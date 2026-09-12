@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32BF04BEE32;
-	Sat, 12 Sep 2026 11:19:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0737A41A554;
+	Sat, 12 Sep 2026 11:19:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789211973; cv=none; b=LnQ1Iazo/6+huX9lfzdSkGozGdQ4Plzith+2KyFvY7EXHY3TVkKVc0yPnSU6kYp8Bq6xD5dIyiKjwGk/Sl+OMKs4w2wlQ8OoDMiZ7+FRPAg9zOGq03jXq6sBKJIfMQAymX86O+UI9kmrgSSxP3Z2/0cg7vlVjc3gNt4mu2wBh0A=
+	t=1789211978; cv=none; b=aRPkh8AdKwVONU7wIZ3o9JgbPIn2IdginFppd2uRGRHJ6iNCnpY6FwBVuJHDkr7rRidh2cN656o7TN+9sXMc5a0XvOtnOM7XYxkKOHWzXd90EZfpKjrreQr1X1XJB22Zz8hB0EIBCtHe/DlsgFhzyCZERs3cGSMA1BlBoOUs1GY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789211973; c=relaxed/simple;
-	bh=5X1MVUjgGiptWK1GJmBjCr2MmY0CPTOsOPwdeLqJTT0=;
+	s=arc-20240116; t=1789211978; c=relaxed/simple;
+	bh=4zpFx8V/3p7gmT41cUjTZqLO4YLni8kPj262xjHeZs8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BcLWpyQCyF/l6cmHKfXd5k2o+wQrc/FY+ngbSDpEh7ERiUifyCvRD9WjhR3uggTH8cXTlK/SeCVfuRZjntmbfQMhBZVI/xlbCB+qeq3GWBSVQrCY/wxHhHaWnoB+zqAGPZLWl1seLzqKrIThuHDtgT5EtNX7maal1T8xoGIMVM0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n9EocgGI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uNDfmXl6B043PCq0gj5zEzIY0KsDvSc8WWg+VKKv9wd16YSwpHAyC4/xpEjMOwRX57IEuCvHr7/tQ/5iZqVJexM9Z+ijbbSn24/liTjCJJJpdEjsgSoMFwRz35V0wz4GlxNBYQe47wX8+mQcGmuVq6ZP6TLxnTpQ/sWMoSZNV0U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WzTMeBqm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n9EocgGI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C93AD1F000FF;
-	Sat, 12 Sep 2026 11:19:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WzTMeBqm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD8501F000FF;
+	Sat, 12 Sep 2026 11:19:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789211972;
-	bh=eucMdDcyPJQA/XdgnrbhmOmdfMdlbQ+znklcPAc8Mqw=;
+	s=korg; t=1789211976;
+	bh=uuYbAAIRKoDjNCjET1xVaivRgpRLXUBeCtobimHkZng=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=n9EocgGIjg9ctEOV5uqaPT8f7Y6OCufThMwOEsQgb3HRwhhek6G+JXXlAw+CBza2w
-	 sbLHYCD7yIZqdCUgVhKfRLmOVb8XSwEIfk+fzWNfNqnOaYOMnmAoLcF3n6GnO547KX
-	 8XRmR1EweJj8riJgv5RSltXLWtn/4MxizHtfZ5Dg=
+	b=WzTMeBqmBY1VZcslqDXYtu1+HpZAPgkMwaUnJwkbYbBidiSKeat389N7XwKdGZ2xq
+	 3mZxCGWyTlIjFXXkUZ1BxA0VNG2rHTyvW3Nmo5WB3+53u4aBqg+bRhzLtDZ1MiSvI6
+	 H7PhtFFTLYYXOZvQYL51oYgnhPWRbdO517b5hFZ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Edward Srouji <edwards@nvidia.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1342/1518] IB/core: Add helper to convert port attributes to data rate
-Date: Sat, 12 Sep 2026 08:58:31 +0200
-Message-ID: <20260912065653.888606495@linuxfoundation.org>
+Subject: [PATCH 6.18 1343/1518] IB/core: Add query_port_speed verb
+Date: Sat, 12 Sep 2026 08:58:32 +0200
+Message-ID: <20260912065653.910429782@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -55,12 +55,13 @@ Content-Transfer-Encoding: 8bit
 
 From: Or Har-Toov <ohartoov@nvidia.com>
 
-[ Upstream commit 2941abac6d0bffd6bf8f438135505b39168a0a08 ]
+[ Upstream commit 51a07ce2fefd061edf4ba552a741c85f07b3e6dd ]
 
-Introduce ib_port_attr_to_rate() to compute the data rate in 100 Mbps
-units (deci-Gb/sec) from a port's active_speed and active_width
-attributes. This generic helper removes duplicated speed-to-rate
-calculations, which are used by sysfs and the upcoming new verb.
+Add new ibv_query_port_speed() verb to enable applications to query
+the effective bandwidth of a port.
+
+This verb is particularly useful when the speed is not a multiplication
+of IB speed and width where width is 2^n.
 
 Signed-off-by: Or Har-Toov <ohartoov@nvidia.com>
 Reviewed-by: Mark Bloch <mbloch@nvidia.com>
@@ -69,97 +70,128 @@ Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Stable-dep-of: ad0ae7aefa7a ("net/mlx5: E-Switch, preserve max tx speed on vport state modification")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/verbs.c | 51 +++++++++++++++++++++++++++++++++
- include/rdma/ib_verbs.h         | 14 +++++++++
- 2 files changed, 65 insertions(+)
+ drivers/infiniband/core/device.c              |  1 +
+ .../infiniband/core/uverbs_std_types_device.c | 42 +++++++++++++++++++
+ include/rdma/ib_verbs.h                       |  2 +
+ include/uapi/rdma/ib_user_ioctl_cmds.h        |  6 +++
+ 4 files changed, 51 insertions(+)
 
-diff --git a/drivers/infiniband/core/verbs.c b/drivers/infiniband/core/verbs.c
-index 2ef4358b01c52..4357164a9976c 100644
---- a/drivers/infiniband/core/verbs.c
-+++ b/drivers/infiniband/core/verbs.c
-@@ -213,6 +213,57 @@ __attribute_const__ int ib_rate_to_mbps(enum ib_rate rate)
+diff --git a/drivers/infiniband/core/device.c b/drivers/infiniband/core/device.c
+index 404fc1edbe60b..c8b7942739a0a 100644
+--- a/drivers/infiniband/core/device.c
++++ b/drivers/infiniband/core/device.c
+@@ -2848,6 +2848,7 @@ void ib_set_device_ops(struct ib_device *dev, const struct ib_device_ops *ops)
+ 	SET_DEVICE_OP(dev_ops, query_gid);
+ 	SET_DEVICE_OP(dev_ops, query_pkey);
+ 	SET_DEVICE_OP(dev_ops, query_port);
++	SET_DEVICE_OP(dev_ops, query_port_speed);
+ 	SET_DEVICE_OP(dev_ops, query_qp);
+ 	SET_DEVICE_OP(dev_ops, query_srq);
+ 	SET_DEVICE_OP(dev_ops, query_ucontext);
+diff --git a/drivers/infiniband/core/uverbs_std_types_device.c b/drivers/infiniband/core/uverbs_std_types_device.c
+index c0fd283d9d6c9..a28f9f21bed89 100644
+--- a/drivers/infiniband/core/uverbs_std_types_device.c
++++ b/drivers/infiniband/core/uverbs_std_types_device.c
+@@ -209,6 +209,39 @@ static int UVERBS_HANDLER(UVERBS_METHOD_QUERY_PORT)(
+ 					     &resp, sizeof(resp));
  }
- EXPORT_SYMBOL(ib_rate_to_mbps);
  
-+struct ib_speed_attr {
-+	const char *str;
-+	int speed;
-+};
-+
-+#define IB_SPEED_ATTR(speed_type, _str, _speed) \
-+	[speed_type] = {.str = _str, .speed = _speed}
-+
-+static const struct ib_speed_attr ib_speed_attrs[] = {
-+	IB_SPEED_ATTR(IB_SPEED_SDR, " SDR", 25),
-+	IB_SPEED_ATTR(IB_SPEED_DDR, " DDR", 50),
-+	IB_SPEED_ATTR(IB_SPEED_QDR, " QDR", 100),
-+	IB_SPEED_ATTR(IB_SPEED_FDR10, " FDR10", 100),
-+	IB_SPEED_ATTR(IB_SPEED_FDR, " FDR", 140),
-+	IB_SPEED_ATTR(IB_SPEED_EDR, " EDR", 250),
-+	IB_SPEED_ATTR(IB_SPEED_HDR, " HDR", 500),
-+	IB_SPEED_ATTR(IB_SPEED_NDR, " NDR", 1000),
-+	IB_SPEED_ATTR(IB_SPEED_XDR, " XDR", 2000),
-+};
-+
-+int ib_port_attr_to_speed_info(struct ib_port_attr *attr,
-+			       struct ib_port_speed_info *speed_info)
++static int UVERBS_HANDLER(UVERBS_METHOD_QUERY_PORT_SPEED)(
++	struct uverbs_attr_bundle *attrs)
 +{
-+	int speed_idx = attr->active_speed;
++	struct ib_ucontext *ucontext;
++	struct ib_device *ib_dev;
++	u32 port_num;
++	u64 speed;
++	int ret;
 +
-+	switch (attr->active_speed) {
-+	case IB_SPEED_DDR:
-+	case IB_SPEED_QDR:
-+	case IB_SPEED_FDR10:
-+	case IB_SPEED_FDR:
-+	case IB_SPEED_EDR:
-+	case IB_SPEED_HDR:
-+	case IB_SPEED_NDR:
-+	case IB_SPEED_XDR:
-+	case IB_SPEED_SDR:
-+		break;
-+	default:
-+		speed_idx = IB_SPEED_SDR; /* Default to SDR for invalid rates */
-+		break;
-+	}
++	ucontext = ib_uverbs_get_ucontext(attrs);
++	if (IS_ERR(ucontext))
++		return PTR_ERR(ucontext);
++	ib_dev = ucontext->device;
 +
-+	speed_info->str = ib_speed_attrs[speed_idx].str;
-+	speed_info->rate = ib_speed_attrs[speed_idx].speed;
-+	speed_info->rate *= ib_width_enum_to_int(attr->active_width);
-+	if (speed_info->rate < 0)
++	if (!ib_dev->ops.query_port_speed)
++		return -EOPNOTSUPP;
++
++	ret = uverbs_get_const(&port_num, attrs,
++			       UVERBS_ATTR_QUERY_PORT_SPEED_PORT_NUM);
++	if (ret)
++		return ret;
++
++	if (!rdma_is_port_valid(ib_dev, port_num))
 +		return -EINVAL;
 +
-+	return 0;
-+}
-+EXPORT_SYMBOL(ib_port_attr_to_speed_info);
++	ret = ib_dev->ops.query_port_speed(ib_dev, port_num, &speed);
++	if (ret)
++		return ret;
 +
- __attribute_const__ enum rdma_transport_type
- rdma_node_get_transport(unsigned int node_type)
++	return uverbs_copy_to(attrs, UVERBS_ATTR_QUERY_PORT_SPEED_RESP,
++			      &speed, sizeof(speed));
++}
++
+ static int UVERBS_HANDLER(UVERBS_METHOD_GET_CONTEXT)(
+ 	struct uverbs_attr_bundle *attrs)
  {
+@@ -469,6 +502,14 @@ DECLARE_UVERBS_NAMED_METHOD(
+ 				   active_speed_ex),
+ 		UA_MANDATORY));
+ 
++DECLARE_UVERBS_NAMED_METHOD(
++	UVERBS_METHOD_QUERY_PORT_SPEED,
++	UVERBS_ATTR_CONST_IN(UVERBS_ATTR_QUERY_PORT_SPEED_PORT_NUM, u32,
++			     UA_MANDATORY),
++	UVERBS_ATTR_PTR_OUT(UVERBS_ATTR_QUERY_PORT_SPEED_RESP,
++			    UVERBS_ATTR_TYPE(u64),
++			    UA_MANDATORY));
++
+ DECLARE_UVERBS_NAMED_METHOD(
+ 	UVERBS_METHOD_QUERY_GID_TABLE,
+ 	UVERBS_ATTR_CONST_IN(UVERBS_ATTR_QUERY_GID_TABLE_ENTRY_SIZE, u64,
+@@ -498,6 +539,7 @@ DECLARE_UVERBS_GLOBAL_METHODS(UVERBS_OBJECT_DEVICE,
+ 			      &UVERBS_METHOD(UVERBS_METHOD_INVOKE_WRITE),
+ 			      &UVERBS_METHOD(UVERBS_METHOD_INFO_HANDLES),
+ 			      &UVERBS_METHOD(UVERBS_METHOD_QUERY_PORT),
++			      &UVERBS_METHOD(UVERBS_METHOD_QUERY_PORT_SPEED),
+ 			      &UVERBS_METHOD(UVERBS_METHOD_QUERY_CONTEXT),
+ 			      &UVERBS_METHOD(UVERBS_METHOD_QUERY_GID_TABLE),
+ 			      &UVERBS_METHOD(UVERBS_METHOD_QUERY_GID_ENTRY));
 diff --git a/include/rdma/ib_verbs.h b/include/rdma/ib_verbs.h
-index 0a1be798255bb..2205c92bdce0a 100644
+index 2205c92bdce0a..7f811e80b63ae 100644
 --- a/include/rdma/ib_verbs.h
 +++ b/include/rdma/ib_verbs.h
-@@ -876,6 +876,20 @@ __attribute_const__ int ib_rate_to_mult(enum ib_rate rate);
-  */
- __attribute_const__ int ib_rate_to_mbps(enum ib_rate rate);
+@@ -2421,6 +2421,8 @@ struct ib_device_ops {
+ 						     int comp_vector);
+ 	int (*query_port)(struct ib_device *device, u32 port_num,
+ 			  struct ib_port_attr *port_attr);
++	int (*query_port_speed)(struct ib_device *device, u32 port_num,
++				u64 *speed);
+ 	int (*modify_port)(struct ib_device *device, u32 port_num,
+ 			   int port_modify_mask,
+ 			   struct ib_port_modify *port_modify);
+diff --git a/include/uapi/rdma/ib_user_ioctl_cmds.h b/include/uapi/rdma/ib_user_ioctl_cmds.h
+index de6f5a94f1e33..35da4026f452b 100644
+--- a/include/uapi/rdma/ib_user_ioctl_cmds.h
++++ b/include/uapi/rdma/ib_user_ioctl_cmds.h
+@@ -73,6 +73,7 @@ enum uverbs_methods_device {
+ 	UVERBS_METHOD_QUERY_CONTEXT,
+ 	UVERBS_METHOD_QUERY_GID_TABLE,
+ 	UVERBS_METHOD_QUERY_GID_ENTRY,
++	UVERBS_METHOD_QUERY_PORT_SPEED,
+ };
  
-+struct ib_port_speed_info {
-+	const char *str;
-+	int rate;	/* in deci-Gb/sec (100 MBps units) */
+ enum uverbs_attrs_invoke_write_cmd_attr_ids {
+@@ -86,6 +87,11 @@ enum uverbs_attrs_query_port_cmd_attr_ids {
+ 	UVERBS_ATTR_QUERY_PORT_RESP,
+ };
+ 
++enum uverbs_attrs_query_port_speed_cmd_attr_ids {
++	UVERBS_ATTR_QUERY_PORT_SPEED_PORT_NUM,
++	UVERBS_ATTR_QUERY_PORT_SPEED_RESP,
 +};
 +
-+/**
-+ * ib_port_attr_to_speed_info - Convert port attributes to speed information
-+ * @attr: Port attributes containing active_speed and active_width
-+ * @speed_info: Speed information to return
-+ *
-+ * Returns 0 on success, -EINVAL on error.
-+ */
-+int ib_port_attr_to_speed_info(struct ib_port_attr *attr,
-+			       struct ib_port_speed_info *speed_info);
- 
- /**
-  * enum ib_mr_type - memory region type
+ enum uverbs_attrs_get_context_attr_ids {
+ 	UVERBS_ATTR_GET_CONTEXT_NUM_COMP_VECTORS,
+ 	UVERBS_ATTR_GET_CONTEXT_CORE_SUPPORT,
 -- 
 2.53.0
 
