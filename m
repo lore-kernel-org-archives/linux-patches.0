@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50E5B47CC92;
-	Sat, 12 Sep 2026 12:59:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EAB347CA67;
+	Sat, 12 Sep 2026 12:59:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789217989; cv=none; b=G5BirPIbSryJXbmwHxdpt4y0pHb6XAPCvXl4ln9Rhroe3630x9FvkNKyNgu1EUZ8dfULwhT6ZMeqdwvMdHgArevKRnWlVHlxdj8lBsVIvmJopmJ3ry/H3BCCsrLdg/6P3RHVC1nGXD0uf1V6SQtKkH5Ni+exsJDKasMzJSxtCd8=
+	t=1789217992; cv=none; b=MaEtJA4TVSJQ15p64tT6vC3EOiwNI9wgUe/cB3v9bbzx/FFgVNvrO2L+5pHCvWYZES1FEUL1FXbCGXPzCfKSYeQOVjFXZme88i5WjQTkKZbrUTsErh+htjUbQxE5Zg7HSoZ4xkDTKdMTWYtpgLcQCYYVGEXU2IkmU3FsB9AFn3c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789217989; c=relaxed/simple;
-	bh=u8TPZfKsfXUKw8C4yp/VMot5EupXgwUvmTtgdglXW2M=;
+	s=arc-20240116; t=1789217992; c=relaxed/simple;
+	bh=0C0rJvvuKvah+LpuIbVlnbrXJhtA5jDUXrAB66uL0Jo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q8fxG6WGukoNKJNXTRCiE9RV3q/vTI3YfZalzavXKMooG0TEN9W6hF/clVDZIfHtYgnVZydzbJn2GIvS3w22JgS3Q9qsIS/4IMIt9WzUBob94evqOTF/4QScEn1UDsN1Fp9BfwdopcueH5+F4aCjU1skEigO4O8UD0FufU+GCYY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E9kcVO0u; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WmO3+BFRjePqXhXm+Ta8Ay9YCt+DpHeLUCaJS5fk/YjjU3xnDQBXiPYJ3v0K3RTHgcg/mgPLtOprRPdY8IuOvdwzgAwp1vCV16qUJhOTlhCEfmrHDAPpbUa0z71kcRWNegoqtJDE1eSIyTZxT8Zpj0sb5tmE0tTh/XSkmOXgjPs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g0WIZ8Gm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E9kcVO0u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9822A1F000FF;
-	Sat, 12 Sep 2026 12:59:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g0WIZ8Gm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 384CE1F000FF;
+	Sat, 12 Sep 2026 12:59:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789217986;
-	bh=CZN/zHw+CQZdP2aBFCeDxxKanXbtCY3tLyebA1qveWY=;
+	s=korg; t=1789217991;
+	bh=lW99WjDDb1PYnVm06uipy/nxWQoMIYmZVoZ7Smrbm4E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=E9kcVO0uixZhTuPM2iA18WOx2K8yemVZHQ3HbaMC61oT0wMdiBPU4KCKJ43U0+Moh
-	 9s9DT9ICvO+OInW+XPoFn1+4q0uBtF4N3+w95OE1ruPjOaymSKxAb+5d+yAH6xJ/SB
-	 8DLSAcFFLFp4eCVB9apoFRsjc7HMX2nG0BS4XlOQ=
+	b=g0WIZ8GmrL4jtcc0Z2q5wvVmOoy5YSdY0dJ1HBrTK1GwUv9vwmcykLEzbaftWGp6T
+	 CLQBRo5mI87cuWS+Z2MpaQErnmjypJQa53oFbdlyWGXa5vDK7MdXtDGaG3vUsABji1
+	 kpYauIrC5wHUPtYZEQKAOq5Xf/ZSZ8wb6Th52kFE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Coiby Xu <coxu@redhat.com>,
-	Alexander Egorenkov <egorenar@linux.ibm.com>,
-	Mimi Zohar <zohar@linux.ibm.com>,
+	Boqun Feng <boqun@kernel.org>,
+	kernel test robot <lkp@intel.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Ilya Leoshkevich <iii@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1051/1376] s390: Drop unnecessary CONFIG_IMA_SECURE_AND_OR_TRUSTED_BOOT
-Date: Sat, 12 Sep 2026 08:57:57 +0200
-Message-ID: <20260912065630.985079443@linuxfoundation.org>
+Subject: [PATCH 6.12 1052/1376] s390/irqflags: Add out-of-line definitions of arch_local_irq_*() for KMSAN
+Date: Sat, 12 Sep 2026 08:57:58 +0200
+Message-ID: <20260912065631.007192144@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -52,84 +54,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Coiby Xu <coxu@redhat.com>
+From: Ilya Leoshkevich <iii@linux.ibm.com>
 
-[ Upstream commit a2e507afd9a25e333b7a58082f5db8c4de2bd12d ]
+[ Upstream commit 3f7c9f9c36b47a2a5cdbc56597eddf32662ef7fa ]
 
-Commit b5ca117365d9 ("ima: prevent kexec_load syscall based on runtime
-secureboot flag") and commit 268a78404973 ("s390/kexec_file: Disable
-kexec_load when IPLed secure") disabled the kexec_load syscall based
-on the secureboot mode. Commit 9e2b4be377f0 ("ima: add a new CONFIG
-for loading arch-specific policies") needed to detect the secure boot
-mode, not to load an IMA architecture specific policy. Since there is
-the new CONFIG_INTEGRITY_SECURE_BOOT, drop
-CONFIG_IMA_SECURE_AND_OR_TRUSTED_BOOT for s390.
+Inline KMSAN arch_local_irq_*() definitions run afoul of
+-Wstatic-in-inline. Move them out-of-line. Make sure decompressor and
+non-GPL modules see the out-of-line definitions.
 
-Signed-off-by: Coiby Xu <coxu@redhat.com>
-Tested-by: Alexander Egorenkov <egorenar@linux.ibm.com>
-[Vasily Gorbik: Fix missing arch_get_secureboot() prototype warning]
-link: https://lore.kernel.org/linux-integrity/c00-01.ttbfdx5@ub.hpns/
-Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
-Stable-dep-of: 3f7c9f9c36b4 ("s390/irqflags: Add out-of-line definitions of arch_local_irq_*() for KMSAN")
+Cc: Boqun Feng <boqun@kernel.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202607131219.euJHPSJ5-lkp@intel.com/
+Suggested-by: Heiko Carstens <hca@linux.ibm.com>
+Fixes: 1b301f5f28ba ("s390/irqflags: do not instrument arch_local_irq_*() with KMSAN")
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/Kconfig           | 1 -
- arch/s390/kernel/Makefile   | 1 -
- arch/s390/kernel/ima_arch.c | 8 --------
- arch/s390/kernel/ipl.c      | 1 +
- 4 files changed, 1 insertion(+), 10 deletions(-)
- delete mode 100644 arch/s390/kernel/ima_arch.c
+ arch/s390/include/asm/irqflags.h | 20 +++++++++++++-------
+ arch/s390/kernel/Makefile        |  1 +
+ arch/s390/kernel/irqflags.c      | 28 ++++++++++++++++++++++++++++
+ 3 files changed, 42 insertions(+), 7 deletions(-)
+ create mode 100644 arch/s390/kernel/irqflags.c
 
-diff --git a/arch/s390/Kconfig b/arch/s390/Kconfig
-index 28e900e5212ca..53dd642281776 100644
---- a/arch/s390/Kconfig
-+++ b/arch/s390/Kconfig
-@@ -57,7 +57,6 @@ config S390
- 	#
- 	# Note: keep this list sorted alphabetically
- 	#
--	imply IMA_SECURE_AND_OR_TRUSTED_BOOT
- 	select ALTERNATE_USER_ADDRESS_SPACE
- 	select ARCH_32BIT_USTAT_F_TINODE
- 	select ARCH_BINFMT_ELF_STATE
+diff --git a/arch/s390/include/asm/irqflags.h b/arch/s390/include/asm/irqflags.h
+index bcab456dfb803..6eb6de6a99f2d 100644
+--- a/arch/s390/include/asm/irqflags.h
++++ b/arch/s390/include/asm/irqflags.h
+@@ -37,18 +37,24 @@ static __always_inline void __arch_local_irq_ssm(unsigned long flags)
+ 	asm volatile("ssm   %0" : : "Q" (flags) : "memory");
+ }
+ 
+-#ifdef CONFIG_KMSAN
+-#define arch_local_irq_attributes noinline notrace __no_sanitize_memory __maybe_unused
++#if defined(CONFIG_KMSAN) && !defined(__DECOMPRESSOR)
++unsigned long arch_local_save_flags(void);
++unsigned long arch_local_irq_save(void);
++void arch_local_irq_enable_external(void);
++void arch_local_irq_enable(void);
+ #else
+-#define arch_local_irq_attributes __always_inline
++#define arch_local_save_flags		__arch_local_save_flags
++#define arch_local_irq_save		__arch_local_irq_save
++#define arch_local_irq_enable_external	__arch_local_irq_enable_external
++#define arch_local_irq_enable		__arch_local_irq_enable
+ #endif
+ 
+-static arch_local_irq_attributes unsigned long arch_local_save_flags(void)
++static __always_inline unsigned long __arch_local_save_flags(void)
+ {
+ 	return __arch_local_irq_stnsm(0xff);
+ }
+ 
+-static arch_local_irq_attributes unsigned long arch_local_irq_save(void)
++static __always_inline unsigned long __arch_local_irq_save(void)
+ {
+ 	return __arch_local_irq_stnsm(0xfc);
+ }
+@@ -58,12 +64,12 @@ static __always_inline void arch_local_irq_disable(void)
+ 	arch_local_irq_save();
+ }
+ 
+-static arch_local_irq_attributes void arch_local_irq_enable_external(void)
++static __always_inline void __arch_local_irq_enable_external(void)
+ {
+ 	__arch_local_irq_stosm(0x01);
+ }
+ 
+-static arch_local_irq_attributes void arch_local_irq_enable(void)
++static __always_inline void __arch_local_irq_enable(void)
+ {
+ 	__arch_local_irq_stosm(0x03);
+ }
 diff --git a/arch/s390/kernel/Makefile b/arch/s390/kernel/Makefile
-index 48caae8c7e104..7981b91fc264e 100644
+index 7981b91fc264e..0a1692a0e85c7 100644
 --- a/arch/s390/kernel/Makefile
 +++ b/arch/s390/kernel/Makefile
-@@ -73,7 +73,6 @@ obj-$(CONFIG_JUMP_LABEL)	+= jump_label.o
+@@ -73,6 +73,7 @@ obj-$(CONFIG_JUMP_LABEL)	+= jump_label.o
  obj-$(CONFIG_KEXEC_FILE)	+= machine_kexec_file.o kexec_image.o
  obj-$(CONFIG_KEXEC_FILE)	+= kexec_elf.o
  obj-$(CONFIG_CERT_STORE)	+= cert_store.o
--obj-$(CONFIG_IMA_SECURE_AND_OR_TRUSTED_BOOT)	+= ima_arch.o
++obj-$(CONFIG_KMSAN)		+= irqflags.o
  
  obj-$(CONFIG_PERF_EVENTS)	+= perf_event.o
  obj-$(CONFIG_PERF_EVENTS)	+= perf_cpum_cf.o perf_cpum_sf.o
-diff --git a/arch/s390/kernel/ima_arch.c b/arch/s390/kernel/ima_arch.c
-deleted file mode 100644
-index 6ccbe34ce4087..0000000000000
---- a/arch/s390/kernel/ima_arch.c
-+++ /dev/null
-@@ -1,8 +0,0 @@
--// SPDX-License-Identifier: GPL-2.0
--
--#include <linux/ima.h>
--
--const char * const *arch_get_ima_policy(void)
--{
--	return NULL;
--}
-diff --git a/arch/s390/kernel/ipl.c b/arch/s390/kernel/ipl.c
-index b6ce3cea3aea0..d4a4d965a9557 100644
---- a/arch/s390/kernel/ipl.c
-+++ b/arch/s390/kernel/ipl.c
-@@ -21,6 +21,7 @@
- #include <linux/crash_dump.h>
- #include <linux/debug_locks.h>
- #include <linux/vmalloc.h>
-+#include <linux/secure_boot.h>
- #include <asm/asm-extable.h>
- #include <asm/diag.h>
- #include <asm/ipl.h>
+diff --git a/arch/s390/kernel/irqflags.c b/arch/s390/kernel/irqflags.c
+new file mode 100644
+index 0000000000000..e192f59f8918c
+--- /dev/null
++++ b/arch/s390/kernel/irqflags.c
+@@ -0,0 +1,28 @@
++// SPDX-License-Identifier: GPL-2.0
++
++#include <linux/export.h>
++#include <asm/irqflags.h>
++
++noinstr unsigned long arch_local_save_flags(void)
++{
++	return __arch_local_save_flags();
++}
++EXPORT_SYMBOL(arch_local_save_flags);
++
++noinstr unsigned long arch_local_irq_save(void)
++{
++	return __arch_local_irq_save();
++}
++EXPORT_SYMBOL(arch_local_irq_save);
++
++noinstr void arch_local_irq_enable_external(void)
++{
++	__arch_local_irq_enable_external();
++}
++EXPORT_SYMBOL(arch_local_irq_enable_external);
++
++noinstr void arch_local_irq_enable(void)
++{
++	__arch_local_irq_enable();
++}
++EXPORT_SYMBOL(arch_local_irq_enable);
 -- 
 2.53.0
 
