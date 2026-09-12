@@ -1,36 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56E9F471249;
-	Sat, 12 Sep 2026 15:50:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DECED4611E1;
+	Sat, 12 Sep 2026 15:50:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789228242; cv=none; b=Tz2nj51+g6sqL1zGQAKzN28WAFVVpy3kAAtqpCUe9T0JrfGUabYS+w3SLATiwJ/rl9R06PPcubAz2O7wNlEawU0WPDe+1gXSDwPJoYxQiFukOUtatuV1WCuA9E3ECkftnPkq0ur3uqHkA25p7MJOHbKtedolaLSCrVeI1/xzUKg=
+	t=1789228247; cv=none; b=Yain1G82cfWwCL73YtrWpLNcq0Lci2eG3LA6zEpp9u6Wdre+fBh5yip5fH7i7YXqXcizivIs/pzsB31V2IwiZvisv5qXsZJbhjLpiEB+KmYuZlt7Xc8zmpnfRpxqIVgaca6kls6iz+pEjIDh7hfZp8j4CZeFhC1VvPr0RPPA+EI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789228242; c=relaxed/simple;
-	bh=KB0v3TmGoHViFOAJX33C360rUAd+rYtWJIZvq2GLFL0=;
+	s=arc-20240116; t=1789228247; c=relaxed/simple;
+	bh=hdPvh1q3eVkI4U/wO9F3/ErksIsT+O/d2S0xAYCyQ24=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TCUkVCjKBoZVA25LsKD1cTvbs7osRWeMnwg918vyF3LTpyEa42BxqYCUJ1YnUpWTPx0i1svAmLkF3fj7kBxV3BNQ99vqrSYd4ksXBf5zKPEP7S69zf3hggUyF1MKT7EdycsjXhikmQtkwKDpES0SPfuWS/Xnu601ptFC1nak1Cs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PzfMLDhx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cZb0DZWUEu0lMT0M0ckKsBdVRlVSY/hJF9HkEwb53FsFNLEiGqLoUziuRQW6RmnHQdk0zaEu0W29EFpVgU6O9AkMJSWrJvzngqAV0qA3DYTxD19Mia86P1OXZWQSgGr6P8+fO7p6KxmlsjL3y2Dm4t6JM1EWF0Hd58uz1XsxSrs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eqlDnGEm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PzfMLDhx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE0391F000FF;
-	Sat, 12 Sep 2026 15:50:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eqlDnGEm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D08041F000FF;
+	Sat, 12 Sep 2026 15:50:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789228240;
-	bh=Z6r5f+33C1siGTdrbiAsvl19AFmU9/4EonUFT0eEcjs=;
+	s=korg; t=1789228245;
+	bh=Tm0ODUFEo4RMOHnE5k7Dknl+tR3f+XNFVRF2wdT8eK4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PzfMLDhxhBK/kTU6dLXaIgsgk82P5079plNju+BInhIEd3tLVfbdZqcTRcNuaE1R9
-	 gn4MdYTZIYBcb6/GzO3oe/P9wa0PXY/f1CzA0jXQ3gO5whWFtXdmaA86jUvWciI8cE
-	 JD2tFIhMRGFOZ2eLmsb1hD3gfoSer7Z2+ClS/Qp8=
+	b=eqlDnGEmjjh5oLdSeAZY3NaXOuEw71rCHKdxYhiQPd8fHjrwjx9SasLYOzi6jg/GC
+	 4L3YF0zpBXV6Kw9KYQsqst49Xx9P6z9YrK9CuakitCqm0LorT65YJkStdGOK5J6K9X
+	 YOYwjps9NXpo8waWJplF8V1dUs1ihb5Usk9AJoI4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sven Eckelmann <sven@narfation.org>
-Subject: [PATCH 6.1 0328/1191] batman-adv: bla: prevent CRC corruptions after claim flush
-Date: Sat, 12 Sep 2026 08:50:56 +0200
-Message-ID: <20260912065555.593299796@linuxfoundation.org>
+	Giorgi Tchankvetadze <giorgi@tchankvetadze.com>,
+	Joshua Crofts <joshua.crofts1@gmail.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Subject: [PATCH 6.1 0346/1191] iio: light: cm32181: return zero after writing calibscale
+Date: Sat, 12 Sep 2026 08:51:14 +0200
+Message-ID: <20260912065555.999781981@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -49,45 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Eckelmann <sven@narfation.org>
+From: Giorgi Tchankvetadze <giorgi@tchankvetadze.com>
 
-commit 89f3502ff6878798be96461b2eebd64ba3c3874c upstream.
+commit 8756acd30919a3e9f547ea4a1d4b7f7895f4d340 upstream.
 
-When batadv_bla_del_backbone_claims() tried to remove all claims of a
-backbone, it sets the CRC to 0. It assumes that the it had the last
-reference of the claims because batadv_claim_release() (which runs after
-the last reference was released), is XORing the crc16 of the claim address
-with the backbone CRC.
+The write_raw callback is documented to return 0 on success or a
+negative error code.  However, the IIO_CHAN_INFO_CALIBSCALE case
+returns 'val' (the user-supplied value) instead of 0.
 
-If there would be a parallel holder of any of these references, it could
-happen that the backbone CRC is (0 ^ crc16(delayed_released_claim)). Which
-is the wrong starting point for the new claims it may receive when the
-remote answers the claim request from batadv_bla_send_request().
+Fix it by returning 0 on success, matching the behavior of other
+calibscale implementations in the subsystem.
 
-This reinitializations can be completely dropped to avoid this problem.
-batadv_claim_release() will take care of fixing the backbone CRC.
-
-Cc: stable@vger.kernel.org
-Fixes: 23721387c409 ("batman-adv: add basic bridge loop avoidance code")
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
+Fixes: 971672c0b3cc ("iio: add Capella CM32181 ambient light sensor driver.")
+Signed-off-by: Giorgi Tchankvetadze <giorgi@tchankvetadze.com>
+Reviewed-by: Joshua Crofts <joshua.crofts1@gmail.com>
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/bridge_loop_avoidance.c |    5 -----
- 1 file changed, 5 deletions(-)
+ drivers/iio/light/cm32181.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/batman-adv/bridge_loop_avoidance.c
-+++ b/net/batman-adv/bridge_loop_avoidance.c
-@@ -323,11 +323,6 @@ batadv_bla_del_backbone_claims(struct ba
- 		}
- 		spin_unlock_bh(list_lock);
- 	}
--
--	/* all claims gone, initialize CRC */
--	spin_lock_bh(&backbone_gw->crc_lock);
--	backbone_gw->crc = BATADV_BLA_CRC_INIT;
--	spin_unlock_bh(&backbone_gw->crc_lock);
- }
- 
- /**
+--- a/drivers/iio/light/cm32181.c
++++ b/drivers/iio/light/cm32181.c
+@@ -370,7 +370,7 @@ static int cm32181_write_raw(struct iio_
+ 	switch (mask) {
+ 	case IIO_CHAN_INFO_CALIBSCALE:
+ 		cm32181->calibscale = val;
+-		return val;
++		return 0;
+ 	case IIO_CHAN_INFO_INT_TIME:
+ 		ret = cm32181_write_als_it(cm32181, val2);
+ 		return ret;
 
 
