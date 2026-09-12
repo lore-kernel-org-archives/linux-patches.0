@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF731331A6E;
-	Sat, 12 Sep 2026 16:13:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51FF137C916;
+	Sat, 12 Sep 2026 16:13:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789229621; cv=none; b=W5qrRg9y9KG9Qh+SzHOm6Gvl3CGECqsKNcAMKlDiZ17zQH8kdoSh3B21wv5i//DLtPKfpHX+SYFN1yl6/KNTzTbSsdelKrT11QppHxkoaok+0JJIwpnI2ecalIxsaLyLzbjLKCsONrUuQXP8YPtAYQ0YccgyKsiEWY1g6qRZTBA=
+	t=1789229626; cv=none; b=ib8CLgB60mrhRVIDZfpNYs7mLYGxlubS5EXiqzZALU7ou0/ZRasczJegQEYti64iMdfRroGvWSY+7KPEdvkkvPmniXIXVBOcRZ1Hv1vaklf453mLeYLZIURG3hro08mgajQ1a6O60W4i79XO7HBZ8LwhprltsUVGD2fNLnnuE2Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789229621; c=relaxed/simple;
-	bh=wwudBwcBTqLWlTLskHZ5+iwjmJpAMDIUWSU28H4kGao=;
+	s=arc-20240116; t=1789229626; c=relaxed/simple;
+	bh=HDlCfl92rjk1Aa8Y0Ja4EbGIom8nEQ/5RF/dCBeXIz0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RmvsJLngWNEqTYJf4vxTo/uufmVtfbsJ0fdA5YQZwOFJneqAwW05feXtO8CoR7bHOn2x46ri+pJOZsWUxYNt2N/m1DOP3XvvUZ5TnB2MWNvMEOcDQDs6v//aP0chJSBbhpl3wN8JCGlwB1c82QslQPHFOJg7KbI9n/EbVjEIXYU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yNTwdCSL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kWRCu8arEERlGPrf218qGkVGsOgUd5A3xX0FhN/CzXYCtFV6Ld7+eYVpjmWot2XTmNYc1VVozswzDNobcm2d/+nUVO5qhdrsrT50XuoeJcOKF51rk0JptLHatrIgSGahTiP2S7fzQT06Q9NVJ9s+1UICRTYRTVuMIUHV6C68LD4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HchnCb2Q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yNTwdCSL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A64D71F000FF;
-	Sat, 12 Sep 2026 16:13:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HchnCb2Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0C231F000FF;
+	Sat, 12 Sep 2026 16:13:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789229619;
-	bh=mIjMWdCv/xLEITymOsVLCv+Xaq4FGHAUqtsjCh2sz0E=;
+	s=korg; t=1789229624;
+	bh=TJScM5GgsfIPVoBLKzc09vxogPrWJdNdmX3SIyW7tow=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yNTwdCSLrITKdKLO5jMgpZM3G9YISoqvoKQRzBvjHBgGGn7raLIiwoYd3H2iA8wYO
-	 MZ8f6rY6aB27einQ6TubvzyB6AEXvZ2/lGHrDDegwMIC93Jaz74VaOzygDADhsgzlH
-	 VtLI5XrdF0ZGKNyGLXooZ7zOlsdV9frwvp7pfDfM=
+	b=HchnCb2QNAJLUc0iQK/3F7s1VvQDS3SdMQH6ZYQJIlzRaVIEAJiV51KlBGvXksrf/
+	 DDqIVWJiDAJ4DhCucxDeBUzdmg/ngrzWqCNM0CANiARhvZcjtmI8bAZzHS+5yMlyL0
+	 todgNwfY0i5WaDwVluWqsQM9jUJ/smc1PBo4Qv10=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Avraham Stern <avraham.stern@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Stefan Wahren <wahrenst@gmx.net>,
+	Ulf Hansson <ulfh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0627/1191] wifi: iwlwifi: mei: add support for SAP version 4
-Date: Sat, 12 Sep 2026 08:55:55 +0200
-Message-ID: <20260912065602.336239130@linuxfoundation.org>
+Subject: [PATCH 6.1 0601/1191] pmdomain: bcm: bcm2835: handle genpd provider registration errors
+Date: Sat, 12 Sep 2026 08:55:29 +0200
+Message-ID: <20260912065601.748566701@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -52,192 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Avraham Stern <avraham.stern@intel.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 27c8f12e972d3647e9d759d7cafd4c34fa513432 ]
+[ Upstream commit a1d9d3b958d69a13783613304f524f489fecdd1f ]
 
-SAP version 4 uses larger Host to MEI notification queue.
-Since it is unknown which SAP version is used by the CSME firmware
-when the driver loads, try version 4 first. In case the CSME firmware
-uses version 3, the memory allocation will fail. In this case the
-driver will try again to allocate the memory for version 3.
+bcm2835_power_probe() initializes all power domains and then registers
+the onecell genpd provider, but ignores of_genpd_add_provider_onecell()
+failures. Probe can therefore return success even though no provider was
+published.
 
-Signed-off-by: Avraham Stern <avraham.stern@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20240729201718.8372e040282f.Ia0085784e08a35159c9293f986c3d2774038f4c4@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Stable-dep-of: 7d8cc301bcba ("wifi: iwlwifi: mei: check SAP message length before reading it")
+Check the provider registration return value and jump to the existing
+cleanup path on failure.
+
+Fixes: 670c672608a1 ("soc: bcm: bcm2835-pm: Add support for power domains under a new binding.")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Reviewed-by: Stefan Wahren <wahrenst@gmx.net>
+Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/wireless/intel/iwlwifi/mei/iwl-mei.h  | 10 ++++
- drivers/net/wireless/intel/iwlwifi/mei/main.c | 58 ++++++++++++++-----
- 2 files changed, 53 insertions(+), 15 deletions(-)
+ drivers/soc/bcm/bcm2835-power.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mei/iwl-mei.h b/drivers/net/wireless/intel/iwlwifi/mei/iwl-mei.h
-index 5409699c9a1fd..da7c26531d368 100644
---- a/drivers/net/wireless/intel/iwlwifi/mei/iwl-mei.h
-+++ b/drivers/net/wireless/intel/iwlwifi/mei/iwl-mei.h
-@@ -281,6 +281,16 @@ struct iwl_mei_colloc_info {
- 	u8 bssid[ETH_ALEN];
- };
+diff --git a/drivers/soc/bcm/bcm2835-power.c b/drivers/soc/bcm/bcm2835-power.c
+index fbe8d57770a31..5669763aea7eb 100644
+--- a/drivers/soc/bcm/bcm2835-power.c
++++ b/drivers/soc/bcm/bcm2835-power.c
+@@ -682,7 +682,12 @@ static int bcm2835_power_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		goto fail;
  
-+/**
-+ * enum iwl_mei_sap_version - SAP version
-+ * @IWL_MEI_SAP_VERSION_3: SAP version 3
-+ * @IWL_MEI_SAP_VERSION_4: SAP version 4
-+ */
-+enum iwl_mei_sap_version {
-+	IWL_MEI_SAP_VERSION_3 = 3,
-+	IWL_MEI_SAP_VERSION_4 = 4,
-+};
-+
- /*
-  * struct iwl_mei_ops - driver's operations called by iwlmei
-  * Operations will not be called more than once concurrently.
-diff --git a/drivers/net/wireless/intel/iwlwifi/mei/main.c b/drivers/net/wireless/intel/iwlwifi/mei/main.c
-index c2f84e1ce73fe..91e30bf7a56e6 100644
---- a/drivers/net/wireless/intel/iwlwifi/mei/main.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mei/main.c
-@@ -1,6 +1,6 @@
- // SPDX-License-Identifier: GPL-2.0-only
- /*
-- * Copyright (C) 2021-2023 Intel Corporation
-+ * Copyright (C) 2021-2024 Intel Corporation
-  */
+-	of_genpd_add_provider_onecell(dev->parent->of_node, &power->pd_xlate);
++	ret = of_genpd_add_provider_onecell(dev->parent->of_node,
++					    &power->pd_xlate);
++	if (ret) {
++		dev_err_probe(dev, ret, "failed to add genpd provider\n");
++		goto fail;
++	}
  
- #include <linux/etherdevice.h>
-@@ -53,7 +53,6 @@ bool iwl_mei_is_connected(void)
- }
- EXPORT_SYMBOL_GPL(iwl_mei_is_connected);
- 
--#define SAP_VERSION	3
- #define SAP_CONTROL_BLOCK_ID 0x21504153 /* SAP! in ASCII */
- 
- struct iwl_sap_q_ctrl_blk {
-@@ -105,16 +104,19 @@ struct iwl_sap_shared_mem_ctrl_blk {
- 
- #define SAP_H2M_DATA_Q_SZ	48256
- #define SAP_M2H_DATA_Q_SZ	24128
--#define SAP_H2M_NOTIF_Q_SZ	2240
-+#define SAP_H2M_NOTIF_Q_SZ_VER3	2240
-+#define SAP_H2M_NOTIF_Q_SZ_VER4	32768
- #define SAP_M2H_NOTIF_Q_SZ	62720
- 
--#define _IWL_MEI_SAP_SHARED_MEM_SZ \
-+#define _IWL_MEI_SAP_SHARED_MEM_SZ_VER3 \
- 	(sizeof(struct iwl_sap_shared_mem_ctrl_blk) + \
--	 SAP_H2M_DATA_Q_SZ + SAP_H2M_NOTIF_Q_SZ + \
-+	 SAP_H2M_DATA_Q_SZ + SAP_H2M_NOTIF_Q_SZ_VER3 + \
- 	 SAP_M2H_DATA_Q_SZ + SAP_M2H_NOTIF_Q_SZ + 4)
- 
--#define IWL_MEI_SAP_SHARED_MEM_SZ \
--	(roundup(_IWL_MEI_SAP_SHARED_MEM_SZ, PAGE_SIZE))
-+#define _IWL_MEI_SAP_SHARED_MEM_SZ_VER4 \
-+	(sizeof(struct iwl_sap_shared_mem_ctrl_blk) + \
-+	 SAP_H2M_DATA_Q_SZ + SAP_H2M_NOTIF_Q_SZ_VER4 + \
-+	 SAP_M2H_DATA_Q_SZ + SAP_M2H_NOTIF_Q_SZ + 4)
- 
- struct iwl_mei_shared_mem_ptrs {
- 	struct iwl_sap_shared_mem_ctrl_blk *ctrl;
-@@ -194,6 +196,7 @@ struct iwl_mei {
-  * @mac_address: interface MAC address.
-  * @nvm_address: NVM MAC address.
-  * @priv: A pointer to iwlwifi.
-+ * @sap_version: The SAP version to use. enum iwl_mei_sap_version.
-  *
-  * This used to cache the configurations coming from iwlwifi's way. The data
-  * is cached here so that we can buffer the configuration even if we don't have
-@@ -208,6 +211,7 @@ struct iwl_mei_cache {
- 	u16 mcc;
- 	u8 mac_address[6];
- 	u8 nvm_address[6];
-+	enum iwl_mei_sap_version sap_version;
- 	void *priv;
- };
- 
-@@ -226,14 +230,17 @@ static void iwl_mei_free_shared_mem(struct mei_cl_device *cldev)
- 
- #define HBM_DMA_BUF_ID_WLAN 1
- 
--static int iwl_mei_alloc_shared_mem(struct mei_cl_device *cldev)
-+static int iwl_mei_alloc_mem_for_version(struct mei_cl_device *cldev,
-+					 enum iwl_mei_sap_version version)
- {
- 	struct iwl_mei *mei = mei_cldev_get_drvdata(cldev);
- 	struct iwl_mei_shared_mem_ptrs *mem = &mei->shared_mem;
-+	u32 mem_size = roundup(version == IWL_MEI_SAP_VERSION_4 ?
-+			       _IWL_MEI_SAP_SHARED_MEM_SZ_VER4 :
-+			       _IWL_MEI_SAP_SHARED_MEM_SZ_VER3, PAGE_SIZE);
- 
--	mem->ctrl = mei_cldev_dma_map(cldev, HBM_DMA_BUF_ID_WLAN,
--				       IWL_MEI_SAP_SHARED_MEM_SZ);
--
-+	iwl_mei_cache.sap_version = version;
-+	mem->ctrl = mei_cldev_dma_map(cldev, HBM_DMA_BUF_ID_WLAN, mem_size);
- 	if (IS_ERR(mem->ctrl)) {
- 		int ret = PTR_ERR(mem->ctrl);
- 
-@@ -242,11 +249,30 @@ static int iwl_mei_alloc_shared_mem(struct mei_cl_device *cldev)
- 		return ret;
- 	}
- 
--	memset(mem->ctrl, 0, IWL_MEI_SAP_SHARED_MEM_SZ);
-+	memset(mem->ctrl, 0, mem_size);
- 
+ 	dev_info(dev, "Broadcom BCM2835 power domains driver");
  	return 0;
- }
- 
-+static int iwl_mei_alloc_shared_mem(struct mei_cl_device *cldev)
-+{
-+	int ret;
-+
-+	/*
-+	 * SAP version 4 uses a larger Host to MEI notif queue.
-+	 * Since it is unknown at this stage which SAP version is used by the
-+	 * CSME firmware on this platform, try to allocate the version 4 first.
-+	 * If the CSME firmware uses version 3, this allocation is expected to
-+	 * fail because the CSME firmware allocated less memory for our driver.
-+	 */
-+	ret = iwl_mei_alloc_mem_for_version(cldev, IWL_MEI_SAP_VERSION_4);
-+	if (ret)
-+		ret = iwl_mei_alloc_mem_for_version(cldev,
-+						    IWL_MEI_SAP_VERSION_3);
-+
-+	return ret;
-+}
-+
- static void iwl_mei_init_shared_mem(struct iwl_mei *mei)
- {
- 	struct iwl_mei_shared_mem_ptrs *mem = &mei->shared_mem;
-@@ -265,7 +291,9 @@ static void iwl_mei_init_shared_mem(struct iwl_mei *mei)
- 	h2m->q_ctrl_blk[SAP_QUEUE_IDX_DATA].size =
- 		cpu_to_le32(SAP_H2M_DATA_Q_SZ);
- 	h2m->q_ctrl_blk[SAP_QUEUE_IDX_NOTIF].size =
--		cpu_to_le32(SAP_H2M_NOTIF_Q_SZ);
-+		iwl_mei_cache.sap_version == IWL_MEI_SAP_VERSION_3 ?
-+		cpu_to_le32(SAP_H2M_NOTIF_Q_SZ_VER3) :
-+		cpu_to_le32(SAP_H2M_NOTIF_Q_SZ_VER4);
- 	m2h->q_ctrl_blk[SAP_QUEUE_IDX_DATA].size =
- 		cpu_to_le32(SAP_M2H_DATA_Q_SZ);
- 	m2h->q_ctrl_blk[SAP_QUEUE_IDX_NOTIF].size =
-@@ -635,7 +663,7 @@ iwl_mei_handle_rx_start_ok(struct mei_cl_device *cldev,
- 		return;
- 	}
- 
--	if (rsp->supported_version != SAP_VERSION) {
-+	if (rsp->supported_version != iwl_mei_cache.sap_version) {
- 		dev_err(&cldev->dev,
- 			"didn't get the expected version: got %d\n",
- 			rsp->supported_version);
-@@ -1252,7 +1280,7 @@ static int iwl_mei_send_start(struct mei_cl_device *cldev)
- 		.hdr.type = cpu_to_le32(SAP_ME_MSG_START),
- 		.hdr.seq_num = cpu_to_le32(atomic_inc_return(&mei->seq_no)),
- 		.hdr.len = cpu_to_le32(sizeof(msg)),
--		.supported_versions[0] = SAP_VERSION,
-+		.supported_versions[0] = iwl_mei_cache.sap_version,
- 		.init_data_seq_num = cpu_to_le16(0x100),
- 		.init_notif_seq_num = cpu_to_le16(0x800),
- 	};
 -- 
 2.53.0
 
