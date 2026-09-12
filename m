@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 431BF37FF60;
-	Sat, 12 Sep 2026 11:58:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5472F373BF2;
+	Sat, 12 Sep 2026 11:58:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789214290; cv=none; b=jKKBVhJdv7ZEgBWQwZ6mgqDunlw/5H+ptWUNDbuDUuUF+4Y5FLWJTFLmAHMvp1RAp9AsezuECZrERQMdQHg57llx34MWbWxSuGmBN0DDx8eeUcEe+e12GimazEpkRQpKXmEXPeb2r3ppCJsD9/ntNeACK/4sziqKP5eXb/yono8=
+	t=1789214295; cv=none; b=d+GLR6zGUFkPoZ+fB3UGp/wx80utbpLr3sQkGPkQ3v+6+GFdtHsnrDXp79z7RHDCzRNSD9kyAMZXfmYk203l+j6jC3+F/Mtax3hN+uSg+nL/DBUy8RCD2l8pkoOdj0eIFYnyVUydRkubQXwiFVjPb4SELuzHrEIY8C9ZIUhdDjI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789214290; c=relaxed/simple;
-	bh=/+GLBmUA5QL5XnN5ZjEwz47j+nzoWQ9lOK5MN/Gyhps=;
+	s=arc-20240116; t=1789214295; c=relaxed/simple;
+	bh=zwDzZUEvqDk/5UZq4Dmxgz0XArynymDiDMDVM1CXxGk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lThvWL16yhHnODUfr9DAnrSe8C81cF9nsN1Utznw3knAuJJHfMOgsR2xrgc27htfEowtAqqTG/6aIZuU/R1xJ0pCOtA6mGFjF62AuUHQC/aKEBMM5h76CW+E6+EiWWtgSivM2V83Lt9EsAXNK5Ut0u4p51i8WLDMSUGi6Lbvb8M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rp72EbYF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EXsqcQ/GI3wJ7ZSZ0Fv0i/ZI4IWjvtkVuolo7fmCF4Zmge/i7ebs/eTLs9nd6nqq35UJFX3tw59unHSkWoEabA/zmzv/ZjnUqjdnFmdYdcdlS+q2zjCd66yh/TDeZEVWv2vsdc7MRO9QNTDf94BTquL6/EQ/mznwdoNzpXJTru8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U5+t3oXJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rp72EbYF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 227101F000FF;
-	Sat, 12 Sep 2026 11:58:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U5+t3oXJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8EC81F000FF;
+	Sat, 12 Sep 2026 11:58:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789214289;
-	bh=VhFgbMwyBlMy/1iLY5E5POpqP+F+bG7Z2b1gZFRQQXk=;
+	s=korg; t=1789214294;
+	bh=w8hXNIBm11od8Xy7tetLvy/m4RzSqj64T3EgB/QvqoE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Rp72EbYF4mK6PhU/tc23HPkPbXnfMXip0Q9iRrT9kf9jCLm+YCnoA6LjnQuDIs4Xh
-	 y6zWMHkXLEBI0g/dzjnnMeOmiYkqTh9FcqUFjSZ0A088emdPp7nwgeG2p3R4FxQDrB
-	 5HoMkqOZB/2VNn6c1AHSpZi68bqkK8QGXOPLfJWU=
+	b=U5+t3oXJVjfcO5jGyxUyC//33azMfxuH+b6i3YK4mRdUtaZysGa5PMa2erVhmzje0
+	 T4Lle7lLzPUGStVDefg58kZdeR1Vp6saNFTTr9F/bv8aAcpQnILSBmxEOpJy+rkGjI
+	 Qe3RVR9x8nU/l4Zlucnh/2h59t481lTnbawUJqSs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rob Herring <robh@kernel.org>,
-	Jianhao Xu <jianhao.xu@seu.edu.cn>,
-	Zilin Guan <zilin@seu.edu.cn>,
+	Akif <akif.sait111@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0297/1376] of: unittest: Fix memory leak in unittest_data_add()
-Date: Sat, 12 Sep 2026 08:45:23 +0200
-Message-ID: <20260912065614.168633860@linuxfoundation.org>
+Subject: [PATCH 6.12 0298/1376] ksmbd: fix use-after-free in smb2_open during durable reconnect
+Date: Sat, 12 Sep 2026 08:45:24 +0200
+Message-ID: <20260912065614.190622645@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -52,82 +52,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zilin Guan <zilin@seu.edu.cn>
+From: Akif <akif.sait111@gmail.com>
 
-[ Upstream commit 235a1eb8d2dcc49a6cf0a5ee1aa85544a5d0054b ]
+[ Upstream commit 1baff47b81f94f9231c91236aa511420d0e266b9 ]
 
-In unittest_data_add(), if of_resolve_phandles() fails, the allocated
-unittest_data is not freed, leading to a memory leak.
+In smb2_open, the call to ksmbd_put_durable_fd(fp) drops the reference
+to the durable file descriptor early during the durable reconnect
+process. If an error occurs subsequently (eg, ksmbd_iov_pin_rsp fails)
+or a scavenger accesses the file, it leads to a use-after-free when
+accessing fp properties (eg fp->create_time).
 
-Fix this by using scope-based cleanup helper __free(kfree) for automatic
-resource cleanup. This ensures unittest_data is automatically freed when
-it goes out of scope in error paths.
+Move the single put to the end of the function below err_out2 so fp
+stays valid until smb2_open returns.
 
-For the success path, use retain_and_null_ptr() to transfer ownership
-of the memory to the device tree and prevent double freeing.
-
-Fixes: 2eb46da2a760 ("of/selftest: Use the resolver to fixup phandles")
-Suggested-by: Rob Herring <robh@kernel.org>
-Co-developed-by: Jianhao Xu <jianhao.xu@seu.edu.cn>
-Signed-off-by: Jianhao Xu <jianhao.xu@seu.edu.cn>
-Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
-Link: https://patch.msgid.link/20251231114915.234638-1-zilin@seu.edu.cn
-Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+Fixes: c8efcc786146 ("ksmbd: add support for durable handles v1/v2")
+Signed-off-by: Akif <akif.sait111@gmail.com>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/of/unittest.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ fs/smb/server/smb2pdu.c | 13 +++++--------
+ 1 file changed, 5 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/of/unittest.c b/drivers/of/unittest.c
-index 96d2e7b63db38..bed3f7538aa99 100644
---- a/drivers/of/unittest.c
-+++ b/drivers/of/unittest.c
-@@ -1871,7 +1871,6 @@ static void attach_node_and_children(struct device_node *np)
-  */
- static int __init unittest_data_add(void)
- {
--	void *unittest_data;
- 	void *unittest_data_align;
- 	struct device_node *unittest_data_node = NULL, *np;
- 	/*
-@@ -1890,7 +1889,7 @@ static int __init unittest_data_add(void)
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index 1dee4b59a22f7..1fa6e701f817f 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -3018,29 +3018,23 @@ int smb2_open(struct ksmbd_work *work)
+ 		if (dh_info.reconnected == true) {
+ 			rc = smb2_check_durable_oplock(conn, share, dh_info.fp,
+ 					lc, sess->user, name);
+-			if (rc) {
+-				ksmbd_put_durable_fd(dh_info.fp);
++			if (rc)
+ 				goto err_out2;
+-			}
+ 
+ 			rc = ksmbd_reopen_durable_fd(work, dh_info.fp);
+-			if (rc) {
+-				ksmbd_put_durable_fd(dh_info.fp);
++			if (rc)
+ 				goto err_out2;
+-			}
+ 
+ 			fp = dh_info.fp;
+ 
+ 			if (ksmbd_override_fsids(work)) {
+ 				rc = -ENOMEM;
+-				ksmbd_put_durable_fd(dh_info.fp);
+ 				goto err_out2;
+ 			}
+ 
+ 			file_info = FILE_OPENED;
+ 
+ 			rc = ksmbd_vfs_getattr(&fp->filp->f_path, &stat);
+-			ksmbd_put_durable_fd(fp);
+ 			if (rc)
+ 				goto err_out2;
+ 
+@@ -3810,6 +3804,9 @@ int smb2_open(struct ksmbd_work *work)
+ 		ksmbd_debug(SMB, "Error response: %x\n", rsp->hdr.Status);
  	}
  
- 	/* creating copy */
--	unittest_data = kmalloc(size + FDT_ALIGN_SIZE, GFP_KERNEL);
-+	void *unittest_data __free(kfree) = kmalloc(size + FDT_ALIGN_SIZE, GFP_KERNEL);
- 	if (!unittest_data)
- 		return -ENOMEM;
- 
-@@ -1900,12 +1899,10 @@ static int __init unittest_data_add(void)
- 	ret = of_fdt_unflatten_tree(unittest_data_align, NULL, &unittest_data_node);
- 	if (!ret) {
- 		pr_warn("%s: unflatten testcases tree failed\n", __func__);
--		kfree(unittest_data);
- 		return -ENODATA;
- 	}
- 	if (!unittest_data_node) {
- 		pr_warn("%s: testcases tree is empty\n", __func__);
--		kfree(unittest_data);
- 		return -ENODATA;
- 	}
- 
-@@ -1924,7 +1921,6 @@ static int __init unittest_data_add(void)
- 	/* attach the sub-tree to live tree */
- 	if (!of_root) {
- 		pr_warn("%s: no live tree to attach sub-tree\n", __func__);
--		kfree(unittest_data);
- 		rc = -ENODEV;
- 		goto unlock;
- 	}
-@@ -1945,6 +1941,8 @@ static int __init unittest_data_add(void)
- 	EXPECT_END(KERN_INFO,
- 		   "Duplicate name in testcase-data, renamed to \"duplicate-name#1\"");
- 
-+	retain_and_null_ptr(unittest_data);
++	if (dh_info.reconnected)
++		ksmbd_put_durable_fd(dh_info.fp);
 +
- unlock:
- 	of_overlay_mutex_unlock();
+ 	kfree(name);
+ 	kfree(lc);
  
 -- 
 2.53.0
