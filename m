@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6581018A93F;
-	Sat, 12 Sep 2026 14:26:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A44632A3DA;
+	Sat, 12 Sep 2026 14:26:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789223191; cv=none; b=X5zPs7Ys9W8p1TUTfHXCnpGePJxY/2DW1CnRBn7tMLgm3Dx1BvS6ep/OlubcrRFc+EY/T4OPG7x3X0oM5gWyjnZqezC0M1WsM4FOjqZZ/NytaPRTVnZKHcpBL6JqfGp2stGsMibn5fiOfBxWXPHUCdagXLtmImS/BnDaOe8DOKI=
+	t=1789223196; cv=none; b=jmtvtOMzDpNIKc/Fa54OS8CIrV7hYqJrNl7O/7FoCiFswGD+1nGTVzRdTbLJcwAzaljfUJ4KU7MEg8tR6mWiVcFNaEYBGwuoCjpPQAGePLRFawpJOFDHfYMAz1/fMLcoYXbUxELB0BYsUQJ+u/+kWLPl2HQ0cJ28LKAZtyK1NzA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789223191; c=relaxed/simple;
-	bh=Hnl1NNDKitXbFd9ZU4/bDU/hYn6kq1JjTmq/MntAZMo=;
+	s=arc-20240116; t=1789223196; c=relaxed/simple;
+	bh=29LpUu4Fj+XL12Kwe+fWCbqrMl/hBc/PdN5ziiIA3OY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cK+RjZvTznzs8mRbnNkSOAjK2qyCI28F9sDeAwPzEoJyseNK38co9QmCj58NLswBzbZ1WCPXR/ozUgHMVgOgBiSyy20H3LIB7Yv0sYeoGJEpZcgA+fTj1ApivGSmVGDXNWEBVqzVXz5T5qcksqghzLZr/pqRsMUuk2Qh3Btlt6k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C+7wttKl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=u3+yOzZ9YJkCHWjxGxdPdmh0cRvk6Trn/MLB8q5vGojs0b7hSnmJMwS8gOatsJS2n+60BIic2Z2/4F0giqvQr+iDdY0yXYWR32v1nHRkjC9pvmbEsi9xUYEY8en5hWbcwChcCJr/h0OoIOr7LF4VNZFRiRTYKa5M68hP3PwBXEY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IMEcHx46; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C+7wttKl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03EF41F000FF;
-	Sat, 12 Sep 2026 14:26:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IMEcHx46"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2A441F000FF;
+	Sat, 12 Sep 2026 14:26:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789223190;
-	bh=SD+MKJCNX+65yS2pbJA3/htatc8Nx4ANbamvrp9EgCk=;
+	s=korg; t=1789223195;
+	bh=QNFTnRl7B1HDFjSfIh6Z/3B1pXdGxXxvWPNasKa8IOQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=C+7wttKlT8lxFqxJaOjzte23AIJOyWV5WnCHcD65YgIYDKqs0jFsyxMx7K09sBASO
-	 FSJAGvFe/gtYTPlNJMsKh8uZxLjkgeh/nbwuPtbKFDdSVAiN4sDceSfwzbh5siQKay
-	 qOLs4hgEi60mBQhSmxl9HuSlTqX0qv0a0KLKyAl8=
+	b=IMEcHx46hcDMphRqwMtukEpZiRd2TMXx/Bfjy9HPpLLQt+pgQbN4+RdPHMUuDByVw
+	 roWfO0U84XOhXvULgJRxUKYkviHysTT6oLOtqjtv+NnWN5WKJrW80JrHpgec1Z+4Qe
+	 Tti2waSI+UHxv1KrI4IhNmVUxluSr6N2fKai+p4M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Kaiser <martin@kaiser.cx>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Alison Schofield <alison.schofield@intel.com>,
+	Dave Jiang <dave.jiang@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0722/1424] hwrng: ks-sa - access private data via struct hwrng
-Date: Sat, 12 Sep 2026 08:52:34 +0200
-Message-ID: <20260912065623.461491140@linuxfoundation.org>
+Subject: [PATCH 6.6 0740/1424] cxl/mbox: Break poison list loop on an empty payload
+Date: Sat, 12 Sep 2026 08:52:52 +0200
+Message-ID: <20260912065623.868415929@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -51,82 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Martin Kaiser <martin@kaiser.cx>
+From: Dave Jiang <dave.jiang@intel.com>
 
-[ Upstream commit b8f836cbe12bccf2beeadd638e1696f4acaa39c3 ]
+[ Upstream commit 8b301c4afbce4bc3f94528441d8d5ce1366504ad ]
 
-This driver uses a struct ks_sa_rng for its private data. It contains a
-struct hwrng. Call container_of to get from hwrng to ks_sa_rng.
+A device that returns count == 0 with CXL_POISON_FLAG_MORE set on every
+iteration never advances nr_records, so the max_errors guard never
+trips and the do/while loops forever while holding poison.mutex. That
+hangs the sysfs-triggered scan thread and blocks all subsequent poison
+operations on the device. The existing "Protect against an uncleared
+_FLAG_MORE" guard was intended to bound a misbehaving device but does
+not cover the count == 0 case.
 
-Signed-off-by: Martin Kaiser <martin@kaiser.cx>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Stable-dep-of: 1c17b601fafb ("hwrng: ks-sa - Fix runtime PM cleanup on registration failure")
+Stop the loop on an empty payload so a malfunctioning or malicious
+device cannot wedge the poison scan.
+
+Link: https://sashiko.dev/#/patchset/20260702090849.47501-1-icheng@nvidia.com?part=3
+Fixes: ed83f7ca398b ("cxl/mbox: Add GET_POISON_LIST mailbox command")
+Assisted-by: Claude:claude-opus-4-8
+Reviewed-by: Alison Schofield <alison.schofield@intel.com>
+Link: https://patch.msgid.link/20260709155714.1893280-1-dave.jiang@intel.com
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/hw_random/ks-sa-rng.c | 15 ++++-----------
- 1 file changed, 4 insertions(+), 11 deletions(-)
+ drivers/cxl/core/mbox.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/char/hw_random/ks-sa-rng.c b/drivers/char/hw_random/ks-sa-rng.c
-index d7b42888f25c2..8cd186fa1107f 100644
---- a/drivers/char/hw_random/ks-sa-rng.c
-+++ b/drivers/char/hw_random/ks-sa-rng.c
-@@ -113,8 +113,7 @@ static unsigned int refill_delay_ns(unsigned long clk_rate)
- static int ks_sa_rng_init(struct hwrng *rng)
- {
- 	u32 value;
--	struct device *dev = (struct device *)rng->priv;
--	struct ks_sa_rng *ks_sa_rng = dev_get_drvdata(dev);
-+	struct ks_sa_rng *ks_sa_rng = container_of(rng, struct ks_sa_rng, rng);
- 	unsigned long clk_rate = clk_get_rate(ks_sa_rng->clk);
+diff --git a/drivers/cxl/core/mbox.c b/drivers/cxl/core/mbox.c
+index fecaa18f4dd20..d98cb4ddca55d 100644
+--- a/drivers/cxl/core/mbox.c
++++ b/drivers/cxl/core/mbox.c
+@@ -1333,6 +1333,11 @@ int cxl_mem_get_poison(struct cxl_memdev *cxlmd, u64 offset, u64 len,
+ 		if (rc)
+ 			break;
  
- 	/* Enable RNG module */
-@@ -153,8 +152,7 @@ static int ks_sa_rng_init(struct hwrng *rng)
- 
- static void ks_sa_rng_cleanup(struct hwrng *rng)
- {
--	struct device *dev = (struct device *)rng->priv;
--	struct ks_sa_rng *ks_sa_rng = dev_get_drvdata(dev);
-+	struct ks_sa_rng *ks_sa_rng = container_of(rng, struct ks_sa_rng, rng);
- 
- 	/* Disable RNG */
- 	writel(0, &ks_sa_rng->reg_rng->control);
-@@ -164,8 +162,7 @@ static void ks_sa_rng_cleanup(struct hwrng *rng)
- 
- static int ks_sa_rng_data_read(struct hwrng *rng, u32 *data)
- {
--	struct device *dev = (struct device *)rng->priv;
--	struct ks_sa_rng *ks_sa_rng = dev_get_drvdata(dev);
-+	struct ks_sa_rng *ks_sa_rng = container_of(rng, struct ks_sa_rng, rng);
- 
- 	/* Read random data */
- 	data[0] = readl(&ks_sa_rng->reg_rng->output_l);
-@@ -179,8 +176,7 @@ static int ks_sa_rng_data_read(struct hwrng *rng, u32 *data)
- 
- static int ks_sa_rng_data_present(struct hwrng *rng, int wait)
- {
--	struct device *dev = (struct device *)rng->priv;
--	struct ks_sa_rng *ks_sa_rng = dev_get_drvdata(dev);
-+	struct ks_sa_rng *ks_sa_rng = container_of(rng, struct ks_sa_rng, rng);
- 	u64 now = ktime_get_ns();
- 
- 	u32	ready;
-@@ -225,7 +221,6 @@ static int ks_sa_rng_probe(struct platform_device *pdev)
- 		.data_present = ks_sa_rng_data_present,
- 		.cleanup = ks_sa_rng_cleanup,
- 	};
--	ks_sa_rng->rng.priv = (unsigned long)dev;
- 
- 	ks_sa_rng->reg_rng = devm_platform_ioremap_resource(pdev, 0);
- 	if (IS_ERR(ks_sa_rng->reg_rng))
-@@ -252,8 +247,6 @@ static int ks_sa_rng_probe(struct platform_device *pdev)
- 		return ret;
- 	}
- 
--	platform_set_drvdata(pdev, ks_sa_rng);
--
- 	return devm_hwrng_register(&pdev->dev, &ks_sa_rng->rng);
- }
- 
++		if (!le16_to_cpu(po->count)) {
++			dev_dbg(&cxlmd->dev, "Poison empty payload!\n");
++			break;
++		}
++
+ 		for (int i = 0; i < le16_to_cpu(po->count); i++)
+ 			trace_cxl_poison(cxlmd, cxlr, &po->record[i],
+ 					 po->flags, po->overflow_ts,
 -- 
 2.53.0
 
