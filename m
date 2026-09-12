@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D231E36A36A;
-	Sat, 12 Sep 2026 09:52:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16E9C343893;
+	Sat, 12 Sep 2026 09:52:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789206746; cv=none; b=i6ifsZZNArX3BNWyknA8YBGXkNkb4hMjZZQHZSQFsVkQdcRhh4tHjng/1Ywo1oZU5ZXVg25/pdGTVVR79+IJ4EeM3g2gzY/H+mb5zSdwWyQsVhqvDI6brxjw2/pfHLfbZp6e1BCv1QnmMwD/smMcgB3uymiMOS00g3UKwsW+bKs=
+	t=1789206751; cv=none; b=Ei3xLd3Pcd/s3DEYM6DXYnDleyJPlAQTIB4+CqhOj64t9f6uaD0KNUqWJ24D3lfHgK39gzFYQ0oz6Ki4eC8mkkRHMaqCm3S4sO0gpjftypsDEejSO3ke0JCyaSKheYlAjMq2jNc/ryOeUJh0tLsQFBXCkPrPpx3EFunvhhdwsws=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789206746; c=relaxed/simple;
-	bh=GyNl9+RyReOjQEFNWdB5KPK2HLihYpsNbcjg1CPH7QA=;
+	s=arc-20240116; t=1789206751; c=relaxed/simple;
+	bh=YTjlA7c0OSX+K970RM14aecxt+UOm40Z3hINsvPzm2Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=IE8uTYn5+0EInbsmGXRIdv2tIHIt4GY3Ji/IdmgWAWwY2q5F+bWLLk+z1dvm2zxMX4q4/ThVUcJ8o82ukf4wUMQslhtA08gwLDAZi7ugtxoDG45OxLxgrAZAdZ3dxauycs/HTEhmVvTNrKGzSJ6LeIXpAugOgnDenSKbqzSgKA4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T3QQv5+0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kTdzxfTJSvPKJPfXE3IpNFGa3aHSC1NQo8kN2ri8kOqz/BTct7Q+VuzjGDyxW79w93JwC6/oU0ala6FSBa4TCmPxfRU8AiBJ0iClVgeHubPyVcHGS/FNBSfndlwuD+HxsS8j+b3N144UpkyEpYlfUw4rCOCEwcENcEL1RomUolE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wWVfbs3R; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T3QQv5+0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BF161F000FF;
-	Sat, 12 Sep 2026 09:52:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wWVfbs3R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7AB61F000FF;
+	Sat, 12 Sep 2026 09:52:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789206744;
-	bh=/ZD0YHMq9E7wuAiz9u/t2gJDuTrk1fIUUBZwGtdFX9U=;
+	s=korg; t=1789206750;
+	bh=g0XUrTHN+htG1NfdGE3ONfqAgOG2vZfMlRjLriFSZ6c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T3QQv5+0WNs49t1KzAhSzUWWu8gf13tYNU6TS6NGBAomZruv08tUhAD699nHRwsfO
-	 LzzhP0bThfqhJteDYID55p2CyUS8BBvRm5SZKnthPrHg8SsoorYFwc3LS6j8z/Nx67
-	 Odalr0GFWRu5BpXzqdFhFPISatT7c0knVeO6Pnpg=
+	b=wWVfbs3RYEA3N6wujgRGs+M6kPRZ2QzJJDIInRnmkC7K94Ay6yDHn4B+Bzu8vm/Do
+	 Z+37q/F+mKjDwms+Qi/DcW7BDaGgQHH9D5KNMLZJhVJRvr++levno7LkixMlpcSVF6
+	 eIDOWJlFzmz5MDMV30exztVs3c68XF/xQqjsf9e8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	=?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
-	Dan Carpenter <error27@gmail.com>,
-	Daniel Lezcano <daniel.lezcano@kernel.org>,
+	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0268/1518] thermal/drivers/rcar: Fix error checking in probe()
-Date: Sat, 12 Sep 2026 08:40:37 +0200
-Message-ID: <20260912065629.548417587@linuxfoundation.org>
+Subject: [PATCH 6.18 0269/1518] usb: typec: ucsi: unregister debugfs entries on teardown
+Date: Sat, 12 Sep 2026 08:40:38 +0200
+Message-ID: <20260912065629.572136098@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -47,81 +45,66 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dan Carpenter <error27@gmail.com>
+From: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
 
-[ Upstream commit dd04ad1cdabcad51e34b74b4e91b9aeb7180d05d ]
+[ Upstream commit eed73a65ab609b79d53de88cccc34b36dfe753c4 ]
 
-This code accidentally calls thermal_zone_device_enable() before checking
-whether thermal_zone_device_register_with_trips() failed.  Move the call
-until later to avoid an error pointer dereference of "priv->zone".
+ucsi_register() creates per-instance debugfs entries, but
+ucsi_unregister() keeps them around until ucsi_destroy().
 
-The driver works differently depending on if we are using OF thermal or
-not.  We use thermal_add_hwmon_sysfs() if we are using OF thermal and
-call thermal_zone_device_enable() if not.  We can share same error check
-for if either of these fail.
+Drivers like ucsi_glink that unregister/register the same UCSI
+instance across remoteproc restart then try to create an already
+existing debugfs directory and log:
 
-Moving the thermal_zone_device_enable() call is a bit cleaner as well.
-The original code used a three step process to cleanup:
-1. Call thermal_zone_device_unregister() to cleanup.
-2. Set priv->zone to an error pointer to preserve the error code.
-3. Set priv->zone to NULL to avoid a second call to
-   thermal_zone_device_unregister() in the rcar_thermal_remove()
-   function.
+  debugfs: 'pmic_glink.ucsi.0' already exists in 'ucsi'
 
-Now we can just do a direct goto error_unregister and rcar_thermal_remove()
-handles the cleanup properly.
+Unregister debugfs entries as part of ucsi_unregister(), and
+clear ucsi->debugfs after freeing it so repeated unregister
+paths remain safe.
 
-Fixes: bbcf90c0646a ("thermal: Explicitly enable non-changing thermal zone devices")
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
-Signed-off-by: Dan Carpenter <error27@gmail.com>
-Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
-Link: https://patch.msgid.link/aj5WnseULiwgmlWv@stanley.mountain
+Assisted-by: Codex:GPT-5.5
+Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+Fixes: df0383ffad64 ("usb: typec: ucsi: Add debugfs for ucsi commands")
+Tested-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com> # X1E80100 CRD
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260611-usci-unregister-debugfs-v1-1-f4a518a94f27@oss.qualcomm.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/renesas/rcar_thermal.c | 15 +++++----------
- 1 file changed, 5 insertions(+), 10 deletions(-)
+ drivers/usb/typec/ucsi/debugfs.c | 1 +
+ drivers/usb/typec/ucsi/ucsi.c    | 2 ++
+ 2 files changed, 3 insertions(+)
 
-diff --git a/drivers/thermal/renesas/rcar_thermal.c b/drivers/thermal/renesas/rcar_thermal.c
-index fdd7afdc4ff69..27adc64757f55 100644
---- a/drivers/thermal/renesas/rcar_thermal.c
-+++ b/drivers/thermal/renesas/rcar_thermal.c
-@@ -492,12 +492,6 @@ static int rcar_thermal_probe(struct platform_device *pdev)
- 				"rcar_thermal", trips, ARRAY_SIZE(trips), priv,
- 						&rcar_thermal_zone_ops, NULL, 0,
- 						idle);
--
--			ret = thermal_zone_device_enable(priv->zone);
--			if (ret) {
--				thermal_zone_device_unregister(priv->zone);
--				priv->zone = ERR_PTR(ret);
--			}
- 		}
- 		if (IS_ERR(priv->zone)) {
- 			dev_err(dev, "can't register thermal zone\n");
-@@ -506,11 +500,12 @@ static int rcar_thermal_probe(struct platform_device *pdev)
- 			goto error_unregister;
- 		}
+diff --git a/drivers/usb/typec/ucsi/debugfs.c b/drivers/usb/typec/ucsi/debugfs.c
+index f73f2b54554e2..414ffe1d23780 100644
+--- a/drivers/usb/typec/ucsi/debugfs.c
++++ b/drivers/usb/typec/ucsi/debugfs.c
+@@ -129,6 +129,7 @@ void ucsi_debugfs_unregister(struct ucsi *ucsi)
  
--		if (chip->use_of_thermal) {
-+		if (chip->use_of_thermal)
- 			ret = thermal_add_hwmon_sysfs(priv->zone);
--			if (ret)
--				goto error_unregister;
--		}
-+		else
-+			ret = thermal_zone_device_enable(priv->zone);
-+		if (ret)
-+			goto error_unregister;
+ 	debugfs_remove_recursive(ucsi->debugfs->dentry);
+ 	kfree(ucsi->debugfs);
++	ucsi->debugfs = NULL;
+ }
  
- 		rcar_thermal_irq_enable(priv);
+ void ucsi_debugfs_init(void)
+diff --git a/drivers/usb/typec/ucsi/ucsi.c b/drivers/usb/typec/ucsi/ucsi.c
+index 85e2e7fcd02cd..2acd48a0a6a2b 100644
+--- a/drivers/usb/typec/ucsi/ucsi.c
++++ b/drivers/usb/typec/ucsi/ucsi.c
+@@ -2275,6 +2275,8 @@ void ucsi_unregister(struct ucsi *ucsi)
+ 	cancel_delayed_work_sync(&ucsi->work);
+ 	cancel_work_sync(&ucsi->resume_work);
+ 
++	ucsi_debugfs_unregister(ucsi);
++
+ 	/* Disable notifications */
+ 	ucsi->ops->async_control(ucsi, cmd);
  
 -- 
 2.53.0
