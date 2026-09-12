@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D66C3750D6;
-	Sat, 12 Sep 2026 09:26:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2130234FF78;
+	Sat, 12 Sep 2026 09:26:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789205205; cv=none; b=rzwGARp1BKYYExr69HWQGkXGRqOUG9h2Cp8NnLQDwO1FdW75jvu+SrhpL46LV/2HAXM/B04rJpt3sRASwKL8Jhh/bx1DR1xz9jPMsiiEa4csFozjeIsZbdXbq2z9lvuyoRUWkHRnKg+PVJDBicqXMW5sdh4qYvcAS36J6Qsi97Q=
+	t=1789205210; cv=none; b=L4d3P9Z6M7XiSOPgZOy5FmQtKTRE3fuOn1QJX+1ROii6ifpOLxzpVQMaY8Cjgr2uEKqHuKrqjGLka7hpDYKq7KBHfRVKJvBx2P9clXRYw3fKeyYOGk+Sko70Jfe4fDTu7BO8hFmerz/87zuN08sTV1pWqApGuFYWZb3e+h5Z0Ww=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789205205; c=relaxed/simple;
-	bh=vZN0iLHHWwdtTAGOlvSYgh/wTAnbUWiyP0CYingXuFM=;
+	s=arc-20240116; t=1789205210; c=relaxed/simple;
+	bh=MMx/+zaH7UYoCejx0FK4oEwvammJbPQ9eIOGUUUV3vs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iurLtzkzUdholAQcKBpEN7ZwG40QATGBlcPlySQtMwuhzNusVBf+s6rAS+NM102CObvjevqBCHCWKSjTBcRT77O1f6JeeF4zxBNnLytGYCCSD2mM+CTgYpfbXlnqE545s9AoymPKzrDjgvltP4u1KL+9nqsCBMD0JG1c7UmWyuc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LKIVSxoI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gUySvprr4K9a2t94b+0x+dd43e58jTnFC80OHvK4ckxQuaEM0jhyE7ztpu+PacwNJkQJKRUxebzLWSNuKAhoYjFZntSeHHOVCKa2XFtQIHS2WoE8kPMwVuorf1exzTuhqban59Ks1Y5/6HrqkJTnMeZvuCrDoMGuFLtt0DcGFpk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WP4SfJZD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LKIVSxoI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 100051F000FF;
-	Sat, 12 Sep 2026 09:26:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WP4SfJZD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D65831F000FF;
+	Sat, 12 Sep 2026 09:26:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789205204;
-	bh=xabf5bA3TekpAYEyCPmD6xl1du/MAiN8shA4yzRgnK0=;
+	s=korg; t=1789205208;
+	bh=sxgKBK0F2Oh+mhUOg5WmNp/URUbZskL9/LPn9e1xO/w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LKIVSxoIJgrer+CE8a8ptPnUM2X4+5e+uzKNadQVM88zQ1hdEuomn7RDVFpTOt3fM
-	 rryGpoan2M40AwBPJq5R6Vx1l8BvAWFFns1cvfiDXdba+pU7hHhV7QAdSaXDcOQQfa
-	 IR9v3Yacjld/dB1BUazxoVDb+WG84NV0pWpfa+qQ=
+	b=WP4SfJZD5lyihCgbvoWuDzw/jyI1gjewLMZrASS/u8TZLLgrNunYh+ffawVhV7j5G
+	 7QjqPsM+IZm4Ci63pQR9sYI+uOw5j7h8xJoDbTIen8Z8jkde6620av/+JuPP+kye6c
+	 psF6Gk0l6FsU4Ikmv6ZN/uMQI8mFMJxLVj4zzylg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fuad Tabba <fuad.tabba@linux.dev>,
-	"Rob Herring (Arm)" <robh@kernel.org>,
+	HyeongJun An <sammiee5311@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1769/1815] of/irq: Fix device node refcount leak in of_irq_get_affinity()
-Date: Sat, 12 Sep 2026 08:58:39 +0200
-Message-ID: <20260912065730.533912034@linuxfoundation.org>
+Subject: [PATCH 7.2 1770/1815] ASoC: dapm: Fix off-by-one check on the second enum channel
+Date: Sat, 12 Sep 2026 08:58:40 +0200
+Message-ID: <20260912065730.558422783@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,43 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fuad Tabba <fuad.tabba@linux.dev>
+From: HyeongJun An <sammiee5311@gmail.com>
 
-[ Upstream commit fe66c3ff85e85d492673c6dc95c3d624a63e0282 ]
+[ Upstream commit 14511c9b54ceeeef487409d73947c89ee8563590 ]
 
-of_irq_parse_one() raises the refcount of the interrupt controller node
-on success, and of_irq_get_affinity() returns without putting it, so
-every call past the parse leaks one reference. It is reached from
-platform_get_irq_affinity(), used by arm_pmu, arm_spe_pmu and
-coresight-trbe.
+The snd_soc_dapm_put_enum_double() rejects item[0] once it reaches
+e->items, but it lets item[1] be equal to it.  Both go on to
+snd_soc_enum_item_to_val(), which indexes e->values with no bound of
+its own, so an enum with a value table reads one element past the end.
 
-Put it once irq_populate_fwspec_info() has run: no in-tree
-->get_fwspec_info() returns a mask that lives in the node.
+The indexing arrived with the MUX consolidation, which relaxed the
+item[1] check in the same hunk.  The value MUX handler it deleted used
+>= there, and the snd_soc_put_enum_double() in soc-ops.c still does.
 
-Fixes: 5404f5c06dd4 ("of/irq: Add interrupt affinity reporting interface")
-Signed-off-by: Fuad Tabba <fuad.tabba@linux.dev>
-Link: https://patch.msgid.link/20260826112234.1033974-1-fuad.tabba@linux.dev
-Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+Only adav80x pairs a value table with two shifts, and its second
+channel looks accidental, but the control does report two values.
+Writing three into it reads off the end of adav80x_mux_values.  The
+core catches that only under CONFIG_SND_CTL_INPUT_VALIDATION, which
+defaults off.
+
+Fixes: 3727b4968453 ("ASoC: dapm: Consolidate MUXs and value MUXs")
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
+Link: https://patch.msgid.link/20260825125745.932832-1-sammiee5311@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/of/irq.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ sound/soc/soc-dapm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/of/irq.c b/drivers/of/irq.c
-index 967c191008797..ec035367c9500 100644
---- a/drivers/of/irq.c
-+++ b/drivers/of/irq.c
-@@ -563,7 +563,9 @@ const struct cpumask *of_irq_get_affinity(struct device_node *dev, int index)
- 	of_phandle_args_to_fwspec(oirq.np, oirq.args, oirq.args_count,
- 				  &fwspec);
- 
--	if (irq_populate_fwspec_info(&fwspec, &info))
-+	rc = irq_populate_fwspec_info(&fwspec, &info);
-+	of_node_put(oirq.np);
-+	if (rc)
- 		return NULL;
- 
- 	return info.affinity;
+diff --git a/sound/soc/soc-dapm.c b/sound/soc/soc-dapm.c
+index 4ad126bd4f705..646f26b7b4153 100644
+--- a/sound/soc/soc-dapm.c
++++ b/sound/soc/soc-dapm.c
+@@ -3608,7 +3608,7 @@ int snd_soc_dapm_put_enum_double(struct snd_kcontrol *kcontrol,
+ 	val = snd_soc_enum_item_to_val(e, item[0]) << e->shift_l;
+ 	mask = e->mask << e->shift_l;
+ 	if (e->shift_l != e->shift_r) {
+-		if (item[1] > e->items)
++		if (item[1] >= e->items)
+ 			return -EINVAL;
+ 		val |= snd_soc_enum_item_to_val(e, item[1]) << e->shift_r;
+ 		mask |= e->mask << e->shift_r;
 -- 
 2.53.0
 
