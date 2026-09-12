@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C829233F59A;
-	Sat, 12 Sep 2026 13:36:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B42A847DFBF;
+	Sat, 12 Sep 2026 13:36:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789220163; cv=none; b=SgIVFMB0ha1ske3CnUdGhAxmaZBYzF4j7Y3HFxuDwHdv9WKoilytKB33iJKF+hwo8Yyjxnbn8ZEokP09vbpF1cAfy2fm+w4c2mPk7SBhIFAqwzab9/xOYDw0Bo1HlPM4y5ynkSCV0tWS9BtoTnEfUL37KrQARIkDZJ1atgQg04Q=
+	t=1789220169; cv=none; b=VIsIOGobOT3QT60JG2/0ucnzfmCgHzWlsgPwkS/WpxikDOfF9bRKgVqAv0VtNIsIMC8JrqxjP/z+GesW9oPGZz/3wZZTxWdG5X3UMyNcsQglGpFNqCBx3bbq+x4cUi47sWJQSoPdK8B6K+qNLitiWLYSWpym/W00VOqTpUO5yRI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789220163; c=relaxed/simple;
-	bh=F60ZGcBi4SyhRuTYBSdXOmW/Qkew7Iz07HJtguX1HKk=;
+	s=arc-20240116; t=1789220169; c=relaxed/simple;
+	bh=OIrbqo8E2tbsHyftVWkLq3GYzfTCREgzfgUpZii+xRw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uM2tN3ArM9w0bWOg9JTkxz3rU77jkwAzCptSLR1MwWLpCdIB5DkNyb8MOLP5QM6PRcpvR1FU3ZiSbOfw6phBWtkdwCdvTDoZMTnqmdxm7RUgAurx4Zo/cLL8UQ9rtGfyF5VnxF5ri4eG83HXoZI60IXmFZ1Zy4U8PrFtnl+JiEQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wCI4xvHr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cCA1ykpW9F5+ETrfeaqe0gk1Iou/gtL/43rMCIkPd/rsCNe3KXVKFeR9vbGp/YxXPlwK7k00pi3BbrOmzQXs8GQFgcnO+jZJWPYCbexIP1FwilhAebvyj7V/10sr3b0OOvRmsoQeK2HoNtJA//HvcgnK0Aj54HvJzWb896P+38k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ep0hXJ+9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wCI4xvHr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81FE01F000FF;
-	Sat, 12 Sep 2026 13:36:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ep0hXJ+9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAA4C1F000FF;
+	Sat, 12 Sep 2026 13:36:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789220162;
-	bh=0w92eypYXU9T/aEyaqh3/3jAtBbzHvQeYJ84TBN6als=;
+	s=korg; t=1789220167;
+	bh=Bph1It06RIw4ew3k1+wHDAWHe0Mz7CEv4lqbWQ8dTLc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wCI4xvHr1rEu3G7Z4XuLd2Q80FjCbEZxdMyz/IHzEHXxaa1GId2n8cB84XFPPgpol
-	 lGsz0Ko1mXE0wEvrJg8M5fPfbG+Kc+ibTm1OgHvXjgO1WBb8CbE1Z2AE5Ww0+FMrH+
-	 9lfYfYA2spjD1UlmKq2n0pTEcrZlFxD5TKdbmeaU=
+	b=Ep0hXJ+9lmAIu6ttWs+vmfkJB89goWmfI0zPUih2jOKgbURfvilxBCtTO1ZYUlAVZ
+	 639JdtydLh4s2q1ivoYbfxSkUPhc4XkJoknJyMCpdo8jo1JPbFlxnveqQN0Oa2cVwN
+	 jTxZk34gVnVUxgWN29qu/BqcJdv4Xt/nWbeVI0yw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
-	Ricardo Robaina <rrobaina@redhat.com>,
-	Paul Moore <paul@paul-moore.com>
-Subject: [PATCH 6.6 0078/1424] audit: avoid dropping live tree ref on fsnotify rule autoremove
-Date: Sat, 12 Sep 2026 08:41:50 +0200
-Message-ID: <20260912065609.053900422@linuxfoundation.org>
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <cel@kernel.org>
+Subject: [PATCH 6.6 0069/1424] nfsd: revoke copy-notify stateids before dropping their reference
+Date: Sat, 12 Sep 2026 08:41:41 +0200
+Message-ID: <20260912065608.851059821@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -46,73 +44,174 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+From: Jeff Layton <jlayton@kernel.org>
 
-commit 783f0f0974c156aca630f4ffff248671082a098d upstream.
+commit 3b0c3595db99bb4bebd7c8aa8a36f3c50e411bb7 upstream.
 
-audit_del_rule() is used for both netlink deletion templates and internal
-fsnotify autoremove.  The former passes a parsed template which owns a
-temporary tree reference; the latter passes the installed entry itself.
+Copy-notify stateids live in the s2s_cp_stateids IDR and on their parent
+stid's sc_cp_list, pinned by a single membership reference.
+_free_cpntf_state_locked() only unlinks an entry once its refcount reaches
+zero, so any revoke path that runs while a concurrent
+find_cpntf_state()/manage_cpntf_state() holder has elevated cs_count drops
+the reference without unlinking, leaving the entry discoverable with its
+membership reference already consumed. A second revoke or a laundromat tick
+then frees it while the reader still holds the pointer -- a
+KASAN-detectable use-after-free at the reader's nfs4_put_cpntf_state().
 
-The unconditional audit_put_tree() at the end of audit_del_rule() assumes
-the template case.  For mixed AUDIT_DIR plus AUDIT_EXE rules, an fsnotify
-autoremove event therefore drops the installed rule's live tree reference.
-Repeating this across rules sharing the same tree can free the tree while
-another rule still references it, and a later autoremove dereferences the
-freed pathname while comparing rules.
+This affected all three revoke paths:
 
-Move the temporary-tree put to audit_rule_change(), the caller that owns
-deletion templates.  Keep it in the AUDIT_DEL_RULE cleanup so both
-successful deletion and -ENOENT still release the parser-owned tree.
+  - The parent-stid drain (nfs4_free_cpntf_statelist()) repeatedly called
+    _free_cpntf_state_locked() on the first list entry; a holder that had
+    bumped cs_count made it return early, so the next iteration
+    re-decremented and burned the holder's reference.
 
-Cc: stable@kernel.org
-Fixes: 34d99af52ad4 ("audit: implement audit by executable")
-Assisted-by: Codex:gpt-5
-Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
-Reviewed-by: Ricardo Robaina <rrobaina@redhat.com>
-Tested-by: Ricardo Robaina <rrobaina@redhat.com>
-[PM: dropped unnecessary comment for line length reasons]
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+  - OFFLOAD_CANCEL (manage_cpntf_state()) and laundromat expiry likewise
+    used _free_cpntf_state_locked() and could drop 2->1 without unlinking.
+
+Add revoke_cpntf_state_locked(), which unhashes the entry from the IDR and
+sc_cp_list first (deferring the final free to any holder), and use it from
+all three revoke paths. The drain now walks with list_for_each_entry_safe()
+and revokes each entry unconditionally, so it terminates in one pass per
+entry regardless of cs_count. The unhash is gated on
+!list_empty(&cps->cp_list); the idr_remove() gate matters because
+idr_alloc_cyclic() may have recycled the so_id by then. Keep
+_free_cpntf_state_locked() for the reference-holder put path only, where a
+concurrent revoke may already have unlinked the entry (its list_del_init()
+then a no-op).
+
+Fixes: 624322f1adc5 ("NFSD add COPY_NOTIFY operation")
+Cc: stable@vger.kernel.org
+Assisted-by: Claude:claude-opus-4-7
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Link: https://patch.msgid.link/20260710-nfsd-testing-v3-6-a0ff7db6aa3e@kernel.org
+Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/auditfilter.c |    6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ fs/nfsd/nfs4state.c |   78 +++++++++++++++++++++++++++++++++++++++++-----------
+ 1 file changed, 62 insertions(+), 16 deletions(-)
 
---- a/kernel/auditfilter.c
-+++ b/kernel/auditfilter.c
-@@ -1025,7 +1025,6 @@ static inline int audit_add_rule(struct
- int audit_del_rule(struct audit_entry *entry)
- {
- 	struct audit_entry  *e;
--	struct audit_tree *tree = entry->rule.tree;
- 	struct list_head *list;
- 	int ret = 0;
- #ifdef CONFIG_AUDITSYSCALL
-@@ -1073,9 +1072,6 @@ int audit_del_rule(struct audit_entry *e
- out:
- 	mutex_unlock(&audit_filter_mutex);
- 
--	if (tree)
--		audit_put_tree(tree);	/* that's the temporary one */
--
- 	return ret;
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -1063,18 +1063,66 @@ void nfs4_free_copy_state(struct nfsd4_c
+ 	spin_unlock(&nn->s2s_cp_lock);
  }
  
-@@ -1160,6 +1156,8 @@ int audit_rule_change(int type, int seq,
- 	}
++/*
++ * Drop the parent's reference on an already-unlinked cpntf entry. If a
++ * concurrent holder still owns a reference, its nfs4_put_cpntf_state() does
++ * the final free.
++ *
++ * nn->s2s_cp_lock must be held.
++ */
++static void put_cpntf_state_unlinked_locked(struct nfs4_cpntf_state *cps)
++{
++	WARN_ON_ONCE(cps->cp_stateid.cs_type != NFS4_COPYNOTIFY_STID);
++	WARN_ON_ONCE(!list_empty(&cps->cp_list));
++
++	if (refcount_dec_and_test(&cps->cp_stateid.cs_count))
++		kfree(cps);
++}
++
++/*
++ * Unhash from the IDR and sc_cp_list. Gated on list_empty() to avoid
++ * evicting a recycled so_id.
++ */
++static void nfsd4_unhash_cpntf_state(struct nfsd_net *nn, struct nfs4_cpntf_state *cps)
++{
++	lockdep_assert_held(&nn->s2s_cp_lock);
++
++	if (!list_empty(&cps->cp_list)) {
++		list_del_init(&cps->cp_list);
++		idr_remove(&nn->s2s_cp_stateids, cps->cp_stateid.cs_stid.si_opaque.so_id);
++	}
++}
++
++/*
++ * Revoke a copy-notify stateid: unlink it from the IDR and sc_cp_list first
++ * so no new finder can discover it, then drop the membership reference. Every
++ * revoke path (cancel, laundromat, drain) must use this rather than
++ * _free_cpntf_state_locked(), which unlinks only at refcount zero and so could
++ * let a second revoke free the entry under a concurrent reader.
++ *
++ * nn->s2s_cp_lock must be held.
++ */
++static void revoke_cpntf_state_locked(struct nfsd_net *nn,
++				      struct nfs4_cpntf_state *cps)
++{
++	nfsd4_unhash_cpntf_state(nn, cps);
++	put_cpntf_state_unlinked_locked(cps);
++}
++
+ static void nfs4_free_cpntf_statelist(struct net *net, struct nfs4_stid *stid)
+ {
+-	struct nfs4_cpntf_state *cps;
++	struct nfs4_cpntf_state *cps, *tmp;
+ 	struct nfsd_net *nn;
  
- 	if (err || type == AUDIT_DEL_RULE) {
-+		if (type == AUDIT_DEL_RULE && entry->rule.tree)
-+			audit_put_tree(entry->rule.tree);
- 		if (entry->rule.exe)
- 			audit_remove_mark(entry->rule.exe);
- 		audit_free_rule(entry);
+ 	nn = net_generic(net, nfsd_net_id);
+ 	spin_lock(&nn->s2s_cp_lock);
+-	while (!list_empty(&stid->sc_cp_list)) {
+-		cps = list_first_entry(&stid->sc_cp_list,
+-				       struct nfs4_cpntf_state, cp_list);
+-		_free_cpntf_state_locked(nn, cps);
+-	}
++	/*
++	 * Revoke unlinks each entry before dropping the parent's reference, so
++	 * the drain terminates in one pass per entry regardless of cs_count; a
++	 * concurrent holder does the final kfree via nfs4_put_cpntf_state().
++	 */
++	list_for_each_entry_safe(cps, tmp, &stid->sc_cp_list, cp_list)
++		revoke_cpntf_state_locked(nn, cps);
+ 	spin_unlock(&nn->s2s_cp_lock);
+ }
+ 
+@@ -6268,7 +6316,7 @@ nfs4_laundromat(struct nfsd_net *nn)
+ 		cps = container_of(cps_t, struct nfs4_cpntf_state, cp_stateid);
+ 		if (cps->cp_stateid.cs_type == NFS4_COPYNOTIFY_STID &&
+ 				state_expired(&lt, cps->cpntf_time))
+-			_free_cpntf_state_locked(nn, cps);
++			revoke_cpntf_state_locked(nn, cps);
+ 	}
+ 	spin_unlock(&nn->s2s_cp_lock);
+ 	nfs4_get_client_reaplist(nn, &reaplist, &lt);
+@@ -6649,16 +6697,14 @@ nfs4_check_file(struct svc_rqst *rqstp,
+ out:
+ 	return status;
+ }
+-static void
+-_free_cpntf_state_locked(struct nfsd_net *nn, struct nfs4_cpntf_state *cps)
++
++static void _free_cpntf_state_locked(struct nfsd_net *nn, struct nfs4_cpntf_state *cps)
+ {
+ 	WARN_ON_ONCE(cps->cp_stateid.cs_type != NFS4_COPYNOTIFY_STID);
+-	if (!refcount_dec_and_test(&cps->cp_stateid.cs_count))
+-		return;
+-	list_del_init(&cps->cp_list);
+-	idr_remove(&nn->s2s_cp_stateids,
+-		   cps->cp_stateid.cs_stid.si_opaque.so_id);
+-	kfree(cps);
++	if (refcount_dec_and_test(&cps->cp_stateid.cs_count)) {
++		nfsd4_unhash_cpntf_state(nn, cps);
++		kfree(cps);
++	}
+ }
+ /*
+  * A READ from an inter server to server COPY will have a
+@@ -6695,7 +6741,7 @@ __be32 manage_cpntf_state(struct nfsd_ne
+ 			state = NULL;
+ 			goto unlock;
+ 		} else {
+-			_free_cpntf_state_locked(nn, state);
++			revoke_cpntf_state_locked(nn, state);
+ 		}
+ 	}
+ unlock:
 
 
