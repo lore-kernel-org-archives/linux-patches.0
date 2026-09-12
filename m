@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98E8433F59A;
-	Sat, 12 Sep 2026 12:12:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC2BA33F59A;
+	Sat, 12 Sep 2026 12:12:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789215130; cv=none; b=nFhgvJx3w/8epebWGbBXjc79ojjhEdtQoxrGIFzQDRRRstgBAmjUM7Es8dhp8ANF9jo/bOVBR/WbS5rPEJP3BmlYV62dGueNPH8mcgBH4F8B8WIjuE2+5syl3R69ru9kO+2L3QH+1OV/emCiuiew0Qrc6zgmJTzV6sNpQCHDCi8=
+	t=1789215136; cv=none; b=ejgq0zLBZpM2C11FU1lK0vDCU5Ly8FF0eUgec2srgVwDNVBNoct8coPsMvkslH8V7NvKqQ6oGNbflL6XNEvHnToW+tgm0FfRW0ExXFGZpOZ7DxeeEoWxBI+Mws93WBHj/UycUkQZRja1HE4mUCtryBOGOqruUU0ophz+KR6WjRQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789215130; c=relaxed/simple;
-	bh=Bq9yqJQ8AgpKDpXlrRMU6m359yvrBId1P3AtS6yizJ4=;
+	s=arc-20240116; t=1789215136; c=relaxed/simple;
+	bh=puzcmK9pjQO2UuXZl+RZWLoQ9qQ7eVNOHQnAkQppoxs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bseu+sCoQCPTvf+2C0ZtEVc0QgKjcEoC4uo5wXA8JMQgStnb9iOZagCHJP6i8wGC1D8S3BjcMMVrTdQOXEKSaRk0qxai0MXp8f44SkYxP2zjbQPLSo8WrvMHpFUHi27InacR6+nhb23cds+a7Gcm8IWLYraaAyB9jYMq+28ETAA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yQx/bYLl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=o4k4xxoy5MUECTsFypSCHkL3pQaAJyax99G1218saViE8010dELY5dZcuvFd9Z76TbZRR2IGYA4Z5dSAEDW6PLTf95bL/NAWGr52UxTOHm1rvo4Ad9H25IMUtIFwh6hxdQCUMxdime1NQG5nberPMhMVjZDSd2joP7Au2R2G7gY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oamsgbpf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yQx/bYLl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F57E1F000FF;
-	Sat, 12 Sep 2026 12:12:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oamsgbpf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88DDE1F000FF;
+	Sat, 12 Sep 2026 12:12:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789215129;
-	bh=PhOYbY9/v56ghXsBHHg2B3DTQfi9rFonEW2+fe6jRW8=;
+	s=korg; t=1789215134;
+	bh=Y09RQ/FclNOQ8b4qO+V/VGhnWArYfI4S/on9UzrUUqQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yQx/bYLlO/Hj3f2ArAy0MnyJICEFGT1sWjwSgpIOvyGJTSaUoOff718w7H4YxFmg4
-	 vw2bD9t17Ya2788IvAxyZGc6PhtlGwwEWbVUYSzM9FSVswJhYIL9MoK/hVR+OJPRh6
-	 Mz+tJ+tZKT2OtlH1v5ZwdDQAn9TZRZyN8rnUksPk=
+	b=oamsgbpfA0MJEmegCh1NQNRinSOGjTdjAQ8CrgNSHhVLJpEsB3fqiad7EdwRHeYmc
+	 +9XHQ+3MfwW5ES3d+mwvAGE/zT0nGPGoolXsn9j9Ix3YrLTyvA6sPX4AiEXLrxSpqm
+	 DFSEP9qUl0eVc7UyEgU4FAzNGQN0jgsKlVROu8rM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuvraj Singh Chauhan <ysinghcin@gmail.com>,
+	Ayush Mukkanwar <ayushmukkanwar@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0426/1376] staging: octeon: fix free_irq dev_id mismatch in cvm_oct_rx_shutdown
-Date: Sat, 12 Sep 2026 08:47:32 +0200
-Message-ID: <20260912065617.029670284@linuxfoundation.org>
+Subject: [PATCH 6.12 0427/1376] staging: octeon: ethernet-mem: replace pr_warn with dev_warn in free functions
+Date: Sat, 12 Sep 2026 08:47:33 +0200
+Message-ID: <20260912065617.051096344@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -50,51 +50,146 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuvraj Singh Chauhan <ysinghcin@gmail.com>
+From: Ayush Mukkanwar <ayushmukkanwar@gmail.com>
 
-[ Upstream commit 41db5b76eeb4cc11a1097384caba7cfc659f7293 ]
+[ Upstream commit be5e8d5f61b31105e0ed7f51cd591653aea5054f ]
 
-In cvm_oct_rx_initialize(), request_irq() is called with
-&oct_rx_group[i].napi as the dev_id:
+Add struct platform_device parameter to cvm_oct_free_hw_skbuff,
+cvm_oct_free_hw_memory and cvm_oct_mem_empty_fpa. Replace pr_warn
+calls with dev_warn, using &pdev->dev for device-aware logging.
 
-	request_irq(oct_rx_group[i].irq, cvm_oct_do_interrupt, 0, "Ethernet",
-							&oct_rx_group[i].napi);
-
-However, cvm_oct_rx_shutdown() passes cvm_oct_device (an array of
-struct net_device pointers) as the dev_id to free_irq():
-
-  free_irq(oct_rx_group[i].irq, cvm_oct_device);
-
-Since __free_irq() matches the action to remove by comparing
-dev_id pointers, the mismatched cookie means the IRQ handler is
-never found, triggering a WARN and leaving the IRQ line permanently
-allocated. This prevents proper driver cleanup on module removal.
-
-Fix the mismatch by passing &oct_rx_group[i].napi as the dev_id
-to free_irq(), matching what was used during request_irq().
-
-Signed-off-by: Yuvraj Singh Chauhan <ysinghcin@gmail.com>
-Link: https://patch.msgid.link/20260212171903.1417804-1-ysinghcin@gmail.com
+Signed-off-by: Ayush Mukkanwar <ayushmukkanwar@gmail.com>
+Link: https://patch.msgid.link/20260511150931.93382-2-ayushmukkanwar@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Stable-dep-of: c0a9a8586a63 ("staging: octeon: add missing napi_disable in cvm_oct_rx_shutdown")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/octeon/ethernet-rx.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/staging/octeon/ethernet-mem.c | 31 ++++++++++++++++-----------
+ drivers/staging/octeon/ethernet-mem.h |  5 ++++-
+ drivers/staging/octeon/ethernet.c     |  6 +++---
+ 3 files changed, 25 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/staging/octeon/ethernet-rx.c b/drivers/staging/octeon/ethernet-rx.c
-index 965330eec80a8..d0b43d50b83ce 100644
---- a/drivers/staging/octeon/ethernet-rx.c
-+++ b/drivers/staging/octeon/ethernet-rx.c
-@@ -535,7 +535,7 @@ void cvm_oct_rx_shutdown(void)
- 			cvmx_write_csr(CVMX_POW_WQ_INT_THRX(i), 0);
+diff --git a/drivers/staging/octeon/ethernet-mem.c b/drivers/staging/octeon/ethernet-mem.c
+index 532594957ebcf..af79b2bdac278 100644
+--- a/drivers/staging/octeon/ethernet-mem.c
++++ b/drivers/staging/octeon/ethernet-mem.c
+@@ -5,6 +5,7 @@
+  * Copyright (c) 2003-2010 Cavium Networks
+  */
  
- 		/* Free the interrupt handler */
--		free_irq(oct_rx_group[i].irq, cvm_oct_device);
-+		free_irq(oct_rx_group[i].irq, &oct_rx_group[i].napi);
++#include <linux/platform_device.h>
+ #include <linux/kernel.h>
+ #include <linux/netdevice.h>
+ #include <linux/slab.h>
+@@ -40,11 +41,13 @@ static int cvm_oct_fill_hw_skbuff(int pool, int size, int elements)
  
- 		netif_napi_del(&oct_rx_group[i].napi);
- 	}
+ /**
+  * cvm_oct_free_hw_skbuff- free hardware pool skbuffs
++ * @pdev:     Platform device for logging
+  * @pool:     Pool to allocate an skbuff for
+  * @size:     Size of the buffer needed for the pool
+  * @elements: Number of buffers to allocate
+  */
+-static void cvm_oct_free_hw_skbuff(int pool, int size, int elements)
++static void cvm_oct_free_hw_skbuff(struct platform_device *pdev,
++				   int pool, int size, int elements)
+ {
+ 	char *memory;
+ 
+@@ -59,11 +62,11 @@ static void cvm_oct_free_hw_skbuff(int pool, int size, int elements)
+ 	} while (memory);
+ 
+ 	if (elements < 0)
+-		pr_warn("Freeing of pool %u had too many skbuffs (%d)\n",
+-			pool, elements);
++		dev_warn(&pdev->dev, "Freeing of pool %u had too many skbuffs (%d)\n",
++			 pool, elements);
+ 	else if (elements > 0)
+-		pr_warn("Freeing of pool %u is missing %d skbuffs\n",
+-			pool, elements);
++		dev_warn(&pdev->dev, "Freeing of pool %u is missing %d skbuffs\n",
++			 pool, elements);
+ }
+ 
+ /**
+@@ -107,11 +110,13 @@ static int cvm_oct_fill_hw_memory(int pool, int size, int elements)
+ 
+ /**
+  * cvm_oct_free_hw_memory - Free memory allocated by cvm_oct_fill_hw_memory
++ * @pdev:     Platform device for logging
+  * @pool:     FPA pool to free
+  * @size:     Size of each buffer in the pool
+  * @elements: Number of buffers that should be in the pool
+  */
+-static void cvm_oct_free_hw_memory(int pool, int size, int elements)
++static void cvm_oct_free_hw_memory(struct platform_device *pdev,
++				   int pool, int size, int elements)
+ {
+ 	char *memory;
+ 	char *fpa;
+@@ -127,11 +132,11 @@ static void cvm_oct_free_hw_memory(int pool, int size, int elements)
+ 	} while (fpa);
+ 
+ 	if (elements < 0)
+-		pr_warn("Freeing of pool %u had too many buffers (%d)\n",
+-			pool, elements);
++		dev_warn(&pdev->dev, "Freeing of pool %u had too many buffers (%d)\n",
++			 pool, elements);
+ 	else if (elements > 0)
+-		pr_warn("Warning: Freeing of pool %u is missing %d buffers\n",
+-			pool, elements);
++		dev_warn(&pdev->dev, "Freeing of pool %u is missing %d buffers\n",
++			 pool, elements);
+ }
+ 
+ int cvm_oct_mem_fill_fpa(int pool, int size, int elements)
+@@ -145,10 +150,10 @@ int cvm_oct_mem_fill_fpa(int pool, int size, int elements)
+ 	return freed;
+ }
+ 
+-void cvm_oct_mem_empty_fpa(int pool, int size, int elements)
++void cvm_oct_mem_empty_fpa(struct platform_device *pdev, int pool, int size, int elements)
+ {
+ 	if (pool == CVMX_FPA_PACKET_POOL)
+-		cvm_oct_free_hw_skbuff(pool, size, elements);
++		cvm_oct_free_hw_skbuff(pdev, pool, size, elements);
+ 	else
+-		cvm_oct_free_hw_memory(pool, size, elements);
++		cvm_oct_free_hw_memory(pdev, pool, size, elements);
+ }
+diff --git a/drivers/staging/octeon/ethernet-mem.h b/drivers/staging/octeon/ethernet-mem.h
+index 692dcdb7154da..ff10ba4525ee8 100644
+--- a/drivers/staging/octeon/ethernet-mem.h
++++ b/drivers/staging/octeon/ethernet-mem.h
+@@ -6,4 +6,7 @@
+  */
+ 
+ int cvm_oct_mem_fill_fpa(int pool, int size, int elements);
+-void cvm_oct_mem_empty_fpa(int pool, int size, int elements);
++struct platform_device;
++
++void cvm_oct_mem_empty_fpa(struct platform_device *pdev, int pool, int size,
++			   int elements);
+diff --git a/drivers/staging/octeon/ethernet.c b/drivers/staging/octeon/ethernet.c
+index a5e99cc78a454..4fb2967598527 100644
+--- a/drivers/staging/octeon/ethernet.c
++++ b/drivers/staging/octeon/ethernet.c
+@@ -958,12 +958,12 @@ static void cvm_oct_remove(struct platform_device *pdev)
+ 	cvmx_ipd_free_ptr();
+ 
+ 	/* Free the HW pools */
+-	cvm_oct_mem_empty_fpa(CVMX_FPA_PACKET_POOL, CVMX_FPA_PACKET_POOL_SIZE,
++	cvm_oct_mem_empty_fpa(pdev, CVMX_FPA_PACKET_POOL, CVMX_FPA_PACKET_POOL_SIZE,
+ 			      num_packet_buffers);
+-	cvm_oct_mem_empty_fpa(CVMX_FPA_WQE_POOL, CVMX_FPA_WQE_POOL_SIZE,
++	cvm_oct_mem_empty_fpa(pdev, CVMX_FPA_WQE_POOL, CVMX_FPA_WQE_POOL_SIZE,
+ 			      num_packet_buffers);
+ 	if (CVMX_FPA_OUTPUT_BUFFER_POOL != CVMX_FPA_PACKET_POOL)
+-		cvm_oct_mem_empty_fpa(CVMX_FPA_OUTPUT_BUFFER_POOL,
++		cvm_oct_mem_empty_fpa(pdev, CVMX_FPA_OUTPUT_BUFFER_POOL,
+ 				      CVMX_FPA_OUTPUT_BUFFER_POOL_SIZE, 128);
+ }
+ 
 -- 
 2.53.0
 
