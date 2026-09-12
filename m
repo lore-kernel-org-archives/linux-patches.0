@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4733832B125;
-	Sat, 12 Sep 2026 16:23:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FD6532B125;
+	Sat, 12 Sep 2026 16:23:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789230225; cv=none; b=jFgN/Va/82y0X/YfF3guczgCwiAOgSXdvXPL1SBET93H7eruhdOPkd7ShHCDW70peBiccOh5Z6VqJkNImjUA95xiJO7qoYYiEggd3SFFUevgM05UGuFkuU1KAPm/sotneuUuQ60M9aCd6k2YnYKL0/6s1i0T1CQKAWUFGcm9LSA=
+	t=1789230230; cv=none; b=uRCT8S0d8sG/3cZbtzxyZ2Cz/pDj9xf8iub6Y3awLM8Mz8ZtXUOuerEdgADYCsmemN8ZbqOWCKXOmImByry29TrQovPVgAPEXMROXCA6/Nl+q9qYDPHIs3ryMLStBMxlg/Vky5rY+LeOqpJbLc+fa6pdKkCq/vKitDtzmpqM2HM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789230225; c=relaxed/simple;
-	bh=5YD3yStgkVZ8fSnMRb+jszLCEs1x/A/mSzaQBHnTFkQ=;
+	s=arc-20240116; t=1789230230; c=relaxed/simple;
+	bh=N8mIgV5KDV9vXDQhqT7B8Wuu1fES6lTuBoLx8KFMSG8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DlSVsvxmzwD6m2iQBvt1r/kBXzrm4YYwTmzSK9opFe5tOhRtUZUX9S9EKlkBXgAc+wwUZeaxj+5mUyenogmHOlXPJ8rdfclOdqACAUn3gd3tEvT1ctIZiVHOBtoQph+KAo40sc/PVj0xFE7j7hzQqZe//NtMwoURIoBO87TOE0c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ol7nsKZZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=a3KpKiyjgKcsLIO/NBGh8RnZb1ByzWEfZ9PxySVqaOtzmnXKQJED33JxZpZ2biOr0CxjQizfCNH67Lz7ENGNQvP1SnOvX+pJzrx4eGBPEFx3fLsedlo+M4o9CdZ8UfWQgDLcOVawzRcCnDQ0WEAJK094D5g8t3mOS/QdfX92fN8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YmxuMf2r; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ol7nsKZZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0181F1F000FF;
-	Sat, 12 Sep 2026 16:23:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YmxuMf2r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E81F1F000FF;
+	Sat, 12 Sep 2026 16:23:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789230224;
-	bh=a/RmDALmzn9Avd+DopGvBJ/RW+lhaKA65NUJ8DphJ0A=;
+	s=korg; t=1789230229;
+	bh=qCme5Eyv3yb/zs0jFxJeofpYPQaOhph0pjUCo4GDFjw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ol7nsKZZCpHHfMM2OvkHSsIqSoB+GRaxhyG9danGCYypUFXL8daR7R23YJ4r5SAgq
-	 M27Zo5lIXHr2acCC++DSDAP66wp9kKYunLDK7yJE4Y/s/YeC+lzUX3mdlmw5RWojy6
-	 vpBW3o9e7aMhgCKZmb4SZM9JD6/NGAYyRC7l9SnI=
+	b=YmxuMf2r4HIiSvb41nNH7q4bBm0Z+Hjh6vsal/Y68+03Z+PWP670fm2hWfndeGpRk
+	 mJi1js9KvpY8XTDfLKLsUD9RJp43fwmZpHmW5nKOtG84NVe3+QBiabdZVQzTkcdz3L
+	 +mlRTQ00B//l/4uN7H74sNsRf8ibe4V6EdGUatZc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	Sajal Gupta <sajal2005gupta@gmail.com>,
-	Yu Kuai <yukuai@fygo.io>,
+	Cheng-Han Wu <hank20010209@gmail.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0751/1191] md/raid5-ppl: fix use-after-free in ppl_do_flush()
-Date: Sat, 12 Sep 2026 08:57:59 +0200
-Message-ID: <20260912065605.148261175@linuxfoundation.org>
+Subject: [PATCH 6.1 0752/1191] selftests/zram: fix kernel_gte() for POSIX sh
+Date: Sat, 12 Sep 2026 08:58:00 +0200
+Message-ID: <20260912065605.170073646@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -52,43 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sajal Gupta <sajal2005gupta@gmail.com>
+From: Cheng-Han Wu <hank20010209@gmail.com>
 
-[ Upstream commit 371f7a1b392edc8b7cf449cc7713179b588f2d0e ]
+[ Upstream commit 649ba27dfac784427a01f9c95c09ecbcb88900d8 ]
 
-The loop in ppl_do_flush() continues iterating after calling
-ppl_io_unit_finished(), touching io->pending_flushes and leading to a
-use-after-free.
+Commit fc4eb486a59d ("selftests/zram: Skip max_comp_streams
+interface on newer kernel") added kernel_gte() to zram_lib.sh.
+The function uses the bash-specific [[ ... ]] conditional, but
+zram selftests source this file while running under /bin/sh.
 
-Add a break statement to stop the loop once io is freed.
+On systems where /bin/sh is dash, such as Debian, the following
+test fails:
 
-Fixes: 1532d9e87e8b ("raid5-ppl: PPL support for disks with write-back cache enabled")
-Reported-by: Dan Carpenter <error27@gmail.com>
-Closes: https://lore.kernel.org/all/ajJF2wKYWRk4GGCK@stanley.mountain/
-Signed-off-by: Sajal Gupta <sajal2005gupta@gmail.com>
-Reviewed-by: Yu Kuai <yukuai@fygo.io>
-Link: https://patch.msgid.link/20260622142146.56637-1-sajal2005gupta@gmail.com
-Signed-off-by: Yu Kuai <yukuai@fygo.io>
+  dash -c '
+  kernel_major=6; kernel_minor=1; major=6; minor=0
+  if [ $kernel_major -gt $major ]; then
+      echo ok
+  elif [[ $kernel_major -eq $major && $kernel_minor -ge $minor ]]; then
+      echo ok
+  fi'
+
+with:
+
+  dash: 5: [[: not found
+
+Use separate POSIX test expressions joined by && instead.
+
+Fixes: fc4eb486a59d ("selftests/zram: Skip max_comp_streams interface on newer kernel")
+Signed-off-by: Cheng-Han Wu <hank20010209@gmail.com>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid5-ppl.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ tools/testing/selftests/zram/zram_lib.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/md/raid5-ppl.c b/drivers/md/raid5-ppl.c
-index 31b9157bc9ae9..526e94e91358f 100644
---- a/drivers/md/raid5-ppl.c
-+++ b/drivers/md/raid5-ppl.c
-@@ -645,8 +645,10 @@ static void ppl_do_flush(struct ppl_io_unit *io)
- 	log->disk_flush_bitmap = 0;
+diff --git a/tools/testing/selftests/zram/zram_lib.sh b/tools/testing/selftests/zram/zram_lib.sh
+index 21ec1966de76c..0d44d83888f9d 100755
+--- a/tools/testing/selftests/zram/zram_lib.sh
++++ b/tools/testing/selftests/zram/zram_lib.sh
+@@ -37,7 +37,7 @@ kernel_gte()
  
- 	for (i = flushed_disks ; i < raid_disks; i++) {
--		if (atomic_dec_and_test(&io->pending_flushes))
-+		if (atomic_dec_and_test(&io->pending_flushes)) {
- 			ppl_io_unit_finished(io);
-+			break;
-+		}
- 	}
- }
+ 	if [ $kernel_major -gt $major ]; then
+ 		return 0
+-	elif [[ $kernel_major -eq $major && $kernel_minor -ge $minor ]]; then
++	elif [ $kernel_major -eq $major ] && [ $kernel_minor -ge $minor ]; then
+ 		return 0
+ 	fi
  
 -- 
 2.53.0
