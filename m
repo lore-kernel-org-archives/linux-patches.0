@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D66F37F8DD;
-	Sat, 12 Sep 2026 07:47:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B4FD2F617C;
+	Sat, 12 Sep 2026 07:47:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789199269; cv=none; b=lWiUuvg6yumdPFs2CUgsOiUsB1oemFnn3B0SvflumpHRzm3HWrBDhhgL8LQ+zRL0FCuy1bZRVpkTAUfi6lzuLy0dwubU8hNxBpCYBDm4cI6HWUQk6AuJQmVEUiAIIGyKtTmlr5U2Ox1O/ZIdwRLq+WUy2+/2BgcLpDpN2B98La0=
+	t=1789199274; cv=none; b=OgY2ZEiLPtLKJp5kEo7RP3qPuIiw0s5063RqFNe6L7/MYtzHvF3PwRL04oNumz/qgho17kVVwS8lMrJ9If+2E4Iu16ZCjrjHy1qBJTyucfhg796/jxyXGnY5WSPsVK0B+bL/1AIv/sFKW2dBb+OTQKNsgRS4MlW0ocRMcRM9BI4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789199269; c=relaxed/simple;
-	bh=fSMR+NDAdl/kugXMh2NIBXSGmbEfRpp+0n5rTc0Joyg=;
+	s=arc-20240116; t=1789199274; c=relaxed/simple;
+	bh=gtO/RPjiPCkhHEzYj4N3Ps2CEHsMBWCRY4xMsWBtBSs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eiJRrWjO6bTuHQg/q7q0e/br42kyACP0+wiMRuOTZcyH5jdpz42BP8NOYJKJW5/pcoITpaO0N5IXD3jXTG3Wi+3gVXCCXZyaMHIekZxaegylBk6f8n1DeqXmHFN9eQcpQitA6IizYyZOm2UfADtScQRYKWUeWQeunTTVFON9w+k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iwDp7WWT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qTHyIaEFMtmGPzbt82Zrssus27PAQ+6bEWtTzt3afJNBocByZBzUDaN2x+wjaQMHUX/RWSJCFa7q+/XUbzpQeXFdgTFO38xkKqrW6TjcJLVbARBndYWZ02F27p13sclDxuDIiZAYAM4Q7NEAHEAmWXZ27Is18Dgg2inlhbd8g58=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IQL0Iape; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iwDp7WWT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA9F01F000FF;
-	Sat, 12 Sep 2026 07:47:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IQL0Iape"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D4A91F000FF;
+	Sat, 12 Sep 2026 07:47:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789199268;
-	bh=mJ+FZNlSTXsVckSHy+jZBii7ESYKM0mam0I1PlMVggk=;
+	s=korg; t=1789199273;
+	bh=rreX8Nt6ha11J87MyEcS06pMXuXq8n2Q0DxpKlIc9NA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iwDp7WWT8IEjnAK2OnJlDGTrr/jFCmlYDMBm4PMUB9nKWWtVUcfIpj98qMi/RGm6F
-	 1LJn93d6tzera/uJqwLfNNNST6ZD8wAKr03zDBpf/YNnWfSqzR4jTgzFHvYgO4RSGc
-	 V3562Rw6tUSofyfBkB4FR+PZCSU/Tq8GWzlplv+8=
+	b=IQL0IapeIlxxnWWbnZdR9QLyZ/c7VKJgkDrqfFFGM9BACOlMr7HyrJ6svuRofRn/r
+	 buEQ99c6+4jcIeSTrQuIuprRDecyWicZtzshzx5DUd/Nq4MKGRBveHEN31Fs2j1SQB
+	 iA5yQ4SdOpfKjSxih+qcYlO9ON5WXOncPbA+gOWc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Nishanth Menon <nm@ti.com>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Raag Jadav <raag.jadav@intel.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0508/1815] soc: ti: knav_qmss: Remove debugfs file on teardown
-Date: Sat, 12 Sep 2026 08:37:38 +0200
-Message-ID: <20260912065700.814726910@linuxfoundation.org>
+Subject: [PATCH 7.2 0509/1815] mtd: intel-dg: Fix runtime PM error path in probe
+Date: Sat, 12 Sep 2026 08:37:39 +0200
+Message-ID: <20260912065700.839181575@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,66 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-[ Upstream commit 3c817862759913097f11467ed4ed2bbf974dabaf ]
+[ Upstream commit df6f582df3377af316a60ca8ee0d590b2d03924d ]
 
-knav_queue_probe() creates the global qmss debugfs file whose show
-callback reads the global knav_qdev state. knav_queue_remove() tears
-down the queue manager resources but leaves the debugfs file published.
+intel_dg_mtd_probe() allocates region names before enabling runtime PM
+and before calling pm_runtime_resume_and_get().
 
-Save the debugfs dentry in struct knav_device and remove it during
-teardown before the resources used by the show callback are released.
-While touching the debugfs_create_file() call, spell the unchanged read-
-only file mode as 0444.
+If kasprintf() fails while building a region name, the error path jumps
+to err, which calls pm_runtime_put(). At that point there has not been a
+successful pm_runtime_resume_and_get() call to balance, so the runtime PM
+usage count can underflow.
 
-Fixes: 41f93af900a2 ("soc: ti: add Keystone Navigator QMSS driver")
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260706144706.96313-1-pengpeng@iscas.ac.cn
-Signed-off-by: Nishanth Menon <nm@ti.com>
+Jump to err_norpm from the kasprintf() failure path, as the runtime PM
+reference has not been acquired yet.
+
+Fixes: 779c59274d03 ("mtd: intel-dg: Fix accessing regions before setting nregions")
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Reviewed-by: Raag Jadav <raag.jadav@intel.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/ti/knav_qmss.h       | 1 +
- drivers/soc/ti/knav_qmss_queue.c | 7 +++++--
- 2 files changed, 6 insertions(+), 2 deletions(-)
+ drivers/mtd/devices/mtd_intel_dg.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/soc/ti/knav_qmss.h b/drivers/soc/ti/knav_qmss.h
-index 037dc1b366453..8a624fbda84ab 100644
---- a/drivers/soc/ti/knav_qmss.h
-+++ b/drivers/soc/ti/knav_qmss.h
-@@ -304,6 +304,7 @@ struct knav_device {
- 	struct list_head			pools;
- 	struct list_head			pdsps;
- 	struct list_head			qmgrs;
-+	struct dentry				*debugfs_file;
- 	enum qmss_version			version;
- };
+diff --git a/drivers/mtd/devices/mtd_intel_dg.c b/drivers/mtd/devices/mtd_intel_dg.c
+index f2fa8f68d1905..a566e86eb5e3a 100644
+--- a/drivers/mtd/devices/mtd_intel_dg.c
++++ b/drivers/mtd/devices/mtd_intel_dg.c
+@@ -780,7 +780,7 @@ static int intel_dg_mtd_probe(struct auxiliary_device *aux_dev,
+ 				       dev_name(&aux_dev->dev), invm->regions[i].name);
+ 		if (!name) {
+ 			ret = -ENOMEM;
+-			goto err;
++			goto err_norpm;
+ 		}
  
-diff --git a/drivers/soc/ti/knav_qmss_queue.c b/drivers/soc/ti/knav_qmss_queue.c
-index 7410b63af0e62..3e4041454f694 100644
---- a/drivers/soc/ti/knav_qmss_queue.c
-+++ b/drivers/soc/ti/knav_qmss_queue.c
-@@ -1849,8 +1849,9 @@ static int knav_queue_probe(struct platform_device *pdev)
- 		goto err;
- 	}
- 
--	debugfs_create_file("qmss", S_IFREG | S_IRUGO, NULL, NULL,
--			    &knav_queue_debug_fops);
-+	knav_qdev->debugfs_file =
-+		debugfs_create_file("qmss", 0444, NULL, NULL,
-+				    &knav_queue_debug_fops);
- 	device_ready = true;
- 	return 0;
- 
-@@ -1868,6 +1869,8 @@ static void knav_queue_remove(struct platform_device *pdev)
- 	struct knav_device *kdev = platform_get_drvdata(pdev);
- 
- 	device_ready = false;
-+	debugfs_remove(kdev->debugfs_file);
-+	kdev->debugfs_file = NULL;
- 	knav_queue_stop_pdsps(kdev);
- 	knav_queue_free_regions(kdev);
- 	knav_free_queue_ranges(kdev);
+ 		nvm->regions[n].name = name;
 -- 
 2.53.0
 
