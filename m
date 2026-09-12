@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A386288B9;
-	Sat, 12 Sep 2026 16:34:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9AD61FBEA6;
+	Sat, 12 Sep 2026 16:34:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789230863; cv=none; b=Mx0/EzA4jfpblB+AWvSjFzTfLwUVv+jcYXghdqlTCIPfmzg5bfe50uNilGWW6X7BTbmFqZPnMTaeKBrcLJD5n0VjU6MO+pZ+CHNVGTI+sqO3ntBkVLtX6hMC8IZGGj1R7iriCbZLa86s3kbv1DT0e4IXzO0KT1aQYnE017hb4X4=
+	t=1789230868; cv=none; b=CGwnH3A88C7Wl6dPYSp2iB8Q328DK8/tHuAamiQBp9OcWa0RMTP5bCqIr5aKoLSZmx7DVN2GClE6szjF1nTdfCTE+x/qVX9RXuaWmDqpBdSklMco7RGXuIsK0WjnU8vuWTtHqHJkPBO98cLOaTGgRpO/u/O7wUQ16gN2z2hrbYA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789230863; c=relaxed/simple;
-	bh=L3KQkPep29bAv5H0fdNPinKSjZE6ihoZySUN5DEVuqI=;
+	s=arc-20240116; t=1789230868; c=relaxed/simple;
+	bh=dGHL/y5trhoi+HyHj6Wf+RBXOjBip3/SkrRjmOwdK7w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D9TlUmfDq9xdByLmHSR1D9Zs90f+otX561xEBvLTOipPYUN7H1MmmRIMaHVOJ1XOqMiAMBGO/rhHd08xqWEWDpEmVk4AUGzcX1EMdHYlXfDzzu7ZRnKU3ZhJ4TNN4Dn/RmSW6CpsBgHYkBgYTU5eVeH0GDnuMh6Nnq01dUn2v5Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PbgN4Fxm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=csjjweCaOUTnKZNximFTcYsKZpR+bwava5hz72qfg5lDzGAcis4Qt912dQ/x27MHu5GkPAFheeDe/qf3GAn6gD+FJy1YfXsfwBHAUOlO+EExcI7SRxztu7KyxBgQV1bfuN5ZlsibGrym97sJXSqpJjtivg3Guwke2GB1mL5/69g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xuNYQSQ3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PbgN4Fxm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A5131F000FF;
-	Sat, 12 Sep 2026 16:34:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xuNYQSQ3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF3B21F000FF;
+	Sat, 12 Sep 2026 16:34:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789230861;
-	bh=fvFPy72X/Po8+K8dzBYZ8jJf/Lh7rnEYDzPp12KUY5w=;
+	s=korg; t=1789230866;
+	bh=j0wz/Dx91bN11E5zdJZLO05Hbgy92mQxr58OfWkDwBM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PbgN4FxmSkaVIbFBT28TE833Umxzl5S/XievAqVr+wq6rtbHCph+KP/KDcpTrK096
-	 zSS+65jG/5iTI+CK7tkRkeY1kZI5WIP6SVb1txtp+gy7jyhpG/ELeQclKcK6sgVtEV
-	 alJuApnwX5b+JOWPV60fUa0tpJWx6NxmezrJ5CsY=
+	b=xuNYQSQ3oQHKTQqJB5PInyXtk20vNgJNRtRupbN8FbjxAfcWEdQOCQlQxBDhRO6g3
+	 V/7QJJMMySLZzJodWgCyK+1NZLsFwWy5v4CASoXALNkhhJXWhPu+TdIkR1uoOGgPN1
+	 3Z3AgY9yoPZqD8pTRcbNCnBcMoevDFVPYfxEfXCI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	Linus Walleij <linusw@kernel.org>,
-	Qi Xi <xiqi2@huawei.com>,
-	Xie Yuanbin <xieyuanbin1@huawei.com>,
-	Russell King <rmk+kernel@armlinux.org.uk>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Crt Mori <cmo@melexis.com>,
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Richard Genoud <richard.genoud@bootlin.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	"Yury Norov (NVIDIA)" <yury.norov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0874/1191] ARM: 9485/1: mm: acquire mmap write lock around show_pte() for user faults
-Date: Sat, 12 Sep 2026 09:00:02 +0200
-Message-ID: <20260912065607.882344069@linuxfoundation.org>
+Subject: [PATCH 6.1 0883/1191] bitfield: Add non-constant field_{prep,get}() helpers
+Date: Sat, 12 Sep 2026 09:00:11 +0200
+Message-ID: <20260912065608.074625466@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -48,85 +51,127 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Xie Yuanbin <xieyuanbin1@huawei.com>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit 1039bffd6ae9c75b42b7d148d6c1106134107b66 ]
+[ Upstream commit c1c6ab80b25c8db1e2ef5ae3ac8075d2c242ae13 ]
 
-When CONFIG_DEBUG_USER=y, and cmdline "user_debug=31" is set,
-a user fault may trigger show_pte() without any lock.
-If another thread in the same process concurrently calls munmap(),
-the page table pages may be freed while show_pte() is still traversing
-them, causing a use-after-free in show_pte().
+The existing FIELD_{GET,PREP}() macros are limited to compile-time
+constants.  However, it is very common to prepare or extract bitfield
+elements where the bitfield mask is not a compile-time constant.
 
-If CONFIG_ARM_LPAE=y, this may cause a kernel panic if the pages table
-of PMD are freed when show_pte() is running.
+To avoid this limitation, the AT91 clock driver and several other
+drivers already have their own non-const field_{prep,get}() macros.
+Make them available for general use by adding them to
+<linux/bitfield.h>, and improve them slightly:
+  1. Avoid evaluating macro parameters more than once,
+  2. Replace "ffs() - 1" by "__ffs()",
+  3. Support 64-bit use on 32-bit architectures,
+  4. Wire field_{get,prep}() to FIELD_{GET,PREP}() when mask is
+     actually constant.
 
-Acquire mmap_write_lock() around show_pte() for user faults to fix the
-contention.
+This is deliberately not merged into the existing FIELD_{GET,PREP}()
+macros, as people expressed the desire to keep stricter variants for
+increased safety, or for performance critical paths.
 
-For user faults, additionally restrict that show_pte() is called only
-when the addr is a user-space address (addr < TASK_SIZE). This is because
-the lock of tsk->mm only protects the virtual memory of user address space,
-furthermore, dumping the page tables of a kernel-space address for user
-faults is unnecessary and may have security implications.
+Yury: use __mask withing new macros.
 
-Keep everything unchanged for kernel faults, because the kernel is
-already in the "oops" state, acquiring a lock may risk a deadlock.
-
-Co-developed-by: Qi Xi <xiqi2@huawei.com>
-
-Fixes: 6d021b724481 ("ARM: dump pgd, pmd and pte states on unhandled data abort faults")
-Link: https://lore.kernel.org/20260716014022.2823-1-xieyuanbin1@huawei.com
-Acked-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Signed-off-by: Qi Xi <xiqi2@huawei.com>
-Signed-off-by: Xie Yuanbin <xieyuanbin1@huawei.com>
-Signed-off-by: Russell King <rmk+kernel@armlinux.org.uk>
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Acked-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Acked-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Acked-by: Crt Mori <cmo@melexis.com>
+Acked-by: Nuno Sá <nuno.sa@analog.com>
+Acked-by: Richard Genoud <richard.genoud@bootlin.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Reviewed-by: Yury Norov (NVIDIA) <yury.norov@gmail.com>
+Signed-off-by: Yury Norov (NVIDIA) <yury.norov@gmail.com>
+Stable-dep-of: 62bac3202042 ("drm/sun4i: tcon-top: Keep mixer routes distinct")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mm/fault.c | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ include/linux/bitfield.h | 59 ++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 59 insertions(+)
 
-diff --git a/arch/arm/mm/fault.c b/arch/arm/mm/fault.c
-index d0681285dbda3..29a995c6d7c6b 100644
---- a/arch/arm/mm/fault.c
-+++ b/arch/arm/mm/fault.c
-@@ -201,7 +201,11 @@ __do_user_fault(unsigned long addr, unsigned int fsr, unsigned int sig,
- 		pr_err("8<--- cut here ---\n");
- 		pr_err("%s: unhandled page fault (%d) at 0x%08lx, code 0x%03x\n",
- 		       tsk->comm, sig, addr, fsr);
--		show_pte(KERN_ERR, tsk->mm, addr);
-+		if (likely(addr < TASK_SIZE)) {
-+			mmap_write_lock(tsk->mm);
-+			show_pte(KERN_ERR, tsk->mm, addr);
-+			mmap_write_unlock(tsk->mm);
-+		}
- 		show_regs(regs);
- 	}
- #endif
-@@ -582,7 +586,15 @@ do_DataAbort(unsigned long addr, unsigned int fsr, struct pt_regs *regs)
- 	pr_alert("8<--- cut here ---\n");
- 	pr_alert("Unhandled fault: %s (0x%03x) at 0x%08lx\n",
- 		inf->name, fsr, addr);
--	show_pte(KERN_ALERT, current->mm, addr);
-+	if (likely(user_mode(regs))) {
-+		if (addr < TASK_SIZE) {
-+			mmap_write_lock(current->mm);
-+			show_pte(KERN_ALERT, current->mm, addr);
-+			mmap_write_unlock(current->mm);
-+		}
-+	} else {
-+		show_pte(KERN_ALERT, current->mm, addr);
-+	}
+diff --git a/include/linux/bitfield.h b/include/linux/bitfield.h
+index 3efe29d662952..35622ff2c9951 100644
+--- a/include/linux/bitfield.h
++++ b/include/linux/bitfield.h
+@@ -16,6 +16,7 @@
+  * FIELD_{GET,PREP} macros take as first parameter shifted mask
+  * from which they extract the base mask and shift amount.
+  * Mask must be a compilation time constant.
++ * field_{get,prep} are variants that take a non-const mask.
+  *
+  * Example:
+  *
+@@ -196,4 +197,62 @@ __MAKE_OP(64)
+ #undef __MAKE_OP
+ #undef ____MAKE_OP
  
- 	arm_notify_die("", regs, inf->sig, inf->code, (void __user *)addr,
- 		       fsr, 0);
++#define __field_prep(mask, val)						\
++	({								\
++		__auto_type __mask = (mask);				\
++		typeof(__mask) __val = (val);				\
++		unsigned int __shift = BITS_PER_TYPE(__mask) <= 32 ?	\
++				       __ffs(__mask) : __ffs64(__mask);	\
++		(__val << __shift) & __mask;				\
++	})
++
++#define __field_get(mask, reg)						\
++	({								\
++		__auto_type __mask = (mask);				\
++		typeof(__mask) __reg =  (reg);				\
++		unsigned int __shift = BITS_PER_TYPE(__mask) <= 32 ?	\
++				       __ffs(__mask) : __ffs64(__mask);	\
++		(__reg & __mask) >> __shift;				\
++	})
++
++/**
++ * field_prep() - prepare a bitfield element
++ * @mask: shifted mask defining the field's length and position, must be
++ *        non-zero
++ * @val:  value to put in the field
++ *
++ * Return: field value masked and shifted to its final destination
++ *
++ * field_prep() masks and shifts up the value.  The result should be
++ * combined with other fields of the bitfield using logical OR.
++ * Unlike FIELD_PREP(), @mask is not limited to a compile-time constant.
++ * Typical usage patterns are a value stored in a table, or calculated by
++ * shifting a constant by a variable number of bits.
++ * If you want to ensure that @mask is a compile-time constant, please use
++ * FIELD_PREP() directly instead.
++ */
++#define field_prep(mask, val)						\
++	(__builtin_constant_p(mask) ? __FIELD_PREP(mask, val, "field_prep: ") \
++				    : __field_prep(mask, val))
++
++/**
++ * field_get() - extract a bitfield element
++ * @mask: shifted mask defining the field's length and position, must be
++ *        non-zero
++ * @reg:  value of entire bitfield
++ *
++ * Return: extracted field value
++ *
++ * field_get() extracts the field specified by @mask from the
++ * bitfield passed in as @reg by masking and shifting it down.
++ * Unlike FIELD_GET(), @mask is not limited to a compile-time constant.
++ * Typical usage patterns are a value stored in a table, or calculated by
++ * shifting a constant by a variable number of bits.
++ * If you want to ensure that @mask is a compile-time constant, please use
++ * FIELD_GET() directly instead.
++ */
++#define field_get(mask, reg)						\
++	(__builtin_constant_p(mask) ? __FIELD_GET(mask, reg, "field_get: ") \
++				    : __field_get(mask, reg))
++
+ #endif
 -- 
 2.53.0
 
