@@ -1,40 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 050643DB31A;
-	Sat, 12 Sep 2026 12:56:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ABB53DB31A;
+	Sat, 12 Sep 2026 12:56:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789217794; cv=none; b=A2CrUCfvGPUUA0ZfvsuyKIwz7tlP2tBlQj/iBOIci5IibFzGfYNWeyIFEO+tyFwPyEmGtvsmeaFBortcUadPcGuxe4sMkNBh77vHszI7isvzCemTbFL1vNFHWqz1XUagjoYweEpOnBpxO3nx7vkP0LEof5SZw1qSmYv3Ol9QXr4=
+	t=1789217800; cv=none; b=jMXgIIxlAFwUdNN3OPraBR1PmIjPar3dy/Aj7a7qukLJT1f228OPq7T2w16IeIvQiz1yi/aGhS5Gdh9ii8iMME3BB9eIyLOVMAWhA9WzFF9U1SGjDwUqPePm0TTDjIv8ZqwquyRB0S4yA5s2L2fr3OW4wLHHun7khdo2tL6vOK8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789217794; c=relaxed/simple;
-	bh=rMqjm+ssEbWsd+Sf2+w0Bg6W+1kyo1l6rEPas2vTgB4=;
+	s=arc-20240116; t=1789217800; c=relaxed/simple;
+	bh=0530AuijPBu/ng/+iNUTqHdmNSrYzz+HQGq4vXLuG9k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HH3rmhNp7/O36Sk4HAxGTToAaEbupzY3bi97LVMzEkNrC9cO9g+bTRlcYt7DYXxjL/OdX5RGvWA9nifyI7o486LDbYq0k8JagUqBmSxEhRKfYiM4DVzt6AozJzK3j1K6+cxdC/BQi/0MSPDg5dQbxEutIVT/sVgsUakQNCnWLC0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MomrO23N; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UE9rcddOj1mD6bZgISF+I2waofIdFMQFMatvfvuALXXg8QjKn95CRXtu0r/HgURmRyJ1aGzt3b5dZe7QPCl1XxfPVFQNZbe7GTxGmbr5Hq7KdiRpBSS7Cczhvx3yniD/m3QOgxECtDxaoSnB/NiNJ2mbJDohXE2fjCOSDgCZabM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KlFZ6rYt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MomrO23N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF9691F000FF;
-	Sat, 12 Sep 2026 12:56:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KlFZ6rYt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAD201F000FF;
+	Sat, 12 Sep 2026 12:56:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789217792;
-	bh=5JgH9yh/CXyTDS/N3mhG5ntIlBN5Bn3nUpnFz8bW4TQ=;
+	s=korg; t=1789217798;
+	bh=fGDzWHpibJXTXDiZb8rvBzvvAGsukRxjNSYAmmgYMsA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MomrO23NmAI6fC3QO5nm6dJ/cMED94FT2Fpp2mf4wJO/UeeoStsXbpdaHoaIwLl2N
-	 YGrQhOnaKaInqiaxgLb3XhdfCSdYqca87UVvzKYSJtgUQAQRgXqoaZKsQLaIUKsvFb
-	 l0FjkfgD9LwEMihY8SndfqV0fYbR5IFNxWozTBFk=
+	b=KlFZ6rYtXxZjUL54tbfa9E0Z387ld/Au4h+AwCh0hJx5hU8qq85PlzTRPxv5XxwNY
+	 TUCpLMybV4F4qYVlKHntbjm7u4W0//I9h4FB/hCAWe2RKP7FEXkQODW7D6BMqzUzhn
+	 b1JPHJ8gLaZ4YUINRVEAIU4OJ5EdYaY8/4f+1Y6o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hannes Reinecke <hare@suse.de>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Luis Chamberlain <mcgrof@kernel.org>,
-	Christian Brauner <brauner@kernel.org>,
+	James Clark <james.clark@linaro.org>,
+	Ian Rogers <irogers@google.com>,
+	Colin Ian King <colin.i.king@gmail.com>,
+	Howard Chu <howardchu95@gmail.com>,
+	Weilin Wang <weilin.wang@intel.com>,
+	Ilya Leoshkevich <iii@linux.ibm.com>,
+	Thomas Richter <tmricht@linux.ibm.com>,
+	Andi Kleen <ak@linux.intel.com>,
+	Dapeng Mi <dapeng1.mi@linux.intel.com>,
+	Athira Jajeev <atrajeev@linux.vnet.ibm.com>,
+	Michael Petlan <mpetlan@redhat.com>,
+	Veronika Molnarova <vmolnaro@redhat.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0975/1376] block/bdev: lift block size restrictions to 64k
-Date: Sat, 12 Sep 2026 08:56:41 +0200
-Message-ID: <20260912065629.297388116@linuxfoundation.org>
+Subject: [PATCH 6.12 1011/1376] perf test: Run parallel tests in two passes
+Date: Sat, 12 Sep 2026 08:57:17 +0200
+Message-ID: <20260912065630.096354942@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -53,63 +62,382 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luis Chamberlain <mcgrof@kernel.org>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit 47dd67532303803a87f43195e088b3b4bcf0454d ]
+[ Upstream commit 79e72f384d733f78cb07a9649a5ea52b78898a30 ]
 
-We now can support blocksizes larger than PAGE_SIZE, so in theory
-we should be able to lift the restriction up to the max supported page
-cache order. However bound ourselves to what we can currently validate
-and test. Through blktests and fstest we can validate up to 64k today.
+In pass 1 run all tests that succeed when run in parallel. In pass 2
+sequentially run all remaining tests that are flagged as
+"exclusive". Sequential and dont_fork tests keep to run in pass 1.
+Read the exclusive flag from the shell test descriptions, but remove
+from display to avoid >100 characters. Add error handling to finish
+tests if starting a later test fails. Mark the task-exit test as
+exclusive due to issues reported-by James Clark.
 
-Reviewed-by: Hannes Reinecke <hare@suse.de>
-Reviewed-by: "Matthew Wilcox (Oracle)" <willy@infradead.org>
-Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
-Link: https://lore.kernel.org/r/20250221223823.1680616-8-mcgrof@kernel.org
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-Stable-dep-of: bb31844d88b7 ("scsi: sd: Fix special_vec mempool leak when scsi_alloc_sgtables() fails")
+Tested-by: James Clark <james.clark@linaro.org>
+Signed-off-by: Ian Rogers <irogers@google.com>
+Cc: Colin Ian King <colin.i.king@gmail.com>
+Cc: Howard Chu <howardchu95@gmail.com>
+Cc: Weilin Wang <weilin.wang@intel.com>
+Cc: Ilya Leoshkevich <iii@linux.ibm.com>
+Cc: Thomas Richter <tmricht@linux.ibm.com>
+Cc: Andi Kleen <ak@linux.intel.com>
+Cc: Dapeng Mi <dapeng1.mi@linux.intel.com>
+Cc: Athira Jajeev <atrajeev@linux.vnet.ibm.com>
+Cc: Michael Petlan <mpetlan@redhat.com>
+Cc: Veronika Molnarova <vmolnaro@redhat.com>
+Link: https://lore.kernel.org/r/20241025192109.132482-8-irogers@google.com
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Stable-dep-of: 44e82c4d2ff3 ("perf test: Fix skiplist leak in cmd_test")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/bdev.c           | 3 +--
- include/linux/blkdev.h | 8 +++++++-
- 2 files changed, 8 insertions(+), 3 deletions(-)
+ tools/perf/tests/builtin-test.c  | 157 +++++++++++++++++++------------
+ tools/perf/tests/task-exit.c     |   9 +-
+ tools/perf/tests/tests-scripts.c |   7 +-
+ tools/perf/tests/tests.h         |   9 ++
+ 4 files changed, 121 insertions(+), 61 deletions(-)
 
-diff --git a/block/bdev.c b/block/bdev.c
-index e96ff382a1ce9..1092998d28d42 100644
---- a/block/bdev.c
-+++ b/block/bdev.c
-@@ -198,8 +198,7 @@ int sb_set_blocksize(struct super_block *sb, int size)
- {
- 	if (set_blocksize(sb->s_bdev_file, size))
- 		return 0;
--	/* If we get here, we know size is power of two
--	 * and it's value is between 512 and PAGE_SIZE */
-+	/* If we get here, we know size is validated */
- 	sb->s_blocksize = size;
- 	sb->s_blocksize_bits = blksize_bits(size);
- 	return sb->s_blocksize;
-diff --git a/include/linux/blkdev.h b/include/linux/blkdev.h
-index 33f5b16c0fd9a..5a90245fbd8ec 100644
---- a/include/linux/blkdev.h
-+++ b/include/linux/blkdev.h
-@@ -268,10 +268,16 @@ static inline dev_t disk_devt(struct gendisk *disk)
- 	return MKDEV(disk->major, disk->first_minor);
+diff --git a/tools/perf/tests/builtin-test.c b/tools/perf/tests/builtin-test.c
+index 28d3c25478a1f..c240000f8b328 100644
+--- a/tools/perf/tests/builtin-test.c
++++ b/tools/perf/tests/builtin-test.c
+@@ -203,6 +203,14 @@ static test_fnptr test_function(const struct test_suite *t, int subtest)
+ 	return t->test_cases[subtest].run_case;
  }
  
-+/*
-+ * We should strive for 1 << (PAGE_SHIFT + MAX_PAGECACHE_ORDER)
-+ * however we constrain this to what we can validate and test.
-+ */
-+#define BLK_MAX_BLOCK_SIZE      SZ_64K
++static bool test_exclusive(const struct test_suite *t, int subtest)
++{
++	if (subtest <= 0)
++		return t->test_cases[0].exclusive;
 +
- /* blk_validate_limits() validates bsize, so drivers don't usually need to */
- static inline int blk_validate_block_size(unsigned long bsize)
++	return t->test_cases[subtest].exclusive;
++}
++
+ static bool perf_test__matches(const char *desc, int curr, int argc, const char *argv[])
  {
--	if (bsize < 512 || bsize > PAGE_SIZE || !is_power_of_2(bsize))
-+	if (bsize < 512 || bsize > BLK_MAX_BLOCK_SIZE || !is_power_of_2(bsize))
- 		return -EINVAL;
+ 	int i;
+@@ -246,7 +254,7 @@ static int run_test_child(struct child_process *process)
+ 	const int signals[] = {
+ 		SIGABRT, SIGBUS, SIGFPE, SIGILL, SIGINT, SIGPIPE, SIGQUIT, SIGSEGV, SIGTERM,
+ 	};
+-	static struct child_test *child;
++	struct child_test *child = container_of(process, struct child_test, process);
+ 	int err;
  
+ 	err = sigsetjmp(run_test_jmp_buf, 1);
+@@ -256,7 +264,6 @@ static int run_test_child(struct child_process *process)
+ 		goto err_out;
+ 	}
+ 
+-	child = container_of(process, struct child_test, process);
+ 	for (size_t i = 0; i < ARRAY_SIZE(signals); i++)
+ 		signal(signals[i], child_test_sig_handler);
+ 
+@@ -309,19 +316,25 @@ static int print_test_result(struct test_suite *t, int i, int subtest, int resul
  	return 0;
+ }
+ 
+-static int finish_test(struct child_test **child_tests, int running_test, int child_test_num,
+-		       int width)
++static void finish_test(struct child_test **child_tests, int running_test, int child_test_num,
++		int width)
+ {
+ 	struct child_test *child_test = child_tests[running_test];
+-	struct test_suite *t = child_test->test;
+-	int i = child_test->test_num;
+-	int subi = child_test->subtest;
+-	int err = child_test->process.err;
++	struct test_suite *t;
++	int i, subi, err;
+ 	bool err_done = false;
+ 	struct strbuf err_output = STRBUF_INIT;
+ 	int last_running = -1;
+ 	int ret;
+ 
++	if (child_test == NULL) {
++		/* Test wasn't started. */
++		return;
++	}
++	t = child_test->test;
++	i = child_test->test_num;
++	subi = child_test->subtest;
++	err = child_test->process.err;
+ 	/*
+ 	 * For test suites with subtests, display the suite name ahead of the
+ 	 * sub test names.
+@@ -351,6 +364,8 @@ static int finish_test(struct child_test **child_tests, int running_test, int ch
+ 			int running = 0;
+ 
+ 			for (int y = running_test; y < child_test_num; y++) {
++				if (child_tests[y] == NULL)
++					continue;
+ 				if (check_if_command_finished(&child_tests[y]->process) == 0)
+ 					running++;
+ 			}
+@@ -403,23 +418,32 @@ static int finish_test(struct child_test **child_tests, int running_test, int ch
+ 	print_test_result(t, i, subi, ret, width, /*running=*/0);
+ 	if (err > 0)
+ 		close(err);
+-	return 0;
++	zfree(&child_tests[running_test]);
+ }
+ 
+ static int start_test(struct test_suite *test, int i, int subi, struct child_test **child,
+-		      int width)
++		int width, int pass)
+ {
+ 	int err;
+ 
+ 	*child = NULL;
+ 	if (dont_fork) {
+-		pr_debug("--- start ---\n");
+-		err = test_function(test, subi)(test, subi);
+-		pr_debug("---- end ----\n");
+-		print_test_result(test, i, subi, err, width, /*running=*/0);
++		if (pass == 1) {
++			pr_debug("--- start ---\n");
++			err = test_function(test, subi)(test, subi);
++			pr_debug("---- end ----\n");
++			print_test_result(test, i, subi, err, width, /*running=*/0);
++		}
++		return 0;
++	}
++	if (pass == 1 && !sequential && test_exclusive(test, subi)) {
++		/* When parallel, skip exclusive tests on the first pass. */
++		return 0;
++	}
++	if (pass != 1 && (sequential || !test_exclusive(test, subi))) {
++		/* Sequential and non-exclusive tests were run on the first pass. */
+ 		return 0;
+ 	}
+-
+ 	*child = zalloc(sizeof(**child));
+ 	if (!*child)
+ 		return -ENOMEM;
+@@ -438,10 +462,14 @@ static int start_test(struct test_suite *test, int i, int subi, struct child_tes
+ 		(*child)->process.err = -1;
+ 	}
+ 	(*child)->process.no_exec_cmd = run_test_child;
+-	err = start_command(&(*child)->process);
+-	if (err || !sequential)
+-		return  err;
+-	return finish_test(child, /*running_test=*/0, /*child_test_num=*/1, width);
++	if (sequential || pass == 2) {
++		err = start_command(&(*child)->process);
++		if (err)
++			return err;
++		finish_test(child, /*running_test=*/0, /*child_test_num=*/1, width);
++		return 0;
++	}
++	return start_command(&(*child)->process);
+ }
+ 
+ #define for_each_test(j, k, t)					\
+@@ -451,12 +479,11 @@ static int start_test(struct test_suite *test, int i, int subi, struct child_tes
+ static int __cmd_test(int argc, const char *argv[], struct intlist *skiplist)
+ {
+ 	struct test_suite *t;
+-	unsigned int j, k;
+-	int i = 0;
+ 	int width = 0;
++	unsigned int j, k;
+ 	size_t num_tests = 0;
+ 	struct child_test **child_tests;
+-	int child_test_num = 0;
++	int err = 0;
+ 
+ 	for_each_test(j, k, t) {
+ 		int len = strlen(test_description(t, -1));
+@@ -479,62 +506,73 @@ static int __cmd_test(int argc, const char *argv[], struct intlist *skiplist)
+ 	if (!child_tests)
+ 		return -ENOMEM;
+ 
+-	for_each_test(j, k, t) {
+-		int curr = i++;
+-
+-		if (!perf_test__matches(test_description(t, -1), curr, argc, argv)) {
+-			bool skip = true;
++	/*
++	 * In parallel mode pass 1 runs non-exclusive tests in parallel, pass 2
++	 * runs the exclusive tests sequentially. In other modes all tests are
++	 * run in pass 1.
++	 */
++	for (int pass = 1; pass <= 2; pass++) {
++		int child_test_num = 0;
++		int i = 0;
++
++		for_each_test(j, k, t) {
++			int curr = i++;
++
++			if (!perf_test__matches(test_description(t, -1), curr, argc, argv)) {
++				/*
++				 * Test suite shouldn't be run based on
++				 * description. See if subtest should.
++				 */
++				bool skip = true;
++
++				for (int subi = 0, subn = num_subtests(t); subi < subn; subi++) {
++					if (perf_test__matches(test_description(t, subi),
++								curr, argc, argv))
++						skip = false;
++				}
+ 
+-			for (int subi = 0, subn = num_subtests(t); subi < subn; subi++) {
+-				if (perf_test__matches(test_description(t, subi),
+-							curr, argc, argv))
+-					skip = false;
++				if (skip)
++					continue;
+ 			}
+ 
+-			if (skip)
++			if (intlist__find(skiplist, i)) {
++				pr_info("%3d: %-*s:", curr + 1, width, test_description(t, -1));
++				color_fprintf(stderr, PERF_COLOR_YELLOW, " Skip (user override)\n");
+ 				continue;
+-		}
+-
+-		if (intlist__find(skiplist, i)) {
+-			pr_info("%3d: %-*s:", curr + 1, width, test_description(t, -1));
+-			color_fprintf(stderr, PERF_COLOR_YELLOW, " Skip (user override)\n");
+-			continue;
+-		}
+-
+-		if (!has_subtests(t)) {
+-			int err = start_test(t, curr, -1, &child_tests[child_test_num++], width);
++			}
+ 
+-			if (err) {
+-				/* TODO: if !sequential waitpid the already forked children. */
+-				free(child_tests);
+-				return err;
++			if (!has_subtests(t)) {
++				err = start_test(t, curr, -1, &child_tests[child_test_num++],
++						 width, pass);
++				if (err)
++					goto err_out;
++				continue;
+ 			}
+-		} else {
+ 			for (int subi = 0, subn = num_subtests(t); subi < subn; subi++) {
+-				int err;
+-
+ 				if (!perf_test__matches(test_description(t, subi),
+ 							curr, argc, argv))
+ 					continue;
+ 
+ 				err = start_test(t, curr, subi, &child_tests[child_test_num++],
+-						 width);
++						 width, pass);
+ 				if (err)
+-					return err;
++					goto err_out;
+ 			}
+ 		}
+-	}
+-	for (i = 0; i < child_test_num; i++) {
+ 		if (!sequential) {
+-			int ret  = finish_test(child_tests, i, child_test_num, width);
+-
+-			if (ret)
+-				return ret;
++			/* Parallel mode starts tests but doesn't finish them. Do that now. */
++			for (size_t x = 0; x < num_tests; x++)
++				finish_test(child_tests, x, num_tests, width);
+ 		}
+-		free(child_tests[i]);
++	}
++err_out:
++	if (err) {
++		pr_err("Internal test harness failure. Completing any started tests:\n:");
++		for (size_t x = 0; x < num_tests; x++)
++			finish_test(child_tests, x, num_tests, width);
+ 	}
+ 	free(child_tests);
+-	return 0;
++	return err;
+ }
+ 
+ static int perf_test__list(int argc, const char **argv)
+@@ -636,6 +674,7 @@ int cmd_test(int argc, const char **argv)
+ 	symbol_conf.priv_size = sizeof(int);
+ 	symbol_conf.try_vmlinux_path = true;
+ 
++
+ 	if (symbol__init(NULL) < 0)
+ 		return -1;
+ 
+diff --git a/tools/perf/tests/task-exit.c b/tools/perf/tests/task-exit.c
+index d33d0952025cf..8e328bbd509dc 100644
+--- a/tools/perf/tests/task-exit.c
++++ b/tools/perf/tests/task-exit.c
+@@ -152,4 +152,11 @@ static int test__task_exit(struct test_suite *test __maybe_unused, int subtest _
+ 	return err;
+ }
+ 
+-DEFINE_SUITE("Number of exit events of a simple workload", task_exit);
++struct test_case tests__task_exit[] = {
++	TEST_CASE_EXCLUSIVE("Number of exit events of a simple workload", task_exit),
++	{	.name = NULL, }
++};
++struct test_suite suite__task_exit = {
++	.desc = "Number of exit events of a simple workload",
++	.test_cases = tests__task_exit,
++};
+diff --git a/tools/perf/tests/tests-scripts.c b/tools/perf/tests/tests-scripts.c
+index b6986d50dde6c..b8651eb7109d9 100644
+--- a/tools/perf/tests/tests-scripts.c
++++ b/tools/perf/tests/tests-scripts.c
+@@ -175,6 +175,7 @@ static void append_script(int dir_fd, const char *name, char *desc,
+ 	struct test_suite *test_suite, **result_tmp;
+ 	struct test_case *tests;
+ 	size_t len;
++	char *exclusive;
+ 
+ 	snprintf(link, sizeof(link), "/proc/%d/fd/%d", getpid(), dir_fd);
+ 	len = readlink(link, filename, sizeof(filename));
+@@ -191,9 +192,13 @@ static void append_script(int dir_fd, const char *name, char *desc,
+ 		return;
+ 	}
+ 	tests[0].name = strdup_check(name);
++	exclusive = strstr(desc, " (exclusive)");
++	if (exclusive != NULL) {
++		tests[0].exclusive = true;
++		exclusive[0] = '\0';
++	}
+ 	tests[0].desc = strdup_check(desc);
+ 	tests[0].run_case = shell_test__run;
+-
+ 	test_suite = zalloc(sizeof(*test_suite));
+ 	if (!test_suite) {
+ 		pr_err("Out of memory while building script test suite list\n");
+diff --git a/tools/perf/tests/tests.h b/tools/perf/tests/tests.h
+index 6d8e46ab82335..7119d1372538a 100644
+--- a/tools/perf/tests/tests.h
++++ b/tools/perf/tests/tests.h
+@@ -36,6 +36,7 @@ struct test_case {
+ 	const char *desc;
+ 	const char *skip_reason;
+ 	test_fnptr run_case;
++	bool exclusive;
+ };
+ 
+ struct test_suite {
+@@ -62,6 +63,14 @@ struct test_suite {
+ 		.skip_reason = _reason,			\
+ 	}
+ 
++#define TEST_CASE_EXCLUSIVE(description, _name)		\
++	{						\
++		.name = #_name,				\
++		.desc = description,			\
++		.run_case = test__##_name,		\
++		.exclusive = true,			\
++	}
++
+ #define DEFINE_SUITE(description, _name)		\
+ 	struct test_case tests__##_name[] = {           \
+ 		TEST_CASE(description, _name),		\
 -- 
 2.53.0
 
