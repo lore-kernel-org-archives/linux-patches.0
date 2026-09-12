@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4318A23BD03;
-	Sat, 12 Sep 2026 15:07:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7B0823BD03;
+	Sat, 12 Sep 2026 15:07:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789225660; cv=none; b=E70E7OmmBu+jEUoPdO9/FfM34huIFsUsRK/4MAFVpj2R5a0vfzsSI9/r6eKOIzNVklpsHd1PXtNaMGBIaQweadrKJvJAxN2aUsQz0G9d5xW7bS2xV7VF25aceIBHUSJlSB4qRQ7ymq5y6RKlAZrtlejU7nsmp/EV/fo1lDHewKg=
+	t=1789225665; cv=none; b=B3DM8iBeCwnaSuM1omsKlL7gbndl7mJK7QdUOWsUxBCAgXFl8eAlPD3fJbSP/esFrHMdW1tzW109iAfb0bCXf+kAo4VBb21oIxqp5xkJYO1x8FtQQiJcpuc3oOhcNbpvJTrzWypmlLfs7zsj5tMB2rv9a/O3/9dwiBiHdMW+DyM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789225660; c=relaxed/simple;
-	bh=sfXZiWy57bmGT+E8t34Baq1bb7P8d9Nt4c8hrwyF58c=;
+	s=arc-20240116; t=1789225665; c=relaxed/simple;
+	bh=bvcoiBOJD7ysL9ggLDZOuazNgYtvUjKWSuAu2OaMxQg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Liz4a8AKKku3EcBQHSODYmkoyjLOOAiEuO8qwQttPyZNMpmQ3FKEKEOepRzeofzqLGckPyHfws9wwbn7lL9Bd8HwpOWz8VuNcG5s8A7hEwip0NmYPSh9waF12jjK6VTrAUyJtKyhCjLWCOesl48iqp0uEK1trwUh3SQ0xCdBiv0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RaLmpc/C; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QYRHwPA1oJap8AhglmDRGvzCadpeeA/uyhHZaYgLGpG/+TfMsZsWyZAPN9M/U+O38P79LtmyZo0RT9OW31XdRfE5efCCf087pLRf3Iem1VvT6HA5gAQos2nrzpRXAOPQ4c43zkI5Hv/pe2Vk4ZWhM1ra66AKsosWuWfHGCpVt/g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NWtd3uPu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RaLmpc/C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 482DB1F00893;
-	Sat, 12 Sep 2026 15:07:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NWtd3uPu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDB2D1F000FF;
+	Sat, 12 Sep 2026 15:07:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789225659;
-	bh=h7Qt94qN8ZZ8FewlMBkVqitsZCauun1TFHcqt2zuyaI=;
+	s=korg; t=1789225663;
+	bh=m/v/hkMZifgEWkUBDx9o1uUfbLWVDXg0R9DjSpPWUj8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RaLmpc/CujqeNpqoy/7cjvtDHbz4TOiAWEM/VEejDpcTo8FxyMQYB1wFK/880/Ckk
-	 r3pcR+IzvQHr653hWSOntyymOmpfmsPWz9mXik5bK9yAN2JIRCJMaThdvj7vx7fYM8
-	 o7UMoaqOLrpts+W1SWIGNUAgacNZiZXdsrYr3omQ=
+	b=NWtd3uPudTE/6jT6BOPPeIGujK6tvFZR0XMZTMt/MwSh8iEro/Fu0DPIw/pvsWS4J
+	 iCotrAlmznSBRn71xDWqBUoAY1eMFbcQcOCv7vplxjNMmycbIiHxeoGV/+Ha2G3pe+
+	 2S4PwCtCJUuTJ9IAOZ/co1+8/EvlWDKNYsUThkLU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Marius Cristea <marius.cristea@microchip.com>,
 	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1244/1424] hwmon: (emc1403) Rely on subsystem locking
-Date: Sat, 12 Sep 2026 09:01:16 +0200
-Message-ID: <20260912065635.143008112@linuxfoundation.org>
+Subject: [PATCH 6.6 1245/1424] hwmon: (emc1403) Drop hysteresis for low limit temperature
+Date: Sat, 12 Sep 2026 09:01:17 +0200
+Message-ID: <20260912065635.164798679@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -50,153 +51,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Marius Cristea <marius.cristea@microchip.com>
 
-[ Upstream commit 61e9b50ffa2390a2927051d335b2ba04b8f791ce ]
+[ Upstream commit 75f2c0b3690702c90863c2e138cb5520670845ea ]
 
-Attribute access is now serialized in the hardware monitoring core,
-so locking in the driver code is no longer necessary. Drop it.
+Remove the hysteresis for low temperature limit, in hardware
+the hysteresis is applied only to the maxim limit and the
+critical limit temperature.
 
+Fixes: 54392ce4446e3 ("hwmon: (emc1403) Add support for min_hyst attributes")
+Signed-off-by: Marius Cristea <marius.cristea@microchip.com>
+Link: https://lore.kernel.org/r/20260813-emc1403_remove_min_hyst-v1-1-43a0d05d9f49@microchip.com
+[groeck: Updated subject]
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Stable-dep-of: 75f2c0b36907 ("hwmon: (emc1403) Drop hysteresis for low limit temperature")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/emc1403.c | 46 +++++++++--------------------------------
- 1 file changed, 10 insertions(+), 36 deletions(-)
+ Documentation/hwmon/emc1403.rst |  8 ++++----
+ drivers/hwmon/emc1403.c         | 27 +++++++++++----------------
+ 2 files changed, 15 insertions(+), 20 deletions(-)
 
+diff --git a/Documentation/hwmon/emc1403.rst b/Documentation/hwmon/emc1403.rst
+index 57f833b1a800e..ebf2435a76a62 100644
+--- a/Documentation/hwmon/emc1403.rst
++++ b/Documentation/hwmon/emc1403.rst
+@@ -71,10 +71,10 @@ and EMC14x8 support eight sensors (one internal, seven external).
+ 
+ The chips implement three limits for each sensor: low (tempX_min), high
+ (tempX_max) and critical (tempX_crit.) The chips also implement an
+-hysteresis mechanism which applies to all limits. The relative difference
+-is stored in a single register on the chip, which means that the relative
+-difference between the limit and its hysteresis is always the same for
+-all three limits.
++hysteresis mechanism which applies to high and critical limits. The relative
++difference is stored in a single register on the chip, which means that the
++relative difference between the limit and its hysteresis is always the same
++for high and critical limits.
+ 
+ This implementation detail implies the following:
+ 
 diff --git a/drivers/hwmon/emc1403.c b/drivers/hwmon/emc1403.c
-index 0011a1d100075..ad4fc64824bc4 100644
+index ad4fc64824bc4..288d540ebabf2 100644
 --- a/drivers/hwmon/emc1403.c
 +++ b/drivers/hwmon/emc1403.c
-@@ -17,7 +17,6 @@
- #include <linux/hwmon-sysfs.h>
- #include <linux/err.h>
- #include <linux/sysfs.h>
--#include <linux/mutex.h>
- #include <linux/regmap.h>
- 
- #define THERMAL_PID_REG		0xfd
-@@ -29,7 +28,6 @@ enum emc1403_chip { emc1402, emc1403, emc1404, emc1428 };
- struct thermal_data {
- 	enum emc1403_chip chip;
- 	struct regmap *regmap;
--	struct mutex mutex;
- };
- 
- static ssize_t power_state_show(struct device *dev, struct device_attribute *attr, char *buf)
-@@ -267,8 +265,8 @@ static s8 emc1403_temp_regs_low[][4] = {
- 	},
- };
- 
--static int __emc1403_get_temp(struct thermal_data *data, int channel,
--			      enum emc1403_reg_map map, long *val)
-+static int emc1403_get_temp(struct thermal_data *data, int channel,
-+			    enum emc1403_reg_map map, long *val)
- {
- 	unsigned int regvalh;
- 	unsigned int regvall = 0;
-@@ -294,38 +292,23 @@ static int __emc1403_get_temp(struct thermal_data *data, int channel,
+@@ -304,10 +304,9 @@ static int emc1403_get_hyst(struct thermal_data *data, int channel,
+ 	ret = regmap_read(data->regmap, 0x21, &hyst);
+ 	if (ret < 0)
+ 		return ret;
+-	if (map == temp_min)
+-		*val = limit + hyst * 1000;
+-	else
+-		*val = limit - hyst * 1000;
++
++	*val = limit - hyst * 1000;
++
  	return 0;
  }
  
--static int emc1403_get_temp(struct thermal_data *data, int channel,
--			    enum emc1403_reg_map map, long *val)
--{
--	int ret;
--
--	mutex_lock(&data->mutex);
--	ret = __emc1403_get_temp(data, channel, map, val);
--	mutex_unlock(&data->mutex);
--
--	return ret;
--}
--
- static int emc1403_get_hyst(struct thermal_data *data, int channel,
- 			    enum emc1403_reg_map map, long *val)
- {
- 	int hyst, ret;
- 	long limit;
- 
--	mutex_lock(&data->mutex);
--	ret = __emc1403_get_temp(data, channel, map, &limit);
-+	ret = emc1403_get_temp(data, channel, map, &limit);
- 	if (ret < 0)
--		goto unlock;
-+		return ret;
- 	ret = regmap_read(data->regmap, 0x21, &hyst);
- 	if (ret < 0)
--		goto unlock;
-+		return ret;
- 	if (map == temp_min)
- 		*val = limit + hyst * 1000;
- 	else
- 		*val = limit - hyst * 1000;
--unlock:
--	mutex_unlock(&data->mutex);
--	return ret;
-+	return 0;
- }
- 
- static int emc1403_temp_read(struct thermal_data *data, u32 attr, int channel, long *val)
-@@ -423,20 +406,16 @@ static int emc1403_set_hyst(struct thermal_data *data, long val)
- 	else
- 		val = clamp_val(val, 0, 255000);
- 
--	mutex_lock(&data->mutex);
--	ret = __emc1403_get_temp(data, 0, temp_crit, &limit);
-+	ret = emc1403_get_temp(data, 0, temp_crit, &limit);
- 	if (ret < 0)
--		goto unlock;
-+		return ret;
- 
- 	hyst = limit - val;
- 	if (data->chip == emc1428)
- 		hyst = clamp_val(DIV_ROUND_CLOSEST(hyst, 1000), 0, 127);
- 	else
- 		hyst = clamp_val(DIV_ROUND_CLOSEST(hyst, 1000), 0, 255);
--	ret = regmap_write(data->regmap, 0x21, hyst);
--unlock:
--	mutex_unlock(&data->mutex);
--	return ret;
-+	return regmap_write(data->regmap, 0x21, hyst);
- }
- 
- static int emc1403_set_temp(struct thermal_data *data, int channel,
-@@ -450,7 +429,6 @@ static int emc1403_set_temp(struct thermal_data *data, int channel,
- 	regh = emc1403_temp_regs[channel][map];
- 	regl = emc1403_temp_regs_low[channel][map];
- 
--	mutex_lock(&data->mutex);
- 	if (regl >= 0) {
- 		if (data->chip == emc1428)
- 			val = clamp_val(val, -128000, 127875);
-@@ -459,7 +437,7 @@ static int emc1403_set_temp(struct thermal_data *data, int channel,
- 		regval = DIV_ROUND_CLOSEST(val, 125);
- 		ret = regmap_write(data->regmap, regh, (regval >> 3) & 0xff);
- 		if (ret < 0)
--			goto unlock;
-+			return ret;
- 		ret = regmap_write(data->regmap, regl, (regval & 0x07) << 5);
- 	} else {
- 		if (data->chip == emc1428)
-@@ -469,8 +447,6 @@ static int emc1403_set_temp(struct thermal_data *data, int channel,
- 		regval = DIV_ROUND_CLOSEST(val, 1000);
- 		ret = regmap_write(data->regmap, regh, regval);
- 	}
--unlock:
--	mutex_unlock(&data->mutex);
- 	return ret;
- }
- 
-@@ -628,8 +604,6 @@ static int emc1403_probe(struct i2c_client *client)
- 	if (IS_ERR(data->regmap))
- 		return PTR_ERR(data->regmap);
- 
--	mutex_init(&data->mutex);
--
- 	hwmon_dev = devm_hwmon_device_register_with_info(&client->dev,
- 							 client->name, data,
- 							 &emc1403_chip_info,
+@@ -323,9 +322,6 @@ static int emc1403_temp_read(struct thermal_data *data, u32 attr, int channel, l
+ 	case hwmon_temp_input:
+ 		ret = emc1403_get_temp(data, channel, ema1403_temp_map[attr], val);
+ 		break;
+-	case hwmon_temp_min_hyst:
+-		ret = emc1403_get_hyst(data, channel, temp_min, val);
+-		break;
+ 	case hwmon_temp_max_hyst:
+ 		ret = emc1403_get_hyst(data, channel, temp_max, val);
+ 		break;
+@@ -494,7 +490,6 @@ static umode_t emc1403_temp_is_visible(const void *_data, u32 attr, int channel)
+ 	case hwmon_temp_max_alarm:
+ 	case hwmon_temp_crit_alarm:
+ 	case hwmon_temp_fault:
+-	case hwmon_temp_min_hyst:
+ 	case hwmon_temp_max_hyst:
+ 		return 0444;
+ 	case hwmon_temp_min:
+@@ -524,35 +519,35 @@ static umode_t emc1403_is_visible(const void *data, enum hwmon_sensor_types type
+ static const struct hwmon_channel_info * const emc1403_info[] = {
+ 	HWMON_CHANNEL_INFO(temp,
+ 			   HWMON_T_INPUT | HWMON_T_MIN | HWMON_T_MAX |
+-			   HWMON_T_CRIT | HWMON_T_MIN_HYST | HWMON_T_MAX_HYST |
++			   HWMON_T_CRIT | HWMON_T_MAX_HYST |
+ 			   HWMON_T_CRIT_HYST | HWMON_T_MIN_ALARM |
+ 			   HWMON_T_MAX_ALARM | HWMON_T_CRIT_ALARM,
+ 			   HWMON_T_INPUT | HWMON_T_MIN | HWMON_T_MAX |
+-			   HWMON_T_CRIT | HWMON_T_MIN_HYST | HWMON_T_MAX_HYST |
++			   HWMON_T_CRIT | HWMON_T_MAX_HYST |
+ 			   HWMON_T_CRIT_HYST | HWMON_T_MIN_ALARM |
+ 			   HWMON_T_MAX_ALARM | HWMON_T_CRIT_ALARM | HWMON_T_FAULT,
+ 			   HWMON_T_INPUT | HWMON_T_MIN | HWMON_T_MAX |
+-			   HWMON_T_CRIT | HWMON_T_MIN_HYST | HWMON_T_MAX_HYST |
++			   HWMON_T_CRIT | HWMON_T_MAX_HYST |
+ 			   HWMON_T_CRIT_HYST | HWMON_T_MIN_ALARM |
+ 			   HWMON_T_MAX_ALARM | HWMON_T_CRIT_ALARM | HWMON_T_FAULT,
+ 			   HWMON_T_INPUT | HWMON_T_MIN | HWMON_T_MAX |
+-			   HWMON_T_CRIT | HWMON_T_MIN_HYST | HWMON_T_MAX_HYST |
++			   HWMON_T_CRIT | HWMON_T_MAX_HYST |
+ 			   HWMON_T_CRIT_HYST | HWMON_T_MIN_ALARM |
+ 			   HWMON_T_MAX_ALARM | HWMON_T_CRIT_ALARM | HWMON_T_FAULT,
+ 			   HWMON_T_INPUT | HWMON_T_MIN | HWMON_T_MAX |
+-			   HWMON_T_CRIT | HWMON_T_MIN_HYST | HWMON_T_MAX_HYST |
++			   HWMON_T_CRIT | HWMON_T_MAX_HYST |
+ 			   HWMON_T_CRIT_HYST | HWMON_T_MIN_ALARM |
+ 			   HWMON_T_MAX_ALARM | HWMON_T_CRIT_ALARM | HWMON_T_FAULT,
+ 			   HWMON_T_INPUT | HWMON_T_MIN | HWMON_T_MAX |
+-			   HWMON_T_CRIT | HWMON_T_MIN_HYST | HWMON_T_MAX_HYST |
++			   HWMON_T_CRIT | HWMON_T_MAX_HYST |
+ 			   HWMON_T_CRIT_HYST | HWMON_T_MIN_ALARM |
+ 			   HWMON_T_MAX_ALARM | HWMON_T_CRIT_ALARM | HWMON_T_FAULT,
+ 			   HWMON_T_INPUT | HWMON_T_MIN | HWMON_T_MAX |
+-			   HWMON_T_CRIT | HWMON_T_MIN_HYST | HWMON_T_MAX_HYST |
++			   HWMON_T_CRIT | HWMON_T_MAX_HYST |
+ 			   HWMON_T_CRIT_HYST | HWMON_T_MIN_ALARM |
+ 			   HWMON_T_MAX_ALARM | HWMON_T_CRIT_ALARM | HWMON_T_FAULT,
+ 			   HWMON_T_INPUT | HWMON_T_MIN | HWMON_T_MAX |
+-			   HWMON_T_CRIT | HWMON_T_MIN_HYST | HWMON_T_MAX_HYST |
++			   HWMON_T_CRIT | HWMON_T_MAX_HYST |
+ 			   HWMON_T_CRIT_HYST | HWMON_T_MIN_ALARM |
+ 			   HWMON_T_MAX_ALARM | HWMON_T_CRIT_ALARM | HWMON_T_FAULT
+ 			   ),
 -- 
 2.53.0
 
