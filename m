@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A19D325726;
-	Sat, 12 Sep 2026 13:53:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B453325726;
+	Sat, 12 Sep 2026 13:53:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789221216; cv=none; b=pTVrIo3tFl7UWDhzzXfgsa+C3Hk/JwfQgs7zGqYeLf0/ISyMhIWZprs1SFdtvl9vL/u4lGH3dcSPF5lUBtLnEI1fqX9VizZw+fWJRYZjO8U8Atpci+gNyh5uzyvPTeuk2CZNKTCx3OalWa96UDrie0vhkV5xMTKTPV9Z/WaD75w=
+	t=1789221222; cv=none; b=SgT8ZaX80FaoRCgo382xs8GrhGBDGQCmMnx41EUWIEN3NnJzkBxSk4jqfLnysAbpekbggBBVWvboGSrs2m2kpps1nwESHtin46PsmZdr7n1JDhvsLxDPsYUEEykBqnQHZGFBrsb5FoNpislOoqu8WocxF6cDhTd/MezvuZrwt3U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789221216; c=relaxed/simple;
-	bh=gFsNzthM4FRUjAVtL6Oe47nY2g7fKx+a0sOBTU7toCE=;
+	s=arc-20240116; t=1789221222; c=relaxed/simple;
+	bh=ex4D25SHmjU4CcomSvr1VC7ZCGaUq9NTg6QPqMndP8E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i1S50vd3bUqRW70VQkSNfOhGiIVyOFOOfnzKKh4wXCC+NKrAL9e7u4ZvHUK/ra6uhbNiyXl57OsW/1xXn9L0/JLQDoiTVNDX5mZXgm8Jqc0C01uGGsgSYA9r5JUFQ9KA9Am7lFp7RPQuDaRkI8+3xK/Kj7fwk7zFMK01v6FKLiI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T9YkYmsU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rtfYM0rOX5oGjNdr+EVunx3gd6jeC3zAw4QyWMekBmc3CXkg438CBItDig/KXrVyio6GZvDTQYqg31tMsas8sCotdKlbW8OjPhXabk7wy/h6jOFp0FQiANGZdQ5MQ2VN/nI1klJGH/aPzM1wzwkXy659tc0uVkLGf3u4WXkiCmM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rk/RP1bC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T9YkYmsU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B1D41F000FF;
-	Sat, 12 Sep 2026 13:53:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rk/RP1bC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D2E91F00893;
+	Sat, 12 Sep 2026 13:53:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789221212;
-	bh=p7WVKlvsi8HgT7YkWC7duPkhy1vWofQIUx5YGwogiPk=;
+	s=korg; t=1789221216;
+	bh=BcF6IaIGlgGZF5qard51g4Tb/MNPAVvMEkB2+niP/qU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T9YkYmsUyjEBb6NcVyH53dDO10gwWXVxk8pP22bblIJWKSSAct3QOYezbsxfbK9Rk
-	 ZT5UHZuFvQZNzbTfIXvMhyh5wv8iefrvzaj8MIgCojX/lVAXWi+3fccYOYdPpcdxSN
-	 mqMQs+hpeKyZKCcF+tPDFHru+e2rzlax2eQWES2Y=
+	b=Rk/RP1bCVnYpIOC0igEEf/vRBWd7rlD7tox+XkRmpKv3a4gLeNB56W8Hyx9UKc6jq
+	 1I5tNXqyWHYcZcAbB7kYFL6gGJhZFVHtrMyUjQE810SGAT0ayHwRnLfajkLuNhKVw1
+	 LfCY4ZJkz8yz9vlcLwMPZDFFOgc6vYkBueNEld9w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Bilal <meatuni001@gmail.com>
-Subject: [PATCH 6.6 0335/1424] staging: rtl8723bs: fix OOB read in rtw_action_frame_parse()
-Date: Sat, 12 Sep 2026 08:46:07 +0200
-Message-ID: <20260912065614.788202511@linuxfoundation.org>
+	Can Peng <pengcan@kylinos.cn>,
+	Daniel Lezcano <daniel.lezcano@kernel.org>,
+	Frank Li <Frank.Li@nxp.com>
+Subject: [PATCH 6.6 0336/1424] thermal/drivers/imx: Disable clock on runtime resume failure
+Date: Sat, 12 Sep 2026 08:46:08 +0200
+Message-ID: <20260912065614.810008301@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -49,51 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Muhammad Bilal <meatuni001@gmail.com>
+From: Can Peng <pengcan@kylinos.cn>
 
-commit ff917923f4fb9c83717ba135ee47d7e4c1567bb7 upstream.
+commit bcc6d886e5006a4656901d2d7fb6a215c96068a0 upstream.
 
-rtw_action_frame_parse() takes a frame_len parameter but never
-actually checks it before indexing into the frame body:
+imx_thermal_runtime_resume() enables the thermal clock before
+powering up the sensor and enabling measurements.
 
-	const u8 *frame_body = frame + sizeof(struct ieee80211_hdr_3addr);
-	...
-	c = frame_body[0];
-	...
-	a = frame_body[1];
+If either regmap_write() fails, the function returns with the clock
+still enabled. This leaves the clock enable count unbalanced after a
+failed runtime resume.
 
-frame_body already points 24 bytes (sizeof(struct
-ieee80211_hdr_3addr)) into frame, so reading frame_body[0] and
-frame_body[1] requires frame_len >= 26. A management action frame
-shorter than that (e.g. exactly 24 bytes, the minimum a malicious
-peer can send) causes a 1-2 byte out-of-bounds read.
+Disable the clock on those failure paths before returning the error.
 
-This is reachable from rtw_cfg80211_monitor_if_xmit_entry() and
-cfg80211_rtw_mgmt_tx() in ioctl_cfg80211.c, both of which pass
-attacker/user-influenced frame buffers and lengths straight through.
-
-Add the missing length check before frame_body is dereferenced.
-
-Fixes: 554c0a3abf216 ("staging: Add rtl8723bs sdio wifi driver")
+Fixes: 4cf2ddf16e17 ("thermal/drivers/imx: Implement runtime PM support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
-Link: https://patch.msgid.link/20260728125456.32359-3-meatuni001@gmail.com
+Signed-off-by: Can Peng <pengcan@kylinos.cn>
+Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260722084909.463437-1-pengcan@kylinos.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/rtl8723bs/core/rtw_ieee80211.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/thermal/imx_thermal.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/drivers/staging/rtl8723bs/core/rtw_ieee80211.c
-+++ b/drivers/staging/rtl8723bs/core/rtw_ieee80211.c
-@@ -1152,6 +1152,9 @@ int rtw_action_frame_parse(const u8 *fra
- 	u8 c;
- 	u8 a = ACT_PUBLIC_MAX;
+--- a/drivers/thermal/imx_thermal.c
++++ b/drivers/thermal/imx_thermal.c
+@@ -851,12 +851,12 @@ static int __maybe_unused imx_thermal_ru
+ 	ret = regmap_write(map, socdata->sensor_ctrl + REG_CLR,
+ 			   socdata->power_down_mask);
+ 	if (ret)
+-		return ret;
++		goto disable_clk;
  
-+	if (frame_len < sizeof(struct ieee80211_hdr_3addr) + 2)
-+		return false;
+ 	ret = regmap_write(map, socdata->sensor_ctrl + REG_SET,
+ 			   socdata->measure_temp_mask);
+ 	if (ret)
+-		return ret;
++		goto disable_clk;
+ 
+ 	/*
+ 	 * According to the temp sensor designers, it may require up to ~17us
+@@ -865,6 +865,11 @@ static int __maybe_unused imx_thermal_ru
+ 	usleep_range(20, 50);
+ 
+ 	return 0;
 +
- 	fc = le16_to_cpu(((struct ieee80211_hdr_3addr *)frame)->frame_control);
++disable_clk:
++	clk_disable_unprepare(data->thermal_clk);
++
++	return ret;
+ }
  
- 	if ((fc & (IEEE80211_FCTL_FTYPE|IEEE80211_FCTL_STYPE))
+ static const struct dev_pm_ops imx_thermal_pm_ops = {
 
 
