@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE6E0CA6F;
-	Sat, 12 Sep 2026 15:12:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CC8E2F531B;
+	Sat, 12 Sep 2026 15:12:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789225954; cv=none; b=PLp1NOl2HNnYgt6Ye4qdiwF3lWvw7t4uQP0z8R1ZQTDUCPfKA9hdw48hnHyBrhrNA4uCQHQxBViXn7UI13UReTW9MHr4JSsv4htuTPXXIyIUOjKDtG4k4FUb98Vpf9y8/ChCVlAloEIiaoDLHjz8sDUYJk4bwgwn3VEnygUjcG8=
+	t=1789225959; cv=none; b=cgi+r/mHDkvY67lb+R2l3dqBezM4wjpvZGKqt03dnvZp8lFNx8YTUWFjcc1oHrFv4maYQts0S8k6FO11nMWiC3h/5lLin4buMG+roVy5EZxMXBoJN++eYbph8/fZz+KDBOLWVk4o20IIVBXfUHlGVHb5MXogkh7TGxfzKV2i0yU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789225954; c=relaxed/simple;
-	bh=qOPMUTP0IZPMdz6yQFcPYWXw5MstIdAJO1pUB2mG1bg=;
+	s=arc-20240116; t=1789225959; c=relaxed/simple;
+	bh=dt7PVfCMl8HNXkALpRTEPEIdBnLsqR0HjCfGQZQok18=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zqjp4iS3luqjBep4rBfvr6/jy2U3OxL3XUY0h6lz1eyh/NCv4syBLPcTbxsWKoJfaF85sHXcrj8aQCTEQ4PZcS3DYi7MFZtsEEWkKtz/i6V+8+0LxA3HrQVAvNdS+m0Bh+wr4/bZyHPovMT8EzYZsa+h6YZemOrF/ulnRF+DoVg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HqvK5cil; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TcNNnVDxchiDWWvYur7hS1q9JzrbV+h5NWIKPCEjZM5geAjbEE1jql7VI+DHJN6qz2Vis5tBsM7h/jlb68aM1ojl6kDrxsDyQyEOLiLzBWXe89pVtPH4bEgV3C+qXjn1BOeW7IlZDtQem8ajZxsKMGyrNarRGP3YCpAUZjmv/3c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FZRBXTr3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HqvK5cil"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3C301F000FF;
-	Sat, 12 Sep 2026 15:12:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FZRBXTr3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 768271F000FF;
+	Sat, 12 Sep 2026 15:12:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789225952;
-	bh=Oyw1d/Q1OS0qmyc7h9lmu9Th+MVlojxwkw/3Sn6yQ7Y=;
+	s=korg; t=1789225957;
+	bh=6PZv9RhgpIf1eI4Tcv+tJFNTkW7AZ4BEpi9TqD+iTIM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HqvK5cilJ/ridn+A++cdKYRJgwa6nmkGEHex8lpsbzLxUxrnuq0Ual8V61+bjZMfZ
-	 li5ytRJ+Na/pPZZCzx7Ttj3WcOAv/7TMHLj/MY5EXb7p2WYAroQCsvttYwXG2bESKP
-	 3MB6n6pvmjOl6bNnR8sf1GHNhsh3/EP+2eecJtEs=
+	b=FZRBXTr3157DglF4bSpj7eJVDccDwCsJxAj4xr1RQzHer4Bx/69bx4Or7x8dQo0Op
+	 DrjcWCN5KjriI+o45dcT1Hpd1iMSBLyefR1TBwUsvlwi37PkmZ08U7eoxRiTWgj0KK
+	 kBxp8VhsJKLI+6TUPuwBeeYEDXP3F8m7OmxwJkHs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jarkko Nikula <jarkko.nikula@linux.intel.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Frank Li <Frank.Li@nxp.com>,
 	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1302/1424] i3c: mipi-i3c-hci: Fix number of DAT/DCT entries for HCI versions < 1.1
-Date: Sat, 12 Sep 2026 09:02:14 +0200
-Message-ID: <20260912065636.423901550@linuxfoundation.org>
+Subject: [PATCH 6.6 1303/1424] i3c: mipi-i3c-hci: Quieten initialization messages
+Date: Sat, 12 Sep 2026 09:02:15 +0200
+Message-ID: <20260912065636.445351196@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -51,74 +52,305 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jarkko Nikula <jarkko.nikula@linux.intel.com>
+From: Adrian Hunter <adrian.hunter@intel.com>
 
-[ Upstream commit be90ae1ba14a83962b33c4d4c854ef081186b0e4 ]
+[ Upstream commit 581d5b7953b8f24d2f379c8c56ceaa7d163488ce ]
 
-I was wrong about the TABLE_SIZE field description in the
-commit 0676bfebf576 ("i3c: mipi-i3c-hci: Fix DAT/DCT entry sizes").
+The copious initialization messages are at most useful only for debugging.
+Change them from dev_info() or dev_notice() to dev_dbg().
 
-For the MIPI I3C HCI versions 1.0 and earlier the TABLE_SIZE field in
-the registers DAT_SECTION_OFFSET and DCT_SECTION_OFFSET is indeed defined
-in DWORDs and not number of entries like it is defined in later versions.
-
-Where above fix allowed driver initialization to continue the wrongly
-interpreted TABLE_SIZE field leads variables DAT_entries being twice and
-DCT_entries four times as big as they really are.
-
-That in turn leads clearing the DAT table over the boundary in the
-dat_v1.c: hci_dat_v1_init().
-
-So interprete the TABLE_SIZE field in DWORDs for HCI versions < 1.1 and
-fix number of DAT/DCT entries accordingly.
-
-Fixes: 0676bfebf576 ("i3c: mipi-i3c-hci: Fix DAT/DCT entry sizes")
-Signed-off-by: Jarkko Nikula <jarkko.nikula@linux.intel.com>
+Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260106164416.67074-4-adrian.hunter@intel.com
 Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Stable-dep-of: 308ecb824db3 ("i3c: mipi-i3c-hci: Fix missing STAT_IBI_STATUS_THLD in PIO mode")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i3c/master/mipi-i3c-hci/core.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/i3c/master/mipi-i3c-hci/core.c     | 18 +++----
+ drivers/i3c/master/mipi-i3c-hci/dma.c      |  4 +-
+ drivers/i3c/master/mipi-i3c-hci/ext_caps.c | 55 ++++++++++------------
+ drivers/i3c/master/mipi-i3c-hci/pio.c      | 16 +++----
+ 4 files changed, 45 insertions(+), 48 deletions(-)
 
 diff --git a/drivers/i3c/master/mipi-i3c-hci/core.c b/drivers/i3c/master/mipi-i3c-hci/core.c
-index 63d5e869dc8ad..a4c57b518bee9 100644
+index a4c57b518bee9..10c400da66403 100644
 --- a/drivers/i3c/master/mipi-i3c-hci/core.c
 +++ b/drivers/i3c/master/mipi-i3c-hci/core.c
-@@ -583,6 +583,7 @@ static irqreturn_t i3c_hci_irq_handler(int irq, void *dev_id)
- static int i3c_hci_init(struct i3c_hci *hci)
- {
- 	u32 regval, offset;
-+	bool size_in_dwords;
- 	int ret;
- 
- 	/* Validate HCI hardware version */
-@@ -606,11 +607,16 @@ static int i3c_hci_init(struct i3c_hci *hci)
- 	hci->caps = reg_read(HC_CAPABILITIES);
- 	DBG("caps = %#x", hci->caps);
- 
-+	size_in_dwords = hci->version_major < 1 ||
-+			 (hci->version_major == 1 && hci->version_minor < 1);
-+
- 	regval = reg_read(DAT_SECTION);
- 	offset = FIELD_GET(DAT_TABLE_OFFSET, regval);
- 	hci->DAT_regs = offset ? hci->base_regs + offset : NULL;
- 	hci->DAT_entries = FIELD_GET(DAT_TABLE_SIZE, regval);
+@@ -617,8 +617,8 @@ static int i3c_hci_init(struct i3c_hci *hci)
  	hci->DAT_entry_size = FIELD_GET(DAT_ENTRY_SIZE, regval) ? 0 : 8;
-+	if (size_in_dwords)
-+		hci->DAT_entries = 4 * hci->DAT_entries / hci->DAT_entry_size;
- 	dev_info(&hci->master.dev, "DAT: %u %u-bytes entries at offset %#x\n",
- 		 hci->DAT_entries, hci->DAT_entry_size, offset);
+ 	if (size_in_dwords)
+ 		hci->DAT_entries = 4 * hci->DAT_entries / hci->DAT_entry_size;
+-	dev_info(&hci->master.dev, "DAT: %u %u-bytes entries at offset %#x\n",
+-		 hci->DAT_entries, hci->DAT_entry_size, offset);
++	dev_dbg(&hci->master.dev, "DAT: %u %u-bytes entries at offset %#x\n",
++		hci->DAT_entries, hci->DAT_entry_size, offset);
  
-@@ -619,6 +625,8 @@ static int i3c_hci_init(struct i3c_hci *hci)
- 	hci->DCT_regs = offset ? hci->base_regs + offset : NULL;
- 	hci->DCT_entries = FIELD_GET(DCT_TABLE_SIZE, regval);
+ 	regval = reg_read(DCT_SECTION);
+ 	offset = FIELD_GET(DCT_TABLE_OFFSET, regval);
+@@ -627,23 +627,23 @@ static int i3c_hci_init(struct i3c_hci *hci)
  	hci->DCT_entry_size = FIELD_GET(DCT_ENTRY_SIZE, regval) ? 0 : 16;
-+	if (size_in_dwords)
-+		hci->DCT_entries = 4 * hci->DCT_entries / hci->DCT_entry_size;
- 	dev_info(&hci->master.dev, "DCT: %u %u-bytes entries at offset %#x\n",
- 		 hci->DCT_entries, hci->DCT_entry_size, offset);
+ 	if (size_in_dwords)
+ 		hci->DCT_entries = 4 * hci->DCT_entries / hci->DCT_entry_size;
+-	dev_info(&hci->master.dev, "DCT: %u %u-bytes entries at offset %#x\n",
+-		 hci->DCT_entries, hci->DCT_entry_size, offset);
++	dev_dbg(&hci->master.dev, "DCT: %u %u-bytes entries at offset %#x\n",
++		hci->DCT_entries, hci->DCT_entry_size, offset);
  
+ 	regval = reg_read(RING_HEADERS_SECTION);
+ 	offset = FIELD_GET(RING_HEADERS_OFFSET, regval);
+ 	hci->RHS_regs = offset ? hci->base_regs + offset : NULL;
+-	dev_info(&hci->master.dev, "Ring Headers at offset %#x\n", offset);
++	dev_dbg(&hci->master.dev, "Ring Headers at offset %#x\n", offset);
+ 
+ 	regval = reg_read(PIO_SECTION);
+ 	offset = FIELD_GET(PIO_REGS_OFFSET, regval);
+ 	hci->PIO_regs = offset ? hci->base_regs + offset : NULL;
+-	dev_info(&hci->master.dev, "PIO section at offset %#x\n", offset);
++	dev_dbg(&hci->master.dev, "PIO section at offset %#x\n", offset);
+ 
+ 	regval = reg_read(EXT_CAPS_SECTION);
+ 	offset = FIELD_GET(EXT_CAPS_OFFSET, regval);
+ 	hci->EXTCAPS_regs = offset ? hci->base_regs + offset : NULL;
+-	dev_info(&hci->master.dev, "Extended Caps at offset %#x\n", offset);
++	dev_dbg(&hci->master.dev, "Extended Caps at offset %#x\n", offset);
+ 
+ 	ret = i3c_hci_parse_ext_caps(hci);
+ 	if (ret)
+@@ -713,7 +713,7 @@ static int i3c_hci_init(struct i3c_hci *hci)
+ 			ret = -EIO;
+ 		} else {
+ 			hci->io = &mipi_i3c_hci_dma;
+-			dev_info(&hci->master.dev, "Using DMA\n");
++			dev_dbg(&hci->master.dev, "Using DMA\n");
+ 		}
+ 	}
+ 
+@@ -725,7 +725,7 @@ static int i3c_hci_init(struct i3c_hci *hci)
+ 			ret = -EIO;
+ 		} else {
+ 			hci->io = &mipi_i3c_hci_pio;
+-			dev_info(&hci->master.dev, "Using PIO\n");
++			dev_dbg(&hci->master.dev, "Using PIO\n");
+ 		}
+ 	}
+ 
+diff --git a/drivers/i3c/master/mipi-i3c-hci/dma.c b/drivers/i3c/master/mipi-i3c-hci/dma.c
+index 624d00b853a51..2cf4974fffa75 100644
+--- a/drivers/i3c/master/mipi-i3c-hci/dma.c
++++ b/drivers/i3c/master/mipi-i3c-hci/dma.c
+@@ -216,7 +216,7 @@ static int hci_dma_init(struct i3c_hci *hci)
+ 
+ 	regval = rhs_reg_read(CONTROL);
+ 	nr_rings = FIELD_GET(MAX_HEADER_COUNT_CAP, regval);
+-	dev_info(&hci->master.dev, "%d DMA rings available\n", nr_rings);
++	dev_dbg(&hci->master.dev, "%d DMA rings available\n", nr_rings);
+ 	if (unlikely(nr_rings > 8)) {
+ 		dev_err(&hci->master.dev, "number of rings should be <= 8\n");
+ 		nr_rings = 8;
+@@ -232,7 +232,7 @@ static int hci_dma_init(struct i3c_hci *hci)
+ 	for (i = 0; i < rings->total; i++) {
+ 		u32 offset = rhs_reg_read(RHn_OFFSET(i));
+ 
+-		dev_info(&hci->master.dev, "Ring %d at offset %#x\n", i, offset);
++		dev_dbg(&hci->master.dev, "Ring %d at offset %#x\n", i, offset);
+ 		ret = -EINVAL;
+ 		if (!offset)
+ 			goto err_out;
+diff --git a/drivers/i3c/master/mipi-i3c-hci/ext_caps.c b/drivers/i3c/master/mipi-i3c-hci/ext_caps.c
+index 2e9b23efdc45d..4e55196281783 100644
+--- a/drivers/i3c/master/mipi-i3c-hci/ext_caps.c
++++ b/drivers/i3c/master/mipi-i3c-hci/ext_caps.c
+@@ -27,9 +27,9 @@ static int hci_extcap_hardware_id(struct i3c_hci *hci, void __iomem *base)
+ 	hci->vendor_version_id	= readl(base + 0x08);
+ 	hci->vendor_product_id	= readl(base + 0x0c);
+ 
+-	dev_info(&hci->master.dev, "vendor MIPI ID: %#x\n", hci->vendor_mipi_id);
+-	dev_info(&hci->master.dev, "vendor version ID: %#x\n", hci->vendor_version_id);
+-	dev_info(&hci->master.dev, "vendor product ID: %#x\n", hci->vendor_product_id);
++	dev_dbg(&hci->master.dev, "vendor MIPI ID: %#x\n", hci->vendor_mipi_id);
++	dev_dbg(&hci->master.dev, "vendor version ID: %#x\n", hci->vendor_version_id);
++	dev_dbg(&hci->master.dev, "vendor product ID: %#x\n", hci->vendor_product_id);
+ 
+ 	/* ought to go in a table if this grows too much */
+ 	switch (hci->vendor_mipi_id) {
+@@ -49,7 +49,7 @@ static int hci_extcap_master_config(struct i3c_hci *hci, void __iomem *base)
+ 	static const char * const functionality[] = {
+ 		"(unknown)", "master only", "target only",
+ 		"primary/secondary master" };
+-	dev_info(&hci->master.dev, "operation mode: %s\n", functionality[operation_mode]);
++	dev_dbg(&hci->master.dev, "operation mode: %s\n", functionality[operation_mode]);
+ 	if (operation_mode & 0x1)
+ 		return 0;
+ 	dev_err(&hci->master.dev, "only master mode is currently supported\n");
+@@ -61,7 +61,7 @@ static int hci_extcap_multi_bus(struct i3c_hci *hci, void __iomem *base)
+ 	u32 bus_instance = readl(base + 0x04);
+ 	unsigned int count = FIELD_GET(GENMASK(3, 0), bus_instance);
+ 
+-	dev_info(&hci->master.dev, "%d bus instances\n", count);
++	dev_dbg(&hci->master.dev, "%d bus instances\n", count);
+ 	return 0;
+ }
+ 
+@@ -71,8 +71,7 @@ static int hci_extcap_xfer_modes(struct i3c_hci *hci, void __iomem *base)
+ 	u32 entries = FIELD_GET(CAP_HEADER_LENGTH, header) - 1;
+ 	unsigned int index;
+ 
+-	dev_info(&hci->master.dev, "transfer mode table has %d entries\n",
+-		 entries);
++	dev_dbg(&hci->master.dev, "transfer mode table has %d entries\n", entries);
+ 	base += 4;  /* skip header */
+ 	for (index = 0; index < entries; index++) {
+ 		u32 mode_entry = readl(base);
+@@ -94,19 +93,19 @@ static int hci_extcap_xfer_rates(struct i3c_hci *hci, void __iomem *base)
+ 
+ 	base += 4;  /* skip header */
+ 
+-	dev_info(&hci->master.dev, "available data rates:\n");
++	dev_dbg(&hci->master.dev, "available data rates:\n");
+ 	for (index = 0; index < entries; index++) {
+ 		rate_entry = readl(base);
+ 		DBG("entry %d: 0x%08x", index, rate_entry);
+ 		rate = FIELD_GET(XFERRATE_ACTUAL_RATE_KHZ, rate_entry);
+ 		rate_id = FIELD_GET(XFERRATE_RATE_ID, rate_entry);
+ 		mode_id = FIELD_GET(XFERRATE_MODE_ID, rate_entry);
+-		dev_info(&hci->master.dev, "rate %d for %s = %d kHz\n",
+-			 rate_id,
+-			 mode_id == XFERRATE_MODE_I3C ? "I3C" :
+-			 mode_id == XFERRATE_MODE_I2C ? "I2C" :
+-			 "unknown mode",
+-			 rate);
++		dev_dbg(&hci->master.dev, "rate %d for %s = %d kHz\n",
++			rate_id,
++			mode_id == XFERRATE_MODE_I3C ? "I3C" :
++			mode_id == XFERRATE_MODE_I2C ? "I2C" :
++			"unknown mode",
++			rate);
+ 		base += 4;
+ 	}
+ 
+@@ -120,8 +119,8 @@ static int hci_extcap_auto_command(struct i3c_hci *hci, void __iomem *base)
+ 	u32 autocmd_ext_config = readl(base + 0x08);
+ 	unsigned int count = FIELD_GET(GENMASK(3, 0), autocmd_ext_config);
+ 
+-	dev_info(&hci->master.dev, "%d/%d active auto-command entries\n",
+-		 count, max_count);
++	dev_dbg(&hci->master.dev, "%d/%d active auto-command entries\n",
++		count, max_count);
+ 	/* remember auto-command register location for later use */
+ 	hci->AUTOCMD_regs = base;
+ 	return 0;
+@@ -129,46 +128,46 @@ static int hci_extcap_auto_command(struct i3c_hci *hci, void __iomem *base)
+ 
+ static int hci_extcap_debug(struct i3c_hci *hci, void __iomem *base)
+ {
+-	dev_info(&hci->master.dev, "debug registers present\n");
++	dev_dbg(&hci->master.dev, "debug registers present\n");
+ 	hci->DEBUG_regs = base;
+ 	return 0;
+ }
+ 
+ static int hci_extcap_scheduled_cmd(struct i3c_hci *hci, void __iomem *base)
+ {
+-	dev_info(&hci->master.dev, "scheduled commands available\n");
++	dev_dbg(&hci->master.dev, "scheduled commands available\n");
+ 	/* hci->schedcmd_regs = base; */
+ 	return 0;
+ }
+ 
+ static int hci_extcap_non_curr_master(struct i3c_hci *hci, void __iomem *base)
+ {
+-	dev_info(&hci->master.dev, "Non-Current Master support available\n");
++	dev_dbg(&hci->master.dev, "Non-Current Master support available\n");
+ 	/* hci->NCM_regs = base; */
+ 	return 0;
+ }
+ 
+ static int hci_extcap_ccc_resp_conf(struct i3c_hci *hci, void __iomem *base)
+ {
+-	dev_info(&hci->master.dev, "CCC Response Configuration available\n");
++	dev_dbg(&hci->master.dev, "CCC Response Configuration available\n");
+ 	return 0;
+ }
+ 
+ static int hci_extcap_global_DAT(struct i3c_hci *hci, void __iomem *base)
+ {
+-	dev_info(&hci->master.dev, "Global DAT available\n");
++	dev_dbg(&hci->master.dev, "Global DAT available\n");
+ 	return 0;
+ }
+ 
+ static int hci_extcap_multilane(struct i3c_hci *hci, void __iomem *base)
+ {
+-	dev_info(&hci->master.dev, "Master Multi-Lane support available\n");
++	dev_dbg(&hci->master.dev, "Master Multi-Lane support available\n");
+ 	return 0;
+ }
+ 
+ static int hci_extcap_ncm_multilane(struct i3c_hci *hci, void __iomem *base)
+ {
+-	dev_info(&hci->master.dev, "NCM Multi-Lane support available\n");
++	dev_dbg(&hci->master.dev, "NCM Multi-Lane support available\n");
+ 	return 0;
+ }
+ 
+@@ -201,7 +200,7 @@ static const struct hci_ext_caps ext_capabilities[] = {
+ static int hci_extcap_vendor_NXP(struct i3c_hci *hci, void __iomem *base)
+ {
+ 	hci->vendor_data = (__force void *)base;
+-	dev_info(&hci->master.dev, "Build Date Info = %#x\n", readl(base + 1*4));
++	dev_dbg(&hci->master.dev, "Build Date Info = %#x\n", readl(base + 1 * 4));
+ 	/* reset the FPGA */
+ 	writel(0xdeadbeef, base + 1*4);
+ 	return 0;
+@@ -239,9 +238,8 @@ static int hci_extcap_vendor_specific(struct i3c_hci *hci, void __iomem *base,
+ 	}
+ 
+ 	if (!vendor_cap_entry) {
+-		dev_notice(&hci->master.dev,
+-			   "unknown ext_cap 0x%02x for vendor 0x%02x\n",
+-			   cap_id, hci->vendor_mipi_id);
++		dev_dbg(&hci->master.dev, "unknown ext_cap 0x%02x for vendor 0x%02x\n",
++			cap_id, hci->vendor_mipi_id);
+ 		return 0;
+ 	}
+ 	if (cap_length < vendor_cap_entry->min_length) {
+@@ -293,8 +291,7 @@ int i3c_hci_parse_ext_caps(struct i3c_hci *hci)
+ 			}
+ 		}
+ 		if (!cap_entry) {
+-			dev_notice(&hci->master.dev,
+-				   "unknown ext_cap 0x%02x\n", cap_id);
++			dev_dbg(&hci->master.dev, "unknown ext_cap 0x%02x\n", cap_id);
+ 		} else if (cap_length < cap_entry->min_length) {
+ 			dev_err(&hci->master.dev,
+ 				"ext_cap 0x%02x has size %d (expecting >= %d)\n",
+diff --git a/drivers/i3c/master/mipi-i3c-hci/pio.c b/drivers/i3c/master/mipi-i3c-hci/pio.c
+index d0272aa93599c..653cee2d0645a 100644
+--- a/drivers/i3c/master/mipi-i3c-hci/pio.c
++++ b/drivers/i3c/master/mipi-i3c-hci/pio.c
+@@ -149,14 +149,14 @@ static int hci_pio_init(struct i3c_hci *hci)
+ 	spin_lock_init(&pio->lock);
+ 
+ 	size_val = pio_reg_read(QUEUE_SIZE);
+-	dev_info(&hci->master.dev, "CMD/RESP FIFO = %ld entries\n",
+-		 FIELD_GET(CR_QUEUE_SIZE, size_val));
+-	dev_info(&hci->master.dev, "IBI FIFO = %ld bytes\n",
+-		 4 * FIELD_GET(IBI_STATUS_SIZE, size_val));
+-	dev_info(&hci->master.dev, "RX data FIFO = %d bytes\n",
+-		 4 * (2 << FIELD_GET(RX_DATA_BUFFER_SIZE, size_val)));
+-	dev_info(&hci->master.dev, "TX data FIFO = %d bytes\n",
+-		 4 * (2 << FIELD_GET(TX_DATA_BUFFER_SIZE, size_val)));
++	dev_dbg(&hci->master.dev, "CMD/RESP FIFO = %ld entries\n",
++		FIELD_GET(CR_QUEUE_SIZE, size_val));
++	dev_dbg(&hci->master.dev, "IBI FIFO = %ld bytes\n",
++		4 * FIELD_GET(IBI_STATUS_SIZE, size_val));
++	dev_dbg(&hci->master.dev, "RX data FIFO = %d bytes\n",
++		4 * (2 << FIELD_GET(RX_DATA_BUFFER_SIZE, size_val)));
++	dev_dbg(&hci->master.dev, "TX data FIFO = %d bytes\n",
++		4 * (2 << FIELD_GET(TX_DATA_BUFFER_SIZE, size_val)));
+ 
+ 	/*
+ 	 * Let's initialize data thresholds to half of the actual FIFO size.
 -- 
 2.53.0
 
