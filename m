@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4E95337699;
-	Sat, 12 Sep 2026 08:49:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6A2B20ED;
+	Sat, 12 Sep 2026 08:49:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789202944; cv=none; b=Z05J5d/NW8I07ZRDFzxGwcoBi72W5hmctCuJx9fib7f510ovkF+9linlYzXwzBhHmvjAiiojhJJ3ln0fR4v8cEYVW2zCeqp8xFrLv9iLuRTFim60gjVpoAtd2khbFcHDK+xj2+aYckIUf2BLWfn0W13xVp/RfkP3mt0aZ6NQrj8=
+	t=1789202949; cv=none; b=d8HtWbEnLaTFi9lVdU0h47b+hlh8hR/uaR4S2jIgPMb14bcVHqVZoB+qzHt3b3sNf52TcuwwvCBWFm7ZV7Rr1GqQH1CJm6jwGbZwsbnnTYLSsplKH5Lbo4FrVEM6M1nXffgnxb4EWVylyfgnJaGk4O/9+KlF3M05vVXUHLJgPvA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789202944; c=relaxed/simple;
-	bh=I+rKr57/JrHQLgNYhB6k09DLM0vqSNDAv5m/6ppQrwk=;
+	s=arc-20240116; t=1789202949; c=relaxed/simple;
+	bh=VkFFWIjdRpyRuyGUIsX3p05f+AzhVhQbGQ56n/5btJw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mf1y2lJXx2xhAr7Bv0pWJSpJB9LHmywwxiJ4TjEc9fJa7qx0Vah4sBh3H1Lp6OxJw6viKVDW9/ZDyDAkWEfd/VqkCOjLgcad7HiOhnQWi4HJUT9onL3xez+BBuIKX+4oiPj6Y8CXTksn/++fo8Wne/weEC3+Y9Y7e32oXPgLmtE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dWoDNHGC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lc5E2a6mH9bPbocW35/jHt3eQBNtHkehYveLS7Y5rUj2wxDRFv5A0A9AGZsypLl0Ky03ajhYQGW0Kv53cHg3Etz6Ii826phDqYk47h8JE3GEzDypT14g8MmjUWp73r2TvgvOLp+s/AtZZE9abtfRCS0igsPiCWUU0JeLTm5pdIM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lBnFxRJK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dWoDNHGC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D54BB1F000FF;
-	Sat, 12 Sep 2026 08:49:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lBnFxRJK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8777C1F000FF;
+	Sat, 12 Sep 2026 08:49:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789202942;
-	bh=pmcsfFFjH6REkGunN/DpnakPzlkotmRwAgTUbHjsXX0=;
+	s=korg; t=1789202947;
+	bh=YEmOp9S8X7lx3xgaaXodZZPscu0UtE+b0FNcMIVcZQ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dWoDNHGC+w2FkaxXvkR6K8aXQcAlCP7GrOhvMPnrXJbE8+2ImyyuhexNzVf/Okrxy
-	 bju/W/JpE121JorGSmyRJZG7YdEnBlIh8G72eANv9S4j3MShrpjcvXqlE0SK7VMOV0
-	 /MCocrivD16fL986829iWKWqhYZGB0+qjzrhsDkk=
+	b=lBnFxRJKsOWbOMtBU3KSlOo3Zi7lAE6I07i0Wjy0DAhh5zAqYPTp7V/pkcfQCjGhR
+	 JheL8r4RRFAoxqC5p1YR1xLJXhhhyq2kjGxT3O1ZpU4DRCIsZmnlmeVENDIFkxWYuG
+	 k1mJnUN39fJTwW0P7L86eO8WWf9MqSQaZja9e3bo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chuck Lever <cel@kernel.org>,
+	Ian Rogers <irogers@google.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1307/1815] xdrgen: Do not declare union XDR functions in the definitions header
-Date: Sat, 12 Sep 2026 08:50:57 +0200
-Message-ID: <20260912065719.701603398@linuxfoundation.org>
+Subject: [PATCH 7.2 1281/1815] perf python: Validate attribute setters in pyrf_evsel
+Date: Sat, 12 Sep 2026 08:50:31 +0200
+Message-ID: <20260912065719.089568672@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -50,47 +51,183 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <cel@kernel.org>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit d4ca0b0a6c62bc12407060754df11b23a90f3e57 ]
+[ Upstream commit 0b274050c4d427828595c12c2e4e53d98612b4f9 ]
 
-Unlike the struct, enum, typedef, and pointer templates, the union
-definitions template also emits xdrgen_decode_*() and
-xdrgen_encode_*() prototypes for a public union into that header.
-Those prototypes name struct xdr_stream, which the definitions
-header neither includes nor forward-declares, so any translation
-unit that includes the definitions header without xdr.h already in
-scope draws -Wvisibility warnings. The same public prototypes are
-emitted into the declarations header, which does include
-<linux/sunrpc/xdr.h>, making the definitions-header copies
-redundant.
+If val is NULL when setting an attribute, PyErr_SetString should be
+called as deleting the attribute isn't supported. In addition, ensure
+PyErr_Occurred is checked before setting the attribute to avoid setting
+a garbage value.
 
-Drop the prototype emission from the union definitions template so
-it matches the other type templates. Public unions keep their
-encode and decode prototypes through the declarations header.
-
-Fixes: 4b132aacb076 ("tools: Add xdrgen")
-Link: https://patch.msgid.link/20260712193122.116845-4-cel@kernel.org
-Signed-off-by: Chuck Lever <cel@kernel.org>
+Fixes: 877108e42b1b ("perf tools: Initial python binding")
+Signed-off-by: Ian Rogers <irogers@google.com>
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/sunrpc/xdrgen/templates/C/union/definition/close.j2 | 6 ------
- 1 file changed, 6 deletions(-)
+ tools/perf/util/python.c | 89 ++++++++++++++++++++++++++++++++++------
+ 1 file changed, 77 insertions(+), 12 deletions(-)
 
-diff --git a/tools/net/sunrpc/xdrgen/templates/C/union/definition/close.j2 b/tools/net/sunrpc/xdrgen/templates/C/union/definition/close.j2
-index 5fc1937ba7744..19ee759d70c6a 100644
---- a/tools/net/sunrpc/xdrgen/templates/C/union/definition/close.j2
-+++ b/tools/net/sunrpc/xdrgen/templates/C/union/definition/close.j2
-@@ -1,9 +1,3 @@
- {# SPDX-License-Identifier: GPL-2.0 #}
- 	} u;
- };
--{%- if name in public_apis %}
--
--
--bool xdrgen_decode_{{ name }}(struct xdr_stream *xdr, struct {{ name }} *ptr);
--bool xdrgen_encode_{{ name }}(struct xdr_stream *xdr, const struct {{ name }} *ptr);
--{%- endif -%}
+diff --git a/tools/perf/util/python.c b/tools/perf/util/python.c
+index 5713e54437f0e..86a3fcb5b5e83 100644
+--- a/tools/perf/util/python.c
++++ b/tools/perf/util/python.c
+@@ -1295,6 +1295,11 @@ static int pyrf_evsel__set_tracking(PyObject *self, PyObject *val, void *closure
+ 
+ 	CHECK_INITIALIZED_INT(pevsel->evsel, "evsel");
+ 
++	if (val == NULL) {
++		PyErr_SetString(PyExc_TypeError, "cannot delete attribute");
++		return -1;
++	}
++
+ 	is_true = PyObject_IsTrue(val);
+ 	if (is_true < 0)
+ 		return -1;
+@@ -1306,11 +1311,21 @@ static int pyrf_evsel__set_tracking(PyObject *self, PyObject *val, void *closure
+ static int pyrf_evsel__set_attr_config(PyObject *self, PyObject *val, void *closure __maybe_unused)
+ {
+ 	struct pyrf_evsel *pevsel = (void *)self;
++	unsigned long long new_val;
+ 
+ 	CHECK_INITIALIZED_INT(pevsel->evsel, "evsel");
+ 
+-	pevsel->evsel->core.attr.config = PyLong_AsUnsignedLongLong(val);
+-	return PyErr_Occurred() ? -1 : 0;
++	if (val == NULL) {
++		PyErr_SetString(PyExc_TypeError, "cannot delete attribute");
++		return -1;
++	}
++
++	new_val = PyLong_AsUnsignedLongLong(val);
++	if (PyErr_Occurred())
++		return -1;
++
++	pevsel->evsel->core.attr.config = new_val;
++	return 0;
+ }
+ 
+ static PyObject *pyrf_evsel__get_attr_config(PyObject *self, void *closure __maybe_unused)
+@@ -1325,11 +1340,21 @@ static PyObject *pyrf_evsel__get_attr_config(PyObject *self, void *closure __may
+ static int pyrf_evsel__set_attr_read_format(PyObject *self, PyObject *val, void *closure __maybe_unused)
+ {
+ 	struct pyrf_evsel *pevsel = (void *)self;
++	unsigned long long new_val;
+ 
+ 	CHECK_INITIALIZED_INT(pevsel->evsel, "evsel");
+ 
+-	pevsel->evsel->core.attr.read_format = PyLong_AsUnsignedLongLong(val);
+-	return PyErr_Occurred() ? -1 : 0;
++	if (val == NULL) {
++		PyErr_SetString(PyExc_TypeError, "cannot delete attribute");
++		return -1;
++	}
++
++	new_val = PyLong_AsUnsignedLongLong(val);
++	if (PyErr_Occurred())
++		return -1;
++
++	pevsel->evsel->core.attr.read_format = new_val;
++	return 0;
+ }
+ 
+ static PyObject *pyrf_evsel__get_attr_read_format(PyObject *self, void *closure __maybe_unused)
+@@ -1344,11 +1369,21 @@ static PyObject *pyrf_evsel__get_attr_read_format(PyObject *self, void *closure
+ static int pyrf_evsel__set_attr_sample_period(PyObject *self, PyObject *val, void *closure __maybe_unused)
+ {
+ 	struct pyrf_evsel *pevsel = (void *)self;
++	unsigned long long new_val;
+ 
+ 	CHECK_INITIALIZED_INT(pevsel->evsel, "evsel");
+ 
+-	pevsel->evsel->core.attr.sample_period = PyLong_AsUnsignedLongLong(val);
+-	return PyErr_Occurred() ? -1 : 0;
++	if (val == NULL) {
++		PyErr_SetString(PyExc_TypeError, "cannot delete attribute");
++		return -1;
++	}
++
++	new_val = PyLong_AsUnsignedLongLong(val);
++	if (PyErr_Occurred())
++		return -1;
++
++	pevsel->evsel->core.attr.sample_period = new_val;
++	return 0;
+ }
+ 
+ static PyObject *pyrf_evsel__get_attr_sample_period(PyObject *self, void *closure __maybe_unused)
+@@ -1363,11 +1398,21 @@ static PyObject *pyrf_evsel__get_attr_sample_period(PyObject *self, void *closur
+ static int pyrf_evsel__set_attr_sample_type(PyObject *self, PyObject *val, void *closure __maybe_unused)
+ {
+ 	struct pyrf_evsel *pevsel = (void *)self;
++	unsigned long long new_val;
+ 
+ 	CHECK_INITIALIZED_INT(pevsel->evsel, "evsel");
+ 
+-	pevsel->evsel->core.attr.sample_type = PyLong_AsUnsignedLongLong(val);
+-	return PyErr_Occurred() ? -1 : 0;
++	if (val == NULL) {
++		PyErr_SetString(PyExc_TypeError, "cannot delete attribute");
++		return -1;
++	}
++
++	new_val = PyLong_AsUnsignedLongLong(val);
++	if (PyErr_Occurred())
++		return -1;
++
++	pevsel->evsel->core.attr.sample_type = new_val;
++	return 0;
+ }
+ 
+ static PyObject *pyrf_evsel__get_attr_sample_type(PyObject *self, void *closure __maybe_unused)
+@@ -1391,11 +1436,21 @@ static PyObject *pyrf_evsel__get_attr_size(PyObject *self, void *closure __maybe
+ static int pyrf_evsel__set_attr_type(PyObject *self, PyObject *val, void *closure __maybe_unused)
+ {
+ 	struct pyrf_evsel *pevsel = (void *)self;
++	unsigned long new_val;
+ 
+ 	CHECK_INITIALIZED_INT(pevsel->evsel, "evsel");
+ 
+-	pevsel->evsel->core.attr.type = PyLong_AsUnsignedLong(val);
+-	return PyErr_Occurred() ? -1 : 0;
++	if (val == NULL) {
++		PyErr_SetString(PyExc_TypeError, "cannot delete attribute");
++		return -1;
++	}
++
++	new_val = PyLong_AsUnsignedLong(val);
++	if (PyErr_Occurred())
++		return -1;
++
++	pevsel->evsel->core.attr.type = new_val;
++	return 0;
+ }
+ 
+ static PyObject *pyrf_evsel__get_attr_type(PyObject *self, void *closure __maybe_unused)
+@@ -1410,11 +1465,21 @@ static PyObject *pyrf_evsel__get_attr_type(PyObject *self, void *closure __maybe
+ static int pyrf_evsel__set_attr_wakeup_events(PyObject *self, PyObject *val, void *closure __maybe_unused)
+ {
+ 	struct pyrf_evsel *pevsel = (void *)self;
++	unsigned long new_val;
+ 
+ 	CHECK_INITIALIZED_INT(pevsel->evsel, "evsel");
+ 
+-	pevsel->evsel->core.attr.wakeup_events = PyLong_AsUnsignedLong(val);
+-	return PyErr_Occurred() ? -1 : 0;
++	if (val == NULL) {
++		PyErr_SetString(PyExc_TypeError, "cannot delete attribute");
++		return -1;
++	}
++
++	new_val = PyLong_AsUnsignedLong(val);
++	if (PyErr_Occurred())
++		return -1;
++
++	pevsel->evsel->core.attr.wakeup_events = new_val;
++	return 0;
+ }
+ 
+ static PyObject *pyrf_evsel__get_attr_wakeup_events(PyObject *self, void *closure __maybe_unused)
 -- 
 2.53.0
 
