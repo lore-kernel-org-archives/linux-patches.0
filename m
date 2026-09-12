@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 597F03C276E;
-	Sat, 12 Sep 2026 07:09:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7856E3BE175;
+	Sat, 12 Sep 2026 07:09:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789196994; cv=none; b=pU9SDBMaMQx1DhAUsj/pfMn1xAOcgPDTMhSRfyy8ZndyqZpOD4Ychz5mdHbE1qdDZEnQ5EAaUXzyz26pdyyTYxyWbrtgr4qQZC/VUvvetQhKDMU5eeh0TxlIDd4mqmtfrbCBrsyvjVMZcpvPa8pTiTjZ2kv85kkou/ayc2hX4nM=
+	t=1789196998; cv=none; b=oQyXPpO/k2YEGf+SatKRpD+ImFwm3vOxhD/qqejml3kgT+7nMgaLJB07i+vB+y25xuO8tx/4/3dUWcS/83hsm/LXpaTaPC71d86SIp/OHtxb1/BTvwSs7ck79MT10Qk3Xh5ILWIBaPd+NnPiCRp39duDgWZaqnFOrQbKcApYGwU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789196994; c=relaxed/simple;
-	bh=C97kC8VXjxV+OJKtNGDb482WufBwSi6AUY0M/GTOnUQ=;
+	s=arc-20240116; t=1789196998; c=relaxed/simple;
+	bh=NdfkfEjcn921V4phPNGNTkvUl1iJ42rtBZIOLVuUrsk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=culNUTAmAdewPZhpsnqvcaIY2AvUxMD0iwTH/WeC3XNhEYUpLC8MIbCFVzKaiSyR0cfb1FhlEhO3ByjxpF0K/QUY0nbphSbTC9FaOLQJGgpZKVzDeKpdkkKK8JhyLzCwljnosmtoJEWsBKNvlYQLkei93sOyXZ4p1naJvWRZhC4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m6sxU9Xl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NDyfxv78Q2qtSjxmGQKPqBKEZ/4Rkff27I21sJZZ7Mj2hZs3gXOpyIYSNGt7B5mvYuZ6jecdMDkSZNw/q7xEh+pGrBw6T4OPmNAqnrrfXXxeqcrft7vt0sqlP4jn9EDBFE/kYk1hy+CKDS1bDuSwfLsGM1JgmxMLqvAg6H3cjfg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mcjx6Khe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m6sxU9Xl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD4FA1F00893;
-	Sat, 12 Sep 2026 07:09:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mcjx6Khe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 746551F000FF;
+	Sat, 12 Sep 2026 07:09:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789196993;
-	bh=U37bYaAIZFilD0Qdpa2ZzqGvsy5YLDRj8AEaAz440zk=;
+	s=korg; t=1789196997;
+	bh=s6SWAFzq1H4mznNragGE84z95Y2T8cR44YRgh8lk9ys=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=m6sxU9Xlt8u0ovuMdFpS2o+fWEqycxpU9RvDZ3/R/HbEpdWKh69SJ1ZF6bBfaZjBg
-	 fnv5DRYDrmGr+DnazJj9X/j/fTx17JaThC8ayZePzwnv1/i3Zu0NswjlGfzanOWhMF
-	 Z/sbJJ8ltO3bgOsQY/YDMtfZ8gufZ+B7NnP3fgww=
+	b=mcjx6KheX2B+oi00IhWIjDvOoiRnASisD6YdOVUFmmpkY8zeQOroTLnAFwbn4/c/I
+	 9GnLfloGL6ahe69ldi104k5uEfqtolI3U6WIocmWckEOp7sPDlP5sbnQl0EQDxWhtL
+	 RyvXTyRARSZdXUaBCni4phzwx64iviseYuuls4I0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
+	David Carlier <devnexen@gmail.com>,
 	Brian Masney <bmasney@redhat.com>,
+	Xukai Wang <kingxukai@zohomail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0078/1815] clk: versaclock7: Fix APLL clock leak on probe failure
-Date: Sat, 12 Sep 2026 08:30:28 +0200
-Message-ID: <20260912065650.842551302@linuxfoundation.org>
+Subject: [PATCH 7.2 0079/1815] clk: canaan: Clear rate fields before reprogramming dividers
+Date: Sat, 12 Sep 2026 08:30:29 +0200
+Message-ID: <20260912065650.865823934@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,47 +52,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: David Carlier <devnexen@gmail.com>
 
-[ Upstream commit e25d8d35e8cbc1a4c04a8b86eed6aa7229f6449e ]
+[ Upstream commit 804bac4a2654ac69e328d68e1961eb984fb18a01 ]
 
-vc7_probe() registers the APLL with clk_register_fixed_rate(), which is
-not devm-managed and must be explicitly unregistered on probe failure.
+The rate set_rate helpers perform a read-modify-write on the divider
+and multiplier registers but only ever OR the new value in, without
+first masking off the existing field. The first write after reset lands
+on a zeroed field and looks correct, but any later reprogramming leaves
+the old bits set: the field becomes the bitwise OR of the previous and
+new encodings, corrupting the divider or multiplier.
 
-Most later errors already unwind through err_clk, but a failure from
-vc7_get_bank_clk() in the output registration loop returned directly.
-That skipped clk_unregister_fixed_rate() and leaked the APLL clock.
+Mask off each field before writing the new value so reprogramming a
+clock to a different rate produces the intended register contents.
 
-Route that error through the existing err_clk label so the fixed-rate
-clock is released consistently with the other probe failure paths.
-
-This issue was identified during our ongoing static-analysis research while
-reviewing kernel code.
-
-Fixes: 48c5e98fedd9 ("clk: Renesas versaclock7 ccf device driver")
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Fixes: a7b7c7c6c016 ("clk: canaan: Add clock driver for Canaan K230")
+Signed-off-by: David Carlier <devnexen@gmail.com>
 Reviewed-by: Brian Masney <bmasney@redhat.com>
+Acked-by: Xukai Wang <kingxukai@zohomail.com>
 Signed-off-by: Brian Masney <bmasney@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/clk-versaclock7.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/clk/clk-k230.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/clk/clk-versaclock7.c b/drivers/clk/clk-versaclock7.c
-index adcc603e32593..e3a36dcd98b80 100644
---- a/drivers/clk/clk-versaclock7.c
-+++ b/drivers/clk/clk-versaclock7.c
-@@ -1197,7 +1197,7 @@ static int vc7_probe(struct i2c_client *client)
- 		if (ret) {
- 			dev_err_probe(&client->dev, ret,
- 				      "unable to register output %d\n", i);
--			return ret;
-+			goto err_clk;
- 		}
+diff --git a/drivers/clk/clk-k230.c b/drivers/clk/clk-k230.c
+index cfc437038e4ed..f34a3e6d3bca0 100644
+--- a/drivers/clk/clk-k230.c
++++ b/drivers/clk/clk-k230.c
+@@ -2227,6 +2227,7 @@ static int k230_clk_set_rate_mul(struct clk_hw *hw, unsigned long rate,
+ 	guard(spinlock)(rate_self->lock);
  
- 		switch (bank_src_map.type) {
+ 	mul_reg = readl(rate_self->reg + clk->mul_reg_off);
++	mul_reg &= ~(rate_self->mul_mask << rate_self->mul_shift);
+ 	mul_reg |= ((mul - 1) & rate_self->mul_mask) << (rate_self->mul_shift);
+ 	mul_reg |= BIT(rate_self->write_enable_bit);
+ 	writel(mul_reg, rate_self->reg + clk->mul_reg_off);
+@@ -2257,6 +2258,7 @@ static int k230_clk_set_rate_div(struct clk_hw *hw, unsigned long rate,
+ 	guard(spinlock)(rate_self->lock);
+ 
+ 	div_reg = readl(rate_self->reg + clk->div_reg_off);
++	div_reg &= ~(rate_self->div_mask << rate_self->div_shift);
+ 	div_reg |= ((div - 1) & rate_self->div_mask) << (rate_self->div_shift);
+ 	div_reg |= BIT(rate_self->write_enable_bit);
+ 	writel(div_reg, rate_self->reg + clk->div_reg_off);
+@@ -2287,11 +2289,13 @@ static int k230_clk_set_rate_mul_div(struct clk_hw *hw, unsigned long rate,
+ 	guard(spinlock)(rate_self->lock);
+ 
+ 	div_reg = readl(rate_self->reg + clk->div_reg_off);
++	div_reg &= ~(rate_self->div_mask << rate_self->div_shift);
+ 	div_reg |= ((div - 1) & rate_self->div_mask) << (rate_self->div_shift);
+ 	div_reg |= BIT(rate_self->write_enable_bit);
+ 	writel(div_reg, rate_self->reg + clk->div_reg_off);
+ 
+ 	mul_reg = readl(rate_self->reg + clk->mul_reg_off);
++	mul_reg &= ~(rate_self->mul_mask << rate_self->mul_shift);
+ 	mul_reg |= ((mul - 1) & rate_self->mul_mask) << (rate_self->mul_shift);
+ 	mul_reg |= BIT(rate_self->write_enable_bit);
+ 	writel(mul_reg, rate_self->reg + clk->mul_reg_off);
 -- 
 2.53.0
 
