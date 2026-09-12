@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E1AB3563FB;
-	Sat, 12 Sep 2026 12:07:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB8D7423A72;
+	Sat, 12 Sep 2026 12:07:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789214839; cv=none; b=DZQmjGNN2wEy4DKlbnkYxiBFX4QNhsfnPHB/Srrz4KbpFJD2jm+ToPucXz/grRqVUmXverwDadjZXe6M7wlI1Xe4mRkYk5msa14DqkNpPRsC2qQMnuJytCOQ6jcm/wHM1bmB+BRaRipoesXzIyCsGtbzaNPih9CHyca3XgXnndg=
+	t=1789214843; cv=none; b=EOKcefPOciMbZ5TXFG6xPW6r8uPtwHvMz3goQuToRCkBZazJFvFzQv4JiiJSs4PAQJKG3QovZx1fvVyOPvHauhcM4YvRFDgvL8YpDF/BFVQRUZc2x+tGDgnHeZ5tA3WSQ/DOM8fW0R2+g/Q5iO/LppCvWPzgpy+W2u8QHZF/Ri0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789214839; c=relaxed/simple;
-	bh=QLucAwma8sihP2Ej19HjWugZb24wGaiRoRZ4dO0MHbk=;
+	s=arc-20240116; t=1789214843; c=relaxed/simple;
+	bh=YyQIQh2+/6soN4kR0RtOTLAlbUkdijZox/1e7EYUBFQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P5wfxyon45uOI4jSptm59BJY29aJOrcCP6VrlWPYV1CD7H1c+03FwQIszAw7GjW82tceoG2xE6EQbNiiKQ9V5IWdSgjnm1IcamRiljKhuIPEcKLRV4MHEDR/JkUK8HGEfOD9GvoDjQ3zaD97PjGQof1WxkxK6PBh8OEZffiBSg4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k6NHABVj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=S5138YV4CE+qnXFw4tg19yXzOE5nuOvBmGN0zAaP/ZlXP5PYtAH2vnzisWjiWudbsuPusld+S3NaGtNJzpxaQD3OkTlBVu9eGZdGPq/Sj9ce126jIInDXDbbernTSOdCOVW/78bn60vjLvddgu8Md0bNXoJZAdW9kzrqg21opgs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ffTy2Vbj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k6NHABVj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A3DA1F000FF;
-	Sat, 12 Sep 2026 12:07:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ffTy2Vbj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED1451F000FF;
+	Sat, 12 Sep 2026 12:07:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789214838;
-	bh=vhhvEbPIWO2qizUnT47W2+MoF1UNf9nVnj28cX+UMUw=;
+	s=korg; t=1789214842;
+	bh=fF5TXNz0ZmTbyN5Byt5Nq5RvQVqZ19h/jHw4pWOUCag=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=k6NHABVjSqHmE2kRFOrnP/eQtD1neRTE3OIZ2ghmqbRkMuQ3TIBSnBxSYZ7UsYJ9+
-	 RsslnsJ1hxJpNQEEKqqk1aU5kImnNPMUKTED7DrWEaekiBWN1NJy0RHap8SJi9YH1N
-	 o4t7p+vZSRBMlrTJvRxeycsAXtibhcYEb7dMjOdo=
+	b=ffTy2VbjOGWsq88+VHSG7HcKkDNSqSmzE3+1Idv5lhXuH5hX2OUvIaXtC50BStIQF
+	 axA7igGnXxl4Yl0W77JOUeoDZjIhFZ5YIsi33qdyPVXeasGDTS0o+O/NTh6pua1YWJ
+	 b5ojbRiNmAqXKogQ8OIoCvTzyDFnSMZbO3loTGO0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0407/1376] crypto: rk3288 - fail ahash requests on HASH idle timeout
-Date: Sat, 12 Sep 2026 08:47:13 +0200
-Message-ID: <20260912065616.613681604@linuxfoundation.org>
+Subject: [PATCH 6.12 0408/1376] crypto: keembay - Fix AEAD unregister count in error path
+Date: Sat, 12 Sep 2026 08:47:14 +0200
+Message-ID: <20260912065616.636096859@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,44 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-[ Upstream commit ae150db7826f21e8d19e54fb6243169628809c4d ]
+[ Upstream commit e264401ce4776a288524e5b87593d4d864147115 ]
 
-rk_hash_run() waits for RK_CRYPTO_HASH_STS to become idle after the
-final DMA transfer, but ignores the poll result. If the hash engine
-never becomes idle, the driver still reads the digest registers and
-finalizes the request with the previous success value.
+register_aes_algs() registers the AEAD algorithms before registering the
+skcipher algorithms.  If skcipher registration fails, the function unwinds
+the earlier AEAD registration with crypto_engine_unregister_aeads(), but it
+passes ARRAY_SIZE(algs), which is the skcipher table size.
 
-Store the poll result and finalize the request with the timeout error
-before reading the digest registers.
+Use ARRAY_SIZE(algs_aead) for the AEAD unwind path so the unregister helper
+iterates over the same table that was registered.  Also clarify the nearby
+comment: the crypto registration helpers clean up algorithms registered
+within the same call, while this function must still unwind earlier
+successful registration steps.
 
-Fixes: 37bc22159c45 ("crypto: rockchip - use read_poll_timeout")
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Fixes: 885743324513 ("crypto: keembay - Add support for Keem Bay OCS AES/SM4")
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/rockchip/rk3288_crypto_ahash.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/crypto/intel/keembay/keembay-ocs-aes-core.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/crypto/rockchip/rk3288_crypto_ahash.c b/drivers/crypto/rockchip/rk3288_crypto_ahash.c
-index ba26b4db7a608..f726e53df9fed 100644
---- a/drivers/crypto/rockchip/rk3288_crypto_ahash.c
-+++ b/drivers/crypto/rockchip/rk3288_crypto_ahash.c
-@@ -322,7 +322,12 @@ static int rk_hash_run(struct crypto_engine *engine, void *breq)
- 	 * efficiency, and make it response quickly when dma
- 	 * complete.
- 	 */
--	readl_poll_timeout(rkc->reg + RK_CRYPTO_HASH_STS, v, v == 0, 10, 1000);
-+	err = readl_poll_timeout(rkc->reg + RK_CRYPTO_HASH_STS, v,
-+				 v == 0, 10, 1000);
-+	if (err) {
-+		dev_err(rkc->dev, "HASH idle timeout\n");
-+		goto theend;
-+	}
+diff --git a/drivers/crypto/intel/keembay/keembay-ocs-aes-core.c b/drivers/crypto/intel/keembay/keembay-ocs-aes-core.c
+index 9b2d098e5eb2c..a02a75bd29860 100644
+--- a/drivers/crypto/intel/keembay/keembay-ocs-aes-core.c
++++ b/drivers/crypto/intel/keembay/keembay-ocs-aes-core.c
+@@ -1541,7 +1541,7 @@ static int register_aes_algs(struct ocs_aes_dev *aes_dev)
  
- 	for (i = 0; i < crypto_ahash_digestsize(tfm) / 4; i++) {
- 		v = readl(rkc->reg + RK_CRYPTO_HASH_DOUT_0 + i * 4);
+ 	/*
+ 	 * If any algorithm fails to register, all preceding algorithms that
+-	 * were successfully registered will be automatically unregistered.
++	 * were registered in the same call are automatically unregistered.
+ 	 */
+ 	ret = crypto_engine_register_aeads(algs_aead, ARRAY_SIZE(algs_aead));
+ 	if (ret)
+@@ -1549,7 +1549,7 @@ static int register_aes_algs(struct ocs_aes_dev *aes_dev)
+ 
+ 	ret = crypto_engine_register_skciphers(algs, ARRAY_SIZE(algs));
+ 	if (ret)
+-		crypto_engine_unregister_aeads(algs_aead, ARRAY_SIZE(algs));
++		crypto_engine_unregister_aeads(algs_aead, ARRAY_SIZE(algs_aead));
+ 
+ 	return ret;
+ }
 -- 
 2.53.0
 
