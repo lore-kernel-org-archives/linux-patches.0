@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56FB03749FA;
-	Sat, 12 Sep 2026 16:39:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE6A43CE495;
+	Sat, 12 Sep 2026 16:39:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789231196; cv=none; b=q4IEBzLd9ZeOt7WkJxjpJ+L+/ST1tjMx+S5csKrSfcQDCR4DH/3UQxGVcOxJ2RL3h9zP8PjC7FNXsQpd5rjG0wWu1qRFheehhO/Xfav5oyz3hbmYszqeaZ6dM7jAltHPmd2nbEtLWiB5Ysbv8GQPbY/yDFe5puBdYfkBDx1onMA=
+	t=1789231201; cv=none; b=HDXrbUj7Ilezbaeslc3SKMqJoVNsD16BfD3ee8gdpUGCGi4Yb9KvSPtLZrIRUgqDCv4N4+ta7ayZoyURxYIWE0qZW8TXIsNqshSAJqRHmqhrXUaAwmo30fZJJgAQcRiBNAcZH/AObsT7koi5c4lknrbv1rG3wJRK1mNRI13R5ec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789231196; c=relaxed/simple;
-	bh=QqBtQ0e6w7vymPq37DmmPQIfyHTgFodu93cVeNI/sq8=;
+	s=arc-20240116; t=1789231201; c=relaxed/simple;
+	bh=0ztxd5IyG5JwqubAFrTBWol85uhmeyo87fKV8AYS0MQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LjQZBMK5ChwJvTSW1kQ9zyUUXetgpLudDDLHmHIOSZdxk/CQDgGqeF5EbdZI9VMfcku7gheOqbxwPWRiiQYnGZ14Xti0bduBehPXNG7RUCpSfF9gKLclsNW/Ez7w6gyuCZQFYz/Udr9wAr5Wnm9juuASekI+TvFD0IEBNqLeT2M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rTLClplX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dE8N1DiUUWTNAbIy+gzi/xZTbIHA6o8V9EjzTB5G0YCOgvXAyBPMu8H7sUhrgD6kwMRPpmZEpHzvWQ7tkp7hmO9I3/7Ebp4phffS3NFBKz7SwImvNhDn49BTUCJ5oy0lOrH/ZxryZGiStgQs+JxI1EhY5snsi47Nq5/1LUd2ZTg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=duvyIJzc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rTLClplX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10E971F000FF;
-	Sat, 12 Sep 2026 16:39:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="duvyIJzc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F29341F000FF;
+	Sat, 12 Sep 2026 16:39:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789231194;
-	bh=xC+MllrAqaqFK00xUBzgYEuIaJLyA6OaRw8F4QuHby8=;
+	s=korg; t=1789231199;
+	bh=9ZMYqHeSqf33d6Sqm+qsSMnH+jAIM/3kNZ9AEeo9+/c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rTLClplXOp/UJnGrVMKiuMnF0fMhusqXTSDBqDnc4jW603ZfA/DEWr70VYTskYmqm
-	 G/PIP78zC2qdYubI3xs3QSTBJalwPUTppNTj/W94t+5Qp1JY22vvnBoU1ewnLuAMeu
-	 vaFT1eSkvPbQ9uSQRIawOuxu3+2Vi3KktWUMkIcM=
+	b=duvyIJzcMCBTogHr18h4J2dbT3pvKR2AwatHX6hNQZNGtQqcYsbsgVNqLOf8giMLi
+	 1aiZw0aPHz3978dmxHrKgpZh/7xA7Ig4uAh/IB5Q0qqM57t/ZcVWTxTwhFCDV03U8A
+	 NPNIfXIjAcZdRdkE8xwiMcHGwupaxgzCuhVmZTPQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ricardo Neri <ricardo.neri-calderon@linux.intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Christian Loehle <christian.loehle@arm.com>,
-	Chen Yu <yu.c.chen@intel.com>,
-	Tim Chen <tim.c.chen@linux.intel.com>,
-	Vincent Guittot <vincent.guittot@linaro.org>,
-	Andrea Righi <arighi@nvidia.com>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Marco Elver <elver@google.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0922/1191] sched/fair: Check CPU capacity before comparing group types during load balance
-Date: Sat, 12 Sep 2026 09:00:50 +0200
-Message-ID: <20260912065608.941820461@linuxfoundation.org>
+Subject: [PATCH 6.1 0949/1191] arm64: Disable KCSAN instrumentation in delay.o
+Date: Sat, 12 Sep 2026 09:01:17 +0200
+Message-ID: <20260912065609.539559375@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -56,78 +52,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ricardo Neri <ricardo.neri-calderon@linux.intel.com>
+From: Marco Elver <elver@google.com>
 
-[ Upstream commit 50b101f6e586b4417d060a976fd831cd87e86e2b ]
+[ Upstream commit 5eaec4cf41a8f5ac1a0c69a607cdc5035a797f73 ]
 
-update_sd_pick_busiest() may incorrectly select a fully_busy group as the
-busiest group when its per-CPU capacity exceeds that of the destination
-CPU. This happens because the type of busiest group is initialized to
-group_has_spare and allows the fully_busy group to win the type comparison.
+KCSAN relies on udelay() for injecting delays. To avoid recursively
+triggering a watchpoint, where KCSAN sets up watchpoint on an address
+that is accessed by udelay() in the same thread, disable instrumentation
+in arm64's delay implementation.
 
-update_sd_pick_busiest() should not choose a candidate scheduling group
-with at most one runnable task if its per-CPU capacity is greater than that
-of the destination CPU. Such a check already exists, but it is done too
-late: after the type comparison, preventing a subsequent fully_busy group
-of equal per-CPU capacity from being correctly selected.
+Paul found a manifestation of this as follows:
 
-Move this check to occur before comparing group types.
+| BUG: KCSAN: data-race in __delay / set_need_resched_current
+|
+| read (marked) to 0xffff000005899b48 of 8 bytes by interrupt on cpu 8:
+|  __delay+0xb0/0x378
+|  __udelay+0x4c/0x60
+|  kcsan_setup_watchpoint+0x3b4/0x820
+|  __tsan_unaligned_write4+0x228/0x26c
+|  set_need_resched_current+0x138/0x1a8
+|  rcu_exp_handler+0x418/0x4a0
+|  __flush_smp_call_function_queue+0x36c/0x4a0
+|  generic_smp_call_function_single_interrupt+0x20/0x30
+|  ipi_handler+0xec/0x558
+|  handle_percpu_devid_irq+0x220/0x2a0
+|  generic_handle_domain_irq+0x84/0xb4
+|  gic_handle_irq+0x64/0x144
+|  call_on_irq_stack+0x30/0x48
+|  do_interrupt_handler+0x80/0xb8
+|  el1_interrupt+0x3c/0x60
+|  el1h_64_irq_handler+0x18/0x24
+|  el1h_64_irq+0x6c/0x70
+|  smp_call_function_single+0x18c/0x25c
+|  sync_rcu_exp_select_node_cpus+0x534/0x8bc
+|  rcu_exp_sel_wait_wake+0x358/0xef4
+|  wait_rcu_exp_gp+0x30/0x44
+|  kthread_worker_fn+0x1b4/0x5dc
+|  kthread+0x1d8/0x204
+|  ret_from_fork+0x10/0x20
+|
+| write to 0xffff000005899b4c of 4 bytes by interrupt on cpu 8:
+|  set_need_resched_current+0x138/0x1a8
+|  [...]
 
-Fixes: 0b0695f2b34a ("sched/fair: Rework load_balance()")
-Signed-off-by: Ricardo Neri <ricardo.neri-calderon@linux.intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Christian Loehle <christian.loehle@arm.com>
-Reviewed-by: Chen Yu <yu.c.chen@intel.com>
-Reviewed-by: Tim Chen <tim.c.chen@linux.intel.com>
-Reviewed-by: Vincent Guittot <vincent.guittot@linaro.org>
-Tested-by: Christian Loehle <christian.loehle@arm.com>
-Tested-by: Andrea Righi <arighi@nvidia.com>
-Link: https://patch.msgid.link/20260720-rneri-fix-cas-clusters-v6-3-bb500bf4afd4@linux.intel.com
+This matches what is already done in arch/x86/lib/Makefile.
+
+Reported-by: "Paul E. McKenney" <paulmck@kernel.org>
+Fixes: dd03762ab608 ("arm64: Enable KCSAN")
+Signed-off-by: Marco Elver <elver@google.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/fair.c | 22 +++++++++++-----------
- 1 file changed, 11 insertions(+), 11 deletions(-)
+ arch/arm64/lib/Makefile | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index 196a1b9cb7b32..a329bd89f1e3d 100644
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -9368,6 +9368,17 @@ static bool update_sd_pick_busiest(struct lb_env *env,
- 	     sds->local_stat.group_type != group_has_spare))
- 		return false;
- 
-+	/*
-+	 * Candidate sg has no more than one task per CPU and has higher
-+	 * per-CPU capacity. Migrating tasks to less capable CPUs may harm
-+	 * throughput. Maximize throughput, power/energy consequences are not
-+	 * considered.
-+	 */
-+	if ((env->sd->flags & SD_ASYM_CPUCAPACITY) &&
-+	    (sgs->group_type <= group_fully_busy) &&
-+	    (capacity_greater(sg->sgc->min_capacity, capacity_of(env->dst_cpu))))
-+		return false;
+diff --git a/arch/arm64/lib/Makefile b/arch/arm64/lib/Makefile
+index 29490be2546bf..d1c2254e4fd1c 100644
+--- a/arch/arm64/lib/Makefile
++++ b/arch/arm64/lib/Makefile
+@@ -1,4 +1,8 @@
+ # SPDX-License-Identifier: GPL-2.0
 +
- 	if (sgs->group_type > busiest->group_type)
- 		return true;
- 
-@@ -9440,17 +9451,6 @@ static bool update_sd_pick_busiest(struct lb_env *env,
- 		break;
- 	}
- 
--	/*
--	 * Candidate sg has no more than one task per CPU and has higher
--	 * per-CPU capacity. Migrating tasks to less capable CPUs may harm
--	 * throughput. Maximize throughput, power/energy consequences are not
--	 * considered.
--	 */
--	if ((env->sd->flags & SD_ASYM_CPUCAPACITY) &&
--	    (sgs->group_type <= group_fully_busy) &&
--	    (capacity_greater(sg->sgc->min_capacity, capacity_of(env->dst_cpu))))
--		return false;
--
- 	return true;
- }
- 
++# KCSAN uses udelay for introducing watchpoint delay; avoid recursion.
++KCSAN_SANITIZE_delay.o := n
++
+ lib-y		:= clear_user.o delay.o copy_from_user.o		\
+ 		   copy_to_user.o copy_page.o				\
+ 		   clear_page.o csum.o insn.o memchr.o memcpy.o		\
 -- 
 2.53.0
 
