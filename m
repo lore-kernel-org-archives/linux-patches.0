@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBA113A1690;
-	Sat, 12 Sep 2026 08:33:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D454385521;
+	Sat, 12 Sep 2026 08:33:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789202004; cv=none; b=jdiM7STJfxt+e6Yr3saiM7YZFl99IATb1HlYOxeOOaRtk3fQt0hfF76Qj0reMSxmXlOokvE71oNQofM+n6utjBZJ7UDlHUZZeuzqJyRdVSEhrnJPwsLlluNZcfWfZmb/KkytA8ZuEgNPgZMj5fy1X+8uagH8jUMbRWCkh0jkSYE=
+	t=1789202009; cv=none; b=KNP2HUj7kwyMAaBd+dvs5tyZmbQ4YLOuXOF9Hs9TR5DnGVtA8ESIJkS7oNpaknqBQ6nj0ltbQI1CozHL3ZR78kVnqv72Js9d4HNAU/ldcBftYCqXr/YoJuPSsql21ywr6DjL2VGluG3i/6U3yotuFlC5PxyAjiH/jKIs3VDho8E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789202004; c=relaxed/simple;
-	bh=5YWYhNB5m1bfra31q867Py5e16BKb7mnU4SNqj5Suns=;
+	s=arc-20240116; t=1789202009; c=relaxed/simple;
+	bh=qbG46cLTFUdZEBOz1TVWlZUIoYOeTxoru6IWQGgFeJ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DPYrnzYYFBEgLdtjBb0aj5vXzsokXkrPq13wsWhLmG4leaD8iwY/pAHbPc922pVUsXwNCj/zapBEf3aoEtsBkRqDWDFjfKtaGt+pgZvBTELM2Fv106OqggSVKDg45qoksJMPtCO2+WhpxXdGr2Vac1yyaDRkwvyVlZZiHVNmDCs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XLSnieRa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Ms28oKhB10pS32ZjUumuyyeQoZxDOZOUK1LpU1yb2BGc5W/wrWGbwb2a/cau7pJSBmy35AhUTY+r6Wjw2K5LWagEeUzdpOjMi1ptNbNFgtL8/kYjELdA29lEIZcU03v32ti34schSy6Ljf0Vuy6yK1CW89n68VJ6sw1c+NzRU10=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1pi1v1TB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XLSnieRa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 824171F000FF;
-	Sat, 12 Sep 2026 08:33:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1pi1v1TB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 530151F000FF;
+	Sat, 12 Sep 2026 08:33:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789202003;
-	bh=T9TbXwWkxgGYy1hmkr3In61aqgFFAeNfdmTcChHCcD4=;
+	s=korg; t=1789202008;
+	bh=6DqbLHu74bmzPyw+8B9pmOod2MUhhoIIxBEU5R4lsyo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XLSnieRaddVfnFAMtspv4clVcvOb3zdqHgb5vP2csZ6XxNZFS+B8sVUqkIgGIi1z5
-	 PC4WBlndv2HhsWvVGzbZlu2eisbS47chah+Vb6GGCkx40cz5T04euEqcaDGOIS2C5K
-	 m6CGomXPlNzgGMlL/CrWEh0BWfNXj45iyIi7ypKU=
+	b=1pi1v1TB/JkhDcRoCx7Vl9w4AtbXffTTJn3ITYC3LZ22BRAWf5A3b3y7w4kp7wUkC
+	 1EAHvZUmZ7f6HmVldic9ctDmQx4Tj978mjy2iE/USUfGbudgsq/zZy4EeYEIG3c+Xx
+	 ApYbpFAzOjKLdNzyC12Ud0DvGwRBtKdE4mlJz3jM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	STAR Labs SG <info@starlabs.sg>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	sashiko-bot <sashiko-bot@kernel.org>,
+	Song Liu <songliubraving@fb.com>,
+	Ian Rogers <irogers@google.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1096/1815] bpf: Check load-acquire src ptr type before the load
-Date: Sat, 12 Sep 2026 08:47:26 +0200
-Message-ID: <20260912065714.749009107@linuxfoundation.org>
+Subject: [PATCH 7.2 1114/1815] perf libbfd: Fix memory leaks and NULL fclose in BPF disassembly
+Date: Sat, 12 Sep 2026 08:47:44 +0200
+Message-ID: <20260912065715.171185141@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -47,76 +48,97 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Daniel Borkmann <daniel@iogearbox.net>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit b87803391baa7e0bef60549d8841f12e549ad057 ]
+[ Upstream commit fe3ab00d55aa56b4d55cbc1150448f0aadd6732c ]
 
-check_atomic_load() calls check_load_mem() before atomic_ptr_type_ok().
-For a load-acquire that fetches into its own source register (dst_reg ==
-src_reg), check_load_mem() overwrites src_reg's type with the type of the
-loaded value, so the subsequent atomic_ptr_type_ok() no longer sees the
-source pointer and fails to reject the disallowed types (ctx, pkt,
-flow_keys, sock).
+symbol__disassemble_bpf_libbfd() has four resource management bugs:
 
-Since bpf_convert_ctx_accesses() does not rewrite atomic loads, the raw
-access to the underlying kernel object is left in place. The destination
-type is taken from the ctx access itself, so a load-acquire of the sk
-field of struct __sk_buff for example leaves the register typed as
-PTR_TO_SOCK_COMMON_OR_NULL, which type_is_sk_pointer() does not match
-either, while it actually holds unconverted struct sk_buff bytes. Once
-the NULL check has passed this is a type confusion, not just a leak of
-kernel data.
+1. free(prog_linfo) leaks internal arrays.  bpf_prog_linfo contains
+   raw_linfo, raw_jited_linfo, nr_jited_linfo_per_func, and
+   jited_linfo_func_idx pointers that are only freed by the proper
+   destructor bpf_prog_linfo__free().
 
-Validate src_reg with check_reg_arg() and check the source pointer type
-with atomic_ptr_type_ok() before the load again, mirroring
-check_atomic_rmw(). Out-of-range register numbers are already rejected
-earlier by check_and_resolve_insns() (commit 503d21ef8eac ("bpf: Do
-register range validation early")), and the only exemption there,
-is_stack_arg_ldx(), requires BPF_LDX | BPF_MEM | BPF_DW and thus never
-matches a BPF_ATOMIC insn. atomic_ptr_type_ok() can therefore not
-dereference register state out of bounds, that is, the out-of-bounds
-read addressed by the Fixes commit below does not reappear (as proven
-also via selftest).
+2. open_memstream(&buf, &buf_size) allocates a dynamic buffer that the
+   caller must free after fclose().  The function calls fclose(s) but
+   never free(buf), leaking the stream buffer on every call.
 
-Fixes: c03bb2fa327e ("bpf: Fix out-of-bounds read in check_atomic_load/store()")
-Reported-by: STAR Labs SG <info@starlabs.sg>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Eduard Zingerman <eddyz87@gmail.com>
-Link: https://lore.kernel.org/bpf/20260804201917.253491-1-daniel@iogearbox.net
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+3. args->line = strdup(srcline) is immediately consumed by
+   disasm_line__new(args) which internally calls strdup(args->line)
+   again via annotation_line__init().  The first strdup result is then
+   overwritten by args->line = buf + prev_buf_size without being freed.
+
+4. If open_memstream() fails, the error path jumps to 'out:' which
+   calls fclose(s) with s == NULL — undefined behavior.
+
+Fix by using bpf_prog_linfo__free(), initializing buf to NULL, adding
+free(buf) after fclose(s), guarding fclose() against NULL, and removing
+the redundant strdup since annotation_line__init() makes its own copy.
+
+Fixes: 6987561c9e86eace ("perf annotate: Enable annotation of BPF programs")
+Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Cc: Song Liu <songliubraving@fb.com>
+Reviewed-by: Ian Rogers <irogers@google.com>
+Assisted-by: Claude:claude-opus-4.6
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tools/perf/util/libbfd.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index a26f38f637bff..34cf85d868d82 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -6531,7 +6531,7 @@ static int check_atomic_load(struct bpf_verifier_env *env,
- {
- 	int err;
+diff --git a/tools/perf/util/libbfd.c b/tools/perf/util/libbfd.c
+index d6c2d9807fc9c..118f973298ea8 100644
+--- a/tools/perf/util/libbfd.c
++++ b/tools/perf/util/libbfd.c
+@@ -15,6 +15,7 @@
+ #ifdef HAVE_LIBBPF_SUPPORT
+ #include <bpf/bpf.h>
+ #include <bpf/btf.h>
++#include <bpf/libbpf.h>
+ #endif
+ #include <fcntl.h>
+ #include <stdio.h>
+@@ -510,7 +511,7 @@ int symbol__disassemble_bpf_libbfd(struct symbol *sym __maybe_unused,
+ 	char tpath[PATH_MAX];
+ 	size_t buf_size;
+ 	int nr_skip = 0;
+-	char *buf;
++	char *buf = NULL;
+ 	bfd *bfdf;
+ 	int ret;
+ 	FILE *s;
+@@ -620,7 +621,7 @@ int symbol__disassemble_bpf_libbfd(struct symbol *sym __maybe_unused,
  
--	err = check_load_mem(env, insn, true, false, false, "atomic_load");
-+	err = check_reg_arg(env, insn->src_reg, SRC_OP);
- 	if (err)
- 		return err;
+ 		if (!annotate_opts.hide_src_code && srcline) {
+ 			args->offset = -1;
+-			args->line = strdup(srcline);
++			args->line = (char *)srcline;
+ 			args->line_nr = 0;
+ 			args->fileloc = NULL;
+ 			args->ms->sym = sym;
+@@ -645,9 +646,12 @@ int symbol__disassemble_bpf_libbfd(struct symbol *sym __maybe_unused,
  
-@@ -6542,7 +6542,7 @@ static int check_atomic_load(struct bpf_verifier_env *env,
- 		return -EACCES;
- 	}
- 
--	return 0;
-+	return check_load_mem(env, insn, true, false, false, "atomic_load");
- }
- 
- static int check_atomic_store(struct bpf_verifier_env *env,
+ 	ret = 0;
+ out:
+-	free(prog_linfo);
++	bpf_prog_linfo__free(prog_linfo);
+ 	btf__free(btf);
+-	fclose(s);
++	if (s) {
++		fclose(s);
++		free(buf);
++	}
+ 	bfd_close(bfdf);
+ 	return ret;
+ #else
 -- 
 2.53.0
 
