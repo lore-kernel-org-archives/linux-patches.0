@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BFFF471249;
-	Sat, 12 Sep 2026 16:22:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCC5C33E346;
+	Sat, 12 Sep 2026 16:22:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789230160; cv=none; b=frOAGH5JhglCwe6Dfjk+PTvNske6r/OeRX7XTqBDvqJ0CO0ZPcIEdu87wPyL97wTC3p5qb55X3fWePI/xXXKhxF3BYEUpx6h5MqtDeEQ2Ir5swhLpSu6kn2vFZ69M03Pi3t+WTsOdOJcekiarNn1sSJjXcv9bhXyWeph3j0ufyA=
+	t=1789230164; cv=none; b=D3XFsrBzdwJ2TPrlqqd8qFbo0svEm1796q3UtFMO6bjPKmqd6HfScH+RmVxiFtWI9zZwbATSF1DbPM93d7j0T4vw/VuvgqZQSQcxz0jeslvpRoY7khlsbBXu09AVxLZtRb4/2QPNr3Yr8ImIHeLYvWHOqTRtYlPZ1xVf0jZdiQ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789230160; c=relaxed/simple;
-	bh=jbPFLdl1qQOEFDvsqxWvFIvSIj1TTt/40Iz3hMycZJc=;
+	s=arc-20240116; t=1789230164; c=relaxed/simple;
+	bh=PVad766ABlJEg1tPCTPHnh0WxiDan86ULPo2hMBV0yg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dzqiQCmvHZRfRP0ULkDdAfp4vxfgdT6ZUek1ArA+B/XkyL07KuSyWJsiwIiA6c8tvvfSi4YdNA7ILbwbqHrGuU7XiY4GOIuil42JLkN+bqlQGa0KFR/tvSYK0XYPfS6k0KHgptXTaWaIrYAuyAUeldIFK47f71xAJdSVSEijvaQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SirVnVYC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IuKjRKF4mLxy1MqrpTn4mGUgT4644BjJHqKbLkqPBdyT0+nK5mQbU0KOndqkQW8ISKDLOX8gJvilb/y7Vj2z8RWgQJ7/Ioii+nwr15AJqMQiXhsHxvZrekOGCOx/27WV5r/+1/SydHLFK2O8VgtaU07YI9GutAZ9reMIrN/v6ko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zR7/W2AD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SirVnVYC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 784931F000FF;
-	Sat, 12 Sep 2026 16:22:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zR7/W2AD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 012A91F000FF;
+	Sat, 12 Sep 2026 16:22:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789230159;
-	bh=aazYTzms1K9MgrlKEBZmfJ1z4v5hKWCTeCA4wB/lbA0=;
+	s=korg; t=1789230163;
+	bh=IcC2O+CDP+/cKhhNpW1oaxrWJnfAbphps6XEU8zQK4k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SirVnVYCrAiwczRYWIhQyfR0iNIFJU4ZzBFx2Zo9E85E4ivlNPjkB4JfzcIwCsh3/
-	 VObsfEQ8KfQmYKrYFz6Vm+Z5dORyjW65rWpdm5bb3KJ4mlv8fZYFVDFtXnznl4cT1j
-	 Tj0fuyKl1vUUWABA/BKnSaEPaCpIzX1NAjCqzj5w=
+	b=zR7/W2ADsdiSA0rJlYhEV3qap0vKoExrsT/1knmmbuSIb6AhwJaY2PoTny0K43RN1
+	 EcSTlh9EZp0vDqkZTrTLhr0HjfQgPAYqvwaIDRoi55JaMfKGE+Cv66AVP78eDZfMwT
+	 inYnipF1lQfoF4j3wEi5L2uJuHk6kKDzp8M7YT14=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Firas Jahjah <firasj@amazon.com>,
-	Michael Margolin <mrgolin@amazon.com>,
-	Yonatan Nachum <ynachum@amazon.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Haoxiang Li <haoxiang_li2024@163.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0735/1191] RDMA/efa: Fix PBL chunk length computation
-Date: Sat, 12 Sep 2026 08:57:43 +0200
-Message-ID: <20260912065604.790329012@linuxfoundation.org>
+Subject: [PATCH 6.1 0695/1191] iommu/qcom: Remove sysfs device on probe failure path
+Date: Sat, 12 Sep 2026 08:57:03 +0200
+Message-ID: <20260912065603.870392896@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -53,72 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yonatan Nachum <ynachum@amazon.com>
+From: Haoxiang Li <haoxiang_li2024@163.com>
 
-[ Upstream commit 229b42d7450c1cf96f45ec39ebb69211b06bc036 ]
+[ Upstream commit c579f18e79599c16168925cb149e1db3f29eea5f ]
 
-On register MR, when creating the PBL, if it's an indirect PBL we create
-a chunk list to hold the PBL pages pointers. Each chunk is 4KB in size
-and can hold 510 addresses (EFA_PTRS_PER_CHUNK) and has a 12-byte
-control buffer at the end of it holding the next chunk's pointer and its
-length.
+In qcom_iommu_device_probe(), if iommu_device_register()
+fails, the sysfs device created by iommu_device_sysfs_add()
+is not released. Add a goto label to do the cleanup.
 
-If the PBL number of pages is a multiple of EFA_PTRS_PER_CHUNK, the
-calculated last chunk length is wrongly computed as 0, even though that
-chunk is fully populated with 510 real page pointers. This wrong length
-is used both to DMA map the chunk and is propagated to the device,
-causing the device to see the chunk as empty and reject the memory
-registration.
-
-Fix the calculation so it will be performed only if the number of pages
-isn't a multiple of EFA_PTRS_PER_CHUNK, if it is, its already handled in
-the above loop correctly.
-Also prevent out-of-bounds reach in the chunks array in such scenario.
-
-Fixes: 40909f664d27 ("RDMA/efa: Add EFA verbs implementation")
-Reviewed-by: Firas Jahjah <firasj@amazon.com>
-Reviewed-by: Michael Margolin <mrgolin@amazon.com>
-Signed-off-by: Yonatan Nachum <ynachum@amazon.com>
-Link: https://patch.msgid.link/20260727090255.1175120-1-ynachum@amazon.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 0ae349a0f33f ("iommu/qcom: Add qcom_iommu")
+Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Reviewed-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/efa/efa_verbs.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ drivers/iommu/arm/arm-smmu/qcom_iommu.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/efa/efa_verbs.c b/drivers/infiniband/hw/efa/efa_verbs.c
-index 03f0424eca37c..f46d0e5f85c50 100644
---- a/drivers/infiniband/hw/efa/efa_verbs.c
-+++ b/drivers/infiniband/hw/efa/efa_verbs.c
-@@ -1286,9 +1286,11 @@ static int pbl_chunk_list_create(struct efa_dev *dev, struct pbl_context *pbl)
- 
- 		chunk_list->chunks[i].length = EFA_CHUNK_USED_SIZE;
- 	}
--	chunk_list->chunks[chunk_list_size - 1].length =
--		((page_cnt % EFA_PTRS_PER_CHUNK) * EFA_CHUNK_PAYLOAD_PTR_SIZE) +
--			EFA_CHUNK_PTR_SIZE;
-+
-+	if (page_cnt % EFA_PTRS_PER_CHUNK != 0)
-+		chunk_list->chunks[chunk_list_size - 1].length =
-+			((page_cnt % EFA_PTRS_PER_CHUNK) * EFA_CHUNK_PAYLOAD_PTR_SIZE) +
-+				EFA_CHUNK_PTR_SIZE;
- 
- 	/* fill the dma addresses of sg list pages to chunks: */
- 	chunk_idx = 0;
-@@ -1300,9 +1302,12 @@ static int pbl_chunk_list_create(struct efa_dev *dev, struct pbl_context *pbl)
- 			rdma_block_iter_dma_address(&biter);
- 
- 		if (payload_idx == EFA_PTRS_PER_CHUNK) {
-+			payload_idx = 0;
- 			chunk_idx++;
-+			if (chunk_idx >= chunk_list_size)
-+				break;
-+
- 			cur_chunk_buf = chunk_list->chunks[chunk_idx].buf;
--			payload_idx = 0;
- 		}
+diff --git a/drivers/iommu/arm/arm-smmu/qcom_iommu.c b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+index 3d4428e688ee5..cf8dcd2371e8f 100644
+--- a/drivers/iommu/arm/arm-smmu/qcom_iommu.c
++++ b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
+@@ -847,7 +847,7 @@ static int qcom_iommu_device_probe(struct platform_device *pdev)
+ 	ret = iommu_device_register(&qcom_iommu->iommu, &qcom_iommu_ops, dev);
+ 	if (ret) {
+ 		dev_err(dev, "Failed to register iommu\n");
+-		goto err_pm_disable;
++		goto err_sysfs_remove;
  	}
  
+ 	if (qcom_iommu->local_base) {
+@@ -858,6 +858,8 @@ static int qcom_iommu_device_probe(struct platform_device *pdev)
+ 
+ 	return 0;
+ 
++err_sysfs_remove:
++	iommu_device_sysfs_remove(&qcom_iommu->iommu);
+ err_pm_disable:
+ 	pm_runtime_disable(dev);
+ 	return ret;
 -- 
 2.53.0
 
