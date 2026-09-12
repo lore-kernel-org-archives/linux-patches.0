@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4ED244AB60;
-	Sat, 12 Sep 2026 10:51:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DB6B44AB60;
+	Sat, 12 Sep 2026 10:52:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789210318; cv=none; b=mq9zE9nSBnvgUktsm62EIL9kaNqqbMxvUohOCcvu2U+mqMPqP5KSyv0Zxq4FmsnFhh1BoZbXmbxRZjh7pTVn7hF6Exy5ZI3eMXEHb+HvlYoT5PhWbPS/3iK9tWafdx4merbw/F6YNxSOS5xzq3sRJLQ6+/m+Xa2uFY02cM/18UA=
+	t=1789210322; cv=none; b=PKLcYAUGsSEnVv4Jn6F6MyxFK1LDskXLm6tN2QuLEtBgN+39u/ZiuvIpQCYGdOUdHrnRl7iE+gcemokVDaGkAxXJxNgJ/c5vApnwmi0pP8FON0CYhXcTxYbbultv/Mbr+54IW/b37CYSR+c7phqHlkFLKVthIpTEGaUuWku7HsI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789210318; c=relaxed/simple;
-	bh=cmPUNg99wnZf9rnU6Kew8f8MjfqNnoQpuYuhEqpojXY=;
+	s=arc-20240116; t=1789210322; c=relaxed/simple;
+	bh=+Mei34hqZmUjDFgNkII+lm/GF/4dq6nZkmbBLK4RRwQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U9YxAS/My5VX6TxdGFpVLovaRT5SMMdgLxAohu9sHiIiHgha+S3xhLV8ewrGmVgVVc8Ale0ie1yZm9F6fv7U06KKYOeelN0XTfjtJvNQcLJqtFuvX/JFF8GcPwEacqoe927SCH+T695MB8dJCSwKg4XpK3E9iMdC/tVGpSSkSww=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qaMCjfrS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=b5UTBqQqbCJABoWAqNH1LKtIrT3gkfsGCokFBY7yk6LIVysnLqY9T/DgLDLPnHZWKz8evjgT5lEeqNeku9y6caxsS9cfqqXuBD7iRP9CQYugamfpqbGhJzN0e6movOT+CUqOitVlfWShqRI++B/ooaoruxOP8XhWR1mKx3DrVA8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wEqaiBM0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qaMCjfrS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CF3B1F000FF;
-	Sat, 12 Sep 2026 10:51:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wEqaiBM0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF1681F000FF;
+	Sat, 12 Sep 2026 10:51:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789210316;
-	bh=dQ8J3iHBZTbeKLRh04EE0W92gwWx+DWWS9+X4TIwdSY=;
+	s=korg; t=1789210321;
+	bh=IBs9yKsRS5BMi9RTPJSG+6ISxdzrX8wCLtsv9BZzJWs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qaMCjfrSU902/qGyy2wjLG6+whTbLbNEic/Yb0Mzw5+V864/TpeMjUIWOaPzHkoJa
-	 4SQU58jHqm8x3/o4Voxos/2U65GD2AReOU2VAsDWJG8OJumxhKcAnYDkas1W2Md2zH
-	 4WMqGNLxnC6Ek8n0dF21GtqwiGdsuNNUKdi+r1CA=
+	b=wEqaiBM0utxTVDQwF4VsZWgE3OHEUvnONITvNNviIfpP9tgJkxRFsGRgCAIMOs0rn
+	 6Iairfip+7UoXFJ8mcsaID1yUN3UBSG4kQtlJLJzE5jBKBBBg+DfPi2sxrwmO9/FjR
+	 4JgPBYKcI9YWEJ15B9TRMJg9Dvmm9d94vmUG8Ut4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1000/1518] btrfs: make btrfs_repair_io_failure() handle bs > ps cases without large folios
-Date: Sat, 12 Sep 2026 08:52:49 +0200
-Message-ID: <20260912065646.076784715@linuxfoundation.org>
+Subject: [PATCH 6.18 1001/1518] btrfs: merge setting ret and return ret
+Date: Sat, 12 Sep 2026 08:52:50 +0200
+Message-ID: <20260912065646.098649995@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,254 +50,374 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: David Sterba <dsterba@suse.com>
 
-[ Upstream commit 2574e9011018a1d6d3da8d03d0bfc4e2675dee2a ]
+[ Upstream commit 4b117be65ff41efae3694df449b9badb4e9d142e ]
 
-Currently btrfs_repair_io_failure() only accept a single @paddr
-parameter, and for bs > ps cases it's required that @paddr is backed by
-a large folio.
+In many places we have pattern:
 
-That assumption has quite some limitations, preventing us from utilizing
-true zero-copy direct-io and encoded read/writes.
+	ret = ...;
+	return ret;
 
-To address the problem, enhance btrfs_repair_io_failure() by:
+This can be simplified to a direct return, removing 'ret' if not
+otherwise needed. The places in self tests are not converted so we can
+add more test cases without changing surrounding code
+(extent-map-tests.c:test_case_4()).
 
-- Accept an array of paddrs, up to 64K / PAGE_SIZE entries
-  This kind of acts like a bio_vec, but with very limited entries, as the
-  function is only utilized to repair one fs data block, or a tree block.
-
-  Both have an upper size limit (BTRFS_MAX_BLOCK_SIZE, i.e. 64K), so we
-  don't need the full bio_vec thing to handle it.
-
-- Allocate a bio with multiple slots
-  Previously even for bs > ps cases, we only passed in a contiguous
-  physical address range, thus a single slot will be enough.
-
-  But not anymore, so we have to allocate a bio structure, other than
-  using the on-stack one.
-
-- Use on-stack memory to allocate @paddrs array
-  It's at most 16 pages (4K page size, 64K block size), will take up at
-  most 128 bytes.
-  I think the on-stack cost is still acceptable.
-
-- Add one extra check to make sure the repair bio is exactly one block
-
-- Utilize btrfs_repair_io_failure() to submit a single bio for metadata
-  This should improve the read-repair performance for metadata, as now
-  we submit a node sized bio then wait, other than submit each block of
-  the metadata and wait for each submitted block.
-
-- Add one extra parameter indicating the step
-  This is due to the fact that metadata step can be as large as
-  nodesize, instead of sectorsize.
-  So we need a way to distinguish metadata and data repair.
-
-- Reduce the width of @length parameter of btrfs_repair_io_failure()
-  Since we only call btrfs_repair_io_failure() on a single data or
-  metadata block, u64 is overkilled.
-  Use u32 instead and add one extra ASSERT()s to make sure the length
-  never exceed BTRFS_MAX_BLOCK_SIZE.
-
-Signed-off-by: Qu Wenruo <wqu@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Stable-dep-of: ec78575dde99 ("btrfs: always wait for ordered extents to avoid OE races")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/bio.c     | 68 ++++++++++++++++++++++++++++++++++++----------
- fs/btrfs/bio.h     |  5 ++--
- fs/btrfs/disk-io.c | 31 +++++++++++++--------
- 3 files changed, 76 insertions(+), 28 deletions(-)
+ fs/btrfs/block-group.c     |  3 +--
+ fs/btrfs/ctree.c           |  3 +--
+ fs/btrfs/delayed-inode.c   |  4 ++--
+ fs/btrfs/disk-io.c         | 13 +++++--------
+ fs/btrfs/extent-io-tree.c  |  7 ++-----
+ fs/btrfs/extent-tree.c     | 10 +++-------
+ fs/btrfs/file.c            |  3 +--
+ fs/btrfs/free-space-tree.c |  4 +---
+ fs/btrfs/inode-item.c      |  7 +++----
+ fs/btrfs/inode.c           | 13 ++++---------
+ fs/btrfs/qgroup.c          | 14 ++++----------
+ fs/btrfs/relocation.c      |  5 ++---
+ fs/btrfs/volumes.c         |  9 +++------
+ 13 files changed, 32 insertions(+), 63 deletions(-)
 
-diff --git a/fs/btrfs/bio.c b/fs/btrfs/bio.c
-index 7d8aaa019c8ce..afe022a3b8fc3 100644
---- a/fs/btrfs/bio.c
-+++ b/fs/btrfs/bio.c
-@@ -172,7 +172,21 @@ static void btrfs_end_repair_bio(struct btrfs_bio *repair_bbio,
- 	struct btrfs_inode *inode = repair_bbio->inode;
- 	struct btrfs_fs_info *fs_info = inode->root->fs_info;
- 	struct bio_vec *bv = bio_first_bvec_all(&repair_bbio->bio);
-+	/*
-+	 * We can not move forward the saved_iter, as it will be later
-+	 * utilized by repair_bbio again.
-+	 */
-+	struct bvec_iter saved_iter = repair_bbio->saved_iter;
-+	const u32 step = min(fs_info->sectorsize, PAGE_SIZE);
-+	const u64 logical = repair_bbio->saved_iter.bi_sector << SECTOR_SHIFT;
-+	const u32 nr_steps = repair_bbio->saved_iter.bi_size / step;
- 	int mirror = repair_bbio->mirror_num;
-+	phys_addr_t paddrs[BTRFS_MAX_BLOCKSIZE / PAGE_SIZE];
-+	phys_addr_t paddr;
-+	unsigned int slot = 0;
+diff --git a/fs/btrfs/block-group.c b/fs/btrfs/block-group.c
+index 93e0063bb1fa5..e9ee10bee2ece 100644
+--- a/fs/btrfs/block-group.c
++++ b/fs/btrfs/block-group.c
+@@ -1057,8 +1057,7 @@ static int remove_block_group_item(struct btrfs_trans_handle *trans,
+ 	if (ret < 0)
+ 		return ret;
+ 
+-	ret = btrfs_del_item(trans, root, path);
+-	return ret;
++	return btrfs_del_item(trans, root, path);
+ }
+ 
+ int btrfs_remove_block_group(struct btrfs_trans_handle *trans,
+diff --git a/fs/btrfs/ctree.c b/fs/btrfs/ctree.c
+index 0f2e9f33dd0cb..c7c2e4405c476 100644
+--- a/fs/btrfs/ctree.c
++++ b/fs/btrfs/ctree.c
+@@ -3990,8 +3990,7 @@ int btrfs_split_item(struct btrfs_trans_handle *trans,
+ 	if (ret)
+ 		return ret;
+ 
+-	ret = split_item(trans, path, new_key, split_offset);
+-	return ret;
++	return split_item(trans, path, new_key, split_offset);
+ }
+ 
+ /*
+diff --git a/fs/btrfs/delayed-inode.c b/fs/btrfs/delayed-inode.c
+index ea48706a3d810..e1d1f71153fcd 100644
+--- a/fs/btrfs/delayed-inode.c
++++ b/fs/btrfs/delayed-inode.c
+@@ -1140,8 +1140,8 @@ __btrfs_commit_inode_delayed_items(struct btrfs_trans_handle *trans,
+ 	ret = btrfs_record_root_in_trans(trans, node->root);
+ 	if (ret)
+ 		return ret;
+-	ret = btrfs_update_delayed_inode(trans, node->root, path, node);
+-	return ret;
 +
-+	/* Repair bbio should be eaxctly one block sized. */
-+	ASSERT(repair_bbio->saved_iter.bi_size == fs_info->sectorsize);
++	return btrfs_update_delayed_inode(trans, node->root, path, node);
+ }
  
- 	if (repair_bbio->bio.bi_status ||
- 	    !btrfs_data_csum_ok(repair_bbio, dev, 0, bvec_phys(bv))) {
-@@ -190,12 +204,17 @@ static void btrfs_end_repair_bio(struct btrfs_bio *repair_bbio,
- 		return;
- 	}
- 
-+	btrfs_bio_for_each_block(paddr, &repair_bbio->bio, &saved_iter, step) {
-+		ASSERT(slot < nr_steps);
-+		paddrs[slot] = paddr;
-+		slot++;
-+	}
-+
- 	do {
- 		mirror = prev_repair_mirror(fbio, mirror);
- 		btrfs_repair_io_failure(fs_info, btrfs_ino(inode),
- 				  repair_bbio->file_offset, fs_info->sectorsize,
--				  repair_bbio->saved_iter.bi_sector << SECTOR_SHIFT,
--				  bvec_phys(bv), mirror);
-+				  logical, paddrs, step, mirror);
- 	} while (mirror != fbio->bbio->mirror_num);
- 
- done:
-@@ -865,18 +884,36 @@ void btrfs_submit_bbio(struct btrfs_bio *bbio, int mirror_num)
-  *
-  * The I/O is issued synchronously to block the repair read completion from
-  * freeing the bio.
-+ *
-+ * @ino:	Offending inode number
-+ * @fileoff:	File offset inside the inode
-+ * @length:	Length of the repair write
-+ * @logical:	Logical address of the range
-+ * @paddrs:	Physical address array of the content
-+ * @step:	Length of for each paddrs
-+ * @mirror_num: Mirror number to write to. Must not be zero
-  */
--int btrfs_repair_io_failure(struct btrfs_fs_info *fs_info, u64 ino, u64 start,
--			    u64 length, u64 logical, phys_addr_t paddr, int mirror_num)
-+int btrfs_repair_io_failure(struct btrfs_fs_info *fs_info, u64 ino, u64 fileoff,
-+			    u32 length, u64 logical, const phys_addr_t paddrs[],
-+			    unsigned int step, int mirror_num)
- {
-+	const u32 nr_steps = DIV_ROUND_UP_POW2(length, step);
- 	struct btrfs_io_stripe smap = { 0 };
--	struct bio_vec bvec;
--	struct bio bio;
-+	struct bio *bio = NULL;
- 	int ret = 0;
- 
- 	ASSERT(!(fs_info->sb->s_flags & SB_RDONLY));
- 	BUG_ON(!mirror_num);
- 
-+	/* Basic alignment checks. */
-+	ASSERT(IS_ALIGNED(logical, fs_info->sectorsize));
-+	ASSERT(IS_ALIGNED(length, fs_info->sectorsize));
-+	ASSERT(IS_ALIGNED(fileoff, fs_info->sectorsize));
-+	/* Either it's a single data or metadata block. */
-+	ASSERT(length <= BTRFS_MAX_BLOCKSIZE);
-+	ASSERT(step <= length);
-+	ASSERT(is_power_of_2(step));
-+
- 	if (btrfs_repair_one_zone(fs_info, logical))
- 		return 0;
- 
-@@ -896,24 +933,27 @@ int btrfs_repair_io_failure(struct btrfs_fs_info *fs_info, u64 ino, u64 start,
- 		goto out_counter_dec;
- 	}
- 
--	bio_init(&bio, smap.dev->bdev, &bvec, 1, REQ_OP_WRITE | REQ_SYNC);
--	bio.bi_iter.bi_sector = smap.physical >> SECTOR_SHIFT;
--	__bio_add_page(&bio, phys_to_page(paddr), length, offset_in_page(paddr));
--	ret = submit_bio_wait(&bio);
-+	bio = bio_alloc(smap.dev->bdev, nr_steps, REQ_OP_WRITE | REQ_SYNC, GFP_NOFS);
-+	bio->bi_iter.bi_sector = smap.physical >> SECTOR_SHIFT;
-+	for (int i = 0; i < nr_steps; i++) {
-+		ret = bio_add_page(bio, phys_to_page(paddrs[i]), step, offset_in_page(paddrs[i]));
-+		/* We should have allocated enough slots to contain all the different pages. */
-+		ASSERT(ret == step);
-+	}
-+	ret = submit_bio_wait(bio);
-+	bio_put(bio);
- 	if (ret) {
- 		/* try to remap that extent elsewhere? */
- 		btrfs_dev_stat_inc_and_print(smap.dev, BTRFS_DEV_STAT_WRITE_ERRS);
--		goto out_bio_uninit;
-+		goto out_counter_dec;
- 	}
- 
- 	btrfs_info_rl(fs_info,
- 		"read error corrected: ino %llu off %llu (dev %s sector %llu)",
--			     ino, start, btrfs_dev_name(smap.dev),
-+			     ino, fileoff, btrfs_dev_name(smap.dev),
- 			     smap.physical >> SECTOR_SHIFT);
- 	ret = 0;
- 
--out_bio_uninit:
--	bio_uninit(&bio);
- out_counter_dec:
- 	btrfs_bio_counter_dec(fs_info);
- 	return ret;
-diff --git a/fs/btrfs/bio.h b/fs/btrfs/bio.h
-index 69fe54f564fcb..fd09b6501c962 100644
---- a/fs/btrfs/bio.h
-+++ b/fs/btrfs/bio.h
-@@ -127,7 +127,8 @@ void btrfs_bio_end_io(struct btrfs_bio *bbio, blk_status_t status);
- 
- void btrfs_submit_bbio(struct btrfs_bio *bbio, int mirror_num);
- void btrfs_submit_repair_write(struct btrfs_bio *bbio, int mirror_num, bool dev_replace);
--int btrfs_repair_io_failure(struct btrfs_fs_info *fs_info, u64 ino, u64 start,
--			    u64 length, u64 logical, phys_addr_t paddr, int mirror_num);
-+int btrfs_repair_io_failure(struct btrfs_fs_info *fs_info, u64 ino, u64 fileoff,
-+			    u32 length, u64 logical, const phys_addr_t paddrs[],
-+			    unsigned int step, int mirror_num);
- 
- #endif
+ /*
 diff --git a/fs/btrfs/disk-io.c b/fs/btrfs/disk-io.c
-index 655eed981078b..4e849ed98b181 100644
+index 4e849ed98b181..b956434208fe6 100644
 --- a/fs/btrfs/disk-io.c
 +++ b/fs/btrfs/disk-io.c
-@@ -183,26 +183,33 @@ static int btrfs_repair_eb_io_failure(const struct extent_buffer *eb,
- 				      int mirror_num)
- {
- 	struct btrfs_fs_info *fs_info = eb->fs_info;
-+	const u32 step = min(fs_info->nodesize, PAGE_SIZE);
-+	const u32 nr_steps = eb->len / step;
-+	phys_addr_t paddrs[BTRFS_MAX_BLOCKSIZE / PAGE_SIZE];
- 	int ret = 0;
+@@ -186,7 +186,6 @@ static int btrfs_repair_eb_io_failure(const struct extent_buffer *eb,
+ 	const u32 step = min(fs_info->nodesize, PAGE_SIZE);
+ 	const u32 nr_steps = eb->len / step;
+ 	phys_addr_t paddrs[BTRFS_MAX_BLOCKSIZE / PAGE_SIZE];
+-	int ret = 0;
  
  	if (sb_rdonly(fs_info->sb))
  		return -EROFS;
- 
--	for (int i = 0; i < num_extent_folios(eb); i++) {
-+	for (int i = 0; i < num_extent_pages(eb); i++) {
- 		struct folio *folio = eb->folios[i];
--		u64 start = max_t(u64, eb->start, folio_pos(folio));
--		u64 end = min_t(u64, eb->start + eb->len,
--				folio_pos(folio) + eb->folio_size);
--		u32 len = end - start;
--		phys_addr_t paddr = PFN_PHYS(folio_pfn(folio)) +
--				    offset_in_folio(folio, start);
--
--		ret = btrfs_repair_io_failure(fs_info, 0, start, len, start,
--					      paddr, mirror_num);
--		if (ret)
--			break;
-+
-+		/* No large folio support yet. */
-+		ASSERT(folio_order(folio) == 0);
-+		ASSERT(i < nr_steps);
-+
-+		/*
-+		 * For nodesize < page size, there is just one paddr, with some
-+		 * offset inside the page.
-+		 *
-+		 * For nodesize >= page size, it's one or more paddrs, and eb->start
-+		 * must be aligned to page boundary.
-+		 */
-+		paddrs[i] = page_to_phys(&folio->page) + offset_in_page(eb->start);
+@@ -208,9 +207,8 @@ static int btrfs_repair_eb_io_failure(const struct extent_buffer *eb,
+ 		paddrs[i] = page_to_phys(&folio->page) + offset_in_page(eb->start);
  	}
  
-+	ret = btrfs_repair_io_failure(fs_info, 0, eb->start, eb->len, eb->start,
-+				      paddrs, step, mirror_num);
- 	return ret;
+-	ret = btrfs_repair_io_failure(fs_info, 0, eb->start, eb->len, eb->start,
+-				      paddrs, step, mirror_num);
+-	return ret;
++	return btrfs_repair_io_failure(fs_info, 0, eb->start, eb->len,
++				       eb->start, paddrs, step, mirror_num);
  }
  
+ /*
+@@ -2190,11 +2188,10 @@ static int load_global_roots(struct btrfs_root *tree_root)
+ 		return ret;
+ 	if (!btrfs_fs_compat_ro(tree_root->fs_info, FREE_SPACE_TREE))
+ 		return ret;
+-	ret = load_global_roots_objectid(tree_root, path,
+-					 BTRFS_FREE_SPACE_TREE_OBJECTID,
+-					 "free space");
+ 
+-	return ret;
++	return load_global_roots_objectid(tree_root, path,
++					  BTRFS_FREE_SPACE_TREE_OBJECTID,
++					  "free space");
+ }
+ 
+ static int btrfs_read_roots(struct btrfs_fs_info *fs_info)
+diff --git a/fs/btrfs/extent-io-tree.c b/fs/btrfs/extent-io-tree.c
+index bb2ca1c9c7b02..d0dd50f7d2795 100644
+--- a/fs/btrfs/extent-io-tree.c
++++ b/fs/btrfs/extent-io-tree.c
+@@ -187,8 +187,6 @@ static int add_extent_changeset(struct extent_state *state, u32 bits,
+ 				 struct extent_changeset *changeset,
+ 				 int set)
+ {
+-	int ret;
+-
+ 	if (!changeset)
+ 		return 0;
+ 	if (set && (state->state & bits) == bits)
+@@ -196,9 +194,8 @@ static int add_extent_changeset(struct extent_state *state, u32 bits,
+ 	if (!set && (state->state & bits) == 0)
+ 		return 0;
+ 	changeset->bytes_changed += state->end - state->start + 1;
+-	ret = ulist_add(&changeset->range_changed, state->start, state->end,
+-			GFP_ATOMIC);
+-	return ret;
++
++	return ulist_add(&changeset->range_changed, state->start, state->end, GFP_ATOMIC);
+ }
+ 
+ static inline struct extent_state *next_state(struct extent_state *state)
+diff --git a/fs/btrfs/extent-tree.c b/fs/btrfs/extent-tree.c
+index d2d96f366dac3..7c199d59a5465 100644
+--- a/fs/btrfs/extent-tree.c
++++ b/fs/btrfs/extent-tree.c
+@@ -2557,7 +2557,6 @@ static u64 get_alloc_profile_by_root(struct btrfs_root *root, int data)
+ {
+ 	struct btrfs_fs_info *fs_info = root->fs_info;
+ 	u64 flags;
+-	u64 ret;
+ 
+ 	if (data)
+ 		flags = BTRFS_BLOCK_GROUP_DATA;
+@@ -2566,8 +2565,7 @@ static u64 get_alloc_profile_by_root(struct btrfs_root *root, int data)
+ 	else
+ 		flags = BTRFS_BLOCK_GROUP_METADATA;
+ 
+-	ret = btrfs_get_alloc_profile(fs_info, flags);
+-	return ret;
++	return btrfs_get_alloc_profile(fs_info, flags);
+ }
+ 
+ static u64 first_logical_byte(struct btrfs_fs_info *fs_info)
+@@ -4192,10 +4190,8 @@ static int find_free_extent_update_loop(struct btrfs_fs_info *fs_info,
+ 			else
+ 				trans = btrfs_join_transaction(root);
+ 
+-			if (IS_ERR(trans)) {
+-				ret = PTR_ERR(trans);
+-				return ret;
+-			}
++			if (IS_ERR(trans))
++				return PTR_ERR(trans);
+ 
+ 			ret = btrfs_chunk_alloc(trans, space_info, ffe_ctl->flags,
+ 						CHUNK_ALLOC_FORCE_FOR_EXTENT);
+diff --git a/fs/btrfs/file.c b/fs/btrfs/file.c
+index 66c76f425afb5..fe78621d4e3d0 100644
+--- a/fs/btrfs/file.c
++++ b/fs/btrfs/file.c
+@@ -1267,8 +1267,7 @@ static int copy_one_range(struct btrfs_inode *inode, struct iov_iter *iter,
+ 		btrfs_delalloc_release_extents(inode, reserved_len);
+ 		release_space(inode, *data_reserved, reserved_start, reserved_len,
+ 			      only_release_metadata);
+-		ret = extents_locked;
+-		return ret;
++		return extents_locked;
+ 	}
+ 
+ 	copied = copy_folio_from_iter_atomic(folio, offset_in_folio(folio, start),
+diff --git a/fs/btrfs/free-space-tree.c b/fs/btrfs/free-space-tree.c
+index f9ffb1c8988d9..fa8fbb19ff650 100644
+--- a/fs/btrfs/free-space-tree.c
++++ b/fs/btrfs/free-space-tree.c
+@@ -1533,9 +1533,7 @@ int btrfs_remove_block_group_free_space(struct btrfs_trans_handle *trans,
+ 		btrfs_release_path(path);
+ 	}
+ 
+-	ret = 0;
+-
+-	return ret;
++	return 0;
+ }
+ 
+ static int load_free_space_bitmaps(struct btrfs_caching_control *caching_ctl,
+diff --git a/fs/btrfs/inode-item.c b/fs/btrfs/inode-item.c
+index b73e1dd97208a..a864f8c997296 100644
+--- a/fs/btrfs/inode-item.c
++++ b/fs/btrfs/inode-item.c
+@@ -371,14 +371,13 @@ int btrfs_insert_empty_inode(struct btrfs_trans_handle *trans,
+ 			     struct btrfs_path *path, u64 objectid)
+ {
+ 	struct btrfs_key key;
+-	int ret;
++
+ 	key.objectid = objectid;
+ 	key.type = BTRFS_INODE_ITEM_KEY;
+ 	key.offset = 0;
+ 
+-	ret = btrfs_insert_empty_item(trans, root, path, &key,
+-				      sizeof(struct btrfs_inode_item));
+-	return ret;
++	return btrfs_insert_empty_item(trans, root, path, &key,
++				       sizeof(struct btrfs_inode_item));
+ }
+ 
+ int btrfs_lookup_inode(struct btrfs_trans_handle *trans, struct btrfs_root
+diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
+index 7af5ea0cf55fd..cca9840bee896 100644
+--- a/fs/btrfs/inode.c
++++ b/fs/btrfs/inode.c
+@@ -2348,7 +2348,6 @@ int btrfs_run_delalloc_range(struct btrfs_inode *inode, struct folio *locked_fol
+ 			     u64 start, u64 end, struct writeback_control *wbc)
+ {
+ 	const bool zoned = btrfs_is_zoned(inode->root->fs_info);
+-	int ret;
+ 
+ 	/*
+ 	 * The range must cover part of the @locked_folio, or a return of 1
+@@ -2356,10 +2355,8 @@ int btrfs_run_delalloc_range(struct btrfs_inode *inode, struct folio *locked_fol
+ 	 */
+ 	ASSERT(!(end <= folio_pos(locked_folio) || start >= folio_end(locked_folio)));
+ 
+-	if (should_nocow(inode, start, end)) {
+-		ret = run_delalloc_nocow(inode, locked_folio, start, end);
+-		return ret;
+-	}
++	if (should_nocow(inode, start, end))
++		return run_delalloc_nocow(inode, locked_folio, start, end);
+ 
+ 	if (btrfs_inode_can_compress(inode) &&
+ 	    inode_need_compress(inode, start, end) &&
+@@ -2367,11 +2364,9 @@ int btrfs_run_delalloc_range(struct btrfs_inode *inode, struct folio *locked_fol
+ 		return 1;
+ 
+ 	if (zoned)
+-		ret = run_delalloc_cow(inode, locked_folio, start, end, wbc,
+-				       true);
++		return run_delalloc_cow(inode, locked_folio, start, end, wbc, true);
+ 	else
+-		ret = cow_file_range(inode, locked_folio, start, end, NULL, 0);
+-	return ret;
++		return cow_file_range(inode, locked_folio, start, end, NULL, 0);
+ }
+ 
+ void btrfs_split_delalloc_extent(struct btrfs_inode *inode,
+diff --git a/fs/btrfs/qgroup.c b/fs/btrfs/qgroup.c
+index b4c6cbbcd168e..6fb01fb78a690 100644
+--- a/fs/btrfs/qgroup.c
++++ b/fs/btrfs/qgroup.c
+@@ -694,7 +694,6 @@ void btrfs_free_qgroup_config(struct btrfs_fs_info *fs_info)
+ static int add_qgroup_relation_item(struct btrfs_trans_handle *trans, u64 src,
+ 				    u64 dst)
+ {
+-	int ret;
+ 	struct btrfs_root *quota_root = trans->fs_info->quota_root;
+ 	BTRFS_PATH_AUTO_FREE(path);
+ 	struct btrfs_key key;
+@@ -707,8 +706,7 @@ static int add_qgroup_relation_item(struct btrfs_trans_handle *trans, u64 src,
+ 	key.type = BTRFS_QGROUP_RELATION_KEY;
+ 	key.offset = dst;
+ 
+-	ret = btrfs_insert_empty_item(trans, quota_root, path, &key, 0);
+-	return ret;
++	return btrfs_insert_empty_item(trans, quota_root, path, &key, 0);
+ }
+ 
+ static int del_qgroup_relation_item(struct btrfs_trans_handle *trans, u64 src,
+@@ -833,9 +831,7 @@ static int del_qgroup_item(struct btrfs_trans_handle *trans, u64 qgroupid)
+ 	if (ret > 0)
+ 		return -ENOENT;
+ 
+-	ret = btrfs_del_item(trans, quota_root, path);
+-
+-	return ret;
++	return btrfs_del_item(trans, quota_root, path);
+ }
+ 
+ static int update_qgroup_limit_item(struct btrfs_trans_handle *trans,
+@@ -2682,10 +2678,8 @@ int btrfs_qgroup_trace_subtree(struct btrfs_trans_handle *trans,
+ 			return ret;
+ 	}
+ 
+-	if (root_level == 0) {
+-		ret = btrfs_qgroup_trace_leaf_items(trans, root_eb);
+-		return ret;
+-	}
++	if (root_level == 0)
++		return btrfs_qgroup_trace_leaf_items(trans, root_eb);
+ 
+ 	path = btrfs_alloc_path();
+ 	if (!path)
+diff --git a/fs/btrfs/relocation.c b/fs/btrfs/relocation.c
+index 37f20f401b0ee..b76cd0b1c3550 100644
+--- a/fs/btrfs/relocation.c
++++ b/fs/btrfs/relocation.c
+@@ -3266,7 +3266,6 @@ static int delete_v1_space_cache(struct extent_buffer *leaf,
+ 	struct btrfs_key key;
+ 	bool found = false;
+ 	int i;
+-	int ret;
+ 
+ 	if (btrfs_header_owner(leaf) != BTRFS_ROOT_TREE_OBJECTID)
+ 		return 0;
+@@ -3290,8 +3289,8 @@ static int delete_v1_space_cache(struct extent_buffer *leaf,
+ 	}
+ 	if (!found)
+ 		return -ENOENT;
+-	ret = delete_block_group_cache(block_group, NULL, space_cache_ino);
+-	return ret;
++
++	return delete_block_group_cache(block_group, NULL, space_cache_ino);
+ }
+ 
+ /*
+diff --git a/fs/btrfs/volumes.c b/fs/btrfs/volumes.c
+index 863f69b9cf14b..51c3eab54bde6 100644
+--- a/fs/btrfs/volumes.c
++++ b/fs/btrfs/volumes.c
+@@ -2456,9 +2456,7 @@ int btrfs_rm_device(struct btrfs_fs_info *fs_info,
+ 		free_fs_devices(cur_devices);
+ 	}
+ 
+-	ret = btrfs_commit_transaction(trans);
+-
+-	return ret;
++	return btrfs_commit_transaction(trans);
+ 
+ error_undo:
+ 	if (test_bit(BTRFS_DEV_STATE_WRITEABLE, &device->dev_state)) {
+@@ -7347,7 +7345,6 @@ static int read_one_dev(struct extent_buffer *leaf,
+ 	struct btrfs_fs_devices *fs_devices = fs_info->fs_devices;
+ 	struct btrfs_device *device;
+ 	u64 devid;
+-	int ret;
+ 	u8 fs_uuid[BTRFS_FSID_SIZE];
+ 	u8 dev_uuid[BTRFS_UUID_SIZE];
+ 
+@@ -7446,8 +7443,8 @@ static int read_one_dev(struct extent_buffer *leaf,
+ 		atomic64_add(device->total_bytes - device->bytes_used,
+ 				&fs_info->free_chunk_space);
+ 	}
+-	ret = 0;
+-	return ret;
++
++	return 0;
+ }
+ 
+ int btrfs_read_sys_array(struct btrfs_fs_info *fs_info)
 -- 
 2.53.0
 
