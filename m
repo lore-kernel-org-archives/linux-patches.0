@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8794C39A803;
-	Sat, 12 Sep 2026 07:04:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDEC439CCF6;
+	Sat, 12 Sep 2026 07:04:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789196696; cv=none; b=X1iW71hVePODcaYExFpyxU5WDLEwez95pkMmXlFyEWnLtj8f02QbUJqvVFOzRSbyxHOi0YwKxmdIT5THNbZ3i9W4Gidzc/eopGWGHDe3+X/T09hNoQDTxnv8e2jeye+ZI1wsaqDoh7nBw/PFSKAdza6XVLHLUonS0yC6GFCGMDw=
+	t=1789196702; cv=none; b=LjA9lfFdiwEbBsFIOANcfN3fdrh5c4z1d7Ureek9GBcWuKquOKXwyz3rreJUXNs1CCey5i3GHQ7gVG+x0PKfYBrqR3quJsC0I/iVKq9yq29CaltMs2X77Lx6Jb/4mN/i/2L2CSRpI2F6LJtlFNkJwZ/WH/QB5z//xkNug3y+c/s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789196696; c=relaxed/simple;
-	bh=1FMOELNBhkq8LNrYzdBdnp00ZnHvAUeTZ4hC3ybwGaQ=;
+	s=arc-20240116; t=1789196702; c=relaxed/simple;
+	bh=LuObjaFzfn8PzAvVxxeRwTvVngSihlN+Yvxpp4JdqZg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RhWl/XKPLEVsofap7KbS2Ln2dALr1/plQTm+d7YuzMuiXCUAGwjrrE89GDPvp3586/c3cxwUdz/BRiVnVQsBfkTA5nGZuKP0iQ+4au5D3U3JnPWh1YTwd7mhZobmPlrwzxMqgQlcA3x8br/rSQPCju7NjbslSBCiulSpbcPFvNU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yRfcqKqm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=i9nFj/W77p/+VzbEI1uB35r75CvMqfNi6farks+nWrM0L1HNvyc6zFyWDyh4pfZu83iZdbQIDVAh8lOBRF3eOavBqwgIoEI6vi9X8e69e4PePqwv5e3yI3SY56vfn1e4Mdxi5EbBvkE8AHo+rpfWx9KUSKnZY1ntSX0hWFaS6Bw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q8pb0bVL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yRfcqKqm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4085A1F000FF;
-	Sat, 12 Sep 2026 07:04:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q8pb0bVL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED79D1F000FF;
+	Sat, 12 Sep 2026 07:04:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789196694;
-	bh=3kI9D+MjA4hgm/F0WO6InM/7y3MyXeB1I2T54aLm10s=;
+	s=korg; t=1789196699;
+	bh=XYa+jtpJBeNCdSy7HsZmjrSSnoGr0q47I107RXKTTEY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yRfcqKqm1ydCEhjY1c6PSelKQT7Ae/0A//ag/4F6ymvvlU/31+tvsA5Y/rXOrVIys
-	 TCTOtCZAOaVt/W6N3l4GE71kwqoTULUxwXwlKh0HgwLDEO8PbNPNrNyxhtIGC4ogNy
-	 nB20Gu7JPZV5AP11KXhR4a665RbsLxEAxGsm66yc=
+	b=Q8pb0bVLAy1na4THVQlbl0FrUfiK3glvAhSpZeuK7JrDdbj5GVPLG7yohKu53R1fQ
+	 MS1FpPU6/uJmYN5TF5/JjwUOiRJ7SWJhaoh0SrdNl/D1o07pA0hQEk+kc2h5+k14s0
+	 USR6NDBwiN7Zs88HRMqNzOeYZJkd34tbfDmoNSvw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Xiang Mei (Microsoft)" <xmei5@asu.edu>,
-	AutonomousCodeSecurity@microsoft.com,
-	"Cen Zhang (Microsoft Security FORGE Labs)" <cenzhang@linux.microsoft.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Sven Eckelmann <sven@narfation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0019/1815] ksmbd: fix tree connection use-after-free in smb2_tree_connect()
-Date: Sat, 12 Sep 2026 08:29:29 +0200
-Message-ID: <20260912065649.458608624@linuxfoundation.org>
+Subject: [PATCH 7.2 0002/1815] batman-adv: dat: atomically update mac addresses
+Date: Sat, 12 Sep 2026 08:29:12 +0200
+Message-ID: <20260912065649.066323963@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -53,163 +51,219 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Cen Zhang (Microsoft Security FORGE Labs)" <cenzhang@linux.microsoft.com>
+From: Sven Eckelmann <sven@narfation.org>
 
-[ Upstream commit b5ec6c462aab1062cf5d1e667ba7c6442f737055 ]
+commit e6de568d3eda3e3c01c868fabd7a9535d5ee4a73 upstream.
 
-ksmbd_tree_conn_connect() publishes a new tree connection in
-sess->tree_conns with a single reference and returns its pointer to
-smb2_tree_connect(). The handler continues to initialize the object and
-build the response after publication. A concurrent session logoff can
-erase the connection and drop that reference, freeing the object while
-the handler still uses it.
+When a MAC address is updated in batadv_dat_entry_add(), it is done using a
+simple copy function. A parallel reader might only see parts of this
+update. In worst case, the reader is transporting the half updated MAC
+address over the network or is creating an ARP response using it -
+poisoning the ARP cache.
 
-BUG: KASAN: slab-use-after-free in smb2_tree_connect+0xe3d/0xf90
-  smb2_tree_connect (fs/smb/server/smb2pdu.c:2872)
-  handle_ksmbd_work
-  process_one_work
-  worker_thread
-  kthread
+atomic64_t can be used to store the 48 bit of a mac address. A reader will
+then either see the old mac address or the new one - never a mixture of
+both.
 
-After xa_store() succeeds, take a second reference before releasing
-tree_conns_lock. The original reference belongs to the xarray entry and
-the second belongs to the creating smb2_tree_connect() handler.
-
-Keep the references balanced in every path:
-
-- On normal exit or an error after publication, smb2_tree_connect()
-  drops its creator reference. Error cleanup also calls
-  ksmbd_tree_conn_disconnect(), which drops the xarray reference only if
-  it removes the exact entry.
-- SMB2 TREE_DISCONNECT uses the same helper to remove the entry and drop
-  its xarray reference. The request's existing lookup reference remains
-  owned by the request and is released by the existing cleanup.
-- Session LOGOFF removes each entry and drops its xarray reference. If
-  it wins the race, later cleanup sees that the entry is gone and does
-  not drop that reference again.
-
-To enforce this ownership, claim the disconnected state and erase the
-exact entry atomically under tree_conns_lock. This guarantees one drop
-for the xarray reference and one drop by each in-flight user, regardless
-of which teardown path wins. If logoff removes the entry before
-initialization completes, fail the connect instead of marking the
-detached object TREE_CONNECTED.
-
-Fixes: 33b235a6e6eb ("ksmbd: fix race condition between tree conn lookup and disconnect")
-Reported-by: Xiang Mei (Microsoft) <xmei5@asu.edu>
-Cc: AutonomousCodeSecurity@microsoft.com
 Cc: stable@vger.kernel.org
-Signed-off-by: Cen Zhang (Microsoft Security FORGE Labs) <cenzhang@linux.microsoft.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-[ added braces around the successful-connect if branch to accommodate the new tree_conn assignment ]
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Fixes: 2f1dfbe18507 ("batman-adv: Distributed ARP Table - implement local storage")
+[ Context ]
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/mgmt/tree_connect.c |    8 ++++++++
- fs/smb/server/smb2pdu.c           |   32 +++++++++++++++-----------------
- 2 files changed, 23 insertions(+), 17 deletions(-)
+ net/batman-adv/distributed-arp-table.c | 58 +++++++++++++++++---------
+ net/batman-adv/types.h                 |  2 +-
+ 2 files changed, 40 insertions(+), 20 deletions(-)
 
---- a/fs/smb/server/mgmt/tree_connect.c
-+++ b/fs/smb/server/mgmt/tree_connect.c
-@@ -82,6 +82,8 @@ ksmbd_tree_conn_connect(struct ksmbd_wor
- 	down_write(&sess->tree_conns_lock);
- 	ret = xa_err(xa_store(&sess->tree_conns, tree_conn->id, tree_conn,
- 			      KSMBD_DEFAULT_GFP));
-+	if (!ret)
-+		atomic_inc(&tree_conn->refcount);
- 	up_write(&sess->tree_conns_lock);
- 	if (ret) {
- 		status.ret = -ENOMEM;
-@@ -127,6 +129,12 @@ int ksmbd_tree_conn_disconnect(struct ks
- 			       struct ksmbd_tree_connect *tree_conn)
+diff --git a/net/batman-adv/distributed-arp-table.c b/net/batman-adv/distributed-arp-table.c
+index 6ca946da92758..95d8e3a383902 100644
+--- a/net/batman-adv/distributed-arp-table.c
++++ b/net/batman-adv/distributed-arp-table.c
+@@ -376,18 +376,19 @@ batadv_dat_entry_hash_find(struct batadv_priv *bat_priv, __be32 ip,
+ static void batadv_dat_entry_add(struct batadv_priv *bat_priv, __be32 ip,
+ 				 u8 *mac_addr, unsigned short vid)
  {
- 	down_write(&sess->tree_conns_lock);
-+	if (tree_conn->t_state == TREE_DISCONNECTED ||
-+	    xa_load(&sess->tree_conns, tree_conn->id) != tree_conn) {
-+		up_write(&sess->tree_conns_lock);
-+		return -ENOENT;
-+	}
-+	tree_conn->t_state = TREE_DISCONNECTED;
- 	xa_erase(&sess->tree_conns, tree_conn->id);
- 	up_write(&sess->tree_conns_lock);
++	u64 u64_mac = ether_addr_to_u64(mac_addr);
+ 	struct batadv_dat_entry *dat_entry;
+ 	int hash_added;
  
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -2251,6 +2251,7 @@ int smb2_tree_connect(struct ksmbd_work
- 	struct ksmbd_session *sess = work->sess;
- 	char *treename = NULL, *name = NULL;
- 	struct ksmbd_tree_conn_status status;
-+	struct ksmbd_tree_connect *tree_conn = NULL;
- 	struct ksmbd_share_config *share = NULL;
- 	int rc = -EINVAL;
- 
-@@ -2277,9 +2278,10 @@ int smb2_tree_connect(struct ksmbd_work
- 		    name, treename);
- 
- 	status = ksmbd_tree_conn_connect(work, name);
--	if (status.ret == KSMBD_TREE_CONN_STATUS_OK)
-+	if (status.ret == KSMBD_TREE_CONN_STATUS_OK) {
-+		tree_conn = status.tree_conn;
- 		rsp->hdr.Id.SyncId.TreeId = cpu_to_le32(status.tree_conn->id);
--	else
-+	} else
- 		goto out_err1;
- 
- 	share = status.tree_conn->share_conf;
-@@ -2311,8 +2313,15 @@ int smb2_tree_connect(struct ksmbd_work
- 		status.tree_conn->posix_extensions = true;
- 
- 	down_write(&sess->tree_conns_lock);
--	status.tree_conn->t_state = TREE_CONNECTED;
-+	if (status.tree_conn->t_state == TREE_DISCONNECTED) {
-+		status.ret = KSMBD_TREE_CONN_STATUS_ERROR;
-+		share = NULL;
-+	} else {
-+		status.tree_conn->t_state = TREE_CONNECTED;
-+	}
- 	up_write(&sess->tree_conns_lock);
-+	if (status.ret != KSMBD_TREE_CONN_STATUS_OK)
-+		goto out_err1;
- 	rsp->StructureSize = cpu_to_le16(16);
- out_err1:
- 	if (server_conf.flags & KSMBD_GLOBAL_FLAG_DURABLE_HANDLE && share &&
-@@ -2332,9 +2341,6 @@ out_err1:
- 	rc = ksmbd_iov_pin_rsp(work, rsp, sizeof(struct smb2_tree_connect_rsp));
- 	if (rc) {
- 		if (status.ret == KSMBD_TREE_CONN_STATUS_OK) {
--			down_write(&sess->tree_conns_lock);
--			status.tree_conn->t_state = TREE_DISCONNECTED;
--			up_write(&sess->tree_conns_lock);
- 			ksmbd_tree_conn_disconnect(sess, status.tree_conn);
- 			status.tree_conn = NULL;
- 		}
-@@ -2375,6 +2381,9 @@ out_err1:
- 	if (status.ret != KSMBD_TREE_CONN_STATUS_OK)
- 		smb2_set_err_rsp(work);
- 
-+	if (tree_conn)
-+		ksmbd_tree_connect_put(tree_conn);
+ 	dat_entry = batadv_dat_entry_hash_find(bat_priv, ip, vid);
+ 	/* if this entry is already known, just update it */
+ 	if (dat_entry) {
+-		if (!batadv_compare_eth(dat_entry->mac_addr, mac_addr))
+-			ether_addr_copy(dat_entry->mac_addr, mac_addr);
++		atomic64_set(&dat_entry->mac_addr, u64_mac);
 +
- 	return rc;
- }
+ 		dat_entry->last_update = jiffies;
+ 		batadv_dbg(BATADV_DBG_DAT, bat_priv,
+ 			   "Entry updated: %pI4 %pM (vid: %d)\n",
+-			   &dat_entry->ip, dat_entry->mac_addr,
++			   &dat_entry->ip, mac_addr,
+ 			   batadv_print_vid(vid));
+ 		goto out;
+ 	}
+@@ -398,7 +399,7 @@ static void batadv_dat_entry_add(struct batadv_priv *bat_priv, __be32 ip,
  
-@@ -2478,17 +2487,6 @@ int smb2_tree_disconnect(struct ksmbd_wo
+ 	dat_entry->ip = ip;
+ 	dat_entry->vid = vid;
+-	ether_addr_copy(dat_entry->mac_addr, mac_addr);
++	atomic64_set(&dat_entry->mac_addr, u64_mac);
+ 	dat_entry->last_update = jiffies;
+ 	kref_init(&dat_entry->refcount);
  
- 	ksmbd_close_tree_conn_fds(work);
+@@ -414,7 +415,7 @@ static void batadv_dat_entry_add(struct batadv_priv *bat_priv, __be32 ip,
+ 	}
  
--	down_write(&sess->tree_conns_lock);
--	if (tcon->t_state == TREE_DISCONNECTED) {
--		up_write(&sess->tree_conns_lock);
--		rsp->hdr.Status = STATUS_NETWORK_NAME_DELETED;
--		err = -ENOENT;
--		goto err_out;
--	}
--
--	tcon->t_state = TREE_DISCONNECTED;
--	up_write(&sess->tree_conns_lock);
--
- 	err = ksmbd_tree_conn_disconnect(sess, tcon);
- 	if (err) {
- 		rsp->hdr.Status = STATUS_NETWORK_NAME_DELETED;
+ 	batadv_dbg(BATADV_DBG_DAT, bat_priv, "New entry added: %pI4 %pM (vid: %d)\n",
+-		   &dat_entry->ip, dat_entry->mac_addr, batadv_print_vid(vid));
++		   &dat_entry->ip, mac_addr, batadv_print_vid(vid));
+ 
+ out:
+ 	batadv_dat_entry_put(dat_entry);
+@@ -868,6 +869,8 @@ batadv_dat_cache_dump_entry(struct sk_buff *msg, u32 portid,
+ 			    struct netlink_callback *cb,
+ 			    struct batadv_dat_entry *dat_entry)
+ {
++	u8 mac[ETH_ALEN];
++	u64 u64_mac;
+ 	int msecs;
+ 	void *hdr;
+ 
+@@ -880,11 +883,12 @@ batadv_dat_cache_dump_entry(struct sk_buff *msg, u32 portid,
+ 	genl_dump_check_consistent(cb, hdr);
+ 
+ 	msecs = jiffies_to_msecs(jiffies - dat_entry->last_update);
++	u64_mac = atomic64_read(&dat_entry->mac_addr);
++	u64_to_ether_addr(u64_mac, mac);
+ 
+ 	if (nla_put_in_addr(msg, BATADV_ATTR_DAT_CACHE_IP4ADDRESS,
+ 			    dat_entry->ip) ||
+-	    nla_put(msg, BATADV_ATTR_DAT_CACHE_HWADDRESS, ETH_ALEN,
+-		    dat_entry->mac_addr) ||
++	    nla_put(msg, BATADV_ATTR_DAT_CACHE_HWADDRESS, ETH_ALEN, mac) ||
+ 	    nla_put_u16(msg, BATADV_ATTR_DAT_CACHE_VID, dat_entry->vid) ||
+ 	    nla_put_u32(msg, BATADV_ATTR_LAST_SEEN_MSECS, msecs)) {
+ 		genlmsg_cancel(msg, hdr);
+@@ -1151,6 +1155,8 @@ bool batadv_dat_snoop_outgoing_arp_request(struct batadv_priv *bat_priv,
+ 	struct net_device *mesh_iface = bat_priv->mesh_iface;
+ 	int hdr_size = 0;
+ 	unsigned short vid;
++	u8 mac[ETH_ALEN];
++	u64 u64_mac;
+ 
+ 	if (!READ_ONCE(bat_priv->distributed_arp_table))
+ 		goto out;
+@@ -1178,6 +1184,9 @@ bool batadv_dat_snoop_outgoing_arp_request(struct batadv_priv *bat_priv,
+ 
+ 	dat_entry = batadv_dat_entry_hash_find(bat_priv, ip_dst, vid);
+ 	if (dat_entry) {
++		u64_mac = atomic64_read(&dat_entry->mac_addr);
++		u64_to_ether_addr(u64_mac, mac);
++
+ 		/* If the ARP request is destined for a local client the local
+ 		 * client will answer itself. DAT would only generate a
+ 		 * duplicate packet.
+@@ -1186,7 +1195,7 @@ bool batadv_dat_snoop_outgoing_arp_request(struct batadv_priv *bat_priv,
+ 		 * additional DAT answer may trigger kernel warnings about
+ 		 * a packet coming from the wrong port.
+ 		 */
+-		if (batadv_is_my_client(bat_priv, dat_entry->mac_addr, vid)) {
++		if (batadv_is_my_client(bat_priv, mac, vid)) {
+ 			ret = true;
+ 			goto out;
+ 		}
+@@ -1196,18 +1205,16 @@ bool batadv_dat_snoop_outgoing_arp_request(struct batadv_priv *bat_priv,
+ 		 * the backbone gws belonging to our backbone has claimed the
+ 		 * destination.
+ 		 */
+-		if (!batadv_bla_check_claim(bat_priv,
+-					    dat_entry->mac_addr, vid)) {
++		if (!batadv_bla_check_claim(bat_priv, mac, vid)) {
+ 			batadv_dbg(BATADV_DBG_DAT, bat_priv,
+ 				   "Device %pM claimed by another backbone gw. Don't send ARP reply!",
+-				   dat_entry->mac_addr);
++				   mac);
+ 			ret = true;
+ 			goto out;
+ 		}
+ 
+ 		skb_new = batadv_dat_arp_create_reply(bat_priv, ip_dst, ip_src,
+-						      dat_entry->mac_addr,
+-						      hw_src, vid);
++						      mac, hw_src, vid);
+ 		if (!skb_new)
+ 			goto out;
+ 
+@@ -1249,6 +1256,8 @@ bool batadv_dat_snoop_incoming_arp_request(struct batadv_priv *bat_priv,
+ 	struct batadv_dat_entry *dat_entry = NULL;
+ 	bool ret = false;
+ 	unsigned short vid;
++	u8 mac[ETH_ALEN];
++	u64 u64_mac;
+ 	int err;
+ 
+ 	if (!READ_ONCE(bat_priv->distributed_arp_table))
+@@ -1276,8 +1285,11 @@ bool batadv_dat_snoop_incoming_arp_request(struct batadv_priv *bat_priv,
+ 	if (!dat_entry)
+ 		goto out;
+ 
++	u64_mac = atomic64_read(&dat_entry->mac_addr);
++	u64_to_ether_addr(u64_mac, mac);
++
+ 	skb_new = batadv_dat_arp_create_reply(bat_priv, ip_dst, ip_src,
+-					      dat_entry->mac_addr, hw_src, vid);
++					      mac, hw_src, vid);
+ 	if (!skb_new)
+ 		goto out;
+ 
+@@ -1368,6 +1380,8 @@ bool batadv_dat_snoop_incoming_arp_reply(struct batadv_priv *bat_priv,
+ 	u8 *hw_src, *hw_dst;
+ 	bool dropped = false;
+ 	unsigned short vid;
++	u8 mac[ETH_ALEN];
++	u64 u64_mac;
+ 
+ 	if (!READ_ONCE(bat_priv->distributed_arp_table))
+ 		goto out;
+@@ -1396,11 +1410,17 @@ bool batadv_dat_snoop_incoming_arp_reply(struct batadv_priv *bat_priv,
+ 	 * this frame would lead to doubled receive of an ARP reply.
+ 	 */
+ 	dat_entry = batadv_dat_entry_hash_find(bat_priv, ip_src, vid);
+-	if (dat_entry && batadv_compare_eth(hw_src, dat_entry->mac_addr)) {
+-		batadv_dbg(BATADV_DBG_DAT, bat_priv, "Doubled ARP reply removed: ARP MSG = [src: %pM-%pI4 dst: %pM-%pI4]; dat_entry: %pM-%pI4\n",
+-			   hw_src, &ip_src, hw_dst, &ip_dst,
+-			   dat_entry->mac_addr,	&dat_entry->ip);
+-		dropped = true;
++	if (dat_entry) {
++		u64_mac = atomic64_read(&dat_entry->mac_addr);
++		u64_to_ether_addr(u64_mac, mac);
++
++		if (batadv_compare_eth(hw_src, mac)) {
++			batadv_dbg(BATADV_DBG_DAT, bat_priv,
++				   "Doubled ARP reply removed: ARP MSG = [src: %pM-%pI4 dst: %pM-%pI4]; dat_entry: %pM-%pI4\n",
++				   hw_src, &ip_src, hw_dst, &ip_dst,
++				   mac, &dat_entry->ip);
++			dropped = true;
++		}
+ 	}
+ 
+ 	/* Update our internal cache with both the IP addresses the node got
+diff --git a/net/batman-adv/types.h b/net/batman-adv/types.h
+index b1f9f8964c3fd..9ab0dba82f509 100644
+--- a/net/batman-adv/types.h
++++ b/net/batman-adv/types.h
+@@ -2176,7 +2176,7 @@ struct batadv_dat_entry {
+ 	__be32 ip;
+ 
+ 	/** @mac_addr: the MAC address associated to the stored IPv4 */
+-	u8 mac_addr[ETH_ALEN];
++	atomic64_t mac_addr;
+ 
+ 	/** @vid: the vlan ID associated to this entry */
+ 	unsigned short vid;
+-- 
+2.53.0
+
 
 
