@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9912E41D10B;
-	Sat, 12 Sep 2026 09:39:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67199416842;
+	Sat, 12 Sep 2026 09:39:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789205942; cv=none; b=eWH8IhQYwoZ/TKXiYH7yFoCoLPgOO5eIrAKftENqQboSOGThvaGn62e4LT6hcqAi+2e7SzG7bE+Z5xuZkLIV2xg6YfqUWp1nFH5GKsxPH5gzfELmD7zBgFzyUlbaE1UotO8/SfZO/Gm/sqiX3ils7JdWC7Ys8EyhMJdeM7ddM8I=
+	t=1789205946; cv=none; b=nO+q22PoN2oZuKI02LbGGrkidg3mGZD6ka4Ts0nXVrU5zYK8pkUBEE4LXE0dP9lzU+9gPYwtmPMeKAePyKUktdPd6BFX725HdKNOYTDtKB3I5NMogg6khQ7BiRQojaHsF8vkayV40ZcaiyV+/H0upSnQ/29D8q4J7vcQQ5l0pqw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789205942; c=relaxed/simple;
-	bh=UptTbTj4faT9lsakbkOKmhnf0p7K5vEnUULqyI+//G4=;
+	s=arc-20240116; t=1789205946; c=relaxed/simple;
+	bh=ST10aWEeR7PZ61epcrQlinJZ+7kOTV/ncCgrY0K95YU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XIhkshVedqr15K3jIPRBuOSRxG2G4zJ3IzdYFPsNJ64S+8NqB+C7P7N/7LUzpWg2cXQflqaDHirFhxzTC7ROuO9xcjI9lMTFsHqAog0cFNBHDiRQ7F1P0/R+YTdBnkIHI0e64JL9wQcavTJF7lDjLRKM6sVDtdbM5VdmGzDF5KI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gSc7aDE2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=XC7SBKd+h0AKnQjjmfW+yV6MeW0yxwv43MgFOh5UrqDGWT/CZBYKMfCLZVOqKdji8KK7efXAQZ9cJ1cuhkwGtEk+xmEUVMIyCJyFVzGVYabYZDglWEMYuqxdsDD+/iIoENRDfwhuDgmT7gwJPhHgzb+5RzOGkJJALPsgoKInWz0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hdC62I8R; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gSc7aDE2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DFFF1F000FF;
-	Sat, 12 Sep 2026 09:38:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hdC62I8R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 394971F000FF;
+	Sat, 12 Sep 2026 09:39:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789205940;
-	bh=UEx99OCmJurCKuH0okL6QX8L1fjrSNUZDbpl+2X7UFU=;
+	s=korg; t=1789205945;
+	bh=M8XtLeu19Ug697aK71ZvtLNQkbmMdSBBzMpWOOKCULk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gSc7aDE2ZK+gbVCuhwvFHUf5MU2lhTuIpOybLm3kiGV5/8n6PosAXRiYu1AUUJBZE
-	 M1qehCjINpvUYoyvTINb2u0jPCs6cBpBlEz9Yety450WlkR2OmGroCmtueA6n92RvM
-	 HemsvXu5+JzV9BW2Th0SzY5WZUs6QfzZT6kEfbEc=
+	b=hdC62I8Rn8dEHgpTDQmaQ5pQo4hFvIEoB5BM8Ig+1SGTtyrbLx+gKmPDRBKvhrOyk
+	 beGcVZ9KkPhMk9xBA0aVyKLOoIiBlv+z0VFURQGAkL9IcvINSWgf2X28r3iR5s7AVc
+	 vRt8PVoOL6qCWl+JVHsn16Sgj6nOzFd8GIgLYq08=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yongxing Mou <yongxing.mou@oss.qualcomm.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
+	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0105/1518] drm/bridge: display-connector: trigger initial HPD event for DP
-Date: Sat, 12 Sep 2026 08:37:54 +0200
-Message-ID: <20260912065625.855518185@linuxfoundation.org>
+Subject: [PATCH 6.18 0106/1518] drm/v3d: Clear queue->active_job when v3d_fence_create() fails
+Date: Sat, 12 Sep 2026 08:37:55 +0200
+Message-ID: <20260912065625.877180160@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -46,104 +45,188 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+From: Maíra Canal <mcanal@igalia.com>
 
-[ Upstream commit 60dc0946bbad3eef8bc66a5a8b09b98dbc6e09c0 ]
+[ Upstream commit 25a1669907512e927fab9ad4d4fb74ff57f63cd9 ]
 
-If the DisplayPort drivers use display-connector for the HPD detection,
-the internal HPD state machine might be not active and thus the hardware
-might be not able to handle cable detection correctly. Instead it will
-depend on the external HPD notifications to set the cable state,
-bypassing the internal HPD state machine (for example this is the case
-for the msm DP driver).
+The run_job() callbacks for BIN, RENDER, TFU and CSD assign the incoming
+job to queue->active_job before calling v3d_fence_create(). If
+v3d_fence_create() fails, the callback returns NULL without clearing
+active_job, leaving a dangling pointer.
 
-However if the cable has been plugged before the HPD IRQ has been
-enabled, there will be no HPD event coming. The drivers might fail
-detection in such a case. Trigger the HPD notification after enabling
-the HPD IRQ, propagating the cable insertion state.
+Create a failure path in all run_job() callbacks that clears the active
+job before returning NULL. The BIN path takes queue->queue_lock around the
+clear as it races against v3d_overflow_mem_work(); RENDER, TFU and CSD
+paths have no concurrent reader, so the clear is lock-free.
 
-Note, this issue only affects drivers which set OP_HPD but not OP_DETECT
-(like dp-connector). Here DP differs from HDMI. For HDMI there is no
-additional state or extra "bridge with no sinks plugged" cases. The HPD
-pin state is equal to the display plugged state. Nor do we have an AUX
-bus with timeouts, etc.
-
-Fixes: 2e2bf3a5584d ("drm/bridge: display-connector: add DP support")
-Reported-by: Yongxing Mou <yongxing.mou@oss.qualcomm.com>
-Reviewed-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-Link: https://patch.msgid.link/20260528-dp-connector-hpd-v3-3-d656eb1079b7@oss.qualcomm.com
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Fixes: a783a09ee76d ("drm/v3d: Refactor job management.")
+Reviewed-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+Link: https://patch.msgid.link/20260604-v3d-sched-misc-fixes-v4-2-c068f5bf5ccf@igalia.com
+Signed-off-by: Maíra Canal <mcanal@igalia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/display-connector.c | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ drivers/gpu/drm/v3d/v3d_sched.c | 60 +++++++++++++++++++--------------
+ 1 file changed, 34 insertions(+), 26 deletions(-)
 
-diff --git a/drivers/gpu/drm/bridge/display-connector.c b/drivers/gpu/drm/bridge/display-connector.c
-index 8b7b2036010c8..ba1d41816f3ec 100644
---- a/drivers/gpu/drm/bridge/display-connector.c
-+++ b/drivers/gpu/drm/bridge/display-connector.c
-@@ -12,6 +12,7 @@
- #include <linux/of.h>
- #include <linux/platform_device.h>
- #include <linux/regulator/consumer.h>
-+#include <linux/workqueue.h>
+diff --git a/drivers/gpu/drm/v3d/v3d_sched.c b/drivers/gpu/drm/v3d/v3d_sched.c
+index 5bbf1b3e60ec3..9b98386965796 100644
+--- a/drivers/gpu/drm/v3d/v3d_sched.c
++++ b/drivers/gpu/drm/v3d/v3d_sched.c
+@@ -214,15 +214,11 @@ static struct dma_fence *v3d_bin_job_run(struct drm_sched_job *sched_job)
+ 	struct v3d_dev *v3d = job->base.v3d;
+ 	struct v3d_queue_state *queue = &v3d->queue[V3D_BIN];
+ 	struct drm_device *dev = &v3d->drm;
+-	struct dma_fence *fence;
++	struct dma_fence *fence = NULL;
+ 	unsigned long irqflags;
  
- #include <drm/drm_atomic_helper.h>
- #include <drm/drm_bridge.h>
-@@ -25,6 +26,8 @@ struct display_connector {
+-	if (unlikely(job->base.base.s_fence->finished.error)) {
+-		spin_lock_irqsave(&queue->queue_lock, irqflags);
+-		queue->active_job = NULL;
+-		spin_unlock_irqrestore(&queue->queue_lock, irqflags);
+-		return NULL;
+-	}
++	if (unlikely(job->base.base.s_fence->finished.error))
++		goto out_clean_job;
  
- 	struct regulator	*supply;
- 	struct gpio_desc	*ddc_en;
+ 	/* Lock required around bin_job update vs
+ 	 * v3d_overflow_mem_work().
+@@ -239,7 +235,7 @@ static struct dma_fence *v3d_bin_job_run(struct drm_sched_job *sched_job)
+ 
+ 	fence = v3d_fence_create(v3d, V3D_BIN);
+ 	if (IS_ERR(fence))
+-		return NULL;
++		goto out_clean_job;
+ 
+ 	if (job->base.irq_fence)
+ 		dma_fence_put(job->base.irq_fence);
+@@ -267,6 +263,12 @@ static struct dma_fence *v3d_bin_job_run(struct drm_sched_job *sched_job)
+ 	V3D_CORE_WRITE(0, V3D_CLE_CT0QEA, job->end);
+ 
+ 	return fence;
 +
-+	struct work_struct	hpd_work;
- };
- 
- static inline struct display_connector *
-@@ -99,15 +102,29 @@ static void display_connector_hpd_enable(struct drm_bridge *bridge)
- 	struct display_connector *conn = to_display_connector(bridge);
- 
- 	enable_irq(conn->hpd_irq);
-+
-+	if (conn->bridge.type == DRM_MODE_CONNECTOR_DisplayPort)
-+		schedule_work(&conn->hpd_work);
++out_clean_job:
++	spin_lock_irqsave(&queue->queue_lock, irqflags);
++	queue->active_job = NULL;
++	spin_unlock_irqrestore(&queue->queue_lock, irqflags);
++	return fence;
  }
  
- static void display_connector_hpd_disable(struct drm_bridge *bridge)
- {
- 	struct display_connector *conn = to_display_connector(bridge);
+ static struct dma_fence *v3d_render_job_run(struct drm_sched_job *sched_job)
+@@ -274,12 +276,10 @@ static struct dma_fence *v3d_render_job_run(struct drm_sched_job *sched_job)
+ 	struct v3d_render_job *job = to_render_job(sched_job);
+ 	struct v3d_dev *v3d = job->base.v3d;
+ 	struct drm_device *dev = &v3d->drm;
+-	struct dma_fence *fence;
++	struct dma_fence *fence = NULL;
  
-+	if (conn->bridge.type == DRM_MODE_CONNECTOR_DisplayPort)
-+		cancel_work_sync(&conn->hpd_work);
+-	if (unlikely(job->base.base.s_fence->finished.error)) {
+-		v3d->queue[V3D_RENDER].active_job = NULL;
+-		return NULL;
+-	}
++	if (unlikely(job->base.base.s_fence->finished.error))
++		goto out_clean_job;
+ 
+ 	v3d->queue[V3D_RENDER].active_job = &job->base;
+ 
+@@ -293,7 +293,7 @@ static struct dma_fence *v3d_render_job_run(struct drm_sched_job *sched_job)
+ 
+ 	fence = v3d_fence_create(v3d, V3D_RENDER);
+ 	if (IS_ERR(fence))
+-		return NULL;
++		goto out_clean_job;
+ 
+ 	if (job->base.irq_fence)
+ 		dma_fence_put(job->base.irq_fence);
+@@ -314,6 +314,10 @@ static struct dma_fence *v3d_render_job_run(struct drm_sched_job *sched_job)
+ 	V3D_CORE_WRITE(0, V3D_CLE_CT1QEA, job->end);
+ 
+ 	return fence;
 +
- 	disable_irq(conn->hpd_irq);
++out_clean_job:
++	v3d->queue[V3D_RENDER].active_job = NULL;
++	return fence;
  }
  
-+static void display_connector_hpd_work(struct work_struct *work)
-+{
-+	struct display_connector *conn = container_of(work, struct display_connector, hpd_work);
-+	struct drm_bridge *bridge = &conn->bridge;
-+
-+	drm_bridge_hpd_notify(bridge, display_connector_detect(bridge));
-+}
-+
- static const struct drm_edid *display_connector_edid_read(struct drm_bridge *bridge,
- 							  struct drm_connector *connector)
- {
-@@ -403,6 +420,8 @@ static int display_connector_probe(struct platform_device *pdev)
- 		conn->bridge.ops |= DRM_BRIDGE_OP_DETECT;
- 	if (conn->hpd_irq >= 0)
- 		conn->bridge.ops |= DRM_BRIDGE_OP_HPD;
-+	if (conn->hpd_irq >= 0 && type == DRM_MODE_CONNECTOR_DisplayPort)
-+		INIT_WORK(&conn->hpd_work, display_connector_hpd_work);
+ static struct dma_fence *
+@@ -322,18 +326,16 @@ v3d_tfu_job_run(struct drm_sched_job *sched_job)
+ 	struct v3d_tfu_job *job = to_tfu_job(sched_job);
+ 	struct v3d_dev *v3d = job->base.v3d;
+ 	struct drm_device *dev = &v3d->drm;
+-	struct dma_fence *fence;
++	struct dma_fence *fence = NULL;
  
- 	dev_dbg(&pdev->dev,
- 		"Found %s display connector '%s' %s DDC bus and %s HPD GPIO (ops 0x%x)\n",
+-	if (unlikely(job->base.base.s_fence->finished.error)) {
+-		v3d->queue[V3D_TFU].active_job = NULL;
+-		return NULL;
+-	}
++	if (unlikely(job->base.base.s_fence->finished.error))
++		goto out_clean_job;
+ 
+ 	v3d->queue[V3D_TFU].active_job = &job->base;
+ 
+ 	fence = v3d_fence_create(v3d, V3D_TFU);
+ 	if (IS_ERR(fence))
+-		return NULL;
++		goto out_clean_job;
+ 
+ 	if (job->base.irq_fence)
+ 		dma_fence_put(job->base.irq_fence);
+@@ -361,6 +363,10 @@ v3d_tfu_job_run(struct drm_sched_job *sched_job)
+ 	V3D_WRITE(V3D_TFU_ICFG(v3d->ver), job->args.icfg | V3D_TFU_ICFG_IOC);
+ 
+ 	return fence;
++
++out_clean_job:
++	v3d->queue[V3D_TFU].active_job = NULL;
++	return fence;
+ }
+ 
+ static struct dma_fence *
+@@ -369,13 +375,11 @@ v3d_csd_job_run(struct drm_sched_job *sched_job)
+ 	struct v3d_csd_job *job = to_csd_job(sched_job);
+ 	struct v3d_dev *v3d = job->base.v3d;
+ 	struct drm_device *dev = &v3d->drm;
+-	struct dma_fence *fence;
++	struct dma_fence *fence = NULL;
+ 	int i, csd_cfg0_reg;
+ 
+-	if (unlikely(job->base.base.s_fence->finished.error)) {
+-		v3d->queue[V3D_CSD].active_job = NULL;
+-		return NULL;
+-	}
++	if (unlikely(job->base.base.s_fence->finished.error))
++		goto out_clean_job;
+ 
+ 	/* The HW interprets a workgroup size of 0 as 65536; however, the
+ 	 * user-space driver exposes a maximum of 65535. Therefore, a 0 in
+@@ -393,7 +397,7 @@ v3d_csd_job_run(struct drm_sched_job *sched_job)
+ 
+ 	fence = v3d_fence_create(v3d, V3D_CSD);
+ 	if (IS_ERR(fence))
+-		return NULL;
++		goto out_clean_job;
+ 
+ 	if (job->base.irq_fence)
+ 		dma_fence_put(job->base.irq_fence);
+@@ -420,6 +424,10 @@ v3d_csd_job_run(struct drm_sched_job *sched_job)
+ 	V3D_CORE_WRITE(0, csd_cfg0_reg, job->args.cfg[0]);
+ 
+ 	return fence;
++
++out_clean_job:
++	v3d->queue[V3D_CSD].active_job = NULL;
++	return fence;
+ }
+ 
+ static void
 -- 
 2.53.0
 
