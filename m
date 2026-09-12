@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB620299920;
-	Sat, 12 Sep 2026 09:36:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02CC6299920;
+	Sat, 12 Sep 2026 09:36:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789205813; cv=none; b=cjCpAgIZyhOAKjKYjDB5T8rSdbuJawqqbCSdu0mbBxjXrWn9xmRGc+ZLcWLv1VvyiMxfK1RuTunGjmPvcbxtnuHsXKFarC/9rk4Otu70E6dIxv49SUysZuO2cJ0YN7S2VJISjL7Ymiw/5WpaJ0LYsbE2wBOItLZrG2q1qL+aHwY=
+	t=1789205818; cv=none; b=Jd8zgp3vilXcIbDmbpYmzh41yLGEPNTBYWYnNiUne6bBkQqZOvzx8eG9mCQSiA6uIZ/ivT9MuvjpMT2Q9cJElKzoqFwB1CqpMqNse4XJUmLqKEEVaS+SuCM+WlW2fy9UosMSfr5vzYx6lWMIRHi7qozH3emEDIsxkobFrIAQV2Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789205813; c=relaxed/simple;
-	bh=zRYAOfg08Ev7Fw24Jlol5KlKcitpMrhzoGKLzANzGUM=;
+	s=arc-20240116; t=1789205818; c=relaxed/simple;
+	bh=eVTlPGCla/NTVL/lX668zuXeADTsGqL5BRhTZYE6+uw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hsLalikbDSqo6j6Y492X+XSm09jKLpbXiBK/FAfbX45oqw8qs419aYdoZb1e+eRNSaOSzgR/HBZ+ZLvsV86lXQpHcJ08p3L25KCGbNb+EJ8voEId8J26gxy3dtfT57KF8a72hAtfYUV6ds+VxMl1UNG5xh1r5iW+WyqeR11DTD8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tV7uctJq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=m7dnFr4jSQZguulY7a4nIdbfWZi6/izlqtwb68quLtDeCWhSDcf9kr6jSX2P1lQn4OS6+xid3rKHyL2DmRQooaSwKSVQM4AIVzKh0PjsKfLrw3rZEokTAbEZEATyKCj7/Q8+l/N7Vyoz7HBKmWW0Jfh8Xm1dZmNL9AYae67Vu+o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kCqDL+Ej; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tV7uctJq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94C541F000FF;
-	Sat, 12 Sep 2026 09:36:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kCqDL+Ej"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBC1E1F000FF;
+	Sat, 12 Sep 2026 09:36:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789205811;
-	bh=NI44hymHiyLoZM77Pb3hVh95vSShOijTD5TQj0CQAYk=;
+	s=korg; t=1789205816;
+	bh=usM5vHBnSEEuXui+3U215RwZBe39zuO1eDXqKTtB1Xo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tV7uctJqsw8M9I689Od8E++txzkubq/B87JvtQnIoEXsCk0UK70ASJYSp0+3ukNAD
-	 xqwscvMpNdsjlwkypEvSQaabaspl5LqDwbinmXfpdWoiDVzRSdH3F7j+M36iYs2J3H
-	 hPk2D9p7ZfIcytqNbp+9dPSZt9iRbNHHVAlbKJFw=
+	b=kCqDL+Ej0h8cWJD1kFkz1nMej0QxE8fRrBdhhdelRGPvAPbxgmldWcRGEBqXC/Ty5
+	 E1/yCUthAwkls0qO6bL6shq3POX8XmD3rekYiv/Cqymc2Io4vxBlMpujEyvmNmzuq7
+	 t8J1sdbh06waSQSNeKo4us7axWn248/j8frPdGy4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+791be35f1fbcc85d06d7@syzkaller.appspotmail.com,
-	stable <stable@kernel.org>,
-	Jeffin Philip <jeffinphilip14@gmail.com>,
-	Alan Stern <stern@rowland.harvard.edu>,
+	Ping-Ke Shih <pkshih@realtek.com>,
+	"Yuhang.chen" <yhchen312@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0077/1518] usb: gadget: f_mass_storage: fix null pointer dereference in fsg_common_set_num_buffers()
-Date: Sat, 12 Sep 2026 08:37:26 +0200
-Message-ID: <20260912065625.199571237@linuxfoundation.org>
+Subject: [PATCH 6.18 0078/1518] wifi: rtw89: pci: add .shutdown callback to stop rfkill polling on reboot
+Date: Sat, 12 Sep 2026 08:37:27 +0200
+Message-ID: <20260912065625.221613493@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -47,51 +45,183 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jeffin Philip <jeffinphilip14@gmail.com>
+From: "Yuhang.chen" <yhchen312@gmail.com>
 
-[ Upstream commit 2c0f5ca48674a5b5f9fa4a9c3325aa48053af0bc ]
+[ Upstream commit 667c12782aaf8dd3cb2213e528fe63a73cb63345 ]
 
-Previously fsg_num_buffers_validate() was removed as it was not
-necessary due to Kconfig setting the limits for n from 2 to 256 with
-default as 2. However, setting the page content in such a way that
-kstrtou8() reflects n value as either 0 or 1 bypasses these
-restrictions leading to a null pointer dereference if n is 0. Fix
-this by adding a check for n < 2 and returning -EINVAL if n is
-either 0 or 1 consistent with Kconfig logic.
+Since the hardware rfkill polling was introduced, arm64 platforms can
+panic with an asynchronous SError during warm reboot:
 
-Reported-by: syzbot+791be35f1fbcc85d06d7@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=791be35f1fbcc85d06d7
-Fixes: fe5a6c48fd95 ("usb: gadget: storage: get rid of fsg_num_buffers_validate()")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Jeffin Philip <jeffinphilip14@gmail.com>
-Acked-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://patch.msgid.link/20260818035904.10324-1-jeffinphilip14@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-[ adjusted context to retain the branch’s existing kcalloc() call instead of kzalloc_objs(). ]
+  SError Interrupt on CPU8, code 0x00000000be000011 -- SError
+  Workqueue: events_power_efficient rfkill_poll [rfkill]
+    rtw89_pci_ops_read8+0x94/0x160 [rtw89_pci]
+    rtw89_core_rfkill_poll+0x50/0x1e0 [rtw89_core]
+    rtw89_ops_rfkill_poll+0x40/0x68 [rtw89_core]
+    ieee80211_rfkill_poll+0x3c/0x70 [mac80211]
+    cfg80211_rfkill_poll+0x40/0x2a0 [cfg80211]
+    rfkill_poll+0x30/0x88 [rfkill]
+  Kernel panic - not syncing: Asynchronous SError Interrupt
+
+On the reboot path the kernel only runs device_shutdown(), which calls
+each driver's .shutdown callback; .remove is not invoked.  The rtw89 PCI
+driver had no .shutdown callback, so nothing stopped the rfkill polling
+work while the platform was tearing the PCIe link down.  Once the link
+is gone, the next MMIO read from the poll handler targets a
+non-responding device and is reported as a fatal asynchronous SError on
+arm64.
+
+Add rtw89_pci_shutdown(), wired to all rtw89 PCI device drivers, which
+sets a new RTW89_FLAG_SHUTDOWN flag (mirroring the USB
+RTW89_FLAG_UNPLUGGED pattern).  When the flag is set,
+rtw89_ops_rfkill_poll() returns early, so no MMIO read is issued to the
+chip after shutdown begins and the SError no longer occurs.
+
+This does not call the full .remove path from .shutdown, to keep the
+shutdown handler minimal and avoid running the non-idempotent teardown
+twice.
+
+Fixes: 0b38e6277aed ("wifi: rtw89: add support for hardware rfkill")
+Cc: stable@vger.kernel.org
+Suggested-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Yuhang.chen <yhchen312@gmail.com>
+Acked-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20260729014142.2746777-1-yhchen312@gmail.com
+[ Omitted the .shutdown registration in rtw8922de.c because the driver is absent from the target tree. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_mass_storage.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/wireless/realtek/rtw89/core.h       |    1 +
+ drivers/net/wireless/realtek/rtw89/mac80211.c   |    3 ++-
+ drivers/net/wireless/realtek/rtw89/pci.c        |   13 +++++++++++++
+ drivers/net/wireless/realtek/rtw89/pci.h        |    1 +
+ drivers/net/wireless/realtek/rtw89/rtw8851be.c  |    1 +
+ drivers/net/wireless/realtek/rtw89/rtw8852ae.c  |    1 +
+ drivers/net/wireless/realtek/rtw89/rtw8852be.c  |    1 +
+ drivers/net/wireless/realtek/rtw89/rtw8852bte.c |    1 +
+ drivers/net/wireless/realtek/rtw89/rtw8852ce.c  |    1 +
+ drivers/net/wireless/realtek/rtw89/rtw8922ae.c  |    1 +
+ 10 files changed, 23 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/gadget/function/f_mass_storage.c
-+++ b/drivers/usb/gadget/function/f_mass_storage.c
-@@ -2748,6 +2748,9 @@ int fsg_common_set_num_buffers(struct fs
- 	struct fsg_buffhd *bh, *buffhds;
- 	int i;
+--- a/drivers/net/wireless/realtek/rtw89/core.h
++++ b/drivers/net/wireless/realtek/rtw89/core.h
+@@ -5042,6 +5042,7 @@ enum rtw89_flags {
+ 	RTW89_FLAG_CHANGING_INTERFACE,
+ 	RTW89_FLAG_HW_RFKILL_STATE,
+ 	RTW89_FLAG_UNPLUGGED,
++	RTW89_FLAG_SHUTDOWN,
  
-+	if (n < 2)
-+		return -EINVAL;
+ 	NUM_OF_RTW89_FLAGS,
+ };
+--- a/drivers/net/wireless/realtek/rtw89/mac80211.c
++++ b/drivers/net/wireless/realtek/rtw89/mac80211.c
+@@ -1879,7 +1879,8 @@ static void rtw89_ops_rfkill_poll(struct
+ 	lockdep_assert_wiphy(hw->wiphy);
+ 
+ 	/* wl_disable GPIO get floating when entering LPS */
+-	if (test_bit(RTW89_FLAG_RUNNING, rtwdev->flags))
++	if (test_bit(RTW89_FLAG_RUNNING, rtwdev->flags) ||
++	    test_bit(RTW89_FLAG_SHUTDOWN, rtwdev->flags))
+ 		return;
+ 
+ 	rtw89_core_rfkill_poll(rtwdev, false);
+--- a/drivers/net/wireless/realtek/rtw89/pci.c
++++ b/drivers/net/wireless/realtek/rtw89/pci.c
+@@ -4829,6 +4829,19 @@ void rtw89_pci_remove(struct pci_dev *pd
+ }
+ EXPORT_SYMBOL(rtw89_pci_remove);
+ 
++void rtw89_pci_shutdown(struct pci_dev *pdev)
++{
++	struct ieee80211_hw *hw = pci_get_drvdata(pdev);
++	struct rtw89_dev *rtwdev;
 +
- 	buffhds = kcalloc(n, sizeof(*buffhds), GFP_KERNEL);
- 	if (!buffhds)
- 		return -ENOMEM;
++	if (!hw)
++		return;
++
++	rtwdev = hw->priv;
++	set_bit(RTW89_FLAG_SHUTDOWN, rtwdev->flags);
++}
++EXPORT_SYMBOL(rtw89_pci_shutdown);
++
+ MODULE_AUTHOR("Realtek Corporation");
+ MODULE_DESCRIPTION("Realtek PCI 802.11ax wireless driver");
+ MODULE_LICENSE("Dual BSD/GPL");
+--- a/drivers/net/wireless/realtek/rtw89/pci.h
++++ b/drivers/net/wireless/realtek/rtw89/pci.h
+@@ -1737,6 +1737,7 @@ struct pci_device_id;
+ 
+ int rtw89_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id);
+ void rtw89_pci_remove(struct pci_dev *pdev);
++void rtw89_pci_shutdown(struct pci_dev *pdev);
+ void rtw89_pci_basic_cfg(struct rtw89_dev *rtwdev, bool resume);
+ void rtw89_pci_ops_reset(struct rtw89_dev *rtwdev);
+ int rtw89_pci_ltr_set(struct rtw89_dev *rtwdev, bool en);
+--- a/drivers/net/wireless/realtek/rtw89/rtw8851be.c
++++ b/drivers/net/wireless/realtek/rtw89/rtw8851be.c
+@@ -92,6 +92,7 @@ static struct pci_driver rtw89_8851be_dr
+ 	.id_table	= rtw89_8851be_id_table,
+ 	.probe		= rtw89_pci_probe,
+ 	.remove		= rtw89_pci_remove,
++	.shutdown	= rtw89_pci_shutdown,
+ 	.driver.pm	= &rtw89_pm_ops,
+ 	.err_handler    = &rtw89_pci_err_handler,
+ };
+--- a/drivers/net/wireless/realtek/rtw89/rtw8852ae.c
++++ b/drivers/net/wireless/realtek/rtw89/rtw8852ae.c
+@@ -94,6 +94,7 @@ static struct pci_driver rtw89_8852ae_dr
+ 	.id_table	= rtw89_8852ae_id_table,
+ 	.probe		= rtw89_pci_probe,
+ 	.remove		= rtw89_pci_remove,
++	.shutdown	= rtw89_pci_shutdown,
+ 	.driver.pm	= &rtw89_pm_ops,
+ 	.err_handler    = &rtw89_pci_err_handler,
+ };
+--- a/drivers/net/wireless/realtek/rtw89/rtw8852be.c
++++ b/drivers/net/wireless/realtek/rtw89/rtw8852be.c
+@@ -96,6 +96,7 @@ static struct pci_driver rtw89_8852be_dr
+ 	.id_table	= rtw89_8852be_id_table,
+ 	.probe		= rtw89_pci_probe,
+ 	.remove		= rtw89_pci_remove,
++	.shutdown	= rtw89_pci_shutdown,
+ 	.driver.pm	= &rtw89_pm_ops,
+ 	.err_handler    = &rtw89_pci_err_handler,
+ };
+--- a/drivers/net/wireless/realtek/rtw89/rtw8852bte.c
++++ b/drivers/net/wireless/realtek/rtw89/rtw8852bte.c
+@@ -98,6 +98,7 @@ static struct pci_driver rtw89_8852bte_d
+ 	.id_table	= rtw89_8852bte_id_table,
+ 	.probe		= rtw89_pci_probe,
+ 	.remove		= rtw89_pci_remove,
++	.shutdown	= rtw89_pci_shutdown,
+ 	.driver.pm	= &rtw89_pm_ops,
+ 	.err_handler    = &rtw89_pci_err_handler,
+ };
+--- a/drivers/net/wireless/realtek/rtw89/rtw8852ce.c
++++ b/drivers/net/wireless/realtek/rtw89/rtw8852ce.c
+@@ -121,6 +121,7 @@ static struct pci_driver rtw89_8852ce_dr
+ 	.id_table	= rtw89_8852ce_id_table,
+ 	.probe		= rtw89_pci_probe,
+ 	.remove		= rtw89_pci_remove,
++	.shutdown	= rtw89_pci_shutdown,
+ 	.driver.pm	= &rtw89_pm_ops,
+ 	.err_handler    = &rtw89_pci_err_handler,
+ };
+--- a/drivers/net/wireless/realtek/rtw89/rtw8922ae.c
++++ b/drivers/net/wireless/realtek/rtw89/rtw8922ae.c
+@@ -109,6 +109,7 @@ static struct pci_driver rtw89_8922ae_dr
+ 	.id_table	= rtw89_8922ae_id_table,
+ 	.probe		= rtw89_pci_probe,
+ 	.remove		= rtw89_pci_remove,
++	.shutdown	= rtw89_pci_shutdown,
+ 	.driver.pm	= &rtw89_pm_ops_be,
+ 	.err_handler    = &rtw89_pci_err_handler,
+ };
 
 
