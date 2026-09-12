@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EFB12D0C94;
-	Sat, 12 Sep 2026 07:37:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0970C332610;
+	Sat, 12 Sep 2026 07:37:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789198633; cv=none; b=WddCm+848CaAi4YokFPi4T7g59rh+QqEhDXpiYkMY02ewrxub5w9Nazn4NX0iJCCgwzyr2YIg3pD/LBD02rNukGZ0q9vEpOZrIri2KsH3lWU3HfM3zKutHgzZWqRx8D56eBXgzzMSltSwbWQWBjlwQAeRkwDoE7OG1R5NycmrPQ=
+	t=1789198639; cv=none; b=Rr6Eoc61/OXxWggPU09nQGyz5DSvru06+W3BLb5MNYXw2zctswH0lK1ANYgvMI7kfTF8iUIQWwM6zRhybRT8d5aPiOZoQLsFlyOQqjerm2vbWQf5naW1KEWMAHdkEWjSVr/kfRhKe8+JsswFouzcBREecZBJEuL1cNzU/Bj1LRU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789198633; c=relaxed/simple;
-	bh=gyn7sTNhwjgK1TVFMAVOhq+ctpEbq5C+z6OpQgF5Hf8=;
+	s=arc-20240116; t=1789198639; c=relaxed/simple;
+	bh=ueaY3Wxxpa8hz+2kO23697V+dsAAoU2YOfShJDHiX3E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G3RFwD/9yUO50b4BL3iaL+YBsJO9ktnMS9nzzAqBCTV2YQDwg6q4QoOo8ArfR/ifELlUxKCV9zuCbNtaBNLvjljdrcOkDOoJ+snDMLIZdnfG/0v8vYOvxCfdW3UBLmTXiBzoCSTfCMcsGO1DLhyzxZIgWd4HkIQj7+9KN9D+yPk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yhgs3CvF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KKQi3rJMdSPM+V3xH4OPXmidyErQWt8viXVEwkCqCtUQT8hPjBIrY9gQVBwoOFVyr3yl42cBzwTX+SdBWTBI3bDtgKhaYEGFYrPslQzEWMknZDtDMQAUUh91Qh2zxQn8z/tzJulojJBLvU/iDnqtQzHiCqgIyY0f1qGMxFAoU1c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GC+rikSs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yhgs3CvF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 950131F000FF;
-	Sat, 12 Sep 2026 07:37:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GC+rikSs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E7EB1F000FF;
+	Sat, 12 Sep 2026 07:37:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789198632;
-	bh=HQqYlXkivgPEDSkIPiQu0E6rqdXDqCLl2ctAnqphK8k=;
+	s=korg; t=1789198637;
+	bh=P60RAaV8eS8D/HT229p43uFDlE1TLFUADcxxTAgu/34=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Yhgs3CvFYD7gQj9kc2QlmATyEzUk+Fr2XAzqTxyhDobml1oLZSfQ4xgFIxahLSOJC
-	 9EOM5pSNqjxs8rvaYaWYrtP3D2bUv15T7Ja0DqNWHtAO3MeEI8CDjNJ/aZirVUiXoq
-	 SuWT/Yum3Jd9Wfuaz716n+KmkgrPVsJScWmmDV7E=
+	b=GC+rikSsIj8nOpU7xnqQhjsYHCHv5CHbbj4AvLz4JkKo4XDLSZg25ZerkvoyY/T6t
+	 kSaNUi6eqlrAHqW+V2ivHDvNvmLNzniwsyPnartnKJxmPXn0Vvv/82GLNUN/umFCcR
+	 E9XvICsKvbDEPGXS96Xz1v1JG2m3+UhfaMbmdgdo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Cheng <icheng@nvidia.com>,
 	John Groves <john@groves.net>,
 	Alison Schofield <alison.schofield@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0422/1815] dax: read holder_ops once in dax_holder_notify_failure()
-Date: Sat, 12 Sep 2026 08:36:12 +0200
-Message-ID: <20260912065658.801337028@linuxfoundation.org>
+Subject: [PATCH 7.2 0423/1815] dax: fix holder_ops race in fs_put_dax()
+Date: Sat, 12 Sep 2026 08:36:13 +0200
+Message-ID: <20260912065658.825967677@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -54,64 +53,95 @@ Content-Transfer-Encoding: 8bit
 
 From: John Groves <John@Groves.net>
 
-[ Upstream commit 7ae9d15bdcde0f2955ae13b6a95587f9e23b2359 ]
+[ Upstream commit 7a6db2eb6d5da9ade0d4802e25bbec3342ae0187 ]
 
-dax_holder_notify_failure() reads dax_dev->holder_ops twice without
-READ_ONCE() -- once for the NULL check and once for the indirect
-notify_failure() call. A concurrent fs_put_dax() can clear holder_ops
-between the two reads, so the check can observe a non-NULL pointer while
-the call dereferences NULL. (kill_dax() also clears holder_ops, but only
-after synchronize_srcu(), so it cannot race a reader that is inside
-dax_read_lock(); fs_put_dax() does no such synchronization.)
+Clear holder_ops before holder_data so that a concurrent fs_dax_get()
+cannot have its newly installed holder_ops overwritten. cmpxchg()
+provides release ordering on weakly-ordered architectures, ensuring the
+WRITE_ONCE(holder_ops, NULL) store is visible to any CPU that observes
+the holder_data release.
 
-Fetch holder_ops once into a local with READ_ONCE() so the NULL check and
-the indirect call observe the same value.
+Add a WARN_ON() that fires only when the cmpxchg observes a non-NULL
+value that is not @holder, i.e. fs_put_dax() called by something that
+is not the current holder. That is an API contract violation; the
+WARN_ON() does not prevent the damage but makes the bug visible.
 
-Fixes: 8012b86608552 ("dax: introduce holder for dax_device")
-Suggested-by: Richard Cheng <icheng@nvidia.com>
-Reviewed-by: Richard Cheng <icheng@nvidia.com>
+A NULL cmpxchg result is deliberately tolerated: kill_dax() clears
+holder_data while a holder is still attached when a device is removed
+out from under a mounted filesystem (after delivering MF_MEM_PRE_REMOVE).
+The holder's subsequent fs_put_dax() - e.g. xfs_free_buftarg() after a
+forced shutdown - then legitimately finds holder_data already NULL, so
+warning on that case would turn supported device removal into a splat
+(or a panic with panic_on_warn).
+
+Also add a kerneldoc comment documenting that fs_put_dax() must only
+be called by the current holder.
+
+Fixes: eec38f5d86d27 ("dax: Add fs_dax_get() func to prepare dax for fs-dax usage")
 Signed-off-by: John Groves <john@groves.net>
-Link: https://patch.msgid.link/0100019ecc09bb56-5ecc9c6b-35ba-44f8-b112-921b01b34478-000000@email.amazonses.com
+Reviewed-by: Alison Schofield <alison.schofield@intel.com>
+Link: https://patch.msgid.link/0100019ecc09dcab-2f4aa175-0b84-4b36-9e54-ebff302ebb0a-000000@email.amazonses.com
 Signed-off-by: Alison Schofield <alison.schofield@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dax/super.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ drivers/dax/super.c | 42 +++++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 39 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/dax/super.c b/drivers/dax/super.c
-index 25cf99dd9360b..433cd431a6c06 100644
+index 433cd431a6c06..45f84b0eb909a 100644
 --- a/drivers/dax/super.c
 +++ b/drivers/dax/super.c
-@@ -303,6 +303,7 @@ EXPORT_SYMBOL_GPL(dax_recovery_write);
- int dax_holder_notify_failure(struct dax_device *dax_dev, u64 off,
- 			      u64 len, int mf_flags)
+@@ -116,11 +116,47 @@ EXPORT_SYMBOL_GPL(fs_dax_get_by_bdev);
+ 
+ #if IS_ENABLED(CONFIG_FS_DAX)
+ 
++/**
++ * fs_put_dax() - release holder ownership of a dax_device
++ * @dax_dev: dax device to release (may be NULL)
++ * @holder: the holder pointer previously passed to fs_dax_get() or
++ *          fs_dax_get_by_bdev(); must match exactly, as it is used
++ *          in a cmpxchg to atomically release ownership
++ *
++ * Must only be called by the current holder. Clears holder_ops before
++ * holder_data to avoid a race where a concurrent fs_dax_get() could have
++ * its newly installed holder_ops overwritten.
++ */
+ void fs_put_dax(struct dax_device *dax_dev, void *holder)
  {
-+	const struct dax_holder_operations *ops;
- 	int rc, id;
- 
- 	id = dax_read_lock();
-@@ -311,12 +312,19 @@ int dax_holder_notify_failure(struct dax_device *dax_dev, u64 off,
- 		goto out;
- 	}
- 
--	if (!dax_dev->holder_ops) {
-+	/*
-+	 * Read holder_ops once: a concurrent fs_put_dax() can clear it without
-+	 * synchronizing against readers. Without the single fetch the compiler
-+	 * could reload between the NULL check and the call and dereference a
-+	 * NULL ops.
-+	 */
-+	ops = READ_ONCE(dax_dev->holder_ops);
-+	if (!ops) {
- 		rc = -EOPNOTSUPP;
- 		goto out;
- 	}
- 
--	rc = dax_dev->holder_ops->notify_failure(dax_dev, off, len, mf_flags);
-+	rc = ops->notify_failure(dax_dev, off, len, mf_flags);
- out:
- 	dax_read_unlock(id);
- 	return rc;
+-	if (dax_dev && holder &&
+-	    cmpxchg(&dax_dev->holder_data, holder, NULL) == holder)
+-		dax_dev->holder_ops = NULL;
++	if (dax_dev && holder) {
++		void *prev;
++
++		/*
++		 * Clear holder_ops before releasing holder_data. A concurrent
++		 * dax_holder_notify_failure() that sees NULL ops returns
++		 * -EOPNOTSUPP cleanly. A concurrent fs_dax_get() that acquires
++		 * holder_data after the cmpxchg below is guaranteed to observe
++		 * holder_ops=NULL first (cmpxchg provides release ordering), so
++		 * its subsequent store of new ops will not be overwritten.
++		 */
++		WRITE_ONCE(dax_dev->holder_ops, NULL);
++		prev = cmpxchg(&dax_dev->holder_data, holder, NULL);
++
++		/*
++		 * prev == holder: normal release.
++		 * prev == NULL:   already released by kill_dax() when the
++		 *                 device was removed under a live holder;
++		 *                 not a bug.
++		 * prev != holder (non-NULL): fs_put_dax() called by something
++		 *                 that is not the current holder; an API
++		 *                 contract violation. A lock would be needed
++		 *                 to guard against this, but we WARN_ON()
++		 *                 instead since violating the contract is
++		 *                 a bug.
++		 */
++		WARN_ON(prev && prev != holder);
++	}
+ 	put_dax(dax_dev);
+ }
+ EXPORT_SYMBOL_GPL(fs_put_dax);
 -- 
 2.53.0
 
