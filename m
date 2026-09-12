@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A3813B813A;
-	Sat, 12 Sep 2026 07:08:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2143B3BE175;
+	Sat, 12 Sep 2026 07:08:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789196903; cv=none; b=OxaC4Pma/QhDPI+KPX41m6psLHTvpSknN5PlL+l6tL/DMzQOD0PXOGCnMSUVcmlUYeybqClo4S6klzoXAyNg8xOzdb0xRvwef1ME2pgFroXxoCYWKdy/O9tWPnKSKDJT+3JLHLd+V7iuFxp3IJeeBI5Opcb+PaTjmxFH2o9+qFQ=
+	t=1789196908; cv=none; b=PrKLf7K0RRhBnTWdIv8mYPMkAjzV40mv+ZteF31h0Ak9FrsYzg5vGsHIfMSaa29Bg9Me89Tl70wieFiv5aBDJtNVhwavKii9VGYFnxh8VRJCtHULpeuMsn8HFYByt7ryqDjKW2XjJ/0RsEapuKQZOoQRwk3GKYlj3oNnQBAElUY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789196903; c=relaxed/simple;
-	bh=iIbwfLzVlcq4gyubyMDeMgwUvfB0+airxZaqmmM+HJU=;
+	s=arc-20240116; t=1789196908; c=relaxed/simple;
+	bh=G6ntpvuiQkYHDyhJyN7VCKUWE8S9VgoWldLp91J/1VI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VOX6b84PY/TNKo72/KeNH5bdUHlfj+7gennG6bBcESCqt4qrYsvDN2QH8kFyFEPz3APJgDhFeyptDaxBKOMCiE12f8kprnPr3Du8TcReALp7ydcW29FoICFSWTW7gO1jjiAkmLbLmJHTjErkbauGXPycy1g0Hc5FuBTdGG75dps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vVhZ0wmu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oR5fu3eMzOmCNmNjxSjxTuuJZJzBzM2orZwBHkk1eWRJ0HJL/Ukd9wO9tVwTvlS5C3YTKU+uxkBOTio7n34H00EEuMDw1Fob6kEDG/ZSih1W7eyJakFGlFd9UT62Dfv9+jjG8ccrw9bVPCxj+glI2L7NJFKF+TAiIL+5xWLOTS8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GJrAOrZS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vVhZ0wmu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA1511F000FF;
-	Sat, 12 Sep 2026 07:08:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GJrAOrZS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E783F1F000FF;
+	Sat, 12 Sep 2026 07:08:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789196901;
-	bh=3zN1VHrajg9vyJDnG4qYlK+OpYyTXO6HWn/8aAbQEb8=;
+	s=korg; t=1789196907;
+	bh=pdCj8Bzs0tmJZ2vDQ6CFSIXPbU2sFopqNw7uDnmw5NU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vVhZ0wmuFQ0eRn0bVVjLheGMHXfAmTw7i0lzWDsMmSPSMcI6IN+5w5YfAIBqZVptm
-	 boCWMTMW0kJHbz9UI3nBynII+KKsCCMA4hsqe+HdOIQxNWfyGFGgpTzewPaI9Gulwa
-	 Y2PAqlFpArOJepSf3duktY3uwVCadNcQivxp0qk8=
+	b=GJrAOrZSfZCaNMsq6RWSm/aMqkMD35uMtGD0NNOm/xyAcgnXJZkNnx5Vuy5KG7deE
+	 HrbUspRsxgOlh99YwO3kLG8nlsnQuI9z1JynH+A5P89nfp2pjesSFjw4grXADXaRdI
+	 20sO0mv3Belg2Ll+OLXPBmsugBHFwpFyMrPnjVUg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wanwu Li <liwanwu@kylinos.cn>,
-	Andrea Righi <arighi@nvidia.com>,
-	Tejun Heo <tj@kernel.org>,
+	kernel test robot <lkp@intel.com>,
+	Damon Ding <damon.ding@rock-chips.com>,
+	Luca Ceresoli <luca.ceresoli@bootlin.com>,
+	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0061/1815] sched_ext/scx_flatcg: Fix cvtime_delta race and add hweight scaling to bypass charging
-Date: Sat, 12 Sep 2026 08:30:11 +0200
-Message-ID: <20260912065650.443367068@linuxfoundation.org>
+Subject: [PATCH 7.2 0062/1815] drm/bridge: of-display-mode-bridge: Fix missing static const for the bridge funcs
+Date: Sat, 12 Sep 2026 08:30:12 +0200
+Message-ID: <20260912065650.466071217@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,81 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wanwu Li <liwanwu@kylinos.cn>
+From: Damon Ding <damon.ding@rock-chips.com>
 
-[ Upstream commit a5cc43414b38decd50bdd447e558358a6fbd5864 ]
+[ Upstream commit 6648301c5bb2ef23f0fb15bcb01d21ff66f36799 ]
 
-1. cgrp_cap_budget() used __sync_fetch_and_sub(&cgc->cvtime_delta,
-   cgc->cvtime_delta) to atomically read and clear cvtime_delta. However,
-   this is not a true atomic read-clear operation: the second argument
-   (cgc->cvtime_delta) is evaluated as a normal read before the atomic
-   fetch_and_sub executes. If a concurrent __sync_fetch_and_add() happens
-   between the read and the sub, the added value gets included in the
-   returned delta AND remains in cvtime_delta, causing double charging.
+Add static qualifier for of_display_mode_bridge_funcs to resolve the
+sparse warning:
 
-   Example:
-   CPU 0 runs cgrp_cap_budget(), CPU 1 runs fcg_stopping().
-   Assume cvtime_delta = 100 initially.
+drivers/gpu/drm/bridge/of-display-mode-bridge.c:54:25: sparse: sparse:
+symbol 'of_display_mode_bridge_funcs' was not declared. Should it be
+static?
 
-     T1  CPU 0: sub_val = cvtime_delta = 100                 cvtime_delta = 100
-     T2  CPU 1: __sync_fetch_and_add(&cvtime_delta, 10)      cvtime_delta = 110
-     T3  CPU 0: __sync_fetch_and_sub(&cvtime_delta, sub_val) cvtime_delta = 10
-                                                                returns old=110
+Also mark the structure const as required by devm_drm_bridge_alloc()
+parameter type constraints.
 
-   delta = 110 (includes the 10 from CPU 1), but cvtime_delta = 10
-   (the 10 also remains). The 10 is charged twice: once in delta
-   (applied to cgv_node->cvtime) and once in the residual cvtime_delta
-   (fetched again next time).
-
-   Fix by using __sync_fetch_and_and(&cgc->cvtime_delta, 0).
-   Disassembly comparison:
-   (1) delta = __sync_fetch_and_sub(&cgc->cvtime_delta, cgc->cvtime_delta);
-   228: (79) r7 = *(u64 *)(r9 +40)
-   229: (87) r7 = -r7
-   230: (db) r7 = atomic64_fetch_add((u64 *)(r9 +40), r7) //r9 may be changed
-
-   (2) delta = __sync_fetch_and_and(&cgc->cvtime_delta, 0);
-   228: (b7) r8 = 0
-   229: (db) r8 = atomic64_xchg((u64 *)(r9 +40), r8)
-
-2. The bypass charging path in fcg_stopping() charges raw execution time
-   to cvtime_delta without scaling by the inverse of the cgroup hweight.
-   Since cvtime_delta is eventually applied to cgv_node->cvtime which is
-   in vtime space (weight-scaled), the bypass path should also scale by
-   FCG_HWEIGHT_ONE / hweight to match the units used by the dispatch path.
-
-Fixes: a4103eacc2ab ("sched_ext: Add a cgroup scheduler which uses flattened hierarchy")
-Signed-off-by: Wanwu Li <liwanwu@kylinos.cn>
-Reviewed-by: Andrea Righi <arighi@nvidia.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Fixes: ba2db93cf3d5 ("drm/bridge: Move legacy bridge driver out of imx directory for multi-platform use")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202606170744.FUStcWaB-lkp@intel.com/
+Signed-off-by: Damon Ding <damon.ding@rock-chips.com>
+Reviewed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+Link: https://patch.msgid.link/20260617080755.186368-1-damon.ding@rock-chips.com
+Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/sched_ext/scx_flatcg.bpf.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/bridge/of-display-mode-bridge.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/sched_ext/scx_flatcg.bpf.c b/tools/sched_ext/scx_flatcg.bpf.c
-index fec3595818269..0fd214cc61dae 100644
---- a/tools/sched_ext/scx_flatcg.bpf.c
-+++ b/tools/sched_ext/scx_flatcg.bpf.c
-@@ -256,7 +256,7 @@ static void cgrp_cap_budget(struct cgv_node *cgv_node, struct fcg_cgrp_ctx *cgc)
- 	 * and thus can't be updated and repositioned. Instead, we collect the
- 	 * vtime deltas separately and apply it asynchronously here.
- 	 */
--	delta = __sync_fetch_and_sub(&cgc->cvtime_delta, cgc->cvtime_delta);
-+	delta = __sync_fetch_and_and(&cgc->cvtime_delta, 0);
- 	cvtime = cgv_node->cvtime + delta;
+diff --git a/drivers/gpu/drm/bridge/of-display-mode-bridge.c b/drivers/gpu/drm/bridge/of-display-mode-bridge.c
+index cb15713f3a796..e66dae168fd0d 100644
+--- a/drivers/gpu/drm/bridge/of-display-mode-bridge.c
++++ b/drivers/gpu/drm/bridge/of-display-mode-bridge.c
+@@ -51,7 +51,7 @@ static int of_display_mode_bridge_get_modes(struct drm_bridge *bridge,
+ 	return 0;
+ }
  
- 	/*
-@@ -570,7 +570,8 @@ void BPF_STRUCT_OPS(fcg_stopping, struct task_struct *p, bool runnable)
- 	cgc = find_cgrp_ctx(cgrp);
- 	if (cgc) {
- 		__sync_fetch_and_add(&cgc->cvtime_delta,
--				     p->se.sum_exec_runtime - taskc->bypassed_at);
-+				     (p->se.sum_exec_runtime - taskc->bypassed_at) *
-+				     FCG_HWEIGHT_ONE / (cgc->hweight ?: 1));
- 		taskc->bypassed_at = 0;
- 	}
- 	bpf_cgroup_release(cgrp);
+-struct drm_bridge_funcs of_display_mode_bridge_funcs = {
++static const struct drm_bridge_funcs of_display_mode_bridge_funcs = {
+ 	.attach = of_display_mode_bridge_attach,
+ 	.get_modes = of_display_mode_bridge_get_modes,
+ };
 -- 
 2.53.0
 
