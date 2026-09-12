@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCA0347A872;
-	Sat, 12 Sep 2026 13:38:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7412431A5C;
+	Sat, 12 Sep 2026 13:38:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789220289; cv=none; b=Qsvt04zIzeiC1XN4IVQzwoTWs1Rfo+n9Q1oaOnMI++nUZmT96Bn5NBlN4+wRFCODoU7nPBDhkL5h2qGJmYpKaqP5jloOkGWf2mtO+GJLUpvf99pWVkJY8IYpETtA/Q6ajmesL/gB1It9rvVKN78kYph6QyJgamVkxMT63v/lINI=
+	t=1789220295; cv=none; b=MMOs3jU+TbO7aDOpVgc15kGx2v6O3vXh6gblSH5fej2zdpBmlhDPk3ptY3z56qjxuXAw7z3p7NygFExOF6gJ290gRIMIzNNvJ4qrR9sEEF3k6ipE0n/RkJvSnjGQRy67m8wYY5DLE6AYNCvl9sSVlkHXrzF8IuOmYn0rPolOuQo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789220289; c=relaxed/simple;
-	bh=IAgxxz5JHP/F0XUCCyZmy3EC7PGIewOa/nOx82PWMKk=;
+	s=arc-20240116; t=1789220295; c=relaxed/simple;
+	bh=g4p46eN0epeT8aedfcn/N49qiQl63LyAku0Ltu9MXoM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Aw9zsY/GBzS398Q7xwdy1EIks4MiLiZ1bXE6FL7YY6AXyUOa3JHCd1IuJxoOiOEGTeNTsgt5t4eBMdOS7IgDGJH9/YI5osiMmh+3T/xTQy/b+2neKqM5n1PqP0uyGI8h2AwCPpG+b67kF75jhICU1wz/uBiThY77RMCw8NShiw0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZaF/FFON; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lSa4em7dY0kUVETqZm6fh7W35m6fBpRHXNa0+EJ+Nqlt3L1U9qGSb/y2ICUR7qKQ2HKe6GfUDj6LyFgp7Jkk7owygvnyqDb+JLX3GX6lsqUsYIKSFdw8Pr3/Gx98ODreDPkciYdfqOe79jptV4/TsFox7hunp95tQeZ8HctNHlA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wE38yvDl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZaF/FFON"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C18FB1F000FF;
-	Sat, 12 Sep 2026 13:38:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wE38yvDl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 169E11F000FF;
+	Sat, 12 Sep 2026 13:38:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789220288;
-	bh=k7KhUnhRgKGdjx516e7eSjghvOUHUfP6VcPayTkXa6I=;
+	s=korg; t=1789220293;
+	bh=Fe1uPtTqx7TEYPIHMZtDSbP7ASszuqHNTWCNcNu6ML4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZaF/FFON/xKXjZU8OXclYmv98i84J7Hmp+0AHKlRA7Hsjn524djwzSR5oxbaH1eML
-	 WwiaWT9n/ok2V3B9Gm6EM7ln9PWUSFM9hqbwLbLTGB9YVTDGI0u4s3dvzTIUXEUq99
-	 j9vO10JK16KVP3kgKZz6XNSfNafW7bE587cXCjhU=
+	b=wE38yvDl82uwUkBdTksvZnmWQQp1hzIoPnSzoSX1QB1M7gRm8y0BQSCsxPKSBoasC
+	 rcgHdm8dTWbN7cUecGLtS4uCiT71G0sjYwFaVvLr5T2UDURVPXyvjmWUTllr+MeIQV
+	 SmRKZor1Pa+kyBs7jJDA56FqkweY8gXrUcQ26tec=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ramesh Adhikari <adhikari.resume@gmail.com>,
-	Coly Li <colyli@fygo.io>,
-	Yu Kuai <yukuai@fygo.io>
-Subject: [PATCH 6.6 0145/1424] md: do overflow check for sb->bblog_shift in super_1_load()
-Date: Sat, 12 Sep 2026 08:42:57 +0200
-Message-ID: <20260912065610.545691131@linuxfoundation.org>
+	Qing Ming <a0yami@mailbox.org>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.6 0146/1424] mpls: reload header after pskb_may_pull()
+Date: Sat, 12 Sep 2026 08:42:58 +0200
+Message-ID: <20260912065610.567908480@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -51,71 +51,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Coly Li <colyli@fygo.io>
+From: Qing Ming <a0yami@mailbox.org>
 
-commit 35d522bd32462afcf1981dab6da8a9256c26c1e0 upstream.
+commit 29e63b8d9fc150cc191b1c6eb7e16e1247e1b650 upstream.
 
-In super_1_load(), sb->bblog_shift is an __u8 type value loaded from on-
-disk superblock. It is used for badblocks API badblocks_set() by the
-following sequence,
+mpls_select_multipath() calls mpls_multipath_hash() to choose a nexthop
+when an MPLS route has multiple nexthops.  While walking the MPLS label
+stack, the hash routine caches hdr for the current label.  After finding
+the bottom-of-stack label, it calls pskb_may_pull() before reading the
+inner IP header.
 
- 1930   rdev->badblocks.shift = sb->bblog_shift;
- 1931   for (i = 0 ; i < (sectors << (9-3)) ; i++, bbp++) {
- 1932           u64 bb = le64_to_cpu(*bbp);
- 1933           int count = bb & (0x3ff);
- 1934           u64 sector = bb >> 10;
- 1935           sector <<= sb->bblog_shift;
- 1936           count <<= sb->bblog_shift;
- 1937           if (bb + 1 == 0)
- 1938                   break;
- 1939           if (!badblocks_set(&rdev->badblocks, sector, count, 1))
- 1940                   return -EINVAL;
- 1941   }
+If an skb is constructed with the inner IP header in nonlinear data and
+insufficient tailroom in the linear head, pskb_may_pull() calls
+pskb_expand_head() to replace the skb head and free the old one.  This
+leaves hdr pointing to freed memory.  The IPv6 path can invalidate hdr
+again when it performs a second pull for the larger header.
 
-bb->bblog_shit is in range of 0-255, variable sector is 64bit width, for
-an invalid bb->bblog_shit, it is possible to make sector be overflowed
-by the following calculation,
- 1935           sector <<= sb->bblog_shift;
-Then in turn when call badblocks_set() at line 1939 with the invalid
-rdev->badblocks.shift set at line 1930, may result an overflow inside
-_badblocks_clear() in block/badblocks.c.
+The issue was found through static analysis.  A reproducer sending a legal
+Geneve packet through a bareudp/MPLS multipath setup triggered the same
+KASAN report in 2 of 2 unpatched runs:
 
-Although there are many places to call badblocks APIs, the non-zero
-shift value is only used in super_1_load(), other places always use 0 as
-the shift value. Therefore it is unnecessary to do a general shift value
-overflow check inside badblock API, and just check here as the caller.
+  BUG: KASAN: slab-use-after-free in mpls_select_multipath
+  Read of size 1 at addr ffff88800ecc6e20 by task ksoftirqd/1/23
 
-This may avoid unnecessary check, make the badblocks API code more simple
-and elegant.
+  Call Trace:
+   mpls_select_multipath
+   mpls_forward
+   __netif_receive_skb_list_core
+   netif_receive_skb_list_internal
+   napi_complete_done
+   gro_cell_poll
+   __napi_poll
+   net_rx_action
 
-Fixes: 2699b67223ac ("md: load/store badblock list from v1.x metadata")
-Fixes: 1726c7746783 ("badblocks: improve badblocks_set() for multiple ranges handling")
+  Freed by task 23:
+   kfree
+   pskb_expand_head
+   __pskb_pull_tail
+   mpls_select_multipath
+
+Reload hdr from the current skb head after each successful pull before
+deriving the inner IPv4 or IPv6 header pointer.
+
+Fixes: 9f427a0e474a ("net: mpls: Fix multipath selection for LSR use case")
 Cc: stable@vger.kernel.org
-Cc: Ramesh Adhikari <adhikari.resume@gmail.com>
-Signed-off-by: Coly Li <colyli@fygo.io>
-Reviewed-by: Yu Kuai <yukuai@fygo.io>
-Link: https://patch.msgid.link/20260720111400.2120834-1-colyli@fygo.io
-Signed-off-by: Yu Kuai <yukuai@fygo.io>
+Signed-off-by: Qing Ming <a0yami@mailbox.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260814095404.7205-1-a0yami@mailbox.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/md.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ net/mpls/af_mpls.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/md/md.c
-+++ b/drivers/md/md.c
-@@ -1726,6 +1726,13 @@ static int super_1_load(struct md_rdev *
- 				  rdev->bb_page, REQ_OP_READ, true))
- 			return -EIO;
- 		bbp = (__le64 *)page_address(rdev->bb_page);
-+
-+		/* check for badblocks api. */
-+		if (sb->bblog_shift >= BITS_PER_TYPE(sector_t)) {
-+			pr_err("md: %pg: bogus bblog_shift %u for badblocks.\n",
-+			       rdev->bdev, sb->bblog_shift);
-+			return -EINVAL;
-+		}
- 		rdev->badblocks.shift = sb->bblog_shift;
- 		for (i = 0 ; i < (sectors << (9-3)) ; i++, bbp++) {
- 			u64 bb = le64_to_cpu(*bbp);
+--- a/net/mpls/af_mpls.c
++++ b/net/mpls/af_mpls.c
+@@ -198,6 +198,7 @@ static u32 mpls_multipath_hash(struct mp
+ 		if (pskb_may_pull(skb, mpls_hdr_len + sizeof(struct iphdr))) {
+ 			const struct iphdr *v4hdr;
+ 
++			hdr = mpls_hdr(skb) + label_index;
+ 			v4hdr = (const struct iphdr *)(hdr + 1);
+ 			if (v4hdr->version == 4) {
+ 				hash = jhash_3words(ntohl(v4hdr->saddr),
+@@ -208,6 +209,7 @@ static u32 mpls_multipath_hash(struct mp
+ 						 sizeof(struct ipv6hdr))) {
+ 				const struct ipv6hdr *v6hdr;
+ 
++				hdr = mpls_hdr(skb) + label_index;
+ 				v6hdr = (const struct ipv6hdr *)(hdr + 1);
+ 				hash = __ipv6_addr_jhash(&v6hdr->saddr, hash);
+ 				hash = __ipv6_addr_jhash(&v6hdr->daddr, hash);
 
 
