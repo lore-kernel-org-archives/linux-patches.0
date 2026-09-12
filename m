@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E183347ACCA;
-	Sat, 12 Sep 2026 11:53:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01553479880;
+	Sat, 12 Sep 2026 11:53:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789214024; cv=none; b=ZVthD7gzzii8xp92urOzLjpAMRB4/BUXWjN4Ns3GCr7xkL/ZTsrA7QLEvC+2qfB/QflxSrRXoK2t414Uzx05qXEeHRqJOcSAIcH+EBOikpRPiOrmG/DN5qIo3P7CcfwyNmm608bfOkhM6kTCE1OlklfXTAjfs82/zLn2+BD/wuk=
+	t=1789214029; cv=none; b=bwpo0mCv6+Ni5LpILwPYclKQzb1wQquBabp1BSppw6z003cdeLD+8lWmAlo4wkC5rjEB4EAZxQGn6P0eP/J+sdEdtg+cgGhK1CUCdW2GS/SzuhMwPcfm0q0Pl8RCf6uNauPCdxLUnbsmASmBkwfEasvPIawk1HX/yvtfP3EN+oU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789214024; c=relaxed/simple;
-	bh=+9Cy5xmDJhkvzeEWrCgKNqoTvBozk89fs3Kw/A0sa50=;
+	s=arc-20240116; t=1789214029; c=relaxed/simple;
+	bh=Hbeco6uuWm/K9CO5Vaj98TGiQa04bDZV5MI/XSw/y04=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cDD49HnOPwlF/bnmcm30mGSpELlQOJ1Qhk3hLSj0BN+bnWnvL5fwhY6w+B3tb2RV2AJMYmwq7Xyzzv2gqvAHDBlAWSbhxGdBds0Xsq91Er7CqpjWIliZ30iaa0o51FxunnQwN81oNT+/T/ufTuQPf3szMp4703RWEAa8ogqsN4Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RJzrM7J6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=k2dr5AX3lzmQW9km/jlpV16wiGEyDRJQ+HPPAMtjloGx9TVtMc109Y82nxee7yYij0p+XlT/Ue79AqxUVANbXf6h2/TAzAaySOo/GiAqbEYo+nd2WDFNc+4nScomApHBMjadOuNL6359C/R4Sl8R1ECKfmvUspDAqLOo+si2YYc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yz3ph4ZZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RJzrM7J6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9A391F000FF;
-	Sat, 12 Sep 2026 11:53:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yz3ph4ZZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D44EB1F00893;
+	Sat, 12 Sep 2026 11:53:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789214020;
-	bh=sFoExLFpRph2dhcC2fK2bwcMJi/QNp5O/Gfdkwkh98I=;
+	s=korg; t=1789214025;
+	bh=FJscz5TbWGL1s7YUR0/BBVNVg8DBFwB693mMUKMM7W8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RJzrM7J63sW7jJVLcEiQZVRSHedFmPv3F2rJCHCD//URhHbgO8Cn+LNMDgnKrsMHv
-	 jRdxZfvu1Dz6ZZk8tb5/frDRvB+0KBZLBb3OtKVsjwJ6w5wMMgt20w4FrIvrtPBpGX
-	 9Qyp3OQpncTTY3SHRCQUaWVt50mloDj033IdRci0=
+	b=Yz3ph4ZZaZWwoIh2SDrkXNYoUAh50MSGpUZ6tlZdwSd4n7Ugt3bq939M07cV6ZtIU
+	 wSSfdmIoEn62VbddLoa2y8uKQnmkgoiW/gVLE8ew1bc4RgiXD3OOoo1TsECjurftxH
+	 I5kWBaXgDoM6q/IYgZFukCE3EC0UsiiEzbnyBkFY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sashiko <sashiko-dev@google.com>,
 	Nilesh Javali <njavali@marvell.com>,
 	"Martin K. Petersen (Oracle)" <mkp@kernel.org>
-Subject: [PATCH 6.12 0242/1376] scsi: qla2xxx: Fix NVMe abort reference leak on repeated abort
-Date: Sat, 12 Sep 2026 08:44:28 +0200
-Message-ID: <20260912065612.935038625@linuxfoundation.org>
+Subject: [PATCH 6.12 0243/1376] scsi: qla2xxx: Drop vport reference under lock in report ID acquisition
+Date: Sat, 12 Sep 2026 08:44:29 +0200
+Message-ID: <20260912065612.957308592@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -53,57 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 From: Nilesh Javali <njavali@marvell.com>
 
-commit 06b5b2a5d499323f1c3256ead35798e8e3d15e60 upstream.
+commit 1154b16439ffc562f9461494c4508c63446eb684 upstream.
 
-qla_nvme_ls_abort() and qla_nvme_fcp_abort() take a command reference with
-kref_get_unless_zero() and then call schedule_work() on priv->abort_work,
-ignoring its return value. qla_nvme_abort_work() runs once and drops
-exactly one reference via kref_put(&sp->cmd_kref, sp->put_fn).
+qla24xx_report_id_acquisition() format-1 handling takes the vport
+reference under vport_slock but drops it outside the lock, after setting
+vp->vp_flags and vp->dpc_flags:
 
-Since the per-abort INIT_WORK() was moved to submission time,
-schedule_work() now returns false when the work is already pending, for
-example on a concurrent transport teardown and timeout-driven abort of
-the same command. In that case the reference taken for the second abort
-is never released because the work still executes only once, leaking a
-reference. The command is then never returned to the NVMe-FC transport,
-which can hang the port.
+	set_bit(VP_IDX_ACQUIRED, &vp->vp_flags);
+	set_bit(REGISTER_FC4_NEEDED, &vp->dpc_flags);
+	set_bit(REGISTER_FDMI_NEEDED, &vp->dpc_flags);
 
-Drop the reference when schedule_work() returns false, so each
-kref_get_unless_zero() is balanced regardless of whether the work was
-newly queued. The held reference keeps priv->sp valid for the put.
+	atomic_dec(&vp->vref_count);
 
-Fixes: 7e85f6dbc856 ("scsi: qla2xxx: Initialize NVMe abort_work once at submission")
+Neither set_bit() nor atomic_dec() imply a memory barrier, so on a weakly
+ordered architecture the decrement can become visible before the flag
+stores. qla24xx_deallocate_vp_id() polls vref_count under vport_slock and
+unlinks the vport once it reads zero, after which qla24xx_vport_delete()
+frees it via scsi_host_put(). The poller could therefore observe
+vref_count == 0 early and tear the vport down while the pending vp_flags/
+dpc_flags stores land on freed memory.
+
+Drop the reference under vport_slock, as is done for the matching
+increment and by every other vref_count user. The unlock release pairs
+with the deallocate poller's lock acquire so the flag stores are ordered
+before vref_count == 0 can be observed.
+
+Fixes: 793cedee296f ("scsi: qla2xxx: Hold vport reference in qla24xx_report_id_acquisition()")
 Cc: stable@vger.kernel.org
 Reported-by: Sashiko <sashiko-dev@google.com>
 Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://patch.msgid.link/20260730155838.2119230-25-njavali@marvell.com
+Link: https://patch.msgid.link/20260730155838.2119230-23-njavali@marvell.com
 Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_nvme.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/scsi/qla2xxx/qla_mbx.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/scsi/qla2xxx/qla_nvme.c
-+++ b/drivers/scsi/qla2xxx/qla_nvme.c
-@@ -466,7 +466,8 @@ static void qla_nvme_ls_abort(struct nvm
- 	}
- 	spin_unlock_irqrestore(&priv->cmd_lock, flags);
+--- a/drivers/scsi/qla2xxx/qla_mbx.c
++++ b/drivers/scsi/qla2xxx/qla_mbx.c
+@@ -4167,7 +4167,9 @@ qla24xx_report_id_acquisition(scsi_qla_h
+ 			set_bit(REGISTER_FC4_NEEDED, &vp->dpc_flags);
+ 			set_bit(REGISTER_FDMI_NEEDED, &vp->dpc_flags);
  
--	schedule_work(&priv->abort_work);
-+	if (!schedule_work(&priv->abort_work))
-+		kref_put(&priv->sp->cmd_kref, priv->sp->put_fn);
- }
- 
- static int qla_nvme_ls_req(struct nvme_fc_local_port *lport,
-@@ -548,7 +549,8 @@ static void qla_nvme_fcp_abort(struct nv
- 	}
- 	spin_unlock_irqrestore(&priv->cmd_lock, flags);
- 
--	schedule_work(&priv->abort_work);
-+	if (!schedule_work(&priv->abort_work))
-+		kref_put(&priv->sp->cmd_kref, priv->sp->put_fn);
- }
- 
- static inline int qla2x00_start_nvme_mq(srb_t *sp)
++			spin_lock_irqsave(&ha->vport_slock, flags);
+ 			atomic_dec(&vp->vref_count);
++			spin_unlock_irqrestore(&ha->vport_slock, flags);
+ 		}
+ 		set_bit(VP_DPC_NEEDED, &vha->dpc_flags);
+ 		qla2xxx_wake_dpc(vha);
 
 
