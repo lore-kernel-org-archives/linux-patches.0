@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F0E136E484;
-	Sat, 12 Sep 2026 09:56:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00FA936A36A;
+	Sat, 12 Sep 2026 09:56:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789206970; cv=none; b=LSodQ2t+f0TYdw5uK4q5h4cytgFI8dJFkr0PvTsCTfQLddmKFtr7KxjpkNX7HLEQyqSwyjIPaokDIPy/MYKTGM8qab4b6gKpWfEP8/K0rpVg/LpwVVOsJgaWzuh6i1aRlRLp6cNeoSetQUVWrwjOYLTZc+3c4zu4hi1XGPbs1qE=
+	t=1789206974; cv=none; b=n9lPaU4G2tyIU94LD8E/IER0r+3yKIA8kxxOqNUrtfw34/itWUbb8GhVAK+h1DFDRKseTTiXQ8u69ttjvtXaAVc5U6aI4zhvT6AXbpMt/0LTDskIEU+NQsjyOyRodDo7t9v9eZsS7kLe2Lsy39uUKw7ezD1iqGzXdUmW72lmB2g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789206970; c=relaxed/simple;
-	bh=TYXhrqWKIRGp8pDLh37zdWtyhxVbDGM79V/gldFXVBo=;
+	s=arc-20240116; t=1789206974; c=relaxed/simple;
+	bh=cmL+xWBnj83TFTIHmOUVtzyy8VpQ9c9dySpb1tDhnW4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aUJm4fSDo+CT6I0tYJIKSuJ4fh9SAaN4ic6c/DKSRQiDvRpLwveBTP2xzy/Kqt5wQhGzKGxMToHEyT0Ya36Ul4C1t8utLYNF/DCQ/c6qObBLDt/vfl/u1jClyH10N738849LJcnIdOBGdRLvLL4aL1OqfUUXZBn+pvRu9kGiZqE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W0Bp+jIj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Y2kwYGM4qEX3bslvJd81qKu4XiIF4yqb57kDaDTtD27DD4oPycCrWosDhQutIr5xt5Cx/cHwYBem930jUrgwF3dVMQ9w3hrXuqFK9CBEMDFPJOcBu+bX2XTHRf9wVhdBvYe6/j/aDZpVTjZPkIvnxgAjDAPvHX5bWDNx/Y5jw04=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qiuS41bb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W0Bp+jIj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21AED1F000FF;
-	Sat, 12 Sep 2026 09:56:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qiuS41bb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 016F51F000FF;
+	Sat, 12 Sep 2026 09:56:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789206969;
-	bh=56IYWSuihE/n0UBllEXyZjNwmRUia0v46OUkT4ME+Dg=;
+	s=korg; t=1789206972;
+	bh=JySP6er3Zv3v/0ZuBMBQPCM22Wk7/bTcinUCxpby7vE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W0Bp+jIjZeaWByxeyOUCr9ENkQfeI+xA5wNZJYFj2xc5P/Ulnjv1OxGwdkph6zjMc
-	 2QRZSlDuF5/Kr4EvMLE1JzKqA4zC248n/7RWMCf+v0YPXm1QBDa9GmObQVUwMjh2Ni
-	 BOpgATu+YjdE2yfj15CfC7d3+EkOYmShASFgp6bw=
+	b=qiuS41bbvsIhNtFCKB0/8UeOcr9OVjwI7GIL29xEfk1tDn7GONmpvbrgzaHBuLP0m
+	 UqOYLz/y3zS9rsKHXQK5+qoweW75yqYsPGhjCWTswDm8aGsei2gRubaDew6JxIlZFZ
+	 l8T3TY5SNS8mmyilRCGY3hfZP9hfGn7TGdR+1Hcw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Paul Cercueil <paul@crapouillou.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0314/1518] serial: qcom-geni: do not advance stale DMA completions
-Date: Sat, 12 Sep 2026 08:41:23 +0200
-Message-ID: <20260912065630.583391171@linuxfoundation.org>
+Subject: [PATCH 6.18 0315/1518] usb: gadget: f_fs: Fix fence cleanup in ffs_dmabuf_transfer() error paths
+Date: Sat, 12 Sep 2026 08:41:24 +0200
+Message-ID: <20260912065630.606006126@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -44,98 +45,70 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Nuno Sá <nuno.sa@analog.com>
 
-[ Upstream commit 7ea38c49e7178960926657863299face6dc0e1b0 ]
+[ Upstream commit 621707dc67c9846fd876d7579ec951d92aa033f1 ]
 
-The qcom GENI serial DMA TX completion path advances the transmit fifo by
-the number of bytes recorded in port->tx_remaining.
+The error paths for endpoint-disabled (ESHUTDOWN) and request-allocation
+failure (ENOMEM) in ffs_dmabuf_transfer() jump to err_fence_put which
+calls dma_fence_put() on the fence. However, at that point the fence has
+only been kmalloc'd — dma_fence_init() has not been called yet, so the
+refcount and the fence ops are uninitialized. Calling dma_fence_put() on
+such an object leads to undefined behavior.
 
-If uart_flush_buffer() runs after the hardware has completed a DMA
-transfer but before the DMA completion interrupt has been handled, the
-serial core resets the transmit fifo while port->tx_remaining still
-describes the old DMA transfer.
+Use kfree() instead, since the fence is just a plain allocation at this
+stage, and rename the label to err_fence_free to reflect the actual
+cleanup action.
 
-A previous fix avoided advancing an empty fifo by checking that the fifo
-length is at least tx_remaining. That still does not distinguish the old
-DMA payload from new bytes written after the flush. If userspace writes
-new data before the stale DMA completion interrupt is handled, the fifo
-can again contain at least tx_remaining bytes and the stale completion
-can advance and discard those new bytes.
-
-Mark an in-flight DMA transfer stale when the transmit fifo is flushed.
-The later completion still unprepares the original DMA mapping using the
-saved length, but it no longer advances the transmit fifo.
-
-Fixes: 2aaa43c70778 ("tty: serial: qcom-geni-serial: add support for serial engine DMA")
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Link: https://patch.msgid.link/20260708131726.768692-1-lgs201920130244@gmail.com
+Fixes: 7b07a2a7ca02 ("usb: gadget: functionfs: Add DMABUF import interface")
+Signed-off-by: Nuno Sá <nuno.sa@analog.com>
+Reviewed-by: Paul Cercueil <paul@crapouillou.net>
+Link: https://patch.msgid.link/20260612-fix-f_fs-fence-cleanup-v1-1-79f489b0efe9@analog.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/qcom_geni_serial.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/usb/gadget/function/f_fs.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
-index 1d561a00cbbd9..953b737357103 100644
---- a/drivers/tty/serial/qcom_geni_serial.c
-+++ b/drivers/tty/serial/qcom_geni_serial.c
-@@ -136,6 +136,7 @@ struct qcom_geni_serial_port {
- 
- 	unsigned int tx_remaining;
- 	unsigned int tx_queued;
-+	bool tx_dma_stale;
- 	int wakeup_irq;
- 	bool rx_tx_swap;
- 	bool cts_rts_swap;
-@@ -688,6 +689,7 @@ static void qcom_geni_serial_start_tx_dma(struct uart_port *uport)
+diff --git a/drivers/usb/gadget/function/f_fs.c b/drivers/usb/gadget/function/f_fs.c
+index 09d6872ad38b7..d73b082d5d835 100644
+--- a/drivers/usb/gadget/function/f_fs.c
++++ b/drivers/usb/gadget/function/f_fs.c
+@@ -1683,13 +1683,13 @@ static int ffs_dmabuf_transfer(struct file *file,
+ 	/* In the meantime, endpoint got disabled or changed. */
+ 	if (epfile->ep != ep) {
+ 		ret = -ESHUTDOWN;
+-		goto err_fence_put;
++		goto err_fence_free;
  	}
  
- 	port->tx_remaining = xmit_size;
-+	port->tx_dma_stale = false;
- }
- 
- static void qcom_geni_serial_start_tx_fifo(struct uart_port *uport)
-@@ -1020,6 +1022,7 @@ static void qcom_geni_serial_handle_tx_dma(struct uart_port *uport)
- 	struct qcom_geni_serial_port *port = to_dev_port(uport);
- 	struct tty_port *tport = &uport->state->port;
- 	unsigned int fifo_len = kfifo_len(&tport->xmit_fifo);
-+	bool tx_dma_stale = port->tx_dma_stale;
+ 	usb_req = usb_ep_alloc_request(ep->ep, GFP_ATOMIC);
+ 	if (!usb_req) {
+ 		ret = -ENOMEM;
+-		goto err_fence_put;
++		goto err_fence_free;
+ 	}
  
  	/*
- 	 * Only advance the kfifo if it still contains the bytes that were
-@@ -1030,12 +1033,13 @@ static void qcom_geni_serial_handle_tx_dma(struct uart_port *uport)
- 	 * kfifo->in, making kfifo_len() wrap to UART_XMIT_SIZE - tx_remaining
- 	 * and triggering a spurious large DMA transfer of stale data.
- 	 */
--	if (fifo_len >= port->tx_remaining)
-+	if (!tx_dma_stale && fifo_len >= port->tx_remaining)
- 		uart_xmit_advance(uport, port->tx_remaining);
+@@ -1738,9 +1738,9 @@ static int ffs_dmabuf_transfer(struct file *file,
  
- 	geni_se_tx_dma_unprep(&port->se, port->tx_dma_addr, port->tx_remaining);
- 	port->tx_dma_addr = 0;
- 	port->tx_remaining = 0;
-+	port->tx_dma_stale = false;
+ 	return ret;
  
- 	if (!kfifo_is_empty(&tport->xmit_fifo))
- 		qcom_geni_serial_start_tx_dma(uport);
-@@ -1173,6 +1177,10 @@ static void qcom_geni_serial_shutdown(struct uart_port *uport)
- 
- static void qcom_geni_serial_flush_buffer_fifo(struct uart_port *uport)
- {
-+	struct qcom_geni_serial_port *port = to_dev_port(uport);
-+
-+	if (port->tx_dma_addr)
-+		port->tx_dma_stale = true;
- 	qcom_geni_serial_cancel_tx_cmd(uport);
- }
- 
+-err_fence_put:
++err_fence_free:
+ 	spin_unlock_irq(&epfile->ffs->eps_lock);
+-	dma_fence_put(&fence->base);
++	kfree(fence);
+ err_resv_unlock:
+ 	dma_resv_unlock(dmabuf->resv);
+ err_attachment_put:
 -- 
 2.53.0
 
