@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03B893DBD5E;
-	Sat, 12 Sep 2026 10:07:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0A54379C38;
+	Sat, 12 Sep 2026 10:07:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789207638; cv=none; b=ialNmZKzI/jSsZ/C1LBnpbe2zDMI+Q6akIyWdB5jMLX9BhcwUB39AGrFWAhhDkqqwOEDw3oy3AzH6is9emre7oxPOYj9d9hcbdUnBOA2i+JelrQZEDRyve3UR7cnfRMShJ2ZDh2Ohv1HrFqPKUc+nYJJhjBzPcVqJkmNRSE7jHo=
+	t=1789207642; cv=none; b=OquBvhEYa1x3+thK1j9ivI/aDPVuhJmceHqKC6TEbc1qic4xtunVhLaWtS0XIXu4ubdaFkFz1v9/QqgoH1fk0E+fTCjAKdlx1pGNXvYbwGIuOFFqABF05NiAi1G+9dW0+shgynj0r6cPTG0YEOc53ZpwPuFN1ikHSpMFVssYqSw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789207638; c=relaxed/simple;
-	bh=8XhU/5SGknuK+IVDIfl4iOVRgSxN6ahQGqZneo69Xjo=;
+	s=arc-20240116; t=1789207642; c=relaxed/simple;
+	bh=JKqT6IPAzqX5KS0cZ3KyS6aSRE83N65bJ5HYnTLZJPU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=md+g1CH46dvjH25NAXhD4a38tGe4UnSWhDMDkTPNFjk9CA/N3yoNz114NBmFQ2OAcQOMXTf25WA36nYs1kE5OccghtWatBEAek9p9yTt3WuQfnXdU/5SvJLCUhggs65zSDIBrnjwfMaCU2YVsEviw3mpaxGHTLp7QG0fzq6duLo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k40VtrKF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BnQpilu/DzSkfPGt+lkus8Pqt8AS5rV6spC9V7FaqvDCFQ5E1JUvTpm+8TQmYrhifkqwathTgmtgTeUTr5bjieUvMgpK1xivMHwcS9cTun678YhPNuBZdKyRxi93Pb9PDh4aHdWdtKt+2o07a4iv2p48cKFD48cuycXH7ut4ioA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p/s4I5YN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k40VtrKF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB6F21F000FF;
-	Sat, 12 Sep 2026 10:07:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p/s4I5YN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 932291F000FF;
+	Sat, 12 Sep 2026 10:07:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789207636;
-	bh=cWw8pqJTJ3C9TSdm/nqofvKNg/LT+WrXmLAuhZ6T4zA=;
+	s=korg; t=1789207641;
+	bh=tibelXgP3kn6xRKfQXziOAk3+/+rMIlvECoVm50tVDU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=k40VtrKF1IG7GL3vivW9bhMNVToFlr+hrqQRh+IC5U4GIqWsaN77aR05MmZWoFwNL
-	 mFzq3KudiH/H5SqwLHadHDXyJAUbR6pAM98qehYJzqErdJ5ZLh/MMMA2ET1y9LcfIu
-	 dUNtcj0+xxeJHrDFdT4bSdFLquSp1qIpkRcL9ZpU=
+	b=p/s4I5YNIana+HIvpsD+ncLa6MiyJ6WconlyURj1jLpwegaWaCqdSLRQQWsGfjMw8
+	 EBUxPPyGSY3+NmB/CEF+AEbb1kCHctzmVnGD6fisUXqeX/+5cpI1CyELmcuPLLs9eW
+	 fCQnXMPF5Y5bdzlqDVtrsW/0ulg9HNGczMJL8ao8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Vishnu Reddy <busanna.reddy@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Gui-Dong Han <hanguidong02@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0416/1518] arm64: dts: qcom: sm8250: correct frequencies in the Iris OPP table
-Date: Sat, 12 Sep 2026 08:43:05 +0200
-Message-ID: <20260912065632.864252757@linuxfoundation.org>
+Subject: [PATCH 6.18 0452/1518] misc: bcm-vk: Use acquire/release for msgq_inited
+Date: Sat, 12 Sep 2026 08:43:41 +0200
+Message-ID: <20260912065633.674135983@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -54,68 +50,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+From: Gui-Dong Han <hanguidong02@gmail.com>
 
-[ Upstream commit 68ea007df9293fcb29d38219d73094bbf4b59673 ]
+[ Upstream commit 61b101c6a150057b6d512421ed108aed16e822ea ]
 
-The OPP table for the Iris core is wrong, it copies the VDD table from
-the downstream kernel, but that table is written for the
-video_cc_mvs0_clk_src, while the upstream uses video_cc_mvs0_clk for OPP
-rate setting (which is clk_src divided by 3). Specify correct
-frequencies in the OPP table.
+bcm_vk_sync_msgq() fills the message queue information and then sets
+msgq_inited. Readers call bcm_vk_drv_access_ok() before accessing the
+message queues and their cached queue information.
 
-Fixes: fa245b3f06cd ("arm64: dts: qcom: sm8250: Add venus DT node")
-Reported-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: Vishnu Reddy <busanna.reddy@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260604-iris-venus-fix-sm8250-v7-2-7bd2f0e5bae8@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+atomic_set()/atomic_read() do not order those accesses. A reader can see
+msgq_inited set while still seeing stale queue information. Use release
+when publishing the initialized queues and acquire when checking the gate.
+
+Keep the clear in bcm_vk_blk_drv_access() as atomic_set(). It closes the
+gate and does not publish queue state to readers.
+
+Fixes: 111d746bb476 ("misc: bcm-vk: add VK messaging support")
+Signed-off-by: Gui-Dong Han <hanguidong02@gmail.com>
+Link: https://patch.msgid.link/20260603021127.3285057-1-hanguidong02@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8250.dtsi | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/misc/bcm-vk/bcm_vk_msg.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-index bdd175392015c..dfba5bc3ba7cf 100644
---- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-@@ -4350,26 +4350,26 @@ venus: video-codec@aa00000 {
- 			venus_opp_table: opp-table {
- 				compatible = "operating-points-v2";
+diff --git a/drivers/misc/bcm-vk/bcm_vk_msg.c b/drivers/misc/bcm-vk/bcm_vk_msg.c
+index 665a3888708ac..a36a6c7d384a9 100644
+--- a/drivers/misc/bcm-vk/bcm_vk_msg.c
++++ b/drivers/misc/bcm-vk/bcm_vk_msg.c
+@@ -108,7 +108,8 @@ u32 msgq_avail_space(const struct bcm_vk_msgq __iomem *msgq,
  
--				opp-720000000 {
--					opp-hz = /bits/ 64 <720000000>;
-+				opp-240000000 {
-+					opp-hz = /bits/ 64 <240000000>;
- 					required-opps = <&rpmhpd_opp_svs>,
- 							<&rpmhpd_opp_low_svs>;
- 				};
+ bool bcm_vk_drv_access_ok(struct bcm_vk *vk)
+ {
+-	return (!!atomic_read(&vk->msgq_inited));
++	/* Pair with the release store after message queue initialization. */
++	return !!atomic_read_acquire(&vk->msgq_inited);
+ }
  
--				opp-1014000000 {
--					opp-hz = /bits/ 64 <1014000000>;
-+				opp-338000000 {
-+					opp-hz = /bits/ 64 <338000000>;
- 					required-opps = <&rpmhpd_opp_svs>,
- 							<&rpmhpd_opp_svs>;
- 				};
+ void bcm_vk_set_host_alert(struct bcm_vk *vk, u32 bit_mask)
+@@ -501,7 +502,8 @@ int bcm_vk_sync_msgq(struct bcm_vk *vk, bool force_sync)
+ 			msgq++;
+ 		}
+ 	}
+-	atomic_set(&vk->msgq_inited, 1);
++	/* Publish message queue info before allowing driver access. */
++	atomic_set_release(&vk->msgq_inited, 1);
  
--				opp-1098000000 {
--					opp-hz = /bits/ 64 <1098000000>;
-+				opp-366000000 {
-+					opp-hz = /bits/ 64 <366000000>;
- 					required-opps = <&rpmhpd_opp_svs_l1>,
- 							<&rpmhpd_opp_svs_l1>;
- 				};
- 
--				opp-1332000000 {
--					opp-hz = /bits/ 64 <1332000000>;
-+				opp-444000000 {
-+					opp-hz = /bits/ 64 <444000000>;
- 					required-opps = <&rpmhpd_opp_svs_l1>,
- 							<&rpmhpd_opp_nom>;
- 				};
+ 	return ret;
+ }
 -- 
 2.53.0
 
