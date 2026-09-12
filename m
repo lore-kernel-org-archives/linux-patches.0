@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 443B435C6B2;
-	Sat, 12 Sep 2026 09:25:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B0EF312834;
+	Sat, 12 Sep 2026 09:25:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789205138; cv=none; b=twFpCvRJ9M4l/97hCHFIr4Z4zx1IhRo0j9NUdIikYWyGpLk+uI+96cdsHq2vtb0uZOmDd5p0tBCPSSmefv5GMvwlJD9812wsfKTRMNWmUm9Vp5gmqx02WRXNdoZzcTiRQpVY0yOvzK5WcFC6rKz2mODgeTg07qIPWJvJsHDG5yA=
+	t=1789205143; cv=none; b=jRMAKE7vUf0vg5uMPS/Jj9XlJRl0j8tJ1Yvrnum4vym8cTtdpJ6BhTDU2BSCGDvay8jYj4wNFEQnecDROeXoiiVW7jjStNTMC3dZcfUIIUkCQua0GHMpLAOVvxFHjwuUfbW396S+2tDNYeJZ8CnsmmOSFb78CB6lZ9H9suVpmgI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789205138; c=relaxed/simple;
-	bh=rl+qxf7HoB3RjYKeEAnYJQWYuJNBmvAutbaepVYd4Y4=;
+	s=arc-20240116; t=1789205143; c=relaxed/simple;
+	bh=cOhm1VM+KHS+FcjK4Hsxj/9Jnba3/jSisNKsC4rqiTY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NlK0Idp5MpUqTiqVg/aGbayI4LUp7/YZMYuUgDiriAdrrv6UlQeG5JujsqphiTVNxhG+soeVMDXd21n/9gQod3B1goaWxPXYfX50PxS8tK/S4Fh/QZaQ0XWSmq9fqSqT3tjrMn8ZI0gjAFqtWHQBpj2Y8pOWerGmllV+q5WUmQU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v2zwYbnT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=K/zwDY2l3D33XM95Fh/oksHB6ouVZo36zg2dFGx5lZoqXbwsnr0+DCNZtzPBy4IGWlnJERKQADJJIRIjoVARO523Js9Z1WkmdR6M2Jv8OUSe27Ba7y0tOltkvrPrTel+wGUzVfVjGvWiA7XrqOk0jBMLnfRpg/h5aWuIbccAAjY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h2T7dio1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v2zwYbnT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2DE11F000FF;
-	Sat, 12 Sep 2026 09:25:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h2T7dio1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19AE11F000FF;
+	Sat, 12 Sep 2026 09:25:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789205137;
-	bh=yfRZb15oJWV8MkrLA/yE1waSevwgr3DwK6rf0xHbuQM=;
+	s=korg; t=1789205142;
+	bh=wVKQeagqdRyApRdmQPRerHxnkSOyIDQqDVJvvX10LHk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=v2zwYbnT/DEo+vwOnrydfwC5y/uY9QPQr1wfYAWEyMC4DnIs/fginU0yRs5SqF2aF
-	 cjKFaqW0X7h+4rFCBcf38k3m7UY9poCX9lHFnmMWUZkXu6kzBNKJt0VRyla5NJQ+9d
-	 qwSBH4Ccqzlnx4SKAT2aswVyptV92gnyjK90UmhQ=
+	b=h2T7dio1sSQPs3onM+mU7rRD0LnUCAmfcucTblbJrUroRhRFyORH58H6wEZr0sqlJ
+	 7LRLsb0aLESGP8+rQKqHHTXyct2YGLSwsSLu2HX4NsZciUTp8i6bu8BEdB2xXWZBrV
+	 yGB9Mzs4dt6gdgs+W21MoSWRJLxB4E0+/2m5P6F8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Fang <wei.fang@nxp.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1739/1815] net: enetc: improve MAFT entry management with bitmap tracking
-Date: Sat, 12 Sep 2026 08:58:09 +0200
-Message-ID: <20260912065729.806491316@linuxfoundation.org>
+Subject: [PATCH 7.2 1757/1815] net: fix a resource leak in copy_net_ns() error handling path
+Date: Sat, 12 Sep 2026 08:58:27 +0200
+Message-ID: <20260912065730.236012512@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,316 +51,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wei Fang <wei.fang@nxp.com>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-[ Upstream commit 6228fc9c2bbe224a376c77e309bcf90158e0595c ]
+[ Upstream commit 3220b62fbb8a55feebd2a826d5ead0f49f09ed5a ]
 
-Replace the counter-based MAFT entry tracking (num_mfe/mac_filter_num)
-with a bitmap (maft_eid_bitmap) stored in struct ntmp_user, which is a
-more appropriate place for NTMP resource management.
+Currently, preinit_net() does two things:
 
-The bitmap approach brings two improvements. First, the entry deletion
-in enetc4_pf_clear_maft_entries() now checks the return value of
-ntmp_maft_delete_entry() and only clears the corresponding bit on
-success, keeping hardware and software state in sync. Previously, the
-counter was reset unconditionally regardless of whether the hardware
-deletion actually succeeded.
+  (1) call ns_common_init() which might fail
+  (2) initialize resources which does not fail
 
-Second, entry allocation in enetc4_pf_add_maft_entries() uses
-ntmp_lookup_free_eid() to find available IDs dynamically, with an
-upfront capacity check via bitmap_weight() to avoid partial failures.
+However, preinit_net() is returning early when (1) fails, and copy_net_ns()
+is jumping to the dec_ucounts: label. As a result, resources allocated by
+net_alloc() are leaking. We need to call key_remove_domain() and
+net_passive_dec() in order to release resources allocated by net_alloc().
 
-The MAFT entry count is moved into ntmp_user.maft_num_entries and
-initialized once during enetc4_init_ntmp_user(). Helper functions
-enetc4_ntmp_bitmap_init() and enetc4_ntmp_bitmap_free() manage the
-bitmap lifetime. The debugfs show function is updated accordingly to
-iterate over set bits under rtnl_lock().
+We cannot simply jump to the put_userns: label when preinit_net() failed,
+for (2) is not yet done. But we can reorder (1) and (2), for there is no
+dependency between (1) and (2). Therefore, this patch decouples (1) from
+preinit_net() and changes preinit_net() back to a void function, and calls
+ns_common_init() after preinit_net() succeeded. Then, we can jump to
+immediately after ns_common_free() of the put_userns: label.
 
-Signed-off-by: Wei Fang <wei.fang@nxp.com>
-Link: https://patch.msgid.link/20260720014317.1059359-5-wei.fang@oss.nxp.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: fa1a8457b858 ("net: enetc: restore RX ring congestion mode for ENETC v4")
+Reported-by: sashiko (no mail address)
+Closes: https://sashiko.dev/#/patchset/af7dabf3-d0d7-46dc-a878-e1715b3c9ac6%40I-love.SAKURA.ne.jp
+Fixes: 08027f6b790b ("net: use ns_common_init()")
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Link: https://patch.msgid.link/c182cf90-1ed7-435b-88f7-9f00e88a0487@I-love.SAKURA.ne.jp
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/freescale/enetc/enetc4_debugfs.c | 30 ++++--
- .../net/ethernet/freescale/enetc/enetc4_pf.c  | 97 ++++++++++++++-----
- .../net/ethernet/freescale/enetc/enetc_pf.h   |  3 -
- include/linux/fsl/ntmp.h                      |  2 +
- 4 files changed, 96 insertions(+), 36 deletions(-)
+ net/core/net_namespace.c | 21 +++++++++------------
+ 1 file changed, 9 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/net/ethernet/freescale/enetc/enetc4_debugfs.c b/drivers/net/ethernet/freescale/enetc/enetc4_debugfs.c
-index 1b1591dce73d4..4a769d9e5679c 100644
---- a/drivers/net/ethernet/freescale/enetc/enetc4_debugfs.c
-+++ b/drivers/net/ethernet/freescale/enetc/enetc4_debugfs.c
-@@ -31,9 +31,11 @@ static int enetc_mac_filter_show(struct seq_file *s, void *data)
- 	struct enetc_si *si = s->private;
- 	struct enetc_hw *hw = &si->hw;
- 	struct maft_entry_data maft;
-+	struct ntmp_user *user;
- 	struct enetc_pf *pf;
--	int i, err, num_si;
--	u32 val;
-+	u32 val, entry_id;
-+	int i, num_si;
-+	int err = 0;
+diff --git a/net/core/net_namespace.c b/net/core/net_namespace.c
+index 21fdda9c20c18..af26bb77991b2 100644
+--- a/net/core/net_namespace.c
++++ b/net/core/net_namespace.c
+@@ -399,14 +399,8 @@ static __net_init void preinit_net_sysctl(struct net *net)
+ }
  
- 	pf = enetc_si_priv(si);
- 	num_si = pf->caps.num_vsi + 1;
-@@ -50,22 +52,30 @@ static int enetc_mac_filter_show(struct seq_file *s, void *data)
- 	for (i = 0; i < num_si; i++)
- 		enetc_show_si_mac_hash_filter(s, i);
- 
--	if (!pf->num_mfe)
--		return 0;
-+	user = &si->ntmp_user;
-+	rtnl_lock();
-+
-+	if (bitmap_empty(user->maft_eid_bitmap, user->maft_num_entries))
-+		goto unlock_rtnl;
- 
- 	/* MAC address filter table */
- 	seq_puts(s, "MAC address filter table\n");
--	for (i = 0; i < pf->num_mfe; i++) {
-+	for_each_set_bit(entry_id, user->maft_eid_bitmap,
-+			 user->maft_num_entries) {
- 		memset(&maft, 0, sizeof(maft));
--		err = ntmp_maft_query_entry(&si->ntmp_user, i, &maft);
-+		err = ntmp_maft_query_entry(user, entry_id, &maft);
- 		if (err)
--			return err;
-+			goto unlock_rtnl;
- 
--		seq_printf(s, "Entry %d, MAC: %pM, SI bitmap: 0x%04x\n", i,
--			   maft.keye.mac_addr, le16_to_cpu(maft.cfge.si_bitmap));
-+		seq_printf(s, "Entry %d, MAC: %pM, SI bitmap: 0x%04x\n",
-+			   entry_id, maft.keye.mac_addr,
-+			   le16_to_cpu(maft.cfge.si_bitmap));
- 	}
- 
+ /* init code that must occur even if setup_net() is not called. */
+-static __net_init int preinit_net(struct net *net, struct user_namespace *user_ns)
++static __net_init void preinit_net(struct net *net, struct user_namespace *user_ns)
+ {
+-	int ret;
+-
+-	ret = ns_common_init(net);
+-	if (ret)
+-		return ret;
+-
+ 	refcount_set(&net->passive, 1);
+ 	ref_tracker_dir_init(&net->refcnt_tracker, 128, "net_refcnt");
+ 	ref_tracker_dir_init(&net->notrefcnt_tracker, 128, "net_notrefcnt");
+@@ -427,7 +421,6 @@ static __net_init int preinit_net(struct net *net, struct user_namespace *user_n
+ 	INIT_LIST_HEAD(&net->ptype_all);
+ 	INIT_LIST_HEAD(&net->ptype_specific);
+ 	preinit_net_sysctl(net);
 -	return 0;
-+unlock_rtnl:
-+	rtnl_unlock();
-+
-+	return err;
- }
- DEFINE_SHOW_ATTRIBUTE(enetc_mac_filter);
- 
-diff --git a/drivers/net/ethernet/freescale/enetc/enetc4_pf.c b/drivers/net/ethernet/freescale/enetc/enetc4_pf.c
-index a02b01753ff27..b966637572a7a 100644
---- a/drivers/net/ethernet/freescale/enetc/enetc4_pf.c
-+++ b/drivers/net/ethernet/freescale/enetc/enetc4_pf.c
-@@ -32,9 +32,6 @@ static void enetc4_get_port_caps(struct enetc_pf *pf)
- 
- 	val = enetc_port_rd(hw, ENETC4_PMCAPR);
- 	pf->caps.half_duplex = (val & PMCAPR_HD) ? 1 : 0;
--
--	val = enetc_port_rd(hw, ENETC4_PSIMAFCAPR);
--	pf->caps.mac_filter_num = val & PSIMAFCAPR_NUM_MAC_AFTE;
  }
  
- static void enetc4_get_psi_hw_features(struct enetc_si *si)
-@@ -92,31 +89,45 @@ static void enetc4_pf_set_loopback(struct net_device *ndev, bool en)
- 
- static void enetc4_pf_clear_maft_entries(struct enetc_pf *pf)
- {
--	int i;
-+	struct ntmp_user *user = &pf->si->ntmp_user;
-+	u32 entry_id;
- 
--	for (i = 0; i < pf->num_mfe; i++)
--		ntmp_maft_delete_entry(&pf->si->ntmp_user, i);
--
--	pf->num_mfe = 0;
-+	for_each_set_bit(entry_id, user->maft_eid_bitmap,
-+			 user->maft_num_entries) {
-+		if (!ntmp_maft_delete_entry(user, entry_id))
-+			ntmp_clear_eid_bitmap(user->maft_eid_bitmap, entry_id);
-+	}
- }
- 
- static int enetc4_pf_add_maft_entries(struct enetc_pf *pf,
- 				      struct netdev_hw_addr_list *uc)
- {
-+	struct ntmp_user *user = &pf->si->ntmp_user;
-+	int mac_cnt = netdev_hw_addr_list_count(uc);
- 	struct maft_entry_data maft = {};
- 	struct netdev_hw_addr *ha;
-+	u32 available_entries;
- 	u16 si_bit = BIT(0);
-+	u32 entry_id;
- 	int err;
- 
-+	available_entries = user->maft_num_entries -
-+			    bitmap_weight(user->maft_eid_bitmap,
-+					  user->maft_num_entries);
-+
-+	if (mac_cnt > available_entries)
-+		return -ENOSPC;
-+
- 	maft.cfge.si_bitmap = cpu_to_le16(si_bit);
- 	netdev_hw_addr_list_for_each(ha, uc) {
-+		entry_id = ntmp_lookup_free_eid(user->maft_eid_bitmap,
-+						user->maft_num_entries);
- 		ether_addr_copy(maft.keye.mac_addr, ha->addr);
--		err = ntmp_maft_add_entry(&pf->si->ntmp_user, pf->num_mfe,
--					  &maft);
--		if (unlikely(err))
-+		err = ntmp_maft_add_entry(user, entry_id, &maft);
-+		if (unlikely(err)) {
-+			ntmp_clear_eid_bitmap(user->maft_eid_bitmap, entry_id);
- 			goto clear_maft_entries;
--
--		pf->num_mfe++;
-+		}
+ /*
+@@ -570,12 +563,14 @@ struct net *copy_net_ns(u64 flags,
+ 		goto dec_ucounts;
  	}
  
- 	return 0;
-@@ -146,10 +157,10 @@ static void enetc4_pf_set_uc_hash_filter(struct enetc_pf *pf,
- static int enetc4_pf_set_uc_exact_filter(struct enetc_pf *pf,
- 					 struct netdev_hw_addr_list *uc)
- {
--	int mac_cnt = netdev_hw_addr_list_count(uc);
- 	struct enetc_si *si = pf->si;
-+	int err;
+-	rv = preinit_net(net, user_ns);
+-	if (rv < 0)
+-		goto dec_ucounts;
++	preinit_net(net, user_ns);
+ 	net->ucounts = ucounts;
+ 	get_user_ns(user_ns);
  
--	if (!mac_cnt) {
-+	if (netdev_hw_addr_list_empty(uc)) {
- 		/* clear both MAC hash and exact filters */
- 		enetc_set_si_uc_hash_filter(si, 0, 0);
- 		enetc4_pf_clear_maft_entries(pf);
-@@ -157,21 +168,19 @@ static int enetc4_pf_set_uc_exact_filter(struct enetc_pf *pf,
- 		return 0;
- 	}
- 
--	if (mac_cnt > pf->caps.mac_filter_num)
--		return -ENOSPC;
--
--	/* Set temporary unicast hash filters in case of Rx loss when
-+	/* Set temporary unicast hash filter in case of Rx loss when
- 	 * updating MAC address filter table
++	rv = ns_common_init(net);
++	if (rv)
++		goto put_userns_no_common;
++
+ 	rv = down_read_killable(&pernet_ops_rwsem);
+ 	if (rv < 0)
+ 		goto put_userns;
+@@ -587,6 +582,7 @@ struct net *copy_net_ns(u64 flags,
+ 	if (rv < 0) {
+ put_userns:
+ 		ns_common_free(net);
++put_userns_no_common:
+ #ifdef CONFIG_KEYS
+ 		key_remove_domain(net->key_domain);
+ #endif
+@@ -1289,7 +1285,8 @@ void __init net_ns_init(void)
+ 	 * This currently cannot fail as the initial network namespace
+ 	 * has a static inode number.
  	 */
- 	enetc4_pf_set_uc_hash_filter(pf, uc);
- 	enetc4_pf_clear_maft_entries(pf);
+-	if (preinit_net(&init_net, &init_user_ns))
++	preinit_net(&init_net, &init_user_ns);
++	if (ns_common_init(&init_net))
+ 		panic("Could not preinitialize the initial network namespace");
  
--	if (!enetc4_pf_add_maft_entries(pf, uc)) {
-+	err = enetc4_pf_add_maft_entries(pf, uc);
-+	if (!err) {
- 		enetc_reset_mac_addr_filter(&pf->mac_filter[UC]);
- 		enetc_set_si_uc_hash_filter(si, 0, 0);
- 	}
- 
--	return 0;
-+	return err;
- }
- 
- static void enetc4_pf_set_mc_hash_filter(struct enetc_pf *pf,
-@@ -393,18 +402,60 @@ static void enetc4_configure_port(struct enetc_pf *pf)
- 	enetc_set_default_rss_key(pf);
- }
- 
-+static void enetc4_get_ntmp_caps(struct enetc_si *si)
-+{
-+	struct ntmp_user *user = &si->ntmp_user;
-+	struct enetc_hw *hw = &si->hw;
-+	u32 val;
-+
-+	val = enetc_port_rd(hw, ENETC4_PSIMAFCAPR);
-+	user->maft_num_entries = FIELD_GET(PSIMAFCAPR_NUM_MAC_AFTE, val);
-+}
-+
-+static int enetc4_ntmp_bitmap_init(struct ntmp_user *user)
-+{
-+	user->maft_eid_bitmap = bitmap_zalloc(user->maft_num_entries,
-+					      GFP_KERNEL);
-+	if (!user->maft_eid_bitmap)
-+		return -ENOMEM;
-+
-+	return 0;
-+}
-+
-+static void enetc4_ntmp_bitmap_free(struct ntmp_user *user)
-+{
-+	bitmap_free(user->maft_eid_bitmap);
-+	user->maft_eid_bitmap = NULL;
-+}
-+
- static int enetc4_init_ntmp_user(struct enetc_si *si)
- {
- 	struct ntmp_user *user = &si->ntmp_user;
-+	int err;
- 
- 	/* For ENETC 4.1, all table versions are 0 */
- 	memset(&user->tbl, 0, sizeof(user->tbl));
- 
--	return enetc4_setup_cbdr(si);
-+	err = enetc4_setup_cbdr(si);
-+	if (err)
-+		return err;
-+
-+	enetc4_get_ntmp_caps(si);
-+	err = enetc4_ntmp_bitmap_init(user);
-+	if (err)
-+		goto teardown_cbdr;
-+
-+	return 0;
-+
-+teardown_cbdr:
-+	enetc4_teardown_cbdr(si);
-+
-+	return err;
- }
- 
- static void enetc4_free_ntmp_user(struct enetc_si *si)
- {
-+	enetc4_ntmp_bitmap_free(&si->ntmp_user);
- 	enetc4_teardown_cbdr(si);
- }
- 
-@@ -422,7 +473,7 @@ static int enetc4_pf_init(struct enetc_pf *pf)
- 
- 	err = enetc4_init_ntmp_user(pf->si);
- 	if (err) {
--		dev_err(dev, "Failed to init CBDR\n");
-+		dev_err(dev, "Failed to init NTMP user\n");
- 		return err;
- 	}
- 
-diff --git a/drivers/net/ethernet/freescale/enetc/enetc_pf.h b/drivers/net/ethernet/freescale/enetc/enetc_pf.h
-index 285b7e5c48fdc..6f15f9ea16644 100644
---- a/drivers/net/ethernet/freescale/enetc/enetc_pf.h
-+++ b/drivers/net/ethernet/freescale/enetc/enetc_pf.h
-@@ -22,7 +22,6 @@ struct enetc_port_caps {
- 	int num_msix;
- 	int num_rx_bdr;
- 	int num_tx_bdr;
--	int mac_filter_num;
- };
- 
- struct enetc_pf;
-@@ -60,8 +59,6 @@ struct enetc_pf {
- 
- 	struct enetc_port_caps caps;
- 	const struct enetc_pf_ops *ops;
--
--	int num_mfe;	/* number of mac address filter table entries */
- };
- 
- #define phylink_to_enetc_pf(config) \
-diff --git a/include/linux/fsl/ntmp.h b/include/linux/fsl/ntmp.h
-index d3b6c476b91a2..764ef28926085 100644
---- a/include/linux/fsl/ntmp.h
-+++ b/include/linux/fsl/ntmp.h
-@@ -75,8 +75,10 @@ struct ntmp_user {
- 	/* NTMP table bitmaps for resource management */
- 	u32 ett_bitmap_size;
- 	u32 ect_bitmap_size;
-+	u16 maft_num_entries;
- 	unsigned long *ett_gid_bitmap; /* only valid for switch */
- 	unsigned long *ect_gid_bitmap; /* only valid for switch */
-+	unsigned long *maft_eid_bitmap; /* only valid for ENETC */
- };
- 
- struct maft_entry_data {
+ 	down_write(&pernet_ops_rwsem);
 -- 
 2.53.0
 
