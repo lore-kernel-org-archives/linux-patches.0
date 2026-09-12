@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 353FF326927;
-	Sat, 12 Sep 2026 13:57:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12E9F3161A1;
+	Sat, 12 Sep 2026 13:57:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789221422; cv=none; b=A4SMxtvJQOp8Rc/ySrAcLJsR9HNXFRwKbPzSHR0JAkWVJIP3JuAWKKuZkUQapbGZjncMYH3/FoszXIDcouHsi53i983YnhZE1HYwmEbl9XQM5wYDepOISjljuRh6F1sCAUwrGp5h9B/0sE45z6oWFOYdH/ieEYhcQzD9HxxMg/g=
+	t=1789221427; cv=none; b=OGCnrBvzdra3v4bTfYOSyZF7TlFklWfymmeUr66TpavLyJWRJk5FItDOdIZru6fGpxUInnzGQmFNYBn8R4cE7g0vOJe/t6c9ZGOqRj+Mfhh/A2Q8H0g3/VDHcad09TcKe4JDk6aju14q1CgxVp8EAYxpJlo5o51CH17+oJ81KZk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789221422; c=relaxed/simple;
-	bh=PFqy5t3Ko8B5Ez3QD0rEwUS7Jh4n3E+8qUBGb/0S3iw=;
+	s=arc-20240116; t=1789221427; c=relaxed/simple;
+	bh=Lil95C4M6rk3wtRH8VPcA/Bxs0klgOYkjzJUm/06SrI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aqkh26LJP8T3vXQoUTN6TjJ12NyYXJHCk88Nnad8Vjv00SqXYlTf7leQq+5RSTv0YSeSKvTLxYtlTa0ETX55LTWhqo3Ev8oiB1yxUcBEEpPUtEbAnZ/od7xyANIcVFR03n/kl0PaI63qCvHMqLPKDqHn1w6thDHrVdI5hSTQn0c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0SH7Vk+m; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=a6oPaUp5SnVw6qV7729/d5kkUvdSedH2BDB2Gs6oLhfgr8QvZ2lNPO41z1wywhACGmTjjAq6ouTB//pAx/YGL14H53yxTmZSgsWG4xnj8CuEvZZQaNLmkCYzqUe3Db1BQhLHrF4uyvyqCBckxyeKsqPdHTwXLajWR4Agv/Ehvc4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X0Vt+t+w; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0SH7Vk+m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C498B1F000FF;
-	Sat, 12 Sep 2026 13:56:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X0Vt+t+w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B67981F000FF;
+	Sat, 12 Sep 2026 13:57:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789221420;
-	bh=MP+MfjV1v1CytueRlaBT2N3a5Bly57O80X0ypAN7Lk0=;
+	s=korg; t=1789221425;
+	bh=MOh06Uv78sD1A6gzJUcsWiyovdTkLaxC5huLAZAvtAA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0SH7Vk+m6MyFKE8fNehCaT9WrcI7LUZXCrjyWVS1p/jo0H/GJbPWFBnvb95jjNLZt
-	 2mOs1RPDGBKje+4UOHrUiH8cLV8io20T6Vl0A8A2eyQaKpZ3PzN053AQw28NvvV56+
-	 2uDerbcRCSeKzlmH9AknZ9W2+gI5QMZYHoOGgn/w=
+	b=X0Vt+t+wD0OtBPYB2JQbU6mscrdWpElt/ztUQshUJfmlZN0lQZx2VLHsA1KAf3MZP
+	 hTb0ehsmoW9bCINBLHIkaM1f4W/3eWHvgATluV0HrXFCNaLLWg7cNTp5Y+ClrGE8gK
+	 yRD0v8/jkq5gqbnx1AUnKZsW/W3foMqFjDMfFLNM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pei Xiao <xiaopei01@kylinos.cn>,
 	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.6 0378/1424] parisc: eisa: Fix infinite loop when parsing invalid IRQ value
-Date: Sat, 12 Sep 2026 08:46:50 +0200
-Message-ID: <20260912065615.756774957@linuxfoundation.org>
+Subject: [PATCH 6.6 0379/1424] parisc: Fix alignment of asm statements in head.S
+Date: Sat, 12 Sep 2026 08:46:51 +0200
+Message-ID: <20260912065615.780376793@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -50,41 +49,30 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pei Xiao <xiaopei01@kylinos.cn>
+From: Helge Deller <deller@gmx.de>
 
-commit 8b585431a16cfb9d8f2955a9fa0787ce3dceb3c2 upstream.
+commit 04cf68c9a76e3c6b67ad056a66a14923abf85925 upstream.
 
-When an invalid value is passed via the "eisa_irq_edge=" kernel
-command line parameter (e.g. "eisa_irq_edge=16,5"), eisa_irq_setup()
-prints an error message and continues without advancing the current
-position.  As a result the same invalid value is parsed again and
-again, causing an infinite loop while the kernel boots.
+All assembler statements need to be 4-byte aligned. Prevent a possible
+misalignment if someone changes the preceeding string and it's length is
+then suddenly not a multiple of 4 any longer.
 
-Advance to the next comma-separated entry, or stop parsing when there
-is no next entry, before continuing so that the remaining entries are
-processed normally.
-
-Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
 Cc: stable@vger.kernel.org
 Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/parisc/eisa.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ arch/parisc/kernel/head.S |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/parisc/eisa.c
-+++ b/drivers/parisc/eisa.c
-@@ -442,6 +442,11 @@ static int __init eisa_irq_setup(char *s
- 		val = (int) simple_strtoul(cur, &pe, 0);
- 		if (val > 15 || val < 0) {
- 			printk(KERN_ERR "eisa: EISA irq value are 0-15\n");
-+			cur = strchr(cur, ',');
-+			if (cur)
-+				cur++;
-+			else
-+				break;
- 			continue;
- 		}
- 		if (val == 2) {
+--- a/arch/parisc/kernel/head.S
++++ b/arch/parisc/kernel/head.S
+@@ -105,6 +105,7 @@ $iodc_panic:
+ 	or		%r10,%r10,%r10	/* qemu idle sleep */
+ msg1:	.ascii "Can't boot kernel which was built for PA8x00 CPUs on this machine.\r\n"
+ msg1_end:
++	.align 4
+ 
+ $cpu_ok:
+ #endif
 
 
