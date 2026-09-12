@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4327E21D00A;
-	Sat, 12 Sep 2026 11:29:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 053782D7380;
+	Sat, 12 Sep 2026 11:29:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789212544; cv=none; b=anBbpcV5fEOsoswYPFy9X03cI60JBdbsqF34yQwJXSQJb2cq933KDveiXhpuJTPjebsQ9g13IGsLXlE8nuoPiMyIFKWCzeJ2lXTpIi2YxnoMoPiVP3xm/olC/iZ0Ze7w+3RGdk6f83dUo9hyyS0Sj66SdiP4j3FJXtAqruuEyNA=
+	t=1789212549; cv=none; b=Kt+IEBz3HpWVdCsDWRIgJiGkc3PIQMJf3LF1lzfr1ohVfR2Cwx4UkQcLJtxUo5jbemcCd5PoOfF8gUg0qX5BDKO8SvlJ31x8HSsPFBApw8k5s7R7Ou60cI4a5r3aV+Zy5v315v2N9ZZHL2GuGExm/d/YbYJcPtc8/4YsWUjnnSo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789212544; c=relaxed/simple;
-	bh=bMrrGFxoJaTxtS95ync9LAAz00X7RZIOEZMwu3+2EFQ=;
+	s=arc-20240116; t=1789212549; c=relaxed/simple;
+	bh=8zFXpvtTEyjdJGOQk8i/mAnp4OMSRMpV9/xXuDgvDEE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VvgKHPhvSFXOgskNIihMrjQoFpR1ZuobLwLK3OqHBoP0BU1RZpG6ymAUzMAaK2F5HdHA3c2zRzqJ58du9viVXi/Pn4kD6MXOZglqgYgaOOm1XDkb83xT3LE4yL8qnOTVgn1g4BRfNvl7cTb8mT5hgJ1k8/yny9IiGnsKP+Y22PQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JfNmijUF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=a4GQFbM9Z3eD3PXHGpsJO8rfb0/bvXW7LJcPkVaD7ZAW4xFaHZiUhrKYFOzzMzNShFTjubrWRR7kUPj9VkKYhkzxNYsRx8u6m0iNQj+6Jm0BJSJ5M5PRp/1TFznP48aGXJNr4RvJbrP2AU5jVfFiWINhxniQbdC/FJDPeMoWrUY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HKSAySG3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JfNmijUF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 024921F000FF;
-	Sat, 12 Sep 2026 11:29:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HKSAySG3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95F4D1F000FF;
+	Sat, 12 Sep 2026 11:29:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789212542;
-	bh=doXfK7krvJCKvDDzOAE0/6ztd0OvstgZD+W9AUsFhUI=;
+	s=korg; t=1789212547;
+	bh=6mO5+l5BhjZodvKeWf0oyKDrNH4FBQWTUhqbpP+cFzs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JfNmijUFlEbY9NUCKayJ7fWpW43pXtrcVp6p26ETSdPcjtXqk6K29Nzf/X8YlDokP
-	 SCRktFML2w1kHGzmQMI4MTlc3lRV8a+rZDeX3T/PA9vsWJklqT8xtOijdFZACbjui/
-	 equognn+E3g5SpaODrAyj5BSgUEVOLLokTELH8So=
+	b=HKSAySG3ZBN8BOiOFfe92aqDRh0YQ7253NA1u6Ewy2xFf1MTzy9SJNL2Aa8WgHUqb
+	 ytsGYBODh6Svx9hh4kNjHRH5Xu0yuuR84i5uKaq5HrpMRFXHH0ciFnNbd/A5aWYnTT
+	 Udxaaa/yNXI6Bwz8GskfYioJT9xhOXZcb0Ju0/rU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jaeyoung Chung <jjy600901@snu.ac.kr>,
-	Eulgyu Kim <eulgyukim@snu.ac.kr>,
-	Qingfang Deng <qingfang.deng@linux.dev>,
-	Eric Dumazet <edumazet@google.com>,
+	Wei Fang <wei.fang@nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	bui duc phuc <phucduc.bui@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1457/1518] slip: remove slip_hangup() to fix use-after-free in slip_receive_buf()
-Date: Sat, 12 Sep 2026 09:00:26 +0200
-Message-ID: <20260912065656.514455700@linuxfoundation.org>
+Subject: [PATCH 6.18 1458/1518] net: fec: only stop PTP if it was initialized
+Date: Sat, 12 Sep 2026 09:00:27 +0200
+Message-ID: <20260912065656.537317825@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -54,74 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: bui duc phuc <phucduc.bui@gmail.com>
 
-[ Upstream commit 23c53269f2baaedf2d92784290cb9ef6db2a3bce ]
+[ Upstream commit dd890ae29299636fb037276fc1b5238698d08b03 ]
 
-Jaeyoung Chung and Eulgyu Kim reported a slab-use-after-free read
-in slip_receive_buf() when racing against tty hangup.
+fec_ptp_init() is only called when fep->bufdesc_ex is available.
+However, fec_probe() unconditionally calls fec_ptp_stop() on the
+failed_init path, and fec_drv_remove() unconditionally calls
+fec_ptp_stop() during device removal.
 
-tty_ldisc_hangup() calls ld->ops->hangup() while holding only
-a read lock on tty->ldisc_sem (via tty_ldisc_ref()).
-Because slip_hangup() simply called slip_close(), it ran concurrently
-with reader functions such as slip_receive_buf().
+Check fep->bufdesc_ex before calling fec_ptp_stop() in both paths
+to avoid stopping PTP when it was not initialized.
 
-slip_close() unregisters and frees the net device and its private
-struct slip, causing concurrent reader threads in slip_receive_buf()
-to dereference freed memory.
-
-Line discipline close() is already guaranteed to be called under
-the write lock of tty->ldisc_sem during hangup processing
-(in tty_ldisc_reinit() or tty_ldisc_kill()).
-
-Remove slip_hangup() so teardown is serialized cleanly by slip_close().
-
-Fixes: 5342b77c4123 ("slip: Clean up create and destroy")
-Reported-by: Jaeyoung Chung <jjy600901@snu.ac.kr>
-Reported-by: Eulgyu Kim <eulgyukim@snu.ac.kr>
-Closes: https://lore.kernel.org/netdev/20260825150655.1450271-1-jjy600901@snu.ac.kr/
-Cc: Qingfang Deng <qingfang.deng@linux.dev>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260826105238.3323436-1-edumazet@google.com
+Fixes: 32cba57ba74b ("net: fec: introduce fec_ptp_stop and use in probe fail path")
+Reviewed-by: Wei Fang <wei.fang@nxp.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
+Link: https://patch.msgid.link/20260826103428.32807-1-phucduc.bui@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/slip/slip.c | 8 --------
- 1 file changed, 8 deletions(-)
+ drivers/net/ethernet/freescale/fec_main.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/slip/slip.c b/drivers/net/slip/slip.c
-index 59daf095cad6e..d16897686d1b5 100644
---- a/drivers/net/slip/slip.c
-+++ b/drivers/net/slip/slip.c
-@@ -886,8 +886,6 @@ static int slip_open(struct tty_struct *tty)
-  * Close down a SLIP channel.
-  * This means flushing out any pending queues, and then returning. This
-  * call is serialized against other ldisc functions.
-- *
-- * We also use this method fo a hangup event
-  */
+diff --git a/drivers/net/ethernet/freescale/fec_main.c b/drivers/net/ethernet/freescale/fec_main.c
+index 7699a970cb25e..b37ab4f826bd2 100644
+--- a/drivers/net/ethernet/freescale/fec_main.c
++++ b/drivers/net/ethernet/freescale/fec_main.c
+@@ -4642,7 +4642,8 @@ fec_probe(struct platform_device *pdev)
+ failed_irq:
+ 	fec_enet_deinit(ndev);
+ failed_init:
+-	fec_ptp_stop(pdev);
++	if (fep->bufdesc_ex)
++		fec_ptp_stop(pdev);
+ failed_reset:
+ 	pm_runtime_put_noidle(&pdev->dev);
+ 	pm_runtime_disable(&pdev->dev);
+@@ -4684,7 +4685,8 @@ fec_drv_remove(struct platform_device *pdev)
+ 			ERR_PTR(ret));
  
- static void slip_close(struct tty_struct *tty)
-@@ -915,11 +913,6 @@ static void slip_close(struct tty_struct *tty)
- 	unregister_netdev(sl->dev);
- 	/* sl_uninit() has dropped the slip_devs[] entry by now */
- }
--
--static void slip_hangup(struct tty_struct *tty)
--{
--	slip_close(tty);
--}
-  /************************************************************************
-   *			STANDARD SLIP ENCAPSULATION		  	 *
-   ************************************************************************/
-@@ -1280,7 +1273,6 @@ static struct tty_ldisc_ops sl_ldisc = {
- 	.name 		= "slip",
- 	.open 		= slip_open,
- 	.close	 	= slip_close,
--	.hangup	 	= slip_hangup,
- 	.ioctl		= slip_ioctl,
- 	.receive_buf	= slip_receive_buf,
- 	.write_wakeup	= slip_write_wakeup,
+ 	cancel_work_sync(&fep->tx_timeout_work);
+-	fec_ptp_stop(pdev);
++	if (fep->bufdesc_ex)
++		fec_ptp_stop(pdev);
+ 	unregister_netdev(ndev);
+ 	fec_enet_mii_remove(fep);
+ 	if (fep->reg_phy)
 -- 
 2.53.0
 
