@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F1852DC321;
-	Sat, 12 Sep 2026 15:21:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C49D5221FD4;
+	Sat, 12 Sep 2026 15:21:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789226483; cv=none; b=rOkTTkuUdIHZFdHhr23AvE9j87PhIixQZxMF/Yl+YvJbwNS8g5j1RhuWkOPVSIfXfNdWmpIlJoymkqY1xnMdjdhjhQGZFRw5AzCTw8xpsGcXP3zZCFaRw2WeuMIUkYE1YkCGQ4aBE3dfz4ekwdI0xWUEX5ksdJk2ePsyJyEZskc=
+	t=1789226488; cv=none; b=oXB4AMqNfls+6BW1YxpMD2lPtszudgwOr09G/teeVsqMr4f6LQfst4RdT4Rg7Ubyd71rkKDQwrfShHqyXfT8FSQRa7BCJDhxpCVuxDsP24fVQrWLIR91rVCyVqbLxB0ybhnLd4eDj5XTRVIEybhB/43ypWtq2Lfb/4b0SWwnM2Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789226483; c=relaxed/simple;
-	bh=yOQeIGE6OUJUwvwwdWpGRVQ9i7coyXtq/hwJz1vbwoI=;
+	s=arc-20240116; t=1789226488; c=relaxed/simple;
+	bh=NeuCZ9qkcHwjV/Iu6au5VrzeSrfxQMnh6i4dAEepySs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YxvLCZ/C93ItNy7aWl3zWDARPvPGN5ItMzO89I9VU0OcRhKeMhVfguVO23KLMQAjQHYBSM+RJLfF2q5ObjQICg+NfHK0Z2Q8w+zUsvKdwsOo0S6iCQrWbjXX5wC7u634tzroFg9qcumwOz+/6/ijoQOY74gY11USikswqbu6i0Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AOgoNgM1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NnY1MEAW9YsFvxKb4LXUBKuynHJKHSgHL9R1zcg4TA9s/dXtNYtDTAMsKE7Sh6B+221JAXduS/HHat50xBx5whIIf3eTwE8ojRP9XSx60yaZaBunT+ifezKiv7mw+Btgt6lXaLFu7np09Id0nVaAwLx8qf11KFwVWlUs7Uucb2c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rZNCLLwK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AOgoNgM1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48E2D1F000FF;
-	Sat, 12 Sep 2026 15:21:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rZNCLLwK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F3EF1F000FF;
+	Sat, 12 Sep 2026 15:21:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789226482;
-	bh=Ol/uHOa3CaGQqcP9Yvrn0wwVEL8a5akmFUvv2drHq/k=;
+	s=korg; t=1789226487;
+	bh=kgwA2n663ryJVsEAV4YT1/1NpVMArkPaZ9s+p3BlYIY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AOgoNgM13hgfk1sqFD6kEC2zPTbSORhpz4QyIZmgy1Rt151HiB7yrZYL9Lti8f9Za
-	 2DK5BHZxXpFGOjQ8rjrTx13G9aUibx8685POEDOphH69pdPKo5VOV39p101wUAUllC
-	 IEjujGPy+FAxwxn+3rsJzRtnXIgGNI+t+JJtQ6tM=
+	b=rZNCLLwKU/bN3Frda7TsKK1jSMMeop0zxxs6+fWWHStj4mEinUEJkCbOqMicQ5zJ4
+	 /P4a11e47lrBYsqGpS3gz+6dxIMeU80VenJpePR7L1Mwwf7dz4V5NzETm7HnOSjU0O
+	 aK56JgYvsuy4XKSt5abMV7EM8HduynIAa3fViZz0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ruoyu Wang <ruoyuw560@gmail.com>,
 	Jarkko Sakkinen <jarkko@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1368/1424] tpm: st33zp24: Return zero on status read failure
-Date: Sat, 12 Sep 2026 09:03:20 +0200
-Message-ID: <20260912065637.899308895@linuxfoundation.org>
+Subject: [PATCH 6.6 1369/1424] tpm: st33zp24: Validate locality read result
+Date: Sat, 12 Sep 2026 09:03:21 +0200
+Message-ID: <20260912065637.921460314@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -53,47 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Ruoyu Wang <ruoyuw560@gmail.com>
 
-[ Upstream commit 8b92687708f5ef980de01c2042dbd76d11f78547 ]
+[ Upstream commit 264216889d39df509b9c8045df53529480b0b718 ]
 
-st33zp24_status() ignores the result of the transport read and returns
-data even when no byte was received. The I2C transport, for example,
-skips i2c_master_recv() when the register-select write is short or fails,
-leaving data uninitialized. The resulting stack value can be interpreted
-as TPM_STS flags and let status checks complete spuriously.
+check_locality() treats every nonzero transport return as success. SPI
+errors remain negative, while the I2C path can convert a negative write
+error through its byte-sized status variable. Either result is nonzero
+even though the TPM_ACCESS byte can remain unwritten, so indeterminate
+ACTIVE_LOCALITY and VALID bits can falsely report an active locality.
 
-The status callback cannot propagate a transport error. Return zero
-unless recv() reports exactly one byte. With no status bits set, callers
-retry or take their existing timeout or error path instead of acting on
-an invalid status value.
+Require recv() to return exactly the requested byte before examining
+TPM_ACCESS. Transport errors and short reads now report an inactive
+locality, while successful reads retain the existing behavior.
 
 This issue was found by a static analysis checker and confirmed by manual
 source review.
 
 Fixes: 251a7b08213a ("TPM: STMicroelectronics ST33 I2C KERNEL 3.x")
 Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
-Link: https://lore.kernel.org/r/20260813153032.3951878-1-ruoyuw560@gmail.com
+Link: https://lore.kernel.org/r/20260813153032.3951878-2-ruoyuw560@gmail.com
 Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/tpm/st33zp24/st33zp24.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/char/tpm/st33zp24/st33zp24.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/char/tpm/st33zp24/st33zp24.c b/drivers/char/tpm/st33zp24/st33zp24.c
-index f78c61f4163d5..e810a7fa9db10 100644
+index e810a7fa9db10..e3ceda5573311 100644
 --- a/drivers/char/tpm/st33zp24/st33zp24.c
 +++ b/drivers/char/tpm/st33zp24/st33zp24.c
-@@ -93,7 +93,9 @@ static u8 st33zp24_status(struct tpm_chip *chip)
+@@ -106,10 +106,10 @@ static bool check_locality(struct tpm_chip *chip)
+ {
  	struct st33zp24_dev *tpm_dev = dev_get_drvdata(&chip->dev);
  	u8 data;
+-	u8 status;
++	int status;
  
--	tpm_dev->ops->recv(tpm_dev->phy_id, TPM_STS, &data, 1);
-+	if (tpm_dev->ops->recv(tpm_dev->phy_id, TPM_STS, &data, 1) != 1)
-+		return 0;
-+
- 	return data;
- }
- 
+ 	status = tpm_dev->ops->recv(tpm_dev->phy_id, TPM_ACCESS, &data, 1);
+-	if (status && (data &
++	if (status == 1 && (data &
+ 		(TPM_ACCESS_ACTIVE_LOCALITY | TPM_ACCESS_VALID)) ==
+ 		(TPM_ACCESS_ACTIVE_LOCALITY | TPM_ACCESS_VALID))
+ 		return true;
 -- 
 2.53.0
 
