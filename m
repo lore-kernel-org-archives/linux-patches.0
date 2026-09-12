@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8CEF356744;
-	Sat, 12 Sep 2026 11:09:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68F8D379982;
+	Sat, 12 Sep 2026 11:09:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789211347; cv=none; b=ktFhK5wQ0QwMaXFtERdeexYbwqzh5F+lxzZtXNUvHK41P/QRh/WldK1PQwrg9IwPnj4d+aJ8hJD83Go9B2LSWFDp5dzYFSdFtnjZBJ8uQnTP1OjYY+GffFtPoOGeGm2jWmIYwXt1X/aYRUaEZzM/9f47U5WILOlRdjH14Ft/KeU=
+	t=1789211351; cv=none; b=X8/GDQTXqdpZESVF3xLGPTqZwzde09nDJ+bnEMkA1NF7gudmvbnMLfo4FTBZc5kO66xAL7spSWp2kqgNiOe5sGYEynK+y80dqVJ/3cvh/aSjR8EauUSRuJz0UUxdfDuJ91ZqqZ/cCl0Vuc6yerUIAwSHgdI8iKiNYXOiRnV6Kj4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789211347; c=relaxed/simple;
-	bh=r5kQIcucTzrj52dOrWdHoK//BJZj2KOxbcSR/vw7mFI=;
+	s=arc-20240116; t=1789211351; c=relaxed/simple;
+	bh=y6m/KotnYnkIu+eG8B1eB8rPFcxzUnodRoEyB5p13Hc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q6HH9eeeErBFHdHGHT2K+qxGCSy30G9yGmbbxFFL1ZyhfIF1V8I41vJbKmw+KMP/wYG9niEsVjkGfWpoq/vfXwuJzWfhIaBSLuLKVbQaGutgba8WqrfxU9fTazY6XiDqRJzrQiTGb07ZpZi31kgt9KjLfHzGeM5v7C+Cbr3SDm0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G6Kt6M0p; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WLq+HC+9RqVeL3MtfC7WPC7D0lHlkJLxRuXUAh3Lxy6jbrnnZi18zCJTIX1YjSXR4x0fnYaAgCUf+NDVPyNj4FHKtztIbgsoTAI41yHG6bouvpJ+BjnVOnABjK5/+8kY9N1cSWpUjMtDliYozco2ucG+s3TIgTZc/xSLsBAEqsc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nwg+XxSE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G6Kt6M0p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE4471F000FF;
-	Sat, 12 Sep 2026 11:09:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nwg+XxSE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F9E81F000FF;
+	Sat, 12 Sep 2026 11:09:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789211345;
-	bh=YF+dSEpmZ4X/SLVIg0d+MniDh0CmwYHtgh/h2vb7eKs=;
+	s=korg; t=1789211350;
+	bh=9FfhTnVJS4UYudjcJ5E285m7/TY5ofNNra1jNcNTLvU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=G6Kt6M0pGvHBsW1nDTnMVeRoLEjoc/nnUcVGpsxfixKfZtZLdrJQ0kD/MZ38YQYSb
-	 imV4mfgHVjXACbIoV8v6UsMeGTsqT44pZxHpLClXLFvtaIwgZ5QB6X+aB5QKk/bWXg
-	 XSARV2SEI+NCvIPv7SWAy+u3SlPf2w3efeJ8bawo=
+	b=Nwg+XxSE6ZGeTLsrzoHiiI8awOQ4+lOOlPJpSx8b0x1VjK74kuOYPK3bd7ws1PuwY
+	 WKZatxlkihf/9hiJMvQFBWH+V6W2b3AKDMlcj9CKmcisl/QAbpvPv9lnLk9Zc5VnGb
+	 +mlN8VUi14YwJac1kphXmtUWmI6q4t5Zp9UZ7dhI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Jassi Brar <jassisinghbrar@gmail.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Zizhi Wo <wozizhi@huawei.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Nilay Shroff <nilay@linux.ibm.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1212/1518] mailbox: riscv-sbi-mpxy: validate RPMI notification lengths
-Date: Sat, 12 Sep 2026 08:56:21 +0200
-Message-ID: <20260912065650.905980921@linuxfoundation.org>
+Subject: [PATCH 6.18 1213/1518] null_blk: use DEFINE_MUTEX for the file-scope mutex
+Date: Sat, 12 Sep 2026 08:56:22 +0200
+Message-ID: <20260912065650.928809767@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,63 +54,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Zizhi Wo <wozizhi@huawei.com>
 
-[ Upstream commit 11d5af151bcbe78f5a579e0faecd3be9cea0399a ]
+[ Upstream commit 017dac7670909eaea3eb36e6b3b5a8be9ce0a14d ]
 
-The SBI return value controls how many bytes are copied from shared
-memory into the RPMI notification buffer. It is not validated against
-the negotiated shared-memory size before that copy. The event walker
-also uses a reversed loop condition and can inspect a short event record.
+In null_init(), mutex_init(&lock) currently happens after
+configfs_register_subsystem(), which exposes the nullb subsystem to
+userspace. A racing mkdir() into /sys/kernel/config/nullb/ can reach
+null_find_dev_by_name() -> mutex_lock(&lock) before the mutex is
+initialized, trigger warning:
 
-Validate the complete notification length before copying it, iterate only
-while a full event header remains, and stop when a declared event payload
-extends beyond the copied notification data.
+[  123.137788] DEBUG_LOCKS_WARN_ON(lock->magic != lock)
+[  123.137796] WARNING: kernel/locking/mutex.c:159 at mutex_lock+0x171/0x1c0, CPU#13: mkdir/1301
+[  123.140090] Modules linked in: null_blk(+) nft_fib_inet nft_fib_ipv4
+......
+[  123.154926] Call Trace:
+[  123.155172]  <TASK>
+[  123.155419]  ? __pfx_mutex_lock+0x10/0x10
+[  123.156181]  ? __pfx__raw_spin_lock+0x10/0x10
+[  123.156571]  nullb_group_make_group+0x20/0x100 [null_blk]
+[  123.157011]  configfs_mkdir+0x47b/0xc70
+[  123.157337]  ? __pfx_configfs_mkdir+0x10/0x10
+[  123.157719]  ? may_create_dentry+0x242/0x2e0
+[  123.158061]  vfs_mkdir+0x2a9/0x6c0
+[  123.158352]  filename_mkdirat+0x3dc/0x500
+[  123.158710]  ? __pfx_filename_mkdirat+0x10/0x10
+[  123.159070]  ? strncpy_from_user+0x3a/0x1d0
+[  123.159413]  __x64_sys_mkdir+0x6b/0x90
+[  123.159760]  do_syscall_64+0xea/0x600
 
-Fixes: bf3022a4eb11 ("mailbox: Add RISC-V SBI message proxy (MPXY) based mailbox driver")
-Assisted-by: Codex:gpt-5
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
+Replace the runtime mutex_init(&lock) with a static DEFINE_MUTEX(lock)
+declaration to fix this issue.
+
+Fixes: 49c3b9266a71 ("block: null_blk: Improve device creation with configfs")
+Suggested-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Zizhi Wo <wozizhi@huawei.com>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Nilay Shroff <nilay@linux.ibm.com>
+Link: https://patch.msgid.link/20260725022509.714271-2-wozizhi@huaweicloud.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mailbox/riscv-sbi-mpxy-mbox.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ drivers/block/null_blk/main.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/mailbox/riscv-sbi-mpxy-mbox.c b/drivers/mailbox/riscv-sbi-mpxy-mbox.c
-index 7c9c006b7244a..714f7fb97a2fd 100644
---- a/drivers/mailbox/riscv-sbi-mpxy-mbox.c
-+++ b/drivers/mailbox/riscv-sbi-mpxy-mbox.c
-@@ -314,8 +314,13 @@ static int mpxy_get_notifications(u32 channel_id,
- 			 channel_id, 0, 0, 0, 0, 0);
- 	if (sret.error)
- 		goto err_put_cpu;
-+	if (sret.value < 0 || mpxy_shmem_size < sizeof(*notif_data) ||
-+	    sret.value > mpxy_shmem_size - sizeof(*notif_data)) {
-+		put_cpu();
-+		return -EOVERFLOW;
-+	}
+diff --git a/drivers/block/null_blk/main.c b/drivers/block/null_blk/main.c
+index 50938881219bc..8f0cdeafe9c90 100644
+--- a/drivers/block/null_blk/main.c
++++ b/drivers/block/null_blk/main.c
+@@ -66,7 +66,7 @@ struct nullb_page {
+ #define NULLB_PAGE_FREE (MAP_SZ - 2)
  
--	memcpy(notif_data, mpxy->shmem, sret.value + 16);
-+	memcpy(notif_data, mpxy->shmem, sret.value + sizeof(*notif_data));
- 	*events_data_len = sret.value;
+ static LIST_HEAD(nullb_list);
+-static struct mutex lock;
++static DEFINE_MUTEX(lock);
+ static int null_major;
+ static DEFINE_IDA(nullb_indexes);
+ static struct blk_mq_tag_set tag_set;
+@@ -2167,8 +2167,6 @@ static int __init null_init(void)
+ 	if (ret)
+ 		return ret;
  
- err_put_cpu:
-@@ -480,11 +485,14 @@ static void mpxy_mbox_peek_rpmi_data(struct mbox_chan *chan,
- 	struct rpmi_mbox_message msg;
- 	unsigned long pos = 0;
- 
--	while (pos < events_data_len && (events_data_len - pos) <= sizeof(*event)) {
-+	while (events_data_len - pos >= sizeof(*event)) {
- 		event = (struct rpmi_notification_event *)(notif->events_data + pos);
- 
- 		msg.type = RPMI_MBOX_MSG_TYPE_NOTIFICATION_EVENT;
- 		msg.notif.event_datalen = le16_to_cpu(event->event_datalen);
-+		if (msg.notif.event_datalen >
-+		    events_data_len - pos - sizeof(*event))
-+			break;
- 		msg.notif.event_id = event->event_id;
- 		msg.notif.event_data = event->event_data;
- 		msg.error = 0;
+-	mutex_init(&lock);
+-
+ 	null_major = register_blkdev(0, "nullb");
+ 	if (null_major < 0) {
+ 		ret = null_major;
 -- 
 2.53.0
 
