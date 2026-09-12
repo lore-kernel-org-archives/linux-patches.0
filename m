@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49C5433F59E;
-	Sat, 12 Sep 2026 16:21:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D20C429992B;
+	Sat, 12 Sep 2026 16:21:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789230110; cv=none; b=Do9+JacwJjvOs7qyQoUWzJKeFIGiJrVYQD69rHAkDVDtP7Vj0F5U8j0nZYtmuoJ87nH10osczCGdtekvFuJMrYt7qgpdJ5Q4qMDFzp+wI7PA0HeDamx1OK3kb60tq3YO9rw44aCWGa5mnY9vJoW1R6KcqE554/HlVzwuHKMEKI0=
+	t=1789230115; cv=none; b=swCRRK8rR28FCkazV8W94u+L9kcSzpi9FVnb3WLd83sNaSvpcuQvNcnxVqwHe/Fz/clX8mhKR+2W7kHV2YzKXwbfChVDgeWv6LJTx0PsXElvuVS15v21GmmSf06sdIqPUEd/sjrHkAZQLhLZjIagJHevkBp5EOc3R3lZNV1vG+w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789230110; c=relaxed/simple;
-	bh=s/f5I9q2Mamv5X1dwbt1iYIfTZzvIiARoC5IOxHPr6Q=;
+	s=arc-20240116; t=1789230115; c=relaxed/simple;
+	bh=DZWwVffeDut/BH0NAa+eBPaB4O6LmOwAvy+FR9ohJ64=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nBcVoIVJNRCsUrD7MhNFcIFZHq5DS1PLGLSlxraBbqi3eKixDujPPuKuh6zl0azCScSVOWSD1fi0RJRj84xtbB1WeIkJUxjzjTBZr9nASvFobx1VcxWixpHZJO5LlaKYh9au3dZWfmq1voL2gl+kf7KOOvMqFRW67MMGfL1eK5g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uJwOSEu2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JvxBnFJfzCzPF1zjD4hJfnIrJkeHRIY56HDFAhFW8VnuKWBT6pnS0a/Zgqkken22IjIPvsumfR3KLmRwnIyf7Tp4Oh7pWcBTBng5SrYdi11OUlBOcIj0PwNIJDZ0eUfciVkOXt2b61YEp4cUrq5lvtA1KELjKDmgvGjfCaNNfyY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r5WOR4Ck; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uJwOSEu2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BB9D1F000FF;
-	Sat, 12 Sep 2026 16:21:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r5WOR4Ck"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 538AD1F000FF;
+	Sat, 12 Sep 2026 16:21:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789230109;
-	bh=xrtKp1mcTtQx40tcuFSmgFZAue7sJxZj6C8iT8zh15o=;
+	s=korg; t=1789230114;
+	bh=tN1eMaCErz7PNCFSeV4YzMgb31J4q2WZpk/gfBIPSgY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uJwOSEu2xrBJQZUpBXGK2cuDvZx/V8+NvRBm8+KbddvlxjuB/RirbfGZpK/eNe9K2
-	 zeeeiEDSamkZdi/SU2/cCp3D28nDqOd7CNnLPu2kupa3hC5H9dwyQfcw/RdGcQAAlP
-	 xCYiHwa0AsMplGp53ptUEcn//Nm8GHhJ54DjpGII=
+	b=r5WOR4CkN4TulmllTj4wm4BDSGbyWW1/Hz0O9PPWEPhT9kuUoO0lOgGcxXN5EgwFw
+	 DsKv6lohLSwZ4rWH0xfVHiiviXgJcuJ3sAtMbp9wRp9XOiEqMf7UaCheakHyrlLDvz
+	 l3u1HQMQcoFoac5zbx7RHzt1yEyTH195+H1wPE1Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maher Sanalla <msanalla@nvidia.com>,
-	Edward Srouji <edwards@nvidia.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Yichong Chen <chenyichong@uniontech.com>,
+	Jan Kara <jack@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0726/1191] RDMA/mlx5: Fix integer overflow of user QP buffer size
-Date: Sat, 12 Sep 2026 08:57:34 +0200
-Message-ID: <20260912065604.586264974@linuxfoundation.org>
+Subject: [PATCH 6.1 0727/1191] isofs: release zisofs block pointer buffer head
+Date: Sat, 12 Sep 2026 08:57:35 +0200
+Message-ID: <20260912065604.608225908@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -52,84 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maher Sanalla <msanalla@nvidia.com>
+From: Yichong Chen <chenyichong@uniontech.com>
 
-[ Upstream commit dec47e4b0fe34afdf38caa72b4408ba95502e5de ]
+[ Upstream commit 2f7dd9b86fe4076059e6a4a2a2c5d565afd76b9e ]
 
-set_user_buf_size() computes the QP buffer size by left-shifting the
-user-supplied rq.wqe_cnt and rq.wqe_shift values as signed integers.
-A sufficiently large rq.wqe_cnt causes signed integer overflow, which
-is undefined behavior, and yields a small or negative buf_size, causing
-ib_umem_get() to map a buffer smaller than the hardware will actually
-write into.
+zisofs_fill_pages() reads the compressed block pointer table.  The error
+paths release the current buffer_head, the loop also releases the old
+buffer_head when it advances. However, the success path leaves the last
+buffer_head referenced. Release it before returning success.
 
-Replace the shifts and addition with check_shl_overflow() and
-check_add_overflow(), rejecting invalid user inputs.
-
-Moreover, guard the identical shift computing qp->sq.offset in
-_create_user_qp() before set_user_buf_size() is reached.
-
-Fixes: e126ba97dba9 ("mlx5: Add driver for Mellanox Connect-IB adapters")
-Signed-off-by: Maher Sanalla <msanalla@nvidia.com>
-Signed-off-by: Edward Srouji <edwards@nvidia.com>
-Link: https://patch.msgid.link/20260723-fix-qp-buf-size-overflow-v1-1-ccb05ee43a7b@nvidia.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 59bc055211b8 ("zisofs: Implement reading of compressed files when PAGE_CACHE_SIZE > compress block size")
+Signed-off-by: Yichong Chen <chenyichong@uniontech.com>
+Link: https://patch.msgid.link/20260721091152.1450622-1-chenyichong@uniontech.com
+Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/qp.c | 25 ++++++++++++++++++++-----
- 1 file changed, 20 insertions(+), 5 deletions(-)
+ fs/isofs/compress.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/infiniband/hw/mlx5/qp.c b/drivers/infiniband/hw/mlx5/qp.c
-index b23bdc3edede4..93ea672325ef3 100644
---- a/drivers/infiniband/hw/mlx5/qp.c
-+++ b/drivers/infiniband/hw/mlx5/qp.c
-@@ -591,6 +591,7 @@ static int set_user_buf_size(struct mlx5_ib_dev *dev,
- 			    struct ib_qp_init_attr *attr)
- {
- 	int desc_sz = 1 << qp->sq.wqe_shift;
-+	int rq_buf_size, sq_buf_size;
- 
- 	if (desc_sz > MLX5_CAP_GEN(dev->mdev, max_wqe_sz_sq)) {
- 		mlx5_ib_warn(dev, "desc_sz %d, max_sq_desc_sz %d\n",
-@@ -615,11 +616,21 @@ static int set_user_buf_size(struct mlx5_ib_dev *dev,
- 
- 	if (attr->qp_type == IB_QPT_RAW_PACKET ||
- 	    qp->flags & IB_QP_CREATE_SOURCE_QPN) {
--		base->ubuffer.buf_size = qp->rq.wqe_cnt << qp->rq.wqe_shift;
--		qp->raw_packet_qp.sq.ubuffer.buf_size = qp->sq.wqe_cnt << 6;
-+		if (check_shl_overflow(qp->rq.wqe_cnt, qp->rq.wqe_shift,
-+				       &base->ubuffer.buf_size))
-+			return -EINVAL;
-+		if (check_shl_overflow(qp->sq.wqe_cnt, 6,
-+				       &qp->raw_packet_qp.sq.ubuffer.buf_size))
-+			return -EINVAL;
- 	} else {
--		base->ubuffer.buf_size = (qp->rq.wqe_cnt << qp->rq.wqe_shift) +
--					 (qp->sq.wqe_cnt << 6);
-+		if (check_shl_overflow(qp->rq.wqe_cnt, qp->rq.wqe_shift,
-+				       &rq_buf_size))
-+			return -EINVAL;
-+		if (check_shl_overflow(qp->sq.wqe_cnt, 6, &sq_buf_size))
-+			return -EINVAL;
-+		if (check_add_overflow(rq_buf_size, sq_buf_size,
-+				       &base->ubuffer.buf_size))
-+			return -EINVAL;
+diff --git a/fs/isofs/compress.c b/fs/isofs/compress.c
+index b94b56211b5ce..fa3daeebad194 100644
+--- a/fs/isofs/compress.c
++++ b/fs/isofs/compress.c
+@@ -293,6 +293,7 @@ static int zisofs_fill_pages(struct inode *inode, int full_page, int pcount,
+ 		memzero_page(*pages, poffset, PAGE_SIZE - poffset);
+ 		SetPageUptodate(*pages);
  	}
- 
++	brelse(bh);
  	return 0;
-@@ -943,7 +954,11 @@ static int _create_user_qp(struct mlx5_ib_dev *dev, struct ib_pd *pd,
+ }
  
- 	qp->rq.offset = 0;
- 	qp->sq.wqe_shift = ilog2(MLX5_SEND_WQE_BB);
--	qp->sq.offset = qp->rq.wqe_cnt << qp->rq.wqe_shift;
-+	if (check_shl_overflow(qp->rq.wqe_cnt, qp->rq.wqe_shift,
-+			       &qp->sq.offset)) {
-+		err = -EINVAL;
-+		goto err_bfreg;
-+	}
- 
- 	err = set_user_buf_size(dev, qp, ucmd, base, attr);
- 	if (err)
 -- 
 2.53.0
 
