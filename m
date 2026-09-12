@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B6813E5A14;
-	Sat, 12 Sep 2026 09:32:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A67B381E98;
+	Sat, 12 Sep 2026 09:33:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789205581; cv=none; b=rEPVofvhp2Bqka8Pf1+h3fhMguDaWG7MxjoZZiilLHTrVkJdfR/OWxnNv3NoH0JVrqIk3T4yzpGxspfo/zkbICaZzt5WPS5kg50wK4g1mXN+UakD3KWeP2T2j10Mzt0Exs+D8pnFcl7womUAQOYZOqtrKleB/84RQEH9FugaRmA=
+	t=1789205586; cv=none; b=JqR64f4ZxlFfLmqh67E9CN66YkfJia60E83BCehpKjIUTEmgFSi5+1F4BckZK7xUGDVud9TFQfMW1RXOwhoj7zCRiLtXrHXjPTxF59L0rMVfPLkAiYqqHUkXKQYMCpeIc0DLq/ne8q3+5cA8W/ASA75gbov4hmXQ1f1STTpv6Z0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789205581; c=relaxed/simple;
-	bh=UUy+QdSo2QmEkK55LIWvqCpb+jyXAIHEOZKlwkJ+/fs=;
+	s=arc-20240116; t=1789205586; c=relaxed/simple;
+	bh=1ZSl5KfvFnzF7G7g1VNwn0L0YrIBdIaeW/wTbYsb3J8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FFYSlgDhxaHMYlZRrUbpb4YoZU1rR77KHmPv7sFqh4TSMBJM2zfx4hcfTWRwKvklGlKR4WBgOa+JAVA8kuF215BVrFk9olnWiZP50aonWy2SZFPKyptQAO4q4KL551S46e37+R/9aLki4tCCt5Wv2SPCw8XX1fysW0a3Vxuqx0w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wGceU4rA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UFdSq5JXP5Mdcd8a0tJAGDHzF05suB0vkKsOcejR/aAINe/P2GOusXGJKNjwtTrHN7jeinZQEg8QBEkc7Z++ZJCgOf4GJQLMtmua8r8X4vKwFryX9yPuaX2pWOWXHNbzWfsYreRoZpfZ6p7TTA5dAcGnmhjxBddeJioC0+J1u+Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DugvuIHQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wGceU4rA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A63B81F000FF;
-	Sat, 12 Sep 2026 09:32:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DugvuIHQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFF7B1F000FF;
+	Sat, 12 Sep 2026 09:33:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789205579;
-	bh=K4pR3k9FrdM8ZWhLMow/jtADuCiUv5AF26vN912idms=;
+	s=korg; t=1789205585;
+	bh=BWjAVRU1cgSUOjPyOQEZmJ0Qa/24wqLVaUdzOU0PRDg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wGceU4rAxsnTaijlBEfRo2Z85Q/wvcUvxg+s/xY/IY3pIi0BH18lZMC1vHP91k2nN
-	 qEIA3FJLaA2CvFzu9Am7FdcFZjOUCiFURN4kwseEb/SrhnFKGV2TSBLaa3Cuj9bmzs
-	 tITKmwhrqCMBL7vghWqjXiTmKRApQfs8jfjguV6M=
+	b=DugvuIHQlFf6S8lywpeCMmcOxBPXR02Ysc0UxSXlTS/wOsnTJ0YFbafPoCrA+2M5e
+	 8tMNO+2RoXQHKypBybFkuwvfPrUxzjHZ1OEniTUqlX+xdKuAY7pIgoTMiFfD4MbqmZ
+	 bZNr3XFMfXPTcBz9soY5Wne9KZDPcxU7DfBFxaHw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Federico Kirschbaum <federico.kirschbaum@xbow.com>,
-	Baul Lee <baul.lee@xbow.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Jon Hunter <jonathanh@nvidia.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0030/1518] ALSA: FCP: do not copy out an uninitialised init response
-Date: Sat, 12 Sep 2026 08:36:39 +0200
-Message-ID: <20260912065624.104978462@linuxfoundation.org>
+Subject: [PATCH 6.18 0031/1518] ASoC: tegra: Fix the MIXER enable default value
+Date: Sat, 12 Sep 2026 08:36:40 +0200
+Message-ID: <20260912065624.127334348@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,106 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baul Lee <baul.lee@xbow.com>
+From: Jon Hunter <jonathanh@nvidia.com>
 
-[ Upstream commit 4335e387786479889e6db691fe06d345e52ea536 ]
+[ Upstream commit 5442b8093a2f94ecd4696b3875194be09e2676c5 ]
 
-fcp_ioctl_init() allocates its response buffer with kmalloc() and copies
-the whole buffer back to userspace:
+Commit 4b05ccb17f92 ("regcache: Sort the local copy of an unsorted
+reg_defaults array") exposed an issue in the Tegra MIXER driver where
+the register default for the TEGRA210_MIXER_ENABLE is specified as 1,
+but the hardware default is actually 0. After this commit was added the
+MIXER driver is no longer working and so fix this by correcting the
+default value for this register and explicitly configuring the
+MIXER_ENABLE register when runtime resuming the MIXER device.
 
-	buf_size = init.step0_resp_size + init.step2_resp_size;
-
-	void *resp __free(kfree) =
-		kmalloc(buf_size, GFP_KERNEL);
-	...
-	if (copy_to_user(arg->resp, resp, buf_size))
-		return -EFAULT;
-
-Nothing clears the buffer, and the only writer of its leading
-step0_resp_size bytes is the step-0 control transfer:
-
-	err = snd_usb_ctl_msg(dev, usb_rcvctrlpipe(dev, 0),
-		FCP_USB_REQ_STEP0,
-		USB_RECIP_INTERFACE | USB_TYPE_CLASS | USB_DIR_IN,
-		0, private->bInterfaceNumber,
-		step0_resp, private->step0_resp_size);
-	if (err < 0)
-		return err;
-
-usb_fill_control_urb() does not set URB_SHORT_NOT_OK, so a short or
-zero-length data stage completes with status 0 and snd_usb_ctl_msg()
-returns a small actual_length.  The only check is err < 0, so a short
-transfer is accepted as success.
-
-snd_usb_ctl_msg() copies the full size back unconditionally:
-
-	buf = kmemdup(data, size, GFP_KERNEL);
-	...
-	memcpy(data, buf, size);
-
-Bytes the device never wrote are therefore restored into resp unchanged
-and copied to userspace.  step0_resp_size and step2_resp_size are each
-validated only to 1..255, so the caller also picks the slab cache, from
-kmalloc-8 up to kmalloc-512.
-
-On 7.2.0-rc5 (arm64), device answering step 0 with a zero-length data
-stage, s0 = s2 = 255:
-
-  # init_on_alloc off, no spray
-  step0 window [0,255): nonzero=94/255
-  000: 00 80 60 06 00 00 ff ff 18 00 00 00 57 01 ea 01
-  010: 08 78 22 13 00 00 ff ff a8 c4 5f 80 00 80 ff ff
-
-  # same kernel, kmalloc-512 pre-seeded with an 8-byte tag
-  step0 window [0,255): nonzero=219/255  tagbytes=232
-
-  # identical run, init_on_alloc=1
-  step0 window [0,255): nonzero=0/255  tagbytes=0
-
-  # all three runs
-  step2 window [255,510): device words matched=62/62
-
-a8 c4 5f 80 00 80 ff ff is the little-endian kernel text address
-ffff8000805fc4a8.  The step-2 window is unaffected, so the disclosure is
-exactly the step-0 region.
-
-Zero the buffer, and require the step-0 transfer to deliver the full
-step0_resp_size bytes so a short data stage is reported as an error.
-
-Discovered by XBOW, triaged by Baul Lee <baul.lee@xbow.com>
-
-Fixes: 46757a3e7d50 ("ALSA: FCP: Add Focusrite Control Protocol driver")
-Reported-by: Federico Kirschbaum <federico.kirschbaum@xbow.com>
-Reported-by: Baul Lee <baul.lee@xbow.com>
+Fixes: 05bb3d5ec64a ("ASoC: tegra: Add Tegra210 based Mixer driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Baul Lee <baul.lee@xbow.com>
-Link: https://patch.msgid.link/20260805013804.38839-1-baul.lee@xbow.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
+Link: https://patch.msgid.link/20260821153734.158426-3-jonathanh@nvidia.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/fcp.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ sound/soc/tegra/tegra210_mixer.c |   10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
---- a/sound/usb/fcp.c
-+++ b/sound/usb/fcp.c
-@@ -494,7 +494,7 @@ static int fcp_ioctl_init(struct usb_mix
- 	buf_size = init.step0_resp_size + init.step2_resp_size;
+--- a/sound/soc/tegra/tegra210_mixer.c
++++ b/sound/soc/tegra/tegra210_mixer.c
+@@ -57,7 +57,7 @@ static const struct reg_default tegra210
+ 	MIXER_TX_REG_DEFAULTS(3),
+ 	MIXER_TX_REG_DEFAULTS(4),
  
- 	void *resp __free(kfree) =
--		kmalloc(buf_size, GFP_KERNEL);
-+		kzalloc(buf_size, GFP_KERNEL);
- 	if (!resp)
- 		return -ENOMEM;
+-	{ TEGRA210_MIXER_ENABLE, 0x1 },
++	{ TEGRA210_MIXER_ENABLE, 0x0 },
+ 	{ TEGRA210_MIXER_CG, 0x00000001},
+ 	{ TEGRA210_MIXER_GAIN_CFG_RAM_CTRL, 0x00004000},
+ 	{ TEGRA210_MIXER_PEAKM_RAM_CTRL, 0x00004000},
+@@ -86,11 +86,15 @@ static int tegra210_mixer_runtime_suspen
+ static int tegra210_mixer_runtime_resume(struct device *dev)
+ {
+ 	struct tegra210_mixer *mixer = dev_get_drvdata(dev);
++	int err;
  
-@@ -1033,6 +1033,8 @@ static int fcp_init(struct usb_mixer_int
- 		step0_resp, private->step0_resp_size);
- 	if (err < 0)
- 		return err;
-+	if (err != private->step0_resp_size)
-+		return -EIO;
+ 	regcache_cache_only(mixer->regmap, false);
+-	regcache_sync(mixer->regmap);
++	err = regcache_sync(mixer->regmap);
++	if (err)
++		return err;
  
- 	err = fcp_init_notify(mixer);
- 	if (err < 0)
+-	return 0;
++	return regmap_write(mixer->regmap, TEGRA210_MIXER_ENABLE,
++			    TEGRA210_MIXER_EN);
+ }
+ 
+ static int tegra210_mixer_write_ram(struct tegra210_mixer *mixer,
 
 
