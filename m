@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF89D2C032C;
-	Sat, 12 Sep 2026 08:16:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07AE6367B8A;
+	Sat, 12 Sep 2026 08:16:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789201016; cv=none; b=SJ9DRERrLbMSpMmxmlRIsIINg06OAdnchpa/u+I3qhxst09YNTTGX5dWKrG/eXfgqPi37CRavY/7z/rwX5dcOYJU8SyTftKvv1jCQieCFzbYfpIsJsX58RnYEszvpZVj2dutVtEjq1FPrtjO+dqiUGXPlkkmwXF2+wzESbQe1F4=
+	t=1789201021; cv=none; b=J6HbesQst6ZMQkExJsU4Mh8UsJ/AuwrLfaaHRwJRp8jaeA8EqlxmgcHkERNniuXG7e1ZE8w+il50CH4FuIsj5/e0n8tdyQSIJIgKwviZCqTRgF/ixGoTvjVk7miQvaD2ikzMMkBDtIgwrIZXN4FjC1x4k1EYIYj+hIMfV3XH3cA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789201016; c=relaxed/simple;
-	bh=qeiVnkcW6HNvzVi9jO0tPpl2l7ImoYmj4N814oGrKrs=;
+	s=arc-20240116; t=1789201021; c=relaxed/simple;
+	bh=WtJfyxlLkXPVWW1VejCbepVS2JwfdItiityzWmCtae4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aHOBrredQO9qarEiTjXGb1v54kkU7dBUOB+jpO9NxyvLfIfuxIPHktTVQ60uhqzm2AlOa7zAr67dLWOJzQWnjYZ+RwIZ5gIF6G4DMEad+X8Sjj5tvDLUS+cIWCfj7alhcyJFtKXOtToWghPyQFDB2TH5HOeqDQ3iHwwsyssyixA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E2rBY2Jk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BmUzcXawwr+l6m+83HDMNvD6s8YTWi7j5HYZQ8shof+jZxXJt6x3Z0pevNo0aLeK+k3FJJ+VmYombu98DBf8NmrWMIgA6/9do6+hrhaa1NEHV5hI5eBaSz5hEqty43R4nhbXJkmeVqAlTHc58vd2e2CMc0oQoBWkWMYK6h3JRss=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ttv2PyGC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E2rBY2Jk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BA6C1F000FF;
-	Sat, 12 Sep 2026 08:16:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ttv2PyGC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AEB21F000FF;
+	Sat, 12 Sep 2026 08:16:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789201014;
-	bh=ExkIYPxHUVpYpt56H0ZkbVT9Td/P+7f/bXDSlHywOVE=;
+	s=korg; t=1789201019;
+	bh=v1lpxXVw/f/laYOI/5xBFjHz7FPZg0eO/04P3tLwVSI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=E2rBY2JkgpX4rXwi2mxo9qYCM3jaceiCdq7KGfKFaNMx8bqrCyLcwg7F3+fYdO/5I
-	 ztLTMINuVaH1bCI1FNwGtdg2XZPdVz6e+J+9rnVrqwmQP0GJ7qARnvs3hFXYUd0chM
-	 FvwpLCw1wlJJHatYgc+SmQMbvCOY2WRsfxDpgKa0=
+	b=ttv2PyGCjiuvvZCO7AOYGQF3HNJpWbYJjIuXbWbosu5BCsjihe4io3HET1EahwrbO
+	 nDGhwI4aQ+Btvjy1XlE+o2D42BAJ2WIJLlFUoX7SaEadQwtbPI/17IuWObYqJKM9cx
+	 RMiyQrEbC/9FbmAD4kQer2SIW6lJY5VbOLq9sIBo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yongxing Mou <yongxing.mou@oss.qualcomm.com>,
 	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0907/1815] drm/msm/dpu: Fix DMA SSPP REC block offsets on DPU v13
-Date: Sat, 12 Sep 2026 08:44:17 +0200
-Message-ID: <20260912065710.214744179@linuxfoundation.org>
+Subject: [PATCH 7.2 0908/1815] drm/msm: dont tear down KMS twice when KMS init fails
+Date: Sat, 12 Sep 2026 08:44:18 +0200
+Message-ID: <20260912065710.238766826@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,118 +51,177 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yongxing Mou <yongxing.mou@oss.qualcomm.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-[ Upstream commit 8834f5494ab5e169b1c0fb4cbcb5464fd81d1ed0 ]
+[ Upstream commit 93c125e4ea98fb25f927ba5a334d85845127d667 ]
 
-On DPU v13, the DMA SSPP REC0 and REC1 blocks are located at
-offsets 0x1000 and 0x3000 from the SSPP common base.
+When priv->kms_init() (mdp4_kms_init() / mdp5_kms_init()) fails partway
+through, both display drivers already tear their KMS state down via
+mdp4_destroy() / mdp5_kms_destroy() before returning the error. The
+common error path in msm_drm_init() then runs msm_drm_uninit() ->
+msm_drm_kms_uninit(), which tries to destroy the very same KMS a second
+time, which causes a use-after-free crash.
 
-The existing DMA SSPP sub-block descriptor does not initialize
-sspp_rec0_blk and sspp_rec1_blk, causing REC register accesses
-to be performed at offset 0 instead of the corresponding REC
-block. As a result, DMA SSPP pipes are not programmed correctly
-and fail to produce output.
+Bring MDP4/MDP5 in line with the DPU driver whose dpu_kms_init() doesn't
+perform error cleanup on the failure. Let the common path own the
+cleanup, instead of freeing the KMS from their error paths.
 
-Introduce a DPU v13 specific DMA SSPP descriptor with the correct
-REC block offsets and use it for all DMA SSPPs in the Kaanapali
-catalog.
+The crash trace for the reference:
 
-Signed-off-by: Yongxing Mou <yongxing.mou@oss.qualcomm.com>
-Fixes: 83fe2cd56b1d ("drm/msm/dpu: Add support for Kaanapali DPU")
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/741230/
-Link: https://lore.kernel.org/r/20260720-dpu-v13-dma-sspp-rec-fix-v1-1-10d69b4875e7@oss.qualcomm.com
+  __lock_acquire from lock_acquire (kernel/locking/lockdep.c:5906 kernel/locking/lockdep.c:5863)
+  lock_acquire from touch_wq_lockdep_map (kernel/workqueue.c:4094 (discriminator 1))
+  touch_wq_lockdep_map from __flush_workqueue (kernel/workqueue.c:4136)
+  __flush_workqueue from msm_drm_kms_uninit (drivers/gpu/drm/msm/msm_kms.c:243 (discriminator 33))
+  msm_drm_kms_uninit from msm_drm_uninit (drivers/gpu/drm/msm/msm_drv.c:93)
+  msm_drm_uninit from msm_drm_init (drivers/gpu/drm/msm/msm_drv.c:184)
+  msm_drm_init from try_to_bring_up_aggregate_device (drivers/base/component.c:249 drivers/base/component.c:227)
+  try_to_bring_up_aggregate_device from __component_add (drivers/base/component.c:269 drivers/base/component.c:748)
+  __component_add from dsi_host_attach (drivers/gpu/drm/msm/dsi/dsi_host.c:1739)
+  dsi_host_attach from mipi_dsi_attach (drivers/gpu/drm/drm_mipi_dsi.c:383)
+  mipi_dsi_attach from sharp_nt_panel_probe (drivers/gpu/drm/panel/panel-sharp-ls043t1le01.c:247)
+
+Fixes: 506efcba3129 ("drm/msm: carve out KMS code from msm_drv.c")
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/742068/
+Link: https://lore.kernel.org/r/20260723-msm-fix-crash-v1-1-78fb4721c2d9@oss.qualcomm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../drm/msm/disp/dpu1/catalog/dpu_13_0_kaanapali.h   | 12 ++++++------
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c       | 12 ++++++++++++
- 2 files changed, 18 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c | 22 ++++++++--------------
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c | 11 +++--------
+ 2 files changed, 11 insertions(+), 22 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_13_0_kaanapali.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_13_0_kaanapali.h
-index 06da1583fb1eb..85f455a9f29c8 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_13_0_kaanapali.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_13_0_kaanapali.h
-@@ -86,42 +86,42 @@ static const struct dpu_sspp_cfg kaanapali_sspp[] = {
- 		.name = "sspp_8", .id = SSPP_DMA0,
- 		.base = 0x97000, .len = 0x84,
- 		.features = DMA_SDM845_MASK_SDMA,
--		.sblk = &dpu_dma_sblk,
-+		.sblk = &dpu_dma_sblk_v13,
- 		.xin_id = 1,
- 		.type = SSPP_TYPE_DMA,
- 	}, {
- 		.name = "sspp_9", .id = SSPP_DMA1,
- 		.base = 0xa0000, .len = 0x84,
- 		.features = DMA_SDM845_MASK_SDMA,
--		.sblk = &dpu_dma_sblk,
-+		.sblk = &dpu_dma_sblk_v13,
- 		.xin_id = 5,
- 		.type = SSPP_TYPE_DMA,
- 	}, {
- 		.name = "sspp_10", .id = SSPP_DMA2,
- 		.base = 0xa9000, .len = 0x84,
- 		.features = DMA_SDM845_MASK_SDMA,
--		.sblk = &dpu_dma_sblk,
-+		.sblk = &dpu_dma_sblk_v13,
- 		.xin_id = 9,
- 		.type = SSPP_TYPE_DMA,
- 	}, {
- 		.name = "sspp_11", .id = SSPP_DMA3,
- 		.base = 0xb2000, .len = 0x84,
- 		.features = DMA_SDM845_MASK_SDMA,
--		.sblk = &dpu_dma_sblk,
-+		.sblk = &dpu_dma_sblk_v13,
- 		.xin_id = 13,
- 		.type = SSPP_TYPE_DMA,
- 	}, {
- 		.name = "sspp_12", .id = SSPP_DMA4,
- 		.base = 0xbb000, .len = 0x84,
- 		.features = DMA_CURSOR_SDM845_MASK_SDMA,
--		.sblk = &dpu_dma_sblk,
-+		.sblk = &dpu_dma_sblk_v13,
- 		.xin_id = 14,
- 		.type = SSPP_TYPE_DMA,
- 	}, {
- 		.name = "sspp_13", .id = SSPP_DMA5,
- 		.base = 0xc4000, .len = 0x84,
- 		.features = DMA_CURSOR_SDM845_MASK_SDMA,
--		.sblk = &dpu_dma_sblk,
-+		.sblk = &dpu_dma_sblk_v13,
- 		.xin_id = 15,
- 		.type = SSPP_TYPE_DMA,
- 	},
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-index 2e10add84fd71..9a993cdfab856 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-@@ -303,6 +303,16 @@ static const u32 wb2_formats_rgb_yuv[] = {
- 	.num_formats = ARRAY_SIZE(plane_formats), \
+diff --git a/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c b/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c
+index 7726edb0d4ede..6ae49f94fea7b 100644
+--- a/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c
++++ b/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c
+@@ -398,7 +398,7 @@ static int mdp4_kms_init(struct drm_device *dev)
+ 	ret = mdp_kms_init(&mdp4_kms->base, &kms_funcs);
+ 	if (ret) {
+ 		DRM_DEV_ERROR(dev->dev, "failed to init kms\n");
+-		goto fail;
++		return ret;
  	}
  
-+#define _DMA_SBLK_V13() \
-+	{ \
-+	.sspp_rec0_blk = {.name = "sspp_rec0", \
-+		.base = 0x1000, .len = 0x180,}, \
-+	.sspp_rec1_blk = {.name = "sspp_rec1", \
-+		.base = 0x3000, .len = 0x180,}, \
-+	.format_list = plane_formats, \
-+	.num_formats = ARRAY_SIZE(plane_formats), \
-+	}
-+
- static const struct dpu_rotation_cfg dpu_rot_sc7280_cfg_v2 = {
- 	.rot_maxheight = 1088,
- 	.rot_num_formats = ARRAY_SIZE(rotation_v2_formats),
-@@ -353,6 +363,8 @@ static const struct dpu_sspp_sub_blks dpu_rgb_sblk = _RGB_SBLK();
+ 	kms = priv->kms;
+@@ -409,7 +409,7 @@ static int mdp4_kms_init(struct drm_device *dev)
+ 		ret = regulator_enable(mdp4_kms->vdd);
+ 		if (ret) {
+ 			DRM_DEV_ERROR(dev->dev, "failed to enable regulator vdd: %d\n", ret);
+-			goto fail;
++			return ret;
+ 		}
+ 	}
  
- static const struct dpu_sspp_sub_blks dpu_dma_sblk = _DMA_SBLK();
+@@ -421,7 +421,7 @@ static int mdp4_kms_init(struct drm_device *dev)
+ 		DRM_DEV_ERROR(dev->dev, "unexpected MDP version: v%d.%d\n",
+ 			      major, minor);
+ 		ret = -ENXIO;
+-		goto fail;
++		return ret;
+ 	}
  
-+static const struct dpu_sspp_sub_blks dpu_dma_sblk_v13 = _DMA_SBLK_V13();
-+
- /*************************************************************
-  * MIXER sub blocks config
-  *************************************************************/
+ 	mdp4_kms->rev = minor;
+@@ -430,7 +430,7 @@ static int mdp4_kms_init(struct drm_device *dev)
+ 		if (!mdp4_kms->lut_clk) {
+ 			DRM_DEV_ERROR(dev->dev, "failed to get lut_clk\n");
+ 			ret = -ENODEV;
+-			goto fail;
++			return ret;
+ 		}
+ 		clk_set_rate(mdp4_kms->lut_clk, max_clk);
+ 	}
+@@ -452,7 +452,7 @@ static int mdp4_kms_init(struct drm_device *dev)
+ 	vm = msm_kms_init_vm(mdp4_kms->dev, NULL);
+ 	if (IS_ERR(vm)) {
+ 		ret = PTR_ERR(vm);
+-		goto fail;
++		return ret;
+ 	}
+ 
+ 	kms->vm = vm;
+@@ -460,7 +460,7 @@ static int mdp4_kms_init(struct drm_device *dev)
+ 	ret = modeset_init(mdp4_kms);
+ 	if (ret) {
+ 		DRM_DEV_ERROR(dev->dev, "modeset_init failed: %d\n", ret);
+-		goto fail;
++		return ret;
+ 	}
+ 
+ 	mdp4_kms->blank_cursor_bo = msm_gem_new(dev, SZ_16K, MSM_BO_WC | MSM_BO_SCANOUT);
+@@ -468,14 +468,14 @@ static int mdp4_kms_init(struct drm_device *dev)
+ 		ret = PTR_ERR(mdp4_kms->blank_cursor_bo);
+ 		DRM_DEV_ERROR(dev->dev, "could not allocate blank-cursor bo: %d\n", ret);
+ 		mdp4_kms->blank_cursor_bo = NULL;
+-		goto fail;
++		return ret;
+ 	}
+ 
+ 	ret = msm_gem_get_and_pin_iova(mdp4_kms->blank_cursor_bo, kms->vm,
+ 			&mdp4_kms->blank_cursor_iova);
+ 	if (ret) {
+ 		DRM_DEV_ERROR(dev->dev, "could not pin blank-cursor bo: %d\n", ret);
+-		goto fail;
++		return ret;
+ 	}
+ 
+ 	dev->mode_config.min_width = 0;
+@@ -484,12 +484,6 @@ static int mdp4_kms_init(struct drm_device *dev)
+ 	dev->mode_config.max_height = 2048;
+ 
+ 	return 0;
+-
+-fail:
+-	if (kms)
+-		mdp4_destroy(kms);
+-
+-	return ret;
+ }
+ 
+ static const struct dev_pm_ops mdp4_pm_ops = {
+diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+index 0a004ab9fc856..3934cd060b276 100644
+--- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
++++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+@@ -517,7 +517,7 @@ static int mdp5_kms_init(struct drm_device *dev)
+ 	ret = mdp_kms_init(&mdp5_kms->base, &kms_funcs);
+ 	if (ret) {
+ 		DRM_DEV_ERROR(&pdev->dev, "failed to init kms\n");
+-		goto fail;
++		return ret;
+ 	}
+ 
+ 	config = mdp5_cfg_get_config(mdp5_kms->cfg);
+@@ -540,7 +540,7 @@ static int mdp5_kms_init(struct drm_device *dev)
+ 	vm = msm_kms_init_vm(mdp5_kms->dev, pdev->dev.parent);
+ 	if (IS_ERR(vm)) {
+ 		ret = PTR_ERR(vm);
+-		goto fail;
++		return ret;
+ 	}
+ 
+ 	kms->vm = vm;
+@@ -550,7 +550,7 @@ static int mdp5_kms_init(struct drm_device *dev)
+ 	ret = modeset_init(mdp5_kms);
+ 	if (ret) {
+ 		DRM_DEV_ERROR(&pdev->dev, "modeset_init failed: %d\n", ret);
+-		goto fail;
++		return ret;
+ 	}
+ 
+ 	dev->mode_config.min_width = 0;
+@@ -562,11 +562,6 @@ static int mdp5_kms_init(struct drm_device *dev)
+ 	dev->vblank_disable_immediate = true;
+ 
+ 	return 0;
+-fail:
+-	if (kms)
+-		mdp5_kms_destroy(kms);
+-
+-	return ret;
+ }
+ 
+ static void mdp5_destroy(struct mdp5_kms *mdp5_kms)
 -- 
 2.53.0
 
