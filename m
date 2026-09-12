@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91F8D479899;
-	Sat, 12 Sep 2026 12:21:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 645012BDC0E;
+	Sat, 12 Sep 2026 12:21:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789215679; cv=none; b=u8zsfI1r5mlhqIuybwDF4CqfdlT/CpPCNGz4cu1wDCd1m//cbEj22Ui9oAm8P530g4ynEJqmRPl/LAIsLDv0yhKrGtTk7A7ftCc9PFztz8j+0ejKKaQfHTJi5GZX3qRMXhlMZUiMyCbOPfCHpQA2eIm4wJHMdSCbvXFh/wGYR/M=
+	t=1789215684; cv=none; b=UfQ/13mnxx81/snk1Y1jPlYNyHCGla3pOPLy0tILzg5wfh9kisQJeKZlJbLpb3BzGttgpipkjsF43RKjPqSNv1/TKQc/zvVdlR4Ro0Y2sVgtPEAM6losmCDmAxQE8emyRGEtiaUBlkjUcKIwk/3su6rRSXe0VrRAhusYM9H53VA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789215679; c=relaxed/simple;
-	bh=8dW135GumAradpb93+zpeJ2haYGLHGlC1VD2Xtun1Wg=;
+	s=arc-20240116; t=1789215684; c=relaxed/simple;
+	bh=k5pz6JJ4+rFwqh+t51g7uDSFN/kda+3axRDNQZtBX+8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nUZX+8QFSki+Jl8LyxdQMGGscPts/jGaRUHSLY0YU1sdQuVLOfY3ZAeW0fKOzvtNDDcM2gLAatMgevJ5PqabZcrCTR1RKbmyR3yglAq2HIAFeSMX+BcLZPTLAInZdzGwte5k7rLjF0Q0D7FjMOp1veCtZGPogxd/a0HlL5CALFE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eWHC1VoU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aMsDU9aq3zIBjDVMDNKNUf2fFSdVcqlgzGTZIf5QqSzFwHEc4Nz8hKrdfZ3nC2Ck2Kv7o9InqVowqnhRwDfcov3NcIbpf0sQ7zqYxzKIhAJp1SCC/WGzobm6+WC+zEJ6jcIRA/Kuk2dbratJzqmgKVNZA/eIcfkdqV+GqzYpi18=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YcoRiaFg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eWHC1VoU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3206A1F000FF;
-	Sat, 12 Sep 2026 12:21:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YcoRiaFg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36A971F000FF;
+	Sat, 12 Sep 2026 12:21:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789215678;
-	bh=3QNorcrlE7LhdEOsZ7fClZCoi4Dc8jcGZXHxwAm9hGQ=;
+	s=korg; t=1789215683;
+	bh=xyZxLG/WiLSSt3Wjp1Ovov7WfTfTtC52WohAWLedk54=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eWHC1VoUDzY3v6g51yJ4yIOc5uON/H0DkYQrwbs5OZ7pZ8HEo6OGH/qgYUWlpIO08
-	 6fAdMKw7GeTIToItAV3mkwceIXVw9CCgDTCI8LT7QIJW3xrwS5h3trZ4GZMnlYvP2U
-	 Q72VG2KSWjzJ7K/epKy8OZ0T9AsJZ8pjn+Zcz5DA=
+	b=YcoRiaFgIIL9IUICxLSafnPjJxnpQxCYBkE7SdiXG7OTaSMdl6RVxooh9FsmNr7PA
+	 69UrlJT3zvqLqm/XdNqSzyE9RWtKmgFA/IegE4WopEdYOtfoZ9b3zVCFPn3IM9gMZS
+	 SR8oEphgtwDW4tihHxoVq2GQdbyl5fWWrDswrbj8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gui-Dong Han <hanguidong02@gmail.com>,
+	Gleb Markov <markov.gi@npc-ksb.ru>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0581/1376] misc: bcm-vk: Use acquire/release for msgq_inited
-Date: Sat, 12 Sep 2026 08:50:07 +0200
-Message-ID: <20260912065620.481553790@linuxfoundation.org>
+Subject: [PATCH 6.12 0582/1376] misc: rtsx: add missing write register handling
+Date: Sat, 12 Sep 2026 08:50:08 +0200
+Message-ID: <20260912065620.503960312@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -50,54 +50,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gui-Dong Han <hanguidong02@gmail.com>
+From: Gleb Markov <markov.gi@npc-ksb.ru>
 
-[ Upstream commit 61b101c6a150057b6d512421ed108aed16e822ea ]
+[ Upstream commit 655faba1ccf195e22a7a83146ef6015e3271233c ]
 
-bcm_vk_sync_msgq() fills the message queue information and then sets
-msgq_inited. Readers call bcm_vk_drv_access_ok() before accessing the
-message queues and their cached queue information.
+If an error occurs at the stage of working with registers in conjunction
+with MCU_Block, it will not be processed.
 
-atomic_set()/atomic_read() do not order those accesses. A reader can see
-msgq_inited set while still seeing stale queue information. Use release
-when publishing the initialized queues and acquire when checking the gate.
+The occurrence of errors at this stage may signal an impact on writes to
+the device's PCI registers and is a more global problem than a
+driver-level security problem, but adding a handler would be a good
+practice.
 
-Keep the clear in bcm_vk_blk_drv_access() as atomic_set(). It closes the
-gate and does not publish queue state to readers.
+Add a missing error handling.
 
-Fixes: 111d746bb476 ("misc: bcm-vk: add VK messaging support")
-Signed-off-by: Gui-Dong Han <hanguidong02@gmail.com>
-Link: https://patch.msgid.link/20260603021127.3285057-1-hanguidong02@gmail.com
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: c0e5f4e73a71 ("misc: rtsx: Add support for RTS5261")
+Signed-off-by: Gleb Markov <markov.gi@npc-ksb.ru>
+Link: https://patch.msgid.link/20260629130920.1260-1-markov.gi@npc-ksb.ru
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/bcm-vk/bcm_vk_msg.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/misc/cardreader/rtsx_pcr.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/misc/bcm-vk/bcm_vk_msg.c b/drivers/misc/bcm-vk/bcm_vk_msg.c
-index 665a3888708ac..a36a6c7d384a9 100644
---- a/drivers/misc/bcm-vk/bcm_vk_msg.c
-+++ b/drivers/misc/bcm-vk/bcm_vk_msg.c
-@@ -108,7 +108,8 @@ u32 msgq_avail_space(const struct bcm_vk_msgq __iomem *msgq,
- 
- bool bcm_vk_drv_access_ok(struct bcm_vk *vk)
- {
--	return (!!atomic_read(&vk->msgq_inited));
-+	/* Pair with the release store after message queue initialization. */
-+	return !!atomic_read_acquire(&vk->msgq_inited);
- }
- 
- void bcm_vk_set_host_alert(struct bcm_vk *vk, u32 bit_mask)
-@@ -501,7 +502,8 @@ int bcm_vk_sync_msgq(struct bcm_vk *vk, bool force_sync)
- 			msgq++;
- 		}
- 	}
--	atomic_set(&vk->msgq_inited, 1);
-+	/* Publish message queue info before allowing driver access. */
-+	atomic_set_release(&vk->msgq_inited, 1);
- 
- 	return ret;
- }
+diff --git a/drivers/misc/cardreader/rtsx_pcr.c b/drivers/misc/cardreader/rtsx_pcr.c
+index be3d4e0e50ccd..6a1cfa948bdb3 100644
+--- a/drivers/misc/cardreader/rtsx_pcr.c
++++ b/drivers/misc/cardreader/rtsx_pcr.c
+@@ -1242,6 +1242,8 @@ static int rtsx_pci_init_hw(struct rtsx_pcr *pcr)
+ 		/* Gating real mcu clock */
+ 		err = rtsx_pci_write_register(pcr, RTS5261_FW_CFG1,
+ 			RTS5261_MCU_CLOCK_GATING, 0);
++		if (err < 0)
++			return err;
+ 		err = rtsx_pci_write_register(pcr, RTS5261_REG_FPDCTL,
+ 			SSC_POWER_DOWN, 0);
+ 	} else {
 -- 
 2.53.0
 
