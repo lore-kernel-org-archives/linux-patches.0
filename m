@@ -1,38 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16962317145;
-	Sat, 12 Sep 2026 15:42:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0A6A25A640;
+	Sat, 12 Sep 2026 15:42:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789227746; cv=none; b=ptcWu3KTiO3xxfLYe3flZ/bRxgD/DTJI9DQ7mmgejZTj8Kl06tXzc/Uho3XoEFiWCDu4kY98zya7DgOCj1wEIqYlu9aNmq/Bmj47MUdkcmdB77xWWMrATSE3AfkuwyJasZdAJgIAAG9oYPz4YyhYCyl3nrslaBoh+oqPDMCvAsM=
+	t=1789227751; cv=none; b=pMu6tRSL/W2qb3TRhyMl4D7WsTK5VlaW0wvcX374p6HpQnbVizaiqgFJgEbaAWeeIJTiM8siN7k8lIEXE2NboOuqC1qbG8MZhrLSAx8oqsi2BJAw+LBCfew40PX+0HCpIELB7GKU42W7xP/2I7EecFySTEYwl/k/Y/D4TKL3URE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789227746; c=relaxed/simple;
-	bh=GVSxwB8O+UaXiBJMupDv6DlLX9sOSQtpOKLGWhTMOak=;
+	s=arc-20240116; t=1789227751; c=relaxed/simple;
+	bh=JVHgYCdsjeuagMHsJo/fDNL3hbRZ2hdLsEsPCPSDiWk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=llK7Kzb5XTk6YJqezONAXSh5HSfwPfutGX62EXbLZ0mjyWDy/OjaTGGPVfpXI2EgC9i3drsY4G+EJ2KKBdnHYU5ztQQgtRFvhXPXeiwmC4d3+Bl44BNPCPOTcxwAe+Vj763WpT2O3fgp28/Jsz6EiK1UIpbaDWCevwOd7tRaprA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M6tkKnRZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FLlobTn90Ttg4hc5tLKXNs2bb87cnL2GrZIeWLnqTzATcaFpD8rsS6YwzpTxkyVeeOBkLw7F4UE2aimlbz/FRrki8VJfIYCl8zmdli0IaCPIIJN7mzHLN7/M5gWiO6XmasQgN6GPUaUmbHjI8l0ECJkqS7KlxuKkac0eepi1Rww=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0+iweJ7e; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M6tkKnRZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D92881F000FF;
-	Sat, 12 Sep 2026 15:42:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0+iweJ7e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B0391F000FF;
+	Sat, 12 Sep 2026 15:42:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789227744;
-	bh=nFFq9MJ1fCkO2iUAMQTsajLDDbw11lpPTYz6c4BzfC4=;
+	s=korg; t=1789227749;
+	bh=i1WP7JJcU9H1e42HJriqRYnM5EItVqF4xw66k77FDRk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M6tkKnRZWhxDLvXFWGSa9gTln3yrh4/O6xx+qONNsiXE9vot2z0hSdVRIlLN/S2S7
-	 fKWfowLPZQkwJul+jFjBvAJzDtYTXwb1VaBy3Dw2hRnhCV4MUQ75l+SkU0kYm8zGhK
-	 vjcvq+/yNAjG60OgUPUBCXHJeKlRjJKI6kP4x6hA=
+	b=0+iweJ7eBCPdhqmUVbzaIiOhttklUQCnRIcjRVQjI4IF8qA9Kqez82j0rQEGtLM+d
+	 luBx0epTY17/DJePZhgFGyWwZ2tq1RI0SgIW/W52CGRsd+M1qRcEo25XHj+cO7zM5i
+	 KzxhEwz4iNavR6MxHjg3+Sc4zcBJDh9+5JlQy1ds=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
-	Arend van Spriel <arend.vanspriel@broadcom.com>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.1 0237/1191] wifi: brcmfmac: Fix memory leak in brcmf_sdio_read_control()
-Date: Sat, 12 Sep 2026 08:49:25 +0200
-Message-ID: <20260912065553.534609138@linuxfoundation.org>
+	Bradley Morgan <include@grrlz.net>,
+	Oleg Nesterov <oleg@redhat.com>,
+	"Eric W. Biederman" <ebiederm@xmission.com>,
+	Adrian Huang <adrianhuang0701@gmail.com>,
+	Aleksandr Nogikh <nogikh@google.com>,
+	Christian Brauner <brauner@kernel.org>,
+	Marco Elver <elver@google.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 0246/1191] signal: avoid shared siginfo namespace rewrites
+Date: Sat, 12 Sep 2026 08:49:34 +0200
+Message-ID: <20260912065553.741188880@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -51,46 +60,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+From: Bradley Morgan <include@grrlz.net>
 
-commit 0d10db8e94fcb23a799789aaa696b4d8f937e207 upstream.
+commit d19cdc167e696714509e87d3f7ae765b6e164589 upstream.
 
-The memory allocated for buf is not freed in some of the error paths in
-brcmf_sdio_read_control(). Fix that by adding vfree() calls.
+send_signal_locked() rewrites sender ids for the target namespace.  Group
+sends reuse the same siginfo, so one recipient can affect the next.
 
-Cc: stable@vger.kernel.org
-Fixes: dd43a01c5cdb ("brcmfmac: use dynamically allocated control frame buffer")
-Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
-[arend: rework as suggested by Johannes]
-Signed-off-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-Link: https://patch.msgid.link/20260803093506.1647790-1-arend.vanspriel@broadcom.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Copy the siginfo before changing it.
+
+Link: https://lore.kernel.org/86a8857d58d43ee26a8b365b837fd24830343494.1782159692.git.include@grrlz.net
+Fixes: 7a0cf094944e ("signal: Correct namespace fixups of si_pid and si_uid")
+Signed-off-by: Bradley Morgan <include@grrlz.net>
+Acked-by: Oleg Nesterov <oleg@redhat.com>
+Cc: "Eric W. Biederman" <ebiederm@xmission.com>
+Cc: Adrian Huang <adrianhuang0701@gmail.com>
+Cc: Aleksandr Nogikh <nogikh@google.com>
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: Marco Elver <elver@google.com>
+Cc: "Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Steven Rostedt <rostedt@goodmis.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ kernel/signal.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
-@@ -1828,17 +1828,18 @@ gotpkt:
- 	if (bus->rxctl) {
- 		brcmf_err("last control frame is being processed.\n");
- 		spin_unlock_bh(&bus->rxctl_lock);
--		vfree(buf);
- 		goto done;
- 	}
- 	bus->rxctl = buf + doff;
- 	bus->rxctl_orig = buf;
- 	bus->rxlen = len - doff;
- 	spin_unlock_bh(&bus->rxctl_lock);
-+	buf = NULL;
+--- a/kernel/signal.c
++++ b/kernel/signal.c
+@@ -1225,6 +1225,7 @@ static inline bool has_si_pid_and_uid(st
+ int send_signal_locked(int sig, struct kernel_siginfo *info,
+ 		       struct task_struct *t, enum pid_type type)
+ {
++	struct kernel_siginfo rewritten;
+ 	/* Should SIGKILL or SIGSTOP be received by a pid namespace init? */
+ 	bool force = false;
  
- done:
- 	/* Awake any waiters */
- 	brcmf_sdio_dcmd_resp_wake(bus);
-+	vfree(buf);
- }
+@@ -1238,6 +1239,9 @@ int send_signal_locked(int sig, struct k
+ 		/* SIGKILL and SIGSTOP is special or has ids */
+ 		struct user_namespace *t_user_ns;
  
- /* Pad read to blocksize for efficiency */
++		rewritten = *info;
++		info = &rewritten;
++
+ 		rcu_read_lock();
+ 		t_user_ns = task_cred_xxx(t, user_ns);
+ 		if (current_user_ns() != t_user_ns) {
 
 
