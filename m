@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0917C34D389;
-	Sat, 12 Sep 2026 16:29:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DD2F2264AB;
+	Sat, 12 Sep 2026 16:29:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789230577; cv=none; b=r3JSRZIXNuTg0pNFdj2Dj6nYA9Mw/SeBT4YCT52qbQDkHkqfvyq4ecPDRMXm1vRtT+a8E9omjsR2owH7KmUD/yvdDgXqK80kHZaeliOEz1b2xzFkvlxABz0FWxdjmwnlU6E2KuwsY3zROv+NXd6cJ8OwqYIF6bRgZYRoHK3YIkQ=
+	t=1789230581; cv=none; b=Ds2cveEh813KyVEx+P4ujkCKzdA+bXI0vjBcBAn0zw1CYwishlRaTLLa7D1yznuJ26duLj1pLKAwjKry+MMZ8yG93T2x8w6NUZabFA5vJQwo0ePlcPk8AaXEDVKLNRZ0fKy0y0u7i5spyuSo3IIb68vzDWgPZlVzaESA67SwXOE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789230577; c=relaxed/simple;
-	bh=8XjJPkk5u3XBsqe8Ews+39YNXrc+ZLIb98rm9X+7Tvs=;
+	s=arc-20240116; t=1789230581; c=relaxed/simple;
+	bh=0+Ih/abTUVevJgAy1kok+C54tTcbA0IrofU7dYfqwOc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=seP9lIsy14klmyHwXQJlDyin1zNmeglxt3ZVYEOAmwbJDyMGe1Hw+6mZZfSD8oBs87IZVe3+ll3NzOdVz7Puj3NGX0PuRRHnzoacL1eoVJ+hPLatOm559tN0IW8JsizClZrT8WzqCAKcOgvoK8i0Xrpco5GGlFaWY2lIgvhItkU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bFPtN3yd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Y7U7Cfmty+2wHEImaMmUc/hijmi8K9ysrSnfeFZJpJhopAiPGWw3DLgVHlWKdpKoM+s1ej+iesCUZLwqb1cDGrbPXfInfCcRB/6X4CxE5M1PcIgCgab4YZgAvbfdF8rPCEFR0K+q8j7b04k7po4AOHRn71XOwaHHNTAOAW6jfI0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bva8pdNg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bFPtN3yd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDEA11F000FF;
-	Sat, 12 Sep 2026 16:29:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bva8pdNg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2A111F000FF;
+	Sat, 12 Sep 2026 16:29:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789230575;
-	bh=weS3Z2mnke4mgja5dRW+YHTK4mGLuhGYJkUTu2EQLOE=;
+	s=korg; t=1789230580;
+	bh=o1K98sPhuzqSJvos6u3tK7kiLGUDenZwmIc8n3T/6rE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bFPtN3ydE5VmfDJvnFAwRhSWuOdRfAj1nViRvcRFQHhx/ZXtTXPIBfGFnGiV9OCdR
-	 ZF+tDuR/ARQSNA0/TTugWmSzh2KC1dGrA3R6Hs5xtMkn4liTUGsUH7Vz8GH7aVOCbL
-	 KQciuoNvborEel4jQpCsunCU2yPCjl7CtSNua1zA=
+	b=bva8pdNg98m07q2DxcOjbXf77HZwfG/cjhtXxsPV0AUKZ5GX0WSEJqAOHJTKpIAez
+	 cCqgwrVJJ31aTpvhTVPm9KZQa1lE0K5VQguAKsJkX0NnBTWacH3eJpQ7B3ub0A5180
+	 k99L0RnnvqMNEyK3IGotuLpzIy2Ua+CPCGQMPJyQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryder Lee <ryder.lee@mediatek.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Pu Lehui <pulehui@huawei.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Amery Hung <ameryhung@gmail.com>,
+	Emil Tsalapatis <emil@etsalapatis.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0821/1191] wifi: mt76: mt7915: add full system reset into debugfs
-Date: Sat, 12 Sep 2026 08:59:09 +0200
-Message-ID: <20260912065606.708285081@linuxfoundation.org>
+Subject: [PATCH 6.1 0786/1191] bpf: Fix potential UAF in bpf_netns_link_update_prog
+Date: Sat, 12 Sep 2026 08:58:34 +0200
+Message-ID: <20260912065605.930800751@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -51,240 +54,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryder Lee <ryder.lee@mediatek.com>
+From: Pu Lehui <pulehui@huawei.com>
 
-[ Upstream commit b662b71ac3cccb50e9a45aae194591fc50e433ce ]
+[ Upstream commit 5c5997836381010fc5907b36bc17d3b19407e933 ]
 
-Trigger firmware crash and enable full system recovery through debugfs.
-This also renames knob "fw_ser" to a clear-cut name "sys_recovery".
+In bpf_netns_link_update_prog, the checks for old_prog and prog type
+are currently performed locklessly before acquiring netns_bpf_mutex.
+This creates a race condition that can lead to a UAF issue.
 
-Signed-off-by: Ryder Lee <ryder.lee@mediatek.com>
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
-Stable-dep-of: 15b960014f24 ("wifi: mt76: mt7915: fix ext PHY use-after-free on register error path")
+If two threads concurrently execute BPF_LINK_UPDATE on the same netns
+link, the following execution path can trigger a UAF:
+
+CPU0                                          CPU1
+bpf_netns_link_update_prog
+  if (old_prog && old_prog != link->prog)
+    return -EPERM;
+                                              bpf_netns_link_update_prog
+                                                if (old_prog && old_prog != link->prog)
+                                                ...
+                                                old_prog = xchg(&link->prog, new_prog);
+                                                bpf_prog_put(old_prog);
+  if (new_prog->type != link->prog->type) <-- trigger UAF
+
+Fix this by moving the old_prog and prog->type checks inside the
+netns_bpf_mutex critical section. Meanwhile, use guard() to simplify
+lock management and avoid all the goto jumping.
+
+Fixes: 7f045a49fee0 ("bpf: Add link-based BPF program attachment to network namespace")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Signed-off-by: Pu Lehui <pulehui@huawei.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Reviewed-by: Amery Hung <ameryhung@gmail.com>
+Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
+Link: https://lore.kernel.org/bpf/f87b53c0-8f00-45a6-82db-8242fa9b143f@huaweicloud.com [0]
+Link: https://lore.kernel.org/bpf/20260728023259.2813482-1-pulehui@huaweicloud.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../wireless/mediatek/mt76/mt7915/debugfs.c   | 81 +++++++++++++++----
- .../net/wireless/mediatek/mt76/mt7915/mac.c   |  5 ++
- .../net/wireless/mediatek/mt76/mt7915/mcu.h   |  2 +
- .../wireless/mediatek/mt76/mt7915/mt7915.h    |  2 +
- .../net/wireless/mediatek/mt76/mt7915/regs.h  |  4 +
- 5 files changed, 80 insertions(+), 14 deletions(-)
+ kernel/bpf/net_namespace.c | 17 ++++++-----------
+ 1 file changed, 6 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/debugfs.c b/drivers/net/wireless/mediatek/mt76/mt7915/debugfs.c
-index 2975128a78c90..80f0488871df7 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7915/debugfs.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7915/debugfs.c
-@@ -46,8 +46,8 @@ DEFINE_DEBUGFS_ATTRIBUTE(fops_implicit_txbf, mt7915_implicit_txbf_get,
+diff --git a/kernel/bpf/net_namespace.c b/kernel/bpf/net_namespace.c
+index 868cc2c438997..a1d14bcb67c57 100644
+--- a/kernel/bpf/net_namespace.c
++++ b/kernel/bpf/net_namespace.c
+@@ -172,33 +172,28 @@ static int bpf_netns_link_update_prog(struct bpf_link *link,
+ 	struct net *net;
+ 	int idx, ret;
  
- /* test knob of system error recovery */
- static ssize_t
--mt7915_fw_ser_set(struct file *file, const char __user *user_buf,
--		  size_t count, loff_t *ppos)
-+mt7915_sys_recovery_set(struct file *file, const char __user *user_buf,
-+			size_t count, loff_t *ppos)
- {
- 	struct mt7915_phy *phy = file->private_data;
- 	struct mt7915_dev *dev = phy->dev;
-@@ -71,8 +71,18 @@ mt7915_fw_ser_set(struct file *file, const char __user *user_buf,
++	guard(mutex)(&netns_bpf_mutex);
++
+ 	if (old_prog && old_prog != link->prog)
+ 		return -EPERM;
+ 	if (new_prog->type != link->prog->type)
  		return -EINVAL;
  
- 	switch (val) {
-+	/*
-+	 * 0: grab firmware current SER state.
-+	 * 1: trigger & enable system error L1 recovery.
-+	 * 2: trigger & enable system error L2 recovery.
-+	 * 3: trigger & enable system error L3 rx abort.
-+	 * 4: trigger & enable system error L3 tx abort
-+	 * 5: trigger & enable system error L3 tx disable.
-+	 * 6: trigger & enable system error L3 bf recovery.
-+	 * 7: trigger & enable system error full recovery.
-+	 * 8: trigger firmware crash.
-+	 */
- 	case SER_QUERY:
--		/* grab firmware SER stats */
- 		ret = mt7915_mcu_set_ser(dev, 0, 0, ext_phy);
- 		break;
- 	case SER_SET_RECOVER_L1:
-@@ -87,6 +97,23 @@ mt7915_fw_ser_set(struct file *file, const char __user *user_buf,
+-	mutex_lock(&netns_bpf_mutex);
+-
+ 	net = net_link->net;
+-	if (!net || !check_net(net)) {
++	if (!net || !check_net(net))
+ 		/* Link auto-detached or netns dying */
+-		ret = -ENOLINK;
+-		goto out_unlock;
+-	}
++		return -ENOLINK;
  
- 		ret = mt7915_mcu_set_ser(dev, SER_RECOVER, val, ext_phy);
- 		break;
-+
-+	/* enable full chip reset */
-+	case SER_SET_RECOVER_FULL:
-+		mt76_set(dev, MT_WFDMA0_MCU_HOST_INT_ENA, MT_MCU_CMD_WDT_MASK);
-+		ret = mt7915_mcu_set_ser(dev, 1, 3, ext_phy);
-+		if (ret)
-+			return ret;
-+
-+		dev->recovery.state |= MT_MCU_CMD_WDT_MASK;
-+		mt7915_reset(dev);
-+		break;
-+
-+	/* WARNING: trigger firmware crash */
-+	case SER_SET_SYSTEM_ASSERT:
-+		mt76_wr(dev, MT_MCU_WM_CIRQ_EINT_MASK_CLR_ADDR, BIT(18));
-+		mt76_wr(dev, MT_MCU_WM_CIRQ_EINT_SOFT_ADDR, BIT(18));
-+		break;
- 	default:
- 		break;
- 	}
-@@ -95,20 +122,45 @@ mt7915_fw_ser_set(struct file *file, const char __user *user_buf,
+ 	run_array = rcu_dereference_protected(net->bpf.run_array[type],
+ 					      lockdep_is_held(&netns_bpf_mutex));
+ 	idx = link_index(net, type, net_link);
+ 	ret = bpf_prog_array_update_at(run_array, idx, new_prog);
+ 	if (ret)
+-		goto out_unlock;
++		return ret;
+ 
+ 	old_prog = xchg(&link->prog, new_prog);
+ 	bpf_prog_put(old_prog);
+-
+-out_unlock:
+-	mutex_unlock(&netns_bpf_mutex);
+-	return ret;
++	return 0;
  }
  
- static ssize_t
--mt7915_fw_ser_get(struct file *file, char __user *user_buf,
--		  size_t count, loff_t *ppos)
-+mt7915_sys_recovery_get(struct file *file, char __user *user_buf,
-+			size_t count, loff_t *ppos)
- {
- 	struct mt7915_phy *phy = file->private_data;
- 	struct mt7915_dev *dev = phy->dev;
- 	char *buff;
- 	int desc = 0;
- 	ssize_t ret;
--	static const size_t bufsz = 400;
-+	static const size_t bufsz = 1024;
- 
- 	buff = kmalloc(bufsz, GFP_KERNEL);
- 	if (!buff)
- 		return -ENOMEM;
- 
-+	/* HELP */
-+	desc += scnprintf(buff + desc, bufsz - desc,
-+			  "Please echo the correct value ...\n");
-+	desc += scnprintf(buff + desc, bufsz - desc,
-+			  "0: grab firmware transient SER state\n");
-+	desc += scnprintf(buff + desc, bufsz - desc,
-+			  "1: trigger system error L1 recovery\n");
-+	desc += scnprintf(buff + desc, bufsz - desc,
-+			  "2: trigger system error L2 recovery\n");
-+	desc += scnprintf(buff + desc, bufsz - desc,
-+			  "3: trigger system error L3 rx abort\n");
-+	desc += scnprintf(buff + desc, bufsz - desc,
-+			  "4: trigger system error L3 tx abort\n");
-+	desc += scnprintf(buff + desc, bufsz - desc,
-+			  "5: trigger system error L3 tx disable\n");
-+	desc += scnprintf(buff + desc, bufsz - desc,
-+			  "6: trigger system error L3 bf recovery\n");
-+	desc += scnprintf(buff + desc, bufsz - desc,
-+			  "7: trigger system error full recovery\n");
-+	desc += scnprintf(buff + desc, bufsz - desc,
-+			  "8: trigger firmware crash\n");
-+
-+	/* SER statistics */
-+	desc += scnprintf(buff + desc, bufsz - desc,
-+			  "\nlet's dump firmware SER statistics...\n");
- 	desc += scnprintf(buff + desc, bufsz - desc,
- 			  "::E  R , SER_STATUS        = 0x%08x\n",
- 			  mt76_rr(dev, MT_SWDEF_SER_STATS));
-@@ -139,15 +191,19 @@ mt7915_fw_ser_get(struct file *file, char __user *user_buf,
- 	desc += scnprintf(buff + desc, bufsz - desc,
- 			  "::E  R , SER_LMAC_WISR7_B1 = 0x%08x\n",
- 			  mt76_rr(dev, MT_SWDEF_LAMC_WISR7_BN1_STATS));
-+	desc += scnprintf(buff + desc, bufsz - desc,
-+			  "\nSYS_RESET_COUNT: WM %d, WA %d\n",
-+			  dev->recovery.wm_reset_count,
-+			  dev->recovery.wa_reset_count);
- 
- 	ret = simple_read_from_buffer(user_buf, count, ppos, buff, desc);
- 	kfree(buff);
- 	return ret;
- }
- 
--static const struct file_operations mt7915_fw_ser_ops = {
--	.write = mt7915_fw_ser_set,
--	.read = mt7915_fw_ser_get,
-+static const struct file_operations mt7915_sys_recovery_ops = {
-+	.write = mt7915_sys_recovery_set,
-+	.read = mt7915_sys_recovery_get,
- 	.open = simple_open,
- 	.llseek = default_llseek,
- };
-@@ -598,10 +654,6 @@ mt7915_fw_util_wm_show(struct seq_file *file, void *data)
- 	struct mt7915_dev *dev = file->private;
- 
- 	seq_printf(file, "Program counter: 0x%x\n", mt76_rr(dev, MT_WM_MCU_PC));
--	seq_printf(file, "Exception state: 0x%x\n",
--		   is_mt7915(&dev->mt76) ?
--		   (u32)mt76_get_field(dev, MT_FW_EXCEPTION, GENMASK(15, 8)) :
--		   (u32)mt76_get_field(dev, MT_FW_EXCEPTION, GENMASK(7, 0)));
- 
- 	if (dev->fw.debug_wm) {
- 		seq_printf(file, "Busy: %u%%  Peak busy: %u%%\n",
-@@ -1010,7 +1062,8 @@ int mt7915_init_debugfs(struct mt7915_phy *phy)
- 	debugfs_create_file("xmit-queues", 0400, dir, phy,
- 			    &mt7915_xmit_queues_fops);
- 	debugfs_create_file("tx_stats", 0400, dir, phy, &mt7915_tx_stats_fops);
--	debugfs_create_file("fw_ser", 0600, dir, phy, &mt7915_fw_ser_ops);
-+	debugfs_create_file("sys_recovery", 0600, dir, phy,
-+			    &mt7915_sys_recovery_ops);
- 	debugfs_create_file("fw_debug_wm", 0600, dir, dev, &fops_fw_debug_wm);
- 	debugfs_create_file("fw_debug_wa", 0600, dir, dev, &fops_fw_debug_wa);
- 	debugfs_create_file("fw_debug_bin", 0600, dir, dev, &fops_fw_debug_bin);
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/mac.c b/drivers/net/wireless/mediatek/mt76/mt7915/mac.c
-index 9eb1f1f4d3d58..636a2a2f32094 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7915/mac.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7915/mac.c
-@@ -1495,6 +1495,11 @@ void mt7915_mac_reset_work(struct work_struct *work)
- 		mt76_clear(dev, MT_WFDMA0_MCU_HOST_INT_ENA,
- 			   MT_MCU_CMD_WDT_MASK);
- 
-+		if (READ_ONCE(dev->recovery.state) & MT_MCU_CMD_WA_WDT)
-+			dev->recovery.wa_reset_count++;
-+		else
-+			dev->recovery.wm_reset_count++;
-+
- 		mt7915_mac_full_reset(dev);
- 
- 		/* enable mcu irq */
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/mcu.h b/drivers/net/wireless/mediatek/mt76/mt7915/mcu.h
-index be2d5349b6389..78e2fd5d5fdb2 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7915/mcu.h
-+++ b/drivers/net/wireless/mediatek/mt76/mt7915/mcu.h
-@@ -447,6 +447,8 @@ enum {
- 	SER_SET_RECOVER_L3_TX_ABORT,
- 	SER_SET_RECOVER_L3_TX_DISABLE,
- 	SER_SET_RECOVER_L3_BF,
-+	SER_SET_RECOVER_FULL,
-+	SER_SET_SYSTEM_ASSERT,
- 	/* action */
- 	SER_ENABLE = 2,
- 	SER_RECOVER
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/mt7915.h b/drivers/net/wireless/mediatek/mt76/mt7915/mt7915.h
-index d13e33d0346c9..ceef06c8a2120 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7915/mt7915.h
-+++ b/drivers/net/wireless/mediatek/mt76/mt7915/mt7915.h
-@@ -306,6 +306,8 @@ struct mt7915_dev {
- 
- 	struct {
- 		u32 state;
-+		u32 wa_reset_count;
-+		u32 wm_reset_count;
- 		bool hw_full_reset:1;
- 		bool hw_init_done:1;
- 		bool restart:1;
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/regs.h b/drivers/net/wireless/mediatek/mt76/mt7915/regs.h
-index 0fc74e3efa9a5..d42e525f55578 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7915/regs.h
-+++ b/drivers/net/wireless/mediatek/mt76/mt7915/regs.h
-@@ -711,6 +711,8 @@ enum offs_rev {
- #define MT_MCU_CMD_NORMAL_STATE		BIT(5)
- #define MT_MCU_CMD_ERROR_MASK		GENMASK(5, 1)
- 
-+#define MT_MCU_CMD_WA_WDT		BIT(31)
-+#define MT_MCU_CMD_WM_WDT		BIT(30)
- #define MT_MCU_CMD_WDT_MASK		GENMASK(31, 30)
- 
- /* TOP RGU */
-@@ -1128,5 +1130,7 @@ enum offs_rev {
- #define MT_MCU_WM_CIRQ(ofs)			(MT_MCU_WM_CIRQ_BASE + (ofs))
- #define MT_MCU_WM_CIRQ_IRQ_MASK_CLR_ADDR	MT_MCU_WM_CIRQ(0x80)
- #define MT_MCU_WM_CIRQ_IRQ_SOFT_ADDR		MT_MCU_WM_CIRQ(0xc0)
-+#define MT_MCU_WM_CIRQ_EINT_MASK_CLR_ADDR	MT_MCU_WM_CIRQ(0x108)
-+#define MT_MCU_WM_CIRQ_EINT_SOFT_ADDR		MT_MCU_WM_CIRQ(0x118)
- 
- #endif
+ static int bpf_netns_link_fill_info(const struct bpf_link *link,
 -- 
 2.53.0
 
