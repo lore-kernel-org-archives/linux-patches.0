@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E13EB373BF2;
-	Sat, 12 Sep 2026 13:14:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB0BA38655A;
+	Sat, 12 Sep 2026 13:14:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789218849; cv=none; b=qWkOGnan7hSI5PhrF5VPm8fC0wlIJmLj1cWH1U4mm8zGaYefzMfSIkzYMLG9vdsBc1eI+UIsSKW44SX9r+/xYqj91kB7gawj/mI8ROm8xpPJyZjgxEbCFCNTNn7Wn1GOfg2giWQ+CSENThlPECFv9N/b5UYC45nRi/dkGW261LI=
+	t=1789218854; cv=none; b=dN4cF6P7Khynsu74aoHImjIhj12QN+xD+/W8uCWdbwaxyq6R/j23OPXuzeOux/pqYFHqdTR/FDvq9xRXD9uO+vhry3fZpJGqGz/VKit83Iqsv8l8adrB53MO8YqsRQ/CxsJ2Nk7Qxrntn2zfRvIlrpLajCQKr+08JuHoLBvJi1I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789218849; c=relaxed/simple;
-	bh=KftMS3EJhYv8OsyBcCw2F2jq6CzsjNxPlZyQyxyou6o=;
+	s=arc-20240116; t=1789218854; c=relaxed/simple;
+	bh=JJfgTdnuNiGQRCrNU3gG76rPYQBH5ISVRr++N3rBjy4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a2LO/r9U1rs24TUYoir1BMRV0obpHvBcxfuHRKDqnt+4zy1ALRrmlHRZ5iPXZ4h3R3nn79VAGKI26y8k9FeUJuWAQNsHPCfjesyHZlxb93uYB1ThaE3jLzrO+VW88L9Hz6KM9xjQtQfkLTNpv11Sc7H44ZIoIYPM4NgTYeseqB8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JNn/95vj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LenvKQ4xBfXhrEUd0VGLAJwZITeNN4Sp7vewM4VOP4+TisoJB3imNW56/ewcReZtgzBVCGu8xVr09nXZpcMo1QihYFoPSAAAeUOMJjVoKVI1b6PtLROvoL6lF1OpBj6HJcjJTtdrpnN9jKscYpqUYg3L1gefKjsWcIH/cdXIVgg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FiEqtaGG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JNn/95vj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35DD81F000FF;
-	Sat, 12 Sep 2026 13:14:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FiEqtaGG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C0ED1F000FF;
+	Sat, 12 Sep 2026 13:14:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789218848;
-	bh=Wa+XtD3V7NkqatRa+gO6J7pfKs+AUuEzY58jUWsStNw=;
+	s=korg; t=1789218853;
+	bh=epeYEyyj8rbaoWI07hjdTVpvJqRrlwKQzfVeefiQriA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JNn/95vj1ZbaL97ilREjO6dvOeJZkasWKG0+Y1yVT2SBVq8R+HPttKXwzclSJWYbU
-	 fy/jcrgQ5xSczI8O7RY6wA6R/lk/DZ0HQ9JWlRPhzMz6Vk8wgLaN7MjKnuwTMg+ln+
-	 9MZPIG4e9UI0Y09D8zCAHBejKXfpM+/49vimxyYk=
+	b=FiEqtaGGSbKiot6onZSDalIbAY71zZkoP/cW1rjSxketx3Y4Hcak2z7cu58h44nRZ
+	 thGUmeVJfQBohe8QAn5GmRX//fJlpB3pfTwFaB6nHlmGNIdcAIeRcEq+RS47Gk/QW8
+	 X1tdUk4iBNtljpoN5X69Di4p9XmqGwus2YIdoxVM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li RongQing <lirongqing@baidu.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1230/1376] virtio_pci: fix wrong queue index for admin vq in intx path
-Date: Sat, 12 Sep 2026 09:00:56 +0200
-Message-ID: <20260912065634.959105638@linuxfoundation.org>
+Subject: [PATCH 6.12 1204/1376] net: bridge: vlan: fix inverted default vlan notification
+Date: Sat, 12 Sep 2026 09:00:30 +0200
+Message-ID: <20260912065634.383991964@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,40 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li RongQing <lirongqing@baidu.com>
+From: Nikolay Aleksandrov <razor@blackwall.org>
 
-[ Upstream commit dc3f1eef9ab678c396baf5df12aba61db061aa8c ]
+[ Upstream commit 21040c7f931502070dcc66bb0f1aeed07dec032b ]
 
-In vp_find_vqs_intx(), the admin vq was set up using the local
-queue_idx counter instead of avq->vq_index (the actual queue index
-obtained from the device). This differs from vp_find_vqs_msix() which
-correctly uses avq->vq_index. Using the wrong index causes the admin
-virtqueue to be mapped to an incorrect hardware queue.
+A notification should be emitted only when the vlan delete was successful
+and not otherwise. The proper check is if br/nbp_vlan_delete returned 0.
 
-Fix it by using avq->vq_index consistent with the msix path.
-
-Fixes: af22bbe1f4a5 ("virtio: create admin queues alongside other virtqueues")
-Signed-off-by: Li RongQing <lirongqing@baidu.com>
-Message-ID: <20260629033538.2476-1-lirongqing@baidu.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Fixes: f545923b4a6b ("net: bridge: vlan: notify on vlan add/delete/change flags")
+Signed-off-by: Nikolay Aleksandrov <razor@blackwall.org>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260814141640.64958-1-razor@blackwall.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/virtio/virtio_pci_common.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/bridge/br_vlan.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/virtio/virtio_pci_common.c b/drivers/virtio/virtio_pci_common.c
-index 189261d230d2e..af31711f3861a 100644
---- a/drivers/virtio/virtio_pci_common.c
-+++ b/drivers/virtio/virtio_pci_common.c
-@@ -502,7 +502,7 @@ static int vp_find_vqs_intx(struct virtio_device *vdev, unsigned int nvqs,
- 	if (!avq_num)
- 		return 0;
- 	sprintf(avq->name, "avq.%u", avq->vq_index);
--	vq = vp_setup_vq(vdev, queue_idx++, vp_modern_avq_done, avq->name,
-+	vq = vp_setup_vq(vdev, avq->vq_index, vp_modern_avq_done, avq->name,
- 			 false, VIRTIO_MSI_NO_VECTOR,
- 			 &vp_dev->admin_vq.info);
- 	if (IS_ERR(vq)) {
+diff --git a/net/bridge/br_vlan.c b/net/bridge/br_vlan.c
+index 1aa3830352948..a61211a09e1e8 100644
+--- a/net/bridge/br_vlan.c
++++ b/net/bridge/br_vlan.c
+@@ -1129,7 +1129,7 @@ int __br_vlan_set_default_pvid(struct net_bridge *br, u16 pvid,
+ 		if (err)
+ 			goto out;
+ 
+-		if (br_vlan_delete(br, old_pvid))
++		if (!br_vlan_delete(br, old_pvid))
+ 			br_vlan_notify(br, NULL, old_pvid, 0, RTM_DELVLAN);
+ 		br_vlan_notify(br, NULL, pvid, 0, RTM_NEWVLAN);
+ 		__set_bit(0, changed);
+@@ -1151,7 +1151,7 @@ int __br_vlan_set_default_pvid(struct net_bridge *br, u16 pvid,
+ 				   &vlchange, extack);
+ 		if (err)
+ 			goto err_port;
+-		if (nbp_vlan_delete(p, old_pvid))
++		if (!nbp_vlan_delete(p, old_pvid))
+ 			br_vlan_notify(br, p, old_pvid, 0, RTM_DELVLAN);
+ 		br_vlan_notify(p->br, p, pvid, 0, RTM_NEWVLAN);
+ 		__set_bit(p->port_no, changed);
 -- 
 2.53.0
 
