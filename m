@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8811E22A7F6;
-	Sat, 12 Sep 2026 14:02:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3511F2DB788;
+	Sat, 12 Sep 2026 14:02:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789221773; cv=none; b=dT1BnA5FIbzCZF8kPHNucro2DNpYU3pVKp/xLZzYTIl1fcrc7y8pyoT0OUDiLROEmcnuzDuyztH16SND/0K3pMECJjrbEdZQK/+lQtW6SJ7VzmT0rLf8mvKOGum2HBOsGRlh/8Vp4dTLxYwZTN1fyWx0+/rsgrbkww1Y62ZwG/Q=
+	t=1789221778; cv=none; b=Cyd+JOxJsCKBq1ROA6T/so30PCSHQadMirPuDS19jaHlK6i/WKIN7tRx4MI65Y/6x8pauVtZy8iCv31Q8abfb+hz0PUHFtzs7nt8+hXuRZouzqA1inbztlxx6H0hPKG5KpV7WHuhEPEhmwwiqdBs+Jzs1JbcrtZD+2JaINiklQg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789221773; c=relaxed/simple;
-	bh=nyD2AZSz+yk5FQpoC3isUj4UZD8ICYD4Qwm3IcOabl0=;
+	s=arc-20240116; t=1789221778; c=relaxed/simple;
+	bh=WDkouc5oIVEeZEhPnNAv/EG0YG2rwchhYnO3YGqctwA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WJKiy3TWVHyMUB0p0ItjNzHaVu6eew5Wh2sSS0guQ4j41JaVlgZULLjxL3C2MXHI2nyM/h+pKwWnXOEY9C+1pIry59UBxXEcFVLIJMK8Zb78DFxfQKaB/iHqMZglPUqNS9jMwAoLp+drUAw4k5zSVW+4pPac1sMq26pRXQBFp8w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FMUO/OMm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=d15YYTom593q2SEnjONWY7AcxQVqjPB0nTjRNNxRw8DqW+yzZTlbBl2hky5zNw8HFP0l5sv455yMoM6vYOoKp/cs4qZM1HI/0FpTPvN1nN6K1qF83Y1AaKs6LWRtHp/kLS7pKErVSP7Xpg0s47VB36GeGnyCjSm13uFaDe6sELA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0gpzcr5U; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FMUO/OMm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D15A1F000FF;
-	Sat, 12 Sep 2026 14:02:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0gpzcr5U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E6C11F000FF;
+	Sat, 12 Sep 2026 14:02:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789221772;
-	bh=F9IzqwDKlyAlQjylFFMx19tObnO7VxQvUOmlOuay5RE=;
+	s=korg; t=1789221777;
+	bh=7jsSINMZYqOTsHrDN/Yvl2CLIkSFxopIwLwDZilxYfE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FMUO/OMmcEwN8SEnvZeIsVq7Dq4djrgyRhWIcoeyoLcdy+sddjcflzAyCpxi8IKNB
-	 tD0Z6gVSG3QxMovJb+82xwPJinHvMOQ13JfU1zuxXeCsFKsFStol8fRMlbGRwSrdiH
-	 uF6ylX1jh220tugqFCY3a16qoIzkTyHJrLdIEr/8=
+	b=0gpzcr5UY0jFjzmJKJipNm1JN0Mf/P3Bs4aBDUuSlLC6/hH53dFAQSpDmXH0y+J8t
+	 My59L37fGaPYy0FRRx9gf8z4Xp7F6iDV2d7nDzyyV+R2Z57sFCts3kq377DRYpJ6nt
+	 KDTtZrk+g1YeivF/AW9GRenB6Nd20/ZYlciMvLkk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Biren Pandya <birenpandya@gmail.com>,
-	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
 	Sakari Ailus <sakari.ailus@linux.intel.com>
-Subject: [PATCH 6.6 0452/1424] media: i2c: ov02a10: fix endpoint parsing use-after-free
-Date: Sat, 12 Sep 2026 08:48:04 +0200
-Message-ID: <20260912065617.406117790@linuxfoundation.org>
+Subject: [PATCH 6.6 0453/1424] media: i2c: ov7740: fix use-after-destroy in remove
+Date: Sat, 12 Sep 2026 08:48:05 +0200
+Message-ID: <20260912065617.429087487@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -53,57 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Biren Pandya <birenpandya@gmail.com>
 
-commit 94971ba0592ca77ec99b292226a4b398763315b8 upstream.
+commit 5d1b3dea5a44124bab6c14a2d71b977dabed54e7 upstream.
 
-The ov02a10_check_hwcfg() function calls fwnode_handle_put(ep)
-immediately after allocating and parsing the endpoint. However, it
-subsequently calls fwnode_property_read_u32() using the same 'ep'
-handle, leading to a potential use-after-free.
+The ov7740_remove() function had a severe teardown order bug where it
+destroyed the driver's mutex before freeing the V4L2 control handler
+which relies on that mutex, leading to a use-after-destroy kernel panic.
+Furthermore, the driver explicitly called v4l2_ctrl_handler_free() and
+mutex_destroy() sequentially, but then called ov7740_free_controls()
+which invokes both of them a second time, resulting in a double-free.
 
-Additionally, reading the optional 'ovti,mipi-clock-voltage' property
-used to overwrite the 'ret' variable. If the property was missing,
-'ret' would become negative, and this failure code would be incorrectly
-returned at the end of the function, causing probe to fail entirely.
+This patch fixes the issue by unregistering the subdevice first, and
+relying exclusively on ov7740_free_controls() to safely tear down the
+mutex and control handler in the correct order.
 
-Fix the use-after-free by moving fwnode_property_read_u32() before
-the endpoint is parsed and freed. Avoid the error leak by not
-assigning the result of fwnode_property_read_u32() to 'ret'.
-
-Fixes: 91807efbe8ec ("media: i2c: add OV02A10 image sensor driver")
+Fixes: 39c5c4471b8d ("media: i2c: Add the ov7740 image sensor driver")
 Cc: stable@vger.kernel.org
 Signed-off-by: Biren Pandya <birenpandya@gmail.com>
-Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/i2c/ov02a10.c |   12 +++++-------
- 1 file changed, 5 insertions(+), 7 deletions(-)
+ drivers/media/i2c/ov7740.c |    4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
---- a/drivers/media/i2c/ov02a10.c
-+++ b/drivers/media/i2c/ov02a10.c
-@@ -821,18 +821,16 @@ static int ov02a10_check_hwcfg(struct de
- 	if (!ep)
- 		return -ENXIO;
+--- a/drivers/media/i2c/ov7740.c
++++ b/drivers/media/i2c/ov7740.c
+@@ -1158,10 +1158,8 @@ static void ov7740_remove(struct i2c_cli
+ 	struct v4l2_subdev *sd = i2c_get_clientdata(client);
+ 	struct ov7740 *ov7740 = container_of(sd, struct ov7740, subdev);
  
-+	/* Optional indication of MIPI clock voltage unit */
-+	if (!fwnode_property_read_u32(ep, "ovti,mipi-clock-voltage",
-+				      &clk_volt))
-+		ov02a10->mipi_clock_voltage = clk_volt;
-+
- 	ret = v4l2_fwnode_endpoint_alloc_parse(ep, &bus_cfg);
- 	fwnode_handle_put(ep);
- 	if (ret)
- 		return ret;
+-	mutex_destroy(&ov7740->mutex);
+-	v4l2_ctrl_handler_free(ov7740->subdev.ctrl_handler);
+-	media_entity_cleanup(&ov7740->subdev.entity);
+ 	v4l2_async_unregister_subdev(sd);
++	media_entity_cleanup(&ov7740->subdev.entity);
+ 	ov7740_free_controls(ov7740);
  
--	/* Optional indication of MIPI clock voltage unit */
--	ret = fwnode_property_read_u32(ep, "ovti,mipi-clock-voltage",
--				       &clk_volt);
--
--	if (!ret)
--		ov02a10->mipi_clock_voltage = clk_volt;
--
- 	for (i = 0; i < ARRAY_SIZE(link_freq_menu_items); i++) {
- 		for (j = 0; j < bus_cfg.nr_of_link_frequencies; j++) {
- 			if (link_freq_menu_items[i] ==
+ 	pm_runtime_get_sync(&client->dev);
 
 
