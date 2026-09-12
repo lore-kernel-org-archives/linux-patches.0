@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A812352022;
-	Sat, 12 Sep 2026 15:38:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D192E3F9F50;
+	Sat, 12 Sep 2026 15:38:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789227522; cv=none; b=fFGlzsQ6+yA7Ka8a5U7YOb49uaVE9bP/X2Zre9vnvjz9xgKsgOW7rivSTxxKTLksaUaNkandTI8tFCJg3KBSKchD44l6SZ0IDzAwEsG45uufimwBMFH66RzO4M6ABi/XQH37Ptkw+J63t6gzyEk0K47D0K8xSOuIZ6z78hr+j0w=
+	t=1789227527; cv=none; b=OcNsFIoZLarARbs55/52SoJ6R3JqnY8qXmSb5cmUk+Hkl/R7rC63lhTVozYWidHhjgzsRoBQ5aRMbhW3JJPZARg4ezJZ2RgsIMzjkuc/+uO0acI8otCe7UJvCn3JIqoWl7iHo2HHfk1qX1KB9K6LXn7n2WoRM05l7xujNfAKlps=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789227522; c=relaxed/simple;
-	bh=KCrGzhPheZCXi129tGG2UKEdHB8dILRT+3zVFzy7QrE=;
+	s=arc-20240116; t=1789227527; c=relaxed/simple;
+	bh=BBhOieFay7egJjC8TkPPaYoznWuFvABAWAMkuiE5j4c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sv+OyitfcjlPCztstHzan7beWpXH3K0ZvkAjvd0dtTeH9XcXuxlJuNhroANIp7trBTNGkbFYg3jtvSmRuXIu2dSKaq05L9aX0HO5JuplcUFIQwbRsuZs7ndbl5OcXowurgGHN/W6BLozXlqxY3KgXV39am71s7zJVkYVAgQUD20=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VvpFr+uH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=tYNyzL71yJdRq0WpsrGlp4RmN8TXX5rv26iHf3KRZMwOrHVApnWORwhImiWellQY39xvdc5Wl0B7yWPDPOaKJXpEEz1sqw161OeJUSI8TMMRqhrs0P9RQt32k2Ew6kpo0R48wmTf/VqTVLBH+lBs0MOO6QZGS4WgAcbKd7lr+/k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0gw5msr4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VvpFr+uH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22CF61F000FF;
-	Sat, 12 Sep 2026 15:38:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0gw5msr4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84F5F1F000FF;
+	Sat, 12 Sep 2026 15:38:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789227520;
-	bh=U/GFXjHRm7Xa+MgDTanep595vnLHB1n7EAfkxV/5tWQ=;
+	s=korg; t=1789227525;
+	bh=ZCP+O5UuzPYexAI/6uzoYL46IfrwkfMNk2zBPrM8t+4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VvpFr+uH5x30kTjtPlfDr+BQ1lYCgR4xF7n6mzYtFbV+QnypWx/dmirL2nRAWjy3g
-	 X00+5r2W3ePL8TfBPrjfebVupqV2wrX4WwjTHB3O9joaSx2FijHR0wIMZCDmVFmSUt
-	 W3AyrMMNprz9CiwCu8r5I2G91i2v8o9Ctjpnk6T8=
+	b=0gw5msr43+V3JDOMgafQRUm/+S8kxUBwO/zJk2HtDWCRWC/TXK9h6khylC9g9TTtP
+	 snjSFRgBhy3CC+VHW6wB222B9CyqXAafPeZGs/Pum2zf53DZAuN5wjouW/xQcJt9N4
+	 tfBuUAEpRSGKIVCSLxwwkhEZXxe5qNMvg3bH5FWE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	WenTao Liang <vulab@iscas.ac.cn>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.1 0146/1191] regulator: max8998_pmic_dt_parse_pdata: of_node_put on reg_np after ownership transferred to rdata
-Date: Sat, 12 Sep 2026 08:47:54 +0200
-Message-ID: <20260912065551.481722659@linuxfoundation.org>
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>
+Subject: [PATCH 6.1 0192/1191] PCI/proc: Warn on writes to kernel-exclusive config space regions
+Date: Sat, 12 Sep 2026 08:48:40 +0200
+Message-ID: <20260912065552.526694387@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -44,44 +44,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: WenTao Liang <vulab@iscas.ac.cn>
+From: Krzysztof Wilczyński <kwilczynski@kernel.org>
 
-commit 7c8cc25d8d86f9eb3979255935cfdc7d062ad746 upstream.
+commit 3359e044d597dd5344f17613e4be6b6e12067f60 upstream.
 
-In max8998_pmic_dt_parse_pdata(), of_get_child_by_name() acquires a
-reference on reg_np which is then stored in rdata->reg_node, transferring
-ownership to the regulator data array. The subsequent of_node_put(reg_np)
-at the end of the function releases the last matched regulator node's
-reference, leaving rdata->reg_node as a dangling pointer for the last
-entry.
+Currently, a driver can claim a region of a device's config space as
+exclusive using pci_request_config_region_exclusive(), after which a write
+to that region originating from user space is expected to emit a warning
+and taint the kernel.  The check is advisory only, as the write itself is
+still allowed to proceed.
 
-Remove the spurious of_node_put(reg_np) call.
+Since commit 278294798ac9 ("PCI: Allow drivers to request exclusive config
+regions"), the sysfs config space attribute performs this check in
+pci_write_config(), but the procfs interface was never updated.  A write
+performed through /proc/bus/pci/BB/DD.F therefore bypasses the detection
+entirely, even though both interfaces offer the same level of access.
 
+Add the same resource_is_exclusive() check to proc_bus_pci_write().
+
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
 Cc: stable@vger.kernel.org
-Fixes: 156f252857df ("drivers: regulator: add Maxim 8998 driver")
-Signed-off-by: WenTao Liang <vulab@iscas.ac.cn>
-Link: https://patch.msgid.link/20260626160326.54457-1-vulab@iscas.ac.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://patch.msgid.link/20260729075413.1215821-1-kwilczynski@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/regulator/max8998.c |    1 -
- 1 file changed, 1 deletion(-)
+ drivers/pci/proc.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/regulator/max8998.c
-+++ b/drivers/regulator/max8998.c
-@@ -611,7 +611,6 @@ static int max8998_pmic_dt_parse_pdata(s
- 	}
- 	pdata->num_regulators = rdata - pdata->regulators;
+--- a/drivers/pci/proc.c
++++ b/drivers/pci/proc.c
+@@ -14,6 +14,8 @@
+ #include <linux/capability.h>
+ #include <linux/uaccess.h>
+ #include <linux/security.h>
++#include <linux/panic.h>
++#include <linux/sched.h>
+ #include <asm/byteorder.h>
+ #include "pci.h"
  
--	of_node_put(reg_np);
- 	of_node_put(regulators_np);
+@@ -127,6 +129,12 @@ static ssize_t proc_bus_pci_write(struct
+ 	if (!nbytes)
+ 		return 0;
  
- 	ret = max8998_pmic_dt_parse_dvs_gpio(iodev, pdata, pmic_np);
++	if (resource_is_exclusive(&dev->driver_exclusive_resource, pos, nbytes)) {
++		pci_warn_once(dev, "%s: Unexpected write to kernel-exclusive config offset %x",
++			      current->comm, pos);
++		add_taint(TAINT_USER, LOCKDEP_STILL_OK);
++	}
++
+ 	if (pos >= size)
+ 		return 0;
+ 	if (nbytes >= size)
 
 
