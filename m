@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB62F38B7D2;
-	Sat, 12 Sep 2026 13:27:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 405B647CC9C;
+	Sat, 12 Sep 2026 13:27:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789219623; cv=none; b=HwJRyQ29IWMU9WULcWy+N7eyEEctZGKmMnI6avZBvkk0LDsThzXjVHN+Nqyaxh/KWeIOfhCxPjZab3y6kt01/0TbrOBqqz+IZhFGLCV8MwIGs6GYYIRIzg1CWklNgoIvAlHc9AyN5rwsXYSEtesO+yx8gpwzyJ7Dt2lbo1cbZRk=
+	t=1789219628; cv=none; b=utoUaJZZ8DRcrsbUPuHBBFCcZv6iYB1LOQXN5jczNr59Tu/fPDk1ITZpoKtS7sEYPIxRXaaqddypI7xl910snosHpoGp8BqPTthe8MGlXj05D2kbp3QKLkq1FfF50G6zu2STHZd5kwITp6XDk374OljhhJC9hjSXEyW6iKMCbGc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789219623; c=relaxed/simple;
-	bh=0566iurWg/3M1vFOSUE8tJATs/J/n8r0W9Pxlc5cMtQ=;
+	s=arc-20240116; t=1789219628; c=relaxed/simple;
+	bh=mOrJOZFwiYkShlwU3FHf2qu4yPBDfgrfTlksjCfAD/A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nrWzEPh9tOG2L9zTxtjpfQ0ce3MJn20f9yL8cCF6FydPOoOVw4QddikKPBe+204p+u4YJFe6r7wHIpt9Ux38RZcyss6+bGgDHqvBT7E+KJXh8y9oqPNOWvnAguaOjuAcGHK0bMHgONYp4SPuwiCYqgBC9UwGetUkcx27gnOsM24=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KjnDXiSY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=VGMre+pb5P52XR2Jbkx7HLjRjzdf/Xb8Hwv6pOs90+G9C3FdSExTFQaGlZ/huK264o8/zNpqHdPQh1zPHknqky3ovxG++wfIh4L7yyFDWIJXymjixPyEmP+xu+KDPTFzFAkBWzTR8Yhw0o9msS9FDZOr3nPn4D7yVhrE5NtmPBI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ma9ohQ0y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KjnDXiSY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 735791F000FF;
-	Sat, 12 Sep 2026 13:27:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ma9ohQ0y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13E631F000FF;
+	Sat, 12 Sep 2026 13:27:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789219622;
-	bh=FiFkJiWWshZFT5/cQ1r3VlL9bmj6vfNwAUoRtAMT7O0=;
+	s=korg; t=1789219627;
+	bh=Ugze1dYu989r9/A7r95vyS5BqNfcYk1xYykiEu8z/JE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KjnDXiSYLSxlT0c8D0pJFOmdbdMgEF0BfiaCfWMkQU1/XocGfXHmkzRiAdizV9pGh
-	 3i3i7OlkhHo8D2Yv1UKi9+jpZAq8P6SZHFCNApXUjoEEUfYC7vX/O/xKTzLZQJtFT0
-	 HkkgcnYbXxMCwPsgPs4OO23sCW0/Nkfyjz4PahFk=
+	b=ma9ohQ0y9WqNL2n7rbJNJxURyVEl11ymhtaAFRgTblJj/xEsudWDYjD4YSdq34h4h
+	 FIgjSedMw9A0JmNZDcy4FbwS1plOIRkiro+xoLin64SD/iw0EFnhA0dSAs0LJQMF5l
+	 elyM2/x2bzlc+WlMgSKJxcZQoLr5MZ5ycn2HGp+o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaurav Batra <gbatra@linux.ibm.com>,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>
-Subject: [PATCH 6.6 0012/1424] powerpc/pseries/iommu: switch to Default DMA window during kdump
-Date: Sat, 12 Sep 2026 08:40:44 +0200
-Message-ID: <20260912065607.567519231@linuxfoundation.org>
+	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
+	Thomas Gleixner <tglx@kernel.org>
+Subject: [PATCH 6.6 0013/1424] timers/itimer: Zero-init old itimerval before copy to userspace
+Date: Sat, 12 Sep 2026 08:40:45 +0200
+Message-ID: <20260912065607.591358192@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -45,125 +44,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gaurav Batra <gbatra@linux.ibm.com>
+From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
 
-commit 1304643a1c20badbb91b86a5084dd76cb7620c05 upstream.
+commit 18c7d85864e554adc8fad1e8d2e9d2cb6c3911c8 upstream.
 
-In PowerPC (pseries) a non-virtualized adapter will have 2 DMA windows -
-2GB default and a larger Dynamic DMA Window (DDW). DDW is large enough to
-map total RAM to a device.
+On native sparc64, struct __kernel_old_timeval contains a four-byte hole
+after tv_usec because tv_sec is 64-bit while __kernel_suseconds_t is 32-bit.
+put_itimerval() fills only the named fields in a stack-allocated
+__kernel_old_itimerval and copies the entire object to userspace, so
+getitimer() can expose the two padding holes.
 
-During normal functioning of OS, since RAM is pre-mapped, 2GB default
-window is not used. The only scenario it might get used is when buffers in
-pmemory are mapped to the device for DMA.
+Zero-initialize the aggregate before assigning the fields so implicit
+padding is deterministic before it crosses the user/kernel boundary.
 
-As of today, during kdump, during early device discovery, pci_dma_find()
-finds that the device has 2 DMA windows. It selects to use DDW. This is a
-kdump path and DMA window is needed for IO to the device.
-
-Although commit 09a3c1e46142 ("powerpc/pseries/iommu: IOMMU table is not
-initialized for kdump over SR-IOV") fixed an issue during kdump with SR-IOV
-case, but this also made the kdump prefer DDW over the default DMA window
-when both are present (dedicated adapter case). Since the DDW is fully
-mapped by the previous kernel, iommu_table_clear() can free only
-KDUMP_MIN_TCE_ENTRIES (2048) TCEs for use by kdump kernel.
-
-This is not enough when the dump device is NVMe over Fibre Channel.
-Because nvme-fc driver DMA-maps the cmds and resp IUs of every
-pre-allocated request and each such mapping consumes roughly:
-
-    32 (IO queues, one per cpus = nr_cpus) *
-    64 (queue_depth, blk-mq kdump limit) *
-    2 (cmd+resp) = 4096
-
-This is already double of what we have without counting admin queues and
-lpfc driver's own allocations / mapping requirement. Hence this results
-into iommu_alloc failures like -
-
-lpfc 0153:70:00.0: iommu_alloc failed,
-tbl 0000000034ebcf5e vaddr 00000000d814df0b npages 1
-lpfc 0153:70:00.0: FCP Op failed - cmdiu dma mapping failed.
-lpfc 0153:70:00.0: iommu_alloc failed,
-tbl 0000000034ebcf5e vaddr 000000009779e4d2 npages 1
-lpfc 0153:70:00.0: FCP Op failed - cmdiu dma mapping failed.
-
-iommu_map_phys+0x1c4/0x1f0 (unreliable)
-dma_iommu_map_phys+0x54/0xa0
-dma_map_phys+0x3f8/0x590
-__nvme_fc_init_request+0x110/0x300 [nvme_fc]
-nvme_fc_init_request+0x60/0xb8 [nvme_fc]
-blk_mq_alloc_map_and_rqs+0x388/0x510
-blk_mq_alloc_tag_set+0x2a4/0x5f0
-nvme_alloc_io_tag_set+0xe0/0x1e0 [nvme_core]
-nvme_fc_connect_ctrl_work+0x85c/0xdac [nvme_fc]
-process_one_work+0x1e4/0x5a0
-worker_thread+0x1ec/0x3e0
-
-Increasing the number of free TCE entries in iommu_table_clear() will
-increase the probability of hitting EEH since there could still be some
-active IOs from the previous life of the kernel.
-
-Hence this patch partially reverts the previous fixes commit and
-switches the kdump's default back to 2GB default DMA window instead of
-DDW window. This window will mostly be empty. Or, could be slightly used
-if buffers in pmemory were mapped for IO.
-
-Fixes: 09a3c1e46142 ("powerpc/pseries/iommu: IOMMU table is not initialized for kdump over SR-IOV")
+Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Assisted-by: Codex:gpt-5
 Cc: stable@vger.kernel.org
-Signed-off-by: Gaurav Batra <gbatra@linux.ibm.com>
-Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20260803224029.60538-1-gbatra@linux.ibm.com
+Link: https://patch.msgid.link/20260809190428.1523014-1-Jeremy.Jean@oss.cyber.gouv.fr
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/platforms/pseries/iommu.c |   23 ++++++++++++-----------
- 1 file changed, 12 insertions(+), 11 deletions(-)
+ kernel/time/itimer.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/powerpc/platforms/pseries/iommu.c
-+++ b/arch/powerpc/platforms/pseries/iommu.c
-@@ -743,18 +743,11 @@ static struct device_node *pci_dma_find(
+--- a/kernel/time/itimer.c
++++ b/kernel/time/itimer.c
+@@ -100,7 +100,7 @@ static int do_getitimer(int which, struc
+ static int put_itimerval(struct __kernel_old_itimerval __user *o,
+ 			 const struct itimerspec64 *i)
+ {
+-	struct __kernel_old_itimerval v;
++	struct __kernel_old_itimerval v = {};
  
- 	/* parse DMA window property. During normal system boot, only default
- 	 * DMA window is passed in OF. But, for kdump, a dedicated adapter might
--	 * have both default and DDW in FDT. In this scenario, DDW takes precedence
--	 * over default window.
-+	 * have both default and DDW in FDT. In this scenario, default window
-+	 * takes precedence over DDW. For a dedicated adapter, default window will
-+	 * potentially have more unused TCEs.
- 	 */
--	if (ddw_win) {
--		struct dynamic_dma_window_prop *p;
--
--		p = (struct dynamic_dma_window_prop *)ddw_prop;
--		prop->liobn = p->liobn;
--		prop->dma_base = p->dma_base;
--		prop->tce_shift = p->tce_shift;
--		prop->window_shift = p->window_shift;
--	} else if (default_win) {
-+	if (default_win) {
- 		unsigned long offset, size, liobn;
- 
- 		of_parse_dma_window(rdn, default_prop, &liobn, &offset, &size);
-@@ -763,6 +756,14 @@ static struct device_node *pci_dma_find(
- 		prop->dma_base = cpu_to_be64(offset);
- 		prop->tce_shift = cpu_to_be32(IOMMU_PAGE_SHIFT_4K);
- 		prop->window_shift = cpu_to_be32(order_base_2(size));
-+	} else {
-+		struct dynamic_dma_window_prop *p;
-+
-+		p = (struct dynamic_dma_window_prop *)ddw_prop;
-+		prop->liobn = p->liobn;
-+		prop->dma_base = p->dma_base;
-+		prop->tce_shift = p->tce_shift;
-+		prop->window_shift = p->window_shift;
- 	}
- 
- 	return rdn;
+ 	v.it_interval.tv_sec = i->it_interval.tv_sec;
+ 	v.it_interval.tv_usec = i->it_interval.tv_nsec / NSEC_PER_USEC;
 
 
