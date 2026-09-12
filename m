@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA899426D03;
-	Sat, 12 Sep 2026 10:59:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC9763290B0;
+	Sat, 12 Sep 2026 10:59:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789210760; cv=none; b=QU66NzjwOi8wghyBa+Nr6pB9MDp/DNs8xzLpItpr7Ne2tq97smhjv4UO/7h6IwgFw8KGvzm0iEhEEeRi5wt9vnlHKNUugFfP0ZXEKSKr+/KYqNRdI4wGMzD9GqKE5FN9SzCyi/kSwCMO5Py7PzN3B5QsLBEMuwMgyExx9QK9By8=
+	t=1789210766; cv=none; b=bhbaeDUj/jTIJ+zBAgxRBLMu8DerCJBfP34dVrnswL1icx6h3qw05xHVs9u1yLihI0QNd0BWIz3f5XeXXEbdUKg9zkRSFTdOkXqQarS9ae2TYFkzRgm5iTXE+UhGtmqMN8v8LlspBcdI9y8nJ0TsLMVitOaCLcUg78WC4tph2Oo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789210760; c=relaxed/simple;
-	bh=gtpGdhJKULwumqVpskiJSb701Qfno5afFCwOveNvgxA=;
+	s=arc-20240116; t=1789210766; c=relaxed/simple;
+	bh=3KKm9SyPPDEYyW2tQy6f8WRjEjLuiYtx0TqxFpj6s2Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H5wGRZlhA3FfAlkYvSpHFKoWoIw/SufZ/yCao3kjj4/YFXgkE2WRvo83agK7kXCyfr3NrnT+oTb0q70ue6KrQ8kahvPbyxxLQp09jybNKn2QaeiD92odDwQf5qPP+Wzbee45+Z9xRePCCXL8lmtj04XvGh4fs+GW+9VNuA5vQMg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eQBLIT/V; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hrCP11EOvpakDW53IqIbkJXkQFwm0zrArgfbWjmiPKfbv3FYaIqYAJ5T3XfDy8CjtNUkJXH5uOnZ2rgK5RooIbD67LfIfFo5lBKg9m7SCVnp6xTQoXsfN9TMucaiSyGAtMZqU2rwsT+8e11m4Khr7qcp3wMv4ZeI9AcaG5Mwr8o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xaFinYbR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eQBLIT/V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01D161F000FF;
-	Sat, 12 Sep 2026 10:59:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xaFinYbR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A06E1F000FF;
+	Sat, 12 Sep 2026 10:59:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789210759;
-	bh=kmYUZF/2gZ8lTBhhk8H/ltUHAHTuwv2EIaFfAaohR30=;
+	s=korg; t=1789210764;
+	bh=ZDW87jJMPBQ/MhmFf9lV3hW/m+hgY3hRmLq8H5k/rPk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eQBLIT/VLy1CO+XxFvynkHwYJ3zAfzvnEd/EgRrIhXnbtydJdQXhdyyy7nydn9RTm
-	 f/b7lINZETxYqLmmfEZUmsHK1Ao7zxCtf5EQzvdgR56iJOtayih5Coez6RJVgwPDc1
-	 +wFYAdtwOha1xAAO7lSx6XFQ4h1Iy5w8E0maRv1Q=
+	b=xaFinYbRZrjYzCESPlOnW9lujidAqGUO9yc9gc2zVtyfB/tJnezxFAilafhYBjVUP
+	 h8bmmfpRULy0otefFWWVZgvdGmi4Wf5oHiwLof8ibH7LT53rq368acq6+8hVk1HOti
+	 QnQBJRxEBaTE/Hl0oMKStwnFvhgtmFmKGZYPSxu8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Taehee Yoo <ap420073@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Michael Walle <mwalle@kernel.org>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1091/1518] amt: Dont support cross-netns setup.
-Date: Sat, 12 Sep 2026 08:54:20 +0200
-Message-ID: <20260912065648.133142282@linuxfoundation.org>
+Subject: [PATCH 6.18 1092/1518] powerpc/configs: enable CONFIG_RAS to fix EDAC support
+Date: Sat, 12 Sep 2026 08:54:21 +0200
+Message-ID: <20260912065648.154731878@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,96 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Michael Walle <mwalle@kernel.org>
 
-[ Upstream commit e99ecc3046ea5f5c6b5e1f8b4ef854c6c6998e06 ]
+[ Upstream commit 3921cfc2e8155a767235801be88cbd0e4c73508d ]
 
-When a lower device is unregistered, amt_device_event() tries
-to unregister its upper AMT device, but it has two problems.
+Before commit e3c4ff6d8c94 ("EDAC: Remove EDAC_MM_EDAC") EDAC_MM_EDAC
+selected RAS, after that commit, EDAC depends on RAS, but nobody enables
+it. Enable it in the config again.
 
-  1. amt_lookup_upper_dev() looks up an upper device in the
-      lower device's netns only
-
-  2. amt_device_event() unregisters a single upper device only
-
-If AMT device is created on a lower device in another netns,
-removing the lower device triggers the splat below and gets
-stuck until all upper devices are removed. [0]
-
-The cross-netns setup seems unintentional considering 1. and
-the following points:
-
-  * amt_link_setup() sets dev->netns_immutable to true
-  * skb_scrub_packet() is not called in the fast path
-  * iproute2 binary fails to find cross-netns lower device via
-    link-netns:
-      # ip -n ns1 link add amt0 link-netns ns2 type amt dev veth1
-      Cannot find device "veth1"
-
-Instead of supporting it properly and preparing for per-netns
-netdev unreg, let's forbid cross-netns setup.
-
-Note that the problem 2. needs a separate fix.
-
-[0]:
-WARNING: net/core/dev.c:12518 at unregister_netdevice_many_notify+0x1cce/0x2250, CPU#48: ip/2031
-Modules linked in:
-CPU: 48 UID: 0 PID: 2031 Comm: ip Not tainted 7.2.0-rc5+ #27 PREEMPT(full)
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.17.0-debian-1.17.0-1 04/01/2014
-RIP: 0010:unregister_netdevice_many_notify (net/core/dev.c:12518)
-Code: 89 ef e8 d5 52 ae fe e9 d0 f4 ff ff 48 8d 3d f9 3b 9c 02 48 c7 c6 c0 0b 63 84 ba ab 1f 00 00 67 48 0f b9 3a e9 65 ff ff ff 90 <0f> 0b 90 eb 81 48 8d 3d f6 3b 9c 02 48 c7 c6 c0 0b 63 84 ba e2 1f
-RSP: 0018:ffffc90004abf160 EFLAGS: 00010212
-RAX: ffff888104d38260 RBX: ffff88800b0911b8 RCX: dffffc0000000000
-RDX: 0000000000000000 RSI: 0000000000000008 RDI: ffffffff85b9f880
-RBP: ffffc90004abf2d0 R08: ffffffff85b9f887 R09: 1ffffffff0b73f10
-R10: dffffc0000000000 R11: fffffbfff0b73f11 R12: ffff88800b091d08
-R13: ffff88800b091178 R14: dffffc0000000000 R15: ffff88800b091000
-FS:  00007f555b86c600(0000) GS:ffff8881942a0000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000562107d489c0 CR3: 0000000109a40002 CR4: 0000000000372ef0
-Call Trace:
- <TASK>
- rtnl_dellink (net/core/rtnetlink.c:3632 net/core/rtnetlink.c:3674)
- rtnetlink_rcv_msg (net/core/rtnetlink.c:7112)
- netlink_rcv_skb (net/netlink/af_netlink.c:2556)
- netlink_unicast (net/netlink/af_netlink.c:1319)
- netlink_sendmsg (net/netlink/af_netlink.c:1900)
- ____sys_sendmsg (net/socket.c:775)
- __sys_sendmsg (net/socket.c:2738)
- do_syscall_64 (arch/x86/entry/syscall_64.c:63)
- entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
-...
-unregister_netdevice: waiting for veth0 to become free. Usage count = 7
-ref_tracker: netdev@ffff88800d7496d8 has 3/3 users at
-     __netdev_adjacent_dev_insert (./include/linux/netdevice.h:4525 ./include/linux/netdevice.h:4554 net/core/dev.c:8791)
-     __netdev_upper_dev_link (net/core/dev.c:8879 net/core/dev.c:8963)
-     netdev_upper_dev_link (net/core/dev.c:9009)
-     amt_newlink (drivers/net/amt.c:3321)
-
-Fixes: b9022b53adad ("amt: add control plane of amt interface")
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Taehee Yoo <ap420073@gmail.com>
-Link: https://patch.msgid.link/20260807020326.2519445-1-kuniyu@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: e3c4ff6d8c94 ("EDAC: Remove EDAC_MM_EDAC")
+Signed-off-by: Michael Walle <mwalle@kernel.org>
+Acked-by: Borislav Petkov (AMD) <bp@alien8.de>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20260730105546.3658570-1-mwalle@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/amt.c | 3 +++
- 1 file changed, 3 insertions(+)
+ arch/powerpc/configs/85xx-hw.config | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/amt.c b/drivers/net/amt.c
-index 2bc8781f07c2d..01d2223fce09b 100644
---- a/drivers/net/amt.c
-+++ b/drivers/net/amt.c
-@@ -3221,6 +3221,9 @@ static int amt_newlink(struct net_device *dev,
- 	struct nlattr **tb = params->tb;
- 	int err = -EINVAL;
- 
-+	if (!net_eq(link_net, dev_net(dev)))
-+		return err;
-+
- 	amt->net = link_net;
- 	amt->mode = nla_get_u32(data[IFLA_AMT_MODE]);
- 
+diff --git a/arch/powerpc/configs/85xx-hw.config b/arch/powerpc/configs/85xx-hw.config
+index 8aff832173977..b655c36e56dad 100644
+--- a/arch/powerpc/configs/85xx-hw.config
++++ b/arch/powerpc/configs/85xx-hw.config
+@@ -90,6 +90,7 @@ CONFIG_PPC_EPAPR_HV_BYTECHAN=y
+ CONFIG_QE_GPIO=y
+ CONFIG_QUICC_ENGINE=y
+ CONFIG_RAPIDIO=y
++CONFIG_RAS=y
+ CONFIG_RTC_CLASS=y
+ CONFIG_RTC_DRV_CMOS=y
+ CONFIG_RTC_DRV_DS1307=y
 -- 
 2.53.0
 
