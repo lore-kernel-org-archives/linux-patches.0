@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91CCD426D03;
-	Sat, 12 Sep 2026 10:36:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22DFF386455;
+	Sat, 12 Sep 2026 10:36:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789209409; cv=none; b=cDlQpurhfhcUTIamABXeJ3IVoXlmk2dzbNkJ6RLpY1WIb7wnMYzPSprR9kNVrFxIf3XVQIE9k5JwOcQg8jFc9tsDsPXqV2xVFLGqjESToc1PIJCm8BpPX3xYD8qEahf79+Rwn3BZ/+KDGC9RlGA2DArFJfAuoRzEDfiqV1we55Q=
+	t=1789209414; cv=none; b=kx4H38BiYLIoLePPvevikXgnRANkc8QGUmg7AkoACvkyjqJxWn7WMz9ypRqi5xdXTFlLSW4pQLl0oSPcUi3TdX5THBCgU14NYrJ6MroHZ5TaHdeZp07bxFG5O9tjkRzT4zcgH2JtcpA6iCV8ZbaQPamNehPH0vETcxKCIDJ56iM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789209409; c=relaxed/simple;
-	bh=EKxHW0wRumcbVjLXIeJxVuWpyO1rKxHnebDPEAe6td0=;
+	s=arc-20240116; t=1789209414; c=relaxed/simple;
+	bh=6fS9H3EFf/Jn5cW1Zhp4CKJcScb+J9rNaLZj28d6lBw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tBdWTtn+Z/5wITIRwtzUB+n5mIppY+j5a0rhiISV5xRYF6wxlBCT4+GC7ovAIZaHUZhW9yMELdLW/niUxIuxC7bgMbkFFtsZv4QXH6CIAmIZlq6784uKbaYizkAIkLffgXii2dcgBmfV0XyJWhAbdmSZTiF30D1wR2cvdzRaGPc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UK9+h4Ph; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iAXA32Fzqrh+Va19Eq9CYdVof8ZV1d8earGFldicA9jXz9F2Stv02jjhu/NbPsPwOU6BNsl1Y1K2GXbEh1O6i17iXhya0SA4fx+Fs1gYb6nzl32lVgJ8KzhIcxifUXatcoB/SMf7SAzU9Oe1jl7KnwWhl7AKKl4XkoZmaSwRXo0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ypVYyB5X; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UK9+h4Ph"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F7E51F000FF;
-	Sat, 12 Sep 2026 10:36:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ypVYyB5X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E27731F0089A;
+	Sat, 12 Sep 2026 10:36:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789209408;
-	bh=C6JjDUst6m67m07diwTqVCyerGqO4KCuggbWs1oilyQ=;
+	s=korg; t=1789209413;
+	bh=C0pNY0IeaumKaf3BdFUfq3gJOBV2QfludzwZx3bH+Rc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UK9+h4Pht0zB4959wyPL7pjQDdiQ5wbUttEkrbiVcYJsGBGo8UeImLYoGds2Hcao9
-	 geUc0DoRRke+no8WhwiPFoL+DYgJOPBPrYnFaleL19A+bv59qcYtJLNgrNMeM0d5FR
-	 G4vBojbowEin60dyuuMkimjmXGwzP1hyDu08yE+Y=
+	b=ypVYyB5XJy8a8Ut+m1F8zipwKwn6dVn9BfCvMwiS1B/j68wdsXgzIKzSp0KgaKpkI
+	 cgQpN1EyR8DYWNPMS1n7/iN0ibd5JmnF90oWZUlDNR/RldjMXvQWwn+eBr25gI7r/M
+	 nraIUAzOmr151GHhb96XjgqZ0y10FiEIAp2l209w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+0ec3d1a6cf1fbe79c153@syzkaller.appspotmail.com,
-	Slawomir Stepien <sst@poczta.fm>,
+	Zhao Li <enderaoelyther@gmail.com>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0814/1518] wifi: zd1211rw: reject secondary interfaces to prevent conflicts
-Date: Sat, 12 Sep 2026 08:49:43 +0200
-Message-ID: <20260912065641.851168208@linuxfoundation.org>
+Subject: [PATCH 6.18 0815/1518] wifi: mac80211: skip unused probe response countdown offsets
+Date: Sat, 12 Sep 2026 08:49:44 +0200
+Message-ID: <20260912065641.873501860@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,69 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Slawomir Stepien <sst@poczta.fm>
+From: Zhao Li <enderaoelyther@gmail.com>
 
-[ Upstream commit 0e4532ec658606f76f62eb277e7a933919d36cbb ]
+[ Upstream commit fd2bf5e718108c00732eb07fd94a5d8830f62a9f ]
 
-The zd1211rw driver is designed for single-function Wi-Fi dongles and
-hardcodes its USB endpoints. When a malformed USB device exposes multiple
-interfaces that match the driver's device ID, the driver blindly binds to
-all of them.
+mac80211 copies cfg80211's variable-length countdown offset list into a
+zero-initialized fixed-size array, leaving unused entries at zero. The
+beacon branch already skips those zero entries, but the AP probe-response
+branch writes through them unconditionally.
 
-During probe(), the driver calls usb_reset_device(), which iterates over
-all interfaces and invokes the pre_reset() callback for each bound
-interface. Since multiple interfaces are bound to zd1211rw, pre_reset() is
-called sequentially for each instance, acquiring their respective
-&mac->chip.mutex. Because all instances initialize their mutexes with the
-same lock class, lockdep detects a task acquiring a lock of the same class
-it already holds and flags it as a possible recursive deadlock:
+When a probe-response template has no countdown offset, the write through
+an unused zero entry overwrites resp->data[0], corrupting the first byte of
+the template. cfg80211 already bounds explicitly supplied non-zero offsets
+in nl80211_parse_counter_offsets(), so this is a zero-sentinel bug, not an
+out-of-bounds write.
 
-WARNING: possible recursive locking detected
-kworker/0:1/11 is trying to acquire lock:
-ffff88810371dde0 (&chip->mutex){+.+.}-{4:4}, at:
-zd_chip_disable_rxtx+0x20/0x50
-drivers/net/wireless/zydas/zd1211rw/zd_chip.c:1465
+Skip zero probe-response offsets, matching the beacon path.
 
-but task is already holding lock:
-ffff8881138ddde0 (&chip->mutex){+.+.}-{4:4}, at: pre_reset+0x28c/0x380
-drivers/net/wireless/zydas/zd1211rw/zd_usb.c:1505
-
-Fix this by explicitly rejecting secondary interfaces (bInterfaceNumber !=
-0) during probe(). This ensures that only a single instance of the driver
-binds to the device, eliminating the recursive locking scenario.
-
-Fixes: e85d0918b54f ("[PATCH] ZyDAS ZD1211 USB-WLAN driver")
-Assisted-by: Gemini:gemini-3.5-flash Gemini:gemini-3.1-pro-preview syzbot
-Reported-by: syzbot+0ec3d1a6cf1fbe79c153@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=0ec3d1a6cf1fbe79c153
-Link: https://syzkaller.appspot.com/ai_job?id=00724ef7-fd77-4cde-9779-895b8f63c2f6
-Signed-off-by: Slawomir Stepien <sst@poczta.fm>
-Link: https://patch.msgid.link/20260730065231.1644030-1-sst@poczta.fm
+Fixes: af296bdb8da4 ("mac80211: move csa counters from sdata to beacon/presp")
+Link: https://lore.kernel.org/all/20260708195911.84365-6-enderaoelyther@gmail.com/
+Assisted-by: Codex:gpt-5
+Assisted-by: Claude:opus-4.8
+Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
+Link: https://patch.msgid.link/20260723011001.76851-1-enderaoelyther@gmail.com
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/zydas/zd1211rw/zd_usb.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ net/mac80211/tx.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/zydas/zd1211rw/zd_usb.c b/drivers/net/wireless/zydas/zd1211rw/zd_usb.c
-index 8ee15a15f4ca2..ebf4e29c566c8 100644
---- a/drivers/net/wireless/zydas/zd1211rw/zd_usb.c
-+++ b/drivers/net/wireless/zydas/zd1211rw/zd_usb.c
-@@ -1353,6 +1353,14 @@ static int probe(struct usb_interface *intf, const struct usb_device_id *id)
- 	struct zd_usb *usb;
- 	struct ieee80211_hw *hw = NULL;
+diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
+index c125871adb62b..89eb340e982b2 100644
+--- a/net/mac80211/tx.c
++++ b/net/mac80211/tx.c
+@@ -5140,7 +5140,8 @@ static void ieee80211_set_beacon_cntdwn(struct ieee80211_sub_if_data *sdata,
+ 		if (sdata->vif.type == NL80211_IFTYPE_AP && resp) {
+ 			u16 *resp_offsets = resp->cntdwn_counter_offsets;
  
-+	/*
-+	 * ZD1211 devices are single-function. Reject secondary interfaces
-+	 * to prevent multiple instances from conflicting on hardcoded endpoints
-+	 * and triggering recursive locking warnings.
-+	 */
-+	if (intf->cur_altsetting->desc.bInterfaceNumber != 0)
-+		return -ENODEV;
-+
- 	print_id(udev);
- 
- 	if (id->driver_info & DEVICE_INSTALLER)
+-			resp->data[resp_offsets[i]] = count;
++			if (resp_offsets[i])
++				resp->data[resp_offsets[i]] = count;
+ 		}
+ 	}
+ }
 -- 
 2.53.0
 
