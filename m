@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 578822D5C68;
-	Sat, 12 Sep 2026 16:24:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77435345EB9;
+	Sat, 12 Sep 2026 16:24:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789230279; cv=none; b=PQLLno0zCuPwW84c72ngyvF056Auww/lMEAjzIeSngcV1CVafv9PtGHU41nSD2snYq/AGj9U/iTrhfj9ZAJT3UqfDAvTajXua6gt6ddPdC6Lw2iB7N1xy5McjHCAR/fpquI0eXSjGmQ45v4Cu3ne+uqBY+1sUli+Dyw4qtNH0zM=
+	t=1789230284; cv=none; b=q3PpFYizfdAfKmUlfsW2XR2GpkjDXQCFCPwpCFCAzVAnSoNENkkezGWuh1HYRVEYBlPJq+mzgIIiNBNUjKPUEZq2UmlGM6UduW1oG91NiQxJTnPEKF6CwzwXBRydKVHaYG69q2IhBDiGkOoX4DXVKbCDNap9B+w3lPw5GXtLt/s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789230279; c=relaxed/simple;
-	bh=rbBToBDIUsiTH9S5gqAI1J+Y9xJ2tqWraE2/mPiW9pI=;
+	s=arc-20240116; t=1789230284; c=relaxed/simple;
+	bh=RQhjczYG4hHpJkc5gObmIXBaAAg4QPzduDK34FE94cw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d0epFymafPL4i0Lr54uOT/KHWux9Z/pThGxbGktQVkXokw7bAixU+vgG2Cv35rAxebMI1eH/tjVQak5V79fsWxKNDrzLb47CjpsUw7LNRQS3pqOngtJj5VU4w4vm51Z7Q3XZ2iPafdlUc1eIFd0mRIONrOrJoIOgotd/dh+2pCY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pkxmpQal; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RYy/8aELw+BReOwMl2ldWlcrL/mLAm/P2FDHasuMDun43JVIcIqBatOexaNtGUDfQ3KcISDvTCCoFTOrdTZwrVKrJRq4/wVXYceuraHo8tfQ1La/Dz6uzUbXvjQABI4ImFHxZhuPwFqQpOFRjVAdMyMlx2ZCysCVNHk//2LJkRc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nZEqiY50; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pkxmpQal"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11CC31F00893;
-	Sat, 12 Sep 2026 16:24:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nZEqiY50"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F36F1F000FF;
+	Sat, 12 Sep 2026 16:24:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789230278;
-	bh=zO89ie8XbYPE7CmspYPb83ARcFecFO+AGXupsF5Vgyo=;
+	s=korg; t=1789230283;
+	bh=12pztvrfNA8JaKjMhpyP7z1OzMUvArihLqqgQmJ2n38=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pkxmpQalMpzcYOeO3NdFnYzO0I7F8BHqtaws6drxFAdTIocebrFTLHbPHcTG8gD2T
-	 cnUUWIdUNBcTHPMXZo2eEx9lXA1CtuPwMLBXmOvFXDsb7K2JyNRSrtsXTZUw79JiRv
-	 b/W7JqInWQPFLTeBxZkmkHl2s4ptSoGv02cT7VWY=
+	b=nZEqiY50O9QBrS9Or7pGC8UBkXTqC+89GaDvEp6aXSSoeA+9YfvRStPanWL+EKi1n
+	 1OwstqdNZMG5R8duNxrIMWfS5rEnTjmF3BOtyrf4HIm9CniX8kZChqf2wWN+1cwFE5
+	 MUmAmAUx0rz/ByC1XT5no6/BN8E79Q+mfDfRzUzc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Abel Vesa <abel.vesa@linaro.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0761/1191] arm64: dts: qcom: msm8998: Dont pull-up I2C pins by default in sleep
-Date: Sat, 12 Sep 2026 08:58:09 +0200
-Message-ID: <20260912065605.369868367@linuxfoundation.org>
+Subject: [PATCH 6.1 0762/1191] dt-bindings: clock: Add SM8550 GCC clocks
+Date: Sat, 12 Sep 2026 08:58:10 +0200
+Message-ID: <20260912065605.392420147@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -51,171 +52,330 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+From: Abel Vesa <abel.vesa@linaro.org>
 
-[ Upstream commit 58ce9a2b9099bb26aed55d4e350c32af94930532 ]
+[ Upstream commit 47ba9c50bbeb1c5005eb06ca0a2ab92604a54b62 ]
 
-When the I2C controller is disabled, no communication is expected to
-take place. Without traffic on the bus, the pull-up is unnecessary.
+Add device tree bindings for global clock controller on SM8550 SoCs.
 
-Both the vendor kernel for this platform and DTs of other SoCs in
-upstream concur this logic. Change the default and clean up now-NOP
-overrides.
-
-Fixes: 0fee55fc0de7 ("arm64: dts: qcom: msm8998: Add I2C pinctrl and fix BLSP2_I2C naming")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260717-topic-june26_dts_fixes-v2-1-797cd46e5d9f@oss.qualcomm.com
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20221130112852.2977816-2-abel.vesa@linaro.org
+Stable-dep-of: 9c4cee964e0c ("clk: qcom: gcc-qcm2290: don't park QUP RCGs upon registration")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../dts/qcom/msm8998-sony-xperia-yoshino.dtsi |  4 ----
- .../boot/dts/qcom/msm8998-xiaomi-sagit.dts    |  5 ----
- arch/arm64/boot/dts/qcom/msm8998.dtsi         | 24 +++++++++----------
- 3 files changed, 12 insertions(+), 21 deletions(-)
+ .../bindings/clock/qcom,sm8550-gcc.yaml       |  62 +++++
+ include/dt-bindings/clock/qcom,sm8550-gcc.h   | 231 ++++++++++++++++++
+ 2 files changed, 293 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,sm8550-gcc.yaml
+ create mode 100644 include/dt-bindings/clock/qcom,sm8550-gcc.h
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8998-sony-xperia-yoshino.dtsi b/arch/arm64/boot/dts/qcom/msm8998-sony-xperia-yoshino.dtsi
-index d086390822476..87f116565fd8e 100644
---- a/arch/arm64/boot/dts/qcom/msm8998-sony-xperia-yoshino.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8998-sony-xperia-yoshino.dtsi
-@@ -225,10 +225,6 @@ rmi4-f11@11 {
- 	};
- };
- 
--&blsp1_i2c5_sleep {
--	bias-disable;
--};
--
- &blsp1_uart3 {
- 	status = "okay";
- 
-diff --git a/arch/arm64/boot/dts/qcom/msm8998-xiaomi-sagit.dts b/arch/arm64/boot/dts/qcom/msm8998-xiaomi-sagit.dts
-index b1aac7311ef96..d0f4d35a399a5 100644
---- a/arch/arm64/boot/dts/qcom/msm8998-xiaomi-sagit.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8998-xiaomi-sagit.dts
-@@ -218,11 +218,6 @@ rmi4-f1a@1a {
- 	};
- };
- 
--&blsp1_i2c5_sleep {
--	/delete-property/ bias-pull-up;
--	bias-disable;
--};
--
- &blsp1_uart3 {
- 	status = "okay";
- 
-diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-index 4de9ff045ff52..a7b9b28d0e580 100644
---- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-@@ -1149,7 +1149,7 @@ blsp1_i2c1_sleep: blsp1-i2c1-sleep {
- 				pins = "gpio2", "gpio3";
- 				function = "blsp_i2c1";
- 				drive-strength = <2>;
--				bias-pull-up;
-+				bias-disable;
- 			};
- 
- 			blsp1_i2c2_default: blsp1-i2c2-default {
-@@ -1163,7 +1163,7 @@ blsp1_i2c2_sleep: blsp1-i2c2-sleep {
- 				pins = "gpio32", "gpio33";
- 				function = "blsp_i2c2";
- 				drive-strength = <2>;
--				bias-pull-up;
-+				bias-disable;
- 			};
- 
- 			blsp1_i2c3_default: blsp1-i2c3-default {
-@@ -1177,7 +1177,7 @@ blsp1_i2c3_sleep: blsp1-i2c3-sleep {
- 				pins = "gpio47", "gpio48";
- 				function = "blsp_i2c3";
- 				drive-strength = <2>;
--				bias-pull-up;
-+				bias-disable;
- 			};
- 
- 			blsp1_i2c4_default: blsp1-i2c4-default {
-@@ -1191,7 +1191,7 @@ blsp1_i2c4_sleep: blsp1-i2c4-sleep {
- 				pins = "gpio10", "gpio11";
- 				function = "blsp_i2c4";
- 				drive-strength = <2>;
--				bias-pull-up;
-+				bias-disable;
- 			};
- 
- 			blsp1_i2c5_default: blsp1-i2c5-default {
-@@ -1205,7 +1205,7 @@ blsp1_i2c5_sleep: blsp1-i2c5-sleep {
- 				pins = "gpio87", "gpio88";
- 				function = "blsp_i2c5";
- 				drive-strength = <2>;
--				bias-pull-up;
-+				bias-disable;
- 			};
- 
- 			blsp1_i2c6_default: blsp1-i2c6-default {
-@@ -1219,7 +1219,7 @@ blsp1_i2c6_sleep: blsp1-i2c6-sleep {
- 				pins = "gpio43", "gpio44";
- 				function = "blsp_i2c6";
- 				drive-strength = <2>;
--				bias-pull-up;
-+				bias-disable;
- 			};
- 			/* 6 interfaces per QUP, BLSP2 indexes are numbered (n)+6 */
- 			blsp2_i2c1_default: blsp2-i2c1-default {
-@@ -1233,7 +1233,7 @@ blsp2_i2c1_sleep: blsp2-i2c1-sleep {
- 				pins = "gpio55", "gpio56";
- 				function = "blsp_i2c7";
- 				drive-strength = <2>;
--				bias-pull-up;
-+				bias-disable;
- 			};
- 
- 			blsp2_i2c2_default: blsp2-i2c2-default {
-@@ -1247,7 +1247,7 @@ blsp2_i2c2_sleep: blsp2-i2c2-sleep {
- 				pins = "gpio6", "gpio7";
- 				function = "blsp_i2c8";
- 				drive-strength = <2>;
--				bias-pull-up;
-+				bias-disable;
- 			};
- 
- 			blsp2_i2c3_default: blsp2-i2c3-default {
-@@ -1261,7 +1261,7 @@ blsp2_i2c3_sleep: blsp2-i2c3-sleep {
- 				pins = "gpio51", "gpio52";
- 				function = "blsp_i2c9";
- 				drive-strength = <2>;
--				bias-pull-up;
-+				bias-disable;
- 			};
- 
- 			blsp2_i2c4_default: blsp2-i2c4-default {
-@@ -1275,7 +1275,7 @@ blsp2_i2c4_sleep: blsp2-i2c4-sleep {
- 				pins = "gpio67", "gpio68";
- 				function = "blsp_i2c10";
- 				drive-strength = <2>;
--				bias-pull-up;
-+				bias-disable;
- 			};
- 
- 			blsp2_i2c5_default: blsp2-i2c5-default {
-@@ -1289,7 +1289,7 @@ blsp2_i2c5_sleep: blsp2-i2c5-sleep {
- 				pins = "gpio60", "gpio61";
- 				function = "blsp_i2c11";
- 				drive-strength = <2>;
--				bias-pull-up;
-+				bias-disable;
- 			};
- 
- 			blsp2_i2c6_default: blsp2-i2c6-default {
-@@ -1303,7 +1303,7 @@ blsp2_i2c6_sleep: blsp2-i2c6-sleep {
- 				pins = "gpio83", "gpio84";
- 				function = "blsp_i2c12";
- 				drive-strength = <2>;
--				bias-pull-up;
-+				bias-disable;
- 			};
- 		};
- 
+diff --git a/Documentation/devicetree/bindings/clock/qcom,sm8550-gcc.yaml b/Documentation/devicetree/bindings/clock/qcom,sm8550-gcc.yaml
+new file mode 100644
+index 0000000000000..0c706de31cf11
+--- /dev/null
++++ b/Documentation/devicetree/bindings/clock/qcom,sm8550-gcc.yaml
+@@ -0,0 +1,62 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/clock/qcom,sm8550-gcc.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Qualcomm Global Clock & Reset Controller on SM8550
++
++maintainers:
++  - Bjorn Andersson <andersson@kernel.org>
++
++description: |
++  Qualcomm global clock control module provides the clocks, resets and power
++  domains on SM8550
++
++  See also:: include/dt-bindings/clock/qcom,sm8550-gcc.h
++
++properties:
++  compatible:
++    const: qcom,sm8550-gcc
++
++  clocks:
++    items:
++      - description: Board XO source
++      - description: Sleep clock source
++      - description: PCIE 0 Pipe clock source
++      - description: PCIE 1 Pipe clock source
++      - description: PCIE 1 Phy Auxiliary clock source
++      - description: UFS Phy Rx symbol 0 clock source
++      - description: UFS Phy Rx symbol 1 clock source
++      - description: UFS Phy Tx symbol 0 clock source
++      - description: USB3 Phy wrapper pipe clock source
++
++required:
++  - compatible
++  - clocks
++
++allOf:
++  - $ref: qcom,gcc.yaml#
++
++unevaluatedProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/clock/qcom,rpmh.h>
++    clock-controller@100000 {
++      compatible = "qcom,sm8550-gcc";
++      reg = <0x00100000 0x001f4200>;
++      clocks = <&rpmhcc RPMH_CXO_CLK>, <&sleep_clk>,
++               <&pcie0_phy>,
++               <&pcie1_phy>,
++               <&pcie_1_phy_aux_clk>,
++               <&ufs_mem_phy 0>,
++               <&ufs_mem_phy 1>,
++               <&ufs_mem_phy 2>,
++               <&usb_1_qmpphy>;
++      #clock-cells = <1>;
++      #reset-cells = <1>;
++      #power-domain-cells = <1>;
++    };
++
++...
+diff --git a/include/dt-bindings/clock/qcom,sm8550-gcc.h b/include/dt-bindings/clock/qcom,sm8550-gcc.h
+new file mode 100644
+index 0000000000000..3bf6f2b75c99a
+--- /dev/null
++++ b/include/dt-bindings/clock/qcom,sm8550-gcc.h
+@@ -0,0 +1,231 @@
++/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
++/*
++ * Copyright (c) 2022, The Linux Foundation. All rights reserved.
++ * Copyright (c) 2022, Linaro Limited
++ */
++
++#ifndef _DT_BINDINGS_CLK_QCOM_GCC_SM8550_H
++#define _DT_BINDINGS_CLK_QCOM_GCC_SM8550_H
++
++/* GCC clocks */
++#define GCC_AGGRE_NOC_PCIE_AXI_CLK				0
++#define GCC_AGGRE_UFS_PHY_AXI_CLK				1
++#define GCC_AGGRE_UFS_PHY_AXI_HW_CTL_CLK			2
++#define GCC_AGGRE_USB3_PRIM_AXI_CLK				3
++#define GCC_AHB2PHY_0_CLK					4
++#define GCC_BOOT_ROM_AHB_CLK					5
++#define GCC_CAMERA_AHB_CLK					6
++#define GCC_CAMERA_HF_AXI_CLK					7
++#define GCC_CAMERA_SF_AXI_CLK					8
++#define GCC_CAMERA_XO_CLK					9
++#define GCC_CFG_NOC_PCIE_ANOC_AHB_CLK				10
++#define GCC_CFG_NOC_USB3_PRIM_AXI_CLK				11
++#define GCC_CNOC_PCIE_SF_AXI_CLK				12
++#define GCC_DDRSS_GPU_AXI_CLK					13
++#define GCC_DDRSS_PCIE_SF_QTB_CLK				14
++#define GCC_DISP_AHB_CLK					15
++#define GCC_DISP_HF_AXI_CLK					16
++#define GCC_DISP_XO_CLK						17
++#define GCC_GP1_CLK						18
++#define GCC_GP1_CLK_SRC						19
++#define GCC_GP2_CLK						20
++#define GCC_GP2_CLK_SRC						21
++#define GCC_GP3_CLK						22
++#define GCC_GP3_CLK_SRC						23
++#define GCC_GPLL0						24
++#define GCC_GPLL0_OUT_EVEN					25
++#define GCC_GPLL4						26
++#define GCC_GPLL7						27
++#define GCC_GPLL9						28
++#define GCC_GPU_CFG_AHB_CLK					29
++#define GCC_GPU_GPLL0_CLK_SRC					30
++#define GCC_GPU_GPLL0_DIV_CLK_SRC				31
++#define GCC_GPU_MEMNOC_GFX_CLK					32
++#define GCC_GPU_SNOC_DVM_GFX_CLK				33
++#define GCC_PCIE_0_AUX_CLK					34
++#define GCC_PCIE_0_AUX_CLK_SRC					35
++#define GCC_PCIE_0_CFG_AHB_CLK					36
++#define GCC_PCIE_0_MSTR_AXI_CLK					37
++#define GCC_PCIE_0_PHY_RCHNG_CLK				38
++#define GCC_PCIE_0_PHY_RCHNG_CLK_SRC				39
++#define GCC_PCIE_0_PIPE_CLK					40
++#define GCC_PCIE_0_PIPE_CLK_SRC					41
++#define GCC_PCIE_0_SLV_AXI_CLK					42
++#define GCC_PCIE_0_SLV_Q2A_AXI_CLK				43
++#define GCC_PCIE_1_AUX_CLK					44
++#define GCC_PCIE_1_AUX_CLK_SRC					45
++#define GCC_PCIE_1_CFG_AHB_CLK					46
++#define GCC_PCIE_1_MSTR_AXI_CLK					47
++#define GCC_PCIE_1_PHY_AUX_CLK					48
++#define GCC_PCIE_1_PHY_AUX_CLK_SRC				49
++#define GCC_PCIE_1_PHY_RCHNG_CLK				50
++#define GCC_PCIE_1_PHY_RCHNG_CLK_SRC				51
++#define GCC_PCIE_1_PIPE_CLK					52
++#define GCC_PCIE_1_PIPE_CLK_SRC					53
++#define GCC_PCIE_1_SLV_AXI_CLK					54
++#define GCC_PCIE_1_SLV_Q2A_AXI_CLK				55
++#define GCC_PDM2_CLK						56
++#define GCC_PDM2_CLK_SRC					57
++#define GCC_PDM_AHB_CLK						58
++#define GCC_PDM_XO4_CLK						59
++#define GCC_QMIP_CAMERA_NRT_AHB_CLK				60
++#define GCC_QMIP_CAMERA_RT_AHB_CLK				61
++#define GCC_QMIP_DISP_AHB_CLK					62
++#define GCC_QMIP_GPU_AHB_CLK					63
++#define GCC_QMIP_PCIE_AHB_CLK					64
++#define GCC_QMIP_VIDEO_CV_CPU_AHB_CLK				65
++#define GCC_QMIP_VIDEO_CVP_AHB_CLK				66
++#define GCC_QMIP_VIDEO_V_CPU_AHB_CLK				67
++#define GCC_QMIP_VIDEO_VCODEC_AHB_CLK				68
++#define GCC_QUPV3_I2C_CORE_CLK					69
++#define GCC_QUPV3_I2C_S0_CLK					70
++#define GCC_QUPV3_I2C_S0_CLK_SRC				71
++#define GCC_QUPV3_I2C_S1_CLK					72
++#define GCC_QUPV3_I2C_S1_CLK_SRC				73
++#define GCC_QUPV3_I2C_S2_CLK					74
++#define GCC_QUPV3_I2C_S2_CLK_SRC				75
++#define GCC_QUPV3_I2C_S3_CLK					76
++#define GCC_QUPV3_I2C_S3_CLK_SRC				77
++#define GCC_QUPV3_I2C_S4_CLK					78
++#define GCC_QUPV3_I2C_S4_CLK_SRC				79
++#define GCC_QUPV3_I2C_S5_CLK					80
++#define GCC_QUPV3_I2C_S5_CLK_SRC				81
++#define GCC_QUPV3_I2C_S6_CLK					82
++#define GCC_QUPV3_I2C_S6_CLK_SRC				83
++#define GCC_QUPV3_I2C_S7_CLK					84
++#define GCC_QUPV3_I2C_S7_CLK_SRC				85
++#define GCC_QUPV3_I2C_S8_CLK					86
++#define GCC_QUPV3_I2C_S8_CLK_SRC				87
++#define GCC_QUPV3_I2C_S9_CLK					88
++#define GCC_QUPV3_I2C_S9_CLK_SRC				89
++#define GCC_QUPV3_I2C_S_AHB_CLK					90
++#define GCC_QUPV3_WRAP1_CORE_2X_CLK				91
++#define GCC_QUPV3_WRAP1_CORE_CLK				92
++#define GCC_QUPV3_WRAP1_S0_CLK					93
++#define GCC_QUPV3_WRAP1_S0_CLK_SRC				94
++#define GCC_QUPV3_WRAP1_S1_CLK					95
++#define GCC_QUPV3_WRAP1_S1_CLK_SRC				96
++#define GCC_QUPV3_WRAP1_S2_CLK					97
++#define GCC_QUPV3_WRAP1_S2_CLK_SRC				98
++#define GCC_QUPV3_WRAP1_S3_CLK					99
++#define GCC_QUPV3_WRAP1_S3_CLK_SRC				100
++#define GCC_QUPV3_WRAP1_S4_CLK					101
++#define GCC_QUPV3_WRAP1_S4_CLK_SRC				102
++#define GCC_QUPV3_WRAP1_S5_CLK					103
++#define GCC_QUPV3_WRAP1_S5_CLK_SRC				104
++#define GCC_QUPV3_WRAP1_S6_CLK					105
++#define GCC_QUPV3_WRAP1_S6_CLK_SRC				106
++#define GCC_QUPV3_WRAP1_S7_CLK					107
++#define GCC_QUPV3_WRAP1_S7_CLK_SRC				108
++#define GCC_QUPV3_WRAP2_CORE_2X_CLK				109
++#define GCC_QUPV3_WRAP2_CORE_CLK				110
++#define GCC_QUPV3_WRAP2_S0_CLK					111
++#define GCC_QUPV3_WRAP2_S0_CLK_SRC				112
++#define GCC_QUPV3_WRAP2_S1_CLK					113
++#define GCC_QUPV3_WRAP2_S1_CLK_SRC				114
++#define GCC_QUPV3_WRAP2_S2_CLK					115
++#define GCC_QUPV3_WRAP2_S2_CLK_SRC				116
++#define GCC_QUPV3_WRAP2_S3_CLK					117
++#define GCC_QUPV3_WRAP2_S3_CLK_SRC				118
++#define GCC_QUPV3_WRAP2_S4_CLK					119
++#define GCC_QUPV3_WRAP2_S4_CLK_SRC				120
++#define GCC_QUPV3_WRAP2_S5_CLK					121
++#define GCC_QUPV3_WRAP2_S5_CLK_SRC				122
++#define GCC_QUPV3_WRAP2_S6_CLK					123
++#define GCC_QUPV3_WRAP2_S6_CLK_SRC				124
++#define GCC_QUPV3_WRAP2_S7_CLK					125
++#define GCC_QUPV3_WRAP2_S7_CLK_SRC				126
++#define GCC_QUPV3_WRAP_1_M_AHB_CLK				127
++#define GCC_QUPV3_WRAP_1_S_AHB_CLK				128
++#define GCC_QUPV3_WRAP_2_M_AHB_CLK				129
++#define GCC_QUPV3_WRAP_2_S_AHB_CLK				130
++#define GCC_SDCC2_AHB_CLK					131
++#define GCC_SDCC2_APPS_CLK					132
++#define GCC_SDCC2_APPS_CLK_SRC					133
++#define GCC_SDCC4_AHB_CLK					134
++#define GCC_SDCC4_APPS_CLK					135
++#define GCC_SDCC4_APPS_CLK_SRC					136
++#define GCC_UFS_PHY_AHB_CLK					137
++#define GCC_UFS_PHY_AXI_CLK					138
++#define GCC_UFS_PHY_AXI_CLK_SRC					139
++#define GCC_UFS_PHY_AXI_HW_CTL_CLK				140
++#define GCC_UFS_PHY_ICE_CORE_CLK				141
++#define GCC_UFS_PHY_ICE_CORE_CLK_SRC				142
++#define GCC_UFS_PHY_ICE_CORE_HW_CTL_CLK				143
++#define GCC_UFS_PHY_PHY_AUX_CLK					144
++#define GCC_UFS_PHY_PHY_AUX_CLK_SRC				145
++#define GCC_UFS_PHY_PHY_AUX_HW_CTL_CLK				146
++#define GCC_UFS_PHY_RX_SYMBOL_0_CLK				147
++#define GCC_UFS_PHY_RX_SYMBOL_0_CLK_SRC				148
++#define GCC_UFS_PHY_RX_SYMBOL_1_CLK				149
++#define GCC_UFS_PHY_RX_SYMBOL_1_CLK_SRC				150
++#define GCC_UFS_PHY_TX_SYMBOL_0_CLK				151
++#define GCC_UFS_PHY_TX_SYMBOL_0_CLK_SRC				152
++#define GCC_UFS_PHY_UNIPRO_CORE_CLK				153
++#define GCC_UFS_PHY_UNIPRO_CORE_CLK_SRC				154
++#define GCC_UFS_PHY_UNIPRO_CORE_HW_CTL_CLK			155
++#define GCC_USB30_PRIM_MASTER_CLK				156
++#define GCC_USB30_PRIM_MASTER_CLK_SRC				157
++#define GCC_USB30_PRIM_MOCK_UTMI_CLK				158
++#define GCC_USB30_PRIM_MOCK_UTMI_CLK_SRC			159
++#define GCC_USB30_PRIM_MOCK_UTMI_POSTDIV_CLK_SRC		160
++#define GCC_USB30_PRIM_SLEEP_CLK				161
++#define GCC_USB3_PRIM_PHY_AUX_CLK				162
++#define GCC_USB3_PRIM_PHY_AUX_CLK_SRC				163
++#define GCC_USB3_PRIM_PHY_COM_AUX_CLK				164
++#define GCC_USB3_PRIM_PHY_PIPE_CLK				165
++#define GCC_USB3_PRIM_PHY_PIPE_CLK_SRC				166
++#define GCC_VIDEO_AHB_CLK					167
++#define GCC_VIDEO_AXI0_CLK					168
++#define GCC_VIDEO_AXI1_CLK					169
++#define GCC_VIDEO_XO_CLK					170
++
++/* GCC resets */
++#define GCC_CAMERA_BCR						0
++#define GCC_DISPLAY_BCR						1
++#define GCC_GPU_BCR						2
++#define GCC_PCIE_0_BCR						3
++#define GCC_PCIE_0_LINK_DOWN_BCR				4
++#define GCC_PCIE_0_NOCSR_COM_PHY_BCR				5
++#define GCC_PCIE_0_PHY_BCR					6
++#define GCC_PCIE_0_PHY_NOCSR_COM_PHY_BCR			7
++#define GCC_PCIE_1_BCR						8
++#define GCC_PCIE_1_LINK_DOWN_BCR				9
++#define GCC_PCIE_1_NOCSR_COM_PHY_BCR				10
++#define GCC_PCIE_1_PHY_BCR					11
++#define GCC_PCIE_1_PHY_NOCSR_COM_PHY_BCR			12
++#define GCC_PCIE_PHY_BCR					13
++#define GCC_PCIE_PHY_CFG_AHB_BCR				14
++#define GCC_PCIE_PHY_COM_BCR					15
++#define GCC_PDM_BCR						16
++#define GCC_QUPV3_WRAPPER_1_BCR					17
++#define GCC_QUPV3_WRAPPER_2_BCR					18
++#define GCC_QUPV3_WRAPPER_I2C_BCR				19
++#define GCC_QUSB2PHY_PRIM_BCR					20
++#define GCC_QUSB2PHY_SEC_BCR					21
++#define GCC_SDCC2_BCR						22
++#define GCC_SDCC4_BCR						23
++#define GCC_UFS_PHY_BCR						24
++#define GCC_USB30_PRIM_BCR					25
++#define GCC_USB3_DP_PHY_PRIM_BCR				26
++#define GCC_USB3_DP_PHY_SEC_BCR					27
++#define GCC_USB3_PHY_PRIM_BCR					28
++#define GCC_USB3_PHY_SEC_BCR					29
++#define GCC_USB3PHY_PHY_PRIM_BCR				30
++#define GCC_USB3PHY_PHY_SEC_BCR					31
++#define GCC_USB_PHY_CFG_AHB2PHY_BCR				32
++#define GCC_VIDEO_AXI0_CLK_ARES					33
++#define GCC_VIDEO_AXI1_CLK_ARES					34
++#define GCC_VIDEO_BCR						35
++
++/* GCC power domains */
++#define PCIE_0_GDSC						0
++#define PCIE_0_PHY_GDSC						1
++#define PCIE_1_GDSC						2
++#define PCIE_1_PHY_GDSC						3
++#define UFS_PHY_GDSC						4
++#define UFS_MEM_PHY_GDSC					5
++#define USB30_PRIM_GDSC						6
++#define USB3_PHY_GDSC						7
++
++#endif
 -- 
 2.53.0
 
