@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DCFA30567B;
-	Sat, 12 Sep 2026 08:07:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB72F30DD22;
+	Sat, 12 Sep 2026 08:07:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789200439; cv=none; b=BGNXL5bRDJx/uIl+qxO9dK5+VJ3TWHiai7JHCYlH7ENBeI/YFRL58+quQWGZ0x8xKr0AIMLcu1xsij9/UcoQyIQkN9YN0aUnOJ1vM3g6qp8JrDig4zQcd1ILjLM6Wz+UC4foCdOGf+bOrPFd3Plxj1pWJI/TedmmG8fBee/lP5s=
+	t=1789200444; cv=none; b=BxZuBX3oybO8rI6R1I9rk7iimPHYxIAMUGaPjzqv4DsxDn5h9sR1rPvM6zQU76z2wKtgKHYnkiTbn8GJ0IfkMBOXcnuhMaVCMvtX49zXuu2YPzO7VAfcdsjP0SK3uTweLrAItwK1u9JbezBM2HlUnxU/efhPVnwSymaYtVFLt1g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789200439; c=relaxed/simple;
-	bh=HkLHmnG9ZDTG1ZmlkaWAdpW+xluQCaS6XDfR19R3Qxk=;
+	s=arc-20240116; t=1789200444; c=relaxed/simple;
+	bh=F/J0szvmMQxQbRCvy3R6E3eYgx2V2zCaiDzsjOLp0zY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pVXRb8exKLsRFT5ZhP0sQEs0U9fDFqVNYY560maoK0WLNtLmpJiEudTanQevdlJmaTCAEr50ak/Z6Sly10/KBRlRzIpV0yuG75un00K7Cjui2Hw3/tz27eaJXV6ohQ57Tdz8nkZ3amuXCtua633zMWFhDijJDcN8sSl2f4ahiRA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rmdx3ySM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ufu4VeYpvvEZB85kJYtnNHpoBwd6VeStkNo5XnY2+qZ9PfOq6QMlluqDG0WYDItSPxqUiYkwBU4CJCZkia9po2FBI6ZyilTONynqzksQGVBfl1YPEu1rYqPGqeTL7JgTJsuFqAZMfm89sz3YS0dBK22piny/M7ndgsIOSfDYYcc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nx7S0syQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rmdx3ySM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 066541F000FF;
-	Sat, 12 Sep 2026 08:07:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nx7S0syQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D4AE1F000FF;
+	Sat, 12 Sep 2026 08:07:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789200438;
-	bh=m6OHEan1bDklWM7wejXmiDy+6IxszzDvBC3x7xgSBZ8=;
+	s=korg; t=1789200443;
+	bh=sZSm4sVgr8Ukya9SiCSy47TY7XfdI/+kNEKpuYgXaAk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Rmdx3ySMx/znaOsMF424LRX+STCBL2DkJAThSYsXSDjXTjxCOgneSTFO8pPqzXYdc
-	 6m9vSZBdCB1hXRmvCFsKz4xGj8sg+auqPIvNbmYPHWK08QeL4s0hwDoZ4NHqByX7ut
-	 3F5Dfl9my6bmuMBd+YuNdH9+gz3DqThaY/Rug4XM=
+	b=Nx7S0syQweCa/15yHH82dmg4UqzwF0pCBeQh7qic+cWELyl4tifz8zJ+pxwqxlwaP
+	 2t0QzdYcCABfFig8Bx8yGidSqHo/7J+dUP7gW1q6wirZDdeFiN9uKiYpcSqgS5n1/0
+	 o7x1iK2hqEmPuDYQ3Qvfrvev4YUWNfocKmxhvVjE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Hannes Reinecke <hare@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Keith Busch <kbusch@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0791/1815] firmware: qcom: scm: Fix tzmem state on probe retry
-Date: Sat, 12 Sep 2026 08:42:21 +0200
-Message-ID: <20260912065707.479792571@linuxfoundation.org>
+Subject: [PATCH 7.2 0792/1815] block: fix dio leak on metadata mapping error
+Date: Sat, 12 Sep 2026 08:42:22 +0200
+Message-ID: <20260912065707.503886996@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -53,65 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+From: Keith Busch <kbusch@kernel.org>
 
-[ Upstream commit 9941fe8a04f3d258e07eb5899db3027252a4190f ]
+[ Upstream commit 702a2a9f3dfe066a7481698c858371112f3cb697 ]
 
-qcom_tzmem_enable() returns -EBUSY if called a second time, but this
-causes probe retries to fail permanently if a later step in
-qcom_scm_probe() defers after qcom_tzmem_enable() has already succeeded.
+A failed integrity mapping holds a dio reference, so we need to go
+through the full bio ending in case there were previously submitted
+bio's in the sequence.
 
-Use DO_ONCE() to ensure qcom_tzmem_init() runs exactly once across all
-calls in a thread-safe manner. qcom_tzmem_dev is set on every call since
-probe retries use the same device pointer. The result of the first
-initialisation is cached and returned to every subsequent caller.
-
-Fixes: 40289e35ca52 ("firmware: qcom: scm: enable the TZ mem allocator")
-Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260724094939.613844-4-mukesh.ojha@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 2729a60bbfb92 ("block: don't silently ignore metadata for sync read/write")
+Reviewed-by: Hannes Reinecke <hare@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+Link: https://patch.msgid.link/20260720201057.1862857-3-kbusch@meta.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/qcom/qcom_tzmem.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ block/fops.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/firmware/qcom/qcom_tzmem.c b/drivers/firmware/qcom/qcom_tzmem.c
-index 0635cbeacfc8e..0fd9581275f17 100644
---- a/drivers/firmware/qcom/qcom_tzmem.c
-+++ b/drivers/firmware/qcom/qcom_tzmem.c
-@@ -15,6 +15,7 @@
- #include <linux/kernel.h>
- #include <linux/list.h>
- #include <linux/mm.h>
-+#include <linux/once.h>
- #include <linux/radix-tree.h>
- #include <linux/slab.h>
- #include <linux/spinlock.h>
-@@ -507,14 +508,18 @@ phys_addr_t qcom_tzmem_to_phys(void *vaddr)
- }
- EXPORT_SYMBOL_GPL(qcom_tzmem_to_phys);
+diff --git a/block/fops.c b/block/fops.c
+index a84450d79b3cc..cb919dea00411 100644
+--- a/block/fops.c
++++ b/block/fops.c
+@@ -238,8 +238,10 @@ static ssize_t __blkdev_direct_IO(struct kiocb *iocb, struct iov_iter *iter,
+ 		}
+ 		if (iocb->ki_flags & IOCB_HAS_METADATA) {
+ 			ret = bio_integrity_map_iter(bio, iocb->private);
+-			if (unlikely(ret))
+-				goto fail;
++			if (unlikely(ret)) {
++				bio_endio_status(bio, errno_to_blk_status(ret));
++				break;
++			}
+ 		}
  
-+static void qcom_tzmem_do_init(int *result)
-+{
-+	*result = qcom_tzmem_init();
-+}
-+
- int qcom_tzmem_enable(struct device *dev)
- {
--	if (qcom_tzmem_dev)
--		return -EBUSY;
-+	static int result;
- 
- 	qcom_tzmem_dev = dev;
--
--	return qcom_tzmem_init();
-+	DO_ONCE(qcom_tzmem_do_init, &result);
-+	return result;
- }
- EXPORT_SYMBOL_GPL(qcom_tzmem_enable);
- 
+ 		if (is_read) {
 -- 
 2.53.0
 
