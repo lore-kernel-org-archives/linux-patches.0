@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFD0F24CEEA;
-	Sat, 12 Sep 2026 11:03:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACEF8221F26;
+	Sat, 12 Sep 2026 11:03:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789210986; cv=none; b=sWUYv4K6TF4nmP4Zc4v3Hw4XwlLHJTVG7aTY228Pa3KFe/rihfoetGIjMshC7nllPtG7+d88PMhwD+jozdr7apW5k7CAF+iJEDoPJ3LpKqJX6t6SPhaaDupxnuNLGuyA/pvs7Ox+9lGddwMsNTscuurAxJNgc7t0WhV4i19dvaY=
+	t=1789210992; cv=none; b=JQp6UjYjNKM8fBLnlJ0iu4CwElolTXlEOTFNiTjYytsVLoRY5vkD93SKYeEvyjPDK6hukFFhoJHbb4ZY5i+EXDoGQ49FxT53bTaSEIFqZbVK7QPQ1+ZXzSffW8oRPiKobYiDJsXNAlZ5cOdcjG/8nn1nV6LOIfWpJfq8UE7r0qU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789210986; c=relaxed/simple;
-	bh=Wm0lsx91ctZuAPyWdHao7lneK0D74PF9bETUzLbG2f0=;
+	s=arc-20240116; t=1789210992; c=relaxed/simple;
+	bh=eyvdSsFwgCyd9ujSUiBTfyTCUYb1MhWR01jI7eFP55E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FpFZ+2HYJW2NIQmnb1QD6AdDhrR3zH1pP6n6gi/4SG5AUQh04lWjAEd+11EPCpUXA/cuIIgkpo+ORO2DTYbDjdXDeBmDcgp8hrgYl9sCacuWSN9xw8x8FjVVvZNo33TE+I4+yCTwK3YG77idUA1ouHlEmko9EFoYkn5R/eilcNA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rBLx+KGv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hu0c0ZTcNijMq1oe4SZycnmPuu6k5WbyMzHdv6w1e+U9EMvn/CSmOatJi/Su64B8BAlvM9KY7Md6HPwNBVcujJ+H17vp3zF/Nb3DS7ZBbZ5ti0PVkSCzedtRD2uDMG26qlaKhoK2rxNFv8KooL2j8oU91Sro1efQr182JVIOulM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U+XWQLW3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rBLx+KGv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EF9E1F000FF;
-	Sat, 12 Sep 2026 11:03:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U+XWQLW3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B07B31F000FF;
+	Sat, 12 Sep 2026 11:03:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789210985;
-	bh=tSAYhncZUToJXSrllpleyCzgVKHJytuRUVtgWNeLGfE=;
+	s=korg; t=1789210990;
+	bh=lcGf2iGD0FQV93Ii1qoITQMQi8VZpbd5AC0TNYFGLKU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rBLx+KGvavR9NJ+5zTvmPX3UjVdwuPQU3zQZXkDmHGi+TFJyGyvjj0wBH6abyk598
-	 TGWvVIn91wcM2EGK7kcSUB36BcbonNcYoxbUEUotR/SQHHceWrXgZm4EiRHCINXW2g
-	 ZANd2lQijAZdXeC/fsTZpe4D64KD+m2otCTDOW7I=
+	b=U+XWQLW3+ZL1DGR6jap8Wxe3eDxP0QJpTiuXDtQbupw71DvoApzyKm9tST09o2NSL
+	 kTM4SbCTTRmkOOVDtXmSluSBPCctjxszvPhp2ZCUNDJ5e3YmZ+vunVduS7e6eZWMoE
+	 eR9EsQP8eNbGEHjAP71dy9M7VKx3tppM+ox6txxo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Oros <poros@redhat.com>,
-	Marcin Szycik <marcin.szycik@linux.intel.com>,
-	Rafal Romanowski <rafal.romanowski@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Jesse Brandeburg <jesse.brandeburg@intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Rinitha S <sx.rinitha@intel.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1137/1518] ice: clear the default forwarding VSI rule when releasing a VSI
-Date: Sat, 12 Sep 2026 08:55:06 +0200
-Message-ID: <20260912065649.178756203@linuxfoundation.org>
+Subject: [PATCH 6.18 1138/1518] ice: refactor to use helpers
+Date: Sat, 12 Sep 2026 08:55:07 +0200
+Message-ID: <20260912065649.201848854@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -53,82 +56,299 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Petr Oros <poros@redhat.com>
+From: Jesse Brandeburg <jesse.brandeburg@intel.com>
 
-[ Upstream commit d04287e27bf1c0b879a10d929c163f2da69715b6 ]
+[ Upstream commit a308ea9721122d632d1ce2af4cec1c008aff512a ]
 
-When a VSI is configured as the switch's default forwarding VSI
-(ICE_SW_LKUP_DFLT) and is then torn down, the rule is left behind in
-the switch. ice_vsi_release() no longer removes it, and the SR-IOV VF
-free path (ice_free_vfs() -> ice_free_vf_res() -> ice_vf_vsi_release()
--> ice_vsi_release()) does not disable promiscuous mode either, which
-only happens on VF reset in ice_vf_clear_all_promisc_modes().
+Use the ice_netdev_to_pf() helper in more places and remove a bunch of
+boilerplate code. Not every instance could be replaced due to use of the
+netdev_priv() output or the vsi variable within a bunch of functions.
 
-A trusted VF that enters unicast promiscuous mode becomes the default
-forwarding VSI (this is the default mode, when the PF does not have VF
-true-promiscuous mode enabled). If the VFs are then destroyed without
-the VF first leaving promiscuous mode, the ICE_SW_LKUP_DFLT rule for
-the now-freed VSI is leaked. When VFs are recreated, a VSI reuses the
-freed hw_vsi_id. If it is assigned a different VSI handle than the
-leaked rule holds, ice_set_dflt_vsi() does not recognize it as
-already-default, and ice_add_update_vsi_list() folds the dangling
-(freed) handle into a VSI list, which the firmware rejects. The VSI
-handle assigned on re-creation varies, so the failure is intermittent
-rather than every cycle.
-
-Reproduce by repeatedly running the cycle below on the two ports of the
-same card, where $VF0 and $VF1 are the netdevs of vf 15 once they
-appear. The VF must be brought up so iavf actually pushes the unicast
-promiscuous request, and the rule must settle before the VFs are torn
-down again:
-
-  echo 16 > /sys/class/net/$PF0/device/sriov_numvfs
-  echo 16 > /sys/class/net/$PF1/device/sriov_numvfs
-  ip link set $PF0 vf 15 trust on
-  ip link set $PF1 vf 15 trust on
-  ip link set $VF0 up
-  ip link set $VF1 up
-  ip link set $VF0 promisc on
-  ip link set $VF1 promisc on
-  sleep 1
-  echo 0 > /sys/class/net/$PF0/device/sriov_numvfs
-  echo 0 > /sys/class/net/$PF1/device/sriov_numvfs
-
-Within a few cycles the ice PF and iavf VF log:
-
-  Failed to set VSI 25 as the default forwarding VSI, error -22
-  Turning on/off promiscuous mode for VF 63 failed, error: -22
-  PF returned error -53 (IAVF_ERR_ADMIN_QUEUE_ERROR) to our request 14
-
-This cleanup used to live in ice_vsi_release() but was dropped by the
-referenced refactor. Restore it. Clear the default forwarding VSI rule
-in ice_vsi_release() when this VSI owns it, which covers every teardown
-path.
-
-Fixes: 6624e780a577 ("ice: split ice_vsi_setup into smaller functions")
-Signed-off-by: Petr Oros <poros@redhat.com>
-Reviewed-by: Marcin Szycik <marcin.szycik@linux.intel.com>
-Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Signed-off-by: Jesse Brandeburg <jesse.brandeburg@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Tested-by: Rinitha S <sx.rinitha@intel.com>
+Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
+Link: https://patch.msgid.link/20251016-jk-iwl-next-2025-10-15-v2-12-ff3a390d9fc6@intel.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: df88d6f1ed65 ("ice: acquire NVM lock around each flash read")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_lib.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/ethernet/intel/ice/ice_ethtool.c  | 48 ++++++-------------
+ .../net/ethernet/intel/ice/ice_flex_pipe.c    |  8 +---
+ drivers/net/ethernet/intel/ice/ice_lag.c      |  3 +-
+ drivers/net/ethernet/intel/ice/ice_main.c     | 10 ++--
+ drivers/net/ethernet/intel/ice/ice_ptp.c      |  6 +--
+ drivers/net/ethernet/intel/ice/ice_sriov.c    |  3 +-
+ 6 files changed, 24 insertions(+), 54 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_lib.c b/drivers/net/ethernet/intel/ice/ice_lib.c
-index 3d14932871c58..851fab1812510 100644
---- a/drivers/net/ethernet/intel/ice/ice_lib.c
-+++ b/drivers/net/ethernet/intel/ice/ice_lib.c
-@@ -2865,6 +2865,9 @@ int ice_vsi_release(struct ice_vsi *vsi)
- 		return -ENODEV;
- 	pf = vsi->back;
+diff --git a/drivers/net/ethernet/intel/ice/ice_ethtool.c b/drivers/net/ethernet/intel/ice/ice_ethtool.c
+index 5944ab6efd448..c595fbf6eb34e 100644
+--- a/drivers/net/ethernet/intel/ice/ice_ethtool.c
++++ b/drivers/net/ethernet/intel/ice/ice_ethtool.c
+@@ -794,8 +794,7 @@ static int ice_get_extended_regs(struct net_device *netdev, void *p)
+ static void
+ ice_get_regs(struct net_device *netdev, struct ethtool_regs *regs, void *p)
+ {
+-	struct ice_netdev_priv *np = netdev_priv(netdev);
+-	struct ice_pf *pf = np->vsi->back;
++	struct ice_pf *pf = ice_netdev_to_pf(netdev);
+ 	struct ice_hw *hw = &pf->hw;
+ 	u32 *regs_buf = (u32 *)p;
+ 	unsigned int i;
+@@ -810,8 +809,7 @@ ice_get_regs(struct net_device *netdev, struct ethtool_regs *regs, void *p)
  
-+	if (ice_is_vsi_dflt_vsi(vsi))
-+		ice_clear_dflt_vsi(vsi);
-+
- 	if (test_bit(ICE_FLAG_RSS_ENA, pf->flags))
- 		ice_rss_clean(vsi);
+ static u32 ice_get_msglevel(struct net_device *netdev)
+ {
+-	struct ice_netdev_priv *np = netdev_priv(netdev);
+-	struct ice_pf *pf = np->vsi->back;
++	struct ice_pf *pf = ice_netdev_to_pf(netdev);
  
+ #ifndef CONFIG_DYNAMIC_DEBUG
+ 	if (pf->hw.debug_mask)
+@@ -824,8 +822,7 @@ static u32 ice_get_msglevel(struct net_device *netdev)
+ 
+ static void ice_set_msglevel(struct net_device *netdev, u32 data)
+ {
+-	struct ice_netdev_priv *np = netdev_priv(netdev);
+-	struct ice_pf *pf = np->vsi->back;
++	struct ice_pf *pf = ice_netdev_to_pf(netdev);
+ 
+ #ifndef CONFIG_DYNAMIC_DEBUG
+ 	if (ICE_DBG_USER & data)
+@@ -840,16 +837,14 @@ static void ice_set_msglevel(struct net_device *netdev, u32 data)
+ static void ice_get_link_ext_stats(struct net_device *netdev,
+ 				   struct ethtool_link_ext_stats *stats)
+ {
+-	struct ice_netdev_priv *np = netdev_priv(netdev);
+-	struct ice_pf *pf = np->vsi->back;
++	struct ice_pf *pf = ice_netdev_to_pf(netdev);
+ 
+ 	stats->link_down_events = pf->link_down_events;
+ }
+ 
+ static int ice_get_eeprom_len(struct net_device *netdev)
+ {
+-	struct ice_netdev_priv *np = netdev_priv(netdev);
+-	struct ice_pf *pf = np->vsi->back;
++	struct ice_pf *pf = ice_netdev_to_pf(netdev);
+ 
+ 	return (int)pf->hw.flash.flash_size;
+ }
+@@ -858,9 +853,7 @@ static int
+ ice_get_eeprom(struct net_device *netdev, struct ethtool_eeprom *eeprom,
+ 	       u8 *bytes)
+ {
+-	struct ice_netdev_priv *np = netdev_priv(netdev);
+-	struct ice_vsi *vsi = np->vsi;
+-	struct ice_pf *pf = vsi->back;
++	struct ice_pf *pf = ice_netdev_to_pf(netdev);
+ 	struct ice_hw *hw = &pf->hw;
+ 	struct device *dev;
+ 	int ret;
+@@ -959,8 +952,7 @@ static u64 ice_link_test(struct net_device *netdev)
+  */
+ static u64 ice_eeprom_test(struct net_device *netdev)
+ {
+-	struct ice_netdev_priv *np = netdev_priv(netdev);
+-	struct ice_pf *pf = np->vsi->back;
++	struct ice_pf *pf = ice_netdev_to_pf(netdev);
+ 
+ 	netdev_info(netdev, "EEPROM test\n");
+ 	return !!(ice_nvm_validate_checksum(&pf->hw));
+@@ -1274,9 +1266,8 @@ static int ice_lbtest_receive_frames(struct ice_rx_ring *rx_ring)
+  */
+ static u64 ice_loopback_test(struct net_device *netdev)
+ {
+-	struct ice_netdev_priv *np = netdev_priv(netdev);
+-	struct ice_vsi *orig_vsi = np->vsi, *test_vsi;
+-	struct ice_pf *pf = orig_vsi->back;
++	struct ice_pf *pf = ice_netdev_to_pf(netdev);
++	struct ice_vsi *test_vsi;
+ 	u8 *tx_frame __free(kfree) = NULL;
+ 	u8 broadcast[ETH_ALEN], ret = 0;
+ 	int num_frames, valid_frames;
+@@ -1365,8 +1356,7 @@ static u64 ice_loopback_test(struct net_device *netdev)
+  */
+ static u64 ice_intr_test(struct net_device *netdev)
+ {
+-	struct ice_netdev_priv *np = netdev_priv(netdev);
+-	struct ice_pf *pf = np->vsi->back;
++	struct ice_pf *pf = ice_netdev_to_pf(netdev);
+ 	u16 swic_old = pf->sw_int_count;
+ 
+ 	netdev_info(netdev, "interrupt test\n");
+@@ -1394,9 +1384,8 @@ static void
+ ice_self_test(struct net_device *netdev, struct ethtool_test *eth_test,
+ 	      u64 *data)
+ {
+-	struct ice_netdev_priv *np = netdev_priv(netdev);
++	struct ice_pf *pf = ice_netdev_to_pf(netdev);
+ 	bool if_running = netif_running(netdev);
+-	struct ice_pf *pf = np->vsi->back;
+ 	struct device *dev;
+ 
+ 	dev = ice_pf_to_dev(pf);
+@@ -1720,9 +1709,7 @@ static int ice_nway_reset(struct net_device *netdev)
+  */
+ static u32 ice_get_priv_flags(struct net_device *netdev)
+ {
+-	struct ice_netdev_priv *np = netdev_priv(netdev);
+-	struct ice_vsi *vsi = np->vsi;
+-	struct ice_pf *pf = vsi->back;
++	struct ice_pf *pf = ice_netdev_to_pf(netdev);
+ 	u32 i, ret_flags = 0;
+ 
+ 	for (i = 0; i < ICE_PRIV_FLAG_ARRAY_SIZE; i++) {
+@@ -4432,9 +4419,7 @@ static int
+ ice_get_module_info(struct net_device *netdev,
+ 		    struct ethtool_modinfo *modinfo)
+ {
+-	struct ice_netdev_priv *np = netdev_priv(netdev);
+-	struct ice_vsi *vsi = np->vsi;
+-	struct ice_pf *pf = vsi->back;
++	struct ice_pf *pf = ice_netdev_to_pf(netdev);
+ 	struct ice_hw *hw = &pf->hw;
+ 	u8 sff8472_comp = 0;
+ 	u8 sff8472_swap = 0;
+@@ -4506,12 +4491,10 @@ static int
+ ice_get_module_eeprom(struct net_device *netdev,
+ 		      struct ethtool_eeprom *ee, u8 *data)
+ {
+-	struct ice_netdev_priv *np = netdev_priv(netdev);
++	struct ice_pf *pf = ice_netdev_to_pf(netdev);
+ #define SFF_READ_BLOCK_SIZE 8
+ 	u8 value[SFF_READ_BLOCK_SIZE] = { 0 };
+ 	u8 addr = ICE_I2C_EEPROM_DEV_ADDR;
+-	struct ice_vsi *vsi = np->vsi;
+-	struct ice_pf *pf = vsi->back;
+ 	struct ice_hw *hw = &pf->hw;
+ 	bool is_sfp = false;
+ 	unsigned int i;
+@@ -4690,8 +4673,7 @@ static void ice_get_fec_stats(struct net_device *netdev,
+  */
+ static int ice_ethtool_reset(struct net_device *dev, u32 *flags)
+ {
+-	struct ice_netdev_priv *np = netdev_priv(dev);
+-	struct ice_pf *pf = np->vsi->back;
++	struct ice_pf *pf = ice_netdev_to_pf(dev);
+ 	enum ice_reset_req reset;
+ 
+ 	switch (*flags) {
+diff --git a/drivers/net/ethernet/intel/ice/ice_flex_pipe.c b/drivers/net/ethernet/intel/ice/ice_flex_pipe.c
+index 013c93b6605ed..c8cb492fddf46 100644
+--- a/drivers/net/ethernet/intel/ice/ice_flex_pipe.c
++++ b/drivers/net/ethernet/intel/ice/ice_flex_pipe.c
+@@ -574,9 +574,7 @@ ice_destroy_tunnel(struct ice_hw *hw, u16 index, enum ice_tunnel_type type,
+ int ice_udp_tunnel_set_port(struct net_device *netdev, unsigned int table,
+ 			    unsigned int idx, struct udp_tunnel_info *ti)
+ {
+-	struct ice_netdev_priv *np = netdev_priv(netdev);
+-	struct ice_vsi *vsi = np->vsi;
+-	struct ice_pf *pf = vsi->back;
++	struct ice_pf *pf = ice_netdev_to_pf(netdev);
+ 	enum ice_tunnel_type tnl_type;
+ 	int status;
+ 	u16 index;
+@@ -598,9 +596,7 @@ int ice_udp_tunnel_set_port(struct net_device *netdev, unsigned int table,
+ int ice_udp_tunnel_unset_port(struct net_device *netdev, unsigned int table,
+ 			      unsigned int idx, struct udp_tunnel_info *ti)
+ {
+-	struct ice_netdev_priv *np = netdev_priv(netdev);
+-	struct ice_vsi *vsi = np->vsi;
+-	struct ice_pf *pf = vsi->back;
++	struct ice_pf *pf = ice_netdev_to_pf(netdev);
+ 	enum ice_tunnel_type tnl_type;
+ 	int status;
+ 
+diff --git a/drivers/net/ethernet/intel/ice/ice_lag.c b/drivers/net/ethernet/intel/ice/ice_lag.c
+index e8ab36d0f11d8..b2ea0532f07b2 100644
+--- a/drivers/net/ethernet/intel/ice/ice_lag.c
++++ b/drivers/net/ethernet/intel/ice/ice_lag.c
+@@ -2177,8 +2177,7 @@ static void ice_lag_chk_disabled_bond(struct ice_lag *lag, void *ptr)
+  */
+ static void ice_lag_disable_sriov_bond(struct ice_lag *lag)
+ {
+-	struct ice_netdev_priv *np = netdev_priv(lag->netdev);
+-	struct ice_pf *pf = np->vsi->back;
++	struct ice_pf *pf = ice_netdev_to_pf(lag->netdev);
+ 
+ 	ice_clear_feature_support(pf, ICE_F_SRIOV_LAG);
+ 	ice_clear_feature_support(pf, ICE_F_SRIOV_AA_LAG);
+diff --git a/drivers/net/ethernet/intel/ice/ice_main.c b/drivers/net/ethernet/intel/ice/ice_main.c
+index 2f1dd9eea2b23..f85051072ba2c 100644
+--- a/drivers/net/ethernet/intel/ice/ice_main.c
++++ b/drivers/net/ethernet/intel/ice/ice_main.c
+@@ -8116,9 +8116,7 @@ static int
+ ice_bridge_getlink(struct sk_buff *skb, u32 pid, u32 seq,
+ 		   struct net_device *dev, u32 filter_mask, int nlflags)
+ {
+-	struct ice_netdev_priv *np = netdev_priv(dev);
+-	struct ice_vsi *vsi = np->vsi;
+-	struct ice_pf *pf = vsi->back;
++	struct ice_pf *pf = ice_netdev_to_pf(dev);
+ 	u16 bmode;
+ 
+ 	bmode = pf->first_sw->bridge_mode;
+@@ -8188,8 +8186,7 @@ ice_bridge_setlink(struct net_device *dev, struct nlmsghdr *nlh,
+ 		   u16 __always_unused flags,
+ 		   struct netlink_ext_ack __always_unused *extack)
+ {
+-	struct ice_netdev_priv *np = netdev_priv(dev);
+-	struct ice_pf *pf = np->vsi->back;
++	struct ice_pf *pf = ice_netdev_to_pf(dev);
+ 	struct nlattr *attr, *br_spec;
+ 	struct ice_hw *hw = &pf->hw;
+ 	struct ice_sw *pf_sw;
+@@ -9623,8 +9620,7 @@ ice_indr_setup_tc_cb(struct net_device *netdev, struct Qdisc *sch,
+  */
+ int ice_open(struct net_device *netdev)
+ {
+-	struct ice_netdev_priv *np = netdev_priv(netdev);
+-	struct ice_pf *pf = np->vsi->back;
++	struct ice_pf *pf = ice_netdev_to_pf(netdev);
+ 
+ 	if (ice_is_reset_in_progress(pf->state)) {
+ 		netdev_err(netdev, "can't open net device while reset is in progress");
+diff --git a/drivers/net/ethernet/intel/ice/ice_ptp.c b/drivers/net/ethernet/intel/ice/ice_ptp.c
+index 30a34ed2ae60a..7808d583b9ee1 100644
+--- a/drivers/net/ethernet/intel/ice/ice_ptp.c
++++ b/drivers/net/ethernet/intel/ice/ice_ptp.c
+@@ -2164,8 +2164,7 @@ static int ice_ptp_getcrosststamp(struct ptp_clock_info *info,
+ int ice_ptp_hwtstamp_get(struct net_device *netdev,
+ 			 struct kernel_hwtstamp_config *config)
+ {
+-	struct ice_netdev_priv *np = netdev_priv(netdev);
+-	struct ice_pf *pf = np->vsi->back;
++	struct ice_pf *pf = ice_netdev_to_pf(netdev);
+ 
+ 	if (pf->ptp.state != ICE_PTP_READY)
+ 		return -EIO;
+@@ -2236,8 +2235,7 @@ int ice_ptp_hwtstamp_set(struct net_device *netdev,
+ 			 struct kernel_hwtstamp_config *config,
+ 			 struct netlink_ext_ack *extack)
+ {
+-	struct ice_netdev_priv *np = netdev_priv(netdev);
+-	struct ice_pf *pf = np->vsi->back;
++	struct ice_pf *pf = ice_netdev_to_pf(netdev);
+ 	int err;
+ 
+ 	if (pf->ptp.state != ICE_PTP_READY)
+diff --git a/drivers/net/ethernet/intel/ice/ice_sriov.c b/drivers/net/ethernet/intel/ice/ice_sriov.c
+index 6a0b724e46f9a..38f8356470131 100644
+--- a/drivers/net/ethernet/intel/ice/ice_sriov.c
++++ b/drivers/net/ethernet/intel/ice/ice_sriov.c
+@@ -1192,8 +1192,7 @@ ice_vf_lan_overflow_event(struct ice_pf *pf, struct ice_rq_event_info *event)
+  */
+ int ice_set_vf_spoofchk(struct net_device *netdev, int vf_id, bool ena)
+ {
+-	struct ice_netdev_priv *np = netdev_priv(netdev);
+-	struct ice_pf *pf = np->vsi->back;
++	struct ice_pf *pf = ice_netdev_to_pf(netdev);
+ 	struct ice_vsi *vf_vsi;
+ 	struct device *dev;
+ 	struct ice_vf *vf;
 -- 
 2.53.0
 
