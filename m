@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2823126ED46;
-	Sat, 12 Sep 2026 19:49:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1912331203;
+	Sat, 12 Sep 2026 19:49:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789242545; cv=none; b=UVGEoUvb9B/2qQK71CQtyFe2e03Hzs/FrO0PFyqM8f39BLiLst2fEUM0AOeO6neR1QZ0k49JlVJjPfrKR+QRhb3hD8RJu0r+7+oEx+s42zJaPYkCjfIBANqHVB/R3tQUORqC85QrXuRwp1n6zfTh02HXSN4YLG5eKLeF5uqw92g=
+	t=1789242548; cv=none; b=T5HBUciSzkqQM/RJ7yB3t/dNSUGGWtDdJmphdnWiu3DSCndj0U6VhrPTw0MY2yGH0qMKSGDeTCYohDX71aSG+VKoRee0JMwgo7IxmWyKpb84ssZ0YN0YHKxkMddvV8a8HcbBKrNGF8kkCY/ukrJwzquqXJkW/AVh067LCot2SUM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789242545; c=relaxed/simple;
-	bh=WkXmToL+NrPZzVORHoG/Sf/n+uqzbM4grju3301k5Y0=;
+	s=arc-20240116; t=1789242548; c=relaxed/simple;
+	bh=MgGfy1RlRHHxKvFpnWBxpnhnsOO+xrS/7UbG026CxTM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EG5/RRCYrzQJlmPS+KBmHsgwml6aX7RCxV4R4gM/YXEbD15ItSEGvBnHp9mMYxyz/GV36iZjt9C4oPz+bmAHIt2I67Q7sKsg8I0ZhNkfaUykxFRzeEmvuEGeTFsJ6vNVw75kRPX+YNr9GiIvJlw+Tf9IEcefDeALwL6oei5eSrc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Exbl8YZ7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WtF2j5ngfvnO6+T+nx+zUAXcNoNQaoG0gZ5TJNYcHffgRmabH09HTgY+j5d/RuWA9NDwQW4xcCAsFEkz7WREDfLlTcq4PKY0il4fl61fgFlwCiOpJXECCzSnT5s8+zeg2pAHv8ATEgue4gap2g9wV7wxqECQAOkvtfGcxxhikgQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n7O4Ssem; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Exbl8YZ7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83B311F000FF;
-	Sat, 12 Sep 2026 19:49:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n7O4Ssem"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 568851F000FF;
+	Sat, 12 Sep 2026 19:49:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789242544;
-	bh=QPAPX0t6Jfn4WVGa1Ms6PVyNuX8NLcIC/iyOX4O8JtM=;
+	s=korg; t=1789242546;
+	bh=QP3ku8E5Rri0/UoRg+iE7s5CJyXgH1ucLWppLSxgM04=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Exbl8YZ7Ji65YwGh1iZ6Y+LrEfG1+li6AwL1ACmji3MFXRAwIQLQmi/c9nKBhm8qy
-	 ir69pvIRTW0ksRcLw81SmzlzZZy9lTZVbN5rjeHm5cL9yK8+o8SLRpvIJrqW0qH7GN
-	 PYrLhH2kMqnv2a/U6o6vDuoRcnGkDio/+63SOla4=
+	b=n7O4SsemVq0KuF44h5LYDEffMJUlcinM8DCBZHhVbtk4YDsG3B/L1hEP0IDj+36/C
+	 IyK3iDgEQdua/syXqMvDySqf6goSupg6vZL56Ess1MtGIljpozI7Qi2ZOUUqQH1noZ
+	 uTTK4sSiPMQsRK3YfwRLmaOqpWa4UP2H0a/rVZiE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Kaiser <martin@kaiser.cx>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	Alison Schofield <alison.schofield@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 424/798] hwrng: ks-sa - access private data via struct hwrng
-Date: Sat, 12 Sep 2026 09:00:52 +0200
-Message-ID: <20260912065526.865953321@linuxfoundation.org>
+Subject: [PATCH 5.10 442/798] libnvdimm/labels: Bound the on-media label size before the shift
+Date: Sat, 12 Sep 2026 09:01:10 +0200
+Message-ID: <20260912065527.268812799@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -51,82 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Martin Kaiser <martin@kaiser.cx>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-[ Upstream commit b8f836cbe12bccf2beeadd638e1696f4acaa39c3 ]
+[ Upstream commit 18f9124248ed7a9da1c31973b629dceef76a9b0c ]
 
-This driver uses a struct ks_sa_rng for its private data. It contains a
-struct hwrng. Call container_of to get from hwrng to ks_sa_rng.
+For a v1.2+ index, __nd_label_validate() computes the label size as
+1 << (7 + nsindex[i]->labelsize), where labelsize is a u8 read from
+the label storage medium.  A value of 25 or more makes the shift count
+reach or exceed the width of int -- undefined behavior -- and 24 already
+shifts into the sign bit.  Only 0 (128-byte) and 1 (256-byte) are valid.
 
-Signed-off-by: Martin Kaiser <martin@kaiser.cx>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Stable-dep-of: 1c17b601fafb ("hwrng: ks-sa - Fix runtime PM cleanup on registration failure")
+Reject a labelsize above 1 before the shift.  The result was rejected by
+the following size comparison anyway, so this only removes the undefined
+shift on a crafted or corrupted medium; conforming labels are unaffected.
+
+Fixes: 564e871aa66f ("libnvdimm, label: add v1.2 nvdimm label definitions")
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Reviewed-by: Alison Schofield <alison.schofield@intel.com>
+Link: https://patch.msgid.link/20260624-b4-disp-d8279485-v3-2-cdb6cab28b41@proton.me
+Signed-off-by: Alison Schofield <alison.schofield@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/hw_random/ks-sa-rng.c | 15 ++++-----------
- 1 file changed, 4 insertions(+), 11 deletions(-)
+ drivers/nvdimm/label.c | 15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/char/hw_random/ks-sa-rng.c b/drivers/char/hw_random/ks-sa-rng.c
-index 994cfdf346e15..09dcaa35c8009 100644
---- a/drivers/char/hw_random/ks-sa-rng.c
-+++ b/drivers/char/hw_random/ks-sa-rng.c
-@@ -113,8 +113,7 @@ static unsigned int refill_delay_ns(unsigned long clk_rate)
- static int ks_sa_rng_init(struct hwrng *rng)
- {
- 	u32 value;
--	struct device *dev = (struct device *)rng->priv;
--	struct ks_sa_rng *ks_sa_rng = dev_get_drvdata(dev);
-+	struct ks_sa_rng *ks_sa_rng = container_of(rng, struct ks_sa_rng, rng);
- 	unsigned long clk_rate = clk_get_rate(ks_sa_rng->clk);
+diff --git a/drivers/nvdimm/label.c b/drivers/nvdimm/label.c
+index 1a1cc83815ff1..d7fedce9d215e 100644
+--- a/drivers/nvdimm/label.c
++++ b/drivers/nvdimm/label.c
+@@ -137,10 +137,21 @@ static int __nd_label_validate(struct nvdimm_drvdata *ndd)
+ 		/* label sizes larger than 128 arrived with v1.2 */
+ 		version = __le16_to_cpu(nsindex[i]->major) * 100
+ 			+ __le16_to_cpu(nsindex[i]->minor);
+-		if (version >= 102)
++		if (version >= 102) {
++			/*
++			 * labelsize feeds the shift below; only 0 (128-byte)
++			 * and 1 (256-byte) are valid -- a larger value would
++			 * overflow or exceed the width of int.
++			 */
++			if (nsindex[i]->labelsize > 1) {
++				dev_dbg(dev, "nsindex%d labelsize: %d invalid\n",
++					i, nsindex[i]->labelsize);
++				continue;
++			}
+ 			labelsize = 1 << (7 + nsindex[i]->labelsize);
+-		else
++		} else {
+ 			labelsize = 128;
++		}
  
- 	/* Enable RNG module */
-@@ -153,8 +152,7 @@ static int ks_sa_rng_init(struct hwrng *rng)
- 
- static void ks_sa_rng_cleanup(struct hwrng *rng)
- {
--	struct device *dev = (struct device *)rng->priv;
--	struct ks_sa_rng *ks_sa_rng = dev_get_drvdata(dev);
-+	struct ks_sa_rng *ks_sa_rng = container_of(rng, struct ks_sa_rng, rng);
- 
- 	/* Disable RNG */
- 	writel(0, &ks_sa_rng->reg_rng->control);
-@@ -164,8 +162,7 @@ static void ks_sa_rng_cleanup(struct hwrng *rng)
- 
- static int ks_sa_rng_data_read(struct hwrng *rng, u32 *data)
- {
--	struct device *dev = (struct device *)rng->priv;
--	struct ks_sa_rng *ks_sa_rng = dev_get_drvdata(dev);
-+	struct ks_sa_rng *ks_sa_rng = container_of(rng, struct ks_sa_rng, rng);
- 
- 	/* Read random data */
- 	data[0] = readl(&ks_sa_rng->reg_rng->output_l);
-@@ -179,8 +176,7 @@ static int ks_sa_rng_data_read(struct hwrng *rng, u32 *data)
- 
- static int ks_sa_rng_data_present(struct hwrng *rng, int wait)
- {
--	struct device *dev = (struct device *)rng->priv;
--	struct ks_sa_rng *ks_sa_rng = dev_get_drvdata(dev);
-+	struct ks_sa_rng *ks_sa_rng = container_of(rng, struct ks_sa_rng, rng);
- 	u64 now = ktime_get_ns();
- 
- 	u32	ready;
-@@ -225,7 +221,6 @@ static int ks_sa_rng_probe(struct platform_device *pdev)
- 		.data_present = ks_sa_rng_data_present,
- 		.cleanup = ks_sa_rng_cleanup,
- 	};
--	ks_sa_rng->rng.priv = (unsigned long)dev;
- 
- 	ks_sa_rng->reg_rng = devm_platform_ioremap_resource(pdev, 0);
- 	if (IS_ERR(ks_sa_rng->reg_rng))
-@@ -253,8 +248,6 @@ static int ks_sa_rng_probe(struct platform_device *pdev)
- 		return ret;
- 	}
- 
--	platform_set_drvdata(pdev, ks_sa_rng);
--
- 	return devm_hwrng_register(&pdev->dev, &ks_sa_rng->rng);
- }
- 
+ 		if (labelsize != sizeof_namespace_label(ndd)) {
+ 			dev_dbg(dev, "nsindex%d labelsize %d invalid\n",
 -- 
 2.53.0
 
