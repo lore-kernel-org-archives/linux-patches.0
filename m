@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93C5E345EB9;
-	Sat, 12 Sep 2026 19:01:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE3CA345EB9;
+	Sat, 12 Sep 2026 19:01:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789239708; cv=none; b=BBISDkhNrD8mMJi5sMsdokvqKBaSTHP0FfpvJ+TkT+9SZlF19PzWKJUbcvPb3601bm4dR8Jmo+LJeP1h1ms8xVI6lZNXg/aOB2B/nv0f/uloml0yPj98K9zXQAvHnv+kCdrincndFFDmtek4/4YiHGW19yX3A7DJLjYUgmVPJhI=
+	t=1789239714; cv=none; b=qBIH6ZVTw0I7N9R/PXXwwXHsBkmtvBgiIMtZFjIzbyVHsvUTBG8Fjnth7qx/CALSvrFZ7bkW85fmiKVOlWVezO8bdLkac328VnT+jpunjbLVgRT0c0VH0EXNca9IITsITIITwi3K6wpVFHIWK7zdJTnS0A5oXc/kbmbaj/OBd8w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789239708; c=relaxed/simple;
-	bh=/JWEDybQbhpebvzyZGN+aK60vqML2H9PwoPEpH1qz4A=;
+	s=arc-20240116; t=1789239714; c=relaxed/simple;
+	bh=5qdMDBaMrt4riOQ3G602lVghV3tLLr/FSu0IxlbepJQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gHiiIYBLkDoPud3kPAHa/5tfTzCqVtlKsYaEpdgDI3LJSFtZzUydJUCwwnl4Q06K/zTPe4C8x2I+Pw91G1iYM1UiJ9EiWcLQBsV6nxX+neuPXB3e1Vx9VWq6NY7/kBz0LyQ+PwgZ8WIts85OoRPL0Iq3L7i8OoSEhXptTbvjjLE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EwyacPro; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=k0fjGr574aWF1G2C6K9Xkcrw9lK2dmM6cQhM5/ghMWOMPfeDVRhW33ryqe95rCwgkm1QzcdyW+4lU/TURooN5fz/BvWaR6O/LS3gZqIxMQ0unosIidNER1ssuwn3xxT5lFfvzwMNmY4I/RIfs6NTsKjUEwJL1A0H4g5OYmThW8c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wkSg8c0b; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EwyacPro"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E6081F000FF;
-	Sat, 12 Sep 2026 19:01:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wkSg8c0b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86B101F000FF;
+	Sat, 12 Sep 2026 19:01:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789239707;
-	bh=pm57et9ncM3HbuaF7ie2kXKhL7Mfom9R9bde50GSD+c=;
+	s=korg; t=1789239712;
+	bh=ZrA1YOitl1MnQSPdqPzPW00anMLBg7LoC8mWqpUEEV8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EwyacProh9WOmAIDcwfPSPXuIWsdmoYYINLJ64sSTfoMmxeVPJOrKI/P++kst6tlS
-	 +k83+0F9G9b/zbtMum5YPOBAjwnRUMCfGGqZeNgd13b4PZvMDWo5qlUb2/payIT0aP
-	 f9dsJOLAWLZ/nBBhet/BBo/Bfu081WyMOZnMG/UM=
+	b=wkSg8c0bkN+laWGH4Wm5Stqon++ENdeuya5TtIB7ZBJMriEL1H+Yh7zKmOVubtXV9
+	 17LPl4kd+tqbv60wUC9ua4hOTdicrhquMl/p+xhGFMOo5mg7OdpanUa49Oyr2t8aCi
+	 6k6i9HCSnRmTYhk98V1VwDcUQ/yafEGubLDj+Nwc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
+	Jiancheng Huang <jchuang@seu.edu.cn>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 717/935] cpufreq: imx6q: fix devres accumulation across driver rebind
-Date: Sat, 12 Sep 2026 09:02:27 +0200
-Message-ID: <20260912065543.282647769@linuxfoundation.org>
+Subject: [PATCH 5.15 677/935] HID: lg4ff: validate report length before fixed offsets
+Date: Sat, 12 Sep 2026 09:01:47 +0200
+Message-ID: <20260912065542.368491767@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -51,65 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Jiancheng Huang <jchuang@seu.edu.cn>
 
-[ Upstream commit 22c23c72c3b21fa3ec3db5070dfc0582794e0ef9 ]
+[ Upstream commit be00988cce4ed44db1e61231d0ab71a64bab44cd ]
 
-imx6_soc_volt is allocated with devm_kcalloc(cpu_dev, ...), where cpu_dev
-is the CPU device from get_cpu_device(0). That device is never unbound, so
-its devres list is never released, and imx6q_cpufreq_remove() does not free
-the array either. Every probe therefore adds an allocation that stays for
-the lifetime of the system.
+lg4ff_raw_event() rewrites fixed report offsets when combined pedals are
+enabled. It currently assumes that each product report contains every
+source and destination byte used by the rewrite.
 
-Allocate against the platform device instead. Its devres is released when
-the driver is unbound, which is exactly the lifetime the array wants:
-imx6q_set_target() reads it, and nothing may reach that after
-cpufreq_unregister_driver().
+Return without rewriting a short report before each product-specific
+access. Apply the same bound to the computed offset path.
 
-That makes the array actually go away on unbind, so also clear the
-file-scope pointer in remove and on the failed-probe path, rather than
-leave it pointing at memory devres is about to release.
-
-Tested by rebinding the driver on qemu's mcimx6ul-evk.
-
-Fixes: b4573d1d657a ("cpufreq: imx6q: correct VDDSOC/PU voltage scaling when cpufreq is changed")
-Assisted-by: Claude:claude-opus-5
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+Fixes: c832f86effbc ("HID: hid-logitech: Add combined pedal support Logitech wheels")
+Signed-off-by: Jiancheng Huang <jchuang@seu.edu.cn>
+Assisted-by: Codex:gpt-5.6-luna
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/imx6q-cpufreq.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/hid/hid-lg4ff.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/cpufreq/imx6q-cpufreq.c b/drivers/cpufreq/imx6q-cpufreq.c
-index ae9ef99f7d862..8df015f07ae8a 100644
---- a/drivers/cpufreq/imx6q-cpufreq.c
-+++ b/drivers/cpufreq/imx6q-cpufreq.c
-@@ -418,7 +418,7 @@ static int imx6q_cpufreq_probe(struct platform_device *pdev)
- 	}
+diff --git a/drivers/hid/hid-lg4ff.c b/drivers/hid/hid-lg4ff.c
+index e3fcf1353fb3b..71f168eff29b1 100644
+--- a/drivers/hid/hid-lg4ff.c
++++ b/drivers/hid/hid-lg4ff.c
+@@ -336,6 +336,8 @@ int lg4ff_raw_event(struct hid_device *hdev, struct hid_report *report,
+ 	if (entry->wdata.combine) {
+ 		switch (entry->wdata.product_id) {
+ 		case USB_DEVICE_ID_LOGITECH_WHEEL:
++			if (size < 7)
++				return 0;
+ 			rd[5] = rd[3];
+ 			rd[6] = 0x7F;
+ 			return 1;
+@@ -343,10 +345,14 @@ int lg4ff_raw_event(struct hid_device *hdev, struct hid_report *report,
+ 		case USB_DEVICE_ID_LOGITECH_WINGMAN_FFG:
+ 		case USB_DEVICE_ID_LOGITECH_MOMO_WHEEL:
+ 		case USB_DEVICE_ID_LOGITECH_MOMO_WHEEL2:
++			if (size < 6)
++				return 0;
+ 			rd[4] = rd[3];
+ 			rd[5] = 0x7F;
+ 			return 1;
+ 		case USB_DEVICE_ID_LOGITECH_DFP_WHEEL:
++			if (size < 7)
++				return 0;
+ 			rd[5] = rd[4];
+ 			rd[6] = 0x7F;
+ 			return 1;
+@@ -366,6 +372,8 @@ int lg4ff_raw_event(struct hid_device *hdev, struct hid_report *report,
+ 		}
  
- 	/* Make imx6_soc_volt array's size same as arm opp number */
--	imx6_soc_volt = devm_kcalloc(cpu_dev, num, sizeof(*imx6_soc_volt),
-+	imx6_soc_volt = devm_kcalloc(&pdev->dev, num, sizeof(*imx6_soc_volt),
- 				     GFP_KERNEL);
- 	if (imx6_soc_volt == NULL) {
- 		ret = -ENOMEM;
-@@ -503,6 +503,7 @@ static int imx6q_cpufreq_probe(struct platform_device *pdev)
- 	return 0;
- 
- free_freq_table:
-+	imx6_soc_volt = NULL;
- 	dev_pm_opp_free_cpufreq_table(cpu_dev, &freq_table);
- out_free_opp:
- 	dev_pm_opp_of_remove_table(cpu_dev);
-@@ -524,6 +525,7 @@ static int imx6q_cpufreq_probe(struct platform_device *pdev)
- static int imx6q_cpufreq_remove(struct platform_device *pdev)
- {
- 	cpufreq_unregister_driver(&imx6q_cpufreq_driver);
-+	imx6_soc_volt = NULL;
- 	dev_pm_opp_free_cpufreq_table(cpu_dev, &freq_table);
- 	dev_pm_opp_of_remove_table(cpu_dev);
- 	regulator_put(arm_reg);
+ 		/* Compute a combined axis when wheel does not supply it */
++		if (size <= offset + 1)
++			return 0;
+ 		rd[offset] = (0xFF + rd[offset] - rd[offset+1]) >> 1;
+ 		rd[offset+1] = 0x7F;
+ 		return 1;
 -- 
 2.53.0
 
