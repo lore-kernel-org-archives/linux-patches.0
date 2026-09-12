@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49C3E396B6F;
-	Sat, 12 Sep 2026 07:05:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B57D3054E4;
+	Sat, 12 Sep 2026 07:05:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789196710; cv=none; b=CLeOkYtsMs8uBPD5yee/46KALKEQpzDfOp0FNvjJ0zoXSga1Pxk2MQx3uhCpET8wmbZ1rubKD4JU8GSRhexkbfqL6mMQmOLNk/VT5GOWZi/JX4xtUBPl8KbvPqMmz7WO6W1s3DtJW8kz8rOz0anj3IiZL4uJEJIIqPfEFfjGJRM=
+	t=1789196715; cv=none; b=aGLHiHCpmrY50skti/da8474vrTpkE7ppggBGECQoJYOCZeqbnGGRftgCWYMZXo5YoxwWT9/b/vtxgw9jzkc+sga+WYu05opuFVuOaTTOEKlsu2uC5UwI1I9xKzK6KQM6hCZhgzQ4fGsQBo2aecEngfvvpouhchutcYHgu+RQyw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789196710; c=relaxed/simple;
-	bh=mf3LMAChgrgTYe6llGu0Lmy8p2C1Fh67KAqsosl8Lfk=;
+	s=arc-20240116; t=1789196715; c=relaxed/simple;
+	bh=WMmTS5lfS2kn0RT2ebGX/Osh+6xgu1wU/sQY0s20IiA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e74P6PI4mp9+C/wqPmJrMRS7zZypeVPQM1pFl+OwZIS+dLcDRDQAzczcc6HCuohdcZ6Ayrs621TXOBzMgX5QoKcQOiToWkCX7KbqfTAT8TAUPTEYADO4EE5b6XHppAkrokEG9QoYjkN6aNVtBi5HGDb2BtajtG/jayr4MNJn7TU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i3l/auef; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=O+Af+oPmRd6nZknFJCR46+BM1TOzAQWISFw+xvCrvJRXLoXkBOVYl/2nmn7RFrNAQCnRx8Cwu4FiqdSflEZ14UCYIAYwTo0HP22RckHrhdhTnuDZnD1ZtA834pttct8CbwNAHRkzBu/rZMNXhHwtlHIRJUW6wM2X6xzzFu9Ziu8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CjUwKBD+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i3l/auef"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5C121F000FF;
-	Sat, 12 Sep 2026 07:05:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CjUwKBD+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2E701F000FF;
+	Sat, 12 Sep 2026 07:05:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789196708;
-	bh=ubsMbN8VvWks1xxbyUnGn82d5+w4tDYXj3aXmxh31Hk=;
+	s=korg; t=1789196713;
+	bh=bE3dn8mb/Gfn4PFqbDSwL1AA2Vat+qYXTqFG7dyv0fo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=i3l/auefAJCX8I7IjsxtxQr0wuapDRjta69nrU573Dx6c8TsJKW8nO1eH1XblO9qA
-	 v27P4Sp0/KS2Zppgze5CTluek6KRVq9bHWIHb6qIJZskUq6buLnhPeARbt29PNDDNF
-	 WEumLNqb2UE4gALQiPO7Y6n7Th57qiPWGSe/3I2w=
+	b=CjUwKBD+IUA/JAtLHFbO7RieYnibDzwtav+eqX4i7py1fKWNVVy3G8eG8p2C1ntUC
+	 /Wh/tmbT72KEIrbakTzGpkex0BpLBR1ysNKHH+QQ3/9zyNQflVcxHplN9dC0KGCJ7+
+	 FlBndTV2/FfDnUysomVNqhUvFpqITWM9Dq+F/9lI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pankaj Gupta <pankaj.gupta.linux@gmail.com>,
 	Li Chen <me@linux.beauty>,
 	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0021/1815] nvdimm: preserve flush callback -ENOMEM
-Date: Sat, 12 Sep 2026 08:29:31 +0200
-Message-ID: <20260912065649.505460367@linuxfoundation.org>
+Subject: [PATCH 7.2 0022/1815] nvdimm: pmem: keep PREFLUSH before data writes
+Date: Sat, 12 Sep 2026 08:29:32 +0200
+Message-ID: <20260912065649.528482263@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -54,44 +53,55 @@ Content-Transfer-Encoding: 8bit
 
 From: Li Chen <me@linux.beauty>
 
-[ Upstream commit 6b7108712a4b1c37cac69815aede1dde202b3187 ]
+[ Upstream commit c644a2f8fef5618fcf453c591177700fd07dd024 ]
 
-nvdimm_flush() maps provider flush failures to -EIO. Keep that default
-because provider callbacks can report host-side or backend failures that
-should remain generic I/O errors to the guest.
+pmem_submit_bio() records a REQ_PREFLUSH error, but continues to copy the
+bio data and can later overwrite the error with a successful REQ_FUA flush.
+That lets data writes run after a failed preflush and can complete the bio
+successfully despite the failed ordering barrier.
 
-Guest-side allocation failures should not be reported as I/O errors. In the
-virtio-pmem path, the flush request allocation can fail with -ENOMEM before
-any request is submitted to the host. Mapping that to -EIO makes resource
-pressure look like media failure.
+Run the REQ_PREFLUSH flush synchronously before touching the bio data and
+complete the bio with the flush error if it fails. Keep asynchronous flush
+chaining for REQ_FUA. At that point, data copy has completed and the parent
+bio can wait for the chained flush bio.
 
-Preserve -ENOMEM from provider callbacks and continue to map other non-zero
-provider failures to -EIO. The generic flush path still returns 0, and
-pmem_submit_bio() already converts errno values to block status for bio
-completion.
-
-Suggested-by: Pankaj Gupta <pankaj.gupta.linux@gmail.com>
 Signed-off-by: Li Chen <me@linux.beauty>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260630092338.2094628-2-me@linux.beauty>
+Message-ID: <20260630092338.2094628-3-me@linux.beauty>
 Stable-dep-of: e57140944b5a ("nvdimm: virtio_pmem: refcount requests for token lifetime")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvdimm/region_devs.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/nvdimm/pmem.c |   12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
---- a/drivers/nvdimm/region_devs.c
-+++ b/drivers/nvdimm/region_devs.c
-@@ -1093,7 +1093,8 @@ int nvdimm_flush(struct nd_region *nd_re
- 	if (!nd_region->flush)
- 		rc = generic_nvdimm_flush(nd_region);
- 	else {
--		if (nd_region->flush(nd_region, bio))
-+		rc = nd_region->flush(nd_region, bio);
-+		if (rc && rc != -ENOMEM)
- 			rc = -EIO;
- 	}
+--- a/drivers/nvdimm/pmem.c
++++ b/drivers/nvdimm/pmem.c
+@@ -208,8 +208,14 @@ static void pmem_submit_bio(struct bio *
+ 	struct pmem_device *pmem = bio->bi_bdev->bd_disk->private_data;
+ 	struct nd_region *nd_region = to_region(pmem);
  
+-	if (bio->bi_opf & REQ_PREFLUSH)
+-		ret = nvdimm_flush(nd_region, bio);
++	if (bio->bi_opf & REQ_PREFLUSH) {
++		ret = nvdimm_flush(nd_region, NULL);
++		if (ret) {
++			bio->bi_status = errno_to_blk_status(ret);
++			bio_endio(bio);
++			return;
++		}
++	}
+ 
+ 	do_acct = blk_queue_io_stat(bio->bi_bdev->bd_disk->queue);
+ 	if (do_acct)
+@@ -229,7 +235,7 @@ static void pmem_submit_bio(struct bio *
+ 	if (do_acct)
+ 		bio_end_io_acct(bio, start);
+ 
+-	if (bio->bi_opf & REQ_FUA)
++	if ((bio->bi_opf & REQ_FUA) && !bio->bi_status)
+ 		ret = nvdimm_flush(nd_region, bio);
+ 
+ 	if (ret)
 
 
