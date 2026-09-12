@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F21733993;
-	Sat, 12 Sep 2026 09:02:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABB47299920;
+	Sat, 12 Sep 2026 09:02:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789203744; cv=none; b=lhCyD9POpC8nT3bwF7GMLfs5pmMh2pEMnsr546wPDGBKh8oaj2tsOv77CHrne3JK0MTd4NKXB1VrOzSef+WA8pyIxNUHEIe5kEoU2glFcJCC7IWPWeSSwCR34wyhZWXwNNWhaEh1z9+2usIwEEKk2tuy37TUxE8TSMdgrnvvgxY=
+	t=1789203748; cv=none; b=H/1V09VWODKkOTmtrN2sSJ4s46FQIt0h9aqZzlcHhBU0CPcYPSxvlbSRedmd5VqUrEqcuyD6OS/xE0L6EpIvKmPDalMYswmOObBJh57HEIF3IXi/cgoJZvySrHPWZW724qq6MF0PpS9fijME5OwPVSHIFhVKE43emijeHkhr4Nc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789203744; c=relaxed/simple;
-	bh=IwXZFZ72oUlej6E3pvAbuSIwE0mrOWQm340Jlqrhp10=;
+	s=arc-20240116; t=1789203748; c=relaxed/simple;
+	bh=XMXA21z5TxNJmY5AgsI8UoLm1secUDRPV8OvJ/k6Scw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nIpDbhZ/Hjj9+vyJC3cyplZsA8qFxsWSwT9zKDrXfmC3ovsnxya/y3LvBniggnlt1YAlzE9MBPfvs3resEKtP106CYYmQJfQVJDqFgYqCyFF1oSscUgS7kzE5wHV5SV7CSAiEzRXeA5AgnNK1NJFNWyqyqyKcGl/fDKEcSf7lTE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y6NwHOmc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Tj0LbTaKRh+UeViTS5HNAGv1aOEx8L8ypD8UyNRQV2xAb/2MyM11+4moxqifoSfwsRAVNj7aiId4oQaudcYm67MBd08F70tiJYbYlo4bw9gGBeZ9/2PbOKVL7bSovQp7tTiDASNUcyzBLj5MCDtuDLi5fqlmGynyaEKtrTN6mc4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cVvvWdqi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y6NwHOmc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC7DD1F000FF;
-	Sat, 12 Sep 2026 09:02:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cVvvWdqi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C81D41F000FF;
+	Sat, 12 Sep 2026 09:02:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789203743;
-	bh=NS2MRy5noSjHWXbtAHvFua/YE07rKuygq18wrHLQDBg=;
+	s=korg; t=1789203747;
+	bh=hHJvxijNCtStS06NITTpRWre7aOoyI4h3izg0W0RSkU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=y6NwHOmcyFiSfoorbKabH/28yfg9Kcg1g+sjO2RySqZYNph4uzZ4WymSuczUMdrZM
-	 durPOirKLluLnlARNJf4/k3k2BsUXHkXYyNqgNbkoJRRtB+XCxKgzvAswIvAgPpnKw
-	 WW7BfgfFMXDdHd24a/o+v9/xI0aQblCIvFh99pKk=
+	b=cVvvWdqisTG3JTtrzQtG2l8fyjvTKXyCfyMho2PunEnxVdR9biRD/cID7BChfiuj1
+	 W/E2bpxsllgb0gk2tvbPzpaOKpUaDM526a4fa17rUeaM/AGeogtj9z+Ew/rKQ1Ns/V
+	 gmcdsINr4fj3px+EmIAulOYTS3xxQIKwzsBf41Rk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1471/1815] perf dso: Guard against errno==0 when dso__get_filename() returns NULL
-Date: Sat, 12 Sep 2026 08:53:41 +0200
-Message-ID: <20260912065723.542595819@linuxfoundation.org>
+Subject: [PATCH 7.2 1472/1815] perf dso: Guard close() against invalid fd in dso__decompress_kmodule_path()
+Date: Sat, 12 Sep 2026 08:53:42 +0200
+Message-ID: <20260912065723.566710264@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -56,25 +56,18 @@ Content-Transfer-Encoding: 8bit
 
 From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 51a7a9ddcb3ebc86615886b1f44e85bdea9df326 ]
+[ Upstream commit 10f452dc2de401be76ae8e7395c9663313df8b53 ]
 
-__open_dso() computes fd = -errno when dso__get_filename() returns NULL.
-Some failure paths in dso__get_filename() (e.g. binary type mismatch)
-return NULL without making a syscall, leaving errno at 0 from a prior
-successful call.  fd = -0 = 0, which is stdin — subsequent code treats
-it as a valid file descriptor.
+dso__decompress_kmodule_path() unconditionally calls close(fd) on the
+return value of decompress_kmodule().  When decompression fails or the
+DSO is not compressed, decompress_kmodule() returns -1.  close(-1)
+fails with EBADF and clobbers errno, which callers up the chain
+(dso__get_filename → __open_dso) depend on for error propagation.
 
-Fall back to ENOENT when errno is 0, ensuring fd is always negative on
-failure.
+Guard the close() call with fd >= 0 so only valid file descriptors are
+closed.
 
-The forced ENOENT stays in errno for the callers that check it after a
-negative fd.  It must not misdirect the try_to_open_dso() fallback
-loop, though: dso__get_filename()'s chroot fallback used to accept a
-stale ENOENT even when stat() succeeded on a non-regular file (e.g. a
-directory).  Re-stat() there and only take the chroot path when
-stat() actually failed with ENOENT [sashiko-bot review of PATCH 1/5].
-
-Fixes: eba5102d2f0b ("perf tools: Add global list of opened dso objects")
+Fixes: 42b3fa670825 ("perf tools: Introduce dso__decompress_kmodule_{fd,path}")
 Reported-by: sashiko-bot <sashiko-bot@kernel.org>
 Reviewed-by: Ian Rogers <irogers@google.com>
 Assisted-by: Claude:claude-opus-4.6
@@ -82,49 +75,24 @@ Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/dso.c | 18 +++++++++++++++---
- 1 file changed, 15 insertions(+), 3 deletions(-)
+ tools/perf/util/dso.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/tools/perf/util/dso.c b/tools/perf/util/dso.c
-index 2309196d8df31..b86969dc6e81e 100644
+index b86969dc6e81e..41bbc8f994e41 100644
 --- a/tools/perf/util/dso.c
 +++ b/tools/perf/util/dso.c
-@@ -582,9 +582,18 @@ static char *dso__get_filename(struct dso *dso, const char *root_dir,
- 		goto out;
+@@ -395,7 +395,9 @@ int dso__decompress_kmodule_path(struct dso *dso, const char *name,
+ {
+ 	int fd = decompress_kmodule(dso, name, pathname, len);
  
- 	if (!is_regular_file(name)) {
-+		struct stat st;
- 		char *new_name;
+-	close(fd);
++	/* decompress_kmodule() returns -1 on failure, don't close(-1) */
++	if (fd >= 0)
++		close(fd);
+ 	return fd >= 0 ? 0 : -1;
+ }
  
--		if (errno != ENOENT || dso__nsinfo(dso) == NULL)
-+		/*
-+		 * errno only reflects the failure reason when stat() itself
-+		 * failed: a successful stat() on a non-regular file (e.g. a
-+		 * directory) leaves a stale errno, which a previous failed
-+		 * iteration of the try_to_open_dso() fallback loop may have
-+		 * set to ENOENT.
-+		 */
-+		if (stat(name, &st) == 0 || errno != ENOENT ||
-+		    dso__nsinfo(dso) == NULL)
- 			goto out;
- 
- 		new_name = dso__filename_with_chroot(dso, name);
-@@ -640,10 +649,13 @@ static int __open_dso(struct dso *dso, struct machine *machine)
- 	mutex_lock(dso__lock(dso));
- 
- 	name = dso__get_filename(dso, machine ? machine->root_dir : "", &decomp);
--	if (name)
-+	if (name) {
- 		fd = do_open(name);
--	else
-+	} else {
-+		if (errno == 0)
-+			errno = ENOENT;
- 		fd = -errno;
-+	}
- 
- 	if (decomp)
- 		unlink(name);
 -- 
 2.53.0
 
