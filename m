@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9696F472071;
-	Sat, 12 Sep 2026 11:14:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87620477298;
+	Sat, 12 Sep 2026 11:14:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789211660; cv=none; b=PPP/V6rm/2h5CvZrok6n+3sMsxu1u2EjFW2EMdc9D4u3ok4WaOXOQivt/Onc11RuKVcrLSermMkzf2NY/t8uDMq0JTOogkDxCGy3gPg/YCfGBLbAXKpJ6iL9FqMXcbNLDur34XxtANUkpgTO/H2sPM7GJ3ZvYXIblitwdN+OmNA=
+	t=1789211666; cv=none; b=jnBcp/Dt+dpJlxeuEXrzgKrwAiv+/0prc5l7qe7W8ZzcPW1dDr/E0XQtXAtMzqjd22vWWE74cpEWt0NDlYHWvm+ig5mMy+EoFm6uk7xagx0G45dv3jOlJTmHzXfhELvbO4bu/WO+XT354D3e47l9M8Ow6Ja2zyl0uGBLE9xk9ao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789211660; c=relaxed/simple;
-	bh=UWYwZTMgKQmZHpyPTfV3reus3pVSsP8C2tgEKIZBjXc=;
+	s=arc-20240116; t=1789211666; c=relaxed/simple;
+	bh=ln9IFjSwycAEBXRcFr5XpY+R8Xvi+AwXE6zs+4AVJw0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gBUotkh+3hi4dn04nki7JhEZqIIkoGe2BS+RiAtQP45kDYHob417lKDMGjaGYbBIVe9TYt2p9Qg8u9tQmVTo0i3WWXGoKpPbnN/oPhD1c37CjeUS2uAyOYv0OXRM1Vf0voHT+yJKte6BaKBejGjlMTXMs0raNYHEa8vflW5B9Tk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XEzEntfQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=iCUXWT+F8BoLfmoEnbV5mOEShZVMAgtqVeye7fHA8SOhm0B46kXjZBC6r9K4Jc7XxySZNGWMPmpmZia+Oy6tVs9ewkSmCDe4laXIHVMxknXYiVhHPfy9CtdCQBlanuf/Bd35gxFq5ZgOv7Wk3GA3c+AnJUk/aQi1R62vDLowLx4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l4SmaLVM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XEzEntfQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CC3C1F000FF;
-	Sat, 12 Sep 2026 11:14:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l4SmaLVM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D54411F000FF;
+	Sat, 12 Sep 2026 11:14:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789211658;
-	bh=7KC5JQyDILuCRH63f1abCi5N/HN+KwtIZ/5im1LJOQI=;
+	s=korg; t=1789211662;
+	bh=UwCTgr7Zhvj6K1tYv3p9XsXbVYrFDV1+VIZNFmqcJQE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XEzEntfQ41zUBx43oYsmTrG/cHbbuCSntwJzOmvQXTpwVPZ3qqwvSB6C7XPRvMgax
-	 zzyhr/qsuApCuKgXpWz2Ajgu6vzCRQYFKqTYltP6nGpnD429B71qvwdfxl8xRWibge
-	 dYhS7e3ZW2BhvGBxNRHhUbJbwJSwDcZSkxWAP6lA=
+	b=l4SmaLVMhqDmE2lQS0ZD1FAM60zewh8SkamudCGCtZgH8T7QRE6l6EzxXi3aNoxpk
+	 bjGfz2He0iN3cRK9EH9mo8KLZFL/B0OQyF0b5iJKuAJxVvXXpVYIYOUxhTlTnrgHy3
+	 UK9f80gD1rj9IVt7L4br6CLV8X50QA8c/824jaEI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Shi <bestswngs@gmail.com>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1275/1518] fs/ntfs3: validate ef->size covers the records name and value
-Date: Sat, 12 Sep 2026 08:57:24 +0200
-Message-ID: <20260912065652.352416363@linuxfoundation.org>
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Daniel Baluta <daniel.baluta@nxp.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Sasha Levin <sashal@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>
+Subject: [PATCH 6.18 1276/1518] soc: qcom: ubwc: Fix missing include
+Date: Sat, 12 Sep 2026 08:57:25 +0200
+Message-ID: <20260912065652.375164387@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -46,94 +48,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Daniel Baluta <daniel.baluta@nxp.com>
 
-[ Upstream commit c22f91d82cb9a29d22bdffdce6c803467984ad0c ]
+[ Upstream commit c6441becf4d064bb1dcbccbd3e2276833804cff5 ]
 
-When an EA record has a non-zero ef->size, ntfs_read_ea() only checks
-that the record fits in the remaining buffer (ea_size > bytes), not that
-ef->size is large enough to hold the record's own name_len + 1 + elength.
+When CONFIG_QCOM_UBWC_CONFIG=n, compiler needs to know the definition
+of ERR_PTR otherwise there will be a compilation error:
 
-A crafted image can pass validation with, e.g., ef->size = 24 but
-elength = 0xffff. ntfs_get_ea() then trusts elength and copies it out of
-the undersized record, reading past the kmalloc(info->size) allocation
-and leaking heap memory to userspace via getxattr():
+In file included from drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp_v13.c:7:
+./include/linux/soc/qcom/ubwc.h: In function ‘qcom_ubwc_config_get_data’:
+./include/linux/soc/qcom/ubwc.h:45:16: error: implicit declaration of
+function ‘ERR_PTR’ [-Wimplicit-function-declaration]
 
- BUG: KASAN: slab-out-of-bounds in ntfs_get_ea (fs/ntfs3/xattr.c:302)
- Read of size 65535 at addr ffff888100794550 by task exploit
-  __asan_memcpy (mm/kasan/shadow.c:105)
-  ntfs_get_ea (fs/ntfs3/xattr.c:302)
-  ntfs_getxattr (fs/ntfs3/xattr.c:848)
-  __vfs_getxattr (fs/xattr.c:441)
-  vfs_getxattr (fs/xattr.c:474)
-  do_getxattr (fs/xattr.c:800)
-  path_getxattrat (fs/xattr.c:868)
-  do_syscall_64 (arch/x86/entry/syscall_64.c:94)
+Fix this by including <linux/err.h>
 
- The buggy address is located 80 bytes inside of
-  allocated 84-byte region in cache kmalloc-96
-
-Compute the size the record needs and require ef->size to cover it.
-
-Fixes: 0e8235d28f3a ("fs/ntfs3: Check fields while reading")
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Fixes: 1924272b9ce1 ("soc: qcom: Add UBWC config provider")
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Signed-off-by: Daniel Baluta <daniel.baluta@nxp.com>
+Tested-by: Nathan Chancellor <nathan@kernel.org> # build
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/xattr.c | 21 ++++++++++++---------
- 1 file changed, 12 insertions(+), 9 deletions(-)
+ include/linux/soc/qcom/ubwc.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/ntfs3/xattr.c b/fs/ntfs3/xattr.c
-index d719e1073dbb1..a664ac5398c67 100644
---- a/fs/ntfs3/xattr.c
-+++ b/fs/ntfs3/xattr.c
-@@ -146,26 +146,29 @@ static int ntfs_read_ea(struct ntfs_inode *ni, struct EA_FULL **ea,
- 	for (off = 0; off < size; off += ea_size) {
- 		const struct EA_FULL *ef = Add2Ptr(ea_p, off);
- 		u32 bytes = size - off;
-+		size_t need;
+diff --git a/include/linux/soc/qcom/ubwc.h b/include/linux/soc/qcom/ubwc.h
+index d9dfc9edc1b2f..d3bb18990f84d 100644
+--- a/include/linux/soc/qcom/ubwc.h
++++ b/include/linux/soc/qcom/ubwc.h
+@@ -8,6 +8,7 @@
+ #define __QCOM_UBWC_H__
  
- 		/* Check if we can use field ea->size. */
- 		if (bytes < sizeof(ef->size))
- 			goto out1;
+ #include <linux/bits.h>
++#include <linux/err.h>
+ #include <linux/printk.h>
+ #include <linux/types.h>
  
-+		/* Check if we can use fields ef->name_len and ef->elength. */
-+		if (bytes < offsetof(struct EA_FULL, name))
-+			goto out1;
-+
-+		/* Size needed to hold this record's name and value. */
-+		need = struct_size(ef, name,
-+				   1 + ef->name_len + le16_to_cpu(ef->elength));
-+
- 		if (ef->size) {
- 			ea_size = le32_to_cpu(ef->size);
--			if (ea_size > bytes)
-+			/* ef->size must fit the list and cover the record. */
-+			if (ea_size > bytes || ea_size < need)
- 				goto out1;
- 			continue;
- 		}
- 
--		/* Check if we can use fields ef->name_len and ef->elength. */
--		if (bytes < offsetof(struct EA_FULL, name))
--			goto out1;
--
--		ea_size = ALIGN(struct_size(ef, name,
--					    1 + ef->name_len +
--						    le16_to_cpu(ef->elength)),
--				4);
-+		ea_size = ALIGN(need, 4);
- 		if (ea_size > bytes)
- 			goto out1;
- 	}
 -- 
 2.53.0
 
