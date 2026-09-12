@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E03F0288B9;
-	Sat, 12 Sep 2026 16:34:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBFDE288B9;
+	Sat, 12 Sep 2026 16:34:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789230891; cv=none; b=PS4+up+D84PKvby9yLJJXfIneWnCnA7bk0Jcrt/LpxH0t3d81u+4wuYqW+SDA0Ti1zSXMecAgYyHF+6ZtEoqLwqEw4V1UPpAg17FiX085i7bc9HspTo8rfJWxr7md8+GgwCJsIgXJaVgOuGqLa+vYBdnPuKDM4jYPdhbP8tdYVw=
+	t=1789230896; cv=none; b=mCmeglBXTg1HkyWyEs+MGUTFZfJvy1QgEc9oSXv/ejAr7fAUsDSB0uTjSh33+hNFnZkZOe0i7So2JA38I2vDqFYqH54OlnhGNSAL4Mk82q9CqazwH5kGpa27NOKD4LhrUGRagfc5H0gfrhOtbGLdgVCM1EcSiAdxB1hk2jnbl58=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789230891; c=relaxed/simple;
-	bh=T/GtAvmn0ec5YJFo5vprZ+kqcX6HEcUju5lpreOygW0=;
+	s=arc-20240116; t=1789230896; c=relaxed/simple;
+	bh=qNrVVAO8MQClLWoLGvEzjJh0KKSdGJMn9/qaFq8gIKc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c8USz3AAE7mhk+QmeI2LsuC6wK4HCd0UunG7DFKvchoDP1n6cpUObHb6pH9bdc9N6VJY+Hz4RhVBCWG1kHTuD0PkUjZDL2gxrQ7iL6wfHjX7DAH7KqOUX+tVg6dpkbgBi3S8FrC9PwehX3JZwQ53c2z7GGcwoj1UgE4vLsRMSis=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qY5b/+/f; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uafqvEZpUKRA2bgZG7fMFGm6dEPQSNI6v6cyLFJkDio9Pu1HR262uSr9nheUwRyVZ0jOrmpOK40lbqLUpuCQRrEy4zkJwRizFbAix8szP3bsuDvwl/jH3txZZJEAENK3OQaXJwh31rAyprilXBemJhYOeoDg9+peY6u3k1KrV2E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DWlRYE3e; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qY5b/+/f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D26E91F000FF;
-	Sat, 12 Sep 2026 16:34:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DWlRYE3e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CD791F000FF;
+	Sat, 12 Sep 2026 16:34:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789230890;
-	bh=vlZ5MGRmwA7jKPI4Nt83fpN2aYeXFfCt+8b+GFsew1s=;
+	s=korg; t=1789230895;
+	bh=g655+0L3KB47OnHdv3S+pdfVQD2IYrrbMe1hRUZoIYA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qY5b/+/fAPW/63UdGJObd7wIvKFNOtCGPc6sRt5LFcF5032vfDOh2glbWGZVvYaM6
-	 CYtQCdfrCSLiB6J4xhBm6zYDZmFx8caWjn3KvgCYdI0uDx0G7loP2a1dwuSi60MSek
-	 xtPxxKJfp/qC7Frj6ZKfk3B+iCNAUULp4p/+PBe0=
+	b=DWlRYE3eO3iKdFzD4w141vRyxIk1iurYglMH9zSt9ZaeMKIwXPEUE4DlHcdNPzorg
+	 DnjFFbRiMLQ8K/3EQyD28tplUGvgMGVIBzcBXY/GJ0XOrAeW7CpleRJ2yqp/W0GX4W
+	 8YcC9pLeyLktQOBEPE3a9Pt9qkj2E5K9uxL8PHj4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jernej Skrabec <jernej.skrabec@gmail.com>,
 	Chen-Yu Tsai <wens@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0888/1191] drm/sun4i: tcon: Drop remote endpoint reference
-Date: Sat, 12 Sep 2026 09:00:16 +0200
-Message-ID: <20260912065608.182126837@linuxfoundation.org>
+Subject: [PATCH 6.1 0889/1191] drm/sun4i: dw-hdmi: Drop TCON TOP port reference
+Date: Sat, 12 Sep 2026 09:00:17 +0200
+Message-ID: <20260912065608.204315702@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -53,36 +53,34 @@ Content-Transfer-Encoding: 8bit
 
 From: Jernej Skrabec <jernej.skrabec@gmail.com>
 
-[ Upstream commit 3f77e4072630e2301efdbe521e7fca10311043ec ]
+[ Upstream commit d2a242e5688a17b79c89cd966cd31820c5096d80 ]
 
-sun4i_tcon_of_get_id_from_port() never drops the reference taken by
-of_graph_get_remote_endpoint(). The function is not only called during
-bind, but also on every mode set through sun8i_r40_tcon_tv_set_mux(),
-so the leak accumulates.
+When the HDMI controller is fed by TCON TOP, the port node used to
+enumerate the possible CRTCs is never released.
 
-Fixes: e8d5bbf7f4c4 ("drm/sun4i: tcon: get TCON ID and matching engine with remote endpoint ID")
+Fixes: 57e23de02f48 ("drm/sun4i: DW HDMI: Expand algorithm for possible crtcs")
 Signed-off-by: Jernej Skrabec <jernej.skrabec@gmail.com>
 Acked-by: Chen-Yu Tsai <wens@kernel.org>
-Reviewed-by: Jernej Skrabec <jernej.skrabec@gmail.com>
-Link: https://patch.msgid.link/3f5ec952ad80cb51efebf2fe230df50259041a23.1785772659.git.jernej.skrabec@gmail.com
+Link: https://patch.msgid.link/43ffcc17f7c3f94c1d7bd1ee89134c766e84df35.1785772659.git.jernej.skrabec@gmail.com
 Signed-off-by: Chen-Yu Tsai <wens@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/sun4i/sun4i_tcon.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/sun4i/sun8i_dw_hdmi.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/sun4i/sun4i_tcon.c b/drivers/gpu/drm/sun4i/sun4i_tcon.c
-index 4df011b126a84..2732273ce78a3 100644
---- a/drivers/gpu/drm/sun4i/sun4i_tcon.c
-+++ b/drivers/gpu/drm/sun4i/sun4i_tcon.c
-@@ -966,6 +966,7 @@ static int sun4i_tcon_of_get_id_from_port(struct device_node *port)
- 			continue;
- 
- 		ret = of_property_read_u32(remote, "reg", &reg);
-+		of_node_put(remote);
- 		if (ret)
- 			continue;
- 
+diff --git a/drivers/gpu/drm/sun4i/sun8i_dw_hdmi.c b/drivers/gpu/drm/sun4i/sun8i_dw_hdmi.c
+index 477cb6985b4d2..25021aadcf6bd 100644
+--- a/drivers/gpu/drm/sun4i/sun8i_dw_hdmi.c
++++ b/drivers/gpu/drm/sun4i/sun8i_dw_hdmi.c
+@@ -83,6 +83,8 @@ static u32 sun8i_dw_hdmi_find_possible_crtcs(struct drm_device *drm,
+ 				of_node_put(remote_port);
+ 			}
+ 		}
++
++		of_node_put(port);
+ 	} else {
+ 		crtcs = drm_of_find_possible_crtcs(drm, node);
+ 	}
 -- 
 2.53.0
 
