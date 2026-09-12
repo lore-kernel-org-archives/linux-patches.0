@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 498773F077C;
-	Sat, 12 Sep 2026 07:16:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6876A3F104F;
+	Sat, 12 Sep 2026 07:16:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789197414; cv=none; b=ZB2ddYMbUW0uoyP8toBn27jPpdbo6hwHCXeaADnlm2mz4Q9FvNWPNSNrp/Y/RdSzder2M6AEBPNBN4xI7crBv6JjmwYbYLfl0C8bCRFDdpQjBhtGtJN43F1dh08Gk4yaZRyhhONxwvGEhuHS/2NKViLoaF5RIuNOrEsb5IO4k5M=
+	t=1789197419; cv=none; b=BGL0K6jS55n5ggHOHE98cRAwX/AYjLuGp4y+EJ6zF6iJpi6gl0Jd0YEqO2aHD5QgEIF25BuziWZdZ3c/LcIqGtzJKPOWcXvHJz+AYeDTrBjZQbjGGreqxQ2cST9PDV6oXqgWxkDrg5g+Wf9ME7J/6nwrQ85o5nAcClFm66B/tb8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789197414; c=relaxed/simple;
-	bh=7L4iVLHJL3mu6ykBi/kngzY/uZHDBdJOkSQXRnzEFA4=;
+	s=arc-20240116; t=1789197419; c=relaxed/simple;
+	bh=bxVjQKKH7Th8c9dSQWxKE/hGOK7xtTiqj7XUTKpIo/c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aEnyA+PoXx0VU8O7iqYPSmvU8Me/FVX4ZGn+lSyA0GABV/mDFe9+m6CkR3SrpswNbkVjtA0p2+vUjVUPomBEmtdMCBCXCZAJtkKP0tGMIjaDpprDvTWPWYAb8Hk8XT6GKcdWVcp0f2Adlp/Em459f53KEGnCVCX93Az+GNq6aZ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pJbBj6jO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=q0C/Jjo/hJkEjTvhujSeomAtuLGeGwoksSYzfYYh3qSVSZYEcc5F7PNo5WViikL0DvBYyYm/guWDoNDys316p9E6/XjMTwCXQ6LGbOhaMbk1PNVzjc4hsGj8H+ZDTcP8rcUGTiH8Ks2kR3/RX6hzLjnlHCugQrIw6zrlk/vUDMU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WVYErSG3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pJbBj6jO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C038B1F000FF;
-	Sat, 12 Sep 2026 07:16:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WVYErSG3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE4941F000FF;
+	Sat, 12 Sep 2026 07:16:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789197411;
-	bh=gCzpcyNNu8qxulzVgv3QyQ53Hw9GU6/BC6u1ak77juQ=;
+	s=korg; t=1789197417;
+	bh=biozp/8lrC+AnLqQqy9vc4wGGH5WG5WQbM9vpOLz+0w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pJbBj6jOG4fMnbfHkPvX9KGU/gxI3jtpvNiHOGBzBpxKzwI5kli8uddZGBQ+PD40k
-	 imCILH5JnYI/KSagXG7HdfKcpthDp1id/BW2lnsYoJO6LAS67QB5neq3hab1gcpj41
-	 S48mxBGo06S8cFILnXE9/01+P6OT7ibfNOW/f6Vk=
+	b=WVYErSG3Znk24u2ZPfDtVyms2cGC49b0NzgtgsDaoqV0vWseKJ14rglsmvwH2lniN
+	 NYvcBNQFPLrCM6mdUGBGodmZp3D7cuExdVWsfZU7l2zVdknU+GdF6q0Go/Cplcd+W1
+	 zFDABDIzr5CgDe5o9QyzK2XvLVtDUQ9ZYOrKCv3w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Guan <guanwentao@uniontech.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	Tomasz Figa <tfiga@chromium.org>,
+	Tzung-Bi Shih <tzungbi@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0168/1815] wifi: rtw89: fw: correct preload field of w2 in rtw89_fw_h2c_default_cmac_tbl_be()
-Date: Sat, 12 Sep 2026 08:31:58 +0200
-Message-ID: <20260912065652.950474366@linuxfoundation.org>
+Subject: [PATCH 7.2 0169/1815] platform/chrome: sensorhub: Fix memory overread in ring handler
+Date: Sat, 12 Sep 2026 08:31:59 +0200
+Message-ID: <20260912065652.973680447@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,36 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Guan <guanwentao@uniontech.com>
+From: Tzung-Bi Shih <tzungbi@kernel.org>
 
-[ Upstream commit e13cd023a4cdbbb9e58ab91e857b5e45ea753f19 ]
+[ Upstream commit d1ceb2b2324717fa30b44d56ef0c52813e239569 ]
 
-BE_CCTL_INFO_W2_PRELOAD_ENABLE is for h2c->w2, not h2c->w1.
-These will cause h2c->w1 wrong overlap by w2 and w2 not initialized.
+`max_response` and `sensor_num` are read from different EC commands:
 
-Fixes: c73607b3a8ef ("wifi: rtw89: fw: add CMAC H2C command to initialize default value for RTL8922D")
-Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20260611082021.46650-1-guanwentao@uniontech.com
+- `max_response` is from cros_ec_get_proto_info().
+    ec_dev->max_response = info->max_response_packet_size -
+                                    sizeof(struct ec_host_response);
+
+- `sensor_num` is from cros_ec_get_sensor_count().
+    sensor_num = cros_ec_get_sensor_count(ec);
+
+With a malfunctioning EC firmware, it is possible that the `msg->insize`
+(i.e., `fifo_info_length` in the context) could be clamped in
+cros_ec_cmd_xfer() because `msg->insize` is greater than `max_response`.
+
+    int fifo_info_length =
+            sizeof(struct ec_response_motion_sense_fifo_info) +
+            sizeof(u16) * sensorhub->sensor_num;
+
+This means the number of read bytes could be less than expected.  As a
+result, the subsequent memcpy() in cros_ec_sensorhub_ring_handler()
+overreads the `resp->fifo_info` buffer.
+
+Check the return value of cros_ec_cmd_xfer_status() and abort if the
+number of bytes read does not match the expected length.
+
+Fixes: 145d59baff59 ("platform/chrome: cros_ec_sensorhub: Add FIFO support")
+Reviewed-by: Tomasz Figa <tfiga@chromium.org>
+Link: https://lore.kernel.org/r/20260702082745.1014968-1-tzungbi@kernel.org
+Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw89/fw.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/platform/chrome/cros_ec_sensorhub_ring.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/fw.c b/drivers/net/wireless/realtek/rtw89/fw.c
-index d6a594b75ab20..c91e7ec8b9722 100644
---- a/drivers/net/wireless/realtek/rtw89/fw.c
-+++ b/drivers/net/wireless/realtek/rtw89/fw.c
-@@ -3729,7 +3729,7 @@ int rtw89_fw_h2c_default_cmac_tbl_be(struct rtw89_dev *rtwdev,
- 		  le32_encode_bits(4, BE_CCTL_INFO_W1_RTS_RTY_LOWEST_RATE);
- 	h2c->m1 = cpu_to_le32(BE_CCTL_INFO_W1_ALL);
+diff --git a/drivers/platform/chrome/cros_ec_sensorhub_ring.c b/drivers/platform/chrome/cros_ec_sensorhub_ring.c
+index e613dce244302..d92b602137207 100644
+--- a/drivers/platform/chrome/cros_ec_sensorhub_ring.c
++++ b/drivers/platform/chrome/cros_ec_sensorhub_ring.c
+@@ -836,8 +836,15 @@ static void cros_ec_sensorhub_ring_handler(struct cros_ec_sensorhub *sensorhub)
+ 		sensorhub->msg->outsize = 1;
+ 		sensorhub->msg->insize = fifo_info_length;
  
--	h2c->w1 = le32_encode_bits(preld, BE_CCTL_INFO_W2_PRELOAD_ENABLE);
-+	h2c->w2 = le32_encode_bits(preld, BE_CCTL_INFO_W2_PRELOAD_ENABLE);
- 	h2c->m2 = cpu_to_le32(BE_CCTL_INFO_W2_ALL);
+-		if (cros_ec_cmd_xfer_status(ec->ec_dev, sensorhub->msg) < 0)
++		ret = cros_ec_cmd_xfer_status(ec->ec_dev, sensorhub->msg);
++		if (ret < 0)
++			goto error;
++		if (ret != fifo_info_length) {
++			dev_warn_ratelimited(sensorhub->dev,
++					     "Mismatch read length: size %d - expected %d\n",
++					     ret, fifo_info_length);
+ 			goto error;
++		}
  
- 	h2c->m3 = cpu_to_le32(BE_CCTL_INFO_W3_ALL);
+ 		memcpy(fifo_info, &sensorhub->resp->fifo_info,
+ 		       fifo_info_length);
 -- 
 2.53.0
 
