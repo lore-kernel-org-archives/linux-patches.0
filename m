@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 779A73C07A;
-	Sat, 12 Sep 2026 16:52:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4175D2AD3C;
+	Sat, 12 Sep 2026 16:52:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789231955; cv=none; b=puDJPSHIUkBaQqk8FgC1pxe6qHCxttlADOLmXxrcJjYB9tTwNspekGsztsQi8jzR8WBc3Hfz02vCzS3P6djOw41+jXbHvZ3coxx1gKuVCDyarfscMYPH+kOQBPaIM93HK1F3TU6G/jS1SEedD0Dtvd+g1VjoyU/81k2C63FIfvU=
+	t=1789231960; cv=none; b=qla1jqVUKqltGPnbGvf+w2vxN6rGchP/Vxg7FyI8rXjHoR0FHIoTmjJz89soRV+3XerQUUYKY2MGJHYSq2cMC4rNDbyBRLgayWK6j9uxk2vIbe4Jb9mK8aFBkFXS+zTX5KNoBViNTHojbGN9LfmHQG2k9s/dkydx5JBiZJGGBjg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789231955; c=relaxed/simple;
-	bh=FXE6z1qv2JmCyHoVUFkdcBxtxYRV6kpOx2xTEeQ68Qs=;
+	s=arc-20240116; t=1789231960; c=relaxed/simple;
+	bh=h7IjJH535wGBB+q00qMPpYxav+x4t2PUITkGZFafZbw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ieLQ4nOnXyCB9mYrJ6fSCQpouqSfe+WZsBYG2pMEb72bn5ozTapViLaz5yJlrFhr6oRSOK/05laP9Z0E4VlYPlQL+8C2N9INKbq3EXD84WOjAG3ml5H3gvxHWo2yEjpopAnFmVrHSNA5SqxkZMH+C+Ap5hCvfY/GyiMO3xe/i2Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VWneTP9l; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=otvNJ8oZs+KI/2LGh7bKg6PDiS2vWIhkcYeg7Nq0XwMFPRcfRAXP7OTU7ddan4bzAwCG8ijUPOzaz4V6zwKvyQ6T0z9Yukf/SkbqZetXIVnlGenN7Wx8uTXUIf9nVe+4Z9YEQj4Awo+jxfhyUV60qiBctHEIhNFzuu3y79BlYeI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ASvzixUa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VWneTP9l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F32C1F000FF;
-	Sat, 12 Sep 2026 16:52:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ASvzixUa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13EA61F00893;
+	Sat, 12 Sep 2026 16:52:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789231954;
-	bh=ZPcv6FXu6PPTD+yXnI0OU++uEhYluowHwTat4vCy+Rg=;
+	s=korg; t=1789231958;
+	bh=zUaThBgHqPURBtUiqI4/u3bfRhKlHrMo1Wpf7B1HQKY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VWneTP9lVsRnM5pQ4fPKgCdqhI7n9vZMwGSCNZUlwk2VjQhQRLSMRIYXZEgcovmGx
-	 JvFFnKGC57TRh8FZT01vj4XdTAYu/zjZ0y0a1xC9aERobSTNOXM2nRL9GlSqNn2cW6
-	 zxXlPVJyZpsuB4DXozRx1xUysYSRK/yi1KEtDUNQ=
+	b=ASvzixUaywKA6cB+e7o6m7tNC3jQA4OVmAZ4sPZ9MbBaofQhS5fQ29kPVyFZ06uXf
+	 yI0j+B/KlJEDu3SysmCFuhw9RLehe7ngowE68s/Zy9FvA1tQkuN12TX1X4Rnc87dTQ
+	 l5aE/0tKYcdvUAs/CLjZvA59b7P9q6ESrrmbuEi8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wupeng Ma <mawupeng1@huawei.com>,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	Nguyen Dinh Phi <phind.uet@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Ruoyu Wang <ruoyuw560@gmail.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Jay Vosburgh <jv@jvosburgh.net>,
+	Hangbin Liu <liuhangbin@kylinos.cn>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1061/1191] vsock: use sock_error() to consume sk_err after a failed connect
-Date: Sat, 12 Sep 2026 09:03:09 +0200
-Message-ID: <20260912065612.004366519@linuxfoundation.org>
+Subject: [PATCH 6.1 1062/1191] bonding: initialize err for empty target lists
+Date: Sat, 12 Sep 2026 09:03:10 +0200
+Message-ID: <20260912065612.026890077@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -53,54 +54,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nguyen Dinh Phi <phind.uet@gmail.com>
+From: Ruoyu Wang <ruoyuw560@gmail.com>
 
-[ Upstream commit 96cbf89993091a163bfedec52a3bd683dc94b3b4 ]
+[ Upstream commit 8ccc9bf9afeeb46a437081c07154fbf5964682b2 ]
 
-vsock_connect() returns sk_err to userspace but does not clear it:
-  if (sk->sk_err) {
-            err = -sk->sk_err;
+Empty NLA_NESTED attributes are valid, and bonding uses them to clear
+the ARP and NS target lists. When either target attribute is empty,
+nla_for_each_nested() does not execute, so err retains an uninitialized
+value before it is tested. The request can consequently return an
+unpredictable error after clearing the targets.
 
-For a blocking connect() the error has already been delivered as
-connect()'s return value, so leaving it set causes subsequent operations
-like poll()/epoll() to keep reporting POLLERR even though the connect
-failure was already delivered.
+Initialize err to zero so an empty target list completes successfully.
+Non-empty lists still propagate errors from __bond_opt_set() unchanged.
 
-The error should be consumed once it has been returned to userspace.
-Switch to sock_error(), which reads and clears sk_err atomically,
-matching the behavior of other protocol implementations such as
-__inet_stream_connect().
+This issue was found by a static analysis checker and confirmed by manual
+source review.
 
-Fixes: d021c344051a ("VSOCK: Introduce VM Sockets")
-Tested-by: Wupeng Ma <mawupeng1@huawei.com>
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-Signed-off-by: Nguyen Dinh Phi <phind.uet@gmail.com>
-Link: https://patch.msgid.link/20260813173024.2362935-4-phind.uet@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 4fb0ef585eb2 ("bonding: convert arp_ip_target to use the new option API")
+Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
+Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
+Acked-by: Jay Vosburgh <jv@jvosburgh.net>
+Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
+Link: https://patch.msgid.link/20260813153126.3952893-1-ruoyuw560@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/vmw_vsock/af_vsock.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/net/bonding/bond_netlink.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/vmw_vsock/af_vsock.c b/net/vmw_vsock/af_vsock.c
-index daca9df5a24b9..92685d6da9ad1 100644
---- a/net/vmw_vsock/af_vsock.c
-+++ b/net/vmw_vsock/af_vsock.c
-@@ -1542,12 +1542,10 @@ static int vsock_connect(struct socket *sock, struct sockaddr *addr,
- 		prepare_to_wait(sk_sleep(sk), &wait, TASK_INTERRUPTIBLE);
- 	}
+diff --git a/drivers/net/bonding/bond_netlink.c b/drivers/net/bonding/bond_netlink.c
+index 0eaf4b0e06ffb..0b445a29bec8e 100644
+--- a/drivers/net/bonding/bond_netlink.c
++++ b/drivers/net/bonding/bond_netlink.c
+@@ -217,7 +217,7 @@ static int bond_changelink(struct net_device *bond_dev, struct nlattr *tb[],
+ 	struct bonding *bond = netdev_priv(bond_dev);
+ 	struct bond_opt_value newval;
+ 	int miimon = 0;
+-	int err;
++	int err = 0;
  
--	if (sk->sk_err) {
--		err = -sk->sk_err;
-+	err = sock_error(sk);
-+	if (err) {
- 		sk->sk_state = TCP_CLOSE;
- 		sock->state = SS_UNCONNECTED;
--	} else {
--		err = 0;
- 	}
- 
- out_wait:
+ 	if (!data)
+ 		return 0;
 -- 
 2.53.0
 
