@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20BB4384242;
-	Sat, 12 Sep 2026 18:40:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DCEB3B38BD;
+	Sat, 12 Sep 2026 18:41:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789238461; cv=none; b=HhHYGT3r7q5mGAJUGsMYD7JKkPGn4IOJIU1Wlt1IMjfWPR4hDUWkFVMLDH5n3jw3xMC89f0xVeBifGLpc7Qs+b1QQP4QPtT9naZtBUpjPWwwJTTRMCMBXETXn69yc7Y7DAwhHaKyBUb4/CPjDsoO+ZDP6/Tf4AR1J6sr0EDQNIM=
+	t=1789238466; cv=none; b=gukTRcSp/ZmuiRSARrvH3c6mKfBY1OTjZoQYrC3surISz7GySll1E6E2LgVTjp1uP16zjkhvCjgSPYptsRmYoc3GrN3dDTuTnyRH+g8knmVV62Ol68MV53H2CnKZAjEDT5SuojcWmlYnYbJeiYBXDo9MTGzsgL5EaNQVkI27H48=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789238461; c=relaxed/simple;
-	bh=06rH7eAnMi2wVP+LwbQJVfNUQj0cOxh4JP3MXpOSlFI=;
+	s=arc-20240116; t=1789238466; c=relaxed/simple;
+	bh=+W6IhLuutyBqBs818+6BhTAbgJXOw18fs8W++jizDDg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NtcRJ0qK7aviGloN9MlApCQHCglvH3g89JTyNTKzNgKA69SHlAPwAWdFIHN9q/cxOAzz6AOLDw0lXFTC9Pq3gRKiVMUztK7Fg+xsp/+RwiKpo3/J723uJZRm41TAy0fk+zx3/27c0PjD1Lt7NVeaxuD+HylG5OshmUET8ApHpiA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=drZy5Rgg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=OnXfrT5Cd+apig0iUpKqF09MZWHKsUwMytxAq4XjyAUAeDnuN30W6xipZRHnWb44GOE/XtUYIrjbhEJ78e0nZBgtD/Jm/u/A7dwIaBvZnJzK1h1VWvGB03YPJGUSnJoEdAt8x9Haa5bCEahW/VOv+W/hmcbSGElHupgD3UTlQSU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0jgTeqnf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="drZy5Rgg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85E8E1F000FF;
-	Sat, 12 Sep 2026 18:40:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0jgTeqnf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDA121F000FF;
+	Sat, 12 Sep 2026 18:41:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789238458;
-	bh=SeCMo+9C3abTQSrYokmVjltnRDBnmifqQawZjFOPZgQ=;
+	s=korg; t=1789238464;
+	bh=uVjq34p87r7q+V4oUAIPIkmgWceiOWzA8QatU5mAjmw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=drZy5Rgg2U8hhZXR/GKlcL0t59zzwUscbaNTm1e9Zs3wvaK6djXMXD+VD1fpR04CB
-	 zacSRSjaYUC2WI40RFWFr3qkkaiaIlczDHjiy7Fm9liA2neitOKzkkQQBi9qRtTiOq
-	 yA8bZySz6zWrQeMB0r6xCY1Ef6Xf15qWlzQvbWm0=
+	b=0jgTeqnfXUpYQq/UWTbeyicO47EW+a0De5XUv4EmL+fWA4T+JrFFtY5p0I5VylSkJ
+	 irr8ni8FoGoo6pNlLz2+ni0njSxM9hffWA84hkx0BvY9RX3eKvDHtJK3/VDkCii5Y7
+	 CbjU+Ws0rxENf167gsEvezeNcY9gkJfwkzI8Yi3I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuho Choi <dbgh9129@gmail.com>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
 	Thomas Gleixner <tglx@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 466/935] clocksource: Unregister subsystem on device registration failure
-Date: Sat, 12 Sep 2026 08:58:16 +0200
-Message-ID: <20260912065537.514984921@linuxfoundation.org>
+Subject: [PATCH 5.15 467/935] y2038: uapi: Use 64-bit __kernel_old_timespec::tv_nsec on x32
+Date: Sat, 12 Sep 2026 08:58:17 +0200
+Message-ID: <20260912065537.538024834@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -45,51 +45,66 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yuho Choi <dbgh9129@gmail.com>
+From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
 
-[ Upstream commit 3dee6537e728bd8137fda6eaf859f26e685943f7 ]
+[ Upstream commit 79ced850e549e8c86b772a79ea417a1425b5c04b ]
 
-init_clocksource_sysfs() registers the clocksource subsystem before
-registering the clocksource device. If device_register() fails, the
-function returns the error while leaving the subsystem registered.
+'struct __kernel_old_timespec' represents the 'native' time ABI of the
+kernel. On 32-bit systems it uses 32-bit fields and on 64-bit systems
+it uses 64-bit fields.
 
-Unregister the clocksource subsystem on that failure path so the
-successful subsystem registration is unwound before returning.
+However the x86 x32 ABI uses the 64-bit time ABI natively.  This is
+correctly handled for the 'tv_sec' fields, through the typedefs of
+'__kernel_old_time_t' -> '__kernel_long_t' -> 'long long'. The same
+treatment was missed for 'tv_nsec'.
 
-Fixes: d369a5d8fc70 ("clocksource: convert sysdev_class to a regular subsystem")
-Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
+In practice this might not make much of a difference as the value of
+'tv_nsec' will always fit into 32 bits and the missing bits fall
+into the padding of the structure.
+
+When introspecting the structure however, a difference can be observed.
+
+Switch to 64-bit tv_nsec on x32.  No other architectures or ABIs are
+affected.
+
+While this could be interpreted as violating the POSIX requirement of
+'timespec::tv_nsec' being 'long':
+
+  * __kernel_old_timespec is not actually the POSIX timespec type
+
+  * the requirement is gone in newer versions of POSIX
+
+  * this matches glibc
+
+Fixes: 94c467ddb273 ("y2038: add __kernel_old_timespec and __kernel_old_time_t")
+Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
 Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Link: https://patch.msgid.link/20260702215733.84588-1-dbgh9129@gmail.com
+Link: https://patch.msgid.link/20260504-timespec-x32-v2-1-0739c9047fc4@linutronix.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/time/clocksource.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ include/uapi/linux/time_types.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/time/clocksource.c b/kernel/time/clocksource.c
-index 57575be840c5a..3b494001e96fe 100644
---- a/kernel/time/clocksource.c
-+++ b/kernel/time/clocksource.c
-@@ -1465,8 +1465,12 @@ static int __init init_clocksource_sysfs(void)
- {
- 	int error = subsys_system_register(&clocksource_subsys, NULL);
+diff --git a/include/uapi/linux/time_types.h b/include/uapi/linux/time_types.h
+index bcc0002115d39..03a0d8aaadca5 100644
+--- a/include/uapi/linux/time_types.h
++++ b/include/uapi/linux/time_types.h
+@@ -30,7 +30,7 @@ struct __kernel_old_timeval {
  
--	if (!error)
--		error = device_register(&device_clocksource);
-+	if (error)
-+		return error;
-+
-+	error = device_register(&device_clocksource);
-+	if (error)
-+		bus_unregister(&clocksource_subsys);
+ struct __kernel_old_timespec {
+ 	__kernel_old_time_t	tv_sec;		/* seconds */
+-	long			tv_nsec;	/* nanoseconds */
++	__kernel_long_t		tv_nsec;	/* nanoseconds */
+ };
  
- 	return error;
- }
+ struct __kernel_old_itimerval {
 -- 
 2.53.0
 
