@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9E711DA62E;
-	Sat, 12 Sep 2026 10:29:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4E061DA62E;
+	Sat, 12 Sep 2026 10:29:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789208991; cv=none; b=Soj4azSNSeBPWjlCpNXYwnq+pf3+Zp7l7GDjpC7uUktvrvGE1VDvgNMNc0dcFyejJOpz9XT3D7xv7RNgOm/uAu5Ii0vtnWbyBV4/Nj0NrNq/ps+T7glKr1OCeCYm3oG62gVzjtmxKms73Y4mNklwHxolDipgZAyEmHjZb3qni7Y=
+	t=1789208995; cv=none; b=jr8KMp44aasEfAAg00jd3Y2dAV0d5SmcoWUwP6+ZQQamvWpjKdD+eyXOx/qWhWXYvy+OzE3h6fyijK4dJoQd2kqgMmUC0zbkDYMn70KmNhyWJvW01qJ1BHWXTIOEvWUsqAp1Srf7Lh+jB6aJfX6utyvxLpRaKIFB4TotpmvTOZw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789208991; c=relaxed/simple;
-	bh=8zmHBxIjLFUsSS9jSNKXvBqsaJYTQnFZzEJhtONWvic=;
+	s=arc-20240116; t=1789208995; c=relaxed/simple;
+	bh=GK0dOHAeUF3vUrcjhFcLS3Wwp3x5xSVlPUzmhd6cKOw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r/WdjTAW5R/+eFxUTDm0iaB84qlb14OnKzXZAAmlXJtO7Rcp3evVLDnsQMoXLqr9Dk450J35OKtO0iIZtRS1FJvKFjI49lk+H3Qi7iDZZT5aUlqQwu4c0J0xSvRJhepil25HKdH4zt8UhflAqUuyif4AJ0f/WVheNC5MMB0MpkY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EUD79g4z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NKF/p6uCLfBWGS2Dx/tDs3TZlq5vgnie/2xWo+9Ko3xCmFkvlN+xs5LJ+XONWEAjz6PQkiJBb2ck73Cwre5gqkMAOuGJdJtl0HglE/EbdAWybF11GDJ6+NyA2Zgt2Js+JCwWpvCx5iCgAPuez/BsTzX/2s9pE8bq03l34FKMnMA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aZHWPF3Z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EUD79g4z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEB281F000FF;
-	Sat, 12 Sep 2026 10:29:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aZHWPF3Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB9801F00893;
+	Sat, 12 Sep 2026 10:29:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789208989;
-	bh=As1pQ8+IPVX9NXYybgxT8Hj99bbBuVv5s+1zhjtPcjo=;
+	s=korg; t=1789208994;
+	bh=2GnF5/Mm4oQvX40YLbH6oWLojEB+j1wTxxBQ9zD5MY4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EUD79g4zvK3JswLDdGx3p6y09snfj4wCAOS28CQKceV66LU5ExGA7WB8oKCYTfz7X
-	 oRN8a52Z2e/QsDdRvcLKYn/+w5YfFZnhrpb+ousugkZrJ/hPGA/ea5hpySpNnekiE7
-	 Z1YgcwOGbcRP6rHsDMEyPc6AM5BvuldcKCrWphtA=
+	b=aZHWPF3ZeLD6wn2BxlY3EskjZfiAAL9qtixh4tSDtE7UO4rvHb4oUQbdv47qxPFGE
+	 ssmSbvwvtHLNOIIqNIfqSxf80Xvf3rgcDbRatEwxwh76PcYFY5HSZGN/uyuA5HNw5m
+	 FGxbi6fQjgg8yc+tj1Y8e/9UuqoFirAxwEzrIbUE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Larsson <benjamin.larsson@genexis.eu>,
-	Zhi-Jun You <hujy652@gmail.com>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0728/1518] wifi: mt76: mt7915: fix net_fill_forward_path for non-DBDC mt7986
-Date: Sat, 12 Sep 2026 08:48:17 +0200
-Message-ID: <20260912065639.902745642@linuxfoundation.org>
+Subject: [PATCH 6.18 0729/1518] wifi: mt76: Move Q_READ/Q_WRITE definitions in dma.h
+Date: Sat, 12 Sep 2026 08:48:18 +0200
+Message-ID: <20260912065639.926169120@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,80 +51,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhi-Jun You <hujy652@gmail.com>
+From: Lorenzo Bianconi <lorenzo@kernel.org>
 
-[ Upstream commit bade0d238b60c29dafcc7da17501fa489495d6ae ]
+[ Upstream commit e627439aecf358944261cf2ffb4449c61a7e5e9f ]
 
-Current implementation assumes that the hardware supports DBDC or single
-band and binds to band0.
+This is a preliminary patch to enable traffic forward offloading between
+the MT76 NIC and the Airoha ethernet one via the Airoha NPU module
+available on the Airoha EN7581 SoC.
 
-This causes net_fill_forward_path to select the wrong queue for non-DBDC
-mt7986 because it binds to band1 and getting the following in dmesg:
-
-ieee80211 phy2: WA: --> drop by reaseon:1, msdu id = 0xc002 but failed!
-mtk_wed1: error status=00000002
-ieee80211 phy2: WA: txblk
-10324e00
-len = 128
-DW0 : 10 00 00 00
-DW1 : 00 00 00 00
-DW2 : 00 00 00 00
-DW3 : 72 0f 94 68
-DW4 : 00 00 00 00
-DW5 : ff 03 00 00
-DW6 : 00 00 3c 40
-DW7 : 00 17 dd 14
-DW8 : 79 6f 00 00
-DW9 : 02 c0 00 00
-DW10 : 58 c5 34 10
-DW11 : 00 00 00 00
-DW12 : 00 06 3e 00
-DW13 : 00 00 00 80
-DW14 : 10 8c 00 00
-DW15 : 00 00 00 00
-DW16 : 00 00 00 00
-DW17 : 00 00 00 00
-DW18 : 00 00 00 00
-DW19 : 00 00 00 00
-DW20 : 00 00 00 00
-DW21 : 00 00 00 00
-DW22 : 00 00 00 00
-DW23 : 00 00 00 00
-DW24 : 00 00 00 00
-DW25 : 00 00 00 00
-DW26 : 00 00 00 00
-DW27 : 00 00 00 00
-DW28 : 00 00 00 00
-DW29 : 00 00 00 00
-DW30 : 00 00 00 00
-DW31 : 00 00 00 00
-
-Fix it by using phy->mt76->band_idx for queue which works for both
-non-DBDC and DBDC devices.
-
-Fixes: f68d67623dec ("mt76: mt7915: add Wireless Ethernet Dispatch support")
-Suggested-by: Benjamin Larsson <benjamin.larsson@genexis.eu>
-Signed-off-by: Zhi-Jun You <hujy652@gmail.com>
-Link: https://patch.msgid.link/20260715152113.553-2-hujy652@gmail.com
+Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Link: https://patch.msgid.link/20251017-mt76-npu-devel-v2-1-ddaa90901723@kernel.org
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Stable-dep-of: 915672c5ae32 ("wifi: mt76: mt7921: Add PCIe AER handler support to prevent system crash")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7915/main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/mediatek/mt76/dma.c | 31 ------------------------
+ drivers/net/wireless/mediatek/mt76/dma.h | 31 ++++++++++++++++++++++++
+ 2 files changed, 31 insertions(+), 31 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/main.c b/drivers/net/wireless/mediatek/mt76/mt7915/main.c
-index 6f594677474b0..8e69df105c5ae 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7915/main.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7915/main.c
-@@ -1738,7 +1738,7 @@ mt7915_net_fill_forward_path(struct ieee80211_hw *hw,
- 	path->mtk_wdma.wdma_idx = wed->wdma_idx;
- 	path->mtk_wdma.bss = mvif->mt76.idx;
- 	path->mtk_wdma.wcid = is_mt7915(&dev->mt76) ? msta->wcid.idx : 0x3ff;
--	path->mtk_wdma.queue = phy != &dev->phy;
-+	path->mtk_wdma.queue = phy->mt76->band_idx;
+diff --git a/drivers/net/wireless/mediatek/mt76/dma.c b/drivers/net/wireless/mediatek/mt76/dma.c
+index 9ef073c27f309..2e1048838c09b 100644
+--- a/drivers/net/wireless/mediatek/mt76/dma.c
++++ b/drivers/net/wireless/mediatek/mt76/dma.c
+@@ -7,37 +7,6 @@
+ #include "mt76.h"
+ #include "dma.h"
  
- 	ctx->dev = NULL;
+-#if IS_ENABLED(CONFIG_NET_MEDIATEK_SOC_WED)
+-
+-#define Q_READ(_q, _field) ({						\
+-	u32 _offset = offsetof(struct mt76_queue_regs, _field);		\
+-	u32 _val;							\
+-	if ((_q)->flags & MT_QFLAG_WED)					\
+-		_val = mtk_wed_device_reg_read((_q)->wed,		\
+-					       ((_q)->wed_regs +	\
+-					        _offset));		\
+-	else								\
+-		_val = readl(&(_q)->regs->_field);			\
+-	_val;								\
+-})
+-
+-#define Q_WRITE(_q, _field, _val)	do {				\
+-	u32 _offset = offsetof(struct mt76_queue_regs, _field);		\
+-	if ((_q)->flags & MT_QFLAG_WED)					\
+-		mtk_wed_device_reg_write((_q)->wed,			\
+-					 ((_q)->wed_regs + _offset),	\
+-					 _val);				\
+-	else								\
+-		writel(_val, &(_q)->regs->_field);			\
+-} while (0)
+-
+-#else
+-
+-#define Q_READ(_q, _field)		readl(&(_q)->regs->_field)
+-#define Q_WRITE(_q, _field, _val)	writel(_val, &(_q)->regs->_field)
+-
+-#endif
+-
+ static struct mt76_txwi_cache *
+ mt76_alloc_txwi(struct mt76_dev *dev)
+ {
+diff --git a/drivers/net/wireless/mediatek/mt76/dma.h b/drivers/net/wireless/mediatek/mt76/dma.h
+index 17a80e1757fcc..56bd53bf97bd3 100644
+--- a/drivers/net/wireless/mediatek/mt76/dma.h
++++ b/drivers/net/wireless/mediatek/mt76/dma.h
+@@ -46,6 +46,37 @@
+ #define MT_FCE_INFO_LEN			4
+ #define MT_RX_RXWI_LEN			32
  
++#if IS_ENABLED(CONFIG_NET_MEDIATEK_SOC_WED)
++
++#define Q_READ(_q, _field) ({						\
++	u32 _offset = offsetof(struct mt76_queue_regs, _field);		\
++	u32 _val;							\
++	if ((_q)->flags & MT_QFLAG_WED)					\
++		_val = mtk_wed_device_reg_read((_q)->wed,		\
++					       ((_q)->wed_regs +	\
++						_offset));		\
++	else								\
++		_val = readl(&(_q)->regs->_field);			\
++	_val;								\
++})
++
++#define Q_WRITE(_q, _field, _val)	do {				\
++	u32 _offset = offsetof(struct mt76_queue_regs, _field);		\
++	if ((_q)->flags & MT_QFLAG_WED)					\
++		mtk_wed_device_reg_write((_q)->wed,			\
++					 ((_q)->wed_regs + _offset),	\
++					 _val);				\
++	else								\
++		writel(_val, &(_q)->regs->_field);			\
++} while (0)
++
++#else
++
++#define Q_READ(_q, _field)		readl(&(_q)->regs->_field)
++#define Q_WRITE(_q, _field, _val)	writel(_val, &(_q)->regs->_field)
++
++#endif
++
+ struct mt76_desc {
+ 	__le32 buf0;
+ 	__le32 ctrl;
 -- 
 2.53.0
 
