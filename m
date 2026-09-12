@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C284C37FF60;
-	Sat, 12 Sep 2026 09:04:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46931418A5D;
+	Sat, 12 Sep 2026 09:04:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789203847; cv=none; b=AHZSY6fkpVdaUj7MSpYhoxJGpn6wMlopW3WLrCGpMgqRBZ6IzlAJJJi7sUaORnQKTkH/ge54W/2wIcxYePUXC/J+tiXiy/Z9+E92YjvjA8RFgqOskXoF+nwwXjPRd70YUfgufAmsYRwnXRF3jmVOoAN9eyReN3lEW7TR2O2PmTY=
+	t=1789203852; cv=none; b=dgbbZPBjE5K5K7Fzost7Zk/wFTv/Gr7aBXk/mpJLni4K2Y0coAaA3OQmDdj6lIH6LW5/ouDHS/5gyS6PiRHA67ktyVvHPSuUb3iBzlbq4MX64U8UURjLkiddJKVFiQsdDaZA/rwIR/CQPBd8bJOyFtvK6vZk9QqewtpI6cGqex0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789203847; c=relaxed/simple;
-	bh=ZwGWFcxO8EpFQ8Jupzg5Iob/veaOxz+g07KHv2raOCs=;
+	s=arc-20240116; t=1789203852; c=relaxed/simple;
+	bh=tfQJONy/0kkcNNz7wXFqxbEurawCNpILGUDM7QskoGo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nun3lEry8V3bexBToGJEhoMaBLBrRvBs/mEpd743uFpkAPZV/E9+PjU9xKZuuuCfSho3BqkmVZW1wOwQB6RzTh/sPVWJSZiwAIxwFWW004XTzux7mTQ0QckY391qKcCL9PFK6hYhdZMYQK51bxFMTZxMqqunlD1BhR9VlFgYn/s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oYGLdjWQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aymS59Ty83aCNs4nC5FJuiw7GqOPEiTEQkH+zzKGxuRPKOpspjSJHzzToqKdzy4TNnbfLyZd/htFIsnajNHjRTl5+SC0uhmRvxQdLgN6GOmu7LzvLNy1Gl7b4ZDFR235zz70krKOn5R2CQtSxhsUHl419ofCHnmavZwlC8wmZPY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2k2llYPu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oYGLdjWQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C770F1F00893;
-	Sat, 12 Sep 2026 09:04:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2k2llYPu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B28901F000FF;
+	Sat, 12 Sep 2026 09:04:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789203845;
-	bh=+YXJX9GgG4cqMGQj8SkMFy20A9/AH3/td5/oaylsHvg=;
+	s=korg; t=1789203850;
+	bh=WGtTM0+um6Sql3h6s6FyXo/TCFF+gjxDY6lOqHECFUg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oYGLdjWQhbAZja4N/juofMqbU7XdnX2AQnDgaERRSf4ORo8NwlbTqCeVH++8BETYy
-	 Vanox2ZNjyKlLOJZOXu9wdConFZKQ9B/lGNUwdYQSt61nPTQa2p6Uu5OVKhY3wBKaS
-	 ffXc5fxPzefJb1LarPomeTH7knkw1TiFFZ+yHQyg=
+	b=2k2llYPuUsHMMZi6kyCb/ip/nYgWFF28Zuq6eo4cRiMrkaAgVIzRQaet7D+TnQ00I
+	 dLJ03vFWWJZz1Xh//kULsanRBELU9RGDIERP9BjKw9JdmVjYrFTMAVPSBrVUeghnas
+	 NWe62n6kzKFF4w6fauGIyiaFPDKEbbIwYkfNbqio=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Israel=20T=C3=A9llez=20Garc=C3=ADa?= <i.tellez@btesa.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Yao Sang <sangyao@kylinos.cn>,
+	Ming Lei <tom.leiming@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1464/1815] bpf: Fix pending_pos walk on 32-bit ring position wrap
-Date: Sat, 12 Sep 2026 08:53:34 +0200
-Message-ID: <20260912065723.379533948@linuxfoundation.org>
+Subject: [PATCH 7.2 1491/1815] ublk: avoid teardown retry loop on xarray allocation failure
+Date: Sat, 12 Sep 2026 08:54:01 +0200
+Message-ID: <20260912065724.005641831@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -45,85 +46,155 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Israel Téllez García <i.tellez@btesa.com>
+From: Yao Sang <sangyao@kylinos.cn>
 
-[ Upstream commit 6ff5b56a50c5351aeeb180e34327736576c038fa ]
+[ Upstream commit 4fd66a7f829f3f38f92a79081f0f2688aed644f0 ]
 
-The reservation path caches the position of the oldest not-yet-committed
-record in rb->pending_pos and advances it past already committed records
-on every reservation:
+__ublk_shmem_remove_ranges() removes matching maple tree ranges in
+batches, but first stores each range into a temporary xarray so that the
+pages can be unpinned after dropping the maple tree lock.
 
-	while (pend_pos < prod_pos) {
+That temporary xarray is filled under the maple tree lock with
+xa_store(..., GFP_ATOMIC). If the store fails before mas_erase(), the
+current range is left in the tree and the helper returns false. The
+outer ublk_shmem_remove_ranges() loop then immediately retries the same
+range. While the atomic allocation keeps failing, the teardown path has
+no forward progress.
 
-consumer_pos, producer_pos and pending_pos are unsigned long, i.e.
-32-bit on 32-bit architectures, and Documentation/bpf/ringbuf.rst states
-that these counters may wrap around there. Every other comparison in the
-file is written as a difference, so modular arithmetic keeps them
-correct across the wrap. This one is an ordering comparison, and it is
-not wrap-safe.
+The issue can be reproduced with radix_tree_node failslab injection after
+a SHMEM_ZC buffer has already been registered:
 
-Once producer_pos wraps past 2^32, prod_pos is small while pend_pos
-still holds its pre-wrap value, so the loop condition is false and
-pending_pos is never advanced again. Reservations keep succeeding for a
-while, because bpf_ringbuf_has_space() uses differences, but
-new_prod_pos - pend_pos grows as the producer advances, and once it
-exceeds rb->mask every subsequent __bpf_ringbuf_reserve() call fails:
-the kernel believes a pending record spans the whole buffer. The ring
-never recovers, bpf_ringbuf_output() drops every event from then on, and
-nothing is logged.
+  # Kernel config:
+  #   CONFIG_BLK_DEV_UBLK=y
+  #   CONFIG_DEBUG_FS=y
+  #   CONFIG_FAULT_INJECTION=y
+  #   CONFIG_FAULT_INJECTION_DEBUG_FS=y
+  #   CONFIG_FAILSLAB=y
 
-Observed on four armv7 devices (i.MX7 Dual, 6.6.52) running a
-tracepoint-based collector with a 512 KiB ring and 160-byte records.
-Every one of them stopped delivering after exactly 26846821 records and
-4295491360 bytes had passed through the ring, at event rates between 441
-and 862 records/s, that is after 8 h to 17 h of uptime: the trigger is
-the byte count, not time or load. That figure is 2^32 plus 524064 bytes,
-and the excess is one ring's worth of grace period, as expected while
-new_prod_pos - pend_pos is still below rb->mask. The last reservation
-that fits is the largest record boundary X with X + 160 <= 524287, and
-since 2^32 mod 160 = 96 the boundaries after the wrap sit at
-X = 64 (mod 160), giving X = 524064. Userspace kept consuming normally
-until the producer stopped, then read zero records for good. With this
-patch applied, one of the four devices took 10 GiB through the same ring
-with no stall, while the three unpatched ones kept wedging at the same
-byte count.
+  echo 10 > /proc/sys/vm/nr_hugepages
+  mkdir -p /tmp/htlb
+  mount -t hugetlbfs none /tmp/htlb
+  fallocate -l 4M /tmp/htlb/ublk_buf
 
-64-bit hosts are unaffected in practice: their counters would need
-16 EiB to wrap.
+  dev_id=$(kublk add -t null --shmem_zc \
+		--htlb /tmp/htlb/ublk_buf |
+	   awk -F '[ :]' '/dev id/ {print $3}')
 
-Compare the two positions as a difference instead. pending_pos never
-runs ahead of producer_pos, so the unsigned difference is the real
-distance between them and stays correct across the wrap.
+  echo 1 > /sys/kernel/slab/radix_tree_node/failslab
+  echo Y > /sys/kernel/debug/failslab/cache-filter
+  echo Y > /sys/kernel/debug/failslab/ignore-gfp-wait
+  echo 1 > /sys/kernel/debug/failslab/interval
+  echo -1 > /sys/kernel/debug/failslab/times
+  echo 100 > /sys/kernel/debug/failslab/probability
 
-Fixes: cfa1a2329a69 ("bpf: Fix overrunning reservations in ringbuf")
-Signed-off-by: Israel Téllez García <i.tellez@btesa.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20260814124843.22041-2-i.tellez@btesa.com
+  kublk del -n "$dev_id"
+
+On the unfixed kernel the delete command was still running after 3
+seconds. Disabling failslab made it return. The fault-injection stack
+showed:
+
+  should_failslab
+  kmem_cache_alloc_lru_noprof
+  __xas_nomem
+  __xa_store
+  xa_store
+  __ublk_shmem_remove_ranges
+  ublk_cdev_rel
+  ublk_ctrl_del_dev
+
+Remove the allocation from the teardown loop. Keep the existing batch
+limit, but collect {base_pfn, nr_pages} pairs in a fixed-size stack array.
+Once a matching range is found, the range is erased from the maple tree
+before dropping the lock, so each successful scan makes progress without
+depending on any GFP_ATOMIC allocation.
+
+With the same failslab settings, the fixed kernel completed
+"kublk del -n $dev_id" successfully in about 45 ms.
+
+Fixes: 309e02dccf64 ("ublk: avoid unpinning pages under maple tree spinlock")
+Signed-off-by: Yao Sang <sangyao@kylinos.cn>
+Reviewed-by: Ming Lei <tom.leiming@gmail.com>
+Link: https://patch.msgid.link/20260804125736.2011774-1-sangyao@kylinos.cn
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/ringbuf.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/block/ublk_drv.c | 31 ++++++++++++++-----------------
+ 1 file changed, 14 insertions(+), 17 deletions(-)
 
-diff --git a/kernel/bpf/ringbuf.c b/kernel/bpf/ringbuf.c
-index 35ae64ade36b8..06d3cc192601f 100644
---- a/kernel/bpf/ringbuf.c
-+++ b/kernel/bpf/ringbuf.c
-@@ -482,7 +482,7 @@ static void *__bpf_ringbuf_reserve(struct bpf_ringbuf *rb, u64 size)
- 	prod_pos = rb->producer_pos;
- 	new_prod_pos = prod_pos + len;
+diff --git a/drivers/block/ublk_drv.c b/drivers/block/ublk_drv.c
+index 0bbf1d5a4fbc6..b71283588ea77 100644
+--- a/drivers/block/ublk_drv.c
++++ b/drivers/block/ublk_drv.c
+@@ -5522,39 +5522,36 @@ static void ublk_unpin_range_pages(unsigned long base_pfn,
  
--	while (pend_pos < prod_pos) {
-+	while (prod_pos - pend_pos > 0) {
- 		hdr = (void *)rb->data + (pend_pos & rb->mask);
- 		hdr_len = READ_ONCE(hdr->len);
- 		if (hdr_len & BPF_RINGBUF_BUSY_BIT)
+ /*
+  * Inner loop: erase up to UBLK_REMOVE_BATCH matching ranges under
+- * mas_lock, collecting them into an xarray. Then drop the lock and
+- * unpin pages + free ranges outside spinlock context.
++ * mas_lock, collecting the page ranges in a fixed-size array. Then
++ * drop the lock and unpin pages + free ranges outside spinlock context.
+  *
+  * Returns true if the tree walk completed, false if more ranges remain.
+- * Xarray key is the base PFN, value encodes nr_pages via xa_mk_value().
+  */
+ #define UBLK_REMOVE_BATCH	64
+ 
++struct ublk_unpin_range {
++	unsigned long base_pfn;
++	unsigned long nr_pages;
++};
++
+ static bool __ublk_shmem_remove_ranges(struct ublk_device *ub,
+ 					int buf_index, int *ret)
+ {
+ 	MA_STATE(mas, &ub->buf_tree, 0, ULONG_MAX);
+ 	struct ublk_buf_range *range;
+-	struct xarray to_unpin;
+-	unsigned long idx;
++	struct ublk_unpin_range to_unpin[UBLK_REMOVE_BATCH];
+ 	unsigned int count = 0;
++	unsigned int i;
+ 	bool done = false;
+-	void *entry;
+-
+-	xa_init(&to_unpin);
+ 
+ 	mas_lock(&mas);
+ 	mas_for_each(&mas, range, ULONG_MAX) {
+-		unsigned long nr;
+-
+ 		if (buf_index >= 0 && range->buf_index != buf_index)
+ 			continue;
+ 
+ 		*ret = 0;
+-		nr = mas.last - mas.index + 1;
+-		if (xa_err(xa_store(&to_unpin, mas.index,
+-				    xa_mk_value(nr), GFP_ATOMIC)))
+-			goto unlock;
++		to_unpin[count].base_pfn = mas.index;
++		to_unpin[count].nr_pages = mas.last - mas.index + 1;
+ 		mas_erase(&mas);
+ 		kfree(range);
+ 		if (++count >= UBLK_REMOVE_BATCH)
+@@ -5564,9 +5561,9 @@ static bool __ublk_shmem_remove_ranges(struct ublk_device *ub,
+ unlock:
+ 	mas_unlock(&mas);
+ 
+-	xa_for_each(&to_unpin, idx, entry)
+-		ublk_unpin_range_pages(idx, xa_to_value(entry));
+-	xa_destroy(&to_unpin);
++	for (i = 0; i < count; i++)
++		ublk_unpin_range_pages(to_unpin[i].base_pfn,
++				       to_unpin[i].nr_pages);
+ 
+ 	return done;
+ }
 -- 
 2.53.0
 
