@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37AB635AC1E;
-	Sat, 12 Sep 2026 08:26:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B6851F1534;
+	Sat, 12 Sep 2026 08:26:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789201563; cv=none; b=RceVHzKxTdy+SC4+vw2b15h8SogvRqyn+4AP8CU4Px3No/8UOV0TYgbckPPaK7ThcJNPkjfXdsF6iSU1LAMCFrtt0F8ER5JF89MA9/z0ydp9rj074j+Q5oVQLN1whBBNX13nW8Heo2lpvw+wgOplzhpLbMo+SuaLMLFlttylTVQ=
+	t=1789201568; cv=none; b=n6Gakrm+AEfGVLB/MH1gMb63sH3Ec+LUOxipT7Fg8TCRbLXWwZYK5QtjtX0/s1uS8HZqXT9+hNkjnEQXVJnNCWzrsam9w6lSdJskPBJ0gmV05BjYz/9Y74kr6i5V/YijxsGjumlnDx24lQgzR4vs/VJeOOmC02B44OzKBkGufwU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789201563; c=relaxed/simple;
-	bh=163aaLN1ZGIpVBEFw3zKQBVmMwSQl6Z7CyiLqn4jh9E=;
+	s=arc-20240116; t=1789201568; c=relaxed/simple;
+	bh=KGxBo9CEAsirEZIxeVPbG5z23W128bBYsoxBrH9TyKo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=svSLnJmC2BW+FT1j7INkSM7bXnJQ0s3QEzcm3WJm83SRjG1U2JQrU/klU3cKEoDcn5wcb0RIcYI+mw1ai0UaktoHsBWBu/nEH4UfIoc9Vzo9zyQh5iqpQkIRS56e+gv4nII5Bfm4M5X4Xw7r9WNFD6DA7BidYNJ7lz9eidAS9e0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x3vhcdN3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oxL9t9EpqTrYqQAggpep80WjqHqP0XodvjyeHZGi1H0TQc81GzWs3S6N2FUGEtUVEdOJyBkS0/Wpiy9PXQoB4ooShGQb91v+OvupcstiBBqyb3R63dMjSFsb9G0mST71wD57iFVOSrp/or/uZmkm3V/FG89L6diRkeHL8bvpZzs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XMCRmHOm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x3vhcdN3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1333A1F00893;
-	Sat, 12 Sep 2026 08:26:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XMCRmHOm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D64741F000FF;
+	Sat, 12 Sep 2026 08:26:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789201561;
-	bh=vvibOS3LUTh1ap7Ddicp2OiatBgqyJexaJftTxmOP0g=;
+	s=korg; t=1789201567;
+	bh=19fA/b1Y6pC5+C5h/MKxy4tKd+643oc2Gi+SG6LGerg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=x3vhcdN3YhNB0Y0ynpEu82EReaR8WAk7zMeuAdI1pQtKYaxEnGp+tS5uyXZydvyUc
-	 y0bwUpYr9MKk+9aDbYaRaX9xu2WSQB6IZtElqCdpt2r/QoVo4KxF4RKw1KH/ss4uwC
-	 XURCNVnQURRUM4UKmKKA1Z4BZu+3sOEGniIwKT5I=
+	b=XMCRmHOmDi9FsINdBIWZ9WbRRh3nCvzih8rjoo2rV2L2Y8wlxLFZah2M5GYWJKbaj
+	 OJt4/CPVRa7HwcrjhaW1Q1/Hp7s9pY+d5V3569jFTRw7KWBJTJcz1wHdFmMKALqSeM
+	 nMYuNM7H1GeLuJlw0GlsF+OSTerOYwXt/5cTmfyA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	James Clark <james.clark@linaro.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Denis Benato <denis.benato@linux.dev>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1022/1815] perf arm-spe: Reject zero nr_cpu in metadata to prevent division by zero
-Date: Sat, 12 Sep 2026 08:46:12 +0200
-Message-ID: <20260912065713.008098112@linuxfoundation.org>
+Subject: [PATCH 7.2 1005/1815] HID: asus: fix a off-by-one in mcu_parse_version_string() validation
+Date: Sat, 12 Sep 2026 08:45:55 +0200
+Message-ID: <20260912065712.599524439@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -54,46 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Denis Benato <denis.benato@linux.dev>
 
-[ Upstream commit d67241d43b709af4d13051bb8494892b654aba41 ]
+[ Upstream commit 2a767bd3e0b7277718a9a604cbe53e42830f025d ]
 
-arm_spe__alloc_metadata() reads nr_cpu from the auxtrace_info priv
-array without validation.  When a crafted perf.data provides nr_cpu=0,
-the per_cpu_sz calculation divides by zero:
+In mcu_parse_version_string() a size validation for response is stricter
+that it needs to be: relax the check by one byte.
 
-  per_cpu_sz = (metadata_size - (hdr_sz * sizeof(u64))) / (*nr_cpu);
+The device always answer with a greater byte count so this does
+not introduce visible changes.
 
-Reject nr_cpu <= 0 early, before the division.  The caller already
-treats NULL return with metadata_ver != 1 as a parse failure.
-
-Fixes: 7842a4b6ff698 ("perf arm-spe: Support metadata version 2")
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Assisted-by: Claude:claude-opus-4.6
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Reviewed-by: James Clark <james.clark@linaro.org>
-Reviewed-by: Adrian Hunter <adrian.hunter@intel.com>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Fixes: ("hid-asus: check ROG Ally MCU version and warn")
+Signed-off-by: Denis Benato <denis.benato@linux.dev>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/arm-spe.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/hid/hid-asus.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/perf/util/arm-spe.c b/tools/perf/util/arm-spe.c
-index 552f063f126e6..401aab529309c 100644
---- a/tools/perf/util/arm-spe.c
-+++ b/tools/perf/util/arm-spe.c
-@@ -1605,6 +1605,10 @@ static u64 **arm_spe__alloc_metadata(struct perf_record_auxtrace_info *info,
- 	hdr_sz = ptr[ARM_SPE_HEADER_SIZE];
- 	*nr_cpu = ptr[ARM_SPE_CPUS_NUM];
+diff --git a/drivers/hid/hid-asus.c b/drivers/hid/hid-asus.c
+index 00c5bbfd706f3..c22c1021ecc38 100644
+--- a/drivers/hid/hid-asus.c
++++ b/drivers/hid/hid-asus.c
+@@ -841,7 +841,7 @@ static int mcu_parse_version_string(const u8 *response, size_t response_size)
+ 			dots++;
+ 	}
  
-+	/* nr_cpu is used as a divisor below */
-+	if (*nr_cpu <= 0)
-+		return NULL;
-+
- 	metadata = calloc(*nr_cpu, sizeof(*metadata));
- 	if (!metadata)
- 		return NULL;
+-	if (dots != 2 || p >= end || (p + 3) >= end)
++	if (dots != 2 || end - p < 3)
+ 		return -EINVAL;
+ 
+ 	memcpy(buf, p, 3);
 -- 
 2.53.0
 
