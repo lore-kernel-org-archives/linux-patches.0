@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 643F72E92BA;
-	Sat, 12 Sep 2026 19:23:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FC692E92BA;
+	Sat, 12 Sep 2026 19:23:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789241035; cv=none; b=ig+wvOod7JmbrP/yDwRYlU5x4yCgi0aGPkfDVExK6VLPJw2cnggX29AOuhT7lRwdDdHFD78+0y2DBkZxq7lcHrmNxFHB3Hcp4rWGO4v+H3Egeh/uuedkjf8OMnJCyrDqOq9HnimyYk6j3VN+V4Pw5bIyTtwRBRLRAGytWDpzj0M=
+	t=1789241041; cv=none; b=bqU1KOK9/ig/+b0aKX+SUQ5G732e6auW33uXo68nTMMeAmF1EgcxMhibLHcaebbTNRZgC9uSZMayk/Yn6Znihwwq5gmQYHkoJh/UUYPgQhjpklkoMWdhENQkNuTuPMN0+3JHITBHgpV+CJypDN8zZYt+gtZmjiH2hCb09ZgvahM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789241035; c=relaxed/simple;
-	bh=YkP/RqJ6ylIbst0vkCeV+o1JHWF1h3MQW3m1S2l/Wa0=;
+	s=arc-20240116; t=1789241041; c=relaxed/simple;
+	bh=uf0vaOzXSeKUcWak26xiITrsyu3MUpGPixjsJKtcLgo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MH4v9mnvEuwVqTFOzuJw5zuHsWTBY2gV7rcMRhizv+2mZ8uqrdKvUitVdqrfWseFzeguFDK1RZBPn4OQQ4LXwwhd7joeOh9TJZBmDtM8HdTv01XLJrV/+vL1XPpLYBZbKRj4X7QOdzA4jwOApmQwbFvVNGG9Go5bLD5l4iJzumU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fOZaeahx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=BjEgqoth3ZMisbPAT3DA0Gxrv+pUeX+QyrkEjQNt//qa/65VxozA59UEr5fYqueZmKA/KPssEMK6BamM3ZzQRDGU1DLj2GntbPikAgEaWbRZChfYefVF2WpbuSHTjOFKJB49MG5+g3iDFzUomUoDAGv56ulp9zNNsTDNPU5/edw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oJfqbQ8f; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fOZaeahx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2093C1F000FF;
-	Sat, 12 Sep 2026 19:23:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oJfqbQ8f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55BE91F000FF;
+	Sat, 12 Sep 2026 19:23:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789241034;
-	bh=NgS7ME1TSRz0dOKXl4FFlWD8lRiA14j8vLweYxFQRhA=;
+	s=korg; t=1789241039;
+	bh=9IetKuelEXxY8iL2zwaC5PgJlr3vbFDFEXu+Bm8aBa4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fOZaeahxSpevSdwIk59AMb7WAqejKomkGWdb3E7Sg6feU6bCxyedU47Vd9AbxnoG+
-	 AZc+2JpPoaLMDIR2GezM7jXPqcw4Mbfcy0ybM6HKwtTWx77ztzxc+f4SBgYaFFcHGN
-	 3IQLNn0Ue/CpVf9zdtg+Ozupj9YmL3nMkacLupFg=
+	b=oJfqbQ8f+31cd+E4AYnyqEpEb9i3avqC8Sdn1zsP9PH5ahsBcfPjV9gWk3IdyvVmN
+	 /ZXE4H6S4w0iUIccLvgQ3DwSDQVPg7EdcwPc/hBbo/VWwioZ6SxTBy4X3aMRtXug5U
+	 lcKNBsiKzdR4iJz9BwcFLunFfAYpMwR2NmH/YbDs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
-	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 5.10 051/798] ceph: bound xattr value length in __build_xattrs()
-Date: Sat, 12 Sep 2026 08:54:39 +0200
-Message-ID: <20260912065518.132383757@linuxfoundation.org>
+	stable@kernel.org,
+	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
+	Ricardo Robaina <rrobaina@redhat.com>,
+	Paul Moore <paul@paul-moore.com>
+Subject: [PATCH 5.10 052/798] audit: avoid dropping live tree ref on fsnotify rule autoremove
+Date: Sat, 12 Sep 2026 08:54:40 +0200
+Message-ID: <20260912065518.155965352@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -45,63 +46,73 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
 
-commit 68d541754d6cd3bb98d1fd8314f57e5eb533557d upstream.
+commit 783f0f0974c156aca630f4ffff248671082a098d upstream.
 
-__build_xattrs() decodes the MDS-supplied xattr blob one attribute at a
-time. For each attribute it reads a 32-bit name length, advances past the
-name bytes, reads a 32-bit value length, records the value pointer, and
-advances past the value bytes. The two length fields are read with
-ceph_decode_32_safe(), but the value bytes themselves are advanced over
-with a bare "p += len" and no ceph_decode_need() check that "len" bytes
-remain in the blob.
+audit_del_rule() is used for both netlink deletion templates and internal
+fsnotify autoremove.  The former passes a parsed template which owns a
+temporary tree reference; the latter passes the installed entry itself.
 
-For every attribute except the last, the next iteration's
-ceph_decode_32_safe() on the following name length implicitly verifies
-that the previous value did not run past the blob end. The final
-attribute has no successor, so its decoded value length is never checked
-against the blob bounds. A malicious or compromised metadata server can
-set the last attribute's value length larger than the bytes actually
-present in the blob.
+The unconditional audit_put_tree() at the end of audit_del_rule() assumes
+the template case.  For mixed AUDIT_DIR plus AUDIT_EXE rules, an fsnotify
+autoremove event therefore drops the installed rule's live tree reference.
+Repeating this across rules sharing the same tree can free the tree while
+another rule still references it, and a later autoremove dereferences the
+freed pathname while comparing rules.
 
-The blob is a dedicated kvmalloc() allocation sized to the wire length
-(ceph_buffer_new() in ceph_fill_inode()). __set_xattr() records the
-oversized length in xattr->val_len verbatim, and a later getxattr(2) runs
-memcpy(value, xattr->val, xattr->val_len) into a user-supplied buffer,
-copying bytes past the end of the allocation back to user space.
+Move the temporary-tree put to audit_rule_change(), the caller that owns
+deletion templates.  Keep it in the AUDIT_DEL_RULE cleanup so both
+successful deletion and -ENOENT still release the parser-owned tree.
 
-Impact: a malicious metadata server discloses adjacent kernel heap bytes
-to a local user via getxattr(2) on a CephFS file. Add the missing
-ceph_decode_need() so an out-of-bounds value length on the final
-attribute fails the decode and returns -EIO instead of being stored.
-
-Cc: stable@vger.kernel.org
-Fixes: 355da1eb7a1f ("ceph: inode operations")
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Cc: stable@kernel.org
+Fixes: 34d99af52ad4 ("audit: implement audit by executable")
+Assisted-by: Codex:gpt-5
+Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+Reviewed-by: Ricardo Robaina <rrobaina@redhat.com>
+Tested-by: Ricardo Robaina <rrobaina@redhat.com>
+[PM: dropped unnecessary comment for line length reasons]
+Signed-off-by: Paul Moore <paul@paul-moore.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ceph/xattr.c |    1 +
- 1 file changed, 1 insertion(+)
+ kernel/auditfilter.c |    6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
---- a/fs/ceph/xattr.c
-+++ b/fs/ceph/xattr.c
-@@ -715,6 +715,7 @@ start:
- 			name = p;
- 			p += len;
- 			ceph_decode_32_safe(&p, end, len, bad);
-+			ceph_decode_need(&p, end, len, bad);
- 			val = p;
- 			p += len;
+--- a/kernel/auditfilter.c
++++ b/kernel/auditfilter.c
+@@ -1015,7 +1015,6 @@ static inline int audit_add_rule(struct
+ int audit_del_rule(struct audit_entry *entry)
+ {
+ 	struct audit_entry  *e;
+-	struct audit_tree *tree = entry->rule.tree;
+ 	struct list_head *list;
+ 	int ret = 0;
+ #ifdef CONFIG_AUDITSYSCALL
+@@ -1063,9 +1062,6 @@ int audit_del_rule(struct audit_entry *e
+ out:
+ 	mutex_unlock(&audit_filter_mutex);
  
+-	if (tree)
+-		audit_put_tree(tree);	/* that's the temporary one */
+-
+ 	return ret;
+ }
+ 
+@@ -1150,6 +1146,8 @@ int audit_rule_change(int type, int seq,
+ 	}
+ 
+ 	if (err || type == AUDIT_DEL_RULE) {
++		if (type == AUDIT_DEL_RULE && entry->rule.tree)
++			audit_put_tree(entry->rule.tree);
+ 		if (entry->rule.exe)
+ 			audit_remove_mark(entry->rule.exe);
+ 		audit_free_rule(entry);
 
 
