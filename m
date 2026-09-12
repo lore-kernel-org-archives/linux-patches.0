@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5A1237E5D1;
-	Sat, 12 Sep 2026 12:39:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3AD9429000;
+	Sat, 12 Sep 2026 12:39:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789216750; cv=none; b=KTM1JAG4skAOUbFIlKR2xHvrs6pTw07ATIYsM/hLlYc4DDrlRVXPXZuL/6Tw9V942nYztqmnh7DwB+9QR5Olyx7El4uaWmyb7JsEhq6+nMttCGK7CpcGLrZmHB0sCJ94+AfWjkTx+n3oOrFd9oYIIl1g8+ZnUzdXmfJfh+hHDUs=
+	t=1789216756; cv=none; b=hIWnaLEhz8rfheFfYmzRtOmZ3vfQ5Pyw1wujwhkwuBlX0nxW8pfljrq1w/L+ewZLJYdO+1itiQeA1Zy4zzg7gOsUMBzZFn3d1L8ZjMhz6YiUm8JQsjPMado41AplkDpjRtn1SrAhUX8w1Fm9Dd/ZoLtXRKgxji4FlbHQbG+VBc0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789216750; c=relaxed/simple;
-	bh=eoQuDJWslsswwTs0r5MBMcb9upExMXOgJ+CjZ02FLSs=;
+	s=arc-20240116; t=1789216756; c=relaxed/simple;
+	bh=0GWnhWJQ71FmTYUL3SYZ6BdvuvRTcM1861JNvCzeDhQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ih/TLGziEuSd1NDolEV4wnQGdbjA+9AaMt0m+tNnxCmwrw1GzaT28t73w9PmXu/ily4Mrv5F36zbIV4JPXbEq9uIcWBhjynvXETQFeBcwp9KaJtzW+WpEj2wWuQcawcFBJswpqdKIZFvWWVsm3hTzwO5Uk7NS/v+/It1lMrI+gA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZfDVxJCJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=F/DcB99FXgPCRsCj7bDLI+pUu7qpjQ1gD3HlEpc4PsR9LUafZpAaQ5zWrbZDcKrPASTLc0zqN1E5v3fV6RE521djFXvlABW+H//PO+nLmO+WnhclAoMrVUKYNIT71jJupsM3vB8IBpaO/7WUA/D5PhQQJo+ENOXUfidEz15M+9A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H9wKjP6G; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZfDVxJCJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2DFA1F000FF;
-	Sat, 12 Sep 2026 12:39:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H9wKjP6G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B55E51F000FF;
+	Sat, 12 Sep 2026 12:39:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789216749;
-	bh=AARH1yJp/YjkdaU8y9PkkKleW9kYzKbePZF/t1FMt0g=;
+	s=korg; t=1789216754;
+	bh=kgVklsgsmBWaXerrdNRk3z1OX+kv3CNgG4g8DAqGOAY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZfDVxJCJ8fn2O6HBA90brdXgbXk5sF7X2Wgki1J27Gh9z8ipSj4VtKhmKx7gvPAI6
-	 2m/ywHzzvRTF+CtnHYz7Z5QhdhY/jJh628YFq+A0s5X6FufELlxQsJs8CN23PyNZfz
-	 DFyO5es8VH939U0DhVd3pTjiXP5YYr6x6d2gt46k=
+	b=H9wKjP6GmvLiRRfsHdfV2qHZnzXRkbIofoZT+y/yOBCove63yxmetbSAzw7Sh18Y4
+	 smcGnv0MtEKEOs5tzqkksz6Y5ECfr6KETZziVqrPaG2IOCrgOd9aFd+3+CAoOYwRMn
+	 p2LEgk4rY4g27fwLo4Y4PiZU+rhGOX7TrTd5xvBI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Larsson <benjamin.larsson@genexis.eu>,
-	Zhi-Jun You <hujy652@gmail.com>,
+	Stella Liu <yu-ching.liu@mediatek.com>,
+	Jeremy Yu <chengwei.yu@mediatek.com>,
+	Sean Wang <sean.wang@mediatek.com>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0801/1376] wifi: mt76: mt7915: fix net_fill_forward_path for non-DBDC mt7986
-Date: Sat, 12 Sep 2026 08:53:47 +0200
-Message-ID: <20260912065625.386497639@linuxfoundation.org>
+Subject: [PATCH 6.12 0802/1376] wifi: mt76: add init_wiphy callback
+Date: Sat, 12 Sep 2026 08:53:48 +0200
+Message-ID: <20260912065625.408238993@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -52,79 +53,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhi-Jun You <hujy652@gmail.com>
+From: Sean Wang <sean.wang@mediatek.com>
 
-[ Upstream commit bade0d238b60c29dafcc7da17501fa489495d6ae ]
+[ Upstream commit 4ee3d2a5f2cd5b6d0ba0d997913c1b763ef4d5c5 ]
 
-Current implementation assumes that the hardware supports DBDC or single
-band and binds to band0.
+Add an optional callback for drivers to finalize wiphy state after mt76
+has initialized the supported bands and before registration.
 
-This causes net_fill_forward_path to select the wrong queue for non-DBDC
-mt7986 because it binds to band1 and getting the following in dmesg:
-
-ieee80211 phy2: WA: --> drop by reaseon:1, msdu id = 0xc002 but failed!
-mtk_wed1: error status=00000002
-ieee80211 phy2: WA: txblk
-10324e00
-len = 128
-DW0 : 10 00 00 00
-DW1 : 00 00 00 00
-DW2 : 00 00 00 00
-DW3 : 72 0f 94 68
-DW4 : 00 00 00 00
-DW5 : ff 03 00 00
-DW6 : 00 00 3c 40
-DW7 : 00 17 dd 14
-DW8 : 79 6f 00 00
-DW9 : 02 c0 00 00
-DW10 : 58 c5 34 10
-DW11 : 00 00 00 00
-DW12 : 00 06 3e 00
-DW13 : 00 00 00 80
-DW14 : 10 8c 00 00
-DW15 : 00 00 00 00
-DW16 : 00 00 00 00
-DW17 : 00 00 00 00
-DW18 : 00 00 00 00
-DW19 : 00 00 00 00
-DW20 : 00 00 00 00
-DW21 : 00 00 00 00
-DW22 : 00 00 00 00
-DW23 : 00 00 00 00
-DW24 : 00 00 00 00
-DW25 : 00 00 00 00
-DW26 : 00 00 00 00
-DW27 : 00 00 00 00
-DW28 : 00 00 00 00
-DW29 : 00 00 00 00
-DW30 : 00 00 00 00
-DW31 : 00 00 00 00
-
-Fix it by using phy->mt76->band_idx for queue which works for both
-non-DBDC and DBDC devices.
-
-Fixes: f68d67623dec ("mt76: mt7915: add Wireless Ethernet Dispatch support")
-Suggested-by: Benjamin Larsson <benjamin.larsson@genexis.eu>
-Signed-off-by: Zhi-Jun You <hujy652@gmail.com>
-Link: https://patch.msgid.link/20260715152113.553-2-hujy652@gmail.com
+Co-developed-by: Stella Liu <yu-ching.liu@mediatek.com>
+Signed-off-by: Stella Liu <yu-ching.liu@mediatek.com>
+Co-developed-by: Jeremy Yu <chengwei.yu@mediatek.com>
+Signed-off-by: Jeremy Yu <chengwei.yu@mediatek.com>
+Signed-off-by: Sean Wang <sean.wang@mediatek.com>
+Link: https://patch.msgid.link/20260625001834.475094-7-sean.wang@kernel.org
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Stable-dep-of: 217f9e7bb025 ("wifi: mt76: mt792x: fix use-after-free in mt76_rx_poll_complete")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7915/main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/mediatek/mt76/mac80211.c | 7 +++++++
+ drivers/net/wireless/mediatek/mt76/mt76.h     | 3 +++
+ 2 files changed, 10 insertions(+)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/main.c b/drivers/net/wireless/mediatek/mt76/mt7915/main.c
-index f49dcdde3f2c6..9b0fde73b8945 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7915/main.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7915/main.c
-@@ -1676,7 +1676,7 @@ mt7915_net_fill_forward_path(struct ieee80211_hw *hw,
- 	path->mtk_wdma.wdma_idx = wed->wdma_idx;
- 	path->mtk_wdma.bss = mvif->mt76.idx;
- 	path->mtk_wdma.wcid = is_mt7915(&dev->mt76) ? msta->wcid.idx : 0x3ff;
--	path->mtk_wdma.queue = phy != &dev->phy;
-+	path->mtk_wdma.queue = phy->mt76->band_idx;
+diff --git a/drivers/net/wireless/mediatek/mt76/mac80211.c b/drivers/net/wireless/mediatek/mt76/mac80211.c
+index e538bb36a7309..e1856664ca5d1 100644
+--- a/drivers/net/wireless/mediatek/mt76/mac80211.c
++++ b/drivers/net/wireless/mediatek/mt76/mac80211.c
+@@ -644,6 +644,7 @@ mt76_alloc_device(struct device *pdev, unsigned int size,
+ 	dev = hw->priv;
+ 	dev->hw = hw;
+ 	dev->dev = pdev;
++	dev->init_wiphy = NULL;
+ 	dev->drv = drv_ops;
+ 	dev->dma_dev = pdev;
  
- 	ctx->dev = NULL;
+@@ -740,6 +741,12 @@ int mt76_register_device(struct mt76_dev *dev, bool vht,
+ 	mt76_check_sband(&dev->phy, &phy->sband_5g, NL80211_BAND_5GHZ);
+ 	mt76_check_sband(&dev->phy, &phy->sband_6g, NL80211_BAND_6GHZ);
+ 
++	if (dev->init_wiphy) {
++		ret = dev->init_wiphy(dev);
++		if (ret)
++			return ret;
++	}
++
+ 	if (IS_ENABLED(CONFIG_MT76_LEDS)) {
+ 		ret = mt76_led_init(phy);
+ 		if (ret)
+diff --git a/drivers/net/wireless/mediatek/mt76/mt76.h b/drivers/net/wireless/mediatek/mt76/mt76.h
+index e7ebae0584f55..daa78f52c15ea 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt76.h
++++ b/drivers/net/wireless/mediatek/mt76/mt76.h
+@@ -845,6 +845,9 @@ struct mt76_dev {
+ 	const struct mt76_bus_ops *bus;
+ 	const struct mt76_driver_ops *drv;
+ 	const struct mt76_mcu_ops *mcu_ops;
++
++	/* Optional callback to finalize wiphy state before registration. */
++	int (*init_wiphy)(struct mt76_dev *dev);
+ 	struct device *dev;
+ 	struct device *dma_dev;
  
 -- 
 2.53.0
