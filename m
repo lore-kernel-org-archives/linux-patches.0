@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF57428B4FA;
-	Sat, 12 Sep 2026 07:53:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3E72235358;
+	Sat, 12 Sep 2026 07:53:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789199606; cv=none; b=VAIdYmXUqNi7iMAalWwJBaE6Zzy4iVrpmOq2pz+/s1Efli4OC9/8djXP92asH6wiWsXxPmS/yjzy9EXbfzN9SVjAPf/Ec4Qfn8gsWUGS8E06t5Qxrmcyr2BGoYg7rz917JXqHkEKvzHGnnhKY0eSYDHlRJ4qNhljhTM1kiPKjTs=
+	t=1789199611; cv=none; b=cGdajE7Kp7AT+TgVZpSetYTsWMNAq2b1lEaYElT4Vt/lECaLXzk1Rb7obNyPuVhLKAs98LQ0w64KpcNwaqOxuZD4W4oa+JepQDt2UR/Ndjp/diM19y31N0qVGMek2Ko/5pUTA+duWvt9ZL/hQn0gsG1vKr4TQqIHG4sUlYyhrYk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789199606; c=relaxed/simple;
-	bh=DbtUwuq5TWMKzWoW75qAwFf3GCEP23q0SEfviBvexGA=;
+	s=arc-20240116; t=1789199611; c=relaxed/simple;
+	bh=CgB6B4DmXasrpSQEMKwapJ+E4K3+gT2gaj+dJj9aeE4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V/wB7QjDZqk7MlfH2EUInY43EzgTbi6LpT40aELy2QB4c+WGKUVR7IUmrdJU8S68ojB1+vv5EkguDcpQnaqpzOxu8U406GQFB0i0W5ydvgpo97BJtgbqwXxcoE5ZVS7wMOGo34JDdhJopA0mI7dGZ0YifwWyVkAAIaVBgGtf8wA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NAF0xAxP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=R08UdU7yORHESdHPZs1lLAMXjcq9M7qez8Fpd4gmA973pbb+6DdIFbo/KBk2d75cK4fX65sBH0hGChJQgoh01L6e1ROlk+mhiCkq0rOWTLLlXpsY1tgQdJ8G4knAad7z9CY0sQtXnw1FYWinzwt1mSsAdAGEM5u61gWz0oBhz7Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s/7cpY8h; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NAF0xAxP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D681A1F000FF;
-	Sat, 12 Sep 2026 07:53:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s/7cpY8h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C612F1F000FF;
+	Sat, 12 Sep 2026 07:53:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789199604;
-	bh=7kYOnHmM+V/skhX07dGfXXEh2iRB/zAbW8LlexrxZqA=;
+	s=korg; t=1789199609;
+	bh=VeAFwHxY2AMSGinv1I+j67YIp3zUyWhoIJ0erLPkVBc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NAF0xAxPSUPFg8qbhpENEYHa21B5k7h0uasNOVGzm2VRueDfw24sFs3NUw+J7r8of
-	 4dbY02zUVx5QGaZLKn4Eg0/BSFb13UaKTZIjwzzZrdLsojyC5kj5sRRVHiVSNt4Jaa
-	 9jcmGgSTEysuagVdIiCywc0R9iXYTlxNAWqAmOzY=
+	b=s/7cpY8h67txSXtXX0iw7L59Q54Yi4L5bM8s/TGRtLTuPj/Q4uUl3pAvhg28BhxPh
+	 otv4PF514L1nDpQ2AgrfCpv4Tz31oYBxk9fOtHKa95UZXFAh/ead+LlVcjox6jQycy
+	 qxon9ym5fKgyf7MtOgEB7KD9DPm0Fo/WXHzm52k0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	EDAMAMEX <edame8080@gmail.com>,
-	Mario Limonciello <superm1@kernel.org>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Sudeep Holla <sudeep.holla@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0619/1815] cpufreq/amd-pstate: handle missing policy in dynamic EPP callbacks
-Date: Sat, 12 Sep 2026 08:39:29 +0200
-Message-ID: <20260912065703.411994837@linuxfoundation.org>
+Subject: [PATCH 7.2 0620/1815] firmware: arm_scmi: Roll back partial protocol table registration
+Date: Sat, 12 Sep 2026 08:39:30 +0200
+Message-ID: <20260912065703.435556433@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,61 +51,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: EDAMAMEX <edame8080@gmail.com>
+From: Sudeep Holla <sudeep.holla@kernel.org>
 
-[ Upstream commit 39c0cf62fc7851a17782e7efe8dfb2948739c681 ]
+[ Upstream commit 2224b622260ba590ab56ea1585d6bf7610be25b2 ]
 
-cpufreq_cpu_get() returns NULL when no cpufreq policy is associated with
-the requested CPU, for example because the CPU is offline or the policy
-has already been torn down.  Both amd_pstate_power_supply_notifier() and
-amd_pstate_profile_set() acquire a policy via cpufreq_cpu_get() and then
-pass that pointer to amd_pstate_get_balanced_epp() and
-amd_pstate_set_epp(), which dereference it unconditionally.  A racing
-CPU hotplug or driver teardown can therefore lead to a NULL pointer
-dereference on either of these dynamic EPP paths.
+scmi_protocol_table_register() can leave earlier requests registered when
+a later entry in the same ID table fails. Each request retains a pointer
+to the driver's ID table, so a failed module load can leave a dangling
+pointer after the module storage is released.
 
-The third cpufreq_cpu_get() caller in this file, amd_pstate_verify(),
-already handles the NULL case.  Bring the two new callers in line with
-that pattern: return NOTIFY_OK from the power-supply notifier (matching
-the other "nothing to do" exits) and -ENODEV from amd_pstate_profile_set()
-(the usual cpufreq error for a missing CPU policy).
+Unrequest only the successfully registered prefix, in reverse order,
+before returning the failure. Leave the failed entry and the remaining
+entries untouched because matching requests can be owned by another
+driver.
 
-Found by code inspection; not tested on hardware.
-
-Fixes: e30ca6dd5345 ("cpufreq/amd-pstate: Add dynamic energy performance preference")
-Fixes: 798c47593cca ("cpufreq/amd-pstate: Add support for platform profile class")
-Signed-off-by: EDAMAMEX <edame8080@gmail.com>
-Link: https://lore.kernel.org/r/20260520070211.2753183-1-edame8080@gmail.com
-Signed-off-by: Mario Limonciello <superm1@kernel.org>
+Fixes: 2858f6e5f064 ("firmware: arm_scmi: Add multiple protocols registration support")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Link: https://patch.msgid.link/20260722173521.2184378-1-sudeep.holla@kernel.org
+Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/amd-pstate.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/firmware/arm_scmi/bus.c | 31 ++++++++++++++++++++-----------
+ 1 file changed, 20 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/cpufreq/amd-pstate.c b/drivers/cpufreq/amd-pstate.c
-index 3c2995686a504..31b320f329290 100644
---- a/drivers/cpufreq/amd-pstate.c
-+++ b/drivers/cpufreq/amd-pstate.c
-@@ -1170,6 +1170,9 @@ static int amd_pstate_power_supply_notifier(struct notifier_block *nb,
- 	if (cpudata->current_profile != PLATFORM_PROFILE_BALANCED)
- 		return 0;
+diff --git a/drivers/firmware/arm_scmi/bus.c b/drivers/firmware/arm_scmi/bus.c
+index cdaea09d96114..d520910eb2515 100644
+--- a/drivers/firmware/arm_scmi/bus.c
++++ b/drivers/firmware/arm_scmi/bus.c
+@@ -135,17 +135,6 @@ static int scmi_protocol_device_request(const struct scmi_device_id *id_table)
+ 	return ret;
+ }
  
-+	if (!policy)
-+		return NOTIFY_OK;
+-static int scmi_protocol_table_register(const struct scmi_device_id *id_table)
+-{
+-	int ret = 0;
+-	const struct scmi_device_id *entry;
+-
+-	for (entry = id_table; entry->name && ret == 0; entry++)
+-		ret = scmi_protocol_device_request(entry);
+-
+-	return ret;
+-}
+-
+ /**
+  * scmi_protocol_device_unrequest  - Helper to unrequest a device
+  *
+@@ -191,6 +180,26 @@ static void scmi_protocol_device_unrequest(const struct scmi_device_id *id_table
+ 	}
+ }
+ 
++static int scmi_protocol_table_register(const struct scmi_device_id *id_table)
++{
++	const struct scmi_device_id *entry;
++	int ret;
 +
- 	epp = amd_pstate_get_balanced_epp(policy);
- 
- 	ret = amd_pstate_set_epp(policy, epp);
-@@ -1205,6 +1208,9 @@ static int amd_pstate_profile_set(struct device *dev,
- 	struct cpufreq_policy *policy __free(put_cpufreq_policy) = cpufreq_cpu_get(cpudata->cpu);
- 	int ret;
- 
-+	if (!policy)
-+		return -ENODEV;
++	for (entry = id_table; entry->name; entry++) {
++		ret = scmi_protocol_device_request(entry);
++		if (ret)
++			goto err_unrequest;
++	}
 +
- 	switch (profile) {
- 	case PLATFORM_PROFILE_LOW_POWER:
- 		ret = amd_pstate_set_epp(policy, AMD_CPPC_EPP_POWERSAVE);
++	return 0;
++
++err_unrequest:
++	while (entry != id_table)
++		scmi_protocol_device_unrequest(--entry);
++
++	return ret;
++}
++
+ static void
+ scmi_protocol_table_unregister(const struct scmi_device_id *id_table)
+ {
 -- 
 2.53.0
 
