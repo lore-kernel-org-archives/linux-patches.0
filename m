@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6582437C0FF;
-	Sat, 12 Sep 2026 19:35:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC8A1386C12;
+	Sat, 12 Sep 2026 19:36:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789241758; cv=none; b=eTgCuxzznNExWRVMP9AQYC+3B/LrG6oRi1rmZkTbg2butjw9IbUul+2cLEtwndQaeaN4f8R+QvKIIXNLKEN0bOjL/YxSLy0YfIybH/kh7EALIr+0/+4Q5OAJjuHbt0BqMhCce7Sq8t4kolFiKkrDRaLq9W01Iq+9RBDXeGOp9wM=
+	t=1789241763; cv=none; b=L2oTxlGp4Oin9oP6irqfKPcW6GUrBRZYv71zYKNBOwyXefOiEvaCB8JAn/Fa78lYI+fifin/MBauINHrnQJ7doY/Nc6HvQK3T94CX+cehf4cxBc48U7zO0X6gs9MlkBBDHSoMpIKcWBVbKbI8a+Yd/Oq5CjGXIw0Wg6yOwSjx34=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789241758; c=relaxed/simple;
-	bh=oeSgYFgomMAPKwEsuEw9IkCVR1P34HWghXqCZ9o485U=;
+	s=arc-20240116; t=1789241763; c=relaxed/simple;
+	bh=SjPwF5imKQq3Q0kFkEBUjW0C/Sk+FSHfb3KAdqYmsHk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RPA1ou05APO6rmFFy5hbcgYjh4+gS7pBcfnYv1+UcEvWnRo61k/9AMmriYMfT10hkJHR1xe4+2KQvDI+1vR3wDf1B9j+oEN63Jojwh4Aa1tRP8IWqYkMkVfpftzFsYhGAItv+HJTJwaYJW+lOgt8j9cDYuh9Qwu4R+abEj8LR7k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=smS2Bq51; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UGzdpE383gYqcKysWit2Sw/+GsfrreMfmZ1f5DDWZOBo2P4GuooPEaJtdthYPqix67NU74Y9jRgZy/WsctefNFIjXN1R8fXLJT5uPvm4ar77wa5N01Zv0cg70m7OO8yebyQztg0x+CBdp5hWqCspiJlg2BdcgkKtojWfz1ej9ms=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eJHC1R2R; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="smS2Bq51"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5C0A1F000FF;
-	Sat, 12 Sep 2026 19:35:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eJHC1R2R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0EEE1F000FF;
+	Sat, 12 Sep 2026 19:35:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789241755;
-	bh=9Nbm9xTQTyNwnko2RTY8wJdsPdNcs5MBGNrVi4XTi3A=;
+	s=korg; t=1789241760;
+	bh=+JZoCnOJkb426NLkeeSIMg3/iMw7eqGf7aojQ3FiAWI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=smS2Bq512so09aVlzDPp//VBvzAZdNQiCuHW4epOh0qYWz7jsoJC9Cs+keROEIsFq
-	 UV5O4aGg+yNtgjQSaBjBEdDzE6300ZuMCGoLgLVqHcYMmY5bXICy2m37x+H4B+zgHW
-	 6Da5n5rU1cLJDmlKrhXjDyqVw4vP7jUQxpUs/gdQ=
+	b=eJHC1R2R83LzZf0ifZ3csl3n23gFuZMFAvZQwGdYXp9kXgPZrudM0L7ZEkAfLQs48
+	 TLZ343ePYfXhNATd26WxgGgpnBWVrdis4XoucNjqYNcmq3USG/t6zdI/4kbvTpR4I3
+	 6X3bNmRedF44/WjFRY44BYIBwwYYGyU1QzXSe7U4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilya Maximets <i.maximets@ovn.org>,
-	Eelco Chaudron <echaudro@redhat.com>,
-	Aaron Conole <aconole@redhat.com>,
+	syzbot+937b5bbb6a815b3e5d0b@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 194/798] net: openvswitch: fix kernel-doc warnings in internal headers
-Date: Sat, 12 Sep 2026 08:57:02 +0200
-Message-ID: <20260912065521.509617748@linuxfoundation.org>
+Subject: [PATCH 5.10 203/798] tcp: fix potential race in tcp_v6_syn_recv_sock()
+Date: Sat, 12 Sep 2026 08:57:11 +0200
+Message-ID: <20260912065521.740138775@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -53,148 +54,373 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilya Maximets <i.maximets@ovn.org>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 6bb0dcb3d321c14be7ca33b71a149034d6a2cde8 ]
+[ Upstream commit 858d2a4f67ff69e645a43487ef7ea7f28f06deae ]
 
-Some field descriptions were missing, some were not very accurate.
-Not touching the uAPI header or .c files for now.
+Code in tcp_v6_syn_recv_sock() after the call to tcp_v4_syn_recv_sock()
+is done too late.
 
-Formatting of those comments isn't great in general, but at least
-they are not missing anything now.
+After tcp_v4_syn_recv_sock(), the child socket is already visible
+from TCP ehash table and other cpus might use it.
 
-Before:
-  $ ./scripts/kernel-doc -none -Wall net/openvswitch/*.h 2>&1 | wc -l
-  16
+Since newinet->pinet6 is still pointing to the listener ipv6_pinfo
+bad things can happen as syzbot found.
 
-After:
-  $ ./scripts/kernel-doc -none -Wall net/openvswitch/*.h 2>&1 | wc -l
-  0
+Move the problematic code in tcp_v6_mapped_child_init()
+and call this new helper from tcp_v4_syn_recv_sock() before
+the ehash insertion.
 
-Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
-Acked-by: Eelco Chaudron <echaudro@redhat.com>
-Reviewed-by: Aaron Conole <aconole@redhat.com>
-Link: https://patch.msgid.link/20250320224431.252489-1-i.maximets@ovn.org
+This allows the removal of one tcp_sync_mss(), since
+tcp_v4_syn_recv_sock() will call it with the correct
+context.
+
+[florian:
+ - net/ipv6/tcp_ipv6.c:
+   - Set `newnp->ipv6_fl_list = NULL` instead of `newinet->ipv6_fl_list = NULL`,
+     as `ipv6_fl_list` is in `struct ipv6_pinfo`.
+   - Guarded `af_specific` assignment with `#ifdef CONFIG_TCP_MD5SIG` instead
+     of checking `CONFIG_TCP_AO`.
+   - Used `if (tcp_inet6_sk(sk)->repflow)` instead of `inet6_test_bit(REPFLOW, sk)`.
+ - net/smc/af_smc.c:
+   - Dropped changes to net/smc/af_smc.c because SMC did not implement
+     `smc_tcp_syn_recv_sock()` in 5.10.y (added in 5.14 via commit e94a869818ab).
+ - net/dccp/:
+   - Updated `syn_recv_sock` implementations and call sites for DCCP, which was
+     removed in upstream kernels prior to this commit.]
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzbot+937b5bbb6a815b3e5d0b@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/69949275.050a0220.2eeac1.0145.GAE@google.com/
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20260217161205.2079883-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ struct vport_upcall_stats_percpu doesn't exist in 6.2 and earlier
-  struct datapath doesn't have @upcall_portids in 5.14 and earlier ]
-Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
+Assisted-by: Cursor:gemini-3.7-flash
+Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/openvswitch/datapath.h | 20 ++++++++++++++------
- net/openvswitch/vport.h    |  8 ++++++++
- 2 files changed, 22 insertions(+), 6 deletions(-)
+ include/net/inet_connection_sock.h |  4 +-
+ include/net/tcp.h                  |  4 +-
+ net/dccp/dccp.h                    |  4 +-
+ net/dccp/ipv4.c                    |  4 +-
+ net/dccp/ipv6.c                    |  7 ++-
+ net/dccp/minisocks.c               |  2 +-
+ net/ipv4/syncookies.c              |  2 +-
+ net/ipv4/tcp_fastopen.c            |  2 +-
+ net/ipv4/tcp_ipv4.c                |  8 ++-
+ net/ipv4/tcp_minisocks.c           |  2 +-
+ net/ipv6/tcp_ipv6.c                | 98 +++++++++++++-----------------
+ net/mptcp/subflow.c                |  6 +-
+ 12 files changed, 74 insertions(+), 69 deletions(-)
 
-diff --git a/net/openvswitch/datapath.h b/net/openvswitch/datapath.h
-index 62e7ad32f8376..26f310f807083 100644
---- a/net/openvswitch/datapath.h
-+++ b/net/openvswitch/datapath.h
-@@ -29,8 +29,8 @@
-  * datapath.
-  * @n_hit: Number of received packets for which a matching flow was found in
-  * the flow table.
-- * @n_miss: Number of received packets that had no matching flow in the flow
-- * table.  The sum of @n_hit and @n_miss is the number of packets that have
-+ * @n_missed: Number of received packets that had no matching flow in the flow
-+ * table.  The sum of @n_hit and @n_missed is the number of packets that have
-  * been received by the datapath.
-  * @n_lost: Number of received packets that had no matching flow in the flow
-  * table that could not be sent to userspace (normally due to an overflow in
-@@ -40,6 +40,7 @@
-  *   up per packet.
-  * @n_cache_hit: The number of received packets that had their mask found using
-  * the mask cache.
-+ * @syncp: Synchronization point for 64bit counters.
-  */
- struct dp_stats_percpu {
- 	u64 n_hit;
-@@ -59,8 +60,10 @@ struct dp_stats_percpu {
-  * ovs_mutex and RCU.
-  * @stats_percpu: Per-CPU datapath statistics.
-  * @net: Reference to net namespace.
-- * @max_headroom: the maximum headroom of all vports in this datapath; it will
-+ * @user_features: Bitmap of enabled %OVS_DP_F_* features.
-+ * @max_headroom: The maximum headroom of all vports in this datapath; it will
-  * be used by all the internal vports in this dp.
-+ * @meter_tbl: Meter table.
-  *
-  * Context: See the comment on locking at the top of datapath.c for additional
-  * locking information.
-@@ -107,10 +110,13 @@ struct ovs_skb_cb {
- #define OVS_CB(skb) ((struct ovs_skb_cb *)(skb)->cb)
+diff --git a/include/net/inet_connection_sock.h b/include/net/inet_connection_sock.h
+index cfb66f5a50766..ba99da8eedb75 100644
+--- a/include/net/inet_connection_sock.h
++++ b/include/net/inet_connection_sock.h
+@@ -41,7 +41,9 @@ struct inet_connection_sock_af_ops {
+ 				      struct request_sock *req,
+ 				      struct dst_entry *dst,
+ 				      struct request_sock *req_unhash,
+-				      bool *own_req);
++				      bool *own_req,
++				      void (*opt_child_init)(struct sock *newsk,
++							     const struct sock *sk));
+ 	u16	    net_header_len;
+ 	u16	    net_frag_header_len;
+ 	u16	    sockaddr_len;
+diff --git a/include/net/tcp.h b/include/net/tcp.h
+index 4c87936a33d6d..5488e66ee69ab 100644
+--- a/include/net/tcp.h
++++ b/include/net/tcp.h
+@@ -438,7 +438,9 @@ struct sock *tcp_v4_syn_recv_sock(const struct sock *sk, struct sk_buff *skb,
+ 				  struct request_sock *req,
+ 				  struct dst_entry *dst,
+ 				  struct request_sock *req_unhash,
+-				  bool *own_req);
++				  bool *own_req,
++				  void (*opt_child_init)(struct sock *newsk,
++							 const struct sock *sk));
+ int tcp_v4_do_rcv(struct sock *sk, struct sk_buff *skb);
+ int tcp_v4_connect(struct sock *sk, struct sockaddr *uaddr, int addr_len);
+ int tcp_connect(struct sock *sk);
+diff --git a/net/dccp/dccp.h b/net/dccp/dccp.h
+index 0218eb169891c..f9744455113f4 100644
+--- a/net/dccp/dccp.h
++++ b/net/dccp/dccp.h
+@@ -272,7 +272,9 @@ struct sock *dccp_v4_request_recv_sock(const struct sock *sk, struct sk_buff *sk
+ 				       struct request_sock *req,
+ 				       struct dst_entry *dst,
+ 				       struct request_sock *req_unhash,
+-				       bool *own_req);
++				       bool *own_req,
++				       void (*opt_child_init)(struct sock *newsk,
++							      const struct sock *sk));
+ struct sock *dccp_check_req(struct sock *sk, struct sk_buff *skb,
+ 			    struct request_sock *req);
  
- /**
-- * struct dp_upcall - metadata to include with a packet to send to userspace
-+ * struct dp_upcall_info - metadata to include with a packet sent to userspace
-  * @cmd: One of %OVS_PACKET_CMD_*.
-  * @userdata: If nonnull, its variable-length value is passed to userspace as
-  * %OVS_PACKET_ATTR_USERDATA.
-+ * @actions: If nonnull, its variable-length value is passed to userspace as
-+ * %OVS_PACKET_ATTR_ACTIONS.
-+ * @actions_len: The length of the @actions.
-  * @portid: Netlink portid to which packet should be sent.  If @portid is 0
-  * then no packet is sent and the packet is accounted in the datapath's @n_lost
-  * counter.
-@@ -131,6 +137,10 @@ struct dp_upcall_info {
-  * struct ovs_net - Per net-namespace data for ovs.
-  * @dps: List of datapaths to enable dumping them all out.
-  * Protected by genl_mutex.
-+ * @dp_notify_work: A work notifier to handle port unregistering.
-+ * @masks_rebalance: A work to periodically optimize flow table caches.
-+ * @ct_limit_info: A hash table of conntrack zone connection limits.
-+ * @xt_label: Whether connlables are configured for the network or not.
-  */
- struct ovs_net {
- 	struct list_head dps;
-@@ -139,8 +149,6 @@ struct ovs_net {
- #if	IS_ENABLED(CONFIG_NETFILTER_CONNCOUNT)
- 	struct ovs_ct_limit_info *ct_limit_info;
+diff --git a/net/dccp/ipv4.c b/net/dccp/ipv4.c
+index 2c7c1bdd39e14..7fa905cf19bd0 100644
+--- a/net/dccp/ipv4.c
++++ b/net/dccp/ipv4.c
+@@ -397,7 +397,9 @@ struct sock *dccp_v4_request_recv_sock(const struct sock *sk,
+ 				       struct request_sock *req,
+ 				       struct dst_entry *dst,
+ 				       struct request_sock *req_unhash,
+-				       bool *own_req)
++				       bool *own_req,
++				       void (*opt_child_init)(struct sock *newsk,
++							      const struct sock *sk))
+ {
+ 	struct inet_request_sock *ireq;
+ 	struct inet_sock *newinet;
+diff --git a/net/dccp/ipv6.c b/net/dccp/ipv6.c
+index aa311ab960b68..7255794491247 100644
+--- a/net/dccp/ipv6.c
++++ b/net/dccp/ipv6.c
+@@ -403,7 +403,9 @@ static struct sock *dccp_v6_request_recv_sock(const struct sock *sk,
+ 					      struct request_sock *req,
+ 					      struct dst_entry *dst,
+ 					      struct request_sock *req_unhash,
+-					      bool *own_req)
++					      bool *own_req,
++					      void (*opt_child_init)(struct sock *newsk,
++								     const struct sock *sk))
+ {
+ 	struct inet_request_sock *ireq = inet_rsk(req);
+ 	struct ipv6_pinfo *newnp;
+@@ -418,7 +420,8 @@ static struct sock *dccp_v6_request_recv_sock(const struct sock *sk,
+ 		 *	v6 mapped
+ 		 */
+ 		newsk = dccp_v4_request_recv_sock(sk, skb, req, dst,
+-						  req_unhash, own_req);
++						  req_unhash, own_req,
++						  opt_child_init);
+ 		if (newsk == NULL)
+ 			return NULL;
+ 
+diff --git a/net/dccp/minisocks.c b/net/dccp/minisocks.c
+index 91e7a22026971..6ea298259b030 100644
+--- a/net/dccp/minisocks.c
++++ b/net/dccp/minisocks.c
+@@ -192,7 +192,7 @@ struct sock *dccp_check_req(struct sock *sk, struct sk_buff *skb,
+ 		 goto drop;
+ 
+ 	child = inet_csk(sk)->icsk_af_ops->syn_recv_sock(sk, skb, req, NULL,
+-							 req, &own_req);
++							 req, &own_req, NULL);
+ 	if (child) {
+ 		child = inet_csk_complete_hashdance(sk, child, req, own_req);
+ 		goto out;
+diff --git a/net/ipv4/syncookies.c b/net/ipv4/syncookies.c
+index cc860f2dcf658..29fb93cb32286 100644
+--- a/net/ipv4/syncookies.c
++++ b/net/ipv4/syncookies.c
+@@ -201,7 +201,7 @@ struct sock *tcp_get_cookie_sock(struct sock *sk, struct sk_buff *skb,
+ 	bool own_req;
+ 
+ 	child = icsk->icsk_af_ops->syn_recv_sock(sk, skb, req, dst,
+-						 NULL, &own_req);
++						 NULL, &own_req, NULL);
+ 	if (child) {
+ 		refcount_set(&req->rsk_refcnt, 1);
+ 		tcp_sk(child)->tsoffset = tsoff;
+diff --git a/net/ipv4/tcp_fastopen.c b/net/ipv4/tcp_fastopen.c
+index 92d63cf3e50b9..edaa6dabfc3c6 100644
+--- a/net/ipv4/tcp_fastopen.c
++++ b/net/ipv4/tcp_fastopen.c
+@@ -262,7 +262,7 @@ static struct sock *tcp_fastopen_create_child(struct sock *sk,
+ 	bool own_req;
+ 
+ 	child = inet_csk(sk)->icsk_af_ops->syn_recv_sock(sk, skb, req, NULL,
+-							 NULL, &own_req);
++							 NULL, &own_req, NULL);
+ 	if (!child)
+ 		return NULL;
+ 
+diff --git a/net/ipv4/tcp_ipv4.c b/net/ipv4/tcp_ipv4.c
+index 855cca214a021..f1e10db3d6253 100644
+--- a/net/ipv4/tcp_ipv4.c
++++ b/net/ipv4/tcp_ipv4.c
+@@ -1535,7 +1535,9 @@ struct sock *tcp_v4_syn_recv_sock(const struct sock *sk, struct sk_buff *skb,
+ 				  struct request_sock *req,
+ 				  struct dst_entry *dst,
+ 				  struct request_sock *req_unhash,
+-				  bool *own_req)
++				  bool *own_req,
++				  void (*opt_child_init)(struct sock *newsk,
++							 const struct sock *sk))
+ {
+ 	struct inet_request_sock *ireq;
+ 	bool found_dup_sk = false;
+@@ -1591,6 +1593,10 @@ struct sock *tcp_v4_syn_recv_sock(const struct sock *sk, struct sk_buff *skb,
+ 	}
+ 	sk_setup_caps(newsk, dst);
+ 
++#if IS_ENABLED(CONFIG_IPV6)
++	if (opt_child_init)
++		opt_child_init(newsk, sk);
++#endif
+ 	tcp_ca_openreq_child(newsk, dst);
+ 
+ 	tcp_sync_mss(newsk, dst_mtu(dst));
+diff --git a/net/ipv4/tcp_minisocks.c b/net/ipv4/tcp_minisocks.c
+index 866055e1b8014..876104fe47bf6 100644
+--- a/net/ipv4/tcp_minisocks.c
++++ b/net/ipv4/tcp_minisocks.c
+@@ -770,7 +770,7 @@ struct sock *tcp_check_req(struct sock *sk, struct sk_buff *skb,
+ 	 * socket is created, wait for troubles.
+ 	 */
+ 	child = inet_csk(sk)->icsk_af_ops->syn_recv_sock(sk, skb, req, NULL,
+-							 req, &own_req);
++							 req, &own_req, NULL);
+ 	if (!child)
+ 		goto listen_overflow;
+ 
+diff --git a/net/ipv6/tcp_ipv6.c b/net/ipv6/tcp_ipv6.c
+index 523aa2efdc499..12118d5d98a19 100644
+--- a/net/ipv6/tcp_ipv6.c
++++ b/net/ipv6/tcp_ipv6.c
+@@ -1217,11 +1217,48 @@ static void tcp_v6_restore_cb(struct sk_buff *skb)
+ 		sizeof(struct inet6_skb_parm));
+ }
+ 
++/* Called from tcp_v4_syn_recv_sock() for v6_mapped children. */
++static void tcp_v6_mapped_child_init(struct sock *newsk, const struct sock *sk)
++{
++	struct inet_sock *newinet = inet_sk(newsk);
++	struct ipv6_pinfo *newnp;
++
++	newinet->pinet6 = newnp = tcp_inet6_sk(newsk);
++
++	memcpy(newnp, tcp_inet6_sk(sk), sizeof(struct ipv6_pinfo));
++
++	newnp->saddr = newsk->sk_v6_rcv_saddr;
++
++	inet_csk(newsk)->icsk_af_ops = &ipv6_mapped;
++	if (sk_is_mptcp(newsk))
++		mptcpv6_handle_mapped(newsk, true);
++	newsk->sk_backlog_rcv = tcp_v4_do_rcv;
++#ifdef CONFIG_TCP_MD5SIG
++	tcp_sk(newsk)->af_specific = &tcp_sock_ipv6_mapped_specific;
++#endif
++
++	newnp->ipv6_mc_list = NULL;
++	newnp->ipv6_ac_list = NULL;
++	newnp->ipv6_fl_list = NULL;
++	newnp->pktoptions  = NULL;
++	newnp->opt	   = NULL;
++
++	/* tcp_v4_syn_recv_sock() has initialized newinet->mc_{index,ttl} */
++	newnp->mcast_oif   = newinet->mc_index;
++	newnp->mcast_hops  = newinet->mc_ttl;
++
++	newnp->rcv_flowinfo = 0;
++	if (tcp_inet6_sk(sk)->repflow)
++		newnp->flow_label = 0;
++}
++
+ static struct sock *tcp_v6_syn_recv_sock(const struct sock *sk, struct sk_buff *skb,
+ 					 struct request_sock *req,
+ 					 struct dst_entry *dst,
+ 					 struct request_sock *req_unhash,
+-					 bool *own_req)
++					 bool *own_req,
++					 void (*opt_child_init)(struct sock *newsk,
++								const struct sock *sk))
+ {
+ 	struct inet_request_sock *ireq;
+ 	struct ipv6_pinfo *newnp;
+@@ -1237,61 +1274,10 @@ static struct sock *tcp_v6_syn_recv_sock(const struct sock *sk, struct sk_buff *
  #endif
--
--	/* Module reference for configuring conntrack. */
- 	bool xt_label;
- };
+ 	struct flowi6 fl6;
  
-diff --git a/net/openvswitch/vport.h b/net/openvswitch/vport.h
-index 1eb7495ac5b45..6e5909ce049db 100644
---- a/net/openvswitch/vport.h
-+++ b/net/openvswitch/vport.h
-@@ -90,6 +90,8 @@ struct vport {
-  * none was supplied.
-  * @dp: New vport's datapath.
-  * @port_no: New vport's port number.
-+ * @upcall_portids: %OVS_VPORT_ATTR_UPCALL_PID attribute from Netlink message,
-+ * %NULL if none was supplied.
-  */
- struct vport_parms {
- 	const char *name;
-@@ -117,6 +119,8 @@ struct vport_parms {
-  * have any configuration.
-  * @send: Send a packet on the device.
-  * zero for dropped packets or negative for error.
-+ * @owner: Module that implements this vport type.
-+ * @list: List entry in the global list of vport types.
-  */
- struct vport_ops {
- 	enum ovs_vport_type type;
-@@ -144,6 +148,8 @@ void ovs_vport_free(struct vport *);
-  *
-  * @vport: vport to access
-  *
-+ * Returns: A void pointer to a private data allocated in the @vport.
-+ *
-  * If a nonzero size was passed in priv_size of vport_alloc() a private data
-  * area was allocated on creation.  This allows that area to be accessed and
-  * used for any purpose needed by the vport implementer.
-@@ -158,6 +164,8 @@ static inline void *vport_priv(const struct vport *vport)
-  *
-  * @priv: Start of private data area.
-  *
-+ * Returns: A reference to a vport structure that contains @priv.
-+ *
-  * It is sometimes useful to translate from a pointer to the private data
-  * area to the vport, such as in the case where the private data pointer is
-  * the result of a hash table lookup.  @priv must point to the start of the
+-	if (skb->protocol == htons(ETH_P_IP)) {
+-		/*
+-		 *	v6 mapped
+-		 */
+-
+-		newsk = tcp_v4_syn_recv_sock(sk, skb, req, dst,
+-					     req_unhash, own_req);
+-
+-		if (!newsk)
+-			return NULL;
+-
+-		inet_sk(newsk)->pinet6 = tcp_inet6_sk(newsk);
+-
+-		newinet = inet_sk(newsk);
+-		newnp = tcp_inet6_sk(newsk);
+-		newtp = tcp_sk(newsk);
+-
+-		memcpy(newnp, np, sizeof(struct ipv6_pinfo));
+-
+-		newnp->saddr = newsk->sk_v6_rcv_saddr;
+-
+-		inet_csk(newsk)->icsk_af_ops = &ipv6_mapped;
+-		if (sk_is_mptcp(newsk))
+-			mptcpv6_handle_mapped(newsk, true);
+-		newsk->sk_backlog_rcv = tcp_v4_do_rcv;
+-#ifdef CONFIG_TCP_MD5SIG
+-		newtp->af_specific = &tcp_sock_ipv6_mapped_specific;
+-#endif
+-
+-		newnp->ipv6_mc_list = NULL;
+-		newnp->ipv6_ac_list = NULL;
+-		newnp->ipv6_fl_list = NULL;
+-		newnp->pktoptions  = NULL;
+-		newnp->opt	   = NULL;
+-		newnp->mcast_oif   = inet_iif(skb);
+-		newnp->mcast_hops  = ip_hdr(skb)->ttl;
+-		newnp->rcv_flowinfo = 0;
+-		if (np->repflow)
+-			newnp->flow_label = 0;
+-
+-		/*
+-		 * No need to charge this sock to the relevant IPv6 refcnt debug socks count
+-		 * here, tcp_create_openreq_child now does this for us, see the comment in
+-		 * that function for the gory details. -acme
+-		 */
+-
+-		/* It is tricky place. Until this moment IPv4 tcp
+-		   worked with IPv6 icsk.icsk_af_ops.
+-		   Sync it now.
+-		 */
+-		tcp_sync_mss(newsk, inet_csk(newsk)->icsk_pmtu_cookie);
+-
+-		return newsk;
+-	}
+-
++	if (skb->protocol == htons(ETH_P_IP))
++		return tcp_v4_syn_recv_sock(sk, skb, req, dst,
++					    req_unhash, own_req,
++					    tcp_v6_mapped_child_init);
+ 	ireq = inet_rsk(req);
+ 
+ 	if (sk_acceptq_is_full(sk))
+diff --git a/net/mptcp/subflow.c b/net/mptcp/subflow.c
+index b13cd310882d3..c9cf0fdbfbdca 100644
+--- a/net/mptcp/subflow.c
++++ b/net/mptcp/subflow.c
+@@ -532,7 +532,9 @@ static struct sock *subflow_syn_recv_sock(const struct sock *sk,
+ 					  struct request_sock *req,
+ 					  struct dst_entry *dst,
+ 					  struct request_sock *req_unhash,
+-					  bool *own_req)
++					  bool *own_req,
++					  void (*opt_child_init)(struct sock *newsk,
++								 const struct sock *sk))
+ {
+ 	struct mptcp_subflow_context *listener = mptcp_subflow_ctx(sk);
+ 	struct mptcp_subflow_request_sock *subflow_req;
+@@ -582,7 +584,7 @@ static struct sock *subflow_syn_recv_sock(const struct sock *sk,
+ 
+ create_child:
+ 	child = listener->icsk_af_ops->syn_recv_sock(sk, skb, req, dst,
+-						     req_unhash, own_req);
++						     req_unhash, own_req, opt_child_init);
+ 
+ 	if (child && *own_req) {
+ 		struct mptcp_subflow_context *ctx = mptcp_subflow_ctx(child);
 -- 
 2.53.0
 
