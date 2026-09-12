@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8CD941E6DB;
-	Sat, 12 Sep 2026 10:09:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B87425B0AA;
+	Sat, 12 Sep 2026 10:09:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789207773; cv=none; b=vBRaYR0bMW3wtQ4VWECuTEnZ035J9dXiY+ILKMy4SGSdd6lp0rAys+Lkr6WBjLoOkCzslXyMaTtlzbZAaNcqyAdjwhIk8FvIpqslPqFtUpGBxFvNmtJmxn51Qvf6Lvv/NelDYFByQwqvc4y9b1medLmv4kf3OyvtD35O06JJeYs=
+	t=1789207779; cv=none; b=rzJLI2ApMGalx8Vx+WNcauZO2kvZ+zqMjr4x17klYklOEJ0M5L3p0c5YjZMsZSrYLd8DolB1uA7XBZiqSLNxQXaRupqn45lq90cEbh24tDVOsIbhhmCbZMyXX967Gqc9NmuLEWEbCxFweWKSWAs92ciG/RebbOg2ufhdqcu6t1w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789207773; c=relaxed/simple;
-	bh=NStHtwP7GNXld1GnQ64lEZKXraIH8T0gyJRwpQo43MM=;
+	s=arc-20240116; t=1789207779; c=relaxed/simple;
+	bh=Znu4l1MP7mKcjZmo+l4xa3dmls7yHgfAyUh9yUaf2BE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=smQs+trrqY7Mjt/sd/KQk4tDjpnHLvcoH1xrg/oqnBncwOj4MXl/5xn/SgHpDqMsFPN5mYqB2R+1y56yIHCw+a616fIi1IbSJ+uC4NycVz+UA5A+QteDw5cFqNmpjiEfgFYJWQA4MDX3bPEbQNJT0h4DnTpZkkHcltamvLOI2FA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o5fXcrwF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DcbG8V5qvhFFcA911VAYVHy2CKqgDDNqq3qOmbk64l2dV+mrj3lexLhzyVGL8OFRstm9FokSFaUFAH8fnFxrvKy3r/3YgCItEoEJSzpQytpYDN39CyMRP8Y5u9ZsTVGePuBTsuiG5suFBriIiKlcKKXIPWx9x4SR0agb6zRT540=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SnaNgJFK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o5fXcrwF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9901A1F000FF;
-	Sat, 12 Sep 2026 10:09:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SnaNgJFK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 867321F000FF;
+	Sat, 12 Sep 2026 10:09:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789207770;
-	bh=dD+6Vt3Db5ZwBCLEzfW9PrNlBaYJnj2Q3XUew5s7prE=;
+	s=korg; t=1789207775;
+	bh=NW0TpCpLcYHrnspVuOGMoDY6iCC5gCaLPz0B1XCL0eU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=o5fXcrwFCjWt4+Gw9c+uDxv3xMl7m3HQlFlG+Y87pj16BPiarpn6MPWJT3D32h4xi
-	 PE2D9PhnHTf9eBHoR8TL6NUwlARpCrWCurUpuoNX9ejbvjkRU/LfTv5ZECw1HqF4Ne
-	 P6DfP9TkCpHCrH2z+qXtKBHwZP4NtVJRs6D4gTZc=
+	b=SnaNgJFK90vaDHHQNAIL4ml6RiIZeH5KvlE7Vb8dOMRRnG6l3jv2q4GJK884rQuUS
+	 sL+FODq+ELdSpX1Cs2ptikjnCbMBmZmAiYmNyYxoDm44rvpFb4+fxFrkkOkcSQR+o/
+	 9OsDPiiNOd/nBEm8D6PqgKmQl10CPUYCs3Oi5/Uc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Danila Chernetsov <listdansp@mail.ru>,
+	Zhu Yanjun <yanjun.zhu@linux.dev>,
+	Ibrahim Hashimov <security@auditcode.ai>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0481/1518] RDMA/hfi1: Propagate sdma_txinit_ahg() errors
-Date: Sat, 12 Sep 2026 08:44:10 +0200
-Message-ID: <20260912065634.328063771@linuxfoundation.org>
+Subject: [PATCH 6.18 0482/1518] RDMA/rxe: Validate num_sge/cur_sge before indexing wqe->dma.sge[]
+Date: Sat, 12 Sep 2026 08:44:11 +0200
+Message-ID: <20260912065634.350788270@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,62 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Danila Chernetsov <listdansp@mail.ru>
+From: Ibrahim Hashimov <security@auditcode.ai>
 
-[ Upstream commit 091c6162c022cbdfb64219708a71728cfd1d4600 ]
+[ Upstream commit 126c757e4cd46f866ddc283143b58eb4d9bf52cd ]
 
-set_txreq_header_ahg() ignores the return value of sdma_txinit_ahg().
+For a user QP, qp->sq.queue is a ring the application writes directly,
+so rxe_post_send() takes the is_user branch and only schedules send_task
+without validating the WQE. rxe_requester() consumes it in place via
+req_next_wqe() and calls copy_data(), which indexes
+&wqe->dma.sge[cur_sge] with the attacker-controlled num_sge/cur_sge.
+Only the kernel path bounds num_sge (validate_send_wr()); the user WQE
+is never checked, so a local unprivileged user can post a WQE with an
+out-of-range cur_sge or oversized num_sge and force an out-of-bounds
+read of the per-WQE sge array in copy_data() (vmalloc OOB read, local
+DoS).
 
-If sdma_txinit_ahg() fails, it returns before initializing tx->txreq.
-However, set_txreq_header_ahg() ignores the error and returns the AHG
-change count, causing the caller to continue processing the request as
-though initialization had succeeded.
+Bound num_sge to qp->sq.max_sge in rxe_requester() before use, the way
+get_srq_wqe() already guards SRQ entries, and bound cur_sge only when
+the WQE carries payload (dma.resid): copy_data() returns early on a
+zero-length copy before touching dma->sge[], so a zero-payload WQE --
+the only kind a max_sge == 0 QP can post -- stays valid.
 
-Propagate sdma_txinit_ahg() failures to the caller and abort request
-processing when initialization fails.
+Reproduced under KASAN; the vmalloc-out-of-bounds in copy_data() is gone.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: e3304b7cc4f1 ("IB/hfi1: Optimize cachelines for user SDMA request structure")
-Signed-off-by: Danila Chernetsov <listdansp@mail.ru>
-Link: https://patch.msgid.link/20260708162252.936634-1-listdansp@mail.ru
+Fixes: 8700e3e7c485 ("Soft RoCE driver")
+Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
+Signed-off-by: Ibrahim Hashimov <security@auditcode.ai>
+Link: https://patch.msgid.link/20260712122149.78142-1-security@auditcode.ai
+Assisted-by: AuditCode-AI:2026.07
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hfi1/user_sdma.c | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ drivers/infiniband/sw/rxe/rxe_req.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/drivers/infiniband/hw/hfi1/user_sdma.c b/drivers/infiniband/hw/hfi1/user_sdma.c
-index 9b1aece1b0800..ae8ff7d5a37ce 100644
---- a/drivers/infiniband/hw/hfi1/user_sdma.c
-+++ b/drivers/infiniband/hw/hfi1/user_sdma.c
-@@ -1028,6 +1028,7 @@ static int set_txreq_header_ahg(struct user_sdma_request *req,
- 				struct user_sdma_txreq *tx, u32 datalen)
- {
- 	u32 ahg[AHG_KDETH_ARRAY_SIZE];
-+	int ret;
- 	int idx = 0;
- 	u8 omfactor; /* KDETH.OM */
- 	struct hfi1_user_sdma_pkt_q *pq = req->pq;
-@@ -1132,11 +1133,13 @@ static int set_txreq_header_ahg(struct user_sdma_request *req,
- 	trace_hfi1_sdma_user_header_ahg(pq->dd, pq->ctxt, pq->subctxt,
- 					req->info.comp_idx, req->sde->this_idx,
- 					req->ahg_idx, ahg, idx, tidval);
--	sdma_txinit_ahg(&tx->txreq,
--			SDMA_TXREQ_F_USE_AHG,
--			datalen, req->ahg_idx, idx,
--			ahg, sizeof(req->hdr),
--			user_sdma_txreq_cb);
-+	ret = sdma_txinit_ahg(&tx->txreq,
-+				SDMA_TXREQ_F_USE_AHG,
-+				datalen, req->ahg_idx, idx,
-+				ahg, sizeof(req->hdr),
-+				user_sdma_txreq_cb);
-+	if (ret)
-+		return ret;
+diff --git a/drivers/infiniband/sw/rxe/rxe_req.c b/drivers/infiniband/sw/rxe/rxe_req.c
+index 12d03f390b097..24f5c044363f7 100644
+--- a/drivers/infiniband/sw/rxe/rxe_req.c
++++ b/drivers/infiniband/sw/rxe/rxe_req.c
+@@ -701,6 +701,21 @@ int rxe_requester(struct rxe_qp *qp)
+ 	if (unlikely(!wqe))
+ 		goto exit;
  
- 	return idx;
- }
++	/*
++	 * Don't trust user space data: a user QP's WQE comes from an mmap'd
++	 * ring, so num_sge/cur_sge are attacker-controlled. Bound num_sge like
++	 * get_srq_wqe(); bound cur_sge only when payload exists (dma.resid),
++	 * since copy_data() skips dma->sge[] on a zero-length copy (all a
++	 * max_sge == 0 QP can post).
++	 */
++	if (unlikely(wqe->dma.num_sge > qp->sq.max_sge ||
++		     (wqe->dma.resid &&
++		      wqe->dma.cur_sge >= qp->sq.max_sge))) {
++		rxe_dbg_qp(qp, "invalid num_sge/cur_sge in send wqe\n");
++		wqe->status = IB_WC_LOC_QP_OP_ERR;
++		goto err;
++	}
++
+ 	if (rxe_wqe_is_fenced(qp, wqe)) {
+ 		qp->req.wait_fence = 1;
+ 		goto exit;
 -- 
 2.53.0
 
