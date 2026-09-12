@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDD85247280;
-	Sat, 12 Sep 2026 11:28:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 230102EC09B;
+	Sat, 12 Sep 2026 11:28:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789212490; cv=none; b=c25L5tZ91spUYIyD9GjCbmtG941dkqhx/Yh4a9smfLQQKpxPgptFojKS96bi4d0Nra+EiMUHmO9SAUbgDa+vEBxOnKqb4MPONNP1w2SeibdMB5oOI5chNKpLeE5DYTXnsH1FTu15JZ7d5CrUa6NoRpSOQBy6YfS6ItFzhe/crEg=
+	t=1789212495; cv=none; b=eot25l5P3ncO8WapAmELmjxi7BGbSeaMtujQEIoQJCdLi3ZrLaNPljs+IK0QRhP9iragFWU10pCJlnGTU3AfStlQ9ewgE5RstVaJsRReUYip4Cnbg7yBfwOSRzl2fyu4R4eoBHL72+KJ7XovkNCOObKPNMotJEJj6cu4sSbdusU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789212490; c=relaxed/simple;
-	bh=+js1+Y8pbtfkHRDbfh5h5TAkbdsrBxyAHjQSHrXX7gI=;
+	s=arc-20240116; t=1789212495; c=relaxed/simple;
+	bh=0sbELAaeW0KT9utPoV5Yxhf5BclKArwRCLl16wCR42k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sFfpOuzzNRQ3cgJJRhh8fNf0lkb6sbH1lEDuh5mevr17hFLEc9yWCmKHGiPMMjQaQDl1NrRSsqkT9yn4GZBFsuQJ1ZInegcha7C/bfE9Ml0YCLO4QCMwjjPcJ2094VARwPcXO+nemasUWzQK0UDbWgErmkFcghV848WO7TEVOWs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XZUtnGO1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IjZBQbJgoAkaaqK1XXj1n99/KM8qrObOJoy5P9t9zUnyNUuYpFSjibunSaG3mW1jbQ8DTZdROsIOxpE9VcSSngPVohG/U9DMqEJx8cqsD1neMuJrwOANpwvJuOCYe/WIgqdD7p+xROtGWlPA5Sp7q6vU5ZU5CUMY3fPCu4NqoTw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S7drQBlQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XZUtnGO1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35F5E1F000FF;
-	Sat, 12 Sep 2026 11:28:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S7drQBlQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B794F1F000FF;
+	Sat, 12 Sep 2026 11:28:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789212488;
-	bh=CNYtGTSDt9tawX35F/Q+5Jvjqf2uaVh2AGOJzKTRUqI=;
+	s=korg; t=1789212494;
+	bh=wVwJrYQnwUyWKYpLiu1EpHLh7g5Gd6J7/PaESqTcxC4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XZUtnGO13/ZAW2y/jWSSyDBqYUTmF+ZmZGZs0/J31baMMqMSqy9DnR1RaXqDnZ4bL
-	 UYNjfD8bFSX+f+zCEl12cs+gt5Kch69Zci9nBIUCO9n3rEJLY1AKB4KWxHEIsg5dTH
-	 yh6CUgbP5sXFx+es9682kfoqL9n9kstaOgQjsDyo=
+	b=S7drQBlQ9TAHh/fJDR7fk9lRAqEyFRoXYSP1sTtbrVm1vMMzedhCi0VLTyLLksy7s
+	 lk0zo6nGn5XB/R9o8REjW7oLSg3RJJMOvREMBa7nBrR4lc1cn43speZhFpCrWriK7s
+	 FQ/VtB5G5iif0wlFJJEt4JRmib6yelWjrLVTUQNc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Mark Brown <broonie@kernel.org>,
 	Muhammad Usama Anjum <usama.anjum@arm.com>,
 	Vincenzo Frascino <vincenzo.frascino@arm.com>,
-	Mark Brown <broonie@kernel.org>,
 	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1447/1518] selftests/arm64: Treat KSM merge_across_nodes as optional
-Date: Sat, 12 Sep 2026 09:00:16 +0200
-Message-ID: <20260912065656.288182597@linuxfoundation.org>
+Subject: [PATCH 6.18 1448/1518] selftests/arm64: Fix MTE prctl TAP plan
+Date: Sat, 12 Sep 2026 09:00:17 +0200
+Message-ID: <20260912065656.311823080@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -55,106 +55,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Muhammad Usama Anjum <usama.anjum@arm.com>
 
-[ Upstream commit 1a0dba077f34a2f8faa98308d30d4b546d073145 ]
+[ Upstream commit bb52892f9234e4ecd982fa51222aab33ce282f79 ]
 
-The MTE KSM test requires write access to KSM sysfs but does not check
-that it is running as root. It also unconditionally saves, enables and
-restores the merge_across_nodes attribute. The kernel only creates this
-attribute when CONFIG_NUMA=y, so a non-NUMA kernel prints the following
-message three times even though every KSM subtest passes:
+The MTE prctl test emits one result from check_basic_read() followed by
+one result for each of the seven entries in mte_modes[]. However, the TAP
+plan only accounts for the array entries, producing:
 
-  # ERR: missing /sys/kernel/mm/ksm/merge_across_nodes
+  # Planned tests != run tests (7 != 8)
 
-Skip the test when it is not running as root. Check that the optional
-attribute is readable and writable, treating ENOENT as its expected
-absence on non-NUMA kernels and skipping the test for other access
-failures. Only save, enable and restore the attribute when it is
-available.
+Include the basic read check in the plan so that all eight emitted results
+are declared.
 
-Check MTE availability before the privilege and sysfs checks so systems
-without MTE retain the existing feature-unavailable skip result.
-
-This preserves the existing behavior on NUMA kernels without requiring
-NUMA or reducing KSM coverage on single-node systems.
-
-Fixes: f981d8fa2646 ("kselftest/arm64: Verify KSM page merge for MTE pages")
+Reviewed-by: Mark Brown <broonie@kernel.org>
+Fixes: 1f488fb91378 ("kselftest/arm64/mte: Add MTE_STORE_ONLY testcases")
 Signed-off-by: Muhammad Usama Anjum <usama.anjum@arm.com>
 Reviewed-by: Vincenzo Frascino <vincenzo.frascino@arm.com>
-Reviewed-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../selftests/arm64/mte/check_ksm_options.c   | 29 +++++++++++++++++--
- 1 file changed, 26 insertions(+), 3 deletions(-)
+ tools/testing/selftests/arm64/mte/check_prctl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/arm64/mte/check_ksm_options.c b/tools/testing/selftests/arm64/mte/check_ksm_options.c
-index 866f0929b6647..4855b737d5507 100644
---- a/tools/testing/selftests/arm64/mte/check_ksm_options.c
-+++ b/tools/testing/selftests/arm64/mte/check_ksm_options.c
-@@ -6,6 +6,7 @@
- #include <errno.h>
- #include <fcntl.h>
- #include <signal.h>
-+#include <stdbool.h>
- #include <stdio.h>
- #include <stdlib.h>
- #include <string.h>
-@@ -22,6 +23,20 @@
+diff --git a/tools/testing/selftests/arm64/mte/check_prctl.c b/tools/testing/selftests/arm64/mte/check_prctl.c
+index f7f320defa7b9..d16a91117eef9 100644
+--- a/tools/testing/selftests/arm64/mte/check_prctl.c
++++ b/tools/testing/selftests/arm64/mte/check_prctl.c
+@@ -119,7 +119,7 @@ int main(void)
+ 	int i;
  
- static size_t page_sz;
- static unsigned long ksm_sysfs[5];
-+static bool has_merge_across_nodes;
-+
-+static bool merge_across_nodes_available(void)
-+{
-+	const char *path = PATH_KSM "merge_across_nodes";
-+
-+	if (!access(path, R_OK | W_OK))
-+		return true;
-+	if (errno == ENOENT)
-+		return false;
-+
-+	ksft_exit_skip("Unable to read and write %s: %s\n", path,
-+		       strerror(errno));
-+}
+ 	ksft_print_header();
+-	ksft_set_plan(ARRAY_SIZE(mte_modes));
++	ksft_set_plan(ARRAY_SIZE(mte_modes) + 1);
  
- static unsigned long read_sysfs(char *str)
- {
-@@ -56,8 +71,10 @@ static void write_sysfs(char *str, unsigned long val)
- 
- static void mte_ksm_setup(void)
- {
--	ksm_sysfs[0] = read_sysfs(PATH_KSM "merge_across_nodes");
--	write_sysfs(PATH_KSM "merge_across_nodes", 1);
-+	if (has_merge_across_nodes) {
-+		ksm_sysfs[0] = read_sysfs(PATH_KSM "merge_across_nodes");
-+		write_sysfs(PATH_KSM "merge_across_nodes", 1);
-+	}
- 	ksm_sysfs[1] = read_sysfs(PATH_KSM "sleep_millisecs");
- 	write_sysfs(PATH_KSM "sleep_millisecs", 0);
- 	ksm_sysfs[2] = read_sysfs(PATH_KSM "run");
-@@ -70,7 +87,8 @@ static void mte_ksm_setup(void)
- 
- static void mte_ksm_restore(void)
- {
--	write_sysfs(PATH_KSM "merge_across_nodes", ksm_sysfs[0]);
-+	if (has_merge_across_nodes)
-+		write_sysfs(PATH_KSM "merge_across_nodes", ksm_sysfs[0]);
- 	write_sysfs(PATH_KSM "sleep_millisecs", ksm_sysfs[1]);
- 	write_sysfs(PATH_KSM "run", ksm_sysfs[2]);
- 	write_sysfs(PATH_KSM "max_page_sharing", ksm_sysfs[3]);
-@@ -137,6 +155,11 @@ int main(int argc, char *argv[])
- 	err = mte_default_setup();
- 	if (err)
- 		return err;
-+
-+	if (geteuid() != 0)
-+		ksft_exit_skip("Please run the test as root\n");
-+
-+	has_merge_across_nodes = merge_across_nodes_available();
- 	page_sz = getpagesize();
- 	if (!page_sz) {
- 		ksft_print_msg("ERR: Unable to get page size\n");
+ 	check_basic_read();
+ 	for (i = 0; i < ARRAY_SIZE(mte_modes); i++)
 -- 
 2.53.0
 
