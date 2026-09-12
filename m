@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAFD326AC5;
-	Sat, 12 Sep 2026 16:34:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4ACB288B9;
+	Sat, 12 Sep 2026 16:34:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789230854; cv=none; b=kCZdtVF+HwSfrEJEUDdSOrOgV2gdS+lPn3A1efn9aWNUcoyk02D67VSd5c69rCuXktJxF6wfipdjvsiHEv8HHfM0GvyXHYvaFkFIaWAI+IedxK7i5iqGHdyng2Y8uKSbO6Ya/Xay2TYbJCMNPzciMO4blMOhmJJq3i7UVUwreoA=
+	t=1789230858; cv=none; b=MSTzrZOqU3NJrwRbbIfN1ezO4q5YSHvSsUbrEyiCyrEP1dXh86P3NfCm1FDeY0bsQmv+Pr2VjMafJpBNT7CrbenZeZffwW6RGeZBqFtsIdoZmCXCGsD5TyrLL4yL7k3BSLefzD6Bzi+SdEnj9MpPFVFcDkiSDCNi2RDhLuaWHMY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789230854; c=relaxed/simple;
-	bh=+qR4pteQWU5LTONhuiV38Snawb86PNvEJIlTCQpGXWk=;
+	s=arc-20240116; t=1789230858; c=relaxed/simple;
+	bh=6qWSVfMg2LtPf7/hlY0lyOjrsHI+AohlB+g5qKcuHFg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Lkv5IGSmTJqw0TyuNoNIoPtbz59BtJuak48LMVFC5ywS0oN2svazTwIwdtshWot7HxLfHMVe/d3aSZNxxpxdOBvLnenQTksJolTf2Jx3zAaSpSDt1fGTEMq+aF/sg/4K5gQsRE3tIt2xL8zYxHJ6H0gZvySitDEsEmmeolOKo7g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wk7ujx6g; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fs+ArF49/kxRhmOsbEdgZwacAW0BU6I2nIRGKI8RHQGDR/pKKUftTqeYczZnFWGlkRNt8V1AeOqm4te3ecNM90Mw1d9Eg5bLYgZziVlRoGwBEpRiNahl84p9YWl6rLNm4pai0DiqYHESz16k0VP4ZA4wEQOJI8pGGD17JKUPLF8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QPvTg5O4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wk7ujx6g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AB541F000FF;
-	Sat, 12 Sep 2026 16:34:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QPvTg5O4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB55A1F000FF;
+	Sat, 12 Sep 2026 16:34:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789230852;
-	bh=SDUnPKL7cDaCTvZ/B9A0fUk1sadtc+Cf75C0cRiINBI=;
+	s=korg; t=1789230857;
+	bh=eELf/MgAdmx72GOIetT3bWC2kgKe86ojpXg2i+lhKdQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Wk7ujx6gYdtPi3qL2IpJVvKceXsjBjZ+Ib1gvc75Hf8bn85WRMprFHv90UEfxmXAi
-	 UIrNkJcudoP10szcZNWSDGdiDPO2D62NQ+UU+rj3uvUP0Xq0lkGKoGs+GkoxhcDYhG
-	 b3IMso7HJPgGRqENWaIet8sQ5LVe0Mts/k8nU8DA=
+	b=QPvTg5O4pbY7+LpHGo+CAdJNzvdlzgYqEluhc39Woa2eVdHHDs2ePKiJKO2SxaHD2
+	 RA75grlFh0B+lz3TpvwyTLU8yDhg6yP0mxn0Nu5sK3Li+hTDvFfyaUFzcGwyyUMclg
+	 CsyXOkaDz4vf9y8g5CX4gXJtNEPGyE+y2hFnnDsk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Jiri Kosina <jkosina@suse.cz>,
+	Zhao Li <enderaoelyther@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0836/1191] HID: split apart hid_device_probe to make logic more apparent
-Date: Sat, 12 Sep 2026 08:59:24 +0200
-Message-ID: <20260912065607.037530839@linuxfoundation.org>
+Subject: [PATCH 6.1 0827/1191] wifi: mac80211: send TWT teardown to peer after setup TX failure
+Date: Sat, 12 Sep 2026 08:59:15 +0200
+Message-ID: <20260912065606.841375870@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -51,144 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Zhao Li <enderaoelyther@gmail.com>
 
-[ Upstream commit 207733f9266194b3cd90ddae723a1f82eb64030b ]
+[ Upstream commit a28fcce6ee74be8a4526e6cfa16dc7786d62a784 ]
 
-hid_device_probe() has a complex flow and locks and unlocks a mutex.
-Move the most of the logic into __hid_device_probe() and
-hid_check_device_match() and leave the locking in hid_device_probe()
-which makes the code more clear.
+When an AP's TWT Setup response is not acknowledged,
+ieee80211_s1g_tx_twt_setup_fail() asks the driver to tear down the local
+agreement and sends a TWT teardown action as the peer notification. It
+uses the response SA as the destination, but
+ieee80211_s1g_send_twt_setup() built that response with SA set to the
+AP's address. The teardown is therefore queued with DA, SA and BSSID all
+set to the AP address and never reaches the station.
 
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.cz>
-Stable-dep-of: 207853d46f7e ("HID: synchronize input before cleaning up a failed probe")
+The in-tree driver callbacks update local hardware state and emit no
+action frame. The station receives no notification that mac80211 asked
+the driver to remove the agreement and can keep following the TWT
+schedule, leaving the peers' power-save state desynchronized.
+
+Address the teardown to the response DA, the station to which the failed
+response was sent. This also matches the station lookup the transmit
+status path already performs on the same frame.
+
+Fixes: f5a4c24e689f ("mac80211: introduce individual TWT support in AP mode")
+Assisted-by: Codex:gpt-5.6-sol
+Assisted-by: Kimi:K3
+Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
+Link: https://patch.msgid.link/20260729173607.13340-1-enderaoelyther@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-core.c | 101 ++++++++++++++++++++++-------------------
- 1 file changed, 54 insertions(+), 47 deletions(-)
+ net/mac80211/s1g.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hid/hid-core.c b/drivers/hid/hid-core.c
-index 9b4c071d57d38..b09ff4cabd53a 100644
---- a/drivers/hid/hid-core.c
-+++ b/drivers/hid/hid-core.c
-@@ -2639,64 +2639,71 @@ bool hid_compare_device_paths(struct hid_device *hdev_a,
- }
- EXPORT_SYMBOL_GPL(hid_compare_device_paths);
+diff --git a/net/mac80211/s1g.c b/net/mac80211/s1g.c
+index 9914390ff31ff..337d8d4ea5f57 100644
+--- a/net/mac80211/s1g.c
++++ b/net/mac80211/s1g.c
+@@ -146,7 +146,7 @@ ieee80211_s1g_tx_twt_setup_fail(struct ieee80211_sub_if_data *sdata,
  
-+static bool hid_check_device_match(struct hid_device *hdev,
-+				   struct hid_driver *hdrv,
-+				   const struct hid_device_id **id)
-+{
-+	*id = hid_match_device(hdev, hdrv);
-+	if (!*id)
-+		return -ENODEV;
-+
-+	if (hdrv->match)
-+		return hdrv->match(hdev, hid_ignore_special_drivers);
-+
-+	/*
-+	 * hid-generic implements .match(), so we must be dealing with a
-+	 * different HID driver here, and can simply check if
-+	 * hid_ignore_special_drivers is set or not.
-+	 */
-+	return !hid_ignore_special_drivers;
-+}
-+
-+static int __hid_device_probe(struct hid_device *hdev, struct hid_driver *hdrv)
-+{
-+	const struct hid_device_id *id;
-+	int ret;
-+
-+	if (!hid_check_device_match(hdev, hdrv, &id))
-+		return -ENODEV;
-+
-+	/* reset the quirks that has been previously set */
-+	hdev->quirks = hid_lookup_quirk(hdev);
-+	hdev->driver = hdrv;
-+
-+	if (hdrv->probe) {
-+		ret = hdrv->probe(hdev, id);
-+	} else { /* default probe */
-+		ret = hid_open_report(hdev);
-+		if (!ret)
-+			ret = hid_hw_start(hdev, HID_CONNECT_DEFAULT);
-+	}
-+
-+	if (ret) {
-+		hid_close_report(hdev);
-+		hdev->driver = NULL;
-+	}
-+
-+	return ret;
-+}
-+
- static int hid_device_probe(struct device *dev)
- {
--	struct hid_driver *hdrv = to_hid_driver(dev->driver);
- 	struct hid_device *hdev = to_hid_device(dev);
--	const struct hid_device_id *id;
-+	struct hid_driver *hdrv = to_hid_driver(dev->driver);
- 	int ret = 0;
+ 	drv_twt_teardown_request(sdata->local, sdata, &sta->sta, flowid);
  
--	if (down_interruptible(&hdev->driver_input_lock)) {
--		ret = -EINTR;
--		goto end;
--	}
--	hdev->io_started = false;
-+	if (down_interruptible(&hdev->driver_input_lock))
-+		return -EINTR;
- 
-+	hdev->io_started = false;
- 	clear_bit(ffs(HID_STAT_REPROBED), &hdev->status);
- 
--	if (!hdev->driver) {
--		id = hid_match_device(hdev, hdrv);
--		if (id == NULL) {
--			ret = -ENODEV;
--			goto unlock;
--		}
-+	if (!hdev->driver)
-+		ret = __hid_device_probe(hdev, hdrv);
- 
--		if (hdrv->match) {
--			if (!hdrv->match(hdev, hid_ignore_special_drivers)) {
--				ret = -ENODEV;
--				goto unlock;
--			}
--		} else {
--			/*
--			 * hid-generic implements .match(), so if
--			 * hid_ignore_special_drivers is set, we can safely
--			 * return.
--			 */
--			if (hid_ignore_special_drivers) {
--				ret = -ENODEV;
--				goto unlock;
--			}
--		}
--
--		/* reset the quirks that has been previously set */
--		hdev->quirks = hid_lookup_quirk(hdev);
--		hdev->driver = hdrv;
--		if (hdrv->probe) {
--			ret = hdrv->probe(hdev, id);
--		} else { /* default probe */
--			ret = hid_open_report(hdev);
--			if (!ret)
--				ret = hid_hw_start(hdev, HID_CONNECT_DEFAULT);
--		}
--		if (ret) {
--			hid_close_report(hdev);
--			hdev->driver = NULL;
--		}
--	}
--unlock:
- 	if (!hdev->io_started)
- 		up(&hdev->driver_input_lock);
--end:
-+
- 	return ret;
+-	ieee80211_s1g_send_twt_teardown(sdata, mgmt->sa, sdata->vif.addr,
++	ieee80211_s1g_send_twt_teardown(sdata, mgmt->da, sdata->vif.addr,
+ 					flowid);
  }
  
 -- 
