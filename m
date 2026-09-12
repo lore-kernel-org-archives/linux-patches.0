@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24B6919D8BC;
-	Sat, 12 Sep 2026 09:57:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C803420465;
+	Sat, 12 Sep 2026 09:57:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789207048; cv=none; b=O/1N4K1/6Bz0A097XbArxxQdngzVnn8O7XSa3C0EjW/VMLYQXF3HtWNBwMWP63xbVnp01L+IgTzpdXkdaXQcxdhkVOOAJ10UEHyY8PR5uUclPH7QTV5RSwhhjfEI9pch6wou9KECjrFEEi/uvFIGNcMqQBr9x9c6l2+u0fQSvTA=
+	t=1789207053; cv=none; b=dN+ZvptlBQ5CEocyC42mEH/XaMBlJLPxVoZMoDhc8alx8Wom0ov8xZOn4aEVG7PV19v1ImAg231Dm8je88+v0YB0a9cZhnoAwuLYYBgYunhUnZN5hSJ+HbtwjP5c5fBw0y5HmoONq5bJOTRdvjtI0Ole4PvHqPHx65wIVChMNlE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789207048; c=relaxed/simple;
-	bh=pZJyoKq1ZWlas+9xMtY27518d1M34P1/wX35gLf9hOc=;
+	s=arc-20240116; t=1789207053; c=relaxed/simple;
+	bh=hY9k4TZT/yRTVTzORHOI3mB1Yt+peQhuxagryeb9opk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jASheiJhbdL2upaukFrC3Qy6FyL4PGwKK8UVK84EteLFPl+HHlQPAM8eaX6VI+/0uumOcLnhhPy88JYqihEH97XA9pSTcLWc/l+vX/gyUnJ+04SIvI/8bxysAkPtTVNeNZBLiDyhSAHEmnZpdGgFz19NXPCqyNar6Ihfhv32zzU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s3cNKz8o; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UQhYtP7GGMByZ8z5V99BOP4VgOBs080zmr6HJ2dNvxXDT/YgojWjKYNCsEYSi3ZIiLdq9I0v0cLK5Om4yCFzhKUJLpRDXYcre9IkTOFM4Bkh/GTxW9/m7Zk2adCOff8dNbMMUJDtQGxkV5L6qmG2h41bCA+88D/6o0OG8aBW3Pc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1UGTs/DC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s3cNKz8o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D22F11F000FF;
-	Sat, 12 Sep 2026 09:57:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1UGTs/DC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD2601F000FF;
+	Sat, 12 Sep 2026 09:57:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789207047;
-	bh=O2e6m6kKHsWwH31jf0Zv7up7jfPDinYrZzf7pGQVgwI=;
+	s=korg; t=1789207051;
+	bh=bnipUPcJS/BRrrOpwzS7zKH7HJYzz0foLq2e+S13aPE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=s3cNKz8owQ1jLgRSusJyzlbSJbbB58HsbCgjTZcHIrX5p1cMLqB2LCmINnRBeYNCF
-	 kyCrUhJ7y7WeLqCxYnWobFCE9bSPuY/Kj8UsJlyf0c4Vg7RwKff+8tNYN6lL4pX4/F
-	 fcROBaLbm7wnAxZfBd8FljyFSR/qwHP5D8lusxCA=
+	b=1UGTs/DCgTsTT/3m82e8Yw2tL1ayfbhfows0FE49NsouW6mUVwlXkqvhmS1RO+Vn7
+	 kl0ky5dInGQhD8upn/H5byl0DeU8prjKkJupBsnqUAj2A4nFldEFUu8dXYN7+Yk/PO
+	 QH7gxG0EZIdIf8BiH6uNOD3E2OMYTYNaKmLlfQnQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0333/1518] wifi: rtw89: pci: add to read PCI configuration space from common code
-Date: Sat, 12 Sep 2026 08:41:42 +0200
-Message-ID: <20260912065631.003955667@linuxfoundation.org>
+Subject: [PATCH 6.18 0334/1518] wifi: rtw89: fw: parse firmware element of DIAG_MAC
+Date: Sat, 12 Sep 2026 08:41:43 +0200
+Message-ID: <20260912065631.026144092@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,107 +52,107 @@ Content-Transfer-Encoding: 8bit
 
 From: Ping-Ke Shih <pkshih@realtek.com>
 
-[ Upstream commit dae8d7d63b740d8f5972b8438b139a6488e0f9fa ]
+[ Upstream commit de19cc7def5a9c646264a1e7a2a183a3baad112f ]
 
-Normally only access PCI device in pci.c. However for debug purpose,
-a set of registers predefined in firmware element including PCI
-configuration space should be read for diagnosis.
+The firmware element ID 28 is a set of rules to diagnose if MAC get
+abnormal. The latter patch will use these rules via debugfs to know
+the status.
+
+The element contains rules with their textual messages shown as below:
+
+   +------------------------------------+
+   |                                    |
+   |                +-----------+       |
+   |                | rule_size |-------|----------+
+   +----------------+-----------+-------+ --       |
+   |             rule[0]                |   \      |
+   |             rule[1]                |   |  <---+
+   |                :                   |   /
+   +------------------------------------+ --
+   | msg[0]      msg[1]                 |  each msg has variable length
+   |        msg[2]    msg[3] ...        |  (with address align 2)
+   | ...                                |
+   +------------------------------------+
 
 Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20251111022452.28093-2-pkshih@realtek.com
+Link: https://patch.msgid.link/20251111022452.28093-3-pkshih@realtek.com
 Stable-dep-of: 9bf6bd6ed5ac ("wifi: rtw89: 8852a: fix RSSI report when average beacon RSSI is not ready")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw89/core.h | 13 +++++++++++++
- drivers/net/wireless/realtek/rtw89/mac.h  |  2 --
- drivers/net/wireless/realtek/rtw89/pci.c  | 16 ++++++++++++++++
- 3 files changed, 29 insertions(+), 2 deletions(-)
+ drivers/net/wireless/realtek/rtw89/core.h |  1 +
+ drivers/net/wireless/realtek/rtw89/fw.c   | 15 +++++++++++++++
+ drivers/net/wireless/realtek/rtw89/fw.h   |  6 ++++++
+ 3 files changed, 22 insertions(+)
 
 diff --git a/drivers/net/wireless/realtek/rtw89/core.h b/drivers/net/wireless/realtek/rtw89/core.h
-index 30bc177808352..d3531630a7023 100644
+index d3531630a7023..3998a53b4ee90 100644
 --- a/drivers/net/wireless/realtek/rtw89/core.h
 +++ b/drivers/net/wireless/realtek/rtw89/core.h
-@@ -38,6 +38,8 @@ extern const struct ieee80211_ops rtw89_ops;
- #define RFREG_MASK 0xfffff
- #define INV_RF_DATA 0xffffffff
- #define BYPASS_CR_DATA 0xbabecafe
-+#define RTW89_R32_EA 0xEAEAEAEA
-+#define RTW89_R32_DEAD 0xDEADBEEF
- 
- #define RTW89_TRACK_WORK_PERIOD	round_jiffies_relative(HZ * 2)
- #define RTW89_TRACK_PS_WORK_PERIOD msecs_to_jiffies(100)
-@@ -3652,6 +3654,8 @@ struct rtw89_hci_ops {
- 	void (*write16)(struct rtw89_dev *rtwdev, u32 addr, u16 data);
- 	void (*write32)(struct rtw89_dev *rtwdev, u32 addr, u32 data);
- 
-+	u32 (*read32_pci_cfg)(struct rtw89_dev *rtwdev, u32 addr);
-+
- 	int (*mac_pre_init)(struct rtw89_dev *rtwdev);
- 	int (*mac_pre_deinit)(struct rtw89_dev *rtwdev);
- 	int (*mac_post_init)(struct rtw89_dev *rtwdev);
-@@ -6626,6 +6630,15 @@ rtw89_write_rf(struct rtw89_dev *rtwdev, enum rtw89_rf_path rf_path,
- 	mutex_unlock(&rtwdev->rf_mutex);
- }
- 
-+static inline u32 rtw89_read32_pci_cfg(struct rtw89_dev *rtwdev, u32 addr)
-+{
-+	if (rtwdev->hci.type != RTW89_HCI_TYPE_PCIE ||
-+	    !rtwdev->hci.ops->read32_pci_cfg)
-+		return RTW89_R32_EA;
-+
-+	return rtwdev->hci.ops->read32_pci_cfg(rtwdev, addr);
-+}
-+
- static inline struct ieee80211_txq *rtw89_txq_to_txq(struct rtw89_txq *rtwtxq)
- {
- 	void *p = rtwtxq;
-diff --git a/drivers/net/wireless/realtek/rtw89/mac.h b/drivers/net/wireless/realtek/rtw89/mac.h
-index 51e37c183a35e..1ac1d0cd79594 100644
---- a/drivers/net/wireless/realtek/rtw89/mac.h
-+++ b/drivers/net/wireless/realtek/rtw89/mac.h
-@@ -574,8 +574,6 @@ enum rtw89_mac_bf_rrsc_rate {
- 	RTW89_MAC_BF_RRSC_MAX = 32
+@@ -4705,6 +4705,7 @@ struct rtw89_fw_elm_info {
+ 	struct rtw89_phy_rfk_log_fmt *rfk_log_fmt;
+ 	const struct rtw89_regd_data *regd;
+ 	const struct rtw89_fw_element_hdr *afe;
++	const struct rtw89_fw_element_hdr *diag_mac;
  };
  
--#define RTW89_R32_EA		0xEAEAEAEA
--#define RTW89_R32_DEAD		0xDEADBEEF
- #define MAC_REG_POOL_COUNT	10
- #define ACCESS_CMAC(_addr) \
- 	({typeof(_addr) __addr = (_addr); \
-diff --git a/drivers/net/wireless/realtek/rtw89/pci.c b/drivers/net/wireless/realtek/rtw89/pci.c
-index 6c1f66e65497f..b24237c1e7df7 100644
---- a/drivers/net/wireless/realtek/rtw89/pci.c
-+++ b/drivers/net/wireless/realtek/rtw89/pci.c
-@@ -2071,6 +2071,20 @@ static void rtw89_pci_ops_write32(struct rtw89_dev *rtwdev, u32 addr, u32 data)
- 	writel(data, rtwpci->mmap + addr);
+ enum rtw89_fw_mss_dev_type {
+diff --git a/drivers/net/wireless/realtek/rtw89/fw.c b/drivers/net/wireless/realtek/rtw89/fw.c
+index 81cd3ea2c3b69..4191fbbc2161c 100644
+--- a/drivers/net/wireless/realtek/rtw89/fw.c
++++ b/drivers/net/wireless/realtek/rtw89/fw.c
+@@ -1299,6 +1299,18 @@ int rtw89_build_afe_pwr_seq_from_elm(struct rtw89_dev *rtwdev,
+ 	return 0;
  }
  
-+static u32 rtw89_pci_ops_read32_pci_cfg(struct rtw89_dev *rtwdev, u32 addr)
++static
++int rtw89_recognize_diag_mac_from_elm(struct rtw89_dev *rtwdev,
++				      const struct rtw89_fw_element_hdr *elm,
++				      const union rtw89_fw_element_arg arg)
 +{
-+	struct rtw89_pci *rtwpci = (struct rtw89_pci *)rtwdev->priv;
-+	struct pci_dev *pdev = rtwpci->pdev;
-+	u32 value;
-+	int ret;
++	struct rtw89_fw_elm_info *elm_info = &rtwdev->fw.elm_info;
 +
-+	ret = pci_read_config_dword(pdev, addr, &value);
-+	if (ret)
-+		return RTW89_R32_EA;
++	elm_info->diag_mac = elm;
 +
-+	return value;
++	return 0;
 +}
 +
- static void rtw89_pci_ctrl_dma_trx(struct rtw89_dev *rtwdev, bool enable)
- {
- 	const struct rtw89_pci_info *info = rtwdev->pci_info;
-@@ -4691,6 +4705,8 @@ static const struct rtw89_hci_ops rtw89_pci_ops = {
- 	.write16	= rtw89_pci_ops_write16,
- 	.write32	= rtw89_pci_ops_write32,
+ static const struct rtw89_fw_element_handler __fw_element_handlers[] = {
+ 	[RTW89_FW_ELEMENT_ID_BBMCU0] = {__rtw89_fw_recognize_from_elm,
+ 					{ .fw_type = RTW89_FW_BBMCU0 }, NULL},
+@@ -1387,6 +1399,9 @@ static const struct rtw89_fw_element_handler __fw_element_handlers[] = {
+ 	[RTW89_FW_ELEMENT_ID_AFE_PWR_SEQ] = {
+ 		rtw89_build_afe_pwr_seq_from_elm, {}, "AFE",
+ 	},
++	[RTW89_FW_ELEMENT_ID_DIAG_MAC] = {
++		rtw89_recognize_diag_mac_from_elm, {}, NULL,
++	},
+ };
  
-+	.read32_pci_cfg	= rtw89_pci_ops_read32_pci_cfg,
-+
- 	.mac_pre_init	= rtw89_pci_ops_mac_pre_init,
- 	.mac_pre_deinit	= rtw89_pci_ops_mac_pre_deinit,
- 	.mac_post_init	= rtw89_pci_ops_mac_post_init,
+ int rtw89_fw_recognize_elements(struct rtw89_dev *rtwdev)
+diff --git a/drivers/net/wireless/realtek/rtw89/fw.h b/drivers/net/wireless/realtek/rtw89/fw.h
+index 7c3cb6d85ca5d..98078a3ef89e6 100644
+--- a/drivers/net/wireless/realtek/rtw89/fw.h
++++ b/drivers/net/wireless/realtek/rtw89/fw.h
+@@ -3989,6 +3989,7 @@ enum rtw89_fw_element_id {
+ 	RTW89_FW_ELEMENT_ID_TXPWR_DA_LMT_RU_5GHZ = 25,
+ 	RTW89_FW_ELEMENT_ID_TXPWR_DA_LMT_RU_6GHZ = 26,
+ 	RTW89_FW_ELEMENT_ID_AFE_PWR_SEQ = 27,
++	RTW89_FW_ELEMENT_ID_DIAG_MAC = 28,
+ 
+ 	RTW89_FW_ELEMENT_ID_NUM,
+ };
+@@ -4166,6 +4167,11 @@ struct rtw89_fw_element_hdr {
+ 				__le32 val;
+ 			} __packed infos[];
+ 		} __packed afe;
++		struct {
++			__le32 rule_size;
++			u8 rsvd[4];
++			u8 rules_and_msgs[];
++		} __packed diag_mac;
+ 		struct __rtw89_fw_txpwr_element txpwr;
+ 		struct __rtw89_fw_regd_element regd;
+ 	} __packed u;
 -- 
 2.53.0
 
