@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B350A2264AB;
-	Sat, 12 Sep 2026 16:29:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F33F7479863;
+	Sat, 12 Sep 2026 16:30:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789230596; cv=none; b=Sjt55+b8OBTY9OS4f89+YAqGpDgBqJ2llKsnuKN9Fgsnk0pf3Y2bVupIWbcX5tVNed3gMyzkcS0HuYWXnZvk5QGkI/9IYPc1ejdIIk7EptURbyulF4lSJuVUi1VmlaM4JIQvv1gFMnjB/9LLjHqaJFcwVh1Vh6aOyWzCgFrSHgE=
+	t=1789230604; cv=none; b=RfZmqiRti9hjeJmEC+9PNwcGS6II30x6PiP44ft/vwvQZySqmY1rNlKTOHKn1SzWVN8tYkiqAgDIReKT42sJM4QYFIW4SpRumuuWpt2iVO3eMpiLu6T7dko08FZu7slnmp1rYgBdMOo7J1sTMYbtmUOKRqdbVe78QAeqymGEbdk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789230596; c=relaxed/simple;
-	bh=U2FjVDTn13TfniY4EkMR7lGML4B9dZgRxvQ02kIdWO8=;
+	s=arc-20240116; t=1789230604; c=relaxed/simple;
+	bh=0jZjoEcNAn3fUqevCr6opbllmP5PaKfiBxhtQ6xBwGU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jjY8viZP8x/0hQ4xBEZ9/2HF9rVbiANXh7AK0bx5Tvw0q9w7fboAEgBPaq1FZVvME9Qx7R+u42xD3DHnRkJujZUMz7ClN6TQoju4fDFahZv3a+4c1Cl/TUQ5ng4y+BaI6hhTM93+AzhzSFB7NA4xh5gj5CS/hKdysNfh/0eWMQk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=039hHhKe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ehBzuUwQMQvqlrUh2dKmB3UADsUXPRG0TFNxgiWmR+ZkTSF1fxysEKksxA86ee0fuDiD3k3OUr3z8CZD4GBAJEJ11wSNabF9rTNFVfhAo8PrtpMvPL+QUclpHbSndl2MAHCnMb73gkC44VYAf0TmDf5IZpQtMleQbL9mUS3fNkE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YQz66AWf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="039hHhKe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B13231F000FF;
-	Sat, 12 Sep 2026 16:29:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YQz66AWf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04F011F000FF;
+	Sat, 12 Sep 2026 16:29:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789230595;
-	bh=RFL8Z/KXAKzx9vbXF/i38E0U0u4n6UnQ8EGBbBR3OSA=;
+	s=korg; t=1789230600;
+	bh=2diYo0HfCnS3QkGl3S1cif1B77Bm8cNB1LGtOxUOtZE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=039hHhKezpd4b3Uq57p2f8j/S6/ivJKgJmS8T6IsNjsoFxtVHrDx1b+ERwwaGUlzy
-	 vi2EaqjuRPU+EnUoxJvrTTLyy9/q3JekF+eJifXy5+2po47lRFTBRLGRyGZ2QqNnWM
-	 lm5zJKMKDkFcW0+/S6HikXfjYKvdMHlmsVLrPa+I=
+	b=YQz66AWfsMTErID2t2N787MVNaG/KXfUA/DvtdLkCgY7jB2zQESBNVUh8ObfIYAEd
+	 OBoCNoiM3TYtD/f8shuGO+mSuadxG1dW9yj4a4qt//0JQIksQDSxKbC00fbh8xDfLL
+	 cVb39xAcea/0Q+vBo7sraTitjqmN1oFpilOVcLl4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Fietkau <nbd@nbd.name>,
+	Linghui Wu <linghui.wu@oss.qualcomm.com>,
+	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0824/1191] wifi: mt76: mt7915: release hif2 reference on probe IRQ failure
-Date: Sat, 12 Sep 2026 08:59:12 +0200
-Message-ID: <20260912065606.773855563@linuxfoundation.org>
+Subject: [PATCH 6.1 0825/1191] wifi: ath10k: snoc: use memcpy_fromio() for MSA ramdump
+Date: Sat, 12 Sep 2026 08:59:13 +0200
+Message-ID: <20260912065606.797136967@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -50,51 +53,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Linghui Wu <linghui.wu@oss.qualcomm.com>
 
-[ Upstream commit 8370aebd26a9dfa2e0de665e3ab504c0e97ee730 ]
+[ Upstream commit 4f25071afe9218aaae1c63fbf75e229aa6405319 ]
 
-The hif2 reference obtained by mt7915_pci_init_hif2() is only released on
-error paths that key off dev->hif2, which is not assigned until after the
-IRQ setup. If pci_alloc_irq_vectors() or the primary devm_request_irq()
-fails, the reference leaks. Drop it explicitly on those paths via
-mt7915_put_hif2().
+On WCN3990/SNOC the MSA region is mapped with devm_memremap(MEMREMAP_WT).
+On arm64 such a mapping is not Normal-cacheable, so unaligned accesses to
+it are not permitted. ath10k_msa_dump_memory() copies the region with a
+plain memcpy(), whose optimized __pi_memcpy_generic implementation issues
+wide/unaligned loads. This triggers an alignment fault (FSC=0x21) Oops in
+ath10k_snoc_fw_crashed_dump() while collecting the devcoredump:
 
-Fixes: f68d67623dec ("mt76: mt7915: add Wireless Ethernet Dispatch support")
-Link: https://patch.msgid.link/20260727150434.1778520-4-nbd@nbd.name
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+  Unable to handle kernel paging request ... FSC=0x21: alignment fault
+  pc : __pi_memcpy_generic
+  lr : ath10k_snoc_fw_crashed_dump [ath10k_snoc]
+
+The Oops both leaves the firmware RAM dump buffer zeroed (no dump is
+captured) and crashes the kernel, which in turn breaks modem SSR
+recovery.
+
+Use memcpy_fromio(), which only performs accesses that are valid for such
+a device-memory mapping. The generic memcpy_fromio() implementation aligns
+the source before issuing word-sized reads and stores the destination with
+put_unaligned(), so it is also safe for the coherent DMA allocation used on
+the non-reserved-memory path. ath11k and ath12k use the same pattern
+when copying target memory into crash dumps, so call it unconditionally
+here too.
+The MEMREMAP_WT pointer is a plain void *, so an explicit __iomem cast is
+needed; use __force to keep sparse happy.
+
+Tested-on: WCN3990 hw1.0 SNOC WLAN.HL.3.3.7.c5-00107-QCAHLSWMTPL-1
+
+Fixes: 3f14b73c3843 ("ath10k: Enable MSA region dump support for WCN3990")
+Signed-off-by: Linghui Wu <linghui.wu@oss.qualcomm.com>
+Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260727072629.2297208-1-linghui.wu@oss.qualcomm.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7915/pci.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/net/wireless/ath/ath10k/snoc.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/pci.c b/drivers/net/wireless/mediatek/mt76/mt7915/pci.c
-index 8e125daa90747..e8b3dda2e2404 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7915/pci.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7915/pci.c
-@@ -143,16 +143,20 @@ static int mt7915_pci_probe(struct pci_dev *pdev,
- 		hif2 = mt7915_pci_init_hif2(pdev);
+diff --git a/drivers/net/wireless/ath/ath10k/snoc.c b/drivers/net/wireless/ath/ath10k/snoc.c
+index b43658b016844..9e6e614c0a2b2 100644
+--- a/drivers/net/wireless/ath/ath10k/snoc.c
++++ b/drivers/net/wireless/ath/ath10k/snoc.c
+@@ -5,6 +5,7 @@
  
- 		ret = pci_alloc_irq_vectors(pdev, 1, 1, PCI_IRQ_ALL_TYPES);
--		if (ret < 0)
-+		if (ret < 0) {
-+			mt7915_put_hif2(hif2);
- 			goto free_device;
-+		}
+ #include <linux/bits.h>
+ #include <linux/clk.h>
++#include <linux/io.h>
+ #include <linux/kernel.h>
+ #include <linux/module.h>
+ #include <linux/of.h>
+@@ -1451,11 +1452,15 @@ static void ath10k_msa_dump_memory(struct ath10k *ar,
+ 	hdr->length = cpu_to_le32(ar->msa.mem_size);
  
- 		irq = pdev->irq;
+ 	if (current_region->len < ar->msa.mem_size) {
+-		memcpy(buf, ar->msa.vaddr, current_region->len);
++		memcpy_fromio(buf,
++			      (const void __iomem __force *)ar->msa.vaddr,
++			      current_region->len);
+ 		ath10k_warn(ar, "msa dump length is less than msa size %x, %x\n",
+ 			    current_region->len, ar->msa.mem_size);
+ 	} else {
+-		memcpy(buf, ar->msa.vaddr, ar->msa.mem_size);
++		memcpy_fromio(buf,
++			      (const void __iomem __force *)ar->msa.vaddr,
++			      ar->msa.mem_size);
  	}
+ }
  
- 	ret = devm_request_irq(mdev->dev, irq, mt7915_irq_handler,
- 			       IRQF_SHARED, KBUILD_MODNAME, dev);
--	if (ret)
-+	if (ret) {
-+		mt7915_put_hif2(hif2);
- 		goto free_wed_or_irq_vector;
-+	}
- 
- 	/* master switch of PCIe tnterrupt enable */
- 	mt76_wr(dev, MT_PCIE_MAC_INT_ENABLE, 0xff);
 -- 
 2.53.0
 
