@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2907419FC9;
-	Sat, 12 Sep 2026 10:31:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C702F34AB14;
+	Sat, 12 Sep 2026 10:31:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789209081; cv=none; b=sIuzWJ4zyWtMZ7hNoL1/tu+ppBOyIOhkBDAshYhtszspV0LserrrAZFCwded5ybC576fosft5/ap24UwA4R38eTAelfEj8ZPosEs6U9qKwWauEuuy4pS1vbyAdiUMYIM901vxxmEovEYBH39hS9r/WF6JJIMQwb/NmbuBhptkTM=
+	t=1789209085; cv=none; b=SVejEVKdJ6JjJBL34TU7fzRTovb+giMQbZfe/BCFABjchdW/CRd5mzVICXm9GqFX+uqZmifbW1L7IE+pLR0BTDGpLnxwORrNkcBBmYO0D5PhD0ulblRORmxtwNX3v7KFLOmPHGzwbDhIE52wH0EnRzp0QB+w4aNV6sdC/KOuE3U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789209081; c=relaxed/simple;
-	bh=KlvKcP/i1HncgkxCV0mAfFwugvwgSvFL2LPWD1BHokc=;
+	s=arc-20240116; t=1789209085; c=relaxed/simple;
+	bh=oYAhfMykFKBKxMdBh3fgWVie9UUEFqF4h1/LOuwJryE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vku2FdBoBTFV56plgM5XmsLRETKV+juNHenC7kd1LiUeVKNttbfg69Pa0HMh8iyuqYQMka3sByzLoZYszf/eNa8Gbi1evh1KR7tlLObPkTpscXbRujJbaEVGUbq3HWUqhgy0jJPwtPXUOKzlfxXNumyxIu33P1/EVVRLhMEiJRk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DN4ba6T5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NnReoiI2GCTayF26Bnq7sjNwXWMRWOlY8YhgDFPBVP5EG+kPNusToTNFzSwYnmTCP1oz6pY4yA7eUBMqb9xZ+0EnKWWPlhq8X4rlp49awu76Zoks+BnrNoWPSvHEe2wyGiR31HFQV9wv+BhDS0R5tBn9ScODv62GBaLmB4gfouc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O7VH/3CW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DN4ba6T5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95DA91F000FF;
-	Sat, 12 Sep 2026 10:31:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O7VH/3CW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0DCA1F000FF;
+	Sat, 12 Sep 2026 10:31:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789209079;
-	bh=WGudW7px5ba6umHqntyBuYbcn66fhWz1NFmN3DsW4rU=;
+	s=korg; t=1789209084;
+	bh=HFJDLEsKt1hesTQES7HMYqHLXbKDN0rVP+/toZVdiUQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DN4ba6T5o583c9v+MUjHwjrRgKW5iaxiKhshNOt1yEjlXV/tiyiA8o12bTHiAWH18
-	 ViyXk7S5dWHDLZfTZIUlEnFhl0Q7A/GE+pv2FY7F1eYkf7h22q8cXrEin9XeQ7wQEz
-	 c88lCaAngC63TQ3/FmHHE2X8V7uqAvtGoGAnK2n0=
+	b=O7VH/3CWLKnhfHpPktvCYUt9lUvia3bqb6ye2iYpN/Ymw2Udb0Y8qG4MhCMiVjpz2
+	 nkeZg/RhvRmXnjilf3S30/50hZDV7ms1RMAYeKY8YvG29YU+oP8J8QOsoPC4zAnsS2
+	 B5RUHNDRZ8Cz4N45dxe9kkcHjrqvHySZjTNIYz5w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0749/1518] wifi: mt76: mt7996: dont report a zero TX bitrate
-Date: Sat, 12 Sep 2026 08:48:38 +0200
-Message-ID: <20260912065640.375345119@linuxfoundation.org>
+Subject: [PATCH 6.18 0750/1518] wifi: mt76: mt7915: write RX header translation bit to the correct register
+Date: Sat, 12 Sep 2026 08:48:39 +0200
+Message-ID: <20260912065640.397805191@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,34 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit d4d92ccded678c92c390003926097ddbb6516bc7 ]
+[ Upstream commit 236145737480c4c0c515e09061d0d5f77cf52d3f ]
 
-mt7996_sta_statistics() set NL80211_STA_INFO_TX_BITRATE unconditionally
-after the block that already sets it, so a station with no rate info yet
-was reported to userspace with a valid-but-zero TX rate. Drop the
-redundant unconditional assignments; the in-block ones are sufficient.
+MT_MDP_DCR0_RX_HDR_TRANS_EN is a field of MT_MDP_DCR0, but monitor-mode
+handling applied it to the per-band MT_DMA_DCR0 register instead. As a
+result RX header translation was never disabled in the MDP when entering
+monitor mode, and an undocumented bit of MT_DMA_DCR0 was toggled. Target
+MT_MDP_DCR0, matching the mt7996 driver.
 
-Fixes: b34f346b917e ("wifi: mt76: mt7996: drop return in mt7996_sta_statistics")
-Link: https://patch.msgid.link/20260722082610.2699628-10-nbd@nbd.name
+Fixes: b2491018587a ("wifi: mt76: mt7915: fix monitor mode issues")
+Link: https://patch.msgid.link/20260722082610.2699628-11-nbd@nbd.name
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7996/main.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7915/main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/main.c b/drivers/net/wireless/mediatek/mt76/mt7996/main.c
-index 103851e011583..840a0b7dd20c5 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/main.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/main.c
-@@ -1733,8 +1733,6 @@ static void mt7996_sta_statistics(struct ieee80211_hw *hw,
- 		sinfo->txrate.flags = txrate->flags;
- 		sinfo->filled |= BIT_ULL(NL80211_STA_INFO_TX_BITRATE);
- 	}
--	sinfo->txrate.flags = txrate->flags;
--	sinfo->filled |= BIT_ULL(NL80211_STA_INFO_TX_BITRATE);
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/main.c b/drivers/net/wireless/mediatek/mt76/mt7915/main.c
+index d6d90d305ab91..4b11e0845f568 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/main.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/main.c
+@@ -493,7 +493,7 @@ static int mt7915_config(struct ieee80211_hw *hw, int radio_idx,
  
- 	sinfo->tx_failed = msta_link->wcid.stats.tx_failed;
- 	sinfo->filled |= BIT_ULL(NL80211_STA_INFO_TX_FAILED);
+ 		mt76_rmw_field(dev, MT_DMA_DCR0(band), MT_DMA_DCR0_RXD_G5_EN,
+ 			       enabled);
+-		mt76_rmw_field(dev, MT_DMA_DCR0(band), MT_MDP_DCR0_RX_HDR_TRANS_EN,
++		mt76_rmw_field(dev, MT_MDP_DCR0, MT_MDP_DCR0_RX_HDR_TRANS_EN,
+ 			       !dev->monitor_mask);
+ 		mt76_testmode_reset(phy->mt76, true);
+ 		mt76_wr(dev, MT_WF_RFCR(band), rxfilter);
 -- 
 2.53.0
 
