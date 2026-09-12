@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2229D4BEE38;
-	Sat, 12 Sep 2026 16:19:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A83104BEE43;
+	Sat, 12 Sep 2026 16:19:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789229969; cv=none; b=c5/oZ2CjfTW1RMUXG4zKUOMlhZEiu7yUdnqswPNjzLVf1anguu9/BJ/Ssb9EQeuiKk+S/nPnRr62KFgMXfaJ52kitwXLrn1XqxoKDmsa2Jhv1coirPwZTt9RWrInsUwJeaUYXfyX2C86IFyYnU1yisqyrqEBNX5pkI/nJTBv4CM=
+	t=1789229973; cv=none; b=CcIzBnTmUmZDQavZdEtOsQkPxA66XSpcqhZXtlOgvmYTrNSmS7wRqvEywUAVrFv8bQr1ueMBavhjdE3aJsKxr9zwpvUT/6q2dzkZL+HKO4ogNSCN+r3w4n5w3BDraFiuI3V/I/hPsw8An5vF31BhnqoSaPbsRhbiBYVAUqMJ5Qw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789229969; c=relaxed/simple;
-	bh=RO7x1QIHkbkQfCRCWD4IvKTtAOikaYhmEZZQtx6ioLQ=;
+	s=arc-20240116; t=1789229973; c=relaxed/simple;
+	bh=Kikr3DLV3gBs8HJiIXsiXQ843g7Oc5lS/QN6tQw463c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TaIZJ9fVWqaK09rS7I0kDIVEDAqklroMcnb2ms0xfr5t2VfEXo/0cL1sjvdTlu23WmpBhYhROrhyta8AxHPmwFR2ELKwxqsEm6mdX70wJQb9fvCC58h/3NNpUXjwK5pD7i84i06+YxWuGltREpe6VK9ZEVi/X3eV/Csjq5ahaDs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c1y28iUa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=m/0jlpQ0Dm6bve8zaVElC9M44gMLrqNAhVA7hVrd4R/hYSrR1ZL+cD6GVJjfzx3aM6HH+CUsc3Z5Du5TSCEbFaFP8ZqDfDWf30ZIeJ0MvvqJZr5UsNEsWMZioJQPpt5oEWC1xLSvlSexW0qOrEoKtj6+bIcMEPYMq2fN/yY+6os=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XG6vLKG6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c1y28iUa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 784511F000FF;
-	Sat, 12 Sep 2026 16:19:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XG6vLKG6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEE631F000FF;
+	Sat, 12 Sep 2026 16:19:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789229967;
-	bh=arGEmzn5orUsYHS9otGEZDTDipfwU5DWXUbti2PWYz8=;
+	s=korg; t=1789229972;
+	bh=aVzg/mg172pLLiSrDIGXT2WQV+qUuWurowAQpNmmM6k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=c1y28iUaJgzujGA4IkqferN/3/SJ7FUdLgqgSYgpDamC5y0+aBE+/EcOP1dKozmGH
-	 VCb7o1IZAA9Fi7PcrNuJVsXkFAWtk0Pht45h/dSYIU5OEFgg2micVkilogmJaPT0uT
-	 dIb4epwpn1dpRbKZXqYfEuMq3KwpDLxGmabcH37o=
+	b=XG6vLKG6ogZUcldnkwudAxBgq4oubN9ZjKxFhctFUFRCjvfrs1YcfJVGYdKB+S+pb
+	 TG3aqzfKFBj4R1lcj0y0YqCzAXHLM8cOz2nRTG1mD2ARhHr/rVp/4twPjpS0ILHco6
+	 ejlSZQa/1gdVd07CYNFGctrFJgpYHH/zMIu5p3mU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Patrisious Haddad <phaddad@nvidia.com>,
-	Michael Guralnik <michaelgur@nvidia.com>,
-	Edward Srouji <edwards@nvidia.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0691/1191] RDMA/core: Fix potential use after free in counter_release()
-Date: Sat, 12 Sep 2026 08:56:59 +0200
-Message-ID: <20260912065603.780527139@linuxfoundation.org>
+Subject: [PATCH 6.1 0700/1191] wifi: ath11k: Correctly copy the hint BSSID in WMI scan request
+Date: Sat, 12 Sep 2026 08:57:08 +0200
+Message-ID: <20260912065603.987837597@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -53,65 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Patrisious Haddad <phaddad@nvidia.com>
+From: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 
-[ Upstream commit 235ef2d0e750885c29340b0fc40620a7a4f52e12 ]
+[ Upstream commit 6fe2dddf59bbb2a96be0fcf23a205807b25ac173 ]
 
-When accessing a counter via the netlink path the only synchronization
-mechanism for the said counter is rdma_restrack_get().
-Currently, rdma_restrack_del() is invoked at the end of
-counter_release(), which is too late, since by that point
-vendor-specific resources associated with the counter might already be
-freed. This can leave a short window where the counter remains
-accessible through restrack, leading to a potential use-after-free.
+Currently, in ath11k_wmi_send_scan_start_cmd(), the logic to populate
+the hint_bssid copies the BSSID in the wrong direction, from the
+firmware message to the argument buffer. Swap the parameters so that
+the BSSID is correctly populated in the firmware message from the
+argument buffer.
 
-Fix this by moving the rdma_restrack_del() call to be before the
-freeing of the vendor-specific resources, ensuring that the counter is
-removed from restrack before its internal resources are released.
-This guarantees that no new users hold references to a counter that is
-in the process of destruction.
+This issue was reported on ath12k, but exists in ath11k as well.
 
-Fixes: 99fa331dc862 ("RDMA/counter: Add "auto" configuration mode support")
-Signed-off-by: Patrisious Haddad <phaddad@nvidia.com>
-Reviewed-by: Michael Guralnik <michaelgur@nvidia.com>
-Signed-off-by: Edward Srouji <edwards@nvidia.com>
-Link: https://patch.msgid.link/20260713-restrack-uaf-fix-resub-v2-5-bbe8bb270d51@nvidia.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Compile tested only.
+
+Reported-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Closes: https://lore.kernel.org/linux-wireless/afbff608-a005-43c4-af76-968a58bf0cc3@oss.qualcomm.com/
+Fixes: 74601ecfef6e ("ath11k: Add support for 6g scan hint")
+Assisted-by: Claude:claude-sonnet-4-6
+Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260713-ath12k_wmi_send_scan_start_cmd-bad-hint_bssid-v1-2-4ffc4a472992@oss.qualcomm.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/counters.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/net/wireless/ath/ath11k/wmi.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/core/counters.c b/drivers/infiniband/core/counters.c
-index d41af5ab6403a..8cbca897fc531 100644
---- a/drivers/infiniband/core/counters.c
-+++ b/drivers/infiniband/core/counters.c
-@@ -217,7 +217,6 @@ static void rdma_counter_free(struct rdma_counter *counter)
- 
- 	mutex_unlock(&port_counter->lock);
- 
--	rdma_restrack_del(&counter->res);
- 	rdma_free_hw_stats_struct(counter->stats);
- 	kfree(counter);
- }
-@@ -312,6 +311,7 @@ static void counter_release(struct kref *kref)
- 
- 	counter = container_of(kref, struct rdma_counter, kref);
- 	counter_history_stat_update(counter);
-+	rdma_restrack_del(&counter->res);
- 	counter->device->ops.counter_dealloc(counter);
- 	rdma_counter_free(counter);
- }
-@@ -472,7 +472,8 @@ static struct rdma_counter *rdma_get_counter_by_id(struct ib_device *dev,
- 		return NULL;
- 
- 	counter = container_of(res, struct rdma_counter, res);
--	kref_get(&counter->kref);
-+	if (!kref_get_unless_zero(&counter->kref))
-+		counter = NULL;
- 	rdma_restrack_put(res);
- 
- 	return counter;
+diff --git a/drivers/net/wireless/ath/ath11k/wmi.c b/drivers/net/wireless/ath/ath11k/wmi.c
+index 31128630d8b62..2ce3f355ecac5 100644
+--- a/drivers/net/wireless/ath/ath11k/wmi.c
++++ b/drivers/net/wireless/ath/ath11k/wmi.c
+@@ -2325,8 +2325,8 @@ int ath11k_wmi_send_scan_start_cmd(struct ath11k *ar,
+ 		for (i = 0; i < params->num_hint_bssid; ++i) {
+ 			hint_bssid->freq_flags =
+ 				params->hint_bssid[i].freq_flags;
+-			ether_addr_copy(&params->hint_bssid[i].bssid.addr[0],
+-					&hint_bssid->bssid.addr[0]);
++			ether_addr_copy(&hint_bssid->bssid.addr[0],
++					&params->hint_bssid[i].bssid.addr[0]);
+ 			hint_bssid++;
+ 		}
+ 	}
 -- 
 2.53.0
 
