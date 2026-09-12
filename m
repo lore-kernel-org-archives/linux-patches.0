@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD05134752E;
-	Sat, 12 Sep 2026 09:29:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40B3D356742;
+	Sat, 12 Sep 2026 09:29:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789205364; cv=none; b=CXJiKMUuij/8uci/j3Vr1a1x8Lc7omL3MU2ylFLg+s8GrPR9jTee0m6/TZn8SWB1wc+wwjtfL88Bq3TfOlpXQNwzsOcRlS+Wwylql/XMn1TkURnJJuRoSWNzVVv9s/nemMWdRTL+QrhUkTbKG18cVPhQKIhIvGB1pg6qyjIiOLI=
+	t=1789205368; cv=none; b=FjJ4CdyeK1vXwiVtjNNahi+YKXRful2jPQWRjjjS9r8BIHtogwlMoV3F4jyAGO7Qgp3S//Vi5iJHOhmJm2mjc3iEOzn26pWfEDWsxTU+IQw5jnJXkRpMnYEa3zLM60pWJplmWOPcrQB00aQmeTBerdWJvqLjAknhWRlz6aLYoT4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789205364; c=relaxed/simple;
-	bh=Rw9/C9zC6naZ4t/ZLtY2BsLQLNrs4sKHIEoZ9pIvW74=;
+	s=arc-20240116; t=1789205368; c=relaxed/simple;
+	bh=XMa4tT/oSTLC2h6keRsrMJKd2pabdpzjsqj0yMMjgw0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HJzeAAxRoBZBtlH4En/qZKRtgr124Zfon1fnm9d0ACvxIfxv0sYndi6dal8P0jQb3m9oGVlj46pckxlEbq7p+BTLbQwVgqeSPRBCxOWOWldxQ0nWGw+0xS3u1nIBRQjtGY9Lg8N1qrdQRk4KtJAhR0pARFNuCK06nQ0v4mOHC6g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DtRnK3Yr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nihYAR1zLabihkjKgfU7HZgpOQ6TW6aDO26vyDhb333c4XpQ5yGvzo5vkkO/EOmHoujVrEyxc1dGwaZRTEU4JpKyGiu7lHYxly0N+aAcVqVWyFyppMYn6RvHlvDvo/jxU/fUBbdr7CvswvCJILPnigYSjL40jZtsawsTawgimu4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wVJUO9h+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DtRnK3Yr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F3481F000FF;
-	Sat, 12 Sep 2026 09:29:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wVJUO9h+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E9D21F000FF;
+	Sat, 12 Sep 2026 09:29:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789205362;
-	bh=EhQ8fEDJluPENzxHqxA02L9qjwSQMi6JfKYMUhdhY34=;
+	s=korg; t=1789205367;
+	bh=HDmhKBQegRjmlqSjjpJ2XufhUEjHUddRJT2JEa4AwzE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DtRnK3Yr+2DQGb/J2QlHJbb0UY7AANNepGkGAQsYef2dKBHn4n2AdC/WboM4oQpDh
-	 VjlioBquUu6u4ZKyEAQI4I7lyZ84Lwi4DUfQdXtWXOn8kSs4v5vLnsPtQRogS4WFfd
-	 eDwqkogiitUZDRuu6YZ9zJyIKARxdExg1pqpfS9g=
+	b=wVJUO9h+dEYkZTiK8xk0N7yo7IN+psENaxsO7t8ScEounuDfR7JETLJVO6W9wsy/x
+	 QVxxQucWLlOsurpGN5cLLVDy5A6DYUk1juXeUXau25HrQvw7L0pxXl1j4TnHyq5Veu
+	 edIWo/CMPX2bHgE0R5c3uSXJH+cDYrelyAeflwqs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	Andrew Lunn <andrew@lunn.ch>,
+	Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1802/1815] net: stmmac: selftests: Dont test flow control for small rx fifos
-Date: Sat, 12 Sep 2026 08:59:12 +0200
-Message-ID: <20260912065731.339804402@linuxfoundation.org>
+Subject: [PATCH 7.2 1803/1815] net: stmmac: drop gso_enabled_types and rely on netdev features
+Date: Sat, 12 Sep 2026 08:59:13 +0200
+Message-ID: <20260912065731.363018225@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,68 +51,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maxime Chevallier <maxime.chevallier@bootlin.com>
+From: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
 
-[ Upstream commit 96e8cb5527ce50c024a8e2d22d2bfedeccaf97d0 ]
+[ Upstream commit 9c24a504a3af1acb96da8d6a45a373fda8a9c687 ]
 
-On dwmac1000, dwmac4 and dwxgmac, we only emit pause frames if there's
-at least 4096 bytes in each queue's fifo.
+The gso_enabled_types field is used by stmmac_xmit() to decide whether a
+GSO skb should be passed to stmmac_tso_xmit(). It is updated in
+stmmac_set_features() based solely on NETIF_F_TSO, so disabling IPv4
+TSO while keeping IPv6 TSO (NETIF_F_TSO6) enabled zeroes the mask. As a
+result IPv6 GSO frames, which the networking stack still generates since
+NETIF_F_TSO6 is enabled, fall through to the non-TSO xmit path where
+they are not handled.
 
-The phylink mac capabilities are still MAC_ASYM_PAUSE | MAC_SYM_PAUSE as
-otherwise we won't be able to negotiate 'rx on' pause. ASYM only will
-prevent negotiating 'rx off tx on', while SYM only doesn't really
-matche the reality (not symmetric if we can only do RX pause).
+The networking stack already manages the GSO logic: a GSO skb is only
+delivered to the driver when the matching offload feature (NETIF_F_TSO,
+NETIF_F_TSO6 or NETIF_F_GSO_UDP_L4) is enabled, otherwise the frame is
+segmented in software before reaching ndo_start_xmit().
+stmmac_features_check() also validates each GSO frame against the TSO
+hardware constraints and falls back to software GSO when they are not met.
 
-Fixes: 091810dbded9 ("net: stmmac: Introduce selftests support")
-Signed-off-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20260826140500.616466-7-maxime.chevallier@bootlin.com
+Drop the gso_enabled_types field and rely on skb_is_gso() in
+stmmac_xmit() instead, which correctly routes IPv6 GSO frames to the TSO
+path when NETIF_F_TSO is disabled. This also removes the data race
+between stmmac_set_gso_types(), called from the feature-set path, and
+the lockless read of gso_enabled_types in stmmac_xmit().
+
+Fixes: 2e4082e4b739 ("net: stmmac: simplify GSO/TSO test in stmmac_xmit()")
+Signed-off-by: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260824-stmmac-fix-tso6-features-v3-1-c73a7a4a0ec7@oss.qualcomm.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/stmicro/stmmac/stmmac_selftests.c   | 16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/stmmac.h  |  2 --
+ .../net/ethernet/stmicro/stmmac/stmmac_main.c | 19 +------------------
+ 2 files changed, 1 insertion(+), 20 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
-index 5e99d8ca773d8..f97f32369e903 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
-@@ -759,12 +759,24 @@ static int stmmac_test_flowctrl(struct stmmac_priv *priv)
- 	struct phy_device *phydev = priv->dev->phydev;
- 	u32 rx_cnt = priv->plat->rx_queues_to_use;
- 	struct stmmac_test_priv *tpriv;
-+	unsigned int rx_fifo_size;
- 	unsigned int pkt_count;
- 	int i, ret = 0;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac.h b/drivers/net/ethernet/stmicro/stmmac/stmmac.h
+index 8ba8f03e1ce03..7582fca637419 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac.h
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac.h
+@@ -265,8 +265,6 @@ struct stmmac_priv {
+ 	u32 rx_coal_frames[MTL_MAX_RX_QUEUES];
  
- 	if (!phydev || (!phydev->pause && !phydev->asym_pause))
- 		return -EOPNOTSUPP;
+ 	int hwts_tx_en;
+-	/* skb_shinfo(skb)->gso_type types that we handle */
+-	unsigned int gso_enabled_types;
+ 	bool tx_path_in_lpi_mode;
+ 	bool sph_active;
+ 	bool sph_capable;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+index a8c1bfeab813c..33cb2067be0aa 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -4376,18 +4376,6 @@ static void stmmac_flush_tx_descriptors(struct stmmac_priv *priv, int queue)
+ 	stmmac_set_queue_tx_tail_ptr(priv, tx_q, queue, tx_q->cur_tx);
+ }
  
-+	rx_fifo_size = priv->plat->rx_fifo_size;
-+	if (!rx_fifo_size)
-+		rx_fifo_size = priv->dma_cap.rx_fifo_size;
-+
-+	/* No pause frame is emitted if we don't have at least 4096 bytes per
-+	 * queue, except on dwmac100.
-+	 */
-+	if (priv->plat->core_type != DWMAC_CORE_MAC100 &&
-+	    rx_fifo_size / priv->plat->rx_queues_to_use < 4096)
-+		return -EOPNOTSUPP;
-+
- 	tpriv = kzalloc_obj(*tpriv);
- 	if (!tpriv)
- 		return -ENOMEM;
-@@ -778,9 +790,7 @@ static int stmmac_test_flowctrl(struct stmmac_priv *priv)
- 	dev_add_pack(&tpriv->pt);
+-static void stmmac_set_gso_types(struct stmmac_priv *priv, bool tso)
+-{
+-	if (!tso) {
+-		priv->gso_enabled_types = 0;
+-	} else {
+-		/* Manage oversized TCP frames for GMAC4 device */
+-		priv->gso_enabled_types = SKB_GSO_TCPV4 | SKB_GSO_TCPV6;
+-		if (priv->plat->core_type == DWMAC_CORE_GMAC4)
+-			priv->gso_enabled_types |= SKB_GSO_UDP_L4;
+-	}
+-}
+-
+ static void stmmac_set_gso_features(struct net_device *ndev)
+ {
+ 	struct stmmac_priv *priv = netdev_priv(ndev);
+@@ -4421,8 +4409,6 @@ static void stmmac_set_gso_features(struct net_device *ndev)
+ 	if (priv->plat->core_type == DWMAC_CORE_GMAC4)
+ 		ndev->hw_features |= NETIF_F_GSO_UDP_L4;
  
- 	/* Compute minimum number of packets to make FIFO full */
--	pkt_count = priv->plat->rx_fifo_size;
--	if (!pkt_count)
--		pkt_count = priv->dma_cap.rx_fifo_size;
-+	pkt_count = rx_fifo_size;
- 	pkt_count /= 1400;
- 	pkt_count *= 2;
+-	stmmac_set_gso_types(priv, true);
+-
+ 	dev_info(priv->device, "TSO feature enabled\n");
+ }
  
+@@ -4770,8 +4756,7 @@ static netdev_tx_t stmmac_xmit(struct sk_buff *skb, struct net_device *dev)
+ 	if (priv->tx_path_in_lpi_mode && priv->eee_sw_timer_en)
+ 		stmmac_stop_sw_lpi(priv);
+ 
+-	if (skb_is_gso(skb) &&
+-	    skb_shinfo(skb)->gso_type & priv->gso_enabled_types)
++	if (skb_is_gso(skb))
+ 		return stmmac_tso_xmit(skb, dev);
+ 
+ 	if (priv->est && priv->est->enable &&
+@@ -6203,8 +6188,6 @@ static int stmmac_set_features(struct net_device *netdev,
+ 			stmmac_enable_sph(priv, priv->ioaddr, sph_en, chan);
+ 	}
+ 
+-	stmmac_set_gso_types(priv, features & NETIF_F_TSO);
+-
+ 	if (features & NETIF_F_HW_VLAN_CTAG_RX)
+ 		priv->hw->hw_vlan_en = true;
+ 	else
 -- 
 2.53.0
 
