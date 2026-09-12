@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 753103DB31A;
-	Sat, 12 Sep 2026 12:57:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDA3042882B;
+	Sat, 12 Sep 2026 12:57:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789217828; cv=none; b=CjuRYPYBbyALRlkWS+3M/1hzaoCyxgPC3TteU5jFEvUUa8UdmvE4A5pJFZofvmO/xO1tOmT78KOEOSrKWcZtcNbswcn6ChOtG4mqqRhM/RugLHhYLjOgACrL3saCM1/krmUM9zyCn0NTRTNcl3SYNbpoc1+NJwHln20BUx0hWZs=
+	t=1789217833; cv=none; b=l/bnRuHRMlbn/EEqv8heZYVHHhO6miVDZ2WRbVKtyVeZJL3yXa9iSqq/6NFdYGl4inagT5TDoO5gHTeWBmKbAkYnfpj0TxqN2p9ZVV7g9uU8e0MBc5hJyvTVaq0PE1ynOv9H6AIy2KTrUlRCJ59v1o0t+8dFOfrZe4ECQzi+xgQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789217828; c=relaxed/simple;
-	bh=jJVg8MbrQ/vhCvzq6cg4GFAqZqVSNaBHy7o/2TYbdfs=;
+	s=arc-20240116; t=1789217833; c=relaxed/simple;
+	bh=SA/Fk6fm8dEqPSgV1i0HndLxdgpOIum4xv37HzXZELg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=FQlaGXvbB3Z3V31qTcG+ZzA/2thkF/pl9hjQb4rCwjmjcYBIBNvjzqlH5w7izIEZ0hrW/jeap8LXqfgvZYG7xH/TaqqriMhSetl/L66DeWqwbSBDqemZkwAiOnQmr6j7L7fJQeKfGv3n2mxzZEz3CNLSIc03rZcJ0DYCg50Dn8s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q1K2txOg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=PDTed7aduHGhP81z3adXjyAezJ5JrmipuLhZim3Ikqxsm3/vgwdE2T5efDJnZHpy+3YTqJ3n79TNZyKHK1zdCfQH+G58PMMqUtEs1yhI0sYkAsiiEM/FubIrIsouQzu/PT67z4dCM0s/mHVzvrh6FT/5DG/Llj/NYFPanjyi7NI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jRwgHcO9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q1K2txOg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78B381F000FF;
-	Sat, 12 Sep 2026 12:57:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jRwgHcO9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C039B1F000FF;
+	Sat, 12 Sep 2026 12:57:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789217827;
-	bh=WIrV04yfoMYU+8cd4A6nf/TS2tSrRMKOj0+9IE4vjkE=;
+	s=korg; t=1789217831;
+	bh=JlZvDTHqQ5l9pLpPPrKujtVY/D1T1vm1d6FdmjSK75A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Q1K2txOg9nvUx5Pn4/o8MGzkwZJt1kYxF6L0tVsPBlZg//XvUGxr5hkR3PKogWf1d
-	 RWMTnRQGc/958zpvmIN0VuNrPvGSP+v1lpXFb0DUEkTIg9+n6tBvxuW0IgTgUazm77
-	 EI48K8scEBzokugojBodgun88Wal/XEFn0bSfK7E=
+	b=jRwgHcO9OlxPLNveNXRP8BOO0KYjpFfJ6pK0v2aYO50lw+dAVtZeW3aYzzAybwxhH
+	 I+mE3nTGrlvQ4aLw/cTld3ylJoxcluW8Ia30R982y9w6/wyYcDocSfwBI7/Vvy4B7V
+	 j/COsrLgKbNMx69JylKC1Li7bC3OIbfXVrZUF2f8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Wang <peter.wang@mediatek.com>,
 	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
+	Peter Wang <peter.wang@mediatek.com>,
 	Bart Van Assche <bvanassche@acm.org>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0976/1376] scsi: core: Pass a struct scsi_driver to scsi_{,un}register_driver()
-Date: Sat, 12 Sep 2026 08:56:42 +0200
-Message-ID: <20260912065629.319751353@linuxfoundation.org>
+Subject: [PATCH 6.12 0977/1376] scsi: core: sysfs: Make use of bus callbacks
+Date: Sat, 12 Sep 2026 08:56:43 +0200
+Message-ID: <20260912065629.342165847@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -56,193 +56,146 @@ Content-Transfer-Encoding: 8bit
 
 From: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
 
-[ Upstream commit 7d42bcea57ae139e2ed754425cc5fc44e260c890 ]
+[ Upstream commit f7d4f1bf5724e52de049c619beddd53c62206624 ]
 
-This aligns with what other subsystems do, reduces boilerplate a bit for
-device drivers and is less error prone.
+Introduce a bus-specific probe, remove and shutdown function. For now
+this only allows to get rid of a cast of the generic device to a SCSI
+device in the drivers and changes the remove prototype to return
+void---a non-zero return value is ignored anyhow.
 
-Reviewed-by: Peter Wang <peter.wang@mediatek.com>
+The objective is to get rid of users of struct device_driver callbacks
+.probe(), .remove() and .shutdown() to eventually remove these. Until
+all SCSI drivers are converted, this results in a runtime warning about
+the drivers needing an update because there is a bus probe function and
+a driver probe function. The in-tree drivers are fixed by the following
+commits.
+
 Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+Reviewed-by: Peter Wang <peter.wang@mediatek.com>
 Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://patch.msgid.link/ac17fdea58e384cb514c639306d48ce0005820b0.1766133330.git.u.kleine-koenig@baylibre.com
+Link: https://patch.msgid.link/a54e363a3fd2054fb924afd7df44bca7f444b5f1.1766133330.git.u.kleine-koenig@baylibre.com
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Stable-dep-of: bb31844d88b7 ("scsi: sd: Fix special_vec mempool leak when scsi_alloc_sgtables() fails")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/ch.c          | 4 ++--
- drivers/scsi/scsi_sysfs.c  | 4 +++-
- drivers/scsi/sd.c          | 4 ++--
- drivers/scsi/ses.c         | 4 ++--
- drivers/scsi/sr.c          | 4 ++--
- drivers/scsi/st.c          | 4 ++--
- drivers/ufs/core/ufshcd.c  | 4 ++--
- include/scsi/scsi_driver.h | 4 ++--
- 8 files changed, 17 insertions(+), 15 deletions(-)
+ drivers/scsi/scsi_sysfs.c  | 73 ++++++++++++++++++++++++++++++++++++--
+ include/scsi/scsi_driver.h |  3 ++
+ 2 files changed, 74 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/scsi/ch.c b/drivers/scsi/ch.c
-index fa07a6f54003e..f2b63e4b9b99e 100644
---- a/drivers/scsi/ch.c
-+++ b/drivers/scsi/ch.c
-@@ -1014,7 +1014,7 @@ static int __init init_ch_module(void)
- 		       SCSI_CHANGER_MAJOR);
- 		goto fail1;
- 	}
--	rc = scsi_register_driver(&ch_template.gendrv);
-+	rc = scsi_register_driver(&ch_template);
- 	if (rc < 0)
- 		goto fail2;
- 	return 0;
-@@ -1028,7 +1028,7 @@ static int __init init_ch_module(void)
- 
- static void __exit exit_ch_module(void)
- {
--	scsi_unregister_driver(&ch_template.gendrv);
-+	scsi_unregister_driver(&ch_template);
- 	unregister_chrdev(SCSI_CHANGER_MAJOR, "ch");
- 	class_unregister(&ch_sysfs_class);
- 	idr_destroy(&ch_index_idr);
 diff --git a/drivers/scsi/scsi_sysfs.c b/drivers/scsi/scsi_sysfs.c
-index e669768a7a5bf..7f69f0613c08c 100644
+index 7f69f0613c08c..0b29cbcbd7e1f 100644
 --- a/drivers/scsi/scsi_sysfs.c
 +++ b/drivers/scsi/scsi_sysfs.c
-@@ -1609,8 +1609,10 @@ void scsi_remove_target(struct device *dev)
+@@ -554,10 +554,48 @@ static int scsi_bus_uevent(const struct device *dev, struct kobj_uevent_env *env
+ 	return 0;
+ }
+ 
++static int scsi_bus_probe(struct device *dev)
++{
++	struct scsi_device *sdp = to_scsi_device(dev);
++	struct scsi_driver *drv = to_scsi_driver(dev->driver);
++
++	if (drv->probe)
++		return drv->probe(sdp);
++	else
++		return 0;
++}
++
++static void scsi_bus_remove(struct device *dev)
++{
++	struct scsi_device *sdp = to_scsi_device(dev);
++	struct scsi_driver *drv = to_scsi_driver(dev->driver);
++
++	if (drv->remove)
++		drv->remove(sdp);
++}
++
++static void scsi_bus_shutdown(struct device *dev)
++{
++	struct scsi_device *sdp = to_scsi_device(dev);
++	struct scsi_driver *drv;
++
++	if (!dev->driver)
++		return;
++
++	drv = to_scsi_driver(dev->driver);
++
++	if (drv->shutdown)
++		drv->shutdown(sdp);
++}
++
++
+ const struct bus_type scsi_bus_type = {
+-        .name		= "scsi",
+-        .match		= scsi_bus_match,
++	.name		= "scsi",
++	.match		= scsi_bus_match,
+ 	.uevent		= scsi_bus_uevent,
++	.probe		= scsi_bus_probe,
++	.remove		= scsi_bus_remove,
++	.shutdown	= scsi_bus_shutdown,
+ #ifdef CONFIG_PM
+ 	.pm		= &scsi_bus_pm_ops,
+ #endif
+@@ -1609,6 +1647,30 @@ void scsi_remove_target(struct device *dev)
  }
  EXPORT_SYMBOL(scsi_remove_target);
  
--int __scsi_register_driver(struct device_driver *drv, struct module *owner)
-+int __scsi_register_driver(struct scsi_driver *sdrv, struct module *owner)
- {
-+	struct device_driver *drv = &sdrv->gendrv;
++static int scsi_legacy_probe(struct scsi_device *sdp)
++{
++	struct device *dev = &sdp->sdev_gendev;
++	struct device_driver *driver = dev->driver;
 +
++	return driver->probe(dev);
++}
++
++static void scsi_legacy_remove(struct scsi_device *sdp)
++{
++	struct device *dev = &sdp->sdev_gendev;
++	struct device_driver *driver = dev->driver;
++
++	driver->remove(dev);
++}
++
++static void scsi_legacy_shutdown(struct scsi_device *sdp)
++{
++	struct device *dev = &sdp->sdev_gendev;
++	struct device_driver *driver = dev->driver;
++
++	driver->shutdown(dev);
++}
++
+ int __scsi_register_driver(struct scsi_driver *sdrv, struct module *owner)
+ {
+ 	struct device_driver *drv = &sdrv->gendrv;
+@@ -1616,6 +1678,13 @@ int __scsi_register_driver(struct scsi_driver *sdrv, struct module *owner)
  	drv->bus = &scsi_bus_type;
  	drv->owner = owner;
  
-diff --git a/drivers/scsi/sd.c b/drivers/scsi/sd.c
-index ab5cf8460aca5..929d3c37879e5 100644
---- a/drivers/scsi/sd.c
-+++ b/drivers/scsi/sd.c
-@@ -4378,7 +4378,7 @@ static int __init init_sd(void)
- 		goto err_out_class;
- 	}
- 
--	err = scsi_register_driver(&sd_template.gendrv);
-+	err = scsi_register_driver(&sd_template);
- 	if (err)
- 		goto err_out_driver;
- 
-@@ -4405,7 +4405,7 @@ static void __exit exit_sd(void)
- 
- 	SCSI_LOG_HLQUEUE(3, printk("exit_sd: exiting sd driver\n"));
- 
--	scsi_unregister_driver(&sd_template.gendrv);
-+	scsi_unregister_driver(&sd_template);
- 	mempool_destroy(sd_page_pool);
- 
- 	class_unregister(&sd_disk_class);
-diff --git a/drivers/scsi/ses.c b/drivers/scsi/ses.c
-index 7e1f085ad350a..23d93cb110a6c 100644
---- a/drivers/scsi/ses.c
-+++ b/drivers/scsi/ses.c
-@@ -920,7 +920,7 @@ static int __init ses_init(void)
- 	if (err)
- 		return err;
- 
--	err = scsi_register_driver(&ses_template.gendrv);
-+	err = scsi_register_driver(&ses_template);
- 	if (err)
- 		goto out_unreg;
- 
-@@ -933,7 +933,7 @@ static int __init ses_init(void)
- 
- static void __exit ses_exit(void)
- {
--	scsi_unregister_driver(&ses_template.gendrv);
-+	scsi_unregister_driver(&ses_template);
- 	scsi_unregister_interface(&ses_interface);
++	if (!sdrv->probe && drv->probe)
++		sdrv->probe = scsi_legacy_probe;
++	if (!sdrv->remove && drv->remove)
++		sdrv->remove = scsi_legacy_remove;
++	if (!sdrv->shutdown && drv->shutdown)
++		sdrv->shutdown = scsi_legacy_shutdown;
++
+ 	return driver_register(drv);
  }
- 
-diff --git a/drivers/scsi/sr.c b/drivers/scsi/sr.c
-index 803fc9c132298..3b71fee9cf3c7 100644
---- a/drivers/scsi/sr.c
-+++ b/drivers/scsi/sr.c
-@@ -994,7 +994,7 @@ static int __init init_sr(void)
- 	rc = register_blkdev(SCSI_CDROM_MAJOR, "sr");
- 	if (rc)
- 		return rc;
--	rc = scsi_register_driver(&sr_template.gendrv);
-+	rc = scsi_register_driver(&sr_template);
- 	if (rc)
- 		unregister_blkdev(SCSI_CDROM_MAJOR, "sr");
- 
-@@ -1003,7 +1003,7 @@ static int __init init_sr(void)
- 
- static void __exit exit_sr(void)
- {
--	scsi_unregister_driver(&sr_template.gendrv);
-+	scsi_unregister_driver(&sr_template);
- 	unregister_blkdev(SCSI_CDROM_MAJOR, "sr");
- }
- 
-diff --git a/drivers/scsi/st.c b/drivers/scsi/st.c
-index 3e982c166baf9..62d1ed02f7e8b 100644
---- a/drivers/scsi/st.c
-+++ b/drivers/scsi/st.c
-@@ -4510,7 +4510,7 @@ static int __init init_st(void)
- 		goto err_class;
- 	}
- 
--	err = scsi_register_driver(&st_template.gendrv);
-+	err = scsi_register_driver(&st_template);
- 	if (err)
- 		goto err_chrdev;
- 
-@@ -4526,7 +4526,7 @@ static int __init init_st(void)
- 
- static void __exit exit_st(void)
- {
--	scsi_unregister_driver(&st_template.gendrv);
-+	scsi_unregister_driver(&st_template);
- 	unregister_chrdev_region(MKDEV(SCSI_TAPE_MAJOR, 0),
- 				 ST_MAX_TAPE_ENTRIES);
- 	class_unregister(&st_sysfs_class);
-diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-index 98bf5bc6f383e..bcbe478bc4032 100644
---- a/drivers/ufs/core/ufshcd.c
-+++ b/drivers/ufs/core/ufshcd.c
-@@ -10935,7 +10935,7 @@ static int __init ufshcd_core_init(void)
- 
- 	ufs_debugfs_init();
- 
--	ret = scsi_register_driver(&ufs_dev_wlun_template.gendrv);
-+	ret = scsi_register_driver(&ufs_dev_wlun_template);
- 	if (ret)
- 		ufs_debugfs_exit();
- 	return ret;
-@@ -10944,7 +10944,7 @@ static int __init ufshcd_core_init(void)
- static void __exit ufshcd_core_exit(void)
- {
- 	ufs_debugfs_exit();
--	scsi_unregister_driver(&ufs_dev_wlun_template.gendrv);
-+	scsi_unregister_driver(&ufs_dev_wlun_template);
- }
- 
- module_init(ufshcd_core_init);
+ EXPORT_SYMBOL(__scsi_register_driver);
 diff --git a/include/scsi/scsi_driver.h b/include/scsi/scsi_driver.h
-index c0e89996bdb3f..40aba9a9349a6 100644
+index 40aba9a9349a6..249cea724abd1 100644
 --- a/include/scsi/scsi_driver.h
 +++ b/include/scsi/scsi_driver.h
-@@ -25,9 +25,9 @@ struct scsi_driver {
+@@ -12,6 +12,9 @@ struct request;
+ struct scsi_driver {
+ 	struct device_driver	gendrv;
  
- #define scsi_register_driver(drv) \
- 	__scsi_register_driver(drv, THIS_MODULE)
--int __scsi_register_driver(struct device_driver *, struct module *);
-+int __scsi_register_driver(struct scsi_driver *, struct module *);
- #define scsi_unregister_driver(drv) \
--	driver_unregister(drv);
-+	driver_unregister(&(drv)->gendrv);
- 
- extern int scsi_register_interface(struct class_interface *);
- #define scsi_unregister_interface(intf) \
++	int (*probe)(struct scsi_device *);
++	void (*remove)(struct scsi_device *);
++	void (*shutdown)(struct scsi_device *);
+ 	int (*resume)(struct device *);
+ 	void (*rescan)(struct device *);
+ 	blk_status_t (*init_command)(struct scsi_cmnd *);
 -- 
 2.53.0
 
