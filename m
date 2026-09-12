@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9054303A35;
-	Sat, 12 Sep 2026 15:07:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA9063AC17;
+	Sat, 12 Sep 2026 15:07:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789225630; cv=none; b=nAIN0WaKLFkYEv7B4cbIq+gJ8JbYrg72HyYhuM6GmIrr4WSNjBbiHHDML281xMqxkTeKCTMqD5Yt3G7X+oxSEb+MpJfZQd/knEaro8z3hug6VxLLNc6Rx2VmDspV8C44qMF64V4AhVHNwEQ0Dfka38staMkDZTnRjsRZwzLLJIU=
+	t=1789225635; cv=none; b=WNsieeAMkAwFtBBUogSvZ/2Yeq5K11nAq8CIUwB7XMDwKhLfHikKhlBrKngtC97b+Dljf33Kmz8lM/0hDeV4hnFbX8qBPVRQilPBXiw6g1HOFx1VSf9voGWlvhzO3AqjRKP6seqLqLgbrUkGP6HaPOW54rSYkdNPTgM+00Ouqes=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789225630; c=relaxed/simple;
-	bh=gqbtB0c+gTIBEWCu76TL8YE1r+qYC44RN/7m81ywv2o=;
+	s=arc-20240116; t=1789225635; c=relaxed/simple;
+	bh=39jbeoN5pESekRIBdN+ceTwArEq4b+YPirwQW+nubjI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j9e54zTw+/9DtfxW3bIYcJGsiLjKJFRsr4FXlulzvyc6K8WxSpCKOTIEh/rINSGpykgHC4JU72ZiDx3S/otRspA0QWn7ksOAI6VG/jwReeGOcFoPKnGSvTId/miXJotIcrkZ0FlMRDowdPys/iYzzQZ5MYBQ3YiRTFqazUik08k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Aw5RumOJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VDHi9DSyuQwBKqQFDzK9eLgjo2jglRMyYM5FWwasvzswWXE7RT7/E8fbaN7CLn/iEu6CweUAVR/SNgY4G0vDdYitLMkkw1LNWlQ1mj1kyhBFq+jm7LvlJ5bKPWcgLE9RSE58qzOR0BWoV0TNmUUo/R4dFPdUzGumUJqt3rFr608=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PZXi39nt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Aw5RumOJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DD6F1F000FF;
-	Sat, 12 Sep 2026 15:07:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PZXi39nt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A8801F000FF;
+	Sat, 12 Sep 2026 15:07:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789225629;
-	bh=wWKqPWEAJvet/83rDLu+dE1LwQP/g9txWxLC3BpzzGU=;
+	s=korg; t=1789225634;
+	bh=P2JiGgmdnQno4eZoB4A5kO122ahYDyS4UbndSyux/Wc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Aw5RumOJR+9XyGtv5dzr3Ve+tUKmVMZnxFyNIVEGLxpyd6ps+w2SWhsp5x/Ow1fPX
-	 CzXLio8QkRCPywwIUXeWoednP2zgsBVHfhkiV5X805ypWEQ/VLXRqmPYMKS9ZRc81c
-	 0D8qIUaTAbRuWSRocfBgF3al/q603cS+bB5IPrCU=
+	b=PZXi39ntsj+SHUK2a1/kPdNqBhMC7vPhPaNMqdhopQWgu0lu84J/ZExxjktF5n3ya
+	 lYfRMtfdkW6khuiHosv2SY1YTy37SinmfWATyevP/GN3LD34V9R0fJxv1kKBzdOKlL
+	 mWyweIvLDUbRlaHt5VWrYr3OIn6CQkvY+GcqepwQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+643a6dd130546afdf1fb@syzkaller.appspotmail.com,
-	Niklas Cassel <cassel@kernel.org>,
-	Damien Le Moal <dlemoal@kernel.org>,
+	Hongyan Xu <getshell@seu.edu.cn>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1238/1424] null_blk: serialize configfs attribute updates with device setup
-Date: Sat, 12 Sep 2026 09:01:10 +0200
-Message-ID: <20260912065635.007664362@linuxfoundation.org>
+Subject: [PATCH 6.6 1239/1424] block: mtip32xx: synchronize ioctls with device removal
+Date: Sat, 12 Sep 2026 09:01:11 +0200
+Message-ID: <20260912065635.030217955@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -53,111 +51,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Cassel <cassel@kernel.org>
+From: Hongyan Xu <getshell@seu.edu.cn>
 
-[ Upstream commit 4e1f23f9c33c156be7e313b40695af5a3a834739 ]
+[ Upstream commit 68940f841d013192086a0f6d7cfbac2cd079e228 ]
 
-The attribute store methods generated with NULLB_DEVICE_ATTR() refuse to
-change the configuration of a live device by testing
-NULLB_DEV_FL_CONFIGURED, but that flag is only set by
-nullb_device_power_store() after null_add_dev() has returned, and the
-store methods take no lock at all. configfs only serializes writes to
-the same open file (buffer->mutex), so a write to any attribute can run
-concurrently with null_add_dev() and change the device configuration
-while it is being used.
+The ioctl handlers only test REMOVE_PENDING before entering
+mtip_hw_ioctl(). Removal can set that bit immediately afterwards and free
+dd->port in mtip_hw_exit() while an ioctl still dereferences it. An already
+open block device can reach the handlers while del_gendisk() is in
+progress.
 
-null_add_dev() reads the configuration several times, e.g. dev->zoned is
-read once to set up the queue limits and once to initialize the zone
-resources:
+Serialize both native and compat ioctls with removal. Set REMOVE_PENDING
+before taking the mutex so new callers fail after an in-flight ioctl has
+drained, and hold the mutex until the port has been torn down.
 
-  CPU0: echo 1 > nullb0/power         CPU1: echo 1 > nullb0/zoned
-  nullb_device_power_store()
-    mutex_lock(&lock)
-    null_add_dev()
-      if (dev->zoned) -> false
-        /* no BLK_FEAT_ZONED */       nullb_device_zoned_store()
-                                        test_bit(FL_CONFIGURED) -> 0
-                                        dev->zoned = true
-      blk_mq_alloc_disk()
-        /* queue is not zoned */
-      if (nullb->dev->zoned) -> true
-        null_register_zoned_dev()
-          blk_revalidate_disk_zones()
-
-blk_revalidate_disk_zones() is then called for a queue that does not
-have BLK_FEAT_ZONED set, which triggers its WARN_ON_ONCE() and fails the
-device setup with -EIO:
-
-  WARNING: CPU: 2 PID: 322 at block/blk-zoned.c:2357 blk_revalidate_disk_zones+0x4c/0x560
-
-Clearing dev->zoned in the same window is worse: the queue is created
-with BLK_FEAT_ZONED but the zone resources are never initialized, so
-add_disk() succeeds for a zoned disk that has no zones. And a store that
-lands after the last dev->zoned test leaves dev->zoned set while
-dev->zones is still NULL, which null_process_zoned_cmd() dereferences on
-the first write.
-
-Fix this by taking the global lock, which nullb_device_power_store()
-already holds across null_add_dev() and null_del_dev(), around both the
-NULLB_DEV_FL_CONFIGURED test and the update of the device configuration.
-The submit_queues and poll_queues apply callbacks are now called with
-that lock held, so remove the locking they did themselves.
-
-Since the store methods can run as soon as configfs_register_subsystem()
-returns, that is, before null_init() gets to mutex_init(&lock), also
-initialize the lock statically with DEFINE_MUTEX().
-
-Fixes: 3bf2bd20734e ("nullb: add configfs interface")
-Reported-by: syzbot+643a6dd130546afdf1fb@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/linux-block/6a7d0b3f.ac361c09.22ff0a.004c.GAE@google.com/
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Link: https://patch.msgid.link/20260813141456.1625857-2-cassel@kernel.org
+Fixes: 88523a61558a ("block: Add driver for Micron RealSSD pcie flash cards")
+Signed-off-by: Hongyan Xu <getshell@seu.edu.cn>
+Link: https://patch.msgid.link/20260806060441.676-1-getshell@seu.edu.cn
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/null_blk/main.c | 14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ drivers/block/mtip32xx/mtip32xx.c | 7 +++++++
+ drivers/block/mtip32xx/mtip32xx.h | 2 ++
+ 2 files changed, 9 insertions(+)
 
-diff --git a/drivers/block/null_blk/main.c b/drivers/block/null_blk/main.c
-index 33652c2a4af36..a011ae2055d0c 100644
---- a/drivers/block/null_blk/main.c
-+++ b/drivers/block/null_blk/main.c
-@@ -311,7 +311,15 @@ static ssize_t nullb_device_bool_attr_store(bool *val, const char *page,
- 	return count;
- }
+diff --git a/drivers/block/mtip32xx/mtip32xx.c b/drivers/block/mtip32xx/mtip32xx.c
+index b200950e8fb5f..8131c72a9e481 100644
+--- a/drivers/block/mtip32xx/mtip32xx.c
++++ b/drivers/block/mtip32xx/mtip32xx.c
+@@ -3053,6 +3053,8 @@ static int mtip_block_ioctl(struct block_device *dev,
+ 	if (!dd)
+ 		return -ENOTTY;
  
--/* The following macro should only be used with TYPE = {uint, ulong, bool}. */
-+/*
-+ * The following macro should only be used with TYPE = {uint, ulong, bool}.
-+ *
-+ * The device configuration is modified under the global lock to serialize
-+ * attribute changes against null_add_dev() and null_del_dev(): without this,
-+ * an attribute could be changed while null_add_dev() is running, that is,
-+ * before NULLB_DEV_FL_CONFIGURED is set, which would let null_add_dev()
-+ * observe inconsistent values for the device configuration.
-+ */
- #define NULLB_DEVICE_ATTR(NAME, TYPE, APPLY)				\
- static ssize_t								\
- nullb_device_##NAME##_show(struct config_item *item, char *page)	\
-@@ -351,6 +359,8 @@ static int nullb_update_nr_hw_queues(struct nullb_device *dev,
- 	struct blk_mq_tag_set *set;
- 	int ret, nr_hw_queues;
- 
-+	lockdep_assert_held(&lock);
++	guard(mutex)(&dd->ioctl_mutex);
 +
- 	if (!dev->nullb)
- 		return 0;
+ 	if (unlikely(test_bit(MTIP_DDF_REMOVE_PENDING_BIT, &dd->dd_flag)))
+ 		return -ENOTTY;
  
-@@ -2371,8 +2381,6 @@ static void __exit null_exit(void)
+@@ -3091,6 +3093,8 @@ static int mtip_block_compat_ioctl(struct block_device *dev,
+ 	if (!dd)
+ 		return -ENOTTY;
  
- 	if (tag_set.ops)
- 		blk_mq_free_tag_set(&tag_set);
--
--	mutex_destroy(&lock);
- }
++	guard(mutex)(&dd->ioctl_mutex);
++
+ 	if (unlikely(test_bit(MTIP_DDF_REMOVE_PENDING_BIT, &dd->dd_flag)))
+ 		return -ENOTTY;
  
- module_init(null_init);
+@@ -3716,6 +3720,7 @@ static int mtip_pci_probe(struct pci_dev *pdev,
+ 	dd = kzalloc_node(sizeof(struct driver_data), GFP_KERNEL, my_node);
+ 	if (!dd)
+ 		return -ENOMEM;
++	mutex_init(&dd->ioctl_mutex);
+ 
+ 	/* Attach the private data to this PCI device.  */
+ 	pci_set_drvdata(pdev, dd);
+@@ -3888,6 +3893,7 @@ static void mtip_pci_remove(struct pci_dev *pdev)
+ 	}
+ 
+ 	set_bit(MTIP_DDF_REMOVE_PENDING_BIT, &dd->dd_flag);
++	mutex_lock(&dd->ioctl_mutex);
+ 
+ 	if (test_bit(MTIP_DDF_INIT_DONE_BIT, &dd->dd_flag))
+ 		del_gendisk(dd->disk);
+@@ -3916,6 +3922,7 @@ static void mtip_pci_remove(struct pci_dev *pdev)
+ 
+ 	/* De-initialize the protocol layer. */
+ 	mtip_hw_exit(dd);
++	mutex_unlock(&dd->ioctl_mutex);
+ 
+ 	if (dd->isr_workq) {
+ 		destroy_workqueue(dd->isr_workq);
+diff --git a/drivers/block/mtip32xx/mtip32xx.h b/drivers/block/mtip32xx/mtip32xx.h
+index f7328f19ac5c2..0963c07b58457 100644
+--- a/drivers/block/mtip32xx/mtip32xx.h
++++ b/drivers/block/mtip32xx/mtip32xx.h
+@@ -12,6 +12,7 @@
+ #define __MTIP32XX_H__
+ 
+ #include <linux/spinlock.h>
++#include <linux/mutex.h>
+ #include <linux/rwsem.h>
+ #include <linux/ata.h>
+ #include <linux/interrupt.h>
+@@ -432,6 +433,7 @@ struct driver_data {
+ 	struct request_queue *queue; /* Our request queue. */
+ 
+ 	struct blk_mq_tag_set tags; /* blk_mq tags */
++	struct mutex ioctl_mutex;
+ 
+ 	struct mtip_port *port; /* Pointer to the port data structure. */
+ 
 -- 
 2.53.0
 
