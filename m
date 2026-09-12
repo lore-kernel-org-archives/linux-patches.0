@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11A7923BD03;
-	Sat, 12 Sep 2026 12:14:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6020647126B;
+	Sat, 12 Sep 2026 12:14:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789215285; cv=none; b=tDcNn4U07rFuzoolIbcFqOWd2sv5TaV0+RMJ7Vb+NmSiPg7KXIQRTUJwg36tLJQLxPAzfFIKoPS27yN1DRTNpR9y6fREqMTnWNaKGpmLVE5s6HVKY9BXbHpaI293pzFhh1L6RNA7vGI6riUQUyBn8prq98KFaz4f3Vvgek4F5F4=
+	t=1789215290; cv=none; b=dqzRSqsDzauXf/eL/rZlcLAj9K0KY54RkGdkPd/U5zu9CCh2yIT6i+a8DcZK1Qwg2iwVFGNeqafnFXWsEdmSLqOuWNTxYY91nhs8rZjknHF36VXTdCWjlTrG87rlzcRTV/qE4t06l0VIvLxPtJq0mDi2mitPlAkz9dZJkRJuKto=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789215285; c=relaxed/simple;
-	bh=CU5JZv57a4Q3DFekStUuIYIqXuqb6HUhFp3zRKsMk8M=;
+	s=arc-20240116; t=1789215290; c=relaxed/simple;
+	bh=2jWHcPM1OHQYPQJwYX21U32e5yc2ExKp8EcuzV1t8JA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BOCcw2FZiQ+vvmMOL4joK6bXfx74igOhoOj+ZH3xvhYU0UhF6ibPD14eDU9wdof/O8nRWcjEg2ETSr+cprmQBjSeK5h8IZ8jnyIvZXHnHXPnO3Jc/EcgVtkI8+w8tbspwHpybrZO4wznrmm8AwbNLFBiCe9JaXbI3RI76Vvwp8s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QK9bhT+S; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PzWmqeN0ieUI/ZYKQXkOPLQ5Nsdq6wIPruFaEAb1d4HkZW6qhxKF9oKJEitx45OaEJwbQ5/QLsF+vn3xO2LBDKMtxj7CtUIQeQjYpRzHtiQQaD3K0sDeS7EaWlZMuJK/MmWz1Tcn0YfyshjnWyspY0+akfS53Qbups1pqw+a31g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VGQo8YE4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QK9bhT+S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 290B21F000FF;
-	Sat, 12 Sep 2026 12:14:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VGQo8YE4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF24E1F000FF;
+	Sat, 12 Sep 2026 12:14:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789215283;
-	bh=+bssBkX5d+k0jPzQDAcSAR3CgrZnunRdPtKy8PF8wY8=;
+	s=korg; t=1789215289;
+	bh=HzijjCQ0VYhPpaIkoEtY/z6jqUdA7tgeb0Z5Ogkj1Sg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QK9bhT+Sru9HwDjk741XjDkxkXBfuFOR+0XrBg/ILQ9hgSDkBexRIxI0fhyDUYCCo
-	 0w2ZGPsdbrnCrx/0atmOzVUu3m2YP+yOlhmULsZLJYh6b3MqN6qe7ZNl+3u5WKfQv9
-	 cFnPaDkRIwpsPbbADOaUHC8VKlO9yHCLdy1shjuc=
+	b=VGQo8YE4K8M5yETl+dU218+bZKjdIndRL0UfiPF06wRykCFSXcBEWo4LvXx7NGVId
+	 rwFRYGHxBQ+NezRVEEB5V0i7uAyiobrdKQg2SncQ6Ztv2trCnH8cjHHMzMlh0BkbbV
+	 I5c8HNcqWfcwlZOzsBBPeK7xM1ijbUlgaoJbvWgo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>,
-	Brian Masney <bmasney@redhat.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Mert Seftali <mertsftl@gmail.com>,
+	Joshua Crofts <joshua.crofts1@gmail.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0499/1376] clk: qcom: camcc-sc8280xp: unregister CAMCC_GDSC_CLK
-Date: Sat, 12 Sep 2026 08:48:45 +0200
-Message-ID: <20260912065618.660466467@linuxfoundation.org>
+Subject: [PATCH 6.12 0500/1376] iio: accel: dmard09: Implement IIO_CHAN_INFO_SCALE
+Date: Sat, 12 Sep 2026 08:48:46 +0200
+Message-ID: <20260912065618.682930745@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -55,120 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Brian Masney <bmasney@redhat.com>
+From: Mert Seftali <mertsftl@gmail.com>
 
-[ Upstream commit 499b4cb6710f9a351d8b57a2132f9b4389d8464a ]
+[ Upstream commit aa58ecc73466d0cb8c418de98e2225490bf600e3 ]
 
-With the introduction of sync_state support in the clk and pmdomain
-subsystems, the following warning happens when the unused clocks are
-shutdown in camcc-sc8280xp:
+Reading the in_accel_scale attribute on the DMARD09 has always returned
+-EINVAL: the channels advertise scale via info_mask_shared_by_type so the
+IIO core exposes the attribute, but dmard09_read_raw() only handles
+IIO_CHAN_INFO_RAW, so a SCALE read falls through to 'default: return
+-EINVAL':
 
-    [   15.408367] titan_top_gdsc status stuck at 'on'
-    [   15.408429] WARNING: drivers/clk/qcom/gdsc.c:178 at gdsc_toggle_logic+0x14c/0x160, CPU#2: kworker/u32:1/14
-    [   15.408462] Modules linked in: bnep vfat fat ath11k_pci(+) ath11k mac80211 cfg80211 mhi libarc4 snd_soc_wcd938x snd_soc_wcd938x_sdw snd_soc_wcd_classh hci_uart snd_soc_wcd_common
-    snd_soc_sc8280xp soundwire_qcom snd_soc_wcd_mbhc snd_soc_qcom_sdw slimbus snd_soc_qcom_common regmap_sdw btqca btrtl qcom_camss soundwire_bus btbcm btintel snd_soc_sdca snd_soc_lpass_wsa_macro
-    bluetooth snd_soc_lpass_tx_macro snd_soc_lpass_va_macro snd_soc_lpass_rx_macro snd_soc_hdmi_codec snd_soc_lpass_macro_common videobuf2_dma_sg ov5675 v4l2_fwnode videobuf2_memops
-    qcom_spmi_adc5 snd_soc_core qcom_spmi_adc_tm5 videobuf2_v4l2 snd_seq snd_seq_device videobuf2_common v4l2_async qcom_vadc_common qcom_spmi_temp_alarm pm8941_pwrkey industrialio videodev
-    snd_compress rfkill ac97_bus snd_pcm_dmaengine qcom_tsens mc qcom_edac snd_pcm pci_pwrctrl_pwrseq qcom_cpufreq_hw snd_timer snd qcomtee soundcore tee leds_gpio joydev binfmt_misc zram
-    lz4hc_compress governor_simpleondemand panel_edp msm xhci_plat_hcd nvme nvme_core dwc3 qcom_pm8008_regulator
-    [   15.408688]  ucsi_glink nvme_keyring nvme_auth pmic_glink_altmode udc_core typec_ucsi aux_hpd_bridge qcom_battmgr ulpi ubwc_config socinfo ocmem drm_gpuvm qcom_q6v5_pas drm_exec
-    qcom_pil_info leds_qcom_lpg gpu_sched led_class_multicolor rtc_pm8xxx qcom_pbs qcom_common drm_display_helper qcom_pon qcom_glink_smem qcom_glink ghash_ce pwrseq_qcom_wcn gpio_sbu_mux
-    qcom_stats phy_qcom_qmp_combo qcom_q6v5 gf128mul cec dispcc_sc8280xp phy_qcom_edp camcc_sc8280xp i2c_qcom_cci qcom_sysmon drm_dp_aux_bus mdt_loader aux_bridge qcom_pm8008 i2c_hid_of_elan
-    dwc3_qcom_legacy llcc_qcom icc_bwmon gpi typec qcom_refgen_regulator phy_qcom_qmp_usb nvmem_qfprom qcom_ipcc phy_qcom_snps_femto_v2 gpucc_sc8280xp pinctrl_sc8280xp_lpass_lpi qcom_hwspinlock
-    pinctrl_lpass_lpi lpasscc_sc8280xp qrtr qcom_aoss pmic_glink pdr_interface phy_qcom_qmp_pcie qcom_smd qcom_pdr_msg icc_osm_l3 qcom_wdt qmi_helpers qcom_rng smp2p rpmsg_core gpio_keys pwm_bl
-    smem hid_multitouch fuse i2c_dev
-    [   15.408928] CPU: 2 UID: 0 PID: 14 Comm: kworker/u32:1 Not tainted 7.1.0+ #2 PREEMPT(lazy)
-    [   15.408937] Hardware name: LENOVO 21BX0016US/21BX0016US, BIOS N3HET88W (1.60 ) 03/14/2024
-    [   15.408942] Workqueue: pm pm_runtime_work
-    [   15.408959] pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-    [   15.408967] pc : gdsc_toggle_logic+0x14c/0x160
-    [   15.408978] lr : gdsc_toggle_logic+0x14c/0x160
-    [   15.408987] sp : ffff8000800f3b40
-    [   15.408991] x29: ffff8000800f3b40 x28: 0000000000000000 x27: 0000000000000000
-    [   15.409003] x26: 0000000000000000 x25: 0000000000000000 x24: 0000000000000000
-    [   15.409014] x23: 0000000000000000 x22: 0000000000000001 x21: ffffa33f298fca88
-    [   15.409024] x20: 0000000000000000 x19: ffffa33f298fc5b0 x18: 00cd15db75dacefd
-    [   15.409035] x17: 000000040044ffff x16: ffffa33f3b1a3d88 x15: 726f776b80000002
-    [   15.409045] x14: ffffffffffffffff x13: 0000000000000028 x12: 0101010101010101
-    [   15.409056] x11: 7f7f7f7f7f7f7f7f x10: fefeff3039313274 x9 : ffffa33f3a5edafc
-    [   15.409067] x8 : ffff8000800f3780 x7 : 0000000000000001 x6 : 0000000000000001
-    [   15.409078] x5 : ffff000bf3ca1288 x4 : 0000000000000000 x3 : ffff5cccb6a3f000
-    [   15.409088] x2 : 0000000000000000 x1 : 0000000000000000 x0 : ffff000080ae0000
-    [   15.409098] Call trace:
-    [   15.409103]  gdsc_toggle_logic+0x14c/0x160 (P)
-    [   15.409115]  gdsc_disable+0x4c/0x190
-    [   15.409126]  _genpd_power_off+0xa0/0x1a8
-    [   15.409137]  genpd_power_off.part.0+0x180/0x2a0
-    [   15.409149]  genpd_runtime_suspend+0x218/0x310
-    [   15.409155]  __rpm_callback+0x50/0x1f8
-    [   15.409166]  rpm_callback+0x7c/0x90
-    [   15.409175]  rpm_suspend+0xe8/0x690
-    [   15.409185]  pm_runtime_work+0xd0/0xe0
-    [   15.409195]  process_one_work+0x18c/0x518
-    [   15.409208]  worker_thread+0x190/0x320
-    [   15.409218]  kthread+0x110/0x130
-    [   15.409227]  ret_from_fork+0x10/0x20
+    $ cat .../iio:deviceX/in_accel_scale
+    cat: in_accel_scale: Invalid argument
 
-This clock is force enabled to be on in the probe, and registered with
-the Common Clk Framework, resulting in them being toggled off after
-unused clocks are shutdown. This clock is required for the GDSC
-transitions.
+leaving userspace with raw counts it cannot convert to m/s^2.
 
-Similar to the fix in commit b60521eff227 ("clk: qcom: gcc-x1e80100:
-Unregister GCC_GPU_CFG_AHB_CLK/GCC_DISP_XO_CLK"), let's just unregister
-this clock.
+The driver was written from a vendor source [1] without a datasheet, and
+the scale was declared but never implemented. The vendor source carries
+the sensitivity: its conversion is
 
-Link: https://lore.kernel.org/linux-clk/20260626-camcc-sc8280xp-titan-top-v1-1-2ca246886493@redhat.com/
-Fixes: ff93872a9c616 ("clk: qcom: camcc-sc8280xp: Add sc8280xp CAMCC")
-Suggested-by: Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>
-Signed-off-by: Brian Masney <bmasney@redhat.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Link: https://lore.kernel.org/r/20260708-camcc-sc8280xp-remove-gdsc-v1-1-dfaab98a3bf5@redhat.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+    acc = raw * GRAVITY_EARTH_1000 / sensitivity   (then / 1000 -> m/s^2)
+
+with sensitivity = 32 and GRAVITY_EARTH_1000 = 9807 ("about
+(9.80665)*1000"), i.e. 32 counts correspond to 1 g.
+
+That sensitivity applies to the value this driver already reports as raw:
+the vendor reduces each 16-bit sample to a signed 9-bit value, and the
+preparation in dmard09_read_raw() yields the same value. It is
+self-consistent: 256 counts / 32 = 8 g full scale, matching the +/-8g
+range.
+
+Implement the scale derived from that sensitivity using standard gravity:
+
+    scale = 9.80665 / 32 = 0.3064578125 m/s^2 per LSB
+
+Link: https://github.com/minstrelsy/mediatek/blob/1f49d8c87b839651bc89afc870277e8e0f2e2d55/custom/common/kernel/accelerometer/dmard09/dmard09.c [1]
+Fixes: a4fa6509dda4 ("iio: accel: add support for the Domintech DMARD09 3-axis accelerometer")
+Signed-off-by: Mert Seftali <mertsftl@gmail.com>
+Reviewed-by: Joshua Crofts <joshua.crofts1@gmail.com>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/camcc-sc8280xp.c | 19 -------------------
- 1 file changed, 19 deletions(-)
+ drivers/iio/accel/dmard09.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/clk/qcom/camcc-sc8280xp.c b/drivers/clk/qcom/camcc-sc8280xp.c
-index 479964f916086..cf170fc7baf1b 100644
---- a/drivers/clk/qcom/camcc-sc8280xp.c
-+++ b/drivers/clk/qcom/camcc-sc8280xp.c
-@@ -1754,24 +1754,6 @@ static struct clk_branch camcc_csiphy3_clk = {
- 	},
- };
+diff --git a/drivers/iio/accel/dmard09.c b/drivers/iio/accel/dmard09.c
+index 4ec70ca6910d5..117cebbeb1387 100644
+--- a/drivers/iio/accel/dmard09.c
++++ b/drivers/iio/accel/dmard09.c
+@@ -8,6 +8,7 @@
+ #include <linux/unaligned.h>
+ #include <linux/module.h>
+ #include <linux/i2c.h>
++#include <linux/units.h>
+ #include <linux/iio/iio.h>
  
--static struct clk_branch camcc_gdsc_clk = {
--	.halt_reg = 0xc1e4,
--	.halt_check = BRANCH_HALT,
--	.clkr = {
--		.enable_reg = 0xc1e4,
--		.enable_mask = BIT(0),
--		.hw.init = &(struct clk_init_data){
--			.name = "camcc_gdsc_clk",
--			.parent_hws = (const struct clk_hw*[]){
--				&camcc_xo_clk_src.clkr.hw,
--			},
--			.num_parents = 1,
--			.flags = CLK_SET_RATE_PARENT,
--			.ops = &clk_branch2_ops,
--		},
--	},
--};
--
- static struct clk_branch camcc_icp_ahb_clk = {
- 	.halt_reg = 0xc0d8,
- 	.halt_check = BRANCH_HALT,
-@@ -2840,7 +2822,6 @@ static struct clk_regmap *camcc_sc8280xp_clocks[] = {
- 	[CAMCC_CSIPHY2_CLK] = &camcc_csiphy2_clk.clkr,
- 	[CAMCC_CSIPHY3_CLK] = &camcc_csiphy3_clk.clkr,
- 	[CAMCC_FAST_AHB_CLK_SRC] = &camcc_fast_ahb_clk_src.clkr,
--	[CAMCC_GDSC_CLK] = &camcc_gdsc_clk.clkr,
- 	[CAMCC_ICP_AHB_CLK] = &camcc_icp_ahb_clk.clkr,
- 	[CAMCC_ICP_CLK] = &camcc_icp_clk.clkr,
- 	[CAMCC_ICP_CLK_SRC] = &camcc_icp_clk_src.clkr,
+ #define DMARD09_DRV_NAME	"dmard09"
+@@ -79,6 +80,12 @@ static int dmard09_read_raw(struct iio_dev *indio_dev,
+ 		*val = accel;
+ 
+ 		return IIO_VAL_INT;
++	case IIO_CHAN_INFO_SCALE:
++		*val = 0;
++		/* 1 g / 32 LSB, in m/s^2 */
++		*val2 = IIO_G_TO_M_S_2(NANO / 32);
++
++		return IIO_VAL_INT_PLUS_NANO;
+ 	default:
+ 		return -EINVAL;
+ 	}
 -- 
 2.53.0
 
