@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22DDA24CEEA;
-	Sat, 12 Sep 2026 11:02:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 069D5221F26;
+	Sat, 12 Sep 2026 11:02:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789210928; cv=none; b=HMt1ekQsI2/WpO5P3LmffVc8OO1+B5AYc7ilXlpHrpK9DKGNXt1SdxlWvAg9geTqi2YqkKk/WUk9OBbTCBI6gOZpXvwT9vOc+nIDBUquTeDzIDrZHmzd0JF+SI3QOW3wCJMi430+bDa+mi4lYPIEFAePS0xrEzQssXggmUq+Ico=
+	t=1789210933; cv=none; b=pfDd/BjqUDoomhgdqSQxirEo4pI4qkjNr/rYrGwaGks1GQPTQ3LaNEwUA0qkAFNlM7qS8t5X3/byRE1rTStXMzOAoA49VN6V77jpC5c1c7r8/1DBrz/mr12LE7oVgefq4XDvGLvgAEptNyMtPmnbYh0y1TiyJLt4gdxJxENNE4M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789210928; c=relaxed/simple;
-	bh=8ZMgK6Bv6Vr9n1uAdkQ3BrYXfNmT3Po52knWoNM2Oc4=;
+	s=arc-20240116; t=1789210933; c=relaxed/simple;
+	bh=xXY8D/Hb8MPvW7C9wyvVr0ma4nHor08L5wfDDx9qT9U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c05Q94zXJ+T3fmKVMiGxgsw+Wp+Wza7bcUDBA/WJxzrxq4Geh0X/C4FCBBkOzcAMDG1fhf69KOSdjm/K2F8Wlc7rDSh0Vpt88wLA+8W3cnlv4CFjK5ZeRep0wbX0zlpg3Tol1C5ViIK8hAQI9uhC0bioVVXS5mVkaW9uy2nzZfE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oYip5+te; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GSILlhDU1yMghP1dOg1RaZgq9KFCgVZ6NUPgNwQ6U4vOeK+NGB9PlcoAR3h6lbxA60GulLWq3aG1//l5Do3LQCBsEwzxpnmOdvcrEB3HEzCks4ftc6+e78f+w4VSwAYGp2O5o+UKrs2p5TW2V/O5jhB2gEOByBiXfLWWSItIeJ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PhhZx4GH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oYip5+te"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 643EC1F000FF;
-	Sat, 12 Sep 2026 11:02:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PhhZx4GH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B49FA1F000FF;
+	Sat, 12 Sep 2026 11:02:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789210927;
-	bh=pS4pjV00qaxPacwI6LmJzBzKU7KIjlTf1wNZyX32OUE=;
+	s=korg; t=1789210931;
+	bh=Q7qYu95s+HccvEopqjfv3xaeeGz39PLljhSxDqL4IAo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oYip5+teOFHMchmKoCIf3S64swron/OqXmmXwYzCOPHUmVdm1GgzcylOYAcumdMHE
-	 7YUSh1LVwa8VrTGEikRTDjEI6hfWOKN1+edy0ISAAtCD3x4yQqbWcalC58BjRlLUN+
-	 eZ2Xc6M5iAV4C5jZhSAKSgvi8DO9RygEwLgk8TBI=
+	b=PhhZx4GHBkqKnX3x7BtptX4nklNVbCxbj9sm3B7UJj7rQD+eEunFV0bBOVNl3NdrX
+	 PWyAFuKbuT48aZWWW5om/lisEIwxJop5l2oKpEkz1Wd2ORn6rQakNC1+o1N1RvXxa9
+	 eD07LtZ75iuGhbbfNk78MCTQNDjkQBdw+Sy21ilQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	Simon Horman <horms@kernel.org>,
+	Zhenghang Xiao <kipreyyy@gmail.com>,
 	David Heidelberg <david@ixit.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1126/1518] nfc: llcp: read llcp_sock->local under the socket lock in getsockopt
-Date: Sat, 12 Sep 2026 08:54:55 +0200
-Message-ID: <20260912065648.926362515@linuxfoundation.org>
+Subject: [PATCH 6.18 1127/1518] nfc: nci: fix double completion race in nci_data_exchange_complete
+Date: Sat, 12 Sep 2026 08:54:56 +0200
+Message-ID: <20260912065648.949141936@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,57 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Zhenghang Xiao <kipreyyy@gmail.com>
 
-[ Upstream commit 36812527052c5bfb1ec6c1e292d67a5bf76b750f ]
+[ Upstream commit 8265a626cc14a48e46e6dc8c47667e72b4232ac2 ]
 
-nfc_llcp_getsockopt() read llcp_sock->local before lock_sock(sk) and
-then dereferenced the cached pointer inside the locked region.
-llcp_sock_bind() assigns and clears llcp_sock->local under the same
-socket lock, dropping the last reference on its error path. A
-getsockopt() racing an in-flight bind() can observe the pointer, block
-on lock_sock(), and then dereference a freed nfc_llcp_local once bind()
-has unwound.
+nci_close_device() and nci_rx_work can both call
+nci_data_exchange_complete() concurrently.  After commit 4527025d440ce8
+("nfc: nci: fix circular locking dependency in nci_close_device") moved
+flush_workqueue(ndev->rx_wq) after mutex_unlock(&ndev->req_lock),
+rx_work is no longer serialized with the explicit completion call in the
+close path.  Both callers read the non-NULL callback pointer and invoke
+rawsock_data_exchange_complete(), which calls sock_put() -- but only one
+sock_hold() was taken, so the second sock_put() underflows the refcount
+and frees the socket while it is still in use.
 
-Move the llcp_sock->local read and the NULL check inside the
-lock_sock(sk) region so bind() cannot mutate or free the pointer between
-the load and the use.
+Replace the bare clear_bit(NCI_DATA_EXCHANGE) with
+test_and_clear_bit() so that only the first caller proceeds to invoke
+the callback.
 
-Fixes: 26fd76cab2e6 ("NFC: llcp: Implement socket options")
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260521-fix_llc-v2-2-ab44cc09179c@debian.org
+Fixes: 4527025d440c ("nfc: nci: fix circular locking dependency in nci_close_device")
+Signed-off-by: Zhenghang Xiao <kipreyyy@gmail.com>
+Link: https://patch.msgid.link/20260526103121.47957-1-kipreyyy@gmail.com
 Signed-off-by: David Heidelberg <david@ixit.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/nfc/llcp_sock.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ net/nfc/nci/data.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/net/nfc/llcp_sock.c b/net/nfc/llcp_sock.c
-index b2028016ed971..507447bbceea4 100644
---- a/net/nfc/llcp_sock.c
-+++ b/net/nfc/llcp_sock.c
-@@ -325,14 +325,16 @@ static int nfc_llcp_getsockopt(struct socket *sock, int level, int optname,
- 	if (len < sizeof(u32))
- 		return -EINVAL;
+diff --git a/net/nfc/nci/data.c b/net/nfc/nci/data.c
+index 5f98c73db5afd..4253edea5c8db 100644
+--- a/net/nfc/nci/data.c
++++ b/net/nfc/nci/data.c
+@@ -46,11 +46,11 @@ void nci_data_exchange_complete(struct nci_dev *ndev, struct sk_buff *skb,
+ 	timer_delete_sync(&ndev->data_timer);
+ 	clear_bit(NCI_DATA_EXCHANGE_TO, &ndev->flags);
  
--	local = llcp_sock->local;
--	if (!local)
--		return -ENODEV;
--
- 	len = min_t(u32, len, sizeof(u32));
- 
- 	lock_sock(sk);
- 
-+	local = llcp_sock->local;
-+	if (!local) {
-+		release_sock(sk);
-+		return -ENODEV;
+-	/* Mark the exchange as done before calling the callback.
+-	 * The callback (e.g. rawsock_data_exchange_complete) may
+-	 * want to immediately queue another data exchange.
+-	 */
+-	clear_bit(NCI_DATA_EXCHANGE, &ndev->flags);
++	/* Claim completion atomically -- both close and rx_work may race here */
++	if (!test_and_clear_bit(NCI_DATA_EXCHANGE, &ndev->flags)) {
++		kfree_skb(skb);
++		return;
 +	}
-+
- 	switch (optname) {
- 	case NFC_LLCP_RW:
- 		rw = llcp_sock->rw > LLCP_MAX_RW ? local->rw : llcp_sock->rw;
+ 
+ 	if (cb) {
+ 		/* forward skb to nfc core */
 -- 
 2.53.0
 
