@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9499303A35;
-	Sat, 12 Sep 2026 15:15:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 564F33CB54E;
+	Sat, 12 Sep 2026 15:15:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789226135; cv=none; b=M6oXfryb4Q9N044kX/OfrHWYRwODe0DFC15x8mqMHtU7rq+lyo6KhfNZRDgIvp5bqDqDr5ZvZfbzY5oUlG9JaQUJBev7GVV+9JKDG/byKTS6CZxQ55EIYHGI07ko2oCxfcYszjrwXqkY9stwlJVw+ZdGJXC64ruPM70E4fRinsE=
+	t=1789226139; cv=none; b=LavHR9aIAiYw7IIE7xOLJjf+sSvVDQq3VdYgyVTtwU9G/rMpMG4tfwTi1d4DrQY35Vp5Q449rFkczE8oln/mxGShXIl27MH2vb9Y9/rstqhWaJHj3W0nK8x5RCm8WGEmg37uiYSNYmUTniDPizdDZhIbqfpfNvccx1vf4OXaYLM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789226135; c=relaxed/simple;
-	bh=SVExNHeji/F5BrSUMp+Vu9GWVtiiDdgxV/FLxw1SwLg=;
+	s=arc-20240116; t=1789226139; c=relaxed/simple;
+	bh=wluj7baWnVh4yvDYup4NUvOM4lDD307XelRedGXlePc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X2VmnXeecfuNEOwt3dKZo1g3WopDhOb48owrtyeMGWxGzvsxjA9BBAfhvzt1c5AmchOeVNhHNgXbC1cUHjllBDNZC5GG+9g/zcOB60V4iwRU6zEBV9jI7CVm1RJLLlfpjS9O88G2LR4/c8baheECJg/Gx7iCp8f2XaZw6LAu9HI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KjtE591h; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LOkBFCje5uGiA+hVtMgiY8JQ1Fsz0M30tBjllyJimVhvH9vFKMPMPapTijIZcrFEV3mczEZFXNjBQbjcGm9MTmOiaUw+qAfbTfNEb7DszA1EagRgEpS4x1EsBbASrOm+NfMbkgC6XxlIIUNO7mE7aw/hsUf52iOXP8MSMHZXg+w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GFEGiJcD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KjtE591h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82F481F000FF;
-	Sat, 12 Sep 2026 15:15:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GFEGiJcD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56CF71F000FF;
+	Sat, 12 Sep 2026 15:15:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789226134;
-	bh=Lih+Bbh5Rz9lxB4ne4ZaOc5EJOMF3HTLRhyq5PapaRo=;
+	s=korg; t=1789226138;
+	bh=iQJGHq9UI40I1cmPcCdrksQcAFohKOp3mAyvcsuJcuE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KjtE591hwHB745xvgSHoHt8YK0XxNX6dUqd953pdhCNyYi5vyfcbg2WodkkBfpaeL
-	 uXYeod8kSqEL6cva6cw/NB0PbAFUiS23o3HO/CnjgyVfK5AxADPfmgyBrlnpiCegVv
-	 ASA7VlD9ZGoCWPSrpK4ImkW7vjUDuniVpak0xlHw=
+	b=GFEGiJcDQabXsGJPRYqSHrS4+c25TfUobyJkXEPJ9VHdOVLDXSLm/ZwgcgHqTJqQY
+	 m9HXS5Oij8O6EN4fzpxZt3oCZJwo+WIox64cka6HOsPaAfU03u/2QtzvLqanhON5jW
+	 eg8F9ot7a0zQH1eSZslEWIWQ7HcYgUKfSPPtUpUY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Chao Yu <chao@kernel.org>,
+	Gao Xiang <xiang@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1340/1424] scsi: qla2xxx: Fix an loop timeout test
-Date: Sat, 12 Sep 2026 09:02:52 +0200
-Message-ID: <20260912065637.266396832@linuxfoundation.org>
+Subject: [PATCH 6.6 1341/1424] erofs: Fix EROFS_FS_ZIP_LZMA_DEFAULT_MAX_STREAMS default logic
+Date: Sat, 12 Sep 2026 09:02:53 +0200
+Message-ID: <20260912065637.289704356@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -51,35 +53,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <error27@gmail.com>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit 11e48f5201fd86ffa038809dd9c41144d43ee2e4 ]
+[ Upstream commit ab74edaeb1ae7c7194e79007e6afdfe788111a3f ]
 
-This loop timeout with "retries" set to -1, not 0.  Fix the test for
-failure.
+When NR_CPUS is less than 16, or when SMP is disabled, the default value
+of 16 is invalid.
 
-Fixes: 7ec0effd30bb ("[SCSI] qla2xxx: Add support for ISP8044.")
-Signed-off-by: Dan Carpenter <error27@gmail.com>
-Link: https://patch.msgid.link/an1twcxTYSFkkUTA@stanley.mountain
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+While actual configuration picks up a sensible and valid default
+(NR_CPUS or 1), "make savedefconfig" will still write a line like
+
+    CONFIG_EROFS_FS_ZIP_LZMA_DEFAULT_MAX_STREAMS=1
+
+to the defconfig file, even if that matches the sensible default.
+
+Avoid needlessly enlarging the defconfig files, and reduce churn for
+updating them, by specifying valid defaults depending on SMP and
+NR_CPUS.
+
+While at it, make the prompt depend on SMP, as there is no point in
+asking the user about the maximum number of decompression streams if
+there is only one valid answer.
+
+Fixes: c9b47e6b23114e93 ("erofs: cap LZMA stream pool size")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Gao Xiang <xiang@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/qla2xxx/qla_nx2.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/erofs/Kconfig | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/scsi/qla2xxx/qla_nx2.c b/drivers/scsi/qla2xxx/qla_nx2.c
-index 41ff6fbdb9333..04d7ab6ad037a 100644
---- a/drivers/scsi/qla2xxx/qla_nx2.c
-+++ b/drivers/scsi/qla2xxx/qla_nx2.c
-@@ -3507,7 +3507,7 @@ qla8044_poll_flash_status_reg(struct scsi_qla_host *vha)
- 		msleep(QLA8044_FLASH_STATUS_REG_POLL_DELAY);
- 	}
+diff --git a/fs/erofs/Kconfig b/fs/erofs/Kconfig
+index baabc37c71b31..bedb31517c445 100644
+--- a/fs/erofs/Kconfig
++++ b/fs/erofs/Kconfig
+@@ -101,11 +101,13 @@ config EROFS_FS_ZIP_LZMA
+ 	  If unsure, say N.
  
--	if (!retries)
-+	if (retries == -1)
- 		ret_val = QLA_FUNCTION_FAILED;
+ config EROFS_FS_ZIP_LZMA_DEFAULT_MAX_STREAMS
+-	int "EROFS LZMA default maximum decompression streams"
++	int "EROFS LZMA default maximum decompression streams" if SMP
+ 	depends on EROFS_FS_ZIP_LZMA
+ 	range 1 NR_CPUS if SMP
+ 	range 1 1 if !SMP
+-	default 16
++	default 16 if SMP && NR_CPUS >= 16
++	default NR_CPUS if SMP
++	default 1
+ 	help
+ 	  By default EROFS allocates one LZMA decompression stream per CPU.
+ 	  Each stream can hold a dictionary of up to 8 MiB taken from the
+@@ -113,7 +115,7 @@ config EROFS_FS_ZIP_LZMA_DEFAULT_MAX_STREAMS
+ 	  of memory.  This caps the default; the lzma_streams module parameter
+ 	  still overrides it.
  
- 	return ret_val;
+-	  If unsure, keep the default of 16.
++	  If unsure, keep the suggested default (16 or lower).
+ 
+ config EROFS_FS_ZIP_DEFLATE
+ 	bool "EROFS DEFLATE compressed data support"
 -- 
 2.53.0
 
