@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CF0E377ABA;
-	Sat, 12 Sep 2026 19:45:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 308FC2F0673;
+	Sat, 12 Sep 2026 19:45:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789242306; cv=none; b=Yb3wVS/y1OhcZTN4klIHMzxmvAV2efLiLQUyuFsoQDkCRJSko9jxSI64NNMWHZ5EU6+ku3EdCKz/fGXhvdkZbb30TgkBzj+ZuXa4p+8WQBBRWtsxGwnQMZmYUpl4w6s/drVbgrMpEJxgGdwFFPcYN7zkwQ9t8D2TsB26i2FBcos=
+	t=1789242309; cv=none; b=T8o/p1ObRx7q9wWo5ZL+5bK8VKeTaEvP7YHn/MyJzyUk67S+fFbYWf+HeL5DU5jTyE1HDF2CXT7k6MC04vy59yxwbM4WHYY+QQ2GkUs9MO5PKOSSC9DgnK5X6g7g7zm1rAt59vpxkZCIyT2MsxF+1N4afuyS80PRt2Ckz5jvILY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789242306; c=relaxed/simple;
-	bh=9/8MHYn42XxEjvtnUH+NU4XlpN7DaBeWtTjp/An3xD0=;
+	s=arc-20240116; t=1789242309; c=relaxed/simple;
+	bh=K9E5J8WHE4WNvnZ7Ygc13cAiGPXZyB2VNZv9WY+OUec=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HopzUF8yt7pfskuxzU+6TdnFYHiw9mBV5cNN9RQjdXjhSr6ReHbel8KfvLZYNjGbwlBdLS66Xt8lRwcXE7TCHzkzyNcqEdfN4xXTgo1+L/zi3jwzJ61Sgf4ej1Zh9EvVau9FZMzfjGsk/Ke4w8/ikueH9k+6k6EhmB22gm4tbRk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vyb4Ony3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VqS3IzZtOsAcsNTZ3a409G1jL20ot3ujzJAQxi6d+srkFopVllj49FCXmhVVyWwrkKaKT22pC7KqPR1yFGvk7oWEkY/uF+CMNbAwjYn5tMWgeb4PbTUo9yvybW2rhh+LHClgzx0HggQ+XFhTe+q3zEfNT2ivhod6cAbCOdP0s3c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EOCtPOgH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vyb4Ony3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCFA41F000FF;
-	Sat, 12 Sep 2026 19:45:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EOCtPOgH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 934CA1F000FF;
+	Sat, 12 Sep 2026 19:45:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789242305;
-	bh=j9chNU33I7zdxbslmwHTJoM7WJdUB9uiT1dCRpx2vnI=;
+	s=korg; t=1789242308;
+	bh=KOAbwG3B6JussVjxhEB40zulv6xiFT/k2uuCfmwgcok=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vyb4Ony3IDf/mY71KrPl21qLMXrJoeOfx2mwdVZXSeRon9TKimUhbbjAE23madIo0
-	 xh1qwuXl//n2U/o8dRWixcsuyiOkS8K+aq2wblL3zqKsw1jCe6ocHOZ4ZVWfB0bEpe
-	 lInCg5ZYTP5YUVsJBRi9FOez/YVcp/rSYm4EWlG0=
+	b=EOCtPOgH17nxzOUWe/dk9tBaoWzf8N0zsk6LPDFR/QdTrxr/8IbSKO6Y6RBvI867m
+	 qFOjgU7dY5Yjpn2OqsoAo+f1HAiTnL9kzt+f8HMXKbMX/GpQ8Z+WMxaP8rdexzJDvt
+	 e4sUIf3NX2+4lZ9E7/C3RY0e+bP9B8FchEJ+cKBE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Zapolskiy <vz@kernel.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
+	Folker Schwesinger <dev@folker-schwesinger.de>,
+	Suraj Gupta <suraj.gupta2@amd.com>,
+	Srinivas Neeli <srinivas.neeli@amd.com>,
+	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 358/798] dmaengine: mediatek: mtk-uart-apdma: Return -ENOMEM on memory allocation failure
-Date: Sat, 12 Sep 2026 08:59:46 +0200
-Message-ID: <20260912065525.366798792@linuxfoundation.org>
+Subject: [PATCH 5.10 359/798] dmaengine: xilinx_dma: Fix channel idle state management in AXIDMA and MCDMA interrupt handlers
+Date: Sat, 12 Sep 2026 08:59:47 +0200
+Message-ID: <20260912065525.389391573@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -54,37 +54,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vladimir Zapolskiy <vz@kernel.org>
+From: Suraj Gupta <suraj.gupta2@amd.com>
 
-[ Upstream commit 467265c750edd7ab43803deeafe7d3120a791d32 ]
+[ Upstream commit 0b6d055edb55ecadadf54e930c2b4fab76fa9a5a ]
 
-If dynamic memory allocation in driver's probe function execution fails, it
-should be reported to the driver's framework with -ENOMEM error code.
+Fix a race condition in AXIDMA and MCDMA irq handlers where the channel
+could be incorrectly marked as idle and attempt spurious transfers when
+descriptors are still being processed.
 
-Fixes: 9135408c3ace ("dmaengine: mediatek: Add MediaTek UART APDMA support")
-Signed-off-by: Vladimir Zapolskiy <vz@kernel.org>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Reviewed-by: Matthias Brugger <matthias.bgg@gmail.com>
-Link: https://patch.msgid.link/20260701200703.117929-1-vz@kernel.org
+The issue occurs when:
+1. Multiple descriptors are queued and active.
+2. An interrupt fires after completing some descriptors.
+3. xilinx_dma_complete_descriptor() moves completed descriptors to
+done_list.
+4. Channel is marked idle and start_transfer() is called even though
+   active_list still contains unprocessed descriptors.
+5. This leads to premature transfer attempts and potential descriptor
+   corruption or missed completions.
+
+Only mark the channel as idle and start new transfers when the active list
+is actually empty, ensuring proper channel state management and avoiding
+spurious transfer attempts.
+
+Fixes: c0bba3a99f07 ("dmaengine: vdma: Add Support for Xilinx AXI Direct Memory Access Engine")
+Tested-by: Folker Schwesinger <dev@folker-schwesinger.de>
+Signed-off-by: Suraj Gupta <suraj.gupta2@amd.com>
+Co-developed-by: Srinivas Neeli <srinivas.neeli@amd.com>
+Signed-off-by: Srinivas Neeli <srinivas.neeli@amd.com>
+Reviewed-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+Link: https://patch.msgid.link/20260626092656.1563871-2-suraj.gupta2@amd.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/mediatek/mtk-uart-apdma.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/dma/xilinx/xilinx_dma.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/dma/mediatek/mtk-uart-apdma.c b/drivers/dma/mediatek/mtk-uart-apdma.c
-index c1e132a110ffb..20d196b766835 100644
---- a/drivers/dma/mediatek/mtk-uart-apdma.c
-+++ b/drivers/dma/mediatek/mtk-uart-apdma.c
-@@ -531,7 +531,7 @@ static int mtk_uart_apdma_probe(struct platform_device *pdev)
- 	for (i = 0; i < mtkd->dma_requests; i++) {
- 		c = devm_kzalloc(mtkd->ddev.dev, sizeof(*c), GFP_KERNEL);
- 		if (!c) {
--			rc = -ENODEV;
-+			rc = -ENOMEM;
- 			goto err_no_dma;
- 		}
+diff --git a/drivers/dma/xilinx/xilinx_dma.c b/drivers/dma/xilinx/xilinx_dma.c
+index ff7fda42b5ca2..44d897f2b0f0b 100644
+--- a/drivers/dma/xilinx/xilinx_dma.c
++++ b/drivers/dma/xilinx/xilinx_dma.c
+@@ -1823,8 +1823,10 @@ static irqreturn_t xilinx_mcdma_irq_handler(int irq, void *data)
+ 	if (status & XILINX_MCDMA_IRQ_IOC_MASK) {
+ 		spin_lock(&chan->lock);
+ 		xilinx_dma_complete_descriptor(chan);
+-		chan->idle = true;
+-		chan->start_transfer(chan);
++		if (list_empty(&chan->active_list)) {
++			chan->idle = true;
++			chan->start_transfer(chan);
++		}
+ 		spin_unlock(&chan->lock);
+ 	}
+ 
+@@ -1880,8 +1882,10 @@ static irqreturn_t xilinx_dma_irq_handler(int irq, void *data)
+ 		      XILINX_DMA_DMASR_DLY_CNT_IRQ)) {
+ 		spin_lock(&chan->lock);
+ 		xilinx_dma_complete_descriptor(chan);
+-		chan->idle = true;
+-		chan->start_transfer(chan);
++		if (list_empty(&chan->active_list)) {
++			chan->idle = true;
++			chan->start_transfer(chan);
++		}
+ 		spin_unlock(&chan->lock);
+ 	}
  
 -- 
 2.53.0
