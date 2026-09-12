@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DDF437FF60;
-	Sat, 12 Sep 2026 12:34:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D37A247A87A;
+	Sat, 12 Sep 2026 12:34:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789216470; cv=none; b=FFgO8m881dz8Z67NHqhyuj4MtyrvA2mb8WMz6xVrQLUGelKgGfDgU0N+6zqT/jHRmI/cncAxRW3RQR5YO1+iltZUjcXFZV//vjzQU6R/zGFj2j45xYH30eYf+URjZrrNF6gVuE5cFgdY3+F47kIrBJuTvuc6D9TNLl0ZQfEloIQ=
+	t=1789216476; cv=none; b=fdexbA9XICkH0B9NZt5XiqvihuBmVBa+twi5mNGnNzUaMigfnR7rtr/vdbDfhrOrGxzil4WUFzwNLF8Yn4SqyusVLG3n2o0svhsCyfUpQbtFfK1v4rxCaxwoXcpZ0fi2A9PKf9VSbZijWRpUVY05uW5Z4qov1i2CD7Rn5UdgGzI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789216470; c=relaxed/simple;
-	bh=LkuWF2VkYrG6KGCWwsrTqoBkv+IB/hy6kz6oppMvKyY=;
+	s=arc-20240116; t=1789216476; c=relaxed/simple;
+	bh=pQB4c6NE47TKStlDm8cnzxR/sSmLCzI0aQ/nHhvZjq4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lHl2ZdLRhrGFhx5yU6uiwxvbvI83STjeQq2+yXBWDdD0BtGatoQrY5qPU/hWkq4cJ5yIwVNNOHd+zRx2RTQQu7DlPlQ4mG/pYvGamwkryhUnW39tt4QcabtHMPgOi1e2Nj6KkzdVpdKl427nzF25j17Q6TEja6SvwYZ1DanLjog=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uakD2nTG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JnZXwq7SnPulWTKPAw7JnDpn10DsLS3yjQ8SKrDcfW7O4UurCXSwOvtTkRfoKOhi63Ig/2smYKqT+ctBWAIJg3soTHCw0CTqXDlZsOvbKyxTWvl99hc5ufFW4v8y2/vACctwMZtl4F28uqKqcc4S7IbHxvx+E065GlMy6HfQhT4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zhkPy4yR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uakD2nTG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A11381F000FF;
-	Sat, 12 Sep 2026 12:34:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zhkPy4yR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EA201F000FF;
+	Sat, 12 Sep 2026 12:34:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789216469;
-	bh=CG3ULqyjgasORQ9qQ25kCv1yGl/3IafHROwPEwevtng=;
+	s=korg; t=1789216474;
+	bh=3DD7HyIxxy+D3PBsHUeMYMWAkgj3i9vOPG17Ul17xlY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uakD2nTGGMZDkdl7/6TQ+pA/YFFvJxWpkV1E1iK43BZrbkGCASCiHu91pChsPFjwI
-	 PtahRoMjbDGAmGk+0bOZAkgGRbOcJdffCIWfdnTDGl0n0zn3o2nQJAAa65IFnPS6Ui
-	 TK4fnDxcN85XYVt2b2oSLBtbtrUXnJkCncyzA08g=
+	b=zhkPy4yR4lsBGszAaLhkvEn7P058ZQ2wtocZnHrF1sMe8IdxCgQ53ZyCwjmoJJLZF
+	 dAG5BUxtMKyIybySYYiGvIPobzdyVd05mAq4yILGv4aaJBs/orMFwJJGlg7epAf+lZ
+	 eEKQUQX4HMfs6YJD/DZXonWyiYLr00SG1JoL4s/M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Qixing <zhengqixing@huawei.com>,
-	Li Nan <linan122@huawei.com>,
-	Yu Kuai <yukuai3@huawei.com>,
+	Fan Wu <fanwu01@zju.edu.cn>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0741/1376] md: allow removing faulty rdev during resync
-Date: Sat, 12 Sep 2026 08:52:47 +0200
-Message-ID: <20260912065624.060426089@linuxfoundation.org>
+Subject: [PATCH 6.12 0700/1376] spi: oc-tiny: switch to managed controller allocation
+Date: Sat, 12 Sep 2026 08:52:06 +0200
+Message-ID: <20260912065623.146958289@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -52,91 +51,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zheng Qixing <zhengqixing@huawei.com>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-[ Upstream commit c0ffeb648000acdc932da7a9d33fd65e9263c54c ]
+[ Upstream commit d710f43ce30975d197f73c543bfe47b958d8ba17 ]
 
-During RAID resync, faulty rdev cannot be removed and will result in
-"Device or resource busy" error when attempting hot removal.
+The controller is allocated with the non-managed spi_alloc_host() while
+the interrupt is registered with devm_request_irq().  During removal,
+spi_bitbang_stop() only unregisters the controller; the subsequent
+spi_controller_put() then frees the controller together with its
+embedded driver-private devdata, which is the IRQ handler's dev_id.  The
+devm_request_irq() release action (free_irq()), which drains the
+handler, does not run until after .remove() returns.  A late or latched
+interrupt can therefore reach tiny_spi_irq() and dereference
+already-freed memory (e.g. hw->base).
 
-Reproduction steps:
-  mdadm -Cv /dev/md0 -l1 -n3 -e1.2 /dev/sd{b..d}
-  mdadm /dev/md0 -f /dev/sdb
-  mdadm /dev/md0 -r /dev/sdb
-  -> mdadm: hot remove failed for /dev/sdb: Device or resource busy
+Switch to devm_spi_alloc_host() so that the devres LIFO order releases
+the controller only after free_irq() has drained the handler, and drop
+the now-redundant spi_controller_put() from .remove().  The probe error
+path is simplified to direct returns.
 
-After commit 4b10a3bc67c1 ("md: ensure resync is prioritized over
-recovery"), when a device becomes faulty during resync, the
-md_choose_sync_action() function returns early without calling
-remove_and_add_spares(), preventing faulty device removal.
+This issue was found by an in-house static analysis tool.
 
-This patch extracts a helper function remove_spares() to support
-removing faulty devices during RAID resync operations.
-
-Fixes: 4b10a3bc67c1 ("md: ensure resync is prioritized over recovery")
-Signed-off-by: Zheng Qixing <zhengqixing@huawei.com>
-Reviewed-by: Li Nan <linan122@huawei.com>
-Link: https://lore.kernel.org/linux-raid/20250707075412.150301-1-zhengqixing@huaweicloud.com
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Stable-dep-of: a47431dfb353 ("md/raid5: protect lockless recovery_offset accesses during reshape")
+Fixes: ce792580ea2c ("spi: add OpenCores tiny SPI driver")
+Assisted-by: Codex:gpt-5.6
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Link: https://patch.msgid.link/20260719010014.3163356-1-fanwu01@zju.edu.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/md.c | 24 +++++++++++++++++-------
- 1 file changed, 17 insertions(+), 7 deletions(-)
+ drivers/spi/spi-oc-tiny.c | 24 ++++++++----------------
+ 1 file changed, 8 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/md/md.c b/drivers/md/md.c
-index 90fe53d5bd818..a5ca93c0223a6 100644
---- a/drivers/md/md.c
-+++ b/drivers/md/md.c
-@@ -9424,17 +9424,11 @@ static bool md_spares_need_change(struct mddev *mddev)
- 	return false;
+diff --git a/drivers/spi/spi-oc-tiny.c b/drivers/spi/spi-oc-tiny.c
+index 7d8c5cd680d1d..2e5df685c2779 100644
+--- a/drivers/spi/spi-oc-tiny.c
++++ b/drivers/spi/spi-oc-tiny.c
+@@ -211,11 +211,11 @@ static int tiny_spi_probe(struct platform_device *pdev)
+ 	struct tiny_spi_platform_data *platp = dev_get_platdata(&pdev->dev);
+ 	struct tiny_spi *hw;
+ 	struct spi_controller *host;
+-	int err = -ENODEV;
++	int err;
+ 
+-	host = spi_alloc_host(&pdev->dev, sizeof(struct tiny_spi));
++	host = devm_spi_alloc_host(&pdev->dev, sizeof(struct tiny_spi));
+ 	if (!host)
+-		return err;
++		return -ENOMEM;
+ 
+ 	/* setup the host state. */
+ 	host->bus_num = pdev->id;
+@@ -233,10 +233,8 @@ static int tiny_spi_probe(struct platform_device *pdev)
+ 
+ 	/* find and map our resources */
+ 	hw->base = devm_platform_ioremap_resource(pdev, 0);
+-	if (IS_ERR(hw->base)) {
+-		err = PTR_ERR(hw->base);
+-		goto exit;
+-	}
++	if (IS_ERR(hw->base))
++		return PTR_ERR(hw->base);
+ 	/* irq is optional */
+ 	hw->irq = platform_get_irq(pdev, 0);
+ 	if (hw->irq >= 0) {
+@@ -244,7 +242,7 @@ static int tiny_spi_probe(struct platform_device *pdev)
+ 		err = devm_request_irq(&pdev->dev, hw->irq, tiny_spi_irq, 0,
+ 				       pdev->name, hw);
+ 		if (err)
+-			goto exit;
++			return err;
+ 	}
+ 	/* find platform data */
+ 	if (platp) {
+@@ -253,29 +251,23 @@ static int tiny_spi_probe(struct platform_device *pdev)
+ 	} else {
+ 		err = tiny_spi_of_probe(pdev);
+ 		if (err)
+-			goto exit;
++			return err;
+ 	}
+ 
+ 	/* register our spi controller */
+ 	err = spi_bitbang_start(&hw->bitbang);
+ 	if (err)
+-		goto exit;
++		return err;
+ 	dev_info(&pdev->dev, "base %p, irq %d\n", hw->base, hw->irq);
+ 
+ 	return 0;
+-
+-exit:
+-	spi_controller_put(host);
+-	return err;
  }
  
--static int remove_and_add_spares(struct mddev *mddev,
--				 struct md_rdev *this)
-+static int remove_spares(struct mddev *mddev, struct md_rdev *this)
+ static void tiny_spi_remove(struct platform_device *pdev)
  {
- 	struct md_rdev *rdev;
--	int spares = 0;
- 	int removed = 0;
+ 	struct tiny_spi *hw = platform_get_drvdata(pdev);
+-	struct spi_controller *host = hw->bitbang.ctlr;
  
--	if (this && test_bit(MD_RECOVERY_RUNNING, &mddev->recovery))
--		/* Mustn't remove devices when resync thread is running */
--		return 0;
--
- 	rdev_for_each(rdev, mddev) {
- 		if ((this == NULL || rdev == this) && rdev_removeable(rdev) &&
- 		    !mddev->pers->hot_remove_disk(mddev, rdev)) {
-@@ -9448,6 +9442,21 @@ static int remove_and_add_spares(struct mddev *mddev,
- 	if (removed && mddev->kobj.sd)
- 		sysfs_notify_dirent_safe(mddev->sysfs_degraded);
+ 	spi_bitbang_stop(&hw->bitbang);
+-	spi_controller_put(host);
+ }
  
-+	return removed;
-+}
-+
-+static int remove_and_add_spares(struct mddev *mddev,
-+				 struct md_rdev *this)
-+{
-+	struct md_rdev *rdev;
-+	int spares = 0;
-+	int removed = 0;
-+
-+	if (this && test_bit(MD_RECOVERY_RUNNING, &mddev->recovery))
-+		/* Mustn't remove devices when resync thread is running */
-+		return 0;
-+
-+	removed = remove_spares(mddev, this);
- 	if (this && removed)
- 		goto no_add;
- 
-@@ -9490,6 +9499,7 @@ static bool md_choose_sync_action(struct mddev *mddev, int *spares)
- 
- 	/* Check if resync is in progress. */
- 	if (mddev->recovery_cp < MaxSector) {
-+		remove_spares(mddev, NULL);
- 		set_bit(MD_RECOVERY_SYNC, &mddev->recovery);
- 		clear_bit(MD_RECOVERY_RECOVER, &mddev->recovery);
- 		return true;
+ #ifdef CONFIG_OF
 -- 
 2.53.0
 
