@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CD8231E84F;
-	Sat, 12 Sep 2026 16:28:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A630242D65;
+	Sat, 12 Sep 2026 16:29:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789230537; cv=none; b=uCv/mPCMuQQi+sG6d/KvhE81xPW/9q2q2MPxcRWs54Luseh0VGh7a4Fkpu7LRBi2SDBzaSsOUkS4reNd+Shdntfaha04atafRZlVABsuWkAM2RwW8vggxFpHNNPVrNRpeS8UejlAP/FvWJfRyqe5SapYJkJG9jbnM5U7Y8YgLb8=
+	t=1789230542; cv=none; b=IhE6+5TyZbASPp5xvmZ+ODY308VPhQJrSEvKRXN+OFI62thcrFouBif3b456yjTaH+Ma6b10LdwvzEOpWZtIP7HYV2HRXTztQFdnrZCVXA1IKSvDNGGBSN/JFlYv9GV6gOQ5rPKZQcXGwzszYsofmnAugv9Azqll110FG0Xc+A0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789230537; c=relaxed/simple;
-	bh=ldNnDZ5o3puML903xsOw6Zf4rvl2NLsTBBZfURfNSkQ=;
+	s=arc-20240116; t=1789230542; c=relaxed/simple;
+	bh=hSTRvtkJMDKBeWeAX4OPKOxfJ/lV2tU0OZTqrM9MWhQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hKHBjanB1ZVIVUJ1OR+Q2++AGJIzhpPpbnszbgy29e73XHcYsp9oTI5VignnDDvQtOXbhZfPH1OaVVncYUSu6WooHNYII0HliTA0mzT7AqmNF/qHqDPvVA0si07tYEonALI8PvG9+6XK8fTffiSKJ1sWx7mOdwPLCLqiT/ZDklM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PF/M0Wou; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hexyJDHVeeQzAn8JNJNwsgAlMWVhqSDL3arTYXwtm6AF44VQv/4/2yh0MHmrHJ3GvFCrZl6tlhWoXqwKGolAetPD6wNJCWtjkUulRFkHkb4MQGx46WuX3JZ+0kMOUsCCF6GQ1fDXd1KHWGWBfT3Owrq3eQwpdIZ4+8qmbApDJNg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i7UClrQ7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PF/M0Wou"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DFFF1F000FF;
-	Sat, 12 Sep 2026 16:28:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i7UClrQ7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 544471F000FF;
+	Sat, 12 Sep 2026 16:29:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789230536;
-	bh=mvwvonX3MLKroI3xnRlVPXEL/XRM0ZCGuoZDyBs4woU=;
+	s=korg; t=1789230541;
+	bh=VqqwagPv8wOZ1cmXGhRYd0ZO6Dv/O+t22TqOY8fErVo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PF/M0WouZCqVGxf2nOMrbp87ago0wUBr96jg4uo8KFxDf5qxh83HQuLGa6JH4WKQw
-	 6uZmeAhsvn7VSI39EIqPvA5NEZ1lcEOOfmpNcH9n/MvRzlsxNouTG8/W3ztxAmRXp8
-	 eW3oB8uUt4Itg+tQxlvebUjf+JEEkL65IV5D1WDo=
+	b=i7UClrQ7VuIRNZ1tYVOz/X6zHhs1nf8sZLhQAsEpDlgLqhrG0bbq6/vb2c8W2WXR7
+	 nPhJ/afCoMLQDydRCr+NrzrVatdaZsnjW4yzxxDjlhAsR97m3B8L8ID4wQSO7lee6d
+	 Rv7PNO7IZ9w8EzoTv57TqocoKgfDSFCvxdWNmu9Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0813/1191] perf machine: Dont abort guest map creation on first inaccessible dir
-Date: Sat, 12 Sep 2026 08:59:01 +0200
-Message-ID: <20260912065606.529099335@linuxfoundation.org>
+Subject: [PATCH 6.1 0814/1191] perf machine: Reset errno before strtol in guest kernel map creation
+Date: Sat, 12 Sep 2026 08:59:02 +0200
+Message-ID: <20260912065606.550588060@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -47,7 +47,6 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
@@ -56,15 +55,15 @@ Content-Transfer-Encoding: 8bit
 
 From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit b687e1a418fb819ef83c362d84c216a6a841e3b0 ]
+[ Upstream commit 29ec46e43f6ca7d6a6651db724d4ffd820f46e8b ]
 
-machines__create_guest_kernel_maps() jumps to the failure label when one
-guest directory's kallsyms file fails access(), skipping all remaining
-valid guest directories.  An inaccessible directory is not fatal — other
-guests may still be reachable.
+machines__create_guest_kernel_maps() checks errno == ERANGE after
+strtol() to detect overflow, but does not clear errno first.  A stale
+ERANGE from an earlier library call (e.g. scandir internals) causes
+valid numeric directory names to be incorrectly skipped.
 
-Replace 'goto failure' with 'continue' so the loop processes all
-directories, and remove the now-unreferenced failure label.
+Set errno = 0 before strtol() so only the current conversion can
+trigger the ERANGE check.
 
 Fixes: a1645ce12adb ("perf: 'perf kvm' tool for monitoring guest performance from host")
 Reported-by: sashiko-bot <sashiko-bot@kernel.org>
@@ -74,30 +73,21 @@ Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/machine.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ tools/perf/util/machine.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/tools/perf/util/machine.c b/tools/perf/util/machine.c
-index 979163670508a..c0785514753e8 100644
+index c0785514753e8..e285ad1397490 100644
 --- a/tools/perf/util/machine.c
 +++ b/tools/perf/util/machine.c
-@@ -1374,14 +1374,12 @@ int machines__create_guest_kernel_maps(struct machines *machines)
- 			snprintf(path, sizeof(path), "%s/%s/proc/kallsyms",
- 				 symbol_conf.guestmount,
- 				 namelist[i]->d_name);
--			ret = access(path, R_OK);
--			if (ret) {
-+			if (access(path, R_OK)) {
- 				pr_debug("Can't access file %s\n", path);
--				goto failure;
-+				continue;
+@@ -1363,6 +1363,7 @@ int machines__create_guest_kernel_maps(struct machines *machines)
+ 				/* Filter out . and .. */
+ 				continue;
  			}
- 			machines__create_kernel_maps(machines, pid);
- 		}
--failure:
- 		free(namelist);
- 	}
- 
++			errno = 0;
+ 			pid = (pid_t)strtol(namelist[i]->d_name, &endp, 10);
+ 			if ((*endp != '\0') ||
+ 			    (endp == namelist[i]->d_name) ||
 -- 
 2.53.0
 
