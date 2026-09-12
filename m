@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A318E24B28;
-	Sat, 12 Sep 2026 09:02:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46ADD35F191;
+	Sat, 12 Sep 2026 09:02:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789203734; cv=none; b=pnipycCJ/oLRTa1Y2fkhP5GJ0QSew/Ie0r0xaNDFH7WqFe3wmdS/NHbTZt5AtPbd/MPgwQt+tdLmLrIJG/z+EAGgt1WkOFfOrcEd/7qVcakAEAd1BjytaIR8YXIEGBS7x7/WNfcsZcxfz1MNyIr4f6sJKeTWZZ8MQPf+wQiOUwk=
+	t=1789203739; cv=none; b=mNcpuf3kymtBjsifTvUPqXREmUVLBr7IaY/o3RsQhrvfoXl9OMi10ACw+3THCdkoCjD1jZHLSM/YXWkPCjd87BWSpE1sSPh7Zl1aPuKMR3wTMRY9NLJYppHoICr4QgU/OzKWPz9APWeL3+S5NeyX2W50bG9+zOhXlCMpzmXAqTk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789203734; c=relaxed/simple;
-	bh=BNYy/FaVASAT7F8FzSaAp4JQ70XQySPik3j/Y3qRoSs=;
+	s=arc-20240116; t=1789203739; c=relaxed/simple;
+	bh=eeMy5bYGewZHKXfWp48NGb2i/0dXjtRHgnzNP3kOUWE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PaP3iVxLTLETRkm0BPHG1bDreFNIkVj/WxA//SZVKGSHIQojC90TReCu4QWpxPwWqNccWtNSjYDNi/8z3u2UITvlluwZZCtD8YPs1cAEwbrDcby52waltj0GomfwSakIqVvAnxzEirmYpP9fVodeCfcsGUHRNtTRRe6hYFuWzTQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V0/oAwAm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gTpyDyP22XjitOECz5dP6opgi74/zVIZxohgson6iKHVVfijqFwP6IrTdrfv9tmsl6Tkodiq8TLn1YmxK653QBso7+mXO8E4hIc0ruSJ805jwbni43W/GwUMaUuW7Y+0kLA5UnHY41ICoiuHLgPRtZ+UMdTqKwm/m0BhSgGAP8E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0wYMe0nY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V0/oAwAm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A886E1F000FF;
-	Sat, 12 Sep 2026 09:02:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0wYMe0nY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 153341F000FF;
+	Sat, 12 Sep 2026 09:02:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789203733;
-	bh=afBR9Rqs9R6GZxlabOyPvA/CslMkzd9k2pGU6KXk1oE=;
+	s=korg; t=1789203738;
+	bh=xRyErewXP0fA3MhqAtYiqkZtuVnZpHmwsw928ohzAxc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V0/oAwAmnFYTcFxvbRaop8eAaWfeqKbWb57uhbsZcgOd2uvB7mVAUf0qga2uAnQjL
-	 V4+Jr/E1zA1y9kttxd9Fooztj586qsfluwCgnG2sn6QqEgP0PXwyKkz3B0XCI600QN
-	 kaaETREvJ7UOEANUBjOfOStVflAVFxNyuFVfowjA=
+	b=0wYMe0nYhD3kDoc/OLHOgcRb/g3sa32YQJ2NUBIkSJZxQpwnQD+XadUItO401BLGS
+	 g0f2FEa91wfytQcslbeZiSvFvJJoG/n3mvef8FmdAPDWTVt4hKBdJXnMT26PbjxJ39
+	 6+GKuLq5rfU5F39C7bzTYG0rmk+xgY57fIhnirxY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matti Vaittinen <mazziesaccount@gmail.com>,
-	Kalle Niemi <kaleposti@gmail.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1415/1815] power: supply: bd71815: Fix temperature reading
-Date: Sat, 12 Sep 2026 08:52:45 +0200
-Message-ID: <20260912065722.240275219@linuxfoundation.org>
+Subject: [PATCH 7.2 1462/1815] ACPI: scan: Use acpi_bus_get_primary_device()
+Date: Sat, 12 Sep 2026 08:53:32 +0200
+Message-ID: <20260912065723.333432571@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,45 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matti Vaittinen <mazziesaccount@gmail.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit c15f0eabec5a051cb8190fa2bff3b211730f4acb ]
+[ Upstream commit 87ee7d704f69f303c86b2dcf617e33764371fe7b ]
 
-The temperature read from the hardware is never returned to caller.
-Furthermore, the check for temperature validity is wrong. This yields
-garbage value to be returned to caller, and also detection of
-bad values read from hardware to fail.
+The acpi_get_first_physical_node() usage in acpi_create_video_bus_device()
+is generally unsafe because in theory the device returned by it may be
+freed at any time.
 
-Signed-off-by: Matti Vaittinen <mazziesaccount@gmail.com>
-Fixes: 5bff79dad20a ("power: supply: Add bd718(15/28/78) charger driver")
-Tested-by: Kalle Niemi <kaleposti@gmail.com>
-Link: https://patch.msgid.link/4ae3dfa7fc80372977fd29c837321f96d551bf6f.1786356145.git.mazziesaccount@gmail.com
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Address this issues by using acpi_bus_get_primary_device() instead of
+acpi_get_first_physical_node() and dropping the device reference
+acquired by it after registering the child.
+
+Fixes: 6ab3532b4c98 ("ACPI: video: Switch over to auxiliary bus type")
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://patch.msgid.link/10906414.nUPlyArG6x@rafael.j.wysocki
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/bd71828-power.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/acpi/scan.c | 20 +++++++++-----------
+ 1 file changed, 9 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/power/supply/bd71828-power.c b/drivers/power/supply/bd71828-power.c
-index 19f24f859666a..e5e5f25474f54 100644
---- a/drivers/power/supply/bd71828-power.c
-+++ b/drivers/power/supply/bd71828-power.c
-@@ -224,13 +224,13 @@ static int bd71815_get_temp(struct bd71828_power *pwr, int *temp)
- 	if (ret)
- 		return ret;
+diff --git a/drivers/acpi/scan.c b/drivers/acpi/scan.c
+index f8450f7ea097c..99af95f338652 100644
+--- a/drivers/acpi/scan.c
++++ b/drivers/acpi/scan.c
+@@ -2213,29 +2213,27 @@ static void acpi_create_video_bus_device(struct acpi_device *adev,
+ 	struct auxiliary_device *aux_dev;
+ 	static unsigned int aux_dev_id;
  
--	t = 200 - t;
--
- 	if (t > 200) {
- 		dev_err(pwr->dev, "Failed to read battery temperature\n");
- 		return -ENODATA;
- 	}
- 
-+	*temp = 200 - t;
++	struct device *phys_parent __free(put_device) = acpi_bus_get_primary_device(parent);
++	if (!phys_parent)
++		return;
 +
- 	return 0;
+ 	aux_dev = kzalloc_obj(*aux_dev);
+ 	if (!aux_dev)
+ 		return;
+ 
+ 	aux_dev->id = aux_dev_id++;
+ 	aux_dev->name = "video_bus";
+-	aux_dev->dev.parent = acpi_get_first_physical_node(parent);
+-	if (!aux_dev->dev.parent)
+-		goto err;
+-
++	aux_dev->dev.parent = phys_parent;
+ 	aux_dev->dev.release = acpi_video_bus_device_release;
+ 
+-	if (auxiliary_device_init(aux_dev))
+-		goto err;
++	if (auxiliary_device_init(aux_dev)) {
++		kfree(aux_dev);
++		return;
++	}
+ 
+ 	ACPI_COMPANION_SET(&aux_dev->dev, adev);
+ 	if (__auxiliary_device_add(aux_dev, "acpi"))
+ 		auxiliary_device_uninit(aux_dev);
+-
+-	return;
+-
+-err:
+-	kfree(aux_dev);
  }
  
+ struct acpi_scan_system_dev {
 -- 
 2.53.0
 
