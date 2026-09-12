@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C247A2FDC30;
-	Sat, 12 Sep 2026 15:39:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEE58345EB9;
+	Sat, 12 Sep 2026 15:39:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789227550; cv=none; b=ovf6cGdk0e4CCG39J8THoHw8CCzantapx3x0SokV/cooocMbOVbw/LsELVgSDDzGP6pOy5kym+NHuGDDpb/evW96WK3ou1LvWONESFPr4laFH78ckTv8ISHHPs/Hmxus1jNqIdBsQ11/TjBRDRfiOCYVedO5o9V5h+L6Ph0O3fg=
+	t=1789227555; cv=none; b=qDn3H6SF8cq8Fg4uZw793+ydhzwfzrkC9JKF+LRWh7CkNdaNHhzpogIt39N7SWjSqHJsD8/cx4zpH61mvda25RxQ+aqPLD0Bj6Wbv5C/eoxb38z4XB/mktwRmz5XHlMDKeJ0H4ODaU/TQne4DeG/qrhLkCfYfAQnmwKWpyANm5w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789227550; c=relaxed/simple;
-	bh=8+8+1stPw0eR8k52ITUNpvfO0BgR6sCmikRT+c0/wCI=;
+	s=arc-20240116; t=1789227555; c=relaxed/simple;
+	bh=NAIeIMo5GGNbKze6/QzYJ+LFloiw2Hr8qg122J5uuiM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p+kU96F/AWllQJ21sFvkATfm2W7O6OpEoelfrL7Zj8jFCQ6NdS6nkJApd9WTFzX1YsMeopA4lF9xiv2a/bjyLXB28Lt82ctKM6IZfWVEAv4eybTk9azaOe+eCAXRfLZ4El6q4nhtaetCnORdyth7zFkYtMowVe19o8ZmR2A79qA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U9T2iQfq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gEynilhyu7OLi/nanX5OLHTI5jStE1Pf3BBkTNqd6gyz+KswLms1xxzdEj32oWn2AD5WSHUDwwhb/q3+nVtqPXQEycYlZwgRP2LR/rnqkG2rDTfXnL5lgOniP+t5jZtn3n7zRffuCPqD/1UIrSsXxQxiuyAIbDGyJ/RD9lp50ak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Si9ykKC/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U9T2iQfq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B84E1F000FF;
-	Sat, 12 Sep 2026 15:39:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Si9ykKC/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B36041F000FF;
+	Sat, 12 Sep 2026 15:39:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789227549;
-	bh=Bq5vGqrXZ2z4ZdJv6z1suKfsNHq3Tpbhk3nYEKXxdFk=;
+	s=korg; t=1789227554;
+	bh=HBd/WvgLEHBb19OMcr+oyaYLjJuVyPaSOZqdK5MJ38o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=U9T2iQfqGFgfUgQuEoFFXbs8YEsA5hQxjxkdvkEiyUbCq4H8wzAeOniCKqwJ3sdaz
-	 ryz3y9iTo+vLPa2mAcxX1vIV5X8MP7nRnWuoHjeT55cQ9qXQ0W9GINst7XPA9mhMtA
-	 TIVEsLUy76boWWk0zksw6v9wfOouz7Z78Y6t1MBg=
+	b=Si9ykKC/dT7jVaSn/RgECaZ/SYQFSBggWTzQTpx5NivZN2sSwtPR0ZC9SeOEe6wSD
+	 I6edFrImwfxlw92dRJ3AdLGAPY4k+tygda2lPMo40H+9dLf0+sUpRSDppYv37woebu
+	 dEvEUhx4mP9pQaI96Py2XeAYGvNi7TF4gOAelLc0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Asim Viladi Oglu Manizada <manizada@pm.me>,
-	Willem de Bruijn <willemb@google.com>,
+	Ilya Maximets <i.maximets@ovn.org>,
+	Aaron Conole <aconole@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 0205/1191] net: tun: bound receive headroom
-Date: Sat, 12 Sep 2026 08:48:53 +0200
-Message-ID: <20260912065552.814945060@linuxfoundation.org>
+Subject: [PATCH 6.1 0206/1191] net: openvswitch: fix flow mask use-after-free on flow deletion
+Date: Sat, 12 Sep 2026 08:48:54 +0200
+Message-ID: <20260912065552.837144491@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -51,84 +51,138 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Asim Viladi Oglu Manizada <manizada@pm.me>
+From: Ilya Maximets <i.maximets@ovn.org>
 
-commit 447c9303942c439a117d9b76ce6d6e2116b38ee7 upstream.
+commit 4e30317ff67a2eb12b4d890d39f72fd7e7117d48 upstream.
 
-tun_get_user() uses tun->align both as skb headroom and when choosing how
-much packet data to keep linear. OVS can propagate an oversized headroom
-request from another port to TUN or TAP.
+The commit in the Fixes tag below made so flow->mask free is scheduled
+via RCU right after it is removed from the flow table.  The pointer
+stays in the flow structure and it can be accessible while in the same
+RCU critical section.  This is done to avoid requiring ovs_mutex for
+the ovs_flow_free().
 
-When align is larger than the usable space in a one-page skb head,
-SKB_MAX_HEAD(align) underflows and the result becomes negative when stored
-in good_linear. That value later wraps when assigned to the size_t linear
-variable, and tun_alloc_skb() can place skb->data outside the allocated
-head.
+However, while removing the flow during processing of CMD_DEL, we do
+not take RCU read lock before the removal, and ovs_flow_cmd_fill_info()
+uses the flow->mask pointer afterwards.  The RCU read lock is taken,
+but it's already late at that point.  The comment on that line
+acknowledges that the lock is cosmetic and doesn't serve a real purpose.
 
-Bound the headroom stored by TUN to the one-page skb-head budget and the
-largest non-sentinel 16-bit skb header offset. Leave one linear byte for
-raw TUN and a complete Ethernet header for TAP, including NET_IP_ALIGN.
+This leads to use-after-free if the RCU grace period passes between
+removal and the filling.  It is a short race window, but it is there
+and can lead to a real crash in case memory allocation for the info
+takes a bit longer:
 
-Also pull the raw-TUN protocol byte and the TAP Ethernet header before
-accessing them, so these checks remain safe for nonlinear skbs supplied by
-other allocation paths.
+ BUG: KASAN: slab-use-after-free in __ovs_nla_put_key
+             net/openvswitch/flow_netlink.c:1996
+ BUG: KASAN: slab-use-after-free in ovs_nla_put_key+0x2463/0x2e30
+             net/openvswitch/flow_netlink.c:2250
+ Read of size 4 at addr ffff88801ee89970 by task ovs_flow_del_ec/9487
 
-Fixes: eaea34b23c46 ("net/tun: implement ndo_set_rx_headroom")
+ Call Trace:
+  <TASK>
+  __ovs_nla_put_key net/openvswitch/flow_netlink.c:1996
+  ovs_nla_put_key+0x2463/0x2e30 net/openvswitch/flow_netlink.c:2250
+  ovs_flow_cmd_fill_info+0x420/0x9c0 net/openvswitch/datapath.c:930
+  ovs_flow_cmd_del+0x53a/0x970 net/openvswitch/datapath.c:1467
+  ...
+  netlink_rcv_skb+0x156/0x420 net/netlink/af_netlink.c:2556
+  </TASK>
+
+ Allocated by task 9487:
+  mask_alloc net/openvswitch/flow_table.c:967
+  flow_mask_insert net/openvswitch/flow_table.c:1012
+  ovs_flow_tbl_insert+0xea2/0x1a90 net/openvswitch/flow_table.c:1084
+  ovs_flow_cmd_new+0x7e3/0xd90 net/openvswitch/datapath.c:1086
+  ...
+  netlink_rcv_skb+0x156/0x420 net/netlink/af_netlink.c:2556
+
+ Freed by task 9485:
+  rcu_free_sheaf+0x1e/0x100 mm/slub.c:5978
+  rcu_do_batch kernel/rcu/tree.c:2645
+  rcu_core+0x59c/0x10c0 kernel/rcu/tree.c:2897
+  handle_softirqs+0x1e4/0x9a0 kernel/softirq.c:622
+  ...
+  instr_sysvec_apic_timer_interrupt arch/x86/kernel/apic/apic.c:1062
+
+ovs_flow_tbl_remove() must be called after the ovs_flow_cmd_fill_info()
+to avoid this race.  This also helps with cleaning up the forced cast
+and the cosmetic RCU read lock.  Before the commit in the Fixes tag the
+order did not matter as long as the flow object itself was not freed.
+
+A wider RCU critical section could be another option, but we have a
+GFP_KERNEL allocation in the way.
+
+Reported by Trend Micro's Zero Day Initiative as ZDI-CAN-32042.
+
+Fixes: 56c19868e115 ("openvswitch: Make flow mask removal symmetric.")
 Cc: stable@vger.kernel.org
-Signed-off-by: Asim Viladi Oglu Manizada <manizada@pm.me>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20260812012139.2134643-1-manizada@pm.me
+Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
+Reviewed-by: Aaron Conole <aconole@redhat.com>
+Link: https://patch.msgid.link/20260815005915.1097270-1-i.maximets@ovn.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/tun.c |   21 ++++++++++++++++-----
- 1 file changed, 16 insertions(+), 5 deletions(-)
+ net/openvswitch/datapath.c |   45 +++++++++++++++++++++++----------------------
+ 1 file changed, 23 insertions(+), 22 deletions(-)
 
---- a/drivers/net/tun.c
-+++ b/drivers/net/tun.c
-@@ -1175,11 +1175,16 @@ static netdev_features_t tun_net_fix_fea
- static void tun_set_headroom(struct net_device *dev, int new_hr)
- {
- 	struct tun_struct *tun = netdev_priv(dev);
-+	size_t max_headroom;
+--- a/net/openvswitch/datapath.c
++++ b/net/openvswitch/datapath.c
+@@ -1419,33 +1419,34 @@ static int ovs_flow_cmd_del(struct sk_bu
+ 		goto unlock;
+ 	}
  
--	if (new_hr < NET_SKB_PAD)
--		new_hr = NET_SKB_PAD;
-+	max_headroom = min_t(size_t, SKB_MAX_HEAD(0), U16_MAX - 1);
+-	ovs_flow_tbl_remove(&dp->table, flow);
+-	ovs_unlock();
+-
+-	reply = ovs_flow_cmd_alloc_info((const struct sw_flow_actions __force *) flow->sf_acts,
++	reply = ovs_flow_cmd_alloc_info(ovsl_dereference(flow->sf_acts),
+ 					&flow->id, info, false, ufid_flags);
+-	if (likely(reply)) {
+-		if (!IS_ERR(reply)) {
+-			rcu_read_lock();	/*To keep RCU checker happy. */
+-			err = ovs_flow_cmd_fill_info(flow, ovs_header->dp_ifindex,
+-						     reply, info->snd_portid,
+-						     info->snd_seq, 0,
+-						     OVS_FLOW_CMD_DEL,
+-						     ufid_flags);
+-			rcu_read_unlock();
+-			if (WARN_ON_ONCE(err < 0)) {
+-				kfree_skb(reply);
+-				goto out_free;
+-			}
++	if (IS_ERR(reply)) {
++		netlink_set_err(sock_net(skb->sk)->genl_sock, 0, 0,
++				PTR_ERR(reply));
++		reply = NULL;
++	}
  
--	tun->align = new_hr;
-+	if ((tun->flags & TUN_TYPE_MASK) == IFF_TAP)
-+		max_headroom -= ETH_HLEN + NET_IP_ALIGN;
-+	else
-+		max_headroom -= 1;
+-			ovs_notify(&dp_flow_genl_family, reply, info);
+-		} else {
+-			netlink_set_err(sock_net(skb->sk)->genl_sock, 0, 0,
+-					PTR_ERR(reply));
++	if (likely(reply)) {
++		err = ovs_flow_cmd_fill_info(flow, ovs_header->dp_ifindex,
++					     reply, info->snd_portid,
++					     info->snd_seq, 0,
++					     OVS_FLOW_CMD_DEL, ufid_flags);
++		if (WARN_ON_ONCE(err < 0)) {
++			kfree_skb(reply);
++			reply = NULL;
+ 		}
+ 	}
++	/* Removal has to happen after ovs_flow_cmd_fill_info(), as it uses
++	 * the flow->mask that can be scheduled to be freed by the
++	 * ovs_flow_tbl_remove() and we're not holding the RCU read lock.
++	 */
++	ovs_flow_tbl_remove(&dp->table, flow);
++	ovs_unlock();
 +
-+	tun->align = clamp_t(int, new_hr, NET_SKB_PAD, max_headroom);
- }
++	if (likely(reply))
++		ovs_notify(&dp_flow_genl_family, reply, info);
  
- static void
-@@ -1868,7 +1873,13 @@ static ssize_t tun_get_user(struct tun_s
- 	switch (tun->flags & TUN_TYPE_MASK) {
- 	case IFF_TUN:
- 		if (tun->flags & IFF_NO_PI) {
--			u8 ip_version = skb->len ? (skb->data[0] >> 4) : 0;
-+			u8 ip_version;
-+
-+			if (!pskb_may_pull(skb, 1)) {
-+				err = -EINVAL;
-+				goto drop;
-+			}
-+			ip_version = skb->data[0] >> 4;
- 
- 			switch (ip_version) {
- 			case 4:
-@@ -1888,7 +1899,7 @@ static ssize_t tun_get_user(struct tun_s
- 		skb->dev = tun->dev;
- 		break;
- 	case IFF_TAP:
--		if (frags && !pskb_may_pull(skb, ETH_HLEN)) {
-+		if (!pskb_may_pull(skb, ETH_HLEN)) {
- 			err = -ENOMEM;
- 			drop_reason = SKB_DROP_REASON_HDR_TRUNC;
- 			goto drop;
+-out_free:
+ 	ovs_flow_free(flow, true);
+ 	return 0;
+ unlock:
 
 
