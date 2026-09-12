@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7E8F2DBF75;
-	Sat, 12 Sep 2026 15:56:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 733BA3328FC;
+	Sat, 12 Sep 2026 15:56:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789228572; cv=none; b=VDJwbQSG0suiBJ5NKzCuyYvKYTTzj/GZDNjlQMIsbu8jfFb7MaaZsloCnF7T8t987VoiVtlsuVyEybRgrI0b6ntB2AuxSQNduhTcsUwBeXgF8zb6YB1TEGHmnM6k+nnE6iDRL8tAeewMFIrLO/kRuFYUKmnNDDHPaW6AzZJu+84=
+	t=1789228576; cv=none; b=jMAJ+yAY+sRA2WBriXCzIKVfZHICLDNUsQz24I1ynbh6E3jDBa4sXXCRI83hDVmDTklrqEBAs32OZy44Ny8e6c+u2T8XpAE2r6u/vRucXznSkpbQz6lquR3Sy9zVlGTeBolQBHvr0Azti5Crw6FivTI+p22SfWdV8TTP4Z3LUWE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789228572; c=relaxed/simple;
-	bh=R7ay8f08qplIDvGV7kvMSb8R7nAecpi0d/nwZ2soBCM=;
+	s=arc-20240116; t=1789228576; c=relaxed/simple;
+	bh=STO5Qh/TWwNLLESkfnBMhBTHmcGogn7dinYC3kpiHb4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XVyw76wD+36zaIbwWtsVlMsCu9yNhueguw20DSTg6lPQeNO47Nmj6VIDtsE6DNbXtyhjlsNNxgf6omijyL9TCa2swtEqXSKUjQWxntcOOfKWG/oEOPfvu0MHu0yzT/vab8X+ETl9ttFLMeWInxc/H8rWJ6mH1zSxwNJKqVmqQVQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mFM3vLd9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eBt8qmQSxsCgcoY5hTRdz4uvfyxBtW7e6Y/kVv79b2SOd5kwkGxP1QuQTR7N6vds+qTzNKCOmB0L8Jk7cyQpjrcrxncersmW+h7OYVN6HoMy4f9tM1Ox8efr4n9GkKE2+Q9iTzXTjXBB1l6IyAtJfG8F/zQb7WedD/OtzNGBcZ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H9eo9LKz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mFM3vLd9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BB3A1F000FF;
-	Sat, 12 Sep 2026 15:56:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H9eo9LKz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E80071F000FF;
+	Sat, 12 Sep 2026 15:56:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789228570;
-	bh=VOAUYUGQ3/R2678mrGd881y2UBqspiOFOVxCsPPvZCU=;
+	s=korg; t=1789228575;
+	bh=B4JADSYNaOgmLUk2tk53dXCMBjfwaHkMlM0zzcSsn0c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mFM3vLd9VEkd88HYjFVihlIkF9gMZKpzHmiKTnNsdqlscZtPUMPwcblg5Cc7ziNZI
-	 O5zVLrIVXjhburEcLI38mSEoH57HqvXH298ZU1XUQDuzoOid3HjX1r0P1cdzEgM20D
-	 hs1C4txdlwUohGRroi1jECfUjJTbNcJk0r+IDdgs=
+	b=H9eo9LKz8c2BzSR3W+XKW1synqjh+3YZsS72rdBCPDaHPooI3HhFjozTGA1OfqPWQ
+	 KDx3qojncDFXb3emKucGXLYZfknEDRR/DQaEsWHeLN/dXjixijpceEOgfEFgLq09td
+	 /nTad0KDc53E0qBBcbBcjDDC/9oiqQWLgmIyxILY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
-	Valery Borovsky <vebohr@gmail.com>
-Subject: [PATCH 6.1 0375/1191] media: rtl2832_sdr: use vb2_video_unregister_device() on remove to fix DMA leak
-Date: Sat, 12 Sep 2026 08:51:43 +0200
-Message-ID: <20260912065556.656238042@linuxfoundation.org>
+	Hao-Qun Huang <alvinhuang0603@gmail.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>
+Subject: [PATCH 6.1 0411/1191] f2fs: reject overlapping move range after len expansion
+Date: Sat, 12 Sep 2026 08:52:19 +0200
+Message-ID: <20260912065557.470224646@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -50,82 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Valery Borovsky <vebohr@gmail.com>
+From: Hao-Qun Huang <alvinhuang0603@gmail.com>
 
-commit dabb047c62668f280998e29117c55e41aabac336 upstream.
+commit 28c1ef094e7c86977d9bf570dc0362fc54e36437 upstream.
 
-rtl2832_sdr_remove() runs on USB disconnect and clears dev->udev to
-NULL before any pending streaming teardown has run. When user space
-later closes its file descriptor, vb2 calls rtl2832_sdr_stop_streaming()
-which in turn calls rtl2832_sdr_free_stream_bufs(). That helper releases
-each coherent buffer with:
+F2FS_IOC_MOVE_RANGE treats a zero length as a request to move data
+from pos_in to EOF. However, the same-file overlap check runs before
+that expansion, so a request with len == 0 bypasses the overlap
+rejection added for same-file moves.
 
-    usb_free_coherent(dev->udev, dev->buf_size,
-                      dev->buf_list[dev->buf_num],
-                      dev->dma_addr[dev->buf_num]);
+For example, with a four-block file, moving from block 0 to block 1
+with len == 0 is accepted by the old check because pos_in + len is
+still pos_in at that point. The code then expands len to cover the
+rest of the file and calls __exchange_data_block() on overlapping
+source and destination ranges in the same inode, which is the
+data-corruption case the overlap check was meant to reject.
 
-usb_free_coherent() returns immediately when its dev argument is NULL,
-so every DMA stream buffer that was live at disconnect is silently
-leaked. The URBs allocated in rtl2832_sdr_alloc_urbs() outlive the
-device for the same reason.
+Move the overlap check after the source range has been validated and
+len == 0 has been expanded, so it sees the effective length. This is a
+no-op for non-zero len (the value is unchanged there) and keeps the
+existing early return for identical positions.
 
-The rtl2832_sdr driver uses vb2_fop_release() in its file_operations,
-so replace video_unregister_device(&dev->vdev) with
-vb2_video_unregister_device(&dev->vdev) and move it before clearing
-dev->udev. vb2_video_unregister_device() releases the vb2 queue, which
-synchronously runs rtl2832_sdr_stop_streaming() if streaming is active,
-so URBs and coherent DMA stream buffers are freed while dev->udev is
-still valid.
-
-vb2_video_unregister_device() locks vdev->queue->lock (vb_queue_lock)
-internally, and stop_streaming() locks v4l2_lock, so the previous outer
-mutex_lock(&dev->vb_queue_lock) / mutex_lock(&dev->v4l2_lock) pair
-around the unregister sequence would self-deadlock and has been removed.
-A short v4l2_lock critical section around dev->udev = NULL remains so
-any ioctl path that still holds the file descriptor sees coherent state.
-
-Issue identified by automated review of the INV-003 series at
-https://sashiko.dev/
-
-Fixes: 771138920eaf ("[media] rtl2832_sdr: Realtek RTL2832 SDR driver module")
+Fixes: d95fd91c1ac1 ("f2fs: exclude special cases for f2fs_move_file_range")
 Cc: stable@vger.kernel.org
-Suggested-by: Hans Verkuil <hverkuil+cisco@kernel.org>
-Signed-off-by: Valery Borovsky <vebohr@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Assisted-by: Claude:claude-fable-5
+Signed-off-by: Hao-Qun Huang <alvinhuang0603@gmail.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/dvb-frontends/rtl2832_sdr.c |   18 +++++++++++++-----
- 1 file changed, 13 insertions(+), 5 deletions(-)
+ fs/f2fs/file.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/media/dvb-frontends/rtl2832_sdr.c
-+++ b/drivers/media/dvb-frontends/rtl2832_sdr.c
-@@ -1478,14 +1478,22 @@ static int rtl2832_sdr_remove(struct pla
+--- a/fs/f2fs/file.c
++++ b/fs/f2fs/file.c
+@@ -2948,8 +2948,6 @@ static int f2fs_move_file_range(struct f
+ 	if (src == dst) {
+ 		if (pos_in == pos_out)
+ 			return 0;
+-		if (pos_out > pos_in && pos_out < pos_in + len)
+-			return -EINVAL;
+ 	}
  
- 	dev_dbg(&pdev->dev, "\n");
- 
--	mutex_lock(&dev->vb_queue_lock);
-+	/*
-+	 * vb2_video_unregister_device() releases the vb2 queue, which
-+	 * triggers rtl2832_sdr_stop_streaming() if streaming is active.
-+	 * stop_streaming() uses dev->udev to free URBs and coherent DMA
-+	 * stream buffers via usb_free_coherent(), so it must run before
-+	 * dev->udev is cleared. vb2_video_unregister_device() locks
-+	 * vb_queue_lock internally and stop_streaming() locks v4l2_lock,
-+	 * so neither may be held by the caller.
-+	 */
-+	v4l2_device_disconnect(&dev->v4l2_dev);
-+	vb2_video_unregister_device(&dev->vdev);
-+
- 	mutex_lock(&dev->v4l2_lock);
--	/* No need to keep the urbs around after disconnection */
- 	dev->udev = NULL;
--	v4l2_device_disconnect(&dev->v4l2_dev);
--	video_unregister_device(&dev->vdev);
- 	mutex_unlock(&dev->v4l2_lock);
--	mutex_unlock(&dev->vb_queue_lock);
-+
- 	v4l2_device_put(&dev->v4l2_dev);
- 	module_put(pdev->dev.parent->driver->owner);
- 
+ 	inode_lock(src);
+@@ -2975,6 +2973,8 @@ static int f2fs_move_file_range(struct f
+ 		goto out_unlock;
+ 	if (len == 0)
+ 		olen = len = src->i_size - pos_in;
++	if (src == dst && pos_out > pos_in && pos_out < pos_in + len)
++		goto out_unlock;
+ 	if (pos_in + len == src->i_size)
+ 		len = ALIGN(src->i_size, F2FS_BLKSIZE) - pos_in;
+ 	if (len == 0) {
 
 
