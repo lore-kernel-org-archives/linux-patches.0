@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8EA43FD956;
-	Sat, 12 Sep 2026 15:58:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90D1F29DB64;
+	Sat, 12 Sep 2026 15:58:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789228683; cv=none; b=UInYZCd9VFGKI/eQU6c7u82sPxRocrzwgnE8ghfIfbvrd2RhAsejKRrcyfXDV/TjO/9o65yb45xhNpoxTYy+G+BuE2fk2igBst8ddG8JZJzkkxd2oqpcPujENlL3luvi4YpXBO23x4wDqe3b832SzIPus2vysNSNaKNaLYYS+/k=
+	t=1789228688; cv=none; b=eIfnb1ai/zhOTuMY9d5c+Fs4jr2qyzcd9G8rzY1DccD9IMTNnf+ypBXOwmwb3xnew+1pKuh269UFF3csg7Gdkl8zy8H1QvQ4ljq4p/PasQZE5eyJCFKAhe1QMHdfEU53H/tOvnSu4N/Dp2zTumxX73eJ6TAH5HeVmoZpWjdbZ4c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789228683; c=relaxed/simple;
-	bh=ZnTWY4WfC1gyQaLS6I85pjIfpXIEA45AzIpeF4XF/Fk=;
+	s=arc-20240116; t=1789228688; c=relaxed/simple;
+	bh=K1x+cJCJgPVu/oRK26QFEG7Ufyd3eEjdC4nAxyKqXKc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oiaSh+qkeFomYr0Mm3+TDpSzWTu9UTHh32rBBPy2kIaMuLMj1q6W0VljQ70wybx5OBvg7bFckSDYz0LNZME0c9VqnvleFgdzMMSXoJ6dbN/PdY49B7ODI6Rjt0RuizwlAHe5MmtUaIpaC/ucDXavIlCaiJHMMkaBSyuQ1lsKUlY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nrt3bApf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PSu1horbL0B3hiHDGSFGW2uI1xleb2ukQ0IRl6WXYD4TTgAyL3x/LE6/wYavym5RJ7sprlvOjuT3ulBB04fxVVSGKrbxwgeJkHN3LCt81SZayHvcDjr1CsrEUJru99aj50RwDNbla859kveEucmmTZgTpFRSHWCamoejxfPw3ro=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0hL6nvAX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nrt3bApf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26CC01F000FF;
-	Sat, 12 Sep 2026 15:58:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0hL6nvAX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 122C01F000FF;
+	Sat, 12 Sep 2026 15:58:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789228682;
-	bh=E1/QKMn2rfHOkUTDxDBQObRTp8qUqo07BNpgjCOfiLk=;
+	s=korg; t=1789228687;
+	bh=7yel8AspmeOQFjLOdX3o5LKrzgpV4R3L7nWwIwSJPBA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nrt3bApfkLD81oZinJE/z64cvpMPQsslLouC5sSrW1U7g49ytSyYq1I6Km6ajJMaY
-	 wDcB6/XUymRYdY60rIto1EJVpugaQIqiSaHqQKgqZCwg2gDkF4IY5ZRsfiN5hl18i7
-	 tbo6KVhfiN9o8DCtIvXY0/j7Eu1CU5wLs2H97FpQ=
+	b=0hL6nvAXe/JOssxhw/k/BW59JFWXudkgbQEhk0M0tcxMMsq8KAaLe0NFmuMIsxL6m
+	 k/s/8neX+yRvQ93BLi6B/gdnpUdOMOkiJZKTpyTShltO1uuCj33rsZgyQj73q7lS+2
+	 3yzVAr6PiraoJZNlTj/Kgn7hbeWFMV478znW/bJM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Chen-Yu Tsai <wens@kernel.org>
-Subject: [PATCH 6.1 0418/1191] drm/sun4i: fix refcount leak in sun4i_backend_init_sat()
-Date: Sat, 12 Sep 2026 08:52:26 +0200
-Message-ID: <20260912065557.628825123@linuxfoundation.org>
+	SJ Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 0436/1191] mm/damon/vaddr: drop last same folio access check optimization
+Date: Sat, 12 Sep 2026 08:52:44 +0200
+Message-ID: <20260912065558.027001214@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -51,43 +51,145 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: SJ Park <sj@kernel.org>
 
-commit f7a56ff6240e6fd0cb36a3c0a911a1cd54789ce2 upstream.
+[ Upstream commit 831846078caa14b7d00b2ccca8b8fe522afe3204 ]
 
-When sun4i_backend_init_sat() calls reset_control_deassert() it
-increments the deassert_count of the reset controller, and must
-pair that with a reset_control_assert() call to decrement it.
-In the error path where clk_prepare_enable() fails, the function
-returns immediately without calling reset_control_assert(), leaking
-the reference count.  Other error paths, like the devm_clk_get()
-failure, correctly jump to the err_assert_reset label which performs
-the missing assert.
+The optimization can race when multiple kdamonds are running.  Meanwhile,
+the impact of the optimization is quite doubtful.  Just remove it.
 
-Fix the leak by using the existing err_assert_reset label in the
-clk_prepare_enable error path instead of returning directly.
+The user impact of the issue should be quite trivial.  After all, the race
+can happen only when the user intentionally setup DAMON in the way.  Even
+if it happens, it would be rare and only degrade the best-effort
+monitoring results.  No critical consequences like kernel panic or memory
+corruption happen.
 
-Cc: stable@vger.kernel.org
-Fixes: 440d2c7b127a ("drm/sun4i: backend: Handle the SAT")
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Reviewed-by: Jernej Skrabec <jernej.skrabec@gmail.com>
-Link: https://patch.msgid.link/20260607030950.83636-1-vulab@iscas.ac.cn
-Signed-off-by: Chen-Yu Tsai <wens@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+The race possibility was discovered [1] by Sashiko.
+
+Link: https://lore.kernel.org/20260715031002.108504-4-sj@kernel.org
+Link: https://lore.kernel.org/20260621204050.10993-1-sj@kernel.org [1]
+Fixes: 3f49584b262c ("mm/damon: implement primitives for the virtual memory address spaces")
+Signed-off-by: SJ Park <sj@kernel.org>
+Cc: <stable@vger.kernel.org> # 5.15.x
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: SJ Park <sj@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/sun4i/sun4i_backend.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ mm/damon/vaddr.c | 42 +++++++++---------------------------------
+ 1 file changed, 9 insertions(+), 33 deletions(-)
 
---- a/drivers/gpu/drm/sun4i/sun4i_backend.c
-+++ b/drivers/gpu/drm/sun4i/sun4i_backend.c
-@@ -683,7 +683,7 @@ static int sun4i_backend_init_sat(struct
- 	ret = clk_prepare_enable(backend->sat_clk);
- 	if (ret) {
- 		dev_err(dev, "Couldn't enable the SAT clock\n");
--		return ret;
-+		goto err_assert_reset;
- 	}
+diff --git a/mm/damon/vaddr.c b/mm/damon/vaddr.c
+index 708f281c1b6b4..4aa89347d754d 100644
+--- a/mm/damon/vaddr.c
++++ b/mm/damon/vaddr.c
+@@ -424,7 +424,6 @@ static void damon_va_prepare_access_checks(struct damon_ctx *ctx)
+ }
  
- 	return 0;
+ struct damon_young_walk_private {
+-	unsigned long *page_sz;
+ 	bool young;
+ };
+ 
+@@ -453,10 +452,8 @@ static int damon_young_pmd_entry(pmd_t *pmd, unsigned long addr,
+ 			goto huge_out;
+ 		if (pmd_young(*pmd) || !page_is_idle(page) ||
+ 					mmu_notifier_test_young(walk->mm,
+-						addr)) {
+-			*priv->page_sz = HPAGE_PMD_SIZE;
++						addr))
+ 			priv->young = true;
+-		}
+ 		put_page(page);
+ huge_out:
+ 		spin_unlock(ptl);
+@@ -475,10 +472,8 @@ static int damon_young_pmd_entry(pmd_t *pmd, unsigned long addr,
+ 	if (!page)
+ 		goto out;
+ 	if (pte_young(*pte) || !page_is_idle(page) ||
+-			mmu_notifier_test_young(walk->mm, addr)) {
+-		*priv->page_sz = PAGE_SIZE;
++			mmu_notifier_test_young(walk->mm, addr))
+ 		priv->young = true;
+-	}
+ 	put_page(page);
+ out:
+ 	pte_unmap_unlock(pte, ptl);
+@@ -505,10 +500,8 @@ static int damon_young_hugetlb_entry(pte_t *pte, unsigned long hmask,
+ 	get_page(page);
+ 
+ 	if (pte_young(entry) || !page_is_idle(page) ||
+-	    mmu_notifier_test_young(walk->mm, addr)) {
+-		*priv->page_sz = huge_page_size(h);
++	    mmu_notifier_test_young(walk->mm, addr))
+ 		priv->young = true;
+-	}
+ 
+ 	put_page(page);
+ 
+@@ -525,11 +518,9 @@ static const struct mm_walk_ops damon_young_ops = {
+ 	.hugetlb_entry = damon_young_hugetlb_entry,
+ };
+ 
+-static bool damon_va_young(struct mm_struct *mm, unsigned long addr,
+-		unsigned long *page_sz)
++static bool damon_va_young(struct mm_struct *mm, unsigned long addr)
+ {
+ 	struct damon_young_walk_private arg = {
+-		.page_sz = page_sz,
+ 		.young = false,
+ 	};
+ 
+@@ -546,25 +537,13 @@ static bool damon_va_young(struct mm_struct *mm, unsigned long addr,
+  * r	the region to be checked
+  */
+ static void __damon_va_check_access(struct mm_struct *mm,
+-				struct damon_region *r, bool same_target)
++				struct damon_region *r)
+ {
+-	static unsigned long last_addr;
+-	static unsigned long last_page_sz = PAGE_SIZE;
+-	static bool last_accessed;
+-
+-	/* If the region is in the last checked page, reuse the result */
+-	if (same_target && (ALIGN_DOWN(last_addr, last_page_sz) ==
+-				ALIGN_DOWN(r->sampling_addr, last_page_sz))) {
+-		if (last_accessed)
+-			r->nr_accesses++;
+-		return;
+-	}
++	bool accessed;
+ 
+-	last_accessed = damon_va_young(mm, r->sampling_addr, &last_page_sz);
+-	if (last_accessed)
++	accessed = damon_va_young(mm, r->sampling_addr);
++	if (accessed)
+ 		r->nr_accesses++;
+-
+-	last_addr = r->sampling_addr;
+ }
+ 
+ static unsigned int damon_va_check_accesses(struct damon_ctx *ctx)
+@@ -573,17 +552,14 @@ static unsigned int damon_va_check_accesses(struct damon_ctx *ctx)
+ 	struct mm_struct *mm;
+ 	struct damon_region *r;
+ 	unsigned int max_nr_accesses = 0;
+-	bool same_target;
+ 
+ 	damon_for_each_target(t, ctx) {
+ 		mm = damon_get_mm(t);
+ 		if (!mm)
+ 			continue;
+-		same_target = false;
+ 		damon_for_each_region(r, t) {
+-			__damon_va_check_access(mm, r, same_target);
++			__damon_va_check_access(mm, r);
+ 			max_nr_accesses = max(r->nr_accesses, max_nr_accesses);
+-			same_target = true;
+ 		}
+ 		mmput(mm);
+ 	}
+-- 
+2.53.0
+
 
 
