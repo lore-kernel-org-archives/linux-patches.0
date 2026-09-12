@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95C55384CD4;
-	Sat, 12 Sep 2026 19:37:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9906A37C0FF;
+	Sat, 12 Sep 2026 19:37:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789241858; cv=none; b=D1NzYptlBj93D1EU/2yXvXbABfobVr6TZ6UCokMaAtNHFrp7yFY4yU83+LK5ExJKQv8dX1NjRxz8miTKzf/2bDfhMOPrrcXiO1OqXaccMbsMUZiyX6sEtyrdTsbukcj7Ygg3Qq0rDZ4kk53b+WtfB96R/sdWmPyj5bMqjkVkuQ8=
+	t=1789241863; cv=none; b=BClNZwWFkzypcbezyUZjpHnmdZ7UIBoycdt22BB+iPjNfXjytKCgI6PecKB8YfpsEp6D/uBs0rHz7gF72juRmdJcd553pXAbyVrfhUwucEd2te2Up0njE8Lfb2R8ti5JS3Yy33PWC7qkVPM0xuE+azQrFc9WQmab1EhNixpkGYA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789241858; c=relaxed/simple;
-	bh=RVZrtR8bp/fChG00djCXmP9d12msJ9M96/FY52Rfeqc=;
+	s=arc-20240116; t=1789241863; c=relaxed/simple;
+	bh=MmXGPZjuqIqDapetKmfiWgw7JC7YyuObTutH60Y3uT4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ri2zk5vYprmUqiyw3mB2YPXaC9NCgVhhuQBWm/bQmA9o0WyTYfKU3OJ2MzPmP3rm1ADHZ7lR+rdxC0yE1Mi/1eZ+SaE1qwWlCUaDCMxR7DifHR/QHcYAdrtYnKrDmXFGMcHEDxU3Rh+60HxdBmHlIgJ875NHyxOJbPnyJKaamK0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pil3v6C6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZzKDPTk0Sqr9EXq2npMFRz9Z6F8rKwxliDWssp53mykjvLoAO8zkiHtk8fNtdaxiJTXdXtLCYQ+DU74rP0F9aTbVFH0vu3nVDJ7fhRFhxCa4MCjh+kmVwASJFnYtl4eGbgU/bdcPGo5pMkPY/gSFNSK+Xt5dsWwCwfmNMg3L1oA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k77Afuxm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pil3v6C6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3F6E1F000FF;
-	Sat, 12 Sep 2026 19:37:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k77Afuxm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53A411F000FF;
+	Sat, 12 Sep 2026 19:37:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789241857;
-	bh=IqYVckSgGPkWRL1v6P+lcov3nb41BXNL100UG93+vFs=;
+	s=korg; t=1789241862;
+	bh=ZdORGER5OJWCgRG4vd6sad8EbzE2kvFtzJi1IuNHWYg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pil3v6C6nuTTU3Ch8L3WjyhB03gfESrOPl1kz0Q9F5gf4XhUexRSfMA///nysz1P0
-	 NuQQpavGdIn5HNuAgGvTUwyG/jKlBAgxCdLoCEfmwceHMq1t/lGU2veSW0VF4GJk7f
-	 TQrkRNmd0TpW/6sgJF/n4qcXfwsJFrT1y4s0VTsk=
+	b=k77AfuxmB238YVlZyc6ENSgZh12AycWoNt0EK2KNHvqhrLZ08Y/+uxidrVVpJygsd
+	 /bq/xZSCB69CA5M+7Irowd2EEFfyNeLhAU/GLAXvm35ONTt8aB+YGsTaLPGF3sZxEt
+	 5sn4SVgbTdUbvfz+81u6WCOqFEE3l1dBGwUB0aes=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Can Peng <pengcan@kylinos.cn>,
-	Daniel Lezcano <daniel.lezcano@kernel.org>,
-	Frank Li <Frank.Li@nxp.com>
-Subject: [PATCH 5.10 222/798] thermal/drivers/imx: Disable clock on runtime resume failure
-Date: Sat, 12 Sep 2026 08:57:30 +0200
-Message-ID: <20260912065522.216216612@linuxfoundation.org>
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Suraj Jitindar Singh <surajjs@amazon.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 196/798] netfilter: nf_tables: make nft_object rhltable per table
+Date: Sat, 12 Sep 2026 08:57:04 +0200
+Message-ID: <20260912065521.563058248@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -51,58 +52,222 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Can Peng <pengcan@kylinos.cn>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-commit bcc6d886e5006a4656901d2d7fb6a215c96068a0 upstream.
+commit f4f699790590bd0896c48a71e9232a65198f92f0 upstream.
 
-imx_thermal_runtime_resume() enables the thermal clock before
-powering up the sensor and enabling measurements.
+The nft_object rhltable is global, this allows for accessing objects
+that are being dismangled from lookup path by other existing netns.
+Given the nft_obj_destroy() releases the object inmediately, this might
+lead to use-after-free of these objects that are being released.
+Make the existing rhltable per table to address this issue to deal with
+with the nft_rcv_nl_event() path too.
 
-If either regmap_write() fails, the function returns with the clock
-still enabled. This leaves the clock enable count unbalanced after a
-failed runtime resume.
+Update nft_obj_lookup() to take the table as non-const, otherwise,
+compiler complains when passing the objname_ht to rhltable_lookup().
 
-Disable the clock on those failure paths before returning the error.
+Fixes: 4d44175aa5bb ("netfilter: nf_tables: handle nft_object lookups via rhltable")
+Suggested-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+[ 5.10: More extensive conflicts than 6.1 in nf_tables_api.c because 5.10
+  lacks several mainline refactors: 0be908750162 ("netfilter: nf_tables:
+  pass nft_table to destroy function", v6.11), e169285f8c56 ("netfilter:
+  nf_tables: do not store nft_ctx in transaction objects", v6.11),
+  f80a612dd77c ("netfilter: nf_tables: add support to destroy
+  operation", v6.3), 797d49805ddc ("netfilter: nfnetlink: pass struct
+  nfnl_info to rcu callbacks", v5.13) and 6001a930ce03 ("netfilter:
+  nftables: introduce table ownership", v5.12). Resolved by: destroying
+  the per-table objname_ht via ctx->table in nf_tables_table_destroy();
+  dropping only the const on the local table in nf_tables_getobj()
+  (which still uses the pre-nfnl_info API); passing the owning table
+  trans->ctx.table to nft_obj_del() in the commit and abort paths
+  (struct nft_trans still embeds an nft_ctx and 5.10 has no
+  NFT_MSG_DESTROYOBJ case); and removing the global nft_objname_ht
+  rhltable_init/destroy from module init, keeping 5.10's numeric error
+  labels. The header and all other hunks applied cleanly. ]
+Signed-off-by: Suraj Jitindar Singh <surajjs@amazon.com>
 
-Fixes: 4cf2ddf16e17 ("thermal/drivers/imx: Implement runtime PM support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Can Peng <pengcan@kylinos.cn>
-Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260722084909.463437-1-pengcan@kylinos.cn
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/imx_thermal.c |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ include/net/netfilter/nf_tables.h |  4 +++-
+ net/netfilter/nf_tables_api.c     | 34 +++++++++++++++----------------
+ 2 files changed, 19 insertions(+), 19 deletions(-)
 
---- a/drivers/thermal/imx_thermal.c
-+++ b/drivers/thermal/imx_thermal.c
-@@ -897,12 +897,12 @@ static int __maybe_unused imx_thermal_ru
- 	ret = regmap_write(map, socdata->sensor_ctrl + REG_CLR,
- 			   socdata->power_down_mask);
- 	if (ret)
--		return ret;
-+		goto disable_clk;
+diff --git a/include/net/netfilter/nf_tables.h b/include/net/netfilter/nf_tables.h
+index af9eaab50f056..9a582fe5b21f3 100644
+--- a/include/net/netfilter/nf_tables.h
++++ b/include/net/netfilter/nf_tables.h
+@@ -1100,6 +1100,7 @@ static inline void nft_use_inc_restore(u32 *use)
+  *	@sets: sets in the table
+  *	@objects: stateful objects in the table
+  *	@flowtables: flow tables in the table
++ *	@objname_ht: hashtable for objects lookup by name
+  *	@hgenerator: handle generator state
+  *	@handle: table handle
+  *	@use: number of chain references to this table
+@@ -1115,6 +1116,7 @@ struct nft_table {
+ 	struct list_head		sets;
+ 	struct list_head		objects;
+ 	struct list_head		flowtables;
++	struct rhltable			objname_ht;
+ 	u64				hgenerator;
+ 	u64				handle;
+ 	u32				use;
+@@ -1187,7 +1189,7 @@ static inline void *nft_obj_data(const struct nft_object *obj)
+ #define nft_expr_obj(expr)	*((struct nft_object **)nft_expr_priv(expr))
  
- 	ret = regmap_write(map, socdata->sensor_ctrl + REG_SET,
- 			   socdata->measure_temp_mask);
- 	if (ret)
--		return ret;
-+		goto disable_clk;
+ struct nft_object *nft_obj_lookup(const struct net *net,
+-				  const struct nft_table *table,
++				  struct nft_table *table,
+ 				  const struct nlattr *nla, u32 objtype,
+ 				  u8 genmask);
  
- 	/*
- 	 * According to the temp sensor designers, it may require up to ~17us
-@@ -911,6 +911,11 @@ static int __maybe_unused imx_thermal_ru
- 	usleep_range(20, 50);
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index 15486d3051f6b..5b909b5902393 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -44,8 +44,6 @@ enum {
+ 	NFT_VALIDATE_DO,
+ };
  
+-static struct rhltable nft_objname_ht;
+-
+ static u32 nft_chain_hash(const void *data, u32 len, u32 seed);
+ static u32 nft_chain_hash_obj(const void *data, u32 len, u32 seed);
+ static int nft_chain_hash_cmp(struct rhashtable_compare_arg *, const void *);
+@@ -1295,6 +1293,10 @@ static int nf_tables_newtable(struct net *net, struct sock *nlsk,
+ 	if (err)
+ 		goto err_chain_ht;
+ 
++	err = rhltable_init(&table->objname_ht, &nft_objname_ht_params);
++	if (err < 0)
++		goto err_obj_ht;
++
+ 	INIT_LIST_HEAD(&table->chains);
+ 	INIT_LIST_HEAD(&table->sets);
+ 	INIT_LIST_HEAD(&table->objects);
+@@ -1311,6 +1313,8 @@ static int nf_tables_newtable(struct net *net, struct sock *nlsk,
+ 	list_add_tail_rcu(&table->list, &nft_net->tables);
  	return 0;
-+
-+disable_clk:
-+	clk_disable_unprepare(data->thermal_clk);
-+
-+	return ret;
+ err_trans:
++	rhltable_destroy(&table->objname_ht);
++err_obj_ht:
+ 	rhltable_destroy(&table->chains_ht);
+ err_chain_ht:
+ 	kfree(table->udata);
+@@ -1469,6 +1473,7 @@ static void nf_tables_table_destroy(struct nft_ctx *ctx)
+ 		return;
+ 
+ 	rhltable_destroy(&ctx->table->chains_ht);
++	rhltable_destroy(&ctx->table->objname_ht);
+ 	kfree(ctx->table->name);
+ 	kfree(ctx->table->udata);
+ 	kfree(ctx->table);
+@@ -6160,7 +6165,7 @@ void nft_unregister_obj(struct nft_object_type *obj_type)
+ EXPORT_SYMBOL_GPL(nft_unregister_obj);
+ 
+ struct nft_object *nft_obj_lookup(const struct net *net,
+-				  const struct nft_table *table,
++				  struct nft_table *table,
+ 				  const struct nlattr *nla, u32 objtype,
+ 				  u8 genmask)
+ {
+@@ -6176,7 +6181,7 @@ struct nft_object *nft_obj_lookup(const struct net *net,
+ 		     !lockdep_commit_lock_is_held(net));
+ 
+ 	rcu_read_lock();
+-	list = rhltable_lookup(&nft_objname_ht, &k, nft_objname_ht_params);
++	list = rhltable_lookup(&table->objname_ht, &k, nft_objname_ht_params);
+ 	if (!list)
+ 		goto out;
+ 
+@@ -6450,7 +6455,7 @@ static int nf_tables_newobj(struct net *net, struct sock *nlsk,
+ 	if (err < 0)
+ 		goto err_trans;
+ 
+-	err = rhltable_insert(&nft_objname_ht, &obj->rhlhead,
++	err = rhltable_insert(&table->objname_ht, &obj->rhlhead,
+ 			      nft_objname_ht_params);
+ 	if (err < 0)
+ 		goto err_obj_ht;
+@@ -6636,7 +6641,7 @@ static int nf_tables_getobj(struct net *net, struct sock *nlsk,
+ 	const struct nfgenmsg *nfmsg = nlmsg_data(nlh);
+ 	u8 genmask = nft_genmask_cur(net);
+ 	int family = nfmsg->nfgen_family;
+-	const struct nft_table *table;
++	struct nft_table *table;
+ 	struct nft_object *obj;
+ 	struct sk_buff *skb2;
+ 	bool reset = false;
+@@ -8192,9 +8197,9 @@ static void nf_tables_commit_chain(struct net *net, struct nft_chain *chain)
+ 		nf_tables_commit_chain_free_rules_old(g0);
  }
  
- static const struct dev_pm_ops imx_thermal_pm_ops = {
+-static void nft_obj_del(struct nft_object *obj)
++static void nft_obj_del(struct nft_table *table, struct nft_object *obj)
+ {
+-	rhltable_remove(&nft_objname_ht, &obj->rhlhead, nft_objname_ht_params);
++	rhltable_remove(&table->objname_ht, &obj->rhlhead, nft_objname_ht_params);
+ 	list_del_rcu(&obj->list);
+ }
+ 
+@@ -8774,7 +8779,7 @@ static int nf_tables_commit(struct net *net, struct sk_buff *skb)
+ 			}
+ 			break;
+ 		case NFT_MSG_DELOBJ:
+-			nft_obj_del(nft_trans_obj(trans));
++			nft_obj_del(trans->ctx.table, nft_trans_obj(trans));
+ 			nf_tables_obj_notify(&trans->ctx, nft_trans_obj(trans),
+ 					     NFT_MSG_DELOBJ);
+ 			break;
+@@ -9022,7 +9027,7 @@ static int __nf_tables_abort(struct net *net, enum nfnl_abort_action action)
+ 				nft_trans_destroy(trans);
+ 			} else {
+ 				nft_use_dec_restore(&trans->ctx.table->use);
+-				nft_obj_del(nft_trans_obj(trans));
++				nft_obj_del(trans->ctx.table, nft_trans_obj(trans));
+ 			}
+ 			break;
+ 		case NFT_MSG_DELOBJ:
+@@ -9679,7 +9684,7 @@ static void __nft_release_table(struct net *net, struct nft_table *table)
+ 		nft_set_destroy(&ctx, set);
+ 	}
+ 	list_for_each_entry_safe(obj, ne, &table->objects, list) {
+-		nft_obj_del(obj);
++		nft_obj_del(table, obj);
+ 		nft_use_dec(&table->use);
+ 		nft_obj_destroy(&ctx, obj);
+ 	}
+@@ -9786,10 +9791,6 @@ static int __init nf_tables_module_init(void)
+ 	if (err < 0)
+ 		goto err3;
+ 
+-	err = rhltable_init(&nft_objname_ht, &nft_objname_ht_params);
+-	if (err < 0)
+-		goto err4;
+-
+ 	err = nft_offload_init();
+ 	if (err < 0)
+ 		goto err5;
+@@ -9805,8 +9806,6 @@ static int __init nf_tables_module_init(void)
+ err6:
+ 	nft_offload_exit();
+ err5:
+-	rhltable_destroy(&nft_objname_ht);
+-err4:
+ 	unregister_netdevice_notifier(&nf_tables_flowtable_notifier);
+ err3:
+ 	nf_tables_core_module_exit();
+@@ -9829,7 +9828,6 @@ static void __exit nf_tables_module_exit(void)
+ 	cancel_work_sync(&trans_gc_work);
+ 	cancel_work_sync(&trans_destroy_work);
+ 	rcu_barrier();
+-	rhltable_destroy(&nft_objname_ht);
+ 	nf_tables_core_module_exit();
+ }
+ 
+-- 
+2.53.0
+
 
 
