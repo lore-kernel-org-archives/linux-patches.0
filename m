@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0834E235358;
-	Sat, 12 Sep 2026 07:53:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EC52235358;
+	Sat, 12 Sep 2026 07:53:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789199591; cv=none; b=Na10KvjZxdYE9wBhjKGxOzXt3IcHnq9WSD/4Yr/BjrQoTGjjH83xzQYIg/H2plTCFwsm55kweHHsk631/hP6CXWq4q7ZdVF9IqBE6YvxfM5SAoHC5vSeccVsWJtgy/MdLGnvSV8kZ8aWkGoR1139QaxL8ELjiIII0R8pCIBX0Es=
+	t=1789199596; cv=none; b=HKwsr/rqgxxpTFxaxhFWJHeIMypVeCg8i/7dCbCKzb5oyMTCIKPLqDfXSF8Un3QvUO5UeRjlOKIm26oAJnnHRA0DZYTTCvp5bnD7jzgtJdrDOBxh9oy+q+oMVboFMHuqciZWibbzP4Us0TNhTXnCAATvsqtQP0+DknDnnZMpDig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789199591; c=relaxed/simple;
-	bh=s5wJRNZ0ZoIAUJRrwRtt8TCszuV5pgtGuZg7SbxVRGQ=;
+	s=arc-20240116; t=1789199596; c=relaxed/simple;
+	bh=A6R6yybH04A9MaTYhSLMPQZA2dp1QntMQzARV0O2Z/I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=myMkUrLXTTBtE07n1tRUIa/ybJOWJLjcGGHNtyWOdL1lj+9o7k/ffW9WRQsBvIycESB1VV2uTh7rgfy+89P54jfANR1qDJGp2xMwDk/Iih+BXnaf0VWwegXmsiIvdCHg4sQiMbYm0s9PuGA1BOV656iOhursCx1NRcsnd/vms4k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xu8gLofg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=r7NgYHRfAxs2krArQ8aFOy7kSVDy1ViX14MAT23vu97z0RGkkLumUwe9C+wxHzuqo8EtyeJZwJJMDUzp8MrJgFNI91tzG1fSNHXArrGZtOQQUWB1Kv1tfwHuPESnNyugnzgy60W/Hn+fMiESQzsXLmRcxxZq3e4fj081ea+nbkY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VCjlc6vG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xu8gLofg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25B261F000FF;
-	Sat, 12 Sep 2026 07:53:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VCjlc6vG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E473C1F000FF;
+	Sat, 12 Sep 2026 07:53:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789199589;
-	bh=Wdkib9pmmzdPqVmGoMW+8stN+zNPtpLAQZFI+ex486c=;
+	s=korg; t=1789199594;
+	bh=lGfYi/LWG/yrRhwAa5Y/5EGXYkjms5czQsoiLFxD3AQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Xu8gLofgHo6NFkH7R/rRGvy9fe5KFq83k83WEK4Pkhu5uOcOglmDzGfmJj/HyATcU
-	 VOjMO7VvMsCyn5EnAP9ODcc2TiHcT9yDLHh54Mj0daZQrScAFV0lhVgEkXDCpUkoE6
-	 VFu1mjVpXWqubJr5jot5XbrMLAjbzirTBnUWx184=
+	b=VCjlc6vGYZzt6bvsdNtjpRWVlxCjCYrsmXB5Ma8JGHt5Xr2/cXVETA5IoNSULODKB
+	 Btg5vx/ZHb0v3rpaX0mtIBLF4T15TnD5XtSx7GscPBdQpAcDDp9Bj/sb6pycQCjcn0
+	 tj4QK0tNl7wOCja6djuvM/55UYxj05zzJbIMNarE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Xiong <xiongl24@chinatelecom.cn>,
-	Xibo Wang <wangxb12@chinatelecom.cn>,
-	Qianheng Peng <pengqh1@chinatelecom.cn>,
-	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
+	K Prateek Nayak <kprateek.nayak@amd.com>,
+	Marco Scardovi <scardracs@disroot.org>,
+	K Prateek Nayak <kprateek.anayk@amd.com>,
 	Mario Limonciello <superm1@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0616/1815] cpufreq: amd-pstate-ut: Skip tests when amd-pstate driver is not active
-Date: Sat, 12 Sep 2026 08:39:26 +0200
-Message-ID: <20260912065703.342977985@linuxfoundation.org>
+Subject: [PATCH 7.2 0617/1815] cpufreq/amd-pstate: Fix EPP return type and handle errors during initialization
+Date: Sat, 12 Sep 2026 08:39:27 +0200
+Message-ID: <20260912065703.365786840@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -54,67 +53,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qianheng Peng <pengqh1@chinatelecom.cn>
+From: Marco Scardovi <scardracs@disroot.org>
 
-[ Upstream commit 8d31bb1451643f328db0cea0e21e63ef54b4faf2 ]
+[ Upstream commit 57476909c3000a04e84a1d6018d63ba1b2aa20ab ]
 
-The crash issue may occur when modprobe amd_pstate_ut on intel platform.
+Currently, the EPP getter helper functions (msr_get_epp, shmem_get_epp, and
+the static call wrapper amd_pstate_get_epp) return u8 or s16. This makes it
+difficult to correctly propagate negative error values returned by the
+underlying MSR read or CPPC helpers (such as rdmsrq_on_cpu or
+cppc_get_epp_perf).
 
-   amd_pstate_ut: 1    amd_pstate_ut_acpi_cpc_valid  success!
-   amd_pstate_ut: 2    amd_pstate_ut_check_enabled   success!
-   BUG: kernel NULL pointer dereference, address: 0000000000000080
-   #PF: supervisor read access in kernel mode
-   #PF: error_code(0x0000) - not-present page
-   PGD 0 P4D 0
-   Oops: 0000 [#1] SMP NOPTI
-   CPU: 0 PID: 20300 Comm: modprobe
-   Kdump: loaded Tainted: G O 6.6.0-0010.rc1.ctl4.x86_64 #1
-   Hardware name: FiberHome R2200 V5/Xeon Boards, BIOS 3.1a 02/24/2020
-   RIP: 0010:amd_pstate_ut_check_perf+0x141/0x280 [amd_pstate_ut]
-   Call Trace:
-    <TASK>
-    amd_pstate_ut_init+0x1b/0xff0 [amd_pstate_ut]
-    ? __pfx_amd_pstate_ut_init+0x10/0x10 [amd_pstate_ut]
-    do_one_initcall+0x42/0x2e0
-    ? kmalloc_trace+0x26/0x90
-    do_init_module+0x60/0x240
-    __se_sys_init_module+0x185/0x1c0
-    do_syscall_64+0x62/0x190
-    entry_SYSCALL_64_after_hwframe+0x76/0x7e
-    </TASK>
+Modify the return type of these functions to int, allowing them to return
+negative error codes properly.
 
-Add state detection to amd pstate driver to prevent amd_pstate_ut driver
-from testing on non-AMD platforms.
+Additionally, in amd_pstate_epp_cpu_init(), fetch the firmware-programmed
+default EPP value and validate it before assigning it to the EPP variables.
+If amd_pstate_get_epp() returns an error code, propagate the error and abort
+the CPU initialization to prevent subsequent configuration failures.
 
-Fixes: 14eb1c96e3a3 ("cpufreq: amd-pstate: Add test module for amd-pstate driver")
-Suggested-by: Li Xiong <xiongl24@chinatelecom.cn>
-Suggested-by: Xibo Wang <wangxb12@chinatelecom.cn>
-Signed-off-by: Qianheng Peng <pengqh1@chinatelecom.cn>
-Reviewed-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/1784191899-28957-1-git-send-email-pengqh1@chinatelecom.cn
-(ML: adjust title)
+Fixes: 555bbe67a622 ("cpufreq/amd-pstate: Convert all perf values to u8")
+Assisted-by: Antigravity:gemini-3.5-flash
+Reviewed-by: K Prateek Nayak <kprateek.nayak@amd.com>
+Tested-by: K Prateek Nayak <kprateek.nayak@amd.com>
+Signed-off-by: Marco Scardovi <scardracs@disroot.org>
+Reviewed-by: K Prateek Nayak <kprateek.anayk@amd.com>
+Link: https://lore.kernel.org/r/20260609073042.81275-2-scardracs@disroot.org
 Signed-off-by: Mario Limonciello <superm1@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/amd-pstate-ut.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/cpufreq/amd-pstate.c | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/cpufreq/amd-pstate-ut.c b/drivers/cpufreq/amd-pstate-ut.c
-index 735b29f76438a..2142838ad6cc4 100644
---- a/drivers/cpufreq/amd-pstate-ut.c
-+++ b/drivers/cpufreq/amd-pstate-ut.c
-@@ -560,6 +560,11 @@ static int amd_pstate_ut_check_freq_attrs(u32 index)
- static int __init amd_pstate_ut_init(void)
- {
- 	u32 i = 0, arr_size = ARRAY_SIZE(amd_pstate_ut_cases);
-+	enum amd_pstate_mode mode = amd_pstate_get_status();
-+
-+	/* don't test if no running amd-pstate driver */
-+	if (mode == AMD_PSTATE_UNDEFINED || mode == AMD_PSTATE_DISABLE)
-+		return -EOPNOTSUPP;
+diff --git a/drivers/cpufreq/amd-pstate.c b/drivers/cpufreq/amd-pstate.c
+index 3a6b4b224a66d..477c17398fc2b 100644
+--- a/drivers/cpufreq/amd-pstate.c
++++ b/drivers/cpufreq/amd-pstate.c
+@@ -199,7 +199,7 @@ static inline int get_mode_idx_from_str(const char *str, size_t size)
  
- 	for (i = 0; i < arr_size; i++) {
- 		int ret;
+ static DEFINE_MUTEX(amd_pstate_driver_lock);
+ 
+-static u8 msr_get_epp(struct amd_cpudata *cpudata)
++static int msr_get_epp(struct amd_cpudata *cpudata)
+ {
+ 	u64 value;
+ 	int ret;
+@@ -215,12 +215,12 @@ static u8 msr_get_epp(struct amd_cpudata *cpudata)
+ 
+ DEFINE_STATIC_CALL(amd_pstate_get_epp, msr_get_epp);
+ 
+-static inline s16 amd_pstate_get_epp(struct amd_cpudata *cpudata)
++static inline int amd_pstate_get_epp(struct amd_cpudata *cpudata)
+ {
+ 	return static_call(amd_pstate_get_epp)(cpudata);
+ }
+ 
+-static u8 shmem_get_epp(struct amd_cpudata *cpudata)
++static int shmem_get_epp(struct amd_cpudata *cpudata)
+ {
+ 	u64 epp;
+ 	int ret;
+@@ -1876,6 +1876,7 @@ static int amd_pstate_epp_cpu_init(struct cpufreq_policy *policy)
+ 	struct amd_cpudata *cpudata;
+ 	union perf_cached perf;
+ 	struct device *dev;
++	int default_epp;
+ 	int ret;
+ 
+ 	/*
+@@ -1924,6 +1925,13 @@ static int amd_pstate_epp_cpu_init(struct cpufreq_policy *policy)
+ 
+ 	policy->boost_supported = READ_ONCE(cpudata->boost_supported);
+ 
++	/* Fetch the firmware programmed default EPP value */
++	default_epp = amd_pstate_get_epp(cpudata);
++	if (default_epp < 0) {
++		ret = default_epp;
++		goto free_cpudata1;
++	}
++
+ 	/*
+ 	 * Set the policy to provide a valid fallback value in case
+ 	 * the default cpufreq governor is neither powersave nor performance.
+@@ -1931,7 +1939,7 @@ static int amd_pstate_epp_cpu_init(struct cpufreq_policy *policy)
+ 	if (amd_pstate_acpi_pm_profile_server() ||
+ 	    amd_pstate_acpi_pm_profile_undefined()) {
+ 		policy->policy = CPUFREQ_POLICY_PERFORMANCE;
+-		cpudata->epp_default_ac = cpudata->epp_default_dc = amd_pstate_get_epp(cpudata);
++		cpudata->epp_default_ac = cpudata->epp_default_dc = default_epp;
+ 		cpudata->current_profile = PLATFORM_PROFILE_PERFORMANCE;
+ 	} else {
+ 		policy->policy = CPUFREQ_POLICY_POWERSAVE;
 -- 
 2.53.0
 
