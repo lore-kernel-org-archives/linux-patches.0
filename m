@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0567E2D0C75;
-	Sat, 12 Sep 2026 11:57:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF50D3F788A;
+	Sat, 12 Sep 2026 11:57:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789214252; cv=none; b=TK7oqXdTsZotx3CJj0ol1IOtOqVNd5OHUfA5EmeFf+InfqU4Uea4dyZy1REr9kats8Db18F3ZX6cp0/RZowzQPJnUg/7ONowI9SgTL5Bn8rIWPYSjntG2vzEC112ORk54rs/rXWDMVYS4N7eH+7l2nO/coPGPR2NQ3pNbpt+Pas=
+	t=1789214257; cv=none; b=Sv867X9doOs0qKOgZ+EHsrYlOLoErUdZVEyfy3IOdrEO1kf4YGhgEx53AsWN37KMZSPATnk9c58uZIlGf2lKuqy/Xe/Kcmzznp+ESEfBM6V1Oky6vHMn3d4iUG935iec5UypaHEsGJ+QFZwKH57uNK4O2ruTd0s6FSJxoaWZnf4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789214252; c=relaxed/simple;
-	bh=L7KjX4fjriHfpVma3l6rTmn7klZv5+Bp+h34LGAsl5s=;
+	s=arc-20240116; t=1789214257; c=relaxed/simple;
+	bh=X3CmMC79RwexvWqx0eyZaUezGDQ4WiQyhVUK6bXlveU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Tmy176C6MumSF4RcDavn7oQ2PX/RvvUchjhjSn/xNnzAncMXTt9vYr+ENqBqziIgaHRlbhU9hgsMRaVNrJejo3Bm1k/WZ//MdMWm3g2iW/1h4q68LFiY9MY637diDke6dUgZU3lBWjtwxaV5nfaY1KvxEkyR5oVJNaPTELZ1dRY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=esm9aBL7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nJfqznxB12DkI1mifdQo9h23zLXJXO4hlK29nzI1bWCd2H60ZwwBI90IWmqc7FLrk1MWINXJu9iWcNjckD9QN5vfM1oRocuiJgaVabDMBX3QVLA1NpN4wQYR6+jaNIzj0U7RFo+Zh+n5mXdZei+15LULITkYJoXZfKmhajVXtVI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gHT8YkPv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="esm9aBL7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4D511F000FF;
-	Sat, 12 Sep 2026 11:57:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gHT8YkPv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0C1F1F00893;
+	Sat, 12 Sep 2026 11:57:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789214250;
-	bh=6u/cgGKDR0Kv9CQ09T8gVlpzgh2YTgpMx3F82Tj/mlY=;
+	s=korg; t=1789214255;
+	bh=1CX2hWmBAKJZQqb3Xd4iJ778LWzTaaDuKuL9/eYW/gI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=esm9aBL7idqHNu/S0fiUDo+5e3uLk44e+bffzAa2K9KVxRhAjOhUSIZDQukB1suWB
-	 waFF33BCL6OQMAvx1Ge5a8s5BMjQWzhw2aPVwsxunpaTlPY0wvwh/JMNYNSZz8HdWe
-	 FRkx14WbGJ4lIyKCUkTSZbZZc9/2wunLJumIiXjI=
+	b=gHT8YkPv4lkh10CgFM8Bqu3wxhj0ySDAYCAKRDCYYpOfVpavMYMDPv74g/uurikyj
+	 ThRkgyKS0KD74SqkBBdyrYZht4QZMXw3HZhV3bS+M+c5iSmV4Iib2nHvNK6mLSU15W
+	 ggM4Z4sllMDDo1UYF17wY5Fy5xheQa7cjND6iUhs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 6.12 0257/1376] f2fs: fix to zero post-EOF data when extending file size
-Date: Sat, 12 Sep 2026 08:44:43 +0200
-Message-ID: <20260912065613.266435190@linuxfoundation.org>
+	Osama Abdelkader <osama.abdelkader@gmail.com>,
+	Steven Price <steven.price@arm.com>,
+	Liviu Dudau <liviu.dudau@arm.com>
+Subject: [PATCH 6.12 0258/1376] drm/panthor: fix firmware control interface bounds checks
+Date: Sat, 12 Sep 2026 08:44:44 +0200
+Message-ID: <20260912065613.289149724@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,265 +51,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Osama Abdelkader <osama.abdelkader@gmail.com>
 
-commit 5eced87b7d19dbc76ebdddaf322046f9ac582fcb upstream.
+commit 6a47f9fd2d970674ed9dedc52fc7ab76fd015785 upstream.
 
-generic/794  4s ... - output mismatch (see /share/git/fstests/results//generic/794.out.bad)
-#    --- tests/generic/794.out   2026-06-12 08:46:32.766426241 +0800
-#    +++ /share/git/fstests/results//generic/794.out.bad 2026-07-05 18:32:55.000000000 +0800
-#    @@ -1,4 +1,16 @@
-#     QA output created by 794
-#     append_write
-#    +FAIL: non-zero data in gap [4080,4096) after shutdown+remount
-#    +000000 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a 5a  >ZZZZZZZZZZZZZZZZ<
-#    +*
-#    +001000
-#     truncate_up
-#    ...
-#    (Run 'diff -u /share/git/fstests/tests/generic/794.out /share/git/fstests/results//generic/794.out.bad'  to see the entire diff)
-Ran: generic/794
-Failures: generic/794
-Failed 1 of 1 tests
+panthor_init_cs_iface() and panthor_init_csg_iface() validate firmware
+control interface offsets with 32-bit arithmetic and the size of the host
+wrapper structures. The offsets are derived from firmware-provided strides,
+so the arithmetic can wrap before the bounds check, and the host wrapper
+size is not the size of the firmware control interface being mapped.
 
-Steps of generic/794:
-1. write 4096 bytes to file w/ 0x5a
-2. use fiemap to get PBA of first block in file
-3. truncate file to 4080
-4. umount; write 4096 bytes to file w/ 0x5a directly via PBA; mount
-5. extend filesize via
-   a) append 4096 from offset 4096, or
-   b) truncate 8192, or
-   c) fallocate 4096 from offset 4096
-6. verify the gap is zeroed in memory [4080,4096)
-7. sync range 4096 from offset 4096; shutdown -f (flush meta before shutdown)
-8. umount; mount; verify [4080,4096) is zeroed or not.
+Use 64-bit arithmetic for the computed offsets and validate against the
+actual firmware control interface structure sizes with subtraction-based
+bounds checks. Also validate that the shared section is large enough for
+the global control interface before using it.
 
-When extending file size (e.g. via truncate, fallocate, or write) across an
-unaligned EOF boundary, we need to ensure that post-EOF data in the partial
-page is zeroed out in pagecache and marked dirty, then writeback the cache to
-persist zeroed data before committing inode w/ updated i_size.
-
-This help to prevent stale disk data beyond the previous EOF from being exposed
-after remounting or crash recovery.
-
-Since f2fs is a LFS filesystem, we only support direct write via PBA in pinfile,
-and pinfile has section-aligned filesize, so in Android, there should no problem,
-but for other usage in different environment, let's fix this w/ fsync_mode=strict
-mount option.
-
-Cc: stable@kernel.org
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Fixes: 2718d91816ee ("drm/panthor: Add the FW logical block")
+Cc: stable@vger.kernel.org
+Signed-off-by: Osama Abdelkader <osama.abdelkader@gmail.com>
+Reviewed-by: Steven Price <steven.price@arm.com>
+Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
+Link: https://patch.msgid.link/20260720134435.13377-1-osama.abdelkader@gmail.com
+Signed-off-by: Steven Price <steven.price@arm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/file.c |  100 +++++++++++++++++++++++++++++++++++++++++++++++----------
- 1 file changed, 84 insertions(+), 16 deletions(-)
+ drivers/gpu/drm/panthor/panthor_fw.c |   19 +++++++++++++------
+ 1 file changed, 13 insertions(+), 6 deletions(-)
 
---- a/fs/f2fs/file.c
-+++ b/fs/f2fs/file.c
-@@ -35,16 +35,52 @@
- #include <trace/events/f2fs.h>
- #include <uapi/linux/f2fs.h>
+--- a/drivers/gpu/drm/panthor/panthor_fw.c
++++ b/drivers/gpu/drm/panthor/panthor_fw.c
+@@ -797,14 +797,15 @@ static int panthor_init_cs_iface(struct
+ 	struct panthor_fw_csg_iface *csg_iface = panthor_fw_get_csg_iface(ptdev, csg_idx);
+ 	struct panthor_fw_cs_iface *cs_iface = &ptdev->fw->iface.streams[csg_idx][cs_idx];
+ 	u64 shared_section_sz = panthor_kernel_bo_size(ptdev->fw->shared_section->mem);
+-	u32 iface_offset = CSF_GROUP_CONTROL_OFFSET +
+-			   (csg_idx * glb_iface->control->group_stride) +
++	u64 iface_offset = CSF_GROUP_CONTROL_OFFSET +
++			   ((u64)csg_idx * glb_iface->control->group_stride) +
+ 			   CSF_STREAM_CONTROL_OFFSET +
+-			   (cs_idx * csg_iface->control->stream_stride);
++			   ((u64)cs_idx * csg_iface->control->stream_stride);
+ 	struct panthor_fw_cs_iface *first_cs_iface =
+ 		panthor_fw_get_cs_iface(ptdev, 0, 0);
  
--static void f2fs_zero_post_eof_page(struct inode *inode,
--					loff_t new_size, bool lock)
-+static int fill_zero(struct inode *inode, pgoff_t index,
-+					loff_t start, loff_t len);
-+
-+static int do_zero_post_eof_page(struct inode *inode, loff_t new_size)
-+{
-+	loff_t old_size = i_size_read(inode);
-+	unsigned int offset, len;
-+	pgoff_t index;
-+	int err;
-+
-+	offset = old_size & (PAGE_SIZE - 1);
-+
-+	if (!offset)
-+		return 0;
-+
-+	len = min_t(loff_t, PAGE_SIZE - offset, new_size - old_size);
-+	index = old_size >> PAGE_SHIFT;
-+
-+	if (f2fs_has_inline_data(inode)) {
-+		/* data post eof should be always zero */
-+		if (new_size <= MAX_INLINE_DATA(inode))
-+			return 0;
-+		err = f2fs_convert_inline_inode(inode);
-+		if (err)
-+			return err;
-+	}
-+
-+	err = fill_zero(inode, index, offset, len);
-+	if (err)
-+		return err;
-+	return filemap_write_and_wait_range(inode->i_mapping,
-+				old_size, old_size + len - 1);
-+}
-+
-+static int f2fs_zero_post_eof_page(struct inode *inode,
-+					loff_t new_size, bool lock, bool writeback)
+-	if (iface_offset + sizeof(*cs_iface) >= shared_section_sz)
++	if (iface_offset > shared_section_sz ||
++	    sizeof(*cs_iface->control) > shared_section_sz - iface_offset)
+ 		return -EINVAL;
+ 
+ 	spin_lock_init(&cs_iface->lock);
+@@ -854,10 +855,12 @@ static int panthor_init_csg_iface(struct
+ 	struct panthor_fw_global_iface *glb_iface = panthor_fw_get_glb_iface(ptdev);
+ 	struct panthor_fw_csg_iface *csg_iface = &ptdev->fw->iface.groups[csg_idx];
+ 	u64 shared_section_sz = panthor_kernel_bo_size(ptdev->fw->shared_section->mem);
+-	u32 iface_offset = CSF_GROUP_CONTROL_OFFSET + (csg_idx * glb_iface->control->group_stride);
++	u64 iface_offset = CSF_GROUP_CONTROL_OFFSET +
++			   ((u64)csg_idx * glb_iface->control->group_stride);
+ 	unsigned int i;
+ 
+-	if (iface_offset + sizeof(*csg_iface) >= shared_section_sz)
++	if (iface_offset > shared_section_sz ||
++	    sizeof(*csg_iface->control) > shared_section_sz - iface_offset)
+ 		return -EINVAL;
+ 
+ 	spin_lock_init(&csg_iface->lock);
+@@ -909,11 +912,15 @@ static u32 panthor_get_instr_features(st
+ static int panthor_fw_init_ifaces(struct panthor_device *ptdev)
  {
- 	loff_t old_size = i_size_read(inode);
-+	bool strict =
-+		F2FS_OPTION(F2FS_I_SB(inode)).fsync_mode == FSYNC_MODE_STRICT;
+ 	struct panthor_fw_global_iface *glb_iface = &ptdev->fw->iface.global;
++	u64 shared_section_sz = panthor_kernel_bo_size(ptdev->fw->shared_section->mem);
+ 	unsigned int i;
  
- 	if (old_size >= new_size)
--		return;
-+		return 0;
+ 	if (!ptdev->fw->shared_section->mem->kmap)
+ 		return -EINVAL;
  
--	if (mapping_empty(inode->i_mapping))
--		return;
-+	if (!strict && mapping_empty(inode->i_mapping))
-+		return 0;
- 
- 	if (lock)
- 		filemap_invalidate_lock(inode->i_mapping);
-@@ -52,6 +88,16 @@ static void f2fs_zero_post_eof_page(stru
- 	truncate_inode_pages_range(inode->i_mapping, old_size, new_size - 1);
- 	if (lock)
- 		filemap_invalidate_unlock(inode->i_mapping);
++	if (sizeof(*glb_iface->control) > shared_section_sz)
++		return -EINVAL;
 +
-+	if (!writeback || !strict)
-+		return 0;
-+	/*
-+	 * In fsync_mode=strict, when we expand an unaligned EOF size, we
-+	 * should zero post EOF data and writeback the data immediately,
-+	 * so that it can avoid exposing stale data after metadata flush
-+	 * and POR.
-+	 */
-+	return do_zero_post_eof_page(inode, new_size);
- }
- 
- static vm_fault_t f2fs_filemap_fault(struct vm_fault *vmf)
-@@ -122,7 +168,10 @@ static vm_fault_t f2fs_vm_page_mkwrite(s
- 
- 	f2fs_bug_on(sbi, f2fs_has_inline_data(inode));
- 
--	f2fs_zero_post_eof_page(inode, (folio->index + 1) << PAGE_SHIFT, true);
-+	err = f2fs_zero_post_eof_page(inode,
-+		(folio->index + 1) << PAGE_SHIFT, true, false);
-+	if (err)
-+		goto out_pagefault;
- 
- 	file_update_time(vmf->vma->vm_file);
- 	filemap_invalidate_lock_shared(inode->i_mapping);
-@@ -179,7 +228,7 @@ static vm_fault_t f2fs_vm_page_mkwrite(s
- 
- out_sem:
- 	filemap_invalidate_unlock_shared(inode->i_mapping);
--
-+out_pagefault:
- 	sb_end_pagefault(inode->i_sb);
- out:
- 	ret = vmf_fs_error(err);
-@@ -1097,8 +1146,12 @@ int f2fs_setattr(struct mnt_idmap *idmap
- 		f2fs_down_write(&fi->i_gc_rwsem[WRITE]);
- 		filemap_invalidate_lock(inode->i_mapping);
- 
--		if (attr->ia_size > old_size)
--			f2fs_zero_post_eof_page(inode, attr->ia_size, false);
-+		if (attr->ia_size > old_size) {
-+			err = f2fs_zero_post_eof_page(inode,
-+				attr->ia_size, false, true);
-+			if (err)
-+				goto err_out;
-+		}
- 		truncate_setsize(inode, attr->ia_size);
- 
- 		if (attr->ia_size <= old_size)
-@@ -1107,6 +1160,7 @@ int f2fs_setattr(struct mnt_idmap *idmap
- 		 * do not trim all blocks after i_size if target size is
- 		 * larger than i_size.
- 		 */
-+err_out:
- 		filemap_invalidate_unlock(inode->i_mapping);
- 		f2fs_up_write(&fi->i_gc_rwsem[WRITE]);
- 		if (err)
-@@ -1217,7 +1271,9 @@ static int f2fs_punch_hole(struct inode
- 	if (ret)
- 		return ret;
- 
--	f2fs_zero_post_eof_page(inode, offset + len, true);
-+	ret = f2fs_zero_post_eof_page(inode, offset + len, true, false);
-+	if (ret)
-+		return ret;
- 
- 	pg_start = ((unsigned long long) offset) >> PAGE_SHIFT;
- 	pg_end = ((unsigned long long) offset + len) >> PAGE_SHIFT;
-@@ -1502,7 +1558,9 @@ static int f2fs_do_collapse(struct inode
- 	f2fs_down_write(&F2FS_I(inode)->i_gc_rwsem[WRITE]);
- 	filemap_invalidate_lock(inode->i_mapping);
- 
--	f2fs_zero_post_eof_page(inode, offset + len, false);
-+	ret = f2fs_zero_post_eof_page(inode, offset + len, false, false);
-+	if (ret)
-+		goto out_unlock;
- 
- 	f2fs_lock_op(sbi);
- 	f2fs_drop_extent_tree(inode);
-@@ -1510,6 +1568,7 @@ static int f2fs_do_collapse(struct inode
- 	ret = __exchange_data_block(inode, inode, end, start, nrpages - end, true);
- 	f2fs_unlock_op(sbi);
- 
-+out_unlock:
- 	filemap_invalidate_unlock(inode->i_mapping);
- 	f2fs_up_write(&F2FS_I(inode)->i_gc_rwsem[WRITE]);
- 	return ret;
-@@ -1631,7 +1690,9 @@ static int f2fs_zero_range(struct inode
- 	if (ret)
- 		return ret;
- 
--	f2fs_zero_post_eof_page(inode, offset + len, true);
-+	ret = f2fs_zero_post_eof_page(inode, offset + len, true, false);
-+	if (ret)
-+		return ret;
- 
- 	pg_start = ((unsigned long long) offset) >> PAGE_SHIFT;
- 	pg_end = ((unsigned long long) offset + len) >> PAGE_SHIFT;
-@@ -1765,7 +1826,9 @@ static int f2fs_insert_range(struct inod
- 	f2fs_down_write(&F2FS_I(inode)->i_gc_rwsem[WRITE]);
- 	filemap_invalidate_lock(mapping);
- 
--	f2fs_zero_post_eof_page(inode, offset + len, false);
-+	ret = f2fs_zero_post_eof_page(inode, offset + len, false, false);
-+	if (ret)
-+		goto out_unlock;
- 	truncate_pagecache(inode, offset);
- 
- 	while (!ret && idx > pg_start) {
-@@ -1781,6 +1844,7 @@ static int f2fs_insert_range(struct inod
- 					idx + delta, nr, false);
- 		f2fs_unlock_op(sbi);
- 	}
-+out_unlock:
- 	filemap_invalidate_unlock(mapping);
- 	f2fs_up_write(&F2FS_I(inode)->i_gc_rwsem[WRITE]);
- 	if (ret)
-@@ -1823,7 +1887,9 @@ static int f2fs_expand_inode_data(struct
- 	if (err)
- 		return err;
- 
--	f2fs_zero_post_eof_page(inode, offset + len, true);
-+	err = f2fs_zero_post_eof_page(inode, offset + len, true, true);
-+	if (err)
-+		return err;
- 
- 	f2fs_balance_fs(sbi, true);
- 
-@@ -4839,8 +4905,10 @@ static ssize_t f2fs_write_checks(struct
- 	if (err)
- 		return err;
- 
--	f2fs_zero_post_eof_page(inode,
--		iocb->ki_pos + iov_iter_count(from), true);
-+	err = f2fs_zero_post_eof_page(inode,
-+		iocb->ki_pos + iov_iter_count(from), true, true);
-+	if (err)
-+		return err;
- 	return count;
- }
+ 	spin_lock_init(&glb_iface->lock);
+ 	glb_iface->control = ptdev->fw->shared_section->mem->kmap;
  
 
 
