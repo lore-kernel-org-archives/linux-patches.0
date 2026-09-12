@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 793E92D47F1;
-	Sat, 12 Sep 2026 14:20:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C91B1311967;
+	Sat, 12 Sep 2026 14:20:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789222807; cv=none; b=LLREpwMPypjzfoOfZ5t8j9ZIWDf/A6tAHwPmwoUucns07SF7A8GCCJ9+osVumV7aNPA4pixxr7Vu4zjy13MD0tJhdDXG4cQ9qqGvZOZl3rCSs9VTXTWu6tJ6JLGIBMSjRXvvUg1eMYRY8V7uhrMOwsBWW2tEUpmcOIN6I3SmIpo=
+	t=1789222812; cv=none; b=LAdh2b3+Cfy9O7RziS7yXqLu4pz+2UgpOx3uwM2/M8e6twPjbc48PtBqSvDJSJ3VcGZZgYxwDrTXLuN9FgxMAVii1PLnHgx7J9LQmbt2FCuS0man+tv1gp+UqSpObk2qm9P/RA/U/Yvy/oBUwp9tFSdcsMen2wW7nG/8qSEW19k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789222807; c=relaxed/simple;
-	bh=y8V6QzsrsiMLRqEYzsvRccIoWvJ4MRmup1YpGTJKWc8=;
+	s=arc-20240116; t=1789222812; c=relaxed/simple;
+	bh=6KeKA2mTsM4NUH8hHbOeympeNjFU0U1hru3TNj5rGLE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Trjo1YqDp9PSUihLTfOOG+i4+dLrsHOpT31flq82G+OCi8KF5oaK0T1u3CNwjSKnpfTgTdE++YL0PIl4G2Y617B2QR6F18wCZcpKJ3Dn3IA+AkNNKW1HD+v/JQzWclKpFSCP1UphlWh3NJj31Oh075vI7pnhRR1acO/z9UxE8Ms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L9Ypa8Qi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cGtBXtBL/5j1MrzzKUKCAqzv6sxUlGmixt64tP1RKxHkwaFa1HvLZX/yk1VghW4pxQ7XHeho9LEazM2dTd46ronpaFDO8JIhRf6e+3W2NdX71InTg+n4FcVFUUTimGx6uZpx3s326U3QXNkSg7a9J9kf34rY+YOw+ssVZ2XnRtE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hbyt94tx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L9Ypa8Qi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C8EB1F000FF;
-	Sat, 12 Sep 2026 14:20:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hbyt94tx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 828651F000FF;
+	Sat, 12 Sep 2026 14:20:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789222806;
-	bh=obGVRFALEaYnKfxvZRAHNYv2BfjcYtWJh6OIT6rrfnI=;
+	s=korg; t=1789222811;
+	bh=2gata/JD7C+mb6dy3yB5gBrFO8yXWQ8sA1JxbuugV3I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L9Ypa8QiYAWheEeW4H8Medavx70KQZBJuFguUS+yui+BSQkDYN1aBe+Ri6WmvO/7O
-	 pQkqwq9IfpJzu+SFVfESGq0g+FaGb2e2/s0GNOs3Iy6SoS75pz8+gex3xWzNBzTtHF
-	 8y/IQBXeK+6pRqZl/+xBSuqYLEHgKV7wE1WvgwdE=
+	b=hbyt94txRYy1Hz1+XPBi2JhSD/atz28leZjkwPDNZ/Rz+rYLdPkaVimHDOCJLcOF1
+	 glxMpJsnzJMJlbVdzzMhbOUl09azjjPVSzq1M8qP+lw4Dth1HtY5N0+bfuXdBfTZNB
+	 vIDy4uocVeMTpSv6HCTVv92SYzKnln9BHO0RwNf4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Ayush Mukkanwar <ayushmukkanwar@gmail.com>,
+	Yuvraj Singh Chauhan <ysinghcin@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0660/1424] staging: octeon: add missing tasklet_kill in cvm_oct_tx_shutdown
-Date: Sat, 12 Sep 2026 08:51:32 +0200
-Message-ID: <20260912065622.075264875@linuxfoundation.org>
+Subject: [PATCH 6.6 0661/1424] staging: octeon: fix free_irq dev_id mismatch in cvm_oct_rx_shutdown
+Date: Sat, 12 Sep 2026 08:51:33 +0200
+Message-ID: <20260912065622.097439780@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -51,40 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ayush Mukkanwar <ayushmukkanwar@gmail.com>
+From: Yuvraj Singh Chauhan <ysinghcin@gmail.com>
 
-[ Upstream commit b9af44b0d20b2247c4eb0ea5cfca907d643eea50 ]
+[ Upstream commit 41db5b76eeb4cc11a1097384caba7cfc659f7293 ]
 
-The TX cleanup tasklet can be scheduled by the watchdog IRQ handler
-to execute cvm_oct_tx_do_cleanup. There can be a pending tasklet in
-the queue which might run after the cvm_oct_remove() frees net_device
-structures, causing a use-after-free in cvm_oct_tx_do_cleanup() as it
-iterates cvm_oct_device[] which is an array of netdevice pointers.
-Add tasklet_kill() after free_irq() to ensure the tasklet is no longer
-scheduled or running before teardown proceeds.
+In cvm_oct_rx_initialize(), request_irq() is called with
+&oct_rx_group[i].napi as the dev_id:
 
-Fixes: 4898c560103f ("Staging: Octeon:  Free transmit SKBs in a timely manner")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260511150931.93382-1-ayushmukkanwar%40gmail.com
-Signed-off-by: Ayush Mukkanwar <ayushmukkanwar@gmail.com>
-Link: https://patch.msgid.link/20260615172734.42038-1-ayushmukkanwar@gmail.com
+	request_irq(oct_rx_group[i].irq, cvm_oct_do_interrupt, 0, "Ethernet",
+							&oct_rx_group[i].napi);
+
+However, cvm_oct_rx_shutdown() passes cvm_oct_device (an array of
+struct net_device pointers) as the dev_id to free_irq():
+
+  free_irq(oct_rx_group[i].irq, cvm_oct_device);
+
+Since __free_irq() matches the action to remove by comparing
+dev_id pointers, the mismatched cookie means the IRQ handler is
+never found, triggering a WARN and leaving the IRQ line permanently
+allocated. This prevents proper driver cleanup on module removal.
+
+Fix the mismatch by passing &oct_rx_group[i].napi as the dev_id
+to free_irq(), matching what was used during request_irq().
+
+Signed-off-by: Yuvraj Singh Chauhan <ysinghcin@gmail.com>
+Link: https://patch.msgid.link/20260212171903.1417804-1-ysinghcin@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: c0a9a8586a63 ("staging: octeon: add missing napi_disable in cvm_oct_rx_shutdown")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/octeon/ethernet-tx.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/staging/octeon/ethernet-rx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/staging/octeon/ethernet-tx.c b/drivers/staging/octeon/ethernet-tx.c
-index bbf33b88bb7c2..e54b4a413dc40 100644
---- a/drivers/staging/octeon/ethernet-tx.c
-+++ b/drivers/staging/octeon/ethernet-tx.c
-@@ -711,4 +711,6 @@ void cvm_oct_tx_shutdown(void)
- {
- 	/* Free the interrupt handler */
- 	free_irq(OCTEON_IRQ_TIMER1, cvm_oct_device);
-+
-+	tasklet_kill(&cvm_oct_tx_cleanup_tasklet);
- }
+diff --git a/drivers/staging/octeon/ethernet-rx.c b/drivers/staging/octeon/ethernet-rx.c
+index 965330eec80a8..d0b43d50b83ce 100644
+--- a/drivers/staging/octeon/ethernet-rx.c
++++ b/drivers/staging/octeon/ethernet-rx.c
+@@ -535,7 +535,7 @@ void cvm_oct_rx_shutdown(void)
+ 			cvmx_write_csr(CVMX_POW_WQ_INT_THRX(i), 0);
+ 
+ 		/* Free the interrupt handler */
+-		free_irq(oct_rx_group[i].irq, cvm_oct_device);
++		free_irq(oct_rx_group[i].irq, &oct_rx_group[i].napi);
+ 
+ 		netif_napi_del(&oct_rx_group[i].napi);
+ 	}
 -- 
 2.53.0
 
