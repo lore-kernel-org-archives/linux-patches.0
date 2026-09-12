@@ -1,37 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBECF38AC92;
-	Sat, 12 Sep 2026 15:36:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 875913CB54E;
+	Sat, 12 Sep 2026 15:36:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789227412; cv=none; b=lcXFMsxGhKjsD+25MQifWJvCmgqIJyVWS46NskfPhRTgGDgTaIntz9XwWL9woaNjf2Moaaap7KX1lsBqxvT89rE+C6oZBeOy8BHH/hnvdWvhJWPEtterl5KfVXAFjShs6GO21T5ociSgbWDUr/MCC9/HFnOQ2cmj03WcPOlWyFU=
+	t=1789227416; cv=none; b=i4ION11L9OK7Ba9gK9RUh+cd/1hIV32uFCwyZUWFDME5Iy2BWUnb72qGrDUwk/RiEfvI3tWpTffBIHok0ICi75yfDN5XvZuK01x5+k0r3RaYjYhZWzKLs2pj0Qf8QLG2q+SaiSn2am3G5HDginmHbr1yx1xIGBJI9iEm5+CSo4g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789227412; c=relaxed/simple;
-	bh=ffBAp4WnKoEC5EpTmc85WM788TaGuzPDdZPYxZuee/I=;
+	s=arc-20240116; t=1789227416; c=relaxed/simple;
+	bh=x3qYs6/ryx9Wa2wQ79kTIStTgVbsZ06GuxdYXoxEulI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ug6Jvu5wJf+4CKFuaxX+J1BmGAiV/y+mwv+V7ZOGwqibkHwXcLcFwpmRCmi5ei1hgxVIO66wwSoTVlbombBUk+I+/4ylhDiNIWEuwU8y89VONdxDImfOcOTCjhZ/D7L9QAjuxzXsj2Y5nBYvZZsddhVz8FCV0X/Qq0CEWCTNiWY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p510N37T; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DQT6Op2DU7zv3lDem3KKScKxijro68mdiM44WOMXbPe4TPzT+HAVf6UQ4Oo2/JN3tS5ae+uBOpjgYtFpW+Vc/3VBc3raNrp5XyBUYaQliJf4h+bPvyql2RDiCzcQaPOSMM/Zx+PobETy/wuw98WWplxI4B0fTp1AFCOm53xw40I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r+MFKrxl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p510N37T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A09001F000FF;
-	Sat, 12 Sep 2026 15:36:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r+MFKrxl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 710B91F000FF;
+	Sat, 12 Sep 2026 15:36:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789227410;
-	bh=+zNnH4KRgtQ9dsA9vfJ0r25yn0jv+sRc9GryQsgQ9hE=;
+	s=korg; t=1789227415;
+	bh=eSrpmeMGyDEeC/rSgaJGwASIjq7tHGEXU3fUiLkSPfc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=p510N37TCr6MqUk4kyFg0GRjfS61KZU3U6qr9V8yneXRS7xv8c5d2nrFRpk3+gyxJ
-	 fCL6LAY7x/qDJQNVtkIHP/9ZGtB2Cepl0ihBGujh5m79QNcRnW09CEQJ1gOEVPiDlX
-	 9pGNX5OZ8+PIRqBC2oE+LVepRoLIZK5l2fDsA5FM=
+	b=r+MFKrxlhjDov/brE/xayeu3pPd7N+CpR53sDEYEEQiiktRU4mH82T4rpnQnShJgp
+	 eTBHFNg1CCOQw826fVOZY5x0LRHTcZuYIVUs3tkgcF1SGcudV9wdvPZ6NMhoFOuuc9
+	 oVJObPmaQHqajkXqmVKpMxw1FShz1sXPwjN5/MbE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fan Wu <fanwu01@zju.edu.cn>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>
-Subject: [PATCH 6.1 0175/1191] power: supply: bq256xx: drain usb_work before freeing the charger
-Date: Sat, 12 Sep 2026 08:48:23 +0200
-Message-ID: <20260912065552.144758755@linuxfoundation.org>
+	Dmitry Antipov <dmantipov@yandex.ru>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Jun Piao <piaojun@huawei.com>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 0149/1191] ocfs2: always run deallocs on copy-on-write completion
+Date: Sat, 12 Sep 2026 08:47:57 +0200
+Message-ID: <20260912065551.549294384@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -50,89 +57,185 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Dmitry Antipov <dmantipov@yandex.ru>
 
-commit 2dd6cd823777bea6d9a880a12a92a73ec76aee0b upstream.
+commit 82ea9d4fc05fb7a387db547c6a7c0aa6a3719616 upstream.
 
-The USB-PHY notifier queues usb_work, whose handler calls
-power_supply_changed(bq->charger). The reset devm action only unregisters
-the notifier and was registered before the power supplies, so devm frees
-bq->charger on unwind before the action runs; a usb_work still queued can
-then dereference it.
+Local fuzzing of 6.12.94 has found the following memory leak
+caused by doing 'copy_file_range()' within the same filesystem:
 
-Register the reset action after the power supplies, so it unregisters
-the notifiers and drains usb_work before the supplies are released.
-Initialize usb_work and obtain the PHY references before registering
-the notifiers, so the worker cannot run before the supplies exist.
+unreferenced object 0xffff88812192c980 (size 32):
+  comm "syz.0.49", pid 12095, jiffies 4294964143
+  hex dump (first 32 bytes):
+    00 00 00 00 00 00 00 00 08 00 00 00 00 00 00 00  ................
+    c0 c5 92 21 81 88 ff ff 00 02 00 00 00 06 00 00  ...!............
+  backtrace (crc 7068d63f):
+    kmemleak_alloc_recursive include/linux/kmemleak.h:42 [inline]
+    slab_post_alloc_hook mm/slub.c:4152 [inline]
+    slab_alloc_node mm/slub.c:4197 [inline]
+    __kmalloc_cache_noprof+0x168/0x2c0 mm/slub.c:4358
+    kmalloc_noprof include/linux/slab.h:878 [inline]
+    ocfs2_find_per_slot_free_list fs/ocfs2/alloc.c:6618 [inline]
+    ocfs2_cache_block_dealloc+0x155/0x4b0 fs/ocfs2/alloc.c:6786
+    ocfs2_cache_extent_block_free fs/ocfs2/alloc.c:6819 [inline]
+    ocfs2_unlink_path+0x286/0x450 fs/ocfs2/alloc.c:2613
+    ocfs2_rotate_subtree_left fs/ocfs2/alloc.c:2779 [inline]
+    __ocfs2_rotate_tree_left+0x1f6f/0x2da0 fs/ocfs2/alloc.c:2985
+    ocfs2_rotate_tree_left+0x283/0xe00 fs/ocfs2/alloc.c:3237
+    ocfs2_try_to_merge_extent+0xf56/0x1a20 fs/ocfs2/alloc.c:3825
+    ocfs2_split_extent+0x15f4/0x2940 fs/ocfs2/alloc.c:5138
+    ocfs2_clear_ext_refcount+0x2f6/0x550 fs/ocfs2/refcounttree.c:3098
+    ocfs2_replace_clusters fs/ocfs2/refcounttree.c:3131 [inline]
+    ocfs2_make_clusters_writable fs/ocfs2/refcounttree.c:3255 [inline]
+    ocfs2_replace_cow+0x991/0x1660 fs/ocfs2/refcounttree.c:3349
+    ocfs2_refcount_cow_hunk fs/ocfs2/refcounttree.c:3427 [inline]
+    ocfs2_refcount_cow+0x5e1/0x9f0 fs/ocfs2/refcounttree.c:3470
+    ocfs2_prepare_inode_for_write fs/ocfs2/file.c:2340 [inline]
+    ocfs2_file_write_iter+0xbda/0x1880 fs/ocfs2/file.c:2451
+    iter_file_splice_write+0x890/0xf60 fs/splice.c:743
+    do_splice_from fs/splice.c:944 [inline]
+    direct_splice_actor+0x232/0x480 fs/splice.c:1167
+    splice_direct_to_actor+0x4b4/0xb60 fs/splice.c:1111
+    do_splice_direct_actor fs/splice.c:1210 [inline]
+    do_splice_direct+0x10f/0x1c0 fs/splice.c:1236
+    do_sendfile+0x430/0xbf0 fs/read_write.c:1388
 
-Found by static analysis.
+unreferenced object 0xffff88812192c5c0 (size 32):
+  comm "syz.0.49", pid 12095, jiffies 4294964143
+  hex dump (first 32 bytes):
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+    29 70 00 00 00 00 00 00 19 00 00 00 00 00 00 00  )p..............
+  backtrace (crc afec850f):
+    kmemleak_alloc_recursive include/linux/kmemleak.h:42 [inline]
+    slab_post_alloc_hook mm/slub.c:4152 [inline]
+    slab_alloc_node mm/slub.c:4197 [inline]
+    __kmalloc_cache_noprof+0x168/0x2c0 mm/slub.c:4358
+    kmalloc_noprof include/linux/slab.h:878 [inline]
+    kzalloc_noprof include/linux/slab.h:1014 [inline]
+    ocfs2_cache_block_dealloc+0x25c/0x4b0 fs/ocfs2/alloc.c:6793
+    ocfs2_cache_extent_block_free fs/ocfs2/alloc.c:6819 [inline]
+    ocfs2_unlink_path+0x286/0x450 fs/ocfs2/alloc.c:2613
+    ocfs2_rotate_subtree_left fs/ocfs2/alloc.c:2779 [inline]
+    __ocfs2_rotate_tree_left+0x1f6f/0x2da0 fs/ocfs2/alloc.c:2985
+    ocfs2_rotate_tree_left+0x283/0xe00 fs/ocfs2/alloc.c:3237
+    ocfs2_try_to_merge_extent+0xf56/0x1a20 fs/ocfs2/alloc.c:3825
+    ocfs2_split_extent+0x15f4/0x2940 fs/ocfs2/alloc.c:5138
+    ocfs2_clear_ext_refcount+0x2f6/0x550 fs/ocfs2/refcounttree.c:3098
+    ocfs2_replace_clusters fs/ocfs2/refcounttree.c:3131 [inline]
+    ocfs2_make_clusters_writable fs/ocfs2/refcounttree.c:3255 [inline]
+    ocfs2_replace_cow+0x991/0x1660 fs/ocfs2/refcounttree.c:3349
+    ocfs2_refcount_cow_hunk fs/ocfs2/refcounttree.c:3427 [inline]
+    ocfs2_refcount_cow+0x5e1/0x9f0 fs/ocfs2/refcounttree.c:3470
+    ocfs2_prepare_inode_for_write fs/ocfs2/file.c:2340 [inline]
+    ocfs2_file_write_iter+0xbda/0x1880 fs/ocfs2/file.c:2451
+    iter_file_splice_write+0x890/0xf60 fs/splice.c:743
+    do_splice_from fs/splice.c:944 [inline]
+    direct_splice_actor+0x232/0x480 fs/splice.c:1167
+    splice_direct_to_actor+0x4b4/0xb60 fs/splice.c:1111
+    do_splice_direct_actor fs/splice.c:1210 [inline]
+    do_splice_direct+0x10f/0x1c0 fs/splice.c:1236
+    do_sendfile+0x430/0xbf0 fs/read_write.c:1388
 
-Fixes: 32e4978bb920 ("power: supply: bq256xx: Introduce the BQ256XX charger driver")
-Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5.6
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Link: https://patch.msgid.link/20260804145511.103470-1-fanwu01@zju.edu.cn
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+This happens when 'ocfs2_cache_block_dealloc()' called from
+'ocfs2_cache_extent_block_free()' uses the suballocator to
+schedule extent removal, so 'ocfs2_run_deallocs()' should
+be run unconditionally to complete the removal with
+'ocfs2_free_cached_blocks()'. An extra semi-automated static
+analysis [1] suspects that the same scenario looks possible in
+'ocfs2_attach_refcount_tree()' and 'ocfs2_reflink_remap_blocks()'
+as well, but, since 'ocfs2_run_deallocs()' is a safe no-op for
+an empty dealloc context, 'ocfs2_create_reflink_node()' and
+'ocfs2_reflink_xattrs()' may be adjusted in the same way too,
+thus keeping the code pattern consistent.
+
+Link: https://lore.kernel.org/20260721102840.387663-1-dmantipov@yandex.ru
+Link: https://lore.kernel.org/ocfs2-devel/f1d7e266-4b44-41b9-98c0-5b3868a8d9c3@yandex.ru [1]
+Fixes: 6f70fa519976 ("ocfs2: Add CoW support.")
+Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
+Suggested-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: Heming Zhao <heming.zhao@suse.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/power/supply/bq256xx_charger.c |   29 +++++++++++++++--------------
- 1 file changed, 15 insertions(+), 14 deletions(-)
+ fs/ocfs2/refcounttree.c |   20 ++++++++------------
+ fs/ocfs2/xattr.c        |    5 ++---
+ 2 files changed, 10 insertions(+), 15 deletions(-)
 
---- a/drivers/power/supply/bq256xx_charger.c
-+++ b/drivers/power/supply/bq256xx_charger.c
-@@ -866,6 +866,8 @@ static void bq256xx_charger_reset(void *
+--- a/fs/ocfs2/refcounttree.c
++++ b/fs/ocfs2/refcounttree.c
+@@ -3364,10 +3364,9 @@ static int ocfs2_replace_cow(struct ocfs
+ 		cow_start += num_clusters;
+ 	}
  
- 	if (!IS_ERR_OR_NULL(bq->usb3_phy))
- 		usb_unregister_notifier(bq->usb3_phy, &bq->usb_nb);
-+
-+	cancel_work_sync(&bq->usb_work);
+-	if (ocfs2_dealloc_has_cluster(&context->dealloc)) {
++	if (ocfs2_dealloc_has_cluster(&context->dealloc))
+ 		ocfs2_schedule_truncate_log_flush(osb, 1);
+-		ocfs2_run_deallocs(osb, &context->dealloc);
+-	}
++	ocfs2_run_deallocs(osb, &context->dealloc);
+ 
+ 	return ret;
  }
+@@ -3850,10 +3849,9 @@ unlock:
+ 	ocfs2_unlock_refcount_tree(osb, ref_tree, 1);
+ 	brelse(ref_root_bh);
  
- static int bq256xx_set_charger_property(struct power_supply *psy,
-@@ -1659,24 +1661,12 @@ static int bq256xx_probe(struct i2c_clie
- 		return ret;
+-	if (!ret && ocfs2_dealloc_has_cluster(&dealloc)) {
++	if (!ret && ocfs2_dealloc_has_cluster(&dealloc))
+ 		ocfs2_schedule_truncate_log_flush(osb, 1);
+-		ocfs2_run_deallocs(osb, &dealloc);
+-	}
++	ocfs2_run_deallocs(osb, &dealloc);
+ out:
+ 	/*
+ 	 * Empty the extent map so that we may get the right extent
+@@ -4139,10 +4137,9 @@ out_unlock_refcount:
+ 	ocfs2_unlock_refcount_tree(osb, ref_tree, 1);
+ 	brelse(ref_root_bh);
+ out:
+-	if (ocfs2_dealloc_has_cluster(&dealloc)) {
++	if (ocfs2_dealloc_has_cluster(&dealloc))
+ 		ocfs2_schedule_truncate_log_flush(osb, 1);
+-		ocfs2_run_deallocs(osb, &dealloc);
+-	}
++	ocfs2_run_deallocs(osb, &dealloc);
+ 
+ 	return ret;
+ }
+@@ -4695,10 +4692,9 @@ loff_t ocfs2_reflink_remap_blocks(struct
  	}
  
--	ret = devm_add_action_or_reset(dev, bq256xx_charger_reset, bq);
--	if (ret)
--		return ret;
-+	INIT_WORK(&bq->usb_work, bq256xx_usb_work);
-+	bq->usb_nb.notifier_call = bq256xx_usb_notifier;
- 
- 	/* OTG reporting */
- 	bq->usb2_phy = devm_usb_get_phy(dev, USB_PHY_TYPE_USB2);
--	if (!IS_ERR_OR_NULL(bq->usb2_phy)) {
--		INIT_WORK(&bq->usb_work, bq256xx_usb_work);
--		bq->usb_nb.notifier_call = bq256xx_usb_notifier;
--		usb_register_notifier(bq->usb2_phy, &bq->usb_nb);
+ out:
+-	if (ocfs2_dealloc_has_cluster(&dealloc)) {
++	if (ocfs2_dealloc_has_cluster(&dealloc))
+ 		ocfs2_schedule_truncate_log_flush(osb, 1);
+-		ocfs2_run_deallocs(osb, &dealloc);
 -	}
--
- 	bq->usb3_phy = devm_usb_get_phy(dev, USB_PHY_TYPE_USB3);
--	if (!IS_ERR_OR_NULL(bq->usb3_phy)) {
--		INIT_WORK(&bq->usb_work, bq256xx_usb_work);
--		bq->usb_nb.notifier_call = bq256xx_usb_notifier;
--		usb_register_notifier(bq->usb3_phy, &bq->usb_nb);
++	ocfs2_run_deallocs(osb, &dealloc);
+ 
+ 	return ret;
+ }
+--- a/fs/ocfs2/xattr.c
++++ b/fs/ocfs2/xattr.c
+@@ -7200,10 +7200,9 @@ out_unlock:
+ 				   ref_tree, 1);
+ 	brelse(ref_root_bh);
+ 
+-	if (ocfs2_dealloc_has_cluster(&dealloc)) {
++	if (ocfs2_dealloc_has_cluster(&dealloc))
+ 		ocfs2_schedule_truncate_log_flush(OCFS2_SB(old_inode->i_sb), 1);
+-		ocfs2_run_deallocs(OCFS2_SB(old_inode->i_sb), &dealloc);
 -	}
++	ocfs2_run_deallocs(OCFS2_SB(old_inode->i_sb), &dealloc);
  
- 	ret = bq256xx_power_supply_init(bq, &psy_cfg, dev);
- 	if (ret) {
-@@ -1684,6 +1674,17 @@ static int bq256xx_probe(struct i2c_clie
- 		return ret;
- 	}
- 
-+	/* Register after the power supplies so devm runs it first. */
-+	ret = devm_add_action_or_reset(dev, bq256xx_charger_reset, bq);
-+	if (ret)
-+		return ret;
-+
-+	if (!IS_ERR_OR_NULL(bq->usb2_phy))
-+		usb_register_notifier(bq->usb2_phy, &bq->usb_nb);
-+
-+	if (!IS_ERR_OR_NULL(bq->usb3_phy))
-+		usb_register_notifier(bq->usb3_phy, &bq->usb_nb);
-+
- 	if (client->irq) {
- 		ret = devm_request_threaded_irq(dev, client->irq, NULL,
- 						bq256xx_irq_handler_thread,
+ out:
+ 	return ret;
 
 
