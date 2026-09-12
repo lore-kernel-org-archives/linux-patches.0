@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B37E8757EA;
-	Sat, 12 Sep 2026 19:30:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F0ED313522;
+	Sat, 12 Sep 2026 19:30:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789241411; cv=none; b=V6dp6Py4FvOJ3jUQ/lGrcu1dH7/QE+rmYCydRt8BwSQ8huZbrLg8b/7zMPBEmFKpAPCNkYNUCtkzK/bwcMlX5Hh96dkPgdHE58Zrn6uPFvf4wb+RPo3N3mzd0zHHmnfzzbMwX/WNcL6ZB5CI/ddECgR9KJcr3aHl0FmFRUOxuXU=
+	t=1789241416; cv=none; b=eIQIfenJE8GDLQYIoMFAMlv2kz1nZw6chEaogqqWLx/NmmOGPKrFG6Nc6ULdroGOX3Pl0wypBUYAPSbNMVrJJwApWS0T/wieFZnptjQVHP6UZa3jArOQW++L+x4u93eo9q4F3GAZXURdT1JPVMjmvuUgpIKDNe8FPD7It4sje6g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789241411; c=relaxed/simple;
-	bh=Vk2SMqPkTI5/Xem08YeBswbKGmj9l400D+UW+DnUqNU=;
+	s=arc-20240116; t=1789241416; c=relaxed/simple;
+	bh=zBoizVTv/X4XhnO8rPz1wnEkEAd52iffOkp3uz1tBeQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iHR6arQCoxrfXYmJdhggJJC+J4riYgPKSiPNhoDPi+7I86Ax4AtHMeQVEeR8+Usu9GIhURVlwz4tdoe0uyiAWf3cPNTJYM3vgt8z0hCBzoOOO+jhb5xa3WaCnVrMS55BGXbWqUwupTtSNfwhUahsZNXsydsqMvXV3x+msUutDO8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xh7Q/qiv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ui7FddBJ9r4S1CqAZc71a3V4iqRabFhN3VJykyWGLx/RgYvkBWrW0K6Opj9IrSTqhGd7krf/zz0bA/Rh0dX7qRmCpAuL5F/eX4eWy0Xv5gDTjMMgQ7qX2XXu67BUSCuqtkzBHbAlCbOTv654qPbybPbXTUWiXOgl9729FQDFq4U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YY1uWZ7c; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xh7Q/qiv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54D8C1F000FF;
-	Sat, 12 Sep 2026 19:30:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YY1uWZ7c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59F171F000FF;
+	Sat, 12 Sep 2026 19:30:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789241410;
-	bh=M2ouzhrigRo48OqfhnqRF0/kfn2D43juxidVi4uof90=;
+	s=korg; t=1789241415;
+	bh=II4pTl25OTfKOVqr43w53S+suyS9UmO5mLd2UAG0GcA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Xh7Q/qiv0tCGwRD45EwSbjtCHVn8nJitMaYifLuTI98k4X/mPZIBTZkQM2y6xWTsZ
-	 HfiereMhHlcBqii+/uU79y/NLkZMO+qDJS8dsoXYHP2xb4cCg2+9xBwFcCGTqQS4c7
-	 xyAapUEzAjrmKcEbcsEy3Uiz9wSZDu5B+5DrWvJc=
+	b=YY1uWZ7cjZlfjHaOURP1SsrYyy/61YasqcrRJf9RDHYRYz19tiXLxJiM8TOKyE1Tj
+	 WTKV4mhRTxicvYtS/EjSTnWqkvQ0u5hk1BCzGac5uVuw1sF364GgaDM6kixeoq2LED
+	 KOj8PE9fpIiA6qG8rapXnwM7aJd8cN8cxVaKIkZE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunwoo Kim <imv4bel@gmail.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 130/798] sctp: stop processing a packet once its association is deleted
-Date: Sat, 12 Sep 2026 08:55:58 +0200
-Message-ID: <20260912065519.954223509@linuxfoundation.org>
+	Doruk Tan Ozturk <doruk@0sec.ai>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Subject: [PATCH 5.10 104/798] wifi: ath6kl: clamp assoc request/response lengths before subtracting IE offsets
+Date: Sat, 12 Sep 2026 08:55:32 +0200
+Message-ID: <20260912065519.341129324@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -51,60 +50,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hyunwoo Kim <imv4bel@gmail.com>
+From: Doruk Tan Ozturk <doruk@0sec.ai>
 
-commit 47e15a8d12e366d0d261bcbc394394f44418938d upstream.
+commit 3bbd05723d15dd06f0560bcd94fbf9a91b5f5613 upstream.
 
-sctp_endpoint_bh_rcv() looks the association up only when chunk->asoc is
-NULL, and caches the result in chunk->asoc and chunk->transport without
-taking a reference.
+ath6kl_cfg80211_connect_event() subtracts fixed IE offsets from
+assoc_req_len (-= 4) and assoc_resp_len (-= 6), both u8, with no lower
+bound. The aggregate check recently added to ath6kl_wmi_connect_event_rx()
+bounds the declared lengths from above (their sum must fit the received
+event), but an assoc request/response shorter than its fixed offset still
+underflows here: the u8 wraps to ~250, and cfg80211_connect_result() /
+cfg80211_roamed() then treat that wrapped value as the IE length and copy
+that many bytes out of the small assoc_info buffer to user space via
+nl80211, disclosing adjacent slab memory.
 
-A packet that matches no association is handed to the endpoint, so a peer
-can bundle COOKIE ECHO, SHUTDOWN and SHUTDOWN ACK in one packet. The
-COOKIE ECHO creates the association, the SHUTDOWN chunk caches it, and
-with the outqueue empty the SHUTDOWN ACK reaches sctp_sf_do_9_2_final(),
-so the association and its transports are freed.
+Clamp both lengths to their offsets before subtracting.
 
-The endpoint loop has no counterpart to the asoc->base.dead check in
-sctp_assoc_bh_rcv(). The next chunk writes to last_time_heard in the freed
-transport and is then passed to sctp_do_sm() with the freed association.
-The transport is freed through RCU, so this needs the packet to come off
-the socket backlog, where the loop runs in task context.
+Found by 0sec (https://0sec.ai) using automated source analysis; the
+missing lower bound is evident from source. Compile-tested.
 
-The endpoint loop cannot do the same check: it holds no reference on the
-association, so reading asoc->base.dead would itself be a use-after-free.
-Mark the packet for discard in the command interpreter, just before it
-deletes the association. That is also before sctp_inq_free() releases the
-chunk on the association receive path.
-
-sctp_sf_do_5_2_4_dupcook() issues SCTP_CMD_DELETE_TCB for the temporary
-association, while the one the packet belongs to stays alive. A restarting
-peer can bundle DATA behind its COOKIE ECHO, so compare against
-chunk->asoc and leave that case alone.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: bdcd81707973 ("Add ath6kl cleaned up driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/an-YYtoqw1QpTXUL@v4bel
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Assisted-by: 0sec:claude-opus-4-8
+Signed-off-by: Doruk Tan Ozturk <doruk@0sec.ai>
+Link: https://patch.msgid.link/20260713213251.21161-1-doruk@0sec.ai
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sctp/sm_sideeffect.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/wireless/ath/ath6kl/cfg80211.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/net/sctp/sm_sideeffect.c
-+++ b/net/sctp/sm_sideeffect.c
-@@ -1321,6 +1321,10 @@ static int sctp_cmd_interpreter(enum sct
- 				sctp_outq_uncork(&asoc->outqueue, gfp);
- 				local_cork = 0;
- 			}
-+			/* No chunk left in this packet may use this asoc. */
-+			if (event_type == SCTP_EVENT_T_CHUNK &&
-+			    chunk->asoc == asoc)
-+				chunk->pdiscard = 1;
- 			/* Delete the current association.  */
- 			sctp_cmd_delete_tcb(commands, asoc);
- 			asoc = NULL;
+--- a/drivers/net/wireless/ath/ath6kl/cfg80211.c
++++ b/drivers/net/wireless/ath/ath6kl/cfg80211.c
+@@ -753,6 +753,11 @@ void ath6kl_cfg80211_connect_event(struc
+ 	u8 *assoc_resp_ie = assoc_info + beacon_ie_len + assoc_req_len +
+ 	    assoc_resp_ie_offset;
+ 
++	if (assoc_req_len < assoc_req_ie_offset)
++		assoc_req_len = assoc_req_ie_offset;
++	if (assoc_resp_len < assoc_resp_ie_offset)
++		assoc_resp_len = assoc_resp_ie_offset;
++
+ 	assoc_req_len -= assoc_req_ie_offset;
+ 	assoc_resp_len -= assoc_resp_ie_offset;
+ 
 
 
