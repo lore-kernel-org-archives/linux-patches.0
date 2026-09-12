@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3383A428470;
-	Sat, 12 Sep 2026 08:41:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC22238F25F;
+	Sat, 12 Sep 2026 08:41:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789202502; cv=none; b=KLklNBWHA73jS1TDUxN8KnhnoXdhyy2oXW0F7yGQGIP5/dIhA8nepoVgg3pk5jiR16u70x/L8Us9cBkvO+sV7/xfXeX8s2GoJezb+UIaDbVciX5Y3da7rSu3YaZlXlzmy5XLii6V1zwBtyO/3cka0hJ2BjWghyrUoF+KFJ2I//4=
+	t=1789202507; cv=none; b=VbFCkXewEwQsHE1WqzOV5NAOXh/JRW/ZHqmOQEcObMMcbIuwoXndrScq67BYkNxfeRirJdM5tjncihM9XZaRoblDzZ70U+BLgjUfWamCb+MIaYTUy7lWF59sAe4i3kRAyu59KUbN4rQ/P2rRLdtsw9qYdZtrFdxn/JEKyiVAZ1o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789202502; c=relaxed/simple;
-	bh=TPI7VnGie1eObgL46O2Yle+3SqMJV4jksJTKsU2M2TA=;
+	s=arc-20240116; t=1789202507; c=relaxed/simple;
+	bh=J1pHYhtl4ofKgEPtj+wMw0XTs7j5vZYBvJR1MKCPj/Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eSkuxpFqGSpFPF6qHrosmD1SZNEsZaCF5Q4IbFubmfPeIByqSLEmg/T3unWHWUzeRskUbICAGNeosIEOIXr/VUQA9fTkA3M6wptKTa3vP+HD0TR0jR5xpiy41iXm0o98KtQw5d9Cnj3/y525I7GngKMDjk9+C5vMbQguSZ7HR0o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YBSY5i+1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=vByDE07Gu8wGI7c6KrdP0Veq0yM0Za8t4TMPwVh52Ddvr4k+ydqKOCkBQY37dbRFIDPwUG3lR6IN2rtlOxOBUZgoewljN5y9J3eBZeo3pkyo/gp4tOZKW7zTnsp7bTIgWAylvhz/wB8B0JHnCV7+1rfeUyoHRoDKN9hRrW18pmM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uzbvEqat; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YBSY5i+1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30D111F000FF;
-	Sat, 12 Sep 2026 08:41:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uzbvEqat"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C47CB1F000FF;
+	Sat, 12 Sep 2026 08:41:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789202501;
-	bh=i82I46rsunRGyejGZ9kBC5bf+YjweKAL8KtUzZuS16I=;
+	s=korg; t=1789202505;
+	bh=O23Ed+B1A5mAPOL2IKAiiC8eZEZ1SFs66oPtTX/1iBQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YBSY5i+1tNRfDI5bPUmaT1/meGf1aiGbhu4XBlcXfkTrCZUaFTNY6x5vj3bJftIl6
-	 TYgwuqRGcTxuEymoDnfZJ1FaR17U/N4zUsBm903DVrf4/FETtVyTPaTmcNygaql053
-	 f2d8y02EfB34iaQQ9flRX/IZzUE99bTzDrChU/H0=
+	b=uzbvEqatfjRbl3IFF7J13tDhu8cZKaRTYK/bSwe/f190iTho/Z9VfD5IL93bXp8x3
+	 ViHf/IVq4IplEg9hFYLTxun1UGW3eP51kAm3BHHkEWsoYAuSplaZGtVMzObxCUMOaU
+	 T9SJTOM8CEtuDNrtRM4wL2cVndFH+f09m4nL2BsM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mykola Marzhan <mykola@meshstor.io>,
-	Yu Kuai <yukuai@fygo.io>,
+	Zijun Hu <zijun.hu@oss.qualcomm.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1189/1815] md: wait for behind writes before destroying bitmap
-Date: Sat, 12 Sep 2026 08:48:59 +0200
-Message-ID: <20260912065716.923336573@linuxfoundation.org>
+Subject: [PATCH 7.2 1216/1815] Bluetooth: btusb: Fix BD_ADDR byte order in btusb_set_bdaddr_wcn6855()
+Date: Sat, 12 Sep 2026 08:49:26 +0200
+Message-ID: <20260912065717.551637988@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,47 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yu Kuai <yukuai@fygo.io>
+From: Zijun Hu <zijun.hu@oss.qualcomm.com>
 
-[ Upstream commit 2a79365b2278f16e163e4024086105693b421601 ]
+[ Upstream commit d0b15d812688d3f0f3fe1c4426e12814d0c294dc ]
 
-__md_stop() destroyed the bitmap before calling mddev_detach(). That made
-mddev_detach() skip bitmap_ops->wait_behind_writes(), because the bitmap
-was already disconnected from mddev.
+btusb_set_bdaddr_wcn6855() sends the address without swapping byte
+order for VSC 0xFC14, but the command expects the address in reversed
+byte order compared to other HCI commands like HCI_Create_Connection,
+resulting in a wrong BD_ADDR being set.
 
-This was still safe for the legacy bitmap because bitmap_destroy() waits
-for behind writes itself. llbitmap keeps that wait in its
-->wait_behind_writes() operation instead, while ->destroy() tears down the
-llbitmap storage. With the old ordering, RAID1 behind-write completions
-could still run after llbitmap storage had been freed.
+btmon log on WCN6855 shows VSC 0xFC14 is sent with swapped bytes
+11 22 33 44 55 66, and Read BD ADDR returns the expected address
+11:22:33:44:55:66:
 
-Call mddev_detach() before md_bitmap_destroy() so the common detach path
-can wait for behind writes while the bitmap is still alive. Only destroy
-the bitmap after those users are gone.
+  < HCI Command: Vendor (0x3f|0x0014) plen 6                  #3 [hci0]
+          11 22 33 44 55 66
+  > HCI Event: Command Complete (0x0e) plen 4                  #4 [hci0]
+        Vendor (0x3f|0x0014) ncmd 1
+          Status: Success (0x00)
+  < HCI Command: Read BD ADDR (0x04|0x0009) plen 0            #11 [hci0]
+  > HCI Event: Command Complete (0x0e) plen 10                #12 [hci0]
+        Read BD ADDR (0x04|0x0009) ncmd 1
+          Status: Success (0x00)
+          Address: 11:22:33:44:55:66 (OUI 11-22-33)
 
-Fixes: 5ab829f1971d ("md/md-llbitmap: introduce new lockless bitmap")
-Tested-by: Mykola Marzhan <mykola@meshstor.io>
-Link: https://patch.msgid.link/20260802195038.164272-7-yukuai@kernel.org
-Signed-off-by: Yu Kuai <yukuai@fygo.io>
+Fix by swapping the input address before issuing the command.
+
+Fixes: b40f58b97386 ("Bluetooth: btusb: Add Qualcomm Bluetooth SoC WCN6855 support")
+Signed-off-by: Zijun Hu <zijun.hu@oss.qualcomm.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/md.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/bluetooth/btusb.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/md/md.c b/drivers/md/md.c
-index 17f9d494dc48f..1603856c644b3 100644
---- a/drivers/md/md.c
-+++ b/drivers/md/md.c
-@@ -7076,8 +7076,8 @@ static void __md_stop(struct mddev *mddev)
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index 91b22ddc9f5df..2dd4d95179c33 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -3083,14 +3083,15 @@ static int btusb_set_bdaddr_ath3012(struct hci_dev *hdev,
+ static int btusb_set_bdaddr_wcn6855(struct hci_dev *hdev,
+ 				const bdaddr_t *bdaddr)
  {
- 	struct md_personality *pers = mddev->pers;
++	bdaddr_t bdaddr_swapped;
+ 	struct sk_buff *skb;
+-	u8 buf[6];
+ 	long ret;
  
--	md_bitmap_destroy(mddev);
- 	mddev_detach(mddev);
-+	md_bitmap_destroy(mddev);
- 	spin_lock(&mddev->lock);
- 	mddev->pers = NULL;
- 	spin_unlock(&mddev->lock);
+-	memcpy(buf, bdaddr, sizeof(bdaddr_t));
++	baswap(&bdaddr_swapped, bdaddr);
+ 
+-	skb = __hci_cmd_sync_ev(hdev, 0xfc14, sizeof(buf), buf,
+-				HCI_EV_CMD_COMPLETE, HCI_INIT_TIMEOUT);
++	skb = __hci_cmd_sync_ev(hdev, 0xfc14, sizeof(bdaddr_swapped),
++				&bdaddr_swapped, HCI_EV_CMD_COMPLETE,
++				HCI_INIT_TIMEOUT);
+ 	if (IS_ERR(skb)) {
+ 		ret = PTR_ERR(skb);
+ 		bt_dev_err(hdev, "Change address command failed (%ld)", ret);
 -- 
 2.53.0
 
