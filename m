@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D56E29992B;
-	Sat, 12 Sep 2026 16:08:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B3E329992B;
+	Sat, 12 Sep 2026 16:08:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789229316; cv=none; b=JHmiE3QBvjyM+eE/Uwg/uZ947A9tYVDL85bDUZWurDxzsFs/s93ClYZwpqHfchgrJbKluL7isKUFyxTcdHxmvWkpvTN5W8HqSBnYMzHPE3gs/C6DbGuzlhQXws/EhxdirGlIN9b15S9SKLSzv865R0w25hPE/ZVN/aVTFp0Y/Ac=
+	t=1789229321; cv=none; b=tsKV7Icw9i1HTDrxPkkYJNn2K3s/dLMYyGUuEauqvXaADnLBBmk4rpgtnf1XCscmrzy6iWQdv7ey359Dr883HCOxyIerBz1zrNRw0WyFvPP8jR5nngRoZW5N716lJFWbl8TGuwMoVDzaTNtrJ1+Kb3MFSgM8zXqSQqwGzWrbKI0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789229316; c=relaxed/simple;
-	bh=xzeZmz7aihpEiKMvsUYbslGiI20Of6AV5IFYrHSlP04=;
+	s=arc-20240116; t=1789229321; c=relaxed/simple;
+	bh=ltax1ZFU+tV9i7eqH2O6WL0brLBjWLHpsUFJZGDRjhY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MciIS9nuAKuGXUUzn762ezunW773xy2vKcPFJD+dy3F+VRnOVEEbUQdWWzWgKquWublh1yzMXNpxcdejVspr9tLIc5fpSHPUYVIb+4XaJEHRdQRn2sEdWNgCqE7rCqkG6QIbIHcndcDvweq+ZcwCRJu911DUYn4gnSDJ+E9MCns=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kyV29iyX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hM/o6pyPy40rfBptwTGYQbxytIt7WsE6FWNqmSjPFMQREIVjcchCM2S/AWpwRwPhZWQI33vrHLgeAXUs5V3gRx5w7FIDvUAh6Cpaac7NzQ8fCnq5RWs92wbgYe8JEwLY2+EIm0KL1EDqBMhn5/o4d1ort9pFprsqb0LLTfNKTtE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nSKAAMaQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kyV29iyX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3F241F000FF;
-	Sat, 12 Sep 2026 16:08:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nSKAAMaQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 173C21F000FF;
+	Sat, 12 Sep 2026 16:08:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789229315;
-	bh=j3XR4rCJMC6Z1ukolVMoBmvKnQuA77e/gm34APSFILM=;
+	s=korg; t=1789229320;
+	bh=vYEjAmtEyp4e6jMH/hQWLdG8a+watw3Mz7Tm1Y2Qeig=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kyV29iyXMaRxb7zTcZsGlWkNHS2iyIqUuiGpt98IRXNCH6DR3zX2KcoIHVaxyYvi9
-	 HYQdmde5K704/FPFOc7dThfKqSFUtZ8AwPSGt7s4aLJFdFCDnzb0OFx7qoMc5oRu01
-	 SVR2LwruPq3VgXXpmMo/Lpxc1j0W0VHQEWsyDAwE=
+	b=nSKAAMaQXd3YFKFVnnNHe6lzcrV/i+t1Fj1bY8+PyOU7WcsPEA49LetYFnBTI82Eu
+	 JMAN12BjGcKvq9ZOzcXzrzTwu6rs3DPQbzc7Wrs4ofQ8/8yUbEWJuEFlkxHBl9077l
+	 e8/XKBmBeDG+wZOg06Uk0GqyDMXIwDhQuH/DIQCY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Akari Tsuyukusa <akkun11.open@gmail.com>,
+	Vladimir Zapolskiy <vz@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Joerg Roedel <joerg.roedel@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0566/1191] iommu/mediatek-v1: Fix off-by-one in MT2701_LARB_NR_MAX
-Date: Sat, 12 Sep 2026 08:54:54 +0200
-Message-ID: <20260912065600.960557848@linuxfoundation.org>
+Subject: [PATCH 6.1 0567/1191] iommu/msm: Return -ENOMEM on memory allocation failure in probe
+Date: Sat, 12 Sep 2026 08:54:55 +0200
+Message-ID: <20260912065600.982551961@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -51,43 +53,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Akari Tsuyukusa <akkun11.open@gmail.com>
+From: Vladimir Zapolskiy <vz@kernel.org>
 
-[ Upstream commit aebaa93f3da1572877579c2e15ebf27be2dcc7fb ]
+[ Upstream commit b0d50c9016c4c2959dfa61bf9549cf98f9aa19cd ]
 
-The mt2701_m4u_in_larb[] array contains 4 (for LARB0 to LARB3)
-elements, meaning mt2701_m4u_to_larb() can legitimately return 3.
-The current check `if (larbid >= MT2701_LARB_NR_MAX)` incorrectly
-rejects valid LARB3 with -EINVAL.
+If dynamic memory allocation in driver's probe function execution fails,
+it should be reported to the driver's framework with -ENOMEM error code.
 
-Fix this off-by-one error by updating MT2701_LARB_NR_MAX to 4.
-
-Note that this does not cause immediate issues with the current
-mt2701.dtsi and mt7623n.dtsi because it only defines 3 LARBs:
-    mediatek,larbs = <&larb0 &larb1 &larb2>;
-Thus, larbid never reaches 3 in the existing upstream device tree.
-
-Fixes: de78657e16f4 ("iommu/mediatek: Fix NULL pointer dereference when printing dev_name")
-Signed-off-by: Akari Tsuyukusa <akkun11.open@gmail.com>
+Fixes: 109bd48ea2e1 ("iommu/msm: Add DT adaptation")
+Signed-off-by: Vladimir Zapolskiy <vz@kernel.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/mtk_iommu_v1.c | 2 +-
+ drivers/iommu/msm_iommu.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/iommu/mtk_iommu_v1.c b/drivers/iommu/mtk_iommu_v1.c
-index 3204371b2eb4c..ff6deb7830a4d 100644
---- a/drivers/iommu/mtk_iommu_v1.c
-+++ b/drivers/iommu/mtk_iommu_v1.c
-@@ -78,7 +78,7 @@
- /* MTK generation one iommu HW only support 4K size mapping */
- #define MT2701_IOMMU_PAGE_SHIFT			12
- #define MT2701_IOMMU_PAGE_SIZE			(1UL << MT2701_IOMMU_PAGE_SHIFT)
--#define MT2701_LARB_NR_MAX			3
-+#define MT2701_LARB_NR_MAX			4
+diff --git a/drivers/iommu/msm_iommu.c b/drivers/iommu/msm_iommu.c
+index 16179a9a72830..256ac3617d701 100644
+--- a/drivers/iommu/msm_iommu.c
++++ b/drivers/iommu/msm_iommu.c
+@@ -703,7 +703,7 @@ static int msm_iommu_probe(struct platform_device *pdev)
  
- /*
-  * MTK m4u support 4GB iova address space, and only support 4K page
+ 	iommu = devm_kzalloc(&pdev->dev, sizeof(*iommu), GFP_KERNEL);
+ 	if (!iommu)
+-		return -ENODEV;
++		return -ENOMEM;
+ 
+ 	iommu->dev = &pdev->dev;
+ 	INIT_LIST_HEAD(&iommu->ctx_list);
 -- 
 2.53.0
 
