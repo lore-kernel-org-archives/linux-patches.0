@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 841C1340400;
-	Sat, 12 Sep 2026 14:02:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEE6B2DB788;
+	Sat, 12 Sep 2026 14:02:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789221727; cv=none; b=oijJf0692A6OLhOluRYZiv6srOMolQ26FNNeDnElredF8HFTFYn8H8vNOlvOc12oi/19a6D/sfKu6vTHovOJIrIvWgqgdgYryyVqgcHBm3j11ToMRO+PlcVrcN5akFnOiDOKFRL+XylmOTe++uuaAfD1S32UCIeJiqPs4KeX/CA=
+	t=1789221728; cv=none; b=gpXHbN0M2CDsz60hevDW6kGr50JC6noVraREXMTsWoDge33ln5q/D0eUfsu04m6QsptkpGDVcGR+jyoAzzHe2q+0IRMq+CWyxHOxr+DqWeCsGx7GkPEw84BojZ7PJIjN5FNRxRmH8ZGj6yk4qFigHewGgpQfrzd9iLVFWZsH6pI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789221727; c=relaxed/simple;
-	bh=g9gvF8c04EzmIxSyhws+lwTjv063NPKto89b6iC6tpE=;
+	s=arc-20240116; t=1789221728; c=relaxed/simple;
+	bh=AvzUZHjxOUYKV1ExT6uFgAJVwhEL71pHp8GmZQ8Uzwk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XeIhK5Jq6OJLMH8jRlmEldc6EYjy5o9Jq+3/bIunRc+UDPGg+HSaGMORRBWNL10fLHPAfycTwnGs6H/YIzMObjeqo2k4ABse5c6Cu7FWZ2T4nKmvTGOil2ElFicGGfIf16K2zYNCnHSqt35FU4HEd/C3AuEKmcV1tmxj+5g5dos=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cEuchs5P; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=j3+Pw5PN4F9+5zGkMRm8w2Rg37dJORnLhQTFP3RF3+7SBMhT96HntdTag4+sYShcSjFDcu8rgZJGYrFUxT856DZx4HIvuHu+lBdE6dFa/v+vHtIVewc83HVhxuIuNcf5JwTNqYHDi+GgAh9dGuvASX8o9LGUMfG4g8BFofHAEls=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=18KIiEqx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cEuchs5P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 056721F000FF;
-	Sat, 12 Sep 2026 14:01:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="18KIiEqx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A6661F00893;
+	Sat, 12 Sep 2026 14:02:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789221719;
-	bh=wfC687LqZuI0NivLc3qmRkODF3JXqF/Ao9Vjiv9YTNg=;
+	s=korg; t=1789221723;
+	bh=GcvN1ArYc6F0l2PgdznvuprHBPaYi4r9vfsTpo0h+TY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cEuchs5PKeHz93v7OEV/IXz18vY+1H2TvEpMuXBl9hFlM/Fa3IB3XxPatzEpxRltz
-	 bGPqexqbICwsXgJD9Ob2ZF61gboDTukgkY/AFKPJoIkv59KR0FH+oL073D+iJnTneh
-	 a8mkLeFkadkHUd6T/+kT8KSxiYrvTMUsIgFCbSkY=
+	b=18KIiEqxqtUiO0rI75sELlrPSNqrdkcbwwhq6JsKavif5Lq+UbfhRSv9Akemlx0yq
+	 Q9/BVfL7Sj19aX6syXbPPJbgt56G2kBdH0lKOeuu/nn7EIDDpnLG3exzKUQ3QqRlai
+	 LsXpfUShT3TbjVfxHDi/9lh1HUxAIBRxbb2IBuXM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
 	Sven Eckelmann <sven@narfation.org>
-Subject: [PATCH 6.6 0397/1424] batman-adv: bla: fix freeing of claims on meshif deletion
-Date: Sat, 12 Sep 2026 08:47:09 +0200
-Message-ID: <20260912065616.177689128@linuxfoundation.org>
+Subject: [PATCH 6.6 0398/1424] batman-adv: bla: prevent CRC corruptions after claim flush
+Date: Sat, 12 Sep 2026 08:47:10 +0200
+Message-ID: <20260912065616.199516140@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -52,65 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 From: Sven Eckelmann <sven@narfation.org>
 
-commit 8d128c932bced74e3b1625ba3d7c78ef122a88a7 upstream.
+commit 89f3502ff6878798be96461b2eebd64ba3c3874c upstream.
 
-When the mesh interface is getting deleted, then
-batadv_bla_del_backbone_claims() (via batadv_bla_purge_backbone_gw()) could
-make sure that all claims gets removed. But this function is only executed
-when bat_priv->bla.claim_hash is not NULL. And since batadv_bla_free() is
-always setting it to NULL before it is (indirectly) called, it was never
-actually executed.
+When batadv_bla_del_backbone_claims() tried to remove all claims of a
+backbone, it sets the CRC to 0. It assumes that the it had the last
+reference of the claims because batadv_claim_release() (which runs after
+the last reference was released), is XORing the crc16 of the claim address
+with the backbone CRC.
 
-But the batadv_bla_purge_claims() -> batadv_handle_unclaim() is at the
-moment too fragile because the BLA code is not handling the rehashing in
-batadv_bla_update_orig_address(). The stored backbone address doesn't have
-to be the one actually used for the hash bucket selection during the
-initial adding of the backbone. The batadv_handle_unclaim() can therefore
-fail to find the respective backbone for the unclaim and then stop the
-deletion.
+If there would be a parallel holder of any of these references, it could
+happen that the backbone CRC is (0 ^ crc16(delayed_released_claim)). Which
+is the wrong starting point for the new claims it may receive when the
+remote answers the claim request from batadv_bla_send_request().
 
-But the actual backbone_gw object is not needed for the unclaim because all
-relevant information is always provided by the caller. And the check for
-the existence of the backbone_gw doesn't provide any additional security
-check for the deletion of a claim.
+This reinitializations can be completely dropped to avoid this problem.
+batadv_claim_release() will take care of fixing the backbone CRC.
 
-Cc: stable@kernel.org
+Cc: stable@vger.kernel.org
 Fixes: 23721387c409 ("batman-adv: add basic bridge loop avoidance code")
 Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/bridge_loop_avoidance.c |   10 +---------
- 1 file changed, 1 insertion(+), 9 deletions(-)
+ net/batman-adv/bridge_loop_avoidance.c |    5 -----
+ 1 file changed, 5 deletions(-)
 
 --- a/net/batman-adv/bridge_loop_avoidance.c
 +++ b/net/batman-adv/bridge_loop_avoidance.c
-@@ -941,26 +941,18 @@ static bool batadv_handle_unclaim(struct
- 				  const u8 *backbone_addr, const u8 *claim_addr,
- 				  unsigned short vid)
- {
--	struct batadv_bla_backbone_gw *backbone_gw;
+@@ -323,11 +323,6 @@ batadv_bla_del_backbone_claims(struct ba
+ 		}
+ 		spin_unlock_bh(list_lock);
+ 	}
 -
- 	/* unclaim in any case if it is our own */
- 	if (primary_if && batadv_compare_eth(backbone_addr,
- 					     primary_if->net_dev->dev_addr))
- 		batadv_bla_send_claim(bat_priv, claim_addr, vid,
- 				      BATADV_CLAIM_TYPE_UNCLAIM);
- 
--	backbone_gw = batadv_backbone_hash_find(bat_priv, backbone_addr, vid);
--
--	if (!backbone_gw)
--		return true;
--
- 	/* this must be an UNCLAIM frame */
- 	batadv_dbg(BATADV_DBG_BLA, bat_priv,
- 		   "%s(): UNCLAIM %pM on vid %d (sent by %pM)...\n", __func__,
--		   claim_addr, batadv_print_vid(vid), backbone_gw->orig);
-+		   claim_addr, batadv_print_vid(vid), backbone_addr);
- 
- 	batadv_bla_del_claim(bat_priv, claim_addr, vid);
--	batadv_backbone_gw_put(backbone_gw);
- 	return true;
+-	/* all claims gone, initialize CRC */
+-	spin_lock_bh(&backbone_gw->crc_lock);
+-	backbone_gw->crc = BATADV_BLA_CRC_INIT;
+-	spin_unlock_bh(&backbone_gw->crc_lock);
  }
  
+ /**
 
 
