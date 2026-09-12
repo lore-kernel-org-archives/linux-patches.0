@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63FE1332610;
-	Sat, 12 Sep 2026 11:32:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F8432C1586;
+	Sat, 12 Sep 2026 11:32:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789212764; cv=none; b=FaN9zMbltSnB0K54Fs9gBCMao9GouttMLD22tfdX8Z216vBxRLoiXlFaTk2BZv/8FZre6SLCLTjJbY+GFu2RW9W1xVhNQc1yEqzEN97YxR8/H1wf2RQHJUJq9gpTfF92jppNVYGL/L6/pPWtbmZa4yNFu0TCNLBD7b+oWsFZFBo=
+	t=1789212769; cv=none; b=IYcPOQoWqWkbSnqE/FKjXRAFbcvZHxhamlgZU/jsICnuJreFeDVc9TaZBXte2F4KeZvlUBmviWmzSNHOj+a6bnvRnPhXmasYj5PGx4j7cQ4qNMWMOQQKWKyIBIZ4OsF1YicBkW1BmZKwTsh+Y+6JB8ej/ABsUrelFpc1zadsX6s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789212764; c=relaxed/simple;
-	bh=yoMJ+Gt7OrHEmeVk3+2MjNmvpAzQVKQt+Jiy2yKJtIY=;
+	s=arc-20240116; t=1789212769; c=relaxed/simple;
+	bh=5iYxo8LOC6n+a9G/I9QAdEOqrFUcSLL25a2+M5lFHbA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rIzkF+onGsOPfobp+REHfkY+Tq3fskXsSDXAHcidfabZeWYifmhI6FM9r0evhu4lhCdJuPMShH4t6wxXRdaqGwfj672OPU7z94bx8Cy69aI4h+zMurWl/fj5EuR4f3ZEjkz9nJjKQCR+EhS9rmmGRZ1vMj2MZD4DlK5BIVgMZ7E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ilL5T8OR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=NT2B8J2zi97UHsdKGjvq3JpLJpxpFQhZvEvhg/0oy6DRQUwNUECM8LT06P572fvrRTk0H+cQS5070yrGiVkkJGcR+I4bQR1pX/HvXIz/rCDuACVCAZwgQ2drHtJSMD3EhJGGw/GJGzV1OXxno99gts6o5wrzMR6mOlFKHYUhUiE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=szbVER4q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ilL5T8OR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC5691F000FF;
-	Sat, 12 Sep 2026 11:32:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="szbVER4q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 153841F000FF;
+	Sat, 12 Sep 2026 11:32:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789212763;
-	bh=0ouXs65qhq/451giyUep86Byc1EgHAUvtREU/07LDI4=;
+	s=korg; t=1789212768;
+	bh=alfIpo66M4YqPfQjbFfljIWdjA4I2dUKYdxZeb3Aujo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ilL5T8ORk2irgzONqLzEuZ9K/JBhssCQMcCxw7KcYZ7vjQ7Fm26ZAuo+TWR8hjvb9
-	 g3L+pwQ0+DOp7Ty18tozPnYiuNLrHJsr0lgQYukxFazac+JAZtmY3ee6ZSDbpZy0es
-	 HdczRMPCJ+cr7q0Yr6FpcU3KmDDkg9lqfIXd3UDU=
+	b=szbVER4qJp0+aJlIU/P+UevggH5qDOp0172So/iuSDOpQKjhuvIl1ROJBAFxKRsc+
+	 fNa//RXiLP/Bd49dFCFUUQ6yO6p762RZguEEWKtE/7MyinxGrKUbvJWw3r2/G49vf2
+	 y2b9QiXux3+0cDtz4gpzwcQwAYbXAlgcfzKBMSfo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Vega <vega@nebusec.ai>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
+	Victor Nogueira <victor@mojatatu.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1502/1518] Bluetooth: btmtk: hide unused btmtk_mt6639_devs[] array
-Date: Sat, 12 Sep 2026 09:01:11 +0200
-Message-ID: <20260912065657.541492925@linuxfoundation.org>
+Subject: [PATCH 6.18 1503/1518] net/sched: fq: clamp quantum and initial_quantum in change path
+Date: Sat, 12 Sep 2026 09:01:12 +0200
+Message-ID: <20260912065657.564014800@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -46,84 +48,85 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-[ Upstream commit 81f971c6abec59240e2bcfc38756bda8172fa788 ]
+[ Upstream commit 094cc07f98dfe70a34e2a1923af17fd29b8cf622 ]
 
-When USB support is disabled, the array is not referenced anywhere,
-causing a warning:
+The fq change path accepts TCA_FQ_QUANTUM in [1, INT_MAX] and
+TCA_FQ_INITIAL_QUANTUM up to INT_MAX, while fq_init() already clamps to
+[1, 1<<20]. A user can override the init clamp via tc qdisc change,
+restoring the small-quantum deficit spin that the init clamp prevents.
 
-drivers/bluetooth/btmtk.c:35:3: error: 'btmtk_mt6639_devs' defined but not used [-Werror=unused-const-variable=]
-   35 | } btmtk_mt6639_devs[] = {
-      |   ^~~~~~~~~~~~~~~~~
+Narrow iq_range.max to 1<<20 so TCA_FQ_INITIAL_QUANTUM is rejected at
+parse time. Clamp TCA_FQ_QUANTUM to [256, 1<<20] in fq_change() and
+fq_init() quantum to [256, 1<<20] for tiny-MTU devices.
 
-Move it into the #ifdef block.
+Conditions to recreate the bug:
+  CONFIG_NET_SCH_FQ=y. Requires CAP_NET_ADMIN (namespace-local via
+  unshare -Urn suffices).
 
-Fixes: 28b7c5a6db74 ("Bluetooth: btmtk: Add MT6639 (MT7927) Bluetooth support")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+  tc qdisc add dev dummy0 root fq
+  tc qdisc change dev dummy0 root fq quantum 1 stab data 32768 size_log 15 cell_log 0
+
+Fixes: 709f34f7c28d ("net/sched: fq: add overflow bounds to quantum and initial quantum")
+Reported-by: Vega <vega@nebusec.ai>
+Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
+Tested-by: Victor Nogueira <victor@mojatatu.com>
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://patch.msgid.link/QDISC-0CFC.v3.20260901204856@mojatatu.com.2
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btmtk.c | 32 ++++++++++++++++----------------
- 1 file changed, 16 insertions(+), 16 deletions(-)
+ net/sched/sch_fq.c | 14 +++++---------
+ 1 file changed, 5 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/bluetooth/btmtk.c b/drivers/bluetooth/btmtk.c
-index a4e3f258bcf47..fb097f78ecd85 100644
---- a/drivers/bluetooth/btmtk.c
-+++ b/drivers/bluetooth/btmtk.c
-@@ -25,22 +25,6 @@
- /* It is for mt79xx iso data transmission setting */
- #define MTK_ISO_THRESHOLD	264
+diff --git a/net/sched/sch_fq.c b/net/sched/sch_fq.c
+index 9df9c93ae4e4c..7599a4f7a3e2a 100644
+--- a/net/sched/sch_fq.c
++++ b/net/sched/sch_fq.c
+@@ -924,7 +924,7 @@ static int fq_resize(struct Qdisc *sch, u32 log)
+ }
  
--/* Known MT6639 (MT7927) Bluetooth USB devices.
-- * Used to scope the zero-CHIPID workaround to real MT6639 hardware,
-- * since some boards return 0x0000 from the MMIO chip ID register.
-- */
--static const struct {
--	u16 vendor;
--	u16 product;
--} btmtk_mt6639_devs[] = {
--	{ 0x0489, 0xe13a },	/* ASUS ROG Crosshair X870E Hero */
--	{ 0x0489, 0xe0fa },	/* Lenovo Legion Pro 7 16ARX9 */
--	{ 0x0489, 0xe10f },	/* Gigabyte Z790 AORUS MASTER X */
--	{ 0x0489, 0xe110 },	/* MSI X870E Ace Max */
--	{ 0x0489, 0xe116 },	/* TP-Link Archer TBE550E */
--	{ 0x13d3, 0x3588 },	/* ASUS ROG STRIX X870E-E */
--};
--
- struct btmtk_patch_header {
- 	u8 datetime[16];
- 	u8 platform[4];
-@@ -471,6 +455,22 @@ int btmtk_process_coredump(struct hci_dev *hdev, struct sk_buff *skb)
- EXPORT_SYMBOL_GPL(btmtk_process_coredump);
+ static const struct netlink_range_validation iq_range = {
+-	.max = INT_MAX,
++	.max = 1 << 20,
+ };
  
- #if IS_ENABLED(CONFIG_BT_HCIBTUSB_MTK)
-+/* Known MT6639 (MT7927) Bluetooth USB devices.
-+ * Used to scope the zero-CHIPID workaround to real MT6639 hardware,
-+ * since some boards return 0x0000 from the MMIO chip ID register.
-+ */
-+static const struct {
-+	u16 vendor;
-+	u16 product;
-+} btmtk_mt6639_devs[] = {
-+	{ 0x0489, 0xe13a },	/* ASUS ROG Crosshair X870E Hero */
-+	{ 0x0489, 0xe0fa },	/* Lenovo Legion Pro 7 16ARX9 */
-+	{ 0x0489, 0xe10f },	/* Gigabyte Z790 AORUS MASTER X */
-+	{ 0x0489, 0xe110 },	/* MSI X870E Ace Max */
-+	{ 0x0489, 0xe116 },	/* TP-Link Archer TBE550E */
-+	{ 0x13d3, 0x3588 },	/* ASUS ROG STRIX X870E-E */
-+};
-+
- static void btmtk_usb_wmt_recv(struct urb *urb)
- {
- 	struct hci_dev *hdev = urb->context;
+ static const struct nla_policy fq_policy[TCA_FQ_MAX + 1] = {
+@@ -1050,14 +1050,10 @@ static int fq_change(struct Qdisc *sch, struct nlattr *opt,
+ 			   nla_get_u32(tb[TCA_FQ_FLOW_PLIMIT]));
+ 
+ 	if (tb[TCA_FQ_QUANTUM]) {
+-		u32 quantum = nla_get_u32(tb[TCA_FQ_QUANTUM]);
++		u32 quantum = clamp_t(u32, nla_get_u32(tb[TCA_FQ_QUANTUM]),
++				     256, 1 << 20);
+ 
+-		if (quantum > 0 && quantum <= (1 << 20)) {
+-			WRITE_ONCE(q->quantum, quantum);
+-		} else {
+-			NL_SET_ERR_MSG_MOD(extack, "invalid quantum");
+-			err = -EINVAL;
+-		}
++		WRITE_ONCE(q->quantum, quantum);
+ 	}
+ 
+ 	if (tb[TCA_FQ_INITIAL_QUANTUM])
+@@ -1176,7 +1172,7 @@ static int fq_init(struct Qdisc *sch, struct nlattr *opt,
+ 	sch->limit		= 10000;
+ 	q->flow_plimit		= 100;
+ 	mtu = clamp_t(u32, psched_mtu(qdisc_dev(sch)), 1, 1 << 20);
+-	q->quantum		= min_t(u32, 2 * mtu, 1 << 20);
++	q->quantum		= clamp_t(u32, 2 * mtu, 256, 1 << 20);
+ 	q->initial_quantum	= min_t(u32, 10 * mtu, 1 << 20);
+ 	q->flow_refill_delay	= msecs_to_jiffies(40);
+ 	q->flow_max_rate	= ~0UL;
 -- 
 2.53.0
 
