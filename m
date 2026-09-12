@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E9BF35F5F8;
-	Sat, 12 Sep 2026 12:41:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21CFE30DEA6;
+	Sat, 12 Sep 2026 12:41:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789216896; cv=none; b=UAE7GnV8nSB+WqMhdoqM0rgVusbipcoU+bOiHmKnWArQqNPM3c4q4wEWTEA2f9MKxDgkHmgZpB28TVt9jR6d42VjmK1Kv04VDcf4Tuv0fOjXCEKmNfQEMO+yOIECagaTQ9gC171D4d4DgwPZqCeD9KbXWeDABEBI3G/H5BKKxMo=
+	t=1789216897; cv=none; b=eATV0xFVFO8NHfK+6FwWEZ9rYhACApPTRaeQuoDCyhu4UsWU3lt0osyzVD1pAS0sYhbU1zK/J1jZmxMivUVCS0NjClG0ucJF8/sjdTLMvUEIpmmiLkaUpjN+DU+bGOrj9yxGDmKhOUgiCqnKAdBGux9E8V3sob6jX0oHwQvnWM4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789216896; c=relaxed/simple;
-	bh=u0NHyaIyOQRchfIvRebmWN+2UjO78OwhLhbUOFkvKNw=;
+	s=arc-20240116; t=1789216897; c=relaxed/simple;
+	bh=Ake0g7DWpThGf08PxGOfoU/GE5YdXSoFvxRZdztruTI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ni+X9KCPP7MtptJL+FJfZPnzIu4b5z/wfiL+MuO80bZrHtSfF2VtCjSjRUR2/HnlAaKZxT4TDIlDGAcyjYlrB5cyc/Dx9/mnv/aIm8WMXAEBF48FZNK4eCRih8usMQAkfp/e1b2KQOEkmrtaE0H2C+K61DtTQNgaRLj9JWQfds0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qrx/zHMe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YIWUVHgno/+mx6jjbSCH1MieK1NKLJ3uHKPnrJTs2MY5mP5qUQjYsz9R8CoSNltE7AixIwMh+s2qw9NnaDiLdX4LEhweWxivCF5+6unBGJLQHfW0V16a9By7ZOTYEIoqDuNAvLvgB8otXhuFDrX2d+DHroz+youjEtS7satGUS4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FlnaHT8L; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qrx/zHMe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EE911F000FF;
-	Sat, 12 Sep 2026 12:41:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FlnaHT8L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E0921F00893;
+	Sat, 12 Sep 2026 12:41:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789216891;
-	bh=5OeDObey2D96ceJSSR7oAYw1VPYWxBXb6dG9RDxUsro=;
+	s=korg; t=1789216895;
+	bh=t/TaEIxLAbhx7GGIg6F3wgO7gu6uARISYoiwZtrMl40=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qrx/zHMeWtz8pO0Q7XTHdMlvkwfqG7c7UW4AhtS1WojGsDZVFY+JKMsPjjALEMQeX
-	 L8mQejQ/x+h7mc6nx6VtKD+MSBvTlATkfevTvIROgpEe9bd5tpnap0M1XSsZ1epu/z
-	 WaXYRO1xxZ2/Bp129V8veEylhc7ZUvc+RKPa4Q4o=
+	b=FlnaHT8LRo9Pj4+KCY+5xAkLEKLBB7u1QFPwkHH/gk1gTxrURCbf9l6wi9sIRb/sc
+	 8LnogJTkxxChghDKD9NJ/eFlm+rNTsSBD0K+xkm2YWUPS4tDMN6wZxsXwk8CstX35O
+	 cgQinWLTvF+JXVLMZc5pfsipjD3BemSf8KzfRkuQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Joy Zou <joy.zou@oss.nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0827/1376] wifi: ath11k: fix leak in ath11k_service_ready_ext_event()
-Date: Sat, 12 Sep 2026 08:54:13 +0200
-Message-ID: <20260912065625.977155538@linuxfoundation.org>
+Subject: [PATCH 6.12 0828/1376] regulator: core: use system_freezable_wq for init complete work
+Date: Sat, 12 Sep 2026 08:54:14 +0200
+Message-ID: <20260912065625.999035369@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -52,41 +52,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+From: Joy Zou <joy.zou@oss.nxp.com>
 
-[ Upstream commit 0293be2212d319d59589082461abf2a9b626cd1c ]
+[ Upstream commit 03eab318cedd6ae34ecd34533cd986edf5237164 ]
 
-Currently, during ath11k_service_ready_ext_event() processing,
-svc_rdy_ext.mac_phy_caps can be allocated during TLV parsing. This is a
-temporary allocation that is freed on the success path, but not on the
-error path. If parsing succeeds far enough to allocate mac_phy_caps and
-then fails on a later TLV, the allocation leaks. So free the allocation
-on the error path.
+schedule_delayed_work() uses system_wq, which is non-freezable, allowing
+regulator_init_complete_work to run concurrently with system suspend. This
+work fires ~30s after boot to disable unused regulators via I2C. When it
+races with PM suspend, the I2C adapter may already be suspended, triggering
+a -ESHUTDOWN warning in __i2c_transfer():
 
-Compile tested only.
+  WARNING: ... at __i2c_transfer+0x36c/0x3c8
+  Call trace:
+   __i2c_transfer
+   i2c_transfer
+   regmap_i2c_write
+   _regmap_update_bits
+   regulator_disable_regmap
+   _regulator_do_disable
+   regulator_late_cleanup
+   regulator_init_complete_work_function
+   process_one_work
 
-Fixes: 5b90fc760db5 ("ath11k: fix wmi service ready ext tlv parsing")
-Assisted-by: Claude:claude-sonnet-4-6
-Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
-Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260727-ath11k_service_ready_ext_event-memleak-v1-1-e8373d27bdd1@oss.qualcomm.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Switch to system_freezable_wq so the work is frozen before any device
+is suspended, eliminating the race.
+
+Fixes: 55576cf18537 ("regulator: Defer init completion for a while after late_initcall")
+Signed-off-by: Joy Zou <joy.zou@oss.nxp.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260731-b4-regulator-pf01-v2-1-a406c8737fdb@oss.nxp.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/wmi.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/regulator/core.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath11k/wmi.c b/drivers/net/wireless/ath/ath11k/wmi.c
-index 540faacee41d8..a184a7e3452c0 100644
---- a/drivers/net/wireless/ath/ath11k/wmi.c
-+++ b/drivers/net/wireless/ath/ath11k/wmi.c
-@@ -5077,6 +5077,7 @@ static int ath11k_service_ready_ext_event(struct ath11k_base *ab,
- 	return 0;
+diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
+index 264c8ab434f07..6c571edfaab97 100644
+--- a/drivers/regulator/core.c
++++ b/drivers/regulator/core.c
+@@ -27,6 +27,7 @@
+ #include <linux/regulator/driver.h>
+ #include <linux/regulator/machine.h>
+ #include <linux/module.h>
++#include <linux/workqueue.h>
  
- err:
-+	kfree(svc_rdy_ext.mac_phy_caps);
- 	ath11k_wmi_free_dbring_caps(ab);
- 	return ret;
+ #define CREATE_TRACE_POINTS
+ #include <trace/events/regulator.h>
+@@ -6467,8 +6468,9 @@ static int __init regulator_init_complete(void)
+ 	 * we'd only do this on systems that need it, and a kernel
+ 	 * command line option might be useful.
+ 	 */
+-	schedule_delayed_work(&regulator_init_complete_work,
+-			      msecs_to_jiffies(30000));
++	queue_delayed_work(system_freezable_wq,
++			   &regulator_init_complete_work,
++			   msecs_to_jiffies(30000));
+ 
+ 	return 0;
  }
 -- 
 2.53.0
