@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A218041F5CA;
-	Sat, 12 Sep 2026 10:13:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E55F41E6DB;
+	Sat, 12 Sep 2026 10:13:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789207993; cv=none; b=sJeEqCGJFSnqRsYp3qOM2/X+NsUeaUIZOZbrO1TQNhBmML4hCaafjIHh5+UHvJbQo/6x4bxXagcSom8WE0qMURKbhno/6qBJtm+BLDo5KzdtG1nDay/mnf2xY/GcPWxEUKka6yyCv1eRrJf4ZXiM9APjDK0+nB336Y2XCUoMhIE=
+	t=1789207999; cv=none; b=BxKFKiUaEMkXQWVro5OTVoLMg1UDuKyggyp7uxewMNn1q74bzcHuOtSWmUhj+tBE8GzDG73ioy+vApExcJi62T89SRsgzJpX9EboCIZ9xw6tUuRpEY6n4FZUhJAXxU29iV4W8fZJaqr9FdLKWOTy3UzE0DCFJUbnTCCU9kG+Pac=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789207993; c=relaxed/simple;
-	bh=egBK1uNKOcsQt7UWOyX+8AFVRB+wpZDJOQ8V9a+hxR4=;
+	s=arc-20240116; t=1789207999; c=relaxed/simple;
+	bh=PxE67oO81LVC7vBrItA7mlZQ2ZGAy5T1X01S74vFzPM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jPjsAXr66aGswgWjZI4x6MctnOfSFNexJThxqkXXzlzMrwxtMKSvCF1tTnfpXVGFRTvNSM2Nj804ZCvEX77WMmneTN6Uq5qf0Wp8wCq4976Dtvf976fZeVGCUTKUkr++WMgh1B7g+raizBMvbZl1+lTv83DYwkdSLyHQgVGCAAA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QC0ep/Zk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=i85dorasHwnN1IG3I6pIXcuU83VNVbg55HoQ+/MNN0l3Sh3VTDFsOkliT5sck74z9m6El9YIVIZi94JUvZr2IT3U3OUeHCm6cHLE8rXj8dys6LGt5S819vAECjio4AFrvQfdMLABEW9+4y2JjEbIYIyrK9AoPbBnzxDwAfkCAKo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QRTvCBW5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QC0ep/Zk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A8E11F000FF;
-	Sat, 12 Sep 2026 10:13:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QRTvCBW5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D5001F000FF;
+	Sat, 12 Sep 2026 10:13:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789207989;
-	bh=YPdXZglIvJtcBROijswRFqd9Y4IvP82U8RWCMHd4W6o=;
+	s=korg; t=1789207994;
+	bh=qYevSyRb13AYVzCvsU/U3A0jxcEaJVUYUPdrVGkrm4I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QC0ep/ZkJhhXQeEwtLiB/1pn2W55o8wTf3KpUPPjYSuUofMu3vRXqJIWgm2dSBwNf
-	 2ENM4VaYbe7yXmmeoA8h58WSiuEHaU3MXsc9hYfjg3uOGkalHaSM/FWJHrHXj7o3yx
-	 w6ChBTEH2mF+ZF3l+sLsoCjJlYFBVGH4FqX4Zryw=
+	b=QRTvCBW5oYvZKD9xNWW1oNXyqFNsXa2aTYuiLXRq3mJBTWx3vgAIAJbKx2IhRCysZ
+	 9lrtMND2NhU3KNDNPjBI1Q2kezinyEjK+yZcLb/enYGcbB4lmLQmHOFy2GjFe6gwLO
+	 IaZ6RleUoIDyfW5OtQ4IgYk4Sgh9rHRtBwi9gXEk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Nicolin Chen <nicolinc@nvidia.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Pranjal Shrivastava <praan@google.com>,
-	Will Deacon <will@kernel.org>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0526/1518] iommu/arm-smmu-v3: Declare eats_s1chk and eats_trans as host-endian u64
-Date: Sat, 12 Sep 2026 08:44:55 +0200
-Message-ID: <20260912065635.344229634@linuxfoundation.org>
+Subject: [PATCH 6.18 0527/1518] thermal: intel: int3400: clean up ODVP on probe failures
+Date: Sat, 12 Sep 2026 08:44:56 +0200
+Message-ID: <20260912065635.366133341@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -54,52 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolin Chen <nicolinc@nvidia.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 4455286274474e95f223c68c215d32c864404889 ]
+[ Upstream commit d83dc9ce57a746a6dca28439bcc0575d26fa6986 ]
 
-arm_smmu_get_ste_update_safe() declares the eats_s1chk and eats_trans
-locals as __le64, but initializes them from FIELD_PREP(), which returns a
-host-endian value, and passes them through cpu_to_le64() at the use sites.
+evaluate_odvp() creates per-ODVP sysfs files before the thermal zone
+and later probe resources are registered. The current unwind path only
+calls cleanup_odvp() from the late sysfs failure path, so failures after
+evaluate_odvp() but before that label, including
+thermal_tripless_zone_device_register() failures, leave the ODVP files
+and storage behind.
 
-Sparse reports the following warnings:
+Move the ODVP cleanup to the common ART/TRT unwind path so every failure
+after evaluate_odvp() releases the ODVP state. Also clear the cached
+ODVP pointers in cleanup_odvp(), because evaluate_odvp() can already call
+it for partial setup failures while probe continues.
 
->> drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c:1122:38: sparse: sparse: cast from restricted __le64
-   drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c:1124:33: sparse: sparse: cast from restricted __le64
-
-Declare both locals as u64 so the type matches FIELD_PREP() and the
-existing cpu_to_le64() at the use sites performs the host-to-little-endian
-conversion. No functional change.
-
-Fixes: 7cad80048595 ("iommu/arm-smmu-v3: Mark EATS_TRANS safe when computing the update sequence")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/all/202606151017.QU0evpH9-lkp@intel.com/
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
-Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Reviewed-by: Pranjal Shrivastava <praan@google.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+Fixes: 006f006f1e5c ("thermal/int340x_thermal: Export OEM vendor variables")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260623015140.19300-1-pengpeng@iscas.ac.cn
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/thermal/intel/int340x_thermal/int3400_thermal.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index 01f448acd8dce..d645f7edbd107 100644
---- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-+++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-@@ -1097,9 +1097,9 @@ VISIBLE_IF_KUNIT
- void arm_smmu_get_ste_update_safe(const __le64 *cur, const __le64 *target,
- 				  __le64 *safe_bits)
- {
--	const __le64 eats_s1chk =
-+	const u64 eats_s1chk =
- 		FIELD_PREP(STRTAB_STE_1_EATS, STRTAB_STE_1_EATS_S1CHK);
--	const __le64 eats_trans =
-+	const u64 eats_trans =
- 		FIELD_PREP(STRTAB_STE_1_EATS, STRTAB_STE_1_EATS_TRANS);
+diff --git a/drivers/thermal/intel/int340x_thermal/int3400_thermal.c b/drivers/thermal/intel/int340x_thermal/int3400_thermal.c
+index 908cc1bf57f19..2aa03ceb570e7 100644
+--- a/drivers/thermal/intel/int340x_thermal/int3400_thermal.c
++++ b/drivers/thermal/intel/int340x_thermal/int3400_thermal.c
+@@ -354,8 +354,10 @@ static void cleanup_odvp(struct int3400_thermal_priv *priv)
+ 			kfree(priv->odvp_attrs[i].attr.attr.name);
+ 		}
+ 		kfree(priv->odvp_attrs);
++		priv->odvp_attrs = NULL;
+ 	}
+ 	kfree(priv->odvp);
++	priv->odvp = NULL;
+ 	priv->odvp_count = 0;
+ }
  
- 	/*
+@@ -635,7 +637,6 @@ static int int3400_thermal_probe(struct platform_device *pdev)
+ 	acpi_remove_notify_handler(priv->adev->handle, ACPI_DEVICE_NOTIFY,
+ 				   int3400_notify);
+ free_sysfs:
+-	cleanup_odvp(priv);
+ 	if (!ZERO_OR_NULL_PTR(priv->data_vault)) {
+ 		device_remove_bin_file(&pdev->dev, &bin_attr_data_vault);
+ 		kfree(priv->data_vault);
+@@ -649,6 +650,7 @@ static int int3400_thermal_probe(struct platform_device *pdev)
+ 		acpi_thermal_rel_misc_device_remove(priv->adev->handle);
+ 	thermal_zone_device_unregister(priv->thermal);
+ free_art_trt:
++	cleanup_odvp(priv);
+ 	kfree(priv->trts);
+ 	kfree(priv->arts);
+ free_priv:
 -- 
 2.53.0
 
