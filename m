@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C5DC320CBE;
-	Sat, 12 Sep 2026 08:24:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E726D36492C;
+	Sat, 12 Sep 2026 08:24:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789201496; cv=none; b=tiHkN7a7air9aSA7ARyv4DiRXyAenBD5CRKMze/TZ1Qu1Qn/ad2N+hhQAHsPh97cfbqUhriBN2g4N7sKwHjPH8aJXTqjRDw3GG891SIM1ahoO2PW2pHx/JvXoP9Ri321XQ7UYo1xdt7tXtOBObNZuUS8FcYrK5vEWPUFHPKBlfE=
+	t=1789201501; cv=none; b=ke0YkmP+Gw2tsqyaHuAZfs02O26zP2Vxy4RtJDhBHOm77zm0hthtx9TD4/FbF7vijelxUF2o8d6ZphrkNCftA4XUyrKPh2t4OiJys5bqI2td3UBf7bjleZ+n7pOSzwhNbl3BTjOWI6JTOmR9NyPaa8n0UdZMhLgvTBTY8iidl0k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789201496; c=relaxed/simple;
-	bh=iaE92IgQ5+DTMeG8hUoxLP9gnA200pIYdBdwNCpt5rA=;
+	s=arc-20240116; t=1789201501; c=relaxed/simple;
+	bh=ChQRw+dJFO/4aqvGx5pWUOgQOYmg2szFflnM5AqwUjw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eMcOeokHc6hvAFxNSzs4+aqQInGuTl4q3VzqZVxNgwhBZsLjnHTnzXDBJ4989iWp/4l3AMZKWa95i/y1belWw/Hdj2zHNaBj5ICSJx0x3VefEq8RCDkZst138IfhLXqRoSmnS3l/e5v2Dyr+NYQW9+0mBTwK2zB35jC8oCrerwA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bLe6rL+h; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=P1WDM5whXF0ugnf7MOgXTSAvff4SZBYaPnPdznQvcSQdrXR5S3Z7fRZRFTPI38fxp91VMxnGZbEjtcuvwXx5kwmGfobjUqTliIcJY2XLExuGJ+a37e/KduYPl/ISIbkWwzjPHs21hmi5Y206oTeQaeZWOSZW9ZPH6SboYB2TtIQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rjzs1yJ7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bLe6rL+h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E35C1F000FF;
-	Sat, 12 Sep 2026 08:24:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rjzs1yJ7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B09721F0089B;
+	Sat, 12 Sep 2026 08:24:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789201495;
-	bh=aFtheJskC6SkbQMYktenauGFF6sk6qomyQ1Tumh3iuQ=;
+	s=korg; t=1789201499;
+	bh=ccRfkcVHFHpy1rDDMUyEs/clVNbGzDrh7ve5NXMxBL4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bLe6rL+h/IB4iK8ZAZhbzxzdrfu0akQ/3UmXZ7GdS8Sna6DMlDmfHlTrVhwlSvw9H
-	 BD/+wyuDW2N/BSYCS+g8j8QkAVCz6+S6j25H5FdNa3ygXE1sgKRSd0HgfOe8l0fbY/
-	 1hNsidr8tSZ7j0x/ZNK/JAdn1FTwx7la8c7JEsAo=
+	b=Rjzs1yJ72zOg/pzANadvSjNYJWF/+mFSHM8KL/jCn5NGZmjmAD/7tXJk3uW7Tn2sw
+	 rPTIdUxxCc9ypgyyNYUd45Z0BfJ5pThHKmdN5R49lA326WT3z5BrlUwwzUaSN64m2o
+	 cd+TPg8FGUnQJckR5mok1hI2sD20FQo6gwDJIFS8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhao Li <enderaoelyther@gmail.com>,
+	syzbot+0ec3d1a6cf1fbe79c153@syzkaller.appspotmail.com,
+	Slawomir Stepien <sst@poczta.fm>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0965/1815] wifi: nl80211: clean up color-change beacon data on errors
-Date: Sat, 12 Sep 2026 08:45:15 +0200
-Message-ID: <20260912065711.628735026@linuxfoundation.org>
+Subject: [PATCH 7.2 0966/1815] wifi: zd1211rw: reject secondary interfaces to prevent conflicts
+Date: Sat, 12 Sep 2026 08:45:16 +0200
+Message-ID: <20260912065711.652422229@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,56 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhao Li <enderaoelyther@gmail.com>
+From: Slawomir Stepien <sst@poczta.fm>
 
-[ Upstream commit 927ee844c47ac2aef22c8f7a35f098ff576b398b ]
+[ Upstream commit 0e4532ec658606f76f62eb277e7a933919d36cbb ]
 
-nl80211_color_change() calls nl80211_parse_beacon() for the beacon_next
-template, which can allocate params.beacon_next.mbssid_ies and .rnr_ies.
-A parsing failure returned directly instead of using the out: cleanup,
-leaking any allocations completed before the error.
+The zd1211rw driver is designed for single-function Wi-Fi dongles and
+hardcodes its USB endpoints. When a malformed USB device exposes multiple
+interfaces that match the driver's device ID, the driver blindly binds to
+all of them.
 
-Allocate the nested attribute table before parsing beacon_next. Its
-allocation failure can then return before beacon data exists, while a
-later parsing failure uses out: to release the parsed data.
+During probe(), the driver calls usb_reset_device(), which iterates over
+all interfaces and invokes the pre_reset() callback for each bound
+interface. Since multiple interfaces are bound to zd1211rw, pre_reset() is
+called sequentially for each instance, acquiring their respective
+&mac->chip.mutex. Because all instances initialize their mutexes with the
+same lock class, lockdep detects a task acquiring a lock of the same class
+it already holds and flags it as a possible recursive deadlock:
 
-Fixes: dc1e3cb8da8b ("nl80211: MBSSID and EMA support in AP mode")
-Assisted-by: Codex:gpt-5
-Assisted-by: Claude:opus-4.8
-Assisted-by: Kimi:K3
-Signed-off-by: Zhao Li <enderaoelyther@gmail.com>
-Link: https://patch.msgid.link/20260731120244.82628-1-enderaoelyther@gmail.com
+WARNING: possible recursive locking detected
+kworker/0:1/11 is trying to acquire lock:
+ffff88810371dde0 (&chip->mutex){+.+.}-{4:4}, at:
+zd_chip_disable_rxtx+0x20/0x50
+drivers/net/wireless/zydas/zd1211rw/zd_chip.c:1465
+
+but task is already holding lock:
+ffff8881138ddde0 (&chip->mutex){+.+.}-{4:4}, at: pre_reset+0x28c/0x380
+drivers/net/wireless/zydas/zd1211rw/zd_usb.c:1505
+
+Fix this by explicitly rejecting secondary interfaces (bInterfaceNumber !=
+0) during probe(). This ensures that only a single instance of the driver
+binds to the device, eliminating the recursive locking scenario.
+
+Fixes: e85d0918b54f ("[PATCH] ZyDAS ZD1211 USB-WLAN driver")
+Assisted-by: Gemini:gemini-3.5-flash Gemini:gemini-3.1-pro-preview syzbot
+Reported-by: syzbot+0ec3d1a6cf1fbe79c153@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=0ec3d1a6cf1fbe79c153
+Link: https://syzkaller.appspot.com/ai_job?id=00724ef7-fd77-4cde-9779-895b8f63c2f6
+Signed-off-by: Slawomir Stepien <sst@poczta.fm>
+Link: https://patch.msgid.link/20260730065231.1644030-1-sst@poczta.fm
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/nl80211.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/net/wireless/zydas/zd1211rw/zd_usb.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
-index 5adcb6bd0fc56..755f8fe711fb2 100644
---- a/net/wireless/nl80211.c
-+++ b/net/wireless/nl80211.c
-@@ -18750,15 +18750,15 @@ static int nl80211_color_change(struct sk_buff *skb, struct genl_info *info)
- 	if (!wdev->links[params.link_id].ap.beacon_interval)
- 		return -EINVAL;
+diff --git a/drivers/net/wireless/zydas/zd1211rw/zd_usb.c b/drivers/net/wireless/zydas/zd1211rw/zd_usb.c
+index 966d8ccb0dbcd..98102c663434b 100644
+--- a/drivers/net/wireless/zydas/zd1211rw/zd_usb.c
++++ b/drivers/net/wireless/zydas/zd1211rw/zd_usb.c
+@@ -1353,6 +1353,14 @@ static int probe(struct usb_interface *intf, const struct usb_device_id *id)
+ 	struct zd_usb *usb;
+ 	struct ieee80211_hw *hw = NULL;
  
-+	tb = kzalloc_objs(*tb, NL80211_ATTR_MAX + 1);
-+	if (!tb)
-+		return -ENOMEM;
++	/*
++	 * ZD1211 devices are single-function. Reject secondary interfaces
++	 * to prevent multiple instances from conflicting on hardcoded endpoints
++	 * and triggering recursive locking warnings.
++	 */
++	if (intf->cur_altsetting->desc.bInterfaceNumber != 0)
++		return -ENODEV;
 +
- 	err = nl80211_parse_beacon(rdev, info->attrs, &params.beacon_next,
- 				   wdev->links[params.link_id].ap.chandef.chan,
- 				   info->extack);
- 	if (err)
--		return err;
--
--	tb = kzalloc_objs(*tb, NL80211_ATTR_MAX + 1);
--	if (!tb)
--		return -ENOMEM;
-+		goto out;
+ 	print_id(udev);
  
- 	err = nla_parse_nested(tb, NL80211_ATTR_MAX,
- 			       info->attrs[NL80211_ATTR_COLOR_CHANGE_ELEMS],
+ 	if (id->driver_info & DEVICE_INSTALLER)
 -- 
 2.53.0
 
