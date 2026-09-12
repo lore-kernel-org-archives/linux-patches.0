@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29F782DE702;
-	Sat, 12 Sep 2026 13:23:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84973376BCD;
+	Sat, 12 Sep 2026 13:23:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789219422; cv=none; b=UgOS4sdM7wqv3l6wZY7fkS+ZNY/o6oK2rsveCCNXR214RJjbV/zCn+ML1AGjouDsM0YlrLbTZ22vCnUTyGuyWPr7gz2YsZYLGHK9V6UBuBr7YeWjYEznYH5nJCaEXBcEi70ihfZ9e/mdwdsRpgqzI3i0JmnUQ4Xqis8OePTXgX4=
+	t=1789219426; cv=none; b=bD0M2lav3Jyb+9/OTXOivsT6CBfA8zG6JV8wEQi3j0/xolewSn3Lb1VrDXgcrJV8nd8Luiq8g7GTj4o/JK8X4wMYx9wlYoS4ZKXHg4WSeGLDrV2DR5qpBFxomnBM6zWCYyPwSNVCAkcFR8RlEUXvDN2QfQCjDKk/ebwztabw/y0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789219422; c=relaxed/simple;
-	bh=Qo69SCgujbY9nWYsFxH5hosHQPo4zey2C+y9hjej3dA=;
+	s=arc-20240116; t=1789219426; c=relaxed/simple;
+	bh=RisDS3olzygdJQ8Pq6pyBOE55P7rJtboP9RvF4SgBYo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ao1PesbjhbPCXzXh9J4lxX28ExM6g7mDxcxlLeVyqZvGP93RQzziHV90vb4kjk8pexkpnN7GoXrei6bbken01fM2VFVw7wTMPjNGYSshhwOdvurkx/oqCY6rJQTn1OF+8Nw0kOMgfjKf3COErpLROzyZpzjDTY2+L4hOzBUW/zc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gxcpL6AJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=KWrNNVEJbq0SjZCXGwsedUtr5xyjeto2c2d4Q1e8zq9+9/vFn+QpxTZJzjTcWAbiRgGt8SceX/m7adjJp6b/enPPJkGtfRMnH+rarSYUI3FhQ7fGl4FKpeLVIFuTPfm6UhLOCNGn2Yp3CJ5VtiD7mcEeT2CSZOJEWdUofKwjWmE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lDZOMZyc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gxcpL6AJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CA411F000FF;
-	Sat, 12 Sep 2026 13:23:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lDZOMZyc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 877511F000FF;
+	Sat, 12 Sep 2026 13:23:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789219420;
-	bh=nGFzC/pO/vNsT6LBsSX5og/8bZ7uCK07U9Db7ULNPC4=;
+	s=korg; t=1789219425;
+	bh=AiHyZjn8T3ZS02U0gDQNuzh4QeWn+/w9gGuthx7f8M4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gxcpL6AJMJ+epxVDFnSBxvHMitfzmfQm6mwu4JES3rw4/dG/Hsy+ncW51HGgd1Kuw
-	 0gywdZnkDam4XwhqFaH4SBnhOPsf1PeqnP5Urkle1I+Wh/pmHwiaAbu2ZQ2pxKHzbs
-	 JibEwJgmQZNkg7GoI/qnfpeLl5QIVDxmAqm9HLE0=
+	b=lDZOMZyctAq57LjlSt4MmGJkYWxdtx6dDSVvnvoDjziykq+VFknN8nqSPbjGV8ZYQ
+	 mFwLPBJKF/82YXT1W7ACEDIi0fYX2E1j2z2Wi9++BFVNV2Wk8vKTZH5jaO6UOgTzg1
+	 O5fGW6erGtLUNsD3murd+oqgyaYYUblKFBGxDfKw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hao Chang <ot_chhao.chang@mediatek.com>,
-	Qingliang Li <qingliang.li@mediatek.com>,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	Linus Walleij <linusw@kernel.org>,
+	=?UTF-8?q?Maciej=20=C5=BBenczykowski?= <maze@google.com>,
+	Lorenzo Colitti <lorenzo@google.com>,
+	Yuyang Huang <yuyanghuang@google.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1340/1376] pinctrl: mediatek: eint: Drop base from mtk_eint_chip_write_mask()
-Date: Sat, 12 Sep 2026 09:02:46 +0200
-Message-ID: <20260912065637.395800428@linuxfoundation.org>
+Subject: [PATCH 6.12 1349/1376] selftests/bpf: add verification for BPF_PROG_QUERY attr size boundaries
+Date: Sat, 12 Sep 2026 09:02:55 +0200
+Message-ID: <20260912065637.598212486@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -47,72 +47,114 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chen-Yu Tsai <wenst@chromium.org>
+From: Yuyang Huang <yuyanghuang@google.com>
 
-[ Upstream commit 3ca99eed042620d12315e9272ed3ef260ca29877 ]
+[ Upstream commit 5add3a4ad1a3bc15404e8bd338813ed0a636f5c9 ]
 
-When support for multiple EINT base addresses was added in commit
-3ef9f710efcb ("pinctrl: mediatek: Add EINT support for multiple
-addresses"), mtk_eint_chip_write_mask() was changed to write interrupt
-masks for all base addresses in one call. However the "base" parameter
-was left around and now causes sparse warnings:
+Add a new selftest to verify that the BPF syscall (specifically
+BPF_PROG_QUERY) correctly handles different user-declared attribute sizes.
 
-    mtk-eint.c:428:44: warning: incorrect type in argument 2 (different address spaces)
-    mtk-eint.c:428:44:    expected void [noderef] __iomem *base
-    mtk-eint.c:428:44:    got void [noderef] __iomem **base
-    mtk-eint.c:436:44: warning: incorrect type in argument 2 (different address spaces)
-    mtk-eint.c:436:44:    expected void [noderef] __iomem *base
-    mtk-eint.c:436:44:    got void [noderef] __iomem **base
+Specifically, verify that:
+- For cgroup queries, a query with a size that covers 'prog_cnt' but is
+  smaller than 'revision' (OLD_QUERY_SIZE) succeeds, but does not write
+  to 'revision' (verifying backward compatibility).
+- A query with full size (FULL_QUERY_SIZE) succeeds and writes both
+  'prog_cnt' and 'revision'.
 
-Since the "base" parameter is no longer needed, just drop it.
-
-Fixes: 3ef9f710efcb ("pinctrl: mediatek: Add EINT support for multiple addresses")
-Cc: Hao Chang <ot_chhao.chang@mediatek.com>
-Cc: Qingliang Li <qingliang.li@mediatek.com>
-Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
+Fixes: 120933984460 ("bpf: Implement mprog API on top of existing cgroup progs")
+Cc: Maciej Żenczykowski <maze@google.com>
+Cc: Lorenzo Colitti <lorenzo@google.com>
+Signed-off-by: Yuyang Huang <yuyanghuang@google.com>
+Link: https://lore.kernel.org/r/20260531075600.4058207-3-yuyanghuang@google.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/mediatek/mtk-eint.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ .../selftests/bpf/prog_tests/bpf_attr_size.c  | 69 +++++++++++++++++++
+ 1 file changed, 69 insertions(+)
+ create mode 100644 tools/testing/selftests/bpf/prog_tests/bpf_attr_size.c
 
-diff --git a/drivers/pinctrl/mediatek/mtk-eint.c b/drivers/pinctrl/mediatek/mtk-eint.c
-index 6787596167b92..85a4f2d3701f5 100644
---- a/drivers/pinctrl/mediatek/mtk-eint.c
-+++ b/drivers/pinctrl/mediatek/mtk-eint.c
-@@ -243,7 +243,7 @@ static int mtk_eint_irq_set_wake(struct irq_data *d, unsigned int on)
- }
- 
- static void mtk_eint_chip_write_mask(const struct mtk_eint *eint,
--				     void __iomem *base, unsigned int **buf)
-+				     unsigned int **buf)
- {
- 	int inst, port, port_num;
- 	void __iomem *reg;
-@@ -422,7 +422,7 @@ static void mtk_eint_irq_handler(struct irq_desc *desc)
- 
- int mtk_eint_do_suspend(struct mtk_eint *eint)
- {
--	mtk_eint_chip_write_mask(eint, eint->base, eint->wake_mask);
-+	mtk_eint_chip_write_mask(eint, eint->wake_mask);
- 
- 	return 0;
- }
-@@ -430,7 +430,7 @@ EXPORT_SYMBOL_GPL(mtk_eint_do_suspend);
- 
- int mtk_eint_do_resume(struct mtk_eint *eint)
- {
--	mtk_eint_chip_write_mask(eint, eint->base, eint->cur_mask);
-+	mtk_eint_chip_write_mask(eint, eint->cur_mask);
- 
- 	return 0;
- }
+diff --git a/tools/testing/selftests/bpf/prog_tests/bpf_attr_size.c b/tools/testing/selftests/bpf/prog_tests/bpf_attr_size.c
+new file mode 100644
+index 0000000000000..32159dc64da8b
+--- /dev/null
++++ b/tools/testing/selftests/bpf/prog_tests/bpf_attr_size.c
+@@ -0,0 +1,69 @@
++// SPDX-License-Identifier: GPL-2.0
++/* Copyright (c) 2026 Google LLC */
++#include <linux/bpf.h>
++#include <unistd.h>
++#include <sys/syscall.h>
++#include <test_progs.h>
++#include <cgroup_helpers.h>
++#include "cgroup_skb_direct_packet_access.skel.h"
++
++#define OLD_QUERY_SIZE		offsetofend(union bpf_attr, query.prog_cnt)
++#define FULL_QUERY_SIZE		offsetofend(union bpf_attr, query.revision)
++
++static void test_query_size_boundaries(void)
++{
++	struct cgroup_skb_direct_packet_access *skel;
++	struct bpf_link *link = NULL;
++	union bpf_attr attr;
++	int cg_fd = -1;
++	int err;
++
++	skel = cgroup_skb_direct_packet_access__open_and_load();
++	if (!ASSERT_OK_PTR(skel, "skel_load"))
++		return;
++
++	cg_fd = test__join_cgroup("/attr_size_cg");
++	if (!ASSERT_GE(cg_fd, 0, "join_cgroup"))
++		goto cleanup;
++
++	link = bpf_program__attach_cgroup(skel->progs.direct_packet_access,
++					  cg_fd);
++	if (!ASSERT_OK_PTR(link, "cg_attach"))
++		goto cleanup;
++
++	memset(&attr, 0, sizeof(attr));
++	attr.query.target_fd = cg_fd;
++	attr.query.attach_type = BPF_CGROUP_INET_INGRESS;
++	attr.query.revision = 0xdeadbeefdeadbeefULL;
++
++	err = syscall(__NR_bpf, BPF_PROG_QUERY, &attr, OLD_QUERY_SIZE);
++	if (ASSERT_OK(err, "query_old_size")) {
++		ASSERT_EQ(attr.query.prog_cnt, 1, "prog_cnt_written_old");
++		ASSERT_EQ(attr.query.revision, 0xdeadbeefdeadbeefULL,
++			  "revision_not_written_old");
++	}
++
++	memset(&attr, 0, sizeof(attr));
++	attr.query.target_fd = cg_fd;
++	attr.query.attach_type = BPF_CGROUP_INET_INGRESS;
++
++	err = syscall(__NR_bpf, BPF_PROG_QUERY, &attr, FULL_QUERY_SIZE);
++	if (!ASSERT_OK(err, "query_full_size"))
++		goto cleanup;
++
++	ASSERT_EQ(attr.query.prog_cnt, 1, "prog_cnt_written");
++	ASSERT_GT(attr.query.revision, 0, "revision_written");
++
++cleanup:
++	if (link)
++		bpf_link__destroy(link);
++	if (cg_fd >= 0)
++		close(cg_fd);
++	cgroup_skb_direct_packet_access__destroy(skel);
++}
++
++void test_bpf_attr_size(void)
++{
++	if (test__start_subtest("query_size_boundaries"))
++		test_query_size_boundaries();
++}
 -- 
 2.53.0
 
