@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FFE8400DF6;
-	Sat, 12 Sep 2026 09:05:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C39A400DF6;
+	Sat, 12 Sep 2026 09:06:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789203957; cv=none; b=l72VQyypz83sFdY3YNlvGsGNPuGOwNvIgsboOkx6L7fAJg5GCa/OY0uy1ffuyHmSKp2Qs7yUWymt1MfUj3Y40IjRZNAuOmFgkbIQYHEi+G+hrhtSMP5lTZeF+Go4/91jSTG6fUdNd10XA1t776NRUmpN35Elmx1zw6FDE2ttpjM=
+	t=1789203962; cv=none; b=lhWFmvPf7MkXzAl7y5JSEPV7l+Ah+AZLVsw4lfMVrEKZfz/7TqTkdQLF7C09e+73MVG6YScNpXtS6DD5inv5hM/FhnWXSe6dgbjxWYpTvCWh/QNr6+1YJa+mKP6P211pBRCNl3kH8fPksd0/INzG2e2h9IrT19ulB2ljPm0390s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789203957; c=relaxed/simple;
-	bh=hbv8OHTrk7ukVS1zpRkvMfFcHiOWYLrTf3g49gD421s=;
+	s=arc-20240116; t=1789203962; c=relaxed/simple;
+	bh=4CqS9omgFoiRsIC/YUMv9NIZ8KgJ0uPTNVG+mnQ8+do=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bjeLHjM3CHEuhAhMJNd0v1eBx0BKqm1WT2V3WSBlHQ0sxW4rokPGOe6jiFH7ag2pvSWECm5dSNC9fVjXVLZQe+Ey11O9zi7z9hly+IM737upeTSOVtnFS4ootr/DKOK6wZsxkMkR86U9bL0LqDPyeIEJKPOP+/HIizHKgn502Kc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uA8KYO66; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CzKrsAb9n/nrjTsUjIlSAnC8/WmN3GJUpQKVUQ5TMQ/I1N57xA6OwnppWLzKUQ7mv0KIts4nZY5bVKl5AEuVRwr5FPNfipc7nrtXu4XRUSGHDlutMLhOHjuJBq+NYEnWrzTO2n2cv2lMSM6oukPDRa4hAUqhMMwVebwcqOLWfUc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C3kDkosn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uA8KYO66"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 195EA1F000FF;
-	Sat, 12 Sep 2026 09:05:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C3kDkosn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 060381F000FF;
+	Sat, 12 Sep 2026 09:05:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789203956;
-	bh=Tp0u0QSJrHu9MF5XBCGAluBBHBG6VaKexpTdynPHe1g=;
+	s=korg; t=1789203960;
+	bh=VxcfTpUkTMMy3bniRUZdsNmag3592uLuGogYNb8w0NU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uA8KYO663rSXa0ijQyaesentvASmatUkzJ6IzhfTksEJ/nOhsLLnrcrtuvHc7DlDC
-	 m3rib2C75igFvgyAWm9DiCCZUXo1yzB4fHFduje4DEy+IYXWmTBGbgV8nCRflM2xYL
-	 n4ONXZJB9fPhc/X4aZHDmAnmDiLdI74Fat9yPbog=
+	b=C3kDkosncZycyTE5tAqJ8qf8Xvxp7XgPJizlR427zqN6WV8LplnQF1QvTGmO3+g48
+	 PcD3keEVO+g9zlnbSeaIlPommSMCI5GyBx/vybiUR+qITRv8x/v1xk1Xtdk313tQP1
+	 BK55TOIhbi5zcEoDgJKHf2nPkRp3VQsRu07I5T2c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1461/1815] ACPI: platform: Use acpi_bus_get_primary_device()
-Date: Sat, 12 Sep 2026 08:53:31 +0200
-Message-ID: <20260912065723.310957516@linuxfoundation.org>
+Subject: [PATCH 7.2 1508/1815] ksmbd: support access-based directory enumeration
+Date: Sat, 12 Sep 2026 08:54:18 +0200
+Message-ID: <20260912065724.399111199@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,87 +50,147 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit a9ba4dd2f18bf3f439d9ef0d8f375f90360ba1bd ]
+[ Upstream commit e5f42cb7577221080e4db0498d71e6db7e67f1a5 ]
 
-The acpi_get_first_physical_node() usage in acpi_platform_fill_resource()
-and acpi_create_platform_device() is generally unsafe because in theory
-the device returned by it may be freed at any time [1].
+SMB shares can advertise access-based directory enumeration. ksmbd does
+not currently provide a share option or filter inaccessible directory
+entries.
 
-It is also inefficient because acpi_get_first_physical_node() is called
-multiple times for the same argument which can be avoided.
+Add a hide-unreadable share flag and advertise
+SMB2_SHAREFLAG_ACCESS_BASED_DIRECTORY_ENUM when it is enabled. During
+QUERY_DIRECTORY, omit entries unless the connected user has
+FILE_READ_DATA, FILE_READ_EA, and FILE_READ_ATTRIBUTES access according
+to the Windows ACL.
 
-Address these issues by using acpi_bus_get_primary_device() instead of
-acpi_get_first_physical_node() and adjusting the code to call it just
-once at the beginning of and acpi_create_platform_device() and drop
-the device reference acquired by it upon the return from that function.
+Keep the existing implicit access allowances for normal CREATE
+permission checks while using strict access-mask matching for directory
+enumeration.
 
-Fixes: 3b95bd160547 ("ACPI: introduce a function to find the first physical device")
-Fixes: a252d881c558 ("ACPI / platform: Pay attention to parent device's resources")
-Link: https://sashiko.dev/#/patchset/12955541.O9o76ZdvQC%40rafael.j.wysocki [1]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://patch.msgid.link/3436112.aeNJFYEL58@rafael.j.wysocki
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Stable-dep-of: b0148dc5625d ("ksmbd: serialize oplock close with pending break ownership")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/acpi_platform.c | 16 +++++++---------
- 1 file changed, 7 insertions(+), 9 deletions(-)
+ fs/smb/server/ksmbd_netlink.h |  1 +
+ fs/smb/server/smb2pdu.c       | 24 +++++++++++++++++++++++-
+ fs/smb/server/smbacl.c        | 13 ++++++++++---
+ fs/smb/server/smbacl.h        |  3 ++-
+ 4 files changed, 36 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/acpi/acpi_platform.c b/drivers/acpi/acpi_platform.c
-index e3c77a65f61c8..80ea7121744d0 100644
---- a/drivers/acpi/acpi_platform.c
-+++ b/drivers/acpi/acpi_platform.c
-@@ -108,18 +108,15 @@ static unsigned int acpi_platform_adjust_resources(struct acpi_device *adev,
- 	return count;
+diff --git a/fs/smb/server/ksmbd_netlink.h b/fs/smb/server/ksmbd_netlink.h
+index 8ccd57fd904bc..c9e1b0b689d7f 100644
+--- a/fs/smb/server/ksmbd_netlink.h
++++ b/fs/smb/server/ksmbd_netlink.h
+@@ -377,6 +377,7 @@ enum KSMBD_TREE_CONN_STATUS {
+ #define KSMBD_SHARE_FLAG_UPDATE				BIT(14)
+ #define KSMBD_SHARE_FLAG_CROSSMNT			BIT(15)
+ #define KSMBD_SHARE_FLAG_CONTINUOUS_AVAILABILITY	BIT(16)
++#define KSMBD_SHARE_FLAG_HIDE_UNREADABLE		BIT(17)
+ 
+ /*
+  * Tree connect request flags.
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index c85879607d1cc..8ef3123655c57 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -2336,6 +2336,10 @@ int smb2_tree_connect(struct ksmbd_work *work)
+ 	if (conn->dialect == SMB311_PROT_ID &&
+ 	    conn->compress_algorithm != SMB3_COMPRESS_NONE)
+ 		rsp->ShareFlags |= cpu_to_le32(SMB2_SHAREFLAG_COMPRESS_DATA);
++	if (share && test_share_config_flag(share,
++					  KSMBD_SHARE_FLAG_HIDE_UNREADABLE))
++		rsp->ShareFlags |=
++			cpu_to_le32(SMB2_SHAREFLAG_ACCESS_BASED_DIRECTORY_ENUM);
+ 
+ 	rc = ksmbd_iov_pin_rsp(work, rsp, sizeof(struct smb2_tree_connect_rsp));
+ 	if (rc) {
+@@ -3607,7 +3611,7 @@ int smb2_open(struct ksmbd_work *work)
+ 	if (file_present && !(req->CreateOptions & FILE_DELETE_ON_CLOSE_LE)) {
+ 		rc = smb_check_perm_dacl(conn, &path, &daccess,
+ 					 req->DesiredAccess,
+-					 sess->user->uid);
++					 sess->user->uid, false);
+ 		if (rc)
+ 			goto err_out;
+ 	}
+@@ -4582,6 +4586,7 @@ static int process_query_dir_entries(struct smb2_query_dir_private *priv)
+ 
+ 	for (i = 0; i < priv->d_info->num_entry; i++) {
+ 		struct dentry *dent;
++		struct path path;
+ 
+ 		if (dentry_name(priv->d_info, priv->info_level))
+ 			return -EINVAL;
+@@ -4604,6 +4609,23 @@ static int process_query_dir_entries(struct smb2_query_dir_private *priv)
+ 			continue;
+ 		}
+ 
++		if (test_share_config_flag(priv->work->tcon->share_conf,
++					   KSMBD_SHARE_FLAG_HIDE_UNREADABLE)) {
++			__le32 daccess = FILE_READ_DATA_LE | FILE_READ_EA_LE |
++				FILE_READ_ATTRIBUTES_LE;
++
++			path.mnt = priv->dir_fp->filp->f_path.mnt;
++			path.dentry = dent;
++			rc = smb_check_perm_dacl(priv->work->conn, &path,
++						 &daccess, daccess,
++						 priv->work->sess->user->uid,
++						 true);
++			if (rc) {
++				dput(dent);
++				continue;
++			}
++		}
++
+ 		ksmbd_kstat.kstat = &kstat;
+ 		if (priv->info_level != FILE_NAMES_INFORMATION) {
+ 			rc = ksmbd_vfs_fill_dentry_attrs(priv->work,
+diff --git a/fs/smb/server/smbacl.c b/fs/smb/server/smbacl.c
+index 0537638153325..88bf7b97042f8 100644
+--- a/fs/smb/server/smbacl.c
++++ b/fs/smb/server/smbacl.c
+@@ -1432,7 +1432,8 @@ bool smb_inherit_flags(int flags, bool is_dir)
  }
  
--static void acpi_platform_fill_resource(struct acpi_device *adev,
--	const struct resource *src, struct resource *dest)
-+static void acpi_platform_fill_resource(struct device *parent,
-+					const struct resource *src,
-+					struct resource *dest)
+ int smb_check_perm_dacl(struct ksmbd_conn *conn, const struct path *path,
+-			__le32 *pdaccess, __le32 raw_daccess, int uid)
++			__le32 *pdaccess, __le32 raw_daccess, int uid,
++			bool strict)
  {
--	struct device *parent;
--
- 	*dest = *src;
--
- 	/*
- 	 * If the device has parent we need to take its resources into
- 	 * account as well because this device might consume part of those.
- 	 */
--	parent = acpi_get_first_physical_node(acpi_dev_parent(adev));
- 	if (parent && dev_is_pci(parent))
- 		dest->parent = pci_find_resource(to_pci_dev(parent), dest);
- }
-@@ -147,7 +144,8 @@ static unsigned int acpi_platform_resource_count(struct acpi_resource *ares, voi
- struct platform_device *acpi_create_platform_device(struct acpi_device *adev,
- 						    const struct property_entry *properties)
- {
--	struct acpi_device *parent = acpi_dev_parent(adev);
-+	struct acpi_device *p = acpi_dev_parent(adev);
-+	struct device *parent __free(put_device) = acpi_bus_get_primary_device(p);
- 	struct platform_device *pdev = NULL;
- 	struct platform_device_info pdevinfo;
- 	const struct acpi_device_id *match;
-@@ -193,7 +191,7 @@ struct platform_device *acpi_create_platform_device(struct acpi_device *adev,
- 								       rentry->res,
- 								       resources,
- 								       count);
--				acpi_platform_fill_resource(adev, rentry->res,
-+				acpi_platform_fill_resource(parent, rentry->res,
- 							    &resources[count++]);
- 			}
- 			acpi_dev_free_resource_list(&resource_list);
-@@ -206,7 +204,7 @@ struct platform_device *acpi_create_platform_device(struct acpi_device *adev,
- 	 * attached to it, that physical device should be the parent of the
- 	 * platform device we are about to create.
- 	 */
--	pdevinfo.parent = parent ? acpi_get_first_physical_node(parent) : NULL;
-+	pdevinfo.parent = parent;
- 	pdevinfo.name = dev_name(&adev->dev);
- 	pdevinfo.id = PLATFORM_DEVID_NONE;
- 	pdevinfo.res = resources;
+ 	struct mnt_idmap *idmap = mnt_idmap(path->mnt);
+ 	struct smb_ntsd *pntsd = NULL;
+@@ -1617,8 +1618,14 @@ int smb_check_perm_dacl(struct ksmbd_conn *conn, const struct path *path,
+ 	}
+ 
+ check_access_bits:
+-	if (granted &
+-	    ~(access_bits | FILE_READ_ATTRIBUTES | READ_CONTROL | WRITE_DAC | DELETE)) {
++	if (strict) {
++		access_bits &= granted;
++	} else {
++		access_bits |= FILE_READ_ATTRIBUTES | READ_CONTROL |
++			WRITE_DAC | DELETE;
++	}
++
++	if (granted & ~access_bits) {
+ 		ksmbd_debug(SMB, "Access denied with winACL, granted : %x, access_req : %x\n",
+ 			    granted, le32_to_cpu(ace->access_req));
+ 		rc = -EACCES;
+diff --git a/fs/smb/server/smbacl.h b/fs/smb/server/smbacl.h
+index bf0312bfa0405..01810c16cc046 100644
+--- a/fs/smb/server/smbacl.h
++++ b/fs/smb/server/smbacl.h
+@@ -95,7 +95,8 @@ bool smb_inherit_flags(int flags, bool is_dir);
+ int smb_inherit_dacl(struct ksmbd_conn *conn, const struct path *path,
+ 		     unsigned int uid, unsigned int gid);
+ int smb_check_perm_dacl(struct ksmbd_conn *conn, const struct path *path,
+-			__le32 *pdaccess, __le32 raw_daccess, int uid);
++			__le32 *pdaccess, __le32 raw_daccess, int uid,
++			bool strict);
+ int set_info_sec(struct ksmbd_conn *conn, struct ksmbd_tree_connect *tcon,
+ 		 const struct path *path, struct smb_ntsd *pntsd, int ntsd_len,
+ 		 bool type_check, bool get_write);
 -- 
 2.53.0
 
