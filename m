@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B775F3911BD;
-	Sat, 12 Sep 2026 09:56:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33DFD36921B;
+	Sat, 12 Sep 2026 09:56:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789206979; cv=none; b=FlEFngZWIke1GVX6hz90Id2dD1Eaqd/x0o+fasOvKkaAHm7ZCm86XsNKUDHuOhbH1RuS0+KvCkTvDOk27Bul/fbp4DMC7IyCHDUHZRpWwj/atohQMn5xSFvHt1yaugWaFfaesAAdvC9DtDKRRQQFTpqoEeveHC3S4SYwIobFktk=
+	t=1789206984; cv=none; b=oS4aVDEE8j+mTcJZ/UoFU11YPMMegRquAFxFUOWZlHkIzKZQCg/fSeZIHCLpLxQYAEjlrv+2YNdzA0YmP/jQYACrqmSVwdevgCFx/qufk7JQ6tmH3TjGygsUFXBiJ1Rc8WDbWbDLqZ+4l4cH0CMuvloay2CoISjHNPgTwQ3Ktlg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789206979; c=relaxed/simple;
-	bh=IGFnfdvRmL8ucCzZSb/CO0NOV76qbJ/am7DE/mGKLDY=;
+	s=arc-20240116; t=1789206984; c=relaxed/simple;
+	bh=7xYpPypdZvwXYD/4KD+rcEMgoZoRcjEujX+JXSh5jbs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YTdbkOFKs11ZclVjD5ITgW3He/zu93pyk/YcAHxUCOz3r8o9S84VYKM/e53h81PvbcrVEYwnuIfqXR/rSWO5/Z1nTvn4ZeQvg4oTaZvARjtXKPcRnvUVJ5QAzb/AQoH8wCwHAuYJI7pQk50urS4/npVKBIrEr0+KbtPUrdlfyAM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lJcfOWvj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uWfVmfZsYX/dBfM//jpr9Hp00eEc8T7+OMuirWOEkc0CNrZrd/D59ruFIn9Sis3TSzlClwgUsEH7jhyB/6Y2u/43pVCHMmC6SZdBXRKhRf3d0RyOd/KqtzSUYPmAIXCbPSQEhbQhEMn07TrSnuZf9EE+p1vsfR8/dwlCPU5Nx+s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pPFO8vQQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lJcfOWvj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B49B81F000FF;
-	Sat, 12 Sep 2026 09:56:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pPFO8vQQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A16E71F000FF;
+	Sat, 12 Sep 2026 09:56:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789206977;
-	bh=LrWefRq1M6tABf6VnnRgNTLx6/kbElSJATUIGEyegn4=;
+	s=korg; t=1789206982;
+	bh=bJLn+p0Lsq0OZX8L9aYTwi/rot5sXcZPeFsvTEM4viM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lJcfOWvji0Sfv/NPput8qyRYaieG2/lItGG8bixk8bzR6TefRzmEplCRmgAJ2NS/6
-	 MyhZk/0GSS1c7eXJntTsk1FWW/N4bLuQa3sYnQ36qafrP/IUhWwp6L4vh/XgWQRzBC
-	 IS6cn6B9TRipRzBzdierLuveZM+cFpPLq7USnLVE=
+	b=pPFO8vQQjx7XYb3lv22HwwHl1FeJZAFFLsdICtya35eCZzdzsbqK0A6qD4aYlMkiZ
+	 99YPwW5dEkMMh5nBjQ1ZrVFWDYP0m5vqJhUaHAj9sSjVT9OnCW1kPFxmX9wVxjiiUK
+	 Bq+527f0ND0l/Fx0ahzvJHbgLbOsDoDMrFF4xgLM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
+	Maoyi Xie <maoyixie.tju@gmail.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0316/1518] usb: gadget: configfs: fix out-of-bounds read of qw_sign
-Date: Sat, 12 Sep 2026 08:41:25 +0200
-Message-ID: <20260912065630.628559138@linuxfoundation.org>
+Subject: [PATCH 6.18 0317/1518] usb: ljca: bound bank_num in ljca_enumerate_gpio()
+Date: Sat, 12 Sep 2026 08:41:26 +0200
+Message-ID: <20260912065630.650200842@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -50,55 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Maoyi Xie <maoyixie.tju@gmail.com>
 
-[ Upstream commit f63edb54d8f738f9c21e2068c777ae1c097df6b7 ]
+[ Upstream commit dd9483726d0f16c1a56879c3edb65128259a4e2b ]
 
-os_desc_qw_sign_show() passes OS_STRING_QW_SIGN_LEN as the input
-length to utf16s_to_utf8s(), but that argument counts UTF-16 code
-units while OS_STRING_QW_SIGN_LEN (14) is the byte size of qw_sign[].
-The array holds only OS_STRING_QW_SIGN_LEN / 2 (7) code units, so the
-conversion reads up to 7 units (14 bytes) past the end of qw_sign[]
-into the following members of struct gadget_info when the stored
-signature fills the array without a NUL terminator, exposing those
-bytes through the configfs attribute.
+ljca_enumerate_gpio() reads desc->bank_num from the device and loops
+valid_pin[i] = get_unaligned_le32(...) for i < bank_num. valid_pin[]
+holds only LJCA_MAX_GPIO_NUM / 32 = 2 entries.
 
-The store path halves the count for its input bound but passes the
-full byte count as the utf8s_to_utf16s() output limit; use the
-destination code-unit count in both directions.
+Two checks run before the loop. The reply length must match
+struct_size(desc, bank_desc, bank_num). The product
+pins_per_bank * bank_num must not exceed LJCA_MAX_GPIO_NUM. Neither one
+bounds bank_num against the size of valid_pin[]. The reply is capped at
+LJCA_MAX_PAYLOAD_SIZE (60) bytes, so the struct_size check limits
+bank_num to 9. A device that reports bank_num 9 with pins_per_bank 7
+still passes both checks. gpio_num is 63 and the reply is 56 bytes. The
+loop then writes nine u32 into the two entry array and overruns
+valid_pin[] on the stack.
 
-Fixes: 76180d716f91 ("usb: gadget: configfs: make qw_sign attribute symmetric")
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Link: https://patch.msgid.link/20260618005043.1581707-1-michael.bommarito@gmail.com
+A broken or malicious LJCA device can therefore overflow the stack.
+Reject a bank_num that does not fit valid_pin[].
+
+Fixes: acd6199f195d ("usb: Add support for Intel LJCA device")
+Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
+Acked-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Link: https://patch.msgid.link/178176358875.3352358.6059116660356914900@maoyixie.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/configfs.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/usb/misc/usb-ljca.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/usb/gadget/configfs.c b/drivers/usb/gadget/configfs.c
-index 6bcac85c55501..aa0a25efb6aa0 100644
---- a/drivers/usb/gadget/configfs.c
-+++ b/drivers/usb/gadget/configfs.c
-@@ -1177,7 +1177,7 @@ static ssize_t os_desc_qw_sign_show(struct config_item *item, char *page)
- 	struct gadget_info *gi = os_desc_item_to_gadget_info(item);
- 	int res;
+diff --git a/drivers/usb/misc/usb-ljca.c b/drivers/usb/misc/usb-ljca.c
+index c562630d862c7..b19cc99edfeb6 100644
+--- a/drivers/usb/misc/usb-ljca.c
++++ b/drivers/usb/misc/usb-ljca.c
+@@ -585,6 +585,9 @@ static int ljca_enumerate_gpio(struct ljca_adapter *adap)
+ 	if (gpio_num > LJCA_MAX_GPIO_NUM)
+ 		return -EINVAL;
  
--	res = utf16s_to_utf8s((wchar_t *) gi->qw_sign, OS_STRING_QW_SIGN_LEN,
-+	res = utf16s_to_utf8s((wchar_t *) gi->qw_sign, OS_STRING_QW_SIGN_LEN / 2,
- 			      UTF16_LITTLE_ENDIAN, page, PAGE_SIZE - 1);
- 	page[res++] = '\n';
- 
-@@ -1199,7 +1199,7 @@ static ssize_t os_desc_qw_sign_store(struct config_item *item, const char *page,
- 	mutex_lock(&gi->lock);
- 	res = utf8s_to_utf16s(page, l,
- 			      UTF16_LITTLE_ENDIAN, (wchar_t *) gi->qw_sign,
--			      OS_STRING_QW_SIGN_LEN);
-+			      OS_STRING_QW_SIGN_LEN / 2);
- 	if (res > 0)
- 		res = len;
- 	mutex_unlock(&gi->lock);
++	if (desc->bank_num > ARRAY_SIZE(valid_pin))
++		return -EINVAL;
++
+ 	/* construct platform data */
+ 	gpio_info = kzalloc(sizeof *gpio_info, GFP_KERNEL);
+ 	if (!gpio_info)
 -- 
 2.53.0
 
