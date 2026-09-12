@@ -1,40 +1,54 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0062F30DEA6;
-	Sat, 12 Sep 2026 13:17:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FEE039281F;
+	Sat, 12 Sep 2026 13:17:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789219041; cv=none; b=AF3+x7wY9VVXBuXkJdjuAZ+ld/gOzXEoD37GQB6KA6IKa/a7hjkUdd4BPI9adAAbbOX2Uik4kDmJlQMIKAxXRiJkBv5dTzVG/4v824oKsiLfi4/Dc4fyIS3kLNgxQV1Wqn+Xo0NbZ2chfRXi47fyiAIRhA4aqfXzZQ4lWYCG1KY=
+	t=1789219045; cv=none; b=XZpyyiPspO5YBGWI0QNgXo/wg29ofcV7LI1E6WDqonJWKnwZ5mCwtARMblzqBEAaZJ2mLiI139LutPIf2k5ylcsqqVviiYt2Rp52vP1xw13qQxltMSBHhzGaBk+iG6Ejx1dExy9IQ4k71ZPnzrjcrFjB0XKajQKAVQdzCM0wmSc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789219041; c=relaxed/simple;
-	bh=wHBgJic0BUdka5Gry5eONeYx2NR4SnhdiUpIhx/DZRw=;
+	s=arc-20240116; t=1789219045; c=relaxed/simple;
+	bh=jr9sZBxsuWoewVmN42KV4824HfqXSBD33IlutDQUKOw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nRVmJq/4r6nOOwEIv4pU/TUJ/cV0VbJzq2kDbL88UWNLHHWmqDCfBk/goDJRorOeyzJU/s3GxLvonOGoYUj1Z1yOiXL2Hq9qFDs9NsogIGeZVpV2BxnK9+P9hhaUH5NgoRoowQ6W86h2rUujYrZ6pOewe1f5ABNDaCflWbJw9Ro=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pFIoPK/C; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=S0wGTOygeNJlq++2Ji2naTuzhTB0UG3lUXgt0xVK+AAG+iyufuOVhYC2BgvvSt4urQ6yntEete7ksV7pjKhJzoLlbwGQ0T//rIAdxq0FrupgTtrHC8Gx7iIIytr5+tlgJRAlCn/AzeVGJneTghWmz9Wlsc6CmZ17yQNDUHl1sRw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KbxqWBBp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pFIoPK/C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFA0D1F000FF;
-	Sat, 12 Sep 2026 13:17:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KbxqWBBp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A2731F000FF;
+	Sat, 12 Sep 2026 13:17:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789219039;
-	bh=6f/2tON0H0u1UVhzYc+Gv28xqdRjv3DFQ52f7NxGFxE=;
+	s=korg; t=1789219044;
+	bh=04zoo4D53c0NjdIPdOGfi/d7D9cpxQKNo9meKEBfp2Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pFIoPK/CnRwIVmw322iq3j7iJU08b7XktidajMQePUFwaKbHDO+PhrMn6aWqahZlm
-	 bjUNCBgx8EAQE6fMCyf3nEjXH/Hhph4v/yiXM3G1oDWWTQr80R/n8JgZLOy7CSbtEn
-	 scTNzrepyYdzVjJ8UoTkdDwHFiaCHVHv1YJn5cYs=
+	b=KbxqWBBpN9e3+jrqYZRKFonV9jf0ATxzXCtHZytUuyhhU04Vm5YTrO29PQ9loa2dN
+	 xGVkayc1j74TEs5PjQDjo3HfUjprOQYWtwstHqwLz54pv4erxQEA13gRKVdE7vzk6K
+	 7rwchhGBUW+TX6s/d3I0reR047UidvygwEJzzUJ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Ankur Arora <ankur.a.arora@oracle.com>,
-	Shrikanth Hegde <sshegde@linux.ibm.com>,
+	Anshuman Khandual <anshuman.khandual@arm.com>,
+	Steven Price <steven.price@arm.com>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Jonathan Corbet <corbet@lwn.net>,
 	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Marc Zyngier <maz@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Nicholas Piggin <npiggin@gmail.com>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Vasily Gorbik <gor@linux.ibm.com>,
+	Will Deacon <will@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1269/1376] powerpc: Add preempt lazy support
-Date: Sat, 12 Sep 2026 09:01:35 +0200
-Message-ID: <20260912065635.822174041@linuxfoundation.org>
+Subject: [PATCH 6.12 1270/1376] mm: make DEBUG_WX depdendent on GENERIC_PTDUMP
+Date: Sat, 12 Sep 2026 09:01:36 +0200
+Message-ID: <20260912065635.843829315@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -53,104 +67,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shrikanth Hegde <sshegde@linux.ibm.com>
+From: Anshuman Khandual <anshuman.khandual@arm.com>
 
-[ Upstream commit 00199ed6f2ca6601b2c5856fac64132303d9437a ]
+[ Upstream commit 3f54872454a927a2b5f9fb3e2d3cdbd51b3666b7 ]
 
-Define preempt lazy bit for Powerpc. Use bit 9 which is free and within
-16 bit range of NEED_RESCHED, so compiler can issue single andi.
+DEBUG_WX selects PTDUMP_CORE without even ensuring that the given platform
+implements GENERIC_PTDUMP.  This problem has been latent until now, as all
+the platforms subscribing ARCH_HAS_DEBUG_WX also subscribe GENERIC_PTDUMP.
 
-Since Powerpc doesn't use the generic entry/exit, add lazy check at exit
-to user. CONFIG_PREEMPTION is defined for lazy/full/rt so use it for
-return to kernel.
-
-Ran a few benchmarks and db workload on Power10. Performance is close to
-preempt=none/voluntary.
-
-Since Powerpc systems can have large core count and large memory,
-preempt lazy is going to be helpful in avoiding soft lockup issues.
-
-Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Reviewed-by: Ankur Arora <ankur.a.arora@oracle.com>
-Signed-off-by: Shrikanth Hegde <sshegde@linux.ibm.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20241116192306.88217-2-sshegde@linux.ibm.com
+Link: https://lkml.kernel.org/r/20250226122404.1927473-5-anshuman.khandual@arm.com
+Signed-off-by: Anshuman Khandual <anshuman.khandual@arm.com>
+Reviewed-by: Steven Price <steven.price@arm.com>
+Reviewed-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Heiko Carstens <hca@linux.ibm.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jonathan Corbet <corbet@lwn.net>
+Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
+Cc: Marc Zyngier <maz@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Michael Ellerman <mpe@ellerman.id.au>
+Cc: Nicholas Piggin <npiggin@gmail.com>
+Cc: Palmer Dabbelt <palmer@dabbelt.com>
+Cc: Paul Walmsley <paul.walmsley@sifive.com>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: Vasily Gorbik <gor@linux.ibm.com>
+Cc: Will Deacon <will@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Stable-dep-of: 902caade3cfd ("arm64: ptdump: Make note_page_flush() range aware")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/Kconfig                   | 1 +
- arch/powerpc/include/asm/thread_info.h | 9 ++++++---
- arch/powerpc/kernel/interrupt.c        | 4 ++--
- 3 files changed, 9 insertions(+), 5 deletions(-)
+ mm/Kconfig.debug | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/powerpc/Kconfig b/arch/powerpc/Kconfig
-index c7b420d6787ca..1bd5a9ff8505d 100644
---- a/arch/powerpc/Kconfig
-+++ b/arch/powerpc/Kconfig
-@@ -145,6 +145,7 @@ config PPC
- 	select ARCH_HAS_NON_OVERLAPPING_ADDRESS_SPACE
- 	select ARCH_HAS_PHYS_TO_DMA
- 	select ARCH_HAS_PMEM_API
-+	select ARCH_HAS_PREEMPT_LAZY
- 	select ARCH_HAS_PTE_DEVMAP		if PPC_BOOK3S_64
- 	select ARCH_HAS_PTE_SPECIAL
- 	select ARCH_HAS_SCALED_CPUTIME		if VIRT_CPU_ACCOUNTING_NATIVE && PPC_BOOK3S_64
-diff --git a/arch/powerpc/include/asm/thread_info.h b/arch/powerpc/include/asm/thread_info.h
-index 6ebca2996f18f..2785c7462ebf7 100644
---- a/arch/powerpc/include/asm/thread_info.h
-+++ b/arch/powerpc/include/asm/thread_info.h
-@@ -103,6 +103,7 @@ void arch_setup_new_exec(void);
- #define TIF_PATCH_PENDING	6	/* pending live patching update */
- #define TIF_SYSCALL_AUDIT	7	/* syscall auditing active */
- #define TIF_SINGLESTEP		8	/* singlestepping active */
-+#define TIF_NEED_RESCHED_LAZY	9       /* Scheduler driven lazy preemption */
- #define TIF_SECCOMP		10	/* secure computing */
- #define TIF_RESTOREALL		11	/* Restore all regs (implies NOERROR) */
- #define TIF_NOERROR		12	/* Force successful syscall return */
-@@ -122,6 +123,7 @@ void arch_setup_new_exec(void);
- #define _TIF_SYSCALL_TRACE	(1<<TIF_SYSCALL_TRACE)
- #define _TIF_SIGPENDING		(1<<TIF_SIGPENDING)
- #define _TIF_NEED_RESCHED	(1<<TIF_NEED_RESCHED)
-+#define _TIF_NEED_RESCHED_LAZY	(1<<TIF_NEED_RESCHED_LAZY)
- #define _TIF_NOTIFY_SIGNAL	(1<<TIF_NOTIFY_SIGNAL)
- #define _TIF_POLLING_NRFLAG	(1<<TIF_POLLING_NRFLAG)
- #define _TIF_32BIT		(1<<TIF_32BIT)
-@@ -142,9 +144,10 @@ void arch_setup_new_exec(void);
- 				 _TIF_SYSCALL_EMU)
- 
- #define _TIF_USER_WORK_MASK	(_TIF_SIGPENDING | _TIF_NEED_RESCHED | \
--				 _TIF_NOTIFY_RESUME | _TIF_UPROBE | \
--				 _TIF_RESTORE_TM | _TIF_PATCH_PENDING | \
--				 _TIF_NOTIFY_SIGNAL)
-+				 _TIF_NEED_RESCHED_LAZY | _TIF_NOTIFY_RESUME | \
-+				 _TIF_UPROBE | _TIF_RESTORE_TM | \
-+				 _TIF_PATCH_PENDING | _TIF_NOTIFY_SIGNAL)
-+
- #define _TIF_PERSYSCALL_MASK	(_TIF_RESTOREALL|_TIF_NOERROR)
- 
- /* Bits in local_flags */
-diff --git a/arch/powerpc/kernel/interrupt.c b/arch/powerpc/kernel/interrupt.c
-index af62ec974b970..8f4acc55407b0 100644
---- a/arch/powerpc/kernel/interrupt.c
-+++ b/arch/powerpc/kernel/interrupt.c
-@@ -185,7 +185,7 @@ interrupt_exit_user_prepare_main(unsigned long ret, struct pt_regs *regs)
- 	ti_flags = read_thread_flags();
- 	while (unlikely(ti_flags & (_TIF_USER_WORK_MASK & ~_TIF_RESTORE_TM))) {
- 		local_irq_enable();
--		if (ti_flags & _TIF_NEED_RESCHED) {
-+		if (ti_flags & (_TIF_NEED_RESCHED | _TIF_NEED_RESCHED_LAZY)) {
- 			schedule();
- 		} else {
- 			/*
-@@ -396,7 +396,7 @@ notrace unsigned long interrupt_exit_kernel_prepare(struct pt_regs *regs)
- 		/* Returning to a kernel context with local irqs enabled. */
- 		WARN_ON_ONCE(!(regs->msr & MSR_EE));
- again:
--		if (IS_ENABLED(CONFIG_PREEMPT)) {
-+		if (IS_ENABLED(CONFIG_PREEMPTION)) {
- 			/* Return to preemptible kernel context */
- 			if (unlikely(read_thread_flags() & _TIF_NEED_RESCHED)) {
- 				if (preempt_count() == 0)
+diff --git a/mm/Kconfig.debug b/mm/Kconfig.debug
+index 41a58536531df..a51a1149909aa 100644
+--- a/mm/Kconfig.debug
++++ b/mm/Kconfig.debug
+@@ -186,6 +186,7 @@ config ARCH_HAS_DEBUG_WX
+ config DEBUG_WX
+ 	bool "Warn on W+X mappings at boot"
+ 	depends on ARCH_HAS_DEBUG_WX
++	depends on GENERIC_PTDUMP
+ 	depends on MMU
+ 	select PTDUMP_CORE
+ 	help
 -- 
 2.53.0
 
