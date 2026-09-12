@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 093DD3939B1;
-	Sat, 12 Sep 2026 18:18:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1B9B486424;
+	Sat, 12 Sep 2026 18:18:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789237129; cv=none; b=EVYWYErqe01QXLErUGVwRO8w06rbqm7c6vp01HqCc2PGmKAvtLdxyiUyS/CuakAkI7Qj8O2y8gfgbdPVH0LUcmhUMcOKipI7KusmKnqyJkW144CHjolenG0/tH7Jc+iMqX8tEHzBVntDVGwC4RlHVSo+lHPNBvHkxsQ+k6iSdqI=
+	t=1789237134; cv=none; b=reVv2Ntol1NPQFdnCvhwYPVR335EI7NV7jindIkb6BO+NVaVltxLoc1FqKH9fl+aEj+fDQOc9Z/OcBi7NRO3q4uHa7uQayz1shmnI3A0hOmk8cmQ+rnQ7Vn0TD3lq6MN6xQLhA0zcaq9+3QcRKNnGbsApB75Nmq6hIE6QFccUjA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789237129; c=relaxed/simple;
-	bh=hvgNpRuPqorbiRPTsJRU50vjNIS1d2yfnniEeOWhwKg=;
+	s=arc-20240116; t=1789237134; c=relaxed/simple;
+	bh=I1syv+R/8NNQ1pv50wjxIidk+3pl1VYIfIHTbhSW+fg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q30xHwqs2yPXngwq6O406WHL389qk+zYmDwvjk3dZAd3hsK2KIQB0Q1MVCpC4T1JiOdaHzKxf2RyCcepFnefZbGMq9WfFMu+Ceacr8bgYV+KkejKBQK5HXOoyM5+QjMaZnXoDCExeH2JyG/k5HAQVveml72Wp6TJEKz9VLdKi2M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ON/RLaKG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uC6rhrNrAFi+ztPvGEE82u2kMiM5TM+hPIlTTsRvg7ZE/adwiAn+FO/P2JjFUX8rVWCbwhx2c6EKdtr1Qtn8oX4TfgDZfI1d4NyE6LYcA2Mcg12EXuwG/aMbchWNRspwGte9nIvNhggBCdd09M0aeoCA/Vo287MilmiQyDkGiMk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HiO45Lap; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ON/RLaKG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8A151F000FF;
-	Sat, 12 Sep 2026 18:18:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HiO45Lap"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF0CB1F000FF;
+	Sat, 12 Sep 2026 18:18:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789237127;
-	bh=RRqgrmJrTRqrGmqhCa14gSmpppoEYizEa6gTkCWnM1k=;
+	s=korg; t=1789237132;
+	bh=bJUgg4Y2/fJTwH9CqXwRVN/xVQNaBNJb1q3gFDr+I9I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ON/RLaKGosd6hCSJ6HrF4U0UyyHfvUw2FZUNCxVkBJJ/cRciMfcMU+CWI7eg7Ni0U
-	 oPlTL1asEB7ZlN+64zDrJRnei1NFnuSnk0vhobCFXncKMfbw5/ZHg7tnb/4Q58tQ9F
-	 LuBxY3h+qhhjUiciwNUTVaQkyQd487gsGCM7uKaQ=
+	b=HiO45LapHWjsro1IWKSM2gxGZQu3eFfkCySYw8itMXZGzVlCRJakzSY2O6j5MD51V
+	 HjhDreob+jCH9A/sB5PxkaaHfpmXzE80Sxeu6gcd60+lB/o0kpUdI9wdNW2O5riVZz
+	 OR7ncAJdB6FSXuBxHzUtL1GGxwM0zCQwWh+78Beo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.15 196/935] ALSA: virmidi: Check card index validity at probe
-Date: Sat, 12 Sep 2026 08:53:46 +0200
-Message-ID: <20260912065531.310659432@linuxfoundation.org>
+	Kuan-Wei Chiu <visitorckw@gmail.com>,
+	Georgi Djakov <djakov@kernel.org>
+Subject: [PATCH 5.15 170/935] interconnect: Fix use after free in icc_get() and of_icc_get_by_index()
+Date: Sat, 12 Sep 2026 08:53:20 +0200
+Message-ID: <20260912065530.717549223@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -49,41 +50,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Kuan-Wei Chiu <visitorckw@gmail.com>
 
-commit b65d5182ecd6b7a24a83d980a0d06e809ef876c5 upstream.
+commit 25c7e242aca084fdc1098248194032317dca625d upstream.
 
-virmidi driver blindly trusts that the given devptr->id value is
-within the proper card index range at probe.  It's OK for the devices
-the driver itself creates at the module probe time, but if the device
-is bound manually via sysfs interface, this could be -1 as "none", and
-this leads to OOB access for index[] and other parameters.
+In of_icc_get_by_index() and icc_get(), if the dynamic allocation for
+path->name fails via kasprintf(), the error handling path directly
+calls kfree(path) to free the path object and returns an error.
 
-Add a sanity check for the card index and warn/correct it if it's a
-value out of the range.
+However, prior to this point, path_find() calls path_init(), which
+already links the path's requests into the req_list of the respective
+interconnect nodes via hlist_add_head(). Directly invoking kfree(path)
+leaves dangling pointers in the hlist. A subsequent call to icc_get()
+or icc_set_bw() will traverse or modify these corrupted lists, triggering
+a slab use afterfree.
 
+KASAN report showing the vulnerability when reproducing via debugfs:
+
+  BUG: KASAN: slab-use-after-free in path_find+0x6f8/0xcfc
+  Write of size 8 at addr fff000000d43f748 by task sh/1
+  ...
+  Call trace:
+   kasan_report+0xac/0xfc
+   path_find+0x6f8/0xcfc
+   icc_get+0x148/0x380
+   icc_get_set+0xf8/0x2d0
+  ...
+  Freed by task 1:
+   kfree+0x1a0/0x4a4
+   icc_get+0x2cc/0x380
+   icc_get_set+0xf8/0x2d0
+
+Fix this by replacing kfree(path) with the proper teardown function,
+icc_put(path), which safely removes the requests from the req_list using
+hlist_del() and drops the provider usage references before freeing the
+memory.
+
+Additionally, in icc_get(), ensure that the icc_lock mutex is released
+prior to calling icc_put(path) to avoid a deadlock, as icc_put()
+internally acquires the same lock.
+
+Fixes: 3791163602f7 ("interconnect: Handle memory allocation errors")
 Cc: stable@vger.kernel.org
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20260806153227.1460166-5-tiwai@suse.de
+Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
+Link: https://patch.msgid.link/20260416190840.1753468-1-visitorckw@gmail.com
+Signed-off-by: Georgi Djakov <djakov@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/drivers/virmidi.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/interconnect/core.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/sound/drivers/virmidi.c
-+++ b/sound/drivers/virmidi.c
-@@ -75,6 +75,12 @@ static int snd_virmidi_probe(struct plat
- 	int idx, err;
- 	int dev = devptr->id;
+--- a/drivers/interconnect/core.c
++++ b/drivers/interconnect/core.c
+@@ -508,7 +508,7 @@ struct icc_path *of_icc_get_by_index(str
+ 	path->name = kasprintf(GFP_KERNEL, "%s-%s",
+ 			       src_data->node->name, dst_data->node->name);
+ 	if (!path->name) {
+-		kfree(path);
++		icc_put(path);
+ 		path = ERR_PTR(-ENOMEM);
+ 	}
  
-+	if (dev < 0 || dev >= SNDRV_CARDS) {
-+		dev_warn(&devptr->dev,
-+			 "Invalid card index %d, using default 0\n", dev);
-+		dev = 0;
-+	}
-+
- 	err = snd_devm_card_new(&devptr->dev, index[dev], id[dev], THIS_MODULE,
- 				sizeof(struct snd_card_virmidi), &card);
- 	if (err < 0)
+@@ -748,8 +748,9 @@ struct icc_path *icc_get(struct device *
+ 
+ 	path->name = kasprintf(GFP_KERNEL, "%s-%s", src->name, dst->name);
+ 	if (!path->name) {
+-		kfree(path);
+-		path = ERR_PTR(-ENOMEM);
++		mutex_unlock(&icc_lock);
++		icc_put(path);
++		return ERR_PTR(-ENOMEM);
+ 	}
+ out:
+ 	mutex_unlock(&icc_lock);
 
 
