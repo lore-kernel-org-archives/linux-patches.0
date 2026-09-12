@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4F8B47ACD0;
-	Sat, 12 Sep 2026 12:00:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 413E443C7B6;
+	Sat, 12 Sep 2026 12:00:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789214415; cv=none; b=s76sjTmxRFrztagqzCxHq0E5+qHPNaKbEvFV46Fy6d5Wwb17QGgmnBR5JhuU9h7CflIBY7KIWI6EJixJoj0z15PB+7cDf6oZ5XscgLGiKNWpV/z+IUsFhIxza17iFyfZdIP/ETb+lX09ZCHgIkqRKw7VuyXIxfHGZXXmSdKJd9c=
+	t=1789214422; cv=none; b=tE+n2xq2lvBCRVCervrBBUhEi7d85oQP98cpJVnXzMvsAJ8CKKZOyH1FBwtX2jMZlFZa2/0Afbi8bEBuW4x7zjFhEuxYf4hMpzN3KRPgkr2ZEkGU9ClMd1UvB6L1qmvG7FFcLj4XPqk8T/LPAmNjiw9fjA4y2jSiVoTgM5FWDMo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789214415; c=relaxed/simple;
-	bh=RxXaqqW++xDUsHg9Guk72mpWbRyAfC1I+qyFJT6gNOk=;
+	s=arc-20240116; t=1789214422; c=relaxed/simple;
+	bh=84OB+yT9Ot+6AVRzWj+yVewaYdIX1aVIL59IxzC+wSM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IlN1NpRC2EWmkhc9Ft8lXDh+J2CQ0iAnysm8r+AfcvKWk6BvifD1khZmpYam0FOou52VSyCBU7mVkhhD509zWg5tweCDVWZfrE1tN/58MkcCnT0GTy3Z+qJYrYCv7uywKj8q0X9To0l6ZL41QzauU+jt9sy/BHSLAX9p7aBRl60=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hyADbmV9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PE8D0/iErKHQ0nBSuoMPrrjrWjZ609LQjT7Q5QnOvs43WScmpEWjeljV4QeizRI5g6dL5N4UpU62dn6RcL2D58jEIOyT1TPVrsn6KfTui8OG9N0rbQJXwR0CTiKc0K0kBs8xkSqNmnCjMBkMLjWbVUfXZ1FXak60mAGWZnGAiqo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xbtA39AQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hyADbmV9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D6111F000FF;
-	Sat, 12 Sep 2026 12:00:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xbtA39AQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0B851F000FF;
+	Sat, 12 Sep 2026 12:00:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789214413;
-	bh=uNtdmFfUFYBcXJIIi81Nez/EKUvbjO0+fbhr+tQNRj4=;
+	s=korg; t=1789214418;
+	bh=R8fT+AEaaJd1laFVtKswvAsk14KXgR2TSQFXcdJdCQE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hyADbmV9Zwo1qZuyt1ufQTrhUMboBUonUoz1xhpN0ja8dLhMsNUoQ//0pBQlLAiCP
-	 ZMNY5Q4W2aTEsiLKlhEr+khEi7qrb1OFKy7IbC1m1WGEe0Qjyvyyn7a4L+65czq12u
-	 0Shkjy/rDPZG1IiREmUxwDyM7y113tSjFQJdEUhg=
+	b=xbtA39AQKa2soRooFXqP95ScFrYMLX9UISoXjxznqAdsYfCgPQD6e0iqYTMgXJTC7
+	 r05Vtl25yZhgGbLl61/PzR35JZOuvNuK+9Eq/4m5NVGkOlR3iSU+s94D2YclXjg6wl
+	 IWxpU4AzQ+s83TYI0rSssNyqsErZQRlzKS6//eXA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrei Kuchynski <akuchynski@chromium.org>,
-	Kaixuan Li <kaixuan.li@ntu.edu.sg>,
-	Maoyi Xie <maoyixie.tju@gmail.com>,
-	Benson Leung <bleung@chromium.org>,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
+	syzbot+9eebf5f6544c5e873858@syzkaller.appspotmail.com,
+	Philipp Weber <kernel@phwe.de>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0320/1376] platform/chrome: cros_ec_typec: Reject out-of-bounds PD cap count
-Date: Sat, 12 Sep 2026 08:45:46 +0200
-Message-ID: <20260912065614.680545406@linuxfoundation.org>
+Subject: [PATCH 6.12 0321/1376] HID: core: quiesce input in hid_hw_stop() to prevent use-after-free
+Date: Sat, 12 Sep 2026 08:45:47 +0200
+Message-ID: <20260912065614.702584347@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -54,65 +52,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maoyi Xie <maoyixie.tju@gmail.com>
+From: Philipp Weber <kernel@phwe.de>
 
-[ Upstream commit a0a8cd9fc9c48b95095bcec4b146f7a99486f58e ]
+[ Upstream commit a4bc41504690b7d7064931909874f5b98cd148b6 ]
 
-cros_typec_register_partner_pdos() copies the partner PDOs from the EC
-TYPEC_STATUS response into the fixed caps_desc.pdo[PDO_MAX_OBJECTS] array.
+A driver's probe calls hid_device_io_start() to enable input delivery,
+then fails at a later initialization step and unwinds via hid_hw_stop().
+The unwind frees struct hidraw via hidraw_disconnect() while in-flight
+HID reports may still be running on another CPU, dereferencing the
+freed object through hidraw_report_event(). syzbot reports the
+resulting use-after-free for the corsair-psu HID driver.
 
-	memcpy(caps_desc.pdo, resp->source_cap_pdos,
-	       sizeof(u32) * resp->source_cap_count);
-	...
-	memcpy(caps_desc.pdo, resp->sink_cap_pdos,
-	       sizeof(u32) * resp->sink_cap_count);
+Edward Adam Davis posted a per-driver fix for corsair-psu that adds
+an explicit hid_device_io_stop() before hid_hw_stop() in the probe
+error path ("hwmon: prevent packets from going to driver for probe",
+2026-04-28). Auditing the tree shows 15 drivers call
+hid_device_io_start(); 7 also call hid_device_io_stop() and 8 do not:
 
-PDO_MAX_OBJECTS is 7. source_cap_count and sink_cap_count are u8 fields
-from the EC. The only check is that they are not both zero. If either is
-larger than 7, the memcpy writes past the end of the array on the stack.
-A count of 255 overflows it by about 1 KB. The EC source arrays are only
-seven entries wide. A larger count reads past them too.
+  drivers calling hid_device_io_start() without a matching
+  hid_device_io_stop() before hid_hw_stop():
+    drivers/hwmon/corsair-psu.c       (fix posted by Edward)
+    drivers/hwmon/corsair-cpro.c
+    drivers/hwmon/nzxt-kraken3.c
+    drivers/hwmon/nzxt-smart2.c
+    drivers/hwmon/gigabyte_waterforce.c
+    drivers/hid/hid-logitech-dj.c
+    drivers/hid/hid-nintendo.c
+    drivers/hid/hid-mcp2221.c
 
-The ChromeOS EC firmware caps these counts today, so a compliant setup
-does not hit this. The kernel should still validate these values rather
-than trust them.
+Roughly half of all callers of the API are exposed. Centralize the
+quiesce in hid_hw_stop() so callers do not have to remember the
+matching stop: if a driver has left hdev->io_started true on entry,
+call hid_device_io_stop() before hid_disconnect().
 
-Validate the counts in cros_typec_register_partner_pdos() next to the
-memcpy. Skip the PDO registration if either count is above PDO_MAX_OBJECTS.
-The rest of cros_typec_handle_status() still runs so events are handled
-and cleared.
+For the 7 drivers that already call hid_device_io_stop() correctly,
+hdev->io_started is false on entry, the guard short-circuits, and
+behavior is unchanged.
 
-Fixes: 348a2e8c93d3 ("platform/chrome: cros_ec_typec: Register partner PDOs")
-Suggested-by: Andrei Kuchynski <akuchynski@chromium.org>
-Co-developed-by: Kaixuan Li <kaixuan.li@ntu.edu.sg>
-Signed-off-by: Kaixuan Li <kaixuan.li@ntu.edu.sg>
-Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
-Reviewed-by: Benson Leung <bleung@chromium.org>
-Reviewed-by: Andrei Kuchynski <akuchynski@chromium.org>
-Link: https://lore.kernel.org/r/20260625130056.3378097-1-maoyixie.tju@gmail.com
-Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
+No Fixes: tag because the affected drivers gained their
+hid_device_io_start() calls independently over years; the bug is a
+class-wide API misuse rather than a regression from one commit.
+
+Reported-by: syzbot+9eebf5f6544c5e873858@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=9eebf5f6544c5e873858
+Signed-off-by: Philipp Weber <kernel@phwe.de>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/chrome/cros_ec_typec.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/hid/hid-core.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/platform/chrome/cros_ec_typec.c b/drivers/platform/chrome/cros_ec_typec.c
-index ca665b901010e..8c0b814973c04 100644
---- a/drivers/platform/chrome/cros_ec_typec.c
-+++ b/drivers/platform/chrome/cros_ec_typec.c
-@@ -989,6 +989,12 @@ static void cros_typec_register_partner_pdos(struct cros_typec_data *typec,
- 	if (!resp->source_cap_count && !resp->sink_cap_count)
- 		return;
- 
-+	if (resp->source_cap_count > PDO_MAX_OBJECTS ||
-+	    resp->sink_cap_count > PDO_MAX_OBJECTS) {
-+		dev_warn(typec->dev, "Invalid PDO count from EC, port: %d\n", port_num);
-+		return;
-+	}
-+
- 	port->partner_pd = typec_partner_usb_power_delivery_register(port->partner, &desc);
- 	if (IS_ERR(port->partner_pd)) {
- 		dev_warn(typec->dev, "Failed to register partner PD device, port: %d\n", port_num);
+diff --git a/drivers/hid/hid-core.c b/drivers/hid/hid-core.c
+index d44b43e2438af..5c33e1a0aef3c 100644
+--- a/drivers/hid/hid-core.c
++++ b/drivers/hid/hid-core.c
+@@ -2423,9 +2423,16 @@ EXPORT_SYMBOL_GPL(hid_hw_start);
+  *
+  * This is usually called from remove function or from probe when something
+  * failed and hid_hw_start was called already.
++ *
++ * If the caller enabled HID input via hid_device_io_start() and is unwinding
++ * without an explicit hid_device_io_stop(), quiesce input first so that
++ * in-flight reports cannot reach handlers (e.g. hidraw_report_event) whose
++ * backing objects hid_disconnect() is about to free.
+  */
+ void hid_hw_stop(struct hid_device *hdev)
+ {
++	if (hdev->io_started)
++		hid_device_io_stop(hdev);
+ 	hid_disconnect(hdev);
+ 	hdev->ll_driver->stop(hdev);
+ }
 -- 
 2.53.0
 
