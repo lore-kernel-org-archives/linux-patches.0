@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A58A5475F;
-	Sat, 12 Sep 2026 15:02:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFA455475F;
+	Sat, 12 Sep 2026 15:02:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789225357; cv=none; b=loke49VQtnK2NAYNvA1DtwP8j0SaV5He0E+i31jMc35rl2+deifz/rQGKgv1rqYfT2r+gkzqU6xwBpiC1LZvn8E/1bAQk2yjrEmwe48vE/3GkEMeDzQk/wx/b9Dz8/5CyUOgW3mgOoR2CGgeAiEtyvBPTJ7zsEvcC+fTVGL9kMk=
+	t=1789225362; cv=none; b=oxEQwadOty3TPmxxj2cytX6noX609ve7KFcx6o8jq2sDM9J/hxFVSKUIalSuwXnwaP5KRPudCpCgXKeOV/gTe4kfDtesVHK4CEJHl5aMMRUSedLVYUuKkQ3sv5z3Old0ZS0YKaiCDnFV9aTrf/3M8cDb5rdAwvjOF9UhjORBgBA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789225357; c=relaxed/simple;
-	bh=B/JUcnlqOO3tM44J0oR/XPs7U497oXFt/Q+XTMJpqV4=;
+	s=arc-20240116; t=1789225362; c=relaxed/simple;
+	bh=60UVRS4L03kAtLRdbZwczH+VC3QJNbP7PhthQsYuJOk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W/EBqFh4jzUShh3EFmmQ5rKsEuoubAZIzkkUKr+bEgUA9lILlIjPppl/981SIvqtB6AFqhwlIOTVArkMM3igYMGYmX4Awzba8CWg2PXCX/iiY3sxV+D46HvAHZhQPSaLbGRJZ+8QGHHw2f8adGkVeYvk1HSH/p4+QLX+oL+SyEI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lau7Ihbm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lnvGJVXjkPURJHSliSZQ86l2eDoldk8FGeh458KVvWvHB+iMEsXMf3kzXeZ5A61SA2PBYJYX03ryo3I5P31wt4f2XJpu8LO/HiDF3wmaf8CfYuv2AseDocxUNlZu3jVsDfZq+Lrj5TQOsi4vuFOuo4qtVJu9B9OPzdYCd4UlQIY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hv/kw06v; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lau7Ihbm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 153B71F000FF;
-	Sat, 12 Sep 2026 15:02:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hv/kw06v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 008891F000FF;
+	Sat, 12 Sep 2026 15:02:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789225356;
-	bh=MfEmlIipZRDNPHKIP+sbsZDfFYVA/EL6J6jVmOnlYvs=;
+	s=korg; t=1789225360;
+	bh=PsoNRPRdZ3xi22bMCvy9F+3A14p2G1Y8g1UIamGKPTI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lau7IhbmR54lt3/aoBfXfelhMXjNW8dDIT82BRobF7mvaSQFYa0Gw2x54u53oZSuQ
-	 1GZvDE98+Zw/WKKKyY/sXJht7JosY2nDUr4z6gymmF2zLLg/PPpow+2vaN2cpEi1SG
-	 xqhkAUrApOQ3MUTdnV08qgJ8+2Up+h9+Umqp2l5U=
+	b=Hv/kw06voiJMb7wT5dK/A8Bq+nld7MxoT+xZ6L+2wuBBuZ9ly3E53cgyWEjwPkqn5
+	 zlhe6zH999EHR7dBeZedil70+3dEF3I+ckLWVbEbVx71L15DN0R5BWRKGxfkBMzN0N
+	 JzSpzjsR8id7hrrsEh6spzb3G9yao6z9cv5DXkT8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
-	Richard Weinberger <richard@nod.at>,
+	Rosen Penev <rosenp@gmail.com>,
+	Gregory CLEMENT <gregory.clement@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1179/1424] ubi: fastmap: Fix missed ec updating after erasing old fastmap data block
-Date: Sat, 12 Sep 2026 09:00:11 +0200
-Message-ID: <20260912065633.695723887@linuxfoundation.org>
+Subject: [PATCH 6.6 1139/1424] ARM: dts: helios4: add SATA regulator supplies
+Date: Sat, 12 Sep 2026 08:59:31 +0200
+Message-ID: <20260912065632.806521929@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -51,143 +51,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhihao Cheng <chengzhihao1@huawei.com>
+From: Rosen Penev <rosenp@gmail.com>
 
-[ Upstream commit 4d18b5a57b16c21cf868369ca555068722c32b2d ]
+[ Upstream commit 7a90520e8c9a8f48fe6f3e741cf34d8c2b6dbc61 ]
 
-After running fsstress on ubifs for a long time, UBI(16384 blocks,
-fastmap takes 2 blocks) has an erase block with different erase
-counters displayed from two views:
+The ahci-mvebu driver and libahci_platform request three supplies
+on SATA controller and port nodes:
+  - ahci-supply  (controller power)
+  - phy-supply   (PHY power)
+  - target-supply (disk power per port)
 
->From ubiscan view: PEB 8031 has erase counter 31581
-=========================================================
-from              to     count      min      avg      max
----------------------------------------------------------
-0        ..        9:        0        0        0        0
-10       ..       99:        0        0        0        0
-100      ..      999:    16383      290      315      781
-1000     ..     9999:        0        0        0        0
-10000    ..    99999:        1    31581    31581    31581
-100000   ..      inf:        0        0        0        0
----------------------------------------------------------
-Total               :    16384      290      317    31581
+Without them the regulator core prints notices at boot, e.g.:
+  supply ahci not found, using dummy regulator
+  supply phy not found, using dummy regulator
+  supply target not found, using dummy regulator
 
->From detailed_erase_block_info view: PEB 8031 has erase counter 7
-physical_block_number   erase_count
-8030                    421
-8031                    7   # mem info is different from disk info
-8032                    434
-8033                    425
-8034                    431
+The SATA controller and PHY inside the Armada 388 SoC are powered
+by the 3.3V I/O rail; the four disk bays are powered by the 5V HDD
+rail.  Wire the existing fixed regulators accordingly.
 
-Following process missed updating erase counter in wl_entry(in memory):
-ubi_update_fastmap
- for (i = 1; i < new_fm->used_blocks; i++) // update fastmap data
-  if (!tmp_e)
-   if (old_fm && old_fm->e[i])
-    erase_block(ubi, old_fm->e[i]->pnum)
-     ret = ubi_io_sync_erase(ubi, pnum, 0)
-     ec = be64_to_cpu(ec_hdr->ec)
-     ec += ret
-     ec_hdr->ec = cpu_to_be64(ec)
-     ubi_io_write_ec_hdr(ubi, pnum, ec_hdr)  // ec is updated on flash
-   // ec is not updated in old_fm->e[i] (in memory)
-
-Fix it by passing wl_enter into erase_block() and updating erase
-counter in erase_block().
-
-Fixes: dbb7d2a88d2a ("UBI: Add fastmap core")
-Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Signed-off-by: Richard Weinberger <richard@nod.at>
-Stable-dep-of: 420477a84f1e ("UBI: Preserve torture flag when rescheduling failed erasures")
+Fixes: ced8025b569e ("ARM: dts: armada388-helios4")
+Assisted-by: opencode:big-pickle
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
+Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/ubi/fastmap.c | 25 +++++++++++++++----------
- 1 file changed, 15 insertions(+), 10 deletions(-)
+ arch/arm/boot/dts/marvell/armada-388-helios4.dts | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/mtd/ubi/fastmap.c b/drivers/mtd/ubi/fastmap.c
-index 2cdc29483aee0..e7a751795832a 100644
---- a/drivers/mtd/ubi/fastmap.c
-+++ b/drivers/mtd/ubi/fastmap.c
-@@ -1393,11 +1393,12 @@ static int ubi_write_fastmap(struct ubi_device *ubi,
- /**
-  * erase_block - Manually erase a PEB.
-  * @ubi: UBI device object
-- * @pnum: PEB to be erased
-+ * @e: the physical eraseblock to erase
-  *
-- * Returns the new EC value on success, < 0 indicates an internal error.
-+ * This function returns zero in case of success and a negative error code in
-+ * case of failure.
-  */
--static int erase_block(struct ubi_device *ubi, int pnum)
-+static int erase_block(struct ubi_device *ubi, struct ubi_wl_entry *e)
- {
- 	int ret;
- 	struct ubi_ec_hdr *ec_hdr;
-@@ -1407,7 +1408,7 @@ static int erase_block(struct ubi_device *ubi, int pnum)
- 	if (!ec_hdr)
- 		return -ENOMEM;
+diff --git a/arch/arm/boot/dts/marvell/armada-388-helios4.dts b/arch/arm/boot/dts/marvell/armada-388-helios4.dts
+index 21df1b9e3900f..003b0708e9656 100644
+--- a/arch/arm/boot/dts/marvell/armada-388-helios4.dts
++++ b/arch/arm/boot/dts/marvell/armada-388-helios4.dts
+@@ -222,13 +222,17 @@ sata@a8000 {
+ 				status = "okay";
+ 				#address-cells = <1>;
+ 				#size-cells = <0>;
++				ahci-supply = <&reg_3p3v>;
++				phy-supply = <&reg_3p3v>;
  
--	ret = ubi_io_read_ec_hdr(ubi, pnum, ec_hdr, 0);
-+	ret = ubi_io_read_ec_hdr(ubi, e->pnum, ec_hdr, 0);
- 	if (ret < 0)
- 		goto out;
- 	else if (ret && ret != UBI_IO_BITFLIPS) {
-@@ -1415,7 +1416,7 @@ static int erase_block(struct ubi_device *ubi, int pnum)
- 		goto out;
- 	}
+ 				sata0: sata-port@0 {
+ 					reg = <0>;
++					target-supply = <&reg_5p0v_hdd>;
+ 				};
  
--	ret = ubi_io_sync_erase(ubi, pnum, 0);
-+	ret = ubi_io_sync_erase(ubi, e->pnum, 0);
- 	if (ret < 0)
- 		goto out;
+ 				sata1: sata-port@1 {
+ 					reg = <1>;
++					target-supply = <&reg_5p0v_hdd>;
+ 				};
+ 			};
  
-@@ -1427,11 +1428,16 @@ static int erase_block(struct ubi_device *ubi, int pnum)
- 	}
+@@ -236,13 +240,17 @@ sata@e0000 {
+ 				status = "okay";
+ 				#address-cells = <1>;
+ 				#size-cells = <0>;
++				ahci-supply = <&reg_3p3v>;
++				phy-supply = <&reg_3p3v>;
  
- 	ec_hdr->ec = cpu_to_be64(ec);
--	ret = ubi_io_write_ec_hdr(ubi, pnum, ec_hdr);
-+	ret = ubi_io_write_ec_hdr(ubi, e->pnum, ec_hdr);
- 	if (ret < 0)
- 		goto out;
+ 				sata2: sata-port@0 {
+ 					reg = <0>;
++					target-supply = <&reg_5p0v_hdd>;
+ 				};
  
--	ret = ec;
-+	e->ec = ec;
-+	spin_lock(&ubi->wl_lock);
-+	if (e->ec > ubi->max_ec)
-+		ubi->max_ec = e->ec;
-+	spin_unlock(&ubi->wl_lock);
-+
- out:
- 	kfree(ec_hdr);
- 	return ret;
-@@ -1577,7 +1583,7 @@ int ubi_update_fastmap(struct ubi_device *ubi)
+ 				sata3: sata-port@1 {
+ 					reg = <1>;
++					target-supply = <&reg_5p0v_hdd>;
+ 				};
+ 			};
  
- 		if (!tmp_e) {
- 			if (old_fm && old_fm->e[i]) {
--				ret = erase_block(ubi, old_fm->e[i]->pnum);
-+				ret = erase_block(ubi, old_fm->e[i]);
- 				if (ret < 0) {
- 					ubi_err(ubi, "could not erase old fastmap PEB");
- 
-@@ -1629,7 +1635,7 @@ int ubi_update_fastmap(struct ubi_device *ubi)
- 	if (old_fm) {
- 		/* no fresh anchor PEB was found, reuse the old one */
- 		if (!tmp_e) {
--			ret = erase_block(ubi, old_fm->e[0]->pnum);
-+			ret = erase_block(ubi, old_fm->e[0]);
- 			if (ret < 0) {
- 				ubi_err(ubi, "could not erase old anchor PEB");
- 
-@@ -1641,7 +1647,6 @@ int ubi_update_fastmap(struct ubi_device *ubi)
- 				goto err;
- 			}
- 			new_fm->e[0] = old_fm->e[0];
--			new_fm->e[0]->ec = ret;
- 			old_fm->e[0] = NULL;
- 		} else {
- 			/* we've got a new anchor PEB, return the old one */
 -- 
 2.53.0
 
