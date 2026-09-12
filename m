@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 390152FDC30;
-	Sat, 12 Sep 2026 16:45:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3113C421EFB;
+	Sat, 12 Sep 2026 16:45:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789231505; cv=none; b=dAKDDie3M6ZlPtZLr6UT6ceof04y47H7gMlWBUn4CHp1aHIsy2hka51jLEgSI+wq2fDkdEkX+772Puz2v3nWAfdKLrhKUDYCS0t0tR9eoGig8ckkP6PShESZIUrHVXS25RE463TVNNp9O9ue7nAB013q+QM3F0fpTB9rL2Bv1FA=
+	t=1789231509; cv=none; b=XEozjKs2Id6T/ousEpdjT8Cwo8rT964mQBO4APEGFFCaLiaIiGSgwJVE6HtZgkZY1GfC4iTRY9ES0tYr/TqwRU/SuwXMce6MUXkD38mlwr+l6I8a1aWsrB1BEuYdna1VrEbrDCZ10Qu6zw3S0fVTA8s//HAMXh87SNJlfW5HbDQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789231505; c=relaxed/simple;
-	bh=72UPc9QHQhRvYsyUN6iBEadZLKxJw3adQhcrdUf0EBo=;
+	s=arc-20240116; t=1789231509; c=relaxed/simple;
+	bh=oReYPa8vaTxxH1dAYwejG2/D+lfdwRGiSc5kBbTrxcY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IBDdv13P2pzFYPysob+n3I2SF9FvQedgcjvCuc2Dd4l2T9xat4640HyM/k7Dbqqi4iC0g7QJecz2miL3hXeZxHGqcgJ4EAou/3orybKkJYgqO73YjdCESORnKyCCM6BplB105AId6+Dcw47Gla4Qol0fmpj9eMm8LkW7lYRfgEo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TwAnKqoT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ubLfRiLFV5vftXT/n5/RonBSxFzYW+Nacjo9V+uNHeKzDk+M8U0rbgjfEyPux6HBiws5y5nJx4a7PwUeM/NVt6YCISB77ueQmKKKK+J87DAP9iJTuw5kTEqOKpdzNgcL4ZhHoJt0rC/nNk/duU95mjyE/oqmxCQyoU9w3Hms2Ds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hcOf1WfN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TwAnKqoT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 162A11F000FF;
-	Sat, 12 Sep 2026 16:45:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hcOf1WfN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4E0B1F000FF;
+	Sat, 12 Sep 2026 16:45:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789231502;
-	bh=gl0H0gQwP6HBzqZQ0HsChIuKVVU/nhn4VUo3UBlrrKw=;
+	s=korg; t=1789231508;
+	bh=VGi5BJ8gx/c9ymV1GLFLy1JkW57gtJEXiOF7/GoGVIo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TwAnKqoT4PNBiH2yVCx3Z2s6JtywzQaVdMVVd8ou3RFbFiangdAWoup52LU2IHYHx
-	 Xo7hxZoVLVo+ClQSzwTcvGQaX9HNE3itnBE4LnkNPqhcloOnAiKYfofUMau3VMzlbF
-	 67Ss9V5PSd+0ZmOYLuBxN1U3Gy1oTMlfDpjm+kJE=
+	b=hcOf1WfNuAdKt4fDIB/TqcTUKXcTBG/FPWGAaPvv+Z9OP9yx7I3AeDv45M28pgrbi
+	 P2p/KHHxpYoG7xmdQu/wjGyz9dQNDZo/shnVfd2N+g3i///dPu5MyyNs12jbsTHWGM
+	 CWT2AeROYzXa4wc7+8XWXg8lone9xOgzJXoXbin0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steven Rostedt <rostedt@goodmis.org>,
+	syzbot+72eddfbadda3e3928e72@syzkaller.appspotmail.com,
+	Zhu Yanjun <yanjun.zhu@linux.dev>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1010/1191] tracing: Have trace_event_update_all() only handle module that is loading
-Date: Sat, 12 Sep 2026 09:02:18 +0200
-Message-ID: <20260912065610.879581679@linuxfoundation.org>
+Subject: [PATCH 6.1 0970/1191] RDMA/cma: Fix WARNING in res_to_rt
+Date: Sat, 12 Sep 2026 09:01:38 +0200
+Message-ID: <20260912065609.999984925@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -50,87 +52,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt <rostedt@goodmis.org>
+From: Zhu Yanjun <yanjun.zhu@linux.dev>
 
-[ Upstream commit ae70b04ab9c7f6162a8c0fdd18a62a945c133142 ]
+[ Upstream commit c6d1ec4fbe56492bb88987d577f04a5fb6955f26 ]
 
-The function trace_event_update_all() does a scan of events looking to
-replace enums with their values in the strings that get exported to the
-event format files. It's run at boot up on all events and again when a
-module loads.
+syzbot reported a WARN_ON(!res->dev) in res_to_rt() triggered via
+addr_handler() during asynchronous address resolution:
 
-The issue is that when a module loads, it still runs on *all* events.
-There's no reason to process every event when a module loads as the
-previous events have already been processed. Only execute on the events
-that are loaded with the module.
+"
+WARNING: drivers/infiniband/core/restrack.c:138 at res_to_rt+0x1c4/0x230
+CPU#1: kworker/u8:4/59
+Modules linked in:
+CPU: 1 UID: 0 PID: 59 Comm: kworker/u8:4 Not tainted syzkaller #0 PREEMPT(full)
+Hardware name: Google Compute Engine, BIOS Google 07/24/2026
+Workqueue: ib_addr process_one_req
+RIP: 0010:res_to_rt+0x1c4/0x230 drivers/infiniband/core/restrack.c:138
+RSP: 0018:ffffc9000201f850 EFLAGS: 00010293
+RAX: ffffffff88d00ce5 RBX: ffff88807f0fd4f8 RCX: ffff88801e6e0000
+RDX: 0000000000000000 RSI: ffffffff8fd996f0 RDI: 0000000000000003
+RBP: 0000000000000000 R08: ffff88801e6e0000 R09: 000000000000000a
+R10: 0000000000000009 R11: 0000000000000000 R12: dffffc0000000000
+R13: 1ffff1100fe1fa9f R14: 0000000000000000 R15: 0000000000000003
+FS:  0000000000000000(0000) GS:ffff888125012000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00001d559c3d2000 CR3: 0000000077c4c000 CR4: 00000000003526f0
+Call Trace:
+ <TASK>
+ rdma_restrack_add+0x5a/0x8a0 drivers/infiniband/core/restrack.c:236
+ addr_handler+0x41a/0x5a0 drivers/infiniband/core/cma.c:3534
+ process_one_req+0x2eb/0x540 drivers/infiniband/core/addr.c:624
+ process_one_work kernel/workqueue.c:3375 [inline]
+ process_scheduled_works+0xc4e/0x1630 kernel/workqueue.c:3458
+ worker_thread+0xa47/0xfb0 kernel/workqueue.c:3539
+ kthread+0x388/0x470 kernel/kthread.c:436
+ ret_from_fork+0x514/0xb70 arch/x86/kernel/process.c:158
+ ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:245
+ </TASK>
+"
 
-Link: https://patch.msgid.link/20260813204226.29563591@gandalf.local.home
-Fixes: 3673b8e4ce723 ("tracing: Allow for modules to convert their enums to values")
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+In addr_handler(), cma_acquire_dev_by_src_ip() is called to populate
+id_priv->cma_dev and bind the associated ib_device to id_priv->id.device.
+If cma_acquire_dev_by_src_ip() returns an error (non-zero status), the ID
+remains unassociated with any RDMA device.
+
+Previously, rdma_restrack_add(&id_priv->res) was invoked unconditionally
+even when cma_acquire_dev_by_src_ip() failed, passing a resource with a
+NULL dev pointer and triggering the WARN_ON assertion in res_to_rt().
+
+Fix this by only adding the resource to restrack when acquiring the device
+succeeds.
+
+Reported-by: syzbot+72eddfbadda3e3928e72@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=72eddfbadda3e3928e72
+Tested-by: syzbot+72eddfbadda3e3928e72@syzkaller.appspotmail.com
+Fixes: cb5cd0ea4eb3 ("RDMA/core: Add CM to restrack after successful attachment to a device")
+
+Link: https://patch.msgid.link/r/20260810220123.191696-1-yanjun.zhu@linux.dev
+Signed-off-by: Zhu Yanjun <yanjun.zhu@linux.dev>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace.c        | 2 +-
- kernel/trace/trace.h        | 4 ++--
- kernel/trace/trace_events.c | 6 +++++-
- 3 files changed, 8 insertions(+), 4 deletions(-)
+ drivers/infiniband/core/cma.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/trace/trace.c b/kernel/trace/trace.c
-index a5f9f666a49f5..33770d2b3489e 100644
---- a/kernel/trace/trace.c
-+++ b/kernel/trace/trace.c
-@@ -6209,7 +6209,7 @@ trace_event_update_with_eval_map(struct module *mod,
- 
- 	map = start;
- 
--	trace_event_update_all(map, len);
-+	trace_event_update_all(map, len, mod);
- 
- 	if (len <= 0)
- 		return;
-diff --git a/kernel/trace/trace.h b/kernel/trace/trace.h
-index 7058234433359..8cdb8e1a33c1e 100644
---- a/kernel/trace/trace.h
-+++ b/kernel/trace/trace.h
-@@ -1930,13 +1930,13 @@ static inline const char *get_syscall_name(int syscall)
- 
- #ifdef CONFIG_EVENT_TRACING
- void trace_event_init(void);
--void trace_event_update_all(struct trace_eval_map **map, int len);
-+void trace_event_update_all(struct trace_eval_map **map, int len, struct module *mod);
- /* Used from boot time tracer */
- extern int ftrace_set_clr_event(struct trace_array *tr, char *buf, int set);
- extern int trigger_process_regex(struct trace_event_file *file, char *buff);
- #else
- static inline void __init trace_event_init(void) { }
--static inline void trace_event_update_all(struct trace_eval_map **map, int len) { }
-+static inline void trace_event_update_all(struct trace_eval_map **map, int len, struct module *mod) { }
- #endif
- 
- #ifdef CONFIG_TRACER_SNAPSHOT
-diff --git a/kernel/trace/trace_events.c b/kernel/trace/trace_events.c
-index 367b34814ab8e..41f113eaaac57 100644
---- a/kernel/trace/trace_events.c
-+++ b/kernel/trace/trace_events.c
-@@ -2976,7 +2976,7 @@ static void update_event_fields(struct trace_event_call *call,
- }
- 
- /* Update all events for replacing eval and sanitizing */
--void trace_event_update_all(struct trace_eval_map **map, int len)
-+void trace_event_update_all(struct trace_eval_map **map, int len, struct module *mod)
- {
- 	struct trace_event_call *call, *p;
- 	const char *last_system = NULL;
-@@ -2988,6 +2988,10 @@ void trace_event_update_all(struct trace_eval_map **map, int len)
- 	mutex_lock(&event_mutex);
- 	down_write(&trace_event_sem);
- 	list_for_each_entry_safe(call, p, &ftrace_events, list) {
-+
-+		if (mod && call->module != mod)
-+			continue;
-+
- 		/* events are usually grouped together with systems */
- 		if (!last_system || call->class->system != last_system) {
- 			first = true;
+diff --git a/drivers/infiniband/core/cma.c b/drivers/infiniband/core/cma.c
+index e782735240902..aa9d8a38c1ddf 100644
+--- a/drivers/infiniband/core/cma.c
++++ b/drivers/infiniband/core/cma.c
+@@ -3475,10 +3475,12 @@ static void addr_handler(int status, struct sockaddr *src_addr,
+ 	memcpy(addr, src_addr, rdma_addr_size(src_addr));
+ 	if (!status && !id_priv->cma_dev) {
+ 		status = cma_acquire_dev_by_src_ip(id_priv);
+-		if (status)
++		if (status) {
+ 			pr_debug_ratelimited("RDMA CM: ADDR_ERROR: failed to acquire device. status %d\n",
+ 					     status);
+-		rdma_restrack_add(&id_priv->res);
++		} else {
++			rdma_restrack_add(&id_priv->res);
++		}
+ 	} else if (status) {
+ 		pr_debug_ratelimited("RDMA CM: ADDR_ERROR: failed to resolve IP. status %d\n", status);
+ 	}
 -- 
 2.53.0
 
