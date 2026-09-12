@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70104348C75;
-	Sat, 12 Sep 2026 14:55:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15DDF191F93;
+	Sat, 12 Sep 2026 14:55:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789224935; cv=none; b=J0iY1HVkQ8mrFKvN4JPCxcUf3Az7f0zQwFwa7KDXZovauCvvgcZEwVtoagCskArFz87ntJgY67Xuig8+1yetTAIDdcjGU5C9yC//jixE6JpN9vgNUg02y0wWV/Ux2VacwEQyXoQph5ZK54uc2ywQc7Cr88jq/hV+ZLGXnNJUiEo=
+	t=1789224940; cv=none; b=IrGA2zDrn9KEtNx57c1cCdtqZ2f1PQSIW0kyh4s7r4htsPiXQUGLTX088cWsz7fw+fo15SwR0Mk2zKjhV2b6KjiFooRh9thzcjLvCuN0b5o9yrr3gvSL+4QhqZP19inM6VbX1/J5aLNTVhcE1hXxCbhm3cc6MZ9yIsqc2+JBOI4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789224935; c=relaxed/simple;
-	bh=b37mvnN8nI5cxhNJUqiswKlgKsCcOc7K4QjkaCYUzgw=;
+	s=arc-20240116; t=1789224940; c=relaxed/simple;
+	bh=RhMQSXtJN4QWO+I0H3MvEtMh2ZpNqIJ3CgrT40TC2jM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jF/lGLgE9AkU7rJ7b+3cZTjudfyfV8xj8dj+QdzrTz1Gwu3pSuNpZ4evmK603o3lhtMnUfR2P6zqgxQtpJorTo1fAgJNWkmOdnBb9RakwkrBZyEMX7baYFFCz1eODyG6ET5PrxMcfvaLVSkKGChnWokV/0BqUvazH86KNqwgVjA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lop74CVB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CF5WNd4UnmveYtvcRmC5tZ40kIyybKcFIV7i5KaKvnwB1JA9DyKD9fKsQtNBKzwv7fdcoHXkvEho6yDWZmktovL5amYL4Y0d3iSyQbJnZGLFWLZjRtSR8Vd+l4kQO3uLEmFdNSb8lyIP5Rob4Zpb6yHIMrZRF3pFLAC+1jFebLc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BfdvhmwQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lop74CVB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F22F31F000FF;
-	Sat, 12 Sep 2026 14:55:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BfdvhmwQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD1AC1F000FF;
+	Sat, 12 Sep 2026 14:55:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789224933;
-	bh=7tibaOj5bbcJzXhTuAegCZZvh56tNNgZPWDdNc5O3p4=;
+	s=korg; t=1789224938;
+	bh=XtO52cdlR2pXCehYq3kVlj/8E/ltqK2D7C8EvPIZ8qc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lop74CVBEuWipYDUwCo5PICuWzCWksevGU25DGaADeEi3SKwCN3PVwx4zZEDSJ/Y9
-	 BcHg/G+HADtp3YF5+AeUVnJ/cuUOOfi4DAy6WiS+sTbZVd968M1cecqNE4ZnfSvWNk
-	 BSUcqZpyRrQLwzPsGM4YAxyRviSCieO8n/xS6V3g=
+	b=BfdvhmwQoLixKhjH7xqWcq4hqdDguieg48bGzm7y1GKhntvoeVxsvsCXiv7haQ/hO
+	 ut9WRhFG2ZYl/GRB4MVgY8rSc/yUVyIT9+uEnfhfjVF4x+Y1CsHDheu2HaLRmoCMtS
+	 iKs65botegIjnzgYxlt5uBQofzH8zlM3tC/CdN3A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Alexandre Bounine <alex.bou9@gmail.com>,
-	Matt Porter <mporter@kernel.crashing.org>,
-	Yang yingliang <yangyingliang@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1043/1424] rapidio: clear mport->net when rio_add_net() fails
-Date: Sat, 12 Sep 2026 08:57:55 +0200
-Message-ID: <20260912065630.665258777@linuxfoundation.org>
+Subject: [PATCH 6.6 1089/1424] mfd: iqs62x: Reject zero-length firmware records
+Date: Sat, 12 Sep 2026 08:58:41 +0200
+Message-ID: <20260912065631.694460691@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -54,47 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit b74030fbf187b43c1f85b66a7082e9946511cb5d ]
+[ Upstream commit 08ea045e0b82cbcadb7a2efc43a23561489a00f2 ]
 
-rio_alloc_net() stores the newly allocated rio_net in mport->net before
-rio_scan_alloc_net() registers the device.
+struct iqs62x_fw_rec includes the first data byte in its fixed-size header,
+so the parser advances by len - 1 bytes after that header. A zero len makes
+the size_t cursor update move back by one byte, so the next record overlaps
+the current record instead of following a valid declared extent.
 
-If rio_add_net() fails, rio_scan_alloc_net() drops the device reference
-with put_device(), which releases the rio_net through the device release
-callback.  However, mport->net is left pointing at the freed object.
+Reject zero-length records and express the remaining-size check without an
+offset addition.
 
-A later mport unregister path can then dereference the dangling mport->net
-pointer and may try to free the same rio_net again.
-
-Clear mport->net in the rio_add_net() failure path, matching the cleanup
-done for the destID table allocation failure path.
-
-Link: https://lore.kernel.org/20260708070628.721010-1-lgs201920130244@gmail.com
-Fixes: e842f9a1edf3 ("rapidio: add check for rio_add_net() in rio_scan_alloc_net()")
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Cc: Alexandre Bounine <alex.bou9@gmail.com>
-Cc: Matt Porter <mporter@kernel.crashing.org>
-Cc: Yang yingliang <yangyingliang@huawei.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 4d9cf7df8d35 ("mfd: Add support for Azoteq IQS620A/621/622/624/625")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://lore.kernel.org/all/20260706091034.75865-1-pengpeng@iscas.ac.cn/
+Link: https://patch.msgid.link/20260720115423.94994-1-pengpeng@iscas.ac.cn
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rapidio/rio-scan.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/mfd/iqs62x.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/rapidio/rio-scan.c b/drivers/rapidio/rio-scan.c
-index dcd6619a4b027..3cc25d0534513 100644
---- a/drivers/rapidio/rio-scan.c
-+++ b/drivers/rapidio/rio-scan.c
-@@ -874,6 +874,7 @@ static struct rio_net *rio_scan_alloc_net(struct rio_mport *mport,
- 		net->dev.release = rio_scan_release_dev;
- 		if (rio_add_net(net)) {
- 			put_device(&net->dev);
-+			mport->net = NULL;
- 			net = NULL;
+diff --git a/drivers/mfd/iqs62x.c b/drivers/mfd/iqs62x.c
+index e03b4d38fbb0a..70ac09ed120c7 100644
+--- a/drivers/mfd/iqs62x.c
++++ b/drivers/mfd/iqs62x.c
+@@ -237,7 +237,7 @@ static int iqs62x_firmware_parse(struct iqs62x_core *iqs62x,
+ 		fw_rec = (struct iqs62x_fw_rec *)(fw->data + pos);
+ 		pos += sizeof(*fw_rec);
+ 
+-		if (pos + fw_rec->len - 1 > fw->size) {
++		if (!fw_rec->len || fw_rec->len - 1 > fw->size - pos) {
+ 			ret = -EINVAL;
+ 			break;
  		}
- 	}
 -- 
 2.53.0
 
