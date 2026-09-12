@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AC8617DFFA;
-	Sat, 12 Sep 2026 09:54:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C006D356744;
+	Sat, 12 Sep 2026 09:54:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789206887; cv=none; b=SAHxGYQt4d/LlpVllWyn7Y+rqQxc0imXvZdUUFirtkAQ/xSFRYJbPCYcZ74pZQokY/hhywg/1xvU5kx+mCCcMXcW7iNLA2+em+D/qboVyw5s1HlyMDsjJ/oAc1qizaATsblQWho6V0YLujR51gSexDUm+YjvpWg961A6zfGnTJ4=
+	t=1789206891; cv=none; b=gBA3vhQqA8CLMVo8XkSLfjy5rjtr2B9RIr406WnNU+K4Q3MPb1Xc/U+Z2w9vYLv25tE0jN5oyBczW4LKW9if7ruoIc3FO8gSfeudMdmj2Qa3cyBrUUnmwtVehpR1hHvRqm877o4qLdgaLEhJjDdWsNIQCYFxvm6q5GLZjXqux9Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789206887; c=relaxed/simple;
-	bh=rV1fpHePZc2eQt8wd0nCPLu6uNV0VISE7xXcvXPhutM=;
+	s=arc-20240116; t=1789206891; c=relaxed/simple;
+	bh=1I3qfUtigDvTJQD+2RIXWWPmnkJy/ZnleXQK/Sz1gQ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=W9e1YkBrATW8ml068HxNOwEokb1YiOternuz9uleJdnqa6EBocSc0vyMzwAgy5WOt81UFlIB3nz0GG0PdNjcZa0TCkncxGFKbglc+HEUu8OON5YfyakVAQaeDo+PPrqNnzPai48xmLu1Bte0TUmzLJnBwKVKSepfs8xajulx6Ig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FBq2zQSI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=knR7a75RNoARFuE6NELFZIhEdR9bZ7OkqOIll30AwW6DnK0KwNXFAen1nV9XUXmQnouy4QUvu6qCzAroc1FONJOadjOonCto8DOgpYa9P00/de0eoSWtntP944FdKMmcXbie3uCKgW7PLUe4y2LYaBYD7gRS3zv3NzJGnNeKlh0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ui+iqjg0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FBq2zQSI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D84DA1F000FF;
-	Sat, 12 Sep 2026 09:54:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ui+iqjg0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5CB11F000FF;
+	Sat, 12 Sep 2026 09:54:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789206886;
-	bh=vC2T50dUwlev0RGYzurwL9jQCPimXhXrhbDGkU1I9Ls=;
+	s=korg; t=1789206890;
+	bh=WYJNFQ4zTOfZAP4S0OW2rYq1J3XoJikaa0KbP4Nv8IE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FBq2zQSIW6MylfSkg5OxdlOHz0FquclRp3K8KRgxysbhVVLFIr5lLaXgH90/UDPp6
-	 z0zVyaARA6bJIfLqOlJZ0WhkbCi9WG2Eedw6rsUHpRrcHeTbsETP2E20HIpLlsk1Xi
-	 PVWJ9ZkpNAEmPPYj1lW/Vt4xeYYEpQfJd6yeuRdY=
+	b=Ui+iqjg06xFaNhKT+AejPuiVrO3RHhvNb3Pu7i7zo+uOv3PyGIr9bYBSLAEb/4wRq
+	 IWjf2F5xNhn0uuJSQfCbaMtaSNy2s1Ri0l1div9t2SYrjBM2QJ1CQAzsDcvuxu6a1h
+	 HZCUhNFvfFYOee+0JW6zWospB6vmtsiPQilFeTUs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Armin Wolf <W_Armin@gmx.de>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0299/1518] platform/x86: dell-wmi-base: Fix resource leak on module load failure
-Date: Sat, 12 Sep 2026 08:41:08 +0200
-Message-ID: <20260912065630.243689834@linuxfoundation.org>
+Subject: [PATCH 6.18 0300/1518] platform/x86: lg-laptop: Drop debug-only ACPI notify handler
+Date: Sat, 12 Sep 2026 08:41:09 +0200
+Message-ID: <20260912065630.265487413@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,51 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Armin Wolf <W_Armin@gmx.de>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 072841e02cf9c00a7e8a9c567a14239e02ca47ad ]
+[ Upstream commit c12fe0b2c12195e0d1c56e0f670a6bd792b0567e ]
 
-We need to properly clean up the SMBIOS request and the privacy driver
-when the module load fails.
+To facilitate subsequent conversion of the driver to using struct
+platform_driver instead of struct acpi_driver, drop the debug-only
+notify handler method from the driver.
 
-Fixes: 8af9fa37b8a3 ("platform/x86: dell-privacy: Add support for Dell hardware privacy")
-Signed-off-by: Armin Wolf <W_Armin@gmx.de>
-Link: https://patch.msgid.link/20260612173451.467629-3-W_Armin@gmx.de
+No intentional functional impact beyond debug.
+
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://patch.msgid.link/3346280.5fSG56mABF@rafael.j.wysocki
 Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Stable-dep-of: 3e91964aa74a ("platform/x86: lg-laptop: Fix LED resource handling")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/dell/dell-wmi-base.c | 17 +++++++++++++++--
- 1 file changed, 15 insertions(+), 2 deletions(-)
+ drivers/platform/x86/lg-laptop.c | 6 ------
+ 1 file changed, 6 deletions(-)
 
-diff --git a/drivers/platform/x86/dell/dell-wmi-base.c b/drivers/platform/x86/dell/dell-wmi-base.c
-index 907f1da01c8db..ba6c88e2a5ec0 100644
---- a/drivers/platform/x86/dell/dell-wmi-base.c
-+++ b/drivers/platform/x86/dell/dell-wmi-base.c
-@@ -851,9 +851,22 @@ static int __init dell_wmi_init(void)
- 
- 	err = dell_privacy_register_driver();
- 	if (err)
--		return err;
-+		goto out_smbios;
- 
--	return wmi_driver_register(&dell_wmi_driver);
-+	err = wmi_driver_register(&dell_wmi_driver);
-+	if (err)
-+		goto out_privacy;
-+
-+	return 0;
-+
-+out_privacy:
-+	dell_privacy_unregister_driver();
-+
-+out_smbios:
-+	if (wmi_requires_smbios_request)
-+		dell_wmi_events_set_enabled(false);
-+
-+	return err;
+diff --git a/drivers/platform/x86/lg-laptop.c b/drivers/platform/x86/lg-laptop.c
+index 6af6cf477c5b5..6a45e6270941a 100644
+--- a/drivers/platform/x86/lg-laptop.c
++++ b/drivers/platform/x86/lg-laptop.c
+@@ -269,11 +269,6 @@ static void wmi_input_setup(void)
+ 	}
  }
- late_initcall(dell_wmi_init);
+ 
+-static void acpi_notify(struct acpi_device *device, u32 event)
+-{
+-	acpi_handle_debug(device->handle, "notify: %d\n", event);
+-}
+-
+ static ssize_t fan_mode_store(struct device *dev,
+ 			      struct device_attribute *attr,
+ 			      const char *buffer, size_t count)
+@@ -886,7 +881,6 @@ static struct acpi_driver acpi_driver = {
+ 	.ops = {
+ 		.add = acpi_add,
+ 		.remove = acpi_remove,
+-		.notify = acpi_notify,
+ 		},
+ };
  
 -- 
 2.53.0
