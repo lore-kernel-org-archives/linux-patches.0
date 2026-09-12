@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B982C347FEC;
-	Sat, 12 Sep 2026 13:12:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC1CD47C111;
+	Sat, 12 Sep 2026 13:11:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789218727; cv=none; b=h/qrX1W3rz3QLcV7Op7UbBjMUm6ImvxdNYPJvDK1G5KyXvnTHkJTy+R7In5cqseJu4vzV/e2xFd8NB/VL/CQmB9CzApqYx1N1E11GlWxU68951iphXxCjBZ1OhSAZvrJLaS8otlftz142fUdgM+AkA/tkUwyfynxpoW9GSQY2Ms=
+	t=1789218728; cv=none; b=uWIjitcbBLNDORPa5KI37PsSTbkNSeQA6qS2cBlG1dSZvWr6l7tTL+vpeHvw4ex4TLNqZt0+vsew8lsmT4Okg2R9/JTYqq4Lv9Bl3RmeD7ArVctx/6uhFTVheUoT1k0pyER6PyGfjZvkicOzIAMMzs8VrThixoiieLCVRFGgK8Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789218727; c=relaxed/simple;
-	bh=CiXsEnsEmgMzCIw0+nsBf2q294k4okyROiAENa1mEvc=;
+	s=arc-20240116; t=1789218728; c=relaxed/simple;
+	bh=dWwYPyy1/6AuJfH6QEtPlaRF2giFlV5OODgDSQqpHys=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QN6HfVBzNClFyQINCkUS8H04YmDY9mEkWyeMarCgIwtDRReiJkmiXf4H2xF/HSJ04FcV7o4YqBMMvjuZyWHokpuwkw7wxet/DRzh5Q0xu28EZieDB3+mn4k9S7h4RDiiXomVt2cVSKPYoTjVE+WN7aXxEmaDomeoakag+mDws3A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kYCbQPi0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=H2+q+jIy2BAC7kbZifW9rOvubJZtuOqCDizKlvot7RMwjKPKU8o0if6+PMbc0Si6OSxCXjcXyruoJdWWDkC+HYIM6bSRA5QOxaT/SCM9+6LrDc7jFe4qzzsuZQ5uAKkz/HF1DlKnzp8gzLQ5yG0Kn++HEZPfLdeONPwEXnxc4vU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yGgs8pKm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kYCbQPi0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D79261F00898;
-	Sat, 12 Sep 2026 13:12:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yGgs8pKm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F88F1F00893;
+	Sat, 12 Sep 2026 13:11:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789218722;
-	bh=qmJwA2klub8TrmQXzyVJfCIto//tfd2kkcDKwFLkBx0=;
+	s=korg; t=1789218714;
+	bh=vrCVnireDb7833p20UTSjIqOYaB71zSbisfLa4aNhew=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kYCbQPi0gp/J00O1zm8SxiujhdbrEENsu1S/LB7RuDEAqnJcCX5Y0vW5v4WJLjCda
-	 VhiZlLHq9aQmdRF47wer7fB5ROkLSvXqM1VrHdTXzmiWri9AmbAl8PiGazVgSknCVR
-	 wOBMx/AXywH1j9P7J1FNIc0erEPbg9rSSkDDbfIg=
+	b=yGgs8pKmNJ6KQgvu/YkEzOPniTLwO7WTYrh+7hVDJrsnSWPiTYZePCPmRYocLXmWG
+	 LqhK0NPX5zcv26HYwpzffeKVK6bP7/13P2NQxfytNFxbsBgzfSr24quHRWqmd4ffCW
+	 BM6rD8aj/AJUFsVMnDeC3Io7wdHkDkNCen+8A4CE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guenter Roeck <linux@roeck-us.net>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1160/1376] hwmon: (emc1403) Rely on subsystem locking
-Date: Sat, 12 Sep 2026 08:59:46 +0200
-Message-ID: <20260912065633.406209587@linuxfoundation.org>
+Subject: [PATCH 6.12 1199/1376] f2fs: fix to avoid pinfile fragment on fragment:{block, segment} mode
+Date: Sat, 12 Sep 2026 09:00:25 +0200
+Message-ID: <20260912065634.272043410@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -50,153 +51,172 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 61e9b50ffa2390a2927051d335b2ba04b8f791ce ]
+[ Upstream commit 0a1703eba23707e3b2edfa2a2329352e7abc0ffa ]
 
-Attribute access is now serialized in the hardware monitoring core,
-so locking in the driver code is no longer necessary. Drop it.
+pinfile fallocate() conflicts w/ mode=fragment:{block,segment} mount option,
+result in fragment blocks in pinfile, it violate semantics of pinfile
+introduced in commit f5a53edcf01e ("f2fs: support aligned pinned file").
 
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Stable-dep-of: 75f2c0b36907 ("hwmon: (emc1403) Drop hysteresis for low limit temperature")
+mkfs.f2fs -f /dev/vdb
+mount -t f2fs -o mode=fragment:block /dev/vdb /mnt/f2fs/
+dd if=/dev/zero of=/mnt/f2fs/file bs=1M count=3900
+sync
+touch /mnt/f2fs/pinfile
+f2fs_io pinfile set /mnt/f2fs/pinfile
+f2fs_io fallocate 0 0 $((1024*1024*16)) /mnt/f2fs/pinfile
+sync
+f2fs_io fiemap 0 $((1024*1024*16)) /mnt/f2fs/pinfile
+
+[Before]
+fallocate failed: No space left on device
+Fiemap: offset = 0 len = 16777216
+        logical addr.    physical addr.   length           flags
+0       0000000000000000 00000000d7200000 0000000000004000 00001000
+1       0000000000004000 00000000d7207000 0000000000001000 00001000
+2       0000000000005000 00000000d720c000 0000000000002000 00001000
+3       0000000000007000 00000000d7211000 0000000000001000 00001000
+4       0000000000008000 00000000d7214000 0000000000001000 00001000
+5       0000000000009000 00000000d7218000 0000000000001000 00001000
+6       000000000000a000 00000000d721d000 0000000000001000 00001000
+7       000000000000b000 00000000d721f000 0000000000004000 00001000
+...
+96      00000000000f1000 00000000d73e9000 0000000000004000 00001000
+97      00000000000f5000 00000000d73f1000 0000000000003000 00001000
+98      00000000000f8000 00000000d73f5000 0000000000004000 00001000
+99      00000000000fc000 00000000d73fa000 0000000000001000 00001000
+100     00000000000fd000 00000000d73ff000 0000000000001000 00001001
+
+[After]
+fallocated a file: i_size=16777216, i_blocks=32808
+Fiemap: offset = 0 len = 16777216
+        logical addr.    physical addr.   length           flags
+0       0000000000000000 0000000018a00000 0000000000400000 00001000
+1       0000000000400000 0000000019000000 0000000000400000 00001000
+2       0000000000800000 0000000032400000 0000000000200000 00001000
+3       0000000000a00000 0000000038000000 0000000000200000 00001000
+4       0000000000c00000 0000000039c00000 0000000000200000 00001000
+5       0000000000e00000 0000000044c00000 0000000000200000 00001001
+
+Let's ignore mode=fragment:{block,segment} mount option while fallocate()
+on pinfile.
+
+Fixes: 6691d940b0e0 ("f2fs: introduce fragment allocation mode mount option")
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/emc1403.c | 46 +++++++++--------------------------------
- 1 file changed, 10 insertions(+), 36 deletions(-)
+ fs/f2fs/f2fs.h    | 15 +++++++++++----
+ fs/f2fs/gc.c      |  2 +-
+ fs/f2fs/segment.c |  8 ++++----
+ fs/f2fs/super.c   |  4 ++--
+ 4 files changed, 18 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/hwmon/emc1403.c b/drivers/hwmon/emc1403.c
-index eca33220d34a0..ccce948a4306e 100644
---- a/drivers/hwmon/emc1403.c
-+++ b/drivers/hwmon/emc1403.c
-@@ -17,7 +17,6 @@
- #include <linux/hwmon-sysfs.h>
- #include <linux/err.h>
- #include <linux/sysfs.h>
--#include <linux/mutex.h>
- #include <linux/regmap.h>
- #include <linux/util_macros.h>
+diff --git a/fs/f2fs/f2fs.h b/fs/f2fs/f2fs.h
+index 57cc64a5c9d2c..095f2c2953f1d 100644
+--- a/fs/f2fs/f2fs.h
++++ b/fs/f2fs/f2fs.h
+@@ -3858,19 +3858,26 @@ unsigned int f2fs_usable_blks_in_seg(struct f2fs_sb_info *sbi,
+ #define MIN_FRAGMENT_SIZE	1
+ #define MAX_FRAGMENT_SIZE	512
  
-@@ -30,7 +29,6 @@ enum emc1403_chip { emc1402, emc1403, emc1404, emc1428 };
- struct thermal_data {
- 	enum emc1403_chip chip;
- 	struct regmap *regmap;
--	struct mutex mutex;
- };
- 
- static ssize_t power_state_show(struct device *dev, struct device_attribute *attr, char *buf)
-@@ -268,8 +266,8 @@ static s8 emc1403_temp_regs_low[][4] = {
- 	},
- };
- 
--static int __emc1403_get_temp(struct thermal_data *data, int channel,
--			      enum emc1403_reg_map map, long *val)
-+static int emc1403_get_temp(struct thermal_data *data, int channel,
-+			    enum emc1403_reg_map map, long *val)
+-static inline bool f2fs_need_rand_blk(struct f2fs_sb_info *sbi)
++static inline bool f2fs_need_rand_blk(struct f2fs_sb_info *sbi,
++					enum log_type type)
  {
- 	unsigned int regvalh;
- 	unsigned int regvall = 0;
-@@ -295,38 +293,23 @@ static int __emc1403_get_temp(struct thermal_data *data, int channel,
- 	return 0;
++	if (type == CURSEG_COLD_DATA_PINNED)
++		return false;
+ 	return F2FS_OPTION(sbi).fs_mode == FS_MODE_FRAGMENT_BLK;
  }
  
--static int emc1403_get_temp(struct thermal_data *data, int channel,
--			    enum emc1403_reg_map map, long *val)
--{
--	int ret;
--
--	mutex_lock(&data->mutex);
--	ret = __emc1403_get_temp(data, channel, map, val);
--	mutex_unlock(&data->mutex);
--
--	return ret;
--}
--
- static int emc1403_get_hyst(struct thermal_data *data, int channel,
- 			    enum emc1403_reg_map map, long *val)
+-static inline bool f2fs_need_rand_seg(struct f2fs_sb_info *sbi)
++static inline bool f2fs_need_rand_seg(struct f2fs_sb_info *sbi,
++					enum log_type type)
  {
- 	int hyst, ret;
- 	long limit;
- 
--	mutex_lock(&data->mutex);
--	ret = __emc1403_get_temp(data, channel, map, &limit);
-+	ret = emc1403_get_temp(data, channel, map, &limit);
- 	if (ret < 0)
--		goto unlock;
-+		return ret;
- 	ret = regmap_read(data->regmap, 0x21, &hyst);
- 	if (ret < 0)
--		goto unlock;
-+		return ret;
- 	if (map == temp_min)
- 		*val = limit + hyst * 1000;
- 	else
- 		*val = limit - hyst * 1000;
--unlock:
--	mutex_unlock(&data->mutex);
--	return ret;
-+	return 0;
++	if (type == CURSEG_COLD_DATA_PINNED)
++		return false;
+ 	return F2FS_OPTION(sbi).fs_mode == FS_MODE_FRAGMENT_SEG;
  }
  
- static int emc1403_temp_read(struct thermal_data *data, u32 attr, int channel, long *val)
-@@ -451,20 +434,16 @@ static int emc1403_set_hyst(struct thermal_data *data, long val)
- 	else
- 		val = clamp_val(val, 0, 255000);
- 
--	mutex_lock(&data->mutex);
--	ret = __emc1403_get_temp(data, 0, temp_crit, &limit);
-+	ret = emc1403_get_temp(data, 0, temp_crit, &limit);
- 	if (ret < 0)
--		goto unlock;
-+		return ret;
- 
- 	hyst = limit - val;
- 	if (data->chip == emc1428)
- 		hyst = clamp_val(DIV_ROUND_CLOSEST(hyst, 1000), 0, 127);
- 	else
- 		hyst = clamp_val(DIV_ROUND_CLOSEST(hyst, 1000), 0, 255);
--	ret = regmap_write(data->regmap, 0x21, hyst);
--unlock:
--	mutex_unlock(&data->mutex);
--	return ret;
-+	return regmap_write(data->regmap, 0x21, hyst);
+-static inline bool f2fs_need_rand_seg_blk(struct f2fs_sb_info *sbi)
++static inline bool f2fs_need_rand_seg_blk(struct f2fs_sb_info *sbi,
++					enum log_type type)
+ {
+-	return f2fs_need_rand_blk(sbi) || f2fs_need_rand_seg(sbi);
++	return f2fs_need_rand_blk(sbi, type) || f2fs_need_rand_seg(sbi, type);
  }
  
- static int emc1403_set_temp(struct thermal_data *data, int channel,
-@@ -478,7 +457,6 @@ static int emc1403_set_temp(struct thermal_data *data, int channel,
- 	regh = emc1403_temp_regs[channel][map];
- 	regl = emc1403_temp_regs_low[channel][map];
+ /*
+diff --git a/fs/f2fs/gc.c b/fs/f2fs/gc.c
+index 08a978b6e0a95..49d1acd26a4c7 100644
+--- a/fs/f2fs/gc.c
++++ b/fs/f2fs/gc.c
+@@ -317,7 +317,7 @@ static void select_policy(struct f2fs_sb_info *sbi, int gc_type,
+ 		p->max_search = sbi->max_victim_search;
  
--	mutex_lock(&data->mutex);
- 	if (regl >= 0) {
- 		if (data->chip == emc1428)
- 			val = clamp_val(val, -128000, 127875);
-@@ -487,7 +465,7 @@ static int emc1403_set_temp(struct thermal_data *data, int channel,
- 		regval = DIV_ROUND_CLOSEST(val, 125);
- 		ret = regmap_write(data->regmap, regh, (regval >> 3) & 0xff);
- 		if (ret < 0)
--			goto unlock;
-+			return ret;
- 		ret = regmap_write(data->regmap, regl, (regval & 0x07) << 5);
- 	} else {
- 		if (data->chip == emc1428)
-@@ -497,8 +475,6 @@ static int emc1403_set_temp(struct thermal_data *data, int channel,
- 		regval = DIV_ROUND_CLOSEST(val, 1000);
- 		ret = regmap_write(data->regmap, regh, regval);
+ 	/* let's select beginning hot/small space first. */
+-	if (f2fs_need_rand_seg_blk(sbi)) {
++	if (f2fs_need_rand_seg_blk(sbi, type)) {
+ 		p->offset = get_random_u32_below(MAIN_SECS(sbi) *
+ 						SEGS_PER_SEC(sbi));
+ 		SIT_I(sbi)->last_victim[p->gc_mode] = p->offset;
+diff --git a/fs/f2fs/segment.c b/fs/f2fs/segment.c
+index 7d85baa22c6ef..e3797e99271ee 100644
+--- a/fs/f2fs/segment.c
++++ b/fs/f2fs/segment.c
+@@ -2843,7 +2843,7 @@ static unsigned int __get_next_segno(struct f2fs_sb_info *sbi, int type)
+ 
+ 	sanity_check_seg_type(sbi, seg_type);
+ 	if (__is_large_section(sbi)) {
+-		if (f2fs_need_rand_seg_blk(sbi)) {
++		if (f2fs_need_rand_seg_blk(sbi, type)) {
+ 			unsigned int hint = GET_SEC_FROM_SEG(sbi, curseg->segno);
+ 
+ 			if (GET_SEC_FROM_SEG(sbi, curseg->segno + 1) != hint)
+@@ -2852,7 +2852,7 @@ static unsigned int __get_next_segno(struct f2fs_sb_info *sbi, int type)
+ 					GET_SEG_FROM_SEC(sbi, hint + 1) - 1);
+ 		}
+ 		return curseg->segno;
+-	} else if (f2fs_need_rand_seg_blk(sbi)) {
++	} else if (f2fs_need_rand_seg_blk(sbi, type)) {
+ 		return get_random_u32_below(MAIN_SECS(sbi) * SEGS_PER_SEC(sbi));
  	}
--unlock:
--	mutex_unlock(&data->mutex);
- 	return ret;
- }
  
-@@ -695,8 +671,6 @@ static int emc1403_probe(struct i2c_client *client)
- 	if (IS_ERR(data->regmap))
- 		return PTR_ERR(data->regmap);
- 
--	mutex_init(&data->mutex);
--
- 	hwmon_dev = devm_hwmon_device_register_with_info(&client->dev,
- 							 client->name, data,
- 							 &emc1403_chip_info,
+@@ -2908,7 +2908,7 @@ static int new_curseg(struct f2fs_sb_info *sbi, int type, bool new_sec)
+ 	curseg->next_segno = segno;
+ 	reset_curseg(sbi, type, 1);
+ 	curseg->alloc_type = LFS;
+-	if (f2fs_need_rand_blk(sbi))
++	if (f2fs_need_rand_blk(sbi, type))
+ 		curseg->fragment_remained_chunk =
+ 				get_random_u32_inclusive(1, sbi->max_fragment_chunk);
+ 	return 0;
+@@ -3712,7 +3712,7 @@ int f2fs_allocate_data_block(struct f2fs_sb_info *sbi, struct page *page,
+ 		curseg->next_blkoff = f2fs_find_next_ssr_block(sbi, curseg);
+ 	} else {
+ 		curseg->next_blkoff++;
+-		if (f2fs_need_rand_blk(sbi))
++		if (f2fs_need_rand_blk(sbi, type))
+ 			f2fs_randomize_chunk(sbi, curseg);
+ 	}
+ 	if (curseg->next_blkoff >= f2fs_usable_blks_in_seg(sbi, curseg->segno))
+diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
+index 59331eddca856..6bf2e0c7854c2 100644
+--- a/fs/f2fs/super.c
++++ b/fs/f2fs/super.c
+@@ -2059,9 +2059,9 @@ static int f2fs_show_options(struct seq_file *seq, struct dentry *root)
+ 		seq_puts(seq, "adaptive");
+ 	else if (F2FS_OPTION(sbi).fs_mode == FS_MODE_LFS)
+ 		seq_puts(seq, "lfs");
+-	else if (f2fs_need_rand_seg(sbi))
++	else if (f2fs_need_rand_seg(sbi, NO_CHECK_TYPE))
+ 		seq_puts(seq, "fragment:segment");
+-	else if (f2fs_need_rand_blk(sbi))
++	else if (f2fs_need_rand_blk(sbi, NO_CHECK_TYPE))
+ 		seq_puts(seq, "fragment:block");
+ 	seq_printf(seq, ",active_logs=%u", F2FS_OPTION(sbi).active_logs);
+ 	if (test_opt(sbi, RESERVE_ROOT))
 -- 
 2.53.0
 
