@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1C383AEF51;
-	Sat, 12 Sep 2026 12:05:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0ED0343893;
+	Sat, 12 Sep 2026 12:05:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789214751; cv=none; b=BIMggqLNNjw4Wr9DNlcJ0+b10+Hjlz7W4GkQcqAL/RCVuKRnWKEzWkMUMelTLe0SkYmTjQ5mNig3Rl/bAXLYUNAHEHgClJJCD1Mw9i7hxoIJk8WHkMprOaQnze88aOhZ52aRSVeGAIuA845pw04ZV8tLUWRoBltl4ej0jjh7tAA=
+	t=1789214756; cv=none; b=XHyoYh+zO8oSdXEl99R19/uHTeW/I4QXOvI9KVfM+M2jMb7Fxan3mjQjsc9Y0Fk6MIf9F5DqWXc6pYDj6/757QZq7yVWz1q+OwFeFbW8cadS6u8ojOPFb7GV9Vi83I/ml2NWKHe2TkAxuOZ457/JuwdRlteTacNvNe1MY0toJaY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789214751; c=relaxed/simple;
-	bh=XuxDYDj/abeTesN5j9K+DTR1kWvXyd1wOn+NP4PyADE=;
+	s=arc-20240116; t=1789214756; c=relaxed/simple;
+	bh=NP52ikrpPKwiRkezckZw2WrGOjaDdxU7xChiptM5MWk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lHgzaLlY3GrGarTN9dQApwEjaxH+lGd2jUf89gw3HmNuPdvEpBlo5GDmX+KsT0L9mtUdYnOmu4GB4hBIS6xWMkNXDmyb6E5Ijxkido9rJN0ZNpltnv+u83oRP912eZ7eSQ4B+n4cDjvXJvQLQ25QJ1NKaJpIvRhGvjNb7AUKO5g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fkflaXhe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UIi9nGe5LT7DI0nled5JOU+1JvE58Qx4Vd2c37LwO8qmBXx395zqFwOuFkt5WHpxrZ5Nz2aPdaTel227t0fWUCkqqZpz6QD8VUc+3VSWuoKwg2SPcA9heeGbZwf3X1pv4jgwIpFCpVzam/E/v4i54009ydI1Nz4Lk2Vb/EnDiqE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PSwty3ah; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fkflaXhe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E68871F000FF;
-	Sat, 12 Sep 2026 12:05:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PSwty3ah"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3D331F000FF;
+	Sat, 12 Sep 2026 12:05:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789214749;
-	bh=XagaLFhLYUvN53ZEB4s+fSIsMliz1CUn9WMJg+BgBpI=;
+	s=korg; t=1789214754;
+	bh=PwgUv26HXnXsGZmm0MaX8Sc2R5CQHUv04oHW1hkyZTM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fkflaXhemsIY8u+6pYLwkMIqhh/y7EYJFjc1mCY9UZmiw2pwC+f3+lHwmihlouARE
-	 b3X52CLBPP6JCPdKD4ntS9d8A7ztgKF5Q9gk3wxrlFdrh8bpp1WWp3Vi/NOnZb3zrr
-	 rLPGY80k7Y6Zi40meZnw10T7QHqNDmpRmXel61Nc=
+	b=PSwty3ahgZPjhB441m4QoQNO5cp6ROegCjgxO2R7iz86Af6PP7uf97n3YiXQnNgWS
+	 JZ9IFTBIusbg85UOtvxE0Ccq3DRkc+UJoQjyveL4z5y4Nyn9dsf4wmlTj19CEdHH6L
+	 yUt1io8SdKSbUatgPW7fZ9oUSpxunQbEw03/nbTo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guo Ren <guoren@kernel.org>,
-	Hanlin Song <pgeorge8929@gmail.com>,
+	Hisam Mehboob <hisamshar@gmail.com>,
+	Thomas Gleixner <tglx@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0391/1376] csky: Fix a4/a5 restoration in syscall trace path
-Date: Sat, 12 Sep 2026 08:46:57 +0200
-Message-ID: <20260912065616.260525467@linuxfoundation.org>
+Subject: [PATCH 6.12 0392/1376] selftests/rseq: Replace glibc-specific __GNUC_PREREQ with portable check
+Date: Sat, 12 Sep 2026 08:46:58 +0200
+Message-ID: <20260912065616.282641373@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,59 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hanlin Song <pgeorge8929@gmail.com>
+From: Hisam Mehboob <hisamshar@gmail.com>
 
-[ Upstream commit abb81e5ce7d995baa41556b8125fa59e28ba3be8 ]
+[ Upstream commit d7b2769f8dba3e5f40d2a8a11988812d51160b17 ]
 
-The syscall trace path reloads syscall arguments from pt_regs before
-calling the syscall handler. On C-SKY ABIv2, the 5th and 6th syscall
-arguments are prepared as stack arguments before invoking syscallid.
+Building the rseq selftests against musl libc fails because musl's
+<features.h> does not provide the glibc-specific __GNUC_PREREQ macro:
 
-The current code adjusts sp before loading LSAVE_A4 and LSAVE_A5. Since
-those offsets are relative to the original pt_regs base, loading them
-after changing sp fetches the wrong slots. As a result, traced syscalls
-that use the 5th or 6th argument may receive corrupted arguments.
+  error: missing binary operator before token '('
 
-This is visible with mmap2(), which takes six arguments. A small
-PTRACE_SYSCALL reproducer opens a file and maps one page with:
+Replace __GNUC_PREREQ(11, 1) with an equivalent check using __GNUC__
+and __GNUC_MINOR__ directly.  This pattern is portable across all C
+library implementations and is already used elsewhere in the tools/
+tree (e.g., tools/include/linux/string.h).
 
-  mmap(NULL, 4096, PROT_READ | PROT_EXEC, MAP_PRIVATE, fd, 0)
+This also allows removing the #include <features.h>, which was only
+needed for __GNUC_PREREQ.
 
-Before the fix, the traced child fails the mmap and exits with 12.
-After the fix, the mapping succeeds and the child exits with 0.
-
-Fix the trace path by loading a4/a5 from pt_regs before changing sp.
-
-Tested on: ck860f, linux-4.19.15, C-SKY abiv2
-
-Fixes: e0bbb53843b5 ("csky: Fixup abiv2 syscall_trace break a4 & a5")
-Suggested-by: Guo Ren <guoren@kernel.org>
-Signed-off-by: Hanlin Song <pgeorge8929@gmail.com>
-Signed-off-by: Guo Ren (Alibaba DAMO Academy) <guoren@kernel.org>
+Fixes: 886ddfba933f ("selftests/rseq: Introduce thread pointer getters")
+Signed-off-by: Hisam Mehboob <hisamshar@gmail.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Link: https://patch.msgid.link/20260618193724.589113-2-hisamshar@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/csky/kernel/entry.S | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ tools/testing/selftests/rseq/rseq-x86-thread-pointer.h | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/arch/csky/kernel/entry.S b/arch/csky/kernel/entry.S
-index c68cdcc76d60e..3261f46f22442 100644
---- a/arch/csky/kernel/entry.S
-+++ b/arch/csky/kernel/entry.S
-@@ -93,11 +93,11 @@ csky_syscall_trace:
- 	ldw	a2, (sp, LSAVE_A2)
- 	ldw	a3, (sp, LSAVE_A3)
- #if defined(__CSKYABIV2__)
--	subi	sp, 8
- 	ldw	r9, (sp, LSAVE_A4)
-+	ldw	r10, (sp, LSAVE_A5)
-+	subi	sp, 8
- 	stw	r9, (sp, 0x0)
--	ldw	r9, (sp, LSAVE_A5)
--	stw	r9, (sp, 0x4)
-+	stw	r10, (sp, 0x4)
- 	jsr	syscallid                     /* Do system call */
- 	addi	sp, 8
- #else
+diff --git a/tools/testing/selftests/rseq/rseq-x86-thread-pointer.h b/tools/testing/selftests/rseq/rseq-x86-thread-pointer.h
+index d3133587d9968..5a29d6bec51f4 100644
+--- a/tools/testing/selftests/rseq/rseq-x86-thread-pointer.h
++++ b/tools/testing/selftests/rseq/rseq-x86-thread-pointer.h
+@@ -8,13 +8,11 @@
+ #ifndef _RSEQ_X86_THREAD_POINTER
+ #define _RSEQ_X86_THREAD_POINTER
+ 
+-#include <features.h>
+-
+ #ifdef __cplusplus
+ extern "C" {
+ #endif
+ 
+-#if __GNUC_PREREQ (11, 1)
++#if __GNUC__ > 11 || (__GNUC__ == 11 && __GNUC_MINOR__ >= 1)
+ static inline void *rseq_thread_pointer(void)
+ {
+ 	return __builtin_thread_pointer();
 -- 
 2.53.0
 
