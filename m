@@ -1,37 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19BB978C9C;
-	Sat, 12 Sep 2026 19:29:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FB3527456;
+	Sat, 12 Sep 2026 19:29:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789241361; cv=none; b=IkGlcAFw33ySoLsJI5stGj4UkijZktu3LTPTYWEyyvhmiLFui2quvMFjnKPX04bt6Cmf6Rg5cqShfHOJ8HG7RQRyg4qZo/mOrfZUyRVvxZmM15C8v4RgoCqo5ovp3RmamYrDN4Tc0l3zqW7ytDBIcDTjKsHBQj5B8EQ8B8KejpM=
+	t=1789241365; cv=none; b=jZ+soFBJ95L1xR68wlzEbTtIPP90ZXJa5IUyVD5W2GcKo8KC9acTnuluf4zfwHkhqsUH0qWvjQoivh0Vt4MUj9SkugiPYvSxWv2QxLgi98INcQ2H2s1dW941O093pDRT8dGGHyUVH32vqQOVsNKjBWT1khxM4Y0mDX/gKq+oSzs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789241361; c=relaxed/simple;
-	bh=YR4h4Fzbbj2KnRH6bU4ua85U4GW7kgHPFFQC3Zsy2aw=;
+	s=arc-20240116; t=1789241365; c=relaxed/simple;
+	bh=pqp6Pdvf7plJSZ6AocrgqVW0OKdYYw0Sjrsvk4q75y4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iAOrq1AJQNjD3o67Ift3igmRYWHBaHBXj1FK1qhqWxRW7l5Wk5C4WiJk+J0X8SZFzeUNHgktRmicYO7IlI8yq9YMaB5i1+pQfbTbW8mGgK5vyXiF9ortoCxf6jsQ5BA49otdSNUHB0bYXH8Yuyj1nTR8Z1TIbualMr20Fdo7nn0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HObKVF31; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tFrA0p/xJeA2xYYGGhUr1yhyREmcw65bR16I1ltadMzNlV1VNzX3ARu0zPCrGJUA1AZTZDw/x5JGQYjw+P3CaMu63UMDgTaUvoy4/XWfbPv6Ccg2kfA+a45FIXnQgcum59GWOl40hEfD4jgZKuMU8vr8wjFMHhd+t/lMrUzBmx0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hrDnBdRV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HObKVF31"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11AFD1F000FF;
-	Sat, 12 Sep 2026 19:29:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hrDnBdRV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A69B71F000FF;
+	Sat, 12 Sep 2026 19:29:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789241359;
-	bh=y9OaVqLF56jbL4eDdq0526R2iH+2Nvs98PFZCwEBYEc=;
+	s=korg; t=1789241364;
+	bh=6ROPPYiXlMLL4694L8TWYsxHUfXudqeuWN6UIdtykRw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HObKVF31ztQRZ+GPRrg6VClllM6GiyM46O8En8iDsJJLRbtUTp36eIR7VerC+5/e4
-	 qB5IGRdWpr0rBNiSr/9a27xwR997aV4eG2QRsG8yAG2I2r2YrdizKsRwnLLNAWpE1e
-	 usBgN76I45L1HBTGWg61vMmnESlGmyJYa6kGPKGg=
+	b=hrDnBdRVgECzGVHefv47kdPECBPWviTJRjd8p48oNRIHzDkp+uBBx9V/esLC/sMim
+	 EiKnkKbzRKAPx5MgJDIp304LCTm6UXDmd7AXJC6HUlNxrcKXLl9RBWmJrdGGoxnWtm
+	 nVg9Hg+TFGIOylKmpRyfiUYFG+aXgf7pBYVgZ7XM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Lee <david.lee@trailofbits.com>,
-	Jan Kara <jack@suse.cz>
-Subject: [PATCH 5.10 103/798] udf: reject VAT indexes equal to the entry count
-Date: Sat, 12 Sep 2026 08:55:31 +0200
-Message-ID: <20260912065519.316160237@linuxfoundation.org>
+	Zhan Xusheng <zhanxusheng@xiaomi.com>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Jun Piao <piaojun@huawei.com>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Andreas Dilger <adilger.kernel@dilger.ca>,
+	Jan Kara <jack@suse.cz>,
+	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Ted Tso <tytso@mit.edu>,
+	"zhangyi (F)" <yi.zhang@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.10 121/798] ocfs2: fix readdir position truncation on 32-bit kernels
+Date: Sat, 12 Sep 2026 08:55:49 +0200
+Message-ID: <20260912065519.749158530@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -50,49 +63,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Lee <david.lee@trailofbits.com>
+From: Zhan Xusheng <zhanxusheng1024@gmail.com>
 
-commit cac0cb07f29ccfb373fd4a36c81e908ef3ce608c upstream.
+commit a63308ab426f3a3c7e33b02c150ea59054620261 upstream.
 
-UDF 1.50 virtual partition mapping uses the VAT as an array of physical
-block mappings. s_num_entries stores the number of entries in that array,
-not the highest valid index. The valid VAT indexes are therefore below
-s_num_entries.
+In ocfs2_dir_foreach_blk_el(), the directory cookie position is
+rebuilt with
 
-udf_get_pblock_virt15() currently rejects only indexes greater than
-s_num_entries. A crafted image can request index s_num_entries, pass the
-bounds check, and make the kernel read one entry past the allocated VAT table.
+	ctx->pos = (ctx->pos & ~(sb->s_blocksize - 1)) | offset;
 
-Change the check to reject block >= s_num_entries, so the count is handled as
-an exclusive upper bound.
+`ctx->pos` is loff_t (signed 64-bit), while `sb->s_blocksize` is
+unsigned long.  On 32-bit kernels unsigned long is 32-bit, so the mask
 
-A crafted UDF image reproduced this on origin/master commit
-0e35b9b6ec0ffcc5e23cbdec09f5c622ad532b53 with a KASAN slab-out-of-bounds
-report in udf_get_pblock_virt15().
+	~(sb->s_blocksize - 1)
 
-Trail of Bits has a reproducer that triggers kernel panic demonstrating the bug, and can share it if needed.
+is computed as a 32-bit unsigned value (e.g. 0xfffff000 for a 4 KiB
+block size).  In the AND expression with the 64-bit `ctx->pos`, that
+unsigned operand is zero-extended to 64 bits per the usual arithmetic
+conversions, yielding 0x00000000fffff000.  The high 32 bits of
+`ctx->pos` are silently cleared, even though directory size is
+allowed to exceed 4 GiB.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Signed-off-by: David Lee <david.lee@trailofbits.com>
-Assisted-by: Codex:gpt-5.5
-Link: https://patch.msgid.link/20260708101712.1706564-1-david.lee@trailofbits.com
-Signed-off-by: Jan Kara <jack@suse.cz>
+When readdir() crosses the 4 GiB boundary on a 32-bit kernel the
+position is reset back into the first 4 GiB block, making the
+re-validation path re-enumerate already-returned dirents indefinitely.
+
+This is ocfs2_dir_foreach_blk_el(), the extent-list readdir path taken
+for all non-inline directories, so a directory large enough to cross
+4 GiB reaches it.
+
+This is the same class of bug that commit 3dce5bb82c97 ("exfat: Fix
+bitwise operation having different size") fixed in exfat, and the
+fix mirrors the equivalent ext4 fix in this series.  Cast the operand
+to loff_t so the mask is 64-bit before the AND:
+
+	ctx->pos = (ctx->pos & ~((loff_t)sb->s_blocksize - 1)) | offset;
+
+64-bit kernels are unaffected.
+
+Link: https://lore.kernel.org/20260806022044.167962-3-zhanxusheng@xiaomi.com
+Fixes: ccd979bdbce9 ("[PATCH] OCFS2: The Second Oracle Cluster Filesystem")
+Signed-off-by: Zhan Xusheng <zhanxusheng@xiaomi.com>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: Heming Zhao <heming.zhao@suse.com>
+Cc: Andreas Dilger <adilger.kernel@dilger.ca>
+Cc: Jan Kara <jack@suse.cz>
+Cc: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+Cc: "Ritesh Harjani (IBM)" <ritesh.list@gmail.com>
+Cc: Ted Ts'o <tytso@mit.edu>
+Cc: "zhangyi (F)" <yi.zhang@huawei.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/udf/partition.c |    2 +-
+ fs/ocfs2/dir.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/udf/partition.c
-+++ b/fs/udf/partition.c
-@@ -58,7 +58,7 @@ uint32_t udf_get_pblock_virt15(struct su
- 	map = &sbi->s_partmaps[partition];
- 	vdata = &map->s_type_specific.s_virtual;
- 
--	if (block > vdata->s_num_entries) {
-+	if (block >= vdata->s_num_entries) {
- 		udf_debug("Trying to access block beyond end of VAT (%u max %u)\n",
- 			  block, vdata->s_num_entries);
- 		return 0xFFFFFFFF;
+--- a/fs/ocfs2/dir.c
++++ b/fs/ocfs2/dir.c
+@@ -1884,7 +1884,7 @@ static int ocfs2_dir_foreach_blk_el(stru
+ 				i += le16_to_cpu(de->rec_len);
+ 			}
+ 			offset = i;
+-			ctx->pos = (ctx->pos & ~(sb->s_blocksize - 1))
++			ctx->pos = (ctx->pos & ~((loff_t)sb->s_blocksize - 1))
+ 				| offset;
+ 			*f_version = inode_query_iversion(inode);
+ 		}
 
 
