@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C353C37E2F3;
-	Sat, 12 Sep 2026 19:18:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6346837E2F3;
+	Sat, 12 Sep 2026 19:18:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789240725; cv=none; b=mY6eyyeolUX/stgqwzJFZwr80xfAtUkbITMtQ2TEapK+L+IT+C9Q3J+lYGwvM1/g6bLvJFlXyF9WXdZwNiYQBb0HKasKTUM9wZJ0zBxE/VYaYvbICHalT7J2fI2WDDy4tAHCve35cWOPJiF4lwKxNo0bC8FGUEWz3LnIpUB1zr0=
+	t=1789240729; cv=none; b=n9RzdJNN14XS5Bt362H4S/cjGWC/ehZMENbKr2u3RSppBW3/AUgm/Kj45L45oroIm9vv9aqUgB3IcA24RIIpWrGzG4U9VNiM1wITQY6pQ96MehvYuv6J0ZrIirsCU4bI5urHqPqjufl1rHoPyr+OWdUyBs7b/esukefp5783SDw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789240725; c=relaxed/simple;
-	bh=N/Z5dAa0TTs7mOJcwP/Ct0R91lfArr+V6lzOJQRDl0I=;
+	s=arc-20240116; t=1789240729; c=relaxed/simple;
+	bh=uJqouFQSFsQGz46zoNriuq0NMIne/32+yKyKNvcVKyI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dHXUmmszHlI/MKnYy1BmzQa2mEtX3oNQscR2DFjhSWb97j2u1t73y+ZZJqnKl8ix5qxCR0NQByjRKA34HlFIZ/s4ivKOeOURHMwfsY8tJoyOTJfy06bZNaT5Z+4YHh1Uk2EnHDL+aO9UN/tWbJMzm568RTtxmNU6q5jelIjlAdg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2MkP1B3P; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UjdwAJLFvENyzFRxzgsXxlpGDk63kmdc8KAPS3n/a9/OB18M4vFzazCfA+yOLsQ2NO6QnP1kfTjYToyJaV03QC8EoXi2sHuk0ViWvAX4y32m/48KlFfzIA6+bK/Cu5aqUrWh2nY+KmcJmM9PytE3jn8z+4Y1DRE0pVCMhz09uIw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=awzT0RYI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2MkP1B3P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FED81F00893;
-	Sat, 12 Sep 2026 19:18:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="awzT0RYI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26E941F000FF;
+	Sat, 12 Sep 2026 19:18:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789240723;
-	bh=JZDTlhx/ZPa8VJLFOQN1bdv5YIYLLLHD1LqiwGw335o=;
+	s=korg; t=1789240728;
+	bh=CVfp8YCnDm+YdsNV5Yl9cRutoGE5BO9PYdSwd4A9+dw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2MkP1B3PtTi89B28HIp7y5et0N9KshxiKNmO4v9JPOgtWFCJ2Spxy9keNjysr/TQC
-	 6DeIvTB2Fla8y9OqQn8LncbIxMElsDajUv+6KE7gU7rvMBqtO9pxVpzwu3o0qG199l
-	 hdY1hcXyXsENTXQg8SX61np8Dnsy1ixTO9OTqDOU=
+	b=awzT0RYIcrCLBBrKy+qUZXwsRDVuRkn84ZtvRrkFDPbUR9Ageg+LWE91WcFLuy8KW
+	 bmq7OFCUWJNJdvYNGBR03WfR49+tZSy3sq1IyeZi45B44xBEFM/Af0caTFy6Ijc2Bd
+	 YChUzGLbfnlx05QvrlhwVabqgN35Yjp8x2vbpDsk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Keith Busch <kbusch@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Abel Vesa <abel.vesa@linaro.org>,
+	Bjorn Andersson <bjorn.andersson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 926/935] nvme: target: rdma: fix ndev refcount leak on queue connect
-Date: Sat, 12 Sep 2026 09:05:56 +0200
-Message-ID: <20260912065548.057778537@linuxfoundation.org>
+Subject: [PATCH 5.15 927/935] clk: qcom: Drop mmcx gdsc supply for dispcc and videocc
+Date: Sat, 12 Sep 2026 09:05:57 +0200
+Message-ID: <20260912065548.079982886@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -52,46 +52,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Abel Vesa <abel.vesa@linaro.org>
 
-[ Upstream commit badc53620fe813b3a9f727ef9526f98567c2c898 ]
+[ Upstream commit b1ec8b53c9ae5fae33d60e9638d39ca5346b941b ]
 
-nvmet_rdma_queue_connect() calls nvmet_rdma_find_get_device() which
-acquires a reference on the returned ndev via kref_get(). On the path
-where the host queue backlog is exceeded and the function returns
-NVME_SC_CONNECT_CTRL_BUSY, reference of ndev is not released, leaking
-the kref.
+Both dispcc and videocc use mmcx power domain now.
+Lets drop the supply mmcx from every gdsc.
 
-Fix this by adding a goto to the existing put_device label before the
-early return.
-
-Fixes: 31deaeb11ba7 ("nvmet-rdma: avoid circular locking dependency on install_queue()")
-Cc: stable@vger.kernel.org
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Fixes: 266e5cf39a0f ("arm64: dts: qcom: sm8250: remove mmcx regulator")
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Link: https://lore.kernel.org/r/20220713143200.3686765-1-abel.vesa@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/rdma.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/clk/qcom/dispcc-sm8250.c  | 1 -
+ drivers/clk/qcom/videocc-sm8250.c | 4 ----
+ 2 files changed, 5 deletions(-)
 
-diff --git a/drivers/nvme/target/rdma.c b/drivers/nvme/target/rdma.c
-index 41e47fe71c372..f8ee057b9af6b 100644
---- a/drivers/nvme/target/rdma.c
-+++ b/drivers/nvme/target/rdma.c
-@@ -1625,8 +1625,10 @@ static int nvmet_rdma_queue_connect(struct rdma_cm_id *cm_id,
- 				pending++;
- 		}
- 		mutex_unlock(&nvmet_rdma_queue_mutex);
--		if (pending > NVMET_RDMA_BACKLOG)
--			return NVME_SC_CONNECT_CTRL_BUSY;
-+		if (pending > NVMET_RDMA_BACKLOG) {
-+			ret = NVME_SC_CONNECT_CTRL_BUSY;
-+			goto put_device;
-+		}
- 	}
+diff --git a/drivers/clk/qcom/dispcc-sm8250.c b/drivers/clk/qcom/dispcc-sm8250.c
+index 2adb38ada9bfb..85bb2181bbafe 100644
+--- a/drivers/clk/qcom/dispcc-sm8250.c
++++ b/drivers/clk/qcom/dispcc-sm8250.c
+@@ -1136,7 +1136,6 @@ static struct gdsc mdss_gdsc = {
+ 	},
+ 	.pwrsts = PWRSTS_OFF_ON,
+ 	.flags = HW_CTRL,
+-	.supply = "mmcx",
+ };
  
- 	ret = nvmet_rdma_cm_accept(cm_id, queue, &event->param.conn);
+ static struct clk_regmap *disp_cc_sm8250_clocks[] = {
+diff --git a/drivers/clk/qcom/videocc-sm8250.c b/drivers/clk/qcom/videocc-sm8250.c
+index 7b435a1c2c4b5..eedef85d90e51 100644
+--- a/drivers/clk/qcom/videocc-sm8250.c
++++ b/drivers/clk/qcom/videocc-sm8250.c
+@@ -276,7 +276,6 @@ static struct gdsc mvs0c_gdsc = {
+ 	},
+ 	.flags = 0,
+ 	.pwrsts = PWRSTS_OFF_ON,
+-	.supply = "mmcx",
+ };
+ 
+ static struct gdsc mvs1c_gdsc = {
+@@ -286,7 +285,6 @@ static struct gdsc mvs1c_gdsc = {
+ 	},
+ 	.flags = 0,
+ 	.pwrsts = PWRSTS_OFF_ON,
+-	.supply = "mmcx",
+ };
+ 
+ static struct gdsc mvs0_gdsc = {
+@@ -296,7 +294,6 @@ static struct gdsc mvs0_gdsc = {
+ 	},
+ 	.flags = HW_CTRL,
+ 	.pwrsts = PWRSTS_OFF_ON,
+-	.supply = "mmcx",
+ };
+ 
+ static struct gdsc mvs1_gdsc = {
+@@ -306,7 +303,6 @@ static struct gdsc mvs1_gdsc = {
+ 	},
+ 	.flags = HW_CTRL,
+ 	.pwrsts = PWRSTS_OFF_ON,
+-	.supply = "mmcx",
+ };
+ 
+ static struct clk_regmap *video_cc_sm8250_clocks[] = {
 -- 
 2.53.0
 
