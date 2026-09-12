@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7E1224CEEA;
-	Sat, 12 Sep 2026 13:40:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB344455626;
+	Sat, 12 Sep 2026 13:40:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789220418; cv=none; b=FyZox3xMqb+4GHnwL+UDwYDl9gaq/mJUbSK9MSwn9tJcLDZiSZs1dp/vDQyga2UUFEf5G4ofcMe9fiQUVsuZtvf8eF67GotCmHulsaLCtYodLmnznkQZiEqG92N7qP6UNOR/Tdt7XF5XakMnvbyK1bKJhyMMkaGwrGTbRNzY5eQ=
+	t=1789220424; cv=none; b=ZE0F+cRy/W+/w66sVzz4v+BNvaZJ+EX4eigqu57CXBbuVMmLHwIt6z+zP1xYRS1+6penLwA//iP28kmAZ1peydd/dpXnNg52bpGlrjjdCUigXFFQPrI/Mcb39cDhGYw8Cr9yN1BL8bmo6QtjqsjfqUy0/9jt8Id9tGBlAjFCYwU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789220418; c=relaxed/simple;
-	bh=iqGlbKkEm/mbVia7lUSUDSIwXF2CxzTr7mGTUKfrZ0o=;
+	s=arc-20240116; t=1789220424; c=relaxed/simple;
+	bh=AH6ZPrZA4k05UNgrlOo+0NGrIcNyccJUPAxycsChXR0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AbfygUXEo4IFxk5+ch/4HClT6qUdVgLIqTx0Uu0qayOPZpSCoH716L8HACGWTLsUXV0F7/dgoiBHCTILr2P5CRcMuJLnSbqG8jJNNJzFe37Z+oG5JZ3sFlJJcIk1GLSbFrjdOg7U7EahYql6ZSYGi71tD2GzmNrsTcOSTCi9ZGU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qiBH2K5/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Tmy2ViJhDqPd1baqqEsTQo0rucM1mRmki2R5rmQ5K2JcX9knrFavdVYdoYXGdymIEaNVKDCi+ltmNE6cer7ctJqoshtrU8bGXyiHt8qpJfOUZYYEy/Ck2BGQWsOKOgdgarI5COsCpepAok80xpFZO+LF+2g/fuhuS3oOCOSG9fQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x4rsjdq+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qiBH2K5/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 634C91F000FF;
-	Sat, 12 Sep 2026 13:40:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x4rsjdq+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2DE51F000FF;
+	Sat, 12 Sep 2026 13:40:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789220417;
-	bh=lLka55+CoobFA/mnt3k6zJFygl6Dod8RZwtTxD9TGJg=;
+	s=korg; t=1789220422;
+	bh=5cawHsKBjRqi63m5+vjYrN6INt4zRgF0f4foiY6VW+A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qiBH2K5/3gskqUFZX2P/g1wBdCKM0OZyY4233Wl3ZwSAw7WUvT0uU0kSSLAEy+bbE
-	 OVFl+ZY8m1Gpd3jYs2eeI3D+5SAwgGsBAB0FnE/osAnexBfrgI17Ze+x2hu6bMGGrj
-	 FikIn0m8KjQpTTy61FHEl65nRyPr/pBfFZa/z7A4=
+	b=x4rsjdq+3gVRyb4vM64o9Tx42abVJM4ZD6WRY0RqfEvC7X8nZX8u0gZp9f6tt5ucd
+	 SdGwZc5yXpGRJXaESor6FIWu216rSW6rP5Xljyfh9i70/iIlW3nMD+r06Od0RoTwwr
+	 mUk04UulXweEHJLhA3ARQ4x2Kc308NZ1K/j+P2j8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	WenTao Liang <vulab@iscas.ac.cn>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.6 0174/1424] regulator: as3722_get_regulator_dt_data: fix premature of_node_put leaving dangling of_node pointer
-Date: Sat, 12 Sep 2026 08:43:26 +0200
-Message-ID: <20260912065611.189327927@linuxfoundation.org>
+Subject: [PATCH 6.6 0175/1424] regulator: max8998_pmic_dt_parse_pdata: of_node_put on reg_np after ownership transferred to rdata
+Date: Sat, 12 Sep 2026 08:43:27 +0200
+Message-ID: <20260912065611.211801871@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -52,34 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 From: WenTao Liang <vulab@iscas.ac.cn>
 
-commit f9324d670ae0b88cbfb0aa48fcaefa5baeb8da4c upstream.
+commit 7c8cc25d8d86f9eb3979255935cfdc7d062ad746 upstream.
 
-In as3722_get_regulator_dt_data(), of_get_child_by_name() acquires a
-reference on np, which is then assigned to pdev->dev.of_node. The
-function immediately calls of_node_put(np), releasing the reference and
-leaving pdev->dev.of_node as a dangling pointer.
+In max8998_pmic_dt_parse_pdata(), of_get_child_by_name() acquires a
+reference on reg_np which is then stored in rdata->reg_node, transferring
+ownership to the regulator data array. The subsequent of_node_put(reg_np)
+at the end of the function releases the last matched regulator node's
+reference, leaving rdata->reg_node as a dangling pointer for the last
+entry.
 
-Remove the of_node_put(np) call to let the device hold the reference.
+Remove the spurious of_node_put(reg_np) call.
 
 Cc: stable@vger.kernel.org
-Fixes: bc407334e9a6 ("regulator: as3722: add regulator driver for AMS AS3722")
+Fixes: 156f252857df ("drivers: regulator: add Maxim 8998 driver")
 Signed-off-by: WenTao Liang <vulab@iscas.ac.cn>
-Link: https://patch.msgid.link/20260626160150.54291-1-vulab@iscas.ac.cn
+Link: https://patch.msgid.link/20260626160326.54457-1-vulab@iscas.ac.cn
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/regulator/as3722-regulator.c |    1 -
+ drivers/regulator/max8998.c |    1 -
  1 file changed, 1 deletion(-)
 
---- a/drivers/regulator/as3722-regulator.c
-+++ b/drivers/regulator/as3722-regulator.c
-@@ -600,7 +600,6 @@ static int as3722_get_regulator_dt_data(
+--- a/drivers/regulator/max8998.c
++++ b/drivers/regulator/max8998.c
+@@ -611,7 +611,6 @@ static int max8998_pmic_dt_parse_pdata(s
+ 	}
+ 	pdata->num_regulators = rdata - pdata->regulators;
  
- 	ret = of_regulator_match(&pdev->dev, np, as3722_regulator_matches,
- 			ARRAY_SIZE(as3722_regulator_matches));
--	of_node_put(np);
- 	if (ret < 0) {
- 		dev_err(&pdev->dev, "Parsing of regulator node failed: %d\n",
- 			ret);
+-	of_node_put(reg_np);
+ 	of_node_put(regulators_np);
+ 
+ 	ret = max8998_pmic_dt_parse_dvs_gpio(iodev, pdata, pmic_np);
 
 
