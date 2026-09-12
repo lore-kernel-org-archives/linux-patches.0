@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F4063C07A;
-	Sat, 12 Sep 2026 19:06:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AF5E349CCD;
+	Sat, 12 Sep 2026 19:06:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789239996; cv=none; b=NowyMc2zdTbDVk4XemMIqUHVlCaXdAFBI3eQXG95BR5WlzIyePR6eb4I+dhZ7KsaWPa4e6pqzelT1aQTv4j3WisRNEU/RkqlmtqUgdnyh7YEJZik6rKmoBje0jGwTTQk/GWpY5zNGw62ONMR7MQU1XmNZvzSVWL39QatFbeFqCE=
+	t=1789240001; cv=none; b=AqzQCiJmxoSZsIQ0QPGx7BK88sWfnUQrx2l+li9g71F+PTRk3Zl6bGnzZJ9oCj+HUIrirOAnHcUW/HNLCJFFeLFlh9qbHTnVzDLEjENGBggejNhzpLVhRZY54WPuPSpU8D+0NUcBsya1jQ96fqHT5OHXXjHZmFliiyzxHzT0AYU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789239996; c=relaxed/simple;
-	bh=XG2U8Jw3ls8ZZn5+6W7C/QNTQJSYVy+btpIGO1MWYMA=;
+	s=arc-20240116; t=1789240001; c=relaxed/simple;
+	bh=4FQu9NzfJ7z1p93BPM5iKBGf4jYfRkAHhTE+VnJaaX8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DSncs1zrxE8vSM13nLJhpcTBV5VzLS4ViFZZ4AZrvDa45eavQAo7J3WRMOIa8/4JNUwmVSDUBoI/LV58cOLaLGYYxzjZVcyNGxzVLKWFrR2JCRRRJ1pPz6oZNTeYnyg84BAoq2oZS+wnO0MCgZzGEtyM4Ho/4Arn1AFL3GpwKaA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tKU9zoWt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=asLU2Qemfzr1FbtCRtpLzDk6fLjlJ5Vj61A57bPamG2r0AG+elFSCBCa5Yjph7LULmyJmxreRnG8BxymMn8DzK60WhLLgRwxj9EI83KBXjx+O4Md3mkIuuC6DfxBncQX4W8fKVQgjsPrvcyZE9AEtOz5eq+oJgySClYo1uBulIY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cpHrZBZM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tKU9zoWt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 297451F00893;
-	Sat, 12 Sep 2026 19:06:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cpHrZBZM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61DA11F000FF;
+	Sat, 12 Sep 2026 19:06:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789239995;
-	bh=tgFwc+y3UcTHnbPWDfX/VqDcnNHnv+bNYLQaEkoI6PU=;
+	s=korg; t=1789240000;
+	bh=DJ0d2y3f2tKDcCMbpeqEl3C9plCLWsZ1jb4wC5qcDHE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tKU9zoWtA+4jdUwBmv4Oedjrf9N3XCuTKrLSqjVUdU6hGpC6wFy0+0PjzErNXPBwb
-	 jRlz9w/umib0fuBtTtUKA3L91mKbs7BkTzUDbOWM7i1XJFDQwWLbVtFRmD1d8OsQ2v
-	 PhLKia5eaeRhR92xM6zACsXx7hQdd5T+XF3+Sq0E=
+	b=cpHrZBZMQ1R45+Rn4i+IO3DJp2jrJVLTHVvbCyKlqlXU86L50733T8O/lsM6Ne5Tg
+	 98Us0IKCyF8/pfO1Aytb27V8cC3a3AwURvOgItynTnwL+3JYmFkTaqqGhHEel8qRcQ
+	 8hBDaiijMYRH+pmagKq2kS5WzVVWy5YIOThe3B7c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+46ca2592193f2fb3debc@syzkaller.appspotmail.com,
-	Yun Zhou <yun.zhou@windriver.com>,
-	David Heidelberg <david@ixit.cz>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 779/935] nfc: nci: fix use of uninitialized memory in CORE_INIT_RSP parsing
-Date: Sat, 12 Sep 2026 09:03:29 +0200
-Message-ID: <20260912065544.693344282@linuxfoundation.org>
+Subject: [PATCH 5.15 780/935] dmaengine: qcom-bam-dma: fix autosuspend cleanup during removal
+Date: Sat, 12 Sep 2026 09:03:30 +0200
+Message-ID: <20260912065544.717339478@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -52,121 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yun Zhou <yun.zhou@windriver.com>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-[ Upstream commit d56575a2595ee1f597f39e8a1cfb67ed3501678d ]
+[ Upstream commit a50184171235045d96104811414b25cf5338cf86 ]
 
-nci_core_init_rsp_packet_v1() and nci_core_init_rsp_packet_v2() parse
-the CORE_INIT_RSP packet without validating that the skb contains
-enough data. A malformed response (e.g. injected via virtual_ncidev)
-can declare a large num_supported_rf_interfaces while providing
-insufficient data, causing reads of uninitialized slab memory. This
-is later used in nci_init_complete_req(), triggering a KMSAN
-uninit-value warning.
+bam_dma_probe() calls pm_runtime_use_autosuspend(), but
+bam_dma_remove() does not call the matching
+pm_runtime_dont_use_autosuspend() when removing the device.
 
-Add skb length checks before accessing packet fields:
-- Validate the skb has at least 1 byte for the status field.
-- Validate the skb can hold the fixed-size header before parsing.
-- In v2, bounds-check each variable-length rf_interface entry and its
-  extension parameters within the parsing loop.
-- In v1, verify the skb is large enough for both the variable-length
-  rf_interfaces array and the trailing rsp_2 structure.
+If the autosuspend delay is set to a negative value while autosuspend
+is enabled, the runtime PM core increments usage_count to prevent
+runtime suspend. Without calling pm_runtime_dont_use_autosuspend()
+during teardown, this reference is not dropped and usage_count remains
+unbalanced.
 
-Reported-by: syzbot+46ca2592193f2fb3debc@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=46ca2592193f2fb3debc
-Fixes: bcd684aace34 ("net/nfc/nci: Support NCI 2.x initial sequence")
-Signed-off-by: Yun Zhou <yun.zhou@windriver.com>
-Link: https://patch.msgid.link/20260527052625.3309581-1-yun.zhou@windriver.com
-Signed-off-by: David Heidelberg <david@ixit.cz>
+Add the missing pm_runtime_dont_use_autosuspend() call before forcing
+the device into runtime suspend during removal.
+
+This issue was found by manual code inspection.
+
+Fixes: 7d2545599f5b ("dmaengine: qcom-bam-dma: Add pm_runtime support")
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260808110642.2770355-1-lgs201920130244@gmail.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/nfc/nci/rsp.c | 41 ++++++++++++++++++++++++++++++++++++++---
- 1 file changed, 38 insertions(+), 3 deletions(-)
+ drivers/dma/qcom/bam_dma.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/nfc/nci/rsp.c b/net/nfc/nci/rsp.c
-index fccd7ce69bb7b..e5d6ce71ca330 100644
---- a/net/nfc/nci/rsp.c
-+++ b/net/nfc/nci/rsp.c
-@@ -50,11 +50,27 @@ static u8 nci_core_init_rsp_packet_v1(struct nci_dev *ndev,
- 	const struct nci_core_init_rsp_1 *rsp_1 = (void *)skb->data;
- 	const struct nci_core_init_rsp_2 *rsp_2;
+diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
+index 02740ec274df4..51c9e7c6b2abe 100644
+--- a/drivers/dma/qcom/bam_dma.c
++++ b/drivers/dma/qcom/bam_dma.c
+@@ -1373,6 +1373,7 @@ static int bam_dma_remove(struct platform_device *pdev)
+ 	struct bam_device *bdev = platform_get_drvdata(pdev);
+ 	u32 i;
  
-+	/* Ensure that the status field can be accessed. */
-+	if (skb_headlen(skb) < 1)
-+		return NCI_STATUS_SYNTAX_ERROR;
-+
- 	pr_debug("status 0x%x\n", rsp_1->status);
++	pm_runtime_dont_use_autosuspend(&pdev->dev);
+ 	pm_runtime_force_suspend(&pdev->dev);
  
- 	if (rsp_1->status != NCI_STATUS_OK)
- 		return rsp_1->status;
- 
-+	/* Success response must contain the full fixed-size header */
-+	if (skb_headlen(skb) < sizeof(*rsp_1))
-+		return NCI_STATUS_SYNTAX_ERROR;
-+
-+	/* Ensure the variable-length rf_interfaces array and trailing
-+	 * rsp_2 structure are fully contained within the skb.
-+	 */
-+	if (skb_headlen(skb) < sizeof(*rsp_1) +
-+			       rsp_1->num_supported_rf_interfaces +
-+			       sizeof(*rsp_2))
-+		return NCI_STATUS_SYNTAX_ERROR;
-+
- 	ndev->nfcc_features = __le32_to_cpu(rsp_1->nfcc_features);
- 	ndev->num_supported_rf_interfaces = rsp_1->num_supported_rf_interfaces;
- 
-@@ -87,15 +103,25 @@ static u8 nci_core_init_rsp_packet_v2(struct nci_dev *ndev,
- 				      const struct sk_buff *skb)
- {
- 	const struct nci_core_init_rsp_nci_ver2 *rsp = (void *)skb->data;
--	const u8 *supported_rf_interface = rsp->supported_rf_interfaces;
-+	const u8 *supported_rf_interface;
- 	u8 rf_interface_idx = 0;
- 	u8 rf_extension_cnt = 0;
- 
-+	/* Ensure that the status field can be accessed. */
-+	if (skb_headlen(skb) < 1)
-+		return NCI_STATUS_SYNTAX_ERROR;
-+
- 	pr_debug("status %x\n", rsp->status);
- 
- 	if (rsp->status != NCI_STATUS_OK)
- 		return rsp->status;
- 
-+	/* Success response must contain the full fixed-size header */
-+	if (skb_headlen(skb) < sizeof(*rsp))
-+		return NCI_STATUS_SYNTAX_ERROR;
-+
-+	supported_rf_interface = rsp->supported_rf_interfaces;
-+
- 	ndev->nfcc_features = __le32_to_cpu(rsp->nfcc_features);
- 	ndev->num_supported_rf_interfaces = rsp->num_supported_rf_interfaces;
- 
-@@ -104,13 +130,22 @@ static u8 nci_core_init_rsp_packet_v2(struct nci_dev *ndev,
- 		    NCI_MAX_SUPPORTED_RF_INTERFACES);
- 
- 	while (rf_interface_idx < ndev->num_supported_rf_interfaces) {
--		ndev->supported_rf_interfaces[rf_interface_idx++] = *supported_rf_interface++;
-+		/* Each entry: [rf_interface_type (1B)] [ext_count (1B)] [ext...] */
-+		if (supported_rf_interface + 2 > skb_tail_pointer(skb))
-+			break;
-+		ndev->supported_rf_interfaces[rf_interface_idx] = *supported_rf_interface++;
- 
--		/* skip rf extension parameters */
- 		rf_extension_cnt = *supported_rf_interface++;
-+		if (supported_rf_interface + rf_extension_cnt > skb_tail_pointer(skb))
-+			break;
-+
-+		/* Only count the entry after full validation */
-+		rf_interface_idx++;
- 		supported_rf_interface += rf_extension_cnt;
- 	}
- 
-+	ndev->num_supported_rf_interfaces = rf_interface_idx;
-+
- 	ndev->max_logical_connections = rsp->max_logical_connections;
- 	ndev->max_routing_table_size =
- 			__le16_to_cpu(rsp->max_routing_table_size);
+ 	of_dma_controller_free(pdev->dev.of_node);
 -- 
 2.53.0
 
