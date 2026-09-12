@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 468B1374E6F;
-	Sat, 12 Sep 2026 09:24:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7013C386C0D;
+	Sat, 12 Sep 2026 09:24:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789205065; cv=none; b=mdH6OE5rxaGrxwquk+uBTgXobeYwAQN6/TivrdnCMuuSz+eO542qdtF4OgR4c4CvRn10LXNBvZ7TpAjQbcC7BKeir4wchuJm/E6HTZpCVfwr4pMahnEWvzvP3FIvwtqgaE8Ue0DXui99/y725jeeUujl7ZyARI+34Ab7ysXU7Pw=
+	t=1789205069; cv=none; b=m6xXYJfyni4BZEsBoHhzfsxqrrqKrWajRDlqQw2zlWyo0HveeCpmiyURzKAXp96wUsGsXk3VYZ1WnCc1kVchthiMnY2sLfXi2XpEQlROpqD7QFfUxCDfl0haB/GQRbdFAZ8k1wIABVVRNt4OIHIk2Rg59CV1+kEDMqHy8FBsBSQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789205065; c=relaxed/simple;
-	bh=bIpx7f0FPqTs20HZ0Tpr/rPylNmtKsLLlVd50DHtiuM=;
+	s=arc-20240116; t=1789205069; c=relaxed/simple;
+	bh=AqEnTk8rHoXsU7h8I8ZRBWEi8Dmqxjk8WKiojLzIxRo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M9DqRaJuCDLerTJTCPeh8qbNeGJpB6na5QbeooqOmgY5Bl+xTrSzrRNbRXLuapxfZBldVcxRewEx2+ohRNxrdieC1vZVZKN77f7dwojml3WPJWCy6fmz1nA95MO4PXxJbsxDcfOsuCAKstY5FtOdnl47LHWRUDaoPR0VCBG/3lc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ChzvCGys; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MEvY0SUo71tHQgOz+VyMYjI+JXyl+6o9H5DXaZki4UbIM6fSNaaJh5nPy25H2ZYPdKrAt1mzE2XFlhHfZ7Tp3TdXQoqksfsZ9ZqkuCcuwBpcGs9DzRd330gEqVS9A3EiR3HbWxS7QckpTCorUPOEgyCY3qEhR9mHucLEv5qvhnU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yZUnWkiW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ChzvCGys"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7C481F000FF;
-	Sat, 12 Sep 2026 09:24:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yZUnWkiW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A7A01F000FF;
+	Sat, 12 Sep 2026 09:24:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789205063;
-	bh=6nhKz185eaHZHgAOEr9kIQG3MRHrt3aM+wL+/8RPd+U=;
+	s=korg; t=1789205068;
+	bh=w2/FGCPgsAWMgjO1ndOiLRifq4iXgI0XFoNCssLB4lk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ChzvCGyscyFEk7Hvy29oQEM7M/PePi/1ltBHJN8KV74G6GlKjqGV+pHUFTEU3I+uv
-	 6LZ5sr1BwmFWqTN9dufmbzOqZ7lTmP5d+2vtG+xaGanCLGbRGja5bBGTHdVkdzc7iF
-	 gVJ0DmWdJuG9hGfg1EALck/Wyw/Eovr27iuwqXlE=
+	b=yZUnWkiW/kYJ+oM0W4m1mI6NQkuXVCXbK6snzE9zJqa7WwzChNJJOt1jppySCxtzP
+	 ZlxO6DXKjhZDVjpCWXY/6KpboNT70X0FatjsvYPNuG2EMD6N9qJtj0cTHqGV6i3HTW
+	 x9JwQEdTPcI/RebWJdhRK+xYRjYpIYP0DfmTpU2M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Daniel Machon <daniel.machon@microchip.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1698/1815] net: microchip: vcap: use port number instead of netdev name for debugfs
-Date: Sat, 12 Sep 2026 08:57:28 +0200
-Message-ID: <20260912065728.843235458@linuxfoundation.org>
+Subject: [PATCH 7.2 1699/1815] net: sparx5: fix sleep in atomic context in MAC table access
+Date: Sat, 12 Sep 2026 08:57:29 +0200
+Message-ID: <20260912065728.866732306@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -53,123 +53,81 @@ Content-Transfer-Encoding: 8bit
 
 From: Daniel Machon <daniel.machon@microchip.com>
 
-[ Upstream commit b7adcc56fd3db4f5ddaf8c01069d26136d61e5c8 ]
+[ Upstream commit b62793a7baeea9cf20209c9fd2e333311aaf3b8d ]
 
-sparx5_vcap_init() runs before sparx5_register_netdevs() in probe, and
-its debugfs setup calls vcap_port_debugfs() for every port using
-netdev_name(ndev) as the debugfs file name. At that point the netdevs
-have only been allocated, not registered, so dev->name still holds the
-"eth%d" template and netdev_name() returns "(unnamed net_device)".
-Every port tries to create the same file under vcaps/, producing a
-flood of warnings at boot:
+sparx5_set_rx_mode() runs with netif_addr_lock_bh held and iterates
+dev->mc via __dev_mc_sync(), which per address calls sparx5_mc_sync() /
+sparx5_mc_unsync() -> sparx5_mact_learn() / sparx5_mact_forget().  These
+take sparx5->lock, a mutex, and then poll the MAC access command
+register with readx_poll_timeout(). A mutex may block, which is not
+allowed from atomic context.
 
-  debugfs: '(unnamed net_device)' already exists in 'vcaps'
-  debugfs: '(unnamed net_device)' already exists in 'vcaps'
-  ...
+Convert the driver to the new .ndo_set_rx_mode_async callback introduced
+in commit 3554b4345d85 ("net: introduce ndo_set_rx_mode_async and
+netdev_rx_mode_work"). The async callback is invoked from process
+context, so the mutex and sleeping completion poll can remain.
 
-Add vcap_port_debugfs_portno(), a variant of vcap_port_debugfs() that
-takes the port's stable hardware port number and uses "p%u" as the
-debugfs file name instead of netdev_name(ndev). This makes the file
-name independent of registration order; the file still stores and
-later dereferences the netdev itself, same as before. sparx5 already
-reports the same "p%d" string via ndo_get_phys_port_name(), so the
-debugfs name now matches that.
+Observed with CONFIG_PROVE_LOCKING, CONFIG_DEBUG_SPINLOCK,
+CONFIG_DEBUG_MUTEXES and CONFIG_DEBUG_ATOMIC_SLEEP enabled:
 
-Only sparx5 (and lan969x, which shares this code) is switched to the
-new function. lan966x keeps calling vcap_port_debugfs() unchanged, so
-this fix does not rename any of its existing debugfs files.
+  BUG: sleeping function called from invalid context at kernel/locking/mutex.c:591
+  in_atomic(): 1, irqs_disabled(): 0, non_block: 0, pid: 217, name: ip
+  preempt_count: 201, expected: 0
+  Call trace:
+   __might_resched+0x144/0x248
+   __might_sleep+0x48/0x7c
+   __mutex_lock+0x74/0x850
+   mutex_lock_nested+0x24/0x30
+   sparx5_mact_learn+0x78/0x100
+   sparx5_mc_sync+0x40/0x54
+   __hw_addr_sync_dev+0xc4/0x170
+   sparx5_set_rx_mode+0x4c/0x58
+   __dev_set_rx_mode+0x64/0xa4
+   __dev_open+0x1ec/0x26c
 
-Fixes: b8909aad5b8d ("net: sparx5: move netdev and notifier block registration to probe")
+Fixes: d6fce5141929 ("net: sparx5: add switching support")
 Signed-off-by: Daniel Machon <daniel.machon@microchip.com>
-Link: https://patch.msgid.link/20260817-misc-fixes-sparx5-lan969x-v3-1-c7c7fef723a8@microchip.com
+Link: https://patch.msgid.link/20260817-misc-fixes-sparx5-lan969x-v3-2-c7c7fef723a8@microchip.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../microchip/sparx5/sparx5_vcap_impl.c       |  5 +++--
- .../microchip/vcap/vcap_api_debugfs.c         | 21 +++++++++++++++++++
- .../microchip/vcap/vcap_api_debugfs.h         | 14 +++++++++++++
- 3 files changed, 38 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/microchip/sparx5/sparx5_netdev.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/microchip/sparx5/sparx5_vcap_impl.c b/drivers/net/ethernet/microchip/sparx5/sparx5_vcap_impl.c
-index cf332de6bf736..2dee2ce19fce7 100644
---- a/drivers/net/ethernet/microchip/sparx5/sparx5_vcap_impl.c
-+++ b/drivers/net/ethernet/microchip/sparx5/sparx5_vcap_impl.c
-@@ -2077,8 +2077,9 @@ int sparx5_vcap_init(struct sparx5 *sparx5)
- 	dir = vcap_debugfs(sparx5->dev, sparx5->debugfs_root, ctrl);
- 	for (idx = 0; idx < consts->n_ports; ++idx)
- 		if (sparx5->ports[idx])
--			vcap_port_debugfs(sparx5->dev, dir, ctrl,
--					  sparx5->ports[idx]->ndev);
-+			vcap_port_debugfs_portno(sparx5->dev, dir, ctrl,
-+						 sparx5->ports[idx]->ndev,
-+						 sparx5->ports[idx]->portno);
- 
- 	return err;
+diff --git a/drivers/net/ethernet/microchip/sparx5/sparx5_netdev.c b/drivers/net/ethernet/microchip/sparx5/sparx5_netdev.c
+index 1d34af78166a3..4dedf5d926416 100644
+--- a/drivers/net/ethernet/microchip/sparx5/sparx5_netdev.c
++++ b/drivers/net/ethernet/microchip/sparx5/sparx5_netdev.c
+@@ -162,13 +162,18 @@ static int sparx5_port_stop(struct net_device *ndev)
+ 	return 0;
  }
-diff --git a/drivers/net/ethernet/microchip/vcap/vcap_api_debugfs.c b/drivers/net/ethernet/microchip/vcap/vcap_api_debugfs.c
-index e0c65c7ab23e1..476f7496a9d44 100644
---- a/drivers/net/ethernet/microchip/vcap/vcap_api_debugfs.c
-+++ b/drivers/net/ethernet/microchip/vcap/vcap_api_debugfs.c
-@@ -400,6 +400,27 @@ void vcap_port_debugfs(struct device *dev, struct dentry *parent,
- }
- EXPORT_SYMBOL_GPL(vcap_port_debugfs);
  
-+void vcap_port_debugfs_portno(struct device *dev,
-+			      struct dentry *parent,
-+			      struct vcap_control *vctrl,
-+			      struct net_device *ndev,
-+			      unsigned int portno)
-+{
-+	struct vcap_port_debugfs_info *info;
-+	char name[16];
-+
-+	info = devm_kzalloc(dev, sizeof(*info), GFP_KERNEL);
-+	if (!info)
-+		return;
-+
-+	info->vctrl = vctrl;
-+	info->ndev = ndev;
-+
-+	snprintf(name, sizeof(name), "p%u", portno);
-+	debugfs_create_file(name, 0444, parent, info, &vcap_port_debugfs_fops);
-+}
-+EXPORT_SYMBOL_GPL(vcap_port_debugfs_portno);
-+
- /* Show the full VCAP instance data (rules with all fields) */
- static int vcap_debugfs_show(struct seq_file *m, void *unused)
+-static void sparx5_set_rx_mode(struct net_device *dev)
++static int sparx5_set_rx_mode(struct net_device *dev,
++			      struct netdev_hw_addr_list *uc,
++			      struct netdev_hw_addr_list *mc)
  {
-diff --git a/drivers/net/ethernet/microchip/vcap/vcap_api_debugfs.h b/drivers/net/ethernet/microchip/vcap/vcap_api_debugfs.h
-index 9f2c59b5f6f53..7dc6e3411a4d9 100644
---- a/drivers/net/ethernet/microchip/vcap/vcap_api_debugfs.h
-+++ b/drivers/net/ethernet/microchip/vcap/vcap_api_debugfs.h
-@@ -18,6 +18,12 @@ void vcap_port_debugfs(struct device *dev, struct dentry *parent,
- 		       struct vcap_control *vctrl,
- 		       struct net_device *ndev);
+ 	struct sparx5_port *port = netdev_priv(dev);
+ 	struct sparx5 *sparx5 = port->sparx5;
  
-+void vcap_port_debugfs_portno(struct device *dev,
-+			      struct dentry *parent,
-+			      struct vcap_control *vctrl,
-+			      struct net_device *ndev,
-+			      unsigned int portno);
+ 	if (!test_bit(port->portno, sparx5->bridge_mask))
+-		__dev_mc_sync(dev, sparx5_mc_sync, sparx5_mc_unsync);
++		return __hw_addr_sync_dev(mc, dev, sparx5_mc_sync,
++					  sparx5_mc_unsync);
 +
- /* Create a debugFS entry for a vcap instance */
- struct dentry *vcap_debugfs(struct device *dev, struct dentry *parent,
- 			    struct vcap_control *vctrl);
-@@ -30,6 +36,14 @@ static inline void vcap_port_debugfs(struct device *dev, struct dentry *parent,
- {
++	return 0;
  }
  
-+static inline void vcap_port_debugfs_portno(struct device *dev,
-+					    struct dentry *parent,
-+					    struct vcap_control *vctrl,
-+					    struct net_device *ndev,
-+					    unsigned int portno)
-+{
-+}
-+
- static inline struct dentry *vcap_debugfs(struct device *dev,
- 					  struct dentry *parent,
- 					  struct vcap_control *vctrl)
+ static int sparx5_port_get_phys_port_name(struct net_device *dev,
+@@ -249,7 +254,7 @@ static const struct net_device_ops sparx5_port_netdev_ops = {
+ 	.ndo_open               = sparx5_port_open,
+ 	.ndo_stop               = sparx5_port_stop,
+ 	.ndo_start_xmit         = sparx5_port_xmit_impl,
+-	.ndo_set_rx_mode        = sparx5_set_rx_mode,
++	.ndo_set_rx_mode_async  = sparx5_set_rx_mode,
+ 	.ndo_get_phys_port_name = sparx5_port_get_phys_port_name,
+ 	.ndo_set_mac_address    = sparx5_set_mac_address,
+ 	.ndo_validate_addr      = eth_validate_addr,
 -- 
 2.53.0
 
