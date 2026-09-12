@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14F793B47D5;
-	Sat, 12 Sep 2026 09:40:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A58444BEE54;
+	Sat, 12 Sep 2026 09:40:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789206034; cv=none; b=QvY86qza3O+iatFmRZP2JB4EjO7f3Of+lld92gfwk6UxwbbkKfuGZBY8g2eH9UfsF87AYfixPTEvOZ5d9b1jmmm5uNSzXu7angG2zUnloOTZsBu30FrZRT8jjW+3UEONEwl8wJ792QFSMWPmt9C5OXsCinlmRMaxjy0/9XJjSKI=
+	t=1789206038; cv=none; b=Dmi06V3rfNCKWR53I69yj6d4Xgc4pmkYn/vLN7W6w4V92/z1TJxw3rtbqtgFgA+Szmg1KxEzm6mNGkylOBdHhXSC2+NBdmgZytwOB1UOhrqjAthx/v0YiyGdUIlFJqKhxB2M8IseYLvBIJ9XttDcLwd5FXv4KKmkwRn4oeERATA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789206034; c=relaxed/simple;
-	bh=md5qXXp8OpGCroySZXuBng/SXWxXjr7MlXN9BSHkspk=;
+	s=arc-20240116; t=1789206038; c=relaxed/simple;
+	bh=zqExXxSvUPbAuM8Z1y0FAc/ZvWOhUo1QS6C92IiHgvo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kTYal+P7OCqylOaj80w+xBVz1ied1QoZLUE01UleaBOGBwZL6A/UrrSu42XsGKyr/nhlGIKCnbHY5ZwUe5+q7X0wqBD4oPF0OYX0o2+l2614w/Q9QuxD+nlhM44XTfNtQViAC5sWW2wCtOWRdGwmcqKg7vrpm+2GdUDODp9/XSY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nU84ZMLO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=F+gGyCPLbuIujDId68ibqtzMg0THFs/XAN0RKpI5HFJrWsNliUyatUXddx2louBX5T+DCt7zQxDfLUQTtLm1+e+kEcTM3gslaWSJXN48j8bJxbQHWc0M4B7rePvJxZW7SZ7f2XlpctsvrzQqKY0OjmznJI3Asha83aS08sz4QNQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VMGB0WOH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nU84ZMLO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A74EE1F000FF;
-	Sat, 12 Sep 2026 09:40:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VMGB0WOH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F5F21F000FF;
+	Sat, 12 Sep 2026 09:40:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789206033;
-	bh=XAUj3LiSob3ZVLhpuvgDCTT4x2rXNbJQV/Ijo2ySb48=;
+	s=korg; t=1789206037;
+	bh=xDJk4zqRoHnEaCBvenk0KyslPfYGkFHfFpcGlB/14U4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nU84ZMLO86BUY84Ux22vn6GnZRBsiEhY7myDpgzPz/Q1h8UPFpnKqD5BO5zivE6q2
-	 a2Rsl9q8r5uoVSQruk1tmvxPHcfLEgupIgyX72bSa6AKgg3o0ELDDmWJgT11i/g0aN
-	 si0AjjCCEdMUCU5UchhbA5+KVh4AA6y1j4iMCco8=
+	b=VMGB0WOHrl0f5m32NcveLwt3VZiMkY5rOclrGYZcUoGZZ0JagccB5GV5XdyDyvxkb
+	 i5VM4ESLfAokS3kSZJJ8J/7lmxTafhCI5omGVYe1H4Rug5oZZecAeT+uL6mEKW8oqh
+	 dEbQDbKJP0KaCfwqWsyb5gZ0RCTBPCRPt00xKR5k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weigang He <geoffreyhe2@gmail.com>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
+	Gui-Dong Han <hanguidong02@gmail.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0122/1518] soc: samsung: exynos-pmu: fix of_node refcount leak in exynos_get_pmu_regmap()
-Date: Sat, 12 Sep 2026 08:38:11 +0200
-Message-ID: <20260912065626.250091801@linuxfoundation.org>
+Subject: [PATCH 6.18 0123/1518] media: cec-pin: Fix event FIFO ordering
+Date: Sat, 12 Sep 2026 08:38:12 +0200
+Message-ID: <20260912065626.271628187@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,46 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weigang He <geoffreyhe2@gmail.com>
+From: Gui-Dong Han <hanguidong02@gmail.com>
 
-[ Upstream commit fa476d53edd24e8105faace04e881b9c4179738f ]
+[ Upstream commit a1d83d1b810665bd53ce8a7b7867e054d68676c7 ]
 
-exynos_get_pmu_regmap() obtains a device_node via of_find_matching_node()
-and passes it to exynos_get_pmu_regmap_by_phandle(np, NULL). With
-propname == NULL the callee uses np directly and does not drop a
-reference, so the reference taken by of_find_matching_node() is leaked on
-every call -- including on each -EPROBE_DEFER retry of the only in-tree
-caller, exynos_retention_init() in the Exynos pinctrl driver.
+cec_pin_update() fills work_pin_events[] and work_pin_ts[], then
+increments work_pin_num_events. cec_pin_thread_func() uses that counter
+to decide when to read the FIFO entries.
 
-Annotate np with the __free(device_node) cleanup attribute so the
-reference is released when the function returns.
+Do not let the counter update be observed without the event update. Also
+do not let a freed slot be reused before the thread has finished reading
+it. Use release operations when publishing an entry and releasing a slot,
+and acquire operations when consuming those counter updates.
 
-Found by static analysis tool CodeQL.
+Leave the other work_pin_num_events users as they do not participate in
+this FIFO publication path.
 
-Fixes: 76640b84bd7a ("soc: samsung: pmu: Provide global function to get PMU regmap")
-Signed-off-by: Weigang He <geoffreyhe2@gmail.com>
-Link: https://patch.msgid.link/20260609143852.1783558-1-geoffreyhe2@gmail.com
-Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+Fixes: ea5c8ef29668 ("media: cec-pin: add low-level pin hardware support")
+Signed-off-by: Gui-Dong Han <hanguidong02@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/samsung/exynos-pmu.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/media/cec/core/cec-pin.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/soc/samsung/exynos-pmu.c b/drivers/soc/samsung/exynos-pmu.c
-index f8fe1a5965ab4..d910499731131 100644
---- a/drivers/soc/samsung/exynos-pmu.c
-+++ b/drivers/soc/samsung/exynos-pmu.c
-@@ -300,8 +300,8 @@ static const struct mfd_cell exynos_pmu_devs[] = {
-  */
- struct regmap *exynos_get_pmu_regmap(void)
- {
--	struct device_node *np = of_find_matching_node(NULL,
--						      exynos_pmu_of_device_ids);
-+	struct device_node *np __free(device_node) =
-+		of_find_matching_node(NULL, exynos_pmu_of_device_ids);
- 	if (np)
- 		return exynos_get_pmu_regmap_by_phandle(np, NULL);
- 	return ERR_PTR(-ENODEV);
+diff --git a/drivers/media/cec/core/cec-pin.c b/drivers/media/cec/core/cec-pin.c
+index 4d7155281daae..754a4bfcc87c7 100644
+--- a/drivers/media/cec/core/cec-pin.c
++++ b/drivers/media/cec/core/cec-pin.c
+@@ -115,7 +115,7 @@ static void cec_pin_update(struct cec_pin *pin, bool v, bool force)
+ 		return;
+ 
+ 	pin->adap->cec_pin_is_high = v;
+-	if (atomic_read(&pin->work_pin_num_events) < CEC_NUM_PIN_EVENTS) {
++	if (atomic_read_acquire(&pin->work_pin_num_events) < CEC_NUM_PIN_EVENTS) {
+ 		u8 ev = v;
+ 
+ 		if (pin->work_pin_events_dropped) {
+@@ -126,7 +126,7 @@ static void cec_pin_update(struct cec_pin *pin, bool v, bool force)
+ 		pin->work_pin_ts[pin->work_pin_events_wr] = ktime_get();
+ 		pin->work_pin_events_wr =
+ 			(pin->work_pin_events_wr + 1) % CEC_NUM_PIN_EVENTS;
+-		atomic_inc(&pin->work_pin_num_events);
++		atomic_inc_return_release(&pin->work_pin_num_events);
+ 	} else {
+ 		pin->work_pin_events_dropped = true;
+ 		pin->work_pin_events_dropped_cnt++;
+@@ -1101,7 +1101,7 @@ static int cec_pin_thread_func(void *_adap)
+ 						     pin->work_tx_ts);
+ 		}
+ 
+-		while (atomic_read(&pin->work_pin_num_events)) {
++		while (atomic_read_acquire(&pin->work_pin_num_events)) {
+ 			unsigned int idx = pin->work_pin_events_rd;
+ 			u8 v = pin->work_pin_events[idx];
+ 
+@@ -1110,7 +1110,7 @@ static int cec_pin_thread_func(void *_adap)
+ 						v & CEC_PIN_EVENT_FL_DROPPED,
+ 						pin->work_pin_ts[idx]);
+ 			pin->work_pin_events_rd = (idx + 1) % CEC_NUM_PIN_EVENTS;
+-			atomic_dec(&pin->work_pin_num_events);
++			atomic_dec_return_release(&pin->work_pin_num_events);
+ 		}
+ 
+ 		switch (atomic_xchg(&pin->work_irq_change,
 -- 
 2.53.0
 
