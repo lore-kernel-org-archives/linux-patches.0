@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D9D5478E57;
-	Sat, 12 Sep 2026 11:39:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C672338B7D2;
+	Sat, 12 Sep 2026 11:39:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789213156; cv=none; b=pt2quvd4g11n+sEGqBX5wMjW5TXE/9MfZ9CRAjekXwBex8i35TxChOaT/pO1rIV3chHUZQecfSSCbsndPWEEtsfcRR7KNyeQEO991o07fhkt3Ofd9HW0TEP1mrAy39sXm9DdBVZi4GmSxPHvBAoStRDn9SqYe7ow/UqETIiMeR4=
+	t=1789213159; cv=none; b=YwS7gb5ZI3BuQS9VHbHk1rEUza8dnJBDyEGfKYp5P1/6KjliwxtcNbHJpMkGGpNK/7W0DFrmCemt6LHUNUcpTrR5xuBYAiUKbmUYQTC+4WYYefQ8MsOVJnCodw8fiqpa/Mq9ayU++t3DHXKAsB+f5bGBXPmIK4p2xU9z+NB6yvc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789213156; c=relaxed/simple;
-	bh=Ftf+qOeA8MIbbsRCRvlRSKOSEWEdGOitYu/R4jbcI5E=;
+	s=arc-20240116; t=1789213159; c=relaxed/simple;
+	bh=TaBdcg2jsxQLtkpv1kYGXlwyLliOcuggUP9MvwoUp0c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qvn6wkW7IjYVAuuSYahJZ4vVmOB/7RL2xePkXXUaWJQwUxtE/CSDkirVuKc7vpR5Sge/Kx/DL9TE2Gl4MJW0xlG1iaisnRJvYrU27BnKNw+KaJjLqeUmt+WsBFbNM73JUJULxKd1HgWulfk/ojYCC3psuKDF1Ug6DbwJPSMIaT0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MnkdgmwE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mNhzoEgpAbjWs8Ky1rJCOQ7/McF/oj+iCkw2bL5b+rcz8Gf7jy1Me4+gSsXySqFaRcHj4X9MaqvaTPGZsf+/iSC2GCwBg8bDJ1XZKEw4i86iExdCpvR2qbyDlhteYLRh7hez+K4x4mEi5SZASNsnIPvw9BxYnlYKRnt/7A8UGVU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kEPtJuWL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MnkdgmwE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D74421F000FF;
-	Sat, 12 Sep 2026 11:39:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kEPtJuWL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F40AB1F00893;
+	Sat, 12 Sep 2026 11:39:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789213152;
-	bh=Qy6PnSh9SVYdG0kjYuum4rZ6T5e+fHW5+kxXmTF1cVY=;
+	s=korg; t=1789213157;
+	bh=McNwsZ1aiyxrW7h8qno5PcRDCOuQnUrXHnAG9wPUjc8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MnkdgmwEP+rOJMhyzVfAHo9nveemjylrjKVNkn8x8o+3SEnS3nGkmJxmh5JjC6wez
-	 O/eEKwtO5SGJUgVkziU+AYoGpkmOaneKhp6dXMIg/EJd/hS6OL10TMjYXiYWJkr/Wc
-	 rdTB/Sa8InlJtcGIulkg5XXF0HoQ4Zc+Kq9j6p34=
+	b=kEPtJuWL7sR7QLdNe92ggI6LNlL+h8dWVIVjBo4GV33nDc87EBB6CDIACevfcz2EF
+	 4SMUFSRSAUzwnq51s4zrog+20ZtyX4hJ4Hf0nrtdZa/Xt18KUaMHhb1wY50BOcDrmv
+	 L12mzlljf/6QdUiavpqEzQajQBBP9l75S//jX9So=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Max Kellermann <max.kellermann@ionos.com>,
-	Alex Markuze <amarkuze@redhat.com>,
-	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 6.12 0064/1376] ceph: lock mutex in ceph_mds_check_access()
-Date: Sat, 12 Sep 2026 08:41:30 +0200
-Message-ID: <20260912065608.987794958@linuxfoundation.org>
+	SJ Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.12 0047/1376] mm/damon/sysfs: kobject_del() region and target (error) dirs
+Date: Sat, 12 Sep 2026 08:41:13 +0200
+Message-ID: <20260912065608.604813327@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,85 +50,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Max Kellermann <max.kellermann@ionos.com>
+From: SJ Park <sj@kernel.org>
 
-commit a61c6ae1dae2611082b831b4aaa780878099c012 upstream.
+commit 2603ef6f6ec3d3f7de2d6a07e7c9a683cebac419 upstream.
 
-MDS session OPEN handling replaces mdsc->s_cap_auths under
-mdsc->mutex, freeing the previous array and its strings.
+On CONFIG_DEBUG_KOBJECT_RELEASE enabled kernel, lack of kobject_del()
+could cause directories creation failures due to the name conflicts.  Fix
+those issues for the normal creation path of region directories and the
+error path of target directories, by adding kobject_del() calls.
 
-ceph_mds_check_access() traverses this array without holding the
-mutex.  A concurrent session reopen can therefore free the array while
-it is being inspected, resulting in a use-after-free like this:
-
-  Unable to handle kernel paging request at virtual address 003aaad64b2c8bb9
-  [...]
-  Internal error: Oops: 0000000096000004 [#1]  SMP
-  Modules linked in:
-  CPU: 56 UID: 2953037534 PID: 1253231 Comm: php-cgi8.4 Not tainted 6.18.45-i2-ampere #1146 NONE
-  [..]
-  pc : ceph_mds_check_access+0xd4/0x550
-  lr : ceph_mds_check_access+0xc8/0x550
-  [...]
-  Call trace:
-   ceph_mds_check_access+0xd4/0x550 (P)
-   ceph_atomic_open+0x138/0xbe8
-   path_openat+0xa24/0xfa8
-   do_filp_open+0x94/0x158
-   do_sys_openat2+0x88/0xf8
-
-Cc: stable@vger.kernel.org
-Fixes: 596afb0b8933 ("ceph: add ceph_mds_check_access() helper")
-Signed-off-by: Max Kellermann <max.kellermann@ionos.com>
-Reviewed-by: Alex Markuze <amarkuze@redhat.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Link: https://lore.kernel.org/20260628220121.97360-3-sj@kernel.org
+Fixes: 2031b14ea757 ("mm/damon/sysfs: support the physical address space monitoring")
+Signed-off-by: SJ Park <sj@kernel.org>
+Cc: <stable@vger.kernel.org> # 5.18.x
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ceph/mds_client.c |    4 ++++
- fs/ceph/mds_client.h |    1 +
- 2 files changed, 5 insertions(+)
+ mm/damon/sysfs.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/fs/ceph/mds_client.c
-+++ b/fs/ceph/mds_client.c
-@@ -5795,11 +5795,13 @@ int ceph_mds_check_access(struct ceph_md
- 	doutc(cl, "tpath '%s', mask %d, caller_uid %d, caller_gid %d\n",
- 	      tpath, mask, caller_uid, caller_gid);
+--- a/mm/damon/sysfs.c
++++ b/mm/damon/sysfs.c
+@@ -107,8 +107,10 @@ static void damon_sysfs_regions_rm_dirs(
+ 	struct damon_sysfs_region **regions_arr = regions->regions_arr;
+ 	int i;
  
-+	mutex_lock(&mdsc->mutex);
- 	for (i = 0; i < mdsc->s_cap_auths_num; i++) {
- 		struct ceph_mds_cap_auth *s = &mdsc->s_cap_auths[i];
+-	for (i = 0; i < regions->nr; i++)
++	for (i = 0; i < regions->nr; i++) {
++		kobject_del(&regions_arr[i]->kobj);
+ 		kobject_put(&regions_arr[i]->kobj);
++	}
+ 	regions->nr = 0;
+ 	kfree(regions_arr);
+ 	regions->regions_arr = NULL;
+@@ -343,13 +345,15 @@ static int damon_sysfs_targets_add_dirs(
  
- 		err = ceph_mds_auth_match(mdsc, s, cred, tpath);
- 		if (err < 0) {
-+			mutex_unlock(&mdsc->mutex);
- 			put_cred(cred);
- 			return err;
- 		} else if (err > 0) {
-@@ -5821,6 +5823,7 @@ int ceph_mds_check_access(struct ceph_md
- 	doutc(cl, "root_squash_perms %d, rw_perms_s %p\n", root_squash_perms,
- 	      rw_perms_s);
- 	if (root_squash_perms && rw_perms_s == NULL) {
-+		mutex_unlock(&mdsc->mutex);
- 		doutc(cl, "access allowed\n");
- 		return 0;
+ 		err = damon_sysfs_target_add_dirs(target);
+ 		if (err)
+-			goto out;
++			goto del_out;
+ 
+ 		targets_arr[i] = target;
+ 		targets->nr++;
  	}
-@@ -5835,6 +5838,7 @@ int ceph_mds_check_access(struct ceph_md
- 		      !!(mask & MAY_READ), !!(mask & MAY_WRITE));
- 	}
- 	doutc(cl, "access denied\n");
-+	mutex_unlock(&mdsc->mutex);
- 	return -EACCES;
- }
+ 	return 0;
  
---- a/fs/ceph/mds_client.h
-+++ b/fs/ceph/mds_client.h
-@@ -540,6 +540,7 @@ struct ceph_mds_client {
- 	struct rw_semaphore     pool_perm_rwsem;
- 	struct rb_root		pool_perm_tree;
- 
-+	/* protected by mutex */
- 	u32			 s_cap_auths_num;
- 	struct ceph_mds_cap_auth *s_cap_auths;
- 
++del_out:
++	kobject_del(&target->kobj);
+ out:
+ 	damon_sysfs_targets_rm_dirs(targets);
+ 	kobject_put(&target->kobj);
 
 
