@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65E8F2D739C;
-	Sat, 12 Sep 2026 13:44:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EDA82DE702;
+	Sat, 12 Sep 2026 13:44:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789220666; cv=none; b=FjqBIZChMvsBuKIpYKc3RBU6scxaKYS1ouM7rjoRSy/zPyVsjitafRBrUqFxonwauajsx/9maTQrEVSHHpV36BidSxQbbvjUE/qJASlEyT39KUvdw+E5HU7+wX2LLw8X54LwH+g63vv40JZcdTdFaVJZgGJpj+PZa5DsuF96CqQ=
+	t=1789220671; cv=none; b=GfeCOi2uiHRuFhS3gFSnqPM6QYvebPeqmigslNRQfueNOCCVfhdZEXCaa328hqA9Vyl6G5/8h2fP4RpcHYhmPHJGvstt/TB8zHCVIvVm/xLNRZmRLG7+ZWKpli+Wmx4rws9F9Cn8HN9/75h/qllUaFSXbEIKhbOPXyg+JgUl/pU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789220666; c=relaxed/simple;
-	bh=NUAjyjh/xlQlznUWcnEMJ/Gh2a7KZLDn6Q3mnwAg/aU=;
+	s=arc-20240116; t=1789220671; c=relaxed/simple;
+	bh=5J0TJBNNeYWVDnrAXHqISON0LaHK4Ksud0XQi1c4uik=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=cZf3DuDq/J8i3U/7oZEeRNyq0/9/D2KkLNNZEArTVn3rccDtFX1pKkQ0uhLPlM6PO3jENtTx6738uFmjVu8EQF28U5JjSUyu18OUSVVRWlMNhZb7tfg1eH5991zauo0Nod2WfeMEqtRYoZiGyD6N0oo7AiW/TNrMOlyDru7Obs8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vHh+WO1Z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DTJ4/2x0oeYrYo3GNltkLujKHO4oVUJx13EUdQRCM8Ai7PFHzFzm2q5B1t9LjOpXGwPMu+oI87lhWxFmPDRAbBYQd8NZ8bxCGZuvREvAoJ6LdPuWceO/vaQoXM4gtw49UX2Fe5C6p2IN2UeamoGSCXb8IvBHuPJTMQ/7RO4XaEw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MxvTaP0f; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vHh+WO1Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C3AD1F000FF;
-	Sat, 12 Sep 2026 13:44:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MxvTaP0f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 391BC1F000FF;
+	Sat, 12 Sep 2026 13:44:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789220665;
-	bh=hs9UnfBv/sUnJuXX6rhVVoSDsadQB03fVdWiRXsMYek=;
+	s=korg; t=1789220670;
+	bh=FZPhdnFDo1E1PKcfbimx0JxUIVfCpIYNOAE9cOatzFc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vHh+WO1ZpO9IxEqEFriG12HqxL6H9guoNtpuNI9mNfdVp/WTf0c4GoHSjJ4CJtuyp
-	 PqcUmbqsiyo0UFXGlotRm8vkbw1yXoeh2PCbrSmAmkK3bKqX3a2c1F3qbEyLi+ePKE
-	 8yt1tLiJQf46V7CBBdI0lyNl32hhvnWE2IOEHFgU=
+	b=MxvTaP0fNx7q+tph4pkbBA7eJDBJSFOCVXecvjYv/kq9c0PHvEDfx94F/UbbloiyV
+	 4Yff4RLJiA6Up//nm4CKkTIyXT6KQcRjRd/zbyrSR5VxhyJIGocgSmLThsoZ5j9Quy
+	 OaHl3PyNaCMUosnfl8bJ6wOzwoTBp3Q8kOFhLNNk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>
-Subject: [PATCH 6.6 0225/1424] PCI/sysfs: Avoid spurious runtime PM wakeup on config space accesses
-Date: Sat, 12 Sep 2026 08:44:17 +0200
-Message-ID: <20260912065612.324040835@linuxfoundation.org>
+	Ma Ke <make_ruc2021@163.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>
+Subject: [PATCH 6.6 0208/1424] power: supply: bq25890: Fix power_supply reference leak
+Date: Sat, 12 Sep 2026 08:44:00 +0200
+Message-ID: <20260912065611.945888891@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -44,73 +44,66 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Krzysztof Wilczyński <kwilczynski@kernel.org>
+From: Ma Ke <make_ruc2021@163.com>
 
-commit b14b2bab88d7099ab4447560cbe4b40945e5c069 upstream.
+commit 863c32a83e4235eb0cbf6106f2b124e645302156 upstream.
 
-Currently, the boundary checks in pci_read_config() and pci_write_config()
-reject only offsets beyond the effective configuration space size.
+bq25890_fw_probe() acquires a reference to a secondary charger using
+power_supply_get_by_name(), but the reference is not released on later
+probe failures or on driver detach.
 
-An access at an offset exactly equal to that size passes the check, has its
-length clamped to zero, and then invokes pci_config_pm_runtime_get() and
-pci_config_pm_runtime_put() around transfer blocks that do nothing.
+In particular, failures after bq25890_fw_probe() returns successfully,
+such as a failure in bq25890_hw_init(), also leak the reference.
 
-This is a problem because pci_config_pm_runtime_get() synchronously resumes
-the upstream bridge through pm_runtime_get_sync() and resumes the device
-itself through pm_runtime_resume() when it is in D3cold, only for the
-handler to return zero immediately afterwards.  Such a spurious wakeup
-wastes power and adds needless resume latency.
+Register a device-managed cleanup action immediately after acquiring
+the secondary charger. This releases the reference on all subsequent
+probe failures and on driver detach.
 
-The sysfs core already clamps accesses against the attribute size set
-through the bin_size() callback, which reports either 256 or 4096 bytes.
-As such, the affected accesses are reads at offset 64 (or 128 for CardBus
-devices) through files opened without CAP_SYS_ADMIN, and reads and writes
-at the exact configuration space size on devices where a quirk sets a
-non-standard size.
+Found by code review.
 
-Reject accesses at the boundary offset as well, so they return early before
-any runtime PM involvement, matching the procfs implementations in
-proc_bus_pci_read() and proc_bus_pci_write().
-
-The value returned to userspace at these offsets remains zero, so the
-change is not visible to userspace.
-
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-[bhelgaas: tweak commit log, order tags]
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Signed-off-by: Ma Ke <make_ruc2021@163.com>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260720204356.1501749-1-kwilczynski@kernel.org
+Fixes: d54bf877fd87 ("power: supply: bq25890: Add support for having a secondary charger IC")
+Link: https://patch.msgid.link/20260722044416.1623621-1-make_ruc2021@163.com
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/pci-sysfs.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/power/supply/bq25890_charger.c |   12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
---- a/drivers/pci/pci-sysfs.c
-+++ b/drivers/pci/pci-sysfs.c
-@@ -728,7 +728,7 @@ static ssize_t pci_read_config(struct fi
- 	else if (dev->hdr_type == PCI_HEADER_TYPE_CARDBUS)
- 		size = 128;
+--- a/drivers/power/supply/bq25890_charger.c
++++ b/drivers/power/supply/bq25890_charger.c
+@@ -1389,6 +1389,14 @@ static int bq25890_fw_read_u32_props(str
+ 	return 0;
+ }
  
--	if (off > size)
-+	if (off >= size)
- 		return 0;
- 	if (off + count > size) {
- 		size -= off;
-@@ -809,7 +809,7 @@ static ssize_t pci_write_config(struct f
- 		add_taint(TAINT_USER, LOCKDEP_STILL_OK);
++static void bq25890_release_secondary_chrg(void *data)
++{
++	struct bq25890_device *bq = data;
++
++	power_supply_put(bq->secondary_chrg);
++	bq->secondary_chrg = NULL;
++}
++
+ static int bq25890_fw_probe(struct bq25890_device *bq)
+ {
+ 	int ret;
+@@ -1401,6 +1409,10 @@ static int bq25890_fw_probe(struct bq258
+ 		bq->secondary_chrg = power_supply_get_by_name(str);
+ 		if (!bq->secondary_chrg)
+ 			return -EPROBE_DEFER;
++
++		ret = devm_add_action_or_reset(bq->dev, bq25890_release_secondary_chrg, bq);
++		if (ret)
++			return ret;
  	}
  
--	if (off > dev->cfg_size)
-+	if (off >= dev->cfg_size)
- 		return 0;
- 	if (off + count > dev->cfg_size) {
- 		size = dev->cfg_size - off;
+ 	/* Optional, left at 0 if property is not present */
 
 
