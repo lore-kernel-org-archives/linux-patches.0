@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE8AF23BD03;
-	Sat, 12 Sep 2026 14:48:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E44FEEED8;
+	Sat, 12 Sep 2026 14:48:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789224518; cv=none; b=WxUY30cXC5Zt6hquS+En0NQ60Q+sI0mnU7z5Jv1P8/GcLNkSW+EddGLPIJad2+DSlHP0KCkArUuI0spAN4pfANJ+I34izen0lFnzxCAfhxlUhiN7t8LkND+z4BlbMLPY9uqDgZZ27KxKiwLRsaKBY0N8agPMT3bPJH2YNoHdC9E=
+	t=1789224524; cv=none; b=R6SXC9/JL/6iucsZXOgicGwPZxmNImkiF9qC0D7xWCpZjuFCL1j+uXtI/8ealDVT0NpjT2+dOjZ6/7Zj7Dgdt4PKdXIKMDjGW/aZlIBq0Q8JrmiU6N8LMUuRms0drcpNhxXIYRVz02VWH5AMFSGnsjfx6Wbok6JA6X3nDNEnryY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789224518; c=relaxed/simple;
-	bh=/yx72plrids443qvwOOFxk+Dxa01i0LsI/HHpFi48Aw=;
+	s=arc-20240116; t=1789224524; c=relaxed/simple;
+	bh=aougDH1M/SjnLkALmTAWlY+bR0kb+G+glLG6YsF/N30=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fxWP/KNCST8XAZv9ag23Uf7zsC8iguq+con/1eoUTG01Hy1nzZJLXZW9DaUmQaUUXI7OWUrVF1MDk8dn+Lq4duV3HzLOUwVZ/M1KPhz5v9GOIgYUJ+rfcdkxWJjeyYCQ3J/a/vZAQVbJAcVa2azSdhBD06+ep4006lNmp2XaVJc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aDetnv1p; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=o5CI5rDKzZYeeqQBpoaEMWUn/kuZbNRBTSyUvrFSs6SFlPjIn6Y6fSu6wM/gK4ma0qLQ9UohEaizcnv0R9KOtYdJn0O/nGIJVfg9juRkzlCzHS0RZ8yricwdwdApaiReqwDonq6o6IDXMKWx4IFrLt0gSppPvNyPJ311SpYcxRU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QYMrIyET; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aDetnv1p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6782D1F000FF;
-	Sat, 12 Sep 2026 14:48:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QYMrIyET"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E3911F000FF;
+	Sat, 12 Sep 2026 14:48:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789224517;
-	bh=kQ4Y3jzq0k4s++3WafsjKUKLkczSzlhokf4FF8vVNXk=;
+	s=korg; t=1789224522;
+	bh=AH+rCLgwIUwZ2O+t+oYk0JTiXDWlDDrS7R1Luj8bQUs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aDetnv1pYr24jR7zTo9gjhGxB1VxsUEHGTCW0VrmuvBoYSHxO7MGiNQTCFpDUPGQd
-	 txbpEEaidK56fYpoLDx8fskam0EDw4Ljsf0OJf1gBUJfK6YRz6oRG8C79Q0UvSOXFP
-	 b1dhc5vSTZ0UZUHnoI87Dz0b8XbJsMKx3QdRUDho=
+	b=QYMrIyETPWE3lzXF1XOpHW69LAyymRDUlJle/oj14Jn/5LCwGDeYVA1thVxGP6KsS
+	 tv5E1nw+Uh9EIFHuxcyAejIKAwPxU35CNCOzmYR6vT9Agb70uLicp6fbjiMJZcKwJa
+	 /Z8vRIc4HWTBvzbS0mVFoZk+KKHW0DmpafVgPqVg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gou Hao <gouhao@uniontech.com>,
-	jiazhenyuan <jiazhenyuan@uniontech.com>,
+	Saket Kumar Bhaskar <skb99@linux.ibm.com>,
+	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>,
+	Hari Bathini <hbathini@linux.ibm.com>,
 	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1010/1424] powerpc/smp: add NULL guard for cause_ipi in smp_muxed_ipi_message_pass
-Date: Sat, 12 Sep 2026 08:57:22 +0200
-Message-ID: <20260912065629.929605457@linuxfoundation.org>
+Subject: [PATCH 6.6 1011/1424] powerpc/irq: Fix missing r2 clobber in PCREL inline assembly
+Date: Sat, 12 Sep 2026 08:57:23 +0200
+Message-ID: <20260912065629.952991969@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -52,47 +53,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gou Hao <gouhao@uniontech.com>
+From: Saket Kumar Bhaskar <skb99@linux.ibm.com>
 
-[ Upstream commit 5aabc192702defb8950e7c81b05c3f4ca8ee43ec ]
+[ Upstream commit 00be69070d91d2be978e752bb117a0a4db0e1281 ]
 
-smp_muxed_ipi_message_pass() calls smp_ops->cause_ipi() without
-checking whether it has been set.
+In CONFIG_PPC_KERNEL_PCREL mode, r2 is no longer reserved for the TOC
+pointer and is available as a caller-saved register [0].
 
-On platforms using muxed IPI (e.g. powernv/pseries), smp_ops->cause_ipi
-is initialized to NULL in the static smp_ops and only assigned during
-the platform smp_probe() handler.  If the IPI subsystem fails to
-initialize -- for example when xive_init_ipis() fails and
-xive_smp_probe() returns an error -- the probe handler returns early
-and cause_ipi is never set.  Any subsequent IPI send (e.g.
-arch_smp_send_reschedule()) would dereference the NULL pointer.
+Both call_do_irq() and call_do_softirq() use inline assembly to call
+functions with stack switching, but fail to list r2 in their clobber
+lists. This causes the compiler to assume r2 is preserved across these
+calls, leading to register corruption when the called functions
+(__do_irq and __do_softirq) clobber r2.
 
-Add a NULL check to avoid the crash in that situation.
+As a result of this kernel crash during interrupt handling is seen and
+the kernel fails to boot:
 
-Fixes: 23d72bfd8f9f ("powerpc: Consolidate ipi message mux and demux")
-Signed-off-by: Gou Hao <gouhao@uniontech.com>
-Reviewed-by: jiazhenyuan <jiazhenyuan@uniontech.com>
+BUG: Unable to handle kernel data access on write at 0xc000000404697638
+Faulting instruction address: 0xc0000000000181ec
+Oops: Kernel access of bad area, sig: 11 [#1]
+NIP [c0000000000181ec] __do_IRQ+0x6c/0xc0
+
+With older GCC, the compiler would conservatively allocate
+callee-saved registers (like r31) for values spanning function calls,
+accidentally avoiding the bug:
+
+<__do_IRQ>:
+00 00 00 60 	nop
+a6 02 08 7c 	mflr    r0
+f8 ff e1 fb 	std     r31,-8(r1)
+f0 ff c1 fb 	std     r30,-16(r1)
+2d 03 10 06 	pla     r31,53297316
+
+...
+
+3d e8 ff 4b 	bl      c0000000000165ac <__do_irq>
+00 00 21 e8 	ld      r1,0(r1)
+28 00 4d e9 	ld      r10,40(r13)
+40 00 21 38 	addi    r1,r1,64
+2a f9 aa 7f 	stdx    r29,r10,r31
+
+With newer GCC 14, the compiler uses r2 for such values, exposing the
+missing clobber specification:
+
+<__do_IRQ>:
+00 00 00 60     nop
+a6 02 08 7c     mflr    r0
+f0 ff c1 fb     std     r30,-16(r1)
+f8 ff e1 fb     std     r31,-8(r1)
+29 02 10 06     pla     r2,36252592     # c0000000022aadc0 <__irq_regs>
+
+...
+
+85 dc ff 4b 	bl      c000000000015ee0 <__do_irq>
+00 00 21 e8 	ld      r1,0(r1)
+28 00 2d e9 	ld      r9,40(r13)
+30 00 21 38 	addi    r1,r1,48
+2a 11 c9 7f 	stdx    r30,r9,r2
+
+Fix this by adding r2 to the clobber list for both call_do_irq() and
+call_do_softirq() when CONFIG_PPC_KERNEL_PCREL is enabled.
+
+[0]: https://www.mail-archive.com/gcc-patches@gcc.gnu.org/msg313226.html
+
+Fixes: 7e3a68be42e1 ("powerpc/64: vmlinux support building with PCREL addresing")
+Signed-off-by: Saket Kumar Bhaskar <skb99@linux.ibm.com>
+Reviewed-by: Christophe Leroy (CS GROUP) <chleroy@kernel.org>
+Reviewed-by: Hari Bathini <hbathini@linux.ibm.com>
 Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20260727104215.184786-6-gouhao@uniontech.com
+Link: https://patch.msgid.link/10fc2cda485cd22e209a31d786bed1984bdf3982.1785732393.git.skb99@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kernel/smp.c | 3 +++
- 1 file changed, 3 insertions(+)
+ arch/powerpc/kernel/irq.c | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/arch/powerpc/kernel/smp.c b/arch/powerpc/kernel/smp.c
-index ab99a3e7f9972..0bcc6056b9e50 100644
---- a/arch/powerpc/kernel/smp.c
-+++ b/arch/powerpc/kernel/smp.c
-@@ -297,6 +297,9 @@ void smp_muxed_ipi_set_message(int cpu, int msg)
- 
- void smp_muxed_ipi_message_pass(int cpu, int msg)
- {
-+	if (!smp_ops->cause_ipi)
-+		return;
-+
- 	smp_muxed_ipi_set_message(cpu, msg);
- 
- 	/*
+diff --git a/arch/powerpc/kernel/irq.c b/arch/powerpc/kernel/irq.c
+index 6f7d4edaa0bc1..64bbe355ea93b 100644
+--- a/arch/powerpc/kernel/irq.c
++++ b/arch/powerpc/kernel/irq.c
+@@ -217,8 +217,12 @@ static __always_inline void call_do_softirq(const void *sp)
+ 		   [sp] "b" (sp), [offset] "i" (THREAD_SIZE - STACK_FRAME_MIN_SIZE),
+ 		   [callee] "i" (__do_softirq)
+ 		 : // Clobbers
+-		   "lr", "xer", "ctr", "memory", "cr0", "cr1", "cr5", "cr6",
+-		   "cr7", "r0", "r3", "r4", "r5", "r6", "r7", "r8", "r9", "r10",
++		   "lr", "xer", "ctr", "memory", "cr0", "cr1", "cr5", "cr6", "cr7", "r0",
++		  /* r2 may be clobbered by the callee when using PCREL mode in the ELFv2 ABI. */
++#ifdef CONFIG_PPC_KERNEL_PCREL
++		   "r2",
++#endif
++		   "r3", "r4", "r5", "r6", "r7", "r8", "r9", "r10",
+ 		   "r11", "r12"
+ 	);
+ }
+@@ -275,8 +279,12 @@ static __always_inline void call_do_irq(struct pt_regs *regs, void *sp)
+ 		   [sp] "b" (sp), [offset] "i" (THREAD_SIZE - STACK_FRAME_MIN_SIZE),
+ 		   [callee] "i" (__do_irq)
+ 		 : // Clobbers
+-		   "lr", "xer", "ctr", "memory", "cr0", "cr1", "cr5", "cr6",
+-		   "cr7", "r0", "r4", "r5", "r6", "r7", "r8", "r9", "r10",
++		   "lr", "xer", "ctr", "memory", "cr0", "cr1", "cr5", "cr6", "cr7", "r0",
++		  /* r2 may be clobbered by the callee when using PCREL mode in the ELFv2 ABI. */
++#ifdef CONFIG_PPC_KERNEL_PCREL
++		   "r2",
++#endif
++		   "r4", "r5", "r6", "r7", "r8", "r9", "r10",
+ 		   "r11", "r12"
+ 	);
+ }
 -- 
 2.53.0
 
