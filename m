@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFDF73176EE;
-	Sat, 12 Sep 2026 19:43:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A188C3176EE;
+	Sat, 12 Sep 2026 19:43:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789242233; cv=none; b=ECPucAVH2K+vbda1CB1B78Rb4c7JViadQutoFM0QCTCvC5OsGHdGFehhGhjqBTF+xwiFw+W95xWlYXG6YzBB4UEbeI8UQul4HLltU7lhdhfAXgQTRhdJMEI2PrWxfbArDuiRJTcDjjNTE9WZILRSDE5zt3Qvxp4Ru+tfEp/zef4=
+	t=1789242235; cv=none; b=p/2WvVJKnYEchBdxlramqk7lXspA/SBh9GxWAkAYdALB0kCEsN4bJg+K+XEarsjgCKBrMjIo5IO+E6cHgtWQ7OARiIxQux5nViRXcU8qT9pTx6EOo+EGvT942/MV705gkRmsN8qngh5yWwMio/lHl/V5UMrXJ04BG8meg5W3JUQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789242233; c=relaxed/simple;
-	bh=7ElQqMcbTEkLidCvu/9bvZ+4sNOS+QgUp4qB93Dbr48=;
+	s=arc-20240116; t=1789242235; c=relaxed/simple;
+	bh=1vLC0HRxrX3voV6vqi6ilP7oCjKsxUhoqaCV5agPNjw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mp3YwrGZ9gLbiYTxf0gJab31pgJmjNkRjoXaGD3rHtiCmNp9RJI5/tuknet3jfU/BkGKTVz9O1vN176bY2Jn6K1ayMAk1yV0yOknVxE+RtXp6/2hoRLuP3dgHUAQsks7+fpdaIPTeKDfhc7tRRJmiWaKOj/BTlduj7x2fX1BoJY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FtYiA/c9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tKmxZjv9ohzmpg3Z0cZyEnay2JcGvtcJOQ7pGIZVafh/1pAIL8xjndk3NogXBL2L1OB845QD1pIgUI0L78rQ6ih6yc7FuFck+bQHjqMNSqUZfxxA+T6pfr1B9k9ie3Rce4vw+HvP1SN/PUWgOBhGtBI5nGE1SFjV5PxUJCsj/qo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Swnxtp+X; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FtYiA/c9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 293551F000FF;
-	Sat, 12 Sep 2026 19:43:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Swnxtp+X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06BF51F00899;
+	Sat, 12 Sep 2026 19:43:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789242231;
-	bh=gECvuzbX/14XPdxeEovod7Pq7N1UUuElBeD2Zo4YWTY=;
+	s=korg; t=1789242234;
+	bh=cl+lawptAsrxJwCRGKsTIiLrKdCM4HP9ZGS71aE2za0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FtYiA/c9XTIFE7ODNRpbqq3+U9WS/0GcSIPuGwMoJK9T6cRUFFUa4GHiK4wyKW5fm
-	 YG0B3Fc+XFwUgHl1SXj+vTY27tYm7yWm8r+wly9vqsL5ubhvPipqd3i00M+GL44O4b
-	 nR4sFUO3n2N3LtAamDo+N2k89EpBfqnDR/I8YXk0=
+	b=Swnxtp+X9qbZFdF3p74ykspUF6AhvczFrS0YeTVmO/xCviLgywuEDjmx4Fn6/ue8+
+	 kx+3zbH6/3pGurY4WOGp1Yy9uvctwHvb4d5BI19gHhoA0ufbsJf6oWnWzlW9Yi+fkS
+	 qHeqtV6AcpiYST/Y3FVOadUoXYGWbDOWt7Iwbhz0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	Ingo Molnar <mingo@elte.hu>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Bjoern Doebel <doebel@amazon.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 330/798] perf sched: Fix register_pid() overflow, strcpy, and BUG_ON
-Date: Sat, 12 Sep 2026 08:59:18 +0200
-Message-ID: <20260912065524.727147086@linuxfoundation.org>
+	Arash Golgol <arash.golgol@gmail.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 5.10 290/798] media: vimc: fix pixel format lookup in enum_framesizes
+Date: Sat, 12 Sep 2026 08:58:38 +0200
+Message-ID: <20260912065523.810020256@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -47,149 +44,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Arash Golgol <arash.golgol@gmail.com>
 
-commit 5949d339f5ec98752d56dcd4e36f619a59d513a5 upstream.
+commit ad4c65fa30cfb00e2e06adae9a8eb407086eaa66 upstream.
 
-register_pid() has several issues when processing untrusted perf.data:
+vimc_capture_enum_framesizes() looks up the requested format using
+vimc_pix_map_by_code(), which searches the pix map table by media
+bus code (MEDIA_BUS_FMT_*).
 
-1. Integer overflow: (pid + 1) * sizeof(struct task_desc *) can wrap
-   to a small value on 32-bit systems when pid is large (e.g.
-   0x40000000), causing realloc to return a tiny buffer followed by
-   out-of-bounds writes in the initialization loop.
+However, v4l2_frmsizeenum::pixel_format holds a V4L2 pixel format
+(V4L2_PIX_FMT_*), not a media bus code, so valid pixel formats end
+up being rejected with -EINVAL.
 
-2. Heap buffer overflow: strcpy(task->comm, comm) copies the
-   untrusted comm string into a fixed 20-byte COMM_LEN buffer with
-   no length check.
+Fix this by using vimc_pix_map_by_pixelformat() instead, which
+performs the lookup by pixel format as the ioctl expects.
 
-3. BUG_ON on allocation failure: perf.data is untrusted input, so
-   allocation failures should be handled gracefully rather than
-   killing the process.
-
-4. Realloc of sched->tasks assigned directly back, leaking the old
-   pointer on failure; nr_tasks incremented before the realloc,
-   leaving corrupted state on failure.
-
-Cap pid at PID_MAX_LIMIT (4194304, matching the kernel's maximum
-on 64-bit), replace strcpy with strlcpy, guard against NULL comm,
-replace BUG_ON with NULL returns using safe realloc patterns, and
-add NULL checks in callers that dereference the result.
-
-Fixes: ec156764d424 ("perf sched: Import schedbench.c")
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Cc: Ingo Molnar <mingo@elte.hu>
-Assisted-by: Claude:claude-opus-4.6
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-[doebel: context adjustment for 5.10]
-Signed-off-by: Bjoern Doebel <doebel@amazon.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 09c41a23a2e2 ("media: Revert "media: vimc: propagate pixel format in the stream"")
+Cc: stable@vger.kernel.org
+Signed-off-by: Arash Golgol <arash.golgol@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/perf/builtin-sched.c | 40 ++++++++++++++++++++++++++++----------
- 1 file changed, 30 insertions(+), 10 deletions(-)
+ drivers/media/test-drivers/vimc/vimc-capture.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tools/perf/builtin-sched.c b/tools/perf/builtin-sched.c
-index 4f8658f5f9dee..c57df485cc91b 100644
---- a/tools/perf/builtin-sched.c
-+++ b/tools/perf/builtin-sched.c
-@@ -50,6 +50,7 @@
- #define COMM_LEN		20
- #define SYM_LEN			129
- #define MAX_PID			1024000
-+#define PID_MAX_LIMIT		4194304 /* kernel limit on 64-bit */
+--- a/drivers/media/test-drivers/vimc/vimc-capture.c
++++ b/drivers/media/test-drivers/vimc/vimc-capture.c
+@@ -176,8 +176,8 @@ static int vimc_cap_enum_framesizes(stru
+ 	if (fsize->index)
+ 		return -EINVAL;
  
- static const char *cpu_list;
- static DECLARE_BITMAP(cpu_bitmap, MAX_NR_CPUS);
-@@ -446,17 +447,28 @@ static void add_sched_event_sleep(struct perf_sched *sched, struct task_desc *ta
- static struct task_desc *register_pid(struct perf_sched *sched,
- 				      unsigned long pid, const char *comm)
- {
--	struct task_desc *task;
-+	struct task_desc *task, **tasks_p;
- 	static int pid_max;
+-	/* Only accept code in the pix map table */
+-	vpix = vimc_pix_map_by_code(fsize->pixel_format);
++	/* Only accept pixel_format in the pix map table */
++	vpix = vimc_pix_map_by_pixelformat(fsize->pixel_format);
+ 	if (!vpix)
+ 		return -EINVAL;
  
-+	/* perf.data is untrusted — cap pid to prevent overflow in size calculations */
-+	if (pid >= PID_MAX_LIMIT) {
-+		pr_err("pid %lu exceeds limit %d, skipping\n", pid, PID_MAX_LIMIT);
-+		return NULL;
-+	}
-+
- 	if (sched->pid_to_task == NULL) {
- 		if (sysctl__read_int("kernel/pid_max", &pid_max) < 0)
- 			pid_max = MAX_PID;
--		BUG_ON((sched->pid_to_task = calloc(pid_max, sizeof(struct task_desc *))) == NULL);
-+		sched->pid_to_task = calloc(pid_max, sizeof(struct task_desc *));
-+		if (sched->pid_to_task == NULL)
-+			return NULL;
- 	}
- 	if (pid >= (unsigned long)pid_max) {
--		BUG_ON((sched->pid_to_task = realloc(sched->pid_to_task, (pid + 1) *
--			sizeof(struct task_desc *))) == NULL);
-+		void *p = realloc(sched->pid_to_task, (pid + 1) * sizeof(struct task_desc *));
-+
-+		if (p == NULL)
-+			return NULL;
-+		sched->pid_to_task = p;
- 		while (pid >= (unsigned long)pid_max)
- 			sched->pid_to_task[pid_max++] = NULL;
- 	}
-@@ -467,9 +479,11 @@ static struct task_desc *register_pid(struct perf_sched *sched,
- 		return task;
- 
- 	task = zalloc(sizeof(*task));
-+	if (task == NULL)
-+		return NULL;
- 	task->pid = pid;
--	task->nr = sched->nr_tasks;
--	strcpy(task->comm, comm);
-+	if (comm)
-+		strlcpy(task->comm, comm, sizeof(task->comm));
- 	/*
- 	 * every task starts in sleeping state - this gets ignored
- 	 * if there's no wakeup pointing to this sleep state:
-@@ -477,10 +491,12 @@ static struct task_desc *register_pid(struct perf_sched *sched,
- 	add_sched_event_sleep(sched, task, 0, 0);
- 
- 	sched->pid_to_task[pid] = task;
--	sched->nr_tasks++;
--	sched->tasks = realloc(sched->tasks, sched->nr_tasks * sizeof(struct task_desc *));
--	BUG_ON(!sched->tasks);
--	sched->tasks[task->nr] = task;
-+	tasks_p = realloc(sched->tasks, (sched->nr_tasks + 1) * sizeof(struct task_desc *));
-+	if (!tasks_p)
-+		return NULL;
-+	sched->tasks = tasks_p;
-+	sched->tasks[sched->nr_tasks] = task;
-+	task->nr = sched->nr_tasks++;
- 
- 	if (verbose > 0)
- 		printf("registered task #%ld, PID %ld (%s)\n", sched->nr_tasks, pid, comm);
-@@ -824,6 +840,8 @@ replay_wakeup_event(struct perf_sched *sched,
- 
- 	waker = register_pid(sched, sample->tid, "<unknown>");
- 	wakee = register_pid(sched, pid, comm);
-+	if (waker == NULL || wakee == NULL)
-+		return -1;
- 
- 	add_sched_event_wakeup(sched, waker, sample->time, wakee);
- 	return 0;
-@@ -866,6 +884,8 @@ static int replay_switch_event(struct perf_sched *sched,
- 
- 	prev = register_pid(sched, prev_pid, prev_comm);
- 	next = register_pid(sched, next_pid, next_comm);
-+	if (prev == NULL || next == NULL)
-+		return -1;
- 
- 	sched->cpu_last_switched[cpu] = timestamp;
- 
--- 
-2.53.0
-
 
 
