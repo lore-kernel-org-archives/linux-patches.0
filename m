@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FF8D47886E;
-	Sat, 12 Sep 2026 11:35:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 905F4479876;
+	Sat, 12 Sep 2026 11:35:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789212925; cv=none; b=AbCoK6948Feb13Fc8d/xHRmkKCo8ade/CCzTpYQrZ/C51yCIJ8wpv6xAEDdCuPEanb4grga6FbVYqB0ZNN4dQWr25E/G4emtyHmjuMrL+fgAg2sAgRiWK/PVXPR3yg0ExM+iiSkMyDyRBriVKCpPu28YzYH3S4k77wEjrzOlSGg=
+	t=1789212928; cv=none; b=boXd147dFaQB8gHNqnDOp3XantqIOG1XbOfa1LVmmP/+Yygd6ogNi/wu/hHAFp76cgi4woxxNpiswNLmJNOlWMb8lAWfYQVAd9dvTG4CKrmXLO7/f0JwYxpOnFfFaVtbu1cK1ZDQIwr9eyIg3z6jLV7V2Av7OsY29CxEi+MV3p0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789212925; c=relaxed/simple;
-	bh=bBf7r99mUrZ60EzuJCJgaVnIgDIqmmgPDapoOLeAfYs=;
+	s=arc-20240116; t=1789212928; c=relaxed/simple;
+	bh=Mla7pMiSrYf76HmnCLUGwsJiwqMIcev107gQq64ig6I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VRlj28CH7vdmS8byAaDhqedqMmvJvcXSUwAJklnG5onT24LLe6u6ckKzFbRdZW6dGyGtzAH4+EYyPjb7L68+xlUpZE7m3RpRW6ODaEkO8y4Tijm/42x1amfW7vXSita7XNGGtMu/4TMRhnFW/0Maz35FvGYeKIuKk1qxmXlv3w4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IKqEmYi0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=R0UDXb6AeCXyswc6SQ8OvVQzhIkDZNA4e8hgWGqSpSYrr0Vi6hWcgEMPvnhzK6CZz7aENC5b5JypTTDFlp0Kd/Hsbm2IpqaToahBl8KY53CVbuJ4mVJMGLuJlZcNXdy73nXdWyTjXc9b4Itm03fpuRyY/aXdXLS+Sq8bg9gYpS4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K9DDyURT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IKqEmYi0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A3981F000FF;
-	Sat, 12 Sep 2026 11:35:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K9DDyURT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16DEB1F000FF;
+	Sat, 12 Sep 2026 11:35:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789212921;
-	bh=yb4A5WQypsTmgqeEYqqF+cNSGCLbtmjBMlrvVD98kDo=;
+	s=korg; t=1789212926;
+	bh=4WCV9hzbLJrO/mTYj9+eRW+eg4fouXTQQa8URNKIj/8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IKqEmYi0UcORD6qvukW9/K6OfExELKD9bNtBCp456aVpAfSC3VpX+VcfJHM9BBwdt
-	 fc7Xu0fr41F6xaDLZtgv/ZooRZDASBPlJr+m7JCmrnBqe0pAeo2DQc06K1m3CVMQuU
-	 +8JYyc1DiWYDD5bJ2fSwFcfV897fv+SP5B07JLrI=
+	b=K9DDyURTQWryX9hPtaQA/RwJZQuEykeIw6hl28sVN1475WrkTlfNWCgcv4lf448YB
+	 +SYnTm7+dWcCZrrcytByR5xP1AQqFpFI+j+XXZzZC4P/R1aOHf6Or/9BHvxm/iWK6z
+	 P5wmoLFqn2TenD+MhBzoXb+MgULcsusVohuqNqQo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Griffin Kroah-Hartman <griffin@kroah.com>
-Subject: [PATCH 6.12 0017/1376] usb: image: mdc800: change kmalloc() to kzalloc()
-Date: Sat, 12 Sep 2026 08:40:43 +0200
-Message-ID: <20260912065607.933380342@linuxfoundation.org>
+	HyeongJun An <sammiee5311@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.12 0018/1376] ALSA: usb-audio: fix OOB write in snd_usbmidi_us122l_output()
+Date: Sat, 12 Sep 2026 08:40:44 +0200
+Message-ID: <20260912065607.955134655@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -50,41 +50,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Griffin Kroah-Hartman <griffin@kroah.com>
+From: HyeongJun An <sammiee5311@gmail.com>
 
-commit 2430eb81e44111b30eeb5273bbcf8b24ca517ef9 upstream.
+commit e4637ce34607f1733a34a57294966d26b263e626 upstream.
 
-Change the kmalloc() calls in usb_mdc800_init() for irq_urb_buffer and
-download_urb_buffer to kzalloc(), avoiding potential stack leaks if a
-shorter message is received in mdc800_usb_irq() and
-mdc800_usb_download_notify()
+The snd_usbmidi_us122l_output() picks a count of 2 on anything slower
+than high speed and never relates it to ep->max_transfer.  The URB
+buffer holds exactly max_transfer bytes, so a device declaring a one
+byte bulk endpoint takes two bytes from snd_rawmidi_transmit(), and the
+memset that pads the rest computes 1 - 2 in int and wraps to SIZE_MAX.
 
-Assisted-by: gkh_clanker_t1000
-Cc: stable <stable@kernel.org>
-Signed-off-by: Griffin Kroah-Hartman <griffin@kroah.com>
-Link: https://patch.msgid.link/20260819-usb_misc_random-v1-1-43a0dcee3a32@kroah.com
+Only 0x800e and 0x800f are pinned to nine bytes.  The US-122MKII at
+0x0644:0x8021 falls to the default and takes usb_maxpacket(), which the
+USB core only clamps downward.
+
+The akai and novation output ops in this file were given the same guard
+recently.  Do the same here.
+
+Fixes: 030a07e44129 ("ALSA: Add USB US122L driver")
+Cc: stable@vger.kernel.org
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
+Link: https://patch.msgid.link/20260901090409.1478573-1-sammiee5311@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/image/mdc800.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/usb/midi.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/usb/image/mdc800.c
-+++ b/drivers/usb/image/mdc800.c
-@@ -1000,13 +1000,13 @@ static int __init usb_mdc800_init (void)
- 	mdc800->downloaded = 0;
- 	mdc800->written = 0;
- 
--	mdc800->irq_urb_buffer=kmalloc (8, GFP_KERNEL);
-+	mdc800->irq_urb_buffer=kzalloc (8, GFP_KERNEL);
- 	if (!mdc800->irq_urb_buffer)
- 		goto cleanup_on_fail;
- 	mdc800->write_urb_buffer=kmalloc (8, GFP_KERNEL);
- 	if (!mdc800->write_urb_buffer)
- 		goto cleanup_on_fail;
--	mdc800->download_urb_buffer=kmalloc (64, GFP_KERNEL);
-+	mdc800->download_urb_buffer=kzalloc (64, GFP_KERNEL);
- 	if (!mdc800->download_urb_buffer)
- 		goto cleanup_on_fail;
- 
+--- a/sound/usb/midi.c
++++ b/sound/usb/midi.c
+@@ -974,6 +974,8 @@ static void snd_usbmidi_us122l_output(st
+ 	default:
+ 		count = 2;
+ 	}
++	if (ep->max_transfer < count)
++		return;
+ 	count = snd_rawmidi_transmit(ep->ports[0].substream,
+ 				     urb->transfer_buffer,
+ 				     count);
 
 
