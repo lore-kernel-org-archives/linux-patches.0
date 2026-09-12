@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 283F323BD03;
-	Sat, 12 Sep 2026 15:06:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B63B9349CE7;
+	Sat, 12 Sep 2026 15:06:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789225571; cv=none; b=TYtd8vFpZS4yfy7qFTzk263iJgE8xD1jq5zVtZvn+uAX88oC2KOe6sb4nR+d4Nv+2F3pKYNp1OVeoasBblBng+WfTP+8lzUoA7Z32socHvwlI6WBwBB06Ja+GY6Cz6n216htldwPJ3k4XFwivYQNAqJXjzc+f8XEIPenUH21V5A=
+	t=1789225577; cv=none; b=GfeSa9hZTUL8uCzfLJ4aItfFNXsF/dchHW6AYhM2v+X4xzlSul8L6sKKS5LQvhU82Y1cqCQ+4kQAOzIbgTpNmHCOO3FZEWA1d7URvuHWJGDZvid+WnlIzCmyvFsBhUqLlRiAX7VyeYeWoarCaJirGxpZEBW9ND/22aPcXeSK3us=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789225571; c=relaxed/simple;
-	bh=4EVFpep7LZv6bK7P5yVadWxiCd6O6tdpOv+K1T3eKU8=;
+	s=arc-20240116; t=1789225577; c=relaxed/simple;
+	bh=fX6oHQr37pm2CCrz1jDxTWiEHV3fUZxRicf9BcRbW+k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=fqvRLujZXsDMffEV8pjO+vd9lAAmxL1HFIn1OlzVTHXhyQYLTDxHUG5hN0+aDTKpeqvEW0e6n7GUP5sWjkXNS31OdtK5nHel/IXKSnt2JAvAFBedzEdOQq53Liz0n8mkJ0zR/c55bj3OGt2bIya6s/Z2WjPIREWRsuugTlGyYyQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wbxUVouz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sCK3ioY7U2DmM54ZPLfghu0mRdxhm/vypXESetTCMFzh15ZEHW9snCAas7rNdTrVhpLwg4YYHPnFKIjiUDlQW09qq7CChihvYBm/BUnT3TdvgvNtwUmX64AExvK8E3sknN51Lpy3FZ4paWdAPHwnDJVVEA2jTz9chKeEEBL6JOk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i9zpVXkN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wbxUVouz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDA021F000FF;
-	Sat, 12 Sep 2026 15:06:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i9zpVXkN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 348A81F000FF;
+	Sat, 12 Sep 2026 15:06:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789225569;
-	bh=cxWb9/DLVYAMyXUadVPjSs0ia4m9jOpFRz++fhhONjk=;
+	s=korg; t=1789225574;
+	bh=pnaLnXnjR4kkipTf76r+odL3Ef43ohgm5LMfeZIi9x8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wbxUVouzTGxdzjwevVPCRdofz5vxbYFdxIddmyKl50KD8vC9eu7t1ZkOzxt52KZut
-	 VLK/oAAmTuqhHxZ+A7Z2eKLi7fWkgnOdSUlvZ7WSRih+8Mi3udlhYtpbJ6kirQ55nM
-	 v+BQcndLcgHpMZ8hDvfTWhy4m2setwBLVX1dwwNc=
+	b=i9zpVXkNybESJwZYAg2APnpaPTEwTAisgBeDoQ5XAMqDwCzCcbqsc5YY0GxcyEv5e
+	 k3cRrWDGQ2u2eUxqIoBbbHOCkjYluNCM9dIGdjHp/cjBYcfzG+o7cvlJBYLoaRhmXy
+	 fIWoeUUT0+z9uLcqY/TCRTB/Ju8riohYgTd/7/Rk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Israel=20T=C3=A9llez=20Garc=C3=ADa?= <i.tellez@btesa.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Zhushuai Yin <yinzhushuai@huawei.com>,
+	Chenghai Huang <huangchenghai2@huawei.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1223/1424] bpf: Fix pending_pos walk on 32-bit ring position wrap
-Date: Sat, 12 Sep 2026 09:00:55 +0200
-Message-ID: <20260912065634.674405222@linuxfoundation.org>
+Subject: [PATCH 6.6 1224/1424] crypto: hisilicon/sec2 - fix CCM algorithm long packet failure
+Date: Sat, 12 Sep 2026 09:00:56 +0200
+Message-ID: <20260912065634.695378363@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -45,85 +46,82 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Israel Téllez García <i.tellez@btesa.com>
+From: Zhushuai Yin <yinzhushuai@huawei.com>
 
-[ Upstream commit 6ff5b56a50c5351aeeb180e34327736576c038fa ]
+[ Upstream commit b82f60be50c87b3d75e207852c5ca74fa18f66cf ]
 
-The reservation path caches the position of the oldest not-yet-committed
-record in rb->pending_pos and advances it past already committed records
-on every reservation:
+In the CCM B0 block the message-length field Q spans L bytes, where
+L (cl in the driver) is derived from the cipher IV flags byte as
+c_ivin[0] + 1. set_aead_auth_iv() hardcoded writing only the last 2
+bytes of a_ivin with cryptlen, implicitly assuming cl = 2.
 
-	while (pend_pos < prod_pos) {
+When cl = 3 (a shorter nonce yielding a 3-byte length field) and the
+packet is longer than 65535 bytes, cryptlen no longer fits in 2 bytes.
+The dropped high byte made the auth IV built by the driver differ from
+the one consumed by the hardware, so the software/hardware comparison
+failed and the CCM request errored out.
 
-consumer_pos, producer_pos and pending_pos are unsigned long, i.e.
-32-bit on 32-bit architectures, and Documentation/bpf/ringbuf.rst states
-that these counters may wrap around there. Every other comparison in the
-file is written as a difference, so modular arithmetic keeps them
-correct across the wrap. This one is an ordering comparison, and it is
-not wrap-safe.
+Write the last cl bytes of a_ivin in a loop driven by the IV's CL
+value, so the length-field width always matches the algorithm
+configuration instead of assuming a fixed 2-byte field.
 
-Once producer_pos wraps past 2^32, prod_pos is small while pend_pos
-still holds its pre-wrap value, so the loop condition is false and
-pending_pos is never advanced again. Reservations keep succeeding for a
-while, because bpf_ringbuf_has_space() uses differences, but
-new_prod_pos - pend_pos grows as the producer advances, and once it
-exceeds rb->mask every subsequent __bpf_ringbuf_reserve() call fails:
-the kernel believes a pending record spans the whole buffer. The ring
-never recovers, bpf_ringbuf_output() drops every event from then on, and
-nothing is logged.
-
-Observed on four armv7 devices (i.MX7 Dual, 6.6.52) running a
-tracepoint-based collector with a 512 KiB ring and 160-byte records.
-Every one of them stopped delivering after exactly 26846821 records and
-4295491360 bytes had passed through the ring, at event rates between 441
-and 862 records/s, that is after 8 h to 17 h of uptime: the trigger is
-the byte count, not time or load. That figure is 2^32 plus 524064 bytes,
-and the excess is one ring's worth of grace period, as expected while
-new_prod_pos - pend_pos is still below rb->mask. The last reservation
-that fits is the largest record boundary X with X + 160 <= 524287, and
-since 2^32 mod 160 = 96 the boundaries after the wrap sit at
-X = 64 (mod 160), giving X = 524064. Userspace kept consuming normally
-until the producer stopped, then read zero records for good. With this
-patch applied, one of the four devices took 10 GiB through the same ring
-with no stall, while the three unpatched ones kept wedging at the same
-byte count.
-
-64-bit hosts are unaffected in practice: their counters would need
-16 EiB to wrap.
-
-Compare the two positions as a difference instead. pending_pos never
-runs ahead of producer_pos, so the unsigned difference is the real
-distance between them and stays correct across the wrap.
-
-Fixes: cfa1a2329a69 ("bpf: Fix overrunning reservations in ringbuf")
-Signed-off-by: Israel Téllez García <i.tellez@btesa.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20260814124843.22041-2-i.tellez@btesa.com
+Fixes: c16a70c1f253 ("crypto: hisilicon/sec - add new algorithm mode for AEAD")
+Signed-off-by: Zhushuai Yin <yinzhushuai@huawei.com>
+Signed-off-by: Chenghai Huang <huangchenghai2@huawei.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/ringbuf.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/crypto/hisilicon/sec2/sec_crypto.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/kernel/bpf/ringbuf.c b/kernel/bpf/ringbuf.c
-index c0c5e9b313e43..73a810a64a6e8 100644
---- a/kernel/bpf/ringbuf.c
-+++ b/kernel/bpf/ringbuf.c
-@@ -429,7 +429,7 @@ static void *__bpf_ringbuf_reserve(struct bpf_ringbuf *rb, u64 size)
- 	prod_pos = rb->producer_pos;
- 	new_prod_pos = prod_pos + len;
+diff --git a/drivers/crypto/hisilicon/sec2/sec_crypto.c b/drivers/crypto/hisilicon/sec2/sec_crypto.c
+index 8db3d2990816e..2bfe3524c2650 100644
+--- a/drivers/crypto/hisilicon/sec2/sec_crypto.c
++++ b/drivers/crypto/hisilicon/sec2/sec_crypto.c
+@@ -98,7 +98,6 @@
+ #define IV_FLAGS_OFFSET	0x6
+ #define IV_CM_OFFSET		0x3
+ #define IV_LAST_BYTE1		1
+-#define IV_LAST_BYTE2		2
+ #define IV_LAST_BYTE_MASK	0xFF
+ #define IV_CTR_INIT		0x1
+ #define IV_BYTE_OFFSET		0x8
+@@ -1469,7 +1468,7 @@ static void set_aead_auth_iv(struct sec_ctx *ctx, struct sec_req *req)
+ 	struct sec_cipher_req *c_req = &req->c_req;
+ 	u32 data_size = aead_req->cryptlen;
+ 	u8 flage = 0;
+-	u8 cm, cl;
++	u8 cm, cl, i;
  
--	while (pend_pos < prod_pos) {
-+	while (prod_pos - pend_pos > 0) {
- 		hdr = (void *)rb->data + (pend_pos & rb->mask);
- 		hdr_len = READ_ONCE(hdr->len);
- 		if (hdr_len & BPF_RINGBUF_BUSY_BIT)
+ 	/* the specification has been checked in aead_iv_demension_check() */
+ 	cl = c_req->c_ivin[0] + 1;
+@@ -1493,15 +1492,16 @@ static void set_aead_auth_iv(struct sec_ctx *ctx, struct sec_req *req)
+ 	 * the last 32bit is counter's initial number,
+ 	 * but the nonce uses the first 16bit
+ 	 * the tail 16bit fill with the cipher length
++	 * When CL is 3, the tail 24bit fill with the cipher length.
+ 	 */
+ 	if (!c_req->encrypt)
+ 		data_size = aead_req->cryptlen - authsize;
+ 
+-	a_req->a_ivin[ctx->c_ctx.ivsize - IV_LAST_BYTE1] =
+-			data_size & IV_LAST_BYTE_MASK;
+-	data_size >>= IV_BYTE_OFFSET;
+-	a_req->a_ivin[ctx->c_ctx.ivsize - IV_LAST_BYTE2] =
++	for (i = 1; i <= cl; i++) {
++		a_req->a_ivin[ctx->c_ctx.ivsize - i] =
+ 			data_size & IV_LAST_BYTE_MASK;
++		data_size >>= IV_BYTE_OFFSET;
++	}
+ }
+ 
+ static void sec_aead_set_iv(struct sec_ctx *ctx, struct sec_req *req)
 -- 
 2.53.0
 
