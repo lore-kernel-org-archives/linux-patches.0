@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 378E3370D47;
-	Sat, 12 Sep 2026 10:18:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F7952594BD;
+	Sat, 12 Sep 2026 10:18:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789208338; cv=none; b=H6e16qotFrzYo/GR4zkS6YDdK872mMPFm4ovnBY0Cn2F3Ljmm7jixdxbur5xs5s/vFJ48JFCmEtEf/HNLuvuD4nxQf4jWFkrTziMV0nr620MyqPIT1IUW0WHwYs0ibzBrsKtEIF81jUPHInlDcWbhaaQls9ipR8kEEY+2y2iioE=
+	t=1789208340; cv=none; b=sSv63ShchmmgMx6bUAJaf4IYKZ50ep+tRsmirG6xaKM3Fgcfp4y0pCfRLwGC8KN3O4zxkQz202NCyvh0u/pIDvfm+I4Zp7CZREQKkQqpDTrKwz8bTY+cSNfEVoMd6Y4psuDnNVwhO1M7hv3ZLfxyeYT6dkAtOoJ3VOC1m2/hNHU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789208338; c=relaxed/simple;
-	bh=LHpGtaHxMF+rCQ1vsf2wm60Fs/Y6T3JG4cm3e1pUaYw=;
+	s=arc-20240116; t=1789208340; c=relaxed/simple;
+	bh=PjiHgTmSxEgiIQpfHgOaG69Nm6OpbIYN6Jx4Hcvk67g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N1JJnD7i7McKhmVk0vp7lPCsOKaDd5f4e02/n1bAmNbzLqP1zaeNTAkglboTsKJD3pJTHctQ80j7YbO3/5UR/ezPtaTmo3tfHhRf50pplDmfI/h7Ud9fLSXx55OGSeL41+jjmTGbZRVRbzeewMpFG3Qo6BIHqCboPJtfdFYcOk8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aEXesIwH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DYNBtkQ4PrKk/sUz53/7JOnq37WIi/RDGhth+UTUhVw0iIbC+3kBxfUiqE3feVve4LLBQwI6jvupV5YfXn2LKgHIED8TZERxIN5UMzC2Y5bZGTlxgxaWhcE0d9z5ksnz4Vwi463OoQPgVOD5er2xjnpzjFEq15gGkUo5O/eT7Qc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XDJB6Qm6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aEXesIwH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02FA21F00893;
-	Sat, 12 Sep 2026 10:18:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XDJB6Qm6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 084E51F000FF;
+	Sat, 12 Sep 2026 10:18:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789208333;
-	bh=kuzSN2LSNc35gKucZ5zMmzP7OdlAPWWkArYvwV+a4ho=;
+	s=korg; t=1789208338;
+	bh=D5LDN0MgbG8gdBVuZGYKmAcuPuh02ga1IBFYnMdPV68=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aEXesIwHkFuf4oGfVm3QYr5rRR0JzAll2Z8I9Uukpn+u8B/CEr+DXbRuppCOoC5zk
-	 68VTjI2X1ikyvB115FlCRm6rKvyDWQPsCCbqIa7Yil+rUXFnlLgBS5rV+h/5/tlxwI
-	 e0uXSLRv7/5b9lz5j6PggI1fClZxYV9RjnM9Z4mU=
+	b=XDJB6Qm6YbAyMRI7S+4PODSlpPLXuECwJm4sJjym+U5oebVERDr9vVThcu1O+0bV9
+	 4UZJ1mhDJ7mt5ue8itGdmzSRXNoq9z5fatejwkqHOgn6qAnr3+pNNzLumKGlHSqGLx
+	 UlBxTwhsPd1BXu++q07NbUiFy4Xgq8/hUjQxJia0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peng Fan <peng.fan@nxp.com>,
-	Andrew Davis <afd@ti.com>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>,
+	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
+	Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0594/1518] remoteproc: core: Drop redundant initialization of ret in rproc_shutdown()
-Date: Sat, 12 Sep 2026 08:46:03 +0200
-Message-ID: <20260912065636.863275160@linuxfoundation.org>
+Subject: [PATCH 6.18 0595/1518] remoteproc: Allow shutdown of crashed processors
+Date: Sat, 12 Sep 2026 08:46:04 +0200
+Message-ID: <20260912065636.885670725@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,39 +53,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peng Fan <peng.fan@nxp.com>
+From: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
 
-[ Upstream commit 4531b6bad5af669511c348ad5225d9f697af221b ]
+[ Upstream commit 2482ca875ef5993df8daee563033d70e2523a25f ]
 
-The variable ret is immediately assigned the return value of
-mutex_lock_interruptible(), making its prior initialization to zero
-unnecessary. Remove the redundant assignment
+rproc_shutdown() rejects a remoteproc in RPROC_CRASHED state, and
+rproc_del() ignores that error. The result of these two decisions is
+that a user cannot stop a remoteproc that with recovery disabled that
+has entered a crash state, and removal of an associated remoteproc
+driver will release resources without first stopping the remoteproc.
 
-No functional changes.
+Allow rproc_shutdown() to stop crashed processors. Propagate the crash
+state to subdevice teardown, to allow subdevices to dismantle things
+appropriately.
 
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Acked-by: Andrew Davis <afd@ti.com>
-Link: https://lore.kernel.org/r/20251016-rproc-cleanup-v3-v3-1-774083716e8a@nxp.com
-Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
-Stable-dep-of: 2482ca875ef5 ("remoteproc: Allow shutdown of crashed processors")
+Assisted-by: OpenCode:GPT-5.5
+Fixes: 5e6a0e05270e ("remoteproc: core: Move state checking to remoteproc_core")
+Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+Reviewed-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260723-rproc-rmmod-not-crashing-v1-1-546dfd5de0e6@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/remoteproc_core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/remoteproc/remoteproc_core.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/remoteproc/remoteproc_core.c b/drivers/remoteproc/remoteproc_core.c
-index 8256721005289..29bbaa349e340 100644
+index 29bbaa349e340..321ec76d20521 100644
 --- a/drivers/remoteproc/remoteproc_core.c
 +++ b/drivers/remoteproc/remoteproc_core.c
-@@ -1989,7 +1989,7 @@ EXPORT_SYMBOL(rproc_boot);
+@@ -1989,6 +1989,7 @@ EXPORT_SYMBOL(rproc_boot);
  int rproc_shutdown(struct rproc *rproc)
  {
  	struct device *dev = &rproc->dev;
--	int ret = 0;
-+	int ret;
++	bool crashed;
+ 	int ret;
  
  	ret = mutex_lock_interruptible(&rproc->lock);
+@@ -1998,16 +1999,18 @@ int rproc_shutdown(struct rproc *rproc)
+ 	}
+ 
+ 	if (rproc->state != RPROC_RUNNING &&
+-	    rproc->state != RPROC_ATTACHED) {
++	    rproc->state != RPROC_ATTACHED &&
++	    rproc->state != RPROC_CRASHED) {
+ 		ret = -EINVAL;
+ 		goto out;
+ 	}
++	crashed = rproc->state == RPROC_CRASHED;
+ 
+ 	/* if the remote proc is still needed, bail out */
+ 	if (!atomic_dec_and_test(&rproc->power))
+ 		goto out;
+ 
+-	ret = rproc_stop(rproc, false);
++	ret = rproc_stop(rproc, crashed);
  	if (ret) {
+ 		atomic_inc(&rproc->power);
+ 		goto out;
 -- 
 2.53.0
 
