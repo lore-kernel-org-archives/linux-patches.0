@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9CC8320CD3;
-	Sat, 12 Sep 2026 15:25:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EC74278161;
+	Sat, 12 Sep 2026 15:25:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789226756; cv=none; b=C/fRjzb+KKsALUZbul53eF0X9eXEivYj5AymXTd0D8vPkhxYpxCRiIJ3ga7r9zxGJhk/V+VP/CIQXLa77R6guvVHZWF+c3QCx+qyaDUCysh3eG1Xvw5Coj8/HobdlVEA3nNeUP1Ja93HhbtruxpS0Q/C+pKwlTyEEWe3TtVwjxs=
+	t=1789226761; cv=none; b=jXTBP5s8yQLwGoY0/oMHi1wE9/qZp4Se47XafRw51jOtZf8Cbw4M7JadvfFukzbssTwGYV7TLinwZYRA5AU1mD9zBOmN6kdP71o46t2lialCyaP6w9kFg96cu9s+SV/5URbDYuDtlA4DS0TxWzsfbyXgAhpEjDnomhWd48oDzCE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789226756; c=relaxed/simple;
-	bh=K9KDCmsGUjUX/hUVQ5VV7WCVph30Wec4HiSIzp8gPo8=;
+	s=arc-20240116; t=1789226761; c=relaxed/simple;
+	bh=VDDOxD4O28ORWJAIpI3BZj0u+opchx1Fu3eYkX2EwtI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K9q7y931uQwSOCxnG1tpNOenhsAD8bnNMOcjbPL5yjWk53JVJyfePheh4xO3Ewn6RkzqOlY+f4iUipOaBb547C4KZu9H4M7LQEc4ouJSPUyLaqtM6Va7W6wEssIFZyiqc+cQSG2WJgBh7CXMld3QlB5nPAWdCVKSpg46wzaVinU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jwxv8rbH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OxzNeBaaG3876jUkmB8qRSMnaoL6DBvnshGyjQdY3ue9+yPdckehunoISStPlXZ1v2zBdgilkKICV84MY75XpoPhZivpiR/jiqFP7WjIdMm9fea7zZyAJJxWOLaRKSunhpDfwMKCcpECWpfUZhLkBd3R9FN8/GEOUH8fkDrChW8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jbl//fW6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jwxv8rbH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 077231F000FF;
-	Sat, 12 Sep 2026 15:25:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jbl//fW6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8C691F000FF;
+	Sat, 12 Sep 2026 15:25:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789226754;
-	bh=8XFJR1uKDk4xrG/ZXXyJmMNYUcKbwTqEFCW1lvFpoUI=;
+	s=korg; t=1789226759;
+	bh=B5mp7FX1jawsXxNr4rJPUOIHhtxnsvNwYmSfHnlEe8s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Jwxv8rbHuMJU//o6eL8gq8QRJZs6rXP3RIoeS/T5s7pM7XJldSN4px7CZ8EAgh3e9
-	 amQy2GhS3dtku9f+/8a4gECBWlsF50MR8hgvpyxCUpD6NL6HuoXO78t3KTKmW2BYcq
-	 OC3NVzH2veJuhoRiQsx7ySlbDfPxzhOKZanB964A=
+	b=jbl//fW6ZT2xQMPYVLTf4IIq3B1EV0krS0oVg3VfGjqzgbzmLdInHhFBi+i3XPg4D
+	 Vc8rYoL86Sr0zyWQALadb9bxMNl4KwISMcjwykbROEVMUuu39U/TSQn7j7m57y8RUZ
+	 zAaTryTMsvMBSxnsNweMzSCzBS7lNu4gZwv+yBlY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Snitzer <snitzer@kernel.org>,
-	Chuck Lever <cel@kernel.org>
-Subject: [PATCH 6.1 0041/1191] NFSD: remove flawed WARN_ON_ONCE from nfsd_mode_check
-Date: Sat, 12 Sep 2026 08:46:09 +0200
-Message-ID: <20260912065549.058800656@linuxfoundation.org>
+	Yuhao Jiang <danisjiang@gmail.com>,
+	Junrui Luo <moonafterrain@outlook.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>
+Subject: [PATCH 6.1 0042/1191] NFSv4.1: fix layout segment leak on the pnfs_layout_process() forget path
+Date: Sat, 12 Sep 2026 08:46:10 +0200
+Message-ID: <20260912065549.083416403@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -50,50 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mike Snitzer <snitzer@kernel.org>
+From: Junrui Luo <moonafterrain@outlook.com>
 
-commit aa0cf48a448c5a9fe1a1e880899ecd589ce39e6e upstream.
+commit ee5a386cfe60f3f8286de16a9db8e1a08f0bc124 upstream.
 
-The header for commit e75b23f9e323 ("nfsd: check d_can_lookup in
-fh_verify of directories") details the assumption that justified
-adding the WARN_ON_ONCE to nfsd_mode_check(), that assumption is
-invalid (in the case of NFS reexport).
+When the server returns a new layout stateid while a valid one is still
+held, pnfs_layout_process() calls pnfs_mark_matching_lsegs_return() on
+the on-stack free_me list and jumps to out_forget. Segments whose
+reference count drops to zero are unlinked from lo->plh_segs and moved
+to free_me by mark_lseg_invalid(); for an idle cached segment the layout
+header holds the only reference, so this happens on the first decrement.
 
-When NFSD exports an NFS filesystem it is very possible for
-nfsd_mode_check() to encounter a @dentry that doesn't have
-i_op->lookup (see nfs_fhget()'s NFS_ATTR_FATTR_MOUNTPOINT and
-NFS_ATTR_FATTR_V4_REFERRAL handling, and d_flags_for_inode()).
+out_forget never drains free_me -- only the success path calls
+pnfs_free_lseg_list().
 
-So remove nfsd_mode_check()'s WARN_ON_ONCE(). The nfserr_notdir
-return on that branch must stay. It guards the subsequent
-lookup_one_unlocked() -> __lookup_slow() path, which calls
-inode->i_op->lookup() with no NULL check, so returning nfserr_notdir
-is what keeps a client LOOKUP into such a @dentry from dereferencing
-a NULL method pointer.
+Commit 814b84971388 ("pNFS/NFSv4: Fix a layout segment leak in
+pnfs_layout_process()") added the drain; commit 08bd8dbe8882
+("pNFS/NFSv4: Try to return invalid layout in pnfs_layout_process()")
+removed it while switching the destination to lo->plh_return_segs, which
+is drained elsewhere. Commit fb700ef02676 ("NFSv4.1: Simplify layout
+return in pnfs_layout_process()") switched the destination back to
+free_me without restoring the drain.
 
-Fixes: e75b23f9e323 ("nfsd: check d_can_lookup in fh_verify of directories")
+Restore the pnfs_free_lseg_list() call.
+
+Fixes: fb700ef02676 ("NFSv4.1: Simplify layout return in pnfs_layout_process()")
+Reported-by: Yuhao Jiang <danisjiang@gmail.com>
+Assisted-by: Claude:claude-opus-5
 Cc: stable@vger.kernel.org
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
-Link: https://patch.msgid.link/20260612191410.50177-1-snitzer@kernel.org
-Signed-off-by: Chuck Lever <cel@kernel.org>
+Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfsfh.c |    4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ fs/nfs/pnfs.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/nfsd/nfsfh.c
-+++ b/fs/nfsd/nfsfh.c
-@@ -70,10 +70,8 @@ nfsd_mode_check(struct svc_rqst *rqstp,
- 	if (requested == 0) /* the caller doesn't care */
- 		return nfs_ok;
- 	if (mode == requested) {
--		if (mode == S_IFDIR && !d_can_lookup(dentry)) {
--			WARN_ON_ONCE(1);
-+		if (mode == S_IFDIR && !d_can_lookup(dentry))
- 			return nfserr_notdir;
--		}
- 		return nfs_ok;
- 	}
- 	/*
+--- a/fs/nfs/pnfs.c
++++ b/fs/nfs/pnfs.c
+@@ -2482,6 +2482,7 @@ out_forget:
+ 	spin_unlock(&ino->i_lock);
+ 	lseg->pls_layout = lo;
+ 	NFS_SERVER(ino)->pnfs_curr_ld->free_lseg(lseg);
++	pnfs_free_lseg_list(&free_me);
+ 	return ERR_PTR(-EAGAIN);
+ }
+ 
 
 
