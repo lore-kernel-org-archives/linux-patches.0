@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 157F73A7F47;
-	Sat, 12 Sep 2026 18:52:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52C483A7F47;
+	Sat, 12 Sep 2026 18:52:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789239150; cv=none; b=PlPSd1Y1Mp4tFd6BkXd2amSjmdghmMPzr3Pw2um4GrovGsjQZXjXxlqDA0ww8zuOi2TmDRkGh0g2NsQsKQZoPa4eaxTGVOCD6BEqD6/9fGIkTVD2lSnnBLpMq/wkl7+Ou36cvvMVgFO8qaifk1nXnFeVI6Dj7J8ziTcXWefxLMk=
+	t=1789239155; cv=none; b=MryElsmJEAFygoY3VGhCumcGl3sk7VMgUvL9auLjCkb0oMkrN8Pk83+TfpgFQzl8jWZJyKu7IKKClBWib2ASpGjDScs01cE42Fgg+3lkQiG/9YHOGoGjKo3Z/KRwZkKAPDkeL/KMwVWWZmPZLLiJbPoysn1WBIWBNzUyjOEr6wk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789239150; c=relaxed/simple;
-	bh=LtTkOLjyQdgzR4UE8UL+/omcmrfkbkeP8wCkuxagYns=;
+	s=arc-20240116; t=1789239155; c=relaxed/simple;
+	bh=KMObFZgQChJF95HHYEd53rJTZgOeIQgf6LayJhQ4HWI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NV+ZoeAsiJIo+bRIuica9qiqE7bg7awZAYERrXssBmJK7abuui0f6yzn9Kdyzao7gLW8RasLZjsIW0qQXOslNWGJJu/didZ0kb9wbiSkfsoGLStxu+dTzM4Rf9Fassx8St8DkMvLDr3SHjS+Hp0eGuypd7AYwLKJIOyu3pF3jJs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q4YWpR/m; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IDU3CqSvCi4//dKhaksGMpw7HQ2T9EDi1RAi8pMVB2OEtwjxUen8rGJIkzWR0wwGXvtNNp9fssXEyOa9VBCQSbOsIY92CLwsISz7HEdym+HK/yyeppH/QX2d6Y/w2X16EdvX4L8dBMM5WzbFgcWCKI/wi65kEX5vzMr4AW/R+g4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UThH+tKQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q4YWpR/m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAF281F000FF;
-	Sat, 12 Sep 2026 18:52:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UThH+tKQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9BE11F000FF;
+	Sat, 12 Sep 2026 18:52:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789239149;
-	bh=yLQEF7rKfQUQ+25FJVhl7OoTvv23jhDZT3ZVb0NO1a4=;
+	s=korg; t=1789239154;
+	bh=p0B90ZBJ+FEqYIELWG0QmI96MsDoSMmdZ//Y/LcyPlU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Q4YWpR/mOg8gO6tC2ZFonONtZ7W6GNIBG+HO5bLoLReq4jnHzHtqFWBlvS/xlztbx
-	 pt4BAOzBVkQEAlj/vktdJB8Efj+95BZH7EPoo91psQGQ+E2y6pN+NXjid4LfTMdkvD
-	 FwLzyy9TKPFH32BlTg08MiYp592P0+PD5Ws5kW3A=
+	b=UThH+tKQrejEzOtPIQHTQdKGmJYa5dnWZRdt2Pc1KKqxVzWrlC2z1Q64kEI4kPZIq
+	 dl73RkUZ2wukpoC0JNeM55D/Q6MjSi62W/IzYS9QX9vsUczBNgZIbK/bLzP0/IF1Ja
+	 G+olKAfxNycM16QfjSFqNbABpR0rJ/2VdHl+2eyQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mukesh Ojha <quic_mojha@quicinc.com>,
-	Bjorn Andersson <bjorn.andersson@linaro.org>,
+	Jingyi Wang <jingyi.wang@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 606/935] remoteproc: Use unbounded workqueue for recovery work
-Date: Sat, 12 Sep 2026 09:00:36 +0200
-Message-ID: <20260912065540.741695536@linuxfoundation.org>
+Subject: [PATCH 5.15 607/935] remoteproc: core: Attach rproc asynchronously in rproc_add() path via schedule_work()
+Date: Sat, 12 Sep 2026 09:00:37 +0200
+Message-ID: <20260912065540.766618794@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -51,79 +51,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mukesh Ojha <quic_mojha@quicinc.com>
+From: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
 
-[ Upstream commit cab8300b5621a54aa25306ff800c27fa5a4632d7 ]
+[ Upstream commit 026a3fada43261e403c6c4d9bda9501547e3f108 ]
 
-There could be a scenario when there is too much load on a core
-(n number of tasks which is affined) or in a case when multiple
-rproc subsystem is going for recovery, they queue their recovery
-work to one core so even though subsystem are independent their
-recovery will be delayed if one of the subsystem recovery work
-is taking more time in completing.
+Unlike the remoteproc firmware load path where rproc_add() call
+rproc_auto_boot_callback() asynchronously and ignores the return value of
+rproc_boot(), the attach path calls rproc_boot() synchronously and
+propagates its return value back to rproc_add(). This means a failure
+during rproc_attach() causes rproc_add() to fail and triggers resource
+release, removing the remoteproc from sysfs and making it unavailable for
+recovery or further boot attempts.
 
-If we make this queue unbounded, the recovery work could be picked
-on any cpu. This patch is trying to address this.
+Align the remoteproc attach path with the firmware load path by
+introducing attach_work and scheduling rproc_boot() asynchronously via
+schedule_work(). This keeps the remoteproc registered and available in
+sysfs even if the initial attach attempt fails, and avoids blocking
+rproc_add() on the attach result.
 
-Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-Link: https://lore.kernel.org/r/1650367554-15510-1-git-send-email-quic_mojha@quicinc.com
+Signed-off-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260623-rproc-attach-issue-v3-1-8e24310707ce@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Stable-dep-of: 74ee3b2f5767 ("remoteproc: Prevent crash handling to race with rproc_del()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/remoteproc_core.c | 15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ drivers/remoteproc/remoteproc_core.c | 20 ++++++++++++--------
+ include/linux/remoteproc.h           |  2 ++
+ 2 files changed, 14 insertions(+), 8 deletions(-)
 
 diff --git a/drivers/remoteproc/remoteproc_core.c b/drivers/remoteproc/remoteproc_core.c
-index 685eb84182f62..7c3383807aa9c 100644
+index 7c3383807aa9c..11ffaa5d06ca3 100644
 --- a/drivers/remoteproc/remoteproc_core.c
 +++ b/drivers/remoteproc/remoteproc_core.c
-@@ -59,6 +59,7 @@ static int rproc_release_carveout(struct rproc *rproc,
- 
- /* Unique indices for remoteproc devices */
- static DEFINE_IDA(rproc_dev_index);
-+static struct workqueue_struct *rproc_recovery_wq;
- 
- static const char * const rproc_crash_names[] = {
- 	[RPROC_MMUFAULT]	= "mmufault",
-@@ -2760,8 +2761,7 @@ void rproc_report_crash(struct rproc *rproc, enum rproc_crash_type type)
- 	dev_err(&rproc->dev, "crash detected in %s: type %s\n",
- 		rproc->name, rproc_crash_to_string(type));
- 
--	/* Have a worker handle the error; ensure system is not suspended */
--	queue_work(system_freezable_wq, &rproc->crash_handler);
-+	queue_work(rproc_recovery_wq, &rproc->crash_handler);
+@@ -1788,18 +1788,21 @@ static void rproc_auto_boot_callback(const struct firmware *fw, void *context)
+ 	release_firmware(fw);
  }
- EXPORT_SYMBOL(rproc_report_crash);
  
-@@ -2810,6 +2810,13 @@ static void __exit rproc_exit_panic(void)
- 
- static int __init remoteproc_init(void)
++static void rproc_attach_work(struct work_struct *work)
++{
++	struct rproc *rproc = container_of(work, struct rproc, attach_work);
++
++	rproc_boot(rproc);
++}
++
+ static int rproc_trigger_auto_boot(struct rproc *rproc)
  {
-+	rproc_recovery_wq = alloc_workqueue("rproc_recovery_wq",
-+						WQ_UNBOUND | WQ_FREEZABLE, 0);
-+	if (!rproc_recovery_wq) {
-+		pr_err("remoteproc: creation of rproc_recovery_wq failed\n");
-+		return -ENOMEM;
+ 	int ret;
+ 
+-	/*
+-	 * Since the remote processor is in a detached state, it has already
+-	 * been booted by another entity.  As such there is no point in waiting
+-	 * for a firmware image to be loaded, we can simply initiate the process
+-	 * of attaching to it immediately.
+-	 */
+-	if (rproc->state == RPROC_DETACHED)
+-		return rproc_boot(rproc);
++	if (rproc->state == RPROC_DETACHED) {
++		schedule_work(&rproc->attach_work);
++		return 0;
 +	}
-+
- 	rproc_init_sysfs();
- 	rproc_init_debugfs();
- 	rproc_init_cdev();
-@@ -2823,9 +2830,13 @@ static void __exit remoteproc_exit(void)
- {
- 	ida_destroy(&rproc_dev_index);
  
-+	if (!rproc_recovery_wq)
-+		return;
-+
- 	rproc_exit_panic();
- 	rproc_exit_debugfs();
- 	rproc_exit_sysfs();
-+	destroy_workqueue(rproc_recovery_wq);
- }
- module_exit(remoteproc_exit);
+ 	/*
+ 	 * We're initiating an asynchronous firmware loading, so we can
+@@ -2570,6 +2573,7 @@ struct rproc *rproc_alloc(struct device *dev, const char *name,
+ 	INIT_LIST_HEAD(&rproc->dump_segments);
  
+ 	INIT_WORK(&rproc->crash_handler, rproc_crash_handler_work);
++	INIT_WORK(&rproc->attach_work, rproc_attach_work);
+ 
+ 	rproc->state = RPROC_OFFLINE;
+ 
+diff --git a/include/linux/remoteproc.h b/include/linux/remoteproc.h
+index 83c09ac36b13b..3e98e55a2ce86 100644
+--- a/include/linux/remoteproc.h
++++ b/include/linux/remoteproc.h
+@@ -512,6 +512,7 @@ struct rproc_dump_segment {
+  * @subdevs: list of subdevices, to following the running state
+  * @notifyids: idr for dynamically assigning rproc-wide unique notify ids
+  * @index: index of this rproc device
++ * @attach_work: workqueue for attaching rproc
+  * @crash_handler: workqueue for handling a crash
+  * @crash_cnt: crash counter
+  * @recovery_disabled: flag that state if recovery was disabled
+@@ -552,6 +553,7 @@ struct rproc {
+ 	struct list_head subdevs;
+ 	struct idr notifyids;
+ 	int index;
++	struct work_struct attach_work;
+ 	struct work_struct crash_handler;
+ 	unsigned int crash_cnt;
+ 	bool recovery_disabled;
 -- 
 2.53.0
 
