@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61C8736404D;
-	Sat, 12 Sep 2026 07:41:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50034346A08;
+	Sat, 12 Sep 2026 07:41:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789198907; cv=none; b=lFdBoQSlr1XT5mu8H3kYEJ+3Bqa8TU4GYcGcLYdtMiMPy+qC7Xvn1LYc35txh/42OXTDiL+hXs2DzOGsqzkPZ2uGJa4JfBnRVrOx6ARX+8nB4qoPVHF0hz6q4lmLA5iS9OUxqhml0G59+Eklkh4rpaX86Nv2leScziWNHEiFGMw=
+	t=1789198910; cv=none; b=TVFVl53ssgOMB1Us7bHbpfFbhsSSsRVgt7y9JHO0BH7kQ2LMb0dm82ilvkC7xYdl6n151vIssgHxQQDU8XS5ZIxQv36RaM/9nhS+osCGJNgXDTsFodzF8lnLKplC+xF/fwZ2Q91SaPjqsg3HHgYN+FYEoH6udvg1G6CbgtW9IQM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789198907; c=relaxed/simple;
-	bh=dT9vvxK0Zi6upKfGbFmO4Bd16l63gpEn0/rQIMlNl9A=;
+	s=arc-20240116; t=1789198910; c=relaxed/simple;
+	bh=XHKCLhKlrVf8ZI0Rvf13VCyaLXW1+8dvmB8LaJ+OpXA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ChSp/tb22GwhSzAhkl5FoA8RNXHgSCjjKx6qwlea00msAYyKVlZJ4hy6DLJKaE/IiRzQvEtKOJlNONPR3kEXMuGp1AHKFy77/Cp6RPlVLOeHqFREG9xOc6ecuOc3fFzAVOEBkTnNDJjHEEr9/S0EWrBqd/Ekpu2NREIX1ltQ174=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lkIza5Zt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WalpCvL7LfZCIA8RZrq8CwXHE0vvallrEVnlGZjy8YJlHCCntudgijWiyEfIPXSDR17tmOCVvQgkf4/kmaMOLJxjWZ/LetCg0Rqv3D2VjdT30PTaBqKtcoUtHZE2elLAzeXQ02DhW7W72/nvEn5a/WUgmIwxHwJpr2z1S9JWB2U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NViCGqhU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lkIza5Zt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AF691F000FF;
-	Sat, 12 Sep 2026 07:41:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NViCGqhU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C07151F000FF;
+	Sat, 12 Sep 2026 07:41:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789198904;
-	bh=N/UdOqR0/pZrn+bJWSDvEoNoojX0LV19N8YklMHKi3Q=;
+	s=korg; t=1789198908;
+	bh=uFHfu52OWexObinqUTNtEb+K2qx2bSNpVlwcgrS8Ctk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lkIza5ZtYFB/r0StIhTRvp5GqfLWtC92GdQE0wCNxcCtMF6e8jgIMQHWfSNmFbsKF
-	 lpQH9Vw+nj0qXVkA1rXIigiwnfTV0RIIivgt9AmEg8tXJ6VNQdSj6HigSsGVqApUdD
-	 gpyzYJVZgcMcYJb7PVOEn3yfiGj+f8o8ZqPm1sqQ=
+	b=NViCGqhU1eM4/NqzkY9cSocP630ScYm/haijcqhFgBbJaNRafZnwji227a0q9pg1h
+	 h/anZ80xwvIQGD/G1xDGMVBrgaDFNY/4OAh3ImavrMmNJA2DaoEVgx+fmjkGJRAML5
+	 mvKn+s/r2cw1YeRwFER4HQGFJYiadjhzFiNi9BDg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jie Zhang <jie.zhang@oss.qualcomm.com>,
 	Akhil P Oommen <akhilpo@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Rob Clark <robin.clark@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0476/1815] drm/msm/a6xx: Fix A621 GPUCC register list for state capture
-Date: Sat, 12 Sep 2026 08:37:06 +0200
-Message-ID: <20260912065700.063012749@linuxfoundation.org>
+Subject: [PATCH 7.2 0477/1815] drm/msm/a6xx: Fix IRQ storm during msm_recovery test
+Date: Sat, 12 Sep 2026 08:37:07 +0200
+Message-ID: <20260912065700.087429127@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -55,76 +54,94 @@ Content-Transfer-Encoding: 8bit
 
 From: Jie Zhang <jie.zhang@oss.qualcomm.com>
 
-[ Upstream commit d052d0358fb89b59718b9c24871d72006d4b89b0 ]
+[ Upstream commit bc024d325e98b6b2806e00455e030622fb8e1820 ]
 
-A621 uses an incorrect GPUCC register list during state capture.
+Once a hang is triggered by the msm_recovery test, the gpu error irq
+remains asserted and triggers an interrupt storm. In the worst case,
+this IRQ storm lands on the CPU core where the hangcheck timer is
+scheduled, blocking it from running. This eventually leads to CPU
+watchdog timeouts.
 
-The existing list matches A623/A663. Rename it accordingly and add a
-dedicated A621 GPUCC register list.
+To fix this, mask the gpu error irqs during msm_recovery test and
+enable them back during the recovery.
 
-Fixes: 11cdb81b3c1b ("drm/msm/a6xx: Fix gpucc register block for A621")
+Fixes: 5edf2750d998 ("drm/msm: Add debugfs to disable hw err handling")
 Signed-off-by: Jie Zhang <jie.zhang@oss.qualcomm.com>
 Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/730659/
-Message-ID: <20260605-assorted-fixes-june-v1-4-2caa04f7287c@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/730660/
+Message-ID: <20260605-assorted-fixes-june-v1-5-2caa04f7287c@oss.qualcomm.com>
 Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c |  7 ++++---
- drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h | 12 ++++++++++++
- 2 files changed, 16 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/msm/adreno/a5xx_gpu.c | 5 +++++
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 5 ++++-
+ drivers/gpu/drm/msm/adreno/a8xx_gpu.c | 5 ++++-
+ drivers/gpu/drm/msm/msm_gpu.c         | 2 ++
+ 4 files changed, 15 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-index 2a62a22077f92..3ea8ff8c74044 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-@@ -1244,11 +1244,12 @@ static void a6xx_get_gmu_registers(struct msm_gpu *gpu,
- 	_a6xx_get_gmu_registers(gpu, a6xx_state, &a6xx_gmu_reglist[1],
- 		&a6xx_state->gmu_registers[1], true);
+diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+index 2c0bbac43c52b..f1df2514c6132 100644
+--- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+@@ -1275,6 +1275,11 @@ static irqreturn_t a5xx_irq(struct msm_gpu *gpu)
+ 		status & ~A5XX_RBBM_INT_0_MASK_RBBM_AHB_ERROR);
  
--	if (adreno_is_a621(adreno_gpu) ||
--	    adreno_is_a623(adreno_gpu) ||
--	    adreno_is_a663(adreno_gpu))
-+	if (adreno_is_a621(adreno_gpu))
- 		_a6xx_get_gmu_registers(gpu, a6xx_state, &a621_gpucc_reg,
- 			&a6xx_state->gmu_registers[2], false);
-+	else if (adreno_is_a623(adreno_gpu) || adreno_is_a663(adreno_gpu))
-+		_a6xx_get_gmu_registers(gpu, a6xx_state, &a623_gpucc_reg,
-+			&a6xx_state->gmu_registers[2], false);
- 	else
- 		_a6xx_get_gmu_registers(gpu, a6xx_state, &a6xx_gpucc_reg,
- 			&a6xx_state->gmu_registers[2], false);
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h
-index b49d8427b59e6..0a13a65f89ac8 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.h
-@@ -377,6 +377,17 @@ static const u32 a6xx_gmu_gpucc_registers[] = {
- };
- 
- static const u32 a621_gmu_gpucc_registers[] = {
-+	/* GPU CC */
-+	0x24000, 0x2400e, 0x24400, 0x2440e, 0x24800, 0x24805, 0x24c00, 0x24cff,
-+	0x25800, 0x25804, 0x25c00, 0x25c04, 0x26000, 0x26004, 0x26400, 0x26405,
-+	0x26414, 0x2641d, 0x2642a, 0x26430, 0x26432, 0x26432, 0x26441, 0x26455,
-+	0x26466, 0x26468, 0x26478, 0x2647a, 0x26489, 0x2648a, 0x2649c, 0x2649e,
-+	0x264a0, 0x264a3, 0x264b3, 0x264b5, 0x264c5, 0x264c7, 0x264d6, 0x264d8,
-+	0x264e8, 0x264e9, 0x264f9, 0x264fc, 0x2650b, 0x2650c, 0x2651c, 0x2651e,
-+	0x26540, 0x26570, 0x26600, 0x26616, 0x26620, 0x2662d,
-+};
+ 	if (priv->disable_err_irq) {
++		/* Turn off interrupts to avoid interrupt storm */
++		gpu_write(gpu, REG_A5XX_RBBM_INT_0_MASK,
++			       A5XX_RBBM_INT_0_MASK_CP_CACHE_FLUSH_TS |
++			       A5XX_RBBM_INT_0_MASK_CP_SW);
 +
-+static const u32 a623_gmu_gpucc_registers[] = {
- 	/* GPU CC */
- 	0x24000, 0x2400e, 0x24400, 0x2440e, 0x25800, 0x25804, 0x25c00, 0x25c04,
- 	0x26000, 0x26004, 0x26400, 0x26405, 0x26414, 0x2641d, 0x2642a, 0x26430,
-@@ -402,6 +413,7 @@ static const struct a6xx_registers a6xx_gmu_reglist[] = {
+ 		status &= A5XX_RBBM_INT_0_MASK_CP_CACHE_FLUSH_TS |
+ 			  A5XX_RBBM_INT_0_MASK_CP_SW;
+ 	}
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+index a44380316aaa9..e293b4ca808a4 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+@@ -1911,8 +1911,11 @@ static irqreturn_t a6xx_irq(struct msm_gpu *gpu)
  
- static const struct a6xx_registers a6xx_gpucc_reg = REGS(a6xx_gmu_gpucc_registers, 0, 0);
- static const struct a6xx_registers a621_gpucc_reg = REGS(a621_gmu_gpucc_registers, 0, 0);
-+static const struct a6xx_registers a623_gpucc_reg = REGS(a623_gmu_gpucc_registers, 0, 0);
+ 	gpu_write(gpu, REG_A6XX_RBBM_INT_CLEAR_CMD, status);
  
- static u32 a6xx_get_cp_roq_size(struct msm_gpu *gpu);
- static u32 a7xx_get_cp_roq_size(struct msm_gpu *gpu);
+-	if (priv->disable_err_irq)
++	if (priv->disable_err_irq) {
++		/* Turn off interrupts to avoid interrupt storm */
++		gpu_write(gpu, REG_A6XX_RBBM_INT_0_MASK, A6XX_RBBM_INT_0_MASK_CP_CACHE_FLUSH_TS);
+ 		status &= A6XX_RBBM_INT_0_MASK_CP_CACHE_FLUSH_TS;
++	}
+ 
+ 	if (status & A6XX_RBBM_INT_0_MASK_RBBM_HANG_DETECT)
+ 		a6xx_fault_detect_irq(gpu);
+diff --git a/drivers/gpu/drm/msm/adreno/a8xx_gpu.c b/drivers/gpu/drm/msm/adreno/a8xx_gpu.c
+index 9e44fd1ae6346..0f6fd35bd5878 100644
+--- a/drivers/gpu/drm/msm/adreno/a8xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a8xx_gpu.c
+@@ -1211,8 +1211,11 @@ irqreturn_t a8xx_irq(struct msm_gpu *gpu)
+ 
+ 	gpu_write(gpu, REG_A8XX_RBBM_INT_CLEAR_CMD, status);
+ 
+-	if (priv->disable_err_irq)
++	if (priv->disable_err_irq) {
++		/* Turn off interrupts to avoid interrupt storm */
++		gpu_write(gpu, REG_A8XX_RBBM_INT_0_MASK, A6XX_RBBM_INT_0_MASK_CP_CACHE_FLUSH_TS);
+ 		status &= A6XX_RBBM_INT_0_MASK_CP_CACHE_FLUSH_TS;
++	}
+ 
+ 	if (status & A6XX_RBBM_INT_0_MASK_RBBM_HANG_DETECT)
+ 		a8xx_fault_detect_irq(gpu);
+diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
+index 9ac7740a87f01..48ac51f4119be 100644
+--- a/drivers/gpu/drm/msm/msm_gpu.c
++++ b/drivers/gpu/drm/msm/msm_gpu.c
+@@ -552,6 +552,8 @@ static void recover_worker(struct kthread_work *work)
+ 		msm_update_fence(ring->fctx, fence);
+ 	}
+ 
++	priv->disable_err_irq = false;
++
+ 	gpu->funcs->recover(gpu);
+ 
+ 	/* retire completed submits, plus the one that hung: */
 -- 
 2.53.0
 
