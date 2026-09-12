@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C50538AC72;
-	Sat, 12 Sep 2026 19:51:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A3C438E8B9;
+	Sat, 12 Sep 2026 19:51:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789242712; cv=none; b=pF1KrdPbq4ABmDSIDMBB6LSyty9xIoivkLEvCc0dxN5ZUMIlETUMWZw4Aq94Sd0Qy4CcP8gqFXzbr2VhmNVcamWs+fEGP143Yy5aOqLjdcfbyK5c0nx5lGW1lsR9Az1LR+NjvWE645erMnmKDZ/HujxRtpmAOSt4/dvZAAVihtY=
+	t=1789242715; cv=none; b=dVVfZ+ljG8O4FiOKPtLZxOVUR2alCpFJdOwRObvtzeTYnl/3ppxrG+m0d3FnCMVr44oaHYXi4L1Bz1uWXFIrsq0djQ+h9G3I/EkgBAWQN9MovvrFalgKjUwg1YoaNbVGn/L2CcgBjorZ8rZdl6WgK9Am78BZeAU9k5BMz99scAU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789242712; c=relaxed/simple;
-	bh=PkLxnJIiq0pfvyU6ZnK0XdAug5U6fDbO2clNRVQ7WEw=;
+	s=arc-20240116; t=1789242715; c=relaxed/simple;
+	bh=0GMX6vLPuK5kq6U4jtfQA5iEPLyMjLWn0KYd7qzFqWY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UWOnGD7qbzB+o6aYTdYjhM2wYVJ3nP7xIYCy/rt/Rtc9fJDdjxh968PcWHNZm2gTeRWK8U/+NyoWGCtKsxCYktjaIQv14x3xDu61CW+bd4TYV1mJBJEzAV4/LpewsrkgNIoK0wGgyi2MKG1EGSfpMo2dBf3yqR0H/3WN6IVDE7o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yKZV+Np/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KWM26A3opvI2d3klD5tqG+g75omYzV31aHvSYk4zJxLZ43CHC1hWuvuTY84p95CCnmhs3JEB09yGbPpz22hJAYEiWGzZu1QHIVEppxfls6gTj8RVbW4HGmi561l4khvk/EmSL/LUUn2oPt0QToKgJuTKyZ7vON460KjOBixHivs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OT7E0p4m; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yKZV+Np/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBBD21F000FF;
-	Sat, 12 Sep 2026 19:51:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OT7E0p4m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3EF61F000FF;
+	Sat, 12 Sep 2026 19:51:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789242711;
-	bh=CSGSB/pYL+d96YnjdjVcx0ZszPCLK8Njbe0Hbri4J2Y=;
+	s=korg; t=1789242714;
+	bh=LVfMBLz84zbszJSbUAhCXJgIAfAW9JiwnS/1TTI+xvM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yKZV+Np/jOrvHzdf78OVWSbzotGu7P2CpyInwWMCFPsdH5cIUPa2+NS8TP2f1W06a
-	 zjbxgEfYUFfK+kgIWsMYF1LDNz61iBrmBO8rnZmbxNoL9dJHiyeI1YF2V9Sp3n3nHu
-	 sVq/AeyjS/Yq9uwLSNxkJ2fCpAA4MZHiWYHkSvmY=
+	b=OT7E0p4mUFzFxNtknnLIlsP3hEkKArUTujXIXq03p/NKvQf07LAM4rIE4Y6PQ2xZR
+	 D4gbx0/iahpYYYmMu03ZZp3XYF6ZUYMBJvfVRjYcO/hQVU2cO8ijpyDh8yfXlzVZF+
+	 z1GUFIFjBdQcEGiYC9CY6ykKyFJGLStG6YIIIpV4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Zhang Yi <yi.zhang@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Baokun Li <libaokun@linux.alibaba.com>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 499/798] thermal: intel: int3400: clean up ODVP on probe failures
-Date: Sat, 12 Sep 2026 09:02:07 +0200
-Message-ID: <20260912065528.573949195@linuxfoundation.org>
+Subject: [PATCH 5.10 500/798] ext4: drain in-flight DIO before buffered write fallback
+Date: Sat, 12 Sep 2026 09:02:08 +0200
+Message-ID: <20260912065528.598113004@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -51,62 +53,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Baokun Li <libaokun@linux.alibaba.com>
 
-[ Upstream commit d83dc9ce57a746a6dca28439bcc0575d26fa6986 ]
+[ Upstream commit 15cdefd0c0522f9d5e12d947fa04f4c11649b699 ]
 
-evaluate_odvp() creates per-ODVP sysfs files before the thermal zone
-and later probe resources are registered. The current unwind path only
-calls cleanup_odvp() from the late sysfs failure path, so failures after
-evaluate_odvp() but before that label, including
-thermal_tripless_zone_device_register() failures, leave the ODVP files
-and storage behind.
+generic/746 started failing intermittently on ext3 (no-extent inodes).
+The test triggers 'Page cache invalidation failure on direct I/O'
+warnings and subsequent fsync returns -EIO. Adding a 50ms delay
+between ext4_buffered_write_iter() and filemap_write_and_wait_range()
+in ext4_dio_write_iter() makes the race almost always reproducible.
 
-Move the ODVP cleanup to the common ART/TRT unwind path so every failure
-after evaluate_odvp() releases the ODVP state. Also clear the cached
-ODVP pointers in cleanup_odvp(), because evaluate_odvp() can already call
-it for partial setup failures while probe continues.
+On no-extent inodes, DIO writes to holes cannot use unwritten extents,
+so ext4_iomap_alloc() leaves m_flags=0 and ext4_map_blocks() returns 0.
+The iomap layer then returns -ENOTBLK, causing fallback to buffered I/O.
 
-Fixes: 006f006f1e5c ("thermal/int340x_thermal: Export OEM vendor variables")
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260623015140.19300-1-pengpeng@iscas.ac.cn
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+The fallback path in ext4_dio_write_iter() calls
+ext4_buffered_write_iter() which dirties pages, then does flush and
+invalidate. However, there's an unprotected window between
+ext4_buffered_write_iter() returning (with inode lock released) and
+the subsequent flush+invalidate.
+
+Concurrent async DIO completions from other threads can run
+kiocb_invalidate_post_direct_write() during this window. If pages have
+been re-dirtied, post-invalidation finds dirty pages and triggers the
+warning, setting -EIO in the error sequence.
+
+Consider a file with two 4k extents: [hole][written]. Thread A does
+DIO to the written extent, while thread B does DIO spanning both:
+
+  kworker A (4k DIO, allocated block)    kworker B (8k DIO, fallback)
+  -----------------------------------    ----------------------------
+  inode_lock_shared()                    inode_lock_shared()
+  iomap_dio_rw():                        iomap_dio_rw():
+    kiocb_invalidate_pages -> clean        iomap_begin -> -ENOTBLK
+    submit_bio (async)                     dio->size = 0
+  inode_unlock_shared()                  inode_unlock_shared()
+
+  [bio pending in block layer]           /* fallback: lock released */
+                                         ext4_buffered_write_iter()
+                                           inode_lock(exclusive)
+                                           generic_perform_write()
+                                             -> dirty pages [0, 8k]
+                                           inode_unlock(exclusive)
+
+                                         /* pages dirty, no lock */
+  [bio completes]                        filemap_write_and_wait_range()
+  iomap_dio_complete()                     -> flush dirty pages
+    kiocb_invalidate_post_direct_write() invalidate_mapping_pages()
+      invalidate_inode_pages2_range()
+      -> finds dirty page!
+      -> dio_warn_stale_pagecache()
+      -> errseq_set(-EIO)
+
+This issue can be triggered through normal I/O paths, not just
+intentionally overlapping DIO writes from userspace. For example,
+generic/746 uses a loop device where multiple kworkers issue concurrent
+I/O to the backing file. Additionally, when block_size < folio_size,
+non-overlapping DIO writes that share a large folio can also trigger
+the race.
+
+Add inode_dio_wait() in ext4_buffered_write_iter() before
+ext4_write_checks() to drain all in-flight DIO. This ensures that
+all DIO clears existing pages before submitting IO (via
+kiocb_invalidate_pages()), all BIO waits for all DIO to complete
+(via inode_dio_wait()), and ext4_write_checks() observes the inode
+size after all completed DIO so that ext4_block_zero_eof() does not
+race with in-flight DIO, thus eliminating the race.
+
+Fixes: 378f32bab371 ("ext4: introduce direct I/O write using iomap infrastructure")
+Suggested-by: Zhang Yi <yi.zhang@huawei.com>
+Link: https://patch.msgid.link/d1adcf7c-c276-458d-9cac-68a4410f7626@gmail.com
+Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Baokun Li <libaokun@linux.alibaba.com>
+Link: https://patch.msgid.link/20260629113827.4074335-3-libaokun@linux.alibaba.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/intel/int340x_thermal/int3400_thermal.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/ext4/file.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/thermal/intel/int340x_thermal/int3400_thermal.c b/drivers/thermal/intel/int340x_thermal/int3400_thermal.c
-index 588d8fb12490a..9d2473f983ab3 100644
---- a/drivers/thermal/intel/int340x_thermal/int3400_thermal.c
-+++ b/drivers/thermal/intel/int340x_thermal/int3400_thermal.c
-@@ -290,8 +290,10 @@ static void cleanup_odvp(struct int3400_thermal_priv *priv)
- 			kfree(priv->odvp_attrs[i].attr.attr.name);
- 		}
- 		kfree(priv->odvp_attrs);
-+		priv->odvp_attrs = NULL;
- 	}
- 	kfree(priv->odvp);
-+	priv->odvp = NULL;
- 	priv->odvp_count = 0;
- }
+diff --git a/fs/ext4/file.c b/fs/ext4/file.c
+index bbed22731ac92..9caf74444c3a1 100644
+--- a/fs/ext4/file.c
++++ b/fs/ext4/file.c
+@@ -261,6 +261,13 @@ static ssize_t ext4_buffered_write_iter(struct kiocb *iocb,
+ 		return -EOPNOTSUPP;
  
-@@ -547,7 +549,6 @@ static int int3400_thermal_probe(struct platform_device *pdev)
- 	return 0;
- 
- free_sysfs:
--	cleanup_odvp(priv);
- 	if (!ZERO_OR_NULL_PTR(priv->data_vault)) {
- 		sysfs_remove_group(&pdev->dev.kobj, &data_attribute_group);
- 		kfree(priv->data_vault);
-@@ -559,6 +560,7 @@ static int int3400_thermal_probe(struct platform_device *pdev)
- 		acpi_thermal_rel_misc_device_remove(priv->adev->handle);
- 	thermal_zone_device_unregister(priv->thermal);
- free_art_trt:
-+	cleanup_odvp(priv);
- 	kfree(priv->trts);
- 	kfree(priv->arts);
- free_priv:
+ 	inode_lock(inode);
++
++	/*
++	 * Prevent concurrent direct I/O and buffered I/O to the same file
++	 * range. Wait for in-flight DIO to finish before dirtying pages.
++	 */
++	inode_dio_wait(inode);
++
+ 	ret = ext4_write_checks(iocb, from);
+ 	if (ret <= 0)
+ 		goto out;
 -- 
 2.53.0
 
