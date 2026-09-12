@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 949863A544C;
-	Sat, 12 Sep 2026 09:34:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6066E381EBB;
+	Sat, 12 Sep 2026 09:34:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789205655; cv=none; b=Q0jEIqqt5ViNe8ALXkoh8oJ1WuTIVE3juu/9fIbDDFkjLKLTNoh/k9u+rsJzSVS4kKVo1NbVp2tN6s+DpU1SooeWcT76iMaCH1Q7hnajylnuFRl7rtw9l0mKnoVe0Z98MOq8l18CRGcRSMjpdLA5YVmQhPiyE1OWxEA936fWmk0=
+	t=1789205660; cv=none; b=I1WDyArYj0jCggS0pq8hsnrjjdxp1TirqRPtLXY/TYgosSKg9ni4pUVyVRvAqBnvIQX4stSRFmncs4/WNz4UXbj33l61JWDtCK1NQ2Bc4kApM7mYj32oxA0x5zq505yxofDTcfb+LyCPdlcb94S5awg8ONp++AjDG/J9wujp760=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789205655; c=relaxed/simple;
-	bh=Lnkfz/cb5TsXEsZ1HglLZLYrpS9MuMaGbKZMWkgvw5M=;
+	s=arc-20240116; t=1789205660; c=relaxed/simple;
+	bh=FRiYmeRT9LO6ShlncnyGoUadQBzrGB0SwpDu7NLXy8U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bqRur9GNtEwG3BZ3clHVcdz6lbzimwWAFzgj0xMQLW3YVa1q9qNd7SlIhiEfa+wXlB5EuvMkDfhaqhPtgE/3sJVwRUxgSstTnsUd3fapt3suahWFQwU4nG/quOwjSF0ZjLZECuIFfaysp2C7Ashesj7Chj+jD1hVVP7v6CjX3T8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jJtpmPWt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Zd0VIMotr9jEcXoMWsQUbBcwj/tlytIUksx/QxYD0DPul0TeYPUMYAibGeNO6+KGuTNX//oVkDQc+9AkifK1AhkkRgnay26+bRp5ezolUeceG72b3FMkbzaApHZPQIbqlFUc13yDbTZa6QHuXgP0GGzdg30TO6Ym7TquoDKTTKk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0gZjbVA3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jJtpmPWt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CF7F1F000FF;
-	Sat, 12 Sep 2026 09:34:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0gZjbVA3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 388A41F000FF;
+	Sat, 12 Sep 2026 09:34:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789205654;
-	bh=zxLAovjc41rmWbAh04vrwcB1P7Qe5owGQEV+8zb9Blk=;
+	s=korg; t=1789205659;
+	bh=PK93sx7Nyh0s3MhjN4uYJ+MkoRAnqSnSsoisjCi7pgE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jJtpmPWtHWRR4D4xbDuQ8o1QpuXhr7EsnUc7DLiW+cA9dIswBxWkJjHSWmqb9GRh1
-	 O7DfRoDg/qS8Ehkmvb9R4rx7dJu485xQtKkxWjOPcrLEk1048Qf+5Wu2L8lt6uiMkP
-	 5vLsgBGlQLB5x4dkeZHG2NDytY7INK50pgEi7w2M=
+	b=0gZjbVA3kOj1hK6fTobkLH1Mok/Vs+83EkOFX8t43sl5cAKxOsUXtHrVZm9OHjjP8
+	 rlskB2FdahqGDO+A+8nHgkRcpDEca7dob8fmz1jpOybsOOpeQo/L/v8K4MsPtQRsLM
+	 IXzEL5oRe/+6naUxfahCPdRcMoMbAd0UBKfjxvVQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Sven Eckelmann <sven@narfation.org>,
+	SJ Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0005/1518] batman-adv: bla: avoid CRC corruption due to parallel claim add
-Date: Sat, 12 Sep 2026 08:36:14 +0200
-Message-ID: <20260912065623.527396955@linuxfoundation.org>
+Subject: [PATCH 6.18 0006/1518] mm/damon/sysfs: read ops_id only once in damon_sysfs_apply_inputs()
+Date: Sat, 12 Sep 2026 08:36:15 +0200
+Message-ID: <20260912065623.549989937@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,162 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Eckelmann <sven@narfation.org>
+From: SJ Park <sj@kernel.org>
 
-commit 08645ab95768b88e2ff85a89211994651710465b upstream.
+[ Upstream commit 5adaaa28be8a79ddd7e103b171f9d6e14e7fc26e ]
 
-batadv_bla_add_claim() is used to add claims and modify the backbone of
-claims for CLAIM frames from remote backbones and local packets. When it
-handles a claim, it needs to either
+damon_sysfs_apply_inputs() reads ops_id twice.  It could race with
+ops_id_store().  As a result, the min_region_sz could wrongly be set up.
+Read it once.
 
-* add the new claim's CRC to the backbone CRC
-* remove the already existing claim's CRC from the old backbone and add it
-  to the new backbone
+The user impact is trivial.  Sane users ain't update the parameter in
+parallel.  Even if it happens, the DAMON core layer handles the wrong
+min_region_sz (!is_power_of_2()).  Even if somehow the race ended up
+making a min_region_sz that is different from the user's intention but
+still valid, only monitoring itself runs differently than expected.  No
+critical consequences like kernel panic or memory corruption happen
 
-But when the "new" claim code was running in parallel to the "change
-backbone" code, it can happen that the CRC was invalid because the
-backbone_gw of the claim was changed twice in the "new" claim code path:
+The issue was discovered [1] by Sashiko.
 
-* CPU0 creates the claim for gateway A and publishes it in the claim
-  hash. The crc16 of the address has not yet been added to A's crc at
-  this point.
-
-* CPU1 processes a claim frame of gateway B for the same client, finds
-  the just published claim, and performs the ownership change: it
-  switches the pointer to B, removes the crc16 from A's crc - which
-  never contained it - and adds it to B's crc.
-
-* CPU0 continues behind the creation branch, unconditionally switches
-  the pointer back to A without compensating B's crc (its remove_crc
-  is false for the creation path), and finally adds the crc16 to A's
-  crc
-
-The CRC is then wrong for both:
-
-* claim belongs to A: but CRC is not part of backbone A's CRC
-* claim doesn't belong to B: CRC is still part of backbone B's CRC
-
-This wrong CRC is never recomputated from the stored claims. For local
-backbone claims, this can also not recovered using syncs.
-
-To avoid this, split the functionality in clear separate parts:
-
-* new claim which always adds claim CRC to the backbone CRC (but never
-  changes the already set backbone_gw of the claim back)
-
-* update of existing claim which automatically changes the backbone_gw
-  entry and only updates both backbone CRCs when there was an actual change
-
-Cc: stable@vger.kernel.org
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Fixes: 23721387c409 ("batman-adv: add basic bridge loop avoidance code")
-[ Context ]
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
+Link: https://lore.kernel.org/20260715031002.108504-7-sj@kernel.org
+Link: https://lore.kernel.org/20260703172417.95426-1-sj@kernel.org [1]
+Fixes: 8d009da32f13 ("mm/damon/sysfs: set damon_ctx->min_sz_region only for paddr use case")
+Signed-off-by: SJ Park <sj@kernel.org>
+Cc: <stable@vger.kernel.org> # 6.18.x
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/batman-adv/bridge_loop_avoidance.c | 63 ++++++++++++++++----------
- 1 file changed, 39 insertions(+), 24 deletions(-)
+ mm/damon/sysfs.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/net/batman-adv/bridge_loop_avoidance.c b/net/batman-adv/bridge_loop_avoidance.c
-index 1591911bceb48..5f2bb9eba3e1d 100644
---- a/net/batman-adv/bridge_loop_avoidance.c
-+++ b/net/batman-adv/bridge_loop_avoidance.c
-@@ -694,12 +694,14 @@ static void batadv_bla_add_claim(struct batadv_priv *bat_priv,
- 	struct batadv_bla_backbone_gw *old_backbone_gw;
- 	struct batadv_bla_claim *claim;
- 	struct batadv_bla_claim search_claim;
--	bool remove_crc = false;
- 	int hash_added;
-+	u16 claim_crc;
-+	bool changed;
+diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
+index 53f99f05eb38e..7f52470be36e3 100644
+--- a/mm/damon/sysfs.c
++++ b/mm/damon/sysfs.c
+@@ -1440,14 +1440,16 @@ static inline bool damon_sysfs_kdamond_running(
+ static int damon_sysfs_apply_inputs(struct damon_ctx *ctx,
+ 		struct damon_sysfs_context *sys_ctx)
+ {
++	enum damon_ops_id ops_id;
+ 	int err;
  
- 	ether_addr_copy(search_claim.addr, mac);
- 	search_claim.vid = vid;
- 	claim = batadv_claim_hash_find(bat_priv, &search_claim);
-+	claim_crc = crc16(0, mac, ETH_ALEN);
- 
- 	/* create a new claim entry if it does not exist yet. */
- 	if (!claim) {
-@@ -731,43 +733,56 @@ static void batadv_bla_add_claim(struct batadv_priv *bat_priv,
- 			kfree(claim);
- 			return;
- 		}
-+
-+		spin_lock_bh(&backbone_gw->crc_lock);
-+		backbone_gw->crc ^= claim_crc;
-+		spin_unlock_bh(&backbone_gw->crc_lock);
-+
-+		WRITE_ONCE(backbone_gw->lasttime, jiffies);
-+
-+		batadv_claim_put(claim);
-+		return;
-+	}
-+
-+	WRITE_ONCE(claim->lasttime, jiffies);
-+
-+	/* replace backbone_gw atomically and adjust reference counters */
-+	spin_lock_bh(&claim->backbone_lock);
-+	if (claim->backbone_gw != backbone_gw) {
-+		changed = true;
-+
-+		old_backbone_gw = claim->backbone_gw;
-+		kref_get(&backbone_gw->refcount);
-+		claim->backbone_gw = backbone_gw;
- 	} else {
--		WRITE_ONCE(claim->lasttime, jiffies);
--		if (claim->backbone_gw == backbone_gw)
--			/* no need to register a new backbone */
--			goto claim_free_ref;
-+		old_backbone_gw = NULL;
-+		changed = false;
-+	}
-+	spin_unlock_bh(&claim->backbone_lock);
- 
-+	if (changed) {
- 		batadv_dbg(BATADV_DBG_BLA, bat_priv,
- 			   "%s(): changing ownership for %pM, vid %d to gw %pM\n",
- 			   __func__, mac, batadv_print_vid(vid),
- 			   backbone_gw->orig);
- 
--		remove_crc = true;
--	}
-+		/* add claim address to new backbone_gw */
-+		spin_lock_bh(&backbone_gw->crc_lock);
-+		backbone_gw->crc ^= claim_crc;
-+		spin_unlock_bh(&backbone_gw->crc_lock);
- 
--	/* replace backbone_gw atomically and adjust reference counters */
--	spin_lock_bh(&claim->backbone_lock);
--	old_backbone_gw = claim->backbone_gw;
--	kref_get(&backbone_gw->refcount);
--	claim->backbone_gw = backbone_gw;
--	spin_unlock_bh(&claim->backbone_lock);
-+		WRITE_ONCE(backbone_gw->lasttime, jiffies);
-+	}
- 
--	if (remove_crc) {
-+	if (old_backbone_gw) {
- 		/* remove claim address from old backbone_gw */
- 		spin_lock_bh(&old_backbone_gw->crc_lock);
--		old_backbone_gw->crc ^= crc16(0, claim->addr, ETH_ALEN);
-+		old_backbone_gw->crc ^= claim_crc;
- 		spin_unlock_bh(&old_backbone_gw->crc_lock);
--	}
--
--	batadv_backbone_gw_put(old_backbone_gw);
- 
--	/* add claim address to new backbone_gw */
--	spin_lock_bh(&backbone_gw->crc_lock);
--	backbone_gw->crc ^= crc16(0, claim->addr, ETH_ALEN);
--	spin_unlock_bh(&backbone_gw->crc_lock);
--	WRITE_ONCE(backbone_gw->lasttime, jiffies);
-+		batadv_backbone_gw_put(old_backbone_gw);
-+	}
- 
--claim_free_ref:
- 	batadv_claim_put(claim);
- }
- 
+-	err = damon_select_ops(ctx, sys_ctx->ops_id);
++	ops_id = READ_ONCE(sys_ctx->ops_id);
++	err = damon_select_ops(ctx, ops_id);
+ 	if (err)
+ 		return err;
+ 	ctx->addr_unit = READ_ONCE(sys_ctx->addr_unit);
+ 	/* addr_unit is respected by only DAMON_OPS_PADDR */
+-	if (sys_ctx->ops_id == DAMON_OPS_PADDR)
++	if (ops_id == DAMON_OPS_PADDR)
+ 		ctx->min_sz_region = max(
+ 				DAMON_MIN_REGION / ctx->addr_unit, 1);
+ 	err = damon_sysfs_set_attrs(ctx, sys_ctx->attrs);
 -- 
 2.53.0
 
