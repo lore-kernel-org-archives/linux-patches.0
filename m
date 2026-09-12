@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B8E147AF5F;
-	Sat, 12 Sep 2026 15:59:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4739A3CDBB5;
+	Sat, 12 Sep 2026 15:59:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789228779; cv=none; b=h2sC8rmdkXFFT370FJ0IbiI9B1vubPPkykqFYJ9HaILKqy2p088OK0udiflbvVrNtZYP8Jl3pHbXTNav7yIs7v1UPC0NPcrbsCmaeHvh1Zs2uvbaq1/2CWNFq3itE/1o3+tzwvShhZEqgl7UdDHH7/D/wVY/juM2WLjfSzzhF7k=
+	t=1789228787; cv=none; b=ecIcB5BqOIEzt0lxCgQh9AU3Um9u1v9paDw8vPmAV/AjPLdf3u+Py3x3f2jnkZ3en15UG7bmbveoOuprBYqyoFnE7H4g/h9dzMNHNUY8/r0x9YMAZnteeax7y4rs7XM8gPFLGHeJgRymhvZopQt+KuS+CImE257XAsGrG4JmGdo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789228779; c=relaxed/simple;
-	bh=SFk65aPTNDNRioq7jWoeABz5FIasz5J65m2mQFVVg9k=;
+	s=arc-20240116; t=1789228787; c=relaxed/simple;
+	bh=uH0fqpGcpSKPUxUBvEn4pBFzfefOCtOScj/mjvUI1Pk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uWVRwXZwGCUBNBC3QJyx/9Kym/N/MaDMjNiLiAC6PRW5ArOuc7G3KifD+v+LYLAQEYxFR3v6Dqp6Kq09o5YD26prndshgLYxWobHpwwpsomL2DmnhNUC8pEbtSJoLZL/Y1MzWqTJfgyt1jBaOgilzO70Y7hC0Dvyocp5Yxgx6b0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jsi7zP8T; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=S8Hj4fqoWOkau1XfAsE13yexdAoT82nGN+ZUGymaEod76szMF3S4auzBGlMvFn/GndCct3IcqfU+QTmXXU4RKeuc/94CMqx93iQ9EHqHjBS5hZNR258tF3IbOMwH+p8TH5ObN6XeflooXN1qe4VAzecbVxVW89xxiojaEeuj/iw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nm7C3yUJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jsi7zP8T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E53F11F000FF;
-	Sat, 12 Sep 2026 15:59:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nm7C3yUJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 853261F00893;
+	Sat, 12 Sep 2026 15:59:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789228774;
-	bh=8VcPvG6sOBk6DL217NHUgivKVu2syQgxvjKyGIqjfOI=;
+	s=korg; t=1789228779;
+	bh=Hn9JhG60VE4Aj+apMK2FktqLShivho6/iPRwmGFGyNI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Jsi7zP8TVNz2u5fvAK4j+Rx/oT7DaBTWjhc36VCw+nE084JZr5n2g+Ut3t4CK79Zq
-	 dqRjlbBYBFAhFtLUDLXQuSGynXhTFus281zPwKuAszpr9XIFsTuQIik669YeH/epgR
-	 0OywwkdbHiK0dbbchkyok4K6qRoKq4gKZ5L1sy4E=
+	b=Nm7C3yUJ7La+K6dft3gsMPK/0Zcih5G+PGadMsiRHZAwDzl1cu3z6HygQX4LpJt/s
+	 NSt7cLHneWEcAtXJpn/p/XA+WMx/TayoCfDbxZ7YHCXMmBsbajpJO8r9gXpvjVyCdz
+	 xpCEvogxrXIpf/ZypZhqmmHeVzUvbw7GiMPM7i6w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weiming Shi <bestswngs@gmail.com>,
-	Xiang Mei <xmei5@asu.edu>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Yuan Tan <yuantan098@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Xiao Liu <lx24@stu.ynu.edu.cn>,
+	Zhengchuan Liang <zcliangcn@gmail.com>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0453/1191] bridge: mrp: reject zero test interval to avoid OOM panic
-Date: Sat, 12 Sep 2026 08:53:01 +0200
-Message-ID: <20260912065558.411141584@linuxfoundation.org>
+Subject: [PATCH 6.1 0454/1191] net: af_key: zero aligned sockaddr tail in PF_KEY exports
+Date: Sat, 12 Sep 2026 08:53:02 +0200
+Message-ID: <20260912065558.433436829@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -54,64 +56,143 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Zhengchuan Liang <zcliangcn@gmail.com>
 
-[ Upstream commit fa6e24963342de4370e3a3c9af41e38277b74cf3 ]
+[ Upstream commit 426c355742f02cf743b347d9d7dbdc1bfbfa31ef ]
 
-br_mrp_start_test() and br_mrp_start_in_test() accept the user-supplied
-interval value from netlink without validation. When interval is 0,
-usecs_to_jiffies(0) yields 0, causing the delayed work
-(br_mrp_test_work_expired / br_mrp_in_test_work_expired) to reschedule
-itself with zero delay. This creates a tight loop on system_percpu_wq
-that allocates and transmits MRP test frames at maximum rate, exhausting
-all system memory and causing a kernel panic via OOM deadlock.
+PF_KEY export paths use `pfkey_sockaddr_size()` when reserving sockaddr
+payload space, so IPv6 addresses occupy 32 bytes on the wire. However,
+`pfkey_sockaddr_fill()` initializes only the first 28 bytes of
+`struct sockaddr_in6`, leaving the final 4 aligned bytes uninitialized.
 
-The same zero-interval issue applies to br_mrp_start_in_test_parse()
-for interconnect test frames.
+Not every PF_KEY message is affected. The state and policy dump builders
+already zero the whole message buffer before filling the sockaddr
+payloads. Keep the fix to the export paths that still append aligned
+sockaddr payloads with plain `skb_put()`:
 
-Use NLA_POLICY_MIN(NLA_U32, 1) in the nla_policy tables for both
-IFLA_BRIDGE_MRP_START_TEST_INTERVAL and
-IFLA_BRIDGE_MRP_START_IN_TEST_INTERVAL, so zero is rejected at the
-netlink attribute parsing layer before the value ever reaches the
-workqueue scheduling code. This is consistent with how other bridge
-subsystems (br_fdb, br_mst) enforce range constraints on netlink
-attributes.
+  - `SADB_ACQUIRE`
+  - `SADB_X_NAT_T_NEW_MAPPING`
+  - `SADB_X_MIGRATE`
 
-Fixes: 20f6a05ef635 ("bridge: mrp: Rework the MRP netlink interface")
-Fixes: 7ab1748e4ce6 ("bridge: mrp: Extend MRP netlink interface for configuring MRP interconnect")
-Reported-by: Weiming Shi <bestswngs@gmail.com>
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260328063000.1845376-1-xmei5@asu.edu
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fix those paths by clearing only the aligned sockaddr tail after
+`pfkey_sockaddr_fill()`.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: 08de61beab8a ("[PFKEYV2]: Extension for dynamic update of endpoint address(es)")
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Co-developed-by: Yuan Tan <yuantan098@gmail.com>
+Signed-off-by: Yuan Tan <yuantan098@gmail.com>
+Suggested-by: Xin Liu <bird@lzu.edu.cn>
+Tested-by: Xiao Liu <lx24@stu.ynu.edu.cn>
+Signed-off-by: Zhengchuan Liang <zcliangcn@gmail.com>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/br_mrp_netlink.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/key/af_key.c | 52 +++++++++++++++++++++++++++++++-----------------
+ 1 file changed, 34 insertions(+), 18 deletions(-)
 
-diff --git a/net/bridge/br_mrp_netlink.c b/net/bridge/br_mrp_netlink.c
-index ce6f63c77cc0a..86f0e75d6e345 100644
---- a/net/bridge/br_mrp_netlink.c
-+++ b/net/bridge/br_mrp_netlink.c
-@@ -196,7 +196,7 @@ static const struct nla_policy
- br_mrp_start_test_policy[IFLA_BRIDGE_MRP_START_TEST_MAX + 1] = {
- 	[IFLA_BRIDGE_MRP_START_TEST_UNSPEC]	= { .type = NLA_REJECT },
- 	[IFLA_BRIDGE_MRP_START_TEST_RING_ID]	= { .type = NLA_U32 },
--	[IFLA_BRIDGE_MRP_START_TEST_INTERVAL]	= { .type = NLA_U32 },
-+	[IFLA_BRIDGE_MRP_START_TEST_INTERVAL]	= NLA_POLICY_MIN(NLA_U32, 1),
- 	[IFLA_BRIDGE_MRP_START_TEST_MAX_MISS]	= { .type = NLA_U32 },
- 	[IFLA_BRIDGE_MRP_START_TEST_PERIOD]	= { .type = NLA_U32 },
- 	[IFLA_BRIDGE_MRP_START_TEST_MONITOR]	= { .type = NLA_U32 },
-@@ -316,7 +316,7 @@ static const struct nla_policy
- br_mrp_start_in_test_policy[IFLA_BRIDGE_MRP_START_IN_TEST_MAX + 1] = {
- 	[IFLA_BRIDGE_MRP_START_IN_TEST_UNSPEC]	= { .type = NLA_REJECT },
- 	[IFLA_BRIDGE_MRP_START_IN_TEST_IN_ID]	= { .type = NLA_U32 },
--	[IFLA_BRIDGE_MRP_START_IN_TEST_INTERVAL]	= { .type = NLA_U32 },
-+	[IFLA_BRIDGE_MRP_START_IN_TEST_INTERVAL]	= NLA_POLICY_MIN(NLA_U32, 1),
- 	[IFLA_BRIDGE_MRP_START_IN_TEST_MAX_MISS]	= { .type = NLA_U32 },
- 	[IFLA_BRIDGE_MRP_START_IN_TEST_PERIOD]	= { .type = NLA_U32 },
- };
+diff --git a/net/key/af_key.c b/net/key/af_key.c
+index 3e6aec499c248..619bb192cca08 100644
+--- a/net/key/af_key.c
++++ b/net/key/af_key.c
+@@ -757,6 +757,22 @@ static unsigned int pfkey_sockaddr_fill(const xfrm_address_t *xaddr, __be16 port
+ 	return 0;
+ }
+ 
++static unsigned int pfkey_sockaddr_fill_zero_tail(const xfrm_address_t *xaddr,
++						  __be16 port,
++						  struct sockaddr *sa,
++						  unsigned short family)
++{
++	unsigned int prefixlen;
++	int sockaddr_len = pfkey_sockaddr_len(family);
++	int sockaddr_size = pfkey_sockaddr_size(family);
++
++	prefixlen = pfkey_sockaddr_fill(xaddr, port, sa, family);
++	if (sockaddr_size > sockaddr_len)
++		memset((u8 *)sa + sockaddr_len, 0, sockaddr_size - sockaddr_len);
++
++	return prefixlen;
++}
++
+ static struct sk_buff *__pfkey_xfrm_state2msg(const struct xfrm_state *x,
+ 					      int add_keys, int hsc)
+ {
+@@ -3207,9 +3223,9 @@ static int pfkey_send_acquire(struct xfrm_state *x, struct xfrm_tmpl *t, struct
+ 	addr->sadb_address_proto = 0;
+ 	addr->sadb_address_reserved = 0;
+ 	addr->sadb_address_prefixlen =
+-		pfkey_sockaddr_fill(&x->props.saddr, 0,
+-				    (struct sockaddr *) (addr + 1),
+-				    x->props.family);
++		pfkey_sockaddr_fill_zero_tail(&x->props.saddr, 0,
++					      (struct sockaddr *)(addr + 1),
++					      x->props.family);
+ 	if (!addr->sadb_address_prefixlen)
+ 		BUG();
+ 
+@@ -3222,9 +3238,9 @@ static int pfkey_send_acquire(struct xfrm_state *x, struct xfrm_tmpl *t, struct
+ 	addr->sadb_address_proto = 0;
+ 	addr->sadb_address_reserved = 0;
+ 	addr->sadb_address_prefixlen =
+-		pfkey_sockaddr_fill(&x->id.daddr, 0,
+-				    (struct sockaddr *) (addr + 1),
+-				    x->props.family);
++		pfkey_sockaddr_fill_zero_tail(&x->id.daddr, 0,
++					      (struct sockaddr *)(addr + 1),
++					      x->props.family);
+ 	if (!addr->sadb_address_prefixlen)
+ 		BUG();
+ 
+@@ -3422,9 +3438,9 @@ static int pfkey_send_new_mapping(struct xfrm_state *x, xfrm_address_t *ipaddr,
+ 	addr->sadb_address_proto = 0;
+ 	addr->sadb_address_reserved = 0;
+ 	addr->sadb_address_prefixlen =
+-		pfkey_sockaddr_fill(&x->props.saddr, 0,
+-				    (struct sockaddr *) (addr + 1),
+-				    x->props.family);
++		pfkey_sockaddr_fill_zero_tail(&x->props.saddr, 0,
++					      (struct sockaddr *)(addr + 1),
++					      x->props.family);
+ 	if (!addr->sadb_address_prefixlen)
+ 		BUG();
+ 
+@@ -3444,9 +3460,9 @@ static int pfkey_send_new_mapping(struct xfrm_state *x, xfrm_address_t *ipaddr,
+ 	addr->sadb_address_proto = 0;
+ 	addr->sadb_address_reserved = 0;
+ 	addr->sadb_address_prefixlen =
+-		pfkey_sockaddr_fill(ipaddr, 0,
+-				    (struct sockaddr *) (addr + 1),
+-				    x->props.family);
++		pfkey_sockaddr_fill_zero_tail(ipaddr, 0,
++					      (struct sockaddr *)(addr + 1),
++					      x->props.family);
+ 	if (!addr->sadb_address_prefixlen)
+ 		BUG();
+ 
+@@ -3475,15 +3491,15 @@ static int set_sadb_address(struct sk_buff *skb, int sasize, int type,
+ 	switch (type) {
+ 	case SADB_EXT_ADDRESS_SRC:
+ 		addr->sadb_address_prefixlen = sel->prefixlen_s;
+-		pfkey_sockaddr_fill(&sel->saddr, 0,
+-				    (struct sockaddr *)(addr + 1),
+-				    sel->family);
++		pfkey_sockaddr_fill_zero_tail(&sel->saddr, 0,
++					      (struct sockaddr *)(addr + 1),
++					      sel->family);
+ 		break;
+ 	case SADB_EXT_ADDRESS_DST:
+ 		addr->sadb_address_prefixlen = sel->prefixlen_d;
+-		pfkey_sockaddr_fill(&sel->daddr, 0,
+-				    (struct sockaddr *)(addr + 1),
+-				    sel->family);
++		pfkey_sockaddr_fill_zero_tail(&sel->daddr, 0,
++					      (struct sockaddr *)(addr + 1),
++					      sel->family);
+ 		break;
+ 	default:
+ 		return -EINVAL;
 -- 
 2.53.0
 
