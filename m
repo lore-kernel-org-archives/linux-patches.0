@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADB7541F35E;
-	Sat, 12 Sep 2026 11:15:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E89401E5B9F;
+	Sat, 12 Sep 2026 11:15:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789211727; cv=none; b=YmTbk1w4ScJpXI3aw16Yc2h3nx+yWtxi57XisI9clLIAI/Nwth1ECgXco6Cra+zCV8u3iNWO0blUfGxGw/ic1dVLEimiyTVjALz+HEl/ldFJQSLQCkxUaXtxkCT0l5BzM2BxvjVdhbm3f6Gs42p5hrXvQ8RytUQGNmKzuR3ugsc=
+	t=1789211732; cv=none; b=tulQ/VVLcw5HaRJK3aV39in5iN2OUWth03gvfvwqv/Br1ofoUrxiWGMVGrRxayHuupUxR1n2eNcJ+f3NH5CREe3P2rW+FnE9Z6tRq9gEqBfSlCOL/39sJPAbbYG9lz0AsDFq1Nz3t8Hysm4JwIve4KjtCV+OXzWVNJN8iCM4W3M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789211727; c=relaxed/simple;
-	bh=fPHmsT6IAeL0RZ5I5ypoQ1SKR1pweFelAGT1l5F2uqM=;
+	s=arc-20240116; t=1789211732; c=relaxed/simple;
+	bh=7T1WXrjqno5shIOB27yQBvVfdpcu/IpVdzT1BuNCn+g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TMP4vcWjGb2iW/VYhFtzdRS1X/ZiLomCyirxDMZfnepCGaJsi2XYkajcYYwaeg93mOUp8Vk3BX63gYMY8wcCtCBeFWaWnDMK9evUx2vE0kH5+3IfmCAZpEVKpmTg9yV+0d6MseVwQl/ZLLBg9Ry5+GyaGyKyGX6C9V4BIiJcQD8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=neFAyJ9t; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=g0pqqydweEcaXO/umtnNjtNNtuBcAo5P05necpxitZb/RBIq1ZImqPlKTQyOQGa5nSmwVXWifgZe6ZOCDZxuBO4q/kBR/OSsO4vgymbbCGrB9w49Iy7d6yxTCNZ3VefX+CzUxXbUvKM5gtLgtkmZZWzhrvsO3bHppm891540FAM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oP16VdRN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="neFAyJ9t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 085D51F000FF;
-	Sat, 12 Sep 2026 11:15:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oP16VdRN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD7511F000FF;
+	Sat, 12 Sep 2026 11:15:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789211726;
-	bh=MQEIOOrKUoV8OX3mb3MApCGEL918GBcJCHmx80Jxm24=;
+	s=korg; t=1789211730;
+	bh=VeamTA7UMpKv5r9l2+ia11M2Ov9egSjF6X2tLaiImwY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=neFAyJ9tDcC0acB5iw5O3F9jpsRIXoiiBVAri3nBqSUkny8RJT17vP3zImF18UOLI
-	 hqOIQ1OawA4O2qu/dgkPo1uPlEWxvcCjZBHStA3oVX7hGdZr6HCfal8W+44uPtCIRn
-	 qFm924fjYaRoENvowzkQ8iRwzLQ0DrSc/0gJc2Ew=
+	b=oP16VdRNlebc+zodFAdEPqdxFraqOdna+ORM/oT6emSHx9tCSZdsbyW+XJEPsYJzw
+	 N7zusZKslpxXUtNQoIUj7nVoYP6mS4EhN+N2i9QKfUiqwGlHci7JZohSRWzilQHwmR
+	 uIMluC1o9WL4QauKLaTlUDgk+EiYF0J3+wkVR/YA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Agatha Isabelle Moreira <code@agatha.dev>,
-	Arnaud Bonnet <abo@medichon.fr>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Sechang Lim <rhkrqnwk98@gmail.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Junseo Lim <zirajs7@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1247/1518] nfs: refactor pNFS functions using clear_and_wake_up_bit
-Date: Sat, 12 Sep 2026 08:56:56 +0200
-Message-ID: <20260912065651.717103537@linuxfoundation.org>
+Subject: [PATCH 6.18 1238/1518] lwt_bpf: Restore reserved headroom after xmit program
+Date: Sat, 12 Sep 2026 08:56:47 +0200
+Message-ID: <20260912065651.512451478@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,134 +52,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnaud Bonnet <abo@medichon.fr>
+From: Junseo Lim <zirajs7@gmail.com>
 
-[ Upstream commit 187bfc974eefa9e5d88a0b4ee9d08ae8fe485df4 ]
+[ Upstream commit 5fe7007aed9ad069b2bd77e5d0c875c64f5c0269 ]
 
-Commit 8236b0ae31c83 ("bdi: wake up concurrent wb_shutdown() callers.")
-introduces the clear_and_wake_up_bit() helper as a wrapper for the
-common clear -> barrier -> wake up bitops sequence.
+ip_finish_output2() expands an skb to LL_RESERVED_SPACE(dev) before LWT
+xmit. An LWT_XMIT BPF program can then modify the skb head and still
+return BPF_OK, so bpf_xmit() rechecks the remaining headroom before the
+skb continues to neighbour output.
 
-The file pnfs.c has several helpers with identical contents. Thus they
-are replaced with the more recent clean_and_wake_up_bit() global helper
-which describes accurately its effects at the call and still specifies
-the cleared bit. This also homogenizes the code with other subsystems.
+That recheck uses dst->dev->hard_header_len. This is not enough for the
+neighbour cached-header path: neigh_hh_output() copies the cached hardware
+header using the aligned hh_cache size, HH_DATA_MOD for short headers or
+HH_DATA_ALIGN(hh_len) otherwise.
 
-Since the helpers are no longer used after this, they can be safely
-removed.
+On Ethernet, hard_header_len is 14 but the cached copy needs 16 bytes. If
+an LWT_XMIT BPF program calls bpf_skb_change_head(skb, 1, 0), the skb can
+still have 15 bytes of headroom after the program. The existing check
+accepts that, after which neigh_hh_output() hits its headroom warning and
+drops the skb.
 
-Suggested-by: Agatha Isabelle Moreira <code@agatha.dev>
-Link: https://kernelnewbies.org/Beginner%20Cleanup%20and%20Refactor%20Tasks%20by%20Agatha%20Isabelle%20Moreira#task_007
-Fixes: d67ae825a59d ("pnfs/flexfiles: Add the FlexFile Layout Driver")
-Signed-off-by: Arnaud Bonnet <abo@medichon.fr>
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Use LL_RESERVED_SPACE(dst->dev) in the post-BPF headroom check to match
+the reservation made before LWT xmit.
+
+Fixes: 3a0af8fd61f9 ("bpf: BPF for lightweight tunnel infrastructure")
+Reported-by: Sechang Lim <rhkrqnwk98@gmail.com>
+Suggested-by: Daniel Borkmann <daniel@iogearbox.net>
+Signed-off-by: Junseo Lim <zirajs7@gmail.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/bpf/20260811044149.118235-1-zirajs7@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/pnfs.c | 35 ++++++++++-------------------------
- 1 file changed, 10 insertions(+), 25 deletions(-)
+ net/core/lwt_bpf.c | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/fs/nfs/pnfs.c b/fs/nfs/pnfs.c
-index 57067589786f0..cf0dcf9e35d75 100644
---- a/fs/nfs/pnfs.c
-+++ b/fs/nfs/pnfs.c
-@@ -2088,15 +2088,6 @@ static bool pnfs_is_first_layoutget(struct pnfs_layout_hdr *lo)
- 	return test_bit(NFS_LAYOUT_FIRST_LAYOUTGET, &lo->plh_flags);
+diff --git a/net/core/lwt_bpf.c b/net/core/lwt_bpf.c
+index 5fffdd4e71add..953237bca36b6 100644
+--- a/net/core/lwt_bpf.c
++++ b/net/core/lwt_bpf.c
+@@ -163,10 +163,10 @@ static int bpf_output(struct net *net, struct sock *sk, struct sk_buff *skb)
+ 	return dst->lwtstate->orig_output(net, sk, skb);
  }
  
--static void pnfs_clear_first_layoutget(struct pnfs_layout_hdr *lo)
--{
--	unsigned long *bitlock = &lo->plh_flags;
--
--	clear_bit_unlock(NFS_LAYOUT_FIRST_LAYOUTGET, bitlock);
--	smp_mb__after_atomic();
--	wake_up_bit(bitlock, NFS_LAYOUT_FIRST_LAYOUTGET);
--}
--
- static void _add_to_server_list(struct pnfs_layout_hdr *lo,
- 				struct nfs_server *server)
+-static int xmit_check_hhlen(struct sk_buff *skb, int hh_len)
++static int xmit_check_headroom(struct sk_buff *skb, int hroom)
  {
-@@ -2272,7 +2263,8 @@ pnfs_update_layout(struct inode *ino,
- 					iomode, lo, lseg,
- 					PNFS_UPDATE_LAYOUT_INVALID_OPEN);
- 			nfs4_schedule_stateid_recovery(server, ctx->state);
--			pnfs_clear_first_layoutget(lo);
-+			clear_and_wake_up_bit(NFS_LAYOUT_FIRST_LAYOUTGET,
-+				&lo->plh_flags);
- 			pnfs_put_layout_hdr(lo);
- 			goto lookup_again;
- 		}
-@@ -2341,7 +2333,8 @@ pnfs_update_layout(struct inode *ino,
- 			if (!exception.retry)
- 				goto out_put_layout_hdr;
- 			if (first)
--				pnfs_clear_first_layoutget(lo);
-+				clear_and_wake_up_bit(NFS_LAYOUT_FIRST_LAYOUTGET,
-+					&lo->plh_flags);
- 			trace_pnfs_update_layout(ino, pos, count,
- 				iomode, lo, lseg, PNFS_UPDATE_LAYOUT_RETRY);
- 			pnfs_put_layout_hdr(lo);
-@@ -2353,7 +2346,7 @@ pnfs_update_layout(struct inode *ino,
+-	if (skb_headroom(skb) < hh_len) {
+-		int nhead = HH_DATA_ALIGN(hh_len - skb_headroom(skb));
++	if (skb_headroom(skb) < hroom) {
++		int nhead = hroom - skb_headroom(skb);
  
- out_put_layout_hdr:
- 	if (first)
--		pnfs_clear_first_layoutget(lo);
-+		clear_and_wake_up_bit(NFS_LAYOUT_FIRST_LAYOUTGET, &lo->plh_flags);
- 	trace_pnfs_update_layout(ino, pos, count, iomode, lo, lseg,
- 				 PNFS_UPDATE_LAYOUT_EXIT);
- 	pnfs_put_layout_hdr(lo);
-@@ -2445,7 +2438,7 @@ static void _lgopen_prepare_attached(struct nfs4_opendata *data,
- 	lgp = pnfs_alloc_init_layoutget_args(ino, ctx, &current_stateid, &rng,
- 					     nfs_io_gfp_mask());
- 	if (!lgp) {
--		pnfs_clear_first_layoutget(lo);
-+		clear_and_wake_up_bit(NFS_LAYOUT_FIRST_LAYOUTGET, &lo->plh_flags);
- 		nfs_layoutget_end(lo);
- 		pnfs_put_layout_hdr(lo);
- 		return;
-@@ -2549,7 +2542,8 @@ void nfs4_lgopen_release(struct nfs4_layoutget *lgp)
- {
- 	if (lgp != NULL) {
- 		if (lgp->lo) {
--			pnfs_clear_first_layoutget(lgp->lo);
-+			clear_and_wake_up_bit(NFS_LAYOUT_FIRST_LAYOUTGET,
-+				&lgp->lo->plh_flags);
- 			nfs_layoutget_end(lgp->lo);
- 		}
- 		pnfs_layoutget_free(lgp);
-@@ -3262,15 +3256,6 @@ pnfs_generic_pg_readpages(struct nfs_pageio_descriptor *desc)
- }
- EXPORT_SYMBOL_GPL(pnfs_generic_pg_readpages);
+ 		if (pskb_expand_head(skb, nhead, 0, GFP_ATOMIC))
+ 			return -ENOMEM;
+@@ -278,7 +278,7 @@ static int bpf_xmit(struct sk_buff *skb)
  
--static void pnfs_clear_layoutcommitting(struct inode *inode)
--{
--	unsigned long *bitlock = &NFS_I(inode)->flags;
--
--	clear_bit_unlock(NFS_INO_LAYOUTCOMMITTING, bitlock);
--	smp_mb__after_atomic();
--	wake_up_bit(bitlock, NFS_INO_LAYOUTCOMMITTING);
--}
--
- /*
-  * There can be multiple RW segments.
-  */
-@@ -3295,7 +3280,7 @@ static void pnfs_list_write_lseg_done(struct inode *inode, struct list_head *lis
- 		pnfs_put_lseg(lseg);
- 	}
+ 	bpf = bpf_lwt_lwtunnel(dst->lwtstate);
+ 	if (bpf->xmit.prog) {
+-		int hh_len = dst->dev->hard_header_len;
++		int hroom = LL_RESERVED_SPACE(dst->dev);
+ 		__be16 proto = skb->protocol;
+ 		int ret;
  
--	pnfs_clear_layoutcommitting(inode);
-+	clear_and_wake_up_bit(NFS_INO_LAYOUTCOMMITTING, &NFS_I(inode)->flags);
- }
+@@ -294,9 +294,12 @@ static int bpf_xmit(struct sk_buff *skb)
+ 				return -EINVAL;
+ 			}
+ 			/* If the header was expanded, headroom might be too
+-			 * small for L2 header to come, expand as needed.
++			 * small for the L2 header to come, expand as needed.
++			 * neigh_hh_output() copies the cached header in
++			 * HH_DATA_MOD aligned chunks, so match the reservation
++			 * made before LWT xmit.
+ 			 */
+-			ret = xmit_check_hhlen(skb, hh_len);
++			ret = xmit_check_headroom(skb, hroom);
+ 			if (unlikely(ret))
+ 				return ret;
  
- void pnfs_set_lo_fail(struct pnfs_layout_segment *lseg)
-@@ -3435,7 +3420,7 @@ pnfs_layoutcommit_inode(struct inode *inode, bool sync)
- 	spin_unlock(&inode->i_lock);
- 	kfree(data);
- clear_layoutcommitting:
--	pnfs_clear_layoutcommitting(inode);
-+	clear_and_wake_up_bit(NFS_INO_LAYOUTCOMMITTING, &NFS_I(inode)->flags);
- 	goto out;
- }
- EXPORT_SYMBOL_GPL(pnfs_layoutcommit_inode);
 -- 
 2.53.0
 
