@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C40429DB64;
-	Sat, 12 Sep 2026 16:04:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E30242BCF4C;
+	Sat, 12 Sep 2026 16:04:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789229057; cv=none; b=Dtg30MwWRA3rNFR14wgidv9ztA7F21hYloLgRabq64CO+ff+4FV9XVXLdnn+vJ66HXUFPpks91cBSQh9xpfO8TiLpjdQH/WhqpXf1gWgrz7/l1d+IYgrRb3H24r1HPmC1XIRTmcsRgCWhBgPsdhs5pU470BqUhRlMIECrOzWQfQ=
+	t=1789229062; cv=none; b=No8xeyR8wsaAW1OLOzbeeaMNSjIz1tE6jetJGj4g1NnMtYhVSzgyjDqLtrOdOg+WmBoE+3qN0C9bDn4JewCZlb6g5nrDEzwKvannzqvYtwqMGVYjoyhlDjhL4b+9pC+IshrrJYm6OlmdUxT9n+TTQSRXBekKaT2ELec3I2HpcIY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789229057; c=relaxed/simple;
-	bh=8mwVigp1kGRM/RJJpoym0FcUr3ur6kU7rg9yMwopows=;
+	s=arc-20240116; t=1789229062; c=relaxed/simple;
+	bh=5QJYcCWqdCx+aOFa0ltDPDawRRRlu9pp6lIRKvztPOc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B/dZvNXH9rUTGM3WDGKST/ks8JftDBIHh7doF6QkbOfeA15QJGH43FUsMuMNsHr8nwhQJz4Rrxzy7S0dAENXYvxoUeH1o2qZotraF3DEhwzY6b4yb42JJlGTo1klO2IbanR9sLWO3Q7h8rIMaD4efrMj5MPH4eOUAU/Mi3H7OZ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aDRTOeF5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cOko9mCJQNcqIZaQ2tQxGXbXDbmw95zQCio4RT1H93kwjpomQb4OVIyXq5ckMvDtyLPKXqaUCs0v0U48Wvsbhab7trKmeYD9ZiyqotlwP0yUOdkyreduAAGI2AzZtHm/ci+vrzDxzGIuP3Gq/zICf7oRiB5+7UtLUrCQbKsWwEY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L6+kawBL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aDRTOeF5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0ED3C1F000FF;
-	Sat, 12 Sep 2026 16:04:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L6+kawBL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6CF31F000FF;
+	Sat, 12 Sep 2026 16:04:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789229056;
-	bh=95UntSaAVNyKFaRvV8peCdh7MzuZg77tKqmGc6uzKxY=;
+	s=korg; t=1789229060;
+	bh=fHL5pmYRa57zAPxFkp0aDPQ6pIq/cJsFxm46kf6EeeI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aDRTOeF51tYqxim64gWJKS/InUpR6UB5PlQPC9doeuCNpmYhrURryyX+XebFMgDry
-	 ssk/p4fewTNXmn3qrW2E787iZLzFBYeO4uc5nGN97PuoUjulkoBI2Ms/arL2wPTApD
-	 3vpAkTxkbrgRlMC/clOZBbBVhODoQOYPOmAtZzJA=
+	b=L6+kawBL/Ni9wAevV/ygvGm6yKRZevpYlBVtx4925jW0lx2HxaT39G8oyZmTZTnDd
+	 rXh5TzRY5Ax9Q3N1x9hl51CWL+d/I+ZtYOjBDEur7ecKaJ0GnwbB1u10CedUwnmAxv
+	 3VLdoAYb8CsIOONXRFkHgobZaNcVpV+DEzhbuA4k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konstantin Andreev <andreev@swemel.ru>,
-	Casey Schaufler <casey@schaufler-ca.com>,
+	Benson Leung <bleung@chromium.org>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Prashant Malani <pmalani@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0470/1191] smack: restrict smackfs/{direct,mapped} values to 0-255
-Date: Sat, 12 Sep 2026 08:53:18 +0200
-Message-ID: <20260912065558.789513658@linuxfoundation.org>
+Subject: [PATCH 6.1 0471/1191] usb: typec: Add partner PD object wrapper
+Date: Sat, 12 Sep 2026 08:53:19 +0200
+Message-ID: <20260912065558.812944808@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -51,134 +52,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konstantin Andreev <andreev@swemel.ru>
+From: Prashant Malani <pmalani@chromium.org>
 
-[ Upstream commit a7c44fd9f80e37763acf9cd3c87a58058d206427 ]
+[ Upstream commit 032399819dd5f135e6ffe446c8e97ab54eec3464 ]
 
-Both smackfs/direct and smackfs/mapped incorrectly accept
-the full range of integer values. For example:
+Some port drivers may want to set a Type-C partner as a parent for a
+USB Power Delivery object, but the Type-C partner struct isn't exposed
+outside of the Type-C class driver. Add a wrapper to
+usb_power_delivery_register() which sets the provided Type-C partner
+as a parent to the USB PD object. This helps to avoid exposing the
+Type-C partner's device struct unnecessarily.
 
-    # cd /sys/fs/smackfs/
-    # cat direct ; echo
-    250
-
-    # cat cipso2
-    @ 250/2
-    _ 250/2,4,5,6,7,8
-    * 250/3,5,7
-    ^ 250/2,4,5,6,7
-    ? 250/3,4,5,6,7,8
-
-    # echo -1234 >direct ; cat direct ; echo
-    -1234
-    # cat cipso2
-    @ -1234/2
-    _ -1234/2,4,5,6,7,8
-    * -1234/3,5,7
-    ^ -1234/2,4,5,6,7
-    ? -1234/3,4,5,6,7,8
-    #
-
-I noticed two things regarding this:
-
-1) sensitivity levels are truncated to 8 bits when labeling
-   outgoing packets (0x2e = 46 for the -1234 example above)
-
-2) the reverse process fails: incoming packets with sensitivity
-   level 46 do not match these smackfs/cipso2 entries.
-
-Even observation (1) on its own warrants a fix.
-
-This patch restricts smackfs/direct and smackfs/mapped
-accepted values to the 0-255 range.
-
-Fixes: e114e473771c ("Smack: Simplified Mandatory Access Control Kernel")
-Signed-off-by: Konstantin Andreev <andreev@swemel.ru>
-Signed-off-by: Casey Schaufler <casey@schaufler-ca.com>
+Cc: Benson Leung <bleung@chromium.org>
+Suggested-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Signed-off-by: Prashant Malani <pmalani@chromium.org>
+Link: https://lore.kernel.org/r/20221122220538.2991775-2-pmalani@chromium.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: a0a8cd9fc9c4 ("platform/chrome: cros_ec_typec: Reject out-of-bounds PD cap count")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/smack/smack.h   |  2 +-
- security/smack/smackfs.c | 26 ++++++++++++++------------
- 2 files changed, 15 insertions(+), 13 deletions(-)
+ drivers/usb/typec/class.c | 19 +++++++++++++++++++
+ include/linux/usb/typec.h |  4 ++++
+ 2 files changed, 23 insertions(+)
 
-diff --git a/security/smack/smack.h b/security/smack/smack.h
-index 52c885f5b425e..27b653125b37e 100644
---- a/security/smack/smack.h
-+++ b/security/smack/smack.h
-@@ -299,7 +299,7 @@ int smack_populate_secattr(struct smack_known *skp);
-  * Shared data.
-  */
- extern int smack_enabled __initdata;
--extern int smack_cipso_auto_level[2];
-+extern u8  smack_cipso_auto_level[2];
- #define smack_cipso_direct (+smack_cipso_auto_level[0])
- #define smack_cipso_mapped (+smack_cipso_auto_level[1])
- extern struct smack_known *smack_net_ambient;
-diff --git a/security/smack/smackfs.c b/security/smack/smackfs.c
-index abecd63592e30..ebfff4692dcb2 100644
---- a/security/smack/smackfs.c
-+++ b/security/smack/smackfs.c
-@@ -92,7 +92,7 @@ struct smack_known *smack_net_ambient;
-  * secid is contained directly in the category set.
-  * It can be reset via smackfs/mapped
-  */
--int smack_cipso_auto_level[2] = {
-+u8 smack_cipso_auto_level[2] = {
- 	SMACK_CIPSO_DIRECT_DEFAULT,
- 	SMACK_CIPSO_MAPPED_DEFAULT,
- };
-@@ -1659,17 +1659,15 @@ static const struct file_operations smk_doi_ops = {
- static ssize_t smk_read_cipso_auto_level(struct file *filp, char __user *buf,
- 			       size_t count, loff_t *ppos)
- {
--	char temp[80];
--	ssize_t rc;
-+	char temp[sizeof "255"];
-+	int n;
- 
- 	if (*ppos != 0)
- 		return 0;
- 
--	sprintf(temp, "%d", smack_cipso_auto_level[
--			      smk_cipso_auto_level_idx(filp)]);
--	rc = simple_read_from_buffer(buf, count, ppos, temp, strlen(temp));
--
--	return rc;
-+	n = sprintf(temp, "%u", (unsigned int)smack_cipso_auto_level[
-+		smk_cipso_auto_level_idx(filp)]);
-+	return simple_read_from_buffer(buf, count, ppos, temp, n);
+diff --git a/drivers/usb/typec/class.c b/drivers/usb/typec/class.c
+index a8e04beb3bc07..95a026d3a0664 100644
+--- a/drivers/usb/typec/class.c
++++ b/drivers/usb/typec/class.c
+@@ -827,6 +827,25 @@ void typec_partner_set_svdm_version(struct typec_partner *partner,
  }
+ EXPORT_SYMBOL_GPL(typec_partner_set_svdm_version);
  
++/**
++ * typec_partner_usb_power_delivery_register - Register Type-C partner USB Power Delivery Support
++ * @partner: Type-C partner device.
++ * @desc: Description of the USB PD contract.
++ *
++ * This routine is a wrapper around usb_power_delivery_register(). It registers
++ * USB Power Delivery Capabilities for a Type-C partner device. Specifically,
++ * it sets the Type-C partner device as a parent for the resulting USB Power Delivery object.
++ *
++ * Returns handle to struct usb_power_delivery or ERR_PTR.
++ */
++struct usb_power_delivery *
++typec_partner_usb_power_delivery_register(struct typec_partner *partner,
++					  struct usb_power_delivery_desc *desc)
++{
++	return usb_power_delivery_register(&partner->dev, desc);
++}
++EXPORT_SYMBOL_GPL(typec_partner_usb_power_delivery_register);
++
  /**
-@@ -1685,13 +1683,16 @@ static ssize_t
- smk_write_cipso_auto_level(struct file *filp, const char __user *buf,
- 			   size_t count, loff_t *ppos)
- {
--	struct smack_known *skp;
--	int i, ret, idx, old_lvl;
-+	int ret, idx;
-+	u8  i, old_lvl;
+  * typec_register_partner - Register a USB Type-C Partner
+  * @port: The USB Type-C Port the partner is connected to
+diff --git a/include/linux/usb/typec.h b/include/linux/usb/typec.h
+index 7751bedcae5dd..8fa781207970a 100644
+--- a/include/linux/usb/typec.h
++++ b/include/linux/usb/typec.h
+@@ -23,6 +23,7 @@ struct fwnode_handle;
+ struct device;
  
- 	if (!smack_privileged(CAP_MAC_ADMIN))
- 		return -EPERM;
--
--	ret = kstrtos32_from_user(buf, count, 10, &i);
-+	/*
-+	 * draft-ietf-cipso-ipsecurity-01 (CIPSO 2.2), 3.4.2.4:
-+	 * "Sensitivity Level is 1 octet in length. Its value is from 0 to 255"
-+	 */
-+	ret = kstrtou8_from_user(buf, count, 10, &i);
- 	if (unlikely(ret))
- 		return ret;
+ struct usb_power_delivery;
++struct usb_power_delivery_desc;
  
-@@ -1704,6 +1705,7 @@ smk_write_cipso_auto_level(struct file *filp, const char __user *buf,
- 	old_lvl = smack_cipso_auto_level[idx];
+ enum typec_port_type {
+ 	TYPEC_PORT_SRC,
+@@ -327,6 +328,9 @@ void typec_partner_set_svdm_version(struct typec_partner *partner,
+ 				    enum usb_pd_svdm_ver svdm_version);
+ int typec_get_negotiated_svdm_version(struct typec_port *port);
  
- 	if (old_lvl != i) {
-+		struct smack_known *skp;
- 		mutex_lock(&smack_known_lock);
- 		list_for_each_entry_rcu(skp, &smack_known_list, list)
- 			if (skp->smk_netlabel.attr.mls.lvl ==
++struct usb_power_delivery *typec_partner_usb_power_delivery_register(struct typec_partner *partner,
++							struct usb_power_delivery_desc *desc);
++
+ int typec_port_set_usb_power_delivery(struct typec_port *port, struct usb_power_delivery *pd);
+ int typec_partner_set_usb_power_delivery(struct typec_partner *partner,
+ 					 struct usb_power_delivery *pd);
 -- 
 2.53.0
 
