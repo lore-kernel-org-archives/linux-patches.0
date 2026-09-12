@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DA3541835E;
-	Sat, 12 Sep 2026 08:36:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D5C3419313;
+	Sat, 12 Sep 2026 08:36:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789202210; cv=none; b=PfWZUTxxwI8oWtUe8TtQ/CqwVzTf5ul2vwp+sHDokday+A+5ZrSDHKswKX0gqrpEnijHZOgp5q8xscn8X/W+tUCz8Z3Ab1MebKPXU568Fz08Nx0IxZNKkaKlu7ZCsh4Dh1avMzkFga1KF/eR6jtW/pTcWZZMcOebhF/xRPZnYxw=
+	t=1789202215; cv=none; b=sOCW19pcr2wsoqHsqRTYSEBW+7MTtj5fn5+Ch1WKClVTXX72dYVrxJEwshVE1tsSj4gW2uLj/+en3mjsdpOK/KVbP0nyf/r75ooZtkGiYYCYHTuBxVYOm3PLXfq49S2NqRrumNtF4/JtVReUtiYJjHY7WVR13jBAWZTBWcPR0ak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789202210; c=relaxed/simple;
-	bh=RQxR0bnsjiCKX1BSzvSEaq+ytCRP7KED5cKYDnyIRnU=;
+	s=arc-20240116; t=1789202215; c=relaxed/simple;
+	bh=2jr6QsQjY67WSgV5S8jKvFbKSAFB21CMcp6YAceeKtA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Q/+qfKXTzyWGSav4jOkzipTUAsHZDai6e0SD8cWklfxolomC/n+jem8FEV/WkfWrJwM0dtsYQ7jC5224iSBQnkuRrwpUvPage21uCSyZLkni5yhD4qZ0hB308dcYpdx1dq7eojkdL1cseqeah1GLYo8UIq0KrH5ZiqKoTCdQznM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QcOR6LQY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WTj7jyWalBUiFf3945xLW1cN1J8EpJUClZxVXheJKuIBkVUoOmxD7LChlzyd/AQFqjf14xfe9ZSfA3dyh0O8BEntjvVhMQdJ8K0M0QxbCU3VMmWJRRUQMSnTBSG7/eOXIWUf68shOOwfGkw/yA46v5LhU/b4WYIclTGDnhpJVyQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yIyix6yB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QcOR6LQY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C778C1F00898;
-	Sat, 12 Sep 2026 08:36:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yIyix6yB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E55161F00893;
+	Sat, 12 Sep 2026 08:36:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789202207;
-	bh=1iXX2qmrDhBNoUSWPlBJ7dXJVVhOlh3Ui2IDyGO9uxQ=;
+	s=korg; t=1789202212;
+	bh=gpKtfe8SOyn0yE3C620AEjKyKtZRmGBCMXJeVbbjQIM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QcOR6LQYPb9/zF6qmnk5dl1PK915gMMa0UnGJ8CfSKK8U8WGoePpcKYloeFYdWQYe
-	 SonttDzpkV8lDFDK15j3qcr/rh/H/+WFotRbkI5zmJ8gC2W2bHZruEqeXLTnY1jvN/
-	 Hew03m2qF0s2ur0gbMegQSjbEAid+GMsolMMtx5c=
+	b=yIyix6yBTUSrdykn3Xs3i3Jj3LyHczZui3QhOLxDSh0immsBfIfKQu3cA/SWurM6H
+	 p3OrX4PXxv3LLJr9PW2lh2zc9V1pof+xkzqBMU36mnmwtXHFPl6eByV2ey1/Norb8j
+	 FB/HE9CQMBKBNr8PD53Ous80PpQAy5/ScUKlrcFs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qiang Yu <Qiang.Yu@amd.com>,
-	=?UTF-8?q?Marek=20Ol=C5=A1=C3=A1k?= <maraeo@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	kernel test robot <lkp@intel.com>,
+	Sven Peter <sven@kernel.org>,
+	Janne Grunau <j@jannau.net>,
+	Joshua Peisach <jpeisach@ubuntu.com>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1156/1815] drm/amdgpu: read TRUNCATE_COORD_MODE on gfx12
-Date: Sat, 12 Sep 2026 08:48:26 +0200
-Message-ID: <20260912065716.150596923@linuxfoundation.org>
+Subject: [PATCH 7.2 1157/1815] mfd: macsmc: Fix key count endianness annotation
+Date: Sat, 12 Sep 2026 08:48:27 +0200
+Message-ID: <20260912065716.173358528@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -46,52 +48,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Qiang Yu <Qiang.Yu@amd.com>
+From: Sven Peter <sven@kernel.org>
 
-[ Upstream commit 4261cbc7b03f1f56e95aeaf1492b8690fa5a253e ]
+[ Upstream commit 0a29aa605286bcd01632eb6b61f59b9053312347 ]
 
-TA_CNTL2.TRUNCATE_COORD_MODE selects whether texture coordinate
-truncation is D3D9/GL/Vulkan conformant. gfx11 reads it and reports it to
-userspace via AMDGPU_IDS_FLAGS_CONFORMANT_TRUNC_COORD, but gfx12 never
-read it, so the flag was always reported as 0 and userspace fell back to
-the non-conformant path.
+SMC firmware returns the value of the #KEY key in big-endian unlike most
+other keys. Reading it through apple_smc_read_u32() into a plain u32
+and then converting with be32_to_cpu() makes sparse complain:
 
-Read it in gfx_v12_0_constants_init() like gfx11 does.
+  drivers/mfd/macsmc.c:462:26: sparse: cast to restricted __be32
 
-Fixes: 52cb80c12e8a ("drm/amdgpu: Add gfx v12_0 ip block support (v6)")
-Signed-off-by: Qiang Yu <Qiang.Yu@amd.com>
-Reviewed-by: Marek Olšák <maraeo@gmail.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Read the raw value into a __be32 using apple_smc_read() instead.
+
+Fixes: e038d985c982 ("mfd: Add Apple Silicon System Management Controller")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202607181046.OANjIoqR-lkp@intel.com/
+Signed-off-by: Sven Peter <sven@kernel.org>
+Reviewed-by: Janne Grunau <j@jannau.net>
+Reviewed-by: Joshua Peisach <jpeisach@ubuntu.com>
+Link: https://patch.msgid.link/20260719-b4-macsmc-be32-fix-v1-1-c7b1936307fa@kernel.org
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/mfd/macsmc.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c
-index 6c37e760fdfae..e55c9002113c7 100644
---- a/drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c
-@@ -1822,6 +1822,12 @@ static void gfx_v12_0_constants_init(struct amdgpu_device *adev)
- 	gfx_v12_0_get_cu_info(adev, &adev->gfx.cu_info);
- 	gfx_v12_0_get_tcc_info(adev);
- 	adev->gfx.config.pa_sc_tile_steering_override = 0;
-+
-+	/* Set whether texture coordinate truncation is conformant. */
-+	tmp = RREG32_SOC15(GC, 0, regTA_CNTL2);
-+	adev->gfx.config.ta_cntl2_truncate_coord_mode =
-+		REG_GET_FIELD(tmp, TA_CNTL2, TRUNCATE_COORD_MODE);
-+
- 	/* Program DB_RING_CONTROL for multiple GFX pipes
- 	 * Default power up value is 1.
- 	 * Possible values:
+diff --git a/drivers/mfd/macsmc.c b/drivers/mfd/macsmc.c
+index 358feec2d088f..514cba7dc897a 100644
+--- a/drivers/mfd/macsmc.c
++++ b/drivers/mfd/macsmc.c
+@@ -410,7 +410,7 @@ static int apple_smc_probe(struct platform_device *pdev)
+ {
+ 	struct device *dev = &pdev->dev;
+ 	struct apple_smc *smc;
+-	u32 count;
++	__be32 count;
+ 	int ret;
+ 
+ 	smc = devm_kzalloc(dev, sizeof(*smc), GFP_KERNEL);
+@@ -461,8 +461,10 @@ static int apple_smc_probe(struct platform_device *pdev)
+ 	dev_set_drvdata(&pdev->dev, smc);
+ 	BLOCKING_INIT_NOTIFIER_HEAD(&smc->event_handlers);
+ 
+-	ret = apple_smc_read_u32(smc, SMC_KEY(#KEY), &count);
+-	if (ret)
++	ret = apple_smc_read(smc, SMC_KEY(#KEY), &count, sizeof(count));
++	if (ret >= 0 && ret != sizeof(count))
++		ret = -EINVAL;
++	if (ret < 0)
+ 		return dev_err_probe(smc->dev, ret, "Failed to get key count");
+ 	smc->key_count = be32_to_cpu(count);
+ 
 -- 
 2.53.0
 
