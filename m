@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D27773B71DA;
-	Sat, 12 Sep 2026 10:33:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D43E343889;
+	Sat, 12 Sep 2026 10:34:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789209238; cv=none; b=ZZKvWwletBsEwF4RiCZMR/RqdOzPgUySP1CHuvOzk4EujAa22A1zVr0IL6PLQSc4BElz6kF2qsUINXyiSfhNHlDqiermIab/32scszo3fEtT8W9Co5oTkYsYd5biHtpgQWXHJ1kQSpbW1X+BHRi14rSWMXtVdfn8g9i/4nDqW1A=
+	t=1789209242; cv=none; b=P04x/xPnoRjs3AqIO+erc+zDaM8w2o7gYjjqY5fEI+h0AimkHkm9w/8kxJXoy02uOFiKqeprtG2luQmU0UW4hvp9E+2VOdluUf8Vp/Tz/0BgjyRXrHImMknLE+mAeI7sLd5HwJu/xQ/iqXoXCOcDyF8Ady0BD0aGiuSVKgYI3OM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789209238; c=relaxed/simple;
-	bh=HXip52DXAMl8Qj3i1j9ZzjmSujXQk5jxFC7we+R0PSI=;
+	s=arc-20240116; t=1789209242; c=relaxed/simple;
+	bh=5I7ZWown1p2dMIZuxmEx2i5QlzWDW9AyOBn5coU5Ahk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nZfJUwssul6glVBee69STPEDArNd+Ndlr2vnrdFA7A6UH+u5xwRJiVPB/KT4CsIHZfveU2oDdOBaOD09qRa3Ns4tsChVCjX/Gd4cvBgNOedbNeD+RYTwhHLDXVh4pwsd04OZ8dO12HKNID4Q+NsCE6iYP23rCPLGnAcL16DxHbA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2SgiAOqY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JoJ5OE7cSVmmb6lvBjm0QzEyBRiKUzxNa9ZUFIrsHcSXvoyYmUpihl/xOe8dF4DOHvI0OVEkViHFJQGW65qgk2fNqy55MFXea8JMxjmDhjVkpotzs9mhfPZdW/qay8qC+oxXGyhpTMKtXm/BJjTDh/RcUUOGt6cREa5lMFWwlu4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uynkeh4U; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2SgiAOqY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92B201F000FF;
-	Sat, 12 Sep 2026 10:33:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uynkeh4U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31E6E1F000FF;
+	Sat, 12 Sep 2026 10:33:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789209236;
-	bh=TW1Eu6qk+XDEDtWa2g0o1Pr+HzTYXxCbJl03QvKcGR4=;
+	s=korg; t=1789209241;
+	bh=4UBcB9GuzOHVl0IPJUdHR1+s93aPDgyEkWsa2IE1Xyc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2SgiAOqYACIk95uWw0iOgIfqmlW2WdGorJdHtIYNPzDE99x5Xfw6FjVlg2MIV7wkN
-	 vpoRHKe0/+CmY3k8Tbups7ihyczu1/PJonrCkpBGDKF3IEv+gE8UlMIgn+ESdvixz7
-	 QsHFvPoOJJAac2xzhp5jxhLMOYo9rsfelL1w0Gg8=
+	b=Uynkeh4UUW1+IUS6tyKwbbjpJBeDbGyPTVw3FWgu/kGDJM2TfK7UsB7HeNJwTp/Pg
+	 uf8n214VmyShybzLDFltgOhJ1TBhAoub/bgW4NqDYc+VL5gxHARiBb4b9gTY7TEv1+
+	 mwLB4mehZljyDBtzK4LfEaxHpFc5gmOYRFOxtRkU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joy Zou <joy.zou@oss.nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Mark Brown <broonie@kernel.org>,
+	sashiko-bot <sashiko-bot@kernel.org>,
+	Ian Rogers <irogers@google.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0778/1518] regulator: core: use system_freezable_wq for init complete work
-Date: Sat, 12 Sep 2026 08:49:07 +0200
-Message-ID: <20260912065641.036468133@linuxfoundation.org>
+Subject: [PATCH 6.18 0779/1518] perf machine: Fix fd leak on bounds check in maps__set_modules_path_dir()
+Date: Sat, 12 Sep 2026 08:49:08 +0200
+Message-ID: <20260912065641.059284440@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,65 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joy Zou <joy.zou@oss.nxp.com>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 03eab318cedd6ae34ecd34533cd986edf5237164 ]
+[ Upstream commit 23010160bb9fd6e7ce940e232cd660b37ab9b20b ]
 
-schedule_delayed_work() uses system_wq, which is non-freezable, allowing
-regulator_init_complete_work to run concurrently with system suspend. This
-work fires ~30s after boot to disable unused regulators via I2C. When it
-races with PM suspend, the I2C adapter may already be suspended, triggering
-a -ESHUTDOWN warning in __i2c_transfer():
+The bounds check for root_len >= path_size returns -1 directly without
+closing the directory fd opened by io_dir__init() a few lines above.
 
-  WARNING: ... at __i2c_transfer+0x36c/0x3c8
-  Call trace:
-   __i2c_transfer
-   i2c_transfer
-   regmap_i2c_write
-   _regmap_update_bits
-   regulator_disable_regmap
-   _regulator_do_disable
-   regulator_late_cleanup
-   regulator_init_complete_work_function
-   process_one_work
+Jump to the out label instead, which calls close(iod.dirfd).
 
-Switch to system_freezable_wq so the work is frozen before any device
-is suspended, eliminating the race.
-
-Fixes: 55576cf18537 ("regulator: Defer init completion for a while after late_initcall")
-Signed-off-by: Joy Zou <joy.zou@oss.nxp.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260731-b4-regulator-pf01-v2-1-a406c8737fdb@oss.nxp.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: e7af1946818b ("perf machine: Reuse module path buffer")
+Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Cc: Ian Rogers <irogers@google.com>
+Assisted-by: Claude:claude-opus-4.6
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/core.c | 6 ++++--
+ tools/perf/util/machine.c | 6 ++++--
  1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
-index 019606bc36b9c..97b4ee5d29902 100644
---- a/drivers/regulator/core.c
-+++ b/drivers/regulator/core.c
-@@ -27,6 +27,7 @@
- #include <linux/regulator/driver.h>
- #include <linux/regulator/machine.h>
- #include <linux/module.h>
-+#include <linux/workqueue.h>
- 
- #define CREATE_TRACE_POINTS
- #include <trace/events/regulator.h>
-@@ -6604,8 +6605,9 @@ static int __init regulator_init_complete(void)
- 	 * we'd only do this on systems that need it, and a kernel
- 	 * command line option might be useful.
- 	 */
--	schedule_delayed_work(&regulator_init_complete_work,
--			      msecs_to_jiffies(30000));
-+	queue_delayed_work(system_freezable_wq,
-+			   &regulator_init_complete_work,
-+			   msecs_to_jiffies(30000));
- 
- 	return 0;
- }
+diff --git a/tools/perf/util/machine.c b/tools/perf/util/machine.c
+index 9331b4cc19f18..a2f5ca35141bb 100644
+--- a/tools/perf/util/machine.c
++++ b/tools/perf/util/machine.c
+@@ -1390,8 +1390,10 @@ static int maps__set_modules_path_dir(struct maps *maps, char *path, size_t path
+ 		return -1;
+ 	}
+ 	/* Bounds check, should never happen. */
+-	if (root_len >= path_size)
+-		return -1;
++	if (root_len >= path_size) {
++		ret = -1;
++		goto out;
++	}
+ 	path[root_len++] = '/';
+ 	while ((dent = io_dir__readdir(&iod)) != NULL) {
+ 		if (io_dir__is_dir(&iod, dent)) {
 -- 
 2.53.0
 
