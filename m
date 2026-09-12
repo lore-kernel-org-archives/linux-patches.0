@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 733114BEE22;
-	Sat, 12 Sep 2026 12:34:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9995479899;
+	Sat, 12 Sep 2026 12:34:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789216480; cv=none; b=HU39kmoqkmmsKUuPYANn3ddJg0VAjs0vr+gM70hUCARG9RgxSzZB/BhSozaJreT6iy0Cy9hNhXsiTesF30OdF0arFqoVow9wlsAQfInXGoZC2XmApzdFOeg7KccaFsXXj2jF4Nr0IYVQAmecXAFh2GsoGtQ39/S4N3zLnP3rqdo=
+	t=1789216485; cv=none; b=NO/AVNBIFalQAGgzfivw5Z/LKhujfTPggn/fXSrtkGAURtD9LZbU8GYaDfQRWKrI/V+AxiexiXxuqXsieUqZSjvK/agZM5ErAIzjUFc+PL/2PSxblS36+74AiI/XUcQ2Ah/4jrK+lxlNZXJhnHFeOWEqvBZ0sffv7IFyvUrzH9Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789216480; c=relaxed/simple;
-	bh=KuFnTWYGqwoT0ldri/kHIdkN6WmemXlGhTnTmfYEuyY=;
+	s=arc-20240116; t=1789216485; c=relaxed/simple;
+	bh=peJyYRpofkgR9mFeCud8A8qeUQLpDbBQjrPLCnINZF0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ABWX+XpaLZNLcKyxMOQOno94Rh22V+jI/ftVBILxNsIK5FF5660a2YQyLKI3Zpqbb+tVCF/o0PFncHfFRuPmSp1kpYkrFqwZRHroMI19dG/1+Psl3oXrhEfq1sV2KptLChaKHa04vo/SKf6doQ+bOJRcoV7M8y9NcxE6TiqFriA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QoKRRiXT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=s9nnlDtupdyXinv0cF1v4MqyoQ+Gf2e2t4lwmpAwuLuKXoBQhmD6MMw0yhnanUnlXEsdKuA/2ADUfFv+3aZOZbaDsqeDZuGemM1H+kr4X+ZzqRL31YP++gTECG6P1sP0GEpTqgjcIECH55//CZeDRcPTTFHpdE8D7XKE/58sD+U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OkPDeULd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QoKRRiXT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77AF51F000FF;
-	Sat, 12 Sep 2026 12:34:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OkPDeULd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63EB31F000FF;
+	Sat, 12 Sep 2026 12:34:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789216479;
-	bh=RFm7EN5oPa5obrY4Voag9EkjXo2C5I0kDOZvc/fLWxs=;
+	s=korg; t=1789216484;
+	bh=Jupo2HH/RoDb4sobaBHveroESJvkYb4ozaP4ccwEAkY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QoKRRiXTsg/YV0VFAwBj5uvfX8wz/zxqfWbyqBp4lEcEBWJ3dP4TyvRTLu/hp095i
-	 b78Q7nfoPk7NQJIRgsV+bIJnHLSxbwJrCmZYpioZYFynla+8dKRJZORG6TEwBBN64X
-	 3cXGNOGadkJf6qvvmXm/2jXZWVZTagS94B36SI0k=
+	b=OkPDeULdkrGgO84pP25Yz35/S2nbxAXumUpqyMEEh/EoHdfOswxlgSTVPn+EYo8Ak
+	 I3u8MLZgqKsqOaoC6T3vnTpWJvdwNSotNCQx7BVddHGFdzSiq6lnd5d8UMHnY993tP
+	 JmhFCusr68St42xsvX0YXpKQTJIpaHh0hzGlGT8s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Babanpreet Singh <bbnpreetsingh@gmail.com>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
+	Peng Fan <peng.fan@nxp.com>,
+	Andrew Davis <afd@ti.com>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0701/1376] w1: ds2482: Fix signedness bug in ds2482_w1_triplet()
-Date: Sat, 12 Sep 2026 08:52:07 +0200
-Message-ID: <20260912065623.169040375@linuxfoundation.org>
+Subject: [PATCH 6.12 0702/1376] remoteproc: core: Drop redundant initialization of ret in rproc_shutdown()
+Date: Sat, 12 Sep 2026 08:52:08 +0200
+Message-ID: <20260912065623.192011424@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,60 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Babanpreet Singh <bbnpreetsingh@gmail.com>
+From: Peng Fan <peng.fan@nxp.com>
 
-[ Upstream commit 4d3721b204f961e905714954ff95633337b768e3 ]
+[ Upstream commit 4531b6bad5af669511c348ad5225d9f697af221b ]
 
-ds2482_wait_1wire_idle() returns the status register value (0..255) on
-success, or a negative value on I2C failure: -1 when selecting the
-status register fails, or a negative errno from i2c_smbus_read_byte().
+The variable ret is immediately assigned the return value of
+mutex_lock_interruptible(), making its prior initialization to zero
+unnecessary. Remove the redundant assignment
 
-ds2482_w1_triplet() feeds that result into "return (status >> 5);"
-without checking for errors, and the function returns u8. For a
-negative status the arithmetic shift keeps the sign and the u8
-truncation fabricates a triplet result whose meaning depends on the
-errno value: -1 and -EIO happen to become 0xff, whose set low bits make
-w1_search() abort, but -ETIMEDOUT (-110 >> 5 = -4) becomes 0xfc -
-"devices responded on both branches, wrote 1" - and -EOPNOTSUPP
-(-95 >> 5 = -3) becomes 0xfd - "only the zero branch responded".
-w1_search() then continues the ROM search with a fabricated direction
-bit instead of aborting, and the corrupted id is either rejected by the
-ROM CRC (existing device missed) or registers a phantom slave.
+No functional changes.
 
-The function already defines an in-band error value: status is
-initialized to (3 << 5), which decodes to 3 (both branch bits set, "no
-device responded") and makes w1_search() terminate the search when
-sending the triplet command fails. Decode a negative status to the same
-value.
-
-Found by smatch:
-drivers/w1/masters/ds2482.c:314 ds2482_w1_triplet() warn: signedness bug returning '(-67108864)'
-
-Fixes: baf12ae29ab4 ("[PATCH] W1: Add the DS2482 I2C-to-w1 bridge driver.")
-Assisted-by: Claude:claude-sonnet-5
-Signed-off-by: Babanpreet Singh <bbnpreetsingh@gmail.com>
-Link: https://patch.msgid.link/20260714041011.7-1-bbnpreetsingh@gmail.com
-Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+Signed-off-by: Peng Fan <peng.fan@nxp.com>
+Acked-by: Andrew Davis <afd@ti.com>
+Link: https://lore.kernel.org/r/20251016-rproc-cleanup-v3-v3-1-774083716e8a@nxp.com
+Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+Stable-dep-of: 2482ca875ef5 ("remoteproc: Allow shutdown of crashed processors")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/w1/masters/ds2482.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/remoteproc/remoteproc_core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/w1/masters/ds2482.c b/drivers/w1/masters/ds2482.c
-index a2ecbb863c57f..a7fc6ec31938e 100644
---- a/drivers/w1/masters/ds2482.c
-+++ b/drivers/w1/masters/ds2482.c
-@@ -309,6 +309,10 @@ static u8 ds2482_w1_triplet(void *data, u8 dbit)
+diff --git a/drivers/remoteproc/remoteproc_core.c b/drivers/remoteproc/remoteproc_core.c
+index b7011eb384a5d..04595ac995632 100644
+--- a/drivers/remoteproc/remoteproc_core.c
++++ b/drivers/remoteproc/remoteproc_core.c
+@@ -1989,7 +1989,7 @@ EXPORT_SYMBOL(rproc_boot);
+ int rproc_shutdown(struct rproc *rproc)
+ {
+ 	struct device *dev = &rproc->dev;
+-	int ret = 0;
++	int ret;
  
- 	mutex_unlock(&pdev->access_lock);
- 
-+	/* On bus error, decode to 3 (no device responded) to abort the search */
-+	if (status < 0)
-+		status = 3 << 5;
-+
- 	/* Decode the status */
- 	return (status >> 5);
- }
+ 	ret = mutex_lock_interruptible(&rproc->lock);
+ 	if (ret) {
 -- 
 2.53.0
 
