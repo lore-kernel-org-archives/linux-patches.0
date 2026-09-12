@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAD2937F313;
-	Sat, 12 Sep 2026 07:59:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0346036E484;
+	Sat, 12 Sep 2026 08:00:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789199999; cv=none; b=trtl9pXy8Jp7ege/e6VRRRPNvP0R/wn0rfJWL5HDLDcBI/PVnzF8wG/+GO49murkMs74pSKe81afZw71E0yNeiX+BSr5y0kIgembzVSrE6MlqXGA824aCgAqvUDt3/T6BcEw63rgGHZ5g2GqpNaNmzSGbfxSl3IAQj1masQosAQ=
+	t=1789200004; cv=none; b=fRhmfveHP4N2Uv8pjq0jcLd6nfbH16keGPp1Z8qr7UUHSeZsn4u8uddbnuYI/VpT+VTi4ZSRv2aRODCLyvwbDI8x27ADAhtxMAqtLrtH0tFBkyYNdAx+uOJSFvWmPwo1pwH4OgEvpmXN+dPuRwPpQSJZOqS3v4lo3ubNeRN+Y5o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789199999; c=relaxed/simple;
-	bh=ELIMzqRBbvS+y/HJHUogMVfmsCL2K6metK/oDWXsMZM=;
+	s=arc-20240116; t=1789200004; c=relaxed/simple;
+	bh=tyvmucMbZySdJwH501vuHSoYkYi2U2j4cMWHd7NW42o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ohp3/3MgJK5Uewc+3IVBWp54Fl5ZPwXfciZ+l3FpoYcw9jfg5nY3yJt1hPPb9ZFapBcKeqADWpgvQ1L0o+6Ct+nS++l/FjGTXobAATRFTKNs1G1NKlCvlUBpIiomLLEOqqrR/3Pjjyd74hD4PACJWVz8WH3LKcioBI9vH+cPS5E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BY7YvlN2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=piYzfbQT36Y9TGPreg9/K4iLt29HAWZ6yKQlFvf+V916SuZhxGIzQhomW2v+fuKnIAmBEoD3k+R4kzSRVbTSaLKzNs7Ue0VFuA1KAD+EflLwGGME8Cu9loTE3h78wQhVUA3uDt6Dg7dV8XtaR22Hrvl2BOcLVcVJimJ9haVFK04=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xUkCqQG4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BY7YvlN2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BE021F000FF;
-	Sat, 12 Sep 2026 07:59:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xUkCqQG4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B06081F000FF;
+	Sat, 12 Sep 2026 08:00:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789199998;
-	bh=cmsrEx71mqQ5c+GFtqYzauADkoyLKZVq0WSnKGowhyA=;
+	s=korg; t=1789200002;
+	bh=h+iq6CGxASXrLfNOmcKhC2pTOxt2lIl/B9CJZWjps4k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BY7YvlN2WiTK+kZOZzVIVq/Ac9lhLB1XUI0vDquHMp8zPxW80kJa5HrL8YZDVZ+Eo
-	 I/BqzEbpPYMtnokmyzYF5pQ6EDqx3RTwdHUz+nhiudl9GWBymc8Py410d7yTh+3/EP
-	 +CNTqEdJuzGuOQ/UhQNUeo0JsBGo4TNt9tL3BWwA=
+	b=xUkCqQG4Amj/+pqaSaL+zArwkli7Fx9TZ+Srt72/4WVGUtp4UCk6iuzMI4jxsww/H
+	 /hidxnwYqNZzB7t3h11vDYVg+8EwP6Ub6Qprkf5a+G+Hf4b0orbOA2ywkohcQ52Ydl
+	 6svsWM2GX4sqVWUPo2kzciE+8yntFqKZrr4oPUJ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Shi <bestswngs@gmail.com>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
+	Brian Masney <bmasney@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0701/1815] fs/ntfs3: reject restart table growth beyond U16_MAX entries
-Date: Sat, 12 Sep 2026 08:40:51 +0200
-Message-ID: <20260912065705.348366090@linuxfoundation.org>
+Subject: [PATCH 7.2 0684/1815] clk: mediatek: mt6735: Unregister PLLs on probe failure
+Date: Sat, 12 Sep 2026 08:40:34 +0200
+Message-ID: <20260912065704.946140452@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,67 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-[ Upstream commit 111f8d74a19d85942ecbb3aba78f6f3c88e59391 ]
+[ Upstream commit 935ad6242c47b37380d0cb7ec366516fe11855b4 ]
 
-During $LogFile replay, log_replay() indexes the transaction table by the
-transact_id taken from the log record header.  check_log_rec() only
-verifies that transact_id is non-zero and properly aligned, not its
-magnitude, so a crafted image can request an arbitrarily large index.
+mtk_clk_register_plls() registers the apmixedsys PLL clocks manually, while
+clk_mt6735_apmixed_remove() unregisters them on driver removal.
 
-alloc_rsttbl_from_idx() grows the table to cover that index via
-extend_rsttbl(), which passes the new entry count to init_rsttbl():
+If devm_of_clk_add_hw_provider() fails after the PLL registration succeeds,
+probe returns the error directly and the remove callback is not run. This
+leaves the registered PLL clocks behind on the probe failure path.
 
-	rt = init_rsttbl(esize, used + add);
+Unregister the PLLs in that failure branch before returning the error.
 
-used + add is computed as u32 but init_rsttbl() takes a u16, and the
-count is stored in struct RESTART_TABLE as a __le16.  When used + add
-exceeds U16_MAX it is truncated, init_rsttbl() allocates a table far
-smaller than the index requires, and alloc_rsttbl_from_idx() then
-dereferences and writes at the original, untruncated offset -- an
-out-of-bounds access past the allocation, reachable by mounting a
-crafted NTFS image.
-
- BUG: KASAN: use-after-free in alloc_rsttbl_from_idx (fs/ntfs3/fslog.c:950)
- Read of size 4 at addr ffff8880327ffff8 by task exploit
-  alloc_rsttbl_from_idx (fs/ntfs3/fslog.c:950)
-  log_replay (fs/ntfs3/fslog.c:4562)
-  ntfs_loadlog_and_replay (fs/ntfs3/fsntfs.c:324)
-  ntfs_fill_super (fs/ntfs3/super.c:1393)
-  get_tree_bdev_flags
-  vfs_get_tree
-  path_mount
-  __x64_sys_mount
-
-A restart table is limited to U16_MAX entries by its __le16 count, so a
-larger growth request is invalid input.  Reject it in extend_rsttbl();
-all callers already handle a NULL return.
-
-Fixes: b46acd6a6a62 ("fs/ntfs3: Add NTFS journal")
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Fixes: 43c04ed79189 ("clk: mediatek: Add drivers for MediaTek MT6735 main clock and reset drivers")
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Reviewed-by: Brian Masney <bmasney@redhat.com>
+Signed-off-by: Brian Masney <bmasney@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/fslog.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/clk/mediatek/clk-mt6735-apmixedsys.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/fs/ntfs3/fslog.c b/fs/ntfs3/fslog.c
-index c759841b74309..1b96ee8208db5 100644
---- a/fs/ntfs3/fslog.c
-+++ b/fs/ntfs3/fslog.c
-@@ -875,6 +875,9 @@ static inline struct RESTART_TABLE *extend_rsttbl(struct RESTART_TABLE *tbl,
- 	u32 used = le16_to_cpu(tbl->used);
- 	struct RESTART_TABLE *rt;
+diff --git a/drivers/clk/mediatek/clk-mt6735-apmixedsys.c b/drivers/clk/mediatek/clk-mt6735-apmixedsys.c
+index 9e30c089a2092..b6eb6a581c31e 100644
+--- a/drivers/clk/mediatek/clk-mt6735-apmixedsys.c
++++ b/drivers/clk/mediatek/clk-mt6735-apmixedsys.c
+@@ -102,9 +102,12 @@ static int clk_mt6735_apmixed_probe(struct platform_device *pdev)
  
-+	if (used + add > U16_MAX)
-+		return NULL;
-+
- 	rt = init_rsttbl(esize, used + add);
- 	if (!rt)
- 		return NULL;
+ 	ret = devm_of_clk_add_hw_provider(&pdev->dev, of_clk_hw_onecell_get,
+ 					  clk_data);
+-	if (ret)
++	if (ret) {
+ 		dev_err(&pdev->dev,
+ 			"Failed to register clock provider: %d\n", ret);
++		mtk_clk_unregister_plls(apmixedsys_plls, ARRAY_SIZE(apmixedsys_plls),
++					clk_data);
++	}
+ 
+ 	return ret;
+ }
 -- 
 2.53.0
 
