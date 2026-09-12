@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0515F372EF0;
-	Sat, 12 Sep 2026 11:53:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0C2447A0CD;
+	Sat, 12 Sep 2026 11:53:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789213997; cv=none; b=dCahUX73N86jEFyHTpLQoIX9y7q3x+a9XznssFkkRKr4SUWDAt5naYrISuSa7Uu6heETJ3PdzWOnjHnQb4Te3iFl4oUWTKtueRXBGETrW3dN84awGzAN8gEyG+FonF5zUBkdQifGQIaw9LHvhgZOR7ZMhxOpUr0cZQbg0rB6F2g=
+	t=1789214001; cv=none; b=lJnBAj30AhWhD2lCBHaYkvfCpZ5e/myCIultYq69om4b66nWe1cc4uC8KFG4RHKL0JoeVWrA/0Cdc81uZel3otMQJ0tz1Yc7Xr/Vu4JS+NUBKyVikjccblp71tSJraX8Ky8yYFerEspWj27+E+XYSJmdln3n3VzuWoZ4TjUCBDg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789213997; c=relaxed/simple;
-	bh=pczjrQSIgJcoHHo24SxABxz1NwLCArKB5aBpqt1uaG0=;
+	s=arc-20240116; t=1789214001; c=relaxed/simple;
+	bh=M4soXHRxpiuBdGlfJT0hLoDgc/KGZswmEtP99nF09iA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FDOFODkwatdYV1mVUHdYwBWfexG2oTEAd8v9AoONJOU3M3dBQNF2bWR2h8gGEHvogpin1S7fAE1ijNlWnMbzD5k7ywJVwDLzOf3d2Ryh4ppazvfYeL4v2WH84q2Xw2AbGGB86tM1bSZdwkXc0DHEqdua+f5JLRBlDqNv5gjKCDg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KQG97Rup; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tntd9bpSL5B2GWAwgVg/cZjh14Z1GE4mgNJXgPVI7Xm3hezHCwal0lNkRuTWNEYDsWOaX2k14xecxAjB7pO1hU+t/jrgNi5nJtvu5hu2E6DCXat6TsJANiqWH41Vsxz2307I50ZDQvYEgYxUo5kcpj3J/IOjtSBQT0pQ45OFrQk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m0UwcdfJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KQG97Rup"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFB4F1F000FF;
-	Sat, 12 Sep 2026 11:53:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m0UwcdfJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3036A1F00893;
+	Sat, 12 Sep 2026 11:53:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789213992;
-	bh=CmwSHNWdyEcBiI5Rkw5fEgS38M0DFug410pwcbvQCME=;
+	s=korg; t=1789213997;
+	bh=xP/D3MuAgXWFX7CjbQa8tj/CLdBxxWqvqF2lE5CxmFA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KQG97RupxppRuivl+G8hNS5F6wvcJTPwJdT8UTyixvxmMh9u4/cRN8hpEusN1OQPR
-	 zCA1wBE/W8uFI+rKOlRH3IKgdcoBatGbEXinKzUoirrFFwxiO/3rHMNBkGHzOB+6F/
-	 BUw9yR4Viaf/YYNEuCKUGcFFmipCwCMrTwzFq58M=
+	b=m0UwcdfJJumuG8x/qtwtK6vdo50CxEmsyfKN7GHDS1rGpAWUV7+P7ra9ugRCa7EyQ
+	 OBKeTQkVsVSq93z68QvsHrEVZLnroNUNGH4hINW3LkRQpoyzdJsj1va86UVZT9Ip08
+	 zrTvxUi0MIvaL5bF8XSthMWYO3bpSv1he7XwppLw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuangpeng Bai <shuangpeng.kernel@gmail.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.12 0192/1376] media: go7007: defer the ALSA v4l2 put until card release
-Date: Sat, 12 Sep 2026 08:43:38 +0200
-Message-ID: <20260912065611.830314467@linuxfoundation.org>
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Sean Young <sean@mess.org>
+Subject: [PATCH 6.12 0183/1376] media: cec: extron-da-hd-4k-plus: add sanity check
+Date: Sat, 12 Sep 2026 08:43:29 +0200
+Message-ID: <20260912065611.630298053@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -50,65 +50,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+From: Hans Verkuil <hverkuil+cisco@kernel.org>
 
-commit 1bd456afeb8a515137e567967069fce6f8fcd23e upstream.
+commit abac9820b26b5cfcb01eb79efe2abdd0ac7e07c3 upstream.
 
-go7007_snd_init() already takes a v4l2_device reference for the ALSA
-side, but go7007_snd_remove() drops it immediately after calling
-snd_card_free_when_closed().
+Add check to prevent overflowing msg.msg[] in case the incoming data
+is malformed.
 
-That is too early when a userspace process still has the capture PCM open.
-The ALSA card and its PCM callbacks remain alive until the last file is
-closed, so the release path can still reach struct go7007 through
-pcm->private_data and call go7007_snd_hw_free() after the V4L2 release path
-has freed the object.
-
-Move the matching v4l2_device_put() to the ALSA card private_free callback
-so the existing ALSA reference covers the whole deferred card lifetime.
-
-Closes: https://lore.kernel.org/r/178144969601.60470.6005237146425573205@gmail.com
-Fixes: d5d3a7cc127d ("[media] go7007: fix unregister/disconnect handling")
-Cc: stable@vger.kernel.org
-Signed-off-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Reviewed-by: Sean Young <sean@mess.org>
+Fixes: 056f2821b631 ("media: cec: extron-da-hd-4k-plus: add the Extron DA HD 4K Plus CEC driver")
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/go7007/snd-go7007.c |   10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/media/cec/usb/extron-da-hd-4k-plus/extron-da-hd-4k-plus.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/media/usb/go7007/snd-go7007.c
-+++ b/drivers/media/usb/go7007/snd-go7007.c
-@@ -195,6 +195,13 @@ static const struct snd_device_ops go700
- 	.dev_free	= go7007_snd_free,
- };
+--- a/drivers/media/cec/usb/extron-da-hd-4k-plus/extron-da-hd-4k-plus.c
++++ b/drivers/media/cec/usb/extron-da-hd-4k-plus/extron-da-hd-4k-plus.c
+@@ -656,7 +656,8 @@ static void extron_process_received(stru
+ 	if (!port || port->disconnected)
+ 		return;
  
-+static void go7007_snd_card_free(struct snd_card *card)
-+{
-+	struct go7007 *go = card->private_data;
-+
-+	v4l2_device_put(&go->v4l2_dev);
-+}
-+
- int go7007_snd_init(struct go7007 *go)
- {
- 	static int dev;
-@@ -245,6 +252,8 @@ int go7007_snd_init(struct go7007 *go)
- 	gosnd->substream = NULL;
- 	go->snd_context = gosnd;
- 	v4l2_device_get(&go->v4l2_dev);
-+	gosnd->card->private_data = go;
-+	gosnd->card->private_free = go7007_snd_card_free;
- 	++dev;
+-	if (len < 5 || (len - 2) % 3 || data[len - 2] != '*')
++	if (len < 5 || ((len - 2) / 3 > sizeof(msg.msg)) ||
++	    (len - 2) % 3 || data[len - 2] != '*')
+ 		goto malformed;
  
- 	return 0;
-@@ -263,7 +272,6 @@ int go7007_snd_remove(struct go7007 *go)
- 
- 	snd_card_disconnect(gosnd->card);
- 	snd_card_free_when_closed(gosnd->card);
--	v4l2_device_put(&go->v4l2_dev);
- 	return 0;
- }
- EXPORT_SYMBOL(go7007_snd_remove);
+ 	while (*data != '*') {
 
 
