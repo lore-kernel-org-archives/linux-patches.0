@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9D1237B407;
-	Sat, 12 Sep 2026 08:12:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 974EA369990;
+	Sat, 12 Sep 2026 08:12:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789200743; cv=none; b=OuCXjZc0sbG48updTDOQp13+NTBZR5c6pHPBBySo/UjdsvAOqmCZJvbRhNvtAZrrXLP18XtTr9LzrSVTgTuFlKUYg6UxFWVQPgQgDRPVgYweTB70X/F5TSf66AQScv6qHGi2jg42vJRs//scsCgKB4HMX0xBGvu0QoowpPCSx2A=
+	t=1789200748; cv=none; b=EP6Oui1gaPXncM3aG/Py/WpmGlygnN27NinVzVl38SkT1ybOA72aQTxyW2Ly5exz7GhOnCBzvVnNcFFPPgRBTMrL5xtTJP1i82yX4NbbBC5SzfWHKoYaBHKR93koVh0s3ekidtJDDrU0R6tUoKt9sKKAv7Eud6jsW230lVr7r9Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789200743; c=relaxed/simple;
-	bh=vGPJk9aZCv+h2jNOfwv8tpS+lFvDWT/6lZBBT50FAX4=;
+	s=arc-20240116; t=1789200748; c=relaxed/simple;
+	bh=7CXqY+F7WsV6OOQWwa3WQiK+Fg2WT4j1YfHLettXh88=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FrQcUHHNCyCSrvFZsfGvAuIBohS+x73VuwNfA0i8W6AvQ9eQIAC8AXGIEdRuQAbKwcAg5mPbkgMMsxSKjL9G3VygHncQjxoR6EANf/gYg4tS/X3VOP3fv6Juc53vH+u0yxFIPpIbuUD9e069pU41U//ZtrejiKYoSmmEGJtxS0Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QzgUXZqG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uF6feffC0cVL9SNd0k8CEDLa9MSTaBYJ+OyQy6bRXmVs3+kxINNSO0GjRO6orUmJHwCHhifnSak1CvSgCH1JxW6Vkm8njz1PX25wu/0Gdw8bH9tHC8gW8ME68T7bcI6uH+S0aOoN6PBegupegeZIRf+Bfn41VfLQ+iKrMhI5oz0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EYqsBlYE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QzgUXZqG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCC7F1F000FF;
-	Sat, 12 Sep 2026 08:12:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EYqsBlYE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED0191F00898;
+	Sat, 12 Sep 2026 08:12:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789200742;
-	bh=fkfGd8ma/S8r/nzWIFDaw6f7RPPtwoZn7vMgi+OiFok=;
+	s=korg; t=1789200747;
+	bh=ZOaYEwgvl1wLAav1EZqz70pf/8YWTb06I4Gz7OkB9n0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QzgUXZqGQqYrvvwohH/PQ9hPxhnEHMlbOpb3yk6UDkoE1u1ho2NLSkFkzeOLasJ+S
-	 Snth25F1z26MYYwSYvAKofpZM/Hu2ZbccoAIyzEWqKLziFryEWeqQxbfm/8G9V/Dg9
-	 IOjtWDYbyIaZrH+kqhjeKTamyo2qml1srHRlkui8=
+	b=EYqsBlYEnPt8Lkpoyn/LKKfUkH0l6zI1meViZz7B4OWwiDRWSynj9GyjEPpHRMG5L
+	 gDCsderHYwB4LWx2iZAkpegIikQbTNDMsU3zucpDRsWBF4v2inPKaMVoLbTZQFtz8P
+	 wdbznggnJqy5eO0R+fPQGeYCF80Omd5F7jtWtG9Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Rosen Penev <rosenp@gmail.com>,
 	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Linus Walleij <linusw@kernel.org>,
 	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0852/1815] powerpc: implement get_direction() in cpm2
-Date: Sat, 12 Sep 2026 08:43:22 +0200
-Message-ID: <20260912065708.921152026@linuxfoundation.org>
+Subject: [PATCH 7.2 0853/1815] powerpc/44x: Set GPIO chip parent
+Date: Sat, 12 Sep 2026 08:43:23 +0200
+Message-ID: <20260912065708.945266310@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,54 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe Leroy (CS GROUP) <chleroy@kernel.org>
+From: Rosen Penev <rosenp@gmail.com>
 
-[ Upstream commit ca16219e9babc874349a6ac307d56523871a9137 ]
+[ Upstream commit b9254d222d0b38cc6f7b73119fad6316f65278be ]
 
-The lack of get_direction() callback in this driver causes GPIOLIB to
-emit a warning. Implement it.
+The PPC4xx GPIO driver stopped assigning an explicit parent
+to the gpio_chip when it moved away from of_mm_gpiochip_add_data().
 
-Fixes: e623c4303ed1 ("gpiolib: sanitize the return value of gpio_chip::get_direction()")
-Signed-off-by: Christophe Leroy (CS GROUP) <chleroy@kernel.org>
-Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Restore that association from the platform device so OF GPIO lookup
+can match phandles to the registered gpiochip.
+
+Tested on: Cisco MX60W. No more probe deferral.
+
+Assisted-by: Codex:GPT-5.5
+Fixes: 1044dbaf2a77 ("powerpc/44x: Change GPIO driver to a proper platform driver")
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
+Reviewed-by: Christophe Leroy (CS GROUP) <chleroy@kernel.org>
+Reviewed-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/c6eb70aa0e1ba6e15f947c827006aa79edace05c.1785318836.git.chleroy@kernel.org
+Link: https://patch.msgid.link/20260517063754.21819-1-rosenp@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/sysdev/cpm_common.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ arch/powerpc/platforms/44x/gpio.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/powerpc/sysdev/cpm_common.c b/arch/powerpc/sysdev/cpm_common.c
-index 07ea605ab0e62..b5d200e3ad684 100644
---- a/arch/powerpc/sysdev/cpm_common.c
-+++ b/arch/powerpc/sysdev/cpm_common.c
-@@ -181,6 +181,18 @@ static int cpm2_gpio32_dir_in(struct gpio_chip *gc, unsigned int gpio)
- 	return 0;
- }
+diff --git a/arch/powerpc/platforms/44x/gpio.c b/arch/powerpc/platforms/44x/gpio.c
+index aea0d913b59d0..4413a94cf7a6a 100644
+--- a/arch/powerpc/platforms/44x/gpio.c
++++ b/arch/powerpc/platforms/44x/gpio.c
+@@ -169,6 +169,7 @@ static int ppc4xx_gpio_probe(struct platform_device *ofdev)
  
-+static int cpm2_gpio32_get_direction(struct gpio_chip *gc, unsigned int gpio)
-+{
-+	struct cpm2_gpio32_chip *cpm2_gc = gpiochip_get_data(gc);
-+	struct cpm2_ioports __iomem *iop = cpm2_gc->regs;
-+	u32 pin_mask = 1 << (31 - gpio);
-+
-+	if (in_be32(&iop->dir) & pin_mask)
-+		return GPIO_LINE_DIRECTION_OUT;
-+
-+	return GPIO_LINE_DIRECTION_IN;
-+}
-+
- int cpm2_gpiochip_add32(struct device *dev)
- {
- 	struct device_node *np = dev->of_node;
-@@ -199,6 +211,7 @@ int cpm2_gpiochip_add32(struct device *dev)
+ 	gc = &chip->gc;
+ 
++	gc->parent = dev;
+ 	gc->base = -1;
  	gc->ngpio = 32;
- 	gc->direction_input = cpm2_gpio32_dir_in;
- 	gc->direction_output = cpm2_gpio32_dir_out;
-+	gc->get_direction = cpm2_gpio32_get_direction;
- 	gc->get = cpm2_gpio32_get;
- 	gc->set = cpm2_gpio32_set;
- 	gc->parent = dev;
+ 	gc->direction_input = ppc4xx_gpio_dir_in;
 -- 
 2.53.0
 
