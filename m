@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 978D83876A7;
-	Sat, 12 Sep 2026 07:45:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54923381EB5;
+	Sat, 12 Sep 2026 07:45:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789199150; cv=none; b=u3FH6hAzkGuyoJ3SAc+AF8cW5nDCzwwR2At27p/hvFGte/MOaNc1izPpZZBsdgBY5fKC54VKPE/PJzZklpbN3Ukr93KbPsq5JS23UdoCrEGqKl0XCgIzmpvskK4NMitqxwNlbdT1qCk0pFix7NeGu3w0ZMd9aWC7nFlBrdRmm1U=
+	t=1789199151; cv=none; b=Jcl1+UhDdLHxnFQKZHXqPEnha1L2uCrt3TWmNQKtHJn1ddGxmeTyc11/mRKXrTDJhjmbGWsOUgGZsJXfp6x4vjJYqOLRPTOKCed1zxccq0Ko8nFBosHUvZcxQWTBTA/zQwGDOP/XZ7fEGfyLeAXQdNUrflIXYyQFQ1okL/6gU8w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789199150; c=relaxed/simple;
-	bh=+9JFEb88etWVw7nlu3ewQdP7j4/2upqIPMd3zmGVP3Y=;
+	s=arc-20240116; t=1789199151; c=relaxed/simple;
+	bh=+CkRAL4bwO3ol+Msc2vgzTddGZmn//S8krZ9P6o05tY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tTKcbJWanyTTy/4pP0xj5wx9+xruhv3aFE1dcB/NHymrBjWZNtvQmB393zA1E6nDuFD/RQ7QJTWuN9vKsdz7+HXi+E6nuwQwrqZFEcBJ42ZgZ40MVQJXnhnFlY6c1Z9AwEQ3nj1yp+jA0tBVV3EGVcSDkfbAQz3tRoWqxg+SAxk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=piTXfUDa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=s1gO2bBa4q0/OpK1xZFoUFF4Cah3FfwALL0EczD3rZHPqBRy7FVvETgFFbOenm4K4n2RQ0J9z/ZBHgtrRff37fzxRIMhKnqWu4PIeYdWp9UWr5YpermmGwejsibS2aLqZwbkdAtnJjjurE92esae/EyAITbvkQ/yoKAPMeNSZoo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mSfM748J; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="piTXfUDa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD8971F000FF;
-	Sat, 12 Sep 2026 07:45:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mSfM748J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D6351F00898;
+	Sat, 12 Sep 2026 07:45:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789199144;
-	bh=EumyAzy+lEpRt5hNz7qoQISpspMv2TUgpCEHArt7ALE=;
+	s=korg; t=1789199149;
+	bh=PfDGyfH2xsM7rUANKvQ00AB0luUiWqNev87ALzbE2pI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=piTXfUDaxKWhEaH3gBGKkUgP7NGUK2KcQuNVtQdu7ioYJHo+DxJnR6GfYhNeeGL25
-	 Jp0mipInLZWEZY4sJLPkucg/8dRqJbU+4tvth3c5ixHNWJWdpnpkO04LF+x9W0TV41
-	 7iz7+FcqJmrMPXHqrLI5OWyrFERO3OIh71wo5MUo=
+	b=mSfM748Jpisa1Vz2oTcvQ4d//fJq+PMEyUEHEGAi5TwXoGULUS24mFVPsUb5KiMYB
+	 nAMQRjvjnQpsM2ro9rfVQSRCarrppL/TGRzvV+CwwQe+5r1cCL2Hjb5On2FkJZHyzY
+	 6I3CGZBvUMbXKuv5bIwPEktiFJqOPmrbYYlu6EtE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abel Vesa <abel.vesa@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Yiyang Chen <chenyy23@mails.tsinghua.edu.cn>,
+	Emil Tsalapatis <emil@etsalapatis.com>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0525/1815] arm64: dts: qcom: glymur: Add CX power domain to GCC
-Date: Sat, 12 Sep 2026 08:37:55 +0200
-Message-ID: <20260912065701.216249893@linuxfoundation.org>
+Subject: [PATCH 7.2 0526/1815] bpf: Reject arena frees below the arena base
+Date: Sat, 12 Sep 2026 08:37:56 +0200
+Message-ID: <20260912065701.237581432@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,39 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abel Vesa <abel.vesa@oss.qualcomm.com>
+From: Yiyang Chen <chenyy23@mails.tsinghua.edu.cn>
 
-[ Upstream commit 2edbea82d8edbddb2a235b8f988f17b86f075476 ]
+[ Upstream commit b5a71cb2db6d84ac0042549dcec266b18429d41e ]
 
-The GCC GDSCs on Glymur are backed by the RPMh CX power domain. Without
-describing that parent domain, consumers of GCC-provided GDSCs can enable
-their local domain without causing the required CX vote to be held.
+bpf_arena_free_pages() accepts scalar arena addresses. The runtime
+masks the address to the low 32 bits and reconstructs a full user
+address from the arena base before returning the range to the arena
+free tree.
 
-Add the CX power-domain reference to the GCC node so votes from GCC GDSC
-consumers can propagate to RPMh CX.
+When the scalar value is below the low 32 bits of the arena base,
+full_uaddr falls below user_vm_start. The existing upper-end clipping
+then turns this into an out-of-range free-tree offset. A later
+allocation can reuse that offset and return an address below the arena
+mapping.
 
-Fixes: 41b6e8db400c ("arm64: dts: qcom: Introduce Glymur base dtsi")
-Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260715-glymur-fix-gcc-cx-scaling-v3-3-72eb5adad156@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Reject such frees before computing the clipped range.
+
+Fixes: 317460317a02a ("bpf: Introduce bpf_arena.")
+Signed-off-by: Yiyang Chen <chenyy23@mails.tsinghua.edu.cn>
+Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
+Link: https://lore.kernel.org/bpf/20260717-c10-031-public-bpf-next-v2-b4-v2-1-54b555443a7c@mails.tsinghua.edu.cn
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/glymur.dtsi | 1 +
- 1 file changed, 1 insertion(+)
+ kernel/bpf/arena.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/glymur.dtsi b/arch/arm64/boot/dts/qcom/glymur.dtsi
-index 02bd6dcd99579..009424594c947 100644
---- a/arch/arm64/boot/dts/qcom/glymur.dtsi
-+++ b/arch/arm64/boot/dts/qcom/glymur.dtsi
-@@ -797,6 +797,7 @@ gcc: clock-controller@100000 {
- 			#clock-cells = <1>;
- 			#reset-cells = <1>;
- 			#power-domain-cells = <1>;
-+			power-domains = <&rpmhpd RPMHPD_CX>;
- 		};
- 
- 		gpi_dma2: dma-controller@800000 {
+diff --git a/kernel/bpf/arena.c b/kernel/bpf/arena.c
+index 80b7b8a694464..97a5d8d212955 100644
+--- a/kernel/bpf/arena.c
++++ b/kernel/bpf/arena.c
+@@ -853,6 +853,8 @@ static void arena_free_pages(struct bpf_arena *arena, long uaddr, long page_cnt,
+ 	uaddr &= PAGE_MASK;
+ 	kaddr = bpf_arena_get_kern_vm_start(arena) + uaddr;
+ 	full_uaddr = clear_lo32(arena->user_vm_start) + uaddr;
++	if (full_uaddr < arena->user_vm_start)
++		return;
+ 	uaddr_end = min(arena->user_vm_end, full_uaddr + (page_cnt << PAGE_SHIFT));
+ 	if (full_uaddr >= uaddr_end)
+ 		return;
 -- 
 2.53.0
 
