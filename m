@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8FE5388862;
-	Sat, 12 Sep 2026 15:44:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E2BC25A640;
+	Sat, 12 Sep 2026 15:44:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789227851; cv=none; b=NZSAGwWKZGEu50G32ph8KMi/ktrhRu6GMC90FbhwRCYqyOZxhiZOMvMcrLCwUl+U/F9fxadMYhgth6k2HX4XP81LwKaWAmRFpHP4/1/khJnPW3QnT4apPPwUnq+lAtKAz1vrX3zKBfqxx3vE/c8ke4jz/c/yyowgGYO8XlWhRC8=
+	t=1789227852; cv=none; b=sSemFVlnXKPIA88u/fo8pdbDr6JFmWdjZakd0Np58DKc4OSpvLNWy2Lm7PkHbdurp5teIvgBz6flz5rln9RxpGzzetE1Ok8xdewH+CbZfEk2cDH8FgA5lOR+kra98jEW/DWGmQiTaj//UITDCP5m9aJc5bbMq+Tl8/F/Dn1SFvk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789227851; c=relaxed/simple;
-	bh=tRrEXdBPSY25vXRIuU1sP+vCkRw3eCLHbMFviaqBO9o=;
+	s=arc-20240116; t=1789227852; c=relaxed/simple;
+	bh=Xbs4jCFAvFuFSH4UR3ECp3KECMEmgAuz+VHr7dnCpeQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fAlX1GACr6TEfT/DFVkYFQUzOElPY8tWec6x8UncKQf8aV49F28lgaNPtSgpkWS2mAo6B+3NeB9BlaWN75sZpzE/A7h+dWmXPVpp1zF6taEJq5yUbVleUmT7rSVMweiNntmJ8WsX/5iupZWman3ADPdRBOURlRwYcY0kTvJ87J0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RFecVIp5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qnmIAvxOIsVzjNeMHs3XBQ2Z9ieJsdKoZq7VKEZSOBkbmOITH7EXAxsXDxtVROjmNJA9LZkOgy/rJScasExSbCfsP9ZByOBGH6d+nPhKEQbg8fatm7j7DGmN2xiYAwYBTPH/z3zvMfoKmyYz4+GRHuGxcrAzgF6YTISZKmxQuJg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GDKSgwxK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RFecVIp5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D61FA1F000FF;
-	Sat, 12 Sep 2026 15:44:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GDKSgwxK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76A711F00893;
+	Sat, 12 Sep 2026 15:44:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789227846;
-	bh=ldhgMgQVxsK00cAfkxeo1stg1E6zBN098GH+xBj9EZI=;
+	s=korg; t=1789227851;
+	bh=1JgjsQS7PE+9LENW1QHS7PGURivhbAyMRk+UwE6ySws=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RFecVIp5jhcIhg8tibdacYSVPuHlDm6IxwhwVd0R+MeDFOGdOWVf4Uzq6wdi5Jakk
-	 5q7yfLv79BmMCo6T7tCes3QAF6hUYzx4Z5xAE+ViM8jRMbuvdDRQILaH3oWPCxCojC
-	 CLJLpj55Z4x9zRry0TbtTYMCdxivDxooOe+rxZxA=
+	b=GDKSgwxK2rdNaK/SyRyjteTp5qeVoxJW1ei1BXJBCwwMFUVDEAQrMzgRh28rKJvIl
+	 YyD8oq3NI9IsM+S7gx7R0LeIWa7nwIpMqgLZ+tqHcbiCY71bVJovmHCSrLv5ixCxDn
+	 ClKF9zuwn75p2siFykGL6WxF6KaXTISngfczdXC4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Alexander Martyniuk <alexevgmart@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0265/1191] tracing/mmiotrace: Remove reference to unused per CPU data pointer
-Date: Sat, 12 Sep 2026 08:49:53 +0200
-Message-ID: <20260912065554.173513453@linuxfoundation.org>
+	Stanislaw Gruszka <stf_xl@wp.pl>,
+	Ping-Ke Shih <pkshih@realtek.com>,
+	stable@kernel.org
+Subject: [PATCH 6.1 0239/1191] wifi: rtl818x: initialize eeprom_93cx6 struct to zero
+Date: Sat, 12 Sep 2026 08:49:27 +0200
+Message-ID: <20260912065553.580019328@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -55,67 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt <rostedt@goodmis.org>
+From: Stanislaw Gruszka <stf_xl@wp.pl>
 
-commit 6936298393d8d8bc3cec6b704f6a774162cf9bd3 upstream.
+commit 799b5f45cb8194ebd06c9c89e0afdad5bedd2cc5 upstream.
 
-The mmiotracer referenced the per CPU array_buffer->data descriptor but
-never actually used it. Remove the references to it.
+Commit 7738a7ab9d12 ("misc: eeprom: eeprom_93cx6: Add quirk for extra
+read clock cycle") added extra 'quirk' field to struct eeprom_93cx6.
 
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Link: https://lore.kernel.org/20250505212234.696945463@goodmis.org
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Alexander Martyniuk <alexevgmart@gmail.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Many existing users of eeprom_93cx6, including rtl818x drivers, allocate
+the structure on the stack without initializing all fields. As a result,
+the added quirk field has an undefined value and can randomly cause
+reading wrong data from the EEPROM.
+
+Fix by initializing the structures with {}.
+
+Fixes: 7738a7ab9d12 ("misc: eeprom: eeprom_93cx6: Add quirk for extra read clock cycle")
+Cc: stable@kernel.org # v6.13+
+Signed-off-by: Stanislaw Gruszka <stf_xl@wp.pl>
+Reviewed-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20260723110640.8588-1-stf_xl@wp.pl
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_mmiotrace.c | 12 ++----------
- 1 file changed, 2 insertions(+), 10 deletions(-)
+ drivers/net/wireless/realtek/rtl818x/rtl8180/dev.c |    2 +-
+ drivers/net/wireless/realtek/rtl818x/rtl8187/dev.c |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/trace/trace_mmiotrace.c b/kernel/trace/trace_mmiotrace.c
-index c523ce5aa4958..74f378fca5187 100644
---- a/kernel/trace/trace_mmiotrace.c
-+++ b/kernel/trace/trace_mmiotrace.c
-@@ -292,7 +292,6 @@ __init static int init_mmio_trace(void)
- device_initcall(init_mmio_trace);
+--- a/drivers/net/wireless/realtek/rtl818x/rtl8180/dev.c
++++ b/drivers/net/wireless/realtek/rtl818x/rtl8180/dev.c
+@@ -1647,7 +1647,7 @@ static void rtl8180_eeprom_register_writ
  
- static void __trace_mmiotrace_rw(struct trace_array *tr,
--				struct trace_array_cpu *data,
- 				struct mmiotrace_rw *rw)
+ static void rtl8180_eeprom_read(struct rtl8180_priv *priv)
  {
- 	struct trace_event_call *call = &event_mmiotrace_rw;
-@@ -318,12 +317,10 @@ static void __trace_mmiotrace_rw(struct trace_array *tr,
- void mmio_trace_rw(struct mmiotrace_rw *rw)
- {
- 	struct trace_array *tr = mmio_trace_array;
--	struct trace_array_cpu *data = per_cpu_ptr(tr->array_buffer.data, smp_processor_id());
--	__trace_mmiotrace_rw(tr, data, rw);
-+	__trace_mmiotrace_rw(tr, rw);
- }
- 
- static void __trace_mmiotrace_map(struct trace_array *tr,
--				struct trace_array_cpu *data,
- 				struct mmiotrace_map *map)
- {
- 	struct trace_event_call *call = &event_mmiotrace_map;
-@@ -349,12 +346,7 @@ static void __trace_mmiotrace_map(struct trace_array *tr,
- void mmio_trace_mapping(struct mmiotrace_map *map)
- {
- 	struct trace_array *tr = mmio_trace_array;
--	struct trace_array_cpu *data;
--
--	preempt_disable();
--	data = per_cpu_ptr(tr->array_buffer.data, smp_processor_id());
--	__trace_mmiotrace_map(tr, data, map);
--	preempt_enable();
-+	__trace_mmiotrace_map(tr, map);
- }
- 
- int mmio_trace_printk(const char *fmt, va_list args)
--- 
-2.53.0
-
+-	struct eeprom_93cx6 eeprom;
++	struct eeprom_93cx6 eeprom = {};
+ 	int eeprom_cck_table_adr;
+ 	u16 eeprom_val;
+ 	int i;
+--- a/drivers/net/wireless/realtek/rtl818x/rtl8187/dev.c
++++ b/drivers/net/wireless/realtek/rtl818x/rtl8187/dev.c
+@@ -1440,7 +1440,7 @@ static int rtl8187_probe(struct usb_inte
+ 	struct usb_device *udev = interface_to_usbdev(intf);
+ 	struct ieee80211_hw *dev;
+ 	struct rtl8187_priv *priv;
+-	struct eeprom_93cx6 eeprom;
++	struct eeprom_93cx6 eeprom = {};
+ 	struct ieee80211_channel *channel;
+ 	const char *chip_name;
+ 	u16 txpwr, reg;
 
 
