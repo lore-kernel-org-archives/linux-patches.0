@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 411733264D4;
-	Sat, 12 Sep 2026 15:09:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAB1D34E75D;
+	Sat, 12 Sep 2026 15:09:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789225745; cv=none; b=QE5ovKHwz3+I2L+0V6rtejCEfuvY3I9uw5UDK4nTMTF47lrnOanL+1RfYWQvUBF+VXmTfe24xtwwCHD8wvXqRxsqJsE26x93VPMB9AMXTfGm9BUPBVkqAFhZoK2sLIXw4phbjfRSGl7aij28MrsWPSVXmHaD4Z+Hd5IRdH0uT4U=
+	t=1789225753; cv=none; b=WB/DeFELS56E4QM+ef3GoOZBoGrwtiO08+d3rfY+7UnFuU2ftRDFLunL7kCZdnmBhMEgA8nY/E3QIGPOCxavhagU1g+v4AyrYAGvd54ORkyn3rqpzbawZ5a6XgpkLyBEkBNmHn17KgCKyUrfVH7q0mEYvkhFqn5IFU+/51TaDm0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789225745; c=relaxed/simple;
-	bh=mH6ddqU90nlNUTSPmZ1Ro939d4cns7wofUcmrX9TaNo=;
+	s=arc-20240116; t=1789225753; c=relaxed/simple;
+	bh=3W3vr+KDLBTpo9n9wjJG8EJNt6irtQNzy3N6JTHnzms=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eKTVfqaQAemFbGd/hFI6xZxMkb978/fKnyR31MuK7sqnaJThiH9pDe/MylvvokiJE1VUjIsb17OHnwnpBlE6OIhAtoeNLMgNJd+lJYLYk4tETE8lCnYm6hAFuH/MdUvfcgu3gqAlgypRVjtC85JAVjIfJRW+cO7hfD+ORYit/30=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VMWmdFCb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=O6vIxqaXG1iEEc7LfW8UzWte+ThcdJSRCrcaOjjkI0wcxgMrTKSk45VZ/lBUn3GZ3RUHPb0eP+Wh4wtAOMpzvy5LArwDuLhlAOOoOCgGBImXU1RK1aq/GKZ/aj2vw29dAD0jWGkk0dBoWURyUgtD08cxFktHD9au0cF0g+9xRG4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V45FBjLl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VMWmdFCb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13F451F000FF;
-	Sat, 12 Sep 2026 15:09:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V45FBjLl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B5971F000FF;
+	Sat, 12 Sep 2026 15:09:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789225744;
-	bh=h6+lPlnokLlZ6Tma95NLB/aRY0HP/Ey5m47BJxkyKvs=;
+	s=korg; t=1789225749;
+	bh=+saobakuAcSO1nJpE5+g+WFZrtKxFhB6qB9aTmP3VBs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VMWmdFCbklUrwF4lJf3YxUmhN5jMIz3Si1+xlYVQ2LeCf/iPq+qDPLQfADA8FZSV+
-	 VRFYu3CUaadHeA82BAwu4SveERpFwSW+G4tsdRZkaBvpxboj4fmuRe9v0PHqelFMnB
-	 sTwvTz0bts7msWM8MRFU6+uBk10kA1iTz53/myIw=
+	b=V45FBjLlPEyrV1OIXSmD9wc8+Wg85B3/Q3M+iVBNTUd9mZH+J7jpFCY1MS+ArPY7o
+	 gY8FO/HPxjZyqVKwAph2LFMzSc89A08p2t2xJeq2OpefEuoGwNYnbgZ6Qw7AeZr0Ta
+	 1QStF/AEAkJ2pE5my3ExRScjP3X8QbkTpaeKiIUo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Agatha Isabelle Moreira <code@agatha.dev>,
-	Arnaud Bonnet <abo@medichon.fr>,
+	Ruoyu Wang <ruoyuw560@gmail.com>,
 	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1259/1424] nfs: refactor pNFS functions using clear_and_wake_up_bit
-Date: Sat, 12 Sep 2026 09:01:31 +0200
-Message-ID: <20260912065635.473918838@linuxfoundation.org>
+Subject: [PATCH 6.6 1260/1424] NFSv4: remove callback IDR entry on client allocation failure
+Date: Sat, 12 Sep 2026 09:01:32 +0200
+Message-ID: <20260912065635.496402406@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -52,134 +51,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnaud Bonnet <abo@medichon.fr>
+From: Ruoyu Wang <ruoyuw560@gmail.com>
 
-[ Upstream commit 187bfc974eefa9e5d88a0b4ee9d08ae8fe485df4 ]
+[ Upstream commit d05c2007b3d84ccba11dc6e9cb3202768cc72f14 ]
 
-Commit 8236b0ae31c83 ("bdi: wake up concurrent wb_shutdown() callers.")
-introduces the clear_and_wake_up_bit() helper as a wrapper for the
-common clear -> barrier -> wake up bitops sequence.
+nfs4_alloc_client() allocates an NFSv4.0 callback identifier before it
+finishes setting up the client. If any later initialization step fails,
+the error path frees the nfs_client directly with nfs_free_client(). That
+bypasses nfs_put_client(), which is where the callback IDR entry is
+removed during normal teardown.
 
-The file pnfs.c has several helpers with identical contents. Thus they
-are replaced with the more recent clean_and_wake_up_bit() global helper
-which describes accurately its effects at the call and still specifies
-the cleared bit. This also homogenizes the code with other subsystems.
+A failed allocation can therefore leave cb_ident_idr pointing at a freed
+nfs_client. A later NFSv4.0 callback lookup by cb_ident would find the
+stale pointer and take a reference to it.
 
-Since the helpers are no longer used after this, they can be safely
-removed.
+Make the callback IDR removal helper callable by the allocation failure
+path, and remove the callback identifier before freeing the client.
 
-Suggested-by: Agatha Isabelle Moreira <code@agatha.dev>
-Link: https://kernelnewbies.org/Beginner%20Cleanup%20and%20Refactor%20Tasks%20by%20Agatha%20Isabelle%20Moreira#task_007
-Fixes: d67ae825a59d ("pnfs/flexfiles: Add the FlexFile Layout Driver")
-Signed-off-by: Arnaud Bonnet <abo@medichon.fr>
+This was found by a local static-analysis checker for publish-before-free
+lifetime bugs and confirmed by manual inspection.
+
+Fixes: f4eecd5da342 ("NFS implement v4.0 callback_ident")
+Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
 Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/pnfs.c | 35 ++++++++++-------------------------
- 1 file changed, 10 insertions(+), 25 deletions(-)
+ fs/nfs/client.c     | 14 +++++++++++++-
+ fs/nfs/internal.h   |  1 +
+ fs/nfs/nfs4client.c |  1 +
+ 3 files changed, 15 insertions(+), 1 deletion(-)
 
-diff --git a/fs/nfs/pnfs.c b/fs/nfs/pnfs.c
-index 2e19945dbb7cb..84b6b2f99026e 100644
---- a/fs/nfs/pnfs.c
-+++ b/fs/nfs/pnfs.c
-@@ -1967,15 +1967,6 @@ static bool pnfs_is_first_layoutget(struct pnfs_layout_hdr *lo)
- 	return test_bit(NFS_LAYOUT_FIRST_LAYOUTGET, &lo->plh_flags);
- }
- 
--static void pnfs_clear_first_layoutget(struct pnfs_layout_hdr *lo)
--{
--	unsigned long *bitlock = &lo->plh_flags;
--
--	clear_bit_unlock(NFS_LAYOUT_FIRST_LAYOUTGET, bitlock);
--	smp_mb__after_atomic();
--	wake_up_bit(bitlock, NFS_LAYOUT_FIRST_LAYOUTGET);
--}
--
- static void _add_to_server_list(struct pnfs_layout_hdr *lo,
- 				struct nfs_server *server)
+diff --git a/fs/nfs/client.c b/fs/nfs/client.c
+index 4350388d40cd1..dfc6f6f6337b2 100644
+--- a/fs/nfs/client.c
++++ b/fs/nfs/client.c
+@@ -208,9 +208,21 @@ static void nfs_cb_idr_remove_locked(struct nfs_client *clp)
  {
-@@ -2149,7 +2140,8 @@ pnfs_update_layout(struct inode *ino,
- 					iomode, lo, lseg,
- 					PNFS_UPDATE_LAYOUT_INVALID_OPEN);
- 			nfs4_schedule_stateid_recovery(server, ctx->state);
--			pnfs_clear_first_layoutget(lo);
-+			clear_and_wake_up_bit(NFS_LAYOUT_FIRST_LAYOUTGET,
-+				&lo->plh_flags);
- 			pnfs_put_layout_hdr(lo);
- 			goto lookup_again;
- 		}
-@@ -2216,7 +2208,8 @@ pnfs_update_layout(struct inode *ino,
- 		}
- 		if (lseg) {
- 			if (first)
--				pnfs_clear_first_layoutget(lo);
-+				clear_and_wake_up_bit(NFS_LAYOUT_FIRST_LAYOUTGET,
-+					&lo->plh_flags);
- 			trace_pnfs_update_layout(ino, pos, count,
- 				iomode, lo, lseg, PNFS_UPDATE_LAYOUT_RETRY);
- 			pnfs_put_layout_hdr(lo);
-@@ -2228,7 +2221,7 @@ pnfs_update_layout(struct inode *ino,
+ 	struct nfs_net *nn = net_generic(clp->cl_net, nfs_net_id);
  
- out_put_layout_hdr:
- 	if (first)
--		pnfs_clear_first_layoutget(lo);
-+		clear_and_wake_up_bit(NFS_LAYOUT_FIRST_LAYOUTGET, &lo->plh_flags);
- 	trace_pnfs_update_layout(ino, pos, count, iomode, lo, lseg,
- 				 PNFS_UPDATE_LAYOUT_EXIT);
- 	pnfs_put_layout_hdr(lo);
-@@ -2320,7 +2313,7 @@ static void _lgopen_prepare_attached(struct nfs4_opendata *data,
- 	lgp = pnfs_alloc_init_layoutget_args(ino, ctx, &current_stateid, &rng,
- 					     nfs_io_gfp_mask());
- 	if (!lgp) {
--		pnfs_clear_first_layoutget(lo);
-+		clear_and_wake_up_bit(NFS_LAYOUT_FIRST_LAYOUTGET, &lo->plh_flags);
- 		nfs_layoutget_end(lo);
- 		pnfs_put_layout_hdr(lo);
- 		return;
-@@ -2424,7 +2417,8 @@ void nfs4_lgopen_release(struct nfs4_layoutget *lgp)
+-	if (clp->cl_cb_ident)
++	if (clp->cl_cb_ident) {
+ 		idr_remove(&nn->cb_ident_idr, clp->cl_cb_ident);
++		clp->cl_cb_ident = 0;
++	}
++}
++
++void nfs_cb_idr_remove(struct nfs_client *clp)
++{
++	struct nfs_net *nn = net_generic(clp->cl_net, nfs_net_id);
++
++	spin_lock(&nn->nfs_client_lock);
++	nfs_cb_idr_remove_locked(clp);
++	spin_unlock(&nn->nfs_client_lock);
+ }
++EXPORT_SYMBOL_GPL(nfs_cb_idr_remove);
+ 
+ static void pnfs_init_server(struct nfs_server *server)
  {
- 	if (lgp != NULL) {
- 		if (lgp->lo) {
--			pnfs_clear_first_layoutget(lgp->lo);
-+			clear_and_wake_up_bit(NFS_LAYOUT_FIRST_LAYOUTGET,
-+				&lgp->lo->plh_flags);
- 			nfs_layoutget_end(lgp->lo);
- 		}
- 		pnfs_layoutget_free(lgp);
-@@ -3146,15 +3140,6 @@ pnfs_generic_pg_readpages(struct nfs_pageio_descriptor *desc)
- }
- EXPORT_SYMBOL_GPL(pnfs_generic_pg_readpages);
+diff --git a/fs/nfs/internal.h b/fs/nfs/internal.h
+index 1ab81d639d5c3..2290433451ce9 100644
+--- a/fs/nfs/internal.h
++++ b/fs/nfs/internal.h
+@@ -218,6 +218,7 @@ void nfs_server_copy_userdata(struct nfs_server *, struct nfs_server *);
  
--static void pnfs_clear_layoutcommitting(struct inode *inode)
--{
--	unsigned long *bitlock = &NFS_I(inode)->flags;
--
--	clear_bit_unlock(NFS_INO_LAYOUTCOMMITTING, bitlock);
--	smp_mb__after_atomic();
--	wake_up_bit(bitlock, NFS_INO_LAYOUTCOMMITTING);
--}
--
- /*
-  * There can be multiple RW segments.
-  */
-@@ -3179,7 +3164,7 @@ static void pnfs_list_write_lseg_done(struct inode *inode, struct list_head *lis
- 		pnfs_put_lseg(lseg);
- 	}
+ extern void nfs_put_client(struct nfs_client *);
+ extern void nfs_free_client(struct nfs_client *);
++void nfs_cb_idr_remove(struct nfs_client *clp);
+ extern struct nfs_client *nfs4_find_client_ident(struct net *, int);
+ extern struct nfs_client *
+ nfs4_find_client_sessionid(struct net *, const struct sockaddr *,
+diff --git a/fs/nfs/nfs4client.c b/fs/nfs/nfs4client.c
+index 3f31d05e87ae1..9311944a47f58 100644
+--- a/fs/nfs/nfs4client.c
++++ b/fs/nfs/nfs4client.c
+@@ -270,6 +270,7 @@ struct nfs_client *nfs4_alloc_client(const struct nfs_client_initdata *cl_init)
+ 	return clp;
  
--	pnfs_clear_layoutcommitting(inode);
-+	clear_and_wake_up_bit(NFS_INO_LAYOUTCOMMITTING, &NFS_I(inode)->flags);
+ error:
++	nfs_cb_idr_remove(clp);
+ 	nfs_free_client(clp);
+ 	return ERR_PTR(err);
  }
- 
- void pnfs_set_lo_fail(struct pnfs_layout_segment *lseg)
-@@ -3319,7 +3304,7 @@ pnfs_layoutcommit_inode(struct inode *inode, bool sync)
- 	spin_unlock(&inode->i_lock);
- 	kfree(data);
- clear_layoutcommitting:
--	pnfs_clear_layoutcommitting(inode);
-+	clear_and_wake_up_bit(NFS_INO_LAYOUTCOMMITTING, &NFS_I(inode)->flags);
- 	goto out;
- }
- EXPORT_SYMBOL_GPL(pnfs_layoutcommit_inode);
 -- 
 2.53.0
 
