@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BB9A2DBF75;
-	Sat, 12 Sep 2026 14:05:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9189622A7F6;
+	Sat, 12 Sep 2026 14:05:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789221944; cv=none; b=ton/7J7xUXFSyng/deGRlDlzXK+JnCtIWIoMTR65o3dktpwO98pKkUcfFf2MJ/Azh83AVGgXn4GefgHB/lvhvfs62ZaE7kJwVQxPTghanjUizCjO485LZsDkfLtJiSYeXZsWtCWBpSX4jRIwNqpW784jN79na8y4KyjD2wdUnkQ=
+	t=1789221949; cv=none; b=s6BK6GzIBj3MYH7ryiWNfAYl4iYiV8lAnB2VPtnjHaPGGhCCpbhCR8i/+JJT70u4rKSmSExgF7IG4iGM4LRgPdO0N2/3Qbb9K0bOktL5VP0mxN9DKSL40S6LySHPxR5Eyo5kVLUit/yrkKWkAwVd6g/Cy7VniSLUzBD6H+//C3Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789221944; c=relaxed/simple;
-	bh=Ysf9idulYNhKCqxVu8JG42kShwHI5/5KJ+/M9TSdKbg=;
+	s=arc-20240116; t=1789221949; c=relaxed/simple;
+	bh=wV7nhu74SQpvh31/GGYhthJGOuEhhcuAbIiTdRRh+pE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M5K0scM8K9df7wMV+vI95c06ic+D2Jk/SzACXYXI5Hpz1CQqgdc9aIqQLWKy5gykSHeBoCPO76P+jrLVaUHS2ejJjgOP44BuWeI3kKh/ZBk9dtckfzsUOP9Z7zUUHGOWx+bLhjLtlkSNOKqt2+4hGGsEjgl5Kw4WbWsbd9oEWQY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C4Y/yyhq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Pgzzz0yTLNOJfJ6khS0/WqcXq6nQAg8Q4NgFhsFt/QcihIqBvhBFfi/tOxgAbzVfiAEnc/Lq16oh9w9RE/KDjx+gUP+KifHVJMexEhqp5VrCBvc/6lfewlC3LM5UKq1AlvkkL6xDR0FZ9pqWG7Xw0qt6oZN5YTBnwDh7ymUA+JQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e4JQZb/f; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C4Y/yyhq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 123EE1F000FF;
-	Sat, 12 Sep 2026 14:05:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e4JQZb/f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49D1A1F000FF;
+	Sat, 12 Sep 2026 14:05:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789221943;
-	bh=Wle8U1CMoEJyLfNv4Fw2bmpriF5ZAlaaL5GEnBU9r4w=;
+	s=korg; t=1789221948;
+	bh=Py8CRtMd/eW1ePJfg0C5NwzZJSqdnUv15A09nUBiFFs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=C4Y/yyhqHOjGONd0cufyifRYg4/tkfpCShDmrIatjKkc2nVWtn1FZtht8afmKl6Eu
-	 2234N+cIkz0eWr1ZAy4WT308FWEORU0fsr2r/tALrc4vUUyaJepcssI+iZSIgJcnaa
-	 T1jec6xMGDLaoRsZF+beKoTGlmYajo3RHkp78LZY=
+	b=e4JQZb/fdqJTn5S9eBxItA9DKrn+oBhLZWobJmUjQzdq9epzP9FkqM26ocd1pCWuW
+	 +fNudA911w/ArWfFZctulPfE3TF8g9Ly5psIxTvBOeFqE/1qsRbI0kmqHzPbjxGsYZ
+	 Km8DfSmYujUu42d6164C26kqJAUo4DB1LpFkyaHo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonas Karlman <jonas@kwiboo.se>,
+	Yi Ding <yi.s.ding@gmail.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.6 0442/1424] media: cec: core: Fix kmemleak due to missed rc_free_device() call
-Date: Sat, 12 Sep 2026 08:47:54 +0200
-Message-ID: <20260912065617.183581334@linuxfoundation.org>
+Subject: [PATCH 6.6 0443/1424] media: cec: meson: ao-cec-g12a: name the CEC core regmap to avoid debugfs clash
+Date: Sat, 12 Sep 2026 08:47:55 +0200
+Message-ID: <20260912065617.206128537@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -50,65 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonas Karlman <jonas@kwiboo.se>
+From: Yi Ding <yi.s.ding@gmail.com>
 
-commit a24ba0653f7154e671dc8d2bf64682ab2d042792 upstream.
+commit 172c5a7d81deb922ddedd1bc920751c7fed6c43c upstream.
 
-The commit dccc0c3ddf8f ("media: rc: fix race between unregister and
-urb/irq callbacks") removed the implicit call to rc_free_device() from
-rc_unregister_device(). However, the commit missed to remove the NULL
-assignment of adap->rc that is now causing rc_free_device() to never be
-called on an allocated rc device.
+The driver registers two regmaps on the same platform device: an MMIO
+regmap for the AO CEC registers, and an indirect regmap (using
+reg_read()/reg_write() callbacks) for the CEC controller core registers.
+Neither regmap_config sets a .name, so both default their debugfs
+directory to the device name and collide:
 
-kmemleak reports following after e.g. dw-hdmi unbind:
+  debugfs: 'ff800280.cec' already exists in 'regmap'
 
-unreferenced object 0xffff00010ac10000 (size 4096):
-  comm "kworker/u16:1", pid 39, jiffies 4294897739
-  hex dump (first 32 bytes):
-    20 23 4b 0a 01 00 ff ff 08 00 c1 0a 01 00 ff ff   #K.............
-    08 00 c1 0a 01 00 ff ff 00 00 00 00 00 00 00 00  ................
-  backtrace (crc e11baccc):
-    kmemleak_alloc+0x38/0x44
-    __kmalloc_cache_noprof+0x4a8/0x5e0
-    rc_allocate_device+0x48/0x2a0
-    cec_allocate_adapter+0x3ac/0x800
-    dw_hdmi_cec_probe+0x264/0x634
-    platform_probe+0xc0/0x188
-    really_probe+0x4a4/0x8e0
-    __driver_probe_device+0x2f8/0x440
-    driver_probe_device+0x60/0x160
-    __device_attach_driver+0x1a0/0x2a0
-    bus_for_each_drv+0x100/0x1a0
-    __device_attach+0x174/0x350
-    device_initial_probe+0x90/0xb0
-    bus_probe_device+0x4c/0x120
-    device_add+0xdec/0x116c
-    platform_device_add+0x354/0x598
+Because of the clash the second regmap's debugfs directory fails to
+register, so its registers can no longer be inspected via debugfs.
 
-Remove the assignment of adap->rc to NULL to let cec_delete_adapter()
-free the allocated rc device after last user of the cec device exits to
-fix the kmemleak.
+Give the indirect CEC core regmap a distinct name. The two debugfs
+directories then become "<dev>.cec" and "<dev>.cec-core". This only
+affects debugfs naming; register access is unchanged.
 
-Fixes: dccc0c3ddf8f ("media: rc: fix race between unregister and urb/irq callbacks")
+Tested on an ODROID-N2 (Amlogic S922X): the warning is gone and both
+/sys/kernel/debug/regmap/ff800280.cec and ff800280.cec-core are present.
+
+Fixes: b7778c46683c ("media: platform: meson: Add Amlogic Meson G12A AO CEC Controller driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jonas Karlman <jonas@kwiboo.se>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Yi Ding <yi.s.ding@gmail.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/cec/core/cec-core.c |    2 --
- 1 file changed, 2 deletions(-)
+ drivers/media/cec/platform/meson/ao-cec-g12a.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/media/cec/core/cec-core.c
-+++ b/drivers/media/cec/core/cec-core.c
-@@ -399,9 +399,7 @@ void cec_unregister_adapter(struct cec_a
- 		return;
+--- a/drivers/media/cec/platform/meson/ao-cec-g12a.c
++++ b/drivers/media/cec/platform/meson/ao-cec-g12a.c
+@@ -405,6 +405,7 @@ static int meson_ao_cec_g12a_write(void
+ }
  
- #ifdef CONFIG_MEDIA_CEC_RC
--	/* Note: rc_unregister also calls rc_free */
- 	rc_unregister_device(adap->rc);
--	adap->rc = NULL;
- #endif
- 	debugfs_remove_recursive(adap->cec_dir);
- #ifdef CONFIG_CEC_NOTIFIER
+ static const struct regmap_config meson_ao_cec_g12a_cec_regmap_conf = {
++	.name = "core",
+ 	.reg_bits = 8,
+ 	.val_bits = 8,
+ 	.reg_read = meson_ao_cec_g12a_read,
 
 
