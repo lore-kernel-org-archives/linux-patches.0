@@ -1,42 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EBCB32D7F8;
-	Sat, 12 Sep 2026 18:19:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA1AE38398F;
+	Sat, 12 Sep 2026 18:19:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789237143; cv=none; b=ius/W1Y4jUfEzaGSCx0bxU6BjZqNl7uWKWYbFtdDndfCLGl/TzXOiU9jLI1xcMjNF1F4sNR6Qz4V1niEYrJ3vDjvbAfaK7NrvO8jjNkvSJuq7oWWfb5TfiqvoAC4l9e5cIVT5daeM0FjOg6lOQgarRGnPXe2KCvEcyFMQSNR8lE=
+	t=1789237148; cv=none; b=dCDyDeEg6lLwuKRV4duQDKJ++LNTfvAoRomAgY1S2S28BK5N1LBozr+HIJ7N+xQJwz4S0oRRRQW+ttEHcaztZOjre7Si8a71oQKUuATSiQbn8g38aoATyjUKOz513Q9kYLbG60xJfvKOrFPfZPxsZ6fGMSYrX0Kfd9dQQ0ru8eY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789237143; c=relaxed/simple;
-	bh=g5MoJKeTxoFR9MsV66jXvJcO5Kv1ggJ6Mhc4ebgt8UU=;
+	s=arc-20240116; t=1789237148; c=relaxed/simple;
+	bh=Y9pWfQOH1mB4P2FAkNT6tvSzsVPrhzFi4K+mQoWpl6o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MgXDdw3k2LABhBT4dJ3MS99D0E+2cPYX3VKlDEGNmq52weCBo9WbLet3q/uhKBIybM/zmjD3U4M1R4TnyJB9ZgMYMmVAkgwSUYaoZGae5UkIv8O83h2O1lkZn+3WCZl7Rpp9hg2A4/z03h46fmmyv43oP6PC904j5W3vhYlPAX8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OJvw5fXI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IYyRROvkDLCEbnjvfZABVSqjEPxow8Su/oNTsVDI6qIjhOz8O9+qu7BofJu9cwP71LENCkVv8PCBrMYJ78FQky6k7oEV39nvLpH3s/u/3foWTZrxWl5pVsGYGKEuUj2A1GNH2qRR3rSxAfx21YscMWW1SM/3jYMuJ7xRbr/Yd5c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e8RhhTZ1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OJvw5fXI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B4901F000FF;
-	Sat, 12 Sep 2026 18:19:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e8RhhTZ1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B5D91F000FF;
+	Sat, 12 Sep 2026 18:19:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789237142;
-	bh=lydVdr2XIbfQ5uBYm3QqYFF9ajlblTzZWiv6nYculcE=;
+	s=korg; t=1789237147;
+	bh=qtNjrHvoxGb9heBd70BDfQ0uFWuhHJw/c0b4dbGhKYA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OJvw5fXIx+Ey+ZpDhSkmqjgTaWg0vG9Aagmkvgo+NqYEEj0ROgUNyWAMAbzkXtBMi
-	 TTxviTIEInBt6VbEgTjpdxVbx+EiIsztYAnZDxylTXR6q8Kl99viMIZI7X8AmBhZlP
-	 WqoLpg7Il8OJbM5b3Pb1D8QgkRqg1Gd1pBSiEQkA=
+	b=e8RhhTZ1FG+vri4hc72FLO7dIrChD/KABPQ23hpyaAijISEEmIpgV5p/wukkxMYJ6
+	 oCdw+LeoVIRbp0gcWNQZZ0FCN6snfeX6T0DHqCQ/VQTJTHW1DMT7q7vRB4gAJB4fob
+	 rWAfBBgOWWgKu5r/j9Ou6ayWWPRMS16/nPASZ9GM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
-	Kees Cook <kees@kernel.org>,
-	Bill Wendling <morbo@google.com>,
-	Justin Stitt <justinstitt@google.com>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.15 198/935] arch_numa: avoid false positive fortify warning in setup_node_to_cpumask_map()
-Date: Sat, 12 Sep 2026 08:53:48 +0200
-Message-ID: <20260912065531.356433869@linuxfoundation.org>
+	Junzhe Yu <junzheyu1@gmail.com>,
+	Mikulas Patocka <mpatocka@redhat.com>
+Subject: [PATCH 5.15 199/935] dm-stats: fix a crash if allocation of per-cpu data fails
+Date: Sat, 12 Sep 2026 08:53:49 +0200
+Message-ID: <20260912065531.379732209@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -55,91 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-commit f2b1cb39d5ccab090d8353788f186f7e7a1fffd4 upstream.
+commit cc87e26d9cce22061dc21e51e11afef29dbbc36a upstream.
 
-When building ARCH=riscv using clang with CONFIG_FORTIFY_SOURCE and
-CONFIG_UBSAN_BOUNDS enabled, CONFIG_NR_CPUS > 64, and the default value of
-2 for CONFIG_NODES_SHIFT, there is a compiletime warning from the fortify
-routines.
+If "dm_kvzalloc(percpu_alloc_size, cpu_to_node(cpu))" fails, the code
+jumps to the "out" label and calls dm_stat_free. dm_stat_free does
+"for_each_possible_cpu(cpu) { dm_kvfree(s->stat_percpu[cpu][0].histogram,
+s->histogram_alloc_size);", which crashes with NULL pointer dereference
+if s->stat_percpu[cpu] is NULL.
 
-  In file included from mm/arch_numa.c:11:
-  In file included from include/linux/acpi.h:14:
-  In file included from include/linux/resource_ext.h:11:
-  In file included from include/linux/slab.h:17:
-  In file included from include/linux/gfp.h:7:
-  In file included from include/linux/mmzone.h:8:
-  In file included from include/linux/spinlock.h:60:
-  In file included from include/linux/interrupt_rc.h:17:
-  In file included from include/linux/smp.h:13:
-  In file included from include/linux/cpumask.h:11:
-  In file included from include/linux/bitmap.h:13:
-  In file included from include/linux/string.h:383:
-  include/linux/fortify-string.h:430:4: warning: call to '__write_overflow_field' declared with 'warning' attribute: detected write beyond size of field (1st parameter); maybe use struct_group()? [-Wattribue-warning]
-    430 |                         __write_overflow_field(p_size_field, size);
-        |                         ^
-  include/linux/fortify-string.h:430:4: note: called by function 'fortify_memset_chk(unsigned long, unsigned long, unsigned long)'
-  include/linux/bitmap.h:248:3: note: inlined by function 'setup_node_to_cpumask_map'
-    248 |                 memset(dst, 0, len);
-        |                 ^
-  include/linux/fortify-string.h:462:25: note: expanded from macro 'memset'
-    462 | #define memset(p, c, s) __fortify_memset_chk(p, c, s,                   \
-        |                         ^
-  include/linux/fortify-string.h:453:2: note: expanded from macro '__fortify_memset_chk'
-    453 |         fortify_memset_chk(__fortify_size, p_size, p_size_field),       \
-        |         ^
-  include/linux/fortify-string.h:430:4: note: use '-gline-directives-only' (implied by '-g1') or higher for more accurate inlining chain locations
-    430 |                         __write_overflow_field(p_size_field, size);
-        |                         ^
-  1 warning generated.
+This commit fixes the bug by testing s->stat_percpu[cpu] for NULL before
+using it.
 
-In this configuration, MAX_NUMNODES is 4.  clang unrolls the for loop in
-setup_node_to_cpumask_map() past this, which triggers the fortify check
-when accessing node_to_cpumask_map on the theoretical fifth loop iteration
-because it would be an out of bounds write.
-
-Make it clear to clang that nr_node_ids is bounded by MAX_NUMNODES due to
-the logic in setup_nr_node_ids() by early returning in
-setup_node_to_cpumask_map() should that condition be violated.
-
-Link: https://lore.kernel.org/20260813-arch_numa-avoid-fortify-warning-v2-1-093ad97a78df@kernel.org
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Closes: https://github.com/ClangBuiltLinux/linux/issues/2174
-Reviewed-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
-Cc: Kees Cook <kees@kernel.org>
-Cc: Bill Wendling <morbo@google.com>
-Cc: Justin Stitt <justinstitt@google.com>
-Cc: Nathan Chancellor <nathan@kernel.org>
-Cc: Nick Desaulniers <ndesaulniers@google.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Reported-by: Junzhe Yu <junzheyu1@gmail.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Fixes: fd2ed4d25270 ("dm: add statistics support")
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/arch_numa.c |   12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/md/dm-stats.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/base/arch_numa.c
-+++ b/drivers/base/arch_numa.c
-@@ -105,6 +105,18 @@ static void __init setup_node_to_cpumask
- 	if (nr_node_ids == MAX_NUMNODES)
- 		setup_nr_node_ids();
- 
-+	/*
-+	 * This check should never be true but it makes it clear to compilers
-+	 * that node_to_cpumask_map is bound by nr_node_ids, avoiding false
-+	 * positive fortify warnings when accessing node_to_cpumask_map in the
-+	 * for loop below.
-+	 */
-+	if (unlikely(nr_node_ids > MAX_NUMNODES)) {
-+		pr_err("nr_node_ids (%u) is larger than MAX_NUMNODES (%u)\n",
-+		       nr_node_ids, MAX_NUMNODES);
-+		return;
-+	}
-+
- 	/* allocate and clear the mapping */
- 	for (node = 0; node < nr_node_ids; node++) {
- 		alloc_bootmem_cpumask_var(&node_to_cpumask_map[node]);
+--- a/drivers/md/dm-stats.c
++++ b/drivers/md/dm-stats.c
+@@ -175,8 +175,10 @@ static void dm_stat_free(struct rcu_head
+ 	kfree(s->program_id);
+ 	kfree(s->aux_data);
+ 	for_each_possible_cpu(cpu) {
+-		dm_kvfree(s->stat_percpu[cpu][0].histogram, s->histogram_alloc_size);
+-		dm_kvfree(s->stat_percpu[cpu], s->percpu_alloc_size);
++		if (s->stat_percpu[cpu]) {
++			dm_kvfree(s->stat_percpu[cpu][0].histogram, s->histogram_alloc_size);
++			dm_kvfree(s->stat_percpu[cpu], s->percpu_alloc_size);
++		}
+ 	}
+ 	dm_kvfree(s->stat_shared[0].tmp.histogram, s->histogram_alloc_size);
+ 	dm_kvfree(s, s->shared_alloc_size);
 
 
