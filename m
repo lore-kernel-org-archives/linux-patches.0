@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C7F63AFD15;
-	Sat, 12 Sep 2026 09:01:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2151C33993;
+	Sat, 12 Sep 2026 09:01:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789203690; cv=none; b=sM2IbDeaoZomy6Ew9nqJt4mgoYL+gEHzlRqJPjSgJjmpFTgnJzZnECmQc662JqUFzsihvlc2J7vGI74rvcJ39oyA10u8/EwjfyBmdVnihfCBhVyjxl7AKb0rYyW03KR50I5UghpfJVK20iml4IOVflIt1OfTAClnzqAdfV7MiTY=
+	t=1789203695; cv=none; b=Sy79inJHPgEKm+f08n4DPPBAJTpLcDDRhOdkihKFqL4cW95omnnb8L4qXM3lBOsWAw4sYTcEaBD9/CnL5RSZGz/R5ZbudtPS8epMms4QNXO/mIsWY4vLimFKf/scRgDrZp3vMi69JqjXWk0RwP+7+dsX7JLTVEZFHZzLJCsSv9U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789203690; c=relaxed/simple;
-	bh=0tuT0Oe+JEAeKC2u30PGlsTYRQWw4cWZHtYwq3dC+xE=;
+	s=arc-20240116; t=1789203695; c=relaxed/simple;
+	bh=4rp3RbEy6ECq4XRXut/KoQyx/h4hbe7zUkxUqnsIfuA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pnMg2BCTLsZ3EU2EWpsb/kS1Gr18fgSYoNhNy9Rpmy/Vp3nf484Dhf462wzGGhHGTq+hwa87I/4+VB9qdqQ0+twUGYJu2mr+fNfb6+K0YIy8J5TeAhdXS06N1j88gXyfQlkgdlWdpqkq0qllNTJkxaH7vJ0Wr7gqSlMB3aSClDk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mobq09vh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SPgxMt7n88S3P5aKta9WqQcjsWRQVqlo/M2eRBN/OMtez/HCOBZ+iB1H6LRaK6h+9a9RVZ9skLAL9DK0KjMNLtKIAjUlI5z2W7vvy8vqElauF+gX2mI99CAMJtBCKxWYmoKDhDKVi2PpQtSTAIGZsmnf6d6BGtd0oRL7lcPbXO4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xApcGfP2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mobq09vh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EC9F1F000FF;
-	Sat, 12 Sep 2026 09:01:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xApcGfP2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AA681F000FF;
+	Sat, 12 Sep 2026 09:01:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789203689;
-	bh=wbvw1lIE4HLexpUDstQlRugmm/z5gOL5L6hEdT3xzwE=;
+	s=korg; t=1789203694;
+	bh=N9MbVVVlSF0oAs5wSkDUrK37/eib34KsEBbO7q42fAQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Mobq09vhpBicwGhIIFLe2V8cJNf3MrmdkgzrpVmvFrtmWwAyehX+L8a6ojSotUZyw
-	 IZ//UZkgm9Y6dsQwh6rHvGLmnKFjac6z6qzUjLUpmm2W3FgUid5CXAiGH4t2Wf9OTN
-	 652MDlR5Yqc3sB9B3BSKCrIwDOernHbuAtm5VJ5I=
+	b=xApcGfP2pU9Vk7zW+TwrHlhlHDZoyqBCtwpvlzHfEcZumf6bLX2wtCla43bKWAZEx
+	 APu4b74Fla4Jbf0ij8lLolraVyrGzwVnk81xBE4d5fFSreuDAmDroYTCm1buBXIA/i
+	 a4agyUGhbhno3vu12vH2BwBCGPqbUofVTEG2kn50=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pu Lehui <pulehui@huawei.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
+	Vincent Donnefort <vdonnefort@google.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1457/1815] riscv, bpf: Fix missing sign-ext for signed 1-byte and 2-byte kfunc args
-Date: Sat, 12 Sep 2026 08:53:27 +0200
-Message-ID: <20260912065723.218083074@linuxfoundation.org>
+Subject: [PATCH 7.2 1458/1815] ring-buffer: Remove trace_buffer::cpus
+Date: Sat, 12 Sep 2026 08:53:28 +0200
+Message-ID: <20260912065723.240866141@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,50 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pu Lehui <pulehui@huawei.com>
+From: Vincent Donnefort <vdonnefort@google.com>
 
-[ Upstream commit f2aaa621591093cfe8224a25ef2f04a3b1e304b0 ]
+[ Upstream commit d9b5e22bf24d5c82522475306cd332b287ac43bc ]
 
-On RV64, the ABI requires sign-extension for signed 1-byte and 2-byte kfunc
-args. However, the RV64 JIT currently does not perform sign-extension for
-such kfunc args.
+The 'cpus' field in struct trace_buffer became useless in commit
+8e7b58c27b3c ("ring-buffer: Just update the subbuffers when changing their
+allocation order"). Remove it
 
-Before commit 7ce090afbf72 ("bpf: Infer zext_dst based on static register
-liveness analysis"), state pruning could potentially omit zero-extension
-of 32-bit subregisters, which inadvertently masked the above issue by making
-the args appear as if they had been properly sign-extended. After that
-commit, the problem is exposed, causing the kfunc_call/kfunc_call_test4
-selftest to fail.
-
-Fix this by extending the existing sign-extension logic to handle signed
-1-byte and 2-byte kfunc args as well.
-
-Fixes: 443574b03387 ("riscv, bpf: Fix kfunc parameters incompatibility between bpf and riscv abi")
-Signed-off-by: Pu Lehui <pulehui@huawei.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/bpf/20260814064726.3607615-1-pulehui@huaweicloud.com
+Link: https://patch.msgid.link/20260813131152.3589632-9-vdonnefort@google.com
+Fixes: 8e7b58c27b3c ("ring-buffer: Just update the subbuffers when changing their allocation order")
+Signed-off-by: Vincent Donnefort <vdonnefort@google.com>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/net/bpf_jit_comp64.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ kernel/trace/ring_buffer.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/arch/riscv/net/bpf_jit_comp64.c b/arch/riscv/net/bpf_jit_comp64.c
-index a5b987a824e38..a3af5070ac66d 100644
---- a/arch/riscv/net/bpf_jit_comp64.c
-+++ b/arch/riscv/net/bpf_jit_comp64.c
-@@ -1830,9 +1830,10 @@ int bpf_jit_emit_insn(const struct bpf_insn *insn, struct rv_jit_context *ctx,
+diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
+index eb01f1d650666..1925ee9cc36da 100644
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -572,7 +572,6 @@ struct ring_buffer_per_cpu {
  
- 			for (idx = 0; idx < fm->nr_args; idx++) {
- 				u8 reg = bpf_to_rv_reg(BPF_REG_1 + idx, ctx);
-+				bool sign = fm->arg_flags[idx] & BTF_FMODEL_SIGNED_ARG;
+ struct trace_buffer {
+ 	unsigned			flags;
+-	int				cpus;
+ 	atomic_t			record_disabled;
+ 	atomic_t			resizing;
+ 	cpumask_var_t			cpumask;
+@@ -2783,7 +2782,6 @@ static struct trace_buffer *alloc_buffer(unsigned long size, unsigned flags,
+ 	init_irq_work(&buffer->irq_work.work, rb_wake_up_waiters);
+ 	init_waitqueue_head(&buffer->irq_work.waiters);
  
--				if (fm->arg_size[idx] == sizeof(int))
--					emit_sextw(reg, reg, ctx);
-+				if (sign_extend(reg, reg, fm->arg_size[idx], sign, ctx))
-+					return -EINVAL;
- 			}
- 		}
+-	buffer->cpus = nr_cpu_ids;
  
+ 	bsize = sizeof(void *) * nr_cpu_ids;
+ 	buffer->buffers = kzalloc(ALIGN(bsize, cache_line_size()),
 -- 
 2.53.0
 
