@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A4C3331EAE;
-	Sat, 12 Sep 2026 16:36:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3A32288B9;
+	Sat, 12 Sep 2026 16:36:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789230986; cv=none; b=GPbLcIa+IKq6CnxBBCyZJNdlhBbTm6cfu8vo4J45hdivop4fpEUeZFUgg5pcJGjrGMU7mcwg5pxKk3i9mflReoraCrYzMRPT/B6ovOObPJk+MKHTBGXSNE9xyxZQC55X0qSzT20V3jdDLXyH8VNz3ap5frOkWcDdK0c3oXzyK0w=
+	t=1789230990; cv=none; b=QfGn2EGq+Q9xjSGrI9xyrf6fiNY0fvQhvPUauNgDzZF6i6Xygms7viUlghWDd9IIHvOPIU5ad6acvOXPKeU2I6tD8r+Tt5y74i8SMsiTx185oWv0fEDSbnCy6zAOmlPsN6gogR3Nf6xv+MfGkgT+hqdmVdJXbRfLf61QAB5Tb24=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789230986; c=relaxed/simple;
-	bh=Ogv5U3M8yF5LWgWQIrOvOYncywWXqbRNFKVP/lIGg6k=;
+	s=arc-20240116; t=1789230990; c=relaxed/simple;
+	bh=hosONQ1mDqy85yrgLkevQY5A/eQ8YAr6yRbUppcQnls=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k+i/youl4R90iCypkPoU36PP3x0f5jDlF4DBH7KrdAsuQpajugtJ71j/AEky1RNMPG4uMTIRSH2UJapX/gWWXn23AYqCZdgXNRaATy+XovjdyRi6B2BpOjXq503gvlAzxt0dNNmTtrchCrS9dgup53OJFYq3HJJhO1I8aKOPyIM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qUXob3qJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aw6KY6nqTYgcf5yxQS/16pb81UKSXesyZhBXO0/xY8i0ofm8hG72tYy6cfwEt0J9usUtb+sIIgP2w+aFHNRgojfvNJDwho99mEbkhwfoJA3t7E2qE502uqQ3rKOHW/Zs4HXrzskkPBuxgsHZxNQioC+9FlOacF3+25WkBZWKnoE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oAszQ4YV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qUXob3qJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E678A1F000FF;
-	Sat, 12 Sep 2026 16:36:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oAszQ4YV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D339E1F000FF;
+	Sat, 12 Sep 2026 16:36:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789230984;
-	bh=uv9CQ0aU3j4+IFcnMEq23FjQBFD13+GGhvo8pU4Jklo=;
+	s=korg; t=1789230989;
+	bh=Wl9Yqvx9mhPgb54OWKSB09vE5kavNmT/ayu7C2x3FB8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qUXob3qJZUv6z+c1siCMnTTP6FRc3MevNoqCqJWQW2CBm+AaQcmzwzseBkrF3nxTR
-	 m+Q8RjBYAbBX1qB6J9A5jBFwWxSfxKmLdx75QI3Z5udpS8xQbQOwxZTMZl5DIbEKUU
-	 yMqUbofPF9LE02c9vIjV+nbtamSnwWIwH8XRjmzc=
+	b=oAszQ4YVg05SpdBgfHAHYGxAHeLzg75NutLDLYK4jNJaqFCjocW/O2SxoDOO6qhZA
+	 o61bbijcmlAsAr+sTP4+ZgJCN3XJK69y/FDsE+6Q4Scu8pbUro2GoDNu5D5nTktTVY
+	 rUvlMJI+3yuJ0OC5NIiDvTT18EiTE5obZtKJLmeE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Meghana Malladi <m-malladi@ti.com>,
-	Vignesh Raghavendra <vigneshr@ti.com>,
+	Felix Gu <ustc.gu@gmail.com>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0905/1191] arm64: dts: ti: k3-am64: Fix MDIO clock reference for ICSSG0 node
-Date: Sat, 12 Sep 2026 09:00:33 +0200
-Message-ID: <20260912065608.560870559@linuxfoundation.org>
+Subject: [PATCH 6.1 0906/1191] phy: sunplus: fix error handling in sp_uphy_init()
+Date: Sat, 12 Sep 2026 09:00:34 +0200
+Message-ID: <20260912065608.582159364@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -51,38 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Meghana Malladi <m-malladi@ti.com>
+From: Felix Gu <ustc.gu@gmail.com>
 
-[ Upstream commit 197df050a10fe216971b45a79f07195c86a02236 ]
+[ Upstream commit 8b2683bc4cc18c581b7cd24f227cbe61abca7f4d ]
 
-MDIO clock index changed from 62:3 to 81:0 to match proper clock
-definition in the SoC device tree. Clock Id 81:0 belongs to ICSSG0
-core clock, where as 62 belongs to EQEP2 device.
+Fix the error paths of sp_uphy_init() to undo exactly what each stage
+did: return directly if clk_prepare_enable() fails, release only the clock
+if reset_control_deassert() fails, and jump to err_reset if
+update_disc_vol() fails so the clock and reset are not leaked.
 
-See: https://software-dl.ti.com/tisci/esd/latest/5_soc_doc/am64x/clocks.html
-
-Fixes: c9087e3898a1d0 ("arm64: dts: ti: k3-am64-main: Add ICSSG nodes")
-Signed-off-by: Meghana Malladi <m-malladi@ti.com>
-Link: https://patch.msgid.link/20260706092229.82674-1-m-malladi@ti.com
-Signed-off-by: Vignesh Raghavendra <vigneshr@ti.com>
+Fixes: 99d9ccd97385 ("phy: usb: Add USB2.0 phy driver for Sunplus SP7021")
+Signed-off-by: Felix Gu <ustc.gu@gmail.com>
+Reviewed-by: Philipp Zabel <p.zabel@pengutronix.de>
+Link: https://patch.msgid.link/20260803-sunplus-usb3-v1-1-5a562524c869@gmail.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/ti/k3-am64-main.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/phy/sunplus/phy-sunplus-usb2.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/ti/k3-am64-main.dtsi b/arch/arm64/boot/dts/ti/k3-am64-main.dtsi
-index d6aa23681bbe5..e385fed83dc8a 100644
---- a/arch/arm64/boot/dts/ti/k3-am64-main.dtsi
-+++ b/arch/arm64/boot/dts/ti/k3-am64-main.dtsi
-@@ -1133,7 +1133,7 @@ tx_pru0_1: txpru@c000 {
- 		icssg0_mdio: mdio@32400 {
- 			compatible = "ti,davinci_mdio";
- 			reg = <0x32400 0x100>;
--			clocks = <&k3_clks 62 3>;
-+			clocks = <&k3_clks 81 0>;
- 			clock-names = "fck";
- 			#address-cells = <1>;
- 			#size-cells = <0>;
+diff --git a/drivers/phy/sunplus/phy-sunplus-usb2.c b/drivers/phy/sunplus/phy-sunplus-usb2.c
+index 56de41091d639..e18a9e6795360 100644
+--- a/drivers/phy/sunplus/phy-sunplus-usb2.c
++++ b/drivers/phy/sunplus/phy-sunplus-usb2.c
+@@ -116,11 +116,11 @@ static int sp_uphy_init(struct phy *phy)
+ 
+ 	ret = clk_prepare_enable(usbphy->phy_clk);
+ 	if (ret)
+-		goto err_clk;
++		return ret;
+ 
+ 	ret = reset_control_deassert(usbphy->rstc);
+ 	if (ret)
+-		goto err_reset;
++		goto err_clk;
+ 
+ 	/* Default value modification */
+ 	writel(HIGH_MASK_BITS | 0x4002, usbphy->moon4_regs + UPHY_CONTROL0);
+@@ -129,7 +129,7 @@ static int sp_uphy_init(struct phy *phy)
+ 	/* disconnect voltage */
+ 	ret = update_disc_vol(usbphy);
+ 	if (ret < 0)
+-		return ret;
++		goto err_reset;
+ 
+ 	/* board uphy 0 internal register modification for tid certification */
+ 	val = readl(usbphy->phy_regs + CONFIG9);
 -- 
 2.53.0
 
