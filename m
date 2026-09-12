@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8729A41687C;
-	Sat, 12 Sep 2026 10:55:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCC9E2D0C94;
+	Sat, 12 Sep 2026 10:55:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789210537; cv=none; b=bCQrYLREnXBJDfnVGrBBzBb3Tylkv0VSs5XGfuVPtyT3XTPXVbThgioJJpvw8Yj7G25dsLhphG3tKOsWvZEFhCdYLdqmBeSZZDu/FRKOhrSB/bOHRaW0rHJwcq1lyjMYXuMtktAW+sjaEQ+IpqjUUFYbR2Qte79+RqUl0Lzm0L4=
+	t=1789210542; cv=none; b=k9PG/WS0f5HRxm7mZC7sYHNwKA1YfjP0qhZZc7IA7byhbqWVJHltmS1Qa+A02jH52gHscARGHv+oBW5J7ZjXmM19bt3+fKC6TZ5tEmTRNv7I5depaUrY47awrS5cUwTd3Y7DiPmFs2a4OQc5cU2SB5II9HoKZmgmXa3LDoY0trQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789210537; c=relaxed/simple;
-	bh=w3nnek0oWLu6AOBXVoFjyquvke0NR76vtIRMRRVU01c=;
+	s=arc-20240116; t=1789210542; c=relaxed/simple;
+	bh=Z6GnvExeDhBATl7q0DgAkWfC4KOS5gKJ5ndC++44VYc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D7ms9YzTOLjX1j2FndV9BzFucf8hCyfg+Fq0MAO+BKc7PQbKGN8cwWaueV1Lxccex/6B06b+YopR9VEjkfZoDyEiMDc1CvFYJmbcSqRFuoEbqMcMSRRfdS6RQlAkdu5AsmMD3f5PYu/O1bAnEAZTBK+D5dHb8/a8flIKnjX7Ohg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CWipc8ia; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=o8BSj7bbJyTceeZfZexk3rFGd9X4dwXBPF2ZJrVlvhH2Gtsw9B74D2JTdOY3Yk8+Wgl5v40Tp07X7+8bq5Jy3tYv+aZwl8y+WLThp/mES+5ToHXmsxNFZ4ySNoyHlPNRuxNnKGw0tCByayJC7RBlYRYsLVLqaE41hrvdvKs2C5Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EHuDJJuF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CWipc8ia"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A5591F000FF;
-	Sat, 12 Sep 2026 10:55:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EHuDJJuF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44B131F000FF;
+	Sat, 12 Sep 2026 10:55:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789210536;
-	bh=pChh/QE5G5IZdi52MYLPc67Qj64VHqA4O1yF1E5dX60=;
+	s=korg; t=1789210541;
+	bh=vlboFZUuMudeDBs3dThEEao+jIez48jldpbtIBTot8Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CWipc8iaMD/HCZzuodLcK4IRV/XxL5s9SI5DphcBCIW0NKR2ENCWjZez1/doYe0VL
-	 MusH/Gs4JxVe27Kr2qoBwZ34onXJXlwro0WhrtYpMVssLrEByfD9POFZPjAxXdPnPL
-	 aKpA0W4lDlJrShaW9NRw+3rin/LjZzKcEZaev43o=
+	b=EHuDJJuFywUWS8Cy8BNUY7GUjkKmbEOeEcVNzLDkqUjmdhnYoYq4cGul+OHOtZtBU
+	 MHAqIZCjjc77gBStQcUkJqQlGvqMqcYLWrs3bRy3Vih36lNecxXFneB8ALFkUSdZYD
+	 D7QMQD0+cagNOawIKbWe9LlE/AfZ+1uiDuavS83I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>,
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	=?UTF-8?q?Tom=C3=A1=C5=A1=20Macholda?= <tomas.macholda@nic.cz>,
+	Gregory CLEMENT <gregory.clement@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1045/1518] i3c: renesas: Dont register devices when ENTDAA times out
-Date: Sat, 12 Sep 2026 08:53:34 +0200
-Message-ID: <20260912065647.091983627@linuxfoundation.org>
+Subject: [PATCH 6.18 1046/1518] arm64: dts: turris-mox: fix usb3 phys
+Date: Sat, 12 Sep 2026 08:53:35 +0200
+Message-ID: <20260912065647.115097310@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -47,58 +45,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>
+From: Tomáš Macholda <tomas.macholda@nic.cz>
 
-[ Upstream commit b6e56fd8c8a8ac7992868a28702192372ab04015 ]
+[ Upstream commit 0c2a8eed95160e41b367a1fa605a2c1b24a9639a ]
 
-renesas_i3c_daa() derives the number of newly assigned dynamic addresses
-from cmd->rx_count, which the response ISR sets to the number of address
-slots ENTDAA left unassigned. It starts out as zero, which already means
-"every address was assigned", so a timed out transfer leaves that value
-in place and it gets used as a result.
+After commit 00e6d608fe80b0f6 ("arm64: dts: marvell: armada-37xx: swap
+PHYs' order in USB3 controller node") swapped USB3 PHY order, USB
+initialization breaks on Turris MOX.
 
-On a bus with no target connected the ENTDAA times out and the driver
-registers RENESAS_I3C_MAX_DEVS devices that are not there, each costing
-the core two seconds on a GETPID that can only time out:
+This regression was exposed by commit 91ddf6f722084383 ("phy: marvell:
+mvebu-a3700-utmi: fix incorrect USB2_PHY_CTRL register access") which
+made USB2 devices not work at all.
 
-  i3c i3c-0: Failed to add I3C device at address 9, error -110
-  ...
-  i3c i3c-0: Failed to add I3C device at address 16, error -110
+Fix the issue by explicitly adding all USB3 PHYs and PHY names to
+Turris MOX device-tree.
 
-Start from maxdevs instead: no address is assigned before ENTDAA runs,
-and the existing rx_count >= maxdevs check then reports an empty bus.
-
-Fixes: d028219a9f14 ("i3c: master: Add basic driver for the Renesas I3C controller")
-Signed-off-by: Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>
-Reviewed-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Tested-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com> # on RZ/G3S
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260731070150.2519825-1-tommaso.merciai.xr@bp.renesas.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Fixes: 7109d817db2e ("arm64: dts: marvell: add DTS for Turris Mox")
+Signed-off-by: Tomáš Macholda <tomas.macholda@nic.cz>
+Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i3c/master/renesas-i3c.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/marvell/armada-3720-turris-mox.dts | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/i3c/master/renesas-i3c.c b/drivers/i3c/master/renesas-i3c.c
-index de2b495d34eff..91c04f3a4c552 100644
---- a/drivers/i3c/master/renesas-i3c.c
-+++ b/drivers/i3c/master/renesas-i3c.c
-@@ -649,7 +649,7 @@ static int renesas_i3c_daa(struct i3c_master_controller *m)
+diff --git a/arch/arm64/boot/dts/marvell/armada-3720-turris-mox.dts b/arch/arm64/boot/dts/marvell/armada-3720-turris-mox.dts
+index f4d73c8b1a6d3..bd00e7df87c67 100644
+--- a/arch/arm64/boot/dts/marvell/armada-3720-turris-mox.dts
++++ b/arch/arm64/boot/dts/marvell/armada-3720-turris-mox.dts
+@@ -290,7 +290,8 @@ connector {
  
- 	init_completion(&xfer->comp);
- 	cmd = xfer->cmds;
--	cmd->rx_count = 0;
-+	cmd->rx_count = i3c->maxdevs;
+ &usb3 {
+ 	status = "okay";
+-	phys = <&comphy2 0>;
++	phys = <&usb2_utmi_otg_phy>, <&comphy2 0>;
++	phy-names = "usb2-phy", "usb3-phy";
+ };
  
- 	/* Enable I3C bus. */
- 	renesas_i3c_bus_enable(m, true);
+ &mdio {
 -- 
 2.53.0
 
