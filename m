@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3435A39936E;
-	Sat, 12 Sep 2026 20:02:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DE7939936E;
+	Sat, 12 Sep 2026 20:02:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789243323; cv=none; b=Q1lbX3glVQXLFvwukYPJh3uMzglKZ4FgCc5Bipm6LP7AuslWtJ5fPUUWd36Mwt60aDBAM6Wn4x+5oxHhell7DzWtzFwn/P1W3Nmkzb8SlwwUbeNhAekpTXKp9eUwkJ669tCGAB54pEHgwlDUoeGVzkbDhXjL0TsbL3Sfz6eqd6A=
+	t=1789243326; cv=none; b=lmbMAAzKnvyKskZDQT+RdmPV6kmA8wRuJ4YM5k36MuJazMENkOoOcttNbykaMV2G+QVeGsf/Wy4GWl3LN1kFo7PoTyfJsXgSEUpmC2L6Dr1t4rRy/gy6/r8Muj7fn/CwTSniycycjIyzLKwLPGGwWUGp45zMN1eMp5HRiHuVsGo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789243323; c=relaxed/simple;
-	bh=MeN3VB87Pzrp/I34dm5m73V2VP4ojt/T48/a8GTrt10=;
+	s=arc-20240116; t=1789243326; c=relaxed/simple;
+	bh=8KAvSk14yI0mFtnRdEZR+Em4s7czsHNEYFeT/LAzRag=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=oUxGpqCKqGP74l1c7b6iPq4w/n/tdItK1LUcSGgoVKWrh2mKy5d4i6QhpkLUBnL7idh69rMcQ63ID+CiZaTMZMxjBh4X1h+SyTi8P2bwA7H+bsBKIE/7pSBT6umTA3WjRMX4c25fAl1Db0I9gHe9rqHtUAFtosysso1p6aTCttg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EFQyoeOL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=trF9pdFxuNHHmZA46Ko2vVB3LDBWweScmmiDZxowDh0xSpKTJZX6M5CNLNx2hRk1wzwyAnWIaluDWFtXusQffLU8FLUtFufHES5p39mCBeKial8Zs8W3LQ8dh5TFgaTqxGWJr0h7jHdaWNZGzVDZNeO2mrkiUq9B8q91QoAQhmY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sZXOFpdR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EFQyoeOL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FEAD1F000FF;
-	Sat, 12 Sep 2026 20:02:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sZXOFpdR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69B6E1F000FF;
+	Sat, 12 Sep 2026 20:02:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789243322;
-	bh=Hl+LEnMwBtchyfcFuUPmKRVlDQNCL+XmS0IGGFLrOO0=;
+	s=korg; t=1789243325;
+	bh=2cuFvpq0B+xunzfKnBEpCifgm2Nox4BnI1lGqO2UXFI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EFQyoeOLDYsPAiXPbipeIy3JdrAwJJtMwj1P3lC/h2W51L3q8OYS0S+HX1EGWqYST
-	 cVBz+/DtSXUbloL5hHlHcailBFPlAeqi/k5l+sRv0cPPrs3mj2Gb9cTURc6yzVrp1M
-	 JF4kQVpTzqGO0cvoz3V3Yy0b8sOZF9GYxfTiArOA=
+	b=sZXOFpdRmIgGovSHhlsq3PZe4bCSeDNVlPeQ57yq+bYXKW8DKfXiOctqcTGFa0KWz
+	 dEZzJQuMzEYhMhc5qMWWuUwvrf2YIJLn02XxorF90rqVIh0sZxWnDmeih15+e6uKvc
+	 dWj//TYBsGNcq1FUJuzG7jk8yXxLGOu4zLr3nVVk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	Ian Rogers <irogers@google.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Linmao Li <lilinmao@kylinos.cn>,
+	Jassi Brar <jassisinghbrar@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 715/798] perf dso: Guard against cache underflow on short reads in dso_cache__memcpy()
-Date: Sat, 12 Sep 2026 09:05:43 +0200
-Message-ID: <20260912065533.470916645@linuxfoundation.org>
+Subject: [PATCH 5.10 716/798] mailbox: rockchip: disable pclk on probe failure and unbind
+Date: Sat, 12 Sep 2026 09:05:44 +0200
+Message-ID: <20260912065533.493209597@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -47,74 +45,66 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Linmao Li <lilinmao@kylinos.cn>
 
-[ Upstream commit 390a9461cd73bdd13acc0f6d763618ae1ff8fa17 ]
+[ Upstream commit ded48fcbdc1e3ed1dc8e1974b7fe9639fcea6dd6 ]
 
-dso_cache__memcpy() computes cache_offset = offset - cache->offset,
-then cache_size = min(cache->size - cache_offset, size).  The RB tree
-lookup in __dso_cache__find() matches using the full
-DSO__DATA_CACHE_SIZE window, but cache->size reflects the actual pread
-return value from dso_cache__populate().
+rockchip_mbox_probe() enables the peripheral clock and then keeps going.
+None of the later failure paths - platform_get_irq(),
+devm_request_threaded_irq() and devm_mbox_controller_register() - disables
+it again. The driver has no remove callback either, so the clock also stays
+prepared and enabled once the device is unbound, and its enable count keeps
+growing over bind/unbind cycles.
 
-A short pread (e.g. near end-of-file) makes cache->size smaller than
-DSO__DATA_CACHE_SIZE.  If a subsequent access targets an offset past
-cache->offset + cache->size but within the DSO__DATA_CACHE_SIZE
-window, the cache entry is found but cache_offset exceeds cache->size.
-Since both are u64, the subtraction cache->size - cache_offset wraps
-to a large value, min() selects the caller's size, and memcpy reads
-out of bounds.
+Use devm_clk_get_enabled() to tie disabling and unpreparing the clock to
+the device lifetime. It is registered before the interrupts and the mailbox
+controller, so devres releases it after both are gone.
 
-Return 0 for an offset past the valid cached data.  For a regular
-file a short pread only happens at end-of-file, so 0 is what a direct
-pread() at that offset would return: cached_io() stops its read loop
-as on EOF.  Re-reading from the backing file would not help — a
-second pread at the same offset returns the same short count.
+While rewriting the error path, switch it to dev_err_probe() so that a
+deferred probe is not reported as an error.
 
-Fixes: 366df72657e0 ("perf dso: Refactor dso_cache__read()")
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Reviewed-by: Ian Rogers <irogers@google.com>
-Assisted-by: Claude:claude-opus-4.6
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Fixes: f70ed3b5dc8b ("mailbox: rockchip: Add Rockchip mailbox driver")
+Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
+Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/dso.c | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ drivers/mailbox/rockchip-mailbox.c | 17 ++++-------------
+ 1 file changed, 4 insertions(+), 13 deletions(-)
 
-diff --git a/tools/perf/util/dso.c b/tools/perf/util/dso.c
-index e07c48422cd2b..caea710ffb7f8 100644
---- a/tools/perf/util/dso.c
-+++ b/tools/perf/util/dso.c
-@@ -853,7 +853,20 @@ static ssize_t dso_cache__memcpy(struct dso_cache *cache, u64 offset, u8 *data,
- 				 u64 size, bool out)
- {
- 	u64 cache_offset = offset - cache->offset;
--	u64 cache_size   = min(cache->size - cache_offset, size);
-+	u64 cache_size;
-+
-+	/*
-+	 * The RB tree matches using DSO__DATA_CACHE_SIZE, but a short
-+	 * pread may leave cache->size smaller.  For a regular file a
-+	 * short pread only happens at end-of-file, so an offset past
-+	 * the valid data is EOF: return 0, matching what a direct
-+	 * pread() at that offset would return, and cached_io() then
-+	 * stops its read loop.
-+	 */
-+	if (cache_offset >= cache->size)
-+		return 0;
-+
-+	cache_size = min(cache->size - cache_offset, size);
+diff --git a/drivers/mailbox/rockchip-mailbox.c b/drivers/mailbox/rockchip-mailbox.c
+index ca50f7f176f6a..e0e9ba8f89993 100644
+--- a/drivers/mailbox/rockchip-mailbox.c
++++ b/drivers/mailbox/rockchip-mailbox.c
+@@ -207,19 +207,10 @@ static int rockchip_mbox_probe(struct platform_device *pdev)
+ 	/* Each channel has two buffers for A2B and B2A */
+ 	mb->buf_size = (size_t)resource_size(res) / (drv_data->num_chans * 2);
  
- 	if (out)
- 		memcpy(data, cache->data + cache_offset, cache_size);
+-	mb->pclk = devm_clk_get(&pdev->dev, "pclk_mailbox");
+-	if (IS_ERR(mb->pclk)) {
+-		ret = PTR_ERR(mb->pclk);
+-		dev_err(&pdev->dev, "failed to get pclk_mailbox clock: %d\n",
+-			ret);
+-		return ret;
+-	}
+-
+-	ret = clk_prepare_enable(mb->pclk);
+-	if (ret) {
+-		dev_err(&pdev->dev, "failed to enable pclk: %d\n", ret);
+-		return ret;
+-	}
++	mb->pclk = devm_clk_get_enabled(&pdev->dev, "pclk_mailbox");
++	if (IS_ERR(mb->pclk))
++		return dev_err_probe(&pdev->dev, PTR_ERR(mb->pclk),
++				     "failed to get and enable pclk_mailbox clock\n");
+ 
+ 	for (i = 0; i < mb->mbox.num_chans; i++) {
+ 		irq = platform_get_irq(pdev, i);
 -- 
 2.53.0
 
