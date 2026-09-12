@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5770247D92F;
-	Sat, 12 Sep 2026 13:17:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2DDA4772B5;
+	Sat, 12 Sep 2026 13:18:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789219081; cv=none; b=FvXZo4x+hzLT4rldvjG+lTawQtBXgkDEH0h0eX0ia5gK7fJJ6cMAzJgvsqOVRNEyDLJdTTGJH9KqeOiYuniJG+I/E7mjJvVB6Fbnr1/8JC8lMu7IoihXIGM1tVJrDOaRw8BzkfqE1a0QTkteZZKSDhonNC0/eWDqy5yj2A6iGg8=
+	t=1789219085; cv=none; b=aik9hRy3Lbyo7wevkeOEd7rfIKe3SyxOu8+kZie1pG5NPR0zDEkt3dma9ow1S68v/N5OBpWOlehJQQ1Peq1HzWTcF1dRmEYA2Y8Xa9Yl0DvDVRAiYjCG891C1BAEuISeDpQjclS9+D98uPgFjR0OmNpHKlbjoJPuKS4/cAc1FCU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789219081; c=relaxed/simple;
-	bh=coZtsTGeCuhSf37e20jARKeo6ZdVovyAUTzFen6C0XE=;
+	s=arc-20240116; t=1789219085; c=relaxed/simple;
+	bh=LiF20dB/mbOfKYr5eONKctrnFQNyR84zUX5IayTKJaQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o9B3wkQYRBrqevk1T8XbojkOHA9EPOKHCc00zgMbCqjAACF0JqMW9O1uTaYq4YrTg/5om5cKTwVJ/i8dwPPM+5D1u+WOBefZbxfpUCMwhzMyJsuOPBsTvFIB1a/rFfCKVCnOBx/zzSM2XSr9Q1Qw6Z77h4Kl8WTX0erEYkJ72cI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NJynYMfw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Hb0ZWGSRZKkQbt67KI72rD+vvNmhFtzbfrH18bvmKZpASoPgTPLH1I7NRecO28kV9SpxxsS1JDbc3ES4mz1K9Yh+c0vN47+2kKsDHsDZ22f2ZEcDFB3FIF2TqLc/oE9ekGnj+RMgOL8Wx7bOruRSZuDxvqP2l8upfvKdxScgue8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d3nehkM1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NJynYMfw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08F2E1F000FF;
-	Sat, 12 Sep 2026 13:17:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d3nehkM1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E40B1F000FF;
+	Sat, 12 Sep 2026 13:18:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789219079;
-	bh=Q8txaLHMORPp4RFufk9Hm3hzAQpXqVS93SfceSzf7Ig=;
+	s=korg; t=1789219083;
+	bh=d0aa4JoyxZ32P6YGMkzYOVBxHLPTsEQscT7Yiv7ozPA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NJynYMfwreuFcXVXm2q7emyOoD0GU1lqjwcH4HSv+gToKos4mx2Xt9j9OKiVwM4Bt
-	 b1WZ3zuUUcgnhWD2ExoPvbvsgFXdso+DUyfPWbLnaqJk7obQpM2UCe8C12m8sKW79n
-	 mIftbgGUgGpTS+ULpZKPu0Zij1IqZwhvPLI1yOEo=
+	b=d3nehkM1+cOvLJT7fFf7MtxllOWTSuW7iCwKNY89z80B83qfbPhOkB7aFxuzaV0jV
+	 5htQyJO6qX1+stbWCfYCzqzq3TuFmDOXwMdzZhsXCkUWOfybowqGpcFXUzASXMxsSA
+	 Zhj+EMeIdx0uA3JnvyZ/ZquXnp3j3SSP0q/o1KqQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Czernohous <marek@czernohous.de>,
-	Simon Horman <horms@kernel.org>,
-	Zhu Yanjun <yanjun.zhu@linux.dev>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Ryan Gilbert <xelnaga@gmail.com>,
+	Javier Tia <floss@jetm.me>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1250/1376] forcedeth: stop the tx_timeout register dump past the requested window
-Date: Sat, 12 Sep 2026 09:01:16 +0200
-Message-ID: <20260912065635.401622104@linuxfoundation.org>
+Subject: [PATCH 6.12 1277/1376] Bluetooth: btmtk: Add MT6639 (MT7927) Bluetooth support
+Date: Sat, 12 Sep 2026 09:01:43 +0200
+Message-ID: <20260912065636.000187878@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -53,93 +52,226 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Czernohous <marek@czernohous.de>
+From: Javier Tia <floss@jetm.me>
 
-[ Upstream commit cfa9178ce2e5b4f2e2a9e8b577a6cff841665aa0 ]
+[ Upstream commit 28b7c5a6db74e9305c6cbcbe52f259ff1cf85158 ]
 
-nv_tx_timeout() dumps the register window in rows of eight dwords:
+The MediaTek MT7927 (Filogic 380) combo WiFi 7 + BT 5.4 module uses
+hardware variant 0x6639 for its Bluetooth subsystem. Without this patch,
+the chip fails with "Unsupported hardware variant (00006639)" or hangs
+during firmware download.
 
-	for (i = 0; i <= np->register_size; i += 32) {
-		netdev_info(dev, "%3x: %08x ... %08x\n", i,
-			    readl(base + i + 0), ..., readl(base + i + 28));
+Three changes are needed to support MT6639:
 
-The loop bound only checks the row's starting offset, so the final row
-reads a full 32 bytes from a position that is below the end of the window
-but too close to it. base is mapped with exactly that length:
+1. CHIPID workaround: On some boards the BT USB MMIO register reads
+   0x0000 for dev_id, causing the driver to skip the 0x6639 init path.
+   Force dev_id to 0x6639 only when the USB VID/PID matches a known
+   MT6639 device, avoiding misdetection if a future chip also reads
+   zero. This follows the WiFi-side pattern that uses PCI device IDs
+   to scope the same workaround.
 
-	np->base = ioremap(addr, np->register_size);
+2. Firmware naming: MT6639 uses firmware version prefix "2_1" instead of
+   "1_1" used by MT7925 and other variants. The firmware path is
+   mediatek/mt7927/BT_RAM_CODE_MT6639_2_1_hdr.bin, using the mt7927
+   directory to match the WiFi firmware convention. The filename will
+   likely change to use MT7927 once MediaTek submits a dedicated
+   Linux firmware binary.
 
-so the tail of that row is read from beyond the length the driver asked
-for. Per variant, the last iteration reads past register_size by:
+3. Section filtering: The MT6639 firmware binary contains 9 sections, but
+   only sections with (dlmodecrctype & 0xff) == 0x01 are Bluetooth-related.
+   Sending the remaining WiFi/other sections causes an irreversible BT
+   subsystem hang requiring a full power cycle. This matches the Windows
+   driver behavior observed via USB captures.
 
-	NV_PCI_REGSZ_VER1 (0x270): row 0x260 reads to 0x27f, 16 bytes over
-	NV_PCI_REGSZ_VER2 (0x2d4): row 0x2c0 reads to 0x2df, 12 bytes over
-	NV_PCI_REGSZ_VER3 (0x604): row 0x600 reads to 0x61f, 28 bytes over
+Also add 0x6639 to the reset register (CONNV3) and firmware setup switch
+cases alongside the existing 0x7925 handling.
 
-This happens on every supported device, not just one of them. Note that
-it is not a consequence of the sizes being odd: with i <= register_size
-the offending row is reached whatever the size, and a size that were a
-multiple of 32 would overrun by a full row rather than by a remainder.
-
-To be precise about the severity: the reads stay inside the BAR. Memory
-BAR sizes are powers of two, the driver only accepts a region with
-pci_resource_len() >= register_size (forcedeth.c:5757-5762), and the
-next power of two at or above each register_size already covers the
-offending row: 0x400 for 0x270 and 0x2d4, 0x800 for 0x604. ioremap()
-also rounds the mapped length up to page granularity, so the reads land
-inside the mapping the CPU has as well. What they leave is the window
-the driver asked for, not the BAR and not the mapping. That is still a
-driver reading registers it did not ask for, and it is trivial to
-avoid, but nobody should expect a fault from it.
-
-Changing <= to < is not enough: register_size is a length and every size
-above is larger than its last row start, so i still reaches the offending
-row. Check that the whole row fits instead.
-
-The trade-off is that a partial trailing row is no longer dumped: 16 bytes
-for VER1, 20 for VER2, 4 for VER3. That seemed preferable to reading
-outside the requested window, and to open-coding a second, narrower dump
-for the remainder in what is a debug-only path. Extending the dump to
-cover the tail can be done on top if anyone misses those registers.
-
-Only reachable with the debug_tx_timeout module parameter, which defaults
-to false. It has not been observed at runtime: forcing a genuine TX
-timeout on the reference machine is not something I can do safely, so this
-rests on the arithmetic above and on a build test, not on a reproduction.
-UBSAN does not catch it either, since these are MMIO reads rather than an
-array access. It was found by reading the function while fixing the
-saved_config_space off-by-one in nv_suspend() and nv_resume().
-
-The dump was introduced with a fixed 0x400 bound while ioremap() mapped
-only NV_PCI_REGSZ (0x270), so it read about 0x190 bytes too far from the
-start. Commit 86a0f04387bf ("[PATCH] forcedeth: fix initialization")
-later replaced 0x400 with np->register_size, which shrank the overrun to
-the remainder but did not remove it.
-
-Fixes: c2dba06dae7d ("[PATCH] forcedeth: rewritten tx irq handling")
-Signed-off-by: Marek Czernohous <marek@czernohous.de>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
-Link: https://patch.msgid.link/178682367886.3748309.6978554332066826294@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=221096
+Link: https://github.com/openwrt/mt76/issues/927
+Reported-by: Ryan Gilbert <xelnaga@gmail.com>
+Signed-off-by: Javier Tia <floss@jetm.me>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Stable-dep-of: 59c3ee19ca88 ("Bluetooth: btmtk: Do not report success when subsys reset fails")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/nvidia/forcedeth.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/bluetooth/btmtk.c     | 60 ++++++++++++++++++++++++++++++++---
+ drivers/bluetooth/btmtk.h     |  7 ++--
+ drivers/bluetooth/btmtksdio.c |  2 +-
+ 3 files changed, 61 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/ethernet/nvidia/forcedeth.c b/drivers/net/ethernet/nvidia/forcedeth.c
-index c9fb3be4fca94..f28ea729ebb4f 100644
---- a/drivers/net/ethernet/nvidia/forcedeth.c
-+++ b/drivers/net/ethernet/nvidia/forcedeth.c
-@@ -2754,7 +2754,7 @@ static void nv_tx_timeout(struct net_device *dev, unsigned int txqueue)
+diff --git a/drivers/bluetooth/btmtk.c b/drivers/bluetooth/btmtk.c
+index 40ee12dc21792..348efc60787f9 100644
+--- a/drivers/bluetooth/btmtk.c
++++ b/drivers/bluetooth/btmtk.c
+@@ -25,6 +25,22 @@
+ /* It is for mt79xx iso data transmission setting */
+ #define MTK_ISO_THRESHOLD	264
  
- 		netdev_info(dev, "Ring at %lx\n", (unsigned long)np->ring_addr);
- 		netdev_info(dev, "Dumping tx registers\n");
--		for (i = 0; i <= np->register_size; i += 32) {
-+		for (i = 0; i + 32 <= np->register_size; i += 32) {
- 			netdev_info(dev,
- 				    "%3x: %08x %08x %08x %08x "
- 				    "%08x %08x %08x %08x\n",
++/* Known MT6639 (MT7927) Bluetooth USB devices.
++ * Used to scope the zero-CHIPID workaround to real MT6639 hardware,
++ * since some boards return 0x0000 from the MMIO chip ID register.
++ */
++static const struct {
++	u16 vendor;
++	u16 product;
++} btmtk_mt6639_devs[] = {
++	{ 0x0489, 0xe13a },	/* ASUS ROG Crosshair X870E Hero */
++	{ 0x0489, 0xe0fa },	/* Lenovo Legion Pro 7 16ARX9 */
++	{ 0x0489, 0xe10f },	/* Gigabyte Z790 AORUS MASTER X */
++	{ 0x0489, 0xe110 },	/* MSI X870E Ace Max */
++	{ 0x0489, 0xe116 },	/* TP-Link Archer TBE550E */
++	{ 0x13d3, 0x3588 },	/* ASUS ROG STRIX X870E-E */
++};
++
+ struct btmtk_patch_header {
+ 	u8 datetime[16];
+ 	u8 platform[4];
+@@ -112,7 +128,11 @@ static void btmtk_coredump_notify(struct hci_dev *hdev, int state)
+ void btmtk_fw_get_filename(char *buf, size_t size, u32 dev_id, u32 fw_ver,
+ 			   u32 fw_flavor)
+ {
+-	if (dev_id == 0x7925)
++	if (dev_id == 0x6639)
++		snprintf(buf, size,
++			 "mediatek/mt7927/BT_RAM_CODE_MT%04x_2_%x_hdr.bin",
++			 dev_id & 0xffff, (fw_ver & 0xff) + 1);
++	else if (dev_id == 0x7925)
+ 		snprintf(buf, size,
+ 			 "mediatek/mt%04x/BT_RAM_CODE_MT%04x_1_%x_hdr.bin",
+ 			 dev_id & 0xffff, dev_id & 0xffff, (fw_ver & 0xff) + 1);
+@@ -128,7 +148,8 @@ void btmtk_fw_get_filename(char *buf, size_t size, u32 dev_id, u32 fw_ver,
+ EXPORT_SYMBOL_GPL(btmtk_fw_get_filename);
+ 
+ int btmtk_setup_firmware_79xx(struct hci_dev *hdev, const char *fwname,
+-			      wmt_cmd_sync_func_t wmt_cmd_sync)
++			      wmt_cmd_sync_func_t wmt_cmd_sync,
++			      u32 dev_id)
+ {
+ 	struct btmtk_hci_wmt_params wmt_params;
+ 	struct btmtk_patch_header *hdr;
+@@ -166,6 +187,14 @@ int btmtk_setup_firmware_79xx(struct hci_dev *hdev, const char *fwname,
+ 		section_offset = le32_to_cpu(sectionmap->secoffset);
+ 		dl_size = le32_to_cpu(sectionmap->bin_info_spec.dlsize);
+ 
++		/* MT6639: only download sections where dlmode byte0 == 0x01,
++		 * matching the Windows driver behavior which skips WiFi/other
++		 * sections that would cause the chip to hang.
++		 */
++		if (dev_id == 0x6639 && dl_size > 0 &&
++		    (le32_to_cpu(sectionmap->bin_info_spec.dlmodecrctype) & 0xff) != 0x01)
++			continue;
++
+ 		if (dl_size > 0) {
+ 			retry = 20;
+ 			while (retry > 0) {
+@@ -847,7 +876,7 @@ int btmtk_usb_subsys_reset(struct hci_dev *hdev, u32 dev_id)
+ 		if (err < 0)
+ 			return err;
+ 		msleep(100);
+-	} else if (dev_id == 0x7925) {
++	} else if (dev_id == 0x7925 || dev_id == 0x6639) {
+ 		err = btmtk_usb_uhw_reg_read(hdev, MTK_BT_RESET_REG_CONNV3, &val);
+ 		if (err)
+ 			return err;
+@@ -933,7 +962,7 @@ int btmtk_usb_subsys_reset(struct hci_dev *hdev, u32 dev_id)
+ 	}
+ 
+ 	err = btmtk_usb_id_get(hdev, 0x70010200, &val);
+-	if (err < 0 || !val)
++	if (err < 0 || (!val && dev_id != 0x6639))
+ 		bt_dev_err(hdev, "Can't get device id, subsys reset fail.");
+ 
+ 	return err;
+@@ -1319,6 +1348,24 @@ int btmtk_usb_setup(struct hci_dev *hdev)
+ 		fw_flavor = (fw_flavor & 0x00000080) >> 7;
+ 	}
+ 
++	if (!dev_id) {
++		u16 vid = le16_to_cpu(btmtk_data->udev->descriptor.idVendor);
++		u16 pid = le16_to_cpu(btmtk_data->udev->descriptor.idProduct);
++		int i;
++
++		for (i = 0; i < ARRAY_SIZE(btmtk_mt6639_devs); i++) {
++			if (vid == btmtk_mt6639_devs[i].vendor &&
++			    pid == btmtk_mt6639_devs[i].product) {
++				dev_id = 0x6639;
++				break;
++			}
++		}
++
++		if (dev_id)
++			bt_dev_info(hdev, "MT6639: CHIPID=0x0000 with VID=%04x PID=%04x, using 0x6639",
++				    vid, pid);
++	}
++
+ 	btmtk_data->dev_id = dev_id;
+ 
+ 	err = btmtk_register_coredump(hdev, btmtk_data->drv_name, fw_version);
+@@ -1336,11 +1383,13 @@ int btmtk_usb_setup(struct hci_dev *hdev)
+ 	case 0x7925:
+ 	case 0x7961:
+ 	case 0x7902:
++	case 0x6639:
+ 		btmtk_fw_get_filename(fw_bin_name, sizeof(fw_bin_name), dev_id,
+ 				      fw_version, fw_flavor);
+ 
+ 		err = btmtk_setup_firmware_79xx(hdev, fw_bin_name,
+-						btmtk_usb_hci_wmt_sync);
++						btmtk_usb_hci_wmt_sync,
++						dev_id);
+ 		if (err < 0) {
+ 			bt_dev_err(hdev, "Failed to set up firmware (%d)", err);
+ 			return err;
+@@ -1507,3 +1556,4 @@ MODULE_FIRMWARE(FIRMWARE_MT7668);
+ MODULE_FIRMWARE(FIRMWARE_MT7922);
+ MODULE_FIRMWARE(FIRMWARE_MT7961);
+ MODULE_FIRMWARE(FIRMWARE_MT7925);
++MODULE_FIRMWARE(FIRMWARE_MT7927);
+diff --git a/drivers/bluetooth/btmtk.h b/drivers/bluetooth/btmtk.h
+index b4506186b2f70..8f40180ca92e3 100644
+--- a/drivers/bluetooth/btmtk.h
++++ b/drivers/bluetooth/btmtk.h
+@@ -8,6 +8,7 @@
+ #define FIRMWARE_MT7902		"mediatek/BT_RAM_CODE_MT7902_1_1_hdr.bin"
+ #define FIRMWARE_MT7961		"mediatek/BT_RAM_CODE_MT7961_1_2_hdr.bin"
+ #define FIRMWARE_MT7925		"mediatek/mt7925/BT_RAM_CODE_MT7925_1_1_hdr.bin"
++#define FIRMWARE_MT7927		"mediatek/mt7927/BT_RAM_CODE_MT6639_2_1_hdr.bin"
+ 
+ #define HCI_EV_WMT 0xe4
+ #define HCI_WMT_MAX_EVENT_SIZE		64
+@@ -188,7 +189,8 @@ typedef int (*wmt_cmd_sync_func_t)(struct hci_dev *,
+ int btmtk_set_bdaddr(struct hci_dev *hdev, const bdaddr_t *bdaddr);
+ 
+ int btmtk_setup_firmware_79xx(struct hci_dev *hdev, const char *fwname,
+-			      wmt_cmd_sync_func_t wmt_cmd_sync);
++			      wmt_cmd_sync_func_t wmt_cmd_sync,
++			      u32 dev_id);
+ 
+ int btmtk_setup_firmware(struct hci_dev *hdev, const char *fwname,
+ 			 wmt_cmd_sync_func_t wmt_cmd_sync);
+@@ -227,7 +229,8 @@ static inline int btmtk_set_bdaddr(struct hci_dev *hdev,
+ 
+ static inline int btmtk_setup_firmware_79xx(struct hci_dev *hdev,
+ 					    const char *fwname,
+-					    wmt_cmd_sync_func_t wmt_cmd_sync)
++					    wmt_cmd_sync_func_t wmt_cmd_sync,
++					    u32 dev_id)
+ {
+ 	return -EOPNOTSUPP;
+ }
+diff --git a/drivers/bluetooth/btmtksdio.c b/drivers/bluetooth/btmtksdio.c
+index 1123428a1c245..ea976671983f5 100644
+--- a/drivers/bluetooth/btmtksdio.c
++++ b/drivers/bluetooth/btmtksdio.c
+@@ -884,7 +884,7 @@ static int mt79xx_setup(struct hci_dev *hdev, const char *fwname)
+ 	u8 param = 0x1;
+ 	int err;
+ 
+-	err = btmtk_setup_firmware_79xx(hdev, fwname, mtk_hci_wmt_sync);
++	err = btmtk_setup_firmware_79xx(hdev, fwname, mtk_hci_wmt_sync, 0);
+ 	if (err < 0) {
+ 		bt_dev_err(hdev, "Failed to setup 79xx firmware (%d)", err);
+ 		return err;
 -- 
 2.53.0
 
