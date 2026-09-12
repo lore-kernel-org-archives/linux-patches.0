@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10BCF346774;
-	Sat, 12 Sep 2026 14:36:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8A599463;
+	Sat, 12 Sep 2026 14:36:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789223807; cv=none; b=cdI9FHpgoLOTmH2O/LeQ3eOW/0Z2sZZP53I2W1hEXyprzHZYUHCjGNpyAW7yhslSmmpsFEr0Au/WcUxPKSfiOaNiTG2qu0D5N4ZZyfIA4MAA9GVEYi7YrAei0bYzkLM9A3ztCVnxYbEl6q5FEA2VG2f6RcG0vgPQ+188zf0EQSw=
+	t=1789223812; cv=none; b=Dwcz+MUAORWASJNbEEnvlZrmwmXGgzuFHhW+oIdWdCH+Eff+NlHfcl3MKJuA5tKalN31M3TsIE5oII7cJrLuIQeqIQix9QR1nLDLjp/jBTLml8jvcO4RS9mF3lAho7ggHul+NCxMVqO33niQJ9THUMMpqZZkmT10e5te5HL62G0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789223807; c=relaxed/simple;
-	bh=OXH9s67pEyLQ8skTkU4BdG17adczI2nvTCHfVs2Q9tI=;
+	s=arc-20240116; t=1789223812; c=relaxed/simple;
+	bh=goSzmNHdzFlQNYmdqlENvC0kTtGXUU7t6rVLubrD3YI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dSdb0x1Qbc8anoTK31oaWAobW8pFCrOLKFeAilDmMDwyKIbVScrbbWOqMekJKwM3o8zRPrGkX6WewJXm5vkEPUNZO+qMhya61VbgAShFcDh9n27YJU9aiDYIq7iJac5ABeOrGeXQBx/bUG5g+1sGybXs/g3AyNlrLW1OT/+RQBw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C9IKf49y; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JjbgvvJFSspslWpFHskzhJEDLjS3eNbmRBLotsBhha9KjPq/mlCY61o+TKTf3jDLh5kWTUOkHe629PYJ9rooUANjoWo8q8CngOIDQ9dM4KCGk9CqOxVDyrkbyT6LI9RNXXw8SwVOeVPQyWqhcinbAPyWuwjMbbPf7KejLKkLxPw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2srzUVwR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C9IKf49y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BD861F000FF;
-	Sat, 12 Sep 2026 14:36:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2srzUVwR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2C161F000FF;
+	Sat, 12 Sep 2026 14:36:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789223805;
-	bh=IS/p5KHbrttS9KJjxLB70sMEoz8s1NcxKe1jbUFPAwE=;
+	s=korg; t=1789223810;
+	bh=Rxp1h9hdgUSgS9TAnJg2EBbRsZrS7gQaBESUrAX9lpc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=C9IKf49y8scIfmokPh/4mLCmUJW/uQWdhkxGXAkL5RUSNy3+YzQB/nHcPPGh3cgFH
-	 u2rUxWOAwbl2l4KWC1eMNSFnaqtNzamKo3hZOYmOHnsETMXfeytxQgftddF/4SXME4
-	 eZKcKtLu6tiAMZ066JYAoJCDJs2BJpmo/iYRD1lw=
+	b=2srzUVwRiftrE7A/cnB8C0i8BpNm2eFca0VnI9dtDYjYGUTaYymQzncHIXXI/7TUg
+	 o+8+pc7/nKSmBDqPK0nwqvutr1poSLYCiTL8Ct/MVpuCSApfNjC8PI8NnWIHeETsCe
+	 lEbsmaE6zRlVaLmFuytZ8E7rIqOMcKR/EiuOpSAs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	TanZheng <tanzheng@kylinos.cn>,
-	Leon Romanovsky <leon@kernel.org>,
+	Frank Li <Frank.Li@nxp.com>,
+	Koichiro Den <den@valinux.co.jp>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0821/1424] RDMA/srpt: Fix srpt_alloc_rw_ctxs() unwind counters
-Date: Sat, 12 Sep 2026 08:54:13 +0200
-Message-ID: <20260912065625.689687419@linuxfoundation.org>
+Subject: [PATCH 6.6 0812/1424] dmaengine: dw-edma: Terminate all descriptors without callbacks
+Date: Sat, 12 Sep 2026 08:54:04 +0200
+Message-ID: <20260912065625.477837519@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -51,60 +52,204 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: TanZheng <tanzheng@kylinos.cn>
+From: Koichiro Den <den@valinux.co.jp>
 
-[ Upstream commit b38f98e176050850f41bb6415f3a71400056623e ]
+[ Upstream commit 99109a51efd28c9a661fbfb9469b023c517b31d1 ]
 
-When srpt_alloc_rw_ctxs() fails partway through a multi-buffer indirect
-descriptor, the unwind path destroys RDMA contexts but leaves stale
-n_rw_ctx and n_rdma values (and a dangling rw_ctxs pointer). Later
-sq_wr_avail accounting in srpt_queue_response() or srpt_write_pending()
-can then subtract the wrong number of send queue credits.
+The DMA Engine client documentation says in the "Terminate APIs" section
+of Documentation/driver-api/dmaengine/client.rst:
 
-Reset the counters and clear rw_ctxs after freeing the heap
-allocation before returning an error.
+"No callback functions will be called for any incomplete transfers."
 
-Fixes: b99f8e4d7bcd ("IB/srpt: convert to the generic RDMA READ/WRITE API")
-Signed-off-by: TanZheng <tanzheng@kylinos.cn>
-Link: https://patch.msgid.link/20260715101550.45345-1-kensanya@163.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+dw-edma instead calls vchan_cookie_complete() when a deferred STOP reaches
+the interrupt handler. This schedules a callback for the active descriptor
+and leaves other issued or submitted descriptors queued. A late callback
+after dmaengine_terminate_sync() can dereference client state that has
+already been freed, while leftover descriptors may later restart into
+reused buffers or leak.
+
+Move all issued and submitted descriptors to the terminated list whenever
+termination completes. For a pending STOP, do this from both the DONE and
+ABORT paths. Complete their cookies in order without scheduling callbacks.
+
+A STOP can remain pending until the running transfer raises an
+interrupt. Make device_synchronize() wait for such a pending STOP to
+complete before releasing terminated descriptors. Reuse it from
+free_chan_resources(), then release the remaining virt-dma resources.
+Sleep instead of busy-polling while waiting, and warn if the existing
+timeout expires.
+
+Fixes: e63d79d1ffcd ("dmaengine: Add Synopsys eDMA IP core driver")
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Koichiro Den <den@valinux.co.jp>
+Link: https://patch.msgid.link/20260717180639.2643243-3-den@valinux.co.jp
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/ulp/srpt/ib_srpt.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/dma/dw-edma/dw-edma-core.c | 90 +++++++++++++++++++++++++-----
+ 1 file changed, 76 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/infiniband/ulp/srpt/ib_srpt.c b/drivers/infiniband/ulp/srpt/ib_srpt.c
-index 13e1fc5e2759a..4a90e7d84d5c9 100644
---- a/drivers/infiniband/ulp/srpt/ib_srpt.c
-+++ b/drivers/infiniband/ulp/srpt/ib_srpt.c
-@@ -959,6 +959,7 @@ static int srpt_alloc_rw_ctxs(struct srpt_send_ioctx *ioctx,
- 	struct srpt_rdma_ch *ch = ioctx->ch;
- 	struct scatterlist *prev = NULL;
- 	unsigned prev_nents;
-+	u8 n_rdma, n_rw_ctx;
- 	int ret, i;
+diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-edma-core.c
+index fa0691c3b330d..e8ac14e7691e2 100644
+--- a/drivers/dma/dw-edma/dw-edma-core.c
++++ b/drivers/dma/dw-edma/dw-edma-core.c
+@@ -7,6 +7,7 @@
+  */
  
- 	if (nbufs == 1) {
-@@ -970,6 +971,9 @@ static int srpt_alloc_rw_ctxs(struct srpt_send_ioctx *ioctx,
- 			return -ENOMEM;
- 	}
- 
-+	n_rw_ctx = ioctx->n_rw_ctx;
-+	n_rdma = ioctx->n_rdma;
-+
- 	for (i = ioctx->n_rw_ctx; i < nbufs; i++, db++) {
- 		struct srpt_rw_ctx *ctx = &ioctx->rw_ctxs[i];
- 		u64 remote_addr = be64_to_cpu(db->va);
-@@ -1016,6 +1020,9 @@ static int srpt_alloc_rw_ctxs(struct srpt_send_ioctx *ioctx,
- 	}
- 	if (ioctx->rw_ctxs != &ioctx->s_rw_ctx)
- 		kfree(ioctx->rw_ctxs);
-+	ioctx->rw_ctxs = NULL;
-+	ioctx->n_rw_ctx = n_rw_ctx;
-+	ioctx->n_rdma = n_rdma;
- 	return ret;
+ #include <linux/module.h>
++#include <linux/delay.h>
+ #include <linux/device.h>
+ #include <linux/kernel.h>
+ #include <linux/dmaengine.h>
+@@ -212,6 +213,35 @@ static int dw_edma_start_transfer(struct dw_edma_chan *chan)
+ 	return 1;
  }
  
++static void dw_edma_terminate_vdesc(struct virt_dma_desc *vd)
++{
++	list_del(&vd->node);
++	dma_cookie_complete(&vd->tx);
++	vchan_terminate_vdesc(vd);
++}
++
++static void dw_edma_terminate_vdesc_list(struct list_head *head)
++{
++	struct virt_dma_desc *vd, *_vd;
++
++	list_for_each_entry_safe(vd, _vd, head, node)
++		dw_edma_terminate_vdesc(vd);
++}
++
++/* Must be called with vc.lock held. */
++static void dw_edma_terminate_all_descs(struct dw_edma_chan *chan)
++{
++	/*
++	 * This order must not be reversed. Cookies are assigned when
++	 * descriptors are submitted, so desc_issued contains older cookies
++	 * than desc_submitted. Completing desc_submitted first could move
++	 * chan->vc.chan.completed_cookie backwards when desc_issued is
++	 * terminated afterwards.
++	 */
++	dw_edma_terminate_vdesc_list(&chan->vc.desc_issued);
++	dw_edma_terminate_vdesc_list(&chan->vc.desc_submitted);
++}
++
+ static void dw_edma_device_caps(struct dma_chan *dchan,
+ 				struct dma_slave_caps *caps)
+ {
+@@ -283,20 +313,22 @@ static int dw_edma_device_terminate_all(struct dma_chan *dchan)
+ 	struct dw_edma_chan *chan = dchan2dw_edma_chan(dchan);
+ 	int err = 0;
+ 
++	guard(spinlock_irqsave)(&chan->vc.lock);
++
+ 	if (!chan->configured) {
+-		/* Do nothing */
++		dw_edma_terminate_all_descs(chan);
+ 	} else if (chan->status == EDMA_ST_PAUSE) {
++		dw_edma_terminate_all_descs(chan);
+ 		chan->status = EDMA_ST_IDLE;
+-		chan->configured = false;
+ 	} else if (chan->status == EDMA_ST_IDLE) {
+-		chan->configured = false;
++		dw_edma_terminate_all_descs(chan);
+ 	} else if (dw_edma_core_ch_status(chan) == DMA_COMPLETE) {
+ 		/*
+ 		 * The channel is in a false BUSY state, probably didn't
+ 		 * receive or lost an interrupt
+ 		 */
++		dw_edma_terminate_all_descs(chan);
+ 		chan->status = EDMA_ST_IDLE;
+-		chan->configured = false;
+ 	} else if (chan->request > EDMA_REQ_PAUSE) {
+ 		err = -EPERM;
+ 	} else {
+@@ -652,8 +684,7 @@ static void dw_edma_done_interrupt(struct dw_edma_chan *chan)
+ 			break;
+ 
+ 		case EDMA_REQ_STOP:
+-			list_del(&vd->node);
+-			vchan_cookie_complete(vd);
++			dw_edma_terminate_all_descs(chan);
+ 			chan->request = EDMA_REQ_NONE;
+ 			chan->status = EDMA_ST_IDLE;
+ 			break;
+@@ -672,7 +703,9 @@ static void dw_edma_abort_interrupt(struct dw_edma_chan *chan)
+ 
+ 	spin_lock_irqsave(&chan->vc.lock, flags);
+ 	vd = vchan_next_desc(&chan->vc);
+-	if (vd) {
++	if (vd && chan->request == EDMA_REQ_STOP) {
++		dw_edma_terminate_all_descs(chan);
++	} else if (vd) {
+ 		dw_hdma_set_callback_result(vd, DMA_TRANS_ABORTED);
+ 		list_del(&vd->node);
+ 		vchan_cookie_complete(vd);
+@@ -720,21 +753,49 @@ static int dw_edma_alloc_chan_resources(struct dma_chan *dchan)
+ 	return 0;
+ }
+ 
+-static void dw_edma_free_chan_resources(struct dma_chan *dchan)
++static void dw_edma_wait_termination(struct dma_chan *dchan)
+ {
++	struct dw_edma_chan *chan = dchan2dw_edma_chan(dchan);
+ 	unsigned long timeout = jiffies + msecs_to_jiffies(5000);
+-	int ret;
++	bool stopping;
+ 
++	/*
++	 * A STOP may be deferred to a later interrupt while the channel is still
++	 * running. Wait until that handler completes the termination.
++	 */
+ 	while (time_before(jiffies, timeout)) {
+-		ret = dw_edma_device_terminate_all(dchan);
+-		if (!ret)
+-			break;
++		scoped_guard(spinlock_irqsave, &chan->vc.lock)
++			stopping = chan->request == EDMA_REQ_STOP;
+ 
+-		if (time_after_eq(jiffies, timeout))
++		if (!stopping)
+ 			return;
+ 
+-		cpu_relax();
++		fsleep(1000);
+ 	}
++
++	dev_warn(chan->dw->chip->dev,
++		 "timeout waiting for channel termination\n");
++}
++
++static void dw_edma_device_synchronize(struct dma_chan *dchan)
++{
++	struct dw_edma_chan *chan = dchan2dw_edma_chan(dchan);
++
++	dw_edma_wait_termination(dchan);
++	vchan_synchronize(&chan->vc);
++}
++
++static void dw_edma_free_chan_resources(struct dma_chan *dchan)
++{
++	struct dw_edma_chan *chan = dchan2dw_edma_chan(dchan);
++
++	dw_edma_device_terminate_all(dchan);
++	dw_edma_device_synchronize(dchan);
++
++	scoped_guard(spinlock_irqsave, &chan->vc.lock)
++		chan->configured = false;
++
++	vchan_free_chan_resources(&chan->vc);
+ }
+ 
+ static int dw_edma_channel_setup(struct dw_edma *dw, u32 wr_alloc, u32 rd_alloc)
+@@ -830,6 +891,7 @@ static int dw_edma_channel_setup(struct dw_edma *dw, u32 wr_alloc, u32 rd_alloc)
+ 	dma->device_pause = dw_edma_device_pause;
+ 	dma->device_resume = dw_edma_device_resume;
+ 	dma->device_terminate_all = dw_edma_device_terminate_all;
++	dma->device_synchronize = dw_edma_device_synchronize;
+ 	dma->device_issue_pending = dw_edma_device_issue_pending;
+ 	dma->device_tx_status = dw_edma_device_tx_status;
+ 	dma->device_prep_slave_sg = dw_edma_device_prep_slave_sg;
 -- 
 2.53.0
 
