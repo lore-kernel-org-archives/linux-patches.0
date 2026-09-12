@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC3EB415B7B;
-	Sat, 12 Sep 2026 09:33:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1C6441A575;
+	Sat, 12 Sep 2026 09:33:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789205619; cv=none; b=lBvHtfn9Hwf2nVes4JU7I8ZyatHQstI3RgXbXkNwZxfq82QceUUyEyMHi0uIz9COiM6HHgwKlA9SiM0wYpbadX704Kh99Czkf7M7NxiFh6hB1EkH6z2qeq3CzhXnHSpwiwZhnkxT+i9DD4EQU9NiGYlgWzpz/0IteDxML9BuHIs=
+	t=1789205624; cv=none; b=AxSU1lKgNDxLNIhUaoa0tsgoHnbRf9Js9EzOITaQh64aI/VUiCO26oCy44Ht+I05sWDTeljNZr6/KoONflR6at+rnQMO/904WmgWfwypOxzmZ+AxcZlu6Ol8xXdE7ylrytrDVbGg5fC8+uOX+iEJS3fIuVESgYwyRynppI5lFWU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789205619; c=relaxed/simple;
-	bh=K84HUdGS667OfsJ0tFiWP3QadZNOUuCpN0vPl9yF/ZI=;
+	s=arc-20240116; t=1789205624; c=relaxed/simple;
+	bh=5HXfrqUs3lwsDEHYYV32MBLy4+ITmgdvA3Cb6CaDrK0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=euVHjkOFAELzK0lTdPLJ2L5Kq/LbacisqrOwyPAGyhi8Bc2BqsjSSTWGAj5+IIJjxcYwcSPYmNcTitZoE0lHNgs7Yhi4u4hboi3mkS5gUlRecLISbiEga9qNyhwRBTtdLCCaPYe1hdo0t8LJ/LPxDX9xTibyXCqUXPblKgkRM0Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iRpNCaJn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aWYT9w0BdmwWO1LqK9fx6r23k+pOljaRF6NQpbSfD5P+b+z93Q56k7bSIyaahw8FEmssHrU+/yc+nnjQjuj9V299uTJR1RqtAOgvLQ4JYfOe0msmKvFVMe0qNox+/wu6ZTaLSqKjiXrgJAI5RWO39lM/eNidzh/b6U+WIRxqXBY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WeBVCE38; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iRpNCaJn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2F461F000FF;
-	Sat, 12 Sep 2026 09:33:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WeBVCE38"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF1091F00893;
+	Sat, 12 Sep 2026 09:33:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789205614;
-	bh=x8A7quyyzuDd7eSvGdh74u7xyqihzwObphjbcGIrb+o=;
+	s=korg; t=1789205620;
+	bh=mWLbR3H6gRgGSwSwB1kCIII9MzaIicM9jd2XwguTdcI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iRpNCaJn+STSQKkeF1y4CG9x8nfl0JUA585a73pkSekzecF//DGNsJpGVQ9pZqAAp
-	 lf67lDYRKNjQLX+fr3O3eQEo1aFvNeDQIRFeh2TadWei4Cieugu07CeZeGqQdBRnYO
-	 TzodfC8uJ7U4J40uW607qHYG+i35EvCyPssJTugo=
+	b=WeBVCE38JT99OGTGL9j1SFc4LxoAwaOnopp6yyuH0HutcjU/dNhw8XsypEzwUm3Bu
+	 DMx36iK6Olxq91giGlmzCjdlZzL9FEZVF8Axr9M093WFg6TitgXxeET6gMUtnyEwrx
+	 RnzyjeaW9JlmOl/78bL+auPenwz0iaD9N0APT7FA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weidong Zhu <weizhu@fiu.edu>,
-	Keith Busch <kbusch@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Chao Shi <coshi036@gmail.com>,
+	Niklas Schnelle <schnelle@linux.ibm.com>,
+	Farhan Ali <alifm@linux.ibm.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0037/1518] nvme: skip the zoned limits update if the zone info query failed
-Date: Sat, 12 Sep 2026 08:36:46 +0200
-Message-ID: <20260912065624.270358642@linuxfoundation.org>
+Subject: [PATCH 6.18 0038/1518] PCI: Allow per function PCI slots to fix slot reset on s390
+Date: Sat, 12 Sep 2026 08:36:47 +0200
+Message-ID: <20260912065624.293491224@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -53,101 +52,154 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Shi <coshi036@gmail.com>
+From: Farhan Ali <alifm@linux.ibm.com>
 
-[ Upstream commit 3838e80fcfb32e62baffb63c6dc0a60153665a4d ]
+[ Upstream commit dcc5bec09e23bbc4f9de055a11fce9937244f2c8 ]
 
-nvme_query_zone_info() returns either a negative errno or a positive
-NVMe status code, but nvme_update_ns_info_block() only tests for the
-negative case:
+On s390 systems, which use a machine level hypervisor, PCI devices are
+always accessed through a form of PCI pass-through which fundamentally
+operates on a per PCI function granularity. This is also reflected in the
+s390 PCI hotplug driver which creates hotplug slots for individual PCI
+functions. Its reset_slot() function, which is a wrapper for
+zpci_hot_reset_device(), thus also resets individual functions.
 
-	ret = nvme_query_zone_info(ns, lbaf, &zi);
-	if (ret < 0)
-		goto out;
+Currently, the pci_create_slot() assigns the same pci_slot object to
+multifunction devices. This approach worked fine on s390 systems that only
+exposed virtual functions as individual PCI domains to the operating
+system.  Since commit 44510d6fa0c0 ("s390/pci: Handling multifunctions")
+s390 supports exposing the topology of multifunction PCI devices by
+grouping them in a shared PCI domain. This creates a problem when resetting
+a function through the hotplug driver's slot_reset() interface.
 
-If the device fails the Identify Namespace (I/O Command Set specific)
-command, or the Identify Controller command issued by
-nvme_set_max_append(), the positive status falls through and setup
-continues with the zero-initialized zone info.  nvme_update_zone_info()
-then marks the queue zoned with chunk_sectors and ns->head->zsze set to
-zero.
+When attempting to reset a function through the hotplug driver, the shared
+slot assignment causes the wrong function to be reset instead of the
+intended one. It also leaks memory as we do create a pci_slot object for
+the function, but don't correctly free it in pci_slot_release().
 
-blk_validate_zoned_limits() does not check chunk_sectors, so the limits
-commit succeeds.  blk_revalidate_disk_zones() does reject the zero zone
-size, but by then the limits are live and nothing rolls them back, so
-I/O keeps being submitted to a zoned queue with a zero zone size and
-disk_zone_no() shifts by ilog2(0):
+Add a flag for struct pci_slot to allow per function PCI slots for
+functions managed through a hypervisor, which exposes individual PCI
+functions while retaining the topology. Since we can use all 8 bits for
+slot 'number' (for ARI devices), change slot 'number' u16 to account for
+special values PCI_SLOT_PLACEHOLDER and PCI_SLOT_ALL_DEVICES.
 
-  nvme0n1: Invalid non power of two zone size (0)
-  UBSAN: shift-out-of-bounds in include/linux/blkdev.h:747:16
-  shift exponent -1 is negative
-   disk_zone_no include/linux/blkdev.h:747 [inline]
-   bio_straddles_zones include/linux/blkdev.h:1058 [inline]
-   blk_zone_wplug_handle_write block/blk-zoned.c:1423 [inline]
-   blk_zone_plug_bio.cold+0x25/0x1c8 block/blk-zoned.c:1605
-   blk_mq_submit_bio+0x18fb/0x2870 block/blk-mq.c:3196
-   submit_bh_wbc+0x575/0x740 fs/buffer.c:2824
-   __block_write_full_folio+0x728/0xdd0 fs/buffer.c:1933
-
-Any device, firmware or NVMe-oF target that fails this one command
-reaches this.
-
-Skip the zoned limits update in that case, and log which of the two
-things happened: during a revalidation the queue keeps the zone
-geometry it was last validated with, and on a first scan the namespace
-is registered without zoned limits, so that it is still available as a
-handle for admin commands.  Neither of the paths in
-nvme_query_zone_info() that return a positive status logs anything, so
-the failure would otherwise be silent.
-
-zi.zone_size is an exact indicator: every path that returns a positive
-status returns before it is assigned, and after that the only failure
-left is -ENODEV, which the caller already handles.
-
-Found by FuzzNvme.
-Fixes: c85c9ab926a5 ("nvme: split nvme_update_zone_info")
+Fixes: 44510d6fa0c0 ("s390/pci: Handling multifunctions")
+Suggested-by: Niklas Schnelle <schnelle@linux.ibm.com>
+Signed-off-by: Farhan Ali <alifm@linux.ibm.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Niklas Schnelle <schnelle@linux.ibm.com>
 Cc: stable@vger.kernel.org
-Cc: Weidong Zhu <weizhu@fiu.edu>
-Suggested-by: Keith Busch <kbusch@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Chao Shi <coshi036@gmail.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Link: https://patch.msgid.link/20260805165518.794-3-alifm@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/host/core.c |   21 +++++++++++++++++++--
- 1 file changed, 19 insertions(+), 2 deletions(-)
+ drivers/pci/pci.c   |    5 +++--
+ drivers/pci/slot.c  |   29 +++++++++++++++++++++++------
+ include/linux/pci.h |    7 ++++---
+ 3 files changed, 30 insertions(+), 11 deletions(-)
 
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -2383,9 +2383,26 @@ static int nvme_update_ns_info_block(str
- 	if (!nvme_update_disk_info(ns, id, &lim))
- 		capacity = 0;
+--- a/drivers/pci/pci.c
++++ b/drivers/pci/pci.c
+@@ -4828,8 +4828,9 @@ static int pci_reset_hotplug_slot(struct
  
-+	/*
-+	 * A failed zone info query leaves zi zero-initialized, so skip the
-+	 * zoned limits update instead of configuring the queue from it.
-+	 * During a revalidation that keeps the zone geometry the queue was
-+	 * last validated with; on a first scan the namespace is registered
-+	 * without zoned limits, so that it is still available as a handle
-+	 * for admin commands.
-+	 */
- 	if (IS_ENABLED(CONFIG_BLK_DEV_ZONED) &&
--	    ns->head->ids.csi == NVME_CSI_ZNS)
--		nvme_update_zone_info(ns, &lim, &zi);
-+	    ns->head->ids.csi == NVME_CSI_ZNS) {
-+		if (zi.zone_size)
-+			nvme_update_zone_info(ns, &lim, &zi);
-+		else
-+			dev_warn(ns->ctrl->device,
-+				 "zone info query failed for nsid %u, %s\n",
-+				 ns->head->ns_id,
-+				 blk_queue_is_zoned(ns->disk->queue) ?
-+				 "keeping the previous zone limits" :
-+				 "not enabling zoned mode");
-+	}
+ static int pci_dev_reset_slot_function(struct pci_dev *dev, bool probe)
+ {
+-	if (dev->multifunction || dev->subordinate || !dev->slot ||
+-	    dev->dev_flags & PCI_DEV_FLAGS_NO_BUS_RESET)
++	if (dev->subordinate || !dev->slot ||
++	    dev->dev_flags & PCI_DEV_FLAGS_NO_BUS_RESET ||
++	    (dev->multifunction && !dev->slot->per_func_slot))
+ 		return -ENOTTY;
  
- 	if ((ns->ctrl->vwc & NVME_CTRL_VWC_PRESENT) && !info->no_vwc)
- 		lim.features |= BLK_FEAT_WRITE_CACHE | BLK_FEAT_FUA;
+ 	return pci_reset_hotplug_slot(dev->slot->hotplug, probe);
+--- a/drivers/pci/slot.c
++++ b/drivers/pci/slot.c
+@@ -72,6 +72,23 @@ static ssize_t cur_speed_read_file(struc
+ 	return bus_speed_read(slot->bus->cur_bus_speed, buf);
+ }
+ 
++static bool pci_dev_matches_slot(struct pci_dev *dev, struct pci_slot *slot)
++{
++	if (slot->per_func_slot)
++		return dev->devfn == slot->number;
++
++	return slot->number == PCI_SLOT_ALL_DEVICES ||
++		PCI_SLOT(dev->devfn) == slot->number;
++}
++
++static bool pci_slot_enabled_per_func(void)
++{
++	if (IS_ENABLED(CONFIG_S390))
++		return true;
++
++	return false;
++}
++
+ static void pci_slot_release(struct kobject *kobj)
+ {
+ 	struct pci_dev *dev;
+@@ -82,8 +99,7 @@ static void pci_slot_release(struct kobj
+ 
+ 	down_read(&pci_bus_sem);
+ 	list_for_each_entry(dev, &slot->bus->devices, bus_list)
+-		if (slot->number == PCI_SLOT_ALL_DEVICES ||
+-		    PCI_SLOT(dev->devfn) == slot->number)
++		if (pci_dev_matches_slot(dev, slot))
+ 			dev->slot = NULL;
+ 	up_read(&pci_bus_sem);
+ 
+@@ -176,8 +192,7 @@ void pci_dev_assign_slot(struct pci_dev
+ 
+ 	mutex_lock(&pci_slot_mutex);
+ 	list_for_each_entry(slot, &dev->bus->slots, list)
+-		if (slot->number == PCI_SLOT_ALL_DEVICES ||
+-		    PCI_SLOT(dev->devfn) == slot->number)
++		if (pci_dev_matches_slot(dev, slot))
+ 			dev->slot = slot;
+ 	mutex_unlock(&pci_slot_mutex);
+ }
+@@ -288,6 +303,9 @@ placeholder:
+ 	slot->bus = pci_bus_get(parent);
+ 	slot->number = slot_nr;
+ 
++	if (pci_slot_enabled_per_func())
++		slot->per_func_slot = 1;
++
+ 	slot->kobj.kset = pci_slots_kset;
+ 
+ 	slot_name = make_slot_name(name);
+@@ -308,8 +326,7 @@ placeholder:
+ 
+ 	down_read(&pci_bus_sem);
+ 	list_for_each_entry(dev, &parent->devices, bus_list)
+-		if (slot_nr == PCI_SLOT_ALL_DEVICES ||
+-		    PCI_SLOT(dev->devfn) == slot_nr)
++		if (pci_dev_matches_slot(dev, slot))
+ 			dev->slot = slot;
+ 	up_read(&pci_bus_sem);
+ 
+--- a/include/linux/pci.h
++++ b/include/linux/pci.h
+@@ -78,17 +78,18 @@
+  * and, if ARI Forwarding is enabled, functions may appear to be on multiple
+  * devices.
+  */
+-#define PCI_SLOT_ALL_DEVICES	0xfe
++#define PCI_SLOT_ALL_DEVICES	0xfeff
+ 
+ /* Used to identify a slot as a placeholder */
+-#define PCI_SLOT_PLACEHOLDER	0xff
++#define PCI_SLOT_PLACEHOLDER	0xffff
+ 
+ /* pci_slot represents a physical slot */
+ struct pci_slot {
+ 	struct pci_bus		*bus;		/* Bus this slot is on */
+ 	struct list_head	list;		/* Node in list of slots */
+ 	struct hotplug_slot	*hotplug;	/* Hotplug info (move here) */
+-	unsigned char		number;		/* Device nr, or PCI_SLOT_ALL_DEVICES */
++	u16			number;		/* Device nr, or PCI_SLOT_ALL_DEVICES */
++	unsigned int		per_func_slot:1; /* Allow per function slot */
+ 	struct kobject		kobj;
+ };
+ 
 
 
