@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4D843D9DC0;
-	Sat, 12 Sep 2026 11:13:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1F4D429000;
+	Sat, 12 Sep 2026 11:13:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789211616; cv=none; b=DKV4UtFRy0vYFO2+o0CCrkjXpMxezQJ8KLQ60DJr7/OLmdhXDnZN+J6XrNHfIAUL9CEMhiT8pGiDeHS5EH3qSHDA85VkqMbNAQV+n4AX2fAhJvzvoOy2sSzL1pcONRMesIPqomQkNn72aBpphRe6U0CS7XLNlKxyD/0ryNrh5s8=
+	t=1789211620; cv=none; b=asouQpCuVEjcB4uu133bg+Ga6+5lgB3sFaOxqPHJYKsINjzdDi6jsEY5QTbzjJlNWbK77TLTdf6eSQ44MvHR/1b4E9cYes5/83JudAF7eW/b6cEKXb5OOfkWbFzEYiBgtfUGLi5bPSGHDIp3Nj1PuswdaWBlpFAiNHIIphL6OWg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789211616; c=relaxed/simple;
-	bh=6eV3XuBm15Eo0lj/4H125ouZKLRdK5jJli9pm/g7w1w=;
+	s=arc-20240116; t=1789211620; c=relaxed/simple;
+	bh=e7fwJzY7K5dimtywnqxY2TzytQzrhGazFP+B/S+V/kM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jd63s6JqyXTMuSBHJv5i9ib4W630V3nc1KP3Kpm3wf79oyAe3k4LfumKSor7hc++/pxq2/C0K1RqtGHvczwOuEZqiSEMrL+Abia3lC8F3uwrJxMrlZhtoOtAgAZ63qczJBkuegt90SK8sAXvcgNxtQZsqIyC35JQ2ziPMnvJ490=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aqJg9Opl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kFPHNV3taY3lpzmurTiuAlDn2MXWZA0FPSFcyVeWg0lFPE5WrFBXvkzQys/xrttTvY1Cpg/ndjjvEzg6OKfxF7lrTaN4QtjKzM0Jqa+2QOX4H/LcfDFiUA0/1AIAN/Eu8+TT9YvOyRVxBiL4dwerhH+d+DKbnaRtLP2bFdVIyAs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xnVqpeIh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aqJg9Opl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E08CA1F000FF;
-	Sat, 12 Sep 2026 11:13:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xnVqpeIh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87BF71F000FF;
+	Sat, 12 Sep 2026 11:13:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789211614;
-	bh=HABmUkMQfuYfPM/iMNGPHsks8qt1uFBtTTCJGn5inz4=;
+	s=korg; t=1789211619;
+	bh=SLDMyy75SEsIUUKtNTVnNcA94acmZHjT7sVnTKPPoSA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aqJg9OplZEV/xYE376+6Mqtqql8KmIG6ZhgIK0N0wGgKbUlR7l7H1C43n0Z0oiEw/
-	 Id7W7QbufE2YI2NvQYSXiIoU4ZvEArOBhHYTM3e/Apsx1N+PDTcBlUI6OvAnHzQX9Q
-	 xumKBc7IPl9AeNQFMJg4vf3vAh/+22ghyJGrVqu4=
+	b=xnVqpeIhVaNm/ERkvrKvcbUeTyukxksQM6PF3gr50y39NkHRRA49ML0QRNsAW2zXk
+	 9lkPog9RBCORpMEefaLpAUoyTWm25pzrTgNmd5z1IhGBnmXF31RZ9f+QwMaD9zygSy
+	 N+GxxrI/z9tPjpqQtEG8xmx3OcteZo0Alx7nLud8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Andreas Schwab <schwab@linux-m68k.org>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1267/1518] f2fs: fix to avoid pinfile fragment on fragment:{block, segment} mode
-Date: Sat, 12 Sep 2026 08:57:16 +0200
-Message-ID: <20260912065652.171972488@linuxfoundation.org>
+Subject: [PATCH 6.18 1241/1518] m68k: nfcon: Do not call console_is_registered() in nfcon_device()
+Date: Sat, 12 Sep 2026 08:56:50 +0200
+Message-ID: <20260912065651.579687829@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,172 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Andreas Schwab <schwab@linux-m68k.org>
 
-[ Upstream commit 0a1703eba23707e3b2edfa2a2329352e7abc0ffa ]
+[ Upstream commit 2f8e3cad53b5c36ab0ed5d3195bfc55c59ea61a5 ]
 
-pinfile fallocate() conflicts w/ mode=fragment:{block,segment} mount option,
-result in fragment blocks in pinfile, it violate semantics of pinfile
-introduced in commit f5a53edcf01e ("f2fs: support aligned pinned file").
+Since 7c2af0f634f1 ("tty: tty_io: use console_list_lock for list
+synchronization") show_cons_active() calls the .device() method under
+the console_list_lock, but console_is_registered() tries to acquire
+console_list_lock as well, causing a deadlock.  It should not be
+necessary to check console_is_registered() here since the function
+should not be called in the fist place when the console is not
+registered.
 
-mkfs.f2fs -f /dev/vdb
-mount -t f2fs -o mode=fragment:block /dev/vdb /mnt/f2fs/
-dd if=/dev/zero of=/mnt/f2fs/file bs=1M count=3900
-sync
-touch /mnt/f2fs/pinfile
-f2fs_io pinfile set /mnt/f2fs/pinfile
-f2fs_io fallocate 0 0 $((1024*1024*16)) /mnt/f2fs/pinfile
-sync
-f2fs_io fiemap 0 $((1024*1024*16)) /mnt/f2fs/pinfile
-
-[Before]
-fallocate failed: No space left on device
-Fiemap: offset = 0 len = 16777216
-        logical addr.    physical addr.   length           flags
-0       0000000000000000 00000000d7200000 0000000000004000 00001000
-1       0000000000004000 00000000d7207000 0000000000001000 00001000
-2       0000000000005000 00000000d720c000 0000000000002000 00001000
-3       0000000000007000 00000000d7211000 0000000000001000 00001000
-4       0000000000008000 00000000d7214000 0000000000001000 00001000
-5       0000000000009000 00000000d7218000 0000000000001000 00001000
-6       000000000000a000 00000000d721d000 0000000000001000 00001000
-7       000000000000b000 00000000d721f000 0000000000004000 00001000
-...
-96      00000000000f1000 00000000d73e9000 0000000000004000 00001000
-97      00000000000f5000 00000000d73f1000 0000000000003000 00001000
-98      00000000000f8000 00000000d73f5000 0000000000004000 00001000
-99      00000000000fc000 00000000d73fa000 0000000000001000 00001000
-100     00000000000fd000 00000000d73ff000 0000000000001000 00001001
-
-[After]
-fallocated a file: i_size=16777216, i_blocks=32808
-Fiemap: offset = 0 len = 16777216
-        logical addr.    physical addr.   length           flags
-0       0000000000000000 0000000018a00000 0000000000400000 00001000
-1       0000000000400000 0000000019000000 0000000000400000 00001000
-2       0000000000800000 0000000032400000 0000000000200000 00001000
-3       0000000000a00000 0000000038000000 0000000000200000 00001000
-4       0000000000c00000 0000000039c00000 0000000000200000 00001000
-5       0000000000e00000 0000000044c00000 0000000000200000 00001001
-
-Let's ignore mode=fragment:{block,segment} mount option while fallocate()
-on pinfile.
-
-Fixes: 6691d940b0e0 ("f2fs: introduce fragment allocation mode mount option")
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Fixes: 7c2af0f634f1 ("tty: tty_io: use console_list_lock for list synchronization")
+Signed-off-by: Andreas Schwab <schwab@linux-m68k.org>
+Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Link: https://patch.msgid.link/87ecfzsv6h.fsf@igel.home
+Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/f2fs.h    | 15 +++++++++++----
- fs/f2fs/gc.c      |  2 +-
- fs/f2fs/segment.c |  8 ++++----
- fs/f2fs/super.c   |  4 ++--
- 4 files changed, 18 insertions(+), 11 deletions(-)
+ arch/m68k/emu/nfcon.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/f2fs/f2fs.h b/fs/f2fs/f2fs.h
-index 25e5285e2e032..bb3f41f088bd3 100644
---- a/fs/f2fs/f2fs.h
-+++ b/fs/f2fs/f2fs.h
-@@ -4019,19 +4019,26 @@ static inline struct inode *fio_inode(struct f2fs_io_info *fio)
- #define MIN_FRAGMENT_SIZE	1
- #define MAX_FRAGMENT_SIZE	512
- 
--static inline bool f2fs_need_rand_blk(struct f2fs_sb_info *sbi)
-+static inline bool f2fs_need_rand_blk(struct f2fs_sb_info *sbi,
-+					enum log_type type)
+diff --git a/arch/m68k/emu/nfcon.c b/arch/m68k/emu/nfcon.c
+index d41260672e24b..f4657d9f4f153 100644
+--- a/arch/m68k/emu/nfcon.c
++++ b/arch/m68k/emu/nfcon.c
+@@ -49,7 +49,7 @@ static void nfcon_write(struct console *con, const char *str,
+ static struct tty_driver *nfcon_device(struct console *con, int *index)
  {
-+	if (type == CURSEG_COLD_DATA_PINNED)
-+		return false;
- 	return F2FS_OPTION(sbi).fs_mode == FS_MODE_FRAGMENT_BLK;
+ 	*index = 0;
+-	return console_is_registered(con) ? nfcon_tty_driver : NULL;
++	return nfcon_tty_driver;
  }
  
--static inline bool f2fs_need_rand_seg(struct f2fs_sb_info *sbi)
-+static inline bool f2fs_need_rand_seg(struct f2fs_sb_info *sbi,
-+					enum log_type type)
- {
-+	if (type == CURSEG_COLD_DATA_PINNED)
-+		return false;
- 	return F2FS_OPTION(sbi).fs_mode == FS_MODE_FRAGMENT_SEG;
- }
- 
--static inline bool f2fs_need_rand_seg_blk(struct f2fs_sb_info *sbi)
-+static inline bool f2fs_need_rand_seg_blk(struct f2fs_sb_info *sbi,
-+					enum log_type type)
- {
--	return f2fs_need_rand_blk(sbi) || f2fs_need_rand_seg(sbi);
-+	return f2fs_need_rand_blk(sbi, type) || f2fs_need_rand_seg(sbi, type);
- }
- 
- /*
-diff --git a/fs/f2fs/gc.c b/fs/f2fs/gc.c
-index 9951255b86846..4c7d07aa0838d 100644
---- a/fs/f2fs/gc.c
-+++ b/fs/f2fs/gc.c
-@@ -312,7 +312,7 @@ static void select_policy(struct f2fs_sb_info *sbi, int gc_type,
- 		p->max_search = sbi->max_victim_search;
- 
- 	/* let's select beginning hot/small space first. */
--	if (f2fs_need_rand_seg_blk(sbi)) {
-+	if (f2fs_need_rand_seg_blk(sbi, type)) {
- 		p->offset = get_random_u32_below(MAIN_SECS(sbi) *
- 						SEGS_PER_SEC(sbi));
- 		SIT_I(sbi)->last_victim[p->gc_mode] = p->offset;
-diff --git a/fs/f2fs/segment.c b/fs/f2fs/segment.c
-index d6814f7093496..8d2f5680ac7d1 100644
---- a/fs/f2fs/segment.c
-+++ b/fs/f2fs/segment.c
-@@ -2964,7 +2964,7 @@ static unsigned int __get_next_segno(struct f2fs_sb_info *sbi, int type)
- 
- 	sanity_check_seg_type(sbi, seg_type);
- 	if (__is_large_section(sbi)) {
--		if (f2fs_need_rand_seg_blk(sbi)) {
-+		if (f2fs_need_rand_seg_blk(sbi, type)) {
- 			unsigned int hint = GET_SEC_FROM_SEG(sbi, curseg->segno);
- 
- 			if (GET_SEC_FROM_SEG(sbi, curseg->segno + 1) != hint)
-@@ -2973,7 +2973,7 @@ static unsigned int __get_next_segno(struct f2fs_sb_info *sbi, int type)
- 					GET_SEG_FROM_SEC(sbi, hint + 1) - 1);
- 		}
- 		return curseg->segno;
--	} else if (f2fs_need_rand_seg_blk(sbi)) {
-+	} else if (f2fs_need_rand_seg_blk(sbi, type)) {
- 		return get_random_u32_below(MAIN_SECS(sbi) * SEGS_PER_SEC(sbi));
- 	}
- 
-@@ -3029,7 +3029,7 @@ static int new_curseg(struct f2fs_sb_info *sbi, int type, bool new_sec)
- 	curseg->next_segno = segno;
- 	reset_curseg(sbi, type, 1);
- 	curseg->alloc_type = LFS;
--	if (f2fs_need_rand_blk(sbi))
-+	if (f2fs_need_rand_blk(sbi, type))
- 		curseg->fragment_remained_chunk =
- 				get_random_u32_inclusive(1, sbi->max_fragment_chunk);
- 	return 0;
-@@ -3832,7 +3832,7 @@ int f2fs_allocate_data_block(struct f2fs_sb_info *sbi, struct folio *folio,
- 		curseg->next_blkoff = f2fs_find_next_ssr_block(sbi, curseg);
- 	} else {
- 		curseg->next_blkoff++;
--		if (f2fs_need_rand_blk(sbi))
-+		if (f2fs_need_rand_blk(sbi, type))
- 			f2fs_randomize_chunk(sbi, curseg);
- 	}
- 	if (curseg->next_blkoff >= f2fs_usable_blks_in_seg(sbi, curseg->segno))
-diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
-index c1cd66c1897a1..c558cc4cf8fb4 100644
---- a/fs/f2fs/super.c
-+++ b/fs/f2fs/super.c
-@@ -2401,9 +2401,9 @@ static int f2fs_show_options(struct seq_file *seq, struct dentry *root)
- 		seq_puts(seq, "adaptive");
- 	else if (F2FS_OPTION(sbi).fs_mode == FS_MODE_LFS)
- 		seq_puts(seq, "lfs");
--	else if (f2fs_need_rand_seg(sbi))
-+	else if (f2fs_need_rand_seg(sbi, NO_CHECK_TYPE))
- 		seq_puts(seq, "fragment:segment");
--	else if (f2fs_need_rand_blk(sbi))
-+	else if (f2fs_need_rand_blk(sbi, NO_CHECK_TYPE))
- 		seq_puts(seq, "fragment:block");
- 	seq_printf(seq, ",active_logs=%u", F2FS_OPTION(sbi).active_logs);
- 	if (test_opt(sbi, RESERVE_ROOT) || test_opt(sbi, RESERVE_NODE))
+ static struct console nf_console = {
 -- 
 2.53.0
 
