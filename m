@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0364A37A498;
-	Sat, 12 Sep 2026 11:29:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00F86247280;
+	Sat, 12 Sep 2026 11:29:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789212574; cv=none; b=AXFgvJGjDVBUZNY3Uz9vj870PJbqlktsXAIsQiHrvD+EqjHHKexhwQf0aTpHggQftbTdGlToT6XMS9GIVzbtpMUo2IJ+mJW3gjOZ1EzdexlwP6fj4og20QEIDWBXFmTNXu66XJyuCUKgg3Z01vDKnJEPWqwRVOm0HOfvZ8akj2c=
+	t=1789212579; cv=none; b=tAduY+wBjrteDxHMxG03UgAcmuJikwgJky5ohG2nCKHScGD5J+mXdX4Thr+E4E0xXOQctLcOxXcgUJh6z2h9rWBJ5+iCSQMlY80ramb0gxc2nb+YKcmwTzk9xcpMOkK7k8h/rjjUIyz0Ro9pDiOKPgU4EarEjXqGZNN87CvtLtE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789212574; c=relaxed/simple;
-	bh=Kmk64qEuvKOi8rGP9bVthYePw80SVaeY/7tLQ8s+7f4=;
+	s=arc-20240116; t=1789212579; c=relaxed/simple;
+	bh=1J1WkpfY2IPoQuKID1wjNEWTsoAZXulIJQZS0ZnQT1w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jqI7G/zhr9TzQt8cbMf44AaIxbK0bNTyYAS4bEAy+gvHUvCDI2aXA7Rk5D8BjI77lpad1xCtt8ELyLAwpQDo4xkaucKCjX8JQQXK6LtUikbEELum+N7c0kNieGBxiLQcqxTo6eTZJgM4h9w9FYstk6ZYatbxlYgU16whJLkfCuU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rJCQ7lxB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ShVgCiUoMqEySUerxNh1M8say6dkoG6kuWJowfBrot9H/f2mbNZTRaokN8c1rwSKn7SQqiwMKdqmKIaKuKKb7ws/xzRezNFUa7R7dbMgeoDZ2XZi3t/0ROjkrJHLSPoiL8FmlAu0hW8/CnHcuPUgxbHQzogHr840r9BTcTILYpU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QFEZFqwA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rJCQ7lxB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B69891F000FF;
-	Sat, 12 Sep 2026 11:29:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QFEZFqwA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 651631F000FF;
+	Sat, 12 Sep 2026 11:29:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789212572;
-	bh=uJs57QnLRsvyLh6h3voxIAFc2dO7xm69BXK8Ja79OPU=;
+	s=korg; t=1789212577;
+	bh=vwlHwfpn/jrqK4Vw70UW2jpQ768IBdrSn/T32eqv0SY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rJCQ7lxByRIJQbezetMrBUfrfPqTaDwQi1MNPFEMRixGZATXc9VWA5+dLiu0HRT2z
-	 cqSyfl7XuaayecaPxVyEQELmmYMd0XU7YF3P/MBf+Ab8P+YvoX2BmgTGJnlAFPixgm
-	 HeGH13hSUW092XrlTV0TICbcx2Qe+SDhVZdJ1Kb4=
+	b=QFEZFqwAjW+yPsq58VOh2BykQeEuZEhO3tHMQdN+3qI07cgmRC1u5ZOdYcaWOfHKt
+	 I3PeDgKF5/UCgUCneB5dgGR5XpwhXI6dE2m8SC9L0scvd/ohim3F+OJy1OBJjTo6MF
+	 R0lI0XY9GLkNYtDOTLrsGTkf1rnuee5Rl4X6Gy6M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jose Fernandez (Anthropic)" <jose.fernandez@linux.dev>,
-	Ben Cressey <ben@cressey.dev>,
-	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 6.18 1462/1518] dm-integrity: fix buffer overflow with keyed discard
-Date: Sat, 12 Sep 2026 09:00:31 +0200
-Message-ID: <20260912065656.627959497@linuxfoundation.org>
+	"Miquel Raynal (DAVE)" <miquel.raynal@bootlin.com>,
+	Michal Simek <michal.simek@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 1463/1518] mtd: rawnand: pl353: Fix debug prints
+Date: Sat, 12 Sep 2026 09:00:32 +0200
+Message-ID: <20260912065656.650348633@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,42 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ben Cressey <ben@cressey.dev>
+From: Miquel Raynal (DAVE) <miquel.raynal@bootlin.com>
 
-commit 59e6f919d77d72ec79cbf171256f2f7819737580 upstream.
+[ Upstream commit 2b7baaddf1bc3e39206a0354449fdc349945b86b ]
 
-Since commit 68c5c42567bc ("dm-integrity: replace forgeable discard
-filler with a keyed sector marker"), integrity_metadata computes a
-checksum for every discarded block into the "checksums" buffer.
-integrity_sector_checksum always writes the whole digest. So if the tag
-size is smaller than the digest size, the checksum of the last block
-that fits into the buffer is written past the end of it. For example,
-with hmac(sha256) and tag size 16, a 4MiB discard writes 16 bytes past
-the kmalloc'ed page.
+They are partially incorrect since "software" engine does not mean
+hamming, the "none" cae is also falling into this print, and on-die
+means there is some kind of hardware support; we prefer to use the
+wording on-host vs. on-die.
 
-Fix this by subtracting extra_space from the buffer size when computing
-max_blocks, like we do for writes.
+Fix all those prints.
 
-Fixes: 68c5c42567bc ("dm-integrity: replace forgeable discard filler with a keyed sector marker")
-Reviewed-by: Jose Fernandez (Anthropic) <jose.fernandez@linux.dev>
-Signed-off-by: Ben Cressey <ben@cressey.dev>
-Assisted-by: Claude:unspecified
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 1e06dbfdfb85 ("mtd: rawnand: pl353: Add message about ECC mode")
+Signed-off-by: Miquel Raynal (DAVE) <miquel.raynal@bootlin.com>
+Acked-by: Michal Simek <michal.simek@amd.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-integrity.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mtd/nand/raw/pl35x-nand-controller.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
---- a/drivers/md/dm-integrity.c
-+++ b/drivers/md/dm-integrity.c
-@@ -1979,7 +1979,7 @@ static void integrity_metadata(struct wo
- 		if (unlikely(dio->op == REQ_OP_DISCARD)) {
- 			unsigned int bi_size = dio->bio_details.bi_iter.bi_size;
- 			unsigned int max_size = likely(checksums != checksums_onstack) ? PAGE_SIZE : HASH_MAX_DIGESTSIZE;
--			unsigned int max_blocks = max_size / ic->tag_size;
-+			unsigned int max_blocks = (max_size - extra_space) / ic->tag_size;
- 			sector_t sector = dio->range.logical_sector;
+diff --git a/drivers/mtd/nand/raw/pl35x-nand-controller.c b/drivers/mtd/nand/raw/pl35x-nand-controller.c
+index 7d43506b1654d..12b9e0936c8f1 100644
+--- a/drivers/mtd/nand/raw/pl35x-nand-controller.c
++++ b/drivers/mtd/nand/raw/pl35x-nand-controller.c
+@@ -972,17 +972,19 @@ static int pl35x_nand_attach_chip(struct nand_chip *chip)
  
- 			if (!ic->discard_keyed)
+ 	switch (chip->ecc.engine_type) {
+ 	case NAND_ECC_ENGINE_TYPE_ON_DIE:
+-		dev_dbg(nfc->dev, "Using on-die ECC\n");
++		dev_dbg(nfc->dev, "Using on-die hardware ECC\n");
+ 		/* Keep these legacy BBT descriptors for ON_DIE situations */
+ 		chip->bbt_td = &bbt_main_descr;
+ 		chip->bbt_md = &bbt_mirror_descr;
+ 		fallthrough;
+ 	case NAND_ECC_ENGINE_TYPE_NONE:
++		dev_dbg(nfc->dev, "Using no ECC engine\n");
++		break;
+ 	case NAND_ECC_ENGINE_TYPE_SOFT:
+-		dev_dbg(nfc->dev, "Using software ECC (Hamming 1-bit/512B)\n");
++		dev_dbg(nfc->dev, "Using software ECC\n");
+ 		break;
+ 	case NAND_ECC_ENGINE_TYPE_ON_HOST:
+-		dev_dbg(nfc->dev, "Using hardware ECC\n");
++		dev_dbg(nfc->dev, "Using on-host hardware ECC\n");
+ 		ret = pl35x_nand_init_hw_ecc_controller(nfc, chip);
+ 		if (ret)
+ 			return ret;
+-- 
+2.53.0
+
 
 
