@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22729415B7B;
-	Sat, 12 Sep 2026 09:31:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 432773F4DE2;
+	Sat, 12 Sep 2026 09:31:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789205508; cv=none; b=Hfd82ovm1h+zmjSsxRP7sVoGzVtrzSmzUgmPvrJp6AfGwyoIjhLRbhbx965PYL4YCJYqH/Devp71O20EMidFeMg70CakGS6pk9LJuFYh6GqB1u6jTs61qP8hgkPwebFS48amceweEQpqACyxvK0RmSCuUXhiNcGuClUItm65LpA=
+	t=1789205513; cv=none; b=rNm8uEqYex237+XK903ZHGXzG+2+jn9p5/GLEWmLEZiClY/SBLHwg19yXcy3NFzLpo9sMVfJQwIBrzaufHcWJTqWy+Twdl7fCnBAzbmECr3Yq0ZxhVnHD5pTdmiuajR5nRJ5annXOrfvwLi0MmxzRPp2gQKECYLSJpdt6PBlwkg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789205508; c=relaxed/simple;
-	bh=ViNi0K25XsNqWR17hI4xg2Zq29EGB4zP+L9UOSvreG8=;
+	s=arc-20240116; t=1789205513; c=relaxed/simple;
+	bh=3JWDh6vVpbgyVdSFZBLUD6zqM98BQwZD7hhqSQ2LnCg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=rixXIfjshGGJ2/dYquGura3O0pSeuoL6YtWlVt+qruPHBM0p3mxnrXdb2SmiPbZqdgoGUhcP9XjBGQxSYO9qMHuu5wV4FM0oSW9z79GpAoVMH58vv0AJC+rAdTjw1+4J/rUHLaUdIW3WWboQ9GU12y1RB0gDIaIlwE6GG3rgxkE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q2SYBBks; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=pDBJXWe6aGmbM4e53CqQOukvsjgtNxIcuBejYFAoLI4OAfqMKoS+S9FV/Ecy7iXZ+yGJnIe+KvV/ORqEPfyMWeSMeU8XB7vQOiWuJz2ijUv/Ko9HIehy1Q2x6VhzpK15x/GJnd1A1/NGLEy+kKwnNPX2bYWZBcywELHG2DxTQ/Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LYdTkbGw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q2SYBBks"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 289CE1F000FF;
-	Sat, 12 Sep 2026 09:31:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LYdTkbGw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD55B1F000FF;
+	Sat, 12 Sep 2026 09:31:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789205507;
-	bh=WwzeFj08ATo+LmnIIznS4HzRpcjrjYYkCg09Kw8Ko8w=;
+	s=korg; t=1789205511;
+	bh=fwmtbUrrkzsj+VC5u9/4cHUFnyBq8W6EmE7r3HD9SMY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=q2SYBBks7Ak983WxMuQhZS+CsJANSDpr8u0BsaEVWrsvipyyB/3Swv82PUmEFv6NU
-	 bVlDW16ZfjsDF0OhRad2B5bP+VQ03fTNqqf2i7xyQhUnFEKxfQ6dBjqda4ZeRWZT6i
-	 fccy0fSmciXsHIrsavz/RN4d/q2gyrJI48wPonmg=
+	b=LYdTkbGwajyVKLsFnICBsy4ZdgMFBPpO1eEzbUI2CVjFmIHH1+3nDWtgdfrqf04rF
+	 yy1QPgVngBJ80LAXp8DIMjkr4ZQ/4GAoxxfFWLBieTGsfICcE2vqENrGMS7Mpjdb95
+	 ULoM4V8y3rrNLtI9yUQI7+eRF3/JIqB7pLj3iFEQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0017/1518] platform/x86: intel_sar: Check ACPI_HANDLE() against NULL
-Date: Sat, 12 Sep 2026 08:36:26 +0200
-Message-ID: <20260912065623.808210819@linuxfoundation.org>
+Subject: [PATCH 6.18 0018/1518] platform/x86: ISST: Check for admin capability for write commands
+Date: Sat, 12 Sep 2026 08:36:27 +0200
+Message-ID: <20260912065623.830471111@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -53,75 +52,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+From: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
 
-[ Upstream commit 2765f16c12af7c2533763e46b8113b727354012d ]
+[ Upstream commit 69cd1ca440a96c85dcedcddfa5e0af6012f60b8b ]
 
-Every platform driver can be forced to match a device that doesn't match
-its list of device IDs because of device_match_driver_override(), so
-platform drivers that rely on the existence of a device's ACPI companion
-object need to verify its presence.
+In some SST deployments, administrators want to allow reading SST
+capabilities for non-root users. This can be achieved by changing file
+permissions for "/dev/isst_interface", but they still want to prevent
+any changes to the SST configuration by non-root users.
 
-Accordingly, add a requisite ACPI_HANDLE() check against NULL to the
-platform/x86 intel_sar driver.
+This capability was available before for non-TPMI SST. Extend the same
+capability for TPMI SST by adding a check for CAP_SYS_ADMIN for all
+write commands.
 
-Fixes: dcfbd31ef4bc ("platform/x86: BIOS SAR driver for Intel M.2 Modem")
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://patch.msgid.link/14023870.uLZWGnKmhe@rafael.j.wysocki
+Signed-off-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+Link: https://patch.msgid.link/20260107060729.1634420-1-srinivas.pandruvada@linux.intel.com
 Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-
-For this stable dependency, also convert the existing allocations in
-parse_package() and sar_probe() to kmalloc_objs() and kzalloc_obj().
-Both helpers are already available in this tree and retain the same
-allocation sizes and GFP_KERNEL flags. This makes intel_sar.c match
-the parent of 30c906cff490 ("platform/x86: int1092: Fix potential
-memory leak in sar_probe()"), allowing that target to apply unchanged.
-No new functions or allocation helpers are introduced.
-
-Stable-dep-of: 30c906cff490 ("platform/x86: int1092: Fix potential memory leak in sar_probe()")
+Stable-dep-of: e45d6b847286 ("platform/x86: ISST: Validate max level for set feature")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/intel/int1092/intel_sar.c |   13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ drivers/platform/x86/intel/speed_select_if/isst_tpmi_core.c |   11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
---- a/drivers/platform/x86/intel/int1092/intel_sar.c
-+++ b/drivers/platform/x86/intel/int1092/intel_sar.c
-@@ -91,8 +91,8 @@ static acpi_status parse_package(struct
- 	    item->package.count <= data->total_dev_mode)
- 		return AE_ERROR;
+--- a/drivers/platform/x86/intel/speed_select_if/isst_tpmi_core.c
++++ b/drivers/platform/x86/intel/speed_select_if/isst_tpmi_core.c
+@@ -625,7 +625,7 @@ static long isst_if_core_power_state(voi
+ 		return -EINVAL;
  
--	data->device_mode_info = kmalloc_array(data->total_dev_mode,
--					       sizeof(struct wwan_device_mode_info), GFP_KERNEL);
-+	data->device_mode_info = kmalloc_objs(struct wwan_device_mode_info,
-+					      data->total_dev_mode);
- 	if (!data->device_mode_info)
- 		return AE_ERROR;
+ 	if (core_power.get_set) {
+-		if (power_domain_info->write_blocked)
++		if (power_domain_info->write_blocked || !capable(CAP_SYS_ADMIN))
+ 			return -EPERM;
  
-@@ -245,15 +245,20 @@ static void sar_get_data(int reg, struct
- static int sar_probe(struct platform_device *device)
- {
- 	struct wwan_sar_context *context;
-+	acpi_handle handle;
- 	int reg;
- 	int result;
+ 		if (core_power.enable > SST_CP_MAX_ENABLE ||
+@@ -684,7 +684,7 @@ static long isst_if_clos_param(void __us
+ 		return -EINVAL;
  
--	context = kzalloc(sizeof(*context), GFP_KERNEL);
-+	handle = ACPI_HANDLE(&device->dev);
-+	if (!handle)
-+		return -ENODEV;
-+
-+	context = kzalloc_obj(*context);
- 	if (!context)
- 		return -ENOMEM;
+ 	if (clos_param.get_set) {
+-		if (power_domain_info->write_blocked)
++		if (power_domain_info->write_blocked || !capable(CAP_SYS_ADMIN))
+ 			return -EPERM;
  
- 	context->sar_device = device;
--	context->handle = ACPI_HANDLE(&device->dev);
-+	context->handle = handle;
- 	dev_set_drvdata(&device->dev, context);
+ 		if (!in_range(clos_param.min_freq_mhz / SST_MUL_FACTOR_FREQ, 0, SST_MAX_FREQ + 1))
+@@ -795,7 +795,8 @@ static long isst_if_clos_assoc(void __us
  
- 	result = guid_parse(SAR_DSM_UUID, &context->guid);
+ 		power_domain_info = &sst_inst->power_domain_info[part][punit_id];
+ 
+-		if (assoc_cmds.get_set && power_domain_info->write_blocked)
++		if (assoc_cmds.get_set && (power_domain_info->write_blocked ||
++					   !capable(CAP_SYS_ADMIN)))
+ 			return -EPERM;
+ 
+ 		offset = SST_CLOS_ASSOC_0_OFFSET +
+@@ -973,7 +974,7 @@ static int isst_if_set_perf_level(void _
+ 	if (!power_domain_info)
+ 		return -EINVAL;
+ 
+-	if (power_domain_info->write_blocked)
++	if (power_domain_info->write_blocked || !capable(CAP_SYS_ADMIN))
+ 		return -EPERM;
+ 
+ 	if (!(power_domain_info->pp_header.allowed_level_mask & BIT(perf_level.level)))
+@@ -1033,7 +1034,7 @@ static int isst_if_set_perf_feature(void
+ 	if (!power_domain_info)
+ 		return -EINVAL;
+ 
+-	if (power_domain_info->write_blocked)
++	if (power_domain_info->write_blocked || !capable(CAP_SYS_ADMIN))
+ 		return -EPERM;
+ 
+ 	if (perf_feature.feature & ~SST_PP_FEATURE_STATE_VALID_MASK)
 
 
