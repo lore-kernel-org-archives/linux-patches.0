@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4A3C38AC9A;
-	Sat, 12 Sep 2026 13:43:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7293478C9C;
+	Sat, 12 Sep 2026 13:43:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789220593; cv=none; b=u974js0bY5YTsjbLbjeXQ/4igNFURDqQlZHwy/xMRJcZGnYSgNH5X6ry6j71XtTGOWALlx+TRa5RqpmEsFfJoMJpwQKK4LChUem/EAz3ZP5HRsTyxkLfnZNwaiWo4QmfQa19tsCCZHmGWEZ31uKP+FnA1gwToHWcFXVEn9g48Us=
+	t=1789220600; cv=none; b=cLDTeEFk6gCVPwh/QUG2P3FcMuvkSKhzk+gM9SXhSsCRkLobmcy/BNrJ5/Awihpvk0yl2Xvr9wMvkbz6Ivvo3gNBZS+7SNswKZOh84Ee2F3jf1DN3hocNdMl8PRBhKsHWsOhiKcZWNVQY69Vnla26gCQ3g1wWOZuEBdiSaFL9I4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789220593; c=relaxed/simple;
-	bh=jDxWwAoTi/aOAEH6lu+hEei41XNU9q8MqwwLsoBYC0A=;
+	s=arc-20240116; t=1789220600; c=relaxed/simple;
+	bh=WbIzJm4YW6farBBuqwxkvRdWV1HlPVqUhUfwS4IGGQk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JSNvDxpzBotGGv0OYetLuqK982PTH1HVnX6Guv+o5nlKw6Lp+NOg/++bkRyX/2wEsdPo2JgDQU2OgLYfcM8sJgC87plhMnY5Gl2Y0eyxCKbNDgtifMKNhl9v6QmvLHYCYv0xjVmWz2xnVOY/XkoDK8VQpjnFugJLj6MA13Avl9A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PlmwGbc2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eD1C1SfhSlHH5frocTEeRsNn01mX7pJRYlD3NT2gFCkg7Um6TslDjn7nD9kdjLyRVMGHzds3swWPU/9LMVehVe/J3pZgpyKbNnEVvpa7miphQzVgrU1oZShqJUvC1A1YGqX4dA/SXRKDZ5acRG78WZh/HdQgBndIVpEikxtg9sE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gXk5+Why; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PlmwGbc2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 320951F000FF;
-	Sat, 12 Sep 2026 13:43:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gXk5+Why"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36C0A1F000FF;
+	Sat, 12 Sep 2026 13:43:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789220592;
-	bh=qFShwJJaSIdJIvm9xBD8S7tJzubTwwpY2khEmzHxS9A=;
+	s=korg; t=1789220597;
+	bh=mXn3M+oLRc4mwyeQPu3fYVMVCuCmDnidMPisEUK20l0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PlmwGbc2IQM+ZZvHNm4yfkz+V+m6E+JtjhAUEKcGXbAmFhtNCs8W8sNceHR3868Sn
-	 ojsHNPB/iikM2sj4k7EeisFRS3q0yr2wnte/Jj+vQ41cycHwnp+9yYciAJJMLL1AOr
-	 oZ65QhBIZTaG5866mMTEavmNnNj8xAkLSFxdBdmQ=
+	b=gXk5+WhyTAXNLc2U7+1UHIYkXGYErvM7xGtzK5GWqrQRyywXlKUJix3UJVnDyZhZ/
+	 UtcAJmllQhxUo0KK0W4G51Mb36C0mEEeX0OsNZ9iLTz7IChdR4uHjkvLXFDm9dwWds
+	 IwQfEf2F6dnNL1pTVVZko8/nOQ8a3+eUCTyzsYQ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hao-Qun Huang <alvinhuang0603@gmail.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.6 0166/1424] staging: media: tegra-video: vi: fix probe failure on skipped last port
-Date: Sat, 12 Sep 2026 08:43:18 +0200
-Message-ID: <20260912065611.010337845@linuxfoundation.org>
+	Chunkai Deng <chunkai.deng@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 6.6 0167/1424] rpmsg: glink: smem: order FIFO read after availability check
+Date: Sat, 12 Sep 2026 08:43:19 +0200
+Message-ID: <20260912065611.032329524@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -50,69 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hao-Qun Huang <alvinhuang0603@gmail.com>
+From: Chunkai Deng <chunkai.deng@oss.qualcomm.com>
 
-commit ae15adeed9f7ec54989175fe3c9e0815186821bc upstream.
+commit 786439ad58763e04b91bc2ec5f590e463939f197 upstream.
 
-tegra_vi_channels_alloc() iterates over port nodes and skips those
-whose reg property cannot be read or whose remote endpoint fails
-v4l2_fwnode_endpoint_parse(), leaving the negative result of the
-failed call in ret. If that happens on the last port node, the loop
-ends with ret still negative and tegra_vi_init() fails the whole VI
-probe.
+glink_smem_rx_peek() reads the RX FIFO payload after the caller has
+determined data is available via glink_smem_rx_avail(), which reads the
+remote-updated head index. A control dependency between the head read
+and the subsequent payload read does not order the two loads, so the
+CPU may speculatively read the FIFO before observing the head update
+and consume stale data the remote has not yet published.
 
-The same defective port earlier in the ports node is skipped silently,
-so probing succeeds or fails depending on the order of the port nodes.
-The CSI equivalent, tegra_csi_channels_alloc(), returns 0
-unconditionally after its loop and does not have this problem.
+Add rmb() in glink_smem_rx_peek() before the memcpy_fromio() so the
+availability (head) read is ordered ahead of the FIFO payload read,
+matching the consumer pattern in
+Documentation/core-api/circular-buffers.rst.
 
-Use a separate variable for the per-port checks so that only fatal
-errors end up in ret.
-
-Fixes: 1ebaeb09830f ("media: tegra-video: Add support for external sensor capture")
-Fixes: 2ac4035a78c9 ("media: tegra-video: Add support for x8 captures with gang ports")
+Fixes: caf989c350e8 ("rpmsg: glink: Introduce glink smem based transport")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-fable-5
-Signed-off-by: Hao-Qun Huang <alvinhuang0603@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Chunkai Deng <chunkai.deng@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260618-rpmsg-glink-smem-mb-v1-1-68a026453a69@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/media/tegra-video/vi.c |    9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/rpmsg/qcom_glink_smem.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/staging/media/tegra-video/vi.c
-+++ b/drivers/staging/media/tegra-video/vi.c
-@@ -1262,6 +1262,7 @@ static int tegra_vi_channels_alloc(struc
- 	struct device_node *parent;
- 	struct v4l2_fwnode_endpoint v4l2_ep = { .bus_type = 0 };
- 	unsigned int lanes;
-+	int err;
- 	int ret = 0;
+--- a/drivers/rpmsg/qcom_glink_smem.c
++++ b/drivers/rpmsg/qcom_glink_smem.c
+@@ -103,6 +103,13 @@ static void glink_smem_rx_peek(struct qc
+ 	if (tail >= pipe->native.length)
+ 		tail -= pipe->native.length;
  
- 	ports = of_get_child_by_name(node, "ports");
-@@ -1272,8 +1273,8 @@ static int tegra_vi_channels_alloc(struc
- 		if (!of_node_name_eq(port, "port"))
- 			continue;
- 
--		ret = of_property_read_u32(port, "reg", &port_num);
--		if (ret < 0)
-+		err = of_property_read_u32(port, "reg", &port_num);
-+		if (err < 0)
- 			continue;
- 
- 		if (port_num > vi->soc->vi_max_channels) {
-@@ -1294,10 +1295,10 @@ static int tegra_vi_channels_alloc(struc
- 
- 		ep = of_graph_get_endpoint_by_regs(parent, 0, 0);
- 		of_node_put(parent);
--		ret = v4l2_fwnode_endpoint_parse(of_fwnode_handle(ep),
-+		err = v4l2_fwnode_endpoint_parse(of_fwnode_handle(ep),
- 						 &v4l2_ep);
- 		of_node_put(ep);
--		if (ret)
-+		if (err)
- 			continue;
- 
- 		lanes = v4l2_ep.bus.mipi_csi2.num_data_lanes;
++	/*
++	 * Order the availability (head) read in glink_smem_rx_avail()
++	 * against the FIFO payload read below, so APPS never consumes
++	 * stale data the remote has not yet published.
++	 */
++	rmb();
++
+ 	len = min_t(size_t, count, pipe->native.length - tail);
+ 	if (len)
+ 		memcpy_fromio(data, pipe->fifo + tail, len);
 
 
