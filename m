@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1F4D429000;
-	Sat, 12 Sep 2026 11:13:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C853F45629C;
+	Sat, 12 Sep 2026 11:13:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789211620; cv=none; b=asouQpCuVEjcB4uu133bg+Ga6+5lgB3sFaOxqPHJYKsINjzdDi6jsEY5QTbzjJlNWbK77TLTdf6eSQ44MvHR/1b4E9cYes5/83JudAF7eW/b6cEKXb5OOfkWbFzEYiBgtfUGLi5bPSGHDIp3Nj1PuswdaWBlpFAiNHIIphL6OWg=
+	t=1789211625; cv=none; b=ZByLVszjAGnFruEoZHl87VzloGAmYhZtOmrZfSNSB33eDTYSuJbJ8xG4JA4qmYUq0M9BnqPZJILN5JF8sTlJaJ1uwT5OkLfFiaXQXyqvG2DRaPR2aJpMTht5z/Vgxz+U+xNlLved8yQvv5ZzEgUxg9CZ+NHG1GYB6tWoWAwCcp4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789211620; c=relaxed/simple;
-	bh=e7fwJzY7K5dimtywnqxY2TzytQzrhGazFP+B/S+V/kM=;
+	s=arc-20240116; t=1789211625; c=relaxed/simple;
+	bh=JPB++TL8gpa/MrS3/KyKM4I3jFssg2NkshGFK8D6dX8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kFPHNV3taY3lpzmurTiuAlDn2MXWZA0FPSFcyVeWg0lFPE5WrFBXvkzQys/xrttTvY1Cpg/ndjjvEzg6OKfxF7lrTaN4QtjKzM0Jqa+2QOX4H/LcfDFiUA0/1AIAN/Eu8+TT9YvOyRVxBiL4dwerhH+d+DKbnaRtLP2bFdVIyAs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xnVqpeIh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Q8nC2YQkL42zrXpfo/OWhVn+Jn9B1c5AG/O0H0aiXb8QKsyifl9J/b+GZzPF5qyCmy2bj5vav2USYN4mTOjHFYw7EzdOyfZ5HCZZRRAiuxJjH1+HXnZ9gcRD5cJPjrkhS95FzftfhFSUVGUa4XzA5Mm43OuNqktJwuES9zhFw98=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dgjovbb1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xnVqpeIh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87BF71F000FF;
-	Sat, 12 Sep 2026 11:13:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dgjovbb1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF08E1F000FF;
+	Sat, 12 Sep 2026 11:13:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789211619;
-	bh=SLDMyy75SEsIUUKtNTVnNcA94acmZHjT7sVnTKPPoSA=;
+	s=korg; t=1789211624;
+	bh=xqZcVj4IqP3jS9Mxy4LkH8SMg8rG4AEw3spwCZj5NHE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xnVqpeIhVaNm/ERkvrKvcbUeTyukxksQM6PF3gr50y39NkHRRA49ML0QRNsAW2zXk
-	 9lkPog9RBCORpMEefaLpAUoyTWm25pzrTgNmd5z1IhGBnmXF31RZ9f+QwMaD9zygSy
-	 N+GxxrI/z9tPjpqQtEG8xmx3OcteZo0Alx7nLud8=
+	b=Dgjovbb11fLR1aEVIibusEsckbZ26/jVbs5EQX06cHY1tzF8+8YT0R3CzkZmgq5WF
+	 2+DZ035QWq0e1QmEUG0SpyYn7kwdUZR7c5HnXNU+H25iV6vMUj+kkHAzL7r9JJdbY1
+	 E4CKKdmjiJ4ZItSq95mwAlCq2YkV8N907nfuMfgg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Schwab <schwab@linux-m68k.org>,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Joas Antonio dos Santos <joasantonio108@gmail.com>,
+	Julian Anastasov <ja@ssi.bg>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1241/1518] m68k: nfcon: Do not call console_is_registered() in nfcon_device()
-Date: Sat, 12 Sep 2026 08:56:50 +0200
-Message-ID: <20260912065651.579687829@linuxfoundation.org>
+Subject: [PATCH 6.18 1268/1518] ipvs: fix integer overflow in ftp helper port/address parsing
+Date: Sat, 12 Sep 2026 08:57:17 +0200
+Message-ID: <20260912065652.195245601@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,41 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andreas Schwab <schwab@linux-m68k.org>
+From: Joas Antonio dos Santos <joasantonio108@gmail.com>
 
-[ Upstream commit 2f8e3cad53b5c36ab0ed5d3195bfc55c59ea61a5 ]
+[ Upstream commit e625a9477d12baaff4025c5f9989184a907ea8fc ]
 
-Since 7c2af0f634f1 ("tty: tty_io: use console_list_lock for list
-synchronization") show_cons_active() calls the .device() method under
-the console_list_lock, but console_is_registered() tries to acquire
-console_list_lock as well, causing a deadlock.  It should not be
-necessary to check console_is_registered() here since the function
-should not be called in the fist place when the console is not
-registered.
+ip_vs_ftp_get_addrport() accumulates decimal digits into a __u16
+(hport) and into unsigned char (p[]) without checking for overflow.
+A crafted FTP PASV/EPSV response with an over-long port or address
+octet wraps the value, so the helper configures the data connection
+with a truncated port/address.
 
-Fixes: 7c2af0f634f1 ("tty: tty_io: use console_list_lock for list synchronization")
-Signed-off-by: Andreas Schwab <schwab@linux-m68k.org>
-Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Link: https://patch.msgid.link/87ecfzsv6h.fsf@igel.home
-Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
+The netfilter conntrack FTP helper had the same defect, fixed in
+commit 2b413fc689ba ("netfilter: nf_conntrack_ftp: avoid u16
+overflows"). Apply the equivalent fix here: widen the port accumulator
+to u32 and reject values above 65535, and reject address octets above
+255.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Joas Antonio dos Santos <joasantonio108@gmail.com>
+Acked-by: Julian Anastasov <ja@ssi.bg>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/m68k/emu/nfcon.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/netfilter/ipvs/ip_vs_ftp.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/arch/m68k/emu/nfcon.c b/arch/m68k/emu/nfcon.c
-index d41260672e24b..f4657d9f4f153 100644
---- a/arch/m68k/emu/nfcon.c
-+++ b/arch/m68k/emu/nfcon.c
-@@ -49,7 +49,7 @@ static void nfcon_write(struct console *con, const char *str,
- static struct tty_driver *nfcon_device(struct console *con, int *index)
- {
- 	*index = 0;
--	return console_is_registered(con) ? nfcon_tty_driver : NULL;
-+	return nfcon_tty_driver;
- }
+diff --git a/net/netfilter/ipvs/ip_vs_ftp.c b/net/netfilter/ipvs/ip_vs_ftp.c
+index 206c6700e2006..d3be352a5ea8c 100644
+--- a/net/netfilter/ipvs/ip_vs_ftp.c
++++ b/net/netfilter/ipvs/ip_vs_ftp.c
+@@ -103,7 +103,7 @@ static int ip_vs_ftp_get_addrport(char *data, char *data_limit,
+ 	char *s, c;
+ 	unsigned char p[6];
+ 	char edelim;
+-	__u16 hport;
++	__u32 hport;
+ 	int i = 0;
  
- static struct console nf_console = {
+ 	if (data_limit - data < plen) {
+@@ -145,7 +145,11 @@ static int ip_vs_ftp_get_addrport(char *data, char *data_limit,
+ 				return -1;
+ 			c = *data;
+ 			if (isdigit(c)) {
+-				p[i] = p[i]*10 + c - '0';
++				unsigned int val = p[i] * 10 + c - '0';
++
++				if (val > 255)
++					return -1;
++				p[i] = val;
+ 			} else if (c == ',' && i < 5) {
+ 				i++;
+ 				p[i] = 0;
+@@ -223,6 +227,8 @@ static int ip_vs_ftp_get_addrport(char *data, char *data_limit,
+ 		if (!isdigit(*s))
+ 			break;
+ 		hport = hport * 10 + *s - '0';
++		if (hport > 65535)
++			return -1;
+ 	}
+ 	if (s == data_limit || !hport || *s != edelim)
+ 		return -1;
 -- 
 2.53.0
 
