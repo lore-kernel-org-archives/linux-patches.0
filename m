@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 923283F1AAD;
-	Sat, 12 Sep 2026 07:25:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16F083803CF;
+	Sat, 12 Sep 2026 07:25:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789197925; cv=none; b=bbA44asIS6sbu1aqtvTwveH2ynOjWEreOio8PjwjGmD2/ED1mncn8gNFHozhbLvMjataK5cLOGootsUs9relhAd6YBaMTDrRyT/vaPcRi0ZJfBoESkAP/0nVckv3IBpw0Oi/A1yOneBA8FpWX1xHc4OZKUMgwJwKuByfsjOGrUQ=
+	t=1789197930; cv=none; b=I5K5LRlQ8O/oYQt660dS4/eNXH+kPlO7MFGm5b6EWJbpW5+lU7Q2bFcV7EGVczCG9qoXbrzSIvRbDRDdoTvRbbs3YWyx8miIaytL2M0X+/shZINA792Q9E7MMSXMupWjwPePD8I25eS8qHEAXavnTOgWxbDfMMP2nfFnNHtaQgo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789197925; c=relaxed/simple;
-	bh=jZ6xLbW1qq08rECkgWNu9ZdmEbrVIWStkc1oWZ7JqYo=;
+	s=arc-20240116; t=1789197930; c=relaxed/simple;
+	bh=9R+qlr7AD0hwqhhTXMRDcPTA9lyOh28RQW5Zr6poyHA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jULZEKEz11/lTswmRLxyIrusq2IrU5MNhQMWxqm+onWouITlLZPMN2wkN8j0xGabXyK2FEutMsvWgBC2wufoLXnRPP4tHr7g1xOD6wd/NS6k9Az5nQdc+2f5f7a25UNEUc9VvrbCfqL1bmDS06rHOYfAEO2kRIlItlRmPXmf30g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HWOKOJf1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HclJLvv1vp2NDgbIcPfGSogZ5oz4KClzfVRIRS5TLtTI/71E/JcrtQmWqZG5On+XXIos2EQOvMLbkz4ngVkFizkR1C8g7Gc5kjMGoOGBne/w4lxUCISFgNEXCwQF/fVnafoX+CQ/fkk5lOhwkOhiVPQtgl1uvvCVwaW7dz4N2jY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=maCq6KX/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HWOKOJf1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8AB21F000FF;
-	Sat, 12 Sep 2026 07:25:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="maCq6KX/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B3101F000FF;
+	Sat, 12 Sep 2026 07:25:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789197924;
-	bh=iRgssUKkjxTKU0J6JJ1Kc6zVxvLgcJnKZs55cZImuUc=;
+	s=korg; t=1789197929;
+	bh=cF4N1FXpAPsjWH53ei3xY0d/Z3gsgSckpqekxhYGmhc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HWOKOJf18r87nRWuyHzpuRlpomh3cuqwyvpkFsBe7wZ2TbWe6BUVvOhIBp/o9aNZK
-	 +Ua9aSQ3cpCJGjxI2I5VE/HhMUelEz8PUiRM1ZIRmALKyBTIjWusmSwUa+TBLyfOQr
-	 LSPxczu7kO3yDiAUKk5qBrtDOf5qpwCUXceiRif8=
+	b=maCq6KX/jrbWkzIcyEOapAr5VEQIRzKbe5JuakYDCJln82xLTUbyCq4c2f3Evjt1a
+	 fX0MzGLnIAfTN9TcZzqKNDsDwIclxPDMwbt6/j6DMQTz9IF3nldJ0t1K1kBSFBEwJJ
+	 MpM7qTW6lpryF6P9b3XL3x3xY/edDiRFhIXoF9vM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Ayush Mukkanwar <ayushmukkanwar@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0232/1815] staging: fbtft: Use sysfs_emit_at() to print to sysfs file
-Date: Sat, 12 Sep 2026 08:33:02 +0200
-Message-ID: <20260912065654.438749810@linuxfoundation.org>
+Subject: [PATCH 7.2 0233/1815] staging: octeon: add missing tasklet_kill in cvm_oct_tx_shutdown
+Date: Sat, 12 Sep 2026 08:33:03 +0200
+Message-ID: <20260912065654.461943663@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,40 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <error27@gmail.com>
+From: Ayush Mukkanwar <ayushmukkanwar@gmail.com>
 
-[ Upstream commit 221192a784c25e28b489a7e75fabf59be4f63d57 ]
+[ Upstream commit b9af44b0d20b2247c4eb0ea5cfca907d643eea50 ]
 
-This scnprintf() uses the wrong limit.  It should be "PAGE_SIZE - len"
-instead of just PAGE_SIZE.  We're not going to hit the limit in real
-life since we are printing at most FBTFT_GAMMA_MAX_VALUES_TOTAL (128)
-u32 values, however, it's still worth fixing.
+The TX cleanup tasklet can be scheduled by the watchdog IRQ handler
+to execute cvm_oct_tx_do_cleanup. There can be a pending tasklet in
+the queue which might run after the cvm_oct_remove() frees net_device
+structures, causing a use-after-free in cvm_oct_tx_do_cleanup() as it
+iterates cvm_oct_device[] which is an array of netdevice pointers.
+Add tasklet_kill() after free_irq() to ensure the tasklet is no longer
+scheduled or running before teardown proceeds.
 
-Use sysfs_emit_at() to fix this since this is a sysfs file.
-
-Fixes: c296d5f9957c ("staging: fbtft: core support")
-Signed-off-by: Dan Carpenter <error27@gmail.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Link: https://patch.msgid.link/ah_Y_Y2RtqeGxchF@stanley.mountain
+Fixes: 4898c560103f ("Staging: Octeon:  Free transmit SKBs in a timely manner")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20260511150931.93382-1-ayushmukkanwar%40gmail.com
+Signed-off-by: Ayush Mukkanwar <ayushmukkanwar@gmail.com>
+Link: https://patch.msgid.link/20260615172734.42038-1-ayushmukkanwar@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/fbtft/fbtft-sysfs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/staging/octeon/ethernet-tx.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/staging/fbtft/fbtft-sysfs.c b/drivers/staging/fbtft/fbtft-sysfs.c
-index d05599d80011a..343545e83a377 100644
---- a/drivers/staging/fbtft/fbtft-sysfs.c
-+++ b/drivers/staging/fbtft/fbtft-sysfs.c
-@@ -98,7 +98,7 @@ sprintf_gamma(struct fbtft_par *par, u32 *curves, char *buf)
- 	mutex_lock(&par->gamma.lock);
- 	for (i = 0; i < par->gamma.num_curves; i++) {
- 		for (j = 0; j < par->gamma.num_values; j++)
--			len += scnprintf(&buf[len], PAGE_SIZE,
-+			len += sysfs_emit_at(buf, len,
- 			     "%04x ", curves[i * par->gamma.num_values + j]);
- 		buf[len - 1] = '\n';
- 	}
+diff --git a/drivers/staging/octeon/ethernet-tx.c b/drivers/staging/octeon/ethernet-tx.c
+index 14d10659bce71..785c6492f170b 100644
+--- a/drivers/staging/octeon/ethernet-tx.c
++++ b/drivers/staging/octeon/ethernet-tx.c
+@@ -668,4 +668,6 @@ void cvm_oct_tx_shutdown(void)
+ {
+ 	/* Free the interrupt handler */
+ 	free_irq(OCTEON_IRQ_TIMER1, cvm_oct_device);
++
++	tasklet_kill(&cvm_oct_tx_cleanup_tasklet);
+ }
 -- 
 2.53.0
 
