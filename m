@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A435C35F5F7;
-	Sat, 12 Sep 2026 09:23:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 952F13FD96B;
+	Sat, 12 Sep 2026 09:23:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789204984; cv=none; b=IlWiui0n6DVmI80dUmKfjWhd+2jscETctHv4FBJals59Ez76gp2gM/8v/y42pTLeVMgaf1LyrT+MwU5CPo3Fb0autSXbwjTQHzNZKZlblXo6/iynU4KO9dPX9HIlNMxuQvTev2zfU4I7StAJX1U13Pz5lo9mTR+bCyTaudljJ3Y=
+	t=1789204989; cv=none; b=h+aUsxEghsSRTy9NBi96sqlFDK2CTot/ABbzU7TF8U3MVMSKhGaKct7OQ060SybXnOxFCGGWz5yujy+F4VGtGMGlhfhwggCjOc83JWXbar5+tNQQsvLapLS+0QH6daYaqNVEPU2XVHoD7a7Jr7ckPpknEKcNpVqk35uWNJuCa1U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789204984; c=relaxed/simple;
-	bh=TAr0/cCYiAznXjv0PfBhkNBTFi5JdCDugz66un0IiV4=;
+	s=arc-20240116; t=1789204989; c=relaxed/simple;
+	bh=WNcBtM+hLuSrZUnnRV8VqNW5YS7K6/5zFOHro2xzCa8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UnZ++CDlofzz009U+OvLaD/fRfVunhv0/dHBf3zTJLTsSjL6CB7xduq0j9tPBhQC4vDPTl11ifxNW+Il3O8IbaS/ZD7/ZBh+GCLV0aeqkUmTU6YKc5yJ4rEEpqTNd8D6NRreBCHdNZb2ZVRrRVhLnL14C07FaoPGMY/jcASVaio=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IY9AK1jT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fr1lq9AwuwcUd1FbB8hnuTD9Jnuu108or5x5VCPCHLnF4CVbloAn7Rfy6HF8mr3AYW4SajuN9h2q5hIM037MdaRphxuFeFBMOCAU14W8WCcwC1lm9gmaiOprf9kpO8s2Qo7oXNfEwnssGpveB5+Lsu4PNrasF+Csk02Jna6p+5Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y9ZpMaRs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IY9AK1jT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A90371F000FF;
-	Sat, 12 Sep 2026 09:23:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y9ZpMaRs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 943D01F000FF;
+	Sat, 12 Sep 2026 09:23:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789204983;
-	bh=N35rS804S3ffH7cdnPcBOLO0IA3BoPdxdAJStb9lb8U=;
+	s=korg; t=1789204988;
+	bh=2BRdVaY4aIXKcLcnpQB6Ciz8p72NwedfPS79W8vFuRc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IY9AK1jTvmgQ6UAxNsUYToer4XpqQJNcWnt9hG8QhiDGssjMWJLdNhPpQTkBvdZqq
-	 8zAUR0DFvBGonX63pzagqM6iTPLJoEhPpGAnLUkzaSa/nInXEd2PYX6u8ghVVel4dM
-	 JxsMBTKx5I4WoYpUAymLZVZE59pt6HPikteHZpGU=
+	b=Y9ZpMaRsBQVkhOlMfGYyjboOkY8oXNzAwvRAWVcPBOqcUTlOo7wDzi2yL8c0t18Ij
+	 nEdVlQgQ9hyCNYyfIhnlt9gDeK83c/8z7FP7heKP/7DbB5dDwa2ScCJ8Hnxx/zrAlB
+	 xWYUTSh0rbDoutw3o6Su1U+dTEuMWoutO0Ke9k58=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ali Ahmet Memis <ali@iusegentoo.com>,
+	Hyunwoo Kim <imv4bel@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1724/1815] Bluetooth: btnxpuart: Validate the FW dump header length
-Date: Sat, 12 Sep 2026 08:57:54 +0200
-Message-ID: <20260912065729.447806474@linuxfoundation.org>
+Subject: [PATCH 7.2 1725/1815] Bluetooth: RFCOMM: Validate MTU in rfcomm_apply_pn() to prevent infinite loop
+Date: Sat, 12 Sep 2026 08:57:55 +0200
+Message-ID: <20260912065729.471681299@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,65 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ali Ahmet Memis <ali@iusegentoo.com>
+From: Hyunwoo Kim <imv4bel@gmail.com>
 
-[ Upstream commit 060fa7592bdc043a93b6b7870f5b8551206d315d ]
+[ Upstream commit 44c98fd082eafd49d55a8a4077ff488175b2fe24 ]
 
-nxp_process_fw_dump() pulls the ACL header off the frame and then reads
-seq_num and buf_len from a struct nxp_fw_dump_hdr placed at skb->data,
-without checking that the ACL payload is long enough to contain it.
+rfcomm_apply_pn() accepts the MTU value from a remote PN (Parameter
+Negotiation) frame without checking for zero. When the remote peer
+sends an MTU of zero, d->mtu is set to 0. This causes the sendmsg
+path to enter an infinite loop when fragmenting data, as each fragment
+has size == min_t(size_t, len, 0) == 0, so the remaining length never
+decreases. The infinite allocation of zero-length skbs exhausts all
+system memory.
 
-h4_recv_buf() collects HCI_ACL_HDR_SIZE bytes of header followed by the
-number of payload bytes named in that header, so skb->len is 4 + dlen
-with dlen supplied by the controller and possibly smaller than the 8
-byte dump header, or zero. A short frame with connection handle 0xfff
-therefore reads both fields from beyond the received data.
+Fix by clamping d->mtu to RFCOMM_DEFAULT_MTU when the negotiated
+value is zero, consistent with the initial value assigned in
+rfcomm_dlc_alloc().
 
-Beyond the read itself, buf_len is what terminates a dump: a value of
-zero makes the driver call hci_devcd_complete() and reset the
-controller, so a truncated frame can end a dump early.
-
-Use skb_pull_data() to validate and pull the FW dump header before
-accessing its fields. Warn and reject the chunk if the header is
-truncated.
-
-Fixes: 998e447f443f ("Bluetooth: btnxpuart: Add support for HCI coredump feature")
-Signed-off-by: Ali Ahmet Memis <ali@iusegentoo.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btnxpuart.c | 15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ net/bluetooth/rfcomm/core.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/bluetooth/btnxpuart.c b/drivers/bluetooth/btnxpuart.c
-index 6a1cffe08d5f7..e6c15bc6a30b9 100644
---- a/drivers/bluetooth/btnxpuart.c
-+++ b/drivers/bluetooth/btnxpuart.c
-@@ -1368,12 +1368,21 @@ static int nxp_process_fw_dump(struct hci_dev *hdev, struct sk_buff *skb)
- {
- 	struct hci_acl_hdr *acl_hdr = (struct hci_acl_hdr *)skb_pull_data(skb,
- 									  sizeof(*acl_hdr));
--	struct nxp_fw_dump_hdr *fw_dump_hdr = (struct nxp_fw_dump_hdr *)skb->data;
-+	struct nxp_fw_dump_hdr *fw_dump_hdr;
- 	struct btnxpuart_dev *nxpdev = hci_get_drvdata(hdev);
--	__u16 seq_num = __le16_to_cpu(fw_dump_hdr->seq_num);
--	__u16 buf_len = __le16_to_cpu(fw_dump_hdr->buf_len);
-+	__u16 seq_num;
-+	__u16 buf_len;
- 	int err;
+diff --git a/net/bluetooth/rfcomm/core.c b/net/bluetooth/rfcomm/core.c
+index 5d150e8623d54..63fa0f542ccf1 100644
+--- a/net/bluetooth/rfcomm/core.c
++++ b/net/bluetooth/rfcomm/core.c
+@@ -1455,6 +1455,10 @@ static int rfcomm_apply_pn(struct rfcomm_dlc *d, int cr, struct rfcomm_pn *pn)
  
-+	fw_dump_hdr = skb_pull_data(skb, sizeof(*fw_dump_hdr));
-+	if (!fw_dump_hdr) {
-+		bt_dev_warn(hdev, "FW dump: invalid or corrupt fw dump chunk");
-+		goto free_skb;
-+	}
+ 	d->mtu = __le16_to_cpu(pn->mtu);
+ 
++	/* MTU 0 causes an infinite loop when fragmenting in sendmsg */
++	if (!d->mtu)
++		d->mtu = RFCOMM_DEFAULT_MTU;
 +
-+	seq_num = __le16_to_cpu(fw_dump_hdr->seq_num);
-+	buf_len = __le16_to_cpu(fw_dump_hdr->buf_len);
-+
- 	if (seq_num == 0x0001) {
- 		if (test_and_set_bit(BTNXPUART_FW_DUMP_IN_PROGRESS, &nxpdev->tx_state)) {
- 			bt_dev_err(hdev, "FW dump already in progress");
+ 	if (cr && d->mtu > s->mtu)
+ 		d->mtu = s->mtu;
+ 
 -- 
 2.53.0
 
