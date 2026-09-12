@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C14C8346E75;
-	Sat, 12 Sep 2026 07:18:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C2693F076C;
+	Sat, 12 Sep 2026 07:18:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789197524; cv=none; b=KR7qynP/pR1aA6m7XbrTAWdvZ6tjvW+d4I85gp07PH7TiYG1+H0xLA1QBRfdra86hEobuwZx1eS9CCTCzx2uIwv7CyUuYbwE/gSNGhIiHWUD+CjiPCM19ZW2g0qkhCQ+LAgpuCdlilAlLOiULuq12+kqeWq7lyC1fTuy3/cN9xk=
+	t=1789197529; cv=none; b=uyXhF5cT8A+jRthLtcWqrpnnCLm+tPxsLEWPp3e2GH8wpuKNnG1EBFNj6WyFQVUOjVNrXole0ntZ5R4n2VvPo567VvDscKGn2w2hQDIpmSgLN4ORZtaYX8bAW5S+Z65KZ1yT6WKc7VUNXku47VKJRcTNIBcO20eIiYU6biKSFHQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789197524; c=relaxed/simple;
-	bh=OweIowaJ5p9yZ0CcflI42irG/YoAgLg5RXDrycKfMjc=;
+	s=arc-20240116; t=1789197529; c=relaxed/simple;
+	bh=/8jkkPN/Jm0cP+dX0krdD7k3WDm9jjso6Bo9j0+4YYs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pfYK6dCmbcM1xZQOcBP6oySWrYqPW3lVTwLxDA2AieGxVKlzfV3sKJX2XtxJDpclccy6+K7jojAaBmnmX46yUB4UNUJMNmxLLpjxV4gqLdyluOa5g1o5iSvlRZs+2qY8SfYNxOFwCVopGsZ0KAGy7jkb5oZNLeQTX8iB4X3mWYw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I4JeoTq+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BvLfAHfffqX8MJu6rLP7E1d+0FtD1C79WUogzwnHtjMkyVFgWKtaShfcaCF8mTa9vCwPD2dUcnCl/yoILU6WrqXhmMUEgw3otclH4eiEzMT/fGFOOdTBlRPxFV2yVrC6VavknRkFc0MNKjk+OVnBfewOX+5Ul+P9TABl6lza8Ls=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wPiabSmm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I4JeoTq+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE91A1F000FF;
-	Sat, 12 Sep 2026 07:18:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wPiabSmm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FA7F1F00893;
+	Sat, 12 Sep 2026 07:18:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789197523;
-	bh=TRjkktj8nN+V9qiV1feiXdjX+U65V5LPtsx6TqjHiGY=;
+	s=korg; t=1789197528;
+	bh=Oi+w2ndvhPHzD7AKfrmOw8lDWkhzprX446Ado0LPBmQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I4JeoTq+cYaU0400mN6w9OtNDarQ+oJwRzfBAT+VlbY0izYFptyN1c2VMsiHtp0Nf
-	 qlRP0SSjIhtcy8nmqsFDVBwlFAgNt5BJK15gMVX3+i1nIsbRU1tjVR0Lax+WQWLf/Y
-	 uczzrlKHfOluwiQO4UJIqzNUMX6D4zqJD8QFYl8E=
+	b=wPiabSmmlnjqqyxmfc1AccL1pbszBYHYn4JB8ElbgyWoIPWyDeU4Yy2NfBuEXAKTy
+	 QafJY1dfPJHGo9ZPc63To+Wy7O15KrBCUr8DH3PHHIrN6Vh5IIegNNK21K1lEvESuM
+	 AqL28J7xYx+MCtMtuR4VGtAlshlo01NZGSN7DEHg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0193/1815] hwrng: xilinx-trng - propagate timeout before any data is read
-Date: Sat, 12 Sep 2026 08:32:23 +0200
-Message-ID: <20260912065653.531112599@linuxfoundation.org>
+Subject: [PATCH 7.2 0194/1815] hwrng: omap - Fix probe error path cleanup
+Date: Sat, 12 Sep 2026 08:32:24 +0200
+Message-ID: <20260912065653.554328706@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,102 +52,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-[ Upstream commit ba088974419326daf46c5dc03e2cf6ab6ab701f7 ]
+[ Upstream commit f8c24e6899e263073fbbeb07fadc1af85ec492f5 ]
 
-xtrng_readblock32() polls for 16-byte chunks but returns the number of
-bytes read even when the first poll times out. Its caller then treats a
-zero return as a short successful read, and partial reads for full
-32-byte blocks can make the tail copy use a fixed block offset rather
-than the amount already produced.
+omap_rng_probe() enables runtime PM before acquiring and enabling the
+functional clocks.  Several later error paths returned or unwound without
+undoing all state acquired so far.
 
-Return the poll error when no data has been read, preserve partial
-positive returns after some data is available, stop the generator on all
-collection exits, and append tail bytes at the current output count.
+If pm_runtime_resume_and_get() failed, the driver returned through the
+generic ioremap error label and left runtime PM enabled.  If either clock
+lookup returned -EPROBE_DEFER, the function returned directly and skipped
+the runtime PM cleanup; the register clock defer path could also leave the
+already enabled functional clock prepared.
 
-Fixes: 8979744aca80 ("crypto: xilinx - Add TRNG driver for Versal")
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Route these failures through the existing unwind labels so each path only
+undoes resources that were acquired successfully.  Keep the resume failure
+path limited to pm_runtime_disable(), and use the later labels only after
+the runtime PM usage count or clocks have been acquired.
+
+This issue was identified during our ongoing static-analysis research while
+reviewing kernel code.
+
+Fixes: 61dc0a446e5d ("hwrng: omap - Fix assumption that runtime_get_sync will always succeed")
+Fixes: 43ec540e6f9b ("hwrng: omap - move clock related code to omap_rng_probe()")
+Fixes: b166be004491 ("hwrng: omap - Fix clock resource by adding a register clock")
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/hw_random/xilinx-trng.c | 32 +++++++++++++++++++++-------
- 1 file changed, 24 insertions(+), 8 deletions(-)
+ drivers/char/hw_random/omap-rng.c | 30 ++++++++++++++++++++----------
+ 1 file changed, 20 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/char/hw_random/xilinx-trng.c b/drivers/char/hw_random/xilinx-trng.c
-index 0fbc22c38fbc7..290bf5bc82db8 100644
---- a/drivers/char/hw_random/xilinx-trng.c
-+++ b/drivers/char/hw_random/xilinx-trng.c
-@@ -86,8 +86,8 @@ static void xtrng_softreset(struct xilinx_rng *rng)
- 	xtrng_readwrite32(rng->rng_base + TRNG_CTRL_OFFSET, TRNG_CTRL_PRNGSRST_MASK, 0);
- }
- 
--/* Return no. of bytes read */
--static size_t xtrng_readblock32(void __iomem *rng_base, __be32 *buf, int blocks32, bool wait)
-+/* Return no. of bytes read or a negative error before any data is read. */
-+static int xtrng_readblock32(void __iomem *rng_base, __be32 *buf, int blocks32, bool wait)
- {
- 	int read = 0, ret;
- 	int timeout = 1;
-@@ -102,8 +102,11 @@ static size_t xtrng_readblock32(void __iomem *rng_base, __be32 *buf, int blocks3
- 		ret = readl_poll_timeout(rng_base + TRNG_STATUS_OFFSET, val,
- 					 (val & TRNG_STATUS_QCNT_MASK) ==
- 					 TRNG_STATUS_QCNT_16_BYTES, !!wait, timeout);
--		if (ret)
-+		if (ret) {
-+			if (!read)
-+				return ret;
- 			break;
-+		}
- 
- 		for (idx = 0; idx < TRNG_READ_4_WORD; idx++) {
- 			*(buf + read) = cpu_to_be32(ioread32(rng_base + TRNG_CORE_OUTPUT_OFFSET));
-@@ -118,27 +121,40 @@ static int xtrng_collect_random_data(struct xilinx_rng *rng, u8 *rand_gen_buf,
- {
- 	u8 randbuf[TRNG_SEC_STRENGTH_BYTES];
- 	int byteleft, blocks, count = 0;
-+	int full_blocks_bytes;
- 	int ret;
- 
- 	byteleft = no_of_random_bytes & (TRNG_SEC_STRENGTH_BYTES - 1);
- 	blocks = no_of_random_bytes >> TRNG_SEC_STRENGTH_SHIFT;
-+	full_blocks_bytes = blocks * TRNG_SEC_STRENGTH_BYTES;
- 	xtrng_readwrite32(rng->rng_base + TRNG_CTRL_OFFSET, TRNG_CTRL_PRNGSTART_MASK,
- 			  TRNG_CTRL_PRNGSTART_MASK);
- 	if (blocks) {
- 		ret = xtrng_readblock32(rng->rng_base, (__be32 *)rand_gen_buf, blocks, wait);
--		if (!ret)
--			return 0;
-+		if (ret <= 0) {
-+			count = ret;
-+			goto out_stop;
-+		}
- 		count += ret;
-+		if (ret < full_blocks_bytes)
-+			goto out_stop;
+diff --git a/drivers/char/hw_random/omap-rng.c b/drivers/char/hw_random/omap-rng.c
+index 5e8b50f15db75..a8c0b3dfb133c 100644
+--- a/drivers/char/hw_random/omap-rng.c
++++ b/drivers/char/hw_random/omap-rng.c
+@@ -455,32 +455,40 @@ static int omap_rng_probe(struct platform_device *pdev)
+ 	ret = pm_runtime_resume_and_get(&pdev->dev);
+ 	if (ret < 0) {
+ 		dev_err(&pdev->dev, "Failed to runtime_get device: %d\n", ret);
+-		goto err_ioremap;
++		goto err_pm_disable;
  	}
  
- 	if (byteleft) {
- 		ret = xtrng_readblock32(rng->rng_base, (__be32 *)randbuf, 1, wait);
-+		if (ret < 0) {
-+			if (!count)
-+				count = ret;
-+			goto out_stop;
-+		}
- 		if (!ret)
--			return count;
--		memcpy(rand_gen_buf + (blocks * TRNG_SEC_STRENGTH_BYTES), randbuf, byteleft);
--		count += byteleft;
-+			goto out_stop;
-+		ret = min(ret, no_of_random_bytes - count);
-+		memcpy(rand_gen_buf + count, randbuf, ret);
-+		count += ret;
+ 	priv->clk = devm_clk_get(&pdev->dev, NULL);
+-	if (PTR_ERR(priv->clk) == -EPROBE_DEFER)
+-		return -EPROBE_DEFER;
++	if (PTR_ERR(priv->clk) == -EPROBE_DEFER) {
++		ret = -EPROBE_DEFER;
++		goto err_pm_put;
++	}
+ 	if (!IS_ERR(priv->clk)) {
+ 		ret = clk_prepare_enable(priv->clk);
+ 		if (ret) {
+ 			dev_err(&pdev->dev,
+ 				"Unable to enable the clk: %d\n", ret);
+-			goto err_register;
++			goto err_pm_put;
+ 		}
++	} else {
++		priv->clk = NULL;
  	}
  
-+out_stop:
- 	xtrng_readwrite32(rng->rng_base + TRNG_CTRL_OFFSET,
- 			  TRNG_CTRL_PRNGMODE_MASK | TRNG_CTRL_PRNGSTART_MASK, 0U);
+ 	priv->clk_reg = devm_clk_get(&pdev->dev, "reg");
+-	if (PTR_ERR(priv->clk_reg) == -EPROBE_DEFER)
+-		return -EPROBE_DEFER;
++	if (PTR_ERR(priv->clk_reg) == -EPROBE_DEFER) {
++		ret = -EPROBE_DEFER;
++		goto err_clk;
++	}
+ 	if (!IS_ERR(priv->clk_reg)) {
+ 		ret = clk_prepare_enable(priv->clk_reg);
+ 		if (ret) {
+ 			dev_err(&pdev->dev,
+ 				"Unable to enable the register clk: %d\n",
+ 				ret);
+-			goto err_register;
++			goto err_clk;
+ 		}
++	} else {
++		priv->clk_reg = NULL;
+ 	}
  
+ 	ret = (dev->of_node) ? of_get_omap_rng_device_details(priv, pdev) :
+@@ -498,12 +506,14 @@ static int omap_rng_probe(struct platform_device *pdev)
+ 	return 0;
+ 
+ err_register:
++	clk_disable_unprepare(priv->clk_reg);
++err_clk:
++	clk_disable_unprepare(priv->clk);
++err_pm_put:
+ 	priv->base = NULL;
+ 	pm_runtime_put_sync(&pdev->dev);
++err_pm_disable:
+ 	pm_runtime_disable(&pdev->dev);
+-
+-	clk_disable_unprepare(priv->clk_reg);
+-	clk_disable_unprepare(priv->clk);
+ err_ioremap:
+ 	dev_err(dev, "initialization failed.\n");
+ 	return ret;
 -- 
 2.53.0
 
