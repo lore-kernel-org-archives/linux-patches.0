@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4D961EB5FD;
-	Sat, 12 Sep 2026 07:22:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B16952BDC0E;
+	Sat, 12 Sep 2026 07:22:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789197726; cv=none; b=lNyAvBfWp6Z9aoxXFGBXN1ebFHEHV/lcOBenCSzOwsqxuMclz7TVgpnHLeJE3axG/8QNFc37KRiH5nbzghylr5ypYL4ferMpkLS+Nj9Qg63hruzQJzwb0aXGmTuVRGmgGcs7WKWwIHhMC6Wmefz6BjS5ycdkuVkEfnhFcRPHsWA=
+	t=1789197731; cv=none; b=hhw3DsoJX9Zca7iaO0lcbAvzaBrwBh13GabHJrKJ38bGk2SFYCFpw2kfjjikFZGAiJNboI90qgPhXMNVVYOKFwYYIpY87V5PsIVKp3HLwWZ7fDozM/u8ymauw9DoLNUvPt7zG45X7DR7DjnSw9oQbp2cO7Usvsw8pX5TC5X0BjM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789197726; c=relaxed/simple;
-	bh=JmZmdyDPWRGMS//uflBPDvCyuMH98dfNlMZvkLFg8Cc=;
+	s=arc-20240116; t=1789197731; c=relaxed/simple;
+	bh=I9ueSbrJf0mJh4rSqfiVy64MCJz9/AaflFAb0kHQsR0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pVCC0/Rc1oGE8Kbqjr21NIfFaSHcs7gZFPQId/5bnY0XqWwYuuZZC1W7NDSxrjj753Zp8pdEVrdXjXw9jakSYWzEbeCxWtGLwMOM4lETb+yOkydwd34ug5DDrUiQ7PQzlG0ODu6P+r0yop6Mql4lOSP3ocvp5RGRtwXwYhm4/j0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kw1HHzo4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=QYlEJmzDhAcSG4szPpm5XHpFGRHZc0cX/RfOFhj8eqztz2j6u5h4gPFF7np8lZebbsrAOCpNG2a5ZZOuZZLFC6CjHvoDDhBGmRp9NMQq6IE3Dpp6DNLMr/93s67QdpDFeP/Zrskyq5ioBfeGG3WT6IXABtHisEZMW/agryGeFNg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XNWdNpTQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kw1HHzo4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9642D1F000FF;
-	Sat, 12 Sep 2026 07:22:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XNWdNpTQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5AD71F000FF;
+	Sat, 12 Sep 2026 07:22:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789197724;
-	bh=f01tca4Jyp0koZ16D0mI1szExudOOmBrOJ9eSPRXqPo=;
+	s=korg; t=1789197729;
+	bh=tOur8k4h0o33Lo3cmMyhVP7SfS5vZplVc7nY7t99ueQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kw1HHzo43Wdk1j4ZJgJJ4c0yFHeQwJFKUYsex9PIdFanZEsl/sLHrB0Qgat6XWmMM
-	 IJ6GUReMfQ0Ye8CxcpFZWQq7qcbdO/naqVh9z8940V3+2butGadDUBH5rtn0HERNyQ
-	 xQkvRylPqkNpC81WpvPMqE8t79JkjZHV4Zm0Anb4=
+	b=XNWdNpTQ0wdk9GWg0c6eo8oIoBIk+pfkfw50HlUxyfp6swTnnXFYB4L6yU3eDWDIX
+	 uEpKxTrODd3rXVb7nw/8HVyvELrKSw7oNGMN3JpuHTMdFzyfbxBxLiWMMrCvieNNwg
+	 zlUokxSbcbUL2NdDOhAMXwBE4QJ7KxM/G/FLJ1l8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zilin Guan <zilin@seu.edu.cn>,
-	Dawei Feng <dawei.feng@seu.edu.cn>,
-	Dan Carpenter <error27@gmail.com>,
+	Zelin Deng <zelin.deng@linux.alibaba.com>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
+	Miroslav Benes <mbenes@suse.cz>,
+	Petr Mladek <pmladek@suse.com>,
+	Nicolas Schier <nsc@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0235/1815] staging: rtl8723bs: fix mismatched free of HalData in rtw_sdio_if1_init()
-Date: Sat, 12 Sep 2026 08:33:05 +0200
-Message-ID: <20260912065654.509329558@linuxfoundation.org>
+Subject: [PATCH 7.2 0236/1815] kbuild: unset sub_make_done before calling kselftest build system
+Date: Sat, 12 Sep 2026 08:33:06 +0200
+Message-ID: <20260912065654.532121598@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -46,57 +48,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dawei Feng <dawei.feng@seu.edu.cn>
+From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
 
-[ Upstream commit 264676418b726baca7be49171e306b6aa05cceb0 ]
+[ Upstream commit e77f165d26f72c280654cff248f5106cb9a53951 ]
 
-padapter->HalData is allocated via vzalloc(), but incorrectly freed
-using kfree() in the rtw_sdio_if1_init() error path. Using kfree() to
-release this vmalloc-backed buffer can lead to memory corruption.
+The kselftest build system may recourse back into kbuild when building
+test modules. In that case kbuild needs to parse the new flags passed
+from the command line, instead of using the ones inherited from the
+kbuild invocation.
 
-Use rtw_hal_data_deinit() to pair the free correctly and free
-HalData with vfree().
+Force that command line reevaluation.
 
-The bug was first flagged by an experimental static analysis tool we
-are developing for kernel memory-management bugs. Manual inspection
-confirms that the issue is still present in current mainline.
+The same was done for scripts/install.sh in commit 14ccc638b02f9ec
+("kbuild: cancel sub_make_done for the install target to fix DKMS")
 
-An x86_64 allyesconfig build showed no new warnings. As we do not have
-suitable RTL8723BS SDIO hardware to test with, no runtime testing was
-able to be performed.
-
-Fixes: 554c0a3abf21 ("staging: Add rtl8723bs sdio wifi driver")
-Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
-Signed-off-by: Dawei Feng <dawei.feng@seu.edu.cn>
-Reviewed-by: Dan Carpenter <error27@gmail.com>
-Link: https://patch.msgid.link/20260525091836.812565-1-dawei.feng@seu.edu.cn
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: Zelin Deng <zelin.deng@linux.alibaba.com>
+Closes: https://lore.kernel.org/all/20260525083721.27857-1-zelin.deng@linux.alibaba.com/
+Fixes: c9bb03ac2c66 ("kbuild: reduce output spam when building out of tree")
+Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+Acked-by: Miroslav Benes <mbenes@suse.cz>
+Acked-by: Petr Mladek <pmladek@suse.com>
+Tested-by: Zelin Deng <zelin.deng@linux.alibaba.com>
+Reviewed-by: Nicolas Schier <nsc@kernel.org>
+Link: https://patch.msgid.link/20260703-makefile-unset-submake-done-v1-1-6899248f3d6a@linutronix.de
+Signed-off-by: Petr Mladek <pmladek@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/rtl8723bs/os_dep/sdio_intf.c | 4 ++--
+ Makefile | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/staging/rtl8723bs/os_dep/sdio_intf.c b/drivers/staging/rtl8723bs/os_dep/sdio_intf.c
-index c43a0391a5ca7..ee4a9c66aceed 100644
---- a/drivers/staging/rtl8723bs/os_dep/sdio_intf.c
-+++ b/drivers/staging/rtl8723bs/os_dep/sdio_intf.c
-@@ -285,8 +285,8 @@ static struct adapter *rtw_sdio_if1_init(struct dvobj_priv *dvobj, const struct
- 	status = _SUCCESS;
+diff --git a/Makefile b/Makefile
+index 408e8512b7134..ad446f35634cd 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1605,10 +1605,10 @@ tools/%: FORCE
  
- free_hal_data:
--	if (status != _SUCCESS && padapter->HalData)
--		kfree(padapter->HalData);
-+	if (status != _SUCCESS)
-+		rtw_hal_data_deinit(padapter);
+ PHONY += kselftest
+ kselftest: headers
+-	$(Q)$(MAKE) -C $(srctree)/tools/testing/selftests run_tests
++	$(Q)unset sub_make_done; $(MAKE) -C $(srctree)/tools/testing/selftests run_tests
  
- 	if (status != _SUCCESS) {
- 		rtw_wdev_unregister(padapter->rtw_wdev);
+ kselftest-%: headers FORCE
+-	$(Q)$(MAKE) -C $(srctree)/tools/testing/selftests $*
++	$(Q)unset sub_make_done; $(MAKE) -C $(srctree)/tools/testing/selftests $*
+ 
+ PHONY += kselftest-merge
+ kselftest-merge:
 -- 
 2.53.0
 
