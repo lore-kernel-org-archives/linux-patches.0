@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE4B93A255F;
-	Sat, 12 Sep 2026 18:37:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D23BC2BCF4C;
+	Sat, 12 Sep 2026 18:37:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789238236; cv=none; b=WG1om4tdBjH0IPBb+/JiJwgTzLGWb/e5XWpu7KrChofCPpHpco5DhEbAQTXuxCQsolkAhoKJHJiuZwgraVrc2eAB4k9bOGT4PD/jNBDV/G1aVUM/Mj4+F7Fa9oy04YCk/rgkOmEtlYZ96cxy/pm9ot5ig6C4GKFYKtcpHeDcNA8=
+	t=1789238240; cv=none; b=AV78GYPMeSla4S3urJFizqVCWWxtS4UizkJ5P+v6Q79tiPg0tL2dXlfWNJAMskZn3N+aU4cNxI2Qp6XiNnGu4dgUrek1EPOrCKxXtXKfdba7YGU3V/KfmESOsLMwADq2J1DkTMRnA1kSbet1/4OWZBDsunTXUz85QVMQhH1VNzA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789238236; c=relaxed/simple;
-	bh=p5pImVPufk5dLRyIBNBC28jOV6RR3PwEyFj2Tn2QPqA=;
+	s=arc-20240116; t=1789238240; c=relaxed/simple;
+	bh=8V4KCLaSqD2ebylXFQtBuo19N3NGLBS7ssa7D9jb3Aw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S82gQWOJE4aThBA7H+93fSsxj19pK19N/lWbdeJdKEBD/Gh/OpJC6Znl7KkwE8ZXzrhlW50PE95Hnz6tdih66vE6XhZh1XCWRjv7QMPY6wwBFxD4FyueEsrdycKmlSliKdDVSogTFSPUii/osxo2frUZc0neDEqawVwarjPRthU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QZkd5N5x; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CcHPyYDu/0/YOdbb4ymksOw0+0bjdIRUCy+R/J/DsqDc/abnzsFNPhFqAtlPnnoWLVUtnMzQcxImUH/gDGQs8IyhtGgoMg+3Jl1N7G+jKujkkRDhHsz9VeOMPhUOTkLoewZrOTTXfqKqUL7Ry9WL4OAbqp/0AOphl8awYsp29vU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VX9Wd+iv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QZkd5N5x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1102B1F000FF;
-	Sat, 12 Sep 2026 18:37:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VX9Wd+iv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44EA41F000FF;
+	Sat, 12 Sep 2026 18:37:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789238233;
-	bh=tDQs9JDp8P+CJwlqoxHMSu9oQg3mssHd/n3SOYcZPJE=;
+	s=korg; t=1789238238;
+	bh=e/azgSZCD16ovWcGPmsZd2Nr1WzZx465NTmuBWNICwE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QZkd5N5xSak+hkul1gLKRQdLJq8l6QKMHaPcbvWG2RbgJSl8pkfYvl+B9xEKPpRb5
-	 ZvdbQpyV/0itIVqL0SQFZ8KO5P1F1ivdxtn5qCRWabr9K/wI7kt+uydjgd+J6lPH5a
-	 Dj0A2crYbrihZ+163g7wHG/2a4LCbGvGs4igVGQA=
+	b=VX9Wd+ivwvmALjBMTrh6btBB72VsSPTpTl1hjMWJDG212hFOXU/Jz7XiyGYGyy5OX
+	 9g3zmUIVYl2mndIjEY1ilNXVZBRgabkApIPpt1X2sZj4ezswFUo9EJeOhky/KywP1s
+	 uITnZyd5RVRXfQaCa1aeS/aauMP1hHDvbjfyZkA8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ian Rogers <irogers@google.com>,
 	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 420/935] perf test: Fix perf stat --bpf-counters on hybrid machines
-Date: Sat, 12 Sep 2026 08:57:30 +0200
-Message-ID: <20260912065536.456570884@linuxfoundation.org>
+Subject: [PATCH 5.15 421/935] perf tests: Fix flakiness in BPF counters test on hybrid systems
+Date: Sat, 12 Sep 2026 08:57:31 +0200
+Message-ID: <20260912065536.479738528@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -51,76 +51,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namhyung Kim <namhyung@kernel.org>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit d9db9c8db56c3e378aa5c91637664f77ca5a6f72 ]
+[ Upstream commit b02027776ac5bf737f1b76f3759f405e376097e5 ]
 
-The test constantly fails on my Intel hybrid machine.  The issue was it
-has two events in the output even if I only gave it one event.
+The `perf stat --bpf-counters test` fails intermittently on hybrid
+architectures or systems with dynamic frequency scaling (DVFS). This
+happens because the test workload (`sqrtloop`) runs for a fixed 1-second
+duration, and the CPU frequency can scale dynamically between idle and
+maximum frequency. As the first run runs on a cold CPU and the second run
+runs on a warmed-up CPU (or vice versa), the number of instructions
+executed in 1 second differs by up to 2.2x, violating the comparison
+tolerance.
 
-  $ perf stat -e instructions -- perf test -w sqrtloop
+Also, when running as root, BPF tracepoints and scheduling programs
+trigger frequently. Since standard `perf stat -e instructions` measures
+both user and kernel space instructions, it counts BPF helper and program
+execution overheads, whereas the BPF counters themselves do not self-
+measure. This introduces a large kernel-space instruction count
+discrepancy between standard and BPF counters.
 
-   Performance counter stats for 'perf test -w sqrtloop':
+Fix these issues by:
+1. Switching the workload to a strictly deterministic, iteration-based
+   workload: `awk 'BEGIN { for (i=0; i<10000000; i++) sum+=i }'`. We pin
+the
+   workload to a single random allowed CPU using `taskset -c $CPU` via a
+bash array.
+2. Restricting the counted event to user-space only (`instructions:u` or
+`/u`).
+3. Tightening the comparison tolerance from 20% to 15%.
 
-         910,856,421      cpu_atom/instructions/                (28.05%)
-      14,852,865,997      cpu_core/instructions/                (96.79%)
+These modifications isolate the measurements to user-space instructions of
+the deterministic loop, which executes a virtually identical number of
+instructions on both runs (with less than 0.001% variation), eliminating
+Dynamic Frequency Scaling (DVFS), kernel scheduling noise, and BPF helper
+self-measurement overheads.
 
-         1.014313341 seconds time elapsed
-
-         1.004114000 seconds user
-         0.008174000 seconds sys
-
-Let's modify the awk script to add the values for each line and print
-the total.  The variable 'i' has a number of input lines that have valid
-output and variable 'c' has the sum of actual counter values.  That way
-it should work on any platforms.
-
-Reviewed-by: Ian Rogers <irogers@google.com>
+Fixes: 2c0cb9f56020 ("perf test: Add a shell test for 'perf stat --bpf-counters' new option")
+Assisted-by: Antigravity:gemini-3.1-pro
+Signed-off-by: Ian Rogers <irogers@google.com>
 Signed-off-by: Namhyung Kim <namhyung@kernel.org>
-Stable-dep-of: b02027776ac5 ("perf tests: Fix flakiness in BPF counters test on hybrid systems")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/tests/shell/stat_bpf_counters.sh | 20 ++++++++++++++++----
- 1 file changed, 16 insertions(+), 4 deletions(-)
+ tools/perf/tests/shell/stat_bpf_counters.sh | 28 +++++++++++++--------
+ 1 file changed, 18 insertions(+), 10 deletions(-)
 
 diff --git a/tools/perf/tests/shell/stat_bpf_counters.sh b/tools/perf/tests/shell/stat_bpf_counters.sh
-index 831f02add75e5..b776ee2e445a6 100755
+index b776ee2e445a6..76d4a7f15a43d 100755
 --- a/tools/perf/tests/shell/stat_bpf_counters.sh
 +++ b/tools/perf/tests/shell/stat_bpf_counters.sh
-@@ -41,8 +41,14 @@ check_counts()
+@@ -4,21 +4,26 @@
+ 
+ set -e
+ 
+-workload="perf test -w sqrtloop"
++# Get the first allowed CPU
++CPU=$(taskset -c -p $$ | awk -F': ' '{print $2}' | awk -F'[,-]' '{print $1}')
++if [ -z "$CPU" ]; then
++	CPU=0
++fi
++workload=(taskset -c "$CPU" awk 'BEGIN { for (i=0; i<10000000; i++) sum+=i }')
+ 
+-# check whether $2 is within +/- 20% of $1
++# check whether $2 is within +/- 15% of $1
+ compare_number()
+ {
+ 	first_num=$1
+ 	second_num=$2
+ 
+-	# upper bound is first_num * 120%
+-	upper=$(expr $first_num + $first_num / 5 )
+-	# lower bound is first_num * 80%
+-	lower=$(expr $first_num - $first_num / 5 )
++	# upper bound is first_num * 115%
++	upper=$(expr $first_num + $first_num / 20 \* 3 )
++	# lower bound is first_num * 85%
++	lower=$(expr $first_num - $first_num / 20 \* 3 )
+ 
+ 	if [ $second_num -gt $upper ] || [ $second_num -lt $lower ]; then
+-		echo "The difference between $first_num and $second_num are greater than 20%."
++		echo "The difference between $first_num and $second_num are greater than 15%."
+ 		exit 1
+ 	fi
+ }
+@@ -41,11 +46,12 @@ check_counts()
  test_bpf_counters()
  {
  	printf "Testing --bpf-counters "
--	base_instructions=$(perf stat --no-big-num -e instructions -- $workload 2>&1 | awk '/instructions/ {print $1}')
--	bpf_instructions=$(perf stat --no-big-num --bpf-counters -e instructions -- $workload  2>&1 | awk '/instructions/ {print $1}')
-+	base_instructions=$(perf stat --no-big-num -e instructions -- $workload 2>&1 | \
-+				awk -v i=0 -v c=0 '/instructions/ { \
-+					if ($1 != "<not") { i++; c += $1 } \
-+				} END { if (i > 0) printf "%.0f", c; else print "<not" }')
-+	bpf_instructions=$(perf stat --no-big-num --bpf-counters -e instructions -- $workload  2>&1 | \
-+				awk -v i=0 -v c=0 '/instructions/ { \
-+					if ($1 != "<not") { i++; c += $1 } \
-+				} END { if (i > 0) printf "%.0f", c; else print "<not" }')
- 	check_counts $base_instructions $bpf_instructions
- 	compare_number $base_instructions $bpf_instructions
- 	echo "[Success]"
-@@ -52,8 +58,14 @@ test_bpf_modifier()
+-	base_instructions=$(perf stat --no-big-num -e instructions -- $workload 2>&1 | \
++	base_instructions=$(perf stat --no-big-num -e instructions:u -- "${workload[@]}" 2>&1 | \
+ 				awk -v i=0 -v c=0 '/instructions/ { \
+ 					if ($1 != "<not") { i++; c += $1 } \
+ 				} END { if (i > 0) printf "%.0f", c; else print "<not" }')
+-	bpf_instructions=$(perf stat --no-big-num --bpf-counters -e instructions -- $workload  2>&1 | \
++	bpf_instructions=$(perf stat --no-big-num --bpf-counters -e instructions:u \
++				-- "${workload[@]}"  2>&1 | \
+ 				awk -v i=0 -v c=0 '/instructions/ { \
+ 					if ($1 != "<not") { i++; c += $1 } \
+ 				} END { if (i > 0) printf "%.0f", c; else print "<not" }')
+@@ -57,7 +63,9 @@ test_bpf_counters()
+ test_bpf_modifier()
  {
  	printf "Testing bpf event modifier "
- 	stat_output=$(perf stat --no-big-num -e instructions/name=base_instructions/,instructions/name=bpf_instructions/b -- $workload 2>&1)
--	base_instructions=$(echo "$stat_output"| awk '/base_instructions/ {print $1}')
--	bpf_instructions=$(echo "$stat_output"| awk '/bpf_instructions/ {print $1}')
-+	base_instructions=$(echo "$stat_output"| \
-+				awk -v i=0 -v c=0 '/base_instructions/ { \
-+					if ($1 != "<not") { i++; c += $1 } \
-+				} END { if (i > 0) printf "%.0f", c; else print "<not" }')
-+	bpf_instructions=$(echo "$stat_output"| \
-+				awk -v i=0 -v c=0 '/bpf_instructions/ { \
-+					if ($1 != "<not") { i++; c += $1 } \
-+				} END { if (i > 0) printf "%.0f", c; else print "<not" }')
- 	check_counts $base_instructions $bpf_instructions
- 	compare_number $base_instructions $bpf_instructions
- 	echo "[Success]"
+-	stat_output=$(perf stat --no-big-num -e instructions/name=base_instructions/,instructions/name=bpf_instructions/b -- $workload 2>&1)
++	stat_output=$(perf stat --no-big-num \
++		-e instructions/name=base_instructions/u,instructions/name=bpf_instructions/bu \
++		-- "${workload[@]}" 2>&1)
+ 	base_instructions=$(echo "$stat_output"| \
+ 				awk -v i=0 -v c=0 '/base_instructions/ { \
+ 					if ($1 != "<not") { i++; c += $1 } \
 -- 
 2.53.0
 
