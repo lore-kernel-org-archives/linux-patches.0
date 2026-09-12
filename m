@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 823EF428495;
-	Sat, 12 Sep 2026 10:21:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7580135FF6E;
+	Sat, 12 Sep 2026 10:21:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789208491; cv=none; b=d9/ecGs/w0AXGRU31g9MQrrcGUmvxpQ5zm6n4i2N6z99XznH0XYJ9jydyxSRHebsanr8TJypze5W0x7eb1sAzsJ585rBup4SPeUohePYPA9UbhIF43KUaofbm+z2fMUpsEcDgA65ofJQ1fjCxiVVFZAq29CYehPan0cmG4TwmSw=
+	t=1789208498; cv=none; b=daX7UdWoZbzGfEqCE7BjOFOYAMn8w/DlC3EoQQ5c08LiiIhRHJktgaa7CczXLqJEPlIkRausa8A3YLQ5IrR6PCeIVDFRiR0WEALK0JELyuqGbjPZKx1sHeChiBFPysIOAIGHtqVFb2I2XaGPrbOESgAWr6fehLh47pv8R6Mq5vI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789208491; c=relaxed/simple;
-	bh=km5/eOAprkYQe9zWtMaw97T91BnC/BK206XhHrIC4yU=;
+	s=arc-20240116; t=1789208498; c=relaxed/simple;
+	bh=vxfWNSJZXcIJpl+lmfKJTjwNiE0MLBV8WLvSGDyKxG0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jsJrrDK+Ad5a0bUQq4Xim5+ILKazKBr68gx2g3MR8cw3nhkQZ2Vz64O4Jt8xhT4r7vbTe2RT/Bn0FB0Ei+sC0aB69Gjh5CWfrMMxTIuYZN/eyq608w2V8214oW0s+i6wIXgSqAaBSS+gQ3K5pl5XiuoFYl5MUwoLgbUPLOzA3Hw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0pRJ/WrJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MgoqkqWukzRi1nlkDAJ6ZQb+Woc8IWITvBtWotdsP3Xma2C3wtTT8mMpY3qV0WHoyYyVMj3Aqnj1igqdoabNvClJ2Cq2fydQyAsUXUePSg0wGbAzBtGpA/MHcefDnZaWjFC4RZIUIArs1AZz+YgWnul8Ae1isLCQY5h0zhcobg4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nR10mm2L; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0pRJ/WrJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84B311F00893;
-	Sat, 12 Sep 2026 10:21:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nR10mm2L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E029D1F000FF;
+	Sat, 12 Sep 2026 10:21:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789208487;
-	bh=ZpBLzqfr/mcbr67RV03mRqoVMLo7Eb9KM6FOCAfMkUA=;
+	s=korg; t=1789208491;
+	bh=1jRztKq6/9r2F8OKnUaakXiQ4id5H/HR+NfoYvbYPeI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0pRJ/WrJL0stRsLKcHzi4JjB75KtjcMfwC16HNzPn7THvxHL4DZNHED65TmDHHv+d
-	 IaCynf8L9HeeVJWRmD4ByNIWfyAL8QbrwGQ8gy6zUs/Y9PmXxeTwcgQPONn63KaY/T
-	 xcybYy22HZ3Kax9o6I+72xD6V1ODDLOFsQT3jJzo=
+	b=nR10mm2LQqLNmGPthEfvuLKDtU4DvvNk6KorrAUofWuwoggF64ST2H2zh9O2CKKQW
+	 8mVlcLCc+7BLCnysEzBBIYHZLi6jxegqBvPWFuJcOUeOGUKe7BSG9p2I1P16iz/QJE
+	 unoDtSRBxtXJBZVk/Lg+7DrtxeJ8J59Cb4Iybphs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Shi <bestswngs@gmail.com>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Cong Nguyen <congnt264@gmail.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0600/1518] fs/ntfs3: reject restart table growth beyond U16_MAX entries
-Date: Sat, 12 Sep 2026 08:46:09 +0200
-Message-ID: <20260912065636.995550144@linuxfoundation.org>
+Subject: [PATCH 6.18 0627/1518] media: staging/ipu7: fix async notifier leak on init error
+Date: Sat, 12 Sep 2026 08:46:36 +0200
+Message-ID: <20260912065637.616899968@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,67 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Cong Nguyen <congnt264@gmail.com>
 
-[ Upstream commit 111f8d74a19d85942ecbb3aba78f6f3c88e59391 ]
+[ Upstream commit 11ccf31a657f9f95260a22848b7d324d3c6cf113 ]
 
-During $LogFile replay, log_replay() indexes the transaction table by the
-transact_id taken from the log record header.  check_log_rec() only
-verifies that transact_id is non-zero and properly aligned, not its
-magnitude, so a crafted image can request an arbitrarily large index.
+isys_notifier_init() initialises a v4l2 async notifier and then, for
+each CSI-2 port, adds a remote sensor subdev to the notifier's
+waiting_list via v4l2_async_nf_add_fwnode_remote(), which allocates a
+sensor_async_sd descriptor and takes a fwnode reference.
 
-alloc_rsttbl_from_idx() grows the table to cover that index via
-extend_rsttbl(), which passes the new entry count to init_rsttbl():
+If parsing or adding a later port fails, the code jumps to the
+"err_parse" label, which only drops the current endpoint fwnode
+reference and returns, without calling v4l2_async_nf_cleanup(). Any
+descriptors already added to the notifier for earlier ports are
+therefore leaked, and the caller's error path does not clean up the
+notifier either.
 
-	rt = init_rsttbl(esize, used + add);
+Call v4l2_async_nf_cleanup() on the error path, matching the cleanup
+already performed when v4l2_async_nf_register() fails. This is safe as
+the notifier is always initialised before the loop is entered.
 
-used + add is computed as u32 but init_rsttbl() takes a u16, and the
-count is stored in struct RESTART_TABLE as a __le16.  When used + add
-exceeds U16_MAX it is truncated, init_rsttbl() allocates a table far
-smaller than the index requires, and alloc_rsttbl_from_idx() then
-dereferences and writes at the original, untruncated offset -- an
-out-of-bounds access past the allocation, reachable by mounting a
-crafted NTFS image.
-
- BUG: KASAN: use-after-free in alloc_rsttbl_from_idx (fs/ntfs3/fslog.c:950)
- Read of size 4 at addr ffff8880327ffff8 by task exploit
-  alloc_rsttbl_from_idx (fs/ntfs3/fslog.c:950)
-  log_replay (fs/ntfs3/fslog.c:4562)
-  ntfs_loadlog_and_replay (fs/ntfs3/fsntfs.c:324)
-  ntfs_fill_super (fs/ntfs3/super.c:1393)
-  get_tree_bdev_flags
-  vfs_get_tree
-  path_mount
-  __x64_sys_mount
-
-A restart table is limited to U16_MAX entries by its __le16 count, so a
-larger growth request is invalid input.  Reject it in extend_rsttbl();
-all callers already handle a NULL return.
-
-Fixes: b46acd6a6a62 ("fs/ntfs3: Add NTFS journal")
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Fixes: a516d36bdc3d ("media: staging/ipu7: add IPU7 input system device driver")
+Signed-off-by: Cong Nguyen <congnt264@gmail.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/fslog.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/staging/media/ipu7/ipu7-isys.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/ntfs3/fslog.c b/fs/ntfs3/fslog.c
-index 5437dc78209e5..5d66a5c3b507a 100644
---- a/fs/ntfs3/fslog.c
-+++ b/fs/ntfs3/fslog.c
-@@ -875,6 +875,9 @@ static inline struct RESTART_TABLE *extend_rsttbl(struct RESTART_TABLE *tbl,
- 	u32 used = le16_to_cpu(tbl->used);
- 	struct RESTART_TABLE *rt;
+diff --git a/drivers/staging/media/ipu7/ipu7-isys.c b/drivers/staging/media/ipu7/ipu7-isys.c
+index bf262c01a2b80..601e5a79ef8ec 100644
+--- a/drivers/staging/media/ipu7/ipu7-isys.c
++++ b/drivers/staging/media/ipu7/ipu7-isys.c
+@@ -233,6 +233,7 @@ static int isys_notifier_init(struct ipu7_isys *isys)
  
-+	if (used + add > U16_MAX)
-+		return NULL;
-+
- 	rt = init_rsttbl(esize, used + add);
- 	if (!rt)
- 		return NULL;
+ err_parse:
+ 		fwnode_handle_put(ep);
++		v4l2_async_nf_cleanup(&isys->notifier);
+ 		return ret;
+ 	}
+ 
 -- 
 2.53.0
 
