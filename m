@@ -1,44 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39D5A3F23BE;
-	Sat, 12 Sep 2026 10:44:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A09D352003;
+	Sat, 12 Sep 2026 10:44:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789209861; cv=none; b=N8vRZfs4Z3Kf63Nb9Dmbv3rqVgcW2Xvcx1z4A5WmcK2Qb+bfHP3nnCvL1cSC8awyuk1vMgSssp2Qx3wwWGpDs/N5O2ugSJDVO1Ag6SRZe/dBPFTsGLvB2MpMDXJZ1rLkZYEjw1TtnDY1EvkoF831aPM3mWEWpj3c6EQZwq+z7y0=
+	t=1789209865; cv=none; b=Pag5GwfVI2P73Y1BckWEwSEbqtxw4EeGN93aEyD4jaynRas4vuNBldQJDc1DiF3fgiJWkSrKJ1BFE2Ysz6/rVPVudc22MuXALkdhIC2bPslJar9VybNxnS9EdY6q2vg2ZqCvZGRurucsORFCGsXcH/cqpiF+/Z93VmaEmgaEbsM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789209861; c=relaxed/simple;
-	bh=G0XM68SM+4lbYQBW3/EA0ZF0cIDVwh1W1reUBjJ8kWw=;
+	s=arc-20240116; t=1789209865; c=relaxed/simple;
+	bh=nLf05TENZKt76oE+OW/qkBEc1H5JkD+qfG0LMYrh5T0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rgKemrSYYLMJJCqJ0ZdDFGxuWjNZqWp2QN1Ei+w329zghcmF4H/9uCHMx/r9q65cs66p0ZieRIUGO7yfsknFxVgWemwIcUeTnVxFJh8GtfzecFaayumdFCNHZ40KNNDoM7ZIxRDjvH8ou5gM2uXDf8voErYPBIj20FmynJhrxO0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YBPflxSx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sYmAG9K1VV1ZEGx3+DS08wpI+QjePRaRMU/NTCVoqvIJiD0m9d/hkVWFXMmH2U7QVZSwKkYE7liuV/nEXmgDtPPPjg2fl/Nq62n4SkIaIxsA+08arnCbvpc2NsqBXKAxLABpWY3+tQ94HGaaCgVEktTmremOZSC1baLtBLdfYgw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XRwf4htE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YBPflxSx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37ADF1F000FF;
-	Sat, 12 Sep 2026 10:44:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XRwf4htE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3451F1F000FF;
+	Sat, 12 Sep 2026 10:44:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789209859;
-	bh=R/2yAqhMgvAt0Qzc756PmmcHNDtOazH11R2EBAmy4GE=;
+	s=korg; t=1789209864;
+	bh=WVW+rDhGL9HvtUjUhpvF3KXMscu4jZhGNelM4lBKZBI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YBPflxSxxZwQrWqE/vYXfG3SvTKf8gGZQoi8BevEF9YLq6k7nrKxRHjcKvVbMdcjS
-	 2uuwZ8YDhBr6UvgHWSRCenp/6QHWwGBR/yx8Qp9FmmEO1vD8qEbtVZqbCiZnqLpYWb
-	 SMSGPP0jVXMXCKSsF1hxolFRon95HVKevlEV4hks=
+	b=XRwf4htE3U5QWr179pvC6jhRzKVgtnrgFcuJRrBE6BbcDvXuAZmkQi07dzo34UU1r
+	 4iFnxL34KVEfho1S7PcLyW1XmWNy2RXCQtylJ8dqo+NvdPYllqzedRi7TRmfCOG3hF
+	 /TE+p57W/ec9xJhX+5KMXdgTLfQQzeZcp0Np1C+k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Ian Rogers <irogers@google.com>,
 	Namhyung Kim <namhyung@kernel.org>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Honglei Wang <jameshongleiwang@126.com>,
+	Jan Polensky <japo@linux.ibm.com>,
+	Sumanth Korikkar <sumanthk@linux.ibm.com>,
+	Thomas Richter <tmricht@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	James Clark <james.clark@linaro.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0907/1518] perf report: Update sort key state from -F option
-Date: Sat, 12 Sep 2026 08:51:16 +0200
-Message-ID: <20260912065643.971044918@linuxfoundation.org>
+Subject: [PATCH 6.18 0908/1518] perf c2c: Use perf_env e_machine rather than arch
+Date: Sat, 12 Sep 2026 08:51:17 +0200
+Message-ID: <20260912065643.993908175@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -57,179 +59,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namhyung Kim <namhyung@kernel.org>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit cbd41c6d4c26c161a2b0e70ad411d3885ff13507 ]
+[ Upstream commit 70b3c4f734bbfd5664cd6e4eb007c108bf2b1c43 ]
 
-Factor out __sort_dimension__update() so that it can be called from -s
-and -F option parsing logics.  Otherwise the following command cannot go
-into the annotation mode.
+Use the e_machine rather than arch string matching for AARCH64.
 
-  $ perf report -F overhead,type,sym
+Add include of dwarf-regs.h in case the EM_AARCH64 isn't defined, sort
+the headers given this include.
 
-  Warning: Annotation is only available for symbolic views, include "sym*" in --sort to use it.
-
-Reviewed-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
-Tested-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Ingo Molnar <mingo@kernel.org>
-Cc: James Clark <james.clark@linaro.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
+Signed-off-by: Ian Rogers <irogers@google.com>
+Acked-by: Namhyung Kim <namhyung@kernel.org>
+Cc: Alexander Gordeev <agordeev@linux.ibm.com>
+Cc: Heiko Carstens <hca@linux.ibm.com>
+Cc: Honglei Wang <jameshongleiwang@126.com>
+Cc: Jan Polensky <japo@linux.ibm.com>
+Cc: Sumanth Korikkar <sumanthk@linux.ibm.com>
+Cc: Thomas Richter <tmricht@linux.ibm.com>
+Cc: Vasily Gorbik <gor@linux.ibm.com>
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Stable-dep-of: f53f5c2437c1 ("perf c2c: Fix error masking, OOM, and unchecked caller errors in hpp_list__parse()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/sort.c | 100 ++++++++++++++++++++++-------------------
- 1 file changed, 54 insertions(+), 46 deletions(-)
+ tools/perf/builtin-c2c.c | 40 ++++++++++++++++++++++------------------
+ 1 file changed, 22 insertions(+), 18 deletions(-)
 
-diff --git a/tools/perf/util/sort.c b/tools/perf/util/sort.c
-index 3d4b68fd6e445..f963d61ac166f 100644
---- a/tools/perf/util/sort.c
-+++ b/tools/perf/util/sort.c
-@@ -3538,6 +3538,56 @@ static int add_dynamic_entry(struct evlist *evlist, const char *tok,
- 	return ret;
- }
- 
-+static int __sort_dimension__update(struct sort_dimension *sd,
-+				    struct perf_hpp_list *list)
-+{
-+	if (sd->entry == &sort_parent && parent_pattern) {
-+		int ret = regcomp(&parent_regex, parent_pattern, REG_EXTENDED);
-+		if (ret) {
-+			char err[BUFSIZ];
+diff --git a/tools/perf/builtin-c2c.c b/tools/perf/builtin-c2c.c
+index 0851f1e184b11..0a0ca054f115c 100644
+--- a/tools/perf/builtin-c2c.c
++++ b/tools/perf/builtin-c2c.c
+@@ -12,41 +12,45 @@
+  */
+ #include <errno.h>
+ #include <inttypes.h>
 +
-+			regerror(ret, &parent_regex, err, sizeof(err));
-+			pr_err("Invalid regex: %s\n%s", parent_pattern, err);
-+			return -EINVAL;
-+		}
-+		list->parent = 1;
-+	} else if (sd->entry == &sort_sym) {
-+		list->sym = 1;
-+		/*
-+		 * perf diff displays the performance difference amongst
-+		 * two or more perf.data files. Those files could come
-+		 * from different binaries. So we should not compare
-+		 * their ips, but the name of symbol.
-+		 */
-+		if (sort__mode == SORT_MODE__DIFF)
-+			sd->entry->se_collapse = sort__sym_sort;
++#include <asm/bug.h>
+ #include <linux/compiler.h>
+ #include <linux/err.h>
+ #include <linux/kernel.h>
+ #include <linux/stringify.h>
+ #include <linux/zalloc.h>
+-#include <asm/bug.h>
+ #include <sys/param.h>
+-#include "debug.h"
+-#include "builtin.h"
 +
-+	} else if (sd->entry == &sort_sym_offset) {
-+		list->sym = 1;
-+	} else if (sd->entry == &sort_dso) {
-+		list->dso = 1;
-+	} else if (sd->entry == &sort_socket) {
-+		list->socket = 1;
-+	} else if (sd->entry == &sort_thread) {
-+		list->thread = 1;
-+	} else if (sd->entry == &sort_comm) {
-+		list->comm = 1;
-+	} else if (sd->entry == &sort_type_offset) {
-+		symbol_conf.annotate_data_member = true;
-+	} else if (sd->entry == &sort_sym_from || sd->entry == &sort_sym_to) {
-+		list->sym = 1;
-+	} else if (sd->entry == &sort_mem_dcacheline && cacheline_size() == 0) {
-+		return -EINVAL;
-+	} else if (sd->entry == &sort_mem_daddr_sym) {
-+		list->sym = 1;
-+	}
++#include <dwarf-regs.h>
+ #include <perf/cpumap.h>
+ #include <subcmd/pager.h>
+ #include <subcmd/parse-options.h>
+-#include "map_symbol.h"
+-#include "mem-events.h"
+-#include "session.h"
+-#include "hist.h"
+-#include "sort.h"
+-#include "tool.h"
 +
-+	if (sd->entry->se_collapse)
-+		list->need_collapse = 1;
-+
-+	return 0;
-+}
-+
- static int __sort_dimension__add(struct sort_dimension *sd,
- 				 struct perf_hpp_list *list,
- 				 int level)
-@@ -3548,8 +3598,8 @@ static int __sort_dimension__add(struct sort_dimension *sd,
- 	if (__sort_dimension__add_hpp_sort(sd, list, level) < 0)
- 		return -1;
++#include "builtin.h"
+ #include "cacheline.h"
+ #include "data.h"
++#include "debug.h"
+ #include "event.h"
+ #include "evlist.h"
+ #include "evsel.h"
+-#include "ui/browsers/hists.h"
+-#include "thread.h"
+-#include "mem2node.h"
++#include "hist.h"
++#include "map_symbol.h"
++#include "mem-events.h"
+ #include "mem-info.h"
+-#include "symbol.h"
+-#include "ui/ui.h"
+-#include "ui/progress.h"
++#include "mem2node.h"
+ #include "pmus.h"
++#include "session.h"
++#include "sort.h"
+ #include "string2.h"
+-#include "util/util.h"
+-#include "util/symbol.h"
++#include "symbol.h"
++#include "thread.h"
++#include "tool.h"
++#include "ui/browsers/hists.h"
++#include "ui/progress.h"
++#include "ui/ui.h"
+ #include "util/annotate.h"
++#include "util/symbol.h"
++#include "util/util.h"
  
--	if (sd->entry->se_collapse)
--		list->need_collapse = 1;
-+	if (__sort_dimension__update(sd, list) < 0)
-+		return -1;
- 
- 	sd->taken = 1;
- 
-@@ -3585,8 +3635,8 @@ static int __sort_dimension__add_output(struct perf_hpp_list *list,
- 	if (__sort_dimension__add_hpp_output(sd, list, level) < 0)
- 		return -1;
- 
--	if (sd->entry->se_collapse)
--		list->need_collapse = 1;
-+	if (__sort_dimension__update(sd, list) < 0)
-+		return -1;
- 
- 	sd->taken = 1;
- 	return 0;
-@@ -3651,39 +3701,6 @@ int sort_dimension__add(struct perf_hpp_list *list, const char *tok,
- 				sort_dimension_add_dynamic_header(sd, env);
- 		}
- 
--		if (sd->entry == &sort_parent && parent_pattern) {
--			int ret = regcomp(&parent_regex, parent_pattern, REG_EXTENDED);
--			if (ret) {
--				char err[BUFSIZ];
--
--				regerror(ret, &parent_regex, err, sizeof(err));
--				pr_err("Invalid regex: %s\n%s", parent_pattern, err);
--				return -EINVAL;
--			}
--			list->parent = 1;
--		} else if (sd->entry == &sort_sym) {
--			list->sym = 1;
--			/*
--			 * perf diff displays the performance difference amongst
--			 * two or more perf.data files. Those files could come
--			 * from different binaries. So we should not compare
--			 * their ips, but the name of symbol.
--			 */
--			if (sort__mode == SORT_MODE__DIFF)
--				sd->entry->se_collapse = sort__sym_sort;
--
--		} else if (sd->entry == &sort_dso) {
--			list->dso = 1;
--		} else if (sd->entry == &sort_socket) {
--			list->socket = 1;
--		} else if (sd->entry == &sort_thread) {
--			list->thread = 1;
--		} else if (sd->entry == &sort_comm) {
--			list->comm = 1;
--		} else if (sd->entry == &sort_type_offset) {
--			symbol_conf.annotate_data_member = true;
--		}
--
- 		return __sort_dimension__add(sd, list, level);
- 	}
- 
-@@ -3702,9 +3719,6 @@ int sort_dimension__add(struct perf_hpp_list *list, const char *tok,
- 				    strlen(tok)))
- 			return -EINVAL;
- 
--		if (sd->entry == &sort_sym_from || sd->entry == &sort_sym_to)
--			list->sym = 1;
--
- 		__sort_dimension__add(sd, list, level);
- 		return 0;
- 	}
-@@ -3718,12 +3732,6 @@ int sort_dimension__add(struct perf_hpp_list *list, const char *tok,
- 		if (sort__mode != SORT_MODE__MEMORY)
- 			return -EINVAL;
- 
--		if (sd->entry == &sort_mem_dcacheline && cacheline_size() == 0)
--			return -EINVAL;
--
--		if (sd->entry == &sort_mem_daddr_sym)
--			list->sym = 1;
--
- 		__sort_dimension__add(sd, list, level);
- 		return 0;
- 	}
+ struct c2c_hists {
+ 	struct hists		hists;
+@@ -3225,7 +3229,7 @@ static int perf_c2c__report(int argc, const char **argv)
+ 	 * default display type.
+ 	 */
+ 	if (!display) {
+-		if (!strcmp(perf_env__arch(env), "arm64"))
++		if (perf_env__e_machine(env, /*e_flags=*/NULL) == EM_AARCH64)
+ 			display = "peer";
+ 		else
+ 			display = "tot";
 -- 
 2.53.0
 
