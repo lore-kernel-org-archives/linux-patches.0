@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0E6B2FD7C3;
-	Sat, 12 Sep 2026 13:46:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39943318BB3;
+	Sat, 12 Sep 2026 13:46:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789220813; cv=none; b=NKF4ehEzQVUnTzjJyoDANmQ70H0ZV/Poo95656IMpWaKaVhCBdc7yPVvOXyxn8caRZNdlCtRdBfVRoC7lBsr5bIIUBYrDof2EgofsD4K5sjapOnOiL8wUFESuhvP00pjppSmT5pjt4GSUHS/24Fldc42wBSfGGU9U4ehN0tRbgY=
+	t=1789220817; cv=none; b=FWtDLgwUnaTJuV4FOI7gqHkl7livhzupg1v3vd8m0p7Md7V+oyyAMvBmOoFkXDG2O+l3dAiHFQJxk6sjmdYVJfKhaSaiUOVjQhn1wubymgae+647P9fBmrsSf10Bur7AXStBu6ikYoRdMO6pyt6Q5slpkwF2Mf3J9lv0jSAz54Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789220813; c=relaxed/simple;
-	bh=PkUjouFZAMuz2z+17qmvwqLEFXzkXT8JpVFzD4Wv4HI=;
+	s=arc-20240116; t=1789220817; c=relaxed/simple;
+	bh=SRQWKmwZvKMNGwK7QM01pxrKgCn1qb7JsFRQJX0R+zo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s712YOBJYIruNQhFhq2XqT9omtkusV3qUHRRvCzArZkXaUxYsyRmzBwlCKxGZ7BFDztKl2sZp0dUBINl465SUZPtz9oASIM6hBcdxeA0SLZ1aynWXtxjMrTaq2C16htFzZQPBpLso542tiaon+Rm3IrIyI3ADeymOgqTTf/vBmA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bf90+2X+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jbBcUsOaj0IuuvP4OOLYRGv8rCbPAo+yBxWKXdxGikSeWbNDsV0z8Peh1FlcFML3oOuuK0bn4UjLEurRN1nG3Zq8zust4lXb8VwmrT06m1onHKWbbICCfuiumJqJutB4x7xQ3nJ3C/Gq1440FI5aD1f4F8vX8IagCyEJ2WJayM8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NtSP9Jv9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bf90+2X+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AC3C1F000FF;
-	Sat, 12 Sep 2026 13:46:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NtSP9Jv9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E81911F000FF;
+	Sat, 12 Sep 2026 13:46:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789220811;
-	bh=5JsQzv9y/VCgiHIJmAQRPl2tbu9ARvmfSbYUKOT4Dvs=;
+	s=korg; t=1789220815;
+	bh=m6g76XmB+81aznDO7fX1ElAbZ9JshA9dSruVYt2aA1A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bf90+2X+7WidZwAt8Wcyvr9awPLplVDciyMJz7Ku93LTmhtbwNn3ZieGmTX/HxPp1
-	 JOxbClpX5TYH3+5+P/zgDvjSTB0qAHsw9E7aghIrM2CZoRLp4ayxXuG07TfgokuWwN
-	 lilAe1DcdHNClofDogQ3QEp6ZnCpg8fftF6K1aIM=
+	b=NtSP9Jv9UBdm+8CST/pyki9w+IinOqMcGc6kPCotP4ETxd68YkV0dGL1CHdN2DZM8
+	 bDp2UFRcuIPaNrJTcbcVr/Ge2eojA7jUdSqGZR1eAHU8HbcJzpeVZUHaXRd3EqkwiE
+	 yqLlExwN3MeZZQhQGZGXNb6JXNqNtF07iRy2zJAI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fan Wu <fanwu01@zju.edu.cn>,
+	HyeongJun An <sammiee5311@gmail.com>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>
-Subject: [PATCH 6.6 0211/1424] power: supply: lp8727: fix use-after-free in lp8727_release_irq()
-Date: Sat, 12 Sep 2026 08:44:03 +0200
-Message-ID: <20260912065612.013132663@linuxfoundation.org>
+Subject: [PATCH 6.6 0212/1424] power: supply: qcom_battmgr: terminate the strings from firmware
+Date: Sat, 12 Sep 2026 08:44:04 +0200
+Message-ID: <20260912065612.035989561@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -50,47 +50,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: HyeongJun An <sammiee5311@gmail.com>
 
-commit ceb6ac43b0f591722401922ceb958ce2616935e0 upstream.
+commit ab1112df8f4ffa88cb024dd370c432ced80f77d8 upstream.
 
-lp8727_isr_func(), the threaded IRQ handler, is the only caller that arms
-pchg->work via schedule_delayed_work().  lp8727_release_irq() currently
-cancels the work before freeing the IRQ, so an IRQ delivered in between
-can re-arm the work through the threaded handler.  After .remove returns
-the devm layer frees pchg while lp8727_delayed_func() may still run and
-dereference it.
+The qcom_battmgr_sc8280xp_strcpy() takes a Pascal-style string when the
+firmware sends one. Otherwise it copies all BATTMGR_STRING_LEN bytes and
+leaves the destination without a terminator.
 
-Free the IRQ first so the threaded handler is quiesced and can no longer
-queue work, then cancel the delayed work to drain the final generation.
+Those destinations are model_number, serial_number and oem_info, each
+BATTMGR_STRING_LEN and declared next to each other. They go out to user
+space as val->strval, which power_supply_format_property() prints with
+"%s", so a firmware string that fills the whole field makes that read run
+into the following members.
 
-This issue was found by an in-house static analysis tool.
+Use strscpy() so the copy always terminates, the way the SM8350 path
+already does for the same field.
 
-Fixes: d71fda016102 ("lp8727_charger: Clean up the interrupt handler")
+Fixes: 29e8142b5623 ("power: supply: Introduce Qualcomm PMIC GLINK power supply")
 Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5.6
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Link: https://patch.msgid.link/20260807033520.8551-1-fanwu01@zju.edu.cn
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
+Link: https://patch.msgid.link/20260727074119.2585463-1-sammiee5311@gmail.com
 Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/power/supply/lp8727_charger.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/power/supply/qcom_battmgr.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/power/supply/lp8727_charger.c
-+++ b/drivers/power/supply/lp8727_charger.c
-@@ -280,10 +280,10 @@ static int lp8727_setup_irq(struct lp872
- 
- static void lp8727_release_irq(struct lp8727_chg *pchg)
- {
--	cancel_delayed_work_sync(&pchg->work);
--
- 	if (pchg->irq)
- 		free_irq(pchg->irq, pchg);
-+
-+	cancel_delayed_work_sync(&pchg->work);
+--- a/drivers/power/supply/qcom_battmgr.c
++++ b/drivers/power/supply/qcom_battmgr.c
+@@ -972,7 +972,7 @@ static void qcom_battmgr_sc8280xp_strcpy
+ 		memcpy(dest, src + 1, len);
+ 		dest[len] = '\0';
+ 	} else {
+-		memcpy(dest, src, BATTMGR_STRING_LEN);
++		strscpy(dest, src, BATTMGR_STRING_LEN);
+ 	}
  }
  
- static enum power_supply_property lp8727_charger_prop[] = {
 
 
