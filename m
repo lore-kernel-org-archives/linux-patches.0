@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CFC83F9F3C;
-	Sat, 12 Sep 2026 09:14:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E7A937F8B2;
+	Sat, 12 Sep 2026 09:14:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789204489; cv=none; b=nw/QpjFwknhY735j0hKZCPEzjyLPbvlRFeU7arKTW6f4eEko98Ay21/A/4Q2FZxRa6jABGyE+yOGsy0ehYpOk9cS7gk7vynNbkGkUWV77jM+yRDZdmGzD6zpLuj7jkBf96n0/wetjRSHOkSUKstg7/ZJeWHN3XwbgMO9SSLXKG0=
+	t=1789204494; cv=none; b=Bzb4AjsQJMmq4jiRz2tZFxseI8PugbQjx9nos9XEijybeTR+t+CnwVdIwMQE94LpVCaXu3qLDxJMOvV2bXzjsKlFkT21OYBt/kkZtjxy+ssGWBZGwsDUqA3uoiftICbL1+2BNiWj8JN81zoE4F0aozkDdnKvhSsImBA2EnLlm4w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789204489; c=relaxed/simple;
-	bh=zhD6YtnbC4jZyX2IOFVMaXN2GHcs368bK50snSt2Tb0=;
+	s=arc-20240116; t=1789204494; c=relaxed/simple;
+	bh=DdVs/7vYon0PWpMI08cEbj+Gqo1yrwPB+tIr+PsIeSc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=suR8XO3d7VHip+xxltyowZMW8NxwS4CEYiCxD5udbk6c3sNDjMdKra2EHvVTtcRhxQ/+PvFy3BJ1EWqVOImeR7UIo4ozdwHOkG5wGnKgnwt/y37fX/uQOxvJlQ7qHMJIAxGu/cL24LJsFi8tjHNTj+mXc6J9UXPcPKrdX69wqJs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zv+SKQlc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=NETYcL43fIYth2Ju1AqU2b82aU/f9hU1rIIwgpbVcC7FfIY5gO0BIN1ziubmO9nlC4UoyAPX8pEbZbehVU44kdxsvke4/uOiLRfTmgr+6jvq9aKJIKwyZn0rHgK5q0PfaJ6fowIuAVZoNmfheHcFGXyX+vZwFluLJd3QxsDjHhE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lqv7+HZA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zv+SKQlc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D57FB1F000FF;
-	Sat, 12 Sep 2026 09:14:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lqv7+HZA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F154F1F000FF;
+	Sat, 12 Sep 2026 09:14:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789204488;
-	bh=iUaFQYynQXH/Yqaebu4dV9nZaXXs6hrlzoJXDxia5Fk=;
+	s=korg; t=1789204493;
+	bh=0JRH2v4hnMfdAkxk4W7oSgmJ70Yi6GmeSn22hYTtQ88=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zv+SKQlcgkSmMyzKHxsGafSSZXJMGKFNqWGIsG4t6mjfa4C73Ba5BbYms4cMrHB/+
-	 vBP3Y2RCKi+AHiwQjL5e0J/lkWcIbAo5ftwHvvqje5vY7HPlaPPS6lYEVPP3GL0Fw5
-	 /W1qJf7mnJDAxX7Pskh6NArWVE+cYlTfudMXIFfM=
+	b=Lqv7+HZAeBKxcI8en1gu2aC4Mx0rNPPry57EShdXzHukcbTx0kAizyHw3cqCwCURE
+	 1dQG7p6MNtsa7FJdCC4NnWFUwfF+V3CC/p4FHU/7btwbCifoIuWQlbUjDcV465xoQl
+	 RVwZAcyQxxFdjqN6DXj4Zpsabe24jzAKwIMm1pno=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Denis V. Lunev" <den@openvz.org>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Yufeng Wang <wangyufeng@kylinos.cn>,
+	=?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>,
 	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1623/1815] virtio_balloon: quiesce balloon work before device shutdown
-Date: Sat, 12 Sep 2026 08:56:13 +0200
-Message-ID: <20260912065727.091292769@linuxfoundation.org>
+Subject: [PATCH 7.2 1624/1815] vhost/net: fix clear_user start address in VHOST_GET_FEATURES_ARRAY
+Date: Sat, 12 Sep 2026 08:56:14 +0200
+Message-ID: <20260912065727.114349216@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -46,78 +46,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Denis V. Lunev <den@openvz.org>
+From: Yufeng Wang <wangyufeng@kylinos.cn>
 
-[ Upstream commit 7e17eef04600c399c7e0f5ce765da5cf9d40d8e1 ]
+[ Upstream commit 92a7b138f2453bf067628de0c5ec563cc8ad16d5 ]
 
-Commit 8bd2fa086a04 ("virtio: break and reset virtio devices on
-device_shutdown()") added a generic virtio bus .shutdown handler that
-breaks and resets every virtio device during device_shutdown(), i.e. on
-reboot and kexec.
+The clear_user() call in VHOST_GET_FEATURES_ARRAY incorrectly starts
+at argp, which is the beginning of the features array, overwriting the
+data just written by copy_to_user(). It should start after the copied
+elements at argp + copied * sizeof(u64) to only zero the trailing
+unused space.
 
-virtio_balloon provides no .shutdown of its own, so that generic path
-runs while the balloon's asynchronous work is still armed. Once the
-device has been broken, virtqueue_add_inbuf() in
-virtballoon_free_page_report() returns -EIO and trips its
-WARN_ON_ONCE(). On a kernel booted with panic_on_warn that turns an
-ordinary reboot, for example a kexec based upgrade, into a fatal panic
-in the middle of device_shutdown(), so the machine never reaches the
-new kernel.
+Use size_mul() for both the offset and length calculations so the
+arithmetic stays consistent with the surrounding code and remains
+overflow-safe.
 
-Relaxing that single WARN_ON_ONCE() would only hide the symptom: the
-inflate/deflate and OOM paths do not warn, they call
-wait_event(vb->acked, ...) and would instead block forever on a broken
-queue that can no longer complete. The device has to be quiesced, not
-just kept quiet.
-
-Add a .shutdown handler that quiesces the balloon via the shared
-virtballoon_quiesce() helper while the device is still alive, and only
-then breaks and resets it via virtio_device_shutdown(). Unlike
-virtballoon_remove() the balloon workqueue is not destroyed, as shutdown
-does not free the device and cancel_work_sync() together with stop_update
-already prevent any further work from being queued.
-
-Fixes: 8bd2fa086a04 ("virtio: break and reset virtio devices on device_shutdown()")
-Signed-off-by: Denis V. Lunev <den@openvz.org>
-Reviewed-by: David Hildenbrand (Arm) <david@kernel.org>
+Fixes: 333c515d1896 ("vhost-net: allow configuring extended features")
+Signed-off-by: Yufeng Wang <wangyufeng@kylinos.cn>
+Acked-by: Eugenio Pérez <eperezma@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260624140846.2616797-4-den@openvz.org>
+Message-ID: <20260626070438.59149-1-r4o5m6e8o@163.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/virtio/virtio_balloon.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/vhost/net.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/virtio/virtio_balloon.c b/drivers/virtio/virtio_balloon.c
-index 6daba1257d392..70450e922d8bb 100644
---- a/drivers/virtio/virtio_balloon.c
-+++ b/drivers/virtio/virtio_balloon.c
-@@ -1135,6 +1135,12 @@ static void virtballoon_remove(struct virtio_device *vdev)
- 	kfree(vb);
- }
+diff --git a/drivers/vhost/net.c b/drivers/vhost/net.c
+index 6949b704166d5..38d9c184082d0 100644
+--- a/drivers/vhost/net.c
++++ b/drivers/vhost/net.c
+@@ -1777,7 +1777,8 @@ static long vhost_net_ioctl(struct file *f, unsigned int ioctl,
+ 			return -EFAULT;
  
-+static void virtballoon_shutdown(struct virtio_device *vdev)
-+{
-+	virtballoon_quiesce(vdev->priv);
-+	virtio_device_shutdown(vdev);
-+}
-+
- #ifdef CONFIG_PM_SLEEP
- static int virtballoon_freeze(struct virtio_device *vdev)
- {
-@@ -1205,6 +1211,7 @@ static struct virtio_driver virtio_balloon_driver = {
- 	.validate =	virtballoon_validate,
- 	.probe =	virtballoon_probe,
- 	.remove =	virtballoon_remove,
-+	.shutdown =	virtballoon_shutdown,
- 	.config_changed = virtballoon_changed,
- #ifdef CONFIG_PM_SLEEP
- 	.freeze	=	virtballoon_freeze,
+ 		/* Zero the trailing space provided by user-space, if any */
+-		if (clear_user(argp, size_mul(count - copied, sizeof(u64))))
++		if (clear_user(argp + size_mul(copied, sizeof(u64)),
++			       size_mul(count - copied, sizeof(u64))))
+ 			return -EFAULT;
+ 		return 0;
+ 	case VHOST_SET_FEATURES_ARRAY:
 -- 
 2.53.0
 
