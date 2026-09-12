@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4D613A8737;
-	Sat, 12 Sep 2026 08:32:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1E193DD847;
+	Sat, 12 Sep 2026 08:32:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789201952; cv=none; b=W5Kqo/XNpaRxEr/oIYkdWEY03LsvbeaVHAcrOscBjUYncR+ETgYuyfJ1xBlPfhZpSba7hzwp8j/9v7zCVtgPoDwcYFQie/Zp//Ro19/KT1ny40igu57PqfGDWJCbJ+DHaMVEMSoN72EdwJomeSlwzZES9bKaApVui3NrjM26GGc=
+	t=1789201957; cv=none; b=qtSakISPRVfixIcYFZSHRWMiLMnKpAonQId1SIAPZCNXBWY3/7uwYhfLNwpN1FcTrCTEUPi3p0QWtMwdVdjeDztS23G5p3vB4nsBUoggLKIa8CKaa16MCxJjzH5zUTVQmESdCCFsRxfY/jik2K8/sstJ9HS153q4+gakSB4tYbs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789201952; c=relaxed/simple;
-	bh=ust34OrJRQubPA1p+H96p0zvSD3qJ020HYAXGmlMcqA=;
+	s=arc-20240116; t=1789201957; c=relaxed/simple;
+	bh=+ElLt4zwp17wsmdX7ZN4zb4CSCIjjZyNg142dx5Wx/g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sHBVorvWs8/MXH7sVibKm01A5QEpED8nLh1dhTjflREa2jpJqPM+gI34ua4/Y4Sba5D0gJx0up8hgGBdnzlw4RcorxwgoIqlThHxizQTOMSALS1TrNkdAQtKartUuMxzeitfzSYCNiAXjspCRryTpN9KsaEMkeH/UrTDPYxTTLU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f32m9h0Q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YhlLH0NuhZoac1r1U+wmw1L6ZfX5krTE9FaaIDP5pbfFmmHZLXBPdI0vrv8cCbknL/yUcOwP/ZPXI729TCO6ldlNI7DxwZVMDAqPZ1Pk25marpr/sJadUkWqkyn2jyBp944R1/8pigwElpee8GbUYO0Nm31b5bBMlhfUoPNJ1Pw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T5++tA0y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f32m9h0Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A69011F000FF;
-	Sat, 12 Sep 2026 08:32:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T5++tA0y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 950B21F000FF;
+	Sat, 12 Sep 2026 08:32:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789201950;
-	bh=tzkT36ksygCiT5DFAlf75/j0P1Yp9LxRYHkf3PrImQY=;
+	s=korg; t=1789201955;
+	bh=YTJMUGcudcwnMPD4Pz80lfzkug8JLM0+mCrDtHh6xZE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=f32m9h0QqnxqRQqYui1osZJD/kJgXXRcwN4R9nHKRmcWD6uu4Ixn+/9m4q98FNol+
-	 LsDjKtQPwRhXc8hvtenoFU2wLBRNCctDkXW04vOdv/ig2HQdMzqzXU0L9b4Nm1GyTN
-	 /OjgsN8P/c4hQbxPSDPAD2X4jOBjC514W+qxnsPI=
+	b=T5++tA0yVkWaYO9aaFKPmo5E45bI6+ArAZdyZ8VEt82gqb4vNytmEa2K/6MxWEV0k
+	 Hvsw9MBoIBuba5juPc4i4yQR7bhN+EXLeq0DWVmAVwWPidwgR4Oz8aZxx97pqptNtI
+	 oygQv6X8xtKyJghWkSJbywTS/FnkVYwmnJH9suMg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eliot Courtney <ecourtney@nvidia.com>,
-	Alexandre Courbot <acourbot@nvidia.com>,
+	Cheng Xu <chengyou@linux.alibaba.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1095/1815] gpu: nova-core: correct FRTS vidmem offset calculation
-Date: Sat, 12 Sep 2026 08:47:25 +0200
-Message-ID: <20260912065714.727623978@linuxfoundation.org>
+Subject: [PATCH 7.2 1104/1815] RDMA/erdma: Hold QP references for AE and CM processing
+Date: Sat, 12 Sep 2026 08:47:34 +0200
+Message-ID: <20260912065714.935722569@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,208 +51,138 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eliot Courtney <ecourtney@nvidia.com>
+From: Cheng Xu <chengyou@linux.alibaba.com>
 
-[ Upstream commit 5c9deba5578db5a3ea05be8a3e4a59ecb08ee76f ]
+[ Upstream commit a52eeff32024f190b3bdc99088c7becccd4fa60b ]
 
-Currently, the frts vidmem offset is calculated based on the non-wpr
-heap size and pmu reservation size, but this is not right. The layout
-actually looks like this:
+AE QP fatal events and iWARP CM paths load QPs from dev->qp_xa
+and then use or reference them outside the xarray lock.
+erdma_destroy_qp() can drop the destroy-path reference and free QP
+resources while such a lookup is in flight.
 
-| non-wpr heap | WPR2 .. FRTS | PMU reserved | ... | VGA workspace |
+Add erdma_qp_get_by_qpn() to acquire a kref under the xarray
+lock with kref_get_unless_zero(). Remove the QP from the xarray
+before dropping the destroy-path reference so no new lookup can acquire
+it while destruction waits for existing users.
 
-It's just by coincidence + generous alignment that the values happened
-to match. Instead, define a per-architecture reserved size at the end of
-the framebuffer and use this plus the PMU reserved size to calculate the
-frts vidmem offset.
-
-Fixes: d317e4585fa3 ("gpu: nova-core: Hopper/Blackwell: add FSP Chain of Trust boot")
-Signed-off-by: Eliot Courtney <ecourtney@nvidia.com>
-Link: https://patch.msgid.link/20260804-blackwell-fixes-v4-1-ac858b6a1935@nvidia.com
-[acourbot: add comment clarifying reason for testing pmu_reserved_size.]
-[acourbot: make fb_end_reserved_size() return u64.]
-Signed-off-by: Alexandre Courbot <acourbot@nvidia.com>
+Fixes: 155055771704 ("RDMA/erdma: Add verbs implementation")
+Signed-off-by: Cheng Xu <chengyou@linux.alibaba.com>
+Link: https://patch.msgid.link/20260730124357.12976-2-chengyou@linux.alibaba.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/nova-core/fb/hal/gb100.rs  |  1 +
- drivers/gpu/nova-core/fb/hal/gb202.rs  |  1 +
- drivers/gpu/nova-core/fsp.rs           | 28 ++++++++++++++++++--------
- drivers/gpu/nova-core/fsp/hal.rs       |  4 ++++
- drivers/gpu/nova-core/fsp/hal/gb100.rs |  6 ++++++
- drivers/gpu/nova-core/fsp/hal/gb202.rs |  9 ++++++++-
- drivers/gpu/nova-core/fsp/hal/gh100.rs |  9 ++++++++-
- 7 files changed, 48 insertions(+), 10 deletions(-)
+ drivers/infiniband/hw/erdma/erdma_cm.c    |  6 ++----
+ drivers/infiniband/hw/erdma/erdma_eq.c    |  3 ++-
+ drivers/infiniband/hw/erdma/erdma_verbs.c |  6 +++++-
+ drivers/infiniband/hw/erdma/erdma_verbs.h | 15 +++++++++++++++
+ 4 files changed, 24 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/nova-core/fb/hal/gb100.rs b/drivers/gpu/nova-core/fb/hal/gb100.rs
-index 6e0eba101ca15..51bd0c0bede69 100644
---- a/drivers/gpu/nova-core/fb/hal/gb100.rs
-+++ b/drivers/gpu/nova-core/fb/hal/gb100.rs
-@@ -78,6 +78,7 @@ fn write_sysmem_flush_page_gb100(bar: Bar0<'_>, addr: Bounded<u64, 52>) {
-     );
+diff --git a/drivers/infiniband/hw/erdma/erdma_cm.c b/drivers/infiniband/hw/erdma/erdma_cm.c
+index 5c7d3a8f8038c..70c5df566d9de 100644
+--- a/drivers/infiniband/hw/erdma/erdma_cm.c
++++ b/drivers/infiniband/hw/erdma/erdma_cm.c
+@@ -1021,10 +1021,9 @@ int erdma_connect(struct iw_cm_id *id, struct iw_cm_conn_param *params)
+ 	if (laddr->sa_family != AF_INET || raddr->sa_family != AF_INET)
+ 		return -EAFNOSUPPORT;
+ 
+-	qp = find_qp_by_qpn(dev, params->qpn);
++	qp = erdma_qp_get_by_qpn(dev, params->qpn);
+ 	if (!qp)
+ 		return -ENOENT;
+-	erdma_qp_get(qp);
+ 
+ 	ret = sock_create(AF_INET, SOCK_STREAM, IPPROTO_TCP, &s);
+ 	if (ret < 0)
+@@ -1154,10 +1153,9 @@ int erdma_accept(struct iw_cm_id *id, struct iw_cm_conn_param *params)
+ 		return -ECONNRESET;
+ 	}
+ 
+-	qp = find_qp_by_qpn(dev, params->qpn);
++	qp = erdma_qp_get_by_qpn(dev, params->qpn);
+ 	if (!qp)
+ 		return -ENOENT;
+-	erdma_qp_get(qp);
+ 
+ 	down_write(&qp->state_lock);
+ 	if (qp->attrs.iwarp.state > ERDMA_QPS_IWARP_RTR) {
+diff --git a/drivers/infiniband/hw/erdma/erdma_eq.c b/drivers/infiniband/hw/erdma/erdma_eq.c
+index 96e74fcf417c0..d5d1704cb57ca 100644
+--- a/drivers/infiniband/hw/erdma/erdma_eq.c
++++ b/drivers/infiniband/hw/erdma/erdma_eq.c
+@@ -65,7 +65,7 @@ void erdma_aeq_event_handler(struct erdma_dev *dev)
+ 			erdma_cq_put(cq);
+ 		} else {
+ 			qpn = le32_to_cpu(aeqe->event_data0);
+-			qp = find_qp_by_qpn(dev, qpn);
++			qp = erdma_qp_get_by_qpn(dev, qpn);
+ 			if (!qp)
+ 				continue;
+ 
+@@ -75,6 +75,7 @@ void erdma_aeq_event_handler(struct erdma_dev *dev)
+ 			if (qp->ibqp.event_handler)
+ 				qp->ibqp.event_handler(&event,
+ 						       qp->ibqp.qp_context);
++			erdma_qp_put(qp);
+ 		}
+ 	}
+ 
+diff --git a/drivers/infiniband/hw/erdma/erdma_verbs.c b/drivers/infiniband/hw/erdma/erdma_verbs.c
+index 5ad23a6547adb..20944d506da77 100644
+--- a/drivers/infiniband/hw/erdma/erdma_verbs.c
++++ b/drivers/infiniband/hw/erdma/erdma_verbs.c
+@@ -1371,6 +1371,7 @@ int erdma_destroy_qp(struct ib_qp *ibqp, struct ib_udata *udata)
+ 		udata, struct erdma_ucontext, ibucontext);
+ 	struct erdma_cmdq_destroy_qp_req req;
+ 	union erdma_mod_qp_params params;
++	unsigned long flags;
+ 	int err;
+ 
+ 	down_write(&qp->state_lock);
+@@ -1398,6 +1399,10 @@ int erdma_destroy_qp(struct ib_qp *ibqp, struct ib_udata *udata)
+ 				       "failed to destroy QP %u: %d\n",
+ 				       QP_ID(qp), err);
+ 
++	xa_lock_irqsave(&dev->qp_xa, flags);
++	__xa_erase(&dev->qp_xa, QP_ID(qp));
++	xa_unlock_irqrestore(&dev->qp_xa, flags);
++
+ 	erdma_qp_put(qp);
+ 	wait_for_completion(&qp->safe_free);
+ 
+@@ -1411,7 +1416,6 @@ int erdma_destroy_qp(struct ib_qp *ibqp, struct ib_udata *udata)
+ 
+ 	if (qp->cep)
+ 		erdma_cep_put(qp->cep);
+-	xa_erase(&dev->qp_xa, QP_ID(qp));
+ 
+ 	return 0;
+ }
+diff --git a/drivers/infiniband/hw/erdma/erdma_verbs.h b/drivers/infiniband/hw/erdma/erdma_verbs.h
+index 894e080435fbf..c73cecf92f611 100644
+--- a/drivers/infiniband/hw/erdma/erdma_verbs.h
++++ b/drivers/infiniband/hw/erdma/erdma_verbs.h
+@@ -360,6 +360,21 @@ static inline struct erdma_qp *find_qp_by_qpn(struct erdma_dev *dev, int id)
+ 	return (struct erdma_qp *)xa_load(&dev->qp_xa, id);
  }
  
-+// This PMU reservation size is r570-specific.
- pub(super) const fn pmu_reserved_size_gb100() -> u32 {
-     usize_into_u32::<{ const_align_up(SZ_8M + SZ_16M + SZ_4K, Alignment::new::<SZ_128K>()).unwrap() }>(
-     )
-diff --git a/drivers/gpu/nova-core/fb/hal/gb202.rs b/drivers/gpu/nova-core/fb/hal/gb202.rs
-index 038d1278c6341..9978a5d2dec1c 100644
---- a/drivers/gpu/nova-core/fb/hal/gb202.rs
-+++ b/drivers/gpu/nova-core/fb/hal/gb202.rs
-@@ -83,6 +83,7 @@ impl FbHal for Gb202 {
- 
-     fn non_wpr_heap_size(&self) -> u32 {
-         // Non-WPR heap for GB20x (see Open RM: kgspGetNonWprHeapSize, GB202+).
-+        // This size is r570-specific.
-         u32::SZ_2M + u32::SZ_128K
-     }
- 
-diff --git a/drivers/gpu/nova-core/fsp.rs b/drivers/gpu/nova-core/fsp.rs
-index d2141b5450573..04af98d2c1f81 100644
---- a/drivers/gpu/nova-core/fsp.rs
-+++ b/drivers/gpu/nova-core/fsp.rs
-@@ -126,20 +126,32 @@ struct FspCotMessage {
- }
- 
- impl FspCotMessage {
-+    /// Computes the FRTS vidmem offset for the Chain-of-Trust message. It is measured backwards
-+    /// from the end of the framebuffer.
-+    fn frts_vidmem_offset(hal: &dyn hal::FspHal, fb_layout: &FbLayout) -> Result<u64> {
-+        let mut offset = hal.fb_end_reserved_size();
++static inline struct erdma_qp *erdma_qp_get_by_qpn(struct erdma_dev *dev,
++						   int id)
++{
++	struct erdma_qp *qp;
++	unsigned long flags;
 +
-+        // As per OpenRM's `kfspPrepareBootCommands_GH100`.
-+        if fb_layout.pmu_reserved_size != 0 {
-+            offset = (offset + u64::from(fb_layout.pmu_reserved_size))
-+                // The 2 MiB alignment is r570-specific.
-+                .align_up(Alignment::new::<SZ_2M>())
-+                .ok_or(EINVAL)?;
-+        }
++	xa_lock_irqsave(&dev->qp_xa, flags);
++	qp = xa_load(&dev->qp_xa, id);
++	if (qp && !kref_get_unless_zero(&qp->ref))
++		qp = NULL;
++	xa_unlock_irqrestore(&dev->qp_xa, flags);
 +
-+        Ok(offset)
-+    }
++	return qp;
++}
 +
-     /// Returns an in-place initializer for [`FspCotMessage`].
-     fn new<'a>(
-         fb_layout: &FbLayout,
-         fsp_fw: &'a FspFirmware,
-         args: &'a FmcBootArgs,
-     ) -> Result<impl Init<Self> + 'a> {
--        // frts_vidmem_offset is measured from the end of FB, so FRTS sits at
--        // (end of FB) - frts_vidmem_offset.
--        let frts_vidmem_offset = if !args.resume {
--            let frts_reserved_size = fb_layout.heap.len() + u64::from(fb_layout.pmu_reserved_size);
-+        let hal = hal::fsp_hal(args.chipset).ok_or(ENOTSUPP)?;
- 
--            frts_reserved_size
--                .align_up(Alignment::new::<SZ_2M>())
--                .ok_or(EINVAL)?
-+        let frts_vidmem_offset = if !args.resume {
-+            Self::frts_vidmem_offset(hal, fb_layout)?
-         } else {
-             0
-         };
-@@ -150,7 +162,7 @@ impl FspCotMessage {
-             0
-         };
- 
--        let version = hal::fsp_hal(args.chipset).ok_or(ENOTSUPP)?.cot_version();
-+        let version = hal.cot_version();
-         let size = num::usize_into_u16::<{ core::mem::size_of::<NvdmPayloadCot>() }>();
- 
-         Ok(init!(Self {
-diff --git a/drivers/gpu/nova-core/fsp/hal.rs b/drivers/gpu/nova-core/fsp/hal.rs
-index b6f2624bb13d4..eaf5837ac5a88 100644
---- a/drivers/gpu/nova-core/fsp/hal.rs
-+++ b/drivers/gpu/nova-core/fsp/hal.rs
-@@ -19,6 +19,10 @@ pub(super) trait FspHal {
- 
-     /// Returns the FSP Chain of Trust protocol version this chipset advertises.
-     fn cot_version(&self) -> u16;
-+
-+    // TODO: consider moving this into the TLV firmware metadata when ready
-+    /// Returns the size reserved at the end of the framebuffer, in bytes.
-+    fn fb_end_reserved_size(&self) -> u64;
- }
- 
- /// Returns the FSP HAL, or `None` if the architecture doesn't support FSP.
-diff --git a/drivers/gpu/nova-core/fsp/hal/gb100.rs b/drivers/gpu/nova-core/fsp/hal/gb100.rs
-index 42f5ecfc64004..7cf53aa3d1ff0 100644
---- a/drivers/gpu/nova-core/fsp/hal/gb100.rs
-+++ b/drivers/gpu/nova-core/fsp/hal/gb100.rs
-@@ -1,6 +1,8 @@
- // SPDX-License-Identifier: GPL-2.0
- // SPDX-FileCopyrightText: Copyright (c) 2026 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
- 
-+use kernel::sizes::SizeConstants;
-+
- use crate::{
-     driver::Bar0,
-     fsp::hal::FspHal, //
-@@ -17,6 +19,10 @@ impl FspHal for Gb100 {
-     fn cot_version(&self) -> u16 {
-         2
-     }
-+
-+    fn fb_end_reserved_size(&self) -> u64 {
-+        u64::SZ_2M + u64::SZ_128K
-+    }
- }
- 
- const GB100: Gb100 = Gb100;
-diff --git a/drivers/gpu/nova-core/fsp/hal/gb202.rs b/drivers/gpu/nova-core/fsp/hal/gb202.rs
-index 1091b169a645a..e380bbc5d58d7 100644
---- a/drivers/gpu/nova-core/fsp/hal/gb202.rs
-+++ b/drivers/gpu/nova-core/fsp/hal/gb202.rs
-@@ -1,7 +1,10 @@
- // SPDX-License-Identifier: GPL-2.0
- // SPDX-FileCopyrightText: Copyright (c) 2026 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
- 
--use kernel::io::Io;
-+use kernel::{
-+    io::Io,
-+    sizes::SizeConstants, //
-+};
- 
- use crate::{
-     driver::Bar0,
-@@ -21,6 +24,10 @@ impl FspHal for Gb202 {
-     fn cot_version(&self) -> u16 {
-         2
-     }
-+
-+    fn fb_end_reserved_size(&self) -> u64 {
-+        u64::SZ_2M + u64::SZ_128K
-+    }
- }
- 
- const GB202: Gb202 = Gb202;
-diff --git a/drivers/gpu/nova-core/fsp/hal/gh100.rs b/drivers/gpu/nova-core/fsp/hal/gh100.rs
-index 291acaf2845a7..9a8563799da85 100644
---- a/drivers/gpu/nova-core/fsp/hal/gh100.rs
-+++ b/drivers/gpu/nova-core/fsp/hal/gh100.rs
-@@ -1,7 +1,10 @@
- // SPDX-License-Identifier: GPL-2.0
- // SPDX-FileCopyrightText: Copyright (c) 2026 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
- 
--use kernel::io::Io;
-+use kernel::{
-+    io::Io,
-+    sizes::SizeConstants, //
-+};
- 
- use crate::{
-     driver::Bar0,
-@@ -26,6 +29,10 @@ impl FspHal for Gh100 {
-     fn cot_version(&self) -> u16 {
-         1
-     }
-+
-+    fn fb_end_reserved_size(&self) -> u64 {
-+        u64::SZ_2M
-+    }
- }
- 
- const GH100: Gh100 = Gh100;
+ static inline struct erdma_cq *erdma_cq_get_by_cqn(struct erdma_dev *dev,
+ 						   int id)
+ {
 -- 
 2.53.0
 
