@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE5134BEE3C;
-	Sat, 12 Sep 2026 17:06:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2A0147ACF6;
+	Sat, 12 Sep 2026 17:06:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789232777; cv=none; b=Df47M94FpICg9icRdptzFVX/eLXPEBRdvCraXgzZVrOhLyIaZSgqqO2fsUoB5fEvGakcYGMBOJwcXCUbzIfAHJBejEqn6TgODarRVDDuTdCGQj/a/oFb/pp5jQcpd6BXpQ/bZEMMRY/fa8/IzZ5d2HuCXdNP962fCymh83ustTw=
+	t=1789232782; cv=none; b=Z6ReuuxhlSwcUnXgtru/BCsTuUWF0vyeVm2t4tVArYWODNRD3i/aTSRcOLjMrJWHLVGZlT8RPdAg2EKbolhIwEWfNhWi+ETtoiVuX/PjXjNkZZmR98aK0oqTvzv+0dzNTN8jAUIabF5yRZa8EIYKxVD6jp+bukSCqjn0xsthnWI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789232777; c=relaxed/simple;
-	bh=WiKiQLnMJ/LnjeYcXoZbWXc1Afim6WTsWdJQsJqGToI=;
+	s=arc-20240116; t=1789232782; c=relaxed/simple;
+	bh=hYLDX18V+gVEBIKwSa4XylsQPYUtVXSd2UCRO+by3u0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hW3pe/zQR6SYo2vQYd4gbdp3Ezzp3l+FWZUFaBV56Cx6rcblhw1MVKHpG+bsILJFdvyt8J9c/q7/KeI7YxcSyrPhy/HAGmVyJLvj4RxD4AZLW8OnYxwrJ34lLwOKmQ0oRtpHfHMcLyZsClDRgstSZzwtbFwkYfZPk185mg9nNuA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Aa0jvOnH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=r7KHMQkHLJbfg6MD24+4TWL0vkqM3+Z3JGAL+rk9m9sP5GC9Hn5K9yVhfkXkO/U6lPimMbg92XI5p0AJG3cB/a4WvWm519zAeHA3k32i+7LDxgxj7MS3hvJaPuAGVmX9Uy9JWh0KAZhSRBQ1qxUt9c2X+i8jc0eq/ch+NkhTAr0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ybGcpiUx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Aa0jvOnH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E307C1F000FF;
-	Sat, 12 Sep 2026 17:06:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ybGcpiUx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D5F31F000FF;
+	Sat, 12 Sep 2026 17:06:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789232775;
-	bh=SK4mmu0xUAYDQ+jXegUfttABH45jPG2JCgh/jkRb5sk=;
+	s=korg; t=1789232780;
+	bh=5d4CNrRKo9G21TgIBAzOMrGLfJFG8axn3O1sDKvxUJw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Aa0jvOnHTazY46QtB8NxWM0JNu9Ank/jCOESXyfqgKMK5wefNl8s06d0GSmRF9KRb
-	 6NDr/y791n0OytHTAWlSoT22PEbOHgolo+EVAq5Ze+2FYa2hmZXhlRESuX4s5f6MG1
-	 Fo0mOLQzdXAmTJ/NZI4PLyBMNlVM0x4lm0qWri5A=
+	b=ybGcpiUxH4bigBn6StxBgqXaHWJff4gfSQFU5S3RcDC+yA2/F1AD3xQOwYMN3pp/Y
+	 423QAs6VQY/G+u6eFUd/M+FRtVetFqWYe/bPyJmPw4W0U9bt21TjDnoHyZIUCA5r5x
+	 hzgpxPmPIFI3GZ5s4rlDkYNK9X6E24AbSKfIlJ0A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.15 036/935] nfsd: Reset write verifier when async COPY writeback fails
-Date: Sat, 12 Sep 2026 08:51:06 +0200
-Message-ID: <20260912065527.668149993@linuxfoundation.org>
+	Chuck Lever <cel@kernel.org>
+Subject: [PATCH 5.15 037/935] nfsd: return NFS4ERR_NOTSUPP for unsupported netloc4 types
+Date: Sat, 12 Sep 2026 08:51:07 +0200
+Message-ID: <20260912065527.690876565@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -50,56 +50,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Jeff Layton <jlayton@kernel.org>
 
-commit f5cb2276954cb80987a93ef9f9dfbfdbfc0f10b9 upstream.
+commit 45b06a75086f331f52cbb81223a59421d43f8809 upstream.
 
-Async COPY captures nn->writeverf at request time and reports it to
-the client via CB_OFFLOAD after the worker kthread completes. When
-the post-copy vfs_fsync_range() or filemap_check_wb_err() in
-_nfsd_copy_file_range() reports an error, the worker correctly
-leaves NFSD4_COPY_F_COMMITTED clear so that CB_OFFLOAD encodes
-wr_stable_how as NFS_UNSTABLE, but the server's write verifier is
-not rotated.
+nfsd4_decode_nl4_server() handled only NL4_NETADDR and returned
+nfserr_bad_xdr for NL4_NAME and NL4_URL. Those forms are well-formed XDR,
+so BADXDR is misleading -- the request is unsupported, not malformed.
 
-A client that receives NFS_UNSTABLE in CB_OFFLOAD follows up with
-COMMIT to make the copied data durable. With the verifier
-unchanged, COMMIT returns the same value the client just received
-via CB_OFFLOAD, and the client concludes the copy is durable --
-silently dropping the data whose writeback in fact failed. This
-violates the UNSTABLE+COMMIT durability contract (RFC 7862 section
-15.1, RFC 8881 section 18.32) and matches the bug just fixed in
-nfsd_vfs_write() and nfsd_commit().
+Decode and discard the utf8str_cis for NL4_NAME and NL4_URL to keep the
+stream consistent, and return nfserr_notsupp. nfsd4_proc_compound() honors
+a decode-time op->status, so the op fails without executing.
 
-Rotate nn->writeverf at the writeback-failure site. The async COPY
-worker has no svc_rqst, so commit_reset_write_verifier() is not
-available here; calling nfsd_reset_write_verifier() directly
-mirrors the trace-less reset already used by
-nfsd_file_check_write_error() for the same purpose. Filter out
--EAGAIN and -ESTALE, matching commit_reset_write_verifier(), since
-neither indicates a durable-storage failure.
-
-Fixes: eac0b17a77fb ("NFSD add vfs_fsync after async copy is done")
+Fixes: 84e1b21d5ec4 ("NFSD add ca_source_server<> to COPY")
 Cc: stable@vger.kernel.org
-Assisted-by: kres:claude-opus-4-7
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260522203723.446841-1-cel@kernel.org
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Link: https://patch.msgid.link/20260710-nfsd-testing-v3-7-a0ff7db6aa3e@kernel.org
+Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4proc.c |    2 ++
- 1 file changed, 2 insertions(+)
+ fs/nfsd/nfs4xdr.c |   13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
---- a/fs/nfsd/nfs4proc.c
-+++ b/fs/nfsd/nfs4proc.c
-@@ -1628,6 +1628,8 @@ static ssize_t _nfsd_copy_file_range(str
- 			status = filemap_check_wb_err(dst->f_mapping, since);
- 		if (!status)
- 			set_bit(NFSD4_COPY_F_COMMITTED, &copy->cp_flags);
-+		else if (status != -EAGAIN && status != -ESTALE)
-+			nfsd_reset_write_verifier(copy->cp_nn);
+--- a/fs/nfsd/nfs4xdr.c
++++ b/fs/nfsd/nfs4xdr.c
+@@ -1918,6 +1918,7 @@ static __be32 nfsd4_decode_nl4_server(st
+ {
+ 	struct nfs42_netaddr *naddr;
+ 	__be32 *p;
++	u32 str_len;
+ 
+ 	if (xdr_stream_decode_u32(argp->xdr, &ns->nl4_type) < 0)
+ 		return nfserr_bad_xdr;
+@@ -1947,6 +1948,18 @@ static __be32 nfsd4_decode_nl4_server(st
+ 			return nfserr_bad_xdr;
+ 		memcpy(naddr->addr, p, naddr->addr_len);
+ 		break;
++	case NL4_NAME:
++	case NL4_URL:
++		/*
++		 * Well-formed XDR, but only NL4_NETADDR is supported. Consume
++		 * the utf8str_cis to keep the stream aligned, then return
++		 * NFS4ERR_NOTSUPP rather than the misleading NFS4ERR_BADXDR.
++		 */
++		if (xdr_stream_decode_u32(argp->xdr, &str_len) < 0)
++			return nfserr_bad_xdr;
++		if (!xdr_inline_decode(argp->xdr, str_len))
++			return nfserr_bad_xdr;
++		return nfserr_notsupp;
+ 	default:
+ 		return nfserr_bad_xdr;
  	}
- 	return bytes_copied;
- }
 
 
