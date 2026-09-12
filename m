@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE480238C36;
-	Sat, 12 Sep 2026 17:11:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BB7632B125;
+	Sat, 12 Sep 2026 17:11:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789233070; cv=none; b=PIpCcDF+e8XKNS7vBm806jo71EX8uCtaB2WnAdvLIFFuogHq1O5U5D4ptRpqF33/0nTHzPrm/MK9shdo9pl/ZtF3ziltbOgkl0l/6v3tGtNreLEG1j4IJGgxGKtlOVeB/0XZ5Xu+AA+VWx+pVijAHORnfhW+T1vdvrVNNMc/pAk=
+	t=1789233075; cv=none; b=a3INj8Lu1e3svFbKBaSi3egnkkZDmtAIDT9s2mv7Ix2VGvb7UfhEfoAXJqHzCXI7elZPfT3Yk2qxvrD/yVBziiW390NHw3X9c9xK4bk/UV/8k4p6JODJ1YRAxQbPUTZrjFHd7FAVSK6huGhehlKEgdSK04hd5fTP8CNQRTmg48k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789233070; c=relaxed/simple;
-	bh=XRRO7vMGHwSLHt1e8Pmt5Q0FvPTI9wMedtTy+HVKrKM=;
+	s=arc-20240116; t=1789233075; c=relaxed/simple;
+	bh=sIA/Z31s01/PPkWpARrXEZdIpPf9PZQYT36Jk71tjTI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rr7QJIf8AyHKVyFhgj/6RbhzyoRPMWYmWspQor/NJu8AHJi4sH94d1EQiAmPYiuuQAXbNnofouulVKe3F9y5gCITGSs62bsKP09PfJ7SAN1Yo6WfeWaIjJNQcEy79hiJCoCo50NfQYVOS6r8tRrLq5gxXODMnkmqoCiNznLsZ7Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=12c5woJ3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VfzJac0kgeho356JxwtC5bUNmuDM7ujeXmme1gCofbHwCkZzShdwZsV2ZkuSNy8gbpe+XszmraFVib+hSc+W/Q13uBIJ7SrCPJeK0pGdkWiV41Sywf/8199apa9VZZJbtpn1JMmAJjMXnZElHhDr1BcgOzMucVQvARoTUTqpB3A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D2D6PK6H; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="12c5woJ3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8DC01F000FF;
-	Sat, 12 Sep 2026 17:11:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D2D6PK6H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C5611F000FF;
+	Sat, 12 Sep 2026 17:11:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789233068;
-	bh=E621d+gGYfMd8G9Dd/2z/5nRKSySfLY8WfEEE7L3KPc=;
+	s=korg; t=1789233074;
+	bh=HXZU284i0lKhRBQOHai3CAnZF31aS5qeqvt13eOgEbk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=12c5woJ3mt5fTUN6cwvNKMJpGW3nDriYe1e7SADlc3VD8yio4tECPZSZGO7gVnAQe
-	 jAmnu2V4qiNBMGzdjbbz6VwSpEnSDlywhft+P3upgcJeE2Eeer/fFnChDfdTsuQW1h
-	 kxrnox+Y/fOhZdLJGBf/r1M1QPnfK9IKR/z10yIQ=
+	b=D2D6PK6H+Kx+nfTXU3od8nPG3v/LODeTD+xRFl0yeDNSZzawmj6KR4yAE1ZEoP/Ny
+	 Cun60nV12EQnFGBgOZ4GI3pxcSF0a7+LqitRAQsScpEowx+qiRbfvC+Il03pLVxrsy
+	 Wq5U9/vAFoI1iaaycMMkWkH2+lbb1Y80iN4zNAvM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.15 140/935] lockd: pin next file across nlm_inspect_file lock-drop
-Date: Sat, 12 Sep 2026 08:52:50 +0200
-Message-ID: <20260912065530.033730773@linuxfoundation.org>
+	Norbert Szetei <norbert@doyensec.com>,
+	Jason Gunthorpe <jgg@nvidia.com>
+Subject: [PATCH 5.15 123/935] RDMA/ucma: Lock the handler in ucma_set_ib_path()
+Date: Sat, 12 Sep 2026 08:52:33 +0200
+Message-ID: <20260912065529.644626815@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -50,121 +50,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Norbert Szetei <norbert@doyensec.com>
 
-commit 526c49cff3f72c3ec74752016380c7567040581b upstream.
+commit ecbe7d36dc2de07e5dfbb4a8ff5b315ab43de820 upstream.
 
-nlm_traverse_files() pins the current file with f_count++ across
-a mutex_unlock for nlm_inspect_file(), but nothing pins the saved
-next pointer.  A concurrent nlm_release_file() can kfree the next
-file during the unlock window, and the iterator dereferences freed
-memory on the next loop step.
+ucma_set_ib_path() calls ucma_event_handler() straight from the write()
+path, without the handler lock that keeps ctx->file stable while a uevent
+is queued.  The handler re-reads ctx->file for every dereference:
 
-Pin both current and next before the lock-drop.  Advance by
-swapping the pinned cursors at the end of each iteration so next
-is always held alive across the unlock.
+	mutex_lock(&ctx->file->mut);			/* file A */
+	list_add_tail(&uevent->list, &ctx->file->event_list);	/* file B */
+	mutex_unlock(&ctx->file->mut);			/* file B */
+	wake_up_interruptible(&ctx->file->poll_wait);	/* file B */
 
-Always call nlm_file_release() after dropping the iteration pin,
-regardless of whether the file matched the predicate.  Use
-nlm_file_inuse(), which does a live walk of the inode lock list,
-rather than the cached f_locks field, so skipped files that never
-ran nlm_inspect_file() are evaluated correctly.
+A concurrent ucma_migrate_id() reassigns ctx->file while the SET_OPTION
+caller sleeps in mutex_lock(), so the list_add_tail() lands on file B's
+event_list while only file A's mutex is held, racing every other user of
+that list:
 
-Because every file in a hash bucket is now pinned and released,
-files skipped by the is_failover_file predicate that have no
-locks, blocks, shares, or external references are deleted during
-traversal.  The old code never evaluated skipped files for
-cleanup.  The new behavior is intentional: such files are stale
-and should not persist in the table.
+  BUG: KASAN: slab-use-after-free in __list_add_valid_or_report+0x1aa/0x1c0
+  Read of size 8 at addr ffff888153c6a418 by task poc_corr/486
+  Call Trace:
+   __list_add_valid_or_report+0x1aa/0x1c0
+   ucma_event_handler+0x1be/0xc00
+   ucma_set_ib_path+0x45e/0x710
+   ucma_set_option+0x32e/0x590
+   ucma_write+0x1f9/0x330
+  Allocated by task 505:
+   ucma_write_cm_event+0x1a1/0x660
+  Freed by task 505:
+   kfree+0x1da/0x4c0
+   ucma_get_event+0x5d5/0x7e0
 
-Fixes: 01df9c5e918a ("LOCKD: Fix a deadlock in nlm_traverse_files()")
+The freed object is a ucma_event that another thread dequeued from file B's
+list under file B's mutex.  File A's mut is left held on top of that,
+wedging its next writer in uninterruptible sleep.
+
+This path needs a bound and address-resolved cm_id, so it requires an RDMA
+device to be present.
+
+Take the handler lock around the call.
+
+Fixes: 09e328e47a69 ("RDMA/ucma: Fix the locking of ctx->file")
+Link: https://patch.msgid.link/r/2823D190-92D5-4714-8769-4FB643C64FF3@doyensec.com
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-7
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Link: https://patch.msgid.link/20260524115527.1734251-1-michael.bommarito@gmail.com
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: Norbert Szetei <norbert@doyensec.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/lockd/svcsubs.c |   53 ++++++++++++++++++++++++++++++-----------------------
- 1 file changed, 30 insertions(+), 23 deletions(-)
+ drivers/infiniband/core/ucma.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/fs/lockd/svcsubs.c
-+++ b/fs/lockd/svcsubs.c
-@@ -286,12 +286,10 @@ nlm_file_inuse(struct nlm_file *file)
- 	return 0;
+--- a/drivers/infiniband/core/ucma.c
++++ b/drivers/infiniband/core/ucma.c
+@@ -1336,7 +1336,10 @@ static int ucma_set_ib_path(struct ucma_
+ 
+ 	memset(&event, 0, sizeof event);
+ 	event.event = RDMA_CM_EVENT_ROUTE_RESOLVED;
+-	return ucma_event_handler(ctx->cm_id, &event);
++	rdma_lock_handler(ctx->cm_id);
++	ret = ucma_event_handler(ctx->cm_id, &event);
++	rdma_unlock_handler(ctx->cm_id);
++	return ret;
  }
  
--static void nlm_close_files(struct nlm_file *file)
-+static void nlm_file_release(struct nlm_file *file)
- {
--	if (file->f_file[O_RDONLY])
--		nlmsvc_ops->fclose(file->f_file[O_RDONLY]);
--	if (file->f_file[O_WRONLY])
--		nlmsvc_ops->fclose(file->f_file[O_WRONLY]);
-+	if (!nlm_file_inuse(file))
-+		nlm_delete_file(file);
- }
- 
- /*
-@@ -301,32 +299,41 @@ static int
- nlm_traverse_files(void *data, nlm_host_match_fn_t match,
- 		int (*is_failover_file)(void *data, struct nlm_file *file))
- {
--	struct hlist_node *next;
--	struct nlm_file	*file;
-+	struct nlm_file *file, *next;
- 	int i, ret = 0;
- 
- 	mutex_lock(&nlm_file_mutex);
- 	for (i = 0; i < FILE_NRHASH; i++) {
--		hlist_for_each_entry_safe(file, next, &nlm_files[i], f_list) {
--			if (is_failover_file && !is_failover_file(data, file))
--				continue;
-+		file = hlist_entry_safe(nlm_files[i].first,
-+					struct nlm_file, f_list);
-+		if (file)
- 			file->f_count++;
--			mutex_unlock(&nlm_file_mutex);
-+		while (file) {
-+			/*
-+			 * Pin the next neighbour before we drop the mutex
-+			 * for nlm_inspect_file(); a concurrent
-+			 * nlm_release_file() under the same mutex would
-+			 * otherwise be free to unlink and kfree it during
-+			 * the unlock window, leaving us to dereference a
-+			 * freed slab when we walked to next afterwards.
-+			 */
-+			next = hlist_entry_safe(file->f_list.next,
-+						struct nlm_file, f_list);
-+			if (next)
-+				next->f_count++;
- 
--			/* Traverse locks, blocks and shares of this file
--			 * and update file->f_locks count */
--			if (nlm_inspect_file(data, file, match))
--				ret = 1;
-+			if (!is_failover_file || is_failover_file(data, file)) {
-+				mutex_unlock(&nlm_file_mutex);
- 
--			mutex_lock(&nlm_file_mutex);
--			file->f_count--;
--			/* No more references to this file. Let go of it. */
--			if (list_empty(&file->f_blocks) && !file->f_locks
--			 && !file->f_shares && !file->f_count) {
--				hlist_del(&file->f_list);
--				nlm_close_files(file);
--				kfree(file);
-+				if (nlm_inspect_file(data, file, match))
-+					ret = 1;
-+
-+				mutex_lock(&nlm_file_mutex);
- 			}
-+
-+			file->f_count--;
-+			nlm_file_release(file);
-+			file = next;
- 		}
- 	}
- 	mutex_unlock(&nlm_file_mutex);
+ static int ucma_set_option_ib(struct ucma_context *ctx, int optname,
 
 
