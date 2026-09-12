@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12E733161A1;
-	Sat, 12 Sep 2026 13:55:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31AF633F5A9;
+	Sat, 12 Sep 2026 13:55:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789221318; cv=none; b=NiLd2sfh++hemsrPazzzdaqYzABbqhgRDfNdL1G5Qxz+J90ZbkC8XP9szZ4aP97sFHCEhCWUpPPkYQ28vczZpItJEhfg9oh5EnfCtTZkIoZ/erIYGCcKpAI4BFhpq4d1HohchgC4biyze/WcjwQILHqBzV1bzhEEHfjT/Bk7x8s=
+	t=1789221325; cv=none; b=J2ASoPZprgxqIekTGdQqBaMPn+8ayvbVwrBQm2al2x+yvOy/VYxtD7Exm8y8vlvTnlzEypm5kV1/JQ5evoiO+cxZM4GWyfLb+M1OxBDEfl5pcwH0zZlmAENu1TNmfs7MmY3uoG/xLuHmoQDEftqMp6tUD0wOrfcdjTC1q/4/ESE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789221318; c=relaxed/simple;
-	bh=FIUqGToP2x9c6cXb6jKiYYQJicz+hWmvn/PMI+xB5D4=;
+	s=arc-20240116; t=1789221325; c=relaxed/simple;
+	bh=pehyrTvG1Cyk8tTYWWro/fcsGV1CfBHZQLHDw5RjprY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Lb2P+810Xzi/29h0zfFvG21KH6Ffpyg6bU8lLMZy53ihUZSs3tuck+c2uX6d6JI1e66ewlv18P4Ct/7X3oiJ353yp6ji8LAcNhEBxWw6aoELxJjlU64HO2fnLvx1UdSP+RtpUQYpPf/ZG/cC0T6yMV4yUPPv/9dkZ0bioXjyHGI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UbN2R8BZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=O7srTMHw6cTrcxx/zCsqNn28Dyq8+CFe73XQql849YgVZ0/vadE4m2xzKDRkyjmqfKgBwA9XCOfXyP5QC1lB6Zz4byJOFQUrIq9fMwaI2pLZS5dHp62B+5uga/noxBXEiNlcb5Um8AuSMYbngdoJ7JJBOB9tpTs6ytjNU8XeWCw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q7VEv+nQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UbN2R8BZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A1DD1F000FF;
-	Sat, 12 Sep 2026 13:55:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q7VEv+nQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8415C1F00893;
+	Sat, 12 Sep 2026 13:55:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789221313;
-	bh=z7hfNHpjXb8qmyPdp9ocA6BFkJ+wg2p9lKJAtPuhxVw=;
+	s=korg; t=1789221318;
+	bh=DHjdEdlW6SlnkphFTMxP/ZFK+HOx2wYWjkz7SM3NtxI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UbN2R8BZYpsNoXW7ZiWfv7B6AH9IjBNad/Iqzr1xE5/hCa4sjt6FiuAvzdwB0d9FU
-	 QBOsdLDtRRcadJrdui/JTtRLkuN/JU/6/emtMhNlRXey1Y+kJrdC2s/GUt44Hls1w8
-	 ageBfGX6LT/FrD9I8WTYzUzfW1nTNsG5g5c4rSIk=
+	b=q7VEv+nQA9TGF9qkotCwFBOWQTfQyruWCcHBBuDtLifoq6rQgF9rvv9y70XGhqj7G
+	 Gz/F3fmZ7GF6Q4BXNfZbCtoJfd2+L/SblU61kr6Hq7w87ChT0hcBhmSrIYh3/Hvhm7
+	 OyzKlsqZdSr5s4yhBcrNDh+9I+TJ1zYxXqZqa2SQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Hajo Noerenberg <hajo-linux-ide@noerenberg.de>,
 	Damien Le Moal <dlemoal@kernel.org>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Hannes Reinecke <hare@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Hannes Reinecke <hare@suse.de>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.6 0358/1424] block: flag zoned disks with GENHD_FL_NO_PART
-Date: Sat, 12 Sep 2026 08:46:30 +0200
-Message-ID: <20260912065615.305323294@linuxfoundation.org>
+	Pali Rohar <pali@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>
+Subject: [PATCH 6.6 0359/1424] ata: ahci: work around lost interrupts on Marvell 88SE61xx
+Date: Sat, 12 Sep 2026 08:46:31 +0200
+Message-ID: <20260912065615.329870578@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -54,58 +52,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Damien Le Moal <dlemoal@kernel.org>
+From: Hajo Noerenberg <hajo-linux-ide@noerenberg.de>
 
-commit 3f9c7a108c0e8f14425384912017071b71341e3b upstream.
+commit dc3565a4ae538e584e5e63b3b3cd1eaf502593c1 upstream.
 
-Zoned block devices do not support partitions. However, the partition
-table is nevertheless still inspected, and any partition found ignored
-with a warning in add_partition(). While this is generally not a problem,
-and in fact beneficial to the user as it indicates an invalid use of a
-zoned block device, scanning for a partition table on the device may
-result in issuing read operations to offline zones (e.g. after a disk head
-is depopulated for disks that support head management operations).
+ahci_single_level_irq_intr() services the ports first and clears the
+global HOST_IRQ_STAT afterwards, as recommended by AHCI 1.1 section
+10.6.2.  The Marvell 88SE6111/6121/6145 family stops reporting interrupts
+for a port when HOST_IRQ_STAT is cleared while PxIS still holds bits:
+PxIS keeps its content, HOST_IRQ_STAT reads back as 0, the port is never
+looked at again, and the command in flight only ends in a timeout.
 
-Since partitions are ignored anyway, completely disable partition scanning
-for zoned gendisks by setting the flag GENHD_FL_NO_PART in __add_disk().
-The existing check in add_partition() is left as-is to ensure that we
-still get a warning if for whatever reason, despite GENHD_FL_NO_PART, we
-still endup trying to add partitions.
+Measured on a Seagate Blackarmor NAS440 (Marvell 88F6281 Kirkwood,
+88SE6121 rev B2 behind PCIe) by polling the AHCI registers from userspace
+while an IDENTIFY was outstanding:
 
-Flagging zoned disks with GENHD_FL_NO_PART also has the benefit to expose
-through sysfs the ext_range attribute with the value of 1 instead of the
-default DISK_MAX_PARTS, thus correctly advertizing the fact that zoned
-disks do not support partitions.
+  t=303.046  irqs 127  PxIS 0x00000000  PxCI 0x00000001
+             IDENTIFY issued
+  t=303.057  irqs 128  PxIS 0x00000020  PxCI 0x00000000
+             CI cleared, DPS set, one interrupt taken
+             ... PxIS stays 0x00000020, HOST_IRQ_STAT stays 0 ...
+  t~308.05   qc timeout after 5000 msecs
 
-Fixes: 5eac3eb30c9a ("block: Remove partition support for zoned block devices")
+The command had completed - PxCI was clear and PxIS had DPS set - so
+ahci_qc_complete() would have completed it.  It never got the chance
+because the handler read HOST_IRQ_STAT as 0 and returned IRQ_NONE.
+
+Marvell's own driver for these chips clears the two registers in the
+opposite order and says so ("clear global before channel"), and
+ahci_xgene handles its broken edge latch the same way.  Since the
+reordering costs at most one spurious interrupt per valid one on
+conforming controllers, do it in a private interrupt handler selected for
+board_ahci_mv instead of changing libahci for everyone.
+
+With this applied, SATA-2 and SATA-3 disks work at 3.0 Gbps on the
+88SE6121 without the drive-side 1.5 Gbps jumper that was needed before.
+Time from link up to a successful IDENTIFY:
+
+  WDC WD5000AADS-00S9B0  port 0    7 ms  (never identified before)
+  WDC WD3202ABYS-01B7A0  port 1   28 ms
+  WDC WD30EFRX-68EUZN0   port 1  200 ms  (3 TB, HPA detection ok)
+
+Only the 88SE6121 was tested; board_ahci_mv also covers the 88SE6145,
+which Marvell's driver treats identically.
+
+Fixes: cd70c26617f4 ("[libata] AHCI: Add support for Marvell AHCI-like chips (initially 6145)")
 Cc: stable@vger.kernel.org
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Reviewed-by: Hannes Reinecke <hare@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Hannes Reinecke <hare@suse.de>
-Link: https://patch.msgid.link/20260831025050.667758-1-dlemoal@kernel.org
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Link: https://lore.kernel.org/linux-ide/db6b48b7-d69a-564b-24f0-75fbd6a9e543@noerenberg.de/
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=216094
+Signed-off-by: Hajo Noerenberg <hajo-linux-ide@noerenberg.de>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Acked-by: Pali Rohar <pali@kernel.org>
+Link: https://lore.kernel.org/r/20260831124303.920391-1-hajo-linux-ide@noerenberg.de
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/genhd.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/ata/ahci.c |   49 +++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 49 insertions(+)
 
---- a/block/genhd.c
-+++ b/block/genhd.c
-@@ -467,6 +467,13 @@ int __must_check device_add_disk(struct
- 		goto out_device_del;
+--- a/drivers/ata/ahci.c
++++ b/drivers/ata/ahci.c
+@@ -1647,6 +1647,51 @@ static irqreturn_t ahci_thunderx_irq_han
+ }
+ #endif
  
- 	/*
-+	 * We do not support partitions with zoned block devices, so do not try
-+	 * to scan the partitions table.
-+	 */
-+	if (blk_queue_is_zoned(disk->queue))
-+		disk->flags |= GENHD_FL_NO_PART;
++/*
++ * The Marvell 88SE6111/6121/6145 ("Thor") family stops reporting interrupts
++ * for a port when HOST_IRQ_STAT is cleared while PxIS still holds bits: PxIS
++ * keeps its content, HOST_IRQ_STAT reads back as 0, the port is never looked
++ * at again and the command in flight only ends in a timeout.  On a 88SE6121
++ * this makes every SATA-2 or SATA-3 disk fail to IDENTIFY, while SATA-1 disks
++ * happen to win the race often enough to work.
++ *
++ * Clearing the host status before servicing the ports avoids it.  Marvell's
++ * own driver for these chips does the same and says so ("clear global before
++ * channel"), and ahci_xgene handles its broken edge latch the same way.  The
++ * price is at most one spurious interrupt per valid one, which is why this is
++ * not the generic behaviour - see AHCI 1.1 section 10.6.2.
++ *
++ * Link: https://bugzilla.kernel.org/show_bug.cgi?id=216094
++ */
++static irqreturn_t ahci_mv_irq_handler(int irq, void *dev_instance)
++{
++	struct ata_host *host = dev_instance;
++	struct ahci_host_priv *hpriv = host->private_data;
++	void __iomem *mmio = hpriv->mmio;
++	unsigned int rc;
++	u32 irq_stat, irq_masked;
++
++	irq_stat = readl(mmio + HOST_IRQ_STAT);
++	if (!irq_stat)
++		return IRQ_NONE;
++
++	irq_masked = irq_stat & hpriv->port_map;
++
++	spin_lock(&host->lock);
 +
 +	/*
- 	 * avoid probable deadlock caused by allocating memory with
- 	 * GFP_KERNEL in runtime_resume callback of its all ancestor
- 	 * devices
++	 * Use the unmasked value to clear the interrupt, as a spurious pending
++	 * event on a dummy port might cause a screaming IRQ.
++	 */
++	writel(irq_stat, mmio + HOST_IRQ_STAT);
++
++	rc = ahci_handle_port_intr(host, irq_masked);
++
++	spin_unlock(&host->lock);
++
++	return IRQ_RETVAL(rc);
++}
++
+ static void ahci_remap_check(struct pci_dev *pdev, int bar,
+ 		struct ahci_host_priv *hpriv)
+ {
+@@ -1890,6 +1935,10 @@ static int ahci_init_one(struct pci_dev
+ 		return -ENOMEM;
+ 	hpriv->flags |= (unsigned long)pi.private_data;
+ 
++	/* the Marvell "Thor" family needs HOST_IRQ_STAT cleared first */
++	if (board_id == board_ahci_mv)
++		hpriv->irq_handler = ahci_mv_irq_handler;
++
+ 	/* MCP65 revision A1 and A2 can't do MSI */
+ 	if (board_id == board_ahci_mcp65 &&
+ 	    (pdev->revision == 0xa1 || pdev->revision == 0xa2))
 
 
