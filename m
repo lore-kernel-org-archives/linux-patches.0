@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2561F399356;
-	Sat, 12 Sep 2026 18:37:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1D0A38DC7B;
+	Sat, 12 Sep 2026 18:37:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789238256; cv=none; b=n+d1AEWGW62DoKYKa7OSx+FXam/AU+ELmlAw7Vq69DK0a7LD38m9zNA57D5/yXm6qgVJepEoe2Y9RUqcKaX4d8KcpCvQJ/tl8kCWqC7YmKV0p8BcwdorWsU1fpVmxlIV06lpdduQdolMg4CHaxrVLd0oeNr3a1ITaSGZeqx78rk=
+	t=1789238259; cv=none; b=Ck6U6M0Sz1MD/Sxx0D1KNaZ9TV78KnZDk1yxKneSjVbidqokWF0dHEnubzCMIdD7hbH1ywvFHY6uKV0T0UTdD2D9ik1x9sR7v1JHnaJz0gOwd/60i1Mwn6Ny5KF0hf4bEzJCP5fmTGmyJjKN685ojbeeAB4XRylzxJ4cQOGxLwM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789238256; c=relaxed/simple;
-	bh=gXsgov3MQLWQ0Df8bsT0oqapioVDhXHjHndHOA/7TY8=;
+	s=arc-20240116; t=1789238259; c=relaxed/simple;
+	bh=sKPLGa9o3FSzxrdsJ+RvWXqw/s6sn+NwT4j9f8ZVOnM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SI/ASg5V4/96fAV3aiC+x8T3f27gLC6TnvjEuIjV4mhmwR6EC87z5Iv4WmgMho+dAWJJa9nF/W3jF1d6MEhgQsilAnPKkA3LEVDgpA9zpvOVDNdw8vdJc1dDyVhOAXR25wmxcJ0pW0btgYvJO8kzwVi7D97S4VtJtahA2MiY6Z0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=saeotf9K; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WGmuHWnCIozKv9LbIM4ov0qqn+ylP632i+oTygpxmuhn+uHqBt9F8vEytjTx4xXKFriMJkCkoZ51aSQRXNrIJBr03BUkc4lWGpvqERspDeE13b67EvPL0nBIaapSozdupvarngzwF9BQADB8kL3W55+SatSwGqPv7tgzzHtAnPE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ond0NhEb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="saeotf9K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B316E1F000FF;
-	Sat, 12 Sep 2026 18:37:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ond0NhEb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 518331F000FF;
+	Sat, 12 Sep 2026 18:37:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789238252;
-	bh=Y9VWe7bdHXGpVohvFBYOS9n5NUjZzFzHZ+Pe34NlDhU=;
+	s=korg; t=1789238257;
+	bh=wkFISBA6eYzTfRPfjeBSh0q8p1BgLb5Kx3YedtZij9U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=saeotf9KeYKXcTzfSUXUv09IdbXGwH2hhIJTD6KVaYZKuKApQulYw6cz9vfIF5hv3
-	 5Ts/jia8RkrfRn9uOEjFM9gO4cQP3e3WEKXnO0Ts8eoaLNKshM2CdBp4uSmcNbsn4i
-	 ejDA7qKbUk6ybhe9abmG0pVWUaVvAVSU0qK6VqNY=
+	b=Ond0NhEbPg1OOuvbJ+zn4L9kLv9Ap+Y+tWUxGN6VRBG1KFnbDODFYenRg8kgmBYJl
+	 0MbK05SypK8cqkjrTwUzBgo4ad7hZYZ8MJXlaMywUp63bCfvFpXu5/xmb9rP6fXbmf
+	 P14tm0Og4Zm1uAOooaAVkeTf/jqsg6CAOflVWhZw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Hengqi Chen <hengqi.chen@gmail.com>,
 	Andrii Nakryiko <andrii@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 424/935] bpftool: Update btf_dump__new() and perf_buffer__new_raw() calls
-Date: Sat, 12 Sep 2026 08:57:34 +0200
-Message-ID: <20260912065536.549009682@linuxfoundation.org>
+Subject: [PATCH 5.15 425/935] bpftool: Use libbpf_get_error() to check error
+Date: Sat, 12 Sep 2026 08:57:35 +0200
+Message-ID: <20260912065536.573086340@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -51,81 +51,218 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrii Nakryiko <andrii@kernel.org>
+From: Hengqi Chen <hengqi.chen@gmail.com>
 
-[ Upstream commit 164b04f27fbd769f57905dfddd2a8953974eeef4 ]
+[ Upstream commit e5043894b21f7d99d3db31ad06308d6c5726caa6 ]
 
-Use v1.0-compatible variants of btf_dump and perf_buffer "constructors".
-This is also a demonstration of reusing struct perf_buffer_raw_opts as
-OPTS-style option struct for new perf_buffer__new_raw() API.
+Currently, LIBBPF_STRICT_ALL mode is enabled by default for
+bpftool which means on error cases, some libbpf APIs would
+return NULL pointers. This makes IS_ERR check failed to detect
+such cases and result in segfault error. Use libbpf_get_error()
+instead like we do in libbpf itself.
 
+Signed-off-by: Hengqi Chen <hengqi.chen@gmail.com>
 Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://lore.kernel.org/bpf/20211111053624.190580-10-andrii@kernel.org
+Link: https://lore.kernel.org/bpf/20211115012436.3143318-1-hengqi.chen@gmail.com
 Stable-dep-of: 66d7e39e49b0 ("tools/bpf/bpftool: Reset vmlinux BTF after map commands")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/bpf/bpftool/btf.c           | 2 +-
- tools/bpf/bpftool/gen.c           | 2 +-
- tools/bpf/bpftool/map_perf_ring.c | 9 +++------
- 3 files changed, 5 insertions(+), 8 deletions(-)
+ tools/bpf/bpftool/btf.c        |  9 +++++----
+ tools/bpf/bpftool/gen.c        | 10 ++++++----
+ tools/bpf/bpftool/iter.c       |  7 ++++---
+ tools/bpf/bpftool/map.c        | 10 +++++-----
+ tools/bpf/bpftool/struct_ops.c | 14 +++++++-------
+ 5 files changed, 27 insertions(+), 23 deletions(-)
 
 diff --git a/tools/bpf/bpftool/btf.c b/tools/bpf/bpftool/btf.c
-index f7e5ff3586c9b..d4c7cd3025171 100644
+index d4c7cd3025171..cc0707ab1374f 100644
 --- a/tools/bpf/bpftool/btf.c
 +++ b/tools/bpf/bpftool/btf.c
-@@ -410,7 +410,7 @@ static int dump_btf_c(const struct btf *btf,
- 	struct btf_dump *d;
+@@ -411,8 +411,9 @@ static int dump_btf_c(const struct btf *btf,
  	int err = 0, i;
  
--	d = btf_dump__new(btf, NULL, NULL, btf_dump_printf);
-+	d = btf_dump__new(btf, btf_dump_printf, NULL, NULL);
- 	if (IS_ERR(d))
- 		return PTR_ERR(d);
+ 	d = btf_dump__new(btf, btf_dump_printf, NULL, NULL);
+-	if (IS_ERR(d))
+-		return PTR_ERR(d);
++	err = libbpf_get_error(d);
++	if (err)
++		return err;
  
+ 	printf("#ifndef __VMLINUX_H__\n");
+ 	printf("#define __VMLINUX_H__\n");
+@@ -539,8 +540,8 @@ static int do_dump(int argc, char **argv)
+ 		}
+ 
+ 		btf = btf__parse_split(*argv, base ?: base_btf);
+-		if (IS_ERR(btf)) {
+-			err = -PTR_ERR(btf);
++		err = libbpf_get_error(btf);
++		if (err) {
+ 			btf = NULL;
+ 			p_err("failed to load BTF from %s: %s",
+ 			      *argv, strerror(err));
 diff --git a/tools/bpf/bpftool/gen.c b/tools/bpf/bpftool/gen.c
-index 07fa502a4ac15..25efbb868e9ea 100644
+index 25efbb868e9ea..2556c13d26fa4 100644
 --- a/tools/bpf/bpftool/gen.c
 +++ b/tools/bpf/bpftool/gen.c
-@@ -197,7 +197,7 @@ static int codegen_datasecs(struct bpf_object *obj, const char *obj_name)
- 	struct btf_dump *d;
+@@ -198,8 +198,9 @@ static int codegen_datasecs(struct bpf_object *obj, const char *obj_name)
  	int i, err = 0;
  
--	d = btf_dump__new(btf, NULL, NULL, codegen_btf_dump_printf);
-+	d = btf_dump__new(btf, codegen_btf_dump_printf, NULL, NULL);
- 	if (IS_ERR(d))
- 		return PTR_ERR(d);
+ 	d = btf_dump__new(btf, codegen_btf_dump_printf, NULL, NULL);
+-	if (IS_ERR(d))
+-		return PTR_ERR(d);
++	err = libbpf_get_error(d);
++	if (err)
++		return err;
  
-diff --git a/tools/bpf/bpftool/map_perf_ring.c b/tools/bpf/bpftool/map_perf_ring.c
-index 825f29f93a57a..241dd3bafd24d 100644
---- a/tools/bpf/bpftool/map_perf_ring.c
-+++ b/tools/bpf/bpftool/map_perf_ring.c
-@@ -125,7 +125,7 @@ int do_event_pipe(int argc, char **argv)
- 		.wakeup_events = 1,
- 	};
- 	struct bpf_map_info map_info = {};
--	struct perf_buffer_raw_opts opts = {};
-+	LIBBPF_OPTS(perf_buffer_raw_opts, opts);
- 	struct event_pipe_ctx ctx = {
- 		.all_cpus = true,
- 		.cpu = -1,
-@@ -191,14 +191,11 @@ int do_event_pipe(int argc, char **argv)
- 		ctx.idx = 0;
+ 	for (i = 1; i <= n; i++) {
+ 		const struct btf_type *t = btf__type_by_id(btf, i);
+@@ -664,10 +665,11 @@ static int do_skeleton(int argc, char **argv)
+ 		get_obj_name(obj_name, file);
+ 	opts.object_name = obj_name;
+ 	obj = bpf_object__open_mem(obj_data, file_sz, &opts);
+-	if (IS_ERR(obj)) {
++	err = libbpf_get_error(obj);
++	if (err) {
+ 		char err_buf[256];
+ 
+-		libbpf_strerror(PTR_ERR(obj), err_buf, sizeof(err_buf));
++		libbpf_strerror(err, err_buf, sizeof(err_buf));
+ 		p_err("failed to open BPF object file: %s", err_buf);
+ 		obj = NULL;
+ 		goto out;
+diff --git a/tools/bpf/bpftool/iter.c b/tools/bpf/bpftool/iter.c
+index 84a9b01d956dc..4d0f4cea03d14 100644
+--- a/tools/bpf/bpftool/iter.c
++++ b/tools/bpf/bpftool/iter.c
+@@ -46,7 +46,8 @@ static int do_pin(int argc, char **argv)
  	}
  
--	opts.attr = &perf_attr;
--	opts.event_cb = print_bpf_output;
--	opts.ctx = &ctx;
- 	opts.cpu_cnt = ctx.all_cpus ? 0 : 1;
- 	opts.cpus = &ctx.cpu;
- 	opts.map_keys = &ctx.idx;
--
--	pb = perf_buffer__new_raw(map_fd, MMAP_PAGE_CNT, &opts);
-+	pb = perf_buffer__new_raw(map_fd, MMAP_PAGE_CNT, &perf_attr,
-+				  print_bpf_output, &ctx, &opts);
- 	err = libbpf_get_error(pb);
- 	if (err) {
- 		p_err("failed to create perf buffer: %s (%d)",
+ 	obj = bpf_object__open(objfile);
+-	if (IS_ERR(obj)) {
++	err = libbpf_get_error(obj);
++	if (err) {
+ 		p_err("can't open objfile %s", objfile);
+ 		goto close_map_fd;
+ 	}
+@@ -64,8 +65,8 @@ static int do_pin(int argc, char **argv)
+ 	}
+ 
+ 	link = bpf_program__attach_iter(prog, &iter_opts);
+-	if (IS_ERR(link)) {
+-		err = PTR_ERR(link);
++	err = libbpf_get_error(link);
++	if (err) {
+ 		p_err("attach_iter failed for program %s",
+ 		      bpf_program__name(prog));
+ 		goto close_obj;
+diff --git a/tools/bpf/bpftool/map.c b/tools/bpf/bpftool/map.c
+index c775a677688ae..12d782962c8c8 100644
+--- a/tools/bpf/bpftool/map.c
++++ b/tools/bpf/bpftool/map.c
+@@ -799,7 +799,7 @@ static struct btf *get_map_kv_btf(const struct bpf_map_info *info)
+ 	if (info->btf_vmlinux_value_type_id) {
+ 		if (!btf_vmlinux) {
+ 			btf_vmlinux = libbpf_find_kernel_btf();
+-			if (IS_ERR(btf_vmlinux))
++			if (libbpf_get_error(btf_vmlinux))
+ 				p_err("failed to get kernel btf");
+ 		}
+ 		return btf_vmlinux;
+@@ -819,13 +819,13 @@ static struct btf *get_map_kv_btf(const struct bpf_map_info *info)
+ 
+ static void free_map_kv_btf(struct btf *btf)
+ {
+-	if (!IS_ERR(btf) && btf != btf_vmlinux)
++	if (!libbpf_get_error(btf) && btf != btf_vmlinux)
+ 		btf__free(btf);
+ }
+ 
+ static void free_btf_vmlinux(void)
+ {
+-	if (!IS_ERR(btf_vmlinux))
++	if (!libbpf_get_error(btf_vmlinux))
+ 		btf__free(btf_vmlinux);
+ }
+ 
+@@ -850,8 +850,8 @@ map_dump(int fd, struct bpf_map_info *info, json_writer_t *wtr,
+ 
+ 	if (wtr) {
+ 		btf = get_map_kv_btf(info);
+-		if (IS_ERR(btf)) {
+-			err = PTR_ERR(btf);
++		err = libbpf_get_error(btf);
++		if (err) {
+ 			goto exit_free;
+ 		}
+ 
+diff --git a/tools/bpf/bpftool/struct_ops.c b/tools/bpf/bpftool/struct_ops.c
+index ab2d2290569a4..407ae9fc20b10 100644
+--- a/tools/bpf/bpftool/struct_ops.c
++++ b/tools/bpf/bpftool/struct_ops.c
+@@ -32,7 +32,7 @@ static const struct btf *get_btf_vmlinux(void)
+ 		return btf_vmlinux;
+ 
+ 	btf_vmlinux = libbpf_find_kernel_btf();
+-	if (IS_ERR(btf_vmlinux))
++	if (libbpf_get_error(btf_vmlinux))
+ 		p_err("struct_ops requires kernel CONFIG_DEBUG_INFO_BTF=y");
+ 
+ 	return btf_vmlinux;
+@@ -45,7 +45,7 @@ static const char *get_kern_struct_ops_name(const struct bpf_map_info *info)
+ 	const char *st_ops_name;
+ 
+ 	kern_btf = get_btf_vmlinux();
+-	if (IS_ERR(kern_btf))
++	if (libbpf_get_error(kern_btf))
+ 		return "<btf_vmlinux_not_found>";
+ 
+ 	t = btf__type_by_id(kern_btf, info->btf_vmlinux_value_type_id);
+@@ -63,7 +63,7 @@ static __s32 get_map_info_type_id(void)
+ 		return map_info_type_id;
+ 
+ 	kern_btf = get_btf_vmlinux();
+-	if (IS_ERR(kern_btf)) {
++	if (libbpf_get_error(kern_btf)) {
+ 		map_info_type_id = PTR_ERR(kern_btf);
+ 		return map_info_type_id;
+ 	}
+@@ -415,7 +415,7 @@ static int do_dump(int argc, char **argv)
+ 	}
+ 
+ 	kern_btf = get_btf_vmlinux();
+-	if (IS_ERR(kern_btf))
++	if (libbpf_get_error(kern_btf))
+ 		return -1;
+ 
+ 	if (!json_output) {
+@@ -495,7 +495,7 @@ static int do_register(int argc, char **argv)
+ 	file = GET_ARG();
+ 
+ 	obj = bpf_object__open(file);
+-	if (IS_ERR_OR_NULL(obj))
++	if (libbpf_get_error(obj))
+ 		return -1;
+ 
+ 	set_max_rlimit();
+@@ -516,7 +516,7 @@ static int do_register(int argc, char **argv)
+ 			continue;
+ 
+ 		link = bpf_map__attach_struct_ops(map);
+-		if (IS_ERR(link)) {
++		if (libbpf_get_error(link)) {
+ 			p_err("can't register struct_ops %s: %s",
+ 			      bpf_map__name(map),
+ 			      strerror(-PTR_ERR(link)));
+@@ -596,7 +596,7 @@ int do_struct_ops(int argc, char **argv)
+ 
+ 	err = cmd_select(cmds, argc, argv, do_help);
+ 
+-	if (!IS_ERR(btf_vmlinux))
++	if (!libbpf_get_error(btf_vmlinux))
+ 		btf__free(btf_vmlinux);
+ 
+ 	return err;
 -- 
 2.53.0
 
