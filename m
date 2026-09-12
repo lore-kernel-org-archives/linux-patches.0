@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0847E41B8E4;
-	Sat, 12 Sep 2026 10:58:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4D7B426D03;
+	Sat, 12 Sep 2026 10:59:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789210737; cv=none; b=sK2JoUyvHf/8XzUyTLpdH8eH9zbC4+U7aQ/ba0P5CBHC/qS/s5QMURGV7a+pCu2fh8U7oEtpdZAdIZyAbbDq57dHoj2jYsedLM7xIO7kQLVWA2JhOusVy2kGjCRrcQ2ZQucPMS9lu3mFRzirrGmvwvEtoxsLiuwZw7N7aKMrmHI=
+	t=1789210741; cv=none; b=AN30/VQq7Z+DiU4skShAx8xUKMhfVWQ0BaanMXtkGucfKQojcdQAnvw0e/aXoZGSs9tvYq3qhjOb2ShecmFAguA8GVUjXFSzuYs0QyIZXLtDBwBP3w2dRKQvNVx7/yw0BF3eIj4D2/jFpKnTe+TiW9oTATSodj55HDsnzygKVWk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789210737; c=relaxed/simple;
-	bh=Yv+c3iuOP9u8YsR0DZgzouxbWdH4Kp9fkQZHID+LXFc=;
+	s=arc-20240116; t=1789210741; c=relaxed/simple;
+	bh=wYy29XnRI+d+14FLjffa4o/6VtO1o53rrlRCwZswQzE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NFB4NF4hPaMsdyaNTcykudOF3OXrp4f84xlPGnd4PAyyg/A0ty2xcJ0iDvDoq9DvcB86s5pHsH+jBBmOZPPj4ISGxnacUDDjT6S9wuT0x8TMS6Bmi9IAvGK+fpKJu/WiUVlUc84gPV/q60lLVL+jagm7M7VpFDWWR/OjBCu9GAs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PRxO+roI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dmW0iRhBrS/EeSKuc3zTNWczjTFNqvnl2M+MyqmxeM9TDsR4gbQcKknJkoxZ6cxsCzj7EFz+jtx9AFfwFyJN2EDO3UVU0EplBpkjosJFqtITntsmvnY3VM8yB3OgJqLItcZhROc0A/oOdzL41gAwW0epc9o8v2DdbePW82EZR+4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SGtHdjPa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PRxO+roI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E869D1F000FF;
-	Sat, 12 Sep 2026 10:58:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SGtHdjPa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A02971F000FF;
+	Sat, 12 Sep 2026 10:58:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789210735;
-	bh=3enata55WZ1EkdFhr/PQaTUd/4CZo5+S/MyxnBvHUYM=;
+	s=korg; t=1789210740;
+	bh=rIcnxWvqQ4LTEZK1UVpvruJ0NBnd5XFtkJxfsQoCA+4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PRxO+roIswQJNn4BW48YbwNwz7Usc94+L0nt6pFS+8KHbUHEGQmCU/UphqM+k11PL
-	 GQLLn0R7aaYfu6YlSF0br+iHe1f/leRNlIFUFsxhCLGe5qnv9nx9UKm3gkG0kr+r8U
-	 xSr169AHaIw9d0xu3pUGuC8R4V8Nyf6WBUiNvsDQ=
+	b=SGtHdjPaP3tDjp5h9kUI/e5geOq9g4WDfE2ODMqQqFfhQS9gN6K5diGRpoj0mZute
+	 /vexOMTYLjC3C0XOHQ6QHfClomi7+SAIkypM/NmvGzPemyO1pcVK0F9h+fvckfV7pC
+	 kPEuOgFnw0R8J9bXlZF73N6DmUlxyBSKWlAhSA/M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guixin Liu <kanie@linux.alibaba.com>,
-	Hannes Reinecke <hare@suse.de>,
-	Christoph Hellwig <hch@lst.de>,
-	Kanchan Joshi <joshi.k@samsung.com>,
-	Nilay Shroff <nilay@linux.ibm.com>,
-	Keith Busch <kbusch@kernel.org>,
+	Frederic Weisbecker <frederic@kernel.org>,
+	Waiman Long <longman@redhat.com>,
+	Gabriele Monaco <gmonaco@redhat.com>,
+	Chen Ridong <chenridong@huaweicloud.com>,
+	Chen Ridong <chenridong@huawei.com>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1086/1518] nvme-pci: release descriptor pools on probe failure
-Date: Sat, 12 Sep 2026 08:54:15 +0200
-Message-ID: <20260912065648.017663070@linuxfoundation.org>
+Subject: [PATCH 6.18 1087/1518] cgroup/cpuset: Rename update_unbound_workqueue_cpumask() to update_isolation_cpumasks()
+Date: Sat, 12 Sep 2026 08:54:16 +0200
+Message-ID: <20260912065648.041898286@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -55,45 +55,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guixin Liu <kanie@linux.alibaba.com>
+From: Gabriele Monaco <gmonaco@redhat.com>
 
-[ Upstream commit cb144c2f67128abfa5c7ba33318617d19f192156 ]
+[ Upstream commit 55939cf28a48dad27d6906e57d3b45905bb0d001 ]
 
-The per-NUMA-node descriptor DMA pools are created lazily from
-nvme_init_hctx_common() once the admin tag set is allocated, but they are
-only destroyed in nvme_remove() via nvme_release_descriptor_pools(). Any
-probe failure after the admin tag set has been allocated unwinds through
-the out_disable label and nvme_pci_free_ctrl(), neither of which releases
-the pools, leaking the dma_pool objects.
+update_unbound_workqueue_cpumask() updates unbound workqueues settings
+when there's a change in isolated CPUs, but it can be used for other
+subsystems requiring updated when isolated CPUs change.
 
-Release the descriptor pools in the out_disable error path. It must not
-be added to nvme_pci_free_ctrl(), as that would double-free against
-nvme_remove() on the normal teardown path.
+Generalise the name to update_isolation_cpumasks() to prepare for other
+functions unrelated to workqueues to be called in that spot.
 
-Fixes: d977506f8863 ("nvme-pci: make PRP list DMA pools per-NUMA-node")
-Signed-off-by: Guixin Liu <kanie@linux.alibaba.com>
-Reviewed-by: Hannes Reinecke <hare@suse.de>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Kanchan Joshi <joshi.k@samsung.com>
-Reviewed-by: Nilay Shroff <nilay@linux.ibm.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+[longman: Change the function name to update_isolation_cpumasks()]
+
+Acked-by: Frederic Weisbecker <frederic@kernel.org>
+Acked-by: Waiman Long <longman@redhat.com>
+Signed-off-by: Gabriele Monaco <gmonaco@redhat.com>
+Signed-off-by: Waiman Long <longman@redhat.com>
+Reviewed-by: Chen Ridong <chenridong@huaweicloud.com>
+Reviewed-by: Chen Ridong <chenridong@huawei.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
+Stable-dep-of: 26d3a59e0241 ("cgroup/cpuset: Use WRITE_ONCE() for shared prs_err updates")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/pci.c | 1 +
- 1 file changed, 1 insertion(+)
+ kernel/cgroup/cpuset.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
-index 0a46c60583d7b..b8b6d9aaac1a6 100644
---- a/drivers/nvme/host/pci.c
-+++ b/drivers/nvme/host/pci.c
-@@ -3557,6 +3557,7 @@ static int nvme_probe(struct pci_dev *pdev, const struct pci_device_id *id)
- 	nvme_dev_remove_admin(dev);
- 	nvme_dbbuf_dma_free(dev);
- 	nvme_free_queues(dev, 0);
-+	nvme_release_descriptor_pools(dev);
- out_release_iod_mempool:
- 	mempool_destroy(dev->dmavec_mempool);
- out_dev_unmap:
+diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
+index 23c90b1e219ac..feff482e26484 100644
+--- a/kernel/cgroup/cpuset.c
++++ b/kernel/cgroup/cpuset.c
+@@ -1410,7 +1410,7 @@ static bool partition_xcpus_del(int old_prs, struct cpuset *parent,
+ 	return isolcpus_updated;
+ }
+ 
+-static void update_unbound_workqueue_cpumask(bool isolcpus_updated)
++static void update_isolation_cpumasks(bool isolcpus_updated)
+ {
+ 	int ret;
+ 
+@@ -1574,7 +1574,7 @@ static int remote_partition_enable(struct cpuset *cs, int new_prs,
+ 	list_add(&cs->remote_sibling, &remote_children);
+ 	cpumask_copy(cs->effective_xcpus, tmp->new_cpus);
+ 	spin_unlock_irq(&callback_lock);
+-	update_unbound_workqueue_cpumask(isolcpus_updated);
++	update_isolation_cpumasks(isolcpus_updated);
+ 	cpuset_force_rebuild();
+ 	cs->prs_err = 0;
+ 
+@@ -1622,7 +1622,7 @@ static void remote_partition_disable(struct cpuset *cs, struct tmpmasks *tmp)
+ 	compute_excpus(cs, cs->effective_xcpus);
+ 	reset_partition_data(cs);
+ 	spin_unlock_irq(&callback_lock);
+-	update_unbound_workqueue_cpumask(isolcpus_updated);
++	update_isolation_cpumasks(isolcpus_updated);
+ 	cpuset_force_rebuild();
+ 
+ 	/*
+@@ -1691,7 +1691,7 @@ static void remote_cpus_update(struct cpuset *cs, struct cpumask *xcpus,
+ 	if (xcpus)
+ 		cpumask_copy(cs->exclusive_cpus, xcpus);
+ 	spin_unlock_irq(&callback_lock);
+-	update_unbound_workqueue_cpumask(isolcpus_updated);
++	update_isolation_cpumasks(isolcpus_updated);
+ 	if (adding || deleting)
+ 		cpuset_force_rebuild();
+ 
+@@ -2049,7 +2049,7 @@ static int update_parent_effective_cpumask(struct cpuset *cs, int cmd,
+ 		WARN_ON_ONCE(parent->nr_subparts < 0);
+ 	}
+ 	spin_unlock_irq(&callback_lock);
+-	update_unbound_workqueue_cpumask(isolcpus_updated);
++	update_isolation_cpumasks(isolcpus_updated);
+ 
+ 	if ((old_prs != new_prs) && (cmd == partcmd_update))
+ 		update_partition_exclusive_flag(cs, new_prs);
+@@ -3074,7 +3074,7 @@ static int update_prstate(struct cpuset *cs, int new_prs)
+ 	else if (isolcpus_updated)
+ 		isolated_cpus_update(old_prs, new_prs, cs->effective_xcpus);
+ 	spin_unlock_irq(&callback_lock);
+-	update_unbound_workqueue_cpumask(isolcpus_updated);
++	update_isolation_cpumasks(isolcpus_updated);
+ 
+ 	/* Force update if switching back to member & update effective_xcpus */
+ 	update_cpumasks_hier(cs, &tmpmask, !new_prs);
 -- 
 2.53.0
 
