@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 838923A2E12;
-	Sat, 12 Sep 2026 20:03:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 694753A7820;
+	Sat, 12 Sep 2026 20:03:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789243408; cv=none; b=ob0QKlPTNSh/vsvMQiM3jF0gXWzy3xt0S3P0zZpDDud+PTYJQPcnp1KQQVnNXX861AdihX+Gg8G93PXhdlNYQ6cUOjZQOiYyZ+IuMX0Roy6Usn8On0kldEwQfJAFj+QnCyhGZ4/THTYbiEFT+/RZAd+TTeGSXS4f2xfCD52J8kY=
+	t=1789243411; cv=none; b=o1MHFhi3RbwbLV+Viz+e6MWfoHjJkegEadY+nD0G/f7+5jYj9BC9fjI01oDM11vFjjxCb66BF2khxctR+aXyilKNlu7q8E3cAEl20oi3gbt92mFGYG/n13ur3LDBTv8OqTPwYlyPtWA4E3HrIafRrG/teF9MrqmY3GuvVG7KA7c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789243408; c=relaxed/simple;
-	bh=Qu4+inrZdIWmlASjmdN7Ci+k16ujF9/eF8Oa1XW9JE0=;
+	s=arc-20240116; t=1789243411; c=relaxed/simple;
+	bh=L+Z5FyDM3eFXQ1Re75j62WUujR8+P60yJzuzvZWjj70=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fKa7JK21oWsVBIPvRCj7twEfI76I/JRbL6fECaY7788IXBTA7g8oiRfLvcSs2+0MhvKP9oLC9rsMWF2ydokKtD/fE2BgjtQ+X+IvQHTg5xBp4X8DXWe4249rfQrEsKvm4g6fanUSKA3ZXYqsNYjn3r5KTK5ZpUJOOZXU6+klKYY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ae1kNeQg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WYlvMc/Mn6Z+T2beQCf7eErpA/1eO/jq8v7Xl6B7MN+Z7CcvOstAjTJ5MdNLCmlKH0adVBYY4uLaqyjUItUrNVqz1qXsizWureuc225iSiEIUIcY2vQx37/ExRXSPXqlOfbpwPncPsjB9cuqHPJaeApXFeetHmWoxziQ7mNeeXU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n8h0Pujp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ae1kNeQg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFC421F000FF;
-	Sat, 12 Sep 2026 20:03:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n8h0Pujp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAF771F000FF;
+	Sat, 12 Sep 2026 20:03:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789243407;
-	bh=emLfpeUChfcv7Ka2HklpArgi2SpjIS7APEiPxqSlZHk=;
+	s=korg; t=1789243410;
+	bh=XynV/xvTQIEnWSTbBqwD2RF/V7J1IZgB/BIQiPfohiQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ae1kNeQgbFB286YG6RDki/jv92pWqlktjR4Zu6IuqEtUe84JiDrlWsBjiPLMj/TdS
-	 RAyO9mQ7ZvlxLuZqM7eeQ4gAxy1KVmCc7VTmFaKO+79qtX4tM5hPdci8Zj77apfQqZ
-	 nUcXzXH85ApFAPseF8LRv8nYfohhe3+Fnl26XwiQ=
+	b=n8h0PujpY1jOdQD5bXmnhydiGaU3sohCN09g1KR6iWsYXm8fel/RxlSv+xqLl9wcP
+	 GS4efpZu5vug/uzgkWR/5JHuE94Q9Fl0AUsavPI84SUUnVPAis6EJ67V1dmXUUwSat
+	 Bz4nS/ygAwPu7kmSbeeku0/4iZYu1N4Y40YYiXAI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
+	Yuho Choi <dbgh9129@gmail.com>,
 	Daniel Lezcano <daniel.lezcano@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 702/798] clocksource/drivers/clps711x: Do not unmap clocksource MMIO
-Date: Sat, 12 Sep 2026 09:05:30 +0200
-Message-ID: <20260912065533.182322056@linuxfoundation.org>
+Subject: [PATCH 5.10 703/798] clocksource/drivers/armada: Unwind timer clock on init failure
+Date: Sat, 12 Sep 2026 09:05:31 +0200
+Message-ID: <20260912065533.205490822@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -51,46 +51,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Yuho Choi <dbgh9129@gmail.com>
 
-[ Upstream commit e998c6300ef4e062a704ee17b5a812c0b595cf42 ]
+[ Upstream commit 8b4127f6db40381229f3564d34ac35f36311c201 ]
 
-clps711x_clksrc_init() stores the timer base address in the static tcd
-pointer and registers it as both the clocksource MMIO address and the
-sched_clock read address.
+The Armada timer init paths enable their clock before calling the
+common initialization routine. If that routine returns an error, the
+clock is left enabled even though the timer was not initialized
+successfully.
 
-The clocksource init path must therefore keep the mapping alive after
-clps711x_timer_init() returns. However, the shared unmap_io exit path is
-also reached after successful clocksource registration, so the MMIO
-mapping is torn down while the clocksource and sched_clock readers may
-still access it.
-
-Return directly after successful clocksource registration and leave the
-mapping alive for the registered readers. Keep the unmap_io path for the
-error paths and for the clockevent init path.
-
-Fixes: cd32e596f02f ("clocksource/drivers/clps711x: Fix resource leaks in error paths")
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Fixes: 12549e27c63c ("clocksource/drivers/time-armada-370-xp: Convert init function to return error")
+Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
 Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
-Link: https://patch.msgid.link/20260704175451.256364-1-lgs201920130244@gmail.com
+Link: https://patch.msgid.link/20260802213545.565913-1-dbgh9129@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clocksource/clps711x-timer.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/clocksource/timer-armada-370-xp.c | 18 +++++++++++++++---
+ 1 file changed, 15 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/clocksource/clps711x-timer.c b/drivers/clocksource/clps711x-timer.c
-index bbceb0289d457..95f8a50ba1ebb 100644
---- a/drivers/clocksource/clps711x-timer.c
-+++ b/drivers/clocksource/clps711x-timer.c
-@@ -94,7 +94,7 @@ static int __init clps711x_timer_init(struct device_node *np)
- 	switch (of_alias_get_id(np, "timer")) {
- 	case CLPS711X_CLKSRC_CLOCKSOURCE:
- 		clps711x_clksrc_init(clock, base);
--		break;
-+		return 0;
- 	case CLPS711X_CLKSRC_CLOCKEVENT:
- 		ret =  _clps711x_clkevt_init(clock, base, irq);
- 		break;
+diff --git a/drivers/clocksource/timer-armada-370-xp.c b/drivers/clocksource/timer-armada-370-xp.c
+index e3acc3c631b72..a3e803fb8b1ee 100644
+--- a/drivers/clocksource/timer-armada-370-xp.c
++++ b/drivers/clocksource/timer-armada-370-xp.c
+@@ -349,7 +349,11 @@ static int __init armada_xp_timer_init(struct device_node *np)
+ 
+ 	timer_clk = clk_get_rate(clk);
+ 
+-	return armada_370_xp_timer_common_init(np);
++	ret = armada_370_xp_timer_common_init(np);
++	if (ret)
++		clk_disable_unprepare(clk);
++
++	return ret;
+ }
+ TIMER_OF_DECLARE(armada_xp, "marvell,armada-xp-timer",
+ 		       armada_xp_timer_init);
+@@ -387,7 +391,11 @@ static int __init armada_375_timer_init(struct device_node *np)
+ 		timer25Mhz = false;
+ 	}
+ 
+-	return armada_370_xp_timer_common_init(np);
++	ret = armada_370_xp_timer_common_init(np);
++	if (ret)
++		clk_disable_unprepare(clk);
++
++	return ret;
+ }
+ TIMER_OF_DECLARE(armada_375, "marvell,armada-375-timer",
+ 		       armada_375_timer_init);
+@@ -410,7 +418,11 @@ static int __init armada_370_timer_init(struct device_node *np)
+ 	timer_clk = clk_get_rate(clk) / TIMER_DIVIDER;
+ 	timer25Mhz = false;
+ 
+-	return armada_370_xp_timer_common_init(np);
++	ret = armada_370_xp_timer_common_init(np);
++	if (ret)
++		clk_disable_unprepare(clk);
++
++	return ret;
+ }
+ TIMER_OF_DECLARE(armada_370, "marvell,armada-370-timer",
+ 		       armada_370_timer_init);
 -- 
 2.53.0
 
