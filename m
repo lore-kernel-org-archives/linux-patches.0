@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 231D33750CB;
-	Sat, 12 Sep 2026 08:00:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F383361DD0;
+	Sat, 12 Sep 2026 08:00:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789200052; cv=none; b=jIptpom/s1YbMGxzje6wx9Bmon8P+vwIaPhA0vFJFOcAQ/EboSoslUtRmK40ezl/WpQTt/gs+JBkgWSiwM7TCJKcyDkeNwq4Mp8SKbxnBrVIA+RVdhMUjlnxNc49BE18HOysHkKZbsKyfFD7+fzWBLg5k/L0QdL3Y1/oeYDfDGw=
+	t=1789200058; cv=none; b=P3okB5XHKGW0SJqwxVwbVRVxbHnrcDbr7vQGOp8Tya9cU3UawiKV/gRIo9kLiwKvylWtIIuce2AermBNbnlt5htHZEDah6k/QEJMRjGRIyOMvk37ao48BHzPou9VssI9udY7Tr7d4IjMknTnSbLU9E07ubYJCilmKQiKXWKIF5Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789200052; c=relaxed/simple;
-	bh=GRAbvFo+pKXbUpJfsfDCZ2UA+X1VY6cT/quqIT/Zb2c=;
+	s=arc-20240116; t=1789200058; c=relaxed/simple;
+	bh=Ffm19O00jjKQWqSzAgTSlgxcaEkyJXiKQQO/kybHPc8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U+O3x4XIOYGITPrwIhxPGc4jn1kiaJYtlk0frxuZ9jF6JQtUauWqaung4z45g+Rs7++B3t//k+czmqUSTnryoiXqzfBBbUcnl+4kbC74FY0NIl4TCTagh5/jrSEmVQW9GxMZUuJRepb1+9hj8XWJgKQDcjnRIdt2D3Hw58qiE7k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2iJOFmPQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ikr2rMn5O80yUrouG0/IYFcsOS+EmdVla3u4acYGr1N5E4uN9uTu819KLNEVEOEpS07W7tKPy85Ir2hpUrsVAyxH7glEDNYKoMDYCv8chcFlGNgA9NKABS0URu9jgdcU9wMD18Mt4WX7FzMhar4U9t25Gkq8k9UiHmRmJXAv8ak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bOviQw7T; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2iJOFmPQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8DD81F000FF;
-	Sat, 12 Sep 2026 08:00:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bOviQw7T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D540B1F000FF;
+	Sat, 12 Sep 2026 08:00:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789200051;
-	bh=3R/GvigLxwWB/Ll0QsLYpcw3Oy6KHng6Xln5LWSrO9E=;
+	s=korg; t=1789200055;
+	bh=nHLszybgTsnVpGWaV3s/mYq0a4AeXKJcf5BJfFC3SHo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2iJOFmPQq9l3G1JabhMWGfyHUnnnwi8aJNAGQOZriOOKPaYTBS/50ixRLf6BY1xES
-	 YwDf3ppnGmXVvnEeDIC/rVce/gAlY7+h/+7M7UCYOdCrmqdYq5D2QmxOkXSTf7GXAg
-	 q2g9rBZVHdPICX0x9n5NRevUoiRXg+8JZtoUa+t0=
+	b=bOviQw7TTdMBg6N8AslzeJI+68VW6rwATrJxYXWfMSWF6EIk3OQNaC7OwvVvXZQaq
+	 VoYQAkAeGu1GEXxFVqisKurRjFwFz7tYDsRijtSeJS1BFBqc9I85yt68DVc9l0G4pY
+	 vmEN16efj/vLFVRUeBkrgSnsRVrR4RFW1g2np01I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alain Volmat <alain.volmat@foss.st.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Fan Wu <fanwu01@zju.edu.cn>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0711/1815] media: stm32: dcmi: fix error handling on MDMA pool alloc failure
-Date: Sat, 12 Sep 2026 08:41:01 +0200
-Message-ID: <20260912065705.585575503@linuxfoundation.org>
+Subject: [PATCH 7.2 0685/1815] spi: oc-tiny: switch to managed controller allocation
+Date: Sat, 12 Sep 2026 08:40:35 +0200
+Message-ID: <20260912065704.970977802@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,41 +51,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alain Volmat <alain.volmat@foss.st.com>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-[ Upstream commit 1bc5946763067d5b8dde2e5c11d7a7ddb89c8937 ]
+[ Upstream commit d710f43ce30975d197f73c543bfe47b958d8ba17 ]
 
-Properly return an error if of_gen_pool_get or gen_pool_dma_zalloc
-fails during the chained DMA probing.
+The controller is allocated with the non-managed spi_alloc_host() while
+the interrupt is registered with devm_request_irq().  During removal,
+spi_bitbang_stop() only unregisters the controller; the subsequent
+spi_controller_put() then frees the controller together with its
+embedded driver-private devdata, which is the IRQ handler's dev_id.  The
+devm_request_irq() release action (free_irq()), which drains the
+handler, does not run until after .remove() returns.  A late or latched
+interrupt can therefore reach tiny_spi_irq() and dereference
+already-freed memory (e.g. hw->base).
 
-Fixes: 87ebce19aa03 ("media: stm32: dcmi: addition of DMA-MDMA chaining support")
-Signed-off-by: Alain Volmat <alain.volmat@foss.st.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Switch to devm_spi_alloc_host() so that the devres LIFO order releases
+the controller only after free_irq() has drained the handler, and drop
+the now-redundant spi_controller_put() from .remove().  The probe error
+path is simplified to direct returns.
+
+This issue was found by an in-house static analysis tool.
+
+Fixes: ce792580ea2c ("spi: add OpenCores tiny SPI driver")
+Assisted-by: Codex:gpt-5.6
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Link: https://patch.msgid.link/20260719010014.3163356-1-fanwu01@zju.edu.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/st/stm32/stm32-dcmi.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/spi/spi-oc-tiny.c | 24 ++++++++----------------
+ 1 file changed, 8 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/media/platform/st/stm32/stm32-dcmi.c b/drivers/media/platform/st/stm32/stm32-dcmi.c
-index eeb0199864dd1..a6911a3349713 100644
---- a/drivers/media/platform/st/stm32/stm32-dcmi.c
-+++ b/drivers/media/platform/st/stm32/stm32-dcmi.c
-@@ -2050,6 +2050,7 @@ static int dcmi_probe(struct platform_device *pdev)
- 		dcmi->sram_pool = of_gen_pool_get(pdev->dev.of_node, "sram", 0);
- 		if (!dcmi->sram_pool) {
- 			dev_info(&pdev->dev, "No SRAM pool, can't use MDMA chaining\n");
-+			ret = -ENOMEM;
- 			goto err_dma_slave_config;
- 		}
+diff --git a/drivers/spi/spi-oc-tiny.c b/drivers/spi/spi-oc-tiny.c
+index 29333b1f82d7a..1cd2a934c0329 100644
+--- a/drivers/spi/spi-oc-tiny.c
++++ b/drivers/spi/spi-oc-tiny.c
+@@ -210,11 +210,11 @@ static int tiny_spi_probe(struct platform_device *pdev)
+ 	struct tiny_spi_platform_data *platp = dev_get_platdata(&pdev->dev);
+ 	struct tiny_spi *hw;
+ 	struct spi_controller *host;
+-	int err = -ENODEV;
++	int err;
  
-@@ -2061,6 +2062,7 @@ static int dcmi_probe(struct platform_device *pdev)
- 						     &dcmi->sram_dma_buf);
- 		if (!dcmi->sram_buf) {
- 			dev_err(dcmi->dev, "Failed to allocate from SRAM\n");
-+			ret = -ENOMEM;
- 			goto err_dma_slave_config;
- 		}
+-	host = spi_alloc_host(&pdev->dev, sizeof(struct tiny_spi));
++	host = devm_spi_alloc_host(&pdev->dev, sizeof(struct tiny_spi));
+ 	if (!host)
+-		return err;
++		return -ENOMEM;
  
+ 	/* setup the host state. */
+ 	host->bus_num = pdev->id;
+@@ -232,10 +232,8 @@ static int tiny_spi_probe(struct platform_device *pdev)
+ 
+ 	/* find and map our resources */
+ 	hw->base = devm_platform_ioremap_resource(pdev, 0);
+-	if (IS_ERR(hw->base)) {
+-		err = PTR_ERR(hw->base);
+-		goto exit;
+-	}
++	if (IS_ERR(hw->base))
++		return PTR_ERR(hw->base);
+ 	/* irq is optional */
+ 	hw->irq = platform_get_irq(pdev, 0);
+ 	if (hw->irq >= 0) {
+@@ -243,7 +241,7 @@ static int tiny_spi_probe(struct platform_device *pdev)
+ 		err = devm_request_irq(&pdev->dev, hw->irq, tiny_spi_irq, 0,
+ 				       pdev->name, hw);
+ 		if (err)
+-			goto exit;
++			return err;
+ 	}
+ 	/* find platform data */
+ 	if (platp) {
+@@ -252,29 +250,23 @@ static int tiny_spi_probe(struct platform_device *pdev)
+ 	} else {
+ 		err = tiny_spi_of_probe(pdev);
+ 		if (err)
+-			goto exit;
++			return err;
+ 	}
+ 
+ 	/* register our spi controller */
+ 	err = spi_bitbang_start(&hw->bitbang);
+ 	if (err)
+-		goto exit;
++		return err;
+ 	dev_info(&pdev->dev, "base %p, irq %d\n", hw->base, hw->irq);
+ 
+ 	return 0;
+-
+-exit:
+-	spi_controller_put(host);
+-	return err;
+ }
+ 
+ static void tiny_spi_remove(struct platform_device *pdev)
+ {
+ 	struct tiny_spi *hw = platform_get_drvdata(pdev);
+-	struct spi_controller *host = hw->bitbang.ctlr;
+ 
+ 	spi_bitbang_stop(&hw->bitbang);
+-	spi_controller_put(host);
+ }
+ 
+ #ifdef CONFIG_OF
 -- 
 2.53.0
 
