@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F36E38757A;
-	Sat, 12 Sep 2026 15:39:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D8A8345EB9;
+	Sat, 12 Sep 2026 15:39:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789227595; cv=none; b=tXee+SpBaHWEzdqGzWpNf5HshbkF57A/8qpYwnMaxB/gCRlmQRWdeap/quApiCIa9OxdpuObNsY3JIWL5OBkHnfrdT1oBhWlAHgGh+sKaCTbbTUUJZavB9enc7TN5ZkS2QIduqJqmHR5GVkeTwHEFiBV2q34aFQY7CTcfR5w4tY=
+	t=1789227601; cv=none; b=o5f9ePPS6+scWk1W8Vb+805zs2RqdFl2JRcrxZ5r+am3xbB3ez3pd73wRCBjRHpujjV9bBb6z36oTkSfgC55THZ02OqjVEB0OlJ+LBYzT9jBKMc9adhkK39mKHYoRce70OQZFS0qoHb2NpE2Ow/hQ3nNjnPXcf3zNOVkHNzplck=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789227595; c=relaxed/simple;
-	bh=6+SCr9QmB7X2KRX3ZwhU5QB8nzThdv04nJati22mdS0=;
+	s=arc-20240116; t=1789227601; c=relaxed/simple;
+	bh=QRsJIblZdsVhrkankK9IHohFR5lfkYjkZuwVjEGQBh4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZXtDvR2uetQwGj06dzs/5O45VNhce2u7zqY8Kg3l8mv2PLJpPwr/1E/bC9UYyBuO4ut/osQlUEJx0HVzHpBCe3pmhSOPQepTqVdotQCh4nRgcnJGF4rEy4jWyiQvMCjWU1vJi76mDeSAt3UGv3s2zJxuJ9QUatvSREWu9wxhz1c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FxKyGAYn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WYv2V/zJJX3+09qokCUWQpSsGGCsQF42M1AU+Azz3djI808Cz2hQAzDKW+aYzZwEPHgwhtkkfNss36ZHuaGe4sCtQyFBdb8Q1anEUEhs84DGn7Fp8Ug5U1/yUXDgiWtiOFQ23hprawEtkrqC3o00YmgOdDfEQVDUV8AtVtqoSS8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aXytAlkk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FxKyGAYn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBE441F00893;
-	Sat, 12 Sep 2026 15:39:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aXytAlkk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7512A1F000FF;
+	Sat, 12 Sep 2026 15:39:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789227594;
-	bh=4ndfcMgFMa1FygtmCj40OSVhLdOaU+OP7DrVzc7lh2w=;
+	s=korg; t=1789227599;
+	bh=yV/eFuwU8Plz4LAgc7bfcZIOPjuMpdKDsEC+Pt+N/3E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FxKyGAYn16JyaP47Ef14O2evXv5/c+BivAlOuUho0aCf8qBypxm1OqmyGdKHauRiX
-	 6COvE9rqMgdJ+FQ2fDXnv/x/txmKBo9UTPFZxILk+08B7VNc0tsPx7fM/hnEo0AGTh
-	 3f/NSffz3m7NE13tXNuaFlHw73EbMQw21RPLI/gM=
+	b=aXytAlkkqD/jwoSgG31H4IF38bSNr5/JEQJEGsGK1EzNxV3Tlp56GTsUTZJqXIDjJ
+	 kWH6l4u9ju4VhI6HTIo9EbDMj/YuwY3kmx4qcynDLbpYtjRLLg6Kg7rLxQ6mACE8kA
+	 kuwH2jnh2qzMvZpbj77+/QPG8oSdZlrS4DOK3Y6Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Koichiro Den <den@valinux.co.jp>,
+	Mahanta Jambigi <mjambigi@linux.ibm.com>,
+	Breno Leitao <leitao@debian.org>,
+	Hidayath Khan <hidayath@linux.ibm.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 0213/1191] net: ntb_netdev: Count packets dropped on RX refill failure
-Date: Sat, 12 Sep 2026 08:49:01 +0200
-Message-ID: <20260912065552.995943796@linuxfoundation.org>
+Subject: [PATCH 6.1 0214/1191] net/smc: fix socket refcount leak in smc_switch_conns()
+Date: Sat, 12 Sep 2026 08:49:02 +0200
+Message-ID: <20260912065553.018074024@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -50,46 +52,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Koichiro Den <den@valinux.co.jp>
+From: Hidayath Khan <hidayath@linux.ibm.com>
 
-commit 31ded341c375bb2faac1d77ab0012a732ba3e2a6 upstream.
+commit 719296c4aa8213d4ac8002e77d5956d436bc98d0 upstream.
 
-When replacement skb allocation fails, ntb_netdev drops a packet that
-was received successfully and requeues the original buffer. The drop is
-counted, but rx_packets and rx_bytes are not.
+smc_switch_conns() takes a reference on the SMC socket before dropping
+lgr->conns_lock, so the connection stays alive while the CDC slot is
+fetched:
 
-Count every good packet before allocating its replacement.
+        sock_hold(&smc->sk);
+        read_unlock_bh(&lgr->conns_lock);
+        /* pre-fetch buffer outside of send_lock, might sleep */
+        rc = smc_cdc_get_free_slot(conn, to_lnk, &wr_buf, NULL, &pend);
+        if (rc)
+                goto err_out;
 
-Fixes: d2121faf133a ("NTB: ntb_netdev: Preserve RX queue depth on allocation failure")
+The err_out label only drops the wr_tx link reference, so this early exit
+returns without the matching sock_put(). The second error exit is not
+affected, because sock_put() has already run by then.
+
+A leaked sk_refcnt means the smc_sock is never destroyed. Its send and
+receive buffers stay allocated, and for a user socket the reference held
+on the network namespace is never released, so the netns can no longer be
+torn down.
+
+smc_cdc_get_free_slot() fails when the target link goes down or when the
+connection has been killed while the switch is in progress. Both are
+reachable during the link failover this function implements, so the leak
+is triggered by the same hardware events that make smc_switch_conns() run
+in the first place.
+
+Restructure so there is a single sock_put() covering both outcomes,
+instead of adding a second one to the error path.
+
+Fixes: 95f7f3e7dc6b ("net/smc: improved fix wait on already cleared link")
 Cc: stable@vger.kernel.org
-Signed-off-by: Koichiro Den <den@valinux.co.jp>
-Link: https://patch.msgid.link/20260819172539.1450821-3-den@valinux.co.jp
+Reviewed-by: Mahanta Jambigi <mjambigi@linux.ibm.com>
+Reviewed-by: Breno Leitao <leitao@debian.org>
+Signed-off-by: Hidayath Khan <hidayath@linux.ibm.com>
+Link: https://patch.msgid.link/20260820144729.1019399-1-hidayath@linux.ibm.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ntb_netdev.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ net/smc/smc_core.c |   14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
---- a/drivers/net/ntb_netdev.c
-+++ b/drivers/net/ntb_netdev.c
-@@ -115,6 +115,9 @@ static void ntb_netdev_rx_handler(struct
- 		goto enqueue_again;
- 	}
- 
-+	ndev->stats.rx_packets++;
-+	ndev->stats.rx_bytes += len;
-+
- 	new_skb = netdev_alloc_skb(ndev, ndev->mtu + ETH_HLEN);
- 	if (!new_skb) {
- 		ndev->stats.rx_dropped++;
-@@ -126,8 +129,6 @@ static void ntb_netdev_rx_handler(struct
- 	skb->ip_summed = CHECKSUM_NONE;
- 
- 	netif_rx(skb);
--	ndev->stats.rx_packets++;
--	ndev->stats.rx_bytes += len;
- 
- 	skb = new_skb;
- 
+--- a/net/smc/smc_core.c
++++ b/net/smc/smc_core.c
+@@ -1070,13 +1070,13 @@ again:
+ 		read_unlock_bh(&lgr->conns_lock);
+ 		/* pre-fetch buffer outside of send_lock, might sleep */
+ 		rc = smc_cdc_get_free_slot(conn, to_lnk, &wr_buf, NULL, &pend);
+-		if (rc)
+-			goto err_out;
+-		/* avoid race with smcr_tx_sndbuf_nonempty() */
+-		spin_lock_bh(&conn->send_lock);
+-		smc_switch_link_and_count(conn, to_lnk);
+-		rc = smc_switch_cursor(smc, pend, wr_buf);
+-		spin_unlock_bh(&conn->send_lock);
++		if (!rc) {
++			/* avoid race with smcr_tx_sndbuf_nonempty() */
++			spin_lock_bh(&conn->send_lock);
++			smc_switch_link_and_count(conn, to_lnk);
++			rc = smc_switch_cursor(smc, pend, wr_buf);
++			spin_unlock_bh(&conn->send_lock);
++		}
+ 		sock_put(&smc->sk);
+ 		if (rc)
+ 			goto err_out;
 
 
