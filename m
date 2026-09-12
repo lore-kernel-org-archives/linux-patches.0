@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EEBB2F0673;
-	Sat, 12 Sep 2026 16:18:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E2724BEE43;
+	Sat, 12 Sep 2026 16:18:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789229907; cv=none; b=CA8m8udcutdxUVRFNlRidQLjnx+c+fBFAGI1nDM0W+NXsIj0MqG4krrhzr9PQEphWJEmj0KP8JyzrbFG3fC76C9coaobkptr3f1lfanB53EZ5pfa2gc5FgDghFxEOsToWpeWPZbkE2C8ossiLbp1PtJglY1C2+HmI7eoi3qZFo0=
+	t=1789229911; cv=none; b=Lr3ef56NZIqWMSULPpcq7+0OzmukWrOqw8z81TENXL5Q4kO51W9LKTEzHrsPZbGOGSz0txprp8+6xavkVNubHOYumqy7bo7Ri4DOOpKwOQ786v08fBf3r0vCSL6ZKsvhuMLoaEB6CfJuHjJOM8CQJHoRt+lEekOQfMlsPmDESMA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789229907; c=relaxed/simple;
-	bh=0nFP4/MoT7Qc2FX1hKeGbqtwyrw1k882XwgzmVSY8NE=;
+	s=arc-20240116; t=1789229911; c=relaxed/simple;
+	bh=yrDpE+pVfCwGjwyZiWRd9XQ8q2ec3INm6mIfV98/UXI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jJ+75q7kNpYwxPqaUM9yhx4ru4TGThZoZPNaELYUCL3bcqsGO8YZEGH/SZGGZiHsG+4dZk5LWvJ+kYCp0GwUv3cYO3u1J3m8fabqlhdKIHpUL02WllA7dRbXhkuzehuBs8Du9YokVOX6vb1BSAOS6NDA/DPv5oyJ0dYpoNLNBL4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QkfYDCA9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BLJp1dBuSwaOCJGOwV9vkKYQRMHo70kG1Of/w1ObDSlUkW1sVBl0EjLFbBu3AjPAN0oq/EqNrk6+eT3twaY4Deynx/a9N0mPvLmLvRak430cWQbBaeCPZzbtN562uSOwHzC/bopuUq3ofw0R6KpaCwl6Zv+mdxgnrgPdeq/Muko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bSlF1fdG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QkfYDCA9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07C931F000FF;
-	Sat, 12 Sep 2026 16:18:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bSlF1fdG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3FCE1F000FF;
+	Sat, 12 Sep 2026 16:18:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789229905;
-	bh=ffQP/81tKiebLhKWdEZ9MyzT/gTXzYc5WxnENm/fI9k=;
+	s=korg; t=1789229909;
+	bh=xjZOo+y5bNsP5Cd9GGN/zwfEmiZvidJBqWOv73eLpzA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QkfYDCA9brrGza8X3nklnq4vky1r1YR0YwvtIMzxIHQl/ddLwTcb5MD14d9iZHYLc
-	 RLNctl7ZpP/6l1UagDtzNnFnwzPC3LD86zHHGuaUamNq0AJWn2FjTXG9UaSSEcl/HR
-	 DILDJFHPXnNzHDn1IvGsBaqiuBzhfL8wCQ/x11bw=
+	b=bSlF1fdGvCY/jMlAlvmKPX+Hw/WeUt/tvwoh/H22SqJuwzYQPCCWZNC0sD4G5Bo/U
+	 S2Sra2Rl76lHrP0E/LXfiEUbk5eqYSjMPL9xw4XcYCK7uVfVo4rAextrHRy74AIOD0
+	 Q3XY3MdQGshZK1GDRQrmf+ONBNthSZ1So3CrsIiw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sven Schnelle <svens@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Niklas Schnelle <schnelle@linux.ibm.com>,
+	Chiara Meiohas <cmeiohas@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0648/1191] s390/con3270: fix formatting issues
-Date: Sat, 12 Sep 2026 08:56:16 +0200
-Message-ID: <20260912065602.809650635@linuxfoundation.org>
+Subject: [PATCH 6.1 0684/1191] RDMA/core: Add an option to display driver-specific QPs in the rdmatool
+Date: Sat, 12 Sep 2026 08:56:52 +0200
+Message-ID: <20260912065603.622311088@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -52,593 +51,232 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Schnelle <svens@linux.ibm.com>
+From: Chiara Meiohas <cmeiohas@nvidia.com>
 
-[ Upstream commit e6d98bb823af51ad8b89ee705111dbb1ed8a4aff ]
+[ Upstream commit e18fa0bbcedf82aaa1db27079ef6a43e11367592 ]
 
-fix function prototypes split over two lines like:
+Utilize the -dd flag (driver-specific details) in the rdmatool
+to view driver-specific QPs which are not exposed yet.
 
-static void
-foobar(void)
+Add the netlink attribute to mark request to convey driver details and
+use it to return QP subtype as a string.
 
-and fix superfluous spaces in declarations like
+$ rdma resource show qp link ibp8s0f1
+link ibp8s0f1/1 lqpn 360 type UD state RTS sq-psn 0 comm [mlx5_ib]
+link ibp8s0f1/1 lqpn 0 type SMI state RTS sq-psn 0 comm [ib_core]
+link ibp8s0f1/1 lqpn 1 type GSI state RTS sq-psn 0 comm [ib_core]
 
-foo * bar
+$ rdma resource show qp link ibp8s0f1 -dd
+link ibp8s0f1/1 lqpn 360 type UD state RTS sq-psn 0 comm [mlx5_ib]
+link ibp8s0f1/1 lqpn 465 type DRIVER subtype REG_UMR state RTS sq-psn 0 comm [mlx5_ib]
+link ibp8s0f1/1 lqpn 0 type SMI state RTS sq-psn 0 comm [ib_core]
+link ibp8s0f1/1 lqpn 1 type GSI state RTS sq-psn 0 comm [ib_core]
 
-Signed-off-by: Sven Schnelle <svens@linux.ibm.com>
-Acked-by: Heiko Carstens <hca@linux.ibm.com>
-Tested-by: Niklas Schnelle <schnelle@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Stable-dep-of: b6b5d64cb161 ("ipack: ipoctal: fix UAF, null-ptr-deref, and use-after-free in cleanup on remove")
+$ rdma resource show
+0: ibp8s0f0: pd 3 cq 4 qp 3 cm_id 0 mr 0 ctx 0 srq 2
+1: ibp8s0f1: pd 3 cq 4 qp 3 cm_id 0 mr 0 ctx 0 srq 2
+
+$ rdma resource show -dd
+0: ibp8s0f0: pd 3 cq 4 qp 4 cm_id 0 mr 0 ctx 0 srq 2
+1: ibp8s0f1: pd 3 cq 4 qp 4 cm_id 0 mr 0 ctx 0 srq 2
+
+Signed-off-by: Chiara Meiohas <cmeiohas@nvidia.com>
+Link: https://lore.kernel.org/r/2607bb3ddec3cae3443c2ea19e9f700825d20a98.1713268997.git.leon@kernel.org
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Stable-dep-of: 709ba0e5311b ("RDMA/core: Fix use after free in ib_query_qp()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/char/tty3270.c | 172 ++++++++++++------------------------
- 1 file changed, 58 insertions(+), 114 deletions(-)
+ drivers/infiniband/core/nldev.c    | 23 +++++++++++++++++++----
+ drivers/infiniband/core/restrack.c | 12 ++++++++++--
+ include/rdma/restrack.h            |  7 +++++--
+ include/uapi/rdma/rdma_netlink.h   |  6 ++++++
+ 4 files changed, 40 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/s390/char/tty3270.c b/drivers/s390/char/tty3270.c
-index 1932077e96500..2ccfe14765e6f 100644
---- a/drivers/s390/char/tty3270.c
-+++ b/drivers/s390/char/tty3270.c
-@@ -134,8 +134,7 @@ static void tty3270_set_timer(struct tty3270 *tp, int expires)
- /*
-  * The input line are the two last lines of the screen.
-  */
--static void
--tty3270_update_prompt(struct tty3270 *tp, char *input, int count)
-+static void tty3270_update_prompt(struct tty3270 *tp, char *input, int count)
- {
- 	struct string *line;
- 	unsigned int off;
-@@ -161,8 +160,7 @@ tty3270_update_prompt(struct tty3270 *tp, char *input, int count)
- 	tp->update_flags |= TTY_UPDATE_INPUT;
+diff --git a/drivers/infiniband/core/nldev.c b/drivers/infiniband/core/nldev.c
+index b010f78ed808b..88c9caebb9677 100644
+--- a/drivers/infiniband/core/nldev.c
++++ b/drivers/infiniband/core/nldev.c
+@@ -137,6 +137,8 @@ static const struct nla_policy nldev_policy[RDMA_NLDEV_ATTR_MAX] = {
+ 	[RDMA_NLDEV_ATTR_RES_SUMMARY_ENTRY_NAME]= { .type = NLA_NUL_STRING,
+ 					.len = RDMA_NLDEV_ATTR_EMPTY_STRING },
+ 	[RDMA_NLDEV_ATTR_RES_TYPE]		= { .type = NLA_U8 },
++	[RDMA_NLDEV_ATTR_RES_SUBTYPE]		= { .type = NLA_NUL_STRING,
++					.len = RDMA_NLDEV_ATTR_EMPTY_STRING },
+ 	[RDMA_NLDEV_ATTR_RES_UNSAFE_GLOBAL_RKEY]= { .type = NLA_U32 },
+ 	[RDMA_NLDEV_ATTR_RES_USECNT]		= { .type = NLA_U64 },
+ 	[RDMA_NLDEV_ATTR_RES_SRQ]		= { .type = NLA_NESTED },
+@@ -164,6 +166,7 @@ static const struct nla_policy nldev_policy[RDMA_NLDEV_ATTR_MAX] = {
+ 	[RDMA_NLDEV_ATTR_STAT_HWCOUNTER_INDEX]	= { .type = NLA_U32 },
+ 	[RDMA_NLDEV_ATTR_STAT_HWCOUNTER_DYNAMIC] = { .type = NLA_U8 },
+ 	[RDMA_NLDEV_SYS_ATTR_PRIVILEGED_QKEY_MODE] = { .type = NLA_U8 },
++	[RDMA_NLDEV_ATTR_DRIVER_DETAILS]	= { .type = NLA_U8 },
+ };
+ 
+ static int put_driver_name_print_type(struct sk_buff *msg, const char *name,
+@@ -400,7 +403,8 @@ static int fill_res_info_entry(struct sk_buff *msg,
+ 	return -EMSGSIZE;
  }
  
--static void
--tty3270_create_prompt(struct tty3270 *tp)
-+static void tty3270_create_prompt(struct tty3270 *tp)
+-static int fill_res_info(struct sk_buff *msg, struct ib_device *device)
++static int fill_res_info(struct sk_buff *msg, struct ib_device *device,
++			 bool show_details)
  {
- 	static const unsigned char blueprint[] =
- 		{ TO_SBA, 0, 0, 0x6e, TO_SF, TF_INPUT,
-@@ -192,8 +190,7 @@ tty3270_create_prompt(struct tty3270 *tp)
-  * The status line is the last line of the screen. It shows the string
-  * "Running"/"Holding" in the lower right corner of the screen.
-  */
--static void
--tty3270_update_status(struct tty3270 * tp)
-+static void tty3270_update_status(struct tty3270 *tp)
+ 	static const char * const names[RDMA_RESTRACK_MAX] = {
+ 		[RDMA_RESTRACK_PD] = "pd",
+@@ -425,7 +429,7 @@ static int fill_res_info(struct sk_buff *msg, struct ib_device *device)
+ 	for (i = 0; i < RDMA_RESTRACK_MAX; i++) {
+ 		if (!names[i])
+ 			continue;
+-		curr = rdma_restrack_count(device, i);
++		curr = rdma_restrack_count(device, i, show_details);
+ 		ret = fill_res_info_entry(msg, names[i], curr);
+ 		if (ret)
+ 			goto err;
+@@ -1288,6 +1292,7 @@ static int nldev_res_get_doit(struct sk_buff *skb, struct nlmsghdr *nlh,
+ 			      struct netlink_ext_ack *extack)
  {
- 	char *str;
+ 	struct nlattr *tb[RDMA_NLDEV_ATTR_MAX];
++	bool show_details = false;
+ 	struct ib_device *device;
+ 	struct sk_buff *msg;
+ 	u32 index;
+@@ -1303,6 +1308,9 @@ static int nldev_res_get_doit(struct sk_buff *skb, struct nlmsghdr *nlh,
+ 	if (!device)
+ 		return -EINVAL;
  
-@@ -203,8 +200,7 @@ tty3270_update_status(struct tty3270 * tp)
- 	tp->update_flags |= TTY_UPDATE_STATUS;
- }
- 
--static void
--tty3270_create_status(struct tty3270 * tp)
-+static void tty3270_create_status(struct tty3270 *tp)
- {
- 	static const unsigned char blueprint[] =
- 		{ TO_SBA, 0, 0, TO_SF, TF_LOG, TO_SA, TAT_COLOR, TAC_GREEN,
-@@ -226,8 +222,7 @@ tty3270_create_status(struct tty3270 * tp)
-  * Set output offsets to 3270 datastream fragment of a tty string.
-  * (TO_SBA offset at the start and TO_RA offset at the end of the string)
-  */
--static void
--tty3270_update_string(struct tty3270 *tp, struct string *line, int nr)
-+static void tty3270_update_string(struct tty3270 *tp, struct string *line, int nr)
- {
- 	unsigned char *cp;
- 
-@@ -242,8 +237,7 @@ tty3270_update_string(struct tty3270 *tp, struct string *line, int nr)
- /*
-  * Rebuild update list to print all lines.
-  */
--static void
--tty3270_rebuild_update(struct tty3270 *tp)
-+static void tty3270_rebuild_update(struct tty3270 *tp)
- {
- 	struct string *s, *n;
- 	int line, nr_up;
-@@ -273,8 +267,7 @@ tty3270_rebuild_update(struct tty3270 *tp)
-  * Alloc string for size bytes. If there is not enough room in
-  * freemem, free strings until there is room.
-  */
--static struct string *
--tty3270_alloc_string(struct tty3270 *tp, size_t size)
-+static struct string *tty3270_alloc_string(struct tty3270 *tp, size_t size)
- {
- 	struct string *s, *n;
- 
-@@ -304,8 +297,7 @@ tty3270_alloc_string(struct tty3270 *tp, size_t size)
- /*
-  * Add an empty line to the list.
-  */
--static void
--tty3270_blank_line(struct tty3270 *tp)
-+static void tty3270_blank_line(struct tty3270 *tp)
- {
- 	static const unsigned char blueprint[] =
- 		{ TO_SBA, 0, 0, TO_SA, TAT_EXTHI, TAX_RESET,
-@@ -324,8 +316,7 @@ tty3270_blank_line(struct tty3270 *tp)
- /*
-  * Create a blank screen and remove all lines from the history.
-  */
--static void
--tty3270_blank_screen(struct tty3270 *tp)
-+static void tty3270_blank_screen(struct tty3270 *tp)
- {
- 	struct string *s, *n;
- 	int i;
-@@ -345,8 +336,7 @@ tty3270_blank_screen(struct tty3270 *tp)
- /*
-  * Write request completion callback.
-  */
--static void
--tty3270_write_callback(struct raw3270_request *rq, void *data)
-+static void tty3270_write_callback(struct raw3270_request *rq, void *data)
- {
- 	struct tty3270 *tp = container_of(rq->view, struct tty3270, view);
- 
-@@ -362,8 +352,7 @@ tty3270_write_callback(struct raw3270_request *rq, void *data)
- /*
-  * Update 3270 display.
-  */
--static void
--tty3270_update(struct timer_list *t)
-+static void tty3270_update(struct timer_list *t)
- {
- 	struct tty3270 *tp = from_timer(tp, t, timer);
- 	static char invalid_sba[2] = { 0xff, 0xff };
-@@ -456,8 +445,7 @@ tty3270_update(struct timer_list *t)
- /*
-  * Command recalling.
-  */
--static void
--tty3270_rcl_add(struct tty3270 *tp, char *input, int len)
-+static void tty3270_rcl_add(struct tty3270 *tp, char *input, int len)
- {
- 	struct string *s;
- 
-@@ -476,8 +464,7 @@ tty3270_rcl_add(struct tty3270 *tp, char *input, int len)
- 	tp->rcl_nr++;
- }
- 
--static void
--tty3270_rcl_backward(struct kbd_data *kbd)
-+static void tty3270_rcl_backward(struct kbd_data *kbd)
- {
- 	struct tty3270 *tp = container_of(kbd->port, struct tty3270, port);
- 	struct string *s;
-@@ -503,8 +490,7 @@ tty3270_rcl_backward(struct kbd_data *kbd)
- /*
-  * Deactivate tty view.
-  */
--static void
--tty3270_exit_tty(struct kbd_data *kbd)
-+static void tty3270_exit_tty(struct kbd_data *kbd)
- {
- 	struct tty3270 *tp = container_of(kbd->port, struct tty3270, port);
- 
-@@ -514,8 +500,7 @@ tty3270_exit_tty(struct kbd_data *kbd)
- /*
-  * Scroll forward in history.
-  */
--static void
--tty3270_scroll_forward(struct kbd_data *kbd)
-+static void tty3270_scroll_forward(struct kbd_data *kbd)
- {
- 	struct tty3270 *tp = container_of(kbd->port, struct tty3270, port);
- 	int nr_up;
-@@ -536,8 +521,7 @@ tty3270_scroll_forward(struct kbd_data *kbd)
- /*
-  * Scroll backward in history.
-  */
--static void
--tty3270_scroll_backward(struct kbd_data *kbd)
-+static void tty3270_scroll_backward(struct kbd_data *kbd)
- {
- 	struct tty3270 *tp = container_of(kbd->port, struct tty3270, port);
- 	int nr_up;
-@@ -558,8 +542,7 @@ tty3270_scroll_backward(struct kbd_data *kbd)
- /*
-  * Pass input line to tty.
-  */
--static void
--tty3270_read_tasklet(unsigned long data)
-+static void tty3270_read_tasklet(unsigned long data)
- {
- 	struct raw3270_request *rrq = (struct raw3270_request *)data;
- 	static char kreset_data = TW_KR;
-@@ -615,8 +598,7 @@ tty3270_read_tasklet(unsigned long data)
- /*
-  * Read request completion callback.
-  */
--static void
--tty3270_read_callback(struct raw3270_request *rq, void *data)
-+static void tty3270_read_callback(struct raw3270_request *rq, void *data)
- {
- 	struct tty3270 *tp = container_of(rq->view, struct tty3270, view);
- 	raw3270_get_view(rq->view);
-@@ -627,8 +609,7 @@ tty3270_read_callback(struct raw3270_request *rq, void *data)
- /*
-  * Issue a read request. Call with device lock.
-  */
--static void
--tty3270_issue_read(struct tty3270 *tp, int lock)
-+static void tty3270_issue_read(struct tty3270 *tp, int lock)
- {
- 	struct raw3270_request *rrq;
- 	int rc;
-@@ -655,8 +636,7 @@ tty3270_issue_read(struct tty3270 *tp, int lock)
- /*
-  * Hang up the tty
-  */
--static void
--tty3270_hangup_tasklet(unsigned long data)
-+static void tty3270_hangup_tasklet(unsigned long data)
- {
- 	struct tty3270 *tp = (struct tty3270 *)data;
- 	tty_port_tty_hangup(&tp->port, true);
-@@ -666,8 +646,7 @@ tty3270_hangup_tasklet(unsigned long data)
- /*
-  * Switch to the tty view.
-  */
--static int
--tty3270_activate(struct raw3270_view *view)
-+static int tty3270_activate(struct raw3270_view *view)
- {
- 	struct tty3270 *tp = container_of(view, struct tty3270, view);
- 
-@@ -676,16 +655,14 @@ tty3270_activate(struct raw3270_view *view)
- 	return 0;
- }
- 
--static void
--tty3270_deactivate(struct raw3270_view *view)
-+static void tty3270_deactivate(struct raw3270_view *view)
- {
- 	struct tty3270 *tp = container_of(view, struct tty3270, view);
- 
- 	del_timer(&tp->timer);
- }
- 
--static void
--tty3270_irq(struct tty3270 *tp, struct raw3270_request *rq, struct irb *irb)
-+static void tty3270_irq(struct tty3270 *tp, struct raw3270_request *rq, struct irb *irb)
- {
- 	/* Handle ATTN. Schedule tasklet to read aid. */
- 	if (irb->scsw.cmd.dstat & DEV_STAT_ATTENTION) {
-@@ -714,8 +691,7 @@ tty3270_irq(struct tty3270 *tp, struct raw3270_request *rq, struct irb *irb)
- /*
-  * Allocate tty3270 structure.
-  */
--static struct tty3270 *
--tty3270_alloc_view(void)
-+static struct tty3270 *tty3270_alloc_view(void)
- {
- 	struct tty3270 *tp;
- 	int pages;
-@@ -785,8 +761,7 @@ tty3270_alloc_view(void)
- /*
-  * Free tty3270 structure.
-  */
--static void
--tty3270_free_view(struct tty3270 *tp)
-+static void tty3270_free_view(struct tty3270 *tp)
- {
- 	int pages;
- 
-@@ -804,8 +779,7 @@ tty3270_free_view(struct tty3270 *tp)
- /*
-  * Allocate tty3270 screen.
-  */
--static struct tty3270_line *
--tty3270_alloc_screen(unsigned int rows, unsigned int cols)
-+static struct tty3270_line *tty3270_alloc_screen(unsigned int rows, unsigned int cols)
- {
- 	struct tty3270_line *screen;
- 	unsigned long size;
-@@ -833,8 +807,7 @@ tty3270_alloc_screen(unsigned int rows, unsigned int cols)
- /*
-  * Free tty3270 screen.
-  */
--static void
--tty3270_free_screen(struct tty3270_line *screen, unsigned int rows)
-+static void tty3270_free_screen(struct tty3270_line *screen, unsigned int rows)
- {
- 	int lines;
- 
-@@ -886,8 +859,7 @@ static void tty3270_resize_work(struct work_struct *work)
- 	tty_kref_put(tty);
- }
- 
--static void
--tty3270_resize(struct raw3270_view *view, int model, int rows, int cols)
-+static void tty3270_resize(struct raw3270_view *view, int model, int rows, int cols)
- {
- 	struct tty3270 *tp = container_of(view, struct tty3270, view);
- 
-@@ -902,8 +874,7 @@ tty3270_resize(struct raw3270_view *view, int model, int rows, int cols)
- /*
-  * Unlink tty3270 data structure from tty.
-  */
--static void
--tty3270_release(struct raw3270_view *view)
-+static void tty3270_release(struct raw3270_view *view)
- {
- 	struct tty3270 *tp = container_of(view, struct tty3270, view);
- 	struct tty_struct *tty = tty_port_tty_get(&tp->port);
-@@ -920,8 +891,7 @@ tty3270_release(struct raw3270_view *view)
- /*
-  * Free tty3270 data structure
-  */
--static void
--tty3270_free(struct raw3270_view *view)
-+static void tty3270_free(struct raw3270_view *view)
- {
- 	struct tty3270 *tp = container_of(view, struct tty3270, view);
- 
-@@ -933,8 +903,7 @@ tty3270_free(struct raw3270_view *view)
- /*
-  * Delayed freeing of tty3270 views.
-  */
--static void
--tty3270_del_views(void)
-+static void tty3270_del_views(void)
- {
- 	int i;
- 
-@@ -1042,8 +1011,7 @@ tty3270_install(struct tty_driver *driver, struct tty_struct *tty)
- /*
-  * This routine is called whenever a 3270 tty is opened.
-  */
--static int
--tty3270_open(struct tty_struct *tty, struct file *filp)
-+static int tty3270_open(struct tty_struct *tty, struct file *filp)
- {
- 	struct tty3270 *tp = tty->driver_data;
- 	struct tty_port *port = &tp->port;
-@@ -1057,8 +1025,7 @@ tty3270_open(struct tty_struct *tty, struct file *filp)
-  * This routine is called when the 3270 tty is closed. We wait
-  * for the remaining request to be completed. Then we clean up.
-  */
--static void
--tty3270_close(struct tty_struct *tty, struct file * filp)
-+static void tty3270_close(struct tty_struct *tty, struct file *filp)
- {
- 	struct tty3270 *tp = tty->driver_data;
- 
-@@ -1081,8 +1048,7 @@ static void tty3270_cleanup(struct tty_struct *tty)
- /*
-  * We always have room.
-  */
--static unsigned int
--tty3270_write_room(struct tty_struct *tty)
-+static unsigned int tty3270_write_room(struct tty_struct *tty)
- {
- 	return INT_MAX;
- }
-@@ -1116,8 +1082,7 @@ static void tty3270_put_character(struct tty3270 *tp, char ch)
- /*
-  * Convert a tty3270_line to a 3270 data fragment usable for output.
-  */
--static void
--tty3270_convert_line(struct tty3270 *tp, int line_nr)
-+static void tty3270_convert_line(struct tty3270 *tp, int line_nr)
- {
- 	struct tty3270_line *line;
- 	struct tty3270_cell *cell;
-@@ -1223,8 +1188,7 @@ tty3270_convert_line(struct tty3270 *tp, int line_nr)
- /*
-  * Do carriage return.
-  */
--static void
--tty3270_cr(struct tty3270 *tp)
-+static void tty3270_cr(struct tty3270 *tp)
- {
- 	tp->cx = 0;
- }
-@@ -1232,8 +1196,7 @@ tty3270_cr(struct tty3270 *tp)
- /*
-  * Do line feed.
-  */
--static void
--tty3270_lf(struct tty3270 *tp)
-+static void tty3270_lf(struct tty3270 *tp)
- {
- 	struct tty3270_line temp;
- 	int i;
-@@ -1253,8 +1216,7 @@ tty3270_lf(struct tty3270 *tp)
- 	tty3270_rebuild_update(tp);
- }
- 
--static void
--tty3270_ri(struct tty3270 *tp)
-+static void tty3270_ri(struct tty3270 *tp)
- {
- 	if (tp->cy > 0) {
- 	    tty3270_convert_line(tp, tp->cy);
-@@ -1265,8 +1227,7 @@ tty3270_ri(struct tty3270 *tp)
- /*
-  * Insert characters at current position.
-  */
--static void
--tty3270_insert_characters(struct tty3270 *tp, int n)
-+static void tty3270_insert_characters(struct tty3270 *tp, int n)
- {
- 	struct tty3270_line *line;
- 	int k;
-@@ -1296,8 +1257,7 @@ tty3270_insert_characters(struct tty3270 *tp, int n)
- /*
-  * Delete characters at current position.
-  */
--static void
--tty3270_delete_characters(struct tty3270 *tp, int n)
-+static void tty3270_delete_characters(struct tty3270 *tp, int n)
- {
- 	struct tty3270_line *line;
- 	int i;
-@@ -1317,8 +1277,7 @@ tty3270_delete_characters(struct tty3270 *tp, int n)
- /*
-  * Erase characters at current position.
-  */
--static void
--tty3270_erase_characters(struct tty3270 *tp, int n)
-+static void tty3270_erase_characters(struct tty3270 *tp, int n)
- {
- 	struct tty3270_line *line;
- 	struct tty3270_cell *cell;
-@@ -1340,8 +1299,7 @@ tty3270_erase_characters(struct tty3270 *tp, int n)
-  *  Esc [ 1 K	Erase from beginning of line to current position inclusive
-  *  Esc [ 2 K	Erase entire line (without moving cursor)
-  */
--static void
--tty3270_erase_line(struct tty3270 *tp, int mode)
-+static void tty3270_erase_line(struct tty3270 *tp, int mode)
- {
- 	struct tty3270_line *line;
- 	struct tty3270_cell *cell;
-@@ -1370,8 +1328,7 @@ tty3270_erase_line(struct tty3270 *tp, int mode)
-  *  Esc [ 1 J	Erase from top of screen to current position inclusive
-  *  Esc [ 2 J	Erase entire screen (without moving the cursor)
-  */
--static void
--tty3270_erase_display(struct tty3270 *tp, int mode)
-+static void tty3270_erase_display(struct tty3270 *tp, int mode)
- {
- 	int i;
- 
-@@ -1400,8 +1357,7 @@ tty3270_erase_display(struct tty3270 *tp, int mode)
-  * Set attributes found in an escape sequence.
-  *  Esc [ <attr> ; <attr> ; ... m
-  */
--static void
--tty3270_set_attributes(struct tty3270 *tp)
-+static void tty3270_set_attributes(struct tty3270 *tp)
- {
- 	static unsigned char f_colors[] = {
- 		TAC_DEFAULT, TAC_RED, TAC_GREEN, TAC_YELLOW, TAC_BLUE,
-@@ -1454,14 +1410,12 @@ tty3270_set_attributes(struct tty3270 *tp)
++	if (tb[RDMA_NLDEV_ATTR_DRIVER_DETAILS])
++		show_details = nla_get_u8(tb[RDMA_NLDEV_ATTR_DRIVER_DETAILS]);
++
+ 	msg = nlmsg_new(NLMSG_DEFAULT_SIZE, GFP_KERNEL);
+ 	if (!msg) {
+ 		ret = -ENOMEM;
+@@ -1317,7 +1325,7 @@ static int nldev_res_get_doit(struct sk_buff *skb, struct nlmsghdr *nlh,
+ 		goto err_free;
  	}
+ 
+-	ret = fill_res_info(msg, device);
++	ret = fill_res_info(msg, device, show_details);
+ 	if (ret)
+ 		goto err_free;
+ 
+@@ -1347,7 +1355,7 @@ static int _nldev_res_get_dumpit(struct ib_device *device,
+ 			RDMA_NL_GET_TYPE(RDMA_NL_NLDEV, RDMA_NLDEV_CMD_RES_GET),
+ 			0, NLM_F_MULTI);
+ 
+-	if (!nlh || fill_res_info(skb, device)) {
++	if (!nlh || fill_res_info(skb, device, false)) {
+ 		nlmsg_cancel(skb, nlh);
+ 		goto out;
+ 	}
+@@ -1518,6 +1526,7 @@ static int res_get_common_dumpit(struct sk_buff *skb,
+ 	struct rdma_restrack_entry *res;
+ 	struct rdma_restrack_root *rt;
+ 	int err, ret = 0, idx = 0;
++	bool show_details = false;
+ 	struct nlattr *table_attr;
+ 	struct nlattr *entry_attr;
+ 	struct ib_device *device;
+@@ -1546,6 +1555,9 @@ static int res_get_common_dumpit(struct sk_buff *skb,
+ 	if (!device)
+ 		return -EINVAL;
+ 
++	if (tb[RDMA_NLDEV_ATTR_DRIVER_DETAILS])
++		show_details = nla_get_u8(tb[RDMA_NLDEV_ATTR_DRIVER_DETAILS]);
++
+ 	/*
+ 	 * If no PORT_INDEX is supplied, we will return all QPs from that device
+ 	 */
+@@ -1583,6 +1595,9 @@ static int res_get_common_dumpit(struct sk_buff *skb,
+ 	 * objects.
+ 	 */
+ 	xa_for_each(&rt->xa, id, res) {
++		if (xa_get_mark(&rt->xa, res->id, RESTRACK_DD) && !show_details)
++			goto next;
++
+ 		if (idx < start || !rdma_restrack_get(res))
+ 			goto next;
+ 
+diff --git a/drivers/infiniband/core/restrack.c b/drivers/infiniband/core/restrack.c
+index 438ed35881752..3313410014cd5 100644
+--- a/drivers/infiniband/core/restrack.c
++++ b/drivers/infiniband/core/restrack.c
+@@ -59,8 +59,10 @@ void rdma_restrack_clean(struct ib_device *dev)
+  * rdma_restrack_count() - the current usage of specific object
+  * @dev:  IB device
+  * @type: actual type of object to operate
++ * @show_details: count driver specific objects
+  */
+-int rdma_restrack_count(struct ib_device *dev, enum rdma_restrack_type type)
++int rdma_restrack_count(struct ib_device *dev, enum rdma_restrack_type type,
++			bool show_details)
+ {
+ 	struct rdma_restrack_root *rt = &dev->res[type];
+ 	struct rdma_restrack_entry *e;
+@@ -68,8 +70,11 @@ int rdma_restrack_count(struct ib_device *dev, enum rdma_restrack_type type)
+ 	u32 cnt = 0;
+ 
+ 	xa_lock(&rt->xa);
+-	xas_for_each(&xas, e, U32_MAX)
++	xas_for_each(&xas, e, U32_MAX) {
++		if (xa_get_mark(&rt->xa, e->id, RESTRACK_DD) && !show_details)
++			continue;
+ 		cnt++;
++	}
+ 	xa_unlock(&rt->xa);
+ 	return cnt;
  }
+@@ -198,6 +203,9 @@ void rdma_restrack_add(struct rdma_restrack_entry *res)
+ 		ret = xa_insert(&rt->xa, res->id, res, GFP_KERNEL);
+ 		if (ret)
+ 			res->id = 0;
++
++		if (qp->qp_type >= IB_QPT_DRIVER)
++			xa_set_mark(&rt->xa, res->id, RESTRACK_DD);
+ 	} else if (res->type == RDMA_RESTRACK_COUNTER) {
+ 		/* Special case to ensure that cntn points to right counter */
+ 		struct rdma_counter *counter;
+diff --git a/include/rdma/restrack.h b/include/rdma/restrack.h
+index 79d109c472423..f97fafe3c9945 100644
+--- a/include/rdma/restrack.h
++++ b/include/rdma/restrack.h
+@@ -14,6 +14,9 @@
+ #include <uapi/rdma/rdma_netlink.h>
+ #include <linux/xarray.h>
  
--static inline int
--tty3270_getpar(struct tty3270 *tp, int ix)
-+static inline int tty3270_getpar(struct tty3270 *tp, int ix)
- {
- 	return (tp->esc_par[ix] > 0) ? tp->esc_par[ix] : 1;
- }
++/* Mark entry as containing driver specific details, it is used to provide QP subtype for now */
++#define RESTRACK_DD XA_MARK_1
++
+ struct ib_device;
+ struct sk_buff;
  
--static void
--tty3270_goto_xy(struct tty3270 *tp, int cx, int cy)
-+static void tty3270_goto_xy(struct tty3270 *tp, int cx, int cy)
- {
- 	int max_cx = max(0, cx);
- 	int max_cy = max(0, cy);
-@@ -1494,8 +1448,7 @@ tty3270_goto_xy(struct tty3270 *tp, int cx, int cy)
-  *  Pn is a numeric parameter, a string of zero or more decimal digits.
-  *  Ps is a selective parameter.
-  */
--static void
--tty3270_escape_sequence(struct tty3270 *tp, char ch)
-+static void tty3270_escape_sequence(struct tty3270 *tp, char ch)
- {
- 	enum { ESnormal, ESesc, ESsquare, ESgetpars };
+@@ -116,8 +119,8 @@ struct rdma_restrack_entry {
+ 	u32 id;
+ };
  
-@@ -1643,9 +1596,8 @@ tty3270_escape_sequence(struct tty3270 *tp, char ch)
- /*
-  * String write routine for 3270 ttys
-  */
--static void
--tty3270_do_write(struct tty3270 *tp, struct tty_struct *tty,
--		const unsigned char *buf, int count)
-+static void tty3270_do_write(struct tty3270 *tp, struct tty_struct *tty,
-+			     const unsigned char *buf, int count)
- {
- 	int i_msg, i;
+-int rdma_restrack_count(struct ib_device *dev,
+-			enum rdma_restrack_type type);
++int rdma_restrack_count(struct ib_device *dev, enum rdma_restrack_type type,
++			bool show_details);
+ /**
+  * rdma_is_kernel_res() - check the owner of resource
+  * @res:  resource entry
+diff --git a/include/uapi/rdma/rdma_netlink.h b/include/uapi/rdma/rdma_netlink.h
+index 6e05b8ecb8a91..327bfb5b83aa9 100644
+--- a/include/uapi/rdma/rdma_netlink.h
++++ b/include/uapi/rdma/rdma_netlink.h
+@@ -556,6 +556,12 @@ enum rdma_nldev_attr {
  
-@@ -1717,9 +1669,8 @@ tty3270_do_write(struct tty3270 *tp, struct tty_struct *tty,
- /*
-  * String write routine for 3270 ttys
-  */
--static int
--tty3270_write(struct tty_struct * tty,
--	      const unsigned char *buf, int count)
-+static int tty3270_write(struct tty_struct *tty,
-+			 const unsigned char *buf, int count)
- {
- 	struct tty3270 *tp;
+ 	RDMA_NLDEV_SYS_ATTR_PRIVILEGED_QKEY_MODE, /* u8 */
  
-@@ -1752,8 +1703,7 @@ static int tty3270_put_char(struct tty_struct *tty, unsigned char ch)
-  * Flush all characters from the ttys characeter buffer put there
-  * by tty3270_put_char.
-  */
--static void
--tty3270_flush_chars(struct tty_struct *tty)
-+static void tty3270_flush_chars(struct tty_struct *tty)
- {
- 	struct tty3270 *tp;
- 
-@@ -1769,8 +1719,7 @@ tty3270_flush_chars(struct tty_struct *tty)
- /*
-  * Check for visible/invisible input switches
-  */
--static void
--tty3270_set_termios(struct tty_struct *tty, const struct ktermios *old)
-+static void tty3270_set_termios(struct tty_struct *tty, const struct ktermios *old)
- {
- 	struct tty3270 *tp;
- 	int new;
-@@ -1793,8 +1742,7 @@ tty3270_set_termios(struct tty_struct *tty, const struct ktermios *old)
- /*
-  * Disable reading from a 3270 tty
-  */
--static void
--tty3270_throttle(struct tty_struct * tty)
-+static void tty3270_throttle(struct tty_struct *tty)
- {
- 	struct tty3270 *tp;
- 
-@@ -1807,8 +1755,7 @@ tty3270_throttle(struct tty_struct * tty)
- /*
-  * Enable reading from a 3270 tty
-  */
--static void
--tty3270_unthrottle(struct tty_struct * tty)
-+static void tty3270_unthrottle(struct tty_struct *tty)
- {
- 	struct tty3270 *tp;
- 
-@@ -1823,8 +1770,7 @@ tty3270_unthrottle(struct tty_struct * tty)
- /*
-  * Hang up the tty device.
-  */
--static void
--tty3270_hangup(struct tty_struct *tty)
-+static void tty3270_hangup(struct tty_struct *tty)
- {
- 	struct tty3270 *tp;
- 
-@@ -1844,8 +1790,7 @@ tty3270_hangup(struct tty_struct *tty)
- 	tty3270_set_timer(tp, 1);
- }
- 
--static void
--tty3270_wait_until_sent(struct tty_struct *tty, int timeout)
-+static void tty3270_wait_until_sent(struct tty_struct *tty, int timeout)
- {
- }
- 
-@@ -1953,8 +1898,7 @@ static int __init tty3270_init(void)
- 	return 0;
- }
- 
--static void __exit
--tty3270_exit(void)
-+static void __exit tty3270_exit(void)
- {
- 	struct tty_driver *driver;
- 
++	RDMA_NLDEV_ATTR_DRIVER_DETAILS,		/* u8 */
++	/*
++	 * QP subtype string, used for driver QPs
++	 */
++	RDMA_NLDEV_ATTR_RES_SUBTYPE,		/* string */
++
+ 	/*
+ 	 * Always the end
+ 	 */
 -- 
 2.53.0
 
