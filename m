@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 426AA30D3EF;
-	Sat, 12 Sep 2026 18:48:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCE434BEE43;
+	Sat, 12 Sep 2026 18:48:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789238909; cv=none; b=YWZ56dPL5tmE7vXVH1KSuzTI6e9lu+oToVR4LXvjiB4ic8n2aQmyQQietZFYAlznrVlyTuxIepJx67d/AAzGNLWjNx+w41o3VAUNdPrWqBalyXlzN2EMpqxmUsbA8Bs5fYGaZ2yzDJJPsTFyt4GJoarcU6wMkhzuZyneS6MrDpw=
+	t=1789238913; cv=none; b=fdCf6fKWOCgwE8GGoLFhhTQN/jmpuwgrO6YUnNHKy/d6vD7prbBouu8S2JXW9S+LLra+mSy/ct0hbsJ0u0u8SoMZ5ZvqeUHrH4WZhWnX/T2Pkjwk+2fS7nE7+ISip7eQOnPr4LoA2LDcUAGYlGERyaEFwtclQwG7ZSLgYXRuI3s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789238909; c=relaxed/simple;
-	bh=2wg7+Ut2zgEjUXzM8mlx8wVtvwvUdCTgwwSf4x63xZg=;
+	s=arc-20240116; t=1789238913; c=relaxed/simple;
+	bh=EOROttHv9CnN8SleEbTDi6vSeBBq+EbTzPhVczkNdJM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mx3razHeCSzAnJIG0Om+Boe5ynufIk98OgLipUEJ7ntw+Iz6EsI/iOHIMo+DE9t+CZS+hd9RCh5iiQiSTo+lf9e/FK1hcd+MNGTHs0wNIXZBEXRX9N8ZEXguPQU4gcoua3TknN2TPK1m9JHUwX3hhuO7zHrvdxDrH2erBNu8OIY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HwyMQgTS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=g6YIH+gwTjztItJYUI/EbZ2MEqE3m8ETCSbWntZeetv3FcsSh7JUWv2PzVUtXw7XT/CSW7GaKawSUtmYdPG13L1zzzR24tNChbZ4WATZvhWGii0vVOyf6h+syvEpnjK5E4nAG9nITp5dAqSWwvicc9oDLGUlaeEU9dW8ohDPO+E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=deOeKi9A; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HwyMQgTS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F347C1F000FF;
-	Sat, 12 Sep 2026 18:48:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="deOeKi9A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCA821F000FF;
+	Sat, 12 Sep 2026 18:48:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789238908;
-	bh=NOBqtcO6MMPEoIXRO+ZgTbC4t0age5NDMYb3878Om/M=;
+	s=korg; t=1789238912;
+	bh=7k9kh1gtqj5ADmIUy/pjxAzrF88UAhwmugID01o6UEA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HwyMQgTSkM+f/cAm96IeGRwAkrTOu9CWfKMsgWx3EdH31GEG4hr1l6SvxtCVQ+L4/
-	 0WcJ40376X7oNYlaSouDgOJXf5kG59Yi/gLOPw1T2wEvAwPb7BL7wFqZpzccWWDbN0
-	 u7wS6buw5k93/E5cS6rrQJgwL7Q003Hbwl/t8SGc=
+	b=deOeKi9Aaeo8+bLpf0CyhIo6gnMNW5BCoKMBjVxuxur2C+IQVGmiVvb21hRnnmCg9
+	 driE/km6hIlYvIsPBrMklzTWh44X9tX0Ah6NUm9r/ytI3Akmnh5Zn7XYWufbayGvBK
+	 +ocvW3eT5NKzV5f4QczdTP6mkFSC++pa0X+CiWxo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Alban Bedel <alban.bedel@lht.dlh.de>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 557/935] software node: Fix software_node_get_reference_args() with index -1
-Date: Sat, 12 Sep 2026 08:59:47 +0200
-Message-ID: <20260912065539.605703579@linuxfoundation.org>
+Subject: [PATCH 5.15 558/935] driver core: soc: remove layering violation for the soc_bus
+Date: Sat, 12 Sep 2026 08:59:48 +0200
+Message-ID: <20260912065539.630160497@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -51,39 +50,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alban Bedel <alban.bedel@lht.dlh.de>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-[ Upstream commit ba3dedcf3bd47017307595a7e54924198f018246 ]
+[ Upstream commit 90be1f15c39858a4f0f4346c39fa150697d231c1 ]
 
-The bounds check for the index passed to
-software_node_get_reference_args() was failing when passed UINT_MAX,
-this in turn would lead to an out of bound access in the property
-array. Fix the bound check to also cover the UINT_MAX case.
+The soc_bus code pokes around in the internal bus structures assuming
+that it "knows" if a field is not set that it has not been registered
+yet.  That isn't a safe assumption, so just remove the layering
+violation entirely and keep track if the bus has been registered or not
+ourselves.
 
-Fixes: 31e4e12e0e960 ("software node: Correct a OOB check in software_node_get_reference_args()")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/linux-devicetree/20260611103904.7CB131F00893@smtp.kernel.org/
-Signed-off-by: Alban Bedel <alban.bedel@lht.dlh.de>
-Link: https://patch.msgid.link/20260611164005.2930205-1-alban.bedel@lht.dlh.de
+Reviewed-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://lore.kernel.org/r/20230130171059.1784057-1-gregkh@linuxfoundation.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 45dfa004893d ("driver core: soc: Unregister bus on early device registration failure")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/swnode.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/base/soc.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/base/swnode.c b/drivers/base/swnode.c
-index 0af6071f86641..d4f012677bd44 100644
---- a/drivers/base/swnode.c
-+++ b/drivers/base/swnode.c
-@@ -524,7 +524,7 @@ software_node_get_reference_args(const struct fwnode_handle *fwnode,
- 	if (prop->is_inline)
- 		return -EINVAL;
+diff --git a/drivers/base/soc.c b/drivers/base/soc.c
+index 0af5363a582c3..ea57b8ddb1510 100644
+--- a/drivers/base/soc.c
++++ b/drivers/base/soc.c
+@@ -30,6 +30,7 @@ struct soc_device {
+ static struct bus_type soc_bus_type = {
+ 	.name  = "soc",
+ };
++static bool soc_bus_registered;
  
--	if ((index + 1) * sizeof(*ref) > prop->length)
-+	if (index >= prop->length / sizeof(*ref))
- 		return -ENOENT;
+ static DEVICE_ATTR(machine,		0444, soc_info_show,  NULL);
+ static DEVICE_ATTR(family,		0444, soc_info_show,  NULL);
+@@ -117,7 +118,7 @@ struct soc_device *soc_device_register(struct soc_device_attribute *soc_dev_attr
+ 	const struct attribute_group **soc_attr_groups;
+ 	int ret;
  
- 	ref_array = prop->pointer;
+-	if (!soc_bus_type.p) {
++	if (!soc_bus_registered) {
+ 		if (early_soc_dev_attr)
+ 			return ERR_PTR(-EBUSY);
+ 		early_soc_dev_attr = soc_dev_attr;
+@@ -183,6 +184,7 @@ static int __init soc_bus_register(void)
+ 	ret = bus_register(&soc_bus_type);
+ 	if (ret)
+ 		return ret;
++	soc_bus_registered = true;
+ 
+ 	if (early_soc_dev_attr)
+ 		return PTR_ERR(soc_device_register(early_soc_dev_attr));
 -- 
 2.53.0
 
