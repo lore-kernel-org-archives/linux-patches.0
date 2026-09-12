@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53AFC38AC92;
-	Sat, 12 Sep 2026 09:05:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E93D03AFD15;
+	Sat, 12 Sep 2026 09:05:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789203938; cv=none; b=pG6vMytgegYxM/FQ1qhbpshknN+YO8CDfLN7XPe15JrJKBSTuYfxMVNQY5aCp5sYuEoVf9LHeet+No42uH798dYab2z6gv+/qxRGxJb36atM8q0XY200AvNwWYOue+CWEj5lNek1sQJIoED0OlzgXPEl+GssfbcPKjzcseXDq/I=
+	t=1789203943; cv=none; b=WPevTWBxak3y0gkl5815hGJMspWtZktVPgivlks1tf0En5Kx8DPA72oQmRrwv6nMAr2/z9bdXG4rXJWmp8qHwe87HH+j8TScxZnfjGDsH/+i1IvwNae9sVBUy2UlpgLatykVA1r9rTjD80krDshd6W9kdWIcs5KWnOlm1/DvWNI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789203938; c=relaxed/simple;
-	bh=/GK96aKfdfJAbHHvMTp4w5bH4gvXbOwRWB4iTSm+lOk=;
+	s=arc-20240116; t=1789203943; c=relaxed/simple;
+	bh=Ggiit/t4om6x0W5/diudaDwUV7pNjXPUFHsN+U6fzQE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TlTfZMNdSjEfs806B6DaXUfgyfJsOivWpWOWL0r7OBsoTduxYXgAnYIRoTCI/zImKGWc/G8sq5sayGC6qPvKfOH1DEL7L/VVjHBh9nS3IHD2xij8MNgm7vzSzOCfgoCY+q1povinqdBZOlWovBA8rsYuPaGwo1UC0g6WG4y/MxA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LeksJbmr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=R9pSKF2fVJuHB/RK+w2nXwzPX3ZTu7+aILIO0wn9IKu1fNksa6jOs+zWJHF+bL/BxhY0EYNaZb9022OxU4ay8+IHfFVKimXIorm6C8tqTlaNbZw4uYFucg4HV/JGXfk9pbeuwDx6OnxJpBcRoGZHCLLIEFUC325nWNtsmqc74wI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ArWjiHHF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LeksJbmr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58CC21F000FF;
-	Sat, 12 Sep 2026 09:05:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ArWjiHHF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E18EC1F000FF;
+	Sat, 12 Sep 2026 09:05:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789203937;
-	bh=QhKK4GbgepFIe/9kJli1kXs6DUiQWOAUOq/5xXxvZ9k=;
+	s=korg; t=1789203941;
+	bh=XuIU358v15hlbHI4lA0AE6k+KW/4mmghQHW1IgkJny8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LeksJbmrUkOaOegMbKeO+YLwefPGPlTW6H5XuES5OW//FIenpJaiPmHLo4c6L42Wv
-	 yD+gZZd6MOITp1CjqpI5zhYBPbY0gtgy+B++LX2HPCb0Eecyn8FjYDkt5BDO9iSOJA
-	 bAhGRoTVqZAlauXC+7xnzy69tgEnig0bhpyJ6fIs=
+	b=ArWjiHHFQJykz/9UaI/ZEzdo6q/OXs7EyvCS+ZTuBOqoVLQE4fk59A0YFQDNJ+s3a
+	 KWGtMj/35/8axUj+xA1kx7aQWp7JjCKM3TluXfuQYAnrjED2rKa/RWSAkTFX5EmoVc
+	 lRseBiReHGMfcGtAd5VWQM17+cnAS/84gWNxXVb4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Tejun Heo <tj@kernel.org>,
+	Changwoo Min <changwoo@igalia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1467/1815] crypto: lskcipher - propagate errors from unaligned crypt
-Date: Sat, 12 Sep 2026 08:53:37 +0200
-Message-ID: <20260912065723.447357700@linuxfoundation.org>
+Subject: [PATCH 7.2 1468/1815] sched_ext: Drop unlocked scx_rq_clock_invalidate() from scx_root_disable()
+Date: Sat, 12 Sep 2026 08:53:38 +0200
+Message-ID: <20260912065723.469982049@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,45 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Tejun Heo <tj@kernel.org>
 
-[ Upstream commit 7537036a2e6fe96f8ed82034f755c54714a0e417 ]
+[ Upstream commit d44093323131a42a85184315bb9b6da4813cc39b ]
 
-The while loop declares a second err variable that shadows the outer
-one. When the crypt callback fails, the goto out path returns the outer
-err, which still holds the -ENOMEM value assigned before the successful
-allocation check. The real error from the cipher is discarded and the
-caller sees -ENOMEM instead.
+scx_root_disable() invalidates each rq's clock before taking the rq lock.
+scx_rq_clock_invalidate() is a plain read-modify-write of rq->scx.flags and
+every other writer of the word runs under the rq lock, so the unlocked
+update can race a concurrent flags update and lose one side's bits.
 
-Drop the inner declaration so the callback error reaches the caller.
+The invalidation doesn't matter in the first place. The cached clock is read
+only by scx_bpf_now() from a loaded scheduler's BPF programs, nothing can
+re-validate the clock while sched_ext is disabled as scx_rq_clock_update()
+is gated on scx_enabled() too, and the usual rq lock cycles under the next
+scheduler refresh or invalidate it before it's practically observable. Drop
+the invalidation instead of fixing the locking.
 
-Verified with a test module that registers an lskcipher whose encrypt
-callback fails with -EIO and calls it through a misaligned buffer.
-An unpatched kernel returns -ENOMEM, a patched kernel returns -EIO.
+v2: Description and comment updated - the invalidation is unnecessary rather
+    than subsumed by the rq lock cycle below.
 
-Found with Clang's -Wshadow.
-
-Fixes: 31865c4c4db2b ("crypto: skcipher - Add lskcipher")
-Assisted-by: Claude:claude-fable-5
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: 3a9910b5904d ("sched_ext: Implement scx_bpf_now()")
+Signed-off-by: Tejun Heo <tj@kernel.org>
+Cc: Changwoo Min <changwoo@igalia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/lskcipher.c | 1 -
- 1 file changed, 1 deletion(-)
+ kernel/sched/ext/ext.c | 11 +++--------
+ 1 file changed, 3 insertions(+), 8 deletions(-)
 
-diff --git a/crypto/lskcipher.c b/crypto/lskcipher.c
-index e4328df6e26c0..a79c9a246e5d7 100644
---- a/crypto/lskcipher.c
-+++ b/crypto/lskcipher.c
-@@ -95,7 +95,6 @@ static int crypto_lskcipher_crypt_unaligned(
+diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
+index c6cfb162abbdc..558be0cdebef8 100644
+--- a/kernel/sched/ext/ext.c
++++ b/kernel/sched/ext/ext.c
+@@ -6294,12 +6294,9 @@ static void scx_root_disable(struct scx_sched *sch)
+ 	percpu_up_write(&scx_fork_rwsem);
  
- 	while (len >= bs) {
- 		unsigned chunk = min((unsigned)PAGE_SIZE, len);
--		int err;
+ 	/*
+-	 * Invalidate all the rq clocks to prevent getting outdated
+-	 * rq clocks from a previous scx scheduler.
+-	 *
+-	 * Also re-balance the dl_server bandwidth reservations: detach
+-	 * ext_server (no more sched_ext tasks) and reinstate fair_server if it
+-	 * was previously detached because we were running in full mode.
++	 * Re-balance the dl_server bandwidth reservations: detach ext_server
++	 * (no more sched_ext tasks) and reinstate fair_server if it was
++	 * previously detached because we were running in full mode.
+ 	 *
+ 	 * Unlike the enable path, this runs on a recovery path that cannot
+ 	 * fail, so we use dl_server_swap_bw() to atomically free ext_server's
+@@ -6312,8 +6309,6 @@ static void scx_root_disable(struct scx_sched *sch)
+ 	for_each_possible_cpu(cpu) {
+ 		struct rq *rq = cpu_rq(cpu);
  
- 		if (chunk > cs)
- 			chunk &= ~(cs - 1);
+-		scx_rq_clock_invalidate(rq);
+-
+ 		scoped_guard(rq_lock_irqsave, rq) {
+ 			update_rq_clock(rq);
+ 			if (was_switched_all) {
 -- 
 2.53.0
 
