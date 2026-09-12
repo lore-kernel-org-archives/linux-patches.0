@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E67E309F08;
-	Sat, 12 Sep 2026 15:23:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59924331203;
+	Sat, 12 Sep 2026 15:23:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789226610; cv=none; b=NUOO5VO6d3TLAN1s9bL6TFUMCvPG2lH8Tetpg9tO23EzjKyyruzvxx0LPAd//HWQdGO+dHRpQp1ndUo8OAXEiEP5mhuDka9DaBgOuw2xlMMEcQ4201oc5nMQEWowStNZqVRlaVdYo6GfZ4USg5l8A7DPVOzc56h8oYQch2h/GtA=
+	t=1789226615; cv=none; b=RjWe7oiil+0RBME/rriTQTjtzLsI3M5g2MwJnxaqnSmuKheaEFQ1aLQ94MP0cIkQwzbBV9T5yyDcoXdWOlMLULb2M9k8PCY7uZ15pSMkVKfIGvh2hubrVF6Cz0BpOkCFbR32GQZHdO0BOKby40CdBIbJzdxbwL4gMOpjAmF1B24=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789226610; c=relaxed/simple;
-	bh=o7/oFCdRJrZyri1E8nTLeIpLrA39Nbf/ec/+kzq2DMU=;
+	s=arc-20240116; t=1789226615; c=relaxed/simple;
+	bh=poC0Mp2QHlEnT616SYjlN4uH/XHscD+M6l0tKAJ+8lM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EfS/ZZDRb7Tx2T6XJqBBlvPgkxlQfoEsntjEn6Gq9JZGm45hNnRlE53dJkkvqy6UIykBeKzyarjPSRNjzWwrsd0ZCXSrF50hctVhQjSGGa7r8+60w+HyXt/9tMGAxcQL2A349SIoSUN/kXEzutqAQspIZsjWDtaRn4qG9bKcCIo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dNqBHf9I; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jpP9+RhjDDc93MDB+AxCQFaPXaF1vLMGJzp7pteJNGfX5Vo1Tlm7lalMBmTAUP3GW7aEQqxEgvBYzaIAdTiggEiSFO7KrQ1tyJbYWFf9WoKLwrOwGywxRtBOO671V5YxqBcFHmqF7uoMWuwyuIu8EUSQcqGmm1tjtwXgh6Pc0UU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dZ83cFfo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dNqBHf9I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 743621F00899;
-	Sat, 12 Sep 2026 15:23:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dZ83cFfo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DCAB1F000FF;
+	Sat, 12 Sep 2026 15:23:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789226609;
-	bh=l6v17L6Pv7mnJldgHsI8TpblHCdKKEK9nscbGl1AKAw=;
+	s=korg; t=1789226614;
+	bh=R1vN669knUelvtX7PPXh06x20CUX2KqGewVDHdyTNC0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dNqBHf9IT2c9H2u7txgIeqPL5C+MbNs4w6xuh2eZJJE9w31iMKg7iCDVklGwyCE1+
-	 k0Tta4+kidI2Nf1LKu8wkwFavV66MOTnIlV0q7aDgfCKCmGZc43jsJpDjqGlAncfFb
-	 nTbgWNzVHkU09jG9ZmgS3pC7jF0z0EoHMXVRXhmI=
+	b=dZ83cFfoIQhXApnUhzZ921Eu7FJlPUcX2yZ6hDn/+Z6KAISOYwdB7OB76B3EXI8KZ
+	 EWrGcsG/4OzwzhqM60j0Lw1gwpHPdM1vQUooPQgY58LBFlzWWfutEGxyz+XsB8LOiI
+	 aHPK1Yaz3nsqP8/i7AhNonJCIRkEPauYtbcHlgjA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Indrek Kruusa <indrek.kruusa@gmail.com>,
-	Felix Yan <felixonmars@archlinux.org>,
-	Daniel Lezcano <daniel.lezcano@kernel.org>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>
-Subject: [PATCH 6.1 0005/1191] clocksource/drivers/timer-sun4i: Advertise a real minimum delta
-Date: Sat, 12 Sep 2026 08:45:33 +0200
-Message-ID: <20260912065548.222177916@linuxfoundation.org>
+	Gaurav Batra <gbatra@linux.ibm.com>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>
+Subject: [PATCH 6.1 0006/1191] powerpc/pseries/iommu: switch to Default DMA window during kdump
+Date: Sat, 12 Sep 2026 08:45:34 +0200
+Message-ID: <20260912065548.245308705@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -52,51 +51,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Yan <felixonmars@archlinux.org>
+From: Gaurav Batra <gbatra@linux.ibm.com>
 
-commit d21808328225ab8cee46885bf9a0dffcefbe630e upstream.
+commit 1304643a1c20badbb91b86a5084dd76cb7620c05 upstream.
 
-sun4i_clkevt_next_event() compensates for the timer stop/start
-synchronization delay by programming evt - TIMER_SYNC_TICKS into the
-hardware interval register. The clockevent device currently advertises
-TIMER_SYNC_TICKS as min_delta_ticks, so the clockevents core is allowed
-to call set_next_event() with evt == TIMER_SYNC_TICKS.
+In PowerPC (pseries) a non-virtualized adapter will have 2 DMA windows -
+2GB default and a larger Dynamic DMA Window (DDW). DDW is large enough to
+map total RAM to a device.
 
-That programs a zero-tick interval. With oneshot/highres/nohz timer
-operation this can leave the next event stuck, which was observed as a
-boot hang on Allwinner D1 after the clockevents core started reusing
-forced minimum-delta events.
+During normal functioning of OS, since RAM is pre-mapped, 2GB default
+window is not used. The only scenario it might get used is when buffers in
+pmemory are mapped to the device for DMA.
 
-Advertise one extra tick instead, so the smallest event accepted by the
-core still programs at least one hardware tick after the synchronization
-compensation.
+As of today, during kdump, during early device discovery, pci_dma_find()
+finds that the device has 2 DMA windows. It selects to use DDW. This is a
+kdump path and DMA window is needed for IO to the device.
 
-Fixes: 12e1480bcb49 ("clocksource: sun4i: Report the minimum tick that we can program")
-Reported-by: Indrek Kruusa <indrek.kruusa@gmail.com>
-Closes: https://lore.kernel.org/linux-riscv/CA+fTLhgLmTY+exGujKf8OYYQvcEW5X5NJ_5sLq2AYL6zER2c0A@mail.gmail.com/
-Assisted-by: Codex:gpt-5.5
-Signed-off-by: Felix Yan <felixonmars@archlinux.org>
-Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
-Tested-by: Indrek Kruusa <indrek.kruusa@gmail.com>
-Acked-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Although commit 09a3c1e46142 ("powerpc/pseries/iommu: IOMMU table is not
+initialized for kdump over SR-IOV") fixed an issue during kdump with SR-IOV
+case, but this also made the kdump prefer DDW over the default DMA window
+when both are present (dedicated adapter case). Since the DDW is fully
+mapped by the previous kernel, iommu_table_clear() can free only
+KDUMP_MIN_TCE_ENTRIES (2048) TCEs for use by kdump kernel.
+
+This is not enough when the dump device is NVMe over Fibre Channel.
+Because nvme-fc driver DMA-maps the cmds and resp IUs of every
+pre-allocated request and each such mapping consumes roughly:
+
+    32 (IO queues, one per cpus = nr_cpus) *
+    64 (queue_depth, blk-mq kdump limit) *
+    2 (cmd+resp) = 4096
+
+This is already double of what we have without counting admin queues and
+lpfc driver's own allocations / mapping requirement. Hence this results
+into iommu_alloc failures like -
+
+lpfc 0153:70:00.0: iommu_alloc failed,
+tbl 0000000034ebcf5e vaddr 00000000d814df0b npages 1
+lpfc 0153:70:00.0: FCP Op failed - cmdiu dma mapping failed.
+lpfc 0153:70:00.0: iommu_alloc failed,
+tbl 0000000034ebcf5e vaddr 000000009779e4d2 npages 1
+lpfc 0153:70:00.0: FCP Op failed - cmdiu dma mapping failed.
+
+iommu_map_phys+0x1c4/0x1f0 (unreliable)
+dma_iommu_map_phys+0x54/0xa0
+dma_map_phys+0x3f8/0x590
+__nvme_fc_init_request+0x110/0x300 [nvme_fc]
+nvme_fc_init_request+0x60/0xb8 [nvme_fc]
+blk_mq_alloc_map_and_rqs+0x388/0x510
+blk_mq_alloc_tag_set+0x2a4/0x5f0
+nvme_alloc_io_tag_set+0xe0/0x1e0 [nvme_core]
+nvme_fc_connect_ctrl_work+0x85c/0xdac [nvme_fc]
+process_one_work+0x1e4/0x5a0
+worker_thread+0x1ec/0x3e0
+
+Increasing the number of free TCE entries in iommu_table_clear() will
+increase the probability of hitting EEH since there could still be some
+active IOs from the previous life of the kernel.
+
+Hence this patch partially reverts the previous fixes commit and
+switches the kdump's default back to 2GB default DMA window instead of
+DDW window. This window will mostly be empty. Or, could be slightly used
+if buffers in pmemory were mapped for IO.
+
+Fixes: 09a3c1e46142 ("powerpc/pseries/iommu: IOMMU table is not initialized for kdump over SR-IOV")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/linux-riscv/CA+fTLhgLmTY+exGujKf8OYYQvcEW5X5NJ_5sLq2AYL6zER2c0A@mail.gmail.com/
-Link: https://patch.msgid.link/20260624220434.4183732-1-felixonmars@archlinux.org
+Signed-off-by: Gaurav Batra <gbatra@linux.ibm.com>
+Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20260803224029.60538-1-gbatra@linux.ibm.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clocksource/timer-sun4i.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/powerpc/platforms/pseries/iommu.c |   23 ++++++++++++-----------
+ 1 file changed, 12 insertions(+), 11 deletions(-)
 
---- a/drivers/clocksource/timer-sun4i.c
-+++ b/drivers/clocksource/timer-sun4i.c
-@@ -207,7 +207,7 @@ static int __init sun4i_timer_init(struc
- 	sun4i_timer_clear_interrupt(timer_of_base(&to));
+--- a/arch/powerpc/platforms/pseries/iommu.c
++++ b/arch/powerpc/platforms/pseries/iommu.c
+@@ -738,18 +738,11 @@ static struct device_node *pci_dma_find(
  
- 	clockevents_config_and_register(&to.clkevt, timer_of_rate(&to),
--					TIMER_SYNC_TICKS, 0xffffffff);
-+					TIMER_SYNC_TICKS + 1, 0xffffffff);
+ 	/* parse DMA window property. During normal system boot, only default
+ 	 * DMA window is passed in OF. But, for kdump, a dedicated adapter might
+-	 * have both default and DDW in FDT. In this scenario, DDW takes precedence
+-	 * over default window.
++	 * have both default and DDW in FDT. In this scenario, default window
++	 * takes precedence over DDW. For a dedicated adapter, default window will
++	 * potentially have more unused TCEs.
+ 	 */
+-	if (ddw_win) {
+-		struct dynamic_dma_window_prop *p;
+-
+-		p = (struct dynamic_dma_window_prop *)ddw_prop;
+-		prop->liobn = p->liobn;
+-		prop->dma_base = p->dma_base;
+-		prop->tce_shift = p->tce_shift;
+-		prop->window_shift = p->window_shift;
+-	} else if (default_win) {
++	if (default_win) {
+ 		unsigned long offset, size, liobn;
  
- 	/* Enable timer0 interrupt */
- 	val = readl(timer_of_base(&to) + TIMER_IRQ_EN_REG);
+ 		of_parse_dma_window(rdn, default_prop, &liobn, &offset, &size);
+@@ -758,6 +751,14 @@ static struct device_node *pci_dma_find(
+ 		prop->dma_base = cpu_to_be64(offset);
+ 		prop->tce_shift = cpu_to_be32(IOMMU_PAGE_SHIFT_4K);
+ 		prop->window_shift = cpu_to_be32(order_base_2(size));
++	} else {
++		struct dynamic_dma_window_prop *p;
++
++		p = (struct dynamic_dma_window_prop *)ddw_prop;
++		prop->liobn = p->liobn;
++		prop->dma_base = p->dma_base;
++		prop->tce_shift = p->tce_shift;
++		prop->window_shift = p->window_shift;
+ 	}
+ 
+ 	return rdn;
 
 
