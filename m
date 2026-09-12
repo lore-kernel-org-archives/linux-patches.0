@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 236312C032C;
-	Sat, 12 Sep 2026 09:12:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED40D2C032C;
+	Sat, 12 Sep 2026 09:12:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789204352; cv=none; b=n4UWChTyAOWYYwTgJy9K4cvx5Wd2XJk0YvC+ylOLSs07IZmZKPApdTohAv24ybs4FjJ9ZIgmmSEQtUxiHwG55N3swk89vHKa8BXiugdJqeLl1xlQQPhw/8gGyRpaqOlkvh1qdzIU/wSfzmuYcgumK9TntvXrg5UvUY5nvnP0x14=
+	t=1789204357; cv=none; b=kLeV2NFvERsOEgINlzdzdxuBQQxRcNh2eRD9xHEjUCIqZfpjooDhSUT1YpA8uMdAuwB5dNJQzUFI+ldTdG9gE+vGBIJ09ZkQjU8IbhxLQ12KIN5+0GORtwEhhAhXWnw4abrKN11BbMu+1B4G03U63+4f/Zc1ax2/P/H/eYTygUg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789204352; c=relaxed/simple;
-	bh=KLzYJm/YHL7qTZZbDNQbNVtkbzixq1djyPpZ9ZbZroE=;
+	s=arc-20240116; t=1789204357; c=relaxed/simple;
+	bh=PqR3dH6ipz0kc9w6Bj3m8b/tJnK2Y4chFO8IyO/g9a0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=RAu5PKYObCNUXNXjOLwW2ztRSZ+LsYdzCdweXbCS26zfVdwJduUjnoWiX1XUoJO2QPMRQ5IxfTlrK7pd+1MVJPviU8BdOm2zhNlsi4k/v/GciVW56c8ukFGnkhpZbS8nTRcAipgpXuI7Bd18CwU3YQu4YY4XByYHUdUuVquPjAA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WifWCP82; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=sJW1Eu1H8+j/suxqZ1ETwRrQNqz/1zYR2hLpTrNyhbwidQwGKt9oMzMgoNHROxGxArNAV4sSLzIhEF3MGRqsBp49dKo8u5BOT9JNo8TKi4FAMpjoxdOhIRqUuGX7QX/nLIG5JeMcpbwcGYgCM3B56NlSBLyDylnhLgV+wjgm8FY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R9N8xcor; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WifWCP82"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBAC91F000FF;
-	Sat, 12 Sep 2026 09:12:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R9N8xcor"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD8171F000FF;
+	Sat, 12 Sep 2026 09:12:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789204351;
-	bh=2WmbIMCZEDlHd6f9Qq05mVRCZsuNs9PYDKgoSlOLUDw=;
+	s=korg; t=1789204355;
+	bh=MpAl+JC00MODxI3Qu3hcqmPooCgljvxZa6RURjvhfkk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WifWCP82S0CN0sgb6CQEL/nYzyx1fUzk/+xHScfxh0i+mamSegk9sVKipocMDMsI8
-	 YvRaEmcPDvzejPO4SAWBWj7rwn+NhgT/MKqeE71pDtjp5/OvJrnphnR+rEMw/YTARj
-	 mwmGywWPe9lULw3LGD4lvJTIxneFHvdavTV8vcZ8=
+	b=R9N8xcorT7XAq4kdSDSypozbPy5f+DiI7O5u2Ofd871WcnrShexblZMerdUD7MbEP
+	 RfVRXBZ2hC/dQZSyZv4PVahzi6SmePZ5INNhfgWlRaj9qAp1krdfUnw1gDJBW/Dd/+
+	 MUx5lVGcbDTbdiFwOowJhkPyfL6ROkcYNNwpxl5w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
+	Hemanth Selam <hemanth.selam@gmail.com>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1593/1815] platform/x86: hp-bioscfg: fix password encoding bounds check
-Date: Sat, 12 Sep 2026 08:55:43 +0200
-Message-ID: <20260912065726.388242931@linuxfoundation.org>
+Subject: [PATCH 7.2 1594/1815] platform/x86/amd/hsmp: Reject negative power cap writes in hwmon
+Date: Sat, 12 Sep 2026 08:55:44 +0200
+Message-ID: <20260912065726.411214661@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,52 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Hemanth Selam <hemanth.selam@gmail.com>
 
-[ Upstream commit e213939ed9e6e6badf7aa48c4c8dd9a9cdf00615 ]
+[ Upstream commit 3921bb8635ff2836622df1cdf3194d4f3c1835a4 ]
 
-The password PSWD_ENCODINGS parser reads password_obj[elem + pos_values]
-while copying the supported password encodings from the ACPI package.
+hsmp_hwmon_write() takes the user-supplied hwmon value as a signed long
+and assigns "val / MICROWATT_PER_MILLIWATT" to msg.args[0], which is a
+__u32.  MICROWATT_PER_MILLIWATT is an unsigned long, so a negative write
+to power1_cap (e.g. "echo -1 > power1_cap") is first converted to a huge
+unsigned value by the division and then stored into the u32 argument.
 
-The outer loop only guarantees that elem is within password_obj_count.
-The encoding count is bounded by MAX_ENCODINGS_SIZE, but that does not
-guarantee that the ACPI package contains enough entries for all
-elem + pos_values accesses.
+As a result a nonsensical, multi-gigawatt socket power limit is sent to
+the SMU via HSMP_SET_SOCKET_POWER_LIMIT instead of the write being
+rejected.
 
-A malformed package can therefore declare a non-zero encoding count
-without providing enough string objects, causing the parser to read past
-the ACPI package array and pass an out-of-bounds string pointer and
-length to hp_convert_hexstr_to_str().
+Reject negative values with -EINVAL before the conversion.
 
-Add the same computed-index bounds check used by the other offset-based
-package parsing loops before reading password_obj[elem + pos_values].
+Tested with HSMP enabled:
 
-Fixes: 8646a3b5ee3a ("platform/x86: hp-bioscfg: passwdobj-attributes")
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Link: https://patch.msgid.link/20260708090937.740435-1-lgs201920130244@gmail.com
+  CAP=$(dirname $(grep -l amd_hsmp_hwmon \
+        /sys/class/hwmon/hwmon*/name | head -1))/power1_cap
+
+  # negative write
+  echo -1000000 > $CAP ; echo "ret=$?"
+  # valid positive write must still work
+  echo 400000000 > $CAP ; echo "ret=$?"
+
+Before:
+  # echo -1000000 > $CAP ; echo "ret=$?"
+  ret=0                             <- accepted; bogus limit sent to SMU
+  # echo 400000000 > $CAP ; echo "ret=$?"
+  ret=0
+
+After:
+  # echo -1000000 > $CAP ; echo "ret=$?"
+  bash: echo: write error: Invalid argument
+  ret=1                             <- rejected with -EINVAL
+  # echo 400000000 > $CAP ; echo "ret=$?"
+  ret=0                             <- valid write still works
+
+Fixes: 92c025db52bb ("platform/x86/amd/hsmp: Report power via hwmon sensors")
+Signed-off-by: Hemanth Selam <hemanth.selam@gmail.com>
+Link: https://patch.msgid.link/20260812090012.140193-1-hemanth.selam@gmail.com
 Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/platform/x86/amd/hsmp/hwmon.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c b/drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c
-index 9821403e42b64..a9e1786374162 100644
---- a/drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c
-+++ b/drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c
-@@ -353,6 +353,11 @@ static int hp_populate_password_elements_from_package(union acpi_object *passwor
- 		case PSWD_ENCODINGS:
- 			size = min_t(u32, password_data->encodings_size, MAX_ENCODINGS_SIZE);
- 			for (pos_values = 0; pos_values < size; pos_values++) {
-+				if (elem + pos_values >= password_obj_count) {
-+					pr_err("Error elem-objects package is too small\n");
-+					return -EINVAL;
-+				}
+diff --git a/drivers/platform/x86/amd/hsmp/hwmon.c b/drivers/platform/x86/amd/hsmp/hwmon.c
+index 0cc9a742497fc..c8314eee06f4f 100644
+--- a/drivers/platform/x86/amd/hsmp/hwmon.c
++++ b/drivers/platform/x86/amd/hsmp/hwmon.c
+@@ -31,6 +31,9 @@ static int hsmp_hwmon_write(struct device *dev, enum hwmon_sensor_types type,
+ 	if (attr != hwmon_power_cap)
+ 		return -EOPNOTSUPP;
+ 
++	if (val < 0)
++		return -EINVAL;
 +
- 				ret = hp_convert_hexstr_to_str(password_obj[elem + pos_values].string.pointer,
- 							       password_obj[elem + pos_values].string.length,
- 							       &str_value, &value_len);
+ 	msg.num_args = 1;
+ 	msg.args[0] = val / MICROWATT_PER_MILLIWATT;
+ 	msg.msg_id = HSMP_SET_SOCKET_POWER_LIMIT;
 -- 
 2.53.0
 
