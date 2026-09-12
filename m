@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27BB0235358;
-	Sat, 12 Sep 2026 07:31:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3E892E718B;
+	Sat, 12 Sep 2026 07:31:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789198278; cv=none; b=T93PnVy0/kT0w0c6rARci4iYqLaA1wJiW3BOjHCOo+bNYHGuBf0lAVj/Mxd3m7hKkDXPGsR6+GPYw0MVd9HshRuKILBxzed6mL3ebbs5DaQl/7g8ouoXczF0sl80eBlwFPfdYYmVA/svZD9OG8p6zAtLcyfiBUHvbn/sJJA09is=
+	t=1789198283; cv=none; b=i04DF/GDFCIkKvX+uIWnyaxzMXLKN5mp714SuAeyZc0g2mcSWPvlhzkLBikU+pCubzI5TY8NRX3PQHws2MIz/BCXfkmLssUDZNjvCCVADefw174RPpSZWnsr78b66bl4Eu+sOoal/BhcBvNJ9EHNzxrXfXJ8UssgD9AhYkZJSVE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789198278; c=relaxed/simple;
-	bh=BoB1K1ZgA9LtFckUDjB8thUdHOAghbayTCixy/sbor8=;
+	s=arc-20240116; t=1789198283; c=relaxed/simple;
+	bh=yd1XDc5zY/TgC58ob3q0+MZA0HMfHoIuc7AcceHn23I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MhK7ACDuuqf6Q8iNzsNYRilZSIKZFoyvc1/Sw1V0/Cgtn/Y/vF5QfFeJZ+LL150hmY0f8k2zoNB/UPjy1SSyp/tCjwQ31FrPz+cs+F2SSsXxSHRDeK6yJVH2w8/DZqHElLeUaBQEREa8ypNGVHoxalGbiPszmxDQkW/gf3d5Lnc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U7tXaWjY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dK68vbQwRaag1egr75EJq6hXyRbxDqlptiuZG5N2Us/vw8cHauC1HZnoiHBMgckD5Dj4oLGvikTjeBy7yrFJD71tMS0FabsaWdUiFNE9R399aEQtGZfc1QWlaNXDj5DLRciB0AKa+qt61HP5ODdjlFg86g6AOjNGwKbdeikvl5E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0I8SwV3k; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U7tXaWjY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9BCA1F000FF;
-	Sat, 12 Sep 2026 07:31:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0I8SwV3k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 605CC1F000FF;
+	Sat, 12 Sep 2026 07:31:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789198277;
-	bh=teVWZkm0hNUlP336UMe3mRXB92Zj6u0kUT9Yqr+RGHA=;
+	s=korg; t=1789198282;
+	bh=fNhg6lTslSxfzkuJGBa/r6r5TaJlODy3ixsjj27KQG8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=U7tXaWjYyyKt8PzNRfIp/1BsLtDsRn88nuvoGeafJ9EsBAEN+qFTCSPsUK1ugHcXS
-	 w7Zm02Asu3+lkiSDd4UxxEav1J1q+S50/JtLvAVILC/MyTAEQQgBXG1bFLPrRFgL8v
-	 sF7VapcaCobCcuG6kKpu2MwB8U/sOcf//iae1lFs=
+	b=0I8SwV3k+iCZAOOxzjYbVTXrOI9pwhnMfUnmNhk6m/aCZdHHMbfpyvU9v1rA/Knsj
+	 uFu5neNREfDN7RbzRFy9L0nYDEcTZh/XhzNB3RTMbuRRWCzgiDi9OTbyanyk6IaWCG
+	 igzVBmsnX3AzURaA/91RPc+YP2qVJYKyS1SzOHxY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
 	Leon Romanovsky <leonro@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0346/1815] RDMA/mlx5: Drain RCU callbacks during module teardown
-Date: Sat, 12 Sep 2026 08:34:56 +0200
-Message-ID: <20260912065657.033805247@linuxfoundation.org>
+Subject: [PATCH 7.2 0347/1815] RDMA/ipoib: Drain RCU callbacks during module teardown
+Date: Sat, 12 Sep 2026 08:34:57 +0200
+Message-ID: <20260912065657.058079171@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -53,47 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 From: Leon Romanovsky <leonro@nvidia.com>
 
-[ Upstream commit e37cdd75f8d61c1123d324ae5667ac3da562290e ]
+[ Upstream commit 31b7c700670830a0e8a4cdcd451c88a13cc5dc48 ]
 
-devx_free_subscription() can remain queued after the last DevX event file
-drops its module reference or an auxiliary driver detaches its devices.
-mlx5_ib can then unload before the callback runs.
+IPoIB reclamation completions can be signaled from inside an RCU callback.
+Teardown can wake before the callback returns and unload ib_ipoib while its
+code is still executing.
 
-Registration error unwind has the same risk because driver registration
-can attach existing devices before failing. Wait after all drivers have
-stopped.
+Client registration failure can also remove already-added devices and queue
+callbacks. Wait after client and workqueue teardown.
 
-Fixes: 6898d1c661d7 ("RDMA/mlx5: Use RCU and direct refcounts to keep memory alive")
+Fixes: b63b70d87741 ("IPoIB: Use a private hash table for path lookup in xmit path")
 Reported-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Closes: https://lore.kernel.org/linux-rdma/20260708092316.Qb39F_B0@linutronix.de/
-Link: https://patch.msgid.link/20260709-unload-rcu-v1-2-fccd27211e5a@nvidia.com
+Link: https://patch.msgid.link/20260709-unload-rcu-v1-3-fccd27211e5a@nvidia.com
 Acked-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/main.c | 2 ++
+ drivers/infiniband/ulp/ipoib/ipoib_main.c | 2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/drivers/infiniband/hw/mlx5/main.c b/drivers/infiniband/hw/mlx5/main.c
-index 02809114fc79a..4ff6cca7e581a 100644
---- a/drivers/infiniband/hw/mlx5/main.c
-+++ b/drivers/infiniband/hw/mlx5/main.c
-@@ -5538,6 +5538,7 @@ static int __init mlx5_ib_init(void)
- dd_err:
- 	mlx5r_rep_cleanup();
- rep_err:
-+	rcu_barrier();
- 	mlx5_ib_qp_event_cleanup();
- qp_event_err:
- 	destroy_workqueue(mlx5_ib_event_wq);
-@@ -5551,6 +5552,7 @@ static void __exit mlx5_ib_cleanup(void)
- 	auxiliary_driver_unregister(&mlx5r_driver);
- 	auxiliary_driver_unregister(&mlx5r_mp_driver);
- 	mlx5r_rep_cleanup();
+diff --git a/drivers/infiniband/ulp/ipoib/ipoib_main.c b/drivers/infiniband/ulp/ipoib/ipoib_main.c
+index 16a015b672063..6c14246befb1f 100644
+--- a/drivers/infiniband/ulp/ipoib/ipoib_main.c
++++ b/drivers/infiniband/ulp/ipoib/ipoib_main.c
+@@ -2783,6 +2783,7 @@ static int __init ipoib_init_module(void)
+ err_sa:
+ 	ib_sa_unregister_client(&ipoib_sa_client);
+ 	destroy_workqueue(ipoib_workqueue);
 +	rcu_barrier();
  
- 	mlx5_ib_qp_event_cleanup();
- 	destroy_workqueue(mlx5_ib_event_wq);
+ err_fs:
+ 	ipoib_unregister_debugfs();
+@@ -2800,6 +2801,7 @@ static void __exit ipoib_cleanup_module(void)
+ 	ib_sa_unregister_client(&ipoib_sa_client);
+ 	ipoib_unregister_debugfs();
+ 	destroy_workqueue(ipoib_workqueue);
++	rcu_barrier();
+ }
+ 
+ module_init(ipoib_init_module);
 -- 
 2.53.0
 
