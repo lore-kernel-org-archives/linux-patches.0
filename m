@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 230102EC09B;
-	Sat, 12 Sep 2026 11:28:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9D6F357CFA;
+	Sat, 12 Sep 2026 11:28:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789212495; cv=none; b=eot25l5P3ncO8WapAmELmjxi7BGbSeaMtujQEIoQJCdLi3ZrLaNPljs+IK0QRhP9iragFWU10pCJlnGTU3AfStlQ9ewgE5RstVaJsRReUYip4Cnbg7yBfwOSRzl2fyu4R4eoBHL72+KJ7XovkNCOObKPNMotJEJj6cu4sSbdusU=
+	t=1789212500; cv=none; b=ZTAsGhGNGK4ajicZkd5Nz213qCTJE2is67jlXoBLO9B6aGsHXasW9NuDq4Yb4ZJw5HYFk1RFW7xSct2H81EhvLY+CFwLwC5whhC9L4AW0lnmygo/ascJr6XrVy2aMVZgWH54vug5sArSt01Nvdxz6mnCzGHF7zEYJBNZdyWhjZE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789212495; c=relaxed/simple;
-	bh=0sbELAaeW0KT9utPoV5Yxhf5BclKArwRCLl16wCR42k=;
+	s=arc-20240116; t=1789212500; c=relaxed/simple;
+	bh=b4lc/KuzDT/gehy+eGt+SdPJmXI/70Cc5zXsXL9U33g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IjZBQbJgoAkaaqK1XXj1n99/KM8qrObOJoy5P9t9zUnyNUuYpFSjibunSaG3mW1jbQ8DTZdROsIOxpE9VcSSngPVohG/U9DMqEJx8cqsD1neMuJrwOANpwvJuOCYe/WIgqdD7p+xROtGWlPA5Sp7q6vU5ZU5CUMY3fPCu4NqoTw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S7drQBlQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pUmzTrgapjgCsmG3tlQE414FhCtcPIXticFz7sQAvQyDSmR4SNln8XsE+RXRYIDOcKvEn5VbbA4lrqzy84IaCnzVEOchtlZdjg4g9466AbE998VA+oh8AUR485taW7DZeQvLfO/ZSvUkhQXqefz+By2eTvgViXhQurbxjCUmYXE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nkM+R5oa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S7drQBlQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B794F1F000FF;
-	Sat, 12 Sep 2026 11:28:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nkM+R5oa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBDD51F000FF;
+	Sat, 12 Sep 2026 11:28:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789212494;
-	bh=wVwJrYQnwUyWKYpLiu1EpHLh7g5Gd6J7/PaESqTcxC4=;
+	s=korg; t=1789212498;
+	bh=DBEWGlP7tLkYl/AU/nyUA74bAZPQs7pWZ9oMXvGKhAA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S7drQBlQ9TAHh/fJDR7fk9lRAqEyFRoXYSP1sTtbrVm1vMMzedhCi0VLTyLLksy7s
-	 lk0zo6nGn5XB/R9o8REjW7oLSg3RJJMOvREMBa7nBrR4lc1cn43speZhFpCrWriK7s
-	 FQ/VtB5G5iif0wlFJJEt4JRmib6yelWjrLVTUQNc=
+	b=nkM+R5oakDcgsfoxwZSV0SwqgSGPkdt3fASZLOgUI/911zhur1eKbnp4a087o5v0Z
+	 qcgIxKi7OclzO2H8JTB7fitgeJnhHl+GMA5FPTdyrEpnG6jszyZuGNLHPQ4vUwhqSI
+	 cX6r2C9hoKLA3a4Rdq9b+bEw3KDoiNvuymkd0zZU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Brown <broonie@kernel.org>,
-	Muhammad Usama Anjum <usama.anjum@arm.com>,
-	Vincenzo Frascino <vincenzo.frascino@arm.com>,
-	Will Deacon <will@kernel.org>,
+	Daniel Pawlik <pawlik.dan@gmail.com>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1448/1518] selftests/arm64: Fix MTE prctl TAP plan
-Date: Sat, 12 Sep 2026 09:00:17 +0200
-Message-ID: <20260912065656.311823080@linuxfoundation.org>
+Subject: [PATCH 6.18 1449/1518] net: airoha: npu: fix missing streaming DMA mask
+Date: Sat, 12 Sep 2026 09:00:18 +0200
+Message-ID: <20260912065656.334292727@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -53,42 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Muhammad Usama Anjum <usama.anjum@arm.com>
+From: Daniel Pawlik <pawlik.dan@gmail.com>
 
-[ Upstream commit bb52892f9234e4ecd982fa51222aab33ce282f79 ]
+[ Upstream commit 6fe7e31a45e3418a39e6343a85126124feec1c2f ]
 
-The MTE prctl test emits one result from check_basic_read() followed by
-one result for each of the seven entries in mte_modes[]. However, the TAP
-plan only accounts for the array entries, producing:
+The driver calls dma_set_coherent_mask() but never dma_set_mask(),
+leaving the streaming DMA mask at the bus default. On the non-coherent
+EN7581 platform (Cortex-A53), this causes the NPU mailbox to hang
+after approximately 41 calls when using streaming DMA mappings.
 
-  # Planned tests != run tests (7 != 8)
+Replace dma_set_coherent_mask() with dma_set_mask_and_coherent() to
+set both the streaming and coherent DMA masks, matching standard
+driver practice.
 
-Include the basic read check in the plan so that all eight emitted results
-are declared.
-
-Reviewed-by: Mark Brown <broonie@kernel.org>
-Fixes: 1f488fb91378 ("kselftest/arm64/mte: Add MTE_STORE_ONLY testcases")
-Signed-off-by: Muhammad Usama Anjum <usama.anjum@arm.com>
-Reviewed-by: Vincenzo Frascino <vincenzo.frascino@arm.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+Fixes: 6f884eb87a79 ("net: airoha: Fix DMA direction for NPU mailbox buffer")
+Link: https://patchwork.kernel.org/project/linux-mediatek/patch/20260814110017.2795022-1-pawlik.dan@gmail.com/
+Link: https://patchwork.kernel.org/project/linux-mediatek/patch/20260809152813.585797-1-pawlik.dan@gmail.com/
+Link: https://patchwork.kernel.org/project/linux-mediatek/patch/20260805070851.2885888-1-pawlik.dan@gmail.com/
+Signed-off-by: Daniel Pawlik <pawlik.dan@gmail.com>
+Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Link: https://patch.msgid.link/20260820085941.380401-1-pawlik.dan@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/arm64/mte/check_prctl.c | 2 +-
+ drivers/net/ethernet/airoha/airoha_npu.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/arm64/mte/check_prctl.c b/tools/testing/selftests/arm64/mte/check_prctl.c
-index f7f320defa7b9..d16a91117eef9 100644
---- a/tools/testing/selftests/arm64/mte/check_prctl.c
-+++ b/tools/testing/selftests/arm64/mte/check_prctl.c
-@@ -119,7 +119,7 @@ int main(void)
- 	int i;
+diff --git a/drivers/net/ethernet/airoha/airoha_npu.c b/drivers/net/ethernet/airoha/airoha_npu.c
+index d6547834d3c78..ddc5a6a7681b1 100644
+--- a/drivers/net/ethernet/airoha/airoha_npu.c
++++ b/drivers/net/ethernet/airoha/airoha_npu.c
+@@ -686,7 +686,7 @@ static int airoha_npu_probe(struct platform_device *pdev)
+ 		npu->irqs[i] = irq;
+ 	}
  
- 	ksft_print_header();
--	ksft_set_plan(ARRAY_SIZE(mte_modes));
-+	ksft_set_plan(ARRAY_SIZE(mte_modes) + 1);
+-	err = dma_set_coherent_mask(dev, DMA_BIT_MASK(32));
++	err = dma_set_mask_and_coherent(dev, DMA_BIT_MASK(32));
+ 	if (err)
+ 		return err;
  
- 	check_basic_read();
- 	for (i = 0; i < ARRAY_SIZE(mte_modes); i++)
 -- 
 2.53.0
 
