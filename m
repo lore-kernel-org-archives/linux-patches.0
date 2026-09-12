@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6330D41A4EE;
-	Sat, 12 Sep 2026 09:30:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D1B438A701;
+	Sat, 12 Sep 2026 09:30:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789205409; cv=none; b=ZkOuOCGZXxaaZPY5sKof9D2xuGJGLceaOC+/2y45RMnYi8423nzo8hEnhAJSn8/lNegXnr18UUX2fWAUoSbElWhpVO7I8QIrNwUzUCvz6N8exY+VLapWnFiOzeyYIzq/FhzdhMpn4RM+2EVDla+rMy2w9pV6jrWEzTB/LTMRLKE=
+	t=1789205412; cv=none; b=Qzo50VeW80NiUCvoC1JdeI5lxqanCNEJHeH4zEmZOgf67nM7ncxRtjp0z5lzK+R0PakcUjAAZThdoRw2/Qv5v/bUlfZpA43Qjp/n94XAoM0T/YZ4FEuk4ZLoR2FS8Ox3G8/ztwDElemzXTOdZl5TKqccmS8sO9IbUnhDJSVjtew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789205409; c=relaxed/simple;
-	bh=78DTCtKan/dzwZUNoEola11+MQdXN8uivGa6l3cZjoc=;
+	s=arc-20240116; t=1789205412; c=relaxed/simple;
+	bh=R2mfv7LcwyAZx4B83JLDbywVrfWXwd8As9l+9cBDQAg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mloFVX9zZzVrtGHSaELSdAj/d8w9SwjYM3vfIL+nGH0jTuEKP9mfKYGvAGh/RphDxogbBnFjze7obt92b+t2NSoHUWcqMwfS1/fcvV+fSLJU2pRypejXLqc9V6TE2sQ7hJuTMpzH/ginvqE7ofkBFLuCo8HL+GssVZPB1muUpzY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CNFOKIYs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CuVo7JW3HeHam+uSkP2MN0x2D/g3VsliAfs+KefYvDVBp48HPYh8mjm32NTua/YzDKOMZ/XTwwNc8NhzH9l73C8Pwo01JAYNyarlQX/bmhePgJKC1Zm5DncppuNtcLTi1oYNgcjykLizHmV8c92uPkz0a0Iuu36fWjhx+6zLW28=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mIZDZdFr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CNFOKIYs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F20B1F000FF;
-	Sat, 12 Sep 2026 09:30:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mIZDZdFr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A2E11F000FF;
+	Sat, 12 Sep 2026 09:30:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789205407;
-	bh=LYpCBzy7dC3dV+DN+7tjbcDBEFmDJlrqluaYk2D58VA=;
+	s=korg; t=1789205411;
+	bh=mWjvp7foVtlxalQ64C4ojGaZ0TCErEhjEf73hO7an0g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CNFOKIYsqGnhy1bW4/oRVkT2fPaYm9gVuO3SkbUa5OWYTNZLCFssfs53fxn1NNYnA
-	 bHQkLqH+Z5MthDxvqStS4LgNEK7bPoVVnWNram/1I6gShplpbikOhK0T1mlK1qVnaQ
-	 21uokpSRixz8fPmoseUAajyVuzAugsDIaerls0co=
+	b=mIZDZdFrxhim8uZlUBQmUOZspO1TgbMx9m3I+jQQLLfaz120QzDkWgwY4OdaQEL09
+	 H7o6BdzGTGntq979aXCIE/xvN6fdivNz4lrjbGhOQ6WUgIY1HtrWvsO9CP6VZ0NWpj
+	 zaAuZImxj3xJJw8GGHRhuYlXrFkgoRcXw8L8BlR4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Victor Nogueira <victor@mojatatu.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Alice Mikityanska <alice@isovalent.com>,
 	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1811/1815] net/sched: sch_htb: limit htb_classify inner-class filter hops
-Date: Sat, 12 Sep 2026 08:59:21 +0200
-Message-ID: <20260912065731.555494865@linuxfoundation.org>
+Subject: [PATCH 7.2 1785/1815] virtio-net: Ensure that TCP packets dont overflow gso_segs
+Date: Sat, 12 Sep 2026 08:58:55 +0200
+Message-ID: <20260912065730.937871173@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -48,109 +46,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jamal Hadi Salim <jhs@mojatatu.com>
+From: Alice Mikityanska <alice@isovalent.com>
 
-[ Upstream commit 729c4896ab829169f95915d65edd530325910b37 ]
+[ Upstream commit c27c449d455aafd9018a3cbab150f1c42c87923f ]
 
-htb_classify() follows each filter-selected inner class by switching
-to cl->filter_list, but never bounds the number of hops. A filter on
-an inner class can point back to itself or to another inner class that
-points back, creating an infinite loop in the packet classification
-path with the qdisc lock held and BH disabled — a soft lockup / panic
-from a single packet.
+The user can specify any gso_size in a packet crafted with an AF_PACKET
+PACKET_VNET_HDR socket, even smaller than TCP_MIN_GSO_SIZE = 8. At the
+same time, GSO_MAX_SIZE = 8 * GSO_MAX_SEGS = 8 * 65535. When the user
+crafts a packet with gso_size < 8, there is a risk for partial GSO to
+overflow the 16-bit gso_segs field when dividing the SKB length by
+gso_size.
 
-Bound the traversal with a hop counter and drop the packet with a
-rate-limited warning once the bound is exceeded. The counter is
-incremented at the point the inner filter chain is picked up, after the
-TC_ACT_* switch has consumed the classifier verdict, so a terminal
-TC_ACT_QUEUED/STOLEN/TRAP on the last permitted chain still sets *qerr
-to __NET_XMIT_STOLEN and the packet is not charged as a drop by this
-qdisc or its parent.
+Adjust gso_size of TCP packets to be at least TCP_MIN_GSO_SIZE = 8. Keep
+gso_size of UDP GSO packets, as gso_size=1 is valid and explicitly
+tested at tools/testing/selftests/net/tun.c:649.
 
-The bound is TC_HTB_MAXDEPTH, taken from HTB's own parameters rather than
-from the qdisc hierarchy depth limit. Class levels run from 0 to
-TC_HTB_MAXDEPTH - 1, so a traversal that strictly descends in level can
-take at most TC_HTB_MAXDEPTH hops. That descent is what a sane
-configuration does, but it is assumed here rather than enforced:
-htb_find() resolves a classid against every class in the qdisc, so a
-filter may equally select a sibling or an ancestor. The normal
-root -> inner -> leaf path takes a single hop, so the bound does not
-affect legitimate classification.
-
-htb_classify() can now return NULL irrespective of CONFIG_NET_CLS_ACT,
-whereas previously every NULL return sat inside that ifdef. The NULL
-handler in htb_enqueue() therefore cannot stay conditional either, so
-drop the ifdef around it. This matches hfsc_enqueue(), which has always
-handled a NULL class unconditionally. Without it, a kernel built
-without actions would dereference a NULL class instead of dropping.
-
-Conditions to recreate the bug:
-- CONFIG_NET_SCHED, CONFIG_NET_SCH_HTB, CONFIG_NET_CLS_U32,
-  CONFIG_LOCKUP_DETECTOR.
-- Create an HTB qdisc on a device (e.g. lo), add an inner class
-  1:1 with a leaf child 1:10, install a root u32 filter selecting
-  1:1, and an inner-class u32 filter on 1:1 also selecting 1:1.
-- Send one packet (ping). On the unfixed kernel the classify loop
-  spins with the qdisc lock held; with softlockup_panic=1 it panics.
-- Reachable from unprivileged user via unshare -Urn (CAP_NET_ADMIN).
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: Vega <vega@nebusec.ai>
-Co-developed-by: Victor Nogueira <victor@mojatatu.com>
-Signed-off-by: Victor Nogueira <victor@mojatatu.com>
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260826143339.271935-1-victor@mojatatu.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 7c6d2ecbda83 ("net: be more gentle about silly gso requests coming from user")
+Signed-off-by: Alice Mikityanska <alice@isovalent.com>
+Suggested-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260822120117.1163423-2-alice.kernel@fastmail.im
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_htb.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ include/linux/virtio_net.h | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/net/sched/sch_htb.c b/net/sched/sch_htb.c
-index fdac0dc8f35a3..1ba67b121de47 100644
---- a/net/sched/sch_htb.c
-+++ b/net/sched/sch_htb.c
-@@ -224,6 +224,7 @@ static struct htb_class *htb_classify(struct sk_buff *skb, struct Qdisc *sch,
- 	struct htb_class *cl;
- 	struct tcf_result res;
- 	struct tcf_proto *tcf;
-+	unsigned int hops = 0;
- 	int result;
+diff --git a/include/linux/virtio_net.h b/include/linux/virtio_net.h
+index f36d21b5bc19e..c381b916c1b54 100644
+--- a/include/linux/virtio_net.h
++++ b/include/linux/virtio_net.h
+@@ -6,6 +6,7 @@
+ #include <linux/ip.h>
+ #include <linux/ipv6.h>
+ #include <linux/udp.h>
++#include <net/tcp.h>
+ #include <uapi/linux/tcp.h>
+ #include <uapi/linux/virtio_net.h>
  
- 	/* allow to select class by setting skb->priority to valid classid;
-@@ -266,6 +267,10 @@ static struct htb_class *htb_classify(struct sk_buff *skb, struct Qdisc *sch,
- 		if (!cl->level)
- 			return cl;	/* we hit leaf; return it */
- 
-+		if (++hops > TC_HTB_MAXDEPTH) {
-+			pr_warn_ratelimited("htb: classify loop detected, dropping packet\n");
-+			return NULL;
-+		}
- 		/* we have got inner class; apply inner filter chain */
- 		tcf = rcu_dereference_bh(cl->filter_list);
- 	}
-@@ -633,13 +638,11 @@ static int htb_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 		} else {
- 			return qdisc_drop(skb, sch, to_free);
+@@ -179,6 +180,9 @@ static inline int __virtio_net_hdr_to_skb(struct sk_buff *skb,
+ 			if (skb->ip_summed == CHECKSUM_PARTIAL &&
+ 			    skb->csum_offset != offsetof(struct tcphdr, check))
+ 				return -EINVAL;
++
++			BUILD_BUG_ON(TCP_MIN_GSO_SIZE * GSO_MAX_SEGS < GSO_MAX_SIZE);
++			gso_size = max(gso_size, TCP_MIN_GSO_SIZE);
+ 			break;
  		}
--#ifdef CONFIG_NET_CLS_ACT
- 	} else if (!cl) {
- 		if (ret & __NET_XMIT_BYPASS)
- 			qdisc_qstats_drop(sch);
- 		__qdisc_drop(skb, to_free);
- 		return ret;
--#endif
- 	} else if ((ret = qdisc_enqueue(skb, cl->leaf.q,
- 					to_free)) != NET_XMIT_SUCCESS) {
- 		if (net_xmit_drop_count(ret)) {
+ 
 -- 
 2.53.0
 
