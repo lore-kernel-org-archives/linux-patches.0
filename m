@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA986343889;
-	Sat, 12 Sep 2026 10:33:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7D20343889;
+	Sat, 12 Sep 2026 10:33:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789209222; cv=none; b=Qg2M7ELg8uBWy+41qHdOy6EPoCsCMIiR14HrAVXamvjtej2P4MogGd28PkozXG0/z1gwxVK3LZ/3FxrBKmnEbPM9bThlgti7HfbbJ9vkrHvoqyU58uTTTLAKkF3vsyT5Al5G6k2t/lLsbndWvfUSVzfgdslyOTdqgRpf636A4Os=
+	t=1789209227; cv=none; b=A7L0JVLpK0APsqvD6uqYyxnPjSClHuTH2Q34tuxxnM3iZZToe21nyvbi7EcPmk/rk0Wwb8Aqvwpu6I2tPxFqAPcI3AsLkM/IsTdNfEK+Wxxnf3awctPVOtTGmix5stADkfn9MoZEHmqQcu5yEG2ISZIR0hqkMJLk9Iykv2XY0a8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789209222; c=relaxed/simple;
-	bh=/+dpH0cegMD3CF+if3fnDMND3f9hbTZfH+pKgKHYbwY=;
+	s=arc-20240116; t=1789209227; c=relaxed/simple;
+	bh=7orv4dpn5TciRkjcbiNhN+ElehdJpkcifnPPLHlem0M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JyaaIBzHmvIXjRidMPEZvld2hFUKa0Wp3docV0lwrCXjDVQC/GIFbbsn/BWdFP5g8MeS6FNpzds9Zi1nD6j3dbOgogtiKYvBC21lWmQ9HHnlFgZ+o5sOvWNWP10aV7POAMw7AE44E+3mM/B4T9x0ysjCwJnhlfVCWXcj9131p3k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1D/yLwuL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cHOcNUKOtJKoZZOF3EHUg7LXL7MJDUMHuarvfveX/JS+LooJ32ipnK9q/jv3+a8U8EFPcsS2ruleyrwAOnNiAwYuadhl3YVC2pIVVC2+3Jb+VaquMp2U7QntWGfZWN4c3HQDMuF8at9uHK2QO+Xb/usUcCOAHOFOowa4V7FlNpk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=poFUpaBo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1D/yLwuL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B1C51F000FF;
-	Sat, 12 Sep 2026 10:33:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="poFUpaBo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA29B1F000FF;
+	Sat, 12 Sep 2026 10:33:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789209221;
-	bh=Ip3B0spTRewiSvpuRuS/amKZvdubprYU5Q8MPa3WCJs=;
+	s=korg; t=1789209226;
+	bh=MHPU534pII+zz9HUuKfdStg+jeBd4SCiatGpCXIm/+Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1D/yLwuLo0EoasM3IDRIUqIxoFa3fy/KA/JUV4VNyK0yaEUdlkPnAsRshrG+G5IHx
-	 OGOS836Cmf/UkLVqMc+2n/s6wAgf0eAjdLdwHl65fjBV7Eqetv9CPzC5sAzioPQ+d4
-	 ybig/D/0hFOI2VKiavxyfhjgt8QaOwFT1ycF71kQ=
+	b=poFUpaBoDIvr0HEYA3NNwsjDncmXfdfJ87+ZkkQzlBtGblteay1Y9Ts2/IbILWvDC
+	 wk+8eAymSER/nzAWOjzcLCheL/3D+psmbznwogtK5dfCLcpq7jUmnM+OM3KZHPyv8d
+	 9ODlRMcjGyUqdNGQZQN0J623ZEzGX6pwMWi7+t3g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0775/1518] ASoC: tas2783: Use new SoundWire enumeration helper
-Date: Sat, 12 Sep 2026 08:49:04 +0200
-Message-ID: <20260912065640.969421737@linuxfoundation.org>
+Subject: [PATCH 6.18 0776/1518] ASoC: codecs: tas2783-sdw: Propagate regcache_sync() errors
+Date: Sat, 12 Sep 2026 08:49:05 +0200
+Message-ID: <20260912065640.991927819@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,53 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Charles Keepax <ckeepax@opensource.cirrus.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit ac6d4f298160bebf6979e63c2758414af5266f28 ]
+[ Upstream commit 0d6b2d6f93a6715827a9b3c027cd8448d76e0e47 ]
 
-Update the driver to use the new core helper that waits for the device
-to enumerate on SoundWire and be initialised by the SoundWire core.
+regcache_sync() can fail while replaying cached register state after
+SoundWire resume or attach handling. tas2783 currently ignores that
+failure.
 
-Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://patch.msgid.link/20260512103022.1154645-19-ckeepax@opensource.cirrus.com
+Propagate the error and restore cache-only/dirty state on failure.
+
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260704035746.82560-1-pengpeng@iscas.ac.cn
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Stable-dep-of: b627da430357 ("ASoC: tas2783-sdw: drop stale regcache on uninitialized re-attach")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/tas2783-sdw.c | 18 ++++--------------
- 1 file changed, 4 insertions(+), 14 deletions(-)
+ sound/soc/codecs/tas2783-sdw.c | 16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
 
 diff --git a/sound/soc/codecs/tas2783-sdw.c b/sound/soc/codecs/tas2783-sdw.c
-index e273b80d033e1..9203ddb4086ab 100644
+index 9203ddb4086ab..2659e8b0c30ca 100644
 --- a/sound/soc/codecs/tas2783-sdw.c
 +++ b/sound/soc/codecs/tas2783-sdw.c
-@@ -1175,22 +1175,12 @@ static s32 tas2783_sdca_dev_resume(struct device *dev)
+@@ -1182,7 +1182,13 @@ static s32 tas2783_sdca_dev_resume(struct device *dev)
+ 		return ret;
+ 
+ 	regcache_cache_only(tas_dev->regmap, false);
+-	regcache_sync(tas_dev->regmap);
++	ret = regcache_sync(tas_dev->regmap);
++	if (ret) {
++		regcache_cache_only(tas_dev->regmap, true);
++		regcache_mark_dirty(tas_dev->regmap);
++		return ret;
++	}
++
+ 	return 0;
+ }
+ 
+@@ -1234,6 +1240,7 @@ static s32 tas_update_status(struct sdw_slave *slave,
  {
- 	struct sdw_slave *slave = dev_to_sdw_dev(dev);
- 	struct tas2783_prv *tas_dev = dev_get_drvdata(dev);
--	unsigned long t;
+ 	struct tas2783_prv *tas_dev = dev_get_drvdata(&slave->dev);
+ 	struct device *dev = &slave->dev;
 +	int ret;
  
--	if (!slave->unattach_request)
--		goto regmap_sync;
--
--	t = wait_for_completion_timeout(&slave->initialization_complete,
--					msecs_to_jiffies(TAS2783_PROBE_TIMEOUT));
--	if (!t) {
--		dev_err(&slave->dev, "resume: initialization timed out\n");
--		sdw_show_ping_status(slave->bus, true);
--		return -ETIMEDOUT;
--	}
--
--	slave->unattach_request = 0;
-+	ret = sdw_slave_wait_for_init(slave, TAS2783_PROBE_TIMEOUT);
-+	if (ret)
-+		return ret;
+ 	dev_dbg(dev, "Peripheral status = %s",
+ 		status == SDW_SLAVE_UNATTACHED ? "unattached" :
+@@ -1251,7 +1258,12 @@ static s32 tas_update_status(struct sdw_slave *slave,
  
--regmap_sync:
+ 	/* updated the cache data to device */
  	regcache_cache_only(tas_dev->regmap, false);
- 	regcache_sync(tas_dev->regmap);
- 	return 0;
+-	regcache_sync(tas_dev->regmap);
++	ret = regcache_sync(tas_dev->regmap);
++	if (ret) {
++		regcache_cache_only(tas_dev->regmap, true);
++		regcache_mark_dirty(tas_dev->regmap);
++		return ret;
++	}
+ 
+ 	/* perform I/O transfers required for Slave initialization */
+ 	return tas_io_init(&slave->dev, slave);
 -- 
 2.53.0
 
