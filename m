@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE9F537F337;
-	Sat, 12 Sep 2026 19:16:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C981837EFEE;
+	Sat, 12 Sep 2026 19:16:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789240579; cv=none; b=e9+vJmmX4LDN1b5jqZdoQzEhlP7Kj0iZZYn+XYL9NhCaPLNegJyL7BqULE8mpYj9vRg8HaZQUYR2QYEwG7sHKi8w/67vB3TYWyjnUfvJcWhb6xv/fVtR1BsqaqegbYmI6Q4Q1g/h8dzTPI0jPNXbS6MA1UYUMXCCD9QHycCk8ls=
+	t=1789240584; cv=none; b=CYwb2K75ql5jLJiR00RHzgjF+lTY3gqIqZElHGCZFH19fbZPT+0BmUKYxQxcpznCihGCekC3UEDzKrpEfrp/dMppOHxIF0hD+eS3lv4g4Id5BoVtAhGdgrx2hlE6ZdWhWImN1kuvKiBJi8h56BvGX3zHqC6uic/oILnh5sAqTss=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789240579; c=relaxed/simple;
-	bh=xrdPqR9fR4eqX635ueEdNgm0muK4GA4x7arjzLsg1/o=;
+	s=arc-20240116; t=1789240584; c=relaxed/simple;
+	bh=clMulq5akkpPmeOtyR9Xsv3khsHsVMv7yIT2inxJvCo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LKmrgKmYBrV6z0H9TM9wqH4za5rqoBCFP8pdTxeJSd1G7p8q1RMvmfXjg6G5+q6PyaptEflAhLOT8t6pCn9WFTG7uWLkua/9SVkGYqaCs7Ppd4vrG23NxAk0tBhFm/cj/UdJOqT8QB6fqc46MhNrse6wKN6j2Om1mRtuyXa0Agc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UjGVoyYV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QwCcPDjLG/kPgzJztqCOpEgWHC6N4VGJhGcpj756P3mLAK2d094qzCchTMyRzE1WaypbMd+wQwOVccvqQSm/8RtcOlHatKIHZSDFc6z3EjoIN1l4KPXWtrlm7ZCnQP761neYBOUgOt5SDqFjU2CaAn+xfx9eQlVHcfZeq+reFVA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SUVBNkPS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UjGVoyYV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98D7C1F000FF;
-	Sat, 12 Sep 2026 19:16:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SUVBNkPS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 843731F000FF;
+	Sat, 12 Sep 2026 19:16:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789240577;
-	bh=2dNCL54gPHbgMYhEoikiTxWxavn1Eg4akgU1CnXAu3w=;
+	s=korg; t=1789240582;
+	bh=iPNDcXLc1G/SgNERbIKCd28UIzHucxDOgYHGZMAAeVU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UjGVoyYVqd0NIXbk7ZVRIcNDtSjmHVBLroCmUlYfKOksXOp6d72bqyQIcsllzITZJ
-	 8ohvYc1gE75QC5eT27+BEi1wpsi6fYccLSBtE1GG39EKnFYz2qCSBr6sKdSw6cA5km
-	 sLOOafYMY2CgZaNaIpnR1K3hvtbEfdUZqwkchkrE=
+	b=SUVBNkPSQWLMBxBPTkvpBjGv8+USVleTT7sk+HkWV/G2u6MJceLxv629CylDkDV/W
+	 On5gATMqzecbIz+lRipyilCi6lx+xkS9wNx/Apg7N+xMuX1gtAbpL0ZhT8zVb26Yxx
+	 Du0MWaOiTMCpVrLAkW65L+/DgvR1sLaD1CHWntfo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	vega@nebusec.ai,
-	Victor Nogueira <victor@mojatatu.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 896/935] net/sched: fq_pie: clamp default quantum to avoid signed overflow
-Date: Sat, 12 Sep 2026 09:05:26 +0200
-Message-ID: <20260912065547.364574023@linuxfoundation.org>
+Subject: [PATCH 5.15 861/935] virtio_balloon: disable indirect descriptors
+Date: Sat, 12 Sep 2026 09:04:51 +0200
+Message-ID: <20260912065546.572117967@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -53,48 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jamal Hadi Salim <jhs@mojatatu.com>
+From: Michael S. Tsirkin <mst@redhat.com>
 
-[ Upstream commit c86cd7ed0b0e44779a3d1683f03e4353baf4bdc9 ]
+[ Upstream commit 281eb4732aae5473141b84e106fe906c69b2ff3d ]
 
-fq_pie_init() sets q->quantum = psched_mtu(qdisc_dev(sch)) without
-clamping. A device with a huge MTU (e.g. dummy with max_mtu == 0
-accepting MTU 2147483634) makes psched_mtu() return 0x80000000, which
-overflows the signed flow->deficit to INT_MIN in fq_pie_qdisc_dequeue(),
-causing an infinite loop and soft lockup. Emulate fq_pie_policy which
-is already bounded to [1, 1 << 20]; clamp the default to [256, 1 << 20].
-256 matches fq_codel's floor and is a sane minimum for a DRR quantum.
+The page reporting callback submits an sg list to the reporting
+virtqueue.  With VIRTIO_RING_F_INDIRECT_DESC negotiated and
+total_sg > 1 (which it typically is), virtqueue_add reports it to the
+host by allocating an indirect descriptor via kmalloc(GFP_KERNEL).
 
-Conditions to recreate the bug: a device whose MTU (plus
-hard_header_len) wraps psched_mtu() into the sign bit (e.g. a dummy
-device with max_mtu == 0 accepting MTU 2147483634). Requires
-CAP_NET_ADMIN in a user namespace.
+This is not pretty: the reporting worker isolates potentially hundreds
+of MB of free pages from the buddy allocator (reported pages are at
+least pageblock_order, and the sg can contain up to
+PAGE_REPORTING_CAPACITY entries of varying orders).  As the result,
+very theoretically, the kmalloc might trigger OOM when we have in fact a
+ton of free memory.
 
-Fixes: ec97ecf1ebe4 ("net: sched: add Flow Queue PIE packet scheduler")
-Reported-by: vega@nebusec.ai
-Tested-by: Victor Nogueira <victor@mojatatu.com>
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/20260822195509.112717-5-jhs@mojatatu.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Clear VIRTIO_RING_F_INDIRECT_DESC, to avoid using indirect descriptors.
+
+Fixes: b0c504f15471 ("virtio-balloon: add support for providing free page reports to host")
+Assisted-by: Claude:claude-opus-4-6
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <73fac8a629fd9aca7bb3265ac243a769c28af25d.1783232420.git.mst@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_fq_pie.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/virtio/virtio_balloon.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/net/sched/sch_fq_pie.c b/net/sched/sch_fq_pie.c
-index 910efc0630a14..33ec3aefde39a 100644
---- a/net/sched/sch_fq_pie.c
-+++ b/net/sched/sch_fq_pie.c
-@@ -417,7 +417,8 @@ static int fq_pie_init(struct Qdisc *sch, struct nlattr *opt,
- 	pie_params_init(&q->p_params);
- 	sch->limit = 10 * 1024;
- 	q->p_params.limit = sch->limit;
--	q->quantum = psched_mtu(qdisc_dev(sch));
-+	q->quantum = clamp_t(u32, psched_mtu(qdisc_dev(sch)),
-+			     256, 1 << 20);
- 	q->sch = sch;
- 	q->ecn_prob = 10;
- 	q->flows_cnt = 1024;
+diff --git a/drivers/virtio/virtio_balloon.c b/drivers/virtio/virtio_balloon.c
+index 82cfa1575027e..450ad2169d835 100644
+--- a/drivers/virtio/virtio_balloon.c
++++ b/drivers/virtio/virtio_balloon.c
+@@ -7,6 +7,7 @@
+  */
+ 
+ #include <linux/virtio.h>
++#include <uapi/linux/virtio_ring.h>
+ #include <linux/virtio_balloon.h>
+ #include <linux/swap.h>
+ #include <linux/workqueue.h>
+@@ -1138,6 +1139,11 @@ static int virtballoon_validate(struct virtio_device *vdev)
+ 	else if (!virtio_has_feature(vdev, VIRTIO_BALLOON_F_PAGE_POISON))
+ 		__virtio_clear_bit(vdev, VIRTIO_BALLOON_F_REPORTING);
+ 
++	/*
++	 * Disable indirect descriptors to avoid memory allocation in
++	 * virtqueue_add during page reporting.
++	 */
++	__virtio_clear_bit(vdev, VIRTIO_RING_F_INDIRECT_DESC);
+ 	__virtio_clear_bit(vdev, VIRTIO_F_ACCESS_PLATFORM);
+ 	return 0;
+ }
 -- 
 2.53.0
 
