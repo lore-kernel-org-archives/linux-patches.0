@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00DFD36606A;
-	Sat, 12 Sep 2026 07:55:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E54725393E;
+	Sat, 12 Sep 2026 07:55:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789199752; cv=none; b=YlmQfJiyIpBtB3xUff4RqbhFRldgYV4Mfs4ZIcgfQeOPKuMhZK8bhpr4IK4zI9YTf6OB0wY0+OC0K2MjvPR9jfwxOVYKai1xUN0cB67qFx0skGfrLZYZvhpDFvmj0yrT34YzSzuFbg+0qOQAS7JGMj25RYXeBWjN3enEJAjBjfA=
+	t=1789199756; cv=none; b=JVbi/Or5MFjo/QBu0spK3rujNk/Ah3y9Eh19BL5ptgFo4Sohgpt2F5ch86g0GgFFIjf0vELpOkeWfneysCpxqNwTfKYfxrHYKNZO8kCT+YB4YwPXErXv78HoI9+PASkDMkWuO8R/GCc7fefhJSiIsr46aAPXMASXuBX2AcVpKDw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789199752; c=relaxed/simple;
-	bh=R4RR04HrTXjmhrT0nzmWOe426fv2XiZNsYjO6oB/nTQ=;
+	s=arc-20240116; t=1789199756; c=relaxed/simple;
+	bh=7ItQSTOlJe/YXXWfyH2jy0imAYuzZHNpyYXZY6v9wZk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dO1OgSMJV886MfW/hWiV2VY67hrXHX6GOn8E9QO8epF1HUW2P9oxO8YjebIvSZsCGgVqG5kwd3n6cTQdmAk8PsCuprp5xiEF+FExhElU+H5WcXhpxg4mOeJFhKKfO+SCNQhBqA5geByHj6zM4VId/9xglEQiGyv6fa++bpkOQ+c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HX4gqila; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=f7r1gOf8V5lnrwoxwVUkfc7Blkylf4KGiHXcCVHYjPx3xy6Q7A923BdNA8GOEXpcGXIZfgD1uyYmQ6DVPYOCv6fbPJSPT2Pz8tAx+52KPHwMjOoNkVZKKOf5+tzkZvxpDquVTXxSLqkmFnxvKI+QvywYGjO7cLnG2pxaG+Pl9B0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ket4tGaN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HX4gqila"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C854B1F000FF;
-	Sat, 12 Sep 2026 07:55:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ket4tGaN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1E8A1F000FF;
+	Sat, 12 Sep 2026 07:55:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789199750;
-	bh=bN2i8VJ9Yi9zUDCKyGmSHt3VWK/mIyNfSu2oOLlXc1c=;
+	s=korg; t=1789199755;
+	bh=y+SKBFA3zdXgYxWU9hKpePjm74Bm5Uetpg5D6XC1FKE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HX4gqila8qAnLBTtekmLREzgwNXDTWZAPBK7YkOB0HXWoMHAZGptqZaNHh2yC/7pv
-	 nlUKLXNAqIWVkZTOc5YsP0cxMwund4TGskOecNLAfnhOA+xIGL1bSX65A0/vpDOYrt
-	 XHVpN4wAT9iyRIIVzZ4sH8lxKuvgQiyj672YNH5A=
+	b=Ket4tGaNWJv4jWZQhL18QDgFWVjPPla84+PzjZa2PV+rDZvTc4q70SR9jzlVaF+Fw
+	 Du9ldLjdYiU73eNvRIXld9qz7KQW+Ikh9i0SBIRM0s7AnGJNzf0rhnXYnNizeY4604
+	 35TE3vIOVRxtV2gTet+JlvT/04cvhcM1pQaFmiCQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Feng Yang <yangfeng@kylinos.cn>,
 	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0650/1815] selftests/bpf: Fix missing allocation null checks in test_progs.c
-Date: Sat, 12 Sep 2026 08:40:00 +0200
-Message-ID: <20260912065704.139050497@linuxfoundation.org>
+Subject: [PATCH 7.2 0651/1815] selftests/bpf: Fix memory leak on subtest_states reallocation
+Date: Sat, 12 Sep 2026 08:40:01 +0200
+Message-ID: <20260912065704.162590029@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -53,52 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Feng Yang <yangfeng@kylinos.cn>
 
-[ Upstream commit 12b362b2f06b283b7d8a2450f702f9b6a0f94aed ]
+[ Upstream commit 06efb01c6530e9cfc247178cb96aa8adb3beaf61 ]
 
-Add null checks after memory allocations to prevent potential segmentation faults.
+Fix memory leak in subtest_states reallocation,
+and revert subtest_num if allocation fails.
 
-Fixes: 79b453501310 ("tools/bpf: add a test for bpf_get_stack with tracepoint prog")
 Fixes: 0925225956bb ("bpf/selftests: Add granular subtest output for prog_test")
 Signed-off-by: Feng Yang <yangfeng@kylinos.cn>
-Link: https://lore.kernel.org/bpf/20260723085100.482147-4-yangfeng59949@163.com
+Link: https://lore.kernel.org/bpf/20260723085100.482147-6-yangfeng59949@163.com
 Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/test_progs.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ tools/testing/selftests/bpf/test_progs.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
 diff --git a/tools/testing/selftests/bpf/test_progs.c b/tools/testing/selftests/bpf/test_progs.c
-index 643c199c3e0c1..ded892f8777b7 100644
+index ded892f8777b7..8ffababe0084b 100644
 --- a/tools/testing/selftests/bpf/test_progs.c
 +++ b/tools/testing/selftests/bpf/test_progs.c
-@@ -730,11 +730,14 @@ int compare_map_keys(int map1_fd, int map2_fd)
- int compare_stack_ips(int smap_fd, int amap_fd, int stack_trace_len)
- {
- 	__u32 key, next_key, *cur_key_p, *next_key_p;
--	char *val_buf1, *val_buf2;
--	int i, err = 0;
-+	char *val_buf1 = NULL, *val_buf2 = NULL;
-+	int i, err = -ENOMEM;
+@@ -573,18 +573,19 @@ bool test__start_subtest_with_desc(const char *subtest_name, const char *subtest
+ 	struct subtest_state *subtest_state;
+ 	const char *subtest_display_name;
+ 	size_t sub_state_size = sizeof(*subtest_state);
++	void *tmp;
  
- 	val_buf1 = malloc(stack_trace_len);
- 	val_buf2 = malloc(stack_trace_len);
-+	if (!val_buf1 || !val_buf2)
-+		goto out;
-+	err = 0;
- 	cur_key_p = NULL;
- 	next_key_p = &key;
- 	while (bpf_map_get_next_key(smap_fd, cur_key_p, next_key_p) == 0) {
-@@ -1514,6 +1517,10 @@ static int dispatch_thread_send_subtests(int sock_fd, struct test_state *state)
- 	int subtest_num = state->subtest_num;
+ 	if (env.subtest_state)
+ 		test__end_subtest();
  
- 	state->subtest_states = malloc(subtest_num * sizeof(*subtest_state));
-+	if (!state->subtest_states) {
-+		state->subtest_num = 0;
-+		return -ENOMEM;
-+	}
+ 	state->subtest_num++;
+-	state->subtest_states =
+-		realloc(state->subtest_states,
+-			state->subtest_num * sub_state_size);
+-	if (!state->subtest_states) {
++	tmp = realloc(state->subtest_states, state->subtest_num * sub_state_size);
++	if (!tmp) {
++		state->subtest_num--;
+ 		fprintf(stderr, "Not enough memory to allocate subtest result\n");
+ 		return false;
+ 	}
++	state->subtest_states = tmp;
  
- 	for (int i = 0; i < subtest_num; i++) {
- 		subtest_state = &state->subtest_states[i];
+ 	subtest_state = &state->subtest_states[state->subtest_num - 1];
+ 
 -- 
 2.53.0
 
