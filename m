@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76C2630FF08;
-	Sat, 12 Sep 2026 09:48:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F1D51D514E;
+	Sat, 12 Sep 2026 09:48:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789206525; cv=none; b=R7mujNqLLEgVibkWtcIy3532ZoRm/rZ2pV8WJJcNqkZAvny0jGWXbu+MSns3yCYZBwnQY6Dv+/vNXh2j7xS+yxb2SnPHb4IQc6tzI6uxZex7p9vX7ZAptkKxu/1GBrlplFHNmuM2Em08cN83/DrUvsyeu4b3LUK5umQpRqo0bNc=
+	t=1789206530; cv=none; b=ioFhGKzcc4UhLYIKfM0KpZBhqO39KLqZRb3a5qcQW4udzqePmbYHwEuOrdfjtg/InNq1o9pbpjtYbcH93BY26MI22wkoBcvuTv4hwoGQuDqg7eUoM44p/HOlHHGKpStGEs9d6fin6KnGHujbqnxYW2ynbHKktqOd5+JZ7E0cDgs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789206525; c=relaxed/simple;
-	bh=7W6r1YCUavhyydBeMeQ5t088ckSoiWzuKGBa6mP1TFI=;
+	s=arc-20240116; t=1789206530; c=relaxed/simple;
+	bh=G9+CwSGe282iJ+hSzLwwvalJkN7r4R9u8p7foeqFGx0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m7T59yq7munhLlOfK5ID81XypD4KAzl+3ynhjWNPRf6fET3NIRF1j7kGdhVfSfq/hoC+yVfqnlYt9wYjdFVJzNy2lQhgWnhO7YXQJCjOAApJkTtJr+iRWJfxlXUFpSzD4KinvjclGc2zowBgJuSn1Wye28L6fAzle0PUF7YpaPc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D5zFiUf+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QoXa7JyTiXlmSZ8HIaTisqy23WQ31yhtBRfEVVhTNvQpYfHh0ZJDYArX2Z0eFdGGwoWDTCXRFYoL/WkUXoDxEZWSZ0zz9jliAGKe0/DgbkI56GMsaQvzBH1LqQ/PHtXY7bJ8zV+L9fRalZFaAiQtWJP4f3gc8OAUVSbpVlA4Qdg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uWm9Ko3q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D5zFiUf+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E10B01F000FF;
-	Sat, 12 Sep 2026 09:48:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uWm9Ko3q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E01051F000FF;
+	Sat, 12 Sep 2026 09:48:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789206524;
-	bh=88XgKo3S4qbqkStO8tGSMDYGrzK01UuglE10/+oUb4g=;
+	s=korg; t=1789206529;
+	bh=cxBBgMnFO+e256mrksk0OEyU5HH7vYTEvT2dUurmbCw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D5zFiUf+T2jvBgrKUaGXIMJhuy9bK7WYFALDKGsz2I7cjBrtfYlRds3qkD6t7i9TU
-	 rHIDxzej0uHwOoc08i2F5uC6DUwGJ8PM0zR4/1Efe4IZaQ5SGKws8WT8nJTfXDhR81
-	 h5C644rwuNbdsqnYxkASbYpYdjmpKpvfk1JrJCgA=
+	b=uWm9Ko3qehWTODJ3AQ7UUqCKpExW1MCOCTXyj2qhyQHEbxvSpHgDmwNQeYvklYWn/
+	 hxB0IRzUrgR2XVt+fZ6h98hQzeLW3DNqoiziF6J2/WDf4VOMuCCwWBpP+1TckJKrga
+	 kQgoAjCnNm/N8Kg7kHPodxHgRxB0QBpBS2ZvQB/U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ruoyu Wang <ruoyuw560@gmail.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Cen Zhang <zzzccc427@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0223/1518] bus: qcom-ebi2: Fix clock leak on probe failure
-Date: Sat, 12 Sep 2026 08:39:52 +0200
-Message-ID: <20260912065628.532100538@linuxfoundation.org>
+Subject: [PATCH 6.18 0224/1518] wifi: mac80211_hwsim: avoid NULL skb in stop queue drain
+Date: Sat, 12 Sep 2026 08:39:53 +0200
+Message-ID: <20260912065628.555027330@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,55 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruoyu Wang <ruoyuw560@gmail.com>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit 64774dea58969194ea5c27fa639954e551a87024 ]
+[ Upstream commit 158438cd6ad69d6dd7d871582c38baf22169fede ]
 
-qcom_ebi2_probe() enables the EBI2X and EBI2 clocks before it walks
-child nodes and populates child devices. If reading a child node's reg
-property fails, or if of_platform_default_populate() fails, probe returns
-without disabling either clock.
+mac80211_hwsim_stop() drops any frames left in data->pending. The loop
+currently checks skb_queue_empty() and then dequeues separately.
 
-Route those failure paths through the existing clock cleanup labels so a
-failed probe does not leave the clocks prepared and enabled.
+That split is racy with TX status handling, which can remove a pending
+frame under the queue lock. If the last entry is removed after the empty
+check, skb_dequeue() returns NULL and the stop path passes that NULL skb
+to ieee80211_free_txskb().
 
-Fixes: 335a12754808 ("bus: qcom: add EBI2 driver")
-Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
-Link: https://lore.kernel.org/r/20260620080406.1970447-1-ruoyuw560@gmail.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Use skb_dequeue() as the loop condition instead. The dequeue result is the
+object that stop owns and frees, and a concurrent status completion that
+empties the queue simply makes the loop terminate.
+
+Fixes: bd18de517923 ("mac80211_hwsim: drop pending frames on stop")
+Assisted-by: Codex:gpt-5.5
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Link: https://patch.msgid.link/20260706161822.921039-1-zzzccc427@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bus/qcom-ebi2.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/net/wireless/virtual/mac80211_hwsim.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/bus/qcom-ebi2.c b/drivers/bus/qcom-ebi2.c
-index be8166565e7cc..ab00c75b9e953 100644
---- a/drivers/bus/qcom-ebi2.c
-+++ b/drivers/bus/qcom-ebi2.c
-@@ -353,7 +353,7 @@ static int qcom_ebi2_probe(struct platform_device *pdev)
- 		/* Figure out the chipselect */
- 		ret = of_property_read_u32(child, "reg", &csindex);
- 		if (ret)
--			return ret;
-+			goto err_disable_clk;
+diff --git a/drivers/net/wireless/virtual/mac80211_hwsim.c b/drivers/net/wireless/virtual/mac80211_hwsim.c
+index a0724e1c53070..3d66f4aa8393e 100644
+--- a/drivers/net/wireless/virtual/mac80211_hwsim.c
++++ b/drivers/net/wireless/virtual/mac80211_hwsim.c
+@@ -2159,6 +2159,7 @@ static int mac80211_hwsim_start(struct ieee80211_hw *hw)
+ static void mac80211_hwsim_stop(struct ieee80211_hw *hw, bool suspend)
+ {
+ 	struct mac80211_hwsim_data *data = hw->priv;
++	struct sk_buff *skb;
+ 	int i;
  
- 		if (csindex > 5) {
- 			dev_err(dev,
-@@ -372,8 +372,12 @@ static int qcom_ebi2_probe(struct platform_device *pdev)
- 		have_children = true;
- 	}
+ 	data->started = false;
+@@ -2166,8 +2167,8 @@ static void mac80211_hwsim_stop(struct ieee80211_hw *hw, bool suspend)
+ 	for (i = 0; i < ARRAY_SIZE(data->link_data); i++)
+ 		hrtimer_cancel(&data->link_data[i].beacon_timer);
  
--	if (have_children)
--		return of_platform_default_populate(np, NULL, dev);
-+	if (have_children) {
-+		ret = of_platform_default_populate(np, NULL, dev);
-+		if (ret)
-+			goto err_disable_clk;
-+	}
-+
- 	return 0;
+-	while (!skb_queue_empty(&data->pending))
+-		ieee80211_free_txskb(hw, skb_dequeue(&data->pending));
++	while ((skb = skb_dequeue(&data->pending)))
++		ieee80211_free_txskb(hw, skb);
  
- err_disable_clk:
+ 	wiphy_dbg(hw->wiphy, "%s\n", __func__);
+ }
 -- 
 2.53.0
 
