@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99C3E308F3B;
-	Sat, 12 Sep 2026 14:30:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 211C1308F3B;
+	Sat, 12 Sep 2026 14:30:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789223414; cv=none; b=pK9pwu3jlRDgy+AvQ688zAO+MPLpoW5qpHXXuqHIq1YqwvRw4s0+VtPWasqWiQ0N24wUomABmlI9Etd1oTVuoN+8x23KCwj+RVt3S1ruidIyGvx5cuaxq4sxw6qEVjH7I/GfQLtSTEXW6JRhJeV7NBcpaXgxGUQWBumFuw11eHk=
+	t=1789223419; cv=none; b=c01cRT3zM61bwhS4f7cHs4LN1a5Dj6OharHVcoetpOzlxUUWxrK9lzqeXDuz3ApcsVN64W+lKjv3b+HgSVan70dYK1CDwSGeLKMrRzcGguwNWh23VqXW8WOZjXPyCBhjAbWjRms7BA2XDw21/jkuNmTwwCt50E78/WeGyN5H9Rc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789223414; c=relaxed/simple;
-	bh=UFzHtwbMYcX5Cw13SkkvBImgaKttCZDoEuL8UUanwQA=;
+	s=arc-20240116; t=1789223419; c=relaxed/simple;
+	bh=YOYU8kp8qJzZQITcEJVXWxt22tvj/48gUAACVLbazqE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bq3n0tSga3VgGFuj0KS79P2AIcAyb04Owvn57zB/bGqvvcVbfjUoOBQMbp2Bil/BDnQ+W2j4U9x8GCKdQGs5nOeAEnUzwfEIg1GWTAN5RZkE1FVKGp+3XwGgVqpkatnUsT0/n8+svCEXIKXishfAiYXADqE8wTADIZMqQGfQ25c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hHju10OF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tKSxi/T7mfabmY/3XZEpfXENCw1mwSWJAnmpJz/VNoLY3/TGum4uB8BD+atHpwZPtVnCFXC2hMR6RsL2xpwF6jev3wxxmC/SckBF1M5JzVCSOLlihYgY+nobJbvZv9YaM40klgCry+Go6/twOdaLclPRhb+VZS+RvwmwBJtRYFM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T+rlbYxK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hHju10OF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EB431F000FF;
-	Sat, 12 Sep 2026 14:30:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T+rlbYxK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EB2C1F000FF;
+	Sat, 12 Sep 2026 14:30:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789223413;
-	bh=zOS32A0yR6XJ9QPox/hqoTCE0Tr1c3gGIgx7rYAk3F4=;
+	s=korg; t=1789223418;
+	bh=43KRhD4utvGlzycQK/n5pMnYBWs5GbYqIj7qNsYwqgM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hHju10OFDOgYZe5Qzqj0lGHv+aoo3LYPH31cWOwvZYFHQdOsoOFLbh5OKxCNv7lKb
-	 Yk6YMmwnGaFBvCH/ys58bXk/SzZ/7f7m3h2etx0h8aleEItxL3OIHj5PDaP1hLT8vA
-	 VbYFrukBtQ/JPRT/vDDZkejhtNLEvgoN3JK9ZJ0E=
+	b=T+rlbYxK7TGhqweLS30GL1e+s4Q4Vc280J41YlmZAqtAHPIeJM0mt7kiZJ8bZJdzZ
+	 FAT0OB7XBeQ3rX04miVGenNOQStffdRGjg2tc3DMCy5S8mVgcOU51SYlM6rirybNFZ
+	 8/G9JvAi2NZUTuKuxzrXHyMaffHhG6+LgrO+g2+w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qingshuang Fu <fuqingshuang@kylinos.cn>,
-	Thomas Gleixner <tglx@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0768/1424] irqchip/renesas-irqc: Fix generic interrupt chip leak on remove
-Date: Sat, 12 Sep 2026 08:53:20 +0200
-Message-ID: <20260912065624.495128690@linuxfoundation.org>
+	Shivam Rawat <shivrawa@qti.qualcomm.com>,
+	Akhil P Oommen <akhilpo@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>
+Subject: [PATCH 6.6 0786/1424] drm/msm/a6xx: Fix stale rpmh votes after suspend
+Date: Sat, 12 Sep 2026 08:53:38 +0200
+Message-ID: <20260912065624.900789332@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -51,47 +55,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qingshuang Fu <fuqingshuang@kylinos.cn>
+From: Shivam Rawat <shivrawa@qti.qualcomm.com>
 
-[ Upstream commit 616dd89d81ad9a3cf1cfff4088a4c43e4e00d6ba ]
+[ Upstream commit d9108bfdb746edacdb05bd27959a4ae63c6c7f3f ]
 
-The driver allocates domain generic chips probe. However, on driver
-removal, the generic chips are not automatically freed when the interrupt
-domain is removed because the domain flags do not include
-IRQ_DOMAIN_FLAG_DESTROY_GC.
+There are stale RPMH votes (BCM votes) observed after GMU suspend. This
+is because the rpmh stop sequences are skipped during gmu suspend. Fix
+this and also move GMU to reset state to avoid any further activity.
 
-This causes both the domain generic chips structure and the associated
-generic chips to be leaked. Additionally, the generic chips remain on the
-global list and may later be accessed by generic interrupt chip suspend,
-resume, or shutdown callbacks after the driver has been removed,
-potentially resulting in a use-after-free and kernel crash.
-
-Fix the resource leak by setting IRQ_DOMAIN_FLAG_DESTROY_GC on the
-interrupt domain; this lets the interrupt domain core automatically
-release all generic chips when irq_domain_remove() is invoked, removing
-the need for manual cleanup calls in error paths and remove callback.
-
-Fixes: 99c221df33fbfa1b ("irqchip/renesas-irqc: Move over to nested generic chip")
-Signed-off-by: Qingshuang Fu <fuqingshuang@kylinos.cn>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Link: https://patch.msgid.link/20260708100846.506314-1-fffsqian@163.com
+Fixes: f248d5d5159a ("drm/msm/a6xx: Fix PDC sleep sequence")
+Signed-off-by: Shivam Rawat <shivrawa@qti.qualcomm.com>
+Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-HDK
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/730652/
+Message-ID: <20260605-assorted-fixes-june-v1-1-2caa04f7287c@oss.qualcomm.com>
+Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-renesas-irqc.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/irqchip/irq-renesas-irqc.c b/drivers/irqchip/irq-renesas-irqc.c
-index 49b446b396f98..b7913a224a74f 100644
---- a/drivers/irqchip/irq-renesas-irqc.c
-+++ b/drivers/irqchip/irq-renesas-irqc.c
-@@ -176,6 +176,7 @@ static int irqc_probe(struct platform_device *pdev)
- 		goto err_runtime_pm_disable;
- 	}
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+index e816ddcac2f8d..b5b77d9f6b7c8 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+@@ -492,7 +492,7 @@ static void a6xx_rpmh_stop(struct a6xx_gmu *gmu)
+ 	int ret;
+ 	u32 val;
  
-+	p->irq_domain->flags |= IRQ_DOMAIN_FLAG_DESTROY_GC;
- 	ret = irq_alloc_domain_generic_chips(p->irq_domain, p->number_of_irqs,
- 					     1, "irqc", handle_level_irq,
- 					     0, 0, IRQ_GC_INIT_NESTED_LOCK);
+-	if (test_and_clear_bit(GMU_STATUS_FW_START, &gmu->status))
++	if (!test_and_clear_bit(GMU_STATUS_FW_START, &gmu->status))
+ 		return;
+ 
+ 	gmu_write(gmu, REG_A6XX_GMU_RSCC_CONTROL_REQ, 1);
+@@ -1100,6 +1100,9 @@ static void a6xx_gmu_shutdown(struct a6xx_gmu *gmu)
+ 	/* Stop the interrupts and mask the hardware */
+ 	a6xx_gmu_irq_disable(gmu);
+ 
++	/* Halt the gmu cm3 core */
++	gmu_write(gmu, REG_A6XX_GMU_CM3_SYSRESET, 1);
++
+ 	/* Tell RPMh to power off the GPU */
+ 	a6xx_rpmh_stop(gmu);
+ 
 -- 
 2.53.0
 
