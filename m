@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDCAD42BE93;
-	Sat, 12 Sep 2026 10:15:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33D40356A0D;
+	Sat, 12 Sep 2026 10:15:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789208155; cv=none; b=jNJhqJ2OGexoD9+Ca/dReI/kXykys9I9GvUUVyxSfiltedet2/7vVapokG4L4ICsXpwuAwgrokdvG01v1VmijO9GHLEOahY2xpPAs8W2KwUokq7VZ6FRcBChxZ7q14yLbN8KTrt2WPzGIqTxIMM3QG8JDpSsaqRe8ggA2302kAs=
+	t=1789208161; cv=none; b=XNSCIKv7oV5JjYKvAc41sLI0k0YVLwO2iZPl/t69mXmz6+WP5O2JGPC+l2Abie978syguN2A3e201vjhGVdZClo97lgMvT7d41VOwSwIu49hyU0BWfwjEXTWsjIRKbhcAwcf7du04LyfkHAjJb3BOFmI820gX6GZujI5xRiS+gY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789208155; c=relaxed/simple;
-	bh=bLGdTBY8FgYK5ZDRYmyPbaQR1aG/EA7I2QpVE1k7NJE=;
+	s=arc-20240116; t=1789208161; c=relaxed/simple;
+	bh=npdJ/Gqxmgyr49wkANeqnpFfZnP+aauESMkuR86s72Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BuE5SHs0kNwaTJZhGQRO5gAYkP3zZe8tT14WikQyA8lLpUzaVkyaC6bglzUM8IZErSX8UKlMtqJPcjve7PRpr7ouM0ZvycwwkNdWuHrZVO8Jf1qpZBoIMAzmRG1hFVlfv+y6VG21QdhtbaL1i4tFlANhBUNyItAB93D5wv4Mh20=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wWIPGjBU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YhNRAO3ANQsfHlTFq/ts10LOmh/cLN70UnHF9AbGId5pl8N1+kul7vkHtcfuRIaIDReUjyhDXabOxySeXM4/86mbEYxixPLv2ie038nzXLZmzl5L5Lt6C7CXLIX2ocgPai/niH3WPz9qOCD4adL1ivbQPePUrAScPkbMCJCB+Kk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J3iNGILT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wWIPGjBU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE7B41F000FF;
-	Sat, 12 Sep 2026 10:15:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J3iNGILT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCEFA1F000FF;
+	Sat, 12 Sep 2026 10:15:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789208153;
-	bh=LdDhBdfg89AQXOpRG5ND7tnFDkx2P/HKSBb+/qPN6/I=;
+	s=korg; t=1789208158;
+	bh=uXzZzX8brSsXOpoU0Bn3qBc9il7oxnDv2Qeaugxer4Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wWIPGjBUZ1hlLCXy5i0wvmsLjCoZmbLk1wK9fQCSu/LFjMxPNDJBQHB5mQzU/3HtH
-	 60YK/H+qaSeTfSjhS25M5rOrzr1U3is8LVM0MliUbIP2gjGvW6X1ubqCwdxz9VGGgi
-	 xBY5wQ5SlHUIgGVeokJKtHfZAp7RVZCWFuumLG0k=
+	b=J3iNGILTdyHfH1E//8O9jGUd6SFGVYz1NDFHk3fB3CBDkAsPyG1byBknORpuuIpn9
+	 Se+z0rEzRtMQa+cTGaUWb10Mta4PBiuBqsJiA4Pb8eqxzQ2yn3vb8QMG8Zlt9FVVZn
+	 UkjyPcFNsHqNSh8TcI8s+WG07WbeWQjmIHAu9yJ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cosmo Chou <chou.cosmo@gmail.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-	Lee Jones <lee@kernel.org>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Ian Rogers <irogers@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0561/1518] leds: pca9532: Fix phantom device registration on missing hardware
-Date: Sat, 12 Sep 2026 08:45:30 +0200
-Message-ID: <20260912065636.125981788@linuxfoundation.org>
+Subject: [PATCH 6.18 0562/1518] perf cap: Remove used_root parameter and simplify capability checks
+Date: Sat, 12 Sep 2026 08:45:31 +0200
+Message-ID: <20260912065636.147433267@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,58 +51,183 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cosmo Chou <chou.cosmo@gmail.com>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit 8d6b6c05b8e33d11e3fb3203309385e1a9cceecd ]
+[ Upstream commit 87ec3437f37b9fe44c524ba967cb12e78de06f15 ]
 
-The initial PWM and PSC register writes in pca9532_configure() do not
-check the return values of i2c_smbus_write_byte_data(). If the I2C
-device is physically absent from the bus, the write fails with -ENXIO.
-However, the driver ignores this error and allows probe() to complete
-successfully.
+Refactor perf_cap__capable() to completely remove the used_root out-parameter
+as requested by the maintainer. Relying on an explicit used_root boolean
+poisoned sequential capability checks (e.g. failing CAP_SYS_ADMIN checks
+poisoning the flag for subsequent CAP_PERFMON evaluations for unprivileged
+users) and created redundant complexity across check_ftrace_capable(),
+symbol__read_kptr_restrict(), and perf_event_paranoid_check().
 
-This results in the registration of phantom LED class devices and
-gpiochips backed by non-existent hardware. Subsequent GPIO reads from
-these phantom chips return bogus values (due to -ENXIO being truncated
-to an unsigned char in pca9532_gpio_get_value()), silently corrupting
-hardware state tracking in userspace.
+Streamline the capability API to perform a pure true/false boolean
+evaluation. The function checks the Effective set using SYS_capget; if
+the syscall is missing or fails on legacy kernels, it cleanly falls back
+to checking EUID == 0. This perfectly preserves modern capability-aware host
+sessions, guarantees transparent fallback for older kernels, and correctly
+rejects privileged operations for containerized root processes that have
+explicitly dropped their capability bounding and permitted sets.
 
-Propagate the I2C write failures back to probe() so the driver core
-can gracefully abort binding and release devres-managed resources.
-
-Fixes: e14fa82439d3 ("leds: Add pca9532 led driver")
-Signed-off-by: Cosmo Chou <chou.cosmo@gmail.com>
-Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260715080747.1638097-1-chou.cosmo@gmail.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+Fixes: e25ebda78e23 ("perf cap: Tidy up and improve capability testing")
+Suggested-by: Namhyung Kim <namhyung@kernel.org>
+Assisted-by: Antigravity:gemini-3.5-flash
+Signed-off-by: Ian Rogers <irogers@google.com>
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/leds/leds-pca9532.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ tools/perf/builtin-ftrace.c  | 13 +++----------
+ tools/perf/util/bpf-filter.c | 22 +++++++++-------------
+ tools/perf/util/cap.c        |  4 +---
+ tools/perf/util/cap.h        |  3 +--
+ tools/perf/util/symbol.c     |  3 +--
+ tools/perf/util/util.c       | 12 +++---------
+ 6 files changed, 18 insertions(+), 39 deletions(-)
 
-diff --git a/drivers/leds/leds-pca9532.c b/drivers/leds/leds-pca9532.c
-index 80bf94e699d41..af141dec4b927 100644
---- a/drivers/leds/leds-pca9532.c
-+++ b/drivers/leds/leds-pca9532.c
-@@ -395,10 +395,14 @@ static int pca9532_configure(struct i2c_client *client,
- 	for (i = 0; i < 2; i++)	{
- 		data->pwm[i] = pdata->pwm[i];
- 		data->psc[i] = pdata->psc[i];
--		i2c_smbus_write_byte_data(client, PCA9532_REG_PWM(maxleds, i),
--			data->pwm[i]);
--		i2c_smbus_write_byte_data(client, PCA9532_REG_PSC(maxleds, i),
--			data->psc[i]);
-+		err = i2c_smbus_write_byte_data(client, PCA9532_REG_PWM(maxleds, i),
-+						data->pwm[i]);
-+		if (err < 0)
-+			return err;
-+		err = i2c_smbus_write_byte_data(client, PCA9532_REG_PSC(maxleds, i),
-+						data->psc[i]);
-+		if (err < 0)
-+			return err;
+diff --git a/tools/perf/builtin-ftrace.c b/tools/perf/builtin-ftrace.c
+index 4cc33452d79b6..d8118256243e2 100644
+--- a/tools/perf/builtin-ftrace.c
++++ b/tools/perf/builtin-ftrace.c
+@@ -71,18 +71,11 @@ static void ftrace__workload_exec_failed_signal(int signo __maybe_unused,
+ 
+ static bool check_ftrace_capable(void)
+ {
+-	bool used_root;
+-
+-	if (perf_cap__capable(CAP_PERFMON, &used_root))
+-		return true;
+-
+-	if (!used_root && perf_cap__capable(CAP_SYS_ADMIN, &used_root))
++	if (perf_cap__capable(CAP_PERFMON) ||
++	    perf_cap__capable(CAP_SYS_ADMIN))
+ 		return true;
+ 
+-	pr_err("ftrace only works for %s!\n",
+-		used_root ? "root"
+-			  : "users with the CAP_PERFMON or CAP_SYS_ADMIN capability"
+-		);
++	pr_err("ftrace only works for users with the CAP_PERFMON or CAP_SYS_ADMIN capability!\n");
+ 	return false;
+ }
+ 
+diff --git a/tools/perf/util/bpf-filter.c b/tools/perf/util/bpf-filter.c
+index 1a2e7b388d57d..bcd81084e3420 100644
+--- a/tools/perf/util/bpf-filter.c
++++ b/tools/perf/util/bpf-filter.c
+@@ -629,24 +629,20 @@ struct perf_bpf_filter_expr *perf_bpf_filter_expr__new(enum perf_bpf_filter_term
+ 
+ static bool check_bpf_filter_capable(void)
+ {
+-	bool used_root;
++	int fd;
+ 
+-	if (perf_cap__capable(CAP_BPF, &used_root))
++	if (perf_cap__capable(CAP_BPF))
+ 		return true;
+ 
+-	if (!used_root) {
+-		/* Check if root already pinned the filter programs and maps */
+-		int fd = get_pinned_fd("filters");
+-
+-		if (fd >= 0) {
+-			close(fd);
+-			return true;
+-		}
++	/* Check if root already pinned the filter programs and maps */
++	fd = get_pinned_fd("filters");
++	if (fd >= 0) {
++		close(fd);
++		return true;
  	}
  
- 	data->hw_blink = true;
+-	pr_err("Error: BPF filter only works for %s!\n"
+-	       "\tPlease run 'perf record --setup-filter pin' as root first.\n",
+-	       used_root ? "root" : "users with the CAP_BPF capability");
++	pr_err("Error: BPF filter only works for users with the CAP_BPF capability!\n"
++	       "\tPlease run 'perf record --setup-filter pin' as root first.\n");
+ 
+ 	return false;
+ }
+diff --git a/tools/perf/util/cap.c b/tools/perf/util/cap.c
+index ac6d1d9a523d9..272bd8255ff12 100644
+--- a/tools/perf/util/cap.c
++++ b/tools/perf/util/cap.c
+@@ -12,7 +12,7 @@
+ 
+ #define MAX_LINUX_CAPABILITY_U32S _LINUX_CAPABILITY_U32S_3
+ 
+-bool perf_cap__capable(int cap, bool *used_root)
++bool perf_cap__capable(int cap)
+ {
+ 	struct __user_cap_header_struct header = {
+ 		.version = _LINUX_CAPABILITY_VERSION_3,
+@@ -21,7 +21,6 @@ bool perf_cap__capable(int cap, bool *used_root)
+ 	struct __user_cap_data_struct data[MAX_LINUX_CAPABILITY_U32S] = {};
+ 	__u32 cap_val;
+ 
+-	*used_root = false;
+ 	while (syscall(SYS_capget, &header, &data[0]) == -1) {
+ 		/* Retry, first attempt has set the header.version correctly. */
+ 		if (errno == EINVAL && header.version != _LINUX_CAPABILITY_VERSION_3 &&
+@@ -29,7 +28,6 @@ bool perf_cap__capable(int cap, bool *used_root)
+ 			continue;
+ 
+ 		pr_debug2("capget syscall failed (%m) fall back on root check\n");
+-		*used_root = true;
+ 		return geteuid() == 0;
+ 	}
+ 
+diff --git a/tools/perf/util/cap.h b/tools/perf/util/cap.h
+index c1b8ac033ccc5..bf09fb20c7793 100644
+--- a/tools/perf/util/cap.h
++++ b/tools/perf/util/cap.h
+@@ -18,7 +18,6 @@
+ #define CAP_BPF		39
+ #endif
+ 
+-/* Query if a capability is supported, used_root is set if the fallback root check was used. */
+-bool perf_cap__capable(int cap, bool *used_root);
++bool perf_cap__capable(int cap);
+ 
+ #endif /* __PERF_CAP_H */
+diff --git a/tools/perf/util/symbol.c b/tools/perf/util/symbol.c
+index af0df841d640c..0d4f1f29b3356 100644
+--- a/tools/perf/util/symbol.c
++++ b/tools/perf/util/symbol.c
+@@ -2326,8 +2326,7 @@ static bool symbol__read_kptr_restrict(void)
+ {
+ 	bool value = false;
+ 	FILE *fp = fopen("/proc/sys/kernel/kptr_restrict", "r");
+-	bool used_root;
+-	bool cap_syslog = perf_cap__capable(CAP_SYSLOG, &used_root);
++	bool cap_syslog = perf_cap__capable(CAP_SYSLOG);
+ 
+ 	if (fp != NULL) {
+ 		char line[8];
+diff --git a/tools/perf/util/util.c b/tools/perf/util/util.c
+index 0f031eb80b4c5..452c691991ae1 100644
+--- a/tools/perf/util/util.c
++++ b/tools/perf/util/util.c
+@@ -331,15 +331,9 @@ int perf_event_paranoid(void)
+ 
+ bool perf_event_paranoid_check(int max_level)
+ {
+-	bool used_root;
+-
+-	if (perf_cap__capable(CAP_SYS_ADMIN, &used_root))
+-		return true;
+-
+-	if (!used_root && perf_cap__capable(CAP_PERFMON, &used_root))
+-		return true;
+-
+-	return perf_event_paranoid() <= max_level;
++	return perf_cap__capable(CAP_SYS_ADMIN) ||
++	       perf_cap__capable(CAP_PERFMON) ||
++	       perf_event_paranoid() <= max_level;
+ }
+ 
+ int perf_tip(char **strp, const char *dirpath)
 -- 
 2.53.0
 
