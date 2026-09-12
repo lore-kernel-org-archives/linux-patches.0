@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F249B2D5C68;
-	Sat, 12 Sep 2026 16:22:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD7B432B125;
+	Sat, 12 Sep 2026 16:22:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789230171; cv=none; b=ILUwxy6OEKeXngf5YD1BwScDrqRRnkLhUub0S2Lpq7G50zVXhvccJdnbyy2YjSQ3ut7YmB0eIgi6RPg5PrCYnhQeksltcglcK7kSNx+I2hLmD7FqkXHOsK34TzO6yxFnoGuGMMbSZQYJ6j9swPALCuQzfL62O53MZzaEjEG82/Y=
+	t=1789230175; cv=none; b=JfGB63ZWXGL4ME27QgNvm6GEVhh8iyYqmlJp9izcX52EI+wjToxQ+qhtA+6m7No+u9sb/O8BMZS+UQYU+H2yfBFIz266nJ/EhvpDiY0mgOr03P0QiYQT/4xNFeHaiZAwmryUYhEN/pyLqIRCzTG7N+C8p8WjrrO+5tb21AfGWaA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789230171; c=relaxed/simple;
-	bh=2slRokZn6GCi/qwXcTkWUCEWPE/tXRnXKTNctFGljTk=;
+	s=arc-20240116; t=1789230175; c=relaxed/simple;
+	bh=WlwKYv1fMeMHdaGWF5r8zFrVBMT0n/BL8xYwNaAKXPg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QoUXOYM1TlSbC/uiJRYOg71QlCf39K4cANO6pTTyfgufaHfvFiNoIA8CKBqybxRl2eXBjx8I8N1gXj3Jnvt0tK2WAsS1+h1zDN21q0GtouwQKZg2iNHKewnAM9xQ7n3tjD2uMc/G55GkAHqXLgmkTyVe2mDG5vDfggcSKlPiDG4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZPhu+xea; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=g+cwtqLueuulrnkPQEqQlFlXx9q3tXS7v1/gVMRbQRhjg2o9Y+aa2QCrN/0NNiOtagWOfspQ1L4w6VFh2YOBBGj4A6AGzrApQFmgOAlImSgYpSVpaL6H8TWmtZ+y4jKKNK+tLHYWjm8WGGnnAnatNbj+kzYzlU8I62m2YPt2Yxw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WDYa+G7w; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZPhu+xea"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC0651F000FF;
-	Sat, 12 Sep 2026 16:22:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WDYa+G7w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E46EE1F000FF;
+	Sat, 12 Sep 2026 16:22:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789230168;
-	bh=Nq+NT+2PJiTKAGm0gV5YuX0YEncclvRWJnD23+/yf00=;
+	s=korg; t=1789230173;
+	bh=DEPLJmMfWjjViuoZcANVYo2xC4VrVAO81v/H9NC/ioc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZPhu+xeaSg7YfnJ24XPvx4pW6VtsjXiavVeuwavEpDTKXXQbyLLI51M6Smbs9pZ26
-	 U3ZvsPsucDlBSHMId4647nYmGgg7Zofu6B+/HrJaOn0ey/ot684QhAwsC+SoV8jDJv
-	 pc7R0PDAB+IrO3uYr01mNT3zbOHDiRUziJFU+oEU=
+	b=WDYa+G7wnNiko1hupAysjy3oKf1ODOapyQEz4tu8wJ3XrCrWavucFrdO8wYNFXdp7
+	 Sbiro7PEfHcyIA0zh0CEJ9AWZSbnPtQlJM/e5ABygpFLG5ETZwc050kgVPuXXGPlkE
+	 qE+stRb0tadUvEfY4/Dy73DS9TPIX7omVD56q6NI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
-	Will Deacon <will@kernel.org>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0696/1191] iommu/qcom: Fix inverted fault report check in qcom_iommu_fault()
-Date: Sat, 12 Sep 2026 08:57:04 +0200
-Message-ID: <20260912065603.893241912@linuxfoundation.org>
+Subject: [PATCH 6.1 0697/1191] thermal: intel: int3400: clean up ODVP on probe failures
+Date: Sat, 12 Sep 2026 08:57:05 +0200
+Message-ID: <20260912065603.914934483@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -46,47 +45,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 1f33b8208a1978b0c0d6ad60a47fe4bb7a235e58 ]
+[ Upstream commit d83dc9ce57a746a6dca28439bcc0575d26fa6986 ]
 
-report_iommu_fault() returns 0 when a fault handler successfully handles
-the fault, and -ENOSYS when no handler is installed. The condition
-'!report_iommu_fault()' evaluates to true (printing "Unhandled context
-fault") precisely when the fault *was* handled, and stays silent when no
-handler is present — the opposite of what is intended.
+evaluate_odvp() creates per-ODVP sysfs files before the thermal zone
+and later probe resources are registered. The current unwind path only
+calls cleanup_odvp() from the late sysfs failure path, so failures after
+evaluate_odvp() but before that label, including
+thermal_tripless_zone_device_register() failures, leave the ODVP files
+and storage behind.
 
-Remove the '!' so the driver logs unhandled faults correctly.
+Move the ODVP cleanup to the common ART/TRT unwind path so every failure
+after evaluate_odvp() releases the ODVP state. Also clear the cached
+ODVP pointers in cleanup_odvp(), because evaluate_odvp() can already call
+it for partial setup failures while probe continues.
 
-Fixes: 049541e178d5 ("iommu: qcom: wire up fault handler")
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+Fixes: 006f006f1e5c ("thermal/int340x_thermal: Export OEM vendor variables")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260623015140.19300-1-pengpeng@iscas.ac.cn
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/arm/arm-smmu/qcom_iommu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/thermal/intel/int340x_thermal/int3400_thermal.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/iommu/arm/arm-smmu/qcom_iommu.c b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
-index cf8dcd2371e8f..96910ad0c9a7f 100644
---- a/drivers/iommu/arm/arm-smmu/qcom_iommu.c
-+++ b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
-@@ -210,7 +210,7 @@ static irqreturn_t qcom_iommu_fault(int irq, void *dev)
- 	fsynr = iommu_readl(ctx, ARM_SMMU_CB_FSYNR0);
- 	iova = iommu_readq(ctx, ARM_SMMU_CB_FAR);
+diff --git a/drivers/thermal/intel/int340x_thermal/int3400_thermal.c b/drivers/thermal/intel/int340x_thermal/int3400_thermal.c
+index 9280241518ee6..86876b99d1dd3 100644
+--- a/drivers/thermal/intel/int340x_thermal/int3400_thermal.c
++++ b/drivers/thermal/intel/int340x_thermal/int3400_thermal.c
+@@ -336,8 +336,10 @@ static void cleanup_odvp(struct int3400_thermal_priv *priv)
+ 			kfree(priv->odvp_attrs[i].attr.attr.name);
+ 		}
+ 		kfree(priv->odvp_attrs);
++		priv->odvp_attrs = NULL;
+ 	}
+ 	kfree(priv->odvp);
++	priv->odvp = NULL;
+ 	priv->odvp_count = 0;
+ }
  
--	if (!report_iommu_fault(ctx->domain, ctx->dev, iova, 0)) {
-+	if (report_iommu_fault(ctx->domain, ctx->dev, iova, 0)) {
- 		dev_err_ratelimited(ctx->dev,
- 				    "Unhandled context fault: fsr=0x%x, "
- 				    "iova=0x%016llx, fsynr=0x%x, cb=%d\n",
+@@ -613,7 +615,6 @@ static int int3400_thermal_probe(struct platform_device *pdev)
+ 	return 0;
+ 
+ free_sysfs:
+-	cleanup_odvp(priv);
+ 	if (!ZERO_OR_NULL_PTR(priv->data_vault)) {
+ 		sysfs_remove_group(&pdev->dev.kobj, &data_attribute_group);
+ 		kfree(priv->data_vault);
+@@ -627,6 +628,7 @@ static int int3400_thermal_probe(struct platform_device *pdev)
+ 		acpi_thermal_rel_misc_device_remove(priv->adev->handle);
+ 	thermal_zone_device_unregister(priv->thermal);
+ free_art_trt:
++	cleanup_odvp(priv);
+ 	kfree(priv->trts);
+ 	kfree(priv->arts);
+ free_priv:
 -- 
 2.53.0
 
