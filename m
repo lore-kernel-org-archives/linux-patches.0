@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D160399342;
-	Sat, 12 Sep 2026 18:32:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F5352F39C2;
+	Sat, 12 Sep 2026 18:32:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789237936; cv=none; b=eb7nYokb+oml0HltESoYWrJ+3gnivKRypxY4sy+QZMmq9WrN0i4ZHZRmDkRTepZVxyUKs2AnRqdNqyjHDWqdZ10aejmXoi7qeONOvWeFX9LtefOXuV0Wy7n5OLjqbDWyLb/AauY8TCY+cJ/Ecq4BJMtresERL6dNOZSW9QI0/IQ=
+	t=1789237939; cv=none; b=CmmCgXAw+fmJXbqky5MMCAbdOwubQkILgDUcabYSepArEPb4m+T4wJE+u4KjCg4uSlEOZCzY6OX6UzhFUff8NybdH1yiZIFSyuqYoSVza4jTkMwxiZAi7ni3Ed0lgZr8l03JmypN/z1XZ7H/i6w82acOYRWanQEj9iYNpfsDaZA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789237936; c=relaxed/simple;
-	bh=VeB+kzMfTGu7FLXajyoHJZrLGjjIXIRaoNz62Z7uC/M=;
+	s=arc-20240116; t=1789237939; c=relaxed/simple;
+	bh=A6jlFyfrf6R6dHLJnYBzzy9P2efZAHzGKJ47IwHX0Ms=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uiXfohyY8sGozgsQ5uiN5/r7SSe6d7IA7xbr86HTVdJ6/jlgGvXLNC/geP8Dp9F451mJ3ngPPNUtaGn+vI9+utYAuJfuep8XEHKnNJzywN2qaRnIpBXpZ9N9IzjRKdm+wDzUFSR1Pnw/dlAjxpJvHs7PPhr2xJhe+XyQkGrvbO4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZZa1f7rf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=g9UBVCvoeBCI80Mae4GHciRBwNc6rfUDb0XNff86+J7JjQsMhQZorjJSDjxH583+LKeS/t9w5K5pVQifwIkQKZI3d4HBt4AnWntrs/c1UHbBzP5+/wfL/Y2rlysLYWJodzqgf3LxbkNdvCkqKZiaXhwaUzCs9EP5KeBVLmM2j54=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q9TXZWni; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZZa1f7rf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98C071F00893;
-	Sat, 12 Sep 2026 18:32:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q9TXZWni"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE4291F000FF;
+	Sat, 12 Sep 2026 18:32:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789237932;
-	bh=Set/EzQR/CaBf1CPkA5o2W93l6VtKbzzQpG1izR0ZAU=;
+	s=korg; t=1789237938;
+	bh=Royy/45FSjJdZ5HObPZpV+SH1UVwxDtykOLlfBv1w/w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZZa1f7rf3eK3QcZztqzpCZN6OCIjuMbF0NzwiAUr3tgnTUlblkgJzOh5d7q2rjt8R
-	 yDeqMKLw54u/dV/MmQDKbSGwpTI2NtRuOH+kUsjYOuZwcjMqyZCctTDwwFBzgDqIT3
-	 C60gXlCbg+3eObJ83fPIZpSbl3ej7GJ2BAeAN7Mc=
+	b=Q9TXZWni07iZQmQer46q7cfNGiQghN05YvHiWnhNdSeLY7mAKaLYiSF7sTF5BACKs
+	 wnaeYwjll8odmrI3Xf7SyQDJoS4ERH1+da58SFUGUTySLmqSEkGuZy0lNsIWVV9mzE
+	 RfRynRftIlEnwem0/eR2pGfD3mkONw/uBQG/KZic=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-dev@google.com>,
-	Nilesh Javali <njavali@marvell.com>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>
-Subject: [PATCH 5.15 352/935] scsi: qla2xxx: Drop vport reference under lock in report ID acquisition
-Date: Sat, 12 Sep 2026 08:56:22 +0200
-Message-ID: <20260912065534.881121080@linuxfoundation.org>
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Chen-Yu Tsai <wens@kernel.org>
+Subject: [PATCH 5.15 361/935] drm/sun4i: fix refcount leak in sun4i_backend_init_sat()
+Date: Sat, 12 Sep 2026 08:56:31 +0200
+Message-ID: <20260912065535.085110806@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -51,55 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nilesh Javali <njavali@marvell.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-commit 1154b16439ffc562f9461494c4508c63446eb684 upstream.
+commit f7a56ff6240e6fd0cb36a3c0a911a1cd54789ce2 upstream.
 
-qla24xx_report_id_acquisition() format-1 handling takes the vport
-reference under vport_slock but drops it outside the lock, after setting
-vp->vp_flags and vp->dpc_flags:
+When sun4i_backend_init_sat() calls reset_control_deassert() it
+increments the deassert_count of the reset controller, and must
+pair that with a reset_control_assert() call to decrement it.
+In the error path where clk_prepare_enable() fails, the function
+returns immediately without calling reset_control_assert(), leaking
+the reference count.  Other error paths, like the devm_clk_get()
+failure, correctly jump to the err_assert_reset label which performs
+the missing assert.
 
-	set_bit(VP_IDX_ACQUIRED, &vp->vp_flags);
-	set_bit(REGISTER_FC4_NEEDED, &vp->dpc_flags);
-	set_bit(REGISTER_FDMI_NEEDED, &vp->dpc_flags);
+Fix the leak by using the existing err_assert_reset label in the
+clk_prepare_enable error path instead of returning directly.
 
-	atomic_dec(&vp->vref_count);
-
-Neither set_bit() nor atomic_dec() imply a memory barrier, so on a weakly
-ordered architecture the decrement can become visible before the flag
-stores. qla24xx_deallocate_vp_id() polls vref_count under vport_slock and
-unlinks the vport once it reads zero, after which qla24xx_vport_delete()
-frees it via scsi_host_put(). The poller could therefore observe
-vref_count == 0 early and tear the vport down while the pending vp_flags/
-dpc_flags stores land on freed memory.
-
-Drop the reference under vport_slock, as is done for the matching
-increment and by every other vref_count user. The unlock release pairs
-with the deallocate poller's lock acquire so the flag stores are ordered
-before vref_count == 0 can be observed.
-
-Fixes: 793cedee296f ("scsi: qla2xxx: Hold vport reference in qla24xx_report_id_acquisition()")
 Cc: stable@vger.kernel.org
-Reported-by: Sashiko <sashiko-dev@google.com>
-Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://patch.msgid.link/20260730155838.2119230-23-njavali@marvell.com
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+Fixes: 440d2c7b127a ("drm/sun4i: backend: Handle the SAT")
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Reviewed-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Link: https://patch.msgid.link/20260607030950.83636-1-vulab@iscas.ac.cn
+Signed-off-by: Chen-Yu Tsai <wens@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_mbx.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/sun4i/sun4i_backend.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/scsi/qla2xxx/qla_mbx.c
-+++ b/drivers/scsi/qla2xxx/qla_mbx.c
-@@ -4161,7 +4161,9 @@ qla24xx_report_id_acquisition(scsi_qla_h
- 			set_bit(REGISTER_FC4_NEEDED, &vp->dpc_flags);
- 			set_bit(REGISTER_FDMI_NEEDED, &vp->dpc_flags);
+--- a/drivers/gpu/drm/sun4i/sun4i_backend.c
++++ b/drivers/gpu/drm/sun4i/sun4i_backend.c
+@@ -680,7 +680,7 @@ static int sun4i_backend_init_sat(struct
+ 	ret = clk_prepare_enable(backend->sat_clk);
+ 	if (ret) {
+ 		dev_err(dev, "Couldn't enable the SAT clock\n");
+-		return ret;
++		goto err_assert_reset;
+ 	}
  
-+			spin_lock_irqsave(&ha->vport_slock, flags);
- 			atomic_dec(&vp->vref_count);
-+			spin_unlock_irqrestore(&ha->vport_slock, flags);
- 		}
- 		set_bit(VP_DPC_NEEDED, &vha->dpc_flags);
- 		qla2xxx_wake_dpc(vha);
+ 	return 0;
 
 
