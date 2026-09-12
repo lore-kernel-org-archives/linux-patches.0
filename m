@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53B2147CA92;
-	Sat, 12 Sep 2026 12:51:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E0273806DD;
+	Sat, 12 Sep 2026 12:51:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789217511; cv=none; b=XIeC0qKRmevmfSjtthqkLD3b40403BfbcZUz8QdFUvr3UhiDsn0pCAOhU2zfvN1xtoEGghpd3Qw4l45pvfLHfEZoMcm2UbfnaJI7NnxxfZqPjlPzSx2WUJNT+xCFgXRrtJckK/iIWM7Qya3+v/GXjqmjokXMD29V6oHKO5uAHDY=
+	t=1789217518; cv=none; b=Qp0qEwKF98/pR0nCva70Rf5xu7P1266sp5ARYBwFrT71DX9FSco3oXFVxRdD05jncjtfd4jwT27O7VVXO62Lyw3Jg+XuYeRHqk/u8D3TdR+D5NiQ1l5RwOupNlOkSHomo8WlokK8nsd/LW8Uz4RuMwzTfnbvy3ZHntFzGyPRzOQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789217511; c=relaxed/simple;
-	bh=yUcvta9l8DAgOT6oEwQTCfYoQpBmipdKMccwIDD/SnA=;
+	s=arc-20240116; t=1789217518; c=relaxed/simple;
+	bh=AIiUnVUbcYhE88bvCHxrY6jKj7ZtLX5T6XhFSmjOxTY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TYMHl/lOGt4l8hwCXz7po5kuFga6PviBqT1xQJ72m3rnS24Kgi6/kVnMQxr/p/5WXt/Tz0cRBhDP0H38KVzRkJjyElZBn4XHsT5RTihzmj8SxEE5uZTReOK168dt9AxIViA9UqL8GSOzwIQVbEItxYzTllTMqf0Uj1MB22MXDU0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LRkl9Vja; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=S28+7IZoSQsTwUVlXNAX6cFsfno2AlyD9epwVeugoaQbrlcorvuygkEQtefakleuTE9U3ROqo2F/79Nwkjvfqw0H0ssQ5QvsqP82WvfXH9ZvGUbcbWbmUtMc0S5xKA13YuJ7ot6rnZLsXnGBiDumnikwv0U1RtYg90bCJ7UqTXw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DN3VAADm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LRkl9Vja"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13DBF1F00893;
-	Sat, 12 Sep 2026 12:51:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DN3VAADm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A8761F000FF;
+	Sat, 12 Sep 2026 12:51:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789217507;
-	bh=0ZFC6st36xsuUlaYVKG+YMT3Ev/2iQOZwUAXpLeXoP4=;
+	s=korg; t=1789217512;
+	bh=/e/aqjLM5m7bdSsyIQ7FSb4sdjVPXoiVxwjbaTaZhDA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LRkl9Vjat9lGcKqm5jh/p4dgudbGwBEYjl14l1+gXNpv9lcsry9IX9SONqi4pnP7I
-	 MisXP4+hQSyRXfKBgkh7jA9Peq6UNk27Bfx6mguN889K1yok/IRLX2ocqU/gPQ87wY
-	 56/PqP2jtsIe97KyvgZWWoWgs/F5RdFaj9a2i9S0=
+	b=DN3VAADmkSDro00beg1B5nk3qZVU1t/qoxbEKID8o5tN/AJYdQ2xTTEe0NDgqpPuM
+	 I5+bpwcsiMTGHM9NqCmyCoXLSlpmWBo1TtazbrMvQGxE6260NaPDXgAgK6VJZ6HDBj
+	 Hb5bsXNkwqjGLKK7H/eSyBLSP+A53Q4upj8mZejs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Naveen Kumar Chaudhary <naveen.osdev@gmail.com>,
-	Petr Pavlu <petr.pavlu@suse.com>,
+	Mykola Marzhan <mykola@meshstor.io>,
+	Yu Kuai <yukuai@fygo.io>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0928/1376] module: use strscpy() to copy module names in stats and dup tracking
-Date: Sat, 12 Sep 2026 08:55:54 +0200
-Message-ID: <20260912065628.247426271@linuxfoundation.org>
+Subject: [PATCH 6.12 0955/1376] md/raid5: round bitmap stripes with sector division
+Date: Sat, 12 Sep 2026 08:56:21 +0200
+Message-ID: <20260912065628.845665145@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,58 +51,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Naveen Kumar Chaudhary <naveen.osdev@gmail.com>
+From: Yu Kuai <yukuai@fygo.io>
 
-[ Upstream commit 93c29ebd1622fb0670701e1c1b3a978a5cac08b7 ]
+[ Upstream commit 17ea021ae74987d6064c8195c4922fa025753892 ]
 
-Both try_add_failed_module() and kmod_dup_request_exists_wait() use
-memcpy() with strlen() to copy module names into fixed-size
-char[MODULE_NAME_LEN] buffers. Neither performs a bounds check on the
-copy. Current callers always pass names originating from
-mod->name (itself char[MODULE_NAME_LEN]), so this is not exploitable
-today. However both functions accept a plain const char * with no
-documented length contract, making them latent buffer overflows if a
-future caller passes a longer string.
+raid5_bitmap_sector_map() aligns the array range to full RAID5 stripe
+widths before converting it to component sectors. That width is
+chunk_sectors multiplied by the number of data disks, and it is not
+always a power of two.
 
-Replace memcpy() with strscpy() in both sites, which bounds the copy
-to MODULE_NAME_LEN and always NUL-terminates.
+Reproduce with a 4-disk RAID5, 1024-sector chunks, and three data disks.
+The full-stripe width is 3072 sectors. For a one-sector write at array
+sector 3072, correct rounding gives array range [3072, 6144), which maps
+to component range [1024, 2048). The old round_down()/round_up() logic
+instead gives [1024, 4096), which maps to [0, 1024).
 
-Signed-off-by: Naveen Kumar Chaudhary <naveen.osdev@gmail.com>
-Reviewed-by: Petr Pavlu <petr.pavlu@suse.com>
-Signed-off-by: Petr Pavlu <petr.pavlu@suse.com>
-Stable-dep-of: 5eecb11b543f ("module/dups: Fix use-after-free in kmod_dup_req lifetime handling")
+Use sector_div() based arithmetic so the rounded range is aligned to the
+actual RAID5 stripe width.
+
+The deterministic mapper test now reports the fixed component range as
+[1024, 2048), while the old mask-based range was [0, 1024).
+
+Fixes: 9c89f604476c ("md/raid5: implement pers->bitmap_sector()")
+Reported-by: Mykola Marzhan <mykola@meshstor.io>
+Link: https://lore.kernel.org/all/20260726185916.2223460-1-mykola@meshstor.io/
+Tested-by: Mykola Marzhan <mykola@meshstor.io>
+Link: https://patch.msgid.link/20260802195038.164272-6-yukuai@kernel.org
+Signed-off-by: Yu Kuai <yukuai@fygo.io>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/module/dups.c  | 2 +-
- kernel/module/stats.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/md/raid5.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/kernel/module/dups.c b/kernel/module/dups.c
-index 0b633f2edda6b..6ecc42193de24 100644
---- a/kernel/module/dups.c
-+++ b/kernel/module/dups.c
-@@ -129,7 +129,7 @@ bool kmod_dup_request_exists_wait(char *module_name, bool wait, int *dup_ret)
- 	if (!new_kmod_req)
- 		return false;
+diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
+index ef1a1a8507792..bdd620d89c672 100644
+--- a/drivers/md/raid5.c
++++ b/drivers/md/raid5.c
+@@ -5918,8 +5918,11 @@ static void raid5_bitmap_sector(struct mddev *mddev, sector_t *offset,
  
--	memcpy(new_kmod_req->name, module_name, strlen(module_name));
-+	strscpy(new_kmod_req->name, module_name);
- 	INIT_WORK(&new_kmod_req->complete_work, kmod_dup_request_complete);
- 	INIT_DELAYED_WORK(&new_kmod_req->delete_work, kmod_dup_request_delete);
- 	init_completion(&new_kmod_req->first_req_done);
-diff --git a/kernel/module/stats.c b/kernel/module/stats.c
-index 3ba0e98b3c910..2a4e2f6708965 100644
---- a/kernel/module/stats.c
-+++ b/kernel/module/stats.c
-@@ -253,7 +253,7 @@ int try_add_failed_module(const char *name, enum fail_dup_mod_reason reason)
- 	mod_fail = kzalloc(sizeof(*mod_fail), GFP_KERNEL);
- 	if (!mod_fail)
- 		return -ENOMEM;
--	memcpy(mod_fail->name, name, strlen(name));
-+	strscpy(mod_fail->name, name);
- 	__set_bit(reason, &mod_fail->dup_fail_mask);
- 	atomic_long_inc(&mod_fail->count);
- 	list_add_rcu(&mod_fail->list, &dup_failed_modules);
+ 	sectors_per_chunk = conf->chunk_sectors *
+ 		(conf->raid_disks - conf->max_degraded);
+-	start = round_down(start, sectors_per_chunk);
+-	end = round_up(end, sectors_per_chunk);
++	sector_div(start, sectors_per_chunk);
++	start *= sectors_per_chunk;
++	if (sector_div(end, sectors_per_chunk))
++		end++;
++	end *= sectors_per_chunk;
+ 
+ 	start = raid5_compute_sector(conf, start, 0, &dd_idx, NULL);
+ 	end = raid5_compute_sector(conf, end, 0, &dd_idx, NULL);
+@@ -5937,8 +5940,10 @@ static void raid5_bitmap_sector(struct mddev *mddev, sector_t *offset,
+ 
+ 	sectors_per_chunk = conf->prev_chunk_sectors *
+ 		(conf->previous_raid_disks - conf->max_degraded);
+-	prev_start = round_down(prev_start, sectors_per_chunk);
+-	prev_end = round_down(prev_end, sectors_per_chunk);
++	sector_div(prev_start, sectors_per_chunk);
++	prev_start *= sectors_per_chunk;
++	sector_div(prev_end, sectors_per_chunk);
++	prev_end *= sectors_per_chunk;
+ 
+ 	prev_start = raid5_compute_sector(conf, prev_start, 1, &dd_idx, NULL);
+ 	prev_end = raid5_compute_sector(conf, prev_end, 1, &dd_idx, NULL);
 -- 
 2.53.0
 
