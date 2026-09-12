@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78586288B9;
-	Sat, 12 Sep 2026 16:30:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E85B3F788A;
+	Sat, 12 Sep 2026 16:30:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789230630; cv=none; b=gp61RA/YsfolVZYo7zy8PPUosGBpOkaJARpzV7PVOacV+v6kHbntiO6ztIVZLwesZjp2C+Mg6PfMOFJ0I6F4PctLZdpFfcdExoiGZFPfoqHF0XDKHslAEYEmYiH5466u61JY2g0EIgXkMPqpp72srxDYuMQVj+MP9KsQvOtM9og=
+	t=1789230635; cv=none; b=CeiR/BlVBb+vkE6gcc8F9EKXiV88IkGAQfPk1zVxanjMN5O9kIDwyvUob/Umrnd4BnbeYlBJErKoBmnIaBawq2wqf7356LA/rWupwiq6YFTUBBqyRQWey0UhLRjjBuBBv+gaYCTjeMJX1wTriibOfg0PbGfUp4zDw4d8wkRS2Uw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789230630; c=relaxed/simple;
-	bh=zmEHtLmOPyiF5PwlK2kv/V6kXhOmdEhuPN6NtwWk9yo=;
+	s=arc-20240116; t=1789230635; c=relaxed/simple;
+	bh=eMoK6n4P+rE+9eVx38VL8Df1Ge5KaF+XOfwVcNV3KBA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cL6lO6DopQWlQzswuI+dKp+8KbzK6xt8s2RLwQAyLTh1KYwAi5M3upoGoYXtmqhe7ccEWItp9u/uK0WwAUEE4MwZd8MZuPns4lgwIdq2anetxecV2rcVsPflfeVbA2fTCmHSbLMAgVmRMzDxqevyKSCN1dWiX0xMBiVd9E39SQo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qkg19OnP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gItUJzd4QW8MpnBct5aTyFMfhP7raWfhRzvq48ugDDpGNTTJyYa7VQ/KC/9VBhQ0/wboGgdm1PwWGbqhp9TJo/9AdoTSaWU1H26MG9PcPN1hPFZrHVFlt6eUVLK5W8FcAkOg/vcHEirdrx2C1f+/n+zxfIm0IYtK/OYA6Lrhga8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=laIwOhyM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qkg19OnP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18E4F1F000FF;
-	Sat, 12 Sep 2026 16:30:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="laIwOhyM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D6A81F000FF;
+	Sat, 12 Sep 2026 16:30:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789230629;
-	bh=kqvhm8XcMFudVvJa/co+jnYL5wDv79yehuGxyItVeeA=;
+	s=korg; t=1789230634;
+	bh=0tueH1rLFBYFDtWsy9n28RvqnKxo7UMOUlVBSZvv9rA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Qkg19OnPRQfu0kYsvJxgOWZpYOXT3QElc2f4BMQyrlyh9BMrJdB5lD+8adnrXfRM8
-	 v2RxC2QwbpwcdvC0Tl+GCicBvs3TqD1NbMram5YFUmL5dyXiUVS/lz6g0VFsdqGTu7
-	 LiIlZ438hrPn8G32wcmWUuaOFhtkR0n4aqOETZPI=
+	b=laIwOhyMynq9jidwA0kxb5GlGRx/+xlwyCR8CHxTq6SY4/PnTm9GXyhjOeuOIXJj1
+	 6q50xH4SYUvTfel33fM47JHNwL8B7hBte0eu1WjbxWMTFPBckmfc9+wO7GAgeCMGXN
+	 okVwPJakJtmWZOo7YIoF9qnrEu9eBj2h+jdhDJkg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0791/1191] i3c: master: Fix device_register() error path
-Date: Sat, 12 Sep 2026 08:58:39 +0200
-Message-ID: <20260912065606.041538908@linuxfoundation.org>
+Subject: [PATCH 6.1 0782/1191] arm64: dts: qcom: sm8550: Fix the PCIe iommu-map entries
+Date: Sat, 12 Sep 2026 08:58:30 +0200
+Message-ID: <20260912065605.842279851@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -53,52 +54,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 
-[ Upstream commit 74be657d98a8d684c0475f3cbd450ef2a30ffc73 ]
+[ Upstream commit 16d98ee918d63018eaa6cc260791b71319aa4faa ]
 
-When device_register() fails in i3c_master_register_new_i3c_devs(),
-put_device() is called to drop the reference taken by
-device_register().  That drops the last reference, so the device's
-release callback i3c_device_release() runs and frees the i3c_device.
+The IOMMU provider apps_smmu uses '#iommu-cells = <2>', but the PCIe
+iommu-map entries specify only one cell for the SID, omitting the SID
+mask. This went unnoticed until the OF core started warning with commit
+ccb2fd725d41 ("of: Respect #{iommu,msi}-cells in maps"):
 
-Two problems follow from that:
+  iommu-map has 1-cell entries targeting 2-cell #iommu-cells, treating as 1-cell output
 
-i3c_device_release() does WARN_ON(i3cdev->desc), so it warns because
-desc->dev->desc still points back at the descriptor.  Clear it before
-calling put_device().
+So fix the entries to match the provider's '#iommu-cells' property.
 
-After put_device() frees the i3c_device, desc->dev is left pointing at
-freed memory, so clear desc->dev as well.  That prevents, for example,
-i3c_master_unregister_i3c_devs() seeing desc->dev as non-NULL and
-dereferencing it.
-
-Reported-by: sashiko-bot@kernel.org
-Link: https://lore.kernel.org/linux-i3c/20260701203053.8F3971F000E9@smtp.kernel.org/
-Fixes: cab63f6488761 ("i3c: Fix potential refcount leak in i3c_master_register_new_i3c_devs")
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260702183644.60827-1-adrian.hunter@intel.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Fixes: 7d1158c984d3 ("arm64: dts: qcom: sm8550: Add PCIe PHYs and controllers nodes")
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260730-iommu-map-fix-v1-10-83405d37ba41@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i3c/master.c | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/arm64/boot/dts/qcom/sm8550.dtsi | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/i3c/master.c b/drivers/i3c/master.c
-index 486578046fac5..059ddd50e8590 100644
---- a/drivers/i3c/master.c
-+++ b/drivers/i3c/master.c
-@@ -1643,7 +1643,9 @@ i3c_master_register_new_i3c_devs(struct i3c_master_controller *master)
- 		if (ret) {
- 			dev_err(&master->dev,
- 				"Failed to add I3C device (err = %d)\n", ret);
-+			desc->dev->desc = NULL;
- 			put_device(&desc->dev->dev);
-+			desc->dev = NULL;
- 		}
- 	}
- }
+diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+index 3a507b46c24d0..1ce2972498277 100644
+--- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+@@ -1418,8 +1418,8 @@ pcie0: pci@1c00000 {
+ 
+ 			msi-map = <0x0 &gic_its 0x1400 0x1>,
+ 				  <0x100 &gic_its 0x1401 0x1>;
+-			iommu-map = <0x0   &apps_smmu 0x1400 0x1>,
+-				    <0x100 &apps_smmu 0x1401 0x1>;
++			iommu-map = <0x0   &apps_smmu 0x1400 0x0 0x1>,
++				    <0x100 &apps_smmu 0x1401 0x0 0x1>;
+ 
+ 			resets = <&gcc GCC_PCIE_0_BCR>;
+ 			reset-names = "pci";
+@@ -1523,8 +1523,8 @@ pcie1: pci@1c08000 {
+ 
+ 			msi-map = <0x0 &gic_its 0x1480 0x1>,
+ 				  <0x100 &gic_its 0x1481 0x1>;
+-			iommu-map = <0x0   &apps_smmu 0x1480 0x1>,
+-				    <0x100 &apps_smmu 0x1481 0x1>;
++			iommu-map = <0x0   &apps_smmu 0x1480 0x0 0x1>,
++				    <0x100 &apps_smmu 0x1481 0x0 0x1>;
+ 
+ 			resets = <&gcc GCC_PCIE_1_BCR>,
+ 				<&gcc GCC_PCIE_1_LINK_DOWN_BCR>;
 -- 
 2.53.0
 
