@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5CD6399004;
-	Sat, 12 Sep 2026 20:00:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E55D309EE2;
+	Sat, 12 Sep 2026 20:00:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789243247; cv=none; b=oA1i3m/4mYlfcEFznnP5hldrAPf2iuu4c+P4Ag4sST5ilewEzqQXA5DzPbbM/fMYGB1KO8IHXjncbhf7vRzFta2wuFPx6Z+TxeKfpOYlJnmCZaizVK8m+1+CP2VY8QRut9c0QlA1M8UpzmOYIdyzQtaDHVpPlA1byLQQdXPJJMg=
+	t=1789243249; cv=none; b=EBZwNP45k8/Ivt1Qm8uFFdVsk6w5D1UCZuBrRozGGQ6af87cmyVAp+lfcJr9Uth5duq0e3NUcJhIpDEe6K9zsk8DK/dZTR82/Iqey9TkV0lnN1gOQ4itjUoXecbiknc8B/KXY7/wddHxCaFrOq4htKD2gp6e2jDEFotrgu3EriY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789243247; c=relaxed/simple;
-	bh=orQ4uWh7O+KPlwmrFTlkUcs9ihxklwPuDu5cnzcLyEg=;
+	s=arc-20240116; t=1789243249; c=relaxed/simple;
+	bh=SwZ5VmP4XQu/ueEn4xp0STSYfleDiEjsUQ+eDH4jJdE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lwFCpfppehgDR71P8aJvFobdrZFXZhURwEcvbiv893DN//I/qGTz4kR5SdOVxxC3ENgpod9M+wsZJ+KMMH7sCKlEN5KdJ6XZMqhEMXoT6xSOrZcO02Z7Tc/qucsVDAjBxhVFAGqKsfx+KVeKPEihrk0+JRxqLafLeX7qSP0RcDo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L+JWlMg9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Tl8/TUADDlkwWJpChondE2/Z+FzvhRXqEc22UWF7kmEzukKJhdxdPK/539wrRSW5mqrlnOyNhxJbkdBqwqENK49ek/8fQndlbqg50qSMd3zPbtfamDsUfCxsPe7kCUOqZddQ3kVud7ETpSolBu6EznL3XTYCbZ0lZhLBrXZJh/k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s8WLJ7aT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L+JWlMg9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F9D91F000FF;
-	Sat, 12 Sep 2026 20:00:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s8WLJ7aT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E906D1F000FF;
+	Sat, 12 Sep 2026 20:00:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789243245;
-	bh=SF5Y+jO7TJ4CfumzQUTnTKpN/LUhvb6P3bvDlCNr4to=;
+	s=korg; t=1789243248;
+	bh=eF8VI+BzC9K0rKG+uw8mNcKQZcgmkXCPE/Pv469Cgeg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L+JWlMg9C8nkEtZl7xrKxxPSXdTzbCsaIDqYJlUgZTdF2jRz8lPoV0GGWBmFTBcd/
-	 HMvCBax+CMuDxeWMEj0FCK9zvN8SHbo/gNa0lR9jidPIVMmpFJ4tWlq9OmmSOCo8/B
-	 4HWORNK1xuoU9NHB0dgWq0cFQ+9HVTw1pWxDmTUY=
+	b=s8WLJ7aT64wGzYwi6OyMhu33KdC8cW2JTxWPBd1ShhDK8d+vzCMfExePQ+ljByTFT
+	 9WkkDrB27RakcihTN6wvjCJjWmtykvD3NU7rLCUqjSJ4/W1Hj9wYzBFv+QFOo71FR1
+	 DY1XDKIcLFsoLmFXxDbB+T0j1+FDTziqM/LnHYgo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
-	Richard Weinberger <richard@nod.at>,
+	Nikhil Gautam <nikhilgtr@gmail.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 687/798] ubi: fastmap: Add fastmap control support for UBI_IOCATT ioctl
-Date: Sat, 12 Sep 2026 09:05:15 +0200
-Message-ID: <20260912065532.846715203@linuxfoundation.org>
+Subject: [PATCH 5.10 652/798] iio: light: gp2ap002: Fix unbalanced runtime PM on repeated event writes
+Date: Sat, 12 Sep 2026 09:04:40 +0200
+Message-ID: <20260912065532.055887380@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -51,157 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhihao Cheng <chengzhihao1@huawei.com>
+From: Nikhil Gautam <nikhilgtr@gmail.com>
 
-[ Upstream commit 669d204469c46e91d99da24914130f78277a71d3 ]
+[ Upstream commit 579c049b4cb6fc72ce2c505fc5334540be0efcd3 ]
 
-[1] suggests that fastmap is suitable for large flash devices. Module
-parameter 'fm_autoconvert' is a coarse grained switch to enable all
-ubi devices to generate fastmap, which may turn on fastmap even for
-small flash devices.
+The IIO core does not filter duplicate writes to the event enable
+attribute, so writing the same value twice invokes
+write_event_config() twice. Enabling twice leaks a runtime PM
+reference, preventing the device from ever suspending again;
+disabling twice underflows the usage count and triggers a
+"Runtime PM usage count underflow" warning.
 
-This patch imports a new field 'disable_fm' in struct 'ubi_attach_req'
-to support following situations by ioctl 'UBI_IOCATT'.
- [old functions]
- A. Disable 'fm_autoconvert': Disbable fastmap for all ubi devices
- B. Enable 'fm_autoconvert': Enable fastmap for all ubi devices
- [new function]
- C. Enable 'fm_autoconvert', set 'disable_fm' for given device: Don't
-    create new fastmap and do full scan (existed fastmap will be
-    destroyed) for the given ubi device.
+Bail out early when the requested state matches the current state.
+While at it, switch to pm_runtime_resume_and_get() so a failed
+resume is propagated to userspace instead of silently marking the
+event enabled.
 
-A simple test case in [2].
-
-[1] http://www.linux-mtd.infradead.org/doc/ubi.html#L_fastmap
-[2] https://bugzilla.kernel.org/show_bug.cgi?id=216278
-
-Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Signed-off-by: Richard Weinberger <richard@nod.at>
-Stable-dep-of: 5b0a6b554e12 ("ubi: Fix rollback for explicit UBI device numbers")
+Fixes: 97d642e23037c ("iio: light: Add a driver for Sharp GP2AP002x00F")
+Signed-off-by: Nikhil Gautam <nikhilgtr@gmail.com>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/ubi/build.c     | 14 ++++++++++----
- drivers/mtd/ubi/cdev.c      |  2 +-
- drivers/mtd/ubi/ubi.h       |  3 ++-
- include/uapi/mtd/ubi-user.h |  8 +++++++-
- 4 files changed, 20 insertions(+), 7 deletions(-)
+ drivers/iio/light/gp2ap002.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/mtd/ubi/build.c b/drivers/mtd/ubi/build.c
-index c689bed646287..9656f6ba0ac11 100644
---- a/drivers/mtd/ubi/build.c
-+++ b/drivers/mtd/ubi/build.c
-@@ -824,6 +824,7 @@ static int autoresize(struct ubi_device *ubi, int vol_id)
-  * @ubi_num: number to assign to the new UBI device
-  * @vid_hdr_offset: VID header offset
-  * @max_beb_per1024: maximum expected number of bad PEB per 1024 PEBs
-+ * @disable_fm: whether disable fastmap
-  *
-  * This function attaches MTD device @mtd_dev to UBI and assign @ubi_num number
-  * to the newly created UBI device, unless @ubi_num is %UBI_DEV_NUM_AUTO, in
-@@ -831,11 +832,15 @@ static int autoresize(struct ubi_device *ubi, int vol_id)
-  * automatically. Returns the new UBI device number in case of success and a
-  * negative error code in case of failure.
-  *
-+ * If @disable_fm is true, ubi doesn't create new fastmap even the module param
-+ * 'fm_autoconvert' is set, and existed old fastmap will be destroyed after
-+ * doing full scanning.
-+ *
-  * Note, the invocations of this function has to be serialized by the
-  * @ubi_devices_mutex.
-  */
- int ubi_attach_mtd_dev(struct mtd_info *mtd, int ubi_num,
--		       int vid_hdr_offset, int max_beb_per1024)
-+		       int vid_hdr_offset, int max_beb_per1024, bool disable_fm)
+diff --git a/drivers/iio/light/gp2ap002.c b/drivers/iio/light/gp2ap002.c
+index 7725d0ef8a721..3d1ab38799c43 100644
+--- a/drivers/iio/light/gp2ap002.c
++++ b/drivers/iio/light/gp2ap002.c
+@@ -343,6 +343,10 @@ static int gp2ap002_write_event_config(struct iio_dev *indio_dev,
+ 				       int state)
  {
- 	struct ubi_device *ubi;
- 	int i, err;
-@@ -945,7 +950,7 @@ int ubi_attach_mtd_dev(struct mtd_info *mtd, int ubi_num,
- 		UBI_FM_MIN_POOL_SIZE);
+ 	struct gp2ap002 *gp2ap002 = iio_priv(indio_dev);
++	int ret;
++
++	if (state == gp2ap002->enabled)
++		return 0;
  
- 	ubi->fm_wl_pool.max_size = ubi->fm_pool.max_size / 2;
--	ubi->fm_disabled = !fm_autoconvert;
-+	ubi->fm_disabled = (!fm_autoconvert || disable_fm) ? 1 : 0;
- 	if (fm_debug)
- 		ubi_enable_dbg_chk_fastmap(ubi);
- 
-@@ -986,7 +991,7 @@ int ubi_attach_mtd_dev(struct mtd_info *mtd, int ubi_num,
- 	if (!ubi->fm_buf)
- 		goto out_free;
- #endif
--	err = ubi_attach(ubi, 0);
-+	err = ubi_attach(ubi, disable_fm ? 1 : 0);
- 	if (err) {
- 		ubi_err(ubi, "failed to attach mtd%d, error %d",
- 			mtd->index, err);
-@@ -1266,7 +1271,8 @@ static int __init ubi_init(void)
- 
- 		mutex_lock(&ubi_devices_mutex);
- 		err = ubi_attach_mtd_dev(mtd, p->ubi_num,
--					 p->vid_hdr_offs, p->max_beb_per1024);
-+					 p->vid_hdr_offs, p->max_beb_per1024,
-+					 false);
- 		mutex_unlock(&ubi_devices_mutex);
- 		if (err < 0) {
- 			pr_err("UBI error: cannot attach mtd%d\n",
-diff --git a/drivers/mtd/ubi/cdev.c b/drivers/mtd/ubi/cdev.c
-index 1d3bbcfb4bb59..f43430b9c1e65 100644
---- a/drivers/mtd/ubi/cdev.c
-+++ b/drivers/mtd/ubi/cdev.c
-@@ -1041,7 +1041,7 @@ static long ctrl_cdev_ioctl(struct file *file, unsigned int cmd,
+ 	if (state) {
+ 		/*
+@@ -350,14 +354,17 @@ static int gp2ap002_write_event_config(struct iio_dev *indio_dev,
+ 		 * already) and reintialize the sensor by using runtime_pm
+ 		 * callbacks.
  		 */
- 		mutex_lock(&ubi_devices_mutex);
- 		err = ubi_attach_mtd_dev(mtd, req.ubi_num, req.vid_hdr_offset,
--					 req.max_beb_per1024);
-+					 req.max_beb_per1024, !!req.disable_fm);
- 		mutex_unlock(&ubi_devices_mutex);
- 		if (err < 0)
- 			put_mtd_device(mtd);
-diff --git a/drivers/mtd/ubi/ubi.h b/drivers/mtd/ubi/ubi.h
-index 2613ea95eb353..12f5ccccb2525 100644
---- a/drivers/mtd/ubi/ubi.h
-+++ b/drivers/mtd/ubi/ubi.h
-@@ -940,7 +940,8 @@ int ubi_io_write_vid_hdr(struct ubi_device *ubi, int pnum,
+-		pm_runtime_get_sync(gp2ap002->dev);
+-		gp2ap002->enabled = true;
++		ret = pm_runtime_resume_and_get(gp2ap002->dev);
++		if (ret)
++			return ret;
++
+ 	} else {
+ 		pm_runtime_mark_last_busy(gp2ap002->dev);
+ 		pm_runtime_put_autosuspend(gp2ap002->dev);
+-		gp2ap002->enabled = false;
+ 	}
  
- /* build.c */
- int ubi_attach_mtd_dev(struct mtd_info *mtd, int ubi_num,
--		       int vid_hdr_offset, int max_beb_per1024);
-+		       int vid_hdr_offset, int max_beb_per1024,
-+		       bool disable_fm);
- int ubi_detach_mtd_dev(int ubi_num, int anyway);
- struct ubi_device *ubi_get_device(int ubi_num);
- void ubi_put_device(struct ubi_device *ubi);
-diff --git a/include/uapi/mtd/ubi-user.h b/include/uapi/mtd/ubi-user.h
-index b69e9ba6742b9..dcb179de43585 100644
---- a/include/uapi/mtd/ubi-user.h
-+++ b/include/uapi/mtd/ubi-user.h
-@@ -247,6 +247,7 @@ enum {
-  * @vid_hdr_offset: VID header offset (use defaults if %0)
-  * @max_beb_per1024: maximum expected number of bad PEB per 1024 PEBs
-  * @padding: reserved for future, not used, has to be zeroed
-+ * @disable_fm: whether disable fastmap
-  *
-  * This data structure is used to specify MTD device UBI has to attach and the
-  * parameters it has to use. The number which should be assigned to the new UBI
-@@ -281,13 +282,18 @@ enum {
-  * eraseblocks for new bad eraseblocks, but attempts to use available
-  * eraseblocks (if any). The accepted range is 0-768. If 0 is given, the
-  * default kernel value of %CONFIG_MTD_UBI_BEB_LIMIT will be used.
-+ *
-+ * If @disable_fm is not zero, ubi doesn't create new fastmap even the module
-+ * param 'fm_autoconvert' is set, and existed old fastmap will be destroyed
-+ * after doing full scanning.
-  */
- struct ubi_attach_req {
- 	__s32 ubi_num;
- 	__s32 mtd_num;
- 	__s32 vid_hdr_offset;
- 	__s16 max_beb_per1024;
--	__s8 padding[10];
-+	__s8 disable_fm;
-+	__s8 padding[9];
- };
++	gp2ap002->enabled = state;
++
+ 	return 0;
+ }
  
- /*
 -- 
 2.53.0
 
