@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10BE53542F8;
-	Sat, 12 Sep 2026 09:43:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DDEC1A8F7B;
+	Sat, 12 Sep 2026 09:43:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789206205; cv=none; b=JBo7EB0YdTXmkowkUtuI203KSzzuSRXDoQK2dzEvI+6rlJ4jaZm4TOwmF5vvbnAS8mqg0AutSCQCMroX9oPvqrtRjgkQbBJn/ZdbQ8jCBE3jxSCDJwqJOb3XvHQkoLLL21K2GKzby5ZcALidD/pK0zVg9by0e5ojnseKbzR73ho=
+	t=1789206210; cv=none; b=Hry9Iytq13CqRe6hjNZbn2ZZ8eE21pVacr01lb5Qopb3vRwZuWM9IKspAJ2ShuQguavCC1FCSI0f97/6wFF0No8gO0YWgJN9F/zjjN9lO2/gf2oimPyDY4DwV41qCE+Cvm5G0/1M8WpxbDUON+HL8IxcAsho1DM2h+PEZL2dD3c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789206205; c=relaxed/simple;
-	bh=BC8En3tEB5OpSOcmJXKlLCbuP2buWnoZfQ8lgdARKGs=;
+	s=arc-20240116; t=1789206210; c=relaxed/simple;
+	bh=cjvM3p23/dAruP4L/ZdxGyRdQzPxeNnYPaOddtyDshc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QTyQJW7PQKggBLnjRKLD5TBfcrclDs08DY670c4vK2yy9srJntNJijwM4R1/WS3Rx6etd9mHY7i0ElTnXYeoy7tUaRP7dOEpkotLIoRJ6qSZqdJYuSkvGL5aPx6SSp4eRksW1rA/nX0XZNoYC3HwkcRwKS08AycvFw+k7vKFskY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fThKjhG0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JRsoY5769Wc9Tv2fePn1COUv9vcMEk8kOeQqNXGOBkL5IjdPgZs4qD1AHqEfxtgdtrVKvGLDg8V85e3u3nS9AwedX4sBRJcAVwC7sHqEazvoMiYlwOqD9Sojx94aESu1ysVBshoghYuq3otYFtXkSMyLcOZm5FH1D5lrGQIH1Pc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zO3wJ3xe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fThKjhG0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8BEF1F000FF;
-	Sat, 12 Sep 2026 09:43:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zO3wJ3xe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C80061F000FF;
+	Sat, 12 Sep 2026 09:43:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789206203;
-	bh=RdOYZuFSJWjYOKPm80BRVk2LY8XPQRv5bpoTrAx4uL8=;
+	s=korg; t=1789206208;
+	bh=RVABXUA4d+SYtLKSu4bKXYqEiCOY/A02dd9aU8KWtgw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fThKjhG07hrFB5EntCBSwyBvAx/R74K0rSlIXcrKykBY2sFr8iwhilwL3oLXVjIrk
-	 iwDzt9vyjTKcLb+BK7CXcZEEnycwetCr1RrNa1EznypBrafaWpkB/UpHT5piyWcXNn
-	 0dzcfjZivl+CTmQEomceeVcr7HvNRKEk5Hgh3lZc=
+	b=zO3wJ3xeyYEvoePqWToJIGkEZVgKdkCCDsws4HtLdAG6i2NlpUO7UIa41eUeMf6YB
+	 DC6mgiOBjU/WsAjQ8nFDO50DYpnStfKgEKzgb390vzAVtLDE7m41Y9tEnCU98UYeaV
+	 NPDJ6OLx0ey9PJwFTnBJZQqHf4hlmOzoI0NJjcFY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ian Rogers <irogers@google.com>,
 	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0159/1518] perf tests: Skip metrics validation if system-wide recording lacks permission
-Date: Sat, 12 Sep 2026 08:38:48 +0200
-Message-ID: <20260912065627.090282565@linuxfoundation.org>
+Subject: [PATCH 6.18 0160/1518] perf test kvm: Add some basic perf kvm test coverage
+Date: Sat, 12 Sep 2026 08:38:49 +0200
+Message-ID: <20260912065627.114002598@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -53,184 +53,180 @@ Content-Transfer-Encoding: 8bit
 
 From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit 8953bfd8820b6525032023fda3a420098c1823ae ]
+[ Upstream commit b58261584d2f6b5241ac1693026242ef2f2148b4 ]
 
-The metrics value validation test requires system-wide recording (`-a`),
-which can fail on systems without root permissions or where paranoid
-levels restrict tracing. Add a check to skip the test if `-a` is not
-supported.
+Setup qemu with KVM then run kvm stat and some host
+recording/reporting/build-id tests.
 
-Also fix false negatives during validation by updating parse error string
-patterns and resolving issues in metric list generation.
-
-Fixes: 3ad7092f5145 ("perf test: Add metric value validation test")
-Assisted-by: Antigravity:gemini-3.1-pro
 Signed-off-by: Ian Rogers <irogers@google.com>
 Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Stable-dep-of: 509a2b9a6e14 ("perf tests: Fix flakiness in trace record and replay test")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../tests/shell/lib/perf_metric_validation.py | 11 ++-
- tools/perf/tests/shell/stat_all_metrics.sh    | 75 ++++++++++++-------
- tools/perf/tests/shell/stat_metrics_values.sh |  7 ++
- 3 files changed, 60 insertions(+), 33 deletions(-)
+ tools/perf/tests/shell/kvm.sh | 154 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 154 insertions(+)
+ create mode 100755 tools/perf/tests/shell/kvm.sh
 
-diff --git a/tools/perf/tests/shell/lib/perf_metric_validation.py b/tools/perf/tests/shell/lib/perf_metric_validation.py
-index dea8ef1977bf6..3d52f94f22b91 100644
---- a/tools/perf/tests/shell/lib/perf_metric_validation.py
-+++ b/tools/perf/tests/shell/lib/perf_metric_validation.py
-@@ -383,10 +383,13 @@ class Validator:
-         wl = workload.split()
-         command.extend(wl)
-         print(" ".join(command))
--        cmd = subprocess.run(command, stderr=subprocess.PIPE, encoding='utf-8')
--        data = [x+'}' for x in cmd.stderr.split('}\n') if x]
--        if data[0][0] != '{':
--            data[0] = data[0][data[0].find('{'):]
-+        cmd = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, encoding='utf-8')
-+        lines = cmd.stderr.splitlines() + cmd.stdout.splitlines()
-+        data = []
-+        for line in lines:
-+            line = line.strip()
-+            if line.startswith('{') and line.endswith('}'):
-+                data.append(line)
-         return data
- 
-     def collect_perf(self, workload: str):
-diff --git a/tools/perf/tests/shell/stat_all_metrics.sh b/tools/perf/tests/shell/stat_all_metrics.sh
-index b582d23f28c9e..feeb34c6fa6df 100755
---- a/tools/perf/tests/shell/stat_all_metrics.sh
-+++ b/tools/perf/tests/shell/stat_all_metrics.sh
-@@ -12,38 +12,65 @@ system_wide_flag="-a"
- if ParanoidAndNotRoot 0
- then
-   system_wide_flag=""
--  test_prog="perf test -w noploop"
-+  test_prog="perf test -w noploop 0.01"
- fi
- 
-+check_metric() {
-+  local output="$1"
-+  local status="$2"
-+  local metric="$3"
+diff --git a/tools/perf/tests/shell/kvm.sh b/tools/perf/tests/shell/kvm.sh
+new file mode 100755
+index 0000000000000..2fafde1a29cca
+--- /dev/null
++++ b/tools/perf/tests/shell/kvm.sh
+@@ -0,0 +1,154 @@
++#!/bin/bash
++# perf kvm tests
++# SPDX-License-Identifier: GPL-2.0
 +
-+  if [[ $status -ne 0 || ! "$output" =~ ${metric:0:50} ]]; then
-+    return 1
-+  fi
++set -e
 +
-+  if [[ "$output" =~ "<not counted>" || "$output" =~ "<not supported>" ]]; then
-+    return 1
-+  fi
++err=0
++perfdata=$(mktemp /tmp/__perf_kvm_test.perf.data.XXXXX)
++qemu_pid_file=$(mktemp /tmp/__perf_kvm_test.qemu.pid.XXXXX)
 +
-+  return 0
++cleanup() {
++	rm -f "${perfdata}"
++	if [ -f "${qemu_pid_file}" ]; then
++		if [ -s "${qemu_pid_file}" ]; then
++			qemu_pid=$(cat "${qemu_pid_file}")
++			if [ -n "${qemu_pid}" ]; then
++				kill "${qemu_pid}" 2>/dev/null || true
++			fi
++		fi
++		rm -f "${qemu_pid_file}"
++	fi
++	trap - EXIT TERM INT
 +}
 +
- skip=0
- err=3
- for m in $(perf list --raw-dump metrics); do
-   echo "Testing $m"
-   result=$(perf stat -M "$m" $system_wide_flag -- $test_prog 2>&1)
-   result_err=$?
--  if [[ $result_err -eq 0 && "$result" =~ ${m:0:50} ]]
--  then
--    # No error result and metric shown.
++trap_cleanup() {
++	echo "Unexpected signal in ${FUNCNAME[1]}"
++	cleanup
++	exit 1
++}
++trap trap_cleanup EXIT TERM INT
 +
-+  if check_metric "$result" $result_err "$m"; then
-     if [[ "$err" -ne 1 ]]
-     then
-       err=0
-     fi
-     continue
-   fi
--  if [[ "$result" =~ "Cannot resolve IDs for" || "$result" =~ "No supported events found" ]]
++skip() {
++	echo "Skip: $1"
++	cleanup
++	exit 2
++}
 +
-+  if [[ "$result" =~ "Access to performance monitoring and observability operations is limited" || \
-+        "$result" =~ "in per-thread mode, enable system wide" || \
-+        "$result" =~ "<not supported>" || \
-+        "$result" =~ "Cannot resolve IDs for" || \
-+        "$result" =~ "No supported events found" || \
-+        "$result" =~ "FP_ARITH" || \
-+        "$result" =~ "AMX" || \
-+        "$result" =~ "PMM" ]]
-   then
--    if [[ $(perf list --raw-dump $m) == "Default"* ]]
--    then
--      echo "[Ignored $m] failed but as a Default metric this can be expected"
--      echo $result
-+    true
-+  else
-+    result=$(perf stat -M "$m" $system_wide_flag -- perf test -w noploop 0.1 2>&1)
-+    result_err=$?
++test_kvm_stat() {
++	echo "Testing perf kvm stat"
 +
-+    if check_metric "$result" $result_err "$m"; then
-+      if [[ "$err" -ne 1 ]]
-+      then
-+        err=0
-+      fi
-       continue
-     fi
--    echo "[Failed $m] Metric contains missing events"
--    echo $result
--    err=1 # Fail
--    continue
--  elif [[ "$result" =~ \
--        "Access to performance monitoring and observability operations is limited" ]]
-+  fi
++	echo "Recording kvm events for pid ${qemu_pid}..."
++	if ! perf kvm stat record -p "${qemu_pid}" -o "${perfdata}" sleep 1; then
++		echo "Failed to record kvm events"
++		err=1
++		return
++	fi
 +
-+  # If retry also failed, determine if we skip, ignore, or fail
-+  if [[ "$result" =~ "Access to performance monitoring and observability operations is limited" ]]
-   then
-     echo "[Skipped $m] Permission failure"
-     echo $result
-@@ -61,7 +88,9 @@ for m in $(perf list --raw-dump metrics); do
-       skip=1
-     fi
-     continue
--  elif [[ "$result" =~ "<not supported>" ]]
-+  elif [[ "$result" =~ "<not supported>" || \
-+          "$result" =~ "Cannot resolve IDs for" || \
-+          "$result" =~ "No supported events found" ]]
-   then
-     if [[ $(perf list --raw-dump $m) == "Default"* ]]
-     then
-@@ -105,19 +134,7 @@ for m in $(perf list --raw-dump metrics); do
-     continue
-   fi
- 
--  # Failed, possibly the workload was too small so retry with something longer.
--  result=$(perf stat -M "$m" $system_wide_flag -- perf bench internals synthesize 2>&1)
--  result_err=$?
--  if [[ $result_err -eq 0 && "$result" =~ ${m:0:50} ]]
--  then
--    # No error result and metric shown.
--    if [[ "$err" -ne 1 ]]
--    then
--      err=0
--    fi
--    continue
--  fi
--  echo "[Failed $m] has non-zero error '$result_err' or not printed in:"
-+  echo "[Failed $m] has non-zero error '$result_err' or not printed/counted in:"
-   echo "$result"
-   err=1
- done
-diff --git a/tools/perf/tests/shell/stat_metrics_values.sh b/tools/perf/tests/shell/stat_metrics_values.sh
-index 30566f0b54279..76f1e99d1273f 100755
---- a/tools/perf/tests/shell/stat_metrics_values.sh
-+++ b/tools/perf/tests/shell/stat_metrics_values.sh
-@@ -8,6 +8,13 @@ shelldir=$(dirname "$0")
- 
- grep -q GenuineIntel /proc/cpuinfo || { echo Skipping non-Intel; exit 2; }
- 
-+# Skip if no permission to record system-wide events
-+if ! perf stat -a -e instructions sleep 0.01 >/dev/null 2>&1; then
-+  echo "Skipping: no permission to record system-wide events (-a)"
-+  exit 2
++	echo "Reporting kvm events..."
++	if ! perf kvm -i "${perfdata}" stat report 2>&1 | grep -q "VM-EXIT"; then
++		echo "Failed to find VM-EXIT in report"
++		perf kvm -i "${perfdata}" stat report 2>&1
++		err=1
++		return
++	fi
++
++	echo "perf kvm stat test [Success]"
++}
++
++test_kvm_record_report() {
++	echo "Testing perf kvm record/report"
++
++	echo "Recording kvm profile for pid ${qemu_pid}..."
++	# Use --host to avoid needing guest symbols/mounts for this simple test
++	# We just want to verify the command runs and produces data
++	# We run in background and kill it because 'perf kvm record' appends options
++	# after the command, which breaks 'sleep' (e.g. it gets '-e cycles').
++	perf kvm --host record -p "${qemu_pid}" -o "${perfdata}" &
++	rec_pid=$!
++	sleep 1
++	kill -INT "${rec_pid}"
++	wait "${rec_pid}" || true
++
++	echo "Reporting kvm profile..."
++	# Check for some standard output from report
++	if ! perf kvm -i "${perfdata}" report --stdio 2>&1 | grep -q "Event count"; then
++		echo "Failed to report kvm profile"
++		perf kvm -i "${perfdata}" report --stdio 2>&1
++		err=1
++		return
++	fi
++
++	echo "perf kvm record/report test [Success]"
++}
++
++test_kvm_buildid_list() {
++	echo "Testing perf kvm buildid-list"
++
++	# We reuse the perf.data from the previous record test
++	if ! perf kvm --host -i "${perfdata}" buildid-list 2>&1 | grep -q "."; then
++		echo "Failed to list buildids"
++		perf kvm --host -i "${perfdata}" buildid-list 2>&1
++		err=1
++		return
++	fi
++
++	echo "perf kvm buildid-list test [Success]"
++}
++
++setup_qemu() {
++	# Find qemu
++	if [ "$(uname -m)" = "x86_64" ]; then
++		qemu="qemu-system-x86_64"
++	elif [ "$(uname -m)" = "aarch64" ]; then
++		qemu="qemu-system-aarch64"
++	elif [ "$(uname -m)" = "s390x" ]; then
++		qemu="qemu-system-s390x"
++	elif [ "$(uname -m)" = "ppc64le" ]; then
++		qemu="qemu-system-ppc64"
++	else
++		qemu="qemu-system-$(uname -m)"
++	fi
++
++	if ! which -s "$qemu"; then
++		skip "$qemu not found"
++	fi
++
++	if [ ! -r /dev/kvm ] || [ ! -w /dev/kvm ]; then
++		skip "/dev/kvm not accessible"
++	fi
++
++	if ! perf kvm stat record -a sleep 0.01 >/dev/null 2>&1; then
++		skip "No permission to record kvm events"
++	fi
++
++	echo "Starting $qemu..."
++	# Start qemu in background, detached, with pidfile
++	# We use -display none -daemonize and a monitor to keep it alive/controllable if needed
++	# We don't need a real kernel, just KVM active.
++	if ! $qemu -enable-kvm -display none -daemonize -pidfile "${qemu_pid_file}" -monitor none; then
++		echo "Failed to start qemu"
++		err=1
++		return
++	fi
++
++	# Wait a bit for qemu to start
++	sleep 1
++	qemu_pid=$(cat "${qemu_pid_file}")
++
++	if ! kill -0 "${qemu_pid}" 2>/dev/null; then
++		echo "Qemu process failed to stay alive"
++		err=1
++		return
++	fi
++}
++
++setup_qemu
++if [ $err -eq 0 ]; then
++	test_kvm_stat
++	test_kvm_record_report
++	test_kvm_buildid_list
 +fi
 +
-+
- pythonvalidator=$(dirname $0)/lib/perf_metric_validation.py
- rulefile=$(dirname $0)/lib/perf_metric_validation_rules.json
- tmpdir=$(mktemp -d /tmp/__perf_test.program.XXXXX)
++cleanup
++exit $err
 -- 
 2.53.0
 
