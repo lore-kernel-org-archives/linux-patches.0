@@ -1,40 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0177E2D23A6;
-	Sat, 12 Sep 2026 13:23:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05547246783;
+	Sat, 12 Sep 2026 13:23:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789219412; cv=none; b=G/YkhPXkzGUUsvId6zaG1FrXhT3BPhNs95K07d0LKXFemoJ2+1AnQuAVBumindqd4MpA1Xj3SJFnLvvZqnDXK14t/yB89+xpRdAjch5ssr1kVFQBNeL+HHlZie7U1O04p7mlR4DVXCq54IlB/HNpM+wKBQWlplUvI/KYzUeM/js=
+	t=1789219417; cv=none; b=cMLVxFXEm2lrueXyM3MHYWnT8L4k+YpIh+0NDwY/+oaa0GlYcXthZ/AEyeDoXuvTuWzZut8ND9Hl1gz/4RMUaJaPUm+l9ohNhCxkbVuwSKGmen/LMFzPeLD7nijUHA5SJrgVw2rQZ8eaRIidi7Vb1fcQDm0yobu5pR5dJ1Ab/t0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789219412; c=relaxed/simple;
-	bh=8/jFFhd7NN1KtmpDiDYJW/F3BXo8fU1zw4ot1jPX7ns=;
+	s=arc-20240116; t=1789219417; c=relaxed/simple;
+	bh=9xTjomEKHCi7JR4K6zeO5oZIKa+ED4rh9WmSbTuu3TY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sJvzrIV737CL/wfMbL0v27WrPhHgT48wkCB5xhVAuDfEoOI37g2uXdc5rmx8CUuwNAACktTkbKf83jINVDznDkVTNj/jhD8mokx23wayR43YX+Y9exjFcAo6bE4fQ1pZiImm0+tvjertjA5LtUqNX64ftHBiznzdI3ybqZQ96jw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lk+urD9n; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ECFkI2+HT34epnzmxyk0NlxDqaMxN1yVoE8a1C91gNKXZ+VV8tQQVHya1hq6shq7cwByn16TEEQgJO8PfOW6nHt9YKkUhJG0eV++tTKB8HPHdg+rzpVO/2p+ognr/VgeDZFc+ofTCOXPDN8XHcHn+U3CElr45uR3Jv56on8aoJw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NTrunptr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lk+urD9n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C48F21F000FF;
-	Sat, 12 Sep 2026 13:23:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NTrunptr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B32681F000FF;
+	Sat, 12 Sep 2026 13:23:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789219410;
-	bh=zhOtwkoq9e0ueeMz1m2h/sACXpvJFXgougQ6fIY79t4=;
+	s=korg; t=1789219415;
+	bh=AQRejnC5cvrQL05kiHIHb+Jis/zE53lHt4jEdseueCI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lk+urD9nJFejgYZw59VWx9BHUNZRKaWmaINTqqiDiRHurf6tJUbNF5g5F49fjbLJE
-	 1+NcxF4KFdH0o9CpogiM6yeuYMhdxB2fySybvYuxLV4FskG7tWEKBEcSL9BNcPSgtH
-	 CKERiyTnqCE351RA4vtfDWKp58GwK0tIGIUposIo=
+	b=NTrunptrlvGOEorJKv4H6Vxq/Ble1uJe1yEGxOqjYbvKgyvviPioPo/n4mcuVsaJN
+	 NEKu+vhe3iloTpE6zTf+1J+1VsZySe0ZHvqUejEiH5HWEckPfZRDFX3W0bmuOQT/J8
+	 X8w6CCuFtq+rmkf/mc+A76Xhls96ZFuPwPuuDQDE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	vega@nebusec.ai,
-	Victor Nogueira <victor@mojatatu.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	"Liam R. Howlett (Oracle)" <liam@infradead.org>,
+	Chris Mason <clm@meta.com>,
+	Chuck Lever <cel@kernel.org>,
+	Boqun Feng <boqun.feng@gmail.com>,
+	Breno Leitao <leitao@debian.org>,
+	Ingo Molnar <mingo@redhat.com>,
+	Jason Gunthorpe <jgg@ziepe.ca>,
+	Joe Perches <joe@perches.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Rik van Riel <riel@surriel.com>,
+	Waiman Long <longman@redhat.com>,
+	Will Deacon <will@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1302/1376] net/sched: hhf: clamp quantum before hhf_change() to avoid overflow
-Date: Sat, 12 Sep 2026 09:02:08 +0200
-Message-ID: <20260912065636.553524565@linuxfoundation.org>
+Subject: [PATCH 6.12 1293/1376] maple_tree: catch race in mas_alloc_cyclic()
+Date: Sat, 12 Sep 2026 09:01:59 +0200
+Message-ID: <20260912065636.353407811@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -53,53 +62,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jamal Hadi Salim <jhs@mojatatu.com>
+From: Liam R. Howlett (Oracle) <liam@infradead.org>
 
-[ Upstream commit 2164b512b97bb053e8ce4d6e95576f11bed6a005 ]
+[ Upstream commit 35f1342e5b893a740eff2ef9ab337bfaa63ab76d ]
 
-hhf_init() sets q->quantum = psched_mtu(qdisc_dev(sch)) with no overflow
-check. A device with a huge MTU (e.g. dummy with max_mtu == 0 accepting
-MTU 2147483634) makes weight * quantum overflow the signed deficit in
-hhf_dequeue(), spinning forever.
+If mas_alloc_cyclic() is called during a low memory situation, it is
+possible the lock may be dropped so reclaim can occur.  There is a window
+where some other task may allocate the same id and cause the mas_insert()
+to fail with -EEXIST.  In this scenario the function will return -EEXIST,
+which is not expected.
 
-Clamp q->quantum before hhf_change() so both the opt and !opt paths see
-a sane quantum. Without this, bare "tc qdisc add ... hhf" succeeds with
-a clamped quantum but "tc qdisc add ... hhf limit 1000" (any option
-present) fails with -EINVAL because hhf_change() re-validates the
-unclamped default (sch_hhf.c:559). 256 matches fq_codel's floor and is
-a sane minimum for a DRR quantum.
+Modifying the retry on mas_nomem() to re-search for a slot means that any
+race with other writes will not matter as the lock will be held between
+finding the index and writing the index.
 
-Conditions to recreate the bug: a device whose MTU (plus
-hard_header_len) wraps psched_mtu() into the sign bit (e.g. a dummy
-device with max_mtu == 0 accepting MTU 2147483634). Requires
-CAP_NET_ADMIN in a user namespace.
+Moving the flag logic avoids cases where the flag is modified on drop
+lock/reacquire or when the write fails after clearing the flag.
 
-Fixes: 10239edf86f1 ("net-qdisc-hhf: Heavy-Hitter Filter (HHF) qdisc")
-Reported-by: vega@nebusec.ai
-Tested-by: Victor Nogueira <victor@mojatatu.com>
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/20260822195509.112717-6-jhs@mojatatu.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+No existing users are exposed to this issue.
+
+Link: https://lore.kernel.org/20260821192627.4085470-13-liam@infradead.org
+Fixes: 9b6713cc7522 ("maple_tree: Add mtree_alloc_cyclic()")
+Signed-off-by: Liam R. Howlett (Oracle) <liam@infradead.org>
+Reported-by: Chris Mason <clm@meta.com>
+Reviewed-by: Chuck Lever <cel@kernel.org>
+Cc: Boqun Feng <boqun.feng@gmail.com>
+Cc: Breno Leitao <leitao@debian.org>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jason Gunthorpe <jgg@ziepe.ca>
+Cc: Joe Perches <joe@perches.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Rik van Riel <riel@surriel.com>
+Cc: Waiman Long <longman@redhat.com>
+Cc: Will Deacon <will@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_hhf.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ lib/maple_tree.c | 43 ++++++++++++++++++++++++-------------------
+ 1 file changed, 24 insertions(+), 19 deletions(-)
 
-diff --git a/net/sched/sch_hhf.c b/net/sched/sch_hhf.c
-index f9d2cf7533faa..0c406d11b22d7 100644
---- a/net/sched/sch_hhf.c
-+++ b/net/sched/sch_hhf.c
-@@ -621,6 +621,10 @@ static int hhf_init(struct Qdisc *sch, struct nlattr *opt,
- 	q->hhf_evict_timeout = HZ;      /* 1  sec */
- 	q->hhf_non_hh_weight = 2;
+diff --git a/lib/maple_tree.c b/lib/maple_tree.c
+index e4b68b19ae9ad..c7e3f91fd91c6 100644
+--- a/lib/maple_tree.c
++++ b/lib/maple_tree.c
+@@ -4348,35 +4348,40 @@ int mas_alloc_cyclic(struct ma_state *mas, unsigned long *startp,
+ 		void *entry, unsigned long range_lo, unsigned long range_hi,
+ 		unsigned long *next, gfp_t gfp)
+ {
+-	unsigned long min = range_lo;
+-	int ret = 0;
+-
+-	range_lo = max(min, *next);
+-	ret = mas_empty_area(mas, range_lo, range_hi, 1);
+-	if ((mas->tree->ma_flags & MT_FLAGS_ALLOC_WRAPPED) && ret == 0) {
+-		mas->tree->ma_flags &= ~MT_FLAGS_ALLOC_WRAPPED;
+-		ret = 1;
+-	}
+-	if (ret < 0 && range_lo > min) {
+-		mas_reset(mas);
+-		ret = mas_empty_area(mas, min, range_hi, 1);
+-		if (ret == 0)
+-			ret = 1;
+-	}
+-	if (ret < 0)
+-		return ret;
++	int ret;
++	unsigned long min;
  
-+	if ((int)q->quantum <= 0 ||
-+	    (u64)q->quantum * q->hhf_non_hh_weight > INT_MAX)
-+		q->quantum = 256;
++	min = range_lo;
+ 	do {
++		range_lo = max(min, *next);
++		ret = mas_empty_area(mas, range_lo, range_hi, 1);
++		if (ret < 0 && range_lo > min) {
++			mas_reset(mas);
++			ret = mas_empty_area(mas, min, range_hi, 1);
++			if (ret == 0)
++				ret = 1;
++		}
++		if (ret < 0)
++			goto out;
 +
- 	if (opt) {
- 		int err = hhf_change(sch, opt, extack);
+ 		mas_insert(mas, entry);
+ 	} while (mas_nomem(mas, gfp));
+-	if (mas_is_err(mas))
+-		return xa_err(mas->node);
  
++	if (mas_is_err(mas)) {
++		ret = xa_err(mas->node);
++		goto out;
++	}
++
++	if ((mas->tree->ma_flags & MT_FLAGS_ALLOC_WRAPPED) && ret == 0) {
++		mas->tree->ma_flags &= ~MT_FLAGS_ALLOC_WRAPPED;
++		ret = 1;
++	}
+ 	*startp = mas->index;
+ 	*next = *startp + 1;
+ 	if (*next == 0)
+ 		mas->tree->ma_flags |= MT_FLAGS_ALLOC_WRAPPED;
+ 
++out:
+ 	mas_destroy(mas);
+ 	return ret;
+ }
 -- 
 2.53.0
 
