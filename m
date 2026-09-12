@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B299537C902;
-	Sat, 12 Sep 2026 07:51:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E050332610;
+	Sat, 12 Sep 2026 07:51:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789199513; cv=none; b=X79DdG9SLoAF8IScWPdqyRNhONHhmj4/usXAAbvynbUMyCl0iLwTv5bbOwDMwDcJ6T+yFgI5Zj33I85FGcARj5tbf7t5nM3MuRjh0icuLbPHnq2KzwzB/1XYauuDZE63hHzdZQM2lXDHNRz/rOwtlKZtbMs1bOB5POz4oFcvtAE=
+	t=1789199518; cv=none; b=nPtvEOJbHgdpiQAXxb70l8lk+Xkw5przX5UkmMRaxGWSZkblsps6/spo84dIewhBMaHapdUHoNO0gjQkztbWAbdZBTsBREyvwXqg02yHhEddAG1H6Xh9f46g9LHfcib8YYRhUaHsZtrvL+h47cSNhvaBMlsTx4aTEYxnFdbgzFw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789199513; c=relaxed/simple;
-	bh=Ut8zS5HyfV0bqJSro8qcb1MPeSyw6PgeuMGVzkrUJOM=;
+	s=arc-20240116; t=1789199518; c=relaxed/simple;
+	bh=Das9MmEph1Yo4IOuK7TFR9+hoM/F+4I6bhhLPGEL2X4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JsTbWO04i8d19xtl80ckILwf0ncWWqFbeRBlwBEGPBiqKWUoWV7PsFZNVFQjMqdfNjuFKRXfiz8VKtkHRDIhL4ywVxIJQO8rnpCbCSanaJY2smz8/lHc51QpyYRVbSf2s57dK2Sp6XZSO6C8uR03Jcd2MoSjz2lP+r9DLKTp71o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZlTTbrBY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SwLTPcadocxLOzwiHH0RbCeJeapN9tiXCY3W/kRN//4pCQY7z9x4o/09DeCjHPtw6nIDe9hcIU4ZcgoXGB8jupbUQRMtvXrH5767feD1LquJkEIedlSmJOhEYYMYjKJLzCH/tpcdy7DH0UPNgGlfNaERcugYDwKb7yGe/G1ekuQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VB1WK0Uj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZlTTbrBY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3D261F000FF;
-	Sat, 12 Sep 2026 07:51:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VB1WK0Uj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 557481F000FF;
+	Sat, 12 Sep 2026 07:51:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789199512;
-	bh=b397CvZAkqNaXl1eE+6g1ppls4HQ72M7xEhJtW7xo/c=;
+	s=korg; t=1789199517;
+	bh=o5yuR6rorGmzUJEmTLYPSRxO1hBftvIWYNW74x7RgsA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZlTTbrBY90tqe3CS5SAIyOXq0tr12Gez3ghFHMfMO2VYGhFXU7dfw5kp2hbIrl4Uv
-	 uXxObfgZeOxA+EK/BQpuRzRJtlOvgpo9Pkzi+LRiRotBuZarkxOrfbLUpe8yycOCDY
-	 p1+u8bif/XZZ+67DJR+Qk3xSbKn8U4jGjNWd20pg=
+	b=VB1WK0UjHuyrGPqhIxJPoOthSzjALsmv/o5Y+bwZvPcoRNPnF3D748Z2dT5lamdOp
+	 lW1sBovUAlQ5bbbx3c645crrw3Z1OI8tMzkdc44Vf5UQsay9Hio3eqUTsy5kOLFIAF
+	 qmXE8KttfVCVu+1ViIvFb0rCIdKgAjau0Um+xoI4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miaoqing Pan <miaoqing.pan@oss.qualcomm.com>,
-	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
 	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
 	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0601/1815] wifi: ath12k: fix ML-STA authentication timeout on QCC2072
-Date: Sat, 12 Sep 2026 08:39:11 +0200
-Message-ID: <20260912065702.993386136@linuxfoundation.org>
+Subject: [PATCH 7.2 0602/1815] wifi: ath6kl: avoid buffer overreads in WMI event handlers
+Date: Sat, 12 Sep 2026 08:39:12 +0200
+Message-ID: <20260912065703.016347020@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -53,73 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miaoqing Pan <miaoqing.pan@oss.qualcomm.com>
+From: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 
-[ Upstream commit ff651212f2e237d790a5b36deef9d332360dc272 ]
+[ Upstream commit f57314aade9d74d30f3360ec5ef85a83654748be ]
 
-QCC2072 firmware interprets the MLO_LINK_ADD and MLO_START_AS_ACTIVE
-flags to control the link state during MLO vdev start. MLO_LINK_ADD
-indicates that a link is being added, while MLO_START_AS_ACTIVE specifies
-that the link should become active during the start.
+The following WMI event handlers currently read from the event buffer
+without first verifying that the message was large enough to hold the
+expected event:
+ath6kl_wmi_scan_complete_rx()
+ath6kl_wmi_addba_req_event_rx()
+ath6kl_wmi_delba_req_event_rx()
 
-When an association link is added without setting MLO_START_AS_ACTIVE,
-the firmware may transition the link into a suspended state. In this
-case, authentication frames transmitted by the host can be dropped,
-leading to repeated authentication retries and eventual timeout,
-for example:
-  wlp1s0: send auth to <AP> (try 1/3)
-  wlp1s0: send auth to <AP> (try 2/3)
-  wlp1s0: send auth to <AP> (try 3/3)
-  wlp1s0: authentication with <AP> timed out
+Add length checks to prevent overread.
 
-Avoid triggering this behavior by setting the MLO_START_AS_ACTIVE flag
-when MLO_ASSOC_LINK is set, which tells the firmware that the current
-vdev must not enter suspend mode
-
-Note that this change relies on firmware behavior observed on the QCC2072
-platform. The firmware on WCN7850 and QCN9274 does not use the
-MLO_START_AS_ACTIVE flag, so this change is effectively a no-op on those
-platforms
-
-Tested-on: QCC2072 hw1.0 PCI WLAN.COL.1.0.c2-00068-QCACOLSWPL_V1_TO_SILICONZ-1
-Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.1.c5-00302-QCAHMTSWPL_V1.0_V2.0_SILICONZ-1.115823.3
-
-Fixes: d8e1f4a19310 ("wifi: ath12k: enable QCC2072 support")
-Signed-off-by: Miaoqing Pan <miaoqing.pan@oss.qualcomm.com>
-Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
+Fixes: bdcd81707973 ("Add ath6kl cleaned up driver")
+Assisted-by: Claude:claude-sonnet-4-6
 Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260704073000.3300099-1-miaoqing.pan@oss.qualcomm.com
+Link: https://patch.msgid.link/20260711-ath6kl_wmi_scan_complete_rx-v2-1-22dc0f7f45e7@oss.qualcomm.com
 Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/wmi.c | 2 ++
- drivers/net/wireless/ath/ath12k/wmi.h | 1 +
- 2 files changed, 3 insertions(+)
+ drivers/net/wireless/ath/ath6kl/wmi.c | 17 +++++++++++++++--
+ 1 file changed, 15 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/wmi.c b/drivers/net/wireless/ath/ath12k/wmi.c
-index 06ec236d20960..4d048bba679d6 100644
---- a/drivers/net/wireless/ath/ath12k/wmi.c
-+++ b/drivers/net/wireless/ath/ath12k/wmi.c
-@@ -1229,6 +1229,8 @@ int ath12k_wmi_vdev_start(struct ath12k *ar, struct wmi_vdev_start_req_arg *arg,
- 						    ATH12K_WMI_FLAG_MLO_MCAST_VDEV) |
- 				   le32_encode_bits(arg->ml.link_add,
- 						    ATH12K_WMI_FLAG_MLO_LINK_ADD) |
-+				   le32_encode_bits(arg->ml.assoc_link,
-+						    ATH12K_WMI_FLAG_MLO_START_AS_ACTIVE) |
- 				   cpu_to_le32(ATH12K_WMI_FLAG_MLO_IEEE_LINK_IDX_VALID);
+diff --git a/drivers/net/wireless/ath/ath6kl/wmi.c b/drivers/net/wireless/ath/ath6kl/wmi.c
+index 2b0c5038ae040..6c29f0bcec9f5 100644
+--- a/drivers/net/wireless/ath/ath6kl/wmi.c
++++ b/drivers/net/wireless/ath/ath6kl/wmi.c
+@@ -1296,6 +1296,9 @@ static int ath6kl_wmi_scan_complete_rx(struct wmi *wmi, u8 *datap, int len,
+ {
+ 	struct wmi_scan_complete_event *ev;
  
- 		ml_params->ieee_link_id = cpu_to_le32(arg->ml.ieee_link_id);
-diff --git a/drivers/net/wireless/ath/ath12k/wmi.h b/drivers/net/wireless/ath/ath12k/wmi.h
-index 51f3426e1fcd9..20e3939e8820b 100644
---- a/drivers/net/wireless/ath/ath12k/wmi.h
-+++ b/drivers/net/wireless/ath/ath12k/wmi.h
-@@ -2954,6 +2954,7 @@ struct wmi_vdev_create_mlo_params {
- #define ATH12K_WMI_FLAG_MLO_EMLSR_SUPPORT		BIT(6)
- #define ATH12K_WMI_FLAG_MLO_FORCED_INACTIVE		BIT(7)
- #define ATH12K_WMI_FLAG_MLO_LINK_ADD			BIT(8)
-+#define ATH12K_WMI_FLAG_MLO_START_AS_ACTIVE		BIT(17)
- #define ATH12K_WMI_FLAG_MLO_IEEE_LINK_IDX_VALID		BIT(18)
- #define ATH12K_WMI_FLAG_MLO_IEEE_LINK_IDX_VALID_PARTNER	BIT(19)
++	if (len < sizeof(*ev))
++		return -EINVAL;
++
+ 	ev = (struct wmi_scan_complete_event *) datap;
+ 
+ 	ath6kl_scan_complete_evt(vif, a_sle32_to_cpu(ev->status));
+@@ -3372,7 +3375,12 @@ static int ath6kl_wmi_get_pmkid_list_event_rx(struct wmi *wmi, u8 *datap,
+ static int ath6kl_wmi_addba_req_event_rx(struct wmi *wmi, u8 *datap, int len,
+ 					 struct ath6kl_vif *vif)
+ {
+-	struct wmi_addba_req_event *cmd = (struct wmi_addba_req_event *) datap;
++	struct wmi_addba_req_event *cmd;
++
++	if (len < sizeof(*cmd))
++		return -EINVAL;
++
++	cmd = (struct wmi_addba_req_event *)datap;
+ 
+ 	aggr_recv_addba_req_evt(vif, cmd->tid,
+ 				le16_to_cpu(cmd->st_seq_no), cmd->win_sz);
+@@ -3383,7 +3391,12 @@ static int ath6kl_wmi_addba_req_event_rx(struct wmi *wmi, u8 *datap, int len,
+ static int ath6kl_wmi_delba_req_event_rx(struct wmi *wmi, u8 *datap, int len,
+ 					 struct ath6kl_vif *vif)
+ {
+-	struct wmi_delba_event *cmd = (struct wmi_delba_event *) datap;
++	struct wmi_delba_event *cmd;
++
++	if (len < sizeof(*cmd))
++		return -EINVAL;
++
++	cmd = (struct wmi_delba_event *)datap;
+ 
+ 	aggr_recv_delba_req_evt(vif, cmd->tid);
  
 -- 
 2.53.0
