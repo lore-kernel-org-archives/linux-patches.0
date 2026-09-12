@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66F58343893;
-	Sat, 12 Sep 2026 09:44:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D427735C6B2;
+	Sat, 12 Sep 2026 09:44:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789206274; cv=none; b=BdSnCdfoy1e8RN+mlmtgI/79TVTHWZABgZssdhdXv45E9/U8NYFlVs62+qCN+WJw0NfsIsOTZV3rRgVfFXh9Pye8u5aJilQoo63QhxSZCKbiraVQlI5TV6fP9M0bMWE8ZKgIR2Xntn7aC1Y0rjxbzTVvTuBJbCJBLJEol1I9NtI=
+	t=1789206281; cv=none; b=mTs15tMvDi+hJ+lQKvZqsbj9wAIfM/ju729XHjXfEJXPS62X5W2yzaNRhD5JdhUOIBsFB3Rgy4XdFOnjIiIihVJq9YBsl4451w/J+ObW7N0Yc2fDSe4SCpGWdd/JrHJqBZozrSy2wcjBsfjx0ajDGhhwi0qIQp/jcwCyS2hTK78=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789206274; c=relaxed/simple;
-	bh=76BnmaT4An9fpZzngA60P6zvc3lHTo4fUrZzXwIACJI=;
+	s=arc-20240116; t=1789206281; c=relaxed/simple;
+	bh=0qcR00oaurWYri0EI8VS2z5KIZPbn9E5KXNhNmggdRM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ah4G93qRbWvtLcz48ozYkF1VDPwaGQEBxgE4xiJoH/cEpDDoOHwmk/7g7yyceD2/Hp1+Gtzkh/eYJhK+8Htt0wFAZkS9Y1PTMAHBpYnMTG0EUp9+J+owDhg9mM1ZBr1S4hNPBS9z3QxcEN9rmFRWr/GcGIpYnPz5nXj2dhwm3RM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B1hyH5uv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=B20nnjb830kijayc7rQ4ex6ZDML9Wk1Jfm1BvK2QfB1MLIaRtRV6Ub1A9cVm/jC0j5/kaUs90PYaCFl6/P5tQ2zBfcURPu2HgX1nXB+unog+MJMUJc6QRysGj6DTRoQ0eGZFh/ShfD5CRG5P8WiKeqbdQ0a/IPvPMYRqtTBYBog=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V59L+zPs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B1hyH5uv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 048DA1F000FF;
-	Sat, 12 Sep 2026 09:44:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V59L+zPs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B2B71F000FF;
+	Sat, 12 Sep 2026 09:44:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789206273;
-	bh=etc8suvqqdxAzj2Pht+jJWoSoeilx05TAZgKdcLJ6LQ=;
+	s=korg; t=1789206278;
+	bh=wFRJyHdcwaBvx6WFLsrlm2cuXrLaiqJE1cZmjJGVQ/0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=B1hyH5uvMUkV6cyIz4ViMFg1sCGAYxfTaVatCqhVXF7G2OlT/RR9I5WTwPAim9jlW
-	 FWoN/YGMpSsQ3DtYw4aEno9Etm2srLyfsUndc3KdhHHSOCJl2cIT4ozOt8LBonvM2Q
-	 PM2iqqMp3vCcbVmNj1wpj/6WuCRi36pPIfh7b7Zg=
+	b=V59L+zPsxtuqeWhywV+oYFFGN/ofmJBZYo4OTl9/GJbYE4S9SeMAo0GiWLTPdAIAR
+	 Qj96qkaWVA8IOvcUExKPTBMzhhKXde24+nFpT4GkKouVI6un2aYfvZ8LfUoAetmKQ3
+	 STe0pBnu3gppkwyTeRoL3j5fgOAAzRx2oKy+GQK8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leon Hwang <leon.hwang@linux.dev>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	=?UTF-8?q?Alexis=20Lothor=C3=A9=20 ?= <alexis.lothore@bootlin.com>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0172/1518] bpf: Copy per-CPU map value padding in copy_map_value_long()
-Date: Sat, 12 Sep 2026 08:39:01 +0200
-Message-ID: <20260912065627.387420824@linuxfoundation.org>
+Subject: [PATCH 6.18 0173/1518] selftests/bpf: Systematically add SO_REUSEADDR in start_server_addr
+Date: Sat, 12 Sep 2026 08:39:02 +0200
+Message-ID: <20260912065627.408729519@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -45,67 +45,61 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Leon Hwang <leon.hwang@linux.dev>
+From: Alexis Lothoré (eBPF Foundation) <alexis.lothore@bootlin.com>
 
-[ Upstream commit 7cf9cd98cf6f0df3befc167ca6b54c07014d71de ]
+[ Upstream commit 38e36514fcb01ff1cce84cd77a93906f233a4cb8 ]
 
-In kernel, per-CPU map elements are stored with
-round_up(map->value_size, 8) bytes. On UAPI lookup paths, it copies the
-rounded size for each CPU into a temporary buffer.
+Some tests have to stop/start a server multiple time with the same
+listening address. Doing so without SO_REUSADDR leads to failures due to
+the socket still being in TIME_WAIT right after the first instance
+stop/before the second instance start. Instead of letting each test
+manually set SO_REUSEADDR on their servers, it can be done automatically
+by start_server_addr for all tests (and without any major downside).
 
-However, copy_map_value_long() passes 'map->value_size' to
-bpf_obj_memcpy(). When the map has special fields, bpf_obj_memcpy() copies
-around those fields with memcpy(), and does not copy the tail padding
-between 'map->value_size' and round_up(map->value_size, 8).
+Enforce SO_REUSEADDR in start_server_addr for all tests.
 
-The temporary UAPI lookup buffers are allocated without __GFP_ZERO. As a
-result, when the per-CPU map's value size is not equal to
-round_up(map->value_size, 8), UAPI LOOKUP_ELEM and its variants can return
-stale heap contents from that padding to user space. The same issue
-applies to bpf_iter for per-CPU maps.
-
-Pass round_up(map->value_size, 8) to bpf_obj_memcpy() from
-copy_map_value_long(), so per-CPU maps both with and without special
-fields copy the entire per-CPU slot. Remove the now redundant round_up()
-from bpf_obj_memcpy()'s long_memcpy path.
-
-Fixes: 448325199f57 ("bpf: Add copy_map_value_long to copy to remote percpu memory")
-Signed-off-by: Leon Hwang <leon.hwang@linux.dev>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20260624155115.85196-2-leon.hwang@linux.dev
+Signed-off-by: Alexis Lothoré (eBPF Foundation) <alexis.lothore@bootlin.com>
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Link: https://patch.msgid.link/20251105-start-server-soreuseaddr-v1-1-1bbd9c1f8d65@bootlin.com
+Stable-dep-of: b4b8b334f6b5 ("selftests/bpf: Mask socket type flags in mptcpify prog")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/bpf.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tools/testing/selftests/bpf/network_helpers.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/include/linux/bpf.h b/include/linux/bpf.h
-index e264c695f31ce..84a8afc6e6df3 100644
---- a/include/linux/bpf.h
-+++ b/include/linux/bpf.h
-@@ -536,7 +536,7 @@ static inline void bpf_obj_memcpy(struct btf_record *rec,
- 
- 	if (IS_ERR_OR_NULL(rec)) {
- 		if (long_memcpy)
--			bpf_long_memcpy(dst, src, round_up(size, 8));
-+			bpf_long_memcpy(dst, src, size);
- 		else
- 			memcpy(dst, src, size);
- 		return;
-@@ -559,7 +559,7 @@ static inline void copy_map_value(struct bpf_map *map, void *dst, void *src)
- 
- static inline void copy_map_value_long(struct bpf_map *map, void *dst, void *src)
+diff --git a/tools/testing/selftests/bpf/network_helpers.c b/tools/testing/selftests/bpf/network_helpers.c
+index cdf7b66414442..e7ae891669e50 100644
+--- a/tools/testing/selftests/bpf/network_helpers.c
++++ b/tools/testing/selftests/bpf/network_helpers.c
+@@ -97,7 +97,7 @@ int settimeo(int fd, int timeout_ms)
+ int start_server_addr(int type, const struct sockaddr_storage *addr, socklen_t addrlen,
+ 		      const struct network_helper_opts *opts)
  {
--	bpf_obj_memcpy(map->record, dst, src, map->value_size, true);
-+	bpf_obj_memcpy(map->record, dst, src, round_up(map->value_size, 8), true);
- }
+-	int fd;
++	int on = 1, fd;
  
- static inline void bpf_obj_swap_uptrs(const struct btf_record *rec, void *dst, void *src)
+ 	if (!opts)
+ 		opts = &default_opts;
+@@ -111,6 +111,12 @@ int start_server_addr(int type, const struct sockaddr_storage *addr, socklen_t a
+ 	if (settimeo(fd, opts->timeout_ms))
+ 		goto error_close;
+ 
++	if (type == SOCK_STREAM &&
++	    setsockopt(fd, SOL_SOCKET, SO_REUSEADDR, &on, sizeof(on))) {
++		log_err("Failed to enable SO_REUSEADDR");
++		goto error_close;
++	}
++
+ 	if (opts->post_socket_cb &&
+ 	    opts->post_socket_cb(fd, opts->cb_opts)) {
+ 		log_err("Failed to call post_socket_cb");
 -- 
 2.53.0
 
