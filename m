@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7112A47ECDE;
-	Sat, 12 Sep 2026 13:31:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2836147F2F0;
+	Sat, 12 Sep 2026 13:31:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789219904; cv=none; b=oH3JL/JAFYgef1CM/qjIWO1DW5yb/YxpBg5hqWqWAZveNvE6t0ERhvuv/I5LNdO1VazFOSabSnoLEGMMODpknGdalQSSI6HTnEaXDO5u/VHDX6y0lzaY+gRDiV3L8SqTL2otu6Sp5fYRi37fV9iBtBWbqXWBb9nBeMcvJxVhPVw=
+	t=1789219910; cv=none; b=QO6xe3gan1ESlFX6aJLRDoh+Ss7TSiW5/xcTsJZ5ji4GmRcTcz9vfE8/1vH4yxeHAC5ngOA8z1Zg7/28nisZQwVjuIFQhxWy8cCnLB75B0Zp/SuHSMmikTdG1CrCm9zsMtEjS5a5wP70FgkjP+vMdl7R1UxeWLBKvn1FbVMW9/E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789219904; c=relaxed/simple;
-	bh=uX3KFMr+w9VfIThB/OlFCggZaVF8GEkz4mizSsA8MHA=;
+	s=arc-20240116; t=1789219910; c=relaxed/simple;
+	bh=sJWoIumfUvRW9rP73xurVVYUo9Ds9TKA4k1e4N7CrNc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QjVcKFGDS4wQSsf0jYgM2FZF4A6+iGu10u96HFIWAwwcHDrS++4bXkFyU/nN/P8x6qE7IP91cR0mihtkqFPWR48Tm0DH+VgU9QVLmIKXjjh9OZZrXeFXTLT65S66oY2eeQN2AwcU82cmeFR/m5HJNTjFPsCIagI4E7CuQmFFB6g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FQicdIKo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RZn4l0b/JebJBHOSI7W87dzxDPGHl59snsAC7BoK3ic7NE5w8MES5Fcz4WxQdzj9OLwC5/n/c1sJ1+jfstWH3Fu6wgif5Tb4wkV/khZEyVGxUQDxA8DwdG2P1ui/PTtYvNcn6jLB3ICUtUQDVEjI4wqChRAOWcQlpzWridEV0As=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dDdpzjRD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FQicdIKo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E73841F000FF;
-	Sat, 12 Sep 2026 13:31:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dDdpzjRD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB2AD1F000FF;
+	Sat, 12 Sep 2026 13:31:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789219903;
-	bh=CvNw/7bCvJiGU2PbpZB56NLsyDmZS0roK+T82PXU5lI=;
+	s=korg; t=1789219908;
+	bh=2gYuKNGRTEnr8iCuoh01afYbhv+ALZeqcYjOct9xCek=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FQicdIKoxWF7Qa5agiiZaQRirdPmsXzJsjYFYcCgHXi2NWo252XkpNtIYxLk9PP7r
-	 NxOSZnqxdTF7AK/+hLImGjFDvmPSfSZ46b/J/8Tuovanc4/JMV+6LWnRnF/KE6nW1z
-	 RsuyICD+EoJSf2HCyelCO8AmUbGR5tq6lFUgN+p8=
+	b=dDdpzjRDDqhOqyVEhMJLNOMz5shVG+ZlU8y2ICoeDl78AclC1fd7o/lQhkesVtQPv
+	 VgVXggM57GWVGtP0DbPgw+54xUKavZlf72kMFf6QiJIXAETXxLLMK+rWlsrev/UHg0
+	 WYLYcVl1O2RM4F3tQkI6ynLLSG28waYAv6rL3PNQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
+	Robbie Ko <robbieko@synology.com>,
 	Chuck Lever <cel@kernel.org>
-Subject: [PATCH 6.6 0066/1424] nfsd: initialize copy-notify stateid before publishing it
-Date: Sat, 12 Sep 2026 08:41:38 +0200
-Message-ID: <20260912065608.784933195@linuxfoundation.org>
+Subject: [PATCH 6.6 0067/1424] nfsd: reject out-of-range useconds in NFSv2 SETATTR/CREATE
+Date: Sat, 12 Sep 2026 08:41:39 +0200
+Message-ID: <20260912065608.806580838@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -50,99 +50,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Robbie Ko <robbieko@synology.com>
 
-commit 129643893b79f8a3c6b72045f933fbab5ee424ca upstream.
+commit 26709c8ffe73772eb69e68d553ac71d91228dccc upstream.
 
-nfsd4_copy_notify() finished initializing the cpntf state after
-nfs4_alloc_init_cpntf_state() had already linked it into the
-s2s_cp_stateids IDR and the parent's sc_cp_list, with cs_count == 1 (the
-membership reference) and none held for the caller. A racing
-OFFLOAD_CANCEL (crafted cl_id == nn->s2s_cp_cl_id plus the guessable
-so_id) could reach manage_cpntf_state() and free the entry, turning the
-caller's subsequent cpn_cnr_stateid read and cp_p_stateid/cp_p_clid
-writes into use-after-free. The owning clientid was also only recorded
-after publication, so it could not gate an ownership check in that window.
+The NFSv2 sattr decoder converts the wire useconds to nanoseconds in
+svcxdr_decode_sattr():
 
-Record cp_p_stateid and cp_p_clid inside nfs4_alloc_init_cpntf_state()
-before nfs4_init_cp_state() publishes the entry, and return it with an
-extra reference. The caller reads the stateid under that reference and
-drops it with nfs4_put_cpntf_state(); on a late error the laundromat
-reaps the entry.
+	iap->ia_atime.tv_nsec = tmp2 * NSEC_PER_USEC;
 
-Fixes: 624322f1adc5 ("NFSD add COPY_NOTIFY operation")
+tmp2 is a u32 and NSEC_PER_USEC is 1000, so the product is computed in
+unsigned long. On ILP32 that is 32 bits, and an out-of-range useconds
+value such as 4294968 wraps to tv_nsec == 704. The corruption therefore
+happens during decode, before any proc function can inspect the value,
+and a later range check on tv_nsec would see an in-range result and
+accept it. Rejecting in the decoder yields an RPC GARBAGE_ARGS reply.
+NFSv2 defines no NFSERR_INVAL, so there is no NFS-level status to return
+for a malformed time argument, and the check cannot move to the proc
+function the way the v3/v4 nsec range checks do.
+
+Guard the raw useconds before the multiplication and reject values
+greater than 1000000. useconds == 1000000 is kept: it is the Sun
+convention for "set to the current server time", and the in-tree Linux
+NFSv2 client emits it in both the atime and the mtime field for a plain
+touch / utimes(file, NULL) (see encode_sattr() and
+xdr_encode_current_server_time() in fs/nfs/nfs2xdr.c). Rejecting 1000000
+would turn that common operation into a hard decode failure for both
+SETATTR and CREATE. 1000000 * NSEC_PER_USEC is 10^9, which does not wrap
+on ILP32, so the Sun convention value passes through safely. Only
+genuinely out-of-range values (> 1000000) are rejected. The atime and
+mtime guards are therefore symmetric.
+
+The decoder only applied the Sun convention in the mtime block, which
+clears ATTR_ATIME_SET|ATTR_MTIME_SET when mtime useconds == 1000000. If a
+client puts 1000000 in the atime field but not in the mtime field, the
+atime block stored an out-of-range tv_nsec (10^9) and left ATTR_ATIME_SET
+set, so the bogus value reached the filesystem. Apply the convention in
+the atime block as well, clearing ATTR_ATIME_SET so the server uses its
+current time and ignores the value. Only ATTR_ATIME_SET is cleared there.
+The mtime block keeps its existing behavior, where 1000000 means "set
+both atime and mtime to now".
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260710-nfsd-testing-v3-4-a0ff7db6aa3e@kernel.org
+Signed-off-by: Robbie Ko <robbieko@synology.com>
+[ cel: various tweaks, addenda, and clean-ups ]
+Link: https://patch.msgid.link/20260616054027.2360930-1-robbieko@synology.com
 Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4proc.c  |   16 +++++++++-------
- fs/nfsd/nfs4state.c |   10 +++++++++-
- 2 files changed, 18 insertions(+), 8 deletions(-)
+ fs/nfsd/nfsxdr.c |   32 ++++++++++++++++++++++----------
+ 1 file changed, 22 insertions(+), 10 deletions(-)
 
---- a/fs/nfsd/nfs4proc.c
-+++ b/fs/nfsd/nfs4proc.c
-@@ -1928,7 +1928,6 @@ nfsd4_copy_notify(struct svc_rqst *rqstp
- 	struct nfsd_net *nn = net_generic(SVC_NET(rqstp), nfsd_net_id);
- 	struct nfs4_stid *stid;
- 	struct nfs4_cpntf_state *cps;
--	struct nfs4_client *clp = cstate->clp;
+--- a/fs/nfsd/nfsxdr.c
++++ b/fs/nfsd/nfsxdr.c
+@@ -10,6 +10,16 @@
+ #include "auth.h"
  
- 	status = nfs4_preprocess_stateid_op(rqstp, cstate, &cstate->current_fh,
- 					&cn->cpn_src_stateid, RD_STATE, NULL,
-@@ -1940,12 +1939,14 @@ nfsd4_copy_notify(struct svc_rqst *rqstp
- 	cn->cpn_nsec = 0;
+ /*
++ * Sun convention: a sattr time-useconds field of one full second (an
++ * otherwise out-of-range value) means "set this time to the current
++ * server time." It's needed to make permissions checks for the "touch"
++ * program across NFSv2 mounts work correctly. See description of
++ * sattr in section 6.1 of "NFS Illustrated" by Brent Callaghan,
++ * Addison-Wesley, ISBN 0-201-32750-5
++ */
++#define NFS2_SATTR_SET_TO_SERVER_TIME	(1000000)
++
++/*
+  * Mapping of S_IF* types to NFS file types
+  */
+ static const u32 nfs_ftypes[] = {
+@@ -172,27 +182,29 @@ svcxdr_decode_sattr(struct svc_rqst *rqs
+ 	tmp1 = be32_to_cpup(p++);
+ 	tmp2 = be32_to_cpup(p++);
+ 	if (tmp1 != (u32)-1 && tmp2 != (u32)-1) {
++		/*
++		 * Range test here to prevent the multiplication from
++		 * wrapping to a valid (but incorrect) value on 32-bit
++		 * platforms.
++		 */
++		if (tmp2 > NFS2_SATTR_SET_TO_SERVER_TIME)
++			return false;
+ 		iap->ia_valid |= ATTR_ATIME | ATTR_ATIME_SET;
+ 		iap->ia_atime.tv_sec = tmp1;
+ 		iap->ia_atime.tv_nsec = tmp2 * NSEC_PER_USEC;
++		if (tmp2 == NFS2_SATTR_SET_TO_SERVER_TIME)
++			iap->ia_valid &= ~ATTR_ATIME_SET;
+ 	}
  
- 	status = nfserrno(-ENOMEM);
-+	/*
-+	 * The returned cps is published and fully initialized, and carries an
-+	 * extra reference for us; drop it once we are done with it.
-+	 */
- 	cps = nfs4_alloc_init_cpntf_state(nn, stid);
- 	if (!cps)
- 		goto out;
- 	memcpy(&cn->cpn_cnr_stateid, &cps->cp_stateid.cs_stid, sizeof(stateid_t));
--	memcpy(&cps->cp_p_stateid, &stid->sc_stateid, sizeof(stateid_t));
--	memcpy(&cps->cp_p_clid, &clp->cl_clientid, sizeof(clientid_t));
+ 	tmp1 = be32_to_cpup(p++);
+ 	tmp2 = be32_to_cpup(p++);
+ 	if (tmp1 != (u32)-1 && tmp2 != (u32)-1) {
++		if (tmp2 > NFS2_SATTR_SET_TO_SERVER_TIME)
++			return false;
+ 		iap->ia_valid |= ATTR_MTIME | ATTR_MTIME_SET;
+ 		iap->ia_mtime.tv_sec = tmp1;
+ 		iap->ia_mtime.tv_nsec = tmp2 * NSEC_PER_USEC;
+-		/*
+-		 * Passing the invalid value useconds=1000000 for mtime
+-		 * is a Sun convention for "set both mtime and atime to
+-		 * current server time".  It's needed to make permissions
+-		 * checks for the "touch" program across v2 mounts to
+-		 * Solaris and Irix boxes work correctly. See description of
+-		 * sattr in section 6.1 of "NFS Illustrated" by
+-		 * Brent Callaghan, Addison-Wesley, ISBN 0-201-32750-5
+-		 */
+-		if (tmp2 == 1000000)
++		if (tmp2 == NFS2_SATTR_SET_TO_SERVER_TIME)
+ 			iap->ia_valid &= ~(ATTR_ATIME_SET|ATTR_MTIME_SET);
+ 	}
  
- 	/* For now, only return one server address in cpn_src, the
- 	 * address used by the client to connect to this server.
-@@ -1954,10 +1955,11 @@ nfsd4_copy_notify(struct svc_rqst *rqstp
- 	status = nfsd4_set_netaddr((struct sockaddr *)&rqstp->rq_daddr,
- 				 &cn->cpn_src->u.nl4_addr);
- 	WARN_ON_ONCE(status);
--	if (status) {
--		nfs4_put_cpntf_state(nn, cps);
--		goto out;
--	}
-+	/*
-+	 * Drop our extra reference. The membership reference keeps the entry
-+	 * alive for a later inter-server READ, or until the laundromat reaps it.
-+	 */
-+	nfs4_put_cpntf_state(nn, cps);
- out:
- 	nfs4_put_stid(stid);
- 	return status;
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -1032,7 +1032,15 @@ struct nfs4_cpntf_state *nfs4_alloc_init
- 	/* So a stale list_del_init() before linking is a no-op. */
- 	INIT_LIST_HEAD(&cps->cp_list);
- 	cps->cpntf_time = ktime_get_boottime_seconds();
--	refcount_set(&cps->cp_stateid.cs_count, 1);
-+	/*
-+	 * Fully initialize the entry before nfs4_init_cp_state() publishes it,
-+	 * since a concurrent OFFLOAD_CANCEL could then free it. Take an extra
-+	 * reference for the caller (dropped with nfs4_put_cpntf_state()).
-+	 */
-+	memcpy(&cps->cp_p_stateid, &p_stid->sc_stateid, sizeof(stateid_t));
-+	memcpy(&cps->cp_p_clid, &p_stid->sc_client->cl_clientid,
-+	       sizeof(clientid_t));
-+	refcount_set(&cps->cp_stateid.cs_count, 2);
- 	if (!nfs4_init_cp_state(nn, &cps->cp_stateid, NFS4_COPYNOTIFY_STID,
- 				p_stid))
- 		goto out_free;
 
 
