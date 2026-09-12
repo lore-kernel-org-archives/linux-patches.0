@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C640A9463;
-	Sat, 12 Sep 2026 19:07:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94D4D47AF5C;
+	Sat, 12 Sep 2026 19:07:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789240045; cv=none; b=kpo/oTnzDBrXT3hrwbYAHfzwMyyDh8FQ+h1kLqiFsXNQEcOmHIcByrQ3gnHHlLMqrooZE+wVqnG5cTFKJ96LGN+PR/jc8N9c8BjEscFFnsT0RE0oWNUmA2jvejosQjX7ujMIbD2ow6K/ySpX1qjMDzKUVhtx4/ihzgJ1JRrnjWo=
+	t=1789240050; cv=none; b=RknsfiNsQOIHgS9du8aAK+BB7Ho5TLM8ayLleWVt5/PEeoGDv7j2nIBPkBr+qUtzPa2G0h2bDimmukv00yA70CICDLnmNXNWndmv7DMBL7idNlUjtPAM0qymumNLw1lj7f5P7+ZUtz9F5T8t7sjXIx9SmVKtyyvCu4PIvZRI4l0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789240045; c=relaxed/simple;
-	bh=Bh6VMl9Vxbl4Tro3XMwcZHooJ7VAaANegCh/9BHv4mA=;
+	s=arc-20240116; t=1789240050; c=relaxed/simple;
+	bh=giJzFzdEKEiCdSPOGkLeEA18idVlO2HqfYX/Vkao1KQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fg/p23kdd9laG6/nERsSFjSf88qhFWZaTG/7m/yup72sAjrneQu6zAI10kWHlqR53iAflL3rNDGHqAx9WByWNs4k43/BW2HIUue2p/f/2e/dJro00R3Q6obXhRO8WHr6Ypz0gl9D1rX4nb8VqZrP72n0rtUvbpmCKs+W1A5h95c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wl0Nyg7+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PZt283SWSBIoBr2KUclKrXNddtESJPQCtD+Kcq6rYTk0cOpovZzSTwZzeoFmYw5o9iHx8LPGo2g6lTe0QvamESEHaT7tJqnzWA8Jp1sy2oIAGizIV2Ucw0gNl//ZXDhJEJvSSpSoMLcxCUuRcFFmC1/xHVLJwzDVOeUn05izOqI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ON4BeksK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wl0Nyg7+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99FBC1F000FF;
-	Sat, 12 Sep 2026 19:07:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ON4BeksK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8613B1F000FF;
+	Sat, 12 Sep 2026 19:07:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789240044;
-	bh=EziLuYvQKuEl1RsJlCWcK6w0pdyguZN4YINbZVpg3DA=;
+	s=korg; t=1789240049;
+	bh=j2Rza59CSKyH/PVFA2cOWxv0d5mcfxZQWvGl3EE//Uc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wl0Nyg7+E3qGHVtAKGDw59HrfbPOwhrBcF3K7mGjWmhjnrxUiotH0xKJYtd1m43qg
-	 IkuWfwlYDDEckO0zK2Xqc7mkn0pg57tWqCIq/oj+fZ/J8PNiqVju9Yxg1xl6f9td53
-	 1yUPUdyi6ll9RMmY8M5t5lqpQgc1X0M0c3Tuz9Bo=
+	b=ON4BeksK2yTZKWgZFQ3RX6wUmynmk2kTkf5MwTmy02vNsdxoCtDH1yzg/x+pNEAi/
+	 fyyLCRw9XnXEWuSDRa4rETtSiiWpv/jXNmsIhK8op+uod+UD/Y31lbhpbMATS6CQnO
+	 nZTr9yJNftsVOiS1oInJ+hIxzs+lQIjkSzWIevaw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Zhihao Cheng <chengzhihao1@huawei.com>,
 	Richard Weinberger <richard@nod.at>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 788/935] ubi: fastmap: erase_block: Get erase counter from wl_entry rather than flash
-Date: Sat, 12 Sep 2026 09:03:38 +0200
-Message-ID: <20260912065544.901516434@linuxfoundation.org>
+Subject: [PATCH 5.15 789/935] ubi: fastmap: Allocate memory with GFP_NOFS in ubi_update_fastmap
+Date: Sat, 12 Sep 2026 09:03:39 +0200
+Message-ID: <20260912065544.924005620@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -53,77 +53,82 @@ Content-Transfer-Encoding: 8bit
 
 From: Zhihao Cheng <chengzhihao1@huawei.com>
 
-[ Upstream commit 08a4267874164b2e9c8c50831acd466f47208acc ]
+[ Upstream commit a033ab4fec5fd9194d1b6c0306efbdc75f70b142 ]
 
-Just like sync_erase() does, getting erase counter from wl_entry is
-faster than reading from flash.
+Function ubi_update_fastmap could be called in IO context, for example:
+ ubifs_writepage
+  do_writepage
+   ubifs_jnl_write_data
+    write_head
+     ubifs_wbuf_write_nolock
+      ubifs_leb_write
+       ubi_leb_write
+        ubi_eba_write_leb
+	 try_write_vid_and_data
+	  ubi_wl_get_peb
+	   ubi_update_fastmap
+	    erase_block
+
+So it's better to allocate memory with GFP_NOFS mode, in case waiting
+page writeback(dead loop).
 
 Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
 Signed-off-by: Richard Weinberger <richard@nod.at>
 Stable-dep-of: 420477a84f1e ("UBI: Preserve torture flag when rescheduling failed erasures")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/ubi/fastmap.c | 27 +++++++++------------------
- 1 file changed, 9 insertions(+), 18 deletions(-)
+ drivers/mtd/ubi/fastmap.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/drivers/mtd/ubi/fastmap.c b/drivers/mtd/ubi/fastmap.c
-index 5dbab1237fee9..f579493b24b80 100644
+index f579493b24b80..d7a4fbe8512bf 100644
 --- a/drivers/mtd/ubi/fastmap.c
 +++ b/drivers/mtd/ubi/fastmap.c
-@@ -1400,36 +1400,27 @@ static int ubi_write_fastmap(struct ubi_device *ubi,
-  */
- static int erase_block(struct ubi_device *ubi, struct ubi_wl_entry *e)
- {
--	int ret;
-+	int err;
- 	struct ubi_ec_hdr *ec_hdr;
--	long long ec;
-+	long long ec = e->ec;
+@@ -20,7 +20,7 @@ static inline unsigned long *init_seen(struct ubi_device *ubi)
+ 	if (!ubi_dbg_chk_fastmap(ubi))
+ 		return NULL;
  
- 	ec_hdr = kzalloc(ubi->ec_hdr_alsize, GFP_KERNEL);
+-	ret = bitmap_zalloc(ubi->peb_count, GFP_KERNEL);
++	ret = bitmap_zalloc(ubi->peb_count, GFP_NOFS);
+ 	if (!ret)
+ 		return ERR_PTR(-ENOMEM);
+ 
+@@ -106,7 +106,7 @@ static struct ubi_vid_io_buf *new_fm_vbuf(struct ubi_device *ubi, int vol_id)
+ 	struct ubi_vid_io_buf *new;
+ 	struct ubi_vid_hdr *vh;
+ 
+-	new = ubi_alloc_vid_buf(ubi, GFP_KERNEL);
++	new = ubi_alloc_vid_buf(ubi, GFP_NOFS);
+ 	if (!new)
+ 		goto out;
+ 
+@@ -1404,7 +1404,7 @@ static int erase_block(struct ubi_device *ubi, struct ubi_wl_entry *e)
+ 	struct ubi_ec_hdr *ec_hdr;
+ 	long long ec = e->ec;
+ 
+-	ec_hdr = kzalloc(ubi->ec_hdr_alsize, GFP_KERNEL);
++	ec_hdr = kzalloc(ubi->ec_hdr_alsize, GFP_NOFS);
  	if (!ec_hdr)
  		return -ENOMEM;
  
--	ret = ubi_io_read_ec_hdr(ubi, e->pnum, ec_hdr, 0);
--	if (ret < 0)
--		goto out;
--	else if (ret && ret != UBI_IO_BITFLIPS) {
--		ret = -EINVAL;
--		goto out;
--	}
--
--	ret = ubi_io_sync_erase(ubi, e->pnum, 0);
--	if (ret < 0)
-+	err = ubi_io_sync_erase(ubi, e->pnum, 0);
-+	if (err < 0)
+@@ -1460,7 +1460,7 @@ static int invalidate_fastmap(struct ubi_device *ubi)
+ 	ubi->fm = NULL;
+ 
+ 	ret = -ENOMEM;
+-	fm = kzalloc(sizeof(*fm), GFP_KERNEL);
++	fm = kzalloc(sizeof(*fm), GFP_NOFS);
+ 	if (!fm)
  		goto out;
  
--	ec = be64_to_cpu(ec_hdr->ec);
--	ec += ret;
-+	ec += err;
- 	if (ec > UBI_MAX_ERASECOUNTER) {
--		ret = -EINVAL;
-+		err = -EINVAL;
- 		goto out;
+@@ -1549,7 +1549,7 @@ int ubi_update_fastmap(struct ubi_device *ubi)
+ 		return 0;
  	}
  
- 	ec_hdr->ec = cpu_to_be64(ec);
--	ret = ubi_io_write_ec_hdr(ubi, e->pnum, ec_hdr);
--	if (ret < 0)
-+	err = ubi_io_write_ec_hdr(ubi, e->pnum, ec_hdr);
-+	if (err < 0)
- 		goto out;
- 
- 	e->ec = ec;
-@@ -1440,7 +1431,7 @@ static int erase_block(struct ubi_device *ubi, struct ubi_wl_entry *e)
- 
- out:
- 	kfree(ec_hdr);
--	return ret;
-+	return err;
- }
- 
- /**
+-	new_fm = kzalloc(sizeof(*new_fm), GFP_KERNEL);
++	new_fm = kzalloc(sizeof(*new_fm), GFP_NOFS);
+ 	if (!new_fm) {
+ 		up_write(&ubi->fm_eba_sem);
+ 		up_write(&ubi->work_sem);
 -- 
 2.53.0
 
