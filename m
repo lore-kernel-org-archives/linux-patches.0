@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5189828E0;
-	Sat, 12 Sep 2026 16:15:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A308D4BEE38;
+	Sat, 12 Sep 2026 16:15:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789229749; cv=none; b=cESHBzWlOGePuRC8Gbj8LZ+Hu049qJ5kxjt3CNw5uYAe4JEZC5Z49BMbgTmS5ChdPdBf9MPDADf7oWWy/YFRrDL3InX/L4LF7IcWFPTZsVLrgsRqm2qaRap+j+HqwCL1OUqKbvbIkIKK4tt5lGYxc7VqJ6JiDmvj9hojK1RDrnE=
+	t=1789229754; cv=none; b=cL5Q9s5HEzz69Q6ihBcqgZQHF2EXEXk5O48DVRGVUEgzeUypaNbV3J/cMptrZjboTQ4lGkO3uY7gq88n5Uew+F+JlbWsdn1EUKSrdINFzxu/4hn5n5ugckLSw5PHa54H8w9wl4kVdIMdvu4hYpUlSp9Bpt5mR5v3q859yfjDMe4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789229749; c=relaxed/simple;
-	bh=K3NF+LZpB0AAZKa1vmGIBFKeI5VyfqZB7TMjyg0chhA=;
+	s=arc-20240116; t=1789229754; c=relaxed/simple;
+	bh=RQiDhyCnpnBVmt2gFdummjLbMZ4qUKvr3OPOPIC2kYQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gZMHXgASGoOdmkerhAvNpkMTxVjVH3+3hj/+vRYrclW2xoZPQIgS3BW3xDhoImGglHxdWWFRjIH6kUBTDTM6XPktcA3nUA9821zdEU04fCbmGpGz5ssPl8NmxY9pjbzooV9QbxwJT74w+fu7Csh/WsiCt0KnU7/Rt1LsEI9n1gs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JqSIktFe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JlRGbITYXcFQl5AoRtOUmoLH/cR4D1gRkcHtMH4NOkrLPcIJuQOz0TIlCwM39ISNiqzekOzxNyiTsdWH8SPt+uga4vOZKO9FkJOn4GaH9SCg/B/trbXHvRSlo7IuFXp1qzCeChawsHs3dXZ/uV3mGxiXlpi9uHXyjr8gAjuMH6U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eGdk1cS1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JqSIktFe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24C5B1F000FF;
-	Sat, 12 Sep 2026 16:15:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eGdk1cS1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 431691F000FF;
+	Sat, 12 Sep 2026 16:15:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789229748;
-	bh=dRXZXS9m/NV5le9vxFNlLpICnm1QBswx9Ee4BJexDec=;
+	s=korg; t=1789229753;
+	bh=T00A7GdU7Nu/ZobLq+GSa7UtC6Vp8nSxyzhKw4HvW94=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JqSIktFeWlicz60GnI7TEErX9o3OuLSZrtnEEwwhqMWbBr2xhln5WOnt5NoN0TMwU
-	 8UyNkEw/EaPYSkATjiJ6vuMLv/hitXOalbA7didgWSwbj26cL181UutcIi2LWsSYjc
-	 Ebq6+WoKkIzHwu53NFiJ5aTvCNnw4Iu8fdoNdlNA=
+	b=eGdk1cS1Y4q0MGBEt8x+2vNOUZkTd3jfBEJlLWyr8wDPEahZBOMEzkDHUKSVX1rVB
+	 QymoEMHP5mCTMFMfk2VUCWGGI47mugdb8NXhYi6oOdztsbquuwCI20UxA+TphpwQRC
+	 WAo8rFO+dE5Ervjp3xrIvfr6AvPmN9TPUFj0XI9U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weiming Shi <bestswngs@gmail.com>,
-	Xiang Mei <xmei5@asu.edu>,
-	Alex Williamson <alex@shazbot.org>,
+	Nishanth Menon <nm@ti.com>,
+	Md Shofiqul Islam <shofiqtest@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0654/1191] vfio/pci: clear vdev->msi_perm after freeing it on init failure
-Date: Sat, 12 Sep 2026 08:56:22 +0200
-Message-ID: <20260912065602.945165651@linuxfoundation.org>
+Subject: [PATCH 6.1 0655/1191] soc: ti: knav_qmss_queue: Implement resource cleanup in remove()
+Date: Sat, 12 Sep 2026 08:56:23 +0200
+Message-ID: <20260912065602.967853926@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -52,96 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Md Shofiqul Islam <shofiqtest@gmail.com>
 
-[ Upstream commit dc77acfeb979dded39b247b60fef0399536bfa77 ]
+[ Upstream commit 10a1969353b20caa50c320717e054601631c0d3e ]
 
-vfio_msi_cap_len() lazily allocates the per-device MSI permission table:
+Implement the TODO in knav_queue_remove() by stopping PDSPs and
+freeing queue regions and queue ranges before disabling runtime PM,
+mirroring the cleanup performed in the probe error path.
 
-	vdev->msi_perm = kmalloc_obj(struct perm_bits, GFP_KERNEL_ACCOUNT);
-	if (!vdev->msi_perm)
-		return -ENOMEM;
+Set device_ready to false before cleanup to prevent any further
+use of the device during teardown.
 
-	ret = init_pci_cap_msi_perm(vdev->msi_perm, len, flags);
-	if (ret) {
-		kfree(vdev->msi_perm);
-		return ret;		/* vdev->msi_perm left dangling */
-	}
+This ensures resources are released on driver unbind and avoids
+leaking queue/region state.
 
-When init_pci_cap_msi_perm() -> alloc_perm_bits() fails with -ENOMEM, the
-error path frees vdev->msi_perm but leaves the freed pointer stored in
-it. vdev->msi_perm is not re-zeroed later because struct
-vfio_pci_core_device is per-device and persists across open/close cycles,
-and the vfio_config_init() error path returns without calling
-vfio_config_free(). So the dangling pointer outlives the failed open.
-
-That leads to two use-after-frees on the same device:
-
-1. Reuse. The next vfio_config_init() sees the stale pointer at
-   "if (vdev->msi_perm) return len;" and reuses the freed object. MSI
-   config accesses in vfio_pci_config_rw_single() then dereference and
-   call the freed perm->readfn / perm->writefn function pointers.
-
-2. Double free. A later vfio_config_free() runs free_perm_bits() and
-   kfree() on the already-freed object.
-
-Fix it by NULLing vdev->msi_perm after the kfree(), matching the
-NULL-after-free discipline already used in free_perm_bits() and
-vfio_config_free().
-
-  BUG: KASAN: slab-use-after-free in vfio_pci_config_rw_single (drivers/vfio/pci/vfio_pci_config.c:1961)
-  Read of size 8 at addr ffff88800fcc88d0 by task exploit/143
-  Call Trace:
-   ...
-   kasan_report (mm/kasan/report.c:595)
-   vfio_pci_config_rw_single (drivers/vfio/pci/vfio_pci_config.c:1961)
-   vfio_pci_config_rw (drivers/vfio/pci/vfio_pci_config.c:1986)
-   vfio_pci_rw (drivers/vfio/pci/vfio_pci_core.c:1599)
-   vfs_read (fs/read_write.c:572)
-   __x64_sys_pread64 (fs/read_write.c:764)
-   do_syscall_64 (arch/x86/entry/syscall_64.c:94)
-   ...
-
-Followed on device close by a double free of the same object:
-
-  Oops: general protection fault, probably for non-canonical address
-    0x1f63e0e8000008: 0000 [#1] SMP KASAN NOPTI
-  RIP: 0010:kfree (mm/slub.c:6711)
-  Call Trace:
-   vfio_config_free (drivers/vfio/pci/vfio_pci_config.c:1861)
-   vfio_pci_core_disable (drivers/vfio/pci/vfio_pci_core.c:685)
-   vfio_pci_core_close_device (drivers/vfio/pci/vfio_pci_core.c:777)
-   vfio_df_close (drivers/vfio/vfio_main.c:602)
-   vfio_device_fops_release (drivers/vfio/vfio_main.c:648)
-   __fput (fs/file_table.c:512)
-   __x64_sys_close (fs/open.c:1496)
-   do_syscall_64 (arch/x86/entry/syscall_64.c:94)
-   ...
-  Kernel panic - not syncing: Fatal exception
-
-Fixes: 30ea32ab1951 ("vfio/pci: Fix potential memory leak in vfio_msi_cap_len")
-Reported-by: Weiming Shi <bestswngs@gmail.com>
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Link: https://lore.kernel.org/r/20260705014010.1297885-1-xmei5@asu.edu
-Signed-off-by: Alex Williamson <alex@shazbot.org>
+Suggested-by: Nishanth Menon <nm@ti.com>
+Signed-off-by: Md Shofiqul Islam <shofiqtest@gmail.com>
+Link: https://lore.kernel.org/linux-arm-kernel/20260506154114.2288-1-shofiqtest@gmail.com/
+Signed-off-by: Nishanth Menon <nm@ti.com>
+Stable-dep-of: 3c8178627599 ("soc: ti: knav_qmss: Remove debugfs file on teardown")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vfio/pci/vfio_pci_config.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/soc/ti/knav_qmss_queue.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/vfio/pci/vfio_pci_config.c b/drivers/vfio/pci/vfio_pci_config.c
-index 105243d83b2dc..925e0cbee658e 100644
---- a/drivers/vfio/pci/vfio_pci_config.c
-+++ b/drivers/vfio/pci/vfio_pci_config.c
-@@ -1255,6 +1255,7 @@ static int vfio_msi_cap_len(struct vfio_pci_core_device *vdev, u8 pos)
- 	ret = init_pci_cap_msi_perm(vdev->msi_perm, len, flags);
- 	if (ret) {
- 		kfree(vdev->msi_perm);
-+		vdev->msi_perm = NULL;
- 		return ret;
- 	}
+diff --git a/drivers/soc/ti/knav_qmss_queue.c b/drivers/soc/ti/knav_qmss_queue.c
+index 8fb76908be704..4bcefef9635de 100644
+--- a/drivers/soc/ti/knav_qmss_queue.c
++++ b/drivers/soc/ti/knav_qmss_queue.c
+@@ -1886,7 +1886,12 @@ static int knav_queue_probe(struct platform_device *pdev)
  
+ static int knav_queue_remove(struct platform_device *pdev)
+ {
+-	/* TODO: Free resources */
++	struct knav_device *kdev = platform_get_drvdata(pdev);
++
++	device_ready = false;
++	knav_queue_stop_pdsps(kdev);
++	knav_queue_free_regions(kdev);
++	knav_free_queue_ranges(kdev);
+ 	pm_runtime_put_sync(&pdev->dev);
+ 	pm_runtime_disable(&pdev->dev);
+ 	return 0;
 -- 
 2.53.0
 
