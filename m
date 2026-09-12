@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A5823BE141;
-	Sat, 12 Sep 2026 07:09:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 597F03C276E;
+	Sat, 12 Sep 2026 07:09:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789196989; cv=none; b=JBHnfGcMrPEMfBLCL5YnLVml+dC8OgwCcDL4UvPi9qnEa0/zlEKw3C8up5HTdu5nogeHUEMIjsRzKknYZIFqHRdWe1bZElPqRI2wq7F66PV+6VdVdLHlM8fapFQaOcQqNuoMA7mXHRooSKIHJET0uyq4ZHODJ3ulwodxD2shzZA=
+	t=1789196994; cv=none; b=pU9SDBMaMQx1DhAUsj/pfMn1xAOcgPDTMhSRfyy8ZndyqZpOD4Ychz5mdHbE1qdDZEnQ5EAaUXzyz26pdyyTYxyWbrtgr4qQZC/VUvvetQhKDMU5eeh0TxlIDd4mqmtfrbCBrsyvjVMZcpvPa8pTiTjZ2kv85kkou/ayc2hX4nM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789196989; c=relaxed/simple;
-	bh=GdAi13wHyaS32inI5M2ZM9vRLGgOxlkHldJ1MIpMPiI=;
+	s=arc-20240116; t=1789196994; c=relaxed/simple;
+	bh=C97kC8VXjxV+OJKtNGDb482WufBwSi6AUY0M/GTOnUQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qdaPFlt7KYLt2p15PoG+SMkfkyYrYP0oR3pUxSGUK1Nnc+EPWLZuPlAk/5t6whMGYIezCU3PdReItAyRkJNPmbzyqwKGbeI8XtQgHiib6AK4klpRMaSAGbq4m1Ev1uYxEmXswTZ3Z26PtNGpJuPoaThnUazkqDbury9RgBrxUYg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z4D490T0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=culNUTAmAdewPZhpsnqvcaIY2AvUxMD0iwTH/WeC3XNhEYUpLC8MIbCFVzKaiSyR0cfb1FhlEhO3ByjxpF0K/QUY0nbphSbTC9FaOLQJGgpZKVzDeKpdkkKK8JhyLzCwljnosmtoJEWsBKNvlYQLkei93sOyXZ4p1naJvWRZhC4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m6sxU9Xl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z4D490T0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2ADF1F000FF;
-	Sat, 12 Sep 2026 07:09:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m6sxU9Xl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD4FA1F00893;
+	Sat, 12 Sep 2026 07:09:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789196987;
-	bh=04puTAVnwiYmRHKc91SyPGdjrPOGBxqOszcOiq88Ink=;
+	s=korg; t=1789196993;
+	bh=U37bYaAIZFilD0Qdpa2ZzqGvsy5YLDRj8AEaAz440zk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Z4D490T0s1wTFum4KtbQ7lDpIndvYwakmLfhw58jTEwd5vcus1ZRiFc1SfKlp8uNN
-	 AQ7uAgsNZxXxFl9X9c6h1pk+QF7Y7dCHSNjnd7nQxWKeZlKxYx6gUOvKN2P+GGvUMN
-	 g/U8WMvXaJPbc40M6IVpq7PAysADCRp55Ptyj+x4=
+	b=m6sxU9Xlt8u0ovuMdFpS2o+fWEqycxpU9RvDZ3/R/HbEpdWKh69SJ1ZF6bBfaZjBg
+	 fnv5DRYDrmGr+DnazJj9X/j/fTx17JaThC8ayZePzwnv1/i3Zu0NswjlGfzanOWhMF
+	 Z/sbJJ8ltO3bgOsQY/YDMtfZ8gufZ+B7NnP3fgww=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuho Choi <dbgh9129@gmail.com>,
-	Martin Kaiser <martin@kaiser.cx>,
-	Frank Li <Frank.Li@nxp.com>,
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
+	Brian Masney <bmasney@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0077/1815] ARM: imx: avic: Fix OF node reference leaks
-Date: Sat, 12 Sep 2026 08:30:27 +0200
-Message-ID: <20260912065650.820205131@linuxfoundation.org>
+Subject: [PATCH 7.2 0078/1815] clk: versaclock7: Fix APLL clock leak on probe failure
+Date: Sat, 12 Sep 2026 08:30:28 +0200
+Message-ID: <20260912065650.842551302@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,49 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuho Choi <dbgh9129@gmail.com>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-[ Upstream commit b24c12e1bad863d27141e4e9c19d25eebd68c4a6 ]
+[ Upstream commit e25d8d35e8cbc1a4c04a8b86eed6aa7229f6449e ]
 
-of_find_compatible_node() returns a device node with its reference count
-incremented. mxc_init_irq() looks up the i.MX25 CCM node for of_iomap()
-and the AVIC node for irq_domain_create_legacy(), but does not release
-either temporary reference.
+vc7_probe() registers the APLL with clk_register_fixed_rate(), which is
+not devm-managed and must be explicitly unregistered on probe failure.
 
-of_iomap() does not consume the node reference, and
-irq_domain_create_legacy() takes its own fwnode reference for the domain.
-Drop the temporary OF node references after each use.
+Most later errors already unwind through err_clk, but a failure from
+vc7_get_bank_clk() in the output registration loop returned directly.
+That skipped clk_unregister_fixed_rate() and leaked the APLL clock.
 
-Fixes: 9b454d16e57d ("ARM: imx: avic: set low-power interrupt mask for imx25")
-Fixes: 544496ab5cbd ("ARM: imx: move irq_domain_add_legacy call into avic driver")
-Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
-Reviewed-by: Martin Kaiser <martin@kaiser.cx>
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Route that error through the existing err_clk label so the fixed-rate
+clock is released consistently with the other probe failure paths.
+
+This issue was identified during our ongoing static-analysis research while
+reviewing kernel code.
+
+Fixes: 48c5e98fedd9 ("clk: Renesas versaclock7 ccf device driver")
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Reviewed-by: Brian Masney <bmasney@redhat.com>
+Signed-off-by: Brian Masney <bmasney@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mach-imx/avic.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/clk/clk-versaclock7.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm/mach-imx/avic.c b/arch/arm/mach-imx/avic.c
-index 3067c06b4b8eb..6873a50bbe2c0 100644
---- a/arch/arm/mach-imx/avic.c
-+++ b/arch/arm/mach-imx/avic.c
-@@ -173,6 +173,7 @@ static void __init mxc_init_irq(void __iomem *irqbase)
+diff --git a/drivers/clk/clk-versaclock7.c b/drivers/clk/clk-versaclock7.c
+index adcc603e32593..e3a36dcd98b80 100644
+--- a/drivers/clk/clk-versaclock7.c
++++ b/drivers/clk/clk-versaclock7.c
+@@ -1197,7 +1197,7 @@ static int vc7_probe(struct i2c_client *client)
+ 		if (ret) {
+ 			dev_err_probe(&client->dev, ret,
+ 				      "unable to register output %d\n", i);
+-			return ret;
++			goto err_clk;
+ 		}
  
- 	np = of_find_compatible_node(NULL, NULL, "fsl,imx25-ccm");
- 	mx25_ccm_base = of_iomap(np, 0);
-+	of_node_put(np);
- 
- 	if (mx25_ccm_base) {
- 		/*
-@@ -203,6 +204,7 @@ static void __init mxc_init_irq(void __iomem *irqbase)
- 	np = of_find_compatible_node(NULL, NULL, "fsl,avic");
- 	domain = irq_domain_create_legacy(of_fwnode_handle(np), AVIC_NUM_IRQS, irq_base, 0,
- 					  &irq_domain_simple_ops, NULL);
-+	of_node_put(np);
- 	WARN_ON(!domain);
- 
- 	for (i = 0; i < AVIC_NUM_IRQS / 32; i++, irq_base += 32)
+ 		switch (bank_src_map.type) {
 -- 
 2.53.0
 
