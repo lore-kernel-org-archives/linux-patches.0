@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86B7D35201F;
-	Sat, 12 Sep 2026 11:34:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 271B035201F;
+	Sat, 12 Sep 2026 11:34:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789212853; cv=none; b=mGnjPLoDTh1yyydb1bArKv5Y2X83MJtKUsWOsW9s69Q/I442NVHnZcITJdjxFBrCiXkzTJRBQ/QmZ1araOZJ4U2bhJTD71YHM8MMRlUmda/EFkV8ZHLPy68JlkVzs+LMr/KivNWVIoKk3PlF8ATBtXl5aSnVq4EX1tS8tEeKgn8=
+	t=1789212858; cv=none; b=eAtoPgXhVUtBzvAoz+3XkttQjdRaibMQTrPV8C8+nhPCCkJ81P14068FpBxTNOGz3bg7+7FLU+5C0Big7w6FSP4V4bbMi8sxssszHFOd88HfThMYCTyellcInw6zIARO5mtsHOeq1Qb6SKumKoZ9kU4CI22I1KwE4iQv+38rvk0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789212853; c=relaxed/simple;
-	bh=zP0qrMd/NibxSw2XD7tz56PEtA/dTr6ANxLp50/Coyc=;
+	s=arc-20240116; t=1789212858; c=relaxed/simple;
+	bh=cbng9b8fQ7PAWG40+FQfhQq7Gu6vIBDMqAvicO7UtCU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C4c5VkBLZhwfmbhfV/RiJeeJQn9ImvdOGYvA1EIKeLKpw5J2goTiZ+AZCOFklki2Xa9ukPSbK6lTec8AxHzQTA71iLCbugsO7eaWVvElKXYWmK6JfhZjWMmq+Wrp4JB/upQ4iApVpTOxM1ZEWox1P9o4uy2e6l4TjBvOW+DFPSQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JCihVUS2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UeHS4lMyZENh1vEYuZVgHc5OfMMquNVw7/GVrpPWfC6bS8aTo21rDziMKgmK/1TGiCpHDz0uyCrsDVt60l5QqqnHcSwQJnXM3oBKZbemx8Zlz+XQwBDKhfgKxOJddvHVt6PoYu37QMdpuUhTg/JBQHXQEMggfOreRf2+eSQN5pA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eTujWvFI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JCihVUS2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 898411F000FF;
-	Sat, 12 Sep 2026 11:34:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eTujWvFI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE3321F000FF;
+	Sat, 12 Sep 2026 11:34:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789212852;
-	bh=keZr+YeDRlSWmEyTXjrnWNE46va3nVq1jWcDeWQ0IaE=;
+	s=korg; t=1789212857;
+	bh=F76DjSgNNmFIeoHpCAtj/8lRfPkNJ4RTsqk5+ZUuBfE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JCihVUS2XNUICQt/nGvHnWGShezKMm2I9vFUxSQFiqlith6b1oFbjjRKBlFhTHCOn
-	 jshMk6n9O9hZFJk/JeXGQdUsV30K2NDNFq1VdVuBFSUldbV2+vIxvFtOPC+sh3szoo
-	 mqtVs6q/6Ef1gshf+9SAOWqeEWgk1qg7gaUsUQMg=
+	b=eTujWvFIn2VcYztPej41Ii6SodRE2mUCCzb4l9glwd+fwsSbXH5tTM5RFiDPeZyIq
+	 XfDlw1y3vg7XAUdNZZr+dpXEcGqfHtn18E1nqo09k9pLzuGvC/WOAB6TVZyF7pwrOo
+	 L2G0tOBD5Q5RnPuT6cFfqZVjIFgb1vZLoYNeGF8Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Ogness <john.ogness@linutronix.de>,
+	Mikhail Kshevetskiy <mikhail.kshevetskiy@iopsys.eu>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1467/1518] serial: 8250: Ignore flow control on suspend/resume with no_console_suspend
-Date: Sat, 12 Sep 2026 09:00:36 +0200
-Message-ID: <20260912065656.741393050@linuxfoundation.org>
+Subject: [PATCH 6.18 1515/1518] pinctrl: airoha: an7583: add missed gpio22 pin group
+Date: Sat, 12 Sep 2026 09:01:24 +0200
+Message-ID: <20260912065657.837840588@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -50,61 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Ogness <john.ogness@linutronix.de>
+From: Mikhail Kshevetskiy <mikhail.kshevetskiy@iopsys.eu>
 
-[ Upstream commit 302fbbb4fcbdeac2dc8c63a56c1c4e38c4781958 ]
+[ Upstream commit 9ef86358855d5fd89db019ace33c097d2d752b9d ]
 
-If no_console_suspend is specified, on suspend the 8250 console driver
-uses a scratch register (UART_SCR) to store a special canary value. This
-is used during the resume path to identify a printk() call before the
-driver's own ->resume() callback. In this case,
-serial8250_console_restore() is called to quickly re-init the 8250 for
-console printing.
+gpio22 pin group is missed, fix it.
 
-See commit 4516d50aabed ("serial: 8250: Use canary to restart console after
-suspend") for the original motivation.
-
-Unfortunately, this canary workaround does not work in all cases (such as
-suspend to mem) because the scratch register will not reset. This has not
-been a real issue until now because it could simply lead to some garbage
-characters upon resume. However, with the introduction of console flow
-control it becomes a real problem because a failed suspend/resume detection
-when flow control is enabled leads to all characters hitting the flow
-control timeout.
-
-Workaround this issue by temporarily ignoring console flow control when
-the debug canary suspend/resume detection is active.
-
-Fixes: 5e6dfb87b191 ("serial: 8250: Add support for console flow control")
-Signed-off-by: John Ogness <john.ogness@linutronix.de>
-Link: https://patch.msgid.link/20260707141032.5074-1-john.ogness@linutronix.de
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 3ffeb17a9a27 ("pinctrl: airoha: add support for Airoha AN7583 PINs")
+Signed-off-by: Mikhail Kshevetskiy <mikhail.kshevetskiy@iopsys.eu>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/8250/8250_port.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/pinctrl/mediatek/pinctrl-airoha.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/tty/serial/8250/8250_port.c b/drivers/tty/serial/8250/8250_port.c
-index 19b5b754a132d..d3ffba16c0f96 100644
---- a/drivers/tty/serial/8250/8250_port.c
-+++ b/drivers/tty/serial/8250/8250_port.c
-@@ -1990,8 +1990,14 @@ static void wait_for_xmitr(struct uart_8250_port *up, int bits)
- 
- 	wait_for_lsr(up, bits);
- 
--	/* Wait up to 1s for flow control if necessary */
--	if (uart_console_hwflow_active(&up->port)) {
-+	/*
-+	 * Wait up to 1s for flow control if necessary.
-+	 * When 'no_console_suspend' is active (in the window between
-+	 * suspend() and resume()), flow control is temporarily ignored
-+	 * because the canary workaround is not reliable in all situations,
-+	 * leading to flow control timeouts for every character.
-+	 */
-+	if (uart_console_hwflow_active(&up->port) && !up->canary) {
- 		for (tmout = 1000000; tmout; tmout--) {
- 			unsigned int msr = serial_in(up, UART_MSR);
- 			up->msr_saved_flags |= msr & MSR_SAVE_FLAGS;
+diff --git a/drivers/pinctrl/mediatek/pinctrl-airoha.c b/drivers/pinctrl/mediatek/pinctrl-airoha.c
+index 9821e2f6f27dd..bdb5e7012d46b 100644
+--- a/drivers/pinctrl/mediatek/pinctrl-airoha.c
++++ b/drivers/pinctrl/mediatek/pinctrl-airoha.c
+@@ -768,6 +768,7 @@ static const int an7583_gpio18_pins[] = { 20 };
+ static const int an7583_gpio19_pins[] = { 21 };
+ static const int an7583_gpio20_pins[] = { 22 };
+ static const int an7583_gpio21_pins[] = { 23 };
++static const int an7583_gpio22_pins[] = { 24 };
+ static const int an7583_gpio23_pins[] = { 25 };
+ static const int an7583_gpio24_pins[] = { 26 };
+ static const int an7583_gpio25_pins[] = { 27 };
+@@ -851,6 +852,7 @@ static const struct pingroup an7583_pinctrl_groups[] = {
+ 	PINCTRL_PIN_GROUP("gpio19", an7583_gpio19),
+ 	PINCTRL_PIN_GROUP("gpio20", an7583_gpio20),
+ 	PINCTRL_PIN_GROUP("gpio21", an7583_gpio21),
++	PINCTRL_PIN_GROUP("gpio22", an7583_gpio22),
+ 	PINCTRL_PIN_GROUP("gpio23", an7583_gpio23),
+ 	PINCTRL_PIN_GROUP("gpio24", an7583_gpio24),
+ 	PINCTRL_PIN_GROUP("gpio25", an7583_gpio25),
 -- 
 2.53.0
 
