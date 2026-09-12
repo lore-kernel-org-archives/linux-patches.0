@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1A6D208D0;
-	Sat, 12 Sep 2026 10:38:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CECDC19D8BC;
+	Sat, 12 Sep 2026 10:38:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789209530; cv=none; b=QSTM8w+J2i5Xqrbc6nySB5J55p0M82YWR8o80E+Wg0K2/KR+f6erPgFdv3HqpcT2Jz8Jm0MJsbuvstvk7Hf4U5ac5nXIJh92JTyzBpgWtZtTpLgibmj401mETNDX9lmnVKEtJUAaM+/Ik6R6gPlk0f8SY68J2fJKWN4/9KiaGI0=
+	t=1789209534; cv=none; b=ZiOOaktyLCbAEFle/c2NeZQw4baCSciWFNc2VHAN/oHxW+uxoC96aXYfCNMITmE73dp4mOkrzg2tVp9OfpabJ7lEtn3w8MzBdNENPbo4NezI/QpKCTMgsFtRiJNasMta8XkgeBNPHrBdYZDbUP6Q5LbdFxpH/gmvPnbrEIziAww=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789209530; c=relaxed/simple;
-	bh=Dw6HGtV7dP9/1gXy91N3CzaQgZ2sn3gwi5oGLtlJ9UY=;
+	s=arc-20240116; t=1789209534; c=relaxed/simple;
+	bh=oA9XjsFxcRsVHP/b1R8YMFH1FFhvnzo/EwVsVmUel2c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=bUqXtLwGgayMbwXRx3/GOqIkTKBbdyHhmHY65XBEhZNL1U95hsB8SxFT6TrOAY0Qilf9jU0DpUeYQ3TLtPNJ9vhDMJuNuZAm/d6Fk8luif6T64QsPuzkvJhLYU8TXD1kNqDT4UCQugWiQny2r6h3mMPRegkBoi4FEFY/0d/rnN4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gLGdk+5W; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=albLY28Ynxx+xYWwMRVNi26UTvCMiJQd9RO/0UfkWj4x+8KqiKMXhCxPlJ/kvdMJ3FC7dzpnNqwi+lRVMRVyN85pL2b0uaHaGmdv+zEpt4F1AxBNiN/k1xzeqW6FbUof/e33sjStaGTmRqAtAr4yHbgDzAPoO0PYKsiOYYc7zdU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yk/PGq2N; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gLGdk+5W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5B221F00893;
-	Sat, 12 Sep 2026 10:38:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yk/PGq2N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 572601F000FF;
+	Sat, 12 Sep 2026 10:38:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789209528;
-	bh=atPZZ6zpdqyudfTjF2O6o2GhN88TYqoZoetiWOQMeiI=;
+	s=korg; t=1789209533;
+	bh=2vG5KAw2tAMDKh6w+qdthU9wvFujvVN9W7s13GHm36A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gLGdk+5WwRbRq29Bh71ROju36VgYQ4bIyZXltd+W6ruvjkHxBJsh7dhfinsYZe4Nf
-	 7/BakocJMzgNZ0k/WHRAYEQxnbn6IyKsMJi0+dDHKCfr2EbYk2YFDCMRpy95PxvIeT
-	 o81TOKjJD9ixQYgcaqGZBwM7nniDeEOINvUuZRco=
+	b=Yk/PGq2Np7FLsBglJ5mpNS+OASIuW/1b6bnEexxvjVrzT9ReTzSRKXDjCE04nFIF/
+	 ksj3iaVGU2l5X44DTW6XnpxONdmza8j12FjPI+1mtviWuk1RRZ+vQsaqesxbrw1ply
+	 TPBPEi/0ZHE3EK0vhIczgaM7aiuTB0gC1Okvw/1w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?=E8=B0=A2=E8=87=B4=E9=82=A6=20 ?= <Yeking@Red54.com>,
+	syzbot+9eebf5f6544c5e873858@syzkaller.appspotmail.com,
+	Yousef Alhouseen <alhouseenyousef@gmail.com>,
 	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0840/1518] HID: i2c-hid: Refactor _DSM helper and add i2c-hid-acpi-prp0001 driver
-Date: Sat, 12 Sep 2026 08:50:09 +0200
-Message-ID: <20260912065642.441700468@linuxfoundation.org>
+Subject: [PATCH 6.18 0841/1518] HID: synchronize input before cleaning up a failed probe
+Date: Sat, 12 Sep 2026 08:50:10 +0200
+Message-ID: <20260912065642.465042764@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -45,300 +46,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: 谢致邦 (XIE Zhibang) <Yeking@Red54.com>
+From: Yousef Alhouseen <alhouseenyousef@gmail.com>
 
-[ Upstream commit fd7c67d05fb695b1deb07f9e213dd7e80e3a8427 ]
+[ Upstream commit 207853d46f7ef2e28042344a1468da8754c3ddbf ]
 
-Move the _DSM call that gets the HID descriptor address from
-i2c-hid-acpi.c into i2c-hid-acpi.h as a static inline so both the ACPI
-and the new PRP0001 driver can use it. While refactoring, move the
-blacklist check and the _DSM call to the top of probe() to avoid a
-pointless alloc when the device is blacklisted or does not implement the
-_DSM.
+hid_device_io_start() allows reports to run concurrently with probe. If
+the probe subsequently fails, __hid_device_probe() releases driver
+resources and clears hdev->driver without first excluding those report
+callbacks.
 
-Some devices, for example the Lenovo KaiTian N60d and Inspur CP300L3,
-are declared with _HID "PRP0001" and _DSD compatible "hid-over-i2c" but
-lack "hid-descr-addr" from the _DSD and provide the HID descriptor
-address only through an ACPI _DSM. The OF driver fails to probe them
-because it requires hid-descr-addr. Add a new driver that handles these
-devices by calling the shared _DSM helper.
+For example, a report may enter hidraw_report_event() while the failure
+path frees the associated hidraw object, leading to a use-after-free when
+the report takes the object's list lock.
 
-Link: https://lore.kernel.org/tencent_F6FC553D1BB737FC00062AD0FEF43C580F0A@qq.com
-Fixes: b33752c30023 ("HID: i2c-hid: Reorganize so ACPI and OF are separate modules")
-Signed-off-by: 谢致邦 (XIE Zhibang) <Yeking@Red54.com>
+Stop input before performing failed-probe cleanup. This reacquires
+driver_input_lock and waits for any report callback already in progress.
+
+Fixes: c849a6143bec ("HID: Separate struct hid_device's driver_lock into two locks.")
+Reported-by: syzbot+9eebf5f6544c5e873858@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=9eebf5f6544c5e873858
+Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/i2c-hid/Makefile               |   2 +-
- drivers/hid/i2c-hid/i2c-hid-acpi-prp0001.c | 104 +++++++++++++++++++++
- drivers/hid/i2c-hid/i2c-hid-acpi.c         |  52 +++--------
- drivers/hid/i2c-hid/i2c-hid-acpi.h         |  33 +++++++
- 4 files changed, 152 insertions(+), 39 deletions(-)
- create mode 100644 drivers/hid/i2c-hid/i2c-hid-acpi-prp0001.c
- create mode 100644 drivers/hid/i2c-hid/i2c-hid-acpi.h
+ drivers/hid/hid-core.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/hid/i2c-hid/Makefile b/drivers/hid/i2c-hid/Makefile
-index 55bd5e0f35af3..38d5d827f3ce4 100644
---- a/drivers/hid/i2c-hid/Makefile
-+++ b/drivers/hid/i2c-hid/Makefile
-@@ -8,7 +8,7 @@ obj-$(CONFIG_I2C_HID_CORE)			+= i2c-hid.o
- i2c-hid-objs					=  i2c-hid-core.o
- i2c-hid-$(CONFIG_DMI)				+= i2c-hid-dmi-quirks.o
+diff --git a/drivers/hid/hid-core.c b/drivers/hid/hid-core.c
+index 55990d17c5669..78adb5a48a612 100644
+--- a/drivers/hid/hid-core.c
++++ b/drivers/hid/hid-core.c
+@@ -2852,6 +2852,8 @@ static int __hid_device_probe(struct hid_device *hdev, struct hid_driver *hdrv)
+ 	 */
  
--obj-$(CONFIG_I2C_HID_ACPI)			+= i2c-hid-acpi.o
-+obj-$(CONFIG_I2C_HID_ACPI)			+= i2c-hid-acpi.o i2c-hid-acpi-prp0001.o
- obj-$(CONFIG_I2C_HID_OF)			+= i2c-hid-of.o
- obj-$(CONFIG_I2C_HID_OF_ELAN)			+= i2c-hid-of-elan.o
- obj-$(CONFIG_I2C_HID_OF_GOODIX)			+= i2c-hid-of-goodix.o
-diff --git a/drivers/hid/i2c-hid/i2c-hid-acpi-prp0001.c b/drivers/hid/i2c-hid/i2c-hid-acpi-prp0001.c
-new file mode 100644
-index 0000000000000..d2cf4714ae7f1
---- /dev/null
-+++ b/drivers/hid/i2c-hid/i2c-hid-acpi-prp0001.c
-@@ -0,0 +1,104 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * HID over I2C driver for PRP0001 devices missing hid-descr-addr
-+ *
-+ * Some devices, for example the Lenovo KaiTian N60d and Inspur CP300L3, use
-+ * _HID "PRP0001" with _DSD compatible "hid-over-i2c" but lack "hid-descr-addr"
-+ * from the _DSD. The HID descriptor address is provided only through an ACPI
-+ * _DSM. The TPD0 node in the DSDT shows _DSM Function 1 returning 0x20.
-+ *
-+ * Copyright (C) 2026 谢致邦 (XIE Zhibang) <Yeking@Red54.com>
-+ */
-+
-+#include <linux/delay.h>
-+#include <linux/device.h>
-+#include <linux/i2c.h>
-+#include <linux/module.h>
-+#include <linux/of.h>
-+
-+#include "i2c-hid.h"
-+#include "i2c-hid-acpi.h"
-+
-+static int i2c_hid_acpi_prp0001_power_up(struct i2chid_ops *ops)
-+{
-+	/* give the device time to power up */
-+	msleep(750);
-+	return 0;
-+}
-+
-+static struct i2chid_ops i2c_hid_acpi_prp0001_ops = {
-+	.power_up = i2c_hid_acpi_prp0001_power_up,
-+	/*
-+	 * No .restore_sequence needed: the _DSM on these devices returns a
-+	 * constant (0x20) with no side effects, unlike some PNP0C50 _DSM
-+	 * implementations that switch the hardware between PS/2 and I2C modes.
-+	 */
-+};
-+
-+static int i2c_hid_acpi_prp0001_probe(struct i2c_client *client)
-+{
-+	struct device *dev = &client->dev;
-+	struct acpi_device *adev;
-+	u16 hid_descriptor_address;
-+	int ret;
-+
-+	/* If hid-descr-addr is present, let i2c-hid-of handle it */
-+	if (device_property_present(dev, "hid-descr-addr"))
-+		return -ENODEV;
-+
-+	adev = ACPI_COMPANION(dev);
-+	if (!adev)
-+		return -ENODEV;
-+
-+	ret = i2c_hid_acpi_get_descriptor(adev);
-+	if (ret < 0)
-+		return ret;
-+	dev_warn(dev,
-+		 "hid-descr-addr device property NOT found, using ACPI _DSM fallback. Contact vendor for firmware update!\n");
-+	hid_descriptor_address = ret;
-+
-+	/*
-+	 * No acpi_device_fix_up_power() needed: TPD0 has no _PS0, _PS3, _PSC
-+	 * or _PRx methods and follows I2C bus power.
-+	 */
-+	return i2c_hid_core_probe(client, &i2c_hid_acpi_prp0001_ops,
-+				  hid_descriptor_address, 0);
-+}
-+
-+static const struct of_device_id i2c_hid_acpi_prp0001_of_match[] = {
-+	{ .compatible = "hid-over-i2c" },
-+	{},
-+};
-+MODULE_DEVICE_TABLE(of, i2c_hid_acpi_prp0001_of_match);
-+
-+static const struct i2c_device_id i2c_hid_acpi_prp0001_id[] = {
-+	{ .name = "hid-over-i2c" },
-+	{ }
-+};
-+MODULE_DEVICE_TABLE(i2c, i2c_hid_acpi_prp0001_id);
-+
-+static struct i2c_driver i2c_hid_acpi_prp0001_driver = {
-+	.driver = {
-+		.name	= "i2c_hid_acpi_prp0001",
-+		.pm	= &i2c_hid_core_pm,
-+		.probe_type = PROBE_PREFER_ASYNCHRONOUS,
-+		/*
-+		 * of_match_ptr() makes this NULL when CONFIG_OF=n, but that's
-+		 * fine: the I2C id_table with "hid-over-i2c" handles matching
-+		 * via client->name (set by acpi_set_modalias() from the _DSD
-+		 * compatible property).
-+		 */
-+		.of_match_table = of_match_ptr(i2c_hid_acpi_prp0001_of_match),
-+	},
-+
-+	.probe		= i2c_hid_acpi_prp0001_probe,
-+	.remove		= i2c_hid_core_remove,
-+	.shutdown	= i2c_hid_core_shutdown,
-+	.id_table	= i2c_hid_acpi_prp0001_id,
-+};
-+
-+module_i2c_driver(i2c_hid_acpi_prp0001_driver);
-+
-+MODULE_DESCRIPTION("HID over I2C driver for PRP0001 devices missing hid-descr-addr");
-+MODULE_AUTHOR("谢致邦 (XIE Zhibang) <Yeking@Red54.com>");
-+MODULE_LICENSE("GPL");
-diff --git a/drivers/hid/i2c-hid/i2c-hid-acpi.c b/drivers/hid/i2c-hid/i2c-hid-acpi.c
-index abd700a101f46..13f977d6aab61 100644
---- a/drivers/hid/i2c-hid/i2c-hid-acpi.c
-+++ b/drivers/hid/i2c-hid/i2c-hid-acpi.c
-@@ -25,9 +25,9 @@
- #include <linux/kernel.h>
- #include <linux/module.h>
- #include <linux/pm.h>
--#include <linux/uuid.h>
- 
- #include "i2c-hid.h"
-+#include "i2c-hid-acpi.h"
- 
- struct i2c_hid_acpi {
- 	struct i2chid_ops ops;
-@@ -48,39 +48,11 @@ static const struct acpi_device_id i2c_hid_acpi_blacklist[] = {
- 	{ }
- };
- 
--/* HID I²C Device: 3cdff6f7-4267-4555-ad05-b30a3d8938de */
--static guid_t i2c_hid_guid =
--	GUID_INIT(0x3CDFF6F7, 0x4267, 0x4555,
--		  0xAD, 0x05, 0xB3, 0x0A, 0x3D, 0x89, 0x38, 0xDE);
--
--static int i2c_hid_acpi_get_descriptor(struct i2c_hid_acpi *ihid_acpi)
--{
--	struct acpi_device *adev = ihid_acpi->adev;
--	acpi_handle handle = acpi_device_handle(adev);
--	union acpi_object *obj;
--	u16 hid_descriptor_address;
--
--	if (acpi_match_device_ids(adev, i2c_hid_acpi_blacklist) == 0)
--		return -ENODEV;
--
--	obj = acpi_evaluate_dsm_typed(handle, &i2c_hid_guid, 1, 1, NULL,
--				      ACPI_TYPE_INTEGER);
--	if (!obj) {
--		acpi_handle_err(handle, "Error _DSM call to get HID descriptor address failed\n");
--		return -ENODEV;
--	}
--
--	hid_descriptor_address = obj->integer.value;
--	ACPI_FREE(obj);
--
--	return hid_descriptor_address;
--}
--
- static void i2c_hid_acpi_restore_sequence(struct i2chid_ops *ops)
- {
- 	struct i2c_hid_acpi *ihid_acpi = container_of(ops, struct i2c_hid_acpi, ops);
- 
--	i2c_hid_acpi_get_descriptor(ihid_acpi);
-+	i2c_hid_acpi_get_descriptor(ihid_acpi->adev);
- }
- 
- static void i2c_hid_acpi_shutdown_tail(struct i2chid_ops *ops)
-@@ -93,24 +65,28 @@ static void i2c_hid_acpi_shutdown_tail(struct i2chid_ops *ops)
- static int i2c_hid_acpi_probe(struct i2c_client *client)
- {
- 	struct device *dev = &client->dev;
-+	struct acpi_device *adev = ACPI_COMPANION(dev);
- 	struct i2c_hid_acpi *ihid_acpi;
- 	u16 hid_descriptor_address;
- 	int ret;
- 
--	ihid_acpi = devm_kzalloc(&client->dev, sizeof(*ihid_acpi), GFP_KERNEL);
-+	if (acpi_match_device_ids(adev, i2c_hid_acpi_blacklist) == 0)
-+		return -ENODEV;
-+
-+	ret = i2c_hid_acpi_get_descriptor(adev);
-+	if (ret < 0)
-+		return ret;
-+	hid_descriptor_address = ret;
-+
-+	ihid_acpi = devm_kzalloc(dev, sizeof(*ihid_acpi), GFP_KERNEL);
- 	if (!ihid_acpi)
- 		return -ENOMEM;
- 
--	ihid_acpi->adev = ACPI_COMPANION(dev);
-+	ihid_acpi->adev = adev;
- 	ihid_acpi->ops.shutdown_tail = i2c_hid_acpi_shutdown_tail;
- 	ihid_acpi->ops.restore_sequence = i2c_hid_acpi_restore_sequence;
- 
--	ret = i2c_hid_acpi_get_descriptor(ihid_acpi);
--	if (ret < 0)
--		return ret;
--	hid_descriptor_address = ret;
--
--	acpi_device_fix_up_power(ihid_acpi->adev);
-+	acpi_device_fix_up_power(adev);
- 
- 	return i2c_hid_core_probe(client, &ihid_acpi->ops,
- 				  hid_descriptor_address, 0);
-diff --git a/drivers/hid/i2c-hid/i2c-hid-acpi.h b/drivers/hid/i2c-hid/i2c-hid-acpi.h
-new file mode 100644
-index 0000000000000..0bbed1853313d
---- /dev/null
-+++ b/drivers/hid/i2c-hid/i2c-hid-acpi.h
-@@ -0,0 +1,33 @@
-+/* SPDX-License-Identifier: GPL-2.0-only */
-+
-+#ifndef _I2C_HID_ACPI_H
-+#define _I2C_HID_ACPI_H
-+
-+#include <linux/acpi.h>
-+#include <linux/uuid.h>
-+
-+static inline int i2c_hid_acpi_get_descriptor(struct acpi_device *adev)
-+{
-+	/* HID I²C Device: 3cdff6f7-4267-4555-ad05-b30a3d8938de */
-+	static const guid_t i2c_hid_guid =
-+		GUID_INIT(0x3CDFF6F7, 0x4267, 0x4555,
-+			  0xAD, 0x05, 0xB3, 0x0A, 0x3D, 0x89, 0x38, 0xDE);
-+
-+	acpi_handle handle = acpi_device_handle(adev);
-+	union acpi_object *obj;
-+	u16 addr;
-+
-+	obj = acpi_evaluate_dsm_typed(handle, &i2c_hid_guid,
-+				      1, 1, NULL, ACPI_TYPE_INTEGER);
-+	if (!obj) {
-+		acpi_handle_err(handle,
-+				"Error _DSM call to get HID descriptor address failed\n");
-+		return -ENODEV;
-+	}
-+
-+	addr = obj->integer.value;
-+	ACPI_FREE(obj);
-+	return addr;
-+}
-+
-+#endif
+ 	if (ret) {
++		if (hdev->io_started)
++			hid_device_io_stop(hdev);
+ 		devres_release_group(&hdev->dev, hdev->devres_group_id);
+ 		hid_close_report(hdev);
+ 		hdev->driver = NULL;
 -- 
 2.53.0
 
