@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A15329D288;
-	Sat, 12 Sep 2026 14:58:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCBDC4BEE55;
+	Sat, 12 Sep 2026 14:58:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789225115; cv=none; b=DKIwnCmRx7LQP7f6tk7xMpgqZqjhMR3qr4BXg+/9qyvGlTUmbPtXiREx8ADCVVYQVqBX+pjVOZGU1F7GoGIX4lGyXmiAg9zAyQxr92K1G4m0w9l7gVz4rUbqcgSblb65A1V4v/oKHQyxbSY2mH/FWI2VQybV3LcfPQ8CAEGCHTs=
+	t=1789225121; cv=none; b=AlEDS/wIA6R4txd/XRB4ubPllp3kLpC8Gd9Ir/7Y+ENtiGIPytISOC36EnqpK/PjS/hZ5jYgJAgzp8eMiALmcJmdH1OgFhA+lmsIPzIDtrMDvFAudfIER0506+CuelRsLNb2onO2uVpk19BX7tde39SQXdq4J0q3y+dN7SvHWjY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789225115; c=relaxed/simple;
-	bh=ONEX9iLdLrv6Y9u5Joys6q4Y3NNPmed6yRa1Py0IA3A=;
+	s=arc-20240116; t=1789225121; c=relaxed/simple;
+	bh=NqhPnCS9C1Hzrww2Nuu8M9zcXvuIDXNxAs3r+5wWySI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KjNScs+KSmQz1bvw2RpDdF6gXYNgsh+LByQXA/Oh/bXuWfqaxUsxjBqFdy59uQkRSOAjzLRkxrEMOhTs5N/JdIio60mdaVeB8SvE8oOIF3vn7b0NsjjaOOZqj/BNzxuG61iR7mO0gdBdHPHe6e++5bwZy8sdVfVrAKe2JlVD9Lg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rXanjXjJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uQO3RkzcJpsN/3Ti35dgJvkbF8MSZAfDmjCzcL48MqQidhKKNeiIjLx4cGPpwn0R6B99KE9YRs/nmPYA8V/cT/peTkjHsvjxaOz2McAxPqVi3jASwPKxPP8M3YxxmYWUmCyxqT27UfccZB5GyqEfIa+sz1uI02u8jnYJsfHMA6Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LMYY1GL0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rXanjXjJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02A161F000FF;
-	Sat, 12 Sep 2026 14:58:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LMYY1GL0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22C981F000FF;
+	Sat, 12 Sep 2026 14:58:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789225114;
-	bh=+BTHZp0n5C3JfNkTHv6qQRBosTvzj+KqgwRNQCRL6w8=;
+	s=korg; t=1789225119;
+	bh=ANA5CMJLjyKq8krQmGydnJLKoE+8kWspcCW8Q6YD7no=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rXanjXjJnFicSElh/DY1Z09tE5EsImW2A5sYNR6wp7xNdMFGLv5O0JsOENgsl3nAB
-	 IHtn+xroL4r1M0Z08Z1euziWttVnVHKIF7ErIXXHXRHQx5PgIVKhaevzJ82LTNaEWK
-	 DK/J2bojYQG5zKWeOF6epW7txjzdC7jT2z3CVrho=
+	b=LMYY1GL0Sp2UF2kgZUfXRV8ARwSEcEA2osqVRUZ6A2wMMAcIR5IP7/N2Jxb3cXGE6
+	 0Ut2cN6oiz8br04ZkcVcthyNx0QsgiNVH5tZXZ8MX4TmO+aatkf690VOiUGr0tqmxX
+	 WRis3cm87W0bZr17PH98IUTtRCnEcHcheTCOunxs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linmao Li <lilinmao@kylinos.cn>,
+	Ali Ahmet Memis <ali@iusegentoo.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1130/1424] Bluetooth: MGMT: free the mesh send cancel command when it is cancelled
-Date: Sat, 12 Sep 2026 08:59:22 +0200
-Message-ID: <20260912065632.605780658@linuxfoundation.org>
+Subject: [PATCH 6.6 1131/1424] Bluetooth: MSFT: validate evt_prefix_len against the response length
+Date: Sat, 12 Sep 2026 08:59:23 +0200
+Message-ID: <20260912065632.628517796@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -51,62 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linmao Li <lilinmao@kylinos.cn>
+From: Ali Ahmet Memis <ali@iusegentoo.com>
 
-[ Upstream commit 3c742feda8fcabf741a17bcf668b63c8f606f9c5 ]
+[ Upstream commit 0079e1a944634ab2dc1c7cdec1144486d096407e ]
 
-mesh_send_cancel() queues the pending command with a NULL destroy
-callback, so it is only freed if send_cancel() runs. A cancelled entry is
-leaked, as _hci_cmd_sync_cancel_entry() does not release entry->data when
-there is no destroy callback, and hci_cmd_sync_clear() cancels every
-pending entry when the controller is unregistered. Nothing else reclaims
-it either: mgmt_pending_new() does not put the command on
-hdev->mgmt_pending.
+read_supported_features() only checks that the response covers the fixed
+part of struct msft_rp_read_supported_features, which is 11 bytes:
 
-The leak also pins the socket reference taken by mgmt_pending_new(), so
-the mgmt socket is never released.
+	if (skb->len < sizeof(*rp)) {
+		bt_dev_err(hdev, "MSFT supported features length mismatch");
+		goto failed;
+	}
 
-Free the command from a destroy callback.
+evt_prefix[] is a flexible array member and rp->evt_prefix_len is an
+unvalidated u8 taken straight out of that response, so
 
-Fixes: b338d91703fa ("Bluetooth: Implement support for Mesh")
-Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
+	msft->evt_prefix = kmemdup(rp->evt_prefix, rp->evt_prefix_len,
+				   GFP_KERNEL);
+
+copies up to 255 bytes from a reply that may have carried none of them.
+What is copied is data the controller never sent, and it is then used to
+match incoming vendor events in msft_vendor_evt().
+
+This is not an out-of-bounds access. An skb data allocation always has
+at least SKB_DATA_ALIGN(sizeof(struct skb_shared_info)) bytes past the
+payload, which is more than the 255 byte maximum, so the read stays
+inside the allocation and KASAN does not report it. It is still a read
+of bytes the host was never given, with the length fully controlled by
+the controller.
+
+Reject a response that is too short for the prefix it declares.
+
+Verified with an emulated controller over /dev/vhci on a KASAN kernel,
+with vhci made to advertise an MSFT opcode the way btintel, btqca, btmtk
+and btrtl do unconditionally. A reply of exactly 11 bytes declaring
+evt_prefix_len = 255 reaches kmemdup and copies 255 bytes
+("skb->len=11 evt_prefix_len=255", with the copied buffer dumped); since
+the reply ends at the fixed part, all 255 come from past the end of the
+response. No KASAN report is produced, as expected from the allocation
+slack described above. With this patch the response is rejected with
+"MSFT event prefix length mismatch" and msft->evt_prefix is left unset.
+
+Fixes: 145373cb1b1f ("Bluetooth: Add framework for Microsoft vendor extension")
+Signed-off-by: Ali Ahmet Memis <ali@iusegentoo.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/mgmt.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ net/bluetooth/msft.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
-index 0422c88ca9eff..0824f417472c7 100644
---- a/net/bluetooth/mgmt.c
-+++ b/net/bluetooth/mgmt.c
-@@ -2404,11 +2404,15 @@ static int send_cancel(struct hci_dev *hdev, void *data)
+diff --git a/net/bluetooth/msft.c b/net/bluetooth/msft.c
+index 9aee9bffaa7e0..01592eb4704ff 100644
+--- a/net/bluetooth/msft.c
++++ b/net/bluetooth/msft.c
+@@ -166,6 +166,11 @@ static bool read_supported_features(struct hci_dev *hdev,
+ 	if (rp->sub_opcode != MSFT_OP_READ_SUPPORTED_FEATURES)
+ 		goto failed;
  
- 	mgmt_cmd_complete(cmd->sk, hdev->id, MGMT_OP_MESH_SEND_CANCEL,
- 			  0, NULL, 0);
--	mgmt_pending_free(cmd);
- 
- 	return 0;
- }
- 
-+static void send_cancel_destroy(struct hci_dev *hdev, void *data, int err)
-+{
-+	mgmt_pending_free(data);
-+}
++	if (skb->len < sizeof(*rp) + rp->evt_prefix_len) {
++		bt_dev_err(hdev, "MSFT event prefix length mismatch");
++		goto failed;
++	}
 +
- static int mesh_send_cancel(struct sock *sk, struct hci_dev *hdev,
- 			    void *data, u16 len)
- {
-@@ -2429,7 +2433,8 @@ static int mesh_send_cancel(struct sock *sk, struct hci_dev *hdev,
- 	if (!cmd)
- 		err = -ENOMEM;
- 	else
--		err = hci_cmd_sync_queue(hdev, send_cancel, cmd, NULL);
-+		err = hci_cmd_sync_queue(hdev, send_cancel, cmd,
-+					 send_cancel_destroy);
- 
- 	if (err < 0) {
- 		err = mgmt_cmd_status(sk, hdev->id, MGMT_OP_MESH_SEND_CANCEL,
+ 	if (rp->evt_prefix_len > 0) {
+ 		msft->evt_prefix = kmemdup(rp->evt_prefix, rp->evt_prefix_len,
+ 					   GFP_KERNEL);
 -- 
 2.53.0
 
