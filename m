@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6402416871;
-	Sat, 12 Sep 2026 08:55:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 884022E718B;
+	Sat, 12 Sep 2026 08:55:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789203350; cv=none; b=KnSd44b3fC1NT64GatEW/1e1cNC8VqiqaBVL+VH0EKZVa0rNrQ/8Eh2BYiLzdOISOnkwVoSf+7AaOopvVxVKK+tQMgb/7X8dkHI8eDUPntECrNiZxz8KPO5zSymTS4JxtzeQLGDlHsyjn94x//kBw51NvdLGSEInhj+AqM8E7sE=
+	t=1789203354; cv=none; b=pAqv4J8/BU742X/K1NfOv+umUUqWtoIFZG9E9DXS+m3ZbBqwM8aBAtmf/QCxKkPN39Y6lyYdyJOXewdQ6eIPjy+XVQKW1zH0cM7fld1ku1o9+TiWSjKCXMWOEL5e0kImjm/8W04AFaQxmBAQKdvXFWTL1qkmqc9d6qSZaOFKWec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789203350; c=relaxed/simple;
-	bh=v5xuzV+E1jLgWCocmMaW4H1r47fwY6vBD7IUnCzUNzc=;
+	s=arc-20240116; t=1789203354; c=relaxed/simple;
+	bh=SaUfpUyzHeRUHppjsbpins78NfEYxbgM13kpmC3MA2s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IROmA+eeSEu/iQq55eDyyXaFVs7z+V4yHQr0r0obKhOF4YDnLiwt51YPeni3wCWB3f/K5cZswUFKloqsQ4Ds0C7KTJbRv6G4iAljxjW1XRlf3zDU4PHwqK9pkTw8qMb0fDwv4a3DTrhYFeQSIrOrhwYKyMHF2Pc7JS/SQ8qYQi4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IBgBi53t; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fqKbdFUN5m83bUKvpDeTVF1dwXcwd3bd7jSXe4GtbIWUv4vQgm8SpJJNMQe/FyS+RgG+Vi9lXSBwFo3zM4Qj7Zl+5phaUJSR/zrY1oQN4axkoBxt7alUtKkrcmVtcpQPpiGlOUa/enTqshSf+NY9PlIB//aZqGerEvnl958zZ9c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oGTcFkxA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IBgBi53t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70EA31F000FF;
-	Sat, 12 Sep 2026 08:55:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oGTcFkxA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7C381F000FF;
+	Sat, 12 Sep 2026 08:55:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789203348;
-	bh=Gw/AN4s/9U4OxqVi+iadkZJll//NuDxupBKQ0+MOQOc=;
+	s=korg; t=1789203353;
+	bh=xJnWSHL8MuCQ8n6812lpIhBTRhzlFwMcluTeklQGjbk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IBgBi53txEwiF2V4VTlM1PCNTHqwDhXNwAVuFIZ0x2vwB6wfaPqGPxSmh0CmmIzL7
-	 arb3iOh1aacrnmMGIoyREmE0Dcoln7zFWV7diweGy4BcOvyVk9BqdXZaMy/sbKMCb7
-	 AvH6keDNCwbPVoKFKZdpyoRrmO3f/eEbDQkrk9IU=
+	b=oGTcFkxAahfk04GtjItTHC7mYUbOXFsq9Lyt6uXRhU2+gH3iTK68PCYzjFvcQaseB
+	 bgjwSfN8kcc62WQ5RMzwPuoF1hlP8Z3qXBgpBTuSUy9pPfQ/l9pOBT22GrF+GHa+IY
+	 GJUViiDcmCcMNl/qzyfewVHoQ58uihY3sEYecB7E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joe Lawrence <joe.lawrence@redhat.com>,
 	Song Liu <song@kernel.org>,
+	Joe Lawrence <joe.lawrence@redhat.com>,
 	Josh Poimboeuf <jpoimboe@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1390/1815] objtool/klp: Fix cross-module klp relocation section naming
-Date: Sat, 12 Sep 2026 08:52:20 +0200
-Message-ID: <20260912065721.656147098@linuxfoundation.org>
+Subject: [PATCH 7.2 1391/1815] objtool/klp: Dont match local symbols against exports
+Date: Sat, 12 Sep 2026 08:52:21 +0200
+Message-ID: <20260912065721.678981943@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -54,201 +54,55 @@ Content-Transfer-Encoding: 8bit
 
 From: Josh Poimboeuf <jpoimboe@kernel.org>
 
-[ Upstream commit 07f14d6af9d7791fdc2b44a3dd0693e42c71d2b8 ]
+[ Upstream commit 86a697572c6271083694025eefa8de518eeef623 ]
 
-A klp relocation section is .klp.rela.<objname>.<secname>, where objname
-is the object being patched.
+While cloning a reloc, klp diff calls find_export() to determine whether
+the referenced symbol is exported.  That decides whether the reference
+needs a klp reloc, which object the klp symbol belongs to, and whether
+the symbol's data needs to be copied into the patch module.
 
-klp-build wrongly derives objname from where the referenced symbol
-lives, not where it's referenced.  For a cross-module reference like
-patched can_isotp code calling can.ko's can_rx_unregister(), that gives
-.klp.rela.can..text rather than .klp.rela.can_isotp..text.  Unless the
-patch happens to patch can.ko as well, the relocation never gets applied
-and the call goes off into the weeds.
+But find_export() matches purely on symbol name, so a static function or
+variable which happens to share its name with an export is mistaken for
+a reference to that export:
 
-Name the intermediate section __klp_relocs.<objname> so post-link can
-read the patched object's name from there.
+  - klp_reloc_needed() creates a klp reloc pointing at the exporting
+    module's symbol rather than the local one.  For a vmlinux export it
+    skips the klp reloc altogether, leaving a normal reloc which the
+    module loader resolves to the vmlinux symbol.
+
+  - clone_reloc() treats the symbol as external and clones it without
+    its data, leaving a dangling reference.
+
+  - validate_special_section_klp_reloc() attributes a static branch or
+    call key to the wrong module, and for a vmlinux export skips the
+    unsupported-key check entirely.
+
+Exports are always global, so ignore local symbols in find_export().
 
 Fixes: dd590d4d57eb ("objtool/klp: Introduce klp diff subcommand for diffing object files")
-Reported-by: Joe Lawrence <joe.lawrence@redhat.com>
-Link: https://lore.kernel.org/20260720145658.1103243-2-joe.lawrence@redhat.com
 Acked-by: Song Liu <song@kernel.org>
 Acked-by: Joe Lawrence <joe.lawrence@redhat.com>
-Link: https://patch.msgid.link/ee93a08f3e55e76ffa67d04e283917ddaa893f09.1786138493.git.jpoimboe@kernel.org
+Link: https://patch.msgid.link/dafc7c017d1f62e2190a20dc84a52fbfc4c70210.1786138493.git.jpoimboe@kernel.org
 Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/objtool/include/objtool/klp.h | 10 ++++--
- tools/objtool/klp-diff.c            | 17 +++++++--
- tools/objtool/klp-post-link.c       | 53 +++++++++++++++++------------
- 3 files changed, 52 insertions(+), 28 deletions(-)
+ tools/objtool/klp-diff.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/tools/objtool/include/objtool/klp.h b/tools/objtool/include/objtool/klp.h
-index 0118c2c170c3f..646d8e1f12eff 100644
---- a/tools/objtool/include/objtool/klp.h
-+++ b/tools/objtool/include/objtool/klp.h
-@@ -14,11 +14,15 @@
- #define KLP_FUNCS_SEC	".init.klp_funcs"
- 
- /*
-- * __klp_relocs is an intermediate section which are created by klp diff and
-- * converted into KLP symbols/relas by "objtool klp post-link".  This is needed
-- * to work around the linker, which doesn't preserve SHN_LIVEPATCH or
-+ * __klp_relocs.<objname> are intermediate sections which are created by klp
-+ * diff and converted into KLP symbols/relas by "objtool klp post-link".  This
-+ * is needed to work around the linker, which doesn't preserve SHN_LIVEPATCH or
-  * SHF_RELA_LIVEPATCH, nor does it support having two RELA sections for a
-  * single PROGBITS section.
-+ *
-+ * "objname" is the name of the object being patched ("vmlinux" or a module
-+ * name).  post-link uses it to name the resulting
-+ * .klp.rela.objname.section_name sections.
-  */
- #define KLP_RELOCS_SEC	"__klp_relocs"
- #define KLP_STRINGS_SEC	".rodata.klp.str1.1"
 diff --git a/tools/objtool/klp-diff.c b/tools/objtool/klp-diff.c
-index df2fe014ec7e8..e266a54b059d6 100644
+index e266a54b059d6..a7cdba08b1deb 100644
 --- a/tools/objtool/klp-diff.c
 +++ b/tools/objtool/klp-diff.c
-@@ -1381,8 +1381,8 @@ static int clone_reloc_klp(struct elfs *e, struct reloc *patched_reloc,
- 	}
- 
- 	/*
--	 * Create the __klp_relocs entry.  This will be converted to an actual
--	 * KLP rela by "objtool klp post-link".
-+	 * Create the __klp_relocs.<objname> entry.  This will be converted to
-+	 * an actual KLP rela by "objtool klp post-link".
- 	 *
- 	 * This intermediate step is necessary to prevent corruption by the
- 	 * linker, which doesn't know how to properly handle two rela sections
-@@ -1390,7 +1390,18 @@ static int clone_reloc_klp(struct elfs *e, struct reloc *patched_reloc,
- 	 */
- 
- 	if (!klp_relocs) {
--		klp_relocs = elf_create_section(e->out, KLP_RELOCS_SEC, 0,
-+		const char *objname = find_modname(e);
-+		char sec_name[SEC_NAME_LEN];
-+
-+		if (!objname)
-+			return -1;
-+
-+		/* section format: __klp_relocs.objname */
-+		if (snprintf_check(sec_name, SEC_NAME_LEN,
-+				   KLP_RELOCS_SEC ".%s", objname))
-+			return -1;
-+
-+		klp_relocs = elf_create_section(e->out, sec_name, 0,
- 						0, SHT_PROGBITS, 8, SHF_ALLOC);
- 		if (!klp_relocs)
- 			return -1;
-diff --git a/tools/objtool/klp-post-link.c b/tools/objtool/klp-post-link.c
-index c013e39957b11..350d20495897b 100644
---- a/tools/objtool/klp-post-link.c
-+++ b/tools/objtool/klp-post-link.c
-@@ -19,19 +19,11 @@
- #include <objtool/util.h>
- #include <linux/livepatch_external.h>
- 
--static int fix_klp_relocs(struct elf *elf)
-+static int fix_klp_reloc_sec(struct elf *elf, struct section *symtab,
-+			     struct section *klp_relocs)
+@@ -1102,6 +1102,9 @@ static struct export *find_export(struct symbol *sym)
  {
--	struct section *symtab, *klp_relocs;
--
--	klp_relocs = find_section_by_name(elf, KLP_RELOCS_SEC);
--	if (!klp_relocs)
--		return 0;
--
--	symtab = find_section_by_name(elf, ".symtab");
--	if (!symtab) {
--		ERROR("missing .symtab");
--		return -1;
--	}
-+	/* section format: __klp_relocs.sec_objname */
-+	const char *sec_objname = klp_relocs->name + strlen(KLP_RELOCS_SEC ".");
+ 	struct export *export;
  
- 	for (int i = 0; i < sec_size(klp_relocs) / sizeof(struct klp_reloc); i++) {
- 		struct klp_reloc *klp_reloc;
-@@ -39,7 +31,6 @@ static int fix_klp_relocs(struct elf *elf)
- 		struct section *sec, *tmp, *klp_rsec;
- 		unsigned long offset;
- 		struct reloc *reloc;
--		char sym_modname[64];
- 		char rsec_name[SEC_NAME_LEN];
- 		u64 addend;
- 		struct symbol *sym, *klp_sym;
-@@ -55,7 +46,7 @@ static int fix_klp_relocs(struct elf *elf)
- 		reloc = find_reloc_by_dest(elf, klp_relocs,
- 					   klp_reloc_off + offsetof(struct klp_reloc, offset));
- 		if (!reloc) {
--			ERROR("malformed " KLP_RELOCS_SEC " section");
-+			ERROR("malformed %s section", klp_relocs->name);
- 			return -1;
- 		}
- 
-@@ -66,17 +57,13 @@ static int fix_klp_relocs(struct elf *elf)
- 		reloc = find_reloc_by_dest(elf, klp_relocs,
- 					   klp_reloc_off + offsetof(struct klp_reloc, sym));
- 		if (!reloc) {
--			ERROR("malformed " KLP_RELOCS_SEC " section");
-+			ERROR("malformed %s section", klp_relocs->name);
- 			return -1;
- 		}
- 
- 		klp_sym = reloc->sym;
- 		addend = reloc_addend(reloc);
- 
--		/* symbol format: .klp.sym.modname.sym_name,sympos */
--		if (sscanf(klp_sym->name + strlen(KLP_SYM_PREFIX), "%55[^.]", sym_modname) != 1)
--			ERROR("can't find modname in klp symbol '%s'", klp_sym->name);
--
- 		/*
- 		 * Create the KLP rela:
- 		 */
-@@ -84,7 +71,7 @@ static int fix_klp_relocs(struct elf *elf)
- 		/* section format: .klp.rela.sec_objname.section_name */
- 		if (snprintf_check(rsec_name, SEC_NAME_LEN,
- 				   KLP_RELOC_SEC_PREFIX "%s.%s",
--				   sym_modname, sec->name))
-+				   sec_objname, sec->name))
- 			return -1;
- 
- 		klp_rsec = find_section_by_name(elf, rsec_name);
-@@ -134,10 +121,32 @@ static int fix_klp_relocs(struct elf *elf)
- 	return 0;
- }
- 
-+static int fix_klp_relocs(struct elf *elf)
-+{
-+	struct section *symtab, *sec;
++	if (is_local_sym(sym))
++		return NULL;
 +
-+	symtab = find_section_by_name(elf, ".symtab");
-+	if (!symtab) {
-+		ERROR("missing .symtab");
-+		return -1;
-+	}
-+
-+	for_each_sec(elf, sec) {
-+		if (strncmp(sec->name, KLP_RELOCS_SEC ".",
-+			    strlen(KLP_RELOCS_SEC ".")))
-+			continue;
-+
-+		if (fix_klp_reloc_sec(elf, symtab, sec))
-+			return -1;
-+	}
-+
-+	return 0;
-+}
-+
- /*
-  * This runs on the livepatch module after all other linking has been done.  It
-- * converts the intermediate __klp_relocs section into proper KLP relocs to be
-- * processed by livepatch.  This needs to run last to avoid linker wreckage.
-+ * converts the intermediate __klp_relocs.* sections into proper KLP relocs to
-+ * be processed by livepatch.  This needs to run last to avoid linker wreckage.
-  * Linkers don't tend to handle the "two rela sections for a single base
-  * section" case very well, nor do they appreciate SHN_LIVEPATCH.
-  */
+ 	hash_for_each_possible(exports, export, hash, str_hash(sym->name)) {
+ 		if (!strcmp(export->sym, sym->name))
+ 			return export;
 -- 
 2.53.0
 
