@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2264330DEA3;
-	Sat, 12 Sep 2026 14:00:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2407F2ECD1D;
+	Sat, 12 Sep 2026 14:00:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789221640; cv=none; b=Xujjc7pJnruiGZiNWar+BwX7Mfe1aZzChtamOo8YxClpRwlqOXMvLGYFYX7OxtOB8W7dorSe9bGMhIwBG1CqMRf1vTy56lROFaSLPhxVW+/waF2AFST1+V93gle73erthnub8bxp/Ct9f0LWbiriW4Nbz7esjaajQpoqQ1KJHH4=
+	t=1789221645; cv=none; b=tEqDySIKAEledQTtRJtqz5BFAbdKC7LlshfX53ig3n9cf7xMYQC2MI1PDu2JK2kF6B8vHV3jzOl57ojvbnboNkPvW96G2arQSIluc/2yoe8P/9f64HuVEgITfClGWLn3b0dmSRXZNdFbl9d2cf83KZ9EYMBOjogIrXiCHmZcnic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789221640; c=relaxed/simple;
-	bh=/TTdgKAZWRTPUjXxiqE6LvEiqUN+8vWjOURW2x3CV5g=;
+	s=arc-20240116; t=1789221645; c=relaxed/simple;
+	bh=M8mP4XY3lBZi9EEZ+kIGLh77cgaeaVbBbSZVCHgULqQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ulkNOJRVZ5BX4J1oci7cENV2hQL32YTKNZ39gzigUnGFwWfrWCv2surxe1SLeO/eye1dkxi1Uy88WU448Tp9e91ZbXY7UPkO1k0UrcnJaxCbUu4TchX53iuuE+zlhav9xchG07XD87FbaDJ2sOjRf9n2svLzpYc1GPG/oq3Gma4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c9MVPav1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ahp0JxPc7kRU6h/M4NZb2m7RvQB2XgU3VT055TbLzeb/CiJM9m0gZXiji+4Bs+5Zbv1+F+B34F/qqz6MGYjr0xQDUffuFpvnXBpsJqpBzTlTTLHeRb9cVfcrwrV1jDP1Fk4MK6kBDoy9ANn/tQCSLt2swNtBIXARWejn862P+CQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CCefDViU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c9MVPav1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D0ED1F000FF;
-	Sat, 12 Sep 2026 14:00:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CCefDViU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1AC41F000FF;
+	Sat, 12 Sep 2026 14:00:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789221638;
-	bh=XOL842H0OKQOYWny519dsw5cyajpLgfirwpgzArHdc4=;
+	s=korg; t=1789221644;
+	bh=kwV7ObeBN0j5cQNQ0NkCihG6lxLZcRPPc7nEh+8iStU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=c9MVPav1b/sxI5euRRDtZbzGlyMP50PDG99voRFBBjc70avTYb28Rhu0fMgXq1yIf
-	 /dQi9lVxdWdU8jvsTBMdUcsk815GhXk2otFACdiY/2ca0XNkf/VN4w+Fl7oqbcvYvh
-	 Vp77c5NAWgitOxGrgdMcxmkfhfFA2xdnNKSWnHnk=
+	b=CCefDViU825Yb3M2vromVoOIRTev6ImbsSbTy0cPPpbVRu8Azg1mC5QYiFkq0elgj
+	 sntcdiVAK1pvDlxcA42XBH9ZTqa0Bm7dJ++x7uV8M948MapHeeN+09qmc1jZSlpKer
+	 Peq3RGTMlzEkMAljlOzJFY+OIS/OO7OcVUK7cw9s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxwell Doose <m32285159@gmail.com>,
+	Jonathan Cameron <jic23@kernel.org>,
+	Nikhil Gautam <nikhilgtr@gmail.com>,
 	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	Sanjay Chitroda <sanjayembeddedse@gmail.com>,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+	Stable@vger.kernel.org,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 6.6 0423/1424] iio: temperature: hid-sensor-temperature: switch to non-devm iio_device_register()
-Date: Sat, 12 Sep 2026 08:47:35 +0200
-Message-ID: <20260912065616.756160230@linuxfoundation.org>
+Subject: [PATCH 6.6 0424/1424] iio: light: opt4001: Fix power down clearing bits of the wrong register
+Date: Sat, 12 Sep 2026 08:47:36 +0200
+Message-ID: <20260912065616.778722846@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -53,55 +53,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sanjay Chitroda <sanjayembeddedse@gmail.com>
+From: Nikhil Gautam <nikhilgtr@gmail.com>
 
-commit 967d066f5334740f656577bc51c381a1bb707b61 upstream.
+commit 3b2cd82c524c75a2173f2e3f874652a75f81cd1d upstream.
 
-Avoid using devm_iio_device_register(), as this driver requires explicit
-error handling and teardown ordering.
+opt4001_power_down() intends to clear the operating mode bits in the
+CTRL register but reads OPT4001_DEVICE_ID instead of OPT4001_CTRL, so
+the value written back to CTRL contains device ID bits rather than the
+current configuration.
 
-With devm_iio_device_register(), IIO device remains registered until the
-devres cleanup phase. However, driver's remove() callback removes the
-sensor hub callback and trigger support. This can create a race window
-where IIO device is still visible and read_raw() requests are issued.
-These requests might call sensor_hub_input_attr_get_raw_value(), which
-waits up to 5 seconds for a response from the sensor hub callback that
-has already been removed.
+Fix and simplify this by using regmap_clear_bits() on the CTRL register
+directly in the devm action, and drop opt4001_power_down() which has no
+other users.
 
-Add an explicit iio_device_unregister() call in the teardown path to
-ensure deterministic cleanup, so that userspace can no longer access the
-device once backend resources begin to be dismantled.
-
-Fixes: 59d0f2da3569 ("iio: hid: Add temperature sensor support")
-Cc: stable@vger.kernel.org
-Reviewed-by: Maxwell Doose <m32285159@gmail.com>
+Suggested-by: Jonathan Cameron <jic23@kernel.org>
+Fixes: 9a9608418292 ("iio: light: Add support for TI OPT4001 light sensor")
+Signed-off-by: Nikhil Gautam <nikhilgtr@gmail.com>
 Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Signed-off-by: Sanjay Chitroda <sanjayembeddedse@gmail.com>
-Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/temperature/hid-sensor-temperature.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/iio/light/opt4001.c | 27 ++++-----------------------
+ 1 file changed, 4 insertions(+), 23 deletions(-)
 
---- a/drivers/iio/temperature/hid-sensor-temperature.c
-+++ b/drivers/iio/temperature/hid-sensor-temperature.c
-@@ -243,7 +243,7 @@ static int hid_temperature_probe(struct
- 	if (ret)
- 		goto error_remove_trigger;
+diff --git a/drivers/iio/light/opt4001.c b/drivers/iio/light/opt4001.c
+index dd152d921b48..288e699734af 100644
+--- a/drivers/iio/light/opt4001.c
++++ b/drivers/iio/light/opt4001.c
+@@ -222,33 +222,14 @@ static int opt4001_set_conf(struct opt4001_chip *chip)
+ 	return ret;
+ }
  
--	ret = devm_iio_device_register(indio_dev->dev.parent, indio_dev);
-+	ret = iio_device_register(indio_dev);
- 	if (ret)
- 		goto error_remove_callback;
+-static int opt4001_power_down(struct opt4001_chip *chip)
+-{
+-	struct device *dev = &chip->client->dev;
+-	int ret;
+-	unsigned int reg;
+-
+-	ret = regmap_read(chip->regmap, OPT4001_DEVICE_ID, &reg);
+-	if (ret) {
+-		dev_err(dev, "Failed to read configuration\n");
+-		return ret;
+-	}
+-
+-	/* MODE_OFF is 0x0 so just set bits to 0 */
+-	reg &= ~OPT4001_CTRL_OPER_MODE_MASK;
+-
+-	ret = regmap_write(chip->regmap, OPT4001_CTRL, reg);
+-	if (ret)
+-		dev_err(dev, "Failed to set configuration to power down\n");
+-
+-	return ret;
+-}
+-
+ static void opt4001_chip_off_action(void *data)
+ {
+ 	struct opt4001_chip *chip = data;
++	int ret;
  
-@@ -263,6 +263,7 @@ static int hid_temperature_remove(struct
- 	struct iio_dev *indio_dev = platform_get_drvdata(pdev);
- 	struct temperature_state *temp_st = iio_priv(indio_dev);
+-	opt4001_power_down(chip);
++	ret = regmap_clear_bits(chip->regmap, OPT4001_CTRL, OPT4001_CTRL_OPER_MODE_MASK);
++	if (ret)
++		dev_err(&chip->client->dev, "Failed to power down\n");
+ }
  
-+	iio_device_unregister(indio_dev);
- 	sensor_hub_remove_callback(hsdev, HID_USAGE_SENSOR_TEMPERATURE);
- 	hid_sensor_remove_trigger(indio_dev, &temp_st->common_attributes);
- 
+ static const struct iio_chan_spec opt4001_channels[] = {
+-- 
+2.55.0
+
 
 
