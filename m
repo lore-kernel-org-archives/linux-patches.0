@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A0F241B8E4;
-	Sat, 12 Sep 2026 10:57:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2C6641B8E4;
+	Sat, 12 Sep 2026 10:57:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789210637; cv=none; b=CkMf2bCHP/YLwx8GtO8oOYKb3rJLScx8Gd/J/gR9o/BdY9ASpXQhDz5U6t0JXCCSBRpx414DayG4yCAe8GRDtyAZiPOL7VTDcU7ZkhqnAieW8/CfkRlqjUrSuBef8jqwwaK/2TMhTZ6TOqFxS8hioljkdY8NmScOZTWwfiO66Zk=
+	t=1789210641; cv=none; b=o9qGhJjJGgE39snoNo/peFQ1fEwUqeeB95DqdCIqXHre6OYTAKIzXfgAwuXMvXUa9W6tZJeQdqPk1mwb5BaLuiS0Y3EnR4pW0pLdEn9Kh8nj1WOFON3VaNlTIm157Fv1NfVz768Uot4rRUHMD+8e0q8kiE22f3qE89jmO3CvAt4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789210637; c=relaxed/simple;
-	bh=+tgrKMT/58g+D5YhzFryqws28e+79RVt5hOzbBgNy00=;
+	s=arc-20240116; t=1789210641; c=relaxed/simple;
+	bh=/p6hzTh74yNft+apkQGTv6XX/RcuMOt60dhZ1KBHOv4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qQu2jV/VOBKxVOpboFt21A7fim9KafmP6jpFLnyzISBDcHYAdvtQtrLSrceKT/TRSbHATGMv+k6w7A8Fv9MDbfwBRT1E9xnkztI3vU/PjXWJ79pkJ+3fbctYJP4ObSsSjyblovkjeuqWDuzhJxOfWkggWtDbEvZaHVnK397j+rs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gaqo4/Ij; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Rrxz3Su8y5XBLCFYLKM6RidqJfP3mBi3m3mkwGGzeyCA1/s88bJlY73zlcPVlgmFwxaVBAGoP0Y+w+2t8LQkG/A86BqoQPble6NebrgH6YPmlmH2g/MtFqutZ2Y1ueKlLHZegr4VZIrgSePMd5YYzKiNjVRu3+mIBHGUlfodVsQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x5+Ps1B7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gaqo4/Ij"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 326FE1F000FF;
-	Sat, 12 Sep 2026 10:57:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x5+Ps1B7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C85AB1F000FF;
+	Sat, 12 Sep 2026 10:57:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789210636;
-	bh=/j91IqaEX0t253UbWPuPT7GwIYykFSs0+OMQsgOT0DA=;
+	s=korg; t=1789210640;
+	bh=VtnHULR3Kn8JwPWSqw3PLCenoa5vshngLPe5T0/oxhQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gaqo4/Ij9rdB7lXDjvWUCn36eYWbRvvIBywhQXTk1xkh9aMGDdsKdWsEXx+3GTaa6
-	 uJH4UR8a8sCVRvk5/6LRlLxN85Tb3AzzDOMpKRS6K99N1jl9kTRoP7O3JtMeWU33nM
-	 UZiVE8JUTuUSHCwN9hh+aAf7VW0ny665xLOM0EzU=
+	b=x5+Ps1B76dRHVbdv2UCP2L11IJh2L4nlhVrsEayGzJGiNzYdoYjwWPoFpNM7lL3oF
+	 MA4V7GJ0mKtCLGDjZsK0H9XRBeNHirtHzZb50raI//sCoqYy6YjvusSgj9Iwaefa6R
+	 +0mVjngCsIgEDyx53g1g0wOmxLBo9kcq0wYb/l+I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
-	Svyatoslav Pankratov <svyatoslav.pankratov@intel.com>,
-	Ahsan Atta <ahsan.atta@intel.com>,
+	Yuho Choi <dbgh9129@gmail.com>,
+	Martin Kaiser <martin@kaiser.cx>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1068/1518] crypto: qat - remove dead ADF_HEX code
-Date: Sat, 12 Sep 2026 08:53:57 +0200
-Message-ID: <20260912065647.608645661@linuxfoundation.org>
+Subject: [PATCH 6.18 1069/1518] hwrng: imx-rngc - Disable clock on registration failure
+Date: Sat, 12 Sep 2026 08:53:58 +0200
+Message-ID: <20260912065647.631256770@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -53,53 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ahsan Atta <ahsan.atta@intel.com>
+From: Yuho Choi <dbgh9129@gmail.com>
 
-[ Upstream commit 61135c1597af56eb454d53c9d7cda90d5e5dc566 ]
+[ Upstream commit 188bb9ad86c3b2d527385328a30c1d9510253202 ]
 
-The ADF_HEX value type is defined in the adf_cfg_val_type enum and
-handled in adf_cfg_add_key_value_param(), but no caller in the tree
-uses it.
+The RNGC clock is enabled manually before runtime PM is configured. If
+devm_hwrng_register() fails, probe returns without disabling the clock.
+The devm_pm_runtime_enable() cleanup only disables runtime PM and does not
+call imx_rngc_suspend().
 
-Remove the unused ADF_HEX enum value and its dead handling code.
+Disable the clock before returning from this failure path.
 
-Fixes: d8cba25d2c68 ("crypto: qat - Intel(R) QAT driver framework")
-Reviewed-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
-Reviewed-by: Svyatoslav Pankratov <svyatoslav.pankratov@intel.com>
-Signed-off-by: Ahsan Atta <ahsan.atta@intel.com>
+Fixes: 7a96a64e8689 ("hwrng: imx-rngc - add runtime pm")
+Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
+Reviewed-by: Martin Kaiser <martin@kaiser.cx>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/intel/qat/qat_common/adf_cfg.c        | 3 ---
- drivers/crypto/intel/qat/qat_common/adf_cfg_common.h | 1 -
- 2 files changed, 4 deletions(-)
+ drivers/char/hw_random/imx-rngc.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/crypto/intel/qat/qat_common/adf_cfg.c b/drivers/crypto/intel/qat/qat_common/adf_cfg.c
-index 3b42e29047bcc..7180dd2b504a1 100644
---- a/drivers/crypto/intel/qat/qat_common/adf_cfg.c
-+++ b/drivers/crypto/intel/qat/qat_common/adf_cfg.c
-@@ -292,9 +292,6 @@ int adf_cfg_add_key_value_param(struct adf_accel_dev *accel_dev,
- 			 "%ld", (*((long *)val)));
- 	} else if (type == ADF_STR) {
- 		strscpy(key_val->val, (char *)val);
--	} else if (type == ADF_HEX) {
--		snprintf(key_val->val, ADF_CFG_MAX_VAL_LEN_IN_BYTES,
--			 "0x%lx", (unsigned long)val);
- 	} else {
- 		dev_err(&GET_DEV(accel_dev), "Unknown type given.\n");
- 		kfree(key_val);
-diff --git a/drivers/crypto/intel/qat/qat_common/adf_cfg_common.h b/drivers/crypto/intel/qat/qat_common/adf_cfg_common.h
-index d63f4dcccbb5d..5922d018f5b98 100644
---- a/drivers/crypto/intel/qat/qat_common/adf_cfg_common.h
-+++ b/drivers/crypto/intel/qat/qat_common/adf_cfg_common.h
-@@ -28,7 +28,6 @@ enum adf_cfg_service_type {
+diff --git a/drivers/char/hw_random/imx-rngc.c b/drivers/char/hw_random/imx-rngc.c
+index 241664a9b5d9a..447424f7ded1c 100644
+--- a/drivers/char/hw_random/imx-rngc.c
++++ b/drivers/char/hw_random/imx-rngc.c
+@@ -314,8 +314,10 @@ static int __init imx_rngc_probe(struct platform_device *pdev)
+ 	devm_pm_runtime_enable(&pdev->dev);
  
- enum adf_cfg_val_type {
- 	ADF_DEC,
--	ADF_HEX,
- 	ADF_STR
- };
+ 	ret = devm_hwrng_register(&pdev->dev, &rngc->rng);
+-	if (ret)
++	if (ret) {
++		clk_disable_unprepare(rngc->clk);
+ 		return dev_err_probe(&pdev->dev, ret, "hwrng registration failed\n");
++	}
  
+ 	dev_info(&pdev->dev,
+ 		"Freescale RNG%c registered (HW revision %d.%02d)\n",
 -- 
 2.53.0
 
