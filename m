@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01A9E2E7622;
-	Sat, 12 Sep 2026 14:46:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D083B306D2A;
+	Sat, 12 Sep 2026 14:46:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789224394; cv=none; b=kXAgvWcn9fBJQ3q6K8sZr/rl/fGGt3pv69mgXoc30M45pUspEmh6n154ZRPREpJmh2t1MT0Lg9INqIYDSXOgozkUNU4SILLIOIUnJh8rpMPHmsPhH9dNlSaXNfEvpjhC6tJiXsF/IU/FHe3YE8o43zz8MJd/I8ohHsln6h6Bt0I=
+	t=1789224398; cv=none; b=ek2jRrRV+uEb2tl+WeILFvSkbF6qiMR+vlPF0yrQ2eyp9BcfSIb03qgdVehcoyieFY02cvBss9e9VeOA1nQZyQ8YbMMSlUUZEV1x/vQoQri+8sbINIY8KBaWKiQPZbXhffNIfS9JFG0DLslrcWNMBN6Hu2+mCIY17ARD8eRFsU8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789224394; c=relaxed/simple;
-	bh=9PbVA++z3wQupl0YKJ4A7c71texynzjuDHGsD4aU5CY=;
+	s=arc-20240116; t=1789224398; c=relaxed/simple;
+	bh=FSb2Uyp6fnJTumjCV4l4WxWv5vJTCIJWFa4Okxd8XD8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tGGbWVyDXkyH5+5Z7BiHxVMVt/rmssEmS4/I6izXlvnzVWC80d0YIgH9w3/VQJjbtQZNwgdMM9KsRqAxhZFWHrrgWTlxGpl5tXQYwtb/oLFGXEvAEFjPepDID90MvUMTtQESff+bhRPfs8bLeb3pFS+M/P4TWYj5SiXhSzAOTc0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MlZF39eh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Mn4YJ6ya+ta2kR1GFiSeeqi0+T3PYOdiguOjd8ksBR17iYT/EcJ5l9GqoSwYDfDnKFCY+q4Zsvr3ri9UifqykNiXkcfnjFM06HmQX46/xOFRvXBKMlexM80rBVx39sJWgXUeSFgz72cBjS4XNj+A2xYYmNEX8o25Xz3PrdAfpdA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tIigCbcK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MlZF39eh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACB921F000FF;
-	Sat, 12 Sep 2026 14:46:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tIigCbcK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C8A11F00899;
+	Sat, 12 Sep 2026 14:46:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789224392;
-	bh=yrA7aNZetj8KiTcDvgG7KgYSd25jF3ZiNRHj4ye5jtY=;
+	s=korg; t=1789224397;
+	bh=D8Ds6Lsy9tyQzoveqy/NKm4F+fALNAd7DrUpRDVJSbM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MlZF39ehQlxLnxgAL6ggivOJXXHEb/YLoM/6GKK8AGcXXu9q2LwPJfBumiNnFW80+
-	 BKp8PfaAMQ8jHQYoJ5IdmmmAU5d70l1F6hk0Fo+iuw1AQ+CkH0tlunaP8J3eSMCqj2
-	 djuKC72prmaplz23aWnNWYEKiqrYEaSYqoPq8q8U=
+	b=tIigCbcKPhKL1q8B/F6Z7OuryWbKUO5uxbz5JjXhWav5nFSkaBSeaapuruoaozm0f
+	 jQa6pJrzkQg9u3tIVC8LkRo4cwdseCsk3ZBLsvajW8cJiCcReKEjJWxs9wC7IWBD22
+	 8fFy1TUf8d2frGd0j5fU+yVzhH5ZrWAkq9cPS8DY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0983/1424] drm/msm/dpu: Drop sneaky dev_pm_opp_set_rate(0)
-Date: Sat, 12 Sep 2026 08:56:55 +0200
-Message-ID: <20260912065629.328899210@linuxfoundation.org>
+Subject: [PATCH 6.6 0984/1424] drm/msm/dsi: Drop dev_pm_opp_set_rate(0)
+Date: Sat, 12 Sep 2026 08:56:56 +0200
+Message-ID: <20260912065629.353278782@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -53,38 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-[ Upstream commit 811c38907eab0f66c22c5e5708e6f8eab14d76fa ]
+[ Upstream commit 06b7ba206561619bb34116f49e0ef26b867ce3aa ]
 
 dev_pm_opp_set_rate(0) removes the vote specified in required-opps but
 does not actually park the clock, making it run without the necessary
-power backing. Prevent that from happening when
-_dpu_core_perf_get_core_clk_rate() returns 0.
+power backing. Drop the explicit call to it.
 
-Fixes: 25fdd5933e4c ("drm/msm: Add SDM845 DPU support")
+Every call site of ops->link_clk_disable() is followed by
+pm_runtime_put(), so the power vote will be rescinded if deemed safe.
+
+Fixes: 32d3e0feccfe ("drm/msm: dsi: Use OPP API to set clk/perf state")
 Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/742779/
-Link: https://lore.kernel.org/r/20260728-topic-dpu_power-v1-1-e7783b859a70@oss.qualcomm.com
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/742783/
+Link: https://lore.kernel.org/r/20260728-topic-dpu_power-v1-3-e7783b859a70@oss.qualcomm.com
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/gpu/drm/msm/dsi/dsi_host.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-index 260accc151d4b..d29df73c02c5f 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
-@@ -383,6 +383,10 @@ int dpu_core_perf_crtc_update(struct drm_crtc *crtc,
+diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+index ab02be7e001eb..be61f265fad94 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi_host.c
++++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+@@ -513,8 +513,6 @@ int dsi_link_clk_enable_v2(struct msm_dsi_host *msm_host)
  
- 		trace_dpu_core_perf_update_clk(kms->dev, !crtc->enabled, clk_rate);
- 
-+		/* If we're going offline, PM callbacks will disable the clocks instead */
-+		if (!clk_rate)
-+			return 0;
-+
- 		clk_rate = min(clk_rate, kms->perf.max_core_clk_rate);
- 		ret = dev_pm_opp_set_rate(&kms->pdev->dev, clk_rate);
- 		if (ret) {
+ void dsi_link_clk_disable_6g(struct msm_dsi_host *msm_host)
+ {
+-	/* Drop the performance state vote */
+-	dev_pm_opp_set_rate(&msm_host->pdev->dev, 0);
+ 	clk_disable_unprepare(msm_host->esc_clk);
+ 	clk_disable_unprepare(msm_host->pixel_clk);
+ 	clk_disable_unprepare(msm_host->byte_intf_clk);
 -- 
 2.53.0
 
