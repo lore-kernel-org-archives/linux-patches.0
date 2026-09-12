@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E90EB38B7D2;
-	Sat, 12 Sep 2026 10:03:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1F073F9F47;
+	Sat, 12 Sep 2026 10:03:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789207411; cv=none; b=iUV7h5TNHjkrLGBGtf37atV3PrxjA/DdcyOV+GnTHldEEnEXH5qdWYjZ612M/5YNtADkEIes78ZqV1WC6/HDzIFmTn8OwNPphVTFNiVoNZE3e1zaANeQGnfmk29dAdjyw2T99B+AlDAfG4+Kcv+XJ3L0k3ITEdFd4MSE95NkYYs=
+	t=1789207416; cv=none; b=V1IlCBkKFeMFqi4+l1ihdZfCHCNx82fitDnLnj5OCFkaIdExyeHMxbUt8l23HLow/h0PSD1T6t5s2TMCFz43drA1gje+SMgEEBQjYTwwe/o2zETZEooT68pEzeywTRMlPl5nTGOnjlqGaJYrHuN5C0Ea1ttvMP/Zan4xULcls7s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789207411; c=relaxed/simple;
-	bh=TEpcq+0ENPsyv7oyPD3ue4KhbCduywRjUxa41fr8ar0=;
+	s=arc-20240116; t=1789207416; c=relaxed/simple;
+	bh=HfyQRpd3khpuKkznDDSMftNbKjDgyygO7Z9GmsH76LM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S/Pum6WKN+sHfT0yAKgD2zzsSiZ/3QKbDrVnNqH15EURrS0LmznECnC9PfgQhyuusT/x2jV63k+OEEmPKApIMaxKAE/TRaxo6iTW2S/RhSiyXmPnCqSEmy/9bzY6EwZZ1JSA60lK5audOZr/+8Uq8nDI2n9TM3KFEc2UPyBI4cs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EaS6YUn1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GulCJ48UnjMas2FjMUmUcfk08D5uqIMAi88oWwlNW84ylZAnFLOgTBi3tHlR7P+KUpSty3qZwAsJYizKGb1pS9cPMuFvV27w37lkbmTQD1ajpjT8uthR9odYKiM2uDrJbuUW8/MIStZwacGabOSnGzt4rsc1ZrSId3BZQYq3T5Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tuZdHmRr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EaS6YUn1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A41031F000FF;
-	Sat, 12 Sep 2026 10:03:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tuZdHmRr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DBAB1F000FF;
+	Sat, 12 Sep 2026 10:03:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789207409;
-	bh=sR4brNPWMJjmXnJIhum3KDrbGJFjAZkh14UNJl4eH34=;
+	s=korg; t=1789207414;
+	bh=oCAwEfcEQCFJNTWK7fkfe0tM8+tj5REFS4A71d8eYkY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EaS6YUn1mQMyxI5HHUBsNFssoJbrdF+QptOG2vQJq9ta39eh2PBRGVlPHMVHt/NuH
-	 k9NaosL8Gq92NcSYL34/c4iwc5Opx81d0iFImWnI8dS+M5wHjqnC75Xh2Z83FSE2fA
-	 4WZkozPI3aSiw0CE39iz/KnjZVxOphjtB2h2QnnU=
+	b=tuZdHmRrK+/XoAENchHiNsJXbDUP1pdD2dgOq5mgoueA/4MZr2JLx5tqncxzCnsrA
+	 RsJR/QNNMXg0jAhZRnFdy81G6zhSwZBgBTI/fP7hNygdlaSImRZZPaWTUZdu98jQdb
+	 Y3kKmjx0qkOW8Mw8O+Z9fOaucySyCPDGGgoIm0XI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guzebing <Guzebing1612@gmail.com>,
-	Dave Jiang <dave.jiang@intel.com>,
+	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
+	Christian Loehle <christian.loehle@arm.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0370/1518] cxl/memdev: Fix firmware upload exact-fit handling
-Date: Sat, 12 Sep 2026 08:42:19 +0200
-Message-ID: <20260912065631.838293899@linuxfoundation.org>
+Subject: [PATCH 6.18 0406/1518] cpufreq: schedutil: Fix self-contradictory comment in sugov_iowait_apply()
+Date: Sat, 12 Sep 2026 08:42:55 +0200
+Message-ID: <20260912065632.641262099@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,46 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guzebing <Guzebing1612@gmail.com>
+From: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
 
-[ Upstream commit af5035e1b3e400067bb003975936e5407377e7a3 ]
+[ Upstream commit db6a017c91b774c15b1b890db45981eacfff540e ]
 
-cxl_fw_prepare() classifies a firmware image as a one-shot transfer
-only when its Transfer FW input payload is smaller than the mailbox
-payload size. An image that exactly fills the payload is therefore
-treated as a multi-part transfer.
+The kerneldoc of sugov_iowait_apply() says the IO boost value is increased
+in sugov_iowait_apply() and, in the same sentence, that it is decreased by
+the same function. That is self-contradictory, and the first part is wrong:
+sugov_iowait_apply() only decreases the boost.
 
-The firmware loader invokes cxl_fw_write() only once for that image.
-Since both offset == 0 and remaining == 0, the multi-part action
-selection sends INITIATE, never sends END, and then attempts to activate
-the target slot.
+The boost is actually increased in sugov_iowait_boost(). Fix the comment to
+name sugov_iowait_boost() as the place where the boost is increased, so it
+matches the code.
 
-Include equality in the one-shot classification so exact-fit images use
-the FULL action.
+No functional change.
 
-Fixes: 9521875bbe00 ("cxl: add a firmware update mechanism using the sysfs firmware loader")
-Signed-off-by: Guzebing <Guzebing1612@gmail.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://patch.msgid.link/20260713112744.2543829-1-guzebing1612@gmail.com
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+Fixes: fd7d5287fd65 ("cpufreq: schedutil: Cleanup and document iowait boost")
+Signed-off-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
+Reviewed-by: Christian Loehle <christian.loehle@arm.com>
+Link: https://patch.msgid.link/20260703092433.4080165-1-zhongqiu.han@oss.qualcomm.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/core/memdev.c | 2 +-
+ kernel/sched/cpufreq_schedutil.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/cxl/core/memdev.c b/drivers/cxl/core/memdev.c
-index 4dff7f44d908e..3bb5835aa548e 100644
---- a/drivers/cxl/core/memdev.c
-+++ b/drivers/cxl/core/memdev.c
-@@ -870,7 +870,7 @@ static enum fw_upload_err cxl_fw_prepare(struct fw_upload *fwl, const u8 *data,
- 	if (!size)
- 		return FW_UPLOAD_ERR_INVALID_SIZE;
- 
--	mds->fw.oneshot = struct_size(transfer, data, size) <
-+	mds->fw.oneshot = struct_size(transfer, data, size) <=
- 			    cxl_mbox->payload_size;
- 
- 	if (cxl_mem_get_fw_info(mds))
+diff --git a/kernel/sched/cpufreq_schedutil.c b/kernel/sched/cpufreq_schedutil.c
+index 374b65940d03b..22a1fbccb929f 100644
+--- a/kernel/sched/cpufreq_schedutil.c
++++ b/kernel/sched/cpufreq_schedutil.c
+@@ -325,7 +325,7 @@ static void sugov_iowait_boost(struct sugov_cpu *sg_cpu, u64 time,
+  * A CPU running a task which woken up after an IO operation can have its
+  * utilization boosted to speed up the completion of those IO operations.
+  * The IO boost value is increased each time a task wakes up from IO, in
+- * sugov_iowait_apply(), and it's instead decreased by this function,
++ * sugov_iowait_boost(), and it's instead decreased by this function,
+  * each time an increase has not been requested (!iowait_boost_pending).
+  *
+  * A CPU which also appears to have been idle for at least one tick has also
 -- 
 2.53.0
 
