@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7D42418A5B;
-	Sat, 12 Sep 2026 08:48:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A033F24CEEA;
+	Sat, 12 Sep 2026 08:48:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789202919; cv=none; b=fCdcOC1LhxaM5ejUxu2mkogQ9JWrCOttTC76aY1EWVL1Q7GKaSLmpV6yXRX6WJEN9HHVvmPqnarR6CwvzWnJEFGizcz2GmsrglYiaDLBWQkkazgN3qjN3HbR6j9yes32+pfUqATWfftxJjI0y0fzQO/mbkCRr7o9UBr/eAiFJwM=
+	t=1789202931; cv=none; b=Kg2Vi0iebh7YpMfmHUsGcc9/z4VNlkhRla68TVNYRJrDr/eG6nwvlMMR/n83XKK/Zp3/KWxr8323+WxQ2Sv8ufxBpEXKqdK1xWgwT/LMglO0VbZKqJQsrPhImyBZn7g6/Hk1Gia/U1bpx1ARv5T/HVZeNzZwbhbRyYHtrS305nI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789202919; c=relaxed/simple;
-	bh=2MrrnVfvxJ6JjUl5NiyTe1qk2UvOn9ZHPSxVi5qxgII=;
+	s=arc-20240116; t=1789202931; c=relaxed/simple;
+	bh=iiJoKX33wveEECpRkOPOpO/fvdt+mFIb076I7aPsfag=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bvUAlOCuMklHiZSuLJkZfruE2mDs60+ZzQld6MJFmFKraKMpOM26Y4AVCrgMoMVlrOhvjxrMaJM2jsBk3GX+1EZ3i+WCj1LOHVLhsYwCQHJEMWl5wGyJ6lW38KVunOVVmlKQk5tTHp+NI9M47XO/A8jZSIulVf2sveGhoD7s7Wo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g5FSKG7u; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DhLK4kZPf67F0CBBFfrceaZZSFTiQxFLFDy/BkGDk/4H7KI/nvmI2AxiLVq9KCsa4/11/ZxxrWSPxpgQlZqgpkpICI5p8PwQVVnbLxSk/M8BzNC+6CjKmjS9TTj5QQnx9ujXLV3mXhHDL5WG3VfiIzGDlH9K05VMa+Uc+iszfdo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wk3OuAzu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g5FSKG7u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB02E1F000FF;
-	Sat, 12 Sep 2026 08:48:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wk3OuAzu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A55741F000FF;
+	Sat, 12 Sep 2026 08:48:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789202917;
-	bh=09ZOgzAnks3GPEbCcRaY1pk+WlgDX12J0m4ZGL0VUu8=;
+	s=korg; t=1789202922;
+	bh=KZtiRL4dt+9KQBm9d/G6HocbXoNSqMVhCidZeah/0J8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=g5FSKG7u+1H+yN/d/kmddyBxxFZMBaYdBHpM+KmONlIITn+tIeojxVAE7WHBp8J+f
-	 +dsof5h1QQjY7Um+sibpLVEeqvuzrmfc0Z4MiHpM9PfzbpqZ12WxEJ9rv1yYISoUNO
-	 FH8C8Z6fWz7lp+1XRNixL0lSXo3Uz6hjU98ndTfA=
+	b=wk3OuAzuhGnWEcenfRfepOxtv6Pk67BOs0fb0jnqxrRC5ijrxamidC2O52TUGYH4U
+	 unTjE9McU6R2PFVd92C5VRGuotMV2h7obN1FEATaX7HaxWgSUI5pY3sAmwLAAsitPy
+	 36UI9JgL/BexNNqfsTpk5Fx6LEhhGZTacb9ECi/8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jaeyeong Lee <iostreampy@proton.me>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	sashiko-bot <sashiko-bot@kernel.org>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <cel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1302/1815] netfilter: nft_ct: move custom expectation support to helper
-Date: Sat, 12 Sep 2026 08:50:52 +0200
-Message-ID: <20260912065719.582917865@linuxfoundation.org>
+Subject: [PATCH 7.2 1303/1815] NFSD: Release the export reference when reaping open stateids
+Date: Sat, 12 Sep 2026 08:50:53 +0200
+Message-ID: <20260912065719.606677487@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,339 +52,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Chuck Lever <cel@kernel.org>
 
-[ Upstream commit 3679da4ad8be84cddaf40bc307fef1fe13e051ff ]
+[ Upstream commit 6480bd703684ed3f760e9e36c4a699033c0806ae ]
 
-Originally, the ct expectation support called nf_ct_helper_ext_add() for
-confirmed conntracks, which is invalid, triggering a splat. This was
-fixed by commit 1710eb913bdc ("netfilter: nft_ct: skip expectations for
-confirmed conntrack") which restricted it to unconfirmed conntracks.
+nfs4_put_stid() releases the svc_export tracked in
+nfs4_stid.sc_export, but free_ol_stateid_reaplist() frees open and
+lock stateids by calling ->sc_free() directly, bypassing that path.
+An open stateid takes an sc_export reference in nfs4_open() and a
+lock stateid takes its own in init_lock_stateid(); both reach
+free_ol_stateid_reaplist() through their normal teardown, the open
+stateid via release_open_stateid() and the lock stateid via
+nfsd4_release_lockowner(), each through put_ol_stateid_locked().
+The reference is therefore never dropped, pinning the export and
+blocking unmount for the lifetime of the stateid.
 
-However, early insertion of expectations into the expectations list when
-the conntrack is unconfirmed leads to stale entries pointing to the
-wrong hlist_head through .pprev due to ct extension reallocation.
+Release sc_export in free_ol_stateid_reaplist() the way
+nfs4_put_stid() does. ->sc_free() runs once per stateid, and a
+stateid reaches free_ol_stateid_reaplist() or nfs4_put_stid() but
+never both, so the reference is dropped exactly once. Revoked
+stateids reach this path with sc_export already cleared by
+drop_stid_export(), so they are skipped rather than double-freed.
 
-Commit 7c9664351980 ("netfilter: move nat hlist_head to nf_conn") moved
-the nat hlist_head to nf_conn for this reason:
+nfs4_put_stid() itself read sc_export before acquiring cl_lock.
+drop_stid_export() clears that field and releases the reference
+under cl_lock, so a concurrent revocation could drop the export in
+the window between the read and the final put, releasing the same
+reference twice. Read sc_export while cl_lock is held so the two
+paths serialize and the reference is released exactly once.
 
-     1. ...
-     2. When reallocation of extension area occurs we need to fixup the
-        bysource hash head via hlist_replace_rcu.
-
-I'd rather not increase the size of the struct nf_conn for this feature
-has very limited scope: only one expectation can be created at a time
-given expect_clash() will make nf_ct_expect_related() reports EBUSY.
-For this reason, relax nf_ct_expect_related() not to drop packets in
-case expectation creation fails, therefore, expectation creation becomes
-best effort.
-
-To address this issue, add an internal ct helper and attach it to the
-conntrack entry to streamline the custom ct expectation support with
-existing ct helpers.
-
-Expose a new nf_conntrack_helper_release() function to release the
-internal helper that is allocated and attached to the conntrack entry to
-create the custom expectations. The nft_ct module removal always waits
-for rcu grace period, then the NULL helper callback is observed after
-this.
-
-This patch also restricts the creation of expectations to different
-helpers other than this custom helper that is created for this type of
-expectations.
-
-Fixes: 857b46027d6f ("netfilter: nft_ct: add ct expectations support")
-Reported-by: Jaeyeong Lee <iostreampy@proton.me>
-Link: https://patch.msgid.link/20260715144755.00ea7dfcd9f@proton.me
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: ba0cde5dc81d ("NFSD: Track svc_export in nfs4_stid")
+Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20260707-cel-v3-0-7c0cc16fd54f@kernel.org?part=9
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Link: https://patch.msgid.link/20260709-cel-v4-9-1d519d9be0cb@kernel.org
+Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/netfilter/nf_conntrack_helper.h |   1 +
- net/netfilter/nf_conntrack_helper.c         |  14 +-
- net/netfilter/nft_ct.c                      | 167 +++++++++++++++-----
- 3 files changed, 135 insertions(+), 47 deletions(-)
+ fs/nfsd/nfs4state.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/include/net/netfilter/nf_conntrack_helper.h b/include/net/netfilter/nf_conntrack_helper.h
-index c761cd8158b25..309f74ea4d098 100644
---- a/include/net/netfilter/nf_conntrack_helper.h
-+++ b/include/net/netfilter/nf_conntrack_helper.h
-@@ -108,6 +108,7 @@ void nf_ct_helper_init(struct nf_conntrack_helper *helper,
- int nf_conntrack_helper_register(struct nf_conntrack_helper *, struct nf_conntrack_helper **);
- int __nf_conntrack_helper_register(struct nf_conntrack_helper *);
- void nf_conntrack_helper_unregister(struct nf_conntrack_helper *);
-+void nf_conntrack_helper_release(struct nf_conntrack_helper *);
- 
- int nf_conntrack_helpers_register(struct nf_conntrack_helper *, unsigned int,
- 				  struct nf_conntrack_helper **);
-diff --git a/net/netfilter/nf_conntrack_helper.c b/net/netfilter/nf_conntrack_helper.c
-index 500509b17663e..f776cc0009da2 100644
---- a/net/netfilter/nf_conntrack_helper.c
-+++ b/net/netfilter/nf_conntrack_helper.c
-@@ -456,6 +456,15 @@ static bool expect_iter_me(struct nf_conntrack_expect *exp, void *data)
- 	return this == me;
- }
- 
-+void nf_conntrack_helper_release(struct nf_conntrack_helper *me)
-+{
-+	nf_ct_expect_iterate_destroy(expect_iter_me, me);
-+
-+	if (refcount_dec_and_test(&me->ct_refcnt))
-+		kfree_rcu(me, rcu);
-+}
-+EXPORT_SYMBOL_GPL(nf_conntrack_helper_release);
-+
- void nf_conntrack_helper_unregister(struct nf_conntrack_helper *me)
+diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
+index 6180f6dc8995b..258621750eb7f 100644
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -1276,9 +1276,9 @@ alloc_init_deleg(struct nfs4_client *clp, struct nfs4_file *fp,
+ void
+ nfs4_put_stid(struct nfs4_stid *s)
  {
- 	mutex_lock(&nf_ct_helper_mutex);
-@@ -471,10 +480,7 @@ void nf_conntrack_helper_unregister(struct nf_conntrack_helper *me)
- 	 */
- 	synchronize_rcu();
+-	struct svc_export *exp = s->sc_export;
+ 	struct nfs4_file *fp = s->sc_file;
+ 	struct nfs4_client *clp = s->sc_client;
++	struct svc_export *exp;
  
--	nf_ct_expect_iterate_destroy(expect_iter_me, me);
--
--	if (refcount_dec_and_test(&me->ct_refcnt))
--		kfree_rcu(me, rcu);
-+	nf_conntrack_helper_release(me);
- }
- EXPORT_SYMBOL_GPL(nf_conntrack_helper_unregister);
+ 	might_lock(&clp->cl_lock);
  
-diff --git a/net/netfilter/nft_ct.c b/net/netfilter/nft_ct.c
-index 358b9287e12e8..9dbf127df9c81 100644
---- a/net/netfilter/nft_ct.c
-+++ b/net/netfilter/nft_ct.c
-@@ -1213,6 +1213,8 @@ struct nft_ct_expect_obj {
- 	u8		l4proto;
- 	u8		size;
- 	u32		timeout;
-+
-+	struct nf_conntrack_helper *helper;
- };
- 
- static int nft_ct_expect_timeout_get(const struct nlattr *attr, u32 *val)
-@@ -1226,6 +1228,93 @@ static int nft_ct_expect_timeout_get(const struct nlattr *attr, u32 *val)
- 	return 0;
- }
- 
-+#if IS_ENABLED(CONFIG_NF_NAT)
-+static void nft_ct_nat_follow_master(struct nf_conn *ct, struct nf_conntrack_expect *this)
-+{
-+	const struct nf_ct_helper_expectfn *expfn;
-+
-+	expfn = nf_ct_helper_expectfn_find_by_name("nat-follow-master");
-+	if (expfn)
-+		expfn->expectfn(ct, this);
-+}
-+#endif
-+
-+struct nft_ct_expect_data {
-+	struct nft_ct_expect_obj	obj;
-+	enum ip_conntrack_dir		dir;
-+};
-+
-+static int ct_expect_help(struct sk_buff *skb, unsigned int protoff,
-+			  struct nf_conn *ct, enum ip_conntrack_info ctinfo)
-+{
-+	enum ip_conntrack_dir dir = CTINFO2DIR(ctinfo);
-+	struct nft_ct_expect_data *expect_data;
-+	struct nf_conntrack_expect *exp;
-+	int ret = NF_ACCEPT;
-+	u16 l3num;
-+
-+	if (nf_ct_is_confirmed(ct))
-+		return NF_ACCEPT;
-+
-+	expect_data = nfct_help_data(ct);
-+	if (!expect_data)
-+		return NF_ACCEPT;
-+
-+	if (expect_data->dir != dir)
-+		return NF_ACCEPT;
-+
-+	exp = nf_ct_expect_alloc(ct);
-+	if (!exp)
-+		return NF_DROP;
-+
-+	if (expect_data->obj.l3num == NFPROTO_INET)
-+		l3num = nf_ct_l3num(ct);
-+	else
-+		l3num = expect_data->obj.l3num;
-+
-+	nf_ct_expect_init(exp, NF_CT_EXPECT_CLASS_DEFAULT, l3num,
-+			  &ct->tuplehash[!dir].tuple.src.u3,
-+			  &ct->tuplehash[!dir].tuple.dst.u3,
-+			  expect_data->obj.l4proto, NULL, &expect_data->obj.dport);
-+	exp->timeout += expect_data->obj.timeout;
-+
-+#if IS_ENABLED(CONFIG_NF_NAT)
-+	if (ct->status & IPS_NAT_MASK) {
-+		exp->saved_proto.tcp.port = expect_data->obj.dport;
-+		exp->dir = !dir;
-+		exp->expectfn = nft_ct_nat_follow_master;
-+	}
-+#endif
-+	if (nf_ct_expect_related(exp, 0) != 0)
-+		ret = NF_ACCEPT;
-+
-+	nf_ct_expect_put(exp);
-+
-+	return ret;
-+}
-+
-+static int nft_ct_expect_helper_alloc(struct nft_ct_expect_obj *priv)
-+{
-+	struct nf_conntrack_helper *ct_expect_helper;
-+
-+	ct_expect_helper = kzalloc_obj(struct nf_conntrack_helper,
-+				       GFP_KERNEL_ACCOUNT);
-+	if (!ct_expect_helper)
-+		return -ENOMEM;
-+
-+	snprintf(ct_expect_helper->name, sizeof(ct_expect_helper->name), "%s",
-+		 "nft_ct_expect");
-+	ct_expect_helper->me = THIS_MODULE;
-+	ct_expect_helper->expect_policy[NF_CT_EXPECT_CLASS_DEFAULT].max_expected = priv->size;
-+	rcu_assign_pointer(ct_expect_helper->help, ct_expect_help);
-+	refcount_set(&ct_expect_helper->ct_refcnt, 1);
-+
-+	/* No need to register this helper, this is internal. */
-+	priv->helper = ct_expect_helper;
-+
-+	return 0;
-+}
-+
- static int nft_ct_expect_obj_init(const struct nft_ctx *ctx,
- 				  const struct nlattr * const tb[],
- 				  struct nft_object *obj)
-@@ -1233,6 +1322,8 @@ static int nft_ct_expect_obj_init(const struct nft_ctx *ctx,
- 	struct nft_ct_expect_obj *priv = nft_obj_data(obj);
- 	int err;
- 
-+	NF_CT_HELPER_BUILD_BUG_ON(sizeof(struct nft_ct_expect_data));
-+
- 	if (!tb[NFTA_CT_EXPECT_L4PROTO] ||
- 	    !tb[NFTA_CT_EXPECT_DPORT] ||
- 	    !tb[NFTA_CT_EXPECT_TIMEOUT] ||
-@@ -1272,13 +1363,31 @@ static int nft_ct_expect_obj_init(const struct nft_ctx *ctx,
- 
- 	priv->dport = nla_get_be16(tb[NFTA_CT_EXPECT_DPORT]);
- 	priv->size = nla_get_u8(tb[NFTA_CT_EXPECT_SIZE]);
-+	if (!priv->size)
-+		priv->size = NF_CT_EXPECT_MAX_CNT;
-+
-+	err = nf_ct_netns_get(ctx->net, ctx->family);
-+	if (err < 0)
-+		return err;
- 
--	return nf_ct_netns_get(ctx->net, ctx->family);
-+	err = nft_ct_expect_helper_alloc(priv);
-+	if (err < 0) {
-+		nf_ct_netns_put(ctx->net, ctx->family);
-+		return err;
-+	}
-+
-+	return err;
- }
- 
- static void nft_ct_expect_obj_destroy(const struct nft_ctx *ctx,
--				       struct nft_object *obj)
-+				      struct nft_object *obj)
+@@ -1289,6 +1289,8 @@ nfs4_put_stid(struct nfs4_stid *s)
+ 	idr_remove(&clp->cl_stateids, s->sc_stateid.si_opaque.so_id);
+ 	if (s->sc_status & SC_STATUS_ADMIN_REVOKED)
+ 		atomic_dec(&s->sc_client->cl_admin_revoked);
++	/* Read under cl_lock to serialize with drop_stid_export(). */
++	exp = s->sc_export;
+ 	nfs4_free_cpntf_statelist(clp->net, s);
+ 	spin_unlock(&clp->cl_lock);
+ 	s->sc_free(s);
+@@ -1745,6 +1747,7 @@ static void
+ free_ol_stateid_reaplist(struct list_head *reaplist)
  {
-+	const struct nft_ct_expect_obj *priv = nft_obj_data(obj);
-+	struct nf_conntrack_helper *me = priv->helper;
-+
-+	/* This helper is going away, disable it. */
-+	rcu_assign_pointer(me->help, NULL);
-+	nf_conntrack_helper_release(me);
- 	nf_ct_netns_put(ctx->net, ctx->family);
- }
+ 	struct nfs4_ol_stateid *stp;
++	struct svc_export *exp;
+ 	struct nfs4_file *fp;
  
-@@ -1297,27 +1406,14 @@ static int nft_ct_expect_obj_dump(struct sk_buff *skb,
- 	return 0;
- }
- 
--#if IS_ENABLED(CONFIG_NF_NAT)
--static void nft_ct_nat_follow_master(struct nf_conn *ct, struct nf_conntrack_expect *this)
--{
--	const struct nf_ct_helper_expectfn *expfn;
--
--	expfn = nf_ct_helper_expectfn_find_by_name("nat-follow-master");
--	if (expfn)
--		expfn->expectfn(ct, this);
--}
--#endif
--
- static void nft_ct_expect_obj_eval(struct nft_object *obj,
- 				   struct nft_regs *regs,
- 				   const struct nft_pktinfo *pkt)
- {
- 	const struct nft_ct_expect_obj *priv = nft_obj_data(obj);
--	struct nf_conntrack_expect *exp;
-+	struct nft_ct_expect_data *expect_data;
- 	enum ip_conntrack_info ctinfo;
- 	struct nf_conn_help *help;
--	enum ip_conntrack_dir dir;
--	u16 l3num = priv->l3num;
- 	struct nf_conn *ct;
- 
- 	ct = nf_ct_get(pkt->skb, &ctinfo);
-@@ -1325,45 +1421,30 @@ static void nft_ct_expect_obj_eval(struct nft_object *obj,
- 		regs->verdict.code = NFT_BREAK;
- 		return;
+ 	might_sleep();
+@@ -1754,7 +1757,10 @@ free_ol_stateid_reaplist(struct list_head *reaplist)
+ 				       st_locks);
+ 		list_del(&stp->st_locks);
+ 		fp = stp->st_stid.sc_file;
++		exp = stp->st_stid.sc_export;
+ 		stp->st_stid.sc_free(&stp->st_stid);
++		if (exp)
++			exp_put(exp);
+ 		if (fp)
+ 			put_nfs4_file(fp);
  	}
--	dir = CTINFO2DIR(ctinfo);
- 
- 	help = nfct_help(ct);
--	if (!help)
--		help = nf_ct_helper_ext_add(ct, GFP_ATOMIC);
--	if (!help) {
--		regs->verdict.code = NF_DROP;
--		return;
--	}
--
--	if (help->expecting[NF_CT_EXPECT_CLASS_DEFAULT] >= priv->size) {
-+	if (help) {
- 		regs->verdict.code = NFT_BREAK;
- 		return;
- 	}
--	if (l3num == NFPROTO_INET)
--		l3num = nf_ct_l3num(ct);
- 
--	exp = nf_ct_expect_alloc(ct);
--	if (exp == NULL) {
-+	help = nf_ct_helper_ext_add(ct, GFP_ATOMIC);
-+	if (!help) {
- 		regs->verdict.code = NF_DROP;
- 		return;
- 	}
--	nf_ct_expect_init(exp, NF_CT_EXPECT_CLASS_DEFAULT, l3num,
--		          &ct->tuplehash[!dir].tuple.src.u3,
--		          &ct->tuplehash[!dir].tuple.dst.u3,
--		          priv->l4proto, NULL, &priv->dport);
--	exp->timeout += priv->timeout;
- 
--#if IS_ENABLED(CONFIG_NF_NAT)
--	if (ct->status & IPS_NAT_MASK) {
--		exp->saved_proto.tcp.port = priv->dport;
--		exp->dir = !dir;
--		exp->expectfn = nft_ct_nat_follow_master;
-+	expect_data = nfct_help_data(ct);
-+	if (!expect_data) {
-+		regs->verdict.code = NFT_BREAK;
-+		return;
- 	}
--#endif
--	if (nf_ct_expect_related(exp, 0) != 0)
--		regs->verdict.code = NF_DROP;
-+	expect_data->obj = *priv;
-+	expect_data->obj.helper = NULL;
-+	expect_data->dir = CTINFO2DIR(ctinfo);
- 
--	nf_ct_expect_put(exp);
-+	if (help && refcount_inc_not_zero(&priv->helper->ct_refcnt))
-+		rcu_assign_pointer(help->helper, priv->helper);
- }
- 
- static const struct nla_policy nft_ct_expect_policy[NFTA_CT_EXPECT_MAX + 1] = {
 -- 
 2.53.0
 
