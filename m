@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE79828B4FA;
-	Sat, 12 Sep 2026 08:23:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1CE938E8A8;
+	Sat, 12 Sep 2026 08:23:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789201389; cv=none; b=okyB9Op1gQ1KBvZRsTpexAzTFr1dQXorepOC9GjvRgtmgb+lnzbguHSMnFcR2ouOP+6ckMwSThbwx/i6xkv5Wp6Yd5FhlIR9RPQh1xQ8flYNOLMsJ8DalHEiNSmH1neYo/NZIOipvE73OXegv3ipKOz7rxhYJ14EGsW3qkY8fX0=
+	t=1789201394; cv=none; b=JRlK+LcwpqYux9duO9YycQWzX3rc8UrUoKGGdTPJh6HU+Q42TZQ+7Qggtu4AxpzaktFMC5CXojbU1weVBASrOOnZPbIGDYGGM/fLtJh9e5lPUigdSf6QRHhezoQ0Ik8DpdTqAb2XxlCpqi933OByWuC9q5lePeJmSKUNT5qFVMw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789201389; c=relaxed/simple;
-	bh=bJhE6iwP5obuRQyLX9UZZ6A9dj2G7IJutUX0oz0ZGe8=;
+	s=arc-20240116; t=1789201394; c=relaxed/simple;
+	bh=n/HM5OUfoa0Fo3MZiShkq2Z9AfU4w/XK1hQCYH+DAoo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=O2QnDInG0TTrrnSNXpn4y40rVjhXynq/TCFNG9laD5El4s0znDHoirUmgLdcmPX5rpwauM8clcOeudE9iiH92bl7fOA+cN9ciksGRKRIdzrnQoSuB1AJTO3qBVtlAzh94FgxUFN4oZayTA8v508CdU7uQUobsjP6qFzbYpNfS+0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jBsrTmN0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Y7oU4PK+hau6/F0AJ6Ibs9oRJ0ylj6KdS6cJVxVBeVepSJHuo7RMzUT0iddjNrGR/Ei/v3IJbIZPWbx31vuogXgtBcEmLS3tYAAirPIwujyU5q+kwqtL6w20yPSxB+/sd+zF9fOe0SYDPLSWL68NuRNxzaMgB25iOb/E0a1r5Qw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XjEaGifh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jBsrTmN0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 314B71F000FF;
-	Sat, 12 Sep 2026 08:23:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XjEaGifh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7CE91F000FF;
+	Sat, 12 Sep 2026 08:23:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789201388;
-	bh=iIJtmospa9PH4ztbc7CVzqynjTgol3VgPTEMfZBMGAo=;
+	s=korg; t=1789201392;
+	bh=4oEfDzEIfMOWjliLIMy2IoZAC9eOwbMY8EqfFItCMD0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jBsrTmN0YXwlWqnwcFRZunGx/XIVUPbeHdU6DTd0f3EnJ4xIfcS/+uHa13xwjKUl7
-	 F0uFhgOzD48+vGTFJx74mKJbtvK8pcxGBUhbbBTHM9nG4iuvZmZqeLWD+zR3IZXNIJ
-	 Clu5tNO3kIcShdzu1l4uuL1h0QHjauUphak3+/m8=
+	b=XjEaGifhfYEa7dq56WG/DOUg/tC5wLTin6JgpZ+QX23JKaRtY2JZ7DLP8KjsaAG6N
+	 6Q6Y2RHZZsSWxR5tKGtKuCWzZm1itDzMzqdnSnNz+lz6s1UGNb8/vgHLIeVHClCZ84
+	 St8tu0cbLpZe5l4n9509SbNNQf1u6P0zuQ3Og/n0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Michal=20Such=C3=A1nek?= <msuchanek@suse.de>,
-	"Mukesh Kumar Chaurasiya (IBM)" <mkchauras@gmail.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Kees Cook <kees@kernel.org>,
+	Jinjie Ruan <ruanjinjie@huawei.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Yiqi Sun <sunyiqixm@gmail.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0986/1815] powerpc/syscall: Fix syscall skip handling for seccomp and ptrace
-Date: Sat, 12 Sep 2026 08:45:36 +0200
-Message-ID: <20260912065712.141526542@linuxfoundation.org>
+Subject: [PATCH 7.2 0960/1815] arm64: ptrace: Keep orig_x0 in-sync with x0 on syscall entry
+Date: Sat, 12 Sep 2026 08:45:10 +0200
+Message-ID: <20260912065711.508264735@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -46,104 +48,120 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mukesh Kumar Chaurasiya (IBM) <mkchauras@gmail.com>
+From: Will Deacon <will@kernel.org>
 
-[ Upstream commit 69cb2be898be6d5826cacd1a628f6945a24480b6 ]
+[ Upstream commit 88b839ce497ccb1ff92f7ae742c78dd2937ba572 ]
 
-After enabling GENERIC_ENTRY on PowerPC, syscall_enter_from_user_mode()
-returns -1 as a sentinel to signal that seccomp or ptrace has intercepted
-the syscall and already set a return value via syscall_set_return_value().
-system_call_exception() was not handling this sentinel, and since -1UL
-is >= NR_syscalls, the code fell into the out-of-range path and returned
--ENOSYS, overwriting the errno already placed in regs->gpr[3].
+Commit e057b9477232 ("arm64: syscall: Ensure saved x0 is kept in-sync
+with tracer updates") attempted to resolve a long-standing issue with
+syscall entry tracing, where a tracer is able to manipulate the first
+syscall argument without being subjected to seccomp or audit checking.
 
-The naive fix of checking r0 == -1L before the NR_syscalls bounds check
-is ambiguous: a user legitimately calling syscall(-1) also produces r0 ==
--1L, and a tracer intercepting such a call would have its injected return
-value silently discarded.
+Unfortunately, that fix was incomplete [1], as it failed to update
+'orig_x0' between a tracer updating x0 during a seccomp ptrace exit
+(SECCOMP_RET_TRACE) and the seccomp filter being re-evaluated.
 
-Fix this by introducing a thread flag that is set whenever
-syscall_set_return_value() explicitly updates the return value. In
-system_call_exception(), check and clear this flag before dispatching
-the syscall, and return the preset value directly when it is present.
-This ensures that an explicitly supplied return value always suppresses
-syscall execution, regardless of the syscall number.
+Rather than add hooks to the core seccomp code, instead move the
+synchronisation code into the ptrace GPR and syscall setting code so
+that 'orig_x0' is kept up to date with x0 whenever we're stopped on the
+syscall entry path.
 
-This handles all seccomp actions correctly:
-
-  - SECCOMP_RET_ERRNO, SECCOMP_RET_TRACE (no tracer), SECCOMP_RET_USER_NOTIF:
-    all call syscall_set_return_value(), flag is set, injected value returned.
-  - SECCOMP_RET_TRAP, SECCOMP_RET_KILL: call syscall_rollback() and deliver
-    a signal; flag is not set, but the process is dying so the return value
-    is irrelevant.
-
-The fix covers both ppc32 and ppc64 with no #ifdefs.
-
-Fixes: bee25f97ad24 ("powerpc: Enable GENERIC_ENTRY feature")
-Reported-by: Michal Suchánek <msuchanek@suse.de>
-Closes: https://lore.kernel.org/all/ajpp-_XnbF3UTM_E@kunlun.suse.cz/
-Tested-by: Michal Suchánek <msuchanek@suse.de>
-Reviewed-by: Michal Suchánek <msuchanek@suse.de>
-Signed-off-by: Mukesh Kumar Chaurasiya (IBM) <mkchauras@gmail.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20260731081521.1852133-1-mkchauras@gmail.com
+Cc: Kees Cook <kees@kernel.org>
+Cc: Jinjie Ruan <ruanjinjie@huawei.com>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Link: https://sashiko.dev/#/patchset/20260716120640.6590-1-will@kernel.org [1]
+Reported-by: Yiqi Sun <sunyiqixm@gmail.com>
+Link: https://lore.kernel.org/all/20260529065444.1336608-1-sunyiqixm@gmail.com/
+Fixes: e057b9477232 ("arm64: syscall: Ensure saved x0 is kept in-sync with tracer updates")
+Fixes: a5cd110cb836 ("arm64/ptrace: run seccomp after ptrace")
+Tested-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/include/asm/syscall.h     | 6 ++++++
- arch/powerpc/include/asm/thread_info.h | 1 +
- arch/powerpc/kernel/syscall.c          | 3 +++
- 3 files changed, 10 insertions(+)
+ arch/arm64/kernel/ptrace.c | 50 ++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 50 insertions(+)
 
-diff --git a/arch/powerpc/include/asm/syscall.h b/arch/powerpc/include/asm/syscall.h
-index 834fcc4f7b543..19d1739af0b77 100644
---- a/arch/powerpc/include/asm/syscall.h
-+++ b/arch/powerpc/include/asm/syscall.h
-@@ -98,6 +98,12 @@ static inline void syscall_set_return_value(struct task_struct *task,
- 			regs->gpr[3] = val;
- 		}
- 	}
-+	/*
-+	 * Mark that a return value has been explicitly set by seccomp or
-+	 * ptrace so that system_call_exception() can skip the syscall
-+	 * unconditionally, even when the user requested syscall(-1).
-+	 */
-+	set_thread_flag(TIF_SYSCALL_RET);
+diff --git a/arch/arm64/kernel/ptrace.c b/arch/arm64/kernel/ptrace.c
+index 2a72c61a8af9c..4955166723b88 100644
+--- a/arch/arm64/kernel/ptrace.c
++++ b/arch/arm64/kernel/ptrace.c
+@@ -560,6 +560,42 @@ static int gpr_get(struct task_struct *target,
+ 	return membuf_write(&to, uregs, sizeof(*uregs));
  }
  
- static inline void syscall_get_arguments(struct task_struct *task,
-diff --git a/arch/powerpc/include/asm/thread_info.h b/arch/powerpc/include/asm/thread_info.h
-index 0487e94d34169..1e069a2e7ce87 100644
---- a/arch/powerpc/include/asm/thread_info.h
-+++ b/arch/powerpc/include/asm/thread_info.h
-@@ -120,6 +120,7 @@ void arch_setup_new_exec(void);
- #endif
- #define TIF_POLLING_NRFLAG	19	/* true if poll_idle() is polling TIF_NEED_RESCHED */
- #define TIF_32BIT		20	/* 32 bit binary */
-+#define TIF_SYSCALL_RET		21	/* syscall error value set */
- 
- /* as above, but as bit values */
- #define _TIF_SYSCALL_TRACE	(1<<TIF_SYSCALL_TRACE)
-diff --git a/arch/powerpc/kernel/syscall.c b/arch/powerpc/kernel/syscall.c
-index a9da2af6efa87..9d1b29f44ea0d 100644
---- a/arch/powerpc/kernel/syscall.c
-+++ b/arch/powerpc/kernel/syscall.c
-@@ -22,6 +22,9 @@ notrace long system_call_exception(struct pt_regs *regs, unsigned long r0)
- 	add_random_kstack_offset();
- 	r0 = syscall_enter_from_user_mode(regs, r0);
- 
-+	if (unlikely(test_and_clear_thread_flag(TIF_SYSCALL_RET)))
-+		return syscall_get_error(current, regs);
++static void update_syscall_orig_x0_after_ptrace(struct task_struct *target)
++{
++	struct pt_regs *regs = task_pt_regs(target);
++	struct kernel_siginfo *info = target->last_siginfo;
 +
- 	if (unlikely(r0 >= NR_syscalls)) {
- 		if (unlikely(trap_is_unsupported_scv(regs))) {
- 			/* Unsupported scv vector */
++	/*
++	 * Skip the update for NO_SYSCALL (set either by the user or the
++	 * tracer), as regs[0] holds the return value (see the comment in
++	 * el0_svc_common()) and can be unwound using syscall_rollback().
++	 */
++	if (regs->syscallno == NO_SYSCALL)
++		return;
++
++	/* We should only be called when target is in a ptrace stop */
++	if (WARN_ON_ONCE(!info))
++		return;
++
++	/*
++	 * For compat tasks, orig_r0 is provided directly through GPR index
++	 * 17.
++	 */
++	if (is_compat_thread(task_thread_info(target)))
++		return;
++
++	/*
++	 * Don't update orig_x0 for a syscall-exit-stop, as x0 now contains the
++	 * return value of the system call.
++	 */
++	if ((info->si_code & ~0x80) == SIGTRAP &&
++	    target->ptrace_message == PTRACE_EVENTMSG_SYSCALL_EXIT) {
++		return;
++	}
++
++	regs->orig_x0 = regs->regs[0];
++}
++
+ static int gpr_set(struct task_struct *target, const struct user_regset *regset,
+ 		   unsigned int pos, unsigned int count,
+ 		   const void *kbuf, const void __user *ubuf)
+@@ -575,6 +611,14 @@ static int gpr_set(struct task_struct *target, const struct user_regset *regset,
+ 		return -EINVAL;
+ 
+ 	task_pt_regs(target)->user_regs = newregs;
++
++	/*
++	 * Keep orig_x0 authoritative so that seccomp (via
++	 * syscall_get_arguments()), audit and the restart path all see the same
++	 * first argument the syscall is dispatched with, even if it has been
++	 * updated by a tracer.
++	 */
++	update_syscall_orig_x0_after_ptrace(target);
+ 	return 0;
+ }
+ 
+@@ -753,6 +797,12 @@ static int system_call_set(struct task_struct *target,
+ 		return ret;
+ 
+ 	task_pt_regs(target)->syscallno = syscallno;
++
++	/*
++	 * Re-sync orig_x0 in case the syscall number has been changed
++	 * from NO_SYSCALL.
++	 */
++	update_syscall_orig_x0_after_ptrace(target);
+ 	return ret;
+ }
+ 
 -- 
 2.53.0
 
