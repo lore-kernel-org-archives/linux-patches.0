@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60CA2242D65;
-	Sat, 12 Sep 2026 14:49:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 071982D739C;
+	Sat, 12 Sep 2026 14:49:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789224558; cv=none; b=CgYUBBMUTL4epVERU5pQVnl8WeB31S2Kytob3ecOsbgrMxamlchsXVRc3RkhQiQ+MYOJab6K411azXGytqYhhykRLPGrEProqiharALC0LMtm14j29a2WgPcfSJySqVGcURMa/xLfWvwigwGsosh7AbgCcggFnuNhWAx53uLV8c=
+	t=1789224562; cv=none; b=RqzcsRXlCJf1Ad1uxYS95VWtmA/BJB91bRhS1OQ2I1wvpYgvS/evS0X5YfH6vLr1wXyGnlKmvuQ082hE/dRhFMhjyBxzabZLx+Fvv9oPViJvxt8xnXw2wveRnsB855GvLR4LU0k5ZE+OCGMEY3UnWqYSpn1tRGpVaamD2uSvD0A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789224558; c=relaxed/simple;
-	bh=476lKe52gxqoAjP/2+K2rmfLSTp2u9aPjVYpdqpduHo=;
+	s=arc-20240116; t=1789224562; c=relaxed/simple;
+	bh=OaOqCIovdxWKCwwt3Tp0pkdFyBuW91MHrcPqG1xCVsQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d7LDFCnVwbTubKOn9M4rtqjy3YyopEwbp4TsFeRqvbbCGk2xnIsFIGDa1HOq96+pHNNQK/p2bTF6gfCkT/CMeP374TUSHodZJhhexvNpaEmGZtzVcUYJonNdkYkBSPyz+ZDNDG8c4GiR+X88eglwlYelhgkc9JHT/M39EscVxUw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=so3YcSzS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZJzOutvHe0T/bugwt6Lk+Y4RWAUyDjhoCixGecc3zOz52JZRaoqw/+mWr8gRZDxNTcT9eRTzDGd2giUu3WHC4kkl2EXVd63cqev5ljIZIAbwomLZjN2GLPwgo2fLZPhKs1j0dVdoojx3m3w/qrWgt8mbgqTFDK+CTNr661sBg2Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lryqa+U3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="so3YcSzS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC4CA1F000FF;
-	Sat, 12 Sep 2026 14:49:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lryqa+U3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 564A91F000FF;
+	Sat, 12 Sep 2026 14:49:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789224556;
-	bh=ldEL92GgVv7xmfSiAvsz1E42I2zteEY7djMQK8V1uuA=;
+	s=korg; t=1789224560;
+	bh=KhPYIPAPVb3R03k4oNqoJJ9ejbEFGZcCLoIo/ASVGH0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=so3YcSzSwlSheEBldBEHksHEDuZPbYYNHTFbUCf6JmrwATw3umSy3I4GwYzvxq5/D
-	 t2G1N0lXCkDgJkmcOZjbSBYkDloC8u7mL8ls/nWBspNVxtSKziWDQkbHClrEim+riN
-	 sNj5ud9u8/DzN0C/hhCKbRbWABtaa4dgqGox6cV8=
+	b=lryqa+U348/jX8/3jB5scTAXbYMuUK5sNfRZsJ6ymscsWKFFHECc9PzbRU6F8iQBx
+	 zsWLWdG1eNq/EgOrgxKtA+qR0soIgS7S6M44HFK61uQRivZRKjNVIgHoBu12QMCz8e
+	 ZWgFnaDVUf9of/U+0dzpOAP/3hnpDVRVg5ZTDzOg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Hans de Goede <hdegoede@redhat.com>,
 	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1017/1424] HID: i2c-hid: Fold i2c_hid_execute_reset() into i2c_hid_hwreset()
-Date: Sat, 12 Sep 2026 08:57:29 +0200
-Message-ID: <20260912065630.087534787@linuxfoundation.org>
+Subject: [PATCH 6.6 1018/1424] HID: i2c-hid: Split i2c_hid_hwreset() in start() and finish() functions
+Date: Sat, 12 Sep 2026 08:57:30 +0200
+Message-ID: <20260912065630.109154748@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -54,10 +54,12 @@ Content-Transfer-Encoding: 8bit
 
 From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit f023605d1de6f150d9266747a2630f029956041f ]
+[ Upstream commit 96d3098db835d58649b73a5788898bd7672a319b ]
 
-i2c_hid_hwreset() is the only caller of i2c_hid_execute_reset(),
-fold the latter into the former.
+Split i2c_hid_hwreset() into:
+
+i2c_hid_start_hwreset() which sends the PWR_ON and reset commands; and
+i2c_hid_finish_hwreset() which actually waits for the reset to complete.
 
 This is a preparation patch for removing the need for
 I2C_HID_QUIRK_NO_IRQ_AFTER_RESET by making i2c-hid behave
@@ -71,116 +73,102 @@ Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Stable-dep-of: 8da0f0951dee ("HID: i2c-hid: Fix "(null)" output when reading report descriptor fails")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/i2c-hid/i2c-hid-core.c | 73 ++++++++++++------------------
- 1 file changed, 30 insertions(+), 43 deletions(-)
+ drivers/hid/i2c-hid/i2c-hid-core.c | 38 ++++++++++++++++++++++--------
+ 1 file changed, 28 insertions(+), 10 deletions(-)
 
 diff --git a/drivers/hid/i2c-hid/i2c-hid-core.c b/drivers/hid/i2c-hid/i2c-hid-core.c
-index 0a350780407ec..c87d3a825dc08 100644
+index c87d3a825dc08..4ef7d20484ded 100644
 --- a/drivers/hid/i2c-hid/i2c-hid-core.c
 +++ b/drivers/hid/i2c-hid/i2c-hid-core.c
-@@ -420,12 +420,23 @@ static int i2c_hid_set_power(struct i2c_hid *ihid, int power_state)
+@@ -420,7 +420,7 @@ static int i2c_hid_set_power(struct i2c_hid *ihid, int power_state)
  	return ret;
  }
  
--static int i2c_hid_execute_reset(struct i2c_hid *ihid)
-+static int i2c_hid_hwreset(struct i2c_hid *ihid)
+-static int i2c_hid_hwreset(struct i2c_hid *ihid)
++static int i2c_hid_start_hwreset(struct i2c_hid *ihid)
  {
  	size_t length = 0;
  	int ret;
+@@ -432,11 +432,11 @@ static int i2c_hid_hwreset(struct i2c_hid *ihid)
+ 	 * being reset. Otherwise we may lose the reset complete
+ 	 * interrupt.
+ 	 */
+-	mutex_lock(&ihid->reset_lock);
++	lockdep_assert_held(&ihid->reset_lock);
  
--	i2c_hid_dbg(ihid, "resetting...\n");
-+	i2c_hid_dbg(ihid, "%s\n", __func__);
-+
-+	/*
-+	 * This prevents sending feature reports while the device is
-+	 * being reset. Otherwise we may lose the reset complete
-+	 * interrupt.
-+	 */
-+	mutex_lock(&ihid->reset_lock);
-+
-+	ret = i2c_hid_set_power(ihid, I2C_HID_PWR_ON);
-+	if (ret)
-+		goto err_unlock;
+ 	ret = i2c_hid_set_power(ihid, I2C_HID_PWR_ON);
+ 	if (ret)
+-		goto err_unlock;
++		return ret;
  
  	/* Prepare reset command. Command register goes first. */
  	*(__le16 *)ihid->cmdbuf = ihid->hdesc.wCommandRegister;
-@@ -438,59 +449,35 @@ static int i2c_hid_execute_reset(struct i2c_hid *ihid)
- 
- 	ret = i2c_hid_xfer(ihid, ihid->cmdbuf, length, NULL, 0);
- 	if (ret) {
--		dev_err(&ihid->client->dev, "failed to reset device.\n");
--		goto out;
-+		dev_err(&ihid->client->dev,
-+			"failed to reset device: %d\n", ret);
-+		goto err_clear_reset;
+@@ -454,6 +454,18 @@ static int i2c_hid_hwreset(struct i2c_hid *ihid)
+ 		goto err_clear_reset;
  	}
  
-+	i2c_hid_dbg(ihid, "%s: waiting...\n", __func__);
-+
- 	if (ihid->quirks & I2C_HID_QUIRK_NO_IRQ_AFTER_RESET) {
- 		msleep(100);
--		goto out;
--	}
--
--	i2c_hid_dbg(ihid, "%s: waiting...\n", __func__);
--	if (!wait_event_timeout(ihid->wait,
--				!test_bit(I2C_HID_RESET_PENDING, &ihid->flags),
--				msecs_to_jiffies(5000))) {
-+		clear_bit(I2C_HID_RESET_PENDING, &ihid->flags);
-+	} else if (!wait_event_timeout(ihid->wait,
-+				       !test_bit(I2C_HID_RESET_PENDING, &ihid->flags),
-+				       msecs_to_jiffies(5000))) {
- 		ret = -ENODATA;
--		goto out;
-+		goto err_clear_reset;
- 	}
- 	i2c_hid_dbg(ihid, "%s: finished.\n", __func__);
- 
--out:
--	clear_bit(I2C_HID_RESET_PENDING, &ihid->flags);
--	return ret;
--}
--
--static int i2c_hid_hwreset(struct i2c_hid *ihid)
--{
--	int ret;
--
--	i2c_hid_dbg(ihid, "%s\n", __func__);
--
--	/*
--	 * This prevents sending feature reports while the device is
--	 * being reset. Otherwise we may lose the reset complete
--	 * interrupt.
--	 */
--	mutex_lock(&ihid->reset_lock);
--
--	ret = i2c_hid_set_power(ihid, I2C_HID_PWR_ON);
--	if (ret)
--		goto out_unlock;
--
--	ret = i2c_hid_execute_reset(ihid);
--	if (ret) {
--		dev_err(&ihid->client->dev,
--			"failed to reset device: %d\n", ret);
--		i2c_hid_set_power(ihid, I2C_HID_PWR_SLEEP);
--		goto out_unlock;
--	}
--
- 	/* At least some SIS devices need this after reset */
- 	if (!(ihid->quirks & I2C_HID_QUIRK_NO_WAKEUP_AFTER_RESET))
- 		ret = i2c_hid_set_power(ihid, I2C_HID_PWR_ON);
- 
--out_unlock:
-+	mutex_unlock(&ihid->reset_lock);
-+	return ret;
++	return 0;
 +
 +err_clear_reset:
 +	clear_bit(I2C_HID_RESET_PENDING, &ihid->flags);
 +	i2c_hid_set_power(ihid, I2C_HID_PWR_SLEEP);
-+err_unlock:
- 	mutex_unlock(&ihid->reset_lock);
++	return ret;
++}
++
++static int i2c_hid_finish_hwreset(struct i2c_hid *ihid)
++{
++	int ret = 0;
++
+ 	i2c_hid_dbg(ihid, "%s: waiting...\n", __func__);
+ 
+ 	if (ihid->quirks & I2C_HID_QUIRK_NO_IRQ_AFTER_RESET) {
+@@ -471,14 +483,11 @@ static int i2c_hid_hwreset(struct i2c_hid *ihid)
+ 	if (!(ihid->quirks & I2C_HID_QUIRK_NO_WAKEUP_AFTER_RESET))
+ 		ret = i2c_hid_set_power(ihid, I2C_HID_PWR_ON);
+ 
+-	mutex_unlock(&ihid->reset_lock);
+ 	return ret;
+ 
+ err_clear_reset:
+ 	clear_bit(I2C_HID_RESET_PENDING, &ihid->flags);
+ 	i2c_hid_set_power(ihid, I2C_HID_PWR_SLEEP);
+-err_unlock:
+-	mutex_unlock(&ihid->reset_lock);
  	return ret;
  }
+ 
+@@ -722,7 +731,11 @@ static int i2c_hid_parse(struct hid_device *hid)
+ 	}
+ 
+ 	do {
+-		ret = i2c_hid_hwreset(ihid);
++		mutex_lock(&ihid->reset_lock);
++		ret = i2c_hid_start_hwreset(ihid);
++		if (ret == 0)
++			ret = i2c_hid_finish_hwreset(ihid);
++		mutex_unlock(&ihid->reset_lock);
+ 		if (ret)
+ 			msleep(1000);
+ 	} while (tries-- > 0 && ret);
+@@ -974,10 +987,15 @@ static int i2c_hid_core_resume(struct i2c_hid *ihid)
+ 	 * However some ALPS touchpads generate IRQ storm without reset, so
+ 	 * let's still reset them here.
+ 	 */
+-	if (ihid->quirks & I2C_HID_QUIRK_RESET_ON_RESUME)
+-		ret = i2c_hid_hwreset(ihid);
+-	else
++	if (ihid->quirks & I2C_HID_QUIRK_RESET_ON_RESUME) {
++		mutex_lock(&ihid->reset_lock);
++		ret = i2c_hid_start_hwreset(ihid);
++		if (ret == 0)
++			ret = i2c_hid_finish_hwreset(ihid);
++		mutex_unlock(&ihid->reset_lock);
++	} else {
+ 		ret = i2c_hid_set_power(ihid, I2C_HID_PWR_ON);
++	}
+ 
+ 	if (ret)
+ 		return ret;
 -- 
 2.53.0
 
