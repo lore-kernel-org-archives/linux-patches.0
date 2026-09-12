@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CF31356742;
-	Sat, 12 Sep 2026 12:07:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6C313563FB;
+	Sat, 12 Sep 2026 12:07:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789214825; cv=none; b=sUgrZImoI8ynCmTUdK6nNdRHPPPIjwBrmKT0nMbnX+y2KENRkoK8FzLmIrwQ7JqI0aRdfaph9EWTDRb38n5+jlhqDiZF5oeXYcMne0GRJ1/5nHaZ80gSb1Lm9RO+GlVChaOhzuOpASmBXES7VkkMUH6rMtBKdMp9pzKDPeYaFw8=
+	t=1789214830; cv=none; b=R80WzjsKRpjcnWKbkjP5VxrrnQa5Scxyha7UPwBhk7PF/6xRSWLAWCdIyjbXPbz2fNPI5rOz4kH8vKB9giK2x/ZAcBnEJIMCDK9Fk8xRx8PLgm4Vu2ALgW7/sGd6T5yRKdF0bPoVMchvWUolULVm2E/T4ykJvS44EL/HkWDiQ3c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789214825; c=relaxed/simple;
-	bh=kTzhEqJmwNoxVCEy+uYnPmolVREO5TreuEbrzxAEN8A=;
+	s=arc-20240116; t=1789214830; c=relaxed/simple;
+	bh=CynLRAI/Yipe2wtks2ymlVUp9w54zyT3FPY/RPXOwYg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=jEmfIIWqJa3QDNnqQcmuL7/0T2vwiMURwUJsfk/na1bj7f2P9zozbYPOGWBNmV6taJZeuVfS+Kse1LNzzTr4KXNfPYB51/iWh4kZ6P1+L9KhdfS05iI+BI+h2YCUh6LVHpFQl9StsQM15+9oeFbXTFQwGSpC8Im3eIxr7xenakk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JagUZ8WH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ykqw+6IFapGJaP8JaigxYN5ktv16+D2Zv9TIl7u3Cvyp58cDkw8AAAO7cd2ZoD14/V9md6c+yKi0Yt/ZZGPS/d3My7na9TPZpl2dYzC4kMmnPd+FWTNJoWOqsLNhQpsS2cfw4ij+rZfW2UUxqlrvPtx/j2WGiMCr5HdnEHGi2qk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ULdw5rTm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JagUZ8WH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A47901F000FF;
-	Sat, 12 Sep 2026 12:07:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ULdw5rTm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C83711F000FF;
+	Sat, 12 Sep 2026 12:07:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789214823;
-	bh=xDFfmQTj/Lz5S1WVNnE/GfoKX0WvxULi4ySemh2TO9s=;
+	s=korg; t=1789214828;
+	bh=mVidGcR5sx/e1rDKZ9Gl3c6RBXsvCw8vbSFJ0pyieGM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JagUZ8WHaVZcfsHnZRU3w9ub+et+NSUzSVJoKUO5yC1jCY6r5t5NRd6P/hCXd9ibn
-	 Ln7xUsXredP13m7zRyxahIgSRu+Br2sHbDux5SDCX9aPd7+lxEwV+Zc5ZSVBKWMkgf
-	 cBgUUXii6DX6FNcQ21gXf4EY4UU1etg1fr+l6sHo=
+	b=ULdw5rTmW0BUL81MlpNi8atQ2bpihkmb6rEcBop+wO/fYCtiYz6MV1Ez0CA6znUNl
+	 HgKHFdaxuZs+w698sHS1WJvXTUQpuFPTkqK0BI8kFKKRjQBsFsvwL0r5G/yVap9tJd
+	 qDYZrkblDVQaGIHkuEJZUVf6zOwDGiaBgAQ1s4Zw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Alexis=20Lothor=C3=A9=20 ?= <alexis.lothore@bootlin.com>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
+	Lothar Rubusch <l.rubusch@gmail.com>,
+	Thorsten Blum <thorsten.blum@linux.dev>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0378/1376] selftests/bpf: Systematically add SO_REUSEADDR in start_server_addr
-Date: Sat, 12 Sep 2026 08:46:44 +0200
-Message-ID: <20260912065615.974162467@linuxfoundation.org>
+Subject: [PATCH 6.12 0405/1376] crypto: atmel-sha204a - fix heap info leak on I2C transfer failure
+Date: Sat, 12 Sep 2026 08:47:11 +0200
+Message-ID: <20260912065616.568491604@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -45,61 +46,65 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexis Lothoré (eBPF Foundation) <alexis.lothore@bootlin.com>
+From: Lothar Rubusch <l.rubusch@gmail.com>
 
-[ Upstream commit 38e36514fcb01ff1cce84cd77a93906f233a4cb8 ]
+[ Upstream commit 72bbf11ba14bd7d5fbf31a1ec42fff608b657f74 ]
 
-Some tests have to stop/start a server multiple time with the same
-listening address. Doing so without SO_REUSADDR leads to failures due to
-the socket still being in TIME_WAIT right after the first instance
-stop/before the second instance start. Instead of letting each test
-manually set SO_REUSEADDR on their servers, it can be done automatically
-by start_server_addr for all tests (and without any major downside).
+The nonblocking RNG path allocates a work_data structure to track the
+state of an in-flight asynchronous I2C request. This pointer is stored
+in rng->priv and later consumed by the read path once the transaction
+completes.
 
-Enforce SO_REUSEADDR in start_server_addr for all tests.
+If the underlying I2C transfer fails, the completion callback is invoked
+with a non-zero status. In this case, the allocated work_data is not
+usable for producing RNG output and must not remain associated with the
+hwrng state.
 
-Signed-off-by: Alexis Lothoré (eBPF Foundation) <alexis.lothore@bootlin.com>
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
-Link: https://patch.msgid.link/20251105-start-server-soreuseaddr-v1-1-1bbd9c1f8d65@bootlin.com
-Stable-dep-of: b4b8b334f6b5 ("selftests/bpf: Mask socket type flags in mptcpify prog")
+Previously, the failure path only logged a warning but left the pointer
+state uncleared, which can result in subsequent read attempts observing
+stale state and interpreting it as valid completion data.
+
+Fix this by freeing the pending work_data. The I2C transaction reports
+an error. This ensures that failed requests do not leave residual state
+behind that could be interpreted as valid RNG data on later reads.
+Clearing rng->priv is done at the subsequent call to nonblocking read.
+
+Fixes: da001fb651b0 ("crypto: atmel-i2c - add support for SHA204A random number generator")
+Signed-off-by: Lothar Rubusch <l.rubusch@gmail.com>
+Assisted-by: Gemini:1.5 Pro [google]
+Reviewed-by: Thorsten Blum <thorsten.blum@linux.dev>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/network_helpers.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/crypto/atmel-sha204a.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/bpf/network_helpers.c b/tools/testing/selftests/bpf/network_helpers.c
-index af0ee70a53f9f..e5f8cab87dd9a 100644
---- a/tools/testing/selftests/bpf/network_helpers.c
-+++ b/tools/testing/selftests/bpf/network_helpers.c
-@@ -97,7 +97,7 @@ int settimeo(int fd, int timeout_ms)
- int start_server_addr(int type, const struct sockaddr_storage *addr, socklen_t addrlen,
- 		      const struct network_helper_opts *opts)
- {
--	int fd;
-+	int on = 1, fd;
+diff --git a/drivers/crypto/atmel-sha204a.c b/drivers/crypto/atmel-sha204a.c
+index 8a3520c9a0ff5..d2031abbd8efa 100644
+--- a/drivers/crypto/atmel-sha204a.c
++++ b/drivers/crypto/atmel-sha204a.c
+@@ -31,10 +31,14 @@ static void atmel_sha204a_rng_done(struct atmel_i2c_work_data *work_data,
+ 	struct atmel_i2c_client_priv *i2c_priv = work_data->ctx;
+ 	struct hwrng *rng = areq;
  
- 	if (!opts)
- 		opts = &default_opts;
-@@ -111,6 +111,12 @@ int start_server_addr(int type, const struct sockaddr_storage *addr, socklen_t a
- 	if (settimeo(fd, opts->timeout_ms))
- 		goto error_close;
- 
-+	if (type == SOCK_STREAM &&
-+	    setsockopt(fd, SOL_SOCKET, SO_REUSEADDR, &on, sizeof(on))) {
-+		log_err("Failed to enable SO_REUSEADDR");
-+		goto error_close;
+-	if (status)
++	if (status) {
+ 		dev_warn_ratelimited(&i2c_priv->client->dev,
+ 				     "i2c transaction failed (%d)\n",
+ 				     status);
++		kfree(work_data);
++		atomic_dec(&i2c_priv->tfm_count);
++		return;
 +	}
-+
- 	if (opts->post_socket_cb &&
- 	    opts->post_socket_cb(fd, opts->cb_opts)) {
- 		log_err("Failed to call post_socket_cb");
+ 
+ 	rng->priv = (unsigned long)work_data;
+ 	atomic_dec(&i2c_priv->tfm_count);
 -- 
 2.53.0
 
