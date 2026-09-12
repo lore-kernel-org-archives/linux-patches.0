@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED03719E7F7;
-	Sat, 12 Sep 2026 08:20:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C84839FCDC;
+	Sat, 12 Sep 2026 08:20:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789201222; cv=none; b=h6meQKA0d5QyLo4We81PZjLQ1sF4ZCwCYsGpOGDN0AvLhJhl8MESiz/bRTwEK2Ersc2v/9L0dZiAMusuU0NskP7k91i8ESeoUsqCETc5VDggHhvzPN1KKnfWeJJowkoNcnnJoJ0WeyxBwPorNDMmGAsMJPumwuFDTsTw1dSYjaM=
+	t=1789201227; cv=none; b=kHcvbzLvgvexAsWSvU5DZYEolRpgxZhUO1WSHKpsBWOIHVLBAjReOODKko8X5qi86x5IJBveuouvaiJtEWz/G5gCmcDIcOs/G9k07ULnQ8SmofzzHayQ/Vt95nuL5B50bOc/uNR4q1FZZmnb3MfvvmG7DrKP4JZ9uySICDHwRas=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789201222; c=relaxed/simple;
-	bh=hMOwabw/pYvp4VDgVAgaDyfoD0+ls891lwrTM4PnooY=;
+	s=arc-20240116; t=1789201227; c=relaxed/simple;
+	bh=7m8OFr2l4h+gTuVmFn4TwWKwl8HPZDKBBSgdEIw30OM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Lu+AdevAgoX28NVxZUKE6EfO8Jd3VcnTpF6Mbt/u9mRUQHi3zV3396NV0GxTwrDby2GGgK1iTHmHnu5v86xYlibHs+XXR9gza6dvMy16iWh6Z11NED7zyjgzIclqv7kNJ9gSc3eUeEGfHiJCZ4zhlGMMBa8oJxFuyzeaOFP6tNc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C+uJhBwc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Yx7Ffj9CxOMNeJbHfKNb90mXjvfiZcs/g62b5tNvSOsu5vGubKteevHiJS+gdt94ZXQZ494ht6cO986cntVgchX++V2H8xHjD+AoKwAU7gVSj7fEBm/Q9ilJamMJOPSBLlUhL99kyJVlyUvLRRUMnZfB3DmFpLyX9ITzk9iS6eA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DGtIwPnH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C+uJhBwc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDDEF1F000FF;
-	Sat, 12 Sep 2026 08:20:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DGtIwPnH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A90341F000FF;
+	Sat, 12 Sep 2026 08:20:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789201220;
-	bh=Z/aSngsqvWAov2KBONKIrij9AQrVASVrhbF/YDZzuA4=;
+	s=korg; t=1789201225;
+	bh=0C7yb2/AbFGGSs0tOAQfLA8MMbwKH9sdiD46yE47FgY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=C+uJhBwcDhPzv3RWtkKdNHRmEjQsVL/K7Rc1u5nojJ3onMGOzAZkAgAwu6rI/3rxu
-	 yYAZBfZhliwyWjRTH9OVxXAu8138XROsCR1sb6fa+qIkJYOJ8AEwoUVsGSslNPUn/i
-	 GoHLfoV9NFaeVXXeXtK3TUEpm7cS1iZzyPmeJatc=
+	b=DGtIwPnHvwMoWnCGjJxzHnVAJe2G2lPBM882niCT+87cbY5yr15RmJznaCEb6bn7p
+	 P2muQoPpbjwZxzv3SNs0w97122YaeobWIyIBxYMuY4zKO869YgJdgXfEx15/S4GkJ4
+	 NAA9qH/4X7IoCvi+kZTPm07ff1y7oonK1e3hhxXc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0915/1815] wifi: ath11k: fix leak in ath11k_service_ready_ext_event()
-Date: Sat, 12 Sep 2026 08:44:25 +0200
-Message-ID: <20260912065710.403427396@linuxfoundation.org>
+Subject: [PATCH 7.2 0951/1815] wifi: mt76: reject out-of-range link ids in mt76_vif_link()
+Date: Sat, 12 Sep 2026 08:45:01 +0200
+Message-ID: <20260912065711.291356734@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,42 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit 0293be2212d319d59589082461abf2a9b626cd1c ]
+[ Upstream commit 9ba744a28c26eaa5cae930688a22e01888395308 ]
 
-Currently, during ath11k_service_ready_ext_event() processing,
-svc_rdy_ext.mac_phy_caps can be allocated during TLV parsing. This is a
-temporary allocation that is freed on the success path, but not on the
-error path. If parsing succeeds far enough to allocate mac_phy_caps and
-then fails on a later TLV, the allocation leaks. So free the allocation
-on the error path.
+mt76_vif_link() indexes mvif->link[] without validating link_id, but
+callers pass mvif->deflink_id / msta->deflink_id, which hold
+IEEE80211_LINK_UNSPECIFIED (0xf) until the first link has been added.
+Since IEEE80211_MLD_MAX_NUM_LINKS is 15, that reads one element past the
+end of the array, aliasing mt76_vif_data.offchannel_link.
 
-Compile tested only.
+Reachable via mt7996_set_tsf()/mt7996_offset_tsf() and
+mt7996_net_fill_forward_path(). Bounds check link_id and return NULL,
+matching mt7996_sta_link() and mt7996_sta_link_protected().
 
-Fixes: 5b90fc760db5 ("ath11k: fix wmi service ready ext tlv parsing")
-Assisted-by: Claude:claude-sonnet-4-6
-Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
-Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260727-ath11k_service_ready_ext_event-memleak-v1-1-e8373d27bdd1@oss.qualcomm.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Fixes: a9384b36a42a ("wifi: mt76: mt7996: rework set/get_tsf callabcks to support MLO")
+Link: https://patch.msgid.link/20260801145334.1166751-9-nbd@nbd.name
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/wmi.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/wireless/mediatek/mt76/mt76.h | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/wireless/ath/ath11k/wmi.c b/drivers/net/wireless/ath/ath11k/wmi.c
-index 1575b7faac7d1..e46f4d7ddc80a 100644
---- a/drivers/net/wireless/ath/ath11k/wmi.c
-+++ b/drivers/net/wireless/ath/ath11k/wmi.c
-@@ -5129,6 +5129,7 @@ static int ath11k_service_ready_ext_event(struct ath11k_base *ab,
- 	return 0;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt76.h b/drivers/net/wireless/mediatek/mt76/mt76.h
+index 640061276d762..476578e2fbf0c 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt76.h
++++ b/drivers/net/wireless/mediatek/mt76/mt76.h
+@@ -2128,6 +2128,9 @@ mt76_vif_link(struct mt76_dev *dev, struct ieee80211_vif *vif, int link_id)
+ 	if (!link_id)
+ 		return mlink;
  
- err:
-+	kfree(svc_rdy_ext.mac_phy_caps);
- 	ath11k_wmi_free_dbring_caps(ab);
- 	return ret;
++	if (link_id >= IEEE80211_MLD_MAX_NUM_LINKS)
++		return NULL;
++
+ 	return mt76_dereference(mvif->link[link_id], dev);
  }
+ 
 -- 
 2.53.0
 
