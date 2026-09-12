@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27E55412279;
-	Sat, 12 Sep 2026 08:36:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F706414A0C;
+	Sat, 12 Sep 2026 08:36:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789202194; cv=none; b=T6dK0vTcnb/K3jV8mvTw+UOLvPNVdy57PnUmYqNPJ2jhagXSwKRrIeNR0Zo9fYSt1CMzim201H+YnFeitIzlHaukusme0nWLqBpR0hY38Kan2q6QicPGoRf4D2mhvq0X0fL1g2NmuDQYGRpZ0CYGvP4BxueUstEtutYKdhqs1BQ=
+	t=1789202200; cv=none; b=u9sVKoBAlsUV4AVZ6PYu9y9ZjEpl4yMmkPMlAp1y4MFqbvuKAJ9koMfrjDakmRB/Gffy0mWpcZ1nWieY26d8rKd/DTb4V1BanbbDbbp6rCRmpZJqZDUiuts4hTUQZ1CivtfWuz9xfhoUuI7KrWqlmSlFwDvebWxZJBdmuuyna7U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789202194; c=relaxed/simple;
-	bh=FCvtddeS52R1oGjdlVNa7x6BnY7R316zDTcxEq0huiE=;
+	s=arc-20240116; t=1789202200; c=relaxed/simple;
+	bh=Zc13SMefLcDcNJ9BgoN7LEvImTSQaCncXXwKWIzeTHk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dqlHhlRdZNjHXeX/jIDGCHJ/WGJFwIT08pYSoQC6PyVzqO63CPlr4GP9U4OqhGsQK02/K15UZF8HjDblYcjK85ExifMS/xjhoucDh5BgTqkY5hkcRJtWO/U+62CrRrf+JFIr6JfZ46a+A66iNomNxcYAneXtZZhfVP1hI3UT+4k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rPEtb46m; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RnKtkJlmr5gZJCKEapRNsGCAOwXGRBaYmpBP233JkPu1t9Tc4z4tKRRj/Ff9bXulNu0dywoOeC2Lq3ApeE3z0LJ97nCpX5aDiADWKwhDfO5T8XjeOhPhuNbNW6FK+V0D7qXkjUoJunJlj/aoy+F7fOYbV5vssyrA/jwyewOLHLs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PUGfZ3c5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rPEtb46m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBF661F000FF;
-	Sat, 12 Sep 2026 08:36:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PUGfZ3c5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A79C61F000FF;
+	Sat, 12 Sep 2026 08:36:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789202192;
-	bh=s00mPdV2+EKIYSJ5xQsQzAboeYRCKHyoGRJnRmOjQGY=;
+	s=korg; t=1789202197;
+	bh=1Ea05HgFvFItxXlofhUt0W+Iqs5ZLm6QWcVygwnN4GU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rPEtb46mE81UuUTVDwSnPLfZ5jkgSXJXm/IssIemUSeoM4H+bV9UK448mZ0nKUSS5
-	 kl9lL2YEHxELy2EZBfvPVrtKzPDQxn/l04Gv2yIGTRx1ZfLeceIgtMY1+wQj2wW26z
-	 gj7z9c5305BcdYf3G7lPRkHJpt3lmJPt3Hz7uIDg=
+	b=PUGfZ3c5CaLgVPt+gZ1CeJCj1a3oEzSoHZ0bU+VCD/Scg+Zgltofg5JVgyoG9y0Ty
+	 GydYp3NHvGPj9VLrxqeIlb0N9C2FzQQlKwOQS2wM/4bsroY1LZgJUowyVJAMYSht1t
+	 8ve5jkjw6PxMN12C7usoorGV7P4i+qpF1qDnh6vI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Brown <broonie@kernel.org>,
-	Will Deacon <will@kernel.org>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1153/1815] tools: Ensure tools copy of linux/filter.h exports the UAPI
-Date: Sat, 12 Sep 2026 08:48:23 +0200
-Message-ID: <20260912065716.080556975@linuxfoundation.org>
+Subject: [PATCH 7.2 1154/1815] mfd: iqs62x: Reject zero-length firmware records
+Date: Sat, 12 Sep 2026 08:48:24 +0200
+Message-ID: <20260912065716.104127453@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,38 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Brown <broonie@kernel.org>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 7a1f400ff5e57f41e23c8145a54ea084039b023c ]
+[ Upstream commit 08ea045e0b82cbcadb7a2efc43a23561489a00f2 ]
 
-Normally when there is an include/foo.h and an include/uapi/foo.h the
-non-UAPI copy includes the UAPI copy.  This is the case for the in
-kernel copy of linux/filter.h but not for the copy in tools/ which
-results in build breaks for the newly added arm64
-seccomp_ptrace_x0_bypass selftest.  Add an explicit include of the uapi
-to fix the test and avoid future surprises.
+struct iqs62x_fw_rec includes the first data byte in its fixed-size header,
+so the parser advances by len - 1 bytes after that header. A zero len makes
+the size_t cursor update move back by one byte, so the next record overlaps
+the current record instead of following a valid declared extent.
 
-Fixes: 2fcbc4adf997 ("kselftest/arm64: Add seccomp ptrace x0 bypass test")
-Fixes: f143c11bb7b9 ("tools: bpf: Use local copy of headers including uapi/linux/filter.h")
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Will Deacon <will@kernel.org>
+Reject zero-length records and express the remaining-size check without an
+offset addition.
+
+Fixes: 4d9cf7df8d35 ("mfd: Add support for Azoteq IQS620A/621/622/624/625")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://lore.kernel.org/all/20260706091034.75865-1-pengpeng@iscas.ac.cn/
+Link: https://patch.msgid.link/20260720115423.94994-1-pengpeng@iscas.ac.cn
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/include/linux/filter.h | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/mfd/iqs62x.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/include/linux/filter.h b/tools/include/linux/filter.h
-index bcc6df79301ae..4ead4e72097c1 100644
---- a/tools/include/linux/filter.h
-+++ b/tools/include/linux/filter.h
-@@ -6,6 +6,7 @@
- #define __TOOLS_LINUX_FILTER_H
+diff --git a/drivers/mfd/iqs62x.c b/drivers/mfd/iqs62x.c
+index ee017617d1d1b..412ae7777f729 100644
+--- a/drivers/mfd/iqs62x.c
++++ b/drivers/mfd/iqs62x.c
+@@ -237,7 +237,7 @@ static int iqs62x_firmware_parse(struct iqs62x_core *iqs62x,
+ 		fw_rec = (struct iqs62x_fw_rec *)(fw->data + pos);
+ 		pos += sizeof(*fw_rec);
  
- #include <linux/bpf.h>
-+#include <uapi/linux/filter.h>
- 
- /* ArgX, context and stack frame pointer register positions. Note,
-  * Arg1, Arg2, Arg3, etc are used as argument mappings of function
+-		if (pos + fw_rec->len - 1 > fw->size) {
++		if (!fw_rec->len || fw_rec->len - 1 > fw->size - pos) {
+ 			ret = -EINVAL;
+ 			break;
+ 		}
 -- 
 2.53.0
 
