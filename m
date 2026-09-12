@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED602345EB5;
-	Sat, 12 Sep 2026 19:51:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 266FF3839BA;
+	Sat, 12 Sep 2026 19:51:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789242707; cv=none; b=Rr/TxS1w73xU5SnGSe9mbWYvDOBW/gCtGfR+Mb6xaNfbkL4gOFDaHBnqtvi5bpYAemJIBexbujpIFpgC9HyH1bUxyo8fJHgvmB8vBE82pKVuOhauaXrmo4oikRCi0Nm/XnksW3r1NlxMeU5vbepOfvmqijHQYquBKSaOAJLO5dA=
+	t=1789242710; cv=none; b=AyHYo+r0T+fnNXVVK1iL/TD2EVTk2e7zuqXzKexQha13Gn/CJLPb17s2VsSLBW2Ss0sXpjAiwuBfj6a4e0jygRvOlSV0K1FOH0sRzrGbOJeVm0+N5HUiwUnUa2tKJledw50No1pQS0RfxggqHOrrRuu+arOUH8/aKUUHwWdDbHE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789242707; c=relaxed/simple;
-	bh=+92EmTUerPaG6uCpJJ+wERz8JkaEq+AnteEkAs3RQ9w=;
+	s=arc-20240116; t=1789242710; c=relaxed/simple;
+	bh=/JSRKfn31fthVwzUhKOxsbal0MRU0wsYaSDPxTakZQo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kG7h6H+Rt4TUeHQ9WCCnT51XhOiLKdGjL0I/yOgHWAO45AT9ysTkYaXdmF7AKzdTikg8yANtIpBLy8rGsJAdUWDc764rYDIMWA2nY3tSOyBW0z9RY+ovF0KQLTZCDZhAp0B6SdPGRnnBeQnkwGBAP7TKIuFm03ITXGfijOZqpko=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uf0bGdeN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eS2m9yO2x9+ckUwduV4au4z5nvW+VDHMJa4S3BUpt7QZajHU0c1oPRrhjLj0WlHgOyjub0YcHgt7jCWjdYImwU4AAhN2SVrvC+qM7TFfW/m00Co6C+YtYnuUh6qal/GX6EREC0uFPAWmtVksxjaFqbSkteSrz9jsSF8dpZzc3tE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YNS6n6I+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uf0bGdeN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 532C61F000FF;
-	Sat, 12 Sep 2026 19:51:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YNS6n6I+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F92E1F000FF;
+	Sat, 12 Sep 2026 19:51:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789242705;
-	bh=xC6OIB0v+iKmr6ElHteV2w3g2ujVB4Cbn9QxaezAi3E=;
+	s=korg; t=1789242708;
+	bh=V6lBq629w1sZAQILHOYgXEVBMrInxnp+aI5DndBGccg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uf0bGdeNYbu/00r0quyJxaxGqW5UZx5tXN9DukApwt3hl+LOfyGHyuTP4vECYAP2J
-	 B1PYyIqSrS1LvCE8ukgLd+a+KiHn0o/MMui28yEN7P7xSfIEgKzVZG1WRAUr/sqFCl
-	 1q1MPZKvBB//Zo7Y1nmQBb6QSoF6zoSi4dCVhiW0=
+	b=YNS6n6I+9Z00vLWVhEDODUHOCPH+t9pMekoSRzu07oDaPmWu1E/Trc0pXdQovWa4n
+	 B/DNj9Fs1tD1qo8dMfh6UOoZ5nSvofRA6xEoLMJvKq1Jpj8qwfiRfgl4HFlSrNB3nU
+	 VGpo33DcfH/0FUSH8X83QYLh6OZsmCOiBqMlwi2U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	zhouminqiang <zhouminqiang2@huawei.com>,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 471/798] mtd: part: reject MTDPART_OFS_RETAIN in mtd_add_partition()
-Date: Sat, 12 Sep 2026 09:01:39 +0200
-Message-ID: <20260912065527.941495941@linuxfoundation.org>
+Subject: [PATCH 5.10 498/798] thermal: int340x_thermal: Consolidate priv->data_vault checks
+Date: Sat, 12 Sep 2026 09:02:06 +0200
+Message-ID: <20260912065528.551959258@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -52,72 +50,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: zhouminqiang <zhouminqiang2@huawei.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit b759d5bb6265419344ee9729fd0dc07ad85719d8 ]
+[ Upstream commit e9a7c526c29b0ae60c888b335bd6cf6e2ee80154 ]
 
-mtd_add_partition() does not reject the special offset value
-MTDPART_OFS_RETAIN (-3), which leads to a WARN_ON in
-add_mtd_device() when called through the BLKPG ioctl on NAND
-devices. The RETAIN value depends on cur_offset being the end of
-the previous partition, but in the dynamic partition path
-cur_offset equals the offset argument itself, causing undefined
-behavior.
+It is sufficient to check priv->data_vault once in the error code path
+of int3400_thermal_probe(), so do that.
 
-Commit 5daa7b21496a ("mtd: prepare partition add and del functions
-for ioctl requests") introduced mtd_add_partition() and correctly
-rejected MTDPART_OFS_APPEND (-1) and MTDPART_OFS_NXTBLK (-2),
-since those special offsets rely on cur_offset tracking the
-previous partition's end. However, commit 1a31368bf92e ("mtd: add a flags
-for partitions which should just leave smth. after them")
-later added MTDPART_OFS_RETAIN (-3) for the static
-partition table path without updating mtd_add_partition() to
-also reject this value.
-
-With offset=-3 passed via BLKPG, the RETAIN size calculation in
-allocate_partition() underflows (parent_size - 0xFFFFFFFFFFFFFFFD
-= parent_size + 3). If the underflow result does not appear to
-leave enough space, allocate_partition() jumps to out_register via
-goto, skipping erasesize initialization. This results in
-erasesize=0, which triggers:
-
-WARN_ON((!mtd->erasesize || !master->_erase) &&
-		!(mtd->flags & MTD_NO_ERASE))
-
-in add_mtd_device(). If the underflow result appears to leave
-enough space, a bogus partition size is calculated, but the
-"out of reach" sanity check catches the invalid offset and
-creates a disabled empty partition (offset=0, size=0) instead
-of returning an error.
-
-Fix this by adding MTDPART_OFS_RETAIN to the rejection list in
-mtd_add_partition(), consistent with the existing handling of
-APPEND and NXTBLK.
-
-Fixes: 1a31368bf92e ("mtd: add a flags for partitions which should just leave smth. after them")
-
-Signed-off-by: zhouminqiang <zhouminqiang2@huawei.com>
-Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Stable-dep-of: d83dc9ce57a7 ("thermal: intel: int3400: clean up ODVP on probe failures")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/mtdpart.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/thermal/intel/int340x_thermal/int3400_thermal.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/mtd/mtdpart.c b/drivers/mtd/mtdpart.c
-index 5725818fa199f..c428fa2b91fcd 100644
---- a/drivers/mtd/mtdpart.c
-+++ b/drivers/mtd/mtdpart.c
-@@ -248,7 +248,8 @@ int mtd_add_partition(struct mtd_info *parent, const char *name,
+diff --git a/drivers/thermal/intel/int340x_thermal/int3400_thermal.c b/drivers/thermal/intel/int340x_thermal/int3400_thermal.c
+index a064a4eb31fba..588d8fb12490a 100644
+--- a/drivers/thermal/intel/int340x_thermal/int3400_thermal.c
++++ b/drivers/thermal/intel/int340x_thermal/int3400_thermal.c
+@@ -548,9 +548,8 @@ static int int3400_thermal_probe(struct platform_device *pdev)
  
- 	/* the direct offset is expected */
- 	if (offset == MTDPART_OFS_APPEND ||
--	    offset == MTDPART_OFS_NXTBLK)
-+	    offset == MTDPART_OFS_NXTBLK ||
-+	    offset == MTDPART_OFS_RETAIN)
- 		return -EINVAL;
- 
- 	if (length == MTDPART_SIZ_FULL)
+ free_sysfs:
+ 	cleanup_odvp(priv);
+-	if (priv->data_vault) {
+-		if (!ZERO_OR_NULL_PTR(priv->data_vault))
+-			sysfs_remove_group(&pdev->dev.kobj, &data_attribute_group);
++	if (!ZERO_OR_NULL_PTR(priv->data_vault)) {
++		sysfs_remove_group(&pdev->dev.kobj, &data_attribute_group);
+ 		kfree(priv->data_vault);
+ 	}
+ free_uuid:
 -- 
 2.53.0
 
