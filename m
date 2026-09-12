@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB3A4235358;
-	Sat, 12 Sep 2026 07:53:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0834E235358;
+	Sat, 12 Sep 2026 07:53:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789199586; cv=none; b=Aw53Z0RVffAne98dDw3Yherzn34Rs2b9KaqxDCMqiRBw4yjts3UiOiFchKI8caeIczo/9Ao4TWt/KSekT1GgGF5Umu3TV2tN5KN4k/eubwxV8I5IEfxuXlKje52cntHAQsVpQOkXeXYs0f6VXSPuhOEFfFliL2mrbjz3jTdCADc=
+	t=1789199591; cv=none; b=Na10KvjZxdYE9wBhjKGxOzXt3IcHnq9WSD/4Yr/BjrQoTGjjH83xzQYIg/H2plTCFwsm55kweHHsk631/hP6CXWq4q7ZdVF9IqBE6YvxfM5SAoHC5vSeccVsWJtgy/MdLGnvSV8kZ8aWkGoR1139QaxL8ELjiIII0R8pCIBX0Es=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789199586; c=relaxed/simple;
-	bh=3NaIuh4nuX6KG0cZIww+4dFPGfR0x9D2gRV+RMQ/E3g=;
+	s=arc-20240116; t=1789199591; c=relaxed/simple;
+	bh=s5wJRNZ0ZoIAUJRrwRtt8TCszuV5pgtGuZg7SbxVRGQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FleLtlrzUV/pqjmMrl5pLxs68S0jo4NwDcPiIb7e9caIYqSamOvcaKiCjh8KFinLFz9BjfITKHDZpDcRmFhRH+4SuX8be1agvLQWadH7pMDqQAg/1LnMQW2QiEOdTGFPbCNg7IBKEC4kV0Fsuo+5tym0a9BFGHSgbfp62HNJJMo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x5Dzh3+p; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=myMkUrLXTTBtE07n1tRUIa/ybJOWJLjcGGHNtyWOdL1lj+9o7k/ffW9WRQsBvIycESB1VV2uTh7rgfy+89P54jfANR1qDJGp2xMwDk/Iih+BXnaf0VWwegXmsiIvdCHg4sQiMbYm0s9PuGA1BOV656iOhursCx1NRcsnd/vms4k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xu8gLofg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x5Dzh3+p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 843721F000FF;
-	Sat, 12 Sep 2026 07:53:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xu8gLofg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25B261F000FF;
+	Sat, 12 Sep 2026 07:53:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789199585;
-	bh=XhvDmaESpG2+0CchXh8tZTYt4qqNSTQ8J8Yg1aXafyo=;
+	s=korg; t=1789199589;
+	bh=Wdkib9pmmzdPqVmGoMW+8stN+zNPtpLAQZFI+ex486c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=x5Dzh3+pAQ/8b9Kpvx5r3BznNAstBX+zJeU5Ny8aDmQ7fQ7UfnufPQ8W2u2jRzL9T
-	 95AMn7itDodhq59SvV0wFIFs1JXuKSAxTC+C0IrD760GsQjSR/j0zrskjocd1b1ARS
-	 cqc1/jInXrlF1trdXcmzOyHw2QNH8eDQCaRMvmMg=
+	b=Xu8gLofgHo6NFkH7R/rRGvy9fe5KFq83k83WEK4Pkhu5uOcOglmDzGfmJj/HyATcU
+	 VOjMO7VvMsCyn5EnAP9ODcc2TiHcT9yDLHh54Mj0daZQrScAFV0lhVgEkXDCpUkoE6
+	 VFu1mjVpXWqubJr5jot5XbrMLAjbzirTBnUWx184=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andre Przywara <andre.przywara@arm.com>,
-	Chen-Yu Tsai <wens@kernel.org>,
+	Li Xiong <xiongl24@chinatelecom.cn>,
+	Xibo Wang <wangxb12@chinatelecom.cn>,
+	Qianheng Peng <pengqh1@chinatelecom.cn>,
+	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
+	Mario Limonciello <superm1@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0615/1815] ARM: dts: allwinner: a10: Fix PMU interrupt
-Date: Sat, 12 Sep 2026 08:39:25 +0200
-Message-ID: <20260912065703.319915268@linuxfoundation.org>
+Subject: [PATCH 7.2 0616/1815] cpufreq: amd-pstate-ut: Skip tests when amd-pstate driver is not active
+Date: Sat, 12 Sep 2026 08:39:26 +0200
+Message-ID: <20260912065703.342977985@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,40 +54,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andre Przywara <andre.przywara@arm.com>
+From: Qianheng Peng <pengqh1@chinatelecom.cn>
 
-[ Upstream commit eb7051f756460d7b951e94d9656e31ebb631ba28 ]
+[ Upstream commit 8d31bb1451643f328db0cea0e21e63ef54b4faf2 ]
 
-The Performance Monitoring Unit of the Cortex-A8 cores in the Allwinner
-A10 SoC is connected to interrupt line 66, not 3. This is shown in the
-manual (where interrupt 3 is assigned to UART2, also in our .dtsi), but
-has also been confirmed by triggering an PMU overflow interrupt and
-inspecting the IRQ controller status registers (from U-Boot).
-Please note that "perf stat" does not use interrupts, this might explain
-why this evaded the initial testing.
+The crash issue may occur when modprobe amd_pstate_ut on intel platform.
 
-Fixes: 7e345d25c796 ("ARM: dts: sun4i-a10: Add PMU node")
-Signed-off-by: Andre Przywara <andre.przywara@arm.com>
-Link: https://patch.msgid.link/20260720215128.5761-1-andre.przywara@arm.com
-Signed-off-by: Chen-Yu Tsai <wens@kernel.org>
+   amd_pstate_ut: 1    amd_pstate_ut_acpi_cpc_valid  success!
+   amd_pstate_ut: 2    amd_pstate_ut_check_enabled   success!
+   BUG: kernel NULL pointer dereference, address: 0000000000000080
+   #PF: supervisor read access in kernel mode
+   #PF: error_code(0x0000) - not-present page
+   PGD 0 P4D 0
+   Oops: 0000 [#1] SMP NOPTI
+   CPU: 0 PID: 20300 Comm: modprobe
+   Kdump: loaded Tainted: G O 6.6.0-0010.rc1.ctl4.x86_64 #1
+   Hardware name: FiberHome R2200 V5/Xeon Boards, BIOS 3.1a 02/24/2020
+   RIP: 0010:amd_pstate_ut_check_perf+0x141/0x280 [amd_pstate_ut]
+   Call Trace:
+    <TASK>
+    amd_pstate_ut_init+0x1b/0xff0 [amd_pstate_ut]
+    ? __pfx_amd_pstate_ut_init+0x10/0x10 [amd_pstate_ut]
+    do_one_initcall+0x42/0x2e0
+    ? kmalloc_trace+0x26/0x90
+    do_init_module+0x60/0x240
+    __se_sys_init_module+0x185/0x1c0
+    do_syscall_64+0x62/0x190
+    entry_SYSCALL_64_after_hwframe+0x76/0x7e
+    </TASK>
+
+Add state detection to amd pstate driver to prevent amd_pstate_ut driver
+from testing on non-AMD platforms.
+
+Fixes: 14eb1c96e3a3 ("cpufreq: amd-pstate: Add test module for amd-pstate driver")
+Suggested-by: Li Xiong <xiongl24@chinatelecom.cn>
+Suggested-by: Xibo Wang <wangxb12@chinatelecom.cn>
+Signed-off-by: Qianheng Peng <pengqh1@chinatelecom.cn>
+Reviewed-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/1784191899-28957-1-git-send-email-pengqh1@chinatelecom.cn
+(ML: adjust title)
+Signed-off-by: Mario Limonciello <superm1@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/allwinner/sun4i-a10.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/cpufreq/amd-pstate-ut.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/arch/arm/boot/dts/allwinner/sun4i-a10.dtsi b/arch/arm/boot/dts/allwinner/sun4i-a10.dtsi
-index 51a6464aab9a3..cabf619c2e217 100644
---- a/arch/arm/boot/dts/allwinner/sun4i-a10.dtsi
-+++ b/arch/arm/boot/dts/allwinner/sun4i-a10.dtsi
-@@ -185,7 +185,7 @@ de: display-engine {
+diff --git a/drivers/cpufreq/amd-pstate-ut.c b/drivers/cpufreq/amd-pstate-ut.c
+index 735b29f76438a..2142838ad6cc4 100644
+--- a/drivers/cpufreq/amd-pstate-ut.c
++++ b/drivers/cpufreq/amd-pstate-ut.c
+@@ -560,6 +560,11 @@ static int amd_pstate_ut_check_freq_attrs(u32 index)
+ static int __init amd_pstate_ut_init(void)
+ {
+ 	u32 i = 0, arr_size = ARRAY_SIZE(amd_pstate_ut_cases);
++	enum amd_pstate_mode mode = amd_pstate_get_status();
++
++	/* don't test if no running amd-pstate driver */
++	if (mode == AMD_PSTATE_UNDEFINED || mode == AMD_PSTATE_DISABLE)
++		return -EOPNOTSUPP;
  
- 	pmu {
- 		compatible = "arm,cortex-a8-pmu";
--		interrupts = <3>;
-+		interrupts = <66>;
- 	};
- 
- 	reserved-memory {
+ 	for (i = 0; i < arr_size; i++) {
+ 		int ret;
 -- 
 2.53.0
 
