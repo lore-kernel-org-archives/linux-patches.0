@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C217385D89;
-	Sat, 12 Sep 2026 08:11:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 612AC364059;
+	Sat, 12 Sep 2026 08:11:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789200698; cv=none; b=buKMvYNcamMqg10CCp5HitUNM/0PHtu9UWVNZ5a1dlCUMXZpYq+OUXKhYU6069D/n0kQMiP48S/kj36p23eFe/sZBVNDPqoK+vOdloM/K/Vidsc6k50HShV2foC/FELcyVOcwgiXsR8zoFBF/38rDGYu7i+OYQzKUMDFKr9+H2s=
+	t=1789200701; cv=none; b=V+KEaQxFAP/xIHdWf+cbzOBX505XF7vIfmFZgdfvHHTdxG04nvKwAk9i5jfVi+H2ijd9D28NdLmdjQJ9zpgXF1ADaNl1BBbkbcsZfZVvqJ8YOwRB8zkSSt+DzW5V2wk3XlLuxMUaTdC6vnYc4wqtvmDikCsK7ndgO9ckkFNTpV4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789200698; c=relaxed/simple;
-	bh=pvDa43/Epx0C4sVfLNoZ4qcB15BTA+XRz8mzJIt3bwU=;
+	s=arc-20240116; t=1789200701; c=relaxed/simple;
+	bh=DIF6xAHMppk7q2fSs1Eo/5rGDDG6GPr7MGfTCeiE3Vc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Sy3ZCh8I2D79FQN+C6WZaCwA01Jh2aQdSkl66eT6RLF31uobAWBeV8vzVXzJbTE16b9yIn7fmR8tgXiIsT/Ze+xvJWAHYcB1WhQ0Yz7hFtjj3focMZqk3EQvWYrbaRRpwhJrxM6USKcS/aK2EVJ5YWHGqcz6am5Gc4LkOcUqSDE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k1x0I06+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jbvSw0HgV+n7La06nliHHTL2Ci9XFgYENufYkhPQjJnpbN4teNFvwrzTQQS6KIKSc+DT89zBMBdx2p8LjlfYOtQKMslT/CK4tLzzygrT3HCSXYLZk9PbV/eMS7YvZWKzxa69IcGAWHbijdT3Fa0QmSYhgS94WHRqGocak13kGxw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h06tMUip; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k1x0I06+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72BFD1F000FF;
-	Sat, 12 Sep 2026 08:11:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h06tMUip"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A67461F000FF;
+	Sat, 12 Sep 2026 08:11:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789200695;
-	bh=tO7f+L8Eoc0d1xAeAlsWHCtAHPiVqjLHMZ/wywRB0Qo=;
+	s=korg; t=1789200700;
+	bh=ujp2NtZqs4Jj6Z+gFD0lVR3Togle4n0nWzBVeLOP98o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=k1x0I06+KDDIwwJ5oZey84wkYClT61jB81TXBehFBducoq57+ar9hqBgj3V831vfS
-	 uSzKMNKaSVGNUVhfdXdUuRcmB7IsxOE0sJTBqKI4DZyWVmS+QJ0+NPrAH+85j/abVK
-	 R1Car6j47qtbmYG8qGzguY2cWzLE6jyI4KmH2bJQ=
+	b=h06tMUiplvvTq1aHoDfmE/pLZZuoUPFfqDP8eEKmdfgXp4Ic+QFev3jHtKP/t/dWp
+	 fuBpSK1E0Qk41i4Ih3ac4PALMUZctAkDqRKU2TWRCoabVvhKV7YL6pKXfqLlp33DPg
+	 pugvrNBkWk1PPcRN7hXxxp4ridASkx99t9QO+oeY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>,
+	Can Peng <pengcan@kylinos.cn>,
 	Frank Li <Frank.Li@nxp.com>,
 	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0843/1815] i3c: dw: avoid shift-out-of-bounds when DAA assigns no devices
-Date: Sat, 12 Sep 2026 08:43:13 +0200
-Message-ID: <20260912065708.708468865@linuxfoundation.org>
+Subject: [PATCH 7.2 0844/1815] i3c: master: adi: add OF module alias for autoloading
+Date: Sat, 12 Sep 2026 08:43:14 +0200
+Message-ID: <20260912065708.731235547@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,62 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Can Peng <pengcan@kylinos.cn>
 
-[ Upstream commit 038cf48b3170af26a70bf2dee4f8c3ac910f5176 ]
+[ Upstream commit a733069a1943f30922b90bde5eef3cb25b010f8b ]
 
-On an empty bus ENTDAA assigns nothing, so cmd->rx_len (the count
-of addresses left unassigned) equals master->maxdevs.
+The Analog Devices I3C master driver can be built as a module and uses
+adi_i3c_master_of_match as its OF match table, but the table is not
+exported for module alias generation.
 
-The GENMASK() index master->maxdevs - cmd->rx_len - 1 then becomes -1,
-which trips up UBSAN. This happens every time on boot on a Gigabyte/AMD
-server:
+Add the MODULE_DEVICE_TABLE(of, ...) entry so modpost can generate OF
+module aliases for OF based module autoloading.
 
-    UBSAN: shift-out-of-bounds in drivers/i3c/master/dw-i3c-master.c:905:12
-    shift exponent 64 is too large for 64-bit type 'long unsigned int'
-    CPU: 7 UID: 0 PID: 963 Comm: (udev-worker) Not tainted 7.0.11-200.fc44.x86_64 #1 PREEMPT(lazy)
-    Hardware name: Giga Computing E163-Z34-AAH1-000/MZ33-DC1-000, BIOS R32_F45 04/01/2026
-    Call Trace:
-     <TASK>
-     dump_stack_lvl+0x5d/0x80
-     ubsan_epilogue+0x5/0x2b
-     __ubsan_handle_shift_out_of_bounds.cold+0xd7/0x1ab
-     dw_i3c_master_daa.cold+0x1b/0x96 [dw_i3c_master]
-     i3c_master_do_daa_ext.part.0+0x3e/0xf0 [i3c]
-
-Skip the mask when no new device was assigned.
-
-Fixes: 1dd728f5d4d4 ("i3c: master: Add driver for Synopsys DesignWare IP")
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: a79ac2cdc91d ("i3c: master: Add driver for Analog Devices I3C Controller IP")
+Signed-off-by: Can Peng <pengcan@kylinos.cn>
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260630172904.2662160-1-kuba@kernel.org
+Link: https://patch.msgid.link/20260715012949.180245-1-pengcan@kylinos.cn
 Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i3c/master/dw-i3c-master.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/i3c/master/adi-i3c-master.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/i3c/master/dw-i3c-master.c b/drivers/i3c/master/dw-i3c-master.c
-index 2f8c0c4683e06..dc3b74822f8ea 100644
---- a/drivers/i3c/master/dw-i3c-master.c
-+++ b/drivers/i3c/master/dw-i3c-master.c
-@@ -888,7 +888,15 @@ static int dw_i3c_master_daa(struct i3c_master_controller *m)
- 	if (!wait_for_completion_timeout(&xfer->comp, XFER_TIMEOUT))
- 		dw_i3c_master_dequeue_xfer(master, xfer);
+diff --git a/drivers/i3c/master/adi-i3c-master.c b/drivers/i3c/master/adi-i3c-master.c
+index e29aac2869577..fb4cfc9026ccf 100644
+--- a/drivers/i3c/master/adi-i3c-master.c
++++ b/drivers/i3c/master/adi-i3c-master.c
+@@ -929,6 +929,7 @@ static const struct of_device_id adi_i3c_master_of_match[] = {
+ 	{ .compatible = "adi,i3c-master-v1" },
+ 	{}
+ };
++MODULE_DEVICE_TABLE(of, adi_i3c_master_of_match);
  
--	newdevs = GENMASK(master->maxdevs - cmd->rx_len - 1, 0);
-+	/*
-+	 * cmd->rx_len holds the number of addresses ENTDAA left unassigned.
-+	 * On an empty bus rx_len == maxdevs, so avoid GENMASK(-1, 0).
-+	 */
-+	if (cmd->rx_len >= master->maxdevs)
-+		newdevs = 0;
-+	else
-+		newdevs = GENMASK(master->maxdevs - cmd->rx_len - 1, 0);
-+
- 	newdevs &= ~olddevs;
- 
- 	for (pos = 0; pos < master->maxdevs; pos++) {
+ static int adi_i3c_master_probe(struct platform_device *pdev)
+ {
 -- 
 2.53.0
 
