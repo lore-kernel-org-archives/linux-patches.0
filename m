@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D1AA30ACF6;
-	Sat, 12 Sep 2026 15:14:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57EA51D7E5C;
+	Sat, 12 Sep 2026 15:14:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789226081; cv=none; b=HfCTVx3oJIpSEKq6+oJ90w/O29Thgyvu5QSyxnFGPUkhXlcbB823FmWBof2kzczZML6lTB0Y3a3Iv+jhYKE5+SDZZNCr6EnLSNSxvNBhW3jCIYYr6pJ5qDr7bL88agrcqIHQka8c/e2qtkedLZhWkNuZu83u192hUAuTMqW3jXA=
+	t=1789226086; cv=none; b=Lj4B72u1gelVEj32GiQB/256Y9IYG4WjevllRdco/7PtoLdmswkutlV891NQBG1L5T7MpUU38R4e4WTWTlIYlqM8C69eV0bdlWoyQGhXbxnIvHWwwJ4ip64iTJyzrz+k3qJk1Gr9M5lrOkpbY9u6r8Oi9Dd+X5VY5Ym0WlDq+p4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789226081; c=relaxed/simple;
-	bh=n7vyV7Zkz9m4fwKQqBX0mTEbGlYNavjUiSpzD7oQ0Vk=;
+	s=arc-20240116; t=1789226086; c=relaxed/simple;
+	bh=D+Wl4mwZSTwo5qF4LiNMXF5RNvhSTwxXYWl/e0ZnqUc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=FJ7RYeOnauwGcCZyI+59/JICMPyigQ21qAN7aqMUZ6jZMv6K+FhOrcUC9bufQDViZrRUcgYuTD2IQtWiBnkZielC3ICUr9Xs+C4bv//iBJdfWdkvJe24tOby8SK5Pk93CcsYNYCCgl+Pusm9FS0BV+FtbSIC/piuHkehrsuzft0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y2t60RrI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YPTCTUcGpghO9F6g2fg1vvIxdhUUBpNlIrFY/mPQj8wgyRYg+zyp8ZvrJqSOJQiheSLp9mDpNMK622NE18x/3/VYhwFOjUW3R7cAhOia5sY/vVB9ii5lQpThFTa19TG75wEXvB1pSBQ65U7KlSWQ6X8WaG9/n7hXRt0aIWVSFAI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sGYRrOky; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y2t60RrI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07CD71F000FF;
-	Sat, 12 Sep 2026 15:14:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sGYRrOky"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11C801F000FF;
+	Sat, 12 Sep 2026 15:14:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789226080;
-	bh=f9beFiziT+JUPom7R1lYOaLz9ypbmGGh+LToMb0eG8M=;
+	s=korg; t=1789226085;
+	bh=KN4UUDXp0NOi4aUtH4753KEWMS40iUoZfmiN6hAxplo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y2t60RrImxWwmDFJjGc5p4mfzR4D+/BTM+rZEwyEynE5SBFMSWFICw/Sd/mgJJ2HS
-	 XFmmyi0e/n800j/hwouklaUIk57EUmmB0NTWmxMdsnGJ+Eh2XJhd4/RBM0JamfjSPx
-	 GEQFYkNnPjYzacxC4hKR3jxGzH+EGxafJOCY+BOc=
+	b=sGYRrOkyTJlDIWraJv48brvf19JPPCPB2E/5cR97L3OE0i17BN7jX/P313Szy5LiD
+	 SY0i0PkRoTJkhxlVj+hQbLC55zabkWT2xNgLrniyUdFpi95imqSiptN/lkWW/HAc2a
+	 /EL0uwL/BoyZOpcvlHm66jpl5H2fP4GrdcRb2aI0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Ruoyu Wang <ruoyuw560@gmail.com>,
+	Alex Elder <elder@riscstar.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1330/1424] net: ipa: Convert to platform remove callback returning void
-Date: Sat, 12 Sep 2026 09:02:42 +0200
-Message-ID: <20260912065637.042545092@linuxfoundation.org>
+Subject: [PATCH 6.6 1331/1424] net: ipa: balance runtime PM reference on remove error
+Date: Sat, 12 Sep 2026 09:02:43 +0200
+Message-ID: <20260912065637.065100007@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -45,101 +46,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Ruoyu Wang <ruoyuw560@gmail.com>
 
-[ Upstream commit a92dbb9cdf0465d56c7e0fc5d674e6834f7c6a79 ]
+[ Upstream commit 6b9eaa61ff2df63c6eb35d5cd025e2cef0861d76 ]
 
-The .remove() callback for a platform driver returns an int which makes
-many driver authors wrongly assume it's possible to do error handling by
-returning an error code. However the value returned is ignored (apart
-from emitting a warning) and this typically results in resource leaks.
+ipa_remove() takes a runtime PM reference before accessing IPA hardware
+during teardown. If a concurrent modem start or stop keeps
+ipa_modem_stop() busy across both attempts, the callback intentionally
+returns without releasing the remaining resources because proceeding
+with teardown could crash. That return also skips the matching
+pm_runtime_put_noidle(), leaving the callback's usage-count reference
+held.
 
-To improve here there is a quest to make the remove callback return
-void. In the first step of this quest all drivers are converted to
-.remove_new(), which already returns void. Eventually after all drivers
-are converted, .remove_new() will be renamed to .remove().
+Drop only this runtime PM reference before returning.
+pm_runtime_put_noidle() does not request an idle transition, so the
+hardware and resources retained on this exceptional path remain
+untouched while the usage count stays balanced.
 
-Trivially convert this driver from always returning zero in the remove
-callback to the void returning variant.
+This issue was found by a static analysis checker and confirmed by
+manual source review.
 
-Link: https://lore.kernel.org/r/20231117095922.876489-3-u.kleine-koenig@pengutronix.de
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Link: https://lore.kernel.org/r/c43193b9a002e88da36b111bb44ce2973ecde722.1701713943.git.u.kleine-koenig@pengutronix.de
+Fixes: 923a6b698447 ("net: ipa: get clock in ipa_probe()")
+Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
+Reviewed-by: Alex Elder <elder@riscstar.com>
+Link: https://patch.msgid.link/20260815151737.3758320-1-ruoyuw560@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 6b9eaa61ff2d ("net: ipa: balance runtime PM reference on remove error")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ipa/ipa_main.c | 29 +++++++++++++----------------
- 1 file changed, 13 insertions(+), 16 deletions(-)
+ drivers/net/ipa/ipa_main.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/net/ipa/ipa_main.c b/drivers/net/ipa/ipa_main.c
-index f5924142021d2..196755bf60f87 100644
+index 196755bf60f87..fe569c8c14af8 100644
 --- a/drivers/net/ipa/ipa_main.c
 +++ b/drivers/net/ipa/ipa_main.c
-@@ -936,7 +936,7 @@ static int ipa_probe(struct platform_device *pdev)
- 	return ret;
- }
- 
--static int ipa_remove(struct platform_device *pdev)
-+static void ipa_remove(struct platform_device *pdev)
- {
- 	struct ipa *ipa = dev_get_drvdata(&pdev->dev);
- 	struct ipa_power *power = ipa->power;
-@@ -959,8 +959,16 @@ static int ipa_remove(struct platform_device *pdev)
- 			usleep_range(USEC_PER_MSEC, 2 * USEC_PER_MSEC);
- 			ret = ipa_modem_stop(ipa);
+@@ -961,12 +961,12 @@ static void ipa_remove(struct platform_device *pdev)
  		}
--		if (ret)
--			return ret;
-+		if (ret) {
-+			/*
-+			 * Not cleaning up here properly might also yield a
-+			 * crash later on. As the device is still unregistered
-+			 * in this case, this might even yield a crash later on.
-+			 */
-+			dev_err(dev, "Failed to stop modem (%pe), leaking resources\n",
-+				ERR_PTR(ret));
-+			return;
-+		}
+ 		if (ret) {
+ 			/*
+-			 * Not cleaning up here properly might also yield a
+-			 * crash later on. As the device is still unregistered
+-			 * in this case, this might even yield a crash later on.
++			 * Continuing teardown after failing to stop the modem
++			 * could crash, so leave the remaining resources allocated.
+ 			 */
+ 			dev_err(dev, "Failed to stop modem (%pe), leaking resources\n",
+ 				ERR_PTR(ret));
++			pm_runtime_put_noidle(dev);
+ 			return;
+ 		}
  
- 		ipa_teardown(ipa);
- 	}
-@@ -978,17 +986,6 @@ static int ipa_remove(struct platform_device *pdev)
- 	ipa_power_exit(power);
- 
- 	dev_info(dev, "IPA driver removed");
--
--	return 0;
--}
--
--static void ipa_shutdown(struct platform_device *pdev)
--{
--	int ret;
--
--	ret = ipa_remove(pdev);
--	if (ret)
--		dev_err(&pdev->dev, "shutdown: remove returned %d\n", ret);
- }
- 
- static const struct attribute_group *ipa_attribute_groups[] = {
-@@ -1001,8 +998,8 @@ static const struct attribute_group *ipa_attribute_groups[] = {
- 
- static struct platform_driver ipa_driver = {
- 	.probe		= ipa_probe,
--	.remove		= ipa_remove,
--	.shutdown	= ipa_shutdown,
-+	.remove_new	= ipa_remove,
-+	.shutdown	= ipa_remove,
- 	.driver	= {
- 		.name		= "ipa",
- 		.pm		= &ipa_pm_ops,
 -- 
 2.53.0
 
