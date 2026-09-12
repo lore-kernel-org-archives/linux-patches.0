@@ -1,45 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72087416842;
-	Sat, 12 Sep 2026 16:02:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA21D455162;
+	Sat, 12 Sep 2026 16:02:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789228969; cv=none; b=i54e/dDjPYnJ8EZaIKI8iKyNddd8BvA31144Ktuq9dwOmxv1QeInuNG8wD0aQWtIH7J+MBVdb1WPZBEKHrer+uGOnLvzLktNgW/tl0BnBgSbLVYIg4JbnPlVSszJnAxoaJuLJv0tqmcWytnXn3PNCeNhQDtnWMBprgxPWYwsGgs=
+	t=1789228974; cv=none; b=tps620iQVF1xLTM2eUfosi6NpbHBq4bRjwT6Own8nDRSRMbcEfhXl2xSDM5JGJQVjsAISdY/1kI/uvajhfCEbXvKNqWK7iJRV43uMsdn058wZXnh5I5ziaYhsm5I4YZ/9s43PlvUnnn++WeA67nHbPssDypCo+1k8Yhc4Brg1ZE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789228969; c=relaxed/simple;
-	bh=8SYgCkczK+fn8Bes2sCUTaSqr1UdctoG/dUEs1NWVsQ=;
+	s=arc-20240116; t=1789228974; c=relaxed/simple;
+	bh=dXuGhtoTpU6WsvyBeIjEUuKWDEjHLfm8JelO5kKCGfU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NO1O1EYyTuOKbqsZPIac5zbp3AYzgwJYRmNhS5SLIjlK1BzarPn4rjEK/PQDtbAzk25DTvy3njObtaU2GWtZTYVV3jsIH0c6N26vyJykBqAMWalnR0QoApEnFD7JJBofKCJ8S2UdrUR//BVoslVTeUS+J/gatq1Csty1aMP1La4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uhzmuwkj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hyAbV51eBofQz8tf7WNvte+BJO63i51OAio33kA1tygJ7xpwJJ3Z95aePm/S1Z2A5fo+whalj2lbCOaouxCQNRjGo6eBb9iw0117VBG3GH6TRx6xJ0tc+zwSyRQi1BF/tgb8GVgmv6ooXJXFgr/OJcLpAKthdiCbyfx/CzfdwvA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qjdQSi4z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uhzmuwkj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 297271F000FF;
-	Sat, 12 Sep 2026 16:02:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qjdQSi4z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13F3B1F000FF;
+	Sat, 12 Sep 2026 16:02:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789228968;
-	bh=lTCdta7tqo18hZwWAZEXcR+HjTit0+vU2+AYaLl5MMY=;
+	s=korg; t=1789228972;
+	bh=ZXT2LmfzRF3le85QQfl10JG4T3zO42oWiogTvyrnKoE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uhzmuwkjcR4Cn1VGp0NG1Iq762w0jhbauMQ2ioj6k7vfHjaP+Y29MNV2q7w5nR4TY
-	 7dulHslt6JTshFGE7CsDPWNvstl65P0xfgEOmNYhmLnUYgXEvVXMFwDejA0ZG65eqr
-	 HRNQXecsSV5uDbUpWAQqC9GkGvMpMsBspOgrsyFo=
+	b=qjdQSi4zdJlZND7ckl4zbgQgi9KIK/cjf13U+z7OpfFJHDxm5MGUx3oxjLnlsTpmn
+	 wBBncss6u8MsRfDXmlfo4WBlcLlS2EAL6ScMQ/GclnqA7G6KatBD9ej40/aov+shby
+	 9zShWNQBxlvTauPwaymBmoNtJoDoleriyzHlyaKs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Athira Rajeev <atrajeev@linux.vnet.ibm.com>,
-	Ian Rogers <irogers@google.com>,
-	Disha Goel <disgoel@linux.vnet.ibm.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Kajol Jain <kjain@linux.ibm.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Thomas Richter <tmricht@linux.ibm.com>,
 	Namhyung Kim <namhyung@kernel.org>,
-	linuxppc-dev@lists.ozlabs.org,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	gor@linux.ibm.com,
+	hca@linux.ibm.com,
+	sumanthk@linux.ibm.com,
+	svens@linux.ibm.com,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0493/1191] perf tests stat_bpf_counters: Fix usage of == to address shellcheck warning
-Date: Sat, 12 Sep 2026 08:53:41 +0200
-Message-ID: <20260912065559.304319358@linuxfoundation.org>
+Subject: [PATCH 6.1 0494/1191] perf test: raise limit to 20 percent for perf_stat_--bpf-counters_test
+Date: Sat, 12 Sep 2026 08:53:42 +0200
+Message-ID: <20260912065559.327253311@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -58,59 +55,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Athira Rajeev <atrajeev@linux.vnet.ibm.com>
+From: Thomas Richter <tmricht@linux.ibm.com>
 
-[ Upstream commit d10eedd87bb3e7678c3a0f77a5cfe7150a318ee2 ]
+[ Upstream commit 999eea92e8d7a1ffa83f7dc89c83d8ed1e746fa9 ]
 
-Running shellcheck on stat_bpf_counter.sh generates below
-warning:
+This test case often fails on s390 (about 2 out of 10) because the
+10% percent limit on the difference between --bpf-counters event counting
+and s390 hardware counting is more than 10% in all failure cases.
+Raise the limit to 20% on s390 and the test case succeeds.
 
-   In tests/shell/stat_bpf_counters.sh line 34:
-   if [ "$base_cycles" == "<not" ]; then
-                       ^-- SC3014 (warning): In POSIX sh, == in place of = is undefined.
-
-   In tests/shell/stat_bpf_counters.sh line 39:
-   if [ "$bpf_cycles" == "<not" ]; then
-                      ^-- SC3014 (warning): In POSIX sh, == in place of = is undefined.
-
-Fix this by using "=" instead of "==" to work for
-all shells.
-
-Signed-off-by: Athira Rajeev <atrajeev@linux.vnet.ibm.com>
-Acked-by: Ian Rogers <irogers@google.com>
-Cc: Disha Goel <disgoel@linux.vnet.ibm.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Kajol Jain <kjain@linux.ibm.com>
-Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: linuxppc-dev@lists.ozlabs.org
-Link: https://lore.kernel.org/r/20230709182800.53002-10-atrajeev@linux.vnet.ibm.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Signed-off-by: Thomas Richter <tmricht@linux.ibm.com>
+Acked-by: Namhyung Kim <namhyung@kernel.org>
+Cc: gor@linux.ibm.com
+Cc: hca@linux.ibm.com
+Cc: sumanthk@linux.ibm.com
+Cc: svens@linux.ibm.com
+Link: https://lore.kernel.org/r/20240108084009.3959211-1-tmricht@linux.ibm.com
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Stable-dep-of: b02027776ac5 ("perf tests: Fix flakiness in BPF counters test on hybrid systems")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/tests/shell/stat_bpf_counters.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tools/perf/tests/shell/stat_bpf_counters.sh | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
 diff --git a/tools/perf/tests/shell/stat_bpf_counters.sh b/tools/perf/tests/shell/stat_bpf_counters.sh
-index 6bf24b85294c7..a87bb2814b4c6 100755
+index a87bb2814b4c6..2d92098747746 100755
 --- a/tools/perf/tests/shell/stat_bpf_counters.sh
 +++ b/tools/perf/tests/shell/stat_bpf_counters.sh
-@@ -31,12 +31,12 @@ if ! perf stat -e cycles --bpf-counters true > /dev/null 2>&1; then
- fi
+@@ -4,19 +4,19 @@
  
- base_cycles=$(perf stat --no-big-num -e cycles -- perf bench sched messaging -g 1 -l 100 -t 2>&1 | awk '/cycles/ {print $1}')
--if [ "$base_cycles" == "<not" ]; then
-+if [ "$base_cycles" = "<not" ]; then
- 	echo "Skipping: cycles event not counted"
- 	exit 2
- fi
- bpf_cycles=$(perf stat --no-big-num --bpf-counters -e cycles -- perf bench sched messaging -g 1 -l 100 -t 2>&1 | awk '/cycles/ {print $1}')
--if [ "$bpf_cycles" == "<not" ]; then
-+if [ "$bpf_cycles" = "<not" ]; then
- 	echo "Failed: cycles not counted with --bpf-counters"
- 	exit 1
- fi
+ set -e
+ 
+-# check whether $2 is within +/- 10% of $1
++# check whether $2 is within +/- 20% of $1
+ compare_number()
+ {
+        first_num=$1
+        second_num=$2
+ 
+-       # upper bound is first_num * 110%
+-       upper=$(expr $first_num + $first_num / 10 )
+-       # lower bound is first_num * 90%
+-       lower=$(expr $first_num - $first_num / 10 )
++       # upper bound is first_num * 120%
++       upper=$(expr $first_num + $first_num / 5 )
++       # lower bound is first_num * 80%
++       lower=$(expr $first_num - $first_num / 5 )
+ 
+        if [ $second_num -gt $upper ] || [ $second_num -lt $lower ]; then
+-               echo "The difference between $first_num and $second_num are greater than 10%."
++               echo "The difference between $first_num and $second_num are greater than 20%."
+                exit 1
+        fi
+ }
 -- 
 2.53.0
 
