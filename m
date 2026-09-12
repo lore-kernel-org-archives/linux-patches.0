@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6911119E7F7;
-	Sat, 12 Sep 2026 07:15:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C4DF3C1F46;
+	Sat, 12 Sep 2026 07:15:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789197318; cv=none; b=HYTlHAWYPf/YgUBY04UvZg0h1awXmtSUT7iFtktlPvDFziMPpHkUAOPCvBY/9+JMUl0LKHVA1G7XkKejz8RaEg0MDlnpjvdBdmmbNEA9DYmOPW8aYLpLKp14OXsx9bqjUkEqB7yq5fW4wwLKc4vhoDxT2Of2Rd8qYW20ZeZS5kM=
+	t=1789197321; cv=none; b=Gkg0gzCb6F4JapcF+lyRvXccN+bOkSHg5OVTHZmrfXwQbyUeYEFMGiHzw62N0y/c39WPU+YjoMEmU0id3NzMli+WQzromVGSuOp/beq3m7wvS+s3ssWTNwjyqSwohf9AZZnLOA4t6mTiBRz3NO+nT/ERXbbx4ihr7Rkizx8DZ74=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789197318; c=relaxed/simple;
-	bh=h3t2Z4fF43eXPVZXcVoTfsNxCKbwfsZed9usvflMLGs=;
+	s=arc-20240116; t=1789197321; c=relaxed/simple;
+	bh=ZTmDr3BC3f94lwraJyPcYWhm5XXvC6wnm1DcgZUeUC4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W9fGv94FydM7NrKS14VwAGEJ5fTWVvbRURfiV+S9pm/i81lKRMremTvTbN/YheGna/AjxCZFHZIkXIkIZ82rz0q6lKABVDoQFHtatz+43P4BioQdF/5t//ribpBJvUlChb/OmC6udWjxrEedcUTEu5UupMqF0hIwXeciaZtu5To=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i3tIcWYi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UpQGIKq5BWLfZfrSm61k+tZFWoZOhMt9ZohYZgq1tmrPByASGr1zmX3CxCU3el7KO0EgxV12GSq1hAaDLNwzbi2kNeIdCArMpYQJsXvTAo6aOMOPpFw9S/igZoV30RAiIIR9n5awKeEwkx60C+djsGqJnN5MW41449raOPBQRaA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gLrxU5kB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i3tIcWYi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A4311F000FF;
-	Sat, 12 Sep 2026 07:15:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gLrxU5kB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5AB41F000FF;
+	Sat, 12 Sep 2026 07:15:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789197315;
-	bh=uS6zg1BkNhceBjnC8gvZ8eykBKU+jOwFb0H/l9US3GI=;
+	s=korg; t=1789197320;
+	bh=B4re2oJqVnacuAw79ABZuigI1NnRTKuUofdIGNE5nEQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=i3tIcWYit25OPbkvwFTjRXEztw1z2TedNuV4sojLSs/yaL2vhUkDotO6SStm/EykQ
-	 12S+MVzSEdgFC8D8ww77NiVXS1Z2qMvFFzB+067D+EX7OcRiIMCH3Kp1YGbXQt/7ut
-	 Myd+06Z5JpaJFJyNqsczyuNoKmaPLg2svwtuVP7w=
+	b=gLrxU5kBjDcCRMBeQ7h6hGKs1ZaOVmhit8R5+nLxvVx3g6HUVH0hNWkl+1T12O53Q
+	 2o6kJ9UoLm/ssXYzXsjUG/qSDLkSHqkl8FAOZauhK9OXXNvR8CmnM1toHLIeer8mCj
+	 8cPWen/QYyrT0bMdPr8ZEV8kMYF9pYFYYYAGxIzQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Andrii Nakryiko <andrii@kernel.org>,
 	Emil Tsalapatis <emil@etsalapatis.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0150/1815] tools/bpf/bpftool: Reset vmlinux BTF after map commands
-Date: Sat, 12 Sep 2026 08:31:40 +0200
-Message-ID: <20260912065652.537444926@linuxfoundation.org>
+Subject: [PATCH 7.2 0151/1815] tools/bpf/bpftool: Reset vmlinux BTF after struct_ops commands
+Date: Sat, 12 Sep 2026 08:31:41 +0200
+Message-ID: <20260912065652.559288273@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -54,74 +54,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Yichong Chen <chenyichong@uniontech.com>
 
-[ Upstream commit 66d7e39e49b0dd57610c9b63afc65b4d5690983b ]
+[ Upstream commit f7f540e19751face50c68bb9ce58460fcb46c293 ]
 
-get_map_kv_btf() caches the vmlinux BTF object when a map uses
-btf_vmlinux_value_type_id. map dump released that object when the
-command completed, but left the global pointer stale.
+struct_ops frees the global btf_vmlinux object.
 
-The same cached object can also be returned to print_key_value(), which
-freed it directly. That leaves btf_vmlinux dangling before the command
-cleanup path runs.
+In batch mode, a later struct_ops command can reuse stale state.
 
-Use free_map_kv_btf() for per-entry cleanup, and reset the cached
-btf_vmlinux pointer when the map command releases the object. This keeps
-batch mode from reusing a freed BTF object.
+Reset the BTF pointer and cached map info state.
 
-Fixes: 4e1ea33292ff ("bpftool: Support dumping a map with btf_vmlinux_value_type_id")
+Fixes: 65c93628599d ("bpftool: Add struct_ops support")
 Signed-off-by: Yichong Chen <chenyichong@uniontech.com>
 Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
 Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
-Link: https://lore.kernel.org/bpf/9072F43B3F74DF91+20260624025055.1574875-2-chenyichong@uniontech.com
+Link: https://lore.kernel.org/bpf/9F9017160ABE125F+20260624025055.1574875-3-chenyichong@uniontech.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/bpf/bpftool/map.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ tools/bpf/bpftool/struct_ops.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/tools/bpf/bpftool/map.c b/tools/bpf/bpftool/map.c
-index 71a45d96617ed..6b9649294ca1a 100644
---- a/tools/bpf/bpftool/map.c
-+++ b/tools/bpf/bpftool/map.c
-@@ -790,6 +790,12 @@ static int maps_have_btf(int *fds, int nb_fds)
+diff --git a/tools/bpf/bpftool/struct_ops.c b/tools/bpf/bpftool/struct_ops.c
+index aa43dead249cb..835e5e561f7fc 100644
+--- a/tools/bpf/bpftool/struct_ops.c
++++ b/tools/bpf/bpftool/struct_ops.c
+@@ -643,6 +643,10 @@ int do_struct_ops(int argc, char **argv)
+ 	err = cmd_select(cmds, argc, argv, do_help);
  
- static struct btf *btf_vmlinux;
- 
-+static void free_btf_vmlinux(void)
-+{
-+	btf__free(btf_vmlinux);
+ 	btf__free(btf_vmlinux);
 +	btf_vmlinux = NULL;
-+}
-+
- static int get_map_kv_btf(const struct bpf_map_info *info, struct btf **btf)
- {
- 	int err = 0;
-@@ -958,7 +964,7 @@ static int do_dump(int argc, char **argv)
- 		close(fds[i]);
- exit_free:
- 	free(fds);
--	btf__free(btf_vmlinux);
-+	free_btf_vmlinux();
++	map_info_type = NULL;
++	map_info_alloc_len = 0;
++	map_info_type_id = 0;
+ 
  	return err;
  }
- 
-@@ -1049,7 +1055,7 @@ static void print_key_value(struct bpf_map_info *info, void *key,
- 		btf_wtr = get_btf_writer();
- 		if (!btf_wtr) {
- 			p_info("failed to create json writer for btf. falling back to plain output");
--			btf__free(btf);
-+			free_map_kv_btf(btf);
- 			btf = NULL;
- 			print_entry_plain(info, key, value);
- 		} else {
-@@ -1065,7 +1071,7 @@ static void print_key_value(struct bpf_map_info *info, void *key,
- 	} else {
- 		print_entry_plain(info, key, value);
- 	}
--	btf__free(btf);
-+	free_map_kv_btf(btf);
- }
- 
- static int do_lookup(int argc, char **argv)
 -- 
 2.53.0
 
