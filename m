@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E5EF37CD21;
-	Sat, 12 Sep 2026 07:24:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F35CC1EB5FD;
+	Sat, 12 Sep 2026 07:24:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789197891; cv=none; b=XIJfyUbyX6hbPh47rXZt3iSpAre8ifQjh4pO7dcWZQ8bc7r51vVj9HLQL6WWjWQIjMURx1nE2+AitKzuAwyOZgdPPbPwKamw2O8EJFCCK1x8IJrctjo41vaCWURoV0QDcI1NUWNgJattbHWzK85ai+xsm+PXjrkgqPvsnYkMm9w=
+	t=1789197896; cv=none; b=rIMXNMzr2KU3Hg5N+n7WNGqfOTrvnxTC3SNoYgJx23nDstxUThTld9uIn83Nyuz/v9j9cNNS2nnMn/CbXpwDTn7t2BXNbI+MCfSShsZPqZpXHsYMWmmVJ1kJeXokgtEhWt2geLJaQ4iTX1r6Vh/02IHyiNqts3nnH76fn9VyuzU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789197891; c=relaxed/simple;
-	bh=jBD4EbouHLqLrpgsv1lhUpud2kH8ZvvgBjmHzu0zXAs=;
+	s=arc-20240116; t=1789197896; c=relaxed/simple;
+	bh=YA/ju1pacLkUXfCJERd2YAY0QVZdcVLYqDKl3T6VDh0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tXgGp8DqiKhdjeFmeLfpYGq5q0CtTzJRHBQVZQXwacOfYjHbrGVSrfWg+XoUWhkJhjHaHdG8zeuF0iBs4Byfw67Ys/f2C+XfC3mFcyU62GAfbj4TqrYsCFj39J1jVRA/mki7tKIJJFpC0cURqJujtMjTe/hs7BHoyrsD1mlsXe0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ywYQbK21; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CMM9UmnGNR/+YqmOzsYGtVcLccgzCm06sUtlCje6XfdB9VJBXyPjgsI1e/wF1YOIMj5mYD9M7zGjRlb52S0BJVPEE6vuoAOEcQFbXXtQIUDfMU2zdWoQyQQGFfUdQjXH56echvWoPH/ikaGohU8vyJwscfGY5+UfNNum5lLPBZU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=edZfCvCV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ywYQbK21"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17F9E1F000FF;
-	Sat, 12 Sep 2026 07:24:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="edZfCvCV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02DD01F000FF;
+	Sat, 12 Sep 2026 07:24:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789197890;
-	bh=5W8MN8Xjfi2HGfZMxaAjiHu9g/J/ajo+zCEUmxbADjE=;
+	s=korg; t=1789197894;
+	bh=UOeBcfVyAlyWDVEe3ir+VI2jfo3dfl396TFD2uMflc4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ywYQbK21PrwyUo5RY8Uh3IanF1LYZ2tS5TuM8P9tDd/LuZVbTiy7PLz+HyfQpOJEP
-	 ipbdLCNTnqe61F9iye05KXh3SCH5Rz1782VqoxXM1cR0eHay6OtagJygr/RCmhblP1
-	 56PaUFKqR1Uowfl0fI6l/+ET0lfVh0Stidl2TYXw=
+	b=edZfCvCVgIg+foI5Ar4hzi4ywtLl9JKNc1UV5yOApoRpuVSDWVZ7ALzHE/lD2noMv
+	 StNL0+h/z3wzut7bnSpqBDS8JJhm62V2vGGU8F0NHK3mU8/8LlBI9F2umbRQOKOc5U
+	 Ergu8msLWSn8qWMOSUToizloFIxRd9Lfk4Adc+TA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiawei Sun <abyssmystery@gmail.com>,
-	Ian Rogers <irogers@google.com>,
+	Tanushree Shah <tshah@linux.ibm.com>,
 	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0266/1815] perf record: fix poll storm when monitored threads exit
-Date: Sat, 12 Sep 2026 08:33:36 +0200
-Message-ID: <20260912065655.216252488@linuxfoundation.org>
+Subject: [PATCH 7.2 0267/1815] perf data convert json: Fix trace_seq memory leak in process_sample_event()
+Date: Sat, 12 Sep 2026 08:33:37 +0200
+Message-ID: <20260912065655.238925179@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,121 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiawei Sun <abyssmystery@gmail.com>
+From: Tanushree Shah <tshah@linux.ibm.com>
 
-[ Upstream commit f94563fac26912ef5a51fd16ae1d83f17b24b19d ]
+[ Upstream commit dcb87c88952046ef43cb5ba3a5b95eb29c362a16 ]
 
-When `perf record` samples a multi-threaded process and one of the
-target threads exits during the session, perf itself may start burning
-100% CPU (up to 200% across two cores) until the session ends.  A
-single dead fd is sufficient to trigger this; it can be reproduced with
-15 pthreads in a compute loop where one thread exits halfway through.
+Unlike the in-kernel trace_seq which uses a statically allocated buffer,
+the userspace traceevent library's trace_seq uses a dynamically allocated
+one. Therefore, every trace_seq_init() call must be paired with a
+trace_seq_destroy(), otherwise it produces a memory leak.
 
-The root cause is two independent instances of the same defect: dead
-perf_event ring-buffer fds are left in a pollfd array.  When a monitored
-thread exits, the kernel closes its ring-buffer fd, which then returns
-POLLHUP.  POSIX specifies that poll() always reports POLLHUP and POLLERR
-regardless of the events mask, so any dead fd left in the array makes
-poll() return immediately every time, spinning in a tight loop:
+In process_sample_event(), a trace_seq is initialized for each field when
+formatting tracepoint raw_data, but the matching trace_seq_destroy() is
+never called, leaking memory for every field of every sample processed.
 
-  3 seconds: 256,600 poll() calls, 0 context switches, only 21 write()
-  Woken up count goes from ~0 to 1,300,000+
+Add the missing trace_seq_destroy() after using the trace_seq buffer to
+properly free the allocated memory.
 
-There are two affected poll paths, fixed together here:
+Detected with Valgrind on a perf.data file with 2,729 tracepoint samples:
+  Before: definitely lost: 55,537,664 bytes in 13,559 blocks
+  After:  definitely lost: 0 bytes in 0 blocks
 
-1. Record main loop, via fdarray__filter() (tools/lib/api/fd/array.c).
-   Since commit 59b4412f27f1 ("libperf: Avoid internal moving of
-   fdarray fds") it only zeroes events/revents without setting fd to
-   -1, so poll() keeps reporting POLLHUP for the entry.  Setting
-   fd = -1 makes poll() skip it, matching the pattern already used in
-   the control-fd path at tools/perf/builtin-record.c:1673.
-
-2. BPF sideband thread, perf_evlist__poll_thread()
-   (tools/perf/util/sideband_evlist.c).  This thread polls for
-   PERF_RECORD_BPF_EVENT but, unlike the main record loop, never calls
-   fdarray__filter() at all, so dead fds accumulate forever and it
-   spins at 100% CPU:
-
-     Before fix: dJiffies=101, wchan=0 (running)
-     After fix:  dJiffies=0,   wchan=do_sys_poll (blocking)
-
-   Fixed by calling the existing evlist__filter_pollfd() helper after
-   evlist__poll(), mirroring the main record loop.  <poll.h> is
-   included for the POLLERR/POLLHUP macros (previously unused there).
-
-The two fixes compose: fix 1 makes poll() ignore dead fds (fd=-1); fix
-2 ensures the sideband thread actually performs the filtering.  Both
-paths are affected in all kernels from v5.1/v5.9 to the current master
-(7.2-rc1); the source of both functions is byte-identical across them.
-
-BPF event recording is preserved: after the fix, perf.data still
-contains PERF_RECORD_BPF_EVENT records and bpf_prog_info entries.
-
-Verified on perf 6.1.76, 6.6.143 and 7.2-rc1 with a minimal reproducer
-(Woken up 1,300,000 -> 3, CPU 100% -> 0%) and an A/B orthogonal test:
-keeping the unpatched binary but preventing the target thread from
-exiting also makes the storm disappear, confirming the trigger.
-
-Fixes: 59b4412f27f1 ("libperf: Avoid internal moving of fdarray fds")
-Fixes: 657ee5531903 ("perf evlist: Introduce side band thread")
-Signed-off-by: Jiawei Sun <abyssmystery@gmail.com>
-Reviewed-by: Ian Rogers <irogers@google.com>
+Fixes: 9d895e468429 ("perf data: Add tracepoint fields when converting to JSON")
+Signed-off-by: Tanushree Shah <tshah@linux.ibm.com>
 Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/api/fd/array.c          |  6 ++++++
- tools/perf/util/sideband_evlist.c | 14 ++++++++++++++
- 2 files changed, 20 insertions(+)
+ tools/perf/util/data-convert-json.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tools/lib/api/fd/array.c b/tools/lib/api/fd/array.c
-index f0f195207fca9..ffe8272af59b2 100644
---- a/tools/lib/api/fd/array.c
-+++ b/tools/lib/api/fd/array.c
-@@ -122,6 +122,12 @@ int fdarray__filter(struct fdarray *fda, short revents,
- 			if (entry_destructor)
- 				entry_destructor(fda, fd, arg);
+diff --git a/tools/perf/util/data-convert-json.c b/tools/perf/util/data-convert-json.c
+index 40412c3dbdb25..40888b7c44671 100644
+--- a/tools/perf/util/data-convert-json.c
++++ b/tools/perf/util/data-convert-json.c
+@@ -258,6 +258,7 @@ static int process_sample_event(const struct perf_tool *tool,
+ 				trace_seq_init(&s);
+ 				tep_print_field(&s, sample->raw_data, fields[i]);
+ 				output_json_key_string(out, true, 3, fields[i]->name, s.buffer);
++				trace_seq_destroy(&s);
  
-+			/*
-+			 * Set fd to -1 so poll() ignores this entry; otherwise
-+			 * POLLHUP/POLLERR are still reported for events=0 fds
-+			 * (POSIX: always checked), causing a poll storm.
-+			 */
-+			fda->entries[fd].fd = -1;
- 			fda->entries[fd].revents = fda->entries[fd].events = 0;
- 			continue;
- 		}
-diff --git a/tools/perf/util/sideband_evlist.c b/tools/perf/util/sideband_evlist.c
-index c07dacf3c54c5..ba043db6cedcb 100644
---- a/tools/perf/util/sideband_evlist.c
-+++ b/tools/perf/util/sideband_evlist.c
-@@ -8,6 +8,7 @@
- #include <perf/mmap.h>
- #include <linux/perf_event.h>
- #include <limits.h>
-+#include <poll.h>
- #include <pthread.h>
- #include <sched.h>
- #include <stdbool.h>
-@@ -55,6 +56,19 @@ static void *perf_evlist__poll_thread(void *arg)
- 		if (!draining)
- 			evlist__poll(evlist, 1000);
- 
-+		/*
-+		 * When a thread of the monitored target exits, its per-cpu
-+		 * ring-buffer fd is closed and starts returning POLLHUP. Such
-+		 * dead fds are never requested for POLLIN, but poll() reports
-+		 * POLLHUP/POLLERR unconditionally, so leaving them in the
-+		 * pollfd array makes the following evlist__poll() return
-+		 * immediately forever, spinning this thread at 100% CPU.
-+		 *
-+		 * Filter them out here, mirroring what the 'perf record' main
-+		 * loop does after fdarray__poll().
-+		 */
-+		evlist__filter_pollfd(evlist, POLLERR | POLLHUP);
-+
- 		for (i = 0; i < evlist__core(evlist)->nr_mmaps; i++) {
- 			struct mmap *map = &evlist__mmap(evlist)[i];
- 			union perf_event *event;
+ 				i++;
+ 			}
 -- 
 2.53.0
 
