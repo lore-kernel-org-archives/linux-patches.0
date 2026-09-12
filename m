@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1AAA47CC79;
-	Sat, 12 Sep 2026 12:48:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F81A47D475;
+	Sat, 12 Sep 2026 12:48:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789217331; cv=none; b=cuZ7DE4vObNqgjascPRSzVYbI4M1PlwxUAbVT9bt4Krxl10BpmpEvt9ql0nmBo3CzZqeIG7zjr04ij0reozgu0s6hqDZYz3HmrUsz5/RYznEpC8U9FPS4HC/weYlM/gsZtrntW35VFOo4yZvTTTTvGSxHHNyke5zZFz2hwG3lfA=
+	t=1789217337; cv=none; b=TvLErCcaFCdeL5CrxgGao8clWITiC9A4vh1Pz/QEdtHCQrSMr64i8HiggSCI2diExvehd1yQRquoWr9qEQebFLmsDJd7fsFUY+9EQF8IlTn4xEy2IKtGpahiniwNH2oAbJoApNi/lYR9AXiHydplACBvbD7t2rifeRuv4L1hQ84=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789217331; c=relaxed/simple;
-	bh=jnx7byexVp0g/uNZiOTuSt9+CtMoE9ISVgTiPDL7O/M=;
+	s=arc-20240116; t=1789217337; c=relaxed/simple;
+	bh=WQpcC1PB1PO5FCEDw62OgIB6/P4mEf6wPf605497CTs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=suqgj71GMHRaLX7ocbW+zOAlGXZjBr/0HF2OL3KGsGePdiC/ZBnTF9chx1D9Fnv/PpmN4gR+1UtoH4hu4CsQT3SlFXOlBA+DeO8qAwXh4y+NlFp01DL1tG/QyvguNajJR1wLZ6XNqSPBz9vrRvMBpZwjkSi4aDhZZtPtyxXtRj4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p5omeHWb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TNFhQcoaMdNQWBlzkXhOUWWfueqTATi+hB3ArdV+djzzgtGLWWnDH0O6GXEMdAcE2Hx3ueq0C3GRvqXB36Ee59TM1BNZQbwyvqTLM9YQZ5xuuiLr9LGkLU4ysxUiR6dm1PNpsxVgdGluGDA5z/zahP8Acw44PqfU1locs1WAfpM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uJ4rSUkq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p5omeHWb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D4951F000FF;
-	Sat, 12 Sep 2026 12:48:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uJ4rSUkq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D388B1F000FF;
+	Sat, 12 Sep 2026 12:48:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789217330;
-	bh=iuxQKCxy2fcAdc6r63DrseIU07MLSoOzps7LX3ojnKw=;
+	s=korg; t=1789217336;
+	bh=Jr7BSkr4/BaWJRP+JHbgqns0w2uhpFEmF90yk7+tkmk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=p5omeHWbHMn43W4TNncA0B8etZ/5FtREASF+KRbWPokzi6TBVOYKX3oBZIgXzQgw6
-	 iXXb+XklzN89BrA4L9Ml7ELgpve/rdbZgPrkZKd39jv4cuwmfVzZDPcZWEGSjRLxQn
-	 2dIpI5jxdmQozRNbwKbqg1uEwU1L9GcD8hhxsqBU=
+	b=uJ4rSUkqqAhktTPFcZtkEcRm3lW7FPXrKeK4sUwvsNy1Cl7zSKnf1sIlfafeY1aPs
+	 CX4+rdieRbeCeqjsGjMx58wh/egjcuBABXoolc3eAXDXq0foanZlCp2x2E5+TpTBO4
+	 w7j0Vi5vEq30CXQW7vYj7x+I5U42HmiHOpzbkqGs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jernej Skrabec <jernej.skrabec@gmail.com>,
 	Chen-Yu Tsai <wens@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0918/1376] drm/sun4i: crtc: Propagate layer initialization error
-Date: Sat, 12 Sep 2026 08:55:44 +0200
-Message-ID: <20260912065628.025434312@linuxfoundation.org>
+Subject: [PATCH 6.12 0919/1376] drm/sun4i: tcon: Drop remote endpoint reference
+Date: Sat, 12 Sep 2026 08:55:45 +0200
+Message-ID: <20260912065628.047493733@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -53,40 +53,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Jernej Skrabec <jernej.skrabec@gmail.com>
 
-[ Upstream commit 7061ff05ed4a3cf16e83f7e3ad09cbd212508a32 ]
+[ Upstream commit 3f77e4072630e2301efdbe521e7fca10311043ec ]
 
-sun4i_crtc_init() returns plain NULL when layer initialization fails,
-while all its other error paths return an error pointer. The only
-caller, sun4i_tcon_bind(), checks the result with IS_ERR() and happily
-continues with tcon->crtc set to NULL. sun4i_rgb_init() and
-sun4i_lvds_init() then dereference it in drm_crtc_mask(), which
-oopses.
+sun4i_tcon_of_get_id_from_port() never drops the reference taken by
+of_graph_get_remote_endpoint(). The function is not only called during
+bind, but also on every mode set through sun8i_r40_tcon_tv_set_mux(),
+so the leak accumulates.
 
-Return the error pointer instead.
-
-Fixes: dcd215801b02 ("drm/sun4i: Drop primary layer pointer from sun4i_drv")
+Fixes: e8d5bbf7f4c4 ("drm/sun4i: tcon: get TCON ID and matching engine with remote endpoint ID")
 Signed-off-by: Jernej Skrabec <jernej.skrabec@gmail.com>
 Acked-by: Chen-Yu Tsai <wens@kernel.org>
-Link: https://patch.msgid.link/b26a0d427d9dfae9c82e3ca90a67d24d8ece5a28.1785772659.git.jernej.skrabec@gmail.com
+Reviewed-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Link: https://patch.msgid.link/3f5ec952ad80cb51efebf2fe230df50259041a23.1785772659.git.jernej.skrabec@gmail.com
 Signed-off-by: Chen-Yu Tsai <wens@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/sun4i/sun4i_crtc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/sun4i/sun4i_tcon.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/sun4i/sun4i_crtc.c b/drivers/gpu/drm/sun4i/sun4i_crtc.c
-index 18e74047b0f56..3e90aeb68c480 100644
---- a/drivers/gpu/drm/sun4i/sun4i_crtc.c
-+++ b/drivers/gpu/drm/sun4i/sun4i_crtc.c
-@@ -208,7 +208,7 @@ struct sun4i_crtc *sun4i_crtc_init(struct drm_device *drm,
- 	planes = sunxi_engine_layers_init(drm, engine);
- 	if (IS_ERR(planes)) {
- 		dev_err(drm->dev, "Couldn't create the planes\n");
--		return NULL;
-+		return ERR_CAST(planes);
- 	}
+diff --git a/drivers/gpu/drm/sun4i/sun4i_tcon.c b/drivers/gpu/drm/sun4i/sun4i_tcon.c
+index 901e84de5aef9..ab4409dcbf302 100644
+--- a/drivers/gpu/drm/sun4i/sun4i_tcon.c
++++ b/drivers/gpu/drm/sun4i/sun4i_tcon.c
+@@ -972,6 +972,7 @@ static int sun4i_tcon_of_get_id_from_port(struct device_node *port)
+ 			continue;
  
- 	/* find primary and cursor planes for drm_crtc_init_with_planes */
+ 		ret = of_property_read_u32(remote, "reg", &reg);
++		of_node_put(remote);
+ 		if (ret)
+ 			continue;
+ 
 -- 
 2.53.0
 
