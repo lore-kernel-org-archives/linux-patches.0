@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C79BB17A30A;
-	Sat, 12 Sep 2026 13:50:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE4C4322C88;
+	Sat, 12 Sep 2026 13:51:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789221056; cv=none; b=JVI6OD35dxdSqBIW/8IgIGHWsCJ//bSyvQPLC3OXh8gB340dDeEeBKlEzmQWlb0lBfm9peaRcrGBWwfpGk+ZKfpfjpdoX6U6BPmrSBH+4CtxkMFqxe8NFUlO8QG7sA1Wo6SU2I2BL4Ai4FrkzHK/Bnj9IIhEIZ1kiiJ4cvrnU7g=
+	t=1789221061; cv=none; b=VEL9wcWrrWpeaw6N4qZDjdWlDmW96niHR5e4E8YFZNfBLiFJUMGlmpD8Y52iQgqm5aHXWmFcuibA510QITcnsPLRHZrqzlyQjUNUl6PMffzQK6kzpllpSws5roOXbOb3IyBfwpCKuu9BOt+u6JIZ7NehDijk+L9+74301jW5ZyQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789221056; c=relaxed/simple;
-	bh=uNaYakk7jN4Aj+xVTnJVpb5S7u8CmE+/CWgPdNiBodQ=;
+	s=arc-20240116; t=1789221061; c=relaxed/simple;
+	bh=t5hJaJhA60vrrwc4B+0wfo0uz5p3XOaKPh531adWmpk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QTlsWiOdRljX3mYkuiqfWU/pdjD+LiOu4V5y1porgFQA+KbElkNffT6IGnQrWH1Va/BKpFcDOk5INij805uQbycsVnD9ZrizMq+51TZTen++HK+EGLkk7zOJCAT3+bZXHayP0aDdunDGMri/6zMK+vESVixdeeV0t6TjoWuxzGg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ohh3BBar; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=M6zZaNLH7+Bi2nCOVc6MxrCdB9SRzBT+zbgWEUV68GVwbpTmy1TTzrrB0FH7q5xXi2iej0KhwWYfmwCS5ZjvLtlUpyz5c5sKnZtdOIw5J6znrUc7+nFc0/IOO7Bwg4pQI7oZ26GIaHVfoBZYgFpuxFCDVbc0BqmHNjGsJLOxAJg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LhCyrz4s; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ohh3BBar"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CAEA1F000FF;
-	Sat, 12 Sep 2026 13:50:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LhCyrz4s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0EBB1F000FF;
+	Sat, 12 Sep 2026 13:50:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789221055;
-	bh=7C+pA+CEXBCLhIKNU1gJN89RwL9AqWFkx9rMYbURsek=;
+	s=korg; t=1789221060;
+	bh=T+2k+QyaUg9vN9Rt+GDz18vKWcPHgE3sSpfWSMRZi7s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ohh3BBarFiOaTeErDA1ALlDjRC8olNsapobwwrSizDlj2PdyjmXWX48AfvY5hJgMH
-	 9wgG6V4SF/VKy4Im+doZlyP5pt93Njl4kS0/R5HocsT9ZYKeqOBIt9m5PXrWdqyfzO
-	 HdUsgnBVmXdIVe8JovieqSv6XlyPzm2+wOxb6wLg=
+	b=LhCyrz4sdf4R9MECzsYQ8Qq0YN6JoqOl0sHzZCm6OAPpj32cVqdXoRXaEbNpbo1HZ
+	 HhzRRZGMmFmqN1Qg+Kn9yWf/YuHEoCDIwbsyLIw7wAlSLDWa1/VJoE0Ig5k/Hzjp/q
+	 lQT8Xym3FBuS5OIZxmMu2HCyJKDGpx26SxuUiS80=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Seiji Nishikawa <snishika@redhat.com>,
-	Corey Minyard <corey@minyard.net>
-Subject: [PATCH 6.6 0252/1424] ipmi: si: Fix NULL pointer dereference after failed registration
-Date: Sat, 12 Sep 2026 08:44:44 +0200
-Message-ID: <20260912065612.923503736@linuxfoundation.org>
+	Maoyi Xie <maoyixie.tju@gmail.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>
+Subject: [PATCH 6.6 0299/1424] w1: ds28e17: reject an oversize length on an I2C block read
+Date: Sat, 12 Sep 2026 08:45:31 +0200
+Message-ID: <20260912065613.982291274@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -50,79 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Seiji Nishikawa <snishika@redhat.com>
+From: Maoyi Xie <maoyixie.tju@gmail.com>
 
-commit 6d920a75df9a83ab096b3cde7a643b656e4fdfeb upstream.
+commit 169ae5e65e5aaf213b6a578f6478a9fd2e523606 upstream.
 
-try_smi_init() allocates new_smi->si_sm and later calls
-ipmi_register_smi_mod(), which maps to ipmi_add_smi().
+w1_f19_i2c_master_transfer() is the master_xfer for the DS28E17 1-Wire
+to I2C bridge. On an I2C_M_RECV_LEN read, it takes the length from the
+device. The downstream slave puts a length byte in buf[0]. The driver
+then reads that many bytes into buf[1] with w1_f19_i2c_read().
 
-During ipmi_add_smi(), the upper IPMI message handler obtains the
-initial BMC device information through __bmc_get_device_id(). This can
-fail if the BMC does not return a successful response to the Get Device
-ID command.
+buf[0] is controlled by the device and can be 0 to 255.
+w1_f19_i2c_read() only rejects a zero count. The caller buffer is
+I2C_SMBUS_BLOCK_MAX + 2, so 34 bytes. A length above 32 makes the read
+run past it, up to about 222 bytes out of bounds.
 
-When the BMC returns a nonzero completion code, the device-id helper
-retries the command and eventually returns -EIO if the device ID still
-cannot be fetched.
+The SMBus core does check buf[0] against I2C_SMBUS_BLOCK_MAX. That
+check runs after master_xfer returns. By then the write is already
+done. i2c-algo-bit rejects an oversize length before it copies, and
+returns -EPROTO.
 
-On this failure path, ipmi_add_smi() logs "Unable to get the device id"
-and goes to out_err_started, where it invokes the lower driver's
-shutdown callback. try_smi_init() then logs the returned registration
-failure:
+Reject a length above I2C_SMBUS_BLOCK_MAX at both RECV_LEN sites, the
+same way i2c-algo-bit does.
 
- ipmi_si IPI0001:00: IPMI message handler: Unable to get the device id: -5
- ipmi_si IPI0001:00: Unable to register device: error -5
-
-For ipmi_si, the shutdown callback is shutdown_smi(), which cleans up
-the SI state machine data, frees smi_info->si_sm, and sets
-smi_info->si_sm and smi_info->intf to NULL.
-
-However, intf->in_shutdown is not set on this failed-registration
-rollback path. Therefore, the asynchronous redo_bmc_reg work item can
-still retry BMC device-id probing after the lower driver has already
-cleared its SI state machine data. In the observed case, that retry path
-reached start_next_msg(), which passed the NULL smi_info->si_sm pointer
-to the selected KCS state machine handler:
-
-BUG: unable to handle kernel NULL pointer dereference at 0000000000000000
-Workqueue: events redo_bmc_reg [ipmi_msghandler]
-RIP: start_kcs_transaction+0x2c/0x190 [ipmi_si]
-Call Trace:
- start_next_msg+0x50/0x80 [ipmi_si]
- check_start_timer_thread.part.9+0x3b/0x50 [ipmi_si]
- sender+0x69/0x80 [ipmi_si]
- i_ipmi_request+0x2ac/0x9d0 [ipmi_msghandler]
- __get_device_id.isra.29+0xaa/0x180 [ipmi_msghandler]
- __bmc_get_device_id+0xef/0x950 [ipmi_msghandler]
- redo_bmc_reg+0x52/0x60 [ipmi_msghandler]
- process_one_work+0x1a7/0x360
-
-Set intf->in_shutdown on the out_err_started path before invoking the
-lower driver's shutdown callback. This prevents later redo_bmc_reg
-retries from using an interface whose lower driver state has been
-cleaned up, and applies the same shutdown state to other IPMI interfaces
-as well.
-
-Fixes: 2512e40e48d2 ("ipmi: Rework SMI registration failure")
+Fixes: ebc4768ac497 ("add w1_ds28e17 driver for the DS28E17 Onewire to I2C master bridge")
 Cc: stable@vger.kernel.org
-Signed-off-by: Seiji Nishikawa <snishika@redhat.com>
-Message-ID: <20260630174348.1483814-1-snishika@redhat.com>
-Signed-off-by: Corey Minyard <corey@minyard.net>
+Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
+Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://patch.msgid.link/20260629121043.199487-1-maoyixie.tju@gmail.com
+Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/ipmi/ipmi_msghandler.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/w1/slaves/w1_ds28e17.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/char/ipmi/ipmi_msghandler.c
-+++ b/drivers/char/ipmi/ipmi_msghandler.c
-@@ -3693,6 +3693,7 @@ int ipmi_add_smi(struct module         *
-  out_err_bmc_reg:
- 	ipmi_bmc_unregister(intf);
-  out_err_started:
-+	intf->in_shutdown = true;
- 	if (intf->handlers->shutdown)
- 		intf->handlers->shutdown(intf->send_info);
-  out_err:
+--- a/drivers/w1/slaves/w1_ds28e17.c
++++ b/drivers/w1/slaves/w1_ds28e17.c
+@@ -389,6 +389,10 @@ static int w1_f19_i2c_master_transfer(st
+ 			 * another simple read in that case.
+ 			 */
+ 			if (msgs[i+1].flags & I2C_M_RECV_LEN) {
++				if (msgs[i+1].buf[0] > I2C_SMBUS_BLOCK_MAX) {
++					i = -EPROTO;
++					goto error;
++				}
+ 				result = w1_f19_i2c_read(sl, msgs[i+1].addr,
+ 					&(msgs[i+1].buf[1]), msgs[i+1].buf[0]);
+ 				if (result < 0) {
+@@ -415,6 +419,10 @@ static int w1_f19_i2c_master_transfer(st
+ 			 * another simple read in that case.
+ 			 */
+ 			if (msgs[i].flags & I2C_M_RECV_LEN) {
++				if (msgs[i].buf[0] > I2C_SMBUS_BLOCK_MAX) {
++					i = -EPROTO;
++					goto error;
++				}
+ 				result = w1_f19_i2c_read(sl,
+ 					msgs[i].addr,
+ 					&(msgs[i].buf[1]),
 
 
