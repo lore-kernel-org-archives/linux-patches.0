@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D92F545040B;
-	Sat, 12 Sep 2026 10:51:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F322A470E8E;
+	Sat, 12 Sep 2026 10:51:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789210299; cv=none; b=LiGVGldgueowW8bbL/nOUacfup/HRuDWWB55eGo5eKjVMnwEiCEO6gMvY0UcbGOWXpjbswk1TEEch7sJMkO2l241MwpFhCxpX5/NX15vPoP9opJcaYlQk8+KdHTjH4t78QxfBEfXK7mGz4SHb/4zSi1E/29nx/4d0GaaDzYEZy0=
+	t=1789210304; cv=none; b=rV238zWfz7Q1F7JKeZbQnzrwyhubJSiQt0wpcfZw20XEX9g7KXwXtY4O78nXI2zPkUbcbfp3zdSjtxBa2v6G//QHONQB7Ur+z0XAx4dZ/BA3zW7e9L09xJzVVqx/PiaSaGLZJnrKRgA65cMdFgqoTiFH9T96s68cWmiM1+zvg38=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789210299; c=relaxed/simple;
-	bh=1SxPR3SW2OiioTnYY5E2uJzg42laQYAyG0IwdZfo6n8=;
+	s=arc-20240116; t=1789210304; c=relaxed/simple;
+	bh=QHzp5MGBakwW6ScvuqMMTium0pJP88DMz9hjm6Gc3KU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oCW62JuFFI0a5dmnWpQa8ejxi8B0V3cuP0KP9S/rcoG5WXF3JzuURpuJc/CWj9QM92g0ZbhREuHsA8rDrTKa4CsFzEvYMEtPhNXri4Hvh5AWXF3NPgX8jXSXBQxGkpoeT4eCW7Des37kgV58XaGvCMZGAT0MjulKTXxjSJ3BDos=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LNv57HvH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GWMjJnXzGgZVer9L/QhYZDIIvasQnKNog5W1qq3pbPY3doMZeMVHeUi8LUBNtsAmyiZtdrH0FmHp+zY/n4iEydN33pM6iqpjCzcelENq9JbRpXkwEWGLO/GwIuIOt6/mhvJoM57dVDA3MFrU1hp4nDC6WLiwczhZmH+KEWiTeCA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ih8WZZw8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LNv57HvH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A19C1F000FF;
-	Sat, 12 Sep 2026 10:51:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ih8WZZw8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EA481F000FF;
+	Sat, 12 Sep 2026 10:51:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789210297;
-	bh=oJAH27PZSQYWsr6Z8CeVAm0DU0BrFmSuG0KjoJCsXuA=;
+	s=korg; t=1789210302;
+	bh=pxmylPW07VT64Iiyw1qYAhVyPsdm68PA6e/AaxiZS1A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LNv57HvHSoAQosM3t7HBZyMJrTvxfaB+TnF8OXjkQhTJAJ0b7rVwNVAm9jI6t61iO
-	 pI3E3QT1n9nGxNw7qoBSC7xyLlFO6++PkPOOqUNeT2LguuvZmMtZorGPqhvUdctLTQ
-	 66JE74A+BZX+hv2wKGi++Oigy4SHpn516n4JqjR8=
+	b=ih8WZZw86OabV4Zya6TFcqZCpWbwhsV4RQqhhlOtVktiW8SckPG+hODO7CloZpe+X
+	 +kayQX8vRmnCIpk5AAux3dmKzb3scH04/F59y7dcGU3ftX+yx/LFnUcYkaGJRzWH1v
+	 hRgMr3Layn6LjHOCF1PSyU9GQUNdKk27eCmPwFLI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Damien Le Moal <dlemoal@kernel.org>,
-	Swarna Prabhu <s.prabhu@samsung.com>,
-	Pankaj Raghav <p.raghav@samsung.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Yang Xiuwei <yangxiuwei@kylinos.cn>,
+	John Garry <john.g.garry@oracle.com>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0996/1518] scsi: sd: Enable sector size > PAGE_SIZE in SCSI sd driver
-Date: Sat, 12 Sep 2026 08:52:45 +0200
-Message-ID: <20260912065645.987208412@linuxfoundation.org>
+Subject: [PATCH 6.18 0997/1518] scsi: sd: Fix special_vec mempool leak when scsi_alloc_sgtables() fails
+Date: Sat, 12 Sep 2026 08:52:46 +0200
+Message-ID: <20260912065646.009683497@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -53,209 +53,137 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Swarna Prabhu <sw.prabhu6@gmail.com>
+From: Yang Xiuwei <yangxiuwei@kylinos.cn>
 
-[ Upstream commit 7179e626b76eb42f2529c6f6dd6ba88ea2445372 ]
+[ Upstream commit bb31844d88b77138b67aa20c3600203baff40140 ]
 
-The WRITE SAME(16) and WRITE SAME(10) SCSI commands use a page from a
-dedicated mempool (sd_page_pool) for their payload. This pool was
-initialized to allocate single pages, which was sufficient as long as the
-device sector size did not exceed the PAGE_SIZE.
+sd_set_special_bvec() allocates a special payload page for UNMAP and
+WRITE SAME commands. If scsi_alloc_sgtables() fails afterward in
+sd_setup_unmap_cmnd() or sd_setup_write_same{10,16}_cmnd(), the SCSI
+midlayer does not call uninit_command() because RQF_DONTPREP is not set
+yet, leaking the page.
 
-Given that block layer now supports block size upto 64KB, i.e. beyond
-PAGE_SIZE, initialize a large page pool in sd_probe() if a higher sector
-device is attached, ensuring atomicity. Adapt sd_set_special_bvec() to use
-large page pool when a higher sector size device is attached. Hence enable
-sector sizes > PAGE_SIZE in SCSI sd driver.
+Call sd_uninit_command() on error, and clear RQF_SPECIAL_PAYLOAD after
+freeing the page.
 
+Fixes: 81d926e8b552 ("sd: split sd_setup_discard_cmnd")
 Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Signed-off-by: Swarna Prabhu <s.prabhu@samsung.com>
-Co-developed-by: Pankaj Raghav <p.raghav@samsung.com>
-Signed-off-by: Pankaj Raghav <p.raghav@samsung.com>
-Link: https://patch.msgid.link/20260219043741.276729-2-sw.prabhu6@gmail.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Stable-dep-of: bb31844d88b7 ("scsi: sd: Fix special_vec mempool leak when scsi_alloc_sgtables() fails")
+Signed-off-by: Yang Xiuwei <yangxiuwei@kylinos.cn>
+Reviewed-by: John Garry <john.g.garry@oracle.com>
+Link: https://patch.msgid.link/20260707030333.22245-3-yangxiuwei@kylinos.cn
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/sd.c | 80 ++++++++++++++++++++++++++++++++++++++++-------
- 1 file changed, 68 insertions(+), 12 deletions(-)
+ drivers/scsi/sd.c | 47 ++++++++++++++++++++++++++++++-----------------
+ 1 file changed, 30 insertions(+), 17 deletions(-)
 
 diff --git a/drivers/scsi/sd.c b/drivers/scsi/sd.c
-index bf14b73a8744c..cb84f34d6cb10 100644
+index cb84f34d6cb10..d44cb802a2621 100644
 --- a/drivers/scsi/sd.c
 +++ b/drivers/scsi/sd.c
-@@ -109,8 +109,11 @@ static void sd_unlock_native_capacity(struct gendisk *disk);
- static void scsi_disk_release(struct device *cdev);
- 
- static DEFINE_IDA(sd_index_ida);
-+static DEFINE_MUTEX(sd_mutex_lock);
- 
- static mempool_t *sd_page_pool;
-+static mempool_t *sd_large_page_pool;
-+static atomic_t sd_large_page_pool_users = ATOMIC_INIT(0);
- static struct lock_class_key sd_bio_compl_lkclass;
- 
- static const char *sd_cache_types[] = {
-@@ -118,6 +121,33 @@ static const char *sd_cache_types[] = {
- 	"write back, no read (daft)"
- };
- 
-+static int sd_large_pool_create(void)
-+{
-+	mutex_lock(&sd_mutex_lock);
-+	if (!sd_large_page_pool) {
-+		sd_large_page_pool = mempool_create_page_pool(
-+			SD_MEMPOOL_SIZE, get_order(BLK_MAX_BLOCK_SIZE));
-+		if (!sd_large_page_pool) {
-+			printk(KERN_ERR "sd: can't create large page mempool\n");
-+			mutex_unlock(&sd_mutex_lock);
-+			return -ENOMEM;
-+		}
-+	}
-+	atomic_inc(&sd_large_page_pool_users);
-+	mutex_unlock(&sd_mutex_lock);
-+	return 0;
-+}
-+
-+static void sd_large_pool_destroy(void)
-+{
-+	mutex_lock(&sd_mutex_lock);
-+	if (atomic_dec_and_test(&sd_large_page_pool_users)) {
-+		mempool_destroy(sd_large_page_pool);
-+		sd_large_page_pool = NULL;
-+	}
-+	mutex_unlock(&sd_mutex_lock);
-+}
-+
- static void sd_disable_discard(struct scsi_disk *sdkp)
- {
- 	sdkp->provisioning_mode = SD_LBP_DISABLE;
-@@ -889,14 +919,24 @@ static unsigned char sd_setup_protect_cmnd(struct scsi_cmnd *scmd,
+@@ -919,6 +919,21 @@ static unsigned char sd_setup_protect_cmnd(struct scsi_cmnd *scmd,
  	return protect;
  }
  
--static void *sd_set_special_bvec(struct request *rq, unsigned int data_len)
-+static void *sd_set_special_bvec(struct scsi_cmnd *cmd, unsigned int data_len)
- {
- 	struct page *page;
++static void sd_uninit_command(struct scsi_cmnd *cmd)
++{
 +	struct request *rq = scsi_cmd_to_rq(cmd);
 +	struct scsi_device *sdp = cmd->device;
-+	unsigned sector_size = sdp->sector_size;
-+	unsigned int nr_pages = DIV_ROUND_UP(sector_size, PAGE_SIZE);
-+	int n;
- 
--	page = mempool_alloc(sd_page_pool, GFP_ATOMIC);
-+	if (sector_size > PAGE_SIZE)
-+		page = mempool_alloc(sd_large_page_pool, GFP_ATOMIC);
-+	else
-+		page = mempool_alloc(sd_page_pool, GFP_ATOMIC);
- 	if (!page)
- 		return NULL;
--	clear_highpage(page);
 +
-+	for (n = 0; n < nr_pages; n++)
-+		clear_highpage(page + n);
- 	bvec_set_page(&rq->special_vec, page, data_len, 0);
- 	rq->rq_flags |= RQF_SPECIAL_PAYLOAD;
- 	return bvec_virt(&rq->special_vec);
-@@ -912,7 +952,7 @@ static blk_status_t sd_setup_unmap_cmnd(struct scsi_cmnd *cmd)
- 	unsigned int data_len = 24;
- 	char *buf;
- 
--	buf = sd_set_special_bvec(rq, data_len);
-+	buf = sd_set_special_bvec(cmd, data_len);
- 	if (!buf)
- 		return BLK_STS_RESOURCE;
- 
-@@ -1001,7 +1041,7 @@ static blk_status_t sd_setup_write_same16_cmnd(struct scsi_cmnd *cmd,
- 	u32 nr_blocks = sectors_to_logical(sdp, blk_rq_sectors(rq));
- 	u32 data_len = sdp->sector_size;
- 
--	if (!sd_set_special_bvec(rq, data_len))
-+	if (!sd_set_special_bvec(cmd, data_len))
- 		return BLK_STS_RESOURCE;
- 
- 	cmd->cmd_len = 16;
-@@ -1028,7 +1068,7 @@ static blk_status_t sd_setup_write_same10_cmnd(struct scsi_cmnd *cmd,
- 	u32 nr_blocks = sectors_to_logical(sdp, blk_rq_sectors(rq));
- 	u32 data_len = sdp->sector_size;
- 
--	if (!sd_set_special_bvec(rq, data_len))
-+	if (!sd_set_special_bvec(cmd, data_len))
- 		return BLK_STS_RESOURCE;
- 
- 	cmd->cmd_len = 10;
-@@ -1474,9 +1514,15 @@ static blk_status_t sd_init_command(struct scsi_cmnd *cmd)
- static void sd_uninit_command(struct scsi_cmnd *SCpnt)
- {
- 	struct request *rq = scsi_cmd_to_rq(SCpnt);
-+	struct scsi_device *sdp = SCpnt->device;
-+	unsigned sector_size = sdp->sector_size;
- 
--	if (rq->rq_flags & RQF_SPECIAL_PAYLOAD)
--		mempool_free(rq->special_vec.bv_page, sd_page_pool);
-+	if (rq->rq_flags & RQF_SPECIAL_PAYLOAD) {
-+		if (sector_size > PAGE_SIZE)
-+			mempool_free(rq->special_vec.bv_page, sd_large_page_pool);
-+		else
-+			mempool_free(rq->special_vec.bv_page, sd_page_pool);
-+	}
- }
- 
- static bool sd_need_revalidate(struct gendisk *disk, struct scsi_disk *sdkp)
-@@ -2876,10 +2922,7 @@ sd_read_capacity(struct scsi_disk *sdkp, struct queue_limits *lim,
- 			  "assuming 512.\n");
- 	}
- 
--	if (sector_size != 512 &&
--	    sector_size != 1024 &&
--	    sector_size != 2048 &&
--	    sector_size != 4096) {
-+	if (blk_validate_block_size(sector_size)) {
- 		sd_printk(KERN_NOTICE, sdkp, "Unsupported sector size %d.\n",
- 			  sector_size);
- 		/*
-@@ -4001,6 +4044,12 @@ static int sd_probe(struct scsi_device *sdp)
- 	sdkp->max_medium_access_timeouts = SD_MAX_MEDIUM_TIMEOUTS;
- 
- 	sd_revalidate_disk(gd);
-+	if (sdp->sector_size > PAGE_SIZE) {
-+		if (sd_large_pool_create()) {
-+			error = -ENOMEM;
-+			goto out_free_index;
-+		}
-+	}
- 
- 	if (sdp->removable) {
- 		gd->flags |= GENHD_FL_REMOVABLE;
-@@ -4018,6 +4067,8 @@ static int sd_probe(struct scsi_device *sdp)
- 	if (error) {
- 		device_unregister(&sdkp->disk_dev);
- 		put_disk(gd);
-+		if (sdp->sector_size > PAGE_SIZE)
-+			sd_large_pool_destroy();
- 		goto out;
- 	}
- 
-@@ -4179,6 +4230,9 @@ static void sd_remove(struct scsi_device *sdp)
- 		sd_shutdown(sdp);
- 
- 	put_disk(sdkp->disk);
++	if (!(rq->rq_flags & RQF_SPECIAL_PAYLOAD))
++		return;
 +
 +	if (sdp->sector_size > PAGE_SIZE)
-+		sd_large_pool_destroy();
++		mempool_free(rq->special_vec.bv_page, sd_large_page_pool);
++	else
++		mempool_free(rq->special_vec.bv_page, sd_page_pool);
++	rq->rq_flags &= ~RQF_SPECIAL_PAYLOAD;
++}
++
+ static void *sd_set_special_bvec(struct scsi_cmnd *cmd, unsigned int data_len)
+ {
+ 	struct page *page;
+@@ -951,6 +966,7 @@ static blk_status_t sd_setup_unmap_cmnd(struct scsi_cmnd *cmd)
+ 	u32 nr_blocks = sectors_to_logical(sdp, blk_rq_sectors(rq));
+ 	unsigned int data_len = 24;
+ 	char *buf;
++	blk_status_t ret;
+ 
+ 	buf = sd_set_special_bvec(cmd, data_len);
+ 	if (!buf)
+@@ -969,7 +985,10 @@ static blk_status_t sd_setup_unmap_cmnd(struct scsi_cmnd *cmd)
+ 	cmd->transfersize = data_len;
+ 	rq->timeout = SD_TIMEOUT;
+ 
+-	return scsi_alloc_sgtables(cmd);
++	ret = scsi_alloc_sgtables(cmd);
++	if (ret != BLK_STS_OK)
++		sd_uninit_command(cmd);
++	return ret;
  }
  
- static inline bool sd_do_start_stop(struct scsi_device *sdev, bool runtime)
-@@ -4402,6 +4456,8 @@ static void __exit exit_sd(void)
+ static void sd_config_atomic(struct scsi_disk *sdkp, struct queue_limits *lim)
+@@ -1040,6 +1059,7 @@ static blk_status_t sd_setup_write_same16_cmnd(struct scsi_cmnd *cmd,
+ 	u64 lba = sectors_to_logical(sdp, blk_rq_pos(rq));
+ 	u32 nr_blocks = sectors_to_logical(sdp, blk_rq_sectors(rq));
+ 	u32 data_len = sdp->sector_size;
++	blk_status_t ret;
  
- 	scsi_unregister_driver(&sd_template);
- 	mempool_destroy(sd_page_pool);
-+	if (sd_large_page_pool)
-+		mempool_destroy(sd_large_page_pool);
+ 	if (!sd_set_special_bvec(cmd, data_len))
+ 		return BLK_STS_RESOURCE;
+@@ -1055,7 +1075,10 @@ static blk_status_t sd_setup_write_same16_cmnd(struct scsi_cmnd *cmd,
+ 	cmd->transfersize = data_len;
+ 	rq->timeout = unmap ? SD_TIMEOUT : SD_WRITE_SAME_TIMEOUT;
  
- 	class_unregister(&sd_disk_class);
+-	return scsi_alloc_sgtables(cmd);
++	ret = scsi_alloc_sgtables(cmd);
++	if (ret != BLK_STS_OK)
++		sd_uninit_command(cmd);
++	return ret;
+ }
  
+ static blk_status_t sd_setup_write_same10_cmnd(struct scsi_cmnd *cmd,
+@@ -1067,6 +1090,7 @@ static blk_status_t sd_setup_write_same10_cmnd(struct scsi_cmnd *cmd,
+ 	u64 lba = sectors_to_logical(sdp, blk_rq_pos(rq));
+ 	u32 nr_blocks = sectors_to_logical(sdp, blk_rq_sectors(rq));
+ 	u32 data_len = sdp->sector_size;
++	blk_status_t ret;
+ 
+ 	if (!sd_set_special_bvec(cmd, data_len))
+ 		return BLK_STS_RESOURCE;
+@@ -1082,7 +1106,10 @@ static blk_status_t sd_setup_write_same10_cmnd(struct scsi_cmnd *cmd,
+ 	cmd->transfersize = data_len;
+ 	rq->timeout = unmap ? SD_TIMEOUT : SD_WRITE_SAME_TIMEOUT;
+ 
+-	return scsi_alloc_sgtables(cmd);
++	ret = scsi_alloc_sgtables(cmd);
++	if (ret != BLK_STS_OK)
++		sd_uninit_command(cmd);
++	return ret;
+ }
+ 
+ static blk_status_t sd_setup_write_zeroes_cmnd(struct scsi_cmnd *cmd)
+@@ -1511,20 +1538,6 @@ static blk_status_t sd_init_command(struct scsi_cmnd *cmd)
+ 	}
+ }
+ 
+-static void sd_uninit_command(struct scsi_cmnd *SCpnt)
+-{
+-	struct request *rq = scsi_cmd_to_rq(SCpnt);
+-	struct scsi_device *sdp = SCpnt->device;
+-	unsigned sector_size = sdp->sector_size;
+-
+-	if (rq->rq_flags & RQF_SPECIAL_PAYLOAD) {
+-		if (sector_size > PAGE_SIZE)
+-			mempool_free(rq->special_vec.bv_page, sd_large_page_pool);
+-		else
+-			mempool_free(rq->special_vec.bv_page, sd_page_pool);
+-	}
+-}
+-
+ static bool sd_need_revalidate(struct gendisk *disk, struct scsi_disk *sdkp)
+ {
+ 	if (sdkp->device->removable || sdkp->write_prot) {
 -- 
 2.53.0
 
