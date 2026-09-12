@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 873F53546E4;
-	Sat, 12 Sep 2026 07:38:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B6E434252D;
+	Sat, 12 Sep 2026 07:38:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789198700; cv=none; b=LOzT0M3aUEiPwr5rk599zxfqugtKoC6pRY2ToGjttPF90qQWo/Z9jJNugY84Yx8P3gNEkrQzKW2/BBnFLqxNsSrhh3wqqRjQpWTHAXtv/8Wpga7s9uNE3LA07FYL4DaRtd0MsGy3kiqMexjFzGJWBuZZI29Ow804QDCvHc5Y17A=
+	t=1789198704; cv=none; b=LPqaRjUn2YWKXwgSEnRike4Un2MysDfC8BBRD1g2iZgSz5UNvUSlwtQ94JTUzWG3uR19PJRrmYf966RLuJ7kMvWBriwdRS2fGvAAe/tgfVnN1HyUKTBtV320BpNkOPhkavo4lfFZTgxRzqZvizTqvn0bW8jzSMO823BL7qu4Jbg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789198700; c=relaxed/simple;
-	bh=WWNxtJsEqsdwljPWjStsJ81is7M/8WITV17D7VX5aYI=;
+	s=arc-20240116; t=1789198704; c=relaxed/simple;
+	bh=/57t02Um6C8RjS4EY1GMa7GAd6/dtmBvPdJPjD554H0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=OFkW+usneUDrkd/F5bJT+0rmPvfyCpkLRVcmShqIEV3LCN7MMZrxWGoxmT4vHPy5eKNbpkgD7ZRrCY2I7YS9RK0trop4OVq66L9quxVAhiQbBaRAihZjO1KBRYqx6h/PfpH4TIcT78yGiozc/6MMA800tAG/ap3HQZRLaw227g8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M9RsqRVR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TEfLp7hIv/cWl1X+DVI6l3MP86XONv02gYekS7yKN6PYIwyfyaSlcDnZRnTlSOLtSMVDRKoVtT0CfTqcETtVGohuSZgmOaKUDc9q7jk0J2B7Kj6nYO+v5FzAOhiOHb7+cqjzJMUKhtYy3aNEeE5TtjkFM38tOMzO3ftWKOh+9/s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y9bWcf5C; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M9RsqRVR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E42691F000FF;
-	Sat, 12 Sep 2026 07:38:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y9bWcf5C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E96671F00898;
+	Sat, 12 Sep 2026 07:38:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789198698;
-	bh=jCL24fC2mpb3hXuW61ooV98aAIaQg+IUsm1mfhgJIdw=;
+	s=korg; t=1789198703;
+	bh=RykUp5duqPyp8yczbPiwt5S7Z4KAjGuOlhgSwHCe8MU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M9RsqRVRtd7t5/gPAUXMwDRwnXA/BHTtT4jIV0vDGkZB1Gm5QvO0KkDg5w2TSFqOU
-	 1cjtFYxeBlGtco5OpS3pFuEKHWipeUuA8HcE7BobuwAWbV0RuuTfAwQa0DJ1D1cJJ8
-	 P8Rm10WSWvCc8Z+O/qXxJFmWqahlKKAUo4JhOQQ8=
+	b=y9bWcf5CCaF26Zw/BjoH2iCtS0xVCqu0U6CKkK2LlQ/IAe84YpxANZYJFxsfJPTJf
+	 jJQ5vltMk7BeYa3TRe7ghaUipIxPm/20kLdVxIAU7YcMliseuy+XM87517rx2zKxoq
+	 +T2tE3c4wUjc04JlFdIkvMJkm7aV9j+u0NM01m5E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geoffrey McRae <geoffrey.mcrae@amd.com>,
+	Gleb Markov <markov.gi@npc-ksb.ru>,
+	George Zhang <george.zhang@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
-	Leo Li <sunpeng.li@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0434/1815] drm/amd/display: Fix DM I2C teardown race
-Date: Sat, 12 Sep 2026 08:36:24 +0200
-Message-ID: <20260912065659.083166496@linuxfoundation.org>
+Subject: [PATCH 7.2 0435/1815] drm/amd/display: Remove unused-but-set variable hubp from
+Date: Sat, 12 Sep 2026 08:36:25 +0200
+Message-ID: <20260912065659.105032457@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -47,109 +46,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Geoffrey McRae <geoffrey.mcrae@amd.com>
+From: Gleb Markov <markov.gi@npc-ksb.ru>
 
-[ Upstream commit e4ae30a12aa95942814957d8bc1ce7366a7107d7 ]
+[ Upstream commit b736792e5bd4a62f24e8d1e310bf4a75bfbeaaaa ]
 
-DM I2C adapters can remain visible to userspace while DM teardown is
-already in progress. A concurrent i2c-dev transfer may then enter
-amdgpu_dm_i2c_xfer() after the backing DM state has been torn down,
-leading to a NULL pointer dereference.
+The final check of hubp for NULL covers all remaining lines of code, since
+the value of hubp does not change until the end of the method.
 
-Create a devres group around the DM I2C adapter lifetime and release it
-at the start of dm_hw_fini(), before HPD, IRQ, and DM state are torn
-down. This removes the I2C adapters first and waits for in-flight users
-to drain before the structures used by amdgpu_dm_i2c_xfer() disappear.
+This check is redundant because hubp1 is already dereferenced within the
+macro.
+If it were NULL, the program would have already failed to proceed.
 
-This fixes a teardown ordering race seen during device removal:
+Remove the left part of the expression with the logical "&&".
 
-BUG: kernel NULL pointer dereference
-RIP: amdgpu_dm_i2c_xfer+0x122/0x1c0 [amdgpu]
-Call Trace:
-__i2c_transfer
-i2c_transfer
-i2cdev_ioctl_rdwr
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Fixes: 5b3eca05cfb0 ("drm/amd/display: Use devm_i2c_add_adapter to simplify i2c cleanup logic")
-Signed-off-by: Geoffrey McRae <geoffrey.mcrae@amd.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Reviewed-by: Leo Li <sunpeng.li@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Cc: Christian König <christian.koenig@amd.com>
+Fixes: be1fb44389ca ("drm/amd/display: Check null pointers before used").
+Signed-off-by: Gleb Markov <markov.gi@npc-ksb.ru>
+Reviewed-by: George Zhang <george.zhang@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 14 +++++++++++++-
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h |  7 +++++++
- 2 files changed, 20 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/dc/hubp/dcn10/dcn10_hubp.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-index 69d12377f6817..170c6b8d0a5f6 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -3284,17 +3284,26 @@ static int dm_hw_init(struct amdgpu_ip_block *ip_block)
- 	struct amdgpu_device *adev = ip_block->adev;
- 	int r;
+diff --git a/drivers/gpu/drm/amd/display/dc/hubp/dcn10/dcn10_hubp.c b/drivers/gpu/drm/amd/display/dc/hubp/dcn10/dcn10_hubp.c
+index 7c97a774141ff..d8eb5996b5774 100644
+--- a/drivers/gpu/drm/amd/display/dc/hubp/dcn10/dcn10_hubp.c
++++ b/drivers/gpu/drm/amd/display/dc/hubp/dcn10/dcn10_hubp.c
+@@ -772,8 +772,7 @@ bool hubp1_is_flip_pending(struct hubp *hubp)
+ 	if (flip_pending)
+ 		return true;
  
-+	adev->dm.i2c_devres_group = devres_open_group(adev->dev, NULL, GFP_KERNEL);
-+	if (!adev->dm.i2c_devres_group)
-+		return -ENOMEM;
-+
- 	/* Create DAL display manager */
- 	r = amdgpu_dm_init(adev);
- 	if (r)
--		return r;
-+		goto err_release_i2c;
- 	amdgpu_dm_hpd_init(adev);
+-	if (hubp &&
+-	    earliest_inuse_address.grph.addr.quad_part != hubp->request_address.grph.addr.quad_part)
++	if (earliest_inuse_address.grph.addr.quad_part != hubp->request_address.grph.addr.quad_part)
+ 		return true;
  
- 	r = dm_oem_i2c_hw_init(adev);
- 	if (r)
- 		drm_info(adev_to_drm(adev), "Failed to add OEM i2c bus\n");
- 
-+	devres_close_group(adev->dev, adev->dm.i2c_devres_group);
- 	return 0;
-+
-+err_release_i2c:
-+	devres_release_group(adev->dev, adev->dm.i2c_devres_group);
-+	return r;
- }
- 
- /**
-@@ -3309,6 +3318,9 @@ static int dm_hw_fini(struct amdgpu_ip_block *ip_block)
- {
- 	struct amdgpu_device *adev = ip_block->adev;
- 
-+	if (adev->dm.i2c_devres_group)
-+		devres_release_group(adev->dev, adev->dm.i2c_devres_group);
-+
- 	amdgpu_dm_hpd_fini(adev);
- 
- 	amdgpu_dm_irq_fini(adev);
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h
-index dd199e0b79226..797f944718108 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h
-@@ -688,6 +688,13 @@ struct amdgpu_display_manager {
- 	 */
- 	void *bb_from_dmub;
- 
-+	/**
-+	 * @i2c_devres_group:
-+	 *
-+	 * Devres group for DM i2c adapter lifetime management.
-+	 */
-+	void *i2c_devres_group;
-+
- 	/**
- 	 * @oem_i2c:
- 	 *
+ 	return false;
 -- 
 2.53.0
 
