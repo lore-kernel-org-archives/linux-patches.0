@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B03742CB1C;
-	Sat, 12 Sep 2026 15:32:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56F654BEE5E;
+	Sat, 12 Sep 2026 15:32:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789227151; cv=none; b=e/NCkMP0Hwv5xEbjra0IDZsZAHmBN5Cbmy5TvrX/HcNQoHiwO7QTOPszf6ij3x4j95mdwvncMTOi4gqAiYmuJn3dvjEIdw1Ua1bTEJshiFN17vGiiW281MDXqGAw5kxcnPsA/yl4GPeD+vidWl1l8iKsEPNXArZUN9L5hvz1Iyc=
+	t=1789227156; cv=none; b=bZ3DClTT12TsbJsiy+FEQwZbg1G19SdZCK9aezXYQAUsydNJgslf6HUlFFGBkuea6/GooZaYZruMGfIA3sYvX1tMr/LgP4LnfWpoZIdh7slyj5DWVopTi9mKHi3FwA+IuWTysHu8B7hTTmP+oLx+yC8XWYpIdL3Cc6P6ln+Ngqs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789227151; c=relaxed/simple;
-	bh=VCrd4BLhnJ/4szb03SKsBhg4gGySNlE+/xRU0A/yijY=;
+	s=arc-20240116; t=1789227156; c=relaxed/simple;
+	bh=FDLLxUdb5i0gYkpAr7z3tSLXBB6tqWrXlfLK8v26YaE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ixrCGiXGz3FNgwVh4lrQavKtcKydK+lPWm1in5PD6W8/gCm913Hqmulr01a097cXVofccSyDXvVP8hjsOGhHfd+ftXZJFO0S1Ajw15e/FTl6KZQb+D5z+sa18ZAFFXuoNfMiZV9sfmpeCbL8hMiTvLXBmkbyqLMmynPvRzktEJI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b/UIJ/85; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Z7Gslz0Nyve0KfBjqq4JVIPf78j8dXUtou4bdsx54D0WMezs5ZRCYjuugrchnzvJodwvd725zW/VbV+tYErkrBdqVbue8aptS6O7oOSGDmGvaEtvW80V7dfrs+ar3iEWay7w1YR4OYi10AACqpVB8YoC+8BatFM/POw0CZaimbo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eHUGLsm9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b/UIJ/85"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A3751F000FF;
-	Sat, 12 Sep 2026 15:32:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eHUGLsm9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 403ED1F000FF;
+	Sat, 12 Sep 2026 15:32:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789227150;
-	bh=yJ/4yTnGfJDxDH4MP62vhlPLRefZssGE+cF0/21gIYk=;
+	s=korg; t=1789227155;
+	bh=jsKxMb8F2c3JF9/gjs9f5OamFoIWDl1lnAIN8FbKa4E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=b/UIJ/85QK2m8y+KJFWxI+2NlFJq0I58hGf9LU3fLVxee9HdzRQIzKAtnJv3f+t7e
-	 hvmxLUjZeXCPnlIR7L/AUfr3LPLpWFhHOm0EkRcobYS4YBFwj7hkTJC+oo8lU6vIaX
-	 46/D5vXzElGSi+hYZADVjNOR0qqfHJWWPZQZyih4=
+	b=eHUGLsm9vxF2KZ4WvK+nsP7jQLILaubyYPDWlWRXzTygZsd+9h/+vC0BLoKyNIVLP
+	 +YTNNSNqqlT9meuL4eilWk1UPnyUv7nWEQNboyvqsQ4OmsZp2WdfT/LLTEZDuZ7EYX
+	 8driCZ2TEHI5v/gL9SKnDEri+bR2aTQ23azpAWf4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anup Vishwakarma <anup.vishwakarma@oss.qualcomm.com>,
-	Jassi Brar <jassisinghbrar@gmail.com>
-Subject: [PATCH 6.1 0122/1191] mailbox: qcom-ipcc: fix duplicate channel allocation across holes
-Date: Sat, 12 Sep 2026 08:47:30 +0200
-Message-ID: <20260912065550.930659675@linuxfoundation.org>
+	Ramesh Adhikari <adhikari.resume@gmail.com>,
+	Coly Li <colyli@fygo.io>,
+	Yu Kuai <yukuai@fygo.io>
+Subject: [PATCH 6.1 0123/1191] md: do overflow check for sb->bblog_shift in super_1_load()
+Date: Sat, 12 Sep 2026 08:47:31 +0200
+Message-ID: <20260912065550.955305547@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -50,65 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anup Vishwakarma <anup.vishwakarma@oss.qualcomm.com>
+From: Coly Li <colyli@fygo.io>
 
-commit 66c7bcad72430a02c860521031350b84b31ad9a8 upstream.
+commit 35d522bd32462afcf1981dab6da8a9256c26c1e0 upstream.
 
-The IPCC of_xlate() both scans for a free mailbox channel and checks
-for duplicate references to the same underlying IPCC channel. When a
-channel has been shutdown it might have left a hole in the channel
-list, which would terminate the search without considering duplicates
-later in the list.
+In super_1_load(), sb->bblog_shift is an __u8 type value loaded from on-
+disk superblock. It is used for badblocks API badblocks_set() by the
+following sequence,
 
-Continue the traversal of the channel list to detect and reject
-duplicates, while keeping track of the first free channel.
+ 1930   rdev->badblocks.shift = sb->bblog_shift;
+ 1931   for (i = 0 ; i < (sectors << (9-3)) ; i++, bbp++) {
+ 1932           u64 bb = le64_to_cpu(*bbp);
+ 1933           int count = bb & (0x3ff);
+ 1934           u64 sector = bb >> 10;
+ 1935           sector <<= sb->bblog_shift;
+ 1936           count <<= sb->bblog_shift;
+ 1937           if (bb + 1 == 0)
+ 1938                   break;
+ 1939           if (!badblocks_set(&rdev->badblocks, sector, count, 1))
+ 1940                   return -EINVAL;
+ 1941   }
 
-Fixes: d6fbfdbc1274 ("mailbox: qcom-ipcc: Fix IPCC mbox channel exhaustion")
+bb->bblog_shit is in range of 0-255, variable sector is 64bit width, for
+an invalid bb->bblog_shit, it is possible to make sector be overflowed
+by the following calculation,
+ 1935           sector <<= sb->bblog_shift;
+Then in turn when call badblocks_set() at line 1939 with the invalid
+rdev->badblocks.shift set at line 1930, may result an overflow inside
+_badblocks_clear() in block/badblocks.c.
+
+Although there are many places to call badblocks APIs, the non-zero
+shift value is only used in super_1_load(), other places always use 0 as
+the shift value. Therefore it is unnecessary to do a general shift value
+overflow check inside badblock API, and just check here as the caller.
+
+This may avoid unnecessary check, make the badblocks API code more simple
+and elegant.
+
+Fixes: 2699b67223ac ("md: load/store badblock list from v1.x metadata")
+Fixes: 1726c7746783 ("badblocks: improve badblocks_set() for multiple ranges handling")
 Cc: stable@vger.kernel.org
-Signed-off-by: Anup Vishwakarma <anup.vishwakarma@oss.qualcomm.com>
-Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
+Cc: Ramesh Adhikari <adhikari.resume@gmail.com>
+Signed-off-by: Coly Li <colyli@fygo.io>
+Reviewed-by: Yu Kuai <yukuai@fygo.io>
+Link: https://patch.msgid.link/20260720111400.2120834-1-colyli@fygo.io
+Signed-off-by: Yu Kuai <yukuai@fygo.io>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mailbox/qcom-ipcc.c |   17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+ drivers/md/md.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/mailbox/qcom-ipcc.c
-+++ b/drivers/mailbox/qcom-ipcc.c
-@@ -165,7 +165,7 @@ static struct mbox_chan *qcom_ipcc_mbox_
- {
- 	struct qcom_ipcc *ipcc = to_qcom_ipcc(mbox);
- 	struct qcom_ipcc_chan_info *mchan;
--	struct mbox_chan *chan;
-+	struct mbox_chan *chan, *free_chan = NULL;
- 	struct device *dev;
- 	int chan_id;
- 
-@@ -178,16 +178,21 @@ static struct mbox_chan *qcom_ipcc_mbox_
- 		chan = &ipcc->chans[chan_id];
- 		mchan = chan->con_priv;
- 
--		if (!mchan)
--			break;
--		else if (mchan->client_id == ph->args[0] &&
--				mchan->signal_id == ph->args[1])
-+		if (!mchan) {
-+			/* Keep scanning past holes to reject duplicate channel requests. */
-+			if (!free_chan)
-+				free_chan = chan;
-+		} else if (mchan->client_id == ph->args[0] &&
-+				mchan->signal_id == ph->args[1]) {
- 			return ERR_PTR(-EBUSY);
-+		}
- 	}
- 
--	if (chan_id >= mbox->num_chans)
-+	if (!free_chan)
- 		return ERR_PTR(-EBUSY);
- 
-+	chan = free_chan;
+--- a/drivers/md/md.c
++++ b/drivers/md/md.c
+@@ -1729,6 +1729,13 @@ static int super_1_load(struct md_rdev *
+ 				  rdev->bb_page, REQ_OP_READ, true))
+ 			return -EIO;
+ 		bbp = (__le64 *)page_address(rdev->bb_page);
 +
- 	mchan = devm_kzalloc(dev, sizeof(*mchan), GFP_KERNEL);
- 	if (!mchan)
- 		return ERR_PTR(-ENOMEM);
++		/* check for badblocks api. */
++		if (sb->bblog_shift >= BITS_PER_TYPE(sector_t)) {
++			pr_err("md: %pg: bogus bblog_shift %u for badblocks.\n",
++			       rdev->bdev, sb->bblog_shift);
++			return -EINVAL;
++		}
+ 		rdev->badblocks.shift = sb->bblog_shift;
+ 		for (i = 0 ; i < (sectors << (9-3)) ; i++, bbp++) {
+ 			u64 bb = le64_to_cpu(*bbp);
 
 
