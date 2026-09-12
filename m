@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 090882576E;
-	Sat, 12 Sep 2026 08:58:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04DF337F8B1;
+	Sat, 12 Sep 2026 08:58:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789203527; cv=none; b=UIgbODqc4UxFtFlm3cj0rErWgMZ0O1ysI9MiBFoWVTK25EVYXxX4QHIHHU+i2T4hFWrurzP8RvqR773EM8ClUYG+ASVeeiZQZptt3D48BfSAvZbUnwCzpyEEEUmnsdKntQ8cGBv6JVcYZczuiqwh9fQSkFdj74eNg2hwHrv/n/8=
+	t=1789203532; cv=none; b=O7pxGIMD75W3xms+kVMJCx/ufKq5IOcjlr1505W59ENx0DUJ5CmnjX88Txlk4XhNhWTIttIR98cbaTUzZ6o85UlMkBZLxOB6YfRW/EPJ28XukFY49m5jbMLIH4cKtVP9t1m5XLPYWACI/6ZsCXeuRu8SOmQuO1qXjfKqbAnWhuA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789203527; c=relaxed/simple;
-	bh=82jpb+97ZIXQ7nsQhkh/jI2cGSf4B9yYMuqpuK4fj2M=;
+	s=arc-20240116; t=1789203532; c=relaxed/simple;
+	bh=W3zkpBWfwiMJfEpygXYXETXwl3hQNqJpIYkk0CttuYg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RfQuYWfQq50ygwNfz1tnIn/q1bbH02bhytiRjY3H7MgsaeI/MrtfsjgsyfhacliM8RSLku3oLIXa6KmtCH3R3l8PYYE9D/VtP6Npii5ucEzYlEk/ecp6n0x+MmNJHbNWcIdgRMAddOrcyBnzNPsmVkOoh1L4WyJJ65uV4K0+ogA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MAKaPBtx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZttB0Kv4zfONzwJ+IgGtbkUjrW+qUxMRMDJU+g3XeQciY9HU/BBh1ZF/vzxyLQzsaMUWfZnqr0IvXsfWBa8v5MZ2MhejbVz3+nTozwqztHLxajPBT7ksJMzVmiEt1A4tfOqiNKXvCShRDpkNU6JE6SPJ9OKwom0vnIOvuEdocMs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1uvyVg4c; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MAKaPBtx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADFBA1F000FF;
-	Sat, 12 Sep 2026 08:58:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1uvyVg4c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFFED1F000FF;
+	Sat, 12 Sep 2026 08:58:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789203525;
-	bh=oSh+thI77YNdzeWLO32Xg35K+usHF9OF70S0OAjgBeY=;
+	s=korg; t=1789203530;
+	bh=fZHkxv0E+YshE2V36Sbe1KvQEPw616yyzEbmyCDzbIc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MAKaPBtxLHGZBEoK1e0qzmlOykwVDk/cYKf1h7tG68O3jaHrzK8tBhddXVxpB6MtS
-	 TIfVfbGDpEK0mavuLyiAx/VxUwTAvkgJ9kwgfJEW2PWHgvQsOtiq8HWUnceKdlkOv+
-	 8hlWVN/R5zZQqqUCNpWLeAzfvP8ptffgRq9CpX70=
+	b=1uvyVg4c2vP51xifyFWxMEqf6QCM+CAMRjRh/gTPM0Y9tqJHh8INXuz5bdzZtBBLQ
+	 3ORJOeYslT+dtcQvpYgy+rfmdH6DBl3Pq4q0inbsyX9NolsPOZD5GYdyf0QClYoogi
+	 CgAi3WI7sGBWc7K9TwOXsbUpmVL/UHjPcl6CtpNI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuho Choi <dbgh9129@gmail.com>,
-	Juergen Gross <jgross@suse.com>,
+	Peter Oberparleiter <oberpar@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1427/1815] xenbus: Unregister reboot notifier on init failure
-Date: Sat, 12 Sep 2026 08:52:57 +0200
-Message-ID: <20260912065722.518792727@linuxfoundation.org>
+Subject: [PATCH 7.2 1428/1815] s390/debug: Fix deadlock during unregister
+Date: Sat, 12 Sep 2026 08:52:58 +0200
+Message-ID: <20260912065722.542722384@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,63 +52,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuho Choi <dbgh9129@gmail.com>
+From: Peter Oberparleiter <oberpar@linux.ibm.com>
 
-[ Upstream commit d330fb86a7170f845123ae82d95df440fad9b707 ]
+[ Upstream commit 445c31ac638fd1af203d79bdf25fc0cb3149fbbc ]
 
-xs_init() registers xs_reboot_nb before initializing XenStore
-communications and starting xenwatch. If either operation fails, the
-notifier remains registered and a later initialization attempt can hit a
-duplicate registration.
+Unregistering an s390dbf debug area while one of the associated debugfs
+files is being written to can cause a deadlock:
 
-Check the notifier registration result and unregister it on every
-subsequent failure path.
+$ echo >.../vmur/level    $ rmmod vmur
+===================================================
+debugfs write
+debugfs_file_get()
+                          debug_unregister()
+                          mutex_lock(debug_mutex)
+                          debugfs_remove()
+                          wait for debugfs_file_put()
+debug_file_ops.write()
+debug_input()
+mutex_lock(debug_mutex) ==> DEADLOCK
 
-Fixes: fd8aa9095a95 ("xen: optimize xenbus driver for multiple concurrent xenstore accesses")
-Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
-Reviewed-by: Juergen Gross <jgross@suse.com>
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Message-ID: <20260807032326.940377-1-dbgh9129@gmail.com>
+Fix this by splitting debug_unregister() into an s390dbf and debugfs
+part, and running only the s390dbf part with debug_mutex locked.
+
+Fixes: 9372a82892c2 ("s390/debug: fix debug area life cycle")
+Signed-off-by: Peter Oberparleiter <oberpar@linux.ibm.com>
+Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/xen/xenbus/xenbus_xs.c | 16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ arch/s390/kernel/debug.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/xen/xenbus/xenbus_xs.c b/drivers/xen/xenbus/xenbus_xs.c
-index d1cca4acb6f33..62274d377b3aa 100644
---- a/drivers/xen/xenbus/xenbus_xs.c
-+++ b/drivers/xen/xenbus/xenbus_xs.c
-@@ -915,19 +915,27 @@ int xs_init(void)
- 	int err;
- 	struct task_struct *task;
+diff --git a/arch/s390/kernel/debug.c b/arch/s390/kernel/debug.c
+index dbf430f479bdf..14d2b58ad0930 100644
+--- a/arch/s390/kernel/debug.c
++++ b/arch/s390/kernel/debug.c
+@@ -993,8 +993,8 @@ void debug_register_static(debug_info_t *id, int pages_per_area, int nr_areas)
+ 	mutex_unlock(&debug_mutex);
+ }
  
--	register_reboot_notifier(&xs_reboot_nb);
-+	err = register_reboot_notifier(&xs_reboot_nb);
-+	if (err)
-+		return err;
+-/* Remove debugfs entries and remove from internal list. */
+-static void _debug_unregister(debug_info_t *id)
++/* Remove debugfs entries. */
++static void _debug_unregister_debugfs(debug_info_t *id)
+ {
+ 	int i;
  
- 	/* Initialize the shared memory rings to talk to xenstored */
- 	err = xb_init_comms();
- 	if (err)
--		return err;
-+		goto err_unregister_reboot_notifier;
- 
- 	task = kthread_run(xenwatch_thread, NULL, "xenwatch");
--	if (IS_ERR(task))
--		return PTR_ERR(task);
-+	if (IS_ERR(task)) {
-+		err = PTR_ERR(task);
-+		goto err_unregister_reboot_notifier;
-+	}
- 
- 	/* shutdown watches for kexec boot */
- 	xs_reset_watches();
- 
- 	return 0;
+@@ -1004,6 +1004,11 @@ static void _debug_unregister(debug_info_t *id)
+ 		debugfs_remove(id->debugfs_entries[i]);
+ 	}
+ 	debugfs_remove(id->debugfs_root_entry);
++}
 +
-+err_unregister_reboot_notifier:
-+	unregister_reboot_notifier(&xs_reboot_nb);
-+	return err;
++/* Remove from internal list. */
++static void _debug_unregister(debug_info_t *id)
++{
+ 	if (id == debug_area_first)
+ 		debug_area_first = id->next;
+ 	if (id == debug_area_last)
+@@ -1029,6 +1034,7 @@ void debug_unregister(debug_info_t *id)
+ 	mutex_lock(&debug_mutex);
+ 	_debug_unregister(id);
+ 	mutex_unlock(&debug_mutex);
++	_debug_unregister_debugfs(id);
+ 
+ 	debug_info_put(id);
  }
 -- 
 2.53.0
