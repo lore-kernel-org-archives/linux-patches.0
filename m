@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62B9A331A6E;
-	Sat, 12 Sep 2026 18:46:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B25E357D10;
+	Sat, 12 Sep 2026 18:46:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789238774; cv=none; b=U441YUDBDlbZf98A/2tQ/BFpSxZ19jcKwqp4Qg5E10xyPJl3IAeWGDSKyXl8QmtxfeQvzrxC9WUcretrkW2QoCYkBCw+aNXQidT5aldAOmIE8Hf/UTKyq79oEqMauQlyxep7pTrZIFvZDXJN81q+Q1QLAlqXLAzhq2dz/vnyMF4=
+	t=1789238779; cv=none; b=oPZ6+Ab8cC3T//cIln9CyZVIAoXBzq6FItVdk4lvqMpPZj+ZNpsyGYO9TgEVK9mqmUN60HwROIYnY6EMEDPe1JgbZYfNpAJSn0vHHBnoD2O8vERGBg2fBXKI+b499Um9IrFa03SkFZCATobqIiX/7uzDxy2Yq3tBrVRUOMuQnhU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789238774; c=relaxed/simple;
-	bh=BPXc3FhQ6zZXteEnL0+O3ZJzt5CQmukmUIGi/612nAY=;
+	s=arc-20240116; t=1789238779; c=relaxed/simple;
+	bh=SdhmCk76/zeS2XpN8HNnkbLzSVwYb30s2p0EKQ2KFbg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SP76y9M3dK10op7Q3FAm8GKylJhxWulNQWk7oo5pHckktGPbVq+JOxvLQUuEEMxO2S0nX9RW+qW5mrj65SiJ61JTIE+YNmlxCzN1URnTzK1W14yNSvPLjeS+eZ5boaInA6BbnoJ4V6eMSiwDnpApDO8tAg++ZO7PgswjvY0vqA0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W8BC5711; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YkEGaPEoW8/GPP5tR5WXEsTJyUSmUwbul5gGVAKCbF0za8WN2wUa0uY9JRd+Z8wQAXnU7fnuPEAZTLLVf3X0gW0b+dgYLmDM1iz57grc/yuOdeqgFx8Xv+ymoRtXJoSeUcAek/pmjY2Zaz3sUWIZ18fuPk58gfHdUR1IIi0b5Kk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wmKtUU2D; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W8BC5711"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67CD01F000FF;
-	Sat, 12 Sep 2026 18:46:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wmKtUU2D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 540511F000FF;
+	Sat, 12 Sep 2026 18:46:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789238773;
-	bh=nw7BYp5ydccuReDHSkybGEyjjGHXFh/W9uvNZc71z9I=;
+	s=korg; t=1789238778;
+	bh=VndSWKD8KpaM8SUE1peI1EEhY1WjAx7SwHsaKwlzGtw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W8BC5711y6ncypTGSwQu1fmTXjkAMAfMQ4KAeewhL5T5qh2YiDvBvZwrQfsy596PY
-	 ZGqskFhzFLyUaMSMCkczQ3Hzk//fjT5umXFcrg872Kc32nexTGU51hFo8wZlbKgXPO
-	 2gVcHHut5aBSbH8pakA56Zg+D6AG9mbVsG6JCwHI=
+	b=wmKtUU2DuOEmDH5VBy1EKwn5Dq0E9xbremOBi3jhz+QPFlx4POF2QoJEutkUiU+IG
+	 1+418L2gGy3aPAsRwHUNABSNMQcNcCqfg91JAJBiqijjWSqfYU3kJU75OzRro5hMTa
+	 EwcQoSBMfUrcIPscBafSUEit2ntFRYTGTVQugS3M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laxman Acharya Padhya <acharyalaxman8848@gmail.com>,
-	Linus Walleij <linusw@kernel.org>,
+	Kaixuan Li <kaixuan.li@ntu.edu.sg>,
+	Maoyi Xie <maoyixie.tju@gmail.com>,
+	Douglas Anderson <dianders@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 493/935] drm/panel: samsung-s6d16d0: Power off on prepare failure
-Date: Sat, 12 Sep 2026 08:58:43 +0200
-Message-ID: <20260912065538.124095609@linuxfoundation.org>
+Subject: [PATCH 5.15 529/935] drm/bridge: tc358767: clamp the reported AUX read size to the request
+Date: Sat, 12 Sep 2026 08:59:19 +0200
+Message-ID: <20260912065538.956058427@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -51,57 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Laxman Acharya Padhya <acharyalaxman8848@gmail.com>
+From: Maoyi Xie <maoyixie.tju@gmail.com>
 
-[ Upstream commit a9f950adfe2147318d75e7a6eab5e814851802ac ]
+[ Upstream commit ec6444a00c49e6c2b5e9a507272a28126677f9ee ]
 
-If enabling tearing mode or exiting sleep mode fails after the
-regulator is enabled, s6d16d0_prepare() returns without asserting
-reset or disabling the supply. Since the DRM panel core leaves the
-panel unprepared, a later unprepare call skips the driver callback
-and the supply remains enabled.
+tc_aux_transfer() clamps an AUX read to the payload limit:
 
-Assert reset and disable the supply before returning the DSI command error.
+	size_t size = min_t(size_t, DP_AUX_MAX_PAYLOAD_BYTES - 1, msg->size);
 
-Fixes: ac1d6d74884e ("drm/panel: Add driver for Samsung S6D16D0 panel")
-Assisted-by: Codex:gpt-5
-Signed-off-by: Laxman Acharya Padhya <acharyalaxman8848@gmail.com>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260704070648.35249-1-acharyalaxman8848@gmail.com
+After the transfer it replaces size with the byte count the controller
+reports in AUX_BYTES:
+
+	if (size)
+		size = FIELD_GET(AUX_BYTES, auxstatus);
+
+AUX_BYTES is GENMASK(15, 8), so it can be up to 255. Nothing clamps it
+back to the request. tc_aux_read_data() reads that many bytes into the
+16-byte auxrdata stack buffer, then copies them into the caller buffer. A
+reported count of 255 makes the read run to 256 bytes and overruns both.
+
+The controller should never report more than it was asked to transfer, so
+this is defense in depth rather than a live hole. The reported count is
+only lightly trusted, and the check is cheap. Clamp it back to the request,
+the same way ti-sn65dsi86 does in commit aca58eac52b8 ("drm/bridge:
+ti-sn65dsi86: Never store more than msg->size bytes in AUX xfer").
+
+Fixes: 12dfe7c4d9c5 ("drm/bridge: tc358767: Use reported AUX transfer size")
+Co-developed-by: Kaixuan Li <kaixuan.li@ntu.edu.sg>
+Signed-off-by: Kaixuan Li <kaixuan.li@ntu.edu.sg>
+Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://patch.msgid.link/20260701064440.1541418-1-maoyixie.tju@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panel/panel-samsung-s6d16d0.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/bridge/tc358767.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/panel/panel-samsung-s6d16d0.c b/drivers/gpu/drm/panel/panel-samsung-s6d16d0.c
-index 70560cac53a99..f8f98eb84c54c 100644
---- a/drivers/gpu/drm/panel/panel-samsung-s6d16d0.c
-+++ b/drivers/gpu/drm/panel/panel-samsung-s6d16d0.c
-@@ -89,16 +89,22 @@ static int s6d16d0_prepare(struct drm_panel *panel)
- 				       MIPI_DSI_DCS_TEAR_MODE_VBLANK);
- 	if (ret) {
- 		dev_err(s6->dev, "failed to enable vblank TE (%d)\n", ret);
--		return ret;
-+		goto err_power_off;
- 	}
- 	/* Exit sleep mode and power on */
- 	ret = mipi_dsi_dcs_exit_sleep_mode(dsi);
- 	if (ret) {
- 		dev_err(s6->dev, "failed to exit sleep mode (%d)\n", ret);
--		return ret;
-+		goto err_power_off;
- 	}
+diff --git a/drivers/gpu/drm/bridge/tc358767.c b/drivers/gpu/drm/bridge/tc358767.c
+index 64ded2dd0c08f..6125d2cb0e811 100644
+--- a/drivers/gpu/drm/bridge/tc358767.c
++++ b/drivers/gpu/drm/bridge/tc358767.c
+@@ -395,7 +395,7 @@ static ssize_t tc_aux_transfer(struct drm_dp_aux *aux,
+ 	 * address-only transfer
+ 	 */
+ 	if (size)
+-		size = FIELD_GET(AUX_BYTES, auxstatus);
++		size = min_t(size_t, size, FIELD_GET(AUX_BYTES, auxstatus));
+ 	msg->reply = FIELD_GET(AUX_STATUS, auxstatus);
  
- 	return 0;
-+
-+err_power_off:
-+	gpiod_set_value_cansleep(s6->reset_gpio, 1);
-+	regulator_disable(s6->supply);
-+
-+	return ret;
- }
- 
- static int s6d16d0_enable(struct drm_panel *panel)
+ 	switch (request) {
 -- 
 2.53.0
 
