@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBF623876C3;
-	Sat, 12 Sep 2026 10:52:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15BAD384232;
+	Sat, 12 Sep 2026 10:52:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789210331; cv=none; b=mpOvPT9V3tn3bWhfDUJLWWgoVn5TVNm/qP7RG6fDrXaj3MPrX9aCmxY84gdhdZaGHYWlfHfokl/iHqZCKOH7rGQLHf+w31wM3lcYWR5XyLv4ElF4j2K2UoALg+AggP0txaH6JZcToQvqX/stRdg8e478gSiIq630vhImVAitJMQ=
+	t=1789210337; cv=none; b=if2g4rUeySHfTvhoG8WOJMMjbxA1Bd60xd+2LUAhn2A0apXgc/y3K0V9KyqGnwOzHtf1Hi5YPKi/ZYxOO/UABuCn9/l8gMvfjDFwuN3hUfac2m8YGEHrn+s6gothYWm5p9YmXWI0EYmMQoFa5qV4OZezvVsn6Goyic8sA1a5GDU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789210331; c=relaxed/simple;
-	bh=6FX1NCyqa2Hw2fQh5Zhd510ulFdKcdHsFc2xNjwowgc=;
+	s=arc-20240116; t=1789210337; c=relaxed/simple;
+	bh=+eod9tt0r913cbRmcHAGPCjPM5hCo6vdI3P8s7aipc8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sKyRUteH44bevlKMeY6UxcibS0xE1hchcB+1VeRqp00BqiYNb2qgM1oNB1OgVXOlhttdabZUnknjqba25iCiHGXS2fVQc2xAyDzKjRb2r1spzXN/P2J2rjGIRVk4F/mrGEpsSNOKEAlYiiYXAZPsAij1sfdVIjMVunrI5uH7gGs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kv6Q1NQx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mkICH+lI4QOsCqAPeF2f+b0bdp1fvvdtqm6tlQ80c4MFdqcfyf/EE+GQxgFEyj2bKiPehQSGHodqH71Pi03j8CT4IyHp1e1l7Ow8N9ECu31JLGeTMqR7shtf1fo8dy6yVstTElenHkUYj6T/cewYs8bHu0OUfXcxg1mA2TG3A0I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vRVcYnnF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kv6Q1NQx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D023B1F000FF;
-	Sat, 12 Sep 2026 10:52:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vRVcYnnF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A10BD1F000FF;
+	Sat, 12 Sep 2026 10:52:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789210330;
-	bh=SZIixQ0ePtYtSwnyiUx/oqgBcst/KlX01cT+tWSetxs=;
+	s=korg; t=1789210335;
+	bh=aiItq8SzeRDyODEFqV7el32Lf9hoOAwcONYWfce1XX8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Kv6Q1NQxW9d1fzM7EYcXr9kQu9ub8QGdqTWTPmmQssokqBXch0w2yrNR6tfNHtkvk
-	 pAgcXLpm/3v5GE8D91zhF0hoWTkfaLtbyjHC1g85iChcJW/e+NACQaQlwZuvHiFjya
-	 Byk4L553j7ArnKOo2AKrvNZY23ydpnbCYvlmGVow=
+	b=vRVcYnnFf8wyTxvpz5lwPG0tz+5zDON0F/B9XkaGlVGtstJ93Ct9ZXzN+F9zEy85w
+	 LN2et/VVR9eWtmBrRBhaBN2CRO4rURzMyxWAT55F+x9Gef5XubsBRiE45H4PRKAJ3b
+	 fU9kQHCPM10fdsG+h/FmYnsXLi/8hxCdPyxY22hE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bruce Johnston <bjohnsto@redhat.com>,
-	Yu Kuai <yukuai@fygo.io>,
+	Boris Burkov <boris@bur.io>,
+	Yichong Chen <chenyichong@uniontech.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0967/1518] md/raid1: dont set array_frozen in raid1_takeover()
-Date: Sat, 12 Sep 2026 08:52:16 +0200
-Message-ID: <20260912065645.335679834@linuxfoundation.org>
+Subject: [PATCH 6.18 1003/1518] btrfs: retry verity reads for not-uptodate Merkle folios
+Date: Sat, 12 Sep 2026 08:52:52 +0200
+Message-ID: <20260912065646.143291161@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,50 +52,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bruce Johnston <bjohnsto@redhat.com>
+From: Yichong Chen <chenyichong@uniontech.com>
 
-[ Upstream commit dc386aa0ac0a3ec06c9a3ea9b064b073fb72a916 ]
+[ Upstream commit 8cc569696dac51fc62bb39b3b8f530582b916d29 ]
 
-raid1_takeover() sets conf->array_frozen = 1 on the newly-allocated
-r1conf and nothing ever clears it, so every I/O to the array stalls
-permanently once _wait_barrier() sees it stuck at 1.
+btrfs_read_merkle_tree_page() can find a folio in the mapping that is not
+uptodate.  After taking the folio lock, the current code treats that state
+as a read error and returns -EIO.
 
-This used to be harmless: level_store() called mddev_resume() right
-after pers->run(), which called raid1_quiesce(mddev, 0) and cleared
-array_frozen back to 0 regardless of what raid1_takeover() set. Commit
-b39f35ebe86d ("md: don't quiesce in mddev_suspend()") removed that
-quiesce(mddev, 0) call, so the pre-set now sticks.
+That can make a previous transient read failure sticky.  If the failed read
+left a not-uptodate folio in the mapping, later callers find that folio and
+fail instead of retrying the read.
 
-setup_conf() already zero-initializes the new r1conf via kzalloc, so
-just don't set array_frozen here.
+Keep the existing page-cache insertion and locking order, but retry the
+Merkle item read when a not-uptodate folio is found in the mapping.  Also
+unlock the folio when read_key_bytes() fails so that a later caller can
+lock it and retry the read.
 
-Same class of bug as commit 892da88d1cd9 ("md/raid10: fix a
-'conf->barrier' leakage in raid10_takeover()"), also triggered by
-b39f35ebe86d.
-
-Fixes: b39f35ebe86d ("md: don't quiesce in mddev_suspend()")
-Link: https://issues.redhat.com/browse/RHEL-191802
-Signed-off-by: Bruce Johnston <bjohnsto@redhat.com>
-Link: https://patch.msgid.link/20260803180240.1177104-1-bjohnsto@redhat.com
-Signed-off-by: Yu Kuai <yukuai@fygo.io>
+Fixes: 06ed09351b67 ("btrfs: convert btrfs_read_merkle_tree_page() to use a folio")
+Reviewed-by: Boris Burkov <boris@bur.io>
+Signed-off-by: Yichong Chen <chenyichong@uniontech.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid1.c | 2 --
- 1 file changed, 2 deletions(-)
+ fs/btrfs/verity.c | 16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/md/raid1.c b/drivers/md/raid1.c
-index 16625b79788bd..1370be1e5cc7b 100644
---- a/drivers/md/raid1.c
-+++ b/drivers/md/raid1.c
-@@ -3480,8 +3480,6 @@ static void *raid1_takeover(struct mddev *mddev)
- 		mddev->new_chunk_sectors = 0;
- 		conf = setup_conf(mddev);
- 		if (!IS_ERR(conf)) {
--			/* Array must appear to be quiesced */
--			conf->array_frozen = 1;
- 			mddev_clear_unsupported_flags(mddev,
- 				UNSUPPORTED_MDDEV_FLAGS);
+diff --git a/fs/btrfs/verity.c b/fs/btrfs/verity.c
+index 46bd8ca586708..7fc30a58d8d9c 100644
+--- a/fs/btrfs/verity.c
++++ b/fs/btrfs/verity.c
+@@ -731,14 +731,18 @@ static struct page *btrfs_read_merkle_tree_page(struct inode *inode,
+ 			goto out;
+ 
+ 		folio_lock(folio);
+-		/* If it's not uptodate after we have the lock, we got a read error. */
+-		if (!folio_test_uptodate(folio)) {
++		/* Folio was truncated from mapping. */
++		if (!folio->mapping) {
+ 			folio_unlock(folio);
+ 			folio_put(folio);
+-			return ERR_PTR(-EIO);
++			goto again;
  		}
+-		folio_unlock(folio);
+-		goto out;
++		/* Another reader may have filled the folio while we waited. */
++		if (folio_test_uptodate(folio)) {
++			folio_unlock(folio);
++			goto out;
++		}
++		goto read_folio;
+ 	}
+ 
+ 	folio = filemap_alloc_folio(mapping_gfp_constraint(inode->i_mapping, ~__GFP_FS),
+@@ -755,6 +759,7 @@ static struct page *btrfs_read_merkle_tree_page(struct inode *inode,
+ 		return ERR_PTR(ret);
+ 	}
+ 
++read_folio:
+ 	/*
+ 	 * Merkle item keys are indexed from byte 0 in the merkle tree.
+ 	 * They have the form:
+@@ -764,6 +769,7 @@ static struct page *btrfs_read_merkle_tree_page(struct inode *inode,
+ 	ret = read_key_bytes(BTRFS_I(inode), BTRFS_VERITY_MERKLE_ITEM_KEY, off,
+ 			     folio_address(folio), PAGE_SIZE, folio);
+ 	if (ret < 0) {
++		folio_unlock(folio);
+ 		folio_put(folio);
+ 		return ERR_PTR(ret);
+ 	}
 -- 
 2.53.0
 
