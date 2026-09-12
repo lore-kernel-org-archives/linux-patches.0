@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DEAC2F531B;
-	Sat, 12 Sep 2026 12:18:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4347D2E06E4;
+	Sat, 12 Sep 2026 12:19:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789215537; cv=none; b=YfKigiy/znSpPkC8RZ3RGKebZIzWGBJno1BFIqh2sa5w42t9pbXsS3Upg5+3idry6HTCKfJtTgW4ZH9QOzaD0YnBRrONXPAmq9n1mwNXfMO9AQv1ZTu+1omcumaurcqfeVjwQvI6atf/MU0WytLE5+Ajk2uAQLQaDHNnt7YvkWY=
+	t=1789215542; cv=none; b=q1y+0/aFaFFxkveutTJA+AIodQU4KJS/qIL61JZOHkimtoml9zJNVnCl5SZxBXRh3bhGaA661kb2YWm0FlVmrAKKaHmtgqNYzwbBbM+OYOqrRGJxm30yPEgPRRzXNwfnkEw/qiLw8n+f8qomhRF+hu8tCZTlTAmtYLcily70H3o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789215537; c=relaxed/simple;
-	bh=zg6m5ZE1wUAPecNGk2I2fIDxfxLNrVQoncS74Mv43Hc=;
+	s=arc-20240116; t=1789215542; c=relaxed/simple;
+	bh=B2iI5qKGtKTDRWzdNn0dPWoNyPGfofDIn2pV4bCENgc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mNZCgyZqsz2razlCAO90drTf7qgOWUAImxh0z+F9PGtzah40q+2Yp7G0vRqoInBehjLdXTz/i7GFmFda4r17IVOEu+763b1KD6aH/l8dPY67F1qoc3iMZMvbHEMHQxJZfkXzeUbB756vnuRstMiL843IAtuZCuMJ1VRZoSdywaE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S0Aeo1qY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Rxr/8srDbqnb4tAluJ70fHNn4RFqcN/yOKaEzDIIpRiqZ1mOGrkGOCl1QYE4Kb9Pv14y937axx4SavApDU8ix6h9WlJJuoy+5Xbxl0CILPL4tWqouJZj5y9z8sL70nAo5oivyQy3HpDZMDNwTR0B1NQEdrBjS++EQ3XACwIO0/I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EzsG8XFn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S0Aeo1qY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D2321F000FF;
-	Sat, 12 Sep 2026 12:18:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EzsG8XFn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E5031F000FF;
+	Sat, 12 Sep 2026 12:18:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789215536;
-	bh=yv7fhkALCqV8Wd1g+RLbHlmyZJ37Z5A52LKeQ20MKoc=;
+	s=korg; t=1789215541;
+	bh=M/nIns4di8vkOhUd5JTAN+hrv9euKRJ4HXd3kuJjS6A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S0Aeo1qY7YQB1WeI3EtnvlK2YQstyqk6fpgaHLlKQy9SfP6AVy4crTX9AdtbPqM/X
-	 L5/gDi8ND3P5HzqmHpOKNzbAMlAbBxIdEz4INnPhzHKTgQ2huW7UO9BJJU07hGM13w
-	 N5XXBABqy1v1pAozqbip16C/ia9ZnjavOlhxm7EQ=
+	b=EzsG8XFnkxeyB5PMfKl34PgRwKs5K0/bTjcTVcu0kxZyOVKxcVgN3xX/RhdNJflOP
+	 bFR4styJploPwv40R1D3jpVrCNASto4Tvw/nWKEltb9Ivz1DnOAz9lpJDE7Fw0/5Sn
+	 Mqsu+pkLagOy+W/AUL2t7C8DAFoSuP1R/W1NQLCg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Biren Pandya <birenpandya@gmail.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0551/1376] media: i2c: rdacm21: Fix missing media_entity_cleanup()
-Date: Sat, 12 Sep 2026 08:49:37 +0200
-Message-ID: <20260912065619.818852818@linuxfoundation.org>
+Subject: [PATCH 6.12 0516/1376] RDMA/hfi1: Initialize debugfs after probe completes
+Date: Sat, 12 Sep 2026 08:49:02 +0200
+Message-ID: <20260912065619.036935816@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,50 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Biren Pandya <birenpandya@gmail.com>
+From: Leon Romanovsky <leonro@nvidia.com>
 
-[ Upstream commit 04c053379c3a33460b581953c4f5b36de39439ac ]
+[ Upstream commit bb18740b302f6f222ce3d5a7e5c45a52a90df805 ]
 
-The driver misses calling media_entity_cleanup() on the probe error path
-and during remove, leaking resources if probe fails after entity
-initialization or when the driver is unloaded.
+Commit ed6f653fe430 ("staging/rdma/hfi1: Fix debugfs access race") moved
+debugfs creation after device initialization and IB registration so users
+cannot access the files before the driver is ready. However, init_one()
+still creates them before character device creation and SDMA startup
+finish.
 
-Fix this by adding media_entity_cleanup() to the rdacm21_probe() error
-handling path and to rdacm21_remove().
+Move hfi1_dbg_ibdev_init() to the end of the successful probe path,
+matching hfi1_dbg_ibdev_exit() as the first action in remove_one().
 
-Fixes: a59f853b3b4b ("media: i2c: Add driver for RDACM21 camera module")
-Signed-off-by: Biren Pandya <birenpandya@gmail.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Fixes: ed6f653fe430 ("staging/rdma/hfi1: Fix debugfs access race")
+Link: https://patch.msgid.link/20260708-clean-init-one-hfi1-v1-12-b9e9641268a5@nvidia.com
+Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/rdacm21.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/infiniband/hw/hfi1/init.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/media/i2c/rdacm21.c b/drivers/media/i2c/rdacm21.c
-index 3e22df36354fd..e8196ea737393 100644
---- a/drivers/media/i2c/rdacm21.c
-+++ b/drivers/media/i2c/rdacm21.c
-@@ -589,10 +589,12 @@ static int rdacm21_probe(struct i2c_client *client)
+diff --git a/drivers/infiniband/hw/hfi1/init.c b/drivers/infiniband/hw/hfi1/init.c
+index d6846d77f9479..c862ae679c9ca 100644
+--- a/drivers/infiniband/hw/hfi1/init.c
++++ b/drivers/infiniband/hw/hfi1/init.c
+@@ -1637,11 +1637,8 @@ static int init_one(struct pci_dev *pdev, const struct pci_device_id *ent)
+ 	 * we still create devices, so diags, etc. can be used
+ 	 * to determine cause of problem.
+ 	 */
+-	if (!initfail && !ret) {
++	if (!initfail && !ret)
+ 		dd->flags |= HFI1_INITTED;
+-		/* create debufs files after init and ib register */
+-		hfi1_dbg_ibdev_init(&dd->verbs_dev);
+-	}
  
- 	ret = v4l2_async_register_subdev(&dev->sd);
- 	if (ret)
--		goto error_free_ctrls;
-+		goto error_entity_cleanup;
+ 	j = hfi1_device_create(dd);
+ 	if (j)
+@@ -1674,6 +1671,7 @@ static int init_one(struct pci_dev *pdev, const struct pci_device_id *ent)
+ 	}
+ 
+ 	sdma_start(dd);
++	hfi1_dbg_ibdev_init(&dd->verbs_dev);
  
  	return 0;
- 
-+error_entity_cleanup:
-+	media_entity_cleanup(&dev->sd.entity);
- error_free_ctrls:
- 	v4l2_ctrl_handler_free(&dev->ctrls);
- error:
-@@ -607,6 +609,7 @@ static void rdacm21_remove(struct i2c_client *client)
- 
- 	v4l2_async_unregister_subdev(&dev->sd);
- 	v4l2_ctrl_handler_free(&dev->ctrls);
-+	media_entity_cleanup(&dev->sd.entity);
- 	i2c_unregister_device(dev->isp);
- }
  
 -- 
 2.53.0
