@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CC6D29D288;
-	Sat, 12 Sep 2026 19:54:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EF0238F93B;
+	Sat, 12 Sep 2026 19:55:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789242900; cv=none; b=NMArwGPY2en9BPc+bSL7Q8zf3WMczvjO7Uw+hXRyWK3DRbb3HB/i9Z6A7Vf9axohRHqkCRklxUkX7TF8ieQBk6xgTRqzCK9mF0MukaUzkaBTPj2TPJMjIi4nvz1goWyF9jPanaCGSsWGxKe2PXmnhQHLPiRMCyaxs1LWgVPVkRU=
+	t=1789242904; cv=none; b=op3768bDE/fe4ngLNjT8aBMIByGtquhX5YMIcskVlXbNxKL04zKwQTXGWuvqQrc/cw1DWwebHVeWRKyDylia5huE8vmqyx3eZQ/o/ccGZvcQv7k2CON3A2JGqGlsJDfTlbmD5zjOE20Z2Z69Hl4aK3t2gHJD8tOP2iwbIsK9OZs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789242900; c=relaxed/simple;
-	bh=EEH2rSu/o3SV7ygQXCo5VJ53FRZMMYYmeUxQH6nXTHc=;
+	s=arc-20240116; t=1789242904; c=relaxed/simple;
+	bh=HI7twBmxUxeuxT8cQzgt6D7Hci+Vg9j+V8zBixrwY/k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UQrpcxa3oqBcYwxsIvKVtRJd+UdKNm5U3R5wxPgP0lmvlyDD2qFGZ1NnNc/3F+TndpcHJzMsZ70sJfbo50M6YFwH3Aim77q6d5eKwcC3uWfwtVVHStpkBlT9kwG/rrAGxsHR438/U0P7xtckIv/u4DCXhuuPT0NVKGJzh/Ls5Y8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cvyzFnWD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=J3vpLMlYR1d21ZcwM9E2XYrmowcHKvzhroFcAFfE4cIWrlDhxWMhvuBBAFP3lpDCXVF8H9UXrdSkuu4NdHd9NlVHcacS6ruCGGORQquVZXeITtuyCujaIsUfoI0UTli1dp95Ezziqv+UThlIrWQnN2pLgp8cq2X/cN/Tm2F1o0E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EUNmydkE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cvyzFnWD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7800D1F000FF;
-	Sat, 12 Sep 2026 19:54:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EUNmydkE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 450961F000FF;
+	Sat, 12 Sep 2026 19:55:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789242899;
-	bh=9gwv1yJt7Mkcw6ljP0410KSsh+i81EpDrkUgfdAQyYE=;
+	s=korg; t=1789242901;
+	bh=7eRh5XPzjN15qleFmyHtRs48Jp0ayJoLtXgWJL1Ujgw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cvyzFnWDtFkAsI0SnuOmcZ1KsKC0rD9l+IjvMfP4uHEUrCEKVMXbVyqkBFfKIAnix
-	 VE8VZDJgk3jZIqkBcRYouRnc72Wv7KGeAtK/dqYLwLw+vCQodQg79TfFdD7OwVJ65/
-	 pupKPxvcrpLryTSw5BigPQJyt+EkOeBl3/USigFo=
+	b=EUNmydkEtR7B606V4q0OTipwGSANb+VhR/89eIH2h5fXdjrBFCVzlGSYL8Wihn6E+
+	 XVOSakHud5M1YVv7R9JSIl25xNmc/zZjAxImYfZ1llevGTivhURbFLx1hwddbiuhtF
+	 UD6v2ScDQLm8JKwNbVHEJFGjZ1GYnr5XrsdtVslY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 567/798] perf machine: Free scandir entries in guest kernel map creation
-Date: Sat, 12 Sep 2026 09:03:15 +0200
-Message-ID: <20260912065530.125055019@linuxfoundation.org>
+Subject: [PATCH 5.10 568/798] perf machine: Check snprintf truncation for guest kallsyms path
+Date: Sat, 12 Sep 2026 09:03:16 +0200
+Message-ID: <20260912065530.147417956@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -55,14 +55,15 @@ Content-Transfer-Encoding: 8bit
 
 From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit f53bf58dcd11e1cb088d3b91a035fef77062094b ]
+[ Upstream commit d04ef71492fad7230d474efe33d05f4c0563d409 ]
 
-machines__create_guest_kernel_maps() calls scandir() which allocates
-both the namelist array and each individual dirent entry.  The code
-frees the namelist array but not the individual entries, leaking memory
-proportional to the number of directories under guestmount.
+machines__create_guest_kernel_maps() builds the guest kallsyms path
+with snprintf() without checking the return value.  A truncated path
+could pass the access() check if a prefix directory happens to contain
+a file named "kallsyms", leading to the wrong file being used for
+symbol resolution.
 
-Free each namelist[i] after it is no longer needed.
+Check for truncation and skip the directory.
 
 Fixes: a1645ce12adb ("perf: 'perf kvm' tool for monitoring guest performance from host")
 Reported-by: sashiko-bot <sashiko-bot@kernel.org>
@@ -72,41 +73,31 @@ Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/machine.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ tools/perf/util/machine.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
 diff --git a/tools/perf/util/machine.c b/tools/perf/util/machine.c
-index 7cea0827a27bc..f0a3c454b7870 100644
+index f0a3c454b7870..218df09bbcbd6 100644
 --- a/tools/perf/util/machine.c
 +++ b/tools/perf/util/machine.c
-@@ -1227,6 +1227,7 @@ int machines__create_guest_kernel_maps(struct machines *machines)
- 		for (i = 0; i < items; i++) {
- 			if (!isdigit(namelist[i]->d_name[0])) {
- 				/* Filter out . and .. */
-+				free(namelist[i]);
+@@ -1240,9 +1240,14 @@ int machines__create_guest_kernel_maps(struct machines *machines)
+ 				free(namelist[i]);
  				continue;
  			}
- 			errno = 0;
-@@ -1236,6 +1237,7 @@ int machines__create_guest_kernel_maps(struct machines *machines)
- 			    (errno == ERANGE)) {
- 				pr_debug("invalid directory (%s). Skipping.\n",
- 					 namelist[i]->d_name);
+-			snprintf(path, sizeof(path), "%s/%s/proc/kallsyms",
+-				 symbol_conf.guestmount,
+-				 namelist[i]->d_name);
++			if (snprintf(path, sizeof(path), "%s/%s/proc/kallsyms",
++				     symbol_conf.guestmount,
++				     namelist[i]->d_name) >= (int)sizeof(path)) {
++				pr_debug("Guest kallsyms path too long for %s. Skipping.\n",
++					 namelist[i]->d_name);
 +				free(namelist[i]);
- 				continue;
- 			}
- 			snprintf(path, sizeof(path), "%s/%s/proc/kallsyms",
-@@ -1243,9 +1245,11 @@ int machines__create_guest_kernel_maps(struct machines *machines)
- 				 namelist[i]->d_name);
++				continue;
++			}
  			if (access(path, R_OK)) {
  				pr_debug("Can't access file %s\n", path);
-+				free(namelist[i]);
- 				continue;
- 			}
- 			machines__create_kernel_maps(machines, pid);
-+			free(namelist[i]);
- 		}
- 		free(namelist);
- 	}
+ 				free(namelist[i]);
 -- 
 2.53.0
 
