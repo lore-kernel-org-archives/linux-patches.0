@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61FDE353A75;
-	Sat, 12 Sep 2026 11:30:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FDF9400DF6;
+	Sat, 12 Sep 2026 11:30:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789212643; cv=none; b=K5azMBN5JjA+CwOolIQNKO1TEzZ+n8vKd2OtvexBZRE7AN0H9OEZ1lBQxiDSaBCPAobr7BhJBhKt6YKA0W9UfaEORIicugFLvzVw7V/Kq8O23HYLXN8DinTerqBV5gJcHIjje7fsghgXww0eA7MS/Ri5+2Wft+zYOM0kIKYIcJc=
+	t=1789212648; cv=none; b=kO5uijAq3/dr/Tnlt6VFpvKh1rap2FkgEzg0JCpxRkLpRZcwZVvTovX9JeVLqGGHwJJHEhSplqIvkn/ADFH8kpSSShXvNUupG9308HxyeuE4nTSsK1b5hGkiNuM77tfP/oOUl8YsNaukxkLiS1iiKLp9HIL9Qzg3E9IwmS3pdjs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789212643; c=relaxed/simple;
-	bh=PyROBf5fMGuBY39PlhPIsTWsgC1f9eHBrR/2aqB2Oz8=;
+	s=arc-20240116; t=1789212648; c=relaxed/simple;
+	bh=pzY+uvPPx8gBMld4Pyp7TijBuanI+HFRIGmrs1zd0tg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PPYGJijUWQxa9PM9xbhRfiAvuwReKLnnx6Oc/PlXlZfamC7OfHbd4U7BLNVxW/xUPi1saDRW1Wu/GcROL4exG8AEPlpjKvbOkGuJDdjlFD53CcgJ0Vw2fqfaQy4RzOiqT2NZzCxU4tnj75AS0MR/Y7JO5OiAIID3dzaW5/ebmu4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eJ2GsJsj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=me+8qzzGMESU+b7h7WMhidz/KGK6OEfJ2KznnYyjotIJGGezRawtPlNp9JYINW+YtqENM/XzyiD3Rzlni021DT5UYz1J/KI8ibdJzrcHaWCIN9zmFP3kOXqQm7guGB4Dlakc4vXqb28RjaJDdUh+Z90Gulj8XMCgMTUWs/1mZrU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PW9XaptW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eJ2GsJsj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3919F1F000FF;
-	Sat, 12 Sep 2026 11:30:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PW9XaptW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23DDE1F000FF;
+	Sat, 12 Sep 2026 11:30:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789212642;
-	bh=ojbjSd3Tne4JiA+xiSrbePwpVlex4ZEoBpXXhSJoOZk=;
+	s=korg; t=1789212647;
+	bh=tBRBqohQlEkjYvLayHpfzyKesPRwtRdFjl/jUa6of5Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eJ2GsJsjQWqsmvHQVYmfraGCkgoxCgZxPfyoF5TCKdkTVfxhCNRsh3v+CyXPUlNAp
-	 s+Favs3c/Vuatnkiyz2yOBOmIdAFfaf6WUCeMsCTqaTO/miyQ0NQ87taqkLbWt4Ngf
-	 4wbpJ66HIY5eSHu/8V4GQRzYsJH6G5zmH24/YSjA=
+	b=PW9XaptWU1WUAK9l21su10+rPTp6PCisBQ9LRVw6D/yz46akRNhUkzPX0LJuTb/VU
+	 Pjs3Hny6mz3BXGxhlIE/5421SPQOuSw1Inowe0/stRQY+xBgBUvBbDISl9QMMAi8md
+	 2bHIAbEVfKJeHIQ5P6LwU9oCAPg3dBPnGgfBgp0c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kang Yang <kang.yang@airoha.com>,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Felix Fietkau <nbd@nbd.name>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1479/1518] wifi: mt76: npu: Add missing rx_token_size initialization
-Date: Sat, 12 Sep 2026 09:00:48 +0200
-Message-ID: <20260912065657.015718267@linuxfoundation.org>
+	Johannes Berg <johannes.berg@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	stable+noautosel@kernel.org
+Subject: [PATCH 6.18 1480/1518] wifi: nl80211: fix UHR capability validation
+Date: Sat, 12 Sep 2026 09:00:49 +0200
+Message-ID: <20260912065657.038576266@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,34 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Bianconi <lorenzo@kernel.org>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 25e3203a2192f2b0d697b2410126bad87e62d4f0 ]
+[ Upstream commit a140826caa2c14aa5a9a6990e514c5edbdb7eafd ]
 
-Add missing rx_token_size initialization for NPU offloading.
+The ieee80211_uhr_capa_size_ok() function returns a boolean,
+but we need an error code here. Fix that.
 
-Fixes: 7fb554b1b623 ("wifi: mt76: Introduce the NPU generic layer")
-Tested-by: Kang Yang <kang.yang@airoha.com>
-Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Link: https://patch.msgid.link/20260122-mt76-npu-eagle-offload-v2-2-2374614c0de6@kernel.org
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Fixes: 072e6f7f416f ("wifi: cfg80211: add initial UHR support")
+Cc: <stable+noautosel@kernel.org> # no drivers with UHR yet
+Link: https://patch.msgid.link/20260303151614.e87ea9995be5.Ie164040a51855a3e548f05f0d0291d7d7993c7ee@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/npu.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/wireless/nl80211.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/npu.c b/drivers/net/wireless/mediatek/mt76/npu.c
-index ec36975f6dc94..9679237f73984 100644
---- a/drivers/net/wireless/mediatek/mt76/npu.c
-+++ b/drivers/net/wireless/mediatek/mt76/npu.c
-@@ -457,6 +457,7 @@ int mt76_npu_init(struct mt76_dev *dev, phys_addr_t phy_addr, int type)
- 	dev->mmio.npu_type = type;
- 	/* NPU offloading requires HW-RRO for RX packet reordering. */
- 	dev->hwrro_mode = MT76_HWRRO_V3_1;
-+	dev->rx_token_size = 32768;
+diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
+index 9c713094f0a5c..232218818ed7f 100644
+--- a/net/wireless/nl80211.c
++++ b/net/wireless/nl80211.c
+@@ -372,7 +372,9 @@ static int validate_uhr_capa(const struct nlattr *attr,
+ 	const u8 *data = nla_data(attr);
+ 	unsigned int len = nla_len(attr);
  
- 	rcu_assign_pointer(dev->mmio.npu, npu);
- 	rcu_assign_pointer(dev->mmio.ppe_dev, ppe_dev);
+-	return ieee80211_uhr_capa_size_ok(data, len, false);
++	if (!ieee80211_uhr_capa_size_ok(data, len, false))
++		return -EINVAL;
++	return 0;
+ }
+ 
+ static int validate_uhr_operation(const struct nlattr *attr,
 -- 
 2.53.0
 
