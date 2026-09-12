@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 449FE31B10B;
-	Sat, 12 Sep 2026 13:56:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F08DF3254B8;
+	Sat, 12 Sep 2026 13:56:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789221407; cv=none; b=mp5yb/RygdyqISH9ay27WiBWOZY6cTUh4ezs5OccK+Fl2cJb7wuQJ/5pmASwrQTthOR/pdq0ycA11P4JN8b1HCBKZ1wl9d2gT3JPwuipvZxEERYUnAsrI/PZDuOpBcLj9g7H9f9ROXMSe8Q0k2XO9xHG2qJ5hxh2+dmMdSbDuGk=
+	t=1789221412; cv=none; b=cPJ7ApzMDLTcPTpj9bVAwslBM3uwIwtpQu/oDfhB5z57Q/dOwfEquCFkL5/AP+aQfnTM8tw8QDnuXscMWXYiRVCOj6HZMJj6CDbvb/4JcehQ+RsxFXwLKzPZEpsO+sSQGvDxSuBqnBO60oYqvc9xgO7k86Q11KwkjTz44CicSDM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789221407; c=relaxed/simple;
-	bh=I1I5dN1C0M/LLRIkgm6X28ABD4o4Dm6K/pqBxB/DZc4=;
+	s=arc-20240116; t=1789221412; c=relaxed/simple;
+	bh=lXXWXW7+wJB9aHUX0GnH855qBeGPecdrCZK6TdfmsuM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ulZ6+gPdvY+bW27uDZkwwpHieEVNHWPwYeyV2FkDGjASMImAxzDvXVgIuchdhrdMXebMRkUKz8RJX5J64syQw6aK0+P9cC2evtP4deMZJM+xU3FVwwf0ooXVUjBavZHRn0BIKqpOtEXE9OiXdsc6e/I0EeW2p7zK4B/nYsnVNNM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xfnat8SP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iqpfQOpkmOEAhmHgMaZaZjSd/qp9d18U0pXnG6V/VVBpBJ57oySURmQSscS/K47Wi8UrmdnfyIaNaTNqI1fOFZBigXQwjq3GOf0RuVU33J2V9mGASaj4qpkbOtVdQatXzSB/Nul6zJ1JmroxiLEdHSZXeduiUVA9r0tok8bNAQo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zr8jPgwh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xfnat8SP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F00C21F000FF;
-	Sat, 12 Sep 2026 13:56:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zr8jPgwh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 194D91F000FF;
+	Sat, 12 Sep 2026 13:56:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789221406;
-	bh=r1eVd8UkpFPbt/trOX871Jdv4TXwphUq+I1fkkxBwKg=;
+	s=korg; t=1789221410;
+	bh=mZ0xf9HrG/r+mX3bJ2jFoEwnC2/JqFoZlJ64GQl+dC0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xfnat8SPKXl5D/Hlj1RdE6eHfhM/BpLb7IqY3+UdxdAf7s+vqyw6Jlr/aL8ZuOlhu
-	 SksMDWAyi8UfDkrvEETfJuhNeJyhQu/KumK6aHEvdLQz9cP2ZEqUkjkmO8PdgGjlrl
-	 j71TF5dz2J58oJIomocSvR1pyu/GFRz3eHwdUTq0=
+	b=zr8jPgwhY1mcX9kAFeLMg+lRtmCxp0wznDAX3oepuqmtXstnPrD2nq/Knft0PN/kv
+	 0V1VxNZIffQc7N8m/yAPYNbyoK35jdGSh5bfvsBif9ZuJ7OkVt0Vxsr6TR9/Om3lnA
+	 5d4prinR2cLhbP4ut6VI/1602FLaLPpgvZg2v8ck=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Zyngier <maz@kernel.org>,
-	caina <caina@uniontech.com>,
-	Thomas Gleixner <tglx@kernel.org>,
-	Yipeng Zou <zouyipeng@huawei.com>
-Subject: [PATCH 6.6 0375/1424] Revert "irqchip/mbigen: Fix mbigen node address layout"
-Date: Sat, 12 Sep 2026 08:46:47 +0200
-Message-ID: <20260912065615.691370905@linuxfoundation.org>
+	Wupeng Ma <mawupeng1@huawei.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Muchun Song <muchun.song@linux.dev>,
+	Oscar Salvador <osalvador@suse.de>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.6 0376/1424] mm/hugetlb: fix missing migratable flag on same-node hugetlb migration
+Date: Sat, 12 Sep 2026 08:46:48 +0200
+Message-ID: <20260912065615.712577337@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -52,114 +54,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: caina <caina@uniontech.com>
+From: Wupeng Ma <mawupeng1@huawei.com>
 
-commit e67091609cf85962f64391c1b0f93d4cbfcd4e22 upstream.
+commit 8ee1ef0f2f8ce29338f4ab00a3d344c010208058 upstream.
 
-This reverts commit 6be6cba9c4371d27f78d900ccfe34bb880d9ee20.
+Commit ba23f58de896 ("mm/migrate: don't call
+folio_putback_active_hugetlb() on dst hugetlb folio") moved setting of the
+migratable flag and active-list placement from
+folio_putback_active_hugetlb(dst) into move_hugetlb_state(), so that the
+freshly allocated destination folio is handled where allocation is known
+to have succeeded.
 
-Commit 6be6cba9c437 ("irqchip/mbigen: Fix mbigen node address layout")
-appears to cause a regression on Hi1616.
+Unfortunately, the new code was appended after the existing
+temporary-folio block in move_hugetlb_state(), which contains an early
+return added earlier by commit 5af1ab1d24e08 ("mm/hugetlb: optimize the
+surplus state transfer code in move_hugetlb_state()"):
 
-On-board hns NIC has two ports, enahisic2i0 and enahisic2i1, both
-behind mbigen-v2.  Port 0 works; port 1 cannot pass any traffic.
+  if (folio_test_hugetlb_temporary(new_folio)) {
+      ...
+      if (new_nid == old_nid)
+          return;                       <-- skips the new code
+      ...
+  }
 
-Their interrupt pins fall on different mbigen nodes:
+  /* added by ba23f58 */
+  folio_set_hugetlb_migratable(new_folio);
+  list_move_tail(&new_folio->lru, ...&h->hugepage_activelist);
 
-  enahisic2i0: pins 1152-1198 -> all in node 9
-  enahisic2i1: pins 1200-1246 -> node 9 (1200-1215) + node 10 (1216-1246)
+When the destination folio is temporary (i.e.  the hugetlb pool was
+exhausted and the migration callback fell back to
+alloc_migrate_hugetlb_folio()) and the migration does not cross a node --
+the common case, and always true on a single-NUMA system --
+move_hugetlb_state() returns before setting the migratable flag or adding
+the new folio to the active list.  The destination folio is then installed
+in the page table but cannot be isolated afterwards, since
+folio_isolate_hugetlb() rejects folios without the migratable flag; a
+subsequent soft-offline, hard-offline or memory-hotplug offline of that
+folio fails with -EBUSY.
 
-  (nid = (hwirq - 64) / 128 + 1; pin 1215 = node 9, pin 1216 = node 10)
+This was reproduced on a single-NUMA arm64 VM: a second MADV_SOFT_OFFLINE
+on an already-migrated hugetlb page returned EBUSY and logged "hugepage
+isolation failed".
 
-/proc/interrupts shows the break happens exactly at the node boundary:
+Keep the surplus adjustment, which is the only part that depends on the
+node crossing, guarded by `if (new_nid != old_nid)', while making the
+migratable flag and active-list placement unconditional.  This preserves
+the cleanup intent of ba23f58 and closes the early-return hole.
 
-  enahisic2i1-rx0  pin 1200  count 102   <- node 9
-  enahisic2i1-rx5  pin 1215  count   1   <- node 9, last pin
-  enahisic2i1-tx5  pin 1216  count   0   <- node 10, first pin
-  enahisic2i1-rx6  pin 1218  count   0   <- node 10
-  ...all node 10 pins stay at zero.
-
-Port 0 (entirely node 9) is unaffected.  Reverting the commit restores
-normal operation.
-
-The commit assumes CLEAR occupies a full 4 KB page at [0xa000, 0xb000)
-and collides with node 10, so node 10+ gets shifted by 0x1000.
-
-But get_mbigen_clear_reg() uses flat, chip-wide addressing -- it never
-multiplies by the node ID:
-
-    *addr = (hwirq / 32) * 4 + REG_MBIGEN_CLEAR_OFFSET;  /* 0xa000 */
-
-Over the valid hwirq range [64, 1407], CLEAR only spans 0xa008-0xa0af
-(168 bytes).  Node 10's registers are:
-
-    TYPE: 0xa000-0xa00f  (16 B)   overlaps CLEAR by 8 B (0xa008-0xa00f)
-    VEC:  0xa200-0xa3ff  (512 B)  no overlap with CLEAR
-
-Shifting the whole page moves VEC from 0xa200 to 0xb200.  The hardware
-reads the event ID from the fixed silicon address 0xa200 on interrupt
-firing, but software wrote it to 0xb200 -- so the hardware gets an
-uninitialised value and the interrupt is lost.
-
-The only real overlap is 8 bytes of TYPE.  It can only trigger when a
-single mbigen instance has devices on both node 1 (CLEAR 0xa008) and
-node 10 (TYPE 0xa008).  On Hi1616 those nodes are on separate mbigen
-instances, so it never triggers.
-
-Fixes: 6be6cba9c4371d27f78d900ccfe34bb880d9ee20 ("irqchip/mbigen: Fix mbigen node address layout")
-Suggested-by: Marc Zyngier <maz@kernel.org>
-Signed-off-by: caina <caina@uniontech.com>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Acked-by: Yipeng Zou <zouyipeng@huawei.com>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260821091720.16665-1-caina@uniontech.com
+Link: https://lore.kernel.org/20260707110254.3147686-1-mawupeng1@huawei.com
+Fixes: ba23f58de896 ("mm/migrate: don't call folio_putback_active_hugetlb() on dst hugetlb folio")
+Signed-off-by: Wupeng Ma <mawupeng1@huawei.com>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
+Cc: Muchun Song <muchun.song@linux.dev>
+Cc: Oscar Salvador <osalvador@suse.de>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/irqchip/irq-mbigen.c |   20 ++++----------------
- 1 file changed, 4 insertions(+), 16 deletions(-)
+ mm/hugetlb.c |   14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
---- a/drivers/irqchip/irq-mbigen.c
-+++ b/drivers/irqchip/irq-mbigen.c
-@@ -64,20 +64,6 @@ struct mbigen_device {
- 	void __iomem		*base;
- };
+--- a/mm/hugetlb.c
++++ b/mm/hugetlb.c
+@@ -7353,14 +7353,14 @@ void move_hugetlb_state(struct folio *ol
+ 		 * There is no need to transfer the per-node surplus state
+ 		 * when we do not cross the node.
+ 		 */
+-		if (new_nid == old_nid)
+-			return;
+-		spin_lock_irq(&hugetlb_lock);
+-		if (h->surplus_huge_pages_node[old_nid]) {
+-			h->surplus_huge_pages_node[old_nid]--;
+-			h->surplus_huge_pages_node[new_nid]++;
++		if (new_nid != old_nid) {
++			spin_lock_irq(&hugetlb_lock);
++			if (h->surplus_huge_pages_node[old_nid]) {
++				h->surplus_huge_pages_node[old_nid]--;
++				h->surplus_huge_pages_node[new_nid]++;
++			}
++			spin_unlock_irq(&hugetlb_lock);
+ 		}
+-		spin_unlock_irq(&hugetlb_lock);
+ 	}
  
--static inline unsigned int get_mbigen_node_offset(unsigned int nid)
--{
--	unsigned int offset = nid * MBIGEN_NODE_OFFSET;
--
--	/*
--	 * To avoid touched clear register in unexpected way, we need to directly
--	 * skip clear register when access to more than 10 mbigen nodes.
--	 */
--	if (nid >= (REG_MBIGEN_CLEAR_OFFSET / MBIGEN_NODE_OFFSET))
--		offset += MBIGEN_NODE_OFFSET;
--
--	return offset;
--}
--
- static inline unsigned int get_mbigen_vec_reg(irq_hw_number_t hwirq)
- {
- 	unsigned int nid, pin;
-@@ -86,7 +72,8 @@ static inline unsigned int get_mbigen_ve
- 	nid = hwirq / IRQS_PER_MBIGEN_NODE + 1;
- 	pin = hwirq % IRQS_PER_MBIGEN_NODE;
- 
--	return pin * 4 + get_mbigen_node_offset(nid) + REG_MBIGEN_VEC_OFFSET;
-+	return pin * 4 + nid * MBIGEN_NODE_OFFSET
-+			+ REG_MBIGEN_VEC_OFFSET;
- }
- 
- static inline void get_mbigen_type_reg(irq_hw_number_t hwirq,
-@@ -101,7 +88,8 @@ static inline void get_mbigen_type_reg(i
- 	*mask = 1 << (irq_ofst % 32);
- 	ofst = irq_ofst / 32 * 4;
- 
--	*addr = ofst + get_mbigen_node_offset(nid) + REG_MBIGEN_TYPE_OFFSET;
-+	*addr = ofst + nid * MBIGEN_NODE_OFFSET
-+		+ REG_MBIGEN_TYPE_OFFSET;
- }
- 
- static inline void get_mbigen_clear_reg(irq_hw_number_t hwirq,
+ 	/*
 
 
