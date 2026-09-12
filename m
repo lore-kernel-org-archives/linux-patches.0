@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3380C42885F;
-	Sat, 12 Sep 2026 11:42:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BFAE47126D;
+	Sat, 12 Sep 2026 11:42:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789213368; cv=none; b=tkQB8wgs6AUWBjrnvYmcmAjAz0nsXHjqHG4KDqb0tpjvHBZgO19ABonCfK/TtzMXJL7Af3nsEHTV71sTAz8io4c6nFU2uY0V3ut9KDGT+u0+dGmzgFPtYIutJ7R9J+wrDc/XLDsYzsDc2TF3Uw7IhTY1PW5bwrfFCuuA9SOnfmw=
+	t=1789213374; cv=none; b=I/xIgJ8zeBKmgyB4FIOC8sfzqXLrIprATthG+6m4EwzefuoKvJwJeATDQyFWrwczvfTY/BsXNVSzxCgC5Wk4pjYLTN9n8/Tq+GAs1tlpcTW9u0pIaMdcK3QFayYMacTEtVXLafWBkk0r3l5YF6LK7yBUxumtGtsVgi+tybha+kM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789213368; c=relaxed/simple;
-	bh=cABF92e1ORskuw5Gbg0Ofi9io/W4PRhQEP8YYCQEV/Y=;
+	s=arc-20240116; t=1789213374; c=relaxed/simple;
+	bh=19w9s48yO5lZhw4JRr38gYgUCz/cPKawjzXv/mBRum0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M+SwQAYbgexyXBnivJuT1k2PMzdk91Q50RdgW07y4HNoz32MXvUxqWC1gkylP0O/g0xC8bMswsZfFyjFAJx2Tz3rvhJxeXoYr2sD0XVdhFbHQ0ZZi4Xs719N7ti4+vY1HeUOK+J0bwOdToGzLM46CsJT9yc7i7dUrQj242SXxd8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NlUqDcA/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DhNpYxXm9xtSVdrxU1nOJa2oPzAEYugKm+WTqMkMfcluUhMJ29SnHxvyqyf5zFJFWT0EahIvaQUItP+lcAI+n/Z5qjgfriwkyJlw+NJTKRc3E2ooPSx9vLqEimGLJJxlsbSNcovBRdqz4VKGuddT9FMp7B1f8lh5M6jTO2pbum8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ptw6iy41; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NlUqDcA/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3807C1F000FF;
-	Sat, 12 Sep 2026 11:42:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ptw6iy41"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5B1D1F000FF;
+	Sat, 12 Sep 2026 11:42:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789213367;
-	bh=omfcDTQwdRfIiu8gZCtO5qpWbD1ug4nj25PURUqz5UE=;
+	s=korg; t=1789213371;
+	bh=sxrB1AkB/Jb+LdCjMCPd4GFLt5D84KIob4ROC4fuKgE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NlUqDcA/HFquNY60OWs4KeDvazcf372UX1Ia6Bz3Lgyei/AKpzYKR/NVHxKBJgcgN
-	 LapyUeeTevsSbNnLx09+gi0ZaXQALr+LpleWfziexSiJX/tRHX6+4RWIJ0lvo1pOIS
-	 EvT7nAKxAgOmjgcduzpfBph5UZlRPvUp2uckkoM8=
+	b=Ptw6iy41EFwcG0Ws8ck4NoR8YCESuzZpfwRsWF7G15LGsvAh0o6E9lkue9mqmhQKl
+	 +LAqqnyqlL06jRuhX0FG1dnWvVKIF7GfrSO+a64eepgdhogkFzRiZhRp8aH9eyeJE+
+	 X/GpB+QvrPLDMl6qCOFG9nzA5/BeV9XXJtVBu3pY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anthony Krowiak <akrowiak@linux.ibm.com>,
-	Matthew Rosato <mjrosato@linux.ibm.com>,
-	Christian Borntraeger <borntraeger@linux.ibm.com>
-Subject: [PATCH 6.12 0108/1376] s390/vfio-ap: Fix required lock not held during update of ap_matrix_mdev object
-Date: Sat, 12 Sep 2026 08:42:14 +0200
-Message-ID: <20260912065609.963618495@linuxfoundation.org>
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Linus Walleij <linusw@kernel.org>,
+	Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: [PATCH 6.12 0109/1376] mtd: afs: validate v2 image info bounds
+Date: Sat, 12 Sep 2026 08:42:15 +0200
+Message-ID: <20260912065609.984391877@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,49 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anthony Krowiak <akrowiak@linux.ibm.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-commit 5883528250be57fa92270459b33603ff52de0a91 upstream.
+commit e9290031f736e99ad17c25c00311c92c266843b7 upstream.
 
-In the vfio_ap_mdev_cfg_add function, the apm_add, aqm_add and adm_add
-fields of an ap_matrix_mdev object fields are modified while not holding
-the matrix_dev->mdevs_lock. This lock must be held while making these
-to guard against a race condition with another caller that may be
-concurrently modifying these fields or any of the fields in the
-matrix_mdev->matrix.
+The AFS v2 parser uses footer[8] to locate the image information block
+inside the current erase block, then uses the image information
+region_count to walk entries from a fixed local array. The footer offset
+and region count come from flash contents and are not checked against the
+erase block or the local image-info array before use.
 
-Fixes: eeb386aeb5b7c ("s390/vfio-ap: handle config changed and scan complete notification")
+Reject v2 entries whose image information offset would underflow the
+erase block calculation, and reject region counts that cannot fit in the
+local image-info array before walking region entries.
+
+Fixes: b7cf5e2830bb ("mtd: afs: add v2 partition parsing")
 Cc: stable@vger.kernel.org
-Signed-off-by: Anthony Krowiak <akrowiak@linux.ibm.com>
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Acked-by: Linus Walleij <linusw@kernel.org>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/crypto/vfio_ap_ops.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/mtd/parsers/afs.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/s390/crypto/vfio_ap_ops.c
-+++ b/drivers/s390/crypto/vfio_ap_ops.c
-@@ -2737,12 +2737,20 @@ static void vfio_ap_mdev_cfg_add(unsigne
- 	vfio_ap_filter_apid_by_qtype(apm_add, aqm_add);
+--- a/drivers/mtd/parsers/afs.c
++++ b/drivers/mtd/parsers/afs.c
+@@ -235,6 +235,9 @@ static int afs_parse_v2_partition(struct
+ 	pr_debug("Parsing v2 partition @%08x-%08x\n",
+ 		 off, off + mtd->erasesize);
  
- 	list_for_each_entry(matrix_mdev, &matrix_dev->mdev_list, node) {
-+		/*
-+		 * The mdevs_lock must be held in order to access fields
-+		 * within matrix_mdev
-+		 */
-+		mutex_lock(&matrix_dev->mdevs_lock);
++	if (mtd->erasesize < sizeof(footer))
++		return -EINVAL;
 +
- 		bitmap_and(matrix_mdev->apm_add,
- 			   matrix_mdev->matrix.apm, apm_add, AP_DEVICES);
- 		bitmap_and(matrix_mdev->aqm_add,
- 			   matrix_mdev->matrix.aqm, aqm_add, AP_DOMAINS);
- 		bitmap_and(matrix_mdev->adm_add,
- 			   matrix_mdev->matrix.adm, adm_add, AP_DEVICES);
-+
-+		mutex_unlock(&matrix_dev->mdevs_lock);
+ 	/* First read the footer */
+ 	ptr = off + mtd->erasesize - sizeof(footer);
+ 	ret = mtd_read(mtd, ptr, sizeof(footer), &sz, (u_char *)footer);
+@@ -245,6 +248,8 @@ static int afs_parse_v2_partition(struct
  	}
- }
+ 	name = (char *) &footer[0];
+ 	version = footer[9];
++	if (footer[8] > mtd->erasesize - sizeof(footer))
++		return -EINVAL;
+ 	ptr = off + mtd->erasesize - sizeof(footer) - footer[8];
+ 
+ 	pr_debug("found image \"%s\", version %08x, info @%08x\n",
+@@ -278,6 +283,8 @@ static int afs_parse_v2_partition(struct
+ 	entrypoint = imginfo[pad];
+ 	attributes = imginfo[pad+1];
+ 	region_count = imginfo[pad+2];
++	if (region_count > (ARRAY_SIZE(imginfo) - pad - 3) / 4)
++		return -EINVAL;
+ 	block_start = imginfo[20];
+ 	block_end = imginfo[21];
  
 
 
