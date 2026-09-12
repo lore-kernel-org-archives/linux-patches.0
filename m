@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77751CA6F;
-	Sat, 12 Sep 2026 15:14:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 172752D739C;
+	Sat, 12 Sep 2026 15:14:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789226057; cv=none; b=TLJLRxzv7+s47FMHOdwj6+N5WRhDbosrLd5beoLphSEhoKHnpKzFnkcm6JlRYlbrOCZ3MvV/14qivJyV0MaJacCzq6t9kDGluuLVsi5vYUYu1v+BWJRE1iTWehVRoTozxjc97sVhXN3NaXAkraZEIaUXL8FD1z2rgxDvoNE0tEQ=
+	t=1789226062; cv=none; b=u3/hrFPaUESphWr2iDpHsYkLNvyVvIlaGkF+38hQ3LcDhl9KO90a+WV+zjMQZH/v8TGFh5e7t1z2uOQoOmWvfPUoYJurZLeqZlJiiTDkA+prquMtXUuyPwp2qvcuI1Ty9Mr1QDiIWH1kYvdB7hS45hJFHJMQDHefeovyGJAlxnI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789226057; c=relaxed/simple;
-	bh=AJq1He3eYOoCvZO8Kr30FlCcqNGX/W0Oe2w4le1B7g0=;
+	s=arc-20240116; t=1789226062; c=relaxed/simple;
+	bh=txoc7fLIbjzwnCXByB1X6aO55iCYeCppXeu2BNEZ6hY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ICcD41q64U6FHJ+TolUQtCWZv8m2M9yKc5bq+cct+AD/AHXPlEN0nOY6HH7bD7rVPpTlTFAKnr4FEXVY3HhhOO18siXRgsMvF7Lssrf+7QVwAG4Arz8Q6OUaMHxArk2O5sYACj9zggu74jb4+91C8IePmMJlIg0+umhp9y+YZ9s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P5Vm3sUN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fPgohe24gCDSeN6/jlq5VB3OgigcXQae9ti/N1raQTS+sprzNM66w72wKo4OYCRLElDxxWLUzJ39eqiDK/p5gfAZ/gW402CmTinbBYKZ1DjolacjNaIa5xiz6oWQwkl48XqHefmTriAdRF9lFXnJPLkJ/GlBcUhc3rLyiKvSai8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HtG5JEnu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P5Vm3sUN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 172C31F000FF;
-	Sat, 12 Sep 2026 15:14:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HtG5JEnu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C9031F000FF;
+	Sat, 12 Sep 2026 15:14:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789226056;
-	bh=8fAw07bdVwy9o8G8ljt4ws+uW8HvUASoYSu5CZRZmmY=;
+	s=korg; t=1789226061;
+	bh=GktV+uzvmAOsVWmLeapaCuZAaGb96EQwVmADKTXiSYQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=P5Vm3sUNQPm+eEGFIBoVtks8Nf2EC/aiWZpJsJpLsnOhqXo5enpODnfjQ/YK3Dj04
-	 KzlGKfThVTydE6c0FDTTKRODuZ6Q/ygfZ4qy89N1JwBo+AcNmULaxNMGgnc1GyIx6b
-	 oN135Mg1J/OwpScrpSQeXL44I4JG9vulsIip3tVc=
+	b=HtG5JEnuTksQfX7KXADkLfNyqng2wV+VRObYO7fuaJ1hTtU3UIJkrieOMmlTbtkRx
+	 5XGSdVs0L5xxFMXat3XXWL22dtfSXT66NWQ/QINuw8PC2ndjVagy9qYuwK1o0cRxdn
+	 Z64udJzowcuMgpXzIQLwM5R4c9iMW/l454saVVoo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joanne Koong <joannelkoong@gmail.com>,
-	Josef Bacik <josef@toxicpanda.com>,
-	Miklos Szeredi <mszeredi@redhat.com>,
+	Ruoyu Wang <ruoyuw560@gmail.com>,
+	Vladimir Oltean <olteanv@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1281/1424] fuse: convert readdir to use folios
-Date: Sat, 12 Sep 2026 09:01:53 +0200
-Message-ID: <20260912065635.962253316@linuxfoundation.org>
+Subject: [PATCH 6.6 1272/1424] net: dsa: mv88e6xxx: Fix PCS link check on CMODE read error
+Date: Sat, 12 Sep 2026 09:01:44 +0200
+Message-ID: <20260912065635.764456032@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -52,79 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joanne Koong <joannelkoong@gmail.com>
+From: Ruoyu Wang <ruoyuw560@gmail.com>
 
-[ Upstream commit 02b78c7a7a0c72aee6f600a167e6adee9417ac0e ]
+[ Upstream commit 7b196e27ad58e612ad1c04b347d0c2135045aa14 ]
 
-Convert readdir requests to use a folio instead of a page.
+mv88e6352_pcs_link_check() ignores errors returned by
+port_get_cmode(). If the port status register read fails,
+mv88e6352_port_get_cmode() returns without setting cmode. The link check
+then compares an uninitialized value and may incorrectly treat the PCS
+as active.
 
-No functional changes.
+Save the return value and fail the link check after releasing the
+register lock. marvell_c22_pcs_get_state() initializes the reported link
+state to down before calling the check, so a read failure is handled
+safely until a later poll succeeds.
 
-Signed-off-by: Joanne Koong <joannelkoong@gmail.com>
-Reviewed-by: Josef Bacik <josef@toxicpanda.com>
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
-Stable-dep-of: 928f659a3e36 ("fuse: check for NULL root inode in fuse_fill_super_submount")
+This issue was found by a static analysis checker and confirmed by manual
+source review.
+
+Fixes: 85764555442f ("net: dsa: mv88e6xxx: convert 88e6352 to phylink_pcs")
+Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
+Reviewed-by: Vladimir Oltean <olteanv@gmail.com>
+Link: https://patch.msgid.link/20260813153131.3952970-1-ruoyuw560@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fuse/readdir.c | 21 +++++++++++----------
- 1 file changed, 11 insertions(+), 10 deletions(-)
+ drivers/net/dsa/mv88e6xxx/pcs-6352.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/fs/fuse/readdir.c b/fs/fuse/readdir.c
-index fca0671322afd..f4653df0ba01c 100644
---- a/fs/fuse/readdir.c
-+++ b/fs/fuse/readdir.c
-@@ -335,24 +335,25 @@ static int fuse_readdir_uncached(struct file *file, struct dir_context *ctx)
- {
- 	int plus;
- 	ssize_t res;
--	struct page *page;
-+	struct folio *folio;
- 	struct inode *inode = file_inode(file);
- 	struct fuse_mount *fm = get_fuse_mount(inode);
- 	struct fuse_io_args ia = {};
- 	struct fuse_args_pages *ap = &ia.ap;
--	struct fuse_page_desc desc = { .length = PAGE_SIZE };
-+	struct fuse_folio_desc desc = { .length = PAGE_SIZE };
- 	u64 attr_version = 0;
- 	bool locked;
+diff --git a/drivers/net/dsa/mv88e6xxx/pcs-6352.c b/drivers/net/dsa/mv88e6xxx/pcs-6352.c
+index 88f624b654702..f0b42786d5873 100644
+--- a/drivers/net/dsa/mv88e6xxx/pcs-6352.c
++++ b/drivers/net/dsa/mv88e6xxx/pcs-6352.c
+@@ -305,13 +305,16 @@ static bool mv88e6352_pcs_link_check(struct marvell_c22_pcs *mpcs)
+ 	struct mv88e6xxx_port *port = mpcs->port;
+ 	struct mv88e6xxx_chip *chip = port->chip;
+ 	u8 cmode;
++	int err;
  
--	page = alloc_page(GFP_KERNEL);
--	if (!page)
-+	folio = folio_alloc(GFP_KERNEL, 0);
-+	if (!folio)
- 		return -ENOMEM;
+ 	/* Port 4 can be in auto-media mode. Check that the port is
+ 	 * associated with the mpcs.
+ 	 */
+ 	mv88e6xxx_reg_lock(chip);
+-	chip->info->ops->port_get_cmode(chip, port->port, &cmode);
++	err = chip->info->ops->port_get_cmode(chip, port->port, &cmode);
+ 	mv88e6xxx_reg_unlock(chip);
++	if (err)
++		return false;
  
- 	plus = fuse_use_readdirplus(inode, ctx);
- 	ap->args.out_pages = true;
--	ap->num_pages = 1;
--	ap->pages = &page;
--	ap->descs = &desc;
-+	ap->uses_folios = true;
-+	ap->num_folios = 1;
-+	ap->folios = &folio;
-+	ap->folio_descs = &desc;
- 	if (plus) {
- 		attr_version = fuse_get_attr_version(fm->fc);
- 		fuse_read_args_fill(&ia, file, ctx->pos, PAGE_SIZE,
-@@ -371,15 +372,15 @@ static int fuse_readdir_uncached(struct file *file, struct dir_context *ctx)
- 			if (ff->open_flags & FOPEN_CACHE_DIR)
- 				fuse_readdir_cache_end(file, ctx->pos);
- 		} else if (plus) {
--			res = parse_dirplusfile(page_address(page), res,
-+			res = parse_dirplusfile(folio_address(folio), res,
- 						file, ctx, attr_version);
- 		} else {
--			res = parse_dirfile(page_address(page), res, file,
-+			res = parse_dirfile(folio_address(folio), res, file,
- 					    ctx);
- 		}
- 	}
- 
--	__free_page(page);
-+	folio_put(folio);
- 	fuse_invalidate_atime(inode);
- 	return res;
- }
+ 	return cmode == MV88E6XXX_PORT_STS_CMODE_100BASEX ||
+ 	       cmode == MV88E6XXX_PORT_STS_CMODE_1000BASEX ||
 -- 
 2.53.0
 
