@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E881337699;
-	Sat, 12 Sep 2026 08:51:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F59520ED;
+	Sat, 12 Sep 2026 08:51:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789203084; cv=none; b=G4EdA1bL11AEbZegB2mN4u8wfnVY7wWBgUt2y8CQZ1rlxAnZEpGcxNYNRc4g9BGZXgD3pPJ3XKyTvZO1l3+5MLoyHKijzjn9q3ut+rXxQi4prif6DJH9AOWU6oEIxVlsbo3RETjMioaIAMVRyr+V+6d1LnaPYG9FmLSAQ1ikDr0=
+	t=1789203089; cv=none; b=daz7gkgM5NKu1ifKgFwGPLBXlNj7OC4W3YOczaDro1RnbSUBSHGpMgJfD/uRgxbiCLUY7DmLwwODykhXC1ruPzXKHRIzvyMunWgsoJbSCUYxMmSiSbCUftF6eQCyK7JsSpPL3JwQZXf6KioCuOTNFIbO9Nyz5aruv9OdXCe0VMY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789203084; c=relaxed/simple;
-	bh=X/9g9ie73ZezyOiq2N1FWExv8a70iM1jX92NSMFDy4c=;
+	s=arc-20240116; t=1789203089; c=relaxed/simple;
+	bh=85BLIth8j6HF0RxMHVxlanbFdzJ3vGqc0LsBBwh1gXE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DUvjEwyLank7ydLQft0XbEuGAjxJadAyvHagOS/AmEzmVexNLct5Uuo1ica4z2FhCASQHH3Kk0N74wlYb7C64XnGseazFYT+UPFpIVzV5vS7FX+zku1IWcs92tA4ZxLLfsWwiTBt73THUFrXzFYgduQ+QpQfcS10XPxronE0XHI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H+sIPfh7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=plmeTTOfJWFHB5KU6C1kKTXqArj4OHc5LhCGLtXU+qV2hdySEZjuf3NNcPjJNHnArNWv3lOyJaduXnoSlqOk7QksTq5f+ueoxm6LXxj1LTDMN/WsWFDB/dq6cL6kHeuu66ETYS0rKAYSoTAMKnpGV5jeLFQGC/eLkmlKb8HlS6g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SsWqSApd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H+sIPfh7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53D0A1F000FF;
-	Sat, 12 Sep 2026 08:51:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SsWqSApd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25BF01F00893;
+	Sat, 12 Sep 2026 08:51:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789203083;
-	bh=iQqosGRkuRRMQgEO/tTlPfwfoA+SenB9FiDaA6OeUa0=;
+	s=korg; t=1789203088;
+	bh=fMeK6N1kiGAX40+4Zi3nVdONBKgkRGstHZ1f9u3fSqo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H+sIPfh7UP1e2l+RIbfvnL0934VRcFf1tkAgo1O5vMkY0TO0OFD2AKTmHnCpgZVKR
-	 M38fE8m87ys0i6x2E1HdAMN3+VzzctDo85iuxHhR7KKm9mrUg08KaTrNVQKCexwKEM
-	 MxePu6yDjrVjAKgOmGXIFfxT7/yjj30hR/0xagro=
+	b=SsWqSApdmuxT5AF841Qr8mUhDnnoShYWQCpJLcMWd14RixUDJLglk7c1Qy8xYvCQd
+	 GHaMam6RsSV937itR5EyetzgT7dsHwJ/FkxhHJXSoEjk0gC+Ybxx47YTEOHDuVZJAr
+	 ApKWxalGOCH/TOCQwhGFz6+sO2W9KVuFOmoG/Szw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Babanpreet Singh <bbnpreetsingh@gmail.com>,
+	Jorijn van der Graaf <jorijnvdgraaf@catcrafts.net>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1337/1815] spi: sprd-adi: Fix probe succeeding without registering the controller
-Date: Sat, 12 Sep 2026 08:51:27 +0200
-Message-ID: <20260912065720.408436703@linuxfoundation.org>
+Subject: [PATCH 7.2 1338/1815] ASoC: qcom: q6apm: keep the graph start count in sync with the DSP
+Date: Sat, 12 Sep 2026 08:51:28 +0200
+Message-ID: <20260912065720.432595664@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,70 +51,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Babanpreet Singh <bbnpreetsingh@gmail.com>
+From: Jorijn van der Graaf <jorijnvdgraaf@catcrafts.net>
 
-[ Upstream commit f092e1c935015ee0a0fea1a0374f4cab7b71953c ]
+[ Upstream commit daa7ffd765ae67a83e77dae32c66ce2d6d995d19 ]
 
-With CONFIG_HWSPINLOCK=n the of_hwspin_lock_get_id() stub returns 0
-unconditionally. In sprd_adi_probe() the guard
+q6apm_graph_start() increments start_count even when APM_CMD_GRAPH_START
+fails, leaving the graph counted as running while the DSP never started
+it. A later start - a retried prepare, or a resume after a failed start -
+then finds a non-zero count, skips the command and returns success with
+no data flowing.
 
-	if (ret > 0 || (IS_ENABLED(CONFIG_HWSPINLOCK) && ret == 0))
+Count the graph only once the DSP has accepted the start. The count then
+stays at zero for a graph that never started, so also stop decrementing
+below zero in q6apm_graph_stop(): the compressed free path stops
+unconditionally, and a negative count would make the next start skip the
+command in the same way.
 
-is false for that 0, so it takes the else branch, where the switch has no
-case for 0 and lands in
-
-	default:
-		return dev_err_probe(&pdev->dev, ret, "failed to find hwlock id\n");
-
-dev_err_probe() returns its err argument unchanged, so probe logs
-"failed to find hwlock id" and then returns 0, reporting success.
-sprd_adi_hw_init(), the restart handler and devm_spi_register_controller()
-are all skipped: the device binds but no SPI controller is ever
-registered.
-
-The hardware spinlock is optional for this controller and the -ENOENT arm
-already covers "no hardware spinlock supplied". Treat the stub's 0 the
-same way and continue without a lock; all four users of sadi->hwlock
-already test it for NULL.
-
-This is not reachable on production kernels. Kconfig has
-
-	depends on HWSPINLOCK || (COMPILE_TEST && !HWSPINLOCK)
-
-so the affected configuration exists only under COMPILE_TEST, where no
-real hardware is present.
-
-Found by smatch:
-drivers/spi/spi-sprd-adi.c:560 sprd_adi_probe() warn: passing zero to 'dev_err_probe'
-
-Fixes: f9adf61e983f ("spi: sprd: adi: Change hwlock to be optional")
+Fixes: 5477518b8a0e ("ASoC: qdsp6: audioreach: add q6apm support")
 Assisted-by: Claude:claude-opus-5
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Signed-off-by: Babanpreet Singh <bbnpreetsingh@gmail.com>
-Link: https://patch.msgid.link/20260729053543.7-1-bbnpreetsingh@gmail.com
+Signed-off-by: Jorijn van der Graaf <jorijnvdgraaf@catcrafts.net>
+Link: https://patch.msgid.link/20260726211226.94059-1-jorijnvdgraaf@catcrafts.net
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-sprd-adi.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ sound/soc/qcom/qdsp6/q6apm.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/spi/spi-sprd-adi.c b/drivers/spi/spi-sprd-adi.c
-index e7d83c16b46c0..a6baaf02b3c86 100644
---- a/drivers/spi/spi-sprd-adi.c
-+++ b/drivers/spi/spi-sprd-adi.c
-@@ -553,6 +553,12 @@ static int sprd_adi_probe(struct platform_device *pdev)
- 			return -ENXIO;
- 	} else {
- 		switch (ret) {
-+		case 0:
-+			/*
-+			 * Only reachable with CONFIG_HWSPINLOCK=n, where the
-+			 * of_hwspin_lock_get_id() stub returns 0.
-+			 */
-+			fallthrough;
- 		case -ENOENT:
- 			dev_info(&pdev->dev, "no hardware spinlock supplied\n");
- 			break;
+diff --git a/sound/soc/qcom/qdsp6/q6apm.c b/sound/soc/qcom/qdsp6/q6apm.c
+index 641d6d2432299..f167b9dae3fa1 100644
+--- a/sound/soc/qcom/qdsp6/q6apm.c
++++ b/sound/soc/qcom/qdsp6/q6apm.c
+@@ -802,14 +802,17 @@ EXPORT_SYMBOL_GPL(q6apm_graph_prepare);
+ int q6apm_graph_start(struct q6apm_graph *graph)
+ {
+ 	struct audioreach_graph *ar_graph = graph->ar_graph;
+-	int ret = 0;
++	int ret;
+ 
+-	if (ar_graph->start_count == 0)
++	if (ar_graph->start_count == 0) {
+ 		ret = audioreach_graph_mgmt_cmd(ar_graph, APM_CMD_GRAPH_START);
++		if (ret)
++			return ret;
++	}
+ 
+ 	ar_graph->start_count++;
+ 
+-	return ret;
++	return 0;
+ }
+ EXPORT_SYMBOL_GPL(q6apm_graph_start);
+ 
+@@ -817,6 +820,9 @@ int q6apm_graph_stop(struct q6apm_graph *graph)
+ {
+ 	struct audioreach_graph *ar_graph = graph->ar_graph;
+ 
++	if (ar_graph->start_count == 0)
++		return 0;
++
+ 	if (--ar_graph->start_count > 0)
+ 		return 0;
+ 
 -- 
 2.53.0
 
