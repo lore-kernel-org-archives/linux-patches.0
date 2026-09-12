@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB97733EAF3;
-	Sat, 12 Sep 2026 07:30:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D3CF3002B3;
+	Sat, 12 Sep 2026 07:30:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789198239; cv=none; b=Zk6mkB6kPwz0lA5CdekSBMbH7poCfvMCEyoGxjt9L5JysoZ8O+ADPnLdcotlnIWfD57D9iu+W90w4eVsRbPDf7gmCaZexXmcBiLArMRMY6TRYHXD1CKAvmD72HcTyeepGXg3VgB3iK905nGBKgD1D1Z8Insggfn8h2XBFKBWVG4=
+	t=1789198244; cv=none; b=lJQAagv24jZG7bpaNFRKh/nZxm5lePKSYIPqpSYnMRWQogXcSGdiUckxZhRgZo2iYWcL6NVuqmc6XSPggDyv1RJ+lRJB+aGjlrLEhCY76PyCyb5j1cfwCj5surBPXppzq70QH8iiYO6f6GT/u9iuFFdXngX9kVeLg3gYMThhwzw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789198239; c=relaxed/simple;
-	bh=9CFk4Gg2lexsHbKVqm/NHyz5JOV/U0EsTldHwItcP0U=;
+	s=arc-20240116; t=1789198244; c=relaxed/simple;
+	bh=QR1QlYacnGfHtdiyuZVaQ+70fTHTdgMhaV71E8F9+Go=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dqEQKl02jfFI8PaixQPy129NX1rwGzFw93zehJLTtRZDflUrr3lfp4lg6qheonsjboxT8TlL/0YSHZ/pLYIHBpln9Wm7u/lLPWGcpGU3c/Stit6yHDoUy+cvnPqcYJ3kVhPi8qPi6dvq+kwKNrgM9yLIUVCepTcoSNrhw+332uY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qp8ohDrm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZmmnWVyzDs5wePnTY4fjXF8hjyDKjiOfWoGXQExpgOPft52esR7xhTRV6FYJ1Tq6etCJBB3ipb4hCSd8AWdAnQN9ihqoD3BlhWTlJG6Pskm8cEps7sGKiI3TTGV8cSL0TJyRz57tSNMMWRxW7Q0anw+w8qRheDBwDNi+Rhxb+lE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=THWkJQjW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qp8ohDrm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF2471F000FF;
-	Sat, 12 Sep 2026 07:30:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="THWkJQjW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9F321F000FF;
+	Sat, 12 Sep 2026 07:30:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789198237;
-	bh=F6jaSKtFxaZiaPk4LAeLh0TyWVcbYud/1Iu38zHjnNE=;
+	s=korg; t=1789198242;
+	bh=dLD30IVkrCmmJPdLYcBcbgsfIfVC6d+S1X8XsJuzotw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qp8ohDrmVHT+0GHz2N6+U7vSdUpHDVGR99rB/eGD6YClEFeIoTzdrj44MXLPgr9c2
-	 gDvYReXMSNgkx6ZM2u3HjlA4BSqFr3O3cw+0YF/61G3qjMEN8HK4bMwwf4JM/myOm5
-	 wiEps4NNCDWc8ILTtmPPaeiVHugXZKEmy2vQreQE=
+	b=THWkJQjWuSreOug0m50vFY2g9pPY4FNuNa78kez8ochKl1DKCvgqPGIYUAIp3tCl2
+	 WA/umTub6bqQap/66dHXLTQS2LFxsITKNfZAi1HrsNXd51TxyWgO+684OzY9HlJ9Xl
+	 wglJfBFCSIHJmb1cUz6MVa4rwpMHY35uAloLh5Eo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>,
+	Brian Masney <bmasney@redhat.com>,
 	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Linus Walleij <linusw@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0339/1815] bus: qcom-ebi2: use managed resources for clocks and children
-Date: Sat, 12 Sep 2026 08:34:49 +0200
-Message-ID: <20260912065656.876938061@linuxfoundation.org>
+Subject: [PATCH 7.2 0340/1815] clk: qcom: camcc-sc8280xp: unregister CAMCC_GDSC_CLK
+Date: Sat, 12 Sep 2026 08:34:50 +0200
+Message-ID: <20260912065656.898391483@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -53,117 +55,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Brian Masney <bmasney@redhat.com>
 
-[ Upstream commit d19a46f7ed8eb54fea61e0eaf7db53ff7babb03c ]
+[ Upstream commit 499b4cb6710f9a351d8b57a2132f9b4389d8464a ]
 
-qcom_ebi2_probe() enables the EBI2 clocks manually and populates child
-devices manually. Several later failure paths can then return without
-disabling the clocks or without relying on the driver core to undo child
-population.
+With the introduction of sync_state support in the clk and pmdomain
+subsystems, the following warning happens when the unused clocks are
+shutdown in camcc-sc8280xp:
 
-Use devm_clk_get_enabled() for both clocks and
-devm_of_platform_populate() for children. This lets the driver core
-unwind the resources automatically and removes the hand-written error
-labels.
+    [   15.408367] titan_top_gdsc status stuck at 'on'
+    [   15.408429] WARNING: drivers/clk/qcom/gdsc.c:178 at gdsc_toggle_logic+0x14c/0x160, CPU#2: kworker/u32:1/14
+    [   15.408462] Modules linked in: bnep vfat fat ath11k_pci(+) ath11k mac80211 cfg80211 mhi libarc4 snd_soc_wcd938x snd_soc_wcd938x_sdw snd_soc_wcd_classh hci_uart snd_soc_wcd_common
+    snd_soc_sc8280xp soundwire_qcom snd_soc_wcd_mbhc snd_soc_qcom_sdw slimbus snd_soc_qcom_common regmap_sdw btqca btrtl qcom_camss soundwire_bus btbcm btintel snd_soc_sdca snd_soc_lpass_wsa_macro
+    bluetooth snd_soc_lpass_tx_macro snd_soc_lpass_va_macro snd_soc_lpass_rx_macro snd_soc_hdmi_codec snd_soc_lpass_macro_common videobuf2_dma_sg ov5675 v4l2_fwnode videobuf2_memops
+    qcom_spmi_adc5 snd_soc_core qcom_spmi_adc_tm5 videobuf2_v4l2 snd_seq snd_seq_device videobuf2_common v4l2_async qcom_vadc_common qcom_spmi_temp_alarm pm8941_pwrkey industrialio videodev
+    snd_compress rfkill ac97_bus snd_pcm_dmaengine qcom_tsens mc qcom_edac snd_pcm pci_pwrctrl_pwrseq qcom_cpufreq_hw snd_timer snd qcomtee soundcore tee leds_gpio joydev binfmt_misc zram
+    lz4hc_compress governor_simpleondemand panel_edp msm xhci_plat_hcd nvme nvme_core dwc3 qcom_pm8008_regulator
+    [   15.408688]  ucsi_glink nvme_keyring nvme_auth pmic_glink_altmode udc_core typec_ucsi aux_hpd_bridge qcom_battmgr ulpi ubwc_config socinfo ocmem drm_gpuvm qcom_q6v5_pas drm_exec
+    qcom_pil_info leds_qcom_lpg gpu_sched led_class_multicolor rtc_pm8xxx qcom_pbs qcom_common drm_display_helper qcom_pon qcom_glink_smem qcom_glink ghash_ce pwrseq_qcom_wcn gpio_sbu_mux
+    qcom_stats phy_qcom_qmp_combo qcom_q6v5 gf128mul cec dispcc_sc8280xp phy_qcom_edp camcc_sc8280xp i2c_qcom_cci qcom_sysmon drm_dp_aux_bus mdt_loader aux_bridge qcom_pm8008 i2c_hid_of_elan
+    dwc3_qcom_legacy llcc_qcom icc_bwmon gpi typec qcom_refgen_regulator phy_qcom_qmp_usb nvmem_qfprom qcom_ipcc phy_qcom_snps_femto_v2 gpucc_sc8280xp pinctrl_sc8280xp_lpass_lpi qcom_hwspinlock
+    pinctrl_lpass_lpi lpasscc_sc8280xp qrtr qcom_aoss pmic_glink pdr_interface phy_qcom_qmp_pcie qcom_smd qcom_pdr_msg icc_osm_l3 qcom_wdt qmi_helpers qcom_rng smp2p rpmsg_core gpio_keys pwm_bl
+    smem hid_multitouch fuse i2c_dev
+    [   15.408928] CPU: 2 UID: 0 PID: 14 Comm: kworker/u32:1 Not tainted 7.1.0+ #2 PREEMPT(lazy)
+    [   15.408937] Hardware name: LENOVO 21BX0016US/21BX0016US, BIOS N3HET88W (1.60 ) 03/14/2024
+    [   15.408942] Workqueue: pm pm_runtime_work
+    [   15.408959] pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+    [   15.408967] pc : gdsc_toggle_logic+0x14c/0x160
+    [   15.408978] lr : gdsc_toggle_logic+0x14c/0x160
+    [   15.408987] sp : ffff8000800f3b40
+    [   15.408991] x29: ffff8000800f3b40 x28: 0000000000000000 x27: 0000000000000000
+    [   15.409003] x26: 0000000000000000 x25: 0000000000000000 x24: 0000000000000000
+    [   15.409014] x23: 0000000000000000 x22: 0000000000000001 x21: ffffa33f298fca88
+    [   15.409024] x20: 0000000000000000 x19: ffffa33f298fc5b0 x18: 00cd15db75dacefd
+    [   15.409035] x17: 000000040044ffff x16: ffffa33f3b1a3d88 x15: 726f776b80000002
+    [   15.409045] x14: ffffffffffffffff x13: 0000000000000028 x12: 0101010101010101
+    [   15.409056] x11: 7f7f7f7f7f7f7f7f x10: fefeff3039313274 x9 : ffffa33f3a5edafc
+    [   15.409067] x8 : ffff8000800f3780 x7 : 0000000000000001 x6 : 0000000000000001
+    [   15.409078] x5 : ffff000bf3ca1288 x4 : 0000000000000000 x3 : ffff5cccb6a3f000
+    [   15.409088] x2 : 0000000000000000 x1 : 0000000000000000 x0 : ffff000080ae0000
+    [   15.409098] Call trace:
+    [   15.409103]  gdsc_toggle_logic+0x14c/0x160 (P)
+    [   15.409115]  gdsc_disable+0x4c/0x190
+    [   15.409126]  _genpd_power_off+0xa0/0x1a8
+    [   15.409137]  genpd_power_off.part.0+0x180/0x2a0
+    [   15.409149]  genpd_runtime_suspend+0x218/0x310
+    [   15.409155]  __rpm_callback+0x50/0x1f8
+    [   15.409166]  rpm_callback+0x7c/0x90
+    [   15.409175]  rpm_suspend+0xe8/0x690
+    [   15.409185]  pm_runtime_work+0xd0/0xe0
+    [   15.409195]  process_one_work+0x18c/0x518
+    [   15.409208]  worker_thread+0x190/0x320
+    [   15.409218]  kthread+0x110/0x130
+    [   15.409227]  ret_from_fork+0x10/0x20
 
-Fixes: 335a12754808 ("bus: qcom: add EBI2 driver")
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+This clock is force enabled to be on in the probe, and registered with
+the Common Clk Framework, resulting in them being toggled off after
+unused clocks are shutdown. This clock is required for the GDSC
+transitions.
+
+Similar to the fix in commit b60521eff227 ("clk: qcom: gcc-x1e80100:
+Unregister GCC_GPU_CFG_AHB_CLK/GCC_DISP_XO_CLK"), let's just unregister
+this clock.
+
+Link: https://lore.kernel.org/linux-clk/20260626-camcc-sc8280xp-titan-top-v1-1-2ca246886493@redhat.com/
+Fixes: ff93872a9c616 ("clk: qcom: camcc-sc8280xp: Add sc8280xp CAMCC")
+Suggested-by: Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>
+Signed-off-by: Brian Masney <bmasney@redhat.com>
 Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Link: https://lore.kernel.org/r/20260623015415.26975-1-pengpeng@iscas.ac.cn
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Link: https://lore.kernel.org/r/20260708-camcc-sc8280xp-remove-gdsc-v1-1-dfaab98a3bf5@redhat.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bus/qcom-ebi2.c | 50 +++++++++--------------------------------
- 1 file changed, 11 insertions(+), 39 deletions(-)
+ drivers/clk/qcom/camcc-sc8280xp.c | 19 -------------------
+ 1 file changed, 19 deletions(-)
 
-diff --git a/drivers/bus/qcom-ebi2.c b/drivers/bus/qcom-ebi2.c
-index ab00c75b9e953..8d2eb955dc921 100644
---- a/drivers/bus/qcom-ebi2.c
-+++ b/drivers/bus/qcom-ebi2.c
-@@ -302,41 +302,23 @@ static int qcom_ebi2_probe(struct platform_device *pdev)
- 	u32 val;
- 	int ret;
+diff --git a/drivers/clk/qcom/camcc-sc8280xp.c b/drivers/clk/qcom/camcc-sc8280xp.c
+index e97b8d4f3c844..660d8655d3919 100644
+--- a/drivers/clk/qcom/camcc-sc8280xp.c
++++ b/drivers/clk/qcom/camcc-sc8280xp.c
+@@ -1753,24 +1753,6 @@ static struct clk_branch camcc_csiphy3_clk = {
+ 	},
+ };
  
--	ebi2xclk = devm_clk_get(dev, "ebi2x");
-+	ebi2xclk = devm_clk_get_enabled(dev, "ebi2x");
- 	if (IS_ERR(ebi2xclk))
- 		return PTR_ERR(ebi2xclk);
- 
--	ret = clk_prepare_enable(ebi2xclk);
--	if (ret) {
--		dev_err(dev, "could not enable EBI2X clk (%d)\n", ret);
--		return ret;
--	}
+-static struct clk_branch camcc_gdsc_clk = {
+-	.halt_reg = 0xc1e4,
+-	.halt_check = BRANCH_HALT,
+-	.clkr = {
+-		.enable_reg = 0xc1e4,
+-		.enable_mask = BIT(0),
+-		.hw.init = &(struct clk_init_data){
+-			.name = "camcc_gdsc_clk",
+-			.parent_hws = (const struct clk_hw*[]){
+-				&camcc_xo_clk_src.clkr.hw,
+-			},
+-			.num_parents = 1,
+-			.flags = CLK_SET_RATE_PARENT,
+-			.ops = &clk_branch2_ops,
+-		},
+-	},
+-};
 -
--	ebi2clk = devm_clk_get(dev, "ebi2");
--	if (IS_ERR(ebi2clk)) {
--		ret = PTR_ERR(ebi2clk);
--		goto err_disable_2x_clk;
--	}
--
--	ret = clk_prepare_enable(ebi2clk);
--	if (ret) {
--		dev_err(dev, "could not enable EBI2 clk\n");
--		goto err_disable_2x_clk;
--	}
-+	ebi2clk = devm_clk_get_enabled(dev, "ebi2");
-+	if (IS_ERR(ebi2clk))
-+		return PTR_ERR(ebi2clk);
- 
- 	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
- 	ebi2_base = devm_ioremap_resource(dev, res);
--	if (IS_ERR(ebi2_base)) {
--		ret = PTR_ERR(ebi2_base);
--		goto err_disable_clk;
--	}
-+	if (IS_ERR(ebi2_base))
-+		return PTR_ERR(ebi2_base);
- 
- 	res = platform_get_resource(pdev, IORESOURCE_MEM, 1);
- 	ebi2_xmem = devm_ioremap_resource(dev, res);
--	if (IS_ERR(ebi2_xmem)) {
--		ret = PTR_ERR(ebi2_xmem);
--		goto err_disable_clk;
--	}
-+	if (IS_ERR(ebi2_xmem))
-+		return PTR_ERR(ebi2_xmem);
- 
- 	/* Allegedly this turns the power save mode off */
- 	writel(0UL, ebi2_xmem + EBI2_XMEM_CFG);
-@@ -353,7 +335,7 @@ static int qcom_ebi2_probe(struct platform_device *pdev)
- 		/* Figure out the chipselect */
- 		ret = of_property_read_u32(child, "reg", &csindex);
- 		if (ret)
--			goto err_disable_clk;
-+			return ret;
- 
- 		if (csindex > 5) {
- 			dev_err(dev,
-@@ -372,20 +354,10 @@ static int qcom_ebi2_probe(struct platform_device *pdev)
- 		have_children = true;
- 	}
- 
--	if (have_children) {
--		ret = of_platform_default_populate(np, NULL, dev);
--		if (ret)
--			goto err_disable_clk;
--	}
-+	if (have_children)
-+		return devm_of_platform_populate(dev);
- 
- 	return 0;
--
--err_disable_clk:
--	clk_disable_unprepare(ebi2clk);
--err_disable_2x_clk:
--	clk_disable_unprepare(ebi2xclk);
--
--	return ret;
- }
- 
- static const struct of_device_id qcom_ebi2_of_match[] = {
+ static struct clk_branch camcc_icp_ahb_clk = {
+ 	.halt_reg = 0xc0d8,
+ 	.halt_check = BRANCH_HALT,
+@@ -2839,7 +2821,6 @@ static struct clk_regmap *camcc_sc8280xp_clocks[] = {
+ 	[CAMCC_CSIPHY2_CLK] = &camcc_csiphy2_clk.clkr,
+ 	[CAMCC_CSIPHY3_CLK] = &camcc_csiphy3_clk.clkr,
+ 	[CAMCC_FAST_AHB_CLK_SRC] = &camcc_fast_ahb_clk_src.clkr,
+-	[CAMCC_GDSC_CLK] = &camcc_gdsc_clk.clkr,
+ 	[CAMCC_ICP_AHB_CLK] = &camcc_icp_ahb_clk.clkr,
+ 	[CAMCC_ICP_CLK] = &camcc_icp_clk.clkr,
+ 	[CAMCC_ICP_CLK_SRC] = &camcc_icp_clk_src.clkr,
 -- 
 2.53.0
 
