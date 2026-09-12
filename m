@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 056C147DD4E;
-	Sat, 12 Sep 2026 13:05:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B32E247D94D;
+	Sat, 12 Sep 2026 13:05:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789218338; cv=none; b=NAe4Z7uBaKqcHC4lFjBQ3X3tpCO8ribRr0sMa/BOPibgwK03Gq3izSdFyJS55uOtP2boJnO6mjWjIQyTfbD1gqdUwywKtMqRdjdvCmReT6N/P3Ah0uCXvs4Ava5Innnm/r1JfixZ+JWtNFb48Em2NxSeoggtvNWb9jAD/VmXICw=
+	t=1789218342; cv=none; b=CSbSbOcFB9Hl5tuU25b7GykCWvYctppiyq3FnAiLK90Ldngj0HHW3DUuXKnjoLIF5uL20p0ito8U6vwy7lX1CxICzggutVezMBSajwtsPsnFhXIYUWVZObMprTsuKA7RfyMe60h/rFPPA/o7JepsvhpHCpsOJ7AXpJZDprzu2fg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789218338; c=relaxed/simple;
-	bh=G8uCivD/gwiQCU4tZSaNSF3Bz6Wz2GoIHJ4W+P11gAA=;
+	s=arc-20240116; t=1789218342; c=relaxed/simple;
+	bh=QpOxDTgzzoBqD6BWPo7/1PS99nA/QJJcVitlaOj8WnA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nJ5SVTJVBY2KxyUil2HaaeQ2AIWey244AFLlDQEacdgQU1Cig6HSSJcKiS3XHKjg1rOapGNuxpQZn5B/lq7oJ1JYyTaEwdHOLapMBytZZ3sNK4YyAcWghdRN1kbWxpN/lXpKh8EpoO5zGaLDAbOtDsb6sH36fBiTgWMrsgojrSU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZqnkOyDM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tkrMwM5NaakjLPl7EQ5Ub2S37iWhNdWidoZ6IpgGYryRfEbUUsnK6RYVJkHg6+awbv2sATUD9qpz5N6SFmC3ojpu4iinNi3AkgxE5VbDryq3Zhteqhjz9sA2dPQ7KwoS3pRdhP5XLHTRtSljFJU2rORrYdYLvMku4Rk2bIzMV8w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vcXEmSNE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZqnkOyDM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCFC81F000FF;
-	Sat, 12 Sep 2026 13:05:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vcXEmSNE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B81F1F000FF;
+	Sat, 12 Sep 2026 13:05:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789218336;
-	bh=jPXGWDMGmuSHVXQuuRtcY+Wun6+lKFp8xcdkhIa6+10=;
+	s=korg; t=1789218341;
+	bh=ccFp4jdXoKcxmthN5FsV1apvYafpusbFMvbWdOIGzXI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZqnkOyDMLEVVTIaXYoVg71D96XdMEj0mAG5PGfmI58BMhc4VP6f9PHor69SWUpD7D
-	 87S8g4FElSIZqpmqLtwEOq9r71xNum4jx5dWNZHqjAmYkWtkcn7e4bix/+QTGTRW7N
-	 DuFBYhXiDVNQb4K1MTBeqpTbfji0t8jc0WdjIA9U=
+	b=vcXEmSNEwvfOJvEiXRVFYYuNi8GEAVhocd8XESdDCLjixgatBl/MuqX1K/9oyn8y8
+	 +vMWPJyeaqOGUWTVwSYVRzVrj289FMD/lTg8XwJwI5IPtRY+Q/m1Wv5XBE3J5/KW6C
+	 1F3WhRLBR7BWCDHi3aFfsDBOxFwb6RqyPNwDdvvc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mina Almasry <almasrymina@google.com>,
-	Jijie Shao <shaojijie@huawei.com>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Zhan Xusheng <zhanxusheng@xiaomi.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1125/1376] net: page_pool: fix UAF in __page_pool_release_netmem_dma on xa_cmpxchg race
-Date: Sat, 12 Sep 2026 08:59:11 +0200
-Message-ID: <20260912065632.637532262@linuxfoundation.org>
+Subject: [PATCH 6.12 1126/1376] fs/ntfs3: fix integer overflow in MFT cluster validation
+Date: Sat, 12 Sep 2026 08:59:12 +0200
+Message-ID: <20260912065632.660715159@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -47,163 +45,98 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jijie Shao <shaojijie@huawei.com>
+From: Zhan Xusheng <zhanxusheng1024@gmail.com>
 
-[ Upstream commit 24ef02f934eeb48830cff6b739abc3c62b1d107b ]
+[ Upstream commit c510c63873103a5da6a498fe537bdb5d6f8d03a2 ]
 
-This bug was discovered while testing the hns3 driver under channel
-reconfiguration (`ethtool -L` / `ethtool -G`) with iperf3 traffic on
-arm64. The race is intermittently triggered when page_pool_destroy()
-runs page_pool_scrub() concurrently with page return via
-page_pool_put_netmem() on a different CPU. A WARN in
-page_pool_clear_pp_info() surfaced the dangling DMA index bits left
-by the cmpxchg loser, which led to the investigation.
+In ntfs_init_from_boot(), the boot sector's MFT cluster numbers are
+validated against the volume size with:
 
-page_pool_scrub() iterates pool->dma_mapped via xa_for_each() with no
-page ref held. __page_pool_release_netmem_dma() currently reads and
-writes netmem fields (dma_addr, DMA index bits in pp_magic) after
-xa_cmpxchg() returns. The unref path calls put_page() unconditionally
-regardless of the cmpxchg outcome; when it loses the cmpxchg, it still
-frees the page before the scrub winner finishes these netmem accesses,
-so scrub touches a freed page -- a Use-After-Free.
+	if (mlcn  * sct_per_clst >= sectors ||
+	    mlcn2 * sct_per_clst >= sectors)
+		goto out;
 
-Fix this by splitting the DMA release into two functions:
+mlcn and mlcn2 are u64 fields read directly from the boot sector.
+sct_per_clst is bounded above by 4096 (true_sectors_per_clst() plus
+the is_power_of_2() check below it), but the multiplication is done
+in u64 and wraps when mlcn (or mlcn2) is large enough -- e.g. mlcn
+near 2^62 with sct_per_clst == 4 wraps to 0, which compares below
+any non-zero 'sectors', so the check is bypassed and the malformed
+record is accepted.
 
-1. __page_pool_unmap_netmem_dma() caches dma_addr before xa_cmpxchg(),
-   does the cmpxchg to remove the DMA mapping, and calls dma_unmap on
-   the cached address. It never touches netmem fields after the cmpxchg,
-   making it safe for the scrub path which holds no page ref.
+The accepted mlcn is then used unchanged in
 
-2. __page_pool_release_netmem_dma() wraps the above and additionally
-   clears dma_addr and DMA index bits in netmem fields. This is safe
-   only when the caller holds a page ref, so it is used by the return
-   path (page_pool_return_netmem).
+	sbi->mft.lbo = mlcn << cluster_bits;
 
-The scrub path calls __page_pool_unmap_netmem_dma() directly; the return
-path calls __page_pool_release_netmem_dma().
+In practice the resulting reads fail at the block layer (sb_bread()
+returns NULL via grow_buffers()'s check_mul_overflow() guard), so
+today this manifests as mount failing in odd places rather than as
+something more dangerous, but the validation step is still wrong
+and there is no reason for callers to rely on the block layer to
+catch a value that should never have been accepted in the first
+place.
 
-Fixes: ee62ce7a1d90 ("page_pool: Track DMA-mapped pages and unmap them when destroying the pool")
-Suggested-by: Mina Almasry <almasrymina@google.com>
-Reviewed-by: Mina Almasry <almasrymina@google.com>
-Signed-off-by: Jijie Shao <shaojijie@huawei.com>
-Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
-Link: https://patch.msgid.link/20260807114830.344336-1-shaojijie@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Use check_mul_overflow() to compute the two sector positions and
+fail the mount if either multiplication wraps; this preserves the
+existing semantics (mlcn * sct_per_clst >= sectors) instead of
+switching to division (mlcn >= sectors / sct_per_clst), which
+would tighten the check at edge cases where 'sectors' is not a
+multiple of sct_per_clst.  The check_*_overflow() style is the
+one ntfs3 already uses for similar on-disk arithmetic in
+fs/ntfs3/run.c.
+
+Fixes: 82cae269cfa9 ("fs/ntfs3: Add initialization of super block")
+Signed-off-by: Zhan Xusheng <zhanxusheng@xiaomi.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/page_pool.c | 66 +++++++++++++++++++++++---------------------
- 1 file changed, 35 insertions(+), 31 deletions(-)
+ fs/ntfs3/super.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/net/core/page_pool.c b/net/core/page_pool.c
-index 642ebe4924edc..96df39f164e59 100644
---- a/net/core/page_pool.c
-+++ b/net/core/page_pool.c
-@@ -500,29 +500,40 @@ static int page_pool_register_dma_index(struct page_pool *pool,
- 	return err;
- }
+diff --git a/fs/ntfs3/super.c b/fs/ntfs3/super.c
+index 1af1500ec24b6..b0c46840f75fa 100644
+--- a/fs/ntfs3/super.c
++++ b/fs/ntfs3/super.c
+@@ -57,6 +57,7 @@
+ #include <linux/minmax.h>
+ #include <linux/module.h>
+ #include <linux/nls.h>
++#include <linux/overflow.h>
+ #include <linux/proc_fs.h>
+ #include <linux/seq_file.h>
+ #include <linux/statfs.h>
+@@ -877,7 +878,7 @@ static int ntfs_init_from_boot(struct super_block *sb, u32 sector_size,
+ 	struct ntfs_sb_info *sbi = sb->s_fs_info;
+ 	int err;
+ 	u32 mb, gb, boot_sector_size, sct_per_clst, record_size;
+-	u64 sectors, clusters, mlcn, mlcn2, dev_size0;
++	u64 sectors, clusters, mlcn, mlcn2, mft_pos, mft2_pos, dev_size0;
+ 	struct NTFS_BOOT *boot;
+ 	struct buffer_head *bh;
+ 	struct MFT_REC *rec;
+@@ -946,7 +947,15 @@ static int ntfs_init_from_boot(struct super_block *sb, u32 sector_size,
+ 	mlcn2 = le64_to_cpu(boot->mft2_clst);
+ 	sectors = le64_to_cpu(boot->sectors_per_volume);
  
--static int page_pool_release_dma_index(struct page_pool *pool,
--				       netmem_ref netmem)
-+static void __page_pool_unmap_netmem_dma(struct page_pool *pool,
-+					 netmem_ref netmem)
- {
- 	struct page *old, *page = netmem_to_page(netmem);
- 	unsigned long id;
-+	dma_addr_t dma;
- 
--	if (unlikely(!PP_DMA_INDEX_BITS))
--		return 0;
--
--	id = netmem_get_dma_index(netmem);
--	if (!id)
--		return -1;
-+	if (!pool->dma_map)
-+		return;
- 
--	if (in_softirq())
--		old = xa_cmpxchg(&pool->dma_mapped, id, page, NULL, 0);
--	else
--		old = xa_cmpxchg_bh(&pool->dma_mapped, id, page, NULL, 0);
--	if (old != page)
--		return -1;
-+	/* Cache dma_addr before xa_cmpxchg. The scrub path holds no page ref;
-+	 * the unref path calls put_page() regardless of cmpxchg outcome, so
-+	 * after the cmpxchg we cannot safely touch netmem fields.
+-	if (mlcn * sct_per_clst >= sectors || mlcn2 * sct_per_clst >= sectors) {
++	/*
++	 * Convert mlcn/mlcn2 to sector positions before comparing with
++	 * 'sectors'.  All three are u64 values that come from the boot
++	 * sector, so use check_mul_overflow() to keep a wraparound from
++	 * silently bypassing the comparison.
 +	 */
-+	dma = page_pool_get_dma_addr_netmem(netmem);
- 
--	netmem_set_dma_index(netmem, 0);
-+	if (likely(PP_DMA_INDEX_BITS)) {
-+		id = netmem_get_dma_index(netmem);
-+		if (!id)
-+			return;
-+
-+		if (in_softirq())
-+			old = xa_cmpxchg(&pool->dma_mapped,
-+					 id, page, NULL, 0);
-+		else
-+			old = xa_cmpxchg_bh(&pool->dma_mapped,
-+					    id, page, NULL, 0);
-+		if (old != page)
-+			return;
-+	}
- 
--	return 0;
-+	dma_unmap_page_attrs(pool->p.dev, dma,
-+			     PAGE_SIZE << pool->p.order, pool->p.dma_dir,
-+			     DMA_ATTR_SKIP_CPU_SYNC | DMA_ATTR_WEAK_ORDERING);
- }
- 
- static bool page_pool_dma_map(struct page_pool *pool, netmem_ref netmem, gfp_t gfp)
-@@ -729,24 +740,16 @@ void page_pool_clear_pp_info(netmem_ref netmem)
- static __always_inline void __page_pool_release_netmem_dma(struct page_pool *pool,
- 							   netmem_ref netmem)
- {
--	dma_addr_t dma;
--
-+	/* Caller must hold a page ref: __page_pool_unmap_netmem_dma() is
-+	 * safe without a ref, but the field clears below require it.
-+	 */
- 	if (!pool->dma_map)
--		/* Always account for inflight pages, even if we didn't
--		 * map them
--		 */
- 		return;
- 
--	if (page_pool_release_dma_index(pool, netmem))
--		return;
--
--	dma = page_pool_get_dma_addr_netmem(netmem);
--
--	/* When page is unmapped, it cannot be returned to our pool */
--	dma_unmap_page_attrs(pool->p.dev, dma,
--			     PAGE_SIZE << pool->p.order, pool->p.dma_dir,
--			     DMA_ATTR_SKIP_CPU_SYNC | DMA_ATTR_WEAK_ORDERING);
-+	__page_pool_unmap_netmem_dma(pool, netmem);
- 	page_pool_set_dma_addr_netmem(netmem, 0);
-+	if (likely(PP_DMA_INDEX_BITS))
-+		netmem_set_dma_index(netmem, 0);
- }
- 
- /* Disconnects a page (from a page_pool).  API users can have a need
-@@ -1137,8 +1140,9 @@ static void page_pool_scrub(struct page_pool *pool)
- 				synchronize_net();
- 		}
- 
-+		/* No page ref, dma-unmap only. */
- 		xa_for_each(&pool->dma_mapped, id, ptr)
--			__page_pool_release_netmem_dma(pool, page_to_netmem((struct page *)ptr));
-+			__page_pool_unmap_netmem_dma(pool, page_to_netmem((struct page *)ptr));
- 	}
- 
- 	/* No more consumers should exist, but producers could still
++	if (check_mul_overflow(mlcn, (u64)sct_per_clst, &mft_pos) ||
++	    check_mul_overflow(mlcn2, (u64)sct_per_clst, &mft2_pos) ||
++	    mft_pos >= sectors || mft2_pos >= sectors) {
+ 		ntfs_err(
+ 			sb,
+ 			"%s: start of MFT 0x%llx (0x%llx) is out of volume 0x%llx.",
 -- 
 2.53.0
 
