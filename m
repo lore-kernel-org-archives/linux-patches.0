@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF09547277D;
-	Sat, 12 Sep 2026 13:13:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FB3547CA76;
+	Sat, 12 Sep 2026 13:14:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789218840; cv=none; b=pxW2xIlZSldlu/9azodv/+Q2T39392FFk7TNmWabOwfPdzeORrG0R9LOFNecMprUrdGqbD3ntH4Lg6X2SV25wufitFaei5cmz4QceGQ21LBpFfklQPJG+98o1b5JX07vWtUW/E06Mm2QsyZo6Gm1/0m8a6yY+iPeBofCIEEyyAY=
+	t=1789218844; cv=none; b=dQx+TFs7Ul09JwLS/rjnwOlhhZM7PKtdfLlJFmndXsCEKOoopp3HhZVfpUVGB5+gjFnISR3FV/a1mBl1eZw6N8lPzzauH0JfA9LgN2j67a17frxcmbrgEpuIjI9V65qQk37Vm3Zgsc4C68V4nYKOpAYgdVXg9baEYLh50Beav6I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789218840; c=relaxed/simple;
-	bh=wMMtXHVLpt+q5hO6Z0Lrw+5m17OzXgiCf9swKtf8rJA=;
+	s=arc-20240116; t=1789218844; c=relaxed/simple;
+	bh=n37giOJJ5sPaC2ZRJ8jOiOtFZ+iBM1BqZRz4HTYtMB8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EIGDZW4cTWjSS9MYMiSMYIBE7lxKs5bzy3I7JN43W+z5ZYfAx1t83x2mOs7jFz4/MxBNxVw48kDMabrbJL9nsYkoah22phWbdhU2nmUZg04TZbIbcNH3h23WcOigVOuM6aO4v1XQkEzEL8iitI9viVWF7lEIpb+5rU2rEae87gg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tpx+zPSK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=tvTLyw87JUQfVpWDz+AuLh+8huIaEweBCSdJi1a6dJbPyNc2fqmjK3HKSlV4Wrrg05THx+hujN5F2GsLg5pxBeIfsQbsFgWVLtu4O2G0GlMaSAv13OATHnib/OUJAcOxBmyY4JnHhLr1siKRJDLmhC90oZl4LR0t2316b4xTJPM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EJSUT/vx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tpx+zPSK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B79251F000FF;
-	Sat, 12 Sep 2026 13:13:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EJSUT/vx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6410F1F000FF;
+	Sat, 12 Sep 2026 13:14:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789218838;
-	bh=TTnwR/k00sKKxCgzLVCeXs2VTFZQDoRuU0J7vvzCah0=;
+	s=korg; t=1789218843;
+	bh=i58NGsGeWOmWcJnmx0glemSmL0Ro8onoMZgv9k/b2tw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tpx+zPSKqLyc4yJZOYYpYZTa4MHU0T0qaMXszjpAR9vQPCeN+CQRryqhcNVMv+z3d
-	 I3axo97Psho8bxOrXilKiGklSyHecc+8oV6ifkWM/ikg0ZT1lLEAWBhNyuFjBMWx/H
-	 2cAo+PrT5WQShLz5VueNZ4spVy8/WGK3fIjauXSw=
+	b=EJSUT/vxHi3BrX4H3WopI72gGsWKBekmRateCwdc/ObRI/foFMuIFFq1AZzfjJL/o
+	 FQguK1vgAsRjdqwVXIPAeiDVTMGooe9p1XgOL8yLVhQ40jsdd3QDbJBR9dKI+JW9UW
+	 4OgPHXOvjsMoqB9hxvghFoX9NlHO7PSPmx/Ygq3Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
+	=?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>,
+	=?UTF-8?q?Linfeng=20Sun=C2=A0?= <linfeng.sun.dev@gamil.com>,
 	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1228/1376] virtio_balloon: disable indirect descriptors
-Date: Sat, 12 Sep 2026 09:00:54 +0200
-Message-ID: <20260912065634.914657942@linuxfoundation.org>
+Subject: [PATCH 6.12 1229/1376] vdpa_sim: fix cleanup after worker creation failure
+Date: Sat, 12 Sep 2026 09:00:55 +0200
+Message-ID: <20260912065634.936564644@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -45,64 +46,93 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michael S. Tsirkin <mst@redhat.com>
+From: Linfeng Sun  <linfeng.sun.dev@gamil.com>
 
-[ Upstream commit 281eb4732aae5473141b84e106fe906c69b2ff3d ]
+[ Upstream commit bd670e5dfd2b01fd9692f61fa1456434c54026a4 ]
 
-The page reporting callback submits an sg list to the reporting
-virtqueue.  With VIRTIO_RING_F_INDIRECT_DESC negotiated and
-total_sg > 1 (which it typically is), virtqueue_add reports it to the
-host by allocating an indirect descriptor via kmalloc(GFP_KERNEL).
+vdpasim_create() leaves vdpasim->worker as an ERR_PTR when
+kthread_run_worker() fails. The error path then drops the device
+reference, which releases the partially initialized simulator.
 
-This is not pretty: the reporting worker isolates potentially hundreds
-of MB of free pages from the buddy allocator (reported pages are at
-least pageblock_order, and the sg can contain up to
-PAGE_REPORTING_CAPACITY entries of varying orders).  As the result,
-very theoretically, the kmalloc might trigger OOM when we have in fact a
-ton of free memory.
+vdpasim_free() unconditionally passes the worker pointer to
+kthread_destroy_worker(), so the ERR_PTR is dereferenced and can trigger
+a general protection fault.
 
-Clear VIRTIO_RING_F_INDIRECT_DESC, to avoid using indirect descriptors.
+Store the worker error, clear the pointer, and only clean up the worker
+when it was successfully initialized. Also make the release path tolerate
+partially initialized objects by guarding virtqueue and IOTLB cleanup,
+since the same release path can be reached from other initialization
+failures.
 
-Fixes: b0c504f15471 ("virtio-balloon: add support for providing free page reports to host")
-Assisted-by: Claude:claude-opus-4-6
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+I found this bug myself, though the patch was written with AI assistance.
+
+Fixes: 76acfa7bc54f ("vdpa_sim: use kthread worker")
+Assisted-by: OpenAI-Codex:GPT-5
+Reviewed-by: Eugenio Pérez <eperezma@redhat.com>
+Signed-off-by: Linfeng Sun <linfeng.sun.dev@gamil.com>
+Message-ID: <20260620100959.2070316-1-slf@hdu.edu.cn>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <73fac8a629fd9aca7bb3265ac243a769c28af25d.1783232420.git.mst@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/virtio/virtio_balloon.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/vdpa/vdpa_sim/vdpa_sim.c | 25 +++++++++++++++++--------
+ 1 file changed, 17 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/virtio/virtio_balloon.c b/drivers/virtio/virtio_balloon.c
-index b7b9fb80d6a0e..02236ee98e596 100644
---- a/drivers/virtio/virtio_balloon.c
-+++ b/drivers/virtio/virtio_balloon.c
-@@ -7,6 +7,7 @@
-  */
+diff --git a/drivers/vdpa/vdpa_sim/vdpa_sim.c b/drivers/vdpa/vdpa_sim/vdpa_sim.c
+index 481c52be50231..825690c6fed19 100644
+--- a/drivers/vdpa/vdpa_sim/vdpa_sim.c
++++ b/drivers/vdpa/vdpa_sim/vdpa_sim.c
+@@ -231,8 +231,11 @@ struct vdpasim *vdpasim_create(struct vdpasim_dev_attr *dev_attr,
+ 	kthread_init_work(&vdpasim->work, vdpasim_work_fn);
+ 	vdpasim->worker = kthread_create_worker(0, "vDPA sim worker: %s",
+ 						dev_attr->name);
+-	if (IS_ERR(vdpasim->worker))
++	if (IS_ERR(vdpasim->worker)) {
++		ret = PTR_ERR(vdpasim->worker);
++		vdpasim->worker = NULL;
+ 		goto err_iommu;
++	}
  
- #include <linux/virtio.h>
-+#include <uapi/linux/virtio_ring.h>
- #include <linux/virtio_balloon.h>
- #include <linux/swap.h>
- #include <linux/workqueue.h>
-@@ -1187,6 +1188,11 @@ static int virtballoon_validate(struct virtio_device *vdev)
- 	else if (!virtio_has_feature(vdev, VIRTIO_BALLOON_F_PAGE_POISON))
- 		__virtio_clear_bit(vdev, VIRTIO_BALLOON_F_REPORTING);
+ 	mutex_init(&vdpasim->mutex);
+ 	spin_lock_init(&vdpasim->iommu_lock);
+@@ -744,18 +747,24 @@ static void vdpasim_free(struct vdpa_device *vdpa)
+ 	struct vdpasim *vdpasim = vdpa_to_sim(vdpa);
+ 	int i;
  
-+	/*
-+	 * Disable indirect descriptors to avoid memory allocation in
-+	 * virtqueue_add during page reporting.
-+	 */
-+	__virtio_clear_bit(vdev, VIRTIO_RING_F_INDIRECT_DESC);
- 	__virtio_clear_bit(vdev, VIRTIO_F_ACCESS_PLATFORM);
- 	return 0;
- }
+-	kthread_cancel_work_sync(&vdpasim->work);
+-	kthread_destroy_worker(vdpasim->worker);
++	if (vdpasim->worker) {
++		kthread_cancel_work_sync(&vdpasim->work);
++		kthread_destroy_worker(vdpasim->worker);
++	}
+ 
+-	for (i = 0; i < vdpasim->dev_attr.nvqs; i++) {
+-		vringh_kiov_cleanup(&vdpasim->vqs[i].out_iov);
+-		vringh_kiov_cleanup(&vdpasim->vqs[i].in_iov);
++	if (vdpasim->vqs) {
++		for (i = 0; i < vdpasim->dev_attr.nvqs; i++) {
++			vringh_kiov_cleanup(&vdpasim->vqs[i].out_iov);
++			vringh_kiov_cleanup(&vdpasim->vqs[i].in_iov);
++		}
+ 	}
+ 
+ 	vdpasim->dev_attr.free(vdpasim);
+ 
+-	for (i = 0; i < vdpasim->dev_attr.nas; i++)
+-		vhost_iotlb_reset(&vdpasim->iommu[i]);
++	if (vdpasim->iommu) {
++		for (i = 0; i < vdpasim->dev_attr.nas; i++)
++			vhost_iotlb_reset(&vdpasim->iommu[i]);
++	}
+ 	kfree(vdpasim->iommu);
+ 	kfree(vdpasim->iommu_pt);
+ 	kfree(vdpasim->vqs);
 -- 
 2.53.0
 
