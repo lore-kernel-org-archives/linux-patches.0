@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2A0333993;
-	Sat, 12 Sep 2026 09:12:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B77141A4E5;
+	Sat, 12 Sep 2026 09:12:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789204334; cv=none; b=bwHeGjcWrspUgspDpx2K+iHO4Ygu0thsLPngUOQ+hBQtEBgv38V3zlgH5Yd2NpAbnEPY8E1tdKiNghnOHgayjMDHO0QkyWf41LX9bXXc1foPzxSuj+D/em8ILkjekG1LVK2QMBcnO4kmDLGDAcDmE2YZ2wo6LTadzjrEAL6g7l0=
+	t=1789204339; cv=none; b=oK8TkUdyZSh9PPKtM0uHqbw/wGn/V2p45pg06eO6RJN/EeM2ji9IJc8LME/d7Fbs+8+EBroUNUm88C6vbUai071UBe0QLaWqHEVJs78OssVsJ3DG63i0RBHbSqiGmskcyRfLGhPt+1fxrx3lxhbd84V9QpZj4p8wmhJD3cl3j78=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789204334; c=relaxed/simple;
-	bh=loRRr/tDjYKQlqtEOWZHvVSOwP7UAeOs3p9pIujs5fU=;
+	s=arc-20240116; t=1789204339; c=relaxed/simple;
+	bh=1PHDD4znGbCNdXPlEQhAkz8QWBvXd0YeNnuMgE49NX8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JDk4AObbyNdS2Dalf0VNJSGGYYCVIcoy6gye4cmvgL/RpQDXp4KTngDW+S7jSMSshMI7EEVJZy2wFUPwcfjDU1R1WRZA/4/PT1Q3WPx8sUwStnGr4i3YPXjVbWgzOpy6D66krQdeaEMDRYyDwahn3JtuyWBqjhOldzaJbyCS3yI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D8GuR/+o; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fTAtoDjjGYZysDDcYlNZzusYtwmvUlfUAhFEKX/4hR2fDimTeRW1gE1jKR/aChAfxoX4Se0WtEvDE6V5Q/ACq4nP3Tw7J1LvNDtlPxHoA4ji+mjypRK5u4EN0EtsJnZV8eHNmZFJgYC+aiTccgdzF3w6hM0UHJPRrxhAB6Twj0o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jQQPJifv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D8GuR/+o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6962C1F000FF;
-	Sat, 12 Sep 2026 09:12:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jQQPJifv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 553F31F000FF;
+	Sat, 12 Sep 2026 09:12:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789204332;
-	bh=3LxXXO4+LgkSBC+Yzq6XQIneApZELEVPcLBrT+y+3Yw=;
+	s=korg; t=1789204337;
+	bh=+jZOB2HwXcV1FrvUtI/WtcSC1bTRzhFv26sG+mUsGLs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D8GuR/+oRk73rV6TWfN4Uo3ujyzAXvXuau76wr/4K/eN5prw4XSzux2fYJVKQbRF1
-	 /Aedor2ByIjO0x/WT6dDn7v4sqq4x+eT9ktAHbIaEbZZYHn9xqMmIvGaPLlh2+20C6
-	 GGM1MsD6ZXBXtvK00TPE0hscRN7x+p+sr7Eb0md8=
+	b=jQQPJifvzuGIiUPkzN7eS4bY3VZHdh07lkfe1/GBKS3ErQ1Uo48nBJl0mb2SXn9/b
+	 4K1K9YWPT3yq02VfTmbVUIBDDJWd35HMN89INQQ8l4MkpYpSC/bVHCq2OTJeAjcSTO
+	 /3RmkWhTJpTydnnzXgAfJzoH6YzjYCgxkXB8uDhY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	HyeongJun An <sammiee5311@gmail.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	syzbot+1b2c9c4a0f8708082678@syzkaller.appspotmail.com,
+	Michal Luczaj <mhal@rbox.co>,
+	Nguyen Dinh Phi <phind.uet@gmail.com>,
+	Stefano Garzarella <sgarzare@redhat.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1590/1815] platform/x86: dell-wmi-sysman: Fix instance ID bounds
-Date: Sat, 12 Sep 2026 08:55:40 +0200
-Message-ID: <20260912065726.317715191@linuxfoundation.org>
+Subject: [PATCH 7.2 1591/1815] vsock: dont check the listeners sk_err in vsock_accept()
+Date: Sat, 12 Sep 2026 08:55:41 +0200
+Message-ID: <20260912065726.340672750@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -45,60 +48,95 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: HyeongJun An <sammiee5311@gmail.com>
+From: Nguyen Dinh Phi <phind.uet@gmail.com>
 
-[ Upstream commit 5ab078e3241da0beec2022254b5811a8a52cff84 ]
+[ Upstream commit b8c899cf5e7be29840a172c183dedd8d3e7a0287 ]
 
-The get_instance_id() macro walks the per-type attribute array with
-'i <= instances_count'.  Each array is allocated with exactly
-instances_count entries, so the valid range is [0, instances_count)
-and the last iteration reads one element past the end.  On a name miss
-that out-of-bounds attribute_name is handed to strcmp(), which reads on
-until it finds a NUL byte.
+Syzbot reported an issue which can be reproduced with these steps:
+	r0 = socket(AF_VSOCK, SOCK_STREAM, 0)
+	bind(r0, {VMADDR_CID_ANY, PORT})
+	connect(r0, {VMADDR_CID_LOCAL, PORT}) -> -1, EPROTO (self-connect)
+	listen(r0, backlog)                   -> 0
+	r1 = socket(AF_VSOCK, SOCK_STREAM, 0)
+	connect(r1, {VMADDR_CID_LOCAL, PORT}) -> 0
+	accept(r0)                            -> -1, EPROTO (stale sk_err)
 
-Every kobject in these ksets is built from an entry that was populated,
-so a miss does not look reachable from sysfs today.  The bound is wrong
-either way and the read is out of bounds.
+Basically, it creates a socket (r0) and triggers a self-connect after
+binding it. This self-connect fails with EPROTO because it loops back
+to r0 while the socket is still in the TCP_SYN_SENT state, causing it
+to be incorrectly dispatched to the connecting-client path. The
+unexpected packet type encountered there sets sk_err to EPROTO.
 
-The matching macro in hp-bioscfg carried the same off-by-one and was
-corrected by commit 25150715e0b0 ("platform/x86: hp-bioscfg: Fix kernel
-panic in GET_INSTANCE_ID macro").  That macro takes a kobject pointer
-out of the out-of-bounds element and dereferences it, so it could fault.
-This one reads a char array.
+After that, it invokes a listen() call on the same socket. This
+listen() call succeeds because the kernel's listening path never
+inspects or clears sk_err. Then, a new socket (r1) is created as a
+normal client and connects to r0. However, vsock_accept() rejects this
+incoming connection because the listener's sk_err still holds the
+EPROTO error from the earlier failed self-connect.
 
-Use '<' to match the allocation.
+This rejection causes the child socket created for r1's connection to
+never be freed on virtio or hyperv transports; only the VMCI transport
+implements pending_work to revisit and clean up a rejected socket.
 
-Fixes: e8a60aa7404b ("platform/x86: Introduce support for Systems Management Driver over WMI for Dell Systems")
-Assisted-by: Claude:claude-opus-5
-Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
-Link: https://patch.msgid.link/20260814132535.4169956-1-sammiee5311@gmail.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+For a non-blocking connect(), vsock_connect() may return -EINPROGRESS
+immediately, and vsock_connect_timeout() can later set sk->sk_err
+asynchronously.
+
+Since no vsock transport ever sets sk_err on a socket while it is in
+TCP_LISTEN state, checking it in vsock_accept() serves no purpose and
+only carries forward errors left behind by earlier, unrelated
+connection attempts on the same socket. Remove the checks so accept()
+no longer rejects valid incoming connections because of a stale
+error, which also avoids the resource leak described above.
+
+Fixes: d021c344051a ("VSOCK: Introduce VM Sockets")
+Reported-by: syzbot+1b2c9c4a0f8708082678@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=1b2c9c4a0f8708082678
+Suggested-by: Michal Luczaj <mhal@rbox.co>
+Signed-off-by: Nguyen Dinh Phi <phind.uet@gmail.com>
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Link: https://patch.msgid.link/20260813173024.2362935-2-phind.uet@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/dell/dell-wmi-sysman/dell-wmi-sysman.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/vmw_vsock/af_vsock.c | 10 +++-------
+ 1 file changed, 3 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/platform/x86/dell/dell-wmi-sysman/dell-wmi-sysman.h b/drivers/platform/x86/dell/dell-wmi-sysman/dell-wmi-sysman.h
-index 3bddedad5eba2..eb48ced558232 100644
---- a/drivers/platform/x86/dell/dell-wmi-sysman/dell-wmi-sysman.h
-+++ b/drivers/platform/x86/dell/dell-wmi-sysman/dell-wmi-sysman.h
-@@ -107,7 +107,7 @@ enum {
- static int get_##type##_instance_id(struct kobject *kobj)			\
- {										\
- 	int i;									\
--	for (i = 0; i <= wmi_priv.type##_instances_count; i++) {		\
-+	for (i = 0; i < wmi_priv.type##_instances_count; i++) {			\
- 		if (!(strcmp(kobj->name, wmi_priv.type##_data[i].attribute_name)))\
- 			return i;						\
- 	}									\
+diff --git a/net/vmw_vsock/af_vsock.c b/net/vmw_vsock/af_vsock.c
+index 622dbd0467994..3cd5c3561be33 100644
+--- a/net/vmw_vsock/af_vsock.c
++++ b/net/vmw_vsock/af_vsock.c
+@@ -1893,7 +1893,7 @@ static int vsock_accept(struct socket *sock, struct socket *newsock,
+ 	timeout = sock_rcvtimeo(listener, arg->flags & O_NONBLOCK);
+ 
+ 	while ((connected = vsock_dequeue_accept(listener)) == NULL &&
+-	       listener->sk_err == 0 && timeout != 0) {
++		timeout != 0) {
+ 		prepare_to_wait(sk_sleep(listener), &wait, TASK_INTERRUPTIBLE);
+ 		release_sock(listener);
+ 		timeout = schedule_timeout(timeout);
+@@ -1906,13 +1906,9 @@ static int vsock_accept(struct socket *sock, struct socket *newsock,
+ 		}
+ 	}
+ 
+-	if (listener->sk_err) {
+-		err = -listener->sk_err;
+-	} else if (!connected) {
++	if (!connected) {
+ 		err = -EAGAIN;
+-	}
+-
+-	if (connected) {
++	} else {
+ 		sk_acceptq_removed(listener);
+ 
+ 		lock_sock_nested(connected, SINGLE_DEPTH_NESTING);
 -- 
 2.53.0
 
