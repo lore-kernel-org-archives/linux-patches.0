@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6346837E2F3;
-	Sat, 12 Sep 2026 19:18:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 697FF37F337;
+	Sat, 12 Sep 2026 19:18:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789240729; cv=none; b=n9RzdJNN14XS5Bt362H4S/cjGWC/ehZMENbKr2u3RSppBW3/AUgm/Kj45L45oroIm9vv9aqUgB3IcA24RIIpWrGzG4U9VNiM1wITQY6pQ96MehvYuv6J0ZrIirsCU4bI5urHqPqjufl1rHoPyr+OWdUyBs7b/esukefp5783SDw=
+	t=1789240734; cv=none; b=AnUa2XqqrMcVLuiNXPgTtLV3Uml6fciMWA51mOTg2xOOzx13eW0iv4o1VZAaobY8X+/8hwVziENi8KhGsycA3csCPpMpiqKe68bBUhVadpaEPxaH3TWtIidq/Ijxu33K/iskqmGCSYYYu+K1hu9D+PDnCKvg9gBzt4Bib6lC2Vc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789240729; c=relaxed/simple;
-	bh=uJqouFQSFsQGz46zoNriuq0NMIne/32+yKyKNvcVKyI=;
+	s=arc-20240116; t=1789240734; c=relaxed/simple;
+	bh=p6Bb9nNAFzVqxTsZ0JAIBNW9VqE8og34d5bzqWUenbk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UjdwAJLFvENyzFRxzgsXxlpGDk63kmdc8KAPS3n/a9/OB18M4vFzazCfA+yOLsQ2NO6QnP1kfTjYToyJaV03QC8EoXi2sHuk0ViWvAX4y32m/48KlFfzIA6+bK/Cu5aqUrWh2nY+KmcJmM9PytE3jn8z+4Y1DRE0pVCMhz09uIw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=awzT0RYI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OVWgQ3d592BI3MUw5fhKBFdfkiDQNWPIZJJ2G5fs2U3hRotl+uPM6tsM4YSgJF8B4qNV4TD1pUT3qgsXmTqR1hwAOOVwbj5n3Enydz37VoRa6DFz/uBTppYuFp1G3fVIdePMib8DNYdVnZ6u/p+ZAv1U2KVWNGlRg1Y6J96U8L4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MXh6Lreb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="awzT0RYI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26E941F000FF;
-	Sat, 12 Sep 2026 19:18:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MXh6Lreb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E5F21F00893;
+	Sat, 12 Sep 2026 19:18:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789240728;
-	bh=CVfp8YCnDm+YdsNV5Yl9cRutoGE5BO9PYdSwd4A9+dw=;
+	s=korg; t=1789240733;
+	bh=aoY/ku0CK86KLSaTa+EYQk6a1AmHrFEy1Y4gxns0ovo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=awzT0RYIcrCLBBrKy+qUZXwsRDVuRkn84ZtvRrkFDPbUR9Ageg+LWE91WcFLuy8KW
-	 bmq7OFCUWJNJdvYNGBR03WfR49+tZSy3sq1IyeZi45B44xBEFM/Af0caTFy6Ijc2Bd
-	 YChUzGLbfnlx05QvrlhwVabqgN35Yjp8x2vbpDsk=
+	b=MXh6LrebdxcBSVZXb9avXdlPTy9q8DoPboOdA7RHDFmV+PI6Ihg1QVs8iGPdMpUeC
+	 RrPdxiskee9/H+CjPvudOvPL4nSq08Z1+k3wLiiZ7BK6O20UM8Et2WTKhWZDsK/bBX
+	 c83ljrKXX7D9pxxNtvtqt6uRgi1/SLNQml/BBK4U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Abel Vesa <abel.vesa@linaro.org>,
-	Bjorn Andersson <bjorn.andersson@linaro.org>,
+	syzbot+9111d2255a9710e87562@syzkaller.appspotmail.com,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 927/935] clk: qcom: Drop mmcx gdsc supply for dispcc and videocc
-Date: Sat, 12 Sep 2026 09:05:57 +0200
-Message-ID: <20260912065548.079982886@linuxfoundation.org>
+Subject: [PATCH 5.15 928/935] RDMA/nldev: Check stat attribute before accessing it
+Date: Sat, 12 Sep 2026 09:05:58 +0200
+Message-ID: <20260912065548.104623761@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -52,74 +52,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abel Vesa <abel.vesa@linaro.org>
+From: Leon Romanovsky <leonro@nvidia.com>
 
-[ Upstream commit b1ec8b53c9ae5fae33d60e9638d39ca5346b941b ]
+[ Upstream commit d821f7c13ca03318ad1bdc64ce64afb43080a07a ]
 
-Both dispcc and videocc use mmcx power domain now.
-Lets drop the supply mmcx from every gdsc.
+The access to non-existent netlink attribute causes to the following
+kernel panic. Fix it by checking existence before trying to read it.
 
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Fixes: 266e5cf39a0f ("arm64: dts: qcom: sm8250: remove mmcx regulator")
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-Link: https://lore.kernel.org/r/20220713143200.3686765-1-abel.vesa@linaro.org
+  general protection fault, probably for non-canonical address 0xdffffc0000000000: 0000 [#1] PREEMPT SMP KASAN
+  KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
+  CPU: 0 PID: 6744 Comm: syz-executor.0 Not tainted 5.15.0-syzkaller #0
+  Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 01/01/2011
+  RIP: 0010:nla_get_u32 include/net/netlink.h:1554 [inline]
+  RIP: 0010:nldev_stat_set_mode_doit drivers/infiniband/core/nldev.c:1909 [inline]
+  RIP: 0010:nldev_stat_set_doit+0x578/0x10d0 drivers/infiniband/core/nldev.c:2040
+  Code: fa 4c 8b a4 24 f8 02 00 00 48 b8 00 00 00 00 00 fc ff df c7 84 24 80 00 00 00 00 00 00 00 49 8d 7c 24 04 48 89
+  fa 48 c1 ea 03 <0f> b6 14 02 48 89 f8 83 e0 07 83 c0 03 38 d0 7c 08 84 d2 0f 85 02
+  RSP: 0018:ffffc90004acf2e8 EFLAGS: 00010247
+  RAX: dffffc0000000000 RBX: 0000000000000000 RCX: ffffc90002b94000
+  RDX: 0000000000000000 RSI: ffffffff8684c5ff RDI: 0000000000000004
+  RBP: ffff88807cda4000 R08: 0000000000000000 R09: ffff888023fb8027
+  R10: ffffffff8684c5d7 R11: 0000000000000000 R12: 0000000000000000
+  R13: 0000000000000001 R14: ffff888041024280 R15: ffff888031ade780
+  FS:  00007eff9dddd700(0000) GS:ffff8880b9c00000(0000) knlGS:0000000000000000
+  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+  CR2: 0000001b2ef24000 CR3: 0000000036902000 CR4: 00000000003506f0
+  DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+  DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+  Call Trace:
+   <TASK>
+   rdma_nl_rcv_msg+0x36d/0x690 drivers/infiniband/core/netlink.c:195
+   rdma_nl_rcv_skb drivers/infiniband/core/netlink.c:239 [inline]
+   rdma_nl_rcv+0x2ee/0x430 drivers/infiniband/core/netlink.c:259
+   netlink_unicast_kernel net/netlink/af_netlink.c:1319 [inline]
+   netlink_unicast+0x533/0x7d0 net/netlink/af_netlink.c:1345
+   netlink_sendmsg+0x86d/0xda0 net/netlink/af_netlink.c:1916
+   sock_sendmsg_nosec net/socket.c:704 [inline]
+   sock_sendmsg+0xcf/0x120 net/socket.c:724
+   ____sys_sendmsg+0x6e8/0x810 net/socket.c:2409
+   ___sys_sendmsg+0xf3/0x170 net/socket.c:2463
+   __sys_sendmsg+0xe5/0x1b0 net/socket.c:2492
+   do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+   do_syscall_64+0x35/0xb0 arch/x86/entry/common.c:80
+   entry_SYSCALL_64_after_hwframe+0x44/0xae
+
+Fixes: 822cf785ac6d ("RDMA/nldev: Split nldev_stat_set_mode_doit out of nldev_stat_set_doit")
+Link: https://lore.kernel.org/r/b21967c366f076ff1988862f9c8a1aa0244c599f.1637151999.git.leonro@nvidia.com
+Reported-by: syzbot+9111d2255a9710e87562@syzkaller.appspotmail.com
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/dispcc-sm8250.c  | 1 -
- drivers/clk/qcom/videocc-sm8250.c | 4 ----
- 2 files changed, 5 deletions(-)
+ drivers/infiniband/core/nldev.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/clk/qcom/dispcc-sm8250.c b/drivers/clk/qcom/dispcc-sm8250.c
-index 2adb38ada9bfb..85bb2181bbafe 100644
---- a/drivers/clk/qcom/dispcc-sm8250.c
-+++ b/drivers/clk/qcom/dispcc-sm8250.c
-@@ -1136,7 +1136,6 @@ static struct gdsc mdss_gdsc = {
- 	},
- 	.pwrsts = PWRSTS_OFF_ON,
- 	.flags = HW_CTRL,
--	.supply = "mmcx",
- };
+diff --git a/drivers/infiniband/core/nldev.c b/drivers/infiniband/core/nldev.c
+index 19dce093e4cb6..4f327e6c5c701 100644
+--- a/drivers/infiniband/core/nldev.c
++++ b/drivers/infiniband/core/nldev.c
+@@ -1900,7 +1900,8 @@ static int nldev_stat_set_mode_doit(struct sk_buff *msg,
+ 	int ret;
  
- static struct clk_regmap *disp_cc_sm8250_clocks[] = {
-diff --git a/drivers/clk/qcom/videocc-sm8250.c b/drivers/clk/qcom/videocc-sm8250.c
-index 7b435a1c2c4b5..eedef85d90e51 100644
---- a/drivers/clk/qcom/videocc-sm8250.c
-+++ b/drivers/clk/qcom/videocc-sm8250.c
-@@ -276,7 +276,6 @@ static struct gdsc mvs0c_gdsc = {
- 	},
- 	.flags = 0,
- 	.pwrsts = PWRSTS_OFF_ON,
--	.supply = "mmcx",
- };
+ 	/* Currently only counter for QP is supported */
+-	if (nla_get_u32(tb[RDMA_NLDEV_ATTR_STAT_RES]) != RDMA_NLDEV_ATTR_RES_QP)
++	if (!tb[RDMA_NLDEV_ATTR_STAT_RES] ||
++	    nla_get_u32(tb[RDMA_NLDEV_ATTR_STAT_RES]) != RDMA_NLDEV_ATTR_RES_QP)
+ 		return -EINVAL;
  
- static struct gdsc mvs1c_gdsc = {
-@@ -286,7 +285,6 @@ static struct gdsc mvs1c_gdsc = {
- 	},
- 	.flags = 0,
- 	.pwrsts = PWRSTS_OFF_ON,
--	.supply = "mmcx",
- };
- 
- static struct gdsc mvs0_gdsc = {
-@@ -296,7 +294,6 @@ static struct gdsc mvs0_gdsc = {
- 	},
- 	.flags = HW_CTRL,
- 	.pwrsts = PWRSTS_OFF_ON,
--	.supply = "mmcx",
- };
- 
- static struct gdsc mvs1_gdsc = {
-@@ -306,7 +303,6 @@ static struct gdsc mvs1_gdsc = {
- 	},
- 	.flags = HW_CTRL,
- 	.pwrsts = PWRSTS_OFF_ON,
--	.supply = "mmcx",
- };
- 
- static struct clk_regmap *video_cc_sm8250_clocks[] = {
+ 	mode = nla_get_u32(tb[RDMA_NLDEV_ATTR_STAT_MODE]);
 -- 
 2.53.0
 
