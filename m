@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6DB23B71AB;
-	Sat, 12 Sep 2026 20:05:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FCBE3B3BFA;
+	Sat, 12 Sep 2026 20:05:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789243548; cv=none; b=DSPsAyiLb/Sed6kc+UItSp+7p2HiFro8BSYryebVo1SSBF56XcVJ7pYrveihnPJx2YM9vdxkgM1ExfL8fim4EpP2eDNV826P+19zW/drwgoOWm6+kMHDtJ+bljsGZeAop4dViOMLTt6CWaUbyncTY9ekahaglj5YXRQlGHcU1/g=
+	t=1789243550; cv=none; b=MHzcWomwlqdwZjYf/jqU7nxdYEXARUx40YUrkvTIyMxd7OF7TV8R9974MQw1OnfWp6CdHp25rUFDSWq3eCTRruuz7Rmlc01XuqD05EDXJO+sen4jP8OT24IqZsSvjxsa8hoatC7JFK/b2RDu8BcWuYLm8zn5UQXYqvoSnJUDDQE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789243548; c=relaxed/simple;
-	bh=Ov2pZEoithgrgkzlF7dcp8RopQTEWTzjZ/nKkyGjtP4=;
+	s=arc-20240116; t=1789243550; c=relaxed/simple;
+	bh=r38FZoF8j6jFXWwglqH/O3JAgylMWtIf1omsl09zYJc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=og1U1+lfFJ8UhxoYBrg8qGEu9OPOFH4OzBCQVNMAD6LITmoP+N7g/ZOyL8LB7pogaSjK9C8ygsvXpRskXSDHV4hQYFl+LAs6ba4pCAmS5HyUOm1X8pJP4J+SeDvh2wVCdk5x5FQiOzGxLLGQ9DZXyefvzN9g0wGZ21OE3Zhs8Os=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y3+bCaZv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=f50DP3a3vOzEtPU29VEBwT9gloVpoDNbADHQFfWni51M3S15rnoXLUtuSKC4ZhQGHmIOmeL38Qb30uuUFcYv4UNoiIkklwC8WorrVjAX6RynM6vbPoBbe7sm2w2IrsB0Pvf/dSEPbN+R1ENWh3f2BKJ5YzTp1Y7KptG4k8Yk4rM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ur1ZJlfZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y3+bCaZv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92BCE1F00898;
-	Sat, 12 Sep 2026 20:05:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ur1ZJlfZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FD1A1F000FF;
+	Sat, 12 Sep 2026 20:05:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789243541;
-	bh=vARPqkX1QvN69xP62XUPOR5+3L5KZv+f4dcX3qD9Vec=;
+	s=korg; t=1789243544;
+	bh=Xz0cM4m0vW+3pWZWPo0hUT1KjwMAwIn3MbKQvMlJ6rc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y3+bCaZvy0oylmldYcHkOtNMdEGqBO1kZByBG0Hwn4jjni4t+pnPo51TPipWAGDlq
-	 S2tDmOsInadIEu2LsYtwknGU9Y5AayjxA7CjZOKBRVRkGT1VkzWPS2Z+/OdDFCNUXN
-	 E0Oir8xit16+h0gJj9cYohZ2zWzIMJCJt09TvJco=
+	b=Ur1ZJlfZXw97yK3XHQTKWVOZpA9gczLoobyVk/0gkBE3SuZLQmeF2AEwc6dJZCJzh
+	 88VrDU0bUPRrpk4k1Rul+GWOBfW3VHulkWZbPYz3wLgVkSb92Oyi4v1pUTlmZ9Xy0v
+	 IdAzKqVCRrx29qlbsphuqBQnnM34ipsv+551YlNo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Urban <surban@surban.net>,
+	Edward Adam Davis <eadavis@qq.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 748/798] Bluetooth: compute LE flow credits based on recvbuf space
-Date: Sat, 12 Sep 2026 09:06:16 +0200
-Message-ID: <20260912065534.216004884@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	syzbot+b7f6f8c9303466e16c8a@syzkaller.appspotmail.com
+Subject: [PATCH 5.10 749/798] bluetooth/l2cap: sync sock recv cb and release
+Date: Sat, 12 Sep 2026 09:06:17 +0200
+Message-ID: <20260912065534.238252948@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -51,387 +52,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Urban <surban@surban.net>
+From: Edward Adam Davis <eadavis@qq.com>
 
-[ Upstream commit ce60b9231b66710b6ee24042ded26efee120ecfc ]
+[ Upstream commit 89e856e124f9ae548572c56b1b70c2255705f8fe ]
 
-Previously LE flow credits were returned to the
-sender even if the socket's receive buffer was
-full. This meant that no back-pressure
-was applied to the sender, thus it continued to
-send data, resulting in data loss without any
-error being reported. Furthermore, the amount
-of credits was essentially fixed to a small
-amount, leading to reduced performance.
+The problem occurs between the system call to close the sock and hci_rx_work,
+where the former releases the sock and the latter accesses it without lock protection.
 
-This is fixed by computing the number of returned
-LE flow credits based on the estimated available
-space in the receive buffer of an L2CAP socket.
-Consequently, if the receive buffer is full, no
-credits are returned until the buffer is read and
-thus cleared by user-space.
+           CPU0                       CPU1
+           ----                       ----
+           sock_close                 hci_rx_work
+	   l2cap_sock_release         hci_acldata_packet
+	   l2cap_sock_kill            l2cap_recv_frame
+	   sk_free                    l2cap_conless_channel
+	                              l2cap_sock_recv_cb
 
-Since the computation of available receive buffer
-space can only be performed approximately (due to
-sk_buff overhead) and the receive buffer size may
-be changed by user-space after flow credits have
-been sent, superfluous received data is temporary
-stored within l2cap_pinfo. This is necessary
-because Bluetooth LE provides no retransmission
-mechanism once the data has been acked by the
-physical layer.
+If hci_rx_work processes the data that needs to be received before the sock is
+closed, then everything is normal; Otherwise, the work thread may access the
+released sock when receiving data.
 
-If receive buffer space estimation is not possible
-at the moment, we fall back to providing credits
-for one full packet as before. This is currently
-the case during connection setup, when MPS is not
-yet available.
+Add a chan mutex in the rx callback of the sock to achieve synchronization between
+the sock release and recv cb.
 
-Fixes: b1c325c23d75 ("Bluetooth: Implement returning of LE L2CAP credits")
-Signed-off-by: Sebastian Urban <surban@surban.net>
+Sock is dead, so set chan data to NULL, avoid others use invalid sock pointer.
+
+Reported-and-tested-by: syzbot+b7f6f8c9303466e16c8a@syzkaller.appspotmail.com
+Signed-off-by: Edward Adam Davis <eadavis@qq.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Stable-dep-of: d4bfa78fd679 ("Bluetooth: L2CAP: reject accept queue add unless BT_LISTEN")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/bluetooth/l2cap.h | 11 ++++-
- net/bluetooth/l2cap_core.c    | 56 ++++++++++++++++++---
- net/bluetooth/l2cap_sock.c    | 91 ++++++++++++++++++++++++++++-------
- 3 files changed, 132 insertions(+), 26 deletions(-)
+ net/bluetooth/l2cap_sock.c | 25 ++++++++++++++++++++++---
+ 1 file changed, 22 insertions(+), 3 deletions(-)
 
-diff --git a/include/net/bluetooth/l2cap.h b/include/net/bluetooth/l2cap.h
-index af590a802eba4..cbde15ad06fa4 100644
---- a/include/net/bluetooth/l2cap.h
-+++ b/include/net/bluetooth/l2cap.h
-@@ -586,6 +586,9 @@ struct l2cap_chan {
- 	__u16		tx_credits;
- 	__u16		rx_credits;
- 
-+	/* estimated available receive buffer space or -1 if unknown */
-+	ssize_t		rx_avail;
-+
- 	__u8		tx_state;
- 	__u8		rx_state;
- 
-@@ -726,10 +729,15 @@ struct l2cap_user {
- /* ----- L2CAP socket info ----- */
- #define l2cap_pi(sk) ((struct l2cap_pinfo *) sk)
- 
-+struct l2cap_rx_busy {
-+	struct list_head	list;
-+	struct sk_buff		*skb;
-+};
-+
- struct l2cap_pinfo {
- 	struct bt_sock		bt;
- 	struct l2cap_chan	*chan;
--	struct sk_buff		*rx_busy_skb;
-+	struct list_head	rx_busy;
- };
- 
- enum {
-@@ -988,6 +996,7 @@ int l2cap_chan_connect(struct l2cap_chan *chan, __le16 psm, u16 cid,
- int l2cap_chan_reconfigure(struct l2cap_chan *chan, __u16 mtu);
- int l2cap_chan_send(struct l2cap_chan *chan, struct msghdr *msg, size_t len);
- void l2cap_chan_busy(struct l2cap_chan *chan, int busy);
-+void l2cap_chan_rx_avail(struct l2cap_chan *chan, ssize_t rx_avail);
- int l2cap_chan_check_security(struct l2cap_chan *chan, bool initiator);
- void l2cap_chan_set_defaults(struct l2cap_chan *chan);
- int l2cap_ertm_init(struct l2cap_chan *chan);
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index 1c2114930f86f..f59146ae72439 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -483,6 +483,9 @@ struct l2cap_chan *l2cap_chan_create(void)
- 	/* Set default lock nesting level */
- 	atomic_set(&chan->nesting, L2CAP_NESTING_NORMAL);
- 
-+	/* Available receive buffer space is initially unknown */
-+	chan->rx_avail = -1;
-+
- 	write_lock(&chan_list_lock);
- 	list_add(&chan->global_l, &chan_list);
- 	write_unlock(&chan_list_lock);
-@@ -568,6 +571,28 @@ void l2cap_chan_set_defaults(struct l2cap_chan *chan)
- }
- EXPORT_SYMBOL_GPL(l2cap_chan_set_defaults);
- 
-+static __u16 l2cap_le_rx_credits(struct l2cap_chan *chan)
-+{
-+	size_t sdu_len = chan->sdu ? chan->sdu->len : 0;
-+
-+	if (chan->mps == 0)
-+		return 0;
-+
-+	/* If we don't know the available space in the receiver buffer, give
-+	 * enough credits for a full packet.
-+	 */
-+	if (chan->rx_avail == -1)
-+		return (chan->imtu / chan->mps) + 1;
-+
-+	/* If we know how much space is available in the receive buffer, give
-+	 * out as many credits as would fill the buffer.
-+	 */
-+	if (chan->rx_avail <= sdu_len)
-+		return 0;
-+
-+	return DIV_ROUND_UP(chan->rx_avail - sdu_len, chan->mps);
-+}
-+
- static void l2cap_le_flowctl_init(struct l2cap_chan *chan, u16 tx_credits)
- {
- 	chan->sdu = NULL;
-@@ -576,8 +601,7 @@ static void l2cap_le_flowctl_init(struct l2cap_chan *chan, u16 tx_credits)
- 	chan->tx_credits = tx_credits;
- 	/* Derive MPS from connection MTU to stop HCI fragmentation */
- 	chan->mps = min_t(u16, chan->imtu, chan->conn->mtu - L2CAP_HDR_SIZE);
--	/* Give enough credits for a full packet */
--	chan->rx_credits = (chan->imtu / chan->mps) + 1;
-+	chan->rx_credits = l2cap_le_rx_credits(chan);
- 
- 	skb_queue_head_init(&chan->tx_q);
- }
-@@ -589,7 +613,7 @@ static void l2cap_ecred_init(struct l2cap_chan *chan, u16 tx_credits)
- 	/* L2CAP implementations shall support a minimum MPS of 64 octets */
- 	if (chan->mps < L2CAP_ECRED_MIN_MPS) {
- 		chan->mps = L2CAP_ECRED_MIN_MPS;
--		chan->rx_credits = (chan->imtu / chan->mps) + 1;
-+		chan->rx_credits = l2cap_le_rx_credits(chan);
- 	}
- }
- 
-@@ -7755,9 +7779,7 @@ static void l2cap_chan_le_send_credits(struct l2cap_chan *chan)
- {
- 	struct l2cap_conn *conn = chan->conn;
- 	struct l2cap_le_credits pkt;
--	u16 return_credits;
--
--	return_credits = (chan->imtu / chan->mps) + 1;
-+	u16 return_credits = l2cap_le_rx_credits(chan);
- 
- 	if (chan->rx_credits >= return_credits)
- 		return;
-@@ -7776,6 +7798,19 @@ static void l2cap_chan_le_send_credits(struct l2cap_chan *chan)
- 	l2cap_send_cmd(conn, chan->ident, L2CAP_LE_CREDITS, sizeof(pkt), &pkt);
- }
- 
-+void l2cap_chan_rx_avail(struct l2cap_chan *chan, ssize_t rx_avail)
-+{
-+	if (chan->rx_avail == rx_avail)
-+		return;
-+
-+	BT_DBG("chan %p has %zd bytes avail for rx", chan, rx_avail);
-+
-+	chan->rx_avail = rx_avail;
-+
-+	if (chan->state == BT_CONNECTED)
-+		l2cap_chan_le_send_credits(chan);
-+}
-+
- static int l2cap_ecred_recv(struct l2cap_chan *chan, struct sk_buff *skb)
- {
- 	int err;
-@@ -7785,6 +7820,12 @@ static int l2cap_ecred_recv(struct l2cap_chan *chan, struct sk_buff *skb)
- 	/* Wait recv to confirm reception before updating the credits */
- 	err = chan->ops->recv(chan, skb);
- 
-+	if (err < 0 && chan->rx_avail != -1) {
-+		BT_ERR("Queueing received LE L2CAP data failed");
-+		l2cap_send_disconn_req(chan, ECONNRESET);
-+		return err;
-+	}
-+
- 	/* Update credits whenever an SDU is received */
- 	l2cap_chan_le_send_credits(chan);
- 
-@@ -7809,7 +7850,8 @@ static int l2cap_ecred_data_rcv(struct l2cap_chan *chan, struct sk_buff *skb)
- 	}
- 
- 	chan->rx_credits--;
--	BT_DBG("rx_credits %u -> %u", chan->rx_credits + 1, chan->rx_credits);
-+	BT_DBG("chan %p: rx_credits %u -> %u",
-+	       chan, chan->rx_credits + 1, chan->rx_credits);
- 
- 	/* Update if remote had run out of credits, this should only happens
- 	 * if the remote is not using the entire MPS.
 diff --git a/net/bluetooth/l2cap_sock.c b/net/bluetooth/l2cap_sock.c
-index 290d4eb44d916..ec95962077e2d 100644
+index ec95962077e2d..9d834f2254626 100644
 --- a/net/bluetooth/l2cap_sock.c
 +++ b/net/bluetooth/l2cap_sock.c
-@@ -1150,6 +1150,34 @@ static int l2cap_sock_sendmsg(struct socket *sock, struct msghdr *msg,
- 	return err;
- }
+@@ -1258,6 +1258,10 @@ static void l2cap_sock_kill(struct sock *sk)
  
-+static void l2cap_publish_rx_avail(struct l2cap_chan *chan)
-+{
-+	struct sock *sk = chan->data;
-+	ssize_t avail = sk->sk_rcvbuf - atomic_read(&sk->sk_rmem_alloc);
-+	int expected_skbs, skb_overhead;
-+
-+	if (avail <= 0) {
-+		l2cap_chan_rx_avail(chan, 0);
-+		return;
-+	}
-+
-+	if (!chan->mps) {
-+		l2cap_chan_rx_avail(chan, -1);
-+		return;
-+	}
-+
-+	/* Correct available memory by estimated sk_buff overhead.
-+	 * This is significant due to small transfer sizes. However, accept
-+	 * at least one full packet if receive space is non-zero.
+ 	BT_DBG("sk %p state %s", sk, state_to_string(sk->sk_state));
+ 
++	/* Sock is dead, so set chan data to NULL, avoid other task use invalid
++	 * sock pointer.
 +	 */
-+	expected_skbs = DIV_ROUND_UP(avail, chan->mps);
-+	skb_overhead = expected_skbs * sizeof(struct sk_buff);
-+	if (skb_overhead < avail)
-+		l2cap_chan_rx_avail(chan, avail - skb_overhead);
-+	else
-+		l2cap_chan_rx_avail(chan, -1);
-+}
-+
- static int l2cap_sock_recvmsg(struct socket *sock, struct msghdr *msg,
- 			      size_t len, int flags)
- {
-@@ -1186,28 +1214,33 @@ static int l2cap_sock_recvmsg(struct socket *sock, struct msghdr *msg,
- 	else
- 		err = bt_sock_recvmsg(sock, msg, len, flags);
++	l2cap_pi(sk)->chan->data = NULL;
+ 	/* Kill poor orphan */
  
--	if (pi->chan->mode != L2CAP_MODE_ERTM)
-+	if (pi->chan->mode != L2CAP_MODE_ERTM &&
-+	    pi->chan->mode != L2CAP_MODE_LE_FLOWCTL &&
-+	    pi->chan->mode != L2CAP_MODE_EXT_FLOWCTL)
- 		return err;
+ 	l2cap_chan_put(l2cap_pi(sk)->chan);
+@@ -1540,12 +1544,25 @@ static struct l2cap_chan *l2cap_sock_new_connection_cb(struct l2cap_chan *chan)
  
--	/* Attempt to put pending rx data in the socket buffer */
--
- 	lock_sock(sk);
- 
--	if (!test_bit(CONN_LOCAL_BUSY, &pi->chan->conn_state))
--		goto done;
-+	l2cap_publish_rx_avail(pi->chan);
- 
--	if (pi->rx_busy_skb) {
--		if (!__sock_queue_rcv_skb(sk, pi->rx_busy_skb))
--			pi->rx_busy_skb = NULL;
--		else
-+	/* Attempt to put pending rx data in the socket buffer */
-+	while (!list_empty(&pi->rx_busy)) {
-+		struct l2cap_rx_busy *rx_busy =
-+			list_first_entry(&pi->rx_busy,
-+					 struct l2cap_rx_busy,
-+					 list);
-+		if (__sock_queue_rcv_skb(sk, rx_busy->skb) < 0)
- 			goto done;
-+		list_del(&rx_busy->list);
-+		kfree(rx_busy);
- 	}
- 
- 	/* Restore data flow when half of the receive buffer is
- 	 * available.  This avoids resending large numbers of
- 	 * frames.
- 	 */
--	if (atomic_read(&sk->sk_rmem_alloc) <= sk->sk_rcvbuf >> 1)
-+	if (test_bit(CONN_LOCAL_BUSY, &pi->chan->conn_state) &&
-+	    atomic_read(&sk->sk_rmem_alloc) <= sk->sk_rcvbuf >> 1)
- 		l2cap_chan_busy(pi->chan, 0);
- 
- done:
-@@ -1508,17 +1541,20 @@ static struct l2cap_chan *l2cap_sock_new_connection_cb(struct l2cap_chan *chan)
  static int l2cap_sock_recv_cb(struct l2cap_chan *chan, struct sk_buff *skb)
  {
- 	struct sock *sk = chan->data;
-+	struct l2cap_pinfo *pi = l2cap_pi(sk);
+-	struct sock *sk = chan->data;
+-	struct l2cap_pinfo *pi = l2cap_pi(sk);
++	struct sock *sk;
++	struct l2cap_pinfo *pi;
  	int err;
  
- 	lock_sock(sk);
+-	lock_sock(sk);
++	/* To avoid race with sock_release, a chan lock needs to be added here
++	 * to synchronize the sock.
++	 */
++	l2cap_chan_hold(chan);
++	l2cap_chan_lock(chan);
++	sk = chan->data;
  
--	if (l2cap_pi(sk)->rx_busy_skb) {
-+	if (chan->mode == L2CAP_MODE_ERTM && !list_empty(&pi->rx_busy)) {
++	if (!sk) {
++		l2cap_chan_unlock(chan);
++		l2cap_chan_put(chan);
++		return -ENXIO;
++	}
++
++	pi = l2cap_pi(sk);
++	lock_sock(sk);
+ 	if (chan->mode == L2CAP_MODE_ERTM && !list_empty(&pi->rx_busy)) {
  		err = -ENOMEM;
  		goto done;
- 	}
+@@ -1594,6 +1611,8 @@ static int l2cap_sock_recv_cb(struct l2cap_chan *chan, struct sk_buff *skb)
  
- 	if (chan->mode != L2CAP_MODE_ERTM &&
--	    chan->mode != L2CAP_MODE_STREAMING) {
-+	    chan->mode != L2CAP_MODE_STREAMING &&
-+	    chan->mode != L2CAP_MODE_LE_FLOWCTL &&
-+	    chan->mode != L2CAP_MODE_EXT_FLOWCTL) {
- 		/* Even if no filter is attached, we could potentially
- 		 * get errors from security modules, etc.
- 		 */
-@@ -1529,7 +1565,9 @@ static int l2cap_sock_recv_cb(struct l2cap_chan *chan, struct sk_buff *skb)
+ done:
+ 	release_sock(sk);
++	l2cap_chan_unlock(chan);
++	l2cap_chan_put(chan);
  
- 	err = __sock_queue_rcv_skb(sk, skb);
- 
--	/* For ERTM, handle one skb that doesn't fit into the recv
-+	l2cap_publish_rx_avail(chan);
-+
-+	/* For ERTM and LE, handle a skb that doesn't fit into the recv
- 	 * buffer.  This is important to do because the data frames
- 	 * have already been acked, so the skb cannot be discarded.
- 	 *
-@@ -1538,8 +1576,18 @@ static int l2cap_sock_recv_cb(struct l2cap_chan *chan, struct sk_buff *skb)
- 	 * acked and reassembled until there is buffer space
- 	 * available.
- 	 */
--	if (err < 0 && chan->mode == L2CAP_MODE_ERTM) {
--		l2cap_pi(sk)->rx_busy_skb = skb;
-+	if (err < 0 &&
-+	    (chan->mode == L2CAP_MODE_ERTM ||
-+	     chan->mode == L2CAP_MODE_LE_FLOWCTL ||
-+	     chan->mode == L2CAP_MODE_EXT_FLOWCTL)) {
-+		struct l2cap_rx_busy *rx_busy =
-+			kmalloc(sizeof(*rx_busy), GFP_KERNEL);
-+		if (!rx_busy) {
-+			err = -ENOMEM;
-+			goto done;
-+		}
-+		rx_busy->skb = skb;
-+		list_add_tail(&rx_busy->list, &pi->rx_busy);
- 		l2cap_chan_busy(chan, 1);
- 		err = 0;
- 	}
-@@ -1777,6 +1825,8 @@ static const struct l2cap_ops l2cap_chan_ops = {
- 
- static void l2cap_sock_destruct(struct sock *sk)
- {
-+	struct l2cap_rx_busy *rx_busy, *next;
-+
- 	BT_DBG("sk %p", sk);
- 
- 	if (l2cap_pi(sk)->chan) {
-@@ -1784,9 +1834,10 @@ static void l2cap_sock_destruct(struct sock *sk)
- 		l2cap_chan_put(l2cap_pi(sk)->chan);
- 	}
- 
--	if (l2cap_pi(sk)->rx_busy_skb) {
--		kfree_skb(l2cap_pi(sk)->rx_busy_skb);
--		l2cap_pi(sk)->rx_busy_skb = NULL;
-+	list_for_each_entry_safe(rx_busy, next, &l2cap_pi(sk)->rx_busy, list) {
-+		kfree_skb(rx_busy->skb);
-+		list_del(&rx_busy->list);
-+		kfree(rx_busy);
- 	}
- 
- 	skb_queue_purge(&sk->sk_receive_queue);
-@@ -1870,6 +1921,8 @@ static void l2cap_sock_init(struct sock *sk, struct sock *parent)
- 
- 	chan->data = sk;
- 	chan->ops = &l2cap_chan_ops;
-+
-+	l2cap_publish_rx_avail(chan);
+ 	return err;
  }
- 
- static struct proto l2cap_proto = {
-@@ -1891,6 +1944,8 @@ static struct sock *l2cap_sock_alloc(struct net *net, struct socket *sock,
- 	sk->sk_destruct = l2cap_sock_destruct;
- 	sk->sk_sndtimeo = L2CAP_CONN_TIMEOUT;
- 
-+	INIT_LIST_HEAD(&l2cap_pi(sk)->rx_busy);
-+
- 	chan = l2cap_chan_create();
- 	if (!chan) {
- 		sk_free(sk);
 -- 
 2.53.0
 
