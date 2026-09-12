@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33BDE38F24D;
-	Sat, 12 Sep 2026 16:10:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ED592594BD;
+	Sat, 12 Sep 2026 16:10:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789229455; cv=none; b=RUyR5+SCpPfL6xdNIEReuVUaO3ZmogDb6/IewtU5Rgso/Ok9DPUt6sNBDjcvGmtqAFFBnsyA22YLG5Af0RX2rJBLO6kXBdzz24dUm9+N/L+m/QNfELkmkgtGWhRdYj0AyoTAen4pKNgj5L/SfC+tGnbCrQZDX3SRk/UZg0a0DYs=
+	t=1789229460; cv=none; b=YkWZZbH8rABsD3eHTRxvFNkeEjb4jhJXMxh6bGU6+LNiigcWXzxtd0WKWDSV2vdqE6KHXKaVEeqBH4gxFDlCz2SSyCQ/Hfi4fj/zLAw8vzUW9mwnnqO8s4Pi1wtoNDoTxPkMG51lLiaY4evqiKjDM2h9scA+XRlCXEiCzbbN5LM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789229455; c=relaxed/simple;
-	bh=20WFHR4jpZAbE5SNHD5tgu2qi1WRos+uElpQjEawNbw=;
+	s=arc-20240116; t=1789229460; c=relaxed/simple;
+	bh=fyVxpP7aV8sT7WvNTXzvKWUVCGkdFmRaYJGqLqMv0qw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M1x/4XCC8HEpfbzFr+ZQGsbEd/nwJmwDmjd81fM93a6EpISb9xTxdRTnZ5WWyCvYdozf7oNUdABwsO+Vcohdd7cVm9FDcLvJQTSatWfV+kuK3WfXrs0gDo/NNHfl8L5FWvaJtywd7vRfHiiSDiC7Hv+pO2WSnBU8rt4/UxrhTes=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TxEG8Hlo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=jOSVa5y64e/Kt3AER/IB0Hy4LI8TY1GGebrjew5JmtqOr5BlGGREalIMQXiPBCc0c8M1m/ebUwQDlnvn6Z0ZWJhN+1youv4SBI/sVdKO975+AjScl9EgxrecqvItF2IqrpEGbu4sZy2Tpcavco8DBeQYacFh8h13in4aOvTJsyI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=03tVXL5n; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TxEG8Hlo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFD791F00898;
-	Sat, 12 Sep 2026 16:10:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="03tVXL5n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A2EA1F000FF;
+	Sat, 12 Sep 2026 16:10:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789229454;
-	bh=p4qehKpeCVQKRsGXcC7u9Lb5fcaeHW/DsT4UWsix1ys=;
+	s=korg; t=1789229459;
+	bh=g6yJrG2xHfRZh80dORbU3JJtA1EMNqka3ZD4J4MoqiA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TxEG8HlohLGrvKHfOamfRDJJVRoGM20qRxxYLQp6l484uvY7TaMd0qykHVlYThxOF
-	 6459+oQ4PpkseTcjXh+RMNOO2bJrmfK91KstFDi7CaQka/gxWY6CJ47v4KoDnP1g3/
-	 Z1bLzM0lQQRMI+h5osgxED8HFmkFHTv0iEY0iw44=
+	b=03tVXL5nGthJQJ3pzTYuq2vRo0VZHq0otB8putFN09WkcW9S05XTn45n9le+XeqVo
+	 BbeIa4XLCIgREiRdmIndaR3u0mbjtJtkJ+/9umt5a3CLhu12LBBTwatO7PCUKe0RpL
+	 4T2brr/bU8WaA1udpPNqOnftNSSbo+w5b2mTV0aE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mert Seftali <mertsftl@gmail.com>,
-	Joshua Crofts <joshua.crofts1@gmail.com>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
+	=?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0592/1191] iio: accel: dmard09: Implement IIO_CHAN_INFO_SCALE
-Date: Sat, 12 Sep 2026 08:55:20 +0200
-Message-ID: <20260912065601.542540008@linuxfoundation.org>
+Subject: [PATCH 6.1 0557/1191] thermal/drivers/rcar_gen3_thermal: Fix device initialization
+Date: Sat, 12 Sep 2026 08:54:45 +0200
+Message-ID: <20260912065600.753772547@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -46,81 +47,131 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mert Seftali <mertsftl@gmail.com>
+From: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
 
-[ Upstream commit aa58ecc73466d0cb8c418de98e2225490bf600e3 ]
+[ Upstream commit 47b2d3d2ed6c5c20f3521d5b615ffc92ed18b974 ]
 
-Reading the in_accel_scale attribute on the DMARD09 has always returned
--EINVAL: the channels advertise scale via info_mask_shared_by_type so the
-IIO core exposes the attribute, but dmard09_read_raw() only handles
-IIO_CHAN_INFO_RAW, so a SCALE read falls through to 'default: return
--EINVAL':
+The thermal zone is registered before the device is register and the
+thermal coefficients are calculated, providing a window for very
+incorrect readings.
 
-    $ cat .../iio:deviceX/in_accel_scale
-    cat: in_accel_scale: Invalid argument
+The reason why the zone was register before the device was fully
+initialized was that the presence of the set_trips() callback is used to
+determine if the driver supports interrupt or not, as it is not defined
+if the device is incapable of interrupts.
 
-leaving userspace with raw counts it cannot convert to m/s^2.
+Fix this by using the operations structure in the private data instead
+of the zone to determine if interrupts are available or not, and
+initialize the device before registering the zone.
 
-The driver was written from a vendor source [1] without a datasheet, and
-the scale was declared but never implemented. The vendor source carries
-the sensitivity: its conversion is
-
-    acc = raw * GRAVITY_EARTH_1000 / sensitivity   (then / 1000 -> m/s^2)
-
-with sensitivity = 32 and GRAVITY_EARTH_1000 = 9807 ("about
-(9.80665)*1000"), i.e. 32 counts correspond to 1 g.
-
-That sensitivity applies to the value this driver already reports as raw:
-the vendor reduces each 16-bit sample to a signed 9-bit value, and the
-preparation in dmard09_read_raw() yields the same value. It is
-self-consistent: 256 counts / 32 = 8 g full scale, matching the +/-8g
-range.
-
-Implement the scale derived from that sensitivity using standard gravity:
-
-    scale = 9.80665 / 32 = 0.3064578125 m/s^2 per LSB
-
-Link: https://github.com/minstrelsy/mediatek/blob/1f49d8c87b839651bc89afc870277e8e0f2e2d55/custom/common/kernel/accelerometer/dmard09/dmard09.c [1]
-Fixes: a4fa6509dda4 ("iio: accel: add support for the Domintech DMARD09 3-axis accelerometer")
-Signed-off-by: Mert Seftali <mertsftl@gmail.com>
-Reviewed-by: Joshua Crofts <joshua.crofts1@gmail.com>
-Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Signed-off-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
+Reviewed-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Link: https://lore.kernel.org/r/20230208190333.3159879-4-niklas.soderlund+renesas@ragnatech.se
+Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Stable-dep-of: dd04ad1cdabc ("thermal/drivers/rcar: Fix error checking in probe()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/accel/dmard09.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/thermal/rcar_gen3_thermal.c | 23 +++++++++++++----------
+ 1 file changed, 13 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/iio/accel/dmard09.c b/drivers/iio/accel/dmard09.c
-index cb0246ca72f32..c4c3ab3ab9e69 100644
---- a/drivers/iio/accel/dmard09.c
-+++ b/drivers/iio/accel/dmard09.c
-@@ -8,6 +8,7 @@
- #include <asm/unaligned.h>
- #include <linux/module.h>
- #include <linux/i2c.h>
-+#include <linux/units.h>
- #include <linux/iio/iio.h>
+diff --git a/drivers/thermal/rcar_gen3_thermal.c b/drivers/thermal/rcar_gen3_thermal.c
+index 2dfce4f096314..8835846884d11 100644
+--- a/drivers/thermal/rcar_gen3_thermal.c
++++ b/drivers/thermal/rcar_gen3_thermal.c
+@@ -89,7 +89,8 @@ struct rcar_gen3_thermal_priv {
+ 	struct rcar_gen3_thermal_tsc *tscs[TSC_MAX_NUM];
+ 	struct thermal_zone_device_ops ops;
+ 	unsigned int num_tscs;
+-	void (*thermal_init)(struct rcar_gen3_thermal_tsc *tsc);
++	void (*thermal_init)(struct rcar_gen3_thermal_priv *priv,
++			     struct rcar_gen3_thermal_tsc *tsc);
+ 	int ptat[3];
+ };
  
- #define DMARD09_DRV_NAME	"dmard09"
-@@ -79,6 +80,12 @@ static int dmard09_read_raw(struct iio_dev *indio_dev,
- 		*val = accel;
- 
- 		return IIO_VAL_INT;
-+	case IIO_CHAN_INFO_SCALE:
-+		*val = 0;
-+		/* 1 g / 32 LSB, in m/s^2 */
-+		*val2 = IIO_G_TO_M_S_2(NANO / 32);
-+
-+		return IIO_VAL_INT_PLUS_NANO;
- 	default:
- 		return -EINVAL;
+@@ -240,7 +241,7 @@ static irqreturn_t rcar_gen3_thermal_irq(int irq, void *data)
+ 	for (i = 0; i < priv->num_tscs; i++) {
+ 		status = rcar_gen3_thermal_read(priv->tscs[i], REG_GEN3_IRQSTR);
+ 		rcar_gen3_thermal_write(priv->tscs[i], REG_GEN3_IRQSTR, 0);
+-		if (status)
++		if (status && priv->tscs[i]->zone)
+ 			thermal_zone_device_update(priv->tscs[i]->zone,
+ 						   THERMAL_EVENT_UNSPECIFIED);
  	}
+@@ -311,7 +312,8 @@ static bool rcar_gen3_thermal_read_fuses(struct rcar_gen3_thermal_priv *priv)
+ 	return true;
+ }
+ 
+-static void rcar_gen3_thermal_init_r8a7795es1(struct rcar_gen3_thermal_tsc *tsc)
++static void rcar_gen3_thermal_init_r8a7795es1(struct rcar_gen3_thermal_priv *priv,
++					      struct rcar_gen3_thermal_tsc *tsc)
+ {
+ 	rcar_gen3_thermal_write(tsc, REG_GEN3_CTSR,  CTSR_THBGR);
+ 	rcar_gen3_thermal_write(tsc, REG_GEN3_CTSR,  0x0);
+@@ -322,7 +324,7 @@ static void rcar_gen3_thermal_init_r8a7795es1(struct rcar_gen3_thermal_tsc *tsc)
+ 
+ 	rcar_gen3_thermal_write(tsc, REG_GEN3_IRQCTL, 0x3F);
+ 	rcar_gen3_thermal_write(tsc, REG_GEN3_IRQMSK, 0);
+-	if (tsc->zone->ops->set_trips)
++	if (priv->ops.set_trips)
+ 		rcar_gen3_thermal_write(tsc, REG_GEN3_IRQEN,
+ 					IRQ_TEMPD1 | IRQ_TEMP2);
+ 
+@@ -338,7 +340,8 @@ static void rcar_gen3_thermal_init_r8a7795es1(struct rcar_gen3_thermal_tsc *tsc)
+ 	usleep_range(1000, 2000);
+ }
+ 
+-static void rcar_gen3_thermal_init(struct rcar_gen3_thermal_tsc *tsc)
++static void rcar_gen3_thermal_init(struct rcar_gen3_thermal_priv *priv,
++				   struct rcar_gen3_thermal_tsc *tsc)
+ {
+ 	u32 reg_val;
+ 
+@@ -350,7 +353,7 @@ static void rcar_gen3_thermal_init(struct rcar_gen3_thermal_tsc *tsc)
+ 
+ 	rcar_gen3_thermal_write(tsc, REG_GEN3_IRQCTL, 0);
+ 	rcar_gen3_thermal_write(tsc, REG_GEN3_IRQMSK, 0);
+-	if (tsc->zone->ops->set_trips)
++	if (priv->ops.set_trips)
+ 		rcar_gen3_thermal_write(tsc, REG_GEN3_IRQEN,
+ 					IRQ_TEMPD1 | IRQ_TEMP2);
+ 
+@@ -510,6 +513,9 @@ static int rcar_gen3_thermal_probe(struct platform_device *pdev)
+ 	for (i = 0; i < priv->num_tscs; i++) {
+ 		struct rcar_gen3_thermal_tsc *tsc = priv->tscs[i];
+ 
++		priv->thermal_init(priv, tsc);
++		rcar_gen3_thermal_calc_coefs(priv, tsc, *ths_tj_1);
++
+ 		zone = devm_thermal_of_zone_register(dev, i, tsc, &priv->ops);
+ 		if (IS_ERR(zone)) {
+ 			dev_err(dev, "Sensor %u: Can't register thermal zone\n", i);
+@@ -518,9 +524,6 @@ static int rcar_gen3_thermal_probe(struct platform_device *pdev)
+ 		}
+ 		tsc->zone = zone;
+ 
+-		priv->thermal_init(tsc);
+-		rcar_gen3_thermal_calc_coefs(priv, tsc, *ths_tj_1);
+-
+ 		tsc->zone->tzp->no_hwmon = false;
+ 		ret = thermal_add_hwmon_sysfs(tsc->zone);
+ 		if (ret)
+@@ -558,7 +561,7 @@ static int __maybe_unused rcar_gen3_thermal_resume(struct device *dev)
+ 	for (i = 0; i < priv->num_tscs; i++) {
+ 		struct rcar_gen3_thermal_tsc *tsc = priv->tscs[i];
+ 
+-		priv->thermal_init(tsc);
++		priv->thermal_init(priv, tsc);
+ 	}
+ 
+ 	return 0;
 -- 
 2.53.0
 
