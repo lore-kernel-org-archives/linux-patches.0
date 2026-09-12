@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A83104BEE43;
-	Sat, 12 Sep 2026 16:19:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94A9D2F0673;
+	Sat, 12 Sep 2026 16:19:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789229973; cv=none; b=CcIzBnTmUmZDQavZdEtOsQkPxA66XSpcqhZXtlOgvmYTrNSmS7wRqvEywUAVrFv8bQr1ueMBavhjdE3aJsKxr9zwpvUT/6q2dzkZL+HKO4ogNSCN+r3w4n5w3BDraFiuI3V/I/hPsw8An5vF31BhnqoSaPbsRhbiBYVAUqMJ5Qw=
+	t=1789229979; cv=none; b=XSFeLumU1vOhkIxwFQf8IAsNXfaCrrPYFiBL5JnXJ7G6v+cPT/TDYyF23xfpUHVoKVFap6T7NgvJf5jnz4J0HY85Zu4aBoIL6ffnNhRKZ62hbJUxY2nGaX/P0VE/SuvKOS768GO5/NTsi5jD5mvs8wZAk5ym8B9Fbg/En153sbA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789229973; c=relaxed/simple;
-	bh=Kikr3DLV3gBs8HJiIXsiXQ843g7Oc5lS/QN6tQw463c=;
+	s=arc-20240116; t=1789229979; c=relaxed/simple;
+	bh=BXih80LvVzV2xPSZL/eH8+BGvyQRX5Z2EmU8J6tIceM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m/0jlpQ0Dm6bve8zaVElC9M44gMLrqNAhVA7hVrd4R/hYSrR1ZL+cD6GVJjfzx3aM6HH+CUsc3Z5Du5TSCEbFaFP8ZqDfDWf30ZIeJ0MvvqJZr5UsNEsWMZioJQPpt5oEWC1xLSvlSexW0qOrEoKtj6+bIcMEPYMq2fN/yY+6os=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XG6vLKG6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cEtut4Q75gcHIFVttHz6Rr20Th4AXES+XhBwWEwrtIMkE5z/qWOjC4qxyYT0f1CpQburpAk89RaERStmOV9vNjHozd0Gl7ZkW2DLjls9xZff0CNn4fqdTsw/oYH9OcXRx0OrGd3V6vG5iVytV0/dXoCRKHJBtwN+5eWqdemCYDY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BICdys2D; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XG6vLKG6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEE631F000FF;
-	Sat, 12 Sep 2026 16:19:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BICdys2D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99B671F000FF;
+	Sat, 12 Sep 2026 16:19:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789229972;
-	bh=aVzg/mg172pLLiSrDIGXT2WQV+qUuWurowAQpNmmM6k=;
+	s=korg; t=1789229977;
+	bh=B83pwwWQvonelMXnqV6eQMBH1ThRx4R5IenJZ6QPPgk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XG6vLKG6ogZUcldnkwudAxBgq4oubN9ZjKxFhctFUFRCjvfrs1YcfJVGYdKB+S+pb
-	 TG3aqzfKFBj4R1lcj0y0YqCzAXHLM8cOz2nRTG1mD2ARhHr/rVp/4twPjpS0ILHco6
-	 ejlSZQa/1gdVd07CYNFGctrFJgpYHH/zMIu5p3mU=
+	b=BICdys2DKTrR5jZtLF0SLN9X211NCymHaCU9TZixjGFzLBE03g8K050xjTavXgH6E
+	 giZ0+mf8bm5b374nRL4ssJgfnJVDKDbEQowlk0wvh8jv+KXN+om10H/ocjaO9ZiOt7
+	 pqy64Qb96jXk/ZFnd0tsP8p+xCEQQhM89aVVgNKA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
 	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
 	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0700/1191] wifi: ath11k: Correctly copy the hint BSSID in WMI scan request
-Date: Sat, 12 Sep 2026 08:57:08 +0200
-Message-ID: <20260912065603.987837597@linuxfoundation.org>
+Subject: [PATCH 6.1 0701/1191] wifi: ath11k: Avoid buffer overread in ath11k_wmi_tlv_op_rx()
+Date: Sat, 12 Sep 2026 08:57:09 +0200
+Message-ID: <20260912065604.012058552@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -54,46 +54,53 @@ Content-Transfer-Encoding: 8bit
 
 From: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 
-[ Upstream commit 6fe2dddf59bbb2a96be0fcf23a205807b25ac173 ]
+[ Upstream commit 9ef9dd30058cc9223c72f711dca1a28a5947d0c5 ]
 
-Currently, in ath11k_wmi_send_scan_start_cmd(), the logic to populate
-the hint_bssid copies the BSSID in the wrong direction, from the
-firmware message to the argument buffer. Swap the parameters so that
-the BSSID is correctly populated in the firmware message from the
-argument buffer.
+Currently, in ath11k_wmi_tlv_op_rx(), the firmware buffer is read
+without first verifying that the buffer has enough data to hold a
+header. This could result in a buffer overread.
 
-This issue was reported on ath12k, but exists in ath11k as well.
+Add an upfront length check before dereferencing skb->data as a
+wmi_cmd_hdr. The check is placed before the trace_ath11k_wmi_event()
+call to preserve the existing trace semantics (tracing the full raw
+WMI event including the header), unlike the analogous ath12k fix which
+could use skb_pull_data() directly.
 
 Compile tested only.
 
-Reported-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Closes: https://lore.kernel.org/linux-wireless/afbff608-a005-43c4-af76-968a58bf0cc3@oss.qualcomm.com/
-Fixes: 74601ecfef6e ("ath11k: Add support for 6g scan hint")
+Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
 Assisted-by: Claude:claude-sonnet-4-6
 Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
 Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260713-ath12k_wmi_send_scan_start_cmd-bad-hint_bssid-v1-2-4ffc4a472992@oss.qualcomm.com
+Link: https://patch.msgid.link/20260716-ath11k_wmi_tlv_op_rx-overread-v1-1-0b972b3f1368@oss.qualcomm.com
 Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/wmi.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/wireless/ath/ath11k/wmi.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/net/wireless/ath/ath11k/wmi.c b/drivers/net/wireless/ath/ath11k/wmi.c
-index 31128630d8b62..2ce3f355ecac5 100644
+index 2ce3f355ecac5..b2b69985dfcbd 100644
 --- a/drivers/net/wireless/ath/ath11k/wmi.c
 +++ b/drivers/net/wireless/ath/ath11k/wmi.c
-@@ -2325,8 +2325,8 @@ int ath11k_wmi_send_scan_start_cmd(struct ath11k *ar,
- 		for (i = 0; i < params->num_hint_bssid; ++i) {
- 			hint_bssid->freq_flags =
- 				params->hint_bssid[i].freq_flags;
--			ether_addr_copy(&params->hint_bssid[i].bssid.addr[0],
--					&hint_bssid->bssid.addr[0]);
-+			ether_addr_copy(&hint_bssid->bssid.addr[0],
-+					&params->hint_bssid[i].bssid.addr[0]);
- 			hint_bssid++;
- 		}
- 	}
+@@ -8046,13 +8046,15 @@ static void ath11k_wmi_tlv_op_rx(struct ath11k_base *ab, struct sk_buff *skb)
+ 	struct wmi_cmd_hdr *cmd_hdr;
+ 	enum wmi_tlv_event_id id;
+ 
++	if (skb->len < sizeof(*cmd_hdr))
++		goto out;
++
+ 	cmd_hdr = (struct wmi_cmd_hdr *)skb->data;
+ 	id = FIELD_GET(WMI_CMD_HDR_CMD_ID, (cmd_hdr->cmd_id));
+ 
+ 	trace_ath11k_wmi_event(ab, id, skb->data, skb->len);
+ 
+-	if (skb_pull(skb, sizeof(struct wmi_cmd_hdr)) == NULL)
+-		goto out;
++	skb_pull(skb, sizeof(*cmd_hdr));
+ 
+ 	switch (id) {
+ 		/* Process all the WMI events here */
 -- 
 2.53.0
 
