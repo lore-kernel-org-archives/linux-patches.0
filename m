@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E32F331EA8;
-	Sat, 12 Sep 2026 16:49:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C28D732D43C;
+	Sat, 12 Sep 2026 16:49:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789231753; cv=none; b=ZwBv5BAm9oOJ6UY5a7frCmF6okBP9r7xmCHyvJjIky/7H3nkod/wQFCcjAtsGxbhJWhd5eqVCXL4HumqeGJfeqr7YtizAks9GsNcC/aGBnYVBk/rMtvRlmpEEELBzTdQ8F5M+yfPUtT/bIvQ1Vke0KTlUQuf6UwvdqSWcgJWv74=
+	t=1789231758; cv=none; b=jfYfqssQ3tSRj3mUojWoDnguM6NNCSl+iRqPdi/7hYj/XwgjP1vpYLIpKcUnxB5yJDWOfIXelHr04RHOAiptBozBeiNmf/Q2kDOfr6WwBPo3o5OkVT20gIXAuh7SZl/MS+6NRULNvehQIc9MDu6GMp4OuDBnWgbNcv6U2xLf2GQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789231753; c=relaxed/simple;
-	bh=NcHRz/Z3Dj1GFD1roD5qXo5UwmiLQfv2lwr6QwRSINM=;
+	s=arc-20240116; t=1789231758; c=relaxed/simple;
+	bh=gdj2Bf5V/5q5Dqo/yN6J0njIiU2M0/1SHKlF0GB4EKI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OMJghCvO4ZS6FPaY9XDM/TSVXHU9/KtzbuA9Jxr7joeuYmESuAaNaICLXYHDx72qOdfRybLoMAF+BY+ejs7pWlG3W4WnFtFOaoKknq7i3/hW3vpZxIfYcXgCcd6I8PFqkRzYVWGtfMNONlf+Lkvfk3aJiXym8nPG0pwcH82OwVI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d28bc2tM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tJuiYu/UOQyRY1zm1flbh45ekSbo5N38hksqb8RdRzU9e45RX8b2rSrDVbceMOTEkakuu0W9lovP899MllwEJyvsb1MJmthlhtFt9o+8bKjbYV4hqRCe4YNMUfnwUcIkOWYuVV3dz9VGQ6vmvM9hCpZOOxsZXqQrUKrJi+GEpos=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TSzzzRsP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d28bc2tM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 055321F000FF;
-	Sat, 12 Sep 2026 16:49:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TSzzzRsP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 237591F000FF;
+	Sat, 12 Sep 2026 16:49:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789231752;
-	bh=sDnc6fxvF3qScTZYJoFloaQmjzG91qouyD71rSHwEMU=;
+	s=korg; t=1789231757;
+	bh=LK5vCvEWNPspt1rxG8xhiEyjJZDuz8jTkfNohYgyqyY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=d28bc2tM+ivnElGVX4P+iS36WlrARx23EWyMUONvJLRp7EnGTnK7q81CZ03/ecJuE
-	 TUkZbfgJqf3SBAubUCO4nFPdsELQ3M4R8GHa143p9CpQPawhvkiV8xQywruWCVoxWS
-	 Sd2/6CCTrvF3u6GGxQcqipwvXCkUmpEZdhwFxsYo=
+	b=TSzzzRsPjnbCBtoLjlURrrXMxYphGYDXCyTaD/3yYcCC17BcJAiSZaJNjcVEC1nfS
+	 RiAHt8W7mm7XUQhkwfEhcEm86xFfjtHkzc6iwj23FLCexq00J0BVuH1mQ1ZKwVl60P
+	 E9vJ+dLOJqDHwf5nrIk0ONz10+KXsMUTXw5fr9h8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Xiang Mei <xmei5@asu.edu>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1011/1191] ASoC: SOF: validate topology volume range before allocation
-Date: Sat, 12 Sep 2026 09:02:19 +0200
-Message-ID: <20260912065610.901319798@linuxfoundation.org>
+Subject: [PATCH 6.1 1057/1191] fs/ntfs3: validate ef->size covers the records name and value
+Date: Sat, 12 Sep 2026 09:03:05 +0200
+Message-ID: <20260912065611.914149675@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -52,89 +52,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Weiming Shi <bestswngs@gmail.com>
 
-[ Upstream commit a698e4a60fa54268a38f4e66378851a196cb139b ]
+[ Upstream commit c22f91d82cb9a29d22bdffdce6c803467984ad0c ]
 
-SOF treats the topology mixer min and max values as non-negative indices
-into its volume table. It stores them in signed fields, allocates max + 1
-entries through an int argument, and later indexes the table with the
-stored range.
+When an EA record has a non-zero ef->size, ntfs_read_ea() only checks
+that the record fits in the remaining buffer (ea_size > bytes), not that
+ef->size is large enough to hold the record's own name_len + 1 + elength.
 
-An inverted range is invalid, while a maximum at or above INT_MAX cannot
-be represented safely after the increment or in the signed fields.
-Validate the complete range before storing it or allocating the table.
+A crafted image can pass validation with, e.g., ef->size = 24 but
+elength = 0xffff. ntfs_get_ea() then trusts elength and copies it out of
+the undersized record, reading past the kmalloc(info->size) allocation
+and leaking heap memory to userspace via getxattr():
 
-Fixes: 311ce4fe7637 ("ASoC: SOF: Add support for loading topologies")
-Assisted-by: Codex:gpt-5
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Acked-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Link: https://patch.msgid.link/20260814081238.25434-1-pengpeng@iscas.ac.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
+ BUG: KASAN: slab-out-of-bounds in ntfs_get_ea (fs/ntfs3/xattr.c:302)
+ Read of size 65535 at addr ffff888100794550 by task exploit
+  __asan_memcpy (mm/kasan/shadow.c:105)
+  ntfs_get_ea (fs/ntfs3/xattr.c:302)
+  ntfs_getxattr (fs/ntfs3/xattr.c:848)
+  __vfs_getxattr (fs/xattr.c:441)
+  vfs_getxattr (fs/xattr.c:474)
+  do_getxattr (fs/xattr.c:800)
+  path_getxattrat (fs/xattr.c:868)
+  do_syscall_64 (arch/x86/entry/syscall_64.c:94)
+
+ The buggy address is located 80 bytes inside of
+  allocated 84-byte region in cache kmalloc-96
+
+Compute the size the record needs and require ef->size to cover it.
+
+Fixes: 0e8235d28f3a ("fs/ntfs3: Check fields while reading")
+Reported-by: Xiang Mei <xmei5@asu.edu>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sof/topology.c | 18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ fs/ntfs3/xattr.c | 21 ++++++++++++---------
+ 1 file changed, 12 insertions(+), 9 deletions(-)
 
-diff --git a/sound/soc/sof/topology.c b/sound/soc/sof/topology.c
-index 374c8b1d69584..69741085ee7db 100644
---- a/sound/soc/sof/topology.c
-+++ b/sound/soc/sof/topology.c
-@@ -771,6 +771,7 @@ static int sof_control_load_volume(struct snd_soc_component *scomp,
- 	struct snd_soc_tplg_mixer_control *mc =
- 		container_of(hdr, struct snd_soc_tplg_mixer_control, hdr);
- 	int tlv[SOF_TLV_ITEMS];
-+	u32 min, max;
- 	unsigned int mask;
- 	int ret;
+diff --git a/fs/ntfs3/xattr.c b/fs/ntfs3/xattr.c
+index 4607ea6068c78..409f9545e9cd5 100644
+--- a/fs/ntfs3/xattr.c
++++ b/fs/ntfs3/xattr.c
+@@ -145,26 +145,29 @@ static int ntfs_read_ea(struct ntfs_inode *ni, struct EA_FULL **ea,
+ 	for (off = 0; off < size; off += ea_size) {
+ 		const struct EA_FULL *ef = Add2Ptr(ea_p, off);
+ 		u32 bytes = size - off;
++		size_t need;
  
-@@ -778,6 +779,11 @@ static int sof_control_load_volume(struct snd_soc_component *scomp,
- 	if (le32_to_cpu(mc->num_channels) > SND_SOC_TPLG_MAX_CHAN)
- 		return -EINVAL;
+ 		/* Check if we can use field ea->size. */
+ 		if (bytes < sizeof(ef->size))
+ 			goto out1;
  
-+	min = le32_to_cpu(mc->min);
-+	max = le32_to_cpu(mc->max);
-+	if (min > max || max >= INT_MAX)
-+		return -EINVAL;
++		/* Check if we can use fields ef->name_len and ef->elength. */
++		if (bytes < offsetof(struct EA_FULL, name))
++			goto out1;
 +
- 	/*
- 	 * If control has more than 2 channels we need to override the info. This is because even if
- 	 * ASoC layer has defined topology's max channel count to SND_SOC_TPLG_MAX_CHAN = 8, the
-@@ -788,12 +794,12 @@ static int sof_control_load_volume(struct snd_soc_component *scomp,
- 		kc->info = snd_sof_volume_info;
++		/* Size needed to hold this record's name and value. */
++		need = struct_size(ef, name,
++				   1 + ef->name_len + le16_to_cpu(ef->elength));
++
+ 		if (ef->size) {
+ 			ea_size = le32_to_cpu(ef->size);
+-			if (ea_size > bytes)
++			/* ef->size must fit the list and cover the record. */
++			if (ea_size > bytes || ea_size < need)
+ 				goto out1;
+ 			continue;
+ 		}
  
- 	scontrol->comp_id = sdev->next_comp_id;
--	scontrol->min_volume_step = le32_to_cpu(mc->min);
--	scontrol->max_volume_step = le32_to_cpu(mc->max);
-+	scontrol->min_volume_step = min;
-+	scontrol->max_volume_step = max;
- 	scontrol->num_channels = le32_to_cpu(mc->num_channels);
- 
--	scontrol->max = le32_to_cpu(mc->max);
--	if (le32_to_cpu(mc->max) == 1)
-+	scontrol->max = max;
-+	if (max == 1)
- 		goto skip;
- 
- 	/* extract tlv data */
-@@ -803,7 +809,7 @@ static int sof_control_load_volume(struct snd_soc_component *scomp,
+-		/* Check if we can use fields ef->name_len and ef->elength. */
+-		if (bytes < offsetof(struct EA_FULL, name))
+-			goto out1;
+-
+-		ea_size = ALIGN(struct_size(ef, name,
+-					    1 + ef->name_len +
+-						    le16_to_cpu(ef->elength)),
+-				4);
++		ea_size = ALIGN(need, 4);
+ 		if (ea_size > bytes)
+ 			goto out1;
  	}
- 
- 	/* set up volume table */
--	ret = set_up_volume_table(scontrol, tlv, le32_to_cpu(mc->max) + 1);
-+	ret = set_up_volume_table(scontrol, tlv, max + 1);
- 	if (ret < 0) {
- 		dev_err(scomp->dev, "error: setting up volume table\n");
- 		return ret;
-@@ -836,7 +842,7 @@ static int sof_control_load_volume(struct snd_soc_component *scomp,
- 	return 0;
- 
- err:
--	if (le32_to_cpu(mc->max) > 1)
-+	if (max > 1)
- 		kfree(scontrol->volume_table);
- 
- 	return ret;
 -- 
 2.53.0
 
