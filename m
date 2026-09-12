@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DC3229D288;
-	Sat, 12 Sep 2026 12:47:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82FE11A6816;
+	Sat, 12 Sep 2026 12:47:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789217258; cv=none; b=Ewg9uEfggN+4IbmZvk87wkllRVIR139i/hakm7kZayAbDSkCm8LB6p0UG85xWfU2sdx06teN/CVkSe1tMGyloOgAFqGybYhUw1qg7O1QQqGuhQttzEy9n075UGnYPkn2Tl0kxTrRW14hug3BbuIylRe9WNalqBwkYxOgLERswtM=
+	t=1789217263; cv=none; b=J8xszDSyqtybbuu6sqt8WOVr+Sdzn00gs7VDBXtI0vzDruDKtAXCgqZiskmGcXsK+pzXQjkD8rMr+52y5exiHKm2sRaVxxDx0WyjM8B+8fBBIB8oI70+2FLw3szrK0i+AQP6ehOvmfKYX2Y/42Oc+OA0qFvJQRBzGZojIcBloXc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789217258; c=relaxed/simple;
-	bh=tAFFtcswTGHWiMH61pR+E+GtsjlEGQ+XhGnOgCG+0WQ=;
+	s=arc-20240116; t=1789217263; c=relaxed/simple;
+	bh=95sML7XQE4zp+acifnTUBq5Ka2UglDwH2YaGb6PHIcI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mtWWTVMdWqGFrMs7IK452tLtW72dW6rxm9laPMOZKzjMGdzzUXjD5WdY8Vvnq/JEo9XkZOapFdo3d6/LhC2Y3n12bEYZfCRQxA5lbvj3D8iS9HX+XuaiH+7sSWCXGwscDVTR5XoxeOvwbdR9x55cAMSw0Wr0cu3TsIQSaIPUOfs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Al0IwI+R; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=McIf2+LH9w6OEZjIZ+dQKBB400tmZBvXpq6YgEpKAOcmEqNMqx475ZDvO2SSL5UiVGGAHY6Oa1gt2k1Bry9cN5pIF7bGYL9s+J5VUUd8gQsgp0x+J6+3HYGicUOCmEvjHHUMSL0NssEJRdVcjE9KQ4EWqCk4bB8jY3KjeTIwBsU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x7jh7c1d; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Al0IwI+R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C4081F000FF;
-	Sat, 12 Sep 2026 12:47:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x7jh7c1d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3ADA41F000FF;
+	Sat, 12 Sep 2026 12:47:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789217257;
-	bh=GTsRkL/rjRIi0bigswlxmj//f+T1Zwy5/sBUQvbhcNI=;
+	s=korg; t=1789217262;
+	bh=00i1Bmx/6W9BNfksVLtQGZVqDY53T75dYLQ6wW8BXCU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Al0IwI+R3Yyy2ld/46WtPnUFDkZ17wsw1yvGxJ/Mud8P9Nn+BiloQifAcouC8T27O
-	 jvtHfBl6z83aIbBrIUT6wUntcu4N+LluanOXbD95mBSgAfNInFxtC2jjj+InKdC12L
-	 Tv+Xo9AvRvrL9XXE/pNbc/YodQguY/BqNpHA/bmY=
+	b=x7jh7c1dBBFC6ICzjCuy7DJlicB0H/eLMSGO3lFzYV4RuzYDNvbULBH2wW3yJXr3R
+	 05Uu35tIktyOXiMjPd75BnI9b/prLYnBl2CF8K2Qd3BKf8w1oKgFQRmAS44e0z4Uxk
+	 0+sS0Z58aylNRemQ+wwVhjE2MMyjyu3/CoV2N9PE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robertus Diawan Chris <robertusdchris@gmail.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Nicolas Schier <nsc@kernel.org>,
+	Cheng Xu <chengyou@linux.alibaba.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0904/1376] modpost: prevent leak when early return no suffix .o in read_symbols()
-Date: Sat, 12 Sep 2026 08:55:30 +0200
-Message-ID: <20260912065627.715637809@linuxfoundation.org>
+Subject: [PATCH 6.12 0905/1376] RDMA/erdma: Hold CQ references when processing EQ events
+Date: Sat, 12 Sep 2026 08:55:31 +0200
+Message-ID: <20260912065627.737399483@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -52,51 +51,164 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Robertus Diawan Chris <robertusdchris@gmail.com>
+From: Cheng Xu <chengyou@linux.alibaba.com>
 
-[ Upstream commit 9a5b76027ed91680e10f90111d9cba300f96d1ab ]
+[ Upstream commit 98df2aee1459ee1c62c70cbe9b370d2a532aea36 ]
 
-The allocation for elf info symsearch and hdr from parse_elf() haven't
-been released when return because of modname didn't have suffix ".o".
-And it seems like the suffix ".o" check did not depends on parse_elf()
-to succeed first. So, move the suffix ".o" check before checking
-parse_elf() result to prevent resource leak when the modname didn't have
-suffix ".o" and return early.
+EQ handlers look up CQs from dev->cq_xa and invoke CQ completion or
+error callbacks outside the xarray lock. erdma_destroy_cq() can erase the
+CQ from the xarray and free its queue buffer and doorbell record while a
+previously scheduled EQ handler is still using the CQ.
 
-This is reported by Coverity Scan as "Resource leak".
+Add a CQ refcount and take a reference under the xarray lock with
+refcount_inc_not_zero(). Remove the CQ from the xarray before dropping
+the destroy-path reference, then wait for in-flight EQ users before
+releasing CQ resources.
 
-Fixes: 8c9ce89c5b63 ("modpost: simplify mod->name allocation")
-Signed-off-by: Robertus Diawan Chris <robertusdchris@gmail.com>
-Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-Link: https://patch.msgid.link/20260624044742.144852-1-robertusdchris@gmail.com
-Signed-off-by: Nicolas Schier <nsc@kernel.org>
+Fixes: 155055771704 ("RDMA/erdma: Add verbs implementation")
+Signed-off-by: Cheng Xu <chengyou@linux.alibaba.com>
+Link: https://patch.msgid.link/20260730124357.12976-1-chengyou@linux.alibaba.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/mod/modpost.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/infiniband/hw/erdma/erdma_eq.c    |  6 ++++--
+ drivers/infiniband/hw/erdma/erdma_verbs.c | 12 +++++++++--
+ drivers/infiniband/hw/erdma/erdma_verbs.h | 25 +++++++++++++++++++++--
+ 3 files changed, 37 insertions(+), 6 deletions(-)
 
-diff --git a/scripts/mod/modpost.c b/scripts/mod/modpost.c
-index 07e8a4eb71d04..f17350bf3ddb4 100644
---- a/scripts/mod/modpost.c
-+++ b/scripts/mod/modpost.c
-@@ -1567,14 +1567,14 @@ static void read_symbols(const char *modname)
- 	struct elf_info info = { };
- 	Elf_Sym *sym;
+diff --git a/drivers/infiniband/hw/erdma/erdma_eq.c b/drivers/infiniband/hw/erdma/erdma_eq.c
+index 5610e7f4c6bf7..6bffbc1b543be 100644
+--- a/drivers/infiniband/hw/erdma/erdma_eq.c
++++ b/drivers/infiniband/hw/erdma/erdma_eq.c
+@@ -52,7 +52,7 @@ void erdma_aeq_event_handler(struct erdma_dev *dev)
+ 		if (FIELD_GET(ERDMA_AEQE_HDR_TYPE_MASK,
+ 			      le32_to_cpu(aeqe->hdr)) == ERDMA_AE_TYPE_CQ_ERR) {
+ 			cqn = le32_to_cpu(aeqe->event_data0);
+-			cq = find_cq_by_cqn(dev, cqn);
++			cq = erdma_cq_get_by_cqn(dev, cqn);
+ 			if (!cq)
+ 				continue;
  
--	if (!parse_elf(&info, modname))
--		return;
--
- 	if (!strends(modname, ".o")) {
- 		error("%s: filename must be suffixed with .o\n", modname);
- 		return;
+@@ -62,6 +62,7 @@ void erdma_aeq_event_handler(struct erdma_dev *dev)
+ 			if (cq->ibcq.event_handler)
+ 				cq->ibcq.event_handler(&event,
+ 						       cq->ibcq.cq_context);
++			erdma_cq_put(cq);
+ 		} else {
+ 			qpn = le32_to_cpu(aeqe->event_data0);
+ 			qp = find_qp_by_qpn(dev, qpn);
+@@ -157,7 +158,7 @@ void erdma_ceq_completion_handler(struct erdma_eq_cb *ceq_cb)
+ 		poll_cnt++;
+ 		cqn = FIELD_GET(ERDMA_CEQE_HDR_CQN_MASK, READ_ONCE(*ceqe));
+ 
+-		cq = find_cq_by_cqn(dev, cqn);
++		cq = erdma_cq_get_by_cqn(dev, cqn);
+ 		if (!cq)
+ 			continue;
+ 
+@@ -166,6 +167,7 @@ void erdma_ceq_completion_handler(struct erdma_eq_cb *ceq_cb)
+ 
+ 		if (cq->ibcq.comp_handler)
+ 			cq->ibcq.comp_handler(&cq->ibcq, cq->ibcq.cq_context);
++		erdma_cq_put(cq);
  	}
  
-+	if (!parse_elf(&info, modname))
-+		return;
-+
- 	/* strip trailing .o */
- 	mod = new_module(modname, strlen(modname) - strlen(".o"));
+ 	notify_eq(&ceq_cb->eq);
+diff --git a/drivers/infiniband/hw/erdma/erdma_verbs.c b/drivers/infiniband/hw/erdma/erdma_verbs.c
+index 3a65cbe5839ad..c9d454813b1f0 100644
+--- a/drivers/infiniband/hw/erdma/erdma_verbs.c
++++ b/drivers/infiniband/hw/erdma/erdma_verbs.c
+@@ -1278,6 +1278,7 @@ int erdma_destroy_cq(struct ib_cq *ibcq, struct ib_udata *udata)
+ 	struct erdma_dev *dev = to_edev(ibcq->device);
+ 	struct erdma_ucontext *ctx = rdma_udata_to_drv_context(
+ 		udata, struct erdma_ucontext, ibucontext);
++	unsigned long flags;
+ 	int err;
+ 	struct erdma_cmdq_destroy_cq_req req;
  
+@@ -1292,6 +1293,13 @@ int erdma_destroy_cq(struct ib_cq *ibcq, struct ib_udata *udata)
+ 				       "failed to destroy CQ %u: %d\n",
+ 				       cq->cqn, err);
+ 
++	xa_lock_irqsave(&dev->cq_xa, flags);
++	__xa_erase(&dev->cq_xa, cq->cqn);
++	xa_unlock_irqrestore(&dev->cq_xa, flags);
++
++	erdma_cq_put(cq);
++	wait_for_completion(&cq->free);
++
+ 	if (rdma_is_kernel_res(&cq->ibcq.res)) {
+ 		dma_free_coherent(&dev->pdev->dev, cq->depth << CQE_SHIFT,
+ 				  cq->kern_cq.qbuf, cq->kern_cq.qbuf_dma_addr);
+@@ -1302,8 +1310,6 @@ int erdma_destroy_cq(struct ib_cq *ibcq, struct ib_udata *udata)
+ 		put_mtt_entries(dev, &cq->user_cq.qbuf_mem);
+ 	}
+ 
+-	xa_erase(&dev->cq_xa, cq->cqn);
+-
+ 	return 0;
+ }
+ 
+@@ -1932,6 +1938,8 @@ int erdma_create_cq(struct ib_cq *ibcq, const struct ib_cq_init_attr *attr,
+ 	cq->ibcq.cqe = depth;
+ 	cq->depth = depth;
+ 	cq->assoc_eqn = attr->comp_vector + 1;
++	refcount_set(&cq->refcount, 1);
++	init_completion(&cq->free);
+ 
+ 	ret = xa_alloc_cyclic(&dev->cq_xa, &cq->cqn, cq,
+ 			      XA_LIMIT(1, dev->attrs.max_cq - 1),
+diff --git a/drivers/infiniband/hw/erdma/erdma_verbs.h b/drivers/infiniband/hw/erdma/erdma_verbs.h
+index f9408ccc8bad0..22ceb5fe7ca2a 100644
+--- a/drivers/infiniband/hw/erdma/erdma_verbs.h
++++ b/drivers/infiniband/hw/erdma/erdma_verbs.h
+@@ -7,6 +7,9 @@
+ #ifndef __ERDMA_VERBS_H__
+ #define __ERDMA_VERBS_H__
+ 
++#include <linux/completion.h>
++#include <linux/refcount.h>
++
+ #include "erdma.h"
+ 
+ /* RDMA Capability. */
+@@ -341,6 +344,8 @@ struct erdma_cq {
+ 
+ 	u32 depth;
+ 	u32 assoc_eqn;
++	refcount_t refcount;
++	struct completion free;
+ 
+ 	union {
+ 		struct erdma_kcq_info kern_cq;
+@@ -355,9 +360,25 @@ static inline struct erdma_qp *find_qp_by_qpn(struct erdma_dev *dev, int id)
+ 	return (struct erdma_qp *)xa_load(&dev->qp_xa, id);
+ }
+ 
+-static inline struct erdma_cq *find_cq_by_cqn(struct erdma_dev *dev, int id)
++static inline struct erdma_cq *erdma_cq_get_by_cqn(struct erdma_dev *dev,
++						   int id)
++{
++	struct erdma_cq *cq;
++	unsigned long flags;
++
++	xa_lock_irqsave(&dev->cq_xa, flags);
++	cq = xa_load(&dev->cq_xa, id);
++	if (cq && !refcount_inc_not_zero(&cq->refcount))
++		cq = NULL;
++	xa_unlock_irqrestore(&dev->cq_xa, flags);
++
++	return cq;
++}
++
++static inline void erdma_cq_put(struct erdma_cq *cq)
+ {
+-	return (struct erdma_cq *)xa_load(&dev->cq_xa, id);
++	if (refcount_dec_and_test(&cq->refcount))
++		complete(&cq->free);
+ }
+ 
+ void erdma_qp_get(struct erdma_qp *qp);
 -- 
 2.53.0
 
