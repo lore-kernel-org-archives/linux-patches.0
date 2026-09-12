@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20CD6384CE9;
-	Sat, 12 Sep 2026 07:46:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0F63381EB5;
+	Sat, 12 Sep 2026 07:46:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789199196; cv=none; b=iy84Thr2l0bVEpK7QcDPaRdcoLgIbVlmJHP0dIJUp2PtV2vEK3C1ALBLMs93f/1IBpqQiTulxSnKeRPLUtx4p4nUnzbU6vEQWWodlC+wVN6bspExqqGbr3sJ/ZjquZ0M0wGpbMNaMrv1xzT7F1I+J2Az106g63H0nvM0N+OZUGo=
+	t=1789199201; cv=none; b=WuRtl1HqLlX+vfKILLefilDA0C0z1hRCXqFe3dXO+o6oTB5p13mecqV8xKyasJrfpI9dMH0o3Cabmi7FE/w6zYP0Loj688A+964ZG9sE8/6BkmQOsrqdcg5KzwQaXRPnE6Unf4Qy22I02sNWFwN2XKXRqz29LyGQ3IJgDwGJeho=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789199196; c=relaxed/simple;
-	bh=f7hUBYErqlbwwpc4JtsDkvLcjQzhgQkMV2OFTmxL46c=;
+	s=arc-20240116; t=1789199201; c=relaxed/simple;
+	bh=6zKC2xuLOrW9sHQnbudsOy0jPKJ9XTjNQAH1o58LQUQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bm9ziB8ID2FO1/P/In3PUseAQumYgyYRtHc1em67Eq3lu5LRkJm6xXXHbk4EGDEA7Pqr6GuQvW1e41Aw5uZopSM3qN/j3nwr4n/IABUe4u8w/PAFonARe4jfsd/ZzsMMcvigqDJxBdtGSrTlv4AEONsPK9sgi2mHNCQt/W8+U7g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vEQKV6oG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oyuAch+VM17KDGyHQm5WewCHVLuzxOpMcX55nEZxWjhJjolXq0mjmH/pOKa7kEhBATQAaTB9N1aY/3MRHY0VXaJ5Hoag4/aklagCwIWGQnajNafmL7lcPDB4Xeb7jZRoUb5fR57gSxCKX/IYTLxLLVpMT/frQ2N3zMkHszHbHB0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iLYm8//O; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vEQKV6oG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2917C1F00893;
-	Sat, 12 Sep 2026 07:46:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iLYm8//O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7CF31F000FF;
+	Sat, 12 Sep 2026 07:46:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789199193;
-	bh=SrK4gNJTgVW0hXe3ctTPIro/8sMX3E+qjtkeEORMTbU=;
+	s=korg; t=1789199199;
+	bh=Xu9sk3EMw+cCjlurlqw5u60kLsGbhOEqlOBibgtecwI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vEQKV6oGAJmOJBHtsTyqP2bA+aWITWXBmJhYzZ37tEARD9Z+1Togs50QSlr2p5IrR
-	 /jmIz/Myiy6x4KRtLrvRY+UMvKZDjjMPVswsHKHqzmznzhnIYz61okoL9+W+tFfJiT
-	 SwEAgAK5SJqINePh6V0ASM7Vny3jVnoywYpomYTU=
+	b=iLYm8//Ocem/9y4WRSc9lC4YKzNzl9ZGIsFIorO9P5FcevxDZgJyrBGeyfny6+ebT
+	 irB2BNQusD5JIfhKYUVwTAB9IuehOFtlFqDYX6AJTpUqTC/eET/gk1mek97tx0MdoV
+	 0TQqL13ynA8GRgzg5FPqH+ANl2dfdSw3Vh+4hb9w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linmao Li <lilinmao@kylinos.cn>,
-	Jerome Brunet <jbrunet@baylibre.com>,
-	Mark Brown <broonie@kernel.org>,
+	sashiko-bot@kernel.org,
+	Rodrigo Alencar <rodrigo.alencar@analog.com>,
+	Joshua Crofts <joshua.crofts1@gmail.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0534/1815] ASoC: meson: Keep link pointers valid on realloc failure
-Date: Sat, 12 Sep 2026 08:38:04 +0200
-Message-ID: <20260912065701.414490993@linuxfoundation.org>
+Subject: [PATCH 7.2 0535/1815] iio: dac: ad5686: missing NULL check on match data
+Date: Sat, 12 Sep 2026 08:38:05 +0200
+Message-ID: <20260912065701.438589264@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,75 +53,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linmao Li <lilinmao@kylinos.cn>
+From: Rodrigo Alencar <rodrigo.alencar@analog.com>
 
-[ Upstream commit 2aaa41cf974f83a6fb105422bac4e2f107150774 ]
+[ Upstream commit 572a008526359cdac2fa935dad75e9d50a79792f ]
 
-meson_card_reallocate_links() grows the DAI link and private data
-arrays with two consecutive krealloc() calls and updates the owner
-pointers only after both calls have succeeded.
+Verify that chip_info pointer is not NULL. If a user binds the driver
+using driver_override via sysfs with a device name not present in the
+id_table or of_match_table, match data will be NULL.
 
-A successful krealloc() may move the data: it frees the old block and
-returns a new one. When that happens for the link array and the second
-krealloc() then fails, card->dai_link still points to the block that
-krealloc() already freed, and the error path frees the new block too.
-The probe error path then calls meson_card_clean_references(), which
-dereferences card->dai_link and kfree()s it again, resulting in a
-use-after-free and a double free.
-
-Commit card->dai_link and card->num_links right after the first
-krealloc() succeeds, so the pointer always refers to a valid allocation
-that meson_card_clean_references() can walk and free. krealloc() with
-__GFP_ZERO zero-initializes the added entries, so walking them on the
-error path is safe. With both failure paths reduced to a plain return,
-drop the goto labels and the error message.
-
-Fixes: 7864a79f37b5 ("ASoC: meson: add axg sound card support")
-Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
-Reviewed-by: Jerome Brunet <jbrunet@baylibre.com>
-Link: https://patch.msgid.link/20260717012433.1432285-1-lilinmao@kylinos.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 0eb1728461a1 ("iio: dac: ad5686: drop enum id")
+Reported-by: sashiko-bot@kernel.org
+Closes: https://lore.kernel.org/all/20260710113149.53EC51F000E9@smtp.kernel.org/
+Signed-off-by: Rodrigo Alencar <rodrigo.alencar@analog.com>
+Reviewed-by: Joshua Crofts <joshua.crofts1@gmail.com>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/meson/meson-card-utils.c | 17 ++++++-----------
- 1 file changed, 6 insertions(+), 11 deletions(-)
+ drivers/iio/dac/ad5686-spi.c | 9 +++++++--
+ drivers/iio/dac/ad5696-i2c.c | 9 +++++++--
+ 2 files changed, 14 insertions(+), 4 deletions(-)
 
-diff --git a/sound/soc/meson/meson-card-utils.c b/sound/soc/meson/meson-card-utils.c
-index cdb759b466ad4..8617a4661a339 100644
---- a/sound/soc/meson/meson-card-utils.c
-+++ b/sound/soc/meson/meson-card-utils.c
-@@ -50,25 +50,20 @@ int meson_card_reallocate_links(struct snd_soc_card *card,
- 			 num_links * sizeof(*priv->card.dai_link),
- 			 GFP_KERNEL | __GFP_ZERO);
- 	if (!links)
--		goto err_links;
-+		return -ENOMEM;
+diff --git a/drivers/iio/dac/ad5686-spi.c b/drivers/iio/dac/ad5686-spi.c
+index 8abfaf8f0c469..859874ab861c5 100644
+--- a/drivers/iio/dac/ad5686-spi.c
++++ b/drivers/iio/dac/ad5686-spi.c
+@@ -98,8 +98,13 @@ static const struct ad5686_bus_ops ad5686_spi_ops = {
+ 
+ static int ad5686_spi_probe(struct spi_device *spi)
+ {
+-	return ad5686_probe(&spi->dev, spi_get_device_match_data(spi),
+-			    spi->modalias, &ad5686_spi_ops);
++	const struct ad5686_chip_info *info;
 +
-+	priv->card.dai_link = links;
-+	priv->card.num_links = num_links;
- 
- 	ldata = krealloc(priv->link_data,
- 			 num_links * sizeof(*priv->link_data),
- 			 GFP_KERNEL | __GFP_ZERO);
-+	/* meson_card_clean_references() will free the links on this error path */
- 	if (!ldata)
--		goto err_ldata;
-+		return -ENOMEM;
- 
--	priv->card.dai_link = links;
- 	priv->link_data = ldata;
--	priv->card.num_links = num_links;
- 	return 0;
--
--err_ldata:
--	kfree(links);
--err_links:
--	dev_err(priv->card.dev, "failed to allocate links\n");
--	return -ENOMEM;
--
++	info = spi_get_device_match_data(spi);
++	if (!info)
++		return -ENODATA;
++
++	return ad5686_probe(&spi->dev, info, spi->modalias, &ad5686_spi_ops);
  }
- EXPORT_SYMBOL_GPL(meson_card_reallocate_links);
  
+ static const struct spi_device_id ad5686_spi_id[] = {
+diff --git a/drivers/iio/dac/ad5696-i2c.c b/drivers/iio/dac/ad5696-i2c.c
+index d49946adbde3a..d5934405d5552 100644
+--- a/drivers/iio/dac/ad5696-i2c.c
++++ b/drivers/iio/dac/ad5696-i2c.c
+@@ -68,8 +68,13 @@ static const struct ad5686_bus_ops ad5686_i2c_ops = {
+ 
+ static int ad5686_i2c_probe(struct i2c_client *i2c)
+ {
+-	return ad5686_probe(&i2c->dev, i2c_get_match_data(i2c),
+-			    i2c->name, &ad5686_i2c_ops);
++	const struct ad5686_chip_info *info;
++
++	info = i2c_get_match_data(i2c);
++	if (!info)
++		return -ENODATA;
++
++	return ad5686_probe(&i2c->dev, info, i2c->name, &ad5686_i2c_ops);
+ }
+ 
+ static const struct i2c_device_id ad5686_i2c_id[] = {
 -- 
 2.53.0
 
