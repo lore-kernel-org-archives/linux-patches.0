@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8A2231F9B1;
-	Sat, 12 Sep 2026 16:48:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABA8335E1D5;
+	Sat, 12 Sep 2026 16:48:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789231723; cv=none; b=WwVg9cl/CuITrQPPNte6hMmAWnzv1KDscDBtVKCgp6JtgnEANbP9QnS42AMIYHWUgWfE4dZbJgj7FASBjt6v3PTRoqBJ8Pwage1y8gq59IzRYtcibsh57obEGSKz6K4JBAOorWmNk7dhtQBPExUpgUovlYqlvz5I499wwaYlaRA=
+	t=1789231728; cv=none; b=EUIWeRKklXHIs+n9ipG5EJJd5lRl//zLrtXGlKC7og/LhYSrU7pmfbYW6gXlZ9FlpeOvM3medyRmo3NqB1wD3tOLaZH3cno3Y6LTZuc7FuRvO+YiVgVo3jUViyyFL+ynSPmDPK9woKEtmpEFV6LGmoWoXQzu+XfvXzErliRRlgo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789231723; c=relaxed/simple;
-	bh=O57Kytbzk6UPX+2AK6AWxi1Z91mauj9h9iQvG0xp7ac=;
+	s=arc-20240116; t=1789231728; c=relaxed/simple;
+	bh=OBKxyDXJaRYrCbzibZPLSE+LilE0u53BtnHkLi+dwgU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NkPmS8actrXKXpKvazp6NV9MGRs/E8NjRovTBfenFDRDhFCqo/LJOF5rZ7zWOMSNrHgwpXrUpIlnCRdNZxFEWO0pF6fcuKaWAeaCoHVmnIlFUv6o4RBy3BkKYOXbhwMD+N4UrzPjFYxKyTZ0dBNgmA70oy40vm8Qwdzm/TJyG4c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nkg1jW7q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=m8c+oI+9T5b4CcyNzaX+2t8TxOXCrUBYXdKbbB4b+o6YkM51fvctk89vfOAAmH9ax1PoSdY+TKgdP8E50eYFXsDn/wwhQb/2rOni8ilaMBNtfubrcSzcFxdrSmJ3V75EhvN34yCYbxbMCwL2GAH+PWYpG9aS8QfhnMvAywkrVJo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U+a3s1Z2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nkg1jW7q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 835611F000FF;
-	Sat, 12 Sep 2026 16:48:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U+a3s1Z2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E2A11F000FF;
+	Sat, 12 Sep 2026 16:48:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789231722;
-	bh=M1ahY1AkVsrA1Ya2ZU7/DPMwG69wrjpTIYPBFKBzVF0=;
+	s=korg; t=1789231727;
+	bh=BN80KpDI5EXV3BQ+QswB9WKGg2RAMsUdVnJh++FHUBs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Nkg1jW7qhcRTJ3fX/2gW4AIypCKX1MbeazdGKAuAY7MYfTy+fUdI/cli0Q4fwZwJm
-	 jDZ8AbxTCFmoCOXR55wnFv1YtEpTgqieDYw5Podk+8d0V+fEVoarv/4OkdY5TZrNiI
-	 8VvzQ05TQh7pURouMMs0/9gr5H7SpRoTWadw4ybY=
+	b=U+a3s1Z2aOVhy/xa9Pgh7OT2NaVXpUAiZHXclAJ+NJjvQQM6zunb97OAYVkQHjESW
+	 T4DPJCc7aq2jOffFBPsDy0oG+a821f1tbb/V2zli4UHgE28G7dGeVmiODBTnIoHZIs
+	 Jv8/MGNsdcO3MgS2OL3ZbY3/Kbo6cbuETTnfJAK4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baokun Li <libaokun@linux.alibaba.com>,
-	Miklos Szeredi <mszeredi@redhat.com>,
+	sashiko-bot <sashiko-bot@kernel.org>,
+	Ian Rogers <irogers@google.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1055/1191] cuse: wait for pending RCU callbacks on module exit
-Date: Sat, 12 Sep 2026 09:03:03 +0200
-Message-ID: <20260912065611.869597312@linuxfoundation.org>
+Subject: [PATCH 6.1 1016/1191] perf dso: Guard against cache underflow on short reads in dso_cache__memcpy()
+Date: Sat, 12 Sep 2026 09:02:24 +0200
+Message-ID: <20260912065611.011423193@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -45,75 +47,74 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Baokun Li <libaokun@linux.alibaba.com>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 4deb3edead0c0e172cc7349e8855d741d3c5e162 ]
+[ Upstream commit 390a9461cd73bdd13acc0f6d763618ae1ff8fa17 ]
 
-Since commit 053fc4f755ad ("fuse: fix UAF in rcu pathwalks"),
-fuse_conn_put() frees the fuse_conn through call_rcu() rather than
-synchronously.  For cuse, fc->release is cuse_fc_release(), which
-lives in the cuse module.  If the module is removed before the RCU
-grace period ends, the callback jumps into freed module memory:
+dso_cache__memcpy() computes cache_offset = offset - cache->offset,
+then cache_size = min(cache->size - cache_offset, size).  The RB tree
+lookup in __dso_cache__find() matches using the full
+DSO__DATA_CACHE_SIZE window, but cache->size reflects the actual pread
+return value from dso_cache__populate().
 
-      userspace / module unload      |        RCU softirq
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- close(/dev/cuse)                    |
-  cuse_channel_release()             |
-   fuse_dev_release()                |
-    fuse_conn_put(fch->conn)         |
-     call_rcu(delayed_release) ------+---> callback queued
-                                     |
- rmmod cuse                          |
-  cuse_exit()                        |
-   cuse_channel_destroy()            |
-   ...                               |
-   return                            |
-                                     |
- <module text freed>                 |
-                                     |  rcu_do_batch()
-                                     |   delayed_release()
-                                     |    fc->release()
-                                     |     -> cuse_fc_release()
-                                     |        ^^^ freed text!
+A short pread (e.g. near end-of-file) makes cache->size smaller than
+DSO__DATA_CACHE_SIZE.  If a subsequent access targets an offset past
+cache->offset + cache->size but within the DSO__DATA_CACHE_SIZE
+window, the cache entry is found but cache_offset exceeds cache->size.
+Since both are u64, the subtraction cache->size - cache_offset wraps
+to a large value, min() selects the caller's size, and memcpy reads
+out of bounds.
 
-The freed module text is unmapped by vfree(), so the jump into the
-stale callback triggers a page-fault Oops.  If the virtual address
-is subsequently reused, the callback could execute unrelated code
-(undefined behaviour).
+Return 0 for an offset past the valid cached data.  For a regular
+file a short pread only happens at end-of-file, so 0 is what a direct
+pread() at that offset would return: cached_io() stops its read loop
+as on EOF.  Re-reading from the backing file would not help — a
+second pread at the same offset returns the same short count.
 
-Fix this by calling rcu_barrier() in cuse_exit() so that any pending
-fuse_conn release callback completes before the module is removed.
-
-Fixes: 053fc4f755ad ("fuse: fix UAF in rcu pathwalks")
-Signed-off-by: Baokun Li <libaokun@linux.alibaba.com>
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
+Fixes: 366df72657e0 ("perf dso: Refactor dso_cache__read()")
+Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Reviewed-by: Ian Rogers <irogers@google.com>
+Assisted-by: Claude:claude-opus-4.6
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fuse/cuse.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ tools/perf/util/dso.c | 15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
-diff --git a/fs/fuse/cuse.c b/fs/fuse/cuse.c
-index d10d58c730dd2..698a69eced17b 100644
---- a/fs/fuse/cuse.c
-+++ b/fs/fuse/cuse.c
-@@ -646,6 +646,11 @@ static void __exit cuse_exit(void)
+diff --git a/tools/perf/util/dso.c b/tools/perf/util/dso.c
+index 6b08278a4b7bd..a40fda8b58db4 100644
+--- a/tools/perf/util/dso.c
++++ b/tools/perf/util/dso.c
+@@ -877,7 +877,20 @@ static ssize_t dso_cache__memcpy(struct dso_cache *cache, u64 offset, u8 *data,
+ 				 u64 size, bool out)
  {
- 	misc_deregister(&cuse_miscdev);
- 	class_destroy(cuse_class);
+ 	u64 cache_offset = offset - cache->offset;
+-	u64 cache_size   = min(cache->size - cache_offset, size);
++	u64 cache_size;
++
 +	/*
-+	 * Wait for pending call_rcu() callbacks that call back into
-+	 * this module via fc->release (cuse_fc_release).
++	 * The RB tree matches using DSO__DATA_CACHE_SIZE, but a short
++	 * pread may leave cache->size smaller.  For a regular file a
++	 * short pread only happens at end-of-file, so an offset past
++	 * the valid data is EOF: return 0, matching what a direct
++	 * pread() at that offset would return, and cached_io() then
++	 * stops its read loop.
 +	 */
-+	rcu_barrier();
- }
++	if (cache_offset >= cache->size)
++		return 0;
++
++	cache_size = min(cache->size - cache_offset, size);
  
- module_init(cuse_init);
+ 	if (out)
+ 		memcpy(data, cache->data + cache_offset, cache_size);
 -- 
 2.53.0
 
