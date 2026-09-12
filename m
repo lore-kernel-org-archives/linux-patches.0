@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 875AC35AC3E;
-	Sat, 12 Sep 2026 09:17:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B95423542F8;
+	Sat, 12 Sep 2026 09:17:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789204625; cv=none; b=VBS4tdFpC2R0L9OyVM6vRaj74O7m+XejNQMeXNWGB4zFDXRF74hNsPPzgHzrQNYoZu9eJo1O1zsKQI1sqQ91YpHou+iXNWXfp4IIq5ET2MjO2TSPmsQ6bkaoWyu8aHWD/fnoWoKu2REjzOsvvUau6yAcgGI7tf8tzpB8RWTiHlA=
+	t=1789204631; cv=none; b=j56XmI7vEFG1+Zmu54pMAU+gHPRUUjhpT47vRiUtz+xsrfxaITOgv8xfhiaT0mufdTMS9plqfUuVXX8t+J0HoNi9aKWtH4vB8wTyPwjWhy+VyXyoLj+edcXRa0SxxDlmHrvnTqE4MrSrjQ7+vrSbyQ0Fl5wEwMZxOgkvZXfXaog=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789204625; c=relaxed/simple;
-	bh=zL+8NivvGrP1UMZ3pCSaEiXygzaDRNK2QFT12wSyJnc=;
+	s=arc-20240116; t=1789204631; c=relaxed/simple;
+	bh=zyCClP2RHyavxisE7mxl5G9bjVH1+WQ3TN5JZ6rmkDg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C+HhqcQKOU22fAI0XY8osTDZ7Dbw0AKp5hVgv+xDUNky7bnW73cX809+5iOPGWbqfHqwrhkCtpV0+KGMpjqucTJrdQvBT/yC2a3uJCwI2NSX/zF8yiajDtAQyAzBnNAffy0LKrVU2ZJJSD5PegsDc/gLnEQYWN+pd9/w7XJ2z7c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ScmjVJlW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=s5EX1iSSXxkg+dpuzsBI+ERIZE9c3dONHP2vPNBjlo8X40x3JzpWQ72p8QEKJsqUVnDuJDqD/x72W1vPOSJKvjD34kX/hjmgEMrRn6392QhSs6Qoavm/UV92/tuDgXXaEbDX4naADHKKYzkOIsryRDfu68i8mQOULzQKdApQ2oQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LafqFLKM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ScmjVJlW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27EBA1F000FF;
-	Sat, 12 Sep 2026 09:17:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LafqFLKM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C47A1F000FF;
+	Sat, 12 Sep 2026 09:17:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789204624;
-	bh=3QDEYYf1VMWCC7WbpkHUWoEuSvagQ6hjLLfHCeIr+nM=;
+	s=korg; t=1789204629;
+	bh=PTjfO65TcHFRWH1p/2DHtUORmo5ARE+IChkcGsm9dtY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ScmjVJlWy2RhOh0P5+DjvUlLpQtJWbIH31ACFLxBfPB/pFPYbNBgeVkRGeifk+cOl
-	 Pgk2KjegdqjRtCN835M9aJEOdmhUbxQjGdpnVtOhHHjj+WVHqRdjqAED/FL1XAShUs
-	 kOAv+Ymy9vV9Tdsar4+E9MhgdjFhBMpopG9buafc=
+	b=LafqFLKMoJ8klx2+puKd+CTeVNH9zqREQDn9MCSxM6KrJZwkCIQbMFqFFr51oVfHj
+	 Ri/4opDiH+cH2m6FisHKNDP7GlLHCwHbWkIsEUnNLVdkPxHqzaLo16fXz5TKYh8Pv9
+	 ZD72W1ye8aKfwhnVFHAuoYZR5BdzM9ktGXC5q4Ys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Wilcox <willy@infradead.org>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	Saurav Sachidanand <sauravsc@amazon.com>,
+	Besar Wicaksono <bwicaksono@nvidia.com>,
+	Ian Rogers <irogers@google.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1608/1815] ntfs: fix kmap_local_page() usage in compress
-Date: Sat, 12 Sep 2026 08:55:58 +0200
-Message-ID: <20260912065726.741218567@linuxfoundation.org>
+Subject: [PATCH 7.2 1599/1815] perf vendor events arm64: fix swapped MetricGroup for Tegra410 L1 prefetcher metrics
+Date: Sat, 12 Sep 2026 08:55:49 +0200
+Message-ID: <20260912065726.527277408@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,204 +53,148 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Saurav Sachidanand <sauravsc@amazon.com>
 
-[ Upstream commit 6e03fbd5f772ad24ea64f7632e4d0d73184787ca ]
+[ Upstream commit 2d85e13c5526eee5f4d5670472a949f1489707ed ]
 
-Several compressed I/O paths discard the address returned by
-kmap_local_page() and later access or unmap the page using page_address().
-This is invalid for highmem pages, and local mappings must also be unmapped
-using the address returned by kmap_local_page().
+The L1D prefetcher metrics (l1d_cache_rw_miss_ratio, l1d_demand_accesses,
+etc.) were incorrectly assigned to MetricGroup "L1I_Prefetcher_Effectiveness"
+and vice versa. This causes 'perf stat --metric-group L1D_Prefetcher_Effectiveness'
+to display L1I metrics, which is misleading.
 
-Map each destination page in ntfs_decompress() only while producing the
-current sub-block. Use memcpy_from_page(), memcpy_to_page(), and
-memzero_page() for the other page accesses. Remove unnecessary local
-mappings from ntfs_write_cb(), where pages are accessed through the vmap()
-mapping.
+Swap the MetricGroup assignments so L1D metrics are in the L1D group and
+L1I metrics are in the L1I group.
 
-Fixes: 495e90fa3348 ("ntfs: update attrib operations")
-Reported-by: Matthew Wilcox <willy@infradead.org>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Fixes: 86ff690f45cc ("perf vendor events arm64: Add Tegra410 Olympus PMU events")
+Signed-off-by: Saurav Sachidanand <sauravsc@amazon.com>
+Reviewed-by: Besar Wicaksono <bwicaksono@nvidia.com>
+Reviewed-by: Ian Rogers <irogers@google.com>
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs/compress.c | 38 +++++++++++++++-----------------------
- 1 file changed, 15 insertions(+), 23 deletions(-)
+ .../arch/arm64/nvidia/t410/metrics.json       | 28 +++++++++----------
+ 1 file changed, 14 insertions(+), 14 deletions(-)
 
-diff --git a/fs/ntfs/compress.c b/fs/ntfs/compress.c
-index d83d3e8e06aeb..e866f43ca30b2 100644
---- a/fs/ntfs/compress.c
-+++ b/fs/ntfs/compress.c
-@@ -177,6 +177,7 @@ static int ntfs_decompress(struct page *dest_pages[], int completed_pages[],
- 
- 	/* Variables for uncompressed data / destination. */
- 	struct page *dp;	/* Current destination page being worked on. */
-+	u8 *dp_kaddr;		/* Local kmap for the current destination page. */
- 	u8 *dp_addr;		/* Current pointer into dp. */
- 	u8 *dp_sb_start;	/* Start of current sub-block in dp. */
- 	u8 *dp_sb_end;		/* End of current sb in dp (dp_sb_start + NTFS_SB_SIZE). */
-@@ -191,6 +192,7 @@ static int ntfs_decompress(struct page *dest_pages[], int completed_pages[],
- 	/* Default error code. */
- 	int err = -EOVERFLOW;
- 
-+	dp_kaddr = NULL;
- 	ntfs_debug("Entering, cb_size = 0x%x.", cb_size);
- do_next_sb:
- 	ntfs_debug("Beginning sub-block at offset = 0x%zx in the cb.",
-@@ -223,7 +225,6 @@ static int ntfs_decompress(struct page *dest_pages[], int completed_pages[],
- 				 */
- 				handle_bounds_compressed_page(dp, i_size,
- 						initialized_size);
--				kunmap_local(page_address(dp));
- 				SetPageUptodate(dp);
- 				unlock_page(dp);
- 				if (di == xpage)
-@@ -269,7 +270,8 @@ static int ntfs_decompress(struct page *dest_pages[], int completed_pages[],
- 	}
- 
- 	/* We have a valid destination page. Setup the destination pointers. */
--	dp_addr = (u8 *)page_address(dp) + do_sb_start;
-+	dp_kaddr = kmap_local_page(dp);
-+	dp_addr = dp_kaddr + do_sb_start;
- 
- 	/* Now, we are ready to process the current sub-block (sb). */
- 	if (!(le16_to_cpup((__le16 *)cb) & NTFS_SB_IS_COMPRESSED)) {
-@@ -290,6 +292,8 @@ static int ntfs_decompress(struct page *dest_pages[], int completed_pages[],
- 		/* Advance destination position to next sub-block. */
- 		*dest_ofs += NTFS_SB_SIZE;
- 		*dest_ofs &= ~PAGE_MASK;
-+		kunmap_local(dp_kaddr);
-+		dp_kaddr = NULL;
- 		if (!(*dest_ofs)) {
- finalize_page:
- 			/*
-@@ -324,6 +328,8 @@ static int ntfs_decompress(struct page *dest_pages[], int completed_pages[],
- 		}
- 		/* We have finished the current sub-block. */
- 		*dest_ofs &= ~PAGE_MASK;
-+		kunmap_local(dp_kaddr);
-+		dp_kaddr = NULL;
- 		if (!(*dest_ofs))
- 			goto finalize_page;
- 		goto do_next_sb;
-@@ -429,6 +435,8 @@ static int ntfs_decompress(struct page *dest_pages[], int completed_pages[],
- 	goto do_next_tag;
- 
- return_overflow:
-+	if (dp_kaddr)
-+		kunmap_local(dp_kaddr);
- 	ntfs_error(NULL, "Failed. Returning -EOVERFLOW.");
- 	goto return_error;
- }
-@@ -557,7 +565,6 @@ int ntfs_read_compressed_block(struct folio *folio)
- 			 * least wasting our time.
- 			 */
- 			if (!PageDirty(page) && (!PageUptodate(page))) {
--				kmap_local_page(page);
- 				continue;
- 			}
- 			unlock_page(page);
-@@ -643,8 +650,7 @@ int ntfs_read_compressed_block(struct folio *folio)
- 		}
- 
- 		lock_page(lpage);
--		memcpy(cb_pos, page_address(lpage) + page_ofs,
--		       vol->cluster_size);
-+		memcpy_from_page(cb_pos, lpage, page_ofs, vol->cluster_size);
- 		unlock_page(lpage);
- 		put_page(lpage);
- 		cb_pos += vol->cluster_size;
-@@ -683,14 +689,7 @@ int ntfs_read_compressed_block(struct folio *folio)
- 		for (; cur_page < cb_max_page; cur_page++) {
- 			page = pages[cur_page];
- 			if (page) {
--				if (likely(!cur_ofs))
--					clear_page(page_address(page));
--				else
--					memset(page_address(page) + cur_ofs, 0,
--							PAGE_SIZE -
--							cur_ofs);
--				flush_dcache_page(page);
--				kunmap_local(page_address(page));
-+				memzero_page(page, cur_ofs, PAGE_SIZE - cur_ofs);
- 				SetPageUptodate(page);
- 				unlock_page(page);
- 				if (cur_page == xpage)
-@@ -708,8 +707,7 @@ int ntfs_read_compressed_block(struct folio *folio)
- 		if (cb_max_ofs && cb_pos < cb_end) {
- 			page = pages[cur_page];
- 			if (page)
--				memset(page_address(page) + cur_ofs, 0,
--						cb_max_ofs - cur_ofs);
-+				memzero_page(page, cur_ofs, cb_max_ofs - cur_ofs);
- 			/*
- 			 * No need to update cb_pos at this stage:
- 			 *	cb_pos += cb_max_ofs - cur_ofs;
-@@ -730,7 +728,7 @@ int ntfs_read_compressed_block(struct folio *folio)
- 		for (; cur_page < cb_max_page; cur_page++) {
- 			page = pages[cur_page];
- 			if (page)
--				memcpy(page_address(page) + cur_ofs, cb_pos,
-+				memcpy_to_page(page, cur_ofs, cb_pos,
- 						PAGE_SIZE - cur_ofs);
- 			cb_pos += PAGE_SIZE - cur_ofs;
- 			cur_ofs = 0;
-@@ -741,7 +739,7 @@ int ntfs_read_compressed_block(struct folio *folio)
- 		if (cb_max_ofs && cb_pos < cb_end) {
- 			page = pages[cur_page];
- 			if (page)
--				memcpy(page_address(page) + cur_ofs, cb_pos,
-+				memcpy_to_page(page, cur_ofs, cb_pos,
- 						cb_max_ofs - cur_ofs);
- 			cb_pos += cb_max_ofs - cur_ofs;
- 			cur_ofs = cb_max_ofs;
-@@ -758,7 +756,6 @@ int ntfs_read_compressed_block(struct folio *folio)
- 				 */
- 				handle_bounds_compressed_page(page, i_size,
- 						initialized_size);
--				kunmap_local(page_address(page));
- 				SetPageUptodate(page);
- 				unlock_page(page);
- 				if (cur2_page == xpage)
-@@ -794,7 +791,6 @@ int ntfs_read_compressed_block(struct folio *folio)
- 				page = pages[prev_cur_page];
- 				if (page) {
- 					flush_dcache_page(page);
--					kunmap_local(page_address(page));
- 					unlock_page(page);
- 					if (prev_cur_page != xpage)
- 						put_page(page);
-@@ -818,7 +814,6 @@ int ntfs_read_compressed_block(struct folio *folio)
- 				"Still have pages left! Terminating them with extreme prejudice.  Inode 0x%llx, page index 0x%lx.",
- 				ni->mft_no, folio->index);
- 			flush_dcache_folio(folio);
--			kunmap_local(page_address(page));
- 			folio_unlock(folio);
- 			if (cur_page != xpage)
- 				folio_put(folio);
-@@ -856,7 +851,6 @@ int ntfs_read_compressed_block(struct folio *folio)
- 		page = pages[i];
- 		if (page) {
- 			flush_dcache_page(page);
--			kunmap_local(page_address(page));
- 			unlock_page(page);
- 			if (i != xpage)
- 				put_page(page);
-@@ -1308,7 +1302,6 @@ static int ntfs_write_cb(struct ntfs_inode *ni, loff_t pos, struct page **pages,
- 		}
- 		pages_disk[i] = pg;
- 		lock_page(pg);
--		kmap_local_page(pg);
- 	}
- 
- 	outbuf = vmap(pages_disk, pages_count, VM_MAP, PAGE_KERNEL);
-@@ -1443,7 +1436,6 @@ static int ntfs_write_cb(struct ntfs_inode *ni, loff_t pos, struct page **pages,
- 	for (i = 0; i < pages_count; i++) {
- 		pg = pages_disk[i];
- 		if (pg) {
--			kunmap_local(page_address(pg));
- 			unlock_page(pg);
- 			put_page(pg);
- 		}
+diff --git a/tools/perf/pmu-events/arch/arm64/nvidia/t410/metrics.json b/tools/perf/pmu-events/arch/arm64/nvidia/t410/metrics.json
+index b825ede03f544..59474ccb7417f 100644
+--- a/tools/perf/pmu-events/arch/arm64/nvidia/t410/metrics.json
++++ b/tools/perf/pmu-events/arch/arm64/nvidia/t410/metrics.json
+@@ -346,42 +346,42 @@
+         "MetricExpr": "l1d_demand_misses / l1d_demand_accesses",
+         "BriefDescription": "This metric measures the ratio of L1 D-cache Read accesses missed to the total number of L1 D-cache accesses. This gives an indication of the effectiveness of the L1 D-cache for demand Load or Store traffic.",
+         "ScaleUnit": "1per cache access",
+-        "MetricGroup": "L1I_Prefetcher_Effectiveness"
++        "MetricGroup": "L1D_Prefetcher_Effectiveness"
+     },
+     {
+         "MetricName": "l1d_demand_accesses",
+         "MetricExpr": "L1D_CACHE_RW",
+         "BriefDescription": "This metric measures the count of L1 D-cache accesses incurred on Load or Store by the instruction stream of the program.",
+         "ScaleUnit": "1count",
+-        "MetricGroup": "L1I_Prefetcher_Effectiveness"
++        "MetricGroup": "L1D_Prefetcher_Effectiveness"
+     },
+     {
+         "MetricName": "l1d_demand_misses",
+         "MetricExpr": "L1D_CACHE_REFILL_RW",
+         "BriefDescription": "This metric measures the count of L1 D-cache misses incurred on a Load or Store by the instruction stream of the program.",
+         "ScaleUnit": "1count",
+-        "MetricGroup": "L1I_Prefetcher_Effectiveness"
++        "MetricGroup": "L1D_Prefetcher_Effectiveness"
+     },
+     {
+         "MetricName": "l1d_prf_accuracy",
+         "MetricExpr": "100 * (l1d_useful_prf / l1d_refilled_prf)",
+         "BriefDescription": "This metric measures the fraction of prefetched memory addresses that are used by the instruction stream.",
+         "ScaleUnit": "1percent of prefetch",
+-        "MetricGroup": "L1I_Prefetcher_Effectiveness"
++        "MetricGroup": "L1D_Prefetcher_Effectiveness"
+     },
+     {
+         "MetricName": "l1d_prf_coverage",
+         "MetricExpr": "100 * (l1d_useful_prf / (l1d_demand_misses + l1d_refilled_prf))",
+         "BriefDescription": "This metric measures the baseline demand cache misses which the prefetcher brings into the cache.",
+         "ScaleUnit": "1percent of cache access",
+-        "MetricGroup": "L1I_Prefetcher_Effectiveness"
++        "MetricGroup": "L1D_Prefetcher_Effectiveness"
+     },
+     {
+         "MetricName": "l1d_refilled_prf",
+         "MetricExpr": "L1D_CACHE_REFILL_HWPRF + L1D_CACHE_REFILL_PRFM + L1D_LFB_HIT_RW_FHWPRF + L1D_LFB_HIT_RW_FPRFM",
+         "BriefDescription": "This metric measures the count of cache lines refilled by L1 data prefetcher (hardware prefetches or software preload) into L1 D-cache.",
+         "ScaleUnit": "1count",
+-        "MetricGroup": "L1I_Prefetcher_Effectiveness"
++        "MetricGroup": "L1D_Prefetcher_Effectiveness"
+     },
+     {
+         "MetricName": "l1d_tlb_miss_ratio",
+@@ -402,7 +402,7 @@
+         "MetricExpr": "L1D_CACHE_HIT_RW_FPRF + L1D_LFB_HIT_RW_FHWPRF + L1D_LFB_HIT_RW_FPRFM",
+         "BriefDescription": "This metric measures the count of cache lines refilled by L1 data prefetcher (hardware prefetches or software preload) into L1 D-cache which are further used by Load or Store from the instruction stream of the program.",
+         "ScaleUnit": "1count",
+-        "MetricGroup": "L1I_Prefetcher_Effectiveness"
++        "MetricGroup": "L1D_Prefetcher_Effectiveness"
+     },
+     {
+         "MetricName": "l1i_cache_miss_ratio",
+@@ -423,42 +423,42 @@
+         "MetricExpr": "l1i_demand_misses / l1i_demand_accesses",
+         "BriefDescription": "This metric measures the ratio of L1 I-cache Read accesses missed to the total number of L1 I-cache accesses. This gives an indication of the effectiveness of the L1 I-cache for demand instruction fetch traffic. Note that cache accesses in this cache are demand instruction fetch.",
+         "ScaleUnit": "1per cache access",
+-        "MetricGroup": "L1D_Prefetcher_Effectiveness"
++        "MetricGroup": "L1I_Prefetcher_Effectiveness"
+     },
+     {
+         "MetricName": "l1i_demand_accesses",
+         "MetricExpr": "L1I_CACHE_RD",
+         "BriefDescription": "This metric measures the count of L1 I-cache accesses caused by an instruction fetch by the instruction stream of the program.",
+         "ScaleUnit": "1count",
+-        "MetricGroup": "L1D_Prefetcher_Effectiveness"
++        "MetricGroup": "L1I_Prefetcher_Effectiveness"
+     },
+     {
+         "MetricName": "l1i_demand_misses",
+         "MetricExpr": "L1I_CACHE_REFILL_RD",
+         "BriefDescription": "This metric measures the count of L1 I-cache misses caused by an instruction fetch by the instruction stream of the program.",
+         "ScaleUnit": "1count",
+-        "MetricGroup": "L1D_Prefetcher_Effectiveness"
++        "MetricGroup": "L1I_Prefetcher_Effectiveness"
+     },
+     {
+         "MetricName": "l1i_prf_accuracy",
+         "MetricExpr": "100 * (l1i_useful_prf / l1i_refilled_prf)",
+         "BriefDescription": "This metric measures the fraction of prefetched memory addresses that are used by the instruction stream.",
+         "ScaleUnit": "1percent of prefetch",
+-        "MetricGroup": "L1D_Prefetcher_Effectiveness"
++        "MetricGroup": "L1I_Prefetcher_Effectiveness"
+     },
+     {
+         "MetricName": "l1i_prf_coverage",
+         "MetricExpr": "100 * (l1i_useful_prf / (l1i_demand_misses + l1i_refilled_prf))",
+         "BriefDescription": "This metric measures the baseline demand cache misses which the prefetcher brings into the cache.",
+         "ScaleUnit": "1percent of cache access",
+-        "MetricGroup": "L1D_Prefetcher_Effectiveness"
++        "MetricGroup": "L1I_Prefetcher_Effectiveness"
+     },
+     {
+         "MetricName": "l1i_refilled_prf",
+         "MetricExpr": "L1I_CACHE_REFILL_HWPRF + L1I_CACHE_REFILL_PRFM",
+         "BriefDescription": "This metric measures the count of cache lines refilled by L1 instruction prefetcher (hardware prefetches or software preload) into L1 I-cache.",
+         "ScaleUnit": "1count",
+-        "MetricGroup": "L1D_Prefetcher_Effectiveness"
++        "MetricGroup": "L1I_Prefetcher_Effectiveness"
+     },
+     {
+         "MetricName": "l1i_tlb_miss_ratio",
+@@ -479,7 +479,7 @@
+         "MetricExpr": "L1I_CACHE_HIT_RD_FPRF",
+         "BriefDescription": "This metric measures the count of cache lines refilled by L1 instruction prefetcher (hardware prefetches or software preload) into L1 I-cache which are further used by instruction stream of the program.",
+         "ScaleUnit": "1count",
+-        "MetricGroup": "L1D_Prefetcher_Effectiveness"
++        "MetricGroup": "L1I_Prefetcher_Effectiveness"
+     },
+     {
+         "MetricName": "l2_cache_miss_ratio",
 -- 
 2.53.0
 
