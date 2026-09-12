@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 991132DC792;
-	Sat, 12 Sep 2026 13:36:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 207E647DFBF;
+	Sat, 12 Sep 2026 13:36:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789220189; cv=none; b=VFswXtv4hZGrZDWVbcyXk9QHXqRLqTFzXTwWNL0x2VlmL2MAard4kybcoUGze40g9e2cGRCu4Q/knFwK/e9LZsoaAeIijfFPhbRx3a8O/PLWyvD2HOPHEbPdABehhqB9ekBTpO1Fc1x2s9ec9iDucf1NuVJZfj8mYOtzGTQZKIE=
+	t=1789220194; cv=none; b=IYDhKYiTDa05+bvSGFaxq/BgQyPnjIKruiRp+RH/kTi1g96XhXMXjDkcRDzyS0xgYUOjno6t391QKZN1TSjsqLf05b2joAq4XseBuSkpTtrUHogd2Lah/xNRIPngiFjF9RuNe1HGFUHM9MJfK2M5rLq+4ImV9GWPs2JdbUtuZGY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789220189; c=relaxed/simple;
-	bh=ZFd0z17SGULyAPI5JljUJY0uR3QjDxl2yuGbNfC/VIc=;
+	s=arc-20240116; t=1789220194; c=relaxed/simple;
+	bh=Un85N9SitUQ+h4A1k2Zqcdf8kbqsrEnxek3Lo2eAF74=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QRdgBYAn0ufCFTmSzEsHVUBq6wcJu3LCDRKOmkqOju4VLEfTwgjDTlGTF+D8UDAeTJweIEZm8mXLKlI3Z3CpOL8ExrQeqrx+hzPf2wfrvlnoUj9/Q8q9BhcW4xGZ4q7+I0vDoEZGwWI91jttZyu9L5n1eouDM8Cbg2eRTT2818s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gmh4UlO2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YQQyG59CV6JgAUXgzokojJ46M539Wo5+2d0+/wnLghc3fZAlaWQrkwuJ4iHjSo0blfCJw2QtDDuJ02SHpaFBs0U3XYYFqUUwu88CfJAupgNzsRKntU09GvGFGM0q+3jDfbowvpiDCRE0PjsSukMrJRjqxvCdxZsDJjUc0nrfMuw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kilqbJas; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gmh4UlO2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 395511F000FF;
-	Sat, 12 Sep 2026 13:36:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kilqbJas"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8DB51F000FF;
+	Sat, 12 Sep 2026 13:36:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789220188;
-	bh=gvlb5QFnsQvvfyIBny9AsPhFadePuBMvx8UoI0YAo/c=;
+	s=korg; t=1789220193;
+	bh=JfbaOe0BJcZxRd1bCd3fQIG9zqRkK/y/vm9hw0UhqVU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Gmh4UlO25m7h4QHIkwffaDba8oj/RJVQQReNaje5nrkzszOui9pUmC3WNxIEStkMj
-	 yKeiYDrgdrkpZIVMoOYDxNPODth2hogoBRZC4h90HQuj0mKoQ2QCUhhY/te0IxYenz
-	 8n122C/TmvVRmztW6q1IYG/zmxO1JHNSD44wcDnc=
+	b=kilqbJasGTd3UIRLMAFrXO0IVBa+t34Y7MAddJg+OjQuZ2CaxW/1bLEsx82qOOFzo
+	 jbhFaI9sw6SJ66B54uFKGgTXT4/wv0q3uamWX+yd/EQIuXyR1N3yD5XxYWjonk45ns
+	 ReQO2gBTWdMYJovJr27k3YiQzXsekdYfjuZRqZyA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Williams <djbw@kernel.org>,
-	Alison Schofield <alison.schofield@intel.com>,
-	Dave Jiang <dave.jiang@intel.com>
-Subject: [PATCH 6.6 0127/1424] cxl/pmem: Format the nvdimm serial number as unsigned decimal
-Date: Sat, 12 Sep 2026 08:42:39 +0200
-Message-ID: <20260912065610.144661579@linuxfoundation.org>
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.6 0128/1424] Bluetooth: hci_bcm: fix usage_count leak when autosuspend_delay is negative
+Date: Sat, 12 Sep 2026 08:42:40 +0200
+Message-ID: <20260912065610.165776943@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -51,105 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alison Schofield <alison.schofield@intel.com>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-commit 8a80d3d65cd06ee35b913d8517fb2f2319f8e70c upstream.
+commit dc6b7c771a963e20aedf4a21ffa22543b9837ba8 upstream.
 
-The CXL NVDIMM security passphrase key description and the nvdimm 'id'
-sysfs attribute are both derived from the CXL device serial number,
-but the serial number is not formatted consistently.
+bcm_request_irq() calls pm_runtime_use_autosuspend(), but bcm_close()
+does not call the matching pm_runtime_dont_use_autosuspend() when
+tearing down runtime PM.
 
-The key description is formatted in hexadecimal while the 'id'
-attribute is formatted in decimal. As a result, ndctl stores the key
-using a decimal description while the kernel later looks it up using
-a hexadecimal description. For serial numbers of 10 and above, the
-descriptions no longer match, preventing automatic unlock after
-reboot.
+If the autosuspend delay is set to a negative value while autosuspend
+is enabled, the runtime PM core increments usage_count to prevent
+runtime suspend. Without calling pm_runtime_dont_use_autosuspend()
+during driver teardown, this reference is not dropped and usage_count
+remains unbalanced.
 
-The decimal formatting has a second problem: both the key description
-and the 'id' attribute use the signed %lld format for a u64 PCIe
-Device Serial Number. Devices whose vendor OUI sets bit 63, such as
-Montage CXL devices, appear with negative decimal serial numbers.
+Add the missing pm_runtime_dont_use_autosuspend() call before disabling
+runtime PM.
 
-Format the security key description and 'id' attribute as unsigned
-decimal, %llu, and document that the 'id' attribute is an unsigned
-decimal value.
+This issue was found by manual code inspection.
 
-The key lookup mismatch was exposed by CXL unit test cxl-security.sh
-when cxl_test mock serial numbers were extended to 10 and above.
-
-A work around is described for ndctl load-key users here:
-https://github.com/pmem/ndctl/issues/299
-
+Fixes: e88ab30d3669 ("Bluetooth: hci_bcm: Add suspend/resume runtime PM functions")
 Cc: stable@vger.kernel.org
-Fixes: b5807c80b5bc ("cxl: add dimm_id support for __nvdimm_create()")
-Acked-by: Dan Williams <djbw@kernel.org>
-Signed-off-by: Alison Schofield <alison.schofield@intel.com>
-Link: https://patch.msgid.link/2c673a5ba0a8fa93ad160578e193bd556091fa95.1784924949.git.alison.schofield@intel.com
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/ABI/testing/sysfs-bus-nvdimm |    3 ++-
- drivers/cxl/core/pmem.c                    |   10 ++++++----
- drivers/cxl/cxl.h                          |    3 ++-
- drivers/cxl/pmem.c                         |    2 +-
- 4 files changed, 11 insertions(+), 7 deletions(-)
+ drivers/bluetooth/hci_bcm.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/Documentation/ABI/testing/sysfs-bus-nvdimm
-+++ b/Documentation/ABI/testing/sysfs-bus-nvdimm
-@@ -48,7 +48,8 @@ What:		/sys/bus/nd/devices/nmemX/cxl/id
- Date:		November 2022
- KernelVersion:	6.2
- Contact:	Dave Jiang <dave.jiang@intel.com>
--Description:	(RO) Show the id (serial) of the device. This is CXL specific.
-+Description:	(RO) Show the id (serial) of the device, formatted as an
-+		unsigned 64-bit decimal value. This is CXL specific.
- 
- What:		/sys/bus/nd/devices/nmemX/cxl/provider
- Date:		November 2022
---- a/drivers/cxl/core/pmem.c
-+++ b/drivers/cxl/core/pmem.c
-@@ -217,12 +217,14 @@ static struct cxl_nvdimm *cxl_nvdimm_all
- 	dev->bus = &cxl_bus_type;
- 	dev->type = &cxl_nvdimm_type;
- 	/*
--	 * A "%llx" string is 17-bytes vs dimm_id that is max
--	 * NVDIMM_KEY_DESC_LEN
-+	 * dev_id is the nvdimm dimm_id used for security key lookup.
-+	 * It must match id_show(), which emits the CXL serial as an
-+	 * unsigned decimal. A u64 decimal string is at most 20 digits
-+	 * plus NUL.
- 	 */
--	BUILD_BUG_ON(sizeof(cxl_nvd->dev_id) < 17 ||
-+	BUILD_BUG_ON(sizeof(cxl_nvd->dev_id) < 21 ||
- 		     sizeof(cxl_nvd->dev_id) > NVDIMM_KEY_DESC_LEN);
--	sprintf(cxl_nvd->dev_id, "%llx", cxlmd->cxlds->serial);
-+	sprintf(cxl_nvd->dev_id, "%llu", cxlmd->cxlds->serial);
- 
- 	return cxl_nvd;
- }
---- a/drivers/cxl/cxl.h
-+++ b/drivers/cxl/cxl.h
-@@ -528,7 +528,8 @@ struct cxl_nvdimm_bridge {
- 	struct nvdimm_bus_descriptor nd_desc;
- };
- 
--#define CXL_DEV_ID_LEN 19
-+/* Holds a u64 serial as a decimal string: up to 20 digits + NUL */
-+#define CXL_DEV_ID_LEN 21
- 
- struct cxl_nvdimm {
- 	struct device dev;
---- a/drivers/cxl/pmem.c
-+++ b/drivers/cxl/pmem.c
-@@ -40,7 +40,7 @@ static ssize_t id_show(struct device *de
- 	struct cxl_nvdimm *cxl_nvd = nvdimm_provider_data(nvdimm);
- 	struct cxl_dev_state *cxlds = cxl_nvd->cxlmd->cxlds;
- 
--	return sysfs_emit(buf, "%lld\n", cxlds->serial);
-+	return sysfs_emit(buf, "%llu\n", cxlds->serial);
- }
- static DEVICE_ATTR_RO(id);
+--- a/drivers/bluetooth/hci_bcm.c
++++ b/drivers/bluetooth/hci_bcm.c
+@@ -548,6 +548,7 @@ static int bcm_close(struct hci_uart *hu
+ 		if (IS_ENABLED(CONFIG_PM) && bdev->irq_acquired) {
+ 			devm_free_irq(bdev->dev, bdev->irq, bdev);
+ 			device_init_wakeup(bdev->dev, false);
++			pm_runtime_dont_use_autosuspend(bdev->dev);
+ 			pm_runtime_disable(bdev->dev);
+ 		}
  
 
 
