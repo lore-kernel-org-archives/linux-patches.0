@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A473F3AC17;
-	Sat, 12 Sep 2026 15:07:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4318A23BD03;
+	Sat, 12 Sep 2026 15:07:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789225656; cv=none; b=ilshVyiH5fPXmAQ7sn9l6E4VdPSJDSH0f43WsfYGYmzFI8GFNP1UbLCNJZRy7hlQ3XqQYzhj7KlzY00HXYKzTrJvpbMBJthztVS5bto7wOaNC65dtJ/eIa3SRK9evm4MfFy4uuE0lSI8/fNJQLLc4azQfWlC0rEOSqBAP6Y9XXQ=
+	t=1789225660; cv=none; b=E70E7OmmBu+jEUoPdO9/FfM34huIFsUsRK/4MAFVpj2R5a0vfzsSI9/r6eKOIzNVklpsHd1PXtNaMGBIaQweadrKJvJAxN2aUsQz0G9d5xW7bS2xV7VF25aceIBHUSJlSB4qRQ7ymq5y6RKlAZrtlejU7nsmp/EV/fo1lDHewKg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789225656; c=relaxed/simple;
-	bh=K/uzlEVkff06QzmN5wdZCOy9TfGxpBQgJKgud4tA9Is=;
+	s=arc-20240116; t=1789225660; c=relaxed/simple;
+	bh=sfXZiWy57bmGT+E8t34Baq1bb7P8d9Nt4c8hrwyF58c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DdEDBXDXH8kj+SaOQJlRJMSIJVG0ng2FTvw5arySAh6STcOHvXH78tdV049LKX7Y+cfjehjGDeADEON6+QCPboiR60iTqlSkIcqvfu9yJTAo2ItM0r9/+2kCGT9AoEhraVok7EIToSRNjOnluN+C9ZkmU0NF3CwFoE3mXEzzmt4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b5SoSI0X; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Liz4a8AKKku3EcBQHSODYmkoyjLOOAiEuO8qwQttPyZNMpmQ3FKEKEOepRzeofzqLGckPyHfws9wwbn7lL9Bd8HwpOWz8VuNcG5s8A7hEwip0NmYPSh9waF12jjK6VTrAUyJtKyhCjLWCOesl48iqp0uEK1trwUh3SQ0xCdBiv0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RaLmpc/C; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b5SoSI0X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 435291F000FF;
-	Sat, 12 Sep 2026 15:07:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RaLmpc/C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 482DB1F00893;
+	Sat, 12 Sep 2026 15:07:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789225654;
-	bh=9DgUY/wmUCuhBEdwnpCsxtRgONjtrGWzqluEea+7qug=;
+	s=korg; t=1789225659;
+	bh=h7Qt94qN8ZZ8FewlMBkVqitsZCauun1TFHcqt2zuyaI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=b5SoSI0XI9uXUVwO/iI+iF/M0UnL4mJgW5lut0iaZ1dX2i290fdNMCBNnVVqq4Ep+
-	 hvHT16USysj6BpS8XFuMEgceX5PKEUFwfr8hl33oQHGO0d8bsYIZK7icJGVabztoVw
-	 jSuRzHdxuxDLdXHxnQfcMWUd3jeqqbOAEJXb29V0=
+	b=RaLmpc/CujqeNpqoy/7cjvtDHbz4TOiAWEM/VEejDpcTo8FxyMQYB1wFK/880/Ckk
+	 r3pcR+IzvQHr653hWSOntyymOmpfmsPWz9mXik5bK9yAN2JIRCJMaThdvj7vx7fYM8
+	 o7UMoaqOLrpts+W1SWIGNUAgacNZiZXdsrYr3omQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lars Petter Mostad <larspm@gmail.com>,
 	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1243/1424] hwmon: (emc1403) Add support for EMC1428 and EMC1438.
-Date: Sat, 12 Sep 2026 09:01:15 +0200
-Message-ID: <20260912065635.119981369@linuxfoundation.org>
+Subject: [PATCH 6.6 1244/1424] hwmon: (emc1403) Rely on subsystem locking
+Date: Sat, 12 Sep 2026 09:01:16 +0200
+Message-ID: <20260912065635.143008112@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -51,283 +50,153 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lars Petter Mostad <larspm@gmail.com>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit c82337843dd7c0723e7ce2b86e5ed89d71f1c7c3 ]
+[ Upstream commit 61e9b50ffa2390a2927051d335b2ba04b8f791ce ]
 
-EMC1428 and EMC1438 are similar to EMC14xx, but have eight temperature
-channels, as well as signed data and limit registers. Chips currently
-supported by this driver have unsigned registers only.
+Attribute access is now serialized in the hardware monitoring core,
+so locking in the driver code is no longer necessary. Drop it.
 
-Signed-off-by: Lars Petter Mostad <larspm@gmail.com>
-Link: https://lore.kernel.org/r/20240510142824.824332-1-lars.petter.mostad@appear.net
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Stable-dep-of: 75f2c0b36907 ("hwmon: (emc1403) Drop hysteresis for low limit temperature")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/hwmon/emc1403.rst |  17 ++++-
- drivers/hwmon/emc1403.c         | 121 +++++++++++++++++++++++++++++---
- 2 files changed, 124 insertions(+), 14 deletions(-)
+ drivers/hwmon/emc1403.c | 46 +++++++++--------------------------------
+ 1 file changed, 10 insertions(+), 36 deletions(-)
 
-diff --git a/Documentation/hwmon/emc1403.rst b/Documentation/hwmon/emc1403.rst
-index 0de9616b24ed4..57f833b1a800e 100644
---- a/Documentation/hwmon/emc1403.rst
-+++ b/Documentation/hwmon/emc1403.rst
-@@ -45,6 +45,17 @@ Supported chips:
- 
- 	- https://ww1.microchip.com/downloads/en/DeviceDoc/1423_1424.pdf
- 
-+  * SMSC / Microchip EMC1428, EMC1438
-+
-+    Addresses scanned: I2C 0x18, 0x4c, 0x4d
-+
-+    Prefix: 'emc1428', 'emc1438'
-+
-+    Datasheets:
-+
-+	- https://ww1.microchip.com/downloads/aemDocuments/documents/OTH/ProductDocuments/DataSheets/20005275A.pdf
-+	- https://ww1.microchip.com/downloads/en/DeviceDoc/EMC1438%20DS%20Rev.%201.0%20(04-29-10).pdf
-+
- Author:
-     Kalhan Trisal <kalhan.trisal@intel.com
- 
-@@ -53,10 +64,10 @@ Description
- -----------
- 
- The Standard Microsystems Corporation (SMSC) / Microchip EMC14xx chips
--contain up to four temperature sensors. EMC14x2 support two sensors
-+contain up to eight temperature sensors. EMC14x2 support two sensors
- (one internal, one external). EMC14x3 support three sensors (one internal,
--two external), and EMC14x4 support four sensors (one internal, three
--external).
-+two external), EMC14x4 support four sensors (one internal, three external),
-+and EMC14x8 support eight sensors (one internal, seven external).
- 
- The chips implement three limits for each sensor: low (tempX_min), high
- (tempX_max) and critical (tempX_crit.) The chips also implement an
 diff --git a/drivers/hwmon/emc1403.c b/drivers/hwmon/emc1403.c
-index 5aafcf2d8ef38..0011a1d100075 100644
+index 0011a1d100075..ad4fc64824bc4 100644
 --- a/drivers/hwmon/emc1403.c
 +++ b/drivers/hwmon/emc1403.c
-@@ -24,7 +24,7 @@
- #define THERMAL_SMSC_ID_REG	0xfe
- #define THERMAL_REVISION_REG	0xff
+@@ -17,7 +17,6 @@
+ #include <linux/hwmon-sysfs.h>
+ #include <linux/err.h>
+ #include <linux/sysfs.h>
+-#include <linux/mutex.h>
+ #include <linux/regmap.h>
  
--enum emc1403_chip { emc1402, emc1403, emc1404 };
-+enum emc1403_chip { emc1402, emc1403, emc1404, emc1428 };
- 
+ #define THERMAL_PID_REG		0xfd
+@@ -29,7 +28,6 @@ enum emc1403_chip { emc1402, emc1403, emc1404, emc1428 };
  struct thermal_data {
  	enum emc1403_chip chip;
-@@ -99,6 +99,12 @@ static int emc1403_detect(struct i2c_client *client,
- 	case 0x27:
- 		strscpy(info->type, "emc1424", I2C_NAME_SIZE);
- 		break;
-+	case 0x29:
-+		strscpy(info->type, "emc1428", I2C_NAME_SIZE);
-+		break;
-+	case 0x59:
-+		strscpy(info->type, "emc1438", I2C_NAME_SIZE);
-+		break;
- 	case 0x60:
- 		strscpy(info->type, "emc1442", I2C_NAME_SIZE);
- 		break;
-@@ -129,6 +135,14 @@ static bool emc1403_regmap_is_volatile(struct device *dev, unsigned int reg)
- 	case 0x35:	/* high limit status */
- 	case 0x36:	/* low limit status */
- 	case 0x37:	/* therm limit status */
-+	case 0x41:	/* external diode 4 high byte */
-+	case 0x42:	/* external diode 4 low byte */
-+	case 0x43:	/* external diode 5 high byte */
-+	case 0x44:	/* external diode 5 low byte */
-+	case 0x45:	/* external diode 6 high byte */
-+	case 0x46:	/* external diode 6 low byte */
-+	case 0x47:	/* external diode 7 high byte */
-+	case 0x48:	/* external diode 7 low byte */
- 		return true;
- 	default:
- 		return false;
-@@ -176,6 +190,30 @@ static u8 emc1403_temp_regs[][4] = {
- 		[temp_crit] = 0x30,
- 		[temp_input] = 0x2a,
- 	},
-+	[4] = {
-+		[temp_min] = 0x51,
-+		[temp_max] = 0x50,
-+		[temp_crit] = 0x64,
-+		[temp_input] = 0x41,
-+	},
-+	[5] = {
-+		[temp_min] = 0x55,
-+		[temp_max] = 0x54,
-+		[temp_crit] = 0x65,
-+		[temp_input] = 0x43
-+	},
-+	[6] = {
-+		[temp_min] = 0x59,
-+		[temp_max] = 0x58,
-+		[temp_crit] = 0x66,
-+		[temp_input] = 0x45,
-+	},
-+	[7] = {
-+		[temp_min] = 0x5d,
-+		[temp_max] = 0x5c,
-+		[temp_crit] = 0x67,
-+		[temp_input] = 0x47,
-+	},
+ 	struct regmap *regmap;
+-	struct mutex mutex;
  };
  
- static s8 emc1403_temp_regs_low[][4] = {
-@@ -203,27 +241,56 @@ static s8 emc1403_temp_regs_low[][4] = {
- 		[temp_crit] = -1,
- 		[temp_input] = 0x2b,
+ static ssize_t power_state_show(struct device *dev, struct device_attribute *attr, char *buf)
+@@ -267,8 +265,8 @@ static s8 emc1403_temp_regs_low[][4] = {
  	},
-+	[4] = {
-+		[temp_min] = 0x53,
-+		[temp_max] = 0x52,
-+		[temp_crit] = -1,
-+		[temp_input] = 0x42,
-+	},
-+	[5] = {
-+		[temp_min] = 0x57,
-+		[temp_max] = 0x56,
-+		[temp_crit] = -1,
-+		[temp_input] = 0x44,
-+	},
-+	[6] = {
-+		[temp_min] = 0x5b,
-+		[temp_max] = 0x5a,
-+		[temp_crit] = -1,
-+		[temp_input] = 0x46,
-+	},
-+	[7] = {
-+		[temp_min] = 0x5f,
-+		[temp_max] = 0x5e,
-+		[temp_crit] = -1,
-+		[temp_input] = 0x48,
-+	},
  };
  
- static int __emc1403_get_temp(struct thermal_data *data, int channel,
- 			      enum emc1403_reg_map map, long *val)
+-static int __emc1403_get_temp(struct thermal_data *data, int channel,
+-			      enum emc1403_reg_map map, long *val)
++static int emc1403_get_temp(struct thermal_data *data, int channel,
++			    enum emc1403_reg_map map, long *val)
  {
--	unsigned int regval;
-+	unsigned int regvalh;
-+	unsigned int regvall = 0;
- 	int ret;
- 	s8 reg;
- 
--	ret = regmap_read(data->regmap, emc1403_temp_regs[channel][map], &regval);
-+	ret = regmap_read(data->regmap, emc1403_temp_regs[channel][map], &regvalh);
- 	if (ret < 0)
- 		return ret;
--	*val = regval * 1000;
- 
- 	reg = emc1403_temp_regs_low[channel][map];
- 	if (reg >= 0) {
--		ret = regmap_read(data->regmap, reg, &regval);
-+		ret = regmap_read(data->regmap, reg, &regvall);
- 		if (ret < 0)
- 			return ret;
--		*val += (regval >> 5) * 125;
- 	}
-+
-+	if (data->chip == emc1428)
-+		*val = sign_extend32((regvalh << 3) | (regvall >> 5), 10) * 125;
-+	else
-+		*val = ((regvalh << 3) | (regvall >> 5)) * 125;
-+
+ 	unsigned int regvalh;
+ 	unsigned int regvall = 0;
+@@ -294,38 +292,23 @@ static int __emc1403_get_temp(struct thermal_data *data, int channel,
  	return 0;
  }
  
-@@ -351,7 +418,10 @@ static int emc1403_set_hyst(struct thermal_data *data, long val)
+-static int emc1403_get_temp(struct thermal_data *data, int channel,
+-			    enum emc1403_reg_map map, long *val)
+-{
+-	int ret;
+-
+-	mutex_lock(&data->mutex);
+-	ret = __emc1403_get_temp(data, channel, map, val);
+-	mutex_unlock(&data->mutex);
+-
+-	return ret;
+-}
+-
+ static int emc1403_get_hyst(struct thermal_data *data, int channel,
+ 			    enum emc1403_reg_map map, long *val)
+ {
  	int hyst, ret;
  	long limit;
  
--	val = clamp_val(val, 0, 255000);
-+	if (data->chip == emc1428)
-+		val = clamp_val(val, -128000, 127000);
-+	else
-+		val = clamp_val(val, 0, 255000);
+-	mutex_lock(&data->mutex);
+-	ret = __emc1403_get_temp(data, channel, map, &limit);
++	ret = emc1403_get_temp(data, channel, map, &limit);
+ 	if (ret < 0)
+-		goto unlock;
++		return ret;
+ 	ret = regmap_read(data->regmap, 0x21, &hyst);
+ 	if (ret < 0)
+-		goto unlock;
++		return ret;
+ 	if (map == temp_min)
+ 		*val = limit + hyst * 1000;
+ 	else
+ 		*val = limit - hyst * 1000;
+-unlock:
+-	mutex_unlock(&data->mutex);
+-	return ret;
++	return 0;
+ }
  
- 	mutex_lock(&data->mutex);
- 	ret = __emc1403_get_temp(data, 0, temp_crit, &limit);
-@@ -359,7 +429,10 @@ static int emc1403_set_hyst(struct thermal_data *data, long val)
- 		goto unlock;
+ static int emc1403_temp_read(struct thermal_data *data, u32 attr, int channel, long *val)
+@@ -423,20 +406,16 @@ static int emc1403_set_hyst(struct thermal_data *data, long val)
+ 	else
+ 		val = clamp_val(val, 0, 255000);
+ 
+-	mutex_lock(&data->mutex);
+-	ret = __emc1403_get_temp(data, 0, temp_crit, &limit);
++	ret = emc1403_get_temp(data, 0, temp_crit, &limit);
+ 	if (ret < 0)
+-		goto unlock;
++		return ret;
  
  	hyst = limit - val;
--	hyst = clamp_val(DIV_ROUND_CLOSEST(hyst, 1000), 0, 255);
-+	if (data->chip == emc1428)
-+		hyst = clamp_val(DIV_ROUND_CLOSEST(hyst, 1000), 0, 127);
-+	else
-+		hyst = clamp_val(DIV_ROUND_CLOSEST(hyst, 1000), 0, 255);
- 	ret = regmap_write(data->regmap, 0x21, hyst);
- unlock:
- 	mutex_unlock(&data->mutex);
-@@ -379,14 +452,20 @@ static int emc1403_set_temp(struct thermal_data *data, int channel,
+ 	if (data->chip == emc1428)
+ 		hyst = clamp_val(DIV_ROUND_CLOSEST(hyst, 1000), 0, 127);
+ 	else
+ 		hyst = clamp_val(DIV_ROUND_CLOSEST(hyst, 1000), 0, 255);
+-	ret = regmap_write(data->regmap, 0x21, hyst);
+-unlock:
+-	mutex_unlock(&data->mutex);
+-	return ret;
++	return regmap_write(data->regmap, 0x21, hyst);
+ }
  
- 	mutex_lock(&data->mutex);
+ static int emc1403_set_temp(struct thermal_data *data, int channel,
+@@ -450,7 +429,6 @@ static int emc1403_set_temp(struct thermal_data *data, int channel,
+ 	regh = emc1403_temp_regs[channel][map];
+ 	regl = emc1403_temp_regs_low[channel][map];
+ 
+-	mutex_lock(&data->mutex);
  	if (regl >= 0) {
--		val = clamp_val(val, 0, 255875);
-+		if (data->chip == emc1428)
-+			val = clamp_val(val, -128000, 127875);
-+		else
-+			val = clamp_val(val, 0, 255875);
+ 		if (data->chip == emc1428)
+ 			val = clamp_val(val, -128000, 127875);
+@@ -459,7 +437,7 @@ static int emc1403_set_temp(struct thermal_data *data, int channel,
  		regval = DIV_ROUND_CLOSEST(val, 125);
--		ret = regmap_write(data->regmap, regh, regval >> 3);
-+		ret = regmap_write(data->regmap, regh, (regval >> 3) & 0xff);
+ 		ret = regmap_write(data->regmap, regh, (regval >> 3) & 0xff);
  		if (ret < 0)
- 			goto unlock;
+-			goto unlock;
++			return ret;
  		ret = regmap_write(data->regmap, regl, (regval & 0x07) << 5);
  	} else {
--		val = clamp_val(val, 0, 255000);
-+		if (data->chip == emc1428)
-+			val = clamp_val(val, -128000, 127000);
-+		else
-+			val = clamp_val(val, 0, 255000);
+ 		if (data->chip == emc1428)
+@@ -469,8 +447,6 @@ static int emc1403_set_temp(struct thermal_data *data, int channel,
  		regval = DIV_ROUND_CLOSEST(val, 1000);
  		ret = regmap_write(data->regmap, regh, regval);
  	}
-@@ -430,6 +509,8 @@ static umode_t emc1403_temp_is_visible(const void *_data, u32 attr, int channel)
- 		return 0;
- 	if (data->chip == emc1403 && channel > 2)
- 		return 0;
-+	if (data->chip != emc1428 && channel > 3)
-+		return 0;
+-unlock:
+-	mutex_unlock(&data->mutex);
+ 	return ret;
+ }
  
- 	switch (attr) {
- 	case hwmon_temp_input:
-@@ -481,6 +562,22 @@ static const struct hwmon_channel_info * const emc1403_info[] = {
- 			   HWMON_T_INPUT | HWMON_T_MIN | HWMON_T_MAX |
- 			   HWMON_T_CRIT | HWMON_T_MIN_HYST | HWMON_T_MAX_HYST |
- 			   HWMON_T_CRIT_HYST | HWMON_T_MIN_ALARM |
-+			   HWMON_T_MAX_ALARM | HWMON_T_CRIT_ALARM | HWMON_T_FAULT,
-+			   HWMON_T_INPUT | HWMON_T_MIN | HWMON_T_MAX |
-+			   HWMON_T_CRIT | HWMON_T_MIN_HYST | HWMON_T_MAX_HYST |
-+			   HWMON_T_CRIT_HYST | HWMON_T_MIN_ALARM |
-+			   HWMON_T_MAX_ALARM | HWMON_T_CRIT_ALARM | HWMON_T_FAULT,
-+			   HWMON_T_INPUT | HWMON_T_MIN | HWMON_T_MAX |
-+			   HWMON_T_CRIT | HWMON_T_MIN_HYST | HWMON_T_MAX_HYST |
-+			   HWMON_T_CRIT_HYST | HWMON_T_MIN_ALARM |
-+			   HWMON_T_MAX_ALARM | HWMON_T_CRIT_ALARM | HWMON_T_FAULT,
-+			   HWMON_T_INPUT | HWMON_T_MIN | HWMON_T_MAX |
-+			   HWMON_T_CRIT | HWMON_T_MIN_HYST | HWMON_T_MAX_HYST |
-+			   HWMON_T_CRIT_HYST | HWMON_T_MIN_ALARM |
-+			   HWMON_T_MAX_ALARM | HWMON_T_CRIT_ALARM | HWMON_T_FAULT,
-+			   HWMON_T_INPUT | HWMON_T_MIN | HWMON_T_MAX |
-+			   HWMON_T_CRIT | HWMON_T_MIN_HYST | HWMON_T_MAX_HYST |
-+			   HWMON_T_CRIT_HYST | HWMON_T_MIN_ALARM |
- 			   HWMON_T_MAX_ALARM | HWMON_T_CRIT_ALARM | HWMON_T_FAULT
- 			   ),
- 	NULL
-@@ -508,6 +605,8 @@ static const struct i2c_device_id emc1403_idtable[] = {
- 	{ "emc1422", emc1402 },
- 	{ "emc1423", emc1403 },
- 	{ "emc1424", emc1404 },
-+	{ "emc1428", emc1428 },
-+	{ "emc1438", emc1428 },
- 	{ "emc1442", emc1402 },
- 	{ }
- };
+@@ -628,8 +604,6 @@ static int emc1403_probe(struct i2c_client *client)
+ 	if (IS_ERR(data->regmap))
+ 		return PTR_ERR(data->regmap);
+ 
+-	mutex_init(&data->mutex);
+-
+ 	hwmon_dev = devm_hwmon_device_register_with_info(&client->dev,
+ 							 client->name, data,
+ 							 &emc1403_chip_info,
 -- 
 2.53.0
 
