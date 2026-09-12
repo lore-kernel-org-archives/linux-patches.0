@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE4EF2AD37;
-	Sat, 12 Sep 2026 10:36:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8D0B415F0E;
+	Sat, 12 Sep 2026 10:36:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789209367; cv=none; b=Lo8LN3wfiQwro8RMCNNpKRry5tFqhOpgcALFU4ldO0RkUlExC++9wseOKgetuBKyJpYT/BAvPTaWwhe9FTrFQ/+vHW8QFkn+OQM1Z1PkBTJ2CW0935jlakNBVAN6vsvwqO7kGs8FuZBlqMKIUXBRm8tlvgx8RCnZ01moD0F8Ku8=
+	t=1789209371; cv=none; b=gFUxmMk+ug+5LMrIiuiOnlztan2uA7T+UsIt8n9HmcuqBdSd5faejquNecos8aR1f+LFOzxBFC9w7XvwQvTOLlOAYl/OY+Eatv9rKogxJEGiuD6eRCaCgd67CCsJUxyNa4+XbrqpFNAetSeV0Da2R0eXKIZiEkW3bxi1sU3/9sk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789209367; c=relaxed/simple;
-	bh=BcBbgBxoekTrIFU3jQFe79LlrY2OK8Qbw4DO4Dznlms=;
+	s=arc-20240116; t=1789209371; c=relaxed/simple;
+	bh=F4Q3sv5eWJSFG5XbYCnBl5LfENb1oMSiKO/dYOx23Xo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uagH7SCATC9F16vpJR3HM18J9BQZUPKF4oNYszwfjA1w6hxODriazi1lJEQ5kwhXJDq6K3IChxQQep1CXLNaN5UPBEQ53k328hCFKRIt1dC0FgZDN0aOJZ53qKdzC63wuJPcu4ZMNpFop4HGceOKb7m4fMK0B6tO/Rn38lAWwk4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yrKKZbxL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nC8i8tnCqpEtj2e1wP+pFkHrMqhfSEnyd3F0O+Z7pKqfK6PeDM6+vrHEaJJIy0YG3KWdrWdYfgg+4pxpEaDuuPz7f2uAkNHZjv+nl7pQyxUnd855Vb9461gzubrFMr95HFLIBaI8D2cNlseCacz5RsnkRUwnpLcvZkeSJhewNaE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gSYa3jlM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yrKKZbxL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 978961F000FF;
-	Sat, 12 Sep 2026 10:36:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gSYa3jlM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7DB01F0089A;
+	Sat, 12 Sep 2026 10:36:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789209365;
-	bh=6hrOK42TIhQvC+Tl56GaWKvYlUpz3qs2y2Qf6cJEA38=;
+	s=korg; t=1789209370;
+	bh=2rpmgzh8ekb5rd1maJJ//6y0ALoaXYgUBhoED+b2AK4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yrKKZbxL69F689uQxfEJ8xTOTDwS7K/oi2aK1o3iAs5uNzvj8KPuN2SkgWy1Da6Fh
-	 CC6RSqiksezDH8ATxq0hUCZuJUYOO7+7YGmedmpFOfWhdgqCormUfyKX6JZ3RiBrF+
-	 Z78tbpJpuEzomBRY7nTTFcW2iIiu03hcxtprvEXE=
+	b=gSYa3jlMqjWbr2m1voeJGMXuh4o/RCNizQdtkBxQmrdtmmNKplo23ZUr4LXglViTQ
+	 V6Z3tD6bT09ZeiVkgIltwLWMm1rADE9+7ZvyZttjVH2SebDO38Cba65adK6WprKTSU
+	 2oWwlp0sBKeq/YKmx9Ufyghb0CRGaKcXhSvyW6Dw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jose Ignacio Tornos Martinez <jtornosm@redhat.com>,
-	Alex Gavin <alex.gavin@candelatech.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	Vladimir Murzin <vladimir.murzin@arm.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0806/1518] wifi: mt76: mt7996: remove beacon_int_min_gcd from ADHOC interface combinations
-Date: Sat, 12 Sep 2026 08:49:35 +0200
-Message-ID: <20260912065641.668388989@linuxfoundation.org>
+Subject: [PATCH 6.18 0807/1518] arm64: smp: Fix IPI teardown for GICv5 flow
+Date: Sat, 12 Sep 2026 08:49:36 +0200
+Message-ID: <20260912065641.690457203@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,60 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
+From: Vladimir Murzin <vladimir.murzin@arm.com>
 
-[ Upstream commit 4df22710a77d2365e56d720bc4106e54c1dfa2ff ]
+[ Upstream commit 4c9c81a0860415284e9d260f998fbd755d3a7469 ]
 
-The driver fails to register with error -22 (EINVAL) due to a cfg80211
-validation failure in wiphy_verify_iface_combinations().
+Sashiko reported that during CPU offlining, __cpu_disable() is
+executed by the stopper thread via take_cpu_down() with local
+interrupts disabled. __cpu_disable() calls ipi_teardown(), which
+invokes ipi_lpi_disable(). For the GICv5 flow, this eventually calls
+the sleepable disable_irq().
 
-Commit 5ef0e8e2653b ("wifi: mt76: mt7996: fix iface combination for
-different chipsets") added beacon_int_min_gcd to if_comb_global and
-if_comb_global_7992, but these combinations include ADHOC (IBSS)
-interface type. This violates a cfg80211 rule from commit 56271da29c52
-("cfg80211: disallow beacon_int_min_gcd with IBSS") that explicitly
-forbids combining ADHOC with beacon_int_min_gcd.
+This can be reproduced easily with CONFIG_DEBUG_ATOMIC_SLEEP=y by
+offlining a CPU:
 
-The restriction exists because beacon_int_min_gcd requires static,
-predictable beacon intervals to coordinate multiple beaconing interfaces,
-but ADHOC interfaces have dynamic beacon intervals that change when
-joining different networks, making the GCD constraint unenforceable.
+  BUG: sleeping function called from invalid context at kernel/irq/manage.c:702
+  in_atomic(): 1, irqs_disabled(): 1, non_block: 0, pid: 20, name: migration/1
+  preempt_count: 1, expected: 0
+  no locks held by migration/1/20.
+  irq event stamp: 186
+  hardirqs last  enabled at (185): [<ffff800080b084c8>] _raw_spin_unlock_irq+0x38/0x68
+  hardirqs last disabled at (186): [<ffff8000801f8e08>] multi_cpu_stop+0xc8/0x190
+  softirqs last  enabled at (80): [<ffff8000800c48b8>] handle_softirqs+0x410/0x468
+  softirqs last disabled at (75): [<ffff8000800102f4>] __do_softirq+0x1c/0x28
 
-Remove beacon_int_min_gcd from the interface combinations that include
-ADHOC because they are not necessary for ADHOC operation. The if_comb
-combination (AP/MESH/STA only, without ADHOC) correctly retains
-beacon_int_min_gcd for multi-AP coordination.
+Fix this by using disable_irq_nosync() instead, which is safe in this
+atomic context.
 
-Fixes: 5ef0e8e2653b ("wifi: mt76: mt7996: fix iface combination for different chipsets")
-Signed-off-by: Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
-Tested-by: Alex Gavin <alex.gavin@candelatech.com>
-Link: https://patch.msgid.link/20260702104337.679536-1-jtornosm@redhat.com
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Fixes: ba1004f861d1 ("arm64: smp: Support non-SGIs for IPIs")
+Signed-off-by: Vladimir Murzin <vladimir.murzin@arm.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7996/init.c | 2 --
- 1 file changed, 2 deletions(-)
+ arch/arm64/kernel/smp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/init.c b/drivers/net/wireless/mediatek/mt76/mt7996/init.c
-index 462322896b474..d0a4530db1cf7 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/init.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/init.c
-@@ -34,7 +34,6 @@ static const struct ieee80211_iface_combination if_comb_global = {
- 			       BIT(NL80211_CHAN_WIDTH_40) |
- 			       BIT(NL80211_CHAN_WIDTH_80) |
- 			       BIT(NL80211_CHAN_WIDTH_160),
--	.beacon_int_min_gcd = 100,
- };
- 
- static const struct ieee80211_iface_combination if_comb_global_7992 = {
-@@ -47,7 +46,6 @@ static const struct ieee80211_iface_combination if_comb_global_7992 = {
- 			       BIT(NL80211_CHAN_WIDTH_40) |
- 			       BIT(NL80211_CHAN_WIDTH_80) |
- 			       BIT(NL80211_CHAN_WIDTH_160),
--	.beacon_int_min_gcd = 100,
- };
- 
- static const struct ieee80211_iface_limit if_limits[] = {
+diff --git a/arch/arm64/kernel/smp.c b/arch/arm64/kernel/smp.c
+index 92b57fc87ee96..6af97292e3692 100644
+--- a/arch/arm64/kernel/smp.c
++++ b/arch/arm64/kernel/smp.c
+@@ -1081,7 +1081,7 @@ static void ipi_teardown(int cpu)
+ 				disable_percpu_irq(ipi_irq_base + i);
+ 			}
+ 		} else {
+-			disable_irq(irq_desc_get_irq(get_ipi_desc(cpu, i)));
++			disable_irq_nosync(irq_desc_get_irq(get_ipi_desc(cpu, i)));
+ 		}
+ 	}
+ }
 -- 
 2.53.0
 
