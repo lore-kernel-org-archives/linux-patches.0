@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C620C36654F;
-	Sat, 12 Sep 2026 07:58:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E73173859CE;
+	Sat, 12 Sep 2026 07:58:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789199888; cv=none; b=oKzpklzV1hNDWHhF9gn0D3cbUoYv+tF11nDTHwRVKBnbXUJe3EIpCXgLzqblZMdY1/1Q9kcyTJdtpc2nCavmJXxJZKJuKvWSfff/c1Vjx98GolgxUMdlvDxQdyd9lQRoBqAeWGfriWOM/GLyWjS/qdxedeq3ucac/UaArfuGk6U=
+	t=1789199894; cv=none; b=Xxfw7lAHSyxPF0JSQldi+KcEM/QZbD9KuNEn7O9E3vTvsZh4mr4oqmFL5ih2VgH8ahEw6XYxn81RBqhnEe7BhmEJWEtJccsuBotBa7zYCjxmc4be1xb3Gr8vG2i87e8k3dykgq+YEB+nApTlXRsiQAqBgr8M8Fe0V+rtXGarmkQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789199888; c=relaxed/simple;
-	bh=RFkbCGzJLn7CUf4+lwShu+VvlED5y5A8crDJ6hFnXyE=;
+	s=arc-20240116; t=1789199894; c=relaxed/simple;
+	bh=ifNi6J/97F47ortvIzaJVecknTK+BnE55K+rx7cBQwk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rFM/UMmlyfcP7AuvvY0HqQ6hi7z69F2P45v+duFMDmE/xXjk5nxG2Y1QtsJIrLA7lhxhAzyeGJ2wi83c2fBCB+dj7HIx6UfUUwA2V59hAIvl3XwIuv1UfjvUbuje1agJpcjwzRQT/MNxiRlnvw8HSZt0zzaG89DBbg2hg/WJnIU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KbWV+Ppo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Qs5l+KGLbsxGSvYXK8CGnDA3GG7Pc+BOFvlB6jo+0oc1bTgRiE5O7WY1drRaXvtfo1XGuX0MjtxnXo7l+RuXnsoPmx6zm72xEvF8N5BWzcxLkMtqJYy4VRtqXS47AR7GvJQRGQ8MJgUBVDQ3n45Jt8lCnZQarmbhgvoH0ZNDDQg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CspGIz3F; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KbWV+Ppo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B34181F000FF;
-	Sat, 12 Sep 2026 07:58:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CspGIz3F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C7E21F000FF;
+	Sat, 12 Sep 2026 07:58:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789199887;
-	bh=+J9OO0518Qa/dm0rfjqQS06s2RUKcr1vgyBcFNf6jE8=;
+	s=korg; t=1789199892;
+	bh=Rq28bSlXRdq3ek74C9UWdjWtFDUKJUdzb9kdiCHH6oo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KbWV+Ppo32zcWn+dYfNh8YRqa5f/eySNjgBbilR/+5DNcmpFIuGFdy9aCJFIrPpbD
-	 Q9GkynssftCNquH8emkCVX39qBoxAmQ6jU3i3+Gqvw8MPMyq3/3uGqtspjR78lsIpp
-	 6LIvEUqv8WQUrcsaDKt47qrAyVYk5IwT5B1dBO40=
+	b=CspGIz3F7QntRykhKxa8BkNSRcj9uZwMSfR9EnSLs3dzR2A+SgPrRZf44Ixify8Qq
+	 K/MhFUAqQLdidXFRcmDgL/mUuJ7Nc+2acy0DZuFgkW7TcyjmgvzQGjUxK3QR25zDFU
+	 zXgR/kEmvwR6x0Fd+jE+b/G3jvihCmmxvOgFj+J0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Osama Abdelkader <osama.abdelkader@gmail.com>,
-	Steven Price <steven.price@arm.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Saverio Miroddi <saverio.pub2@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0640/1815] drm/panthor: return PTR_ERR() from devm_drm_dev_alloc()
-Date: Sat, 12 Sep 2026 08:39:50 +0200
-Message-ID: <20260912065703.905262247@linuxfoundation.org>
+Subject: [PATCH 7.2 0676/1815] ACPI: bus: Avoid confusing complaints regarding missing _OSC features
+Date: Sat, 12 Sep 2026 08:40:26 +0200
+Message-ID: <20260912065704.756647169@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,37 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Osama Abdelkader <osama.abdelkader@gmail.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit abc1e559f8e5996eee506dfdc8e3781c2a1e04f9 ]
+[ Upstream commit 9bfb23e0661be3d6a72aedde08a9f0fec2e8041a ]
 
-devm_drm_dev_alloc() returns an ERR_PTR() on failure, but panthor_probe()
-always converts that failure to -ENOMEM. Preserve the actual error code
-returned by the DRM core instead.
+The platform firmware on some platforms sets OSC_CAPABILITIES_MASK_ERROR
+in _OSC error bits even though it actually acknowledges all of the
+requested features which after commit e5322888e6bf ("ACPI: bus: Rework
+the handling of \_SB._OSC platform features") causes the kernel to
+complain unnecessarily.
 
-Fixes: 4bdca1150792 ("drm/panthor: Add the driver frontend block")
-Signed-off-by: Osama Abdelkader <osama.abdelkader@gmail.com>
-Reviewed-by: Steven Price <steven.price@arm.com>
-Signed-off-by: Steven Price <steven.price@arm.com>
-Link: https://patch.msgid.link/20260716140337.10679-1-osama.abdelkader@gmail.com
+Avoid the confusing complaints by explicitly checking for that case
+in acpi_osc_handshake().
+
+Fixes: e5322888e6bf ("ACPI: bus: Rework the handling of \_SB._OSC platform features")
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Tested-by: Saverio Miroddi <saverio.pub2@gmail.com>
+[ rjw: Fixed a typo in the new comment ]
+Link: https://patch.msgid.link/6315683.lOV4Wx5bFT@rafael.j.wysocki
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panthor/panthor_drv.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/acpi/bus.c | 14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/panthor/panthor_drv.c b/drivers/gpu/drm/panthor/panthor_drv.c
-index e8dc4096c1d25..74ec417115a3d 100644
---- a/drivers/gpu/drm/panthor/panthor_drv.c
-+++ b/drivers/gpu/drm/panthor/panthor_drv.c
-@@ -1814,7 +1814,7 @@ static int panthor_probe(struct platform_device *pdev)
- 	ptdev = devm_drm_dev_alloc(&pdev->dev, &panthor_drm_driver,
- 				   struct panthor_device, base);
- 	if (IS_ERR(ptdev))
--		return -ENOMEM;
-+		return PTR_ERR(ptdev);
+diff --git a/drivers/acpi/bus.c b/drivers/acpi/bus.c
+index a30a904f6535f..8614b8140ef71 100644
+--- a/drivers/acpi/bus.c
++++ b/drivers/acpi/bus.c
+@@ -335,7 +335,7 @@ static int acpi_osc_handshake(acpi_handle handle, const char *uuid_str,
+ 		.length = bufsize * sizeof(u32),
+ 	};
+ 	struct acpi_buffer output;
+-	u32 *retbuf, test;
++	u32 *retbuf, test, errors;
+ 	guid_t guid;
+ 	int ret, i;
  
- 	platform_set_drvdata(pdev, ptdev);
+@@ -395,10 +395,18 @@ static int acpi_osc_handshake(acpi_handle handle, const char *uuid_str,
+ 	 * Clear the feature bits in capbuf[] that have not been acknowledged.
+ 	 * After that, capbuf[] contains the resultant feature mask.
+ 	 */
+-	for (i = OSC_QUERY_DWORD + 1; i < bufsize; i++)
++	for (i = OSC_QUERY_DWORD + 1, test = 0; i < bufsize; i++) {
++		test |= capbuf[i] & ~retbuf[i];
+ 		capbuf[i] &= retbuf[i];
++	}
  
+-	if (retbuf[OSC_QUERY_DWORD] & OSC_ERROR_MASK) {
++	errors = retbuf[OSC_QUERY_DWORD] & OSC_ERROR_MASK;
++	/*
++	 * Some platforms set OSC_CAPABILITIES_MASK_ERROR even though they
++	 * acknowledge all of the requested features, so avoid complaining in
++	 * those cases unless any other error bits are also set.
++	 */
++	if (errors && (test || errors != OSC_CAPABILITIES_MASK_ERROR)) {
+ 		/*
+ 		 * Complain about the unexpected errors and print diagnostic
+ 		 * information related to them.
 -- 
 2.53.0
 
