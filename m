@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 997C53A4F35;
-	Sat, 12 Sep 2026 20:04:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79D053A7820;
+	Sat, 12 Sep 2026 20:04:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789243454; cv=none; b=J0tp+CXuuQ9SZm5A0N8s9tRGTMl5KDnC//Yo2bVnHTMzKvRTYBRZr4EKHoJ56K3Gu1khXr65Sw2OIcLNk/ZINaW/Fj6IOiPbmn22ZeiTTcw+/0eYLfuCzQKRIQB7ADkTvH2wGNjnfsQDeFuwDOP2yMP6JjBBImgvmvEf/IalouE=
+	t=1789243457; cv=none; b=tDS40c2oDu1BBGh4Pgo3k69yPP4LzzAV8FQSXSOv567eht24YPRCgqvVeNmsXh/k1Wr9aFWwwapH9MIO1Yppnp7cHL5eFjp4QhjQxPwbiowFfDETrjqGRYTO2DxDyi2811Ar8WHnuCZVwInfVAVWwPTCkmIgq9vD+fOoYJw+Ufk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789243454; c=relaxed/simple;
-	bh=oq+iKraq/qG5I3btgY0F3W8GZe6qZjXd60Hi6avaF0M=;
+	s=arc-20240116; t=1789243457; c=relaxed/simple;
+	bh=wO5ub6A4T++B1OvUBh4/JSYJUPoB6k3haWePHD/dHBg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=kN4kBbrtlZ6Er2mLFl4hH+NEap0iMToHqqs6bwV02cERxkMWDSPfWtiydd2GyixjoJ8HxU+PXveDDkz2lpIOY2BfH4j/AvnonMgcC4Xois01CRgLm8ak5WH5MeFM+4ZDrtrrUwPHfHBZWM47jxZhbFzT2YuMXq/YF/jprn7ieAk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cEhuTi+C; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rHe7T2Aznc5mju1FJWIhe34kfrNDQtmlYPS58rk1kdszqbAnYOK34f4FNxHF/cgHpllDFzkVmAUmaXzfpgS/p9nmFMYy9aOJkS74LM1IjVCAxPb/GCiPVjqMxyyIkNVzqHp5tQRACV+fVOCFADCLSKK7y/Cv4Oz34jlVyeKujyk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BgAT8HGr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cEhuTi+C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A94C1F000FF;
-	Sat, 12 Sep 2026 20:04:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BgAT8HGr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2F901F000FF;
+	Sat, 12 Sep 2026 20:04:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789243453;
-	bh=1SqBehHB4P6WcOCP7TBd+x5vt6vZ6bjO2pSPbYB1Zyc=;
+	s=korg; t=1789243456;
+	bh=hoTAfPEI9xTGd2KZPzzoCnZ26CcE8oC5NwwL7RrVLg0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cEhuTi+C7PLg8Q6SuuzYxh8mE4b9fY+2nkscAxX9Bs7dPYXjS3TaY+b3qYNX9NCIR
-	 WJbghndqnZ+XQuGs/gY3uPiW2LmQ/QecJ2ytTv9JpCQHIYc3etBvjilZrAYHjMkvOE
-	 lP8leHzJagcUidzGubrPqLOycRawEMlxePhPBzPs=
+	b=BgAT8HGrNUrz6SWIxFDdoJCnhHjfdCHsrmepH8hjjGa4iUzVXBK1YArcwaG55ER2z
+	 Aiu22TU1TT+zhC5g49oYuBR18u6fijRu0N2gYK3bLquAeQsZ0BBOpJUA9YELEtBm6t
+	 YLTAyothDZ8b4f0n38tLejrtm2A9A/Cwv/WoLJwo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Dave Taht <dave.taht@gmail.com>,
-	Willem de Bruijn <willemb@google.com>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
+	vega@nebusec.ai,
+	Victor Nogueira <victor@mojatatu.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 760/798] net_sched: export pfifo_fast prio2band[]
-Date: Sat, 12 Sep 2026 09:06:28 +0200
-Message-ID: <20260912065534.486957941@linuxfoundation.org>
+Subject: [PATCH 5.10 761/798] net/sched: fq_codel: clamp default quantum and mtu
+Date: Sat, 12 Sep 2026 09:06:29 +0200
+Message-ID: <20260912065534.509859135@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -48,79 +47,76 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-[ Upstream commit 5579ee462dfe768297563a6083e21df52c3ad856 ]
+[ Upstream commit d9ebd8f9aa8b2773235889cb903fafd61f2d8585 ]
 
-pfifo_fast prio2band[] is renamed to sch_default_prio2band[]
-and exported because we want to share it in FQ.
+fq_codel_init() sets q->quantum = psched_mtu(qdisc_dev(sch)) without
+clamping. A device with a huge MTU (e.g. dummy with max_mtu == 0
+accepting MTU 2147483634) makes psched_mtu() return 0x80000000, which
+overflows the signed flow->deficit to INT_MIN in fq_codel_dequeue(),
+causing an infinite loop and soft lockup. Emulate fq_codel_change()
+and constrain to [256, FQ_CODEL_QUANTUM_MAX].
 
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Acked-by: Dave Taht <dave.taht@gmail.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
+The same unclamped psched_mtu() is assigned to q->cparams.mtu a bit
+below, and fq_codel_change() never updates it. codel_should_drop()
+tests "*backlog <= params->mtu"; with mtu == 0x80000000 (~2 GiB) and
+the default 32 MiB memory_limit, the test is always true, so CoDel is
+silently and completely disabled (no drops, no ECN). Declare a single
+clamped mtu and assign both q->quantum and q->cparams.mtu from it,
+which also removes the double psched_mtu() call.
+
+Conditions to recreate the bug: a device whose MTU (plus
+hard_header_len) wraps psched_mtu() into the sign bit (e.g. a dummy
+device with max_mtu == 0 accepting MTU 2147483634). Requires
+CAP_NET_ADMIN in a user namespace.
+
+Fixes: 4b549a2ef4be ("fq_codel: Fair Queue Codel AQM")
+Reported-by: vega@nebusec.ai
+Tested-by: Victor Nogueira <victor@mojatatu.com>
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://patch.msgid.link/20260822195509.112717-3-jhs@mojatatu.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Stable-dep-of: 709f34f7c28d ("net/sched: fq: add overflow bounds to quantum and initial quantum")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/sch_generic.h | 1 +
- net/sched/sch_generic.c   | 9 +++++----
- 2 files changed, 6 insertions(+), 4 deletions(-)
+ net/sched/sch_fq_codel.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/include/net/sch_generic.h b/include/net/sch_generic.h
-index b46a70602da44..fa5c253770e1e 100644
---- a/include/net/sch_generic.h
-+++ b/include/net/sch_generic.h
-@@ -610,6 +610,7 @@ static inline void sch_tree_unlock(const struct Qdisc *q)
- extern struct Qdisc noop_qdisc;
- extern struct Qdisc_ops noop_qdisc_ops;
- extern struct Qdisc_ops pfifo_fast_ops;
-+extern const u8 sch_default_prio2band[TC_PRIO_MAX + 1];
- extern struct Qdisc_ops mq_qdisc_ops;
- extern struct Qdisc_ops noqueue_qdisc_ops;
- extern const struct Qdisc_ops *default_qdisc_ops;
-diff --git a/net/sched/sch_generic.c b/net/sched/sch_generic.c
-index 243a1d6b349c7..43ef80f11a9d7 100644
---- a/net/sched/sch_generic.c
-+++ b/net/sched/sch_generic.c
-@@ -618,9 +618,10 @@ struct Qdisc_ops noqueue_qdisc_ops __read_mostly = {
- 	.owner		=	THIS_MODULE,
- };
- 
--static const u8 prio2band[TC_PRIO_MAX + 1] = {
--	1, 2, 2, 2, 1, 2, 0, 0 , 1, 1, 1, 1, 1, 1, 1, 1
-+const u8 sch_default_prio2band[TC_PRIO_MAX + 1] = {
-+	1, 2, 2, 2, 1, 2, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1
- };
-+EXPORT_SYMBOL(sch_default_prio2band);
- 
- /* 3-band FIFO queue: old style, but should be a bit faster than
-    generic prio+fifo combination.
-@@ -645,7 +646,7 @@ static inline struct skb_array *band2list(struct pfifo_fast_priv *priv,
- static int pfifo_fast_enqueue(struct sk_buff *skb, struct Qdisc *qdisc,
- 			      struct sk_buff **to_free)
+diff --git a/net/sched/sch_fq_codel.c b/net/sched/sch_fq_codel.c
+index ae1d19bb6c556..4a8e85622aa6e 100644
+--- a/net/sched/sch_fq_codel.c
++++ b/net/sched/sch_fq_codel.c
+@@ -491,6 +491,7 @@ static int fq_codel_init(struct Qdisc *sch, struct nlattr *opt,
+ 			 struct netlink_ext_ack *extack)
  {
--	int band = prio2band[skb->priority & TC_PRIO_MAX];
-+	int band = sch_default_prio2band[skb->priority & TC_PRIO_MAX];
- 	struct pfifo_fast_priv *priv = qdisc_priv(qdisc);
- 	struct skb_array *q = band2list(priv, band);
- 	unsigned int pkt_len = qdisc_pkt_len(skb);
-@@ -755,7 +756,7 @@ static int pfifo_fast_dump(struct Qdisc *qdisc, struct sk_buff *skb)
- {
- 	struct tc_prio_qopt opt = { .bands = PFIFO_FAST_BANDS };
+ 	struct fq_codel_sched_data *q = qdisc_priv(sch);
++	u32 mtu;
+ 	int i;
+ 	int err;
  
--	memcpy(&opt.priomap, prio2band, TC_PRIO_MAX + 1);
-+	memcpy(&opt.priomap, sch_default_prio2band, TC_PRIO_MAX + 1);
- 	if (nla_put(skb, TCA_OPTIONS, sizeof(opt), &opt))
- 		goto nla_put_failure;
- 	return skb->len;
+@@ -498,13 +499,14 @@ static int fq_codel_init(struct Qdisc *sch, struct nlattr *opt,
+ 	q->flows_cnt = 1024;
+ 	q->memory_limit = 32 << 20; /* 32 MBytes */
+ 	q->drop_batch_size = 64;
+-	q->quantum = psched_mtu(qdisc_dev(sch));
++	mtu = clamp_t(u32, psched_mtu(qdisc_dev(sch)), 256, FQ_CODEL_QUANTUM_MAX);
++	q->quantum = mtu;
+ 	INIT_LIST_HEAD(&q->new_flows);
+ 	INIT_LIST_HEAD(&q->old_flows);
+ 	codel_params_init(&q->cparams);
+ 	codel_stats_init(&q->cstats);
+ 	q->cparams.ecn = true;
+-	q->cparams.mtu = psched_mtu(qdisc_dev(sch));
++	q->cparams.mtu = mtu;
+ 
+ 	if (opt) {
+ 		err = fq_codel_change(sch, opt, extack);
 -- 
 2.53.0
 
