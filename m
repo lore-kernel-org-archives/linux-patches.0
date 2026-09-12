@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94C4A343893;
-	Sat, 12 Sep 2026 09:46:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C2CE34252D;
+	Sat, 12 Sep 2026 09:46:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789206384; cv=none; b=sFyQTiy9S6ibI5WDjfQHKzcxhsqD3DleG3rJO5RhOTz5ihOSCcRNlQicDX49i9sOT7GlrZ/Knq/9nTCSRHlIDjt2IyiA93y3/cZefPO4nrqFYrtMnx22C1byQceB2PQ6S+q2m8j7lnwgvpdzdBGgfETjEl/SVZF3eoikbQsscTw=
+	t=1789206388; cv=none; b=q0aGuQ2ZFXKh+1nqMo6k39QiqYyKNtfs7OC9SPfyFLhmzyWBBa7yTSeP63zeZoqQlimjAxZW6LE8ShKOKAjQ1FZycHdJWTEK19YwcN1+Tlal2qU3Ub0VgkBaxNh/oCrdljlJ1fSZLJPEkwVf+5OwAKh4D7BnStz8nPhnG8r6cvc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789206384; c=relaxed/simple;
-	bh=zAH9wb7rK3V8x4rvYu594iqGwj3ay8dyMLwktokF+n8=;
+	s=arc-20240116; t=1789206388; c=relaxed/simple;
+	bh=J+rHD3mgWX2qCV62L6GVV1Tw/LadIeZN6CSOdzyluDc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I6WGTxpzF7Xe4rEiVd6BY/JG6qfOFzCdsbYQ6plE0VZbwcKMQVlCfJmw1UQfkCqEwvPgqHmLGjpr+uAjlg2ef6TbT0RXLoB41/19At9TaYRYPqNLP0yrTixEwEJHn2FklqWoeVrOy6lxScg4ThEgI/UZAw/TbJ4Gyf85sYKvMIw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TS/cHA0g; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SpERgrLxEsVAKzLA7vrOzy3bNPe+5u63ZtSnEM+jq/VE4Y+m+jEwyF2isBk2X1TwGyYSc+p2KgDsp+BuiQM1qBRbCOwNgvGZ4PgBIel8lxDTQcp8W8ZnX3KVQm16YUP3K5KQOmAjdb6LvPlBnM87PIs/clSxIRl/VBrGxZpvdw8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=loWxGHc1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TS/cHA0g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E866F1F000FF;
-	Sat, 12 Sep 2026 09:46:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="loWxGHc1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F42351F000FF;
+	Sat, 12 Sep 2026 09:46:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789206382;
-	bh=L04rCn8w9K/VF+ZtF1U510nJGRZppGeWZVL4HWiu7gA=;
+	s=korg; t=1789206387;
+	bh=j66nRoD9bLHy/+fj35axIgamzS+E6SxVt/SKZiY9qFM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TS/cHA0gJ9uEISgVayV8Orvu6Giz+zbQ4b7Xhw2Xyye6i7KX1FW8yXXzZlAlR8qKm
-	 yPiTsqp7fDlcHUT7+tE8Y83e58TUbVdH5Ky3WfyLbR4EhXtRiBu1p0I0Q6VOgLDpT4
-	 0jiqV4tNuorIz/OcsCRLumLJz3Yk3yQR6pcTPuXU=
+	b=loWxGHc10fRlq0IKyUDQ983Rc/qfzXWp0PA7QN3x+no4o4g+oCTOke31sx09cTijg
+	 MxvSPlMV/LLERLGqpY6NF7c2cf31MOa7jb5iVMsfM9XQpCxmWCYszdT5KTMmnYgkgJ
+	 /dDUZNad4LIbM6uPUz400MrfWsQqcrbsVU9Lh/n4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sandipan Das <sandipan.das@amd.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Manos Pitsidianakis <manos@pitsidianak.is>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0197/1518] perf vendor events amd: Update Zen 5 core events
-Date: Sat, 12 Sep 2026 08:39:26 +0200
-Message-ID: <20260912065627.946744074@linuxfoundation.org>
+Subject: [PATCH 6.18 0198/1518] hwrng: core - fix rng list on registration error
+Date: Sat, 12 Sep 2026 08:39:27 +0200
+Message-ID: <20260912065627.968900801@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,324 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sandipan Das <sandipan.das@amd.com>
+From: Manos Pitsidianakis <manos@pitsidianak.is>
 
-[ Upstream commit 047979af3bf6a118066c81099162d518de63abb1 ]
+[ Upstream commit 3a5834db2b1ce25649f330e78efe1ccde78967fd ]
 
-Update definitions for the following events.
-  * PMCx00A - Add missing unit masks
-  * PMCx00B - Add missing unit masks and fix descriptions
-  * PMCx00C - Add missing unit masks
-  * PMCx00D - Add missing unit masks
-  * PMCx025 - Add missing unit masks and fix descriptions
+hwrng_register(rng) does the following:
 
-Fixes: 45c072f2537a ("perf vendor events amd: Add Zen 5 core events")
-Signed-off-by: Sandipan Das <sandipan.das@amd.com>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+1. Checks if rng has name and read methods set
+2. Checks if the name already exists
+3. Adds rng to global rng_list
+4. May try to set rng to current_rng
+
+If step 4 fails, it returns an error. However, it does not remove the
+rng from rng_list, causing a dangling reference which can result in
+use-after-free if the caller frees rng, since registration failed.
+
+Add a list_del_init() cleanup step.
+
+Fixes: 2bbb6983887f ("hwrng: use rng source with best quality")
+Signed-off-by: Manos Pitsidianakis <manos@pitsidianak.is>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../arch/x86/amdzen5/floating-point.json      | 130 +++++++++++++++---
- .../arch/x86/amdzen5/load-store.json          |   8 +-
- 2 files changed, 120 insertions(+), 18 deletions(-)
+ drivers/char/hw_random/core.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/tools/perf/pmu-events/arch/x86/amdzen5/floating-point.json b/tools/perf/pmu-events/arch/x86/amdzen5/floating-point.json
-index 9204bfb1d69e0..569975b53cc33 100644
---- a/tools/perf/pmu-events/arch/x86/amdzen5/floating-point.json
-+++ b/tools/perf/pmu-events/arch/x86/amdzen5/floating-point.json
-@@ -179,6 +179,30 @@
-     "BriefDescription": "Retired scalar floating-point blend ops.",
-     "UMask": "0x09"
-   },
-+  {
-+    "EventName": "fp_ops_retired_by_type.scalar_mov",
-+    "EventCode": "0x0a",
-+    "BriefDescription": "Retired scalar floating-point MOV ops.",
-+    "UMask": "0x0a"
-+  },
-+  {
-+    "EventName": "fp_ops_retired_by_type.scalar_shuffle",
-+    "EventCode": "0x0a",
-+    "BriefDescription": "Retired scalar floating-point shuffle ops (may include instructions not necessarily thought of as including shuffles e.g. horizontal add, dot product, and certain MOV instructions).",
-+    "UMask": "0x0b"
-+  },
-+  {
-+    "EventName": "fp_ops_retired_by_type.scalar_bfloat",
-+    "EventCode": "0x0a",
-+    "BriefDescription": "Retired scalar floating-point bfloat ops.",
-+    "UMask": "0x0c"
-+  },
-+  {
-+    "EventName": "fp_ops_retired_by_type.scalar_logical",
-+    "EventCode": "0x0a",
-+    "BriefDescription": "Retired scalar floating-point logical ops.",
-+    "UMask": "0x0d"
-+  },
-   {
-     "EventName": "fp_ops_retired_by_type.scalar_other",
-     "EventCode": "0x0a",
-@@ -245,12 +269,24 @@
-     "BriefDescription": "Retired vector floating-point blend ops.",
-     "UMask": "0x90"
-   },
-+  {
-+    "EventName": "fp_ops_retired_by_type.vector_mov",
-+    "EventCode": "0x0a",
-+    "BriefDescription": "Retired vector floating-point MOV ops.",
-+    "UMask": "0xa0"
-+  },
-   {
-     "EventName": "fp_ops_retired_by_type.vector_shuffle",
-     "EventCode": "0x0a",
-     "BriefDescription": "Retired vector floating-point shuffle ops (may include instructions not necessarily thought of as including shuffles e.g. horizontal add, dot product, and certain MOV instructions).",
-     "UMask": "0xb0"
-   },
-+  {
-+    "EventName": "fp_ops_retired_by_type.vector_bfloat",
-+    "EventCode": "0x0a",
-+    "BriefDescription": "Retired vector floating-point bfloat ops.",
-+    "UMask": "0xc0"
-+  },
-   {
-     "EventName": "fp_ops_retired_by_type.vector_logical",
-     "EventCode": "0x0a",
-@@ -278,7 +314,7 @@
-   {
-     "EventName": "sse_avx_ops_retired.mmx_add",
-     "EventCode": "0x0b",
--    "BriefDescription": "Retired MMX integer add.",
-+    "BriefDescription": "Retired MMX integer add ops.",
-     "UMask": "0x01"
-   },
-   {
-@@ -299,16 +335,34 @@
-     "BriefDescription": "Retired MMX integer multiply-accumulate ops.",
-     "UMask": "0x04"
-   },
-+  {
-+    "EventName": "sse_avx_ops_retired.mmx_aes",
-+    "EventCode": "0x0b",
-+    "BriefDescription": "Retired MMX integer AES ops.",
-+    "UMask": "0x05"
-+  },
-+  {
-+    "EventName": "sse_avx_ops_retired.mmx_sha",
-+    "EventCode": "0x0b",
-+    "BriefDescription": "Retired MMX integer SHA ops.",
-+    "UMask": "0x06"
-+  },
-   {
-     "EventName": "sse_avx_ops_retired.mmx_cmp",
-     "EventCode": "0x0b",
-     "BriefDescription": "Retired MMX integer compare ops.",
-     "UMask": "0x07"
-   },
-+  {
-+    "EventName": "sse_avx_ops_retired.mmx_cvt",
-+    "EventCode": "0x0b",
-+    "BriefDescription": "Retired MMX integer convert or pack ops.",
-+    "UMask": "0x08"
-+  },
-   {
-     "EventName": "sse_avx_ops_retired.mmx_shift",
-     "EventCode": "0x0b",
--    "BriefDescription": "Retired MMX integer shift ops.",
-+    "BriefDescription": "Retired MMX integer shift or rotate ops.",
-     "UMask": "0x09"
-   },
-   {
-@@ -324,9 +378,9 @@
-     "UMask": "0x0b"
-   },
-   {
--    "EventName": "sse_avx_ops_retired.mmx_pack",
-+    "EventName": "sse_avx_ops_retired.mmx_vnni",
-     "EventCode": "0x0b",
--    "BriefDescription": "Retired MMX integer pack ops.",
-+    "BriefDescription": "Retired MMX integer VNNI ops.",
-     "UMask": "0x0c"
-   },
-   {
-@@ -390,15 +444,15 @@
-     "UMask": "0x70"
-   },
-   {
--    "EventName": "sse_avx_ops_retired.sse_avx_clm",
-+    "EventName": "sse_avx_ops_retired.sse_avx_cvt",
-     "EventCode": "0x0b",
--    "BriefDescription": "Retired SSE and AVX integer CLM ops.",
-+    "BriefDescription": "Retired SSE and AVX integer convert or pack ops.",
-     "UMask": "0x80"
-   },
-   {
-     "EventName": "sse_avx_ops_retired.sse_avx_shift",
-     "EventCode": "0x0b",
--    "BriefDescription": "Retired SSE and AVX integer shift ops.",
-+    "BriefDescription": "Retired SSE and AVX integer shift or rotate ops.",
-     "UMask": "0x90"
-   },
-   {
-@@ -414,9 +468,9 @@
-     "UMask": "0xb0"
-   },
-   {
--    "EventName": "sse_avx_ops_retired.sse_avx_pack",
-+    "EventName": "sse_avx_ops_retired.sse_avx_vnni",
-     "EventCode": "0x0b",
--    "BriefDescription": "Retired SSE and AVX integer pack ops.",
-+    "BriefDescription": "Retired SSE and AVX integer VNNI ops.",
-     "UMask": "0xc0"
-   },
-   {
-@@ -497,12 +551,24 @@
-     "BriefDescription": "Retired 128-bit packed floating-point blend ops.",
-     "UMask": "0x09"
-   },
-+  {
-+    "EventName": "fp_pack_ops_retired.fp128_mov",
-+    "EventCode": "0x0c",
-+    "BriefDescription": "Retired 128-bit packed floating-point MOV ops.",
-+    "UMask": "0x0a"
-+  },
-   {
-     "EventName": "fp_pack_ops_retired.fp128_shuffle",
-     "EventCode": "0x0c",
-     "BriefDescription": "Retired 128-bit packed floating-point shuffle ops (may include instructions not necessarily thought of as including shuffles e.g. horizontal add, dot product, and certain MOV instructions).",
-     "UMask": "0x0b"
-   },
-+  {
-+    "EventName": "fp_pack_ops_retired.fp128_bfloat",
-+    "EventCode": "0x0c",
-+    "BriefDescription": "Retired 128-bit packed floating-point bfloat ops.",
-+    "UMask": "0x0c"
-+  },
-   {
-     "EventName": "fp_pack_ops_retired.fp128_logical",
-     "EventCode": "0x0c",
-@@ -575,12 +641,24 @@
-     "BriefDescription": "Retired 256-bit packed floating-point blend ops.",
-     "UMask": "0x90"
-   },
-+  {
-+    "EventName": "fp_pack_ops_retired.fp256_mov",
-+    "EventCode": "0x0c",
-+    "BriefDescription": "Retired 256-bit packed floating-point MOV ops.",
-+    "UMask": "0xa0"
-+  },
-   {
-     "EventName": "fp_pack_ops_retired.fp256_shuffle",
-     "EventCode": "0x0c",
-     "BriefDescription": "Retired 256-bit packed floating-point shuffle ops (may include instructions not necessarily thought of as including shuffles e.g. horizontal add, dot product, and certain MOV instructions).",
-     "UMask": "0xb0"
-   },
-+  {
-+    "EventName": "fp_pack_ops_retired.fp256_bfloat",
-+    "EventCode": "0x0c",
-+    "BriefDescription": "Retired 256-bit packed floating-point bfloat ops.",
-+    "UMask": "0xc0"
-+  },
-   {
-     "EventName": "fp_pack_ops_retired.fp256_logical",
-     "EventCode": "0x0c",
-@@ -648,15 +726,15 @@
-     "UMask": "0x07"
-   },
-   {
--    "EventName": "packed_int_op_type.int128_clm",
-+    "EventName": "packed_int_op_type.int128_cvt",
-     "EventCode": "0x0d",
--    "BriefDescription": "Retired 128-bit packed integer CLM ops.",
-+    "BriefDescription": "Retired 128-bit packed integer convert or pack ops.",
-     "UMask": "0x08"
-   },
-   {
-     "EventName": "packed_int_op_type.int128_shift",
-     "EventCode": "0x0d",
--    "BriefDescription": "Retired 128-bit packed integer shift ops.",
-+    "BriefDescription": "Retired 128-bit packed integer shift or rotate ops.",
-     "UMask": "0x09"
-   },
-   {
-@@ -672,9 +750,9 @@
-     "UMask": "0x0b"
-   },
-   {
--    "EventName": "packed_int_op_type.int128_pack",
-+    "EventName": "packed_int_op_type.int128_vnni",
-     "EventCode": "0x0d",
--    "BriefDescription": "Retired 128-bit packed integer pack ops.",
-+    "BriefDescription": "Retired 128-bit packed integer VNNI ops.",
-     "UMask": "0x0c"
-   },
-   {
-@@ -719,16 +797,34 @@
-     "BriefDescription": "Retired 256-bit packed integer multiply-accumulate ops.",
-     "UMask": "0x40"
-   },
-+  {
-+    "EventName": "packed_int_op_type.int256_aes",
-+    "EventCode": "0x0d",
-+    "BriefDescription": "Retired 256-bit packed integer AES ops.",
-+    "UMask": "0x50"
-+  },
-+  {
-+    "EventName": "packed_int_op_type.int256_sha",
-+    "EventCode": "0x0d",
-+    "BriefDescription": "Retired 256-bit packed integer SHA ops.",
-+    "UMask": "0x60"
-+  },
-   {
-     "EventName": "packed_int_op_type.int256_cmp",
-     "EventCode": "0x0d",
-     "BriefDescription": "Retired 256-bit packed integer compare ops.",
-     "UMask": "0x70"
-   },
-+  {
-+    "EventName": "packed_int_op_type.int256_cvt",
-+    "EventCode": "0x0d",
-+    "BriefDescription": "Retired 256-bit packed integer convert or pack ops.",
-+    "UMask": "0x80"
-+  },
-   {
-     "EventName": "packed_int_op_type.int256_shift",
-     "EventCode": "0x0d",
--    "BriefDescription": "Retired 256-bit packed integer shift ops.",
-+    "BriefDescription": "Retired 256-bit packed integer shift or rotate ops.",
-     "UMask": "0x90"
-   },
-   {
-@@ -744,9 +840,9 @@
-     "UMask": "0xb0"
-   },
-   {
--    "EventName": "packed_int_op_type.int256_pack",
-+    "EventName": "packed_int_op_type.int256_vnni",
-     "EventCode": "0x0d",
--    "BriefDescription": "Retired 256-bit packed integer pack ops.",
-+    "BriefDescription": "Retired 256-bit packed integer VNNI ops.",
-     "UMask": "0xc0"
-   },
-   {
-diff --git a/tools/perf/pmu-events/arch/x86/amdzen5/load-store.json b/tools/perf/pmu-events/arch/x86/amdzen5/load-store.json
-index 06bbaea159259..b1994539ece82 100644
---- a/tools/perf/pmu-events/arch/x86/amdzen5/load-store.json
-+++ b/tools/perf/pmu-events/arch/x86/amdzen5/load-store.json
-@@ -8,9 +8,15 @@
-   {
-     "EventName": "ls_locks.bus_lock",
-     "EventCode": "0x25",
--    "BriefDescription": "Retired Lock instructions which caused a bus lock.",
-+    "BriefDescription": "Retired lock instructions which caused a bus lock.",
-     "UMask": "0x01"
-   },
-+  {
-+    "EventName": "ls_locks.all",
-+    "EventCode": "0x25",
-+    "BriefDescription": "Retired lock instructions of all types.",
-+    "UMask": "0x1f"
-+  },
-   {
-     "EventName": "ls_ret_cl_flush",
-     "EventCode": "0x26",
+diff --git a/drivers/char/hw_random/core.c b/drivers/char/hw_random/core.c
+index 036de7294bbda..054ffbc9e4220 100644
+--- a/drivers/char/hw_random/core.c
++++ b/drivers/char/hw_random/core.c
+@@ -604,11 +604,13 @@ int hwrng_register(struct hwrng *rng)
+ 			 */
+ 			err = set_current_rng(rng);
+ 			if (err)
+-				goto out_unlock;
++				goto out_list_del;
+ 		}
+ 	}
+ 	mutex_unlock(&rng_mutex);
+ 	return 0;
++out_list_del:
++	list_del_init(&rng->list);
+ out_unlock:
+ 	mutex_unlock(&rng_mutex);
+ out:
 -- 
 2.53.0
 
