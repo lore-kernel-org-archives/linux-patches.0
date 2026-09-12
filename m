@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA8573B0ACC;
-	Sat, 12 Sep 2026 18:25:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60CA7491597;
+	Sat, 12 Sep 2026 18:25:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789237532; cv=none; b=I0luY6ohavOjvrBLAarmnAvr4uW2lYvZE3SfNCPjF33GwDoi8ZeFVvKhdtDUQQ2xNdGQQzDD6rXp+j1fj52oUSUaGbDF+ANJA27qm5/PDrqBTSMWp3n9GcdxogC8oLQPzY1J4IEgz8K8P8Mz2pq+wqAAolJUbtuuvE1hIdxZhg0=
+	t=1789237535; cv=none; b=UkHPeeF2EH/pR5USg4BjYJt661TY0VCxS+3+ASUL0bixXHrKGAIdIoJXC0Csn+KRaaQU8cNihmdZGsypiiy/qsOovG3QWX12pbWJQCjqvGpSm7ffVSy1dukCOS93KV/rXiKul1OqrUSXQ6GWZKWrR17v6WdltB3otxXNA4uNCiY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789237532; c=relaxed/simple;
-	bh=lhrFhiaFBwMD3vFeqxFcgyFj47m2IfDhyPcFN5KzkTg=;
+	s=arc-20240116; t=1789237535; c=relaxed/simple;
+	bh=AfpX0g78cTUcEz8EIjExvYd3xghN8koQKX2y4kiaauM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jh7IRYv8vY9e82As0kGsOoiGRY1c+aHVv00A1a0ZPJH/oBZAqtwpf1HCw8ELh6lvauu+kZ/QC42CfaxwUSIartQPqIxw5iNEtFUXNPSst339Tv4RIqQ8jQKiLHzDDBG4frYRfPUw1ove8PbFzgJ0aHiqNyuSeTbMyEod+IbpUWM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NxEpmyiN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GN6axWr40WlsmpSYFexYNDqup3PeU0JU0lNrg7SfRNUsbNq5w4clMmDt74tHgdEJf54QYAxKqUawBdjQxq2dDH8UqObX6wgmS/Q+P0QMBeKPSyOPC0Ehh0Ph5d2R1HrUzPGZfdz1XNXQ+VPLAPzeMeHHGqaBCqLUxOwTXKefFKQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YTJPniZm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NxEpmyiN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 418A31F000FF;
-	Sat, 12 Sep 2026 18:25:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YTJPniZm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BA351F000FF;
+	Sat, 12 Sep 2026 18:25:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789237529;
-	bh=iKwuU76VTBjVTEzmzXM4sYWLDHfxKsYg/cMEOYlsq8E=;
+	s=korg; t=1789237534;
+	bh=Viu9fKCt0E9aPAaJ0r0Xy+synIaQ0vYUm9BMt15rU5s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NxEpmyiNeECBR3ZRLk21tahAdEN8PK/Zi7EGRAyDBIBfA+1EFJohvXrLgBLOCI7Ec
-	 TYUJyvpw8DUd78nW0CjQSd+1WTBhmnEtnZY53e2IQuIkMBzRkHCK7baU/a5z/qP1Xe
-	 oV+W4bf5RMd5Nv4toXXmYq6mFbXt3BzdnHLo28y4=
+	b=YTJPniZmM3FSkcz/eUk9l16bTTMnl87KV3epQUXtyt1dOpCdfy/HSKJPkyQ8xdY+D
+	 lx/SNjP579xvIF+dTDUwp1qbYh/Hm/ngKS3tOfPj/d14AGGDnfMeEqB0JyUC9c+Zql
+	 mX/biJTX9yoMQGA/jGidga7CKKqJ/iaSvVLq0ZTc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+23ad911c819b923238b7@syzkaller.appspotmail.com,
-	Vasileios Almpanis <vasilisalmpanis@gmail.com>,
-	Andi Shyti <andi.shyti@kernel.org>
-Subject: [PATCH 5.15 260/935] i2c: core: fix debugfs UAF on adapter removal
-Date: Sat, 12 Sep 2026 08:54:50 +0200
-Message-ID: <20260912065532.788283073@linuxfoundation.org>
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Stephan Gerhold <stephan.gerhold@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 5.15 278/935] clk: qcom: gcc-msm8916: Fix enable_reg for gcc_blsp1_sleep_clk
+Date: Sat, 12 Sep 2026 08:55:08 +0200
+Message-ID: <20260912065533.196989465@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -51,58 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vasileios Almpanis <vasilisalmpanis@gmail.com>
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
 
-commit b15b548d52b43ba8ac4652bc2c7244a8dd1e9622 upstream.
+commit c5339edc6abb601ea10df910ea0b1592fa1016f3 upstream.
 
-i2c_del_adapter() frees the adapter's debugfs directory before it
-unregisters the adapter device, but the new_device sysfs attribute
-stays writable until device_del(). A write racing with removal still
-reaches i2c_device_probe(), which passes the freed adap->debugfs to
-debugfs_create_dir() as the new client's parent:
+According to the APQ8016E TRM, the GCC_BLSP1_SLEEP_CBCR register is
+read-only and only has the CLK_OFF bit to check if the clock is running.
+This is a shared vote clock, the correct way to enable it is to vote for
+BLSP1_SLEEP_CLK_ENA (BIT(9)) in GCC_APCS_CLOCK_BRANCH_ENA_VOTE (0x45004).
 
-  BUG: KASAN: slab-use-after-free in lookup_noperm_common+0x407/0x430
-  Read of size 4 at addr ffff88803ef87810 by task syz.0.61/6090
-   lookup_noperm_common+0x407/0x430
-   simple_start_creating+0x9c/0x110
-   debugfs_start_creating+0xdb/0x1a0
-   debugfs_create_dir+0x24/0x350
-   i2c_device_probe+0x814/0xbf0
-
-It's technically possible to create a client after i2c_deregister_clients
-has run. That client will never be unregistered and make
-wait_for_completion hang.
-
-Close the window by removing the new_device attribute at the start of
-i2c_del_adapter(). device_remove_file() will drain any clients left.
-
-Fixes: 73febd775bdb ("i2c: create debugfs entry per adapter")
-Reported-by: syzbot+23ad911c819b923238b7@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=23ad911c819b923238b7
-Signed-off-by: Vasileios Almpanis <vasilisalmpanis@gmail.com>
-Cc: <stable@vger.kernel.org> # v6.8+
-Tested-by: syzbot+23ad911c819b923238b7@syzkaller.appspotmail.com
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://patch.msgid.link/20260812-i2c-v2-1-5efaab4c3334@gmail.com
+Cc: stable@vger.kernel.org
+Fixes: 3966fab8b6ab ("clk: qcom: Add MSM8916 Global Clock Controller support")
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+Link: https://lore.kernel.org/r/20260706-qcom-clk-mdm9607-fixes-v2-1-745565101869@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/i2c-core-base.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/clk/qcom/gcc-msm8916.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/i2c/i2c-core-base.c
-+++ b/drivers/i2c/i2c-core-base.c
-@@ -1810,6 +1810,12 @@ void i2c_del_adapter(struct i2c_adapter
- 		return;
- 	}
+--- a/drivers/clk/qcom/gcc-msm8916.c
++++ b/drivers/clk/qcom/gcc-msm8916.c
+@@ -1539,9 +1539,10 @@ static struct clk_branch gcc_blsp1_ahb_c
  
-+	/*
-+	 * This drains any in-flight writers, so all
-+	 * clients will be caught by i2c_deregister_clients().
-+	 */
-+	device_remove_file(&adap->dev, &dev_attr_new_device);
-+
- 	i2c_acpi_remove_space_handler(adap);
- 
- 	i2c_deregister_clients(adap);
+ static struct clk_branch gcc_blsp1_sleep_clk = {
+ 	.halt_reg = 0x01004,
++	.halt_check = BRANCH_HALT_VOTED,
+ 	.clkr = {
+-		.enable_reg = 0x01004,
+-		.enable_mask = BIT(0),
++		.enable_reg = 0x45004,
++		.enable_mask = BIT(9),
+ 		.hw.init = &(struct clk_init_data){
+ 			.name = "gcc_blsp1_sleep_clk",
+ 			.parent_names = (const char *[]){
 
 
