@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C43211D798E;
-	Sat, 12 Sep 2026 17:01:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 961091D798E;
+	Sat, 12 Sep 2026 17:01:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789232507; cv=none; b=nthKmfSQo4Pjtchm6Cgl1J7lDdjbqRihTEdkTLHuUM1gN5iR906h+egThCoEokarQzX9R0KHs3Ce0KXBhBRex5Ry2ozqV+7RCBR/iEfoRlLahVy/dF6+lhLJHV7iHpnb+ztUwzf9wvmejZeuhAvo+2Y1q1bZ+G4nb6C875sCKek=
+	t=1789232512; cv=none; b=seKjNAXJR3OVnA8muLTukqu2Ylh4x4HmDtEvCbMRUOpT+YeFzW9bj8tbfo9tJs6i5/9mDbUHTVr4Qu+C2cZ/esdMI0r0bCHzQ6y05l8lMdEounR/mM80tuGglmnJKlSVSlrQn3Vp1QZk3muw+nkcdfhvGEJqH0d6t5MBX1cL5Uc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789232507; c=relaxed/simple;
-	bh=StxIuLlzaQATpDMjJ3lK73KEdGTDdsn8ab+bwhrBq2A=;
+	s=arc-20240116; t=1789232512; c=relaxed/simple;
+	bh=OgdXgB9ZvdkTGnuc+8/A+8ixBcOs1NFoLIkBGiDJHgk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eSTS3la7/kJrT77oNyX1sWgEUkYX/qNCOL/YiFJVZHi8eszzJ7chH2x3+KTbiKk2nz4TbLBmn8bG4+uLvqvlib91Y+/msqncgIPGz6cwuYca+fTtCaoY5EXE3xuiw5wONUVwZtzCxtsyGA7kJjBHdf7W5OkmAaGexZnuLDJelNo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DVj+qMjI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TrIXU6TmXYGnLFUSPb8vEgWRsihlI1B8hDCS0SCctwQZNoBhZRGQQfjIbrwA8lNxW1+VzKz2Ds0mgqo4YiCU6DCUxJUpwCJxE8F8nhL5DbKjr7OOOgsZT91C+HBi++dlvZPaHFF2QcuX7YdLFTFSy0RjV/1yiDNIZQtwTTwV140=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xlxSYeAH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DVj+qMjI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F2281F000FF;
-	Sat, 12 Sep 2026 17:01:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xlxSYeAH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AE651F000FF;
+	Sat, 12 Sep 2026 17:01:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789232506;
-	bh=7lrSmdoZp2kqaE97ILcqtJFrOCPC4hlnLqFaF7oLhgU=;
+	s=korg; t=1789232511;
+	bh=AXp2qtC42YVb98ZSBqLX7Q3j7lRYPbmNWeUDlVzPjq4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DVj+qMjI6TEru7rZ9tabg9cTR9vewIuqR+VYHbzy0ruKB+USwnwJuWUV3ofEueXzs
-	 MNWjBpD8OTSWBWvmRH56dZFznmrumH8LulAKw3RfmqcSlZPU7VK8gYtVRQh7YhCOUs
-	 G1ByIB9gUY62XocksK+G2duzwqrEqAcot3DaVo5I=
+	b=xlxSYeAHBTAfPt1nrMbQfN7qkQZIJrVxSnvyH+sCrqGYW8R1yth9N5E/KMXPUV5fg
+	 iKDwYlP+sc4pp90Iu9bQovXX49bnmPy0h6sYyvq/BEri7cCqrzqTfkams4iQynDHJw
+	 BeN0nEo6xifzmbCfYs0gIV9CJCSIiRsNJ/wBTZPg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Xingrui Li <baka9@bakabaka9.tech>,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 5.15 024/935] HID: sensor-hub: Fix out-of-bounds write in sensor_hub_get_feature
-Date: Sat, 12 Sep 2026 08:50:54 +0200
-Message-ID: <20260912065527.393644715@linuxfoundation.org>
+	Vincent Mailhol <mailhol@kernel.org>,
+	Kees Cook <kees@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.15 025/935] lib/ucs2_string.c: fix out-of-bounds read in ucs2_strnlen()
+Date: Sat, 12 Sep 2026 08:50:55 +0200
+Message-ID: <20260912065527.416004778@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -52,99 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xingrui Li <baka9@bakabaka9.tech>
+From: Vincent Mailhol <mailhol@kernel.org>
 
-commit c92693f3ed099401d0383ef35ca1fe1e6ba033de upstream.
+commit cec0d03fe785380540dc1b4d07c80f67ae2ffc78 upstream.
 
-sensor_hub_get_feature() clamps its return value to the caller's buffer
-size, but the copy loop still copies field->report_size / 8 bytes for
-each report value. A malicious HID descriptor can advertise a large
-feature field size while an IIO caller supplies a small stack buffer,
-such as a single s32, causing an out-of-bounds write.
+Patch series "lib/ucs2_string.c: fix out-of-bounds read in
+ucs2_strnlen()", v2.
 
-HID core stores parsed report values in __s32 slots and clamps extracted
-values to 32 bits. Reject feature fields that require more than one slot
-per value, guard the total byte count calculation, and clamp each
-per-value copy to the remaining caller buffer.
+This series fixes an off-by-one out-of-bounds read in ucs2_strnlen().
 
-Fixes: 5459ada2b3cd69 ("HID: sensor-hub: Fix packing of result buffer for feature report")
-Cc: stable@kernel.org
-Assisted-by: OpenAI:GPT-5.5-Cyber
-Signed-off-by: Xingrui Li <baka9@bakabaka9.tech>
-Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+The first patch is the real fix, the second patch comes as a bonus and
+fixes the code indentation.
+
+
+This patch (of 2):
+
+ucs2_strnlen() checks the current character before checking whether the
+caller-provided maximum length has been reached.  If the input is not
+NUL-terminated within that bound, the loop can read one ucs2_char_t past
+the limit.
+
+Test the length before dereferencing to prevent an off-by-one
+out-of-bounds read.
+
+Link: https://lore.kernel.org/20260723-fix-ucs2_strnlen-v2-0-9ea94e32a358@kernel.org
+Link: https://lore.kernel.org/20260723-fix-ucs2_strnlen-v2-1-9ea94e32a358@kernel.org
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Vincent Mailhol <mailhol@kernel.org>
+Cc: Kees Cook <kees@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-sensor-hub.c |   44 +++++++++++++++++++++++++------------------
- 1 file changed, 26 insertions(+), 18 deletions(-)
+ lib/ucs2_string.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/hid/hid-sensor-hub.c
-+++ b/drivers/hid/hid-sensor-hub.c
-@@ -239,12 +239,17 @@ int sensor_hub_get_feature(struct hid_se
- 			   u32 field_index, int buffer_size, void *buffer)
+--- a/lib/ucs2_string.c
++++ b/lib/ucs2_string.c
+@@ -8,7 +8,7 @@ ucs2_strnlen(const ucs2_char_t *s, size_
  {
- 	struct hid_report *report;
-+	struct hid_field *field;
- 	struct sensor_hub_data *data = hid_get_drvdata(hsdev->hdev);
--	int report_size;
-+	size_t field_size;
-+	size_t report_size;
-+	size_t copied = 0;
-+	size_t to_copy;
- 	int ret = 0;
--	u8 *val_ptr;
--	int buffer_index = 0;
--	int i;
-+	unsigned int i;
-+
-+	if (!buffer || buffer_size <= 0)
-+		return -EINVAL;
+         unsigned long length = 0;
  
- 	memset(buffer, 0, buffer_size);
- 
-@@ -258,26 +263,29 @@ int sensor_hub_get_feature(struct hid_se
- 	hid_hw_request(hsdev->hdev, report, HID_REQ_GET_REPORT);
- 	hid_hw_wait(hsdev->hdev);
- 
-+	field = report->field[field_index];
-+
- 	/* calculate number of bytes required to read this field */
--	report_size = DIV_ROUND_UP(report->field[field_index]->report_size,
--				   8) *
--				   report->field[field_index]->report_count;
--	if (!report_size) {
-+	field_size = DIV_ROUND_UP(field->report_size, 8);
-+	/* HID core stores each parsed report value in a __s32 slot. */
-+	if (!field_size || field_size > sizeof(field->value[0])) {
-+		ret = -EINVAL;
-+		goto done_proc;
-+	}
-+	if (field->report_count > SIZE_MAX / field_size) {
- 		ret = -EINVAL;
- 		goto done_proc;
- 	}
--	ret = min(report_size, buffer_size);
- 
--	val_ptr = (u8 *)report->field[field_index]->value;
--	for (i = 0; i < report->field[field_index]->report_count; ++i) {
--		if (buffer_index >= ret)
--			break;
--
--		memcpy(&((u8 *)buffer)[buffer_index], val_ptr,
--		       report->field[field_index]->report_size / 8);
--		val_ptr += sizeof(__s32);
--		buffer_index += (report->field[field_index]->report_size / 8);
-+	report_size = field_size * field->report_count;
-+	report_size = min_t(size_t, report_size, buffer_size);
-+
-+	for (i = 0; i < field->report_count && copied < report_size; ++i) {
-+		to_copy = min(field_size, report_size - copied);
-+		memcpy(&((u8 *)buffer)[copied], &field->value[i], to_copy);
-+		copied += to_copy;
- 	}
-+	ret = copied;
- 
- done_proc:
- 	mutex_unlock(&data->mutex);
+-        while (*s++ != 0 && length < maxlength)
++	while (length < maxlength && *s++ != 0)
+                 length++;
+         return length;
+ }
 
 
