@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A4B1372B57;
-	Sat, 12 Sep 2026 12:54:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05D6B202F71;
+	Sat, 12 Sep 2026 12:54:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789217672; cv=none; b=U9PyuxCKUrqKqnhUU7fbWkC49ch/CYXvuYiDpGrg9lBQOh5M5PNwhyBEV2EvpAVB/5XKpkI97ji2QV9hC3p+HL41E4bBVflyF7RClhnVYO07M2ZWOvrzv5d0Xid926lArgVPMHKQx0iestdatzaRYiR0s2ft+8tfCmmckdBvDF8=
+	t=1789217677; cv=none; b=WAfkfFXhRshm/ghU5f5vR8eTfGdTveyLutNXNC6JyB+u3VjzVkxX/lfj0q4R48SVrPGqFAofBk9f7woMLRNyd1iGBHWIIidE0o+eoVoza3vXSLdXklPzL4rzTr25m5rOx19UG/3D0Ze0P+hGAqK31unCeAiUUR3hiT/a015H2zM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789217672; c=relaxed/simple;
-	bh=F/p3eRfiY9lcG4CvHWHg9/FttT50aPylsIswM/IittQ=;
+	s=arc-20240116; t=1789217677; c=relaxed/simple;
+	bh=ix3OVpOX+ZcHVr4lmygY0qDME3MDmoDM2oSD/UGDnKI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TRzpaa79XW2N9ozPsrGh/YeOU/lxEXNjXBxZuD6dt9wf+Emv5dr+/tbyzPfzt8bs8evlYQUtOiVNqSnJEWFOJbYaENc6rl/G0ty94TsS6eJLU/h7tXmSmVpwGYHPTqi4zggYzlDIOAiHoi3ev6Soi5ddASLB8oEkwspyErfhNi0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HJilJckp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FJYFz3e2NnCn/zLdDwWrxWZ6KmoiYvvc4TikYYZw548I0MLPvdG4KL8a+RVZL5Cnt7FQCB4WI9aGZRfIYS8M/BZVKL1miPWE0HImOOStwWtASDkfcic6R/VI36/4AMkoqU5a/2nb8uGzcxkx4bWRZ/kHavlhQZvf747bb/zXJCw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hIOHyjUA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HJilJckp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C76A51F000FF;
-	Sat, 12 Sep 2026 12:54:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hIOHyjUA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A2B01F000FF;
+	Sat, 12 Sep 2026 12:54:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789217671;
-	bh=xDTv8DEI8QpeJcjxunjFswGeRcVmiqHClt0RydVfYFc=;
+	s=korg; t=1789217675;
+	bh=OKUFb22v9/ve4e7zzDCNAirNDK5YwK4sJqdZWAksZJ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HJilJckpgWYhhTPmomeUzzG1QcCIYrmyy2+OgzMYiAw7Or0YbgTjL7XeV8ObAYp5O
-	 bjqm/ePuyzgdwtXQdQtwbbmVuUofHEKR38mXE99YK1kpfWba1OnUxumS0qI7DB4dMM
-	 FdYbBHFr2+6mFDR62ocS4evdg8oNUEZv4URN3yBE=
+	b=hIOHyjUAPi4XSQx1zoDEo+m9fkZr2OO0NvhTfGkr0Nz2peG8EXJDt64tVW/hpuoaQ
+	 6vf42mpGC/uPMOJZcpss/e3LELdWYfnrToM4xaQ1S2dPe4GQrZ+pVUNlfLDFrhRRwg
+	 YdUuNXpXMi05Tv5z9wQtjxUVdoVSJ7aHBo/6rWyI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Linmao Li <lilinmao@kylinos.cn>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0988/1376] Bluetooth: hci_sync: free the advertising instance on the failure and cancel paths
-Date: Sat, 12 Sep 2026 08:56:54 +0200
-Message-ID: <20260912065629.586906441@linuxfoundation.org>
+Subject: [PATCH 6.12 0989/1376] Bluetooth: MGMT: free the mesh send cancel command when it is cancelled
+Date: Sat, 12 Sep 2026 08:56:55 +0200
+Message-ID: <20260912065629.608892102@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -53,68 +53,60 @@ Content-Transfer-Encoding: 8bit
 
 From: Linmao Li <lilinmao@kylinos.cn>
 
-[ Upstream commit 120d8dc042e3d45073bb6e50ee7b058a0b182627 ]
+[ Upstream commit 3c742feda8fcabf741a17bcf668b63c8f606f9c5 ]
 
-adv_timeout_expire() hands a kmalloc()ed instance byte to
-hci_cmd_sync_queue() with a NULL destroy callback, and only
-adv_timeout_expire_sync() frees it. That leaks on two paths:
+mesh_send_cancel() queues the pending command with a NULL destroy
+callback, so it is only freed if send_cancel() runs. A cancelled entry is
+leaked, as _hci_cmd_sync_cancel_entry() does not release entry->data when
+there is no destroy callback, and hci_cmd_sync_clear() cancels every
+pending entry when the controller is unregistered. Nothing else reclaims
+it either: mgmt_pending_new() does not put the command on
+hdev->mgmt_pending.
 
- - the return value is not checked, and hci_cmd_sync_queue() does not
-   take ownership when it fails (-ENETDOWN, -ENODEV, -ENOMEM);
+The leak also pins the socket reference taken by mgmt_pending_new(), so
+the mgmt socket is never released.
 
- - a cancelled entry is not released, as _hci_cmd_sync_cancel_entry()
-   does not free entry->data when there is no destroy callback.
-   hci_cmd_sync_clear() cancels every pending entry when the controller
-   is unregistered.
+Free the command from a destroy callback.
 
-Free the buffer from a destroy callback, and in the caller when the entry
-could not be queued at all.
-
-Fixes: c249ea9b4309 ("Bluetooth: Move Adv Instance timer to hci_sync")
+Fixes: b338d91703fa ("Bluetooth: Implement support for Mesh")
 Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_sync.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ net/bluetooth/mgmt.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index cb6889ed9e0da..cc2b0b85426f3 100644
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -540,8 +540,6 @@ static int adv_timeout_expire_sync(struct hci_dev *hdev, void *data)
- {
- 	u8 instance = *(u8 *)data;
+diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
+index 13b1ecb83e0e3..d92eb0d4c54da 100644
+--- a/net/bluetooth/mgmt.c
++++ b/net/bluetooth/mgmt.c
+@@ -2411,11 +2411,15 @@ static int send_cancel(struct hci_dev *hdev, void *data)
  
--	kfree(data);
--
- 	hci_clear_adv_instance_sync(hdev, NULL, instance, false);
+ 	mgmt_cmd_complete(cmd->sk, hdev->id, MGMT_OP_MESH_SEND_CANCEL,
+ 			  0, NULL, 0);
+-	mgmt_pending_free(cmd);
  
- 	if (list_empty(&hdev->adv_instances))
-@@ -550,6 +548,12 @@ static int adv_timeout_expire_sync(struct hci_dev *hdev, void *data)
  	return 0;
  }
  
-+static void adv_timeout_expire_destroy(struct hci_dev *hdev, void *data,
-+				       int err)
++static void send_cancel_destroy(struct hci_dev *hdev, void *data, int err)
 +{
-+	kfree(data);
++	mgmt_pending_free(data);
 +}
 +
- static void adv_timeout_expire(struct work_struct *work)
+ static int mesh_send_cancel(struct sock *sk, struct hci_dev *hdev,
+ 			    void *data, u16 len)
  {
- 	u8 *inst_ptr;
-@@ -570,7 +574,9 @@ static void adv_timeout_expire(struct work_struct *work)
- 		goto unlock;
+@@ -2436,7 +2440,8 @@ static int mesh_send_cancel(struct sock *sk, struct hci_dev *hdev,
+ 	if (!cmd)
+ 		err = -ENOMEM;
+ 	else
+-		err = hci_cmd_sync_queue(hdev, send_cancel, cmd, NULL);
++		err = hci_cmd_sync_queue(hdev, send_cancel, cmd,
++					 send_cancel_destroy);
  
- 	*inst_ptr = hdev->cur_adv_instance;
--	hci_cmd_sync_queue(hdev, adv_timeout_expire_sync, inst_ptr, NULL);
-+	if (hci_cmd_sync_queue(hdev, adv_timeout_expire_sync, inst_ptr,
-+			       adv_timeout_expire_destroy) < 0)
-+		kfree(inst_ptr);
- 
- unlock:
- 	hci_dev_unlock(hdev);
+ 	if (err < 0) {
+ 		err = mgmt_cmd_status(sk, hdev->id, MGMT_OP_MESH_SEND_CANCEL,
 -- 
 2.53.0
 
