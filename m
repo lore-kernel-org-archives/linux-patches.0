@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D5E3383C88;
-	Sat, 12 Sep 2026 19:04:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6910F383C88;
+	Sat, 12 Sep 2026 19:04:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789239874; cv=none; b=Qb3CIGuzFRcXmky5Jl/VB8cismgwy7LZHbPeeqpXXB7yrPGKNGtj03AcQ1ZMBE8nSgSOXtJwuu3BjVQxmBc3MPItzH75NeWfBGDo0MWxfjnq28jTShvT51jWjtCFgxlXHYgH7NiQRGipefhDLoU6+9KpkU71+eRfr7WxA2P0ZsU=
+	t=1789239880; cv=none; b=knYSql6oMtikTK04+/1Fh5jXBceWFoWK7vMtimGW3RwIuZ7ZyNs/hEH3XcL2g44Fa5ZIxH8FUE1dyvrveONfb9xy1IVaGnzBhM2Be/O4lYx8VIuSFIhUdfiTJMRcUVpcXwsLgOGnmWKDjFCxz5FCmfpNPLEyldiXk7PD7YaKpGo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789239874; c=relaxed/simple;
-	bh=c6HjLo+ESgClYyY2AN079DZqwYhx6JJLjl7ish13ERQ=;
+	s=arc-20240116; t=1789239880; c=relaxed/simple;
+	bh=1A3I4Z/Do/HA6tCZ/ClOONVB5F2ezWZrDCKWMkIxl5M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q+goJ9IWfa/4Fe0GiEitv6+CY493Ca61FyIlvhxiCUYrtEAmaLXK5qid6srXnl7k6uUA8KUV6GyByDs1rwb2RfZQjHT2aGiUBG+9XdH2kepGq0/k1T6DxzLtW1oum+sLP8ws+UZ5U5ll5MaNoYU22sf4t+qu26pbSCgsriouU/I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dxvYDW/Y; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tnAyoCaMifERkKiOY4RWCBSVOe+t/jMW8OwCm5a8H8XO+CAFf54CJXTlQ/9q06PJvgh6Sy5EzMWetZq2ieXJ3UCms4X7XGJY/xxI4r/hjMX67vsgh+T7wWfArSPq3EQsjN7zAaqAE5WZxwdiElSR3bNLI/oE/+78e6UIxuKMQ+k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PTxHykp2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dxvYDW/Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCEE81F000FF;
-	Sat, 12 Sep 2026 19:04:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PTxHykp2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA13F1F000FF;
+	Sat, 12 Sep 2026 19:04:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789239872;
-	bh=1BoTOVXxyMq7C7GvOhbovIcRIAQHvCeXXbmN/R7gGcM=;
+	s=korg; t=1789239878;
+	bh=qqov6yoCumB0drZylhby0GDHjmwtxuu+hsDAntC3gXY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dxvYDW/Y43Pbo2cOjXey8gDMMU0csKNvT6JfD3R5cYEsRPLqTb13SgZ9ao32s68Mv
-	 9rKLl9trKbrhA1r2CO1Co1n4+wo8ihBtROXmW0Bdt6X7l3WuohQKHjwOBOE5NoA+hQ
-	 +9488T9ARbk106xxjDev7Vby7vamTQvUlwaltHSo=
+	b=PTxHykp2L/my/HPWZq/YihMhd1CgL7OJkYKtOpTbDBADc+FzGN7+5NR+8drb8f6cV
+	 /sWnDZPrVYsTzEm+IJkjZooLYdYVHLe+PjoTzlR0LxKp5W6xvUj6H/zmYSFkP6jHdS
+	 i4LdFCfFvyNmNJ2+vFKLlcp+DW87/F+7F7ktOcRE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	HyeongJun An <sammiee5311@gmail.com>,
+	Ali Ahmet Memis <ali@iusegentoo.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 752/935] Bluetooth: virtio_bt: avoid OOB read of build info string
-Date: Sat, 12 Sep 2026 09:03:02 +0200
-Message-ID: <20260912065544.079766001@linuxfoundation.org>
+Subject: [PATCH 5.15 753/935] Bluetooth: MSFT: validate evt_prefix_len against the response length
+Date: Sat, 12 Sep 2026 09:03:03 +0200
+Message-ID: <20260912065544.103704231@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -51,54 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: HyeongJun An <sammiee5311@gmail.com>
+From: Ali Ahmet Memis <ali@iusegentoo.com>
 
-[ Upstream commit 502adc06ba76dee19c292ae4a07d74d202fe734d ]
+[ Upstream commit 0079e1a944634ab2dc1c7cdec1144486d096407e ]
 
-The virtbt_setup_zephyr() sends the Zephyr vendor command 0xfc08 (Read
-Build Information) and hands the response to bt_dev_info() and
-hci_set_fw_info() as a "%s" string starting at skb->data + 1, without
-checking the length. A backend that answers with status only leaves that
-pointer past the end of the received data, so the walk reads adjacent
-slab memory until it meets a NUL. Those bytes reach the kernel log and
-the firmware-info debugfs file.
+read_supported_features() only checks that the response covers the fixed
+part of struct msft_rp_read_supported_features, which is 11 bytes:
 
-To fix this, print the string with a bounded "%.*s" limited to
-skb->len - 1. A short or unterminated response then prints as much as
-arrived instead of failing setup.
+	if (skb->len < sizeof(*rp)) {
+		bt_dev_err(hdev, "MSFT supported features length mismatch");
+		goto failed;
+	}
 
-This mirrors commit dd068ef04412 ("Bluetooth: bpa10x: avoid OOB read of
-revision string in bpa10x_setup()"), which fixed the identical pattern.
+evt_prefix[] is a flexible array member and rp->evt_prefix_len is an
+unvalidated u8 taken straight out of that response, so
 
-Fixes: afd2daa26c7a ("Bluetooth: Add support for virtio transport driver")
-Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
-Assisted-by: Claude:claude-opus-4-8
+	msft->evt_prefix = kmemdup(rp->evt_prefix, rp->evt_prefix_len,
+				   GFP_KERNEL);
+
+copies up to 255 bytes from a reply that may have carried none of them.
+What is copied is data the controller never sent, and it is then used to
+match incoming vendor events in msft_vendor_evt().
+
+This is not an out-of-bounds access. An skb data allocation always has
+at least SKB_DATA_ALIGN(sizeof(struct skb_shared_info)) bytes past the
+payload, which is more than the 255 byte maximum, so the read stays
+inside the allocation and KASAN does not report it. It is still a read
+of bytes the host was never given, with the length fully controlled by
+the controller.
+
+Reject a response that is too short for the prefix it declares.
+
+Verified with an emulated controller over /dev/vhci on a KASAN kernel,
+with vhci made to advertise an MSFT opcode the way btintel, btqca, btmtk
+and btrtl do unconditionally. A reply of exactly 11 bytes declaring
+evt_prefix_len = 255 reaches kmemdup and copies 255 bytes
+("skb->len=11 evt_prefix_len=255", with the copied buffer dumped); since
+the reply ends at the fixed part, all 255 come from past the end of the
+response. No KASAN report is produced, as expected from the allocation
+slack described above. With this patch the response is rejected with
+"MSFT event prefix length mismatch" and msft->evt_prefix is left unset.
+
+Fixes: 145373cb1b1f ("Bluetooth: Add framework for Microsoft vendor extension")
+Signed-off-by: Ali Ahmet Memis <ali@iusegentoo.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/virtio_bt.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ net/bluetooth/msft.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/bluetooth/virtio_bt.c b/drivers/bluetooth/virtio_bt.c
-index 2d060ea6da847..ed7d4ed4b575e 100644
---- a/drivers/bluetooth/virtio_bt.c
-+++ b/drivers/bluetooth/virtio_bt.c
-@@ -112,9 +112,13 @@ static int virtbt_setup_zephyr(struct hci_dev *hdev)
- 	if (IS_ERR(skb))
- 		return PTR_ERR(skb);
+diff --git a/net/bluetooth/msft.c b/net/bluetooth/msft.c
+index b4bfae41e8a55..0fb0d4b741c1c 100644
+--- a/net/bluetooth/msft.c
++++ b/net/bluetooth/msft.c
+@@ -132,6 +132,11 @@ static bool read_supported_features(struct hci_dev *hdev,
+ 	if (rp->sub_opcode != MSFT_OP_READ_SUPPORTED_FEATURES)
+ 		goto failed;
  
--	bt_dev_info(hdev, "%s", (char *)(skb->data + 1));
-+	/* Bounded print: the backend controls skb->len. */
-+	if (skb->len > 1) {
-+		int len = skb->len - 1;
- 
--	hci_set_fw_info(hdev, "%s", skb->data + 1);
-+		bt_dev_info(hdev, "%.*s", len, (char *)(skb->data + 1));
-+		hci_set_fw_info(hdev, "%.*s", len, skb->data + 1);
++	if (skb->len < sizeof(*rp) + rp->evt_prefix_len) {
++		bt_dev_err(hdev, "MSFT event prefix length mismatch");
++		goto failed;
 +	}
- 
- 	kfree_skb(skb);
- 	return 0;
++
+ 	if (rp->evt_prefix_len > 0) {
+ 		msft->evt_prefix = kmemdup(rp->evt_prefix, rp->evt_prefix_len,
+ 					   GFP_KERNEL);
 -- 
 2.53.0
 
