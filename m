@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D954A34752E;
-	Sat, 12 Sep 2026 11:17:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9490A2DC792;
+	Sat, 12 Sep 2026 11:17:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789211865; cv=none; b=WYE+BSV3N4Go7ycX8F4hW177CocGhFNWFlUcoxF+SXqoMBhzWRICDDSG5t37SR4som5JQC4dOxNcUYebDjpUsPD/Y7xCWsdTrhqMaV4Iy8a3KNX54+ke4LrUneybSE3fUh1xQKcA2LWZ/OvXbZVoBrurnYy2wvZhhD7hJF3be+8=
+	t=1789211870; cv=none; b=B04hwQxJV7TSPeTEFLyB2H2MqRmlGiIKWFcmh0nWE+P9dF4xaICGfgEktFojTQUx25lfYCL2KET2J+4WIcAksTfhsI/ziajXJ/BuN7uU2nu4tVPTfoUDX3HCM0yhkeLi2z8BX1DdeXx0JZHaKBWXN8NhW6OR4ZC1amnkpMlYZLw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789211865; c=relaxed/simple;
-	bh=haQQ7wIhpgqvfdauNIgDG79OmQAQQAxgM2Q5oItjkQ0=;
+	s=arc-20240116; t=1789211870; c=relaxed/simple;
+	bh=1lyS96OIcHAJ56beEAWd4L1QR39E41kQ2w+2ysu6D5E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IAQLm5E/LuZZtGLKmX52TyHoUMrXtUamwJVomYLx7aEQZ20wVljOkC5qIGo+oUzt1M/pOHRjlbtWRoy5D955zP1dCheBZuXUlp1sGznIZBttkrj9KBMciErVw+bzRiH1LCl4fOFg9BpktcfW8QWfCg1SMrXuPpLgDpo/lHga57U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L4P/5+CI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OhkXPDHzUx1uSSO0haBBDivt6LW/DX9CrMvCDi0H/wA4Yd+gBhhmVc+dTmSHF08hlCE7gS2feACc0EK5UfoFUsYzdcxsQY8uDeceLlIp3lOdbpTOwMplkHsQyYGmyNNpqDFJ/+yuW344IQbvpkEM0VB8o7LMPkjIiIkqyud0FO4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=saKe4DRn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L4P/5+CI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34A711F000FF;
-	Sat, 12 Sep 2026 11:17:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="saKe4DRn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 986081F000FF;
+	Sat, 12 Sep 2026 11:17:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789211864;
-	bh=EpzshKM+qw/h7nDHbFBihHPN5Vd0/NaW3+ggR1IfeQM=;
+	s=korg; t=1789211869;
+	bh=ftVj2F76T1Rxv1gsjYhvml3JUronEAzwHYjlb0VsOGY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L4P/5+CIGCeOYqauh7kH6tOwcy86iLnuqgyajOB6hLbZ1DBIdsP35/E9uxQh7azS7
-	 617IHvGAwlwCHeNSWch8cxDExIMmHQGcJuE4dmyTlIPXrFoiOKhbGwCuNpQNPMlEM+
-	 9b73218UQC84JYtKlGLT74mhEpp1ytH/MpzY6je0=
+	b=saKe4DRn6Da2I/nF1ZQMDC1P99v3gBSkA/buvzlF1RlTY+ZODJ0tXI2Rr/Ry3WLwM
+	 yLfAy6Ea2Hbq/oBrWf1X4grKDoRynyopqGfgE+r7stcaBY1punA+5CEPpbC6HjvI+A
+	 l8hcDco1gKtWGN9ASFGwzWpc5w66+sd0zOPkIBMM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Serhat Kumral <serhatkumral1@gmail.com>,
-	Leon Romanovsky <leon@kernel.org>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Brian Masney <bmasney@redhat.com>,
+	Xianwei Zhao <xianwei.zhao@amlogic.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1318/1518] RDMA/ucma: Allow path records to exactly fit the output buffer
-Date: Sat, 12 Sep 2026 08:58:07 +0200
-Message-ID: <20260912065653.345190615@linuxfoundation.org>
+Subject: [PATCH 6.18 1319/1518] spi: amlogic-spisg: Make sure clk_init_data is fully initialized
+Date: Sat, 12 Sep 2026 08:58:08 +0200
+Message-ID: <20260912065653.367092991@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,49 +53,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Serhat Kumral <serhatkumral1@gmail.com>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit 8049741ac93acd3a590dac070e12571fddf0e294 ]
+[ Upstream commit b2702908ee23ef31bfcf241a2e07ace0eb76bd71 ]
 
-ucma_query_path() emits a path record only when the remaining output
-buffer is strictly larger than struct ib_path_rec_data. A buffer sized
-exactly for the response header and N complete records therefore gets
-only N - 1 records, while resp->num_paths still advertises N. A caller
-sizing its buffer for a single record gets a header claiming one path
-and no path data at all.
+The clk_init_data structure contains several mutually-exclusive members
+for different methods to specify the possible parents of a clock,
+prompting drivers to initialize only the members they need.  However,
+not initializing all members may cause subtle issues, which are only
+exposed when CONFIG_INIT_STACK_ALL_PATTERN or CONFIG_INIT_STACK_NONE is
+enabled.
 
-ucma_query_ib_service() in the same file computes the record count with
-a plain division and so accepts an exact fit; make ucma_query_path()
-behave the same way.
+aml_spisg_clk_init() fills in init.parent_data, and assumes that
+init.parent_names is NULL.  However, the latter in uninitialized, and
+thus may cause a crash.
 
-Current librdmacm is unaffected because it always sizes the response for
-six records while the kernel currently reports at most two paths. Other
-users of the UAPI that provide an exactly sized buffer can observe the
-truncated response.
+Make sure all members are fully initialized, to fix such bugs, and to
+avoid future breakage when converting drivers to a different method for
+specifying the parents.
 
-Fixes: ac53b264b2f3 ("RDMA/ucma: Support querying when IB paths are not reversible")
-Signed-off-by: Serhat Kumral <serhatkumral1@gmail.com>
-Link: https://patch.msgid.link/20260806201358.147478-1-serhatkumral1@gmail.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Fixes: cef9991e04aed330 ("spi: Add Amlogic SPISG driver")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: Brian Masney <bmasney@redhat.com>
+Reviewed-by: Xianwei Zhao <xianwei.zhao@amlogic.com>
+Link: https://patch.msgid.link/9fb35ae0aedb7a6db0db6c78a8193c7602dd9d44.1787165329.git.geert+renesas@glider.be
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/ucma.c | 2 +-
+ drivers/spi/spi-amlogic-spisg.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/core/ucma.c b/drivers/infiniband/core/ucma.c
-index 5d76879218ad6..797efd4a47282 100644
---- a/drivers/infiniband/core/ucma.c
-+++ b/drivers/infiniband/core/ucma.c
-@@ -951,7 +951,7 @@ static ssize_t ucma_query_path(struct ucma_context *ctx,
- 
- 	resp->num_paths = ctx->cm_id->route.num_pri_alt_paths;
- 	for (i = 0, out_len -= sizeof(*resp);
--	     i < resp->num_paths && out_len > sizeof(struct ib_path_rec_data);
-+	     i < resp->num_paths && out_len >= sizeof(struct ib_path_rec_data);
- 	     i++, out_len -= sizeof(struct ib_path_rec_data)) {
- 		struct sa_path_rec *rec = &ctx->cm_id->route.path_rec[i];
- 
+diff --git a/drivers/spi/spi-amlogic-spisg.c b/drivers/spi/spi-amlogic-spisg.c
+index 970fddbb25857..8ddb7a1a40567 100644
+--- a/drivers/spi/spi-amlogic-spisg.c
++++ b/drivers/spi/spi-amlogic-spisg.c
+@@ -640,7 +640,7 @@ static int aml_spisg_target_abort(struct spi_controller *ctlr)
+ static int aml_spisg_clk_init(struct spisg_device *spisg, void __iomem *base)
+ {
+ 	struct device *dev = &spisg->pdev->dev;
+-	struct clk_init_data init;
++	struct clk_init_data init = {};
+ 	struct clk_divider *div;
+ 	struct clk_div_table *tbl;
+ 	char name[32];
 -- 
 2.53.0
 
