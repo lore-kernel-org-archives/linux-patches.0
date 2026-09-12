@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3DFA2F7F17;
-	Sat, 12 Sep 2026 19:34:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FA2C2D0C94;
+	Sat, 12 Sep 2026 19:34:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789241650; cv=none; b=O1guyF6cz1Iexp1BzS2NJc5xTnKt/kytqySvjDqKsv+zS33xAEPcoiK4GyT6aoUFFHflPUNogcVF6WdudMKg7LbCy6AfhPYoyHzJzj8LjB8332GU6THpYnXSHv7ZaaznCU14pdqH+JLgvQtB6rFEe9LVEJG6yfLLEiYxJaGV+jw=
+	t=1789241654; cv=none; b=MogiLwHFDj7fg+r6Sy10OQ5oK1ytu3iJ2Pz17LADxfR71atgR1Tpk2DpJrNRYPbls9LqiqGoR367sA3djVlT3N+KXp5bZ3YpG4dwKFl2C3O6YkcauidMNrx+EJmcDOXPditDCfwBvJ00OcZ8KbvWkOkGIzcEz48DFH5fN0XB64o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789241650; c=relaxed/simple;
-	bh=vLKBsEoGyJHN74ZYfqrF3dUJMzN858gci05H9ZwSlvo=;
+	s=arc-20240116; t=1789241654; c=relaxed/simple;
+	bh=Z8Ptzt2jAx/6+zfD9SIOAk9YgtyMUrzZHGEG92sJogg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lXQPRBJ/B5DEUDJnd5bwSXIrevumqerBVcA/7KSlRBBWskFAkQhhvbfv0n9JMIJ0Xbj7Za2IrSXFTOKWHPnW0CptgrE+6aV1hSfCgux4mlijE8hKkKAk3O92UU9gQhsgVhtjkzIAt2hDeptFO5w5qs3o+Pt4lSugFWn8V7CZ9/g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SXfUNHvE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=o91BaVqkhkpV0s7ghAZdkQ898pFjg/Os+og2f64gtoWDUw67/5MjWOfiSpUJ+3nYUB6yPFyObiMIg8YQx8EoOtUepSwpnSldCJA0xpdufDnv+4NFs7WFo7++eXmwjMHD+MnQQIUV1Jh4mdA9aNWdBJs42aiCVuVV+Yqlqt8xsXI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rW+FEZ9B; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SXfUNHvE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56F961F000FF;
-	Sat, 12 Sep 2026 19:34:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rW+FEZ9B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98D071F000FF;
+	Sat, 12 Sep 2026 19:34:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789241649;
-	bh=f6varmY2IWCHLg1aioMDOy02YSOI5q/uSIrFeykiqhs=;
+	s=korg; t=1789241653;
+	bh=jueoL3la29RUVb7YkALZmokqrlMHM7seQ084MqqzIDA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SXfUNHvEB8Mxlqgd2zTqQaRgHaY3E5D7wusr5lRdP8wCbRIiz4lAtcfd6J0P7RkC9
-	 UB/GHXPiNOodB/0MHVxJ4d7gIGreiat3Ki5JMgbC7QZR/ZhoH1/qDR8GWXU6b1tAMH
-	 V2LXj+vavFt1VYuwFBCBa7wnNWU6bzLtM7Yfyjpg=
+	b=rW+FEZ9B35bUc96/3UDhBxzzwwcNXkT9NGpwGNGn07YkHaCIVVhvuGHW/aOxCl63/
+	 LPfp0jDY4bONscGRdHsfF7AQt3R7aO29gmKuld4onJuoUZjCQRljXYK7K/X+tTSh/r
+	 OJNURcLH/sHaTtVIpePzuBXlFB4GyY4c4AJHWPVc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haotian Zhang <vulab@iscas.ac.cn>,
-	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 5.10 178/798] dm-switch: use WRITE_ONCE() in switch_region_table_write()
-Date: Sat, 12 Sep 2026 08:56:46 +0200
-Message-ID: <20260912065521.103758568@linuxfoundation.org>
+	sashiko-bot@kernel.org,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>
+Subject: [PATCH 5.10 179/798] i3c: master: Fix info leak and UAF in device unregister path
+Date: Sat, 12 Sep 2026 08:56:47 +0200
+Message-ID: <20260912065521.127877810@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -50,38 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haotian Zhang <vulab@iscas.ac.cn>
+From: Adrian Hunter <adrian.hunter@intel.com>
 
-commit c7391ebe33162c7962b313caea4d8e6b0bc2a671 upstream.
+commit d2c743efd2d1ee64e94324664808f623dd865872 upstream.
 
-switch_region_table_read() accesses the region table with READ_ONCE()
-and is called from the lockless switch_map() IO path. However,
-switch_region_table_write() stores to the same array with a plain
-assignment. This results in an inconsistent access pattern for a
-lockless shared variable and may trigger data race reports.
+i3c_master_unregister_i3c_devs() clears i3cdev->dev->desc before
+calling device_unregister().  During device_unregister(),
+device_del() emits a KOBJ_REMOVE uevent and unbinds the driver while
+the device descriptor is still expected to be valid.  As a result,
+i3c_device_uevent() and a racing modalias_show() can observe a NULL
+desc and fall back to an uninitialized stack struct i3c_device_info,
+leaking kernel stack contents in the generated modalias.  Driver
+.remove() callbacks may also encounter an unexpected NULL desc during
+unbind.
 
-Use WRITE_ONCE() to pair with the existing READ_ONCE() in
-switch_region_table_read().
+Keep desc valid until device_unregister() has completed.  Since
+device_unregister() drops the device reference and may free the device,
+take an extra reference with get_device() before unregistering.  Clear
+desc afterwards and release the extra reference with put_device().
+This preserves the release-time invariant that desc must be NULL while
+avoiding both the information leak and a potential use-after-free from
+writing desc after the device has been released.
 
+Reported-by: sashiko-bot@kernel.org
+Link: https://lore.kernel.org/linux-i3c/20260702190003.8BF741F000E9@smtp.kernel.org/
+Fixes: 3a379bbcea0a ("i3c: Add core I3C infrastructure")
 Cc: stable@vger.kernel.org
-Fixes: 99eb1908e643 ("dm switch: factor out switch_region_table_read")
-Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260723075747.34049-1-adrian.hunter@intel.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-switch.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/i3c/master.c |    9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
---- a/drivers/md/dm-switch.c
-+++ b/drivers/md/dm-switch.c
-@@ -183,7 +183,7 @@ static void switch_region_table_write(st
- 	pte = sctx->region_table[region_index];
- 	pte &= ~((((region_table_slot_t)1 << sctx->region_table_entry_bits) - 1) << bit);
- 	pte |= (region_table_slot_t)value << bit;
--	sctx->region_table[region_index] = pte;
-+	WRITE_ONCE(sctx->region_table[region_index], pte);
- }
+--- a/drivers/i3c/master.c
++++ b/drivers/i3c/master.c
+@@ -2279,11 +2279,12 @@ static void i3c_master_unregister_i3c_de
+ 		if (!i3cdev->dev)
+ 			continue;
  
- /*
+-		i3cdev->dev->desc = NULL;
+-		if (device_is_registered(&i3cdev->dev->dev))
++		if (device_is_registered(&i3cdev->dev->dev)) {
++			get_device(&i3cdev->dev->dev);
+ 			device_unregister(&i3cdev->dev->dev);
+-		else
+-			put_device(&i3cdev->dev->dev);
++		}
++		i3cdev->dev->desc = NULL;
++		put_device(&i3cdev->dev->dev);
+ 		i3cdev->dev = NULL;
+ 	}
+ }
 
 
