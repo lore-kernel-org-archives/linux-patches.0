@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93E023624DE;
-	Sat, 12 Sep 2026 18:40:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0C1E3AFD0C;
+	Sat, 12 Sep 2026 18:40:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789238440; cv=none; b=e5w3DmHz1mwZp5fD9sJ+9kGzMKcY3Gzuq4nm53un1LY1wenOcAtVD/lDDsJvn96yhAsrv1qGJ4P8naaiN6Zr/s67pj+OnYaVRZJxmbNqU5b0jRXQy6k9y7Zhqz5zqTR3W2ZcQjLejOzLevxbkRb1uV+p6/fwyHx0DtP5yNzZvgc=
+	t=1789238449; cv=none; b=ami0WZ93NY9hRda6XW/r2TxoWaHJNUSk2NGKCGET0xALrEKgE95HS9lXcEctJ+C0TV7BMt0f7icR4VFH4xM2HUT9qbxv/N48LpohyOrbNmaWJ/Mcj44oXJK4MQufxQ/BN6Q5KUFYqh+90AbvKjcUsef5qq8DA6eAUahaJFWYvmI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789238440; c=relaxed/simple;
-	bh=9ZWOrLSQjWZo00qzQqkrjyEUb0zLiuR7qsQYUNTCA0w=;
+	s=arc-20240116; t=1789238449; c=relaxed/simple;
+	bh=lV7Iw7Ba7ZqpJXPALSzK3xY9kT0Ymyg8qp/BgoNzp08=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ubv7nQ0zW+N4RwYGZDbDZVmvIx+BTGc4XB33RyF6iYXM+Bjfjp0SRThXZY09NmTPK9Au8O6X4om4Yo/Veqifv3pilD2xrM8I7IHoGIO98Adi9s6btIltY6c01sxcBMegCDu5IndbBPp6z8XV1zyaEjeDHCA2oGn5bPxaJc6FnxE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JJHJfODN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oirsnUA5D6QtSACGrFbwiVYK3Pv/7caXWiPgmYcD4bB1DzLvtGoHfAPMASYM20WaV06Z6HOni+Zy9imCRDW63tb7RUjdxZJm5vmzOs8HHYeTfoLjBW2rNISMfbK3OS6dkColaLtJsk5WT0n3V+HNMl8d1bJcDONEuElKZbtTKAE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MgHT1Hto; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JJHJfODN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 573D01F00899;
-	Sat, 12 Sep 2026 18:40:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MgHT1Hto"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DD6E1F00893;
+	Sat, 12 Sep 2026 18:40:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789238433;
-	bh=kttNQqt5XdKKKKNurviz0mt+mdtXV23q1m1RYyCGWpo=;
+	s=korg; t=1789238438;
+	bh=En0jBP/GZtSJgvUdxH0DNY8WqaoVBYq6ZAs07nHnVLw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JJHJfODNQAHr4RG9wqMw5j2w8TN7sYVS2rovSaXyNYxEI02nhg0NnVOb5H8zYOUJH
-	 0j8MuO8/UDfmH+i9dxRxsSzt3qFh5CkYAw/XtpB3nt/4VYvBskziZA4VMXDMwea9sZ
-	 Vy0hI3fUHmDXY6+GISi+wb+EPPiHoOYrLDIEQTLY=
+	b=MgHT1HtoCTtrmCCZEOIQqCMGhbGpaGc/+dHmBwDhDHXkIb0GrFPBu8zNM49cfvzUc
+	 hzXujF6WXiOBnZd4LV4bVWoClA5c4d/kEkXh+j7ROXkwNi2Xf0+JkiCpj5XquBqxPz
+	 We1r2T2RnMZJuXGvmYvE8FrOde45uS2ZCrBgUGLQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Malaya Kumar Rout <malayarout91@gmail.com>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 462/935] selftests/bpf: Fix memory leak in msg_alloc_iov error path
-Date: Sat, 12 Sep 2026 08:58:12 +0200
-Message-ID: <20260912065537.424330811@linuxfoundation.org>
+Subject: [PATCH 5.15 445/935] nvmet-rdma: factor out response resource cleanup
+Date: Sat, 12 Sep 2026 08:57:55 +0200
+Message-ID: <20260912065537.037636088@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -52,41 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Malaya Kumar Rout <malayarout91@gmail.com>
+From: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
 
-[ Upstream commit 0bebfaa39deadec21638f6fba553eae12627a26d ]
+[ Upstream commit 90096175473f7c86e39c3f74f10343f965f5a05d ]
 
-In msg_alloc_iov(), when calloc() fails for an individual iov_base
-allocation, the error path frees all previously allocated iov_base
-entries but fails to free the iov array itself that was allocated
-with calloc() at the beginning of the function. This results in a
-memory leak of the iov array.
+Move the RDMA read/write context teardown and the request SGL freeing
+out of nvmet_rdma_release_rsp() into a new helper function
+nvmet_rdma_free_rsp_resources().
 
-Add free(iov) in the unwind_iov error path to ensure proper cleanup
-of all allocated memory.
+This is a refactoring with no functional change, in preparation for the
+following patch that uses nvmet_rdma_free_rsp_resources().
 
-Fixes: 753fb2ee0934 ("bpf: sockmap, add msg_peek tests to test_sockmap")
-Signed-off-by: Malaya Kumar Rout <malayarout91@gmail.com>
-Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
-Link: https://lore.kernel.org/bpf/20260704122936.102394-1-malayarout91@gmail.com
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Signed-off-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+Stable-dep-of: 0114dd303b37 ("nvmet-rdma: fix response resource leak on queue teardown")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/test_sockmap.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/nvme/target/rdma.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/test_sockmap.c b/tools/testing/selftests/bpf/test_sockmap.c
-index 2cecd6cd647b0..1033c8a2a459c 100644
---- a/tools/testing/selftests/bpf/test_sockmap.c
-+++ b/tools/testing/selftests/bpf/test_sockmap.c
-@@ -515,6 +515,7 @@ static int msg_alloc_iov(struct msghdr *msg,
- unwind_iov:
- 	for (i--; i >= 0 ; i--)
- 		free(msg->msg_iov[i].iov_base);
-+	free(iov);
- 	return -ENOMEM;
+diff --git a/drivers/nvme/target/rdma.c b/drivers/nvme/target/rdma.c
+index 153008946087d..b96d8b11f85e5 100644
+--- a/drivers/nvme/target/rdma.c
++++ b/drivers/nvme/target/rdma.c
+@@ -658,18 +658,25 @@ static void nvmet_rdma_rw_ctx_destroy(struct nvmet_rdma_rsp *rsp)
+ 				    req->sg, req->sg_cnt, nvmet_data_dir(req));
  }
  
+-static void nvmet_rdma_release_rsp(struct nvmet_rdma_rsp *rsp)
++static void nvmet_rdma_free_rsp_resources(struct nvmet_rdma_rsp *rsp)
+ {
+ 	struct nvmet_rdma_queue *queue = rsp->queue;
+ 
+-	atomic_add(1 + rsp->n_rdma, &queue->sq_wr_avail);
+-
+ 	if (rsp->n_rdma)
+ 		nvmet_rdma_rw_ctx_destroy(rsp);
+ 
+ 	if (rsp->req.sg < rsp->cmd->inline_sg ||
+ 	    rsp->req.sg >= rsp->cmd->inline_sg + queue->dev->inline_page_count)
+ 		nvmet_req_free_sgls(&rsp->req);
++}
++
++static void nvmet_rdma_release_rsp(struct nvmet_rdma_rsp *rsp)
++{
++	struct nvmet_rdma_queue *queue = rsp->queue;
++
++	atomic_add(1 + rsp->n_rdma, &queue->sq_wr_avail);
++
++	nvmet_rdma_free_rsp_resources(rsp);
+ 
+ 	if (unlikely(!list_empty_careful(&queue->rsp_wr_wait_list)))
+ 		nvmet_rdma_process_wr_wait_list(queue);
 -- 
 2.53.0
 
