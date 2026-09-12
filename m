@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D658D2EC09B;
-	Sat, 12 Sep 2026 11:23:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B980E412276;
+	Sat, 12 Sep 2026 11:23:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789212201; cv=none; b=ENQyOfyARitJBeVmMsURjtBi8kVQM/FQnwy08KEXZXdCvTpvi9GAqyTS+AOu1ldQQZSxjWcqlfn5aQD00vuStGo9R3HQZ35Nr9JXRFemQit75VU8WND7YvjTdmrf+WtjyJnn/RWjbmTyOwjXTOnjLNjs0I9Buvcl9BCrgDUlt60=
+	t=1789212206; cv=none; b=MHaC+8kS7VWPMXn/i20VTK8F1QXNLtf1xrTVmxvZR5o6qeIIDcq2TNoLmLYfox6uquHi2B2FXTsnYHEeOTPOFNt1YqLJFJL8gq2warJoMF3YZiiN1XqH2zvQAMJkWt83ydkrc6+yfwwbimn+nHDbgVTHZf8dSFiwpBsor72wGuM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789212201; c=relaxed/simple;
-	bh=j+FYjgMPQtKlI+pmAg8pe/9mvPwuLr9kE0oai0ZnOEE=;
+	s=arc-20240116; t=1789212206; c=relaxed/simple;
+	bh=J4FxSwhbqj7V9T/gdmtXXi4ic3V0nupI3Xi8FnoFHCA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XUlmEZq0E2es6kUhU/rcfNStTpXT+uRc5GEZQHMmg7MtQhUAUzor1j7/mtQ6l6brzVNGXuhDBqa5j7Ducnk1HgKB+TZMQvm4wUqmjGj651MT9/+9wooYFPaahgpgSo8IB22UJWw1kUbmwtCVw7eE7UKOrT9KYjtv1+Nx64dQrv0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qaIQ21V+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WCGGluyaCHqK0fXS/2LP0i7yAtgZry/1dBZ3I0frc+VzndVYV7le3RdMVOHBp19WYqhsPnY315YUce/6C/36teyzAgaUbpjaFdYV1m7CRz2XkqDncG2TGIk9PwBxGFOZk6JpCA8o8WbgXk4GgZk4WnTY8pTv0oah8u2S69oo2z0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xb2+R/U3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qaIQ21V+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 896071F000FF;
-	Sat, 12 Sep 2026 11:23:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xb2+R/U3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEA051F000FF;
+	Sat, 12 Sep 2026 11:23:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789212199;
-	bh=j1UgqdUu7w1JKowxwEkeRWRA+2ZT6jo/CalARC56hgE=;
+	s=korg; t=1789212204;
+	bh=+H3HD2NYUvLc+a3Rdp+kv8ZH0AXDHcPbjjgtjSbj9KY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qaIQ21V+uyV4NOkQDRgeAw/OmUkpAh/69fZDs4iq4gNOIiuVgN4ai5sLUg8rrwErY
-	 DOb2Ca5ugZuVQq2Rz8fABPQHw+2hFqKIbaC0OHi/ztip9OU7T7/L+CfUtNABen1Xmx
-	 2Ozt0yDs0Hop4AGiJF87FIiwJcOT9mC9QHN9pKwE=
+	b=xb2+R/U3G4SK2Pn9ePAF2V5EnBztaqeK2q5kjm5x44Kp/EmtsWlOwRWjIf50o4+14
+	 g5HLtvE5run3UoMMHx9CZZb439L1Lmse7f2HugzlmexSSiT8oEY7vPxmKw+/93PD1p
+	 01YhV00nwPBAHLdHm7A8Sn7PgFHUjK+8QmkQ+wm8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+e6382a2f53f5fc7453ac@syzkaller.appspotmail.com,
-	Pauli Virtanen <pav@iki.fi>,
+	Ryan Gilbert <xelnaga@gmail.com>,
+	Javier Tia <floss@jetm.me>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1389/1518] Bluetooth: L2CAP: fix race l2cap_sock_cleanup_listen() vs. put_chan
-Date: Sat, 12 Sep 2026 08:59:18 +0200
-Message-ID: <20260912065654.969130069@linuxfoundation.org>
+Subject: [PATCH 6.18 1390/1518] Bluetooth: btmtk: Add MT6639 (MT7927) Bluetooth support
+Date: Sat, 12 Sep 2026 08:59:19 +0200
+Message-ID: <20260912065654.991914729@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,120 +52,226 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pauli Virtanen <pav@iki.fi>
+From: Javier Tia <floss@jetm.me>
 
-[ Upstream commit 66d6ef18548ae6d7dd452b84115fc82c0a73a4ea ]
+[ Upstream commit 28b7c5a6db74e9305c6cbcbe52f259ff1cf85158 ]
 
-For L2CAP sockets without owning sk->sk_socket, reading
-l2cap_pi(sk)->chan may race against concurrent l2cap_sock_kill() ->
-l2cap_sock_put_chan().  This excludes simultaneous proto_ops callbacks,
-but access in l2cap_sock_cleanup_listen() has unsafe lockless read.
+The MediaTek MT7927 (Filogic 380) combo WiFi 7 + BT 5.4 module uses
+hardware variant 0x6639 for its Bluetooth subsystem. Without this patch,
+the chip fails with "Unsupported hardware variant (00006639)" or hangs
+during firmware download.
 
- [Task 1]                         [Task 2 (hdev->workqueue)]
- l2cap_sock_release(parent)       l2cap_disconn_cfm
-   l2cap_sock_cleanup_listen        l2cap_conn_del
-     bt_accept_dequeue                l2cap_chan_del
-       lock_sock(sk)                    l2cap_sock_teardown_cb
-       bt_accept_unlink
-         bt_sk(sk)->parent = NULL
-       release_sock(sk) ----------------> lock_sock(sk)
-                                          parent = /* NULL */
-     lock_sock(sk) <--------------------- release_sock(sk)
-                                          sock_set_flag(sk, SOCK_ZAPPED)
-                                      l2cap_sock_close_cb
-                                        l2cap_sock_kill(sk)
-                                          l2cap_sock_put_chan
-     chan = READ l2cap_pi(sk)->chan         l2cap_pi(sk)->chan = NULL
-     l2cap_chan_hold_unless_zero            l2cap_put_chan(chan)
-       kref_get_unless_zero(&chan->ref)
+Three changes are needed to support MT6639:
 
-Task 1 may observe NULL which causes null-ptr-deref.
+1. CHIPID workaround: On some boards the BT USB MMIO register reads
+   0x0000 for dev_id, causing the driver to skip the 0x6639 init path.
+   Force dev_id to 0x6639 only when the USB VID/PID matches a known
+   MT6639 device, avoiding misdetection if a future chip also reads
+   zero. This follows the WiFi-side pattern that uses PCI device IDs
+   to scope the same workaround.
 
-Fix the race by taking lock_sock() in l2cap_sock_kill() to
-synchronize with l2cap_sock_cleanup_listen().  hold_unless_zero() is not
-needed here, l2cap_pi(sk)->chan owns reference if it is non-NULL.
+2. Firmware naming: MT6639 uses firmware version prefix "2_1" instead of
+   "1_1" used by MT7925 and other variants. The firmware path is
+   mediatek/mt7927/BT_RAM_CODE_MT6639_2_1_hdr.bin, using the mt7927
+   directory to match the WiFi firmware convention. The filename will
+   likely change to use MT7927 once MediaTek submits a dedicated
+   Linux firmware binary.
 
-Clarify code comments vs. locking.
+3. Section filtering: The MT6639 firmware binary contains 9 sections, but
+   only sections with (dlmodecrctype & 0xff) == 0x01 are Bluetooth-related.
+   Sending the remaining WiFi/other sections causes an irreversible BT
+   subsystem hang requiring a full power cycle. This matches the Windows
+   driver behavior observed via USB captures.
 
-Fixes: 6fef032af009 ("Bluetooth: L2CAP: Fix use-after-free in l2cap_sock_new_connection_cb()")
-Reported-by: syzbot+e6382a2f53f5fc7453ac@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=e6382a2f53f5fc7453ac
-Signed-off-by: Pauli Virtanen <pav@iki.fi>
+Also add 0x6639 to the reset register (CONNV3) and firmware setup switch
+cases alongside the existing 0x7925 handling.
+
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=221096
+Link: https://github.com/openwrt/mt76/issues/927
+Reported-by: Ryan Gilbert <xelnaga@gmail.com>
+Signed-off-by: Javier Tia <floss@jetm.me>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Stable-dep-of: 59c3ee19ca88 ("Bluetooth: btmtk: Do not report success when subsys reset fails")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/bluetooth/l2cap.h |  5 +++++
- net/bluetooth/l2cap_sock.c    | 23 +++++++++++++----------
- 2 files changed, 18 insertions(+), 10 deletions(-)
+ drivers/bluetooth/btmtk.c     | 60 ++++++++++++++++++++++++++++++++---
+ drivers/bluetooth/btmtk.h     |  7 ++--
+ drivers/bluetooth/btmtksdio.c |  2 +-
+ 3 files changed, 61 insertions(+), 8 deletions(-)
 
-diff --git a/include/net/bluetooth/l2cap.h b/include/net/bluetooth/l2cap.h
-index 265afda2e13bc..2f7c367d68ce4 100644
---- a/include/net/bluetooth/l2cap.h
-+++ b/include/net/bluetooth/l2cap.h
-@@ -702,7 +702,12 @@ struct l2cap_rx_busy {
+diff --git a/drivers/bluetooth/btmtk.c b/drivers/bluetooth/btmtk.c
+index 580df595b4301..4cfc1763d36e7 100644
+--- a/drivers/bluetooth/btmtk.c
++++ b/drivers/bluetooth/btmtk.c
+@@ -25,6 +25,22 @@
+ /* It is for mt79xx iso data transmission setting */
+ #define MTK_ISO_THRESHOLD	264
  
- struct l2cap_pinfo {
- 	struct bt_sock		bt;
++/* Known MT6639 (MT7927) Bluetooth USB devices.
++ * Used to scope the zero-CHIPID workaround to real MT6639 hardware,
++ * since some boards return 0x0000 from the MMIO chip ID register.
++ */
++static const struct {
++	u16 vendor;
++	u16 product;
++} btmtk_mt6639_devs[] = {
++	{ 0x0489, 0xe13a },	/* ASUS ROG Crosshair X870E Hero */
++	{ 0x0489, 0xe0fa },	/* Lenovo Legion Pro 7 16ARX9 */
++	{ 0x0489, 0xe10f },	/* Gigabyte Z790 AORUS MASTER X */
++	{ 0x0489, 0xe110 },	/* MSI X870E Ace Max */
++	{ 0x0489, 0xe116 },	/* TP-Link Archer TBE550E */
++	{ 0x13d3, 0x3588 },	/* ASUS ROG STRIX X870E-E */
++};
 +
-+	/* With owning sk_socket chan may be read without lock, other access
-+	 * should hold lock_sock.
-+	 */
- 	struct l2cap_chan	*chan;
+ struct btmtk_patch_header {
+ 	u8 datetime[16];
+ 	u8 platform[4];
+@@ -112,7 +128,11 @@ static void btmtk_coredump_notify(struct hci_dev *hdev, int state)
+ void btmtk_fw_get_filename(char *buf, size_t size, u32 dev_id, u32 fw_ver,
+ 			   u32 fw_flavor)
+ {
+-	if (dev_id == 0x7925)
++	if (dev_id == 0x6639)
++		snprintf(buf, size,
++			 "mediatek/mt7927/BT_RAM_CODE_MT%04x_2_%x_hdr.bin",
++			 dev_id & 0xffff, (fw_ver & 0xff) + 1);
++	else if (dev_id == 0x7925)
+ 		snprintf(buf, size,
+ 			 "mediatek/mt%04x/BT_RAM_CODE_MT%04x_1_%x_hdr.bin",
+ 			 dev_id & 0xffff, dev_id & 0xffff, (fw_ver & 0xff) + 1);
+@@ -128,7 +148,8 @@ void btmtk_fw_get_filename(char *buf, size_t size, u32 dev_id, u32 fw_ver,
+ EXPORT_SYMBOL_GPL(btmtk_fw_get_filename);
+ 
+ int btmtk_setup_firmware_79xx(struct hci_dev *hdev, const char *fwname,
+-			      wmt_cmd_sync_func_t wmt_cmd_sync)
++			      wmt_cmd_sync_func_t wmt_cmd_sync,
++			      u32 dev_id)
+ {
+ 	struct btmtk_hci_wmt_params wmt_params;
+ 	struct btmtk_patch_header *hdr;
+@@ -166,6 +187,14 @@ int btmtk_setup_firmware_79xx(struct hci_dev *hdev, const char *fwname,
+ 		section_offset = le32_to_cpu(sectionmap->secoffset);
+ 		dl_size = le32_to_cpu(sectionmap->bin_info_spec.dlsize);
+ 
++		/* MT6639: only download sections where dlmode byte0 == 0x01,
++		 * matching the Windows driver behavior which skips WiFi/other
++		 * sections that would cause the chip to hang.
++		 */
++		if (dev_id == 0x6639 && dl_size > 0 &&
++		    (le32_to_cpu(sectionmap->bin_info_spec.dlmodecrctype) & 0xff) != 0x01)
++			continue;
 +
- 	struct list_head	rx_busy;
- };
+ 		if (dl_size > 0) {
+ 			retry = 20;
+ 			while (retry > 0) {
+@@ -847,7 +876,7 @@ int btmtk_usb_subsys_reset(struct hci_dev *hdev, u32 dev_id)
+ 		if (err < 0)
+ 			return err;
+ 		msleep(100);
+-	} else if (dev_id == 0x7925) {
++	} else if (dev_id == 0x7925 || dev_id == 0x6639) {
+ 		err = btmtk_usb_uhw_reg_read(hdev, MTK_BT_RESET_REG_CONNV3, &val);
+ 		if (err)
+ 			return err;
+@@ -933,7 +962,7 @@ int btmtk_usb_subsys_reset(struct hci_dev *hdev, u32 dev_id)
+ 	}
  
-diff --git a/net/bluetooth/l2cap_sock.c b/net/bluetooth/l2cap_sock.c
-index 8dd2946297709..d332cd999d8c0 100644
---- a/net/bluetooth/l2cap_sock.c
-+++ b/net/bluetooth/l2cap_sock.c
-@@ -1284,7 +1284,12 @@ static void l2cap_sock_kill(struct sock *sk)
+ 	err = btmtk_usb_id_get(hdev, 0x70010200, &val);
+-	if (err < 0 || !val)
++	if (err < 0 || (!val && dev_id != 0x6639))
+ 		bt_dev_err(hdev, "Can't get device id, subsys reset fail.");
  
- 	BT_DBG("sk %p state %s", sk, state_to_string(sk->sk_state));
+ 	return err;
+@@ -1319,6 +1348,24 @@ int btmtk_usb_setup(struct hci_dev *hdev)
+ 		fw_flavor = (fw_flavor & 0x00000080) >> 7;
+ 	}
  
-+	/* Take lock to synchronize against access without owning sk->sk_socket,
-+	 * eg. in l2cap_sock_cleanup_listen(). proto_ops etc. don't need lock.
-+	 */
-+	lock_sock(sk);
- 	l2cap_sock_put_chan(sk);
-+	release_sock(sk);
++	if (!dev_id) {
++		u16 vid = le16_to_cpu(btmtk_data->udev->descriptor.idVendor);
++		u16 pid = le16_to_cpu(btmtk_data->udev->descriptor.idProduct);
++		int i;
++
++		for (i = 0; i < ARRAY_SIZE(btmtk_mt6639_devs); i++) {
++			if (vid == btmtk_mt6639_devs[i].vendor &&
++			    pid == btmtk_mt6639_devs[i].product) {
++				dev_id = 0x6639;
++				break;
++			}
++		}
++
++		if (dev_id)
++			bt_dev_info(hdev, "MT6639: CHIPID=0x0000 with VID=%04x PID=%04x, using 0x6639",
++				    vid, pid);
++	}
++
+ 	btmtk_data->dev_id = dev_id;
  
- 	/* Kill poor orphan */
- 	sock_set_flag(sk, SOCK_DEAD);
-@@ -1487,14 +1492,10 @@ static void l2cap_sock_cleanup_listen(struct sock *parent)
- 	 * establish sk_lock -> conn->lock and invert the established
- 	 * conn->lock -> chan->lock -> sk_lock order (lockdep deadlock).
- 	 *
--	 * Instead, briefly take the child sk lock to fetch and pin its chan.
--	 * l2cap_conn_del() reaches the chan free only via
--	 * l2cap_chan_del() -> l2cap_sock_teardown_cb(), which itself takes
--	 * the child sk lock; holding it across l2cap_chan_hold_unless_zero()
--	 * therefore guarantees the chan cannot be freed while we read and
--	 * pin it (hold_unless_zero() additionally skips a chan already past
--	 * its last reference).  We then drop the sk lock before taking
--	 * chan->lock, so sk and chan locks are never held together.
-+	 * Instead, briefly take the child sk lock to synchronize vs.
-+	 * l2cap_sock_kill that puts l2cap_pi(sk)->chan. We then drop the sk
-+	 * lock before taking chan->lock, so sk and chan locks are never held
-+	 * together.
- 	 *
- 	 * Since we cannot call l2cap_chan_close() without conn->lock,
- 	 * schedule l2cap_chan_timeout to close the channel; it already
-@@ -1504,10 +1505,12 @@ static void l2cap_sock_cleanup_listen(struct sock *parent)
- 		struct l2cap_chan *chan;
+ 	err = btmtk_register_coredump(hdev, btmtk_data->drv_name, fw_version);
+@@ -1336,11 +1383,13 @@ int btmtk_usb_setup(struct hci_dev *hdev)
+ 	case 0x7925:
+ 	case 0x7961:
+ 	case 0x7902:
++	case 0x6639:
+ 		btmtk_fw_get_filename(fw_bin_name, sizeof(fw_bin_name), dev_id,
+ 				      fw_version, fw_flavor);
  
- 		lock_sock_nested(sk, L2CAP_NESTING_NORMAL);
--		chan = l2cap_chan_hold_unless_zero(l2cap_pi(sk)->chan);
-+		chan = l2cap_pi(sk)->chan;
-+		if (chan)
-+			l2cap_chan_hold(chan);
- 		release_sock(sk);
- 		if (!chan) {
--			/* l2cap_conn_del() already tearing this child down */
-+			/* Already torn down */
- 			sock_put(sk);
- 			continue;
- 		}
+ 		err = btmtk_setup_firmware_79xx(hdev, fw_bin_name,
+-						btmtk_usb_hci_wmt_sync);
++						btmtk_usb_hci_wmt_sync,
++						dev_id);
+ 		if (err < 0) {
+ 			bt_dev_err(hdev, "Failed to set up firmware (%d)", err);
+ 			return err;
+@@ -1507,3 +1556,4 @@ MODULE_FIRMWARE(FIRMWARE_MT7668);
+ MODULE_FIRMWARE(FIRMWARE_MT7922);
+ MODULE_FIRMWARE(FIRMWARE_MT7961);
+ MODULE_FIRMWARE(FIRMWARE_MT7925);
++MODULE_FIRMWARE(FIRMWARE_MT7927);
+diff --git a/drivers/bluetooth/btmtk.h b/drivers/bluetooth/btmtk.h
+index b4506186b2f70..8f40180ca92e3 100644
+--- a/drivers/bluetooth/btmtk.h
++++ b/drivers/bluetooth/btmtk.h
+@@ -8,6 +8,7 @@
+ #define FIRMWARE_MT7902		"mediatek/BT_RAM_CODE_MT7902_1_1_hdr.bin"
+ #define FIRMWARE_MT7961		"mediatek/BT_RAM_CODE_MT7961_1_2_hdr.bin"
+ #define FIRMWARE_MT7925		"mediatek/mt7925/BT_RAM_CODE_MT7925_1_1_hdr.bin"
++#define FIRMWARE_MT7927		"mediatek/mt7927/BT_RAM_CODE_MT6639_2_1_hdr.bin"
+ 
+ #define HCI_EV_WMT 0xe4
+ #define HCI_WMT_MAX_EVENT_SIZE		64
+@@ -188,7 +189,8 @@ typedef int (*wmt_cmd_sync_func_t)(struct hci_dev *,
+ int btmtk_set_bdaddr(struct hci_dev *hdev, const bdaddr_t *bdaddr);
+ 
+ int btmtk_setup_firmware_79xx(struct hci_dev *hdev, const char *fwname,
+-			      wmt_cmd_sync_func_t wmt_cmd_sync);
++			      wmt_cmd_sync_func_t wmt_cmd_sync,
++			      u32 dev_id);
+ 
+ int btmtk_setup_firmware(struct hci_dev *hdev, const char *fwname,
+ 			 wmt_cmd_sync_func_t wmt_cmd_sync);
+@@ -227,7 +229,8 @@ static inline int btmtk_set_bdaddr(struct hci_dev *hdev,
+ 
+ static inline int btmtk_setup_firmware_79xx(struct hci_dev *hdev,
+ 					    const char *fwname,
+-					    wmt_cmd_sync_func_t wmt_cmd_sync)
++					    wmt_cmd_sync_func_t wmt_cmd_sync,
++					    u32 dev_id)
+ {
+ 	return -EOPNOTSUPP;
+ }
+diff --git a/drivers/bluetooth/btmtksdio.c b/drivers/bluetooth/btmtksdio.c
+index 7b5359ebdc648..125f726b2fa1c 100644
+--- a/drivers/bluetooth/btmtksdio.c
++++ b/drivers/bluetooth/btmtksdio.c
+@@ -884,7 +884,7 @@ static int mt79xx_setup(struct hci_dev *hdev, const char *fwname)
+ 	u8 param = 0x1;
+ 	int err;
+ 
+-	err = btmtk_setup_firmware_79xx(hdev, fwname, mtk_hci_wmt_sync);
++	err = btmtk_setup_firmware_79xx(hdev, fwname, mtk_hci_wmt_sync, 0);
+ 	if (err < 0) {
+ 		bt_dev_err(hdev, "Failed to setup 79xx firmware (%d)", err);
+ 		return err;
 -- 
 2.53.0
 
