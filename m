@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 455D9472091;
-	Sat, 12 Sep 2026 15:29:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7B04352017;
+	Sat, 12 Sep 2026 15:29:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789226992; cv=none; b=l/k3avBxDbuqEPLUlrSA8M7udHIQAIWidyQi8UaK1PN0bVMWu0GNKzmQPdWmIuG4CCHJYUVZ+INk81XTao8vXxu9oGZO+owDAoFD8JfC9va+ZMLsk2v9mBBZYeoeg2PLCnCJQaxr8OQMPCDsWrR5phTJ2gv9dYHwQWTCgoIMseU=
+	t=1789226997; cv=none; b=kqD53EY1eDxjzw1sur6vknGlQwqNwy+w8fPf2m+2WOYLmeTOPxKAx64dQl7mQEFESnShCW852OiA9Kqqa4y9rEscts2O0MTUhKWC+LbUHGGutruuQr2WGrY88MQ8ZkblwS7ykN+Fw30j0e1DW0ZB6OJZ3cLbMVyXETT4spryxqw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789226992; c=relaxed/simple;
-	bh=UPQhr+rIIpONNeU1r7xLKzkSnRf3Wn34cGAxxL7HvmM=;
+	s=arc-20240116; t=1789226997; c=relaxed/simple;
+	bh=fqwPw8RQUs7udZN/ddIhHXX4RnwBibs+bNyLck377l0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RKlyCvCb0FWjhIqJGvtQtoM2nvHoBGFxcZmBSFRov+boz9lROTZE0ax+mCr3UkWuaPSHuQ91bKvT6BnEOggjcwW1DENLggQLIgppTJJEglwv6ttkUUAWx6Fb7FYYP21AYw7WBzZzYeOMUpUcaCrmoemutwisg6NIvgc6+Q3gx5A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eCubs3+f; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EMIMclXUMy59rtu4Ho5VQN/BSPP/D7cD/Z+DfsxzHaw4WKnGFYoQWcSgzYUonrlA/lfp7lNdYMORofTjqX0xNq5L5WtHnwkZ3ltRXfVoilDk6ywGjq69RiMwndi/bL8dNvhhjAP0dY0Rhqem5YEr0QxJ0sFKWJOoopFY5QfI5eY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BbzqCie5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eCubs3+f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0739A1F00893;
-	Sat, 12 Sep 2026 15:29:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BbzqCie5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D3531F000FF;
+	Sat, 12 Sep 2026 15:29:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789226983;
-	bh=hbqIvEP8hFQiNDINVdcXxcIMrj0Yvg2omRQYgHxBmyo=;
+	s=korg; t=1789226988;
+	bh=y1y5yNEz49PgE7FinD5jxogWjEUSBJ1fwQL4jLC7Wfk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eCubs3+f4WwfKCwVvlfp65wUE92mbQ+ii/uGReZCyuPA+wSr349dDpqRaOEiMf8Sj
-	 Engm0q2nUJsdGpz4oaAWXVH6uuBKsCvLquAu/xNImsPCACS4p88zgGW3whSl4/HU0N
-	 G5UlweQYehBbWzjtj3ineamaTKQ2GhbZSXESEoI4=
+	b=BbzqCie5bXyjkKJBc/3AqxGguSdl3ZKrw2b2u9WpFrZ9/rpOTM6z/zXMtb47wRB96
+	 I5Cj9GqInblRFPHxV4Njar4o5BjF+Gj7JhRZREJKy5RfzLJxPww4JQ8S9jt1+Au35D
+	 dYaw2QwXaDdiaJec2Zp+AhCTk0NzKu0VdXeGEtxk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	kernel test robot <lkp@intel.com>,
+	Florian Fuchs <fuchsfl@gmail.com>,
 	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.1 0087/1191] fbdev: omapfb: panel-dsi-cm: initialize lock before registering display
-Date: Sat, 12 Sep 2026 08:46:55 +0200
-Message-ID: <20260912065550.133073020@linuxfoundation.org>
+Subject: [PATCH 6.1 0088/1191] fbdev: pvr2fb: correct user pointer annotation and sentinel initializer
+Date: Sat, 12 Sep 2026 08:46:56 +0200
+Message-ID: <20260912065550.155956007@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -50,45 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Florian Fuchs <fuchsfl@gmail.com>
 
-commit f8e43fe0f22b7137ce456e6fe3581d3098174f74 upstream.
+commit 5dc2e70dd74b1f03e2e13bfb6922111d9e0adf90 upstream.
 
-dsicm_probe() registers the display before initializing ddata->lock.
-Once omapdss_register_display() publishes the display, another consumer
-can reach a dsicm callback that takes this mutex while it is still
-uninitialized.
+Add __user annotation to buf, as it is passed as a user pointer in
+pin_user_pages_fast(). Use an empty initializer for the sentinel
+board-table entry to avoid initializing a function pointer with an
+integer literal.
 
-Initialize the mutex before registering the display so the published
-callbacks always see a valid lock.
-
-Fixes: f76ee892a99e ("omapfb: copy omapdss & displays for omapfb")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202607131247.fpQ6eTc7-lkp@intel.com/
 Cc: stable@vger.kernel.org
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Signed-off-by: Florian Fuchs <fuchsfl@gmail.com>
 Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/omap2/omapfb/displays/panel-dsi-cm.c |    4 ++--
+ drivers/video/fbdev/pvr2fb.c |    4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/video/fbdev/omap2/omapfb/displays/panel-dsi-cm.c
-+++ b/drivers/video/fbdev/omap2/omapfb/displays/panel-dsi-cm.c
-@@ -1190,14 +1190,14 @@ static int dsicm_probe(struct platform_d
- 	dssdev->caps = OMAP_DSS_DISPLAY_CAP_MANUAL_UPDATE |
- 		OMAP_DSS_DISPLAY_CAP_TEAR_ELIM;
+--- a/drivers/video/fbdev/pvr2fb.c
++++ b/drivers/video/fbdev/pvr2fb.c
+@@ -639,7 +639,7 @@ static irqreturn_t __maybe_unused pvr2fb
+ }
  
-+	mutex_init(&ddata->lock);
-+
- 	r = omapdss_register_display(dssdev);
- 	if (r) {
- 		dev_err(dev, "Failed to register panel\n");
- 		goto err_reg;
- 	}
+ #ifdef CONFIG_PVR2_DMA
+-static ssize_t pvr2fb_write(struct fb_info *info, const char *buf,
++static ssize_t pvr2fb_write(struct fb_info *info, const char __user *buf,
+ 			    size_t count, loff_t *ppos)
+ {
+ 	unsigned long dst, start, end, len;
+@@ -1073,7 +1073,7 @@ static struct pvr2_board {
+ #ifdef CONFIG_PCI
+ 	{ pvr2fb_pci_init, pvr2fb_pci_exit, "PCI PVR2" },
+ #endif
+-	{ 0, },
++	{ },
+ };
  
--	mutex_init(&ddata->lock);
--
- 	atomic_set(&ddata->do_update, 0);
- 
- 	if (gpio_is_valid(ddata->reset_gpio)) {
+ static int __init pvr2fb_init(void)
 
 
