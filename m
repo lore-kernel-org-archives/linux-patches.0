@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15E38479863;
-	Sat, 12 Sep 2026 16:08:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04D39344DBD;
+	Sat, 12 Sep 2026 16:08:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789229299; cv=none; b=rkR9lb74XtYAin+NWEN5v+qIgv8r7AdnLoLzUxsZ2UAyF/wd+loEienAxa79mlgU3aPDQMGsaUu4bF6z+RzU4OHZDCr6bvvCbmVsnPqX+xb9l6Q2sCiCKErZb5iyq/RY39LGM3+5PCIc+Dp08wQyn38Di5fs2yWiHPup+kAqajQ=
+	t=1789229302; cv=none; b=cXvXKEQnSNk9QuiL+6E10hJGR+hzEsch23AZ5s51mwzgvpxEaZC7sZr0V+BN9bhjyieRcUcGrUW42FjZEOWK4omdThXTkSI32qBMb0RKam96/N63GygGAlzjICP6lZs1eXLefLtQoFiDE0QMZK8ssaxBendYr1jJLNc6I5BO7dU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789229299; c=relaxed/simple;
-	bh=Tjzecg9TXmPooAhFYY9GvPFvIJcRtXDEHXpL5ASukmg=;
+	s=arc-20240116; t=1789229302; c=relaxed/simple;
+	bh=Amgib3uXIf7NC/AIO9AcPVDg4mqi5OGFr5n/Jg+zQcU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o2Wk/M4grFtFbg70fjtqHNs4WEakof0XjoowqGc8Qf1aKUXOh9IEghut5v6c/FoHUIkyvqYyJVbYcYKDM6dhwy6vQMao5WPJ46fkMNtjYVJdeKzTVPSj/2lMISFD9rdlIWbVnX1pAj/mMHmZNz6QsVlGHEv1Tl0UWNO8utESuXI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kpn9imJm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FcGSMOhGlKytV60WXDJI48frVK945N+6KSgfgoTDVDv22u8SDokXl/5O54/VI1V57KXAMMuaqtxaSjH4qKY/US0bndzAF36XPbHuT3xBLnrbpRjifxVLuO2A1LyLJjuzlup0mY+yAXseqtwNU0sIRByDtOcybKIOO0e9hJr5SsI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d0P9xEq+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kpn9imJm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 513811F000FF;
-	Sat, 12 Sep 2026 16:08:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d0P9xEq+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 243021F00893;
+	Sat, 12 Sep 2026 16:08:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789229295;
-	bh=6gomxGrnjtyjckOvwfHE9bTNyZ5aoBIoz537cNMrqZE=;
+	s=korg; t=1789229300;
+	bh=ZIZrK8C/aEILlOgAPIFQQlqg+5gaeuUlNe6g4wi8uE8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Kpn9imJmbBPjW5I10SMI2xr/x4Kdrc0WkzkSz+Qh8/udPe0GqUsQo1ajnE1C/3Qtq
-	 d8/VE+pafBiZLYqeNg+4BTayanMtYJ+o8Hp5uAhoZoVc2fO2j24TgtdCyE7flP+UbL
-	 a3rp+CQglfgmU+secx4oZQRnSnGfPu0r/Zpa4y+A=
+	b=d0P9xEq+nV2Mp+u/lvPeq5g08zsiYjkkJYnY4ApBRHMqTtaKm9bAa3eLUWEBUSAJv
+	 CxuLkRyraLPq+QNGIvb9eDUDQzfld5Mds95omD0+QYsdSsuM3xXR2R+pqYpqV3QI91
+	 FXi3BEBrRINGJUTg03KHC4KQ+jmkYcKv3bDP3PAc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Herman van Hazendonk <github.com@herrie.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Breno Leitao <leitao@debian.org>,
+	Ard Biesheuvel <ardb@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0554/1191] clk: qcom: gdsc: tear down per-domain genpds in gdsc_unregister()
-Date: Sat, 12 Sep 2026 08:54:42 +0200
-Message-ID: <20260912065600.686771659@linuxfoundation.org>
+Subject: [PATCH 6.1 0563/1191] efi: fix stale reference to efi_recover_from_page_fault()
+Date: Sat, 12 Sep 2026 08:54:51 +0200
+Message-ID: <20260912065600.889728756@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -52,74 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Herman van Hazendonk <github.com@herrie.org>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit 86b23609d5e17a770d03037e53c6a443e742a6e6 ]
+[ Upstream commit 718ee46ba4d95d28d50d3f6437afbbe2be531175 ]
 
-gdsc_unregister() removes the OF provider entry and tears down the
-parent/subdomain wiring, but never calls pm_genpd_remove() on the
-individual generic_pm_domain structures registered by gdsc_init():
+efi_recover_from_page_fault() was renamed to
+efi_crash_gracefully_on_page_fault(), but the comment above enum
+efi_rts_ids was not updated. Use the current name.
 
-	void gdsc_unregister(struct gdsc_desc *desc)
-	{
-		struct device *dev = desc->dev;
-		size_t num = desc->num;
-
-		gdsc_pm_subdomain_remove(desc, num);
-		of_genpd_del_provider(dev->of_node);
-	}
-
-That leaves dangling entries on the global gpd_list. After a provider
-unbind/rebind cycle (deferred-probe replay during early boot, real
-module unload of a clk driver that owns GDSCs, or an OF-overlay tear-
-down) the next gdsc_init() will end up trying to re-register a name
-that is still in the list and pm_genpd_init() returns -EEXIST.
-
-While we are here, flip the order so the consumer-facing OF provider
-entry is the first thing removed -- otherwise a fresh
-of_genpd_get_from_provider() call racing with the teardown could
-attach to a domain that is mid-removal.
-
-Iterate the scs[] array and pm_genpd_remove() each registered domain
-after the subdomain links are torn down. The regulators stay devm-
-managed (devm_regulator_get_optional() in gdsc_register()), so the
-release happens automatically when the underlying device is unbound;
-just the genpd accounting needs to be undone explicitly.
-
-Signed-off-by: Herman van Hazendonk <github.com@herrie.org>
-Fixes: 45dd0e55317c ("clk: qcom: Add support for GDSCs")
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260602140934.796697-4-github.com@herrie.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: c46f52231e79 ("x86/{fault,efi}: Fix and rename efi_recover_from_page_fault()")
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/gdsc.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ include/linux/efi.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
-index ecc7c67207e0a..d95b90ab91ab9 100644
---- a/drivers/clk/qcom/gdsc.c
-+++ b/drivers/clk/qcom/gdsc.c
-@@ -552,10 +552,18 @@ int gdsc_register(struct gdsc_desc *desc,
- void gdsc_unregister(struct gdsc_desc *desc)
- {
- 	struct device *dev = desc->dev;
-+	struct gdsc **scs = desc->scs;
- 	size_t num = desc->num;
-+	int i;
- 
--	gdsc_pm_subdomain_remove(desc, num);
- 	of_genpd_del_provider(dev->of_node);
-+	gdsc_pm_subdomain_remove(desc, num);
-+
-+	for (i = 0; i < num; i++) {
-+		if (!scs[i])
-+			continue;
-+		pm_genpd_remove(&scs[i]->pd);
-+	}
- }
+diff --git a/include/linux/efi.h b/include/linux/efi.h
+index 5868c4b293326..68b2c82df2b62 100644
+--- a/include/linux/efi.h
++++ b/include/linux/efi.h
+@@ -1254,8 +1254,8 @@ extern unsigned long rci2_table_phys;
  
  /*
+  * efi_runtime_service() function identifiers.
+- * "NONE" is used by efi_recover_from_page_fault() to check if the page
+- * fault happened while executing an efi runtime service.
++ * "NONE" is used by efi_crash_gracefully_on_page_fault() to check if the
++ * page fault happened while executing an efi runtime service.
+  */
+ enum efi_rts_ids {
+ 	EFI_NONE,
 -- 
 2.53.0
 
