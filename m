@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F10037F75B;
-	Sat, 12 Sep 2026 19:24:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08399331EA8;
+	Sat, 12 Sep 2026 19:24:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789241074; cv=none; b=XrVVUiqkoDX5WQgsmkfm7ki3caioiqxaGK2wz8MkbGYdx8U3manJTqhP1FtQJba0gQzXiol7rQdVFeBUyzq/2N38cxDNGASbV1iA8xYzo9calzdYx0UpBa7ZOWIJn7LfibVRUY4fqyuvx53Spd7N8yPe+hQZ8Hiz5mYiusM0rok=
+	t=1789241079; cv=none; b=YRbvM0ktItyS/pKAqfssn7+zRLlqUB5UdIOcIzXIS37JiEcA47pbD+QBhIpMDCVE1DAvzguZ31TfqqcNRSXWswtXyeil0zzjrHoG+k6rM6fDe6EXikdGv1KcKsHhGLJCuXDj1hoNhP7ApdI6V1A2fVHOE7wOvLFzxXmMxJ0GwTk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789241074; c=relaxed/simple;
-	bh=GdclS1Ihagot2m3JeZCzwkg0ASbx4yLr2iT+8R47hFk=;
+	s=arc-20240116; t=1789241079; c=relaxed/simple;
+	bh=v0W2UE5474OWYMpVmRDYBGAioRiVEAkrsVpDFwGhzR4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=twhFdSX1ZMTk5VBJwuIZXMyJn/yATIhrxxj8QN68xCO8zzZTZMiOAm2yth63b/rV448GgzkSVcRs97A3MRA5SCnG9P7SivM4qCeA4sQ5L/xjbCxj1Ud2rW7YcCsc7b+Yk+R2nZEsu/k+ORa8njEfORdCxNNYkKMuXTrqUfkYcrs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1NVV/JBc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=epYTLz6MzFp6lC+IRPNFLikbMAvQKQsu7+EgNMjF+XUnCnykiCu7Rmq48DP2+htHgvtF9zfIsAhfnS8T3JKLcDMPwaMNWeGdDA3j4fWsnFpKCUliMtmTLEBs/YGQgTtxvTmJac6tTk+dS6MpxBHKYPBM92ZMxUXljDgefI6BssQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EJzihjzu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1NVV/JBc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 227001F000FF;
-	Sat, 12 Sep 2026 19:24:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EJzihjzu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B94521F000FF;
+	Sat, 12 Sep 2026 19:24:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789241073;
-	bh=4yeLqzChMHGb757Js8/IB/DutdqLGsCJ6ssK7Hv5llk=;
+	s=korg; t=1789241077;
+	bh=2lOXm4Zb8JMy4+VmKz5dCD6xLRG+PoSaLCI9UDOcqa4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1NVV/JBc9QeHO84laTj3a3L5ufVmVDg1mPeIbXGCVKWHmUYlsivAkMvho834I4PtF
-	 frof9eQtWXWUa3gN4torVtBsh7K/uvOTa8XKQqtBiDr9glSBGUJS3aDyVt5H5Y1Bfh
-	 GwOTrLmTg0lpAtOpK4kQnIFu0qZ8ZKdfCItzwlag=
+	b=EJzihjzueAKPelORGowMCv0gsPzOuwgigDLAhi4WgGTl/ECC2aTudqTqinie+BBYP
+	 Eb+T1RKV4j4pc0/QCbHFAVU2J/6nmrYlvr0QP/BubWbFIUshIT7bJtISXPVeBM2kcS
+	 c+bsY3DkE81md3igMF1xGQjY3He8CoSYtUqghkNc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+de553c19cb054f174a35@syzkaller.appspotmail.com,
-	Jeffin Philip <jeffinphilip14@gmail.com>
-Subject: [PATCH 5.10 018/798] usb: gadget: uvc: fix dangling pointers in uvc_function_bind() and uvc_function_unbind()
-Date: Sat, 12 Sep 2026 08:54:06 +0200
-Message-ID: <20260912065517.377700230@linuxfoundation.org>
+	"Kiryl Shutsemau (Meta)" <kas@kernel.org>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 5.10 009/798] x86/insn-eval: Move assign_register() out of KVM as insn_assign_reg()
+Date: Sat, 12 Sep 2026 08:53:57 +0200
+Message-ID: <20260912065517.173842362@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -50,55 +51,149 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeffin Philip <jeffinphilip14@gmail.com>
+From: Kiryl Shutsemau (Meta) <kas@kernel.org>
 
-commit bdab5605259ba5d6ff927c1a85cc83eb3ecfdacc upstream.
+commit 1fe104b048d77d6cb25bd938e6a67450fb50e61d upstream.
 
-In uvc_function_bind() error path, we use usb_ep_free_request which
-uses uvc->control_req but does not set it to NULL afterwards. Thus,
-uvc->control_req is a dangling pointer causing a UAF. Also we do not set
-the uvc->control_buf pointer to NULL after freeing it, which is another
-dangling pointer. Fix it by setting uvc->control_req to NULL after we run
-usb_ep_free_request() and uvc->control_buf to NULL after kfree. Do the
-same for uvc_function_unbind().
+KVM's instruction emulator has a small helper, assign_register(), that
+writes a value into a register following the x86 rules for writes to
+general-purpose registers: an 8- or 16-bit write leaves the rest of the
+register untouched, a 32-bit write zero-extends the result to 64 bits,
+and a 64-bit write replaces the whole register.
 
-Reported-by: syzbot+de553c19cb054f174a35@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=de553c19cb054f174a35
-Fixes: 0f9df9393855 ("usb: gadget: uvc: fix error path in uvc_function_bind()")
-Fixes: 6d11ed76c45d ("usb: gadget: f_uvc: convert f_uvc to new function interface")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jeffin Philip <jeffinphilip14@gmail.com>
-Link: https://patch.msgid.link/20260813174311.130823-1-jeffinphilip14@gmail.com
+The TDX guest #VE handler needs the same logic for port I/O emulation
+to get 32-bit zero-extension right.  Rather than add a third copy of
+the same switch, move the helper verbatim to <asm/insn-eval.h>, rename
+it to insn_assign_reg(), and route KVM's callers through it.
+
+Add <asm/insn.h> to the header's includes so it builds standalone in
+callers that have not pulled it in transitively.
+
+No functional change.
+
+Signed-off-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Acked-by: Sean Christopherson <seanjc@google.com>
+Cc:stable@vger.kernel.org
+Link: https://patch.msgid.link/20260713133753.223947-3-kirill@shutemov.name
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_uvc.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ arch/x86/include/asm/insn-eval.h |   36 ++++++++++++++++++++++++++++++++++++
+ arch/x86/kvm/emulate.c           |   26 ++++----------------------
+ 2 files changed, 40 insertions(+), 22 deletions(-)
 
---- a/drivers/usb/gadget/function/f_uvc.c
-+++ b/drivers/usb/gadget/function/f_uvc.c
-@@ -780,9 +780,12 @@ uvc_function_bind(struct usb_configurati
- v4l2_error:
- 	v4l2_device_unregister(&uvc->v4l2_dev);
- error:
--	if (uvc->control_req)
-+	if (uvc->control_req) {
- 		usb_ep_free_request(cdev->gadget->ep0, uvc->control_req);
-+		uvc->control_req = NULL;
+--- a/arch/x86/include/asm/insn-eval.h
++++ b/arch/x86/include/asm/insn-eval.h
+@@ -9,6 +9,7 @@
+ #include <linux/compiler.h>
+ #include <linux/bug.h>
+ #include <linux/err.h>
++#include <asm/insn.h>
+ #include <asm/ptrace.h>
+ 
+ #define INSN_CODE_SEG_ADDR_SZ(params) ((params >> 4) & 0xf)
+@@ -29,4 +30,39 @@ int insn_fetch_from_user_inatomic(struct
+ bool insn_decode_from_regs(struct insn *insn, struct pt_regs *regs,
+ 			   unsigned char buf[MAX_INSN_SIZE], int buf_size);
+ 
++/*
++ * Write @val into *@reg following the x86 rules for writes to
++ * general-purpose registers (Intel SDM Vol. 1, "General-Purpose
++ * Registers in 64-Bit Mode"): an 8- or 16-bit write leaves the rest of
++ * the register untouched, a 32-bit write zero-extends the result into
++ * the upper 32 bits, and a 64-bit write replaces the whole register.
++ *
++ * @bytes is the width of the write, not a property of the instruction:
++ * an instruction that, say, sign-extends a 32-bit immediate into a
++ * 64-bit register does a 64-bit write here.
++ *
++ * @reg need not be 8-byte aligned: KVM's instruction emulator offsets
++ * the pointer by one byte to address the high-byte registers (AH, CH,
++ * DH, BH).  Use narrow stores for the sub-word cases so the access
++ * width matches @bytes and the adjacent bytes are left alone.
++ */
++static inline void insn_assign_reg(unsigned long *reg, u64 val, int bytes)
++{
++	switch (bytes) {
++	case 1:
++		*(u8 *)reg = (u8)val;
++		break;
++	case 2:
++		*(u16 *)reg = (u16)val;
++		break;
++	case 4:
++		/* A 32-bit write zero-extends into the upper 32 bits. */
++		*reg = (u32)val;
++		break;
++	case 8:
++		*reg = val;
++		break;
 +	}
- 	kfree(uvc->control_buf);
-+	uvc->control_buf = NULL;
++}
++
+ #endif /* _ASM_X86_INSN_EVAL_H */
+--- a/arch/x86/kvm/emulate.c
++++ b/arch/x86/kvm/emulate.c
+@@ -24,6 +24,7 @@
+ #include <linux/stringify.h>
+ #include <asm/fpu/api.h>
+ #include <asm/debugreg.h>
++#include <asm/insn-eval.h>
+ #include <asm/nospec-branch.h>
  
- 	usb_free_all_descriptors(f);
- 	return ret;
-@@ -957,7 +960,9 @@ static void uvc_function_unbind(struct u
- 	uvc->vdev_release_done = NULL;
- 
- 	usb_ep_free_request(cdev->gadget->ep0, uvc->control_req);
-+	uvc->control_req = NULL;
- 	kfree(uvc->control_buf);
-+	uvc->control_buf = NULL;
- 
- 	usb_free_all_descriptors(f);
+ #include "x86.h"
+@@ -526,25 +527,6 @@ static void assign_masked(ulong *dest, u
+ 	*dest = (*dest & ~mask) | (src & mask);
  }
+ 
+-static void assign_register(unsigned long *reg, u64 val, int bytes)
+-{
+-	/* The 4-byte case *is* correct: in 64-bit mode we zero-extend. */
+-	switch (bytes) {
+-	case 1:
+-		*(u8 *)reg = (u8)val;
+-		break;
+-	case 2:
+-		*(u16 *)reg = (u16)val;
+-		break;
+-	case 4:
+-		*reg = (u32)val;
+-		break;	/* 64b: zero-extend */
+-	case 8:
+-		*reg = val;
+-		break;
+-	}
+-}
+-
+ static inline unsigned long ad_mask(struct x86_emulate_ctxt *ctxt)
+ {
+ 	return (1UL << (ctxt->ad_bytes << 3)) - 1;
+@@ -592,7 +574,7 @@ register_address_increment(struct x86_em
+ {
+ 	ulong *preg = reg_rmw(ctxt, reg);
+ 
+-	assign_register(preg, *preg + inc, ctxt->ad_bytes);
++	insn_assign_reg(preg, *preg + inc, ctxt->ad_bytes);
+ }
+ 
+ static void rsp_increment(struct x86_emulate_ctxt *ctxt, int inc)
+@@ -1884,7 +1866,7 @@ static int load_segment_descriptor(struc
+ 
+ static void write_register_operand(struct operand *op)
+ {
+-	return assign_register(op->addr.reg, op->val, op->bytes);
++	return insn_assign_reg(op->addr.reg, op->val, op->bytes);
+ }
+ 
+ static int writeback(struct x86_emulate_ctxt *ctxt, struct operand *op)
+@@ -2118,7 +2100,7 @@ static int em_popa(struct x86_emulate_ct
+ 		rc = emulate_pop(ctxt, &val, ctxt->op_bytes);
+ 		if (rc != X86EMUL_CONTINUE)
+ 			break;
+-		assign_register(reg_rmw(ctxt, reg), val, ctxt->op_bytes);
++		insn_assign_reg(reg_rmw(ctxt, reg), val, ctxt->op_bytes);
+ 		--reg;
+ 	}
+ 	return rc;
 
 
