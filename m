@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E90D332EAE;
-	Sat, 12 Sep 2026 14:49:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1644133E346;
+	Sat, 12 Sep 2026 14:49:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789224574; cv=none; b=k2Xo3xOFSLJDS6q1FzcGz9HXegFSkGvCf/lvTEhAf9rSlkFZOwdTu5EOXJKzvZaPtGdM2iwSTrzA+xSLRQCbxm3JK0BQSj2i7BPlK2ZNi0dMAYv+2Y7bPKzc2pELYJh0oYTMfCfWtmQxnODEHNeYSs8KDNeorEXIas//xk//X/0=
+	t=1789224577; cv=none; b=GoV5BdWz2u8cB7asElbbVtocFFu73lA9MJypBQJ2H+hivbqn+Bzsli2f++EJbQmcz3zLqKSMMmr7Gbars2s8NvOUElA4MQg90gozCHNpv85+Y0bk4mkcELSk8xoa4OsCqhhJGLp37tw4ytJ3jC/5dDlJH508SYXpMTprMDm4ZSg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789224574; c=relaxed/simple;
-	bh=tl9n6UXAJHo71qKvpz4ciMFJEqPAlzUYqS4iASfIw6o=;
+	s=arc-20240116; t=1789224577; c=relaxed/simple;
+	bh=Mzb6IrLNVrWtY0l0SG91Tl1w1EWEYn10EI2HKum3Nes=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hxfhNRXzbwoN/m6v3ANC24ZjPaS9sgtXylko9aj1fR7cpO3pm/y4FMmbIQXsfCTTdtzefL1XbkoKHVXDZhHGRnbohkw/sniNpspAN3KnxUfUkXSZ2SCLm9aNHjSUg60938bCCPPEydT1NICmc2KEcg+nGk8yT3fmemvaJF+B3yY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gdeO3TIN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XKT/Tmm+T3Gk6jcpjCsHHThaEOfKZbPguKhO+qPlyzLuG6mmFi8QN2t+S9FAQy1gQaDIl68KGYw/ET/yU5RTJkTmAMQcxviJc0SUVZT2HnXjLmqclsgC7BnQldWkbUkbsqlpFrMdMojmPjTI+8E+nqjeR8v4bwEn9DK8xWCWllw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uig0O/6x; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gdeO3TIN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D87111F000FF;
-	Sat, 12 Sep 2026 14:49:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uig0O/6x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0606A1F000FF;
+	Sat, 12 Sep 2026 14:49:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789224571;
-	bh=cW1dfuMStMPniCn+oUl99luyQoX7GP/Lq4iz0gv2QLQ=;
+	s=korg; t=1789224576;
+	bh=GUxSvBiJ/JFdxk4Ww1JYCotYKOB8Rfyil4tVUqIQWdo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gdeO3TINs3lNTUKxsHnRrd+zGyeOqqnTzSqkzesREVJO/bCVyiSHtxhX9VHf5swKv
-	 KOLbiDW8tXYpu5bUwLoZfLjXKkyheepCh8J6Ue+EsJohtDduXt82zKtBIrQNg9ZSOV
-	 fbEVN0KjEqJtT2+FM7MgksCbifh2cbJmsNa6hSpg=
+	b=Uig0O/6xWmpLNkKv7sJfksAubHUK1kxPvf8yinMyEQkrIqq7p3AL60Ho3HecuvxjL
+	 R7aY36OzuXxPSGLQBsvzVdFmPB2O3jUcjDRdwopG2EbGhjshVL9XKtKRkhVt0aMaEp
+	 2snlU1i5B33agrZdrR6kDfyStqRguRhOwNqa8+Ak=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Kenny Levinsen <kl@kl.wtf>,
 	Hans de Goede <hdegoede@redhat.com>,
-	Douglas Anderson <dianders@chromium.org>,
+	Mark Pearson <mpearson-lenovo@squebb.ca>,
 	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1020/1424] HID: i2c-hid: Move i2c_hid_finish_hwreset() to after reading the report-descriptor
-Date: Sat, 12 Sep 2026 08:57:32 +0200
-Message-ID: <20260912065630.153642795@linuxfoundation.org>
+Subject: [PATCH 6.6 1021/1424] HID: i2c-hid: Revert to await reset ACK before reading report descriptor
+Date: Sat, 12 Sep 2026 08:57:33 +0200
+Message-ID: <20260912065630.175044869@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -46,127 +47,118 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Kenny Levinsen <kl@kl.wtf>
 
-[ Upstream commit af93a167eda90192563bce64c4bb989836afac1f ]
+[ Upstream commit ea36bf1827462e4a52365bf8e3f7d1712c5d9600 ]
 
-A recent bug made me look at Microsoft's i2c-hid docs again
-and I noticed the following:
+In af93a167eda9, i2c_hid_parse was changed to continue with reading the
+report descriptor before waiting for reset to be acknowledged.
 
-"""
-4. Issue a RESET (Host Initiated Reset) to the Device.
-5. Retrieve report descriptor from the device.
+This has lead to two regressions:
 
-Note: Steps 4 and 5 may be done in parallel to optimize for time on I²C.
-Since report descriptors are (a) static and (b) quite long, Windows 8 may
-issue a request for 5 while it is waiting for a response from the device
-on 4.
-"""
+1. We fail to handle reset acknowledgment if it happens while reading
+   the report descriptor. The transfer sets I2C_HID_READ_PENDING, which
+   causes the IRQ handler to return without doing anything.
 
-Which made me think that maybe on some touchpads the reset ack is delayed
-till after the report descriptor is read ?
+   This affects both a Wacom touchscreen and a Sensel touchpad.
 
-Testing a T-BAO Tbook Air 12.5 with a 0911:5288 (SIPODEV SP1064?) touchpad,
-for which the I2C_HID_QUIRK_NO_IRQ_AFTER_RESET quirk was first introduced,
-shows that reading the report descriptor before waiting for the reset
-helps with the missing reset IRQ. Now the reset does get acked properly,
-but the ack sometimes still does not happen unfortunately.
+2. On a Sensel touchpad, reading the report descriptor this quickly
+   after reset results in all zeroes or partial zeroes.
 
-Still moving the wait for ack to after reading the report-descriptor,
-is probably a good idea, both to make i2c-hid's behavior closer to
-Windows as well as to speed up probing i2c-hid devices.
+The issues were observed on the Lenovo Thinkpad Z16 Gen 2.
 
-While at it drop the dbg_hid() for a malloc failure, malloc failures
-already get logged extensively by malloc itself.
+The change in question was made based on a Microsoft article[0] stating
+that Windows 8 *may* read the report descriptor in parallel with
+awaiting reset acknowledgment, intended as a slight reset performance
+optimization. Perhaps they only do this if reset is not completing
+quickly enough for their tastes?
 
-Link: https://bugzilla.redhat.com/show_bug.cgi?id=2247751
+As the code is not currently ready to read registers in parallel with a
+pending reset acknowledgment, and as reading quickly breaks the report
+descriptor on the Sensel touchpad, revert to waiting for reset
+acknowledgment before proceeding to read the report descriptor.
+
+[0]: https://learn.microsoft.com/en-us/windows-hardware/drivers/hid/plug-and-play-support-and-power-management
+
+Fixes: af93a167eda9 ("HID: i2c-hid: Move i2c_hid_finish_hwreset() to after reading the report-descriptor")
+Closes: https://bugzilla.redhat.com/show_bug.cgi?id=2271136
+Cc: stable@vger.kernel.org
+Signed-off-by: Kenny Levinsen <kl@kl.wtf>
+Link: https://lore.kernel.org/r/20240331182440.14477-1-kl@kl.wtf
+[hdegoede@redhat.com Drop no longer necessary abort_reset error exit path]
 Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Tested-by: Mark Pearson <mpearson-lenovo@squebb.ca>
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Stable-dep-of: 8da0f0951dee ("HID: i2c-hid: Fix "(null)" output when reading report descriptor fails")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/i2c-hid/i2c-hid-core.c | 29 +++++++++++++++++++----------
- 1 file changed, 19 insertions(+), 10 deletions(-)
+ drivers/hid/i2c-hid/i2c-hid-core.c | 29 ++++++++---------------------
+ 1 file changed, 8 insertions(+), 21 deletions(-)
 
 diff --git a/drivers/hid/i2c-hid/i2c-hid-core.c b/drivers/hid/i2c-hid/i2c-hid-core.c
-index ed92f7be9adcc..22e6795cdaff7 100644
+index 22e6795cdaff7..aa71388852099 100644
 --- a/drivers/hid/i2c-hid/i2c-hid-core.c
 +++ b/drivers/hid/i2c-hid/i2c-hid-core.c
-@@ -716,11 +716,10 @@ static int i2c_hid_parse(struct hid_device *hid)
- 	struct i2c_client *client = hid->driver_data;
- 	struct i2c_hid *ihid = i2c_get_clientdata(client);
- 	struct i2c_hid_desc *hdesc = &ihid->hdesc;
-+	char *rdesc = NULL, *use_override = NULL;
- 	unsigned int rsize;
--	char *rdesc;
- 	int ret;
- 	int tries = 3;
--	char *use_override;
- 
- 	i2c_hid_dbg(ihid, "entering %s\n", __func__);
- 
-@@ -730,18 +729,15 @@ static int i2c_hid_parse(struct hid_device *hid)
- 		return -EINVAL;
- 	}
- 
-+	mutex_lock(&ihid->reset_lock);
+@@ -732,12 +732,15 @@ static int i2c_hid_parse(struct hid_device *hid)
+ 	mutex_lock(&ihid->reset_lock);
  	do {
--		mutex_lock(&ihid->reset_lock);
  		ret = i2c_hid_start_hwreset(ihid);
--		if (ret == 0)
--			ret = i2c_hid_finish_hwreset(ihid);
--		mutex_unlock(&ihid->reset_lock);
- 		if (ret)
+-		if (ret)
++		if (ret == 0)
++			ret = i2c_hid_finish_hwreset(ihid);
++		else
  			msleep(1000);
  	} while (tries-- > 0 && ret);
++	mutex_unlock(&ihid->reset_lock);
  
  	if (ret)
--		return ret;
-+		goto abort_reset;
+-		goto abort_reset;
++		return ret;
  
  	use_override = i2c_hid_get_dmi_hid_report_desc_override(client->name,
  								&rsize);
-@@ -753,8 +749,8 @@ static int i2c_hid_parse(struct hid_device *hid)
+@@ -747,11 +750,8 @@ static int i2c_hid_parse(struct hid_device *hid)
+ 		i2c_hid_dbg(ihid, "Using a HID report descriptor override\n");
+ 	} else {
  		rdesc = kzalloc(rsize, GFP_KERNEL);
- 
- 		if (!rdesc) {
--			dbg_hid("couldn't allocate rdesc memory\n");
--			return -ENOMEM;
-+			ret = -ENOMEM;
-+			goto abort_reset;
- 		}
+-
+-		if (!rdesc) {
+-			ret = -ENOMEM;
+-			goto abort_reset;
+-		}
++		if (!rdesc)
++			return -ENOMEM;
  
  		i2c_hid_dbg(ihid, "asking HID report descriptor\n");
-@@ -764,10 +760,23 @@ static int i2c_hid_parse(struct hid_device *hid)
+ 
+@@ -760,23 +760,10 @@ static int i2c_hid_parse(struct hid_device *hid)
  					    rdesc, rsize);
  		if (ret) {
  			hid_err(hid, "reading report descriptor failed\n");
--			goto out;
-+			goto abort_reset;
+-			goto abort_reset;
++			goto out;
  		}
  	}
  
-+	/*
-+	 * Windows directly reads the report-descriptor after sending reset
-+	 * and then waits for resets completion afterwards. Some touchpads
-+	 * actually wait for the report-descriptor to be read before signalling
-+	 * reset completion.
-+	 */
-+	ret = i2c_hid_finish_hwreset(ihid);
-+abort_reset:
-+	clear_bit(I2C_HID_RESET_PENDING, &ihid->flags);
-+	mutex_unlock(&ihid->reset_lock);
-+	if (ret)
-+		goto out;
-+
+-	/*
+-	 * Windows directly reads the report-descriptor after sending reset
+-	 * and then waits for resets completion afterwards. Some touchpads
+-	 * actually wait for the report-descriptor to be read before signalling
+-	 * reset completion.
+-	 */
+-	ret = i2c_hid_finish_hwreset(ihid);
+-abort_reset:
+-	clear_bit(I2C_HID_RESET_PENDING, &ihid->flags);
+-	mutex_unlock(&ihid->reset_lock);
+-	if (ret)
+-		goto out;
+-
  	i2c_hid_dbg(ihid, "Report Descriptor: %*ph\n", rsize, rdesc);
  
  	ret = hid_parse_report(hid, rdesc, rsize);
