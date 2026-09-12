@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 100A54746AD;
-	Sat, 12 Sep 2026 11:30:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51BB547886A;
+	Sat, 12 Sep 2026 11:31:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789212659; cv=none; b=iumcjArLeqZ0Lx672m+y2aWi7gBqkTSsM+O/MGkl6ZdIomv+NVOhCen7UzfmPt7fAM0kOmpeSPmQEYxvJBF5P6qPfAmPPd+OR8QkhAElOmrEtahmKDnQgQRMb2OH4LgeKW7rq7wRuT97gAA46hers5Fo/8oRnEWkW3SLyRBEWs0=
+	t=1789212663; cv=none; b=CeWnViF+qI9QXeHtQX16IepVrQZtKy4vDmE0Uiw+0MposO2GaIwjfedKfu2tEyNH8iYU6f7GYCmaihcu25NhiBvV8Snb7KNKjE5W134WQVt/HIbSMhkZaFxtgsXFykRZ86lF3IFHMqG+Dpqp7bieXpSb9MRTpY4hV2Zf5SfQxDs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789212659; c=relaxed/simple;
-	bh=FZ4JkhPHYo8BRKN6/QtbXiMByKU+rKNs/gK1yvAVCFc=;
+	s=arc-20240116; t=1789212663; c=relaxed/simple;
+	bh=UgnihiCHCdxzg5XIRXe8W1H2r9J7eVzS49R7+sS3OpI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GKEyfz5oYctRaNrLvyWih6iwleuThGJNHB6n7BEokq/PyNOrL9UfbEiW7wKnxAv7IrbrdYRp8idSujDVuu0l10SK73y3eNEMk8eKB7lVItdO1WNYpgN1crHenb4QeTj7OBmgCEs7LoJKWa9RPki/DfEFnwR2BEuy7tpzahRtPQc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jxbMeQDh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PcnBKc3o8zQzAljmUC9CwFKk0i5JPqDYygXq/3JzCSZxwp9aXShLhSWrx8rra9Q1xhUJLv75g16LfOlEWCRY0RaUq+gADHT2O9jnrQNoZ5wQqZfd2q2B47B+AxCxlaPf/5bpay+fnyE8+QDgwvn51yJ+tyveiTGNt8dYIQZbHcw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BUomkH5W; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jxbMeQDh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CA691F000FF;
-	Sat, 12 Sep 2026 11:30:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BUomkH5W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9C501F000FF;
+	Sat, 12 Sep 2026 11:31:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789212657;
-	bh=l6LM15qTI11HGf6ZAqR+Cda2uTqHds2QceoP5qPCJeY=;
+	s=korg; t=1789212662;
+	bh=BTx0MeuInveb0V3hFYxeZQ8g5a9qF41nPRSFd+ZHwCM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jxbMeQDhcTSuhsP0vszRU5iRclCAg4k56K9O6IyH/prevEKLDrkF6W5XrmGbeDBTp
-	 4rO6cx0XOqkf/9dWKD89UW3yE47XfwohX9nFpYBOQZ3gLESp36NB3FMJ/BP8KOicTf
-	 Fxo11n+9NHGs60caPGnlQu0HXs8zcsJtPJKNXl4I=
+	b=BUomkH5WlHV91Guu+/yOCRpp75hnY6wFqdGTSf4qFfwUkCysZdcQNdEJ6+2HmLgjz
+	 Srn7TrGWNXJWh6PftqUWZBjyAxljOxfWDl3vBVwkk8Gy7wwfoRvMw8oue82c3ljuH1
+	 dGhuzFEYVUbcSacolabqYu8syii5dtDT9TCel3qs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Yang Xiuwei <yangxiuwei@kylinos.cn>,
+	John Garry <john.g.garry@oracle.com>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1482/1518] phy: renesas: rcar-gen3-usb2: add regulator dependency
-Date: Sat, 12 Sep 2026 09:00:51 +0200
-Message-ID: <20260912065657.085943102@linuxfoundation.org>
+Subject: [PATCH 6.18 1483/1518] scsi: sd: Fix error handling in sd_probe() after large pool creation failure
+Date: Sat, 12 Sep 2026 09:00:52 +0200
+Message-ID: <20260912065657.109489325@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,41 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Yang Xiuwei <yangxiuwei@kylinos.cn>
 
-[ Upstream commit 3a03a0e47cf2e0ec7ce7ca9e0bf4c59ec537ad09 ]
+[ Upstream commit e3cc6ea1a745e7f5d326f919a428b244fa119d8f ]
 
-The driver start registering a regulator, but can still be
-enabled even when it is unable to call into the regulator
-subsystem:
+After device_add(&sdkp->disk_dev) succeeds, sd_large_pool_create()
+failure must unregister disk_dev and let scsi_disk_release() free
+sdkp. Going through out_free_index kfree()s an already registered device
+and leaks the sysfs entry.
 
-aarch64-linux-ld: drivers/phy/renesas/phy-rcar-gen3-usb2.o: in function `rcar_gen3_phy_usb2_probe':
-phy-rcar-gen3-usb2.c:(.text+0x2884): undefined reference to `devm_regulator_register'
-
-Add a Kconfig dependency to avoid this configuration.
-
-Fixes: b6d7dd157763 ("phy: renesas: rcar-gen3-usb2: Add regulator for OTG VBUS control")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Tested-by: Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>
-Link: https://patch.msgid.link/20260202095118.1233046-1-arnd@kernel.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes: 7179e626b76e ("scsi: sd: Enable sector size > PAGE_SIZE in SCSI sd driver")
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Signed-off-by: Yang Xiuwei <yangxiuwei@kylinos.cn>
+Reviewed-by: John Garry <john.g.garry@oracle.com>
+Link: https://patch.msgid.link/20260707030333.22245-2-yangxiuwei@kylinos.cn
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/renesas/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/scsi/sd.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/phy/renesas/Kconfig b/drivers/phy/renesas/Kconfig
-index e342eef0640b7..e128b9c177a51 100644
---- a/drivers/phy/renesas/Kconfig
-+++ b/drivers/phy/renesas/Kconfig
-@@ -29,6 +29,7 @@ config PHY_RCAR_GEN3_USB2
- 	depends on ARCH_RENESAS
- 	depends on EXTCON || !EXTCON # if EXTCON=m, this cannot be built-in
- 	depends on USB_SUPPORT
-+	depends on REGULATOR
- 	select GENERIC_PHY
- 	select USB_COMMON
- 	help
+diff --git a/drivers/scsi/sd.c b/drivers/scsi/sd.c
+index ff6b953da68a7..58d28c80c93a9 100644
+--- a/drivers/scsi/sd.c
++++ b/drivers/scsi/sd.c
+@@ -4060,7 +4060,9 @@ static int sd_probe(struct scsi_device *sdp)
+ 	if (sdp->sector_size > PAGE_SIZE) {
+ 		if (sd_large_pool_create()) {
+ 			error = -ENOMEM;
+-			goto out_free_index;
++			device_unregister(&sdkp->disk_dev);
++			put_disk(gd);
++			goto out;
+ 		}
+ 	}
+ 
 -- 
 2.53.0
 
