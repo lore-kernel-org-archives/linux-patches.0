@@ -1,45 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41EC52F617C;
-	Sat, 12 Sep 2026 18:44:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24CE92F617C;
+	Sat, 12 Sep 2026 18:44:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789238690; cv=none; b=NkLbeu5L4UhcDHOAn7PIsIMQRmsqZBcr60728rW3fa+BC4CH8DvbuUd/cUtTK9l4EqqnZ+iUMQyB9BCo0TUW9YjCRQvSc7KAXjgP/PwPuqOu2nLp+56DjY0cljgXgPJ6c2cA737SBbqHdoJNOOyXzAca4Wtp8L2u+8gKS1KN1IU=
+	t=1789238695; cv=none; b=OXxidl8DhHTt1FIsj6rA4XR7iX8OIFpJNbTrU3sUEtvjwUIi9FQdQXH900FYehP3o0Zzmi3iucRpzhplPJIkDJALfw+0Ib1DtFI6l1KsoUvemlm8+uPKM8F9MGFoYP7C+uZibO+RlyJnUdzYDDXoJYxY8ZogYB+9GPTrgfokGjw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789238690; c=relaxed/simple;
-	bh=OWvaKnC7zaJrbxqQVEczmqUfdN89Qi/NBmxtYG6KuyU=;
+	s=arc-20240116; t=1789238695; c=relaxed/simple;
+	bh=fu5H6qLRq0K8edLeeIGd3PYBSFCnzNxc85CRYft5mpo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uREbQSswD2PYoXqfv2Yw3aE5Oe681EN5KorIJzm51u+JjziKQVwL1dKy9SDNu/ALGleSxlYK/GWpeZTFM1yxe+aSwnVZDmeSWzCLaDZzKtK2e1Ou2wWE8Onzih5dCgBlYhcjYh5y472toE2XSCLs9ApmqfK66X0OS1imD8hjwn8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HfAEqtMN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=THLB+DsjWwrBAJT3WMF/nmzoC3eFfi5qkrw7Ph9l+9PY56uqjKKoHWQ9Hzz2vXWJDT/FTwGEnqi+AoQYgknKgsZ1LhMcX/Nw0fM7OoFq7rbyqX/mIpnVQSm78TIuS4+GWhcOgsbuM7eaprKZ/eFXT1Bm51WUmcQIowvyXvdTG2c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hotDng4m; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HfAEqtMN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8F681F000FF;
-	Sat, 12 Sep 2026 18:44:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hotDng4m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D69851F000FF;
+	Sat, 12 Sep 2026 18:44:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789238688;
-	bh=eQ8oTNZPOMgiQtytTbHgDmTc4/UIMZYvCAeZqO2w/Jc=;
+	s=korg; t=1789238694;
+	bh=+O2In1mIO0FOPsTxbs40VjUFoqQB7/y9Y2f9D3738P0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HfAEqtMNS1mwFtRNXYEQOMA15rJWF18M1PuWueCZwU4m9IA+BWDFqz05oyxbHDbuS
-	 1RCMxTvGI3eRfpp1hqliztuPVKSDTSej3yPE0TXxJpRsCrEgrz5Jb1pUpRCcoJRtPp
-	 PE97OsAvHYoBHfmMOkhlxqzkmSmv+CVHPSLkNoME=
+	b=hotDng4muBM+AeKQfRoQljzrvV2oAeTK3d9uMQJsn38mOCRlz5oxEV63jDIwbxnHi
+	 1U5p85F6m+XtAMFG0n3FyEeZWnTJn415sJ2sS+bvnV3yGQy6VZOiniPr3381mclXtw
+	 gFcr0rsuxL1A2BbREsfLiSAWVZ7KECTmT2t+jUpM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Fabio M. De Francesco" <fmdefrancesco@gmail.com>,
-	Ira Weiny <ira.weiny@intel.com>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Xiang Mei <xmei5@asu.edu>,
 	Jan Kara <jack@suse.cz>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
-	Muchun Song <songmuchun@bytedance.com>,
-	Theodore Tso <tytso@mit.edu>,
-	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 513/935] fs/isofs: replace kmap() with kmap_local_page()
-Date: Sat, 12 Sep 2026 08:59:03 +0200
-Message-ID: <20260912065538.588554521@linuxfoundation.org>
+Subject: [PATCH 5.15 514/935] isofs: fix out-of-bounds page array access on empty zisofs block
+Date: Sat, 12 Sep 2026 08:59:04 +0200
+Message-ID: <20260912065538.611272350@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -52,132 +46,77 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Fabio M. De Francesco <fmdefrancesco@gmail.com>
+From: Xiang Mei <xmei5@asu.edu>
 
-[ Upstream commit 5bb6ce3aeb02497668a4e8971268b041aa61de8d ]
+[ Upstream commit 68d4d3e78150c7ed7d1195af63ad1e6ace30c661 ]
 
-The use of kmap() is being deprecated in favor of kmap_local_page().
+zisofs_uncompress_block()'s empty-block fast path returns
+pcount << PAGE_SHIFT, ignoring the incoming poffset, unlike the
+decompression path which returns bytes produced relative to poffset.
+zisofs_fill_pages() uses that return to advance its page cursor, so when
+the zisofs block size is below PAGE_SIZE and a sub-page block leaves
+poffset partway into a page, a following empty block over-counts and
+advances pages[] one element past its end, after which
+"if (poffset && *pages)" reads pages[1] out of bounds.  rock.c only
+rejects a block-size shift > 17, so a crafted "ZF" Rock Ridge record can
+set it below PAGE_SHIFT; the bug is reached by an ordinary read() of a
+compressed file on such a mounted ISO9660 image.
 
-There are two main problems with kmap(): (1) It comes with an overhead as
-mapping space is restricted and protected by a global lock for
-synchronization and (2) it also requires global TLB invalidation when the
-kmap's pool wraps and it might block when the mapping space is fully
-utilized until a slot becomes available.
+Return the byte count relative to poffset and zero only
+[poffset, PAGE_SIZE) of the first page, matching the decompression path.
+The page-aligned case (poffset == 0) is unaffected.
 
-With kmap_local_page() the mappings are per thread, CPU local, can take
-page faults, and can be called from any context (including interrupts).
-Tasks can be preempted and, when scheduled to run again, the kernel
-virtual addresses are restored and still valid.  It is faster than kmap()
-in kernels with HIGHMEM enabled.
+  BUG: KASAN: slab-out-of-bounds in zisofs_read_folio (fs/isofs/compress.c:290)
+  Read of size 8 at addr ffff88800f5eac48 by task exploit/142
+   zisofs_read_folio (fs/isofs/compress.c:290)
+   read_pages (mm/readahead.c:184)
+   ...
+   filemap_read (mm/filemap.c:2814)
+   vfs_read (fs/read_write.c:574)
+   __x64_sys_pread64 (fs/read_write.c:769)
+   do_syscall_64 (arch/x86/entry/syscall_64.c:94)
+   entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
+  The buggy address is located 0 bytes to the right of the
+  allocated 8-byte region in the kmalloc-8 cache
 
-Since kmap_local_page() can be safely used in compress.c, it should be
-called everywhere instead of kmap().
-
-Therefore, replace kmap() with kmap_local_page() in compress.c.  Where it
-is needed, use memzero_page() instead of open coding kmap_local_page()
-plus memset() to fill the pages with zeros.  Delete the redundant
-flush_dcache_page() in the two call sites of memzero_page().
-
-Tested with mkisofs on a QEMU/KVM x86_32 VM, 6GB RAM, booting a kernel
-with HIGHMEM64GB enabled.
-
-Link: https://lkml.kernel.org/r/20220801122709.8164-1-fmdefrancesco@gmail.com
-Signed-off-by: Fabio M. De Francesco <fmdefrancesco@gmail.com>
-Suggested-by: Ira Weiny <ira.weiny@intel.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Roman Gushchin <roman.gushchin@linux.dev>
-Cc: Pali Rohár <pali@kernel.org>
-Cc: Muchun Song <songmuchun@bytedance.com>
-Cc: Theodore Ts'o <tytso@mit.edu>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Stable-dep-of: 68d4d3e78150 ("isofs: fix out-of-bounds page array access on empty zisofs block")
+Fixes: 59bc055211b8 ("zisofs: Implement reading of compressed files when PAGE_CACHE_SIZE > compress block size")
+Reported-by: Weiming Shi <bestswngs@gmail.com>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Link: https://patch.msgid.link/20260712234150.3213467-1-xmei5@asu.edu
+Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/isofs/compress.c | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ fs/isofs/compress.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/fs/isofs/compress.c b/fs/isofs/compress.c
-index bc12ac7e23127..f2deec0df49c5 100644
+index f2deec0df49c5..b81415e73aaf4 100644
 --- a/fs/isofs/compress.c
 +++ b/fs/isofs/compress.c
-@@ -67,8 +67,7 @@ static loff_t zisofs_uncompress_block(struct inode *inode, loff_t block_start,
+@@ -65,12 +65,14 @@ static loff_t zisofs_uncompress_block(struct inode *inode, loff_t block_start,
+ 	/* Empty block? */
+ 	if (block_size == 0) {
  		for ( i = 0 ; i < pcount ; i++ ) {
++			unsigned int off = i ? 0 : poffset;
++
  			if (!pages[i])
  				continue;
--			memset(page_address(pages[i]), 0, PAGE_SIZE);
--			flush_dcache_page(pages[i]);
-+			memzero_page(pages[i], 0, PAGE_SIZE);
+-			memzero_page(pages[i], 0, PAGE_SIZE);
++			memzero_page(pages[i], off, PAGE_SIZE - off);
  			SetPageUptodate(pages[i]);
  		}
- 		return ((loff_t)pcount) << PAGE_SHIFT;
-@@ -120,7 +119,7 @@ static loff_t zisofs_uncompress_block(struct inode *inode, loff_t block_start,
- 	       zerr != Z_STREAM_END) {
- 		if (!stream.avail_out) {
- 			if (pages[curpage]) {
--				stream.next_out = page_address(pages[curpage])
-+				stream.next_out = kmap_local_page(pages[curpage])
- 						+ poffset;
- 				stream.avail_out = PAGE_SIZE - poffset;
- 				poffset = 0;
-@@ -176,6 +175,10 @@ static loff_t zisofs_uncompress_block(struct inode *inode, loff_t block_start,
- 				flush_dcache_page(pages[curpage]);
- 				SetPageUptodate(pages[curpage]);
- 			}
-+			if (stream.next_out != (unsigned char *)zisofs_sink_page) {
-+				kunmap_local(stream.next_out);
-+				stream.next_out = NULL;
-+			}
- 			curpage++;
- 		}
- 		if (!stream.avail_in)
-@@ -183,6 +186,8 @@ static loff_t zisofs_uncompress_block(struct inode *inode, loff_t block_start,
- 	}
- inflate_out:
- 	zlib_inflateEnd(&stream);
-+	if (stream.next_out && stream.next_out != (unsigned char *)zisofs_sink_page)
-+		kunmap_local(stream.next_out);
- 
- z_eio:
- 	mutex_unlock(&zisofs_zlib_lock);
-@@ -283,9 +288,7 @@ static int zisofs_fill_pages(struct inode *inode, int full_page, int pcount,
+-		return ((loff_t)pcount) << PAGE_SHIFT;
++		return (((loff_t)pcount) << PAGE_SHIFT) - poffset;
  	}
  
- 	if (poffset && *pages) {
--		memset(page_address(*pages) + poffset, 0,
--		       PAGE_SIZE - poffset);
--		flush_dcache_page(*pages);
-+		memzero_page(*pages, poffset, PAGE_SIZE - poffset);
- 		SetPageUptodate(*pages);
- 	}
- 	return 0;
-@@ -342,10 +345,8 @@ static int zisofs_readpage(struct file *file, struct page *page)
- 	for (i = 0; i < pcount; i++, index++) {
- 		if (i != full_page)
- 			pages[i] = grab_cache_page_nowait(mapping, index);
--		if (pages[i]) {
-+		if (pages[i])
- 			ClearPageError(pages[i]);
--			kmap(pages[i]);
--		}
- 	}
- 
- 	err = zisofs_fill_pages(inode, full_page, pcount, pages);
-@@ -356,7 +357,6 @@ static int zisofs_readpage(struct file *file, struct page *page)
- 			flush_dcache_page(pages[i]);
- 			if (i == full_page && err)
- 				SetPageError(pages[i]);
--			kunmap(pages[i]);
- 			unlock_page(pages[i]);
- 			if (i != full_page)
- 				put_page(pages[i]);
+ 	/* Because zlib is not thread-safe, do all the I/O at the top. */
 -- 
 2.53.0
 
