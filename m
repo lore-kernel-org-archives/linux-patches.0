@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD65C31F9B1;
-	Sat, 12 Sep 2026 16:48:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8A2231F9B1;
+	Sat, 12 Sep 2026 16:48:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789231718; cv=none; b=Y+LfYoKBFRY8qgb505efxvbWwOa4tT7fuPFh1BCvrzTsj9QU/cb8p1YLR0XPYuUMEl/uvoRbfHReqgcd6Y8KLU2d4WqqXrixadFPOOSq0qFXlh4F5EVUfGKbfL1tkQBzCr/YIZVhqBkvihBtaK/w6HzeMEZ5Zju5aoLZxvAGiYw=
+	t=1789231723; cv=none; b=WwVg9cl/CuITrQPPNte6hMmAWnzv1KDscDBtVKCgp6JtgnEANbP9QnS42AMIYHWUgWfE4dZbJgj7FASBjt6v3PTRoqBJ8Pwage1y8gq59IzRYtcibsh57obEGSKz6K4JBAOorWmNk7dhtQBPExUpgUovlYqlvz5I499wwaYlaRA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789231718; c=relaxed/simple;
-	bh=c3yfLKSFsekCICDUkGWqN8q0Q2O9dPq6kF5cAyzsk4c=;
+	s=arc-20240116; t=1789231723; c=relaxed/simple;
+	bh=O57Kytbzk6UPX+2AK6AWxi1Z91mauj9h9iQvG0xp7ac=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e4lwDijKPH8puOXlNomHcQrdm8z0+gkq/Y4rkWk7ziMuu/Ylf5Nn6yZEY5GzyYmtPAowXQM5Wck6+izJL70ejIg/UiMsxLMOm7rU3tsk44f1gW8sFYTMNhR/VzlxtHGPuh8KS+2d3qCBwqyZI5Hv0ef0ARsJO1v7PBUFsLifRHs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P2sFErEo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NkPmS8actrXKXpKvazp6NV9MGRs/E8NjRovTBfenFDRDhFCqo/LJOF5rZ7zWOMSNrHgwpXrUpIlnCRdNZxFEWO0pF6fcuKaWAeaCoHVmnIlFUv6o4RBy3BkKYOXbhwMD+N4UrzPjFYxKyTZ0dBNgmA70oy40vm8Qwdzm/TJyG4c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nkg1jW7q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P2sFErEo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CA8C1F000FF;
-	Sat, 12 Sep 2026 16:48:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nkg1jW7q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 835611F000FF;
+	Sat, 12 Sep 2026 16:48:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789231717;
-	bh=10pfWMNIoxV8bzPV+8uU8v/gV6X3lULah0v5+DI2Fe8=;
+	s=korg; t=1789231722;
+	bh=M1ahY1AkVsrA1Ya2ZU7/DPMwG69wrjpTIYPBFKBzVF0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=P2sFErEok33WHbhbq0+mMs3LWqoUni7OQcNZsDPOdaEl7ODITdqXFZoSofdJBhvKd
-	 IbLaLVezWM6Jepg9XkU933gXhzkwRiyM9M2ITYBqnPeDl2GSdq+OW2+PgbnpmA9gvX
-	 drUHkGbDPNlY7rQPc7ve09zUdLiSzQtzUJwDzSIg=
+	b=Nkg1jW7qhcRTJ3fX/2gW4AIypCKX1MbeazdGKAuAY7MYfTy+fUdI/cli0Q4fwZwJm
+	 jDZ8AbxTCFmoCOXR55wnFv1YtEpTgqieDYw5Podk+8d0V+fEVoarv/4OkdY5TZrNiI
+	 8VvzQ05TQh7pURouMMs0/9gr5H7SpRoTWadw4ybY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Baokun Li <libaokun@linux.alibaba.com>,
+	Miklos Szeredi <mszeredi@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1054/1191] net: bridge: vlan: fix inverted default vlan notification
-Date: Sat, 12 Sep 2026 09:03:02 +0200
-Message-ID: <20260912065611.847087986@linuxfoundation.org>
+Subject: [PATCH 6.1 1055/1191] cuse: wait for pending RCU callbacks on module exit
+Date: Sat, 12 Sep 2026 09:03:03 +0200
+Message-ID: <20260912065611.869597312@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -52,45 +51,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikolay Aleksandrov <razor@blackwall.org>
+From: Baokun Li <libaokun@linux.alibaba.com>
 
-[ Upstream commit 21040c7f931502070dcc66bb0f1aeed07dec032b ]
+[ Upstream commit 4deb3edead0c0e172cc7349e8855d741d3c5e162 ]
 
-A notification should be emitted only when the vlan delete was successful
-and not otherwise. The proper check is if br/nbp_vlan_delete returned 0.
+Since commit 053fc4f755ad ("fuse: fix UAF in rcu pathwalks"),
+fuse_conn_put() frees the fuse_conn through call_rcu() rather than
+synchronously.  For cuse, fc->release is cuse_fc_release(), which
+lives in the cuse module.  If the module is removed before the RCU
+grace period ends, the callback jumps into freed module memory:
 
-Fixes: f545923b4a6b ("net: bridge: vlan: notify on vlan add/delete/change flags")
-Signed-off-by: Nikolay Aleksandrov <razor@blackwall.org>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260814141640.64958-1-razor@blackwall.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+      userspace / module unload      |        RCU softirq
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ close(/dev/cuse)                    |
+  cuse_channel_release()             |
+   fuse_dev_release()                |
+    fuse_conn_put(fch->conn)         |
+     call_rcu(delayed_release) ------+---> callback queued
+                                     |
+ rmmod cuse                          |
+  cuse_exit()                        |
+   cuse_channel_destroy()            |
+   ...                               |
+   return                            |
+                                     |
+ <module text freed>                 |
+                                     |  rcu_do_batch()
+                                     |   delayed_release()
+                                     |    fc->release()
+                                     |     -> cuse_fc_release()
+                                     |        ^^^ freed text!
+
+The freed module text is unmapped by vfree(), so the jump into the
+stale callback triggers a page-fault Oops.  If the virtual address
+is subsequently reused, the callback could execute unrelated code
+(undefined behaviour).
+
+Fix this by calling rcu_barrier() in cuse_exit() so that any pending
+fuse_conn release callback completes before the module is removed.
+
+Fixes: 053fc4f755ad ("fuse: fix UAF in rcu pathwalks")
+Signed-off-by: Baokun Li <libaokun@linux.alibaba.com>
+Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/br_vlan.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/fuse/cuse.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/net/bridge/br_vlan.c b/net/bridge/br_vlan.c
-index c442ed83c01f4..ac15a5fe20d3e 100644
---- a/net/bridge/br_vlan.c
-+++ b/net/bridge/br_vlan.c
-@@ -1129,7 +1129,7 @@ int __br_vlan_set_default_pvid(struct net_bridge *br, u16 pvid,
- 		if (err)
- 			goto out;
+diff --git a/fs/fuse/cuse.c b/fs/fuse/cuse.c
+index d10d58c730dd2..698a69eced17b 100644
+--- a/fs/fuse/cuse.c
++++ b/fs/fuse/cuse.c
+@@ -646,6 +646,11 @@ static void __exit cuse_exit(void)
+ {
+ 	misc_deregister(&cuse_miscdev);
+ 	class_destroy(cuse_class);
++	/*
++	 * Wait for pending call_rcu() callbacks that call back into
++	 * this module via fc->release (cuse_fc_release).
++	 */
++	rcu_barrier();
+ }
  
--		if (br_vlan_delete(br, old_pvid))
-+		if (!br_vlan_delete(br, old_pvid))
- 			br_vlan_notify(br, NULL, old_pvid, 0, RTM_DELVLAN);
- 		br_vlan_notify(br, NULL, pvid, 0, RTM_NEWVLAN);
- 		__set_bit(0, changed);
-@@ -1151,7 +1151,7 @@ int __br_vlan_set_default_pvid(struct net_bridge *br, u16 pvid,
- 				   &vlchange, extack);
- 		if (err)
- 			goto err_port;
--		if (nbp_vlan_delete(p, old_pvid))
-+		if (!nbp_vlan_delete(p, old_pvid))
- 			br_vlan_notify(br, p, old_pvid, 0, RTM_DELVLAN);
- 		br_vlan_notify(p->br, p, pvid, 0, RTM_NEWVLAN);
- 		__set_bit(p->port_no, changed);
+ module_init(cuse_init);
 -- 
 2.53.0
 
