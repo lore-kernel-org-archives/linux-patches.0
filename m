@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BD7E34252D;
-	Sat, 12 Sep 2026 12:26:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 306F53BE643;
+	Sat, 12 Sep 2026 12:26:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789216015; cv=none; b=OBLpfJCqjRMcat23VORxy+Lusbl819tEdfUy0nlEIP6EklACqgxofYP848qyiFKrRBw2jq02Frfbi269dJJ5k94wHxyNRlFGCnmfo2n42y/SY6nUiqlye8jWmCUEccX9KgmIe7yvjgQudK3PFyghUkhP9/qm3b0kd70NTcJnpoc=
+	t=1789216021; cv=none; b=EjUniE4glIryHDk7wJc4v++HntlHDMzWtxvaHdmZeInBJwFx4zG1Mo0Lcjhm0yWuUkGNy8K/JFGhAl4bthpbgU6TWTdhFcs4QLhYh1Mt11fCOrn0qNzckgbJMQhVHBlJIIsFklRXQ0b2K8OF10Ay+N4ilvBvSVMk8TQvIgk7vjo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789216015; c=relaxed/simple;
-	bh=WWuHu2zPOSifYP+xDAEQ1uJM187ncDsB+T2hkAGnUh8=;
+	s=arc-20240116; t=1789216021; c=relaxed/simple;
+	bh=VkT0GW2w9DqfT7IwBtUPaGEkqjkS+lKlhBvFbnyoCdg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zi5ppyewIJ3kSGrRKyIxMgpOScQGpNAOlNsymcOLeqDXD3Pd4AwUdDqmCN/8ZT50L5eAFaMGIVh4MpXLD04BPruIdBYhv2mC4JtT/fG6THF8wSS2RIjXNnhpnU4HhnkUO7WzF3/+1NKNTTa11z++YAY9Ro0uaW1raTad+kTm99A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rdG1gmpd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=S8Zksc4I25V8Kyo6Fj8xnmGl9/LcdIx7kX/XLOGcQycnYUIn76/mFvA5HYJq3RM6HEEXy8urJziiT1K/71etBDy97ohA/q3ztqvOzyY4lKKpaF0RzACCuw/tHXd876x699bX7jZWvZd1/PO2tOxDGVxRvRfPsr7YuFStA6j47hA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NNKkb+4N; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rdG1gmpd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1441A1F000FF;
-	Sat, 12 Sep 2026 12:26:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NNKkb+4N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDFF01F000FF;
+	Sat, 12 Sep 2026 12:26:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789216014;
-	bh=Yg0Vi4UeLexXWsXB12Sfme3ro45eSinju53hK/hoVu8=;
+	s=korg; t=1789216018;
+	bh=0Bdz6ksPtoTy2pX08C3IGpMiyFWeUWqgHhmajW9ojJ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rdG1gmpdHCrlRpLFx21CJPErMrRPYPvAphq0xzJpHAAqrMXR9SkvvWPPmCjwvPgip
-	 NzeNZluXI+VFiJJUfar8sWNvT0XifGafiGeHvxuiCO1b/jaNOQXmE8U5UTkFOAsfNl
-	 JPO0zWYCRudwI5nyQQoTpygPlNLnm59kebmlP4uI=
+	b=NNKkb+4N6gG36ckVzc5YqMl9jOap+233yhYCbtBVjrXJ6G9ddk+fQ+74SG6+CHar9
+	 QAotLPPF9o9TtWN7qdu2TMQQu5Gxt0K95sy6zKyOqddMX+KMNrz65fsm22u4aPxaFT
+	 NbQ4b9rbqjXeP052KCzAbLchscuXpcDPdDAQO/+Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Yousef Alhouseen <alhouseenyousef@gmail.com>,
+	Selvin Xavier <selvin.xavier@broadcom.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0648/1376] wifi: ath11k: Avoid buffer overread in ath11k_wmi_tlv_op_rx()
-Date: Sat, 12 Sep 2026 08:51:14 +0200
-Message-ID: <20260912065621.986271166@linuxfoundation.org>
+Subject: [PATCH 6.12 0649/1376] RDMA/bnxt_re: Clear VM_MAYWRITE on DBR/toggle page mmap
+Date: Sat, 12 Sep 2026 08:51:15 +0200
+Message-ID: <20260912065622.008727513@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -52,55 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+From: Selvin Xavier <selvin.xavier@broadcom.com>
 
-[ Upstream commit 9ef9dd30058cc9223c72f711dca1a28a5947d0c5 ]
+[ Upstream commit 9b66c9af7172ffcf727214fa0ebe9a5e1ed6eb16 ]
 
-Currently, in ath11k_wmi_tlv_op_rx(), the firmware buffer is read
-without first verifying that the buffer has enough data to hold a
-header. This could result in a buffer overread.
+bnxt_re_mmap() rejects VM_WRITE for the DBR_PAGE and TOGGLE_PAGE mmap
+flags, but a read-only mapping can still retain VM_MAYWRITE. nd later
+be upgraded with mprotect(PROT_WRITE). This can bypass the write check
+that only runs at mmap time.
 
-Add an upfront length check before dereferencing skb->data as a
-wmi_cmd_hdr. The check is placed before the trace_ath11k_wmi_event()
-call to preserve the existing trace semantics (tracing the full raw
-WMI event including the header), unlike the analogous ath12k fix which
-could use skb_pull_data() directly.
+Clear VM_MAYWRITE before vm_insert_page() in the shared DBR/toggle-page
+branch, matching the existing policy that userspace writes are not
+expected for these pages.
 
-Compile tested only.
-
-Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
-Assisted-by: Claude:claude-sonnet-4-6
-Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
-Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260716-ath11k_wmi_tlv_op_rx-overread-v1-1-0b972b3f1368@oss.qualcomm.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Fixes: ea222485788208 ("RDMA/bnxt_re: Update alloc_page uapi for pacing")
+Suggested-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
+Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
+Link: https://patch.msgid.link/20260721115440.24021-5-selvin.xavier@broadcom.com
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/wmi.c | 6 ++++--
+ drivers/infiniband/hw/bnxt_re/ib_verbs.c | 6 ++++--
  1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath11k/wmi.c b/drivers/net/wireless/ath/ath11k/wmi.c
-index 2f70541461d8e..570c5e051b8c9 100644
---- a/drivers/net/wireless/ath/ath11k/wmi.c
-+++ b/drivers/net/wireless/ath/ath11k/wmi.c
-@@ -8757,13 +8757,15 @@ static void ath11k_wmi_tlv_op_rx(struct ath11k_base *ab, struct sk_buff *skb)
- 	struct wmi_cmd_hdr *cmd_hdr;
- 	enum wmi_tlv_event_id id;
- 
-+	if (skb->len < sizeof(*cmd_hdr))
-+		goto out;
-+
- 	cmd_hdr = (struct wmi_cmd_hdr *)skb->data;
- 	id = FIELD_GET(WMI_CMD_HDR_CMD_ID, (cmd_hdr->cmd_id));
- 
- 	trace_ath11k_wmi_event(ab, id, skb->data, skb->len);
- 
--	if (skb_pull(skb, sizeof(struct wmi_cmd_hdr)) == NULL)
--		goto out;
-+	skb_pull(skb, sizeof(*cmd_hdr));
- 
- 	switch (id) {
- 		/* Process all the WMI events here */
+diff --git a/drivers/infiniband/hw/bnxt_re/ib_verbs.c b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
+index 7ad5d88358b03..467bdfea6c92c 100644
+--- a/drivers/infiniband/hw/bnxt_re/ib_verbs.c
++++ b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
+@@ -4389,11 +4389,13 @@ int bnxt_re_mmap(struct ib_ucontext *ib_uctx, struct vm_area_struct *vma)
+ 	case BNXT_RE_MMAP_DBR_PAGE:
+ 	case BNXT_RE_MMAP_TOGGLE_PAGE:
+ 		/* Driver doesn't expect write access for user space */
+-		if (vma->vm_flags & VM_WRITE)
++		if (vma->vm_flags & VM_WRITE) {
+ 			ret = -EFAULT;
+-		else
++		} else {
++			vm_flags_clear(vma, VM_MAYWRITE);
+ 			ret = vm_insert_page(vma, vma->vm_start,
+ 					     virt_to_page((void *)bnxt_entry->mem_offset));
++		}
+ 		break;
+ 	default:
+ 		ret = -EINVAL;
 -- 
 2.53.0
 
