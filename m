@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7C253C13E3;
-	Sat, 12 Sep 2026 07:10:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B34E437F729;
+	Sat, 12 Sep 2026 07:10:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789197043; cv=none; b=R6VWLZZ/4EPn1i3wYMYz4WiIxmAFhVfqgxerXbSLIHhhF6D2JHYr6AlvxwbdSn8H0Pe7qdcPI4H2YPAqgpHR2TAiITcWdpsFXyKWM7D+OL7c8RU3rKIsR2PQxr1cCoVd0Zn+YUH4JIIGfdgbO9dIDtGVh2FSFQ3pk1vV5cTkk2w=
+	t=1789197048; cv=none; b=D+Zu7IACqdAON/rRelsRTZUttjDyRDhZTtIGTViIGy3k0ZyNFebUfxclEyYpQr+M8Y4zX8CVB46y9KMPkyQvA+NTT7R2AqiE+Na81yr4ocDGXXYeD+wh6vBFnsYclW52uT5OTs8H7+pHxsxq2WA8N+d0T7GvjWrZ7H8C2Juu1Q4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789197043; c=relaxed/simple;
-	bh=aqnwxN4uwlbKz5qKa2O0ELWu1+6TLKPljnaKsoHrZtE=;
+	s=arc-20240116; t=1789197048; c=relaxed/simple;
+	bh=N1DLbBrBLQbTD9rkij29PfZQZA7iYI9c338UO/IQNWk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pr3ffDeIWWr+xtB160HivHdXgj/eJDQx8yKxMGbM2q6sA9ZCN5BUl8F8CJpJBZXh1byzPoDYjiRyS3HZHPMnAM9SONztHXJTYgcF4NBvQsZvfqFElOUCyFUjq0+vzQOjNS4fucz/Bd1l7UjmPd11m/SFZ+TFBvZ0a3K+dw5LkDU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kfgN+ekO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VcWWmxuQRVSCGYwE2bnNuqzLo3unRNMczLVBnWG9az/yEjQl229ctbu5/V1RCzpknU9+zE+9S76/UNPFe+/HKQrUFkKbDQtu5V8VTwLHEOlQveF+LZKW/YLc2DrxeaEoiT+5UoSUv/cAesjKcOufEKyD2WxzLfs2fRZRs3U5OGo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qyi0Bguo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kfgN+ekO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 809D71F000FF;
-	Sat, 12 Sep 2026 07:10:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qyi0Bguo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B70891F000FF;
+	Sat, 12 Sep 2026 07:10:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789197042;
-	bh=M0qCfp2tKVPlmHlGUUDphSj1cgOna6NLJOlolEuTzRA=;
+	s=korg; t=1789197047;
+	bh=yLJTBmnjkCh6+r+oaSLpQbLFYnzc5+YhCpJTsu0W5Hs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kfgN+ekOHU8JJv01G3w4gy39TZM62AZR7NqIrnquTtB23cqpbH74dbCdnWSSEJnrC
-	 kMTPfbCQnNzZKiHB1/1+DLaDcF/DmijpXlUtMaPQcqaZzx9MY7gih92E8jGFfTvue4
-	 vzA81tPuUV+2xOJQ38tTkIHVm4bcwDTq7JAFwm2o=
+	b=qyi0BguoQwCOSeCiHDlYTftt9vNT2ixFwazDZgbJ/uCM9zs0DphgXi/7CNtrrjViV
+	 2spG8nfFJXfiVWsFoxu/5dwzuR2Xq2lOrBbBdtbp8FwM3lz4IE/++NVoqI9wM+Uyth
+	 ySu6Os33ZpWsi/wu1kTOuDZSy2u2Jyl4VbTOVd1I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shengjiu Wang <shengjiu.wang@nxp.com>,
-	Mark Brown <broonie@kernel.org>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0087/1815] ASoC: fsl_audmix: rework runtime PM handling in probe
-Date: Sat, 12 Sep 2026 08:30:37 +0200
-Message-ID: <20260912065651.050189413@linuxfoundation.org>
+Subject: [PATCH 7.2 0088/1815] arm64: dts: imx8mp-frdm: Add missing HDMI DDC pinctrl
+Date: Sat, 12 Sep 2026 08:30:38 +0200
+Message-ID: <20260912065651.072579910@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,103 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shengjiu Wang <shengjiu.wang@nxp.com>
+From: Philipp Zabel <p.zabel@pengutronix.de>
 
-[ Upstream commit 3359ba93d01a23b2e4249e9e44ccfe48eb9c5d71 ]
+[ Upstream commit c33b03ac7ff7ca0267ae7a4284a2b9258483614d ]
 
-After pm_runtime_enable() the AUDMIX block is powered off and stays
-suspended until the first runtime resume. Register writes issued between
-probe() and the first resume (e.g. from DAPM or ALSA control paths)
-target unpowered hardware and cause a system hang.
+Configure HDMI DDC SCL/SDA pins to support reading EDID.
 
-Fix this by calling pm_runtime_resume_and_get() immediately after
-pm_runtime_enable() to power the hardware up and enable its clocks.
-Release the reference afterwards with pm_runtime_put() to allow the
-runtime PM framework to suspend the device and switch the regmap to
-cache-only mode when idle.
-
-When CONFIG_PM is disabled or runtime PM is not enabled, pm_runtime_*
-calls are stubs that do not power up the hardware. Handle this case
-explicitly by calling fsl_audmix_runtime_resume() directly so the
-hardware is always initialised and its clocks are enabled, ensuring
-register accesses succeed regardless of PM configuration.
-
-Fixes: be1df61cf06ef ("ASoC: fsl: Add Audio Mixer CPU DAI driver")
-Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
-Link: https://patch.msgid.link/20260618023818.31618-1-shengjiu.wang@oss.nxp.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Philipp Zabel <p.zabel@pengutronix.de>
+Fixes: 95d7d7d2ad27 ("arm64: dts: imx8mp-frdm: add sd, ethernet, wifi, usb and hdmi support")
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/fsl/fsl_audmix.c | 24 ++++++++++++++++++++++--
- 1 file changed, 22 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/freescale/imx8mp-frdm.dts | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/sound/soc/fsl/fsl_audmix.c b/sound/soc/fsl/fsl_audmix.c
-index f819f33ec46b8..2885cc10b02d4 100644
---- a/sound/soc/fsl/fsl_audmix.c
-+++ b/sound/soc/fsl/fsl_audmix.c
-@@ -457,6 +457,9 @@ static const struct of_device_id fsl_audmix_ids[] = {
- };
- MODULE_DEVICE_TABLE(of, fsl_audmix_ids);
+diff --git a/arch/arm64/boot/dts/freescale/imx8mp-frdm.dts b/arch/arm64/boot/dts/freescale/imx8mp-frdm.dts
+index 5fb9714215bfe..f43330d1ff8b6 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mp-frdm.dts
++++ b/arch/arm64/boot/dts/freescale/imx8mp-frdm.dts
+@@ -562,6 +562,8 @@ MX8MP_IOMUXC_SAI1_RXD0__GPIO4_IO02		0x10
  
-+static int fsl_audmix_runtime_resume(struct device *dev);
-+static int fsl_audmix_runtime_suspend(struct device *dev);
-+
- static int fsl_audmix_probe(struct platform_device *pdev)
- {
- 	struct device *dev = &pdev->dev;
-@@ -488,13 +491,25 @@ static int fsl_audmix_probe(struct platform_device *pdev)
- 	spin_lock_init(&priv->lock);
- 	platform_set_drvdata(pdev, priv);
- 	pm_runtime_enable(dev);
-+	if (!pm_runtime_enabled(dev)) {
-+		ret = fsl_audmix_runtime_resume(dev);
-+		if (ret)
-+			goto err_disable_pm;
-+	}
-+
-+	ret = pm_runtime_resume_and_get(dev);
-+	if (ret < 0)
-+		goto err_pm_get_sync;
-+
-+	/* To enable regmap cache only when runtime PM enabled */
-+	pm_runtime_put(dev);
- 
- 	ret = devm_snd_soc_register_component(dev, &fsl_audmix_component,
- 					      fsl_audmix_dai,
- 					      ARRAY_SIZE(fsl_audmix_dai));
- 	if (ret) {
- 		dev_err(dev, "failed to register ASoC DAI\n");
--		goto err_disable_pm;
-+		goto err_pm_get_sync;
- 	}
- 
- 	/*
-@@ -506,12 +521,15 @@ static int fsl_audmix_probe(struct platform_device *pdev)
- 		if (IS_ERR(priv->pdev)) {
- 			ret = PTR_ERR(priv->pdev);
- 			dev_err(dev, "failed to register platform: %d\n", ret);
--			goto err_disable_pm;
-+			goto err_pm_get_sync;
- 		}
- 	}
- 
- 	return 0;
- 
-+err_pm_get_sync:
-+	if (!pm_runtime_status_suspended(dev))
-+		fsl_audmix_runtime_suspend(dev);
- err_disable_pm:
- 	pm_runtime_disable(dev);
- 	return ret;
-@@ -522,6 +540,8 @@ static void fsl_audmix_remove(struct platform_device *pdev)
- 	struct fsl_audmix *priv = dev_get_drvdata(&pdev->dev);
- 
- 	pm_runtime_disable(&pdev->dev);
-+	if (!pm_runtime_status_suspended(&pdev->dev))
-+		fsl_audmix_runtime_suspend(&pdev->dev);
- 
- 	if (priv->pdev)
- 		platform_device_unregister(priv->pdev);
+ 	pinctrl_hdmi: hdmigrp {
+ 		fsl,pins = <
++			MX8MP_IOMUXC_HDMI_DDC_SCL__HDMIMIX_HDMI_SCL	0x1c2
++			MX8MP_IOMUXC_HDMI_DDC_SDA__HDMIMIX_HDMI_SDA	0x1c2
+ 			MX8MP_IOMUXC_HDMI_CEC__HDMIMIX_HDMI_CEC		0x10
+ 		>;
+ 	};
 -- 
 2.53.0
 
