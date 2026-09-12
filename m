@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CEF235A925;
-	Sat, 12 Sep 2026 14:41:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD1D6353A84;
+	Sat, 12 Sep 2026 14:41:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789224104; cv=none; b=lYpJMPqIeh+Jxs/saL8UpD7tPgBiJoMJYezIx1MG8JESvHtFbixO7XhfZ53704C+hiYLiVi/AZPYyuOjFAl/wzQ0whU5+XGY738aiHTQbdoDUy6gg0gmBjAd23RxmXqS52lsbNIR6F2NrjSocZlso+yPVWwMYPjhQojQxMxRVIA=
+	t=1789224106; cv=none; b=VYbFQx5KWCCBhpdA/1z65/3fF7C/ZLMK8QeiJ8ZU4lKbE7cbCGy/dzd5eI7EMbOJGDqwCNA6bMDpRL1pVcLPc7ssRgVspfoDkBHqxUFPK602RiccCBWFYXs59RpUQCVfy9plw6ZbsL/tF4POiaPP+j+5/V0HVRmnAutsr12S3m8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789224104; c=relaxed/simple;
-	bh=qTiLjgNIjLwSrViPGzSnctV4KHExaJnA1i+6j1tRNNM=;
+	s=arc-20240116; t=1789224106; c=relaxed/simple;
+	bh=wSaSMSxT3W1VJMFybYKlPZMdnCBz1gy59AVrB/hImas=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P69toMAmHON5lxBZIYAqtTxXO9cny+OmfRqQmKv4o+z9dsNdmSLBorGvOnjyQ2aYKFlhVIyVaqwbyWXInDrtRzkgVVAzs6Hr16NQSCwpAnfHKIYKgUjmriej/wGjnT+sQCFiF+R17vSqFJAQHl5FHb0L7S8IiBxjRcXyhTnErjU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GqYZfOtY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=d9f96VYNeORt6mtI6KeBcr9GV7ksJVw3VoY/74kSaKRV1lfDrpK5jmWKBA5NPPbFRhYsKoPG8PSV6vwip+cHdWQjaBRG41olM3h4g5GAjRnt6f1+7fRiAfXOm9jDdvqECR8Sh3tTwPQSisoU6j19wEvGhhKUhfa3FP6tT/GrThk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZmRBbcFD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GqYZfOtY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF0EE1F00893;
-	Sat, 12 Sep 2026 14:41:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZmRBbcFD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99FDB1F000FF;
+	Sat, 12 Sep 2026 14:41:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789224098;
-	bh=P3T8tfSgu3NTzYt48K0dgvCvXvAvSB4BG6Kt5K75tUg=;
+	s=korg; t=1789224103;
+	bh=caXCqq+O/8EiV1SNpcEzkeUXt7Qx8Zicb511Y8//8To=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GqYZfOtYAuNQSXaoYJ7b819art7rFozMRTARMsc7cD3rvbiBUEvD0wCuKuWkpQv3L
-	 jFYQtSOLA2TWzakjv27BPvmewEjeOFZPvo3m8oCCr8rEzE1jzTlHPeiB0jRibDbOVT
-	 GsVTVKWPB5/QKtIogjfSLEsPM3TypeAQmTvHkj8Y=
+	b=ZmRBbcFDL79lMubsFQmCcI7PWidlZCK08XpmdwCqtH8WpGeRqtbDTn5lyjxp4h+rw
+	 4TorxNuJ6M594VIN43Ed05XEN73w1HGnav/cACoRvwdC2MvNup+eu2U98y4k/P2sj9
+	 B8Fb8PQFoA+f2RhMcmhu90Ub3GVc6hfLib0L3/v0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	P Praneesh <quic_ppranees@quicinc.com>,
+	Anilkumar Kolli <quic_akolli@quicinc.com>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0907/1424] nilfs2: add nilfs_end_folio_io()
-Date: Sat, 12 Sep 2026 08:55:39 +0200
-Message-ID: <20260912065627.638323865@linuxfoundation.org>
+Subject: [PATCH 6.6 0925/1424] wifi: ath11k: add firmware-2.bin support
+Date: Sat, 12 Sep 2026 08:55:57 +0200
+Message-ID: <20260912065628.039675722@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -52,115 +52,454 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Wilcox (Oracle) <willy@infradead.org>
+From: Anilkumar Kolli <quic_akolli@quicinc.com>
 
-[ Upstream commit 8f46eaf6fd8454b0621b4ce07df50b2aa471c880 ]
+[ Upstream commit 7db88b962f06a52af5e9a32971012e8f3427cec0 ]
 
-Patch series "nilfs2: Folio conversions for file paths".
+Firmware IE containers can dynamically provide various information
+what firmware supports. Also it can embed more than one image so
+updating firmware is easy, user just needs to update one file in
+/lib/firmware/.
 
-This series advances page->folio conversions for a wide range of nilfs2,
-including its file operations, block routines, and the log writer's
-writeback routines.  It doesn't cover large folios support, but it saves a
-lot of hidden compound_head() calls while preserving the existing support
-range behavior.
+The firmware API 2 or higher will use the IE container format, the
+current API 1 will not use the new format but it still is supported
+for some time. Firmware API 2 files are named as firmware-2.bin
+(which contains both amss.bin and m3.bin images) and API 1 files are
+amss.bin and m3.bin.
 
-The original series in post [1] also covered directory-related page->folio
-conversions, but that was put on hold because a regression was found in
-testing, so this is an excerpt from the first half of the original post.
+Currently ath11k PCI driver provides firmware binary (amss.bin) path to
+MHI driver, MHI driver reads firmware from filesystem and boots it. Add
+provision to read firmware files from ath11k driver and provide the amss.bin
+firmware data and size to MHI using a pointer.
 
-[1] https://lkml.kernel.org/r/20231106173903.1734114-1-willy@infradead.org
+Currently enum ath11k_fw_features is empty, the patches adding features will
+add the flags.
 
-I tested this series in both 32-bit and 64-bit environments, switching
-between normal and small block sizes.  I also reviewed all changes in all
-patches to ensure they do not break existing behavior.  There were no
-problems.
+With AHB devices there's no amss.bin or m3.bin, so no changes in how AHB
+firmware files are used. But AHB devices can use future additions to the meta
+data, for example in enum ath11k_fw_features.
 
-This patch (of 20):
+Tested-on: WCN6855 hw2.0 PCI WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.9
 
-This is the folio counterpart of the existing nilfs_end_page_io() which is
-retained as a wrapper of nilfs_end_folio_io().  Replaces nine hidden calls
-to compound_head() with one.
-
-Link: https://lkml.kernel.org/r/20231114084436.2755-1-konishi.ryusuke@gmail.com
-Link: https://lkml.kernel.org/r/20231114084436.2755-2-konishi.ryusuke@gmail.com
-Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Stable-dep-of: 66f4ad3ce158 ("nilfs2: fix BUG in nilfs_copy_dirty_pages() on dirty state mismatch")
+Co-developed-by: P Praneesh <quic_ppranees@quicinc.com>
+Signed-off-by: P Praneesh <quic_ppranees@quicinc.com>
+Signed-off-by: Anilkumar Kolli <quic_akolli@quicinc.com>
+Co-developed-by: Kalle Valo <quic_kvalo@quicinc.com>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://lore.kernel.org/r/20230727100430.3603551-4-kvalo@kernel.org
+Stable-dep-of: 208d7fdb8597 ("wifi: ath11k: fix overreads in ath11k_wmi_process_csa_switch_count_event()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nilfs2/segment.c | 36 ++++++++++++++++++++++--------------
- 1 file changed, 22 insertions(+), 14 deletions(-)
+ drivers/net/wireless/ath/ath11k/Makefile |   3 +-
+ drivers/net/wireless/ath/ath11k/core.c   |   8 ++
+ drivers/net/wireless/ath/ath11k/core.h   |  15 ++
+ drivers/net/wireless/ath/ath11k/fw.c     | 168 +++++++++++++++++++++++
+ drivers/net/wireless/ath/ath11k/fw.h     |  27 ++++
+ drivers/net/wireless/ath/ath11k/mhi.c    |  18 ++-
+ drivers/net/wireless/ath/ath11k/qmi.c    |  36 +++--
+ 7 files changed, 258 insertions(+), 17 deletions(-)
+ create mode 100644 drivers/net/wireless/ath/ath11k/fw.c
+ create mode 100644 drivers/net/wireless/ath/ath11k/fw.h
 
-diff --git a/fs/nilfs2/segment.c b/fs/nilfs2/segment.c
-index 94458afcd5294..2879f1763deb0 100644
---- a/fs/nilfs2/segment.c
-+++ b/fs/nilfs2/segment.c
-@@ -1744,17 +1744,18 @@ static int nilfs_segctor_write(struct nilfs_sc_info *sci,
- 	return ret;
+diff --git a/drivers/net/wireless/ath/ath11k/Makefile b/drivers/net/wireless/ath/ath11k/Makefile
+index cc47e0114595f..2c94d50ae36f7 100644
+--- a/drivers/net/wireless/ath/ath11k/Makefile
++++ b/drivers/net/wireless/ath/ath11k/Makefile
+@@ -17,7 +17,8 @@ ath11k-y += core.o \
+ 	    peer.o \
+ 	    dbring.o \
+ 	    hw.o \
+-	    pcic.o
++	    pcic.o \
++	    fw.o
+ 
+ ath11k-$(CONFIG_ATH11K_DEBUGFS) += debugfs.o debugfs_htt_stats.o debugfs_sta.o
+ ath11k-$(CONFIG_NL80211_TESTMODE) += testmode.o
+diff --git a/drivers/net/wireless/ath/ath11k/core.c b/drivers/net/wireless/ath/ath11k/core.c
+index 9eb8887f84e7e..e3f730e0dd589 100644
+--- a/drivers/net/wireless/ath/ath11k/core.c
++++ b/drivers/net/wireless/ath/ath11k/core.c
+@@ -16,6 +16,7 @@
+ #include "debug.h"
+ #include "hif.h"
+ #include "wow.h"
++#include "fw.h"
+ 
+ unsigned int ath11k_debug_mask;
+ EXPORT_SYMBOL(ath11k_debug_mask);
+@@ -2124,6 +2125,12 @@ int ath11k_core_pre_init(struct ath11k_base *ab)
+ 		return ret;
+ 	}
+ 
++	ret = ath11k_fw_pre_init(ab);
++	if (ret) {
++		ath11k_err(ab, "failed to pre init firmware: %d", ret);
++		return ret;
++	}
++
+ 	return 0;
  }
+ EXPORT_SYMBOL(ath11k_core_pre_init);
+@@ -2163,6 +2170,7 @@ void ath11k_core_deinit(struct ath11k_base *ab)
+ 	ath11k_hif_power_down(ab);
+ 	ath11k_mac_destroy(ab);
+ 	ath11k_core_soc_destroy(ab);
++	ath11k_fw_destroy(ab);
+ }
+ EXPORT_SYMBOL(ath11k_core_deinit);
  
--static void nilfs_end_page_io(struct page *page, int err)
-+static void nilfs_end_folio_io(struct folio *folio, int err)
- {
--	if (!page)
-+	if (!folio)
- 		return;
+diff --git a/drivers/net/wireless/ath/ath11k/core.h b/drivers/net/wireless/ath/ath11k/core.h
+index 4bb36dc6ae08b..4cf6716a182dc 100644
+--- a/drivers/net/wireless/ath/ath11k/core.h
++++ b/drivers/net/wireless/ath/ath11k/core.h
+@@ -15,6 +15,8 @@
+ #include <linux/ctype.h>
+ #include <linux/rhashtable.h>
+ #include <linux/average.h>
++#include <linux/firmware.h>
++
+ #include "qmi.h"
+ #include "htc.h"
+ #include "wmi.h"
+@@ -29,6 +31,7 @@
+ #include "dbring.h"
+ #include "spectral.h"
+ #include "wow.h"
++#include "fw.h"
  
--	if (buffer_nilfs_node(page_buffers(page)) && !PageWriteback(page)) {
-+	if (buffer_nilfs_node(folio_buffers(folio)) &&
-+			!folio_test_writeback(folio)) {
- 		/*
- 		 * For b-tree node pages, this function may be called twice
- 		 * or more because they might be split in a segment.
- 		 */
--		if (PageDirty(page)) {
-+		if (folio_test_dirty(folio)) {
- 			/*
- 			 * For pages holding split b-tree node buffers, dirty
- 			 * flag on the buffers may be cleared discretely.
-@@ -1762,24 +1763,31 @@ static void nilfs_end_page_io(struct page *page, int err)
- 			 * remaining buffers, and it must be cancelled if
- 			 * all the buffers get cleaned later.
- 			 */
--			lock_page(page);
--			if (nilfs_page_buffers_clean(page))
--				__nilfs_clear_page_dirty(page);
--			unlock_page(page);
-+			folio_lock(folio);
-+			if (nilfs_page_buffers_clean(&folio->page))
-+				__nilfs_clear_page_dirty(&folio->page);
-+			folio_unlock(folio);
- 		}
- 		return;
- 	}
+ #define SM(_v, _f) (((_v) << _f##_LSB) & _f##_MASK)
  
- 	if (!err) {
--		if (!nilfs_page_buffers_clean(page))
--			__set_page_dirty_nobuffers(page);
--		ClearPageError(page);
-+		if (!nilfs_page_buffers_clean(&folio->page))
-+			filemap_dirty_folio(folio->mapping, folio);
-+		folio_clear_error(folio);
- 	} else {
--		__set_page_dirty_nobuffers(page);
--		SetPageError(page);
-+		filemap_dirty_folio(folio->mapping, folio);
-+		folio_set_error(folio);
- 	}
+@@ -993,6 +996,18 @@ struct ath11k_base {
+ 		const struct ath11k_pci_ops *ops;
+ 	} pci;
  
--	end_page_writeback(page);
-+	folio_end_writeback(folio);
++	struct {
++		u32 api_version;
++
++		const struct firmware *fw;
++		const u8 *amss_data;
++		size_t amss_len;
++		const u8 *m3_data;
++		size_t m3_len;
++
++		DECLARE_BITMAP(fw_features, ATH11K_FW_FEATURE_COUNT);
++	} fw;
++
+ #ifdef CONFIG_NL80211_TESTMODE
+ 	struct {
+ 		u32 data_pos;
+diff --git a/drivers/net/wireless/ath/ath11k/fw.c b/drivers/net/wireless/ath/ath11k/fw.c
+new file mode 100644
+index 0000000000000..8f84fba29886e
+--- /dev/null
++++ b/drivers/net/wireless/ath/ath11k/fw.c
+@@ -0,0 +1,168 @@
++// SPDX-License-Identifier: BSD-3-Clause-Clear
++/*
++ * Copyright (c) 2022-2023, Qualcomm Innovation Center, Inc. All rights reserved.
++ */
++
++#include "core.h"
++
++#include "debug.h"
++
++static int ath11k_fw_request_firmware_api_n(struct ath11k_base *ab,
++					    const char *name)
++{
++	size_t magic_len, len, ie_len;
++	int ie_id, i, index, bit, ret;
++	struct ath11k_fw_ie *hdr;
++	const u8 *data;
++	__le32 *timestamp;
++
++	ab->fw.fw = ath11k_core_firmware_request(ab, name);
++	if (IS_ERR(ab->fw.fw)) {
++		ret = PTR_ERR(ab->fw.fw);
++		ath11k_dbg(ab, ATH11K_DBG_BOOT, "failed to load %s: %d\n", name, ret);
++		ab->fw.fw = NULL;
++		return ret;
++	}
++
++	data = ab->fw.fw->data;
++	len = ab->fw.fw->size;
++
++	/* magic also includes the null byte, check that as well */
++	magic_len = strlen(ATH11K_FIRMWARE_MAGIC) + 1;
++
++	if (len < magic_len) {
++		ath11k_err(ab, "firmware image too small to contain magic: %zu\n",
++			   len);
++		ret = -EINVAL;
++		goto err;
++	}
++
++	if (memcmp(data, ATH11K_FIRMWARE_MAGIC, magic_len) != 0) {
++		ath11k_err(ab, "Invalid firmware magic\n");
++		ret = -EINVAL;
++		goto err;
++	}
++
++	/* jump over the padding */
++	magic_len = ALIGN(magic_len, 4);
++
++	/* make sure there's space for padding */
++	if (magic_len > len) {
++		ath11k_err(ab, "No space for padding after magic\n");
++		ret = -EINVAL;
++		goto err;
++	}
++
++	len -= magic_len;
++	data += magic_len;
++
++	/* loop elements */
++	while (len > sizeof(struct ath11k_fw_ie)) {
++		hdr = (struct ath11k_fw_ie *)data;
++
++		ie_id = le32_to_cpu(hdr->id);
++		ie_len = le32_to_cpu(hdr->len);
++
++		len -= sizeof(*hdr);
++		data += sizeof(*hdr);
++
++		if (len < ie_len) {
++			ath11k_err(ab, "Invalid length for FW IE %d (%zu < %zu)\n",
++				   ie_id, len, ie_len);
++			ret = -EINVAL;
++			goto err;
++		}
++
++		switch (ie_id) {
++		case ATH11K_FW_IE_TIMESTAMP:
++			if (ie_len != sizeof(u32))
++				break;
++
++			timestamp = (__le32 *)data;
++
++			ath11k_dbg(ab, ATH11K_DBG_BOOT, "found fw timestamp %d\n",
++				   le32_to_cpup(timestamp));
++			break;
++		case ATH11K_FW_IE_FEATURES:
++			ath11k_dbg(ab, ATH11K_DBG_BOOT,
++				   "found firmware features ie (%zd B)\n",
++				   ie_len);
++
++			for (i = 0; i < ATH11K_FW_FEATURE_COUNT; i++) {
++				index = i / 8;
++				bit = i % 8;
++
++				if (index == ie_len)
++					break;
++
++				if (data[index] & (1 << bit))
++					__set_bit(i, ab->fw.fw_features);
++			}
++
++			ath11k_dbg_dump(ab, ATH11K_DBG_BOOT, "features", "",
++					ab->fw.fw_features,
++					sizeof(ab->fw.fw_features));
++			break;
++		case ATH11K_FW_IE_AMSS_IMAGE:
++			ath11k_dbg(ab, ATH11K_DBG_BOOT,
++				   "found fw image ie (%zd B)\n",
++				   ie_len);
++
++			ab->fw.amss_data = data;
++			ab->fw.amss_len = ie_len;
++			break;
++		case ATH11K_FW_IE_M3_IMAGE:
++			ath11k_dbg(ab, ATH11K_DBG_BOOT,
++				   "found m3 image ie (%zd B)\n",
++				   ie_len);
++
++			ab->fw.m3_data = data;
++			ab->fw.m3_len = ie_len;
++			break;
++		default:
++			ath11k_warn(ab, "Unknown FW IE: %u\n", ie_id);
++			break;
++		}
++
++		/* jump over the padding */
++		ie_len = ALIGN(ie_len, 4);
++
++		/* make sure there's space for padding */
++		if (ie_len > len)
++			break;
++
++		len -= ie_len;
++		data += ie_len;
++	};
++
++	return 0;
++
++err:
++	release_firmware(ab->fw.fw);
++	ab->fw.fw = NULL;
++	return ret;
 +}
 +
-+static void nilfs_end_page_io(struct page *page, int err)
++int ath11k_fw_pre_init(struct ath11k_base *ab)
 +{
-+	if (!page)
-+		return;
-+	nilfs_end_folio_io(page_folio(page), err);
- }
++	int ret;
++
++	ret = ath11k_fw_request_firmware_api_n(ab, ATH11K_FW_API2_FILE);
++	if (ret == 0) {
++		ab->fw.api_version = 2;
++		goto out;
++	}
++
++	ab->fw.api_version = 1;
++
++out:
++	ath11k_dbg(ab, ATH11K_DBG_BOOT, "using fw api %d\n",
++		   ab->fw.api_version);
++
++	return 0;
++}
++
++void ath11k_fw_destroy(struct ath11k_base *ab)
++{
++	release_firmware(ab->fw.fw);
++}
+diff --git a/drivers/net/wireless/ath/ath11k/fw.h b/drivers/net/wireless/ath/ath11k/fw.h
+new file mode 100644
+index 0000000000000..d9893ceb2c3dd
+--- /dev/null
++++ b/drivers/net/wireless/ath/ath11k/fw.h
+@@ -0,0 +1,27 @@
++/* SPDX-License-Identifier: BSD-3-Clause-Clear */
++/*
++ * Copyright (c) 2022-2023, Qualcomm Innovation Center, Inc. All rights reserved.
++ */
++
++#ifndef ATH11K_FW_H
++#define ATH11K_FW_H
++
++#define ATH11K_FW_API2_FILE		"firmware-2.bin"
++#define ATH11K_FIRMWARE_MAGIC		"QCOM-ATH11K-FW"
++
++enum ath11k_fw_ie_type {
++	ATH11K_FW_IE_TIMESTAMP = 0,
++	ATH11K_FW_IE_FEATURES = 1,
++	ATH11K_FW_IE_AMSS_IMAGE = 2,
++	ATH11K_FW_IE_M3_IMAGE = 3,
++};
++
++enum ath11k_fw_features {
++	/* keep last */
++	ATH11K_FW_FEATURE_COUNT,
++};
++
++int ath11k_fw_pre_init(struct ath11k_base *ab);
++void ath11k_fw_destroy(struct ath11k_base *ab);
++
++#endif /* ATH11K_FW_H */
+diff --git a/drivers/net/wireless/ath/ath11k/mhi.c b/drivers/net/wireless/ath/ath11k/mhi.c
+index 48ae81efc2696..d3a4b561832c5 100644
+--- a/drivers/net/wireless/ath/ath11k/mhi.c
++++ b/drivers/net/wireless/ath/ath11k/mhi.c
+@@ -6,6 +6,7 @@
  
- static void nilfs_abort_logs(struct list_head *logs, int err)
+ #include <linux/msi.h>
+ #include <linux/pci.h>
++#include <linux/firmware.h>
+ #include <linux/of.h>
+ #include <linux/of_address.h>
+ #include <linux/ioport.h>
+@@ -389,16 +390,23 @@ int ath11k_mhi_register(struct ath11k_pci *ab_pci)
+ 	if (!mhi_ctrl)
+ 		return -ENOMEM;
+ 
+-	ath11k_core_create_firmware_path(ab, ATH11K_AMSS_FILE,
+-					 ab_pci->amss_path,
+-					 sizeof(ab_pci->amss_path));
+-
+ 	ab_pci->mhi_ctrl = mhi_ctrl;
+ 	mhi_ctrl->cntrl_dev = ab->dev;
+-	mhi_ctrl->fw_image = ab_pci->amss_path;
+ 	mhi_ctrl->regs = ab->mem;
+ 	mhi_ctrl->reg_len = ab->mem_len;
+ 
++	if (ab->fw.amss_data && ab->fw.amss_len > 0) {
++		/* use MHI firmware file from firmware-N.bin */
++		mhi_ctrl->fw_data = ab->fw.amss_data;
++		mhi_ctrl->fw_sz = ab->fw.amss_len;
++	} else {
++		/* use the old separate mhi.bin MHI firmware file */
++		ath11k_core_create_firmware_path(ab, ATH11K_AMSS_FILE,
++						 ab_pci->amss_path,
++						 sizeof(ab_pci->amss_path));
++		mhi_ctrl->fw_image = ab_pci->amss_path;
++	}
++
+ 	ret = ath11k_mhi_get_msi(ab_pci);
+ 	if (ret) {
+ 		ath11k_err(ab, "failed to get msi for mhi\n");
+diff --git a/drivers/net/wireless/ath/ath11k/qmi.c b/drivers/net/wireless/ath/ath11k/qmi.c
+index c27d2a6cbd9da..dde60ca9d2b8b 100644
+--- a/drivers/net/wireless/ath/ath11k/qmi.c
++++ b/drivers/net/wireless/ath/ath11k/qmi.c
+@@ -2514,25 +2514,39 @@ static int ath11k_qmi_load_bdf_qmi(struct ath11k_base *ab,
+ static int ath11k_qmi_m3_load(struct ath11k_base *ab)
+ {
+ 	struct m3_mem_region *m3_mem = &ab->qmi.m3_mem;
+-	const struct firmware *fw;
++	const struct firmware *fw = NULL;
++	const void *m3_data;
+ 	char path[100];
++	size_t m3_len;
+ 	int ret;
+ 
+ 	if (m3_mem->vaddr)
+ 		/* m3 firmware buffer is already available in the DMA buffer */
+ 		return 0;
+ 
+-	fw = ath11k_core_firmware_request(ab, ATH11K_M3_FILE);
+-	if (IS_ERR(fw)) {
+-		ret = PTR_ERR(fw);
+-		ath11k_core_create_firmware_path(ab, ATH11K_M3_FILE,
+-						 path, sizeof(path));
+-		ath11k_err(ab, "failed to load %s: %d\n", path, ret);
+-		return ret;
++	if (ab->fw.m3_data && ab->fw.m3_len > 0) {
++		/* firmware-N.bin had a m3 firmware file so use that */
++		m3_data = ab->fw.m3_data;
++		m3_len = ab->fw.m3_len;
++	} else {
++		/* No m3 file in firmware-N.bin so try to request old
++		 * separate m3.bin.
++		 */
++		fw = ath11k_core_firmware_request(ab, ATH11K_M3_FILE);
++		if (IS_ERR(fw)) {
++			ret = PTR_ERR(fw);
++			ath11k_core_create_firmware_path(ab, ATH11K_M3_FILE,
++							 path, sizeof(path));
++			ath11k_err(ab, "failed to load %s: %d\n", path, ret);
++			return ret;
++		}
++
++		m3_data = fw->data;
++		m3_len = fw->size;
+ 	}
+ 
+ 	m3_mem->vaddr = dma_alloc_coherent(ab->dev,
+-					   fw->size, &m3_mem->paddr,
++					   m3_len, &m3_mem->paddr,
+ 					   GFP_KERNEL);
+ 	if (!m3_mem->vaddr) {
+ 		ath11k_err(ab, "failed to allocate memory for M3 with size %zu\n",
+@@ -2541,8 +2555,8 @@ static int ath11k_qmi_m3_load(struct ath11k_base *ab)
+ 		goto out;
+ 	}
+ 
+-	memcpy(m3_mem->vaddr, fw->data, fw->size);
+-	m3_mem->size = fw->size;
++	memcpy(m3_mem->vaddr, m3_data, m3_len);
++	m3_mem->size = m3_len;
+ 
+ 	ret = 0;
+ 
 -- 
 2.53.0
 
