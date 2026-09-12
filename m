@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AE7C2FFDEA;
-	Sat, 12 Sep 2026 14:22:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7F33349CFF;
+	Sat, 12 Sep 2026 14:22:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789222931; cv=none; b=ozEL49LH35/VXxENF1PgjuUXihIBbCqgT1bfkdKQmr5igdxUCnpr2QpRyiRzSBtqc8geYOL0fFa0ol0bYjOUmpWLhiRy1XVfXv3I5knzmITZUQl/66ulSO6+m7+HMJE/fNbkQbsyPO3KrIVLHV1o6wfe7QapMscJ493lZdqYwhU=
+	t=1789222941; cv=none; b=Pmv3ATsB5V3hgFf9R4/Kt/o8cywTnmhlj0Z2TTJ5HyVDBX4eNncd8m0HsBic+UynroVlbvWh4wnpmKq7mKsaGshci224jb0tUev5bePmNs2Q1qJh4Z/ppRPudDPDpWgKaljkY4q7X7uApb86absc69OGeByZwdhaicMq4OHsSHk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789222931; c=relaxed/simple;
-	bh=lfnN/+Pb0zwhM0B/rnnfRDtn6vw0fyagh2xd3usgNaM=;
+	s=arc-20240116; t=1789222941; c=relaxed/simple;
+	bh=oyZATvaU0iS5Gt+g6X/jlod++iVVRUzsSb3y+2+vrO4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rP/mBlPWpXL5zCS2wj1dLDgDAFfCy6dOhcBKmOK85DUSGqhns3IGvjijLHyFILBSludB7F0LV3R7wG7GO719fzq/nZqv2CdyVE2hQGFJ5Oc/XVFSNd7MjBgNyBP+Pn1Q3vVpY9LeEJzskOd1qL4RnLrKuYFtbWsRw367xkGP50s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c4IdLgzl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XLRpK1gdd3f5Zmosn8iSwuZSu3QhhPJiWJ2aB0iOt45IHGKNs8wrywpDexqR14p7kLAOovVI8qs2Vr6TXigPTxbkDKhBrVJjhT6IAXRItsif3SlPTJz61aJVfe98U6fCgwwvr8SHinIRAifCxo8K/clsb7O240eGKP9WSBv8o7s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jz+l6ZcG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c4IdLgzl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BC651F000FF;
-	Sat, 12 Sep 2026 14:22:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jz+l6ZcG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 691911F00893;
+	Sat, 12 Sep 2026 14:22:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789222930;
-	bh=FeZ7D2dffXG2Avy1qGuN6ALa+Oz/LwpHA5ViCr1w50M=;
+	s=korg; t=1789222939;
+	bh=agU84rlNQgDP0Phc+rAD8quNz7d97MJkgirCR1ZNZNE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=c4IdLgzl0hBTZWsqQTx9fzvKonc6Hwwtr4dShsj7NgZXSa/cwdVYiP9qQMfEj80NV
-	 eqrE7Rp7W6REObqoIJixmh3MKNqYrDojr2gXA0aA8tqiqs4l42uIcJ2B4zxp4z3gFH
-	 feN5TH27newFWLKeVN2Jd/LgR/yh/NsXz3mXemUQ=
+	b=jz+l6ZcG0oyqB1tpqmgU/gCtGnjI8AaZ0WVOXKfeoWCaFHdjjR+pGqlhr61ZaWEo3
+	 ocN3TRtu8RDjUkk1n6ky+k9tJMqZoCJSJv+8GsXR2gGOwx7ucoqm2KfH4AnewTmasF
+	 oLPKRuKdS9y6mPrtQ/LwD5sWSndnSwqlkrcnTx6E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Borkmann <daniel@iogearbox.net>,
+	Sanghyun Park <sanghyun.park.cnu@gmail.com>,
+	Puranjay Mohan <puranjay@kernel.org>,
+	Yonghong Song <yonghong.song@linux.dev>,
 	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0687/1424] bpf: Fix vmlinux BTF prep race in bpf_get_btf_vmlinux
-Date: Sat, 12 Sep 2026 08:51:59 +0200
-Message-ID: <20260912065622.686127732@linuxfoundation.org>
+Subject: [PATCH 6.6 0689/1424] bpf: Fix use-after-free on mm_struct in bpf_find_vma()
+Date: Sat, 12 Sep 2026 08:52:01 +0200
+Message-ID: <20260912065622.729195778@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -51,71 +53,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Borkmann <daniel@iogearbox.net>
+From: Sanghyun Park <sanghyun.park.cnu@gmail.com>
 
-[ Upstream commit 92863e678070f57c17c868e4bfa2441a5c61ad2b ]
+[ Upstream commit 47b079e2117a2ee52e21f8b72935900c702fc0b5 ]
 
-bpf_get_btf_vmlinux() lazily parses the vmlinux BTF under the
-bpf_verifier_lock, but publishes the result through a plain store
-and re-checks it through a plain lockless load. Nothing orders
-the stores initializing the struct btf inside btf_parse_vmlinux()
-against the store publishing the pointer: On a weakly ordered
-arch, a concurrent first-time caller taking the lockless fast
-path could in principle observe the pointer before the parsed
-contents are visible. The mutex_unlock() does not help such a
-reader given it only synchronizes with a later acquisition of the
-same lock. Thus, publish the pointer with smp_store_release()
-and read it on the fast path with smp_load_acquire().
+bpf_find_vma() reads task->mm and calls mmap_read_trylock(mm) without
+holding a reference on the mm. On a foreign task, a concurrent exit_mm()
+can free the mm_struct between the lockless read and the trylock,
+resulting in a use-after-free. mm_struct is not SLAB_TYPESAFE_BY_RCU.
 
-Acquire semantics are needed rather than a dependency-ordered
-READ_ONCE(): btf_parse_vmlinux() also populates globals outside
-the returned object (e.g. bpf_ctx_convert.t). An address
-dependency would only order accesses performed through the
-pointer and not cover other globals.
+For the current task, task->mm is stable. For a foreign task, pin the mm
+under task->alloc_lock and release it with mmput_async(), mirroring commit
+d8e27d2d22b6 ("bpf: fix mm lifecycle in open-coded task_vma iterator").
+Use spin_trylock() instead of get_task_mm() so BPF context does not block
+on alloc_lock. Reject irqs-disabled contexts and !CONFIG_MMU on the
+foreign-task path because dropping the mm reference is not safe there.
 
-Fixes: 8580ac9404f6 ("bpf: Process in-kernel BTF")
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/bpf/20260708211537.371874-2-daniel@iogearbox.net
+Race:
+
+  CPU0 (BPF program)                  CPU1 (exiting task)
+  ============================        ==========================
+  bpf_find_vma(foreign_task):
+    mm = task->mm
+                                      exit_mm():
+                                        task->mm = NULL
+                                        mmput(mm) -> frees mm_struct
+    mmap_read_trylock(mm)
+        // UAF on mm
+
+Fixes: 7c7e3d31e785 ("bpf: Introduce helper bpf_find_vma")
+Signed-off-by: Sanghyun Park <sanghyun.park.cnu@gmail.com>
+Reviewed-by: Puranjay Mohan <puranjay@kernel.org>
+Acked-by: Yonghong Song <yonghong.song@linux.dev>
+Link: https://lore.kernel.org/bpf/20260708072106.199637-2-sanghyun.park.cnu@gmail.com
 Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 20 ++++++++++++++++----
- 1 file changed, 16 insertions(+), 4 deletions(-)
+ kernel/bpf/task_iter.c | 36 +++++++++++++++++++++++++++++++++---
+ 1 file changed, 33 insertions(+), 3 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 0a67f285f4b08..f7f5f54dc4485 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -20511,13 +20511,25 @@ static int check_attach_btf_id(struct bpf_verifier_env *env)
+diff --git a/kernel/bpf/task_iter.c b/kernel/bpf/task_iter.c
+index f7ef58090c7d0..30dd2b31a38d9 100644
+--- a/kernel/bpf/task_iter.c
++++ b/kernel/bpf/task_iter.c
+@@ -783,6 +783,7 @@ BPF_CALL_5(bpf_find_vma, struct task_struct *, task, u64, start,
+ 	struct mmap_unlock_irq_work *work = NULL;
+ 	struct vm_area_struct *vma;
+ 	bool irq_work_busy = false;
++	bool __maybe_unused mmput_needed = false;
+ 	struct mm_struct *mm;
+ 	int ret = -ENOENT;
  
- struct btf *bpf_get_btf_vmlinux(void)
- {
--	if (!btf_vmlinux && IS_ENABLED(CONFIG_DEBUG_INFO_BTF)) {
-+	/* Pairs with the smp_store_release() on the parse path below. */
-+	struct btf *btf = smp_load_acquire(&btf_vmlinux);
-+
-+	if (!btf && IS_ENABLED(CONFIG_DEBUG_INFO_BTF)) {
- 		mutex_lock(&bpf_verifier_lock);
--		if (!btf_vmlinux)
--			btf_vmlinux = btf_parse_vmlinux();
-+		btf = btf_vmlinux;
-+		if (!btf) {
-+			btf = btf_parse_vmlinux();
-+			/*
-+			 * Order the parsed BTF contents and the globals the
-+			 * parse populated (e.g. bpf_ctx_convert.t) before
-+			 * the pointer publication. Pairs with the acquire
-+			 * on the lockless fast path above.
-+			 */
-+			smp_store_release(&btf_vmlinux, btf);
+@@ -792,14 +793,38 @@ BPF_CALL_5(bpf_find_vma, struct task_struct *, task, u64, start,
+ 	if (!task)
+ 		return -ENOENT;
+ 
+-	mm = task->mm;
++	if (task == current) {
++		mm = task->mm;
++	} else {
++		/*
++		 * Foreign task: pin task->mm against a concurrent exit_mm().
++		 * Use trylock on alloc_lock instead of get_task_mm()'s
++		 * blocking task_lock() to avoid deadlocking the target task.
++		 */
++		if (!IS_ENABLED(CONFIG_MMU))
++			return -EOPNOTSUPP;
++		if (irqs_disabled())
++			return -EBUSY;
++		if (!spin_trylock(&task->alloc_lock))
++			return -EBUSY;
++		mm = task->mm;
++		if (mm && !(task->flags & PF_KTHREAD)) {
++			mmget(mm);
++			mmput_needed = true;
++		} else {
++			mm = NULL;
 +		}
- 		mutex_unlock(&bpf_verifier_lock);
++		spin_unlock(&task->alloc_lock);
++	}
+ 	if (!mm)
+ 		return -ENOENT;
+ 
+ 	irq_work_busy = bpf_mmap_unlock_get_irq_work(&work);
+ 
+-	if (irq_work_busy || !mmap_read_trylock(mm))
+-		return -EBUSY;
++	if (irq_work_busy || !mmap_read_trylock(mm)) {
++		ret = -EBUSY;
++		goto out;
++	}
+ 
+ 	vma = find_vma(mm, start);
+ 
+@@ -809,6 +834,11 @@ BPF_CALL_5(bpf_find_vma, struct task_struct *, task, u64, start,
+ 		ret = 0;
  	}
--	return btf_vmlinux;
-+	return btf;
+ 	bpf_mmap_unlock_mm(work, mm);
++out:
++#ifdef CONFIG_MMU
++	if (mmput_needed)
++		mmput_async(mm);
++#endif
+ 	return ret;
  }
  
- int bpf_check(struct bpf_prog **prog, union bpf_attr *attr, bpfptr_t uattr, __u32 uattr_size)
 -- 
 2.53.0
 
