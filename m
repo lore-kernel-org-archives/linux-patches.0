@@ -1,37 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42C32345EB9;
-	Sat, 12 Sep 2026 15:38:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D017282F1F;
+	Sat, 12 Sep 2026 15:38:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789227494; cv=none; b=JHyxeZPNbNckneUNudVbB/6+6nROW0Vxxd80+vnlk/j42wKcl/12po1s1MLrLPeLZWwPnxpP5Z3Ad3/Lv5glTW3696TNxl0/8nZACIBraNaSMw3BgdQ3ufSw9+d7O5hRTlK5k5SDPYrdr56G/3AhpBMnzJLpUJYz0XVT3C8XEmQ=
+	t=1789227499; cv=none; b=A73RRsqgZRNVXNQZvC+jo/0EtIoSJt/w8D1sFb5VLVGqEMgbHqRLCR1KOGcH3SNslX1noJ55gqjzUynVBZ1uuLcSQA5QfZqjDUFL3EjaVeiX62MQ1MZ0Zb8ifbz1YrImZDr7ngsdAmdV2Kr2LXI1gu++E/I7I4OtxEynluw7hcs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789227494; c=relaxed/simple;
-	bh=P9ZlnC3wRRthquFHF761uUrBwEeKqz+6GA+EWjiC+NE=;
+	s=arc-20240116; t=1789227499; c=relaxed/simple;
+	bh=UUZGjIH+6IoyCYYcsr5dUT1DQxpdYTe27N18fBNdzqI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=J4euYm4UxsiUhtn3Mt5ETCsazFaebR6gKWc8tDFx4nno+loFWe9uPipzdVPvOyjGu3A5loVEGW/bGN9asPx6tBTuaissslZUQ+VaReouHm8Thh/dzhu9Wksdo4isYr2ZCzXjslxkOPI1Xe4zvBPl7mq8QMd36LwJMxKIZSKB7uU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gj2/6VcT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IZqcsAUrfDHJze8Ol5lJbXnvLkjeEircSVvAWoQK9MvhvvJkrxBH46kFMuPhnQ3qzg/qaEm+XQ0/JE1rPGXXk3xA4uEUlvGeLwdiYXrbxMelaNmPB5DuHmxcbMdFrLtTnDISkicgt4MrJRRwlWnoztRu+3asxLPEIAI15lrB8XM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XqU4c0VI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gj2/6VcT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFB5E1F000FF;
-	Sat, 12 Sep 2026 15:38:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XqU4c0VI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18BAA1F000FF;
+	Sat, 12 Sep 2026 15:38:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789227493;
-	bh=YWfcxoTNWTONwMXhDHN+WEXPhgX3Jros+NpHozI+phs=;
+	s=korg; t=1789227498;
+	bh=dbUe9O6c+XnKQ5SstjXRdm8zbVBQrbCwsr8D4xYYfkI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Gj2/6VcThgsFZceq+VNmcTxadAJaH8faNjGw9qGD8HQDzmrVc28fjceXrPjV/hfOB
-	 z5VUnpFKFd3yqRfZVUf+jOovGRf4a3sL7SB1x0j1aIwYBDi+UJeTQuWgqgZIdI/a9l
-	 Jf7OaD7/zl8p+yLssgY4X0Wq6Br3qT46zaZVZJe0=
+	b=XqU4c0VI9T1nh3/nnUawjAj+7tK7kpH5CzeplcNxvDdmZ+q7wFoeq1d0eeMF67Tps
+	 DE5iGXRM3va/Mj1gTw+W2jC6+Dsw8Y1GQJ2UY9uWvIEbIo6GnrwG+sEC6ZmShsIRKg
+	 gYrKGVAdgAQPcU/UequugzCd2LT3SONrZMOJmGMs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>
-Subject: [PATCH 6.1 0190/1191] PCI/proc: Avoid spurious runtime PM wakeup on config space accesses
-Date: Sat, 12 Sep 2026 08:48:38 +0200
-Message-ID: <20260912065552.482784999@linuxfoundation.org>
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Jun Piao <piaojun@huawei.com>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 0151/1191] ocfs2: validate lengths in dlm_mig_lockres_handler
+Date: Sat, 12 Sep 2026 08:47:59 +0200
+Message-ID: <20260912065551.596225196@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -44,71 +51,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Krzysztof Wilczyński <kwilczynski@kernel.org>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-commit 4ff664a81d729b37f2eb65de80a670abfb61c9a0 upstream.
+commit b54e03d9b3697d25f4a0063cf717d459c5e3ad94 upstream.
 
-Currently, proc_bus_pci_read() and proc_bus_pci_write() do not return early
-for zero-length configuration space accesses at valid offsets.
+A node receiving a DLM_MIG_LOCKRES message trusts several fields of the
+peer-supplied dlm_migratable_lockres without validation.  num_locks and
+lockname_len are bounded only on the sending side, and the message is
+never checked to actually carry num_locks migratable_lock entries.  As a
+result dlm_process_recovery_data() walks mres->ml[0..num_locks) past the
+kmalloc(data_len) copy of the message (an out-of-bounds read that ends in
+a BUG_ON panic), and dlm_init_lockres() copies lockname_len bytes into the
+fixed 32-byte o2dlm_lockname slab object (a heap out-of-bounds write).
+Both are reachable by any node in the domain.
 
-Such an access invokes pci_config_pm_runtime_get() and
-pci_config_pm_runtime_put() around transfer blocks that do nothing.
+Validate these fields right after dlm_grab(), before anything uses them --
+including the not-joined error path, which already prints mres->lockname
+with the unbounded lockname_len as a %.*s precision.  Reject the message
+unless lockname_len <= DLM_LOCKID_NAME_MAX, num_locks <=
+DLM_MAX_MIGRATABLE_LOCKS (the bound the sender already asserts), and the
+payload is large enough to hold the claimed locks.  Conforming recovery
+and migration messages are unaffected.
 
-This is a problem because pci_config_pm_runtime_get() synchronously resumes
-the upstream bridge through pm_runtime_get_sync(), and resumes the device
-itself through pm_runtime_resume() when it is in D3cold, only for the
-handler to return zero immediately afterwards.  Such a spurious wakeup
-wastes power and adds needless resume latency.
-
-The sysfs core already returns early for in-range zero-length binary
-attribute accesses before pci_read_config() or pci_write_config() is
-invoked.  In contrast, the VFS forwards zero-length requests to the procfs
-callbacks, where they continue into runtime PM handling.
-
-Return early from proc_bus_pci_read() and proc_bus_pci_write() when nbytes
-is zero, before any runtime PM involvement.
-
-The value returned to userspace at these offsets remains zero,
-so the change is not visible to userspace.
-
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-[bhelgaas: order tags]
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260729075909.1219906-1-kwilczynski@kernel.org
+Link: https://lore.kernel.org/20260629-b4-disp-94fb6521-v1-2-6953bcc0421f@proton.me
+Fixes: 6714d8e86bf4 ("[PATCH] OCFS2: The Second Oracle Cluster Filesystem")
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: Heming Zhao <heming.zhao@suse.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/proc.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/ocfs2/dlm/dlmrecovery.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/drivers/pci/proc.c
-+++ b/drivers/pci/proc.c
-@@ -45,6 +45,9 @@ static ssize_t proc_bus_pci_read(struct
- 	else
- 		size = 64;
+--- a/fs/ocfs2/dlm/dlmrecovery.c
++++ b/fs/ocfs2/dlm/dlmrecovery.c
+@@ -1359,6 +1359,15 @@ int dlm_mig_lockres_handler(struct o2net
+ 	if (!dlm_grab(dlm))
+ 		return -EINVAL;
  
-+	if (!nbytes)
-+		return 0;
++	if (mres->lockname_len > DLM_LOCKID_NAME_MAX ||
++	    mres->num_locks > DLM_MAX_MIGRATABLE_LOCKS ||
++	    be16_to_cpu(msg->data_len) < struct_size(mres, ml, mres->num_locks)) {
++		mlog(ML_ERROR, "%s: invalid lockres migration message from %u\n",
++		     dlm->name, mres->master);
++		dlm_put(dlm);
++		return -EINVAL;
++	}
 +
- 	if (pos >= size)
- 		return 0;
- 	if (nbytes >= size)
-@@ -121,6 +124,9 @@ static ssize_t proc_bus_pci_write(struct
- 	if (ret)
- 		return ret;
- 
-+	if (!nbytes)
-+		return 0;
-+
- 	if (pos >= size)
- 		return 0;
- 	if (nbytes >= size)
+ 	if (!dlm_joined(dlm)) {
+ 		mlog(ML_ERROR, "Domain %s not joined! "
+ 			  "lockres %.*s, master %u\n",
 
 
