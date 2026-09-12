@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26E573F1ADC;
-	Sat, 12 Sep 2026 07:24:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C5D91EB5FD;
+	Sat, 12 Sep 2026 07:24:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789197881; cv=none; b=i4djdraO1hQjkQgdz1d85du6uygvgyNdoMcIghTYBhwijRzOL3aXnNupMmS6k11aO601tnlbm3Lu3KMWeY3sKD1l0DPoMsaop0NY9ZIvUokv31q6Ro1OqjR0G9e9IomnHoR9rGlWDhxnDtXPWt00XsBK++KW8PGeovJzNRoBvDI=
+	t=1789197886; cv=none; b=koZc3UCl5Mbnh16rcQw5FzYa67G1UJO4JGwCxRGYlVOXba6HI4OnE2Xlz51qq8a7AX6rd0bq57ugP+D6Xy6m+JPRZrH4GJdc+oLB+OEshtNkAWX7m5eKQ94Dg/cJXKgk/Lon/op7TLsSqI3SUyof/lU4gAoVX1/ZDIWjmlSc3Yk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789197881; c=relaxed/simple;
-	bh=hQpYhS9JlpXP1vbyXdyhYZ4TfcdI6iMIScIlk+4/NJY=;
+	s=arc-20240116; t=1789197886; c=relaxed/simple;
+	bh=atnCSU2WpvWvgnKYNOO121oLKtloQDIazLwGPVDERrU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XIkJROEgRo2ZdXa9qWm66Fpcnp3RR9hEWkQcV6ee1GZs4313WailSe6jWFgoeq+OzbzQujK8KhGDF0gz0tNy6HdxACuYvOFnPlIk9UXaS/xfb22BQxMRoEgjBin4cOABynsdGmeVMzTdNZ5c2R9pcM0L1MMVJpV8nRBTu3Rb6d0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mGMetsSq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=POZxuAVPahh3+GIsRdb7msPz8EnQrJJuACQckx6pLLz4prdKguk4HKYAd/Os+NZVbw5r0v6k/SZbk5b8wQLT0AzwmukHzdtFU4O4S+N2h+mqQyzCvrc+/vnuhEwDNq36GAS2OQGHhJuCiRvqOqE2n+so6CkA3iMuoWviywb/E1E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g44Gqdyo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mGMetsSq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBDAA1F000FF;
-	Sat, 12 Sep 2026 07:24:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g44Gqdyo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BF9C1F000FF;
+	Sat, 12 Sep 2026 07:24:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789197880;
-	bh=Zr2CyYMZzIf60w6BZ4oGzfT1Q/UYukotFNDoIMXgapc=;
+	s=korg; t=1789197885;
+	bh=gWx+BrHGuKz/jtTxc63anl2NlXxCc3hjzpSPSLGf7UU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mGMetsSqe6N43wl+Nmui2imgd5D9mvTkHrT/gwaxn9Giqn7ArYLuvXidD98tymTuh
-	 9iWqFb67iFfVDTgixYPhWgo8y7oW0uOCqBzlXkEc84QMh/LgNbds/MBtN5Ph6kqaES
-	 wfUogv8jDNsShtEcJpJo6gztiWNWXAwVIIxYI/Wc=
+	b=g44GqdyoTvDmADDjwGFoEO/5H9Zwt0O4g6U86HswQf73WyvdUyvyeZA5IcTwGMhZK
+	 fQgCyvRk+5xbUHbup+wPCJOGAYKUG5zhVsu46RATbebrBv9LBoDFeXiGCZP9ycBJq1
+	 qDDnaWWIh1heBO+DF+1w6xEDipe+U58JaYdyBhTA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ahmet Sezgin Duran <ahmet@sezginduran.net>,
+	Loic Poulain <loic.poulain@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0229/1815] staging: sm750fb: gate dualview dataflow using g_dualview
-Date: Sat, 12 Sep 2026 08:32:59 +0200
-Message-ID: <20260912065654.368765706@linuxfoundation.org>
+Subject: [PATCH 7.2 0265/1815] clk: qcom: gcc-qcs8300: Use retention for USB power domains
+Date: Sat, 12 Sep 2026 08:33:35 +0200
+Message-ID: <20260912065655.194178715@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -50,64 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ahmet Sezgin Duran <ahmet@sezginduran.net>
+From: Loic Poulain <loic.poulain@oss.qualcomm.com>
 
-[ Upstream commit d352778979d2eed09e266ed0f3a5e3ccd3983940 ]
+[ Upstream commit d8638610e0c9ebab2800b7ad6c2c2a3737090da9 ]
 
-In sm750fb_setup and sm750fb_set_drv functions, the dualview
-related code is guarded by `sm750_dev->fb_count > 1` condition.
-That value is updated only after each framebuffer is registered,
-while both guards are used before any increment.
+The USB subsystem does not expect to lose its state on suspend:
 
-Current flow:
+  xhci-hcd xhci-hcd.1.auto: xHC error in resume, USBSTS 0x401, Reinit
+  usb usb1: root hub lost power or was reset
 
-  lynxfb_pci_probe()
-    sm750fb_setup()                 // fb_count is 0
-    for each fb:
-      sm750fb_framebuffer_alloc()
-        lynxfb_set_fbinfo()
-          sm750fb_set_drv()         // fb_count is 0 or 1
-        register_framebuffer()
-        sm750_dev->fb_count++;      // fb_count is incremented
+To maintain state during suspend, the relevant GDSCs need to stay in
+retention mode, like they do on other similar SoCs. Change the mode to
+PWRSTS_RET_ON to fix.
 
-Thus even if `dualview=1` parameter is passed down to the driver,
-fb_count is never > 1 at either check, so dualview dataflows are
-not selected and crtc->vidmem_size is never halved.
-
-Use `g_dualview` global variable instead of fb_count > 1 to correctly
-enable dualview capabilities.
-
-Fixes: a3f92cc94c61 ("staging: sm750fb: replace dual member of sm750_dev with fb_count")
-Signed-off-by: Ahmet Sezgin Duran <ahmet@sezginduran.net>
-Link: https://patch.msgid.link/20260521204425.82627-1-ahmet@sezginduran.net
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 95eeb2ffce73 ("clk: qcom: Add support for Global Clock Controller on QCS8300")
+Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260629-monza-suspend-v1-2-b601d8a2f2f8@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/sm750fb/sm750.c | 4 ++--
+ drivers/clk/qcom/gcc-qcs8300.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/staging/sm750fb/sm750.c b/drivers/staging/sm750fb/sm750.c
-index da0b4979a281b..d85ccf5f7a7e5 100644
---- a/drivers/staging/sm750fb/sm750.c
-+++ b/drivers/staging/sm750fb/sm750.c
-@@ -591,7 +591,7 @@ static int sm750fb_set_drv(struct lynxfb_par *par)
- 	crtc = &par->crtc;
+diff --git a/drivers/clk/qcom/gcc-qcs8300.c b/drivers/clk/qcom/gcc-qcs8300.c
+index 71c5a901715ff..31fd870b10f7a 100644
+--- a/drivers/clk/qcom/gcc-qcs8300.c
++++ b/drivers/clk/qcom/gcc-qcs8300.c
+@@ -3305,7 +3305,7 @@ static struct gdsc gcc_usb20_prim_gdsc = {
+ 	.pd = {
+ 		.name = "gcc_usb20_prim_gdsc",
+ 	},
+-	.pwrsts = PWRSTS_OFF_ON,
++	.pwrsts = PWRSTS_RET_ON,
+ 	.flags = RETAIN_FF_ENABLE | POLL_CFG_GDSCR,
+ };
  
- 	crtc->vidmem_size = sm750_dev->vidmem_size;
--	if (sm750_dev->fb_count > 1)
-+	if (g_dualview)
- 		crtc->vidmem_size >>= 1;
+@@ -3317,7 +3317,7 @@ static struct gdsc gcc_usb30_prim_gdsc = {
+ 	.pd = {
+ 		.name = "gcc_usb30_prim_gdsc",
+ 	},
+-	.pwrsts = PWRSTS_OFF_ON,
++	.pwrsts = PWRSTS_RET_ON,
+ 	.flags = RETAIN_FF_ENABLE | POLL_CFG_GDSCR,
+ };
  
- 	/* setup crtc and output member */
-@@ -896,7 +896,7 @@ static void sm750fb_setup(struct sm750_dev *sm750_dev, char *src)
- 
- NO_PARAM:
- 	if (sm750_dev->revid != SM750LE_REVISION_ID) {
--		if (sm750_dev->fb_count > 1) {
-+		if (g_dualview) {
- 			if (swap)
- 				sm750_dev->dataflow = sm750_dual_swap;
- 			else
 -- 
 2.53.0
 
