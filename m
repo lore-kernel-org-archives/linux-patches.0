@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7907D23BD06;
-	Sat, 12 Sep 2026 14:51:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 684FC2D739C;
+	Sat, 12 Sep 2026 14:51:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789224688; cv=none; b=dUt1ckvt+BmSrvzh4JC040ji/T+F5227ueova7UX8vwfMWaHzN2D3nAEtxeJuQt/Mu7b+fkS+y95mWx2bcXXdAg6IuuqLYSVzQ/Qa9JF8lZev3bhWEejkse7IacrJL/F8GnFpg7ibzxSJjk2y0erzDQKOrGxPGpIvYHrffBgH/Y=
+	t=1789224693; cv=none; b=m/YiQVBWVVwRej1aKO+zonjy8H7d3JJseJ9P6AgtOuAs5pyR9GYjyHsfuRl2qxwnd2ui+KYL8PR3iVT3GvpNXbPYsuemDARCtgani6NffJsKxO6dqi3m9Nf+Z40W00arv8E4oJL9VcYJVjZMg3LvFp7Yt5sYYXEISlMFHGGhecI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789224688; c=relaxed/simple;
-	bh=VGhbC/IHqJpqzVwz+MzzO5cUvrNilIsNM7u2LBLJY+w=;
+	s=arc-20240116; t=1789224693; c=relaxed/simple;
+	bh=+6t+7XKF49dSXIBVAL0inMpJGfhxVghsImluLGx/IjE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LwYb/o2871eDwypGJpdEJHlXGgFh+Qo6j3QiIrdzcy8Iklj7n0O1xcjG6tREPEa7bxq9azcnvKgLNY21XLZeM/oClfwp+h5pbJBPafRaC50d+Fglu2idI5eBcOf+hTlTsrXyxHBNztgTmOoJclUht7ITgk+03o6JzAD5/277c+M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1E5m8elk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uk73iOEYxnRdhHv4vIUJu3nYzbkTMIrWLLoLPkgrkq1/56Q+XQbTRyVTOE6iy8DKXkK1xTc+n4o1qB4q2gAOe80444spX0ipLPfcYSzQUD86tIPXlMRuQGfgd1FsHs5jjJ8YGOMNXCAQM6CPNfpsFgADh+llBvCrZBiJdEY12uQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iCO/j/lV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1E5m8elk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 981331F000FF;
-	Sat, 12 Sep 2026 14:51:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iCO/j/lV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 391351F000FF;
+	Sat, 12 Sep 2026 14:51:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789224687;
-	bh=EAfcP3vZt2gpwc/Vor2f1tVU0ftH0WRDt3ng6+q4UAo=;
+	s=korg; t=1789224692;
+	bh=BG/zbxCDDrkj5mHhU67U1DrSLUX9otMl9A2qZjTSLJU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1E5m8elkl7ytbl5nLVJvFdClGw48CsY8n95wr+G88060tTH+lgxUD1dFqAfaG3TBY
-	 wbenYTivIbzCns91C+5B9QUVdzhnfRc69b6uCWJJaKCqysgUIa1blYwloZhoOSCuhB
-	 90RhfLolQXmO8V7+c1yFL5OOdMf8z2RtWq2YyAow=
+	b=iCO/j/lVYAyO15ZbbWu2vRW+Mj56YXJn/7arsXosk6MyyXZbO4WXNVSR4qKvFQ8gs
+	 gLRoXkmDHU7gj0Zw5Tym7dY4aBhFScft24qNftZgNaMzFHLFXqV5AJaaHx1tuGn6nf
+	 vuuHj3e0lLqSBPWS0o/8ocSdiVsCfdQfiWNXBK3o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Calvin Owens <calvin@wbinvd.org>,
-	Rodolfo Giometti <giometti@enneenne.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Linghui Wu <linghui.wu@oss.qualcomm.com>,
+	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1042/1424] pps-gpio: remove dead capture_clear code
-Date: Sat, 12 Sep 2026 08:57:54 +0200
-Message-ID: <20260912065630.643208019@linuxfoundation.org>
+Subject: [PATCH 6.6 1002/1424] wifi: ath10k: snoc: use memcpy_fromio() for MSA ramdump
+Date: Sat, 12 Sep 2026 08:57:14 +0200
+Message-ID: <20260912065629.752567032@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -52,117 +53,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Calvin Owens <calvin@wbinvd.org>
+From: Linghui Wu <linghui.wu@oss.qualcomm.com>
 
-[ Upstream commit b899e0279f90c3ce4099d68b989dd27861cc5c4f ]
+[ Upstream commit 4f25071afe9218aaae1c63fbf75e229aa6405319 ]
 
-The capture_clear field is never set, and all code conditional on it being
-set has been unreachable since the platform data logic was removed from
-pps-gpio in ee89646619ba ("pps: clients: gpio: Get rid of legacy platform
-data").
+On WCN3990/SNOC the MSA region is mapped with devm_memremap(MEMREMAP_WT).
+On arm64 such a mapping is not Normal-cacheable, so unaligned accesses to
+it are not permitted. ath10k_msa_dump_memory() copies the region with a
+plain memcpy(), whose optimized __pi_memcpy_generic implementation issues
+wide/unaligned loads. This triggers an alignment fault (FSC=0x21) Oops in
+ath10k_snoc_fw_crashed_dump() while collecting the devcoredump:
 
-I think the only logical thing to do here is to remove it all, since no
-in-tree code ever actually used it in the first place, and it has been
-completely dead code for over five years (since v5.13).
+  Unable to handle kernel paging request ... FSC=0x21: alignment fault
+  pc : __pi_memcpy_generic
+  lr : ath10k_snoc_fw_crashed_dump [ath10k_snoc]
 
-Sashiko asked some questions about the gpiod_get_value() call which caused
-me to look deeper and figure this out, but it did not actually notice
-capture_clear is never set.
+The Oops both leaves the firmware RAM dump buffer zeroed (no dump is
+captured) and crashes the kernel, which in turn breaks modem SSR
+recovery.
 
-Link: https://lore.kernel.org/f70196bafcf75d9782dd36ed784e42345b6e8a1b.1783355507.git.calvin@wbinvd.org
-Fixes: ee89646619ba ("pps: clients: gpio: Get rid of legacy platform data")
-Signed-off-by: Calvin Owens <calvin@wbinvd.org>
-Closes: https://sashiko.dev/#/patchset/cover.1779733602.git.calvin%40wbinvd.org?part=1
-Acked-by: Rodolfo Giometti <giometti@enneenne.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Use memcpy_fromio(), which only performs accesses that are valid for such
+a device-memory mapping. The generic memcpy_fromio() implementation aligns
+the source before issuing word-sized reads and stores the destination with
+put_unaligned(), so it is also safe for the coherent DMA allocation used on
+the non-reserved-memory path. ath11k and ath12k use the same pattern
+when copying target memory into crash dumps, so call it unconditionally
+here too.
+The MEMREMAP_WT pointer is a plain void *, so an explicit __iomem cast is
+needed; use __force to keep sparse happy.
+
+Tested-on: WCN3990 hw1.0 SNOC WLAN.HL.3.3.7.c5-00107-QCAHLSWMTPL-1
+
+Fixes: 3f14b73c3843 ("ath10k: Enable MSA region dump support for WCN3990")
+Signed-off-by: Linghui Wu <linghui.wu@oss.qualcomm.com>
+Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260727072629.2297208-1-linghui.wu@oss.qualcomm.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pps/clients/pps-gpio.c | 37 ++++------------------------------
- 1 file changed, 4 insertions(+), 33 deletions(-)
+ drivers/net/wireless/ath/ath10k/snoc.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pps/clients/pps-gpio.c b/drivers/pps/clients/pps-gpio.c
-index d21fc4bf0e3df..98dfab2dcdb7d 100644
---- a/drivers/pps/clients/pps-gpio.c
-+++ b/drivers/pps/clients/pps-gpio.c
-@@ -32,7 +32,6 @@ struct pps_gpio_device_data {
- 	struct gpio_desc *echo_pin;
- 	struct timer_list echo_timer;	/* timer to reset echo active state */
- 	bool assert_falling_edge;
--	bool capture_clear;
- 	unsigned int echo_active_ms;	/* PPS echo active duration */
- 	unsigned long echo_timeout;	/* timer timeout value in jiffies */
- 	struct pps_event_time ts;	/* timestamp captured in hardirq */
-@@ -62,19 +61,8 @@ static irqreturn_t pps_gpio_irq_hardirq(int irq, void *data)
- static irqreturn_t pps_gpio_irq_thread(int irq, void *data)
- {
- 	struct pps_gpio_device_data *info = data;
--	int rising_edge;
--
--	rising_edge = info->capture_clear ?
--		      gpiod_get_value(info->gpio_pin) : !info->assert_falling_edge;
--	if ((rising_edge && !info->assert_falling_edge) ||
--			(!rising_edge && info->assert_falling_edge))
--		pps_event(info->pps, &info->ts, PPS_CAPTUREASSERT, data);
--	else if (info->capture_clear &&
--			((rising_edge && info->assert_falling_edge) ||
--			(!rising_edge && !info->assert_falling_edge)))
--		pps_event(info->pps, &info->ts, PPS_CAPTURECLEAR, data);
--	else
--		dev_warn_ratelimited(&info->pps->dev, "IRQ did not trigger any PPS event\n");
-+
-+	pps_event(info->pps, &info->ts, PPS_CAPTUREASSERT, data);
+diff --git a/drivers/net/wireless/ath/ath10k/snoc.c b/drivers/net/wireless/ath/ath10k/snoc.c
+index 1d06d4125992d..17cf939a019f3 100644
+--- a/drivers/net/wireless/ath/ath10k/snoc.c
++++ b/drivers/net/wireless/ath/ath10k/snoc.c
+@@ -5,6 +5,7 @@
  
- 	return IRQ_HANDLED;
- }
-@@ -90,11 +78,6 @@ static void pps_gpio_echo(struct pps_device *pps, int event, void *data)
- 		if (pps->params.mode & PPS_ECHOASSERT)
- 			gpiod_set_value(info->echo_pin, 1);
- 		break;
--
--	case PPS_CAPTURECLEAR:
--		if (pps->params.mode & PPS_ECHOCLEAR)
--			gpiod_set_value(info->echo_pin, 1);
--		break;
+ #include <linux/bits.h>
+ #include <linux/clk.h>
++#include <linux/io.h>
+ #include <linux/kernel.h>
+ #include <linux/module.h>
+ #include <linux/of.h>
+@@ -1452,11 +1453,15 @@ static void ath10k_msa_dump_memory(struct ath10k *ar,
+ 	hdr->length = cpu_to_le32(ar->msa.mem_size);
+ 
+ 	if (current_region->len < ar->msa.mem_size) {
+-		memcpy(buf, ar->msa.vaddr, current_region->len);
++		memcpy_fromio(buf,
++			      (const void __iomem __force *)ar->msa.vaddr,
++			      current_region->len);
+ 		ath10k_warn(ar, "msa dump length is less than msa size %x, %x\n",
+ 			    current_region->len, ar->msa.mem_size);
+ 	} else {
+-		memcpy(buf, ar->msa.vaddr, ar->msa.mem_size);
++		memcpy_fromio(buf,
++			      (const void __iomem __force *)ar->msa.vaddr,
++			      ar->msa.mem_size);
  	}
- 
- 	/* fire the timer */
-@@ -156,15 +139,8 @@ static int pps_gpio_setup(struct device *dev)
- static unsigned long
- get_irqf_trigger_flags(const struct pps_gpio_device_data *data)
- {
--	unsigned long flags = data->assert_falling_edge ?
--		IRQF_TRIGGER_FALLING : IRQF_TRIGGER_RISING;
--
--	if (data->capture_clear) {
--		flags |= ((flags & IRQF_TRIGGER_RISING) ?
--				IRQF_TRIGGER_FALLING : IRQF_TRIGGER_RISING);
--	}
--
--	return flags;
-+	return data->assert_falling_edge ? IRQF_TRIGGER_FALLING :
-+					   IRQF_TRIGGER_RISING;
  }
  
- static int pps_gpio_probe(struct platform_device *pdev)
-@@ -197,9 +173,6 @@ static int pps_gpio_probe(struct platform_device *pdev)
- 	/* initialize PPS specific parts of the bookkeeping data structure. */
- 	data->info.mode = PPS_CAPTUREASSERT | PPS_OFFSETASSERT |
- 		PPS_ECHOASSERT | PPS_CANWAIT | PPS_TSFMT_TSPEC;
--	if (data->capture_clear)
--		data->info.mode |= PPS_CAPTURECLEAR | PPS_OFFSETCLEAR |
--			PPS_ECHOCLEAR;
- 	data->info.owner = THIS_MODULE;
- 	snprintf(data->info.name, PPS_MAX_NAME_LEN - 1, "%s.%d",
- 		 pdev->name, pdev->id);
-@@ -211,8 +184,6 @@ static int pps_gpio_probe(struct platform_device *pdev)
- 
- 	/* register PPS source */
- 	pps_default_params = PPS_CAPTUREASSERT | PPS_OFFSETASSERT;
--	if (data->capture_clear)
--		pps_default_params |= PPS_CAPTURECLEAR | PPS_OFFSETCLEAR;
- 	data->pps = pps_register_source(&data->info, pps_default_params);
- 	if (IS_ERR(data->pps)) {
- 		dev_err(dev, "failed to register IRQ %d as PPS source\n",
 -- 
 2.53.0
 
