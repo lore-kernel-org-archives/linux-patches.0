@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4635B2D23A6;
-	Sat, 12 Sep 2026 13:22:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 065FD4BEE2A;
+	Sat, 12 Sep 2026 13:22:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789219358; cv=none; b=boPymM+UuNExjjMe3vOEShVH1rwu96ikUqY3M7wjKgU/7s5FsPZCCg5qa9W9EdJY0UYzG5Ogrhyn9vN6KxIM4iV1/1BlGPMDDirP/3FbmoKyZKbM9I1hr+H/iVmHOeax/OzJRlVqvxaQnKspeNniuwNKnD0tWyy4rIWtKl5/vhQ=
+	t=1789219363; cv=none; b=qL+nDN0Dj6FBCbh+QDJZMkrxkuHv+SVkFkERu5nwdujjEEWtP0VggjwC0aDFW+ZJF5abaQPUy0UEmwDgr6QJW+X0lMC3yttiDNenW+MpdGleinlBmCq21oHJrCqtS4MVs5ALcvFCEUoj/W+xZ5HhXcMZgyk29X8juGWJvhEV9VY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789219358; c=relaxed/simple;
-	bh=aU7bi/6bOkW6G6NrwZErIw5qph9oQVOXnZqIC7Yeim4=;
+	s=arc-20240116; t=1789219363; c=relaxed/simple;
+	bh=K4Md+Md+5FSizMpKgk77Ys9o8ksht74BIX4c6wr6TYc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rmuNtM+O8cpd7XtB4y+GkseC/rymo7JLE+X3S44niayRYmtS8IbVceB4AmIr7HzktIAHSoVzMXKNDkZiIIUS+iIBtMNHRwT580FiwM6yeUi98VfAeynfvlR8k2MLOZOIm9PX/c7don4Ix3j9Q3ta4TZHMAppPsCA+CV5dFZou+w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YrUJ8rUQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ws4GdGbUSsDdE38SndUr4b9OPjc3LKeVoAzVk6cLeUHSLO9EpwsQtGlz9YkYTe3giJ7tLqV+l1KpEcCAsffe6fdbXcgU4XlURqssmsjitT0Y30iWNtOSiOK72T8Gq8FFC268a8D/PIU3eIjkBHu+BrR04vBi9ZeIhYDdheFdQSM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ddfjkh1m; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YrUJ8rUQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B57AC1F000FF;
-	Sat, 12 Sep 2026 13:22:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ddfjkh1m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1063F1F000FF;
+	Sat, 12 Sep 2026 13:22:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789219356;
-	bh=P2LosmjtyJJ8Xeycp9fK9yx2wo+Izfh95VUo5tHAR8E=;
+	s=korg; t=1789219361;
+	bh=FISzd1B0SBd5lS9qksVvx1QAkvMlCUQ71ch0vIk49NI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YrUJ8rUQziApfHQ7jh39USbZ88qafO3k7Ouxb/OGgtRl8Q0UaDyYSZD/IxQ39Uj5d
-	 e1hN4BHZuH7u9ak2uQ0OZkvAzDhcR6r/zpuulcRWjXvBlUTLrlDFOvvkdGc//0YS/3
-	 plKDyb3yXYiis8qGXO48JgG77vJNNOcigYPOJ8hg=
+	b=ddfjkh1mNe7wCauF8c/wYeeSK2PnJ1XVq5oV8cBxsANJLAbxd0VOGJMjk4YAST5A9
+	 mR85awo5vILCeos0PUKW56wtLKxdhYe9sub/3ekkKZr3wgHqezHT7/jnblEb+tVwgj
+	 Up4POeoxgrT4O8CnoIuU4KlBQuEykSj79tf5IsEo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mina Almasry <almasrymina@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Jaeyoung Chung <jjy600901@snu.ac.kr>,
+	Eulgyu Kim <eulgyukim@snu.ac.kr>,
+	Qingfang Deng <qingfang.deng@linux.dev>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1297/1376] net: core: check skb_frags_readable before uncloning in skb_copy_ubufs
-Date: Sat, 12 Sep 2026 09:02:03 +0200
-Message-ID: <20260912065636.441608470@linuxfoundation.org>
+Subject: [PATCH 6.12 1333/1376] slip: remove slip_hangup() to fix use-after-free in slip_receive_buf()
+Date: Sat, 12 Sep 2026 09:02:39 +0200
+Message-ID: <20260912065637.241505932@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,44 +54,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mina Almasry <almasrymina@google.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 00e11ee9831b3439264e0ae6762a0470126515af ]
+[ Upstream commit 23c53269f2baaedf2d92784290cb9ef6db2a3bce ]
 
-skb_copy_ubufs drops clones and modifies the SKB via pskb_expand_head()
-before checking for !skb_frags_readable(skb). This alters the SKB
-geometry prior to throwing an -EFAULT on an invalid SKB. Check
-readability first.
+Jaeyoung Chung and Eulgyu Kim reported a slab-use-after-free read
+in slip_receive_buf() when racing against tty hangup.
 
-Fixes: 65249feb6b3d ("net: add support for skbs with unreadable frags")
-Signed-off-by: Mina Almasry <almasrymina@google.com>
-Link: https://patch.msgid.link/20260823183602.1051453-1-almasrymina@google.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+tty_ldisc_hangup() calls ld->ops->hangup() while holding only
+a read lock on tty->ldisc_sem (via tty_ldisc_ref()).
+Because slip_hangup() simply called slip_close(), it ran concurrently
+with reader functions such as slip_receive_buf().
+
+slip_close() unregisters and frees the net device and its private
+struct slip, causing concurrent reader threads in slip_receive_buf()
+to dereference freed memory.
+
+Line discipline close() is already guaranteed to be called under
+the write lock of tty->ldisc_sem during hangup processing
+(in tty_ldisc_reinit() or tty_ldisc_kill()).
+
+Remove slip_hangup() so teardown is serialized cleanly by slip_close().
+
+Fixes: 5342b77c4123 ("slip: Clean up create and destroy")
+Reported-by: Jaeyoung Chung <jjy600901@snu.ac.kr>
+Reported-by: Eulgyu Kim <eulgyukim@snu.ac.kr>
+Closes: https://lore.kernel.org/netdev/20260825150655.1450271-1-jjy600901@snu.ac.kr/
+Cc: Qingfang Deng <qingfang.deng@linux.dev>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260826105238.3323436-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/skbuff.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/slip/slip.c | 8 --------
+ 1 file changed, 8 deletions(-)
 
-diff --git a/net/core/skbuff.c b/net/core/skbuff.c
-index ca861bd6db148..b754125dcaadf 100644
---- a/net/core/skbuff.c
-+++ b/net/core/skbuff.c
-@@ -1967,12 +1967,12 @@ int skb_copy_ubufs(struct sk_buff *skb, gfp_t gfp_mask)
- 	int i, order, psize, new_frags;
- 	u32 d_off;
+diff --git a/drivers/net/slip/slip.c b/drivers/net/slip/slip.c
+index 117de9eb5e09e..bc155dddae8b1 100644
+--- a/drivers/net/slip/slip.c
++++ b/drivers/net/slip/slip.c
+@@ -886,8 +886,6 @@ static int slip_open(struct tty_struct *tty)
+  * Close down a SLIP channel.
+  * This means flushing out any pending queues, and then returning. This
+  * call is serialized against other ldisc functions.
+- *
+- * We also use this method fo a hangup event
+  */
  
--	if (skb_shared(skb) || skb_unclone(skb, gfp_mask))
--		return -EINVAL;
+ static void slip_close(struct tty_struct *tty)
+@@ -915,11 +913,6 @@ static void slip_close(struct tty_struct *tty)
+ 	unregister_netdev(sl->dev);
+ 	/* sl_uninit() has dropped the slip_devs[] entry by now */
+ }
 -
- 	if (!skb_frags_readable(skb))
- 		return -EFAULT;
- 
-+	if (skb_shared(skb) || skb_unclone(skb, gfp_mask))
-+		return -EINVAL;
-+
- 	if (!num_frags)
- 		goto release;
- 
+-static void slip_hangup(struct tty_struct *tty)
+-{
+-	slip_close(tty);
+-}
+  /************************************************************************
+   *			STANDARD SLIP ENCAPSULATION		  	 *
+   ************************************************************************/
+@@ -1280,7 +1273,6 @@ static struct tty_ldisc_ops sl_ldisc = {
+ 	.name 		= "slip",
+ 	.open 		= slip_open,
+ 	.close	 	= slip_close,
+-	.hangup	 	= slip_hangup,
+ 	.ioctl		= slip_ioctl,
+ 	.receive_buf	= slip_receive_buf,
+ 	.write_wakeup	= slip_write_wakeup,
 -- 
 2.53.0
 
