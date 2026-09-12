@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 058D8415F0E;
-	Sat, 12 Sep 2026 10:32:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC5C6399352;
+	Sat, 12 Sep 2026 10:32:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789209164; cv=none; b=kjmBiyKz886gyEPFQTHsOIEpJjMTRUN7Zah8iJ0hafu18npNjEQAj2cNiWIBhTtAff9LUAY7YJxuO9ON5RAt1ftK8Y16DpsliddhPAMZJXS8kPvQB1MvOfIS+K7L5RH3gRJhdplHDmEiOUHeRstqb4dBGNAc8+kDvj8SEPFgKNw=
+	t=1789209169; cv=none; b=GmgIE8D87nCU6nSt62MksyuWxQIEGL68Nu329VdolCPF7N6wQ3xmSO/PVnoeOB6yIe0UQqcdRFfslA1aHlTTbbkxMHLI1tw0AXtUKqnPzHj4o3Jpo28vEztgTqgNrjrn5+q7/BL0WE2YIH7TMCDwZCbX8Ft9cJQPhvv/2MbiBqo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789209164; c=relaxed/simple;
-	bh=GrG3IjfvoS9un+uH0BRgKcXNPzRL004eBQ5TiXQwa1M=;
+	s=arc-20240116; t=1789209169; c=relaxed/simple;
+	bh=EnsWr1IPURR9vLYbSOtL74/TpJe+dvlHFT8NuK9nZDE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t4Q3sr/K2pN6cGxPXDEfAyHzWXOilVz2aOnqAuPkP/yife3XoLb4CnayLuLQX1xzagJHsPFaf/3U7zA+hQOTC4Q6s3TvIKyGjWDxEKcqxba7qkjhq8Ctj7H+08MDGCO9IFvSWsjvGIfILBuHLUhIkGaBeaYgzjHiumNQHBDemV8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UtWbyiEN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KbFtdPFH03YZZp1mx7hON0MaJexE8fAmoM8ii8ULXgiTtGMZjkmJj1HUeRDBoscFcEudoBBelmi8PB8o3O90B6GB6h3J768TvmBgvIfiCocK8eBQOJQnM9j/EI6Vt7PwrZ+6vtPZvqZJEcqj4rxzrlzidZRfkdP9cnm4MywpaL8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AoKF1F25; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UtWbyiEN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89D811F0089A;
-	Sat, 12 Sep 2026 10:32:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AoKF1F25"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 750C41F000FF;
+	Sat, 12 Sep 2026 10:32:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789209162;
-	bh=dgkpMElXz/gFUt74KeeHDXcCcY4Nh+zLvE8Jwf65YXs=;
+	s=korg; t=1789209167;
+	bh=DOg7bbwbUhM6r3CgGlLT/qKD3QSW8Hf8qhB9v/Eqlsg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UtWbyiENdJpVbmETrr50zVCi7IkY2uAXqGYhMhE5f2LzbuUSfGtwLbO6tzCkK37Ne
-	 iGw3PPopS9LXJZOVQc3JhziLdPChVzx/bAMjc5l+/ympo/UgS+Cx9Z6qCbxZf54xby
-	 6gaQrmbG2EsqfmWGIPPObY2cEM8J1BcdosO0+IWo=
+	b=AoKF1F25xsZdkh84uOKiGFPOTtqNgyygJHRBQUhtd+fX1i55ONnc9H6Wl9mcGRWe+
+	 DGOyLwY+x6E0kVopHz5hQj/QO+j9beuVzLINZcOUFdCIS8G8JpEYBYVfi8OZ3yaHsw
+	 H0LvyokXfxR20qrUt1tePOQiT5zQ/KZwidNIwfkw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Huisong Li <lihuisong@huawei.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Can Peng <pengcan@kylinos.cn>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0764/1518] ACPI: processor: idle: Optimize ACPI idle driver registration
-Date: Sat, 12 Sep 2026 08:48:53 +0200
-Message-ID: <20260912065640.715938594@linuxfoundation.org>
+Subject: [PATCH 6.18 0765/1518] ACPI: processor: Unregister cpufreq notifier on init failure
+Date: Sat, 12 Sep 2026 08:48:54 +0200
+Message-ID: <20260912065640.738782963@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,199 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huisong Li <lihuisong@huawei.com>
+From: Can Peng <pengcan@kylinos.cn>
 
-[ Upstream commit 13ebeef6a1b9c4e5c9789f835cc4ec34873f0bb1 ]
+[ Upstream commit 06f32dd67e6b23a05bef0d8183c5335af91c0c3b ]
 
-Currently, the ACPI idle driver is registered from within a CPU
-hotplug callback. Although this didn't cause any functional issues,
-this is questionable and confusing. And it is better to register
-the cpuidle driver when all of the CPUs have been brought up.
+acpi_processor_driver_init() registers the cpufreq policy notifier before
+registering the ACPI processor driver and setting up CPU hotplug state.
 
-So add a new function to initialize acpi_idle_driver based on the
-power management information of an available CPU and register cpuidle
-driver in acpi_processor_driver_init().
+If driver_register() or cpuhp_setup_state() fails, the error path only
+unregisters the ACPI processor driver and the idle driver. The cpufreq
+notifier remains registered even though initialization failed.
 
-This commit has four changes under the commit 7a8c994cbb2d (ACPI:
-processor: idle: Optimize ACPI idle driver registration):
+Mirror the module exit path on the init failure path and unregister the
+cpufreq notifier when it has been registered.
 
- 1) move acpi_processor_register_idle_driver() ahead of the
-    driver_register().
- 2) add acpi_processor_cstate_first_run_checks() before calling
-    acpi_processor_get_power_info().
- 3) squash the commit 9d68320b2bca (ACPI: processor: idle: Fix
-    function defined but not used warning) into this change.
- 4) use for_each_possible_cpu(cpu) to scan all possible cpus.
-
-Signed-off-by: Huisong Li <lihuisong@huawei.com>
-Tested-by: Borislav Petkov (AMD) <bp@alien8.de>
-[ rjw: New comment edits, changelog tweak ]
-Link: https://patch.msgid.link/20251223100914.2407069-2-lihuisong@huawei.com
+Fixes: c0e0421a60bf ("ACPI: processor: Reorder acpi_processor_driver_init()")
+Signed-off-by: Can Peng <pengcan@kylinos.cn>
+Link: https://patch.msgid.link/20260729023605.197367-1-pengcan@kylinos.cn
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Stable-dep-of: 06f32dd67e6b ("ACPI: processor: Unregister cpufreq notifier on init failure")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/processor_driver.c | 10 ++++-
- drivers/acpi/processor_idle.c   | 66 +++++++++++++++++++++------------
- include/acpi/processor.h        |  2 +
- 3 files changed, 54 insertions(+), 24 deletions(-)
+ drivers/acpi/processor_driver.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
 diff --git a/drivers/acpi/processor_driver.c b/drivers/acpi/processor_driver.c
-index 65e779be64ffc..311863e00ffd5 100644
+index 311863e00ffd5..06589bf488f74 100644
 --- a/drivers/acpi/processor_driver.c
 +++ b/drivers/acpi/processor_driver.c
-@@ -259,9 +259,11 @@ static int __init acpi_processor_driver_init(void)
- 		acpi_processor_ignore_ppc_init();
- 	}
+@@ -292,6 +292,12 @@ static int __init acpi_processor_driver_init(void)
+ unregister_idle_drv:
+ 	acpi_processor_unregister_idle_driver();
  
-+	acpi_processor_register_idle_driver();
-+
- 	result = driver_register(&acpi_processor_driver);
- 	if (result < 0)
--		return result;
-+		goto unregister_idle_drv;
- 
- 	result = cpuhp_setup_state(CPUHP_AP_ONLINE_DYN,
- 				   "acpi/cpu-drv:online",
-@@ -283,8 +285,13 @@ static int __init acpi_processor_driver_init(void)
- 	acpi_idle_rescan_dead_smt_siblings();
- 
- 	return 0;
-+
- err:
- 	driver_unregister(&acpi_processor_driver);
-+
-+unregister_idle_drv:
-+	acpi_processor_unregister_idle_driver();
++	if (acpi_processor_cpufreq_init) {
++		cpufreq_unregister_notifier(&acpi_processor_notifier_block,
++					    CPUFREQ_POLICY_NOTIFIER);
++		acpi_processor_cpufreq_init = false;
++	}
 +
  	return result;
  }
  
-@@ -302,6 +309,7 @@ static void __exit acpi_processor_driver_exit(void)
- 	cpuhp_remove_state_nocalls(hp_online);
- 	cpuhp_remove_state_nocalls(CPUHP_ACPI_CPUDRV_DEAD);
- 	driver_unregister(&acpi_processor_driver);
-+	acpi_processor_unregister_idle_driver();
- }
- 
- module_init(acpi_processor_driver_init);
-diff --git a/drivers/acpi/processor_idle.c b/drivers/acpi/processor_idle.c
-index 99e0a14a6201a..a8a3c6229e9f4 100644
---- a/drivers/acpi/processor_idle.c
-+++ b/drivers/acpi/processor_idle.c
-@@ -1371,7 +1371,49 @@ int acpi_processor_power_state_has_changed(struct acpi_processor *pr)
- 	return 0;
- }
- 
--static int acpi_processor_registered;
-+void acpi_processor_register_idle_driver(void)
-+{
-+	struct acpi_processor *pr;
-+	int ret = -ENODEV;
-+	int cpu;
-+
-+	/*
-+	 * ACPI idle driver is used by all possible CPUs.
-+	 * Use the processor power info of one in them to set up idle states.
-+	 * Note that the existing idle handler will be used on platforms that
-+	 * only support C1.
-+	 */
-+	for_each_possible_cpu(cpu) {
-+		pr = per_cpu(processors, cpu);
-+		if (!pr)
-+			continue;
-+
-+		acpi_processor_cstate_first_run_checks();
-+		ret = acpi_processor_get_power_info(pr);
-+		if (!ret) {
-+			pr->flags.power_setup_done = 1;
-+			acpi_processor_setup_cpuidle_states(pr);
-+			break;
-+		}
-+	}
-+
-+	if (ret) {
-+		pr_debug("No ACPI power information from any CPUs.\n");
-+		return;
-+	}
-+
-+	ret = cpuidle_register_driver(&acpi_idle_driver);
-+	if (ret) {
-+		pr_debug("register %s failed.\n", acpi_idle_driver.name);
-+		return;
-+	}
-+	pr_debug("%s registered with cpuidle.\n", acpi_idle_driver.name);
-+}
-+
-+void acpi_processor_unregister_idle_driver(void)
-+{
-+	cpuidle_unregister_driver(&acpi_idle_driver);
-+}
- 
- int acpi_processor_power_init(struct acpi_processor *pr)
- {
-@@ -1386,22 +1428,7 @@ int acpi_processor_power_init(struct acpi_processor *pr)
- 	if (!acpi_processor_get_power_info(pr))
- 		pr->flags.power_setup_done = 1;
- 
--	/*
--	 * Install the idle handler if processor power management is supported.
--	 * Note that we use previously set idle handler will be used on
--	 * platforms that only support C1.
--	 */
- 	if (pr->flags.power) {
--		/* Register acpi_idle_driver if not already registered */
--		if (!acpi_processor_registered) {
--			acpi_processor_setup_cpuidle_states(pr);
--			retval = cpuidle_register_driver(&acpi_idle_driver);
--			if (retval)
--				return retval;
--			pr_debug("%s registered with cpuidle\n",
--				 acpi_idle_driver.name);
--		}
--
- 		dev = kzalloc(sizeof(*dev), GFP_KERNEL);
- 		if (!dev)
- 			return -ENOMEM;
-@@ -1414,14 +1441,11 @@ int acpi_processor_power_init(struct acpi_processor *pr)
- 		 */
- 		retval = cpuidle_register_device(dev);
- 		if (retval) {
--			if (acpi_processor_registered == 0)
--				cpuidle_unregister_driver(&acpi_idle_driver);
- 
- 			per_cpu(acpi_cpuidle_device, pr->id) = NULL;
- 			kfree(dev);
- 			return retval;
- 		}
--		acpi_processor_registered++;
- 	}
- 	return 0;
- }
-@@ -1435,10 +1459,6 @@ int acpi_processor_power_exit(struct acpi_processor *pr)
- 
- 	if (pr->flags.power) {
- 		cpuidle_unregister_device(dev);
--		acpi_processor_registered--;
--		if (acpi_processor_registered == 0)
--			cpuidle_unregister_driver(&acpi_idle_driver);
--
- 		kfree(dev);
- 	}
- 
-diff --git a/include/acpi/processor.h b/include/acpi/processor.h
-index d0eccbd920e5c..ff864c1cee3a4 100644
---- a/include/acpi/processor.h
-+++ b/include/acpi/processor.h
-@@ -423,6 +423,8 @@ int acpi_processor_power_init(struct acpi_processor *pr);
- int acpi_processor_power_exit(struct acpi_processor *pr);
- int acpi_processor_power_state_has_changed(struct acpi_processor *pr);
- int acpi_processor_hotplug(struct acpi_processor *pr);
-+void acpi_processor_register_idle_driver(void);
-+void acpi_processor_unregister_idle_driver(void);
- #else
- static inline int acpi_processor_power_init(struct acpi_processor *pr)
- {
 -- 
 2.53.0
 
