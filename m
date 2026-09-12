@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A8FDCA6F;
-	Sat, 12 Sep 2026 14:32:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D66D04BEE55;
+	Sat, 12 Sep 2026 14:32:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789223544; cv=none; b=X4mAoWOTvgT4+YiH0EQF9TMnyPJ3LWe91FI4IgYmfhYY+EhPHfh1VYc4/y4yXM7WQgojrJCvr64YaA6njtiaBhJjWzOTqSDeFxKyfwl3FhxNZOo4GVOHWfm2Tnc6XElsoZRG7dMXPt9SMknFUhlrFfFkRgteZkRYB7uGrUU9aJg=
+	t=1789223548; cv=none; b=VlVMpVXBFdslxw5i27VbK0cmD9YufSAG9j4GYyxHzUrQ0oSrAvd5rlEXOv1UVZJQQq65a4bKNkKGe2fn6rc/9LXvpS1xsI+Kbm0ZLehf0ny4cNtNVokY5Nzr+8ary3P/23RHS9mp6g1RcuFsXB7Ym6cdNqEmim0tJxhQWhZrmEE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789223544; c=relaxed/simple;
-	bh=k15/E1tehPPmUWQPmW3W1fKu4WCKnhWmoaxl1rKPlqI=;
+	s=arc-20240116; t=1789223548; c=relaxed/simple;
+	bh=/fK9GjxWCIEfzvo4DWgyn4T5XpciUv7lrJ9bPlC3II8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dAdYCH/Uet3kmLIUuT55A1+IBir85QzgE51emFfqBerrsIT9GZo6sBcskqIUdq8xscDYJho/X2lwPunoudS+1Fv+Sg7CymGi/xgVjzOrTmRDQkyAockc+216cvSDe5T4HqtadrYCbNxcwyQiRDi2+3k/ljYpOt12uqttcY9vvsY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DpZ1v9T5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BQCqpD8QZamBY4izp9wLFe0YOJ9xXOnVmUGRG3XQ2Gqy0NBXLfodo1esvAkmyeUcfGqoEkhCSVEV8wNx4JPf97bbnU7JpD1May06anfkKXHREH2eirqJDAIfW+46Iel4w7l/3Blk5Fau7oZa+dZ1dR/HI630Keo4wS8j1gQEJmM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j3WgAXuz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DpZ1v9T5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B0F61F000FF;
-	Sat, 12 Sep 2026 14:32:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j3WgAXuz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F46C1F000FF;
+	Sat, 12 Sep 2026 14:32:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789223542;
-	bh=9oAPQdVKPBOQx0v3n6aIBbi2FprMNrluZekpS3+g3WU=;
+	s=korg; t=1789223547;
+	bh=6miNmCggRYHAOpMozHyG0XyDDfJ/Qc8gwxQvuZ4fwXU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DpZ1v9T5vQ+KER+7ynAUq0hX9k9zLg8ZabW3KSs28jQzBVlSLAAzVy1rxpCr5iYbN
-	 jCAjPEcYIKmIEonKv7M1kZuxO+GFQTEl83g7kVCzgltyLoRhOS45ykQXsT5WxFv3xs
-	 ndZjXMiD3U+0pKXWIfMJ4q9LttDE1gGTW6gG6B7s=
+	b=j3WgAXuzoWk+3FksHGQ1axM4uosCDaR50AHFdX/v/qd8AVSTHNgiNln3Yl0UvEV5E
+	 TuROFihjeJz4iNhDjYSGX7yG7XiBsdoZ7yjSKFG5AOzYxudohyFwlr/xavVA4RGIWk
+	 gPg/KruEbwBZbIrZk8konDi2QS0IXOaSG9Puk4mI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	Ian Rogers <irogers@google.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Alban Bedel <alban.bedel@lht.dlh.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0809/1424] perf ui hists: Fix uninitialized stack memory free on pstack allocation failure
-Date: Sat, 12 Sep 2026 08:54:01 +0200
-Message-ID: <20260912065625.409113175@linuxfoundation.org>
+Subject: [PATCH 6.6 0810/1424] software node: Fix software_node_get_reference_args() with index -1
+Date: Sat, 12 Sep 2026 08:54:02 +0200
+Message-ID: <20260912065625.431161179@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -52,49 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Alban Bedel <alban.bedel@lht.dlh.de>
 
-[ Upstream commit d5fdde1c426922efabe86a515f0782b3eba40577 ]
+[ Upstream commit ba3dedcf3bd47017307595a7e54924198f018246 ]
 
-Fixes heap corruption by initializing the options and actions arrays before
-the pstack allocation check, preventing an uninitialized stack pointer from
-being passed to free_popup_options() if the allocation fails.
+The bounds check for the index passed to
+software_node_get_reference_args() was failing when passed UINT_MAX,
+this in turn would lead to an out of bound access in the property
+array. Fix the bound check to also cover the UINT_MAX case.
 
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/linux-perf-users/20260709035230.6DBEE1F000E9@smtp.kernel.org/
-Fixes: f2b487db45f2 ("perf hists browser: Fix possible memory leak")
-Assisted-by: Antigravity:gemini-3.5-flash
-Signed-off-by: Ian Rogers <irogers@google.com>
-Link: https://lore.kernel.org/linux-perf-users/20260709035230.6DBEE1F000E9@smtp.kernel.org/
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Fixes: 31e4e12e0e960 ("software node: Correct a OOB check in software_node_get_reference_args()")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://lore.kernel.org/linux-devicetree/20260611103904.7CB131F00893@smtp.kernel.org/
+Signed-off-by: Alban Bedel <alban.bedel@lht.dlh.de>
+Link: https://patch.msgid.link/20260611164005.2930205-1-alban.bedel@lht.dlh.de
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/ui/browsers/hists.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/base/swnode.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/perf/ui/browsers/hists.c b/tools/perf/ui/browsers/hists.c
-index a53a0257a4bca..cf61fc75c1510 100644
---- a/tools/perf/ui/browsers/hists.c
-+++ b/tools/perf/ui/browsers/hists.c
-@@ -3005,15 +3005,15 @@ static int evsel__hists_browse(struct evsel *evsel, int nr_events, const char *h
- 		browser->min_pcnt = min_pcnt;
- 	hist_browser__update_nr_entries(browser);
+diff --git a/drivers/base/swnode.c b/drivers/base/swnode.c
+index a7a3e3b66bb5e..c34a5fc20f1e9 100644
+--- a/drivers/base/swnode.c
++++ b/drivers/base/swnode.c
+@@ -518,7 +518,7 @@ software_node_get_reference_args(const struct fwnode_handle *fwnode,
+ 	if (prop->is_inline)
+ 		return -EINVAL;
  
-+	memset(options, 0, sizeof(options));
-+	memset(actions, 0, sizeof(actions));
-+
- 	browser->pstack = pstack__new(3);
- 	if (browser->pstack == NULL)
- 		goto out;
+-	if ((index + 1) * sizeof(*ref) > prop->length)
++	if (index >= prop->length / sizeof(*ref))
+ 		return -ENOENT;
  
- 	ui_helpline__push(helpline);
- 
--	memset(options, 0, sizeof(options));
--	memset(actions, 0, sizeof(actions));
--
- 	if (symbol_conf.col_width_list_str)
- 		perf_hpp__set_user_width(symbol_conf.col_width_list_str);
- 
+ 	ref_array = prop->pointer;
 -- 
 2.53.0
 
