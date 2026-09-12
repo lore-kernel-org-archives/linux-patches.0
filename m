@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6066E381EBB;
-	Sat, 12 Sep 2026 09:34:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6774437F8BC;
+	Sat, 12 Sep 2026 09:34:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789205660; cv=none; b=I1WDyArYj0jCggS0pq8hsnrjjdxp1TirqRPtLXY/TYgosSKg9ni4pUVyVRvAqBnvIQX4stSRFmncs4/WNz4UXbj33l61JWDtCK1NQ2Bc4kApM7mYj32oxA0x5zq505yxofDTcfb+LyCPdlcb94S5awg8ONp++AjDG/J9wujp760=
+	t=1789205665; cv=none; b=JAnkvW/V3y6JMyUa/tO18M6en7lHB8TIX3NNmYbAJiX0sOku/oJbDRx+ubl/vaVRjD8yPh3FwJNbBmtM/S8ApzitJrVkqTR8v6nXakrH1zRu2BVGJhG7m7zUbPggo0n0cQkP5ZXoOiOUXMZAu8c33969v9CAlVcb4Ff6FeEJhNs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789205660; c=relaxed/simple;
-	bh=FRiYmeRT9LO6ShlncnyGoUadQBzrGB0SwpDu7NLXy8U=;
+	s=arc-20240116; t=1789205665; c=relaxed/simple;
+	bh=7rJ0dDxwRbqBl/e8KqR3FP31cp7Qhr98x1JqkoPl9WY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zd0VIMotr9jEcXoMWsQUbBcwj/tlytIUksx/QxYD0DPul0TeYPUMYAibGeNO6+KGuTNX//oVkDQc+9AkifK1AhkkRgnay26+bRp5ezolUeceG72b3FMkbzaApHZPQIbqlFUc13yDbTZa6QHuXgP0GGzdg30TO6Ym7TquoDKTTKk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0gZjbVA3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WHq4j8dKWZgd23VCTsiU2IQ7WPEBYhQxr+aos8F5cxcTruhOsd1LJKFkBldpOWFB/orQ4u1E44HSwbddcac7K+mD09coV+zY4KPd5JRo2ys+6fLz77S6BTHPZEX7/caLBWiKvSsRW5Now1Urnk5i7nV1SZ43RfFvlxBYJSjEjak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lv1vxscq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0gZjbVA3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 388A41F000FF;
-	Sat, 12 Sep 2026 09:34:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lv1vxscq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD46A1F000FF;
+	Sat, 12 Sep 2026 09:34:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789205659;
-	bh=PK93sx7Nyh0s3MhjN4uYJ+MkoRAnqSnSsoisjCi7pgE=;
+	s=korg; t=1789205663;
+	bh=2gw1U4ZYAZkWWQkRDsVhYu7LT7IMTE/+jSeVAHF+4zU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0gZjbVA3kOj1hK6fTobkLH1Mok/Vs+83EkOFX8t43sl5cAKxOsUXtHrVZm9OHjjP8
-	 rlskB2FdahqGDO+A+8nHgkRcpDEca7dob8fmz1jpOybsOOpeQo/L/v8K4MsPtQRsLM
-	 IXzEL5oRe/+6naUxfahCPdRcMoMbAd0UBKfjxvVQ=
+	b=Lv1vxscqxJaRu6sKBQoY0yAt0GF9jw5/T9xU0x9Z4sQ+eHOm7r+MWu0jnwwW4yrnM
+	 mQvc8UTJqetZV9/jWXfO9zBPrEqBkew5IMA4sl9qXufQwhlKgVePNobTkoMa64bR4O
+	 xg+kHt9lZwrybZN4C9KP3+6I8jQdWA4pCO4Qv8tw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SJ Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Sven Eckelmann <sven@narfation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0006/1518] mm/damon/sysfs: read ops_id only once in damon_sysfs_apply_inputs()
-Date: Sat, 12 Sep 2026 08:36:15 +0200
-Message-ID: <20260912065623.549989937@linuxfoundation.org>
+Subject: [PATCH 6.18 0007/1518] batman-adv: fix TX priority extraction for BATADV_FORW_MCAST
+Date: Sat, 12 Sep 2026 08:36:16 +0200
+Message-ID: <20260912065623.571946423@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,57 +50,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SJ Park <sj@kernel.org>
+From: Sven Eckelmann <sven@narfation.org>
 
-[ Upstream commit 5adaaa28be8a79ddd7e103b171f9d6e14e7fc26e ]
+commit 7aedb59b80993c912ab45ce24386a2775150962b upstream.
 
-damon_sysfs_apply_inputs() reads ops_id twice.  It could race with
-ops_id_store().  As a result, the min_region_sz could wrongly be set up.
-Read it once.
+batadv_mcast_forw_mode_by_count() pushs the skb->data for BATADV_FORW_MCAST
+forwarding via batadv_mcast_forw_mcsend(). But the
+batadv_skb_set_priority() expects the ethernet header directly before
+(skb->data + offset). With the moved skb->data, just some random data would
+be accessed to get the priority data.
 
-The user impact is trivial.  Sane users ain't update the parameter in
-parallel.  Even if it happens, the DAMON core layer handles the wrong
-min_region_sz (!is_power_of_2()).  Even if somehow the race ended up
-making a min_region_sz that is different from the user's intention but
-still valid, only monitoring itself runs differently than expected.  No
-critical consequences like kernel panic or memory corruption happen
+Move the batadv_skb_set_priority() before the decision about the handling
+multicast packets and potential header modifications.
 
-The issue was discovered [1] by Sashiko.
-
-Link: https://lore.kernel.org/20260715031002.108504-7-sj@kernel.org
-Link: https://lore.kernel.org/20260703172417.95426-1-sj@kernel.org [1]
-Fixes: 8d009da32f13 ("mm/damon/sysfs: set damon_ctx->min_sz_region only for paddr use case")
-Signed-off-by: SJ Park <sj@kernel.org>
-Cc: <stable@vger.kernel.org> # 6.18.x
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: stable@vger.kernel.org
+Fixes: 90039133221e ("batman-adv: mcast: implement multicast packet generation")
+[ Context ]
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/damon/sysfs.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ net/batman-adv/mesh-interface.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/mm/damon/sysfs.c b/mm/damon/sysfs.c
-index 53f99f05eb38e..7f52470be36e3 100644
---- a/mm/damon/sysfs.c
-+++ b/mm/damon/sysfs.c
-@@ -1440,14 +1440,16 @@ static inline bool damon_sysfs_kdamond_running(
- static int damon_sysfs_apply_inputs(struct damon_ctx *ctx,
- 		struct damon_sysfs_context *sys_ctx)
- {
-+	enum damon_ops_id ops_id;
- 	int err;
+diff --git a/net/batman-adv/mesh-interface.c b/net/batman-adv/mesh-interface.c
+index 0d598bf39bfc2..3d49fd7ef3e62 100644
+--- a/net/batman-adv/mesh-interface.c
++++ b/net/batman-adv/mesh-interface.c
+@@ -258,6 +258,8 @@ static netdev_tx_t batadv_interface_tx(struct sk_buff *skb,
+ 	if (batadv_compare_eth(ethhdr->h_dest, ectp_addr))
+ 		goto dropped;
  
--	err = damon_select_ops(ctx, sys_ctx->ops_id);
-+	ops_id = READ_ONCE(sys_ctx->ops_id);
-+	err = damon_select_ops(ctx, ops_id);
- 	if (err)
- 		return err;
- 	ctx->addr_unit = READ_ONCE(sys_ctx->addr_unit);
- 	/* addr_unit is respected by only DAMON_OPS_PADDR */
--	if (sys_ctx->ops_id == DAMON_OPS_PADDR)
-+	if (ops_id == DAMON_OPS_PADDR)
- 		ctx->min_sz_region = max(
- 				DAMON_MIN_REGION / ctx->addr_unit, 1);
- 	err = damon_sysfs_set_attrs(ctx, sys_ctx->attrs);
++	batadv_skb_set_priority(skb, 0);
++
+ 	gw_mode = atomic_read(&bat_priv->gw.mode);
+ 	if (is_multicast_ether_addr(ethhdr->h_dest)) {
+ 		/* if gw mode is off, broadcast every packet */
+@@ -291,6 +293,9 @@ static netdev_tx_t batadv_interface_tx(struct sk_buff *skb,
+ 
+ send:
+ 		if (do_bcast && !is_broadcast_ether_addr(ethhdr->h_dest)) {
++			/* WARNING batadv_mcast_forw_mode might add more headers
++			 * in front of the skb. and might even reallocate the skb
++			 */
+ 			forw_mode = batadv_mcast_forw_mode(bat_priv, skb, vid,
+ 							   &mcast_is_routable);
+ 			switch (forw_mode) {
+@@ -308,8 +313,6 @@ static netdev_tx_t batadv_interface_tx(struct sk_buff *skb,
+ 		}
+ 	}
+ 
+-	batadv_skb_set_priority(skb, 0);
+-
+ 	/* ethernet packet should be broadcasted */
+ 	if (do_bcast) {
+ 		primary_if = batadv_primary_if_get_selected(bat_priv);
 -- 
 2.53.0
 
