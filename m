@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A21411A6816;
-	Sat, 12 Sep 2026 12:47:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DC3229D288;
+	Sat, 12 Sep 2026 12:47:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789217254; cv=none; b=AvNaovLhNLWheanwkEy5fpiQlI0nslxsVc6AtvlsUbj3R1L1aS5Tat4aH7M4u02K8r9bPYSo00dZJ6cxMyPYYbAXBrgcYM9sI2e/HTKR823QNMiNCCuzdDN/mOMk0WEoxnkava8ttUIUghzaHYG+QfLEuKx2i/WbMliQc6fVU+4=
+	t=1789217258; cv=none; b=Ewg9uEfggN+4IbmZvk87wkllRVIR139i/hakm7kZayAbDSkCm8LB6p0UG85xWfU2sdx06teN/CVkSe1tMGyloOgAFqGybYhUw1qg7O1QQqGuhQttzEy9n075UGnYPkn2Tl0kxTrRW14hug3BbuIylRe9WNalqBwkYxOgLERswtM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789217254; c=relaxed/simple;
-	bh=ml7l3GeEHCr/L35LiwszY4FZGqKCyqaheN5x4hgTNoc=;
+	s=arc-20240116; t=1789217258; c=relaxed/simple;
+	bh=tAFFtcswTGHWiMH61pR+E+GtsjlEGQ+XhGnOgCG+0WQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ua1Tbf33lmLZm6glzLc4iKCxu3XlvJ76+2EXn7xzNWwBcqPc8b7solLlC+dfVzggEjldIvafqo4onP3QbYHguV0m5lrV9r/eawx9OCTCtMxEkEyD7VxQ94N3GtA5IZ+zDThpfnhS1yqNfI9p5J2v4idbCVvLVEdc/8Ot8HGmHuU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VJSmES/B; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mtWWTVMdWqGFrMs7IK452tLtW72dW6rxm9laPMOZKzjMGdzzUXjD5WdY8Vvnq/JEo9XkZOapFdo3d6/LhC2Y3n12bEYZfCRQxA5lbvj3D8iS9HX+XuaiH+7sSWCXGwscDVTR5XoxeOvwbdR9x55cAMSw0Wr0cu3TsIQSaIPUOfs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Al0IwI+R; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VJSmES/B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AE6B1F000FF;
-	Sat, 12 Sep 2026 12:47:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Al0IwI+R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C4081F000FF;
+	Sat, 12 Sep 2026 12:47:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789217252;
-	bh=VOjrilYcfA2T3W9SfyjFrN5Q4OO2v6dfg0vKwrnWJog=;
+	s=korg; t=1789217257;
+	bh=GTsRkL/rjRIi0bigswlxmj//f+T1Zwy5/sBUQvbhcNI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VJSmES/BQKWo0mKiCMUPWv+iTw39x0rvstipMfag1DQ645di/1rVNTZ2ocS54l/kV
-	 AqlPefyeJyAx2ZTJz29h9sqICbwnu3TqV+HO82aB/gx777D7XuySriE/XD4HT6hWTU
-	 OHpl/6Z6ztqdq1gAzb2m+rrKP65a+7KAPTlvBujI=
+	b=Al0IwI+R3Yyy2ld/46WtPnUFDkZ17wsw1yvGxJ/Mud8P9Nn+BiloQifAcouC8T27O
+	 jvtHfBl6z83aIbBrIUT6wUntcu4N+LluanOXbD95mBSgAfNInFxtC2jjj+InKdC12L
+	 Tv+Xo9AvRvrL9XXE/pNbc/YodQguY/BqNpHA/bmY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergei Litvin <litvindev@gmail.com>,
-	Miguel Ojeda <ojeda@kernel.org>,
-	Nicolas Schier <n.schier@fritz.com>,
+	Robertus Diawan Chris <robertusdchris@gmail.com>,
+	Nathan Chancellor <nathan@kernel.org>,
 	Nicolas Schier <nsc@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0903/1376] scripts/tags.sh: Prevent binary files appearing in cscope.files
-Date: Sat, 12 Sep 2026 08:55:29 +0200
-Message-ID: <20260912065627.693123405@linuxfoundation.org>
+Subject: [PATCH 6.12 0904/1376] modpost: prevent leak when early return no suffix .o in read_symbols()
+Date: Sat, 12 Sep 2026 08:55:30 +0200
+Message-ID: <20260912065627.715637809@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -53,48 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sergei Litvin <litvindev@gmail.com>
+From: Robertus Diawan Chris <robertusdchris@gmail.com>
 
-[ Upstream commit a9b93c34625a27bed5dc0f80ee2a359ceb955172 ]
+[ Upstream commit 9a5b76027ed91680e10f90111d9cba300f96d1ab ]
 
-When executing the command `make COMPILED_SOURCE=1 cscope`, the resulting
-`cscope.files` file contains filenames with the extensions *.rlib, *.rmeta,
-and *.so.
+The allocation for elf info symsearch and hdr from parse_elf() haven't
+been released when return because of modname didn't have suffix ".o".
+And it seems like the suffix ".o" check did not depends on parse_elf()
+to succeed first. So, move the suffix ".o" check before checking
+parse_elf() result to prevent resource leak when the modname didn't have
+suffix ".o" and return early.
 
-To fix this, modify the regular expression in the `all_compiled_sources()`
-function so that only files with the extensions *.h, *.c, *.S, and *.rs are
-accepted.
+This is reported by Coverity Scan as "Resource leak".
 
-The issue has been introduced by commit 4f491bb6ea2a ("scripts/tags.sh:
-collect compiled source precisely") which implemented the parsing of
-compiled sources from *.cmd files instead of using the "find" command.
-
-Fixes: 4f491bb6ea2a ("scripts/tags.sh: collect compiled source precisely")
-Signed-off-by: Sergei Litvin <litvindev@gmail.com>
-Acked-by: Miguel Ojeda <ojeda@kernel.org>
-Tested-by: Nicolas Schier <n.schier@fritz.com>
-Reviewed-by: Nicolas Schier <n.schier@fritz.com>
-Link: https://patch.msgid.link/20260714083331.69482-1-litvindev@gmail.com
-[nsc: cleaned-up commit message line breaks and removed cc trailers]
+Fixes: 8c9ce89c5b63 ("modpost: simplify mod->name allocation")
+Signed-off-by: Robertus Diawan Chris <robertusdchris@gmail.com>
+Reviewed-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://patch.msgid.link/20260624044742.144852-1-robertusdchris@gmail.com
 Signed-off-by: Nicolas Schier <nsc@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/tags.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ scripts/mod/modpost.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/scripts/tags.sh b/scripts/tags.sh
-index 191e0461d6d5b..4c194ebf7a70d 100755
---- a/scripts/tags.sh
-+++ b/scripts/tags.sh
-@@ -100,7 +100,7 @@ all_compiled_sources()
- 	{
- 		echo include/generated/autoconf.h
- 		find $ignore -name "*.cmd" -exec \
--			grep -Poh '(?<=^  )\S+|(?<== )\S+[^\\](?=$)' {} \+ |
-+			grep -Poh '(?<=^  )\S+\.([chS]|rs)(?=\s)|(?<== )\S+\.(?1)(?=$)' {} \+ |
- 		awk '!a[$0]++'
- 	} | xargs realpath -esq $([ -z "$KBUILD_ABS_SRCTREE" ] && echo --relative-to=.) |
- 	sort -u
+diff --git a/scripts/mod/modpost.c b/scripts/mod/modpost.c
+index 07e8a4eb71d04..f17350bf3ddb4 100644
+--- a/scripts/mod/modpost.c
++++ b/scripts/mod/modpost.c
+@@ -1567,14 +1567,14 @@ static void read_symbols(const char *modname)
+ 	struct elf_info info = { };
+ 	Elf_Sym *sym;
+ 
+-	if (!parse_elf(&info, modname))
+-		return;
+-
+ 	if (!strends(modname, ".o")) {
+ 		error("%s: filename must be suffixed with .o\n", modname);
+ 		return;
+ 	}
+ 
++	if (!parse_elf(&info, modname))
++		return;
++
+ 	/* strip trailing .o */
+ 	mod = new_module(modname, strlen(modname) - strlen(".o"));
+ 
 -- 
 2.53.0
 
