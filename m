@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFC19390CAE;
-	Sat, 12 Sep 2026 19:56:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2629530DEA3;
+	Sat, 12 Sep 2026 19:56:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789243006; cv=none; b=HWKFLBPz/ebo3ZvzoC8Xj8ZxFaHz7OtVlDyeeaupkxyO4tpL9cnMYJYIle5cQxCl1uVCMAqEgl+EcMzx9TaPDh8K7mzQZUedv6pSV9T4eJCC18uYDkHqLsZWnick/In1/NDsk5DUyTLGisAY5QlMw0dzNan4CyNoQ+g8yFAqltc=
+	t=1789243010; cv=none; b=kvX5456wbdR2Su9gyGwo6BXgmC+Wh4nPbXG8bb32dPz42HzzDEjz0pZDjNhM6nRa56HuSNAT4Tx8uMzYmktIWmfcqfbWRYR79oML20mE19fhIgI8qPk1CTvfYouXJm6sChPKqnQ788tyVfD916a7FscH2f5z7XlOsonGhz8q4YM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789243006; c=relaxed/simple;
-	bh=qApnSGabrnQSwANRjiARsuR851AgwsDVl4paC4M1FFk=;
+	s=arc-20240116; t=1789243010; c=relaxed/simple;
+	bh=+E0VgDgV8iF0ucblEo+Ahf/j9uf7CHTRWjkX4Q0QwTA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QYBkwM5P83NjQWnWfFMcVAdcjN7C72EIoFp+yXAc6n1TYFh9oZNojJLhWDw1sG8DvmS1mMdzcfMTqNXJe3qWaNdWcvJTbpuEy6UwTrP8/4p6I6WXuHk8k3lMKUvllA1CojDr9aw+iofxx3ubfjInr7oHNcvZaJvqF3aNyx4KKe4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hlnORIHJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QRitMjhFkMZIqgmiIq81HGGFMiTutcSEKD7LPnZbjyqrJsUve9oLCS0zAHEG/lWIJg/XEc6RIVQbUVcpvE9/M//epM05mmXbvK7ycr+9ZTUpFPeHHxHV0AfNFndpgjrJ4yErVb62K3ZWApMHjnOe7YU1exOAk2poQW8Zbno5awg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J31aIl7b; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hlnORIHJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E07271F000FF;
-	Sat, 12 Sep 2026 19:56:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J31aIl7b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B09461F000FF;
+	Sat, 12 Sep 2026 19:56:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789243004;
-	bh=Z63hypned6q6jjpJmomQS438JJHzNl/Fm+gZZYd279o=;
+	s=korg; t=1789243007;
+	bh=MCTdQksHq1k0byVblt+eBs6TagZQl4cDPJDCVXtRwTQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hlnORIHJN6HDVDuhgHClgb4cxRf5Loz2kTnry5t4/HAJrN1CniCVuYPry+UHN/Mbc
-	 Di4mFVZsXa4CD5B6INSCVQrdR/cm/1Ytxp4svuzbyl5U29PO8wJqC1x+3VRSXnb5lB
-	 hZc776q8VvECmd/NEVepgIa1m26p3MynKZNN1pWw=
+	b=J31aIl7bavae3bN1skUSWCqxceNHUcdbkR8T7H4V3ssnEV9bwHqecAxWg6YCdszPY
+	 Ha/mv1iSXffbhcPbg/NaKF5bPE7j1oyF4/cZPtiI6cWZRZNmhmMPB3FHdUJBEEqeJO
+	 RFeKMrWDfkRNaFXLOH6lppNqiWcT007g3oCgp84Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Shivaprasad G Bhat <sbhat@linux.ibm.com>,
+	Joy Zou <joy.zou@oss.nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 601/798] PCI/sysfs: Add static PCI resource attribute macros
-Date: Sat, 12 Sep 2026 09:03:49 +0200
-Message-ID: <20260912065530.901972739@linuxfoundation.org>
+Subject: [PATCH 5.10 561/798] regulator: core: use system_freezable_wq for init complete work
+Date: Sat, 12 Sep 2026 09:03:09 +0200
+Message-ID: <20260912065529.985802805@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -46,91 +46,71 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Krzysztof Wilczyński <kwilczynski@kernel.org>
+From: Joy Zou <joy.zou@oss.nxp.com>
 
-[ Upstream commit b15ac7e008bf0039f981da21e983b2df130152ff ]
+[ Upstream commit 03eab318cedd6ae34ecd34533cd986edf5237164 ]
 
-Add three macros for declaring static binary attributes for PCI resource
-files:
+schedule_delayed_work() uses system_wq, which is non-freezable, allowing
+regulator_init_complete_work to run concurrently with system suspend. This
+work fires ~30s after boot to disable unused regulators via I2C. When it
+races with PM suspend, the I2C adapter may already be suspended, triggering
+a -ESHUTDOWN warning in __i2c_transfer():
 
-  - pci_dev_resource_io_attr(), for I/O BAR resources (read/write)
-  - pci_dev_resource_uc_attr(), for memory BAR resources (mmap uncached)
-  - pci_dev_resource_wc_attr(), for write-combine resources (mmap WC)
+  WARNING: ... at __i2c_transfer+0x36c/0x3c8
+  Call trace:
+   __i2c_transfer
+   i2c_transfer
+   regmap_i2c_write
+   _regmap_update_bits
+   regulator_disable_regmap
+   _regulator_do_disable
+   regulator_late_cleanup
+   regulator_init_complete_work_function
+   process_one_work
 
-Each macro only sets the callbacks its resource type needs.  The I/O macro
-conditionally includes mmap support via __PCI_RESOURCE_IO_MMAP_ATTRS on
-architectures where arch_can_pci_mmap_io() is true at compile time (such as
-PowerPC, SPARC, and Xtensa).
+Switch to system_freezable_wq so the work is frozen before any device
+is suspended, eliminating the race.
 
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Tested-by: Shivaprasad G Bhat <sbhat@linux.ibm.com>
-Link: https://patch.msgid.link/20260508043543.217179-7-kwilczynski@kernel.org
-Stable-dep-of: bad94d3d18c6 ("PCI/sysfs: Return -EINVAL for unsupported I/O BAR mmap")
+Fixes: 55576cf18537 ("regulator: Defer init completion for a while after late_initcall")
+Signed-off-by: Joy Zou <joy.zou@oss.nxp.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260731-b4-regulator-pf01-v2-1-a406c8737fdb@oss.nxp.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pci-sysfs.c | 41 +++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 41 insertions(+)
+ drivers/regulator/core.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pci/pci-sysfs.c b/drivers/pci/pci-sysfs.c
-index 23ea48f176f16..ae0129b6ba103 100644
---- a/drivers/pci/pci-sysfs.c
-+++ b/drivers/pci/pci-sysfs.c
-@@ -1148,6 +1148,47 @@ static ssize_t pci_write_resource_io(struct file *filp, struct kobject *kobj,
- 	return pci_resource_io(filp, kobj, attr, buf, off, count, true);
- }
+diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
+index 335150e777568..0cdb81a1ba316 100644
+--- a/drivers/regulator/core.c
++++ b/drivers/regulator/core.c
+@@ -26,6 +26,7 @@
+ #include <linux/regulator/driver.h>
+ #include <linux/regulator/machine.h>
+ #include <linux/module.h>
++#include <linux/workqueue.h>
  
-+/*
-+ * generic_file_llseek() consults f_mapping->host to determine
-+ * the file size. As iomem_inode knows nothing about the
-+ * attribute, it's not going to work, so override it as well.
-+ */
-+#if arch_can_pci_mmap_io()
-+# define __PCI_RESOURCE_IO_MMAP_ATTRS		\
-+	.f_mapping = iomem_get_mapping,		\
-+	.llseek = pci_llseek_resource,		\
-+	.mmap = pci_mmap_resource_uc,
-+#else
-+# define __PCI_RESOURCE_IO_MMAP_ATTRS
-+#endif
-+
-+#define pci_dev_resource_io_attr(_bar)					\
-+static const struct bin_attribute dev_resource##_bar##_io_attr = {	\
-+	.attr = { .name = "resource" __stringify(_bar), .mode = 0600 },	\
-+	.private = (void *)(unsigned long)(_bar),			\
-+	.read = pci_read_resource_io,					\
-+	.write = pci_write_resource_io,					\
-+	__PCI_RESOURCE_IO_MMAP_ATTRS					\
-+}
-+
-+#define pci_dev_resource_uc_attr(_bar)					\
-+static const struct bin_attribute dev_resource##_bar##_uc_attr = {	\
-+	.attr = { .name = "resource" __stringify(_bar), .mode = 0600 },	\
-+	.private = (void *)(unsigned long)(_bar),			\
-+	.f_mapping = iomem_get_mapping,					\
-+	.llseek = pci_llseek_resource,					\
-+	.mmap = pci_mmap_resource_uc,					\
-+}
-+
-+#define pci_dev_resource_wc_attr(_bar)					      \
-+static const struct bin_attribute dev_resource##_bar##_wc_attr = {	      \
-+	.attr = { .name = "resource" __stringify(_bar) "_wc", .mode = 0600 }, \
-+	.private = (void *)(unsigned long)(_bar),			      \
-+	.f_mapping = iomem_get_mapping,					      \
-+	.llseek = pci_llseek_resource,					      \
-+	.mmap = pci_mmap_resource_wc,					      \
-+}
-+
- /**
-  * pci_remove_resource_files - cleanup resource files
-  * @pdev: dev to cleanup
+ #define CREATE_TRACE_POINTS
+ #include <trace/events/regulator.h>
+@@ -6081,8 +6082,9 @@ static int __init regulator_init_complete(void)
+ 	 * we'd only do this on systems that need it, and a kernel
+ 	 * command line option might be useful.
+ 	 */
+-	schedule_delayed_work(&regulator_init_complete_work,
+-			      msecs_to_jiffies(30000));
++	queue_delayed_work(system_freezable_wq,
++			   &regulator_init_complete_work,
++			   msecs_to_jiffies(30000));
+ 
+ 	return 0;
+ }
 -- 
 2.53.0
 
