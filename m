@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B344841A508;
-	Sat, 12 Sep 2026 10:30:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1274334AB14;
+	Sat, 12 Sep 2026 10:30:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789209006; cv=none; b=Mjbyek3xUjPB8YVpBruXkfgfbyPob59GXxvQ/8a/wRnRJszblYgfDNKcr9B3rCMzgEjBp5Md43pyvE9GIGSr+N74PCRj4E3ReaVWhSActij6PtklXYveRoHYUfqop5M/gyQ89mp2R70v6uB/AiXAFj3i/ZFI0Pzigq7AhCRwJmg=
+	t=1789209011; cv=none; b=O0LKbAdqif8VWR3395JxjjO8ZWCKF5BfEK79IaieVyDSX9UTxVyTrfgFNobTfm5tVakSwzF+8/6ZitE/RQTTCHUDDCD5q3RMANwvA1Zr8+fbzQkSa0sVzPKvFGwYjbVVwQSs+6UvyDzb0YC/pbHAvth44YqUFtVxGW5O1Hdfq5o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789209006; c=relaxed/simple;
-	bh=z8MasXcnmN33YqxfY/0PjmZInmQNVF8yCWd85dY3+Sw=;
+	s=arc-20240116; t=1789209011; c=relaxed/simple;
+	bh=JR7r4C484D0Ftl7qX2EcJdFxGe4SKC4pvWtFg6FTUyQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gtxEhImPDduLZm5qbfvxGcKJOKRXkUJnrpJ+wTaScgD/JbjB7qv3M03QdA+F4c0bVtrkOzMUdJ60qjh7YS8ueDGj9OSapXF6gPh+rfpfFj4iXbIpfQw7h7X/yxyG5qnDKsJhb1jWlHC3h+mwKjx9Z4YmtZ9suhAoGEP7FIbnsgc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T0tzGKk5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dwR0VuPPYW9J73Vw84w2TtjyMWOUpJ40zLa7elvHHjrbcD21ItY2p4Iu76z+SYqmFi5vnac2pLDzX2zfWvCRnM0lvfqMMQWEQmmLAKNSca359sF9Tu8et0DtvNbyahA3QcQXKaq7x4ZiB+p9lbD8B3Ep2BtGpHTSWMElNeOwSGo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U4Zz5Yzc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T0tzGKk5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29CAF1F000FF;
-	Sat, 12 Sep 2026 10:30:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U4Zz5Yzc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 472151F000FF;
+	Sat, 12 Sep 2026 10:30:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789209005;
-	bh=LfsUGPVIPmMNU+/2/t6fOdxwpagbMK0mhrUmHTp4m38=;
+	s=korg; t=1789209010;
+	bh=b1XLRfgZXe6REhfGolvPSR2jRaoT8ZIP1Wf99qYSG60=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T0tzGKk5sG/xLsVhsL6Eo9Ynk+H/KYy9Ul6+T4Vk6VuEFtapceS6Rs9t0ln59ivYY
-	 uv+o8q8X4h2dMldRAeCifBhlllgkwnK70Yu7YnPI+bLM390yXFzleHZdpBtdacZeX4
-	 FOHjYaf+WR50df0GTaKNHdztJxLfgCcknAIfwAQ8=
+	b=U4Zz5Yzc4e7Cn9I9o8+s0lUOhXPwTQZjEo9r14rdpd0KyaktLWLgjVvSBHbBHljLF
+	 5+kVFWgsZ2NX6US3uv+tQ9irCsS9Jaafxo4PluwfUZ7/7KAKOyC4aWrkGNDmJC5AoB
+	 m0Bb7/MHniW6ig/3WyVv6uHfa/FXECGH9J+CfPls=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kang Yang <kang.yang@airoha.com>,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Sean Wang <sean.wang@mediatek.com>,
+	Jeff Hsu <jeff.hsu@mediatek.com>,
+	Eason Lai <Eason.Lai@mediatek.com>,
 	Felix Fietkau <nbd@nbd.name>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0731/1518] wifi: mt76: always enable RRO queues for non-MT7992 chipset
-Date: Sat, 12 Sep 2026 08:48:20 +0200
-Message-ID: <20260912065639.971244708@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	Michael Lo <michael.lo@mediatek.com>
+Subject: [PATCH 6.18 0732/1518] wifi: mt76: mt7921: Add PCIe AER handler support to prevent system crash
+Date: Sat, 12 Sep 2026 08:48:21 +0200
+Message-ID: <20260912065639.994993634@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,58 +54,336 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Bianconi <lorenzo@kernel.org>
+From: Eason Lai <Eason.Lai@mediatek.com>
 
-[ Upstream commit f801fec3f0850ac00073bc322c0e4ea446d938ae ]
+[ Upstream commit 915672c5ae32deeb72f4572856d123f314791136 ]
 
-MT7990 NPU binary requires to initialize NPU desc_base after configuring
-ring_size. This is a preliminary patch to enable NPU offload for MT7996
-(Eagle) chipset.
+When an AER error occurs and the bus is hung, the register reads return
+0xFFFFFFFF, causing the DMA queue state to be corrupted and resulting in
+an invalid memory access when accessing q->desc[] or q->entry[].
 
-Tested-by: Kang Yang <kang.yang@airoha.com>
-Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Link: https://patch.msgid.link/20260122-mt76-npu-eagle-offload-v2-3-2374614c0de6@kernel.org
+Unable to handle kernel paging request at virtual address
+ffffffc01099eac0
+pc : mt76_dma_add_buf+0x124/0x188 [mt76]
+lr : mt76_dma_rx_fill+0x11c/0x1d8 [mt76]
+sp : ffffffc016d9bbf0
+x29: ffffffc016d9bc10 x28: 0000000000000000
+x27: 0000000000000000 x26: ffffffb7855e50b8
+x25: ffffffb80d04f000 x24: 0000000000000000
+x23: 0000000000000ec0 x22: ffffffb796803648
+x21: ffffffb796801f80 x20: ffffffb7968035f8
+x19: 0000000000000ec0 x18: 0000000000000000
+x17: 000000004ec00000 x16: 000000000ec00000
+x15: ffffffc01099eac0 x14: 000000004ec00000
+x13: 00000000ffc5a000 x12: ffffffc016d9bc32
+x11: 00000000ffffffff x10: 0000000000000002
+x9 : 0000000000000000 x8 : 000000000000b4ac
+x7 : 0000000000000a20 x6 : ffffffb6c1806400
+x5 : 0000000000000000 x4 : ffffffb80d04f000
+x3 : 0000000000000000 x2 : 0000000000000001
+x1 : 000000000ec04000 x0 : ffffffb7968035f8
+Call trace:
+ mt76_dma_add_buf+0x124/0x188 [mt76 (HASH:1029 4)]
+ mt76_dma_rx_reset+0xe8/0xfc [mt76 (HASH:1029 4)]
+ mt7921_wpdma_reset+0x188/0x1b0 [mt7921e (HASH:ee48 5)]
+ mt7921e_mac_reset+0x128/0x418 [mt7921e (HASH:ee48 5)]
+ mt7921_mac_reset_work+0xac/0x1a8 [mt7921_common (HASH:f721 6)]
+ process_one_work+0x188/0x514
+ worker_thread+0x12c/0x300
+ kthread+0x140/0x1fc
+ ret_from_fork+0x10/0x30
+
+Fix the invalid memory access by validating the DMA index read from the
+hardware before it is used as a queue index. An out-of-range value, such
+as the 0xFFFFFFFF returned while the bus is hung, is now clamped so it can
+no longer corrupt q->head or q->tail. In addition, check the bus_hung flag
+in mt7921_mac_reset_work() before attempting the reset sequence, reject MCU
+messages while the bus is hung, and install no-op bus operations when an
+unrecoverable AER error is detected, preventing further invalid hardware
+accesses.
+
+Due to hardware limitations - such as the lack of a connected hardware
+reset pin or the absence of host re-probe functionality - affected Wi-Fi
+devices may not fully recover to a normal operational state after
+certain errors, even with AER enabled.
+
+Fixes: 17f1de56df05 ("mt76: add common code shared between multiple chipsets")
+Co-developed-by: Sean Wang <sean.wang@mediatek.com>
+Signed-off-by: Sean Wang <sean.wang@mediatek.com>
+Co-developed-by: Jeff Hsu <jeff.hsu@mediatek.com>
+Signed-off-by: Jeff Hsu <jeff.hsu@mediatek.com>
+Signed-off-by: Eason Lai <Eason.Lai@mediatek.com>
+Co-developed-by: Michael Lo <michael.lo@mediatek.com>
+Link: https://patch.msgid.link/20260506070458.3096180-1-jb.tsai@mediatek.com
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
-Stable-dep-of: 915672c5ae32 ("wifi: mt76: mt7921: Add PCIe AER handler support to prevent system crash")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/dma.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/net/wireless/mediatek/mt76/dma.c      |  27 +++--
+ drivers/net/wireless/mediatek/mt76/mcu.c      |  12 +-
+ .../net/wireless/mediatek/mt76/mt76_connac.h  |   5 +
+ .../net/wireless/mediatek/mt76/mt7921/mac.c   |   3 +
+ .../net/wireless/mediatek/mt76/mt7921/pci.c   | 103 ++++++++++++++++++
+ 5 files changed, 139 insertions(+), 11 deletions(-)
 
 diff --git a/drivers/net/wireless/mediatek/mt76/dma.c b/drivers/net/wireless/mediatek/mt76/dma.c
-index b36ceec45c4d7..66df27480f39a 100644
+index 66df27480f39a..0ba93290b00d3 100644
 --- a/drivers/net/wireless/mediatek/mt76/dma.c
 +++ b/drivers/net/wireless/mediatek/mt76/dma.c
-@@ -6,6 +6,7 @@
- #include <linux/dma-mapping.h>
- #include "mt76.h"
- #include "dma.h"
-+#include "mt76_connac.h"
+@@ -186,6 +186,18 @@ mt76_dma_queue_magic_cnt_init(struct mt76_dev *dev, struct mt76_queue *q)
+ 	}
+ }
  
- static struct mt76_txwi_cache *
- mt76_alloc_txwi(struct mt76_dev *dev)
-@@ -188,16 +189,18 @@ mt76_dma_queue_magic_cnt_init(struct mt76_dev *dev, struct mt76_queue *q)
++/* A hung bus (e.g. after a PCIe AER error) reads 0xffffffff from every
++ * register, so clamp an out-of-range index to the fallback to keep it from
++ * corrupting q->head/q->tail.
++ */
++static int
++mt76_dma_read_dma_idx(struct mt76_queue *q, int fallback)
++{
++	u32 idx = Q_READ(q, dma_idx);
++
++	return idx < q->ndesc ? idx : fallback;
++}
++
  static void
  mt76_dma_sync_idx(struct mt76_dev *dev, struct mt76_queue *q)
  {
--	Q_WRITE(q, desc_base, q->desc_dma);
--	if ((q->flags & MT_QFLAG_WED_RRO_EN) && !mt76_npu_device_active(dev))
-+	if ((q->flags & MT_QFLAG_WED_RRO_EN) &&
-+	    (!is_mt7992(dev) || !mt76_npu_device_active(dev)))
- 		Q_WRITE(q, ring_size, MT_DMA_RRO_EN | q->ndesc);
- 	else
- 		Q_WRITE(q, ring_size, q->ndesc);
- 
- 	if (mt76_queue_is_npu_tx(q)) {
--		writel(q->desc_dma, &q->regs->desc_base);
- 		writel(q->ndesc, &q->regs->ring_size);
-+		writel(q->desc_dma, &q->regs->desc_base);
+@@ -201,7 +213,8 @@ mt76_dma_sync_idx(struct mt76_dev *dev, struct mt76_queue *q)
  	}
+ 
+ 	Q_WRITE(q, desc_base, q->desc_dma);
+-	q->head = Q_READ(q, dma_idx);
 +
-+	Q_WRITE(q, desc_base, q->desc_dma);
- 	q->head = Q_READ(q, dma_idx);
++	q->head = mt76_dma_read_dma_idx(q, 0);
  	q->tail = q->head;
  }
+ 
+@@ -419,7 +432,7 @@ mt76_dma_tx_cleanup(struct mt76_dev *dev, struct mt76_queue *q, bool flush)
+ 	if (flush)
+ 		last = -1;
+ 	else
+-		last = Q_READ(q, dma_idx);
++		last = mt76_dma_read_dma_idx(q, -1);
+ 
+ 	while (q->queued > 0 && q->tail != last) {
+ 		mt76_dma_tx_cleanup_idx(dev, q, q->tail, &entry);
+@@ -432,7 +445,7 @@ mt76_dma_tx_cleanup(struct mt76_dev *dev, struct mt76_queue *q, bool flush)
+ 		}
+ 
+ 		if (!flush && q->tail == last)
+-			last = Q_READ(q, dma_idx);
++			last = mt76_dma_read_dma_idx(q, -1);
+ 	}
+ 	spin_unlock_bh(&q->cleanup_lock);
+ 
+@@ -625,8 +638,8 @@ mt76_dma_tx_queue_skb_raw(struct mt76_dev *dev, struct mt76_queue *q,
+ 	buf.len = skb->len;
+ 
+ 	spin_lock_bh(&q->lock);
+-	mt76_dma_add_buf(dev, q, &buf, 1, tx_info, skb, NULL);
+-	mt76_dma_kick_queue(dev, q);
++	if (mt76_dma_add_buf(dev, q, &buf, 1, tx_info, skb, NULL) >= 0)
++		mt76_dma_kick_queue(dev, q);
+ 	spin_unlock_bh(&q->lock);
+ 
+ 	return 0;
+@@ -969,7 +982,7 @@ mt76_dma_rx_process(struct mt76_dev *dev, struct mt76_queue *q, int budget)
+ 	if ((q->flags & MT_QFLAG_WED_RRO_EN) ||
+ 	    (IS_ENABLED(CONFIG_NET_MEDIATEK_SOC_WED) &&
+ 	     mt76_queue_is_wed_tx_free(q))) {
+-		dma_idx = Q_READ(q, dma_idx);
++		dma_idx = mt76_dma_read_dma_idx(q, q->tail);
+ 		check_ddone = true;
+ 	}
+ 
+@@ -979,7 +992,7 @@ mt76_dma_rx_process(struct mt76_dev *dev, struct mt76_queue *q, int budget)
+ 
+ 		if (check_ddone) {
+ 			if (q->tail == dma_idx)
+-				dma_idx = Q_READ(q, dma_idx);
++				dma_idx = mt76_dma_read_dma_idx(q, q->tail);
+ 
+ 			if (q->tail == dma_idx)
+ 				break;
+diff --git a/drivers/net/wireless/mediatek/mt76/mcu.c b/drivers/net/wireless/mediatek/mt76/mcu.c
+index 65d4c2adb5386..951781dcf0ade 100644
+--- a/drivers/net/wireless/mediatek/mt76/mcu.c
++++ b/drivers/net/wireless/mediatek/mt76/mcu.c
+@@ -78,15 +78,19 @@ int mt76_mcu_skb_send_and_get_msg(struct mt76_dev *dev, struct sk_buff *skb,
+ 	unsigned long expires;
+ 	int ret, seq;
+ 
+-	if (mt76_is_sdio(dev))
+-		if (test_bit(MT76_RESET, &dev->phy.state) && atomic_read(&dev->bus_hung))
+-			return -EIO;
+-
+ 	if (ret_skb)
+ 		*ret_skb = NULL;
+ 
+ 	mutex_lock(&dev->mcu.mutex);
+ 
++	if ((mt76_is_mmio(dev) && atomic_read(&dev->bus_hung)) ||
++	    (mt76_is_sdio(dev) && test_bit(MT76_RESET, &dev->phy.state) &&
++	    atomic_read(&dev->bus_hung))) {
++		orig_skb = skb;
++		ret = -EIO;
++		goto out;
++	}
++
+ 	if (dev->mcu_ops->mcu_skb_prepare_msg) {
+ 		orig_skb = skb;
+ 		ret = dev->mcu_ops->mcu_skb_prepare_msg(dev, skb, cmd, &seq);
+diff --git a/drivers/net/wireless/mediatek/mt76/mt76_connac.h b/drivers/net/wireless/mediatek/mt76/mt76_connac.h
+index 670f59f55605a..d504bf0c5f168 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt76_connac.h
++++ b/drivers/net/wireless/mediatek/mt76/mt76_connac.h
+@@ -48,6 +48,11 @@ enum rx_pkt_type {
+ #define MT_TXD_LEN_MSDU_LAST		BIT(14)
+ #define MT_TXD_LEN_AMSDU_LAST		BIT(15)
+ 
++/* PCIE part */
++#define PCIE_AER_UNC_STATUS_OFFSET  0x204
++#define PCIE_AER_UNC_MASK_OFFSET    0x208
++#define PCIE_AER_CO_STATUS_OFFSET   0x210
++
+ enum {
+ 	CMD_CBW_20MHZ = IEEE80211_STA_RX_BW_20,
+ 	CMD_CBW_40MHZ = IEEE80211_STA_RX_BW_40,
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/mac.c b/drivers/net/wireless/mediatek/mt76/mt7921/mac.c
+index 251a9a1f664d5..0d48dbb2354f3 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7921/mac.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7921/mac.c
+@@ -673,6 +673,9 @@ void mt7921_mac_reset_work(struct work_struct *work)
+ 	cancel_work_sync(&pm->wake_work);
+ 
+ 	for (i = 0; i < 10; i++) {
++		if (atomic_read(&dev->mt76.bus_hung))
++			return;
++
+ 		mutex_lock(&dev->mt76.mutex);
+ 		ret = mt792x_dev_reset(dev);
+ 		mutex_unlock(&dev->mt76.mutex);
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/pci.c b/drivers/net/wireless/mediatek/mt76/mt7921/pci.c
+index a0c9df3c2cc75..85caa2fbb78f0 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7921/pci.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7921/pci.c
+@@ -554,6 +554,108 @@ static int mt7921_pci_resume(struct device *device)
+ 	return err;
+ }
+ 
++static u32 mt7921_aer_rr(struct mt76_dev *mdev, u32 offset)
++{
++	return 0;
++}
++
++static void mt7921_aer_wr(struct mt76_dev *mdev, u32 offset, u32 val)
++{
++	;
++}
++
++static u32 mt791_aer_rmw(struct mt76_dev *mdev, u32 offset, u32 mask, u32 val)
++{
++	return 0;
++}
++
++static const struct mt76_bus_ops mt7921_aer_bus_hung_ops = {
++	.rr = mt7921_aer_rr,
++	.wr = mt7921_aer_wr,
++	.rmw = mt791_aer_rmw,
++	.type = MT76_BUS_MMIO
++};
++
++static void mt7921_pci_set_aer_bus_hung_ops(struct mt792x_dev *dev)
++{
++	if (READ_ONCE(dev->mt76.bus) == &mt7921_aer_bus_hung_ops)
++		return;
++
++	atomic_set(&dev->mt76.bus_hung, true);
++	WRITE_ONCE(dev->mt76.bus, &mt7921_aer_bus_hung_ops);
++}
++
++static pci_ers_result_t mt7921_error_detected(struct pci_dev *pdev,
++					      pci_channel_state_t state)
++{
++	struct mt76_dev *mdev = pci_get_drvdata(pdev);
++	struct mt792x_dev *dev = container_of(mdev, struct mt792x_dev, mt76);
++	u32 aer_unc_val = 0, aer_co_val = 0;
++
++	dev_err(mdev->dev, "PCIE error detect state: %d\n", state);
++
++	/* Clear SW IRQ tasklet first */
++	tasklet_kill(&mdev->irq_tasklet);
++
++	if (state == pci_channel_io_perm_failure) {
++		mt7921_pci_set_aer_bus_hung_ops(dev);
++		return PCI_ERS_RESULT_DISCONNECT;
++	}
++
++	pci_read_config_dword(pdev, PCIE_AER_UNC_STATUS_OFFSET, &aer_unc_val);
++	pci_read_config_dword(pdev, PCIE_AER_CO_STATUS_OFFSET, &aer_co_val);
++
++	dev_warn(mdev->dev, "PCIE_AER_UNC_STATUS_OFFSET: 0x%x\n", aer_unc_val);
++	dev_warn(mdev->dev, "PCIE_AER_CO_STATUS_OFFSET: 0x%x\n", aer_co_val);
++
++	/**
++	 * Due to this error is from link error and this AER is un-correctable,
++	 * so can't covered by device
++	 **/
++	if (aer_unc_val != 0) {
++		mt7921_pci_set_aer_bus_hung_ops(dev);
++		return PCI_ERS_RESULT_DISCONNECT;
++	}
++
++	/**
++	 * Try to recover it when state is pci_channel_io_frozen or
++	 * AER is correctable error
++	 **/
++	if (state == pci_channel_io_frozen || aer_co_val != 0) {
++		/* Disable PCIE activity first. */
++		pci_disable_device(pdev);
++		return PCI_ERS_RESULT_NEED_RESET;
++	}
++
++	return PCI_ERS_RESULT_NONE;
++}
++
++static pci_ers_result_t mt7921_slot_reset(struct pci_dev *pdev)
++{
++	struct mt76_dev *mdev = pci_get_drvdata(pdev);
++	int ret = 0;
++
++	ret = pci_enable_device_mem(pdev);
++
++	if (ret) {
++		dev_err(mdev->dev, "pci_enable_device_mem failed: %d\n", ret);
++		return PCI_ERS_RESULT_DISCONNECT;
++	}
++
++	pci_set_master(pdev);
++	pci_restore_state(pdev);
++	pci_save_state(pdev);
++	/* Also try do the vendor reset to let it more clear. */
++	mt792x_reset(mdev);
++
++	return PCI_ERS_RESULT_RECOVERED;
++}
++
++static const struct pci_error_handlers mt7921_err_handler = {
++	.error_detected = mt7921_error_detected,
++	.slot_reset     = mt7921_slot_reset,
++};
++
+ static void mt7921_pci_shutdown(struct pci_dev *pdev)
+ {
+ 	mt7921_pci_remove(pdev);
+@@ -568,6 +670,7 @@ static struct pci_driver mt7921_pci_driver = {
+ 	.remove		= mt7921_pci_remove,
+ 	.shutdown	= mt7921_pci_shutdown,
+ 	.driver.pm	= pm_sleep_ptr(&mt7921_pm_ops),
++	.err_handler    = &mt7921_err_handler,
+ };
+ 
+ module_pci_driver(mt7921_pci_driver);
 -- 
 2.53.0
 
