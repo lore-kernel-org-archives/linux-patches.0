@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92FD3320CD3;
-	Sat, 12 Sep 2026 15:27:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C77FE33C18B;
+	Sat, 12 Sep 2026 15:27:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789226860; cv=none; b=ZL/unfjwVoxUs7hRngsaRLuBWmFA5mWkAckeDy8NdgXY8Ol/3mXHXGIQiXdqR2BgJuzKBgTyhUyqh8Tz4sgW/jOjs9Wrwt1pJ+Y2tC82aqDbuiUCJxQDn24aRzC2GVlQQO+8+KeMbv/bowZoPU2aSWGJDlUwNT4mLx4CFpJbL+I=
+	t=1789226864; cv=none; b=EY0HLynjvvpE1idZ20qQF/qlJOBaM2Oo1upjNzELoAF4yBde0W+Zzcs/hckVheCVEcC9y7jWoP+KvfA2MhUhhtVC1N+S19naRTAhWNH2doEvzjcWZC1VryzL8PEIrfwNFlePy6JjbEJoJ1SIUyCvyvPQSmrk5yWhmyZHS/BXBXQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789226860; c=relaxed/simple;
-	bh=FDS+tsneo/Skve0itLtPMg3gn2yZNfwccztjpBC9iow=;
+	s=arc-20240116; t=1789226864; c=relaxed/simple;
+	bh=ichyEfukdbwnstbO7OVYSYcjuuzH29m9oH3eqY8H27Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pmFtELLSrAe4nZZK+r3kPhay9yFK0iyc8GI0vFx2UfbAORDH22ifxNtXhlIcjIgdMdtArUEW2hz1lAbf5lD+odCHRl9+3cSPUgvtxig26v0xxE+aRQWkpCYwsHKptFS3BcE7AI0Mdilj/gpGR8fbV/7fj4gWlNirb/+1tC1zHsE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DrU5ozI0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=cO3n6p3ghpTBLcbCl/2A5OxnOrI0T3834NuiSRhnGwA1v4CwuQbOEa1KvbibND60tuhzyEBtjctEgTXy1bymKHH3GQ5R6Tlzgmlnvjviq1PqDwGdZ5GBp7+1xm2/369r/z8/nx3nUP9nA7JjOcS8HCO4oGPpa7QHo9dSn0azB48=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H/CquN0J; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DrU5ozI0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DAFA1F000FF;
-	Sat, 12 Sep 2026 15:27:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H/CquN0J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66FC01F000FF;
+	Sat, 12 Sep 2026 15:27:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789226858;
-	bh=PCMA1KUItPlDuT3cAEJlLgTCnunvGrK/q/vjxyqGzio=;
+	s=korg; t=1789226863;
+	bh=Zbvh/N5cyecA52YaEMWdp73O3GBD8S7meEbonF+bCd0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DrU5ozI0AVuAsY1EuiTcSr7/p77A5LI/UrJDlfSm7SQapnGuqjiS284YXJ/FPQAH5
-	 mQx+ZrTFQ29NronH4WMe75/Pn2TpnZDwnzlEXghuPbqd7t4J37nKCAlpQw5dbAYBux
-	 mfgxvBVIke5hp0q7yOQEvJ6Bm0wXLvMk67RnSNF8=
+	b=H/CquN0J4hj9YIPAcwFdbhdRiROj8eAxMc6S9hZpO2LeESuVPSjWZwDnvf5vJRGpb
+	 H7UMq1P8iHGcSyPitZF4pIUeKShS/7hM1VRFXeHgkbx8/p4jJipjGnj4Y2kf7Uy+Bv
+	 C2dZUI6n0P/Mg7/WU1yEKiH/drYDrl2zJMVY0Bwk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robbie Ko <robbieko@synology.com>,
-	Chuck Lever <cel@kernel.org>
-Subject: [PATCH 6.1 0056/1191] nfsd: reject out-of-range useconds in NFSv2 SETATTR/CREATE
-Date: Sat, 12 Sep 2026 08:46:24 +0200
-Message-ID: <20260912065549.406890320@linuxfoundation.org>
+	stable@kernel.org,
+	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
+	Ricardo Robaina <rrobaina@redhat.com>,
+	Paul Moore <paul@paul-moore.com>
+Subject: [PATCH 6.1 0065/1191] audit: avoid dropping live tree ref on fsnotify rule autoremove
+Date: Sat, 12 Sep 2026 08:46:33 +0200
+Message-ID: <20260912065549.619208453@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -44,122 +46,73 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Robbie Ko <robbieko@synology.com>
+From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
 
-commit 26709c8ffe73772eb69e68d553ac71d91228dccc upstream.
+commit 783f0f0974c156aca630f4ffff248671082a098d upstream.
 
-The NFSv2 sattr decoder converts the wire useconds to nanoseconds in
-svcxdr_decode_sattr():
+audit_del_rule() is used for both netlink deletion templates and internal
+fsnotify autoremove.  The former passes a parsed template which owns a
+temporary tree reference; the latter passes the installed entry itself.
 
-	iap->ia_atime.tv_nsec = tmp2 * NSEC_PER_USEC;
+The unconditional audit_put_tree() at the end of audit_del_rule() assumes
+the template case.  For mixed AUDIT_DIR plus AUDIT_EXE rules, an fsnotify
+autoremove event therefore drops the installed rule's live tree reference.
+Repeating this across rules sharing the same tree can free the tree while
+another rule still references it, and a later autoremove dereferences the
+freed pathname while comparing rules.
 
-tmp2 is a u32 and NSEC_PER_USEC is 1000, so the product is computed in
-unsigned long. On ILP32 that is 32 bits, and an out-of-range useconds
-value such as 4294968 wraps to tv_nsec == 704. The corruption therefore
-happens during decode, before any proc function can inspect the value,
-and a later range check on tv_nsec would see an in-range result and
-accept it. Rejecting in the decoder yields an RPC GARBAGE_ARGS reply.
-NFSv2 defines no NFSERR_INVAL, so there is no NFS-level status to return
-for a malformed time argument, and the check cannot move to the proc
-function the way the v3/v4 nsec range checks do.
+Move the temporary-tree put to audit_rule_change(), the caller that owns
+deletion templates.  Keep it in the AUDIT_DEL_RULE cleanup so both
+successful deletion and -ENOENT still release the parser-owned tree.
 
-Guard the raw useconds before the multiplication and reject values
-greater than 1000000. useconds == 1000000 is kept: it is the Sun
-convention for "set to the current server time", and the in-tree Linux
-NFSv2 client emits it in both the atime and the mtime field for a plain
-touch / utimes(file, NULL) (see encode_sattr() and
-xdr_encode_current_server_time() in fs/nfs/nfs2xdr.c). Rejecting 1000000
-would turn that common operation into a hard decode failure for both
-SETATTR and CREATE. 1000000 * NSEC_PER_USEC is 10^9, which does not wrap
-on ILP32, so the Sun convention value passes through safely. Only
-genuinely out-of-range values (> 1000000) are rejected. The atime and
-mtime guards are therefore symmetric.
-
-The decoder only applied the Sun convention in the mtime block, which
-clears ATTR_ATIME_SET|ATTR_MTIME_SET when mtime useconds == 1000000. If a
-client puts 1000000 in the atime field but not in the mtime field, the
-atime block stored an out-of-range tv_nsec (10^9) and left ATTR_ATIME_SET
-set, so the bogus value reached the filesystem. Apply the convention in
-the atime block as well, clearing ATTR_ATIME_SET so the server uses its
-current time and ignores the value. Only ATTR_ATIME_SET is cleared there.
-The mtime block keeps its existing behavior, where 1000000 means "set
-both atime and mtime to now".
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Signed-off-by: Robbie Ko <robbieko@synology.com>
-[ cel: various tweaks, addenda, and clean-ups ]
-Link: https://patch.msgid.link/20260616054027.2360930-1-robbieko@synology.com
-Signed-off-by: Chuck Lever <cel@kernel.org>
+Cc: stable@kernel.org
+Fixes: 34d99af52ad4 ("audit: implement audit by executable")
+Assisted-by: Codex:gpt-5
+Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+Reviewed-by: Ricardo Robaina <rrobaina@redhat.com>
+Tested-by: Ricardo Robaina <rrobaina@redhat.com>
+[PM: dropped unnecessary comment for line length reasons]
+Signed-off-by: Paul Moore <paul@paul-moore.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfsxdr.c |   32 ++++++++++++++++++++++----------
- 1 file changed, 22 insertions(+), 10 deletions(-)
+ kernel/auditfilter.c |    6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
---- a/fs/nfsd/nfsxdr.c
-+++ b/fs/nfsd/nfsxdr.c
-@@ -10,6 +10,16 @@
- #include "auth.h"
+--- a/kernel/auditfilter.c
++++ b/kernel/auditfilter.c
+@@ -1024,7 +1024,6 @@ static inline int audit_add_rule(struct
+ int audit_del_rule(struct audit_entry *entry)
+ {
+ 	struct audit_entry  *e;
+-	struct audit_tree *tree = entry->rule.tree;
+ 	struct list_head *list;
+ 	int ret = 0;
+ #ifdef CONFIG_AUDITSYSCALL
+@@ -1072,9 +1071,6 @@ int audit_del_rule(struct audit_entry *e
+ out:
+ 	mutex_unlock(&audit_filter_mutex);
  
- /*
-+ * Sun convention: a sattr time-useconds field of one full second (an
-+ * otherwise out-of-range value) means "set this time to the current
-+ * server time." It's needed to make permissions checks for the "touch"
-+ * program across NFSv2 mounts work correctly. See description of
-+ * sattr in section 6.1 of "NFS Illustrated" by Brent Callaghan,
-+ * Addison-Wesley, ISBN 0-201-32750-5
-+ */
-+#define NFS2_SATTR_SET_TO_SERVER_TIME	(1000000)
-+
-+/*
-  * Mapping of S_IF* types to NFS file types
-  */
- static const u32 nfs_ftypes[] = {
-@@ -172,27 +182,29 @@ svcxdr_decode_sattr(struct svc_rqst *rqs
- 	tmp1 = be32_to_cpup(p++);
- 	tmp2 = be32_to_cpup(p++);
- 	if (tmp1 != (u32)-1 && tmp2 != (u32)-1) {
-+		/*
-+		 * Range test here to prevent the multiplication from
-+		 * wrapping to a valid (but incorrect) value on 32-bit
-+		 * platforms.
-+		 */
-+		if (tmp2 > NFS2_SATTR_SET_TO_SERVER_TIME)
-+			return false;
- 		iap->ia_valid |= ATTR_ATIME | ATTR_ATIME_SET;
- 		iap->ia_atime.tv_sec = tmp1;
- 		iap->ia_atime.tv_nsec = tmp2 * NSEC_PER_USEC;
-+		if (tmp2 == NFS2_SATTR_SET_TO_SERVER_TIME)
-+			iap->ia_valid &= ~ATTR_ATIME_SET;
+-	if (tree)
+-		audit_put_tree(tree);	/* that's the temporary one */
+-
+ 	return ret;
+ }
+ 
+@@ -1159,6 +1155,8 @@ int audit_rule_change(int type, int seq,
  	}
  
- 	tmp1 = be32_to_cpup(p++);
- 	tmp2 = be32_to_cpup(p++);
- 	if (tmp1 != (u32)-1 && tmp2 != (u32)-1) {
-+		if (tmp2 > NFS2_SATTR_SET_TO_SERVER_TIME)
-+			return false;
- 		iap->ia_valid |= ATTR_MTIME | ATTR_MTIME_SET;
- 		iap->ia_mtime.tv_sec = tmp1;
- 		iap->ia_mtime.tv_nsec = tmp2 * NSEC_PER_USEC;
--		/*
--		 * Passing the invalid value useconds=1000000 for mtime
--		 * is a Sun convention for "set both mtime and atime to
--		 * current server time".  It's needed to make permissions
--		 * checks for the "touch" program across v2 mounts to
--		 * Solaris and Irix boxes work correctly. See description of
--		 * sattr in section 6.1 of "NFS Illustrated" by
--		 * Brent Callaghan, Addison-Wesley, ISBN 0-201-32750-5
--		 */
--		if (tmp2 == 1000000)
-+		if (tmp2 == NFS2_SATTR_SET_TO_SERVER_TIME)
- 			iap->ia_valid &= ~(ATTR_ATIME_SET|ATTR_MTIME_SET);
- 	}
- 
+ 	if (err || type == AUDIT_DEL_RULE) {
++		if (type == AUDIT_DEL_RULE && entry->rule.tree)
++			audit_put_tree(entry->rule.tree);
+ 		if (entry->rule.exe)
+ 			audit_remove_mark(entry->rule.exe);
+ 		audit_free_rule(entry);
 
 
