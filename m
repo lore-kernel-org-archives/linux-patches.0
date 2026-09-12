@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FA493749E3;
-	Sat, 12 Sep 2026 17:06:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE5134BEE3C;
+	Sat, 12 Sep 2026 17:06:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789232773; cv=none; b=tyDlj90GHOFPBQSZ+2MPFkPzOb6R5pv9w01llr4WrjCzVwzSLqzBVyDeSTW1ZsrwGi1jiptBTEu3Q0sDt9QdUv5zZAWhKe03J4B+S+4dca131h+nAiphYb32/hLLUP4ny39RJ/18H1rxQ8XsSECY5PPV6P7FoO8qBQTDJ+3OeEE=
+	t=1789232777; cv=none; b=Df47M94FpICg9icRdptzFVX/eLXPEBRdvCraXgzZVrOhLyIaZSgqqO2fsUoB5fEvGakcYGMBOJwcXCUbzIfAHJBejEqn6TgODarRVDDuTdCGQj/a/oFb/pp5jQcpd6BXpQ/bZEMMRY/fa8/IzZ5d2HuCXdNP962fCymh83ustTw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789232773; c=relaxed/simple;
-	bh=Irl5qkTzPPqF2Xjr1cbgGBZ+9OfDs4laD4MdYxXcyEg=;
+	s=arc-20240116; t=1789232777; c=relaxed/simple;
+	bh=WiKiQLnMJ/LnjeYcXoZbWXc1Afim6WTsWdJQsJqGToI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZnCaQLBH3ox92y9Ky23IQbUBiWUedXL1jWA+a5GV/MorNkl+H3HU3J1cGCFqo2R5X/kPTebIZbd2Fr3ZPVVIu2lk/ZpwOyEykMtCZzct3i0xmVUIQpC7eQow4C5FiEygBwzQyrm1nnzZ4bPqiND+319+olNfd4j5Xq4iP8jkwZo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ldbS2PpW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hW3pe/zQR6SYo2vQYd4gbdp3Ezzp3l+FWZUFaBV56Cx6rcblhw1MVKHpG+bsILJFdvyt8J9c/q7/KeI7YxcSyrPhy/HAGmVyJLvj4RxD4AZLW8OnYxwrJ34lLwOKmQ0oRtpHfHMcLyZsClDRgstSZzwtbFwkYfZPk185mg9nNuA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Aa0jvOnH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ldbS2PpW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 027451F00893;
-	Sat, 12 Sep 2026 17:06:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Aa0jvOnH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E307C1F000FF;
+	Sat, 12 Sep 2026 17:06:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789232771;
-	bh=q5QZfAyb8K/8Kwc2hF/JjO9Cda9WoNbH4JomuKyhfc8=;
+	s=korg; t=1789232775;
+	bh=SK4mmu0xUAYDQ+jXegUfttABH45jPG2JCgh/jkRb5sk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ldbS2PpWIqkbikfdvF4o4aumr5GMpIVURKzXsZlZRBcY6Uh+DIhFZH7dAkutGvQkz
-	 M7d/E5f4R9R5LUo+uis4x+63hFClOK22NDD+uJWi1d/fDdTQGKxHK+f8DizqsearKV
-	 azPWOMUklQcur04IRELFopIyq3YPom4six5tWqjA=
+	b=Aa0jvOnHTazY46QtB8NxWM0JNu9Ank/jCOESXyfqgKMK5wefNl8s06d0GSmRF9KRb
+	 6NDr/y791n0OytHTAWlSoT22PEbOHgolo+EVAq5Ze+2FYa2hmZXhlRESuX4s5f6MG1
+	 Fo0mOLQzdXAmTJ/NZI4PLyBMNlVM0x4lm0qWri5A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuhao Jiang <danisjiang@gmail.com>,
-	Junrui Luo <moonafterrain@outlook.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>
-Subject: [PATCH 5.15 035/935] NFSv4.1: fix layout segment leak on the pnfs_layout_process() forget path
-Date: Sat, 12 Sep 2026 08:51:05 +0200
-Message-ID: <20260912065527.646178744@linuxfoundation.org>
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 5.15 036/935] nfsd: Reset write verifier when async COPY writeback fails
+Date: Sat, 12 Sep 2026 08:51:06 +0200
+Message-ID: <20260912065527.668149993@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -51,50 +50,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junrui Luo <moonafterrain@outlook.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-commit ee5a386cfe60f3f8286de16a9db8e1a08f0bc124 upstream.
+commit f5cb2276954cb80987a93ef9f9dfbfdbfc0f10b9 upstream.
 
-When the server returns a new layout stateid while a valid one is still
-held, pnfs_layout_process() calls pnfs_mark_matching_lsegs_return() on
-the on-stack free_me list and jumps to out_forget. Segments whose
-reference count drops to zero are unlinked from lo->plh_segs and moved
-to free_me by mark_lseg_invalid(); for an idle cached segment the layout
-header holds the only reference, so this happens on the first decrement.
+Async COPY captures nn->writeverf at request time and reports it to
+the client via CB_OFFLOAD after the worker kthread completes. When
+the post-copy vfs_fsync_range() or filemap_check_wb_err() in
+_nfsd_copy_file_range() reports an error, the worker correctly
+leaves NFSD4_COPY_F_COMMITTED clear so that CB_OFFLOAD encodes
+wr_stable_how as NFS_UNSTABLE, but the server's write verifier is
+not rotated.
 
-out_forget never drains free_me -- only the success path calls
-pnfs_free_lseg_list().
+A client that receives NFS_UNSTABLE in CB_OFFLOAD follows up with
+COMMIT to make the copied data durable. With the verifier
+unchanged, COMMIT returns the same value the client just received
+via CB_OFFLOAD, and the client concludes the copy is durable --
+silently dropping the data whose writeback in fact failed. This
+violates the UNSTABLE+COMMIT durability contract (RFC 7862 section
+15.1, RFC 8881 section 18.32) and matches the bug just fixed in
+nfsd_vfs_write() and nfsd_commit().
 
-Commit 814b84971388 ("pNFS/NFSv4: Fix a layout segment leak in
-pnfs_layout_process()") added the drain; commit 08bd8dbe8882
-("pNFS/NFSv4: Try to return invalid layout in pnfs_layout_process()")
-removed it while switching the destination to lo->plh_return_segs, which
-is drained elsewhere. Commit fb700ef02676 ("NFSv4.1: Simplify layout
-return in pnfs_layout_process()") switched the destination back to
-free_me without restoring the drain.
+Rotate nn->writeverf at the writeback-failure site. The async COPY
+worker has no svc_rqst, so commit_reset_write_verifier() is not
+available here; calling nfsd_reset_write_verifier() directly
+mirrors the trace-less reset already used by
+nfsd_file_check_write_error() for the same purpose. Filter out
+-EAGAIN and -ESTALE, matching commit_reset_write_verifier(), since
+neither indicates a durable-storage failure.
 
-Restore the pnfs_free_lseg_list() call.
-
-Fixes: fb700ef02676 ("NFSv4.1: Simplify layout return in pnfs_layout_process()")
-Reported-by: Yuhao Jiang <danisjiang@gmail.com>
-Assisted-by: Claude:claude-opus-5
+Fixes: eac0b17a77fb ("NFSD add vfs_fsync after async copy is done")
 Cc: stable@vger.kernel.org
-Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Assisted-by: kres:claude-opus-4-7
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Link: https://patch.msgid.link/20260522203723.446841-1-cel@kernel.org
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfs/pnfs.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/nfsd/nfs4proc.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/fs/nfs/pnfs.c
-+++ b/fs/nfs/pnfs.c
-@@ -2479,6 +2479,7 @@ out_forget:
- 	spin_unlock(&ino->i_lock);
- 	lseg->pls_layout = lo;
- 	NFS_SERVER(ino)->pnfs_curr_ld->free_lseg(lseg);
-+	pnfs_free_lseg_list(&free_me);
- 	return ERR_PTR(-EAGAIN);
+--- a/fs/nfsd/nfs4proc.c
++++ b/fs/nfsd/nfs4proc.c
+@@ -1628,6 +1628,8 @@ static ssize_t _nfsd_copy_file_range(str
+ 			status = filemap_check_wb_err(dst->f_mapping, since);
+ 		if (!status)
+ 			set_bit(NFSD4_COPY_F_COMMITTED, &copy->cp_flags);
++		else if (status != -EAGAIN && status != -ESTALE)
++			nfsd_reset_write_verifier(copy->cp_nn);
+ 	}
+ 	return bytes_copied;
  }
- 
 
 
