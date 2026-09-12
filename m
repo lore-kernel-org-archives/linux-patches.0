@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C39E535677C;
-	Sat, 12 Sep 2026 16:01:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 849712E8B64;
+	Sat, 12 Sep 2026 16:01:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789228873; cv=none; b=u0uVpYtvHAri++bphVX7Kz5V59hLgD8I2jTB4DMH0tvx/mn375fVOIjFxAHFTsTBORHOuFqMRcErDgf6sLVU079SCat/0Ww0I973jjFAErpvilSWa5592U4YI5mw/D/g4RxSJzaUIf4hcyQZ1j7zlOBSk+a+f2zbMxauP65Iqrs=
+	t=1789228878; cv=none; b=V/uJa1dylLVtC0ZS2Byth/8OJG56stjl6qEY3mULi0/d/OVNdkncOBujj6rnS1fV/tYjgH1p1NvQomthRZwgifGXEKB2EEFPQY2dMUlxTzQ68UAtDoyFiz+lIXah+/piAU/M/TVh8aivwB6811wKLKPcuPlxObMApQWrIn2TjCE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789228873; c=relaxed/simple;
-	bh=OuuNrTZ1pq2e1ZmVahywlnNiBTez0NGt6I7z/FHKnzs=;
+	s=arc-20240116; t=1789228878; c=relaxed/simple;
+	bh=Oc6ww/WaiguhSTG2JhaVVheb9dhkBXcuqMgxnyw5vyQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ptpSimafN2YosJ5shSGYBOBK21Y5Bl0oxuvYUXEqLKRLM5YlBtQFkJzIRXWDbwNtHQ0lHlGFoOGlGic5Dq2gew6G9sIxWki66px/uLbBkWKOD+98lSQEis7mvIKvHj2nwBmT5vZbfvADwIAgkntOXXTDqO33lG3IbfyaxheebsI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d6Hgj1hO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aIIUms6pJgPVYrbpgcejINyfwlCn0BnRgasnXysRY41dQewACQ+3B51hDOUgVuoELAFgWeFYJchsHByD3wAg7OvkYPB9rlQMMuN12Hc86HQGTHPE+rf5xaetc/aOYKP6UzAM1DBcK1Ip4UXNTkWQAs3GxEGp/TgvhW24ySPhlNU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j9+qeZm8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d6Hgj1hO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 987C51F000FF;
-	Sat, 12 Sep 2026 16:01:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j9+qeZm8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F0601F000FF;
+	Sat, 12 Sep 2026 16:01:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789228872;
-	bh=d4mtQ2+sBL193SBPPqdsmSTKjt7EqZXLa6Obej8PV9A=;
+	s=korg; t=1789228876;
+	bh=JLXEMzkF2pmjB2g76Wu9HnpGFkkKGQknRmOztDy5GII=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=d6Hgj1hOmFYOfswZBz78fbdv5wwcE57lBcLwB9oKWmD1bQIKQ0WnjMIS46srSpeW6
-	 AmxhYtWlidKCGmzCSiZohs3xjmj1DxrRMjQ+h96BkcL8MeIYV3ccD/FeTAlbUhp08m
-	 ayDH1pvsENxHQvBd0+XuKVJ5PiOWPQ2F2Sbca81k=
+	b=j9+qeZm8NJLiJBdl4xqqS1Eracvyw9/M5PRt35XB6B3FaP5JiyFUfL/oo19PUNQTj
+	 pgsiOfuu5LAvHOjdAMFcv8Xv0Izw53WV/ZRtU3IOjTFaq/JvbUSL/67ZZVQjGILg9E
+	 FdSbjRLVbKah/giQbUE3pVMJPoL9FQ7FzgY60fqM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christos Maragkos <whitetowersoftware@gmail.com>,
+	Michael Bommarito <michael.bommarito@gmail.com>,
 	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0475/1191] HID: nintendo: Fix imu_timestamp_us double increment per report
-Date: Sat, 12 Sep 2026 08:53:23 +0200
-Message-ID: <20260912065558.903298438@linuxfoundation.org>
+Subject: [PATCH 6.1 0476/1191] HID: roccat: bound device-supplied profile index
+Date: Sat, 12 Sep 2026 08:53:24 +0200
+Message-ID: <20260912065558.925294113@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -51,41 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christos Maragkos <whitetowersoftware@gmail.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-[ Upstream commit 1f9b25d3fb65b9384dec16d9db13a3e71abd9145 ]
+[ Upstream commit 43fae42628a8c10fa8981773d7ec9f1a367821a7 ]
 
-Previously, the imu_timestamp_us variable was incremented twice per
-report, causing it to advance by two times the desired amount.
+kone_keep_values_up_to_date() and kone_profile_activated() use an
+8-bit, device-supplied profile value as an index into the 5-element
+kone->profiles[] array without a range check. A malicious USB device
+claiming the Roccat Kone id can send a switch-profile event (or a
+startup_profile read at probe) with an out-of-range value and make the
+driver read out of bounds; the result is exposed via the actual_dpi
+sysfs attribute.
 
-This resulted in incorrect jumps in IMU timestamps reported using
-MSC_TIMESTAMP, so userspace applications saw corrupted timing on
-functions such as gyroscope-based aim and motion controls.
+Reject out-of-range indices in both paths.
 
-This is fixed by removing the redundant increment at the start of the
-report handling so the remaining can account for the full report
-interval.
+This was found with static analysis and confirmed with the KUnit test
+added in the following patch (KASAN: slab-out-of-bounds).
 
-Fixes: 4ff5b10840a88 ("HID: nintendo: add IMU support")
-Signed-off-by: Christos Maragkos <whitetowersoftware@gmail.com>
+Fixes: 14bf62cde7942 ("HID: add driver for Roccat Kone gaming mouse")
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-nintendo.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/hid/hid-roccat-kone.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hid/hid-nintendo.c b/drivers/hid/hid-nintendo.c
-index 924f84a04dd04..44edc50be6e56 100644
---- a/drivers/hid/hid-nintendo.c
-+++ b/drivers/hid/hid-nintendo.c
-@@ -1127,7 +1127,6 @@ static void joycon_parse_imu_report(struct joycon_ctlr *ctlr,
- 		dropped_threshold = ctlr->imu_avg_delta_ms * 3 / 2;
- 		dropped_pkts = (delta - min(delta, dropped_threshold)) /
- 				ctlr->imu_avg_delta_ms;
--		ctlr->imu_timestamp_us += 1000 * ctlr->imu_avg_delta_ms;
- 		if (dropped_pkts > JC_IMU_DROPPED_PKT_WARNING) {
- 			hid_warn(ctlr->hdev,
- 				 "compensating for %u dropped IMU reports\n",
+diff --git a/drivers/hid/hid-roccat-kone.c b/drivers/hid/hid-roccat-kone.c
+index 76da04801ca9b..b3e2a352b0dc3 100644
+--- a/drivers/hid/hid-roccat-kone.c
++++ b/drivers/hid/hid-roccat-kone.c
+@@ -36,6 +36,8 @@ static uint profile_numbers[5] = {0, 1, 2, 3, 4};
+ 
+ static void kone_profile_activated(struct kone_device *kone, uint new_profile)
+ {
++	if (new_profile < 1 || new_profile > ARRAY_SIZE(kone->profiles))
++		new_profile = 1;
+ 	kone->actual_profile = new_profile;
+ 	kone->actual_dpi = kone->profiles[new_profile - 1].startup_dpi;
+ }
+@@ -790,8 +792,10 @@ static void kone_keep_values_up_to_date(struct kone_device *kone,
+ {
+ 	switch (event->event) {
+ 	case kone_mouse_event_switch_profile:
+-		kone->actual_dpi = kone->profiles[event->value - 1].
+-				startup_dpi;
++		if (event->value >= 1 &&
++		    event->value <= ARRAY_SIZE(kone->profiles))
++			kone->actual_dpi =
++				kone->profiles[event->value - 1].startup_dpi;
+ 		fallthrough;
+ 	case kone_mouse_event_osd_profile:
+ 		kone->actual_profile = event->value;
 -- 
 2.53.0
 
