@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CDFA30DEA6;
-	Sat, 12 Sep 2026 13:17:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EDDF430789;
+	Sat, 12 Sep 2026 13:17:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789219060; cv=none; b=K/0VndYhBndb/+TXkUL01JHhEqp+YYPA0Sb4tolN0APeiFgyWCy/mszSn7XVcTweGPRlMaSyNE2UJ9wfs3F5xaWLorBKCdeMtlI1+sbvlwMxhVfvzNcV8bqvO/7NXRjwlc+WzEZo6KSeG7YQg6WiaoGpThjXeionblveBd0QFuo=
+	t=1789219065; cv=none; b=pmCDB9nGfjC440mEidzLccu7QHG/mmZDhzB1gwKZfyOa+RWcHs3UCWTNvkESZt9FtQ1AKRRGd5p2dVXaONf58EL7SCzgdLF1n+8bItWrtXO9RE648hdPkDxu6O/Pr2RoMi99KS/Fc5baMRzOev5y0ag9jGSnL1pNWNf17y1Af+o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789219060; c=relaxed/simple;
-	bh=5PEE5cXs/gDeNZDmlqNbBvi2+uTyr+cEJExpHvv5MLE=;
+	s=arc-20240116; t=1789219065; c=relaxed/simple;
+	bh=hUTyphkXWGqRABWl8bPqyy7fO3VjXs/sJvj+VIEuzCM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lZJNj8HRAi3ybiCPjFA//8EwhD6z3CQbEOapl/nVyj61/THMzVUFaNNyv69jMQf7mRsduO4qtOuufGK322uwbl9v9S7LvLLOcP+JXTqZeGM3t7yzF9+RcnNxcxNdIfwlz3KNbWLkTtf6xsPHzQzYcPWIqMI9WajG/V56emeOqdA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ihNrC3Nv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uUfdXGsTFxlCcw7AT4dCtyAIOqyEXZSXdvC0RRArEhDzbZatmmDwt+O4/+dSNSwrqYm6MhbQAi7jtsVetDmdOCTaB6N8mKGdb5Wc+wX4K54NcSP443rFnyaxAAKDgP66ld5Dhx/LtO2BtQcCj5OLIm+hJ+ygQU6l04O0jIpBrCI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ccm6D/Zy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ihNrC3Nv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12F261F000FF;
-	Sat, 12 Sep 2026 13:17:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ccm6D/Zy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D65751F000FF;
+	Sat, 12 Sep 2026 13:17:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789219058;
-	bh=UTn92YfaN1QQAOa+ATgeMY4IFKfYd2BQBhnp3HqGwas=;
+	s=korg; t=1789219064;
+	bh=Fz7VGTz588sRQgWeMROKAqJymyRkNdC4+prf0ATXTus=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ihNrC3NvX5+rVfFVa1C7g4yQtP4ZsJJpsKCv2QhF39YG+Ugz9QSk2QYYePeWF3ook
-	 1ZyxUjfodnBXoTP4cjQvuT8jg25HzSkU8SKJO53n7SvrKb+bouLrtuDwmssWU6DNve
-	 Lx9YEQXXH/nzNGmNpZx/R+AuTaPcqxCrONv/xxlM=
+	b=ccm6D/ZyaZcg8T+EostySpdQxjrh1bXnh0f/j2afQTysnk0k50NGLuPzqHTGpfGFQ
+	 zknRW5FSQq9W0m1h8dU/Y9AFe3F7Ju6Zww6UBO2iTFUJ1xfXcoMppCm9J9+IkVJPS8
+	 FEA0mYMZoBanDNY3m4S0dA54+0uDaUfpWcK6Yb2Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei-Lin Chang <weilin.chang@arm.com>,
-	Marc Zyngier <maz@kernel.org>,
-	Will Deacon <will@kernel.org>,
+	syzbot+9265e754091c2d27ea29@syzkaller.appspotmail.com,
+	Pauli Virtanen <pav@iki.fi>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1273/1376] arm64: ptdump: Make note_page_flush() range aware
-Date: Sat, 12 Sep 2026 09:01:39 +0200
-Message-ID: <20260912065635.911109432@linuxfoundation.org>
+Subject: [PATCH 6.12 1274/1376] Bluetooth: L2CAP: reject accept queue add unless BT_LISTEN
+Date: Sat, 12 Sep 2026 09:01:40 +0200
+Message-ID: <20260912065635.932988983@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -52,99 +52,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wei-Lin Chang <weilin.chang@arm.com>
+From: Pauli Virtanen <pav@iki.fi>
 
-[ Upstream commit 902caade3cfd60f99bf71b355e7c86344bd831e5 ]
+[ Upstream commit d4bfa78fd67929b62b02013c107973e0c5b7aa9a ]
 
-note_page_flush() calls note_page() with addr == 0 and level == -1 to
-dump the last row of a ptdump. addr == 0 (1 << 64 wrapped around)
-renders a huge region with enormous size for address spaces with
-IA bits < 64. For example the stage-2 page tables and the EFI runtime
-page table.
+New sk should not be added to parent socket accept queue after last
+l2cap_sock_cleanup_listen() has run in l2cap_sock_teardown_cb() and
+state set to BT_CLOSED, as that can result to UAF on dereferencing the
+dangling parent reference.
 
-More importantly, the last region of the address space and everything
-after the address space up to 1 << 64 are merged into one row of
-output. If the last region within the address space is valid, it will
-appear to remain valid up to 1 << 64 with the same attributes.
+l2cap_sock_new_connection_cb() may race with parent l2cap_chan teardown,
+due to chan->state accessed without consistent locking:
 
-Currently only the EFI runtime ptdump is affected by this, but KVM will
-soon fix its stage-2 ptdump by using note_page_flush(). Here is an
-example of an EFI runtime ptdump (last row):
+  [Task 1]                           [Task 2]
+  l2cap_sock_release(parent)         l2cap_connect
+    l2cap_sock_shutdown                pchan = l2cap_global_chan_by_psm
+      l2cap_chan_lock(pchan)
+      l2cap_chan_close
+        l2cap_sock_teardown_cb
+          pchan->state = BT_CLOSED
+      l2cap_chan_unlock(pchan) ------> l2cap_chan_lock(pchan)
+                                       l2cap_new_connection
+                                         l2cap_sock_new_connection_cb
+      l2cap_chan_lock(pchan) <-------- l2cap_chan_unlock(pchan)
+      l2cap_sock_kill(parent)          /* bt_sk(sk)->parent dangling */
 
-0x0000008000000000-0x0000000000000000   17179868672G PGD
+Fix by adding check for sk_state == BT_LISTEN after acquiring sk lock in
+l2cap_sock_new_connection_cb().  Add lock_sock() around sk_state writes
+where missing, to avoid data races.
 
-With this patch:
+Although the data races on pchan->state should be fixed too, this
+defensive sk_state check probably makes sense in any case.
 
-0x0000008000000000-0x0001000000000000      261632G PGD
-
-To fix this, cache the end address of a ptdump in ptdump_pg_state so
-note_page_flush() can call the final note_page() with the correct end
-address.
-
-Fixes: 9d80448ac92b ("efi/arm64: Add debugfs node to dump UEFI runtime page tables")
-Signed-off-by: Wei-Lin Chang <weilin.chang@arm.com>
-Reviewed-by: Marc Zyngier <maz@kernel.org>
-Signed-off-by: Will Deacon <will@kernel.org>
+Fixes: 2ff1a41a912d ("Bluetooth: L2CAP: Fix null-ptr-deref in l2cap_sock_state_change_cb()")
+Reported-by: syzbot+9265e754091c2d27ea29@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=9265e754091c2d27ea29
+Signed-off-by: Pauli Virtanen <pav@iki.fi>
+Reported-by: syzbot+9265e754091c2d27ea29@syzkaller.appspotmail.com
+Tested-by: syzbot+9265e754091c2d27ea29@syzkaller.appspotmail.com
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/include/asm/ptdump.h |  2 ++
- arch/arm64/mm/ptdump.c          | 14 +++++++++++++-
- 2 files changed, 15 insertions(+), 1 deletion(-)
+ net/bluetooth/l2cap_sock.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/arch/arm64/include/asm/ptdump.h b/arch/arm64/include/asm/ptdump.h
-index 01033c1d38dc2..8bf87ac9bb4ba 100644
---- a/arch/arm64/include/asm/ptdump.h
-+++ b/arch/arm64/include/asm/ptdump.h
-@@ -50,6 +50,8 @@ struct ptdump_pg_state {
- 	const struct addr_marker *marker;
- 	const struct mm_struct *mm;
- 	unsigned long start_address;
-+	/* exclusive end, ULONG_MAX represents an end at 1 << 64 */
-+	unsigned long end_address;
- 	int level;
- 	u64 current_prot;
- 	bool check_wx;
-diff --git a/arch/arm64/mm/ptdump.c b/arch/arm64/mm/ptdump.c
-index cafaff8056b14..93a872582ede8 100644
---- a/arch/arm64/mm/ptdump.c
-+++ b/arch/arm64/mm/ptdump.c
-@@ -278,9 +278,19 @@ void note_page_pgd(struct ptdump_state *pt_st, unsigned long addr, pgd_t pgd)
+diff --git a/net/bluetooth/l2cap_sock.c b/net/bluetooth/l2cap_sock.c
+index 47ef01e2f7e25..8432baba7bb82 100644
+--- a/net/bluetooth/l2cap_sock.c
++++ b/net/bluetooth/l2cap_sock.c
+@@ -1526,6 +1526,11 @@ static int l2cap_sock_new_connection_cb(struct l2cap_chan *chan,
  
- void note_page_flush(struct ptdump_state *pt_st)
- {
-+	struct ptdump_pg_state *st = container_of(pt_st, struct ptdump_pg_state, ptdump);
-+	unsigned long end = st->end_address;
- 	pte_t pte_zero = {0};
+ 	lock_sock(parent);
  
--	note_page(pt_st, 0, -1, pte_val(pte_zero));
-+	/*
-+	 * Address spaces that end at 1 << 64 have end_address == ULONG_MAX,
-+	 * but note_page() expects the exclusive end. In this case adjust end
-+	 * to the wraparound value 0.
-+	 */
-+	if (end == ULONG_MAX)
-+		end = 0;
++	if (parent->sk_state != BT_LISTEN) {
++		release_sock(parent);
++		return -EINVAL;
++	}
 +
-+	note_page(pt_st, end, -1, pte_val(pte_zero));
+ 	/* Check for backlog size */
+ 	if (sk_acceptq_is_full(parent)) {
+ 		BT_DBG("backlog full %d", parent->sk_ack_backlog);
+@@ -1690,10 +1695,14 @@ static void l2cap_sock_state_change_cb(struct l2cap_chan *chan, int state,
+ 	if (!sk)
+ 		return;
+ 
++	lock_sock(sk);
++
+ 	sk->sk_state = state;
+ 
+ 	if (err)
+ 		sk->sk_err = err;
++
++	release_sock(sk);
  }
  
- void ptdump_walk(struct seq_file *s, struct ptdump_info *info)
-@@ -296,6 +306,7 @@ void ptdump_walk(struct seq_file *s, struct ptdump_info *info)
- 		.marker = info->markers,
- 		.mm = info->mm,
- 		.pg_level = &kernel_pg_levels[0],
-+		.end_address = end,
- 		.level = -1,
- 		.ptdump = {
- 			.note_page_pte = note_page_pte,
-@@ -337,6 +348,7 @@ bool ptdump_check_wx(void)
- 			{ -1, NULL},
- 		},
- 		.pg_level = &kernel_pg_levels[0],
-+		.end_address = ~0UL,
- 		.level = -1,
- 		.check_wx = true,
- 		.ptdump = {
+ static struct sk_buff *l2cap_sock_alloc_skb_cb(struct l2cap_chan *chan,
+@@ -1769,6 +1778,8 @@ static void l2cap_sock_resume_cb(struct l2cap_chan *chan)
+ 	if (!sk)
+ 		return;
+ 
++	lock_sock(sk);
++
+ 	if (test_and_clear_bit(FLAG_PENDING_SECURITY, &chan->flags)) {
+ 		sk->sk_state = BT_CONNECTED;
+ 		chan->state = BT_CONNECTED;
+@@ -1776,6 +1787,8 @@ static void l2cap_sock_resume_cb(struct l2cap_chan *chan)
+ 
+ 	clear_bit(BT_SK_SUSPEND, &bt_sk(sk)->flags);
+ 	sk->sk_state_change(sk);
++
++	release_sock(sk);
+ }
+ 
+ static void l2cap_sock_set_shutdown_cb(struct l2cap_chan *chan)
 -- 
 2.53.0
 
