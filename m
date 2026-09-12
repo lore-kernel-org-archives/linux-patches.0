@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6990038DC59;
-	Sat, 12 Sep 2026 09:15:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF05035F5F7;
+	Sat, 12 Sep 2026 09:15:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789204542; cv=none; b=rKCPvpYIWYmLidN2uV0SEbmNyGvLOaytjykWXWxOZUvJb/iLdmLn0jYBueEk+gLSA7uCorjVweXsFqdZhoaikZIyHTACGsgF0stt5Bgpx0sqKzcN9AtCWMta1DJKyJpKR7p82yZgB0IO92oFyIi2MqU993kjZK7m/HQh0VRhUSE=
+	t=1789204547; cv=none; b=jXICtx8SBpjh7vdKwCKGHj5qE/PjBhuWctAy6eFV6Su4Ornp847HLKr2bVIWadTWvGRlrninCF5QjlLRzcjYge76Gy57RVfnnfruC1QcEOlcpwAGZ57oUIQIxyjeuPhOuG0npVVOMGCiOKqxD5A623SPlMlEx9E2eYunpn9F0To=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789204542; c=relaxed/simple;
-	bh=4SAuDoyb7sITTjyo92wg2UwE/HRlKVvMoEOzmz5RY8k=;
+	s=arc-20240116; t=1789204547; c=relaxed/simple;
+	bh=VIu3VaowAv8eOyfTxMLpJjHKBWnghhbTA/ll2Uu/3Gw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Dkhem1VwDICzx1DDuo4lYQX04zsqpYByQnx0AAoYLrza9dwSfgelUJZDM6Mb6DkGOlp9MmIL6kM9Z+VIy3yurdF8SW8u9xY93oT4pNjXDum6qCU6E3GJmT5rt0FqlqXZd9rqs1kaPTq5DPML28tWVQke2i8eJUd0fMKcyoBWU5Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wlHV3HYD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PlAGrjOumkotpUE30lvMAmn9TcVaJSwylT2v1U5xa4bDOFlLgRP+u0MAtP3GWXQzBPBJJJefO0eYnCrMDdvFij8QSUx7+2TNPgHzORXxtJdX3Es8bv0Bp9PbttmCdbI2O/fWJUKaE+8WfsqkVax4KlrgKGUrT/c/TimdsIbKHak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MHtk/vlt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wlHV3HYD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60CAD1F00898;
-	Sat, 12 Sep 2026 09:15:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MHtk/vlt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D9291F000FF;
+	Sat, 12 Sep 2026 09:15:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789204540;
-	bh=O+M3hht+ta3+MPY+QIL9NJC2ham3gB4DvmZwqmZowMY=;
+	s=korg; t=1789204545;
+	bh=zjKRjnDtRazRQ46qPh+eWjSJ1Kh/1lu4VrELtdLb4W4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wlHV3HYDthBOcmTVzjMF4LbPQ7tiw770+55ZYmfk86miqpLU0jSou1V28UckpLWfc
-	 sQfJvHCahl7ANreBdBp9BfJj8ZCQSyK6SGT9IAzkQElpJcClriIMs7o1GoL+bUU2xS
-	 rsC9uzyzz7fclQWKHJEux5A0Mta72V++HKsFc1js=
+	b=MHtk/vltlepdRBOuL3QLU5h9CXlV7+Qv5+9eHi4p8PtMJ5fY7ikDuVkYxY9vs7jN1
+	 R2LZyw+diHa11dDsNH2MKC3r+ATaPc7woxVi+NoX3Z4uTPEtowHpNlPUWymKEh4ECz
+	 lpvWBpSwbl3GRkR6CAbFMKvC3cOvzu9AGkaRldXk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Sorenson <sorenson@redhat.com>,
-	Huiwen He <hehuiwen@kylinos.cn>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Paulo Alcantara <pc@manguebit.org>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Michal Simek <michal.simek@amd.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1633/1815] cifs: remove dead size-update blocks in cifs_setattr_unix/nounix
-Date: Sat, 12 Sep 2026 08:56:23 +0200
-Message-ID: <20260912065727.324979496@linuxfoundation.org>
+Subject: [PATCH 7.2 1634/1815] rtc: zynqmp: Return optional clock lookup errors
+Date: Sat, 12 Sep 2026 08:56:24 +0200
+Message-ID: <20260912065727.349798298@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -53,75 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frank Sorenson <sorenson@redhat.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 60be95527bc8d1b33dca25d2a849268cca11d139 ]
+[ Upstream commit 5904c4109554582ce8ded6a4dcfede48b21dbe4d ]
 
-Commit 110fee6b9bb5 ("smb: client: fix missing timestamp updates with
-O_TRUNC") introduced cifs_file_set_size(), which calls netfs_resize_file()
-and cifs_setsize() on success.  cifs_setsize() calls i_size_write(),
-updating i_size to the new value.  The subsequent blocks in both
-cifs_setattr_unix() and cifs_setattr_nounix():
+devm_clk_get_optional() returns NULL when the optional clock is absent,
+but returns an ERR_PTR when the clock provider lookup fails.  Probe
+currently keeps the ERR_PTR and then passes it to clk_get_rate().
 
-    if ((attrs->ia_valid & ATTR_SIZE) &&
-        attrs->ia_size != i_size_read(inode)) {
-        truncate_setsize(inode, attrs->ia_size);
-        netfs_resize_file(&cifsInode->netfs, attrs->ia_size, true);
-        fscache_resize_cookie(cifs_inode_cookie(inode), attrs->ia_size);
-    }
+Return the lookup error instead.  A truly absent optional clock still
+reaches the existing calibration fallback through clk_get_rate(NULL).
 
-are therefore unreachable on the success path: attrs->ia_size ==
-i_size_read(inode) always holds after cifs_file_set_size() succeeds.
-On the failure path, execution jumps to out/cifs_setattr_exit before
-reaching these blocks.
-
-truncate_setsize() and netfs_resize_file() are redundant with what
-cifs_file_set_size() already did; fscache_resize_cookie() was moved there
-by commit fa724e235cfd ("cifs: add fscache_resize_cookie() to
-cifs_setsize()").  Remove both dead blocks.
-
-Fixes: 110fee6b9bb5 ("smb: client: fix missing timestamp updates with O_TRUNC")
-Signed-off-by: Frank Sorenson <sorenson@redhat.com>
-Reviewed-by: Huiwen He <hehuiwen@kylinos.cn>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Fixes: 07dcc6f9c762 ("rtc: zynqmp: Add calibration set and get support")
+Reviewed-by: Michal Simek <michal.simek@amd.com>
+Link: https://patch.msgid.link/20260624055524.38522-1-pengpeng@iscas.ac.cn
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/inode.c | 14 --------------
- 1 file changed, 14 deletions(-)
+ drivers/rtc/rtc-zynqmp.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/fs/smb/client/inode.c b/fs/smb/client/inode.c
-index aec8ed8881a6c..85ef8fff0e842 100644
---- a/fs/smb/client/inode.c
-+++ b/fs/smb/client/inode.c
-@@ -3310,13 +3310,6 @@ cifs_setattr_unix(struct dentry *direntry, struct iattr *attrs)
- 	if (rc)
- 		goto out;
+diff --git a/drivers/rtc/rtc-zynqmp.c b/drivers/rtc/rtc-zynqmp.c
+index 2ae54804b87a4..5bcb7536e9734 100644
+--- a/drivers/rtc/rtc-zynqmp.c
++++ b/drivers/rtc/rtc-zynqmp.c
+@@ -334,10 +334,9 @@ static int xlnx_rtc_probe(struct platform_device *pdev)
  
--	if ((attrs->ia_valid & ATTR_SIZE) &&
--	    attrs->ia_size != i_size_read(inode)) {
--		truncate_setsize(inode, attrs->ia_size);
--		netfs_resize_file(&cifsInode->netfs, attrs->ia_size, true);
--		fscache_resize_cookie(cifs_inode_cookie(inode), attrs->ia_size);
+ 	/* Getting the rtc info */
+ 	xrtcdev->rtc_clk = devm_clk_get_optional(&pdev->dev, "rtc");
+-	if (IS_ERR(xrtcdev->rtc_clk)) {
+-		if (PTR_ERR(xrtcdev->rtc_clk) != -EPROBE_DEFER)
+-			dev_warn(&pdev->dev, "Device clock not found.\n");
 -	}
--
- 	setattr_copy(&nop_mnt_idmap, inode, attrs);
- 	mark_inode_dirty(inode);
- 
-@@ -3537,13 +3530,6 @@ cifs_setattr_nounix(struct dentry *direntry, struct iattr *attrs)
- 	if (rc)
- 		goto cifs_setattr_exit;
- 
--	if ((attrs->ia_valid & ATTR_SIZE) &&
--	    attrs->ia_size != i_size_read(inode)) {
--		truncate_setsize(inode, attrs->ia_size);
--		netfs_resize_file(&cifsInode->netfs, attrs->ia_size, true);
--		fscache_resize_cookie(cifs_inode_cookie(inode), attrs->ia_size);
--	}
--
- 	setattr_copy(&nop_mnt_idmap, inode, attrs);
- 	mark_inode_dirty(inode);
- 
++	if (IS_ERR(xrtcdev->rtc_clk))
++		return dev_err_probe(&pdev->dev, PTR_ERR(xrtcdev->rtc_clk),
++				     "Failed to get rtc clock\n");
+ 	xrtcdev->freq = clk_get_rate(xrtcdev->rtc_clk);
+ 	if (!xrtcdev->freq) {
+ 		ret = of_property_read_u32(pdev->dev.of_node, "calibration",
 -- 
 2.53.0
 
