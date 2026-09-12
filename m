@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 944CF2ECD1D;
-	Sat, 12 Sep 2026 14:27:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61F0A18A93F;
+	Sat, 12 Sep 2026 14:27:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789223238; cv=none; b=hgCp5z1cod1cYGyyUfdLNu7OhscEmjgDiSb6DQo1iuHCmRjxU4kEmxXpSaQBDB6gcXCdxxVbSHkBvaeee/4NFsJO1Llz6uEkPR3OW46Sf4UiYSeC2LN2Z3j3MQ7ngBf8ulvVDUO1iiMghnv2eREn4IR4uoRtjff45YCu61Was0E=
+	t=1789223243; cv=none; b=P7Ue0VauRQxH7CS92dyMUbMrMTiLaFFStX/OgjzUUw2oGezgw1EyHJs5ZgfA7Sk4Lxr9n8sx0Bc+vj8UXbO9puXVjpHyONt8s/KLy3KTfx8zx3rhSiTmnaWgcSiKojVIYuzXirDyI9W0l7pJCajhGFukkFUDYLUC+GkNw83fmg4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789223238; c=relaxed/simple;
-	bh=Kt3fomIySC/q3IZx3qviorDY6hwj0IJmjknu1VZOcXg=;
+	s=arc-20240116; t=1789223243; c=relaxed/simple;
+	bh=FatiuWmGEA8MuHLIO8QwPhZwSiIF7Xi0m7LIeXCGR1s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EW+Pzt96CgZMhbCv8/7J8Limp4rJepk0XMfSuC54GnG1qGZOpM09UYK5aPgTH5sIhOOO58xUmNIxMPiCX31uor3fqi899GA48tJSNFnsa1iNQyoWKlc4SGBLiA1amYIUqCfTL7XY+WA8vB1yKLk2B44XUCjnOoRcwjLsJWDQIjI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SQ8nPfDI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SuLHSaQemfdP+ZEnp7hKuXKy/iglq/ha92B3aKZFBJwV5ldpKtqgcmiFuYpA55yw3BOJg/4Yqg3zaEg+LZ3DlrSxuuWsL055S12g76Q4nRf08RpLU3amws99SJgmcPHU450xkKZteeIf4UWvpNgxpT2nZOSUbZuSd9MKbFNO+z0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fvkUOswj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SQ8nPfDI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9FD41F00893;
-	Sat, 12 Sep 2026 14:27:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fvkUOswj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B1C81F000FF;
+	Sat, 12 Sep 2026 14:27:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789223237;
-	bh=ehpON/gU+cMOfREFKI46SteXa1+bTpdbqoHbjHhPsho=;
+	s=korg; t=1789223242;
+	bh=pf4KZjbxnQlJVIRKr0EbFZO2K+NLhJwleYQZaClX98o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SQ8nPfDIrcc6MdI4FHFoKrXzkaD26ArbYqbCaieRg2VrgggVjLfeO0rxrJkOkunrX
-	 vqxoguYqdI6tG8taO96dlEnFb6GmG5L7iVBTBiADr7Otz3KpyJwQo6RRv1z6qK0gxC
-	 c/wCNavs1th1xkY3T5lkUBLt65Kbb1SdJl8vJUeI=
+	b=fvkUOswjmZYotLKo0lUg+plsEvK/eLfd5eMX/JxoU9IhYwnPNUhQyDJz3R100spbE
+	 +bbL5Ccgw2o0E0n3kCuFNCNWliL+mPs0n+PjEYWZcTfqchPWSMIbwD9LIkeyCnyCzY
+	 7CQZMxnDzc+Vrinio6ZQ7/3S0c/cwcO5Usz83iIE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Sudeep Holla <sudeep.holla@kernel.org>,
+	Yuho Choi <dbgh9129@gmail.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0749/1424] firmware: arm_scmi: Unregister device notifier before IDR teardown
-Date: Sat, 12 Sep 2026 08:53:01 +0200
-Message-ID: <20260912065624.071323801@linuxfoundation.org>
+Subject: [PATCH 6.6 0723/1424] hwrng: ks-sa - Fix runtime PM cleanup on registration failure
+Date: Sat, 12 Sep 2026 08:52:35 +0200
+Message-ID: <20260912065623.483202088@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -51,50 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sudeep Holla <sudeep.holla@kernel.org>
+From: Yuho Choi <dbgh9129@gmail.com>
 
-[ Upstream commit 66a0bbf30cc14140fe13f63cd594a7c1ee352b75 ]
+[ Upstream commit 1c17b601fafb09c9ec074fd097737d20eafe7d63 ]
 
-The requested-devices notifier looks up protocol fwnodes from the
-active_protocols IDR. During remove, unregister the notifier before
-releasing and destroying active_protocols so no notifier callback can race
-with the IDR teardown.
+ks_sa_rng_probe() enables runtime PM and resumes the device before
+registering the hwrng. If devm_hwrng_register() fails, probe returns
+without dropping the runtime PM usage count or disabling runtime PM.
 
-Keep the bus notifier registered until after the protocol state is torn
-down, matching the existing remove ordering for SCMI bus users.
+Unwind the runtime PM state on the registration failure path, matching
+the cleanup done by remove().
 
-Fixes: 53b8c25df708 ("firmware: arm_scmi: Add common notifier helpers")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Link: https://patch.msgid.link/20260714-scmi_core_fixes-v6-2-3afe499d46e3@kernel.org
-Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
+Fixes: eb428ee0e3ca ("hwrng: ks-sa - add hw_random driver")
+Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_scmi/driver.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/char/hw_random/ks-sa-rng.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/firmware/arm_scmi/driver.c b/drivers/firmware/arm_scmi/driver.c
-index fbe893734411c..4bc73ead390e4 100644
---- a/drivers/firmware/arm_scmi/driver.c
-+++ b/drivers/firmware/arm_scmi/driver.c
-@@ -2936,6 +2936,9 @@ static int scmi_remove(struct platform_device *pdev)
- 	list_del(&info->node);
- 	mutex_unlock(&scmi_list_mutex);
+diff --git a/drivers/char/hw_random/ks-sa-rng.c b/drivers/char/hw_random/ks-sa-rng.c
+index 8cd186fa1107f..3e032ef2ccc74 100644
+--- a/drivers/char/hw_random/ks-sa-rng.c
++++ b/drivers/char/hw_random/ks-sa-rng.c
+@@ -247,7 +247,14 @@ static int ks_sa_rng_probe(struct platform_device *pdev)
+ 		return ret;
+ 	}
  
-+	blocking_notifier_chain_unregister(&scmi_requested_devices_nh,
-+					   &info->dev_req_nb);
+-	return devm_hwrng_register(&pdev->dev, &ks_sa_rng->rng);
++	ret = devm_hwrng_register(dev, &ks_sa_rng->rng);
++	if (ret) {
++		pm_runtime_put_sync(dev);
++		pm_runtime_disable(dev);
++		return ret;
++	}
 +
- 	scmi_notification_exit(&info->handle);
++	return 0;
+ }
  
- 	mutex_lock(&info->protocols_mtx);
-@@ -2946,8 +2949,6 @@ static int scmi_remove(struct platform_device *pdev)
- 		of_node_put(child);
- 	idr_destroy(&info->active_protocols);
- 
--	blocking_notifier_chain_unregister(&scmi_requested_devices_nh,
--					   &info->dev_req_nb);
- 	bus_unregister_notifier(&scmi_bus_type, &info->bus_nb);
- 
- 	/* Safe to free channels since no more users */
+ static int ks_sa_rng_remove(struct platform_device *pdev)
 -- 
 2.53.0
 
