@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DAA3374A12;
-	Sat, 12 Sep 2026 09:21:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DBD2366052;
+	Sat, 12 Sep 2026 09:21:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789204906; cv=none; b=FM/yMkvsIxgrkjCu6h0tv1iQTjaIuVCYkEQ39neOqrUTlTMGBdfj0c1xkAQ99GYvroezOohow2WjboUi9W3/gUbqjMyHviczX85OGSiFU9OTibclqoUK+FiNP9HsZrq4+MQBiP/9XvKVjeua0GG1jWZ8fGjx1tuzRH3svU87pxk=
+	t=1789204911; cv=none; b=q8nUFruZygDAr6+WdMcZEdVMHg1ONcPys8Cq6icxkC07z9IQbqYNKc9BwkWrtD9jNSLToXgEsTnYBjJ+gJWaUChfSMiakI2DAy3QNbVzwII4HaeUouy5bB6UaG/mVjeqLiPbjDy5JhQLFKgTGsajhyrNajJpoptR5BVf3gOTPT0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789204906; c=relaxed/simple;
-	bh=oMkN3II1tnqd7IiT2BKhyLrI6/gUwcQuSx6F46ARYnY=;
+	s=arc-20240116; t=1789204911; c=relaxed/simple;
+	bh=COFRfdtcF/1Zd3R6XiSpUE+73K+eefUBJQElt1XDXus=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aBDcvWc5HaH0VgFtuKpHBzH6WGm0WYtS1Y8pOSEpZvz7odQlw7lGEO/H5RVHNIq+BtzeBkVYgN6dYJw++ItsMb1gS5K/tAd7ToIZVMf9zb573BBtlbh10uFDFzM0PwqwA3Vo3M1wlcdiSBoBO+L/xqND3MBoKOCaTAMbefvIvF0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aO6e2KNT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Yg/BPkxVmJz0HUI+MHsjpDpMb0LjqVcy8pbrFa65KFaJQV8WSM89DnyoCWkFR3dRhhtmdm6FSvlZj4qAGNOJWVnmFw8/L37x9vJqryOxIfsqj6tBfrGvDKaTSpmOPd+J80nB0nG4f4qTjkOGEufi/3S2PuY4rQk3agFg8u+HxLg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kr9lT4/q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aO6e2KNT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1FFA1F000FF;
-	Sat, 12 Sep 2026 09:21:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kr9lT4/q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43C6E1F000FF;
+	Sat, 12 Sep 2026 09:21:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789204905;
-	bh=4XaaFogjBSrgEhUlFXw7cQ7FolB+r1ih68kaFbh7Nvg=;
+	s=korg; t=1789204910;
+	bh=T0o4sLjJnhrW6sPHsjqJ2oYytZ4JvdbiZSIvcBiXecQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aO6e2KNTBQJbfmcrWnmUSY9lYodC21Vsc5XS1VYNnxQwLMPraPjqd310mm/zVIiKC
-	 Wki5Ug/20qrOu5JfkqHWVvw/lAhqmtFmjyyiythjAP6JI4EkXtPxF/alZYLa9doYm1
-	 USRCyDqMHKPMp5jnlCv+AFVb/5G7I/iUEBmmvOto=
+	b=Kr9lT4/qpYAZRv3TjzkywD8QvipBBQgTLIuen1Yw9DMn4jEBZXpumi/QesLCrpQpk
+	 9OLUS0dTJEfqPA/MRJorsuplTrf04ZbjVLThH86WuH+eXxsr5oUVVyn0Wfno0mI1lW
+	 l2nqPhEaDRmdJXYlC7xI0QCmdPinuC3P1z+hym2E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joanne Koong <joannelkoong@gmail.com>,
-	Miklos Szeredi <mszeredi@redhat.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Rosen Penev <rosenp@gmail.com>,
+	Julian Braha <julianbraha@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1710/1815] fuse: use release/acquire for fch->initialized
-Date: Sat, 12 Sep 2026 08:57:40 +0200
-Message-ID: <20260912065729.121502330@linuxfoundation.org>
+Subject: [PATCH 7.2 1693/1815] ASoC: fix unmet dependencies on PPC_BESTCOMM and SND_SOC_AC97_BUS
+Date: Sat, 12 Sep 2026 08:57:23 +0200
+Message-ID: <20260912065728.724628192@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,104 +53,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joanne Koong <joannelkoong@gmail.com>
+From: Julian Braha <julianbraha@gmail.com>
 
-[ Upstream commit 4ef7c8cc9894fccc7aa5fdaf6b39faa45c58c23e ]
+[ Upstream commit 72cc574aa3791aa4f05d247b4e884cdbd135819a ]
 
-fuse_chan_set_initialized() sets values for the connection state and
-then sets fch->initialized to true, but lockless readers read
-fch->initialized and if true, go to read the connection state values,
-without using any barriers.
+SND_MPC52xx_SOC_PCM030 and SND_MPC52xx_SOC_EFIKA both select
+SND_SOC_MPC5200_AC97 without ensuring its dependency on PPC_BESTCOMM is
+met. This causes unmet dependencies such as:
 
-There are a few instances where this happens (fuse_uring_cmd() before
-dispatching register / commit-and-fetch cmds, fuse_dev_do_wriite() for
-handling notify retrieves, etc).
+WARNING: unmet direct dependencies detected for SND_SOC_MPC5200_AC97
+  Depends on [n]: SOUND [=m] && SND [=m] && SND_SOC [=m] && SND_POWERPC_SOC [=m] && PPC_BESTCOMM [=n]
+  Selected by [m]:
+  - SND_MPC52xx_SOC_PCM030 [=m] && SOUND [=m] && SND [=m] && SND_SOC [=m] && SND_POWERPC_SOC [=m] && PPC_MPC5200_SIMPLE [=y]
 
-To make this as simple as possible, use release/acquire semantics for
-writing/reading fch->initialized. Add the missing read barriers.
-This is not marked for stable as these are not realistically reachable
-on a well-behaved server, and buggy/malicious servers who trigger this
-path fail benignly rather than crash or deadlock the kernel.
+In v1, Rosen pointed out that the import of "mpc5200_dma.h" is actually
+unnecessary, and Arnd suggested that the 'select' of SND_SOC_MPC5200_AC97
+be changed to 'depends on'.
 
-Signed-off-by: Joanne Koong <joannelkoong@gmail.com>
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
-Stable-dep-of: 1f59015e9581 ("fuse: Fix the condition to enable over-io-uring")
+This resolves all 3 unmet dependencies.
+
+These unmet dependency bugs were detected by kconfirm, a static analysis tool
+for Kconfig.
+
+Fixes: a9262c4fd404 ("ASoC: Support for AC97 on Phytec pmc030 base board.")
+Fixes: 6ffee43ecf8b ("ASoC: Fabric bindings for STAC9766 on the Efika")
+Suggested-by: Arnd Bergmann <arnd@arndb.de>
+Suggested-by: Rosen Penev <rosenp@gmail.com>
+Signed-off-by: Julian Braha <julianbraha@gmail.com>
+Link: https://patch.msgid.link/20260821175410.179631-1-julianbraha@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fuse/cuse.c      |  3 ++-
- fs/fuse/dev.c       | 14 ++++++--------
- fs/fuse/dev_uring.c |  4 +++-
- 3 files changed, 11 insertions(+), 10 deletions(-)
+ sound/soc/fsl/Kconfig               | 4 ++--
+ sound/soc/fsl/efika-audio-fabric.c  | 2 --
+ sound/soc/fsl/pcm030-audio-fabric.c | 2 --
+ 3 files changed, 2 insertions(+), 6 deletions(-)
 
-diff --git a/fs/fuse/cuse.c b/fs/fuse/cuse.c
-index 1c71783ca5a51..4079cf8e5974a 100644
---- a/fs/fuse/cuse.c
-+++ b/fs/fuse/cuse.c
-@@ -530,7 +530,8 @@ static int cuse_channel_open(struct inode *inode, struct file *file)
+diff --git a/sound/soc/fsl/Kconfig b/sound/soc/fsl/Kconfig
+index 8ae59c0948788..04940879dfd80 100644
+--- a/sound/soc/fsl/Kconfig
++++ b/sound/soc/fsl/Kconfig
+@@ -244,7 +244,7 @@ config SND_SOC_MPC5200_AC97
+ config SND_MPC52xx_SOC_PCM030
+ 	tristate "SoC AC97 Audio support for Phytec pcm030 and WM9712"
+ 	depends on PPC_MPC5200_SIMPLE
+-	select SND_SOC_MPC5200_AC97
++	depends on SND_SOC_MPC5200_AC97
+ 	select SND_SOC_WM9712
+ 	help
+ 	  Say Y if you want to add support for sound on the Phytec pcm030
+@@ -253,7 +253,7 @@ config SND_MPC52xx_SOC_PCM030
+ config SND_MPC52xx_SOC_EFIKA
+ 	tristate "SoC AC97 Audio support for bbplan Efika and STAC9766"
+ 	depends on PPC_EFIKA
+-	select SND_SOC_MPC5200_AC97
++	depends on SND_SOC_MPC5200_AC97
+ 	select SND_SOC_STAC9766
+ 	help
+ 	  Say Y if you want to add support for sound on the Efika.
+diff --git a/sound/soc/fsl/efika-audio-fabric.c b/sound/soc/fsl/efika-audio-fabric.c
+index 4d3266d9cbb79..e9c728bae8b97 100644
+--- a/sound/soc/fsl/efika-audio-fabric.c
++++ b/sound/soc/fsl/efika-audio-fabric.c
+@@ -22,8 +22,6 @@
+ #include <sound/initval.h>
+ #include <sound/soc.h>
  
- 	INIT_LIST_HEAD(&cc->list);
- 
--	cc->fc.chan->initialized = 1;
-+	/* Pairs with smp_load_acquire() readers of fch->initialized */
-+	smp_store_release(&cc->fc.chan->initialized, 1);
- 	rc = cuse_send_init(cc);
- 	if (rc) {
- 		fuse_dev_put(fud);
-diff --git a/fs/fuse/dev.c b/fs/fuse/dev.c
-index e7da62a7293dc..a82cf763f50db 100644
---- a/fs/fuse/dev.c
-+++ b/fs/fuse/dev.c
-@@ -80,20 +80,17 @@ void fuse_chan_set_initialized(struct fuse_chan *fch, struct fuse_chan_param *pa
- 			fuse_uring_conn_init(fch);
- 	}
- 
--	/* Make sure stores before this are seen on another CPU */
--	smp_wmb();
--	fch->initialized = 1;
-+	/* Pairs with smp_load_acquire() readers of fch->initialized */
-+	smp_store_release(&fch->initialized, 1);
- 	wake_up_all(&fch->blocked_waitq);
- }
- 
- static bool fuse_block_alloc(struct fuse_chan *fch, bool for_background)
- {
--	if (!fch->initialized)
-+	/* Pairs with smp_store_release() in fuse_chan_set_initialized() */
-+	if (!smp_load_acquire(&fch->initialized))
- 		return true;
- 
--	/* Pairs with smp_wmb() in fuse_chan_set_initialized() */
--	smp_rmb();
+-#include "mpc5200_dma.h"
 -
- 	return (for_background && fch->blocked) ||
- 	       (fch->io_uring && fch->connected && !fuse_uring_ready(fch));
- }
-@@ -1891,7 +1888,8 @@ static ssize_t fuse_dev_do_write(struct fuse_dev *fud,
- 		 * initialized and connected state
- 		 */
- 		err = -EINVAL;
--		if (!fch->initialized || !fch->connected)
-+		/* Pairs with smp_store_release() in fuse_chan_set_initialized() */
-+		if (!smp_load_acquire(&fch->initialized) || !fch->connected)
- 			goto copy_finish;
+ #define DRV_NAME "efika-audio-fabric"
  
- 		/* Don't try to move folios (yet) */
-diff --git a/fs/fuse/dev_uring.c b/fs/fuse/dev_uring.c
-index 82da15a9cc787..bda2b2cda190e 100644
---- a/fs/fuse/dev_uring.c
-+++ b/fs/fuse/dev_uring.c
-@@ -1251,8 +1251,10 @@ int fuse_uring_cmd(struct io_uring_cmd *cmd, unsigned int issue_flags)
- 	/*
- 	 * fuse_uring_register() needs the ring to be initialized,
- 	 * we need to know the max payload size
-+	 *
-+	 * Pairs with smp_store_release() in fuse_chan_set_initialized()
- 	 */
--	if (!fch->initialized)
-+	if (!smp_load_acquire(&fch->initialized))
- 		return -EAGAIN;
+ SND_SOC_DAILINK_DEFS(analog,
+diff --git a/sound/soc/fsl/pcm030-audio-fabric.c b/sound/soc/fsl/pcm030-audio-fabric.c
+index 5542c4ee6d129..a7a5dba83a2f8 100644
+--- a/sound/soc/fsl/pcm030-audio-fabric.c
++++ b/sound/soc/fsl/pcm030-audio-fabric.c
+@@ -13,8 +13,6 @@
  
- 	switch (cmd_op) {
+ #include <sound/soc.h>
+ 
+-#include "mpc5200_dma.h"
+-
+ #define DRV_NAME "pcm030-audio-fabric"
+ 
+ struct pcm030_audio_data {
 -- 
 2.53.0
 
