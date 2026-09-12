@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D238D36A377;
-	Sat, 12 Sep 2026 16:20:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9682F386562;
+	Sat, 12 Sep 2026 16:20:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789230035; cv=none; b=sb3NdlNKCg9TOVqeRZeIhw29cbwG5/y/mkKny8M+i6/7suz8WZ9AvDMqks4WGl/ZT2R9PIrY4HRw1D1YDB1Rb178vvXiO6rozXXSau/VCW/8vNs+gJeyQbC1u/sqBhmdX6E3wUsMkJIYatUMmJWVBPvX/iSLK7cirM99RrBsX0I=
+	t=1789230040; cv=none; b=B9DTpEumB29M5Hn7hQfzEF6crGJ1iXPzoIWbMkUUg/tb3hNwu8wB8plnHEbnTZCqQbHPCEKye1rxe7N2aD3+MhKNBz1QtJBkdYa9CGg5rZJOsRZiHe1GpHnfSnlMlquZojf5KsZJN4wUwBRvtBvaJ/xXAToNnKqDtrjxP/z01OQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789230035; c=relaxed/simple;
-	bh=j155L+agkb2eo12U57GFgJuvxL0lbzumpLjXg5cLzjY=;
+	s=arc-20240116; t=1789230040; c=relaxed/simple;
+	bh=2Uf8sLbFrFaHupIoYnYkA4ulTr8orRhrMC4m+gvp0AI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rMLkNqQlNZlhSr6/bSez8L/9a3O4DB3/yFQy8Nn4SAfZ8uEzgGEbC1YRHQEk/YbnDrybFP9Hs69YVX+cv2wGsQ1frAgpdJ1q5Hl7dhGhsam9uFwEJ+YvTeeVoBiKjhghDbyfvOr34NA+ANwO9GqvmZ+G4fr4xLvCms8EL+Qy6CY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yTx4K+Q2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ND+bDUwmBNoVnTA4MwGoxFk1kEZDnRUBl8W4CaIAOh3IY49OI/2kw+xvnx6KJG97xDUGVSL62RnHdbehJbo543o5pn/QEcoXVtRO9cmzOF8kRTBW5oVtXvraDIibERIsGj6Wc/R9xnAgkABg6OmJsbq8m7c7CFy1d2KWQ4Uf6tc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zMX2PfUI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yTx4K+Q2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD72E1F00893;
-	Sat, 12 Sep 2026 16:20:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zMX2PfUI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDA351F000FF;
+	Sat, 12 Sep 2026 16:20:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789230028;
-	bh=tMSgjzFsoyDvXXYtcbp2kD8DTPvfpjy+D+8LP2wfVFs=;
+	s=korg; t=1789230038;
+	bh=OMae8C2Lt0wOMdvcqVUB+2fwfClYsiELK3Ncal8+dj8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yTx4K+Q2yheAdpfU1bvSTBQB32EQU02yC6NlB7Cpw6IZC++JfKWey4eGptlJ3T+NB
-	 El6UE7TqTrIv/Y2tHS92SXOih9Gsrd/j3LPj/skzYK0HfwWgnA9a4LKDNc/WNbTlrh
-	 CiE3azYgFWaT974CxltYB4p7clQbvoiz4khoYqr0=
+	b=zMX2PfUItB0k7wS/87KNwMe83B8+JLYQy2fjvHUs4h/ROs8rbhRnFqB1Z0+q/4543
+	 bW306N0V2hAhgXrbJQMkTBht9yhhEM/3jXV+fOJzFfOgmFpAc9M005uZyIhNfvDrcx
+	 EzRkf5e6lceBkSWknfIHcM12EVuj5MzPNG06eMzs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Wu <weiming3@asu.edu>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Vladimir Zapolskiy <vz@kernel.org>,
+	Vladimir Zapolskiy <vz@mleia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0710/1191] fs/ntfs3: fix out-of-bounds read of INDEX_ROOT in reparse/objid init
-Date: Sat, 12 Sep 2026 08:57:18 +0200
-Message-ID: <20260912065604.219712967@linuxfoundation.org>
+Subject: [PATCH 6.1 0712/1191] ARM: lpc32xx: only run SoC init on LPC32xx hardware
+Date: Sat, 12 Sep 2026 08:57:20 +0200
+Message-ID: <20260912065604.270078002@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -52,72 +53,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Wu <weiming3@asu.edu>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit 2064bc663f89e61b8681c1fb9d1ce445de72063d ]
+[ Upstream commit 717ea4000867e6dffee5e1ed92150a9704ae9f68 ]
 
-ntfs_reparse_init() and ntfs_objid_init() parse the index root of the
-$Extend/$Reparse and $Extend/$ObjId metafiles (the INDEX_ROOT attributes
-named $R and $O). They read its type and rule fields through
-resident_data(), which does not check that the resident attribute is
-large enough to hold them.
+lpc32xx_check_uid() and lpc32xx_pm_init() are arch_initcalls that poke
+LPC32xx-only registers. Since the multiplatform conversion they also
+run on other ARCH_MULTI_V5 boards where access faults e.g. on versatile:
 
-mi_enum_attr() accepts a resident attribute with data_off == asize and
-data_size == 0. For such an attribute placed last in its MFT record,
-resident_data() returns a pointer to the end of the record_size buffer,
-so reading root->type / root->rule reads past the allocation.
+  Unable to handle kernel paging request at virtual address f4004130
+  PC is at lpc32xx_check_uid+0x2c/0x9c
 
-Use resident_data_ex(attr, sizeof(struct INDEX_ROOT)) and bail out when
-it returns NULL, as ntfs_security_init() already does for $SDH / $SII.
+Drop the arch_initcall() registrations and call both functions directly
+from lpc3250_machine_init(), the machine's .init_machine hook.
+The calls are placed in link order (common.c, pm.c, phy3250.c) to
+keep their previous relative ordering.
 
-The attribute is only parsed while mounting a crafted image, so this
-needs CAP_SYS_ADMIN.
-
- BUG: KASAN: slab-out-of-bounds in ntfs_reparse_init (fs/ntfs3/fsntfs.c:2306)
- Read of size 4 at addr ffff88801219dc00 by task mount
-  ntfs_reparse_init (fs/ntfs3/fsntfs.c:2306)
-  ntfs_fill_super (fs/ntfs3/super.c:1604)
-  get_tree_bdev_flags (fs/super.c:1703)
-  vfs_get_tree (fs/super.c:1758)
-  path_mount (fs/namespace.c:4131)
-  __x64_sys_mount (fs/namespace.c:4360)
-
-Fixes: 82cae269cfa9 ("fs/ntfs3: Add initialization of super block")
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Weiming Wu <weiming3@asu.edu>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Fixes: 75bf1bd7d2f9 ("ARM: lpc32xx: allow multiplatform build")
+Suggested-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Reviewed-by: Vladimir Zapolskiy <vz@kernel.org>
+Reviewed-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Vladimir Zapolskiy <vz@mleia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/fsntfs.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ arch/arm/mach-lpc32xx/common.c  | 5 +----
+ arch/arm/mach-lpc32xx/common.h  | 2 ++
+ arch/arm/mach-lpc32xx/phy3250.c | 2 ++
+ arch/arm/mach-lpc32xx/pm.c      | 5 +----
+ 4 files changed, 6 insertions(+), 8 deletions(-)
 
-diff --git a/fs/ntfs3/fsntfs.c b/fs/ntfs3/fsntfs.c
-index f28bbec5fab45..781a7f53f5ddb 100644
---- a/fs/ntfs3/fsntfs.c
-+++ b/fs/ntfs3/fsntfs.c
-@@ -2284,8 +2284,8 @@ int ntfs_reparse_init(struct ntfs_sb_info *sbi)
- 		goto out;
- 	}
+diff --git a/arch/arm/mach-lpc32xx/common.c b/arch/arm/mach-lpc32xx/common.c
+index 304ea61a07160..35ed3569c5a35 100644
+--- a/arch/arm/mach-lpc32xx/common.c
++++ b/arch/arm/mach-lpc32xx/common.c
+@@ -106,7 +106,7 @@ void __init lpc32xx_map_io(void)
+ 	iotable_init(lpc32xx_io_desc, ARRAY_SIZE(lpc32xx_io_desc));
+ }
  
--	root_r = resident_data(attr);
--	if (root_r->type != ATTR_ZERO ||
-+	root_r = resident_data_ex(attr, sizeof(struct INDEX_ROOT));
-+	if (!root_r || root_r->type != ATTR_ZERO ||
- 	    root_r->rule != NTFS_COLLATION_TYPE_UINTS) {
- 		err = -EINVAL;
- 		goto out;
-@@ -2322,8 +2322,8 @@ int ntfs_objid_init(struct ntfs_sb_info *sbi)
- 		goto out;
- 	}
+-static int __init lpc32xx_check_uid(void)
++void __init lpc32xx_check_uid(void)
+ {
+ 	u32 uid[4];
  
--	root = resident_data(attr);
--	if (root->type != ATTR_ZERO ||
-+	root = resident_data_ex(attr, sizeof(struct INDEX_ROOT));
-+	if (!root || root->type != ATTR_ZERO ||
- 	    root->rule != NTFS_COLLATION_TYPE_UINTS) {
- 		err = -EINVAL;
- 		goto out;
+@@ -119,7 +119,4 @@ static int __init lpc32xx_check_uid(void)
+ 		system_serial_low = uid[0];
+ 		system_serial_high = uid[1];
+ 	}
+-
+-	return 1;
+ }
+-arch_initcall(lpc32xx_check_uid);
+diff --git a/arch/arm/mach-lpc32xx/common.h b/arch/arm/mach-lpc32xx/common.h
+index 32f0ad2178077..06b20bea324e1 100644
+--- a/arch/arm/mach-lpc32xx/common.h
++++ b/arch/arm/mach-lpc32xx/common.h
+@@ -16,6 +16,8 @@
+  * Other arch specific structures and functions
+  */
+ extern void __init lpc32xx_map_io(void);
++extern void __init lpc32xx_check_uid(void);
++extern void __init lpc32xx_pm_init(void);
+ extern void __init lpc32xx_serial_init(void);
+ 
+ /*
+diff --git a/arch/arm/mach-lpc32xx/phy3250.c b/arch/arm/mach-lpc32xx/phy3250.c
+index 66701bf432488..ddc6333ca55da 100644
+--- a/arch/arm/mach-lpc32xx/phy3250.c
++++ b/arch/arm/mach-lpc32xx/phy3250.c
+@@ -71,6 +71,8 @@ static const struct of_dev_auxdata lpc32xx_auxdata_lookup[] __initconst = {
+ 
+ static void __init lpc3250_machine_init(void)
+ {
++	lpc32xx_check_uid();
++	lpc32xx_pm_init();
+ 	lpc32xx_serial_init();
+ 
+ 	of_platform_default_populate(NULL, lpc32xx_auxdata_lookup, NULL);
+diff --git a/arch/arm/mach-lpc32xx/pm.c b/arch/arm/mach-lpc32xx/pm.c
+index 2572bd89a5e8d..9b5c5e1462ed3 100644
+--- a/arch/arm/mach-lpc32xx/pm.c
++++ b/arch/arm/mach-lpc32xx/pm.c
+@@ -120,7 +120,7 @@ static const struct platform_suspend_ops lpc32xx_pm_ops = {
+ #define EMC_DYN_MEM_CTRL_OFS 0x20
+ #define EMC_SRMMC           (1 << 3)
+ #define EMC_CTRL_REG io_p2v(LPC32XX_EMC_BASE + EMC_DYN_MEM_CTRL_OFS)
+-static int __init lpc32xx_pm_init(void)
++void __init lpc32xx_pm_init(void)
+ {
+ 	/*
+ 	 * Setup SDRAM self-refresh clock to automatically disable o
+@@ -129,7 +129,4 @@ static int __init lpc32xx_pm_init(void)
+ 	__raw_writel(__raw_readl(EMC_CTRL_REG) | EMC_SRMMC, EMC_CTRL_REG);
+ 
+ 	suspend_set_ops(&lpc32xx_pm_ops);
+-
+-	return 0;
+ }
+-arch_initcall(lpc32xx_pm_init);
 -- 
 2.53.0
 
