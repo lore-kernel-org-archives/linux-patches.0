@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1247A367B60;
-	Sat, 12 Sep 2026 07:29:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A40FF19D8BC;
+	Sat, 12 Sep 2026 07:29:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789198142; cv=none; b=BtE7kWGrUQ+hpdbdUdWy4PXiQk2P3XL9dWOZts/OWdX8r/Qi1HFIGydXUqVLU4qV49gCmp2giK1iZoBEl1WBJEbyyiGsdhIvjoa9jUVM3lDXyqD9Jc+EkW5zTQi9mK0ZEErTyjUdAsqYmzsvnJD0nTR42wzGjieZXVL53Xg1U3s=
+	t=1789198146; cv=none; b=Otb7k8bH8Bf8bAFoSvvh9+dzssyMy51D/+ZWt+9bu/YbeMnfaNxmmHVTtk/4DHZfYvaOrJOWviZIVEkozhTtGEaPtap164u6Tvv1mujLjIHKoIImypKioWxPbIgJV/9vclKZUagzRoie0pLVyYXin33ikUolq/AuJ3pygrVHcOg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789198142; c=relaxed/simple;
-	bh=W6Qs52Z88fwhAUB1I8GkHmAMiMu2IWsa890rfz0Bay8=;
+	s=arc-20240116; t=1789198146; c=relaxed/simple;
+	bh=f/8QFCZ934UceEmfZ/rMNt7ieyxNctMhIHmMuTvg6QY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fq6VxFQKCK8sIlgOmRqLbN2pe+tAySkTWVOae6v3pE62XSdE5Ku36KQh11NxBcAynrdcJfBJqBH+C+86j4Ny3FNDlsro4kYoQXlMFqEAdVJUiwfmfytgbHS/pLhkx5ig1ivKhd8wBzdG8e3y3tJ73oRy+Hy7Bm4/TzXSQNuI3uk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZY8GkIw/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nSIyMEv2/I/21z6FR1bO4cIi+PSlR9+ta3AqZdr/ZOcOVkgJyUrqY/ediGk0Ed3unmtP83Rd/vI/PS6gdTtcNfM+XVsQN6+01P+87mFSjsXocA14sxTLq10TKUjrbbznUUvKeGEs4YoDiwGGRLMcKoVJG1SsrJRPy+K6JZTxXHs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iksBZAb7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZY8GkIw/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE2F01F000FF;
-	Sat, 12 Sep 2026 07:28:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iksBZAb7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CF071F000FF;
+	Sat, 12 Sep 2026 07:29:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789198140;
-	bh=ZRoJ5Qr1VdJgzMa7OzO+3xSbp2S3v84y5ZyPWnwhOLw=;
+	s=korg; t=1789198145;
+	bh=2/L42cjEHZMJscnt4UOG8tbKIuUk5IzoFpIbYsWb0jE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZY8GkIw/Rmd5o4k9wllINbapnnasPKjt4/rv10JNNqUJPnJYNBDcDnhfCgLorRwd6
-	 cFaOFwmhznSbfSfFB/V0oV3e6P9f/E6jjy7szesXSvn07Cnnc/68yIk6UcdAtHamvO
-	 rLTsYpMi9WGNdqVstmVx9QKZaFWxpe4qysELvAvc=
+	b=iksBZAb75WcyQdf6NOxE1H9slNoCtvLBkbTDd3mQMMQAE0VAEWnv9Re5K9LaMA8VH
+	 uHlWS+kx/iB/7Gih11rMZR2jkrNOJPnInp0iWIsROP6mtQw18hiZICnDDg/bkW9rQd
+	 xx7N/UuMOfIe1ENvAQYbgu0QtQ5a9GDydcSVSJwI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Sandipan Das <sandipan.das@amd.com>,
+	Tanushree Shah <tshah@linux.ibm.com>,
 	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0277/1815] perf vendor events amd: Reintroduce deprecated Zen 5 core events
-Date: Sat, 12 Sep 2026 08:33:47 +0200
-Message-ID: <20260912065655.468427898@linuxfoundation.org>
+Subject: [PATCH 7.2 0278/1815] perf dso: Fix kallsyms DSO detection with fallback logic
+Date: Sat, 12 Sep 2026 08:33:48 +0200
+Message-ID: <20260912065655.490467780@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,114 +51,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sandipan Das <sandipan.das@amd.com>
+From: Tanushree Shah <tshah@linux.ibm.com>
 
-[ Upstream commit eda39f98bbc5ce8b7b0be10193d2de38ed59da6c ]
+[ Upstream commit 8c5f60344b07f839267c0c835962e2206143be85 ]
 
-Maintain backward compatibility by reintroducing the events that were
-previously removed by commit 047979af3bf6 ("perf vendor events amd:
-Update Zen 5 core events"). Also set the deprecated flag and update
-the descriptions to point users to the correct alternative.
+The current kallsyms detection in dso__is_kallsyms() uses the
+dso_binary_type enum which fixes the issue of kallsyms being cached in
+the build-id cache for out-of-tree modules.
 
-Reported-by: Ian Rogers <irogers@google.com>
-Closes: https://lore.kernel.org/all/CAP-5=fV_czvd-z4N7K+_SabxuOm9UUHRyBxNuchrtAgJL3OqOw@mail.gmail.com/
-Fixes: 047979af3bf6 ("perf vendor events amd: Update Zen 5 core events")
-Signed-off-by: Sandipan Das <sandipan.das@amd.com>
-Reviewed-by: Ian Rogers <irogers@google.com>
+However, during build-id injection in perf record/inject, dso_binary_type
+has not been explicitly set yet,so dso__binary_type() returns
+DSO_BINARY_TYPE__NOT_FOUND instead of DSO_BINARY_TYPE__KALLSYMS for the
+kernel DSO. The current check then fails to identify it as kallsyms,
+causing build-id symlinks to not be created in ~/.debug/.build-id/ and
+perf archive to fail with "Cannot stat" errors.
+
+Steps to reproduce the issue:
+1. rm -rf ~/.debug/.build-id
+2. perf record sleep 1
+3. perf archive
+
+Fix by falling back to matching long_name against the known kallsyms
+strings explicitly when binary_type is not yet set
+(== DSO_BINARY_TYPE__NOT_FOUND). Use strcmp() for exact matching of
+fixed names and strict validation for guest kallsyms with embedded PID
+to prevent path traversal attacks.
+
+Fixes: ebf0b332732d ("perf dso: fix dso__is_kallsyms() check")
+Signed-off-by: Tanushree Shah <tshah@linux.ibm.com>
 Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../arch/x86/amdzen5/floating-point.json      | 42 +++++++++++++++++++
- 1 file changed, 42 insertions(+)
+ tools/perf/util/dso.h | 57 ++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 56 insertions(+), 1 deletion(-)
 
-diff --git a/tools/perf/pmu-events/arch/x86/amdzen5/floating-point.json b/tools/perf/pmu-events/arch/x86/amdzen5/floating-point.json
-index 569975b53cc33..50d38434f8d3d 100644
---- a/tools/perf/pmu-events/arch/x86/amdzen5/floating-point.json
-+++ b/tools/perf/pmu-events/arch/x86/amdzen5/floating-point.json
-@@ -383,6 +383,13 @@
-     "BriefDescription": "Retired MMX integer VNNI ops.",
-     "UMask": "0x0c"
-   },
-+  {
-+    "EventName": "sse_avx_ops_retired.mmx_pack",
-+    "EventCode": "0x0b",
-+    "BriefDescription": "This event is deprecated. Refer to new event sse_avx_ops_retired.mmx_vnni",
-+    "Deprecated": "1",
-+    "UMask": "0x0c"
-+  },
-   {
-     "EventName": "sse_avx_ops_retired.mmx_logical",
-     "EventCode": "0x0b",
-@@ -449,6 +456,13 @@
-     "BriefDescription": "Retired SSE and AVX integer convert or pack ops.",
-     "UMask": "0x80"
-   },
-+  {
-+    "EventName": "sse_avx_ops_retired.sse_avx_clm",
-+    "EventCode": "0x0b",
-+    "BriefDescription": "This event is deprecated. Refer to new event sse_avx_ops_retired.sse_avx_cvt",
-+    "Deprecated": "1",
-+    "UMask": "0x80"
-+  },
-   {
-     "EventName": "sse_avx_ops_retired.sse_avx_shift",
-     "EventCode": "0x0b",
-@@ -473,6 +487,13 @@
-     "BriefDescription": "Retired SSE and AVX integer VNNI ops.",
-     "UMask": "0xc0"
-   },
-+  {
-+    "EventName": "sse_avx_ops_retired.sse_avx_pack",
-+    "EventCode": "0x0b",
-+    "BriefDescription": "This event is deprecated. Refer to new event sse_avx_ops_retired.sse_avx_vnni",
-+    "Deprecated": "1",
-+    "UMask": "0xc0"
-+  },
-   {
-     "EventName": "sse_avx_ops_retired.sse_avx_logical",
-     "EventCode": "0x0b",
-@@ -731,6 +752,13 @@
-     "BriefDescription": "Retired 128-bit packed integer convert or pack ops.",
-     "UMask": "0x08"
-   },
-+  {
-+    "EventName": "packed_int_op_type.int128_clm",
-+    "EventCode": "0x0d",
-+    "BriefDescription": "This event is deprecated. Refer to new event packed_int_op_type.int128_cvt",
-+    "Deprecated": "1",
-+    "UMask": "0x08"
-+  },
-   {
-     "EventName": "packed_int_op_type.int128_shift",
-     "EventCode": "0x0d",
-@@ -755,6 +783,13 @@
-     "BriefDescription": "Retired 128-bit packed integer VNNI ops.",
-     "UMask": "0x0c"
-   },
-+  {
-+    "EventName": "packed_int_op_type.int128_pack",
-+    "EventCode": "0x0d",
-+    "BriefDescription": "This event is deprecated. Refer to new event packed_int_op_type.int128_vnni",
-+    "Deprecated": "1",
-+    "UMask": "0x0c"
-+  },
-   {
-     "EventName": "packed_int_op_type.int128_logical",
-     "EventCode": "0x0d",
-@@ -845,6 +880,13 @@
-     "BriefDescription": "Retired 256-bit packed integer VNNI ops.",
-     "UMask": "0xc0"
-   },
-+  {
-+    "EventName": "packed_int_op_type.int256_pack",
-+    "EventCode": "0x0d",
-+    "BriefDescription": "This event is deprecated. Refer to new event packed_int_op_type.int256_vnni",
-+    "Deprecated": "1",
-+    "UMask": "0xc0"
-+  },
-   {
-     "EventName": "packed_int_op_type.int256_logical",
-     "EventCode": "0x0d",
+diff --git a/tools/perf/util/dso.h b/tools/perf/util/dso.h
+index 2916b954a804b..55c4aaa53c382 100644
+--- a/tools/perf/util/dso.h
++++ b/tools/perf/util/dso.h
+@@ -9,6 +9,7 @@
+ #include <stdbool.h>
+ #include <stdio.h>
+ #include <linux/bitops.h>
++#include <string.h>
+ #include "build-id.h"
+ #include "debuginfo.h"
+ #include "mutex.h"
+@@ -20,6 +21,40 @@ struct perf_env;
+ 
+ #define DSO__NAME_KALLSYMS	"[kernel.kallsyms]"
+ #define DSO__NAME_KCORE		"[kernel.kcore]"
++#define DSO__NAME_GUEST_KALLSYMS		"[guest.kernel.kallsyms]"
++#define DSO__NAME_GUEST_KALLSYMS_PID_PREFIX	"[guest.kernel.kallsyms."
++
++/*
++ * Validate names of the form "[guest.kernel.kallsyms.<pid>]", where
++ * <pid> is the PID of the guest VM and varies per guest, so it
++ * cannot be matched with strcmp() against a fixed string.
++ *
++ * Every character after the fixed prefix must be a decimal digit,
++ * with ']' immediately terminating the digit run and nothing
++ * following it. This rules out '/', "..", or any other character
++ * being smuggled into the name.
++ */
++static inline bool is_guest_kallsyms_pid_name(const char *name)
++{
++	const size_t prefix_len = sizeof(DSO__NAME_GUEST_KALLSYMS_PID_PREFIX) - 1;
++	size_t digits;
++
++	if (strncmp(name, DSO__NAME_GUEST_KALLSYMS_PID_PREFIX, prefix_len) != 0)
++		return false;
++
++	digits = strspn(name + prefix_len, "0123456789");
++	if (digits == 0)
++		return false;
++
++	/* ']' must terminate the digit run, with nothing trailing it */
++	if (name[prefix_len + digits] != ']')
++		return false;
++
++	if (name[prefix_len + digits + 1] != '\0')
++		return false;
++
++	return true;
++}
+ 
+ /**
+  * enum dso_binary_type - The kind of DSO generally associated with a memory
+@@ -924,8 +959,28 @@ static inline bool dso__is_kcore(const struct dso *dso)
+ static inline bool dso__is_kallsyms(const struct dso *dso)
+ {
+ 	enum dso_binary_type bt = dso__binary_type(dso);
++	const char *name;
++
++	if (bt == DSO_BINARY_TYPE__KALLSYMS || bt == DSO_BINARY_TYPE__GUEST_KALLSYMS)
++		return true;
++
++	if (bt != DSO_BINARY_TYPE__NOT_FOUND)
++		return false;
++
++	if (!dso__kernel(dso))
++		return false;
++
++	name = dso__long_name(dso);
++	if (!name)
++		return false;
++
++	if (!strcmp(name, DSO__NAME_KALLSYMS))
++		return true;
++
++	if (!strcmp(name, DSO__NAME_GUEST_KALLSYMS))
++		return true;
+ 
+-	return bt == DSO_BINARY_TYPE__KALLSYMS || bt == DSO_BINARY_TYPE__GUEST_KALLSYMS;
++	return is_guest_kallsyms_pid_name(name);
+ }
+ 
+ bool dso__is_object_file(const struct dso *dso);
 -- 
 2.53.0
 
