@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F16D0361DDC;
-	Sat, 12 Sep 2026 15:20:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96FA1274B39;
+	Sat, 12 Sep 2026 15:20:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789226410; cv=none; b=rR19PCim4+cUU6qiVEj7vkqrCPrS/EVwpYAKTH4f1JNcNJY9eLOfPOblTg8pdF4sW1eI2RS/MHwJFJu4z+0LVAgnRT3AVinDIKgv+BoqVl8iaNXgg0y5qPfJec2qfeGGTnb+iIUr7XwLdCwWag6qSbYvhiDcDsK/mUc0im97uP8=
+	t=1789226411; cv=none; b=Sbj11Hs0O6EZZ4rJg06zvgpnHuX9041A7H3nXksAMae5VZMccIUFCijGVnKClfrDn3vXLlEj+b4rpJEZnGV5Sqg5GQ1vsrbsFsqG4zGZpnB4VY4NpDRdnmj6EkgxCgoAJuz8XT+mMRU2cCg1FSJ07iNTGA5t10FA6z4dlbddZ/g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789226410; c=relaxed/simple;
-	bh=v9IIDkc7iYSYI2XjuBtNDAn3fzjBgsGOBD6o2Y4ClcA=;
+	s=arc-20240116; t=1789226411; c=relaxed/simple;
+	bh=C6S8rcGdP4Ux2iqLpgoo6YzDCXirwlBBLwj9lbmp/JE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ujelkcjHWZxkXL5YMxbeWPxXKKnCU72Ct2AxfdIzdp3axbuj7pcEbZ1sCJd40O0SQH2yEglkbP4IEk8eRazgTo7jFanGwr9RopH5TDWkXuVPgw/unbmxqT7FSBbU0G3rF3MfQKqU5K7LLbQy/PnJNUjI5Unq+qiqmNmFCU9ciMw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x52HHZGV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XNL3IEGx6XpkPDE1p3E2+N+WtR6X7Ww9z+g/oXdlCaLlY20AMiOd7SRdUmVNrAZ0AspElSow2A0rd9Ik9QKUTmP25bA/0ln9nb/FCtIrJVv8lNnYMJq3RccC600xICQEM0Fg1fw0ouOnqxRqN9qZDrxeEAXqxp1agIlnsHFDqC4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ygFsXLWv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x52HHZGV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D5D11F00893;
-	Sat, 12 Sep 2026 15:20:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ygFsXLWv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 308591F000FF;
+	Sat, 12 Sep 2026 15:20:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789226405;
-	bh=pCX4bRNLJzB2+BU5kECurh8TlIaRhHdZadl+Xwgo6W8=;
+	s=korg; t=1789226410;
+	bh=DDvVU7xOBhPgRtIv+hOtsrIAjIowInQ8otlq5aTTZjg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=x52HHZGVcPgknxz4UPoqX8TSCeN4/zxLTPd29DP6VkhupRWoLwr01GwJQQ1jzoooE
-	 zT3SJgcw82Wq7QskPj3juhDImO0ZdJmlF7w1cziq3rLNKbUnI8YhKRNSuNv8bSthOS
-	 gcxUHYiFRb2lnkk3aI/L3u+FP1rDjKmgCWO5mCa8=
+	b=ygFsXLWvxP70/UY8aWulnJMhyp79kcjQ2TrJI/JuxnfKj/zi4OOB13XowU7Vp/JWg
+	 zd9Loc5INpQQXp+4GhBJxhEhW7Jzig3kkCqsIPh2CCde19OSbfrQnahKD+vNRtZc2z
+	 w7WUY++U+8D7j+dkGKzxQ/i/Fk/pW5N4QJX30GGo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Fang <wei.fang@nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	bui duc phuc <phucduc.bui@gmail.com>,
+	syzbot+6665d3db5fef15914802@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Deepanshu Kartikey <kartikey406@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1394/1424] net: fec: only stop PTP if it was initialized
-Date: Sat, 12 Sep 2026 09:03:46 +0200
-Message-ID: <20260912065638.479673248@linuxfoundation.org>
+Subject: [PATCH 6.6 1395/1424] usb: atm: usbatm: fix invalid ci_range initialization
+Date: Sat, 12 Sep 2026 09:03:47 +0200
+Message-ID: <20260912065638.501517005@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -53,53 +53,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: bui duc phuc <phucduc.bui@gmail.com>
+From: Deepanshu Kartikey <kartikey406@gmail.com>
 
-[ Upstream commit dd890ae29299636fb037276fc1b5238698d08b03 ]
+[ Upstream commit a60fd8c6dbaa76da4163cf225ed2b9e982540f39 ]
 
-fec_ptp_init() is only called when fep->bufdesc_ex is available.
-However, fec_probe() unconditionally calls fec_ptp_stop() on the
-failed_init path, and fec_drv_remove() unconditionally calls
-fec_ptp_stop() during device removal.
+syzbot reported a shift-out-of-bounds in __vcc_connect():
 
-Check fep->bufdesc_ex before calling fec_ptp_stop() in both paths
-to avoid stopping PTP when it was not initialized.
+  UBSAN: shift-out-of-bounds in net/atm/common.c:382:32
+  shift exponent -1 is negative
+  CPU: 0 UID: 0 PID: 5987 Comm: syz.0.18 Not tainted syzkaller #0 PREEMPT(full)
+  Hardware name: Google Compute Engine/Google Compute Engine, BIOS Google 08/05/2026
+  Call Trace:
+   <TASK>
+   dump_stack_lvl+0xe8/0x150 lib/dump_stack.c:120
+   ubsan_epilogue+0xa/0x30 lib/ubsan.c:233
+   __ubsan_handle_shift_out_of_bounds+0x36d/0x400 lib/ubsan.c:494
+   __vcc_connect+0x14b4/0x19c0 net/atm/common.c:382
+   vcc_connect+0x328/0x8f0 net/atm/common.c:498
+   pvc_bind+0x272/0x380 net/atm/pvc.c:52
+   __sys_bind+0x2e3/0x410 net/socket.c:1976
+   __x64_sys_bind+0x7a/0x90 net/socket.c:1979
+   ...
 
-Fixes: 32cba57ba74b ("net: fec: introduce fec_ptp_stop and use in probe fail path")
-Reviewed-by: Wei Fang <wei.fang@nxp.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
-Link: https://patch.msgid.link/20260826103428.32807-1-phucduc.bui@gmail.com
+ATM device ci_range fields (vpi_bits and vci_bits) represent the
+number of bits supported for VPI and VCI addressing on the device.
+net/atm/common.c directly uses these fields as bit shift counts:
+  vpi >> dev->ci_range.vpi_bits
+  vci >> dev->ci_range.vci_bits
+  1 << vcc->dev->ci_range.vpi_bits
+  1 << vcc->dev->ci_range.vci_bits
+
+usbatm_atm_init() sets ci_range.vpi_bits and ci_range.vci_bits to
+ATM_CI_MAX (-1), which is defined in <uapi/linux/atmdev.h> as a
+sentinel value for userspace ATM_SETCIRANGE requests, not a valid bit
+count. Shifting by -1 is undefined behavior and triggers UBSAN
+warnings.
+
+ATM UNI cell headers allow up to 8 bits for VPI (0..255) and 16 bits
+for VCI (0..65535). Initialize vpi_bits to 8 and vci_bits to 16, as
+done by solos-pci.
+
+Fixes: c59bba75fa50 ("[PATCH] USB ATM: new usbatm core")
+Reported-by: syzbot+6665d3db5fef15914802@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=6665d3db5fef15914802
+Suggested-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/all/20260824024620.23485-1-kartikey406@gmail.com/T/ [v1]
+Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
+Link: https://patch.msgid.link/20260826133258.8306-1-kartikey406@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/fec_main.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/usb/atm/usbatm.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/freescale/fec_main.c b/drivers/net/ethernet/freescale/fec_main.c
-index ec7fe943e5682..dd977b45f6d0c 100644
---- a/drivers/net/ethernet/freescale/fec_main.c
-+++ b/drivers/net/ethernet/freescale/fec_main.c
-@@ -4604,7 +4604,8 @@ fec_probe(struct platform_device *pdev)
- failed_irq:
- 	fec_enet_deinit(ndev);
- failed_init:
--	fec_ptp_stop(pdev);
-+	if (fep->bufdesc_ex)
-+		fec_ptp_stop(pdev);
- failed_reset:
- 	pm_runtime_put_noidle(&pdev->dev);
- 	pm_runtime_disable(&pdev->dev);
-@@ -4646,7 +4647,8 @@ fec_drv_remove(struct platform_device *pdev)
- 			ERR_PTR(ret));
+diff --git a/drivers/usb/atm/usbatm.c b/drivers/usb/atm/usbatm.c
+index 1cdb8758ae01b..bbee6bfed5b88 100644
+--- a/drivers/usb/atm/usbatm.c
++++ b/drivers/usb/atm/usbatm.c
+@@ -917,8 +917,8 @@ static int usbatm_atm_init(struct usbatm_data *instance)
  
- 	cancel_work_sync(&fep->tx_timeout_work);
--	fec_ptp_stop(pdev);
-+	if (fep->bufdesc_ex)
-+		fec_ptp_stop(pdev);
- 	unregister_netdev(ndev);
- 	fec_enet_mii_remove(fep);
- 	if (fep->reg_phy)
+ 	instance->atm_dev = atm_dev;
+ 
+-	atm_dev->ci_range.vpi_bits = ATM_CI_MAX;
+-	atm_dev->ci_range.vci_bits = ATM_CI_MAX;
++	atm_dev->ci_range.vpi_bits = 8;
++	atm_dev->ci_range.vci_bits = 16;
+ 	atm_dev->signal = ATM_PHY_SIG_UNKNOWN;
+ 
+ 	/* temp init ATM device, set to 128kbit */
 -- 
 2.53.0
 
