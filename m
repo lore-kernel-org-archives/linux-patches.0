@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC94633E35C;
-	Sat, 12 Sep 2026 12:18:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 393EA2F531B;
+	Sat, 12 Sep 2026 12:18:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789215513; cv=none; b=TKbmT1c8Qhhq40t6gSHENxKfeTxa5PrlPmvZpIHHwa5WSsH1uyZSjW6EnMerNpkLWDdLJC2h3ESmR1wr7PNfMG0pjCfA3D6TtQRpeymhpp4DA8n0zGwnz6OW28E58Yk0lA9uoJuFLDj1kiZoennfwAEV3H/O6dEFZGd1uSh9L/M=
+	t=1789215518; cv=none; b=Rpz+GnLSR+YIp+SQtiawKPArkdw7zIdcMLnih/jIu9pOBmnjBt8v14EZCtWgIevsRNijYTZniQzoThWtiCmeVTrgrnomLaPBhOjZdmO4Qd0q8F2NdWjDEfppNc2eZYxvlAFrULTVA2w52Dh8wS4i6xMXlWSavwzNfhTHZr9wfIo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789215513; c=relaxed/simple;
-	bh=AOR57x7EgPq9LnBe72J6revMM6f0WhK2Yw8UjulBae4=;
+	s=arc-20240116; t=1789215518; c=relaxed/simple;
+	bh=S8tddhRcUojRWs5NEuZ29vQX7W1BkcdURZZBQD7phDo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MfV2h+/03zd3YwSCWyNmS4kcMExAq4tMiWa/ZIUC7F2jcN/4PXOGsHbQ0uP2K6Nf+koDRrsV5GnU3LwJJ9KvgoDMc2PQb4nLrkvH1HvE6rh8aAoDioSe+uNB+Dg7G+Gy273px0bC1Jfn73V6o2LqClPsKMc3kjZNzVIkvKXgdls=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MssswseY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=l2Rw3/NkYQjEHpDvDRLGkbEslmp9Y7FPZfjfA9WlgKp81B62f0onTu8SgOSAN5O9wvI8BhivVU1t1+rdHBVAe6JT5JrzJF5EODobdr45SlPyFTkmTDv5aVVPA3Kb1h+pIGVt+B7V5Zx7S7KLR9T6EJumULtOv1tswS8oC5fSbh8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EYo3qVuD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MssswseY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 024B11F000FF;
-	Sat, 12 Sep 2026 12:18:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EYo3qVuD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 072571F000FF;
+	Sat, 12 Sep 2026 12:18:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789215512;
-	bh=6sv+higebyZG7l9T9HAb3jfnecJFmem0KW3Pd+JDiTU=;
+	s=korg; t=1789215516;
+	bh=jx+ti9xavQZ+8SayEU9qPMc+k0XwdVxfjvTfI0c/2e0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MssswseYqiRx0qYXxGCgP8VsYxJm4Wru6kZfWjT8o0TtNknNe9OfO1PWzafmQBabq
-	 uW5hAE5C/+/VzADkw94FMbJa6nwstyMMNFVxF2igWbOeDZUeOlNA1wR2MMAzKqHsuk
-	 KqW/Fwz+cqNn4SwwaExdpfFCQb8q9CsutXlL6RDs=
+	b=EYo3qVuDTedsdzghS9E/hOVNKKrqgexHBgOkNdgWLyjUGukuy7DvtZj/F0rpMGl9q
+	 efZwY2qFM1f+XxdhTF36GVn6FBLI2HKe0zBtIMHe2XJwynue14SGxSYvxqcNqipufg
+	 YL7rk5ou95osTGiHc6EHqFJ/UaMeUyGieYnq/p6U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Cheng <icheng@nvidia.com>,
-	John Groves <john@groves.net>,
-	Alison Schofield <alison.schofield@intel.com>,
+	Dan Carpenter <error27@gmail.com>,
+	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0546/1376] dax: read holder_ops once in dax_holder_notify_failure()
-Date: Sat, 12 Sep 2026 08:49:32 +0200
-Message-ID: <20260912065619.708890414@linuxfoundation.org>
+Subject: [PATCH 6.12 0547/1376] cpufreq: spear: Fix an IS_ERR() vs NULL bug in spear1340_set_cpu_rate()
+Date: Sat, 12 Sep 2026 08:49:33 +0200
+Message-ID: <20260912065619.730418007@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -52,66 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Groves <John@Groves.net>
+From: Dan Carpenter <error27@gmail.com>
 
-[ Upstream commit 7ae9d15bdcde0f2955ae13b6a95587f9e23b2359 ]
+[ Upstream commit 6a9e0e0f7592313ace66303cf5eca68e04c10f30 ]
 
-dax_holder_notify_failure() reads dax_dev->holder_ops twice without
-READ_ONCE() -- once for the NULL check and once for the indirect
-notify_failure() call. A concurrent fs_put_dax() can clear holder_ops
-between the two reads, so the check can observe a non-NULL pointer while
-the call dereferences NULL. (kill_dax() also clears holder_ops, but only
-after synchronize_srcu(), so it cannot race a reader that is inside
-dax_read_lock(); fs_put_dax() does no such synchronization.)
+The clk_get_parent() function doesn't return error pointers, it returns
+NULL on error.  Update the error checking to match.
 
-Fetch holder_ops once into a local with READ_ONCE() so the NULL check and
-the indirect call observe the same value.
-
-Fixes: 8012b86608552 ("dax: introduce holder for dax_device")
-Suggested-by: Richard Cheng <icheng@nvidia.com>
-Reviewed-by: Richard Cheng <icheng@nvidia.com>
-Signed-off-by: John Groves <john@groves.net>
-Link: https://patch.msgid.link/0100019ecc09bb56-5ecc9c6b-35ba-44f8-b112-921b01b34478-000000@email.amazonses.com
-Signed-off-by: Alison Schofield <alison.schofield@intel.com>
+Fixes: 420993221175 ("cpufreq: SPEAr: Add CPUFreq driver")
+Signed-off-by: Dan Carpenter <error27@gmail.com>
+Reviewed-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dax/super.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ drivers/cpufreq/spear-cpufreq.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/dax/super.c b/drivers/dax/super.c
-index e16d1d40d7738..6eb7ecd233840 100644
---- a/drivers/dax/super.c
-+++ b/drivers/dax/super.c
-@@ -233,6 +233,7 @@ EXPORT_SYMBOL_GPL(dax_recovery_write);
- int dax_holder_notify_failure(struct dax_device *dax_dev, u64 off,
- 			      u64 len, int mf_flags)
- {
-+	const struct dax_holder_operations *ops;
- 	int rc, id;
+diff --git a/drivers/cpufreq/spear-cpufreq.c b/drivers/cpufreq/spear-cpufreq.c
+index c032dd5d12d3c..ae038eec35bc1 100644
+--- a/drivers/cpufreq/spear-cpufreq.c
++++ b/drivers/cpufreq/spear-cpufreq.c
+@@ -79,9 +79,9 @@ static int spear1340_set_cpu_rate(struct clk *sys_pclk, unsigned long newfreq)
+ 	int ret = 0;
  
- 	id = dax_read_lock();
-@@ -241,12 +242,19 @@ int dax_holder_notify_failure(struct dax_device *dax_dev, u64 off,
- 		goto out;
+ 	sys_clk = clk_get_parent(spear_cpufreq.clk);
+-	if (IS_ERR(sys_clk)) {
++	if (!sys_clk) {
+ 		pr_err("failed to get cpu's parent (sys) clock\n");
+-		return PTR_ERR(sys_clk);
++		return -EINVAL;
  	}
  
--	if (!dax_dev->holder_ops) {
-+	/*
-+	 * Read holder_ops once: a concurrent fs_put_dax() can clear it without
-+	 * synchronizing against readers. Without the single fetch the compiler
-+	 * could reload between the NULL check and the call and dereference a
-+	 * NULL ops.
-+	 */
-+	ops = READ_ONCE(dax_dev->holder_ops);
-+	if (!ops) {
- 		rc = -EOPNOTSUPP;
- 		goto out;
- 	}
- 
--	rc = dax_dev->holder_ops->notify_failure(dax_dev, off, len, mf_flags);
-+	rc = ops->notify_failure(dax_dev, off, len, mf_flags);
- out:
- 	dax_read_unlock(id);
- 	return rc;
+ 	/* Set the rate of the source clock before changing the parent */
 -- 
 2.53.0
 
