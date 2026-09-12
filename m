@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 694753A7820;
-	Sat, 12 Sep 2026 20:03:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3365B3A782D;
+	Sat, 12 Sep 2026 20:03:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789243411; cv=none; b=o1MHFhi3RbwbLV+Viz+e6MWfoHjJkegEadY+nD0G/f7+5jYj9BC9fjI01oDM11vFjjxCb66BF2khxctR+aXyilKNlu7q8E3cAEl20oi3gbt92mFGYG/n13ur3LDBTv8OqTPwYlyPtWA4E3HrIafRrG/teF9MrqmY3GuvVG7KA7c=
+	t=1789243414; cv=none; b=T+Y4gXFtnJfUWbo745OQL+RYV3bzxkXJw6KiJiX+SZtc7xokMuQHlVMXPiFTrerLMSlonkT3vcoDNvjFDXr4CfOPFCJqhi9ykBxDgkDC/oDCSDae9f3XT4i7CWq3NRH9BLqsOx66R25qNGaeYhZbf2LohWIsdu9pTiEPGdZwEC8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789243411; c=relaxed/simple;
-	bh=L+Z5FyDM3eFXQ1Re75j62WUujR8+P60yJzuzvZWjj70=;
+	s=arc-20240116; t=1789243414; c=relaxed/simple;
+	bh=hKvJtgKxzmR27/7CxoFdOapRcEW6UOTYl8SYXpWNOOs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WYlvMc/Mn6Z+T2beQCf7eErpA/1eO/jq8v7Xl6B7MN+Z7CcvOstAjTJ5MdNLCmlKH0adVBYY4uLaqyjUItUrNVqz1qXsizWureuc225iSiEIUIcY2vQx37/ExRXSPXqlOfbpwPncPsjB9cuqHPJaeApXFeetHmWoxziQ7mNeeXU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n8h0Pujp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YDediMC0BHKtjlAv2h6KjAlonY4YvMy1KtaihuHJW2c7YvSFuUhg38/5VHBsgzLr3UGj6R4fgt2vAxdU0HWDhDYANS/ZgCdqhoItcSSKWrC3jQqL7W4F6b/Ab6unwz2Zsuxsm9db0NsVeK2qOfC0yG+SRKXBgbRTeMsAJSqqVaE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SSu4SVx/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n8h0Pujp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAF771F000FF;
-	Sat, 12 Sep 2026 20:03:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SSu4SVx/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FE341F000FF;
+	Sat, 12 Sep 2026 20:03:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789243410;
-	bh=XynV/xvTQIEnWSTbBqwD2RF/V7J1IZgB/BIQiPfohiQ=;
+	s=korg; t=1789243413;
+	bh=x3H0Mub9HIuWKSjvorZeuOsHoCdtZf6dY36I5MSBfRA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=n8h0PujpY1jOdQD5bXmnhydiGaU3sohCN09g1KR6iWsYXm8fel/RxlSv+xqLl9wcP
-	 GS4efpZu5vug/uzgkWR/5JHuE94Q9Fl0AUsavPI84SUUnVPAis6EJ67V1dmXUUwSat
-	 Bz4nS/ygAwPu7kmSbeeku0/4iZYu1N4Y40YYiXAI=
+	b=SSu4SVx/zlsVhxnSOKU+SwraA6DNBv+gtyejC7wz1rOeyA+XbsMMN96NgBGhjn8jm
+	 9jF5wkU2bJ4VjyDZyB0gmw+GEAw+6lozC9MaXCuRhkgmUOKXkyZmtYC89WOKDWmamW
+	 X89ecaMS6CfUZtGWp7FI7RQYZsJUQKfQumc6IiRY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuho Choi <dbgh9129@gmail.com>,
-	Daniel Lezcano <daniel.lezcano@kernel.org>,
+	Rosen Penev <rosenp@gmail.com>,
+	Michal Simek <michal.simek@amd.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 703/798] clocksource/drivers/armada: Unwind timer clock on init failure
-Date: Sat, 12 Sep 2026 09:05:31 +0200
-Message-ID: <20260912065533.205490822@linuxfoundation.org>
+Subject: [PATCH 5.10 694/798] ASoC: xilinx: formatter_pcm: fix stream_data leak on open error
+Date: Sat, 12 Sep 2026 09:05:22 +0200
+Message-ID: <20260912065533.002434306@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -51,67 +52,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuho Choi <dbgh9129@gmail.com>
+From: Rosen Penev <rosenp@gmail.com>
 
-[ Upstream commit 8b4127f6db40381229f3564d34ac35f36311c201 ]
+[ Upstream commit b992511180e126150c6ad3580a6fd568c385f4c6 ]
 
-The Armada timer init paths enable their clock before calling the
-common initialization routine. If that routine returns an error, the
-clock is left enabled even though the timer was not initialized
-successfully.
+In xlnx_formatter_pcm_open(), stream_data is allocated and
+adata->play_stream or adata->capture_stream is assigned early.  If a
+later step, such as snd_pcm_hw_constraint_step() or
+snd_pcm_hw_constraint_integer(), fails, the function returns the error
+immediately.  ALSA does not call the close callback when open fails, so
+stream_data is leaked and the stream pointer is left dangling, pointing
+to a substream that ALSA frees.  A later interrupt would then call
+snd_pcm_period_elapsed() on the freed substream.
 
-Fixes: 12549e27c63c ("clocksource/drivers/time-armada-370-xp: Convert init function to return error")
-Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
-Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
-Link: https://patch.msgid.link/20260802213545.565913-1-dbgh9129@gmail.com
+Free stream_data and clear the stream pointer on the error paths.
+
+Fixes: 6f6c3c36f091 ("ASoC: xlnx: add pcm formatter platform driver")
+Assisted-by: opencode:deepseek-v4-flash-free
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
+Reviewed-by: Michal Simek <michal.simek@amd.com>
+Link: https://patch.msgid.link/20260811185140.27149-1-rosenp@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clocksource/timer-armada-370-xp.c | 18 +++++++++++++++---
- 1 file changed, 15 insertions(+), 3 deletions(-)
+ sound/soc/xilinx/xlnx_formatter_pcm.c | 14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/clocksource/timer-armada-370-xp.c b/drivers/clocksource/timer-armada-370-xp.c
-index e3acc3c631b72..a3e803fb8b1ee 100644
---- a/drivers/clocksource/timer-armada-370-xp.c
-+++ b/drivers/clocksource/timer-armada-370-xp.c
-@@ -349,7 +349,11 @@ static int __init armada_xp_timer_init(struct device_node *np)
- 
- 	timer_clk = clk_get_rate(clk);
- 
--	return armada_370_xp_timer_common_init(np);
-+	ret = armada_370_xp_timer_common_init(np);
-+	if (ret)
-+		clk_disable_unprepare(clk);
-+
-+	return ret;
- }
- TIMER_OF_DECLARE(armada_xp, "marvell,armada-xp-timer",
- 		       armada_xp_timer_init);
-@@ -387,7 +391,11 @@ static int __init armada_375_timer_init(struct device_node *np)
- 		timer25Mhz = false;
+diff --git a/sound/soc/xilinx/xlnx_formatter_pcm.c b/sound/soc/xilinx/xlnx_formatter_pcm.c
+index dccc056e0e0a6..74a7c8e5998df 100644
+--- a/sound/soc/xilinx/xlnx_formatter_pcm.c
++++ b/sound/soc/xilinx/xlnx_formatter_pcm.c
+@@ -384,7 +384,7 @@ static int xlnx_formatter_pcm_open(struct snd_soc_component *component,
+ 	if (err) {
+ 		dev_err(component->dev,
+ 			"Unable to set constraint on period bytes\n");
+-		return err;
++		goto error;
  	}
  
--	return armada_370_xp_timer_common_init(np);
-+	ret = armada_370_xp_timer_common_init(np);
-+	if (ret)
-+		clk_disable_unprepare(clk);
-+
-+	return ret;
- }
- TIMER_OF_DECLARE(armada_375, "marvell,armada-375-timer",
- 		       armada_375_timer_init);
-@@ -410,7 +418,11 @@ static int __init armada_370_timer_init(struct device_node *np)
- 	timer_clk = clk_get_rate(clk) / TIMER_DIVIDER;
- 	timer25Mhz = false;
+ 	/* Resize the buffer bytes as divisible by 64 */
+@@ -394,7 +394,7 @@ static int xlnx_formatter_pcm_open(struct snd_soc_component *component,
+ 	if (err) {
+ 		dev_err(component->dev,
+ 			"Unable to set constraint on buffer bytes\n");
+-		return err;
++		goto error;
+ 	}
  
--	return armada_370_xp_timer_common_init(np);
-+	ret = armada_370_xp_timer_common_init(np);
-+	if (ret)
-+		clk_disable_unprepare(clk);
+ 	/* Set periods as integer multiple */
+@@ -403,7 +403,7 @@ static int xlnx_formatter_pcm_open(struct snd_soc_component *component,
+ 	if (err < 0) {
+ 		dev_err(component->dev,
+ 			"Unable to set constraint on periods to be integer\n");
+-		return err;
++		goto error;
+ 	}
+ 
+ 	/* enable DMA IOC irq */
+@@ -412,6 +412,14 @@ static int xlnx_formatter_pcm_open(struct snd_soc_component *component,
+ 	writel(val, stream_data->mmio + XLNX_AUD_CTRL);
+ 
+ 	return 0;
 +
-+	return ret;
++error:
++	if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK)
++		adata->play_stream = NULL;
++	else
++		adata->capture_stream = NULL;
++	kfree(stream_data);
++	return err;
  }
- TIMER_OF_DECLARE(armada_370, "marvell,armada-370-timer",
- 		       armada_370_timer_init);
+ 
+ static int xlnx_formatter_pcm_close(struct snd_soc_component *component,
 -- 
 2.53.0
 
