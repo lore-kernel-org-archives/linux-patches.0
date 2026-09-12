@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CD6A47F2CA;
-	Sat, 12 Sep 2026 13:31:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E268A2C08D0;
+	Sat, 12 Sep 2026 13:31:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789219879; cv=none; b=otAMCrSzx2yPc6Y5jvDAsdjl80rOz5euekThPQeOTqFzfFp9eImdIb76ij/CmrP9XKgCwa4gPGg6MC7LTZg8xNw5bkwljaNgjaL5XJa1lJMAYZnZIV/6c9iUBlmN7rfN2UpToiF7WDycRc/URJ54UdYRU1lLFrsZf8Um5Y8gqfI=
+	t=1789219884; cv=none; b=ZkiWOARReAQHajsHXPn0d9QOra7EsV6MtdSClyUh7eo2fzvBWhXINwhdxNmtngbEmKhqpcrRIc+0ZxafhBt5Yi1croUf+g2wlpN6DudozeMFnUd37M85PXvhsoYR+rQz45cYt5H91D3yOFLLbtHDrEs4hsYLQaFOkzNI/44SC/E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789219879; c=relaxed/simple;
-	bh=v3FuOgePW8IqHEF3M64FunKXtpLJUNx8w+jPd6T//IQ=;
+	s=arc-20240116; t=1789219884; c=relaxed/simple;
+	bh=T2ffGwGMwY9yJrlKcPy5AfEBOG2YRUhcuJXYK6bkBFE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KTfr8P955onx7qH07kmuWi+vmuql+iCB2uwwIPLePZmPd7N1+RsjcBdOmjxisbIvRqwGO+A/JCrH7aFgbTOZ5qT5aYH0Um/ucHg5IvLbg3sct9PLpzuLtaYdEMgdGTKZHZ6UxlBP+qWna3wjyi6e8FmgyzoBI5Ab+QeSXVUXwp8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SSMOj21y; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VL7Gc7RiZdky75BV2uTL6p2O6CO3D0YhsISaRCvMYwUOGNKZFOdLWVxsRXItfskLl3gRKDm1r4y5BjyFx6F8wA0Td1YU2x7juW41f6GlWjIEcPeM/d2NuMF+lP+4+7oEzz9A1NfVjVzPtVaU2y/GX5hBxO7ypQL469BDQm8jPds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RJcHuC7O; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SSMOj21y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B88241F000FF;
-	Sat, 12 Sep 2026 13:31:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RJcHuC7O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A425D1F000FF;
+	Sat, 12 Sep 2026 13:31:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789219877;
-	bh=ELeBTD0SYJHPojVw9yYGl40jUYzNfnwTbSh0W8LaHts=;
+	s=korg; t=1789219882;
+	bh=BUb2CCVyREOnlG591wGYkp6g75+Ur/e5al4xBq/rkgk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SSMOj21ydOlyiTKT406mT5WxiksZdvBxeQ7bGCDJfO0UQ2kYC5PDfXDRPFEPRJwht
-	 ikcpnFf96nj7E1j6ehTJsKRsXsG+1DL6DAOie3neDQHPfEA4PdEFp4oQYJs2aOZC3+
-	 uxP/B45JC2uUXXaGNqLeot5Dcu2iBQ6PewZV+FLY=
+	b=RJcHuC7OEpN226IZt+MLS/uhlcEM6A7S8mQrZ6fngJjuKTDVBG6wCsMNwK8BQR1Jm
+	 LhQGAffAo7tA11KQLPEy2C/1tafNmZ0EA8lOOPoUJwtusKd716pbgFrbZbLDv3Qist
+	 dE/OFcLzWOU1H7rEk6gIiS5T2KbrXCOpmGduQfLw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.6 0062/1424] nfsd: fix XDR length calculation in nfsd4_ff_encode_layoutget
-Date: Sat, 12 Sep 2026 08:41:34 +0200
-Message-ID: <20260912065608.695394558@linuxfoundation.org>
+	James Kim <james010kim@gmail.com>,
+	Dan Carpenter <error27@gmail.com>,
+	Alexandre Bounine <alex.bou9@gmail.com>,
+	Matt Porter <mporter@kernel.crashing.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.6 0027/1424] rapidio: mport_cdev: fix use-after-free in dma_req_free()
+Date: Sat, 12 Sep 2026 08:40:59 +0200
+Message-ID: <20260912065607.913481553@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -50,74 +53,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Layton <jlayton@kernel.org>
+From: James Kim <james010kim@gmail.com>
 
-commit f9868174af49d207fbaf0c5e055d088a983684af upstream.
+commit 5cbef379a94b161726c5f504598bf4791d45cedc upstream.
 
-The XDR buffer size calculation in nfsd4_ff_encode_layoutget() has
-multiple errors that can result in either an out-of-bounds write or
-leaking uninitialized kernel memory to the client:
+dma_req_free() acquires buf_mutex through req->map, drops the mapping
+reference with kref_put(), and then dereferences req->map again to unlock
+the mutex.
 
- - fh_len doesn't account for XDR padding on the file handle data
- - uid and gid lengths use "8 + len" but xdr_encode_opaque() actually
-   writes "4 + xdr_align_size(len)" bytes
- - ds_len omits the flags and stats_collect_hint fields (8 bytes),
-   while len's header constant overestimates by 8 bytes -- these
-   partially cancel but leave a net mismatch
+If kref_put() drops the last reference, mport_release_mapping() frees the
+mapping, and the subsequent mutex_unlock() dereferences a freed object.
+This is a use-after-free.
 
-The worst case occurs with short strings (e.g. uid=0, gid=0 with an
-odd-sized file handle), where the function writes up to 5 bytes past
-the reserved XDR buffer. Conversely, when string lengths happen to be
-4-byte aligned, the reservation is too large and stale buffer content
-is sent to the client.
+Fix this by caching map and md before kref_put(), clearing req->map while
+holding buf_mutex, and using the cached md for mutex unlocking.
 
-Fix this by breaking out every encoded field explicitly in the ds_len
-calculation, using xdr_align_size() for all variable-length opaque
-fields, and correcting the header constants.
+The bug is reachable from userspace via the RapidIO mport character device
+interface.
 
-Fixes: 9b9960a0ca47 ("nfsd: Add a super simple flex file server")
-Cc: stable@vger.kernel.org
-Assisted-by: kres:claude-opus-4-7
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260528-pnfs-fixes-v1-1-8a1255ae2f16@kernel.org
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Link: https://lore.kernel.org/20260723235220.588424-1-james010kim@gmail.com
+Fixes: e8de370188d0 ("rapidio: add mport char device driver")
+Signed-off-by: James Kim <james010kim@gmail.com>
+Reviewed-by: Dan Carpenter <error27@gmail.com>
+Cc: Alexandre Bounine <alex.bou9@gmail.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Matt Porter <mporter@kernel.crashing.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/flexfilelayoutxdr.c |   17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+ drivers/rapidio/devices/rio_mport_cdev.c |   10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
---- a/fs/nfsd/flexfilelayoutxdr.c
-+++ b/fs/nfsd/flexfilelayoutxdr.c
-@@ -30,19 +30,24 @@ nfsd4_ff_encode_layoutget(struct xdr_str
- 	struct ff_idmap uid;
- 	struct ff_idmap gid;
+--- a/drivers/rapidio/devices/rio_mport_cdev.c
++++ b/drivers/rapidio/devices/rio_mport_cdev.c
+@@ -582,9 +582,13 @@ static void dma_req_free(struct kref *re
+ 	}
  
--	fh_len = 4 + fl->fh.size;
-+	fh_len = 4 + xdr_align_size(fl->fh.size);
+ 	if (req->map) {
+-		mutex_lock(&req->map->md->buf_mutex);
+-		kref_put(&req->map->ref, mport_release_mapping);
+-		mutex_unlock(&req->map->md->buf_mutex);
++		struct rio_mport_mapping *map = req->map;
++		struct mport_dev *md = map->md;
++
++		mutex_lock(&md->buf_mutex);
++		req->map = NULL;
++		kref_put(&map->ref, mport_release_mapping);
++		mutex_unlock(&md->buf_mutex);
+ 	}
  
- 	uid.len = sprintf(uid.buf, "%u", from_kuid(&init_user_ns, fl->uid));
- 	gid.len = sprintf(gid.buf, "%u", from_kgid(&init_user_ns, fl->gid));
- 
--	/* 8 + len for recording the length, name, and padding */
--	ds_len = 20 + sizeof(stateid_opaque_t) + 4 + fh_len +
--		 8 + uid.len + 8 + gid.len;
-+	/* data server entry: deviceid + efficiency + stateid + fh list +
-+	 * user + group + flags + stats_collect_hint
-+	 */
-+	ds_len = 16 + 4 + 4 + sizeof(stateid_opaque_t) + 4 + fh_len +
-+		 4 + xdr_align_size(uid.len) +
-+		 4 + xdr_align_size(gid.len) +
-+		 4 + 4;
- 
-+	/* mirror: ds_count + ds */
- 	mirror_len = 4 + ds_len;
- 
--	/* The layout segment */
--	len = 20 + mirror_len;
-+	/* stripe_unit + mirror_count + mirror */
-+	len = 12 + mirror_len;
- 
- 	p = xdr_reserve_space(xdr, sizeof(__be32) + len);
- 	if (!p)
+ 	kref_put(&priv->dma_ref, mport_release_dma);
 
 
