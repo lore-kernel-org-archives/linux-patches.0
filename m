@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D5BA30C60F;
-	Sat, 12 Sep 2026 16:26:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E68D3750C9;
+	Sat, 12 Sep 2026 16:27:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789230416; cv=none; b=hCIBRnZmbgVv7hCbCGPjKj1QRdpqz+NfuRFri0KeEVti2KCKoN/WgTNkqWK+NzdsbuzGbBjvHKeU/xend/BCS8spVjCTd8J4wG/xOobEwISgmf6swf1oJTwceTYav069EQa4G+oYzILx67sHUDXpQSpFg0eFJOyeeHK3VwjGAmU=
+	t=1789230421; cv=none; b=Ap+lIDhHHuu4xZGwzeu1uEVa28aBTkP7cb9EptaLLVG/7+RGmda4lg/zkbVaLdFcWUOZgNXMPfNP/hrUlhneYjDSqXkZsn9pDnifxDYcapwU8PMQaQzYAwPJNULjM+HiM1urYvLIso4jhIV/8uB3pK/3yh/EULizNMK1HdVXuYw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789230416; c=relaxed/simple;
-	bh=WWN16anqv+HciWw0iLbsjC+G8QYGKQOOPjcYx0XIG78=;
+	s=arc-20240116; t=1789230421; c=relaxed/simple;
+	bh=UjNS2ZmwZt8q0O4WCMry1uc91wxVgbPrVJ8htBmwo+I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T+SyDQzlSGPpGIsWIe9/5zkTI7Djfgqe2AacZiTuAhnGbTcgVCcB09afEezR+KH2O5FIG404gpn6AXmLwTxJdNDJe6c20ZssqZ8+tJeY6rILZLNMtXN2hm5ixySq6w5+BbLl/ll2qwGsz1w24lu3GXBEMQo0BZiwd+lTz9ejxno=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=amxmxavY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pYLaywDLsCoTHzYxYenl4O4duWWxvucNrnyVGuLc/cHTfLaE6zpiYT9cjMIOap1aZcv/hP2V1yV5x+H3dWb4GzzOVC+K8F7Pe/c7IGMDI9Vbg0tildgZ0WviT8de15ithYOp3dWQ55eXfvvyNGdIYKQPm60+aBEufziv0UNDfWE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RUp+7TNZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="amxmxavY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 146D51F000FF;
-	Sat, 12 Sep 2026 16:26:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RUp+7TNZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F40291F000FF;
+	Sat, 12 Sep 2026 16:26:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789230415;
-	bh=dvGSO6oxXxrQ26dTsB1LAhj8njA19XeP1OxrhyUmtow=;
+	s=korg; t=1789230419;
+	bh=lZBkRElaDfZsNxyejmh4vSHdXytyfrBw41pEPRflQhU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=amxmxavYXa4uJJ6hx7nZF8+Xe+Sspf55jWycFNvbDkEKidfoLNN92AbDqOS6jStUq
-	 O79ZfLj4wF4YGq07gzU9KALd46fxQU56K8CLzgKXCevqDIvz9sLv6eoEPwTAokvou0
-	 nLQiVI/KYl7V+OBd7wXfE454KE9MXyvI2CvJb//Q=
+	b=RUp+7TNZCB6f8yeE9lwP8FSQO7zzfEg7kkX1ZlV+7WTTWSME1dfvJfPXW/vauvfBY
+	 sa5nja2LzYoI2850IULaHQGdreVMUd2UhDIqU5IhdD/R6R57vv45AQ18nqs/btttd2
+	 fCpL8fU66bQqR5ZR3pirMrJT2ayQThFG5u7dwVO4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ondrej Jirman <megi@xff.cz>,
-	Chen-Yu Tsai <wens@kernel.org>,
+	Hongyan Xu <getshell@seu.edu.cn>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0736/1191] arm64: dts: allwinner: sun50i-a64-pinephone: Fix mpu6050 mount matrix
-Date: Sat, 12 Sep 2026 08:57:44 +0200
-Message-ID: <20260912065604.812409605@linuxfoundation.org>
+Subject: [PATCH 6.1 0783/1191] power: supply: isp1704_charger: cancel work on remove
+Date: Sat, 12 Sep 2026 08:58:31 +0200
+Message-ID: <20260912065605.864521846@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -51,57 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ondrej Jirman <megi@xff.cz>
+From: Hongyan Xu <getshell@seu.edu.cn>
 
-[ Upstream commit dfc735fd93e4814e65894916ec5f807f25a391d1 ]
+[ Upstream commit 60c5b8a9ef4dbc5d69bbc1a960fe55826cb3b643 ]
 
-The current mount matrix for mpu6050 is wrong. The mount matrix is a
-simple transform from the sensor coordinate space to the device
-coordinate space described in DT, where, looking at the screen, X
-points to the right, Y to the top, and Z towards the user.
+The USB notifier and initial VBUS detection can schedule isp->work. The
+remove path unregisters the notifier and power supply, but does not wait
+for queued or running work before tearing down the power supply state.
 
-The mpu6050 is mounted like this (looking at the screen from the
-front; the sensor is on the near side of the PCB, so its Z axis
-points towards the user; o marks the pin 1 corner):
+Cancel the work after unregistering the notifier. Do this before
+unregistering the power supply.
 
-           +Xs
-            ^
-            |
-         +------+
-  +Ys <--|      |
-         | o    |
-         +------+
+This issue was found by a static analysis tool.
 
-so this gives:
-
-  Xd = -Ys  [0, -1, 0]
-  Yd =  Xs  [1, 0, 0]
-  Zd =  Zs  [0, 0, 1]
-
-Fixes: 2496b2aaacf1 ("arm64: dts: allwinner: pinephone: Add mount matrix to accelerometer")
-Signed-off-by: Ondrej Jirman <megi@xff.cz>
-Link: https://patch.msgid.link/20260725111909.2244868-1-megi@xff.cz
-Signed-off-by: Chen-Yu Tsai <wens@kernel.org>
+Signed-off-by: Hongyan Xu <getshell@seu.edu.cn>
+Link: https://patch.msgid.link/20260728123423.781-5-getshell@seu.edu.cn
+Fixes: ec46475f3e31 ("power_supply: Add isp1704 charger detection driver")
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/allwinner/sun50i-a64-pinephone.dtsi | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/power/supply/isp1704_charger.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm64/boot/dts/allwinner/sun50i-a64-pinephone.dtsi b/arch/arm64/boot/dts/allwinner/sun50i-a64-pinephone.dtsi
-index b0885a3899510..75116ae701f89 100644
---- a/arch/arm64/boot/dts/allwinner/sun50i-a64-pinephone.dtsi
-+++ b/arch/arm64/boot/dts/allwinner/sun50i-a64-pinephone.dtsi
-@@ -202,8 +202,8 @@ accelerometer@68 {
- 		interrupts = <7 5 IRQ_TYPE_EDGE_RISING>; /* PH5 */
- 		vdd-supply = <&reg_dldo1>;
- 		vddio-supply = <&reg_dldo1>;
--		mount-matrix = "0", "1", "0",
--			       "-1", "0", "0",
-+		mount-matrix = "0", "-1", "0",
-+			       "1", "0", "0",
- 			       "0", "0", "1";
- 	};
- };
+diff --git a/drivers/power/supply/isp1704_charger.c b/drivers/power/supply/isp1704_charger.c
+index b6efc454e4f02..2233dc9cefe08 100644
+--- a/drivers/power/supply/isp1704_charger.c
++++ b/drivers/power/supply/isp1704_charger.c
+@@ -482,6 +482,7 @@ static int isp1704_charger_remove(struct platform_device *pdev)
+ 	struct isp1704_charger *isp = platform_get_drvdata(pdev);
+ 
+ 	usb_unregister_notifier(isp->phy, &isp->nb);
++	cancel_work_sync(&isp->work);
+ 	power_supply_unregister(isp->psy);
+ 	isp1704_charger_set_power(isp, 0);
+ 
 -- 
 2.53.0
 
