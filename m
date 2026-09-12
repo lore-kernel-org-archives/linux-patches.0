@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D94A0415F36;
-	Sat, 12 Sep 2026 08:37:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62357415B9D;
+	Sat, 12 Sep 2026 08:37:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789202247; cv=none; b=Ud/GIUvJazrESfftpoIh54+g4C20K28nUUR58e/Q7cUtwtnCP4wyQTzO84cC9RJPcmePPlQwxkm+Ufl/gc4nyTtlvO7p/eFHDyAv4NUvkJ8WVgGUjazKetrMiCxk3X0iYz8m5SnRljg5z4iJTeZsb7t1yvbkgFM0IU1Qk82WsHI=
+	t=1789202251; cv=none; b=fX09bbrnoMsjRMCIfT7O3RzeF+YhwDwHL0ZfOZGkE5hCpi4fO5eI3a3/gu3PiXizahD73Q4Yril4kV+wdYqSkxSchldWhtTq48sPUV5JRDqF9JBAYXSRWhWqj3W/4yNyka+d+p0PLP7B/w6MuCll41f4jAc2myEZ0ENdUrD38dk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789202247; c=relaxed/simple;
-	bh=YXJABJJQh6lMfI/11pCI13e72welCQUawAmoWrfy/Jk=;
+	s=arc-20240116; t=1789202251; c=relaxed/simple;
+	bh=UEGSEJt63q3Dkz0jGIJju1y9p75f4zoEMhMxNyxNVCU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KQfqfh87OkSlwcCNB35ixAX/0RKFHuMhVh6XDsB4kbzMIPa9LK7a7oWS8QznQoR9woZHPdtq8ZjBRjMfRFIqTKBv1vXo7KpPJF+mFsPh+yCvP0af9lRDdnC17+uq10a2AqKIwIRiBC1kOveN6UVsG/8x9Ny/GRgYxZCmmMAillY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VZ1YUOjB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=q/Fr9Br4NHtiROyZfmC/APNzjxIAo2fjVM+wLnUCE+RgozbpfQzjbAx0u6LHxLHtCH+3rVjdNdxkR6Kg2eGVAKQUuhe2kucxyz0BLxjHmr/awdC3NYy4enSa+a10PYt2DP+n72xwW3/m4ey3P77EEVHM+BwW7b2DfDQyHLCnqQw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PR6joASf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VZ1YUOjB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFE9C1F000FF;
-	Sat, 12 Sep 2026 08:37:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PR6joASf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 341881F000FF;
+	Sat, 12 Sep 2026 08:37:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789202245;
-	bh=HGzkBgLPGvLzMyQrLHzYYUGZxpE2B67Y819L6YEuz54=;
+	s=korg; t=1789202250;
+	bh=RpqmAwkD/qc+6UZMkDX5H+rP7MF/g5sPHiccBYuDQKQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VZ1YUOjBvcCb6rk5FsnysuWqdO1k7O4OJuxm0Y6B9nv/iPz5WIs2Nh6yL5z8M1h98
-	 v2rEDTZS9hNCBG/HS2JUCGDQpu5CTizhYaxrAVCJR4GZeB5ZY6pR7B1RdMqQE1T65q
-	 0xhETQW0OjW3FYgljrMD5s45B9+4t+kw5Rblxra8=
+	b=PR6joASfelH38oJPVxmoz5yceJqBE2o1GR+aweEpbKWdp7cyjsSdnIMp0U2ArEVDe
+	 h+QoeT+xNVlfKQFGqGN+gHXBYLAUTjdTVVI0A+hI7JdjYcKLzwELYABe4i6A+l6mwd
+	 wOYaHidUdfEvou/fk4FbWGM3fbdD9RU4JI0phO5s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Meghana Malladi <m-malladi@ti.com>,
+	Vignesh Raghavendra <vigneshr@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1163/1815] ALSA: hda: cix-ipbloq: Avoid build with 32bit archs
-Date: Sat, 12 Sep 2026 08:48:33 +0200
-Message-ID: <20260912065716.317708161@linuxfoundation.org>
+Subject: [PATCH 7.2 1164/1815] arm64: dts: ti: k3-am64: Fix MDIO clock reference for ICSSG0 node
+Date: Sat, 12 Sep 2026 08:48:34 +0200
+Message-ID: <20260912065716.340627963@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,36 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Meghana Malladi <m-malladi@ti.com>
 
-[ Upstream commit 2a611c4a1cbcb179cd8079a7ccadee390dac66f6 ]
+[ Upstream commit 197df050a10fe216971b45a79f07195c86a02236 ]
 
-The cix-ipbloq driver has an assumption of 64bit DMA address, and
-building it for 32bit dma_addr_t leads to a sparse / compile warning.
-Simply disable the builds for 32bit archs for avoiding such reports.
+MDIO clock index changed from 62:3 to 81:0 to match proper clock
+definition in the SoC device tree. Clock Id 81:0 belongs to ICSSG0
+core clock, where as 62 belongs to EQEP2 device.
 
-Fixes: d91e9bd10125 ("ALSA: hda: add CIX IPBLOQ HDA controller support")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202608061559.Kxqvi5LZ-lkp@intel.com/
-Link: https://patch.msgid.link/20260806104431.1300304-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+See: https://software-dl.ti.com/tisci/esd/latest/5_soc_doc/am64x/clocks.html
+
+Fixes: c9087e3898a1d0 ("arm64: dts: ti: k3-am64-main: Add ICSSG nodes")
+Signed-off-by: Meghana Malladi <m-malladi@ti.com>
+Link: https://patch.msgid.link/20260706092229.82674-1-m-malladi@ti.com
+Signed-off-by: Vignesh Raghavendra <vigneshr@ti.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/hda/controllers/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/boot/dts/ti/k3-am64-main.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/hda/controllers/Kconfig b/sound/hda/controllers/Kconfig
-index 5d6a77e68588e..26ca69b09a9c3 100644
---- a/sound/hda/controllers/Kconfig
-+++ b/sound/hda/controllers/Kconfig
-@@ -33,6 +33,7 @@ config SND_HDA_TEGRA
- config SND_HDA_CIX_IPBLOQ
- 	tristate "CIX IPBLOQ HD Audio"
- 	depends on ARCH_CIX || COMPILE_TEST
-+	depends on ARCH_DMA_ADDR_T_64BIT
- 	select SND_HDA
- 	select SND_HDA_ALIGNED_MMIO
- 	help
+diff --git a/arch/arm64/boot/dts/ti/k3-am64-main.dtsi b/arch/arm64/boot/dts/ti/k3-am64-main.dtsi
+index 1b1d3970888b8..a9a83781d40f5 100644
+--- a/arch/arm64/boot/dts/ti/k3-am64-main.dtsi
++++ b/arch/arm64/boot/dts/ti/k3-am64-main.dtsi
+@@ -1401,7 +1401,7 @@ tx_pru0_1: txpru@c000 {
+ 		icssg0_mdio: mdio@32400 {
+ 			compatible = "ti,davinci_mdio";
+ 			reg = <0x32400 0x100>;
+-			clocks = <&k3_clks 62 3>;
++			clocks = <&k3_clks 81 0>;
+ 			clock-names = "fck";
+ 			#address-cells = <1>;
+ 			#size-cells = <0>;
 -- 
 2.53.0
 
