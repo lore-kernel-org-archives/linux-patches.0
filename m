@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C20B332EAE;
-	Sat, 12 Sep 2026 13:59:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93E6E32D7C7;
+	Sat, 12 Sep 2026 13:59:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789221568; cv=none; b=SV07gGKBZ6NPk6bsjcrMUMCW42Qxi4rC8PK/zCjQ1oA5pWAoikKWFoilB+914gE0/m0EfQq6iY+hSr33+AF3NrQwkDbCWpuCpCzSzZxR1nJM/QS/sFKxW/kvB3IIvBIVFyYHI8K2vwWIkCGiniLFJC5MwcMEw9am2b/d58GwGP4=
+	t=1789221573; cv=none; b=mo/LYRnfyPfuUBAlvplBk/QU4qO8HWRXK3p2oUea8mltDoHqz7PSRbOr1kXoCArUHwmgrpgNYRgXjSHVdFX09cikNwrYzFjVNlwYFGRUbJy6NOaQcBESoZifJY36IfC0JNZQwelkJqPXO87Og+pXUxS/gJZtZi/qV2R0EY8H3rs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789221568; c=relaxed/simple;
-	bh=5TRhUbtMSw6njuYd4mCk+oU9rz7czXtweWPgCV8K6ZM=;
+	s=arc-20240116; t=1789221573; c=relaxed/simple;
+	bh=7QuQIUmwyOeKgR/tMv63jDuwb36DyGf1rMWLrTA5luo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kQy16bCqyp4f5W4BZTBfQJTzx1dn0vjbsToo+m3PGQqxmsQ1G8nNMSPZyPYvpqzZ5hSOACNgKF6syOGKRcXZe3cTCxCdUgL0CPY71IaPgJ1nrh7uqIJSjFmbFRid3yDr9OP+upGolmivOHMwT8SCM3gEs+OhH1jg7m/NucM5MUQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nqaeAHPz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=B79Jkgki7emhIF8qjZh1rjDhYioolCWGHidCWCEnLJEQwMaSoyD2fJkQxfsJDXTNjgENhqtMrtf1moLRFzsatC6patl5LWcUorie+APH/I3hs5rfKacfg2WH/wxglAQRK5Nh7KvLerRLaubfkETs4ThXZLnfbVLS29ED5pMJzrE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HTRFlNep; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nqaeAHPz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 483211F000FF;
-	Sat, 12 Sep 2026 13:59:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HTRFlNep"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCD3F1F00893;
+	Sat, 12 Sep 2026 13:59:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789221564;
-	bh=CxFqBuw0TT1ZQwa0DEgCzaGUg5LcznXpBiMcUHfOQ9Q=;
+	s=korg; t=1789221568;
+	bh=+paDfIKtILUIe3Xn4r78b4P9hGdF4OIaZHBuppE1fnU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nqaeAHPzak5gng7+GHwjVuSYum97yQOXYz9GCV3sta0LJIzSEpCqz2l2r/+9gkoSI
-	 EyiY7DtuLk01Ykg7GxZgWmjmrr5xEASwrx+j9nLyHkLtty2+pKKCFtM+2+BTfDDkg+
-	 LE/cqIo23VSmB2NYdlhEcnuhRTsANbuqlflfFYnM=
+	b=HTRFlNepI5f5kKN0rPJpLj8EuUhYxnM+bKMQ5Nqs8cW8doYYXRzbwvx6Y+wopU7vn
+	 qwbcmJBOMGcK2EVcj04M8xiS+cBdAG0e5kFaqpnJnkJCKgVOFgXbu1/5I5wljiqI/Q
+	 52NKvkkeMC+BWJyFOw714NM6y6UnfeFpLuz9e1uM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.6 0409/1424] ASoC: cs35l34: drain threaded IRQ before runtime suspend
-Date: Sat, 12 Sep 2026 08:47:21 +0200
-Message-ID: <20260912065616.442567409@linuxfoundation.org>
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Linus Walleij <linusw@kernel.org>,
+	Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: [PATCH 6.6 0392/1424] mtd: afs: validate v2 image info bounds
+Date: Sat, 12 Sep 2026 08:47:04 +0200
+Message-ID: <20260912065616.067966113@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -50,86 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-commit 4105a4c0678b2808fc8046b60321b4f1cc7dae75 upstream.
+commit e9290031f736e99ad17c25c00311c92c266843b7 upstream.
 
-cs35l34_runtime_suspend() currently switches the codec into
-regcache_cache_only(true), asserts reset low, and powers the device off
-without first quiescing the threaded IRQ registered by
-devm_request_threaded_irq(). That leaves a window where
-cs35l34_irq_thread() can still run after suspend has removed live
-hardware access.
+The AFS v2 parser uses footer[8] to locate the image information block
+inside the current erase block, then uses the image information
+region_count to walk entries from a fixed local array. The footer offset
+and region count come from flash contents and are not checked against the
+erase block or the local image-info array before use.
 
-A running system can reach this during runtime PM while the driver still
-has critical fault IRQs unmasked. If the threaded handler runs in that
-window, it reads volatile INT_STATUS_1..4 after cache_only has been
-enabled, ignores the regmap_read() failures, and can still execute the
-PROT_RELEASE_CTL release sequence or the BST fault power-down writes.
+Reject v2 entries whose image information offset would underflow the
+erase block calculation, and reject region counts that cannot fit in the
+local image-info array before walking region entries.
 
-Use disable_irq() before entering cache_only/reset-low/power-off so any
-in-flight threaded handler is drained and no new IRQ thread can run
-while the device is suspended. Re-enable the IRQ only after
-runtime_resume() has restored live register access with regcache_sync().
-Since probe only logs request_threaded_irq() failures and keeps going,
-track whether the IRQ was actually installed before disabling or
-re-enabling it.
-
-Fixes: c1124c09e103 ("ASoC: cs35l34: Initial commit of the cs35l34 CODEC driver.")
+Fixes: b7cf5e2830bb ("mtd: afs: add v2 partition parsing")
 Cc: stable@vger.kernel.org
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Link: https://patch.msgid.link/20260611161553.3378721-3-runyu.xiao@seu.edu.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Acked-by: Linus Walleij <linusw@kernel.org>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/codecs/cs35l34.c |   14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ drivers/mtd/parsers/afs.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/sound/soc/codecs/cs35l34.c
-+++ b/sound/soc/codecs/cs35l34.c
-@@ -45,6 +45,7 @@ struct  cs35l34_private {
- 	int num_core_supplies;
- 	int mclk_int;
- 	bool tdm_mode;
-+	bool irq_requested;
- 	struct gpio_desc *reset_gpio;	/* Active-low reset GPIO */
- };
+--- a/drivers/mtd/parsers/afs.c
++++ b/drivers/mtd/parsers/afs.c
+@@ -235,6 +235,9 @@ static int afs_parse_v2_partition(struct
+ 	pr_debug("Parsing v2 partition @%08x-%08x\n",
+ 		 off, off + mtd->erasesize);
  
-@@ -1053,10 +1054,12 @@ static int cs35l34_i2c_probe(struct i2c_
- 	}
- 
- 	ret = devm_request_threaded_irq(&i2c_client->dev, i2c_client->irq, NULL,
--			cs35l34_irq_thread, IRQF_ONESHOT | IRQF_TRIGGER_LOW,
--			"cs35l34", cs35l34);
-+				cs35l34_irq_thread, IRQF_ONESHOT | IRQF_TRIGGER_LOW,
-+				"cs35l34", cs35l34);
- 	if (ret != 0)
- 		dev_err(&i2c_client->dev, "Failed to request IRQ: %d\n", ret);
-+	else
-+		cs35l34->irq_requested = true;
- 
- 	cs35l34->reset_gpio = devm_gpiod_get_optional(&i2c_client->dev,
- 				"reset", GPIOD_OUT_LOW);
-@@ -1161,6 +1164,9 @@ static int __maybe_unused cs35l34_runtim
- 		dev_err(dev, "Failed to restore register cache\n");
- 		goto err;
- 	}
++	if (mtd->erasesize < sizeof(footer))
++		return -EINVAL;
 +
-+	if (cs35l34->irq_requested)
-+		enable_irq(to_i2c_client(dev)->irq);
- 	return 0;
- err:
- 	regcache_cache_only(cs35l34->regmap, true);
-@@ -1174,6 +1180,10 @@ static int __maybe_unused cs35l34_runtim
- {
- 	struct cs35l34_private *cs35l34 = dev_get_drvdata(dev);
+ 	/* First read the footer */
+ 	ptr = off + mtd->erasesize - sizeof(footer);
+ 	ret = mtd_read(mtd, ptr, sizeof(footer), &sz, (u_char *)footer);
+@@ -245,6 +248,8 @@ static int afs_parse_v2_partition(struct
+ 	}
+ 	name = (char *) &footer[0];
+ 	version = footer[9];
++	if (footer[8] > mtd->erasesize - sizeof(footer))
++		return -EINVAL;
+ 	ptr = off + mtd->erasesize - sizeof(footer) - footer[8];
  
-+	/* Drain and block the threaded IRQ before cache_only/power-off. */
-+	if (cs35l34->irq_requested)
-+		disable_irq(to_i2c_client(dev)->irq);
-+
- 	regcache_cache_only(cs35l34->regmap, true);
- 	regcache_mark_dirty(cs35l34->regmap);
+ 	pr_debug("found image \"%s\", version %08x, info @%08x\n",
+@@ -278,6 +283,8 @@ static int afs_parse_v2_partition(struct
+ 	entrypoint = imginfo[pad];
+ 	attributes = imginfo[pad+1];
+ 	region_count = imginfo[pad+2];
++	if (region_count > (ARRAY_SIZE(imginfo) - pad - 3) / 4)
++		return -EINVAL;
+ 	block_start = imginfo[20];
+ 	block_end = imginfo[21];
  
 
 
