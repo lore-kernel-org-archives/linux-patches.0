@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F20547CA7A;
-	Sat, 12 Sep 2026 16:17:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F27CE30C60F;
+	Sat, 12 Sep 2026 16:17:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789229858; cv=none; b=oI230GnSYUzEbT7yM/tW0yHHwMhr+5Q15MYF+/HOtg5R0kmT0OEJtiMVhy0dElOnR2N/07tH4tMiORVhmnc/IJ8/y14tRf8Bolod4QdJUVBkqoaxDU/h/QXOkUnAt/mPeczMcCnBalwTYIQUxqnTplx0RuvJ7KALRnIRjnMBGOY=
+	t=1789229858; cv=none; b=ucjgizPMbvK4vB8bjvcTkNoE4vIAJu1j+p/iizQbiheMU5QfoPMED37x7/jWRm1xWZXoROk5H5x92t9+HLHh543FJ7DoOJAzEl2tWF62PmqzXx0eqQLmmF1AvXs1DsiCt0WN3IAISycDqUfcgQ05aUPwWxDYBAmLFLFZDxwtvPU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1789229858; c=relaxed/simple;
-	bh=YkPcfYfQBXVNF9vQOGan/y7LwIF7EezxX50A9uHCST8=;
+	bh=l5QuSA5Dll/Dmbhy2DesAXhkqfS+Xccim6Ua1RegJuQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dnZS8tYULa5L8J6MMv5mfoz07Md+5vO3DciHuCM/8gR66uC3xC2d7wK6/I27Fsc0h0+rf/ux8uhb9JQoIT0hidAYO004/hGTRnZe/zMk2ZvEiY6KKcbwPFS3McVfiISABLWTOAPr1ZoTbkrAuYBKTTjwiuw73qA1BsoePLbqBzs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z617dvkh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gI66d6AtijtzoUTJSl11itJFS5kmIL3Rz24UnAYlxlPETDoCQ38pqa9lMCI2lHomO25sUUsVLSFsWwRm6pDwxvY0D1NsrxPxRnnJ+Eb4qGdtZJcF/ym6QsIvzDfRcIj1nTyiRLZ2/SdQ4y7UBSce+B7knEAOSZgy5BoTLAfKHmk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L6+WO3xV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z617dvkh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2237D1F0092B;
-	Sat, 12 Sep 2026 16:17:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L6+WO3xV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DD381F0089C;
+	Sat, 12 Sep 2026 16:17:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789229850;
-	bh=5DMFkPWTHQGS7jHCwJYRpXHDjKKrwIW2tC/hKzj6qdc=;
+	s=korg; t=1789229855;
+	bh=viTMpdbxIX+wb91q4eh0b5gHdIvRix69aHhlq/YgjWk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Z617dvkhXI4lKR+xM2BVW2yHwz45ldSC/2OBGmsqp30XrYGRYgA4Yupby2+VRCYQC
-	 h86v8PqjN08/oyocTQri3t8dtdSn5ezgTTjPUxNizRnoWD6TDZxL/U98OsSINwyiKn
-	 n4f0J5gzqkg3BU+Smgr6vdgqTvZY84mmnyEI//c4=
+	b=L6+WO3xVg21U7mz11GxSuzUaGqaYgtq6bMdmVeN/ybl26fuX5Po0EBZqk+Y6Y/ty0
+	 xszzh6WqQ+CzBX4E7ISTuX4LNDSyfAbzTojUrvdwl/eBQHuGoG2eO3+q9oNlHwjqHY
+	 UyR+XdTLA2exCeIa/seJb8/NjM314DJVNL2UTPGM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sven Schnelle <svens@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Niklas Schnelle <schnelle@linux.ibm.com>,
+	Zhu Ling <zhuling2709@phytium.com.cn>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0647/1191] s390/3270: unify con3270 + tty3270
-Date: Sat, 12 Sep 2026 08:56:15 +0200
-Message-ID: <20260912065602.787008359@linuxfoundation.org>
+Subject: [PATCH 6.1 0674/1191] ACPI: EC: Avoid _REG disconnect on GPIO IRQ defer
+Date: Sat, 12 Sep 2026 08:56:42 +0200
+Message-ID: <20260912065603.396604465@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -52,1073 +51,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Schnelle <svens@linux.ibm.com>
+From: Zhu Ling <zhuling2709@phytium.com.cn>
 
-[ Upstream commit c17fe081ac1f397feaed6c8a279ebb3f647f359a ]
+[ Upstream commit e71bdbce27dcaa7f467a3a198cbe723924f05569 ]
 
-There were two flavours of 3270 drivers: con3270, which provides a
-console driver, and tty3270 providing a tty driver. A user could switch
-with PF3 between the two views. While this sounds nice, it's a bit
-annoying: If the user enters a command which triggers a kernel message,
-he always has to switch back and forth to see the message. Unify both
-views to have kernel messages and tty in one screen, like it is on almost
-all other platforms. This also has the nice side effect of removing a lot
-of duplicate code.
+EC event delivery uses either a GPE or, on ACPI reduced hardware
+platforms, a GpioInt resource.  The GPE path does not have a provider
+lookup that can defer, but acpi_dev_gpio_irq_get() can return
+-EPROBE_DEFER for the GpioInt path.
 
-Signed-off-by: Sven Schnelle <svens@linux.ibm.com>
-Acked-by: Heiko Carstens <hca@linux.ibm.com>
-Tested-by: Niklas Schnelle <schnelle@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Stable-dep-of: b6b5d64cb161 ("ipack: ipoctal: fix UAF, null-ptr-deref, and use-after-free in cleanup on remove")
+ec_install_handlers() currently installs the EC address space handler and
+executes _REG before looking up the GPIO IRQ.  If the GPIO lookup then
+defers, acpi_ec_setup() tears the handlers down again.  Removing the EC
+address space handler causes ACPICA to execute _REG for disconnect, so
+firmware may observe an EC OpRegion connected -> disconnected transition
+during one failed probe attempt.
+
+This is observable when the namespace EC reuses a boot EC that has already
+installed the EC address space handler.  A deferred namespace EC probe can
+disconnect the already usable boot EC OpRegion until a later reprobe
+connects it again.  AML that gates EC field accesses on _REG state can
+then return fallback values to other drivers during that window.
+
+Prepare the GPIOInt IRQ before publishing EC OpRegion availability to AML.
+This leaves the GPE path unchanged, keeps non-deferred GPIO lookup errors
+non-fatal as before, and still lets the existing acpi_ec_setup() error
+path clean up real handler installation failures.
+
+Fixes: f6484cadbcaf ("ACPI: EC: clean up handlers on probe failure in acpi_ec_setup()")
+Signed-off-by: Zhu Ling <zhuling2709@phytium.com.cn>
+[ rjw: Added an empty code line after a conditional ]
+Link: https://patch.msgid.link/20260715012556.12043-1-zhuling2709@phytium.com.cn
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/char/Makefile  |   1 -
- drivers/s390/char/con3270.c | 651 ------------------------------------
- drivers/s390/char/tty3270.c | 181 ++++++++--
- drivers/s390/char/tty3270.h |  15 -
- 4 files changed, 158 insertions(+), 690 deletions(-)
- delete mode 100644 drivers/s390/char/con3270.c
- delete mode 100644 drivers/s390/char/tty3270.h
+ drivers/acpi/ec.c | 40 ++++++++++++++++++++++++++--------------
+ 1 file changed, 26 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/s390/char/Makefile b/drivers/s390/char/Makefile
-index ce32270082f59..e3bcbbb98b9fa 100644
---- a/drivers/s390/char/Makefile
-+++ b/drivers/s390/char/Makefile
-@@ -22,7 +22,6 @@ obj-y += ctrlchar.o keyboard.o defkeymap.o sclp.o sclp_rw.o sclp_quiesce.o \
- 	 sclp_early.o sclp_early_core.o sclp_sd.o
- 
- obj-$(CONFIG_TN3270) += raw3270.o
--obj-$(CONFIG_TN3270_CONSOLE) += con3270.o
- obj-$(CONFIG_TN3270_TTY) += tty3270.o
- obj-$(CONFIG_TN3270_FS) += fs3270.o
- 
-diff --git a/drivers/s390/char/con3270.c b/drivers/s390/char/con3270.c
-deleted file mode 100644
-index 10f6a37fb1531..0000000000000
---- a/drivers/s390/char/con3270.c
-+++ /dev/null
-@@ -1,651 +0,0 @@
--// SPDX-License-Identifier: GPL-2.0
--/*
-- * IBM/3270 Driver - console view.
-- *
-- * Author(s):
-- *   Original 3270 Code for 2.4 written by Richard Hitt (UTS Global)
-- *   Rewritten for 2.5 by Martin Schwidefsky <schwidefsky@de.ibm.com>
-- *     Copyright IBM Corp. 2003, 2009
-- */
--
--#include <linux/module.h>
--#include <linux/console.h>
--#include <linux/init.h>
--#include <linux/interrupt.h>
--#include <linux/list.h>
--#include <linux/panic_notifier.h>
--#include <linux/types.h>
--#include <linux/slab.h>
--#include <linux/err.h>
--#include <linux/reboot.h>
--
--#include <asm/ccwdev.h>
--#include <asm/cio.h>
--#include <asm/cpcmd.h>
--#include <asm/ebcdic.h>
--
--#include "raw3270.h"
--#include "tty3270.h"
--#include "ctrlchar.h"
--
--#define CON3270_OUTPUT_BUFFER_SIZE 1024
--#define CON3270_STRING_PAGES 4
--
--static struct raw3270_fn con3270_fn;
--
--static bool auto_update = true;
--module_param(auto_update, bool, 0);
--
--/*
-- * Main 3270 console view data structure.
-- */
--struct con3270 {
--	struct raw3270_view view;
--	struct list_head freemem;	/* list of free memory for strings. */
--
--	/* Output stuff. */
--	struct list_head lines;		/* list of lines. */
--	struct list_head update;	/* list of lines to update. */
--	int line_nr;			/* line number for next update. */
--	int nr_lines;			/* # lines in list. */
--	int nr_up;			/* # lines up in history. */
--	unsigned long update_flags;	/* Update indication bits. */
--	struct string *cline;		/* current output line. */
--	struct string *status;		/* last line of display. */
--	struct raw3270_request *write;	/* single write request. */
--	struct timer_list timer;
--
--	/* Input stuff. */
--	struct string *input;		/* input string for read request. */
--	struct raw3270_request *read;	/* single read request. */
--	struct raw3270_request *kreset;	/* single keyboard reset request. */
--	struct tasklet_struct readlet;	/* tasklet to issue read request. */
--};
--
--static struct con3270 *condev;
--
--/* con3270->update_flags. See con3270_update for details. */
--#define CON_UPDATE_ERASE	1	/* Use EWRITEA instead of WRITE. */
--#define CON_UPDATE_LIST		2	/* Update lines in tty3270->update. */
--#define CON_UPDATE_STATUS	4	/* Update status line. */
--#define CON_UPDATE_ALL		8	/* Recreate screen. */
--
--static void con3270_update(struct timer_list *);
--
--/*
-- * Setup timeout for a device. On timeout trigger an update.
-- */
--static void con3270_set_timer(struct con3270 *cp, int expires)
--{
--	if (expires == 0)
--		del_timer(&cp->timer);
--	else
--		mod_timer(&cp->timer, jiffies + expires);
--}
--
--/*
-- * The status line is the last line of the screen. It shows the string
-- * "console view" in the lower left corner and "Running"/"More..."/"Holding"
-- * in the lower right corner of the screen.
-- */
--static void
--con3270_update_status(struct con3270 *cp)
--{
--	char *str;
--
--	str = (cp->nr_up != 0) ? "History" : "Running";
--	memcpy(cp->status->string + 24, str, 7);
--	codepage_convert(cp->view.ascebc, cp->status->string + 24, 7);
--	cp->update_flags |= CON_UPDATE_STATUS;
--}
--
--static void
--con3270_create_status(struct con3270 *cp)
--{
--	static const unsigned char blueprint[] =
--		{ TO_SBA, 0, 0, TO_SF,TF_LOG,TO_SA,TAT_COLOR, TAC_GREEN,
--		  'c','o','n','s','o','l','e',' ','v','i','e','w',
--		  TO_RA,0,0,0,'R','u','n','n','i','n','g',TO_SF,TF_LOG };
--
--	cp->status = alloc_string(&cp->freemem, sizeof(blueprint));
--	/* Copy blueprint to status line */
--	memcpy(cp->status->string, blueprint, sizeof(blueprint));
--	/* Set TO_RA addresses. */
--	raw3270_buffer_address(cp->view.dev, cp->status->string + 1,
--			       cp->view.cols * (cp->view.rows - 1));
--	raw3270_buffer_address(cp->view.dev, cp->status->string + 21,
--			       cp->view.cols * cp->view.rows - 8);
--	/* Convert strings to ebcdic. */
--	codepage_convert(cp->view.ascebc, cp->status->string + 8, 12);
--	codepage_convert(cp->view.ascebc, cp->status->string + 24, 7);
--}
--
--/*
-- * Set output offsets to 3270 datastream fragment of a console string.
-- */
--static void
--con3270_update_string(struct con3270 *cp, struct string *s, int nr)
--{
--	if (s->len < 4) {
--		/* This indicates a bug, but printing a warning would
--		 * cause a deadlock. */
--		return;
--	}
--	if (s->string[s->len - 4] != TO_RA)
--		return;
--	raw3270_buffer_address(cp->view.dev, s->string + s->len - 3,
--			       cp->view.cols * (nr + 1));
--}
--
--/*
-- * Rebuild update list to print all lines.
-- */
--static void
--con3270_rebuild_update(struct con3270 *cp)
--{
--	struct string *s, *n;
--	int nr;
--
--	/* 
--	 * Throw away update list and create a new one,
--	 * containing all lines that will fit on the screen.
--	 */
--	list_for_each_entry_safe(s, n, &cp->update, update)
--		list_del_init(&s->update);
--	nr = cp->view.rows - 2 + cp->nr_up;
--	list_for_each_entry_reverse(s, &cp->lines, list) {
--		if (nr < cp->view.rows - 1)
--			list_add(&s->update, &cp->update);
--		if (--nr < 0)
--			break;
--	}
--	cp->line_nr = 0;
--	cp->update_flags |= CON_UPDATE_LIST;
--}
--
--/*
-- * Alloc string for size bytes. Free strings from history if necessary.
-- */
--static struct string *
--con3270_alloc_string(struct con3270 *cp, size_t size)
--{
--	struct string *s, *n;
--
--	s = alloc_string(&cp->freemem, size);
--	if (s)
--		return s;
--	list_for_each_entry_safe(s, n, &cp->lines, list) {
--		list_del(&s->list);
--		if (!list_empty(&s->update))
--			list_del(&s->update);
--		cp->nr_lines--;
--		if (free_string(&cp->freemem, s) >= size)
--			break;
--	}
--	s = alloc_string(&cp->freemem, size);
--	BUG_ON(!s);
--	if (cp->nr_up != 0 && cp->nr_up + cp->view.rows > cp->nr_lines) {
--		cp->nr_up = cp->nr_lines - cp->view.rows + 1;
--		con3270_rebuild_update(cp);
--		con3270_update_status(cp);
--	}
--	return s;
--}
--
--/*
-- * Write completion callback.
-- */
--static void
--con3270_write_callback(struct raw3270_request *rq, void *data)
--{
--	raw3270_request_reset(rq);
--	xchg(&((struct con3270 *) rq->view)->write, rq);
--}
--
--/*
-- * Update console display.
-- */
--static void
--con3270_update(struct timer_list *t)
--{
--	struct con3270 *cp = from_timer(cp, t, timer);
--	struct raw3270_request *wrq;
--	char wcc, prolog[6];
--	unsigned long flags;
--	unsigned long updated;
--	struct string *s, *n;
--	int rc;
--
--	if (!auto_update && !raw3270_view_active(&cp->view))
--		return;
--	if (cp->view.dev)
--		raw3270_activate_view(&cp->view);
--
--	wrq = xchg(&cp->write, 0);
--	if (!wrq) {
--		con3270_set_timer(cp, 1);
--		return;
--	}
--
--	spin_lock_irqsave(&cp->view.lock, flags);
--	updated = 0;
--	if (cp->update_flags & CON_UPDATE_ALL) {
--		con3270_rebuild_update(cp);
--		con3270_update_status(cp);
--		cp->update_flags = CON_UPDATE_ERASE | CON_UPDATE_LIST |
--			CON_UPDATE_STATUS;
--	}
--	if (cp->update_flags & CON_UPDATE_ERASE) {
--		/* Use erase write alternate to initialize display. */
--		raw3270_request_set_cmd(wrq, TC_EWRITEA);
--		updated |= CON_UPDATE_ERASE;
--	} else
--		raw3270_request_set_cmd(wrq, TC_WRITE);
--
--	wcc = TW_NONE;
--	raw3270_request_add_data(wrq, &wcc, 1);
--
--	/*
--	 * Update status line.
--	 */
--	if (cp->update_flags & CON_UPDATE_STATUS)
--		if (raw3270_request_add_data(wrq, cp->status->string,
--					     cp->status->len) == 0)
--			updated |= CON_UPDATE_STATUS;
--
--	if (cp->update_flags & CON_UPDATE_LIST) {
--		prolog[0] = TO_SBA;
--		prolog[3] = TO_SA;
--		prolog[4] = TAT_COLOR;
--		prolog[5] = TAC_TURQ;
--		raw3270_buffer_address(cp->view.dev, prolog + 1,
--				       cp->view.cols * cp->line_nr);
--		raw3270_request_add_data(wrq, prolog, 6);
--		/* Write strings in the update list to the screen. */
--		list_for_each_entry_safe(s, n, &cp->update, update) {
--			if (s != cp->cline)
--				con3270_update_string(cp, s, cp->line_nr);
--			if (raw3270_request_add_data(wrq, s->string,
--						     s->len) != 0)
--				break;
--			list_del_init(&s->update);
--			if (s != cp->cline)
--				cp->line_nr++;
--		}
--		if (list_empty(&cp->update))
--			updated |= CON_UPDATE_LIST;
--	}
--	wrq->callback = con3270_write_callback;
--	rc = raw3270_start(&cp->view, wrq);
--	if (rc == 0) {
--		cp->update_flags &= ~updated;
--		if (cp->update_flags)
--			con3270_set_timer(cp, 1);
--	} else {
--		raw3270_request_reset(wrq);
--		xchg(&cp->write, wrq);
--	}
--	spin_unlock_irqrestore(&cp->view.lock, flags);
--}
--
--/*
-- * Read tasklet.
-- */
--static void
--con3270_read_tasklet(unsigned long data)
--{
--	static char kreset_data = TW_KR;
--	struct raw3270_request *rrq;
--	struct con3270 *cp;
--	unsigned long flags;
--	int nr_up, deactivate;
--
--	rrq = (struct raw3270_request *)data;
--	cp = (struct con3270 *) rrq->view;
--	spin_lock_irqsave(&cp->view.lock, flags);
--	nr_up = cp->nr_up;
--	deactivate = 0;
--	/* Check aid byte. */
--	switch (cp->input->string[0]) {
--	case 0x7d:	/* enter: jump to bottom. */
--		nr_up = 0;
--		break;
--	case 0xf3:	/* PF3: deactivate the console view. */
--		deactivate = 1;
--		break;
--	case 0x6d:	/* clear: start from scratch. */
--		cp->update_flags = CON_UPDATE_ALL;
--		con3270_set_timer(cp, 1);
--		break;
--	case 0xf7:	/* PF7: do a page up in the console log. */
--		nr_up += cp->view.rows - 2;
--		if (nr_up + cp->view.rows - 1 > cp->nr_lines) {
--			nr_up = cp->nr_lines - cp->view.rows + 1;
--			if (nr_up < 0)
--				nr_up = 0;
--		}
--		break;
--	case 0xf8:	/* PF8: do a page down in the console log. */
--		nr_up -= cp->view.rows - 2;
--		if (nr_up < 0)
--			nr_up = 0;
--		break;
--	}
--	if (nr_up != cp->nr_up) {
--		cp->nr_up = nr_up;
--		con3270_rebuild_update(cp);
--		con3270_update_status(cp);
--		con3270_set_timer(cp, 1);
--	}
--	spin_unlock_irqrestore(&cp->view.lock, flags);
--
--	/* Start keyboard reset command. */
--	raw3270_request_reset(cp->kreset);
--	raw3270_request_set_cmd(cp->kreset, TC_WRITE);
--	raw3270_request_add_data(cp->kreset, &kreset_data, 1);
--	raw3270_start(&cp->view, cp->kreset);
--
--	if (deactivate)
--		raw3270_deactivate_view(&cp->view);
--
--	raw3270_request_reset(rrq);
--	xchg(&cp->read, rrq);
--	raw3270_put_view(&cp->view);
--}
--
--/*
-- * Read request completion callback.
-- */
--static void
--con3270_read_callback(struct raw3270_request *rq, void *data)
--{
--	raw3270_get_view(rq->view);
--	/* Schedule tasklet to pass input to tty. */
--	tasklet_schedule(&((struct con3270 *) rq->view)->readlet);
--}
--
--/*
-- * Issue a read request. Called only from interrupt function.
-- */
--static void
--con3270_issue_read(struct con3270 *cp)
--{
--	struct raw3270_request *rrq;
--	int rc;
--
--	rrq = xchg(&cp->read, 0);
--	if (!rrq)
--		/* Read already scheduled. */
--		return;
--	rrq->callback = con3270_read_callback;
--	rrq->callback_data = cp;
--	raw3270_request_set_cmd(rrq, TC_READMOD);
--	raw3270_request_set_data(rrq, cp->input->string, cp->input->len);
--	/* Issue the read modified request. */
--	rc = raw3270_start_irq(&cp->view, rrq);
--	if (rc)
--		raw3270_request_reset(rrq);
--}
--
--/*
-- * Switch to the console view.
-- */
--static int
--con3270_activate(struct raw3270_view *view)
--{
--	struct con3270 *cp;
--
--	cp = (struct con3270 *) view;
--	cp->update_flags = CON_UPDATE_ALL;
--	con3270_set_timer(cp, 1);
--	return 0;
--}
--
--static void
--con3270_deactivate(struct raw3270_view *view)
--{
--	struct con3270 *cp;
--
--	cp = (struct con3270 *) view;
--	del_timer(&cp->timer);
--}
--
--static void
--con3270_irq(struct con3270 *cp, struct raw3270_request *rq, struct irb *irb)
--{
--	/* Handle ATTN. Schedule tasklet to read aid. */
--	if (irb->scsw.cmd.dstat & DEV_STAT_ATTENTION)
--		con3270_issue_read(cp);
--
--	if (rq) {
--		if (irb->scsw.cmd.dstat & DEV_STAT_UNIT_CHECK)
--			rq->rc = -EIO;
--		else
--			/* Normal end. Copy residual count. */
--			rq->rescnt = irb->scsw.cmd.count;
--	} else if (irb->scsw.cmd.dstat & DEV_STAT_DEV_END) {
--		/* Interrupt without an outstanding request -> update all */
--		cp->update_flags = CON_UPDATE_ALL;
--		con3270_set_timer(cp, 1);
--	}
--}
--
--/* Console view to a 3270 device. */
--static struct raw3270_fn con3270_fn = {
--	.activate = con3270_activate,
--	.deactivate = con3270_deactivate,
--	.intv = (void *) con3270_irq
--};
--
--static inline void
--con3270_cline_add(struct con3270 *cp)
--{
--	if (!list_empty(&cp->cline->list))
--		/* Already added. */
--		return;
--	list_add_tail(&cp->cline->list, &cp->lines);
--	cp->nr_lines++;
--	con3270_rebuild_update(cp);
--}
--
--static inline void
--con3270_cline_insert(struct con3270 *cp, unsigned char c)
--{
--	cp->cline->string[cp->cline->len++] = 
--		cp->view.ascebc[(c < ' ') ? ' ' : c];
--	if (list_empty(&cp->cline->update)) {
--		list_add_tail(&cp->cline->update, &cp->update);
--		cp->update_flags |= CON_UPDATE_LIST;
--	}
--}
--
--static inline void
--con3270_cline_end(struct con3270 *cp)
--{
--	struct string *s;
--	unsigned int size;
--
--	/* Copy cline. */
--	size = (cp->cline->len < cp->view.cols - 5) ?
--		cp->cline->len + 4 : cp->view.cols;
--	s = con3270_alloc_string(cp, size);
--	memcpy(s->string, cp->cline->string, cp->cline->len);
--	if (cp->cline->len < cp->view.cols - 5) {
--		s->string[s->len - 4] = TO_RA;
--		s->string[s->len - 1] = 0;
--	} else {
--		while (--size >= cp->cline->len)
--			s->string[size] = cp->view.ascebc[' '];
--	}
--	/* Replace cline with allocated line s and reset cline. */
--	list_add(&s->list, &cp->cline->list);
--	list_del_init(&cp->cline->list);
--	if (!list_empty(&cp->cline->update)) {
--		list_add(&s->update, &cp->cline->update);
--		list_del_init(&cp->cline->update);
--	}
--	cp->cline->len = 0;
--}
--
--/*
-- * Write a string to the 3270 console
-- */
--static void
--con3270_write(struct console *co, const char *str, unsigned int count)
--{
--	struct con3270 *cp;
--	unsigned long flags;
--	unsigned char c;
--
--	cp = condev;
--	spin_lock_irqsave(&cp->view.lock, flags);
--	while (count-- > 0) {
--		c = *str++;
--		if (cp->cline->len == 0)
--			con3270_cline_add(cp);
--		if (c != '\n')
--			con3270_cline_insert(cp, c);
--		if (c == '\n' || cp->cline->len >= cp->view.cols)
--			con3270_cline_end(cp);
--	}
--	/* Setup timer to output current console buffer after 1/10 second */
--	cp->nr_up = 0;
--	if (cp->view.dev && !timer_pending(&cp->timer))
--		con3270_set_timer(cp, HZ/10);
--	spin_unlock_irqrestore(&cp->view.lock,flags);
--}
--
--static struct tty_driver *
--con3270_device(struct console *c, int *index)
--{
--	*index = c->index;
--	return tty3270_driver;
--}
--
--/*
-- * Wait for end of write request.
-- */
--static void
--con3270_wait_write(struct con3270 *cp)
--{
--	while (!cp->write) {
--		raw3270_wait_cons_dev(cp->view.dev);
--		barrier();
--	}
--}
--
--/*
-- * The below function is called as a panic/reboot notifier before the
-- * system enters a disabled, endless loop.
-- *
-- * Notice we must use the spin_trylock() alternative, to prevent lockups
-- * in atomic context (panic routine runs with secondary CPUs, local IRQs
-- * and preemption disabled).
-- */
--static int con3270_notify(struct notifier_block *self,
--			  unsigned long event, void *data)
--{
--	struct con3270 *cp;
--	unsigned long flags;
--
--	cp = condev;
--	if (!cp->view.dev)
--		return NOTIFY_DONE;
--	if (!raw3270_view_lock_unavailable(&cp->view))
--		raw3270_activate_view(&cp->view);
--	if (!spin_trylock_irqsave(&cp->view.lock, flags))
--		return NOTIFY_DONE;
--	con3270_wait_write(cp);
--	cp->nr_up = 0;
--	con3270_rebuild_update(cp);
--	con3270_update_status(cp);
--	while (cp->update_flags != 0) {
--		spin_unlock_irqrestore(&cp->view.lock, flags);
--		con3270_update(&cp->timer);
--		spin_lock_irqsave(&cp->view.lock, flags);
--		con3270_wait_write(cp);
--	}
--	spin_unlock_irqrestore(&cp->view.lock, flags);
--
--	return NOTIFY_DONE;
--}
--
--static struct notifier_block on_panic_nb = {
--	.notifier_call = con3270_notify,
--	.priority = INT_MIN + 1, /* run the callback late */
--};
--
--static struct notifier_block on_reboot_nb = {
--	.notifier_call = con3270_notify,
--	.priority = INT_MIN + 1, /* run the callback late */
--};
--
--/*
-- *  The console structure for the 3270 console
-- */
--static struct console con3270 = {
--	.name	 = "tty3270",
--	.write	 = con3270_write,
--	.device	 = con3270_device,
--	.flags	 = CON_PRINTBUFFER,
--};
--
--/*
-- * 3270 console initialization code called from console_init().
-- */
--static int __init
--con3270_init(void)
--{
--	struct raw3270 *rp;
--	void *cbuf;
--	int i;
--
--	/* Check if 3270 is to be the console */
--	if (!CONSOLE_IS_3270)
--		return -ENODEV;
--
--	/* Set the console mode for VM */
--	if (MACHINE_IS_VM) {
--		cpcmd("TERM CONMODE 3270", NULL, 0, NULL);
--		cpcmd("TERM AUTOCR OFF", NULL, 0, NULL);
--	}
--
--	rp = raw3270_setup_console();
--	if (IS_ERR(rp))
--		return PTR_ERR(rp);
--
--	condev = kzalloc(sizeof(struct con3270), GFP_KERNEL | GFP_DMA);
--	if (!condev)
--		return -ENOMEM;
--	condev->view.dev = rp;
--
--	condev->read = raw3270_request_alloc(0);
--	condev->read->callback = con3270_read_callback;
--	condev->read->callback_data = condev;
--	condev->write = raw3270_request_alloc(CON3270_OUTPUT_BUFFER_SIZE);
--	condev->kreset = raw3270_request_alloc(1);
--
--	INIT_LIST_HEAD(&condev->lines);
--	INIT_LIST_HEAD(&condev->update);
--	timer_setup(&condev->timer, con3270_update, 0);
--	tasklet_init(&condev->readlet, con3270_read_tasklet,
--		     (unsigned long) condev->read);
--
--	raw3270_add_view(&condev->view, &con3270_fn, 1, RAW3270_VIEW_LOCK_IRQ);
--
--	INIT_LIST_HEAD(&condev->freemem);
--	for (i = 0; i < CON3270_STRING_PAGES; i++) {
--		cbuf = (void *) get_zeroed_page(GFP_KERNEL | GFP_DMA);
--		add_string_memory(&condev->freemem, cbuf, PAGE_SIZE);
--	}
--	condev->cline = alloc_string(&condev->freemem, condev->view.cols);
--	condev->cline->len = 0;
--	con3270_create_status(condev);
--	condev->input = alloc_string(&condev->freemem, 80);
--	atomic_notifier_chain_register(&panic_notifier_list, &on_panic_nb);
--	register_reboot_notifier(&on_reboot_nb);
--	register_console(&con3270);
--	return 0;
--}
--
--console_initcall(con3270_init);
-diff --git a/drivers/s390/char/tty3270.c b/drivers/s390/char/tty3270.c
-index 3ea5df58b64bd..1932077e96500 100644
---- a/drivers/s390/char/tty3270.c
-+++ b/drivers/s390/char/tty3270.c
-@@ -17,7 +17,8 @@
- #include <linux/console.h>
- #include <linux/interrupt.h>
- #include <linux/workqueue.h>
--
-+#include <linux/panic_notifier.h>
-+#include <linux/reboot.h>
- #include <linux/slab.h>
- #include <linux/memblock.h>
- #include <linux/compat.h>
-@@ -25,19 +26,19 @@
- #include <asm/ccwdev.h>
- #include <asm/cio.h>
- #include <asm/ebcdic.h>
-+#include <asm/cpcmd.h>
- #include <linux/uaccess.h>
- 
- #include "raw3270.h"
--#include "tty3270.h"
- #include "keyboard.h"
- 
- #define TTY3270_CHAR_BUF_SIZE 256
- #define TTY3270_OUTPUT_BUFFER_SIZE 1024
- #define TTY3270_STRING_PAGES 5
- 
--struct tty_driver *tty3270_driver;
-+static struct tty_driver *tty3270_driver;
- static int tty3270_max_index;
--
-+static struct tty3270 *condev;
- static struct raw3270_fn tty3270_fn;
- 
- struct tty3270_cell {
-@@ -378,7 +379,7 @@ tty3270_update(struct timer_list *t)
- 		return;
- 	}
- 
--	spin_lock(&tp->view.lock);
-+	spin_lock_irq(&tp->view.lock);
- 	updated = 0;
- 	if (tp->update_flags & TTY_UPDATE_ALL) {
- 		tty3270_rebuild_update(tp);
-@@ -449,7 +450,7 @@ tty3270_update(struct timer_list *t)
- 		raw3270_request_reset(wrq);
- 		xchg(&tp->write, wrq);
- 	}
--	spin_unlock(&tp->view.lock);
-+	spin_unlock_irq(&tp->view.lock);
+diff --git a/drivers/acpi/ec.c b/drivers/acpi/ec.c
+index d00fd26c274f2..f25fe2b073e3d 100644
+--- a/drivers/acpi/ec.c
++++ b/drivers/acpi/ec.c
+@@ -1492,6 +1492,24 @@ static bool install_gpio_irq_event_handler(struct acpi_ec *ec)
+ 			   "ACPI EC", ec) >= 0;
  }
  
- /*
-@@ -481,7 +482,7 @@ tty3270_rcl_backward(struct kbd_data *kbd)
- 	struct tty3270 *tp = container_of(kbd->port, struct tty3270, port);
- 	struct string *s;
- 
--	spin_lock_bh(&tp->view.lock);
-+	spin_lock_irq(&tp->view.lock);
- 	if (tp->inattr == TF_INPUT) {
- 		if (tp->rcl_walk && tp->rcl_walk->prev != &tp->rcl_lines)
- 			tp->rcl_walk = tp->rcl_walk->prev;
-@@ -496,7 +497,7 @@ tty3270_rcl_backward(struct kbd_data *kbd)
- 			tty3270_update_prompt(tp, NULL, 0);
- 		tty3270_set_timer(tp, 1);
- 	}
--	spin_unlock_bh(&tp->view.lock);
-+	spin_unlock_irq(&tp->view.lock);
- }
- 
- /*
-@@ -519,7 +520,7 @@ tty3270_scroll_forward(struct kbd_data *kbd)
- 	struct tty3270 *tp = container_of(kbd->port, struct tty3270, port);
- 	int nr_up;
- 
--	spin_lock_bh(&tp->view.lock);
-+	spin_lock_irq(&tp->view.lock);
- 	nr_up = tp->nr_up - tp->view.rows + 2;
- 	if (nr_up < 0)
- 		nr_up = 0;
-@@ -529,7 +530,7 @@ tty3270_scroll_forward(struct kbd_data *kbd)
- 		tty3270_update_status(tp);
- 		tty3270_set_timer(tp, 1);
- 	}
--	spin_unlock_bh(&tp->view.lock);
-+	spin_unlock_irq(&tp->view.lock);
- }
- 
- /*
-@@ -541,7 +542,7 @@ tty3270_scroll_backward(struct kbd_data *kbd)
- 	struct tty3270 *tp = container_of(kbd->port, struct tty3270, port);
- 	int nr_up;
- 
--	spin_lock_bh(&tp->view.lock);
-+	spin_lock_irq(&tp->view.lock);
- 	nr_up = tp->nr_up + tp->view.rows - 2;
- 	if (nr_up + tp->view.rows - 2 > tp->nr_lines)
- 		nr_up = tp->nr_lines - tp->view.rows + 2;
-@@ -551,7 +552,7 @@ tty3270_scroll_backward(struct kbd_data *kbd)
- 		tty3270_update_status(tp);
- 		tty3270_set_timer(tp, 1);
- 	}
--	spin_unlock_bh(&tp->view.lock);
-+	spin_unlock_irq(&tp->view.lock);
- }
- 
- /*
-@@ -566,7 +567,7 @@ tty3270_read_tasklet(unsigned long data)
- 	char *input;
- 	int len;
- 
--	spin_lock_bh(&tp->view.lock);
-+	spin_lock_irq(&tp->view.lock);
- 	/*
- 	 * Two AID keys are special: For 0x7d (enter) the input line
- 	 * has to be emitted to the tty and for 0x6d the screen
-@@ -593,7 +594,7 @@ tty3270_read_tasklet(unsigned long data)
- 		tp->update_flags = TTY_UPDATE_ALL;
- 		tty3270_set_timer(tp, 1);
- 	}
--	spin_unlock_bh(&tp->view.lock);
-+	spin_unlock_irq(&tp->view.lock);
- 
- 	/* Start keyboard reset command. */
- 	raw3270_request_reset(tp->kreset);
-@@ -857,7 +858,7 @@ static void tty3270_resize_work(struct work_struct *work)
- 	if (IS_ERR(screen))
- 		return;
- 	/* Switch to new output size */
--	spin_lock_bh(&tp->view.lock);
-+	spin_lock_irq(&tp->view.lock);
- 	tty3270_blank_screen(tp);
- 	oscreen = tp->screen;
- 	orows = tp->view.rows;
-@@ -872,7 +873,7 @@ static void tty3270_resize_work(struct work_struct *work)
- 	while (tp->nr_lines < tp->view.rows - 2)
- 		tty3270_blank_line(tp);
- 	tp->update_flags = TTY_UPDATE_ALL;
--	spin_unlock_bh(&tp->view.lock);
-+	spin_unlock_irq(&tp->view.lock);
- 	tty3270_free_screen(oscreen, orows);
- 	tty3270_set_timer(tp, 1);
- 	/* Informat tty layer about new size */
-@@ -969,7 +970,7 @@ tty3270_create_view(int index, struct tty3270 **newtp)
- 
- 	rc = raw3270_add_view(&tp->view, &tty3270_fn,
- 			      index + RAW3270_FIRSTMINOR,
--			      RAW3270_VIEW_LOCK_BH);
-+			      RAW3270_VIEW_LOCK_IRQ);
- 	if (rc) {
- 		tty3270_free_view(tp);
- 		return rc;
-@@ -1648,7 +1649,7 @@ tty3270_do_write(struct tty3270 *tp, struct tty_struct *tty,
- {
- 	int i_msg, i;
- 
--	spin_lock_bh(&tp->view.lock);
-+	spin_lock_irq(&tp->view.lock);
- 	for (i_msg = 0; !tty->flow.stopped && i_msg < count; i_msg++) {
- 		if (tp->esc_state != 0) {
- 			/* Continue escape sequence. */
-@@ -1710,7 +1711,7 @@ tty3270_do_write(struct tty3270 *tp, struct tty_struct *tty,
- 	if (!timer_pending(&tp->timer))
- 		tty3270_set_timer(tp, HZ/10);
- 
--	spin_unlock_bh(&tp->view.lock);
-+	spin_unlock_irq(&tp->view.lock);
- }
- 
- /*
-@@ -1777,7 +1778,7 @@ tty3270_set_termios(struct tty_struct *tty, const struct ktermios *old)
- 	tp = tty->driver_data;
- 	if (!tp)
- 		return;
--	spin_lock_bh(&tp->view.lock);
-+	spin_lock_irq(&tp->view.lock);
- 	if (L_ICANON(tty)) {
- 		new = L_ECHO(tty) ? TF_INPUT: TF_INPUTN;
- 		if (new != tp->inattr) {
-@@ -1786,7 +1787,7 @@ tty3270_set_termios(struct tty_struct *tty, const struct ktermios *old)
- 			tty3270_set_timer(tp, 1);
- 		}
- 	}
--	spin_unlock_bh(&tp->view.lock);
-+	spin_unlock_irq(&tp->view.lock);
- }
- 
- /*
-@@ -1830,7 +1831,7 @@ tty3270_hangup(struct tty_struct *tty)
- 	tp = tty->driver_data;
- 	if (!tp)
- 		return;
--	spin_lock_bh(&tp->view.lock);
-+	spin_lock_irq(&tp->view.lock);
- 	tp->cx = tp->saved_cx = 0;
- 	tp->cy = tp->saved_cy = 0;
- 	tp->highlight = tp->saved_highlight = TAX_RESET;
-@@ -1839,7 +1840,7 @@ tty3270_hangup(struct tty_struct *tty)
- 	while (tp->nr_lines < tp->view.rows - 2)
- 		tty3270_blank_line(tp);
- 	tp->update_flags = TTY_UPDATE_ALL;
--	spin_unlock_bh(&tp->view.lock);
-+	spin_unlock_irq(&tp->view.lock);
- 	tty3270_set_timer(tp, 1);
- }
- 
-@@ -1965,6 +1966,140 @@ tty3270_exit(void)
- 	tty3270_del_views();
- }
- 
-+#if IS_ENABLED(CONFIG_TN3270_CONSOLE)
-+static void
-+con3270_write(struct console *co, const char *str, unsigned int count)
++static int ec_prepare_gpio_irq(struct acpi_ec *ec, struct acpi_device *device)
 +{
-+	struct tty3270 *tp = co->data;
-+	unsigned long flags;
-+	char c;
++	int irq;
 +
-+	spin_lock_irqsave(&tp->view.lock, flags);
-+	while (count--) {
-+		c = *str++;
-+		if (c == 0x0a) {
-+			tty3270_cr(tp);
-+			tty3270_lf(tp);
-+		} else {
-+			if (tp->cx >= tp->view.cols) {
-+				tty3270_cr(tp);
-+				tty3270_lf(tp);
-+			}
-+			tty3270_put_character(tp, c);
-+			tp->cx++;
-+		}
-+	}
-+	spin_unlock_irqrestore(&tp->view.lock, flags);
-+}
++	if (!device || ec->gpe >= 0 || ec->irq >= 0)
++		return 0;
 +
-+static struct tty_driver *
-+con3270_device(struct console *c, int *index)
-+{
-+	*index = c->index;
-+	return tty3270_driver;
-+}
++	/* ACPI reduced hardware platforms use a GpioInt from _CRS. */
++	irq = acpi_dev_gpio_irq_get(device, 0);
++	if (irq == -EPROBE_DEFER)
++		return irq;
 +
-+static void
-+con3270_wait_write(struct tty3270 *tp)
-+{
-+	while (!tp->write) {
-+		raw3270_wait_cons_dev(tp->view.dev);
-+		barrier();
-+	}
-+}
++	if (irq >= 0)
++		ec->irq = irq;
 +
-+/*
-+ * The below function is called as a panic/reboot notifier before the
-+ * system enters a disabled, endless loop.
-+ *
-+ * Notice we must use the spin_trylock() alternative, to prevent lockups
-+ * in atomic context (panic routine runs with secondary CPUs, local IRQs
-+ * and preemption disabled).
-+ */
-+static int con3270_notify(struct notifier_block *self,
-+			  unsigned long event, void *data)
-+{
-+	struct tty3270 *tp;
-+	unsigned long flags;
-+
-+	tp = condev;
-+	if (!tp->view.dev)
-+		return NOTIFY_DONE;
-+	if (!raw3270_view_lock_unavailable(&tp->view))
-+		raw3270_activate_view(&tp->view);
-+	if (!spin_trylock_irqsave(&tp->view.lock, flags))
-+		return NOTIFY_DONE;
-+	con3270_wait_write(tp);
-+	tp->nr_up = 0;
-+	while (tp->update_flags != 0) {
-+		spin_unlock_irqrestore(&tp->view.lock, flags);
-+		tty3270_update(&tp->timer);
-+		spin_lock_irqsave(&tp->view.lock, flags);
-+		con3270_wait_write(tp);
-+	}
-+	spin_unlock_irqrestore(&tp->view.lock, flags);
-+	return NOTIFY_DONE;
-+}
-+
-+static struct notifier_block on_panic_nb = {
-+	.notifier_call = con3270_notify,
-+	.priority = INT_MIN + 1, /* run the callback late */
-+};
-+
-+static struct notifier_block on_reboot_nb = {
-+	.notifier_call = con3270_notify,
-+	.priority = INT_MIN + 1, /* run the callback late */
-+};
-+
-+static struct console con3270 = {
-+	.name	 = "tty3270",
-+	.write	 = con3270_write,
-+	.device	 = con3270_device,
-+	.flags	 = CON_PRINTBUFFER,
-+};
-+
-+static int __init
-+con3270_init(void)
-+{
-+	struct raw3270_view *view;
-+	struct raw3270 *rp;
-+	struct tty3270 *tp;
-+	int rc;
-+
-+	/* Check if 3270 is to be the console */
-+	if (!CONSOLE_IS_3270)
-+		return -ENODEV;
-+
-+	/* Set the console mode for VM */
-+	if (MACHINE_IS_VM) {
-+		cpcmd("TERM CONMODE 3270", NULL, 0, NULL);
-+		cpcmd("TERM AUTOCR OFF", NULL, 0, NULL);
-+	}
-+
-+	rp = raw3270_setup_console();
-+	if (IS_ERR(rp))
-+		return PTR_ERR(rp);
-+
-+	/* Check if the tty3270 is already there. */
-+	view = raw3270_find_view(&tty3270_fn, RAW3270_FIRSTMINOR);
-+	if (IS_ERR(view)) {
-+		rc = tty3270_create_view(0, &tp);
-+		if (rc)
-+			return rc;
-+	} else {
-+		tp = container_of(view, struct tty3270, view);
-+		tp->inattr = TF_INPUT;
-+	}
-+	con3270.data = tp;
-+	condev = tp;
-+	atomic_notifier_chain_register(&panic_notifier_list, &on_panic_nb);
-+	register_reboot_notifier(&on_reboot_nb);
-+	register_console(&con3270);
 +	return 0;
 +}
-+console_initcall(con3270_init);
-+#endif
 +
- MODULE_LICENSE("GPL");
- MODULE_ALIAS_CHARDEV_MAJOR(IBM_TTY3270_MAJOR);
+ /**
+  * ec_install_handlers - Install service callbacks and register query methods.
+  * @ec: Target EC.
+@@ -1506,7 +1524,6 @@ static bool install_gpio_irq_event_handler(struct acpi_ec *ec)
+  * Return:
+  * -ENODEV if the address space handler cannot be installed, which means
+  *  "unable to handle transactions",
+- * -EPROBE_DEFER if GPIO IRQ acquisition needs to be deferred,
+  * or 0 (success) otherwise.
+  */
+ static int ec_install_handlers(struct acpi_ec *ec, struct acpi_device *device,
+@@ -1539,19 +1556,6 @@ static int ec_install_handlers(struct acpi_ec *ec, struct acpi_device *device,
+ 	if (!device)
+ 		return 0;
  
-diff --git a/drivers/s390/char/tty3270.h b/drivers/s390/char/tty3270.h
-deleted file mode 100644
-index 52ceed6f84088..0000000000000
---- a/drivers/s390/char/tty3270.h
-+++ /dev/null
-@@ -1,15 +0,0 @@
--/* SPDX-License-Identifier: GPL-2.0 */
--/*
-- *    Copyright IBM Corp. 2007
-- *
-- */
+-	if (ec->gpe < 0) {
+-		/* ACPI reduced hardware platforms use a GpioInt from _CRS. */
+-		int irq = acpi_dev_gpio_irq_get(device, 0);
+-		/*
+-		 * Bail out right away for deferred probing or complete the
+-		 * initialization regardless of any other errors.
+-		 */
+-		if (irq == -EPROBE_DEFER)
+-			return -EPROBE_DEFER;
+-		else if (irq >= 0)
+-			ec->irq = irq;
+-	}
 -
--#ifndef __DRIVERS_S390_CHAR_TTY3270_H
--#define __DRIVERS_S390_CHAR_TTY3270_H
--
--#include <linux/tty.h>
--#include <linux/tty_driver.h>
--
--extern struct tty_driver *tty3270_driver;
--
--#endif /* __DRIVERS_S390_CHAR_TTY3270_H */
+ 	if (!test_bit(EC_FLAGS_QUERY_METHODS_INSTALLED, &ec->flags)) {
+ 		/* Find and register all query methods */
+ 		acpi_walk_namespace(ACPI_TYPE_METHOD, ec->handle, 1,
+@@ -1629,6 +1633,14 @@ static int acpi_ec_setup(struct acpi_ec *ec, struct acpi_device *device, bool ca
+ {
+ 	int ret;
+ 
++	/*
++	 * GPIO IRQ lookup can defer.  Do it before publishing the EC
++	 * OpRegion to AML to avoid a spurious _REG(disconnect).
++	 */
++	ret = ec_prepare_gpio_irq(ec, device);
++	if (ret)
++		return ret;
++
+ 	/* First EC capable of handling transactions */
+ 	if (!first_ec)
+ 		first_ec = ec;
 -- 
 2.53.0
 
