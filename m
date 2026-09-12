@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F423A2F7F17;
-	Sat, 12 Sep 2026 16:09:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DED872594BD;
+	Sat, 12 Sep 2026 16:09:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789229351; cv=none; b=BY0ZniZ5p5O+vMq8TBt1q1QXJsJoM7l1DF1vnvT8p1UrpClzZ+dAbvI1eD2oaIHIxjrHOxDHJgqAfQyC4Chs0Txh9KPcWUSKI1ADbreVdEmxbDghQNUareBw8l1l5i3StV3ABhr4MtjcL/qZ8lJc+CIDyKIelBMfWw5IBOG2H+8=
+	t=1789229356; cv=none; b=VeHu3/pac+1rK+xQNrNSSBE6iaV+mmkoUmmmZLY9AEhxJAxZMTmn/djWYvSCexbdPHlF4kqCfOVphG2Db4AgCMxq5Ln9QX8/7CGgu0L75M5TLAo+HydN+G7Exmbr2vR7URiIa3aHZ3F9VYfXHI5dWi6VoSsJFoypw5T/akANA0M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789229351; c=relaxed/simple;
-	bh=JT+UtGIu/t4t6TkvkqjKIJDjiI9/Mru02THVRvk82qk=;
+	s=arc-20240116; t=1789229356; c=relaxed/simple;
+	bh=Sy1zKfGSg9xzDutEa6nBLk0lkigKpyC0zmkjYhImWjQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=LvhlEoOLmcPxKAY6TiH+vNLoP+HXq0bBBhFgjS5xIbWfKKQmfcc7xCFHNDbaUcCYM+EIaLnqrM+5BN9TPrISmDtUYCxCyyRZFQKDhh9ozHEtWp9SIUEqB7KvEseVJtDHXWKwgAWOTpqr1p5IXz4+x1OCbos/cDiBi4T9upXf3mM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LNfPwNP8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=EItLvtG0PnxWWaJJjZrdWWXpYspPjQeoAFEnC38OFFwSg/FHMX/E2txXV8jmzmCsCDriOf3tWPS1ZbLwe5XXX8LgW7+jD6LeqWwwl+F5urZqdrxEo4BowvN7nqAiFmy28rqWGy/gz1FtTRQ7yyecPZ6yj5JJ2DDK5Qc723WpTtM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ITnnHQYG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LNfPwNP8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD33C1F000FF;
-	Sat, 12 Sep 2026 16:09:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ITnnHQYG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E32C51F000FF;
+	Sat, 12 Sep 2026 16:09:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789229349;
-	bh=yXnDF7mGlkL4ElDpruQ6NW8kzk44p8ogJADzDSBDTrA=;
+	s=korg; t=1789229354;
+	bh=z8CbqrsnPpfHRbw7U6zEa9NSNbaSfwblhWBdBbkzyh0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LNfPwNP8dnoAeJFQYMHut/vyUT/BvwCYaFmCLLij0By8JP7+yLIgdQpmggRAUJC//
-	 +Uqv+lerSrs6DNmj4D8xmm3Pi9HTVYpkLsDYTvYJofuFCvXe3JvmskLXfemAdFgQul
-	 matQxvlS0vpDOoKDs6tHea8mW9L4RYAImV1n7wpM=
+	b=ITnnHQYG5TK1chQTKBpNpfp/gYg16KSnOBfRcrFzbyadrlD+4a2430juiS7NzDHDM
+	 1SOx7Wh2r61FbMIHkpIwfiiFTECgr7HTDgbEpv/9BUqncJkzqZdvJ2TVNavrXMaVl0
+	 86/HMd1At1bNsksfEzH8p6gfiPsJcCl5DZTD2G8I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
-	=?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Armin Wolf <W_Armin@gmx.de>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0555/1191] thermal/drivers/rcar_gen3_thermal: Do not call set_trips() when resuming
-Date: Sat, 12 Sep 2026 08:54:43 +0200
-Message-ID: <20260912065600.709597090@linuxfoundation.org>
+Subject: [PATCH 6.1 0573/1191] platform/x86: dell-wmi-base: Fix resource leak on module load failure
+Date: Sat, 12 Sep 2026 08:55:01 +0200
+Message-ID: <20260912065601.116817442@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -53,42 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
+From: Armin Wolf <W_Armin@gmx.de>
 
-[ Upstream commit 1c63f8cd018db726e6cddcbb5abd069fab0e9cea ]
+[ Upstream commit 072841e02cf9c00a7e8a9c567a14239e02ca47ad ]
 
-There is no need to explicitly call set_trips() when resuming from
-suspend. The thermal framework calls thermal_zone_device_update() that
-restores the trip points.
+We need to properly clean up the SMBIOS request and the privacy driver
+when the module load fails.
 
-Suggested-by: Daniel Lezcano <daniel.lezcano@linaro.org>
-Signed-off-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
-Link: https://lore.kernel.org/r/20230208190333.3159879-2-niklas.soderlund+renesas@ragnatech.se
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Stable-dep-of: dd04ad1cdabc ("thermal/drivers/rcar: Fix error checking in probe()")
+Fixes: 8af9fa37b8a3 ("platform/x86: dell-privacy: Add support for Dell hardware privacy")
+Signed-off-by: Armin Wolf <W_Armin@gmx.de>
+Link: https://patch.msgid.link/20260612173451.467629-3-W_Armin@gmx.de
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/rcar_gen3_thermal.c | 4 ----
- 1 file changed, 4 deletions(-)
+ drivers/platform/x86/dell/dell-wmi-base.c | 17 +++++++++++++++--
+ 1 file changed, 15 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/thermal/rcar_gen3_thermal.c b/drivers/thermal/rcar_gen3_thermal.c
-index 4c1c6f89aa2fb..5a715a58f18b2 100644
---- a/drivers/thermal/rcar_gen3_thermal.c
-+++ b/drivers/thermal/rcar_gen3_thermal.c
-@@ -556,12 +556,8 @@ static int __maybe_unused rcar_gen3_thermal_resume(struct device *dev)
+diff --git a/drivers/platform/x86/dell/dell-wmi-base.c b/drivers/platform/x86/dell/dell-wmi-base.c
+index 01f3ff21c8884..713ec2c12a04e 100644
+--- a/drivers/platform/x86/dell/dell-wmi-base.c
++++ b/drivers/platform/x86/dell/dell-wmi-base.c
+@@ -839,9 +839,22 @@ static int __init dell_wmi_init(void)
  
- 	for (i = 0; i < priv->num_tscs; i++) {
- 		struct rcar_gen3_thermal_tsc *tsc = priv->tscs[i];
--		struct thermal_zone_device *zone = tsc->zone;
+ 	err = dell_privacy_register_driver();
+ 	if (err)
+-		return err;
++		goto out_smbios;
  
- 		priv->thermal_init(tsc);
--		if (zone->ops->set_trips)
--			rcar_gen3_thermal_set_trips(zone, zone->prev_low_trip,
--						    zone->prev_high_trip);
- 	}
+-	return wmi_driver_register(&dell_wmi_driver);
++	err = wmi_driver_register(&dell_wmi_driver);
++	if (err)
++		goto out_privacy;
++
++	return 0;
++
++out_privacy:
++	dell_privacy_unregister_driver();
++
++out_smbios:
++	if (wmi_requires_smbios_request)
++		dell_wmi_events_set_enabled(false);
++
++	return err;
+ }
+ late_initcall(dell_wmi_init);
  
- 	return 0;
 -- 
 2.53.0
 
