@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BB7632B125;
-	Sat, 12 Sep 2026 17:11:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EB8047CA72;
+	Sat, 12 Sep 2026 17:11:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789233075; cv=none; b=a3INj8Lu1e3svFbKBaSi3egnkkZDmtAIDT9s2mv7Ix2VGvb7UfhEfoAXJqHzCXI7elZPfT3Yk2qxvrD/yVBziiW390NHw3X9c9xK4bk/UV/8k4p6JODJ1YRAxQbPUTZrjFHd7FAVSK6huGhehlKEgdSK04hd5fTP8CNQRTmg48k=
+	t=1789233080; cv=none; b=mzR4Jn4s4N+eZMfEQKMgM4lJNGRkTi8YJy6Uo/rQgQ6rwCfzrD+9Ed001571ix4kTFmoDpxtbtGf6uGGuBUzhSjhfk35dLjKUF11231G4MbiilofepNHdyflYONzpc+3ScH4RuYGloMzaiI8JxKiK7p6jCAPs7fXkKonowU/X5c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789233075; c=relaxed/simple;
-	bh=sIA/Z31s01/PPkWpARrXEZdIpPf9PZQYT36Jk71tjTI=;
+	s=arc-20240116; t=1789233080; c=relaxed/simple;
+	bh=gVFHx8iLOiw+WSzyo0AvXT8c5ryjVzu8sRk1yvqAmPc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VfzJac0kgeho356JxwtC5bUNmuDM7ujeXmme1gCofbHwCkZzShdwZsV2ZkuSNy8gbpe+XszmraFVib+hSc+W/Q13uBIJ7SrCPJeK0pGdkWiV41Sywf/8199apa9VZZJbtpn1JMmAJjMXnZElHhDr1BcgOzMucVQvARoTUTqpB3A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D2D6PK6H; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Lk3hjcm248S8uLdTb7+Fk1lwQv4fnZipRDF5GO7lt/WHPZrdQd175JurU9C6h6Yy/wdPM+epkUtK4lDHWIytBhrkIlKtuNcuWvfsIcTZryEtNqlmaKiC4iNUsHmEltcxpjr9qPRyTGnZCyR9OHZEjwUCNQPqiYfZ9/l4kH+9Y44=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wzin702r; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D2D6PK6H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C5611F000FF;
-	Sat, 12 Sep 2026 17:11:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wzin702r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 214D31F000FF;
+	Sat, 12 Sep 2026 17:11:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789233074;
-	bh=HXZU284i0lKhRBQOHai3CAnZF31aS5qeqvt13eOgEbk=;
+	s=korg; t=1789233079;
+	bh=7ZK4A6VlArLGnfCVzjKSq7cF6jbBltpQEDxkRbBNgak=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D2D6PK6H+Kx+nfTXU3od8nPG3v/LODeTD+xRFl0yeDNSZzawmj6KR4yAE1ZEoP/Ny
-	 Cun60nV12EQnFGBgOZ4GI3pxcSF0a7+LqitRAQsScpEowx+qiRbfvC+Il03pLVxrsy
-	 Wq5U9/vAFoI1iaaycMMkWkH2+lbb1Y80iN4zNAvM=
+	b=wzin702r4t9fEmADbrBD7+gJJzWE0H8FCU7Esrs8d7fzTY8n/JF1FcMmVTI+7KUOo
+	 Z8aGhe/aVlMF/kOYhBCPGpD7/F9jQC8fdmvhDIOWuwStbmeBHkKZKlSvNGqUyJW84s
+	 W7urJLjlCgPLOMQ5bJrNeVCAHNyhrpjQMUJVbEPo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Norbert Szetei <norbert@doyensec.com>,
-	Jason Gunthorpe <jgg@nvidia.com>
-Subject: [PATCH 5.15 123/935] RDMA/ucma: Lock the handler in ucma_set_ib_path()
-Date: Sat, 12 Sep 2026 08:52:33 +0200
-Message-ID: <20260912065529.644626815@linuxfoundation.org>
+	Maurizio Lombardi <mlombard@redhat.com>,
+	Laurence Oberman <loberman@redhat.com>,
+	Justin Tee <justin.tee@broadcom.com>,
+	"Ewan D. Milne" <emilne@redhat.com>,
+	Keith Busch <kbusch@kernel.org>
+Subject: [PATCH 5.15 141/935] nvme: nvme-fc: Fix nvme_fc_create_hw_io_queues() queue deletion in error path
+Date: Sat, 12 Sep 2026 08:52:51 +0200
+Message-ID: <20260912065530.056005658@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -50,71 +53,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Norbert Szetei <norbert@doyensec.com>
+From: Ewan D. Milne <emilne@redhat.com>
 
-commit ecbe7d36dc2de07e5dfbb4a8ff5b315ab43de820 upstream.
+commit 22eb631bf86ee3246f47885e4fa94154a46863e4 upstream.
 
-ucma_set_ib_path() calls ucma_event_handler() straight from the write()
-path, without the handler lock that keeps ctx->file stable while a uevent
-is queued.  The handler re-reads ctx->file for every dereference:
+nvme_fc_create_hw_io_queues() will call __nvme_fc_delete_hw_queue() for the
+last queue on which __nvme_fc_create_hw_queue() reported an error when deleting
+all the io queues if they cannot all be created.  This is incorrect since the
+last queue did not actually get created.
 
-	mutex_lock(&ctx->file->mut);			/* file A */
-	list_add_tail(&uevent->list, &ctx->file->event_list);	/* file B */
-	mutex_unlock(&ctx->file->mut);			/* file B */
-	wake_up_interruptible(&ctx->file->poll_wait);	/* file B */
+The most recent change to this code was commit 17a1ec08ce70 ("nvme/fc: simplify
+error handling of nvme_fc_create_hw_io_queues") which moved the cleanup to the
+delete_queues: label and changed the loop bounds, however the code was not
+correct prior to this change in a different way.  The original commit
+e399441de911 ("nvme-fabrics: Add host support for FC transport") had a
+different error which called __nvme_fc_delete_hw_queue() on queue index 0 which
+is used for the admin queue.
 
-A concurrent ucma_migrate_id() reassigns ctx->file while the SET_OPTION
-caller sleeps in mutex_lock(), so the list_add_tail() lands on file B's
-event_list while only file A's mutex is held, racing every other user of
-that list:
+Fix this by correcting the initial loop index when deleting the io queues.
 
-  BUG: KASAN: slab-use-after-free in __list_add_valid_or_report+0x1aa/0x1c0
-  Read of size 8 at addr ffff888153c6a418 by task poc_corr/486
-  Call Trace:
-   __list_add_valid_or_report+0x1aa/0x1c0
-   ucma_event_handler+0x1be/0xc00
-   ucma_set_ib_path+0x45e/0x710
-   ucma_set_option+0x32e/0x590
-   ucma_write+0x1f9/0x330
-  Allocated by task 505:
-   ucma_write_cm_event+0x1a1/0x660
-  Freed by task 505:
-   kfree+0x1da/0x4c0
-   ucma_get_event+0x5d5/0x7e0
-
-The freed object is a ucma_event that another thread dequeued from file B's
-list under file B's mutex.  File A's mut is left held on top of that,
-wedging its next writer in uninterruptible sleep.
-
-This path needs a bound and address-resolved cm_id, so it requires an RDMA
-device to be present.
-
-Take the handler lock around the call.
-
-Fixes: 09e328e47a69 ("RDMA/ucma: Fix the locking of ctx->file")
-Link: https://patch.msgid.link/r/2823D190-92D5-4714-8769-4FB643C64FF3@doyensec.com
+Fixes: 17a1ec08ce70 ("nvme/fc: simplify error handling of nvme_fc_create_hw_io_queues")
+Fixes: e399441de911 ("nvme-fabrics: Add host support for FC transport")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-5
-Signed-off-by: Norbert Szetei <norbert@doyensec.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Assisted-by: Claude:claude-opus-4-6
+Reviewed-by: Maurizio Lombardi <mlombard@redhat.com>
+Reviewed-by: Laurence Oberman <loberman@redhat.com>
+Reviewed-by: Justin Tee <justin.tee@broadcom.com>
+Signed-off-by: Ewan D. Milne <emilne@redhat.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/core/ucma.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/nvme/host/fc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/infiniband/core/ucma.c
-+++ b/drivers/infiniband/core/ucma.c
-@@ -1336,7 +1336,10 @@ static int ucma_set_ib_path(struct ucma_
+--- a/drivers/nvme/host/fc.c
++++ b/drivers/nvme/host/fc.c
+@@ -2326,7 +2326,7 @@ nvme_fc_create_hw_io_queues(struct nvme_
+ 	return 0;
  
- 	memset(&event, 0, sizeof event);
- 	event.event = RDMA_CM_EVENT_ROUTE_RESOLVED;
--	return ucma_event_handler(ctx->cm_id, &event);
-+	rdma_lock_handler(ctx->cm_id);
-+	ret = ucma_event_handler(ctx->cm_id, &event);
-+	rdma_unlock_handler(ctx->cm_id);
-+	return ret;
+ delete_queues:
+-	for (; i > 0; i--)
++	for (--i; i > 0; i--)
+ 		__nvme_fc_delete_hw_queue(ctrl, &ctrl->queues[i], i);
+ 	return ret;
  }
- 
- static int ucma_set_option_ib(struct ucma_context *ctx, int optname,
 
 
