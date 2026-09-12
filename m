@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 621283093A6;
-	Sat, 12 Sep 2026 14:31:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8425A340D90;
+	Sat, 12 Sep 2026 14:31:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789223494; cv=none; b=G43LUhWHD8Y3oXx+RxCPc6MY/urFLKSbBDv4hgdIA2A3oeGv66LDFsP64w0+LLV9UMpGX5DhfNmerpXk8sLbMhl1fCsM8V90nGCAKOROeWTzLs952XDYXqOn5oXDp9RBjRI20OZp+tLtd3nWrxQ12IJmKn7LiW9ss8Mk5wGhA/M=
+	t=1789223497; cv=none; b=OCXzTNcIyuhAjoyBjHbrLPLjoGeJmIcwjwdtG+HA20PAt/vTCDnPZABqluxlFACqDOW56GKopwZLMfU/E4cb6D7beUObQH3C8gS5t0TxD/uzTiKQInUBqPRSk7XspxzKHyLz60tggUjEY5IYDcYGyLRMwFAW88TNGEPtibAPpj4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789223494; c=relaxed/simple;
-	bh=qfgH0xiPG+melQx0YfauotwG5bIt5DuWQ8FuOgD78ag=;
+	s=arc-20240116; t=1789223497; c=relaxed/simple;
+	bh=gWLQvKCkzg8h1gnnFmLx2EvY1p4Nk48z7zK+1FcAI9Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FOGZbreCuPTPK9vI1Kj+lw+iHTqu5z8Fhkpm/6U9KYcuScUtT/XLDwm4L86+WGsjffUiZ2xvtnbqJLznb8MZeIsE865oVsTGDwXkkkeuIwnV0mqpxEsMAnNnhWi2QEBQq2oehpy/Sch+/fn5O3u7LOMdPP23LkO7MxsS2Z3jbCI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PeFjn2B6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fwEYJtZCFZ8ABysLAv205VbxLPt6gu27dUAAX7Q9XJFWcJCECsFJTR0mq6xaMrUAZ2udQkz1XE5aqeTBX1HKxLxBBESk4cqJLzkv8wRrlKT0sc1GYkR711eXoqHGsmJlP7HLFxWe+eg0f1TfDVkfL0qBxESZkMhxzegQJM+u2eY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IjQTnvzj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PeFjn2B6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 499C41F00893;
-	Sat, 12 Sep 2026 14:31:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IjQTnvzj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FD2E1F00898;
+	Sat, 12 Sep 2026 14:31:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789223488;
-	bh=/X+VOpGemogHgIP1+LtM8tWK2jz5NIUtjIXj7opj7Ek=;
+	s=korg; t=1789223493;
+	bh=XVJlQISHDvguzaTVNpM8rvE7gb20nTUF3QzSaojkgFc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PeFjn2B6uI+R7iaPAZeFo5ObWRX1wJm6pwEsaeXVVcV+rMW3Qq6DlSEJJ3M8cq2P5
-	 Heyw1W6c9gK1D26RkoHGXiui9L5QjbfDjJvX+0uqvn7PoX17TZ/ho0KgXHdcLetJrl
-	 O7P3hr9vAsDWagZD100zWswwauLXXZUbuOCLlNLQ=
+	b=IjQTnvzjLrHauW9hDUB6SZiVeAT1bjvi8kYbnhXYmtWrabDTXvkzmix3cuVMl8X20
+	 24tJtTdUWhm6u78VIxcXCQZsbJJ1cqeDXfEJvuQheifOqw54l0jGJw7bqBW11LCuGX
+	 4zskcKWSOi+TGq+lZhWMI+AZzdmKinf+XGvuD10E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pierre Gondois <pierre.gondois@arm.com>,
-	Breno Leitao <leitao@debian.org>,
-	Sudeep Holla <sudeep.holla@kernel.org>,
+	Linmao Li <lilinmao@kylinos.cn>,
+	Arnd Bergmann <arnd@arndb.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0799/1424] cacheinfo: dont propagate DT/ACPI error when arch supplies info (arm64)
-Date: Sat, 12 Sep 2026 08:53:51 +0200
-Message-ID: <20260912065625.189445944@linuxfoundation.org>
+Subject: [PATCH 6.6 0800/1424] ppdev: prevent overflow when setting port timeout
+Date: Sat, 12 Sep 2026 08:53:52 +0200
+Message-ID: <20260912065625.211306877@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -52,59 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Linmao Li <lilinmao@kylinos.cn>
 
-[ Upstream commit 274259391c14166fcabae74f9fc0104223ff27a1 ]
+[ Upstream commit 3c0cf801ea2fa40daa5e7d1e6d32adca5ff75ad9 ]
 
-cache_setup_properties() sets use_arch_info = true when DT/ACPI
-provide no cache nodes and the arch can derive the topology from
-CPU registers (e.g. arm64 reading CLIDR_EL1), but still returns the
-original -ENOENT. cache_shared_cpu_map_setup() bails on that error
-before the new flag can take effect, so the first CPU brought online
-always trips a misleading warning:
+PPSETTIME64 supplies the timeval fields as s64 values, but
+pp_set_timeout() narrows tv_usec to int and calculates tv_sec * HZ in a
+signed long. Large positive values can therefore be truncated or overflow
+and install an unintended timeout.
 
-  cacheinfo: Unable to detect cache hierarchy for CPU 0
+Keep both fields as s64, reject a non-canonical microsecond value, and
+use timespec64_to_jiffies() to cap excessively large timeouts at
+MAX_JIFFY_OFFSET. This is a behavior change because both PPSETTIME
+ioctls could previously accept values with tv_usec >= USEC_PER_SEC.
+The validation follows the precedent set by sock_set_timeout().
 
-Subsequent CPUs skip cache_setup_properties() entirely because
-use_arch_info is now true, which is why only CPU0 hits it. This is
-reproducible on arm64 with the QEMU 'virt' machine, whose default DT
-has no cache nodes.
-
-Clear ret after setting use_arch_info so the caller proceeds and
-populates the shared cpu map via the arch-supplied leaves.
-
-Fixes: ef9f643a9f8b ("cacheinfo: Add use_arch[|_cache]_info field/function")
-Reviewed-by: Pierre Gondois <pierre.gondois@arm.com>
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Reviewed-by: Sudeep Holla <sudeep.holla@kernel.org>
-Link: https://patch.msgid.link/20260611-cacheinfo-v2-1-6069ef066cf3@debian.org
+Fixes: 3b9ab374a1e6 ("ppdev: convert to y2038 safe")
+Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
+Reviewed-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://patch.msgid.link/20260716013923.19494-1-lilinmao@kylinos.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/cacheinfo.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/char/ppdev.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/base/cacheinfo.c b/drivers/base/cacheinfo.c
-index b5715b8ded897..f03ea44609bf8 100644
---- a/drivers/base/cacheinfo.c
-+++ b/drivers/base/cacheinfo.c
-@@ -347,9 +347,14 @@ static int cache_setup_properties(unsigned int cpu)
- 	else if (!acpi_disabled)
- 		ret = cache_setup_acpi(cpu);
- 
--	// Assume there is no cache information available in DT/ACPI from now.
--	if (ret && use_arch_cache_info())
-+	/*
-+	 * No DT/ACPI cache nodes; fall back to arch-derived topology (e.g.
-+	 * arm64 CLIDR_EL1) and clear the error to avoid a spurious warning.
-+	 */
-+	if (ret && use_arch_cache_info()) {
- 		use_arch_info = true;
-+		ret = 0;
-+	}
- 
- 	return ret;
+diff --git a/drivers/char/ppdev.c b/drivers/char/ppdev.c
+index 58e9dcc2a3087..550ddbf1f3279 100644
+--- a/drivers/char/ppdev.c
++++ b/drivers/char/ppdev.c
+@@ -340,15 +340,17 @@ static enum ieee1284_phase init_phase(int mode)
+ 	return IEEE1284_PH_FWD_IDLE;
  }
+ 
+-static int pp_set_timeout(struct pardevice *pdev, long tv_sec, int tv_usec)
++static int pp_set_timeout(struct pardevice *pdev, s64 tv_sec, s64 tv_usec)
+ {
++	struct timespec64 ts;
+ 	long to_jiffies;
+ 
+-	if ((tv_sec < 0) || (tv_usec < 0))
++	if (tv_sec < 0 || tv_usec < 0 || tv_usec >= USEC_PER_SEC)
+ 		return -EINVAL;
+ 
+-	to_jiffies = usecs_to_jiffies(tv_usec);
+-	to_jiffies += tv_sec * HZ;
++	ts.tv_sec = tv_sec;
++	ts.tv_nsec = tv_usec * NSEC_PER_USEC;
++	to_jiffies = timespec64_to_jiffies(&ts);
+ 	if (to_jiffies <= 0)
+ 		return -EINVAL;
+ 
 -- 
 2.53.0
 
