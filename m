@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EA2737FF60;
-	Sat, 12 Sep 2026 13:09:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 622D02EC09B;
+	Sat, 12 Sep 2026 13:10:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789218596; cv=none; b=l6aIN4SsUVzKh7kri3x73J+mkJjgQ0GtHTDkZzcsjpTZ9cDZX7JsD1xOtQI6/FsmVKACBZYc96Sng5ZrkxTs0VYOlYzXA7feX2UfBAbAxaKQhHru2lAOpCz8leyiK4Z9E3HCEabdQy5u1lagvbYzTwLC0Xxg9IycDRMNxfOX5eY=
+	t=1789218601; cv=none; b=EZv9BFYRKK4LpFS+AOyqSohmYdQrXkj2RwypBvFwn+G4GM1WspLT9v0hs8acWHIDtUy3TvrbTe+PtkAUYiNoYcS9eUhVbSmLqwz0WTnhdHrmpgxzQ7/iGiWnOTdS4+6m0MVbFPPNnhmUZ9dR/CQDVLNSwSej4WyDgdX1S4NImlo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789218596; c=relaxed/simple;
-	bh=quZ+a8JmQRHZva/ojtISFEgoPNGW9Yri4L7Wo1xHANo=;
+	s=arc-20240116; t=1789218601; c=relaxed/simple;
+	bh=jqs2kJvW4soccR51YCB0/HF/spCuWxlePG+R129hUKM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y/9ODmFVV3Wzw2f+WyYKE/pD1PtI1myxmPbwFEu6BFK+gGPvYEfvQRZjvkT847an5eaAeEBiKEhXdP32SFlljQ3ot9pX/eTb1hoKf5zXMJMqhoEaTPDkZjzckqdvv0C6k1J/txynHNKhDub+uVszgfN1hcJ69CL+NWvWrb8BItw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AvN6sgtb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Hrq2eRal0pjmAEKG/T+V6KJUB8hlqTSAR9zYEH+XF3+0GxsrOWzsRQdLNPtTlgpzFowwM0Emll6ZK3JOtKXLlInL7zuanc8ua7/eQEdsmkQh1E7kenWnjvJ6H7/szjkXr+C5LyjnCpA7YwthjLXS6Hex4lNsyU0tBcfnNzKOMp8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1sxVaP18; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AvN6sgtb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8BD51F000FF;
-	Sat, 12 Sep 2026 13:09:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1sxVaP18"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEB9C1F000FF;
+	Sat, 12 Sep 2026 13:09:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789218595;
-	bh=YSrtyA26s0Fh7QMCo3GU6vGC63ENQjsSGURNJvB7DlQ=;
+	s=korg; t=1789218600;
+	bh=Em9TDN/qSt0g46fahWP9NNZ0J/AfhYZyMrBHV2gr49s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AvN6sgtb17RRdXPg1CZ0Sn+QmFQpsuVYc5ZlzWd7RRZsSxaik7n63o/zbR48/NvpQ
-	 eRfSz+4tZrXR+PlXXqk8g647KbWIOT1Yhtl99XvcDcDOfwsIEe9gfeuZyrzUdISSeV
-	 8duBJZTJwTUNvN9/2RpSWe2JThP7dRAjFu7kNfAI=
+	b=1sxVaP18REdGE21YUQiesVsMz2Ou6NaARCzZaIvQeTKjTiWDOpWeXN6htAVx+xaU/
+	 qRGI6jO99A2TLQxKbgwmcIwivyX3eshhvYElBTMmXVbbmI8IHJbnZAre8/BhIQOvmI
+	 nzGNyiRdyGnuo4Hm7fLR9GOGEwNYGsDeit+8TRyw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Hang Nan <2122295973@qq.com>,
+	ChenXiaoSong <chenxiaosong@kylinos.cn>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1177/1376] ksmbd: disconnect on SMB3 decryption failure
-Date: Sat, 12 Sep 2026 09:00:03 +0200
-Message-ID: <20260912065633.784262963@linuxfoundation.org>
+Subject: [PATCH 6.12 1178/1376] ksmbd: bound smb_check_perm_dacl() ACE walks by DACL size
+Date: Sat, 12 Sep 2026 09:00:04 +0200
+Message-ID: <20260912065633.806776586@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -50,111 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Hang Nan <2122295973@qq.com>
 
-[ Upstream commit 12a6680ce59bcd431730c9f049caddb017964c64 ]
+[ Upstream commit 79decd88dd3f0d42e7fb0689b1a7853bfa302459 ]
 
-MS-SMB2 requires the server to disconnect a connection when an
-encrypted transform cannot be associated with a session or fails
-authenticated decryption. This includes an encrypted request that
-still carries a SessionId invalidated through PreviousSessionId.
+smb_check_perm_dacl() validates that the DACL fits inside the NT
+security descriptor, but then bounds its two ACE walks by the
+remaining NTSD length (acl_size) rather than the DACL's declared
+size (pdacl_size).
 
-Move the connection to EXITING and shut down its transport when
-decrypt_req() fails. Add the missing TCP shutdown callback so a receive
-blocked in kernel_recvmsg() is released; SMB Direct already provides
-the corresponding callback.
+When pdacl->size is smaller than the trailing NTSD buffer, bytes
+after the declared DACL boundary - still inside the stored security
+descriptor - are parsed as ACEs during access checks.  A crafted
+DACL can place an access-granting ACE beyond pdacl->size, and the
+current code accepts it during SMB2_CREATE access validation, while
+parse_dacl() and smb_inherit_dacl() stop at pdacl_size.
 
-Plaintext requests using an invalidated SessionId do not take this
-path and continue to receive STATUS_USER_SESSION_DELETED.
+Bound both ACE walks by pdacl_size to match the DACL boundary
+semantics used elsewhere in the server.
 
-Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
+Validation:
+- semantic KUnit harness shows the post-boundary ACE is selected
+  before the fix and rejected (EACCES) after it
+- linux master (7.2-rc6), x86_64
+
+Fixes: 8f0541186e9a ("ksmbd: fix heap-based overflow in set_ntacl_dacl()")
+Signed-off-by: Hang Nan <2122295973@qq.com>
+Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/connection.c    | 16 ++++++++++++++++
- fs/smb/server/connection.h    |  1 +
- fs/smb/server/server.c        |  4 +++-
- fs/smb/server/transport_tcp.c |  6 ++++++
- 4 files changed, 26 insertions(+), 1 deletion(-)
+ fs/smb/server/smbacl.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/smb/server/connection.c b/fs/smb/server/connection.c
-index 6808fee63f284..c5f9705825b87 100644
---- a/fs/smb/server/connection.c
-+++ b/fs/smb/server/connection.c
-@@ -255,6 +255,22 @@ void ksmbd_all_conn_set_status(u64 sess_id, u32 status)
- 	up_read(&conn_list_lock);
- }
+diff --git a/fs/smb/server/smbacl.c b/fs/smb/server/smbacl.c
+index d3d0a22620f96..0879012aa63c8 100644
+--- a/fs/smb/server/smbacl.c
++++ b/fs/smb/server/smbacl.c
+@@ -1471,7 +1471,7 @@ int smb_check_perm_dacl(struct ksmbd_conn *conn, const struct path *path,
+ 			DELETE;
  
-+void ksmbd_conn_abort(struct ksmbd_conn *conn)
-+{
-+	bool shutdown = false;
-+
-+	spin_lock(&conn->request_lock);
-+	if (!ksmbd_conn_exiting(conn) && !ksmbd_conn_releasing(conn)) {
-+		ksmbd_conn_set_exiting(conn);
-+		shutdown = true;
-+	}
-+	spin_unlock(&conn->request_lock);
-+	wake_up_all(&conn->req_running_q);
-+
-+	if (shutdown && conn->transport->ops->shutdown)
-+		conn->transport->ops->shutdown(conn->transport);
-+}
-+
- void ksmbd_conn_wait_idle(struct ksmbd_conn *conn)
- {
- 	wait_event(conn->req_running_q, atomic_read(&conn->req_running) < 2);
-diff --git a/fs/smb/server/connection.h b/fs/smb/server/connection.h
-index 8728899d5e756..96ef441330512 100644
---- a/fs/smb/server/connection.h
-+++ b/fs/smb/server/connection.h
-@@ -166,6 +166,7 @@ struct ksmbd_conn *ksmbd_conn_alloc(void);
- void ksmbd_conn_free(struct ksmbd_conn *conn);
- struct ksmbd_conn *ksmbd_conn_get(struct ksmbd_conn *conn);
- void ksmbd_conn_put(struct ksmbd_conn *conn);
-+void ksmbd_conn_abort(struct ksmbd_conn *conn);
- int ksmbd_conn_wq_init(void);
- void ksmbd_conn_wq_destroy(void);
- bool ksmbd_conn_lookup_dialect(struct ksmbd_conn *c);
-diff --git a/fs/smb/server/server.c b/fs/smb/server/server.c
-index 4c7924e254174..a618638875012 100644
---- a/fs/smb/server/server.c
-+++ b/fs/smb/server/server.c
-@@ -170,8 +170,10 @@ static void __handle_ksmbd_work(struct ksmbd_work *work,
- 	if (conn->ops->is_transform_hdr &&
- 	    conn->ops->is_transform_hdr(work->request_buf)) {
- 		rc = conn->ops->decrypt_req(work);
--		if (rc < 0)
-+		if (rc < 0) {
-+			ksmbd_conn_abort(conn);
- 			return;
-+		}
- 		work->encrypted = true;
- 	}
+ 		ace = (struct smb_ace *)((char *)pdacl + sizeof(struct smb_acl));
+-		aces_size = acl_size - sizeof(struct smb_acl);
++		aces_size = pdacl_size - sizeof(struct smb_acl);
+ 		for (i = 0; i < le16_to_cpu(pdacl->num_aces); i++) {
+ 			if (aces_size < offsetof(struct smb_ace, sid) +
+ 			    CIFS_SID_BASE_SIZE)
+@@ -1495,7 +1495,7 @@ int smb_check_perm_dacl(struct ksmbd_conn *conn, const struct path *path,
+ 	id_to_sid(uid, sid_type, &sid);
  
-diff --git a/fs/smb/server/transport_tcp.c b/fs/smb/server/transport_tcp.c
-index d731bab985683..902a6265e323c 100644
---- a/fs/smb/server/transport_tcp.c
-+++ b/fs/smb/server/transport_tcp.c
-@@ -467,6 +467,11 @@ static void ksmbd_tcp_disconnect(struct ksmbd_transport *t)
- 		atomic_dec(&active_num_conn);
- }
- 
-+static void ksmbd_tcp_shutdown(struct ksmbd_transport *t)
-+{
-+	kernel_sock_shutdown(TCP_TRANS(t)->sock, SHUT_RDWR);
-+}
-+
- static void tcp_destroy_socket(struct socket *ksmbd_socket)
- {
- 	int ret;
-@@ -722,5 +727,6 @@ static const struct ksmbd_transport_ops ksmbd_tcp_transport_ops = {
- 	.read		= ksmbd_tcp_read,
- 	.writev		= ksmbd_tcp_writev,
- 	.disconnect	= ksmbd_tcp_disconnect,
-+	.shutdown	= ksmbd_tcp_shutdown,
- 	.free_transport = ksmbd_tcp_free_transport,
- };
+ 	ace = (struct smb_ace *)((char *)pdacl + sizeof(struct smb_acl));
+-	aces_size = acl_size - sizeof(struct smb_acl);
++	aces_size = pdacl_size - sizeof(struct smb_acl);
+ 	for (i = 0; i < le16_to_cpu(pdacl->num_aces); i++) {
+ 		if (aces_size < offsetof(struct smb_ace, sid) +
+ 		    CIFS_SID_BASE_SIZE)
 -- 
 2.53.0
 
