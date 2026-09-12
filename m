@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 072F41DA62E;
-	Sat, 12 Sep 2026 10:29:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0F0B24CEEA;
+	Sat, 12 Sep 2026 10:29:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789208976; cv=none; b=Or2ghRie36+7eFy4d6b+hu/fS3JxzvwpWxY0DLs3IcHyVXywY0bHxc5mxHdRJVw0aoSIa6dD/Fkya993/kQ6Yzw5sovO5Lrk+TjIPQuIOuk++AMR9ZrZY4kWHtOD2bNt32dw5nHqqzIBxqu1rNXG9OQzN4Ns8wYSk3ZCdKgpS6A=
+	t=1789208981; cv=none; b=VbeJWRax1DZuZEUYsX5zgI4aBjpfTN0ZX54N/fqy5AXZgR/bk2OVThI3u/j/UpH4qdJdyd8WwxcHai7bUBcXALwsMMOMGlGDCswOdY+n4tj8FJP1Af9OcG1S00ruoAvGo92E+A+yd3tUcZgSfts3kwZe7qTQVLTQF5gQyyVG8Fc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789208976; c=relaxed/simple;
-	bh=6NJ50/KJNtLqIOrO4THWhKr0PdzLDe0ZEOK4LBuyvMk=;
+	s=arc-20240116; t=1789208981; c=relaxed/simple;
+	bh=X6WJtyZIg/iJV9pqvoB5V1/KmyynqLcguAdGSgCATdo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UV18eXtE16w9vZ+T/kDPfroHKVoTDk8zZ6phGzslrgHTJpqL3MvkNXK5AjR7IVh1hVuYBk/fYuGl8I+YQvEEB1Rq+0uxeuioiQ1iOXDBVooC5c0nsWuDdaqvIzhDtwa7YVJ+Eiu+wj9iTj1O4O8WEVmzrUa9CMBCZ5V9ERp5NTg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2f+H+Euf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uoclKRb0egqwcChjC3LWmG/j/krHhKZaQtmsseB0rS69HyKrMPoMyq9+TG/B6cgN906icgdmZgdbe5Z/aFgZ2g1pcTnGZac7FAavPCkEshtxxo+C6IbhWwudwclFjPhfOTyv99+ckLoRGWxRnwTmNCfrp6atQe1Wwt3KWcI6IMg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A+gD4TqU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2f+H+Euf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D172A1F000FF;
-	Sat, 12 Sep 2026 10:29:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A+gD4TqU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF0AC1F000FF;
+	Sat, 12 Sep 2026 10:29:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789208974;
-	bh=Zo5s9gKWsdhU7XeEeT0lLITTXDKMCMtJ8mpU9MMySYI=;
+	s=korg; t=1789208979;
+	bh=XEPuivz9ThLjdEV6cTCzLjGOq+wHJAtLO2HavDEcXGQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2f+H+EufAblVajUv0vLKQN07bB3omqOsxK3CIChX48yINzQKQ2LFDBckhRgu628gp
-	 hRxg8mekob9gGCe5W+/VcpmpjE3m61k5WRtYSnHvWsDrwliGvsnXGHT5bu2nC/RHsY
-	 Nw25Y6VCr22hw73B/l2okAEmTzPbBgObXVjETozo=
+	b=A+gD4TqUyPgx6mLuJqpmmeqYhd1RlMnkSNh424ySpl76xYD5ij3QaevGNi2XeqBn5
+	 uTDxiAAIvSM9E+hJ/RzOJWiQZhptlfgUmiUegyKbpdOlNaZ5ANGE+w98BFXgEMlvxI
+	 RLRDER2egRnMUEh+O5LGbEQCbh96iZo6MtcqLdjA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Devin Wittmayer <lucid_duck@justthetip.ca>,
+	Laxman Acharya Padhya <acharyalaxman8848@gmail.com>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0726/1518] wifi: mt76: mt76x02: do not WARN on invalid rx descriptor length
-Date: Sat, 12 Sep 2026 08:48:15 +0200
-Message-ID: <20260912065639.857718457@linuxfoundation.org>
+Subject: [PATCH 6.18 0727/1518] wifi: mt76: mt7921: validate CLC firmware records
+Date: Sat, 12 Sep 2026 08:48:16 +0200
+Message-ID: <20260912065639.879693381@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,47 +51,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Devin Wittmayer <lucid_duck@justthetip.ca>
+From: Laxman Acharya Padhya <acharyalaxman8848@gmail.com>
 
-[ Upstream commit 81497634d9f872fd3e8b03aada55574afff6f174 ]
+[ Upstream commit 9417c5818a0146980c2608fda94c908e604eb033 ]
 
-The MPDU length in the rx descriptor comes from the hardware. In
-monitor mode with the fcsfail filter enabled, the hardware passes up
-corrupted frames, and a corrupted frame can report a length larger
-than the received buffer. The bounds check correctly discards such
-frames, but its WARN_ON_ONCE wrapper means any over-the-air garbage
-frame taints the kernel, and panics it on the first such frame when
-panic_on_warn is set.
+The CLC region is supplied by firmware, but the loader trusts the
+region count and each record length. A malformed image can make the
+region table pointer precede the firmware buffer, make the record loop
+fail to advance, or index phy->clc past its end. Validate the table and
+record bounds before dereferencing or copying.
 
-Drop the WARN and discard the frame silently, matching what
-commit c2d4c8723dbf ("mt76x2: remove some harmless WARN_ONs in tx
-status and rx path") did for the neighboring rx and tx status paths.
-
-Observed immediately on rx with an MT7612U in fcsfail monitor mode
-on a busy channel.
-
-Fixes: 7bc04215a66b ("mt76: add driver code for MT76x2e")
-Signed-off-by: Devin Wittmayer <lucid_duck@justthetip.ca>
-Link: https://patch.msgid.link/20260613002544.27750-2-lucid_duck@justthetip.ca
+Fixes: 23bdc5d8cadf ("wifi: mt76: mt7921: introduce Country Location Control support")
+Signed-off-by: Laxman Acharya Padhya <acharyalaxman8848@gmail.com>
+Link: https://patch.msgid.link/CAMyXUJmh=WfwC4_KHupNxYR5e2Gy5QhBDL5TSG6XEW-XLa+X4Q@mail.gmail.com
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt76x02_mac.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../net/wireless/mediatek/mt76/mt7921/mcu.c   | 28 ++++++++++++++++---
+ 1 file changed, 24 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt76x02_mac.c b/drivers/net/wireless/mediatek/mt76/mt76x02_mac.c
-index 83488b2d6efb9..06f17da2c0106 100644
---- a/drivers/net/wireless/mediatek/mt76/mt76x02_mac.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt76x02_mac.c
-@@ -848,7 +848,7 @@ int mt76x02_mac_process_rx(struct mt76x02_dev *dev, struct sk_buff *skb,
- 		}
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c
+index 663b245f2891f..ad0a7ebb2f3aa 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c
+@@ -418,7 +418,8 @@ static int mt7921_load_clc(struct mt792x_dev *dev, const char *fw_name)
+ 	struct mt76_dev *mdev = &dev->mt76;
+ 	struct mt792x_phy *phy = &dev->phy;
+ 	const struct firmware *fw;
+-	int ret, i, len, offset = 0;
++	size_t clc_len, fw_data_len, len, offset = 0;
++	int ret, i;
+ 	u8 *clc_base = NULL, hw_encap = 0;
+ 
+ 	dev->phy.clc_chan_conf = 0xff;
+@@ -444,13 +445,21 @@ static int mt7921_load_clc(struct mt792x_dev *dev, const char *fw_name)
  	}
  
--	if (WARN_ON_ONCE(len > skb->len))
-+	if (len > skb->len)
- 		return -EINVAL;
+ 	hdr = (const void *)(fw->data + fw->size - sizeof(*hdr));
++	if (hdr->n_region > (fw->size - sizeof(*hdr)) / sizeof(*region)) {
++		dev_err(mdev->dev, "Invalid firmware region table\n");
++		ret = -EINVAL;
++		goto out;
++	}
++	fw_data_len = fw->size - sizeof(*hdr) -
++		      hdr->n_region * sizeof(*region);
++
+ 	for (i = 0; i < hdr->n_region; i++) {
+ 		region = (const void *)((const u8 *)hdr -
+ 					(hdr->n_region - i) * sizeof(*region));
+ 		len = le32_to_cpu(region->len);
  
- 	if (pskb_trim(skb, len))
+ 		/* check if we have valid buffer size */
+-		if (offset + len > fw->size) {
++		if (len > fw_data_len - offset) {
+ 			dev_err(mdev->dev, "Invalid firmware region\n");
+ 			ret = -EINVAL;
+ 			goto out;
+@@ -467,8 +476,19 @@ static int mt7921_load_clc(struct mt792x_dev *dev, const char *fw_name)
+ 	if (!clc_base)
+ 		goto out;
+ 
+-	for (offset = 0; offset < len; offset += le32_to_cpu(clc->len)) {
++	for (offset = 0; offset < len; offset += clc_len) {
++		if (len - offset < sizeof(*clc)) {
++			ret = -EINVAL;
++			goto out;
++		}
++
+ 		clc = (const struct mt7921_clc *)(clc_base + offset);
++		clc_len = le32_to_cpu(clc->len);
++		if (clc_len < sizeof(*clc) || clc_len > len - offset ||
++		    clc->idx >= ARRAY_SIZE(phy->clc)) {
++			ret = -EINVAL;
++			goto out;
++		}
+ 
+ 		/* do not init buf again if chip reset triggered */
+ 		if (phy->clc[clc->idx])
+@@ -480,7 +500,7 @@ static int mt7921_load_clc(struct mt792x_dev *dev, const char *fw_name)
+ 			continue;
+ 
+ 		phy->clc[clc->idx] = devm_kmemdup(mdev->dev, clc,
+-						  le32_to_cpu(clc->len),
++						  clc_len,
+ 						  GFP_KERNEL);
+ 
+ 		if (!phy->clc[clc->idx]) {
 -- 
 2.53.0
 
