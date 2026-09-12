@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1804835DA40;
-	Sat, 12 Sep 2026 18:33:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A54A235DA40;
+	Sat, 12 Sep 2026 18:33:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789238026; cv=none; b=WzxhMU0LwmLUVM1jmSXt/KRxr4W1cujJYKi2oDul5nTyGEREcO7Q1huj7lDZ26YhcDHknZd4C2Fek2PtMmISBp6IlK2DRG0QPmAN0KrScMrGQBjNvdAqkQ81KiVbUJbAd3SE/8Q38/BGn0eJpC+yiF9txcWC55Hg9WvWt256a6Q=
+	t=1789238030; cv=none; b=ma4UQLGQLKPdIjhfD+8oLrAamV/DrVRwp4F1jDf0B6MSp5zOtVRvzem/HVhhbB9NZ4SLu1JtzvYjtE1Kr8QzlGSDIvHZh+1hztLaVvvb5LZi0xNx/xWf/JRe6EjFwSTlzum2Ud6Rbl3oxbgNGAkMYaLrKBhCokBixWXuTsHt+Is=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789238026; c=relaxed/simple;
-	bh=3y4Kll/ih3htJEjDPYH2mdIwLNeVTS7XJmah34Zi1Zc=;
+	s=arc-20240116; t=1789238030; c=relaxed/simple;
+	bh=M6UbK3J00j0jN19F/mKLsydPXoVLL9wt0/c/HHIKiUw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nI48SHCLVjQ9y1TJkzcXmIB7zTz9wcMqL7cVCVf8HR58gVw/kWcrLn1h7egpNLJw+sagHzkRjGjO/ysklxajdObPjfaLO3lZISRrtGevpgi7WoCKuW7T/aL0nOtBFt0AjZieDycdSfJJ3/sFsTFPKxhlPCCuqLCqRjX6eYtt7x8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RKVcQuOZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=P81Spu1L1U+S53OnGE3167HyLNPa32mjL4atTjGz86i7sj9D1f/MthowJekFEW2Hixitf9xIcIDZCxgdvL5V6/DJqVjHJWLgGYhi0Lg4PM/LQkQfMjnTyN92d03GZp/YvsAmrJdrzQXHT5MhJIPFXzdErj4ftdgkh7pxi/YDrhk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MF3aUnLZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RKVcQuOZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE45F1F000FF;
-	Sat, 12 Sep 2026 18:33:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MF3aUnLZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB5E91F000FF;
+	Sat, 12 Sep 2026 18:33:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789238024;
-	bh=xsLletF1DIZ+lyyZq+x5VThDZvRhqcx6bWlZIYmPc78=;
+	s=korg; t=1789238029;
+	bh=hPUCHFavBiEoXLPYOZlrkSdaZe+WhwCCGQN3n7LwFJg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RKVcQuOZtlDwohnKBlOXJ5Ld+tazpQSIcKZ8ZToODAKLK6Sir1VUmOak+gBRsHmBA
-	 Mx3alTrDoGfLWk/pxcE4uezNTUVyVOhO0RHP1NYG2Uov/8uvF/g6Z6A2d2PID3a5NP
-	 NaH35wM7ejmeUvKk9SHZ9BjLfnUYueTfjtjpD1b8=
+	b=MF3aUnLZIKMl28/1htOtA4VU8aGgdYO9Dui8MwPkPo68iBAO35aeguSqxdkCLCVgW
+	 ouohDpjjn9o9XsbXPnF3SvyzFhC79scaMu4IRJP2nWqgc3pz4K38DPUmk/gXpvZvYe
+	 bXMD1qMA7uwTtLtbm43f8tHQjlqOWJNQHB9lo0dw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Duoming Zhou <duoming@zju.edu.cn>,
-	Simon Horman <horms@kernel.org>,
+	Jie Wang <wangjie125@huawei.com>,
+	Jijie Shao <shaojijie@huawei.com>,
+	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 378/935] ax25: fix use-after-free bugs caused by ax25_ds_del_timer
-Date: Sat, 12 Sep 2026 08:56:48 +0200
-Message-ID: <20260912065535.487247911@linuxfoundation.org>
+Subject: [PATCH 5.15 379/935] net: hns3: fix kernel crash when 1588 is sent on HIP08 devices
+Date: Sat, 12 Sep 2026 08:56:49 +0200
+Message-ID: <20260912065535.512034715@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -52,51 +53,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Duoming Zhou <duoming@zju.edu.cn>
+From: Jie Wang <wangjie125@huawei.com>
 
-[ Upstream commit fd819ad3ecf6f3c232a06b27423ce9ed8c20da89 ]
+[ Upstream commit 9741e72b2286de8b38de9db685588ac421a95c87 ]
 
-When the ax25 device is detaching, the ax25_dev_device_down()
-calls ax25_ds_del_timer() to cleanup the slave_timer. When
-the timer handler is running, the ax25_ds_del_timer() that
-calls del_timer() in it will return directly. As a result,
-the use-after-free bugs could happen, one of the scenarios
-is shown below:
+Currently, HIP08 devices does not register the ptp devices, so the
+hdev->ptp is NULL. But the tx process would still try to set hardware time
+stamp info with SKBTX_HW_TSTAMP flag and cause a kernel crash.
 
-      (Thread 1)          |      (Thread 2)
-                          | ax25_ds_timeout()
-ax25_dev_device_down()    |
-  ax25_ds_del_timer()     |
-    del_timer()           |
-  ax25_dev_put() //FREE   |
-                          |  ax25_dev-> //USE
+[  128.087798] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000018
+...
+[  128.280251] pc : hclge_ptp_set_tx_info+0x2c/0x140 [hclge]
+[  128.286600] lr : hclge_ptp_set_tx_info+0x20/0x140 [hclge]
+[  128.292938] sp : ffff800059b93140
+[  128.297200] x29: ffff800059b93140 x28: 0000000000003280
+[  128.303455] x27: ffff800020d48280 x26: ffff0cb9dc814080
+[  128.309715] x25: ffff0cb9cde93fa0 x24: 0000000000000001
+[  128.315969] x23: 0000000000000000 x22: 0000000000000194
+[  128.322219] x21: ffff0cd94f986000 x20: 0000000000000000
+[  128.328462] x19: ffff0cb9d2a166c0 x18: 0000000000000000
+[  128.334698] x17: 0000000000000000 x16: ffffcf1fc523ed24
+[  128.340934] x15: 0000ffffd530a518 x14: 0000000000000000
+[  128.347162] x13: ffff0cd6bdb31310 x12: 0000000000000368
+[  128.353388] x11: ffff0cb9cfbc7070 x10: ffff2cf55dd11e02
+[  128.359606] x9 : ffffcf1f85a212b4 x8 : ffff0cd7cf27dab0
+[  128.365831] x7 : 0000000000000a20 x6 : ffff0cd7cf27d000
+[  128.372040] x5 : 0000000000000000 x4 : 000000000000ffff
+[  128.378243] x3 : 0000000000000400 x2 : ffffcf1f85a21294
+[  128.384437] x1 : ffff0cb9db520080 x0 : ffff0cb9db500080
+[  128.390626] Call trace:
+[  128.393964]  hclge_ptp_set_tx_info+0x2c/0x140 [hclge]
+[  128.399893]  hns3_nic_net_xmit+0x39c/0x4c4 [hns3]
+[  128.405468]  xmit_one.constprop.0+0xc4/0x200
+[  128.410600]  dev_hard_start_xmit+0x54/0xf0
+[  128.415556]  sch_direct_xmit+0xe8/0x634
+[  128.420246]  __dev_queue_xmit+0x224/0xc70
+[  128.425101]  dev_queue_xmit+0x1c/0x40
+[  128.429608]  ovs_vport_send+0xac/0x1a0 [openvswitch]
+[  128.435409]  do_output+0x60/0x17c [openvswitch]
+[  128.440770]  do_execute_actions+0x898/0x8c4 [openvswitch]
+[  128.446993]  ovs_execute_actions+0x64/0xf0 [openvswitch]
+[  128.453129]  ovs_dp_process_packet+0xa0/0x224 [openvswitch]
+[  128.459530]  ovs_vport_receive+0x7c/0xfc [openvswitch]
+[  128.465497]  internal_dev_xmit+0x34/0xb0 [openvswitch]
+[  128.471460]  xmit_one.constprop.0+0xc4/0x200
+[  128.476561]  dev_hard_start_xmit+0x54/0xf0
+[  128.481489]  __dev_queue_xmit+0x968/0xc70
+[  128.486330]  dev_queue_xmit+0x1c/0x40
+[  128.490856]  ip_finish_output2+0x250/0x570
+[  128.495810]  __ip_finish_output+0x170/0x1e0
+[  128.500832]  ip_finish_output+0x3c/0xf0
+[  128.505504]  ip_output+0xbc/0x160
+[  128.509654]  ip_send_skb+0x58/0xd4
+[  128.513892]  udp_send_skb+0x12c/0x354
+[  128.518387]  udp_sendmsg+0x7a8/0x9c0
+[  128.522793]  inet_sendmsg+0x4c/0x8c
+[  128.527116]  __sock_sendmsg+0x48/0x80
+[  128.531609]  __sys_sendto+0x124/0x164
+[  128.536099]  __arm64_sys_sendto+0x30/0x5c
+[  128.540935]  invoke_syscall+0x50/0x130
+[  128.545508]  el0_svc_common.constprop.0+0x10c/0x124
+[  128.551205]  do_el0_svc+0x34/0xdc
+[  128.555347]  el0_svc+0x20/0x30
+[  128.559227]  el0_sync_handler+0xb8/0xc0
+[  128.563883]  el0_sync+0x160/0x180
 
-In order to mitigate bugs, when the device is detaching, use
-timer_shutdown_sync() to stop the timer.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20240329015023.9223-1-duoming@zju.edu.cn
+Fixes: 0bf5eb788512 ("net: hns3: add support for PTP")
+Signed-off-by: Jie Wang <wangjie125@huawei.com>
+Signed-off-by: Jijie Shao <shaojijie@huawei.com>
+Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
+Link: https://patch.msgid.link/20250106143642.539698-8-shaojijie@huawei.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ax25/ax25_dev.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_ptp.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/ax25/ax25_dev.c b/net/ax25/ax25_dev.c
-index d2e0cc67d91a7..d1d8d8a21ddd5 100644
---- a/net/ax25/ax25_dev.c
-+++ b/net/ax25/ax25_dev.c
-@@ -103,7 +103,7 @@ void ax25_dev_device_down(struct net_device *dev)
- 	spin_lock_bh(&ax25_dev_lock);
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_ptp.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_ptp.c
+index 6d7aeac600128..9fdd66fb7f8ec 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_ptp.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_ptp.c
+@@ -70,6 +70,9 @@ bool hclge_ptp_set_tx_info(struct hnae3_handle *handle, struct sk_buff *skb)
+ 	struct hclge_dev *hdev = vport->back;
+ 	struct hclge_ptp *ptp = hdev->ptp;
  
- #ifdef CONFIG_AX25_DAMA_SLAVE
--	ax25_ds_del_timer(ax25_dev);
-+	timer_shutdown_sync(&ax25_dev->dama.slave_timer);
- #endif
- 
- 	/*
++	if (!ptp)
++		return false;
++
+ 	if (!test_bit(HCLGE_PTP_FLAG_TX_EN, &ptp->flags) ||
+ 	    test_and_set_bit(HCLGE_STATE_PTP_TX_HANDLING, &hdev->state)) {
+ 		ptp->tx_skipped++;
 -- 
 2.53.0
 
