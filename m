@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C3A647A0C0;
-	Sat, 12 Sep 2026 11:45:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB97B43BDDE;
+	Sat, 12 Sep 2026 11:45:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789213542; cv=none; b=HaMb8mALdNH/PH+cK3cvE1UI9Vu4jW3py1raK4/BBtTN9xn8WcmXUfkKllQOExvnXcYOyFf4qbeM6WEUp6V5l5Juncs3DSBKViQz14/vN/MJeALa1BqNtuF9tKclr7Axhjt/DpusHLO/Uj5PV3wwxQv8ZS13aNKvDpF5Z2Tpuc8=
+	t=1789213547; cv=none; b=dnThj3iia7mHn18Uq7kaq9u30CElyQ2mYL8fCzpSdV8YWulpjTw7Lzd92YjKGKFLhi/bcIx0eBKyzg40DTtr3eEdpXGjYvmDsZRWeLB62iCA0jc+gnJ0r57TZNQnMdw7tEy38WjeE1L1RFmINUbdV2RmUW3v0hbbfHgSfzAoSuA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789213542; c=relaxed/simple;
-	bh=FY6bPOF5FeWx8MutP8sJ0VuNMoDHqHk90kW90/xWleA=;
+	s=arc-20240116; t=1789213547; c=relaxed/simple;
+	bh=AJ51ecG0CFHxLH+yMKu8L5LQG88JQRYSsbfdS50jK80=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N9Hhvz4gwP3Wj/SSOIdKEsOAxI8WGhaJvrNEA8wJ4OAcobA0aEInTFL2TiEFxffNEnJ/oid25dAbqCNh3kS6Te7S9nHHsIGQbK1F+LdF+8gERVlseOYMD56xWzQX3VRjhs8fRnOr96vtdvbVY7ZFfSu9dQGBkBquKd6JaF/aSoQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UzRw3UeG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ycn19W1FOzzK3Pbi/xM4uNIee/pj4EPEI0GovmfHR92aetV/jtn+zvYLLA7YWZKRzcLCBor3fHads62WajawaMJSZLkd/pKl0xlTetDMhmWzH/SmGDBBq2SJjYhLTKNfwFMYIqkQz6h6yBS2vgFKrwZNPzlIDwugQ2gfz1Nc2wU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l4ttuasJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UzRw3UeG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7A151F00893;
-	Sat, 12 Sep 2026 11:45:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l4ttuasJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A2481F000FF;
+	Sat, 12 Sep 2026 11:45:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789213540;
-	bh=y9eDziUY9a3k0PQfnfUWl9HFXujMDBd5CnmGbtSXOzU=;
+	s=korg; t=1789213545;
+	bh=A0ulk+jfIVCFmU20WmOHZnjyDg9zUF4QXaL/PsH4uyE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UzRw3UeGPq3nHFzU7+BilM9ysIu919SP6Ab/QVTzRtSElNRsLyHW+Rg8dUW4/1OCG
-	 2JaTGE6r6tRUmOThKusjs509v1ocbiGeE67jMnS7tp1HTIRTzWS58k6iOCcldrZ3eQ
-	 tj9odfIsHSs9U7u8Gr0q3QhV3WU4muFI4NhVP3oo=
+	b=l4ttuasJ6YUwKkx2g5PnhhfoVGVFJsjsbC5B0H7Dyjee99goT7v3uA4O5UioHxlsJ
+	 8vob+FfcjLAab/ssbHY8cY/+KY9pSagPCcdReA7e4IEzZ3OU2xcf+FSWosCUup77Kx
+	 JgAclApTjFknTqHWLARiEjF/Rcaj4qMsylV0kRIE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Zyngier <maz@kernel.org>,
-	caina <caina@uniontech.com>,
-	Thomas Gleixner <tglx@kernel.org>,
-	Yipeng Zou <zouyipeng@huawei.com>
-Subject: [PATCH 6.12 0090/1376] Revert "irqchip/mbigen: Fix mbigen node address layout"
-Date: Sat, 12 Sep 2026 08:41:56 +0200
-Message-ID: <20260912065609.567876717@linuxfoundation.org>
+	Lars-Peter Clausen <lars@metafoo.de>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Subject: [PATCH 6.12 0137/1376] iio: buffer: Make IIO DMA fence release RCU-safe
+Date: Sat, 12 Sep 2026 08:42:43 +0200
+Message-ID: <20260912065610.606746828@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -52,114 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: caina <caina@uniontech.com>
+From: Lars-Peter Clausen <lars@metafoo.de>
 
-commit e67091609cf85962f64391c1b0f93d4cbfcd4e22 upstream.
+commit 8662e56c31cf23b61ca3d11b516efb94c35b8026 upstream.
 
-This reverts commit 6be6cba9c4371d27f78d900ccfe34bb880d9ee20.
+The `dma_fence` documentation states that if a custom release
+implementation is provided, the `dma_fence` object must be freed in an
+RCU-safe way. The current `iio_dma_fence` implementation uses `kfree()`,
+which might result in a use-after-free.
 
-Commit 6be6cba9c437 ("irqchip/mbigen: Fix mbigen node address layout")
-appears to cause a regression on Hi1616.
+Remove the custom `release` implementation. This makes the DMA fence core
+fall back to `dma_fence_free()`, which calls `kfree_rcu()` on the fence.
+This requires that the fence be the first member of `struct iio_dma_fence`.
 
-On-board hns NIC has two ports, enahisic2i0 and enahisic2i1, both
-behind mbigen-v2.  Port 0 works; port 1 cannot pass any traffic.
+Using the default release method for extended DMA fence structures is a
+common pattern.
 
-Their interrupt pins fall on different mbigen nodes:
-
-  enahisic2i0: pins 1152-1198 -> all in node 9
-  enahisic2i1: pins 1200-1246 -> node 9 (1200-1215) + node 10 (1216-1246)
-
-  (nid = (hwirq - 64) / 128 + 1; pin 1215 = node 9, pin 1216 = node 10)
-
-/proc/interrupts shows the break happens exactly at the node boundary:
-
-  enahisic2i1-rx0  pin 1200  count 102   <- node 9
-  enahisic2i1-rx5  pin 1215  count   1   <- node 9, last pin
-  enahisic2i1-tx5  pin 1216  count   0   <- node 10, first pin
-  enahisic2i1-rx6  pin 1218  count   0   <- node 10
-  ...all node 10 pins stay at zero.
-
-Port 0 (entirely node 9) is unaffected.  Reverting the commit restores
-normal operation.
-
-The commit assumes CLEAR occupies a full 4 KB page at [0xa000, 0xb000)
-and collides with node 10, so node 10+ gets shifted by 0x1000.
-
-But get_mbigen_clear_reg() uses flat, chip-wide addressing -- it never
-multiplies by the node ID:
-
-    *addr = (hwirq / 32) * 4 + REG_MBIGEN_CLEAR_OFFSET;  /* 0xa000 */
-
-Over the valid hwirq range [64, 1407], CLEAR only spans 0xa008-0xa0af
-(168 bytes).  Node 10's registers are:
-
-    TYPE: 0xa000-0xa00f  (16 B)   overlaps CLEAR by 8 B (0xa008-0xa00f)
-    VEC:  0xa200-0xa3ff  (512 B)  no overlap with CLEAR
-
-Shifting the whole page moves VEC from 0xa200 to 0xb200.  The hardware
-reads the event ID from the fixed silicon address 0xa200 on interrupt
-firing, but software wrote it to 0xb200 -- so the hardware gets an
-uninitialised value and the interrupt is lost.
-
-The only real overlap is 8 bytes of TYPE.  It can only trigger when a
-single mbigen instance has devices on both node 1 (CLEAR 0xa008) and
-node 10 (TYPE 0xa008).  On Hi1616 those nodes are on separate mbigen
-instances, so it never triggers.
-
-Fixes: 6be6cba9c4371d27f78d900ccfe34bb880d9ee20 ("irqchip/mbigen: Fix mbigen node address layout")
-Suggested-by: Marc Zyngier <maz@kernel.org>
-Signed-off-by: caina <caina@uniontech.com>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Acked-by: Yipeng Zou <zouyipeng@huawei.com>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260821091720.16665-1-caina@uniontech.com
+Reported-by: codex:gpt-5.6
+Fixes: 3e26d9f08fbe ("iio: core: Add new DMABUF interface infrastructure")
+Signed-off-by: Lars-Peter Clausen <lars@metafoo.de>
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/irqchip/irq-mbigen.c |   20 ++++----------------
- 1 file changed, 4 insertions(+), 16 deletions(-)
+ drivers/iio/industrialio-buffer.c |   13 ++++---------
+ 1 file changed, 4 insertions(+), 9 deletions(-)
 
---- a/drivers/irqchip/irq-mbigen.c
-+++ b/drivers/irqchip/irq-mbigen.c
-@@ -64,20 +64,6 @@ struct mbigen_device {
- 	void __iomem		*base;
+--- a/drivers/iio/industrialio-buffer.c
++++ b/drivers/iio/industrialio-buffer.c
+@@ -57,6 +57,10 @@ struct iio_dmabuf_priv {
  };
  
--static inline unsigned int get_mbigen_node_offset(unsigned int nid)
+ struct iio_dma_fence {
++	/*
++	 * Must remain the first member so the default release callback can pass
++	 * the fence directly to dma_fence_free().
++	 */
+ 	struct dma_fence base;
+ 	struct iio_dmabuf_priv *priv;
+ 	struct work_struct work;
+@@ -1811,18 +1815,9 @@ iio_buffer_dma_fence_get_driver_name(str
+ 	return "iio";
+ }
+ 
+-static void iio_buffer_dma_fence_release(struct dma_fence *fence)
 -{
--	unsigned int offset = nid * MBIGEN_NODE_OFFSET;
+-	struct iio_dma_fence *iio_fence =
+-		container_of(fence, struct iio_dma_fence, base);
 -
--	/*
--	 * To avoid touched clear register in unexpected way, we need to directly
--	 * skip clear register when access to more than 10 mbigen nodes.
--	 */
--	if (nid >= (REG_MBIGEN_CLEAR_OFFSET / MBIGEN_NODE_OFFSET))
--		offset += MBIGEN_NODE_OFFSET;
--
--	return offset;
+-	kfree(iio_fence);
 -}
 -
- static inline unsigned int get_mbigen_vec_reg(irq_hw_number_t hwirq)
- {
- 	unsigned int nid, pin;
-@@ -86,7 +72,8 @@ static inline unsigned int get_mbigen_ve
- 	nid = hwirq / IRQS_PER_MBIGEN_NODE + 1;
- 	pin = hwirq % IRQS_PER_MBIGEN_NODE;
+ static const struct dma_fence_ops iio_buffer_dma_fence_ops = {
+ 	.get_driver_name	= iio_buffer_dma_fence_get_driver_name,
+ 	.get_timeline_name	= iio_buffer_dma_fence_get_driver_name,
+-	.release		= iio_buffer_dma_fence_release,
+ };
  
--	return pin * 4 + get_mbigen_node_offset(nid) + REG_MBIGEN_VEC_OFFSET;
-+	return pin * 4 + nid * MBIGEN_NODE_OFFSET
-+			+ REG_MBIGEN_VEC_OFFSET;
- }
- 
- static inline void get_mbigen_type_reg(irq_hw_number_t hwirq,
-@@ -101,7 +88,8 @@ static inline void get_mbigen_type_reg(i
- 	*mask = 1 << (irq_ofst % 32);
- 	ofst = irq_ofst / 32 * 4;
- 
--	*addr = ofst + get_mbigen_node_offset(nid) + REG_MBIGEN_TYPE_OFFSET;
-+	*addr = ofst + nid * MBIGEN_NODE_OFFSET
-+		+ REG_MBIGEN_TYPE_OFFSET;
- }
- 
- static inline void get_mbigen_clear_reg(irq_hw_number_t hwirq,
+ static int iio_buffer_enqueue_dmabuf(struct iio_dev_buffer_pair *ib,
 
 
