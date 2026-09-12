@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FE634BEE32;
-	Sat, 12 Sep 2026 11:22:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1374D4BEE32;
+	Sat, 12 Sep 2026 11:23:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789212180; cv=none; b=aMe7KeVqFTciAluIPNXCkChFqM580UASsTvjxyUoTREefDWBZIIoBcZ8LwrJeJP9DJQmZT2jtr/w/Rwkqm1qrE6/IWX+yUEJbHVNRjatcRel9MTDGNc/hdQS4mV4zbmYC+W5OJOnTlFUT9490pfYRx0QNk8rQH5H1+svizKGy1U=
+	t=1789212185; cv=none; b=Cu6XD+frHgjFbavf+JGT+9avUmiLfJB3BM8AM//FCEhNgDo35FzfY5dB07ntOs7wc7NICuHUTCqoYqgTeIgeih3uK+6mEUxeczJomWFG/dsmzYeEBMD3bveQobtYbkqYhzRUNQlC9/m99r2coqgJ2LK/EE4KDSVCk2uPX+nJiQc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789212180; c=relaxed/simple;
-	bh=BfjSIcTxpkdVkylpiivSAp9XGZK4Z2FOOWvRDZjBxIs=;
+	s=arc-20240116; t=1789212185; c=relaxed/simple;
+	bh=6EvIR7BD64THznDGPraQX+9RMVkQcERLvuxvCk+oSno=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kB/qQPh7gO9/GHZL4fAW9weIfzUFSqodGi2WtFauBavDEEUAkA9iRbteGm15VnuKwTRGVBmvWlpm8tCyIzDAchI0NJpnl31xQ4nqLTwX5as/gMsJSVo/15TgDeGTlVIUxTuKTCgI+uAT6ujSx5UTHRu7s8ErtwrWcVyU918dd7Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sadW6FR4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KBR5dnvBMKk2mNETDftsQNP1ng86SL4x8I0vMYXsK1JtfxrtXuQfp5gZStWD6FVEyDmYqPRBpzu4vPUkZKwJ0WJEAyaZdKKQGLLW45ZK7K+Hwxzirr2ZC4nP7lOEfiIyAYBgcO4Ly3Igxh+am3pSg/I/CwBGig0BzFBzu2N0jlI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kqvRWAUq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sadW6FR4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C7C11F000FF;
-	Sat, 12 Sep 2026 11:22:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kqvRWAUq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAA911F000FF;
+	Sat, 12 Sep 2026 11:23:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789212179;
-	bh=5KGr09/+rHr6eK59J1xOHx63gGQDJuQyg4OKSBCToLE=;
+	s=korg; t=1789212184;
+	bh=2wmKFgm8/b31MV5EjgVBLiFh40WDl6BOryesmyWR9Gk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sadW6FR4oL8kdjX0gatG3vyc0pL9nBeuZ7lPrZ9pUyvcA1TzRf7pmvuRy4hwA/YHw
-	 l9N3YmgylVJk4xF8c+YZ9JhB9FGsLRBVie0JZHPiEizpSRbwzDRl6e5dReNHP8xhUU
-	 fB2EDteyrfNy0lEAEYfSYCRTB5lMpeX0WhLmidlU=
+	b=kqvRWAUqH4Ssn4VfMjchhIk5VnMcqdRvL5CW2RSXeGWY4gavMH9gcf4uHo2aG6LRZ
+	 zVqkyzGGEd2DGtV8mK7xr5qrd5BX9nwco9lWWDV1yRDx6kgCl4aVGbJmNGI7heQV+j
+	 nQq8kp/Ok1rJPJVLcA3zqgcK2chhRh4rjtkd/lGs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiawen Wu <jiawenwu@trustnetic.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Vladimir Murzin <vladimir.murzin@arm.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Yeoreum Yun <yeoreum.yun@arm.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1377/1518] net: txgbe: fix MISC interrupt unmasking in non-MSI-X mode and device shutdown
-Date: Sat, 12 Sep 2026 08:59:06 +0200
-Message-ID: <20260912065654.693700865@linuxfoundation.org>
+Subject: [PATCH 6.18 1386/1518] arm64: process: Fix context switching MTE store-only tag check
+Date: Sat, 12 Sep 2026 08:59:15 +0200
+Message-ID: <20260912065654.901432846@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,68 +53,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiawen Wu <jiawenwu@trustnetic.com>
+From: Vladimir Murzin <vladimir.murzin@arm.com>
 
-[ Upstream commit 7bf29145d7a9564162c6b18f8d23760e141e2d15 ]
+[ Upstream commit b8f070ac3167595069feb1f794c127b805115645 ]
 
-In txgbe_misc_irq_thread_fn(), the driver unmasks the miscellaneous
-interrupt at the end of the handler using TXGBE_INTR_MISC(wx) (which
-resolves to BIT(wx->num_q_vectors)). While this is correct for MSI-X
-mode, it is incorrect for legacy INTx or single MSI modes.
+SCTLR_EL1.TCSO0 is set when user opt-in for MTE store-only tag check
+mode. However, it is not part of SCTLR_USER_MASK which imply that on
+context switch we never clear SCTLR_EL1.TCSO0, so we are leaking that
+setting into another task.
 
-Due to hardware behavior, the WX_PX_MISC_IVAR register is completely
-ignored by the hardware when MSI-X is disabled. In non-MSI-X mode, the
-hardware forcibly merges all interrupt causes (both Queue and MISC) into
-a single bit: BIT(0) of the interrupt register.
+Fix that by including SCTLR_EL1_TCSO0_MASK into SCTLR_USER_MASK
 
-Unconditionally unmasking TXGBE_INTR_MISC(wx) (e.g., BIT(1)) in non-MSI-X
-mode means the actual MISC interrupt bit (BIT(0)) is not unmasked
-promptly at the end of the MISC thread. Instead, it remains masked until
-NAPI completes its polling and unmasks the shared BIT(0). This delays the
-assertion of subsequent MISC interrupts, preventing timely handling of
-events like link state changes.
-
-Fix this by explicitly checking `pdev->msix_enabled` and falling back
-to BIT(0) as the interrupt mask for the MISC cause when MSI-X is disabled.
-
-Additionally, unconditionally unmasking the interrupt at the end of the
-thread introduces a race condition during device teardown. Guarding the
-wx_intr_enable() call with a check for the WX_STATE_DOWN bit, to prevent
-re-arming the interrupt during device shutdown.
-
-Fixes: e37546ad1f9b ("net: wangxun: revert the adjustment of the IRQ vector sequence")
-Signed-off-by: Jiawen Wu <jiawenwu@trustnetic.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/56A53978B83EEDE9+20260818023026.6631-1-jiawenwu@trustnetic.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 4d51ff5bba00 ("arm64/kernel: Support store-only mte tag check")
+Signed-off-by: Vladimir Murzin <vladimir.murzin@arm.com>
+Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
+Reviewed-by: Yeoreum Yun <yeoreum.yun@arm.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/wangxun/txgbe/txgbe_irq.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ arch/arm64/include/asm/processor.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/wangxun/txgbe/txgbe_irq.c b/drivers/net/ethernet/wangxun/txgbe/txgbe_irq.c
-index 6f29d35b767f3..5ceca13eaa5bc 100644
---- a/drivers/net/ethernet/wangxun/txgbe/txgbe_irq.c
-+++ b/drivers/net/ethernet/wangxun/txgbe/txgbe_irq.c
-@@ -164,6 +164,7 @@ static irqreturn_t txgbe_misc_irq_thread_fn(int irq, void *data)
- 	struct wx *wx = txgbe->wx;
- 	unsigned int nhandled = 0;
- 	unsigned int sub_irq;
-+	u64 misc_mask;
- 	u32 eicr;
+diff --git a/arch/arm64/include/asm/processor.h b/arch/arm64/include/asm/processor.h
+index 61d62bfd5a7bf..ba0517d80fa56 100644
+--- a/arch/arm64/include/asm/processor.h
++++ b/arch/arm64/include/asm/processor.h
+@@ -256,7 +256,7 @@ static inline void task_set_sve_vl_onexec(struct task_struct *task,
  
- 	eicr = txgbe->eicr;
-@@ -183,7 +184,9 @@ static irqreturn_t txgbe_misc_irq_thread_fn(int irq, void *data)
- 		nhandled++;
- 	}
+ #define SCTLR_USER_MASK                                                        \
+ 	(SCTLR_ELx_ENIA | SCTLR_ELx_ENIB | SCTLR_ELx_ENDA | SCTLR_ELx_ENDB |   \
+-	 SCTLR_EL1_TCF0_MASK)
++	 SCTLR_EL1_TCF0_MASK | SCTLR_EL1_TCSO0_MASK)
  
--	wx_intr_enable(wx, TXGBE_INTR_MISC(wx));
-+	misc_mask = wx->pdev->msix_enabled ? TXGBE_INTR_MISC(wx) : BIT(0);
-+	if (!test_bit(WX_STATE_DOWN, wx->state))
-+		wx_intr_enable(wx, misc_mask);
- 	return (nhandled > 0 ? IRQ_HANDLED : IRQ_NONE);
- }
- 
+ static inline void arch_thread_struct_whitelist(unsigned long *offset,
+ 						unsigned long *size)
 -- 
 2.53.0
 
