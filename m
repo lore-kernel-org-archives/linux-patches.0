@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 699342BDC0E;
-	Sat, 12 Sep 2026 12:21:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 579702F617C;
+	Sat, 12 Sep 2026 12:21:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789215689; cv=none; b=RFrsILNWejQjeu2C0sjPYYEykgO3XvVSiO72AG4NMxArANpuSQsozxoFio7451Nhd1N8yYpk4Hzin/pEpxL58ZTQfOIk4MHeKh7kwzx3dDXt0hG90vSNb1oUb5xNAeqIacprEBIJP6vplZGvETGxUnXxo9tHFSMGteCajI97gg4=
+	t=1789215694; cv=none; b=rbGX2CCU3l9oYACVl9Lgph7rAKIQU53UMdIMEIQFq+wRY9eSB9NJvUlx2TpUviw3YcGZ17E8yR9BfFmMELGGe3Nr9t5srtWQbpI2UWDr6kw3gxYb817CHXigm4+ZkCM7JSTV8fOlBM7QsBAKrrI3EzpNg2wGw6lvWL3wDGgzjmY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789215689; c=relaxed/simple;
-	bh=Nzvj/Y2M07ADVemJgRPXnudyDonzEpZ2hbf/6KYmxGM=;
+	s=arc-20240116; t=1789215694; c=relaxed/simple;
+	bh=zvhHQWsMxRdchbOdcfImlvn3BvJOo3h+nx0ULdATdcw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AQNiQrRPnqEEtBUmXx9/jZdnXD8jZZGKg2HlrsTVMsG/mXfGYKa1wmaFRUlxljcKFF5P5cslcvMDLp/pyCGqavEFw7H2go135ba13xLOtk+bYKcyHrszPdSywaljmomCbKFqJ8/ZAHspftXuUV37Mei8SgeBb/E6UBQFFe1SC4s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pzu32/f7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qT4+xyQg0QFQY14cPora2q9+k4FPuDWvprd9emWRaX+sYeu3rSHMY+O7FOz4Ihf4KO3v9ngX4FiDVLxhH9QqQF6NWY50LYcBlnBphrOoYp9uTPX7nyyErW4pmtrWvr43iU5spTZqy9Xi3o0osdAJWvdDNjUhkMjNKYsO7ojDhms=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BK3ZtjDo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pzu32/f7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 080F31F00893;
-	Sat, 12 Sep 2026 12:21:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BK3ZtjDo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D5021F000FF;
+	Sat, 12 Sep 2026 12:21:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789215688;
-	bh=Mi5m6jV6hQU9KbCnUv4mszMe3TyIj87o3ZKxO22by6w=;
+	s=korg; t=1789215693;
+	bh=wtXRUdsLtxzeVLyRbjYeClenjTNWoSVJd15+kiBw+w0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Pzu32/f7IaQFDwMVQKzo0MnmodTq4SVChM6UP8aIHHsnsUPnrqrv9wutXIbtxVuCw
-	 slz4FEz08H+1hBpqcmJC2vGP/1AB1SMRbk/oaCJW3LaMttxnv1UvXDlhsmkaYqzpGf
-	 JDheiz3OmFS79zricECZogjkXT1wihXWp0GQ9LH0=
+	b=BK3ZtjDoQfD3kv90d6fpx84g85G0uHajyePRu5R4/UHzuW/eKJCoWG8zLHdXo2N4F
+	 KH6S41AIikseC6LH3uQr9ah8iB5ubBgzSJ0haM6tFYruMOfIs2IlqC2ORRCjbQk/xH
+	 E25PeOcOHyyLW6GjMSDnXtDXtwTkASfdv3xYDYKo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Pierre Gondois <pierre.gondois@arm.com>,
+	Breno Leitao <leitao@debian.org>,
+	Sudeep Holla <sudeep.holla@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0583/1376] misc: ad525x_dpot: use driver core groups for sysfs files
-Date: Sat, 12 Sep 2026 08:50:09 +0200
-Message-ID: <20260912065620.525963259@linuxfoundation.org>
+Subject: [PATCH 6.12 0584/1376] cacheinfo: dont propagate DT/ACPI error when arch supplies info (arm64)
+Date: Sat, 12 Sep 2026 08:50:10 +0200
+Message-ID: <20260912065620.547969410@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -50,307 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit e3a8557e88eb26278eda60bf64f2ef33ce7de8bf ]
+[ Upstream commit 274259391c14166fcabae74f9fc0104223ff27a1 ]
 
-ad_dpot_probe() creates per-RDAC sysfs files manually and then
-optionally creates the command sysfs group. This leaves probe responsible
-for rolling back partial sysfs state and makes remove responsible for
-matching every file that probe created.
+cache_setup_properties() sets use_arch_info = true when DT/ACPI
+provide no cache nodes and the arch can derive the topology from
+CPU registers (e.g. arm64 reading CLIDR_EL1), but still returns the
+original -ENOENT. cache_shared_cpu_map_setup() bails on that error
+before the new flag can take effect, so the first CPU brought online
+always trips a misleading warning:
 
-Move the device attributes into driver core dev_groups for the I2C and
-SPI drivers and use an is_visible() callback to expose only the
-attributes supported by the probed device. With this shape, the driver
-core creates the sysfs files only after probe succeeds and removes them
-before the remove callback frees the driver data.
+  cacheinfo: Unable to detect cache hierarchy for CPU 0
 
-Fixes: 4eb174bee6f8 ("ad525x_dpot: new driver for AD525x digital potentiometers")
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260623015643.36508-1-pengpeng@iscas.ac.cn
+Subsequent CPUs skip cache_setup_properties() entirely because
+use_arch_info is now true, which is why only CPU0 hits it. This is
+reproducible on arm64 with the QEMU 'virt' machine, whose default DT
+has no cache nodes.
+
+Clear ret after setting use_arch_info so the caller proceeds and
+populates the shared cpu map via the arch-supplied leaves.
+
+Fixes: ef9f643a9f8b ("cacheinfo: Add use_arch[|_cache]_info field/function")
+Reviewed-by: Pierre Gondois <pierre.gondois@arm.com>
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Reviewed-by: Sudeep Holla <sudeep.holla@kernel.org>
+Link: https://patch.msgid.link/20260611-cacheinfo-v2-1-6069ef066cf3@debian.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/ad525x_dpot-i2c.c |   1 +
- drivers/misc/ad525x_dpot-spi.c |   1 +
- drivers/misc/ad525x_dpot.c     | 177 ++++++++++++++++++++-------------
- drivers/misc/ad525x_dpot.h     |   3 +
- 4 files changed, 112 insertions(+), 70 deletions(-)
+ drivers/base/cacheinfo.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/misc/ad525x_dpot-i2c.c b/drivers/misc/ad525x_dpot-i2c.c
-index 469478f7a1d33..896ad61bb9e17 100644
---- a/drivers/misc/ad525x_dpot-i2c.c
-+++ b/drivers/misc/ad525x_dpot-i2c.c
-@@ -105,6 +105,7 @@ MODULE_DEVICE_TABLE(i2c, ad_dpot_id);
- static struct i2c_driver ad_dpot_i2c_driver = {
- 	.driver = {
- 		.name	= "ad_dpot",
-+		.dev_groups = ad_dpot_groups,
- 	},
- 	.probe		= ad_dpot_i2c_probe,
- 	.remove		= ad_dpot_i2c_remove,
-diff --git a/drivers/misc/ad525x_dpot-spi.c b/drivers/misc/ad525x_dpot-spi.c
-index 263055bda48b7..1ebe629715a84 100644
---- a/drivers/misc/ad525x_dpot-spi.c
-+++ b/drivers/misc/ad525x_dpot-spi.c
-@@ -131,6 +131,7 @@ MODULE_DEVICE_TABLE(spi, ad_dpot_spi_id);
- static struct spi_driver ad_dpot_spi_driver = {
- 	.driver = {
- 		.name	= "ad_dpot",
-+		.dev_groups = ad_dpot_groups,
- 	},
- 	.probe		= ad_dpot_spi_probe,
- 	.remove		= ad_dpot_spi_remove,
-diff --git a/drivers/misc/ad525x_dpot.c b/drivers/misc/ad525x_dpot.c
-index 756ef6912b5aa..3ceb1f1caa383 100644
---- a/drivers/misc/ad525x_dpot.c
-+++ b/drivers/misc/ad525x_dpot.c
-@@ -631,66 +631,132 @@ static struct attribute *ad525x_attributes_commands[] = {
- 	NULL
- };
+diff --git a/drivers/base/cacheinfo.c b/drivers/base/cacheinfo.c
+index 89410127089b9..2af13612a40ab 100644
+--- a/drivers/base/cacheinfo.c
++++ b/drivers/base/cacheinfo.c
+@@ -332,9 +332,14 @@ static int cache_setup_properties(unsigned int cpu)
+ 	else if (!acpi_disabled)
+ 		ret = cache_setup_acpi(cpu);
  
--static const struct attribute_group ad525x_group_commands = {
--	.attrs = ad525x_attributes_commands,
-+static struct attribute *ad525x_attributes[] = {
-+	&dev_attr_rdac0.attr,
-+	&dev_attr_rdac1.attr,
-+	&dev_attr_rdac2.attr,
-+	&dev_attr_rdac3.attr,
-+	&dev_attr_rdac4.attr,
-+	&dev_attr_rdac5.attr,
-+	&dev_attr_eeprom0.attr,
-+	&dev_attr_eeprom1.attr,
-+	&dev_attr_eeprom2.attr,
-+	&dev_attr_eeprom3.attr,
-+	&dev_attr_eeprom4.attr,
-+	&dev_attr_eeprom5.attr,
-+	&dev_attr_tolerance0.attr,
-+	&dev_attr_tolerance1.attr,
-+	&dev_attr_tolerance2.attr,
-+	&dev_attr_tolerance3.attr,
-+	&dev_attr_tolerance4.attr,
-+	&dev_attr_tolerance5.attr,
-+	&dev_attr_otp0.attr,
-+	&dev_attr_otp1.attr,
-+	&dev_attr_otp2.attr,
-+	&dev_attr_otp3.attr,
-+	&dev_attr_otp4.attr,
-+	&dev_attr_otp5.attr,
-+	&dev_attr_otp0en.attr,
-+	&dev_attr_otp1en.attr,
-+	&dev_attr_otp2en.attr,
-+	&dev_attr_otp3en.attr,
-+	&dev_attr_otp4en.attr,
-+	&dev_attr_otp5en.attr,
-+	&dev_attr_inc_all.attr,
-+	&dev_attr_dec_all.attr,
-+	&dev_attr_inc_all_6db.attr,
-+	&dev_attr_dec_all_6db.attr,
-+	NULL
- };
+-	// Assume there is no cache information available in DT/ACPI from now.
+-	if (ret && use_arch_cache_info())
++	/*
++	 * No DT/ACPI cache nodes; fall back to arch-derived topology (e.g.
++	 * arm64 CLIDR_EL1) and clear the error to avoid a spurious warning.
++	 */
++	if (ret && use_arch_cache_info()) {
+ 		use_arch_info = true;
++		ret = 0;
++	}
  
--static int ad_dpot_add_files(struct device *dev,
--		unsigned int features, unsigned int rdac)
-+static int ad525x_attr_index(struct attribute *attr,
-+			     const struct attribute * const *attrs)
- {
--	int err = sysfs_create_file(&dev->kobj,
--		dpot_attrib_wipers[rdac]);
--	if (features & F_CMD_EEP)
--		err |= sysfs_create_file(&dev->kobj,
--			dpot_attrib_eeprom[rdac]);
--	if (features & F_CMD_TOL)
--		err |= sysfs_create_file(&dev->kobj,
--			dpot_attrib_tolerance[rdac]);
--	if (features & F_CMD_OTP) {
--		err |= sysfs_create_file(&dev->kobj,
--			dpot_attrib_otp_en[rdac]);
--		err |= sysfs_create_file(&dev->kobj,
--			dpot_attrib_otp[rdac]);
--	}
-+	int i;
- 
--	if (err)
--		dev_err(dev, "failed to register sysfs hooks for RDAC%d\n",
--			rdac);
-+	for (i = 0; attrs[i]; i++)
-+		if (attr == attrs[i])
-+			return i;
- 
--	return err;
-+	return -ENOENT;
+ 	return ret;
  }
- 
--static inline void ad_dpot_remove_files(struct device *dev,
--		unsigned int features, unsigned int rdac)
-+static bool ad525x_is_command_attr(struct attribute *attr)
- {
--	sysfs_remove_file(&dev->kobj,
--		dpot_attrib_wipers[rdac]);
--	if (features & F_CMD_EEP)
--		sysfs_remove_file(&dev->kobj,
--			dpot_attrib_eeprom[rdac]);
--	if (features & F_CMD_TOL)
--		sysfs_remove_file(&dev->kobj,
--			dpot_attrib_tolerance[rdac]);
--	if (features & F_CMD_OTP) {
--		sysfs_remove_file(&dev->kobj,
--			dpot_attrib_otp_en[rdac]);
--		sysfs_remove_file(&dev->kobj,
--			dpot_attrib_otp[rdac]);
-+	int i;
-+
-+	for (i = 0; ad525x_attributes_commands[i]; i++) {
-+		if (attr == ad525x_attributes_commands[i])
-+			return true;
- 	}
-+
-+	return false;
-+}
-+
-+static umode_t ad525x_is_visible(struct kobject *kobj, struct attribute *attr,
-+				 int n)
-+{
-+	struct device *dev = kobj_to_dev(kobj);
-+	struct dpot_data *data = dev_get_drvdata(dev);
-+	int rdac;
-+
-+	if (!data)
-+		return 0;
-+
-+	rdac = ad525x_attr_index(attr, dpot_attrib_wipers);
-+	if (rdac >= 0)
-+		return data->wipers & BIT(rdac) ? attr->mode : 0;
-+
-+	rdac = ad525x_attr_index(attr, dpot_attrib_eeprom);
-+	if (rdac >= 0)
-+		return (data->wipers & BIT(rdac)) && (data->feat & F_CMD_EEP) ?
-+			attr->mode : 0;
-+
-+	rdac = ad525x_attr_index(attr, dpot_attrib_tolerance);
-+	if (rdac >= 0)
-+		return (data->wipers & BIT(rdac)) && (data->feat & F_CMD_TOL) ?
-+			attr->mode : 0;
-+
-+	rdac = ad525x_attr_index(attr, dpot_attrib_otp);
-+	if (rdac >= 0)
-+		return (data->wipers & BIT(rdac)) && (data->feat & F_CMD_OTP) ?
-+			attr->mode : 0;
-+
-+	rdac = ad525x_attr_index(attr, dpot_attrib_otp_en);
-+	if (rdac >= 0)
-+		return (data->wipers & BIT(rdac)) && (data->feat & F_CMD_OTP) ?
-+			attr->mode : 0;
-+
-+	if (ad525x_is_command_attr(attr))
-+		return data->feat & F_CMD_INC ? attr->mode : 0;
-+
-+	return attr->mode;
- }
- 
-+static const struct attribute_group ad525x_group = {
-+	.attrs = ad525x_attributes,
-+	.is_visible = ad525x_is_visible,
-+};
-+
-+const struct attribute_group *ad_dpot_groups[] = {
-+	&ad525x_group,
-+	NULL
-+};
-+EXPORT_SYMBOL(ad_dpot_groups);
-+
- int ad_dpot_probe(struct device *dev,
- 		struct ad_dpot_bus_data *bdata, unsigned long devid,
- 			    const char *name)
- {
- 
- 	struct dpot_data *data;
--	int i, err = 0;
-+	int i;
- 
- 	data = kzalloc(sizeof(struct dpot_data), GFP_KERNEL);
- 	if (!data) {
--		err = -ENOMEM;
--		goto exit;
-+		dev_err(dev, "failed to create client for %s ID 0x%lX\n",
-+			name, devid);
-+		return -ENOMEM;
- 	}
- 
- 	dev_set_drvdata(dev, data);
-@@ -706,51 +772,22 @@ int ad_dpot_probe(struct device *dev,
- 	data->wipers = DPOT_WIPERS(devid);
- 
- 	for (i = DPOT_RDAC0; i < MAX_RDACS; i++)
--		if (data->wipers & (1 << i)) {
--			err = ad_dpot_add_files(dev, data->feat, i);
--			if (err)
--				goto exit_remove_files;
-+		if (data->wipers & BIT(i)) {
- 			/* power-up midscale */
- 			if (data->feat & F_RDACS_WONLY)
- 				data->rdac_cache[i] = data->max_pos / 2;
- 		}
- 
--	if (data->feat & F_CMD_INC)
--		err = sysfs_create_group(&dev->kobj, &ad525x_group_commands);
--
--	if (err) {
--		dev_err(dev, "failed to register sysfs hooks\n");
--		goto exit_free;
--	}
--
- 	dev_info(dev, "%s %d-Position Digital Potentiometer registered\n",
- 		 name, data->max_pos);
- 
- 	return 0;
--
--exit_remove_files:
--	for (i = DPOT_RDAC0; i < MAX_RDACS; i++)
--		if (data->wipers & (1 << i))
--			ad_dpot_remove_files(dev, data->feat, i);
--
--exit_free:
--	kfree(data);
--	dev_set_drvdata(dev, NULL);
--exit:
--	dev_err(dev, "failed to create client for %s ID 0x%lX\n",
--		name, devid);
--	return err;
- }
- EXPORT_SYMBOL(ad_dpot_probe);
- 
- void ad_dpot_remove(struct device *dev)
- {
- 	struct dpot_data *data = dev_get_drvdata(dev);
--	int i;
--
--	for (i = DPOT_RDAC0; i < MAX_RDACS; i++)
--		if (data->wipers & (1 << i))
--			ad_dpot_remove_files(dev, data->feat, i);
- 
- 	kfree(data);
- }
-diff --git a/drivers/misc/ad525x_dpot.h b/drivers/misc/ad525x_dpot.h
-index 72a9d6801937c..2e877c89523b5 100644
---- a/drivers/misc/ad525x_dpot.h
-+++ b/drivers/misc/ad525x_dpot.h
-@@ -10,6 +10,8 @@
- 
- #include <linux/types.h>
- 
-+struct attribute_group;
-+
- #define DPOT_CONF(features, wipers, max_pos, uid) \
- 		(((features) << 18) | (((wipers) & 0xFF) << 10) | \
- 		((max_pos & 0xF) << 6) | (uid & 0x3F))
-@@ -210,5 +212,6 @@ struct ad_dpot_bus_data {
- int ad_dpot_probe(struct device *dev, struct ad_dpot_bus_data *bdata,
- 		  unsigned long devid, const char *name);
- void ad_dpot_remove(struct device *dev);
-+extern const struct attribute_group *ad_dpot_groups[];
- 
- #endif
 -- 
 2.53.0
 
