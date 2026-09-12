@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74A75332610;
-	Sat, 12 Sep 2026 11:36:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6C022D0C75;
+	Sat, 12 Sep 2026 11:36:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789212962; cv=none; b=R2U/sHoU7gAd5Z1KoXHhlQ6AQTEjfCKgzffFQClGuzgnEl+edBI6CQUOh6L2mSViY6OUfabjyQhBdy+59VgvYEtj6z4CEgO31mjkGOyvVEp5fDfDce0yaCYBafwxnsBM6MZGffxa7I2FKxYIEAB3vdXmW+IKum9vJ+BCBVL/y/Q=
+	t=1789212967; cv=none; b=Vhp4vYa37Wy0iOaK4PovJGy9dhJGE9ITuIevA/Lu5Tpd61OdBq33eElwYsKmLQStPZTTx41IccWAH/kp0JI3FQkZh0V02G05dvHecp7CmaY8nRwOf4jxpsM2kpARbEFauNNyaC9MDv262JJLAUYEva1beKc/me1KwLVGYnmhqsA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789212962; c=relaxed/simple;
-	bh=69Rl7ANBhe/Ae7LF7DTbdYhWR31lFf3hiIyVWmOPh2g=;
+	s=arc-20240116; t=1789212967; c=relaxed/simple;
+	bh=fh2gx18fhNdnIm3jLcnKi6fS/ryGJU2lpjl/xM11Heo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sPvrww5y+eK4ZeyhMeztGV6dJxFIxo8ug7XV109I5aB85ed+RySFYnS5mgKhfx0z4zkMefa9JJ1cNMkJzsVBi53rz/LNOYJwEZiGa8lSKhn7652++T51h6cxcuRgG29eyfhSqhXBSPrnFjnK8dhdfqakA/UojmAs6s99muO7V3I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aKEfaBY/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SdWV9E9cn7GhjF9OJjgGlz4Tkz94MFdue2+PLkGcwAs/lncdSTmxQtdp+MYd7E/3NphVmznacLHv/eBzA/LGCnWnW8qeYnmFZglQGanjiPjJAVC8mFsVzhYqh93McORfHD9sZxo7DYw3Xbpp2jykKApTVDz4kJpkgkogeItuNSs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EgQlYKxK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aKEfaBY/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78CE21F000FF;
-	Sat, 12 Sep 2026 11:35:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EgQlYKxK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 644D41F000FF;
+	Sat, 12 Sep 2026 11:36:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789212960;
-	bh=MiNSzwm2+TPVeTzWI/pl4by/xaRcAPSfz+0D6SSNn44=;
+	s=korg; t=1789212965;
+	bh=JiZN784eHvbm6ymkoziEV9cCJDSc3db3UCzoubbFIZM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aKEfaBY/wmN+CScHumJQX590LkSKMI10vkPAXbbBOQ/Lhay4x7Md1QgCObOZRCtYP
-	 LSPRp9mvFgkU44rdzFGfQVrlwQWhebl5GVGzVMeFr5psJjC6jvhi4UWW67u/MqZK34
-	 L+v00Cst2wudjG5Wh/F2MiZgh6gf/O78GcUbfYxY=
+	b=EgQlYKxKOAPPSN25yrp73sayQLmFrtmhfi7Ygs+cja5w9aRvjASW+I/CPH5b8XQa3
+	 lptE+OpZ2uzGklJPiRh2XXWDIEj5Y1/0hAPNnw45EgEBoVMTL7uTbp+TlM3pIYi3o0
+	 zJnB53OpzBq0DXbbTZd1gOeMzC7dEVfclyfv24w0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	stable <stable@kernel.org>,
 	Fan Wu <fanwu01@zju.edu.cn>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	stable <stable@kernel.org>
-Subject: [PATCH 6.12 0024/1376] usb: typec: qcom-pmic-typec: drain cc_debounce_dwork if port_start() fails
-Date: Sat, 12 Sep 2026 08:40:50 +0200
-Message-ID: <20260912065608.087869500@linuxfoundation.org>
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 6.12 0025/1376] usb: typec: qcom-pmic: cancel reset_work on stop
+Date: Sat, 12 Sep 2026 08:40:51 +0200
+Message-ID: <20260912065608.109943663@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -54,43 +55,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Fan Wu <fanwu01@zju.edu.cn>
 
-commit c9273c83885835dbd1e8835d5665dfb8503d65e0 upstream.
+commit 7b0df6efd143f8085bdb68778a013a46f1349913 upstream.
 
-cc_debounce_dwork can be queued before port_start() fails:
-tcpm_register_port() runs first, and its state machine may invoke
-set_cc() or start_toggling() from the TCPM worker.  The error path then
-calls tcpm_unregister_port(), whose worker flush may queue the delayed
-work before devres frees pmic_typec_port.
+pdphy_stop() disables IRQs but leaves reset_work pending.  If the IRQ
+handler schedules it just before disable_irq(), the work runs after
+remove() frees the struct via devm.
 
-Disable and drain the delayed work directly at port_start()'s error
-exit.  Do not use port_stop() for this path: its IRQs use IRQF_NO_AUTOEN
-and are enabled only after a successful port_start().
+Call cancel_work_sync() after disabling IRQs to close the window.
 
 This issue was found by an in-house static analysis tool.
 
 Fixes: a4422ff22142 ("usb: typec: qcom: Add Qualcomm PMIC Type-C driver")
-Cc: stable <stable@kernel.org>  # v6.10+
-Suggested-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc: stable <stable@kernel.org>
 Assisted-by: Codex:gpt-5.6
 Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://patch.msgid.link/20260820135307.153773-3-fanwu01@zju.edu.cn
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://patch.msgid.link/20260819161448.76597-1-fanwu01@zju.edu.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_port.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_port.c
-+++ b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_port.c
-@@ -683,6 +683,9 @@ static int qcom_pmic_typec_port_start(st
- 		enable_irq(pmic_typec_port->irq_data[i].irq);
+--- a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy.c
++++ b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy.c
+@@ -544,6 +544,8 @@ static void qcom_pmic_typec_pdphy_stop(s
+ 	for (i = 0; i < pmic_typec_pdphy->nr_irqs; i++)
+ 		disable_irq(pmic_typec_pdphy->irq_data[i].irq);
  
- done:
-+	if (ret)
-+		disable_delayed_work_sync(&pmic_typec_port->cc_debounce_dwork);
++	cancel_work_sync(&pmic_typec_pdphy->reset_work);
 +
- 	return ret;
- }
+ 	qcom_pmic_typec_pdphy_reset_on(pmic_typec_pdphy);
  
+ 	regulator_disable(pmic_typec_pdphy->vdd_pdphy);
 
 
