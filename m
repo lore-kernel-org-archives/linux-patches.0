@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94A7737AA97;
-	Sat, 12 Sep 2026 08:11:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADAF1360EF5;
+	Sat, 12 Sep 2026 08:12:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789200720; cv=none; b=OEIjG7ThXqDk3gwJv8x5mbUrytxHxpJEfrQCMbuLW0V7q/iSXjMtMN4g15vT4odSPG5NGiSbY6nCJDeE12FGraECY5O6ZAiZ2oOTaM34JlNb5TAcZr/IKFo6RTIxQoaOhJv0Z5dwic4+bJ1DQAqAq9aAAbdkAncFpHsOiM27kgs=
+	t=1789200724; cv=none; b=XISpou1egQmmBgBA7Z+wrCAldDOcbfPZ1hBxkHR+BLc5+TNBNrRVJWxJPQOhWcFdgMizTR40w6jNnP+uGLsePtuGpfw7xmOtd9k3jwftQNcLNJKtnlnK9OEt67yX9POvkORYyFpgj+2A0L/vQoHJtZ+gtXs1zpHUxT3uaYFzb9U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789200720; c=relaxed/simple;
-	bh=Wk3vV6y7wENdaSgdo0LLBcpnKmG2QlMDTj5RVVN1uGw=;
+	s=arc-20240116; t=1789200724; c=relaxed/simple;
+	bh=njyTi5uy2FS8Fgrqf/5v5u1+pwzJsnMHBQRgmvI7Ip4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GagLdbM0LyWS+5JtG9PX6AMN4OBmjjz+ThO3XPhNSLEhMhuNb+rTMzAqkiim3HwQJOIbSPZ6wj95SGh04DuNfloHaLIbhjQC4sAQeAx334tJNC6sDdrsitEu3x6iS1bVwFVfOUq4vBkfuXWr2caL2+u1711j23XUxAsSbFEJE0s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hDpCDUkN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Rml0B7T7NuSUnMfkHJdKd/OY0bUcB/leqefru42LeUd0azSMpVWLXTyVopr4k0b6xjh6REmD4a63Ow5BIms+3ff3G/QipdjrFBYrKjhQdm6maDE2wSZ143EDo7RsV5biKZg6kuY5VmZS1M01ROh6APwP3azYPU3ztqGIG0DagMM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JibQAmly; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hDpCDUkN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EB191F000FF;
-	Sat, 12 Sep 2026 08:11:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JibQAmly"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B12891F000FF;
+	Sat, 12 Sep 2026 08:12:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789200719;
-	bh=iorvhniXs+fPIgV30HchORzBiYq52q2saSMLdAoR0vA=;
+	s=korg; t=1789200723;
+	bh=sczfu4tKFu61lGvrg9k2jhNutr2Ly+1tWqw/EiOdXSs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hDpCDUkNyNsDEH/pmfilZ/c+gk3pQ25RMRxuoGCMpEh6EZFIIhj3wCPkDvzyHes+L
-	 XuZdtTpelO37Y6A9aNAeobcsE23g8UxVROhcmPUAZTUkG3OLFCp+CbQfpZ93t7HJh5
-	 KlRsMtuduEsfBPxw1hk6ma3rB4sNFzEoCr3uC7iA=
+	b=JibQAmlyY6VL1QNDAjaNL5l8q7VaObetGzOoAzJhnZ3CrklSLsr2snSyM9w9jR2xg
+	 VSgd7N9Tt4vCsDf9nM3ACdsXxFVLkXNGq3C6/6OIoMVrT1OrL4V75K28+iX4qeI6eo
+	 Nua99enGdRq8U1VoW3mz4mM8X3JrHu3Vog1SavC0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Naveen Kumar Chaudhary <naveen.osdev@gmail.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Waiman Long <longman@redhat.com>,
-	Dmitry Ilvokhin <d@ilvokhin.com>,
+	Alexis Savery <asavery@google.com>,
+	Tzung-Bi Shih <tzungbi@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0848/1815] locking/lockdep: Fix NULL pointer dereference in __lock_set_class()
-Date: Sat, 12 Sep 2026 08:43:18 +0200
-Message-ID: <20260912065708.826791153@linuxfoundation.org>
+Subject: [PATCH 7.2 0822/1815] platform/chrome: lightbar: Limit payload to max packet size
+Date: Sat, 12 Sep 2026 08:42:52 +0200
+Message-ID: <20260912065708.210912299@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -53,50 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Naveen Kumar Chaudhary <naveen.osdev@gmail.com>
+From: Alexis Savery <asavery@google.com>
 
-[ Upstream commit 7577e00b9ab506202b9f1a33de3cc8cc6413a4db ]
+[ Upstream commit ed1d1f519c56c6c2ffa13f3d52cd77beb023db13 ]
 
-register_lock_class() can return NULL when the lock class pool is
-exhausted, graph_lock() fails, or key validation fails. However,
-__lock_set_class() uses the return value directly in pointer arithmetic
-without a NULL check:
+The LIGHTBAR_CMD_SET_PROGRAM command uses an 8-bit size field for its
+payload length, but the protocol-negotiated `max_request` may exceed
+the maximum value an 8-bit integer can represent.
 
-  class = register_lock_class(lock, subclass, 0);
-  hlock->class_idx = class - lock_classes;
+When this occurs, large payloads (e.g., >255 bytes) integer wrap the
+8-bit size variable when assigning `param->set_program_ex.size`, causing
+truncation and parse failures downstream in the EC firmware stack.
 
-If class is NULL, this computes a wild offset that corrupts
-hlock->class_idx. The subsequent reacquire_held_locks() call will
-invoke hlock_class() with this corrupted index, leading to a NULL or
-out-of-bounds pointer dereference.
+Clamp `max_size` to the maximum value the structural size field can
+support.
 
-Add the missing NULL check, consistent with how __lock_acquire() already
-handles this case at the same call site.
-
-Fixes: 64aa348edc61 ("lockdep: lock_set_subclass - reset a held lock's subclass")
-Signed-off-by: Naveen Kumar Chaudhary <naveen.osdev@gmail.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Waiman Long <longman@redhat.com>
-Reviewed-by: Dmitry Ilvokhin <d@ilvokhin.com>
-Link: https://patch.msgid.link/h2kfw43n4527x6mgi2lwpz2rieqnfzgictpv4wr5nyfjkc47co@2r5vz4uz44db
+Fixes: 9600b8bdbfe4 ("platform/chrome: lightbar: Add support for large sequence")
+Signed-off-by: Alexis Savery <asavery@google.com>
+Link: https://lore.kernel.org/r/20260730204240.2227178-1-asavery@google.com
+Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/locking/lockdep.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/platform/chrome/cros_ec_lightbar.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/locking/lockdep.c b/kernel/locking/lockdep.c
-index 2d4c5bab5af88..e0de811148242 100644
---- a/kernel/locking/lockdep.c
-+++ b/kernel/locking/lockdep.c
-@@ -5437,6 +5437,8 @@ __lock_set_class(struct lockdep_map *lock, const char *name,
- 			      lock->wait_type_outer,
- 			      lock->lock_type);
- 	class = register_lock_class(lock, subclass, 0);
-+	if (!class)
-+		return 0;
- 	hlock->class_idx = class - lock_classes;
+diff --git a/drivers/platform/chrome/cros_ec_lightbar.c b/drivers/platform/chrome/cros_ec_lightbar.c
+index ac919c14c631e..1a89e90957cde 100644
+--- a/drivers/platform/chrome/cros_ec_lightbar.c
++++ b/drivers/platform/chrome/cros_ec_lightbar.c
+@@ -504,9 +504,14 @@ static ssize_t program_store(struct device *dev, struct device_attribute *attr,
+ 			return -EINVAL;
+ 		}
+ 	} else {
++		/*
++		 * Bound the payload strictly by the maximum value the structural
++		 * size field can natively support.
++		 */
+ 		extra_bytes = offsetof(typeof(*param), set_program_ex) +
+ 			sizeof(param->set_program_ex);
+-		max_size = ec->ec_dev->max_request - extra_bytes;
++		max_size = min_t(size_t, ec->ec_dev->max_request - extra_bytes,
++				 type_max(typeof(param->set_program_ex.size)));
+ 	}
  
- 	curr->lockdep_depth = i;
+ 	msg = alloc_lightbar_cmd_msg(ec);
 -- 
 2.53.0
 
