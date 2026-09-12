@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C199F2E06E4;
-	Sat, 12 Sep 2026 12:20:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 601842F531B;
+	Sat, 12 Sep 2026 12:20:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789215606; cv=none; b=AztSzz7ZjrmuIgFfVdH6kFoFaSkwfo2gEdDxMAMl1R1yF2fB4oTVFjSx9vdeXE4u0FehyRskFby7LI48B4rNyigQh1q6BcpmSGUbmPhfHwAusjUMkU0LKWn57QngXVP3oOxBp8RYWDiJa79TEgK/cBFT4XMTjLir9BYtNEUMAXU=
+	t=1789215611; cv=none; b=ncFQ/N66j1qwsdpRBc3MwOM8rKVkqWAJxGwKW2WNXznbT0zwtqPReGTaf+caXNFbYqIYPW24e3xJBw5YIGKGEyTjvZvhjk4NcocMMWyAWwqgnPpsbs9uSDX0L3NPGdBk+CAQ9pjtEeKhf0zDHlQMZwAQifmwBjyh5J4Eaf6DB0U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789215606; c=relaxed/simple;
-	bh=AmzLnW91Z+TUt/xNLeMhEyNaM0KpGAXwN9/jwG24FQQ=;
+	s=arc-20240116; t=1789215611; c=relaxed/simple;
+	bh=44xbNpGG/oJAvF9zy2sqz//AfhrUVyfLvtOVSGUGJxM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=epS0wmftJ/wvnUwJmO/RUAPJ3YyPiCmG5qPLDkW9RFiSAwdwgFQDnX4dxBYwqOkuJdpVVyY2IbfWADLY4OWlK8zLKEyNTWjqYKk/w5V+KYGOVPsu3oyV8gFJhQiYvosfkijl/Jko4I1StfDJxXVZST/fvpJm+zB9vouZ52sR/gk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s+YiMWUX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cCLzu/+AyP+h+HRdp0Id93g8G5IM20Z3qF2ARDF7XCZRSPjxqylkocTb0iwyj1I4fDuMwN9p2vHktWoSqbV6wAVTr80ZmrKhRHuXE+MPOGry9yVMPPxl9bih2ArxSJNNtP3Uf8flOFd973lOtjoVb3WX4QTCbyfF8fUojiJxNHU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fu1BPVmA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s+YiMWUX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C52BA1F000FF;
-	Sat, 12 Sep 2026 12:20:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fu1BPVmA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 673FB1F000FF;
+	Sat, 12 Sep 2026 12:20:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789215605;
-	bh=8OitU4/HXIGF2B5CYZLE5LtBfXtVfNiBXBPurLarhIU=;
+	s=korg; t=1789215610;
+	bh=OfbTQjwo2R1BrjDdo+Z3rbXzFxh24N8ZoLfCo+9TLwM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=s+YiMWUX3Ut9MG3WRL9Q78dj5ucQlxszYkRzdbxKG7OPKX6Ce4dIX7jKNgzQ9GqN0
-	 5FoRAQA7udqDJgKFoTKdXR1BEz+KaRNUezO4ON4BIy41Go1mI6ei5upD2g12DHlAE2
-	 2nIazim19Ae0dHgvgDzdj7gtlP719Fml7gx3xC1w=
+	b=Fu1BPVmAuRmMlflGYBwAgOSHdTeGUb5iFiDYG2mRyZOLwWcXdwVEHYfBqaQRmfPyC
+	 Z8lyBOwoV4S9inhIMcHLg7yZKVSKIIr2M7OgxwZ2Q9K5qZIculgiFyKw0TbUAA2pc6
+	 YiwNAM39be3YTTk7hkGLzsT7asaH0oDc11UAU0AM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Avraham Stern <avraham.stern@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0559/1376] arm64: dts: qcom: msm8996-xiaomi-gemini: Fix up ti,drv2604 enable GPIO
-Date: Sat, 12 Sep 2026 08:49:45 +0200
-Message-ID: <20260912065619.993631541@linuxfoundation.org>
+Subject: [PATCH 6.12 0568/1376] wifi: iwlwifi: mei: pass correct argument to function
+Date: Sat, 12 Sep 2026 08:49:54 +0200
+Message-ID: <20260912065620.190915975@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -52,37 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+From: Avraham Stern <avraham.stern@intel.com>
 
-[ Upstream commit 569413a98a1761782a0770aa85d20a2c78893279 ]
+[ Upstream commit 905f57aefde4f4092a411c8a55856182fb1c7598 ]
 
-Update the 'enable-gpio' property name to 'enable-gpios' to conform to
-the bindings for the TI DRV2604 haptics module. While at it, use the
-GPIO_ACTIVE_HIGH define instead of the raw literal.
+The first argument to iwl_mei_write_cyclic_buf() should be the cldev
+but the q_head pointer is passed instead. Fix it.
 
-Fixes: 4ac46b3682c5 ("arm64: dts: qcom: msm8996: xiaomi-gemini: Add support for Xiaomi Mi 5")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260625-topic-ti_drv2604_dtwarn-v1-1-76e91fcafbe8@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 652291601459 ("iwlwifi: mei: don't rely on the size from the shared area")
+Signed-off-by: Avraham Stern <avraham.stern@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20260715220243.24cea60c6428.I42301010c31487b1458faa967b22c8320b0cfd23@changeid
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dts | 2 +-
+ drivers/net/wireless/intel/iwlwifi/mei/main.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dts b/arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dts
-index dbad8f57f2fa3..f145e8ee5f80b 100644
---- a/arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dts
-@@ -39,7 +39,7 @@ &blsp2_i2c3 {
- 	haptics: drv2604@5a {
- 		compatible = "ti,drv2604";
- 		reg = <0x5a>;
--		enable-gpio = <&tlmm 93 0x00>;
-+		enable-gpios = <&tlmm 93 GPIO_ACTIVE_HIGH>;
- 		mode = <DRV260X_LRA_MODE>;
- 		library-sel = <DRV260X_LIB_LRA>;
- 		pinctrl-names = "default","sleep";
+diff --git a/drivers/net/wireless/intel/iwlwifi/mei/main.c b/drivers/net/wireless/intel/iwlwifi/mei/main.c
+index c083af5240593..1486702d37e75 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mei/main.c
++++ b/drivers/net/wireless/intel/iwlwifi/mei/main.c
+@@ -458,7 +458,7 @@ static int iwl_mei_send_sap_msg_payload(struct mei_cl_device *cldev,
+ 	notif_q = &dir->q_ctrl_blk[SAP_QUEUE_IDX_NOTIF];
+ 	q_head = mei->shared_mem.q_head[SAP_DIRECTION_HOST_TO_ME][SAP_QUEUE_IDX_NOTIF];
+ 	q_sz = mei->shared_mem.q_size[SAP_DIRECTION_HOST_TO_ME][SAP_QUEUE_IDX_NOTIF];
+-	ret = iwl_mei_write_cyclic_buf(q_head, notif_q, q_head, hdr, q_sz);
++	ret = iwl_mei_write_cyclic_buf(cldev, notif_q, q_head, hdr, q_sz);
+ 
+ 	if (ret < 0)
+ 		return ret;
 -- 
 2.53.0
 
