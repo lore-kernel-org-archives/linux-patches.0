@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91B2B31F9B4;
-	Sat, 12 Sep 2026 14:59:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB747274B46;
+	Sat, 12 Sep 2026 14:59:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789225155; cv=none; b=X0mJNQ5xy04fJKgcz8UtjsVp2h6Ec/zmuXr37XOW6yfPz3uDWvrlWS3MUqxSR2U+wI3RGt/sbWbQuxtAhQAiCnJMb2z2UiIjuUwtW9TDSoiI6j4umUgg2qPQwxRPQRayBUKBCYlZ6uxOpcHmiTzOndg6WEDCnzDvYGdZ2hLkJMs=
+	t=1789225161; cv=none; b=nvVM51OoEV1AT9rdJpJkdnzXR2ibivDxSKPxZkXtnq6WmXxJwU0a3qWHCgV798CpRMCUx87kIbdkedE4igE4j5HsdBz8O4Mxr8JTTTlAfCpblpnR5uOraw4y2bBPlcgJspNxrH4FxQs9UybfBS3fBYN+1FvXzntb63sfHNzd4NE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789225155; c=relaxed/simple;
-	bh=G6Du4Sn+HSaozpgNOaiguSjlc27Azbe/CXz3B+Ycos0=;
+	s=arc-20240116; t=1789225161; c=relaxed/simple;
+	bh=rz9P+e6rEP1EqKRBLfA0GHioW1wOarmTSEqwUzB0UT8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XDS2jw+KG1v6O5Beb5/CINwSTRlwpr2pOZvixbJkVyUBlDN1tZ6OTN6JGiPfT1aVGSfciIEsJc68Z9mTr/4paRNrac4a9KRz8QGLHRrUqWm5/lD8laBIFDrPJyFK1xtXpllPR5X+kztSu/JHOqjdjPk7c7HP+EFG22giBKSz2lQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xm5ZyNib; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AbQWmmsGpjbGCxGU+5JuEnUohczdwzfT8enlYXZ/WTdvaE2NYdR8P9/1p1G3XfXlYPZHnVsMOYp6PW3K0HsGzqKiQOJu6UuDQs9uYdKUm3gURRE65lBqiAtsD2cDUpAzZKQgHcEVQxjk6DelSY++cEy/4oS4S2KDKl1qYPcwass=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lZo35UMc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xm5ZyNib"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E5EB1F000FF;
-	Sat, 12 Sep 2026 14:59:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lZo35UMc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 732C81F000FF;
+	Sat, 12 Sep 2026 14:59:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789225154;
-	bh=++VHVOodfpwWFyTIaeao6It6EmgJnSE7zofZlibTF4A=;
+	s=korg; t=1789225159;
+	bh=fWYhcbTAE340c3AJnK8Vo5nNroY5dzDT5oS7rx7n7yA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Xm5ZyNibJ0qR4voWbOHbg4rvPN0kRWsbDeSfhnUrsMQ2nneeJUaqrzdbvuohCtuiQ
-	 KTc7sjfYIENIU/IZ3q6sneMMbgKpr19okioS5OPx6+7QcmrN5DkDQ7C7CHj4uY3c/i
-	 cAc3CAQHbGNzug+VY5Z1QlaLTarWMaa5apjiTaXQ=
+	b=lZo35UMc9ZVAo0SIOd2LTutGJExaw1Kk8VmFJgtufQZd5QCvQwNtAK0bndNRlLG/r
+	 cpEv9z5SHKWk9poKnqbB7ENUkd+eJPj2khuzvsEWJa8AODWngupxGS70rxwAqOLKvu
+	 Z7PEh8Q9H3qTWepvagm0hfwnJ5Zti593NMcsISzg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1097/1424] drm/amdgpu/gfx6: Use PFP on the compute queues too
-Date: Sat, 12 Sep 2026 08:58:49 +0200
-Message-ID: <20260912065631.873701430@linuxfoundation.org>
+Subject: [PATCH 6.6 1088/1424] mfd: rave-sp: validate received frame payload lengths
+Date: Sat, 12 Sep 2026 08:58:40 +0200
+Message-ID: <20260912065631.671999587@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -45,85 +45,184 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Timur Kristóf <timur.kristof@gmail.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 60f20946cd318518ddc2c0da12103c666b2b9564 ]
+[ Upstream commit 0be718b5451bd83865d6e2a8d750ca7886c4772a ]
 
-On GFX6, the compute rings use the same CP path as
-the graphics ring. The only difference is that they
-don't support draw commands. (As opposed to GFX7 and
-newer which have a separate command parser that is
-called MEC for compute queues.)
+A received RAVE-SP frame contains protocol data followed by a
+variant-specific one- or two-byte checksum. rave_sp_receive_frame() derives
+a checksum pointer before proving that the frame contains the checksum,
+then passes the checksum-inclusive length to handlers that index the
+command, acknowledgment ID and event-data bytes or derive a reply payload
+length.
 
-This means that we have to take into consideration
-that the PFP also exists on compute queues on GFX6:
+Name those protocol field offsets, prove the checksum extent before
+deriving the protocol-data length, pass only that data length to the
+handlers, and require the complete event or reply prefix before consuming
+it.
 
-Use PFP for register writes on both graphics and
-compute queues.
-
-In the pipeline sync, use the PFP to wait for the
-previous fence (and not the ME) to prevent the PFP
-from starting to execute the next submission while
-the ME is still in the previous submission.
-
-After a VM flush, emit PFP_SYNC_ME on compute
-queues as well.
-
-Fixes: 2cd46ad22383 ("drm/amdgpu: add graphic pipeline implementation for si v8")
-Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: 538ee27290fa ("mfd: Add driver for RAVE Supervisory Processor")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://lore.kernel.org/all/20260706092337.78754-1-pengpeng@iscas.ac.cn/
+Link: https://patch.msgid.link/20260720115523.99956-1-pengpeng@iscas.ac.cn
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/gfx_v6_0.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/mfd/rave-sp.c | 64 +++++++++++++++++++++++++++++--------------
+ 1 file changed, 44 insertions(+), 20 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v6_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v6_0.c
-index a8bf6c753b2ff..c2a6fcc4eda7f 100644
---- a/drivers/gpu/drm/amd/amdgpu/gfx_v6_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/gfx_v6_0.c
-@@ -2326,7 +2326,7 @@ static int gfx_v6_0_cp_resume(struct amdgpu_device *adev)
+diff --git a/drivers/mfd/rave-sp.c b/drivers/mfd/rave-sp.c
+index da50eba100149..458b7334b323b 100644
+--- a/drivers/mfd/rave-sp.c
++++ b/drivers/mfd/rave-sp.c
+@@ -63,6 +63,12 @@
+ #define RAVE_SP_TX_BUFFER_SIZE				\
+ 	(RAVE_SP_STX_ETX_SIZE + 2 * RAVE_SP_RX_BUFFER_SIZE)
  
- static void gfx_v6_0_ring_emit_pipeline_sync(struct amdgpu_ring *ring)
++enum rave_sp_frame_offset {
++	RAVE_SP_FRAME_CODE_OFFSET,
++	RAVE_SP_FRAME_ACK_ID_OFFSET,
++	RAVE_SP_FRAME_DATA_OFFSET,
++};
++
+ /**
+  * enum rave_sp_deframer_state - Possible state for de-framer
+  *
+@@ -352,7 +358,7 @@ int rave_sp_exec(struct rave_sp *sp,
+ 	int command, ret = 0;
+ 	u8 ackid;
+ 
+-	command = sp->variant->cmd.translate(data[0]);
++	command = sp->variant->cmd.translate(data[RAVE_SP_FRAME_CODE_OFFSET]);
+ 	if (command < 0)
+ 		return command;
+ 
+@@ -366,8 +372,8 @@ int rave_sp_exec(struct rave_sp *sp,
+ 	sp->reply = &reply;
+ 	mutex_unlock(&sp->reply_lock);
+ 
+-	data[0] = command;
+-	data[1] = ackid;
++	data[RAVE_SP_FRAME_CODE_OFFSET] = command;
++	data[RAVE_SP_FRAME_ACK_ID_OFFSET] = ackid;
+ 
+ 	rave_sp_write(sp, data, data_size);
+ 
+@@ -388,16 +394,23 @@ EXPORT_SYMBOL_GPL(rave_sp_exec);
+ static void rave_sp_receive_event(struct rave_sp *sp,
+ 				  const unsigned char *data, size_t length)
  {
--	int usepfp = (ring->funcs->type == AMDGPU_RING_TYPE_GFX);
-+	int usepfp = 1;
- 	uint32_t seq = ring->fence_drv.sync_seq;
- 	uint64_t addr = ring->fence_drv.gpu_addr;
+-	u8 cmd[] = {
+-		[0] = rave_sp_reply_code(data[0]),
+-		[1] = data[1],
+-	};
++	unsigned long action;
++	u8 cmd[RAVE_SP_FRAME_DATA_OFFSET];
++
++	if (length < RAVE_SP_FRAME_DATA_OFFSET + 1) {
++		dev_warn(&sp->serdev->dev, "Dropping short event frame\n");
++		return;
++	}
++
++	cmd[RAVE_SP_FRAME_CODE_OFFSET] =
++		rave_sp_reply_code(data[RAVE_SP_FRAME_CODE_OFFSET]);
++	cmd[RAVE_SP_FRAME_ACK_ID_OFFSET] = data[RAVE_SP_FRAME_ACK_ID_OFFSET];
  
-@@ -2344,7 +2344,7 @@ static void gfx_v6_0_ring_emit_pipeline_sync(struct amdgpu_ring *ring)
- static void gfx_v6_0_ring_emit_vm_flush(struct amdgpu_ring *ring,
- 					unsigned vmid, uint64_t pd_addr)
+ 	rave_sp_write(sp, cmd, sizeof(cmd));
+ 
+-	blocking_notifier_call_chain(&sp->event_notifier_list,
+-				     rave_sp_action_pack(data[0], data[2]),
+-				     NULL);
++	action = rave_sp_action_pack(data[RAVE_SP_FRAME_CODE_OFFSET],
++				     data[RAVE_SP_FRAME_DATA_OFFSET]);
++	blocking_notifier_call_chain(&sp->event_notifier_list, action, NULL);
+ }
+ 
+ static void rave_sp_receive_reply(struct rave_sp *sp,
+@@ -405,27 +418,35 @@ static void rave_sp_receive_reply(struct rave_sp *sp,
  {
--	int usepfp = (ring->funcs->type == AMDGPU_RING_TYPE_GFX);
-+	int usepfp = 1;
+ 	struct device *dev = &sp->serdev->dev;
+ 	struct rave_sp_reply *reply;
+-	const  size_t payload_length = length - 2;
++	size_t payload_length;
++
++	if (length < RAVE_SP_FRAME_DATA_OFFSET) {
++		dev_warn(dev, "Dropping short reply frame\n");
++		return;
++	}
++	payload_length = length - RAVE_SP_FRAME_DATA_OFFSET;
  
- 	amdgpu_gmc_emit_flush_gpu_tlb(ring, vmid, pd_addr);
+ 	mutex_lock(&sp->reply_lock);
+ 	reply = sp->reply;
  
-@@ -2368,7 +2368,7 @@ static void gfx_v6_0_ring_emit_vm_flush(struct amdgpu_ring *ring,
- static void gfx_v6_0_ring_emit_wreg(struct amdgpu_ring *ring,
- 				    uint32_t reg, uint32_t val)
+ 	if (reply) {
+-		if (reply->code == data[0] && reply->ackid == data[1] &&
++		if (reply->code == data[RAVE_SP_FRAME_CODE_OFFSET] &&
++		    reply->ackid == data[RAVE_SP_FRAME_ACK_ID_OFFSET] &&
+ 		    payload_length >= reply->length) {
+ 			/*
+ 			 * We are relying on memcpy(dst, src, 0) to be a no-op
+ 			 * when handling commands that have a no-payload reply
+ 			 */
+-			memcpy(reply->data, &data[2], reply->length);
++			memcpy(reply->data, &data[RAVE_SP_FRAME_DATA_OFFSET],
++			       reply->length);
+ 			complete(&reply->received);
+ 			sp->reply = NULL;
+ 		} else {
+ 			dev_err(dev, "Ignoring incorrect reply\n");
+ 			dev_dbg(dev, "Code:   expected = 0x%08x received = 0x%08x\n",
+-				reply->code, data[0]);
++				reply->code, data[RAVE_SP_FRAME_CODE_OFFSET]);
+ 			dev_dbg(dev, "ACK ID: expected = 0x%08x received = 0x%08x\n",
+-				reply->ackid, data[1]);
++				reply->ackid, data[RAVE_SP_FRAME_ACK_ID_OFFSET]);
+ 			dev_dbg(dev, "Length: expected = %zu received = %zu\n",
+ 				reply->length, payload_length);
+ 		}
+@@ -439,10 +460,10 @@ static void rave_sp_receive_frame(struct rave_sp *sp,
+ 				  size_t length)
  {
--	int usepfp = (ring->funcs->type == AMDGPU_RING_TYPE_GFX);
-+	int usepfp = 1;
+ 	const size_t checksum_length = sp->variant->checksum->length;
+-	const size_t payload_length  = length - checksum_length;
+-	const u8 *crc_reported       = &data[payload_length];
+ 	struct device *dev           = &sp->serdev->dev;
+ 	u8 crc_calculated[RAVE_SP_CHECKSUM_SIZE];
++	const u8 *crc_reported;
++	size_t payload_length;
  
- 	amdgpu_ring_write(ring, PACKET3(PACKET3_WRITE_DATA, 3));
- 	amdgpu_ring_write(ring, (WRITE_DATA_ENGINE_SEL(usepfp) |
-@@ -3565,7 +3565,7 @@ static const struct amdgpu_ring_funcs gfx_v6_0_ring_funcs_compute = {
- 	.emit_frame_size =
- 		5 + 5 + /* hdp flush / invalidate */
- 		7 + /* gfx_v6_0_ring_emit_pipeline_sync */
--		SI_FLUSH_GPU_TLB_NUM_WREG * 5 + 7 + /* gfx_v6_0_ring_emit_vm_flush */
-+		SI_FLUSH_GPU_TLB_NUM_WREG * 5 + 7 + 2 + /* gfx_v6_0_ring_emit_vm_flush */
- 		14 + 14 + 14 + /* gfx_v6_0_ring_emit_fence x3 for user fence, vm fence */
- 		3 * 2 + /* gfx_v6_0_ring_emit_sb x3 (from amdgpu_vm_flush, amdgpu_ib_schedule) */
- 		5, /* SURFACE_SYNC */
+ 	if (unlikely(checksum_length > sizeof(crc_calculated))) {
+ 		dev_warn(dev, "Checksum too long, dropping\n");
+@@ -457,6 +478,9 @@ static void rave_sp_receive_frame(struct rave_sp *sp,
+ 		return;
+ 	}
+ 
++	payload_length = length - checksum_length;
++	crc_reported = &data[payload_length];
++
+ 	sp->variant->checksum->subroutine(data, payload_length,
+ 					  crc_calculated);
+ 
+@@ -465,10 +489,10 @@ static void rave_sp_receive_frame(struct rave_sp *sp,
+ 		return;
+ 	}
+ 
+-	if (rave_sp_id_is_event(data[0]))
+-		rave_sp_receive_event(sp, data, length);
++	if (rave_sp_id_is_event(data[RAVE_SP_FRAME_CODE_OFFSET]))
++		rave_sp_receive_event(sp, data, payload_length);
+ 	else
+-		rave_sp_receive_reply(sp, data, length);
++		rave_sp_receive_reply(sp, data, payload_length);
+ }
+ 
+ static int rave_sp_receive_buf(struct serdev_device *serdev,
 -- 
 2.53.0
 
