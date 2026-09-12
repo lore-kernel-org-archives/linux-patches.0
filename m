@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 199BE32B126;
-	Sat, 12 Sep 2026 19:02:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 239684369A;
+	Sat, 12 Sep 2026 19:02:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789239748; cv=none; b=bzLV9bZ2HWuh0E1GnyWawFxOdIn/c+srJnw+HjcfB2caXNp7Fz60VItqN2KEAsy5rT/s5DC4ePMJ5o9y/5blekWsXAVQil2jl6oBQ+9T0gW+x+RuLb1xrFB27EMgw8eR6oHNKwm9IzsXppqOwd7xK1aXlRyDb1SgLg7seKG3CZc=
+	t=1789239753; cv=none; b=W5lPVs5y0NpIWx5IibEWYazzG23FluKWAK911QpUwBOoUaxnQn29QARn6Cd6AgzT0pgAftnbZKHqMxhlAfaybDNNU0BYU2YEVX7ke+6UWunKqoH+8YZPUOjlLtDRq1KKyD++dwz0KtVN80j0g0LExGCcmpsD35L17Ufpx/Jnsc8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789239748; c=relaxed/simple;
-	bh=KrY1TRv/aLz2grDIZtS5K0ppeC3f1OwR+M+m1cDziG8=;
+	s=arc-20240116; t=1789239753; c=relaxed/simple;
+	bh=fh7eMKFsK2gzINw4pXFXALXMqOVmbfxR9QmSoZRDWKg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iC1wWSVqhXTf+BOW6HChGP5j+KqiQeEZqs+trIyrVvJpvbyyCXSURWK61DHQyCu04ts854Ip60VhcvAgkhkmGRLv6rNxKhUMSU+zn+7RcaSac0G9T/cFFrxFL+88tq3JnCqO7KqpCQE8lsS8ZywDMwRm6JO6VtIGkuATpMq9eUQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=feDzlCIS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MDVQOZbuJdY/RmDuDid0LdA4A8iVUl1ezONIXjnvA2pgkCaSsqY+KUFDEeTxCVgsGk56CAwnuONuGM4jUyk/gRvGxq3BmOzeM+UPiyQykHU025C4hZYEMZF547AZksAxrnUHugF0IKVwrM4qZd59cn0lzG2ooDS3Q4lWEAusa4I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Eyz7/Fi8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="feDzlCIS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E3101F000FF;
-	Sat, 12 Sep 2026 19:02:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Eyz7/Fi8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A8931F000FF;
+	Sat, 12 Sep 2026 19:02:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789239746;
-	bh=z4pbdSvXrZR2GjFvla4eFwMQa1PwDffzuvdFy+tPmsQ=;
+	s=korg; t=1789239751;
+	bh=g/kzMUaZhRIOuhLq8jEQROPrZJ24DPz0dQXg9V6znCc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=feDzlCISi7ZJnDxmiL2cXOHmWxWeoYd/xht4fCArfBeRhKYwnZ+w4dhl3INTgMbm1
-	 aPTaP7CFBeV/8WGgiuoVf4Wja+XB1Md+qhRorrPqaqpB7fEG7enHNnrC/uQ5z4InHH
-	 Ck8DB6k/fu6YQc6A2FIfk4d6ArwTr1IhRmIDslAw=
+	b=Eyz7/Fi8rcLxXnrxmYv2E51xjnbg0smDZ4QkoYXHuMNaOxUx7E2PKVCbII422arRt
+	 qWgnXgc6hsa6+5wNOopOha2gMCpro7I7yX3UbzkBuPjLqS6FE5+D07d+hQzqnEzG6W
+	 WEBG6o8KCFYjerzMOCfOI1gSuyjUMKRcmX20qwDc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tigran Aivazian <aivazian.tigran@gmail.com>,
-	Jan Kara <jack@suse.cz>,
-	Baokun Li <libaokun@linux.alibaba.com>,
-	Theodore Tso <tytso@mit.edu>,
+	Michael Riesch <michael.riesch@collabora.com>,
+	Gerald Loacker <gerald.loacker@wolfvision.net>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 728/935] ext4: fix spurious message about orphan cleanup on RO fs
-Date: Sat, 12 Sep 2026 09:02:38 +0200
-Message-ID: <20260912065543.529599531@linuxfoundation.org>
+Subject: [PATCH 5.15 729/935] phy: rockchip: phy-rockchip-inno-csidphy: fix rk1808 hsfreq table
+Date: Sat, 12 Sep 2026 09:02:39 +0200
+Message-ID: <20260912065543.553715859@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -53,41 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Kara <jack@suse.cz>
+From: Gerald Loacker <gerald.loacker@wolfvision.net>
 
-[ Upstream commit 5aa98f874c013bcce9bb84ffded2f0ef886e4e33 ]
+[ Upstream commit 4fae43e33a7c10951fbdc6baf409d51bd66aaefb ]
 
-When orphan_file feature is enabled, ext4_orphan_cleanup() was always
-walking through the orphan file looking for orphan inodes. This is
-mostly harmless but for read-only filesystem it results in spurious
-"orphan cleanup on readonly fs" message and in other cornercases it
-could result in similar somewhat misleading messages. Skip orphan
-cleanup if the orphan file is empty to avoid confusing messages.
+The rk1808 hsfreq table capped at 2499 Mbps, preventing a data rate of
+exactly 2500 Mbps. Extend the final entry to 2500 Mbps to support this
+rate.
 
-Fixes: 02f310fcf47f ("ext4: Speedup ext4 orphan inode handling")
-Reported-by: Tigran Aivazian <aivazian.tigran@gmail.com>
-Signed-off-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Baokun Li <libaokun@linux.alibaba.com>
-Link: https://patch.msgid.link/20260803160037.64285-2-jack@suse.cz
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+This is essential for RK3588 reusing this array and fully supporting
+rates up to 2500 Mbps.
+
+Fixes: bd1f775d6027 ("phy/rockchip: add Innosilicon-based CSI dphy")
+Reviewed-by: Michael Riesch <michael.riesch@collabora.com>
+Signed-off-by: Gerald Loacker <gerald.loacker@wolfvision.net>
+Link: https://patch.msgid.link/20260725-feature-mipi-csi-dphy-4k60-v4-1-5b2c4626d31e@wolfvision.net
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/orphan.c | 2 +-
+ drivers/phy/rockchip/phy-rockchip-inno-csidphy.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/ext4/orphan.c b/fs/ext4/orphan.c
-index 48c0d323ff8f8..56a032f58a218 100644
---- a/fs/ext4/orphan.c
-+++ b/fs/ext4/orphan.c
-@@ -388,7 +388,7 @@ void ext4_orphan_cleanup(struct super_block *sb, struct ext4_super_block *es)
- 	struct ext4_orphan_info *oi = &EXT4_SB(sb)->s_orphan_info;
- 	int inodes_per_ob = ext4_inodes_per_orphan_block(sb);
+diff --git a/drivers/phy/rockchip/phy-rockchip-inno-csidphy.c b/drivers/phy/rockchip/phy-rockchip-inno-csidphy.c
+index 286b38cc6f442..7f499d4dfda40 100644
+--- a/drivers/phy/rockchip/phy-rockchip-inno-csidphy.c
++++ b/drivers/phy/rockchip/phy-rockchip-inno-csidphy.c
+@@ -146,7 +146,7 @@ static const struct hsfreq_range rk1808_mipidphy_hsfreq_ranges[] = {
+ 	{ 299, 0x06}, { 399, 0x08}, { 499, 0x0b}, { 599, 0x0e},
+ 	{ 699, 0x10}, { 799, 0x12}, { 999, 0x16}, {1199, 0x1e},
+ 	{1399, 0x23}, {1599, 0x2d}, {1799, 0x32}, {1999, 0x37},
+-	{2199, 0x3c}, {2399, 0x41}, {2499, 0x46}
++	{2199, 0x3c}, {2399, 0x41}, {2500, 0x46}
+ };
  
--	if (!es->s_last_orphan && !oi->of_blocks) {
-+	if (!es->s_last_orphan && ext4_orphan_file_empty(sb)) {
- 		ext4_debug("no orphan inodes to clean up\n");
- 		return;
- 	}
+ static const struct hsfreq_range rk3326_mipidphy_hsfreq_ranges[] = {
 -- 
 2.53.0
 
