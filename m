@@ -1,44 +1,65 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from smtpbg150.qq.com (smtpbg150.qq.com [18.132.163.193])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BE433815DF;
-	Sat, 12 Sep 2026 18:33:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C712535DA40
+	for <patches@lists.linux.dev>; Sat, 12 Sep 2026 18:33:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=18.132.163.193
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789237983; cv=none; b=kQexjI2pyYsIThDRTyuOpCEHZzp6L0nUyBH1mEmGeBK/ftxtjKVRR1sN5rYKDl4Z8tk/xGBA5s1KdWutZZUGUA0hXMC5PELHZfRN4ikqvsENkZqeVQ1iRhBR7c70rGeMKHFOFT7tyRYqvd4J36DC3ACvA6bjbMYR6buD36M93xs=
+	t=1789237986; cv=none; b=jl7JDNT0I52dB2h/S+NpSbbhUEam8Gr4ZYiYxydbLDr1ye7yverV8oKFwJJiwZU1mJ1ZXX7cXLyO27HGO5mLEpu3aCv1VSUHZj47Ur/sFa3Vdi44dEELLhyGzKLFTvi8u3zanwuhA+qk0T1TWkAIW0QdDbhNlsNRO1UfqV/GQhs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789237983; c=relaxed/simple;
-	bh=FVL36zd+rkipHFO8nCNdnPUb6PDQqMOw05hxZAP3kTo=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ebxqtfGyD5ajRBLU3YH/RzMYdWf1kWFiPFlk6O0232atPQE/Sli+O6HFytbbh8y2edrvpUJgUDhEvY++M+voQFSRN1ak0raFBDvTzrKFYzmDZPJRcAlBxG8Ai+gC26COZlpuooQSMdc7Ad+8G2DhctN+dlYC2ZSUPNGZCAtCUbg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A1cMuFFE; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1789237986; c=relaxed/simple;
+	bh=EehspJWxBfgxZxcXNmhaNSb76TeoQuQnC6cupWen7fs=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=M06AM+pKGYkxYiIEOJtOGymTCQn/hwilxMS5dyh1ZaDLiZF+7ymsZr74k1VMGNxLT+WxM4PWyJx3cJAAL4M8ZMQDtOL80sq5NTe7BCjkqgmbi2wGEbKkTSNoRvpttEHB4oREzO5co0XmP8ehWuIcUQhsE/3xX6w4VIiFuAwisuY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=uniontech.com; spf=pass smtp.mailfrom=uniontech.com; dkim=pass (1024-bit key) header.d=uniontech.com header.i=@uniontech.com header.b=kMACDoA7; arc=none smtp.client-ip=18.132.163.193
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=uniontech.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=uniontech.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A1cMuFFE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DF311F000FF;
-	Sat, 12 Sep 2026 18:33:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789237982;
-	bh=X0RhrqKkKObB90iKYrq3AyN/f7I3kO2jo16o0s/CzQ8=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=A1cMuFFEAH1a3eaFQ9bl1w5448UDUPLvm9TxOpU7dWyjbjsdDhXAwe+uVhhrLZShV
-	 Av4ynjyl8mYNp9Qw+iZtikYXFSizt4M3IDgxtqixTKmtAV5ewnZZ4q2mxF0eb65StJ
-	 fFmSdiXpIjvW0cHJO8SS5hohW8HuA8mwVQuTKHZI=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	dkim=pass (1024-bit key) header.d=uniontech.com header.i=@uniontech.com header.b="kMACDoA7"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=uniontech.com;
+	s=onoh2408; t=1789237960;
+	bh=EehspJWxBfgxZxcXNmhaNSb76TeoQuQnC6cupWen7fs=;
+	h=From:To:Subject:Date:Message-Id:MIME-Version;
+	b=kMACDoA7MXi4fLkLTMUa3dByZanIlgKCnh3bD2kcdv1xEC4g6Tbbtp2iMNsLxahBm
+	 cdrocxj8r3x7a3CF9/rmw6DeYWbMaB8yk4WVVVhyO6mQi+HPrZpMem4BT6nKPpgK12
+	 bVzqYWJowYHrjPQlLHUFTaE36kbei7IloAL5pqfc=
+X-QQ-mid: zesmtpsz9t1789237955teb9d1e36
+X-QQ-Originating-IP: 2MiFuFD/tKLMHaKg2sO6/FCDBS7Mac1mwUPIvJjgmmc=
+Received: from localhost.localdomain ( [113.57.152.160])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Sun, 13 Sep 2026 02:32:31 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 1
+X-BIZMAIL-ID: 10537202822548573077
+EX-QQ-RecipientCnt: 21
+From: Wentao Guan <guanwentao@uniontech.com>
+To: gregkh@linuxfoundation.org
+Cc: achill@achill.org,
+	akpm@linux-foundation.org,
+	broonie@kernel.org,
+	conor@kernel.org,
+	f.fainelli@gmail.com,
+	hargar@microsoft.com,
+	jonathanh@nvidia.com,
+	linux-kernel@vger.kernel.org,
+	linux@roeck-us.net,
+	lkft-triage@lists.linaro.org,
+	patches@kernelci.org,
 	patches@lists.linux.dev,
-	Michal Pecio <michal.pecio@gmail.com>,
-	Arthur Gautier <baloo@superbaloo.net>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: [PATCH 5.15 370/935] xhci: fix lost bounce buffers on TDs spanning several ring segments
-Date: Sat, 12 Sep 2026 08:56:40 +0200
-Message-ID: <20260912065535.300008239@linuxfoundation.org>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
-References: <20260912065526.833703348@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
+	pavel@nabladev.com,
+	rwarsow@gmx.de,
+	shuah@kernel.org,
+	sr@sladewatkins.com,
+	stable@vger.kernel.org,
+	sudipm.mukherjee@gmail.com,
+	torvalds@linux-foundation.org,
+	Wentao Guan <guanwentao@uniontech.com>
+Subject: Re: [PATCH 6.6 0000/1424] 6.6.157-rc1 review
+Date: Sun, 13 Sep 2026 02:32:28 +0800
+Message-Id: <20260912183228.840180-1-guanwentao@uniontech.com>
+X-Mailer: git-send-email 2.30.2
+In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
+References: <20260912065607.279695368@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -46,144 +67,41 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+X-QQ-SENDSIZE: 520
+Feedback-ID: zesmtpsz:uniontech.com:qybglogicsvrgz:qybglogicsvrgz3a-0
+X-QQ-XMAILINFO: Ob956G9wEH2TWSnm5UbP+4jMykKXAuhqZK9T/TKRAR45AaCmZ99Hd1cw
+	gqF+N41baCrIgPRv8rCsBiVuFxKyH+rYIhWrBULESsLdlWbTylfCxSUG6/lmiRzWkdtrLLX
+	I06LWKFcPdXcaHZDbohLPipLPupCG1KXZabP/D4PY+HsGc+nCsYbgt9D1yYDLi6MRCqJYn3
+	jDe0o6YPh5GLK/zZWjUSDUpHa1ES6S5DyGpuq9Ul6Ag6Ag+bbHSxpDzP2IfwzaGhEwaithd
+	HweF3zfznNAIAr9biFsv2b3jJ4PKgR1mRXIVkbqWbfP2A7Dl3Y8n+rDGrCt2ZzaUygJh9BK
+	nVSDm3fvd22ZZn/AWbQmSe3GbtInQ5Mqfqcd4cQR4ysENUhqZQoHAR39eMNdCyYQewslknX
+	56bL/ljyt6MAbwle2nekDo0tFiWwmvIXNpOewffRGOYMHQ1pWkcLK8b6xM5k+qUJL78BS1N
+	TuFG+41J/wjVCSTUtSMWPiPbIVTEsI1nX9FV/geIF9koAQCZ/hHjbvO/q+zyNupqZUMfWbm
+	N/IDn2g0sCZ522nj24pIZT4z/1ygtXD8JoL9DugddPnN1n3cS4LrY+G4PIEmFcwXRbTPhPZ
+	0BmBzjxFJJXCJT7PiGgPYYMd0Ii1HGIv8XBC97G31aj9IpQwjMuQr+Ng0Flk2P+aOWcQ/nQ
+	3SdribuHo7grgJri8crigh8XxveggwbT04hOw08yUaJwQYPLKkFAd99XsPWNa1eVt97a3WI
+	I26Ni2BrUdHoQIsbrpVregwCtC+PaTgwGp+tkNd/JYWEgIINVFcHJQRC+KsGzcRF5QkpSsc
+	KKVfHsvMLhRUy53Phc7K6NLnl706py9D8CXd6AxiCnrTAlCTwLOf+8YhNoQgUvoSmF7hs/H
+	lS6S/kop/rdfteLojXEeNYSOvnA1/aohRtZ2T3ovA4gmFBCCuvbJTn5LYarnMKcDInrQgGR
+	hk2uN8pT4JBbbFTaNablVlWivkwcLoblrXZgamGvGUFWJpzG8pVYeC75UTm1AHyeUY4Uszy
+	sRPjt/ryUtfv3BEy0Ja4msgvdLXhnOiNe9xlxjZCExb2jrNbjHAIhtuacmfi8=
+X-QQ-XMRINFO: OWPUhxQsoeAVwkVaQIEGSKwwgKCxK/fD5g==
+X-QQ-RECHKSPAM: 0
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+Build tested in our x86,arm64,loongarch,riscv config successfully without error.
 
-------------------
+Tested-by: Wentao Guan <guanwentao@uniontech.com>
 
-From: Arthur Gautier <baloo@superbaloo.net>
+Best Regards
+Wentao Guan
 
-commit ff44dfb03a293bf30e31f98772a1dd316a6071d1 upstream.
-
-When a TD reaches a link TRB with data that is not aligned to the
-endpoint's wMaxPacketSize, xhci_align_td() stages the unalignable tail
-through the bounce buffer of the ring segment holding that link TRB.
-xhci_unmap_td_bounce_buffer() later unmaps it and, for IN transfers,
-copies the data back into the URB's buffer.
-
-The enqueue path records the segment that was bounced in td->bounce_seg,
-under the assumption that a TD never spans more than two ring segments.
-That assumption does not hold: a TD large enough to span three or more
-segments crosses several link TRBs and can be bounced at each of them.
-Only the last one survives in td->bounce_seg, so every earlier bounce
-buffer is neither copied back nor DMA unmapped.
-
-The URB still completes with actual_length equal to the requested length
-and no error, so the transfer looks successful while a wMaxPacketSize
-sized hole in the destination buffer silently keeps its previous
-contents. It also leaks a DMA mapping per dropped bounce.
-
-Any sufficiently large and fragmented bulk transfer can hit this. It was
-found with a USB mass storage device behind xHCI backing a dm-verity
-target with 512 byte hash blocks, where the stale data is detected rather
-than silently consumed. The device enumerates as SuperSpeed, so
-wMaxPacketSize is 1024, while dm-bufio issues one 512 byte bio per hash
-block. verity_prefetch_io() makes the block layer merge hundreds of them
-into a single request of up to 512 scatterlist entries of 512 bytes each.
-At 256 TRBs per ring segment such a TD spans three segments, and every
-segment boundary falls on an odd multiple of 512, i.e. unaligned to
-wMaxPacketSize. dm-bufio then caches a hash block holding stale data and
-dm-verity declares the metadata block corrupted:
-
-  device-mapper: verity: 8:2: metadata block 10850 is corrupted
-
-A reproducer running this under qemu is available at
-https://github.com/baloo/xhci-verity
-
-The bounce state (bounce_buf, bounce_dma, bounce_len, bounce_offs)
-already lives on the ring segment, so there is nothing extra to track.
-Keep recording the last bounced segment in td->bounce_seg and, on
-completion, walk the segments from td->start_seg up to it, unmapping
-every segment that still has a pending bounce.
-
-Stopping at td->bounce_seg rather than td->end_seg matters: a bounce
-implies the TD continues past that segment's link TRB, so bounce_seg is
-always strictly before end_seg, and a later TD may already have started
-in end_seg and been bounced there. Walking that far would copy a foreign
-bounce buffer into this URB and unmap it twice. It also keeps the walk
-correct if a TD ever wraps the whole ring so that end_seg == start_seg.
-
-[mn: Add ring->num_segs check to prevent unlikely infinite for loop.]
-
-Fixes: f9c589e142d0 ("xhci: TD-fragment, align the unsplittable case with a bounce buffer")
-Cc: stable@vger.kernel.org
-Suggested-by: Michal Pecio <michal.pecio@gmail.com>
-Signed-off-by: Arthur Gautier <baloo@superbaloo.net>
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://patch.msgid.link/20260831090448.95644-4-mathias.nyman@linux.intel.com
-[Michal: solved context conflict due to xhci_td_cleanup() type]
-Signed-off-by: Michal Pecio <michal.pecio@gmail.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- drivers/usb/host/xhci-ring.c |   32 ++++++++++++++++++++++++--------
- 1 file changed, 24 insertions(+), 8 deletions(-)
-
---- a/drivers/usb/host/xhci-ring.c
-+++ b/drivers/usb/host/xhci-ring.c
-@@ -770,21 +770,18 @@ static void xhci_giveback_urb_in_irq(str
- 	usb_hcd_giveback_urb(hcd, urb, status);
- }
- 
--static void xhci_unmap_td_bounce_buffer(struct xhci_hcd *xhci,
--		struct xhci_ring *ring, struct xhci_td *td)
-+static void xhci_unmap_one_bounce_buffer(struct xhci_hcd *xhci,
-+		struct xhci_ring *ring, struct xhci_td *td,
-+		struct xhci_segment *seg)
- {
- 	struct device *dev = xhci_to_hcd(xhci)->self.sysdev;
--	struct xhci_segment *seg = td->bounce_seg;
- 	struct urb *urb = td->urb;
- 	size_t len;
- 
--	if (!ring || !seg || !urb)
--		return;
--
- 	if (usb_urb_dir_out(urb)) {
- 		dma_unmap_single(dev, seg->bounce_dma, ring->bounce_buf_len,
- 				 DMA_TO_DEVICE);
--		return;
-+		goto done;
- 	}
- 
- 	dma_unmap_single(dev, seg->bounce_dma, ring->bounce_buf_len,
-@@ -800,10 +797,29 @@ static void xhci_unmap_td_bounce_buffer(
- 		memcpy(urb->transfer_buffer + seg->bounce_offs, seg->bounce_buf,
- 		       seg->bounce_len);
- 	}
-+done:
- 	seg->bounce_len = 0;
- 	seg->bounce_offs = 0;
- }
- 
-+static void xhci_unmap_td_bounce_buffer(struct xhci_hcd *xhci,
-+		struct xhci_ring *ring, struct xhci_td *td)
-+{
-+	struct xhci_segment *seg;
-+	int i = 0;
-+
-+	if (!td->bounce_seg || !ring || !td->urb)
-+		return;
-+
-+	/* td->bounce_seg is the last one bounced, unmap them all */
-+	for (seg = td->start_seg; i++ < ring->num_segs; seg = seg->next) {
-+		if (seg->bounce_len)
-+			xhci_unmap_one_bounce_buffer(xhci, ring, td, seg);
-+		if (seg == td->bounce_seg)
-+			break;
-+	}
-+}
-+
- static int xhci_td_cleanup(struct xhci_hcd *xhci, struct xhci_td *td,
- 			   struct xhci_ring *ep_ring, int status)
- {
-@@ -3830,7 +3846,7 @@ int xhci_queue_bulk_tx(struct xhci_hcd *
- 						  &trb_buff_len,
- 						  ring->enq_seg)) {
- 					send_addr = ring->enq_seg->bounce_dma;
--					/* assuming TD won't span 2 segs */
-+					/* TD bounced at least, and last on this seg */
- 					td->bounce_seg = ring->enq_seg;
- 				}
- 			}
-
+Log:
+Linux version 6.6.157-rc1-arm64-desktop-hwe-gfcb8c41a77e1 (guanwentao@uos-PC) (aarch64-linux-gnu-gcc-12 (Deepin 12.3.0-17deepin8) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) # SMP PREEMPT
+Linux version 6.6.157-rc1-arm64-desktop-hwe-gfcb8c41a77e1 (guanwentao@uos-PC) (aarch64-linux-gnu-gcc-12 (Deepin 12.3.0-17deepin8) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) #34 SMP PREEMPT Sun Sep 13 01:43:27 CST 2026
+Linux version 6.6.157-rc1-loong64-desktop-hwe-gfcb8c41a77e1 (guanwentao@uos-PC) (loongarch64-linux-gnu-gcc-12 (Deepin 12.3.0-17deepin8) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) # SMP PREEMPT
+Linux version 6.6.157-rc1-loong64-desktop-hwe-gfcb8c41a77e1 (guanwentao@uos-PC) (loongarch64-linux-gnu-gcc-12 (Deepin 12.3.0-17deepin8) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) #35 SMP PREEMPT Sun Sep 13 01:58:15 CST 2026
+Linux version 6.6.157-rc1-riscv64-desktop-hwe+ (guanwentao@uos-PC) (riscv64-linux-gnu-gcc-12 (Deepin 12.3.0-17deepin8) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) # SMP
+Linux version 6.6.157-rc1-riscv64-desktop-hwe+ (guanwentao@uos-PC) (riscv64-linux-gnu-gcc-12 (Deepin 12.3.0-17deepin8) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) #36 SMP Sun Sep 13 02:14:33 CST 2026
+Linux version 6.6.157-rc1-amd64-desktop-hwe-gfcb8c41a77e1 (guanwentao@uos-PC) (gcc (Deepin 12.3.0-17deepin18) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) # SMP PREEMPT_DYNAMIC
+Linux version 6.6.157-rc1-amd64-desktop-hwe-gfcb8c41a77e1 (guanwentao@uos-PC) (gcc (Deepin 12.3.0-17deepin18) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) #33 SMP PREEMPT_DYNAMIC Sun Sep 13 01:22:56 CST 2026
 
