@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FEB7399351;
-	Sat, 12 Sep 2026 20:01:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 378B339936E;
+	Sat, 12 Sep 2026 20:01:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789243303; cv=none; b=CqK/HxK94fQZFExI/5stYveHI2hij7hTl5Sbv8rsLcvOeps60aNsE3PJ3LqNfYsWEtWVXX8ZKL00U0CH8CF3v9bVe1aOyLUFZuQOevdRhLyTTBGTD1Im8PaYy88TQV0fBv4qKaNNzRiNG2mBAY3fgxgWhlVoJ94ddAp0nU7601Q=
+	t=1789243306; cv=none; b=s6pOYoyyNyhi+/0NJq/RWlHH3pcQdBWwY13bEV67uNXjECK5z+YA+6mZBNQzUrUrmG6NqB8ziLcsBD2ug53/ESbiuqfydtKu0U0iQ9Y+ONdYJT4cfGJKaL6ojUbq28SEaNvL5wo06fqxLMqCXFYtL0yrPD90JvrpKDStyS7rMGY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789243303; c=relaxed/simple;
-	bh=jo80ECIVngO9211TkatlP+69WDwkWoDACcHU+YmnnoM=;
+	s=arc-20240116; t=1789243306; c=relaxed/simple;
+	bh=XvBbfRXBjAVkAmZNlHDvLy2QeMXu2yadBOsDfIWoARw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g/klSEhrG7oDrp0f895cBVS6NYiHHq5XajofLppYoakkgnVmIaVYpFPll3eOu6z8lPwqelr5I/3lJGYBk4bWOHZq/IyP1VQbh8FE7ZThJpMcTWxC/EqENb9hR3O/yH8ydDQYrcnMrC78sqpfK+D4mwnYVEvdK/2EtttMqKXvFWM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vwgTgrp7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hzfpen1rIsnD3xDj9xuPOqOjZemaDZPgVigzesfTBxE2l8kZPIA1Rract/k7VHho6yj4PRkuFVTCOx9itnJvyBYKwrSKGvbiLURS6cM6FIP8q8x7LUw82PUy1DaXrA3JkgTk1pARNHoo5Eq6B1kBsayjFE+A7lIQIfjRLcFXW4w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dpprO3Qx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vwgTgrp7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A27671F00893;
-	Sat, 12 Sep 2026 20:01:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dpprO3Qx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 811EE1F000FF;
+	Sat, 12 Sep 2026 20:01:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789243302;
-	bh=Q51toIvWcGcG7zikBFcc1BIPhnenH6YECA4uPFQ1uN0=;
+	s=korg; t=1789243305;
+	bh=bY9EvUS5hKEQQB3Tdz2Tl0sZEXr7/1KA+Jh2isXdIdg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vwgTgrp7QHH6Vff3d1rM3T9wo2Gp3CHSw4vbn8LnBLqwSMTliSb8gW6vhcnVDA627
-	 37PUE0hqZHLLIkF4rbWenIm4iPY6Q2oK0NggAcEKiDIKYlIp9gP1Z6GkgMC+YtE50y
-	 5VWUf6uw1r7/uYSw2iL7Zj6h2fs7M2AMgJ3TGhWw=
+	b=dpprO3QxQL3CnEXX/RL9To6GE55vWxYoNUH072Rp15kxehGN2okJP92Yqmn304AzE
+	 Xm2SipPpak4QdQgfVyBoZrfeFxuj1wrL6Z2TlUGWWroj6fg+C5loYLEGv3uw0W6sxn
+	 T/wGtfDZypT1/0ZnSifvG4HdaASOUzOn446z2/nc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Steven Rostedt (VMware)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 709/798] seq_buf: Add seq_buf_terminate() API
-Date: Sat, 12 Sep 2026 09:05:37 +0200
-Message-ID: <20260912065533.336933537@linuxfoundation.org>
+Subject: [PATCH 5.10 710/798] tracing: Add a verifier to check string pointers for trace events
+Date: Sat, 12 Sep 2026 09:05:38 +0200
+Message-ID: <20260912065533.359896595@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -52,56 +52,311 @@ Content-Transfer-Encoding: 8bit
 
 From: Steven Rostedt (VMware) <rostedt@goodmis.org>
 
-[ Upstream commit f2616c772c768485de18e7fcb2816bcdcd098339 ]
+[ Upstream commit 9a6944fee68e25084130386c608c5ac8db487581 ]
 
-In the case that the seq_buf buffer needs to be printed directly, add a way
-to make sure that the buffer is safe to read by forcing a nul terminating
-character at the end of the string, or the last byte of the buffer if the
-string has overflowed.
+It is a common mistake for someone writing a trace event to save a pointer
+to a string in the TP_fast_assign() and then display that string pointer
+in the TP_printk() with %s. The problem is that those two events may happen
+a long time apart, where the source of the string may no longer exist.
+
+The proper way to handle displaying any string that is not guaranteed to be
+in the kernel core rodata section, is to copy it into the ring buffer via
+the __string(), __assign_str() and __get_str() helper macros.
+
+Add a check at run time while displaying the TP_printk() of events to make
+sure that every %s referenced is safe to dereference, and if it is not,
+trigger a warning and only show the address of the pointer, and the
+dereferenced string if it can be safely retrieved with a
+strncpy_from_kernel_nofault() call.
+
+In order to not have to copy the parsing of vsnprintf() formats, or even
+exporting its code, the verifier relies on vsnprintf() being able to
+modify the va_list that is passed to it, and it remains modified after it
+is called. This is the case for some architectures like x86_64, but other
+architectures like x86_32 pass the va_list to vsnprintf() as a value not a
+reference, and the verifier can not use it to parse the non string
+arguments. Thus, at boot up, it is checked if vsnprintf() modifies the
+passed in va_list or not, and a static branch will disable the verifier if
+it's not compatible.
 
 Signed-off-by: Steven Rostedt (VMware) <rostedt@goodmis.org>
 Stable-dep-of: ae70b04ab9c7 ("tracing: Have trace_event_update_all() only handle module that is loading")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/seq_buf.h | 25 +++++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
+ kernel/trace/trace.c        | 200 ++++++++++++++++++++++++++++++++++++
+ kernel/trace/trace.h        |   3 +
+ kernel/trace/trace_output.c |   2 +-
+ kernel/trace/trace_printk.c |  11 ++
+ 4 files changed, 215 insertions(+), 1 deletion(-)
 
-diff --git a/include/linux/seq_buf.h b/include/linux/seq_buf.h
-index 9d6c28cc4d8f2..5b31c51479694 100644
---- a/include/linux/seq_buf.h
-+++ b/include/linux/seq_buf.h
-@@ -71,6 +71,31 @@ static inline unsigned int seq_buf_used(struct seq_buf *s)
- 	return min(s->len, s->size);
+diff --git a/kernel/trace/trace.c b/kernel/trace/trace.c
+index ed32d3c4f0e76..31d0abb1c9429 100644
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -3585,6 +3585,204 @@ static char *trace_iter_expand_format(struct trace_iterator *iter)
+ 	return tmp;
  }
  
-+/**
-+ * seq_buf_terminate - Make sure buffer is nul terminated
-+ * @s: the seq_buf descriptor to terminate.
-+ *
-+ * This makes sure that the buffer in @s is nul terminated and
-+ * safe to read as a string.
-+ *
-+ * Note, if this is called when the buffer has overflowed, then
-+ * the last byte of the buffer is zeroed, and the len will still
-+ * point passed it.
-+ *
-+ * After this function is called, s->buffer is safe to use
-+ * in string operations.
-+ */
-+static inline void seq_buf_terminate(struct seq_buf *s)
++/* Returns true if the string is safe to dereference from an event */
++static bool trace_safe_str(struct trace_iterator *iter, const char *str)
 +{
-+	if (WARN_ON(s->size == 0))
-+		return;
++	unsigned long addr = (unsigned long)str;
++	struct trace_event *trace_event;
++	struct trace_event_call *event;
 +
-+	if (seq_buf_buffer_left(s))
-+		s->buffer[s->len] = 0;
-+	else
-+		s->buffer[s->size - 1] = 0;
++	/* OK if part of the event data */
++	if ((addr >= (unsigned long)iter->ent) &&
++	    (addr < (unsigned long)iter->ent + iter->ent_size))
++		return true;
++
++	/* OK if part of the temp seq buffer */
++	if ((addr >= (unsigned long)iter->tmp_seq.buffer) &&
++	    (addr < (unsigned long)iter->tmp_seq.buffer + PAGE_SIZE))
++		return true;
++
++	/* Core rodata can not be freed */
++	if (is_kernel_rodata(addr))
++		return true;
++
++	if (trace_is_tracepoint_string(str))
++		return true;
++
++	/*
++	 * Now this could be a module event, referencing core module
++	 * data, which is OK.
++	 */
++	if (!iter->ent)
++		return false;
++
++	trace_event = ftrace_find_event(iter->ent->type);
++	if (!trace_event)
++		return false;
++
++	event = container_of(trace_event, struct trace_event_call, event);
++	if (!event->mod)
++		return false;
++
++	/* Would rather have rodata, but this will suffice */
++	if (within_module_core(addr, event->mod))
++		return true;
++
++	return false;
 +}
 +
- /**
-  * seq_buf_get_buf - get buffer to write arbitrary data to
-  * @s: the seq_buf handle
++static const char *show_buffer(struct trace_seq *s)
++{
++	struct seq_buf *seq = &s->seq;
++
++	seq_buf_terminate(seq);
++
++	return seq->buffer;
++}
++
++static DEFINE_STATIC_KEY_FALSE(trace_no_verify);
++
++static int test_can_verify_check(const char *fmt, ...)
++{
++	char buf[16];
++	va_list ap;
++	int ret;
++
++	/*
++	 * The verifier is dependent on vsnprintf() modifies the va_list
++	 * passed to it, where it is sent as a reference. Some architectures
++	 * (like x86_32) passes it by value, which means that vsnprintf()
++	 * does not modify the va_list passed to it, and the verifier
++	 * would then need to be able to understand all the values that
++	 * vsnprintf can use. If it is passed by value, then the verifier
++	 * is disabled.
++	 */
++	va_start(ap, fmt);
++	vsnprintf(buf, 16, "%d", ap);
++	ret = va_arg(ap, int);
++	va_end(ap);
++
++	return ret;
++}
++
++static void test_can_verify(void)
++{
++	if (!test_can_verify_check("%d %d", 0, 1)) {
++		pr_info("trace event string verifier disabled\n");
++		static_branch_inc(&trace_no_verify);
++	}
++}
++
++/**
++ * trace_check_vprintf - Check dereferenced strings while writing to the seq buffer
++ * @iter: The iterator that holds the seq buffer and the event being printed
++ * @fmt: The format used to print the event
++ * @ap: The va_list holding the data to print from @fmt.
++ *
++ * This writes the data into the @iter->seq buffer using the data from
++ * @fmt and @ap. If the format has a %s, then the source of the string
++ * is examined to make sure it is safe to print, otherwise it will
++ * warn and print "[UNSAFE MEMORY]" in place of the dereferenced string
++ * pointer.
++ */
++void trace_check_vprintf(struct trace_iterator *iter, const char *fmt,
++			 va_list ap)
++{
++	const char *p = fmt;
++	const char *str;
++	int i, j;
++
++	if (WARN_ON_ONCE(!fmt))
++		return;
++
++	if (static_branch_unlikely(&trace_no_verify))
++		goto print;
++
++	/* Don't bother checking when doing a ftrace_dump() */
++	if (iter->fmt == static_fmt_buf)
++		goto print;
++
++	while (*p) {
++		j = 0;
++
++		/* We only care about %s and variants */
++		for (i = 0; p[i]; i++) {
++			if (i + 1 >= iter->fmt_size) {
++				/*
++				 * If we can't expand the copy buffer,
++				 * just print it.
++				 */
++				if (!trace_iter_expand_format(iter))
++					goto print;
++			}
++
++			if (p[i] == '\\' && p[i+1]) {
++				i++;
++				continue;
++			}
++			if (p[i] == '%') {
++				/* Need to test cases like %08.*s */
++				for (j = 1; p[i+j]; j++) {
++					if (isdigit(p[i+j]) ||
++					    p[i+j] == '*' ||
++					    p[i+j] == '.')
++						continue;
++					break;
++				}
++				if (p[i+j] == 's')
++					break;
++			}
++			j = 0;
++		}
++		/* If no %s found then just print normally */
++		if (!p[i])
++			break;
++
++		/* Copy up to the %s, and print that */
++		strncpy(iter->fmt, p, i);
++		iter->fmt[i] = '\0';
++		trace_seq_vprintf(&iter->seq, iter->fmt, ap);
++
++		/* The ap now points to the string data of the %s */
++		str = va_arg(ap, const char *);
++
++		/*
++		 * If you hit this warning, it is likely that the
++		 * trace event in question used %s on a string that
++		 * was saved at the time of the event, but may not be
++		 * around when the trace is read. Use __string(),
++		 * __assign_str() and __get_str() helpers in the TRACE_EVENT()
++		 * instead. See samples/trace_events/trace-events-sample.h
++		 * for reference.
++		 */
++		if (WARN_ONCE(!trace_safe_str(iter, str),
++			      "fmt: '%s' current_buffer: '%s'",
++			      fmt, show_buffer(&iter->seq))) {
++			int ret;
++
++			/* Try to safely read the string */
++			ret = strncpy_from_kernel_nofault(iter->fmt, str,
++							  iter->fmt_size);
++			if (ret < 0)
++				trace_seq_printf(&iter->seq, "(0x%px)", str);
++			else
++				trace_seq_printf(&iter->seq, "(0x%px:%s)",
++						 str, iter->fmt);
++			str = "[UNSAFE-MEMORY]";
++			strcpy(iter->fmt, "%s");
++		} else {
++			strncpy(iter->fmt, p + i, j + 1);
++			iter->fmt[j+1] = '\0';
++		}
++		trace_seq_printf(&iter->seq, iter->fmt, str);
++
++		p += i + j + 1;
++	}
++ print:
++	if (*p)
++		trace_seq_vprintf(&iter->seq, p, ap);
++}
++
+ const char *trace_event_format(struct trace_iterator *iter, const char *fmt)
+ {
+ 	const char *p, *new_fmt;
+@@ -9835,6 +10033,8 @@ __init static int tracer_alloc_buffers(void)
+ 
+ 	register_snapshot_cmd();
+ 
++	test_can_verify();
++
+ 	return 0;
+ 
+ out_free_pipe_cpumask:
+diff --git a/kernel/trace/trace.h b/kernel/trace/trace.h
+index 8dce0e205c8ed..767da9900c4ac 100644
+--- a/kernel/trace/trace.h
++++ b/kernel/trace/trace.h
+@@ -769,7 +769,10 @@ struct trace_entry *trace_find_next_entry(struct trace_iterator *iter,
+ void trace_buffer_unlock_commit_nostack(struct trace_buffer *buffer,
+ 					struct ring_buffer_event *event);
+ 
++bool trace_is_tracepoint_string(const char *str);
+ const char *trace_event_format(struct trace_iterator *iter, const char *fmt);
++void trace_check_vprintf(struct trace_iterator *iter, const char *fmt,
++			 va_list ap);
+ 
+ int trace_empty(struct trace_iterator *iter);
+ 
+diff --git a/kernel/trace/trace_output.c b/kernel/trace/trace_output.c
+index 94b0991717b6d..5a9c849670d83 100644
+--- a/kernel/trace/trace_output.c
++++ b/kernel/trace/trace_output.c
+@@ -317,7 +317,7 @@ void trace_event_printf(struct trace_iterator *iter, const char *fmt, ...)
+ 	va_list ap;
+ 
+ 	va_start(ap, fmt);
+-	trace_seq_vprintf(&iter->seq, trace_event_format(iter, fmt), ap);
++	trace_check_vprintf(iter, trace_event_format(iter, fmt), ap);
+ 	va_end(ap);
+ }
+ EXPORT_SYMBOL(trace_event_printf);
+diff --git a/kernel/trace/trace_printk.c b/kernel/trace/trace_printk.c
+index ff32476df0729..4b320fe7df704 100644
+--- a/kernel/trace/trace_printk.c
++++ b/kernel/trace/trace_printk.c
+@@ -251,6 +251,17 @@ int __ftrace_vprintk(unsigned long ip, const char *fmt, va_list ap)
+ }
+ EXPORT_SYMBOL_GPL(__ftrace_vprintk);
+ 
++bool trace_is_tracepoint_string(const char *str)
++{
++	const char **ptr = __start___tracepoint_str;
++
++	for (ptr = __start___tracepoint_str; ptr < __stop___tracepoint_str; ptr++) {
++		if (str == *ptr)
++			return true;
++	}
++	return false;
++}
++
+ static const char **find_next(void *v, loff_t *pos)
+ {
+ 	const char **fmt = v;
 -- 
 2.53.0
 
