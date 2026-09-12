@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C08981C5799;
-	Sat, 12 Sep 2026 15:02:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A58A5475F;
+	Sat, 12 Sep 2026 15:02:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789225352; cv=none; b=QQMigmiHpsAs9rKzbthm72gXbY2dhu/K9eisfvZ4iHIhS2Rimgmj7q90iOSfi6USU0O4t+KOhUSgZkbDZrV1olXRDw6auitmB9ExeMy3hKYfsSV2lQu0zt2FQl+6wFULMxOTgozsX6VvyZQomBS55ZzxNIVjdu7QRMfgAyCT1BI=
+	t=1789225357; cv=none; b=loke49VQtnK2NAYNvA1DtwP8j0SaV5He0E+i31jMc35rl2+deifz/rQGKgv1rqYfT2r+gkzqU6xwBpiC1LZvn8E/1bAQk2yjrEmwe48vE/3GkEMeDzQk/wx/b9Dz8/5CyUOgW3mgOoR2CGgeAiEtyvBPTJ7zsEvcC+fTVGL9kMk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789225352; c=relaxed/simple;
-	bh=sSOhL2b+xalJDhlPKLK/Pt65FQvEHBX2irOUSsBVQFY=;
+	s=arc-20240116; t=1789225357; c=relaxed/simple;
+	bh=B/JUcnlqOO3tM44J0oR/XPs7U497oXFt/Q+XTMJpqV4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LG72VkSNPP964D9sw+FUBBLrULMSUgUg9EDmgd339MDh6GPm5u6zKCiQy4N/jUO09FjvXBHqA3wtpoq6TbKouz55bfsIb34IKs6C4Sa0kTkva4qShEpWYhiEuetALZ/pkfAtOFeWQV4tjxRspV8HSfRf6bAVE55CTS3HryV0P/4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dxxnn0T5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=W/EBqFh4jzUShh3EFmmQ5rKsEuoubAZIzkkUKr+bEgUA9lILlIjPppl/981SIvqtB6AFqhwlIOTVArkMM3igYMGYmX4Awzba8CWg2PXCX/iiY3sxV+D46HvAHZhQPSaLbGRJZ+8QGHHw2f8adGkVeYvk1HSH/p4+QLX+oL+SyEI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lau7Ihbm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dxxnn0T5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10A761F000FF;
-	Sat, 12 Sep 2026 15:02:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lau7Ihbm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 153B71F000FF;
+	Sat, 12 Sep 2026 15:02:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789225351;
-	bh=GA7+z+Fx/6pvgsqJauoUY5qw6/7tNGKWfXWRQOKhqbU=;
+	s=korg; t=1789225356;
+	bh=MfEmlIipZRDNPHKIP+sbsZDfFYVA/EL6J6jVmOnlYvs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dxxnn0T5/vHIsO2ESu+PTH5cAH9H61LElQcT0bFfsn/5vbM8z4aYRHTc0Yx8T1aiD
-	 oLqUpBwfngeP9XkcB+ufbu1y/NVEX9H+LTu8gVknBc5hUbRKFxYW6j40cD6OrZQ/W4
-	 PxsarwszGjZnp+V5zp2pAbgkC65AwLN+mn1+4R8c=
+	b=lau7IhbmR54lt3/aoBfXfelhMXjNW8dDIT82BRobF7mvaSQFYa0Gw2x54u53oZSuQ
+	 1GZvDE98+Zw/WKKKyY/sXJht7JosY2nDUr4z6gymmF2zLLg/PPpow+2vaN2cpEi1SG
+	 xqhkAUrApOQ3MUTdnV08qgJ8+2Up+h9+Umqp2l5U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	LiangCheng Wang <zaq14760@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Zhihao Cheng <chengzhihao1@huawei.com>,
+	Richard Weinberger <richard@nod.at>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1178/1424] ASoC: fsl-asoc-card: defer probe when the CPU DAI device is not ready
-Date: Sat, 12 Sep 2026 09:00:10 +0200
-Message-ID: <20260912065633.672895381@linuxfoundation.org>
+Subject: [PATCH 6.6 1179/1424] ubi: fastmap: Fix missed ec updating after erasing old fastmap data block
+Date: Sat, 12 Sep 2026 09:00:11 +0200
+Message-ID: <20260912065633.695723887@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -51,46 +51,143 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: LiangCheng Wang <zaq14760@gmail.com>
+From: Zhihao Cheng <chengzhihao1@huawei.com>
 
-[ Upstream commit 0286324da660875dc504fd65b3be87e9c8b9a547 ]
+[ Upstream commit 4d18b5a57b16c21cf868369ca555068722c32b2d ]
 
-fsl_asoc_card_probe() hard-fails with -EINVAL when the CPU DAI (SAI)
-platform device is not found. Like the codec, the CPU DAI may just be
-probed later than the machine driver; the order is not guaranteed and
-varies across kernel versions, so a permanent -EINVAL leaves the card
-unregistered with no analog playback or capture.
+After running fsstress on ubifs for a long time, UBI(16384 blocks,
+fastmap takes 2 blocks) has an erase block with different erase
+counters displayed from two views:
 
-Defer probe instead, mirroring commit e396dec46c56 ("ASoC:
-fsl-asoc-card: Defer probe when fail to find codec device").
+>From ubiscan view: PEB 8031 has erase counter 31581
+=========================================================
+from              to     count      min      avg      max
+---------------------------------------------------------
+0        ..        9:        0        0        0        0
+10       ..       99:        0        0        0        0
+100      ..      999:    16383      290      315      781
+1000     ..     9999:        0        0        0        0
+10000    ..    99999:        1    31581    31581    31581
+100000   ..      inf:        0        0        0        0
+---------------------------------------------------------
+Total               :    16384      290      317    31581
 
-Tested on i.MX8MP with an ALC5672 on SAI3: the card that failed to
-register on v6.18 now comes up during boot.
+>From detailed_erase_block_info view: PEB 8031 has erase counter 7
+physical_block_number   erase_count
+8030                    421
+8031                    7   # mem info is different from disk info
+8032                    434
+8033                    425
+8034                    431
 
-Fixes: 708b4351f08c ("ASoC: fsl: Add Freescale Generic ASoC Sound Card with ASRC support")
-Signed-off-by: LiangCheng Wang <zaq14760@gmail.com>
-Link: https://patch.msgid.link/20260805-fsl-asoc-defer-cpu-dai-v1-1-43f7f538e384@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Following process missed updating erase counter in wl_entry(in memory):
+ubi_update_fastmap
+ for (i = 1; i < new_fm->used_blocks; i++) // update fastmap data
+  if (!tmp_e)
+   if (old_fm && old_fm->e[i])
+    erase_block(ubi, old_fm->e[i]->pnum)
+     ret = ubi_io_sync_erase(ubi, pnum, 0)
+     ec = be64_to_cpu(ec_hdr->ec)
+     ec += ret
+     ec_hdr->ec = cpu_to_be64(ec)
+     ubi_io_write_ec_hdr(ubi, pnum, ec_hdr)  // ec is updated on flash
+   // ec is not updated in old_fm->e[i] (in memory)
+
+Fix it by passing wl_enter into erase_block() and updating erase
+counter in erase_block().
+
+Fixes: dbb7d2a88d2a ("UBI: Add fastmap core")
+Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Signed-off-by: Richard Weinberger <richard@nod.at>
+Stable-dep-of: 420477a84f1e ("UBI: Preserve torture flag when rescheduling failed erasures")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/fsl/fsl-asoc-card.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/mtd/ubi/fastmap.c | 25 +++++++++++++++----------
+ 1 file changed, 15 insertions(+), 10 deletions(-)
 
-diff --git a/sound/soc/fsl/fsl-asoc-card.c b/sound/soc/fsl/fsl-asoc-card.c
-index f76252b3f5913..f447d0cc2baf4 100644
---- a/sound/soc/fsl/fsl-asoc-card.c
-+++ b/sound/soc/fsl/fsl-asoc-card.c
-@@ -573,8 +573,8 @@ static int fsl_asoc_card_probe(struct platform_device *pdev)
+diff --git a/drivers/mtd/ubi/fastmap.c b/drivers/mtd/ubi/fastmap.c
+index 2cdc29483aee0..e7a751795832a 100644
+--- a/drivers/mtd/ubi/fastmap.c
++++ b/drivers/mtd/ubi/fastmap.c
+@@ -1393,11 +1393,12 @@ static int ubi_write_fastmap(struct ubi_device *ubi,
+ /**
+  * erase_block - Manually erase a PEB.
+  * @ubi: UBI device object
+- * @pnum: PEB to be erased
++ * @e: the physical eraseblock to erase
+  *
+- * Returns the new EC value on success, < 0 indicates an internal error.
++ * This function returns zero in case of success and a negative error code in
++ * case of failure.
+  */
+-static int erase_block(struct ubi_device *ubi, int pnum)
++static int erase_block(struct ubi_device *ubi, struct ubi_wl_entry *e)
+ {
+ 	int ret;
+ 	struct ubi_ec_hdr *ec_hdr;
+@@ -1407,7 +1408,7 @@ static int erase_block(struct ubi_device *ubi, int pnum)
+ 	if (!ec_hdr)
+ 		return -ENOMEM;
  
- 	cpu_pdev = of_find_device_by_node(cpu_np);
- 	if (!cpu_pdev) {
--		dev_err(&pdev->dev, "failed to find CPU DAI device\n");
--		ret = -EINVAL;
-+		ret = dev_err_probe(&pdev->dev, -EPROBE_DEFER,
-+				    "failed to find CPU DAI device\n");
- 		goto fail;
+-	ret = ubi_io_read_ec_hdr(ubi, pnum, ec_hdr, 0);
++	ret = ubi_io_read_ec_hdr(ubi, e->pnum, ec_hdr, 0);
+ 	if (ret < 0)
+ 		goto out;
+ 	else if (ret && ret != UBI_IO_BITFLIPS) {
+@@ -1415,7 +1416,7 @@ static int erase_block(struct ubi_device *ubi, int pnum)
+ 		goto out;
  	}
  
+-	ret = ubi_io_sync_erase(ubi, pnum, 0);
++	ret = ubi_io_sync_erase(ubi, e->pnum, 0);
+ 	if (ret < 0)
+ 		goto out;
+ 
+@@ -1427,11 +1428,16 @@ static int erase_block(struct ubi_device *ubi, int pnum)
+ 	}
+ 
+ 	ec_hdr->ec = cpu_to_be64(ec);
+-	ret = ubi_io_write_ec_hdr(ubi, pnum, ec_hdr);
++	ret = ubi_io_write_ec_hdr(ubi, e->pnum, ec_hdr);
+ 	if (ret < 0)
+ 		goto out;
+ 
+-	ret = ec;
++	e->ec = ec;
++	spin_lock(&ubi->wl_lock);
++	if (e->ec > ubi->max_ec)
++		ubi->max_ec = e->ec;
++	spin_unlock(&ubi->wl_lock);
++
+ out:
+ 	kfree(ec_hdr);
+ 	return ret;
+@@ -1577,7 +1583,7 @@ int ubi_update_fastmap(struct ubi_device *ubi)
+ 
+ 		if (!tmp_e) {
+ 			if (old_fm && old_fm->e[i]) {
+-				ret = erase_block(ubi, old_fm->e[i]->pnum);
++				ret = erase_block(ubi, old_fm->e[i]);
+ 				if (ret < 0) {
+ 					ubi_err(ubi, "could not erase old fastmap PEB");
+ 
+@@ -1629,7 +1635,7 @@ int ubi_update_fastmap(struct ubi_device *ubi)
+ 	if (old_fm) {
+ 		/* no fresh anchor PEB was found, reuse the old one */
+ 		if (!tmp_e) {
+-			ret = erase_block(ubi, old_fm->e[0]->pnum);
++			ret = erase_block(ubi, old_fm->e[0]);
+ 			if (ret < 0) {
+ 				ubi_err(ubi, "could not erase old anchor PEB");
+ 
+@@ -1641,7 +1647,6 @@ int ubi_update_fastmap(struct ubi_device *ubi)
+ 				goto err;
+ 			}
+ 			new_fm->e[0] = old_fm->e[0];
+-			new_fm->e[0]->ec = ret;
+ 			old_fm->e[0] = NULL;
+ 		} else {
+ 			/* we've got a new anchor PEB, return the old one */
 -- 
 2.53.0
 
