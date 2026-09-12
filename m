@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BCF437F75B;
-	Sat, 12 Sep 2026 19:18:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE7FD361977;
+	Sat, 12 Sep 2026 19:19:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789240739; cv=none; b=QNWCVyzFxBniw5n/FkGtcbbNgh3OG5yAfyql6nfe0LivQzfW339qAx1chxmK3Q9EyEt7oQiF/2DRUOdysWAc5w+n1EyYHC9VrbSNu6J4w716RhJudHit7iQLnYrHp036aN29uUsXTVUc6RLWPd0f+mBupb7yd315vPTLN1vESzY=
+	t=1789240743; cv=none; b=FpkKKsz1Y0FjerA8Sb6bTNXMzpyOyH2iSYGcvW8rzTorPAjHN1HWrT5ZRbr7TFNfnc1++orJFn2au1zsS6rDUILjHsP3qO3pQCJq9ln7vdtvW8I4kLLvfRZ5d2Pm8/67KMB6S2d6bRA/MJ/3seOysMWY/k2EUW7V5NL45CVGJL8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789240739; c=relaxed/simple;
-	bh=P5GAq8qwFCAS0uC756CjgtmhmnGx2Aa3MTZq/DNq5Pw=;
+	s=arc-20240116; t=1789240743; c=relaxed/simple;
+	bh=2+52G4Ri34oOT30HFgZZY4+1+NVR/PrPALDVmqWAgow=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oEecnKFOxbGcvgdq+otNcYzRnsOQrdLdk4i/wLd5Zcn2yjI9QENDmxdq2Il+xqt9nXhE2QFrW8e4xrS7y1jZpuQgneOjamvj/sxyFIOsJ38BddFCY5qJg/FOxNlpjuPtPBlnAPdJ31BNz4w4es+CXUWwJ/LJA/+PCBxjpFBMGBE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KJu2nJRS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=h30CmMSd9T5/zS6+ryRh74Jls9ZNmFr7uxKjNZcIvKKB02tFT/ANRxJpfg3QQgBMHTSsQTIqOIzcrqSuz4go45KLAWPO4leX5GAdv8ARSV6L2kRLICaFNTzvVmoKQQirWay2jB08aDlbR+2FUKk+WYurk7W6SjUvNt2omYjvKsY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qw8dXNob; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KJu2nJRS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47C751F000FF;
-	Sat, 12 Sep 2026 19:18:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qw8dXNob"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1A1A1F000FF;
+	Sat, 12 Sep 2026 19:19:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789240737;
-	bh=9mEFPJJukLE5EEzK5QeRI2HDUDr1siShmsJ8slsuuv8=;
+	s=korg; t=1789240741;
+	bh=m4Q88b5TQw6z5Yj5ZkBdi+aJ7TqAq2x6WaDO4TM0St8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KJu2nJRShWq47TWoGVdfn5tqC4x8USsGZcOxeK7y+K9POL9QUrIoUag2jHyiqgplm
-	 b9VqkY9IZLd+hYV5Q4jSvQTVY9lLsZq8V7P8LMWHaStEAiJ+fHARco6rkzH/0vm0gT
-	 R6A4BIjJFdujlWHU8CKNO1ivTQRo2NQ7IKAa5Fd0=
+	b=Qw8dXNobdrfdqUyYmHYlu5JmSgBWWlZyCy21Yfgx0Snd4TkPh6wGbTBSALs5efjs2
+	 TVQgYI3yRzXX7UyUOi0uIoHVv0lm65V8R6v4DklrM1nJST/BdMlnt5f8I2qGofXuDj
+	 nAKUldZbyoq+wyMVp0gJkkimEJvvQSmL8DzAdKMI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Benjamin Tissoires <benjamin.tissoires@redhat.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Jiri Kosina <jkosina@suse.cz>,
+	Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 929/935] HID: fix an error code in hid_check_device_match()
-Date: Sat, 12 Sep 2026 09:05:59 +0200
-Message-ID: <20260912065548.129620269@linuxfoundation.org>
+Subject: [PATCH 5.15 930/935] ALSA: control: Fix unannotated kfree() cleanup
+Date: Sat, 12 Sep 2026 09:06:00 +0200
+Message-ID: <20260912065548.153604218@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -53,37 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 89e756e3cc8d9c1ebc0f2b2f6912227073d93118 ]
+[ Upstream commit 14d811467f6592aa0e685730e66b5f9123287468 ]
 
-The hid_check_device_match() returns true if we find a match and false
-if we don't.  But here it returns -ENODEV which becomes true instead
-of false.
+The recent conversion to the automatic kfree() forgot to mark a
+variable with __free(kfree), leading to memory leaks.  Fix it.
 
-Fixes: 207733f92661 ("HID: split apart hid_device_probe to make logic more apparent")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Benjamin Tissoires <benjamin.tissoires@redhat.com>
-Reviewed-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.cz>
+Fixes: 1052d9882269 ("ALSA: control: Use automatic cleanup of kfree()")
+Reported-by: Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>
+Closes: https://lore.kernel.org/r/c1e2ef3c-164f-4840-9b1c-f7ca07ca422a@alu.unizg.hr
+Message-ID: <20240320062722.31325-1-tiwai@suse.de>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/core/control.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hid/hid-core.c b/drivers/hid/hid-core.c
-index 07b4bda8e2c9c..783f55a259cd8 100644
---- a/drivers/hid/hid-core.c
-+++ b/drivers/hid/hid-core.c
-@@ -2322,7 +2322,7 @@ static bool hid_check_device_match(struct hid_device *hdev,
+diff --git a/sound/core/control.c b/sound/core/control.c
+index 59f8533b54036..bce311cd5326b 100644
+--- a/sound/core/control.c
++++ b/sound/core/control.c
+@@ -1115,12 +1115,12 @@ static int snd_ctl_elem_read(struct snd_card *card,
+ static int snd_ctl_elem_read_user(struct snd_card *card,
+ 				  struct snd_ctl_elem_value __user *_control)
  {
- 	*id = hid_match_device(hdev, hdrv);
- 	if (!*id)
--		return -ENODEV;
-+		return false;
+-	struct snd_ctl_elem_value *control;
++	struct snd_ctl_elem_value *control __free(kfree) = NULL;
+ 	int result;
  
- 	if (hdrv->match)
- 		return hdrv->match(hdev, hid_ignore_special_drivers);
+ 	control = memdup_user(_control, sizeof(*control));
+ 	if (IS_ERR(control))
+-		return PTR_ERR(control);
++		return PTR_ERR(no_free_ptr(control));
+ 
+ 	result = snd_ctl_elem_read(card, control);
+ 	if (result < 0)
 -- 
 2.53.0
 
