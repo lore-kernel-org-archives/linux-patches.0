@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BBB84BEE52;
-	Sat, 12 Sep 2026 16:52:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27928F4F1;
+	Sat, 12 Sep 2026 16:52:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789231925; cv=none; b=Zr+oDxtExopriXabmjP7kkFAgrwkWx5VC/Zf5YhTvINLh6yGhp0LY/0T5bSS9sWWHX1nEAa4G3Syc9sNLLxfnZLiojUYymfZNuLenxfKo24GNCFBGMqqBMs0wBKcVEQTokDO1rXaFoRoU0ghbkbfqKEOxZqmPc2PBCs5E5A/lto=
+	t=1789231930; cv=none; b=hfe8wwqZKb8FRSMl/BiQJ5jx/n39PTL9ZBjhU3MNvmQO6Py0y2xsiKW2ypYg4JyYssJPY8mH3Zcr9n8y3x2MHfTVoOwO6PxWYwYJhfxfes7I0Qop4is0ZDoMGgsPc18TYddu14hyIWHfwGJh3kYJTxjf24lOP0Aah7rSjj8X1GI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789231925; c=relaxed/simple;
-	bh=l+1TqoQcvx13JEDVnlGttMQHK+zfV8fG0GOrAT1WlQ8=;
+	s=arc-20240116; t=1789231930; c=relaxed/simple;
+	bh=o4lRnE16KG7R0Kex9I+ncUJ9YRxyhRlQIe49sibxVQU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bOCeoK5cHTcAisD7gEiiQuMShpl7+YiJ6y8Nhydt0cRuBCxT33AkrU6RhkpYzy0RBzkwsP+yQNm+UyzSC+aNx//CtW/tEJqku8Ir0B5xmFPZKdQWBKvNCOLqlD4b/xdyHs7J4UWgWlDKHUHG92Z30T070IVcK9BUJJRfvD5o+0w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qcytMwwC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UPP1kH28v0wqakImtAdjcX+QKVxhBqtA+XKi8lDwlbuzbA/+qPb/MEe+QxgRkuDRYZgxc1J5VMJv2mTPLdk6QTZkMelwZE1CXCG/VkSddi0lv6Umd22N1b4kYcEzedFYr0vS8YrF7WWFIfOg+YNr2mjfPFXpqZ0slBG5n5vQyJw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EOy5t/Hv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qcytMwwC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 043A61F000FF;
-	Sat, 12 Sep 2026 16:52:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EOy5t/Hv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE7E01F000FF;
+	Sat, 12 Sep 2026 16:52:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789231923;
-	bh=+tdnO5duxMdp6COxCjbYhPtleQBkxUxAlC0LX51qmm8=;
+	s=korg; t=1789231929;
+	bh=4cZp9qYeOjvAYstFRcBCmVON4BxqjykMlw4IAzvYe2I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qcytMwwCCb7jRK6NQrLuDq4DnbFouwMo3E3z0oAApQMUMD9VDVT0gDB5p8XiSQj1Z
-	 RbAdvxKYx4kAKvAxIujnFu1BTdUblP//D5nNTQCdNv9IhSvNCjsWs0OPPfixaRSJLH
-	 gZU3hAO+1ZAuzVllQg3M4lyVuLgAAjaLMxWMuIYY=
+	b=EOy5t/Hv2YBBspPil0PjgJrfxcUDkDiBAd5oYq86NwZgYXpTF5muedfhagfTwkIK6
+	 4ftAqadpHVf78jfvdVc4BkntlfEk0USEUb84Mq2jEFAlTh+40f+RcxX1BrF+UlfAfd
+	 aZdobl7r1ipysNjEJnH4slLjqRqa51wTvc6c0HJI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Lu <chris.lu@mediatek.com>,
+	Hyunwoo Kim <imv4bel@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1096/1191] Bluetooth: btmtksdio: Fix out-of-bounds DMA read in the TX path
-Date: Sat, 12 Sep 2026 09:03:44 +0200
-Message-ID: <20260912065612.778125109@linuxfoundation.org>
+Subject: [PATCH 6.1 1097/1191] Bluetooth: RFCOMM: Validate MTU in rfcomm_apply_pn() to prevent infinite loop
+Date: Sat, 12 Sep 2026 09:03:45 +0200
+Message-ID: <20260912065612.799503228@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -51,99 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Lu <chris.lu@mediatek.com>
+From: Hyunwoo Kim <imv4bel@gmail.com>
 
-[ Upstream commit fa0ad2d277c7adead61d1c22411c55cea6990c2a ]
+[ Upstream commit 44c98fd082eafd49d55a8a4077ff488175b2fe24 ]
 
-btmtksdio_tx_packet() rounds the transfer size up to the SDIO block size
-of 256 bytes, but hands the host controller the SKB buffer as is:
+rfcomm_apply_pn() accepts the MTU value from a remote PN (Parameter
+Negotiation) frame without checking for zero. When the remote peer
+sends an MTU of zero, d->mtu is set to 0. This causes the sendmsg
+path to enter an infinite loop when fragmenting data, as each fragment
+has size == min_t(size_t, len, 0) == 0, so the remaining length never
+decreases. The infinite allocation of zero-length skbs exhausts all
+system memory.
 
-	err = sdio_writesb(bdev->func, MTK_REG_CTDR, skb->data,
-			   round_up(skb->len, MTK_SDIO_BLOCK_SIZE));
+Fix by clamping d->mtu to RFCOMM_DEFAULT_MTU when the negotiated
+value is zero, consistent with the initial value assigned in
+rfcomm_dlc_alloc().
 
-Only skb->len bytes hold packet data, so the controller reads up to 255
-bytes of uninitialised memory and sends it to the device over the SDIO
-bus. Depending on how much tailroom slack the SKB allocation happens to
-carry, that read can also extend past the end of the buffer.
-
-Compute the padded length up front, ensure the SKB has tailroom for it,
-and zero-fill the padding with skb_put_zero(). skb->len then covers the
-padding, so sdio_writesb() no longer needs to round up. byte_tx keeps
-counting the header and the payload only, and the error path restores the
-SKB so that the caller can requeue it.
-
-Writing behind skb->tail is only safe because the driver owns the buffer,
-which "Bluetooth: btmtksdio: Take exclusive ownership of the SKB before
-TX" ensures.
-
-Fixes: 9aebfd4a2200 ("Bluetooth: mediatek: add support for MediaTek MT7663S and MT7668S SDIO devices")
-Signed-off-by: Chris Lu <chris.lu@mediatek.com>
-Assisted-by: Claude:claude-opus-5
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btmtksdio.c | 26 +++++++++++++++++++++-----
- 1 file changed, 21 insertions(+), 5 deletions(-)
+ net/bluetooth/rfcomm/core.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/bluetooth/btmtksdio.c b/drivers/bluetooth/btmtksdio.c
-index d49fdad875e86..0432ae9bc6601 100644
---- a/drivers/bluetooth/btmtksdio.c
-+++ b/drivers/bluetooth/btmtksdio.c
-@@ -257,6 +257,7 @@ static int btmtksdio_tx_packet(struct btmtksdio_dev *bdev,
- 			       struct sk_buff *skb)
- {
- 	struct mtkbtsdio_hdr *sdio_hdr;
-+	unsigned int len, pad_len;
- 	int err;
+diff --git a/net/bluetooth/rfcomm/core.c b/net/bluetooth/rfcomm/core.c
+index 349f62a18190e..2914ac1c50024 100644
+--- a/net/bluetooth/rfcomm/core.c
++++ b/net/bluetooth/rfcomm/core.c
+@@ -1454,6 +1454,10 @@ static int rfcomm_apply_pn(struct rfcomm_dlc *d, int cr, struct rfcomm_pn *pn)
  
- 	/* Make sure that the data buffer is not shared with anyone else and
-@@ -266,6 +267,18 @@ static int btmtksdio_tx_packet(struct btmtksdio_dev *bdev,
- 	if (err < 0)
- 		return err;
+ 	d->mtu = __le16_to_cpu(pn->mtu);
  
-+	/* The transfer is rounded up to the SDIO block size, so the buffer
-+	 * has to provide tailroom for the padding as well
-+	 */
-+	len = skb->len + sizeof(*sdio_hdr);
-+	pad_len = round_up(len, MTK_SDIO_BLOCK_SIZE) - len;
++	/* MTU 0 causes an infinite loop when fragmenting in sendmsg */
++	if (!d->mtu)
++		d->mtu = RFCOMM_DEFAULT_MTU;
 +
-+	if (unlikely(skb_tailroom(skb) < pad_len)) {
-+		err = pskb_expand_head(skb, 0, pad_len, GFP_ATOMIC);
-+		if (err < 0)
-+			return err;
-+	}
-+
- 	/* Prepend MediaTek SDIO Specific Header */
- 	skb_push(skb, sizeof(*sdio_hdr));
+ 	if (cr && d->mtu > s->mtu)
+ 		d->mtu = s->mtu;
  
-@@ -274,19 +287,22 @@ static int btmtksdio_tx_packet(struct btmtksdio_dev *bdev,
- 	sdio_hdr->reserved = cpu_to_le16(0);
- 	sdio_hdr->bt_type = hci_skb_pkt_type(skb);
- 
-+	/* Zero the padding so that no uninitialised memory is sent out */
-+	skb_put_zero(skb, pad_len);
-+
- 	clear_bit(BTMTKSDIO_HW_TX_READY, &bdev->tx_state);
--	err = sdio_writesb(bdev->func, MTK_REG_CTDR, skb->data,
--			   round_up(skb->len, MTK_SDIO_BLOCK_SIZE));
-+	err = sdio_writesb(bdev->func, MTK_REG_CTDR, skb->data, skb->len);
- 	if (err < 0)
--		goto err_skb_pull;
-+		goto err_skb_restore;
- 
--	bdev->hdev->stat.byte_tx += skb->len;
-+	bdev->hdev->stat.byte_tx += len;
- 
- 	kfree_skb(skb);
- 
- 	return 0;
- 
--err_skb_pull:
-+err_skb_restore:
-+	skb_trim(skb, len);
- 	skb_pull(skb, sizeof(*sdio_hdr));
- 
- 	return err;
 -- 
 2.53.0
 
