@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0A3947CA67;
-	Sat, 12 Sep 2026 16:47:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB8F035E1D5;
+	Sat, 12 Sep 2026 16:47:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789231664; cv=none; b=a6oQat3l/QC8mf8RA/KaIP3JhBx1kd/v+eqDDzhlJCIn4QRsCAaIKD5jp1uEC5oNuUbtrJ3n05f54ODqDndsJZ6ALrt5h9dMPH8oJPr1CBWoa15JZswMN6AVT32jUd9aAzpu2HbpfwOgeyoaiAkK7oKl3hBB30iE4BgcEN8fGQw=
+	t=1789231669; cv=none; b=aF2tiyOHPWQ3jObHDthQc5caKD7B0EbBLnayLxsFoxtIjW7rhfF6Awe3sKajEy3meavB2BlgztYCnjJH4SVI5CEhLDuqKY3r9obbqtrWLqZ4G0bdHwcLpIX55T6eiSZoAGFyHbHgOX/+RiW8C6bVxmb8XvADLkUJRq+Jpp/ESTs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789231664; c=relaxed/simple;
-	bh=d0OnBSuVSgeBJ/bQc8G3msqPCeqtqNGwPGteLlTIz0Q=;
+	s=arc-20240116; t=1789231669; c=relaxed/simple;
+	bh=pkkPkT3MUdYK2O90lNLRwJJWHPA1AkGnw8r7nKD2aQk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aarnM7AnELLzzL6lSCXUSbFfP6xSFOJIozgO8OfPl1lzAjE48lYx7KswiDse+fiUTj5qcoDm22qTneBzbF4VF5hh2qTPs9KdUyOZHhGXfoMesHxTbghneY0XnTRXix82rxSvhRPJPz9UJA1Ua1TnsGHASXbJTyUB24sEIw04i0U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Oh819JF/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bx5M8+h42xDk541+2Gx7iz/IH+nTYVaCBfaX6pw/n/SpMZhqvIIPxQ/7nxdobzGzR4qCFFSTpDkdN0zcs7eYTxvQgAEI+HAaiCkMz8572wLHmwwKzac/XybyNDmZflLdT3tVIOvaORSVsKHEsRRijh7zId9/SUddP7vQLpHCK/M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n+7nkbml; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Oh819JF/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6B1A1F000FF;
-	Sat, 12 Sep 2026 16:47:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n+7nkbml"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D08601F000FF;
+	Sat, 12 Sep 2026 16:47:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789231662;
-	bh=aKDmWXiM+EG3iXACUBLI633C9XQ/t/t2jmsVbvxZM3o=;
+	s=korg; t=1789231668;
+	bh=SAtC5wfm5CFOytzoXrDyVXlmxZUHPcqvSdNxb/ssD+o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Oh819JF/9rPCIikJmmi6+rHxgOe1bymKW8CHKS/XLqjk8V4kjOgAalMoCPHbRqnlf
-	 uOFj3w0Xw5c2er+cxtecSJz+fiA4EFamfXqwBdoc4eYu+Sh16995zTazvUDUJhUDMF
-	 EXzKF5LkWCvze+kT0iEk8CJ05FNzHC3JOoEjx7cs=
+	b=n+7nkbmlvr3hZfWwHLzxUCcCAon6a7OhFUPL4sVA06BsUIvqnT5XLJrWQ2UlW5FEA
+	 lwTfTGZUvpOVGNNywjsV7mpGK9mAvZ1Lz4y70hGPhQFP2FQnHyiWntNeiP6n50lqXP
+	 herrcXGnAacSEKoDGp47BJ0TdVvbJizHC6SUAbwQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sechang Lim <rhkrqnwk98@gmail.com>,
-	Junseo Lim <zirajs7@gmail.com>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1044/1191] net: kcm: Hold RCU read lock while running BPF parser
-Date: Sat, 12 Sep 2026 09:02:52 +0200
-Message-ID: <20260912065611.626118411@linuxfoundation.org>
+Subject: [PATCH 6.1 1045/1191] net: dsa: b53: fix error propagation from b53_fdb_dump()
+Date: Sat, 12 Sep 2026 09:02:53 +0200
+Message-ID: <20260912065611.648367166@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -52,49 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junseo Lim <zirajs7@gmail.com>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit b0346dd64e4905291cc9c479f2e6cf1884ced4e6 ]
+[ Upstream commit 4f1d06cf8aaa9d2cb18e5ee8835aff6177256bc6 ]
 
-kcm_parse_func_strparser() calls bpf_prog_run_pin_on_cpu() which
-prevents CPU migration, but does not establish an RCU read-side
-critical section. Consequently, BPF map operations can trigger
-WARN_ON_ONCE(!bpf_rcu_lock_held()) when called from the KCM strparser
-program.
+The blamed commit replaced "return ret" statements in b53_fdb_dump()
+with "break;" which jumps to the mutex_unlock() -> return 0 section.
 
-Hold the RCU read lock while running the program.
+This is notably problematic because it swallows errors from the
+b53_fdb_copy() -> cb() path, and this will result in FDB dump truncation
+when the netlink skb overflows - see commit 21b52fed928e ("net: dsa:
+sja1105: fix broken backpressure in .port_fdb_dump").
 
-Fixes: 9b73896a81dc ("kcm: Use stream parser")
-Reported-by: Sechang Lim <rhkrqnwk98@gmail.com>
-Signed-off-by: Junseo Lim <zirajs7@gmail.com>
-Link: https://patch.msgid.link/20260813035136.106167-1-zirajs7@gmail.com
+Let's go back to "return ret". We don't need to preinitialize "ret" with
+0, because the "do {} while" block guarantees we cannot reach the end of
+the function without at least once calling b53_arl_search_wait(), which
+will have initialized ret to some valid value.
+
+Fixes: f7eb4a1c0864 ("net: dsa: b53: serialize access to the ARL table")
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://patch.msgid.link/20260812201121.2012356-1-vladimir.oltean@nxp.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/kcm/kcmsock.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/dsa/b53/b53_common.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/kcm/kcmsock.c b/net/kcm/kcmsock.c
-index ba221c6a8cbd7..ab7629cee1bd0 100644
---- a/net/kcm/kcmsock.c
-+++ b/net/kcm/kcmsock.c
-@@ -5,6 +5,7 @@
-  * Copyright (c) 2016 Tom Herbert <tom@herbertland.com>
-  */
+diff --git a/drivers/net/dsa/b53/b53_common.c b/drivers/net/dsa/b53/b53_common.c
+index 49fb610db484e..aaf9fbaefd6b9 100644
+--- a/drivers/net/dsa/b53/b53_common.c
++++ b/drivers/net/dsa/b53/b53_common.c
+@@ -1863,7 +1863,7 @@ int b53_fdb_dump(struct dsa_switch *ds, int port,
  
-+#include <linux/rcupdate.h>
- #include <linux/bpf.h>
- #include <linux/errno.h>
- #include <linux/errqueue.h>
-@@ -386,7 +387,9 @@ static int kcm_parse_func_strparser(struct strparser *strp, struct sk_buff *skb)
- 	struct bpf_prog *prog = psock->bpf_prog;
- 	int res;
+ 	mutex_unlock(&priv->arl_mutex);
  
-+	rcu_read_lock();
- 	res = bpf_prog_run_pin_on_cpu(prog, skb);
-+	rcu_read_unlock();
- 	return res;
+-	return 0;
++	return ret;
  }
+ EXPORT_SYMBOL(b53_fdb_dump);
  
 -- 
 2.53.0
