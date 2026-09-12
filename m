@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6CBD364038;
-	Sat, 12 Sep 2026 09:48:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BF0E1D514E;
+	Sat, 12 Sep 2026 09:48:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789206510; cv=none; b=PiGhf2whcC00f6aFWwBOlK8DUE8gczzs8//pzYVNDhymkzgpS48CvqJU8vQ0BLzcrhkwqMrwbGyXHkm4nz04FUrQMVKao0hKBaJEvgyapNEpUsso4TQaGh0OUbNFzhugI3rZzQhN8Adl2WdJOEq7VN+vwghddXclPF01QvvxKas=
+	t=1789206515; cv=none; b=XAY8MJPtsxnIbOKAkf0cQ2UyMP/Om3VtiSd+mG7wCbFMf2encZrS2FeqYInft1gShi6HwMLgFMXZC8Z9UFXhJ0SGejupSChtxe9HQ2RXBJaa/89SjptFu3U0WZpNb+2pF8jMbR5RP8kTWBK3OHk5b00SIGdNDv04sXfBbHbfhtI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789206510; c=relaxed/simple;
-	bh=DuzE8bN4iypaBGRftXR2EGpWuZeiJXzq5ZHTlXig5pI=;
+	s=arc-20240116; t=1789206515; c=relaxed/simple;
+	bh=IUXFTx6DVofoLlUtIyPY5RlKwOmxUI5TGnUSdp29ZO4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AVqfeV1sIGDbRL2tq1awPHY36yKbpx/Yj6QLroAchy0/FhSCNf8ZiyV5naUV+cTMqN8+QVoZUZd+BoMQc0fgRNbfB7Fltfe5gMgaGCkE7VLkn0Zd1mNNm2SAk3wXI5NLASxzDXdPlK/8ooKXVPj8mKcDS+VLKF864iXVPZlZxRg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ifUUOGlp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tqBRuLuwLq2Uct2vSxk2Bolv0DFiHasZNXXSlp+P6CBIES8vLNJgTBY2VEo1AqZl/ta3THmLBPICflv48M5G/1PpQNT1NharPc3gXnCsJFISpqlALhaV2osAhe8xI4WSmc2Z2IOdc0PTxUqeWhBxL3RTrlzKLPMgrJPcOpKRXqU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BN3Egl0A; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ifUUOGlp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D3B51F000FF;
-	Sat, 12 Sep 2026 09:48:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BN3Egl0A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 883711F00893;
+	Sat, 12 Sep 2026 09:48:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789206508;
-	bh=RMxkPPJ/o95bbv9u+wqNckn4009xyP51m7YNU8IVBXU=;
+	s=korg; t=1789206513;
+	bh=MZdL5leZYQMPSsy4F/keIo+D1stjgH5AARfOUllaax8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ifUUOGlpHZu7Cpv7ymECjTpCkTO+3ltjR6ReChIUP0oXUiJKXUXq8/mKFKW6bhZCh
-	 vIq2AvMhu9c+GR2HuarqCx2qcHxemFHiduKZmzV5xqo73BjS3pbr0tuMyN/jYOPRyK
-	 5UFOE7PUGTszfFd40Gn0C3KhrEbKpCVlmkvcu8nk=
+	b=BN3Egl0AAx6ayUg0kOayOYhJUlnC1XcRy6gjQhRXhsKJ8HoGjav5RU2ff7yVfK4RS
+	 HpP54TnyI7jBXxnTNdHGl15VxfZx7NvJowSdO1G4tMZKkTm+qleDUfQ3B7dO5NB3K8
+	 jzoW0IkZ0kk1f1t+hWjLan00YVPlrWLrE29IJVQU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sanjay Chitroda <sanjayembeddedse@gmail.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	Jonathan Cameron <jic23@kernel.org>,
+	Taniya Das <taniya.das@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0185/1518] iio: orientation: hid-sensor-rotation: Avoid race between callback setup and device exposure
-Date: Sat, 12 Sep 2026 08:39:14 +0200
-Message-ID: <20260912065627.676386130@linuxfoundation.org>
+Subject: [PATCH 6.18 0221/1518] clk: qcom: gcc-glymur: Move EVA clocks to critical clock list
+Date: Sat, 12 Sep 2026 08:39:50 +0200
+Message-ID: <20260912065628.487799462@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -53,84 +52,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sanjay Chitroda <sanjayembeddedse@gmail.com>
+From: Taniya Das <taniya.das@oss.qualcomm.com>
 
-[ Upstream commit 0e32649a7cf3cd784862f8dc0c68a5134731bfff ]
+[ Upstream commit 7399034fd78615ba826b864fca2e4572f13cf8e3 ]
 
-The driver currently exposes the IIO device to userspace before
-completing sensor hub callback registration, and similarly removes
-callbacks while the device can still be accessed during teardown.
+The gcc_eva_ahb_clk and gcc_eva_xo_clk branch clocks should not be
+registered as standalone GCC branch clocks. Drop these clocks from
+the GCC clock list and instead add their CBCR registers to the GCC
+critical clocks list to ensure they remain enabled during early boot.
 
-This creates a timing window where userspace may enable the buffer
-before callbacks are available. In such cases:
-- samples can be dropped,
-- buffered reads may observe stale or no data.
+If these clocks are registered as normal branch clocks, they may be
+gated, which breaks access to the EVA clock controller during clock
+controller probe, thus leave them as critical clocks similar to other
+subsystem AHB and XO clocks.
 
-Reorder probe and remove paths to ensure callbacks are active before
-device exposure and are removed after device is no longer accessible.
-
-This avoids a race window leading to data loss.
-
-Signed-off-by: Sanjay Chitroda <sanjayembeddedse@gmail.com>
-Fixes: fc18dddc0625 ("iio: hid-sensors: Added device rotation support")
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Signed-off-by: Jonathan Cameron <jic23@kernel.org>
+Fixes: efe504300a17 ("clk: qcom: gcc: Add support for Global Clock Controller")
+Signed-off-by: Taniya Das <taniya.das@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260617-evacc_glymur-v2-1-905108dacaaa@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/orientation/hid-sensor-rotation.c | 20 +++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ drivers/clk/qcom/gcc-glymur.c | 32 ++------------------------------
+ 1 file changed, 2 insertions(+), 30 deletions(-)
 
-diff --git a/drivers/iio/orientation/hid-sensor-rotation.c b/drivers/iio/orientation/hid-sensor-rotation.c
-index 83a0b0283605b..061934f0cb999 100644
---- a/drivers/iio/orientation/hid-sensor-rotation.c
-+++ b/drivers/iio/orientation/hid-sensor-rotation.c
-@@ -353,12 +353,6 @@ static int hid_dev_rot_probe(struct platform_device *pdev)
- 		return ret;
- 	}
+diff --git a/drivers/clk/qcom/gcc-glymur.c b/drivers/clk/qcom/gcc-glymur.c
+index eff3248d483ad..9e84f3e7c6a9b 100644
+--- a/drivers/clk/qcom/gcc-glymur.c
++++ b/drivers/clk/qcom/gcc-glymur.c
+@@ -3671,21 +3671,6 @@ static struct clk_branch gcc_disp_hf_axi_clk = {
+ 	},
+ };
  
--	ret = iio_device_register(indio_dev);
--	if (ret) {
--		dev_err(&pdev->dev, "device register failed\n");
--		goto error_remove_trigger;
--	}
+-static struct clk_branch gcc_eva_ahb_clk = {
+-	.halt_reg = 0x9b004,
+-	.halt_check = BRANCH_HALT_VOTED,
+-	.hwcg_reg = 0x9b004,
+-	.hwcg_bit = 1,
+-	.clkr = {
+-		.enable_reg = 0x9b004,
+-		.enable_mask = BIT(0),
+-		.hw.init = &(const struct clk_init_data) {
+-			.name = "gcc_eva_ahb_clk",
+-			.ops = &clk_branch2_ops,
+-		},
+-	},
+-};
 -
- 	rot_state->callbacks.send_event = dev_rot_proc_event;
- 	rot_state->callbacks.capture_sample = dev_rot_capture_sample;
- 	rot_state->callbacks.pdev = pdev;
-@@ -366,13 +360,19 @@ static int hid_dev_rot_probe(struct platform_device *pdev)
- 					&rot_state->callbacks);
- 	if (ret) {
- 		dev_err(&pdev->dev, "callback reg failed\n");
--		goto error_iio_unreg;
-+		goto error_remove_trigger;
-+	}
-+
-+	ret = iio_device_register(indio_dev);
-+	if (ret) {
-+		dev_err(&pdev->dev, "device register failed\n");
-+		goto error_remove_callback;
- 	}
+ static struct clk_branch gcc_eva_axi0_clk = {
+ 	.halt_reg = 0x9b008,
+ 	.halt_check = BRANCH_HALT_SKIP,
+@@ -3716,19 +3701,6 @@ static struct clk_branch gcc_eva_axi0c_clk = {
+ 	},
+ };
  
- 	return 0;
+-static struct clk_branch gcc_eva_xo_clk = {
+-	.halt_reg = 0x9b024,
+-	.halt_check = BRANCH_HALT,
+-	.clkr = {
+-		.enable_reg = 0x9b024,
+-		.enable_mask = BIT(0),
+-		.hw.init = &(const struct clk_init_data) {
+-			.name = "gcc_eva_xo_clk",
+-			.ops = &clk_branch2_ops,
+-		},
+-	},
+-};
+-
+ static struct clk_branch gcc_gp1_clk = {
+ 	.halt_reg = 0x64000,
+ 	.halt_check = BRANCH_HALT,
+@@ -7995,10 +7967,8 @@ static struct clk_regmap *gcc_glymur_clocks[] = {
+ 	[GCC_CFG_NOC_USB_ANOC_AHB_CLK] = &gcc_cfg_noc_usb_anoc_ahb_clk.clkr,
+ 	[GCC_CFG_NOC_USB_ANOC_SOUTH_AHB_CLK] = &gcc_cfg_noc_usb_anoc_south_ahb_clk.clkr,
+ 	[GCC_DISP_HF_AXI_CLK] = &gcc_disp_hf_axi_clk.clkr,
+-	[GCC_EVA_AHB_CLK] = &gcc_eva_ahb_clk.clkr,
+ 	[GCC_EVA_AXI0_CLK] = &gcc_eva_axi0_clk.clkr,
+ 	[GCC_EVA_AXI0C_CLK] = &gcc_eva_axi0c_clk.clkr,
+-	[GCC_EVA_XO_CLK] = &gcc_eva_xo_clk.clkr,
+ 	[GCC_GP1_CLK] = &gcc_gp1_clk.clkr,
+ 	[GCC_GP1_CLK_SRC] = &gcc_gp1_clk_src.clkr,
+ 	[GCC_GP2_CLK] = &gcc_gp2_clk.clkr,
+@@ -8547,6 +8517,8 @@ static u32 gcc_glymur_critical_cbcrs[] = {
+ 	0x71004, /* GCC_GPU_CFG_AHB_CLK */
+ 	0x32004, /* GCC_VIDEO_AHB_CLK */
+ 	0x32058, /* GCC_VIDEO_XO_CLK */
++	0x9b004, /* GCC_EVA_AHB_CLK */
++	0x9b024, /* GCC_EVA_XO_CLK */
+ };
  
--error_iio_unreg:
--	iio_device_unregister(indio_dev);
-+error_remove_callback:
-+	sensor_hub_remove_callback(hsdev, hsdev->usage);
- error_remove_trigger:
- 	hid_sensor_remove_trigger(indio_dev, &rot_state->common_attributes);
- 	return ret;
-@@ -385,8 +385,8 @@ static void hid_dev_rot_remove(struct platform_device *pdev)
- 	struct iio_dev *indio_dev = platform_get_drvdata(pdev);
- 	struct dev_rot_state *rot_state = iio_priv(indio_dev);
- 
--	sensor_hub_remove_callback(hsdev, hsdev->usage);
- 	iio_device_unregister(indio_dev);
-+	sensor_hub_remove_callback(hsdev, hsdev->usage);
- 	hid_sensor_remove_trigger(indio_dev, &rot_state->common_attributes);
- }
- 
+ static const struct regmap_config gcc_glymur_regmap_config = {
 -- 
 2.53.0
 
