@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1412B456DEA;
-	Sat, 12 Sep 2026 10:47:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A75C459AD7;
+	Sat, 12 Sep 2026 10:47:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789210061; cv=none; b=FfyifOGTntCVkj8QZzWfYFMsxALBxiiIqCVwdKlDszyaz8JO9MmWbk6Q1WETQ8PcCiqnj4UGtpZg27kp19opk/1Fnr688sbq6M5NUpNXlLSTwxy65RGTdlOl93TsaRsP8I6s3M2fnfT+rfKOps67EG7ctX6dgtSNh7pmltaFlQI=
+	t=1789210066; cv=none; b=BFX/leLSRLccCWU3vSfUEjB1D6KwcJ0w7HCa+JaJ7QyzlJbq+T25+K/fbixumn78O4Ov5EoS5zmaFN0Oy4fF3B0OybKXLQ9zYx/VPzVsU14q6MH2iO2fqB2Vg5oMMr+pGeH2KilEw3Q7nBnZYY/2//KW2evJFbQ1/htNFktyE4U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789210061; c=relaxed/simple;
-	bh=CzhkWyoP6P26j169zLjE+BJmwq3akT5a1dqiyO1oKLg=;
+	s=arc-20240116; t=1789210066; c=relaxed/simple;
+	bh=RznA831Tt8Jne2ffNl9aWQbfo3ELwr0cv08TwNan7mI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b+rTIb0at+Q58wihP0vrjyMezHxVq7EaQOX+zUN8ptKdnMu4DN/3GuC8GJOPmBIKqwgMnHSVw8T7MFQcEQiSW0KneWPNewdUDksA0xZiNZc3r0P2Kl+nkwF2tO0yMme8WyvKZv2UfpJ8d8whSV9lH5bkmSrcu2pH7hzz227+qEE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y/9waopO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=B09Q5BKbmtWgT4JzbYharI/CQB8j7rhwBinDgrFXuiuvWM5NJXYm6oAd2olks8tiq3FrptT2CjXDfthjBlHLy1Z/Vq2+MM3wWhC8zNa4xQ2dTrXIyo67zoPpL+Tdlgqbw0shZgq8Hc2K3AUU4Qi/Heo31UdMtmWkofrzcC/n7rM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FOvRTwEx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y/9waopO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBE701F000FF;
-	Sat, 12 Sep 2026 10:47:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FOvRTwEx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D2A91F000FF;
+	Sat, 12 Sep 2026 10:47:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789210060;
-	bh=BXPhmyZpDHPSHoujarW7P7Lf0lNnwR3rcuC0xBpppD0=;
+	s=korg; t=1789210065;
+	bh=LhPKgxFQzHL5LajgS4LmSW8WjwKBkGVXh3VTahm9/m4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y/9waopOyEQ4Ovb1kkE+hjabfVVlmBVqkISaA3H502D1KcBsBCwdeMaEGwxqMky0F
-	 4T1Upjl985fOXRgsMFXmF2vUInVuysd4loLwiudl5fd4MYBmT4LWwEdifAZKj6uUV2
-	 M5eF6M8HZY6mLmANNQWyO7W58cts4W2Ulxwe8DSc=
+	b=FOvRTwEx8f3NYFZms+Kcn0cDugyqd7UXYkvu8vXsrHW1nHUdCb6cojPH52OmsN3dz
+	 r0RPQ6yTCbJjz6w+PXNZYs/9ClQuVWMGZDQLwLGEx8FAxNiAHzfJCS4nYezvZ3Afve
+	 iC38PUG3ZHKkFQTNpWsA2f2dOc0FRPXpsM9vQDXM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tanushree Shah <tshah@linux.ibm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0948/1518] perf trace-event: Fix buffer overflow in read_string()
-Date: Sat, 12 Sep 2026 08:51:57 +0200
-Message-ID: <20260912065644.902553849@linuxfoundation.org>
+Subject: [PATCH 6.18 0949/1518] drm/amdgpu/gfx6: Fixup emitting SWITCH_BUFFER packets
+Date: Sat, 12 Sep 2026 08:51:58 +0200
+Message-ID: <20260912065644.925445489@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -45,47 +45,134 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tanushree Shah <tshah@linux.ibm.com>
+From: Timur Kristóf <timur.kristof@gmail.com>
 
-[ Upstream commit 1121a7af1833f8b5723f1e32685b461614353d5d ]
+[ Upstream commit 7aac4242a11991d530eee3e141d6e445d5f11c22 ]
 
-read_string() writes into buf[BUFSIZ] one byte at a time without
-checking 'size' against the buffer bound before each write. A
-string longer than BUFSIZ in the input overflows the stack buffer.
+Implement the emit_switch_buffer() function instead of emitting
+them duing emit_ib, emit_pipeline_sync and emit_vm_flush.
 
-Add a bounds check before each write to prevent overflow. On
-overflow the function returns NULL, matching its other error paths.
+Note that it isn't necessary to emit these in both
+emit_pipeline_sync() and emit_vm_flush() because
+amdgpu_vm_flush() already calls these when calling
+either of those functions.
 
-Fixes: 9215545e99d8 ("perf: Convert perf tracing data into a tracing_data event")
-Signed-off-by: Tanushree Shah <tshah@linux.ibm.com>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Fixes: 2cd46ad22383 ("drm/amdgpu: add graphic pipeline implementation for si v8")
+Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/trace-event-read.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/gfx_v6_0.c | 38 ++++++++++-----------------
+ 1 file changed, 14 insertions(+), 24 deletions(-)
 
-diff --git a/tools/perf/util/trace-event-read.c b/tools/perf/util/trace-event-read.c
-index ecbbb93f01853..afd458cf1387d 100644
---- a/tools/perf/util/trace-event-read.c
-+++ b/tools/perf/util/trace-event-read.c
-@@ -127,6 +127,11 @@ static char *read_string(void)
- 			}
- 		}
+diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v6_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v6_0.c
+index 8b2bb61ca6c92..935610635bff0 100644
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v6_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v6_0.c
+@@ -1926,12 +1926,6 @@ static void gfx_v6_0_ring_emit_ib(struct amdgpu_ring *ring,
+ 	unsigned vmid = AMDGPU_JOB_GET_VMID(job);
+ 	u32 header, control = 0;
  
-+		if (size >= (int)sizeof(buf) - 1) {
-+			pr_debug("string too long (max %zu bytes)", sizeof(buf) - 1);
-+			goto out;
-+		}
+-	/* insert SWITCH_BUFFER packet before first IB in the ring frame */
+-	if (flags & AMDGPU_HAVE_CTX_SWITCH) {
+-		amdgpu_ring_write(ring, PACKET3(PACKET3_SWITCH_BUFFER, 0));
+-		amdgpu_ring_write(ring, 0);
+-	}
+-
+ 	if (ib->flags & AMDGPU_IB_FLAG_CE)
+ 		header = PACKET3(PACKET3_INDIRECT_BUFFER_CONST, 2);
+ 	else
+@@ -2366,14 +2360,6 @@ static void gfx_v6_0_ring_emit_pipeline_sync(struct amdgpu_ring *ring)
+ 	amdgpu_ring_write(ring, seq);
+ 	amdgpu_ring_write(ring, 0xffffffff);
+ 	amdgpu_ring_write(ring, 4); /* poll interval */
+-
+-	if (usepfp) {
+-		/* synce CE with ME to prevent CE fetch CEIB before context switch done */
+-		amdgpu_ring_write(ring, PACKET3(PACKET3_SWITCH_BUFFER, 0));
+-		amdgpu_ring_write(ring, 0);
+-		amdgpu_ring_write(ring, PACKET3(PACKET3_SWITCH_BUFFER, 0));
+-		amdgpu_ring_write(ring, 0);
+-	}
+ }
+ 
+ static void gfx_v6_0_ring_emit_vm_flush(struct amdgpu_ring *ring,
+@@ -2397,12 +2383,6 @@ static void gfx_v6_0_ring_emit_vm_flush(struct amdgpu_ring *ring,
+ 		/* sync PFP to ME, otherwise we might get invalid PFP reads */
+ 		amdgpu_ring_write(ring, PACKET3(PACKET3_PFP_SYNC_ME, 0));
+ 		amdgpu_ring_write(ring, 0x0);
+-
+-		/* synce CE with ME to prevent CE fetch CEIB before context switch done */
+-		amdgpu_ring_write(ring, PACKET3(PACKET3_SWITCH_BUFFER, 0));
+-		amdgpu_ring_write(ring, 0);
+-		amdgpu_ring_write(ring, PACKET3(PACKET3_SWITCH_BUFFER, 0));
+-		amdgpu_ring_write(ring, 0);
+ 	}
+ }
+ 
+@@ -2998,6 +2978,12 @@ static uint64_t gfx_v6_0_get_gpu_clock_counter(struct amdgpu_device *adev)
+ 	return clock;
+ }
+ 
++static void gfx_v6_0_ring_emit_sb(struct amdgpu_ring *ring)
++{
++	amdgpu_ring_write(ring, PACKET3(PACKET3_SWITCH_BUFFER, 0));
++	amdgpu_ring_write(ring, 0);
++}
 +
- 		buf[size++] = c;
- 
- 		if (!c)
+ static void gfx_v6_ring_emit_cntxcntl(struct amdgpu_ring *ring, uint32_t flags)
+ {
+ 	u32 dw2 = 0x80000000; /* set load_enable otherwise this package is just NOPs */
+@@ -3541,11 +3527,12 @@ static const struct amdgpu_ring_funcs gfx_v6_0_ring_funcs_gfx = {
+ 	.emit_frame_size =
+ 		5 + 5 + /* hdp flush / invalidate */
+ 		14 + 14 + 14 + /* gfx_v6_0_ring_emit_fence x3 for user fence, vm fence */
+-		7 + 4 + /* gfx_v6_0_ring_emit_pipeline_sync */
+-		SI_FLUSH_GPU_TLB_NUM_WREG * 5 + 7 + 6 + /* gfx_v6_0_ring_emit_vm_flush */
++		7 + /* gfx_v6_0_ring_emit_pipeline_sync */
++		SI_FLUSH_GPU_TLB_NUM_WREG * 5 + 7 + 2 + /* gfx_v6_0_ring_emit_vm_flush */
++		3 * 2 + /* gfx_v6_0_ring_emit_sb x3 (from amdgpu_vm_flush, amdgpu_ib_schedule) */
+ 		3 + 2 + 2 + /* gfx_v6_ring_emit_cntxcntl including VGT flush */
+ 		5, /* SURFACE_SYNC */
+-	.emit_ib_size = 6, /* gfx_v6_0_ring_emit_ib */
++	.emit_ib_size = 4, /* gfx_v6_0_ring_emit_ib */
+ 	.emit_ib = gfx_v6_0_ring_emit_ib,
+ 	.emit_fence = gfx_v6_0_ring_emit_fence,
+ 	.emit_pipeline_sync = gfx_v6_0_ring_emit_pipeline_sync,
+@@ -3553,6 +3540,7 @@ static const struct amdgpu_ring_funcs gfx_v6_0_ring_funcs_gfx = {
+ 	.test_ring = gfx_v6_0_ring_test_ring,
+ 	.test_ib = gfx_v6_0_ring_test_ib,
+ 	.insert_nop = amdgpu_ring_insert_nop,
++	.emit_switch_buffer = gfx_v6_0_ring_emit_sb,
+ 	.emit_cntxcntl = gfx_v6_ring_emit_cntxcntl,
+ 	.emit_wreg = gfx_v6_0_ring_emit_wreg,
+ 	.emit_mem_sync = gfx_v6_0_emit_mem_sync,
+@@ -3570,8 +3558,9 @@ static const struct amdgpu_ring_funcs gfx_v6_0_ring_funcs_compute = {
+ 		7 + /* gfx_v6_0_ring_emit_pipeline_sync */
+ 		SI_FLUSH_GPU_TLB_NUM_WREG * 5 + 7 + /* gfx_v6_0_ring_emit_vm_flush */
+ 		14 + 14 + 14 + /* gfx_v6_0_ring_emit_fence x3 for user fence, vm fence */
++		3 * 2 + /* gfx_v6_0_ring_emit_sb x3 (from amdgpu_vm_flush, amdgpu_ib_schedule) */
+ 		5, /* SURFACE_SYNC */
+-	.emit_ib_size = 6, /* gfx_v6_0_ring_emit_ib */
++	.emit_ib_size = 4, /* gfx_v6_0_ring_emit_ib */
+ 	.emit_ib = gfx_v6_0_ring_emit_ib,
+ 	.emit_fence = gfx_v6_0_ring_emit_fence,
+ 	.emit_pipeline_sync = gfx_v6_0_ring_emit_pipeline_sync,
+@@ -3579,6 +3568,7 @@ static const struct amdgpu_ring_funcs gfx_v6_0_ring_funcs_compute = {
+ 	.test_ring = gfx_v6_0_ring_test_ring,
+ 	.test_ib = gfx_v6_0_ring_test_ib,
+ 	.insert_nop = amdgpu_ring_insert_nop,
++	.emit_switch_buffer = gfx_v6_0_ring_emit_sb,
+ 	.emit_wreg = gfx_v6_0_ring_emit_wreg,
+ 	.emit_mem_sync = gfx_v6_0_emit_mem_sync,
+ };
 -- 
 2.53.0
 
