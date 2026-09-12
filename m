@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 564F33CB54E;
-	Sat, 12 Sep 2026 15:15:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 901453CDBB5;
+	Sat, 12 Sep 2026 15:15:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789226139; cv=none; b=LavHR9aIAiYw7IIE7xOLJjf+sSvVDQq3VdYgyVTtwU9G/rMpMG4tfwTi1d4DrQY35Vp5Q449rFkczE8oln/mxGShXIl27MH2vb9Y9/rstqhWaJHj3W0nK8x5RCm8WGEmg37uiYSNYmUTniDPizdDZhIbqfpfNvccx1vf4OXaYLM=
+	t=1789226145; cv=none; b=kMUMEa7cwx8W/ovuSWrFDsakLRFMjreoPFhmH5Xr0wMi85zkNozB4ccSYTEsYysQrV4JHSdyCIEX5sVPBn8Ckj8al4M2R4izbcymflIsIDqO0XzMkKSFI/NxMx8Kwln7+rF6na6ZxG7QjrLo03uHoGQx2c1mThgc7IK1uBms+Fw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789226139; c=relaxed/simple;
-	bh=wluj7baWnVh4yvDYup4NUvOM4lDD307XelRedGXlePc=;
+	s=arc-20240116; t=1789226145; c=relaxed/simple;
+	bh=jphTW7rwfsSOAu+Fxd7eM8EQu/ISoxjuHLgqVKbjQag=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LOkBFCje5uGiA+hVtMgiY8JQ1Fsz0M30tBjllyJimVhvH9vFKMPMPapTijIZcrFEV3mczEZFXNjBQbjcGm9MTmOiaUw+qAfbTfNEb7DszA1EagRgEpS4x1EsBbASrOm+NfMbkgC6XxlIIUNO7mE7aw/hsUf52iOXP8MSMHZXg+w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GFEGiJcD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=g1ZZee2btHmD/zZ8HWpOL4wJXFig5UTNoHHQspLrIZjDU0VqKvohKegn4vz7SStMQ7XhHvG87wsS7e7uDsrAAv3l4MpFQDmqJKd8wRvqlsQ6kVyr4/t1INrF44fKnKkwno/PPcDqBOQN3i9D5/0E8VMH6t6dOZl0R4G4Sg0z2T8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1KH81GfX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GFEGiJcD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56CF71F000FF;
-	Sat, 12 Sep 2026 15:15:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1KH81GfX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F91D1F000FF;
+	Sat, 12 Sep 2026 15:15:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789226138;
-	bh=iQJGHq9UI40I1cmPcCdrksQcAFohKOp3mAyvcsuJcuE=;
+	s=korg; t=1789226142;
+	bh=1fAVQDJRWXJf8RNtk8N/Yf8rYUM6XB/e6QRFsJmi1Zc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GFEGiJcDQabXsGJPRYqSHrS4+c25TfUobyJkXEPJ9VHdOVLDXSLm/ZwgcgHqTJqQY
-	 m9HXS5Oij8O6EN4fzpxZt3oCZJwo+WIox64cka6HOsPaAfU03u/2QtzvLqanhON5jW
-	 eg8F9ot7a0zQH1eSZslEWIWQ7HcYgUKfSPPtUpUY=
+	b=1KH81GfXiaHv3m6YAIXFptz8A74Q2GdDPREQXmJtf5LsW1w8iq0IG95+O4y0f9JHi
+	 1DkgvDKhjvgkbojvmUPQc7E+cgcgage8MFpEBmklhNkISApuYuiFKBn240t5zMi9TD
+	 baeg1+TFnSzLM+D4c9JCw/BISWiseZdYSv/u4YGI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Chao Yu <chao@kernel.org>,
-	Gao Xiang <xiang@kernel.org>,
+	syzbot+9265e754091c2d27ea29@syzkaller.appspotmail.com,
+	Pauli Virtanen <pav@iki.fi>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1341/1424] erofs: Fix EROFS_FS_ZIP_LZMA_DEFAULT_MAX_STREAMS default logic
-Date: Sat, 12 Sep 2026 09:02:53 +0200
-Message-ID: <20260912065637.289704356@linuxfoundation.org>
+Subject: [PATCH 6.6 1342/1424] Bluetooth: L2CAP: reject accept queue add unless BT_LISTEN
+Date: Sat, 12 Sep 2026 09:02:54 +0200
+Message-ID: <20260912065637.311894934@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -53,67 +52,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Pauli Virtanen <pav@iki.fi>
 
-[ Upstream commit ab74edaeb1ae7c7194e79007e6afdfe788111a3f ]
+[ Upstream commit d4bfa78fd67929b62b02013c107973e0c5b7aa9a ]
 
-When NR_CPUS is less than 16, or when SMP is disabled, the default value
-of 16 is invalid.
+New sk should not be added to parent socket accept queue after last
+l2cap_sock_cleanup_listen() has run in l2cap_sock_teardown_cb() and
+state set to BT_CLOSED, as that can result to UAF on dereferencing the
+dangling parent reference.
 
-While actual configuration picks up a sensible and valid default
-(NR_CPUS or 1), "make savedefconfig" will still write a line like
+l2cap_sock_new_connection_cb() may race with parent l2cap_chan teardown,
+due to chan->state accessed without consistent locking:
 
-    CONFIG_EROFS_FS_ZIP_LZMA_DEFAULT_MAX_STREAMS=1
+  [Task 1]                           [Task 2]
+  l2cap_sock_release(parent)         l2cap_connect
+    l2cap_sock_shutdown                pchan = l2cap_global_chan_by_psm
+      l2cap_chan_lock(pchan)
+      l2cap_chan_close
+        l2cap_sock_teardown_cb
+          pchan->state = BT_CLOSED
+      l2cap_chan_unlock(pchan) ------> l2cap_chan_lock(pchan)
+                                       l2cap_new_connection
+                                         l2cap_sock_new_connection_cb
+      l2cap_chan_lock(pchan) <-------- l2cap_chan_unlock(pchan)
+      l2cap_sock_kill(parent)          /* bt_sk(sk)->parent dangling */
 
-to the defconfig file, even if that matches the sensible default.
+Fix by adding check for sk_state == BT_LISTEN after acquiring sk lock in
+l2cap_sock_new_connection_cb().  Add lock_sock() around sk_state writes
+where missing, to avoid data races.
 
-Avoid needlessly enlarging the defconfig files, and reduce churn for
-updating them, by specifying valid defaults depending on SMP and
-NR_CPUS.
+Although the data races on pchan->state should be fixed too, this
+defensive sk_state check probably makes sense in any case.
 
-While at it, make the prompt depend on SMP, as there is no point in
-asking the user about the maximum number of decompression streams if
-there is only one valid answer.
-
-Fixes: c9b47e6b23114e93 ("erofs: cap LZMA stream pool size")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Gao Xiang <xiang@kernel.org>
+Fixes: 2ff1a41a912d ("Bluetooth: L2CAP: Fix null-ptr-deref in l2cap_sock_state_change_cb()")
+Reported-by: syzbot+9265e754091c2d27ea29@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=9265e754091c2d27ea29
+Signed-off-by: Pauli Virtanen <pav@iki.fi>
+Reported-by: syzbot+9265e754091c2d27ea29@syzkaller.appspotmail.com
+Tested-by: syzbot+9265e754091c2d27ea29@syzkaller.appspotmail.com
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/erofs/Kconfig | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ net/bluetooth/l2cap_sock.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/fs/erofs/Kconfig b/fs/erofs/Kconfig
-index baabc37c71b31..bedb31517c445 100644
---- a/fs/erofs/Kconfig
-+++ b/fs/erofs/Kconfig
-@@ -101,11 +101,13 @@ config EROFS_FS_ZIP_LZMA
- 	  If unsure, say N.
+diff --git a/net/bluetooth/l2cap_sock.c b/net/bluetooth/l2cap_sock.c
+index 89f881be9712b..5cbd50889b7c6 100644
+--- a/net/bluetooth/l2cap_sock.c
++++ b/net/bluetooth/l2cap_sock.c
+@@ -1523,6 +1523,11 @@ static int l2cap_sock_new_connection_cb(struct l2cap_chan *chan,
  
- config EROFS_FS_ZIP_LZMA_DEFAULT_MAX_STREAMS
--	int "EROFS LZMA default maximum decompression streams"
-+	int "EROFS LZMA default maximum decompression streams" if SMP
- 	depends on EROFS_FS_ZIP_LZMA
- 	range 1 NR_CPUS if SMP
- 	range 1 1 if !SMP
--	default 16
-+	default 16 if SMP && NR_CPUS >= 16
-+	default NR_CPUS if SMP
-+	default 1
- 	help
- 	  By default EROFS allocates one LZMA decompression stream per CPU.
- 	  Each stream can hold a dictionary of up to 8 MiB taken from the
-@@ -113,7 +115,7 @@ config EROFS_FS_ZIP_LZMA_DEFAULT_MAX_STREAMS
- 	  of memory.  This caps the default; the lzma_streams module parameter
- 	  still overrides it.
+ 	lock_sock(parent);
  
--	  If unsure, keep the default of 16.
-+	  If unsure, keep the suggested default (16 or lower).
++	if (parent->sk_state != BT_LISTEN) {
++		release_sock(parent);
++		return -EINVAL;
++	}
++
+ 	/* Check for backlog size */
+ 	if (sk_acceptq_is_full(parent)) {
+ 		BT_DBG("backlog full %d", parent->sk_ack_backlog);
+@@ -1687,10 +1692,14 @@ static void l2cap_sock_state_change_cb(struct l2cap_chan *chan, int state,
+ 	if (!sk)
+ 		return;
  
- config EROFS_FS_ZIP_DEFLATE
- 	bool "EROFS DEFLATE compressed data support"
++	lock_sock(sk);
++
+ 	sk->sk_state = state;
+ 
+ 	if (err)
+ 		sk->sk_err = err;
++
++	release_sock(sk);
+ }
+ 
+ static struct sk_buff *l2cap_sock_alloc_skb_cb(struct l2cap_chan *chan,
+@@ -1766,6 +1775,8 @@ static void l2cap_sock_resume_cb(struct l2cap_chan *chan)
+ 	if (!sk)
+ 		return;
+ 
++	lock_sock(sk);
++
+ 	if (test_and_clear_bit(FLAG_PENDING_SECURITY, &chan->flags)) {
+ 		sk->sk_state = BT_CONNECTED;
+ 		chan->state = BT_CONNECTED;
+@@ -1773,6 +1784,8 @@ static void l2cap_sock_resume_cb(struct l2cap_chan *chan)
+ 
+ 	clear_bit(BT_SK_SUSPEND, &bt_sk(sk)->flags);
+ 	sk->sk_state_change(sk);
++
++	release_sock(sk);
+ }
+ 
+ static void l2cap_sock_set_shutdown_cb(struct l2cap_chan *chan)
 -- 
 2.53.0
 
