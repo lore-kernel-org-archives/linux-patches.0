@@ -1,112 +1,216 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44278428841
-	for <patches@lists.linux.dev>; Sat, 12 Sep 2026 10:58:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D11B8426D03;
+	Sat, 12 Sep 2026 10:58:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789210683; cv=none; b=h14MVu6gMzRl/ztzD1JjitTw5jKma/jZYnobN+mZS+r/aJ4AbuUTmK1KRAMfnj6rS3Nf52XN54ED/HmUBq7iHgYtne8oxpKZHl43hhMocNKWodkhyV07jv5YaMF1VnKlzjqG2YPOIo6W5fDdNgEze8Um46z0PpRnFIjl9Ctyoag=
+	t=1789210687; cv=none; b=Gs20Y9+Oi3bx1j4NcxuGXGGTmR+NEHiSWU9811nV3zgrxfevsg2HoG2Z4wIgrn5RMF7B3hxeKt5B2cE9N4Vp9u0TOucxzYogQpJEAtZ3G6pG0Ur7I6alrgBal+E88dXc1NpPrkHkBw6gfT4OBSC3EzFwxfIwxxU1NBs1guSmBxM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789210683; c=relaxed/simple;
-	bh=hVXAeeXWKdYkspctwqo9kbFTabQPqrYaGxCN45CSpyQ=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=BlqYFtGUrNk0u6s7iZY73OKCj/Haa5BvMw5vz8VTv/3aPXMg+u6zCwonVEvXB3/Oi0sZnMitWF60eerYpcDKQmbGgwfp/NyZUKCFTcZYn4mGdRWmnZ8zXawXjH3NVR40GfPAE0GK/BZseZ1wWxcFTmQl8SazCtIVvOZ2cCpB0nU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arndb.de; spf=pass smtp.mailfrom=arndb.de; dkim=pass (2048-bit key) header.d=arndb.de header.i=@arndb.de header.b=YYCC865q; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Vuna+zG+; arc=none smtp.client-ip=103.168.172.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arndb.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arndb.de
+	s=arc-20240116; t=1789210687; c=relaxed/simple;
+	bh=FkW70XxV8YZD2gLboyw2T1KSowg4p+7tt1LYyowdspk=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=SUZTswany8YZ4R5WiEajFrr/TM9Uxq7EDw9GMJo8xIHBvLI7vO6NqyOZSgAC/SOvJ5+7vbiGTu8gVCe0j4ti3jEqPGBJ52snFfeW+GDJlXGAedgd0bHb/ZkG6qiM/5kH/s53VgANI8aSP3bUGNS1GF3w3WOYAeKWOLd+4s/M8GU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bn8ceTMs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=arndb.de header.i=@arndb.de header.b="YYCC865q";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Vuna+zG+"
-Received: from ams-compute-02.internal (ams-compute-02.internal [10.64.2.62])
-	by mailfout.phl.internal (Postfix) with ESMTP id DC469EC0101;
-	Sat, 12 Sep 2026 06:58:00 -0400 (EDT)
-Received: from ams-imap-03 ([10.64.2.23])
-  by ams-compute-02.internal (MEProxy); Sat, 12 Sep 2026 06:58:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1789210680;
-	 x=1789297080; bh=KijIXLGdUqOF6cyNT3nNqDfzqJ+JjAIePBMYLLtZ+2o=; b=
-	YYCC865qsLVP+/m61o4pWLeP2H5UrNmj1bncuJgff73T0Fl54k/a2d2/bkBC1cWQ
-	XnNl6QDYVDlMr5xZoN4RPPA7CWmkA0vMP3nrBHev4MR+F/9wgIfsPQXSG0mkjRHl
-	EJSM2dq72IDnR9zqlaWVWho3AneYxiQL01sBGfxd/TYUSuxbC3l2L/UEiU9wgzEa
-	HuATIP+Ki6hoo24DWVWDDFEWEKsWFIvJHpzi6kkSxSOO2W4swNLYCS+WjTTb3QW9
-	Qi838tGq3mPXYQeojGcCEo3NqEDROLMEh6yyOK7oghI+affiwkKXs/WhM1KwYNcz
-	lm//ydccbH8cKYsqM63UwA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1789210680; x=
-	1789297080; bh=KijIXLGdUqOF6cyNT3nNqDfzqJ+JjAIePBMYLLtZ+2o=; b=V
-	una+zG+JQ7DBDeKvh1qSD1KtaSpCQihDTSM0kwniaf5g+ErEJ1TxVrO7+3VMfbZl
-	VQqrdg3k6OcKoX4EIFdqHVuzTu/7KT879mpPpAbRAzRiC5PvPZF9SCE5M9RzQxg/
-	NiRXLVlu6oI57Wb3DzOrlOiSLzCqkXD6pz/ERpfY0DqR4ErioiMrHYzDzrIYSm4F
-	hbLOjkOYJ23YOorcRfcgSufAvr+8Cnuko5TPvPn8JlvoyAH2CX5cUKq4sjuD4YKa
-	aZuuZnJMb4UopB3siirlCm69sUtzjXNEpboc6iX5XcLE0fB5SraKvlq/RGoP231f
-	YoLKU3F//o5hwDoj+GKRQ==
-X-ME-Sender: <xms:NTClauQn6uB0sOQI4f6S9M1rFYFt1tnLn1PEDLAKDz2-jUuCvOkziA>
-    <xme:NTClaumnSH3uwDAOeBmqucH698Uw8FGecVwc6vIGT1T3qZEZDHTXAX9ln9dSsw4sw
-    y4Z31rqwtPSiZCQrZFpUNiPBIy3Y6tXdHalnt3ZSK5tLd7QNejGHzI>
-X-ME-Proxy-Cause: dmFkZTEIXI2wlk1tCvJNEjna4Opps0JwkN+WEecBjWkn3oKN7bDcV+WVEZurN/3CWvnm2K
-    0ME+2T5Eue2UdOVwDcbZjnFms292Ufyv6Ua3dEltuc5ELkptt+7reX+3HaqJK7UMrwA5zq
-    cRUSkBPWuFHITdpjTnGg7gPAi3L2zl+y7dqmCTft/p2mpYEmWbI+lVV6lG+vrlaNVwO9yk
-    TzkX8FaMXNI5AhadQUHuAMn5fBYpg/jAn3x2fj1QGBHm9+aXXrms+/EAYa5k4hhNasfZ3X
-    IbuQagcqRD15dw+N5sE+unpc7T8pZ8VpSKrcd2BAvhNiZ+GgkjbiBWlDN8ByAw3xBbTwYR
-    FTJRJz4r7hld8oAmz3dS6bcH2eoko1jrUvFQLCkFLyximb4cW7X5n6x4Wx2sNfK1ehB83y
-    WKejjMiRg9zvZu1NbIw+phBASa8LD0is6NB/7RVY/ubKmfnT1bYoT9KwR3y2OMK9VdiBbI
-    2HYSEbNMAIYfDO8q+vO1O1eEkTRUeMIrMDLF/5cvg12jubIg5KcXSjMNE2Rcjnzt8I0Hlv
-    WG5T3BstcCCdC6I1MN42BmDJPbrNlfM7Ze+gDHq1ui6c5WPSCY4y/0Jtx5FPU+qLNclc5N
-    UdP3FCrQYrdQnlCKz2n1jzdnth6JFUsIaSj8p0QFhkwoLGxItI7kVYy+WUdg
-X-ME-Proxy: <xmx:NjClauGVenfGtPWiYn8C1EnF1-LaTduEBb154T7I_kCg0I7jXn2qDw>
-    <xmx:NjClajA4t0Laz7YJtcbbwJEhGzkz0sFH0hrDnDmIFV0RP8hz4-N1Mg>
-    <xmx:NjClah9ngbmsIX9rTUk89QdJlOxiXp56p2fel1LxdMWEGWwFoGprWA>
-    <xmx:NjClavAxQBXkgWbRXk4RRB2eCL2A9pqbw1CIFBYZAMiC4TZtbvRAog>
-    <xmx:ODClaiUpVVURynsCABtLFBGxcCagxnmPXQQ75EMBMU3uIez-wobEZDZq>
-Feedback-ID: i56a14606:Fastmail
-Received: by mailuser.ams.internal (Postfix, from userid 501)
-	id 7D72532A0082; Sat, 12 Sep 2026 06:57:57 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bn8ceTMs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C9C41F000FF;
+	Sat, 12 Sep 2026 10:58:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1789210685;
+	bh=USSga1EiUNBj9r8aDgn0BPrDm0vEISbjN3Q26XuvTuc=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=Bn8ceTMs7QBjFqbN8gtVN27BZWdAQCLswKTgxdgS5a1ott3hBNtzWH3Mx53oHN40e
+	 EmhC9ZZbBcuP8lfOWCRvUSFwUSVO//+52wXg23D8EPVnhdLQZo05URa52m2alou6DA
+	 ljTLb7r+HLEeAgrmvWsYWGVSYk6jKRfNp26Nsygs=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	Tzung-Bi Shih <tzungbi@kernel.org>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 1077/1518] hwmon: (cros_ec) Add support for temperature thresholds
+Date: Sat, 12 Sep 2026 08:54:06 +0200
+Message-ID: <20260912065647.813197931@linuxfoundation.org>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
+References: <20260912065623.398859879@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-ThreadId: AggdL0O517qg
-Date: Sat, 12 Sep 2026 12:57:36 +0200
-From: "Arnd Bergmann" <arnd@arndb.de>
-To: "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev,
- "Bartosz Golaszewski" <bartosz.golaszewski@oss.qualcomm.com>,
- "Sasha Levin" <sashal@kernel.org>
-Message-Id: <d6c294c1-4e40-4646-b5f1-065a3a9b16a4@app.fastmail.com>
-In-Reply-To: <20260912065644.647595753@linuxfoundation.org>
-References: <20260912065623.398859879@linuxfoundation.org>
- <20260912065644.647595753@linuxfoundation.org>
-Subject: Re: [PATCH 6.18 0937/1518] gpiolib: move legacy interface into
- linux/gpio/legacy.h
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Sat, Sep 12, 2026, at 08:51, Greg Kroah-Hartman wrote:
-> 6.18-stable review patch.  If anyone has any objections, please let me know.
->
-> Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-> Link: https://patch.msgid.link/20260428154522.2861492-1-arnd@kernel.org
-> Signed-off-by: Bartosz Golaszewski 
-> <bartosz.golaszewski@oss.qualcomm.com>
-> Stable-dep-of: 942901eeda93 ("leds: gpio: Clear error pointers for 
-> skipped LEDs")
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
-> ---
->  include/linux/gpio.h        | 162 +--------------------------------
->  include/linux/gpio/legacy.h | 173 ++++++++++++++++++++++++++++++++++++
->  2 files changed, 177 insertions(+), 158 deletions(-)
->  create mode 100644 include/linux/gpio/legacy.h
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
-I don't see how this would related to 942901eeda93, this only moves code
-around that is not touched by that patch.
+------------------
 
-     Arnd
+From: Thomas Weißschuh <linux@weissschuh.net>
+
+[ Upstream commit afa7c56ec447315ab38182bb9c185d8ea712c3ad ]
+
+Implement reading temperature thresholds through
+EC_CMD_THERMAL_GET_THRESHOLD/EC_CMD_THERMAL_SET_THRESHOLD.
+
+Thresholds are mapped as follows between the EC and hwmon:
+
+hwmon_temp_max       - EC_TEMP_THRESH_WARN
+hwmon_temp_crit      - EC_TEMP_THRESH_HIGH
+hwmon_temp_emergency - EC_TEMP_THRESH_HALT
+
+Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
+Reviewed-by: Tzung-Bi Shih <tzungbi@kernel.org>
+Link: https://lore.kernel.org/r/20260118-cros_ec-hwmon-pwm-v2-4-77eb1709b031@weissschuh.net
+[groeck: Rearrange code to no longer use unreachable() since that causes
+ a hiccup with some versions of gcc and objtool]
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Stable-dep-of: 26db27364088 ("hwmon: (cros_ec) Synchronize EC access from the thermal device callbacks")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ Documentation/hwmon/cros_ec_hwmon.rst |  3 ++
+ drivers/hwmon/cros_ec_hwmon.c         | 57 +++++++++++++++++++++++++--
+ 2 files changed, 57 insertions(+), 3 deletions(-)
+
+diff --git a/Documentation/hwmon/cros_ec_hwmon.rst b/Documentation/hwmon/cros_ec_hwmon.rst
+index b7dc88d22fdae..47a85cd40937e 100644
+--- a/Documentation/hwmon/cros_ec_hwmon.rst
++++ b/Documentation/hwmon/cros_ec_hwmon.rst
+@@ -32,6 +32,9 @@ Fan readings
+ Temperature readings
+     Always supported.
+ 
++Temperature thresholds
++    If supported by the EC.
++
+ PWM fan control
+     If the EC also supports setting fan PWM values and fan mode.
+ 
+diff --git a/drivers/hwmon/cros_ec_hwmon.c b/drivers/hwmon/cros_ec_hwmon.c
+index 9b5759e91c725..7e0fd5bbe2d75 100644
+--- a/drivers/hwmon/cros_ec_hwmon.c
++++ b/drivers/hwmon/cros_ec_hwmon.c
+@@ -28,6 +28,7 @@ struct cros_ec_hwmon_priv {
+ 	const char *temp_sensor_names[EC_TEMP_SENSOR_ENTRIES + EC_TEMP_SENSOR_B_ENTRIES];
+ 	u8 usable_fans;
+ 	bool fan_control_supported;
++	bool temp_threshold_supported;
+ 	u8 manual_fans; /* bits to indicate whether the fan is set to manual */
+ 	u8 manual_fan_pwm[EC_FAN_SPEED_ENTRIES];
+ };
+@@ -102,6 +103,23 @@ static int cros_ec_hwmon_read_temp(struct cros_ec_device *cros_ec, u8 index, u8
+ 	return 0;
+ }
+ 
++static int cros_ec_hwmon_read_temp_threshold(struct cros_ec_device *cros_ec, u8 index,
++					     enum ec_temp_thresholds threshold, u32 *temp)
++{
++	struct ec_params_thermal_get_threshold_v1 req = {};
++	struct ec_thermal_config resp;
++	int ret;
++
++	req.sensor_num = index;
++	ret = cros_ec_cmd(cros_ec, 1, EC_CMD_THERMAL_GET_THRESHOLD,
++			  &req, sizeof(req), &resp, sizeof(resp));
++	if (ret < 0)
++		return ret;
++
++	*temp = resp.temp_host[threshold];
++	return 0;
++}
++
+ static bool cros_ec_hwmon_is_error_fan(u16 speed)
+ {
+ 	return speed == EC_FAN_SPEED_NOT_PRESENT || speed == EC_FAN_SPEED_STALLED;
+@@ -120,12 +138,29 @@ static long cros_ec_hwmon_temp_to_millicelsius(u8 temp)
+ 	return kelvin_to_millicelsius((((long)temp) + EC_TEMP_SENSOR_OFFSET));
+ }
+ 
++static bool cros_ec_hwmon_attr_is_temp_threshold(u32 attr)
++{
++	return attr == hwmon_temp_max ||
++	       attr == hwmon_temp_crit ||
++	       attr == hwmon_temp_emergency;
++}
++
++static enum ec_temp_thresholds cros_ec_hwmon_attr_to_thres(u32 attr)
++{
++	if (attr == hwmon_temp_max)
++		return EC_TEMP_THRESH_WARN;
++	else if (attr == hwmon_temp_crit)
++		return EC_TEMP_THRESH_HIGH;
++	return EC_TEMP_THRESH_HALT;	/* attr == hwmon_temp_emergency */
++}
++
+ static int cros_ec_hwmon_read(struct device *dev, enum hwmon_sensor_types type,
+ 			      u32 attr, int channel, long *val)
+ {
+ 	struct cros_ec_hwmon_priv *priv = dev_get_drvdata(dev);
+ 	int ret = -EOPNOTSUPP;
+ 	u8 control_method;
++	u32 threshold;
+ 	u8 pwm_value;
+ 	u16 speed;
+ 	u8 temp;
+@@ -168,6 +203,13 @@ static int cros_ec_hwmon_read(struct device *dev, enum hwmon_sensor_types type,
+ 			ret = cros_ec_hwmon_read_temp(priv->cros_ec, channel, &temp);
+ 			if (ret == 0)
+ 				*val = cros_ec_hwmon_is_error_temp(temp);
++
++		} else if (cros_ec_hwmon_attr_is_temp_threshold(attr)) {
++			ret = cros_ec_hwmon_read_temp_threshold(priv->cros_ec, channel,
++								cros_ec_hwmon_attr_to_thres(attr),
++								&threshold);
++			if (ret == 0)
++				*val = kelvin_to_millicelsius(threshold);
+ 		}
+ 	}
+ 
+@@ -267,8 +309,14 @@ static umode_t cros_ec_hwmon_is_visible(const void *data, enum hwmon_sensor_type
+ 		if (priv->fan_control_supported && priv->usable_fans & BIT(channel))
+ 			return 0644;
+ 	} else if (type == hwmon_temp) {
+-		if (priv->temp_sensor_names[channel])
+-			return 0444;
++		if (priv->temp_sensor_names[channel]) {
++			if (cros_ec_hwmon_attr_is_temp_threshold(attr)) {
++				if (priv->temp_threshold_supported)
++					return 0444;
++			} else {
++				return 0444;
++			}
++		}
+ 	}
+ 
+ 	return 0;
+@@ -286,7 +334,8 @@ static const struct hwmon_channel_info * const cros_ec_hwmon_info[] = {
+ 			   HWMON_PWM_INPUT | HWMON_PWM_ENABLE,
+ 			   HWMON_PWM_INPUT | HWMON_PWM_ENABLE,
+ 			   HWMON_PWM_INPUT | HWMON_PWM_ENABLE),
+-#define CROS_EC_HWMON_TEMP_PARAMS (HWMON_T_INPUT | HWMON_T_FAULT | HWMON_T_LABEL)
++#define CROS_EC_HWMON_TEMP_PARAMS (HWMON_T_INPUT | HWMON_T_FAULT | HWMON_T_LABEL | \
++				   HWMON_T_MAX | HWMON_T_CRIT | HWMON_T_EMERGENCY)
+ 	HWMON_CHANNEL_INFO(temp,
+ 			   CROS_EC_HWMON_TEMP_PARAMS,
+ 			   CROS_EC_HWMON_TEMP_PARAMS,
+@@ -496,6 +545,8 @@ static int cros_ec_hwmon_probe(struct platform_device *pdev)
+ 	cros_ec_hwmon_probe_temp_sensors(dev, priv, thermal_version);
+ 	cros_ec_hwmon_probe_fans(priv);
+ 	priv->fan_control_supported = cros_ec_hwmon_probe_fan_control_supported(priv->cros_ec);
++	priv->temp_threshold_supported = is_cros_ec_cmd_available(priv->cros_ec,
++								  EC_CMD_THERMAL_GET_THRESHOLD, 1);
+ 	cros_ec_hwmon_register_fan_cooling_devices(dev, priv);
+ 
+ 	hwmon_dev = devm_hwmon_device_register_with_info(dev, "cros_ec", priv,
+-- 
+2.53.0
+
+
+
