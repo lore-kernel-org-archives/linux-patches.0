@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC93139E6EB;
-	Sat, 12 Sep 2026 20:02:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A818C3A6EF7;
+	Sat, 12 Sep 2026 20:02:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789243375; cv=none; b=MGY50m0l+Z1cN0BugwOMR/X13hNbLiKmII06Wt7uW/Fm/Ld+pCE169lFwNunC5JqGs8ErqbpnQ1Y9JRq+Pg7Uwef926skUXage2HyiwSkguImvvDzHfViWv8M8eYWHK2vLvRntzDbaKPLmQf2cHqOsR2FAzONwHvoPTBQXsocK8=
+	t=1789243381; cv=none; b=IRzapKws/VymvXC7yNQHU29tIUzKuN/9uF3X9Pa+5gxVKij1f4R/DtfZzcRIYuOQXCOhQruVkEz97SebooGU0R0WunBqPrrfkjukcCZvC4HbCKsiGPJqWdITxywWLC49wwgDwbUdDQOQe0N9YPo3kK+6rugaodSitOvGTD+7qBw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789243375; c=relaxed/simple;
-	bh=4lumD9jtT7Jt/xIX9iDFL4+h+A4mWWJZd4erCSD+3Tg=;
+	s=arc-20240116; t=1789243381; c=relaxed/simple;
+	bh=36lFWTPaomfQElszEFMwo6M3RGNdR31oAQ04856jtLU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q6YfWmxOkL19NLvDZYAeJ5GzkDuePSwAzMNHGXkcLDLg6c+NtrTDB7EvSdmtHXBdgLh+xZHuvAOGnm2AqGLcY9wDQ7ZvvMY9U9mO8gWk9ShAEQWlRO1gX2yecyoN8bfKlJqW3wBKzwPUdFLedQfwQsMkLjxUml7EYTzlGBTThmY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RbQejuxl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=V425xWzGVzdgfV7C8GgOdeofI34VEZVOe/DHCOt/04OjPVgETSCXEAx//B0X74OXowVS7VEhUDvV4wIDuA2OrFC95g5mi8rDj5bpLYbb4NgJ1dXCqtaw2QpPCR1qLZxhjaZI525jDRxqMz7ACBo53CTbRYWhGMAid6JsldQf/lc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IvBLxfTL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RbQejuxl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D07C51F000FF;
-	Sat, 12 Sep 2026 20:02:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IvBLxfTL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6F291F000FF;
+	Sat, 12 Sep 2026 20:02:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789243373;
-	bh=G4jsmhIU55tFt/sjPVolXws9uq41BOdSol2Dc9yK7K8=;
+	s=korg; t=1789243376;
+	bh=dL6Km1uF7RfGUVIpcekxGImcIqFO0A5GOUxrD4vKIsk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RbQejuxlGWx2RgBe4pXKBuBREo+QLK1UDXdDHKjPVgfjEX7K/+L5JcRhIS6v7Lpuf
-	 mzoBZFwvbjlPooxWTEfAETjCeiZTXzOEDR4Fk0XzuoOPYZdbTjx7ieXAzoJtAN5oln
-	 VTfmakbqqUmJhug8bXvcZHByVcS3mNuMfVXukZrw=
+	b=IvBLxfTLltVXx/NaI8nR49VqewF/T8dVgYuq++z05DYcccaKGVCPUwfIo17vEbQOs
+	 g0vt2n9JJ1HQQICrsYR8dTFdfHVf1JqV/MbOBSaJ+WwWJARcCZ/ftwLOo/4boRJwy3
+	 ducedRpIvoXNdjBsbYF9Mgd9Wp862zL0en3ApYqo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Andrew Lunn <andrew@lunn.ch>,
+	Wupeng Ma <mawupeng1@huawei.com>,
+	Stefano Garzarella <sgarzare@redhat.com>,
+	Nguyen Dinh Phi <phind.uet@gmail.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 732/798] 8139cp: fix Rx and Tx not being disabled in cp_suspend
-Date: Sat, 12 Sep 2026 09:06:00 +0200
-Message-ID: <20260912065533.855353370@linuxfoundation.org>
+Subject: [PATCH 5.10 733/798] vsock: use sock_error() to consume sk_err after a failed connect
+Date: Sat, 12 Sep 2026 09:06:01 +0200
+Message-ID: <20260912065533.877416456@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -52,45 +53,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Nguyen Dinh Phi <phind.uet@gmail.com>
 
-[ Upstream commit cb7643b78d35392f0f434774d78b4c77b80f677f ]
+[ Upstream commit 96cbf89993091a163bfedec52a3bd683dc94b3b4 ]
 
-On QEMU rtl8139 model, frames that arrive while the interface is
-suspended still end up in the stack after resume. With pm_test=devices,
-which keeps devices suspended for 5s, 200 frames sent to interface
-during that time and 50 frames after resume, eth0 reports 113
-received frames.
+vsock_connect() returns sk_err to userspace but does not clear it:
+  if (sk->sk_err) {
+            err = -sk->sk_err;
 
-cp_suspend() is supposed to stop receiver and the transmitter, but
-the mask is wrong: (~RxOn | ~TxOn) is ~0, nothing is cleared and Cmd
-still reads 0x0d when cp_suspend() returns.
+For a blocking connect() the error has already been delivered as
+connect()'s return value, so leaving it set causes subsequent operations
+like poll()/epoll() to keep reporting POLLERR even though the connect
+failure was already delivered.
 
-Use ~(RxOn | TxOn) so both bits are actually cleared.
+The error should be consumed once it has been returned to userspace.
+Switch to sock_error(), which reads and clears sk_err atomically,
+matching the behavior of other protocol implementations such as
+__inet_stream_connect().
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20260817043057.20099-1-kmehltretter@gmail.com
+Fixes: d021c344051a ("VSOCK: Introduce VM Sockets")
+Tested-by: Wupeng Ma <mawupeng1@huawei.com>
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Signed-off-by: Nguyen Dinh Phi <phind.uet@gmail.com>
+Link: https://patch.msgid.link/20260813173024.2362935-4-phind.uet@gmail.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/realtek/8139cp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/vmw_vsock/af_vsock.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/realtek/8139cp.c b/drivers/net/ethernet/realtek/8139cp.c
-index 4e44313b76513..086fce1b15269 100644
---- a/drivers/net/ethernet/realtek/8139cp.c
-+++ b/drivers/net/ethernet/realtek/8139cp.c
-@@ -2070,7 +2070,7 @@ static int __maybe_unused cp_suspend(struct device *device)
+diff --git a/net/vmw_vsock/af_vsock.c b/net/vmw_vsock/af_vsock.c
+index 27f2fbf56616c..15dd900beaf22 100644
+--- a/net/vmw_vsock/af_vsock.c
++++ b/net/vmw_vsock/af_vsock.c
+@@ -1504,12 +1504,10 @@ static int vsock_stream_connect(struct socket *sock, struct sockaddr *addr,
+ 		prepare_to_wait(sk_sleep(sk), &wait, TASK_INTERRUPTIBLE);
+ 	}
  
- 	/* Disable Rx and Tx */
- 	cpw16 (IntrMask, 0);
--	cpw8  (Cmd, cpr8 (Cmd) & (~RxOn | ~TxOn));
-+	cpw8  (Cmd, cpr8 (Cmd) & ~(RxOn | TxOn));
+-	if (sk->sk_err) {
+-		err = -sk->sk_err;
++	err = sock_error(sk);
++	if (err) {
+ 		sk->sk_state = TCP_CLOSE;
+ 		sock->state = SS_UNCONNECTED;
+-	} else {
+-		err = 0;
+ 	}
  
- 	spin_unlock_irqrestore (&cp->lock, flags);
- 
+ out_wait:
 -- 
 2.53.0
 
