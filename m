@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3657B369D56;
-	Sat, 12 Sep 2026 09:57:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4EAA369D56;
+	Sat, 12 Sep 2026 09:57:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789207038; cv=none; b=N5gVG8E1XdbXyny3hbiallkeFwao/rjcPzwQD4vFnhDmoW8OsZVIM2XdTlyaqTg0wnF3TmRNdYaqemIT10ne0Yv5vXDRZpVDaYF5Q50tt+qpcUSFQ9ha/H1jESPR6fu7SDLQxTz5U4Ru8F6rHdMgMV0qjRZRFY8LFaA5kaswFQc=
+	t=1789207043; cv=none; b=mF4WS6YgvwPpZactNf2pHeali5ZK97Aon9I3aYs2QFZQMuUBkVKLnDw51wx1IBn//oZkS6EYHIR3+LT9PYHN8sPcXdlApjVUX7h3i8zX4Jt77IJN1QtYuk4dKa1iwUozqAMsqiireNM+1ioR6OqvmIkBsG+D1qvKmXJGaM7qrd8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789207038; c=relaxed/simple;
-	bh=T4H6AqRK5YfVKrMhQUtq4ZfWqADfzsg+uIrvay9tKCs=;
+	s=arc-20240116; t=1789207043; c=relaxed/simple;
+	bh=Epvitdz+v/ADp3CMVoWKEl31QjIzw28e2sJLJmVUNcc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OF5DYy9ql3FH5YA41yvw9I87XYe13cCHmnRiAhw82EtloHqZRKPH4Ckt7L4D+Vdr9+9ESU+xe7U+Fny37uuuXvU5+Inh6U0SZIrvVfGW3UGW+H6CMfKyn9bmTzOEMbYJ3Yk/N8PDERvT83dMCDDjff57+Z/E5qMl0DMJ268l0rQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NO5qU7jn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DukcQrePjk+yOhWYDpZ/cZ0WEKntewMnnILeDAKt12m6A0+2V5wuN/pdsYMzCHDvnRqpPjPCkaYMPvXoAR9ir4E6KVhCOY2UUmFQ20AU9Pur2VclNxjX0g586FNeAXz7gLAPEGuEgtC5RpWsi8Kc2VAt7GrR/9FcrB6H3IQl0OY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hnILgQTT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NO5qU7jn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 077E81F000FF;
-	Sat, 12 Sep 2026 09:57:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hnILgQTT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E733D1F000FF;
+	Sat, 12 Sep 2026 09:57:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789207037;
-	bh=GA6mTYA8bdQxrYJW68HlO7TGTINqS7AhbctuEmzAL8k=;
+	s=korg; t=1789207041;
+	bh=twmeCSe34MAjaTXs2kNQTd0JMm40DZXLt2wGNvo/Rzo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NO5qU7jn8FX0IoRs5DYdnOKZONUxinFO+IvnRjccMgr26r3cFBmVXdbzpuQrYjtV+
-	 Q5Uq0Ok8RpOMU/kQF2SLrtCNn0BTr29jBRgGJjpaQ3dZfSvEwt62xXq7JZHRK/lwK3
-	 k1dYfFzjPxVrV05P8QPyLwfsmQXUzeDllpKdh32Q=
+	b=hnILgQTTitvXAaPuEK4Tk3kEWB4Qp5oYx99s435XpJrYk4+Z9LgU0gIGEnD+vac3G
+	 Fsh4lbhgXj63JrymVzIH2JVhKB1zJHaPjHJINMMsm75GaqpyZZhXMPF4Beo3dC6MOU
+	 NxMKOSY+aQtL65rLBY6ccawPPYmGpQskkTg8hc10=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Changwoo Min <changwoo@igalia.com>,
-	Andrea Righi <arighi@nvidia.com>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
+	Nicholas Dudar <main.kalliope@gmail.com>,
 	Tejun Heo <tj@kernel.org>,
+	Emil Tsalapatis <emil@etsalapatis.com>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0331/1518] tools/sched_ext: Strip compatibility macros for cgroup and dispatch APIs
-Date: Sat, 12 Sep 2026 08:41:40 +0200
-Message-ID: <20260912065630.959272829@linuxfoundation.org>
+Subject: [PATCH 6.18 0332/1518] bpf: Require a BPF cpumask for bpf_cpumask_populate()
+Date: Sat, 12 Sep 2026 08:41:41 +0200
+Message-ID: <20260912065630.981173321@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -53,235 +53,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tejun Heo <tj@kernel.org>
+From: Nicholas Dudar <main.kalliope@gmail.com>
 
-[ Upstream commit 111a79800aeda615797f20b3a00ef116edce9e03 ]
+[ Upstream commit 8740156ad33be5071b588b594c55f279457f667c ]
 
-Enough time has passed since the introduction of scx_bpf_task_cgroup() and
-the scx_bpf_dispatch* -> scx_bpf_dsq* kfunc renaming. Strip the compatibility
-macros.
+bpf_cpumask_populate() writes to its destination with bitmap_copy(), but
+the destination is typed as struct cpumask *. That allows the verifier to
+accept borrowed cpumask pointers returned by read-only kfuncs, such as
+scx_bpf_get_online_cpumask(), as a writable destination.
 
-Acked-by: Changwoo Min <changwoo@igalia.com>
-Acked-by: Andrea Righi <arighi@nvidia.com>
+Make the destination a struct bpf_cpumask * so populate follows the same
+ownership rule as the other mutating cpumask kfuncs. Query kfuncs continue
+to accept const struct cpumask * inputs.
+
+Fixes: 950ad93df2fc ("bpf: add kfunc for populating cpumask bits")
+Signed-off-by: Nicholas Dudar <main.kalliope@gmail.com>
+Acked-by: Tejun Heo <tj@kernel.org>
 Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
-Stable-dep-of: 8740156ad33b ("bpf: Require a BPF cpumask for bpf_cpumask_populate()")
+Link: https://lore.kernel.org/bpf/20260709182800.2037938-2-main.kalliope@gmail.com
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/sched_ext/include/scx/compat.bpf.h | 108 +----------------------
- tools/sched_ext/scx_flatcg.bpf.c         |  10 +--
- tools/sched_ext/scx_qmap.bpf.c           |  14 ++-
- 3 files changed, 12 insertions(+), 120 deletions(-)
+ kernel/bpf/cpumask.c                     | 6 +++---
+ tools/sched_ext/include/scx/compat.bpf.h | 2 +-
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
+diff --git a/kernel/bpf/cpumask.c b/kernel/bpf/cpumask.c
+index 9876c5fe6c2a2..341f80bb72ff2 100644
+--- a/kernel/bpf/cpumask.c
++++ b/kernel/bpf/cpumask.c
+@@ -449,12 +449,12 @@ __bpf_kfunc u32 bpf_cpumask_weight(const struct cpumask *cpumask)
+  * @src__sz: Length of the BPF memory region in bytes.
+  *
+  * Return:
+- * * 0 if the struct cpumask * instance was populated successfully.
++ * * 0 if the struct bpf_cpumask * instance was populated successfully.
+  * * -EACCES if the memory region is too small to populate the cpumask.
+  * * -EINVAL if the memory region is not aligned to the size of a long
+  *   and the architecture does not support efficient unaligned accesses.
+  */
+-__bpf_kfunc int bpf_cpumask_populate(struct cpumask *cpumask, void *src, size_t src__sz)
++__bpf_kfunc int bpf_cpumask_populate(struct bpf_cpumask *cpumask, void *src, size_t src__sz)
+ {
+ 	unsigned long source = (unsigned long)src;
+ 
+@@ -467,7 +467,7 @@ __bpf_kfunc int bpf_cpumask_populate(struct cpumask *cpumask, void *src, size_t
+ 		!IS_ALIGNED(source, sizeof(long)))
+ 		return -EINVAL;
+ 
+-	bitmap_copy(cpumask_bits(cpumask), src, nr_cpu_ids);
++	bitmap_copy(cpumask_bits(&cpumask->cpumask), src, nr_cpu_ids);
+ 
+ 	return 0;
+ }
 diff --git a/tools/sched_ext/include/scx/compat.bpf.h b/tools/sched_ext/include/scx/compat.bpf.h
-index dd9144624dc99..d979f16a3ae2b 100644
+index d979f16a3ae2b..3ffd14e9c948f 100644
 --- a/tools/sched_ext/include/scx/compat.bpf.h
 +++ b/tools/sched_ext/include/scx/compat.bpf.h
-@@ -15,121 +15,17 @@
- 	__ret;									\
- })
- 
--/* v6.12: 819513666966 ("sched_ext: Add cgroup support") */
--#define __COMPAT_scx_bpf_task_cgroup(p)						\
--	(bpf_ksym_exists(scx_bpf_task_cgroup) ?					\
--	 scx_bpf_task_cgroup((p)) : NULL)
--
- /*
-- * v6.13: The verb `dispatch` was too overloaded and confusing. kfuncs are
-- * renamed to unload the verb.
-- *
-- * Build error is triggered if old names are used. New binaries work with both
-- * new and old names. The compat macros will be removed on v6.15 release.
-+ * v6.15: 950ad93df2fc ("bpf: add kfunc for populating cpumask bits")
+@@ -20,7 +20,7 @@
   *
-- * scx_bpf_dispatch_from_dsq() and friends were added during v6.12 by
-- * 4c30f5ce4f7a ("sched_ext: Implement scx_bpf_dispatch[_vtime]_from_dsq()").
-- * Preserve __COMPAT macros until v6.15.
-+ * Compat macro will be dropped on v6.19 release.
+  * Compat macro will be dropped on v6.19 release.
   */
--void scx_bpf_dispatch___compat(struct task_struct *p, u64 dsq_id, u64 slice, u64 enq_flags) __ksym __weak;
--void scx_bpf_dispatch_vtime___compat(struct task_struct *p, u64 dsq_id, u64 slice, u64 vtime, u64 enq_flags) __ksym __weak;
--bool scx_bpf_consume___compat(u64 dsq_id) __ksym __weak;
--void scx_bpf_dispatch_from_dsq_set_slice___compat(struct bpf_iter_scx_dsq *it__iter, u64 slice) __ksym __weak;
--void scx_bpf_dispatch_from_dsq_set_vtime___compat(struct bpf_iter_scx_dsq *it__iter, u64 vtime) __ksym __weak;
--bool scx_bpf_dispatch_from_dsq___compat(struct bpf_iter_scx_dsq *it__iter, struct task_struct *p, u64 dsq_id, u64 enq_flags) __ksym __weak;
--bool scx_bpf_dispatch_vtime_from_dsq___compat(struct bpf_iter_scx_dsq *it__iter, struct task_struct *p, u64 dsq_id, u64 enq_flags) __ksym __weak;
- int bpf_cpumask_populate(struct cpumask *dst, void *src, size_t src__sz) __ksym __weak;
+-int bpf_cpumask_populate(struct cpumask *dst, void *src, size_t src__sz) __ksym __weak;
++int bpf_cpumask_populate(struct bpf_cpumask *dst, void *src, size_t src__sz) __ksym __weak;
  
--#define scx_bpf_dsq_insert(p, dsq_id, slice, enq_flags)				\
--	(bpf_ksym_exists(scx_bpf_dsq_insert) ?					\
--	 scx_bpf_dsq_insert((p), (dsq_id), (slice), (enq_flags)) :		\
--	 scx_bpf_dispatch___compat((p), (dsq_id), (slice), (enq_flags)))
--
--#define scx_bpf_dsq_insert_vtime(p, dsq_id, slice, vtime, enq_flags)		\
--	(bpf_ksym_exists(scx_bpf_dsq_insert_vtime) ?				\
--	 scx_bpf_dsq_insert_vtime((p), (dsq_id), (slice), (vtime), (enq_flags)) : \
--	 scx_bpf_dispatch_vtime___compat((p), (dsq_id), (slice), (vtime), (enq_flags)))
--
--#define scx_bpf_dsq_move_to_local(dsq_id)					\
--	(bpf_ksym_exists(scx_bpf_dsq_move_to_local) ?				\
--	 scx_bpf_dsq_move_to_local((dsq_id)) :					\
--	 scx_bpf_consume___compat((dsq_id)))
--
--#define __COMPAT_scx_bpf_dsq_move_set_slice(it__iter, slice)			\
--	(bpf_ksym_exists(scx_bpf_dsq_move_set_slice) ?				\
--	 scx_bpf_dsq_move_set_slice((it__iter), (slice)) :			\
--	 (bpf_ksym_exists(scx_bpf_dispatch_from_dsq_set_slice___compat) ?	\
--	  scx_bpf_dispatch_from_dsq_set_slice___compat((it__iter), (slice)) :	\
--	  (void)0))
--
--#define __COMPAT_scx_bpf_dsq_move_set_vtime(it__iter, vtime)			\
--	(bpf_ksym_exists(scx_bpf_dsq_move_set_vtime) ?				\
--	 scx_bpf_dsq_move_set_vtime((it__iter), (vtime)) :			\
--	 (bpf_ksym_exists(scx_bpf_dispatch_from_dsq_set_vtime___compat) ?	\
--	  scx_bpf_dispatch_from_dsq_set_vtime___compat((it__iter), (vtime)) :	\
--	  (void) 0))
--
--#define __COMPAT_scx_bpf_dsq_move(it__iter, p, dsq_id, enq_flags)		\
--	(bpf_ksym_exists(scx_bpf_dsq_move) ?					\
--	 scx_bpf_dsq_move((it__iter), (p), (dsq_id), (enq_flags)) :		\
--	 (bpf_ksym_exists(scx_bpf_dispatch_from_dsq___compat) ?			\
--	  scx_bpf_dispatch_from_dsq___compat((it__iter), (p), (dsq_id), (enq_flags)) : \
--	  false))
--
--#define __COMPAT_scx_bpf_dsq_move_vtime(it__iter, p, dsq_id, enq_flags)		\
--	(bpf_ksym_exists(scx_bpf_dsq_move_vtime) ?				\
--	 scx_bpf_dsq_move_vtime((it__iter), (p), (dsq_id), (enq_flags)) :	\
--	 (bpf_ksym_exists(scx_bpf_dispatch_vtime_from_dsq___compat) ?		\
--	  scx_bpf_dispatch_vtime_from_dsq___compat((it__iter), (p), (dsq_id), (enq_flags)) : \
--	  false))
--
  #define __COMPAT_bpf_cpumask_populate(cpumask, src, size__sz)		\
  	(bpf_ksym_exists(bpf_cpumask_populate) ?			\
- 	 (bpf_cpumask_populate(cpumask, src, size__sz)) : -EOPNOTSUPP)
- 
--#define scx_bpf_dispatch(p, dsq_id, slice, enq_flags)				\
--	_Static_assert(false, "scx_bpf_dispatch() renamed to scx_bpf_dsq_insert()")
--
--#define scx_bpf_dispatch_vtime(p, dsq_id, slice, vtime, enq_flags)		\
--	_Static_assert(false, "scx_bpf_dispatch_vtime() renamed to scx_bpf_dsq_insert_vtime()")
--
--#define scx_bpf_consume(dsq_id) ({						\
--	_Static_assert(false, "scx_bpf_consume() renamed to scx_bpf_dsq_move_to_local()"); \
--	false;									\
--})
--
--#define scx_bpf_dispatch_from_dsq_set_slice(it__iter, slice)		\
--	_Static_assert(false, "scx_bpf_dispatch_from_dsq_set_slice() renamed to scx_bpf_dsq_move_set_slice()")
--
--#define scx_bpf_dispatch_from_dsq_set_vtime(it__iter, vtime)		\
--	_Static_assert(false, "scx_bpf_dispatch_from_dsq_set_vtime() renamed to scx_bpf_dsq_move_set_vtime()")
--
--#define scx_bpf_dispatch_from_dsq(it__iter, p, dsq_id, enq_flags) ({	\
--	_Static_assert(false, "scx_bpf_dispatch_from_dsq() renamed to scx_bpf_dsq_move()"); \
--	false;									\
--})
--
--#define scx_bpf_dispatch_vtime_from_dsq(it__iter, p, dsq_id, enq_flags) ({  \
--	_Static_assert(false, "scx_bpf_dispatch_vtime_from_dsq() renamed to scx_bpf_dsq_move_vtime()"); \
--	false;									\
--})
--
--#define __COMPAT_scx_bpf_dispatch_from_dsq_set_slice(it__iter, slice)		\
--	_Static_assert(false, "__COMPAT_scx_bpf_dispatch_from_dsq_set_slice() renamed to __COMPAT_scx_bpf_dsq_move_set_slice()")
--
--#define __COMPAT_scx_bpf_dispatch_from_dsq_set_vtime(it__iter, vtime)		\
--	_Static_assert(false, "__COMPAT_scx_bpf_dispatch_from_dsq_set_vtime() renamed to __COMPAT_scx_bpf_dsq_move_set_vtime()")
--
--#define __COMPAT_scx_bpf_dispatch_from_dsq(it__iter, p, dsq_id, enq_flags) ({	\
--	_Static_assert(false, "__COMPAT_scx_bpf_dispatch_from_dsq() renamed to __COMPAT_scx_bpf_dsq_move()"); \
--	false;									\
--})
--
--#define __COMPAT_scx_bpf_dispatch_vtime_from_dsq(it__iter, p, dsq_id, enq_flags) ({  \
--	_Static_assert(false, "__COMPAT_scx_bpf_dispatch_vtime_from_dsq() renamed to __COMPAT_scx_bpf_dsq_move_vtime()"); \
--	false;									\
--})
--
- /**
-  * __COMPAT_is_enq_cpu_selected - Test if SCX_ENQ_CPU_SELECTED is on
-  * in a compatible way. We will preserve this __COMPAT helper until v6.16.
-diff --git a/tools/sched_ext/scx_flatcg.bpf.c b/tools/sched_ext/scx_flatcg.bpf.c
-index eab9dafc8cb31..cd9bf93d70b1f 100644
---- a/tools/sched_ext/scx_flatcg.bpf.c
-+++ b/tools/sched_ext/scx_flatcg.bpf.c
-@@ -382,7 +382,7 @@ void BPF_STRUCT_OPS(fcg_enqueue, struct task_struct *p, u64 enq_flags)
- 		return;
- 	}
- 
--	cgrp = __COMPAT_scx_bpf_task_cgroup(p);
-+	cgrp = scx_bpf_task_cgroup(p);
- 	cgc = find_cgrp_ctx(cgrp);
- 	if (!cgc)
- 		goto out_release;
-@@ -508,7 +508,7 @@ void BPF_STRUCT_OPS(fcg_runnable, struct task_struct *p, u64 enq_flags)
- {
- 	struct cgroup *cgrp;
- 
--	cgrp = __COMPAT_scx_bpf_task_cgroup(p);
-+	cgrp = scx_bpf_task_cgroup(p);
- 	update_active_weight_sums(cgrp, true);
- 	bpf_cgroup_release(cgrp);
- }
-@@ -521,7 +521,7 @@ void BPF_STRUCT_OPS(fcg_running, struct task_struct *p)
- 	if (fifo_sched)
- 		return;
- 
--	cgrp = __COMPAT_scx_bpf_task_cgroup(p);
-+	cgrp = scx_bpf_task_cgroup(p);
- 	cgc = find_cgrp_ctx(cgrp);
- 	if (cgc) {
- 		/*
-@@ -564,7 +564,7 @@ void BPF_STRUCT_OPS(fcg_stopping, struct task_struct *p, bool runnable)
- 	if (!taskc->bypassed_at)
- 		return;
- 
--	cgrp = __COMPAT_scx_bpf_task_cgroup(p);
-+	cgrp = scx_bpf_task_cgroup(p);
- 	cgc = find_cgrp_ctx(cgrp);
- 	if (cgc) {
- 		__sync_fetch_and_add(&cgc->cvtime_delta,
-@@ -579,7 +579,7 @@ void BPF_STRUCT_OPS(fcg_quiescent, struct task_struct *p, u64 deq_flags)
- {
- 	struct cgroup *cgrp;
- 
--	cgrp = __COMPAT_scx_bpf_task_cgroup(p);
-+	cgrp = scx_bpf_task_cgroup(p);
- 	update_active_weight_sums(cgrp, false);
- 	bpf_cgroup_release(cgrp);
- }
-diff --git a/tools/sched_ext/scx_qmap.bpf.c b/tools/sched_ext/scx_qmap.bpf.c
-index 4f65a7550fb2d..b76702bbf1ee8 100644
---- a/tools/sched_ext/scx_qmap.bpf.c
-+++ b/tools/sched_ext/scx_qmap.bpf.c
-@@ -320,12 +320,9 @@ static bool dispatch_highpri(bool from_timer)
- 
- 		if (tctx->highpri) {
- 			/* exercise the set_*() and vtime interface too */
--			__COMPAT_scx_bpf_dsq_move_set_slice(
--				BPF_FOR_EACH_ITER, slice_ns * 2);
--			__COMPAT_scx_bpf_dsq_move_set_vtime(
--				BPF_FOR_EACH_ITER, highpri_seq++);
--			__COMPAT_scx_bpf_dsq_move_vtime(
--				BPF_FOR_EACH_ITER, p, HIGHPRI_DSQ, 0);
-+			scx_bpf_dsq_move_set_slice(BPF_FOR_EACH_ITER, slice_ns * 2);
-+			scx_bpf_dsq_move_set_vtime(BPF_FOR_EACH_ITER, highpri_seq++);
-+			scx_bpf_dsq_move_vtime(BPF_FOR_EACH_ITER, p, HIGHPRI_DSQ, 0);
- 		}
- 	}
- 
-@@ -342,9 +339,8 @@ static bool dispatch_highpri(bool from_timer)
- 		else
- 			cpu = scx_bpf_pick_any_cpu(p->cpus_ptr, 0);
- 
--		if (__COMPAT_scx_bpf_dsq_move(BPF_FOR_EACH_ITER, p,
--					      SCX_DSQ_LOCAL_ON | cpu,
--					      SCX_ENQ_PREEMPT)) {
-+		if (scx_bpf_dsq_move(BPF_FOR_EACH_ITER, p, SCX_DSQ_LOCAL_ON | cpu,
-+				     SCX_ENQ_PREEMPT)) {
- 			if (cpu == this_cpu) {
- 				dispatched = true;
- 				__sync_fetch_and_add(&nr_expedited_local, 1);
 -- 
 2.53.0
 
