@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A105C4078E8;
-	Sat, 12 Sep 2026 09:58:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B5513F1AC6;
+	Sat, 12 Sep 2026 09:58:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789207101; cv=none; b=SuiST1a9meHCR/d0VfkbOc2PBVbP+YXDlc7iUgW0pt0qIBtVpWkbWu3ycn8kEaboaA/yokE9WAXa0RcCk//RSRUeRKcHTGsRk+cs5I1qOo+nlyqzuJspY/xmLlSqsT1oC7b8Lcse7zQT7dFSbn4poYoLwlYV8+Zt4DaS3VLtxig=
+	t=1789207106; cv=none; b=l/XMUyYI6t7EMJthc57OxdzVdw/mu4NLf6b24UjgDIaV4o5vWLzln4F+iho9dTvF9rpdzw/a8lgliebenvAOFMjNXujNREhD03B1Z2gR18rWJixOKtuHA9g82ChxrlJwwD7QC0FhvweOoEx2E2kmTxm1h6jl10h1qLQkkUq6S98=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789207101; c=relaxed/simple;
-	bh=JcdRGVTlqSBXjGZZHAnhwSvRru48h3s7tJdHPC4H278=;
+	s=arc-20240116; t=1789207106; c=relaxed/simple;
+	bh=P8ejfzEasgK1876eGHS4yLLXRYzJvUzmVHQpcoR7/z0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sqhQnq3rEdAA2qOKJC0MkXb5KZ7hhtfy6Hz8zTKAzua9/j0eM9skbXuLzZ1ip6js2Y2jYETNN87n/ukgGhpXHapLfQnN5TPKucMOEcW+XKhXUwIDy2HG4ubBq6ou3KhwsCFOf+2ki8+JGXiHzkhXSrq9MtAc5++9zaZNUTbNZJQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fo61NGrl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jX4oYINLxtrF9lm62uxtwPJIgFVg4PXS4+iQmCT7nR73WGVJQ47cF054Sebrl3+BSnCHjoceddDuuqvRMcuBHSnbcXLDn6j7n1sNxxZSf3VZXmlD29zkna+lU3pacuVnKShoNW/Q3hbQgk8YMQonpclCsP8zosmRfdlF+2mhWdk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ALxpMHnJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fo61NGrl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98F2F1F000FF;
-	Sat, 12 Sep 2026 09:58:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ALxpMHnJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F28C1F000FF;
+	Sat, 12 Sep 2026 09:58:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789207100;
-	bh=RrxqddRSqDPQpvdaLw1xSvCgrVdDF92Tc+VBgIPYw50=;
+	s=korg; t=1789207105;
+	bh=ZBBpjZXuw7libLpoujSlYs8HSbI6UArWJkY0SRkDX4c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fo61NGrloN9qN7Rtzthje/4ayrfKGq1I7CwI94nBGxuT6ObYNj48WkLmRqIBWd4V+
-	 tCXS1D9J4P01Y7qznD+n+ggTMZr1sbSiRafb/a8gxLSOOJ01SVQt1cT5Xb9EEBXICS
-	 FTzh3LdAiYd3YI3Z4xriiL5vt0bWOomYJO3B+RZc=
+	b=ALxpMHnJAz3/3o7FNnHtakQFTaUFsGvcuPGV6XYMKbE1TL6g/6fawA5VFZummV1Na
+	 olS6TvVlLYqS4id2huyS+m84rEr1ddsVae9RUMdnDSeKTAPtQ0XlirTs6T+r/C9wPi
+	 cTbemCM2RF07Endrdzn5C5WGwLig7agQj28Eu/yI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Allison Henderson <achender@kernel.org>,
-	Zhu Yanjun <yanjun.zhu@linux.dev>,
-	Leon Romanovsky <leon@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Jens Glathe <jens.glathe@oldschoolsolutions.biz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0343/1518] RDMA/rxe: Avoid reprocessing the current packet after the QP enters the error state
-Date: Sat, 12 Sep 2026 08:41:52 +0200
-Message-ID: <20260912065631.234259519@linuxfoundation.org>
+Subject: [PATCH 6.18 0344/1518] drm/msm/dp: add missing drm_edid_connector_update() before add_modes on cached EDID
+Date: Sat, 12 Sep 2026 08:41:53 +0200
+Message-ID: <20260912065631.255642575@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,80 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Allison Henderson <achender@kernel.org>
+From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
 
-[ Upstream commit 15ae32c4a3551c4c9da457370bdfdd65d171e512 ]
+[ Upstream commit b7088d58dccfba87fe8dd2ab7c493ee1d9d09277 ]
 
-When do_complete() finds the QP in the error state it returns
-RESPST_CHK_RESOURCE.  Before commit 49dc9c1f0c7e ("RDMA/rxe: Cleanup
-reset state handling in rxe_resp.c") this was the flush loop:
-check_resource() had an error-state branch that fetched each remaining
-recv WQE and completed it with IB_WC_WR_FLUSH_ERR, without touching
-the current packet.  That commit removed the error-state branch from
-check_resource() (draining is now done at rxe_receiver() entry) but
-kept the do_complete() error-state return.
+After the refactor to struct drm_edid, the fast path in
+msm_dp_panel_get_modes() that already held a cached EDID called
+drm_edid_connector_add_modes() directly without first calling
+drm_edid_connector_update().
 
-As a result, when a QP moves to the error state while a packet is
-being completed - e.g. an rdma_cm disconnect racing with receive
-processing - the responder state machine loops back into the request
-processing chain with the already-completed packet still in hand:
-check_resource() fetches a fresh recv WQE, execute()/send_data_in()
-copies the same packet payload again, do_complete() posts another
-IB_WC_SUCCESS CQE (qp->resp.status is still 0), and control returns
-to the error-state check.  The loop re-executes the same packet once
-per posted recv WQE (observed: ~1000 duplicate IB_WC_SUCCESS
-completions of one SEND, one per ~8us, matching the RQ occupancy)
-until the RQ is exhausted, after which qp->resp.wqe is NULL and
-send_data_in() dereferences it:
+The new API requires the update step to associate the EDID with the
+connector. Add the missing call. This restores correct behaviour for
+the cached-EDID path.
 
-  BUG: kernel NULL pointer dereference, address: 0000000000000014
-  Workqueue: rxe_wq do_work
-  RIP: copy_data+0x29/0x1f0
-  Call Trace:
-   send_data_in+0x25/0x50
-   rxe_receiver+0xf36/0x1dd0
-
-The duplicate completions are indistinguishable from real receives to
-the ULP.  During an rds stress test, the message was accepted as new and
-delivered the same datagram to user space hundreds of times, corrupting
-the stream; any ULP that relies on RC exactly-once delivery is affected.
-
-A live packet reaching the error-state check in do_complete() has
-been executed and completed exactly once and must be consumed, not
-re-processed.  Return RESPST_CLEANUP for it (dequeue and free); keep
-returning RESPST_CHK_RESOURCE for the pkt == NULL case.
-
-Fixes: 49dc9c1f0c7e ("RDMA/rxe: Cleanup reset state handling in rxe_resp.c")
-Assisted-by: Claude-Code:claude-fable-5
-Signed-off-by: Allison Henderson <achender@kernel.org>
-Link: https://patch.msgid.link/20260711165419.13486-1-achender@kernel.org
-Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 5bea90ad9743 ("drm/msm/dp: switch to struct drm_edid")
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+Patchwork: https://patchwork.freedesktop.org/patch/731125/
+Link: https://lore.kernel.org/r/20260608-drm_plug_flaky_edid-v3-1-1ca632938e7f@oldschoolsolutions.biz
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/rxe/rxe_resp.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/msm/dp/dp_panel.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/sw/rxe/rxe_resp.c b/drivers/infiniband/sw/rxe/rxe_resp.c
-index 995805e16d78b..6aabf1d07ea34 100644
---- a/drivers/infiniband/sw/rxe/rxe_resp.c
-+++ b/drivers/infiniband/sw/rxe/rxe_resp.c
-@@ -1203,7 +1203,14 @@ static enum resp_states do_complete(struct rxe_qp *qp,
- 	spin_lock_irqsave(&qp->state_lock, flags);
- 	if (unlikely(qp_state(qp) == IB_QPS_ERR)) {
- 		spin_unlock_irqrestore(&qp->state_lock, flags);
--		return RESPST_CHK_RESOURCE;
-+		/* The packet was executed and completed before the QP
-+		 * moved to ERROR; it must be consumed exactly once.
-+		 * Re-entering the request chain with the stale packet
-+		 * would copy it into every remaining recv WQE as a new
-+		 * completion.  Remaining WQEs are flushed by the drain
-+		 * path at rxe_receiver() entry.
-+		 */
-+		return pkt ? RESPST_CLEANUP : RESPST_CHK_RESOURCE;
+diff --git a/drivers/gpu/drm/msm/dp/dp_panel.c b/drivers/gpu/drm/msm/dp/dp_panel.c
+index 15b7f6c7146e1..9191f0fc3d81a 100644
+--- a/drivers/gpu/drm/msm/dp/dp_panel.c
++++ b/drivers/gpu/drm/msm/dp/dp_panel.c
+@@ -254,8 +254,10 @@ int msm_dp_panel_get_modes(struct msm_dp_panel *msm_dp_panel,
+ 		return -EINVAL;
  	}
- 	spin_unlock_irqrestore(&qp->state_lock, flags);
  
+-	if (msm_dp_panel->drm_edid)
++	if (msm_dp_panel->drm_edid) {
++		drm_edid_connector_update(connector, msm_dp_panel->drm_edid);
+ 		return drm_edid_connector_add_modes(connector);
++	}
+ 
+ 	return 0;
+ }
 -- 
 2.53.0
 
