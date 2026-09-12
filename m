@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E6CD32B108;
-	Sat, 12 Sep 2026 15:22:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4BA9331203;
+	Sat, 12 Sep 2026 15:22:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789226526; cv=none; b=k6M4qaI9MdjoFnKPrh+9gDL+ns4fezeEuOHffXPbexBAGcyUNWR449ecuLiLhGMoWsepjy7nM0zHzqyrrbtbYyA6fcYKhTjqJuYQMn/cPqzTrPVcjX+CTgMxtmOiTOv7EsftVW3kFSSdh0f6tnrL1fmlXhmK1gzTV7tN4/Skrsk=
+	t=1789226532; cv=none; b=O4pIOaPasKOWqWV8xk+VZAOCXSWokhB7eSAaqw2+CqSamJKrq1ZpIET2dwaNaGDJS9FAVw6HKHR8wQq5f/lJy6svolbTsA9qlIacPIsXl5hR5p6jzY7LqJetvGuUhpXJyv9DihA+o0TIUIVp4Wr89tFDjqRWceDvXj3T91qXKg8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789226526; c=relaxed/simple;
-	bh=+B/P0Ch9r/Epbef0fhueXDvqqlqDNeq6v4l5+RNX+ME=;
+	s=arc-20240116; t=1789226532; c=relaxed/simple;
+	bh=ZF1aQpb2KNBDAgCmRw0m33WyVPfx6Aut4GHC68J8t4M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tR5zVF0Vuv1wMjSsSDxp3WhGeolXmPiM2w0C6h+ejQMD8Efe7jDoloeV50jNwDcBk1rk08mjLa54Vt7gYQOB1XMLnwe3dto5RN6b3Rb2Uag7nswBarih/n6Sa02Z4AxWsMxJOS0fVbcXC1+qoow5RQ0D1YowE4k2uMaK1dG9JzI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wmvZs8W7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gUCpJQbB2fmkrx9HoaVQ2PAxR92Dnm1ChkuYuNgPYoQqysccLWftYjRwNf3u1UEz5ahDEOyVG06zMjO3snqxWykZcTGLDG6VvN7rVdp0rLx3aaMUuBUjbTmoR3x7/oi7ZR+QqhXFqHaAhllJ3ZJ/eosLsWJaM6UPhIeLC/FPKiY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=esr3qOcc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wmvZs8W7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49EF71F000FF;
-	Sat, 12 Sep 2026 15:22:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="esr3qOcc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FA381F000FF;
+	Sat, 12 Sep 2026 15:22:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789226525;
-	bh=SEIzZA7lNREOr9DVnFa9W+LE4murdH5/EjoSeLzHtUo=;
+	s=korg; t=1789226530;
+	bh=QBml85DYFGCMz8kE8OHXsOtYlvq3xRf6wu59YACLCMc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wmvZs8W7mLvb3vLvobJHS0GVVHOW2GTqWtXaB+9TsK3+Y2sJ2wVi4KGp9xzFCHmmd
-	 qt1j9TGj6s8ZIOpmPyuXqvX5Zwcn9s5R+Gi8u1H+Jf6HNejfPIRSrRQE/oJqBB7RjG
-	 +e3W5Xj8XYV2aQpbtc9k5fBKmw+PRwcCEHrmxWzE=
+	b=esr3qOccQtVscvASFngXXuyopM+M+kCQkfjNXsVH/Bjsun9xblEOTupc2TbloYIfe
+	 IPSHijViN3hvw30cZGrSf05IZtU7PuJcklLt8s5IGCp00RdbhphXBn9LRlMjln4vjg
+	 rr7HIx331pZE++5jOCKiynI75R3F9YqsNvMa8KiM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Linus Walleij <linus.walleij@linaro.org>
-Subject: [PATCH 6.6 1421/1424] pinctrl: mediatek: common-v1: Fix error checking in mtk_eint_init()
-Date: Sat, 12 Sep 2026 09:04:13 +0200
-Message-ID: <20260912065639.082355119@linuxfoundation.org>
+	syzbot+7f4643b267cc680bfa1c@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Lukasz Majewski <lukma@denx.de>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.6 1422/1424] net: hsr: must allocate more bytes for RedBox support
+Date: Sat, 12 Sep 2026 09:04:14 +0200
+Message-ID: <20260912065639.104791175@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -50,40 +52,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Eric Dumazet <edumazet@google.com>
 
-commit 446d28584723e5d4bcdb18cf6ef87cb2bb597dd8 upstream.
+commit af8edaeddbc52e53207d859c912b017fd9a77629 upstream.
 
-The devm_kzalloc() function doesn't return error pointers, it returns
-NULL on error.  Then on the next line it checks the same pointer again
-by mistake, "->base" instead of "->base[0]".
+Blamed commit forgot to change hsr_init_skb() to allocate
+larger skb for RedBox case.
 
-Fixes: fe412e3a6c97 ("pinctrl: mediatek: common-v1: Fix EINT breakage on older controllers")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/aAijc10fHka1WAMX@stanley.mountain
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Indeed, send_hsr_supervision_frame() will add
+two additional components (struct hsr_sup_tlv
+and struct hsr_sup_payload)
+
+syzbot reported the following crash:
+skbuff: skb_over_panic: text:ffffffff8afd4b0a len:34 put:6 head:ffff88802ad29e00 data:ffff88802ad29f22 tail:0x144 end:0x140 dev:gretap0
+------------[ cut here ]------------
+ kernel BUG at net/core/skbuff.c:206 !
+Oops: invalid opcode: 0000 [#1] PREEMPT SMP KASAN NOPTI
+CPU: 2 UID: 0 PID: 7611 Comm: syz-executor Not tainted 6.12.0-syzkaller #0
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2~bpo12+1 04/01/2014
+ RIP: 0010:skb_panic+0x157/0x1d0 net/core/skbuff.c:206
+Code: b6 04 01 84 c0 74 04 3c 03 7e 21 8b 4b 70 41 56 45 89 e8 48 c7 c7 a0 7d 9b 8c 41 57 56 48 89 ee 52 4c 89 e2 e8 9a 76 79 f8 90 <0f> 0b 4c 89 4c 24 10 48 89 54 24 08 48 89 34 24 e8 94 76 fb f8 4c
+RSP: 0018:ffffc90000858ab8 EFLAGS: 00010282
+RAX: 0000000000000087 RBX: ffff8880598c08c0 RCX: ffffffff816d3e69
+RDX: 0000000000000000 RSI: ffffffff816de786 RDI: 0000000000000005
+RBP: ffffffff8c9b91c0 R08: 0000000000000005 R09: 0000000000000000
+R10: 0000000000000302 R11: ffffffff961cc1d0 R12: ffffffff8afd4b0a
+R13: 0000000000000006 R14: ffff88804b938130 R15: 0000000000000140
+FS:  000055558a3d6500(0000) GS:ffff88806a800000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007f1295974ff8 CR3: 000000002ab6e000 CR4: 0000000000352ef0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+ <IRQ>
+  skb_over_panic net/core/skbuff.c:211 [inline]
+  skb_put+0x174/0x1b0 net/core/skbuff.c:2617
+  send_hsr_supervision_frame+0x6fa/0x9e0 net/hsr/hsr_device.c:342
+  hsr_proxy_announce+0x1a3/0x4a0 net/hsr/hsr_device.c:436
+  call_timer_fn+0x1a0/0x610 kernel/time/timer.c:1794
+  expire_timers kernel/time/timer.c:1845 [inline]
+  __run_timers+0x6e8/0x930 kernel/time/timer.c:2419
+  __run_timer_base kernel/time/timer.c:2430 [inline]
+  __run_timer_base kernel/time/timer.c:2423 [inline]
+  run_timer_base+0x111/0x190 kernel/time/timer.c:2439
+  run_timer_softirq+0x1a/0x40 kernel/time/timer.c:2449
+  handle_softirqs+0x213/0x8f0 kernel/softirq.c:554
+  __do_softirq kernel/softirq.c:588 [inline]
+  invoke_softirq kernel/softirq.c:428 [inline]
+  __irq_exit_rcu kernel/softirq.c:637 [inline]
+  irq_exit_rcu+0xbb/0x120 kernel/softirq.c:649
+  instr_sysvec_apic_timer_interrupt arch/x86/kernel/apic/apic.c:1049 [inline]
+  sysvec_apic_timer_interrupt+0xa4/0xc0 arch/x86/kernel/apic/apic.c:1049
+ </IRQ>
+
+Fixes: 5055cccfc2d1 ("net: hsr: Provide RedBox support (HSR-SAN)")
+Reported-by: syzbot+7f4643b267cc680bfa1c@syzkaller.appspotmail.com
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Lukasz Majewski <lukma@denx.de>
+Link: https://patch.msgid.link/20241202100558.507765-1-edumazet@google.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pinctrl/mediatek/pinctrl-mtk-common.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/hsr/hsr_device.c |   19 +++++++++++++------
+ 1 file changed, 13 insertions(+), 6 deletions(-)
 
---- a/drivers/pinctrl/mediatek/pinctrl-mtk-common.c
-+++ b/drivers/pinctrl/mediatek/pinctrl-mtk-common.c
-@@ -1027,12 +1027,12 @@ static int mtk_eint_init(struct mtk_pinc
- 	pctl->eint->nbase = 1;
- 	/* mtk-eint expects an array */
- 	pctl->eint->base = devm_kzalloc(pctl->dev, sizeof(pctl->eint->base), GFP_KERNEL);
--	if (IS_ERR(pctl->eint->base))
-+	if (!pctl->eint->base)
- 		return -ENOMEM;
+--- a/net/hsr/hsr_device.c
++++ b/net/hsr/hsr_device.c
+@@ -253,20 +253,22 @@ static const struct header_ops hsr_heade
+ 	.parse	 = eth_header_parse,
+ };
  
- 	pctl->eint->base[0] = devm_platform_ioremap_resource(pdev, 0);
--	if (IS_ERR(pctl->eint->base))
--		return PTR_ERR(pctl->eint->base);
-+	if (IS_ERR(pctl->eint->base[0]))
-+		return PTR_ERR(pctl->eint->base[0]);
+-static struct sk_buff *hsr_init_skb(struct hsr_port *master)
++static struct sk_buff *hsr_init_skb(struct hsr_port *master, int extra)
+ {
+ 	struct hsr_priv *hsr = master->hsr;
+ 	struct sk_buff *skb;
+ 	int hlen, tlen;
++	int len;
  
- 	pctl->eint->irq = irq_of_parse_and_map(np, 0);
- 	if (!pctl->eint->irq)
+ 	hlen = LL_RESERVED_SPACE(master->dev);
+ 	tlen = master->dev->needed_tailroom;
++	len = sizeof(struct hsr_sup_tag) + sizeof(struct hsr_sup_payload);
+ 	/* skb size is same for PRP/HSR frames, only difference
+ 	 * being, for PRP it is a trailer and for HSR it is a
+-	 * header
++	 * header.
++	 * RedBox might use @extra more bytes.
+ 	 */
+-	skb = dev_alloc_skb(sizeof(struct hsr_sup_tag) +
+-			    sizeof(struct hsr_sup_payload) + hlen + tlen);
++	skb = dev_alloc_skb(len + extra + hlen + tlen);
+ 
+ 	if (!skb)
+ 		return skb;
+@@ -301,6 +303,7 @@ static void send_hsr_supervision_frame(s
+ 	struct hsr_sup_tlv *hsr_stlv;
+ 	struct hsr_sup_tag *hsr_stag;
+ 	struct sk_buff *skb;
++	int extra = 0;
+ 
+ 	*interval = msecs_to_jiffies(HSR_LIFE_CHECK_INTERVAL);
+ 	if (hsr->announce_count < 3 && hsr->prot_version == 0) {
+@@ -309,7 +312,11 @@ static void send_hsr_supervision_frame(s
+ 		hsr->announce_count++;
+ 	}
+ 
+-	skb = hsr_init_skb(master);
++	if (hsr->redbox)
++		extra = sizeof(struct hsr_sup_tlv) +
++			sizeof(struct hsr_sup_payload);
++
++	skb = hsr_init_skb(master, extra);
+ 	if (!skb) {
+ 		netdev_warn_once(master->dev, "HSR: Could not send supervision frame\n");
+ 		return;
+@@ -369,7 +376,7 @@ static void send_prp_supervision_frame(s
+ 	struct hsr_sup_tag *hsr_stag;
+ 	struct sk_buff *skb;
+ 
+-	skb = hsr_init_skb(master);
++	skb = hsr_init_skb(master, 0);
+ 	if (!skb) {
+ 		netdev_warn_once(master->dev, "PRP: Could not send supervision frame\n");
+ 		return;
 
 
