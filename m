@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0244E30C60F;
-	Sat, 12 Sep 2026 16:21:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 306A130C60F;
+	Sat, 12 Sep 2026 16:21:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789230068; cv=none; b=kUBeOZWn5W2dquhgQ/ai/NOsBqnQ9K+UOSibS23KGkziVXUeEr+lyxkXAjayDcU9H17F5HijzkHK6ZQIGCe/z1Z8m5cgksvC+Gt9MHNELjLBI/11KQT1kGQD03Ivr+9Pr3BLzX6kJ8IRUjDQfANm99FvQSRNl2mKr05zeTXILjw=
+	t=1789230073; cv=none; b=TqmOxbNQRHroFzvb7Em2GWWab+HGqLsH6+MeR7sPF1s6H0zMShrn+df5/e2YNR0C7QqOvYjDa2rUpAgMU/QOZrrfWGnPycUMtgGX7VFPP+7Atc8UyThcn8KN2bqf+FWfbV/CT6HIFf5lYy3GzoxJKlympxFTnYqvSqUI/ctK0lg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789230068; c=relaxed/simple;
-	bh=vfEcLnTutR24aZVN3vtAer2wm6SwbREX2gF6XWsbMsU=;
+	s=arc-20240116; t=1789230073; c=relaxed/simple;
+	bh=4XJE1TZTvSASTbgdxWowjmDblESzWptlxpoiuMFmf84=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Vb8veQxQ1Jp8pg+oIwToql9yK6pDL8qAabPSjtGOmreT7LZQpcuqPDGgKebmfhMXP4sCUmVlA4UmocNzL24N/E5ADVE+6XaoWy18W5hKs8Egx1kEBzQLcpoftijfP29VgmY5+6q6rvYIdwOhifhQsiRV/m5AGz35EZ7Y/ijHYEA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JN39qXQl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GlIJwxHSHkLUh75IU3oegnNLR0rWzsk0pWUqLfmjVAzyXnrR7+KTRYUNHIKdHIxHAaqIUE3bSd7q8dg2CTuhp5WY76Yx+ipbESXtt95CQ8v+rrSoZtl5Ee1NQbex5xaDs6G9OC466Csg2grJhoDEX5ZrryC7jIfT+mL1xypBRDk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G7RambU5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JN39qXQl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEFD21F000FF;
-	Sat, 12 Sep 2026 16:21:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G7RambU5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A7C81F000FF;
+	Sat, 12 Sep 2026 16:21:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789230066;
-	bh=26jKAr6AEwJPlTBlOwOxJ+1jet/3J/IY4Mjz2g89UXA=;
+	s=korg; t=1789230071;
+	bh=txwfKJ/7TcZj4Cbezb8rGldS5GPIWLCiKehtxRjs0XY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JN39qXQlj+SmSFBpN+3ad9p5AS/xiG7rF69OmwJbiTbChPXXRmpfV+G1jVPDGa16w
-	 JSA2Bm1/1BU3xxWqkMC+66bsJ7frF2UEQFIj79ci8C9eW6qrOCzP7ABshyYv/ng+TA
-	 4S6m2gHbOmNPnQ+FDk/mCyx/kODrdrFO+3mEcpCg=
+	b=G7RambU5/hno1XRHnctDS8F0UITeCro7/uzOpqiUoyAeD2QxIr4Bcsd0dIgZ0nhFC
+	 +j6D4gpn6KcIdqLgryHKFFsKrV5pgErHBGK7pc0XVEDapVfe9UPhNDerzhV8BAv2zw
+	 7DAKzxCvUKMLVs9tzHO5Z+4+XwiwP+lMOky2WtIo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Justin Yeh <justin.yeh@mediatek.com>,
 	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0718/1191] pinctrl: mediatek: eint: Fix invalid pointer dereference for v1 platforms
-Date: Sat, 12 Sep 2026 08:57:26 +0200
-Message-ID: <20260912065604.406539068@linuxfoundation.org>
+Subject: [PATCH 6.1 0719/1191] pinctrl: mediatek: free EINT resources on unbind
+Date: Sat, 12 Sep 2026 08:57:27 +0200
+Message-ID: <20260912065604.428713732@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -46,167 +46,92 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nícolas F. R. A. Prado <nfraprado@collabora.com>
+From: Justin Yeh <justin.yeh@mediatek.com>
 
-[ Upstream commit 1c9977b263475373b31bbf86af94a5c9ae2be42c ]
+[ Upstream commit 88292b7103d260e3e606eb3bb2794060a5fde48e ]
 
-Commit 3ef9f710efcb ("pinctrl: mediatek: Add EINT support for multiple
-addresses") introduced an access to the 'soc' field of struct
-mtk_pinctrl in mtk_eint_do_init() and for that an include of
-pinctrl-mtk-common-v2.h.
+mtk_eint_do_init() creates an IRQ domain, populates it with a mapping for
+every EINT line and installs a chained handler on the parent interrupt,
+but none of these are ever released. This was harmless while the drivers
+were built-in, but now that they can be built as modules and
+unbound/rmmod'd it leaves behind a dangling IRQ domain, interrupt mappings
+whose chip data points at freed memory, and a chained handler that keeps
+firing into that freed data.
 
-However, pinctrl drivers relying on the v1 common driver include
-pinctrl-mtk-common.h instead, which provides another definition of
-struct mtk_pinctrl that does not contain an 'soc' field.
+The plain allocations in mtk_eint_do_init() already use the device-managed
+devm_*() helpers, so tear the remaining resources down the same way:
+register a devm action that detaches the chained handler, waits for any
+in-flight handler to finish, disposes of the per-line mappings and removes
+the IRQ domain. This mirrors the device-managed lifecycle adopted for the
+GPIO chip and keeps the whole EINT setup self-cleaning on unbind.
 
-Since mtk_eint_do_init() can be called both by v1 and v2 drivers, it
-will now try to dereference an invalid pointer when called on v1
-platforms. This has been observed on Genio 350 EVK (MT8365), which
-crashes very early in boot (the kernel trace can only be seen with
-earlycon).
-
-In order to fix this, since 'struct mtk_pinctrl' was only needed to get
-a 'struct mtk_eint_pin', make 'struct mtk_eint_pin' a parameter
-of mtk_eint_do_init() so that callers need to supply it, removing
-mtk_eint_do_init()'s dependency on any particular 'struct mtk_pinctrl'.
-
-Fixes: 3ef9f710efcb ("pinctrl: mediatek: Add EINT support for multiple addresses")
-Suggested-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
-Link: https://lore.kernel.org/20250520-genio-350-eint-null-ptr-deref-fix-v2-1-6a3ca966a7ba@collabora.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Stable-dep-of: 88292b7103d2 ("pinctrl: mediatek: free EINT resources on unbind")
+Fixes: e46df235b4e6 ("pinctrl: mediatek: refactor EINT related code for all MediaTek pinctrl can fit")
+Signed-off-by: Justin Yeh <justin.yeh@mediatek.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/mediatek/mtk-eint.c           | 26 ++++++++-----------
- drivers/pinctrl/mediatek/mtk-eint.h           |  5 ++--
- .../pinctrl/mediatek/pinctrl-mtk-common-v2.c  |  2 +-
- drivers/pinctrl/mediatek/pinctrl-mtk-common.c |  2 +-
- 4 files changed, 16 insertions(+), 19 deletions(-)
+ drivers/pinctrl/mediatek/mtk-eint.c | 25 ++++++++++++++++++++++++-
+ 1 file changed, 24 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/pinctrl/mediatek/mtk-eint.c b/drivers/pinctrl/mediatek/mtk-eint.c
-index 557dec75fa031..c2e452c699cfa 100644
+index c2e452c699cfa..6787596167b92 100644
 --- a/drivers/pinctrl/mediatek/mtk-eint.c
 +++ b/drivers/pinctrl/mediatek/mtk-eint.c
-@@ -22,7 +22,6 @@
- #include <linux/platform_device.h>
+@@ -12,8 +12,10 @@
+  */
  
- #include "mtk-eint.h"
--#include "pinctrl-mtk-common-v2.h"
- 
- #define MTK_EINT_EDGE_SENSITIVE           0
- #define MTK_EINT_LEVEL_SENSITIVE          1
-@@ -505,10 +504,9 @@ int mtk_eint_find_irq(struct mtk_eint *eint, unsigned long eint_n)
+ #include <linux/delay.h>
++#include <linux/device.h>
+ #include <linux/err.h>
+ #include <linux/gpio/driver.h>
++#include <linux/interrupt.h>
+ #include <linux/io.h>
+ #include <linux/irqchip/chained_irq.h>
+ #include <linux/irqdomain.h>
+@@ -504,6 +506,27 @@ int mtk_eint_find_irq(struct mtk_eint *eint, unsigned long eint_n)
  }
  EXPORT_SYMBOL_GPL(mtk_eint_find_irq);
  
--int mtk_eint_do_init(struct mtk_eint *eint)
-+int mtk_eint_do_init(struct mtk_eint *eint, struct mtk_eint_pin *eint_pin)
++static void mtk_eint_teardown(void *data)
++{
++	struct mtk_eint *eint = data;
++	unsigned int i, virq;
++
++	/* Detach the demux handler so it can no longer reference freed data. */
++	irq_set_chained_handler_and_data(eint->irq, NULL, NULL);
++
++	/* Wait for any in-flight handler to finish before tearing down. */
++	synchronize_irq(eint->irq);
++
++	/* Dispose of all child mappings before the domain is removed. */
++	for (i = 0; i < eint->hw->ap_num; i++) {
++		virq = irq_find_mapping(eint->domain, i);
++		if (virq)
++			irq_dispose_mapping(virq);
++	}
++
++	irq_domain_remove(eint->domain);
++}
++
+ int mtk_eint_do_init(struct mtk_eint *eint, struct mtk_eint_pin *eint_pin)
  {
  	unsigned int size, i, port, virq, inst = 0;
--	struct mtk_pinctrl *hw = (struct mtk_pinctrl *)eint->pctl;
+@@ -589,7 +612,7 @@ int mtk_eint_do_init(struct mtk_eint *eint, struct mtk_eint_pin *eint_pin)
+ 	irq_set_chained_handler_and_data(eint->irq, mtk_eint_irq_handler,
+ 					 eint);
  
- 	/* If clients don't assign a specific regs, let's use generic one */
- 	if (!eint->regs)
-@@ -519,7 +517,15 @@ int mtk_eint_do_init(struct mtk_eint *eint)
- 	if (!eint->base_pin_num)
- 		return -ENOMEM;
+-	return 0;
++	return devm_add_action_or_reset(eint->dev, mtk_eint_teardown, eint);
  
--	if (eint->nbase == 1) {
-+	if (eint_pin) {
-+		eint->pins = eint_pin;
-+		for (i = 0; i < eint->hw->ap_num; i++) {
-+			inst = eint->pins[i].instance;
-+			if (inst >= eint->nbase)
-+				continue;
-+			eint->base_pin_num[inst]++;
-+		}
-+	} else {
- 		size = eint->hw->ap_num * sizeof(struct mtk_eint_pin);
- 		eint->pins = devm_kmalloc(eint->dev, size, GFP_KERNEL);
- 		if (!eint->pins)
-@@ -533,16 +539,6 @@ int mtk_eint_do_init(struct mtk_eint *eint)
- 		}
- 	}
- 
--	if (hw && hw->soc && hw->soc->eint_pin) {
--		eint->pins = hw->soc->eint_pin;
--		for (i = 0; i < eint->hw->ap_num; i++) {
--			inst = eint->pins[i].instance;
--			if (inst >= eint->nbase)
--				continue;
--			eint->base_pin_num[inst]++;
--		}
--	}
--
- 	eint->pin_list = devm_kmalloc(eint->dev, eint->nbase * sizeof(u16 *), GFP_KERNEL);
- 	if (!eint->pin_list)
- 		goto err_pin_list;
-@@ -610,7 +606,7 @@ int mtk_eint_do_init(struct mtk_eint *eint)
- err_wake_mask:
- 	devm_kfree(eint->dev, eint->pin_list);
- err_pin_list:
--	if (eint->nbase == 1)
-+	if (!eint_pin)
- 		devm_kfree(eint->dev, eint->pins);
- err_pins:
- 	devm_kfree(eint->dev, eint->base_pin_num);
-diff --git a/drivers/pinctrl/mediatek/mtk-eint.h b/drivers/pinctrl/mediatek/mtk-eint.h
-index 0c6bf7cbdc3a4..fc31a4c0c77bf 100644
---- a/drivers/pinctrl/mediatek/mtk-eint.h
-+++ b/drivers/pinctrl/mediatek/mtk-eint.h
-@@ -88,7 +88,7 @@ struct mtk_eint {
- };
- 
- #if IS_ENABLED(CONFIG_EINT_MTK)
--int mtk_eint_do_init(struct mtk_eint *eint);
-+int mtk_eint_do_init(struct mtk_eint *eint, struct mtk_eint_pin *eint_pin);
- int mtk_eint_do_suspend(struct mtk_eint *eint);
- int mtk_eint_do_resume(struct mtk_eint *eint);
- int mtk_eint_set_debounce(struct mtk_eint *eint, unsigned long eint_n,
-@@ -96,7 +96,8 @@ int mtk_eint_set_debounce(struct mtk_eint *eint, unsigned long eint_n,
- int mtk_eint_find_irq(struct mtk_eint *eint, unsigned long eint_n);
- 
- #else
--static inline int mtk_eint_do_init(struct mtk_eint *eint)
-+static inline int mtk_eint_do_init(struct mtk_eint *eint,
-+				   struct mtk_eint_pin *eint_pin)
- {
- 	return -EOPNOTSUPP;
- }
-diff --git a/drivers/pinctrl/mediatek/pinctrl-mtk-common-v2.c b/drivers/pinctrl/mediatek/pinctrl-mtk-common-v2.c
-index 26fe53d9a53fb..882733516b45e 100644
---- a/drivers/pinctrl/mediatek/pinctrl-mtk-common-v2.c
-+++ b/drivers/pinctrl/mediatek/pinctrl-mtk-common-v2.c
-@@ -419,7 +419,7 @@ int mtk_build_eint(struct mtk_pinctrl *hw, struct platform_device *pdev)
- 	hw->eint->pctl = hw;
- 	hw->eint->gpio_xlate = &mtk_eint_xt;
- 
--	ret = mtk_eint_do_init(hw->eint);
-+	ret = mtk_eint_do_init(hw->eint, hw->soc->eint_pin);
- 	if (ret)
- 		goto err_free_eint;
- 
-diff --git a/drivers/pinctrl/mediatek/pinctrl-mtk-common.c b/drivers/pinctrl/mediatek/pinctrl-mtk-common.c
-index 6f09ace0db424..ee00575ec3365 100644
---- a/drivers/pinctrl/mediatek/pinctrl-mtk-common.c
-+++ b/drivers/pinctrl/mediatek/pinctrl-mtk-common.c
-@@ -1030,7 +1030,7 @@ static int mtk_eint_init(struct mtk_pinctrl *pctl, struct platform_device *pdev)
- 	pctl->eint->pctl = pctl;
- 	pctl->eint->gpio_xlate = &mtk_eint_xt;
- 
--	return mtk_eint_do_init(pctl->eint);
-+	return mtk_eint_do_init(pctl->eint, NULL);
- }
- 
- /* This is used as a common probe function */
+ err_eint:
+ 	for (i = 0; i < eint->nbase; i++) {
 -- 
 2.53.0
 
