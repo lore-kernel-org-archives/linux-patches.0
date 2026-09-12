@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83F152D0C94;
-	Sat, 12 Sep 2026 10:52:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B3B32D0C94;
+	Sat, 12 Sep 2026 10:52:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789210366; cv=none; b=MZ5ic93v5byY1BJ8LK7G5Q8hkh0Z0KMvKOFKPFXrwSpPdxzCp6ITAsOcbvP765AxGH77meRKXv3qfHSSpsZOjTx1rIGY57A8iaO+sw0dwnuDctcUtaSaJ63EO0Xm3Q/Q5LUsDtCCCvHtglzEDTKypfA3bFR3IjMYtYb8C/w0rBE=
+	t=1789210371; cv=none; b=ib1gDgEp3Y0f9m0siWSTlyhU0xmCj+7EZDerabVlA+vHApVwgVCkofbqES962SZOO+AJntvokUp0mcAQQeaJCuVXR7EJ+3M3Yfc0KqWm0eNvIuvK3Nmv4SGNirva2eGX0HuF308LJiAdEbMmkcfOf9ssAiMjCO1oLmoujVLQqp4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789210366; c=relaxed/simple;
-	bh=GGFo/rLMoH7sj/Oxb/I2Iz3OTkvRMcFmXAk+T91exR8=;
+	s=arc-20240116; t=1789210371; c=relaxed/simple;
+	bh=wfYFMiQaaNuYuqr+l3jTzE0741VPUjL79bFz0o5YqDc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IAQPEUmTdrx7kf0D01sjrTi0CoOQ5Nn8y1UJahl+fZZ20Yp6L/UGREFq5EQXPcDFaJrYVuhe8Z9ZRyT5ynUtIcbv18KeWNdLp8paatok6A9XNtQRnlDoCwTEiYzDHtUKVyFrR0v7tr2RBUYrgamDJYU5biIbblgry4PA5RkyRUc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lRkR4wwh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=at7+PkJZU5X7GoChmWrgjyjocnFZHLjNmfggd85n8+/3ycj73ys+Oog5pk2dwrkGai7RlVY8PkJQGBPL2K/gisl6yLq/bEEQ840NRM48s1+xZymZ4FQk5T0R0iwGXzmS1GTO71Kry6+ytjMPSYtScTP4sf2PJ0qRR403kSQ5QNE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q4TFua8a; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lRkR4wwh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24D7E1F000FF;
-	Sat, 12 Sep 2026 10:52:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q4TFua8a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A7161F000FF;
+	Sat, 12 Sep 2026 10:52:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789210365;
-	bh=Ersmsw5YIqeBVHO952b5k6RY9gTVorZ8tA0hDEbyopM=;
+	s=korg; t=1789210369;
+	bh=5+XagdkiN1FDaJBWSiI8CiMU/5egBTqkkTVznzjV0rA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lRkR4wwh92nRDxn1P+gRl+uwwayjs+y00tDoFVT6jS3nl1lWoan0i2gNX3UJddaAh
-	 M6V3btVcfuiyPCgF7YAfbol7QztXFSCueqKrfbcVmBRGJDu+MfKYE1F4g43O7wQNf5
-	 TQ/ceUgjx6s8rdIrZo80d2KSwMWXp1IbCDLPgChk=
+	b=q4TFua8ate7K1Vg7pTF9sM+CG0flZmFWrn1IS+GvYdEr3fAoZ3X/tG3os9/aSE+L/
+	 9EaepS2Bpc1n9ZXbEEa16M8o4YawrRfO3YAVqck2pjPoxkFdyb+fCqod+cw4ZxjUOm
+	 iNnDCjYQNhkvBAMNtRlDi4Zg+MgQiSCvwo217lcE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Mike Leach <mike.leach@linaro.org>,
 	Leo Yan <leo.yan@arm.com>,
-	Yeoreum Yun <yeoreum.yun@arm.com>,
+	James Clark <james.clark@linaro.org>,
 	Suzuki K Poulose <suzuki.poulose@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0968/1518] coresight: etm4x: fix wrong check of etm4x_sspcicrn_present()
-Date: Sat, 12 Sep 2026 08:52:17 +0200
-Message-ID: <20260912065645.358249941@linuxfoundation.org>
+Subject: [PATCH 6.18 0969/1518] coresight: Change syncfreq to be a u8
+Date: Sat, 12 Sep 2026 08:52:18 +0200
+Message-ID: <20260912065645.379650284@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,46 +53,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yeoreum Yun <yeoreum.yun@arm.com>
+From: James Clark <james.clark@linaro.org>
 
-[ Upstream commit 0e1cd4270b42a257c139165622091e1e8c7104a7 ]
+[ Upstream commit 10d4dbdc8fbce586b17be07b8138e025381453dd ]
 
-According to Embedded Trace Macrocell Architecture Specification
-ETMv4.0 to ETM4.6 [0], TRCSSPCICR<n> is present only if all of
-the following are true:
+TRCSYNCPR.PERIOD is the only functional part of TRCSYNCPR and it only
+has 5 valid bits so it can be stored in a u8.
 
-  - TRCIDR4.NUMSSCC > n.
-  - TRCIDR4.NUMPC > 0b0000.
-  - TRCSSCSR<n>.PC == 0b1.
-
-Comment for etm4x_sspcicrn_present() is align with the specification.
-However, the check should use drvdata->nr_pe_cmp to check TRCIDR4.NUMPC
-not nr_pe.
-
-Link: https://developer.arm.com/documentation/ihi0064/latest/ [0]
-Fixes: f6a18f354c58 ("coresight: etm4x: Handle access to TRCSSPCICRn")
+Reviewed-by: Mike Leach <mike.leach@linaro.org>
 Reviewed-by: Leo Yan <leo.yan@arm.com>
-Signed-off-by: Yeoreum Yun <yeoreum.yun@arm.com>
+Tested-by: Leo Yan <leo.yan@arm.com>
+Signed-off-by: James Clark <james.clark@linaro.org>
 Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Link: https://lore.kernel.org/r/20260725113645.57519-2-yeoreum.yun@arm.com
+Link: https://lore.kernel.org/r/20251128-james-cs-syncfreq-v8-1-4d319764cc58@linaro.org
+Stable-dep-of: 1674d9bff807 ("coresight: etm4x: fix underflow for usage of (nrseqstate - 1)")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwtracing/coresight/coresight-etm4x-core.c | 2 +-
+ drivers/hwtracing/coresight/coresight-etm4x.h | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hwtracing/coresight/coresight-etm4x-core.c b/drivers/hwtracing/coresight/coresight-etm4x-core.c
-index 2271f5ea81214..318846e4dda3a 100644
---- a/drivers/hwtracing/coresight/coresight-etm4x-core.c
-+++ b/drivers/hwtracing/coresight/coresight-etm4x-core.c
-@@ -92,7 +92,7 @@ static int etm4_probe_cpu(unsigned int cpu);
- static bool etm4x_sspcicrn_present(struct etmv4_drvdata *drvdata, int n)
- {
- 	return (n < drvdata->nr_ss_cmp) &&
--	       drvdata->nr_pe &&
-+	       drvdata->nr_pe_cmp &&
- 	       (drvdata->config.ss_status[n] & TRCSSCSRn_PC);
- }
- 
+diff --git a/drivers/hwtracing/coresight/coresight-etm4x.h b/drivers/hwtracing/coresight/coresight-etm4x.h
+index 012c52fd19338..0287d19ce12ed 100644
+--- a/drivers/hwtracing/coresight/coresight-etm4x.h
++++ b/drivers/hwtracing/coresight/coresight-etm4x.h
+@@ -825,7 +825,6 @@ struct etmv4_config {
+ 	u32				eventctrl1;
+ 	u32				stall_ctrl;
+ 	u32				ts_ctrl;
+-	u32				syncfreq;
+ 	u32				ccctlr;
+ 	u32				bb_ctrl;
+ 	u32				vinst_ctrl;
+@@ -833,6 +832,7 @@ struct etmv4_config {
+ 	u32				vissctlr;
+ 	u32				vipcssctlr;
+ 	u8				seq_idx;
++	u8				syncfreq;
+ 	u32				seq_ctrl[ETM_MAX_SEQ_STATES];
+ 	u32				seq_rst;
+ 	u32				seq_state;
 -- 
 2.53.0
 
