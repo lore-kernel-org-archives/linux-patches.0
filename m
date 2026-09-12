@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 017AE384230;
-	Sat, 12 Sep 2026 15:28:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA697418A5B;
+	Sat, 12 Sep 2026 15:28:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789226910; cv=none; b=CCkAzoh/iRXkYyJlXRz7KJ0EBtJ/gTG05/u5l9SzC4PkR3umReiNqz9JZ/nzX+oak8fLRHffmRe8kGY/tZsvsEni/XOn33/bY6CJFkaeshB9YPXyeEmLDF8nRrXYNNNOzuaj5Oclsd2rQJ3N8Bnu1SVPpFHQk4V1Gtkz4W/2+GQ=
+	t=1789226915; cv=none; b=iQbtkK8YUGyJlNdhNsMi2S6EQU6GIq1Yj0qFJb+pR0zxJHXKVn/A2MWt5eDC7kLGDcUi2ewvViOTd4SymCS7zO39QDuh77E7iLulLKLmMJ5s/M7G/rsmt+AWTU9YZZ13OUWTuThR5IbZ/d2XUNjIhEbTDiyAbPHowNGEFf/K8jA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789226910; c=relaxed/simple;
-	bh=uAHMdkh05xiS/TDWwx7hyNgB/hUNBaFV2NHtFEhBW5s=;
+	s=arc-20240116; t=1789226915; c=relaxed/simple;
+	bh=7jzyrpcrmLY1lpIc0DZ+SBFEqS+/hdm6Gx+vUwWTB8w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VomMXnVeg7kYLIIBkG/1F0Yxb50JqyGLcRPUi1XkZnLjOcZr/c6zCfe083O9jp4pMD7Q+jH3Zeg1AKaVAWdOzkeabtMH92lcWHQp+SBei2KIE59pkt3FNDqSn6+7GVIkOxWGEgF2ApsS65sxaxADm4HTN11UMuKBvfBZJL5StVA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VlSqavq4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YzfsjGUE+FDcf/YXN9WadQ6S5Gl7AvH8F7dFzFaEiqSn4D7oYu7KiPuzYqHeqEuIZ0s2CCOyzV9GvuIuKvUk+om+c/YZ7geUCzA19gj8CwtWYUp/QuSNLwpA9atbjeF5X75PV1bDZywZRlc+5LeyyVxfJdXGManA4Hir9lA03Tk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=meNuVU6d; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VlSqavq4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6CE21F000FF;
-	Sat, 12 Sep 2026 15:28:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="meNuVU6d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD8891F000FF;
+	Sat, 12 Sep 2026 15:28:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789226908;
-	bh=bT070znlIS1SxaXJdcdGjx1dgPoq9De3zdbg6c6tue8=;
+	s=korg; t=1789226913;
+	bh=+4QzuxEQcKCSGlD7QAzkhViMezd+qT2h5kA2u6lfVro=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VlSqavq4FVdxmWNtv8DoydA3LHuwAEasg6jFvCDEgQLHAJAXCKIZDkR0/TJeP5K7Q
-	 SkLQAe5pMXWk86H8IJQojB6M7CBkH+HKCrIZbdFrx7xzZHYL2XqDev9pkY08txsoZi
-	 wVXcqC41Eesp6V04BUQ5siW5urln6AXnVFEZfbHA=
+	b=meNuVU6daoL8RgWGDwgziNAZMfYJ9ocTKpRGb9eQA49eItunDFYC4LsQ1ny5bz0p9
+	 Z8W2NCOII0TAGtmnCyRG2rLzW0Ct5iGoxlzyjOeLK8YxL4uWK6E+lAFHBNxAf7qANb
+	 e6oQLNMXy22xJkZFjacX3M4xloC4aYl4DFqfvXvw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weiming Shi <bestswngs@gmail.com>,
-	Xiang Mei <xmei5@asu.edu>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
-Subject: [PATCH 6.1 0074/1191] fs/ntfs3: validate dirty page table on log replay
-Date: Sat, 12 Sep 2026 08:46:42 +0200
-Message-ID: <20260912065549.826190539@linuxfoundation.org>
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <cel@kernel.org>
+Subject: [PATCH 6.1 0057/1191] nfsd: reject reclaim LOCK after RECLAIM_COMPLETE
+Date: Sat, 12 Sep 2026 08:46:25 +0200
+Message-ID: <20260912065549.429998876@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -51,69 +50,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Jeff Layton <jlayton@kernel.org>
 
-commit 006cb7713dec10368e699abc4367e5faa334c9a5 upstream.
+commit 2327ba1d9546727a35b17888777e991f68a9b305 upstream.
 
-Each DIR_PAGE_ENTRY ends in a page_lcns[] array whose length is the on-disk
-lcns_follow field. check_rstbl() validates the table bookkeeping but never
-checks that this array fits in the entry, so a crafted lcns_follow lets the
-v0->v1 conversion memmove and later replay passes run off the entry.
+nfsd4_lock() only checks the namespace-wide grace flag when deciding
+whether to accept a reclaim LOCK. It does not check the per-client
+NFSD4_CLIENT_RECLAIM_COMPLETE bit. An NFSv4.1+ client that has
+already sent RECLAIM_COMPLETE can submit lk_reclaim=1 while grace is
+still active (e.g. lockd holds the grace list open), and the server
+accepts it instead of returning NFS4ERR_NO_GRACE as required by
+RFC 8881 section 18.51.3.
 
-Add check_dp_table() to reject, right after check_rstbl(), any entry larger
-than its size claims via struct_size() (the same expression used to allocate
-these entries, so the check is overflow-safe by construction). All consumers
-can then trust lcns_follow as the real capacity. This covers every
-page_lcns[] access whose index is bounded by the entry itself (the
-conversion memmove, the HotFix store via find_dp(), and the self-bounded
-scan loops). Accesses whose index comes from the log record need a separate
-bound and are handled in a follow-up patch.
+The OPEN path already enforces both tiers: the grace check plus the
+per-client RECLAIM_COMPLETE check in nfs4_check_open_reclaim(). Add
+the equivalent per-client check to the LOCK path.
 
-Fixes: b46acd6a6a62 ("fs/ntfs3: Add NTFS journal")
+Fixes: 3b3e7b72239a ("nfsd: reject reclaim request when client has already sent RECLAIM_COMPLETE")
 Cc: stable@vger.kernel.org
-Reported-by: Weiming Shi <bestswngs@gmail.com>
 Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+[ cel: Correct the RFC citations in the commit message ]
+Link: https://patch.msgid.link/20260611-nfsd-testing-v2-14-5b90e276f2d9@kernel.org
+Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs3/fslog.c |   19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ fs/nfsd/nfs4state.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/fs/ntfs3/fslog.c
-+++ b/fs/ntfs3/fslog.c
-@@ -789,6 +789,20 @@ static bool check_rstbl(const struct RES
- 	return true;
- }
- 
-+static bool check_dp_table(const struct RESTART_TABLE *dptbl)
-+{
-+	u32 rsize = le16_to_cpu(dptbl->size);
-+	struct DIR_PAGE_ENTRY *dp = NULL;
-+
-+	while ((dp = enum_rstbl((struct RESTART_TABLE *)dptbl, dp))) {
-+		if (struct_size(dp, page_lcns, le32_to_cpu(dp->lcns_follow)) >
-+		    rsize)
-+			return false;
-+	}
-+
-+	return true;
-+}
-+
- /*
-  * free_rsttbl_idx - Free a previously allocated index a Restart Table.
-  */
-@@ -4283,6 +4297,11 @@ check_dirty_page_table:
- 		err = -EINVAL;
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -7618,6 +7618,9 @@ nfsd4_lock(struct svc_rqst *rqstp, struc
+ 	status = nfserr_no_grace;
+ 	if (!locks_in_grace(net) && lock->lk_reclaim)
  		goto out;
- 	}
-+
-+	if (!check_dp_table(rt)) {
-+		err = -EINVAL;
++	if (lock->lk_reclaim &&
++	    test_bit(NFSD4_CLIENT_RECLAIM_COMPLETE, &cstate->clp->cl_flags))
 +		goto out;
-+	}
  
- 	dptbl = kmemdup(rt, t32, GFP_NOFS);
- 	if (!dptbl) {
+ 	if (lock->lk_reclaim)
+ 		fl_flags |= FL_RECLAIM;
 
 
