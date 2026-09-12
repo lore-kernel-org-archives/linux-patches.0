@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B63E033A9F3;
-	Sat, 12 Sep 2026 17:10:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8313A238C36;
+	Sat, 12 Sep 2026 17:10:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789233010; cv=none; b=G3B3v2pKEgkNWQohSO2Am96awc+EA5zG/FEmOUBBvfAwvKfnm/Zx6nD4S0jMxJ6NZfD2lOco3rQ1N11MP/8pMGuhpK00tPszkMNCQ/BKMO3+vZzv70ftoCEs6h1T9REkT/n13tpbWYeNt6gx/LQSaamTQ4Z/B44V47VDgqJOSzI=
+	t=1789233015; cv=none; b=EoBTfdCsFpZ0mvv9lJvfOKzbRsiafEbJ1O3JTTiKIutON+IjJPOiyuQTAKsiBfqmExWEiFqeX8UhruMQFEqDJkE4g7oLlYMPqwSz+mEtwm5J6F5Nxy3uN+9PaeTb1h9yjiYY3KwrIMh/3IQBm84lBxgkFjRUxlr5QomFFpnWEhk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789233010; c=relaxed/simple;
-	bh=C9DNlfzkzNcEc4kfWbPAdLjOJyBrIlxJDDElA2ZVdN0=;
+	s=arc-20240116; t=1789233015; c=relaxed/simple;
+	bh=/anVjb2i8Rmpk91TgeFmPNVlARxe8pK2NjyKoEGUBPI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L/uqxn0AisSRe4+kJx6ubVWvc/OcpgeghTGuCr1RX3WUclkNY7hjFkDDHe+/xMohO2hkARFG6NPLGCjMUQk3Ef7ucro/NHiB3x9o3QCachEbTHdgs+75e6XwGnnYhNJYx5OhAHvKQtxhfgReKDipHEBtqjP/VKL3+rO5FSJr4hM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QdOOeLWI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=i5vDQMdbxPBOZTo5WnG2jXWlzreIoEAz24BNf01J69wqgqyFtAl5ycdPgddes8Iw5MxDW1QYSx3yvosFXeKva/HVKg9e29OO5LASgreYfbfspJnLX9gj10GGb7fpisgbwRwSVJp5/vZce37hn44GwsizOH7nxKujuKX/H7r1fBQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1X4hBX6E; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QdOOeLWI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C264A1F000FF;
-	Sat, 12 Sep 2026 17:10:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1X4hBX6E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE0061F000FF;
+	Sat, 12 Sep 2026 17:10:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789233008;
-	bh=FsO6Wpc6QQ3xVd8c+49SbHSFwxVD7VVoLMi4J4gJUEE=;
+	s=korg; t=1789233014;
+	bh=ZYK4n2Rm3aJaF+j4ybo3C5itEbjcwHbTWBxrkT8Fmbw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QdOOeLWIX5YlTxkeRfjzNRIt5zQaaiYqP+ALrACoJ9Pkoh1GfHdyuhUkZeLQapCOk
-	 Wefdh0XSBBgGa2R7Lt7yC96Dd6CkCKanOfgXksaEbTCVBT1773SDbb86KoeAAS26kG
-	 ZQID0CTB+0vItoTD1/V3T0boEVjQr4YU/2f/q+rU=
+	b=1X4hBX6ENg+XJwmcRW+5ImP91+Fo/dEMJl08rUSTpTfpzJ9lysFfNM3cdME203OBo
+	 pdgNQqs6KcayWuTbGr1JI/XtAs1SO4/pT9fgNRvVGQKR6zy4er6Z26u00Dk24swNfA
+	 H64AjhxONU5NIHnJwjEfXBZIFsqPrVrnK/USmgAI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hannes Reinecke <hare@kernel.org>,
-	Niklas Cassel <cassel@kernel.org>,
-	Damien Le Moal <dlemoal@kernel.org>
-Subject: [PATCH 5.15 084/935] ata: libata-scsi: fix DSM TRIM for sector sizes larger than 2048 bytes
-Date: Sat, 12 Sep 2026 08:51:54 +0200
-Message-ID: <20260912065528.755070246@linuxfoundation.org>
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 5.15 075/935] fbdev: omapfb: panel-dsi-cm: initialize lock before registering display
+Date: Sat, 12 Sep 2026 08:51:45 +0200
+Message-ID: <20260912065528.553364657@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -51,119 +50,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Cassel <cassel@kernel.org>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-commit 79cce911e623c0baa0fde307ce3a434e084b881a upstream.
+commit f8e43fe0f22b7137ce456e6fe3581d3098174f74 upstream.
 
-ata_scsi_write_same_xlat() translates a SCSI WRITE SAME command with the
-UNMAP bit set into an ATA DATA SET MANAGEMENT TRIM command.  The TRIM
-descriptor is built by ata_format_dsm_trim_descr() into the 2048-byte
-ata_scsi_rbuf staging buffer, and the number of bytes copied is compared
-against the logical sector size by the caller:
+dsicm_probe() registers the display before initializing ddata->lock.
+Once omapdss_register_display() publishes the display, another consumer
+can reach a dsicm callback that takes this mutex while it is still
+uninitialized.
 
-	size = ata_format_dsm_trim_descr(scmd, trmax, block, n_block);
-	if (size != len)		/* len == sdp->sector_size */
-		goto invalid_param_len;
+Initialize the mutex before registering the display so the published
+callbacks always see a valid lock.
 
-ata_format_dsm_trim_descr() clamps the copy length to ATA_SCSI_RBUF_SIZE
-(2048).  On a device whose logical sector size exceeds that (e.g. a 4Kn
-device, where sector_size == 4096) the function can never return more than
-2048, while the caller expects it to return sector_size.  The comparison
-therefore always fails, so every TRIM is rejected with "Parameter list
-length error" and WARN_ON() splats on each attempt.  TRIM / discard is
-thus completely broken on such devices.
-
-The descriptor was incorrectly sized from the logical sector size.  A DSM
-TRIM payload is a list of 512-byte pages, each holding up to
-ATA_MAX_TRIM_RNUM (64) LBA Range Entries, and is independent of the logical
-sector size.  The Block Limits VPD page already advertises a single such
-page as the maximum WRITE SAME length (65535 * ATA_MAX_TRIM_RNUM logical
-blocks), so the block layer never sends a request that needs more than one
-page.
-
-Emit exactly one 512-byte page, independent of the logical sector size,
-and transfer only that page (COUNT == 1).  For a 512-byte-sector device
-this is unchanged; devices with larger logical sectors now work instead of
-failing every TRIM.
-
-Reviewed-by: Hannes Reinecke <hare@kernel.org>
-Fixes: ef2d7392c4ec ("libata: SCT Write Same / DSM Trim")
+Fixes: f76ee892a99e ("omapfb: copy omapdss & displays for omapfb")
 Cc: stable@vger.kernel.org
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ata/libata-scsi.c |   28 ++++++++++++++--------------
- 1 file changed, 14 insertions(+), 14 deletions(-)
+ drivers/video/fbdev/omap2/omapfb/displays/panel-dsi-cm.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/ata/libata-scsi.c
-+++ b/drivers/ata/libata-scsi.c
-@@ -3103,17 +3103,13 @@ static unsigned int ata_scsi_pass_thru(s
- static size_t ata_format_dsm_trim_descr(struct scsi_cmnd *cmd, u32 trmax,
- 					u64 sector, u32 count)
- {
--	struct scsi_device *sdp = cmd->device;
--	size_t len = sdp->sector_size;
-+	size_t len = ATA_SECT_SIZE;
- 	size_t r;
- 	__le64 *buf;
- 	u32 i = 0;
- 	unsigned long flags;
+--- a/drivers/video/fbdev/omap2/omapfb/displays/panel-dsi-cm.c
++++ b/drivers/video/fbdev/omap2/omapfb/displays/panel-dsi-cm.c
+@@ -1190,14 +1190,14 @@ static int dsicm_probe(struct platform_d
+ 	dssdev->caps = OMAP_DSS_DISPLAY_CAP_MANUAL_UPDATE |
+ 		OMAP_DSS_DISPLAY_CAP_TEAR_ELIM;
  
--	WARN_ON(len > ATA_SCSI_RBUF_SIZE);
++	mutex_init(&ddata->lock);
++
+ 	r = omapdss_register_display(dssdev);
+ 	if (r) {
+ 		dev_err(dev, "Failed to register panel\n");
+ 		goto err_reg;
+ 	}
+ 
+-	mutex_init(&ddata->lock);
 -
--	if (len > ATA_SCSI_RBUF_SIZE)
--		len = ATA_SCSI_RBUF_SIZE;
-+	BUILD_BUG_ON(ATA_SECT_SIZE > ATA_SCSI_RBUF_SIZE);
+ 	atomic_set(&ddata->do_update, 0);
  
- 	spin_lock_irqsave(&ata_scsi_rbuf_lock, flags);
- 	buf = ((void *)ata_scsi_rbuf);
-@@ -3148,13 +3144,11 @@ static unsigned int ata_scsi_write_same_
- {
- 	struct ata_taskfile *tf = &qc->tf;
- 	struct scsi_cmnd *scmd = qc->scsicmd;
--	struct scsi_device *sdp = scmd->device;
--	size_t len = sdp->sector_size;
- 	struct ata_device *dev = qc->dev;
- 	const u8 *cdb = scmd->cmnd;
- 	u64 block;
- 	u32 n_block;
--	const u32 trmax = len >> 3;
-+	const u32 trmax = ATA_MAX_TRIM_RNUM;
- 	u32 size;
- 	u16 fp;
- 	u8 bp = 0xff;
-@@ -3199,13 +3193,13 @@ static unsigned int ata_scsi_write_same_
- 		goto invalid_param_len;
- 
- 	/*
--	 * size must match sector size in bytes
--	 * For DATA SET MANAGEMENT TRIM in ACS-2 nsect (aka count)
--	 * is defined as number of 512 byte blocks to be transferred.
-+	 * The TRIM descriptor is a single 512-byte page, which is the maximum
-+	 * WRITE SAME length advertised in the Block Limits VPD page. For DATA
-+	 * SET MANAGEMENT TRIM the COUNT field (aka nsect) is the number of
-+	 * 512-byte blocks to be transferred.
- 	 */
--
- 	size = ata_format_dsm_trim_descr(scmd, trmax, block, n_block);
--	if (size != len)
-+	if (size != ATA_SECT_SIZE)
- 		goto invalid_param_len;
- 
- 	if (ata_ncq_enabled(dev) && ata_fpdma_dsm_supported(dev)) {
-@@ -3231,6 +3225,12 @@ static unsigned int ata_scsi_write_same_
- 		     ATA_TFLAG_WRITE;
- 
- 	ata_qc_set_pc_nbytes(qc);
-+	/*
-+	 * The DSM TRIM payload is a single 512-byte page, which may be smaller
-+	 * than the WRITE SAME data-out buffer (one logical block); only
-+	 * transfer that page so the length matches the COUNT field.
-+	 */
-+	qc->nbytes = size;
- 
- 	return 0;
- 
+ 	if (gpio_is_valid(ddata->reset_gpio)) {
 
 
