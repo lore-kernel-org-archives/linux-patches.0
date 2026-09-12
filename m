@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4209E2DBF75;
-	Sat, 12 Sep 2026 11:46:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9248A431A5C;
+	Sat, 12 Sep 2026 11:46:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789213601; cv=none; b=WFHeFdTFqqPJMJDegy9OGoUNGF+YchAIkYgsftTW4gI+hulVh4VKe4BihSyxRZJbpSVIJ+qMq9+DljpV34x3Ik97JBKDPbgo51piCWZ8xJ0aKPrk9+bWtbi0097RPERaBH5kKTRMw2cxbJk31tjL2AbfdKN+2vDX4n6eviTRC9U=
+	t=1789213606; cv=none; b=QpHlDWQZo3SPJGpz1Yy4s6V0BpIUzNNWrpEQJdEfkB5GssOvHvrO3vuiwLx8V3LsVkNDZEVZxWY3ldJjF6ldibj3IREjWRZaBt45EciwbF5iWCmVqK9M5JOx3GFfxLDDdn4OVNxk2fBW3yi7sfqb2lbtoUNrZJN0WxC+zg9cYps=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789213601; c=relaxed/simple;
-	bh=k+XuBD7L6zftWSmpiP6DLQ91ef87HFCwSUn/kBxCxSk=;
+	s=arc-20240116; t=1789213606; c=relaxed/simple;
+	bh=2JqBRfU6cepxbqWf0rXczQtCCTicX5hDVRpwA2N0JcE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mls9+kpzM/tN7fJPke+wLcuAOJAc6lbDc0bUYfReuVnuO5xY131EPLqdm2P6YVj6oTscpSnYsGEp1eqIsl/KgbKYL8miCMPSMrwq/0YaXVoj37a3QEnDKNHZdpzzu4Vr75f+cba3LqoXwnJ9SJDauzVqwj+AW9ngYk1XKJ1Fhwc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nqBPMatT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rD8HfBMNM9umyp5M9WlwT606syt3njr9rdrqDy2TXbGhW37MAkJCtz9q3ttL53JHjYLDxGf0mb2NhE3agZlfzT8SQxdWvt6XQ6laQYuWFRixl3XUQlup/1FLVfBAulv7TLIcetv/zc6klY8C6A17uZi23u4NsephhuLmcPnBe/I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DE+i1kZC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nqBPMatT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1628D1F000FF;
-	Sat, 12 Sep 2026 11:46:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DE+i1kZC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32E481F000FF;
+	Sat, 12 Sep 2026 11:46:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789213600;
-	bh=G41wrPXmZ05qCYGFwXR9ct6x+ZjgLKCRjBmoPrNvKrQ=;
+	s=korg; t=1789213605;
+	bh=IczY6qHoUaZjLHOdKIqsHqRrerwc5nQmKOKlelMmzzU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nqBPMatTWtMmRslHiFoVhX7/hPk3aqbwMgN429LoX6Tmk8WqBP09b72Z6IWzucARM
-	 cH1f5RC1JzrCfKP8NkmC1GoYF6EaAAjDHF+YWEkfUiMWjDPGszy7ljhVL2q9V0b7zz
-	 bo79B5XcVKTp06caUIHm/Z2yvXn+fSsMF2PX7HaA=
+	b=DE+i1kZCBBnanvscqKisKpgtIaPQi0ay5Q5UTDX9TascgF9LjdbMr87er1/k9WDLn
+	 BTOlrud5kMW5Zx/NRH0Fhfj6VrntGPpP9IJfIhOIeIo6GP9Hfu6wCbzUJMVNl3ojB/
+	 qQWan4KbU9AWEjnumasdroO/mxfAiQkC+uZBolZE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lars-Peter Clausen <lars@metafoo.de>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 6.12 0138/1376] iio: buffer: Tie IIO dma fence lock lifetime to the fence
-Date: Sat, 12 Sep 2026 08:42:44 +0200
-Message-ID: <20260912065610.630300822@linuxfoundation.org>
+	Yosry Ahmed <yosry@kernel.org>,
+	Kai Huang <kai.huang@intel.com>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.12 0156/1376] KVM: nVMX: Decouple INVVPID operand checks from flushing of vpid02
+Date: Sat, 12 Sep 2026 08:43:02 +0200
+Message-ID: <20260912065611.025801569@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,80 +51,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lars-Peter Clausen <lars@metafoo.de>
+From: Sean Christopherson <seanjc@google.com>
 
-commit f25ec4627d935dedfb5fe83bd2c2678cdcc19611 upstream.
+commit 32912404b4b1ee98400744941c78f019a63d6e8f upstream.
 
-The `iio_dma_fence` implementation currently uses a lock embedded in the
-`iio_dmabuf_priv`. But the `iio_dma_fence` can outlive the
-`iio_dmabuf_priv`, which can cause a use-after-free.
+Separate the INVVPID operand checks from the actual flushing of vpid02 so
+the flushing can be adjusted to do the right thing when vmcs02  was last
+loaded on a different pCPU, without having to duplicate the logic across
+multiple case-statements.
 
-Tie the lifetime of the lock to the lifetime of the fence by embedding them
-in the same struct.
+Opportunistically let the VM-Fail paths poke out past 80 chars.
 
-We can't just hold a reference to the `iio_dmabuf_priv` from the
-`iio_dma_fence` since `iio_buffer_dmabuf_release()` might sleep and the
-fence release callback is not allowed to sleep.
+No functional change intended.
 
-Note that the `dma_fence` framework now has an internal lock that gets used
-when the passing `NULL` for `lock` in `dma_fence_init()`, but in order to
-allow this patch to be backportable use an external lock.
-
-Reported-by: codex:gpt-5.6
-Fixes: 3e26d9f08fbe ("iio: core: Add new DMABUF interface infrastructure")
-Signed-off-by: Lars-Peter Clausen <lars@metafoo.de>
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Yosry Ahmed <yosry@kernel.org>
+Reviewed-by: Kai Huang <kai.huang@intel.com>
+Link: https://patch.msgid.link/20260616214652.2157032-3-yosry@kernel.org
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/industrialio-buffer.c |    9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ arch/x86/kvm/vmx/nested.c |   43 +++++++++++++------------------------------
+ 1 file changed, 13 insertions(+), 30 deletions(-)
 
---- a/drivers/iio/industrialio-buffer.c
-+++ b/drivers/iio/industrialio-buffer.c
-@@ -47,9 +47,6 @@ struct iio_dmabuf_priv {
+--- a/arch/x86/kvm/vmx/nested.c
++++ b/arch/x86/kvm/vmx/nested.c
+@@ -5980,7 +5980,6 @@ static int handle_invvpid(struct kvm_vcp
+ 		u64 vpid;
+ 		u64 gla;
+ 	} operand;
+-	u16 vpid02;
+ 	int r, gpr_index;
  
- 	u64 context;
+ 	if (!(vmx->nested.msrs.secondary_ctls_high &
+@@ -6015,8 +6014,15 @@ static int handle_invvpid(struct kvm_vcp
+ 		return kvm_handle_memory_failure(vcpu, r, &e);
  
--	/* Spinlock used for locking the dma_fence */
--	spinlock_t lock;
--
- 	struct dma_buf_attachment *attach;
- 	struct sg_table *sgt;
- 	enum dma_data_direction dir;
-@@ -62,6 +59,7 @@ struct iio_dma_fence {
- 	 * the fence directly to dma_fence_free().
- 	 */
- 	struct dma_fence base;
-+	spinlock_t lock; /* protects base */
- 	struct iio_dmabuf_priv *priv;
- 	struct work_struct work;
- };
-@@ -1690,7 +1688,6 @@ static int iio_buffer_attach_dmabuf(stru
- 	if (!priv)
- 		return -ENOMEM;
- 
--	spin_lock_init(&priv->lock);
- 	priv->context = dma_fence_context_alloc(1);
- 
- 	dmabuf = dma_buf_get(fd);
-@@ -1871,6 +1868,8 @@ static int iio_buffer_enqueue_dmabuf(str
- 		goto err_attachment_put;
- 	}
- 
-+	spin_lock_init(&fence->lock);
+ 	if (operand.vpid >> 16)
+-		return nested_vmx_fail(vcpu,
+-			VMXERR_INVALID_OPERAND_TO_INVEPT_INVVPID);
++		return nested_vmx_fail(vcpu, VMXERR_INVALID_OPERAND_TO_INVEPT_INVVPID);
 +
- 	fence->priv = priv;
++	if (type != VMX_VPID_EXTENT_ALL_CONTEXT && !operand.vpid)
++		return nested_vmx_fail(vcpu, VMXERR_INVALID_OPERAND_TO_INVEPT_INVVPID);
++
++	/* LAM doesn't apply to addresses that are inputs to TLB invalidation. */
++	if (type == VMX_VPID_EXTENT_INDIVIDUAL_ADDR &&
++	    is_noncanonical_invlpg_address(operand.gla, vcpu))
++		return nested_vmx_fail(vcpu, VMXERR_INVALID_OPERAND_TO_INVEPT_INVVPID);
  
- 	seqno = atomic_add_return(1, &priv->seqno);
-@@ -1881,7 +1880,7 @@ static int iio_buffer_enqueue_dmabuf(str
- 	 * the dma_fence.
+ 	/*
+ 	 * Always flush the effective vpid02, i.e. never flush the current VPID
+@@ -6024,33 +6030,10 @@ static int handle_invvpid(struct kvm_vcp
+ 	 * VMCS, and so whether or not the current vmcs12 has VPID enabled is
+ 	 * irrelevant (and there may not be a loaded vmcs12).
  	 */
- 	dma_fence_init(&fence->base, &iio_buffer_dma_fence_ops,
--		       &priv->lock, priv->context, seqno);
-+		       &fence->lock, priv->context, seqno);
+-	vpid02 = nested_get_vpid02(vcpu);
+-	switch (type) {
+-	case VMX_VPID_EXTENT_INDIVIDUAL_ADDR:
+-		/*
+-		 * LAM doesn't apply to addresses that are inputs to TLB
+-		 * invalidation.
+-		 */
+-		if (!operand.vpid ||
+-		    is_noncanonical_invlpg_address(operand.gla, vcpu))
+-			return nested_vmx_fail(vcpu,
+-				VMXERR_INVALID_OPERAND_TO_INVEPT_INVVPID);
+-		vpid_sync_vcpu_addr(vpid02, operand.gla);
+-		break;
+-	case VMX_VPID_EXTENT_SINGLE_CONTEXT:
+-	case VMX_VPID_EXTENT_SINGLE_NON_GLOBAL:
+-		if (!operand.vpid)
+-			return nested_vmx_fail(vcpu,
+-				VMXERR_INVALID_OPERAND_TO_INVEPT_INVVPID);
+-		vpid_sync_context(vpid02);
+-		break;
+-	case VMX_VPID_EXTENT_ALL_CONTEXT:
+-		vpid_sync_context(vpid02);
+-		break;
+-	default:
+-		WARN_ON_ONCE(1);
+-		return kvm_skip_emulated_instruction(vcpu);
+-	}
++	if (type == VMX_VPID_EXTENT_INDIVIDUAL_ADDR)
++		vpid_sync_vcpu_addr(nested_get_vpid02(vcpu), operand.gla);
++	else
++		vpid_sync_context(nested_get_vpid02(vcpu));
  
- 	ret = iio_dma_resv_lock(dmabuf, nonblock);
- 	if (ret)
+ 	/*
+ 	 * Sync the shadow page tables if EPT is disabled, L1 is invalidating
 
 
