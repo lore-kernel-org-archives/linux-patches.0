@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE00119D8BC;
-	Sat, 12 Sep 2026 09:55:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E7AB17DFFA;
+	Sat, 12 Sep 2026 09:55:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789206905; cv=none; b=RcxhvUwpiLrYTxeSOGKU0r7GdZLzaZwa0ngolUd5x3YmBhO+OGik/ggny4KzUmN9HssmsaKh9N3OYORyQPeWpnJM7sIvvLio90v7EQZ+bQ/dHi9h4RBpeVshlDfdh2l2lblRjpt3eWCE6JUIwV7fdzgMXiOMIHn08dt+4DBuAKU=
+	t=1789206910; cv=none; b=ofXHnS3RQYBwgLan/2dJjxQ8J9Jzc4hTCogbO72Qq00W0ZoaiEOgiqGAXxlUbGydZwxEyoGybGMZhYPtcYzdkWCBUjic6XTLSFmEQq1FHUxkFxEsLYTVZO7GW+DGPkLAySZ9FSFiVMfYhzyiSaYjzZUmqWW4SGecDQJxfQkJUyM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789206905; c=relaxed/simple;
-	bh=Jc4km2aIQAhjrO0qPaBoDAbCcobTLwXiQSsOrtE/miw=;
+	s=arc-20240116; t=1789206910; c=relaxed/simple;
+	bh=9ZpHr/dOHAC7RLbtfe53IWYWOQaceXa+iJVrttoGriU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LQabNj+04C5w8B4HunWOSAqYXNz06rbelGcs78GeaYmuz+q9fjfXlXeGR1NExlrjPjSDW5gs8Xg+BBisjIPI5HQbhJDg78f89yeEqsn2igo3rNXe+xNQpHB9tBpMKHQT28EMYGETaaNK+1nwjlCuYGo47wnlltsnmNK8mi4nGVc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NHSgmQb6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RXEzgD/aorSP0FR1Ex1U70Lhx839NYwk92B+R1INQ5WLMn+beHP1zqvr6oDFM2cXU9L2cx/v89ym/tweN6F0X3OJi38zctlJhg5mG4oq8cjWx9Jnm64yd6sdjCoHDvJ2XyF+lCYRNa6qVN3nDXhEyyHsUNw2L7ZW7/1FpMjqRX0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E7HAvaP3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NHSgmQb6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E42DC1F000FF;
-	Sat, 12 Sep 2026 09:55:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E7HAvaP3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6C771F000FF;
+	Sat, 12 Sep 2026 09:55:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789206904;
-	bh=nq15fGIl574D1dzoAXw7k0WBy9lWMxxFepZvfQ9fEwI=;
+	s=korg; t=1789206909;
+	bh=C6ycfMZ3cPpZksyEtyXN9dOkK+cxC5IZEqBT5kbxyeI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NHSgmQb6PrRoVT2rmv11WKXD5YlgROAAXsLk7CAu6lbAAKUUB/1/Dw8LYKujdHLbN
-	 CGWb2Yikk+olqOQW9fTewib9yFMrHu/VoxW172pa0/QqHfnMlsy6b1XWAM+IC5XUVu
-	 hEqfiUSUmd7ssejdkM/WSGV18xZC6ZyDJVNMTcrE=
+	b=E7HAvaP3Q4M9bXlRxKNjOE4NWpswtPuMAj8E5m/uaLQ4XuZF3upT+H2vlkW23Z4TN
+	 6XuAfZK8sgRUFx+hftfxC0DSdmXUGM44RXQm+34K6INAk2y0u5agO6vKk7Fh1Bnlih
+	 j73Xrkf/mrQsKGiN8SjZVYR8ex2qVX/GbtQkW3mc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Gu <gu_0233@qq.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Sanghyun Park <sanghyun.park.cnu@gmail.com>,
+	Puranjay Mohan <puranjay@kernel.org>,
+	Yonghong Song <yonghong.song@linux.dev>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0303/1518] remoteproc: qcom_q6v5_adsp: Fix reference leak for device node
-Date: Sat, 12 Sep 2026 08:41:12 +0200
-Message-ID: <20260912065630.334081691@linuxfoundation.org>
+Subject: [PATCH 6.18 0277/1518] bpf: Fix use-after-free on mm_struct in bpf_find_vma()
+Date: Sat, 12 Sep 2026 08:40:46 +0200
+Message-ID: <20260912065629.749606089@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,35 +53,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Gu <gu_0233@qq.com>
+From: Sanghyun Park <sanghyun.park.cnu@gmail.com>
 
-[ Upstream commit 8c952807c2cebd5e9e9b37146c9383229794c129 ]
+[ Upstream commit 47b079e2117a2ee52e21f8b72935900c702fc0b5 ]
 
-When calling of_parse_phandle_with_args(), the caller is responsible
-to call of_node_put() to release the reference of device node.
-In adsp_map_carveout, it does not release the reference.
+bpf_find_vma() reads task->mm and calls mmap_read_trylock(mm) without
+holding a reference on the mm. On a foreign task, a concurrent exit_mm()
+can free the mm_struct between the lockless read and the trylock,
+resulting in a use-after-free. mm_struct is not SLAB_TYPESAFE_BY_RCU.
 
-Fixes: f22eedff28af ("remoteproc: qcom: Add support for memory sandbox")
-Signed-off-by: Felix Gu <gu_0233@qq.com>
-Link: https://lore.kernel.org/r/tencent_EDC2253D3B1C22217E1259E07765D269100A@qq.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+For the current task, task->mm is stable. For a foreign task, pin the mm
+under task->alloc_lock and release it with mmput_async(), mirroring commit
+d8e27d2d22b6 ("bpf: fix mm lifecycle in open-coded task_vma iterator").
+Use spin_trylock() instead of get_task_mm() so BPF context does not block
+on alloc_lock. Reject irqs-disabled contexts and !CONFIG_MMU on the
+foreign-task path because dropping the mm reference is not safe there.
+
+Race:
+
+  CPU0 (BPF program)                  CPU1 (exiting task)
+  ============================        ==========================
+  bpf_find_vma(foreign_task):
+    mm = task->mm
+                                      exit_mm():
+                                        task->mm = NULL
+                                        mmput(mm) -> frees mm_struct
+    mmap_read_trylock(mm)
+        // UAF on mm
+
+Fixes: 7c7e3d31e785 ("bpf: Introduce helper bpf_find_vma")
+Signed-off-by: Sanghyun Park <sanghyun.park.cnu@gmail.com>
+Reviewed-by: Puranjay Mohan <puranjay@kernel.org>
+Acked-by: Yonghong Song <yonghong.song@linux.dev>
+Link: https://lore.kernel.org/bpf/20260708072106.199637-2-sanghyun.park.cnu@gmail.com
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/qcom_q6v5_adsp.c | 1 +
- 1 file changed, 1 insertion(+)
+ kernel/bpf/task_iter.c | 36 +++++++++++++++++++++++++++++++++---
+ 1 file changed, 33 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/remoteproc/qcom_q6v5_adsp.c b/drivers/remoteproc/qcom_q6v5_adsp.c
-index e98b7e03162c7..b7d472afd5a9b 100644
---- a/drivers/remoteproc/qcom_q6v5_adsp.c
-+++ b/drivers/remoteproc/qcom_q6v5_adsp.c
-@@ -355,6 +355,7 @@ static int adsp_map_carveout(struct rproc *rproc)
- 		return ret;
+diff --git a/kernel/bpf/task_iter.c b/kernel/bpf/task_iter.c
+index e791ae065c39b..b256fb9c1214e 100644
+--- a/kernel/bpf/task_iter.c
++++ b/kernel/bpf/task_iter.c
+@@ -756,6 +756,7 @@ BPF_CALL_5(bpf_find_vma, struct task_struct *, task, u64, start,
+ 	struct mmap_unlock_irq_work *work = NULL;
+ 	struct vm_area_struct *vma;
+ 	bool irq_work_busy = false;
++	bool __maybe_unused mmput_needed = false;
+ 	struct mm_struct *mm;
+ 	int ret = -ENOENT;
  
- 	sid = args.args[0] & SID_MASK_DEFAULT;
-+	of_node_put(args.np);
+@@ -765,14 +766,38 @@ BPF_CALL_5(bpf_find_vma, struct task_struct *, task, u64, start,
+ 	if (!task)
+ 		return -ENOENT;
  
- 	/* Add SID configuration for ADSP Firmware to SMMU */
- 	iova =  adsp->mem_phys | (sid << 32);
+-	mm = task->mm;
++	if (task == current) {
++		mm = task->mm;
++	} else {
++		/*
++		 * Foreign task: pin task->mm against a concurrent exit_mm().
++		 * Use trylock on alloc_lock instead of get_task_mm()'s
++		 * blocking task_lock() to avoid deadlocking the target task.
++		 */
++		if (!IS_ENABLED(CONFIG_MMU))
++			return -EOPNOTSUPP;
++		if (irqs_disabled())
++			return -EBUSY;
++		if (!spin_trylock(&task->alloc_lock))
++			return -EBUSY;
++		mm = task->mm;
++		if (mm && !(task->flags & PF_KTHREAD)) {
++			mmget(mm);
++			mmput_needed = true;
++		} else {
++			mm = NULL;
++		}
++		spin_unlock(&task->alloc_lock);
++	}
+ 	if (!mm)
+ 		return -ENOENT;
+ 
+ 	irq_work_busy = bpf_mmap_unlock_get_irq_work(&work);
+ 
+-	if (irq_work_busy || !mmap_read_trylock(mm))
+-		return -EBUSY;
++	if (irq_work_busy || !mmap_read_trylock(mm)) {
++		ret = -EBUSY;
++		goto out;
++	}
+ 
+ 	vma = find_vma(mm, start);
+ 
+@@ -782,6 +807,11 @@ BPF_CALL_5(bpf_find_vma, struct task_struct *, task, u64, start,
+ 		ret = 0;
+ 	}
+ 	bpf_mmap_unlock_mm(work, mm);
++out:
++#ifdef CONFIG_MMU
++	if (mmput_needed)
++		mmput_async(mm);
++#endif
+ 	return ret;
+ }
+ 
 -- 
 2.53.0
 
