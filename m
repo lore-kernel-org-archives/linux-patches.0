@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 566455475F;
-	Sat, 12 Sep 2026 15:02:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A19E1C5799;
+	Sat, 12 Sep 2026 15:02:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789225322; cv=none; b=fz6sqQ27JcWlr5jHmOdSjwgsrsWOiUrNOUCfbyO3cgb2aMH2cWkzNFwkbVB3yVVuwqbimgJP8pz4spYXNZv8e4DRzl/8gpNDKM/Uoym5mKv9mxeo0sJ2y9I8pjsV0sgAVKqUyb+ABnsP1NGvuuZS0XhqZD78ksZ/PnJrGPFEVWs=
+	t=1789225327; cv=none; b=fnXuOwQy0xEV6ZTt0uUx9+4DNp8BOcVBEtabaJ+E5NLBWHbXqWwoep8aqOCDlYyDqgzLwvTFBWdQf44DpF/6mUSUySnHSuUPsO3FUlEiQkmnt7uY6o0t7o1ijH5hre7BAzNssoP1PM7HJgzZJ95cwPQnucwJjj6lD/6rEqC+zZk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789225322; c=relaxed/simple;
-	bh=S3wA93pew6kQrfdgxkKhhVZA8NjIBSsxjAT3PzDT6xI=;
+	s=arc-20240116; t=1789225327; c=relaxed/simple;
+	bh=gblx8dguYciVS4VDGZOScFB6VxxaDBg3XoDDOWeoVms=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rHJK8po9RVZdRG5iKubbLfQCIk0/fh/Gx1+7vs5D8mPwt4ed+47f6LrKVhdObSuoSnuXTk1TNf6ipXxgf4V2wHW/0J50VMuDKQ/J2/Adzjp4nkNnN1Gt91+IeAAnz0l3iiYdh9ZkiJXIyk1nnXXRILwSDfoEYS97vqS6ayzH0bk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XpPBQzos; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pr6AbLLjE0JDjo3/+eh1NDKtipfPsK0SEMzWGxSAee0rkY3DX0ybHHqYoX/HGACmar/ReXYXEGl5rXdaUzOsIZb40AsVVQTIdCGennJW7MpYxBWj/XvO78Ct9RzBg4EP6XHbMg0wMRPrg1y5Z2o0Xk1eR/KSDmyn85RjBwYtvL4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wbAx9P4l; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XpPBQzos"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 290811F000FF;
-	Sat, 12 Sep 2026 15:01:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wbAx9P4l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF71B1F000FF;
+	Sat, 12 Sep 2026 15:02:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789225321;
-	bh=bsaNbgIbcP/G5ZEUy749ZbbXHMX2KVTlTGh771mI0RI=;
+	s=korg; t=1789225326;
+	bh=t+FwO+SCOk0dZwG7iiSZwrIRWBQs22dDw0wPK1Yuyxo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XpPBQzosC+mPCY2wVAIKN1pzNb3eSKsmOMM+/6laQdnM/criZkDCUumJw5uIA9Klo
-	 0ylLLNyg8jxRUKSABgIAIlIgv7YbstwzGoCHkI05omev95GZtwcEw70hepx01ODfRN
-	 6njKzmTmbE+q7JfSnfodA5SwcWdFD09m/Lmr8cTs=
+	b=wbAx9P4l53z/QxCfQlvNe4//2Y18LBQPWf879J9ecORa88sa84pyHA5rgyUNE/NKI
+	 NSd8gNf7DtrkLN+UMPpnnco90sxBPGB/DIEz7I5mcEnEPxssnPo/4kmM1K6P3ItfOS
+	 XXRvabAiUu4OHKr9wW2wV4qLtYZid6TQFErdBjIM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Rosen Penev <rosenp@gmail.com>,
+	Gregory CLEMENT <gregory.clement@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1173/1424] dmaengine: qcom-bam-dma: fix autosuspend cleanup during removal
-Date: Sat, 12 Sep 2026 09:00:05 +0200
-Message-ID: <20260912065633.561612837@linuxfoundation.org>
+Subject: [PATCH 6.6 1138/1424] ARM: dts: helios4: add vcc-supply to GPIO expander
+Date: Sat, 12 Sep 2026 08:59:30 +0200
+Message-ID: <20260912065632.783941777@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -52,47 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Rosen Penev <rosenp@gmail.com>
 
-[ Upstream commit a50184171235045d96104811414b25cf5338cf86 ]
+[ Upstream commit c23988f84496e937dd255564cb30bec67608dcc6 ]
 
-bam_dma_probe() calls pm_runtime_use_autosuspend(), but
-bam_dma_remove() does not call the matching
-pm_runtime_dont_use_autosuspend() when removing the device.
+The pca953x driver requests a 'vcc' supply, producing:
+  pca953x 0-0020: supply vcc not found, using dummy regulator
 
-If the autosuspend delay is set to a negative value while autosuspend
-is enabled, the runtime PM core increments usage_count to prevent
-runtime suspend. Without calling pm_runtime_dont_use_autosuspend()
-during teardown, this reference is not dropped and usage_count remains
-unbalanced.
+The PCA9655 (PCA9555-compatible) expander is powered by the same
+always-on 3.3V rail as the other I2C devices on the bus.  Add
+vcc-supply = <&reg_3p3v> to silence the warning.
 
-Add the missing pm_runtime_dont_use_autosuspend() call before forcing
-the device into runtime suspend during removal.
-
-This issue was found by manual code inspection.
-
-Fixes: 7d2545599f5b ("dmaengine: qcom-bam-dma: Add pm_runtime support")
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260808110642.2770355-1-lgs201920130244@gmail.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes: ced8025b569e ("ARM: dts: armada388-helios4")
+Assisted-by: opencode:big-pickle
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
+Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/qcom/bam_dma.c | 1 +
+ arch/arm/boot/dts/marvell/armada-388-helios4.dts | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
-index d5882c8537e52..f931e63e1884f 100644
---- a/drivers/dma/qcom/bam_dma.c
-+++ b/drivers/dma/qcom/bam_dma.c
-@@ -1395,6 +1395,7 @@ static int bam_dma_remove(struct platform_device *pdev)
- 	struct bam_device *bdev = platform_get_drvdata(pdev);
- 	u32 i;
- 
-+	pm_runtime_dont_use_autosuspend(&pdev->dev);
- 	pm_runtime_force_suspend(&pdev->dev);
- 
- 	of_dma_controller_free(pdev->dev.of_node);
+diff --git a/arch/arm/boot/dts/marvell/armada-388-helios4.dts b/arch/arm/boot/dts/marvell/armada-388-helios4.dts
+index 61fc3adab54bb..21df1b9e3900f 100644
+--- a/arch/arm/boot/dts/marvell/armada-388-helios4.dts
++++ b/arch/arm/boot/dts/marvell/armada-388-helios4.dts
+@@ -169,6 +169,7 @@ expander0: gpio-expander@20 {
+ 					gpio-controller;
+ 					#gpio-cells = <2>;
+ 					reg = <0x20>;
++					vcc-supply = <&reg_3p3v>;
+ 					pinctrl-names = "default";
+ 					pinctrl-0 = <&pca0_pins>;
+ 					interrupt-parent = <&gpio0>;
 -- 
 2.53.0
 
