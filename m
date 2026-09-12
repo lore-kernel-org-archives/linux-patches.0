@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72BAC332610;
-	Sat, 12 Sep 2026 11:49:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED30A21D00A;
+	Sat, 12 Sep 2026 11:49:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789213754; cv=none; b=Acsi/oiw/WQ8B4bzJSOWML7leUivd9dEQQqdaWJuvGp0ounCdX2gfihYHJmaM68tAUzsp3YkRdeWvEWz1/Wi4iAod4MVZYBh8nghW+WL0yxbX5ON8+JxtIebRYnS3yim9PaUwVARPj6KhK1/BkdbIZJe8bu3FmGEJ45vIwdOC64=
+	t=1789213759; cv=none; b=OWZXCT/BlgO4uBp5jxz1SnTI64Y9Q7axug14HKbKheHkv9GFtkE0AtVo9eEBXNhCJ7cufnDvoVT1UA8rQuSJ7tBmutuHOrNzbpPiUD+kHvMvsLW8AOSbN1TfvtghYqkFB1uIzjzOeNPkZaVdAuc7lxwIAui28/g74iKPypozGQ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789213754; c=relaxed/simple;
-	bh=ojpqU58q5mqxkpyoqqBVXjVtc+c2NxsvJs9yYTr0Btk=;
+	s=arc-20240116; t=1789213759; c=relaxed/simple;
+	bh=jg7EUknjExCgXy6Lo3kLgrOP/vjtOCzZFy+IP9UsHgc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wj/H+VwYAvDkE9G53x8/nraGzxCh7ZwDxzWD2wnMAepMepcY0VnTwpnwI7dL+Vm3G5nJytsiXCTYEfgs+JcEOGGrkv39S6ZR6ertvvTnBuIaWJSLs6rp0sUopSvK5E6etLmoRrq0zrlwUu6nouz8osq7Lbxwp4tOnZTRzRldtsg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tYTWXY55; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=R6Lgd9h8b0IaF/R0E82PPOuUS9p0dku+935AxfOiZGVFQsLI2ZexXYeBkEI14ba8zrRhQmPt9yTxyuCbQTOGFawjmdNZSY16ClqtZO9u69pCwYCHz3k3VflfYoDT5BPH5/FZZ9rgmIfYsQKruAr5M8/TFattFnvfCq7wJw4cW5Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w2HovzkM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tYTWXY55"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC04D1F000FF;
-	Sat, 12 Sep 2026 11:49:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w2HovzkM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5B571F000FF;
+	Sat, 12 Sep 2026 11:49:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789213752;
-	bh=nAjndws6cfcfV66bQ0ctfAMZesFH8yMf5OALWCfhO3k=;
+	s=korg; t=1789213757;
+	bh=mzr9qvujwKo5B6Zqng/o7gKaLbuiR+8XMfqAc/Vui3U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tYTWXY55J11CzIVpdjVfLTp92ivTjoncwmqG2lxFok2rdB9zHBdeXKPbayuVlfkJK
-	 uJV3ndBgxffW8iaUT/Oupyt2x6pzKGTqURzZr/9fCzMb9O14AeK8Lo6F04vqLkeq1i
-	 vWggVS6ugwjeLS0QQzxT1RCzMQyyF6+lfkmhvpJI=
+	b=w2HovzkMfumodrJvcE9pGVn89qCx5iIVgfZIVyXIbNHdKfmetICnWbIYHJ+wPcWYA
+	 wkgi1UmquPMzUstdo+F5RBCLkY61BttJAAMqVVX81tvrUotsX29cdn4InDQTKHs54U
+	 ftx7LbRIAWMZhhw5/eWaHx1y34sdC4pBfIiStWnE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Erick Henrique <erick.henrique.rodrigues@usp.br>,
+	Cong Nguyen <congnt264@gmail.com>,
+	Linus Walleij <linusw@kernel.org>,
+	Joshua Crofts <joshua.crofts1@gmail.com>,
+	David Lechner <dlechner@baylibre.com>,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 6.12 0142/1376] iio: dac: m62332: Fix regulator reference count imbalance
-Date: Sat, 12 Sep 2026 08:42:48 +0200
-Message-ID: <20260912065610.719312889@linuxfoundation.org>
+Subject: [PATCH 6.12 0143/1376] iio: gyro: mpu3050: fix sign of raw angular velocity readings
+Date: Sat, 12 Sep 2026 08:42:49 +0200
+Message-ID: <20260912065610.740882044@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,78 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Erick Henrique <erick.henrique.rodrigues@usp.br>
+From: Cong Nguyen <congnt264@gmail.com>
 
-commit a130404ce0b69ca1438126bd81c1985d3b4d2e6f upstream.
+commit 06fab97602fe400bea843176f485bbac07a668e2 upstream.
 
-m62332_set_value() enables the Vcc regulator on every write of a
-non-zero value and disables it on every write of zero, without tracking
-the channel's current state. Because the regulator is reference counted,
-changing a channel directly from one non-zero value to another enables
-it more than once, while a later write of zero disables it only once.
-The reference count never returns to zero and the regulator is left
-enabled indefinitely.
+The MPU-3050 gyroscope output registers hold 16-bit two's complement
+values; the angular velocity channels are declared with .sign = 's'.
+When mpu3050_read_raw() handles IIO_CHAN_INFO_RAW it reads the register
+via a big-endian regmap_bulk_read() and assigns it with:
 
-Only enable the regulator on the transition from zero to non-zero, and
-only disable it on the transition from non-zero to zero, using the
-previously stored channel value to detect the edge. Balance the
-regulator on the I2C error path so the reference count stays consistent
-if the write fails.
+	*val = be16_to_cpu(raw_val);
 
-Fixes: b87b0c0f81e8 ("iio: add m62332 DAC driver")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260418130322.106769-1-erick.henrique.rodrigues%40usp.br
+be16_to_cpu() yields an unsigned 16-bit quantity, so negative rates
+(bit 15 set) are reported to userspace as large positive integers
+(e.g. -1 becomes 65535) instead of the correct negative value.
+
+Cast to s16 before the assignment, matching the temperature channel a
+few lines above which already handles the sign correctly.
+
+Fixes: 3904b28efb2c ("iio: gyro: Add driver for the MPU-3050 gyroscope")
 Cc: stable@vger.kernel.org
-Signed-off-by: Erick Henrique <erick.henrique.rodrigues@usp.br>
+Assisted-by: Claude:claude-opus-4
+Signed-off-by: Cong Nguyen <congnt264@gmail.com>
+Reviewed-by: Linus Walleij <linusw@kernel.org>
+Reviewed-by: Joshua Crofts <joshua.crofts1@gmail.com>
+Reviewed-by: David Lechner <dlechner@baylibre.com>
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/dac/m62332.c |   17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
+ drivers/iio/gyro/mpu3050-core.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/iio/dac/m62332.c
-+++ b/drivers/iio/dac/m62332.c
-@@ -32,6 +32,7 @@ static int m62332_set_value(struct iio_d
- {
- 	struct m62332_data *data = iio_priv(indio_dev);
- 	struct i2c_client *client = data->client;
-+	bool enabling, disabling;
- 	u8 outbuf[2];
- 	int res;
+--- a/drivers/iio/gyro/mpu3050-core.c
++++ b/drivers/iio/gyro/mpu3050-core.c
+@@ -356,7 +356,7 @@ static int mpu3050_read_raw(struct iio_d
+ 				goto out_read_raw_unlock;
+ 			}
  
-@@ -43,7 +44,10 @@ static int m62332_set_value(struct iio_d
+-			*val = be16_to_cpu(raw_val);
++			*val = (s16)be16_to_cpu(raw_val);
+ 			ret = IIO_VAL_INT;
  
- 	mutex_lock(&data->mutex);
- 
--	if (val) {
-+	enabling = val && !data->raw[channel];
-+	disabling = !val && data->raw[channel];
-+
-+	if (enabling) {
- 		res = regulator_enable(data->vcc);
- 		if (res)
- 			goto out;
-@@ -52,14 +56,17 @@ static int m62332_set_value(struct iio_d
- 	res = i2c_master_send(client, outbuf, ARRAY_SIZE(outbuf));
- 	if (res >= 0 && res != ARRAY_SIZE(outbuf))
- 		res = -EIO;
--	if (res < 0)
-+	if (res < 0) {
-+		if (enabling)
-+			regulator_disable(data->vcc);
- 		goto out;
-+	}
- 
--	data->raw[channel] = val;
--
--	if (!val)
-+	if (disabling)
- 		regulator_disable(data->vcc);
- 
-+	data->raw[channel] = val;
-+
- 	mutex_unlock(&data->mutex);
- 
- 	return 0;
+ 			goto out_read_raw_unlock;
 
 
