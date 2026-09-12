@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BA6747ACD7;
-	Sat, 12 Sep 2026 18:31:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1EFD3AC0D9;
+	Sat, 12 Sep 2026 18:31:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789237883; cv=none; b=Rd+X8vlMu0dpLTUIqBgs9n+FM6ilJszgDay0ct09lJ/9GZtcZ5VPnsPvndXgrZmWFDkqaylAzt/psZTDxc77KnitDLmh7kdnpuIqQW/HRu1Mu/PRgL6yeqVa84lCpXVzvNK756BVJ6kFWtjTLmURHR6r2g4UZ5BM1djI9Jtglho=
+	t=1789237885; cv=none; b=IKTCXehajotvPhojaMWK+tPOQUgwQMhTt0y7e4X9gcNwFDGxVim0rJSFyDiBaCJIzl3IkMcpPpCtKrYGFA4waKMwYIQRIG3BV20wR9nCm8Edz+gXlajfnHRHEDTaqSVOM9U7DuIZZzfRDD0vhwjEirAGFKL7fAi4iK36ZpF4+zg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789237883; c=relaxed/simple;
-	bh=GB9Ip/W6XsWRMQ1luOSVOJf8DNyZNF5abKVQ58Mzmes=;
+	s=arc-20240116; t=1789237885; c=relaxed/simple;
+	bh=xJWpXxQO0o1gxuQ1nvU5wI8aFi/4mlhLtvgF48MOGq4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AavvMOGa3QFezRwIG/Wu2s6ovbDVDvcy+0ehwBvy3uhmFwGfa/qIcIsxv6n9dn5eNynAkMX4PybSAehcL4fAEEa3YkbwKZseHk7M/fRVFyusMV2SqsLvITdEl2G47+q8UWEj0hdx/hbpQzCQWW7gTBPCaqcT4WUJXTHKAo0SlFk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ESjHqL/r; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Gby/avYtlnQBepS3WYqm54QlxMTn2BWXtQ+YWYoJ+fcYIJqa84lc8ryBA06epWpSqwqnXhwrDYklqpqOYDqh+LGDRJpttE508q/WLbXK0bN1CKrVTG+bmGMK03g4MngTslQF0Y2MpbM76L76FpRNMr7nL3pQaRXhZitHKjUNZdU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yq5iYB/I; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ESjHqL/r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2AD31F00893;
-	Sat, 12 Sep 2026 18:31:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yq5iYB/I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEFE71F000FF;
+	Sat, 12 Sep 2026 18:31:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789237878;
-	bh=qxN69a9Mf0C9iuMg6u6qSaDPoMknhUAxdi2zefMJJlM=;
+	s=korg; t=1789237883;
+	bh=z++NOvVr5iqN+GOh6gJ4oIhFmCE/u1zY0b45F3MLitc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ESjHqL/renzVArOILZOGmSjw7vZZv2tNBCc3bIPR4mqeoJ0uKH69rA7JZ9ON/2RY3
-	 FEbR4Lcwhsj8Bie/xVlM0ywwRWO97j5psAdHwTjhsSWpxj+JubhhLCLVO++iYlENEK
-	 WRgf9qrR8KkU9b6gi3VRxQ2iCmX4QJBh5lzJt2dM=
+	b=Yq5iYB/I1CH010mZ6DIP3GOvZv7A5D2p1LN+CQUOc/IBPRf4k4VW6E1S1KXWM6/PW
+	 e4t+w/9qS8Q5X9vkmPFqdjh5H4Ps2XAOnohJj4z6MBDLRw5Toc7PwhoejrctxXiVqL
+	 7UTEpgaAyHfM2BSMybGLOSG9weooeUBsSGxL2FHA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sashiko <sashiko-dev@google.com>,
 	Nilesh Javali <njavali@marvell.com>,
 	"Martin K. Petersen (Oracle)" <mkp@kernel.org>
-Subject: [PATCH 5.15 346/935] scsi: qla2xxx: Dont query firmware state while chip is down
-Date: Sat, 12 Sep 2026 08:56:16 +0200
-Message-ID: <20260912065534.742215025@linuxfoundation.org>
+Subject: [PATCH 5.15 347/935] scsi: qla2xxx: Reject non-SCSI SRB on status IOCB fast path
+Date: Sat, 12 Sep 2026 08:56:17 +0200
+Message-ID: <20260912065534.765440316@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -53,44 +53,64 @@ Content-Transfer-Encoding: 8bit
 
 From: Nilesh Javali <njavali@marvell.com>
 
-commit e0cebe20dcffbed9c078fe30e2d18cd5046d9eff upstream.
+commit 0f41d07d72f2245208c45374ca8d0a1846cad667 upstream.
 
-qla2x00_fw_state_show() initializes rval to QLA_FUNCTION_FAILED and jumps
-to the out: label when the chip is down or EEH is busy. The out: block
-then re-issued qla2x00_get_firmware_state() because rval != QLA_SUCCESS,
-defeating the chip-down/EEH-busy guards and issuing a mailbox command
-(outside optrom_mutex) during ISP reset or PCI error recovery, which can
-hang the adapter. It also turned a normal in-lock mailbox failure into a
-second unsynchronized mailbox attempt.
+qla2x00_status_entry() filters out non-TYPE_SRB entries and the
+SRB_NVME_CMD, SRB_BIDI_CMD and SRB_TM_CMD types, then falls through to a
+SCSI fast path that assumes the command is an SRB_SCSI_CMD. The first
+thing on that path, qla_chk_edif_rx_sa_delete_pending(), and the
+subsequent handling both evaluate GET_CMD_SP(sp), i.e. sp->u.scmd.cmd.
 
-Make the out: fallback only mark the firmware state as unknown. The
-mailbox is now issued at most once, inside optrom_mutex, and only when
-the chip is up and not EEH-busy.
+The srb u union overlays the SCSI command pointer with other command
+layouts (bsg_job, iocb_cmd). If firmware delivers an unexpected
+STATUS_TYPE IOCB for a non-SCSI handle, sp->u.scmd.cmd can read as a
+non-NULL garbage pointer, bypassing the NULL checks in
+qla_chk_edif_rx_sa_delete_pending() and at the cp == NULL test, and
+leading to a wild pointer dereference.
 
-Fixes: b6faaaf796d7 ("scsi: qla2xxx: Serialize mailbox request")
+Reject any SRB whose type is not SRB_SCSI_CMD before entering the fast
+path. The outstanding_cmds slot is left untouched so a genuinely
+non-SCSI command still completes through its proper handler.
+
+Fixes: dd30706e73b7 ("scsi: qla2xxx: edif: Add key update")
 Cc: stable@vger.kernel.org
 Reported-by: Sashiko <sashiko-dev@google.com>
 Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://patch.msgid.link/20260730155838.2119230-8-njavali@marvell.com
+Link: https://patch.msgid.link/20260730155838.2119230-19-njavali@marvell.com
 Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_attr.c |    4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/scsi/qla2xxx/qla_dbg.c |    2 +-
+ drivers/scsi/qla2xxx/qla_isr.c |    8 ++++++++
+ 2 files changed, 9 insertions(+), 1 deletion(-)
 
---- a/drivers/scsi/qla2xxx/qla_attr.c
-+++ b/drivers/scsi/qla2xxx/qla_attr.c
-@@ -1669,10 +1669,8 @@ qla2x00_fw_state_show(struct device *dev
- 	rval = qla2x00_get_firmware_state(vha, state);
- 	mutex_unlock(&vha->hw->optrom_mutex);
- out:
--	if (rval != QLA_SUCCESS) {
-+	if (rval != QLA_SUCCESS)
- 		memset(state, -1, sizeof(state));
--		rval = qla2x00_get_firmware_state(vha, state);
--	}
+--- a/drivers/scsi/qla2xxx/qla_dbg.c
++++ b/drivers/scsi/qla2xxx/qla_dbg.c
+@@ -17,7 +17,7 @@
+  * |                              |                    | 0x212c-0x2134  |
+  * | Queue Command and IO tracing |       0x3074       | 0x300b         |
+  * |                              |                    | 0x3027-0x3028  |
+- * |                              |                    | 0x303d-0x3041  |
++ * |                              |                    | 0x303e-0x3041  |
+  * |                              |                    | 0x302e,0x3033  |
+  * |                              |                    | 0x3036,0x3038  |
+  * |                              |                    | 0x303a		|
+--- a/drivers/scsi/qla2xxx/qla_isr.c
++++ b/drivers/scsi/qla2xxx/qla_isr.c
+@@ -3232,6 +3232,14 @@ qla2x00_status_entry(scsi_qla_host_t *vh
+ 		return;
+ 	}
  
- 	return scnprintf(buf, PAGE_SIZE, "0x%x 0x%x 0x%x 0x%x 0x%x 0x%x\n",
- 	    state[0], state[1], state[2], state[3], state[4], state[5]);
++	/* Everything below is the SCSI fast path; reject other SRB types. */
++	if (sp->type != SRB_SCSI_CMD) {
++		ql_dbg(ql_dbg_io, vha, 0x303d,
++		    "Unexpected SRB type %x for status IOCB, sp %p.\n",
++		    sp->type, sp);
++		return;
++	}
++
+ 	/* Fast path completion. */
+ 	qla_chk_edif_rx_sa_delete_pending(vha, sp, sts24);
+ 	sp->qpair->cmd_completion_cnt++;
 
 
