@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C759A429000;
-	Sat, 12 Sep 2026 11:11:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E75F457E7A;
+	Sat, 12 Sep 2026 11:11:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789211500; cv=none; b=lU/oP0801oN16kvQpoUykxEQJeMzc8UQgFxZmq8PlbLr3Jx0HNzPMyL0lq92LyxJ3bHas7Di0iG5dHJJ5N5YT0mYKV5SNUvc4XIzYLBaVZcq3xEK3rQUbPd176E5DZv+QGD3YQz3Y7JXzin6YQhfwpmpG9i5KqpW2agXZh4MVl4=
+	t=1789211504; cv=none; b=dG11TpOYpYwu8WPs+trvl9IHNkIlY5mfQOB/qE1tSFYB0GgTT2Ast6MNLWB21g98/z3MgxfWzaBwxUbvUzPjMPNzjH9T56+BzPYLWTBq6AXRol80tVl0uLg49B7/KVCEPB6kPtmTOefwLhsHlIzQXuWzdToUR/bIr9pR1VTlZtk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789211500; c=relaxed/simple;
-	bh=6yrdUuzHQyREQdQkUAaEcNOxy3QvRvusJDGzHAey3Wc=;
+	s=arc-20240116; t=1789211504; c=relaxed/simple;
+	bh=iJfEEN99PdS5i0HqFAxLEeZL7TL9m+szeXUfAFM1pXM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DpQIl7zg9TQNsGcWBgyvHZulhzblXhMGFZBbJEoYRe+RlxyhNMV3uV3SYK+xQH1tLty6ZMrWLV25mw2iPMhsYWr3vkm63m7hEQvONBRj/LoJPRWIS9zNSr9x9YvaGtZT7i3lf3DLAGRD9ktuWoVuQO3UBZpwSnqZ7CxrYRqPFu4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bTMLOx7J; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CgqrBxdTrMu36pA3XXRNnvKP99KCEY/JgsFG1dKytmNmbBnUfXSOBdwqnWC0DE9GFrzBZDCyRfutbQNiLocwlDoHaPaVOjx8+4sr4wQU4tPTxrkFbqLRoZUuE6n8w9xuLLBfLyMJZs2IYx0ZyEYbiyJ3CxoZV3hOqXOUwQbCYsM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qW3HgelA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bTMLOx7J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 342741F000FF;
-	Sat, 12 Sep 2026 11:11:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qW3HgelA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 204B01F000FF;
+	Sat, 12 Sep 2026 11:11:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789211498;
-	bh=KeWvEzEtadshxBxbcHaRfG8VlvRmWOgPTYB5jXw0uxQ=;
+	s=korg; t=1789211503;
+	bh=pnTMefDqdQKn64fkq3Q/EmDCeXO4Onxam1QzWoK/jvo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bTMLOx7JZVBYPhaSh+RThPmq01bqIBz1z1QBoy3FARZ2RWUSq728AdbcglJZxNSJN
-	 98dumoAn22OWooBQUYZ6glgOFfIh6lpZJAU+mQgLnjzwjchYilADTMBde3fpAtPYwW
-	 APnsGS+6eQmpGW1CyFpaMpGviQUts0pLgT9LUxjQ=
+	b=qW3HgelAW1eHcpAghVaVqH1U09/6SNC959wBAJy/1rM793Su3LQtjfIhOnyRr+ftI
+	 ABbN+MbfwN8dxKm78eSrE2sRsAkr2GaDak5bBQV7ZftU4Cx5P99VLUOBZ1T94kOpU9
+	 HH59zd3dwXoBQpujBddheGMB0uMjmS+tngN9YSCs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhushuai Yin <yinzhushuai@huawei.com>,
-	Chenghai Huang <huangchenghai2@huawei.com>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1200/1518] crypto: hisilicon/sec2 - fix CCM algorithm long packet failure
-Date: Sat, 12 Sep 2026 08:56:09 +0200
-Message-ID: <20260912065650.629932378@linuxfoundation.org>
+Subject: [PATCH 6.18 1201/1518] crypto: lskcipher - propagate errors from unaligned crypt
+Date: Sat, 12 Sep 2026 08:56:10 +0200
+Message-ID: <20260912065650.653699301@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,76 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhushuai Yin <yinzhushuai@huawei.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit b82f60be50c87b3d75e207852c5ca74fa18f66cf ]
+[ Upstream commit 7537036a2e6fe96f8ed82034f755c54714a0e417 ]
 
-In the CCM B0 block the message-length field Q spans L bytes, where
-L (cl in the driver) is derived from the cipher IV flags byte as
-c_ivin[0] + 1. set_aead_auth_iv() hardcoded writing only the last 2
-bytes of a_ivin with cryptlen, implicitly assuming cl = 2.
+The while loop declares a second err variable that shadows the outer
+one. When the crypt callback fails, the goto out path returns the outer
+err, which still holds the -ENOMEM value assigned before the successful
+allocation check. The real error from the cipher is discarded and the
+caller sees -ENOMEM instead.
 
-When cl = 3 (a shorter nonce yielding a 3-byte length field) and the
-packet is longer than 65535 bytes, cryptlen no longer fits in 2 bytes.
-The dropped high byte made the auth IV built by the driver differ from
-the one consumed by the hardware, so the software/hardware comparison
-failed and the CCM request errored out.
+Drop the inner declaration so the callback error reaches the caller.
 
-Write the last cl bytes of a_ivin in a loop driven by the IV's CL
-value, so the length-field width always matches the algorithm
-configuration instead of assuming a fixed 2-byte field.
+Verified with a test module that registers an lskcipher whose encrypt
+callback fails with -EIO and calls it through a misaligned buffer.
+An unpatched kernel returns -ENOMEM, a patched kernel returns -EIO.
 
-Fixes: c16a70c1f253 ("crypto: hisilicon/sec - add new algorithm mode for AEAD")
-Signed-off-by: Zhushuai Yin <yinzhushuai@huawei.com>
-Signed-off-by: Chenghai Huang <huangchenghai2@huawei.com>
+Found with Clang's -Wshadow.
+
+Fixes: 31865c4c4db2b ("crypto: skcipher - Add lskcipher")
+Assisted-by: Claude:claude-fable-5
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/hisilicon/sec2/sec_crypto.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ crypto/lskcipher.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/crypto/hisilicon/sec2/sec_crypto.c b/drivers/crypto/hisilicon/sec2/sec_crypto.c
-index 2d0b248c59ebd..66d76134f1dfa 100644
---- a/drivers/crypto/hisilicon/sec2/sec_crypto.c
-+++ b/drivers/crypto/hisilicon/sec2/sec_crypto.c
-@@ -96,7 +96,6 @@
- #define IV_FLAGS_OFFSET	0x6
- #define IV_CM_OFFSET		0x3
- #define IV_LAST_BYTE1		1
--#define IV_LAST_BYTE2		2
- #define IV_LAST_BYTE_MASK	0xFF
- #define IV_CTR_INIT		0x1
- #define IV_BYTE_OFFSET		0x8
-@@ -1697,7 +1696,7 @@ static void set_aead_auth_iv(struct sec_ctx *ctx, struct sec_req *req)
- 	struct sec_cipher_req *c_req = &req->c_req;
- 	u32 data_size = aead_req->cryptlen;
- 	u8 flage = 0;
--	u8 cm, cl;
-+	u8 cm, cl, i;
+diff --git a/crypto/lskcipher.c b/crypto/lskcipher.c
+index c2e2c38b5aa8d..091761d6ca0bf 100644
+--- a/crypto/lskcipher.c
++++ b/crypto/lskcipher.c
+@@ -95,7 +95,6 @@ static int crypto_lskcipher_crypt_unaligned(
  
- 	/* the specification has been checked in aead_iv_demension_check() */
- 	cl = c_req->c_ivin[0] + 1;
-@@ -1721,15 +1720,16 @@ static void set_aead_auth_iv(struct sec_ctx *ctx, struct sec_req *req)
- 	 * the last 32bit is counter's initial number,
- 	 * but the nonce uses the first 16bit
- 	 * the tail 16bit fill with the cipher length
-+	 * When CL is 3, the tail 24bit fill with the cipher length.
- 	 */
- 	if (!c_req->encrypt)
- 		data_size = aead_req->cryptlen - authsize;
+ 	while (len >= bs) {
+ 		unsigned chunk = min((unsigned)PAGE_SIZE, len);
+-		int err;
  
--	a_req->a_ivin[ctx->c_ctx.ivsize - IV_LAST_BYTE1] =
--			data_size & IV_LAST_BYTE_MASK;
--	data_size >>= IV_BYTE_OFFSET;
--	a_req->a_ivin[ctx->c_ctx.ivsize - IV_LAST_BYTE2] =
-+	for (i = 1; i <= cl; i++) {
-+		a_req->a_ivin[ctx->c_ctx.ivsize - i] =
- 			data_size & IV_LAST_BYTE_MASK;
-+		data_size >>= IV_BYTE_OFFSET;
-+	}
- }
- 
- static void sec_aead_set_iv(struct sec_ctx *ctx, struct sec_req *req)
+ 		if (chunk > cs)
+ 			chunk &= ~(cs - 1);
 -- 
 2.53.0
 
