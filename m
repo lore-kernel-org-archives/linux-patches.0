@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DE7939936E;
-	Sat, 12 Sep 2026 20:02:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7F9539A067;
+	Sat, 12 Sep 2026 20:02:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789243326; cv=none; b=lmbMAAzKnvyKskZDQT+RdmPV6kmA8wRuJ4YM5k36MuJazMENkOoOcttNbykaMV2G+QVeGsf/Wy4GWl3LN1kFo7PoTyfJsXgSEUpmC2L6Dr1t4rRy/gy6/r8Muj7fn/CwTSniycycjIyzLKwLPGGwWUGp45zMN1eMp5HRiHuVsGo=
+	t=1789243329; cv=none; b=ZNsCQKBXirTJ3W3WVlQad6DD/DbWe1lhYt9OVkmWoPwGgo6Bij9G37fFvsZeNmq6Pgq73uE456ax2XBauek35uQBCjA/RaQ9zewkLInjHWh/akjRy1eU1WGRLZc4AELaERPI9YRl54uXOvuRlO5y0qXrwjoUn549mY2ll7rhMQk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789243326; c=relaxed/simple;
-	bh=8KAvSk14yI0mFtnRdEZR+Em4s7czsHNEYFeT/LAzRag=;
+	s=arc-20240116; t=1789243329; c=relaxed/simple;
+	bh=xP2Nf6l8A2AJUOBEvWYF6Ylk0EHfEf/5DS6Bh5PlTVo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=trF9pdFxuNHHmZA46Ko2vVB3LDBWweScmmiDZxowDh0xSpKTJZX6M5CNLNx2hRk1wzwyAnWIaluDWFtXusQffLU8FLUtFufHES5p39mCBeKial8Zs8W3LQ8dh5TFgaTqxGWJr0h7jHdaWNZGzVDZNeO2mrkiUq9B8q91QoAQhmY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sZXOFpdR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=q89E8CRYPOqQjP6Vz2Le2mc5w4Y6Z8Z5zuyabaNtjXMqxy+HVp1xkmYlvJ+SUbphenMN+YjPdUiSidkm0lO4L7vz0i6AL+Fm11GZNP1Q12533Au3GALG2bH4JzQgR60aHxkuDgUtJZfxBLrdOpcXQXHXD0qUiUfjYqmIVfB65nU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Jsqro7I; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sZXOFpdR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69B6E1F000FF;
-	Sat, 12 Sep 2026 20:02:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Jsqro7I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A4691F000FF;
+	Sat, 12 Sep 2026 20:02:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789243325;
-	bh=2cuFvpq0B+xunzfKnBEpCifgm2Nox4BnI1lGqO2UXFI=;
+	s=korg; t=1789243327;
+	bh=YTFFnnC/sYdnqu9CMRbUtvr1PogsOwIcYEXvQbVlWb0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sZXOFpdRmIgGovSHhlsq3PZe4bCSeDNVlPeQ57yq+bYXKW8DKfXiOctqcTGFa0KWz
-	 dEZzJQuMzEYhMhc5qMWWuUwvrf2YIJLn02XxorF90rqVIh0sZxWnDmeih15+e6uKvc
-	 dWj//TYBsGNcq1FUJuzG7jk8yXxLGOu4zLr3nVVk=
+	b=0Jsqro7IdqVjGfFWRMrjqztsAm9u5F9dAO7iMny4hzgScw25n1Bj4Hl+/j5y3SI3E
+	 67H2rLSSqKDpEu/6i6PVAuY40StE3cLVi6f5LDNhlzuqqpuLXsDyflXrkWeetGXe+2
+	 Y6ZNlbHGr49F1gNWCyWK9SWe/Fy4RGTplivwMMcs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linmao Li <lilinmao@kylinos.cn>,
-	Jassi Brar <jassisinghbrar@gmail.com>,
+	Delphine CC Chiu <Delphine_CC_Chiu@wiwynn.com>,
+	Patrick Williams <patrick@stwcx.xyz>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 716/798] mailbox: rockchip: disable pclk on probe failure and unbind
-Date: Sat, 12 Sep 2026 09:05:44 +0200
-Message-ID: <20260912065533.493209597@linuxfoundation.org>
+Subject: [PATCH 5.10 717/798] hwmon: (emc1403) Add support for EMC1442
+Date: Sat, 12 Sep 2026 09:05:45 +0200
+Message-ID: <20260912065533.515750941@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -51,60 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linmao Li <lilinmao@kylinos.cn>
+From: Delphine CC Chiu <Delphine_CC_Chiu@wiwynn.com>
 
-[ Upstream commit ded48fcbdc1e3ed1dc8e1974b7fe9639fcea6dd6 ]
+[ Upstream commit 9350163aff24530f2aa3357ee1c7bd8771a443e4 ]
 
-rockchip_mbox_probe() enables the peripheral clock and then keeps going.
-None of the later failure paths - platform_get_irq(),
-devm_request_threaded_irq() and devm_mbox_controller_register() - disables
-it again. The driver has no remove callback either, so the clock also stays
-prepared and enabled once the device is unbound, and its enable count keeps
-growing over bind/unbind cycles.
+Add support for EMC1442 which is compatible with EMC1402.
 
-Use devm_clk_get_enabled() to tie disabling and unpreparing the clock to
-the device lifetime. It is registered before the interrupts and the mailbox
-controller, so devres releases it after both are gone.
-
-While rewriting the error path, switch it to dev_err_probe() so that a
-deferred probe is not reported as an error.
-
-Fixes: f70ed3b5dc8b ("mailbox: rockchip: Add Rockchip mailbox driver")
-Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
-Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
+Signed-off-by: Delphine CC Chiu <Delphine_CC_Chiu@wiwynn.com>
+Reviewed-by: Patrick Williams <patrick@stwcx.xyz>
+Link: https://lore.kernel.org/r/20231102090808.427351-1-Delphine_CC_Chiu@wiwynn.com
+[groeck: compatible with EMC1402, not EMC1403]
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Stable-dep-of: 75f2c0b36907 ("hwmon: (emc1403) Drop hysteresis for low limit temperature")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mailbox/rockchip-mailbox.c | 17 ++++-------------
- 1 file changed, 4 insertions(+), 13 deletions(-)
+ drivers/hwmon/emc1403.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/mailbox/rockchip-mailbox.c b/drivers/mailbox/rockchip-mailbox.c
-index ca50f7f176f6a..e0e9ba8f89993 100644
---- a/drivers/mailbox/rockchip-mailbox.c
-+++ b/drivers/mailbox/rockchip-mailbox.c
-@@ -207,19 +207,10 @@ static int rockchip_mbox_probe(struct platform_device *pdev)
- 	/* Each channel has two buffers for A2B and B2A */
- 	mb->buf_size = (size_t)resource_size(res) / (drv_data->num_chans * 2);
+diff --git a/drivers/hwmon/emc1403.c b/drivers/hwmon/emc1403.c
+index 3148382720499..568702e08cafd 100644
+--- a/drivers/hwmon/emc1403.c
++++ b/drivers/hwmon/emc1403.c
+@@ -346,6 +346,9 @@ static int emc1403_detect(struct i2c_client *client,
+ 	case 0x27:
+ 		strlcpy(info->type, "emc1424", I2C_NAME_SIZE);
+ 		break;
++	case 0x60:
++		strscpy(info->type, "emc1442", I2C_NAME_SIZE);
++		break;
+ 	default:
+ 		return -ENODEV;
+ 	}
+@@ -430,7 +433,7 @@ static int emc1403_probe(struct i2c_client *client)
+ }
  
--	mb->pclk = devm_clk_get(&pdev->dev, "pclk_mailbox");
--	if (IS_ERR(mb->pclk)) {
--		ret = PTR_ERR(mb->pclk);
--		dev_err(&pdev->dev, "failed to get pclk_mailbox clock: %d\n",
--			ret);
--		return ret;
--	}
--
--	ret = clk_prepare_enable(mb->pclk);
--	if (ret) {
--		dev_err(&pdev->dev, "failed to enable pclk: %d\n", ret);
--		return ret;
--	}
-+	mb->pclk = devm_clk_get_enabled(&pdev->dev, "pclk_mailbox");
-+	if (IS_ERR(mb->pclk))
-+		return dev_err_probe(&pdev->dev, PTR_ERR(mb->pclk),
-+				     "failed to get and enable pclk_mailbox clock\n");
+ static const unsigned short emc1403_address_list[] = {
+-	0x18, 0x1c, 0x29, 0x4c, 0x4d, 0x5c, I2C_CLIENT_END
++	0x18, 0x1c, 0x29, 0x3c, 0x4c, 0x4d, 0x5c, I2C_CLIENT_END
+ };
  
- 	for (i = 0; i < mb->mbox.num_chans; i++) {
- 		irq = platform_get_irq(pdev, i);
+ /* Last digit of chip name indicates number of channels */
+@@ -444,6 +447,7 @@ static const struct i2c_device_id emc1403_idtable[] = {
+ 	{ "emc1422", emc1402 },
+ 	{ "emc1423", emc1403 },
+ 	{ "emc1424", emc1404 },
++	{ "emc1442", emc1402 },
+ 	{ }
+ };
+ MODULE_DEVICE_TABLE(i2c, emc1403_idtable);
 -- 
 2.53.0
 
