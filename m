@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D45742DBF75;
-	Sat, 12 Sep 2026 12:04:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EA614156C2;
+	Sat, 12 Sep 2026 12:04:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789214653; cv=none; b=Q+zFbWcHk59nlvYEKmH9BCwXiIL1uuPN4gpEi8MeQU7Ihm9vdX1Q9pI7fqJI0IjA2BljclTLXu123tcFfuAQ/o7I5pvvwyX7qJr4j7jEXuLBu0w9RpH3gs/hrappUjl5s/71duEzGPaAE9/0cNT92A52JHaG5RLV/sPcqCRTc0o=
+	t=1789214657; cv=none; b=M7tmWfYkk9eZkHRVFfZ8luJ3258rTej/xu/xT/v1baXIUdBkr9yRX1ilcnplOmEzdKkatitB7Qb6MDvqYTYt+ZMKWLktj9H9ftkm1qSYSzcBCsV4IJ7L9cm+onbalR6kYN8dBTCRGIAynN269NJaI53doLWRCEuPmAiuNVckN9o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789214653; c=relaxed/simple;
-	bh=u47ts6UrEgE/QYNVKoiM45CG/3SGXhmqoKGK8PQ2fjE=;
+	s=arc-20240116; t=1789214657; c=relaxed/simple;
+	bh=KW9knIKRWRl1Ig5PumRVoFI/p6kVjMVsKh6Gk4TdrOk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aWl370oqcQWEQ+3M/9+1f7szWkJXgUx/uN1PYP9EkQAvrMHUqChXLZcelPChm4htkSmrOkcS6Bl1KRHp0kh7nvITTPD1z6Zrn7NMOldB6kztrKVH8oE11rWlvQwLkVwVF8AlshAz93whkBj7rJ+TgK/Sq7/VEh3x4oNdB22oPOk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dnHgjys+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pcbFyYQsq6gufO2VKUy8V223MoRaYyOtQYrBCq/72XtvLnouUmiBvUutzC6ijWaen8VhK+SNEwPD78048MUve3yaQ2HGzJoEgHzqBtbe0caPT3UmMInw717HuuDDyD3XIhMutz8pEjiF+Wv8SRzpHlP62EpJW7jh3LhChz+NVgo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IO8KlF6M; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dnHgjys+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5116D1F000FF;
-	Sat, 12 Sep 2026 12:04:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IO8KlF6M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E570D1F000FF;
+	Sat, 12 Sep 2026 12:04:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789214651;
-	bh=lA0anVE1R0YPA6x2tqNM4TLK+5s2ycNW+hWoHwxeIho=;
+	s=korg; t=1789214656;
+	bh=C8X8lTHau+qn/w2PiNJG+9xFkYXweda+TXZYHQY1v5E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dnHgjys+XJdQBuZ6ikwOvZiamLZaR0fwvG/klYm6xFXYldju7dj0Pmw70qTCVuJP7
-	 FT2EoZpL5MldMB8BDDwcLSrqm9wKKLIrqxX9l96QhkWnYfIQvmipVrrNuKfDx5zOn2
-	 NVt0SyRyi1T+wkehDM7dflry9GO12JKIJihtDiQs=
+	b=IO8KlF6MbWlCWJ8yS2G+d2kLZ4wNhVIgwt3YPIvQnwSXE8uzwARoD5q+hBcIh2B9l
+	 z+Lw80s0bdwg6Dp1h05hCOymb6Hifj18XTy+5socij+QxlFUEV8Y5aR3vxr260iQfz
+	 MvyTOuj6YZ5MsknlthKvnvRFSap9LWw+KiT1ofFo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Walle <mwalle@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
+	Joey Lu <a0987203069@gmail.com>,
+	Brian Masney <bmasney@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0369/1376] regulator: tps6594-regulator: remove interrupt_count
-Date: Sat, 12 Sep 2026 08:46:35 +0200
-Message-ID: <20260912065615.773806253@linuxfoundation.org>
+Subject: [PATCH 6.12 0334/1376] clk: nuvoton: ma35d1: fix ma35d1_clk_pll_determine_rate logic
+Date: Sat, 12 Sep 2026 08:46:00 +0200
+Message-ID: <20260912065614.991836092@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,102 +51,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Walle <mwalle@kernel.org>
+From: Joey Lu <a0987203069@gmail.com>
 
-[ Upstream commit 16d1a9bf36ef649b1fdb866985b4b87584491fac ]
+[ Upstream commit e1311954cb600d5f95cd9e2fe9a7376edc2ac3c5 ]
 
-In .probe() interrupt_count and nr_types is essentially the same. It
-contains the number of different interrupt per LDO or buck converter.
-Drop one. This is a preparation patch to further simplify the handling
-of different variants of this PMIC.
+ma35d1_clk_pll_determine_rate() called ma35d1_pll_find_closest()
+unconditionally before the switch statement, and then every case
+branch overwrote pll_freq by reading the current hardware registers.
+For CAPLL and DDRPLL this means find_closest() ran unnecessarily
+(and incorrectly, since those PLLs are read-only) and its result
+was silently discarded.
 
-This patch is only compile-time tested.
+Fix by moving the find_closest() call inside the APLL/EPLL/VPLL
+branch where it belongs.  Group CAPLL and DDRPLL together as
+read-only PLLs that simply report their current rate; handle them
+with an explicit if/else to keep the CAPLL (SMIC design) and DDRPLL
+(standard design) paths distinct.
 
-Signed-off-by: Michael Walle <mwalle@kernel.org>
-Acked-by: Mark Brown <broonie@kernel.org>
-Link: https://patch.msgid.link/20250703113153.2447110-6-mwalle@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Stable-dep-of: 7fd28093b3ef ("regulator: tps6594: Fix device node reference leaks in multiphase loop")
+Fixes: 691521a367cf ("clk: nuvoton: Add clock driver for ma35d1 clock controller")
+Signed-off-by: Joey Lu <a0987203069@gmail.com>
+Signed-off-by: Brian Masney <bmasney@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/tps6594-regulator.c | 17 ++++++-----------
- 1 file changed, 6 insertions(+), 11 deletions(-)
+ drivers/clk/nuvoton/clk-ma35d1-pll.c | 26 +++++++++++++-------------
+ 1 file changed, 13 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/regulator/tps6594-regulator.c b/drivers/regulator/tps6594-regulator.c
-index 0193efb5dffa9..1284a702db8f2 100644
---- a/drivers/regulator/tps6594-regulator.c
-+++ b/drivers/regulator/tps6594-regulator.c
-@@ -577,18 +577,15 @@ static int tps6594_regulator_probe(struct platform_device *pdev)
- 	const struct regulator_desc *multi_regs;
- 	const struct tps6594_regulator_irq_type **ldos_irq_types;
- 	const struct regulator_desc *ldo_regs;
--	size_t interrupt_count;
+diff --git a/drivers/clk/nuvoton/clk-ma35d1-pll.c b/drivers/clk/nuvoton/clk-ma35d1-pll.c
+index eb9d69d2077b1..c7c0dc91a012c 100644
+--- a/drivers/clk/nuvoton/clk-ma35d1-pll.c
++++ b/drivers/clk/nuvoton/clk-ma35d1-pll.c
+@@ -255,32 +255,32 @@ static int ma35d1_clk_pll_determine_rate(struct clk_hw *hw,
+ 	if (req->best_parent_rate < PLL_FREF_MIN_FREQ || req->best_parent_rate > PLL_FREF_MAX_FREQ)
+ 		return -EINVAL;
  
- 	if (tps->chip_id == TPS65224) {
- 		bucks_irq_types = tps65224_bucks_irq_types;
--		interrupt_count = ARRAY_SIZE(tps65224_buck1_irq_types);
- 		multi_regs = tps65224_multi_regs;
- 		ldos_irq_types = tps65224_ldos_irq_types;
- 		ldo_regs = tps65224_ldo_regs;
- 		multi_phase_cnt = ARRAY_SIZE(tps65224_multi_regs);
- 	} else {
- 		bucks_irq_types = tps6594_bucks_irq_types;
--		interrupt_count = ARRAY_SIZE(tps6594_buck1_irq_types);
- 		multi_regs = tps6594_multi_regs;
- 		ldos_irq_types = tps6594_ldos_irq_types;
- 		ldo_regs = tps6594_ldo_regs;
-@@ -686,29 +683,27 @@ static int tps6594_regulator_probe(struct platform_device *pdev)
- 
- 		error = tps6594_request_reg_irqs(pdev, rdev, irq_data,
- 						 bucks_irq_types[buck_idx],
--						 interrupt_count, &irq_idx);
-+						 nr_types, &irq_idx);
- 		if (error)
- 			return error;
- 
- 		error = tps6594_request_reg_irqs(pdev, rdev, irq_data,
- 						 bucks_irq_types[buck_idx + 1],
--						 interrupt_count, &irq_idx);
-+						 nr_types, &irq_idx);
- 		if (error)
- 			return error;
- 
- 		if (i == MULTI_BUCK123 || i == MULTI_BUCK1234) {
- 			error = tps6594_request_reg_irqs(pdev, rdev, irq_data,
- 							 tps6594_bucks_irq_types[buck_idx + 2],
--							 interrupt_count,
--							 &irq_idx);
-+							 nr_types, &irq_idx);
- 			if (error)
- 				return error;
- 		}
- 		if (i == MULTI_BUCK1234) {
- 			error = tps6594_request_reg_irqs(pdev, rdev, irq_data,
- 							 tps6594_bucks_irq_types[buck_idx + 3],
--							 interrupt_count,
--							 &irq_idx);
-+							 nr_types, &irq_idx);
- 			if (error)
- 				return error;
- 		}
-@@ -727,7 +722,7 @@ static int tps6594_regulator_probe(struct platform_device *pdev)
- 					     "failed to register %s regulator\n", pdev->name);
- 
- 		error = tps6594_request_reg_irqs(pdev, rdev, irq_data,
--						 bucks_irq_types[i], interrupt_count, &irq_idx);
-+						 bucks_irq_types[i], nr_types, &irq_idx);
- 		if (error)
- 			return error;
+-	ret = ma35d1_pll_find_closest(pll, req->rate, req->best_parent_rate,
+-				      reg_ctl, &pll_freq);
+-	if (ret < 0)
+-		return ret;
+-
+ 	switch (pll->id) {
+ 	case CAPLL:
++	case DDRPLL:
++		/* Read-only PLLs: return current rate */
+ 		reg_ctl[0] = readl_relaxed(pll->ctl0_base);
+-		pll_freq = ma35d1_calc_smic_pll_freq(reg_ctl[0], req->best_parent_rate);
++		if (pll->id == CAPLL) {
++			pll_freq = ma35d1_calc_smic_pll_freq(reg_ctl[0], req->best_parent_rate);
++		} else {
++			reg_ctl[1] = readl_relaxed(pll->ctl1_base);
++			pll_freq = ma35d1_calc_pll_freq(pll->mode, reg_ctl, req->best_parent_rate);
++		}
+ 		req->rate = pll_freq;
+-
+ 		return 0;
+-	case DDRPLL:
+ 	case APLL:
+ 	case EPLL:
+ 	case VPLL:
+-		reg_ctl[0] = readl_relaxed(pll->ctl0_base);
+-		reg_ctl[1] = readl_relaxed(pll->ctl1_base);
+-		pll_freq = ma35d1_calc_pll_freq(pll->mode, reg_ctl, req->best_parent_rate);
++		/* Configurable PLLs: find closest achievable rate */
++		ret = ma35d1_pll_find_closest(pll, req->rate, req->best_parent_rate,
++					      reg_ctl, &pll_freq);
++		if (ret < 0)
++			return ret;
+ 		req->rate = pll_freq;
+-
+ 		return 0;
  	}
-@@ -742,7 +737,7 @@ static int tps6594_regulator_probe(struct platform_device *pdev)
- 						     pdev->name);
  
- 			error = tps6594_request_reg_irqs(pdev, rdev, irq_data,
--							 ldos_irq_types[i], interrupt_count,
-+							 ldos_irq_types[i], nr_types,
- 							 &irq_idx);
- 			if (error)
- 				return error;
+ 	req->rate = 0;
+-
+ 	return 0;
+ }
+ 
 -- 
 2.53.0
 
