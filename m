@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD775352003;
-	Sat, 12 Sep 2026 09:03:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 963FB35F602;
+	Sat, 12 Sep 2026 09:03:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789203802; cv=none; b=PIwLcNTKZLlrXDlOS57M4E8nRZYZqFESQedYbhS3iZlmkYQjKjoJewmzmzm3Uh1O104ucBIB7GFLe5XbKuAsOZGhWC3CT4hs7m901MVO3T2auK9D91Zm0kZkoGGDIxJFtH281qY4fOtIUXYRj7h8WhU61YbUQarlq+EF9dxWh0o=
+	t=1789203806; cv=none; b=I3ShseN3Hz6pSZi/b7Cm2IovSUVFgZYj/DcDoSk2LqN5aZO11gReypZZ2lh+kxS5kp530DRzlLlRnE4VLHNMI39ndw5WgqkrADp6dLSVWo380lVk7039AMQjIcWb/PSf+M7zk0uXNOeM8K42/2YMR/gGu8YW89OC8AhXxAp8a+Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789203802; c=relaxed/simple;
-	bh=CLiqT17TlHRlyB3iNU0uDwyxUYTSI2Ba/j4RyqyChD8=;
+	s=arc-20240116; t=1789203806; c=relaxed/simple;
+	bh=moL+AMXBuCrQqHBgF17lGja9JF4Ry7zdmqi1jBjCioo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qRlUXLcKdrXFwjnVkAfSm4Q9Gm/WLlOwtqEtiWXeSpapvOAc3EUcFuabqWG+S8htU/gwrGszUavZi05O4HL6J0Jw9e9BoOzB4XysPCTsusH9tFfHRfV7PSJAux/BorQyzrhl2UQksmg3jczZj7SayVIbv2yB+eO6q/EdnYY+k2w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ji0+tw1A; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WLS3/O0DrL8O6D0cwIqn7y9kW6N0zlTvuIF9j7LbF5afUh/PMAxnlnLsahYq2Hapn6bNGc9D5Nu6+5WHVxHm2fxtI5mHFxT9/zGX92zDROJQfflGvZfzLS4nWOTUECcc9dvE6zes3UbU7MH5Wt50Qy3KC9ZEW1lIPd82pqXEw6s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y8MV56Ff; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ji0+tw1A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAF131F000FF;
-	Sat, 12 Sep 2026 09:03:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y8MV56Ff"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AFCD1F000FF;
+	Sat, 12 Sep 2026 09:03:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789203800;
-	bh=kUrJDkXutX6mhdf+AA/q6JlBfwPQJTMIeuUU3k+YP7w=;
+	s=korg; t=1789203805;
+	bh=G/JNdUd1kbd9OYd05AxsMnoBM88Q5GJIv41QBIXtzwE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ji0+tw1AqzywZyNJQE1K+22iNVFVZBpZHDSNwUpPTSYOaSoxewIyS/Rmwb+e3fkh9
-	 mKG37Cxg8u8AZLF11Tyb09MOuni2sMW+mczC3t46cJZarWswGAArylVf4Tpyu/vvmd
-	 33ACcEJN1ynpdMCQZJ3Fl4lu0Kx+QFfXlzjsb5Rw=
+	b=Y8MV56Ff0xEeT5fv6XkMVh2b8C1Lo3Ym8n+ScI1cN94yOsFCPZ6CDzoCTAP3XAz89
+	 IQPALFMRCp6ClSw48PO/wYmhqaBIYLK/DnVhkPjAMuGxumJjTxbhGzk8YH3vmsB4sQ
+	 HMoKwhNu1cV+Un9Y3JacMf69LuGRKCKd2Apud1Ig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -33,9 +33,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Nilay Shroff <nilay@linux.ibm.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1482/1815] null_blk: register configfs subsystem after creating default devices
-Date: Sat, 12 Sep 2026 08:53:52 +0200
-Message-ID: <20260912065723.797934847@linuxfoundation.org>
+Subject: [PATCH 7.2 1483/1815] null_blk: free global tag_set on init error path
+Date: Sat, 12 Sep 2026 08:53:53 +0200
+Message-ID: <20260912065723.820733798@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -56,98 +56,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Zizhi Wo <wozizhi@huawei.com>
 
-[ Upstream commit c9d293d6bb0575fcb1f3408129453187e2a28a4e ]
+[ Upstream commit 5a1c5ff3a49ba93a1fd0b70537e7a0164071760d ]
 
-In null_init(), configfs_register_subsystem() currently runs before
-register_blkdev(), so when null_blk is built as a module, a racing mkdir()
-+ poweron from userspace can reach null_add_dev() while null_major is still
-0. __add_disk() then hits WARN_ON(disk->minors) (major=0 with minors!=0)
-and fails:
+If shared_tags is enabled, null_setup_tagset() allocates the global tag_set
+via null_init_global_tag_set(). If device creation later fails, err_dev
+destroys the default devices and calls unregister_blkdev(), but never frees
+the global tag_set. Since module init failed, null_exit() is never invoked,
+so the global tag_set's tags and maps are permanently leaked.
 
-[root@fedora ~]# [ 2366.521436] WARNING: block/genhd.c:476 at __add_disk+0x8a7/0xde0,
-[ 2366.523552] Modules linked in: null_blk(+) nft_fib_inet nft_fib_ipv4 nft_fib_ipv6 nft_fib
-[ 2366.529081] CPU: 26 UID: 0 PID: 1600 Comm: sh Not tainted 7.2.0-rc1+ #66 PREEMPT(full)
-......
-[ 2366.547251] Call Trace:
-[ 2366.547575]  <TASK>
-[ 2366.547831]  ? _raw_spin_lock+0x84/0xe0
-[ 2366.548260]  add_disk_fwnode+0x114/0x560
-[ 2366.548739]  null_add_dev+0x102d/0x1b80 [null_blk]
-[ 2366.549310]  ? __pfx_null_add_dev+0x10/0x10 [null_blk]
-[ 2366.549906]  ? mutex_lock+0xde/0x1c0
-[ 2366.550361]  ? __pfx_mutex_lock+0x10/0x10
-[ 2366.550827]  nullb_device_power_store+0x1e7/0x280 [null_blk]
-[ 2366.551499]  ? __pfx_nullb_device_power_store+0x10/0x10 [null_blk]
-[ 2366.552177]  ? __kmalloc_cache_noprof+0x1f5/0x470
-[ 2366.552748]  ? configfs_write_iter+0x35c/0x4e0
-[ 2366.553242]  configfs_write_iter+0x286/0x4e0
-[ 2366.553787]  vfs_write+0x52d/0xd00
-[ 2366.554169]  ? __pfx_vfs_write+0x10/0x10
-[ 2366.554679]  ? __pfx___css_rstat_updated+0x10/0x10
-[ 2366.555196]  ? fdget_pos+0x1cf/0x4c0
-[ 2366.555649]  ksys_write+0xfc/0x1d0
-......
+Free the global tag_set in err_dev, matching null_exit() which does
+if (tag_set.ops) blk_mq_free_tag_set(&tag_set).
 
-Additionally, the err_dev path destroys all devices on nullb_list while
-configfs is still registered. If a racing mkdir() + poweron puts a user
-device on the list, null_destroy_dev()->null_free_dev() kfrees the user
-device's nullb_device but /sys/kernel/config/nullb/<name> is still
-reachable. Any userspace access to the item will trigger a UAF.
-
-For simplicity, move configfs_register_subsystem() to the end to solve
-the problems above.
-
-Fixes: 3bf2bd20734e ("nullb: add configfs interface")
+Fixes: 82f402fefa50 ("null_blk: add support for shared tags")
 Signed-off-by: Zizhi Wo <wozizhi@huawei.com>
 Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
 Reviewed-by: Bart Van Assche <bvanassche@acm.org>
 Reviewed-by: Nilay Shroff <nilay@linux.ibm.com>
-Link: https://patch.msgid.link/20260725022509.714271-3-wozizhi@huaweicloud.com
+Link: https://patch.msgid.link/20260725022509.714271-5-wozizhi@huaweicloud.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/null_blk/main.c | 16 ++++++----------
- 1 file changed, 6 insertions(+), 10 deletions(-)
+ drivers/block/null_blk/main.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/drivers/block/null_blk/main.c b/drivers/block/null_blk/main.c
-index eba204b277854..4613035222cd5 100644
+index 4613035222cd5..fda1ffd2a64ec 100644
 --- a/drivers/block/null_blk/main.c
 +++ b/drivers/block/null_blk/main.c
-@@ -2162,15 +2162,9 @@ static int __init null_init(void)
- 	config_group_init(&nullb_subsys.su_group);
- 	mutex_init(&nullb_subsys.su_mutex);
- 
--	ret = configfs_register_subsystem(&nullb_subsys);
--	if (ret)
--		return ret;
--
- 	null_major = register_blkdev(0, "nullb");
--	if (null_major < 0) {
--		ret = null_major;
--		goto err_conf;
--	}
-+	if (null_major < 0)
-+		return null_major;
- 
- 	for (i = 0; i < nr_devices; i++) {
- 		ret = null_create_dev();
-@@ -2178,6 +2172,10 @@ static int __init null_init(void)
- 			goto err_dev;
- 	}
- 
-+	ret = configfs_register_subsystem(&nullb_subsys);
-+	if (ret)
-+		goto err_dev;
-+
- 	pr_info("module loaded\n");
- 	return 0;
- 
-@@ -2187,8 +2185,6 @@ static int __init null_init(void)
+@@ -2185,6 +2185,8 @@ static int __init null_init(void)
  		null_destroy_dev(nullb);
  	}
  	unregister_blkdev(null_major, "nullb");
--err_conf:
--	configfs_unregister_subsystem(&nullb_subsys);
++	if (tag_set.ops)
++		blk_mq_free_tag_set(&tag_set);
  	return ret;
  }
  
