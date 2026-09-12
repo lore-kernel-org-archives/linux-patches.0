@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8ACB379982;
-	Sat, 12 Sep 2026 11:08:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71635356744;
+	Sat, 12 Sep 2026 11:08:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789211283; cv=none; b=PzFfS/nGYC0Bi/UJ1PKCfNEBB4DCGom3irfZboxw5OM8rrXoRzFoSFtE+aBZDXItximjYslxkVANo5M37qYAOTd/VzxZdSM+5+U11+p/wOW6Rnlaaow1JOD+FeezEsQwuVJ0uZnoTI4EmpmgYd6TlUJIRtxsRp7sa63v2PJ/DVk=
+	t=1789211289; cv=none; b=aZAN2rZqZhk5RuZlnnfaLkDWPOXl4xiUUoUkj3E1xhkKTqbxZrLUCErbBQWnrliUH9ZnWfLLN2DrdekPVlJ1wDphkM03J7EeT2ADRM83nJnbxmtTULtKDOsETrHF1uuLb1OpA/0PYIfKsWkDArRN4yv3XOwgpDF8Jb8Gft/v5us=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789211283; c=relaxed/simple;
-	bh=AHZ2AOT1079KLeU8XpN9953OfY2Fcq8rKarZ04PLl/Q=;
+	s=arc-20240116; t=1789211289; c=relaxed/simple;
+	bh=4gJsEBTEdGukJAY9Bcm8RscUv0fOndttuxaVToIwYa0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J3Y7N0c18BM7Cvqa6lxK/KVAqPmi8QFU8oZXZvU7qYxAMTahd7crj0kRXRfR6dZhgpP3DaDutkZHNOlJfoPL7DPl5cfCQdt09mKYQLr5T1uhoVJmzxn3JMw8RHP3ELERNaqXbYqAWH+acmR8U87Csvpt6lhXB09mHSY2kVr8U1g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kGB34wTu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eGjlw1sMlkS53X/arGEckGnbjK53YlMqkF973u2AystchRmxdrZtZRLOclHonBOT788u6XSIl5WRAMUT4dDB1m64FD4OQyQP3a9IyqyxvMIHBI4gavJ3u2fuXf1SihMR7OIadDypRuSbwpE4pIviisOVdTBtv59HhIytuEof7Lw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sCiStGpJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kGB34wTu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 885E21F000FF;
-	Sat, 12 Sep 2026 11:08:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sCiStGpJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 759B91F000FF;
+	Sat, 12 Sep 2026 11:08:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789211282;
-	bh=Tg9LlWuxV/yvkIQDt+O4dJ3DWhmYPzqhaW8GlpzdRpk=;
+	s=korg; t=1789211287;
+	bh=zw2t91Rc94cQC9p7+Jrr9o5szNPOFw/ZYsr19hZiO0g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kGB34wTuaCFe8oUJKKMt0F0ouuGq+eScNH8m+8f971kZZ1Bk9JpvBRwc/TzItAmtc
-	 sg0ooqMSgPraMWkLSSFDjXKyUfSxaOGy7ZsrKd8UDFUaKRftc58p2TRbwFWbpg9+7U
-	 mKJv+79dC9FBS90DJmNXDGVaQhWBLhSxnVrG4nqg=
+	b=sCiStGpJ8GDRx16AoAV77Ny8t5XstsvMs5uVR1rnUrP24DJFHnNZSIlhFud6If6ES
+	 wWuOmSgbfao2pEFi+FIVUNb4lRoA/YH4yJdkHxo2SLyPltOjNlZlFjlw7GjqTL4Y+B
+	 4yfzsluu4GeVHNskFEsKfhk4A6ynKXBS6djKQ2/U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rosen Penev <rosenp@gmail.com>,
-	Michal Simek <michal.simek@amd.com>,
-	Mark Brown <broonie@kernel.org>,
+	Leon Hwang <leon.huangfu@shopee.com>,
+	Leon Hwang <leon.hwang@linux.dev>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1147/1518] ASoC: xilinx: formatter_pcm: fix stream_data leak on open error
-Date: Sat, 12 Sep 2026 08:55:16 +0200
-Message-ID: <20260912065649.404836416@linuxfoundation.org>
+Subject: [PATCH 6.18 1193/1518] selftests/bpf: Add tests to verify the fix of encapsulating VxLAN in lwt
+Date: Sat, 12 Sep 2026 08:56:02 +0200
+Message-ID: <20260912065650.466919009@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,78 +52,388 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rosen Penev <rosenp@gmail.com>
+From: Leon Hwang <leon.hwang@linux.dev>
 
-[ Upstream commit b992511180e126150c6ad3580a6fd568c385f4c6 ]
+[ Upstream commit 5477d55f351fea3eeb2c5c77a9224eed0fd4d6a9 ]
 
-In xlnx_formatter_pcm_open(), stream_data is allocated and
-adata->play_stream or adata->capture_stream is assigned early.  If a
-later step, such as snd_pcm_hw_constraint_step() or
-snd_pcm_hw_constraint_integer(), fails, the function returns the error
-immediately.  ALSA does not call the close callback when open fails, so
-stream_data is leaked and the stream pointer is left dangling, pointing
-to a substream that ALSA frees.  A later interrupt would then call
-snd_pcm_period_elapsed() on the freed substream.
+Add two tests to verify the transport header of skb has been set when
+encapsulate VxLAN using bpf_lwt_push_encap() helper.
 
-Free stream_data and clear the stream pointer on the error paths.
+1. VxLAN over IPv4.
+2. VxLAN over IPv6.
 
-Fixes: 6f6c3c36f091 ("ASoC: xlnx: add pcm formatter platform driver")
-Assisted-by: opencode:deepseek-v4-flash-free
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Reviewed-by: Michal Simek <michal.simek@amd.com>
-Link: https://patch.msgid.link/20260811185140.27149-1-rosenp@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Without the fix, the tests would fail:
+
+ lwt_ip_encap_vxlan:FAIL:transport_hdr offset unexpected transport_hdr offset: actual 70 != expected 20
+ #208     lwt_ip_encap_vxlan_ipv4:FAIL
+ lwt_ip_encap_vxlan:FAIL:transport_hdr offset unexpected transport_hdr offset: actual 110 != expected 40
+ #209     lwt_ip_encap_vxlan_ipv6:FAIL
+
+The unexpected offsets are: outer encap headers
+(IPv4: iphdr+udp+vxlan+eth = 50 bytes, IPv6: ipv6hdr+udp+vxlan+eth = 70 bytes)
+plus the inner IP header (20 or 40 bytes), because without the fix
+transport_header still points at the inner transport layer instead of the
+outer UDP header.
+
+Assisted-by: Claude:claude-sonnet-4-6
+Cc: Leon Hwang <leon.huangfu@shopee.com>
+Signed-off-by: Leon Hwang <leon.hwang@linux.dev>
+Link: https://lore.kernel.org/r/20260602150931.49629-3-leon.hwang@linux.dev
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Stable-dep-of: 073574da7a8e ("selftests/bpf: Use ping_command() for IPv6 pings in lwt_ip_encap")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/xilinx/xlnx_formatter_pcm.c | 14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ .../selftests/bpf/prog_tests/lwt_ip_encap.c   | 145 ++++++++++++++++
+ .../selftests/bpf/progs/test_lwt_ip_encap.c   | 155 ++++++++++++++++--
+ 2 files changed, 290 insertions(+), 10 deletions(-)
 
-diff --git a/sound/soc/xilinx/xlnx_formatter_pcm.c b/sound/soc/xilinx/xlnx_formatter_pcm.c
-index 45b178148b98b..4d90e96a677c9 100644
---- a/sound/soc/xilinx/xlnx_formatter_pcm.c
-+++ b/sound/soc/xilinx/xlnx_formatter_pcm.c
-@@ -384,7 +384,7 @@ static int xlnx_formatter_pcm_open(struct snd_soc_component *component,
- 	if (err) {
- 		dev_err(component->dev,
- 			"Unable to set constraint on period bytes\n");
--		return err;
-+		goto error;
- 	}
+diff --git a/tools/testing/selftests/bpf/prog_tests/lwt_ip_encap.c b/tools/testing/selftests/bpf/prog_tests/lwt_ip_encap.c
+index b6391af5f6f96..6606f0ed9a9a9 100644
+--- a/tools/testing/selftests/bpf/prog_tests/lwt_ip_encap.c
++++ b/tools/testing/selftests/bpf/prog_tests/lwt_ip_encap.c
+@@ -3,6 +3,7 @@
  
- 	/* Resize the buffer bytes as divisible by 64 */
-@@ -394,7 +394,7 @@ static int xlnx_formatter_pcm_open(struct snd_soc_component *component,
- 	if (err) {
- 		dev_err(component->dev,
- 			"Unable to set constraint on buffer bytes\n");
--		return err;
-+		goto error;
- 	}
+ #include "network_helpers.h"
+ #include "test_progs.h"
++#include "test_lwt_ip_encap.skel.h"
  
- 	/* Set periods as integer multiple */
-@@ -403,7 +403,7 @@ static int xlnx_formatter_pcm_open(struct snd_soc_component *component,
- 	if (err < 0) {
- 		dev_err(component->dev,
- 			"Unable to set constraint on periods to be integer\n");
--		return err;
-+		goto error;
- 	}
+ #define BPF_FILE "test_lwt_ip_encap.bpf.o"
  
- 	/* enable DMA IOC irq */
-@@ -412,6 +412,14 @@ static int xlnx_formatter_pcm_open(struct snd_soc_component *component,
- 	writel(val, stream_data->mmio + XLNX_AUD_CTRL);
+@@ -32,6 +33,9 @@
+ #define IP6_ADDR_8 "fb08::1"
+ #define IP6_ADDR_GRE "fb10::1"
  
- 	return 0;
++#define IP4_ADDR_VXLAN  "172.16.17.100"
++#define IP6_ADDR_VXLAN  "fb11::1"
 +
-+error:
-+	if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK)
-+		adata->play_stream = NULL;
+ #define IP6_ADDR_SRC IP6_ADDR_1
+ #define IP6_ADDR_DST IP6_ADDR_4
+ 
+@@ -538,3 +542,144 @@ void test_lwt_ip_encap_ipv4(void)
+ 	if (test__start_subtest("ingress"))
+ 		lwt_ip_encap(IPV4_ENCAP, INGRESS, "");
+ }
++
++/*
++ * VxLAN Setup/topology:
++ *
++ * NS1 (IP*_ADDR_1)                NS2                  NS3 (IP*_ADDR_4)
++ *       [ping src]
++ *           |                          top route
++ *         veth1 (LWT encap)  <<-- veth2        veth3  <<-- veth4 (ping dst)
++ *           |                                                ^
++ *       (bottom route)                                       | (inner pkt)
++ *           v                        bottom route            |
++ *         veth5              -->> veth6        veth7  -->> veth8 (vxlan decap)
++ *                                                          (IP*_ADDR_VXLAN)
++ *
++ * Add the VxLAN endpoint addresses to NS3's veth8, create standard
++ * VxLAN decap devices bound to those addresses, and install routes so
++ * NS1/NS2 can reach the endpoints via the bottom route.  NS2 here is to
++ * make sure the LWT-encap VxLAN packets are routed to NS3 correctly.
++ */
++static int setup_vxlan_routes(const char *ns3, const char *ns1, const char *ns2)
++{
++	struct nstoken *nstoken;
++
++	nstoken = open_netns(ns3);
++	if (!ASSERT_OK_PTR(nstoken, "open ns3 for vxlan"))
++		return -1;
++
++	SYS(fail_close, "ip    a add %s/32  dev veth8", IP4_ADDR_VXLAN);
++	SYS(fail_close, "ip -6 a add %s/128 dev veth8", IP6_ADDR_VXLAN);
++	/*
++	 * Standard VxLAN devices to decap the encapsulated packets.  The inner
++	 * Ethernet frame uses a broadcast dst MAC so the IP stack accepts it
++	 * without ARP or FDB configuration.
++	 */
++	SYS(fail_close, "ip link add vxlan4 type vxlan id 1 dstport 4789 local %s dev veth8 nolearning noudpcsum",
++	    IP4_ADDR_VXLAN);
++	SYS(fail_close, "ip link set vxlan4 up");
++	SYS(fail_close, "ip link add vxlan6 type vxlan id 1 dstport 4789 local %s dev veth8 nolearning udp6zerocsumrx",
++	    IP6_ADDR_VXLAN);
++	SYS(fail_close, "ip link set vxlan6 up");
++	close_netns(nstoken);
++
++	SYS(fail, "ip -n %s    route add %s/32  dev veth5 via %s",
++	    ns1, IP4_ADDR_VXLAN, IP4_ADDR_6);
++	SYS(fail, "ip -n %s    route add %s/32  dev veth7 via %s",
++	    ns2, IP4_ADDR_VXLAN, IP4_ADDR_8);
++	SYS(fail, "ip -n %s -6 route add %s/128 dev veth5 via %s",
++	    ns1, IP6_ADDR_VXLAN, IP6_ADDR_6);
++	SYS(fail, "ip -n %s -6 route add %s/128 dev veth7 via %s",
++	    ns2, IP6_ADDR_VXLAN, IP6_ADDR_8);
++	return 0;
++
++fail_close:
++	close_netns(nstoken);
++fail:
++	return -1;
++}
++
++static void lwt_ip_encap_vxlan(bool ipv4_encap)
++{
++	char ns1[NETNS_NAME_SIZE] = NETNS_BASE "-1-";
++	char ns2[NETNS_NAME_SIZE] = NETNS_BASE "-2-";
++	char ns3[NETNS_NAME_SIZE] = NETNS_BASE "-3-";
++	const char *sec = ipv4_encap ? "encap_vxlan" : "encap_vxlan6";
++	int expected_offset = ipv4_encap ? (int)sizeof(struct iphdr)
++					 : (int)sizeof(struct ipv6hdr);
++	struct test_lwt_ip_encap *skel = NULL;
++	int thdr_offset, err;
++
++	if (!ASSERT_OK(create_ns(ns1, NETNS_NAME_SIZE), "create ns1"))
++		goto out;
++	if (!ASSERT_OK(create_ns(ns2, NETNS_NAME_SIZE), "create ns2"))
++		goto out;
++	if (!ASSERT_OK(create_ns(ns3, NETNS_NAME_SIZE), "create ns3"))
++		goto out;
++
++	if (!ASSERT_OK(setup_network(ns1, ns2, ns3, ""), "setup network"))
++		goto out;
++
++	if (!ASSERT_OK(setup_vxlan_routes(ns3, ns1, ns2), "setup vxlan routes"))
++		goto out;
++
++	skel = test_lwt_ip_encap__open();
++	if (!ASSERT_OK_PTR(skel, "test_lwt_ip_encap__open"))
++		goto out;
++
++	bpf_program__set_autoload(skel->progs.bpf_lwt_encap_gre, false);
++	bpf_program__set_autoload(skel->progs.bpf_lwt_encap_gre6, false);
++	bpf_program__set_autoload(skel->progs.bpf_lwt_encap_vxlan, false);
++	bpf_program__set_autoload(skel->progs.bpf_lwt_encap_vxlan6, false);
++	bpf_program__set_autoload(skel->progs.fexit_lwt_push_ip_encap, true);
++	skel->rodata->tgt_ip_version = ipv4_encap ? 4 : 6;
++
++	err = test_lwt_ip_encap__load(skel);
++	if (!ASSERT_OK(err, "test_lwt_ip_encap__load"))
++		goto out;
++
++	err = test_lwt_ip_encap__attach(skel);
++	if (!ASSERT_OK(err, "test_lwt_ip_encap__attach"))
++		goto out;
++
++	/* Remove the direct NS2->DST route so packets must go via LWT encap. */
++	SYS(out, "ip -n %s    route del %s/32  dev veth3", ns2, IP4_ADDR_DST);
++	SYS(out, "ip -n %s -6 route del %s/128 dev veth3", ns2, IP6_ADDR_DST);
++
++	if (ipv4_encap)
++		SYS(out, "ip -n %s route add %s encap bpf xmit obj %s sec %s dev veth1",
++		    ns1, IP4_ADDR_DST, BPF_FILE, sec);
 +	else
-+		adata->capture_stream = NULL;
-+	kfree(stream_data);
-+	return err;
++		SYS(out, "ip -n %s -6 route add %s encap bpf xmit obj %s sec %s dev veth1",
++		    ns1, IP6_ADDR_DST, BPF_FILE, sec);
++
++	skel->bss->fexit_triggered = false;
++
++	if (ipv4_encap)
++		SYS(out, "ip netns exec %s ping  -c 1 -W1 %s", ns1, IP4_ADDR_DST);
++	else
++		SYS(out, "ip netns exec %s ping6 -c 1 -W1 %s", ns1, IP6_ADDR_DST);
++
++	if (!ASSERT_TRUE(skel->bss->fexit_triggered, "fexit_triggered"))
++		goto out;
++
++	thdr_offset = (int)skel->bss->transport_hdr - (int)skel->bss->network_hdr;
++	ASSERT_EQ(thdr_offset, expected_offset, "transport_hdr offset");
++
++out:
++	test_lwt_ip_encap__destroy(skel);
++	SYS_NOFAIL("ip netns del %s", ns1);
++	SYS_NOFAIL("ip netns del %s", ns2);
++	SYS_NOFAIL("ip netns del %s", ns3);
++}
++
++void test_lwt_ip_encap_vxlan_ipv4(void)
++{
++	lwt_ip_encap_vxlan(IPV4_ENCAP);
++}
++
++void test_lwt_ip_encap_vxlan_ipv6(void)
++{
++	lwt_ip_encap_vxlan(IPV6_ENCAP);
++}
+diff --git a/tools/testing/selftests/bpf/progs/test_lwt_ip_encap.c b/tools/testing/selftests/bpf/progs/test_lwt_ip_encap.c
+index d6cb986e7533f..4a934fccf8f5b 100644
+--- a/tools/testing/selftests/bpf/progs/test_lwt_ip_encap.c
++++ b/tools/testing/selftests/bpf/progs/test_lwt_ip_encap.c
+@@ -1,11 +1,9 @@
+ // SPDX-License-Identifier: GPL-2.0
+-#include <stddef.h>
++#include "vmlinux.h"
+ #include <string.h>
+-#include <linux/bpf.h>
+-#include <linux/ip.h>
+-#include <linux/ipv6.h>
+ #include <bpf/bpf_helpers.h>
+ #include <bpf/bpf_endian.h>
++#include <bpf/bpf_tracing.h>
+ 
+ struct grehdr {
+ 	__be16 flags;
+@@ -64,13 +62,13 @@ int bpf_lwt_encap_gre6(struct __sk_buff *skb)
+ 	hdr.ip6hdr.nexthdr = 47;  /* IPPROTO_GRE */
+ 	hdr.ip6hdr.hop_limit = 0x40;
+ 	/* fb01::1 */
+-	hdr.ip6hdr.saddr.s6_addr[0] = 0xfb;
+-	hdr.ip6hdr.saddr.s6_addr[1] = 1;
+-	hdr.ip6hdr.saddr.s6_addr[15] = 1;
++	hdr.ip6hdr.saddr.in6_u.u6_addr8[0] = 0xfb;
++	hdr.ip6hdr.saddr.in6_u.u6_addr8[1] = 1;
++	hdr.ip6hdr.saddr.in6_u.u6_addr8[15] = 1;
+ 	/* fb10::1 */
+-	hdr.ip6hdr.daddr.s6_addr[0] = 0xfb;
+-	hdr.ip6hdr.daddr.s6_addr[1] = 0x10;
+-	hdr.ip6hdr.daddr.s6_addr[15] = 1;
++	hdr.ip6hdr.daddr.in6_u.u6_addr8[0] = 0xfb;
++	hdr.ip6hdr.daddr.in6_u.u6_addr8[1] = 0x10;
++	hdr.ip6hdr.daddr.in6_u.u6_addr8[15] = 1;
+ 
+ 	hdr.greh.protocol = skb->protocol;
+ 
+@@ -82,4 +80,141 @@ int bpf_lwt_encap_gre6(struct __sk_buff *skb)
+ 	return BPF_LWT_REROUTE;
  }
  
- static int xlnx_formatter_pcm_close(struct snd_soc_component *component,
++#define VXLAN_PORT  4789
++#define VXLAN_FLAGS 0x08000000
++#define VXLAN_VNI   1
++
++#define ETH_ALEN	6		/* Octets in one ethernet addr	 */
++#define ETH_P_IP	0x0800		/* Internet Protocol packet	*/
++#define ETH_P_IPV6	0x86DD		/* IPv6 over bluebook		*/
++
++static const __u8 bcast[ETH_ALEN] = {
++	0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++};
++
++static const __u8 srcmac[ETH_ALEN] = {
++	0x02, 0x00, 0x00, 0x00, 0x00, 0x01,
++};
++
++SEC("encap_vxlan")
++int bpf_lwt_encap_vxlan(struct __sk_buff *skb)
++{
++	struct encap_hdr {
++		struct iphdr    iph;
++		struct udphdr   udph;
++		struct vxlanhdr vxh;
++		struct ethhdr   eth;
++	} __attribute__((__packed__)) hdr;
++	int err;
++
++	memset(&hdr, 0, sizeof(hdr));
++
++	hdr.iph.ihl      = 5;
++	hdr.iph.version  = 4;
++	hdr.iph.ttl      = 0x40;
++	hdr.iph.protocol = 17; /* IPPROTO_UDP */
++	hdr.iph.tot_len  = bpf_htons(skb->len + sizeof(hdr));
++#if __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
++	hdr.iph.saddr = 0x640510ac;  /* 172.16.5.100  */
++	hdr.iph.daddr = 0x641110ac;  /* 172.16.17.100 */
++#elif __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
++	hdr.iph.saddr = 0xac100564;  /* 172.16.5.100 */
++	hdr.iph.daddr = 0xac101164;  /* 172.16.17.100 */
++#else
++#error "Fix your compiler's __BYTE_ORDER__?!"
++#endif
++
++	hdr.udph.source = bpf_htons(VXLAN_PORT);
++	hdr.udph.dest   = bpf_htons(VXLAN_PORT);
++	hdr.udph.len    = bpf_htons(skb->len + sizeof(hdr.udph) + sizeof(hdr.vxh) +
++				    sizeof(hdr.eth));
++
++	hdr.vxh.vx_flags = bpf_htonl(VXLAN_FLAGS);
++	hdr.vxh.vx_vni   = bpf_htonl(VXLAN_VNI << 8);
++
++	__builtin_memcpy(hdr.eth.h_dest, bcast, ETH_ALEN);
++	__builtin_memcpy(hdr.eth.h_source, srcmac, ETH_ALEN);
++	hdr.eth.h_proto = bpf_htons(ETH_P_IP);
++
++	err = bpf_lwt_push_encap(skb, BPF_LWT_ENCAP_IP, &hdr, sizeof(hdr));
++	if (err)
++		return BPF_DROP;
++
++	return BPF_LWT_REROUTE;
++}
++
++SEC("encap_vxlan6")
++int bpf_lwt_encap_vxlan6(struct __sk_buff *skb)
++{
++	struct encap_hdr {
++		struct ipv6hdr  ip6hdr;
++		struct udphdr   udph;
++		struct vxlanhdr vxh;
++		struct ethhdr   eth;
++	} __attribute__((__packed__)) hdr;
++	int err;
++
++	memset(&hdr, 0, sizeof(hdr));
++
++	hdr.ip6hdr.version     = 6;
++	hdr.ip6hdr.nexthdr     = 17; /* IPPROTO_UDP */
++	hdr.ip6hdr.hop_limit   = 0x40;
++	hdr.ip6hdr.payload_len = bpf_htons(skb->len + sizeof(hdr.udph) + sizeof(hdr.vxh) +
++					   sizeof(hdr.eth));
++	/* fb05::1 */
++	hdr.ip6hdr.saddr.in6_u.u6_addr8[0]  = 0xfb;
++	hdr.ip6hdr.saddr.in6_u.u6_addr8[1]  = 0x05;
++	hdr.ip6hdr.saddr.in6_u.u6_addr8[15] = 1;
++	/* fb11::1 */
++	hdr.ip6hdr.daddr.in6_u.u6_addr8[0]  = 0xfb;
++	hdr.ip6hdr.daddr.in6_u.u6_addr8[1]  = 0x11;
++	hdr.ip6hdr.daddr.in6_u.u6_addr8[15] = 1;
++
++	hdr.udph.source = bpf_htons(VXLAN_PORT);
++	hdr.udph.dest   = bpf_htons(VXLAN_PORT);
++	hdr.udph.len    = bpf_htons(skb->len + sizeof(hdr.udph) + sizeof(hdr.vxh) +
++				    sizeof(hdr.eth));
++
++	hdr.vxh.vx_flags = bpf_htonl(VXLAN_FLAGS);
++	hdr.vxh.vx_vni   = bpf_htonl(VXLAN_VNI << 8);
++
++	__builtin_memcpy(hdr.eth.h_dest, bcast, ETH_ALEN);
++	__builtin_memcpy(hdr.eth.h_source, srcmac, ETH_ALEN);
++	hdr.eth.h_proto = bpf_htons(ETH_P_IPV6);
++
++	err = bpf_lwt_push_encap(skb, BPF_LWT_ENCAP_IP, &hdr, sizeof(hdr));
++	if (err)
++		return BPF_DROP;
++
++	return BPF_LWT_REROUTE;
++}
++
++volatile const int tgt_ip_version;
++
++__u16 transport_hdr = 0;
++__u16 network_hdr = 0;
++bool fexit_triggered = false;
++
++SEC("?fexit/bpf_lwt_push_ip_encap")
++int BPF_PROG(fexit_lwt_push_ip_encap, struct sk_buff *skb, void *hdr, u32 len, bool ingress,
++	     int retval)
++{
++	struct iphdr *iph;
++
++	if (retval || fexit_triggered)
++		return 0;
++
++	iph = (typeof(iph)) (skb->head + skb->network_header);
++	if (iph->version != tgt_ip_version)
++		return 0;
++
++	if ((iph->version == 4 && iph->protocol == 17 /* IPPROTO_UDP */) ||
++	    (iph->version == 6 && ((struct ipv6hdr *)iph)->nexthdr == 17 /* IPPROTO_UDP */)) {
++		fexit_triggered = true;
++		transport_hdr   = skb->transport_header;
++		network_hdr     = skb->network_header;
++	}
++	return 0;
++}
++
+ char _license[] SEC("license") = "GPL";
 -- 
 2.53.0
 
