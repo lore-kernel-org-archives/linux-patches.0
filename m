@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38E201DE4EF;
-	Sat, 12 Sep 2026 14:08:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24F0124CEEA;
+	Sat, 12 Sep 2026 14:08:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789222122; cv=none; b=k1eflbEpJp0+h05vGPpuae8fWMvis9WIy5zAYI61YuZdMr+bFUxCFzgVA3S/FyB1OQ8IMOlVCy2W8r+2mBlYaTdlaZgAoE2woRmKHOdcjnXIRSXrVuQaTpkgb0q99qbnVTi6RuUO0e4D3191gXMKK4KWvrQQlvdXrlA2Pp2IoRY=
+	t=1789222127; cv=none; b=ChThSrqVUZ9SytAdAgvMvCXrTfMCPXKnD+ISJdKZah1oHv3pl6Hqs8nReKt9MYE8Cleze6KzMzOd5kcdjOKQGG8WrBRodzKgoRFgkqMsLa8yNL9bClRWLtw212/f19F7PtbwcxNV6HZe2nLj/hNs/n/yQqVajh8AwDEZ5AloCEk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789222122; c=relaxed/simple;
-	bh=N/0p7FU14ONZA2cc9mMRG67n9Em4fhmQLnhlISjfiXc=;
+	s=arc-20240116; t=1789222127; c=relaxed/simple;
+	bh=Pv/4YQcCBGCqbeujdmePvteJpoTA0gBGFWLGIh4Ggyo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XjZj9k8k+EjyxtIIuG72WpOldXLQ9WoLD8DKRVEZtQXVeKUQ4l4ku6fbI79CIMdCe2vK076QJsc7qTvHHwR9wIuvS8deRWVhLJLIVYLHmuFLeaZI/uxVZhm0jCE73kVOTU++MLMHGjzHSHNuTN9sbowa3Tln3Lu7gkt9VJ/LzEc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zQVkfzTP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Eln2LN87oGVOGBaTpcuffwYqnJl+3T/Cum0YSvYLzdGuvrhwOejzLClk2FaksRelHJyGgzQNvwqPWYTWtA/lAMG72rLuVbXTpT5AHo9S11jo/4+IpRmJ8ZQFP31m9GHfshHYByFQdRwphXaKV07YKF7RDTW9DJN1XaIkwAf4HUo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RCIsaAXy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zQVkfzTP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD9CA1F000FF;
-	Sat, 12 Sep 2026 14:08:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RCIsaAXy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1A5A1F000FF;
+	Sat, 12 Sep 2026 14:08:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789222121;
-	bh=jHUKJWJZeU78jmiNNHaYZ+NLGPduIA+uhrJ7TvH0tLE=;
+	s=korg; t=1789222126;
+	bh=LHsGaXiDwWZbgIkIsSguQOgR3sA7W7cR6pGdpfbGQIw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zQVkfzTP+3kiJM1qGRF6LGmUpLIl9z2NIXZp6chW6gZ/JeUKxW/ZYdYnLbmT/1kWy
-	 njso/ASbsBYDhQ60JnvIE++nrwBzSXekYIpbb9fueiRs3N7rJDmWAeyIRwfQrpBO0M
-	 KWOqm/Lh3AuFhjnyr9sc+I5UPW6OAIZzsOvLNK9k=
+	b=RCIsaAXyEE1bw6zo4Fx0uFMN/JyPt5shf33S7EGLZEFkv4IEMG8V5sjW3jgAjpkor
+	 GoyPuBu+ofYN3839MrnNrPm7kLE6kLW3ehEhA8V6DNzwo7qf3zIHqPQ7HPeJLcqLAp
+	 nfbORPrLFhaWuBMvTLMenzdUOZWg0AbshgZVwy/4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhan Xusheng <zhanxusheng@xiaomi.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 6.6 0505/1424] f2fs: fix i_size when pinned fallocate partially fails
-Date: Sat, 12 Sep 2026 08:48:57 +0200
-Message-ID: <20260912065618.600004080@linuxfoundation.org>
+	Sunil Khatri <sunil.khatri@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.6 0523/1424] drm/amdgpu: use AMDGPU_GPU_PAGE_SHIFT instead of PAGE_SHIFT
+Date: Sat, 12 Sep 2026 08:49:15 +0200
+Message-ID: <20260912065619.005646936@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -51,71 +50,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhan Xusheng <zhanxusheng1024@gmail.com>
+From: Sunil Khatri <sunil.khatri@amd.com>
 
-commit 0f448bb3767ef6119f5cdeabcae3f10d6e75aed6 upstream.
+commit d6e16df7df4d2c39e2b04b355d0434fb90e2d62c upstream.
 
-From: Zhan Xusheng <zhanxusheng@xiaomi.com>
+For different address types the variable PAGE_SHIFT might
+not work well and it's better to use the GPU specific one
 
-Commit 4275b59673eb ("f2fs: fix to round down start offset of fallocate
-for pin file") moved the allocation loop's start down to a section
-boundary, but the error path still converts @expanded against @pg_start,
-which holds the unrounded start.
-
-@pg_start exists for that conversion: commit 88f2cfc5fa90 ("f2fs: fix to
-update last i_size if fallocate partially succeeds") added it as an
-immutable base because map.m_lblk moves every round.  Each round now maps
-exactly sec_blks blocks starting from rounddown(pg_start, sec_blks), so
-pg_start + expanded overshoots the last allocated block by
-pg_start % sec_blks, and a partial failure leaves i_size covering a tail
-that was never allocated.  Nothing corrects that afterwards either, since
-file_dont_truncate() has already cleared FADVISE_TRUNC_BIT.
-
-It needs a start offset that is not section aligned plus a fallocate that
-hits ENOSPC partway, so the error path runs with expanded > 0.  On an
-80 MiB image with 2 MiB sections:
-
-  truncate -s 80M img
-  mkfs.f2fs -s 1 -f img
-  mount -o loop img /mnt
-  touch /mnt/pinned
-  f2fs_io pinfile set /mnt/pinned
-  # 2093056 = block 511, so pg_start % sec_blks = 511
-  f2fs_io fallocate 0 2093056 536870912 /mnt/pinned
-  stat -c %s /mnt/pinned
-  filefrag -v /mnt/pinned
-
-The last extent ends at block 10737 either way.  Before, i_size is
-46075904, block 11249, so 511 blocks of it were never allocated, and
-filefrag does not mark the last extent eof.  After, i_size is 43982848,
-block 10738, and eof is back.  A kernel from before that commit also
-shows no overshoot.
-
-Keep @pg_start pointing at where allocation actually begins.
-
-Fixes: 4275b59673eb ("f2fs: fix to round down start offset of fallocate for pin file")
+Signed-off-by: Sunil Khatri <sunil.khatri@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 3494b77d10375e0f9ab784e9b20763339844b55b)
 Cc: stable@vger.kernel.org
-Signed-off-by: Zhan Xusheng <zhanxusheng@xiaomi.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/file.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/f2fs/file.c
-+++ b/fs/f2fs/file.c
-@@ -1832,8 +1832,9 @@ static int f2fs_expand_inode_data(struct
- 		block_t sec_len;
- 
- 		if (map.m_lblk % sec_blks) {
--			map.m_lblk = rounddown(map.m_lblk, sec_blks);
--			map.m_len = pg_end - map.m_lblk;
-+			pg_start = rounddown(map.m_lblk, sec_blks);
-+			map.m_lblk = pg_start;
-+			map.m_len = pg_end - pg_start;
- 			if (off_end)
- 				map.m_len++;
- 		}
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
+@@ -1760,7 +1760,7 @@ int amdgpu_vm_bo_clear_mappings(struct a
+ 			after->start = eaddr + 1;
+ 			after->last = tmp->last;
+ 			after->offset = tmp->offset;
+-			after->offset += (after->start - tmp->start) << PAGE_SHIFT;
++			after->offset += (after->start - tmp->start) << AMDGPU_GPU_PAGE_SHIFT;
+ 			after->flags = tmp->flags;
+ 			after->bo_va = tmp->bo_va;
+ 			list_add(&after->list, &tmp->bo_va->invalids);
 
 
