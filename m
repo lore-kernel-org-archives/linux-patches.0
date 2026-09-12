@@ -1,57 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 459CC39281F;
-	Sat, 12 Sep 2026 13:19:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14A2A47AF69;
+	Sat, 12 Sep 2026 13:19:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789219159; cv=none; b=RCtS6hBZMd8QFcdqHt7rO+1st1/hLUpRhb8jpDUeu0bYT5oVoedPHafwZbx4K+qR+Zy7w+ZHWz9q8kp8BZi8Fj1qxFIuv5hE8OGkC1fzM9dQbTybKSOWHiywnH1h3tqIl1u9TpDTB+aHprPLxCB2uJ+VkqbSc7Hm3JzbM8le6ow=
+	t=1789219164; cv=none; b=en2cYx8KQUywVn36vK1I50P18/cNOGuOALu1lWTdIsm2yfzPXwF9yG4Ct8PIdXOCE8zAbPZRtMCAstXuwfAZ/gy7auFrePxuF9vz9gEZdsT2Qo8zdo6+4AygfgYJwyX0wpGYelS1n+KXgG1H0nYLAdZU0kvRBbMKRMq+yDO2npc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789219159; c=relaxed/simple;
-	bh=atubWGniKhhJs88Vsa13F+fsFdJQv2QpjXrB9Tg5tXI=;
+	s=arc-20240116; t=1789219164; c=relaxed/simple;
+	bh=iYVqb/g1y8OmYDef9rj9jAguGzfW+2TUPzOYQRh/1As=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=akki6OwNzDryCQ3HXoktsYOrtSjvhHuwGrzDN1JM8nGicVOtrrwbiQyUuVgFlgZu9NOMN9l2Au3Fjc9f9CZObGlWDuEQLmCMPvRMTqNtoYzBtT4mF6qm1iPijJKpNL/DwA8UHfNgvDvVlPct4yLKq52SZNcqZULSHi09NfjzQ7E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EzmIUM9q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pbw24YvHliLOhzz4xbOpldzW7RutwsKKWvTzWu9eHXW/SMjrctRWUX8YGrdYxmawboH/u2ZBAP5jvkUMpB+eHTO2V29KGh2S5wAFnnHAtqdS5n3CiN503DvWK2dPcNHIKr8cpHVO/j3HElgz6oGvgsLHK1CiyAaAjAzu5cCXjF0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GJE1CIAZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EzmIUM9q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5B571F000FF;
-	Sat, 12 Sep 2026 13:19:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GJE1CIAZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB6FB1F00893;
+	Sat, 12 Sep 2026 13:19:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789219158;
-	bh=a6WOW92Qk+zIIAuYh9OKdMwjhF/QSYxLnawP1x71/UQ=;
+	s=korg; t=1789219163;
+	bh=ci48YlPhaObbsjoxf6PtFWaekWvaMq6kSu3+e5p2tpc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EzmIUM9qVUew8UBv3O2fpuje5RpHurTxFv3szC6b2Go1qGoTKaw6Hl8oo6PbWxYze
-	 QJV1b4ghtqCljdAYxy+SEsd00lSo8ms+mwdgUCOR71+RVthYlXazWO55WKE5eyiIsV
-	 hVO3OULG0xRwfNIoAMBS/iq2J/XKagyjef06uvhw=
+	b=GJE1CIAZK2h+qVOR9QNaYMlI/hnBoXlmUpOuiBF4LNh7jkqXGcR25GgjEDemxXRbe
+	 xhD02XMc1/kr9/DkKa27bp1mQGBL1XiP8fBkyLmdVcBDR5IeeyauzO03CkLOLm6QR6
+	 rPpKHzs/d5bYXsJmOnS+bQqYZ53XRa/aik97V2n4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Usama Anjum <usama.anjum@arm.com>,
-	Sarthak Sharma <sarthak.sharma@arm.com>,
-	Usama Arif <usama.arif@linux.dev>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Barry Song <baohua@kernel.org>,
-	Dev Jain <dev.jain@arm.com>,
-	Lance Yang <lance.yang@linux.dev>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Miaohe Lin <linmiaohe@huawei.com>,
-	Michal Hocko <mhocko@suse.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Naoya Horiguchi <nao.horiguchi@gmail.com>,
-	Nico Pache <npache@redhat.com>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Shuah Khan <shuah@kernel.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Zi Yan <ziy@nvidia.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1292/1376] selftests/mm: skip COW tmpfile cases when fallocate() is unsupported
-Date: Sat, 12 Sep 2026 09:01:58 +0200
-Message-ID: <20260912065636.331499036@linuxfoundation.org>
+Subject: [PATCH 6.12 1252/1376] net: add missing ref_tracker_dir_exit() to net_passive_dec()
+Date: Sat, 12 Sep 2026 09:01:18 +0200
+Message-ID: <20260912065635.446131692@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -70,85 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Muhammad Usama Anjum <usama.anjum@arm.com>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-[ Upstream commit 4004c130c358b1561a55323b0e747f20f5133f7b ]
+[ Upstream commit f85dc137aabf357bf3d9fe4c9712121039d83798 ]
 
-Patch series "selftests/mm: Handle unsupported and transient test
-conditions", v3.
+I found that trying to read /sys/kernel/debug/ref_tracker/* causes NULL
+pointer dereference crash when alloc_netdev_mqs() via unshare() returned
+NULL, for commit 9ba74e6c9e9d ("net: add networking namespace refcount
+tracker") added ref_tracker_dir_exit(&net->refcnt_tracker) to only
+__put_net() path whereas commit 65b584f53611 ("ref_tracker: automatically
+register a file in debugfs for a ref_tracker_dir") added
+ref_tracker_dir_debugfs() to ref_tracker_dir_init() path.
 
-Several MM selftests report failures when the test environment lacks
-an underlying prerequisite, such as fallocate() support, MADV_REMOVE,
-local page-cache semantics, or swap.
+Since preinit_net() calls ref_tracker_dir_init(&net->refcnt_tracker) and
+ref_tracker_dir_init(&net->notrefcnt_tracker), we need to make sure that
+both ref_tracker_dir_exit(&net->refcnt_tracker) and
+ref_tracker_dir_exit(&net->notrefcnt_tracker) are called before
+net_passive_dec() schedules for kmem_cache_free() via net_complete_free().
 
-This series converts those unsupported cases to SKIP while preserving
-failures for unexpected errors. It also allows migration tests to retry
-transient move_pages() failures.
+ref_tracker_dir_exit(&net->refcnt_tracker) is called via put_net() when
+ns_ref_put() returned true. But put_net() is not called when copy_net_ns()
+fails. Therefore, call ref_tracker_dir_exit() from net_passive_dec() if
+put_net() is not yet called.
 
-This patch (of 4):
-
-The tmpfile-backed COW cases allocate a one-page file with fallocate()
-before exercising private and shared mappings.  When the filesystem
-backing tmpfile() does not implement fallocate(), setup fails with
-EOPNOTSUPP and no COW behavior is exercised.
-
-This occurs when the temporary directory resides on a filesystem with
-limited allocation support, such as NFSv3.  Reporting a failure adds noise
-because the test prerequisite is absent rather than the COW implementation
-being broken.
-
-Report EOPNOTSUPP as a skip.  Continue treating every other fallocate()
-error as a failure so unexpected setup regressions remain visible.
-
-Link: https://lore.kernel.org/20260727095225.372655-1-usama.anjum@arm.com
-Link: https://lore.kernel.org/20260727095225.372655-2-usama.anjum@arm.com
-Fixes: f8664f3c4a08 ("selftests/vm: cow: basic COW tests for non-anonymous pages")
-Signed-off-by: Muhammad Usama Anjum <usama.anjum@arm.com>
-Tested-by: Sarthak Sharma <sarthak.sharma@arm.com>
-Acked-by: Usama Arif <usama.arif@linux.dev>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: Barry Song <baohua@kernel.org>
-Cc: Dev Jain <dev.jain@arm.com>
-Cc: Lance Yang <lance.yang@linux.dev>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Miaohe Lin <linmiaohe@huawei.com>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Mike Rapoport <rppt@kernel.org>
-Cc: Naoya Horiguchi <nao.horiguchi@gmail.com>
-Cc: Nico Pache <npache@redhat.com>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: Zi Yan <ziy@nvidia.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Link: https://sashiko.dev/#/patchset/b06ce35d-e7bc-47a5-8e0a-e82be7e4dd08%40I-love.SAKURA.ne.jp
+Fixes: 9ba74e6c9e9d ("net: add networking namespace refcount tracker")
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Link: https://patch.msgid.link/64254d80-9248-466c-8108-95f43bd71117@I-love.SAKURA.ne.jp
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/mm/cow.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ net/core/net_namespace.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/tools/testing/selftests/mm/cow.c b/tools/testing/selftests/mm/cow.c
-index d0e11a40269ea..c0ca9483c448a 100644
---- a/tools/testing/selftests/mm/cow.c
-+++ b/tools/testing/selftests/mm/cow.c
-@@ -1717,8 +1717,13 @@ static void run_with_tmpfile(non_anon_test_fn fn, const char *desc)
+diff --git a/net/core/net_namespace.c b/net/core/net_namespace.c
+index cc03e3fd85fcd..613b2b07bad9f 100644
+--- a/net/core/net_namespace.c
++++ b/net/core/net_namespace.c
+@@ -469,8 +469,12 @@ void net_passive_dec(struct net *net)
+ 	if (refcount_dec_and_test(&net->passive)) {
+ 		kfree(rcu_access_pointer(net->gen));
  
- 	/* File consists of a single page filled with zeroes. */
- 	if (fallocate(fd, 0, 0, pagesize)) {
--		ksft_perror("fallocate() failed");
--		log_test_result(KSFT_FAIL);
-+		if (errno == EOPNOTSUPP) {
-+			ksft_print_msg("fallocate() not supported by filesystem\n");
-+			log_test_result(KSFT_SKIP);
-+		} else {
-+			ksft_perror("fallocate() failed");
-+			log_test_result(KSFT_FAIL);
-+		}
- 		goto close;
- 	}
++#ifdef CONFIG_REF_TRACKER
+ 		/* There should not be any trackers left there. */
+ 		ref_tracker_dir_exit(&net->notrefcnt_tracker);
++		if (!net->refcnt_tracker.dead)
++			ref_tracker_dir_exit(&net->refcnt_tracker);
++#endif
  
+ 		/* Wait for an extra rcu_barrier() before final free. */
+ 		llist_add(&net->defer_free_list, &defer_free_list);
 -- 
 2.53.0
 
