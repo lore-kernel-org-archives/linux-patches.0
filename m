@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16E4817DFFA;
-	Sat, 12 Sep 2026 09:59:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EAC417DFFA;
+	Sat, 12 Sep 2026 09:59:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789207172; cv=none; b=g3mIBdhbFHcu0XiIgYW6XmZOm5CqwyaI9SYxuw2M7xnZgcuaQD+LiSOuhEkefjUIVHSnFeZm9U4dVlRMPUj9gdWXIJVC63L7h86nYB71ToMkpPF8KS9T83e3kQtPpZFx5eRU+ubdKZVqvIhszf0bREM/grhy8TEAF9aOaPPFe7Q=
+	t=1789207177; cv=none; b=nruVFJywy0WXzjFz2ssYtE6mR7LbpB3sv9VGK5sQBc4JHXDe+HctW1P3bXFBGUX+Gg0Xq1zUOj7Nf+GMNHvLh0QkrogKbbo40AIY6CUnnNmVSoP7xhO5ILV2tumhnmhdcKndHvhMoDN5JXNZlM5UX/ARHIIPEcf7ATupw+ClUY8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789207172; c=relaxed/simple;
-	bh=jgnpJBSeji+cc2uE2hYnxSnORjIMKfVE7/uh6Lb11G0=;
+	s=arc-20240116; t=1789207177; c=relaxed/simple;
+	bh=m1WFruepR83Llg059udNcUUvgEs2eZ3sEnfNyhpCKzc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rJLzYcxmnCbk8/m630T3+rswQnZ/jCgwjzvpzqLF+CK69wFPAjtgXJ7cx+GFoTnqDHu/KtW5/egPeq46SMA1uVNyQJSsqVX3DZRQctO0HFm9X4Gn7btLmnxwdLalvDyi98Mvo8M2RLS2QR8o9Dv1/GK6/8ORS7EgqQX3HKBobnY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d5gj0Owv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ANxZDefVrMvG37BdL2uytD41OM7UuoYMau5xJ/SGNzGVmCeH1vwRNeD85tJtznEHI2mPdK40bW/rjJ5AqCzQ3KasqS8tqHjoUbp+P5NxP77oKQ+uUkXx0FCe7Ufel7s0lg5woFxUF8d4WQg0HPNTOJBYP1XQOSEw9j7GoAdZfoU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cpMW9QVj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d5gj0Owv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 857EC1F000FF;
-	Sat, 12 Sep 2026 09:59:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cpMW9QVj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CC241F000FF;
+	Sat, 12 Sep 2026 09:59:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789207170;
-	bh=aJsKcvjRNM3zEygGu0lANflz4G2P9oC6Z9CYnxfefhM=;
+	s=korg; t=1789207175;
+	bh=O4LabD0zABLNnfW3GjrllkQfSKrHtRROmZWZLhLUXsE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=d5gj0OwvPsQ5UaGSiYS/dl6GnDd6tcjw5Au3/TcI/WWlB/CFspsCS2y1Adtlp/dzf
-	 Vcsj7S5Rtiod0/Vr2enIO8rJcfnd9v6nL3nsMojRI4spFgfv2Q2tmIgkzlrC+kjsc7
-	 iLh1nYmjN0Iasinq3Qx60KGOKrCoBNbdhqr/LV1I=
+	b=cpMW9QVj5uEEbSuhB+i4xHQTpwf+Yq0xxnn+p4jroEGeGukdwk7ZyT/q+JVPHyV35
+	 gaIDPsCG66eGBekCIVedAe2fySL7M2yKFiflszeE//g5j7N92CceRtSMXcvOhtAex+
+	 493wZyvPj5XgjmFcNY3CcYgmTGfD8zBorR2Ootp4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
 	Leon Romanovsky <leonro@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0357/1518] RDMA/hfi1: Stop flushing the global IB workqueue
-Date: Sat, 12 Sep 2026 08:42:06 +0200
-Message-ID: <20260912065631.548378849@linuxfoundation.org>
+Subject: [PATCH 6.18 0358/1518] RDMA/hfi1: Initialize debugfs after probe completes
+Date: Sat, 12 Sep 2026 08:42:07 +0200
+Message-ID: <20260912065631.570003367@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,45 +53,50 @@ Content-Transfer-Encoding: 8bit
 
 From: Leon Romanovsky <leonro@nvidia.com>
 
-[ Upstream commit d43b1c17f9e1b9d34a0d742f569c00d84147ebc0 ]
+[ Upstream commit bb18740b302f6f222ce3d5a7e5c45a52a90df805 ]
 
-hfi1 does not queue work on ib_wq. QSFP and link work run on the per-port
-link_wq, while the remaining device work uses hfi1_wq or dedicated queues.
-The probe failure path destroys both per-port workqueues, and normal device
-removal flushes them in shutdown_device() before destroying them.
+Commit ed6f653fe430 ("staging/rdma/hfi1: Fix debugfs access race") moved
+debugfs creation after device initialization and IB registration so users
+cannot access the files before the driver is ready. However, init_one()
+still creates them before character device creation and SDMA startup
+finish.
 
-Remove the flushes of the core-owned global workqueue. Waiting for
-unrelated core or other device work is not part of hfi1 teardown.
+Move hfi1_dbg_ibdev_init() to the end of the successful probe path,
+matching hfi1_dbg_ibdev_exit() as the first action in remove_one().
 
-Fixes: 71d47008ca1b ("IB/hfi1: Create workqueue for link events")
-Link: https://patch.msgid.link/20260708-clean-init-one-hfi1-v1-10-b9e9641268a5@nvidia.com
+Fixes: ed6f653fe430 ("staging/rdma/hfi1: Fix debugfs access race")
+Link: https://patch.msgid.link/20260708-clean-init-one-hfi1-v1-12-b9e9641268a5@nvidia.com
+Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
 Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hfi1/init.c | 4 ----
- 1 file changed, 4 deletions(-)
+ drivers/infiniband/hw/hfi1/init.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/infiniband/hw/hfi1/init.c b/drivers/infiniband/hw/hfi1/init.c
-index 68e0aab49fb94..6253d8088abd6 100644
+index 6253d8088abd6..f0b3d53243687 100644
 --- a/drivers/infiniband/hw/hfi1/init.c
 +++ b/drivers/infiniband/hw/hfi1/init.c
-@@ -1660,7 +1660,6 @@ static int init_one(struct pci_dev *pdev, const struct pci_device_id *ent)
- 	if (initfail || ret) {
- 		msix_clean_up_interrupts(dd);
- 		stop_timers(dd);
--		flush_workqueue(ib_wq);
- 		for (pidx = 0; pidx < dd->num_pports; ++pidx) {
- 			hfi1_quiet_serdes(dd->pport + pidx);
- 			ppd = dd->pport + pidx;
-@@ -1737,9 +1736,6 @@ static void remove_one(struct pci_dev *pdev)
+@@ -1647,11 +1647,8 @@ static int init_one(struct pci_dev *pdev, const struct pci_device_id *ent)
+ 	 * we still create devices, so diags, etc. can be used
+ 	 * to determine cause of problem.
+ 	 */
+-	if (!initfail && !ret) {
++	if (!initfail && !ret)
+ 		dd->flags |= HFI1_INITTED;
+-		/* create debufs files after init and ib register */
+-		hfi1_dbg_ibdev_init(&dd->verbs_dev);
+-	}
  
- 	stop_timers(dd);
+ 	j = hfi1_device_create(dd);
+ 	if (j)
+@@ -1684,6 +1681,7 @@ static int init_one(struct pci_dev *pdev, const struct pci_device_id *ent)
+ 	}
  
--	/* wait until all of our (qsfp) queue_work() calls complete */
--	flush_workqueue(ib_wq);
--
- 	postinit_cleanup(dd);
- }
+ 	sdma_start(dd);
++	hfi1_dbg_ibdev_init(&dd->verbs_dev);
+ 
+ 	return 0;
  
 -- 
 2.53.0
