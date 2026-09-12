@@ -1,48 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1ACB27456;
-	Sat, 12 Sep 2026 19:20:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8D9526ED46;
+	Sat, 12 Sep 2026 19:20:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789240836; cv=none; b=ehObbpW0X69rzqQUxDO/uP/tiwxjKLcGHPWoz+tP92hbJBVv9ciSAkH4tFF0IYOjbSFqyU4tRaw2BbYrFDJeEWkdjGSDMJT1m8ixmGyF+kSJltV/Vl9X0+Wfr55ihBvfmzxjpqT+rvRgiqIBAf5rQb53TQrs28MBZAi5J7VlJJA=
+	t=1789240841; cv=none; b=iPhkNBf09Lr8lk3YXAuWbn5nHO/V4mBdEkLHUtDF0ziftT1/Of2in4q9fV21xV4B2WEOVQtO4/NY6It5kBJq/aAzQQu8LCh+nm73U2/+c9f3XZ1hTT75L5sflgNlWNCjw3jgbKdG8BfIvuxI/yUYJj6ZOCGYlOVszvuuCledVAA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789240836; c=relaxed/simple;
-	bh=+lKnZvl5Hm+DsnVTIpC27TOa/d6KP7ID3LVGzGiZnCg=;
+	s=arc-20240116; t=1789240841; c=relaxed/simple;
+	bh=eI2zFeqRs5pzOQTmBSldaaOg89JNhOMY17iBSc6R1lQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hecpsS+veoT+0ZPqpkfnTS5qJy6tDSy5QQ3CO4TkaUZgFvbcOfG/eNd8tVmNSsS1ojLkHbOrlkmtsbFgQIfhivj3hCh1+nLovGiMsB+LSRsjk+UwbrMlaMtENv7gXP9R73vDQ8kYqT7HuCeNkzcJ1DT3B9aowNCQ5Khbqp2SnLk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=enm8JbsS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Mw8/CNek63W0j0Hmo9zdDZsDXvo+LCP3MntSZYvgN6bHxRDwhJLiocIw0sO1QDyG3BI+/9ke4cgIvUJ8Z2DXhYLcIOwPC/cRnbBo459WJbqqxjhpguXzMXlz/G+ClDCe99q9G1yR0+gPftfd7gMFrIy/P8SvZbeJfUP011KsHPY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rcc5hrh6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="enm8JbsS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9EFA1F000FF;
-	Sat, 12 Sep 2026 19:20:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rcc5hrh6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D503E1F000FF;
+	Sat, 12 Sep 2026 19:20:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789240834;
-	bh=jk4gVKFFDt60eGo23Snoonk0bHcLQ+JR6aQkLYc+8B8=;
+	s=korg; t=1789240839;
+	bh=X/ZYrJR15bA4lDGfRX5TUtHcDBBskLgccAYzUWwoMfE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=enm8JbsS3QlISVFcHXE2JOxCux3jaTyhvEtlO/OXY+E42xnD7R6saOxAU3b2KjIU2
-	 AAcLvuq05Evk/y16Q9P47pdeoi58VKebd5+nNv+3vSJ27mEg3rg3sXNMQJhM83DcxG
-	 OTBBggcQ2eMHpAQc4W+GtE5sHGVCk4reyO56AS1g=
+	b=Rcc5hrh6+WMf2o4gb63XBQMViqBDqCAaNOqh5wWPVL3adPSFuE2dKaJIKJ+jkVq9k
+	 wM3BnpTKvQp2QXbVchyGPknuJ3OgjyaJaPz+IAgSd6/2LoYI6LZEiwapzq37tkf6ql
+	 7Qf262i3GSivZmW+6/Y5TGClLk+tNA49FOUsr9ug=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
+	Guopeng Zhang <zhangguopeng@kylinos.cn>,
+	Tao Cui <cuitao@kylinos.cn>,
 	Johannes Weiner <hannes@cmpxchg.org>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Axel Rasmussen <axelrasmussen@google.com>,
-	Barry Song <baohua@kernel.org>,
-	David Hildenbrand <david@kernel.org>,
-	Kairui Song <kasong@tencent.com>,
-	Lorenzo Stoakes <ljs@kernel.org>,
 	Michal Hocko <mhocko@kernel.org>,
-	Wei Xu <weixugc@google.com>,
-	Yuanchu Xie <yuanchu@google.com>,
+	Muchun Song <muchun.song@linux.dev>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.10 006/798] mm/vmscan: report RCU-tasks quiescent states in shrink_lruvec()
-Date: Sat, 12 Sep 2026 08:53:54 +0200
-Message-ID: <20260912065517.106418680@linuxfoundation.org>
+Subject: [PATCH 5.10 007/798] mm: memcg: stop reclaim when a limit update is superseded
+Date: Sat, 12 Sep 2026 08:53:55 +0200
+Message-ID: <20260912065517.127636488@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -61,68 +56,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Guopeng Zhang <zhangguopeng@kylinos.cn>
 
-commit 25f52e81216884a7444bf07a606691feb09a94e3 upstream.
+commit 9477820c63cbf4d97114238f3d1ff10dfd6bee3f upstream.
 
-I am seeing some rcu_tasks stalls in the Meta fleet during reclaim.
+kernfs serializes file operations only per open file, so separate open
+files can update the same memory.high or memory.max file concurrently.
+Both handlers store the new limit before synchronous reclaim, but continue
+to use the writer's local target in the reclaim loop.  If another writer
+raises or removes the limit, the first writer can continue reclaiming
+toward a stale target.
 
-  INFO: rcu_tasks detected stalls on tasks:
-	0000000088620d09: .. nvcsw: 6735/6735 holdout: 1 idle_cpu: -1/8
-	task:GlobalCPUThread state:R  running task  pid:2552016 tgid:2524552
-  Call Trace:
-   shrink_lruvec
-   mem_cgroup_iter
-   shrink_node
-   do_try_to_free_pages
-   try_to_free_pages
-   __alloc_frozen_pages_noprof
-   alloc_pages_noprof
-   pte_alloc_one
-   __pte_alloc
-   handle_mm_fault
+For memory.max, this can leave the writer looping indefinitely once
+reclaim retries are exhausted.  The OOM path sees sufficient margin under
+the current limit and returns true without killing, while the writer still
+compares usage against its stale target and records another OOM event.
 
-Nothing promises direct reclaim returns in bounded time, and the scan loop
-in shrink_lruvec() only calls cond_resched(), which is a no-op on
-PREEMPTION kernels.  Involuntary preemption is not a Tasks-RCU quiescent
-state, so the reclaiming task never reports one and becomes a holdout.
+Check the current limit at the start of each reclaim iteration and stop if
+it no longer matches the writer's target.
 
-Upgrade it to cond_resched_tasks_rcu_qs(), which reports a quiescent state
-even when cond_resched() does nothing.
+Reproducer:
 
-PS: This has been discussed in [1]
+Populate a cgroup with anonymous memory and disable swapping.  Lower
+memory.max from one open file, then restore it to "max" through another
+open file after the new limit becomes visible.
 
-Link: https://lore.kernel.org/20260810-rcu_task_shrink_lruvec-v1-1-4d9f7d5251cb@debian.org
-Link: https://lore.kernel.org/all/amdWVTs0WKOxguxP@gmail.com/ [1]
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Reviewed-by: Paul E. McKenney <paulmck@kernel.org>
+Without the patch, the first writer remains blocked and repeatedly
+increments the OOM event counter.  With the patch, it returns normally.
+
+This was not motivated by a reported production workload.  We found it
+through automated randomized testing for our cgroup observability work
+and reduced it to the reproducer above.
+
+Link: https://lore.kernel.org/20260724021805.1234583-1-guopeng.zhang@linux.dev
+Fixes: 8c8c383c04f6 ("mm: memcontrol: try harder to set a new memory.high")
+Fixes: b6e6edcfa405 ("mm: memcontrol: reclaim and OOM kill when shrinking memory.max below usage")
+Signed-off-by: Guopeng Zhang <zhangguopeng@kylinos.cn>
+Acked-by: Tao Cui <cuitao@kylinos.cn>
 Acked-by: Johannes Weiner <hannes@cmpxchg.org>
-Acked-by: Shakeel Butt <shakeel.butt@linux.dev>
-Cc: Axel Rasmussen <axelrasmussen@google.com>
-Cc: Barry Song <baohua@kernel.org>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Kairui Song <kasong@tencent.com>
-Cc: Lorenzo Stoakes <ljs@kernel.org>
 Cc: Michal Hocko <mhocko@kernel.org>
-Cc: Wei Xu <weixugc@google.com>
-Cc: Yuanchu Xie <yuanchu@google.com>
+Cc: Muchun Song <muchun.song@linux.dev>
+Cc: Roman Gushchin <roman.gushchin@linux.dev>
+Cc: Shakeel Butt <shakeel.butt@linux.dev>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/vmscan.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ mm/memcontrol.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/mm/vmscan.c
-+++ b/mm/vmscan.c
-@@ -2484,7 +2484,7 @@ static void shrink_lruvec(struct lruvec
- 			}
- 		}
+--- a/mm/memcontrol.c
++++ b/mm/memcontrol.c
+@@ -6363,6 +6363,9 @@ static ssize_t memory_high_write(struct
+ 		unsigned long nr_pages = page_counter_read(&memcg->memory);
+ 		unsigned long reclaimed;
  
--		cond_resched();
-+		cond_resched_tasks_rcu_qs();
++		if (high != READ_ONCE(memcg->memory.high))
++			break;
++
+ 		if (nr_pages <= high)
+ 			break;
  
- 		if (nr_reclaimed < nr_to_reclaim || proportional_reclaim)
- 			continue;
+@@ -6411,6 +6414,9 @@ static ssize_t memory_max_write(struct k
+ 	for (;;) {
+ 		unsigned long nr_pages = page_counter_read(&memcg->memory);
+ 
++		if (max != READ_ONCE(memcg->memory.max))
++			break;
++
+ 		if (nr_pages <= max)
+ 			break;
+ 
 
 
