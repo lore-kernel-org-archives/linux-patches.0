@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE6843B3BF5;
-	Sat, 12 Sep 2026 10:17:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A36337FF60;
+	Sat, 12 Sep 2026 10:17:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789208240; cv=none; b=E73cQsNmuQ/e4brRv/SmLUkRvcmfloIIrWx1xGGLrTCq1OWtXrml78M08rEXHeOGDry6SSU1b9x8k8iC6H+uaXPMDUtgBksFYTeFDXJI18tVOSj7tNePOuENOg8unr0M0AJ/FDYwnGB39OMQ8s3xw2H4odD/C0U4E0Tk7TVyZV0=
+	t=1789208245; cv=none; b=i9S7MTLt3d5cAUaCWXmRUzugIT+IEKCbzpj1Bj7FZIy89Mabpz+hKVzZkxYZUN86oT21oSH9E8vVUKQmINyOLN7vnmfydjGEOI+k8/RYznng+WqUNVjttAV2pkaPOzPoJAS3dH4Z6fwP1UAdatyu2oKxJp1id8H5r1q/A5pCwBA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789208240; c=relaxed/simple;
-	bh=HiPlI1y7zP+7VH5nhA5rw869had2DVMA6MeCM4Cbcyg=;
+	s=arc-20240116; t=1789208245; c=relaxed/simple;
+	bh=0Vk56qoaBfwzw9mzob3QpSsbklS5IRaNkkhmjQCS0g4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X/ROJ4+SV61138jD4E7CwP6q07NQbDpCIiTnCkJ82qqkgEqLPbpjz/OwNZvOJ25XRtRfv1aD5pG0SroSfyxgwtenB5Q+25NPzWUS2o8MHm6HSjETIyp6Sx0LE0i4g+6wvbuKUbmqvYby5V5CNBPfSitlJEWqWh3Ch/PfEi3cxyg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VjBlxQOz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OXNjctYfz5mcx+t58HxI4vCJOFDwIpEkcsa3T8Bxgpk1wzeR2tn846zmb0/zIn6dWLseeqYz/hoMqQAw4vjNwB4y+oi97NNvha0ZT57TnDZdG7FG63RXV+O7g1GmMErQoZYkD+Tm+OjGLNdgrGmmZUDYyCrSEKRA3m8/7pTuwRo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JKnEONcX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VjBlxQOz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC41F1F000FF;
-	Sat, 12 Sep 2026 10:17:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JKnEONcX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D748B1F000FF;
+	Sat, 12 Sep 2026 10:17:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789208237;
-	bh=XNhQyFwA8O914jZKNbLUU4L4On/IuOAMGic2ZdXphPU=;
+	s=korg; t=1789208242;
+	bh=ljGew+eVU5m3AoeHxxtlYGgKd5Y12ynAVC++b6NDVBg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VjBlxQOzxwkKII61AuFddctqN71wefXm+36hf5vHayYAwtQtcSf2uRI/AR9k/kU0O
-	 uqMWuugENGDgcVsHIv+ulOqZrPiOonMdFR8zn5UbXygzyo7CNcOPisR0l+cMZk9z8I
-	 x2iIM2QZWt8CINe+BawGXBQRo0eh8bAPC3pX90Q0=
+	b=JKnEONcX9LXCuEtYw5j/SFL1MNEHqMnnO8qDXjy1BqUX/jrpFV2yATkGsFVn/VyPT
+	 /RjWQlcyBR1SHcpZeaacZYnZ7kW1bO/CoTf6Yw4jzmS7MNyecaOaK3wnzKC6w+Rrtz
+	 TrW9YaByi8eaSUbDrrzjblXiBsApdUm7MP2mkD8Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Clark <james.clark@linaro.org>,
-	Ian Rogers <irogers@google.com>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Kohei Enju <enju.kohei@fujitsu.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0577/1518] tools/build: Allow versioning of all LLVM tools defined in Makefile.include
-Date: Sat, 12 Sep 2026 08:45:46 +0200
-Message-ID: <20260912065636.481288001@linuxfoundation.org>
+Subject: [PATCH 6.18 0578/1518] arm64: RSI: fix field-spanning write warning in attestation token init
+Date: Sat, 12 Sep 2026 08:45:47 +0200
+Message-ID: <20260912065636.504478820@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -53,107 +51,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: James Clark <james.clark@linaro.org>
+From: Kohei Enju <enju.kohei@fujitsu.com>
 
-[ Upstream commit d5a1d1270c898057afc5b51fb6d0f2defa89d56d ]
+[ Upstream commit 221049874b6a78c7d87bc826581b0695cd338e2b ]
 
-The version of LLVM tools can be given on the build command with
-LLVM=-15, but this isn't applied to all tools. For example $(CC) gets
-versioned, but $(CLANG) doesn't. This causes a Perf build with LTO=1 to
-fail with an error about mixed clang versions:
+The challenge is passed in registers a1 through a8. However, copying to
+&regs.a1 makes FORTIFY treat the destination as the single a1 field,
+resulting in a field-spanning write warning. [1]
 
- ld.lld: error: libperf/core.o: Unknown attribute kind (86)
-   (Producer: 'LLVM18.1.8' Reader: 'LLVM 15.0.7')
+Overlay the SMCCC register structure with an RSI-specific argument
+layout and copy the challenge into an explicit 64-byte array. This keeps
+the existing a1-a8 argument encoding while giving the copy a correctly
+sized destination object.
 
-This file has two "ifneq ($(LLVM),)" blocks adjacent to each other, so
-merge these blocks making it obvious that all tools should be versioned
-consistently and there is nothing special about each block.
+[1]
+memcpy: detected field-spanning write (size 64) of single field "&regs.a1" at ./arch/arm64/include/asm/rsi_cmds.h:119 (size 8)
+WARNING: ./arch/arm64/include/asm/rsi_cmds.h:119 at rsi_attestation_token_init+0xdc/0xf8 [arm_cca_guest], CPU#0: cat/3314
 
-This also reveals that ?= and "allow-override" are used inconsistently
-between the blocks. "allow-override" is technically only required for
-builtin variables, but isn't only used on them, and doesn't do any harm
-if used on a non-builtin. Make them all "allow-override" for
-consistency. The only functional difference this will cause is if there
-is a file level definition of one of the variables followed by an
-"#include of Makefile.include" which will now overwrite. But this isn't
-done and in a later commit some of the duplicate definitions will be
-removed for good measure.
-
-There are also some other LLVM tools that are not defined here and will
-be moved in a later commit.
-
-Signed-off-by: James Clark <james.clark@linaro.org>
-Reviewed-by: Ian Rogers <irogers@google.com>
-Acked-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Fixes: e9c281928c24 ("kbuild: Make $(LLVM) more flexible")
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Fixes: b880a80011f5 ("arm64: rsi: Add RSI definitions")
+Signed-off-by: Kohei Enju <enju.kohei@fujitsu.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/scripts/Makefile.include | 37 ++++++++++++++++++----------------
- 1 file changed, 20 insertions(+), 17 deletions(-)
+ arch/arm64/include/asm/rsi_cmds.h | 27 +++++++++++++++++++--------
+ 1 file changed, 19 insertions(+), 8 deletions(-)
 
-diff --git a/tools/scripts/Makefile.include b/tools/scripts/Makefile.include
-index ded48263dd5e0..c5bb7bf42f430 100644
---- a/tools/scripts/Makefile.include
-+++ b/tools/scripts/Makefile.include
-@@ -59,10 +59,18 @@ LLVM_SUFFIX := $(LLVM)
- endif
+diff --git a/arch/arm64/include/asm/rsi_cmds.h b/arch/arm64/include/asm/rsi_cmds.h
+index 2c8763876dfb7..c1fab41f671ec 100644
+--- a/arch/arm64/include/asm/rsi_cmds.h
++++ b/arch/arm64/include/asm/rsi_cmds.h
+@@ -88,6 +88,14 @@ static inline long rsi_set_addr_range_state(phys_addr_t start,
+ 	return res.a0;
+ }
  
- $(call allow-override,CC,$(LLVM_PREFIX)clang$(LLVM_SUFFIX))
-+$(call allow-override,CLANG,$(LLVM_PREFIX)clang$(LLVM_SUFFIX))
-+$(call allow-override,HOSTCC,$(LLVM_PREFIX)clang$(LLVM_SUFFIX))
- $(call allow-override,AR,$(LLVM_PREFIX)llvm-ar$(LLVM_SUFFIX))
-+$(call allow-override,HOSTAR,$(LLVM_PREFIX)llvm-ar$(LLVM_SUFFIX))
- $(call allow-override,LD,$(LLVM_PREFIX)ld.lld$(LLVM_SUFFIX))
-+$(call allow-override,HOSTLD,$(LLVM_PREFIX)ld.lld$(LLVM_SUFFIX))
- $(call allow-override,CXX,$(LLVM_PREFIX)clang++$(LLVM_SUFFIX))
- $(call allow-override,STRIP,$(LLVM_PREFIX)llvm-strip$(LLVM_SUFFIX))
-+$(call allow-override,LLVM_STRIP,$(LLVM_PREFIX)llvm-strip$(LLVM_SUFFIX))
-+$(call allow-override,LLC,$(LLVM_PREFIX)llc$(LLVM_SUFFIX))
-+$(call allow-override,LLVM_CONFIG,$(LLVM_PREFIX)llvm-config$(LLVM_SUFFIX))
-+$(call allow-override,LLVM_OBJCOPY,$(LLVM_PREFIX)llvm-objcopy$(LLVM_SUFFIX))
- else
- # Allow setting various cross-compile vars or setting CROSS_COMPILE as a prefix.
- $(call allow-override,CC,$(CROSS_COMPILE)gcc)
-@@ -70,26 +78,21 @@ $(call allow-override,AR,$(CROSS_COMPILE)ar)
- $(call allow-override,LD,$(CROSS_COMPILE)ld)
- $(call allow-override,CXX,$(CROSS_COMPILE)g++)
- $(call allow-override,STRIP,$(CROSS_COMPILE)strip)
--endif
--
--CC_NO_CLANG := $(shell $(CC) -dM -E -x c /dev/null | grep -Fq "__clang__"; echo $$?)
- 
--ifneq ($(LLVM),)
--HOSTAR  ?= $(LLVM_PREFIX)llvm-ar$(LLVM_SUFFIX)
--HOSTCC  ?= $(LLVM_PREFIX)clang$(LLVM_SUFFIX)
--HOSTLD  ?= $(LLVM_PREFIX)ld.lld$(LLVM_SUFFIX)
--else
--HOSTAR  ?= ar
--HOSTCC  ?= gcc
--HOSTLD  ?= ld
-+# Host versions aren't prefixed
-+$(call allow-override,HOSTAR,ar)
-+$(call allow-override,HOSTCC,gcc)
-+$(call allow-override,HOSTLD,ld)
++#define RSI_ATTEST_CHALLENGE_MIN_SIZE	32
++#define RSI_ATTEST_CHALLENGE_MAX_SIZE	64
 +
-+# Some tools still require Clang, LLC and/or LLVM utils
-+$(call allow-override,CLANG,clang)
-+$(call allow-override,LLC,llc)
-+$(call allow-override,LLVM_CONFIG,llvm-config)
-+$(call allow-override,LLVM_OBJCOPY,llvm-objcopy)
-+$(call allow-override,LLVM_STRIP,llvm-strip)
- endif
++struct rsi_attestation_token_init_args {
++	unsigned long fid;
++	u8 challenge[RSI_ATTEST_CHALLENGE_MAX_SIZE];
++};
++
+ /**
+  * rsi_attestation_token_init - Initialise the operation to retrieve an
+  * attestation token.
+@@ -109,18 +117,21 @@ static inline long rsi_set_addr_range_state(phys_addr_t start,
+ static inline long
+ rsi_attestation_token_init(const u8 *challenge, unsigned long size)
+ {
+-	struct arm_smccc_1_2_regs regs = { 0 };
++	union {
++		struct arm_smccc_1_2_regs regs;
++		struct rsi_attestation_token_init_args init;
++	} args = { 0 };
  
--# Some tools require Clang, LLC and/or LLVM utils
--CLANG		?= clang
--LLC		?= llc
--LLVM_CONFIG	?= llvm-config
--LLVM_OBJCOPY	?= llvm-objcopy
--LLVM_STRIP	?= llvm-strip
-+CC_NO_CLANG := $(shell $(CC) -dM -E -x c /dev/null | grep -Fq "__clang__"; echo $$?)
+-	/* The challenge must be at least 32bytes and at most 64bytes */
+-	if (!challenge || size < 32 || size > 64)
++	if (!challenge || size < RSI_ATTEST_CHALLENGE_MIN_SIZE ||
++	    size > RSI_ATTEST_CHALLENGE_MAX_SIZE)
+ 		return -EINVAL;
  
- # Some tools require bpftool
- SYSTEM_BPFTOOL	?= bpftool
+-	regs.a0 = SMC_RSI_ATTESTATION_TOKEN_INIT;
+-	memcpy(&regs.a1, challenge, size);
+-	arm_smccc_1_2_smc(&regs, &regs);
++	args.init.fid = SMC_RSI_ATTESTATION_TOKEN_INIT;
++	memcpy(args.init.challenge, challenge, size);
++	arm_smccc_1_2_smc(&args.regs, &args.regs);
+ 
+-	if (regs.a0 == RSI_SUCCESS)
+-		return regs.a1;
++	if (args.regs.a0 == RSI_SUCCESS)
++		return args.regs.a1;
+ 
+ 	return -EINVAL;
+ }
 -- 
 2.53.0
 
