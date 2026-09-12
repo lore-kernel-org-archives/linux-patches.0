@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2F3441E6DB;
-	Sat, 12 Sep 2026 10:09:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D250341D23A;
+	Sat, 12 Sep 2026 10:09:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789207744; cv=none; b=e8ITUcFhpzagIfwItoYLoGO2rK8j1lQDuQalyDwmHyLr7h6rpytfiPNcXS0nA3n679gmhcttLqax5QJeGfKkZRtnZlvJIWdVmrTUa/fLcm9wwsVNYp9gDmZt5F4NfS/1Get/uOTrl6ATbDZcJxJn9KfAqwX68CvIJzyKLG1701I=
+	t=1789207750; cv=none; b=BF5NtUQ9y6f32c1/YB5l5erqesM6DX0zgzlEPBGIhs3a/NB3urrKhuGBkzXQ+6BJ1zszD1ZbFVA52+IsWr6jrxfl1xQ/96ge+PAy2JHNVvUcfPKlkyjplTglY2NbmMQ02FiOvAGB2CZxUsepnkfx39QRy8j+xBoR8k0iiPvxAtc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789207744; c=relaxed/simple;
-	bh=nucaF91ltIIsqnarmejlY0aFCQf3wNZAb6hNE7n0mMM=;
+	s=arc-20240116; t=1789207750; c=relaxed/simple;
+	bh=ZPNssF8wg5w7wyt3P7BsrJBtimvbdgbMp7NNwZ5EU0o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C/W1mEY7C+lQUYm6x5GIMXazYTI2v2WOsT1y6u+l4k4s+jOLP8aOvMLjeUgZFgiIzGboObVFHIvv8oDpxo/3cIDXEChgctJdmEdC4W540QX9xQB706LQWPFfMjA3gXB7Y382z6UDq+ylTa5Qf/666isYyug5Eup9kCQAfoSeoP8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rbdt2k4q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JSCoKYWslhBJ59vczhzVhJ1vvFaZjoiOmYmZTfxoiN+v6OcyizpW83CXyVT1SRUwDuj6BSHzeQ88LX0Rcwlp69w7NfL5kPtZiWGuwQdpm5d2GWkEZOzTjYdYE4H1MHV0OV7ExO26TzWHLSSiW4RpqUzr5lWtW6T2liJwWyINkNw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2v+KjeBb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rbdt2k4q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E3EF1F000FF;
-	Sat, 12 Sep 2026 10:09:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2v+KjeBb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D8011F000FF;
+	Sat, 12 Sep 2026 10:09:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789207742;
-	bh=f1GRqdpv/LM67z3nkciyz2+tzC27uPDH9ak7ZLI/i5k=;
+	s=korg; t=1789207747;
+	bh=LgCji30GaIZ8zDBtuBdcynT943KGX1iWWOgWj/hVAL0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Rbdt2k4qBkC4AbxvCljZQR0tRpfLF558ntBkcOSqygMxcLIq3k1AmJgzfmf9TCAcr
-	 8/6+TV84TyDZDdfcjNc/8V9P4tp7o1fTIZihw+xA+KtFyK2Vt5Sj5LD1FOskj5OVYM
-	 rH72j1MgD/oj9A/N7noE9CS/Rvapkkihf4FT5Zqc=
+	b=2v+KjeBbRLIsaulFS81Ptsqq4oLbf42dzymYzdj/2KRTi7w/f/qyy7s2CvVsCKzpa
+	 V43g8c3E0fhdN90Qe6uEJQphaY5R3DTZ1fxvPNs5XqTkBNGE2rCf0vJXFpMQ9dfz+S
+	 9kJLB++Ap5uzitegOWul+6RKmx5MW311MN2ghlrg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linmao Li <lilinmao@kylinos.cn>,
-	Jerome Brunet <jbrunet@baylibre.com>,
-	Mark Brown <broonie@kernel.org>,
+	Can Peng <pengcan@kylinos.cn>,
+	Changhuang Liang <changhuang.liang@starfivetech.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0476/1518] ASoC: meson: Keep link pointers valid on realloc failure
-Date: Sat, 12 Sep 2026 08:44:05 +0200
-Message-ID: <20260912065634.214776248@linuxfoundation.org>
+Subject: [PATCH 6.18 0477/1518] phy: starfive: Fix runtime PM cleanup in JH7110 DPHY TX probe
+Date: Sat, 12 Sep 2026 08:44:06 +0200
+Message-ID: <20260912065634.237649550@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,75 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linmao Li <lilinmao@kylinos.cn>
+From: Can Peng <pengcan@kylinos.cn>
 
-[ Upstream commit 2aaa41cf974f83a6fb105422bac4e2f107150774 ]
+[ Upstream commit f40b0241f3a382e99c14de2f28f14a44973407c1 ]
 
-meson_card_reallocate_links() grows the DAI link and private data
-arrays with two consecutive krealloc() calls and updates the owner
-pointers only after both calls have succeeded.
+stf_dphy_probe() enables runtime PM before getting the clock and
+reset controls, creating the PHY and registering the PHY provider. If
+any of those steps fails, probe returns with runtime PM still enabled.
 
-A successful krealloc() may move the data: it frees the old block and
-returns a new one. When that happens for the link array and the second
-krealloc() then fails, card->dai_link still points to the block that
-krealloc() already freed, and the error path frees the new block too.
-The probe error path then calls meson_card_clean_references(), which
-dereferences card->dai_link and kfree()s it again, resulting in a
-use-after-free and a double free.
+The driver also has no remove callback, so runtime PM is left enabled
+on driver unbind after a successful probe.
 
-Commit card->dai_link and card->num_links right after the first
-krealloc() succeeds, so the pointer always refers to a valid allocation
-that meson_card_clean_references() can walk and free. krealloc() with
-__GFP_ZERO zero-initializes the added entries, so walking them on the
-error path is safe. With both failure paths reduced to a plain return,
-drop the goto labels and the error message.
+Use devm_pm_runtime_enable() so runtime PM is disabled automatically
+on later probe failures and on driver unbind.
 
-Fixes: 7864a79f37b5 ("ASoC: meson: add axg sound card support")
-Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
-Reviewed-by: Jerome Brunet <jbrunet@baylibre.com>
-Link: https://patch.msgid.link/20260717012433.1432285-1-lilinmao@kylinos.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: d3ab79553308 ("phy: starfive: Add mipi dphy tx support")
+Signed-off-by: Can Peng <pengcan@kylinos.cn>
+Reviewed-by: Changhuang Liang <changhuang.liang@starfivetech.com>
+Link: https://patch.msgid.link/20260718090054.444513-2-pengcan@kylinos.cn
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/meson/meson-card-utils.c | 17 ++++++-----------
- 1 file changed, 6 insertions(+), 11 deletions(-)
+ drivers/phy/starfive/phy-jh7110-dphy-tx.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/meson/meson-card-utils.c b/sound/soc/meson/meson-card-utils.c
-index cdb759b466ad4..8617a4661a339 100644
---- a/sound/soc/meson/meson-card-utils.c
-+++ b/sound/soc/meson/meson-card-utils.c
-@@ -50,25 +50,20 @@ int meson_card_reallocate_links(struct snd_soc_card *card,
- 			 num_links * sizeof(*priv->card.dai_link),
- 			 GFP_KERNEL | __GFP_ZERO);
- 	if (!links)
--		goto err_links;
-+		return -ENOMEM;
-+
-+	priv->card.dai_link = links;
-+	priv->card.num_links = num_links;
+diff --git a/drivers/phy/starfive/phy-jh7110-dphy-tx.c b/drivers/phy/starfive/phy-jh7110-dphy-tx.c
+index c64d1c91b1307..181491a938079 100644
+--- a/drivers/phy/starfive/phy-jh7110-dphy-tx.c
++++ b/drivers/phy/starfive/phy-jh7110-dphy-tx.c
+@@ -392,6 +392,7 @@ static int stf_dphy_probe(struct platform_device *pdev)
+ {
+ 	struct phy_provider *phy_provider;
+ 	struct stf_dphy *dphy;
++	int ret;
  
- 	ldata = krealloc(priv->link_data,
- 			 num_links * sizeof(*priv->link_data),
- 			 GFP_KERNEL | __GFP_ZERO);
-+	/* meson_card_clean_references() will free the links on this error path */
- 	if (!ldata)
--		goto err_ldata;
-+		return -ENOMEM;
+ 	dphy = devm_kzalloc(&pdev->dev, sizeof(*dphy), GFP_KERNEL);
+ 	if (!dphy)
+@@ -406,7 +407,9 @@ static int stf_dphy_probe(struct platform_device *pdev)
+ 	if (IS_ERR(dphy->topsys))
+ 		return PTR_ERR(dphy->topsys);
  
--	priv->card.dai_link = links;
- 	priv->link_data = ldata;
--	priv->card.num_links = num_links;
- 	return 0;
--
--err_ldata:
--	kfree(links);
--err_links:
--	dev_err(priv->card.dev, "failed to allocate links\n");
--	return -ENOMEM;
--
- }
- EXPORT_SYMBOL_GPL(meson_card_reallocate_links);
+-	pm_runtime_enable(&pdev->dev);
++	ret = devm_pm_runtime_enable(&pdev->dev);
++	if (ret)
++		return ret;
  
+ 	dphy->txesc_clk = devm_clk_get(&pdev->dev, "txesc");
+ 	if (IS_ERR(dphy->txesc_clk))
 -- 
 2.53.0
 
