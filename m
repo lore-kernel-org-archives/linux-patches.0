@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A8ED384232;
-	Sat, 12 Sep 2026 10:52:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83F152D0C94;
+	Sat, 12 Sep 2026 10:52:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789210362; cv=none; b=P47aROvQzqSeQeWyMfSTpMeRibjWuGMRF9wFj09Jd4p1U3cluRzRa1Nwq6GN2TDu3NRkLefBt+qB++31sTVgxTkc400lzFjMaxLtEXTxrCgRe7AocuDZxFaXJ7IR3fgXo2P3nrp203sZJvV68OD0A7ehkO5/tbc6ATE3RN6G2y8=
+	t=1789210366; cv=none; b=MZ5ic93v5byY1BJ8LK7G5Q8hkh0Z0KMvKOFKPFXrwSpPdxzCp6ITAsOcbvP765AxGH77meRKXv3qfHSSpsZOjTx1rIGY57A8iaO+sw0dwnuDctcUtaSaJ63EO0Xm3Q/Q5LUsDtCCCvHtglzEDTKypfA3bFR3IjMYtYb8C/w0rBE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789210362; c=relaxed/simple;
-	bh=Vv1zf9qzWgaA9Cy4cDxLoQcUNhQTG3MjB9rHukf4NPE=;
+	s=arc-20240116; t=1789210366; c=relaxed/simple;
+	bh=GGFo/rLMoH7sj/Oxb/I2Iz3OTkvRMcFmXAk+T91exR8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mTn69I5paMXev5Xsv7YmaKDi+U2lxRW0cX9JT7KW8pHghzUhozv8iSnKLa9VBLGRrdtM6c46vBQUiSgWOanJTuViJLIrdUvbvCU+5kExPh91AzX/xYijWwiqTWHayNnAOko0s/EUocVs1B2FvSZ8uLY86lXs8fIJOG+zrLPqkes=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f7KXeMJe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IAQPEUmTdrx7kf0D01sjrTi0CoOQ5Nn8y1UJahl+fZZ20Yp6L/UGREFq5EQXPcDFaJrYVuhe8Z9ZRyT5ynUtIcbv18KeWNdLp8paatok6A9XNtQRnlDoCwTEiYzDHtUKVyFrR0v7tr2RBUYrgamDJYU5biIbblgry4PA5RkyRUc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lRkR4wwh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f7KXeMJe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0803B1F000FF;
-	Sat, 12 Sep 2026 10:52:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lRkR4wwh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24D7E1F000FF;
+	Sat, 12 Sep 2026 10:52:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789210360;
-	bh=2pU1YQXb0kKQ/+DT3a6HyuIRlbl7p0987AOz9xu6Ah0=;
+	s=korg; t=1789210365;
+	bh=Ersmsw5YIqeBVHO952b5k6RY9gTVorZ8tA0hDEbyopM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=f7KXeMJeX5KG7eOJnkflp361KsB5Jk6pqT5PmS+tZRJwPlbIGIHSm5FyW7JHnhXXU
-	 StL21oz2ewkK+u8jtSEk+dNjwSRwlwaN8bJs01i/d3+SzXIi9pu027hUSii6qmX2jy
-	 tQ91p86Gf6UXgzsQuAdijKC7tDpwE16/3nxnxw/A=
+	b=lRkR4wwh92nRDxn1P+gRl+uwwayjs+y00tDoFVT6jS3nl1lWoan0i2gNX3UJddaAh
+	 M6V3btVcfuiyPCgF7YAfbol7QztXFSCueqKrfbcVmBRGJDu+MfKYE1F4g43O7wQNf5
+	 TQ/ceUgjx6s8rdIrZo80d2KSwMWXp1IbCDLPgChk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Marangi <ansuelsmth@gmail.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Leo Yan <leo.yan@arm.com>,
+	Yeoreum Yun <yeoreum.yun@arm.com>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1008/1518] pinctrl: airoha: convert PHY LED GPIO to macro
-Date: Sat, 12 Sep 2026 08:52:57 +0200
-Message-ID: <20260912065646.257122660@linuxfoundation.org>
+Subject: [PATCH 6.18 0968/1518] coresight: etm4x: fix wrong check of etm4x_sspcicrn_present()
+Date: Sat, 12 Sep 2026 08:52:17 +0200
+Message-ID: <20260912065645.358249941@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,644 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Marangi <ansuelsmth@gmail.com>
+From: Yeoreum Yun <yeoreum.yun@arm.com>
 
-[ Upstream commit 579839c9548cf2a85e873ad787bc2fa6610bf8ab ]
+[ Upstream commit 0e1cd4270b42a257c139165622091e1e8c7104a7 ]
 
-PHY LED GPIO pinctrl struct definition is very similar across the
-different 4 PHY and 2 LED and it can be generelized to a macro.
+According to Embedded Trace Macrocell Architecture Specification
+ETMv4.0 to ETM4.6 [0], TRCSSPCICR<n> is present only if all of
+the following are true:
 
-To reduce code size, convert them to a common macro.
+  - TRCIDR4.NUMSSCC > n.
+  - TRCIDR4.NUMPC > 0b0000.
+  - TRCSSCSR<n>.PC == 0b1.
 
-Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Stable-dep-of: a8454680a6ce ("pinctrl: airoha: fix mdio bitfield names")
+Comment for etm4x_sspcicrn_present() is align with the specification.
+However, the check should use drvdata->nr_pe_cmp to check TRCIDR4.NUMPC
+not nr_pe.
+
+Link: https://developer.arm.com/documentation/ihi0064/latest/ [0]
+Fixes: f6a18f354c58 ("coresight: etm4x: Handle access to TRCSSPCICRn")
+Reviewed-by: Leo Yan <leo.yan@arm.com>
+Signed-off-by: Yeoreum Yun <yeoreum.yun@arm.com>
+Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Link: https://lore.kernel.org/r/20260725113645.57519-2-yeoreum.yun@arm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/mediatek/pinctrl-airoha.c | 588 ++++------------------
- 1 file changed, 100 insertions(+), 488 deletions(-)
+ drivers/hwtracing/coresight/coresight-etm4x-core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pinctrl/mediatek/pinctrl-airoha.c b/drivers/pinctrl/mediatek/pinctrl-airoha.c
-index 9f8e05e3671d6..2eaac83a1a413 100644
---- a/drivers/pinctrl/mediatek/pinctrl-airoha.c
-+++ b/drivers/pinctrl/mediatek/pinctrl-airoha.c
-@@ -1475,516 +1475,128 @@ static const struct airoha_pinctrl_func_group pwm_func_group[] = {
- 	},
- };
+diff --git a/drivers/hwtracing/coresight/coresight-etm4x-core.c b/drivers/hwtracing/coresight/coresight-etm4x-core.c
+index 2271f5ea81214..318846e4dda3a 100644
+--- a/drivers/hwtracing/coresight/coresight-etm4x-core.c
++++ b/drivers/hwtracing/coresight/coresight-etm4x-core.c
+@@ -92,7 +92,7 @@ static int etm4_probe_cpu(unsigned int cpu);
+ static bool etm4x_sspcicrn_present(struct etmv4_drvdata *drvdata, int n)
+ {
+ 	return (n < drvdata->nr_ss_cmp) &&
+-	       drvdata->nr_pe &&
++	       drvdata->nr_pe_cmp &&
+ 	       (drvdata->config.ss_status[n] & TRCSSCSRn_PC);
+ }
  
-+#define AIROHA_PINCTRL_PHY_LED0(gpio, mux_val, map_mask, map_val)	\
-+	{								\
-+		.name = (gpio),						\
-+		.regmap[0] = {						\
-+			AIROHA_FUNC_MUX,				\
-+			REG_GPIO_2ND_I2C_MODE,				\
-+			(mux_val),					\
-+			(mux_val),					\
-+		},							\
-+		.regmap[1] = {						\
-+			AIROHA_FUNC_MUX,				\
-+			REG_LAN_LED0_MAPPING,				\
-+			(map_mask),					\
-+			(map_val),					\
-+		},							\
-+		.regmap_size = 2,					\
-+	}
-+
-+#define AIROHA_PINCTRL_PHY_LED1(gpio, mux_val, map_mask, map_val)	\
-+	{								\
-+		.name = (gpio),						\
-+		.regmap[0] = {						\
-+			AIROHA_FUNC_MUX,				\
-+			REG_GPIO_2ND_I2C_MODE,				\
-+			(mux_val),					\
-+			(mux_val),					\
-+		},							\
-+		.regmap[1] = {						\
-+			AIROHA_FUNC_MUX,				\
-+			REG_LAN_LED1_MAPPING,				\
-+			(map_mask),					\
-+			(map_val),					\
-+		},							\
-+		.regmap_size = 2,					\
-+	}
-+
- static const struct airoha_pinctrl_func_group phy1_led0_func_group[] = {
--	{
--		.name = "gpio33",
--		.regmap[0] = {
--			AIROHA_FUNC_MUX,
--			REG_GPIO_2ND_I2C_MODE,
--			GPIO_LAN0_LED0_MODE_MASK,
--			GPIO_LAN0_LED0_MODE_MASK
--		},
--		.regmap[1] = {
--			AIROHA_FUNC_MUX,
--			REG_LAN_LED0_MAPPING,
--			LAN0_LED_MAPPING_MASK,
--			LAN0_PHY_LED_MAP(0)
--		},
--		.regmap_size = 2,
--	}, {
--		.name = "gpio34",
--		.regmap[0] = {
--			AIROHA_FUNC_MUX,
--			REG_GPIO_2ND_I2C_MODE,
--			GPIO_LAN1_LED0_MODE_MASK,
--			GPIO_LAN1_LED0_MODE_MASK
--		},
--		.regmap[1] = {
--			AIROHA_FUNC_MUX,
--			REG_LAN_LED0_MAPPING,
--			LAN1_LED_MAPPING_MASK,
--			LAN1_PHY_LED_MAP(0)
--		},
--		.regmap_size = 2,
--	}, {
--		.name = "gpio35",
--		.regmap[0] = {
--			AIROHA_FUNC_MUX,
--			REG_GPIO_2ND_I2C_MODE,
--			GPIO_LAN2_LED0_MODE_MASK,
--			GPIO_LAN2_LED0_MODE_MASK
--		},
--		.regmap[1] = {
--			AIROHA_FUNC_MUX,
--			REG_LAN_LED0_MAPPING,
--			LAN2_LED_MAPPING_MASK,
--			LAN2_PHY_LED_MAP(0)
--		},
--		.regmap_size = 2,
--	}, {
--		.name = "gpio42",
--		.regmap[0] = {
--			AIROHA_FUNC_MUX,
--			REG_GPIO_2ND_I2C_MODE,
--			GPIO_LAN3_LED0_MODE_MASK,
--			GPIO_LAN3_LED0_MODE_MASK
--		},
--		.regmap[1] = {
--			AIROHA_FUNC_MUX,
--			REG_LAN_LED0_MAPPING,
--			LAN3_LED_MAPPING_MASK,
--			LAN3_PHY_LED_MAP(0)
--		},
--		.regmap_size = 2,
--	},
-+	AIROHA_PINCTRL_PHY_LED0("gpio33", GPIO_LAN0_LED0_MODE_MASK,
-+				LAN0_LED_MAPPING_MASK, LAN0_PHY_LED_MAP(0)),
-+	AIROHA_PINCTRL_PHY_LED0("gpio34", GPIO_LAN1_LED0_MODE_MASK,
-+				LAN1_LED_MAPPING_MASK, LAN1_PHY_LED_MAP(0)),
-+	AIROHA_PINCTRL_PHY_LED0("gpio35", GPIO_LAN2_LED0_MODE_MASK,
-+				LAN2_LED_MAPPING_MASK, LAN2_PHY_LED_MAP(0)),
-+	AIROHA_PINCTRL_PHY_LED0("gpio42", GPIO_LAN3_LED0_MODE_MASK,
-+				LAN3_LED_MAPPING_MASK, LAN3_PHY_LED_MAP(0)),
- };
- 
- static const struct airoha_pinctrl_func_group phy2_led0_func_group[] = {
--	{
--		.name = "gpio33",
--		.regmap[0] = {
--			AIROHA_FUNC_MUX,
--			REG_GPIO_2ND_I2C_MODE,
--			GPIO_LAN0_LED0_MODE_MASK,
--			GPIO_LAN0_LED0_MODE_MASK
--		},
--		.regmap[1] = {
--			AIROHA_FUNC_MUX,
--			REG_LAN_LED0_MAPPING,
--			LAN0_LED_MAPPING_MASK,
--			LAN0_PHY_LED_MAP(1)
--		},
--		.regmap_size = 2,
--	}, {
--		.name = "gpio34",
--		.regmap[0] = {
--			AIROHA_FUNC_MUX,
--			REG_GPIO_2ND_I2C_MODE,
--			GPIO_LAN1_LED0_MODE_MASK,
--			GPIO_LAN1_LED0_MODE_MASK
--		},
--		.regmap[1] = {
--			AIROHA_FUNC_MUX,
--			REG_LAN_LED0_MAPPING,
--			LAN1_LED_MAPPING_MASK,
--			LAN1_PHY_LED_MAP(1)
--		},
--		.regmap_size = 2,
--	}, {
--		.name = "gpio35",
--		.regmap[0] = {
--			AIROHA_FUNC_MUX,
--			REG_GPIO_2ND_I2C_MODE,
--			GPIO_LAN2_LED0_MODE_MASK,
--			GPIO_LAN2_LED0_MODE_MASK
--		},
--		.regmap[1] = {
--			AIROHA_FUNC_MUX,
--			REG_LAN_LED0_MAPPING,
--			LAN2_LED_MAPPING_MASK,
--			LAN2_PHY_LED_MAP(1)
--		},
--		.regmap_size = 2,
--	}, {
--		.name = "gpio42",
--		.regmap[0] = {
--			AIROHA_FUNC_MUX,
--			REG_GPIO_2ND_I2C_MODE,
--			GPIO_LAN3_LED0_MODE_MASK,
--			GPIO_LAN3_LED0_MODE_MASK
--		},
--		.regmap[1] = {
--			AIROHA_FUNC_MUX,
--			REG_LAN_LED0_MAPPING,
--			LAN3_LED_MAPPING_MASK,
--			LAN3_PHY_LED_MAP(1)
--		},
--		.regmap_size = 2,
--	},
-+	AIROHA_PINCTRL_PHY_LED0("gpio33", GPIO_LAN0_LED0_MODE_MASK,
-+				LAN0_LED_MAPPING_MASK, LAN0_PHY_LED_MAP(1)),
-+	AIROHA_PINCTRL_PHY_LED0("gpio34", GPIO_LAN1_LED0_MODE_MASK,
-+				LAN1_LED_MAPPING_MASK, LAN1_PHY_LED_MAP(1)),
-+	AIROHA_PINCTRL_PHY_LED0("gpio35", GPIO_LAN2_LED0_MODE_MASK,
-+				LAN2_LED_MAPPING_MASK, LAN2_PHY_LED_MAP(1)),
-+	AIROHA_PINCTRL_PHY_LED0("gpio42", GPIO_LAN3_LED0_MODE_MASK,
-+				LAN3_LED_MAPPING_MASK, LAN3_PHY_LED_MAP(1)),
- };
- 
- static const struct airoha_pinctrl_func_group phy3_led0_func_group[] = {
--	{
--		.name = "gpio33",
--		.regmap[0] = {
--			AIROHA_FUNC_MUX,
--			REG_GPIO_2ND_I2C_MODE,
--			GPIO_LAN0_LED0_MODE_MASK,
--			GPIO_LAN0_LED0_MODE_MASK
--		},
--		.regmap[1] = {
--			AIROHA_FUNC_MUX,
--			REG_LAN_LED0_MAPPING,
--			LAN0_LED_MAPPING_MASK,
--			LAN0_PHY_LED_MAP(2)
--		},
--		.regmap_size = 2,
--	}, {
--		.name = "gpio34",
--		.regmap[0] = {
--			AIROHA_FUNC_MUX,
--			REG_GPIO_2ND_I2C_MODE,
--			GPIO_LAN1_LED0_MODE_MASK,
--			GPIO_LAN1_LED0_MODE_MASK
--		},
--		.regmap[1] = {
--			AIROHA_FUNC_MUX,
--			REG_LAN_LED0_MAPPING,
--			LAN1_LED_MAPPING_MASK,
--			LAN1_PHY_LED_MAP(2)
--		},
--		.regmap_size = 2,
--	}, {
--		.name = "gpio35",
--		.regmap[0] = {
--			AIROHA_FUNC_MUX,
--			REG_GPIO_2ND_I2C_MODE,
--			GPIO_LAN2_LED0_MODE_MASK,
--			GPIO_LAN2_LED0_MODE_MASK
--		},
--		.regmap[1] = {
--			AIROHA_FUNC_MUX,
--			REG_LAN_LED0_MAPPING,
--			LAN2_LED_MAPPING_MASK,
--			LAN2_PHY_LED_MAP(2)
--		},
--		.regmap_size = 2,
--	}, {
--		.name = "gpio42",
--		.regmap[0] = {
--			AIROHA_FUNC_MUX,
--			REG_GPIO_2ND_I2C_MODE,
--			GPIO_LAN3_LED0_MODE_MASK,
--			GPIO_LAN3_LED0_MODE_MASK
--		},
--		.regmap[1] = {
--			AIROHA_FUNC_MUX,
--			REG_LAN_LED0_MAPPING,
--			LAN3_LED_MAPPING_MASK,
--			LAN3_PHY_LED_MAP(2)
--		},
--		.regmap_size = 2,
--	},
-+	AIROHA_PINCTRL_PHY_LED0("gpio33", GPIO_LAN0_LED0_MODE_MASK,
-+				LAN0_LED_MAPPING_MASK, LAN0_PHY_LED_MAP(2)),
-+	AIROHA_PINCTRL_PHY_LED0("gpio34", GPIO_LAN1_LED0_MODE_MASK,
-+				LAN1_LED_MAPPING_MASK, LAN1_PHY_LED_MAP(2)),
-+	AIROHA_PINCTRL_PHY_LED0("gpio35", GPIO_LAN2_LED0_MODE_MASK,
-+				LAN2_LED_MAPPING_MASK, LAN2_PHY_LED_MAP(2)),
-+	AIROHA_PINCTRL_PHY_LED0("gpio42", GPIO_LAN3_LED0_MODE_MASK,
-+				LAN3_LED_MAPPING_MASK, LAN3_PHY_LED_MAP(2)),
- };
- 
- static const struct airoha_pinctrl_func_group phy4_led0_func_group[] = {
--	{
--		.name = "gpio33",
--		.regmap[0] = {
--			AIROHA_FUNC_MUX,
--			REG_GPIO_2ND_I2C_MODE,
--			GPIO_LAN0_LED0_MODE_MASK,
--			GPIO_LAN0_LED0_MODE_MASK
--		},
--		.regmap[1] = {
--			AIROHA_FUNC_MUX,
--			REG_LAN_LED0_MAPPING,
--			LAN0_LED_MAPPING_MASK,
--			LAN0_PHY_LED_MAP(3)
--		},
--		.regmap_size = 2,
--	}, {
--		.name = "gpio34",
--		.regmap[0] = {
--			AIROHA_FUNC_MUX,
--			REG_GPIO_2ND_I2C_MODE,
--			GPIO_LAN1_LED0_MODE_MASK,
--			GPIO_LAN1_LED0_MODE_MASK
--		},
--		.regmap[1] = {
--			AIROHA_FUNC_MUX,
--			REG_LAN_LED0_MAPPING,
--			LAN1_LED_MAPPING_MASK,
--			LAN1_PHY_LED_MAP(3)
--		},
--		.regmap_size = 2,
--	}, {
--		.name = "gpio35",
--		.regmap[0] = {
--			AIROHA_FUNC_MUX,
--			REG_GPIO_2ND_I2C_MODE,
--			GPIO_LAN2_LED0_MODE_MASK,
--			GPIO_LAN2_LED0_MODE_MASK
--		},
--		.regmap[1] = {
--			AIROHA_FUNC_MUX,
--			REG_LAN_LED0_MAPPING,
--			LAN2_LED_MAPPING_MASK,
--			LAN2_PHY_LED_MAP(3)
--		},
--		.regmap_size = 2,
--	}, {
--		.name = "gpio42",
--		.regmap[0] = {
--			AIROHA_FUNC_MUX,
--			REG_GPIO_2ND_I2C_MODE,
--			GPIO_LAN3_LED0_MODE_MASK,
--			GPIO_LAN3_LED0_MODE_MASK
--		},
--		.regmap[1] = {
--			AIROHA_FUNC_MUX,
--			REG_LAN_LED0_MAPPING,
--			LAN3_LED_MAPPING_MASK,
--			LAN3_PHY_LED_MAP(3)
--		},
--		.regmap_size = 2,
--	},
-+	AIROHA_PINCTRL_PHY_LED0("gpio33", GPIO_LAN0_LED0_MODE_MASK,
-+				LAN0_LED_MAPPING_MASK, LAN0_PHY_LED_MAP(3)),
-+	AIROHA_PINCTRL_PHY_LED0("gpio34", GPIO_LAN1_LED0_MODE_MASK,
-+				LAN1_LED_MAPPING_MASK, LAN1_PHY_LED_MAP(3)),
-+	AIROHA_PINCTRL_PHY_LED0("gpio35", GPIO_LAN2_LED0_MODE_MASK,
-+				LAN2_LED_MAPPING_MASK, LAN2_PHY_LED_MAP(3)),
-+	AIROHA_PINCTRL_PHY_LED0("gpio42", GPIO_LAN3_LED0_MODE_MASK,
-+				LAN3_LED_MAPPING_MASK, LAN3_PHY_LED_MAP(3)),
- };
- 
- static const struct airoha_pinctrl_func_group phy1_led1_func_group[] = {
--	{
--		.name = "gpio43",
--		.regmap[0] = {
--			AIROHA_FUNC_MUX,
--			REG_GPIO_2ND_I2C_MODE,
--			GPIO_LAN0_LED1_MODE_MASK,
--			GPIO_LAN0_LED1_MODE_MASK
--		},
--		.regmap[1] = {
--			AIROHA_FUNC_MUX,
--			REG_LAN_LED1_MAPPING,
--			LAN0_LED_MAPPING_MASK,
--			LAN0_PHY_LED_MAP(0)
--		},
--		.regmap_size = 2,
--	}, {
--		.name = "gpio44",
--		.regmap[0] = {
--			AIROHA_FUNC_MUX,
--			REG_GPIO_2ND_I2C_MODE,
--			GPIO_LAN1_LED1_MODE_MASK,
--			GPIO_LAN1_LED1_MODE_MASK
--		},
--		.regmap[1] = {
--			AIROHA_FUNC_MUX,
--			REG_LAN_LED1_MAPPING,
--			LAN1_LED_MAPPING_MASK,
--			LAN1_PHY_LED_MAP(0)
--		},
--		.regmap_size = 2,
--	}, {
--		.name = "gpio45",
--		.regmap[0] = {
--			AIROHA_FUNC_MUX,
--			REG_GPIO_2ND_I2C_MODE,
--			GPIO_LAN2_LED1_MODE_MASK,
--			GPIO_LAN2_LED1_MODE_MASK
--		},
--		.regmap[1] = {
--			AIROHA_FUNC_MUX,
--			REG_LAN_LED1_MAPPING,
--			LAN2_LED_MAPPING_MASK,
--			LAN2_PHY_LED_MAP(0)
--		},
--		.regmap_size = 2,
--	}, {
--		.name = "gpio46",
--		.regmap[0] = {
--			AIROHA_FUNC_MUX,
--			REG_GPIO_2ND_I2C_MODE,
--			GPIO_LAN3_LED1_MODE_MASK,
--			GPIO_LAN3_LED1_MODE_MASK
--		},
--		.regmap[1] = {
--			AIROHA_FUNC_MUX,
--			REG_LAN_LED1_MAPPING,
--			LAN3_LED_MAPPING_MASK,
--			LAN3_PHY_LED_MAP(0)
--		},
--		.regmap_size = 2,
--	},
-+	AIROHA_PINCTRL_PHY_LED1("gpio43", GPIO_LAN0_LED1_MODE_MASK,
-+				LAN0_LED_MAPPING_MASK, LAN0_PHY_LED_MAP(0)),
-+	AIROHA_PINCTRL_PHY_LED1("gpio44", GPIO_LAN1_LED1_MODE_MASK,
-+				LAN1_LED_MAPPING_MASK, LAN1_PHY_LED_MAP(0)),
-+	AIROHA_PINCTRL_PHY_LED1("gpio45", GPIO_LAN2_LED1_MODE_MASK,
-+				LAN2_LED_MAPPING_MASK, LAN2_PHY_LED_MAP(0)),
-+	AIROHA_PINCTRL_PHY_LED1("gpio46", GPIO_LAN3_LED1_MODE_MASK,
-+				LAN3_LED_MAPPING_MASK, LAN3_PHY_LED_MAP(0)),
- };
- 
- static const struct airoha_pinctrl_func_group phy2_led1_func_group[] = {
--	{
--		.name = "gpio43",
--		.regmap[0] = {
--			AIROHA_FUNC_MUX,
--			REG_GPIO_2ND_I2C_MODE,
--			GPIO_LAN0_LED1_MODE_MASK,
--			GPIO_LAN0_LED1_MODE_MASK
--		},
--		.regmap[1] = {
--			AIROHA_FUNC_MUX,
--			REG_LAN_LED1_MAPPING,
--			LAN0_LED_MAPPING_MASK,
--			LAN0_PHY_LED_MAP(1)
--		},
--		.regmap_size = 2,
--	}, {
--		.name = "gpio44",
--		.regmap[0] = {
--			AIROHA_FUNC_MUX,
--			REG_GPIO_2ND_I2C_MODE,
--			GPIO_LAN1_LED1_MODE_MASK,
--			GPIO_LAN1_LED1_MODE_MASK
--		},
--		.regmap[1] = {
--			AIROHA_FUNC_MUX,
--			REG_LAN_LED1_MAPPING,
--			LAN1_LED_MAPPING_MASK,
--			LAN1_PHY_LED_MAP(1)
--		},
--		.regmap_size = 2,
--	}, {
--		.name = "gpio45",
--		.regmap[0] = {
--			AIROHA_FUNC_MUX,
--			REG_GPIO_2ND_I2C_MODE,
--			GPIO_LAN2_LED1_MODE_MASK,
--			GPIO_LAN2_LED1_MODE_MASK
--		},
--		.regmap[1] = {
--			AIROHA_FUNC_MUX,
--			REG_LAN_LED1_MAPPING,
--			LAN2_LED_MAPPING_MASK,
--			LAN2_PHY_LED_MAP(1)
--		},
--		.regmap_size = 2,
--	}, {
--		.name = "gpio46",
--		.regmap[0] = {
--			AIROHA_FUNC_MUX,
--			REG_GPIO_2ND_I2C_MODE,
--			GPIO_LAN3_LED1_MODE_MASK,
--			GPIO_LAN3_LED1_MODE_MASK
--		},
--		.regmap[1] = {
--			AIROHA_FUNC_MUX,
--			REG_LAN_LED1_MAPPING,
--			LAN3_LED_MAPPING_MASK,
--			LAN3_PHY_LED_MAP(1)
--		},
--		.regmap_size = 2,
--	},
-+	AIROHA_PINCTRL_PHY_LED1("gpio43", GPIO_LAN0_LED1_MODE_MASK,
-+				LAN0_LED_MAPPING_MASK, LAN0_PHY_LED_MAP(1)),
-+	AIROHA_PINCTRL_PHY_LED1("gpio44", GPIO_LAN1_LED1_MODE_MASK,
-+				LAN1_LED_MAPPING_MASK, LAN1_PHY_LED_MAP(1)),
-+	AIROHA_PINCTRL_PHY_LED1("gpio45", GPIO_LAN2_LED1_MODE_MASK,
-+				LAN2_LED_MAPPING_MASK, LAN2_PHY_LED_MAP(1)),
-+	AIROHA_PINCTRL_PHY_LED1("gpio46", GPIO_LAN3_LED1_MODE_MASK,
-+				LAN3_LED_MAPPING_MASK, LAN3_PHY_LED_MAP(1)),
- };
- 
- static const struct airoha_pinctrl_func_group phy3_led1_func_group[] = {
--	{
--		.name = "gpio43",
--		.regmap[0] = {
--			AIROHA_FUNC_MUX,
--			REG_GPIO_2ND_I2C_MODE,
--			GPIO_LAN0_LED1_MODE_MASK,
--			GPIO_LAN0_LED1_MODE_MASK
--		},
--		.regmap[1] = {
--			AIROHA_FUNC_MUX,
--			REG_LAN_LED1_MAPPING,
--			LAN0_LED_MAPPING_MASK,
--			LAN0_PHY_LED_MAP(2)
--		},
--		.regmap_size = 2,
--	}, {
--		.name = "gpio44",
--		.regmap[0] = {
--			AIROHA_FUNC_MUX,
--			REG_GPIO_2ND_I2C_MODE,
--			GPIO_LAN1_LED1_MODE_MASK,
--			GPIO_LAN1_LED1_MODE_MASK
--		},
--		.regmap[1] = {
--			AIROHA_FUNC_MUX,
--			REG_LAN_LED1_MAPPING,
--			LAN1_LED_MAPPING_MASK,
--			LAN1_PHY_LED_MAP(2)
--		},
--		.regmap_size = 2,
--	}, {
--		.name = "gpio45",
--		.regmap[0] = {
--			AIROHA_FUNC_MUX,
--			REG_GPIO_2ND_I2C_MODE,
--			GPIO_LAN2_LED1_MODE_MASK,
--			GPIO_LAN2_LED1_MODE_MASK
--		},
--		.regmap[1] = {
--			AIROHA_FUNC_MUX,
--			REG_LAN_LED1_MAPPING,
--			LAN2_LED_MAPPING_MASK,
--			LAN2_PHY_LED_MAP(2)
--		},
--		.regmap_size = 2,
--	}, {
--		.name = "gpio46",
--		.regmap[0] = {
--			AIROHA_FUNC_MUX,
--			REG_GPIO_2ND_I2C_MODE,
--			GPIO_LAN3_LED1_MODE_MASK,
--			GPIO_LAN3_LED1_MODE_MASK
--		},
--		.regmap[1] = {
--			AIROHA_FUNC_MUX,
--			REG_LAN_LED1_MAPPING,
--			LAN3_LED_MAPPING_MASK,
--			LAN3_PHY_LED_MAP(2)
--		},
--		.regmap_size = 2,
--	},
-+	AIROHA_PINCTRL_PHY_LED1("gpio43", GPIO_LAN0_LED1_MODE_MASK,
-+				LAN0_LED_MAPPING_MASK, LAN0_PHY_LED_MAP(2)),
-+	AIROHA_PINCTRL_PHY_LED1("gpio44", GPIO_LAN1_LED1_MODE_MASK,
-+				LAN1_LED_MAPPING_MASK, LAN1_PHY_LED_MAP(2)),
-+	AIROHA_PINCTRL_PHY_LED1("gpio45", GPIO_LAN2_LED1_MODE_MASK,
-+				LAN2_LED_MAPPING_MASK, LAN2_PHY_LED_MAP(2)),
-+	AIROHA_PINCTRL_PHY_LED1("gpio46", GPIO_LAN3_LED1_MODE_MASK,
-+				LAN3_LED_MAPPING_MASK, LAN3_PHY_LED_MAP(2)),
- };
- 
- static const struct airoha_pinctrl_func_group phy4_led1_func_group[] = {
--	{
--		.name = "gpio43",
--		.regmap[0] = {
--			AIROHA_FUNC_MUX,
--			REG_GPIO_2ND_I2C_MODE,
--			GPIO_LAN0_LED1_MODE_MASK,
--			GPIO_LAN0_LED1_MODE_MASK
--		},
--		.regmap[1] = {
--			AIROHA_FUNC_MUX,
--			REG_LAN_LED1_MAPPING,
--			LAN0_LED_MAPPING_MASK,
--			LAN0_PHY_LED_MAP(3)
--		},
--		.regmap_size = 2,
--	}, {
--		.name = "gpio44",
--		.regmap[0] = {
--			AIROHA_FUNC_MUX,
--			REG_GPIO_2ND_I2C_MODE,
--			GPIO_LAN1_LED1_MODE_MASK,
--			GPIO_LAN1_LED1_MODE_MASK
--		},
--		.regmap[1] = {
--			AIROHA_FUNC_MUX,
--			REG_LAN_LED1_MAPPING,
--			LAN1_LED_MAPPING_MASK,
--			LAN1_PHY_LED_MAP(3)
--		},
--		.regmap_size = 2,
--	}, {
--		.name = "gpio45",
--		.regmap[0] = {
--			AIROHA_FUNC_MUX,
--			REG_GPIO_2ND_I2C_MODE,
--			GPIO_LAN2_LED1_MODE_MASK,
--			GPIO_LAN2_LED1_MODE_MASK
--		},
--		.regmap[1] = {
--			AIROHA_FUNC_MUX,
--			REG_LAN_LED1_MAPPING,
--			LAN2_LED_MAPPING_MASK,
--			LAN2_PHY_LED_MAP(3)
--		},
--		.regmap_size = 2,
--	}, {
--		.name = "gpio46",
--		.regmap[0] = {
--			AIROHA_FUNC_MUX,
--			REG_GPIO_2ND_I2C_MODE,
--			GPIO_LAN3_LED1_MODE_MASK,
--			GPIO_LAN3_LED1_MODE_MASK
--		},
--		.regmap[1] = {
--			AIROHA_FUNC_MUX,
--			REG_LAN_LED1_MAPPING,
--			LAN3_LED_MAPPING_MASK,
--			LAN3_PHY_LED_MAP(3)
--		},
--		.regmap_size = 2,
--	},
-+	AIROHA_PINCTRL_PHY_LED1("gpio43", GPIO_LAN0_LED1_MODE_MASK,
-+				LAN0_LED_MAPPING_MASK, LAN0_PHY_LED_MAP(2)),
-+	AIROHA_PINCTRL_PHY_LED1("gpio44", GPIO_LAN1_LED1_MODE_MASK,
-+				LAN1_LED_MAPPING_MASK, LAN1_PHY_LED_MAP(2)),
-+	AIROHA_PINCTRL_PHY_LED1("gpio45", GPIO_LAN2_LED1_MODE_MASK,
-+				LAN2_LED_MAPPING_MASK, LAN2_PHY_LED_MAP(2)),
-+	AIROHA_PINCTRL_PHY_LED1("gpio46", GPIO_LAN3_LED1_MODE_MASK,
-+				LAN3_LED_MAPPING_MASK, LAN3_PHY_LED_MAP(2)),
- };
- 
- static const struct airoha_pinctrl_func en7581_pinctrl_funcs[] = {
 -- 
 2.53.0
 
