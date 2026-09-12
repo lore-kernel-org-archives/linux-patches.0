@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D3A934CFDA;
-	Sat, 12 Sep 2026 12:16:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3624F47A86E;
+	Sat, 12 Sep 2026 12:16:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789215386; cv=none; b=N2UYd3aWgteopFGRuYxOPD83mxl3DV2VK6E0W7PR7I7lO5JanJqnQa66oBYjRqQlyD7zbW/WZ36XDkYhTHIrLQG4XeCbI9/CSRcI4ZDgGVxlTVXyDKtZjHrYA7DILW9P4pRG2xqMahQDdhP41Q4oVpmMyK8Dwf1//FYLev/kGeM=
+	t=1789215396; cv=none; b=MjqXjBu4pNCeERm8iARt17p3xYRQ3x825/1q+ARFozgS8t8DnUAAjBYxpwQqsBQn6MZabufvIV1mMKY+xbJ0nCQ+WoUV/EIi2SKGEcXjT1xLLE1ObDRfidq3zpZd8PyzGWTXL17iHFXu8ZU5vk3BcQirN95ljeCVAbinkvUAYus=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789215386; c=relaxed/simple;
-	bh=Jg4Q74kjZyKi+ActzxDpgDCRMrRu9oaXWpGIqulkCqc=;
+	s=arc-20240116; t=1789215396; c=relaxed/simple;
+	bh=iMHSmLb05sKG3k8JgYDWCTJwQaCOfBYMz5HeM3NYROo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=fZNTsndHdFvuZfOdziqElvH2pllW1rmHtyiYV1bk1f94pfIjxdOHmoo/3n9RrGHA9UJLp/nQ6QYDHBjyg7FXQK/9koyceIHQBnehn8zP6HJfew5ME2td8icaCvyuF3b7Y6vuJ0g/+veZHyY06iCqDRr+RXLZdFEuRA8LCx3Pmoo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v6TI7/au; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HAzjzvhxmhe8IlD/xGdIBWKO8mAX0Ofx9rhNgvuc3RJ6PxSa0pIvOUkw1+TtsGX+qNKXqm9xmUUmMl6C9HdvtJcFPSGyznvtG4FaGhtq539PWj4VX/2GCs7NMR0yAvB1zZ4QV5zh1TatSHi/fZ9TtePe5qgQLsEcKUuJ5aeW6io=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tHs1CYyl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v6TI7/au"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86BCD1F000FF;
-	Sat, 12 Sep 2026 12:16:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tHs1CYyl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 577E21F000FF;
+	Sat, 12 Sep 2026 12:16:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789215385;
-	bh=ASLs4TLoDOGHqKRhI+eSgR5lDl5EkG3J6roHzi4+z4E=;
+	s=korg; t=1789215390;
+	bh=n0lIruvSuHz5xvdn1YCb/QMvRk4fUGR/zKeh8KCDAKQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=v6TI7/aubNGc8+52en3E3nRDTeO9tr+iDF8WdjXkAWBBQux34p9mdNmWTk5oto+Si
-	 CR0kxbO22u5Xc97spvA5r/AcxS1/8eJzoJq78J4uVTYpllfRZX/Ckgg9CyHip0MROs
-	 fm1K5CzQ8OviIokBj0pf+JQpmuB354UjiCVqCF1E=
+	b=tHs1CYylinw7Dn2EZm5trZU3ytg0wZDeEkSRFsLHx1yvORGDJqN6RPd+wJYGC9wSG
+	 pdzXWM19MrOQTomO+Az9TDoQOPyGoF2osnHw5mYCqCuFAtRAkyVJT3jmdJq/iAPwyN
+	 4abE4KZFOSmulpe3cPRxP461PWZqnngnJAw3+g0M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Deepak Kumar Singh <deepak.singh@oss.qualcomm.com>,
-	Vishnu Santhosh <vishnu.santhosh@oss.qualcomm.com>,
-	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Guzebing <Guzebing1612@gmail.com>,
+	Dave Jiang <dave.jiang@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0522/1376] rpmsg: glink: fix deadlock in endpoint destroy during driver detach
-Date: Sat, 12 Sep 2026 08:49:08 +0200
-Message-ID: <20260912065619.170237391@linuxfoundation.org>
+Subject: [PATCH 6.12 0523/1376] cxl/memdev: Fix firmware upload exact-fit handling
+Date: Sat, 12 Sep 2026 08:49:09 +0200
+Message-ID: <20260912065619.193067118@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -48,86 +45,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vishnu Santhosh <vishnu.santhosh@oss.qualcomm.com>
+From: Guzebing <Guzebing1612@gmail.com>
 
-[ Upstream commit 5a5a48e788e02fd8a8eb7188ce440572d6c12418 ]
+[ Upstream commit af5035e1b3e400067bb003975936e5407377e7a3 ]
 
-During driver detach, the device core holds the device mutex throughout
-the driver's remove callback chain.  When the rpmsg endpoint is
-destroyed as part of that teardown, the GLINK endpoint destroy
-implementation attempts to unregister the underlying rpmsg device.
-That unregistration calls device_del(), which tries to re-acquire the
-same device mutex already held higher up the stack, causing rmmod to
-hang indefinitely.
+cxl_fw_prepare() classifies a firmware image as a one-shot transfer
+only when its Transfer FW input payload is smaller than the mailbox
+payload size. An image that exactly fills the payload is therefore
+treated as a multi-part transfer.
 
-The deadlock manifests with the following call chain:
+The firmware loader invokes cxl_fw_write() only once for that image.
+Since both offset == 0 and remaining == 0, the multi-part action
+selection sends INITIATE, never sends END, and then attempts to activate
+the target slot.
 
-[<0>] device_del+0x44/0x414  <- tries to acquire same mutex
-[<0>] device_unregister+0x18/0x34
-[<0>] rpmsg_unregister_device+0x28/0x4c
-[<0>] qcom_glink_remove_rpmsg_device+0x70/0xc0
-[<0>] qcom_glink_destroy_ept+0x58/0xbc
-[<0>] rpmsg_dev_remove+0x50/0x60
-[<0>] device_remove+0x4c/0x80
-[<0>] device_release_driver_internal+0x1cc/0x228  <- acquires device mutex
-[<0>] driver_detach+0x4c/0x98
-[<0>] bus_remove_driver+0x6c/0xbc
-[<0>] driver_unregister+0x30/0x60
-[<0>] unregister_rpmsg_driver+0x10/0x1c
-[<0>] fastrpc_exit+0x28/0x38 [fastrpc]
-[<0>] __arm64_sys_delete_module+0x1b8/0x294
-[<0>] invoke_syscall+0x48/0x10c
-[<0>] el0_svc_common.constprop.0+0xc0/0xe0
-[<0>] do_el0_svc+0x1c/0x28
-[<0>] el0_svc+0x34/0x108
-[<0>] el0t_64_sync_handler+0xa0/0xe4
-[<0>] el0t_64_sync+0x198/0x19c
+Include equality in the one-shot classification so exact-fit images use
+the FULL action.
 
-The rpmsg device unregistration inside endpoint destroy is redundant.
-In both contexts where endpoint destruction is triggered:
-
-- Driver detach path: the driver core already tears down the rpmsg
-  device.
-
-- Channel close path: the rpmsg device is already unregistered before
-  endpoint destruction is reached.
-
-Remove the redundant unregistration to fix the deadlock.
-
-Co-developed-by: Deepak Kumar Singh <deepak.singh@oss.qualcomm.com>
-Signed-off-by: Deepak Kumar Singh <deepak.singh@oss.qualcomm.com>
-Signed-off-by: Vishnu Santhosh <vishnu.santhosh@oss.qualcomm.com>
-Tested-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
-Fixes: a53e356df548 ("rpmsg: glink: fix rpmsg device leak")
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260604-rpmsg-glink-fix-deadlock-destroy-ept-v1-1-b8a54ad1e4fd@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 9521875bbe00 ("cxl: add a firmware update mechanism using the sysfs firmware loader")
+Signed-off-by: Guzebing <Guzebing1612@gmail.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Link: https://patch.msgid.link/20260713112744.2543829-1-guzebing1612@gmail.com
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rpmsg/qcom_glink_native.c | 3 ---
- 1 file changed, 3 deletions(-)
+ drivers/cxl/core/memdev.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/rpmsg/qcom_glink_native.c b/drivers/rpmsg/qcom_glink_native.c
-index 9d4fee6409423..c21a5e4da0f68 100644
---- a/drivers/rpmsg/qcom_glink_native.c
-+++ b/drivers/rpmsg/qcom_glink_native.c
-@@ -1418,9 +1418,6 @@ static void qcom_glink_destroy_ept(struct rpmsg_endpoint *ept)
- 	channel->ept.cb = NULL;
- 	spin_unlock_irqrestore(&channel->recv_lock, flags);
+diff --git a/drivers/cxl/core/memdev.c b/drivers/cxl/core/memdev.c
+index 4d544a55ac3e8..d2a554c2f92b0 100644
+--- a/drivers/cxl/core/memdev.c
++++ b/drivers/cxl/core/memdev.c
+@@ -845,7 +845,7 @@ static enum fw_upload_err cxl_fw_prepare(struct fw_upload *fwl, const u8 *data,
+ 	if (!size)
+ 		return FW_UPLOAD_ERR_INVALID_SIZE;
  
--	/* Decouple the potential rpdev from the channel */
--	qcom_glink_remove_rpmsg_device(glink, channel);
--
- 	qcom_glink_send_close_req(glink, channel);
- }
+-	mds->fw.oneshot = struct_size(transfer, data, size) <
++	mds->fw.oneshot = struct_size(transfer, data, size) <=
+ 			    cxl_mbox->payload_size;
  
+ 	if (cxl_mem_get_fw_info(mds))
 -- 
 2.53.0
 
