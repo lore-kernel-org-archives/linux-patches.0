@@ -1,45 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A40A337C906;
-	Sat, 12 Sep 2026 12:46:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8EBB47C11A;
+	Sat, 12 Sep 2026 12:46:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789217180; cv=none; b=PmKrfbtFoZutM+CwZl2xoVoo+sxhcwRca01Gv03H7+ah3A4Gfo3XmFVmJhNDIy7GB9PntfSSreXNim8NFX3bw9fEiuj4FCy3dW6zYqtwD5+ATzrD2X8ggTNHQr61dhqbBgDfQbONnF4xqQ+aPP15jSA5edEGoCC2rpc155Lspdo=
+	t=1789217186; cv=none; b=oJ0vq5QgI08r9Tmsla4IEhNQOZ9hOza6/6dZ3vYTiw1U5vEjEKdU2eKzbZDcu9QHvmA/wYvubCriHyxRZKO16eDhRXf1qkbXD6it6bitaDFf3H7hZdJkoVW0i6Q7ET8j3+WzdCqEoBOdImFPBGcpERGTI7ByTlvQXsA910JQTOM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789217180; c=relaxed/simple;
-	bh=g1AxiWJ9eP5DYWIWmN9DwatfeFLfcn2dyCDF/S/JxWE=;
+	s=arc-20240116; t=1789217186; c=relaxed/simple;
+	bh=aZoDeCX81GF8/6T7JKnfWs1WrEHvrBw8Ld0dBmMxESQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b/ZQtXT1dhYgUD/QB23p8ffjROcDr4kLh+zPKoGZqNsBqAfBsjtBhW0tGtiL04QsvVSGp/SM5TcWUuA2gEvzu57eS5Zfv6KlyZJSiHeq2XZjrZCPaQydeXcRmOQMc09VJR0rxATCwkFKmoviv4GiFvS0xxXQUeCdnsjEgLVqTfA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f7+crLmY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=suXru7TNVAqIolIXubHjop4gzVCXZ6fDYXu6YQ3MmFcDQnClljhMqUF3/VwjLRxajdK500T6ZcDdytZptaWrCVwyKMLoJXzq7lJqT3yzai0511JHsZ7HV7TIQa2+yKu7zuLyLC66LPgzaQK5PXkevis4nabGav1c4zwAkNZYWiE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qk3rGXFV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f7+crLmY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A83DA1F000FF;
-	Sat, 12 Sep 2026 12:46:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qk3rGXFV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 920331F000FF;
+	Sat, 12 Sep 2026 12:46:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789217178;
-	bh=kcRFOwXfFtdZnYOi4yIpurMxBI/4zzivZpSLRaJs3zc=;
+	s=korg; t=1789217183;
+	bh=f0eGJS/ya7MhkIAGhHAI7acuPQDQk0eXilwHptHAXoM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=f7+crLmYpM9zZQTYv7WSheUzDxPkLzEgyrxt5wETH8qeWMOPApcKaOxdjr3I8ad/e
-	 +OS1znur5Fj1e8k1RoB9tdkbRMtoxt+ckRyhoIbK5tJoc/xbET06KaaCD78LrkmJvI
-	 un/RKmewEt4eKYc2JcOu6/1KcTVdN8DvkAxUFdso=
+	b=qk3rGXFVaF43O4v+drttmEpOpKF7obbvkxhccAEu/WVlOcSYlKR8AMcAfr4/Vugsl
+	 DhI567RqDSEXHOaUgIWM0vMyE3tKxmfoQVR70rBdp4MGRDnRj2inaIiHmKT2Fwqy+0
+	 7QqaVWqGu/zd50vsRP/0lOHLwEFAIgpMgJCF1fKg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cen Zhang <zzzccc427@gmail.com>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Andreas Kemnade <andreas@kemnade.info>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0881/1376] ocfs2/cluster: keep heartbeat local node stable
-Date: Sat, 12 Sep 2026 08:55:07 +0200
-Message-ID: <20260912065627.198924166@linuxfoundation.org>
+Subject: [PATCH 6.12 0890/1376] drm/omap: dsi: Do not copy isr table
+Date: Sat, 12 Sep 2026 08:55:16 +0200
+Message-ID: <20260912065627.398688452@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -58,298 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: Andreas Kemnade <andreas@kemnade.info>
 
-[ Upstream commit 688bc88e2046dd6ce81ce18079b5254cb8dadc0e ]
+[ Upstream commit 97c03b32b28a9f7f13f768f2b06e1eaafe850e66 ]
 
-o2nm_node_local_store() handles local=0 by stopping o2net and setting
-cl_local_node to O2NM_INVALID_NODE_NUM, but it leaves cl_has_local set.
-That stale state makes o2nm_this_node() return 255, blocks a later local=1
-attempt with -EBUSY, and can feed 255 to heartbeat users that call
-o2nm_this_node() dynamically.
+To be able to unregister stuff from isrs, the corresponding table was
+copied.  Nobody seems to unregister stuff that way, so it does not help.
+But there are stack-allocated objects passed to these isrs giving chances
+of UAF of these objects if irqs are unregistered while they are handled,
+so better do not copy that table.
 
-Clearing cl_has_local is required when the local node is reset.  But
-heartbeat threads can still be running at that point.  They pin the local
-node config item at startup, yet o2hb_do_disk_heartbeat() and thread
-teardown re-read o2nm_this_node() for the local slot and for
-o2nm_undepend_this_node().  Once local=0 has cleared the live local-node
-state, those dynamic reads return O2NM_MAX_NODES, which is also the
-invalid node number 255.
-
-Store the local node number in the heartbeat region when the region
-starts.  Use that stable node for heartbeat slot writes/checks,
-negotiation messages, and the final configfs undepend.  Stop the heartbeat
-loop when the current local node no longer matches the stored node, and
-clear cl_has_local together with cl_local_node in the local=0 path so
-nodemanager state matches node removal.
-
-Validation reproduced this kernel report:
-KASAN slab-out-of-bounds in o2hb_do_disk_heartbeat+0x372/0xb30
-RIP: 0010:memset+0xf/0x20
-Read of size 8
-Call trace:
-  dump_stack_lvl+0x66/0xa0
-  print_report+0xd0/0x630
-  o2hb_do_disk_heartbeat+0x372/0xb30 (fs/ocfs2/cluster/heartbeat.c:1079)
-  srso_alias_return_thunk+0x5/0xfbef5
-  __virt_addr_valid+0x188/0x2f0
-  kasan_report+0xe4/0x120
-  o2hb_do_disk_heartbeat+0x5/0xb30 (fs/ocfs2/cluster/heartbeat.c:1079)
-  o2hb_thread+0x14e/0x770
-  kthread_affine_node+0x139/0x180
-  lockdep_hardirqs_on_prepare+0xda/0x190
-  trace_hardirqs_on+0x18/0x130
-  kthread+0x19d/0x1e0
-  ret_from_fork+0x37a/0x4d0
-  __switch_to+0x2d5/0x6f0
-  ret_from_fork_asm+0x1a/0x30
-
-Link: https://lore.kernel.org/20260616074931.3774929-1-zzzccc427@gmail.com
-Fixes: a7f6a5fb4bde ("[PATCH] OCFS2: The Second Oracle Cluster Filesystem")
-Assisted-by: Codex:gpt-5.5
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
-Suggested-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: Heming Zhao <heming.zhao@suse.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 4ae2ddddf44cd ("OMAP: DSS2: DSI: Add ISR support")
+Signed-off-by: Andreas Kemnade <andreas@kemnade.info>
+Link: https://patch.msgid.link/20260702-dsi-uaf-v2-1-dbb4aa0f0b8e@kemnade.info
+Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/cluster/heartbeat.c   | 43 +++++++++++++++++++++++-----------
- fs/ocfs2/cluster/nodemanager.c | 19 +++++++++++----
- fs/ocfs2/cluster/nodemanager.h |  2 ++
- 3 files changed, 46 insertions(+), 18 deletions(-)
+ drivers/gpu/drm/omapdrm/dss/dsi.c | 7 +------
+ drivers/gpu/drm/omapdrm/dss/dsi.h | 2 --
+ 2 files changed, 1 insertion(+), 8 deletions(-)
 
-diff --git a/fs/ocfs2/cluster/heartbeat.c b/fs/ocfs2/cluster/heartbeat.c
-index 5743dff6af4ea..ea44ea6efbc6e 100644
---- a/fs/ocfs2/cluster/heartbeat.c
-+++ b/fs/ocfs2/cluster/heartbeat.c
-@@ -210,6 +210,7 @@ struct o2hb_region {
+diff --git a/drivers/gpu/drm/omapdrm/dss/dsi.c b/drivers/gpu/drm/omapdrm/dss/dsi.c
+index ea63c64d3a1ab..b9b013ba80e2e 100644
+--- a/drivers/gpu/drm/omapdrm/dss/dsi.c
++++ b/drivers/gpu/drm/omapdrm/dss/dsi.c
+@@ -455,15 +455,10 @@ static irqreturn_t omap_dsi_irq_handler(int irq, void *arg)
+ 		del_timer(&dsi->te_timer);
+ #endif
  
- 	/* protected by the hr_callback_sem */
- 	struct task_struct 	*hr_task;
-+	u8			hr_node_num;
+-	/* make a copy and unlock, so that isrs can unregister
+-	 * themselves */
+-	memcpy(&dsi->isr_tables_copy, &dsi->isr_tables,
+-		sizeof(dsi->isr_tables));
++	dsi_handle_isrs(&dsi->isr_tables, irqstatus, vcstatus, ciostatus);
  
- 	unsigned int		hr_blocks;
- 	unsigned long long	hr_start_block;
-@@ -357,12 +358,12 @@ static void o2hb_disarm_timeout(struct o2hb_region *reg)
- 	cancel_delayed_work_sync(&reg->hr_nego_timeout_work);
- }
+ 	spin_unlock(&dsi->irq_lock);
  
--static int o2hb_send_nego_msg(int key, int type, u8 target)
-+static int o2hb_send_nego_msg(int key, int type, u8 target, u8 node_num)
- {
- 	struct o2hb_nego_msg msg;
- 	int status, ret;
+-	dsi_handle_isrs(&dsi->isr_tables_copy, irqstatus, vcstatus, ciostatus);
+-
+ 	dsi_handle_irq_errors(dsi, irqstatus, vcstatus, ciostatus);
  
--	msg.node_num = o2nm_this_node();
-+	msg.node_num = node_num;
- again:
- 	ret = o2net_send_message(type, key, &msg, sizeof(msg),
- 			target, &status);
-@@ -380,8 +381,10 @@ static void o2hb_nego_timeout(struct work_struct *work)
- 	unsigned long live_node_bitmap[BITS_TO_LONGS(O2NM_MAX_NODES)];
- 	int master_node, i, ret;
- 	struct o2hb_region *reg;
-+	u8 node_num;
+ 	dsi_collect_irq_stats(dsi, irqstatus, vcstatus, ciostatus);
+diff --git a/drivers/gpu/drm/omapdrm/dss/dsi.h b/drivers/gpu/drm/omapdrm/dss/dsi.h
+index 601707c0ecc4e..2b25247ea8935 100644
+--- a/drivers/gpu/drm/omapdrm/dss/dsi.h
++++ b/drivers/gpu/drm/omapdrm/dss/dsi.h
+@@ -379,8 +379,6 @@ struct dsi_data {
  
- 	reg = container_of(work, struct o2hb_region, hr_nego_timeout_work.work);
-+	node_num = reg->hr_node_num;
- 	/* don't negotiate timeout if last hb failed since it is very
- 	 * possible io failed. Should let write timeout fence self.
- 	 */
-@@ -392,10 +395,10 @@ static void o2hb_nego_timeout(struct work_struct *work)
- 	/* lowest node as master node to make negotiate decision. */
- 	master_node = find_first_bit(live_node_bitmap, O2NM_MAX_NODES);
+ 	spinlock_t irq_lock;
+ 	struct dsi_isr_tables isr_tables;
+-	/* space for a copy used by the interrupt handler */
+-	struct dsi_isr_tables isr_tables_copy;
  
--	if (master_node == o2nm_this_node()) {
-+	if (master_node == node_num) {
- 		if (!test_bit(master_node, reg->hr_nego_node_bitmap)) {
- 			printk(KERN_NOTICE "o2hb: node %d hb write hung for %ds on region %s (%pg).\n",
--				o2nm_this_node(), O2HB_NEGO_TIMEOUT_MS/1000,
-+				node_num, O2HB_NEGO_TIMEOUT_MS / 1000,
- 				config_item_name(&reg->hr_item), reg_bdev(reg));
- 			set_bit(master_node, reg->hr_nego_node_bitmap);
- 		}
-@@ -424,7 +427,7 @@ static void o2hb_nego_timeout(struct work_struct *work)
- 
- 			mlog(ML_HEARTBEAT, "send NEGO_APPROVE msg to node %d\n", i);
- 			ret = o2hb_send_nego_msg(reg->hr_key,
--					O2HB_NEGO_APPROVE_MSG, i);
-+					O2HB_NEGO_APPROVE_MSG, i, node_num);
- 			if (ret)
- 				mlog(ML_ERROR, "send NEGO_APPROVE msg to node %d fail %d\n",
- 					i, ret);
-@@ -432,10 +435,10 @@ static void o2hb_nego_timeout(struct work_struct *work)
- 	} else {
- 		/* negotiate timeout with master node. */
- 		printk(KERN_NOTICE "o2hb: node %d hb write hung for %ds on region %s (%pg), negotiate timeout with node %d.\n",
--			o2nm_this_node(), O2HB_NEGO_TIMEOUT_MS/1000, config_item_name(&reg->hr_item),
-+			node_num, O2HB_NEGO_TIMEOUT_MS / 1000, config_item_name(&reg->hr_item),
- 			reg_bdev(reg), master_node);
- 		ret = o2hb_send_nego_msg(reg->hr_key, O2HB_NEGO_TIMEOUT_MSG,
--				master_node);
-+				master_node, node_num);
- 		if (ret)
- 			mlog(ML_ERROR, "send NEGO_TIMEOUT msg to node %d fail %d\n",
- 				master_node, ret);
-@@ -608,7 +611,9 @@ static int o2hb_issue_node_write(struct o2hb_region *reg,
- 
- 	o2hb_bio_wait_init(write_wc);
- 
--	slot = o2nm_this_node();
-+	slot = reg->hr_node_num;
-+	if (slot >= O2NM_MAX_NODES)
-+		return -EINVAL;
- 
- 	bio = o2hb_setup_one_bio(reg, write_wc, &slot, slot+1,
- 				 REQ_OP_WRITE | REQ_SYNC);
-@@ -677,8 +682,12 @@ static int o2hb_check_own_slot(struct o2hb_region *reg)
- 	struct o2hb_disk_slot *slot;
- 	struct o2hb_disk_heartbeat_block *hb_block;
- 	char *errstr;
-+	u8 node_num = reg->hr_node_num;
-+
-+	if (node_num >= O2NM_MAX_NODES)
-+		return 0;
- 
--	slot = &reg->hr_slots[o2nm_this_node()];
-+	slot = &reg->hr_slots[node_num];
- 	/* Don't check on our 1st timestamp */
- 	if (!slot->ds_last_time)
- 		return 0;
-@@ -719,7 +728,10 @@ static inline void o2hb_prepare_block(struct o2hb_region *reg,
- 	struct o2hb_disk_slot *slot;
- 	struct o2hb_disk_heartbeat_block *hb_block;
- 
--	node_num = o2nm_this_node();
-+	node_num = reg->hr_node_num;
-+	if (node_num >= O2NM_MAX_NODES)
-+		return;
-+
- 	slot = &reg->hr_slots[node_num];
- 
- 	hb_block = (struct o2hb_disk_heartbeat_block *)slot->ds_raw_block;
-@@ -1213,7 +1225,7 @@ static int o2hb_thread(void *data)
- 	set_user_nice(current, MIN_NICE);
- 
- 	/* Pin node */
--	ret = o2nm_depend_this_node();
-+	ret = o2nm_depend_node(reg->hr_node_num);
- 	if (ret) {
- 		mlog(ML_ERROR, "Node has been deleted, ret = %d\n", ret);
- 		reg->hr_node_deleted = 1;
-@@ -1222,7 +1234,8 @@ static int o2hb_thread(void *data)
- 	}
- 
- 	while (!kthread_should_stop() &&
--	       !reg->hr_unclean_stop && !reg->hr_aborted_start) {
-+	       !reg->hr_unclean_stop && !reg->hr_aborted_start &&
-+	       o2nm_this_node() == reg->hr_node_num) {
- 		/* We track the time spent inside
- 		 * o2hb_do_disk_heartbeat so that we avoid more than
- 		 * hr_timeout_ms between disk writes. On busy systems
-@@ -1271,7 +1284,7 @@ static int o2hb_thread(void *data)
- 	}
- 
- 	/* Unpin node */
--	o2nm_undepend_this_node();
-+	o2nm_undepend_node(reg->hr_node_num);
- 
- 	mlog(ML_HEARTBEAT|ML_KTHREAD, "o2hb thread exiting\n");
- 
-@@ -1782,7 +1795,8 @@ static ssize_t o2hb_region_dev_store(struct config_item *item,
- 
- 	/* We can't heartbeat without having had our node number
- 	 * configured yet. */
--	if (o2nm_this_node() == O2NM_MAX_NODES)
-+	reg->hr_node_num = o2nm_this_node();
-+	if (reg->hr_node_num == O2NM_MAX_NODES)
- 		return -EINVAL;
- 
- 	fd = simple_strtol(p, &p, 0);
-@@ -2017,6 +2031,7 @@ static struct config_item *o2hb_heartbeat_group_make_item(struct config_group *g
- 		ret = -ENAMETOOLONG;
- 		goto free;
- 	}
-+	reg->hr_node_num = O2NM_MAX_NODES;
- 
- 	spin_lock(&o2hb_live_lock);
- 	reg->hr_region_num = 0;
-diff --git a/fs/ocfs2/cluster/nodemanager.c b/fs/ocfs2/cluster/nodemanager.c
-index 5fffbed779da7..46e0c9ba8a4ff 100644
---- a/fs/ocfs2/cluster/nodemanager.c
-+++ b/fs/ocfs2/cluster/nodemanager.c
-@@ -366,6 +366,7 @@ static ssize_t o2nm_node_local_store(struct config_item *item, const char *page,
- 	if (!tmp && cluster->cl_has_local &&
- 	    cluster->cl_local_node == node->nd_num) {
- 		o2net_stop_listening(node);
-+		cluster->cl_has_local = 0;
- 		cluster->cl_local_node = O2NM_INVALID_NODE_NUM;
- 	}
- 
-@@ -787,12 +788,12 @@ void o2nm_undepend_item(struct config_item *item)
- 	configfs_undepend_item(item);
- }
- 
--int o2nm_depend_this_node(void)
-+int o2nm_depend_node(u8 node_num)
- {
- 	int ret = 0;
- 	struct o2nm_node *local_node;
- 
--	local_node = o2nm_get_node_by_num(o2nm_this_node());
-+	local_node = o2nm_get_node_by_num(node_num);
- 	if (!local_node) {
- 		ret = -EINVAL;
- 		goto out;
-@@ -805,17 +806,27 @@ int o2nm_depend_this_node(void)
- 	return ret;
- }
- 
--void o2nm_undepend_this_node(void)
-+void o2nm_undepend_node(u8 node_num)
- {
- 	struct o2nm_node *local_node;
- 
--	local_node = o2nm_get_node_by_num(o2nm_this_node());
-+	local_node = o2nm_get_node_by_num(node_num);
- 	BUG_ON(!local_node);
- 
- 	o2nm_undepend_item(&local_node->nd_item);
- 	o2nm_node_put(local_node);
- }
- 
-+int o2nm_depend_this_node(void)
-+{
-+	return o2nm_depend_node(o2nm_this_node());
-+}
-+
-+void o2nm_undepend_this_node(void)
-+{
-+	o2nm_undepend_node(o2nm_this_node());
-+}
-+
- 
- static void __exit exit_o2nm(void)
- {
-diff --git a/fs/ocfs2/cluster/nodemanager.h b/fs/ocfs2/cluster/nodemanager.h
-index 2f72f56996bd9..ca3483fb54504 100644
---- a/fs/ocfs2/cluster/nodemanager.h
-+++ b/fs/ocfs2/cluster/nodemanager.h
-@@ -66,6 +66,8 @@ void o2nm_node_put(struct o2nm_node *node);
- int o2nm_depend_item(struct config_item *item);
- int o2nm_depend_item_unlocked(struct config_item *item);
- void o2nm_undepend_item(struct config_item *item);
-+int o2nm_depend_node(u8 node_num);
-+void o2nm_undepend_node(u8 node_num);
- int o2nm_depend_this_node(void);
- void o2nm_undepend_this_node(void);
- 
+ 	int update_vc;
+ #ifdef DSI_PERF_MEASURE
 -- 
 2.53.0
 
