@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DCA63254B8;
-	Sat, 12 Sep 2026 13:49:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 196C22594BD;
+	Sat, 12 Sep 2026 13:49:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789220994; cv=none; b=EzUrG2SFm/V2xYPSL4GdH3Quaz/I/1R75ne3N3uP+Ou0IPxWMvM0JjMH8jLoQrUmDUki45TvzVL6J+hmWywPAgG+Wo5DJBI84gabz5WN4kpPzjAZkfJZrjvTNwUZOHjj/1vLtrz/Pi7Gj/G/m9wlcvbcsvNC0PB0er9eXN2qSLU=
+	t=1789220999; cv=none; b=FWPNvsi6o2ADXxPgDUxlLeZPogjXnKG5n4G8jUJwN2XGW1iDKq8wSKqGIjz8HIVKvqQD/77mcORC9c9gMhwk1dcHalHdnrOo5FN67UTOU4epYbqZMDiEbELkID8ac7RXIG06BMypN0GID3HTZZboj3hgvYt8CkAgi96crk3xUOk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789220994; c=relaxed/simple;
-	bh=lPJt/Cq+X1p2OzlLm1D0DNKC87ePKAoSaqCl3BLd2hI=;
+	s=arc-20240116; t=1789220999; c=relaxed/simple;
+	bh=w7uTu73hv//Ozgho730LHtkVMxKYyNshuxLDn7OGEQU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rIlYmzgg4Q6Dlj98QkTWAMj27gUh+NyeQfHkZYP6H1Pl7ubp2Ev9OixwCsOiabhazMdcGj5+QOWDy5aSk7xahyAne90Jen2abSRFEmNJVms/xtjXgCu51wz3Q/7Fdti5kSLn0Uljt4L47cl7Ke/ySxqWKC6dbmC1dRle+InK47k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P5LOoTJE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UhT1yVt/3OjBUMh+maJ3pZd7QPMCM4Jh+tMKfJTw/Mh+H4VMrOG4YH2ZCTERm0nzDJMdIxyA0lo82L1Dpju3LgyLv8Lf44rNdLRLIE9AfPmrB2O0bVtlrr6CO4A+qIUFau2KL2hto9ScdqC87U+L2pB0yYtOYC0EeqQ35j/75ps=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HqzMr//B; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P5LOoTJE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAA071F000FF;
-	Sat, 12 Sep 2026 13:49:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HqzMr//B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C85B21F000FF;
+	Sat, 12 Sep 2026 13:49:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789220992;
-	bh=1SLr5hdY6RMHpfG5lwBBVZ57Y5aRpWyuOYVV8VRVomU=;
+	s=korg; t=1789220998;
+	bh=dud8MdVyUMQlICsvfV1C/zWba4M/W7ToM77NdIP+epM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=P5LOoTJEgeWARVNPntNEkJfoCiaxbcY8aTEpJzefCG8QlLRhDQL0GAI2gBSXSiYO8
-	 ndUMWgtq9kaKIEl8ZgaroAQpDfeaSbWCvp9oG07tUwkcbKzYEdyzaszLXNddraTUlq
-	 wMPRliqJxxFaDvjtIzp3CD4SstgRqoq3p41trpm8=
+	b=HqzMr//B68AUugwJhiugNH9vAKx2x8ogt+CT0diMvTX9xn/7QEKA457sO8yOhc33D
+	 PELkhO491G/N9Wl0mBpu08GL4PM5+9IHSDzsge5qvVVM8U2d+9+klNtVGS7r2/rZBI
+	 iFzdYsYdoC1zPMIUyBY0jI9YjeIdEnNe9SH0FTiE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>
-Subject: [PATCH 6.6 0291/1424] i3c: master: Fix info leak and UAF in device unregister path
-Date: Sat, 12 Sep 2026 08:45:23 +0200
-Message-ID: <20260912065613.801501121@linuxfoundation.org>
+	Fabio Porcedda <fabio.porcedda@gmail.com>,
+	Breno Leitao <leitao@debian.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 0256/1424] net: usb: qmi_wwan: add Telit Cinterion FE990D50 composition
+Date: Sat, 12 Sep 2026 08:44:48 +0200
+Message-ID: <20260912065613.011717825@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -52,59 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: Fabio Porcedda <fabio.porcedda@gmail.com>
 
-commit d2c743efd2d1ee64e94324664808f623dd865872 upstream.
+commit 1056e79fffd0841f43c6a1b25664b196b3caf1c6 upstream.
 
-i3c_master_unregister_i3c_devs() clears i3cdev->dev->desc before
-calling device_unregister().  During device_unregister(),
-device_del() emits a KOBJ_REMOVE uevent and unbinds the driver while
-the device descriptor is still expected to be valid.  As a result,
-i3c_device_uevent() and a racing modalias_show() can observe a NULL
-desc and fall back to an uninitialized stack struct i3c_device_info,
-leaking kernel stack contents in the generated modalias.  Driver
-.remove() callbacks may also encounter an unexpected NULL desc during
-unbind.
+Add the followin Telit Cinterion FE990D50 composition:
 
-Keep desc valid until device_unregister() has completed.  Since
-device_unregister() drops the device reference and may free the device,
-take an extra reference with get_device() before unregistering.  Clear
-desc afterwards and release the extra reference with put_device().
-This preserves the release-time invariant that desc must be NULL while
-avoiding both the information leak and a potential use-after-free from
-writing desc after the device has been released.
+0x0991: rmnet + tty (AT/NMEA) + tty (AT) + tty (AT) + tty (AT) +
+        tty (diag) + ADPL + adb
+T:  Bus=01 Lev=01 Prnt=01 Port=06 Cnt=03 Dev#= 10 Spd=480  MxCh= 0
+D:  Ver= 2.10 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=1bc7 ProdID=0991 Rev=06.06
+S:  Manufacturer=Telit Cinterion
+S:  Product=FE990
+S:  SerialNumber=2aa802d2
+C:  #Ifs= 9 Cfg#= 1 Atr=e0 MxPwr=500mA
+I:  If#= 0 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=qmi_wwan
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=82(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
+I:  If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=60 Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=88(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=89(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=8a(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=06(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=8b(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 6 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=80 Driver=(none)
+E:  Ad=8c(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 7 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=70 Driver=(none)
+E:  Ad=8d(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 8 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=(none)
+E:  Ad=07(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=8e(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
 
-Reported-by: sashiko-bot@kernel.org
-Link: https://lore.kernel.org/linux-i3c/20260702190003.8BF741F000E9@smtp.kernel.org/
-Fixes: 3a379bbcea0a ("i3c: Add core I3C infrastructure")
 Cc: stable@vger.kernel.org
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260723075747.34049-1-adrian.hunter@intel.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Signed-off-by: Fabio Porcedda <fabio.porcedda@gmail.com>
+Reviewed-by: Breno Leitao <leitao@debian.org>
+Link: https://patch.msgid.link/20260812054911.447887-1-Fabio.Porcedda@telit.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i3c/master.c |    9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/net/usb/qmi_wwan.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/i3c/master.c
-+++ b/drivers/i3c/master.c
-@@ -2505,11 +2505,12 @@ static void i3c_master_unregister_i3c_de
- 		if (!i3cdev->dev)
- 			continue;
- 
--		i3cdev->dev->desc = NULL;
--		if (device_is_registered(&i3cdev->dev->dev))
-+		if (device_is_registered(&i3cdev->dev->dev)) {
-+			get_device(&i3cdev->dev->dev);
- 			device_unregister(&i3cdev->dev->dev);
--		else
--			put_device(&i3cdev->dev->dev);
-+		}
-+		i3cdev->dev->desc = NULL;
-+		put_device(&i3cdev->dev->dev);
- 		i3cdev->dev = NULL;
- 	}
- }
+--- a/drivers/net/usb/qmi_wwan.c
++++ b/drivers/net/usb/qmi_wwan.c
+@@ -1368,6 +1368,7 @@ static const struct usb_device_id produc
+ 	{QMI_FIXED_INTF(0x1bbb, 0x0203, 2)},	/* Alcatel L800MA */
+ 	{QMI_FIXED_INTF(0x2357, 0x0201, 4)},	/* TP-LINK HSUPA Modem MA180 */
+ 	{QMI_FIXED_INTF(0x2357, 0x9000, 4)},	/* TP-LINK MA260 */
++	{QMI_QUIRK_SET_DTR(0x1bc7, 0x0991, 0)}, /* Telit FE990D50 */
+ 	{QMI_QUIRK_SET_DTR(0x1bc7, 0x1031, 3)}, /* Telit LE910C1-EUX */
+ 	{QMI_QUIRK_SET_DTR(0x1bc7, 0x1034, 2)}, /* Telit LE910C4-WWX */
+ 	{QMI_QUIRK_SET_DTR(0x1bc7, 0x1037, 4)}, /* Telit LE910C4-WWX */
 
 
