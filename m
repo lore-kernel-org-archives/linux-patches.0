@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37735478E57;
-	Sat, 12 Sep 2026 11:37:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9403037F313;
+	Sat, 12 Sep 2026 11:37:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789213073; cv=none; b=TemTJIHFwDmwCn+2A1nJpB2b7bEeD2SsrTFUyhJx2Z+euERDC4b3JGAvP3grM4GEWgW6CH621w2sngM6yiVm5sQ2SrTMX+6gNFgKaecfMr3oLsUbJnnmnSHV4YGbdjZtKRn9LMfnJXUEkqYkxGi7ojVMG6aoB7psKzg7RKFq6EY=
+	t=1789213077; cv=none; b=mP2ZCLMIbjy7Vezeci4GtXtPjSecccGhuSOoXTYgyAGCI2dFDcPnwYvj8pENYoCZmh8qERtofBG+CJlzilqiwHhAlg/sGPrZmw4SxtMtc05Ao4+kSR7kqLM6nGnjwObLz+P52eE+OwkDc1QWACReF/gBJaCzoZLYKh2eYA5GL4w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789213073; c=relaxed/simple;
-	bh=JvAZLIXPlONUYeISrnQFsa4Tv8LQlCqGUtbjMqJSF5I=;
+	s=arc-20240116; t=1789213077; c=relaxed/simple;
+	bh=eVeZsdtcrFesqx6L7/vZlPo+qlWVFLJ1CPYpGxAQY0k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ncmWfT7Osvjl+m9XGZfhM2GF/+ijTFjCjhX8aLjeNHjn/PKZftDgbfEH6TiRh0fZIW+GWg5hj5hlm8JMXQF2bAgCi4BTaBgxRiUnpYrB+vzHH7Khc1Ik1o3KqOollq7lU81FrWU/TjUjJH00Py1IsuIgvuAQZ+iebJyJYJ33M7Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=scCFAE+f; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TVWth5Z2msCFqM+EHzyjG1eQOp9HVSgQQwhOt76MxDYsCe1pCZNFvU3AHIfne0tPoh461/hHn56IxmUu8PDhsJ1hvn+G+mCtSUs5s/WYPoX05pSh10qzQQPBSHLMu/8OxuuUT2Rg85qVO1I8i0ywmCWRQKq3Bm8wjNASbMfuR+c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QJv7T2WR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="scCFAE+f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02E511F000FF;
-	Sat, 12 Sep 2026 11:37:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QJv7T2WR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 986131F000FF;
+	Sat, 12 Sep 2026 11:37:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789213071;
-	bh=QwfVfGoLuM+F9Ar/zsM6Zp+Act80R7+Ay1XfFaNRHZI=;
+	s=korg; t=1789213076;
+	bh=NjxA6IhOdDxwuibK7RNjn58kJgDNzlpX48ByqsTlrBc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=scCFAE+foym2VYyjKo2AUugtIfEMDkS9381x6WDz0caW+ixpaC9qMskzHHutgTL6j
-	 Pt3AqnYKmbrQ9/3sjLjcCjwRE27CW516o/UVGAYWVPHeR1bKkK64I8hJ3pGO8TJ1yp
-	 dtWRz58rTF7U9qxrEY+MeL1TcYQOc0OkqL/QsJQA=
+	b=QJv7T2WRlAeyqUKh/LtgwUm1LOat4mcCJerh+5ArWTHVeRRqsF9NHkye/FNDKNNtl
+	 tqdafj5xBba2B3xIfFdYd+CixTSIiOGZPM3UmVbQ7nVvlxiA2g4nneH7cBnLd+X1LE
+	 rh7rvEamwTdgKf/cOf+O4gizOZMgwOY3/MELCM4k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
-	Jason Xing <kernelxing@tencent.com>,
-	Stanislav Fomichev <sdf@fomichev.me>,
-	Jakub Kicinski <kuba@kernel.org>,
+	David Howells <dhowells@redhat.com>,
+	Paulo Alcantara <pc@manguebit.org>,
+	Matthew Wilcox <willy@infradead.org>,
+	netfs@lists.linux.dev,
+	linux-fsdevel@vger.kernel.org,
+	Christian Brauner <brauner@kernel.org>,
 	Suraj Jitindar Singh <surajjs@amazon.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0005/1376] xsk: cache csum_start/csum_offset to fix TOCTOU in xsk_skb_metadata()
-Date: Sat, 12 Sep 2026 08:40:31 +0200
-Message-ID: <20260912065607.667647307@linuxfoundation.org>
+Subject: [PATCH 6.12 0006/1376] netfs: Fix netfs_read_folio() to wait on writeback
+Date: Sat, 12 Sep 2026 08:40:32 +0200
+Message-ID: <20260912065607.689814190@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -54,78 +56,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Xing <kernelxing@tencent.com>
+From: David Howells <dhowells@redhat.com>
 
-commit 22ba97ea9cc1f63a0d0244fae38057ed452b6ac7 upstream.
+commit ded0c6f1606061148c202825f7e53d711f9f84cf upstream.
 
-The TX metadata area resides in the UMEM buffer which is memory-mapped
-and concurrently writable by userspace. In xsk_skb_metadata(),
-csum_start and csum_offset are read from shared memory for bounds
-validation, then read again for skb assignment. A malicious userspace
-application can race to overwrite these values between the two reads,
-bypassing the bounds check and causing out-of-bounds memory access
-during checksum computation in the transmit path.
+Fix netfs_read_folio() to wait for an ongoing writeback to complete so that
+it can trust the dirty flag and whatever is attached to folio->private
+(folio->private may get cleaned up by the collector before it clears the
+writeback flag).
 
-Fix this by reading csum_start and csum_offset into local variables
-once, then using the local copies for both validation and assignment.
-
-Note that other metadata fields (flags, launch_time) and the cached
-csum fields may be mutually inconsistent due to concurrent userspace
-writes, but this is benign: the only security-critical invariant is
-that each field's validated value is the same one used, which local
-caching guarantees.
-
-Closes: https://lore.kernel.org/all/20260503200927.73EA1C2BCB4@smtp.kernel.org/
-Reviewed-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
-Signed-off-by: Jason Xing <kernelxing@tencent.com>
-Acked-by: Stanislav Fomichev <sdf@fomichev.me>
-Fixes: 48eb03dd2630 ("xsk: Add TX timestamp and TX checksum offload support")
-Link: https://patch.msgid.link/20260530042630.80626-1-kerneljasonxing@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ 6.12: Apply fix in xsk_build_skb() since missing patch
-	30c3055f9c0d ("xsk: wrap generic metadata handling onto separate
-	function") added in v6.18 which moves handling to separate
-	function xsk_skb_metadata(). ]
+Fixes: ee4cdf7ba857 ("netfs: Speed up buffered reading")
+Closes: https://sashiko.dev/#/patchset/20260414082004.3756080-1-dhowells%40redhat.com
+Signed-off-by: David Howells <dhowells@redhat.com>
+Link: https://patch.msgid.link/20260512123404.719402-23-dhowells@redhat.com
+cc: Paulo Alcantara <pc@manguebit.org>
+cc: Matthew Wilcox <willy@infradead.org>
+cc: netfs@lists.linux.dev
+cc: linux-fsdevel@vger.kernel.org
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Suraj Jitindar Singh <surajjs@amazon.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xdp/xsk.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ fs/netfs/buffered_read.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/xdp/xsk.c b/net/xdp/xsk.c
-index da7e11e3bfad2..76675ce70f03d 100644
---- a/net/xdp/xsk.c
-+++ b/net/xdp/xsk.c
-@@ -665,6 +665,7 @@ static struct sk_buff *xsk_build_skb(struct xdp_sock *xs,
- 	struct xsk_tx_metadata *meta = NULL;
- 	struct net_device *dev = xs->dev;
- 	struct sk_buff *skb = xs->skb;
-+	u16 csum_start, csum_offset;
- 	bool first_frag = false;
- 	int err;
+diff --git a/fs/netfs/buffered_read.c b/fs/netfs/buffered_read.c
+index d99284e35126c..fd41e38aedb75 100644
+--- a/fs/netfs/buffered_read.c
++++ b/fs/netfs/buffered_read.c
+@@ -565,6 +565,8 @@ int netfs_read_folio(struct file *file, struct folio *folio)
+ 	struct netfs_inode *ctx = netfs_inode(mapping->host);
+ 	int ret;
  
-@@ -733,15 +734,17 @@ static struct sk_buff *xsk_build_skb(struct xdp_sock *xs,
- 			}
- 
- 			if (meta->flags & XDP_TXMD_FLAGS_CHECKSUM) {
--				if (unlikely(meta->request.csum_start +
--					     meta->request.csum_offset +
-+				csum_start = READ_ONCE(meta->request.csum_start);
-+				csum_offset = READ_ONCE(meta->request.csum_offset);
++	folio_wait_writeback(folio);
 +
-+				if (unlikely(csum_start + csum_offset +
- 					     sizeof(__sum16) > len)) {
- 					err = -EINVAL;
- 					goto free_err;
- 				}
- 
--				skb->csum_start = hr + meta->request.csum_start;
--				skb->csum_offset = meta->request.csum_offset;
-+				skb->csum_start = hr + csum_start;
-+				skb->csum_offset = csum_offset;
- 				skb->ip_summed = CHECKSUM_PARTIAL;
- 
- 				if (unlikely(xs->pool->tx_sw_csum)) {
+ 	if (folio_test_dirty(folio)) {
+ 		trace_netfs_folio(folio, netfs_folio_trace_read_gaps);
+ 		return netfs_read_gaps(file, folio);
 -- 
 2.53.0
 
