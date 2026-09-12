@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC3AC3AEF4F;
-	Sat, 12 Sep 2026 18:45:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B2A648D880;
+	Sat, 12 Sep 2026 18:45:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789238710; cv=none; b=cWF0q2O+IfEKep6fmd6mkcHXznjxnDlXG1ZqR2GNiPJuRJiq5irL+hkOUVba+vqxGrBZIfZzWqlgu4KBCWxlaq/m0rTspQUQuNuvloTNDwKZ2tgYr0j8fYCdM7bnMIa9Nv4psJHz1GlEtc0rxSZZhQ9+BSIGcvyoAbaw8dJ3ULg=
+	t=1789238716; cv=none; b=bhL7KBArrzNdKMYhZn8ugc/APQjsFnx5E4c8/G64fINDGD+oE3dN0fkFdPNzxDy82q/TFODlFJIBzz1mxcdSnYDVOcDfS2B7tgnVHkluOYphBhapsLvZ+2o5zYInWZGt7tE7MBuc/kaK4GE9zwImfwCxNlxa+H+BkE768kh4aLU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789238710; c=relaxed/simple;
-	bh=jJMu7caqkpZC3PJ8jvlV9QJUgRwMTWDUbCLie4hLF+s=;
+	s=arc-20240116; t=1789238716; c=relaxed/simple;
+	bh=ri9Y5A/IWz7uVsyDyZkAyLY9fXqPIDnXeCF4ODfwGt8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=bAmTst+LaSX7GGHWsd2OZQUvoNMq6lqpqlz36C9soxaIgJdkw9pDQ63LxQojvhHt4xDkxf6yw7etLU2HwsYgz/QSOKDgXe3hXRByGg0dMesY9QsM2CDSCy1rZVOkXBVSHAzZN7NCzmHclJInEvtnYL6/DAboXVblCikPtd/dDMc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kCeBK3Ij; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gvzSjmKGNebEzi04TBfCv+dt93Nd+YxnkV7yRtLDGJSXHAKyeoR/ffCI7HHa9vBI3BbyPUmHFPpexf6aWFTMIfKRHBbXUFhCVtPJRHwxd33jJD0M3YjNrXAb39t/mI15Vk8Ml0EVrjOwwat6Gj0i7dM+gNjdIzt9nYo10ErL1IQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yMpQhyuf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kCeBK3Ij"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D67DD1F000FF;
-	Sat, 12 Sep 2026 18:45:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yMpQhyuf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC5751F000FF;
+	Sat, 12 Sep 2026 18:45:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789238708;
-	bh=imuMoAs4YVSZOfMhu3F8U/0UBR4/rm5GiRHB1IXmFyM=;
+	s=korg; t=1789238714;
+	bh=IqLBrfZ37Eri5GgUofoV+/rwXyu+1ULxd+jVcYcz0ws=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kCeBK3IjYixHBX/eu1A7j6TrwkILI/JCqVKFm7TnpgF0jGnm38VCR0WX87estMdOl
-	 pJWGPKW7ntdxAcP57Doz9+oP5LuTEfMu7TZbVmOBypVz7zW9cdOnoFWAk5de+rCV19
-	 H3OdTr5wtIWmAxsVcAHjjQR6yIjPEZCVRMtUf2YY=
+	b=yMpQhyuf3IgjuJVEXQ1muDIyfqL89lyyZzswfZMq4ks6WvJiUHoB6WdxxFr2vPDDM
+	 OHYc7bRfllwGOqzZhir10icXJhHa2dbc7Ud5wmuJ5yn9iN+8jqVYlxJ6hoENy0XxSz
+	 KL3zldJTyIovxSJBV2KOtnE1LY5+FrYmex/PDiiY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Deepak Kumar Singh <deepak.singh@oss.qualcomm.com>,
-	Vishnu Santhosh <vishnu.santhosh@oss.qualcomm.com>,
-	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Kyle Zeng <kylebot@openai.com>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 517/935] rpmsg: glink: fix deadlock in endpoint destroy during driver detach
-Date: Sat, 12 Sep 2026 08:59:07 +0200
-Message-ID: <20260912065538.683936826@linuxfoundation.org>
+Subject: [PATCH 5.15 518/935] hfsplus: validate thread record before delete key rebuild
+Date: Sat, 12 Sep 2026 08:59:08 +0200
+Message-ID: <20260912065538.706988166@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -48,86 +45,116 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vishnu Santhosh <vishnu.santhosh@oss.qualcomm.com>
+From: Kyle Zeng <kylebot@openai.com>
 
-[ Upstream commit 5a5a48e788e02fd8a8eb7188ce440572d6c12418 ]
+[ Upstream commit e2ea5cac61acfc11dad22f1d2d4bc71d56c52a20 ]
 
-During driver detach, the device core holds the device mutex throughout
-the driver's remove callback chain.  When the rpmsg endpoint is
-destroyed as part of that teardown, the GLINK endpoint destroy
-implementation attempts to unregister the underlying rpmsg device.
-That unregistration calls device_del(), which tries to re-acquire the
-same device mutex already held higher up the stack, causing rmmod to
-hang indefinitely.
+hfsplus_delete_cat() is called with str == NULL when the last open
+reference to an unlinked HFS+ hardlink backing inode is closed. In that
+case, the function finds the catalog thread by CNID and rebuilds the
+catalog key from thread.nodeName.
 
-The deadlock manifests with the following call chain:
+That reconstruction path reads thread.nodeName.length directly from the
+catalog B-tree into fd.search_key and then copies length * 2 bytes into
+fd.search_key->cat.name.unicode. It does not first check that the found
+record is a thread record or that its size matches the thread name.
 
-[<0>] device_del+0x44/0x414  <- tries to acquire same mutex
-[<0>] device_unregister+0x18/0x34
-[<0>] rpmsg_unregister_device+0x28/0x4c
-[<0>] qcom_glink_remove_rpmsg_device+0x70/0xc0
-[<0>] qcom_glink_destroy_ept+0x58/0xbc
-[<0>] rpmsg_dev_remove+0x50/0x60
-[<0>] device_remove+0x4c/0x80
-[<0>] device_release_driver_internal+0x1cc/0x228  <- acquires device mutex
-[<0>] driver_detach+0x4c/0x98
-[<0>] bus_remove_driver+0x6c/0xbc
-[<0>] driver_unregister+0x30/0x60
-[<0>] unregister_rpmsg_driver+0x10/0x1c
-[<0>] fastrpc_exit+0x28/0x38 [fastrpc]
-[<0>] __arm64_sys_delete_module+0x1b8/0x294
-[<0>] invoke_syscall+0x48/0x10c
-[<0>] el0_svc_common.constprop.0+0xc0/0xe0
-[<0>] do_el0_svc+0x1c/0x28
-[<0>] el0_svc+0x34/0x108
-[<0>] el0t_64_sync_handler+0xa0/0xe4
-[<0>] el0t_64_sync+0x198/0x19c
+A corrupted image can therefore provide an oversized thread name length
+and make hfs_bnode_read() write past the catalog search-key allocation.
 
-The rpmsg device unregistration inside endpoint destroy is redundant.
-In both contexts where endpoint destruction is triggered:
+Read the CNID record through hfsplus_brec_read_cat(), which bounds the
+record read to sizeof(hfsplus_cat_entry) and verifies that a thread
+record's size exactly matches nodeName.length. Together, these checks
+ensure an accepted thread name fits HFSPLUS_MAX_STRLEN. Reject non-thread
+records before building the delete key from the validated thread name.
 
-- Driver detach path: the driver core already tears down the rpmsg
-  device.
+Share the thread-record-type helper between hfsplus_find_cat() and
+hfsplus_delete_cat().
 
-- Channel close path: the rpmsg device is already unregistered before
-  endpoint destruction is reached.
-
-Remove the redundant unregistration to fix the deadlock.
-
-Co-developed-by: Deepak Kumar Singh <deepak.singh@oss.qualcomm.com>
-Signed-off-by: Deepak Kumar Singh <deepak.singh@oss.qualcomm.com>
-Signed-off-by: Vishnu Santhosh <vishnu.santhosh@oss.qualcomm.com>
-Tested-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
-Fixes: a53e356df548 ("rpmsg: glink: fix rpmsg device leak")
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260604-rpmsg-glink-fix-deadlock-destroy-ept-v1-1-b8a54ad1e4fd@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Assisted-by: Codex:gpt-5.6
+Signed-off-by: Kyle Zeng <kylebot@openai.com>
+Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Link: https://lore.kernel.org/r/20260709010203.49664-1-kylebot@openai.com
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rpmsg/qcom_glink_native.c | 3 ---
- 1 file changed, 3 deletions(-)
+ fs/hfsplus/catalog.c    | 25 ++++++++++++-------------
+ fs/hfsplus/hfsplus_fs.h |  6 ++++++
+ 2 files changed, 18 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/rpmsg/qcom_glink_native.c b/drivers/rpmsg/qcom_glink_native.c
-index 3c4537b13ef9f..72e39ccaa2998 100644
---- a/drivers/rpmsg/qcom_glink_native.c
-+++ b/drivers/rpmsg/qcom_glink_native.c
-@@ -1263,9 +1263,6 @@ static void qcom_glink_destroy_ept(struct rpmsg_endpoint *ept)
- 	channel->ept.cb = NULL;
- 	spin_unlock_irqrestore(&channel->recv_lock, flags);
+diff --git a/fs/hfsplus/catalog.c b/fs/hfsplus/catalog.c
+index 136aa1017af2b..9a82bdf4caf24 100644
+--- a/fs/hfsplus/catalog.c
++++ b/fs/hfsplus/catalog.c
+@@ -204,7 +204,7 @@ int hfsplus_find_cat(struct super_block *sb, u32 cnid,
+ 		return err;
  
--	/* Decouple the potential rpdev from the channel */
--	qcom_glink_remove_rpmsg_device(glink, channel);
--
- 	qcom_glink_send_close_req(glink, channel);
+ 	type = be16_to_cpu(tmp.type);
+-	if (type != HFSPLUS_FOLDER_THREAD && type != HFSPLUS_FILE_THREAD) {
++	if (!is_hfs_thread_record_type(type)) {
+ 		pr_err("found bad thread record in catalog\n");
+ 		return -EIO;
+ 	}
+@@ -350,23 +350,22 @@ int hfsplus_delete_cat(u32 cnid, struct inode *dir, const struct qstr *str)
+ 		goto out;
+ 
+ 	if (!str) {
+-		int len;
++		hfsplus_cat_entry entry = {0};
+ 
+ 		hfsplus_cat_build_key_with_cnid(sb, fd.search_key, cnid);
+-		err = hfs_brec_find(&fd, hfs_find_rec_by_key);
++		err = hfsplus_brec_read_cat(&fd, &entry);
+ 		if (err)
+ 			goto out;
+ 
+-		off = fd.entryoffset +
+-			offsetof(struct hfsplus_cat_thread, nodeName);
+-		fd.search_key->cat.parent = cpu_to_be32(dir->i_ino);
+-		hfs_bnode_read(fd.bnode,
+-			&fd.search_key->cat.name.length, off, 2);
+-		len = be16_to_cpu(fd.search_key->cat.name.length) * 2;
+-		hfs_bnode_read(fd.bnode,
+-			&fd.search_key->cat.name.unicode,
+-			off + 2, len);
+-		fd.search_key->key_len = cpu_to_be16(6 + len);
++		type = be16_to_cpu(entry.type);
++		if (!is_hfs_thread_record_type(type)) {
++			pr_err("found bad thread record in catalog\n");
++			err = -EIO;
++			goto out;
++		}
++
++		hfsplus_cat_build_key_uni(fd.search_key, dir->i_ino,
++					  &entry.thread.nodeName);
+ 	} else {
+ 		err = hfsplus_cat_build_key(sb, fd.search_key, dir->i_ino, str);
+ 		if (unlikely(err))
+diff --git a/fs/hfsplus/hfsplus_fs.h b/fs/hfsplus/hfsplus_fs.h
+index ef8c087098853..1a8231dfb0353 100644
+--- a/fs/hfsplus/hfsplus_fs.h
++++ b/fs/hfsplus/hfsplus_fs.h
+@@ -540,6 +540,12 @@ static inline u32 hfsplus_cat_thread_size(const struct hfsplus_cat_thread *threa
+ 	       be16_to_cpu(thread->nodeName.length) * sizeof(hfsplus_unichr);
  }
  
++static inline
++bool is_hfs_thread_record_type(u16 type)
++{
++	return type == HFSPLUS_FOLDER_THREAD || type == HFSPLUS_FILE_THREAD;
++}
++
+ int hfsplus_brec_read_cat(struct hfs_find_data *fd, hfsplus_cat_entry *entry);
+ 
+ /*
 -- 
 2.53.0
 
