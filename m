@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 266D33A1690;
-	Sat, 12 Sep 2026 08:33:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1DFE3FC5B5;
+	Sat, 12 Sep 2026 08:33:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789201985; cv=none; b=ODmK8F4CRnqD5jbeM8HMdys7eT0GICQ94BVAwV111JvlqvbWUizlSnHW8jMzk8mQpLy4NU/UhvSTo9Q78Evbmx5d4OMyZXG5Sq6FrLacGE4ob929fahkO5Qztj9jrROQvSlK7g4MD5trQXtp734+XRjxoELt6a9e/VJPceFI8no=
+	t=1789201990; cv=none; b=rHhHAAp0X7g/UK3Ds7MZ5X+B0kz8Qcv7rcntutAov38UyY7DOZP0f4HrcPjZY3Wi03KarGECuIwsr8Igw1y0KOcimpruldHh+O22CQOoBUtQBKYxX2WjhbP9xq1pEBONHMamYc+b/dbPWroPUllpv5cCpu3zDf41rqfN0ZRtbn8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789201985; c=relaxed/simple;
-	bh=o9WrUvB0mhaSVJxYbw7DOIEVJOK3sVR+qMhwZtHoy9g=;
+	s=arc-20240116; t=1789201990; c=relaxed/simple;
+	bh=QHjHqo8Fatz5OgqifRzAtdY5iKRtILKP/0vezqZIvFw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z5lA8xR1TxXl5waHcPOK08oy2a+CVwrogYjx2VkpReaUt8wBjSNQof461JGe/w8MVh0uuct5cY9+bwSc9NSRmRpAS/sDC43h/40Ziju/qkDXM5BDQBFHUMFaB0NJQ5dLTNMdd7AN+Rq4Edrun4Z41PbWpTSXE7N77NNE9UqG3qg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YgJYvNW6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cihp+9qwR/64XiIWbb9tgwVQStsh7CBDvjROqMuh0TvVG5VmrVmtTFYpwYmQLDS1qKPFmmh14Fdx4CZ9ytDGUU+Y/FW6N8KcGxtpeCIOUM4tMpTCERZql8k+A6jnRl6uAUrP+ZcoambZ2Y5mO1LuFS0w83EwYbQ3klUsIU+fy5I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aIA56N/I; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YgJYvNW6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A4AF1F000FF;
-	Sat, 12 Sep 2026 08:33:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aIA56N/I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D86201F000FF;
+	Sat, 12 Sep 2026 08:33:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789201984;
-	bh=IfrXr6t3G1qfHxn0nCq86fyiaeBbzxiQgtaUqb493uI=;
+	s=korg; t=1789201988;
+	bh=TUdTG9aYd7o22IUDNwhob7W1uNWauUHjm9RecHWSu1s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YgJYvNW6oPJvOegK/hxrU6hMLDHgfJRzfSwsOHiD8XsgXUOHjYTkQ4+Tyjg8I+ttT
-	 kEs4++Db250WipcR/GKaBkNjdrhXSIqn717pxeZ95H/pGzP/8By3LMefixo3UlZLTF
-	 lfxqItTe4NBpx5aL6MWdIFVxExqGzqCKIoNbk6CA=
+	b=aIA56N/ImLAK82Z15ZZffJHEaRIHHag5CXGfN2JeTbVajAgBwa8Tu0QVYKrUZFX+d
+	 HOfg+HYiD+dOlqSQnzWExhLa7dyvztGo9vMhQNj3sYg73lZcpNHqna4weA8atrAnqu
+	 dJ15J6HiAqsh9C1mHx0zxLa2jE7jZwXqBo/ac7nk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	Farhan Ali <alifm@linux.ibm.com>,
-	Niklas Schnelle <schnelle@linux.ibm.com>,
-	Matthew Rosato <mjrosato@linux.ibm.com>,
-	Alex Williamson <alex@shazbot.org>,
+	sashiko-bot <sashiko-bot@kernel.org>,
+	Song Liu <songliubraving@fb.com>,
+	Ian Rogers <irogers@google.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1110/1815] vfio/pci: Avoid mapping BARs for devices with non-mappable BARs
-Date: Sat, 12 Sep 2026 08:47:40 +0200
-Message-ID: <20260912065715.077302196@linuxfoundation.org>
+Subject: [PATCH 7.2 1111/1815] perf libbfd: Validate BPF prog info arrays before pointer cast
+Date: Sat, 12 Sep 2026 08:47:41 +0200
+Message-ID: <20260912065715.100017351@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -54,50 +54,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Farhan Ali <alifm@linux.ibm.com>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 6edd69813b2d8c30c24a86052065a5dbf390a3cd ]
+[ Upstream commit 01765b456f850aed7475b37111f1c50bf76aaf51 ]
 
-vfio_pci_core_map_bars() calls pci_iomap() to set up BAR resources, but not
-all devices support having their BARs mapped by the CPU. The
-non_mappable_bars flag indicates that a PCI device's BARs cannot be
-accessed by the CPU. The ISM device on s390 is one such device. The BAR
-size for an ISM device is 256 TiB, and attempting to map the BAR will lead
-to warnings:
+symbol__disassemble_bpf_libbfd() casts info_linear->info.jited_prog_insns
+and info_linear->info.jited_ksyms to pointers without checking whether
+bpil_offs_to_addr() actually converted the file offsets.  A crafted
+perf.data with PERF_BPIL_* bits unset but non-zero counts causes raw
+file offsets to be dereferenced as pointers.
 
-vmalloc_node_range for size 281474976714752 failed: Address range
-restricted to 0x2110bab00000 - 0x21903ab00000
+Add bitmask checks for PERF_BPIL_JITED_INSNS and PERF_BPIL_JITED_KSYMS
+before the casts, matching the validation added to bpf-event.c call
+sites.
 
-Use pdev->non_mappable_bars to skip pci_iomap() for such devices. This flag
-is set by the PCI core at enumeration time and already serves the same
-purpose in vfio_pci_probe_mmaps().
-
-Fixes: 05f2a68b407a ("vfio/pci: Set up BAR resources and maps in vfio_pci_core_enable()")
-Reported-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Signed-off-by: Farhan Ali <alifm@linux.ibm.com>
-Reviewed-by: Niklas Schnelle <schnelle@linux.ibm.com>
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Link: https://lore.kernel.org/r/20260729181116.1373-1-alifm@linux.ibm.com
-Signed-off-by: Alex Williamson <alex@shazbot.org>
+Fixes: 6987561c9e86 ("perf annotate: Enable annotation of BPF programs")
+Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Cc: Song Liu <songliubraving@fb.com>
+Reviewed-by: Ian Rogers <irogers@google.com>
+Assisted-by: Claude:claude-opus-4.6
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vfio/pci/vfio_pci_core.c | 3 +++
- 1 file changed, 3 insertions(+)
+ tools/perf/util/libbfd.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/drivers/vfio/pci/vfio_pci_core.c b/drivers/vfio/pci/vfio_pci_core.c
-index 3f11a9624b9c0..6a184588ff234 100644
---- a/drivers/vfio/pci/vfio_pci_core.c
-+++ b/drivers/vfio/pci/vfio_pci_core.c
-@@ -554,6 +554,9 @@ static void vfio_pci_core_map_bars(struct vfio_pci_core_device *vdev)
+diff --git a/tools/perf/util/libbfd.c b/tools/perf/util/libbfd.c
+index c1c12308cc12f..d6c2d9807fc9c 100644
+--- a/tools/perf/util/libbfd.c
++++ b/tools/perf/util/libbfd.c
+@@ -552,6 +552,11 @@ int symbol__disassemble_bpf_libbfd(struct symbol *sym __maybe_unused,
+ 	info_linear = info_node->info_linear;
+ 	sub_id = dso__bpf_prog(dso)->sub_id;
  
- 		vdev->barmap[bar] = IOMEM_ERR_PTR(-ENODEV);
++	/* jited_prog_insns is only valid if bpil_offs_to_addr() converted it */
++	if (!(info_linear->arrays & (1UL << PERF_BPIL_JITED_INSNS))) {
++		ret = SYMBOL_ANNOTATE_ERRNO__BPF_MISSING_BTF;
++		goto out;
++	}
+ 	info.buffer = (void *)(uintptr_t)(info_linear->info.jited_prog_insns);
+ 	info.buffer_length = info_linear->info.jited_prog_len;
  
-+		if (pdev->non_mappable_bars)
-+			continue;
+@@ -581,6 +586,12 @@ int symbol__disassemble_bpf_libbfd(struct symbol *sym __maybe_unused,
+ 	if (disassemble == NULL)
+ 		abort();
+ 
++	/* jited_ksyms is only valid if bpil_offs_to_addr() converted it */
++	if (!(info_linear->arrays & (1UL << PERF_BPIL_JITED_KSYMS))) {
++		ret = SYMBOL_ANNOTATE_ERRNO__BPF_MISSING_BTF;
++		goto out;
++	}
 +
- 		if (!pci_resource_len(pdev, i))
- 			continue;
- 
+ 	fflush(s);
+ 	do {
+ 		const struct bpf_line_info *linfo = NULL;
 -- 
 2.53.0
 
