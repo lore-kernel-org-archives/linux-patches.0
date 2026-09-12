@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3783941687C;
-	Sat, 12 Sep 2026 11:37:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3DB33F9F47;
+	Sat, 12 Sep 2026 11:37:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789213050; cv=none; b=fQygQ5ad2qCwCtALxyhAMZf4TA2F9i8j3UOipwNDd+SznFBHPKu3+ezTqzVZTATFAImgwIPYcflJbvv8wKKFNTD3NQf8gPJMYf8Ox++BByGQM9e/CgZWoqC/dzPoyaYwwW+geYEv+Qe6e1oCPnd7u6sM1iZQNzzBQ0fgk5hatvw=
+	t=1789213055; cv=none; b=Sq97VmYZN1cReii5Vh87NxiV0hoh8paJi9xECm8UXOJAmH8T6nzhUgmo+GiCmy//CvQ6tL7B7/MaZlmTBjNjN5crO48xAi+bKO+YhtR8M0DeYVXU67L09lgxwu+0PrQXn+ZeZ8Msj8KzLzpQjfzJuJzoLw3KFIjYmF1yhvTDUaE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789213050; c=relaxed/simple;
-	bh=NS2aUd2E5qf+JmZdA3TY9x3CyxbiH0Gy94jRbMf8FbU=;
+	s=arc-20240116; t=1789213055; c=relaxed/simple;
+	bh=s3qDWmDGEEFrinKHbFR43IILrHzoMjlvG1NLKolmwc8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FMsq0Q6wfjJQgmlZcN+UmeYaa3XiZlpn8aztKzqXiVgANrUReCkUd5je9UMiaxFJybVj4+2r5/sll/pnugzbmdCjhhU/Mgnplqsq5fxKETyakJhsfQmRtUO8dPId+lMSImJKXBFQG1PQqr4p0FTsYKh31p9Fdu9I8f3034DVNkM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uvqqwGYV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gYC7LP6aJTBtfboLfahax3iE3Lyln/JT5jo2opjQKr1UMxAnynQRi5YO2zCc/Mq+iet9Kx9wGYAzV2UW1zQCC7K2eir0I3Fta+2wS23ONpOuWEAGHyot4vWvQIHUFr1Bwiie/oDjtoixZwYy/4J2aSGD6ghd6qm5DOaeU4AeoG0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gkz4yo5v; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uvqqwGYV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC8CA1F000FF;
-	Sat, 12 Sep 2026 11:37:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gkz4yo5v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0C111F000FF;
+	Sat, 12 Sep 2026 11:37:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789213049;
-	bh=Q/tsREWKsbhS1XBdGoURYEzbmXOP50KAZANRWIuY6EA=;
+	s=korg; t=1789213053;
+	bh=SVPeTjK9nK8e9J9gxMc4S0IoVVQL92UHYWwE4TED1E4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uvqqwGYVFI5TVAiV6gDMyP2BQWuJqzv8rolDwIhXumleCRdKBmut52vLQSLSmCGtM
-	 nWMgl8kOoKdDuLuQHEQsKt5xRneSo/flaYVh6BewqUOcFl6o7pVJJ1x/+DPHWC17AO
-	 i1r4XjxVaXVqFrPB7pTYYIef+874WFCxZlz2wmHk=
+	b=gkz4yo5vwl2NdKegERfGrbUIeMiefNI9FTh255qAdCyexMVCbz2iRT32g+r8GuFCV
+	 Qw1NPrHJnQvpM/yuxohvXcHslSbcYsErPWrCc7xVSCVc2LQ6Jfhjl6xv5sFx113ZG8
+	 /41mFa59WrtbjURpXwEaWZKagtz4HK8AvRsYp9O4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Honghui Jiang <jiang_hh2019@163.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.12 0040/1376] spi: Fix DMA mapping ownership on partial map failure
-Date: Sat, 12 Sep 2026 08:41:06 +0200
-Message-ID: <20260912065608.444678888@linuxfoundation.org>
+	Sujal Tuladhar <sujaltuladhar1231@gmail.com>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>
+Subject: [PATCH 6.12 0041/1376] scsi: target: iscsi: Reserve a terminator byte for the login payload
+Date: Sat, 12 Sep 2026 08:41:07 +0200
+Message-ID: <20260912065608.467173142@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,110 +50,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Honghui Jiang <jiang_hh2019@163.com>
+From: Sujal Tuladhar <sujaltuladhar1231@gmail.com>
 
-commit 367cea239fc93094e5c16a72724800e0358f5c46 upstream.
+commit f4825922d2fb371e2b969697d792077f1b62b62c upstream.
 
-If RX mapping fails after TX mapping succeeds, __spi_map_msg() unmaps
-TX but leaves tx_sg_mapped set. If TX mapping fails on a later
-transfer, mappings created for earlier transfers remain active.
+iscsi_target_check_login_request() rejects a login PDU whose
+DataSegmentLength exceeds MAX_KEY_VALUE_PAIRS, but the test is '>' and
+login->req_buf is allocated with exactly MAX_KEY_VALUE_PAIRS
+bytes. Since iscsit_get_login_rx() receives payload_length + padding
+bytes, where
 
-In both cases, cur_{tx,rx}_dma_dev have not yet been updated because they
-are assigned only after every transfer has been mapped. The subsequent
-spi_unmap_msg() may therefore unmap the TX mapping again or release
-earlier mappings using a NULL or stale device. Using a NULL device can
-trigger an oops. An empty SG table does not prevent the NULL dereference
-because dma_unmap_sg_attrs() accesses the device before checking the
-entry count.
+	padding = ((-payload_length) & 3);
 
-Publish both mapping devices before mapping starts and unwind all
-failures through __spi_unmap_msg(). This clears the mapping flags and
-releases each mapping once with the device that created it.
+any payload_length from 8189 to 8192 fills the whole 8192 byte
+buffer. The write stays in bounds, but no byte is left for a NUL
+terminator.
 
-Publishing the devices before the loop also refreshes them when no
-transfer needs mapping. No mapping flag is set in that case, so current
-users do not use the pointers as mapping owners.
+The buffer is subsequently consumed as a C string. In the CHAP path
+chap_check_algorithm() calls kstrdup(a_str), and extract_param() calls
+strstr(in_buf, pattern) followed by strlen_semi(), none of which take a
+length. convert_null_to_semi() additionally rewrites every embedded NUL
+to ';', so even a payload made of well formed NUL separated key=value
+records is left without a terminator. These walk past the end of the
+object into adjacent slab memory. It is reachable by an unauthenticated
+initiator against a portal configured for CHAP; when authentication is
+not required iscsi_login_zero_tsih_s2() rewrites AuthMethod to None and
+the CHAP path is never entered.
 
-Fixes: e289df82344f ("spi: Rework per message DMA mapped flag to be per transfer")
+Allocate one extra byte. kzalloc() zeroes it and nothing ever writes to
+it, as every writer copies to offset 0 for at most MAX_KEY_VALUE_PAIRS
+bytes, so the buffer is always terminated.
+
+Fixes: e48354ce078c ("iscsi-target: Add iSCSI fabric support for target v4.1")
+Assisted-by: Claude Opus5 (custom harness)
 Cc: stable@vger.kernel.org
-Signed-off-by: Honghui Jiang <jiang_hh2019@163.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://patch.msgid.link/20260814031419.43378-2-jiang_hh2019@163.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sujal Tuladhar <sujaltuladhar1231@gmail.com>
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi.c |   34 ++++++++++++++++++----------------
- 1 file changed, 18 insertions(+), 16 deletions(-)
+ drivers/target/iscsi/iscsi_target_login.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/spi/spi.c
-+++ b/drivers/spi/spi.c
-@@ -1229,6 +1229,8 @@ void spi_unmap_buf(struct spi_controller
- 	spi_unmap_buf_attrs(ctlr, dev, sgt, dir, 0);
- }
+--- a/drivers/target/iscsi/iscsi_target_login.c
++++ b/drivers/target/iscsi/iscsi_target_login.c
+@@ -48,7 +48,7 @@ static struct iscsi_login *iscsi_login_i
+ 	login->conn = conn;
+ 	login->first_request = 1;
  
-+static int __spi_unmap_msg(struct spi_controller *ctlr, struct spi_message *msg);
-+
- static int __spi_map_msg(struct spi_controller *ctlr, struct spi_message *msg)
- {
- 	struct device *tx_dev, *rx_dev;
-@@ -1252,7 +1254,13 @@ static int __spi_map_msg(struct spi_cont
- 	else
- 		rx_dev = ctlr->dev.parent;
- 
--	ret = -ENOMSG;
-+	/*
-+	 * Store the devices before mapping so partial failures can be unwound
-+	 * with the device that created each mapping.
-+	 */
-+	ctlr->cur_tx_dma_dev = tx_dev;
-+	ctlr->cur_rx_dma_dev = rx_dev;
-+
- 	list_for_each_entry(xfer, &msg->transfers, transfer_list) {
- 		/* The sync is done before each transfer. */
- 		unsigned long attrs = DMA_ATTR_SKIP_CPU_SYNC;
-@@ -1265,8 +1273,8 @@ static int __spi_map_msg(struct spi_cont
- 						(void *)xfer->tx_buf,
- 						xfer->len, DMA_TO_DEVICE,
- 						attrs);
--			if (ret != 0)
--				return ret;
-+			if (ret)
-+				goto unwind;
- 
- 			xfer->tx_sg_mapped = true;
- 		}
-@@ -1275,25 +1283,19 @@ static int __spi_map_msg(struct spi_cont
- 			ret = spi_map_buf_attrs(ctlr, rx_dev, &xfer->rx_sg,
- 						xfer->rx_buf, xfer->len,
- 						DMA_FROM_DEVICE, attrs);
--			if (ret != 0) {
--				spi_unmap_buf_attrs(ctlr, tx_dev,
--						&xfer->tx_sg, DMA_TO_DEVICE,
--						attrs);
--
--				return ret;
--			}
-+			if (ret)
-+				goto unwind;
- 
- 			xfer->rx_sg_mapped = true;
- 		}
- 	}
--	/* No transfer has been mapped, bail out with success */
--	if (ret)
--		return 0;
--
--	ctlr->cur_rx_dma_dev = rx_dev;
--	ctlr->cur_tx_dma_dev = tx_dev;
- 
- 	return 0;
-+
-+unwind:
-+	__spi_unmap_msg(ctlr, msg);
-+
-+	return ret;
- }
- 
- static int __spi_unmap_msg(struct spi_controller *ctlr, struct spi_message *msg)
+-	login->req_buf = kzalloc(MAX_KEY_VALUE_PAIRS, GFP_KERNEL);
++	login->req_buf = kzalloc(MAX_KEY_VALUE_PAIRS + 1, GFP_KERNEL);
+ 	if (!login->req_buf) {
+ 		pr_err("Unable to allocate memory for response buffer.\n");
+ 		goto out_login;
 
 
