@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC02537FF40;
-	Sat, 12 Sep 2026 19:32:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2991A37F30B;
+	Sat, 12 Sep 2026 19:32:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789241522; cv=none; b=EcBE2g1e61qdn8QuCVOztrNpJnZM291xUuKIH1k+92EUA4Ctq5FXGnpjhKE+Lyi1OGvEt7q5UiddagvtFSN50ft5LI6C7nyULSqTxT6ttF/UxmMj36XakKLhwYn7LawjAG9Ghbl1gNy+GKE5dzy7YEltMdrkCC9jRmP9yDV9tkQ=
+	t=1789241528; cv=none; b=glQ0g/v001HI663eDoLqt2txZtE6NK4o33WZUrSncfZOLtQQFQPkEnYIZ1STVocRYWuCGO/Z+afsAzmKBSN0pq4JpEYpx5psFKF34W4NAjLEDP7ChnXd3kaRfbnqF2SXvFh9PYZHk0ETJNXhxwbu/RfntJJBBNSymb2iFH/b4Ng=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789241522; c=relaxed/simple;
-	bh=R5daW3iGWApC34YtOadNJFUT2cDRalD6g1K9RrxGNEA=;
+	s=arc-20240116; t=1789241528; c=relaxed/simple;
+	bh=ZGKAT3oWCHCu8/AIrEsW9qkdzw1llhe2PLOG28Bv17s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OLskAlXHHS2uoeyp4p3fzWuxvDqk56iEF8baKDhAaAaE4vW7kbQjTMUq+bzkggeL7O89PnU3F/9Q9gDKK2xh+M6ii+vJpDanKjPk+lPB74wXYj4eD8w+LO31tUe5kv775PPC1N2ojqq1l77Gh3stXelPlwDZsqYyDa5vF3E474k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p83QFZyB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OKadUlc/JJJHiaUWoU0KJ6oLA53dT32NqJ92pJPzhUbbcuwmyLTrkw/7rZzqsk4DcAdUzJ/p4wOH5wMuAjqCwa93z6TaKef/xXi+gbM21X26iYqW2/YrGSEfjGN5im8BSlfjrpeyk8v2sDEmK0pA0E1FeXAff02ZHcDBYJBDKLw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gukUHGX9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p83QFZyB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 863FE1F000FF;
-	Sat, 12 Sep 2026 19:32:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gukUHGX9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEC231F000FF;
+	Sat, 12 Sep 2026 19:32:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789241521;
-	bh=+unxYwrLWpntRi6L/zkVsgLEtVIen3aSzqMwgmTM9KI=;
+	s=korg; t=1789241527;
+	bh=esjJerYCv8Uju0B1ADNJfL7/QAcbg+YAuiv/WE3or1w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=p83QFZyBpCPH8MIhPAyrDDQoaX9wtKb4x4Si0pCdLWbPUseixIrXqdZIAVtdSPFtj
-	 og2D9FLPN/4cPz9Ln+rKtc85PFxiXz+wmb5HRePM2yHxEWU1v8gJwSKcIVTMd/nxCQ
-	 QuNg2HkaWLT+0OAtN7aBsDOjnBM9CyhIbVhZczMg=
+	b=gukUHGX980CZDtq3rSlT7PXopya9zxSGxJrkLH03I0lOUSO6xupRy2eceBZzfk3IW
+	 Fiv87OGr5mJx+QKpm7flGwAV5aC9uJj1ei4S7AtX7/DyMZrLERHOLlHSW9h/azYXJP
+	 EFsaeVkl7ZBFhLDpyBeCtKLrXD6//F525U6eiTVs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	WenTao Liang <vulab@iscas.ac.cn>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 5.10 110/798] regulator: as3722_get_regulator_dt_data: fix premature of_node_put leaving dangling of_node pointer
-Date: Sat, 12 Sep 2026 08:55:38 +0200
-Message-ID: <20260912065519.481490312@linuxfoundation.org>
+	Chris Mason <clm@meta.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 5.10 101/798] sunrpc: init gssp_lock before publishing proc entry
+Date: Sat, 12 Sep 2026 08:55:29 +0200
+Message-ID: <20260912065519.270174233@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -50,36 +51,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: WenTao Liang <vulab@iscas.ac.cn>
+From: Chris Mason <clm@meta.com>
 
-commit f9324d670ae0b88cbfb0aa48fcaefa5baeb8da4c upstream.
+commit 5ce1ed6159731a41fdd0b03eedbed4e147036a5a upstream.
 
-In as3722_get_regulator_dt_data(), of_get_child_by_name() acquires a
-reference on np, which is then assigned to pdev->dev.of_node. The
-function immediately calls of_node_put(np), releasing the reference and
-leaving pdev->dev.of_node as a dangling pointer.
+create_use_gss_proxy_proc_entry() publishes /proc/net/rpc/use-gss-proxy
+via proc_create_data() before init_gssp_clnt() runs mutex_init() on
+sn->gssp_lock.  Once the dentry is linked under proc_subdir_lock it is
+immediately reachable from userspace, so a write that lands in the
+window drives set_gssp_clnt() into mutex_lock() on a zero-initialized
+struct mutex.
 
-Remove the of_node_put(np) call to let the device hold the reference.
+    create_use_gss_proxy_proc_entry(net)
+      proc_create_data("use-gss-proxy", ...)   /* dentry live */
+      init_gssp_clnt(sn)
+        mutex_init(&sn->gssp_lock)             /* too late */
 
+    write_gssp()
+      set_gssp_clnt(net)
+        mutex_lock(&sn->gssp_lock)             /* uninitialized */
+        gssp_rpc_create(...)
+        sn->gssp_clnt = clnt
+        mutex_unlock(&sn->gssp_lock)
+
+The window spans only the two statements between proc_create_data()
+returning and init_gssp_clnt(), so a writer reaches it only if the
+registering thread is preempted there while another task is already
+opening the freshly published file.  register_pernet_subsys() runs in
+preemptible context under pernet_ops_rwsem, so that preemption is
+possible, and the window widens on auth_rpcgss module load, when the
+proc entry is created for every live net namespace whose tasks are
+already running.  A writer that wins the race locks a zero-filled
+struct mutex.  On CONFIG_DEBUG_MUTEXES the missing magic value trips a
+"lock used without init" splat; on a production kernel the fast path
+acquires the lock via CMPXCHG(owner, 0, current).  In the latter case
+a second writer that arrives before init_gssp_clnt() re-zeroes owner
+can enter set_gssp_clnt() concurrently, shut down the first writer's
+clnt while it is still in use, and leak the loser's clnt.
+
+Fix by initializing sn->gssp_lock in sunrpc_init_net() so its lifetime
+matches the sunrpc_net it lives in.  sn->gssp_clnt is already NULL from
+the kzalloc that backs net_generic storage, so the lazy helper is no
+longer needed; drop init_gssp_clnt(), its prototype, and the call from
+create_use_gss_proxy_proc_entry().  sunrpc.ko is a build-time
+dependency of auth_rpcgss.ko, so sunrpc_init_net() has always run on
+every netns before any auth_gss pernet init can publish the proc
+entry.
+
+Fixes: 030d794bf498 ("SUNRPC: Use gssproxy upcall for server RPCGSS authentication.")
 Cc: stable@vger.kernel.org
-Fixes: bc407334e9a6 ("regulator: as3722: add regulator driver for AMS AS3722")
-Signed-off-by: WenTao Liang <vulab@iscas.ac.cn>
-Link: https://patch.msgid.link/20260626160150.54291-1-vulab@iscas.ac.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Assisted-by: kres:claude-opus-4-7
+Signed-off-by: Chris Mason <clm@meta.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Link: https://patch.msgid.link/20260530-tier2-local-v2-1-5a0fd532db57@oracle.com
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/regulator/as3722-regulator.c |    1 -
- 1 file changed, 1 deletion(-)
+ net/sunrpc/auth_gss/gss_rpc_upcall.c |    6 ------
+ net/sunrpc/auth_gss/gss_rpc_upcall.h |    1 -
+ net/sunrpc/auth_gss/svcauth_gss.c    |    1 -
+ net/sunrpc/sunrpc_syms.c             |    1 +
+ 4 files changed, 1 insertion(+), 8 deletions(-)
 
---- a/drivers/regulator/as3722-regulator.c
-+++ b/drivers/regulator/as3722-regulator.c
-@@ -599,7 +599,6 @@ static int as3722_get_regulator_dt_data(
+--- a/net/sunrpc/auth_gss/gss_rpc_upcall.c
++++ b/net/sunrpc/auth_gss/gss_rpc_upcall.c
+@@ -120,12 +120,6 @@ out:
+ 	return result;
+ }
  
- 	ret = of_regulator_match(&pdev->dev, np, as3722_regulator_matches,
- 			ARRAY_SIZE(as3722_regulator_matches));
--	of_node_put(np);
- 	if (ret < 0) {
- 		dev_err(&pdev->dev, "Parsing of regulator node failed: %d\n",
- 			ret);
+-void init_gssp_clnt(struct sunrpc_net *sn)
+-{
+-	mutex_init(&sn->gssp_lock);
+-	sn->gssp_clnt = NULL;
+-}
+-
+ int set_gssp_clnt(struct net *net)
+ {
+ 	struct sunrpc_net *sn = net_generic(net, sunrpc_net_id);
+--- a/net/sunrpc/auth_gss/gss_rpc_upcall.h
++++ b/net/sunrpc/auth_gss/gss_rpc_upcall.h
+@@ -29,7 +29,6 @@ int gssp_accept_sec_context_upcall(struc
+ 				struct gssp_upcall_data *data);
+ void gssp_free_upcall_data(struct gssp_upcall_data *data);
+ 
+-void init_gssp_clnt(struct sunrpc_net *);
+ int set_gssp_clnt(struct net *);
+ void clear_gssp_clnt(struct sunrpc_net *);
+ 
+--- a/net/sunrpc/auth_gss/svcauth_gss.c
++++ b/net/sunrpc/auth_gss/svcauth_gss.c
+@@ -1495,7 +1495,6 @@ static int create_use_gss_proxy_proc_ent
+ 			      &use_gss_proxy_proc_ops, net);
+ 	if (!*p)
+ 		return -ENOMEM;
+-	init_gssp_clnt(sn);
+ 	return 0;
+ }
+ 
+--- a/net/sunrpc/sunrpc_syms.c
++++ b/net/sunrpc/sunrpc_syms.c
+@@ -53,6 +53,7 @@ static __net_init int sunrpc_init_net(st
+ 	INIT_LIST_HEAD(&sn->all_clients);
+ 	spin_lock_init(&sn->rpc_client_lock);
+ 	spin_lock_init(&sn->rpcb_clnt_lock);
++	mutex_init(&sn->gssp_lock);
+ 	return 0;
+ 
+ err_pipefs:
 
 
