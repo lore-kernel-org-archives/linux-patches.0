@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FF031FCFFC;
-	Sat, 12 Sep 2026 14:27:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8227432A3DA;
+	Sat, 12 Sep 2026 14:28:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789223277; cv=none; b=iPIheGv06um0Datta90IZm1JL3Q5r/2goxG7y3YtNFdT/Y+UkKcBa1fwDuQjkPBaLzqYJ8kOsv0AwCJJDcDqZhAEr/R+Fu2Nx8lK3Xq5nYqv18+pCLadSSoQcM7P+nbSLye1xfJCq0vTPSOTYVqKs75eaHVURs/F+LkvTCN1QNo=
+	t=1789223282; cv=none; b=L/yuG3RVMzzUo1HaFnidkzi7w7mZKZCOI60uq+mokWtZlzGu0YCP1JLj3a0dB9eVAqW5AgRMxtC+3Xdsj1cmuzZOLlkYpXNkvf/5ee10Xn7ZL0gGWVtxCe4OIkkhOB+TNtzWncpPjpC7OJSK4e7wotdppC/WWt+ebdpJ/ykVus8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789223277; c=relaxed/simple;
-	bh=ljtMnjE47V/D6BVBbCyWGIweFiIXE0QieTAEU5rW8W4=;
+	s=arc-20240116; t=1789223282; c=relaxed/simple;
+	bh=IIUkiPXUDGaB5VfH6KlCAgxLGR3q+34h9evO9ZpM074=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jS2JdEqznii3IjOraLzlypOrZCdVY1zJt5+DNl8qyVVLt6e0BwpQgOiLfdQatKU7hVf0LuPWENPOg8rUpULqIpcYJ3CKiLXaUSdvvgzCYFvBBuA7n+VVBHeqHoND/3RWuG/WTlBLFN6vYzzV/VKwHcRaaPwjPP9QsTWGMVkLiQk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O1NDaNo6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Uqo9dBnA2xCkW6wGAz3asNEGwG4UBUaJ6GOVPqe3J6Hl+RqPVuG0pZEbAqDKiOVMlybYwl6rgZz0GW3d0NuB8FtckaIZ7TwM3BcBn/b/4jgBIOFT5Jco86h3PnMNqU2MYgWxbrj7cYPwGdrOaNLyeB1fN3P1/whAmot/OAI3CZg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LGlNa3Pj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O1NDaNo6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50DB01F000FF;
-	Sat, 12 Sep 2026 14:27:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LGlNa3Pj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C3D61F000FF;
+	Sat, 12 Sep 2026 14:27:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789223276;
-	bh=QJ7FMUHu4TaInxSP7YgDLKzjs3F025uXbITwDtSoYjE=;
+	s=korg; t=1789223281;
+	bh=jKR35IUMhFJ68/Pijb3BsokJqwRiXz/cvHQvfBDeOKc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O1NDaNo6HXHn/gk/2/iH+QPlZM4mUbDpe2srhboPtVsYLm3+TxrG6nTLaovoT/UJS
-	 ytl52db03K5QujmIha6/6Jij9NqVvilYmpGTmRc4g+nCI2voSTBzCqThHRxLKCGNN/
-	 d2IlCushYDOPTA6a+QJ6qIGvLxiewbMQxqj6ii0k=
+	b=LGlNa3PjPWkZv+C77GfW3LqjIE42bV0hGzb9DG6f52oOUu9VWp3MqYrTRCwMVXdL8
+	 K8e14YC+xNcxaG1+z4cy5Kwpf778UAdhG1d4hBiq+FoPu33ao1J4M0vkI/ssUtxqlr
+	 HIvbNxVbBGfsGg68rEo4LDDH4RJ4qGg2vvEJKlfo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryam Vargas <hexlabsecurity@proton.me>,
+	Richard Cheng <icheng@nvidia.com>,
+	John Groves <john@groves.net>,
 	Alison Schofield <alison.schofield@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0756/1424] libnvdimm/labels: Bound the on-media label size before the shift
-Date: Sat, 12 Sep 2026 08:53:08 +0200
-Message-ID: <20260912065624.226888223@linuxfoundation.org>
+Subject: [PATCH 6.6 0757/1424] dax: read holder_ops once in dax_holder_notify_failure()
+Date: Sat, 12 Sep 2026 08:53:09 +0200
+Message-ID: <20260912065624.248272611@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -51,58 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: John Groves <John@Groves.net>
 
-[ Upstream commit 18f9124248ed7a9da1c31973b629dceef76a9b0c ]
+[ Upstream commit 7ae9d15bdcde0f2955ae13b6a95587f9e23b2359 ]
 
-For a v1.2+ index, __nd_label_validate() computes the label size as
-1 << (7 + nsindex[i]->labelsize), where labelsize is a u8 read from
-the label storage medium.  A value of 25 or more makes the shift count
-reach or exceed the width of int -- undefined behavior -- and 24 already
-shifts into the sign bit.  Only 0 (128-byte) and 1 (256-byte) are valid.
+dax_holder_notify_failure() reads dax_dev->holder_ops twice without
+READ_ONCE() -- once for the NULL check and once for the indirect
+notify_failure() call. A concurrent fs_put_dax() can clear holder_ops
+between the two reads, so the check can observe a non-NULL pointer while
+the call dereferences NULL. (kill_dax() also clears holder_ops, but only
+after synchronize_srcu(), so it cannot race a reader that is inside
+dax_read_lock(); fs_put_dax() does no such synchronization.)
 
-Reject a labelsize above 1 before the shift.  The result was rejected by
-the following size comparison anyway, so this only removes the undefined
-shift on a crafted or corrupted medium; conforming labels are unaffected.
+Fetch holder_ops once into a local with READ_ONCE() so the NULL check and
+the indirect call observe the same value.
 
-Fixes: 564e871aa66f ("libnvdimm, label: add v1.2 nvdimm label definitions")
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Reviewed-by: Alison Schofield <alison.schofield@intel.com>
-Link: https://patch.msgid.link/20260624-b4-disp-d8279485-v3-2-cdb6cab28b41@proton.me
+Fixes: 8012b86608552 ("dax: introduce holder for dax_device")
+Suggested-by: Richard Cheng <icheng@nvidia.com>
+Reviewed-by: Richard Cheng <icheng@nvidia.com>
+Signed-off-by: John Groves <john@groves.net>
+Link: https://patch.msgid.link/0100019ecc09bb56-5ecc9c6b-35ba-44f8-b112-921b01b34478-000000@email.amazonses.com
 Signed-off-by: Alison Schofield <alison.schofield@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvdimm/label.c | 15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ drivers/dax/super.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/nvdimm/label.c b/drivers/nvdimm/label.c
-index 584a9c27ce4bf..93ff219d91fc5 100644
---- a/drivers/nvdimm/label.c
-+++ b/drivers/nvdimm/label.c
-@@ -145,10 +145,21 @@ static int __nd_label_validate(struct nvdimm_drvdata *ndd)
- 		/* label sizes larger than 128 arrived with v1.2 */
- 		version = __le16_to_cpu(nsindex[i]->major) * 100
- 			+ __le16_to_cpu(nsindex[i]->minor);
--		if (version >= 102)
-+		if (version >= 102) {
-+			/*
-+			 * labelsize feeds the shift below; only 0 (128-byte)
-+			 * and 1 (256-byte) are valid -- a larger value would
-+			 * overflow or exceed the width of int.
-+			 */
-+			if (nsindex[i]->labelsize > 1) {
-+				dev_dbg(dev, "nsindex%d labelsize: %d invalid\n",
-+					i, nsindex[i]->labelsize);
-+				continue;
-+			}
- 			labelsize = 1 << (7 + nsindex[i]->labelsize);
--		else
-+		} else {
- 			labelsize = 128;
-+		}
+diff --git a/drivers/dax/super.c b/drivers/dax/super.c
+index 0da9232ea1754..b55a015e8576f 100644
+--- a/drivers/dax/super.c
++++ b/drivers/dax/super.c
+@@ -232,6 +232,7 @@ EXPORT_SYMBOL_GPL(dax_recovery_write);
+ int dax_holder_notify_failure(struct dax_device *dax_dev, u64 off,
+ 			      u64 len, int mf_flags)
+ {
++	const struct dax_holder_operations *ops;
+ 	int rc, id;
  
- 		if (labelsize != sizeof_namespace_label(ndd)) {
- 			dev_dbg(dev, "nsindex%d labelsize %d invalid\n",
+ 	id = dax_read_lock();
+@@ -240,12 +241,19 @@ int dax_holder_notify_failure(struct dax_device *dax_dev, u64 off,
+ 		goto out;
+ 	}
+ 
+-	if (!dax_dev->holder_ops) {
++	/*
++	 * Read holder_ops once: a concurrent fs_put_dax() can clear it without
++	 * synchronizing against readers. Without the single fetch the compiler
++	 * could reload between the NULL check and the call and dereference a
++	 * NULL ops.
++	 */
++	ops = READ_ONCE(dax_dev->holder_ops);
++	if (!ops) {
+ 		rc = -EOPNOTSUPP;
+ 		goto out;
+ 	}
+ 
+-	rc = dax_dev->holder_ops->notify_failure(dax_dev, off, len, mf_flags);
++	rc = ops->notify_failure(dax_dev, off, len, mf_flags);
+ out:
+ 	dax_read_unlock(id);
+ 	return rc;
 -- 
 2.53.0
 
