@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 301E1388868;
-	Sat, 12 Sep 2026 08:24:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B8CA35AC1E;
+	Sat, 12 Sep 2026 08:24:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789201469; cv=none; b=F1hQYaueYulaCdvF7Zu4VJK5wsp1KryVSbmbEluxbX14mz40yez2DlM2Zh2UZdkX5GAf9HRBpPQ1ZnH+TcLgh3nRMRDoV56IHj+iKeJRGGfp4rubmktknN+M8EP1knc9xVJ3DoATF7+1YpgcOJCjV5JBXgBcYhG/ZSRRs7Gqugk=
+	t=1789201473; cv=none; b=IRCfmvKGH13zexcfba02hyGcqkwTgI86o8HKGlLcyDLl5B6IzW8ddN0i0dI6O/+RX15GQWefwki18zOtiZVfWOm+k4EwS1kBbO4H7KO/a1O08ZQJVzXJ3TnxiyXNemrppBgRs7i2tGbu5hbgfdB5TiEBhqnfS1zTyNsszD5bt4Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789201469; c=relaxed/simple;
-	bh=V0bz25q1WrZiCbA2zzoex2nLlbFuVtzxjl/hR7pfECQ=;
+	s=arc-20240116; t=1789201473; c=relaxed/simple;
+	bh=OA9KStQRsKDtREwvk+Tyh0N29ZLOn3eiRvFNkUIkklY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KkGFRrTTJxDwYfRIR8Qf9hD0EySTIR0xZcSKxwB81usM5VY8ig2D56/DQbKBaKClHRq/MFHFRpLyBpN5tCAADx056MgVLMFo/0LFHIfg7sZp8fpN3CYoqpK4WyxJXJNyMoSW5tV42ViddCPozlCZzW3EEDnOewnw9S2wCbmS8L4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TDiCFihJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WnmFXc/C+BKhQotN32nRd7GX8BdTTBcvV01ovXCvr7ZarCq3VBAxyWQCMao14MQpoUqhNzM2Qm1I+Lpau8r5U7ogPZ4h++ZCvIxnpVeB75RqvPG9MxMdpT2/75pem1dqOIa+jhZ6t8Gt337uqUGQEyTtJNlpWCPHB7FojvT+RnU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EJX8nCiu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TDiCFihJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE3ED1F00893;
-	Sat, 12 Sep 2026 08:24:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EJX8nCiu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAF591F000FF;
+	Sat, 12 Sep 2026 08:24:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789201466;
-	bh=xOAKfz4pcEeQOqacjk5PZfWv/D8c3U5lM4W0T5Hddqo=;
+	s=korg; t=1789201471;
+	bh=JUJHq1zG7Y0wlc38nyyYjJzvE1e6OpSa0fHCwVwaPQk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TDiCFihJ5OuoSe3HnWPel78wRbxh1+V2l9srxQQhLoSO1cRB22zekYC2MrGP6+tOq
-	 VIMlp+qeLYd5gfTGqytBEdok1oQBDb0pRE07wEjDgcac5ViGD8kRdrkCcl6ddesZ7h
-	 PQUQZtxMgj4vxttP5lfXfwNxmQ4BiJUkDlHSB1Nc=
+	b=EJX8nCiucgN8e/t7K7zW/4vESQMEAJ7g9IrB6RWbkgleslBLZ241qt6IlBtyM/Ig0
+	 kl91RmktBiSIK9NYMsWM3ZWy21METGOByZmmbjpocPmZXTe0nUGxsKh15SyQ6+/iNF
+	 CaXOuUF0e1GNJtDERta0gITOvjurjfn+90fGqnkU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Sashiko <sashiko-bot@kernel.org>,
 	Niklas Cassel <cassel@kernel.org>,
 	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1000/1815] misc: pci_endpoint_test: Check SUCCESS bit for doorbell status
-Date: Sat, 12 Sep 2026 08:45:50 +0200
-Message-ID: <20260912065712.483325257@linuxfoundation.org>
+Subject: [PATCH 7.2 1001/1815] PCI: dwc: ep: Flush cached MSI write before unmapping the iATU
+Date: Sat, 12 Sep 2026 08:45:51 +0200
+Message-ID: <20260912065712.507259050@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -53,81 +54,71 @@ Content-Transfer-Encoding: 8bit
 
 From: Niklas Cassel <cassel@kernel.org>
 
-[ Upstream commit 37ddcce6904c20c6a7debe4751f6a82f218c3bae ]
+[ Upstream commit 1b01d725d8b42450b86a857bab3c46856c740166 ]
 
-The pci-epf driver sets STATUS_DOORBELL_ENABLE_SUCCESS as the final step of
-pci_epf_test_enable_doorbell(), and STATUS_DOORBELL_DISABLE_SUCCESS as the
-final step of pci_epf_test_disable_doorbell(). A missing SUCCESS bit
-therefore unambiguously means that the operation did not complete, whereas
-the FAIL bit is only set on an explicit failure path.
+The MSI-X path already flushes any posted MSI-X write before tearing down
+its iATU mapping. That was added by commit c22533c66cca ("PCI: dwc: ep:
+Flush MSI-X write before unmapping its ATU entry") to make sure the write
+reaches the Root Complex before the outbound window that translates it
+disappears.
 
-The host side test in pci_endpoint_test_doorbell() currently keys off
-the FAIL bit. That covers explicit failures but misses two cases.
+The MSI path has the same problem but no equivalent flush. When the
+Endpoint driver caches an MSI target address and later observes that the
+Root Complex has changed it, dw_pcie_ep_raise_msi_irq() unmaps the existing
+iATU entry and reprograms it for the new address. Between the last MSI
+writel() and the unmap there may still be a posted write sitting in the
+fabric, and unmapping the iATU entry can drop or misroute that write.
 
-The first case is when the wait for the completion IRQ times out. No IRQ
-arrives, the Endpoint never updates STATUS, and neither SUCCESS nor FAIL
-is set. The enable path already handles this correctly because it also
-fails when the wait times out without an IRQ. The disable path does not
-have that extra guard and would wrongly treat the timeout as success.
+Fix this by reading back from the mapped MSI window before the unmap. The
+readback drains any posted MSI writes through the same iATU entry that
+mapped them, which is the same logic the MSI-X path uses.
 
-The second is a buggy EPC that raises two IRQs in response to a single
-DOORBELL_ENABLE command. The second wait_for_completion_timeout()
-returns immediately with 'left' non zero, but the endpoint has not yet
-written STATUS, so SUCCESS is clear and FAIL is also clear. The current
-FAIL only check treats this as success.
-
-So check the SUCCESS bit instead. That matches the Endpoint's contract
-because SUCCESS is the last write on the success path, and it correctly
-reports failure for both timeouts and the spurious IRQ case without
-relying on the FAIL bit being set.
-
-Fixes: eefb83790a0d ("misc: pci_endpoint_test: Add doorbell test case")
+Fixes: 468711a40d5d ("PCI: dwc: ep: Refresh MSI Message Address cache on change")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://lore.kernel.org/linux-pci/20260729214859.B9E2B1F00A3A@smtp.kernel.org
 Signed-off-by: Niklas Cassel <cassel@kernel.org>
 [mani: commit log]
 Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260730122045.1382749-5-cassel@kernel.org
+Link: https://patch.msgid.link/20260730133123.1420413-5-cassel@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/pci_endpoint_test.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ drivers/pci/controller/dwc/pcie-designware-ep.c | 3 +++
+ drivers/pci/controller/dwc/pcie-designware.h    | 1 +
+ 2 files changed, 4 insertions(+)
 
-diff --git a/drivers/misc/pci_endpoint_test.c b/drivers/misc/pci_endpoint_test.c
-index 3635741c3e7a7..26ab9252251f1 100644
---- a/drivers/misc/pci_endpoint_test.c
-+++ b/drivers/misc/pci_endpoint_test.c
-@@ -1071,6 +1071,7 @@ static int pci_endpoint_test_doorbell(struct pci_endpoint_test *test)
- 	struct pci_dev *pdev = test->pdev;
- 	struct device *dev = &pdev->dev;
- 	int irq_type = test->irq_type;
-+	int ret = 0;
- 	enum pci_barno bar;
- 	u32 data, status;
- 	u32 addr;
-@@ -1119,8 +1120,11 @@ static int pci_endpoint_test_doorbell(struct pci_endpoint_test *test)
- 
- 	status = pci_endpoint_test_readl(test, PCI_ENDPOINT_TEST_STATUS);
- 
--	if (!left || !(status & STATUS_DOORBELL_SUCCESS))
-+	if (!left || !(status & STATUS_DOORBELL_SUCCESS)) {
- 		dev_err(dev, "Failed to trigger doorbell in endpoint\n");
-+		/* Store error code, but continue to disable doorbell. */
-+		ret = -EINVAL;
-+	}
- 
- 	pci_endpoint_test_writel(test, PCI_ENDPOINT_TEST_COMMAND,
- 				 COMMAND_DISABLE_DOORBELL);
-@@ -1134,10 +1138,7 @@ static int pci_endpoint_test_doorbell(struct pci_endpoint_test *test)
- 		return -EINVAL;
+diff --git a/drivers/pci/controller/dwc/pcie-designware-ep.c b/drivers/pci/controller/dwc/pcie-designware-ep.c
+index 31402ae218c79..9e50c589b308f 100644
+--- a/drivers/pci/controller/dwc/pcie-designware-ep.c
++++ b/drivers/pci/controller/dwc/pcie-designware-ep.c
+@@ -1032,6 +1032,8 @@ int dw_pcie_ep_raise_msi_irq(struct dw_pcie_ep *ep, u8 func_no,
+ 		 * there is no unified way to check if we have operations in
+ 		 * flight, thus we don't know if we should WARN() or not.
+ 		 */
++		/* flush posted write before unmap */
++		readl(ep->msi_mem + ep->msi_iatu_mapped_offset);
+ 		dw_pcie_ep_unmap_addr(epc, func_no, 0, ep->msi_mem_phys);
+ 		ep->msi_iatu_mapped = false;
  	}
+@@ -1044,6 +1046,7 @@ int dw_pcie_ep_raise_msi_irq(struct dw_pcie_ep *ep, u8 func_no,
+ 			return ret;
  
--	if (!(status & STATUS_DOORBELL_SUCCESS))
--		return -EINVAL;
--
--	return 0;
-+	return ret;
- }
+ 		ep->msi_iatu_mapped = true;
++		ep->msi_iatu_mapped_offset = offset;
+ 		ep->msi_msg_addr = msg_addr;
+ 		ep->msi_map_size = map_size;
+ 	}
+diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
+index de4b245b1758c..1d21394741572 100644
+--- a/drivers/pci/controller/dwc/pcie-designware.h
++++ b/drivers/pci/controller/dwc/pcie-designware.h
+@@ -518,6 +518,7 @@ struct dw_pcie_ep {
  
- static long pci_endpoint_test_ioctl(struct file *file, unsigned int cmd,
+ 	/* MSI outbound iATU state */
+ 	bool			msi_iatu_mapped;
++	size_t			msi_iatu_mapped_offset;
+ 	u64			msi_msg_addr;
+ 	size_t			msi_map_size;
+ };
 -- 
 2.53.0
 
