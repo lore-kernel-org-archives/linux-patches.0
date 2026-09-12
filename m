@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30EA437FF60;
-	Sat, 12 Sep 2026 09:04:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53B41418355;
+	Sat, 12 Sep 2026 09:04:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789203885; cv=none; b=gWF4LRokua/vFV7OCD9Q7zVNNkBIeQFNeL9GqGrrRBiUyz4bWlWTJe6if9knCcZOQRMvtI5BeqOAxqO8MW+DXEWTja75qmiIOw6JoCrZuqRt5IysCH5EeUASHfC9HulJlVaRSn+vio0xZaKE4/bD1ns4Ptn7tlTpz9gNnKCce9c=
+	t=1789203890; cv=none; b=mx7WtJtdOmwP/RcPAuT5aMvk7kuvZkyNcDsWvDfgI/clMYKDqWd38WRmztBarbtA4IN7unxgWcP5MrL384wgxPq2J/TKtSq0esbPvs43B8DssWImEC4ALdk16mZRCRO6rPm3x33dKEpBh+lGBADjkHCIXShKj3HexaPKIQvuzeU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789203885; c=relaxed/simple;
-	bh=5aYDXvGlJhzZMgjH5ADI2kWIKFsN6cIGpyizub9Etdk=;
+	s=arc-20240116; t=1789203890; c=relaxed/simple;
+	bh=NDXY24rXZAzip2ktdJLd5HLNx7iMuhCJ8igAWZ6bDKI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZGgBMKGm1aE5TtdZsHhaUgMbEtVWGfb+Vi48py+X3ECLQXLqwhA4FRUHRP/EmM7DzzSZP5kxFtOgJqge9sfXqPkLtjLfm63rduYt0kej+dSMagZUTbs3Uz/nicFKU7ppMB1RM+sYv6OOw+rBSejOa9vVab1+GNEEDk76eF/iEv8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZrmoZAl5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LJSIzEkFYbmir6B3bi7Uc0JQ7YUJRRkDz02uY/39lYOkKcV/4z1jN0mnJR1eXXvEB/mBedHG7EqTMCz4JiT7lrBqakVzrL2wMXTZd/LjOTsFgdkbWWtDUl9Y92PIJAzwRiyops1ZoCesviqcWiaUWTb1z/aiiyLMIKPsAEcuedk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xWmHmMNf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZrmoZAl5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4681F1F000FF;
-	Sat, 12 Sep 2026 09:04:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xWmHmMNf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9E211F000FF;
+	Sat, 12 Sep 2026 09:04:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789203884;
-	bh=oB0PBaUqv+VeyXilAQ10SyFkSeyVzlKLiDz79LfViEI=;
+	s=korg; t=1789203888;
+	bh=1TJ5AaufY1NxmgPtpqD9tSaHt2poEZzToMVkU/YEOno=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZrmoZAl5BtmPzoBd1DrhONkU9B9+SLiEYLrb+l7NlVcJQ8FtsZIMQ4OuNjY3USYFr
-	 XPufrfFE6dQchTGJvSwKApfzWp26ruXhxVOmxJYwHQ83Iy9Lu517W+i8D5sK4DcqvP
-	 bHsJGy3BesEkJzkieEjDpno9EnUf8I09oLmmUo8U=
+	b=xWmHmMNfu98zb2VbfdGdwds7yjQx8nK7ysXQxSonW9bE/FuMR0a5MZja9bUNdoIyy
+	 fzveOgBzHVjJ3Om4Qb9nB7nWsLRhDVtRa257H2wvfOV9oDGXHd2mOeWcyvSNNMKbBO
+	 0SvBiCbXbXVdxyGWyCyc2qlX9Wc3kOAiGc6IOUXE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
+	Enzo Matsumiya <ematsumiya@suse.de>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1498/1815] ksmbd: Do not skip lock checks for single-byte ranges
-Date: Sat, 12 Sep 2026 08:54:08 +0200
-Message-ID: <20260912065724.166706045@linuxfoundation.org>
+Subject: [PATCH 7.2 1499/1815] smb: server: fix leak of ksmbd_ipc_login_request_ext() returned buffer
+Date: Sat, 12 Sep 2026 08:54:09 +0200
+Message-ID: <20260912065724.189812317@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,45 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Enzo Matsumiya <ematsumiya@suse.de>
 
-[ Upstream commit d40c24634fe077a0dc91fd11fccf44ce12b454d5 ]
+[ Upstream commit 1c3ebf832d010c08afe1359215d4121cb1ed2de5 ]
 
-check_lock_range() uses inclusive ranges. Its callers pass the end
-offset as start + length - 1, so start == end represents a valid
-single-byte range rather than an empty range.
+Free it unconditionally after ksmbd_alloc_user() calls.
 
-The start == end shortcut therefore skips mandatory byte-range lock
-checks for one-byte reads, writes, copychunk operations and one-byte
-truncate ranges. A conflicting lock covering that byte is not checked
-and the operation is allowed to proceed.
+kmemleak splat:
+  unreferenced object 0xffff888103b83540 (size 192):
+    comm "pool-0", pid 16970, jiffies 4377290937
+    hex dump (first 32 bytes):
+      00 00 00 00 01 00 00 00 00 00 00 00 00 00 00 00  ................
+      00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+    backtrace (crc 408ccc66):
+      __kvmalloc_node_noprof+0x730/0x920
+      handle_generic_event+0xec/0x1a0 [ksmbd]
+      genl_family_rcv_msg_doit+0xe0/0x130
+      genl_rcv_msg+0x181/0x290
+      netlink_rcv_skb+0x4f/0x100
+      genl_rcv+0x28/0x40
+      netlink_unicast+0x1e6/0x2c0
+      netlink_sendmsg+0x20a/0x450
+      ____sys_sendmsg+0x2e8/0x310
+      ___sys_sendmsg+0x78/0xc0
+      __sys_sendmsg+0x63/0xc0
+      do_syscall_64+0xa1/0x670
+      entry_SYSCALL_64_after_hwframe+0x76/0x7e
 
-Remove the shortcut. The truncate size == inode->i_size case is already
-handled by only calling check_lock_range() when the new size differs
-from the current file size.
-
-Fixes: 5d510ac31626 ("ksmbd: skip lock-range check on equal size to avoid size==0 underflow")
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Fixes: a77e0e02af1c ("ksmbd: add support for supplementary groups")
+Signed-off-by: Enzo Matsumiya <ematsumiya@suse.de>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/vfs.c | 3 ---
- 1 file changed, 3 deletions(-)
+ fs/smb/server/auth.c             | 1 +
+ fs/smb/server/mgmt/user_config.c | 1 +
+ 2 files changed, 2 insertions(+)
 
-diff --git a/fs/smb/server/vfs.c b/fs/smb/server/vfs.c
-index d324585c0566b..233d127f27015 100644
---- a/fs/smb/server/vfs.c
-+++ b/fs/smb/server/vfs.c
-@@ -297,9 +297,6 @@ static int check_lock_range(struct file *filp, loff_t start, loff_t end,
- 	struct file_lock_context *ctx = locks_inode_context(file_inode(filp));
- 	int error = 0;
+diff --git a/fs/smb/server/auth.c b/fs/smb/server/auth.c
+index 4e7b6f0e6b8cd..f2100e3ec54c9 100644
+--- a/fs/smb/server/auth.c
++++ b/fs/smb/server/auth.c
+@@ -439,6 +439,7 @@ int ksmbd_krb5_authenticate(struct ksmbd_session *sess, char *in_blob,
+ 		resp_ext = ksmbd_ipc_login_request_ext(resp->login_response.account);
  
--	if (start == end)
--		return 0;
--
- 	if (!ctx || list_empty_careful(&ctx->flc_posix))
- 		return 0;
+ 	user = ksmbd_alloc_user(&resp->login_response, resp_ext);
++	kvfree(resp_ext);
+ 	if (!user) {
+ 		ksmbd_debug(AUTH, "login failure\n");
+ 		retval = -ENOMEM;
+diff --git a/fs/smb/server/mgmt/user_config.c b/fs/smb/server/mgmt/user_config.c
+index cf45841d9d1b9..03184a3303b9f 100644
+--- a/fs/smb/server/mgmt/user_config.c
++++ b/fs/smb/server/mgmt/user_config.c
+@@ -26,6 +26,7 @@ struct ksmbd_user *ksmbd_login_user(const char *account)
+ 		resp_ext = ksmbd_ipc_login_request_ext(account);
  
+ 	user = ksmbd_alloc_user(resp, resp_ext);
++	kvfree(resp_ext);
+ out:
+ 	kvfree(resp);
+ 	return user;
 -- 
 2.53.0
 
