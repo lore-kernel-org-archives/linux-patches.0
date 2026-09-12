@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1498D472091;
-	Sat, 12 Sep 2026 12:45:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB24747B437;
+	Sat, 12 Sep 2026 12:45:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789217112; cv=none; b=jdY/njrjWFaqRexYH4RkSNUmS69XsD5PdYI/v2E80cNOi996f0nWbRM8wVRuBqUPL479SLzb1X+Rcp6zfaWbI+n2hqa79Wd7knw0i/qv9zzSI7tFRGGk8QSPeaN5frxxaZZerXulwaEOoLtxIwPSr4WeaVkrd2G7kHPUsxapHqo=
+	t=1789217116; cv=none; b=A+Hu9lxkNMO6zVnBE+/bDFEjnVJaJV61aNiKz+RpLsvp161nBa7ltAdZemL8qtql197Dolp1gNQetAKcBSxumx9Efx/QnbPQZgg2kEiZ9WFKXpykvA+PppK2o89IbszHURxWyGRS9lPkVAnh8P41FlwYMYNWMix47RMA9YDHmes=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789217112; c=relaxed/simple;
-	bh=l/SLW37+8G7hrTs4iYfHElQW0bWRh5tC0sjLdeEuE4k=;
+	s=arc-20240116; t=1789217116; c=relaxed/simple;
+	bh=sEFfvkNJqwRxduot8w8OjnVLmPdbiy7Nr7E9gHEqSo4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NVdz2a6AOI7kd2i57kiB8KeAMMrdkGOnbWZ7gWrWMuG6kwdAfHv22hQOScMiArYV8sJeX5p5BsfloQo4m9yLtUS0R9hg/8DS31GzLR6SMFWUhewz6EMPw3RI5etZ1EuVtcWF5jia/4N5S+pGt6bKhpenvOqxA5H/JVB21fcEW7M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=otrkgcaX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Dqo5E7gFDGtBu+9gIgThHcbFr+m3j1d8lO1Zpm9AzQrJM7QRzdnXA7aaKLxZN375DMQ7BUfgTLwwlWRLNihLP1cRCq5TgANpbfsnwrzV6pToxOmCURM7NKLlVJBaF+TNRArIy1bpzEDXyrP5zO9xXbwAf11DJNUmspr/vRWH1gM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JkRpTU5a; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="otrkgcaX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76F4E1F000FF;
-	Sat, 12 Sep 2026 12:45:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JkRpTU5a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 931711F000FF;
+	Sat, 12 Sep 2026 12:45:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789217110;
-	bh=Sl9P2UdJx/cyJo0Ubx28OO+NnoiXk7Eb1KLWs8lM80I=;
+	s=korg; t=1789217115;
+	bh=nwgVImpkBqaniOr1iRuKjzhSTJCOgmqhF1WJIsFuXKg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=otrkgcaXduU00yzHkKZRBzNinD/pJncT5gbgvg19vY9aJKuG7H+9fiwTOPwXXOEpm
-	 VgIU+Pfn9vx4k2CXSC2zFIfa/w7Fn0gU7phixLwrRuuM92s68SySQIeX63VQGAlmNG
-	 GlFYld1YvR80yirQKIIPzVd5XH2pg2hlWvNIl20g=
+	b=JkRpTU5aC7XHSqlZOcv2OMzK6359DQsOg9gagiIInZxzxwz2ZWcrxgfGCcFKBqmnv
+	 Y4sLMyFTV3UxTMyTrbogBnFmEXhKNEpTNvdnsNEB5EvtDNpuFfDV4eRq7tcFjDFCu2
+	 JvsKeznlZaDoPDDttv7vevgaNb6gB8/Xmoli/Fx0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Leon Hwang <leon.hwang@linux.dev>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Zxyan Zhu <zxyan0222@gmail.com>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0837/1376] bpf, x86: Fix trampoline stack size for 128-bit arguments
-Date: Sat, 12 Sep 2026 08:54:23 +0200
-Message-ID: <20260912065626.203349141@linuxfoundation.org>
+Subject: [PATCH 6.12 0873/1376] net: stmmac: Skip PHY attach if custom PCS is in use
+Date: Sat, 12 Sep 2026 08:54:59 +0200
+Message-ID: <20260912065627.014891237@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -52,46 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yonghong Song <yonghong.song@linux.dev>
+From: Zxyan Zhu <zxyan0222@gmail.com>
 
-[ Upstream commit 814cba835ef648e0c5eb79505c96c0493b29eea6 ]
+[ Upstream commit af4d934164457f0578bf90e92ae0fcc5348260cb ]
 
-btf_distill_func_proto() accepts a function argument up to 16 bytes, so a
-128-bit scalar such as __int128 reaches the x86 trampoline with
-arg_size == 16. But the current implementation assumes an __int128
-argument only needs one register, so the register save area is
-under-allocated and save_args() overwrites adjacent stack slots.
+When a platform provides a custom PCS via the pcs_init callback,
+the MAC's phylink_pcs is already configured. In this case, no
+traditional PHY device is needed.
 
-Compute the register count from arg_size for all arguments to fix it.
+Without this, stmmac_init_phy() falls through to the no-phy-node
+path and errors out with "no phy found" when the DT has no
+phy-handle for such interfaces.
 
-Fixes: a9c5ad31fbdc ("bpf: x86: Support in-register struct arguments in trampoline programs")
-Signed-off-by: Yonghong Song <yonghong.song@linux.dev>
-Acked-by: Leon Hwang <leon.hwang@linux.dev>
-Link: https://lore.kernel.org/bpf/20260729050204.2586457-1-yonghong.song@linux.dev
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Skip the PHY attach when priv->hw->phylink_pcs is set and
+phy_addr is invalid.
+
+Fixes: f0ef433fc264 ("net: stmmac: introduce pcs_init/pcs_exit stmmac operations")
+Signed-off-by: Zxyan Zhu <zxyan0222@gmail.com>
+Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Link: https://patch.msgid.link/20260729074237.2624940-2-zxyan0222@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/net/bpf_jit_comp.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/arch/x86/net/bpf_jit_comp.c b/arch/x86/net/bpf_jit_comp.c
-index 5e1518218f1de..ca882b8d70734 100644
---- a/arch/x86/net/bpf_jit_comp.c
-+++ b/arch/x86/net/bpf_jit_comp.c
-@@ -2948,11 +2948,8 @@ static int __arch_prepare_bpf_trampoline(struct bpf_tramp_image *im, void *rw_im
- 	WARN_ON_ONCE((flags & BPF_TRAMP_F_INDIRECT) &&
- 		     (flags & ~(BPF_TRAMP_F_INDIRECT | BPF_TRAMP_F_RET_FENTRY_RET)));
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+index 44fd0fadc137d..3074e322a2cc2 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -1183,6 +1183,10 @@ static int stmmac_init_phy(struct net_device *dev)
+ 		struct phy_device *phydev;
  
--	/* extra registers for struct arguments */
--	for (i = 0; i < m->nr_args; i++) {
--		if (m->arg_flags[i] & BTF_FMODEL_STRUCT_ARG)
--			nr_regs += (m->arg_size[i] + 7) / 8 - 1;
--	}
-+	for (i = 0; i < m->nr_args; i++)
-+		nr_regs += (m->arg_size[i] + 7) / 8 - 1;
- 
- 	/* x86-64 supports up to MAX_BPF_FUNC_ARGS arguments. 1-6
- 	 * are passed through regs, the remains are through stack.
+ 		if (addr < 0) {
++			/* If a custom PCS is in use, no PHY is needed */
++			if (priv->hw->phylink_pcs)
++				return 0;
++
+ 			netdev_err(priv->dev, "no phy found\n");
+ 			return -ENODEV;
+ 		}
 -- 
 2.53.0
 
