@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E154B1C5799;
-	Sat, 12 Sep 2026 18:57:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A0B21C5799;
+	Sat, 12 Sep 2026 18:57:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789239462; cv=none; b=OgHtlL/QRH33FG0vDYjcfDLi1OyjNd79NvraCJrm0ICg5inAsF75H5kE62ZnMGgv8Y/TyKYcOk47TTLlImFxQU8+PPZMiKIpDUPxxmAXPs+4NSd9RJngkVH7g1t40czOIHTlKenRIlsmAmCsZ4fBroDlAvIqrJu9HNEWsUnaRu4=
+	t=1789239467; cv=none; b=hpHDM1QFrN9b5wuDSzaMIy9iHLJf7nXcqHarl8buTI5h1as2AEtuGC17/9IdrgyTg8A30aJSxMeB2FBL/n5SoL74jYrAx7xGK8h0S86H1vaF9GuvhPwunK55ZrXBQgHzScuqJ1O2byewXRbCUiaotlcHbuo3QIjlKmMPFvikDww=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789239462; c=relaxed/simple;
-	bh=vgJvEWcZ/T4e1HkQWQFBlQ8zYGb0CfUgMulUAvUb1XA=;
+	s=arc-20240116; t=1789239467; c=relaxed/simple;
+	bh=Z5lqfnZQxE5384s/DD4i3LaKgv/tsYbLuBIRc01Kn2U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qSw4x44zqQF4gPHilCviYSPgI5QAoaqDg98seji8z6HlkjiwkTYb58wIrsN6058q8MVouf8o9AA3IzAFou4jodWHiPYWZhvVzJSJMJFHBeQx3i05h3I4FpGstgP/JKlLjo9dXRXRJCUI+ZNNygg36IA9x46l0eY2Trh/7Nj/IkM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IucNbhMo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cboNdMUtGT1Btlg9dPPyPEEfQfG3XCf/83WruPZumS0/6m2640JYd66YlLRQTej5MOHMDB8X0DbmsPrljqKdCYbsQdlntMinCURPOUwKrsZV35u6BOf5IGuyyBcd4nJGLD//QuH4mRuZxDYCVvYkd/mlv2K5kw7rPEGzgjwFDx4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UqH2lakK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IucNbhMo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E83C51F000FF;
-	Sat, 12 Sep 2026 18:57:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UqH2lakK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D33BD1F000FF;
+	Sat, 12 Sep 2026 18:57:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789239460;
-	bh=MyL5lpQ1jEUUpM6y8kh/wch17JrScmdi89gC5jIs8/g=;
+	s=korg; t=1789239465;
+	bh=BjsIb++eRy0RblsldUSepf8zD8rLvvoGvUm6sq4wZgA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IucNbhMoao4MEWF0CMCAOzTan+bgMOf5YSer0pyR6QPckGNOpvqelMgV0avpcneRg
-	 ml/sajCPVjGyB2EcbdK4gkKv+II9S1JZu89l86jVENMd4u5kKdkDXXHgwjPJ575tt6
-	 tNOnrMrzFEkniKdT2dlLzBT5mcwwT+33CPMLYYRc=
+	b=UqH2lakKLBp1H0Un1M1kOz5Y63InBCFHTOk8vAADYlcRD5YIExYd74LTl0aa5Hst1
+	 5UfU7VpxnzIWiEM0gfL79KbRClYHLarC84B2CHPEKvgQ4amsbkkQjbdhGlr0DN4ued
+	 FR29O5itO22vvC3OikYweT44oxoIgmNvH0NnGcss=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laxman Acharya Padhya <acharyalaxman8848@gmail.com>,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
+	Gou Hao <gouhao@uniontech.com>,
+	jiazhenyuan <jiazhenyuan@uniontech.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 667/935] firmware: coreboot: Validate table bounds
-Date: Sat, 12 Sep 2026 09:01:37 +0200
-Message-ID: <20260912065542.139279223@linuxfoundation.org>
+Subject: [PATCH 5.15 668/935] powerpc/smp: add NULL guard for cause_ipi in smp_muxed_ipi_message_pass
+Date: Sat, 12 Sep 2026 09:01:38 +0200
+Message-ID: <20260912065542.162238484@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -51,86 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Laxman Acharya Padhya <acharyalaxman8848@gmail.com>
+From: Gou Hao <gouhao@uniontech.com>
 
-[ Upstream commit a58a57a1076f8c5dae0327e3710899478c3be901 ]
+[ Upstream commit 5aabc192702defb8950e7c81b05c3f4ca8ee43ec ]
 
-The existing coreboot_table_populate() bounds checks limit individual
-entries to the mapped length.  However, coreboot_table_probe() replaces
-the platform resource length with header and table sizes supplied by
-firmware before mapping the full table.
+smp_muxed_ipi_message_pass() calls smp_ops->cause_ipi() without
+checking whether it has been set.
 
-A malformed table can overflow the 32-bit size addition or advertise an
-extent beyond the resource, causing the driver to map and parse memory
-outside the resource.  A resource shorter than the fixed header is also
-mapped as though it contained a complete header.
+On platforms using muxed IPI (e.g. powernv/pseries), smp_ops->cause_ipi
+is initialized to NULL in the static smp_ops and only assigned during
+the platform smp_probe() handler.  If the IPI subsystem fails to
+initialize -- for example when xive_init_ipis() fails and
+xive_smp_probe() returns an error -- the probe handler returns early
+and cause_ipi is never set.  Any subsequent IPI send (e.g.
+arch_smp_send_reschedule()) would dereference the NULL pointer.
 
-Reject resources shorter than the fixed header.  After validating the
-signature, require a complete header, calculate the advertised extent
-with overflow checking, and reject extents beyond the resource before
-remapping the table.
+Add a NULL check to avoid the crash in that situation.
 
-Fixes: d384d6f43d1e ("firmware: google memconsole: Add coreboot support")
-Signed-off-by: Laxman Acharya Padhya <acharyalaxman8848@gmail.com>
-Link: https://lore.kernel.org/r/20260801165651.42172-1-acharyalaxman8848@gmail.com
-Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
+Fixes: 23d72bfd8f9f ("powerpc: Consolidate ipi message mux and demux")
+Signed-off-by: Gou Hao <gouhao@uniontech.com>
+Reviewed-by: jiazhenyuan <jiazhenyuan@uniontech.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20260727104215.184786-6-gouhao@uniontech.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/google/coreboot_table.c | 17 +++++++++++++----
- 1 file changed, 13 insertions(+), 4 deletions(-)
+ arch/powerpc/kernel/smp.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/firmware/google/coreboot_table.c b/drivers/firmware/google/coreboot_table.c
-index 95fc2e4d0cccf..7d7a6a1a2ac07 100644
---- a/drivers/firmware/google/coreboot_table.c
-+++ b/drivers/firmware/google/coreboot_table.c
-@@ -130,6 +130,7 @@ static int coreboot_table_populate(struct device *dev, void *ptr, resource_size_
- static int coreboot_table_probe(struct platform_device *pdev)
+diff --git a/arch/powerpc/kernel/smp.c b/arch/powerpc/kernel/smp.c
+index 2b8a5309fb4a5..9e3d9a3c8db4f 100644
+--- a/arch/powerpc/kernel/smp.c
++++ b/arch/powerpc/kernel/smp.c
+@@ -296,6 +296,9 @@ void smp_muxed_ipi_set_message(int cpu, int msg)
+ 
+ void smp_muxed_ipi_message_pass(int cpu, int msg)
  {
- 	resource_size_t len;
-+	resource_size_t table_span;
- 	struct coreboot_table_header *header;
- 	struct resource *res;
- 	struct device *dev = &pdev->dev;
-@@ -141,7 +142,7 @@ static int coreboot_table_probe(struct platform_device *pdev)
- 		return -EINVAL;
- 
- 	len = resource_size(res);
--	if (!res->start || !len)
-+	if (!res->start || len < sizeof(*header))
- 		return -EINVAL;
- 
- 	/* Check just the header first to make sure things are sane */
-@@ -149,19 +150,27 @@ static int coreboot_table_probe(struct platform_device *pdev)
- 	if (!header)
- 		return -ENOMEM;
- 
--	len = header->header_bytes + header->table_bytes;
- 	ret = strncmp(header->signature, "LBIO", sizeof(header->signature));
++	if (!smp_ops->cause_ipi)
++		return;
 +
-+	if (!ret &&
-+	    (header->header_bytes < sizeof(*header) ||
-+	     check_add_overflow((resource_size_t)header->header_bytes,
-+				(resource_size_t)header->table_bytes,
-+				&table_span) ||
-+	     table_span > len))
-+		ret = -EINVAL;
-+
- 	memunmap(header);
- 	if (ret) {
- 		dev_warn(dev, "coreboot table missing or corrupt!\n");
- 		return -ENODEV;
- 	}
+ 	smp_muxed_ipi_set_message(cpu, msg);
  
--	ptr = memremap(res->start, len, MEMREMAP_WB);
-+	ptr = memremap(res->start, table_span, MEMREMAP_WB);
- 	if (!ptr)
- 		return -ENOMEM;
- 
--	ret = coreboot_table_populate(dev, ptr, len);
-+	ret = coreboot_table_populate(dev, ptr, table_span);
- 
- 	memunmap(ptr);
- 
+ 	/*
 -- 
 2.53.0
 
