@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB8A234E75A;
-	Sat, 12 Sep 2026 12:34:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68CEF37E5D1;
+	Sat, 12 Sep 2026 12:35:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789216496; cv=none; b=CHti13/CcOAaFNxcKtP5AXhezwriAT8f4ptTiUP4wagf17mTrpevC68+TwkQGkEmlSrbaG3bjVthSl1twjuPjYtAC5v0kroIt8p2rlU2kE+4jGxdKHR+UuXwsYMsNyCasGjy2R6EbwCvt+K23LkCAeZ1zOG3zmoIIW4DS2Jv4is=
+	t=1789216501; cv=none; b=bkluEqqsX6H2aJ0lrmiOjB/E02laxlzNIxkQb1X1LN91mn8zIkTZBQsGo9TVIpG5Li3igyKdhUEYeD6jfZ1daoPuoINlriF41s1CC+SZo+d7Vph9gVJrZLJw3cz3K+RdkrJtl9pSOIUdO+Z01Q96MrJkLqInMaADKIYLz8DY+kA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789216496; c=relaxed/simple;
-	bh=dWE8ICWzvTr6xcOxpP5ypFePYLPSvrcfoREt68fzzAQ=;
+	s=arc-20240116; t=1789216501; c=relaxed/simple;
+	bh=vabhGmgRBomjpLlc0h9Ktu32EhO1Ah0BIT6TPjHYkmc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gMn6VXiFApXNj2xEk2K9KpkMLSJsyMIK+1vPuFRn/zKFzUZO4hBgdhbrd4lrfQeJzSCq6/ZrqBO5wW87gERj7ymFHOuYJq13oseiyURtapkrm/Lf2M04KsTJ1IDnGTSQOxS1QQxSuskjXIJDIKdkd/viV6uSvxrl0ldUjJWvvcI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fSEzwCmr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PhxGvwQxCBku59DkC11Beczp+wODZcze+RJOPXkIJydGNioKx93CAB3gBjywgMsZurBwvkg4DvEQbO0p+sQyjnCrBNsQKGQjdNnLz/PRaIe+2igFM3zbo6k6dMLmWhLN7OW72Ba+An/yPHBVC/L42A4G8XGJnzOWeBocFoq0nps=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LaZGNK9x; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fSEzwCmr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8690A1F000FF;
-	Sat, 12 Sep 2026 12:34:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LaZGNK9x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D40C41F000FF;
+	Sat, 12 Sep 2026 12:34:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789216494;
-	bh=L+R3zJH64bM+fptVLAlXlBa9axMs0lcc2G/DsFaaB1g=;
+	s=korg; t=1789216499;
+	bh=56rTSoaq+qNi+Aaqu6olk50veZJz17AyKdg4Tf0vaCE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fSEzwCmr+Yf/VwFWhoDBgDe4JskXj6U9NZx0fsvr+KFH7MFpthXljxqc98k+uy1lW
-	 xZvBMctJwH5uoBRO+335cTAtpNhzSEmphAhCL2o6vGmd88g7aC05AUg+fbi1m/zTAn
-	 l/TJrT63DCXpRtfsSBCja14rjWpcX+4e7c+fa23Q=
+	b=LaZGNK9xjukyB6zLZI4nWB5yAoTzu7HAR4r4V4KNr0R9br9/J5E2/hehjnruwwqxy
+	 qm4jVFvHtHKHuUl/Xy5zuaJnIUb4zILZS4D7R/AdlFdUr/PkcDhCiiNR9ou+UwSZYO
+	 dqWNpnETUs4yqXehHKXVWB6HAjSBJMLJdip2n61A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jingyi Wang <jingyi.wang@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Linmao Li <lilinmao@kylinos.cn>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0704/1376] remoteproc: core: Attach rproc asynchronously in rproc_add() path via schedule_work()
-Date: Sat, 12 Sep 2026 08:52:10 +0200
-Message-ID: <20260912065623.235755313@linuxfoundation.org>
+Subject: [PATCH 6.12 0695/1376] crypto: keembay - Initialize completion before requesting IRQ
+Date: Sat, 12 Sep 2026 08:52:01 +0200
+Message-ID: <20260912065623.034615033@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,96 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
+From: Linmao Li <lilinmao@kylinos.cn>
 
-[ Upstream commit 026a3fada43261e403c6c4d9bda9501547e3f108 ]
+[ Upstream commit fce20289dd622cc7ab78d72c8a979a9f8b7cb10e ]
 
-Unlike the remoteproc firmware load path where rproc_add() call
-rproc_auto_boot_callback() asynchronously and ignores the return value of
-rproc_boot(), the attach path calls rproc_boot() synchronously and
-propagates its return value back to rproc_add(). This means a failure
-during rproc_attach() causes rproc_add() to fail and triggers resource
-release, removing the remoteproc from sysfs and making it unavailable for
-recovery or further boot attempts.
+kmb_ocs_aes_probe() requests the device IRQ before initializing
+irq_completion. Once the handler is registered it can run immediately,
+and ocs_aes_irq_handler() unconditionally calls complete(). An
+interrupt in this window would therefore use an uninitialized
+completion.
 
-Align the remoteproc attach path with the firmware load path by
-introducing attach_work and scheduling rproc_boot() asynchronously via
-schedule_work(). This keeps the remoteproc registered and available in
-sysfs even if the initial attach attempt fails, and avoids blocking
-rproc_add() on the attach result.
+Initialize the completion before requesting the IRQ, as the sibling
+OCS HCU and ECC drivers already do.
 
-Signed-off-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260623-rproc-attach-issue-v3-1-8e24310707ce@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Stable-dep-of: 74ee3b2f5767 ("remoteproc: Prevent crash handling to race with rproc_del()")
+Fixes: 885743324513 ("crypto: keembay - Add support for Keem Bay OCS AES/SM4")
+Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/remoteproc_core.c | 20 ++++++++++++--------
- include/linux/remoteproc.h           |  2 ++
- 2 files changed, 14 insertions(+), 8 deletions(-)
+ drivers/crypto/intel/keembay/keembay-ocs-aes-core.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/remoteproc/remoteproc_core.c b/drivers/remoteproc/remoteproc_core.c
-index bb905076f31b9..4279def9e1779 100644
---- a/drivers/remoteproc/remoteproc_core.c
-+++ b/drivers/remoteproc/remoteproc_core.c
-@@ -1678,18 +1678,21 @@ static void rproc_auto_boot_callback(const struct firmware *fw, void *context)
- 	release_firmware(fw);
- }
+diff --git a/drivers/crypto/intel/keembay/keembay-ocs-aes-core.c b/drivers/crypto/intel/keembay/keembay-ocs-aes-core.c
+index a02a75bd29860..9dc69a2706663 100644
+--- a/drivers/crypto/intel/keembay/keembay-ocs-aes-core.c
++++ b/drivers/crypto/intel/keembay/keembay-ocs-aes-core.c
+@@ -1602,6 +1602,8 @@ static int kmb_ocs_aes_probe(struct platform_device *pdev)
+ 	if (IS_ERR(aes_dev->base_reg))
+ 		return PTR_ERR(aes_dev->base_reg);
  
-+static void rproc_attach_work(struct work_struct *work)
-+{
-+	struct rproc *rproc = container_of(work, struct rproc, attach_work);
++	init_completion(&aes_dev->irq_completion);
 +
-+	rproc_boot(rproc);
-+}
-+
- static int rproc_trigger_auto_boot(struct rproc *rproc)
- {
- 	int ret;
+ 	/* Get and request IRQ */
+ 	aes_dev->irq = platform_get_irq(pdev, 0);
+ 	if (aes_dev->irq < 0)
+@@ -1619,8 +1621,6 @@ static int kmb_ocs_aes_probe(struct platform_device *pdev)
+ 	list_add_tail(&aes_dev->list, &ocs_aes.dev_list);
+ 	spin_unlock(&ocs_aes.lock);
  
--	/*
--	 * Since the remote processor is in a detached state, it has already
--	 * been booted by another entity.  As such there is no point in waiting
--	 * for a firmware image to be loaded, we can simply initiate the process
--	 * of attaching to it immediately.
--	 */
--	if (rproc->state == RPROC_DETACHED)
--		return rproc_boot(rproc);
-+	if (rproc->state == RPROC_DETACHED) {
-+		schedule_work(&rproc->attach_work);
-+		return 0;
-+	}
- 
- 	/*
- 	 * We're initiating an asynchronous firmware loading, so we can
-@@ -2521,6 +2524,7 @@ struct rproc *rproc_alloc(struct device *dev, const char *name,
- 	INIT_LIST_HEAD(&rproc->dump_segments);
- 
- 	INIT_WORK(&rproc->crash_handler, rproc_crash_handler_work);
-+	INIT_WORK(&rproc->attach_work, rproc_attach_work);
- 
- 	rproc->state = RPROC_OFFLINE;
- 
-diff --git a/include/linux/remoteproc.h b/include/linux/remoteproc.h
-index b4795698d8c2a..580d324a1e8ff 100644
---- a/include/linux/remoteproc.h
-+++ b/include/linux/remoteproc.h
-@@ -526,6 +526,7 @@ enum rproc_features {
-  * @subdevs: list of subdevices, to following the running state
-  * @notifyids: idr for dynamically assigning rproc-wide unique notify ids
-  * @index: index of this rproc device
-+ * @attach_work: workqueue for attaching rproc
-  * @crash_handler: workqueue for handling a crash
-  * @crash_cnt: crash counter
-  * @recovery_disabled: flag that state if recovery was disabled
-@@ -568,6 +569,7 @@ struct rproc {
- 	struct list_head subdevs;
- 	struct idr notifyids;
- 	int index;
-+	struct work_struct attach_work;
- 	struct work_struct crash_handler;
- 	unsigned int crash_cnt;
- 	bool recovery_disabled;
+-	init_completion(&aes_dev->irq_completion);
+-
+ 	/* Initialize crypto engine */
+ 	aes_dev->engine = crypto_engine_alloc_init(dev, true);
+ 	if (!aes_dev->engine) {
 -- 
 2.53.0
 
