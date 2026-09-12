@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 267B94248DB;
-	Sat, 12 Sep 2026 10:09:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73F8D25B0AA;
+	Sat, 12 Sep 2026 10:09:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789207792; cv=none; b=ai8IV8eMUHFxCJg2jI6X9+eUrMp2SaFXEbuRVTDwJBiRyK6QAnmggjnd5iG+5rNByZUT/sVuKT3hrsuCKuI78L51HNfsnnap++yPWK9FYlTCsCAusFs3n1EtYOkcOqPPmVdlumBZiJDLHy3T7kfypmvHdWXPDjUFQCWkRtDqA8g=
+	t=1789207795; cv=none; b=LZoCT9QfIdzh4bRgyusIiwnzqxnM9gSP+UMj5WCr9MM8lLYrVRDj3wGOr9OFfyvECaSI1ZGCGf4HbGNqepqR2HzGFx1T7smEW2NXGxUmyNjawNsSGF5DkTtOY4QsVFbGDxX/WlyBRRm1elHQKcjdbY9qk3FlT0OkSZzZNjJJiPQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789207792; c=relaxed/simple;
-	bh=9G9Qnrza8CodvmjtdqD37VUPsSlyz48MSM+mS352Chs=;
+	s=arc-20240116; t=1789207795; c=relaxed/simple;
+	bh=kv4MNUfelVbzz54cMM2Z293zkbzDCTW/l+fVNVB6NfU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eWLOkr5MqaO2LFp+GY8oav7deRWcQa6rC+v6B7+ZHXqEYBIwZWZo+3uVtux+bzXtKHKA4QZyOWM05uYeU7K3yKk5IHDVPBNYr9JDpn3ynLaH9VGo1d5onIPtBF0DY6dzEqO4EUUv1VizJRqTHwub5+Vk1QvRupJZ6quTtv2l5II=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WfZ2h3nd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Vy+6LjAT+cW8Ix6aPSrqnHpp1ipar23ZOR4T+wMpBhjbs5RbbL9lVuPNz70trWlx8BzTFp5MTD2Z45kVgJGaXOCJHXH5cvPYcjSSOj7OpInzr317BasEnqz56Q3032/cUHjM/pmuBNZUDuDHk0IsZDHbkSepnta+qvJYov/HohM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZK9sOtEG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WfZ2h3nd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A69BF1F000FF;
-	Sat, 12 Sep 2026 10:09:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZK9sOtEG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9480C1F000FF;
+	Sat, 12 Sep 2026 10:09:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789207789;
-	bh=yrZBNsG7rXPO9fnciSBqPhh07bL9h8BI8zKr3peMEdg=;
+	s=korg; t=1789207794;
+	bh=7KJT7JtO0kR9+umE1a8rV1WDvlWNV8Ubhvb9Gw7mF3E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WfZ2h3ndE7zkeR0DVNcnavv1h2MGQRZr4xzJSTR4YeOSUQ7O9IPQh+LPY4STjDXpY
-	 h/ovQGvRO1oVENOY5+eEhh9bbQUsNI0rmtzVPdBjk2IpKJ2VO9Cfsk9SxOmnRA9uDD
-	 SqDakF4Y1a3OZHDcR6uzWlK5+p60WzBYWLcjzufk=
+	b=ZK9sOtEGmvTIe3skSrq7xxYkRF85YKhWZNDq2oLePuEhAHJGzOuHab6nW28vln+M4
+	 LUqYojTc46+INOU6RT7Iz69VeaHZDt/QaUq8MYlijM9kTKMn7rF9YTxx6VTLQ9LLiY
+	 NnzjaLGHxI5RaOb5B0GvzSFg5VHnvY+TvR/CuWAM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Li <Frank.Li@nxp.com>,
+	Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0485/1518] arm64: dts: imx8-ss-audio: Fix LPCG clock indices for ASRC0
-Date: Sat, 12 Sep 2026 08:44:14 +0200
-Message-ID: <20260912065634.420183811@linuxfoundation.org>
+Subject: [PATCH 6.18 0486/1518] x86/bugs: Dont use cpu-type matching in cpu_vuln_blacklist
+Date: Sat, 12 Sep 2026 08:44:15 +0200
+Message-ID: <20260912065634.441976412@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -50,44 +51,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frank Li <Frank.Li@nxp.com>
+From: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
 
-[ Upstream commit 8563591f76ca02c1a6fd70ce986df1d0dde8d249 ]
+[ Upstream commit a4c714fe9746bf5a434bb798b26ebba278b798c1 ]
 
-The LPCG clock indices for ASRC0 and AUD_PLL_DIV0 are swapped. The ASRC0
-LPCG provides only IMX_LPCG_CLK_4, so update the ASRC0 clock consumer to
-use IMX_LPCG_CLK_4 instead of the non-existent IMX_LPCG_CLK_0.
+Thomas Gleixner pointed out that cpu-type is a per-CPU property while hybrid
+is a system property; conflating the two in the CPU matching infrastructure is
+wrong. Currently, on a hybrid system x86_match_cpu() matches any cpu-type.
+This works if the intent is to find the possibility of a cpu-type in a system.
+But fails if matching for the cpu-type of a given CPU.
 
-Likewise, the AUD_PLL_DIV0 LPCG provides only IMX_LPCG_CLK_0, so update its
-clock consumer to use IMX_LPCG_CLK_0 instead of the non-existent
-IMX_LPCG_CLK_4.
+Borislav posted a cleanup here:
 
-Fixes: 5125617c7a4d3 ("arm64: dts: imx8qxp: add asrc[0,1], esai0, spdif0 and sai[4,5]")
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
+  https://lore.kernel.org/all/20260703193222.GFakgORjvxwnZTPRnI@fat_crate.local
+
+To make way for the cleanup stop matching cpu-type in cpu_vuln_blacklist.
+RFDS is the only user, so drop the VULNBL_INTEL_TYPE entries and fold their
+RFDS bit into the base Alder Lake (0x97) and Raptor Lake (0xB7) blacklist
+entries. For now open-code cpu-type check in vulnerable_to_rfds(). In the
+future, if more vulnerabilities need cpu-type matching a helper can be added.
+
+No functional change intended.
+
+Fixes: 722fa0dba74f ("x86/rfds: Exclude P-only parts from the RFDS affected list")
+Signed-off-by: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Link: https://patch.msgid.link/20260708-cpu-type-vuln-v1-1-85c1d3c704db@linux.intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/imx8-ss-audio.dtsi | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ arch/x86/kernel/cpu/common.c | 25 +++++++++++++++++--------
+ 1 file changed, 17 insertions(+), 8 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx8-ss-audio.dtsi b/arch/arm64/boot/dts/freescale/imx8-ss-audio.dtsi
-index c32a6947ae9c4..5ddb90be54608 100644
---- a/arch/arm64/boot/dts/freescale/imx8-ss-audio.dtsi
-+++ b/arch/arm64/boot/dts/freescale/imx8-ss-audio.dtsi
-@@ -124,10 +124,10 @@ asrc0: asrc@59000000 {
- 		compatible = "fsl,imx8qm-asrc";
- 		reg = <0x59000000 0x10000>;
- 		interrupts = <GIC_SPI 372 IRQ_TYPE_LEVEL_HIGH>;
--		clocks = <&asrc0_lpcg IMX_LPCG_CLK_0>,
--			 <&asrc0_lpcg IMX_LPCG_CLK_0>,
--			 <&aud_pll_div0_lpcg IMX_LPCG_CLK_4>,
--			 <&aud_pll_div1_lpcg IMX_LPCG_CLK_4>,
-+		clocks = <&asrc0_lpcg IMX_LPCG_CLK_4>,
-+			 <&asrc0_lpcg IMX_LPCG_CLK_4>,
-+			 <&aud_pll_div0_lpcg IMX_LPCG_CLK_0>,
-+			 <&aud_pll_div1_lpcg IMX_LPCG_CLK_0>,
- 			 <&acm IMX_ADMA_ACM_AUD_CLK0_SEL>,
- 			 <&acm IMX_ADMA_ACM_AUD_CLK1_SEL>,
- 			 <&clk_dummy>,
+diff --git a/arch/x86/kernel/cpu/common.c b/arch/x86/kernel/cpu/common.c
+index 6cf7c2d0dc59c..3ffeadad02447 100644
+--- a/arch/x86/kernel/cpu/common.c
++++ b/arch/x86/kernel/cpu/common.c
+@@ -1210,9 +1210,6 @@ static const __initconst struct x86_cpu_id cpu_vuln_whitelist[] = {
+ #define VULNBL_INTEL_STEPS(vfm, max_stepping, issues)		   \
+ 	X86_MATCH_VFM_STEPS(vfm, X86_STEP_MIN, max_stepping, issues)
+ 
+-#define VULNBL_INTEL_TYPE(vfm, cpu_type, issues)	\
+-	X86_MATCH_VFM_CPU_TYPE(vfm, INTEL_CPU_TYPE_##cpu_type, issues)
+-
+ #define VULNBL_AMD(family, blacklist)		\
+ 	VULNBL(AMD, family, X86_MODEL_ANY, blacklist)
+ 
+@@ -1275,11 +1272,9 @@ static const struct x86_cpu_id cpu_vuln_blacklist[] __initconst = {
+ 	VULNBL_INTEL_STEPS(INTEL_TIGERLAKE,	     X86_STEP_MAX,	GDS | ITS | ITS_NATIVE_ONLY),
+ 	VULNBL_INTEL_STEPS(INTEL_LAKEFIELD,	     X86_STEP_MAX,	MMIO | MMIO_SBDS | RETBLEED),
+ 	VULNBL_INTEL_STEPS(INTEL_ROCKETLAKE,	     X86_STEP_MAX,	MMIO | RETBLEED | GDS | ITS | ITS_NATIVE_ONLY),
+-	VULNBL_INTEL_TYPE(INTEL_ALDERLAKE,		     ATOM,	RFDS | VMSCAPE),
+-	VULNBL_INTEL_STEPS(INTEL_ALDERLAKE,	     X86_STEP_MAX,	VMSCAPE),
++	VULNBL_INTEL_STEPS(INTEL_ALDERLAKE,	     X86_STEP_MAX,	RFDS | VMSCAPE),
+ 	VULNBL_INTEL_STEPS(INTEL_ALDERLAKE_L,	     X86_STEP_MAX,	RFDS | VMSCAPE),
+-	VULNBL_INTEL_TYPE(INTEL_RAPTORLAKE,		     ATOM,	RFDS | VMSCAPE),
+-	VULNBL_INTEL_STEPS(INTEL_RAPTORLAKE,	     X86_STEP_MAX,	VMSCAPE),
++	VULNBL_INTEL_STEPS(INTEL_RAPTORLAKE,	     X86_STEP_MAX,	RFDS | VMSCAPE),
+ 	VULNBL_INTEL_STEPS(INTEL_RAPTORLAKE_P,	     X86_STEP_MAX,	RFDS | VMSCAPE),
+ 	VULNBL_INTEL_STEPS(INTEL_RAPTORLAKE_S,	     X86_STEP_MAX,	RFDS | VMSCAPE),
+ 	VULNBL_INTEL_STEPS(INTEL_METEORLAKE_L,	     X86_STEP_MAX,	VMSCAPE),
+@@ -1347,7 +1342,21 @@ static bool __init vulnerable_to_rfds(u64 x86_arch_cap_msr)
+ 		return true;
+ 
+ 	/* Only consult the blacklist when there is no enumeration: */
+-	return cpu_matches(cpu_vuln_blacklist, RFDS);
++	if (!cpu_matches(cpu_vuln_blacklist, RFDS))
++		return false;
++
++	/*
++	 * ADL and RPL are affected only if they have Atom CPUs. Hybrids have
++	 * both Core and Atom CPUs. Mark unaffected when Atom CPUs are not
++	 * present.
++	 */
++	if ((boot_cpu_data.x86_model == 0x97 ||
++	     boot_cpu_data.x86_model == 0xB7) &&
++	     boot_cpu_data.topo.intel_type != INTEL_CPU_TYPE_ATOM &&
++	     !boot_cpu_has(X86_FEATURE_HYBRID_CPU))
++		return false;
++
++	return true;
+ }
+ 
+ static bool __init vulnerable_to_its(u64 x86_arch_cap_msr)
 -- 
 2.53.0
 
