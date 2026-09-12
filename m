@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE127367B65;
-	Sat, 12 Sep 2026 19:56:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 890A937EFE5;
+	Sat, 12 Sep 2026 19:57:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789243020; cv=none; b=BAGmIqUIu/Il0Ogyi1/HT+DnCIGoR1sSBxPPWjGBzAw+npD3b/Xbt/ishsnTAjfT0ojDRoLqTj1Uvr+j8RVOidgtQZ6K4bgV3Xnus3x8fGgxQReWXFCtFxmDWPwEnTF9xqu8Wcc4TWUQrohTIH+v75dqMxpy82GsL+EKdjVtlf8=
+	t=1789243022; cv=none; b=VVV2kJecb252/67TRDRZ/g3jO7ECeOE+NJyfO0tTiCCQeZiOvgyMpu+JcVxPtAbwVvlnICnBe3HssXpM2tI1DqlStvDt5czgIzA00gELbfoH+OmmmdbtmZ2hRBSfCJzRx3KcxBHpmBnXZ+AXHTHFTDu05z6rWpVVGIlFIuRCElw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789243020; c=relaxed/simple;
-	bh=EY2JN1W7P7SBaFGT3DJS9EKIhcY6I9+NWBQvG+cKAxA=;
+	s=arc-20240116; t=1789243022; c=relaxed/simple;
+	bh=+HtiakM2FzEK99QUxaWJ5HrTpOB6IJVWdtdk1aqr91A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=k7MIX9Tk/weIzY49rdnvhKpesWkOjIr66kEEOCkv1Irme1+DTr3SCLwIaxIwPhKmILOBwiH22XySnePc18obKQT1qYHAoq1N9PbLeVZXMoOsoxSrttaBPJC8t9j9JxolnKi7VImVjmlrbHHVvhrDwwC0IWVVkAVnT8Xcf52y+6M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PcOcppiH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Q5KYhhoWO5CJzX82ZdhQhKiEos0qaV7zfEwG719LgCXPro1DsHS0QUCt0l+ibi4xrV4i58VNitV+3eomato9zzrWA/5h97PO9lbmriNTLDDOHC98Vi4qgDpyKJPVUvpjAbuXzH0/ppi4WfiabHyvrPGiybWTu4Ap1sKo/Jk21dY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lyctl+z/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PcOcppiH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1334D1F000FF;
-	Sat, 12 Sep 2026 19:56:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lyctl+z/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4A621F000FF;
+	Sat, 12 Sep 2026 19:57:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789243018;
-	bh=QD1xPXjA9h+mGY7oIVeiEeDVs1gL/54RV/AYpdeBzyk=;
+	s=korg; t=1789243021;
+	bh=UU4/VaXix65lSy+F1FHwHovzdBHnW0SX85PRhcX+Ag8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PcOcppiHCIGjLDaBktfU5Lu3S9oTT5oeEhLnTcmG63p41dmODsEak0/DkIKcXcvpc
-	 HQYzXtXL8hUFk7wGu3pjQXGmj8wkeoYKvcAfQ9UDBsgGVixJtEVgn2IEb4+s8jMD0M
-	 sZFGeplutF6ftIeOif4yQ09/rG70HkKOFRm8P5h0=
+	b=Lyctl+z/iDgSRDYbkelSMz88+Cz+JXoOg/kUKaAYE01y9CL/xv+EBd7g0HB85vsr5
+	 HRGZ00ixQMb4nOu2T3LciTi7w3VZCDKjLxxi+km+123zwahpi2vg2Z1xqbY0bsHSZs
+	 jocaJW9jOWdi3ixBxnFkF72dx7qkIplnALwQHtvo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	"Zhang, Yanmin" <yanmin_zhang@linux.intel.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 565/798] perf machine: Dont abort guest map creation on first inaccessible dir
-Date: Sat, 12 Sep 2026 09:03:13 +0200
-Message-ID: <20260912065530.078508634@linuxfoundation.org>
+Subject: [PATCH 5.10 556/798] wifi: mt76: mt7915: avoid nss underflow in mt7915_mcu_get_sta_nss
+Date: Sat, 12 Sep 2026 09:03:04 +0200
+Message-ID: <20260912065529.873072618@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -47,57 +44,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit b687e1a418fb819ef83c362d84c216a6a841e3b0 ]
+[ Upstream commit 4a2f4be532e3ea4e2b536e411793a05aaa51af25 ]
 
-machines__create_guest_kernel_maps() jumps to the failure label when one
-guest directory's kallsyms file fails access(), skipping all remaining
-valid guest directories.  An inaccessible directory is not fatal — other
-guests may still be reachable.
+If a peer's VHT/HE MCS map has no supported spatial stream (all fields
+0x3), the loop exits with nss == 0 and the function returned (u8)-1 (255),
+which was then written into the firmware sta_rec_bf beamforming fields.
+Clamp the result to 0.
 
-Replace 'goto failure' with 'continue' so the loop processes all
-directories, and remove the now-unreferenced failure label.
-
-Fixes: a1645ce12adb ("perf: 'perf kvm' tool for monitoring guest performance from host")
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Cc: Zhang, Yanmin <yanmin_zhang@linux.intel.com>
-Assisted-by: Claude:claude-opus-4.6
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Fixes: 89029a85482c ("mt76: mt7915: add Tx beamformer support")
+Link: https://patch.msgid.link/20260722082610.2699628-9-nbd@nbd.name
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/machine.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7915/mcu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/perf/util/machine.c b/tools/perf/util/machine.c
-index be18fd39813f6..197d68d533b1b 100644
---- a/tools/perf/util/machine.c
-+++ b/tools/perf/util/machine.c
-@@ -1240,14 +1240,12 @@ int machines__create_guest_kernel_maps(struct machines *machines)
- 			snprintf(path, sizeof(path), "%s/%s/proc/kallsyms",
- 				 symbol_conf.guestmount,
- 				 namelist[i]->d_name);
--			ret = access(path, R_OK);
--			if (ret) {
-+			if (access(path, R_OK)) {
- 				pr_debug("Can't access file %s\n", path);
--				goto failure;
-+				continue;
- 			}
- 			machines__create_kernel_maps(machines, pid);
- 		}
--failure:
- 		free(namelist);
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c
+index 41054ee43dbfa..53caa5f63a057 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/mcu.c
+@@ -212,7 +212,7 @@ mt7915_mcu_get_sta_nss(u16 mcs_map)
+ 			break;
  	}
  
+-	return nss - 1;
++	return nss ? nss - 1 : 0;
+ }
+ 
+ static int __mt7915_mcu_msg_send(struct mt7915_dev *dev, struct sk_buff *skb,
 -- 
 2.53.0
 
