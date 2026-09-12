@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0971D4BEE22;
-	Sat, 12 Sep 2026 13:08:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8016E30FF08;
+	Sat, 12 Sep 2026 13:08:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789218500; cv=none; b=eDw8Oz9k8iQ8q5CqXehDolS/vOG+psvCm7GfdgNJv3p9SBfhwNHuVBUFwW7RgFAMVf2BVIx8GsQRsseUAscjz72fnpL4jOibbkkXaFnJLpHJRCLhiCxsUdldH50BJ1m3VfkPkgozWGmM013Wfwg70IajAVMggqTdfR80ywg5POk=
+	t=1789218504; cv=none; b=MfpqYe67lwCqEV/hGJZyit13jB/ZMJTNnY1lHyXOEBBGbjXaID2oVcts0G/Rzvdp4iGjOeErXW/oi4SObzZAY+vclYw14oUKg6+2Eq/qOYCiIpDiUFG70OTdq6K0zNxZIg9ST21Y171gsxRm3okt1MtSYBP5x9+iplMD2efut/I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789218500; c=relaxed/simple;
-	bh=zDCkVjN+gVlw55YySI9f0kYUhzAd0/gbb6n74H8+dEk=;
+	s=arc-20240116; t=1789218504; c=relaxed/simple;
+	bh=aBjJa4AaDRRk3as9cJlTQCBhSje02JnyLMV63/WGhqQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eq/cQaE4NsRQId3j0oiWoxknu78Ep+GovbH0NLcaKu0XkdHl7XyTnqAStI3uHrMYDmXabxjMO/enGRMhCM/cx3b8CVCvUZOFBDPAulZ50BJEX5R4PVDpDMfEbtjsglcEV3LbX6GmSA61b9l9w9PmdH7HiQlfpC1Z51bKV3gGePY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oUJHHnFt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=p/8ZSkYk9cuIUzhF+EOlQDtbOBhfoITmzszT8BRSrp4Qu7MyUCOYnWwqL6a19fYB4L8Gs/naQFwuEQVe19FxUS2O8aUH4cea+WR7eX1Nv7nOQAR7gBBXmKF9hlQ6IQvdyhZYUdMsl8PNKjqInAqlpNhlHNPymFR7P64j8XpRlNs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XEadU6lA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oUJHHnFt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B15E51F000FF;
-	Sat, 12 Sep 2026 13:08:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XEadU6lA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CE061F000FF;
+	Sat, 12 Sep 2026 13:08:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789218498;
-	bh=ols9JUL2jOaOcX4aetP28LVMMn+2cGXho8mpszvClNY=;
+	s=korg; t=1789218503;
+	bh=g/MIM5hpDrs7ZQeS3H5KhAvUiH8jpe3pT3MX/RqAXw4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oUJHHnFtpUHBhXtQ1PlhadPIYxR8OiZLffnRio5+EYuSfcFNt1Pb8ywh4PDD4NknK
-	 K4YDkYOhiPUpEyW423Aj3nuRwnqP1dedvoNwMJzGyW5XIuZenCk8NfQfGhl3J3Rgom
-	 wKKtHWljkWAiINgU57q52v00zOp0aTS+pZCISeaw=
+	b=XEadU6lAcOAKFYIl7k0DXjZwukwKstkOvsfQhPEpHkMeKoPnJbP87m0OH0fACZ3hm
+	 wGeU+xaC+AxRu0GoWwfD8h6k+q3EOIkgecR+1zQI6IIp5eBR5zKgTPCbG0CviVlk4a
+	 5qoww7sGBnh34FZUVcelSwJZ4WYKl/qrBca4hZBk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Waiman Long <longman@redhat.com>,
+	Rui Qi <qirui.001@bytedance.com>,
 	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1114/1376] selftest/cgroup: Clean up and restructure test_cpuset_prs.sh
-Date: Sat, 12 Sep 2026 08:59:00 +0200
-Message-ID: <20260912065632.391837096@linuxfoundation.org>
+Subject: [PATCH 6.12 1115/1376] selftests/cgroup: Preserve CPU hotplug write errors
+Date: Sat, 12 Sep 2026 08:59:01 +0200
+Message-ID: <20260912065632.413344288@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,468 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Waiman Long <longman@redhat.com>
+From: Rui Qi <qirui.001@bytedance.com>
 
-[ Upstream commit b2b2b4d058b776be0168b4ea46ed84cfb0f884e9 ]
+[ Upstream commit ddabc5dbd262f3ca981e679ddae99ed7a9adb279 ]
 
-Cleaning up the test_cpuset_prs.sh script and restructure some of the
-functions so that a new test matrix with a different cgroup directory
-structure can be added in the next patch.
+The cpuset partition root state selftest checks several CPU hotplug
+transitions. If writing to a CPU online file fails, the helper still
+runs pause afterwards and returns the status of pause instead of the
+failed write.
 
-Signed-off-by: Waiman Long <longman@redhat.com>
+This hides the real hotplug failure and can make later checks run
+against expectations for a transition that never happened. Move the
+write before the bookkeeping and return when it fails, so callers can
+observe the hotplug error and the test does not record a CPU as offline
+unless the offline operation actually succeeded.
+
+Also change the O* command handler in set_ctrl_state() to use
+"eval $COMM $REDIRECT" like all other handlers. The previous version
+set COMM but still called write_cpu_online directly, bypassing the
+redirect that captures stderr for error reporting.
+
+Changes since v1:
+ - Use eval $COMM $REDIRECT in the O* handler instead of calling
+   write_cpu_online directly (Waiman Long)
+
+Fixes: a8c52eba880a ("kselftest/cgroup: Add cpuset v2 partition root state test")
+Signed-off-by: Rui Qi <qirui.001@bytedance.com>
 Signed-off-by: Tejun Heo <tj@kernel.org>
-Stable-dep-of: ddabc5dbd262 ("selftests/cgroup: Preserve CPU hotplug write errors")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../selftests/cgroup/test_cpuset_prs.sh       | 257 +++++++++++-------
- 1 file changed, 156 insertions(+), 101 deletions(-)
+ tools/testing/selftests/cgroup/test_cpuset_prs.sh | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
 diff --git a/tools/testing/selftests/cgroup/test_cpuset_prs.sh b/tools/testing/selftests/cgroup/test_cpuset_prs.sh
-index f11f347129d87..d99412e7d1965 100755
+index d99412e7d1965..f6bc762705abc 100755
 --- a/tools/testing/selftests/cgroup/test_cpuset_prs.sh
 +++ b/tools/testing/selftests/cgroup/test_cpuset_prs.sh
-@@ -88,22 +88,30 @@ echo "" > test/cpuset.cpus
- # If isolated CPUs have been reserved at boot time (as shown in
- # cpuset.cpus.isolated), these isolated CPUs should be outside of CPUs 0-8
- # that will be used by this script for testing purpose. If not, some of
--# the tests may fail incorrectly. These pre-isolated CPUs should stay in
--# an isolated state throughout the testing process for now.
-+# the tests may fail incorrectly. Wait a bit and retry again just in case
-+# these isolated CPUs are leftover from previous run and have just been
-+# cleaned up earlier in this script.
-+#
-+# These pre-isolated CPUs should stay in an isolated state throughout the
-+# testing process for now.
- #
- BOOT_ISOLCPUS=$(cat $CGROUP2/cpuset.cpus.isolated)
-+[[ -n "$BOOT_ISOLCPUS" ]] && {
-+	sleep 0.5
-+	BOOT_ISOLCPUS=$(cat $CGROUP2/cpuset.cpus.isolated)
-+}
- if [[ -n "$BOOT_ISOLCPUS" ]]
- then
- 	[[ $(echo $BOOT_ISOLCPUS | sed -e "s/[,-].*//") -le 8 ]] &&
- 		skip_test "Pre-isolated CPUs ($BOOT_ISOLCPUS) overlap CPUs to be tested"
- 	echo "Pre-isolated CPUs: $BOOT_ISOLCPUS"
- fi
-+
- cleanup()
- {
- 	online_cpus
- 	cd $CGROUP2
--	rmdir A1/A2/A3 A1/A2 A1 B1 > /dev/null 2>&1
--	rmdir test > /dev/null 2>&1
-+	rmdir A1/A2/A3 A1/A2 A1 B1 test/A1 test/B1 test > /dev/null 2>&1
- 	[[ -n "$SCHED_DEBUG" ]] &&
- 		echo "$SCHED_DEBUG" > /sys/kernel/debug/sched/verbose
- }
-@@ -173,14 +181,22 @@ test_add_proc()
- #
- # Cgroup test hierarchy
- #
--# root -- A1 -- A2 -- A3
--#      +- B1
-+#	      root
-+#	        |
-+#	 +------+------+
-+#	 |             |
-+#	 A1            B1
-+#	 |
-+#	 A2
-+#	 |
-+#	 A3
- #
- #  P<v> = set cpus.partition (0:member, 1:root, 2:isolated)
- #  C<l> = add cpu-list to cpuset.cpus
- #  X<l> = add cpu-list to cpuset.cpus.exclusive
- #  S<p> = use prefix in subtree_control
- #  T    = put a task into cgroup
-+#  CX<l> = add cpu-list to both cpuset.cpus and cpuset.cpus.exclusive
- #  O<c>=<v> = Write <v> to CPU online file of <c>
- #
- # ECPUs    - effective CPUs of cpusets
-@@ -453,25 +469,26 @@ set_ctrl_state()
- 		PFILE=$CGRP/cpuset.cpus.partition
- 		CFILE=$CGRP/cpuset.cpus
- 		XFILE=$CGRP/cpuset.cpus.exclusive
--		S=$(expr substr $CMD 1 1)
--		if [[ $S = S ]]
--		then
--			PREFIX=${CMD#?}
-+		case $CMD in
-+		    S*) PREFIX=${CMD#?}
- 			COMM="echo ${PREFIX}${CTRL} > $SFILE"
- 			eval $COMM $REDIRECT
--		elif [[ $S = X ]]
--		then
-+			;;
-+		    X*)
- 			CPUS=${CMD#?}
- 			COMM="echo $CPUS > $XFILE"
- 			eval $COMM $REDIRECT
--		elif [[ $S = C ]]
--		then
--			CPUS=${CMD#?}
-+			;;
-+		    CX*)
-+			CPUS=${CMD#??}
-+			COMM="echo $CPUS > $CFILE; echo $CPUS > $XFILE"
-+			eval $COMM $REDIRECT
-+			;;
-+		    C*) CPUS=${CMD#?}
- 			COMM="echo $CPUS > $CFILE"
- 			eval $COMM $REDIRECT
--		elif [[ $S = P ]]
--		then
--			VAL=${CMD#?}
-+			;;
-+		    P*) VAL=${CMD#?}
- 			case $VAL in
- 			0)  VAL=member
- 			    ;;
-@@ -486,15 +503,17 @@ set_ctrl_state()
- 			esac
- 			COMM="echo $VAL > $PFILE"
- 			eval $COMM $REDIRECT
--		elif [[ $S = O ]]
--		then
--			VAL=${CMD#?}
-+			;;
-+		    O*) VAL=${CMD#?}
- 			write_cpu_online $VAL
--		elif [[ $S = T ]]
--		then
--			COMM="echo 0 > $TFILE"
-+			;;
-+		    T*) COMM="echo 0 > $TFILE"
- 			eval $COMM $REDIRECT
--		fi
-+			;;
-+		    *)  echo "Unknown command: $CMD"
-+		        exit 1
-+			;;
-+		esac
- 		RET=$?
- 		[[ $RET -ne 0 ]] && {
- 			[[ -n "$SHOWERR" ]] && {
-@@ -532,21 +551,18 @@ online_cpus()
- }
- 
- #
--# Return 1 if the list of effective cpus isn't the same as the initial list.
-+# Remove all the test cgroup directories
- #
- reset_cgroup_states()
- {
- 	echo 0 > $CGROUP2/cgroup.procs
- 	online_cpus
--	rmdir A1/A2/A3 A1/A2 A1 B1 > /dev/null 2>&1
--	pause 0.02
--	set_ctrl_state . R-
--	pause 0.01
-+	rmdir $RESET_LIST > /dev/null 2>&1
- }
- 
- dump_states()
- {
--	for DIR in . A1 A1/A2 A1/A2/A3 B1
-+	for DIR in $CGROUP_LIST
- 	do
- 		CPUS=$DIR/cpuset.cpus
- 		ECPUS=$DIR/cpuset.cpus.effective
-@@ -565,6 +581,21 @@ dump_states()
- 	done
- }
- 
-+#
-+# Set the actual cgroup directory into $CGRP_DIR
-+# $1 - cgroup name
-+#
-+set_cgroup_dir()
-+{
-+	CGRP_DIR=$1
-+	[[ $CGRP_DIR = A2  ]] && CGRP_DIR=A1/A2
-+	[[ $CGRP_DIR = A3  ]] && CGRP_DIR=A1/A2/A3
-+	[[ $CGRP_DIR = c11 ]] && CGRP_DIR=p1/c11
-+	[[ $CGRP_DIR = c12 ]] && CGRP_DIR=p1/c12
-+	[[ $CGRP_DIR = c21 ]] && CGRP_DIR=p2/c21
-+	[[ $CGRP_DIR = c22 ]] && CGRP_DIR=p2/c22
-+}
-+
- #
- # Check effective cpus
- # $1 - check string, format: <cgroup>:<cpu-list>[|<cgroup>:<cpu-list>]*
-@@ -576,7 +607,8 @@ check_effective_cpus()
- 	do
- 		set -- $(echo $CHK | sed -e "s/:/ /g")
- 		CGRP=$1
--		CPUS=$2
-+		EXPECTED_CPUS=$2
-+		ACTUAL_CPUS=
- 		if [[ $CGRP = X* ]]
- 		then
- 			CGRP=${CGRP#X}
-@@ -584,10 +616,10 @@ check_effective_cpus()
- 		else
- 			FILE=cpuset.cpus.effective
- 		fi
--		[[ $CGRP = A2 ]] && CGRP=A1/A2
--		[[ $CGRP = A3 ]] && CGRP=A1/A2/A3
--		[[ -e $CGRP/$FILE ]] || return 1
--		[[ $CPUS = $(cat $CGRP/$FILE) ]] || return 1
-+		set_cgroup_dir $CGRP
-+		[[ -e $CGRP_DIR/$FILE ]] || return 1
-+		ACTUAL_CPUS=$(cat $CGRP_DIR/$FILE)
-+		[[ $EXPECTED_CPUS = $ACTUAL_CPUS ]] || return 1
- 	done
- }
- 
-@@ -602,23 +634,21 @@ check_cgroup_states()
- 	do
- 		set -- $(echo $CHK | sed -e "s/:/ /g")
- 		CGRP=$1
--		CGRP_DIR=$CGRP
--		STATE=$2
-+		EXPECTED_STATE=$2
- 		FILE=
--		EVAL=$(expr substr $STATE 2 2)
--		[[ $CGRP = A2 ]] && CGRP_DIR=A1/A2
--		[[ $CGRP = A3 ]] && CGRP_DIR=A1/A2/A3
-+		EVAL=$(expr substr $EXPECTED_STATE 2 2)
- 
--		case $STATE in
-+		set_cgroup_dir $CGRP
-+		case $EXPECTED_STATE in
- 			P*) FILE=$CGRP_DIR/cpuset.cpus.partition
- 			    ;;
--			*)  echo "Unknown state: $STATE!"
-+			*)  echo "Unknown state: $EXPECTED_STATE!"
- 			    exit 1
- 			    ;;
- 		esac
--		VAL=$(cat $FILE)
-+		ACTUAL_STATE=$(cat $FILE)
- 
--		case "$VAL" in
-+		case "$ACTUAL_STATE" in
- 			member) VAL=0
- 				;;
- 			root)	VAL=1
-@@ -642,7 +672,7 @@ check_cgroup_states()
- 		[[ $VAL -eq 1 && $VERBOSE -gt 0 ]] && {
- 			DOMS=$(cat $CGRP_DIR/cpuset.cpus.effective)
- 			[[ -n "$DOMS" ]] &&
--				echo " [$CGRP] sched-domain: $DOMS" > $CONSOLE
-+				echo " [$CGRP_DIR] sched-domain: $DOMS" > $CONSOLE
+@@ -428,6 +428,7 @@ write_cpu_online()
+ 	CPU=${1%=*}
+ 	VAL=${1#*=}
+ 	CPUFILE=//sys/devices/system/cpu/cpu${CPU}/online
++	echo $VAL > $CPUFILE || return 1
+ 	if [[ $VAL -eq 0 ]]
+ 	then
+ 		OFFLINE_CPUS="$OFFLINE_CPUS $CPU"
+@@ -437,7 +438,6 @@ write_cpu_online()
+ 					sort | uniq -u)
  		}
- 	done
- 	return 0
-@@ -665,22 +695,22 @@ check_cgroup_states()
- #
- check_isolcpus()
- {
--	EXPECT_VAL=$1
--	ISOLCPUS=
-+	EXPECTED_ISOLCPUS=$1
-+	ISCPUS=${CGROUP2}/cpuset.cpus.isolated
-+	ISOLCPUS=$(cat $ISCPUS)
- 	LASTISOLCPU=
- 	SCHED_DOMAINS=/sys/kernel/debug/sched/domains
--	ISCPUS=${CGROUP2}/cpuset.cpus.isolated
--	if [[ $EXPECT_VAL = . ]]
-+	if [[ $EXPECTED_ISOLCPUS = . ]]
- 	then
--		EXPECT_VAL=
--		EXPECT_VAL2=
--	elif [[ $(expr $EXPECT_VAL : ".*|.*") > 0 ]]
-+		EXPECTED_ISOLCPUS=
-+		EXPECTED_SDOMAIN=
-+	elif [[ $(expr $EXPECTED_ISOLCPUS : ".*|.*") > 0 ]]
- 	then
--		set -- $(echo $EXPECT_VAL | sed -e "s/|/ /g")
--		EXPECT_VAL=$1
--		EXPECT_VAL2=$2
-+		set -- $(echo $EXPECTED_ISOLCPUS | sed -e "s/|/ /g")
-+		EXPECTED_ISOLCPUS=$2
-+		EXPECTED_SDOMAIN=$1
- 	else
--		EXPECT_VAL2=$EXPECT_VAL
-+		EXPECTED_SDOMAIN=$EXPECTED_ISOLCPUS
  	fi
- 
- 	#
-@@ -689,20 +719,21 @@ check_isolcpus()
- 	# to make appending those CPUs easier.
- 	#
- 	[[ -n "$BOOT_ISOLCPUS" ]] && {
--		EXPECT_VAL=${EXPECT_VAL:+${EXPECT_VAL},}${BOOT_ISOLCPUS}
--		EXPECT_VAL2=${EXPECT_VAL2:+${EXPECT_VAL2},}${BOOT_ISOLCPUS}
-+		EXPECTED_ISOLCPUS=${EXPECTED_ISOLCPUS:+${EXPECTED_ISOLCPUS},}${BOOT_ISOLCPUS}
-+		EXPECTED_SDOMAIN=${EXPECTED_SDOMAIN:+${EXPECTED_SDOMAIN},}${BOOT_ISOLCPUS}
- 	}
- 
- 	#
- 	# Check cpuset.cpus.isolated cpumask
- 	#
--	[[ "$EXPECT_VAL2" != "$ISOLCPUS" ]] && {
-+	[[ "$EXPECTED_ISOLCPUS" != "$ISOLCPUS" ]] && {
- 		# Take a 50ms pause and try again
- 		pause 0.05
- 		ISOLCPUS=$(cat $ISCPUS)
- 	}
--	[[ "$EXPECT_VAL2" != "$ISOLCPUS" ]] && return 1
-+	[[ "$EXPECTED_ISOLCPUS" != "$ISOLCPUS" ]] && return 1
- 	ISOLCPUS=
-+	EXPECTED_ISOLCPUS=$EXPECTED_SDOMAIN
- 
- 	#
- 	# Use the sched domain in debugfs to check isolated CPUs, if available
-@@ -736,7 +767,7 @@ check_isolcpus()
- 	done
- 	[[ "$ISOLCPUS" = *- ]] && ISOLCPUS=${ISOLCPUS}$LASTISOLCPU
- 
--	[[ "$EXPECT_VAL" = "$ISOLCPUS" ]]
-+	[[ "$EXPECTED_SDOMAIN" = "$ISOLCPUS" ]]
+-	echo $VAL > $CPUFILE
+ 	pause 0.05
  }
  
- test_fail()
-@@ -773,6 +804,63 @@ null_isolcpus_check()
- 	exit 1
- }
- 
-+#
-+# Check state transition test result
-+#  $1 - Test number
-+#  $2 - Expected effective CPU values
-+#  $3 - Expected partition states
-+#  $4 - Expected isolated CPUs
-+#
-+check_test_results()
-+{
-+	_NR=$1
-+	_ECPUS="$2"
-+	_PSTATES="$3"
-+	_ISOLCPUS="$4"
-+
-+	[[ -n "$_ECPUS" && "$_ECPUS" != . ]] && {
-+		check_effective_cpus $_ECPUS
-+		[[ $? -ne 0 ]] && test_fail $_NR "effective CPU" \
-+			 "Cgroup $CGRP: expected $EXPECTED_CPUS, got $ACTUAL_CPUS"
-+	}
-+
-+	[[ -n "$_PSTATES" && "$_PSTATES" != . ]] && {
-+		check_cgroup_states $_PSTATES
-+		[[ $? -ne 0 ]] && test_fail $_NR states \
-+			"Cgroup $CGRP: expected $EXPECTED_STATE, got $ACTUAL_STATE"
-+	}
-+
-+	# Compare the expected isolated CPUs with the actual ones,
-+	# if available
-+	[[ -n "$_ISOLCPUS" ]] && {
-+		check_isolcpus $_ISOLCPUS
-+		[[ $? -ne 0 ]] && {
-+			[[ -n "$BOOT_ISOLCPUS" ]] && _ISOLCPUS=${_ISOLCPUS},${BOOT_ISOLCPUS}
-+			test_fail $_NR "isolated CPU" \
-+				"Expect $_ISOLCPUS, get $ISOLCPUS instead"
-+		}
-+	}
-+	reset_cgroup_states
-+	#
-+	# Check to see if effective cpu list changes
-+	#
-+	_NEWLIST=$(cat $CGROUP2/cpuset.cpus.effective)
-+	RETRY=0
-+	while [[ $_NEWLIST != $CPULIST && $RETRY -lt 8 ]]
-+	do
-+		# Wait a bit longer & recheck a few times
-+		pause 0.02
-+		((RETRY++))
-+		_NEWLIST=$(cat $CGROUP2/cpuset.cpus.effective)
-+	done
-+	[[ $_NEWLIST != $CPULIST ]] && {
-+		echo "Effective cpus changed to $_NEWLIST after test $_NR!"
-+		exit 1
-+	}
-+	null_isolcpus_check
-+	[[ $VERBOSE -gt 0 ]] && echo "Test $I done."
-+}
-+
- #
- # Run cpuset state transition test
- #  $1 - test matrix name
-@@ -785,6 +873,8 @@ run_state_test()
- {
- 	TEST=$1
- 	CONTROLLER=cpuset
-+	CGROUP_LIST=". A1 A1/A2 A1/A2/A3 B1"
-+	RESET_LIST="A1/A2/A3 A1/A2 A1 B1"
- 	I=0
- 	eval CNT="\${#$TEST[@]}"
- 
-@@ -824,45 +914,7 @@ run_state_test()
- 
- 		[[ $RETVAL -ne $RESULT ]] && test_fail $I result
- 
--		[[ -n "$ECPUS" && "$ECPUS" != . ]] && {
--			check_effective_cpus $ECPUS
--			[[ $? -ne 0 ]] && test_fail $I "effective CPU"
--		}
--
--		[[ -n "$STATES" && "$STATES" != . ]] && {
--			check_cgroup_states $STATES
--			[[ $? -ne 0 ]] && test_fail $I states
--		}
--
--		# Compare the expected isolated CPUs with the actual ones,
--		# if available
--		[[ -n "$ICPUS" ]] && {
--			check_isolcpus $ICPUS
--			[[ $? -ne 0 ]] && {
--				[[ -n "$BOOT_ISOLCPUS" ]] && ICPUS=${ICPUS},${BOOT_ISOLCPUS}
--				test_fail $I "isolated CPU" \
--					"Expect $ICPUS, get $ISOLCPUS instead"
--			}
--		}
--		reset_cgroup_states
--		#
--		# Check to see if effective cpu list changes
--		#
--		NEWLIST=$(cat cpuset.cpus.effective)
--		RETRY=0
--		while [[ $NEWLIST != $CPULIST && $RETRY -lt 8 ]]
--		do
--			# Wait a bit longer & recheck a few times
--			pause 0.02
--			((RETRY++))
--			NEWLIST=$(cat cpuset.cpus.effective)
--		done
--		[[ $NEWLIST != $CPULIST ]] && {
--			echo "Effective cpus changed to $NEWLIST after test $I!"
--			exit 1
--		}
--		null_isolcpus_check
--		[[ $VERBOSE -gt 0 ]] && echo "Test $I done."
-+		check_test_results $I "$ECPUS" "$STATES" "$ICPUS"
- 		((I++))
- 	done
- 	echo "All $I tests of $TEST PASSED."
-@@ -932,6 +984,7 @@ test_isolated()
- 	echo $$ > $CGROUP2/cgroup.procs
- 	[[ -d A1 ]] && rmdir A1
- 	null_isolcpus_check
-+	pause 0.05
- }
- 
- #
-@@ -997,6 +1050,8 @@ test_inotify()
- 	else
- 		echo "Inotify test PASSED"
- 	fi
-+	echo member > cpuset.cpus.partition
-+	echo "" > cpuset.cpus
- }
- 
- trap cleanup 0 2 3 6
+@@ -505,7 +505,8 @@ set_ctrl_state()
+ 			eval $COMM $REDIRECT
+ 			;;
+ 		    O*) VAL=${CMD#?}
+-			write_cpu_online $VAL
++			COMM="write_cpu_online $VAL"
++			eval $COMM $REDIRECT
+ 			;;
+ 		    T*) COMM="echo 0 > $TFILE"
+ 			eval $COMM $REDIRECT
 -- 
 2.53.0
 
