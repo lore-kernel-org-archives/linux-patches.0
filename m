@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F0ED313522;
-	Sat, 12 Sep 2026 19:30:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40F41279DC3;
+	Sat, 12 Sep 2026 19:30:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789241416; cv=none; b=eIQIfenJE8GDLQYIoMFAMlv2kz1nZw6chEaogqqWLx/NmmOGPKrFG6Nc6ULdroGOX3Pl0wypBUYAPSbNMVrJJwApWS0T/wieFZnptjQVHP6UZa3jArOQW++L+x4u93eo9q4F3GAZXURdT1JPVMjmvuUgpIKDNe8FPD7It4sje6g=
+	t=1789241421; cv=none; b=ce/PepmMHBDuxby6R5gLdo+o//KTXyB1Qam3UYPVRYeb5d4YbQDigMOpSeVYefI8swbL4/r070d7IQdVE/oZD2JS0brnDOkicVwACqtD7HKyyEeO/Y0FgtMmyLJVxsAeA/0amEh9HW3J6g7GHa9d0hh3yevuLHoHswA7f1bqE0U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789241416; c=relaxed/simple;
-	bh=zBoizVTv/X4XhnO8rPz1wnEkEAd52iffOkp3uz1tBeQ=;
+	s=arc-20240116; t=1789241421; c=relaxed/simple;
+	bh=jluYCjzoYM9nUYrsK4AQN6j8iNPGfPlfpCYH30aZPY4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ui7FddBJ9r4S1CqAZc71a3V4iqRabFhN3VJykyWGLx/RgYvkBWrW0K6Opj9IrSTqhGd7krf/zz0bA/Rh0dX7qRmCpAuL5F/eX4eWy0Xv5gDTjMMgQ7qX2XXu67BUSCuqtkzBHbAlCbOTv654qPbybPbXTUWiXOgl9729FQDFq4U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YY1uWZ7c; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hufjxXX+SC+QSSBuKMyz1JbYllJAT0t/brOA0jJ9vi5LuPysu4fC7DCQOCak2PB8OzUloHqhLhdBEm6pZwH4OF7/13lPgAHcREjaFkZSPcmquwTgYszZRdG5isnsluSQko9YPfnEBMo7ZElTIWCnNhKxSuwfBx2OByLmMG3x82g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RHO1iOn4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YY1uWZ7c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59F171F000FF;
-	Sat, 12 Sep 2026 19:30:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RHO1iOn4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78BA21F000FF;
+	Sat, 12 Sep 2026 19:30:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789241415;
-	bh=II4pTl25OTfKOVqr43w53S+suyS9UmO5mLd2UAG0GcA=;
+	s=korg; t=1789241420;
+	bh=3W1D6iP8TVD9frDtlmItIu2Yr49ZLJTwzZaQDA4XZ1Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YY1uWZ7cjZlfjHaOURP1SsrYyy/61YasqcrRJf9RDHYRYz19tiXLxJiM8TOKyE1Tj
-	 WTKV4mhRTxicvYtS/EjSTnWqkvQ0u5hk1BCzGac5uVuw1sF364GgaDM6kixeoq2LED
-	 KOj8PE9fpIiA6qG8rapXnwM7aJd8cN8cxVaKIkZE=
+	b=RHO1iOn4nHk1tkq9MOt7q0YUchqzPrl/DTexiU4iY7a/sVCWaHhMMQQ+R2xfF8STN
+	 LzCsYJRZv4jQIBq4f+MEDBo+ZxFzn1Tuypy+gpo7J3v/trIrzbMBSs+DMfHsPqDieC
+	 kMjNbMZioMrApqZphJcigd4Jnbc+gxfvxiHRpfZQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Doruk Tan Ozturk <doruk@0sec.ai>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Subject: [PATCH 5.10 104/798] wifi: ath6kl: clamp assoc request/response lengths before subtracting IE offsets
-Date: Sat, 12 Sep 2026 08:55:32 +0200
-Message-ID: <20260912065519.341129324@linuxfoundation.org>
+	Hyunwoo Kim <imv4bel@gmail.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.10 131/798] sctp: drop a chunk if its transport was removed
+Date: Sat, 12 Sep 2026 08:55:59 +0200
+Message-ID: <20260912065519.978220207@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -50,49 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Doruk Tan Ozturk <doruk@0sec.ai>
+From: Hyunwoo Kim <imv4bel@gmail.com>
 
-commit 3bbd05723d15dd06f0560bcd94fbf9a91b5f5613 upstream.
+commit 03a9d10ecf71f54b2af8020935f2033d4a132be5 upstream.
 
-ath6kl_cfg80211_connect_event() subtracts fixed IE offsets from
-assoc_req_len (-= 4) and assoc_resp_len (-= 6), both u8, with no lower
-bound. The aggregate check recently added to ath6kl_wmi_connect_event_rx()
-bounds the declared lengths from above (their sum must fit the received
-event), but an assoc request/response shorter than its fixed offset still
-underflows here: the u8 wraps to ~250, and cfg80211_connect_result() /
-cfg80211_roamed() then treat that wrapped value as the IE length and copy
-that many bytes out of the small assoc_info buffer to user space via
-nl80211, disclosing adjacent slab memory.
+sctp_rcv() resolves the transport once per packet and leaves it in
+chunk->transport. The lookup reference, or the one sctp_add_backlog() takes
+if the socket is owned by userspace, keeps it around until the chunk has
+been processed.
 
-Clamp both lengths to their offsets before subtracting.
+An authenticated ASCONF DEL-IP can remove it in the meantime.
+sctp_assoc_rm_peer() takes the transport out of the association and calls
+sctp_transport_free(), which tags it dead and drops the reference the
+association held. There is a window on both paths: the packet can sit on
+the socket backlog, and on the direct path the lookup completes before
+bh_lock_sock().
 
-Found by 0sec (https://0sec.ai) using automated source analysis; the
-missing lower bound is evident from source. Compile-tested.
+The DATA chunk in that packet puts the removed transport back into
+asoc->peer.last_data_from. Once the packet is done that reference goes
+away and the transport is freed by RCU, so the next delayed SACK carries
+the pointer into the SACK chunk and sctp_outq_select_transport() reads the
+freed transport's state.
 
-Fixes: bdcd81707973 ("Add ath6kl cleaned up driver")
+Drop the chunk in sctp_inq_push(), next to the existing rcvr->dead check.
+Both paths reach it with the association's socket lock held. The peer
+retransmits it.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Assisted-by: 0sec:claude-opus-4-8
-Signed-off-by: Doruk Tan Ozturk <doruk@0sec.ai>
-Link: https://patch.msgid.link/20260713213251.21161-1-doruk@0sec.ai
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/aoUJHQmxL0LFIMCw@v4bel
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/ath/ath6kl/cfg80211.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ net/sctp/inqueue.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/drivers/net/wireless/ath/ath6kl/cfg80211.c
-+++ b/drivers/net/wireless/ath/ath6kl/cfg80211.c
-@@ -753,6 +753,11 @@ void ath6kl_cfg80211_connect_event(struc
- 	u8 *assoc_resp_ie = assoc_info + beacon_ie_len + assoc_req_len +
- 	    assoc_resp_ie_offset;
- 
-+	if (assoc_req_len < assoc_req_ie_offset)
-+		assoc_req_len = assoc_req_ie_offset;
-+	if (assoc_resp_len < assoc_resp_ie_offset)
-+		assoc_resp_len = assoc_resp_ie_offset;
-+
- 	assoc_req_len -= assoc_req_ie_offset;
- 	assoc_resp_len -= assoc_resp_ie_offset;
- 
+--- a/net/sctp/inqueue.c
++++ b/net/sctp/inqueue.c
+@@ -63,8 +63,11 @@ void sctp_inq_free(struct sctp_inq *queu
+  */
+ void sctp_inq_push(struct sctp_inq *q, struct sctp_chunk *chunk)
+ {
+-	/* Directly call the packet handling routine. */
+-	if (chunk->rcvr->dead) {
++	/* Directly call the packet handling routine.  Drop the chunk if the
++	 * receiver or the transport it was looked up on is gone.
++	 */
++	if (chunk->rcvr->dead ||
++	    (chunk->transport && chunk->transport->dead)) {
+ 		sctp_chunk_free(chunk);
+ 		return;
+ 	}
 
 
