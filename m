@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 073E131E822;
-	Sat, 12 Sep 2026 07:33:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBBE834252D;
+	Sat, 12 Sep 2026 07:33:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789198405; cv=none; b=MQEpSQTtq9vxKQ5jN76onWnu2Gmm4mZitPpua2+QhIEASNjgiFjVSlm17p605yYWn39EZJYCVzuckKyeak+oMKkl1IiEDFIt1v/zZ5NRhvUF2OFBHgj1ayt/lck+Muierv16Vuw8aHTWChlzgEmba/H6fdk15iX+BX5MVNb0X5M=
+	t=1789198410; cv=none; b=nqlTLOfUo85tdaO99+fpnpmMbz5+B8OnTXFTTL6pK6D8ohDY+S3JV4EUiGwiWutpQrJTRvujBFSvjV33FYUoKN6YPCTN7L3D6hbpMjmDDSuZBwpDmVsxEzvswmG2rDVmwyryC/dS9WkxDd8flqd5mVecAlASEheTA6IY4pOOIh4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789198405; c=relaxed/simple;
-	bh=z3aSmqenYACEaOzWIpR9xLLQfKEDye+/O7xWAvkJaCg=;
+	s=arc-20240116; t=1789198410; c=relaxed/simple;
+	bh=sPRO6ZqUNoZ2yxeZp7FAPvySEDWW9TZC9B9LKJnfBIM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LGGsqQIZGKo1VhDKwZF/LvYVOAUNuinsiUw/dBAfuzApr2MH4TZmlEyfMbaQ4igzmo3aWK3xaUZGRFA3r2kIFPcr5x43mHgECS8QU0GLUzYSOpFlwi6D3vFYfoe6721DaA+q3L8qU7EB28qqezhvpWYucPrGVsckn+iWGMnx6mQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1cPVbMRQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SRTJiu0tUeZLaZQGCn0VVPJgkuz7X3zqvZugTRwPAKucONm1EHK3hzx+Iwzr/w+2q8wdrpEaP/fiOORNsUr1p+q1soDOBru6iCRG6i0RZvdCo0X0qbxnTMRntMznTWlJ/SXBePHlEsaJ2t+9LKMtGpxMc7P6oInAdkkFO249VIc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WOZcTy2F; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1cPVbMRQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4F6F1F000FF;
-	Sat, 12 Sep 2026 07:33:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WOZcTy2F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA5921F000FF;
+	Sat, 12 Sep 2026 07:33:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789198403;
-	bh=rKxIQCtqK4JbDkw0Zodgd5AXbxN7/j7GHHKSbHDGgwk=;
+	s=korg; t=1789198408;
+	bh=Dpq4cC8e5z1Gegpk7ALLcpwBELPt6dA18igxXb6gEGg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1cPVbMRQ2bL2+ext1UHBSFFkVTf9qOFoYjqpbHQdixWaDVdfPN6U2vlWzU8TUvhdF
-	 g/lOJMpWmf9c7DAYvs2oHraBvhU3CnS2O4HoPxkAwe3zHuI2skeXClYMJmXiJRzL8C
-	 zvkhCPWppHBsBZUA7ir2sMtqfcYd9M1gWWB+xgGU=
+	b=WOZcTy2F5RU1a7L8Dnkv2dW3q0GK36QFYuqCU3AGvfO39lbzG0ywab4jZFsVZovgi
+	 JW4MWz5swXbcFev2jvAtp8QyRhS5mha7tTgDPVaw/tLDIwE1fWhH+duT/N+NPyZjNy
+	 DYyMGbWGTrZG6To7lQ/CSUQceTcw+1zmAD20v/Zk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Farid Zakaria <fmzakari@meta.com>,
-	Dmitry Ilvokhin <d@ilvokhin.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Tony Luck <tony.luck@intel.com>,
+	Reinette Chatre <reinette.chatre@intel.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0374/1815] perf record: Fix multiple PERF_RECORD_COMPRESSED2 records per push
-Date: Sat, 12 Sep 2026 08:35:24 +0200
-Message-ID: <20260912065657.682167163@linuxfoundation.org>
+Subject: [PATCH 7.2 0375/1815] fs/resctrl: Fix UAF from worker threads when domains are removed
+Date: Sat, 12 Sep 2026 08:35:25 +0200
+Message-ID: <20260912065657.705250731@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,224 +53,269 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Ilvokhin <d@ilvokhin.com>
+From: Reinette Chatre <reinette.chatre@intel.com>
 
-[ Upstream commit ad40a000ea598f316ddc0e81e5acc77cc3b1fae0 ]
+[ Upstream commit 2566b5cd6a275c124e8f154fef6e815f92ec8d5c ]
 
-With Zstd compression enabled ('perf record -z'), a single mmap push
-whose compressed output exceeds the maximum record size makes
-zstd_compress_stream_to_records() emit several PERF_RECORD_COMPRESSED2
-records back to back. record__pushfn() however rewrote only the first
-record's header to describe the whole blob as one record:
+The mbm_handle_overflow() and cqm_handle_limbo() workers read event counters
+and may sleep while doing so. They are scheduled via delayed_work embedded in
+struct rdt_l3_mon_domain. Architecture allocates and frees these domains from
+CPU hotplug callbacks under cpus_write_lock(), and the workers acquire
+cpus_read_lock() to keep the domain alive across their access.
 
-  event->data_size   = compressed - sizeof(struct perf_record_compressed2);
-  event->header.size = PERF_ALIGN(compressed, sizeof(u64));
-  padding            = event->header.size - compressed;
-  ...
-  record__write(rec, map, &pad, padding);
+A use-after-free can occur when a worker is blocked waiting for
+cpus_read_lock() while the hotplug core holds cpus_write_lock(): the
+architecture frees the rdt_l3_mon_domain that contains the worker's
+work_struct. When the worker unblocks, the container_of() it performs on the
+embedded work pointer dereferences freed memory.
 
-perf_event_header::size is a __u16, so once the compressed blob no
-longer fits in it the header.size assignment truncates and 'padding'
-(size_t) underflows. write() is then handed that bogus length and fails
-with EFAULT, aborting the recording:
+Drop cpus_read_lock() from the workers and instead drain pending and in-flight
+work synchronously before the architecture can free the domain.  Since
+architecture offlines the domain under cpus_write_lock() after it has been
+unlinked from the RCU list and a grace period has elapsed, no new work can be
+scheduled. The cancel only needs to wait out existing work.  Drop
+rdtgroup_mutex during CPU offline around cancel_delayed_work_sync() so that
+a worker waiting on the mutex can complete before re-pinning the work on
+a different CPU.
 
-  failed to write perf data, error: Bad address
+When offlining a CPU the architecture may iterate over resources in any order.
+For example, the MBA control domain may be offlined before or after
+a corresponding L3 monitor domain. Ensure that resctrl fs cancels the workers
+no matter what order the architecture offlines the domains.
 
-The bytes that did reach the file are mis-framed, so reading it back
-cannot be decompressed.
-
-This is easy to hit with a high event rate and a large buffer, e.g.:
-
-  perf record -z -F max -m 32M --per-thread -- perf test -w thloop 5 1
-
-The single-record fixup is wrong by construction: because header.size is
-16 bits a compressed record cannot exceed 64KB, so the compressor must
-split a push into a chain of records, and the session reader already
-consumes them as such.
-
-Frame each record where it is produced instead: make
-process_comp_header() set the per-record data_size, 8-byte-align
-header.size and zero the trailing padding, and let record__pushfn()
-write the resulting blob, as the AIO path already does. Reduce
-max_record_size by sizeof(u64) so the per-record alignment padding
-cannot push header.size past its u16 field. process_comp_header()
-returns -1 when that padding would not fit the space left in 'dst', so
-the compressor stops instead of overrunning the output buffer.
-
-There is no on-disk format change; a perf.data written by the fixed tool
-is still read by existing perf.
-
-Fixes: 208c0e168344 ("perf record: Add 8-byte aligned event type PERF_RECORD_COMPRESSED2")
-Reported-by: Farid Zakaria <fmzakari@meta.com>
-Signed-off-by: Dmitry Ilvokhin <d@ilvokhin.com>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Fixes: 24247aeeabe9 ("x86/intel_rdt/cqm: Improve limbo list processing")
+Closes: https://sashiko.dev/#/patchset/20260429184858.36423-1-tony.luck%40intel.com # [1]
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Co-developed-by: Tony Luck <tony.luck@intel.com>
+Signed-off-by: Tony Luck <tony.luck@intel.com>
+Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Link: https://patch.msgid.link/3f0e0752deb3421606dfc4600f0ab3a4ae098cd7.1783963505.git.reinette.chatre@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-record.c                   | 38 +++++------
- .../record+zstd_comp_decomp_multi_record.sh   | 63 +++++++++++++++++++
- 2 files changed, 83 insertions(+), 18 deletions(-)
- create mode 100755 tools/perf/tests/shell/record+zstd_comp_decomp_multi_record.sh
+ fs/resctrl/monitor.c  | 60 +++++++++++++++++++++++++++++++++++--------
+ fs/resctrl/rdtgroup.c | 52 +++++++++++++++++++++++++++++++++----
+ 2 files changed, 97 insertions(+), 15 deletions(-)
 
-diff --git a/tools/perf/builtin-record.c b/tools/perf/builtin-record.c
-index 294bdd4b8d004..f58d7e3c7879e 100644
---- a/tools/perf/builtin-record.c
-+++ b/tools/perf/builtin-record.c
-@@ -64,6 +64,7 @@
- #include <poll.h>
- #include <pthread.h>
- #include <unistd.h>
-+#include <string.h>
- #ifndef HAVE_GETTID
- #include <syscall.h>
- #endif
-@@ -653,27 +654,14 @@ static int record__pushfn(struct mmap *map, void *to, void *bf, size_t size)
- 	struct record *rec = to;
- 
- 	if (record__comp_enabled(rec)) {
--		struct perf_record_compressed2 *event = map->data;
--		size_t padding = 0;
--		u8 pad[8] = {0};
- 		ssize_t compressed = zstd_compress(rec->session, map, map->data,
- 						   mmap__mmap_len(map), bf, size);
- 
- 		if (compressed < 0)
- 			return (int)compressed;
- 
--		bf = event;
- 		thread->samples++;
--
--		/*
--		 * The record from `zstd_compress` is not 8 bytes aligned, which would cause asan
--		 * error. We make it aligned here.
--		 */
--		event->data_size = compressed - sizeof(struct perf_record_compressed2);
--		event->header.size = PERF_ALIGN(compressed, sizeof(u64));
--		padding = event->header.size - compressed;
--		return record__write(rec, map, bf, compressed) ||
--		       record__write(rec, map, &pad, padding);
-+		return record__write(rec, map, map->data, compressed);
- 	}
- 
- 	thread->samples++;
-@@ -1594,7 +1582,8 @@ static void record__adjust_affinity(struct record *rec, struct mmap *map)
- 
- /*
-  * Called once with data_size == 0 to start a record, then once with
-- * data_size == compressed payload size to finalize.
-+ * data_size == compressed payload size to finalize and 8-byte-pad it
-+ * (unaligned records trip ASan in the reader).
-  * Returns the bytes written, or -1 if it won't fit.
-  */
- static ssize_t process_comp_header(void *record, size_t dst_size,
-@@ -1604,8 +1593,15 @@ static ssize_t process_comp_header(void *record, size_t dst_size,
- 	size_t size = sizeof(*event);
- 
- 	if (data_size) {
--		event->header.size += data_size;
--		return 0;
-+		size_t padding;
-+
-+		event->data_size = data_size;
-+		event->header.size = PERF_ALIGN(size + data_size, sizeof(u64));
-+		padding = event->header.size - size - data_size;
-+		if (padding > dst_size)
-+			return -1;
-+		memset(record + size + data_size, 0, padding);
-+		return padding;
- 	}
- 
- 	if (size > dst_size)
-@@ -1613,6 +1609,7 @@ static ssize_t process_comp_header(void *record, size_t dst_size,
- 
- 	event->header.type = PERF_RECORD_COMPRESSED2;
- 	event->header.size = size;
-+	event->data_size = 0;
- 
- 	return size;
+diff --git a/fs/resctrl/monitor.c b/fs/resctrl/monitor.c
+index a932a1fea8182..723ba366324a8 100644
+--- a/fs/resctrl/monitor.c
++++ b/fs/resctrl/monitor.c
+@@ -628,14 +628,22 @@ void mon_event_count(void *info)
+ 		rr->err = 0;
  }
-@@ -1621,7 +1618,12 @@ static ssize_t zstd_compress(struct perf_session *session, struct mmap *map,
- 			    void *dst, size_t dst_size, void *src, size_t src_size)
- {
- 	ssize_t compressed;
--	size_t max_record_size = PERF_SAMPLE_MAX_SIZE - sizeof(struct perf_record_compressed2) - 1;
-+	/*
-+	 * Reserve space so per-record PERF_ALIGN() padding keeps header.size
-+	 * within u16.
-+	 */
-+	size_t max_record_size = PERF_SAMPLE_MAX_SIZE
-+		- sizeof(struct perf_record_compressed2) - sizeof(u64);
- 	struct zstd_data *zstd_data = &session->zstd_data;
  
- 	if (map && map->file)
-diff --git a/tools/perf/tests/shell/record+zstd_comp_decomp_multi_record.sh b/tools/perf/tests/shell/record+zstd_comp_decomp_multi_record.sh
-new file mode 100755
-index 0000000000000..c05ace8214ca3
---- /dev/null
-+++ b/tools/perf/tests/shell/record+zstd_comp_decomp_multi_record.sh
-@@ -0,0 +1,63 @@
-+#!/bin/bash
-+# Zstd perf.data compression/decompression of multi-record data
-+# SPDX-License-Identifier: GPL-2.0
+-static struct rdt_ctrl_domain *get_ctrl_domain_from_cpu(int cpu,
+-							struct rdt_resource *r)
++/*
++ * Find the software controller's ctrl domain that contains @cpu on resource @r.
++ *
++ * Only called from the mbm_over worker via update_mba_bw() where the returned
++ * domain is kept alive by cancel_delayed_work_sync() in
++ * resctrl_offline_ctrl_domain(). This drains this worker and then waits on
++ * rdtgroup_mutex held here before the architecture can free the ctrl domain.
++ *
++ * Context: Call from RCU read-side critical section.
++ */
++static struct rdt_ctrl_domain *get_sc_ctrl_domain_from_cpu(int cpu,
++							   struct rdt_resource *r)
+ {
+ 	struct rdt_ctrl_domain *d;
+ 
+-	lockdep_assert_cpus_held();
+-
+-	list_for_each_entry(d, &r->ctrl_domains, hdr.list) {
++	list_for_each_entry_rcu(d, &r->ctrl_domains, hdr.list) {
+ 		/* Find the domain that contains this CPU */
+ 		if (cpumask_test_cpu(cpu, &d->hdr.cpu_mask))
+ 			return d;
+@@ -696,7 +704,8 @@ static void update_mba_bw(struct rdtgroup *rgrp, struct rdt_l3_mon_domain *dom_m
+ 	if (WARN_ON_ONCE(!pmbm_data))
+ 		return;
+ 
+-	dom_mba = get_ctrl_domain_from_cpu(smp_processor_id(), r_mba);
++	guard(rcu)();
++	dom_mba = get_sc_ctrl_domain_from_cpu(smp_processor_id(), r_mba);
+ 	if (!dom_mba) {
+ 		pr_warn_once("Failure to get domain for MBA update\n");
+ 		return;
+@@ -799,11 +808,25 @@ void cqm_handle_limbo(struct work_struct *work)
+ 	unsigned long delay = msecs_to_jiffies(CQM_LIMBOCHECK_INTERVAL);
+ 	struct rdt_l3_mon_domain *d;
+ 
+-	cpus_read_lock();
++	/*
++	 * Safe to run without CPU hotplug lock. Work is guaranteed to be
++	 * canceled before the domain structure is removed.
++	 */
+ 	mutex_lock(&rdtgroup_mutex);
+ 
++	/*
++	 * Ensure the worker is dedicated to a CPU as intended and not
++	 * relocated by workqueue subsystem as part of CPU going offline.
++	 */
++	if (!is_percpu_thread())
++		goto out_unlock;
 +
-+perfdata=$(mktemp /tmp/__perf_test.perf.data.XXXXX)
-+recout=$(mktemp /tmp/__perf_test.zstd.rec.XXXXX)
-+injout=$(mktemp /tmp/__perf_test.zstd.inj.XXXXX)
-+perf_tool=perf
+ 	d = container_of(work, struct rdt_l3_mon_domain, cqm_limbo.work);
+ 
++	/* Domain is going offline */
++	if (cpumask_empty(&d->hdr.cpu_mask))
++		goto out_unlock;
 +
-+cleanup() {
-+	rm -f "${perfdata}" "${perfdata}".old "${perfdata}".decomp "${recout}" "${injout}"
-+}
-+trap cleanup EXIT TERM INT
+ 	__check_limbo(d, false);
+ 
+ 	if (has_busy_rmid(d)) {
+@@ -813,8 +836,8 @@ void cqm_handle_limbo(struct work_struct *work)
+ 					 delay);
+ 	}
+ 
++out_unlock:
+ 	mutex_unlock(&rdtgroup_mutex);
+-	cpus_read_unlock();
+ }
+ 
+ /**
+@@ -846,7 +869,10 @@ void mbm_handle_overflow(struct work_struct *work)
+ 	struct list_head *head;
+ 	struct rdt_resource *r;
+ 
+-	cpus_read_lock();
++	/*
++	 * Safe to run without CPU hotplug lock. Work is guaranteed to be
++	 * canceled before the domain structure is removed.
++	 */
+ 	mutex_lock(&rdtgroup_mutex);
+ 
+ 	/*
+@@ -856,9 +882,24 @@ void mbm_handle_overflow(struct work_struct *work)
+ 	if (!resctrl_mounted || !resctrl_arch_mon_capable())
+ 		goto out_unlock;
+ 
++	/*
++	 * Ensure the worker is dedicated to a CPU and not relocated by
++	 * workqueue subsystem as part of CPU going offline since reading
++	 * events depend on smp_processor_id(). After passing this check
++	 * smp_processor_id() is valid for entire duration of this worker
++	 * since it runs with rdtgroup_mutex held and the offline handler needs
++	 * rdtgroup_mutex to offline the CPU being run on here.
++	 */
++	if (!is_percpu_thread())
++		goto out_unlock;
 +
-+skip_if_no_z_record() {
-+	$perf_tool record -h 2>&1 | grep -q -- '-z, --compression-level'
-+}
+ 	r = resctrl_arch_get_resource(RDT_RESOURCE_L3);
+ 	d = container_of(work, struct rdt_l3_mon_domain, mbm_over.work);
+ 
++	/* Domain is going offline */
++	if (cpumask_empty(&d->hdr.cpu_mask))
++		goto out_unlock;
 +
-+collect_z_record() {
-+	echo "Collecting compressed record file:"
-+	[ "$(uname -m)" != s390x ] && gflag='-g'
-+	$perf_tool record -o "${perfdata}" $gflag -z -F max -m 32M --per-thread -- \
-+		$perf_tool test -w thloop 5 1 \
-+		>/dev/null 2>"${recout}"
-+}
+ 	list_for_each_entry(prgrp, &rdt_all_groups, rdtgroup_list) {
+ 		mbm_update(r, d, prgrp);
+ 
+@@ -880,7 +921,6 @@ void mbm_handle_overflow(struct work_struct *work)
+ 
+ out_unlock:
+ 	mutex_unlock(&rdtgroup_mutex);
+-	cpus_read_unlock();
+ }
+ 
+ /**
+diff --git a/fs/resctrl/rdtgroup.c b/fs/resctrl/rdtgroup.c
+index ad280dca301e9..11c88d593f1ef 100644
+--- a/fs/resctrl/rdtgroup.c
++++ b/fs/resctrl/rdtgroup.c
+@@ -4342,6 +4342,29 @@ static void domain_destroy_l3_mon_state(struct rdt_l3_mon_domain *d)
+ 
+ void resctrl_offline_ctrl_domain(struct rdt_resource *r, struct rdt_ctrl_domain *d)
+ {
++	/*
++	 * mbm_handle_overflow() may dereference this ctrl domain via
++	 * update_mba_bw()->get_sc_ctrl_domain_from_cpu(). The architecture has
++	 * unlinked the domain from the RCU list and waited a grace period, so
++	 * no new worker iteration can find it; drain any worker that already
++	 * holds a pointer to it before the architecture frees the domain.
++	 *
++	 * Software controller is enabled/disabled on mount/unmount with
++	 * cpus_read_lock() held. Running here with cpus_write_lock() so
++	 * there are no concurrent changes to software controller status.
++	 */
++	if (r->rid == RDT_RESOURCE_MBA && is_mba_sc(r)) {
++		struct rdt_resource *l3 = resctrl_arch_get_resource(RDT_RESOURCE_L3);
++		struct rdt_l3_mon_domain *mon_d;
 +
-+check_record() {
-+	echo "Checking record did not fail to write data:"
-+	if grep -q "failed to write perf data" "${recout}"; then
-+		cat "${recout}"
-+		return 1
-+	fi
-+}
++		list_for_each_entry_rcu(mon_d, &l3->mon_domains, hdr.list, lockdep_is_cpus_held()) {
++			if (mon_d->hdr.id == d->hdr.id) {
++				cancel_delayed_work_sync(&mon_d->mbm_over);
++				break;
++			}
++		}
++	}
 +
-+check_decompress() {
-+	echo "Checking compressed file decompresses cleanly:"
-+	if ! $perf_tool inject -i "${perfdata}" -o "${perfdata}".decomp 2>"${injout}"; then
-+		cat "${injout}"
-+		return 1
-+	fi
-+	if grep -Eqi "decompress|corrupt|failed to process type" "${injout}"; then
-+		cat "${injout}"
-+		return 1
-+	fi
-+}
+ 	mutex_lock(&rdtgroup_mutex);
+ 
+ 	if (supports_mba_mbps() && r->rid == RDT_RESOURCE_MBA)
+@@ -4354,6 +4377,24 @@ void resctrl_offline_mon_domain(struct rdt_resource *r, struct rdt_domain_hdr *h
+ {
+ 	struct rdt_l3_mon_domain *d;
+ 
++	/*
++	 * Called by architecture under CPU hotplug lock as it prepares to remove
++	 * the domain which is guaranteed to be accessible here.
++	 * The domain has been unlinked from the RCU list and a grace period
++	 * has elapsed, so no new worker can be scheduled. Drain any worker that
++	 * is in flight or pending before letting architecture proceed to free
++	 * the domain that has the workers' struct delayed_work embedded.
++	 * Do so before taking rdtgroup_mutex since the workers also acquire it.
++	 */
++	if (r->rid == RDT_RESOURCE_L3 &&
++	    domain_header_is_valid(hdr, RESCTRL_MON_DOMAIN, RDT_RESOURCE_L3)) {
++		d = container_of(hdr, struct rdt_l3_mon_domain, hdr);
++		if (resctrl_is_mbm_enabled())
++			cancel_delayed_work_sync(&d->mbm_over);
++		if (resctrl_is_mon_event_enabled(QOS_L3_OCCUP_EVENT_ID))
++			cancel_delayed_work_sync(&d->cqm_limbo);
++	}
 +
-+skip_if_no_z_record || exit 2
-+collect_z_record
-+check_record || exit 1
-+
-+# Need >1 record, else the multi-record path wasn't exercised.
-+# Skip rather than pass/fail spuriously.
-+nr=$($perf_tool report -i "${perfdata}" --stats 2>/dev/null |
-+	awk '/COMPRESSED2 events:/ { print $3 }')
-+if [ -z "${nr}" ] || [ "${nr}" -lt 2 ]; then
-+	echo "less than two compressed records (${nr:-0}), skipping"
-+	exit 2
-+fi
-+echo "Produced ${nr} compressed records"
-+
-+check_decompress
-+err=$?
-+exit $err
+ 	mutex_lock(&rdtgroup_mutex);
+ 
+ 	/*
+@@ -4370,8 +4411,6 @@ void resctrl_offline_mon_domain(struct rdt_resource *r, struct rdt_domain_hdr *h
+ 		goto out_unlock;
+ 
+ 	d = container_of(hdr, struct rdt_l3_mon_domain, hdr);
+-	if (resctrl_is_mbm_enabled())
+-		cancel_delayed_work(&d->mbm_over);
+ 	if (resctrl_is_mon_event_enabled(QOS_L3_OCCUP_EVENT_ID) && has_busy_rmid(d)) {
+ 		/*
+ 		 * When a package is going down, forcefully
+@@ -4382,7 +4421,6 @@ void resctrl_offline_mon_domain(struct rdt_resource *r, struct rdt_domain_hdr *h
+ 		 * package never comes back.
+ 		 */
+ 		__check_limbo(d, true);
+-		cancel_delayed_work(&d->cqm_limbo);
+ 	}
+ 
+ 	domain_destroy_l3_mon_state(d);
+@@ -4563,12 +4601,16 @@ void resctrl_offline_cpu(unsigned int cpu)
+ 	d = get_mon_domain_from_cpu(cpu, l3);
+ 	if (d) {
+ 		if (resctrl_is_mbm_enabled() && cpu == d->mbm_work_cpu) {
+-			cancel_delayed_work(&d->mbm_over);
++			mutex_unlock(&rdtgroup_mutex);
++			cancel_delayed_work_sync(&d->mbm_over);
++			mutex_lock(&rdtgroup_mutex);
+ 			mbm_setup_overflow_handler(d, 0, cpu);
+ 		}
+ 		if (resctrl_is_mon_event_enabled(QOS_L3_OCCUP_EVENT_ID) &&
+ 		    cpu == d->cqm_work_cpu && has_busy_rmid(d)) {
+-			cancel_delayed_work(&d->cqm_limbo);
++			mutex_unlock(&rdtgroup_mutex);
++			cancel_delayed_work_sync(&d->cqm_limbo);
++			mutex_lock(&rdtgroup_mutex);
+ 			cqm_setup_limbo_handler(d, 0, cpu);
+ 		}
+ 	}
 -- 
 2.53.0
 
