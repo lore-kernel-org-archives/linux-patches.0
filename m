@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2E5D412276;
-	Sat, 12 Sep 2026 11:35:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 116AA479891;
+	Sat, 12 Sep 2026 11:35:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789212908; cv=none; b=osmT7p/ysrQ4zn5yjcAK1sMP2kBGluiHezXqPcEgBVjaQoFXz1Wfx7Om8w6nxjEAV82/1iz/lzOeWy3f3e6DVyL6GMT2n9VtTNyfZLRuZmCAUPHu+vTPKhqpe4lT5U0Ec0UmOmKU/ukHYZJFYidcnmRETQ06458R2KmnhbbSdto=
+	t=1789212918; cv=none; b=BiDzWihwV1nWC69WAf+R5d0TR5/CbnQ2WC3j9F3P+YbRtcHd/fyHBf1fTu15zStNbhh/Sr+LI67busBxbEqdaJNCEhlqFjPfLMx8tRQNDkFXxskcRBm5+pwcSlcQCHOjdl+M7IDKjDEsu97sG3NlbvmnNq1ky9yR9W3rZp55SMM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789212908; c=relaxed/simple;
-	bh=DdlKP9wBitxfwVOnnhP+uP4hOSN9LNuhchjA3gZTVEI=;
+	s=arc-20240116; t=1789212918; c=relaxed/simple;
+	bh=z5zoOwchvXCdOhaTJqmWkuCm+BvrbeXZoWJ3j13RM3U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D3mh8UD6vZ0REftLPcAEDPm2Ukyt546YQUIdQZ4tXvwmCSnhMQIM7yN8PqW0PrqZhPwLfncmjnJsKZgcMoR973DZzswz3ONJTxK//SRUz+66LDJzxTPYqNsuZVRpaJsC+CFgCYTt1Vvwo7XjQL/w5uhlgOEVl7jw3eQU9GFiY9E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pi618gyr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YfYjqX2+N26tkVkr8qm3pQZ5JkNoCyPP3sUj3fa41nXLiuTIz+n7d/GYww9X/d/y2jblY8gX2mSGw/vBpx5FE+2U1aWZgees9p82+an2aYy5VJEu3nmk53qKweV1hjUnELivs/mDbHfnHdyAlW6Ai0eORoyyt1WlYvcDj5WNjbs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=du31Mxpj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pi618gyr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EA8F1F0089C;
-	Sat, 12 Sep 2026 11:35:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="du31Mxpj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07A4D1F000FF;
+	Sat, 12 Sep 2026 11:35:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789212906;
-	bh=w2YLQPq4YwYBoeWlCDakGMCsT7BhA1xC5VqhJJuOlMo=;
+	s=korg; t=1789212911;
+	bh=ybSZC73nJS45ya75nfEjojWGkEtuLRanAAGgL3GUV6o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Pi618gyrgOhIX+NjwNHg9gZp8zRbZqsueIdQ3pyI/FpywGtfjWB9Givoq0LYcmBlV
-	 +D7o0X/JDX7JQY2IZgx++ZzcMaEmKfDPUm8/i/hLD+uDWMnKQmXwTuYKBAqaj87JHL
-	 P5WGR6WjJPalaWS1/7Fgy5ZCCyYO31wpFhmParMA=
+	b=du31MxpjthOBf8YmhbvAiea7oc4Ide7lCkHrv7hv5puUosgndFa0mZQjR4EZdrJPd
+	 m+92Fmzz2gDMWTeBWlBW67kKjbN9latdTo27EG75sfEh7uFN4HcyjzySpu3Uq2NlOl
+	 ehns311b9U681NDY7qTf7tlFDXxQSzDZS86vthbc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sun Jian <sun.jian.kdev@gmail.com>,
-	Jan Kara <jack@suse.cz>,
-	Youngjae Kwon <yjkwon0026@snu.ac.kr>,
+	Koichiro Den <den@valinux.co.jp>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0014/1376] fsnotify: inotify: pass mark connector to fsnotify_recalc_mask()
-Date: Sat, 12 Sep 2026 08:40:40 +0200
-Message-ID: <20260912065607.867316079@linuxfoundation.org>
+Subject: [PATCH 6.12 0015/1376] net: ntb_netdev: Fix TX busy and drop handling
+Date: Sat, 12 Sep 2026 08:40:41 +0200
+Message-ID: <20260912065607.888734949@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -52,37 +52,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sun Jian <sun.jian.kdev@gmail.com>
+From: Koichiro Den <den@valinux.co.jp>
 
-[ Upstream commit 4520b96b8136ba2465a3f4dc5c3fb8bdf3d92e4e ]
+[ Upstream commit 8aaa47351db0f93a5c5297fbafdfa8bc75e8ae49 ]
 
-fsnotify_recalc_mask() expects a plain struct fsnotify_mark_connector *,
-but inode->i_fsnotify_marks is an __rcu pointer.  Use fsn_mark->connector
-instead to avoid sparse "different address spaces" warnings.
+Currently, ntb_netdev returns NETDEV_TX_BUSY for every enqueue error. It
+also increments the drop and error counters while leaving the skb owned
+by the qdisc, and may return BUSY with the subqueue still awake.
+Retrying a permanent error cannot succeed either.
 
-Signed-off-by: Sun Jian <sun.jian.kdev@gmail.com>
-Link: https://patch.msgid.link/20260214051217.1381363-1-sun.jian.kdev@gmail.com
-Signed-off-by: Jan Kara <jack@suse.cz>
-(cherry picked from commit 4520b96b8136ba2465a3f4dc5c3fb8bdf3d92e4e)
-Signed-off-by: Youngjae Kwon <yjkwon0026@snu.ac.kr>
+The unconditional BUSY return and premature accounting date back to the
+initial driver. The error-path queue stop was later removed without
+changing that return value. The current flow-control code includes a
+resource check, but ntb_netdev does not honor its result before enqueue.
+
+Honor the resource check before enqueue. For -EAGAIN and -EBUSY, stop
+the subqueue, arm the existing reaper timer, and return BUSY without
+touching the skb. For other errors, free the skb, increment tx_dropped,
+and return NETDEV_TX_OK.
+
+Fixes: 548c237c0a99 ("net: Add support for NTB virtual ethernet device")
+Fixes: d723485cb4ca ("ntb_netdev: remove tx timeout")
+Fixes: e74bfeedad08 ("NTB: Add flow control to the ntb_netdev")
+Cc: stable@vger.kernel.org
+Signed-off-by: Koichiro Den <den@valinux.co.jp>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Link: https://patch.msgid.link/20260817053519.4135287-3-den@valinux.co.jp
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[den: adapt to the single-queue implementation, as 6.12.y lacks commit:
+ ee970634c777 ("net: ntb_netdev: Introduce per-queue context")]
+Stable-dep-of: 873ce713fef5 ("NTB: ntb_transport: Fail TX enqueue when the QP link is down")
+Stable-dep-of: a4f2387db6f1 ("NTB: ntb_transport: Reject oversized TX buffers")
+Signed-off-by: Koichiro Den <den@valinux.co.jp>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/notify/inotify/inotify_user.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ntb_netdev.c | 27 +++++++++++++++++++--------
+ 1 file changed, 19 insertions(+), 8 deletions(-)
 
-diff --git a/fs/notify/inotify/inotify_user.c b/fs/notify/inotify/inotify_user.c
-index e5ccd5572beb6..024be6cee849f 100644
---- a/fs/notify/inotify/inotify_user.c
-+++ b/fs/notify/inotify/inotify_user.c
-@@ -562,7 +562,7 @@ static int inotify_update_existing_watch(struct fsnotify_group *group,
- 	fsn_mark->flags |= inotify_arg_to_flags(arg);
- 	spin_unlock(&fsn_mark->lock);
+diff --git a/drivers/net/ntb_netdev.c b/drivers/net/ntb_netdev.c
+index ec5c6be874469..bf11812438aae 100644
+--- a/drivers/net/ntb_netdev.c
++++ b/drivers/net/ntb_netdev.c
+@@ -164,8 +164,10 @@ static int __ntb_netdev_maybe_stop_tx(struct net_device *netdev,
+ static int ntb_netdev_maybe_stop_tx(struct net_device *ndev,
+ 				    struct ntb_transport_qp *qp, int size)
+ {
+-	if (netif_queue_stopped(ndev) ||
+-	    (ntb_transport_tx_free_entry(qp) >= size))
++	if (netif_queue_stopped(ndev))
++		return -EBUSY;
++
++	if (ntb_transport_tx_free_entry(qp) >= size)
+ 		return 0;
  
--	fsnotify_recalc_mask(inode->i_fsnotify_marks);
-+	fsnotify_recalc_mask(fsn_mark->connector);
+ 	return __ntb_netdev_maybe_stop_tx(ndev, qp, size);
+@@ -208,21 +210,30 @@ static netdev_tx_t ntb_netdev_start_xmit(struct sk_buff *skb,
+ 	struct ntb_netdev *dev = netdev_priv(ndev);
+ 	int rc;
  
- 	/* return the wd */
- 	ret = i_mark->wd;
+-	ntb_netdev_maybe_stop_tx(ndev, dev->qp, tx_stop);
++	if (unlikely(ntb_netdev_maybe_stop_tx(ndev, dev->qp, tx_stop)))
++		return NETDEV_TX_BUSY;
+ 
+ 	rc = ntb_transport_tx_enqueue(dev->qp, skb, skb->data, skb->len);
+-	if (rc)
+-		goto err;
++	if (rc) {
++		if (rc == -EAGAIN || rc == -EBUSY) {
++			netif_stop_queue(ndev);
++			mod_timer(&dev->tx_timer,
++				  jiffies + usecs_to_jiffies(tx_time));
++			return NETDEV_TX_BUSY;
++		}
++
++		goto drop;
++	}
+ 
+ 	/* check for next submit */
+ 	ntb_netdev_maybe_stop_tx(ndev, dev->qp, tx_stop);
+ 
+ 	return NETDEV_TX_OK;
+ 
+-err:
++drop:
++	dev_kfree_skb_any(skb);
+ 	ndev->stats.tx_dropped++;
+-	ndev->stats.tx_errors++;
+-	return NETDEV_TX_BUSY;
++	return NETDEV_TX_OK;
+ }
+ 
+ static void ntb_netdev_tx_timer(struct timer_list *t)
 -- 
 2.53.0
 
