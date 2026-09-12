@@ -1,43 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0EF7348C75;
-	Sat, 12 Sep 2026 15:41:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD903356744;
+	Sat, 12 Sep 2026 15:41:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789227683; cv=none; b=tGfq2s0LWBGpzA8cbR0THdirxrhsI/rlZdu8gQZGp+23rK8gWVC9XvXkiMiwlQDdm5Lu6CIon/FxDSrLNkIwMB2JLReWrSbbvXDC7n8deU7ZChHT0inAnadHEfzXXrRRM5/13ds64oNPrmYdfGYQDCXeDJE8uVWnkqjqt3WAZQY=
+	t=1789227688; cv=none; b=d8t3l86yp/g0s2MCodHikQwhtapRtedKpX3OebGm1RjfzR1Kx7ExJ8Sk8pDDTb1s+Pp0CB4l9C2PfkDpOh6dQGPJF7C/0ot8oUMmeb692Ul0gJzKsN2u1tTggz+aiL8OxWupG7UOBIGek2DMpTr+Iq4S9P4F3tBLomhsDbCDf7Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789227683; c=relaxed/simple;
-	bh=XgJ2LrDFZubwk38dzK9/2rP/+AM8KwWnUKiq2mqYv7Y=;
+	s=arc-20240116; t=1789227688; c=relaxed/simple;
+	bh=NXM/XwuvhqpdW83pGeNhoPT/H6FhJfV5emAaAtVtNeQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P8PwHarLGpFtxPgD12VHgVG9nyJ7mFv1Fvsmzpq+RTilgREjdbASUGN4zsUIJgpW4DDZPFRgeruulc4gZLSg1iregkqvhA4SSOO7V4oL+Ex7DxGEi3CSOGo7z51USyqqfxkdm7+zodGRwACiY98RC/rRkYjB+fZ3pHj/gXMKdlw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pDcSmbJe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QGHHo9h/qaPBzRuUlxXcqK42E2mYijlfPG64xqT76VFBF6iTabEQW2V4ww7LSowQtvySZy2ICoqXTGcH83MIN47aovdYwSyxmGAOkN08ApL504JQZHA5/slEGHE44vk7vEsi4DyfWv1n2PZhYbqjmCKlUm/2VFZ292SjlkT4jug=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=On6QE2uI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pDcSmbJe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0C591F000FF;
-	Sat, 12 Sep 2026 15:41:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="On6QE2uI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F6D61F000FF;
+	Sat, 12 Sep 2026 15:41:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789227681;
-	bh=fkfv4NYDqUacioxrOtTReOckrwf+EVL9cgtcNz6tPyI=;
+	s=korg; t=1789227686;
+	bh=G5Vj6r+fSs7QOLFuTNhO4ih6xPlh8wl2zl8j91TgE4c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pDcSmbJe78O+AaOg1+OxuQDihV9+sx6iBDW5KlUwcY9JakTQpF3FPSebvy2M07UNC
-	 THhAF3VdXgJR50tIW+W85jucOkPbwyO9ZxVEwcJpQxCt0n6HRveYYwAx2b/JWCI0dT
-	 w3go3VDRbNRx1sYZXvLkSsOQXoLqtArvkrStaolQ=
+	b=On6QE2uIEIjNC5dzPBi4LS0Ks6xgzC+86yDKaaxf0hpaG0+DMiGORi/aMt8bBT1h0
+	 pVV9KK+pTxl1i4e3hRdhYQKMpmgxv5XdVHiv/mmNhMkcrQfbST+QFnRW28MgJ8ory2
+	 U0VTVCg/Ucl6fPP+AF30QhQLZ0xhPDmXJzvZVsog=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Long Li <longli@microsoft.com>,
-	Thomas Gleixner <tglx@kernel.org>,
-	Aditya Garg <gargaditya@linux.microsoft.com>,
-	Shradha Gupta <shradhagupta@linux.microsoft.com>,
-	Naman Jain <namjain@linux.microsoft.com>,
-	Michael Kelley <mhklinux@outlook.com>,
-	Wei Liu <wei.liu@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0230/1191] PCI: hv: Set irq_retrigger callback for the Hyper-V PCI MSI irqchip
-Date: Sat, 12 Sep 2026 08:49:18 +0200
-Message-ID: <20260912065553.375773628@linuxfoundation.org>
+	Fan Wu <fanwu01@zju.edu.cn>,
+	Ulf Hansson <ulfh@kernel.org>
+Subject: [PATCH 6.1 0195/1191] mmc: via-sdmmc: stop card-detect handling on probe failure
+Date: Sat, 12 Sep 2026 08:48:43 +0200
+Message-ID: <20260912065552.594381514@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -56,52 +50,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Naman Jain <namjain@linux.microsoft.com>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-[ Upstream commit 86bdd16e8f390d51bae9e77a4bc4164ca2f580fe ]
+commit 088eaa92fcebaa6b957ccf9635afdf39643a577d upstream.
 
-The Hyper-V vPCI MSI irqchip never installs an irq_retrigger() callback.
+request_irq() registers the SD card-detect interrupt and the probe enables
+it before mmc_add_host() runs. If mmc_add_host() fails, the error path only
+unmaps the registers and returns: the interrupt stays registered, so the
+handler keeps running against the host once it is freed. via_sdc_isr()
+dereferences sdhost and its MMIO base and schedules carddet_work, which
+via_sdc_card_detect() also runs against freed memory through its
+container_of() dereference.
 
-On CPU hot-unplug fixup_irqs() migrates the interrupts which are affine to
-the outgoing CPU to a new target. If an interrupt still has its pending bit
-set in the outgoing CPU's IRR at that point, fixup_irqs() resends it on the
-new target through the irqchip's irq_retrigger() callback. As the Hyper-V
-PCI/MSI chip does not provide that callback, the pending interrupt is
-silently dropped, which can result in lost interrupts, stalls and "No irq
-handler for vector" messages during CPU hotplug.
+Add a probe-error path that disables and frees the interrupt and cancels
+carddet_work before unmapping. carddet_work can re-enable the device
+interrupt via via_reset_pcictrl(), which restores PCIINTCTRL, so mask it
+again after cancelling the work.
 
-Install irq_chip_retrigger_hierarchy() as the irq_retrigger() callback for
-the Hyper-V PCI/MSI irqchip, so that a pending interrupt is resent on its
-new target CPU via the parent x86 vector domain.
+This issue was found by an in-house static analysis tool and confirmed by
+manual code review.
 
-Fixes: 4daace0d8ce85 ("PCI: hv: Add paravirtual PCI front-end for Microsoft Hyper-V VMs")
+Fixes: e4e46fb61e3b ("mmc: via-sdmmc: fix return value check of mmc_add_host()")
 Cc: stable@vger.kernel.org
-Suggested-by: Long Li <longli@microsoft.com>
-Suggested-by: Thomas Gleixner <tglx@kernel.org>
-Reviewed-by: Aditya Garg <gargaditya@linux.microsoft.com>
-Reviewed-by: Shradha Gupta <shradhagupta@linux.microsoft.com>
-Signed-off-by: Naman Jain <namjain@linux.microsoft.com>
-Reviewed-by: Michael Kelley <mhklinux@outlook.com>
-Signed-off-by: Wei Liu <wei.liu@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Assisted-by: Codex:gpt-5.6
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Signed-off-by: Ulf Hansson <ulfh@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/pci-hyperv.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/mmc/host/via-sdmmc.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pci/controller/pci-hyperv.c b/drivers/pci/controller/pci-hyperv.c
-index 58430ca37bbdf..4ff94e93a538f 100644
---- a/drivers/pci/controller/pci-hyperv.c
-+++ b/drivers/pci/controller/pci-hyperv.c
-@@ -1978,6 +1978,7 @@ static struct irq_chip hv_msi_irq_chip = {
- 	.name			= "Hyper-V PCIe MSI",
- 	.irq_compose_msi_msg	= hv_compose_msi_msg,
- 	.irq_set_affinity	= irq_chip_set_affinity_parent,
-+	.irq_retrigger		= irq_chip_retrigger_hierarchy,
- #ifdef CONFIG_X86
- 	.irq_ack		= irq_chip_ack_parent,
- #elif defined(CONFIG_ARM64)
--- 
-2.53.0
-
+--- a/drivers/mmc/host/via-sdmmc.c
++++ b/drivers/mmc/host/via-sdmmc.c
+@@ -1153,10 +1153,16 @@ static int via_sd_probe(struct pci_dev *
+ 
+ 	ret = mmc_add_host(mmc);
+ 	if (ret)
+-		goto unmap;
++		goto free_irq;
+ 
+ 	return 0;
+ 
++free_irq:
++	writeb(0x0, sdhost->pcictrl_mmiobase + VIA_CRDR_PCIINTCTRL);
++	free_irq(pcidev->irq, sdhost);
++	cancel_work_sync(&sdhost->carddet_work);
++	/* carddet_work may re-enable the interrupt via via_reset_pcictrl(). */
++	writeb(0x0, sdhost->pcictrl_mmiobase + VIA_CRDR_PCIINTCTRL);
+ unmap:
+ 	iounmap(sdhost->mmiobase);
+ free_mmc_host:
 
 
