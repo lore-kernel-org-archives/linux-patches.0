@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F64334752E;
-	Sat, 12 Sep 2026 07:58:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18CEA27AC31;
+	Sat, 12 Sep 2026 07:58:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789199932; cv=none; b=SKdork+kQNT1ejVDm2bQBlg1G4Vfay3289gXVKRfBeZJH//ahDhcwuNv54BmcaBiwdHZPyMsvOXIchiEdekHd6T+rRSu8oekdzRwWs1my8Ildm37laCdwfjCdL3Gc/eLkM5A63jkMLJ3g9pPlGBLJnP26Yjz/qBN+4JyRedBzZg=
+	t=1789199937; cv=none; b=cAnQ9oKIIZlD6BX0ihR5anfNP/OX6R44izquzQqr6jdxMg2EBhhnYKJ52y956U8/VBSaRh7Iq+WiKjzaCZ4nTfYGdaPOjl4r7zne7x990BVOOs9jY8lZqeucKTU5SN36eNHWvAiSunu0azDX/C0Da+XjbUynuADLuHnlmehN4oU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789199932; c=relaxed/simple;
-	bh=zyU7ERbtlO8SP9OT0wSgP85vCok6nkRpyaPkdAv08gU=;
+	s=arc-20240116; t=1789199937; c=relaxed/simple;
+	bh=evbI0DTWq5FoA69WKaFgHp+yr5Ojdeknm/mEFXDhiDY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A47iAuEbDftOsxLIPVfVohNzikaMAGFh2oI95QFzPi1jd1rlNgfkcXeGA7H8ezlv+E9xE+vH+6mKHRJz8FKkURQwZltDfzWxs9o3IFGMVmek3U6vwQyThT4cYk6QhS1nlC6+8/Y5E99YWVZQuSQp5nXc+42PvoUzcwXU0mPVfMk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pfeVXCl5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WlAFBiah/YhTljdil7SFuN5jOUJLouGzMS12RTJyDNcvR21VyMDdGiz2Br/L0BKaeioLIckpkUXUhJcFVdiCCIMEa8i+Pw1FLvSCW/bIfqHFXLdj8g7MGlmkTh/H9CRl5tGugm0Ck5UBPmZUqieycWKcXWDgPLOD7k6AjGGOHh8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RGAej7GI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pfeVXCl5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3FC51F000FF;
-	Sat, 12 Sep 2026 07:58:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RGAej7GI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B95D41F000FF;
+	Sat, 12 Sep 2026 07:58:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789199931;
-	bh=4lDkrvHp32Miu4ZhWh3tUfF/ctntF+cKmsrN9X3acvY=;
+	s=korg; t=1789199935;
+	bh=XB0WhqJc5ntvl3LXDt12d3MWJ+DSTKCx6SW678iFr5U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pfeVXCl5pYxvczHaHUFVc3R2DwBRDMnoe6fMxewB3/ZwJuKcDR1A7rG4MsarykW+d
-	 BS1SRSRul1mL3y7NkXlsSYYNJ5OuYnBVdI63OJsYm6AbS10mLSxKpTjwtuhCNvW54f
-	 9+a0urn3TYmeuKgwtkAncRRwg/mzok1GOV8kjJFM=
+	b=RGAej7GIMMFzLN3WPEPTsFRP1zLWm7kUDvCk24dows/AfsjGKHnR4UPGqj8spZ9Po
+	 J23ffB5JWxCPIlyvhlgXhw2F0wWxR+UGtHMaH+A/SRZGlqfCgdSLA8PglYqb6/cfI7
+	 d2ZQcZ8m8gM9ztHuTzX5TlSN/jDRqfwgcD/Epi5k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damon Ding <damon.ding@rock-chips.com>,
+	Fabio Estevam <festevam@gmail.com>,
 	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0643/1815] arm64: dts: rockchip: Add missing hclk for RK3588 eDP1
-Date: Sat, 12 Sep 2026 08:39:53 +0200
-Message-ID: <20260912065703.975164549@linuxfoundation.org>
+Subject: [PATCH 7.2 0644/1815] arm64: dts: rockchip: Fix Gru WLAN sideband interrupt
+Date: Sat, 12 Sep 2026 08:39:54 +0200
+Message-ID: <20260912065704.000086045@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,41 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Damon Ding <damon.ding@rock-chips.com>
+From: Fabio Estevam <festevam@gmail.com>
 
-[ Upstream commit 09820811c549ee2c408defe36b210b13c7a85fcf ]
+[ Upstream commit a761818d9ee11183df0aefd16bf9fe46cc1c4c6d ]
 
-Add the required HCLK_VO1 bus clock to RK3588 eDP1 node with
-corresponding clock-name "hclk". This clock is necessary for
-the eDP controller to access video output GRF and work properly.
+The Marvell WLAN host wake interrupt is wired to GPIO0 8 and is not
+one of the PCI INTx interrupts. The PCI device schema therefore
+interprets the two-cell GPIO interrupt specifier as an invalid PCI
+interrupt and reports dtbs_check warnings:
 
-Previously the clock was enabled implicitly via GRF phandle
-reference. Add it explicitly now to align with updated binding.
+pcie@0,0: wifi@0,0:interrupts:0:0: 8 is not one of [1, 2, 3, 4]
+pcie@0,0: wifi@0,0:interrupts:0: [8, 8] is too long
 
-Fixes: a481bb0b1ad9 ("arm64: dts: rockchip: Add eDP1 dt node for rk3588")
-Signed-off-by: Damon Ding <damon.ding@rock-chips.com>
-Link: https://patch.msgid.link/20260605022305.3058853-3-damon.ding@rock-chips.com
+Describe the sideband interrupt with interrupts-extended, which
+explicitly carries the interrupt controller and removes the ambiguity.
+
+Fixes: 48f4d9796d99 ("arm64: dts: rockchip: add Gru/Kevin DTS")
+Signed-off-by: Fabio Estevam <festevam@gmail.com>
+Link: https://patch.msgid.link/20260721133445.44283-1-festevam@gmail.com
 Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3588-extra.dtsi | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/rockchip/rk3399-gru-chromebook.dtsi | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3588-extra.dtsi b/arch/arm64/boot/dts/rockchip/rk3588-extra.dtsi
-index a2640014ee042..b251bb129cdbf 100644
---- a/arch/arm64/boot/dts/rockchip/rk3588-extra.dtsi
-+++ b/arch/arm64/boot/dts/rockchip/rk3588-extra.dtsi
-@@ -285,8 +285,8 @@ hdmi1_out: port@1 {
- 	edp1: edp@fded0000 {
- 		compatible = "rockchip,rk3588-edp";
- 		reg = <0x0 0xfded0000 0x0 0x1000>;
--		clocks = <&cru CLK_EDP1_24M>, <&cru PCLK_EDP1>;
--		clock-names = "dp", "pclk";
-+		clocks = <&cru CLK_EDP1_24M>, <&cru PCLK_EDP1>, <&cru HCLK_VO1>;
-+		clock-names = "dp", "pclk", "hclk";
- 		interrupts = <GIC_SPI 164 IRQ_TYPE_LEVEL_HIGH 0>;
- 		phys = <&hdptxphy1>;
- 		phy-names = "dp";
+diff --git a/arch/arm64/boot/dts/rockchip/rk3399-gru-chromebook.dtsi b/arch/arm64/boot/dts/rockchip/rk3399-gru-chromebook.dtsi
+index 3f3cb0eb58096..5435fbc270954 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3399-gru-chromebook.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3399-gru-chromebook.dtsi
+@@ -505,8 +505,7 @@ &pci_rootport {
+ 	mvl_wifi: wifi@0,0 {
+ 		compatible = "pci1b4b,2b42";
+ 		reg = <0x0000 0x0 0x0 0x0 0x0>;
+-		interrupt-parent = <&gpio0>;
+-		interrupts = <8 IRQ_TYPE_LEVEL_LOW>;
++		interrupts-extended = <&gpio0 8 IRQ_TYPE_LEVEL_LOW>;
+ 		pinctrl-names = "default";
+ 		pinctrl-0 = <&wlan_host_wake_l>;
+ 		wakeup-source;
 -- 
 2.53.0
 
