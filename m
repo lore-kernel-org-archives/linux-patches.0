@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47B91353A75;
-	Sat, 12 Sep 2026 11:31:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 461691A9F83;
+	Sat, 12 Sep 2026 11:31:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789212693; cv=none; b=gHLHaLwu3cBx6ubEDFnUou+dluDGMhOPiqZvneTRvo+hyNm3h2K6LeR1kx2Ttk7qiDgB3j5EoPfECLHmykiRanL/eBt+Nypeag9Yqhm1VEwrg2nkxiqIMCPMoIEwX2Q/zI/iV9HIqa+9Xsr1/F+RbDewJRj6m29drGNN80eZztM=
+	t=1789212697; cv=none; b=PUy4gFOjlo7tNp60+A4+pGL4ZgnNGHrIdDF/rhtjccQ1uxpqgQzcG/CXOZltP6AQuTHB2XZOdf8/3AtGst9gMkOtH7YNmQ5AG67VWTJ/+FiVFj6j75M647qv/mLHY/q4uSZ02y8VcyK+Siw2YzTi/XvPjBJc7mEwTfDqlk8uZn0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789212693; c=relaxed/simple;
-	bh=G9yBZxltKzBDG2YaI1qtXVvB/putx7VIXLs5YZn06+Y=;
+	s=arc-20240116; t=1789212697; c=relaxed/simple;
+	bh=YqNbC/pPclQN4GC387E1iqm0AcL0cvDIymIBkXOTpkY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I1DcET8oEiDi3gnTjULmYyIGIckPc41cK2onmh3dU3GWqH8jV8hDS1N5Yhc9CQ8WuSjI4jZW3OMCJafX0RjCGt88uQlKhIkjYktG8McZl/jueBiMsSAeC34Bt/FHWwD/jCkiWaID1iIsQfHbGwHoWiAs2HDq3xwFa/6vtjNQITg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RTA55eVu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YKMrXOkhFUDJrpELtBfQH6/8c2qXAOTeUVSkVs4v500+Q31Uit0iJS3UT/OeitBbkPMi1y7rj2SNjGaIko6LPY2r3u7k1+Voyn2tD+pmiXd7dTTXvwpo+T3ZxDvv9r2efV2xCa7te8RI56oF/aorgVYtRgYctc6svPyef2qj2mw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fc24Q9MU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RTA55eVu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A7DD1F000FF;
-	Sat, 12 Sep 2026 11:31:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fc24Q9MU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 620DC1F000FF;
+	Sat, 12 Sep 2026 11:31:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789212692;
-	bh=ookhQMVcS9eLXZXRY7XOCMSoUbkirZgPBNk0giOBm5o=;
+	s=korg; t=1789212696;
+	bh=Ct1XP7fM28ZHZldLsRM9xOSjssWeo8cHliSVem/coCU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RTA55eVuOz9nmlsz5LG/3TwmZAeYlyIWalXl54EpQhF4F7s/968RE4BcImE63fx6e
-	 kmecgcoVi8Ra67ZVuzjjTX2ks71/bWcbfMqroAeWVppfeXenDrCyjik4NdjLVdcCYQ
-	 GtpWtwil3AX6GhnJHEJGPxH5iKZxa/7CsGH8r+gY=
+	b=fc24Q9MUReMweBZWTX1jS37NN1emBCJQoUvI0ye6ujCXKUzngNHZ2LWFZK+ldd48H
+	 zCvI1QFOWbkv5noeD/Vu94z3aJkQuWZ11y7tshfDR5msWPo5UW0pXl2/LEfp08n/pw
+	 Hv6liuprCs+yho/Iu3QvhhWXbt0tm83p18gQVNCs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1488/1518] pinctrl: airoha: an7583: fix misprint in gpio19 pinconf
-Date: Sat, 12 Sep 2026 09:00:57 +0200
-Message-ID: <20260912065657.222929527@linuxfoundation.org>
+Subject: [PATCH 6.18 1489/1518] pinctrl: airoha: an7583: add missed gpio32 pin group
+Date: Sat, 12 Sep 2026 09:00:58 +0200
+Message-ID: <20260912065657.246695048@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -54,10 +54,9 @@ Content-Transfer-Encoding: 8bit
 
 From: Mikhail Kshevetskiy <mikhail.kshevetskiy@iopsys.eu>
 
-[ Upstream commit a7f3e2b7730fc1d6c7431af49e0dc1ee97589795 ]
+[ Upstream commit 81cc2285cea84e3ed8688d353e1250cf8899c80a ]
 
-Pin 21 (gpio19) duplicate pinconf settings of pin 20. Fix it using
-a proper bit number in the configuration register.
+gpio32 pin group is missed for an7583 SoC. This patch add it.
 
 Fixes: 3ffeb17a9a27 ("pinctrl: airoha: add support for Airoha AN7583 PINs")
 Signed-off-by: Mikhail Kshevetskiy <mikhail.kshevetskiy@iopsys.eu>
@@ -65,49 +64,29 @@ Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/mediatek/pinctrl-airoha.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/pinctrl/mediatek/pinctrl-airoha.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/drivers/pinctrl/mediatek/pinctrl-airoha.c b/drivers/pinctrl/mediatek/pinctrl-airoha.c
-index f10b2d1eb56bc..99fee1b490d86 100644
+index 99fee1b490d86..5d8b6e828673b 100644
 --- a/drivers/pinctrl/mediatek/pinctrl-airoha.c
 +++ b/drivers/pinctrl/mediatek/pinctrl-airoha.c
-@@ -2063,7 +2063,7 @@ static const struct airoha_pinctrl_conf an7583_pinctrl_pullup_conf[] = {
- 	PINCTRL_CONF_DESC(18, REG_GPIO_L_PU, BIT(16)),
- 	PINCTRL_CONF_DESC(19, REG_GPIO_L_PU, BIT(17)),
- 	PINCTRL_CONF_DESC(20, REG_GPIO_L_PU, BIT(18)),
--	PINCTRL_CONF_DESC(21, REG_GPIO_L_PU, BIT(18)),
-+	PINCTRL_CONF_DESC(21, REG_GPIO_L_PU, BIT(19)),
- 	PINCTRL_CONF_DESC(22, REG_GPIO_L_PU, BIT(20)),
- 	PINCTRL_CONF_DESC(23, REG_GPIO_L_PU, BIT(21)),
- 	PINCTRL_CONF_DESC(24, REG_GPIO_L_PU, BIT(22)),
-@@ -2180,7 +2180,7 @@ static const struct airoha_pinctrl_conf an7583_pinctrl_pulldown_conf[] = {
- 	PINCTRL_CONF_DESC(18, REG_GPIO_L_PD, BIT(16)),
- 	PINCTRL_CONF_DESC(19, REG_GPIO_L_PD, BIT(17)),
- 	PINCTRL_CONF_DESC(20, REG_GPIO_L_PD, BIT(18)),
--	PINCTRL_CONF_DESC(21, REG_GPIO_L_PD, BIT(18)),
-+	PINCTRL_CONF_DESC(21, REG_GPIO_L_PD, BIT(19)),
- 	PINCTRL_CONF_DESC(22, REG_GPIO_L_PD, BIT(20)),
- 	PINCTRL_CONF_DESC(23, REG_GPIO_L_PD, BIT(21)),
- 	PINCTRL_CONF_DESC(24, REG_GPIO_L_PD, BIT(22)),
-@@ -2297,7 +2297,7 @@ static const struct airoha_pinctrl_conf an7583_pinctrl_drive_e2_conf[] = {
- 	PINCTRL_CONF_DESC(18, REG_GPIO_L_E2, BIT(16)),
- 	PINCTRL_CONF_DESC(19, REG_GPIO_L_E2, BIT(17)),
- 	PINCTRL_CONF_DESC(20, REG_GPIO_L_E2, BIT(18)),
--	PINCTRL_CONF_DESC(21, REG_GPIO_L_E2, BIT(18)),
-+	PINCTRL_CONF_DESC(21, REG_GPIO_L_E2, BIT(19)),
- 	PINCTRL_CONF_DESC(22, REG_GPIO_L_E2, BIT(20)),
- 	PINCTRL_CONF_DESC(23, REG_GPIO_L_E2, BIT(21)),
- 	PINCTRL_CONF_DESC(24, REG_GPIO_L_E2, BIT(22)),
-@@ -2414,7 +2414,7 @@ static const struct airoha_pinctrl_conf an7583_pinctrl_drive_e4_conf[] = {
- 	PINCTRL_CONF_DESC(18, REG_GPIO_L_E4, BIT(16)),
- 	PINCTRL_CONF_DESC(19, REG_GPIO_L_E4, BIT(17)),
- 	PINCTRL_CONF_DESC(20, REG_GPIO_L_E4, BIT(18)),
--	PINCTRL_CONF_DESC(21, REG_GPIO_L_E4, BIT(18)),
-+	PINCTRL_CONF_DESC(21, REG_GPIO_L_E4, BIT(19)),
- 	PINCTRL_CONF_DESC(22, REG_GPIO_L_E4, BIT(20)),
- 	PINCTRL_CONF_DESC(23, REG_GPIO_L_E4, BIT(21)),
- 	PINCTRL_CONF_DESC(24, REG_GPIO_L_E4, BIT(22)),
+@@ -777,6 +777,7 @@ static const int an7583_gpio28_pins[] = { 30 };
+ static const int an7583_gpio29_pins[] = { 31 };
+ static const int an7583_gpio30_pins[] = { 32 };
+ static const int an7583_gpio31_pins[] = { 33 };
++static const int an7583_gpio32_pins[] = { 34 };
+ static const int an7583_gpio33_pins[] = { 35 };
+ static const int an7583_gpio34_pins[] = { 36 };
+ static const int an7583_gpio35_pins[] = { 37 };
+@@ -859,6 +860,7 @@ static const struct pingroup an7583_pinctrl_groups[] = {
+ 	PINCTRL_PIN_GROUP("gpio29", an7583_gpio29),
+ 	PINCTRL_PIN_GROUP("gpio30", an7583_gpio30),
+ 	PINCTRL_PIN_GROUP("gpio31", an7583_gpio31),
++	PINCTRL_PIN_GROUP("gpio32", an7583_gpio32),
+ 	PINCTRL_PIN_GROUP("gpio33", an7583_gpio33),
+ 	PINCTRL_PIN_GROUP("gpio34", an7583_gpio34),
+ 	PINCTRL_PIN_GROUP("gpio35", an7583_gpio35),
 -- 
 2.53.0
 
