@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B9EC379C38;
-	Sat, 12 Sep 2026 10:06:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 083C436E484;
+	Sat, 12 Sep 2026 10:06:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789207610; cv=none; b=lJt1jgdXUcie5D5EGMbtTg1p4O+6e4rv8/VoCHGnawk6Zspwd1bGsjdFf6wLn1xSzIhPFEgaT/quacIvSsv47fX4MR0RktbVeJm9sLWX3zExy4jbGnZjL8+GxJFH7YtmlbeZx2XybLy/K3qJEzbFT26mCrAwcD0J9uAG0Y6nrWE=
+	t=1789207614; cv=none; b=KynJEKQpl5mWXpwgp4PSods/XI7U+LBna9zLao8Iswb7a/Vge0qULrQh38hRafE3uJj2i/HtPdWCsNBv+6BDA3B6fzdMMteyJVIIgK8B74aNTX/K7fSsEnIfz0rFkvrq9ASyIDUFGyvc6ehKgF2oR5qe9DGmDtNbbUSiDG7r4Eo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789207610; c=relaxed/simple;
-	bh=Fh3s4+97MKeFrncsAqC6/RAS/b49hnc/hgLSEivRdMA=;
+	s=arc-20240116; t=1789207614; c=relaxed/simple;
+	bh=0+6M5gRMFxCkx3xS5FIJCplWSbXPh2qd3OPX/AQMT7o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HRBRWHGfCE/3e/KR31+8CW3W9a35TFFXdqDYXvzLjVa+T5p1kehL2x16y/ANwFtySOaefn2WpkmMuw/UjtXuZEqTztvoQAixxirxlIuxABVZqTyzNDMTgomXIs2Vte4trileam3c5PW62/ZaxnYe9Ozdsk3hVl+QS57Lvyse4Jo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=luuEuO1k; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RjY8KoH0QIB2UNV5wQXnu3Ty6I5GezD8Ml/xFL+tP/0lJwgPOduUNjDxC6d5wHSLZiC1+z39bcPB41ohyCVymK13NTCYGQa2Jfafa+YqjFjZIeP3V+j9PCPw8W1tXcx9zscQPJ+kXiTV75Ct0RsIOX0tvvE7QystE9wXqbqMdho=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ma6hd1sY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="luuEuO1k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0407A1F000FF;
-	Sat, 12 Sep 2026 10:06:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ma6hd1sY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B11AE1F000FF;
+	Sat, 12 Sep 2026 10:06:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789207608;
-	bh=1qWekAdYjz13eoLnPZHixPVduXmUvfRV5TnGbCmIbWU=;
+	s=korg; t=1789207612;
+	bh=N7qd6lDtlvM6HJyINYJE4kqbWTdNRGebqEuAkMTYsps=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=luuEuO1kKp1RB/vbyR1r+9BZFdj0ccbzjWa3rkql8IPlCTACJvRVPajiHf1b1nEa5
-	 McvPH7/a0ouwAfXLDiMk1KxjHvtFEGK0MmxPGCSPs78pSWalfQ5+wRukfZUz5WwMP9
-	 VlGLUX7KL6MU0H2aiRbCGx6sqsr6I0/JXsPU4RLQ=
+	b=Ma6hd1sYmm2sV28EehZj+sFyoA7bkyUpXMZYVCiIqawQ1EoR4cjHYwjHNh6AIs9/E
+	 4yi/0adLDjV8ZG8XidcAcJOMamD0HW1h229lzq4/H8AJkvwfnVIEgiSqX/gXDgMN67
+	 X18JeeFaaJaWX8GtlP/aqA8BXK+3mDldbMgom/MQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mohammed Rizwan Kaniyate <mrizwank004@gmail.com>,
-	Luka Gejak <luka.gejak@linux.dev>,
+	Cong Nguyen <congnt264@gmail.com>,
+	Dan Carpenter <error27@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0446/1518] staging: rtl8723bs: remove multiple blank lines in core/
-Date: Sat, 12 Sep 2026 08:43:35 +0200
-Message-ID: <20260912065633.539255218@linuxfoundation.org>
+Subject: [PATCH 6.18 0447/1518] staging: rtl8723bs: fix xmit_frame/xmit_buf leaks on mgnt-frame error paths
+Date: Sat, 12 Sep 2026 08:43:36 +0200
+Message-ID: <20260912065633.561614740@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,612 +51,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mohammed Rizwan Kaniyate <mrizwank004@gmail.com>
+From: Cong Nguyen <congnt264@gmail.com>
 
-[ Upstream commit 7dbc9fd714387388ebe049a619513e60b5c442e8 ]
+[ Upstream commit 41b8209376dffbd7b0b85c8bc4697d9166ac62ef ]
 
-Remove multiple consecutive blank lines.
-Issue reported by checkpatch.pl
+issue_beacon(), issue_probersp() and issue_asocrsp() obtain a management
+xmit_frame together with its xmit_buf from the driver's fixed-size
+management-TX pools via alloc_mgtxmitframe(). On the normal path the frame
+is handed to dump_mgntframe(), which transfers ownership and eventually
+returns both objects to their pools (the frame and, for beacons, the buf
+in rtl8723bs_mgnt_xmit(); other bufs via the pending-xmitbuf/TX-completion
+path).
 
-Signed-off-by: Mohammed Rizwan Kaniyate <mrizwank004@gmail.com>
-Reviewed-by: Luka Gejak <luka.gejak@linux.dev>
-Link: https://patch.msgid.link/20260425112327.215355-1-mrizwank004@gmail.com
+Several error/edge paths return early after a successful
+alloc_mgtxmitframe() but before dump_mgntframe(), so ownership is never
+transferred and neither object is freed:
+
+  - issue_beacon(): beacon larger than 512 bytes
+  - issue_probersp(): cur_network->ie_length > MAX_IE_SZ
+  - issue_probersp(): kzalloc() of the SSID scratch buffer fails
+  - issue_asocrsp(): pkt_type is neither ASSOCRSP nor REASSOCRSP
+
+Because alloc_mgtxmitframe() removes the frame and buf from their free
+lists (list_del_init) without placing them on any pending list, an
+orphaned pair is on no list and referenced by nobody, so it is only
+reclaimed at driver teardown. Repeated hits progressively exhaust the
+management-TX pools until alloc_mgtxmitframe() returns NULL and the
+interface can no longer send beacons or probe/assoc responses.
+
+Free the frame and buffer on these paths, matching the existing correct
+error handling in issue_assocreq().
+
+Fixes: 554c0a3abf21 ("staging: Add rtl8723bs sdio wifi driver")
+Signed-off-by: Cong Nguyen <congnt264@gmail.com>
+Reviewed-by: Dan Carpenter <error27@gmail.com>
+Link: https://patch.msgid.link/20260715111710.295052-1-congnt264@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: 41b8209376df ("staging: rtl8723bs: fix xmit_frame/xmit_buf leaks on mgnt-frame error paths")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/rtl8723bs/core/rtw_efuse.c    |  1 -
- .../staging/rtl8723bs/core/rtw_ioctl_set.c    |  1 -
- drivers/staging/rtl8723bs/core/rtw_mlme_ext.c | 48 -------------------
- drivers/staging/rtl8723bs/core/rtw_recv.c     | 25 ----------
- .../staging/rtl8723bs/core/rtw_wlan_util.c    |  1 -
- 5 files changed, 76 deletions(-)
+ drivers/staging/rtl8723bs/core/rtw_mlme_ext.c | 22 ++++++++++++++-----
+ 1 file changed, 17 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/staging/rtl8723bs/core/rtw_efuse.c b/drivers/staging/rtl8723bs/core/rtw_efuse.c
-index d5c53b614f616..62a40d4672d3f 100644
---- a/drivers/staging/rtl8723bs/core/rtw_efuse.c
-+++ b/drivers/staging/rtl8723bs/core/rtw_efuse.c
-@@ -253,7 +253,6 @@ void EFUSE_ShadowMapUpdate(struct adapter *padapter, u8 efuseType)
- 	/* void *)&pHalData->EfuseMap[EFUSE_INIT_MAP][0], mapLen); */
- } /*  EFUSE_ShadowMapUpdate */
- 
--
- /*-----------------------------------------------------------------------------
-  * Function:	EFUSE_ShadowRead
-  *
-diff --git a/drivers/staging/rtl8723bs/core/rtw_ioctl_set.c b/drivers/staging/rtl8723bs/core/rtw_ioctl_set.c
-index 587a87fbffeb4..df664efb21269 100644
---- a/drivers/staging/rtl8723bs/core/rtw_ioctl_set.c
-+++ b/drivers/staging/rtl8723bs/core/rtw_ioctl_set.c
-@@ -345,7 +345,6 @@ u8 rtw_set_802_11_infrastructure_mode(struct adapter *padapter,
- 	return true;
- }
- 
--
- u8 rtw_set_802_11_disassociate(struct adapter *padapter)
- {
- 	struct mlme_priv *pmlmepriv = &padapter->mlmepriv;
 diff --git a/drivers/staging/rtl8723bs/core/rtw_mlme_ext.c b/drivers/staging/rtl8723bs/core/rtw_mlme_ext.c
-index abd26ac3787a3..8f7b5e2dce2f5 100644
+index 8f7b5e2dce2f5..8d33631ab8f0f 100644
 --- a/drivers/staging/rtl8723bs/core/rtw_mlme_ext.c
 +++ b/drivers/staging/rtl8723bs/core/rtw_mlme_ext.c
-@@ -536,7 +536,6 @@ unsigned int OnProbeReq(struct adapter *padapter, union recv_frame *precv_frame)
- 	p = rtw_get_ie(pframe + WLAN_HDR_A3_LEN + _PROBEREQ_IE_OFFSET_, WLAN_EID_SSID, (int *)&ielen,
- 			len - WLAN_HDR_A3_LEN - _PROBEREQ_IE_OFFSET_);
+@@ -2248,8 +2248,11 @@ void issue_beacon(struct adapter *padapter, int timeout_ms)
  
--
- 	/* check (wildcard) SSID */
- 	if (p) {
- 		if (is_valid_p2p_probereq)
-@@ -795,7 +794,6 @@ unsigned int OnAuth(struct adapter *padapter, union recv_frame *precv_frame)
- 	if (pstat->auth_seq == 0)
- 		pstat->expire_to = pstapriv->auth_to;
+ 	spin_unlock_bh(&pmlmepriv->bcn_update_lock);
  
--
- 	if ((pstat->auth_seq + 1) != seq) {
- 		status = WLAN_STATUS_UNKNOWN_AUTH_TRANSACTION;
- 		goto auth_fail;
-@@ -844,7 +842,6 @@ unsigned int OnAuth(struct adapter *padapter, union recv_frame *precv_frame)
- 		}
- 	}
+-	if ((pattrib->pktlen + TXDESC_SIZE) > 512)
++	if ((pattrib->pktlen + TXDESC_SIZE) > 512) {
++		rtw_free_xmitbuf(pxmitpriv, pmgntframe->pxmitbuf);
++		rtw_free_xmitframe(pxmitpriv, pmgntframe);
+ 		return;
++	}
  
--
- 	/*  Now, we are going to issue_auth... */
- 	pstat->auth_seq = seq + 1;
+ 	pattrib->last_txcmdsz = pattrib->pktlen;
  
-@@ -853,7 +850,6 @@ unsigned int OnAuth(struct adapter *padapter, union recv_frame *precv_frame)
- 	if (pstat->state & WIFI_FW_AUTH_SUCCESS)
- 		pstat->auth_seq = 0;
- 
--
- 	return _SUCCESS;
- 
- auth_fail:
-@@ -979,7 +975,6 @@ unsigned int OnAssocReq(struct adapter *padapter, union recv_frame *precv_frame)
- 	else /*  WIFI_REASSOCREQ */
- 		ie_offset = _REASOCREQ_IE_OFFSET_;
- 
--
- 	if (pkt_len < sizeof(struct ieee80211_hdr_3addr) + ie_offset)
- 		return _FAIL;
- 
-@@ -1009,7 +1004,6 @@ unsigned int OnAssocReq(struct adapter *padapter, union recv_frame *precv_frame)
- 		pstat->state |= WIFI_FW_ASSOC_STATE;
- 	}
- 
--
- 	pstat->capability = capab_info;
- 
- 	/* now parse all ieee802_11 ie to point to elems */
-@@ -1146,7 +1140,6 @@ unsigned int OnAssocReq(struct adapter *padapter, union recv_frame *precv_frame)
- 			pstat->flags |= WLAN_STA_MAYBE_WPS;
- 		}
- 
--
- 		/*  AP support WPA/RSN, and sta is going to do WPS, but AP is not ready */
- 		/*  that the selected registrar of AP is _FLASE */
- 		if ((psecuritypriv->wpa_psk > 0)
-@@ -1181,13 +1174,11 @@ unsigned int OnAssocReq(struct adapter *padapter, union recv_frame *precv_frame)
- 			copy_len = ((wpa_ie_len+2) > sizeof(pstat->wpa_ie)) ? (sizeof(pstat->wpa_ie)):(wpa_ie_len+2);
- 		}
- 
--
- 		if (copy_len > 0)
- 			memcpy(pstat->wpa_ie, wpa_ie-2, copy_len);
- 
- 	}
- 
--
- 	/*  check if there is WMM IE & support WWM-PS */
- 	pstat->flags &= ~WLAN_STA_WME;
- 	pstat->qos_option = 0;
-@@ -1260,13 +1251,11 @@ unsigned int OnAssocReq(struct adapter *padapter, union recv_frame *precv_frame)
- 	} else
- 		pstat->flags &= ~WLAN_STA_HT;
- 
--
- 	if ((pmlmepriv->htpriv.ht_option == false) && (pstat->flags&WLAN_STA_HT)) {
- 		status = WLAN_STATUS_CHALLENGE_FAIL;
- 		goto OnAssocReqFail;
- 	}
- 
--
- 	if ((pstat->flags & WLAN_STA_HT) &&
- 		    ((pstat->wpa2_pairwise_cipher&WPA_CIPHER_TKIP) ||
- 		      (pstat->wpa_pairwise_cipher&WPA_CIPHER_TKIP))) {
-@@ -1314,13 +1303,11 @@ unsigned int OnAssocReq(struct adapter *padapter, union recv_frame *precv_frame)
- 
- 			goto OnAssocReqFail;
- 
--
- 		} else {
- 			pstapriv->sta_aid[pstat->aid - 1] = pstat;
- 		}
- 	}
- 
--
- 	pstat->state &= (~WIFI_FW_ASSOC_STATE);
- 	pstat->state |= WIFI_FW_ASSOC_SUCCESS;
- 
-@@ -1519,7 +1506,6 @@ unsigned int OnDeAuth(struct adapter *padapter, union recv_frame *precv_frame)
- 			associated_clients_update(padapter, updated);
- 		}
- 
--
- 		return _SUCCESS;
- 	}
- 
-@@ -2162,7 +2148,6 @@ void issue_beacon(struct adapter *padapter, int timeout_ms)
- 	pframe = (u8 *)(pmgntframe->buf_addr) + TXDESC_OFFSET;
- 	pwlanhdr = (struct ieee80211_hdr *)pframe;
- 
--
- 	fctrl = &(pwlanhdr->frame_control);
- 	*(fctrl) = 0;
- 
-@@ -2251,12 +2236,10 @@ void issue_beacon(struct adapter *padapter, int timeout_ms)
- 		pframe = rtw_set_ie(pframe, WLAN_EID_ERP_INFO, 1, &erpinfo, &pattrib->pktlen);
- 	}
- 
--
- 	/*  EXTERNDED SUPPORTED RATE */
- 	if (rate_len > 8)
- 		pframe = rtw_set_ie(pframe, WLAN_EID_EXT_SUPP_RATES, (rate_len - 8), (cur_network->supported_rates + 8), &pattrib->pktlen);
- 
--
- 	/* todo:HT for adhoc */
- 
- _issue_bcn:
-@@ -2328,7 +2311,6 @@ void issue_probersp(struct adapter *padapter, unsigned char *da, u8 is_valid_p2p
+@@ -2311,8 +2314,11 @@ void issue_probersp(struct adapter *padapter, unsigned char *da, u8 is_valid_p2p
  	pattrib->pktlen = pattrib->hdrlen;
  	pframe += pattrib->hdrlen;
  
--
- 	if (cur_network->ie_length > MAX_IE_SZ)
+-	if (cur_network->ie_length > MAX_IE_SZ)
++	if (cur_network->ie_length > MAX_IE_SZ) {
++		rtw_free_xmitbuf(pxmitpriv, pmgntframe->pxmitbuf);
++		rtw_free_xmitframe(pxmitpriv, pmgntframe);
  		return;
++	}
  
-@@ -2452,19 +2434,16 @@ void issue_probersp(struct adapter *padapter, unsigned char *da, u8 is_valid_p2p
- 			pframe = rtw_set_ie(pframe, WLAN_EID_ERP_INFO, 1, &erpinfo, &pattrib->pktlen);
- 		}
+ 	if ((pmlmeinfo->state&0x03) == WIFI_FW_AP_STATE) {
+ 		pwps_ie = rtw_get_wps_ie(cur_network->ies+_FIXED_IE_LENGTH_, cur_network->ie_length-_FIXED_IE_LENGTH_, NULL, &wps_ielen);
+@@ -2359,8 +2365,11 @@ void issue_probersp(struct adapter *padapter, unsigned char *da, u8 is_valid_p2p
+ 			u8 *ies = pmgntframe->buf_addr+TXDESC_OFFSET+sizeof(struct ieee80211_hdr_3addr);
  
--
- 		/*  EXTERNDED SUPPORTED RATE */
- 		if (rate_len > 8)
- 			pframe = rtw_set_ie(pframe, WLAN_EID_EXT_SUPP_RATES, (rate_len - 8), (cur_network->supported_rates + 8), &pattrib->pktlen);
+ 			buf = kzalloc(MAX_IE_SZ, GFP_ATOMIC);
+-			if (!buf)
++			if (!buf) {
++				rtw_free_xmitbuf(pxmitpriv, pmgntframe->pxmitbuf);
++				rtw_free_xmitframe(pxmitpriv, pmgntframe);
+ 				return;
++			}
  
--
- 		/* todo:HT for adhoc */
+ 			ssid_ie = rtw_get_ie(ies+_FIXED_IE_LENGTH_, WLAN_EID_SSID, &ssid_ielen,
+ 				(pframe-ies)-_FIXED_IE_LENGTH_);
+@@ -2744,10 +2753,13 @@ void issue_asocrsp(struct adapter *padapter, unsigned short status, struct sta_i
  
- 	}
- 
- 	pattrib->last_txcmdsz = pattrib->pktlen;
- 
--
- 	dump_mgntframe(padapter, pmgntframe);
- 
- 	return;
-@@ -2496,7 +2475,6 @@ static int _issue_probereq(struct adapter *padapter,
- 	pattrib = &pmgntframe->attrib;
- 	update_mgntframe_attrib(padapter, pattrib);
- 
--
- 	memset(pmgntframe->buf_addr, 0, WLANHDR_OFFSET + TXDESC_OFFSET);
- 
- 	pframe = (u8 *)(pmgntframe->buf_addr) + TXDESC_OFFSET;
-@@ -2640,7 +2618,6 @@ void issue_auth(struct adapter *padapter, struct sta_info *psta, unsigned short
- 	pframe += sizeof(struct ieee80211_hdr_3addr);
- 	pattrib->pktlen = sizeof(struct ieee80211_hdr_3addr);
- 
--
- 	if (psta) { /*  for AP mode */
- 		memcpy(pwlanhdr->addr1, psta->hwaddr, ETH_ALEN);
- 		memcpy(pwlanhdr->addr2, myid(&(padapter->eeprompriv)), ETH_ALEN);
-@@ -2701,7 +2678,6 @@ void issue_auth(struct adapter *padapter, struct sta_info *psta, unsigned short
- 		le_tmp = cpu_to_le16(pmlmeinfo->auth_seq);
- 		pframe = rtw_set_fixed_ie(pframe, _AUTH_SEQ_NUM_, (unsigned char *)&le_tmp, &(pattrib->pktlen));
- 
--
- 		/*  setting status code... */
- 		le_tmp = cpu_to_le16(status);
- 		pframe = rtw_set_fixed_ie(pframe, _STATUS_CODE_, (unsigned char *)&le_tmp, &(pattrib->pktlen));
-@@ -2730,7 +2706,6 @@ void issue_auth(struct adapter *padapter, struct sta_info *psta, unsigned short
- 	dump_mgntframe(padapter, pmgntframe);
- }
- 
--
- void issue_asocrsp(struct adapter *padapter, unsigned short status, struct sta_info *pstat, int pkt_type)
- {
- 	struct xmit_frame	*pmgntframe;
-@@ -2755,7 +2730,6 @@ void issue_asocrsp(struct adapter *padapter, unsigned short status, struct sta_i
- 	pattrib = &pmgntframe->attrib;
- 	update_mgntframe_attrib(padapter, pattrib);
- 
--
- 	memset(pmgntframe->buf_addr, 0, WLANHDR_OFFSET + TXDESC_OFFSET);
- 
- 	pframe = (u8 *)(pmgntframe->buf_addr) + TXDESC_OFFSET;
-@@ -2768,7 +2742,6 @@ void issue_asocrsp(struct adapter *padapter, unsigned short status, struct sta_i
- 	memcpy((void *)GetAddr2Ptr(pwlanhdr), myid(&(padapter->eeprompriv)), ETH_ALEN);
- 	memcpy((void *)GetAddr3Ptr(pwlanhdr), get_my_bssid(&(pmlmeinfo->network)), ETH_ALEN);
- 
--
  	SetSeqNum(pwlanhdr, pmlmeext->mgnt_seq);
  	pmlmeext->mgnt_seq++;
- 	if ((pkt_type == WIFI_ASSOCRSP) || (pkt_type == WIFI_REASSOCRSP))
-@@ -2927,7 +2900,6 @@ void issue_assocreq(struct adapter *padapter)
- 	if (pmlmeext->cur_channel == 14) /*  for JAPAN, channel 14 can only uses B Mode(CCK) */
- 		sta_bssrate_len = 4;
- 
--
- 	/* for (i = 0; i < sta_bssrate_len; i++) { */
- 	/*  */
- 
-@@ -2936,12 +2908,10 @@ void issue_assocreq(struct adapter *padapter)
- 			break;
- 	}
- 
--
- 	for (i = 0; i < NDIS_802_11_LENGTH_RATES_EX; i++) {
- 		if (pmlmeinfo->network.supported_rates[i] == 0)
- 			break;
- 
--
- 		/*  Check if the AP's supported rates are also supported by STA. */
- 		for (j = 0; j < sta_bssrate_len; j++) {
- 			 /*  Avoid the proprietary data rate (22Mbps) of Handlink WSG-4000 AP */
-@@ -2963,7 +2933,6 @@ void issue_assocreq(struct adapter *padapter)
- 		goto exit; /* don't connect to AP if no joint supported rate */
- 	}
- 
--
- 	if (bssrate_len > 8) {
- 		pframe = rtw_set_ie(pframe, WLAN_EID_SUPP_RATES, 8, bssrate, &(pattrib->pktlen));
- 		pframe = rtw_set_ie(pframe, WLAN_EID_EXT_SUPP_RATES, (bssrate_len - 8), (bssrate + 8), &(pattrib->pktlen));
-@@ -3024,7 +2993,6 @@ void issue_assocreq(struct adapter *padapter)
- 	if (pmlmeinfo->assoc_AP_vendor == HT_IOT_PEER_REALTEK)
- 		pframe = rtw_set_ie(pframe, WLAN_EID_VENDOR_SPECIFIC, 6, REALTEK_96B_IE, &(pattrib->pktlen));
- 
--
- 	pattrib->last_txcmdsz = pattrib->pktlen;
- 	dump_mgntframe(padapter, pmgntframe);
- 
-@@ -3121,7 +3089,6 @@ int issue_nulldata(struct adapter *padapter, unsigned char *da, unsigned int pow
- 	struct mlme_ext_info *pmlmeinfo = &(pmlmeext->mlmext_info);
- 	struct sta_info *psta;
- 
--
- 	/* da == NULL, assume it's null data for sta to ap*/
- 	if (!da)
- 		da = get_my_bssid(&(pmlmeinfo->network));
-@@ -3171,7 +3138,6 @@ s32 issue_nulldata_in_interrupt(struct adapter *padapter, u8 *da)
- 	struct mlme_ext_priv *pmlmeext;
- 	struct mlme_ext_info *pmlmeinfo;
- 
--
- 	pmlmeext = &padapter->mlmeextpriv;
- 	pmlmeinfo = &pmlmeext->mlmext_info;
- 
-@@ -3340,7 +3306,6 @@ static int _issue_deauth(struct adapter *padapter, unsigned char *da,
- 
- 	pattrib->last_txcmdsz = pattrib->pktlen;
- 
--
- 	if (wait_ack) {
- 		ret = dump_mgntframe_and_wait_ack(padapter, pmgntframe);
- 	} else {
-@@ -3662,7 +3627,6 @@ static void issue_action_BSSCoexistPacket(struct adapter *padapter)
- 	pframe = rtw_set_fixed_ie(pframe, 1, &(category), &(pattrib->pktlen));
- 	pframe = rtw_set_fixed_ie(pframe, 1, &(action), &(pattrib->pktlen));
- 
--
- 	/*  */
- 	if (pmlmepriv->num_FortyMHzIntolerant > 0) {
- 		u8 iedata = 0;
-@@ -3673,7 +3637,6 @@ static void issue_action_BSSCoexistPacket(struct adapter *padapter)
- 
- 	}
- 
--
- 	/*  */
- 	memset(ICS, 0, sizeof(ICS));
- 	if (pmlmepriv->num_sta_no_ht > 0) {
-@@ -3714,7 +3677,6 @@ static void issue_action_BSSCoexistPacket(struct adapter *padapter)
- 
- 		spin_unlock_bh(&(pmlmepriv->scanned_queue.lock));
- 
--
- 		for (i = 0; i < 8; i++) {
- 			if (ICS[i][0] == 1) {
- 				int j, k = 0;
-@@ -3742,7 +3704,6 @@ static void issue_action_BSSCoexistPacket(struct adapter *padapter)
- 
- 	}
- 
--
- 	pattrib->last_txcmdsz = pattrib->pktlen;
- 
- 	dump_mgntframe(padapter, pmgntframe);
-@@ -4223,7 +4184,6 @@ void start_clnt_auth(struct adapter *padapter)
- 	pmlmeinfo->link_count = 0;
- 	pmlmeext->retry = 0;
- 
--
- 	netdev_dbg(padapter->pnetdev, "start auth\n");
- 	issue_auth(padapter, NULL, 0);
- 
-@@ -4231,7 +4191,6 @@ void start_clnt_auth(struct adapter *padapter)
- 
- }
- 
--
- void start_clnt_assoc(struct adapter *padapter)
- {
- 	struct mlme_ext_priv *pmlmeext = &padapter->mlmeextpriv;
-@@ -4278,7 +4237,6 @@ static void process_80211d(struct adapter *padapter, struct wlan_bssid_ex *bssid
- 	u8 channel;
- 	u8 i;
- 
--
- 	pregistrypriv = &padapter->registrypriv;
- 	pmlmeext = &padapter->mlmeextpriv;
- 
-@@ -4562,10 +4520,8 @@ void report_join_res(struct adapter *padapter, int res)
- 	memcpy((unsigned char *)(&(pjoinbss_evt->network.network)), &(pmlmeinfo->network), sizeof(struct wlan_bssid_ex));
- 	pjoinbss_evt->network.join_res	= pjoinbss_evt->network.aid = res;
- 
--
- 	rtw_joinbss_event_prehandle(padapter, (u8 *)&pjoinbss_evt->network);
- 
--
- 	rtw_enqueue_cmd(pcmdpriv, pcmd_obj);
- 
- 	return;
-@@ -4657,7 +4613,6 @@ void report_del_sta_event(struct adapter *padapter, unsigned char *MacAddr, unsi
- 	memcpy((unsigned char *)(&(pdel_sta_evt->macaddr)), MacAddr, ETH_ALEN);
- 	memcpy((unsigned char *)(pdel_sta_evt->rsvd), (unsigned char *)(&reason), 2);
- 
--
- 	psta = rtw_get_stainfo(&padapter->stapriv, MacAddr);
- 	if (psta)
- 		mac_id = (int)psta->mac_id;
-@@ -4846,7 +4801,6 @@ void mlmeext_joinbss_event_callback(struct adapter *padapter, int join_res)
- 		/* update bc/mc sta_info */
- 		update_bmc_sta(padapter);
- 
--
- 	/* turn on dynamic functions */
- 	Switch_DM_Func(padapter, DYNAMIC_ALL_FUNC_ENABLE, true);
- 
-@@ -5152,7 +5106,6 @@ void link_timer_hdl(struct timer_list *t)
- 	struct mlme_ext_priv *pmlmeext = &padapter->mlmeextpriv;
- 	struct mlme_ext_info *pmlmeinfo = &(pmlmeext->mlmext_info);
- 
--
- 	if (pmlmeinfo->state & WIFI_FW_AUTH_NULL) {
- 		pmlmeinfo->state = WIFI_FW_NULL_STATE;
- 		report_join_res(padapter, -3);
-@@ -5339,7 +5292,6 @@ u8 join_cmd_hdl(struct adapter *padapter, u8 *pbuf)
- 		/* Set_MSR(padapter, _HW_STATE_NOLINK_); */
- 		Set_MSR(padapter, _HW_STATE_STATION_);
- 
--
- 		rtw_hal_set_hwreg(padapter, HW_VAR_MLME_DISCONNECT, NULL);
- 	}
- 
-diff --git a/drivers/staging/rtl8723bs/core/rtw_recv.c b/drivers/staging/rtl8723bs/core/rtw_recv.c
-index c0dbe4db44c39..4727f94df4355 100644
---- a/drivers/staging/rtl8723bs/core/rtw_recv.c
-+++ b/drivers/staging/rtl8723bs/core/rtw_recv.c
-@@ -60,7 +60,6 @@ signed int _rtw_init_recv_priv(struct recv_priv *precvpriv, struct adapter *pada
- 
- 	precvframe = (union recv_frame *) precvpriv->precv_frame_buf;
- 
--
- 	for (i = 0; i < NR_RECVFRAME; i++) {
- 		INIT_LIST_HEAD(&(precvframe->u.list));
- 
-@@ -180,9 +179,6 @@ int rtw_free_recvframe(union recv_frame *precvframe, struct __queue *pfree_recv_
- 	return _SUCCESS;
- }
- 
--
--
--
- signed int _rtw_enqueue_recvframe(union recv_frame *precvframe, struct __queue *queue)
- {
- 
-@@ -192,7 +188,6 @@ signed int _rtw_enqueue_recvframe(union recv_frame *precvframe, struct __queue *
- 	/* INIT_LIST_HEAD(&(precvframe->u.hdr.list)); */
- 	list_del_init(&(precvframe->u.hdr.list));
- 
--
- 	list_add_tail(&(precvframe->u.hdr.list), get_list_head(queue));
- 
- 	if (padapter)
-@@ -257,7 +252,6 @@ u32 rtw_free_uc_swdec_pending_queue(struct adapter *adapter)
- 	return cnt;
- }
- 
--
- signed int rtw_enqueue_recvbuf_to_head(struct recv_buf *precvbuf, struct __queue *queue)
- {
- 	spin_lock_bh(&queue->lock);
-@@ -405,7 +399,6 @@ static signed int recvframe_chkmic(struct adapter *adapter,  union recv_frame *p
- 					bmic_err = true;
- 			}
- 
--
- 			if (bmic_err == true) {
- 				/*  double check key_index for some timing issue , */
- 				/*  cannot compare with psecuritypriv->dot118021XGrpKeyid also cause timing issue */
-@@ -772,8 +765,6 @@ static signed int sta2sta_data_frame(struct adapter *adapter, union recv_frame *
- 	} else
- 		ret  = _FAIL;
- 
--
--
- 	if (bmcast)
- 		*psta = rtw_get_bcmc_stainfo(adapter);
- 	else
-@@ -817,7 +808,6 @@ static signed int ap2sta_data_frame(struct adapter *adapter, union recv_frame *p
- 			goto exit;
- 		}
- 
--
- 		/*  check BSSID */
- 		if (is_zero_ether_addr(pattrib->bssid) ||
- 		    is_zero_ether_addr(mybssid) ||
-@@ -858,14 +848,12 @@ static signed int ap2sta_data_frame(struct adapter *adapter, union recv_frame *p
- 		/*  */
- 		memcpy(pattrib->bssid,  mybssid, ETH_ALEN);
- 
--
- 		*psta = rtw_get_stainfo(pstapriv, pattrib->bssid); /*  get sta_info */
- 		if (!*psta) {
- 			ret = _FAIL;
- 			goto exit;
- 		}
- 
--
- 	} else if (check_fwstate(pmlmepriv, WIFI_AP_STATE) == true) {
- 		/* Special case */
- 		ret = RTW_RX_HANDLED;
-@@ -1109,7 +1097,6 @@ static union recv_frame *recvframe_defrag(struct adapter *adapter,
- 		pnextrframe = (union recv_frame *)plist;
- 		pnfhdr = &pnextrframe->u.hdr;
- 
--
- 		/* check the fragment sequence  (2nd ~n fragment frame) */
- 
- 		if (curfragnum != pnfhdr->attrib.frag_num) {
-@@ -1197,7 +1184,6 @@ static union recv_frame *recvframe_chk_defrag(struct adapter *padapter, union re
- 					/* free current defrag_q */
- 					rtw_free_recvframe_queue(pdefrag_q, pfree_recv_queue);
- 
--
- 			/* Then enqueue the 0~(n-1) fragment into the defrag_q */
- 
- 			/* spin_lock(&pdefrag_q->lock); */
-@@ -1236,7 +1222,6 @@ static union recv_frame *recvframe_chk_defrag(struct adapter *padapter, union re
- 
- 	}
- 
--
- 	if ((prtnframe) && (prtnframe->u.hdr.attrib.privacy)) {
- 		/* after defrag we must check tkip mic code */
- 		if (recvframe_chkmic(padapter,  prtnframe) == _FAIL) {
-@@ -1345,7 +1330,6 @@ static signed int validate_recv_data_frame(struct adapter *adapter, union recv_f
- 		goto exit;
- 	}
- 
--
- 	if (!psta) {
- 		ret = _FAIL;
- 		goto exit;
-@@ -1355,7 +1339,6 @@ static signed int validate_recv_data_frame(struct adapter *adapter, union recv_f
- 	/* psta->signal_quality = prxcmd->sq; */
- 	precv_frame->u.hdr.psta = psta;
- 
--
- 	pattrib->amsdu = 0;
- 	pattrib->ack_policy = 0;
- 	/* parsing QC field */
-@@ -1373,7 +1356,6 @@ static signed int validate_recv_data_frame(struct adapter *adapter, union recv_f
- 		pattrib->hdrlen = pattrib->to_fr_ds == 3 ? 30 : 24;
- 	}
- 
--
- 	if (pattrib->order)/* HT-CTRL 11n */
- 		pattrib->hdrlen += 4;
- 
-@@ -1827,7 +1809,6 @@ static int enqueue_reorder_recvframe(struct recv_reorder_ctrl *preorder_ctrl, un
- 	/* spin_lock_irqsave(&ppending_recvframe_queue->lock, irql); */
- 	/* spin_lock(&ppending_recvframe_queue->lock); */
- 
--
- 	phead = get_list_head(ppending_recvframe_queue);
- 	plist = get_next(phead);
- 
-@@ -1846,7 +1827,6 @@ static int enqueue_reorder_recvframe(struct recv_reorder_ctrl *preorder_ctrl, un
- 
- 	}
- 
--
- 	/* spin_lock_irqsave(&ppending_recvframe_queue->lock, irql); */
- 	/* spin_lock(&ppending_recvframe_queue->lock); */
- 
-@@ -1975,7 +1955,6 @@ static int recv_indicatepkts_in_order(struct adapter *padapter, struct recv_reor
- 				/* error condition; */
- 			}
- 
--
- 			/* Update local variables. */
- 			bPktInBuf = false;
- 
-@@ -2058,7 +2037,6 @@ static int recv_indicatepkt_reorder(struct adapter *padapter, union recv_frame *
- 		goto _err_exit;
- 	}
- 
--
- 	/* s4. */
- 	/*  Indication process. */
- 	/*  After Packet dropping and Sliding Window shifting as above, we can now just indicate the packets */
-@@ -2086,7 +2064,6 @@ static int recv_indicatepkt_reorder(struct adapter *padapter, union recv_frame *
- 	return _FAIL;
- }
- 
--
- void rtw_reordering_ctrl_timeout_handler(struct timer_list *t)
- {
- 	struct recv_reorder_ctrl *preorder_ctrl =
-@@ -2094,7 +2071,6 @@ void rtw_reordering_ctrl_timeout_handler(struct timer_list *t)
- 	struct adapter *padapter = preorder_ctrl->padapter;
- 	struct __queue *ppending_recvframe_queue = &preorder_ctrl->pending_recvframe_queue;
- 
--
- 	if (padapter->bDriverStopped || padapter->bSurpriseRemoved)
+-	if ((pkt_type == WIFI_ASSOCRSP) || (pkt_type == WIFI_REASSOCRSP))
++	if ((pkt_type == WIFI_ASSOCRSP) || (pkt_type == WIFI_REASSOCRSP)) {
+ 		SetFrameSubType(pwlanhdr, pkt_type);
+-	else
++	} else {
++		rtw_free_xmitbuf(pxmitpriv, pmgntframe->pxmitbuf);
++		rtw_free_xmitframe(pxmitpriv, pmgntframe);
  		return;
++	}
  
-@@ -2242,7 +2218,6 @@ static int recv_func(struct adapter *padapter, union recv_frame *rframe)
- 	return ret;
- }
- 
--
- s32 rtw_recv_entry(union recv_frame *precvframe)
- {
- 	struct adapter *padapter;
-diff --git a/drivers/staging/rtl8723bs/core/rtw_wlan_util.c b/drivers/staging/rtl8723bs/core/rtw_wlan_util.c
-index 82624e46fbf59..ccfbef80c00ca 100644
---- a/drivers/staging/rtl8723bs/core/rtw_wlan_util.c
-+++ b/drivers/staging/rtl8723bs/core/rtw_wlan_util.c
-@@ -341,7 +341,6 @@ void set_channel_bwmode(struct adapter *padapter, unsigned char channel, unsigne
- 
- 	center_ch = rtw_get_center_ch(channel, bwmode, channel_offset);
- 
--
- 	/* set Channel */
- 	if (mutex_lock_interruptible(&(adapter_to_dvobj(padapter)->setch_mutex)))
- 		return;
+ 	pattrib->hdrlen = sizeof(struct ieee80211_hdr_3addr);
+ 	pattrib->pktlen += pattrib->hdrlen;
 -- 
 2.53.0
 
