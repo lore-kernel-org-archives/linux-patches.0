@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0D46384232;
-	Sat, 12 Sep 2026 10:52:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBF623876C3;
+	Sat, 12 Sep 2026 10:52:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789210327; cv=none; b=UhgOzvvQ7tnKLTmvci8pZRmHf+7X9LpDwPs8MYYwBeUAGddZgw5XsofG49wJWlY8ZsiRWrx7VWLFZHHUJBtp6os3tJpFroGX+Ad/3Et9T/C59HIpOCpacM3Tm9GwLNY2c3/i9am5f/xNiwUpPtZPAGCXOpP1Zhsd3dxojI2KHVA=
+	t=1789210331; cv=none; b=mpOvPT9V3tn3bWhfDUJLWWgoVn5TVNm/qP7RG6fDrXaj3MPrX9aCmxY84gdhdZaGHYWlfHfokl/iHqZCKOH7rGQLHf+w31wM3lcYWR5XyLv4ElF4j2K2UoALg+AggP0txaH6JZcToQvqX/stRdg8e478gSiIq630vhImVAitJMQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789210327; c=relaxed/simple;
-	bh=iD1bXkojgDGwNcv1kI1qVpA276YFanX4YyyYnRWsH6I=;
+	s=arc-20240116; t=1789210331; c=relaxed/simple;
+	bh=6FX1NCyqa2Hw2fQh5Zhd510ulFdKcdHsFc2xNjwowgc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=duFDKA4AzrtSszxlQekhCvTz6K0hS72cSesIviFZmSpNzYh8VzSbvSi3cS9+pC8wE7Krmn0jwgH5G+mQ1jGwD54TPrwzAW5c4TklqHtaFWCKwezf7CqUaorjUwCoQnaFm/ncY7ApBGnundpSBeJHAmoJS1lZiNV4Va/vrU4azE4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CIDjY0kM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sKyRUteH44bevlKMeY6UxcibS0xE1hchcB+1VeRqp00BqiYNb2qgM1oNB1OgVXOlhttdabZUnknjqba25iCiHGXS2fVQc2xAyDzKjRb2r1spzXN/P2J2rjGIRVk4F/mrGEpsSNOKEAlYiiYXAZPsAij1sfdVIjMVunrI5uH7gGs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kv6Q1NQx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CIDjY0kM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 986041F000FF;
-	Sat, 12 Sep 2026 10:52:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kv6Q1NQx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D023B1F000FF;
+	Sat, 12 Sep 2026 10:52:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789210325;
-	bh=eQrSWQ81wHR25AxfbJ/rgb9oOr7W8hqCtPbCXew58gY=;
+	s=korg; t=1789210330;
+	bh=SZIixQ0ePtYtSwnyiUx/oqgBcst/KlX01cT+tWSetxs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CIDjY0kM5syRqVl8Bly4l+Bx1dSDdOcyJ5bKgGidpYRnFqpd2wpPZzysAdSDsZjPu
-	 NZuovzZQK4zOU4yPhXcZP8noIi8oEFy2mC04XdMoWwFpxCu2wqCYmCAdmgOQRUOIcu
-	 zyRHkAabaGnrv2Zq69uJsSoXh6vYA1qxoWrd2kpk=
+	b=Kv6Q1NQxW9d1fzM7EYcXr9kQu9ub8QGdqTWTPmmQssokqBXch0w2yrNR6tfNHtkvk
+	 pAgcXLpm/3v5GE8D91zhF0hoWTkfaLtbyjHC1g85iChcJW/e+NACQaQlwZuvHiFjya
+	 Byk4L553j7ArnKOo2AKrvNZY23ydpnbCYvlmGVow=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+ba2afde329fc27e3f22e@syzkaller.appspotmail.com,
-	Filipe Manana <fdmanana@suse.com>,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Bruce Johnston <bjohnsto@redhat.com>,
+	Yu Kuai <yukuai@fygo.io>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1002/1518] btrfs: always wait for ordered extents to avoid OE races
-Date: Sat, 12 Sep 2026 08:52:51 +0200
-Message-ID: <20260912065646.120789006@linuxfoundation.org>
+Subject: [PATCH 6.18 0967/1518] md/raid1: dont set array_frozen in raid1_takeover()
+Date: Sat, 12 Sep 2026 08:52:16 +0200
+Message-ID: <20260912065645.335679834@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -53,272 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Bruce Johnston <bjohnsto@redhat.com>
 
-[ Upstream commit ec78575dde998c21be7e0cb2503b5620f34b6255 ]
+[ Upstream commit dc386aa0ac0a3ec06c9a3ea9b064b073fb72a916 ]
 
-[BUG]
-Syzbot reported a bug that there can be conflicting OEs for the same
-range:
+raid1_takeover() sets conf->array_frozen = 1 on the newly-allocated
+r1conf and nothing ever clears it, so every I/O to the array stalls
+permanently once _wait_barrier() sees it stuck at 1.
 
-  BTRFS critical (device loop4): panic in insert_ordered_extent:264: overlapping ordered extents, existing oe file_offset 16384 num_bytes 430080 flags 0x1089, new oe file_offset 16384 num_bytes 430080 flags 0x80 (errno=-17 Object alrea[  179.162726][ T6897] BTRFS critical (device loop4): panic in insert_ordered_extent:264: overlapping ordered extents, existing oe file_offset 16384 num_bytes 430080 flags 0x1089, new oe file_offset 16384 num_bytes 430080 flags 0x80 (errno=-17 Object already exists)
-  ------------[ cut here ]------------
-  kernel BUG at fs/btrfs/ordered-data.c:264!
-  Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 05/09/2026
-  RIP: 0010:btrfs_alloc_ordered_extent+0x943/0xad0
-  Call Trace:
-   <TASK>
-   cow_file_range+0x744/0x12a0
-   fallback_to_cow+0x5ea/0xa00
-   run_delalloc_nocow+0x110c/0x17a0
-   btrfs_run_delalloc_range+0xbe4/0x1c20
-   writepage_delalloc+0x104d/0x1ba0
-   btrfs_writepages+0x1667/0x28b0
-   do_writepages+0x338/0x560
-   filemap_fdatawrite_range+0x1f2/0x300
-   btrfs_fdatawrite_range+0x54/0xf0
-   btrfs_direct_write+0x6a0/0xc30
-   btrfs_do_write_iter+0x329/0x790
-   do_iter_readv_writev+0x624/0x8d0
-   vfs_writev+0x34c/0x990
-   __se_sys_pwritev2+0x17a/0x2a0
-   do_syscall_64+0x174/0x580
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
-   </TASK>
-  ---[ end trace 0000000000000000 ]---
+This used to be harmless: level_store() called mddev_resume() right
+after pers->run(), which called raid1_quiesce(mddev, 0) and cleared
+array_frozen back to 0 regardless of what raid1_takeover() set. Commit
+b39f35ebe86d ("md: don't quiesce in mddev_suspend()") removed that
+quiesce(mddev, 0) call, so the pre-set now sticks.
 
-[CAUSE]
-Since commit ff66fe666233 ("btrfs: fix incorrect buffered IO fallback
-for append direct writes"), if the direct IO finished short, we will
-revert the isize back to the original one, so that append writes can be
-respected during the buffered fallback.
+setup_conf() already zero-initializes the new r1conf via kzalloc, so
+just don't set array_frozen here.
 
-Normally we rely on lock_and_cleanup_extent_if_need() function during
-buffered writeback to wait for any existing ordered extents.
+Same class of bug as commit 892da88d1cd9 ("md/raid10: fix a
+'conf->barrier' leakage in raid10_takeover()"), also triggered by
+b39f35ebe86d.
 
-But that ordered extent waiting only happens if the start_pos is inside
-the isize.
-Since we have reverted the isize during failed direct IO, we will not
-wait for any ordered extents.
-
-This means we can have a race where the direct IO OE is still in the
-tree, finished but not yet removed, then we're inserting the OE for the
-buffered write, causing the above crash.
-
-[FIX]
-Make the OE wait to be unconditional, to handle the reverted isize
-situation.
-
-And since lock_and_cleanup_extent_if_need() now either lock the
-extents or return -EAGAIN, also remove the branches that handles
-no-extent-locked cases, and rename it to remove the "_if_need" suffix.
-
-The following micro benchmark shows the runtime difference for
-btrfs_buffered_write(), doing `xfs_io -f -c "pwrite 0 1m"` workload,
-all values are the average runtime in nano seconds.
-
-      function runtime              |   before    |     after
- -----------------------------------+-------------+---------------
- lock_and_cleanup_extent_if_need()  |     58.2    |    183.0
- btrfs_buffered_write()             |   2115.6    |   2973.3
-
-The overall runtime of btrfs_buffered_write() is still pretty
-tiny (still less than 3 micro seconds), I'd say the extra cost is still
-acceptable.
-
-An alternative to fix this problem is to wait ordered extents during
-iomap_end() where the isize revert is done.
-
-But that solution will break nowait requirement, as if a nowait direct
-IO finished short, we have to wait for the OEs unconditionally or the
-next append buffered IO can still hit the same problem.
-
-So here we have to move the wait cost to buffered write, but at least
-the code is slightly more streamline.
-
-Reported-by: syzbot+ba2afde329fc27e3f22e@syzkaller.appspotmail.com
-Link: https://syzkaller.appspot.com/bug?extid=ba2afde329fc27e3f22e
-Fixes: ff66fe666233 ("btrfs: fix incorrect buffered IO fallback for append direct writes")
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: b39f35ebe86d ("md: don't quiesce in mddev_suspend()")
+Link: https://issues.redhat.com/browse/RHEL-191802
+Signed-off-by: Bruce Johnston <bjohnsto@redhat.com>
+Link: https://patch.msgid.link/20260803180240.1177104-1-bjohnsto@redhat.com
+Signed-off-by: Yu Kuai <yukuai@fygo.io>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/file.c | 102 +++++++++++++++++++-----------------------------
- 1 file changed, 40 insertions(+), 62 deletions(-)
+ drivers/md/raid1.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/fs/btrfs/file.c b/fs/btrfs/file.c
-index fe78621d4e3d0..a15062f976ba3 100644
---- a/fs/btrfs/file.c
-+++ b/fs/btrfs/file.c
-@@ -881,62 +881,56 @@ static noinline int prepare_one_folio(struct inode *inode, struct folio **folio_
- 
- /*
-  * Locks the extent and properly waits for data=ordered extents to finish
-- * before allowing the folios to be modified if need.
-+ * before allowing the folios to be modified.
-  *
-  * Return:
-- * 1 - the extent is locked
-- * 0 - the extent is not locked, and everything is OK
-+ * 0 - the extent is locked
-  * -EAGAIN - need to prepare the folios again
-  */
- static noinline int
--lock_and_cleanup_extent_if_need(struct btrfs_inode *inode, struct folio *folio,
--				loff_t pos, size_t write_bytes,
--				u64 *lockstart, u64 *lockend, bool nowait,
--				struct extent_state **cached_state)
-+lock_and_cleanup_extent(struct btrfs_inode *inode, struct folio *folio,
-+			loff_t pos, size_t write_bytes,
-+			u64 *lockstart, u64 *lockend, bool nowait,
-+			struct extent_state **cached_state)
- {
- 	struct btrfs_fs_info *fs_info = inode->root->fs_info;
-+	struct btrfs_ordered_extent *ordered;
- 	u64 start_pos;
- 	u64 last_pos;
--	int ret = 0;
- 
- 	start_pos = round_down(pos, fs_info->sectorsize);
- 	last_pos = round_up(pos + write_bytes, fs_info->sectorsize) - 1;
- 
--	if (start_pos < inode->vfs_inode.i_size) {
--		struct btrfs_ordered_extent *ordered;
--
--		if (nowait) {
--			if (!btrfs_try_lock_extent(&inode->io_tree, start_pos,
--						   last_pos, cached_state)) {
--				folio_unlock(folio);
--				folio_put(folio);
--				return -EAGAIN;
--			}
--		} else {
--			btrfs_lock_extent(&inode->io_tree, start_pos, last_pos,
--					  cached_state);
--		}
--
--		ordered = btrfs_lookup_ordered_range(inode, start_pos,
--						     last_pos - start_pos + 1);
--		if (ordered &&
--		    ordered->file_offset + ordered->num_bytes > start_pos &&
--		    ordered->file_offset <= last_pos) {
--			btrfs_unlock_extent(&inode->io_tree, start_pos, last_pos,
--					    cached_state);
-+	if (nowait) {
-+		if (!btrfs_try_lock_extent(&inode->io_tree, start_pos,
-+					   last_pos, cached_state)) {
- 			folio_unlock(folio);
- 			folio_put(folio);
--			btrfs_start_ordered_extent(ordered);
--			btrfs_put_ordered_extent(ordered);
- 			return -EAGAIN;
+diff --git a/drivers/md/raid1.c b/drivers/md/raid1.c
+index 16625b79788bd..1370be1e5cc7b 100644
+--- a/drivers/md/raid1.c
++++ b/drivers/md/raid1.c
+@@ -3480,8 +3480,6 @@ static void *raid1_takeover(struct mddev *mddev)
+ 		mddev->new_chunk_sectors = 0;
+ 		conf = setup_conf(mddev);
+ 		if (!IS_ERR(conf)) {
+-			/* Array must appear to be quiesced */
+-			conf->array_frozen = 1;
+ 			mddev_clear_unsupported_flags(mddev,
+ 				UNSUPPORTED_MDDEV_FLAGS);
  		}
--		if (ordered)
--			btrfs_put_ordered_extent(ordered);
-+	} else {
-+		btrfs_lock_extent(&inode->io_tree, start_pos, last_pos,
-+				  cached_state);
-+	}
- 
--		*lockstart = start_pos;
--		*lockend = last_pos;
--		ret = 1;
-+	ordered = btrfs_lookup_ordered_range(inode, start_pos,
-+					     last_pos - start_pos + 1);
-+	if (ordered &&
-+	    ordered->file_offset + ordered->num_bytes > start_pos &&
-+	    ordered->file_offset <= last_pos) {
-+		btrfs_unlock_extent(&inode->io_tree, start_pos, last_pos,
-+				    cached_state);
-+		folio_unlock(folio);
-+		folio_put(folio);
-+		btrfs_start_ordered_extent(ordered);
-+		btrfs_put_ordered_extent(ordered);
-+		return -EAGAIN;
- 	}
-+	if (ordered)
-+		btrfs_put_ordered_extent(ordered);
-+
-+	*lockstart = start_pos;
-+	*lockend = last_pos;
- 
- 	/*
- 	 * We should be called after prepare_one_folio() which should have locked
-@@ -944,7 +938,7 @@ lock_and_cleanup_extent_if_need(struct btrfs_inode *inode, struct folio *folio,
- 	 */
- 	WARN_ON(!folio_test_locked(folio));
- 
--	return ret;
-+	return 0;
- }
- 
- /*
-@@ -1201,7 +1195,6 @@ static int copy_one_range(struct btrfs_inode *inode, struct iov_iter *iter,
- 	const u64 reserved_start = round_down(start, fs_info->sectorsize);
- 	u64 reserved_len;
- 	struct folio *folio = NULL;
--	int extents_locked;
- 	u64 lockstart;
- 	u64 lockend;
- 	bool only_release_metadata = false;
-@@ -1256,18 +1249,16 @@ static int copy_one_range(struct btrfs_inode *inode, struct iov_iter *iter,
- 		reserved_len = last_block - reserved_start;
- 	}
- 
--	extents_locked = lock_and_cleanup_extent_if_need(inode, folio, start,
--							 write_bytes, &lockstart,
--							 &lockend, nowait,
--							 &cached_state);
--	if (extents_locked < 0) {
--		if (!nowait && extents_locked == -EAGAIN)
-+	ret = lock_and_cleanup_extent(inode, folio, start, write_bytes,
-+				      &lockstart, &lockend, nowait, &cached_state);
-+	if (ret < 0) {
-+		if (!nowait)
- 			goto again;
- 
- 		btrfs_delalloc_release_extents(inode, reserved_len);
- 		release_space(inode, *data_reserved, reserved_start, reserved_len,
- 			      only_release_metadata);
--		return extents_locked;
-+		return ret;
- 	}
- 
- 	copied = copy_folio_from_iter_atomic(folio, offset_in_folio(folio, start),
-@@ -1291,11 +1282,8 @@ static int copy_one_range(struct btrfs_inode *inode, struct iov_iter *iter,
- 
- 		/* No copied bytes, unlock, release reserved space and exit. */
- 		if (copied == 0) {
--			if (extents_locked)
--				btrfs_unlock_extent(&inode->io_tree, lockstart, lockend,
--						    &cached_state);
--			else
--				btrfs_free_extent_state(cached_state);
-+			btrfs_unlock_extent(&inode->io_tree, lockstart, lockend,
-+					    &cached_state);
- 			btrfs_delalloc_release_extents(inode, reserved_len);
- 			release_space(inode, *data_reserved, reserved_start, reserved_len,
- 				      only_release_metadata);
-@@ -1314,17 +1302,7 @@ static int copy_one_range(struct btrfs_inode *inode, struct iov_iter *iter,
- 
- 	ret = btrfs_dirty_folio(inode, folio, start, copied, &cached_state,
- 				only_release_metadata);
--	/*
--	 * If we have not locked the extent range, because the range's start
--	 * offset is >= i_size, we might still have a non-NULL cached extent
--	 * state, acquired while marking the extent range as delalloc through
--	 * btrfs_dirty_page(). Therefore free any possible cached extent state
--	 * to avoid a memory leak.
--	 */
--	if (extents_locked)
--		btrfs_unlock_extent(&inode->io_tree, lockstart, lockend, &cached_state);
--	else
--		btrfs_free_extent_state(cached_state);
-+	btrfs_unlock_extent(&inode->io_tree, lockstart, lockend, &cached_state);
- 
- 	btrfs_delalloc_release_extents(inode, reserved_len);
- 	if (ret) {
 -- 
 2.53.0
 
