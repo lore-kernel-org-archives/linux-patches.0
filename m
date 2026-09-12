@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BB143624BC;
-	Sat, 12 Sep 2026 08:59:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 854453546E1;
+	Sat, 12 Sep 2026 08:59:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789203566; cv=none; b=ZGtzRopMCNSUsMkR933iJBsKLYeqQx2LyLNd+qOLH+3iRxVQ6mfx+sliHaA/y84AQ6O7nHVDglqCeYR/JawqPpWIqeEw4agq4vn1cyKbxvKerw3Fa1npxQb28PBqz3Ydqbum9KKi6HmKbLyxJ1yBOQ42QWCBSMn74nJd81xKzzc=
+	t=1789203571; cv=none; b=ongfY4DWcu5JNrWUQMuSqhQVv/R2o7aFgzqlY8XqB9avAY+2Vd5C+gckIa4544LYjQzoB25hk+1xRZPlI46sV/wQibdhpEbRZVCKE3bWpNAif7s0qXfRc1txi7WtHuyfRxrO1NFatRtLrLSxbtsnWW+6V1PFN3uGposUxyWDROI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789203566; c=relaxed/simple;
-	bh=0k2gq2TiipmKKKQzJhw8OAHdigmedDfgZ5VKwPC/0xg=;
+	s=arc-20240116; t=1789203571; c=relaxed/simple;
+	bh=ne8HUIMw2sq2JJxNOkv+q8O2nFvJtb1ioGIlOnyxTrE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U5XSw6O5DIGVyPMPModkSbgmY0Cd9BUpLJ8PHA2NhnoF5sY6o1v8tegyFd13PvO5mHJlyEK2UY6Ax8KCbLs9BfQO8zZZldiX/mcCByuekh3GzKpX56SdX3YjHUFcBZXuGOvLV1McmPL5xoC3tsU5do2NWvb9Onq5jTpk0mTNX70=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PsB+QYhk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Tq4JPmlqYoGn1Ay1RFtRDmH+gNNItlvWJ8UJzRPKtsQdu0oHqVLR0PMWjsrwA9bcum/eM/ksjde45ioMW4/2xpmEkiCZ5qHlRRQKIdX4x3yCGXqeGPNwu/1YfOYWltYuR8c/owro411Lzu35M109YxQEVIvFS3gtpd16TrNmPy8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DLato0ab; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PsB+QYhk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54DB11F000FF;
-	Sat, 12 Sep 2026 08:59:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DLato0ab"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AF321F000FF;
+	Sat, 12 Sep 2026 08:59:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789203565;
-	bh=LnGOTelyjWgfRIyejbwJq7cVjIaEWnNYFJev9PFe90I=;
+	s=korg; t=1789203570;
+	bh=y/gChCYfFePczFox2EyoDyJG/kloTcTroEp/HLZ7YBM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PsB+QYhkkaobrhXfZuDfYfP/ON1+L7uoPTYmYYjSIpg13fPHTVD46Bh2bwD7L1Rqk
-	 tYEfLZhCgvm0F4zqEHaXv+e+BVMmnayxpZnwjx/hEPh5qFyRMpW/+f4qtYg4JKW3AB
-	 ZiyorDOGi2ebPUPificcNk5f802bcedWGT9pxta0=
+	b=DLato0abYJ+7yTMTgypjOAh1UPPjtqMqHb0xDM31cR4swHMKT+ekU4CKu/T2pSSrS
+	 tDNIxuOUT9Z6f5M8OsOg1fWn4nU21J0Bk4JQDa+RcWN+pL6Bm/g0FAOIQcJoQafuc7
+	 j1IHRMLvir1B77SU9rsnJzHZQimCdoGMnogsAw68=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matti Vaittinen <mazziesaccount@gmail.com>,
-	Kalle Niemi <kaleposti@gmail.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Rui Qi <qirui.001@bytedance.com>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1417/1815] power: supply: bd71828: Drop duplicate power-supply property
-Date: Sat, 12 Sep 2026 08:52:47 +0200
-Message-ID: <20260912065722.286487442@linuxfoundation.org>
+Subject: [PATCH 7.2 1435/1815] selftests/cgroup: Preserve CPU hotplug write errors
+Date: Sat, 12 Sep 2026 08:53:05 +0200
+Message-ID: <20260912065722.705803966@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,36 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matti Vaittinen <mazziesaccount@gmail.com>
+From: Rui Qi <qirui.001@bytedance.com>
 
-[ Upstream commit 6605209ceb53eaa25582d1f4726217bd09eff392 ]
+[ Upstream commit ddabc5dbd262f3ca981e679ddae99ed7a9adb279 ]
 
-The POWER_SUPPLY_PROP_HEALTH is added into property-array twice.
+The cpuset partition root state selftest checks several CPU hotplug
+transitions. If writing to a CPU online file fails, the helper still
+runs pause afterwards and returns the status of pause instead of the
+failed write.
 
-Drop the duplicate property.
+This hides the real hotplug failure and can make later checks run
+against expectations for a transition that never happened. Move the
+write before the bookkeeping and return when it fails, so callers can
+observe the hotplug error and the test does not record a CPU as offline
+unless the offline operation actually succeeded.
 
-Signed-off-by: Matti Vaittinen <mazziesaccount@gmail.com>
-Fixes: 5bff79dad20a ("power: supply: Add bd718(15/28/78) charger driver")
-Tested-by: Kalle Niemi <kaleposti@gmail.com>
-Link: https://patch.msgid.link/518283ec9163943fcd1b53ad61fc3025fd346d83.1786356145.git.mazziesaccount@gmail.com
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Also change the O* command handler in set_ctrl_state() to use
+"eval $COMM $REDIRECT" like all other handlers. The previous version
+set COMM but still called write_cpu_online directly, bypassing the
+redirect that captures stderr for error reporting.
+
+Changes since v1:
+ - Use eval $COMM $REDIRECT in the O* handler instead of calling
+   write_cpu_online directly (Waiman Long)
+
+Fixes: a8c52eba880a ("kselftest/cgroup: Add cpuset v2 partition root state test")
+Signed-off-by: Rui Qi <qirui.001@bytedance.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/bd71828-power.c | 1 -
- 1 file changed, 1 deletion(-)
+ tools/testing/selftests/cgroup/test_cpuset_prs.sh | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/power/supply/bd71828-power.c b/drivers/power/supply/bd71828-power.c
-index 98e9b096cd1c9..792596d96e624 100644
---- a/drivers/power/supply/bd71828-power.c
-+++ b/drivers/power/supply/bd71828-power.c
-@@ -639,7 +639,6 @@ static const enum power_supply_property bd71828_charger_props[] = {
+diff --git a/tools/testing/selftests/cgroup/test_cpuset_prs.sh b/tools/testing/selftests/cgroup/test_cpuset_prs.sh
+index 8e21e9fc439c0..b2e60671273ec 100755
+--- a/tools/testing/selftests/cgroup/test_cpuset_prs.sh
++++ b/tools/testing/selftests/cgroup/test_cpuset_prs.sh
+@@ -520,6 +520,7 @@ write_cpu_online()
+ 	CPU=${1%=*}
+ 	VAL=${1#*=}
+ 	CPUFILE=//sys/devices/system/cpu/cpu${CPU}/online
++	echo $VAL > $CPUFILE || return 1
+ 	if [[ $VAL -eq 0 ]]
+ 	then
+ 		OFFLINE_CPUS="$OFFLINE_CPUS $CPU"
+@@ -529,7 +530,6 @@ write_cpu_online()
+ 					sort | uniq -u)
+ 		}
+ 	fi
+-	echo $VAL > $CPUFILE
+ 	pause 0.05
+ }
  
- static const enum power_supply_property bd71828_battery_props[] = {
- 	POWER_SUPPLY_PROP_STATUS,
--	POWER_SUPPLY_PROP_HEALTH,
- 	POWER_SUPPLY_PROP_VOLTAGE_NOW,
- 	POWER_SUPPLY_PROP_HEALTH,
- 	POWER_SUPPLY_PROP_PRESENT,
+@@ -597,7 +597,8 @@ set_ctrl_state()
+ 			eval $COMM $REDIRECT
+ 			;;
+ 		    O*) VAL=${CMD#?}
+-			write_cpu_online $VAL
++			COMM="write_cpu_online $VAL"
++			eval $COMM $REDIRECT
+ 			;;
+ 		    T*) COMM="echo 0 > $TFILE"
+ 			eval $COMM $REDIRECT
 -- 
 2.53.0
 
