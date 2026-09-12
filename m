@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9753E368D5A;
-	Sat, 12 Sep 2026 07:55:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 667F0368D5A;
+	Sat, 12 Sep 2026 07:55:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789199737; cv=none; b=UzU28pOhT8JXZMgfjN3yjPqenwWjxosOXX98dZx2RJxJGLGZ3z8NOT7yUAdJz+Z8j2oQc06qMl1O94EaQb0tHv3Nw1PZuUSf3bOtBqwY0eSJ4CBR/FwQBePpJQdi5I0MNKhwIcby1RxWPZjNF7AABHS3k5MBGdICJ5K7kiBKy8A=
+	t=1789199742; cv=none; b=fXJ4jVTiDygBcCrJqDN43adUWUvICy/F1WjcHvvURy9wVr8G3VBT9e3ImEptAv5WdbCwH/UsOVvv7wslD/dJLX7mSMCgya5Y/VmnLJbKwMAXRhZzIhyRGWvhW29+05GxncZJY3Ad/1JQjf5BDOLOQi+8o5ns+BNmuSmz+uPIoc8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789199737; c=relaxed/simple;
-	bh=2bUN+tXKdpaWcCu67b9byIbxUDme3IA9g2em9Nu38+Q=;
+	s=arc-20240116; t=1789199742; c=relaxed/simple;
+	bh=OtnRbOaY0hzsTNWqZlo5Ns3E36fgahZ9E1QIYrhfarg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PENys+GsMa9OgrOsSl63eejJz+tGqZ+R/obw5lvQX6lXrHTQ+sxABEh+0aDJhDO0u6q3DSvEbTOJPv8/cAugDkDpJdmMyUf5mGjMbi4BuffaK/T+lvty6Awk4rlDHL8icUgQi/Tdnn8MyJhAC4BsVrMcDLllfurq8Vd52SBBZ/4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pmq2BbfI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LNqyoPS9XqFE7ZIXeKWFUbl4eJZujAkjhXpdDmpN7X8jcmJ9WKQq90D6et+Ev2+GWh0eLb7cw5jlXZSK65ynAQrXcb4R2pwfELAW933ybiNVPe8+4DO87waGSRiCzLlUc6Nbz6ZpAXumVUv9LDwf2BfV83H61lZQkUco7b0hpoY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p0wA13/e; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pmq2BbfI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC8771F00893;
-	Sat, 12 Sep 2026 07:55:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p0wA13/e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F13FA1F000FF;
+	Sat, 12 Sep 2026 07:55:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789199736;
-	bh=5QCOfcrfMSsgMQ5rZpUJZnd4r5bEpB3g2KMQWe6cMCM=;
+	s=korg; t=1789199741;
+	bh=l4Udm6oZGLi5OANCRy613WHp7nXBSu+lxQIz/FgNONE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pmq2BbfITj2XkVuBz04baZ8QcOytmFT4BRZOL1MpMaEenqrb9ODZTBGpty+wBo9+7
-	 bDDfKX4UITFw8xfZuzxpQO8kZp0IQ0Pkesawqa3VEJYSyk+vEpqz9gRV1m4OqHsWjo
-	 54WcacE/iPhD7gotDENrRlJBMYjKztvp6/jCQdk8=
+	b=p0wA13/eojcJE17h+RRNxWnkLXUYStkU3j9umFyyoI0vqwggRA2rDHj9ez0+eq6Ud
+	 OHPfoz9yc+jPETn3ghzlgDXzWTYvWjcmWTUZXrzTU3gBOSM4U38kjp2VXQFhTwZS3r
+	 Qpz9KZlwk6sz/ToTblqxphQUvbp64H77oX5z45e0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Vladimir Zapolskiy <vz@kernel.org>,
-	Vladimir Zapolskiy <vz@mleia.com>,
+	Leon Hwang <leon.hwang@linux.dev>,
+	Pu Lehui <pulehui@huawei.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0647/1815] ARM: lpc32xx: only run SoC init on LPC32xx hardware
-Date: Sat, 12 Sep 2026 08:39:57 +0200
-Message-ID: <20260912065704.070315187@linuxfoundation.org>
+Subject: [PATCH 7.2 0648/1815] bpf: Fix WARNING in bpf_tracing_link_release
+Date: Sat, 12 Sep 2026 08:39:58 +0200
+Message-ID: <20260912065704.092285604@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -53,104 +53,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Leon Hwang <leon.hwang@linux.dev>
 
-[ Upstream commit 717ea4000867e6dffee5e1ed92150a9704ae9f68 ]
+[ Upstream commit 61aaa8782bec59ecffd22e030f54ef9351bcabf9 ]
 
-lpc32xx_check_uid() and lpc32xx_pm_init() are arch_initcalls that poke
-LPC32xx-only registers. Since the multiplatform conversion they also
-run on other ARCH_MULTI_V5 boards where access faults e.g. on versatile:
+The trampoline could be corrupted by the blindly
+'tr->flags = BPF_TRAMP_F_TAIL_CALL_CTX' in verifier.
 
-  Unable to handle kernel paging request at virtual address f4004130
-  PC is at lpc32xx_check_uid+0x2c/0x9c
+1. A fexit attached to a tail_call_reachable prog. 'tr->flags' became
+   'BPF_TRAMP_F_CALL_ORIG | BPF_TRAMP_F_TAIL_CALL_CTX'. And, the
+   trampoline would poke the target prog's nop insn using jmp insn instead
+   of call insn.
+2. Another fexit loaded with the same tail_call_reachable prog target.
+   'tr->flags' became 'BPF_TRAMP_F_TAIL_CALL_CTX'.
+3. Close the first fexit link. Due to no BPF_TRAMP_F_CALL_ORIG in
+   'tr->flags', the trampoline will fail to restore the prog's nop insn
+   using call insn.
 
-Drop the arch_initcall() registrations and call both functions directly
-from lpc3250_machine_init(), the machine's .init_machine hook.
-The calls are placed in link order (common.c, pm.c, phy3250.c) to
-keep their previous relative ordering.
+[    3.410719] WARNING: kernel/bpf/syscall.c:3551 at bpf_tracing_link_release+0x53/0x60, CPU#1: test_progs/98
+...
+[    3.428793]  bpf_link_free+0x58/0x130
+[    3.429293]  bpf_link_release+0x23/0x30
 
-Fixes: 75bf1bd7d2f9 ("ARM: lpc32xx: allow multiplatform build")
-Suggested-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Reviewed-by: Vladimir Zapolskiy <vz@kernel.org>
-Reviewed-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Vladimir Zapolskiy <vz@mleia.com>
+Fix the warning by updating 'tr->flags' with '|=' and lock.
+
+Fixes: 2b5dcb31a19a ("bpf, x64: Fix tailcall infinite loop")
+Signed-off-by: Leon Hwang <leon.hwang@linux.dev>
+Reviewed-by: Pu Lehui <pulehui@huawei.com>
+Acked-by: Jiri Olsa <jolsa@kernel.org>
+Link: https://lore.kernel.org/bpf/20260722151909.69142-2-leon.hwang@linux.dev
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mach-lpc32xx/common.c  | 5 +----
- arch/arm/mach-lpc32xx/common.h  | 2 ++
- arch/arm/mach-lpc32xx/phy3250.c | 2 ++
- arch/arm/mach-lpc32xx/pm.c      | 5 +----
- 4 files changed, 6 insertions(+), 8 deletions(-)
+ include/linux/bpf.h     | 2 ++
+ kernel/bpf/trampoline.c | 7 +++++++
+ kernel/bpf/verifier.c   | 2 +-
+ 3 files changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm/mach-lpc32xx/common.c b/arch/arm/mach-lpc32xx/common.c
-index 304ea61a07160..35ed3569c5a35 100644
---- a/arch/arm/mach-lpc32xx/common.c
-+++ b/arch/arm/mach-lpc32xx/common.c
-@@ -106,7 +106,7 @@ void __init lpc32xx_map_io(void)
- 	iotable_init(lpc32xx_io_desc, ARRAY_SIZE(lpc32xx_io_desc));
- }
- 
--static int __init lpc32xx_check_uid(void)
-+void __init lpc32xx_check_uid(void)
- {
- 	u32 uid[4];
- 
-@@ -119,7 +119,4 @@ static int __init lpc32xx_check_uid(void)
- 		system_serial_low = uid[0];
- 		system_serial_high = uid[1];
- 	}
--
--	return 1;
- }
--arch_initcall(lpc32xx_check_uid);
-diff --git a/arch/arm/mach-lpc32xx/common.h b/arch/arm/mach-lpc32xx/common.h
-index 32f0ad2178077..06b20bea324e1 100644
---- a/arch/arm/mach-lpc32xx/common.h
-+++ b/arch/arm/mach-lpc32xx/common.h
-@@ -16,6 +16,8 @@
-  * Other arch specific structures and functions
-  */
- extern void __init lpc32xx_map_io(void);
-+extern void __init lpc32xx_check_uid(void);
-+extern void __init lpc32xx_pm_init(void);
- extern void __init lpc32xx_serial_init(void);
+diff --git a/include/linux/bpf.h b/include/linux/bpf.h
+index 31c1fef6b59b1..52eedb71d6eb7 100644
+--- a/include/linux/bpf.h
++++ b/include/linux/bpf.h
+@@ -1524,6 +1524,7 @@ int bpf_trampoline_multi_attach(struct bpf_prog *prog, u32 *ids,
+ 				struct bpf_tracing_multi_link *link);
+ int bpf_trampoline_multi_detach(struct bpf_prog *prog,
+ 				struct bpf_tracing_multi_link *link);
++void bpf_trampoline_set_flags(struct bpf_trampoline *tr, u32 flags);
  
  /*
-diff --git a/arch/arm/mach-lpc32xx/phy3250.c b/arch/arm/mach-lpc32xx/phy3250.c
-index 66701bf432488..ddc6333ca55da 100644
---- a/arch/arm/mach-lpc32xx/phy3250.c
-+++ b/arch/arm/mach-lpc32xx/phy3250.c
-@@ -71,6 +71,8 @@ static const struct of_dev_auxdata lpc32xx_auxdata_lookup[] __initconst = {
- 
- static void __init lpc3250_machine_init(void)
+  * When the architecture supports STATIC_CALL replace the bpf_dispatcher_fn
+@@ -1647,6 +1648,7 @@ static inline int bpf_trampoline_multi_detach(struct bpf_prog *prog,
  {
-+	lpc32xx_check_uid();
-+	lpc32xx_pm_init();
- 	lpc32xx_serial_init();
- 
- 	of_platform_default_populate(NULL, lpc32xx_auxdata_lookup, NULL);
-diff --git a/arch/arm/mach-lpc32xx/pm.c b/arch/arm/mach-lpc32xx/pm.c
-index 2572bd89a5e8d..9b5c5e1462ed3 100644
---- a/arch/arm/mach-lpc32xx/pm.c
-+++ b/arch/arm/mach-lpc32xx/pm.c
-@@ -120,7 +120,7 @@ static const struct platform_suspend_ops lpc32xx_pm_ops = {
- #define EMC_DYN_MEM_CTRL_OFS 0x20
- #define EMC_SRMMC           (1 << 3)
- #define EMC_CTRL_REG io_p2v(LPC32XX_EMC_BASE + EMC_DYN_MEM_CTRL_OFS)
--static int __init lpc32xx_pm_init(void)
-+void __init lpc32xx_pm_init(void)
- {
- 	/*
- 	 * Setup SDRAM self-refresh clock to automatically disable o
-@@ -129,7 +129,4 @@ static int __init lpc32xx_pm_init(void)
- 	__raw_writel(__raw_readl(EMC_CTRL_REG) | EMC_SRMMC, EMC_CTRL_REG);
- 
- 	suspend_set_ops(&lpc32xx_pm_ops);
--
--	return 0;
+ 	return -ENOTSUPP;
  }
--arch_initcall(lpc32xx_pm_init);
++static inline void bpf_trampoline_set_flags(struct bpf_trampoline *tr, u32 flags) {}
+ #endif
+ 
+ struct bpf_func_info_aux {
+diff --git a/kernel/bpf/trampoline.c b/kernel/bpf/trampoline.c
+index 6eadf64f7ec90..129d07db117ec 100644
+--- a/kernel/bpf/trampoline.c
++++ b/kernel/bpf/trampoline.c
+@@ -670,6 +670,13 @@ static struct bpf_tramp_image *bpf_tramp_image_alloc(u64 key, int size)
+ 	return ERR_PTR(err);
+ }
+ 
++void bpf_trampoline_set_flags(struct bpf_trampoline *tr, u32 flags)
++{
++	trampoline_lock(tr);
++	tr->flags |= flags;
++	trampoline_unlock(tr);
++}
++
+ static int bpf_trampoline_update(struct bpf_trampoline *tr, bool lock_direct_mutex,
+ 				 const struct bpf_trampoline_ops *ops, void *data)
+ {
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 22a122403a2e3..072275c7d4be6 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -19444,7 +19444,7 @@ static int check_attach_btf_id(struct bpf_verifier_env *env)
+ 		return -ENOMEM;
+ 
+ 	if (tgt_prog && tgt_prog->aux->tail_call_reachable)
+-		tr->flags = BPF_TRAMP_F_TAIL_CALL_CTX;
++		bpf_trampoline_set_flags(tr, BPF_TRAMP_F_TAIL_CALL_CTX);
+ 
+ 	prog->aux->dst_trampoline = tr;
+ 	return 0;
 -- 
 2.53.0
 
