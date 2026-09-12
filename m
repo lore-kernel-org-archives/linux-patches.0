@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DFAF38E8CB;
-	Sat, 12 Sep 2026 19:51:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45703345EB5;
+	Sat, 12 Sep 2026 19:51:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789242661; cv=none; b=P+hvZoXZYmzHbNFeL3QKrySBpmt+zTcsxBYyg+V9LQF1KLtHMoNrofkzaKoSVqy4uX+tPS/m8OWt4EqLCrYSTxeYBTsCNro3vHN4DNiK6QCXGCTO37b0zU9rSc29Uc1poqb4UEAUiQw9X25xU5C4WO/uUKjKu9g7j4S5QH7KMPo=
+	t=1789242664; cv=none; b=Okm5GJR/ZaDMUYRECIFywHtnni3PDW2u71AtgCDbIdD3BXdriBnqayAvV4++kb8opobCgEmILIWRi6xly3T45P0u/kPgzAtD5gKr93jAd0QWQQR8Mv1BXkdJ4INE5lNxXEwcMT8tf37bC41jPcX7Wy+pPVD/fSHmm2+/mZAepD8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789242661; c=relaxed/simple;
-	bh=N9tylSDiClWMoshZkIHvZlB1Mj70i8rxdL58ssw/b3g=;
+	s=arc-20240116; t=1789242664; c=relaxed/simple;
+	bh=zmZIWy54c1mzrW4TkosrvR8/SBJlwallOr1ks9eapG0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BDQLJ+DyZpc9ADXEWFtG7h0MIltQb1JKkyk5Y+Vj++gMVBrbCoTmhzoOB3/N+2lkAR59j6sXK1bQblJ0cfbKuwJQ/3W/8teIj/jClxQLPUyofymqtm9jXY8JWFgIQujBAUESvZSXwlPODNLZaf85uKK4JqlmsBi7U8Zg1Y/WKhg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NGGK5jAw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UhQ9J+r1q5kDdh0GQ2+YzpAcciu/iJ7JAtQTkRHQQLEOc11XMf6o6o/G5lyVKX/mi5KcZ50H8r8ZkOgPFR1mX0LnbM2ygEivB0pLkrHpniWnL4WxIsU5NWdbFG0CbXr1zpU2OB99IZTJ7Ag9xohA8iCkQMHbsLdC93V6BAIfdt4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BSD3M9cu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NGGK5jAw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB35C1F000FF;
-	Sat, 12 Sep 2026 19:50:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BSD3M9cu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0B6B1F000FF;
+	Sat, 12 Sep 2026 19:51:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789242660;
-	bh=PiLhsnIzENQR9AUzV/4uFjuckjtAL6vq4+ixeETfQN8=;
+	s=korg; t=1789242663;
+	bh=8HIWbjA+TIYhmUpBjqZT8fhocF1XfUL+l+c9KmQXnlA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NGGK5jAweZCYdmZqclZv2lpGRjHRq+1Odb4inCQJ9HQZetophOlRx0nH2GPvFPSJt
-	 qdBQJ6AQHX/yb57SV/MrTdIc4LE3DiVu99QaYforZsgMPCaDBr+UgabCMIIcar6GIV
-	 ZkbEMSGIduMBYQY8NdjGLxwu5uFWrmQtdF2V2Rkc=
+	b=BSD3M9cuMMO1EEKCg0mFt0MgT5Rrt7N1law4y9ZomhGs2fCrTpdSEuFWI8QUn3JPb
+	 JIeKb32EfZtDd1efsU7b4UbrK9l1xanm/3XKD926B0LlAcTxvogFEE2c3ZTKYnyd4C
+	 76BNS1Z1kce4T+DZ6Xyfd9I5qCP0hMaGDb0xtJPY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Sashiko AI review <sashiko-bot@kernel.org>,
+	Chen Pei <cp0613@linux.alibaba.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 483/798] ACPI: processor: validate MADT IOAPIC entry bounds
-Date: Sat, 12 Sep 2026 09:01:51 +0200
-Message-ID: <20260912065528.211506634@linuxfoundation.org>
+Subject: [PATCH 5.10 484/798] ACPI: PCI: Clear driver_data on all paths that free the acpi_pci_root
+Date: Sat, 12 Sep 2026 09:01:52 +0200
+Message-ID: <20260912065528.234457092@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -51,97 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Chen Pei <cp0613@linux.alibaba.com>
 
-[ Upstream commit 2c50ffdc73f3a70d745d249f509fc290754121e6 ]
+[ Upstream commit 8a742141f7ab84975aa758b775567ef4740ef0cf ]
 
-The IOAPIC hotplug lookup parses both MADT and _MAT records directly.
-The MADT walk previously used a subtable's declared length to advance
-the cursor after only locating a generic header.  The _MAT path likewise
-passed a generic header to the IOAPIC helper.
+acpi_pci_root_add() assigns the freshly allocated root to
+device->driver_data before dmar_device_add() and pci_acpi_scan_root().
+Both failure paths reach the end: label where root is kfree()'d, but
+only the pci_acpi_scan_root() path clears driver_data first.
 
-Validate that a current record has a complete generic header, that its
-declared length is contained in the available record range, and that a
-typed IOAPIC record contains the full fixed IOAPIC body before reading
-its fields.  Use the same relation for both MADT and _MAT provider
-paths.
+When dmar_device_add() fails during a hot-add, root is freed while
+device->driver_data still points at it.  The ACPI core does not clear
+driver_data on attach failure, so a later acpi_pci_find_root() call may
+dereference this dangling pointer.
 
-Fixes: ecf5636dcd59 ("ACPI: Add interfaces to parse IOAPIC ID for IOAPIC hotplug")
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260715083253.22831-1-pengpeng@iscas.ac.cn
+acpi_pci_root_remove() has the same problem: it frees root without
+clearing device->driver_data, leaving a dangling pointer behind after
+the root bridge is removed.
+
+Move the NULL assignment to the shared end: label so every error path in
+acpi_pci_root_add() clears driver_data before freeing root, and clear it
+in acpi_pci_root_remove() as well, so the object is never left reachable
+through driver_data after being freed.
+
+Fixes: db89b4f0dbab ("ACPI: catch calls of acpi_driver_data on pointer of wrong type")
+Reported-by: Sashiko AI review <sashiko-bot@kernel.org>
+Link: https://sashiko.dev/#/patchset/20260526025118.38935-1-cp0613@linux.alibaba.com
+Link: https://sashiko.dev/#/patchset/20260707121258.11640-1-cp0613@linux.alibaba.com
+Signed-off-by: Chen Pei <cp0613@linux.alibaba.com>
+Link: https://patch.msgid.link/20260715135048.3278-1-cp0613@linux.alibaba.com
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/processor_core.c | 31 +++++++++++++++++++++++++------
- 1 file changed, 25 insertions(+), 6 deletions(-)
+ drivers/acpi/pci_root.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/acpi/processor_core.c b/drivers/acpi/processor_core.c
-index eae7efae3b5cf..63c787f142ef0 100644
---- a/drivers/acpi/processor_core.c
-+++ b/drivers/acpi/processor_core.c
-@@ -262,11 +262,26 @@ int acpi_get_cpuid(acpi_handle handle, int type, u32 acpi_id)
- EXPORT_SYMBOL_GPL(acpi_get_cpuid);
- 
- #ifdef CONFIG_ACPI_HOTPLUG_IOAPIC
--static int get_ioapic_id(struct acpi_subtable_header *entry, u32 gsi_base,
-+static bool madt_entry_is_valid(struct acpi_subtable_header *entry,
-+				unsigned long end)
-+{
-+	unsigned long start = (unsigned long)entry;
-+
-+	if (start >= end || end - start < sizeof(*entry))
-+		return false;
-+
-+	return entry->length >= sizeof(*entry) && entry->length <= end - start;
-+}
-+
-+static int get_ioapic_id(struct acpi_subtable_header *entry,
-+			 const unsigned long end, u32 gsi_base,
- 			 u64 *phys_addr, int *ioapic_id)
- {
- 	struct acpi_madt_io_apic *ioapic = (struct acpi_madt_io_apic *)entry;
- 
-+	if (!madt_entry_is_valid(entry, end) || BAD_MADT_ENTRY(ioapic, end))
-+		return 0;
-+
- 	if (ioapic->global_irq_base != gsi_base)
- 		return 0;
- 
-@@ -287,17 +302,19 @@ static int parse_madt_ioapic_entry(u32 gsi_base, u64 *phys_addr)
- 		return apic_id;
- 
- 	entry = (unsigned long)madt;
-+	if (madt->header.length < sizeof(*madt))
-+		return apic_id;
- 	madt_end = entry + madt->header.length;
- 
- 	/* Parse all entries looking for a match. */
- 	entry += sizeof(struct acpi_table_madt);
--	while (entry + sizeof(struct acpi_subtable_header) < madt_end) {
-+	while (madt_entry_is_valid((struct acpi_subtable_header *)entry,
-+				   madt_end)) {
- 		hdr = (struct acpi_subtable_header *)entry;
- 		if (hdr->type == ACPI_MADT_TYPE_IO_APIC &&
--		    get_ioapic_id(hdr, gsi_base, phys_addr, &apic_id))
-+		    get_ioapic_id(hdr, madt_end, gsi_base, phys_addr, &apic_id))
- 			break;
--		else
--			entry += hdr->length;
-+		entry += hdr->length;
+diff --git a/drivers/acpi/pci_root.c b/drivers/acpi/pci_root.c
+index d972ea057a035..326c3169320ce 100644
+--- a/drivers/acpi/pci_root.c
++++ b/drivers/acpi/pci_root.c
+@@ -609,7 +609,6 @@ static int acpi_pci_root_add(struct acpi_device *device,
+ 		dev_err(&device->dev,
+ 			"Bus %04x:%02x not present in PCI namespace\n",
+ 			root->segment, (unsigned int)root->secondary.start);
+-		device->driver_data = NULL;
+ 		result = -ENODEV;
+ 		goto remove_dmar;
  	}
+@@ -645,6 +644,7 @@ static int acpi_pci_root_add(struct acpi_device *device,
+ 	if (hotadd)
+ 		dmar_device_remove(handle);
+ end:
++	device->driver_data = NULL;
+ 	kfree(root);
+ 	return result;
+ }
+@@ -668,6 +668,7 @@ static void acpi_pci_root_remove(struct acpi_device *device)
  
- 	return apic_id;
-@@ -324,7 +341,9 @@ static int parse_mat_ioapic_entry(acpi_handle handle, u32 gsi_base,
+ 	pci_unlock_rescan_remove();
  
- 	header = (struct acpi_subtable_header *)obj->buffer.pointer;
- 	if (header->type == ACPI_MADT_TYPE_IO_APIC)
--		get_ioapic_id(header, gsi_base, phys_addr, &apic_id);
-+		get_ioapic_id(header,
-+			      (unsigned long)header + obj->buffer.length,
-+			      gsi_base, phys_addr, &apic_id);
++	device->driver_data = NULL;
+ 	kfree(root);
+ }
  
- exit:
- 	kfree(buffer.pointer);
 -- 
 2.53.0
 
