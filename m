@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 058BF361DDC;
-	Sat, 12 Sep 2026 13:13:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B90CC34252D;
+	Sat, 12 Sep 2026 13:13:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789218808; cv=none; b=kHT6RoERIas0XUsRXSJXegtPjNSK5mU+tLBYIvAx5uAEEvCf5IKxTIm84gzT2foCI+cgWe0OU9h+PLW4u+KnAfns0BT2Oof/G7y1NMJJTIDKxgZnJqImK+JE6Wm1KGdkz0yi9m4WWtka6Q6y3tnQdBnkd52o24NjycybP5T8ryM=
+	t=1789218812; cv=none; b=K9mLi+mKUWIgpD+jQDR+90FcmbylA1tO4OZFzB8Mcu5nrvmv0Vo9ymgxW+cmzp/5NIIMVVe/HKSstImzwHHHO4REfOXCKbYJszyQxxjA8W84Zdt8qDw+EnPffUrKRsDMWgG3shqnvXoWMf+V4Gmuw6GRfWuK+Gu8RYwGmzuhdZU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789218808; c=relaxed/simple;
-	bh=x30b1wa3TZLtGFYJTvylVH02ahtU1kVM9fmEoW5MBX4=;
+	s=arc-20240116; t=1789218812; c=relaxed/simple;
+	bh=3+cCT15YIHuhxodceqXPusKCXhX5mY6ot834mrlmGWU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=i9CDYQtmqyND6YynxnhmyqOGgx93/LAjgZIIznxcu7ZrK7Q9DGvI5lWKpETmUUXIAsMR+JXKguJ7JPGgpPehPI9ckPOuaHCCHRoL3psuGw1IhXiST67QVLbKlWkG0wz1JcgmPq5bbboZ7xnd8XM3SFNo+LdS+hOklSxAwh4wWUw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v0V7BzEs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XCTOxulD4ibl4QmuicaacO3kg0hcDMF8TNgzgYUean7jnRUknOJI5HcQesaSHQlKalI13fD7vie+uSoxBngWbv+NnsY/zsb239Bv6Pv54Q6PSi9I2KFIsoLQiXoo7KEIScwE+3D8h1siL8Y/q/wJagoNQHvJvqZkne/zAonN9TU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X5x+YQHj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v0V7BzEs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3977B1F000FF;
-	Sat, 12 Sep 2026 13:13:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X5x+YQHj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCE031F000FF;
+	Sat, 12 Sep 2026 13:13:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789218806;
-	bh=eRV3jaK+e/O12naa2GWe1OmhFfzZ6s/Vl3lF4/LCKsM=;
+	s=korg; t=1789218811;
+	bh=tvLVVLPsb5uqOws6HUOxeTUeRIy17dOGCTj1X/kfi0k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=v0V7BzEsWCtULumIEmlyFIU1rG2QJl0WolOT+pBA7cTT2djeRUBPyuPYv7M+Q+UDT
-	 stjMQ6H9E8kIvVNA1yrTogUxM9Xo1DGZMaHsac/eHZmK3ysOoi6jd4mWkrLB+3To5Q
-	 9VaaxMO2WbGFM0W0W2L4x5xUeyxNh2eCXpzHaqJw=
+	b=X5x+YQHjQ77uyWihVAVVIynPbC9w/LfoMSmNewJXv7VtRmlp7XT7pU4WAm0cERjNn
+	 egsvOnVQ1VG+4miBSFRcR0NoG+aH2LcJCM58NoA3BZgLlkvMo1VsALa0G9KO9LW52L
+	 FZ4e+MXLai8Q7PimJnpz1cXR7S/8pccWh4jesuR0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikolay Kulikov <nikolayof23@gmail.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Ruoyu Wang <ruoyuw560@gmail.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Jay Vosburgh <jv@jvosburgh.net>,
+	Hangbin Liu <liuhangbin@kylinos.cn>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1221/1376] mlxbf-bootctl: fix the build error with FIELD_PREP()
-Date: Sat, 12 Sep 2026 09:00:47 +0200
-Message-ID: <20260912065634.762491940@linuxfoundation.org>
+Subject: [PATCH 6.12 1222/1376] bonding: initialize err for empty target lists
+Date: Sat, 12 Sep 2026 09:00:48 +0200
+Message-ID: <20260912065634.783847695@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -45,50 +48,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nikolay Kulikov <nikolayof23@gmail.com>
+From: Ruoyu Wang <ruoyuw560@gmail.com>
 
-[ Upstream commit 46b14c6f11f558362391e308f4f184ee867ef58f ]
+[ Upstream commit 8ccc9bf9afeeb46a437081c07154fbf5964682b2 ]
 
-rsh_log_store() calls the FIELD_PREP() macro without including the
-required header file, resulting a build error:
+Empty NLA_NESTED attributes are valid, and bonding uses them to clear
+the ARP and NS target lists. When either target attribute is empty,
+nla_for_each_nested() does not execute, so err retains an uninitialized
+value before it is tested. The request can consequently return an
+unpredictable error after clearing the targets.
 
-  CC      drivers/platform/mellanox/mlxbf-bootctl.o
-drivers/platform/mellanox/mlxbf-bootctl.c: In function ‘rsh_log_store’:
-drivers/platform/mellanox/mlxbf-bootctl.c:429:16: error: implicit declaration of function ‘FIELD_PREP’ [-Wimplicit-function-declaration]
-  429 |         data = FIELD_PREP(MLXBF_RSH_LOG_TYPE_MASK, MLXBF_RSH_LOG_TYPE_MSG);
-      |                ^~~~~~~~~~
+Initialize err to zero so an empty target list completes successfully.
+Non-empty lists still propagate errors from __bond_opt_set() unchanged.
 
-Fix this by including the <linux/bitfield.h> file.
+This issue was found by a static analysis checker and confirmed by manual
+source review.
 
-Fixes: e9d1b2d0f7d0 ("mlxbf-bootctl: Add sysfs file for BlueField boot log")
-Signed-off-by: Nikolay Kulikov <nikolayof23@gmail.com>
-Link: https://patch.msgid.link/20260810-mellanox_fix_implicit_declaration-v1-1-352e647b8f28@gmail.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Fixes: 4fb0ef585eb2 ("bonding: convert arp_ip_target to use the new option API")
+Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
+Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
+Acked-by: Jay Vosburgh <jv@jvosburgh.net>
+Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
+Link: https://patch.msgid.link/20260813153126.3952893-1-ruoyuw560@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/mellanox/mlxbf-bootctl.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/bonding/bond_netlink.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/platform/mellanox/mlxbf-bootctl.c b/drivers/platform/mellanox/mlxbf-bootctl.c
-index dd5f370c31682..73f74c61df2a6 100644
---- a/drivers/platform/mellanox/mlxbf-bootctl.c
-+++ b/drivers/platform/mellanox/mlxbf-bootctl.c
-@@ -10,6 +10,7 @@
+diff --git a/drivers/net/bonding/bond_netlink.c b/drivers/net/bonding/bond_netlink.c
+index a754bad4c5d66..ff0c04cfe9714 100644
+--- a/drivers/net/bonding/bond_netlink.c
++++ b/drivers/net/bonding/bond_netlink.c
+@@ -218,7 +218,7 @@ static int bond_changelink(struct net_device *bond_dev, struct nlattr *tb[],
+ 	struct bonding *bond = netdev_priv(bond_dev);
+ 	struct bond_opt_value newval;
+ 	int miimon = 0;
+-	int err;
++	int err = 0;
  
- #include <linux/acpi.h>
- #include <linux/arm-smccc.h>
-+#include <linux/bitfield.h>
- #include <linux/delay.h>
- #include <linux/if_ether.h>
- #include <linux/iopoll.h>
+ 	if (!data)
+ 		return 0;
 -- 
 2.53.0
 
