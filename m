@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B90CC34252D;
-	Sat, 12 Sep 2026 13:13:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF45647AF66;
+	Sat, 12 Sep 2026 13:13:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789218812; cv=none; b=K9mLi+mKUWIgpD+jQDR+90FcmbylA1tO4OZFzB8Mcu5nrvmv0Vo9ymgxW+cmzp/5NIIMVVe/HKSstImzwHHHO4REfOXCKbYJszyQxxjA8W84Zdt8qDw+EnPffUrKRsDMWgG3shqnvXoWMf+V4Gmuw6GRfWuK+Gu8RYwGmzuhdZU=
+	t=1789218818; cv=none; b=oAlJt/C7FWbIdysnGTov2zvNVv6Ft423Wr/shASSMlhetkOeERVlloocFXTow0N7sZ7kKmC5UHtmW90jP2R8j7tLbfc96gF2O8pPksU+jX+YMSUKGNjeF1/VDktxV3yQD4siX/kCS6U+T30Ic9LGaljLnBUvRNZUbm7kJ9a3OSQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789218812; c=relaxed/simple;
-	bh=3+cCT15YIHuhxodceqXPusKCXhX5mY6ot834mrlmGWU=;
+	s=arc-20240116; t=1789218818; c=relaxed/simple;
+	bh=Q8Ej521c1SALFFELLwuMqneLvC2SAy1AHlfC7H1DoMQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XCTOxulD4ibl4QmuicaacO3kg0hcDMF8TNgzgYUean7jnRUknOJI5HcQesaSHQlKalI13fD7vie+uSoxBngWbv+NnsY/zsb239Bv6Pv54Q6PSi9I2KFIsoLQiXoo7KEIScwE+3D8h1siL8Y/q/wJagoNQHvJvqZkne/zAonN9TU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X5x+YQHj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bZNOP3YwsmzP3gKIzCfXCxiEP2ko0hjxeecsCM0D/9RFEfSHjjOA4PmJ8q5kqWSqcoSQq1923bj1aWn8kLaHaO8X9qaGa7DP+EsfoyyCdbKI8yZe50J1i39ZrIJYKxlwNB6nAxLktSkc6rJytPAqXXd5YmWqvYuoNCrzlry1nTk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AaoCgzvC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X5x+YQHj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCE031F000FF;
-	Sat, 12 Sep 2026 13:13:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AaoCgzvC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A68EE1F000FF;
+	Sat, 12 Sep 2026 13:13:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789218811;
-	bh=tvLVVLPsb5uqOws6HUOxeTUeRIy17dOGCTj1X/kfi0k=;
+	s=korg; t=1789218816;
+	bh=6jMoWuUa32C+03Q3dkNZhD+TZwNIJwfqdvWL8er2Fro=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X5x+YQHjQ77uyWihVAVVIynPbC9w/LfoMSmNewJXv7VtRmlp7XT7pU4WAm0cERjNn
-	 egsvOnVQ1VG+4miBSFRcR0NoG+aH2LcJCM58NoA3BZgLlkvMo1VsALa0G9KO9LW52L
-	 FZ4e+MXLai8Q7PimJnpz1cXR7S/8pccWh4jesuR0=
+	b=AaoCgzvCXDdfK6y3M9wxMFHQYHENa3fSYJk7ldyzZYSyf9i5AjhMU1OG9pIMJUAio
+	 GvCAIZ2jN0o04kyU3UjPGMPlWz4RAMBkozF9n3SNDD5HUo4PH5NpEiHB4b+1VigiTZ
+	 CzHVIZZPc2CqweL1RORlXlPpJ+eiHvM27lmetdJM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ruoyu Wang <ruoyuw560@gmail.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Jay Vosburgh <jv@jvosburgh.net>,
-	Hangbin Liu <liuhangbin@kylinos.cn>,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1222/1376] bonding: initialize err for empty target lists
-Date: Sat, 12 Sep 2026 09:00:48 +0200
-Message-ID: <20260912065634.783847695@linuxfoundation.org>
+Subject: [PATCH 6.12 1223/1376] net: add missing ref_tracker_dir_exit() to alloc_netdev_mqs()
+Date: Sat, 12 Sep 2026 09:00:49 +0200
+Message-ID: <20260912065634.805661638@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -54,47 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruoyu Wang <ruoyuw560@gmail.com>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-[ Upstream commit 8ccc9bf9afeeb46a437081c07154fbf5964682b2 ]
+[ Upstream commit 0b1c2af8a22c35cb099c735c2f63ea3ba757557d ]
 
-Empty NLA_NESTED attributes are valid, and bonding uses them to clear
-the ARP and NS target lists. When either target attribute is empty,
-nla_for_each_nested() does not execute, so err retains an uninitialized
-value before it is tested. The request can consequently return an
-unpredictable error after clearing the targets.
+sashiko is reporting that trying to read /sys/kernel/debug/ref_tracker/*
+causes use-afer-free crash when either alloc_percpu() or dev_addr_init()
+in alloc_netdev_mqs() failed, for commit 4d92b95ff2f9 ("net: add net device
+refcount tracker infrastructure") added ref_tracker_dir_exit() to only
+free_netdev() path.
 
-Initialize err to zero so an empty target list completes successfully.
-Non-empty lists still propagate errors from __bond_opt_set() unchanged.
-
-This issue was found by a static analysis checker and confirmed by manual
-source review.
-
-Fixes: 4fb0ef585eb2 ("bonding: convert arp_ip_target to use the new option API")
-Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
-Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
-Acked-by: Jay Vosburgh <jv@jvosburgh.net>
-Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
-Link: https://patch.msgid.link/20260813153126.3952893-1-ruoyuw560@gmail.com
+Closes: https://sashiko.dev/#/patchset/56c707e7-1fb0-43ec-b8fb-cf6f451e513e%40I-love.SAKURA.ne.jp
+Fixes: 4d92b95ff2f9 ("net: add net device refcount tracker infrastructure")
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/b06ce35d-e7bc-47a5-8e0a-e82be7e4dd08@I-love.SAKURA.ne.jp
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/bonding/bond_netlink.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/core/dev.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/bonding/bond_netlink.c b/drivers/net/bonding/bond_netlink.c
-index a754bad4c5d66..ff0c04cfe9714 100644
---- a/drivers/net/bonding/bond_netlink.c
-+++ b/drivers/net/bonding/bond_netlink.c
-@@ -218,7 +218,7 @@ static int bond_changelink(struct net_device *bond_dev, struct nlattr *tb[],
- 	struct bonding *bond = netdev_priv(bond_dev);
- 	struct bond_opt_value newval;
- 	int miimon = 0;
--	int err;
-+	int err = 0;
- 
- 	if (!data)
- 		return 0;
+diff --git a/net/core/dev.c b/net/core/dev.c
+index e08150baf0aa1..de1922f93ef25 100644
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -11335,6 +11335,7 @@ struct net_device *alloc_netdev_mqs(int sizeof_priv, const char *name,
+ 	free_percpu(dev->pcpu_refcnt);
+ free_dev:
+ #endif
++	ref_tracker_dir_exit(&dev->refcnt_tracker);
+ 	kvfree(dev);
+ 	return NULL;
+ }
 -- 
 2.53.0
 
