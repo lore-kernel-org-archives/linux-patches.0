@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3593C3FD96B;
-	Sat, 12 Sep 2026 10:16:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6472342A178;
+	Sat, 12 Sep 2026 10:17:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789208221; cv=none; b=UNmutLiqTNHwJkd/S4AdQzyaJb5Lg5okG8/pFXh0K1od6KFIVy8PQOMfQx1aTkNas9QOpMVncShBBGR6tVqxO54NlPAYKrae2LkF9jcGhUf95Z58A9K3ghc7n4en4aHVe4HXbO0Icf0xz8ZkGurAdlyIL0fKkc48MMeoAQXnm64=
+	t=1789208232; cv=none; b=eZXS7BB92Y9Y+U8K+EW4Tn8J4UEMmGvJ+Lvs6C58djQ5dokl2FspJHO3kWtWQxd/MapBtOQ6U+Qvss3BfwhWWTlx7ungExHmifEtV4Lqyl+niXAs5oyvXgvs/EkozSlE2AhEfPzuaFrQbcveYUFmoUknyb8F5WInvXH1o0YcUjY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789208221; c=relaxed/simple;
-	bh=6MlkVJN0UwNkyRMrvF6nJYxziP78qEd60moCMLQeJ/s=;
+	s=arc-20240116; t=1789208232; c=relaxed/simple;
+	bh=s7sXl043sX0jqoMK31fIh0FkOAwVWBq7x1vQ3je5yWQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PLZ5/QAw+aiHEanG93KWaLLcYIEDfRiX1V4B2FCyjEGe9HmTtmciP76hbLWqrTU327nog/ldRmK0gF7W6L3tBMqPt5JdR297f4f7w33yBZmyogr0VLIR79o7xRQJ4eTW6GbLKN5+IGGET6k4hYNxqXjobdaiWGsJ3XAhQ1vngdI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=An4RVUVz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dz5L+lXmXJ+bYY7sp4a6sALnq0+oHORgpLPVw/6n2U9SsTm9LncF2Cp9FTkNt7A+mImPJONmT90BgusUFPdhfc8o68vLjXeEhh82MJdiZIzwafjpWFL6wh5bFVqyVnqtWBWuMrauyMp/FN6JvuD0dfVXBs1Q0yPZvT1P/AAC9Oo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yj1FbF9H; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="An4RVUVz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F29901F00898;
-	Sat, 12 Sep 2026 10:16:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yj1FbF9H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD7C81F000FF;
+	Sat, 12 Sep 2026 10:17:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789208217;
-	bh=uVlN5xb0UMq2tpGJZVKROTPCFFui7FC/psin+O3ey58=;
+	s=korg; t=1789208221;
+	bh=nqoeBlzk64jRM+E8T4c5ErFwvI1W+KsK8ztyIkHDLZc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=An4RVUVzPbTVWwSh0zJHQCAicduiwS547zbICKcCq1tiHCp1VjFcGYte3qjIp49Lv
-	 47oXUWsa5ZcVWQRJlCZ+sLIFVFNhGiW/V3rfNBnYXcMYGkbo4W/zI3pQGolmTlHqqS
-	 fPAcZYjf42mSqUTnulAN3JcfkhmRGfGTH3e6EMfE=
+	b=yj1FbF9HST4HkTvXSBZ36Y1j9JG8ZN00s9WdpCH7aB0UVAVYThfAbXnX5bTmQ5mjr
+	 FEcBo72iCzuU+6qnUG+iXuY6FcDCo82bEqgEoinqJH7gkaBg3FAmLfLOG6+W3X8j5e
+	 I1DyBxgQkm3hJEjMRxs9DxJ2U44AcS7NN/whlZ+Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Feng Yang <yangfeng@kylinos.cn>,
 	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0573/1518] selftests/bpf: Fix incorrect error checking for pthread_create
-Date: Sat, 12 Sep 2026 08:45:42 +0200
-Message-ID: <20260912065636.392806671@linuxfoundation.org>
+Subject: [PATCH 6.18 0574/1518] selftests/bpf: Fix memory leak on subtest_states reallocation
+Date: Sat, 12 Sep 2026 08:45:43 +0200
+Message-ID: <20260912065636.414585551@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -53,35 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Feng Yang <yangfeng@kylinos.cn>
 
-[ Upstream commit b04b8d4e198aefc863e7b702ececb957845b0c25 ]
+[ Upstream commit 06efb01c6530e9cfc247178cb96aa8adb3beaf61 ]
 
-pthread_create returns 0 on success and a positive error code on failure;
-it never returns a negative value. The current conditional branch can never be taken.
-Failures during thread creation are silently ignored, which will lead to
-invalid memory access when waiting on threads or dereferencing thread handles later.
+Fix memory leak in subtest_states reallocation,
+and revert subtest_num if allocation fails.
 
-Fixes: 91b2c0afd00c ("selftests/bpf: Add parallelism to test_progs")
+Fixes: 0925225956bb ("bpf/selftests: Add granular subtest output for prog_test")
 Signed-off-by: Feng Yang <yangfeng@kylinos.cn>
-Link: https://lore.kernel.org/bpf/20260723085100.482147-3-yangfeng59949@163.com
+Link: https://lore.kernel.org/bpf/20260723085100.482147-6-yangfeng59949@163.com
 Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/test_progs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/bpf/test_progs.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
 diff --git a/tools/testing/selftests/bpf/test_progs.c b/tools/testing/selftests/bpf/test_progs.c
-index 02a85dda30e64..082f05f341e58 100644
+index 082f05f341e58..eda3fcf72095f 100644
 --- a/tools/testing/selftests/bpf/test_progs.c
 +++ b/tools/testing/selftests/bpf/test_progs.c
-@@ -1690,7 +1690,7 @@ static void server_main(void)
- 		data[i].worker_id = i;
- 		data[i].sock_fd = env.worker_socks[i];
- 		rc = pthread_create(&dispatcher_threads[i], NULL, dispatch_thread, &data[i]);
--		if (rc < 0) {
-+		if (rc) {
- 			perror("Failed to launch dispatcher thread");
- 			exit(EXIT_ERR_SETUP_INFRA);
- 		}
+@@ -550,18 +550,19 @@ bool test__start_subtest(const char *subtest_name)
+ 	struct test_state *state = env.test_state;
+ 	struct subtest_state *subtest_state;
+ 	size_t sub_state_size = sizeof(*subtest_state);
++	void *tmp;
+ 
+ 	if (env.subtest_state)
+ 		test__end_subtest();
+ 
+ 	state->subtest_num++;
+-	state->subtest_states =
+-		realloc(state->subtest_states,
+-			state->subtest_num * sub_state_size);
+-	if (!state->subtest_states) {
++	tmp = realloc(state->subtest_states, state->subtest_num * sub_state_size);
++	if (!tmp) {
++		state->subtest_num--;
+ 		fprintf(stderr, "Not enough memory to allocate subtest result\n");
+ 		return false;
+ 	}
++	state->subtest_states = tmp;
+ 
+ 	subtest_state = &state->subtest_states[state->subtest_num - 1];
+ 
 -- 
 2.53.0
 
