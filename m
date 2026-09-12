@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16588364038;
-	Sat, 12 Sep 2026 09:34:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 949863A544C;
+	Sat, 12 Sep 2026 09:34:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789205651; cv=none; b=qUMjAhmabBGFgD4ePzAQxB455ogj8FjcUyGstjmG8q/opF/0bxgJLJY11Byfp8LHMi+fMcy48XIcG4qEK/zuVjiLGX7lexBSWSMpFjFHK2FhkexACv9hg1acBvZXHjXTsmUB8dsKZIEkE1eIXaRgjl22ZY9iV6oM3dWjmISltS4=
+	t=1789205655; cv=none; b=Q0jEIqqt5ViNe8ALXkoh8oJ1WuTIVE3juu/9fIbDDFkjLKLTNoh/k9u+rsJzSVS4kKVo1NbVp2tN6s+DpU1SooeWcT76iMaCH1Q7hnajylnuFRl7rtw9l0mKnoVe0Z98MOq8l18CRGcRSMjpdLA5YVmQhPiyE1OWxEA936fWmk0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789205651; c=relaxed/simple;
-	bh=MVU7iXxEFVyFOlARaUUlAg727n/Lko00y/ckJuuvfno=;
+	s=arc-20240116; t=1789205655; c=relaxed/simple;
+	bh=Lnkfz/cb5TsXEsZ1HglLZLYrpS9MuMaGbKZMWkgvw5M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q7GZoKIU4M0SoEIVV7AlwZPQYI8o62lG4phTq8a8jTCfaJDX2Jo/4eSsubsXlNPO3qE5bAYVSm2klOPun5st7XvwkotOKzOfCK54McTGHeMsRC3LyulG/TlZB31U3xJMpwiQaiX8woaiBVDxoN745Dj0UrsocXIZEPvYebuhU9w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LzOgMOa0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bqRur9GNtEwG3BZ3clHVcdz6lbzimwWAFzgj0xMQLW3YVa1q9qNd7SlIhiEfa+wXlB5EuvMkDfhaqhPtgE/3sJVwRUxgSstTnsUd3fapt3suahWFQwU4nG/quOwjSF0ZjLZECuIFfaysp2C7Ashesj7Chj+jD1hVVP7v6CjX3T8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jJtpmPWt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LzOgMOa0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48E931F000FF;
-	Sat, 12 Sep 2026 09:34:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jJtpmPWt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CF7F1F000FF;
+	Sat, 12 Sep 2026 09:34:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789205649;
-	bh=17jagA5x8b0RQNgRyLCNmvL/kaaLrj0DjnYpshas5Ao=;
+	s=korg; t=1789205654;
+	bh=zxLAovjc41rmWbAh04vrwcB1P7Qe5owGQEV+8zb9Blk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LzOgMOa0iAOluHPYMRZFb7/t/6e2iThPT1mgfOZGUwxHQeCJ/CH4cy84KloLOl/Xy
-	 SIeSayXlNy+ZgvEdENzS1gvqx6C9reaoJUd9UrAUMW+RHPmBVXpZ9a7NQdKQHNvndg
-	 3sz34XNDIsEDLbYpP6jQ5WDi+IP/4ZCfbv6khJgc=
+	b=jJtpmPWtHWRR4D4xbDuQ8o1QpuXhr7EsnUc7DLiW+cA9dIswBxWkJjHSWmqb9GRh1
+	 O7DfRoDg/qS8Ehkmvb9R4rx7dJu485xQtKkxWjOPcrLEk1048Qf+5Wu2L8lt6uiMkP
+	 5vLsgBGlQLB5x4dkeZHG2NDytY7INK50pgEi7w2M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Bilal <meatuni001@gmail.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Sven Eckelmann <sven@narfation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0043/1518] staging: rtl8723bs: fix OOB read in rtw_restruct_wmm_ie()
-Date: Sat, 12 Sep 2026 08:36:52 +0200
-Message-ID: <20260912065624.410222394@linuxfoundation.org>
+Subject: [PATCH 6.18 0005/1518] batman-adv: bla: avoid CRC corruption due to parallel claim add
+Date: Sat, 12 Sep 2026 08:36:14 +0200
+Message-ID: <20260912065623.527396955@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -50,58 +51,164 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Muhammad Bilal <meatuni001@gmail.com>
+From: Sven Eckelmann <sven@narfation.org>
 
-[ Upstream commit 28a289beaf226b30b1e6e7d7b1a2946fe2d6e852 ]
+commit 08645ab95768b88e2ff85a89211994651710465b upstream.
 
-rtw_restruct_wmm_ie() scans in_ie for a WMM IE with:
+batadv_bla_add_claim() is used to add claims and modify the backbone of
+claims for CLAIM frames from remote backbones and local packets. When it
+handles a claim, it needs to either
 
-	while (i < in_len) {
-		...
-		if (i + 5 < in_len && in_ie[i] == 0xDD && ...) {
-			...
-			break;
-		}
-		i += (in_ie[i + 1] + 2); /* to the next IE element */
-	}
+* add the new claim's CRC to the backbone CRC
+* remove the already existing claim's CRC from the old backbone and add it
+  to the new backbone
 
-When the "i + 5 < in_len" match check fails simply because i is
-within 5 bytes of the end of the buffer (i.e. no WMM IE was found
-near the tail of in_ie), execution falls through to
-"i += (in_ie[i + 1] + 2)", which reads in_ie[i + 1]. If i == in_len
-- 1 at that point, this is a 1-byte out-of-bounds read of an
-attacker-influenced IE buffer built from association/scan data.
+But when the "new" claim code was running in parallel to the "change
+backbone" code, it can happen that the CRC was invalid because the
+backbone_gw of the claim was changed twice in the "new" claim code path:
 
-Commit a75281626fc8f ("staging: rtl8723bs: fix potential
-out-of-bounds read in rtw_restruct_wmm_ie") added the "i + 5 <
-in_len" guard to the match condition itself, but did not add an
-equivalent guard before the fallthrough advance, so the same class
-of OOB read remained reachable through the non-matching path.
+* CPU0 creates the claim for gateway A and publishes it in the claim
+  hash. The crc16 of the address has not yet been added to A's crc at
+  this point.
 
-Add an explicit bounds check before advancing to the next IE.
+* CPU1 processes a claim frame of gateway B for the same client, finds
+  the just published claim, and performs the ownership change: it
+  switches the pointer to B, removes the crc16 from A's crc - which
+  never contained it - and adds it to B's crc.
 
-Fixes: 554c0a3abf216 ("staging: Add rtl8723bs sdio wifi driver")
+* CPU0 continues behind the creation branch, unconditionally switches
+  the pointer back to A without compensating B's crc (its remove_crc
+  is false for the creation path), and finally adds the crc16 to A's
+  crc
+
+The CRC is then wrong for both:
+
+* claim belongs to A: but CRC is not part of backbone A's CRC
+* claim doesn't belong to B: CRC is still part of backbone B's CRC
+
+This wrong CRC is never recomputated from the stored claims. For local
+backbone claims, this can also not recovered using syncs.
+
+To avoid this, split the functionality in clear separate parts:
+
+* new claim which always adds claim CRC to the backbone CRC (but never
+  changes the already set backbone_gw of the claim back)
+
+* update of existing claim which automatically changes the backbone_gw
+  entry and only updates both backbone CRCs when there was an actual change
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
-Link: https://patch.msgid.link/20260728125456.32359-4-meatuni001@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Fixes: 23721387c409 ("batman-adv: add basic bridge loop avoidance code")
+[ Context ]
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/rtl8723bs/core/rtw_mlme.c |    3 +++
- 1 file changed, 3 insertions(+)
+ net/batman-adv/bridge_loop_avoidance.c | 63 ++++++++++++++++----------
+ 1 file changed, 39 insertions(+), 24 deletions(-)
 
---- a/drivers/staging/rtl8723bs/core/rtw_mlme.c
-+++ b/drivers/staging/rtl8723bs/core/rtw_mlme.c
-@@ -2029,6 +2029,9 @@ int rtw_restruct_wmm_ie(struct adapter *
- 			break;
+diff --git a/net/batman-adv/bridge_loop_avoidance.c b/net/batman-adv/bridge_loop_avoidance.c
+index 1591911bceb48..5f2bb9eba3e1d 100644
+--- a/net/batman-adv/bridge_loop_avoidance.c
++++ b/net/batman-adv/bridge_loop_avoidance.c
+@@ -694,12 +694,14 @@ static void batadv_bla_add_claim(struct batadv_priv *bat_priv,
+ 	struct batadv_bla_backbone_gw *old_backbone_gw;
+ 	struct batadv_bla_claim *claim;
+ 	struct batadv_bla_claim search_claim;
+-	bool remove_crc = false;
+ 	int hash_added;
++	u16 claim_crc;
++	bool changed;
+ 
+ 	ether_addr_copy(search_claim.addr, mac);
+ 	search_claim.vid = vid;
+ 	claim = batadv_claim_hash_find(bat_priv, &search_claim);
++	claim_crc = crc16(0, mac, ETH_ALEN);
+ 
+ 	/* create a new claim entry if it does not exist yet. */
+ 	if (!claim) {
+@@ -731,43 +733,56 @@ static void batadv_bla_add_claim(struct batadv_priv *bat_priv,
+ 			kfree(claim);
+ 			return;
  		}
- 
-+		if (i + 1 >= in_len)
-+			break;
 +
- 		i += (in_ie[i + 1] + 2); /*  to the next IE element */
- 	}
++		spin_lock_bh(&backbone_gw->crc_lock);
++		backbone_gw->crc ^= claim_crc;
++		spin_unlock_bh(&backbone_gw->crc_lock);
++
++		WRITE_ONCE(backbone_gw->lasttime, jiffies);
++
++		batadv_claim_put(claim);
++		return;
++	}
++
++	WRITE_ONCE(claim->lasttime, jiffies);
++
++	/* replace backbone_gw atomically and adjust reference counters */
++	spin_lock_bh(&claim->backbone_lock);
++	if (claim->backbone_gw != backbone_gw) {
++		changed = true;
++
++		old_backbone_gw = claim->backbone_gw;
++		kref_get(&backbone_gw->refcount);
++		claim->backbone_gw = backbone_gw;
+ 	} else {
+-		WRITE_ONCE(claim->lasttime, jiffies);
+-		if (claim->backbone_gw == backbone_gw)
+-			/* no need to register a new backbone */
+-			goto claim_free_ref;
++		old_backbone_gw = NULL;
++		changed = false;
++	}
++	spin_unlock_bh(&claim->backbone_lock);
  
++	if (changed) {
+ 		batadv_dbg(BATADV_DBG_BLA, bat_priv,
+ 			   "%s(): changing ownership for %pM, vid %d to gw %pM\n",
+ 			   __func__, mac, batadv_print_vid(vid),
+ 			   backbone_gw->orig);
+ 
+-		remove_crc = true;
+-	}
++		/* add claim address to new backbone_gw */
++		spin_lock_bh(&backbone_gw->crc_lock);
++		backbone_gw->crc ^= claim_crc;
++		spin_unlock_bh(&backbone_gw->crc_lock);
+ 
+-	/* replace backbone_gw atomically and adjust reference counters */
+-	spin_lock_bh(&claim->backbone_lock);
+-	old_backbone_gw = claim->backbone_gw;
+-	kref_get(&backbone_gw->refcount);
+-	claim->backbone_gw = backbone_gw;
+-	spin_unlock_bh(&claim->backbone_lock);
++		WRITE_ONCE(backbone_gw->lasttime, jiffies);
++	}
+ 
+-	if (remove_crc) {
++	if (old_backbone_gw) {
+ 		/* remove claim address from old backbone_gw */
+ 		spin_lock_bh(&old_backbone_gw->crc_lock);
+-		old_backbone_gw->crc ^= crc16(0, claim->addr, ETH_ALEN);
++		old_backbone_gw->crc ^= claim_crc;
+ 		spin_unlock_bh(&old_backbone_gw->crc_lock);
+-	}
+-
+-	batadv_backbone_gw_put(old_backbone_gw);
+ 
+-	/* add claim address to new backbone_gw */
+-	spin_lock_bh(&backbone_gw->crc_lock);
+-	backbone_gw->crc ^= crc16(0, claim->addr, ETH_ALEN);
+-	spin_unlock_bh(&backbone_gw->crc_lock);
+-	WRITE_ONCE(backbone_gw->lasttime, jiffies);
++		batadv_backbone_gw_put(old_backbone_gw);
++	}
+ 
+-claim_free_ref:
+ 	batadv_claim_put(claim);
+ }
+ 
+-- 
+2.53.0
+
 
 
