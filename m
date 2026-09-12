@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E5BF202F71;
-	Sat, 12 Sep 2026 12:55:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 048FC2E06E4;
+	Sat, 12 Sep 2026 12:55:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789217722; cv=none; b=CYp+jW6lxg1LRNwI88lOrqQRxD2kucvvHhFDuQ4h5YD/w/pr4DQ8buvx+JfT9JPe+i2VZ1kZllLR9tNtSJNHWHJldlKH4LsmqPSVb+udCu+vQ9c3lfffSpf/iwRQ3uwcw1irTQYP8tZqOdKRsHXXqUCbkK+wfK07eC0kvc44I0c=
+	t=1789217727; cv=none; b=SOrqaGgSsi7laym4JSb5s7qICxxk+tw/WFvbPHZ4b+nlSApETKQIRHVJRaE4Et7950+/BniBaDpD9nl4tZFc8UgMwiKObmDqk69XIRJej+P9ulhTpHnKSu6P0gdYVSqDt0q478ZmfTGFnF8sl3TMjEXraA64B7ATpI3pFcSyohA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789217722; c=relaxed/simple;
-	bh=sQXt+WqxKqUR0ubJc5ZXMEnTPUiwLbcgHmgaKTc/gFU=;
+	s=arc-20240116; t=1789217727; c=relaxed/simple;
+	bh=KlERh51soifQhOZ8tPHqpiQUVvsXFWGA/qwsxaRFiVM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j566vHkI9B5R5iWHJ6F/mZEBEy+MXbkcsDIsHhGIVpjpChutnKgr+0DZ04BAlkcUCaNtf8ksdfaMnAjroKglCcYUUT8+uurFFF6flICwqhKIt3H+AUR63AHU1rt6k4VpAeui0v9rhPcUWZrRbcdVSXo4lbFMJeqtPxTtPTClCfQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vcMF/ygv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=O2TADYLYb9cwP3RgiV0CNdexqDPBmOCnL5eSZFCqwv+NxmYFv9ch/DRcM8iqI90DEn1cCuLzQd7az/DjI9fZmvUryCfDGsnd54ugpOAgghpZXaiKgpg+3lsvuyOHmPV07NdcjNniLIdA092IYeCvSIDd8JbjbFpX46axDHv22bI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O67IXTpr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vcMF/ygv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3114A1F000FF;
-	Sat, 12 Sep 2026 12:55:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O67IXTpr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B22571F000FF;
+	Sat, 12 Sep 2026 12:55:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789217721;
-	bh=FmfFkerUAliv+qNqJV6JRQvUqSAUp8sQDdH64EIcL5o=;
+	s=korg; t=1789217725;
+	bh=diYm1yDAfLXtsSGKfo1e15W+ZGuELSIYq5oHsYMcmeQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vcMF/ygv3UCiulQIFdfWtSZVhdZE5fnr1BAFi/M8VvbsqOk1hYs7I5nF8OIp6WrZV
-	 TFnkhomuR/GpGOmnMS3WlGFc5Zn+9pBYrh+jXw6o5ZfmHi0ywL8pvejURHMnK7iW5J
-	 +n0joSF+g6XQEmL6CUz0LthX2nS5OBpkzBlKhBLw=
+	b=O67IXTprrbJq7jTO3n3dm0+WX3rzC0LOUZ5iPCBGgrHWTiYzRYeV8HgTV+C1xdwP8
+	 3BHpm4vvyx6uvN/rZ1kn34Nu1pqFcnIznmpVlMoc9pZjNF9UHvaqlDztutx8EaNcXE
+	 cYNoMxfiib6iX9exJK5X/nHF+lLErIgRum53W+GA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pu Lehui <pulehui@huawei.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Amery Hung <ameryhung@gmail.com>,
-	Leon Hwang <leon.hwang@linux.dev>,
+	Nikhil Gautam <nikhilgtr@gmail.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0997/1376] bpf, cgroup: Fix storage null-ptr-deref after replacing prog
-Date: Sat, 12 Sep 2026 08:57:03 +0200
-Message-ID: <20260912065629.785806580@linuxfoundation.org>
+Subject: [PATCH 6.12 0998/1376] iio: light: gp2ap002: Fix unbalanced runtime PM on repeated event writes
+Date: Sat, 12 Sep 2026 08:57:04 +0200
+Message-ID: <20260912065629.807620863@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -53,73 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pu Lehui <pulehui@huawei.com>
+From: Nikhil Gautam <nikhilgtr@gmail.com>
 
-[ Upstream commit 3f562c537e9ecf4bc5e206cfffc2cc047f1b7e94 ]
+[ Upstream commit 579c049b4cb6fc72ce2c505fc5334540be0efcd3 ]
 
-Syzkaller reported a storage null-ptr-deref issue after replacing prog.
-This occurs in the following scenario:
-1. prog A, an empty prog, is attached to a cgrp.
-2. prog B uses BPF_MAP_TYPE_PERCPU_CGROUP_STORAGE and calls the
-   bpf_get_local_storage helper.
-3. link_update is called to replace prog A with prog B.
+The IIO core does not filter duplicate writes to the event enable
+attribute, so writing the same value twice invokes
+write_event_config() twice. Enabling twice leaks a runtime PM
+reference, preventing the device from ever suspending again;
+disabling twice underflows the usage count and triggers a
+"Runtime PM usage count underflow" warning.
 
-The reason is that __cgroup_bpf_replace fails to alloc and assign the
-required cgrp storage for the incoming replacement prog. Consequently,
-the new prog inherits an uninit storage, leading to null-ptr-deref panic
-when kick the new prog.
+Bail out early when the requested state matches the current state.
+While at it, switch to pm_runtime_resume_and_get() so a failed
+resume is propagated to userspace instead of silently marking the
+event enabled.
 
-Fix this by rejecting a link update if new_prog's cgroup storage is
-incompatible with link->prog.
-
-Fixes: 0c991ebc8c69 ("bpf: Implement bpf_prog replacement for an active bpf_cgroup_link")
-Signed-off-by: Pu Lehui <pulehui@huawei.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Reviewed-by: Amery Hung <ameryhung@gmail.com>
-Acked-by: Leon Hwang <leon.hwang@linux.dev>
-Link: https://lore.kernel.org/bpf/20260728132336.2857800-1-pulehui@huaweicloud.com [0]
-Link: https://lore.kernel.org/bpf/f87b53c0-8f00-45a6-82db-8242fa9b143f@huaweicloud.com [1]
-Link: https://lore.kernel.org/bpf/20260807104403.1013064-1-pulehui@huaweicloud.com
+Fixes: 97d642e23037c ("iio: light: Add a driver for Sharp GP2AP002x00F")
+Signed-off-by: Nikhil Gautam <nikhilgtr@gmail.com>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/cgroup.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ drivers/iio/light/gp2ap002.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/kernel/bpf/cgroup.c b/kernel/bpf/cgroup.c
-index a888ae8d27223..e2d352251bb71 100644
---- a/kernel/bpf/cgroup.c
-+++ b/kernel/bpf/cgroup.c
-@@ -972,6 +972,20 @@ static void replace_effective_prog(struct cgroup *cgrp,
+diff --git a/drivers/iio/light/gp2ap002.c b/drivers/iio/light/gp2ap002.c
+index be31505a87fa0..d82a4c93c9d16 100644
+--- a/drivers/iio/light/gp2ap002.c
++++ b/drivers/iio/light/gp2ap002.c
+@@ -343,6 +343,10 @@ static int gp2ap002_write_event_config(struct iio_dev *indio_dev,
+ 				       int state)
+ {
+ 	struct gp2ap002 *gp2ap002 = iio_priv(indio_dev);
++	int ret;
++
++	if (state == gp2ap002->enabled)
++		return 0;
+ 
+ 	if (state) {
+ 		/*
+@@ -350,14 +354,17 @@ static int gp2ap002_write_event_config(struct iio_dev *indio_dev,
+ 		 * already) and reintialize the sensor by using runtime_pm
+ 		 * callbacks.
+ 		 */
+-		pm_runtime_get_sync(gp2ap002->dev);
+-		gp2ap002->enabled = true;
++		ret = pm_runtime_resume_and_get(gp2ap002->dev);
++		if (ret)
++			return ret;
++
+ 	} else {
+ 		pm_runtime_mark_last_busy(gp2ap002->dev);
+ 		pm_runtime_put_autosuspend(gp2ap002->dev);
+-		gp2ap002->enabled = false;
  	}
+ 
++	gp2ap002->enabled = state;
++
+ 	return 0;
  }
  
-+static bool cgroup_bpf_storages_compatible(struct bpf_prog *old_prog,
-+					   struct bpf_prog *new_prog)
-+{
-+	enum bpf_cgroup_storage_type stype;
-+
-+	for_each_cgroup_storage_type(stype) {
-+		if (old_prog->aux->cgroup_storage[stype] !=
-+		    new_prog->aux->cgroup_storage[stype])
-+			return false;
-+	}
-+
-+	return true;
-+}
-+
- /**
-  * __cgroup_bpf_replace() - Replace link's program and propagate the change
-  *                          to descendants
-@@ -1010,6 +1024,9 @@ static int __cgroup_bpf_replace(struct cgroup *cgrp,
- 	if (!found)
- 		return -ENOENT;
- 
-+	if (!cgroup_bpf_storages_compatible(link->link.prog, new_prog))
-+		return -EINVAL;
-+
- 	cgrp->bpf.revisions[atype] += 1;
- 	old_prog = xchg(&link->link.prog, new_prog);
- 	replace_effective_prog(cgrp, atype, pl);
 -- 
 2.53.0
 
