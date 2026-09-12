@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55A1A32D7F8;
-	Sat, 12 Sep 2026 18:15:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F17832D7F8;
+	Sat, 12 Sep 2026 18:15:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789236937; cv=none; b=OX3AgIMAsUHtjKRU2agEXl9hQHYqbmSS7YwJVtOPBwcHvZidZ3f5Nj4AiXs4xjG40Zh8cNvU/3mTz2xz7OKeSO3palmhiE2wYVr/LQcoICFXButoa2c4PO8dHhYh6AnphBkMxroHyWZuYg7/wQ4/5i8GUEaEMdLROwu+u3uor6o=
+	t=1789236942; cv=none; b=aMcRs8EYjfY2ZYMDoy8+RNDIc6V3rj6VmZ26k69K/ecZv4ndW1PkFlk0vdMSOFKsZiVWsu0dUJhBF7Ix8tnZ0v0jWm9Phc68gwtrGRi07l8+dEa1270CgRxn3JO5BhFtCi/W94lqe19tCQ3D04X1DwD82NLzaiPlvTTVzc9NSnk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789236937; c=relaxed/simple;
-	bh=/hbkLuJStWQfouDjpozndphvOPaKsdsucfR93ybwuhY=;
+	s=arc-20240116; t=1789236942; c=relaxed/simple;
+	bh=D0XBmXFvD+Q+kr7C8A04j4aZs0WZYRS7YVeI5MQIyEA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I1rwJsIpJA/x4YNWt1hHKmvdfUzXJiU/mYhwN+tCPr3vIsG2RmUmECONCGFu3eWfEYzpuFbiV+FHjzmIRSAMXvSlAd3Jo85sqcpJ6v75Cs5oFKUVXzzrlSmFxWo5QE/XfUiie8fC+s3ZvyJUV1RxGYLAGCQlbwPSuX5q0QEbOmA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PM6nKUxg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Z9M9rOBn9oye9vWuXvudgyYlehC5XDSjMeQ9Z/GwAHmQxVtXuKFwpuhwrFua5G9dK+yBRzoO5/n2/Z4R77aTJHoy74YuzhhPybeMItdSnN0T73LLAOBDZbvyHaVRkdtXn9R7+WrqK57DFE+8qhh0uOyGfsNc1GyVM52bfYKVzjg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NbDvDWs6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PM6nKUxg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A2EB1F000FF;
-	Sat, 12 Sep 2026 18:15:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NbDvDWs6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 443F81F000FF;
+	Sat, 12 Sep 2026 18:15:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789236936;
-	bh=gMLn2+llRF5+GhuXct5aPPM5l8l+pR0u2tGP4XdPDUQ=;
+	s=korg; t=1789236941;
+	bh=VVOjHpt2I3bjcV0XaqCR+YkUnAAZLhPa6kjdtyYC1uM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PM6nKUxgCDCl422sMyO6lDt+kKkWOFi/ervEygHgTDUxjyarDpROt+R87uPCJD1d4
-	 4U/o/S363WMzRee9tOHzWik1VtXz49coz+K7ASLXSX4pS/Kr92t9wkYcxvjbQLIo20
-	 +sD/CEOsYgzuj2V7KeNh9n9bXv9XK010eKEXyYRw=
+	b=NbDvDWs6F2GivDyc7XTtiRzsGsHO7R+y7scXZZYDrn2I3659vKiRG36Bf88LYUVTt
+	 38Q099k7QJp5316krr/gaE2KXngdb6Pd9ZG2DXcQ4eKOYcLeKILXk1fKJ/GdxB09kk
+	 7+hh6aEhM5a1ZR8zRh8R9Zlw1QzOY+SwB/D/5vWw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fan Wu <fanwu01@zju.edu.cn>,
-	Lucas Stach <l.stach@pengutronix.de>,
+	Jianing Li <m13940358460@163.com>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>
-Subject: [PATCH 5.15 156/935] power: supply: ucs1002: fix use-after-free on remove
-Date: Sat, 12 Sep 2026 08:53:06 +0200
-Message-ID: <20260912065530.399753477@linuxfoundation.org>
+Subject: [PATCH 5.15 157/935] power: supply: max17040: synchronize work cancellation on suspend
+Date: Sat, 12 Sep 2026 08:53:07 +0200
+Message-ID: <20260912065530.423231967@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -51,57 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Jianing Li <m13940358460@163.com>
 
-commit 609af0ceeaefdfa42cd01dd060b20f2e41f9a232 upstream.
+commit 86a3a8a926aa5969c329d1df2d3259f189961bbc upstream.
 
-ucs1002 has no remove callback, so unbind runs entirely through devm.
-The alert IRQ handler queues the health_poll delayed work, and the work
-reschedules itself while the chip reports a bad-health condition.  devm
-frees the alert IRQ, which only synchronizes the handler; it does not
-cancel the delayed work, which can then run after devm frees the driver
-data and dereference it.
+max17040_work() requeues itself after every poll. cancel_delayed_work()
+only cancels a pending instance and does not wait for a callback that is
+already running.
 
-Register health_poll with devm_delayed_work_autocancel() before the
-alert IRQ is requested.  devm then frees the IRQ before cancelling the
-work, so the handler can no longer queue it and the work is cancelled
-before the driver data is freed.
+If system suspend races with the polling callback, the callback can
+continue accessing the fuel gauge and requeue itself after the suspend
+callback returns.
 
-This issue was found by an in-house static analysis tool.
+Use cancel_delayed_work_sync() to ensure polling is quiesced before
+suspend completes.
 
-Fixes: 81196e2e57fc ("power: supply: ucs1002: fix some health status issues")
+Fixes: c6f4a42de60b ("Add MAX17040 Fuel Gauge driver")
 Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5.6
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Reviewed-by: Lucas Stach <l.stach@pengutronix.de>
-Link: https://patch.msgid.link/20260802051249.424015-1-fanwu01@zju.edu.cn
+Signed-off-by: Jianing Li <m13940358460@163.com>
+Link: https://patch.msgid.link/20260810004701.1683-1-m13940358460@163.com
 Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/power/supply/ucs1002_power.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/power/supply/max17040_battery.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/power/supply/ucs1002_power.c
-+++ b/drivers/power/supply/ucs1002_power.c
-@@ -12,6 +12,7 @@
- #include <linux/kernel.h>
- #include <linux/kthread.h>
- #include <linux/device.h>
-+#include <linux/devm-helpers.h>
- #include <linux/module.h>
- #include <linux/of.h>
- #include <linux/of_irq.h>
-@@ -644,7 +645,10 @@ static int ucs1002_probe(struct i2c_clie
- 	}
+--- a/drivers/power/supply/max17040_battery.c
++++ b/drivers/power/supply/max17040_battery.c
+@@ -532,7 +532,7 @@ static int max17040_suspend(struct devic
+ 		// disable soc alert to prevent wakeup
+ 		max17040_set_soc_alert(chip, 0);
+ 	else
+-		cancel_delayed_work(&chip->work);
++		cancel_delayed_work_sync(&chip->work);
  
- 	info->health = POWER_SUPPLY_HEALTH_GOOD;
--	INIT_DELAYED_WORK(&info->health_poll, ucs1002_health_poll);
-+	ret = devm_delayed_work_autocancel(dev, &info->health_poll,
-+					   ucs1002_health_poll);
-+	if (ret)
-+		return ret;
- 
- 	if (irq_a_det > 0) {
- 		ret = devm_request_threaded_irq(dev, irq_a_det, NULL,
+ 	if (client->irq && device_may_wakeup(dev))
+ 		enable_irq_wake(client->irq);
 
 
