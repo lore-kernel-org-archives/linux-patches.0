@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD1D6353A84;
-	Sat, 12 Sep 2026 14:41:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24F3E274B46;
+	Sat, 12 Sep 2026 14:41:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789224106; cv=none; b=VYbFQx5KWCCBhpdA/1z65/3fF7C/ZLMK8QeiJ8ZU4lKbE7cbCGy/dzd5eI7EMbOJGDqwCNA6bMDpRL1pVcLPc7ssRgVspfoDkBHqxUFPK602RiccCBWFYXs59RpUQCVfy9plw6ZbsL/tF4POiaPP+j+5/V0HVRmnAutsr12S3m8=
+	t=1789224110; cv=none; b=lSv5cmoUU6kqSBGfS8Zhou0EOZtF0IWLbbaf/PhgMxzei6NQDXqUNcgG6hrtZ0e8GDV+vmEhPSwAMEawRomQ4fQLCDIvDMATobDDmdbfOcsc2mPBc8Sr53UVgNYc9g1sZ3Tm23IFrTQ8B6fBBEEILiVhNU7wguAuT+z7L5EOZw8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789224106; c=relaxed/simple;
-	bh=wSaSMSxT3W1VJMFybYKlPZMdnCBz1gy59AVrB/hImas=;
+	s=arc-20240116; t=1789224110; c=relaxed/simple;
+	bh=Nul9sseF1OiGFVTULY3nibgjMW3iF1nN48wU76DfMNc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d9f96VYNeORt6mtI6KeBcr9GV7ksJVw3VoY/74kSaKRV1lfDrpK5jmWKBA5NPPbFRhYsKoPG8PSV6vwip+cHdWQjaBRG41olM3h4g5GAjRnt6f1+7fRiAfXOm9jDdvqECR8Sh3tTwPQSisoU6j19wEvGhhKUhfa3FP6tT/GrThk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZmRBbcFD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fZAFI1Pnu3gEs/J37qHLhtbDu4bSL3qrrTm3cVHM0JsHrzAofUKDUQEVXsINtVvD/CzhlJ2bWTEIZ5lklZKu2xljlaTOZTwcOPG74CtPVFkdhqB0TtKE3S4kfe9kiCKgR1sw/nqZkk9kSiYkanAeI3l9CzMjejJEtjcsP2LPOsw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MFjw2E+c; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZmRBbcFD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99FDB1F000FF;
-	Sat, 12 Sep 2026 14:41:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MFjw2E+c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF3F41F000FF;
+	Sat, 12 Sep 2026 14:41:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789224103;
-	bh=caXCqq+O/8EiV1SNpcEzkeUXt7Qx8Zicb511Y8//8To=;
+	s=korg; t=1789224108;
+	bh=HQSCka33/21mNKIWO4H93Yvsy5UWYlnfEaJuxbGzi0w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZmRBbcFDL79lMubsFQmCcI7PWidlZCK08XpmdwCqtH8WpGeRqtbDTn5lyjxp4h+rw
-	 4TorxNuJ6M594VIN43Ed05XEN73w1HGnav/cACoRvwdC2MvNup+eu2U98y4k/P2sj9
-	 B8Fb8PQFoA+f2RhMcmhu90Ub3GVc6hfLib0L3/v0=
+	b=MFjw2E+cm+wRQTrzVWcuIZ0kL9Xd8pMzbXeer0NtQee3OJ5XzTsc0jdsTX1Tf/MUP
+	 C4R6yqmnahTz4WChm/vBQoEPLI7iOOjWVMkmHTkmJtx67g6acGE48zDFUO6t3TLQ7U
+	 aUp0IXIS7nkIcHFVtLd183NW614La6O+6ZvzoNc8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	P Praneesh <quic_ppranees@quicinc.com>,
-	Anilkumar Kolli <quic_akolli@quicinc.com>,
+	Dmitry Antipov <dmantipov@yandex.ru>,
 	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0925/1424] wifi: ath11k: add firmware-2.bin support
-Date: Sat, 12 Sep 2026 08:55:57 +0200
-Message-ID: <20260912065628.039675722@linuxfoundation.org>
+Subject: [PATCH 6.6 0926/1424] wifi: ath11k: refactor ath11k_wmi_tlv_parse_alloc()
+Date: Sat, 12 Sep 2026 08:55:58 +0200
+Message-ID: <20260912065628.062249755@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -52,454 +51,353 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anilkumar Kolli <quic_akolli@quicinc.com>
+From: Dmitry Antipov <dmantipov@yandex.ru>
 
-[ Upstream commit 7db88b962f06a52af5e9a32971012e8f3427cec0 ]
+[ Upstream commit f5e6c0c4b0877e0ec0221df6c0041c0f39b6ce0f ]
 
-Firmware IE containers can dynamically provide various information
-what firmware supports. Also it can embed more than one image so
-updating firmware is easy, user just needs to update one file in
-/lib/firmware/.
+Since 'ath11k_wmi_tlv_parse_alloc()' always operates on
+'skb->data, skb->len' tuple, it may be simplified to pass
+the only 'skb' argument instead (which also implies
+refactoring of 'ath11k_pull_bcn_tx_status_ev()' and
+'ath11k_pull_chan_info_ev()' in the same way). Compile
+tested only.
 
-The firmware API 2 or higher will use the IE container format, the
-current API 1 will not use the new format but it still is supported
-for some time. Firmware API 2 files are named as firmware-2.bin
-(which contains both amss.bin and m3.bin images) and API 1 files are
-amss.bin and m3.bin.
-
-Currently ath11k PCI driver provides firmware binary (amss.bin) path to
-MHI driver, MHI driver reads firmware from filesystem and boots it. Add
-provision to read firmware files from ath11k driver and provide the amss.bin
-firmware data and size to MHI using a pointer.
-
-Currently enum ath11k_fw_features is empty, the patches adding features will
-add the flags.
-
-With AHB devices there's no amss.bin or m3.bin, so no changes in how AHB
-firmware files are used. But AHB devices can use future additions to the meta
-data, for example in enum ath11k_fw_features.
-
-Tested-on: WCN6855 hw2.0 PCI WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.9
-
-Co-developed-by: P Praneesh <quic_ppranees@quicinc.com>
-Signed-off-by: P Praneesh <quic_ppranees@quicinc.com>
-Signed-off-by: Anilkumar Kolli <quic_akolli@quicinc.com>
-Co-developed-by: Kalle Valo <quic_kvalo@quicinc.com>
+Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
 Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/20230727100430.3603551-4-kvalo@kernel.org
+Link: https://msgid.link/20231214161117.75145-1-dmantipov@yandex.ru
 Stable-dep-of: 208d7fdb8597 ("wifi: ath11k: fix overreads in ath11k_wmi_process_csa_switch_count_event()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/Makefile |   3 +-
- drivers/net/wireless/ath/ath11k/core.c   |   8 ++
- drivers/net/wireless/ath/ath11k/core.h   |  15 ++
- drivers/net/wireless/ath/ath11k/fw.c     | 168 +++++++++++++++++++++++
- drivers/net/wireless/ath/ath11k/fw.h     |  27 ++++
- drivers/net/wireless/ath/ath11k/mhi.c    |  18 ++-
- drivers/net/wireless/ath/ath11k/qmi.c    |  36 +++--
- 7 files changed, 258 insertions(+), 17 deletions(-)
- create mode 100644 drivers/net/wireless/ath/ath11k/fw.c
- create mode 100644 drivers/net/wireless/ath/ath11k/fw.h
+ drivers/net/wireless/ath/ath11k/testmode.c |  2 +-
+ drivers/net/wireless/ath/ath11k/wmi.c      | 73 +++++++++++-----------
+ drivers/net/wireless/ath/ath11k/wmi.h      |  4 +-
+ 3 files changed, 39 insertions(+), 40 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath11k/Makefile b/drivers/net/wireless/ath/ath11k/Makefile
-index cc47e0114595f..2c94d50ae36f7 100644
---- a/drivers/net/wireless/ath/ath11k/Makefile
-+++ b/drivers/net/wireless/ath/ath11k/Makefile
-@@ -17,7 +17,8 @@ ath11k-y += core.o \
- 	    peer.o \
- 	    dbring.o \
- 	    hw.o \
--	    pcic.o
-+	    pcic.o \
-+	    fw.o
- 
- ath11k-$(CONFIG_ATH11K_DEBUGFS) += debugfs.o debugfs_htt_stats.o debugfs_sta.o
- ath11k-$(CONFIG_NL80211_TESTMODE) += testmode.o
-diff --git a/drivers/net/wireless/ath/ath11k/core.c b/drivers/net/wireless/ath/ath11k/core.c
-index 9eb8887f84e7e..e3f730e0dd589 100644
---- a/drivers/net/wireless/ath/ath11k/core.c
-+++ b/drivers/net/wireless/ath/ath11k/core.c
-@@ -16,6 +16,7 @@
- #include "debug.h"
- #include "hif.h"
- #include "wow.h"
-+#include "fw.h"
- 
- unsigned int ath11k_debug_mask;
- EXPORT_SYMBOL(ath11k_debug_mask);
-@@ -2124,6 +2125,12 @@ int ath11k_core_pre_init(struct ath11k_base *ab)
- 		return ret;
- 	}
- 
-+	ret = ath11k_fw_pre_init(ab);
-+	if (ret) {
-+		ath11k_err(ab, "failed to pre init firmware: %d", ret);
-+		return ret;
-+	}
-+
- 	return 0;
- }
- EXPORT_SYMBOL(ath11k_core_pre_init);
-@@ -2163,6 +2170,7 @@ void ath11k_core_deinit(struct ath11k_base *ab)
- 	ath11k_hif_power_down(ab);
- 	ath11k_mac_destroy(ab);
- 	ath11k_core_soc_destroy(ab);
-+	ath11k_fw_destroy(ab);
- }
- EXPORT_SYMBOL(ath11k_core_deinit);
- 
-diff --git a/drivers/net/wireless/ath/ath11k/core.h b/drivers/net/wireless/ath/ath11k/core.h
-index 4bb36dc6ae08b..4cf6716a182dc 100644
---- a/drivers/net/wireless/ath/ath11k/core.h
-+++ b/drivers/net/wireless/ath/ath11k/core.h
-@@ -15,6 +15,8 @@
- #include <linux/ctype.h>
- #include <linux/rhashtable.h>
- #include <linux/average.h>
-+#include <linux/firmware.h>
-+
- #include "qmi.h"
- #include "htc.h"
- #include "wmi.h"
-@@ -29,6 +31,7 @@
- #include "dbring.h"
- #include "spectral.h"
- #include "wow.h"
-+#include "fw.h"
- 
- #define SM(_v, _f) (((_v) << _f##_LSB) & _f##_MASK)
- 
-@@ -993,6 +996,18 @@ struct ath11k_base {
- 		const struct ath11k_pci_ops *ops;
- 	} pci;
- 
-+	struct {
-+		u32 api_version;
-+
-+		const struct firmware *fw;
-+		const u8 *amss_data;
-+		size_t amss_len;
-+		const u8 *m3_data;
-+		size_t m3_len;
-+
-+		DECLARE_BITMAP(fw_features, ATH11K_FW_FEATURE_COUNT);
-+	} fw;
-+
- #ifdef CONFIG_NL80211_TESTMODE
- 	struct {
- 		u32 data_pos;
-diff --git a/drivers/net/wireless/ath/ath11k/fw.c b/drivers/net/wireless/ath/ath11k/fw.c
-new file mode 100644
-index 0000000000000..8f84fba29886e
---- /dev/null
-+++ b/drivers/net/wireless/ath/ath11k/fw.c
-@@ -0,0 +1,168 @@
-+// SPDX-License-Identifier: BSD-3-Clause-Clear
-+/*
-+ * Copyright (c) 2022-2023, Qualcomm Innovation Center, Inc. All rights reserved.
-+ */
-+
-+#include "core.h"
-+
-+#include "debug.h"
-+
-+static int ath11k_fw_request_firmware_api_n(struct ath11k_base *ab,
-+					    const char *name)
-+{
-+	size_t magic_len, len, ie_len;
-+	int ie_id, i, index, bit, ret;
-+	struct ath11k_fw_ie *hdr;
-+	const u8 *data;
-+	__le32 *timestamp;
-+
-+	ab->fw.fw = ath11k_core_firmware_request(ab, name);
-+	if (IS_ERR(ab->fw.fw)) {
-+		ret = PTR_ERR(ab->fw.fw);
-+		ath11k_dbg(ab, ATH11K_DBG_BOOT, "failed to load %s: %d\n", name, ret);
-+		ab->fw.fw = NULL;
-+		return ret;
-+	}
-+
-+	data = ab->fw.fw->data;
-+	len = ab->fw.fw->size;
-+
-+	/* magic also includes the null byte, check that as well */
-+	magic_len = strlen(ATH11K_FIRMWARE_MAGIC) + 1;
-+
-+	if (len < magic_len) {
-+		ath11k_err(ab, "firmware image too small to contain magic: %zu\n",
-+			   len);
-+		ret = -EINVAL;
-+		goto err;
-+	}
-+
-+	if (memcmp(data, ATH11K_FIRMWARE_MAGIC, magic_len) != 0) {
-+		ath11k_err(ab, "Invalid firmware magic\n");
-+		ret = -EINVAL;
-+		goto err;
-+	}
-+
-+	/* jump over the padding */
-+	magic_len = ALIGN(magic_len, 4);
-+
-+	/* make sure there's space for padding */
-+	if (magic_len > len) {
-+		ath11k_err(ab, "No space for padding after magic\n");
-+		ret = -EINVAL;
-+		goto err;
-+	}
-+
-+	len -= magic_len;
-+	data += magic_len;
-+
-+	/* loop elements */
-+	while (len > sizeof(struct ath11k_fw_ie)) {
-+		hdr = (struct ath11k_fw_ie *)data;
-+
-+		ie_id = le32_to_cpu(hdr->id);
-+		ie_len = le32_to_cpu(hdr->len);
-+
-+		len -= sizeof(*hdr);
-+		data += sizeof(*hdr);
-+
-+		if (len < ie_len) {
-+			ath11k_err(ab, "Invalid length for FW IE %d (%zu < %zu)\n",
-+				   ie_id, len, ie_len);
-+			ret = -EINVAL;
-+			goto err;
-+		}
-+
-+		switch (ie_id) {
-+		case ATH11K_FW_IE_TIMESTAMP:
-+			if (ie_len != sizeof(u32))
-+				break;
-+
-+			timestamp = (__le32 *)data;
-+
-+			ath11k_dbg(ab, ATH11K_DBG_BOOT, "found fw timestamp %d\n",
-+				   le32_to_cpup(timestamp));
-+			break;
-+		case ATH11K_FW_IE_FEATURES:
-+			ath11k_dbg(ab, ATH11K_DBG_BOOT,
-+				   "found firmware features ie (%zd B)\n",
-+				   ie_len);
-+
-+			for (i = 0; i < ATH11K_FW_FEATURE_COUNT; i++) {
-+				index = i / 8;
-+				bit = i % 8;
-+
-+				if (index == ie_len)
-+					break;
-+
-+				if (data[index] & (1 << bit))
-+					__set_bit(i, ab->fw.fw_features);
-+			}
-+
-+			ath11k_dbg_dump(ab, ATH11K_DBG_BOOT, "features", "",
-+					ab->fw.fw_features,
-+					sizeof(ab->fw.fw_features));
-+			break;
-+		case ATH11K_FW_IE_AMSS_IMAGE:
-+			ath11k_dbg(ab, ATH11K_DBG_BOOT,
-+				   "found fw image ie (%zd B)\n",
-+				   ie_len);
-+
-+			ab->fw.amss_data = data;
-+			ab->fw.amss_len = ie_len;
-+			break;
-+		case ATH11K_FW_IE_M3_IMAGE:
-+			ath11k_dbg(ab, ATH11K_DBG_BOOT,
-+				   "found m3 image ie (%zd B)\n",
-+				   ie_len);
-+
-+			ab->fw.m3_data = data;
-+			ab->fw.m3_len = ie_len;
-+			break;
-+		default:
-+			ath11k_warn(ab, "Unknown FW IE: %u\n", ie_id);
-+			break;
-+		}
-+
-+		/* jump over the padding */
-+		ie_len = ALIGN(ie_len, 4);
-+
-+		/* make sure there's space for padding */
-+		if (ie_len > len)
-+			break;
-+
-+		len -= ie_len;
-+		data += ie_len;
-+	};
-+
-+	return 0;
-+
-+err:
-+	release_firmware(ab->fw.fw);
-+	ab->fw.fw = NULL;
-+	return ret;
-+}
-+
-+int ath11k_fw_pre_init(struct ath11k_base *ab)
-+{
-+	int ret;
-+
-+	ret = ath11k_fw_request_firmware_api_n(ab, ATH11K_FW_API2_FILE);
-+	if (ret == 0) {
-+		ab->fw.api_version = 2;
-+		goto out;
-+	}
-+
-+	ab->fw.api_version = 1;
-+
-+out:
-+	ath11k_dbg(ab, ATH11K_DBG_BOOT, "using fw api %d\n",
-+		   ab->fw.api_version);
-+
-+	return 0;
-+}
-+
-+void ath11k_fw_destroy(struct ath11k_base *ab)
-+{
-+	release_firmware(ab->fw.fw);
-+}
-diff --git a/drivers/net/wireless/ath/ath11k/fw.h b/drivers/net/wireless/ath/ath11k/fw.h
-new file mode 100644
-index 0000000000000..d9893ceb2c3dd
---- /dev/null
-+++ b/drivers/net/wireless/ath/ath11k/fw.h
-@@ -0,0 +1,27 @@
-+/* SPDX-License-Identifier: BSD-3-Clause-Clear */
-+/*
-+ * Copyright (c) 2022-2023, Qualcomm Innovation Center, Inc. All rights reserved.
-+ */
-+
-+#ifndef ATH11K_FW_H
-+#define ATH11K_FW_H
-+
-+#define ATH11K_FW_API2_FILE		"firmware-2.bin"
-+#define ATH11K_FIRMWARE_MAGIC		"QCOM-ATH11K-FW"
-+
-+enum ath11k_fw_ie_type {
-+	ATH11K_FW_IE_TIMESTAMP = 0,
-+	ATH11K_FW_IE_FEATURES = 1,
-+	ATH11K_FW_IE_AMSS_IMAGE = 2,
-+	ATH11K_FW_IE_M3_IMAGE = 3,
-+};
-+
-+enum ath11k_fw_features {
-+	/* keep last */
-+	ATH11K_FW_FEATURE_COUNT,
-+};
-+
-+int ath11k_fw_pre_init(struct ath11k_base *ab);
-+void ath11k_fw_destroy(struct ath11k_base *ab);
-+
-+#endif /* ATH11K_FW_H */
-diff --git a/drivers/net/wireless/ath/ath11k/mhi.c b/drivers/net/wireless/ath/ath11k/mhi.c
-index 48ae81efc2696..d3a4b561832c5 100644
---- a/drivers/net/wireless/ath/ath11k/mhi.c
-+++ b/drivers/net/wireless/ath/ath11k/mhi.c
-@@ -6,6 +6,7 @@
- 
- #include <linux/msi.h>
- #include <linux/pci.h>
-+#include <linux/firmware.h>
- #include <linux/of.h>
- #include <linux/of_address.h>
- #include <linux/ioport.h>
-@@ -389,16 +390,23 @@ int ath11k_mhi_register(struct ath11k_pci *ab_pci)
- 	if (!mhi_ctrl)
- 		return -ENOMEM;
- 
--	ath11k_core_create_firmware_path(ab, ATH11K_AMSS_FILE,
--					 ab_pci->amss_path,
--					 sizeof(ab_pci->amss_path));
--
- 	ab_pci->mhi_ctrl = mhi_ctrl;
- 	mhi_ctrl->cntrl_dev = ab->dev;
--	mhi_ctrl->fw_image = ab_pci->amss_path;
- 	mhi_ctrl->regs = ab->mem;
- 	mhi_ctrl->reg_len = ab->mem_len;
- 
-+	if (ab->fw.amss_data && ab->fw.amss_len > 0) {
-+		/* use MHI firmware file from firmware-N.bin */
-+		mhi_ctrl->fw_data = ab->fw.amss_data;
-+		mhi_ctrl->fw_sz = ab->fw.amss_len;
-+	} else {
-+		/* use the old separate mhi.bin MHI firmware file */
-+		ath11k_core_create_firmware_path(ab, ATH11K_AMSS_FILE,
-+						 ab_pci->amss_path,
-+						 sizeof(ab_pci->amss_path));
-+		mhi_ctrl->fw_image = ab_pci->amss_path;
-+	}
-+
- 	ret = ath11k_mhi_get_msi(ab_pci);
- 	if (ret) {
- 		ath11k_err(ab, "failed to get msi for mhi\n");
-diff --git a/drivers/net/wireless/ath/ath11k/qmi.c b/drivers/net/wireless/ath/ath11k/qmi.c
-index c27d2a6cbd9da..dde60ca9d2b8b 100644
---- a/drivers/net/wireless/ath/ath11k/qmi.c
-+++ b/drivers/net/wireless/ath/ath11k/qmi.c
-@@ -2514,25 +2514,39 @@ static int ath11k_qmi_load_bdf_qmi(struct ath11k_base *ab,
- static int ath11k_qmi_m3_load(struct ath11k_base *ab)
- {
- 	struct m3_mem_region *m3_mem = &ab->qmi.m3_mem;
--	const struct firmware *fw;
-+	const struct firmware *fw = NULL;
-+	const void *m3_data;
- 	char path[100];
-+	size_t m3_len;
+diff --git a/drivers/net/wireless/ath/ath11k/testmode.c b/drivers/net/wireless/ath/ath11k/testmode.c
+index b9f0ef458988c..7aa62a7d9a272 100644
+--- a/drivers/net/wireless/ath/ath11k/testmode.c
++++ b/drivers/net/wireless/ath/ath11k/testmode.c
+@@ -198,7 +198,7 @@ static void ath11k_tm_wmi_event_segmented(struct ath11k_base *ab, u32 cmd_id,
+ 	u16 length;
  	int ret;
  
- 	if (m3_mem->vaddr)
- 		/* m3 firmware buffer is already available in the DMA buffer */
- 		return 0;
+-	tb = ath11k_wmi_tlv_parse_alloc(ab, skb->data, skb->len, GFP_ATOMIC);
++	tb = ath11k_wmi_tlv_parse_alloc(ab, skb, GFP_ATOMIC);
+ 	if (IS_ERR(tb)) {
+ 		ret = PTR_ERR(tb);
+ 		ath11k_warn(ab, "failed to parse ftm event tlv: %d\n", ret);
+diff --git a/drivers/net/wireless/ath/ath11k/wmi.c b/drivers/net/wireless/ath/ath11k/wmi.c
+index aa6f89ccfeae4..538ac38aaf0bd 100644
+--- a/drivers/net/wireless/ath/ath11k/wmi.c
++++ b/drivers/net/wireless/ath/ath11k/wmi.c
+@@ -238,8 +238,8 @@ static int ath11k_wmi_tlv_parse(struct ath11k_base *ar, const void **tb,
+ 				   (void *)tb);
+ }
  
--	fw = ath11k_core_firmware_request(ab, ATH11K_M3_FILE);
--	if (IS_ERR(fw)) {
--		ret = PTR_ERR(fw);
--		ath11k_core_create_firmware_path(ab, ATH11K_M3_FILE,
--						 path, sizeof(path));
--		ath11k_err(ab, "failed to load %s: %d\n", path, ret);
--		return ret;
-+	if (ab->fw.m3_data && ab->fw.m3_len > 0) {
-+		/* firmware-N.bin had a m3 firmware file so use that */
-+		m3_data = ab->fw.m3_data;
-+		m3_len = ab->fw.m3_len;
-+	} else {
-+		/* No m3 file in firmware-N.bin so try to request old
-+		 * separate m3.bin.
-+		 */
-+		fw = ath11k_core_firmware_request(ab, ATH11K_M3_FILE);
-+		if (IS_ERR(fw)) {
-+			ret = PTR_ERR(fw);
-+			ath11k_core_create_firmware_path(ab, ATH11K_M3_FILE,
-+							 path, sizeof(path));
-+			ath11k_err(ab, "failed to load %s: %d\n", path, ret);
-+			return ret;
-+		}
-+
-+		m3_data = fw->data;
-+		m3_len = fw->size;
+-const void **ath11k_wmi_tlv_parse_alloc(struct ath11k_base *ab, const void *ptr,
+-					size_t len, gfp_t gfp)
++const void **ath11k_wmi_tlv_parse_alloc(struct ath11k_base *ab,
++					struct sk_buff *skb, gfp_t gfp)
+ {
+ 	const void **tb;
+ 	int ret;
+@@ -248,7 +248,7 @@ const void **ath11k_wmi_tlv_parse_alloc(struct ath11k_base *ab, const void *ptr,
+ 	if (!tb)
+ 		return ERR_PTR(-ENOMEM);
+ 
+-	ret = ath11k_wmi_tlv_parse(ab, tb, ptr, len);
++	ret = ath11k_wmi_tlv_parse(ab, tb, skb->data, skb->len);
+ 	if (ret) {
+ 		kfree(tb);
+ 		return ERR_PTR(ret);
+@@ -3933,7 +3933,7 @@ ath11k_wmi_obss_color_collision_event(struct ath11k_base *ab, struct sk_buff *sk
+ 	struct ath11k_vif *arvif;
+ 	int ret;
+ 
+-	tb = ath11k_wmi_tlv_parse_alloc(ab, skb->data, skb->len, GFP_ATOMIC);
++	tb = ath11k_wmi_tlv_parse_alloc(ab, skb, GFP_ATOMIC);
+ 	if (IS_ERR(tb)) {
+ 		ret = PTR_ERR(tb);
+ 		ath11k_warn(ab, "failed to parse tlv: %d\n", ret);
+@@ -5006,7 +5006,7 @@ static int ath11k_pull_vdev_start_resp_tlv(struct ath11k_base *ab, struct sk_buf
+ 	const struct wmi_vdev_start_resp_event *ev;
+ 	int ret;
+ 
+-	tb = ath11k_wmi_tlv_parse_alloc(ab, skb->data, skb->len, GFP_ATOMIC);
++	tb = ath11k_wmi_tlv_parse_alloc(ab, skb, GFP_ATOMIC);
+ 	if (IS_ERR(tb)) {
+ 		ret = PTR_ERR(tb);
+ 		ath11k_warn(ab, "failed to parse tlv: %d\n", ret);
+@@ -5105,7 +5105,7 @@ static int ath11k_pull_reg_chan_list_update_ev(struct ath11k_base *ab,
+ 
+ 	ath11k_dbg(ab, ATH11K_DBG_WMI, "processing regulatory channel list\n");
+ 
+-	tb = ath11k_wmi_tlv_parse_alloc(ab, skb->data, skb->len, GFP_ATOMIC);
++	tb = ath11k_wmi_tlv_parse_alloc(ab, skb, GFP_ATOMIC);
+ 	if (IS_ERR(tb)) {
+ 		ret = PTR_ERR(tb);
+ 		ath11k_warn(ab, "failed to parse tlv: %d\n", ret);
+@@ -5281,7 +5281,7 @@ static int ath11k_pull_reg_chan_list_ext_update_ev(struct ath11k_base *ab,
+ 
+ 	ath11k_dbg(ab, ATH11K_DBG_WMI, "processing regulatory ext channel list\n");
+ 
+-	tb = ath11k_wmi_tlv_parse_alloc(ab, skb->data, skb->len, GFP_ATOMIC);
++	tb = ath11k_wmi_tlv_parse_alloc(ab, skb, GFP_ATOMIC);
+ 	if (IS_ERR(tb)) {
+ 		ret = PTR_ERR(tb);
+ 		ath11k_warn(ab, "failed to parse tlv: %d\n", ret);
+@@ -5636,7 +5636,7 @@ static int ath11k_pull_peer_del_resp_ev(struct ath11k_base *ab, struct sk_buff *
+ 	const struct wmi_peer_delete_resp_event *ev;
+ 	int ret;
+ 
+-	tb = ath11k_wmi_tlv_parse_alloc(ab, skb->data, skb->len, GFP_ATOMIC);
++	tb = ath11k_wmi_tlv_parse_alloc(ab, skb, GFP_ATOMIC);
+ 	if (IS_ERR(tb)) {
+ 		ret = PTR_ERR(tb);
+ 		ath11k_warn(ab, "failed to parse tlv: %d\n", ret);
+@@ -5668,7 +5668,7 @@ static int ath11k_pull_vdev_del_resp_ev(struct ath11k_base *ab,
+ 	const struct wmi_vdev_delete_resp_event *ev;
+ 	int ret;
+ 
+-	tb = ath11k_wmi_tlv_parse_alloc(ab, skb->data, skb->len, GFP_ATOMIC);
++	tb = ath11k_wmi_tlv_parse_alloc(ab, skb, GFP_ATOMIC);
+ 	if (IS_ERR(tb)) {
+ 		ret = PTR_ERR(tb);
+ 		ath11k_warn(ab, "failed to parse tlv: %d\n", ret);
+@@ -5688,15 +5688,15 @@ static int ath11k_pull_vdev_del_resp_ev(struct ath11k_base *ab,
+ 	return 0;
+ }
+ 
+-static int ath11k_pull_bcn_tx_status_ev(struct ath11k_base *ab, void *evt_buf,
+-					u32 len, u32 *vdev_id,
+-					u32 *tx_status)
++static int ath11k_pull_bcn_tx_status_ev(struct ath11k_base *ab,
++					struct sk_buff *skb,
++					u32 *vdev_id, u32 *tx_status)
+ {
+ 	const void **tb;
+ 	const struct wmi_bcn_tx_status_event *ev;
+ 	int ret;
+ 
+-	tb = ath11k_wmi_tlv_parse_alloc(ab, evt_buf, len, GFP_ATOMIC);
++	tb = ath11k_wmi_tlv_parse_alloc(ab, skb, GFP_ATOMIC);
+ 	if (IS_ERR(tb)) {
+ 		ret = PTR_ERR(tb);
+ 		ath11k_warn(ab, "failed to parse tlv: %d\n", ret);
+@@ -5724,7 +5724,7 @@ static int ath11k_pull_vdev_stopped_param_tlv(struct ath11k_base *ab, struct sk_
+ 	const struct wmi_vdev_stopped_event *ev;
+ 	int ret;
+ 
+-	tb = ath11k_wmi_tlv_parse_alloc(ab, skb->data, skb->len, GFP_ATOMIC);
++	tb = ath11k_wmi_tlv_parse_alloc(ab, skb, GFP_ATOMIC);
+ 	if (IS_ERR(tb)) {
+ 		ret = PTR_ERR(tb);
+ 		ath11k_warn(ab, "failed to parse tlv: %d\n", ret);
+@@ -5881,7 +5881,7 @@ static int ath11k_pull_mgmt_tx_compl_param_tlv(struct ath11k_base *ab,
+ 	const struct wmi_mgmt_tx_compl_event *ev;
+ 	int ret;
+ 
+-	tb = ath11k_wmi_tlv_parse_alloc(ab, skb->data, skb->len, GFP_ATOMIC);
++	tb = ath11k_wmi_tlv_parse_alloc(ab, skb, GFP_ATOMIC);
+ 	if (IS_ERR(tb)) {
+ 		ret = PTR_ERR(tb);
+ 		ath11k_warn(ab, "failed to parse tlv: %d\n", ret);
+@@ -6057,7 +6057,7 @@ static int ath11k_pull_scan_ev(struct ath11k_base *ab, struct sk_buff *skb,
+ 	const struct wmi_scan_event *ev;
+ 	int ret;
+ 
+-	tb = ath11k_wmi_tlv_parse_alloc(ab, skb->data, skb->len, GFP_ATOMIC);
++	tb = ath11k_wmi_tlv_parse_alloc(ab, skb, GFP_ATOMIC);
+ 	if (IS_ERR(tb)) {
+ 		ret = PTR_ERR(tb);
+ 		ath11k_warn(ab, "failed to parse tlv: %d\n", ret);
+@@ -6090,7 +6090,7 @@ static int ath11k_pull_peer_sta_kickout_ev(struct ath11k_base *ab, struct sk_buf
+ 	const struct wmi_peer_sta_kickout_event *ev;
+ 	int ret;
+ 
+-	tb = ath11k_wmi_tlv_parse_alloc(ab, skb->data, skb->len, GFP_ATOMIC);
++	tb = ath11k_wmi_tlv_parse_alloc(ab, skb, GFP_ATOMIC);
+ 	if (IS_ERR(tb)) {
+ 		ret = PTR_ERR(tb);
+ 		ath11k_warn(ab, "failed to parse tlv: %d\n", ret);
+@@ -6117,7 +6117,7 @@ static int ath11k_pull_roam_ev(struct ath11k_base *ab, struct sk_buff *skb,
+ 	const struct wmi_roam_event *ev;
+ 	int ret;
+ 
+-	tb = ath11k_wmi_tlv_parse_alloc(ab, skb->data, skb->len, GFP_ATOMIC);
++	tb = ath11k_wmi_tlv_parse_alloc(ab, skb, GFP_ATOMIC);
+ 	if (IS_ERR(tb)) {
+ 		ret = PTR_ERR(tb);
+ 		ath11k_warn(ab, "failed to parse tlv: %d\n", ret);
+@@ -6158,14 +6158,14 @@ static int freq_to_idx(struct ath11k *ar, int freq)
+ 	return idx;
+ }
+ 
+-static int ath11k_pull_chan_info_ev(struct ath11k_base *ab, u8 *evt_buf,
+-				    u32 len, struct wmi_chan_info_event *ch_info_ev)
++static int ath11k_pull_chan_info_ev(struct ath11k_base *ab, struct sk_buff *skb,
++				    struct wmi_chan_info_event *ch_info_ev)
+ {
+ 	const void **tb;
+ 	const struct wmi_chan_info_event *ev;
+ 	int ret;
+ 
+-	tb = ath11k_wmi_tlv_parse_alloc(ab, evt_buf, len, GFP_ATOMIC);
++	tb = ath11k_wmi_tlv_parse_alloc(ab, skb, GFP_ATOMIC);
+ 	if (IS_ERR(tb)) {
+ 		ret = PTR_ERR(tb);
+ 		ath11k_warn(ab, "failed to parse tlv: %d\n", ret);
+@@ -6204,7 +6204,7 @@ ath11k_pull_pdev_bss_chan_info_ev(struct ath11k_base *ab, struct sk_buff *skb,
+ 	const struct wmi_pdev_bss_chan_info_event *ev;
+ 	int ret;
+ 
+-	tb = ath11k_wmi_tlv_parse_alloc(ab, skb->data, skb->len, GFP_ATOMIC);
++	tb = ath11k_wmi_tlv_parse_alloc(ab, skb, GFP_ATOMIC);
+ 	if (IS_ERR(tb)) {
+ 		ret = PTR_ERR(tb);
+ 		ath11k_warn(ab, "failed to parse tlv: %d\n", ret);
+@@ -6244,7 +6244,7 @@ ath11k_pull_vdev_install_key_compl_ev(struct ath11k_base *ab, struct sk_buff *sk
+ 	const struct wmi_vdev_install_key_compl_event *ev;
+ 	int ret;
+ 
+-	tb = ath11k_wmi_tlv_parse_alloc(ab, skb->data, skb->len, GFP_ATOMIC);
++	tb = ath11k_wmi_tlv_parse_alloc(ab, skb, GFP_ATOMIC);
+ 	if (IS_ERR(tb)) {
+ 		ret = PTR_ERR(tb);
+ 		ath11k_warn(ab, "failed to parse tlv: %d\n", ret);
+@@ -6275,7 +6275,7 @@ static int ath11k_pull_peer_assoc_conf_ev(struct ath11k_base *ab, struct sk_buff
+ 	const struct wmi_peer_assoc_conf_event *ev;
+ 	int ret;
+ 
+-	tb = ath11k_wmi_tlv_parse_alloc(ab, skb->data, skb->len, GFP_ATOMIC);
++	tb = ath11k_wmi_tlv_parse_alloc(ab, skb, GFP_ATOMIC);
+ 	if (IS_ERR(tb)) {
+ 		ret = PTR_ERR(tb);
+ 		ath11k_warn(ab, "failed to parse tlv: %d\n", ret);
+@@ -7000,7 +7000,7 @@ static int ath11k_reg_11d_new_cc_event(struct ath11k_base *ab, struct sk_buff *s
+ 	const void **tb;
+ 	int ret, i;
+ 
+-	tb = ath11k_wmi_tlv_parse_alloc(ab, skb->data, skb->len, GFP_ATOMIC);
++	tb = ath11k_wmi_tlv_parse_alloc(ab, skb, GFP_ATOMIC);
+ 	if (IS_ERR(tb)) {
+ 		ret = PTR_ERR(tb);
+ 		ath11k_warn(ab, "failed to parse tlv: %d\n", ret);
+@@ -7391,8 +7391,7 @@ static void ath11k_bcn_tx_status_event(struct ath11k_base *ab, struct sk_buff *s
+ 	struct ath11k_vif *arvif;
+ 	u32 vdev_id, tx_status;
+ 
+-	if (ath11k_pull_bcn_tx_status_ev(ab, skb->data, skb->len,
+-					 &vdev_id, &tx_status) != 0) {
++	if (ath11k_pull_bcn_tx_status_ev(ab, skb, &vdev_id, &tx_status) != 0) {
+ 		ath11k_warn(ab, "failed to extract bcn tx status");
+ 		return;
  	}
+@@ -7423,7 +7422,7 @@ static void ath11k_wmi_event_peer_sta_ps_state_chg(struct ath11k_base *ab,
+ 	enum ath11k_wmi_peer_ps_state peer_previous_ps_state;
+ 	int ret;
  
- 	m3_mem->vaddr = dma_alloc_coherent(ab->dev,
--					   fw->size, &m3_mem->paddr,
-+					   m3_len, &m3_mem->paddr,
- 					   GFP_KERNEL);
- 	if (!m3_mem->vaddr) {
- 		ath11k_err(ab, "failed to allocate memory for M3 with size %zu\n",
-@@ -2541,8 +2555,8 @@ static int ath11k_qmi_m3_load(struct ath11k_base *ab)
- 		goto out;
+-	tb = ath11k_wmi_tlv_parse_alloc(ab, skb->data, skb->len, GFP_ATOMIC);
++	tb = ath11k_wmi_tlv_parse_alloc(ab, skb, GFP_ATOMIC);
+ 	if (IS_ERR(tb)) {
+ 		ret = PTR_ERR(tb);
+ 		ath11k_warn(ab, "failed to parse tlv: %d\n", ret);
+@@ -7891,7 +7890,7 @@ static void ath11k_chan_info_event(struct ath11k_base *ab, struct sk_buff *skb)
+ 	/* HW channel counters frequency value in hertz */
+ 	u32 cc_freq_hz = ab->cc_freq_hz;
+ 
+-	if (ath11k_pull_chan_info_ev(ab, skb->data, skb->len, &ch_info_ev) != 0) {
++	if (ath11k_pull_chan_info_ev(ab, skb, &ch_info_ev) != 0) {
+ 		ath11k_warn(ab, "failed to extract chan info event");
+ 		return;
  	}
+@@ -8223,7 +8222,7 @@ static void ath11k_pdev_ctl_failsafe_check_event(struct ath11k_base *ab,
+ 	const struct wmi_pdev_ctl_failsafe_chk_event *ev;
+ 	int ret;
  
--	memcpy(m3_mem->vaddr, fw->data, fw->size);
--	m3_mem->size = fw->size;
-+	memcpy(m3_mem->vaddr, m3_data, m3_len);
-+	m3_mem->size = m3_len;
+-	tb = ath11k_wmi_tlv_parse_alloc(ab, skb->data, skb->len, GFP_ATOMIC);
++	tb = ath11k_wmi_tlv_parse_alloc(ab, skb, GFP_ATOMIC);
+ 	if (IS_ERR(tb)) {
+ 		ret = PTR_ERR(tb);
+ 		ath11k_warn(ab, "failed to parse tlv: %d\n", ret);
+@@ -8288,7 +8287,7 @@ ath11k_wmi_pdev_csa_switch_count_status_event(struct ath11k_base *ab,
+ 	const u32 *vdev_ids;
+ 	int ret;
  
- 	ret = 0;
+-	tb = ath11k_wmi_tlv_parse_alloc(ab, skb->data, skb->len, GFP_ATOMIC);
++	tb = ath11k_wmi_tlv_parse_alloc(ab, skb, GFP_ATOMIC);
+ 	if (IS_ERR(tb)) {
+ 		ret = PTR_ERR(tb);
+ 		ath11k_warn(ab, "failed to parse tlv: %d\n", ret);
+@@ -8322,7 +8321,7 @@ ath11k_wmi_pdev_dfs_radar_detected_event(struct ath11k_base *ab, struct sk_buff
+ 	struct ath11k *ar;
+ 	int ret;
  
+-	tb = ath11k_wmi_tlv_parse_alloc(ab, skb->data, skb->len, GFP_ATOMIC);
++	tb = ath11k_wmi_tlv_parse_alloc(ab, skb, GFP_ATOMIC);
+ 	if (IS_ERR(tb)) {
+ 		ret = PTR_ERR(tb);
+ 		ath11k_warn(ab, "failed to parse tlv: %d\n", ret);
+@@ -8376,7 +8375,7 @@ ath11k_wmi_pdev_temperature_event(struct ath11k_base *ab,
+ 	const struct wmi_pdev_temperature_event *ev;
+ 	int ret;
+ 
+-	tb = ath11k_wmi_tlv_parse_alloc(ab, skb->data, skb->len, GFP_ATOMIC);
++	tb = ath11k_wmi_tlv_parse_alloc(ab, skb, GFP_ATOMIC);
+ 	if (IS_ERR(tb)) {
+ 		ret = PTR_ERR(tb);
+ 		ath11k_warn(ab, "failed to parse tlv: %d\n", ret);
+@@ -8416,7 +8415,7 @@ static void ath11k_fils_discovery_event(struct ath11k_base *ab,
+ 	const struct wmi_fils_discovery_event *ev;
+ 	int ret;
+ 
+-	tb = ath11k_wmi_tlv_parse_alloc(ab, skb->data, skb->len, GFP_ATOMIC);
++	tb = ath11k_wmi_tlv_parse_alloc(ab, skb, GFP_ATOMIC);
+ 	if (IS_ERR(tb)) {
+ 		ret = PTR_ERR(tb);
+ 		ath11k_warn(ab,
+@@ -8448,7 +8447,7 @@ static void ath11k_probe_resp_tx_status_event(struct ath11k_base *ab,
+ 	const struct wmi_probe_resp_tx_status_event *ev;
+ 	int ret;
+ 
+-	tb = ath11k_wmi_tlv_parse_alloc(ab, skb->data, skb->len, GFP_ATOMIC);
++	tb = ath11k_wmi_tlv_parse_alloc(ab, skb, GFP_ATOMIC);
+ 	if (IS_ERR(tb)) {
+ 		ret = PTR_ERR(tb);
+ 		ath11k_warn(ab,
+@@ -8574,7 +8573,7 @@ static void ath11k_wmi_twt_add_dialog_event(struct ath11k_base *ab,
+ 	const struct wmi_twt_add_dialog_event *ev;
+ 	int ret;
+ 
+-	tb = ath11k_wmi_tlv_parse_alloc(ab, skb->data, skb->len, GFP_ATOMIC);
++	tb = ath11k_wmi_tlv_parse_alloc(ab, skb, GFP_ATOMIC);
+ 	if (IS_ERR(tb)) {
+ 		ret = PTR_ERR(tb);
+ 		ath11k_warn(ab,
+@@ -8611,7 +8610,7 @@ static void ath11k_wmi_gtk_offload_status_event(struct ath11k_base *ab,
+ 	u64    replay_ctr;
+ 	int ret;
+ 
+-	tb = ath11k_wmi_tlv_parse_alloc(ab, skb->data, skb->len, GFP_ATOMIC);
++	tb = ath11k_wmi_tlv_parse_alloc(ab, skb, GFP_ATOMIC);
+ 	if (IS_ERR(tb)) {
+ 		ret = PTR_ERR(tb);
+ 		ath11k_warn(ab, "failed to parse tlv: %d\n", ret);
+diff --git a/drivers/net/wireless/ath/ath11k/wmi.h b/drivers/net/wireless/ath/ath11k/wmi.h
+index fa3b480b9d24f..9f6280d87b898 100644
+--- a/drivers/net/wireless/ath/ath11k/wmi.h
++++ b/drivers/net/wireless/ath/ath11k/wmi.h
+@@ -6320,8 +6320,8 @@ enum wmi_sta_keepalive_method {
+ #define WMI_STA_KEEPALIVE_INTERVAL_DEFAULT	30
+ #define WMI_STA_KEEPALIVE_INTERVAL_DISABLE	0
+ 
+-const void **ath11k_wmi_tlv_parse_alloc(struct ath11k_base *ab, const void *ptr,
+-					size_t len, gfp_t gfp);
++const void **ath11k_wmi_tlv_parse_alloc(struct ath11k_base *ab,
++					struct sk_buff *skb, gfp_t gfp);
+ int ath11k_wmi_cmd_send(struct ath11k_pdev_wmi *wmi, struct sk_buff *skb,
+ 			u32 cmd_id);
+ struct sk_buff *ath11k_wmi_alloc_skb(struct ath11k_wmi_base *wmi_sc, u32 len);
 -- 
 2.53.0
 
