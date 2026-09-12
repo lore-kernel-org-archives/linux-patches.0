@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2B0F2D739C;
-	Sat, 12 Sep 2026 13:16:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECA0939281F;
+	Sat, 12 Sep 2026 13:16:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789219002; cv=none; b=XWidKPdT+yrqfcLgZ2KRK0j3hQ/ujSeBgn53Xg5FT3fPm4/jLNMLtWshHHF6rBhUiFF9Ub/Ur3tDKxDBp6rZWGuyd2aenGwX1XGR6DUkDN5q0ud6IMZtvOVzM6SMdOScWmppUY7AnnkFBydjZWmhtyXsQ6efIfgi4tfWEJTlvsY=
+	t=1789219007; cv=none; b=K4es5J/DCB3XFgR/SESxehANOdEplM1WHb6f9mIQXj7MZ19QV7OXyB9pod3CG0kOLYZ7WqcCsgTDLmublbEhI/llCKJHX3R93AvZNDYqffeXcgE+A7PH1n7SdNYNZrx+qwWuFzgDqHaX8oCTCd2HcwE7go5zNpZPTYtKiJpHm+Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789219002; c=relaxed/simple;
-	bh=RoJhjGmz9hHoLmnC1OSfy70OYRc6wVEpaiqQo0d+sjA=;
+	s=arc-20240116; t=1789219007; c=relaxed/simple;
+	bh=6howlhmtpxrTmPr/zDZ0vcgPZWLjYanEHTQAy0lZd4M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G+F29pa18HYfjm5kDSDnGJvTvHJuknZEJYjclqULJzYvsjtRDljoUwKyZoGMF8JpK4bXoA9CUPzaMWbv5Sjw5HdAhvqnDXAvtcTkkWSpb2m1hxKj0GUFUz2ZyegV/WttarQLJxz/T696IoXeuQDTs1QuTftF5xYYu7BurG1wahI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FHSomKQz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=K6EGw++G7hyQjDlCTPWfMMPU7uFjOqI3g0iU1QHUsbUQYVgh0HfNJ5w/phV2QKJWtkj5hb+7rma5yh4BiYH209/mbjteB/gNF96vx826hAWsXVq9RsKx+hyZRt+dbNcq34yuMekdKHO8TIV9Ad0W9zVGZphlidnH+bUPZvor84c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bl1NQ6Js; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FHSomKQz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA8121F000FF;
-	Sat, 12 Sep 2026 13:16:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bl1NQ6Js"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFFEA1F000FF;
+	Sat, 12 Sep 2026 13:16:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789219000;
-	bh=sw+UgXu3zylNURjDk+aWeAPaNfLQg77z0aww1Nj9uvI=;
+	s=korg; t=1789219005;
+	bh=YZuCpnA6kd0APw9WMh2WoGQdIu78yrhTPr2OJAy8VpA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FHSomKQz1Gsh/G81ggjqv0UHl/buUh6Oo7n5H8lfW7sw0C6Vb8lChLuQttYUEgO36
-	 cVWqXlnTi783amuUnxOIVLA91T3WjX8m+uviBU8FeOVoO0oHXe5uizB2vx9Jc/dxIQ
-	 WBCBorkCdhs4RO/neBcM6X4bNU8yi5F39GRh528Y=
+	b=Bl1NQ6JsfFi6TMAuB+GQrgS8kYsvQQcXtK8NhWE80gSAMAceEQZkBGt9oWE0ktEFa
+	 aU65FXOPySsTFuKteTPPdJhPWroQ/3ou1X6ulD7Qrd8FqSkDO93BGibHYlDClSgXDA
+	 tmBG8OaVHFBH2c62yRw8abDpCZWe2EZ3y4AQfAWc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guenter Roeck <linux@roeck-us.net>,
-	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	Rong Zhang <i@rong.moe>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1262/1376] bnxt_en: Fix call to hardware monitoring event handler
-Date: Sat, 12 Sep 2026 09:01:28 +0200
-Message-ID: <20260912065635.669306786@linuxfoundation.org>
+Subject: [PATCH 6.12 1263/1376] net: page_pool: Remove zone/policy GFP flags when allocating XArray entries
+Date: Sat, 12 Sep 2026 09:01:29 +0200
+Message-ID: <20260912065635.690931055@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -47,48 +46,94 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Rong Zhang <i@rong.moe>
 
-[ Upstream commit 622d698df4239fef3e0eb51fe59f4198f957f28a ]
+[ Upstream commit 039f248a6cc1f4dec895c001de2c600842022e58 ]
 
-The first parameter of hwmon_notify_event() is supposed to be the hardware
-monitoring device. The bnxt driver calls it with the platform device as
-first parameter instead. This API break results in undefined behavior and
-may result in a crash.
+Net drivers request GFP flags according to both the current context and
+the device constraints, but the XArray entry itself is by no mean used
+by the device. Passing though device constraints to XArray allocation is
+a bug and will be warned and fixed up by slab, e.g.:
 
-Pass the hardware monitoring device as parameter instead to fix the
-problem.
+    Unexpected gfp: 0x4 (GFP_DMA32). Fixing up to gfp: 0x82820 (GFP_ATOMIC|__GFP_NOWARN|__GFP_NOMEMALLOC). Fix your code!
+    CPU: 2 UID: 0 PID: 1071629 Comm: kworker/u80:1 Not tainted 7.2.0-rc7+ #1 PREEMPT(lazy)
+    Hardware name: LENOVO 21Q4/LNVNB161216, BIOS PXCN27WW 10/20/2025
+    Workqueue: mt76 mt792x_pm_wake_work [mt792x_lib]
+    Call Trace:
+     <TASK>
+     dump_stack_lvl+0x6e/0x90
+     kmalloc_fix_flags+0x4d/0x6a
+     refill_objects+0x10a/0x330
+     __pcs_replace_empty_main+0x292/0x5c0
+     kmem_cache_alloc_lru_noprof+0x4c2/0x680
+     ? __xas_nomem+0x3a/0x120
+     __xas_nomem+0x3a/0x120
+     __xa_alloc+0xd4/0x190
+     page_pool_dma_map+0xef/0x400
+     __page_pool_alloc_netmems_slow+0xed/0x480
+     ? lock_release+0x280/0x490
+     page_pool_alloc_frag_netmem+0xe0/0x3a0
+     page_pool_alloc_frag+0xe/0x20
+     mt76_dma_rx_fill_buf+0x1f6/0x580 [mt76]
+     mt76_dma_rx_reset+0x1cf/0x230 [mt76]
+     mt792x_wpdma_reset+0x183/0x1b0 [mt792x_lib]
+     mt792x_wpdma_reinit_cond+0x5e/0xa0 [mt792x_lib]
+     mt792xe_mcu_drv_pmctrl+0x28/0x60 [mt792x_lib]
+     mt792x_mcu_drv_pmctrl+0x3e/0x90 [mt792x_lib]
+     mt792x_pm_wake_work+0x2d/0x1d0 [mt792x_lib]
+     ? process_one_work+0x20e/0x600
+     process_one_work+0x230/0x600
+     ? process_one_work+0x256/0x600
+     worker_thread+0x1ec/0x3c0
+     ? rescuer_thread+0x610/0x610
+     kthread+0xf2/0x130
+     ? kthread_affine_node+0x140/0x140
+     ret_from_fork+0x2a5/0x380
+     ? kthread_affine_node+0x140/0x140
+     ret_from_fork_asm+0x11/0x20
+     </TASK>
 
-Fixes: a19b4801457b0 ("bnxt_en: Event handler for Thermal event")
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
-Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Link: https://patch.msgid.link/20260821044512.663941-1-linux@roeck-us.net
+Currently mt76 and stmmac may allocate page pool pages with GFP_DMA32.
+
+Fix it by removing zone/policy GFP flags when allocating XArray entries.
+This is inspired by commit 96d578088085 ("iommu/dma: Use the gfp
+parameter in __iommu_dma_alloc_noncontiguous()").
+
+Fixes: ee62ce7a1d90 ("page_pool: Track DMA-mapped pages and unmap them when destroying the pool")
+Signed-off-by: Rong Zhang <i@rong.moe>
+Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
+Link: https://patch.msgid.link/20260821-page-pool-xa-drop-dma32-v1-1-6eab295c3478@rong.moe
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt_hwmon.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/core/page_pool.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_hwmon.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_hwmon.c
-index 669d24ba0e87f..a53815bbe2725 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt_hwmon.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_hwmon.c
-@@ -40,7 +40,7 @@ void bnxt_hwmon_notify_event(struct bnxt *bp)
- 		return;
- 	}
+diff --git a/net/core/page_pool.c b/net/core/page_pool.c
+index 96df39f164e59..af4c7e62fe8d3 100644
+--- a/net/core/page_pool.c
++++ b/net/core/page_pool.c
+@@ -484,6 +484,13 @@ static int page_pool_register_dma_index(struct page_pool *pool,
+ 	if (unlikely(!PP_DMA_INDEX_BITS))
+ 		goto out;
  
--	hwmon_notify_event(&bp->pdev->dev, hwmon_temp, attr, 0);
-+	hwmon_notify_event(bp->hwmon_dev, hwmon_temp, attr, 0);
- }
- 
- static int bnxt_hwrm_temp_query(struct bnxt *bp, u8 *temp)
++	/*
++	 * Drivers request GFP flags according to both the current context and
++	 * the device constraints, but the XArray entry itself is by no mean
++	 * used by the device, so remove zone/policy flags.
++	 */
++	gfp &= ~(__GFP_DMA | __GFP_DMA32 | __GFP_HIGHMEM | __GFP_COMP);
++
+ 	if (in_softirq())
+ 		err = xa_alloc(&pool->dma_mapped, &id, netmem_to_page(netmem),
+ 			       PP_DMA_INDEX_LIMIT, gfp);
 -- 
 2.53.0
 
