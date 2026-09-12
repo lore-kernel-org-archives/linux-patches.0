@@ -1,51 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0F9841A575;
-	Sat, 12 Sep 2026 12:08:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8174932779D;
+	Sat, 12 Sep 2026 12:08:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789214930; cv=none; b=IxZjm9531Po4RUoT84kpTY49xOA7zDRLmP/LCb9BqJpGdwuKV6cg5ZyihwDw7miPjit3EMaCUkX2/NDRlBUNcgUgDpr5FddpjXqIfIaoPDPmw3acCXs0AJ/3P/dbpTiGBee5Y+lTR0wrBkz47Q7VJIX+8ijEV/qJzPii+F1StKg=
+	t=1789214934; cv=none; b=tFHuCYCAoTnxgX6wGFGs5aGaueCDke5vyC2Bsy6M+D+IoHmTAGaQK1CPW+yicBBmaKuiMTmVay0kx4BwdMVc56XJxll7XLHUIurwJ3Fu7No3PqKGHg6xj7nvvQhu+wHXUi7dHiQV+6cJamsedeaWXGBlShHdsne5Jb9zBgUc+gw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789214930; c=relaxed/simple;
-	bh=5S8omyryFmOC2mEUVFHng0SlSWsd20+dEdIjzaRquHc=;
+	s=arc-20240116; t=1789214934; c=relaxed/simple;
+	bh=EcGSxvWm8GIVhBjoPsZa/+uCqy7iUcDiQr5eMCtBcbc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EPc1Kh3GIPP2q6zjQcLaYQbOIOE/dWgA3bEvbVacggwSQpwHk08jzl786aTvXLqEU144b+8HMMf3wjd3ZZShodkgRVb1LZVJ16bjnqNrDG9S2N79Wpa+pRvQz0kdOUGNsF3Q0u3TPedoWc18XxnmgYmhZqHKC/hfJR6lQvMfQh8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I6aOX2Pj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nzVAhqI0GSILaO5RalZPGthkO6GV3VdBWrpCZxDuP/3q7EEYDYBO9PW3wok+K8rdRRxsnvdd80LMQLS9rRPOklASUAegHoyi25vC4Hp9hsFeFi/boU3v+ZEGl1YZ2Im8vMk5/o/53ydXMfa+6nhJu8Kdvh2xjW2KNRU+P2PYIUg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O6la/sKU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I6aOX2Pj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A7C41F000FF;
-	Sat, 12 Sep 2026 12:08:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O6la/sKU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A03A01F000FF;
+	Sat, 12 Sep 2026 12:08:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789214928;
-	bh=NQ38Uv9MfGZP3vRr9Dvde5RvsHnWYRIINxzy77zJOGI=;
+	s=korg; t=1789214933;
+	bh=z77DAedu6UCgLHMUWsrmHABo9x1CgGIACBJ9WpVHvhk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I6aOX2PjrmKjlA7B2iPuzxShSBB4fUblHqKNbPyhMiVyS8X0aUH0vKk+hk4K7AM3Y
-	 3oXkW116KU2cVhYa+LAeFoY3Fnuf8oGNNB4ewYBC3mwBqn3tANOOIyiaJUB81swf7r
-	 NiKeZa2je3FB2YxZgpZ7bq2Z3d17b18klxH4QNi0=
+	b=O6la/sKUk1jMUJzu3qRSPG5OE8UGICHoQUmZgikU/uhsgaFTSQf8HrSX+BX8sPZca
+	 O+BIrb8OMPaY+ms+E11CJE612+SmQ/X1Tdj9SbxJSBHVKZB2Mw8LFYebUzHJ0hg+OC
+	 cQ5k+KTT1N9XP7KvAcDLwIszaM5jV6uPHVrdZ3q8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gregory Price <gourry@gourry.net>,
-	Jonathan Cameron <jonathan.cameron@huawei.com>,
-	"David Hildenbrand (arm)" <david@kernel.org>,
-	Ben Cheatham <benjamin.cheatham@amd.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Davidlohr Bueso <dave@stgolabs.net>,
-	Danilo Krummrich <dakr@kernel.org>,
-	Liam Howlett <liam.howlett@oracle.com>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	Michal Hocko <mhocko@suse.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Oscar Salvador <osalvador@suse.de>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Yichong Chen <chenyichong@uniontech.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Emil Tsalapatis <emil@etsalapatis.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0384/1376] mm: name the anonymous MMOP enum as enum mmop
-Date: Sat, 12 Sep 2026 08:46:50 +0200
-Message-ID: <20260912065616.105565373@linuxfoundation.org>
+Subject: [PATCH 6.12 0375/1376] tools/bpf/bpftool: Reset vmlinux BTF after map commands
+Date: Sat, 12 Sep 2026 08:46:41 +0200
+Message-ID: <20260912065615.905240326@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -64,189 +52,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gregory Price <gourry@gourry.net>
+From: Yichong Chen <chenyichong@uniontech.com>
 
-[ Upstream commit c5c48345135ff04e039377020df23294d59aa59a ]
+[ Upstream commit 66d7e39e49b0dd57610c9b63afc65b4d5690983b ]
 
-Give the MMOP enum (MMOP_OFFLINE, MMOP_ONLINE, etc) a proper type name so
-the compiler can help catch invalid values being assigned to variables of
-this type.
+get_map_kv_btf() caches the vmlinux BTF object when a map uses
+btf_vmlinux_value_type_id. map dump released that object when the
+command completed, but left the global pointer stale.
 
-Leave the existing functions returning int alone to allow for
-value-or-error pattern to remain unchanged without churn.
+The same cached object can also be returned to print_key_value(), which
+freed it directly. That leaves btf_vmlinux dangling before the command
+cleanup path runs.
 
-mmop_default_online_type is left as int because it uses the -1 sentinal
-value to signal it hasn't been initialized yet.
+Use free_map_kv_btf() for per-entry cleanup, and reset the cached
+btf_vmlinux pointer when the map command releases the object. This keeps
+batch mode from reusing a freed BTF object.
 
-Keep the uint8_t buffer in offline_and_remove_memory() as-is for space
-efficiency, with an explicit cast when we consume the value.
-
-Move the enum definition before the CONFIG_MEMORY_HOTPLUG guard so it is
-unconditionally available for struct memory_block in memory.h.
-
-No functional change.
-
-Link: https://lore.kernel.org/linux-mm/3424eba7-523b-4351-abd0-3a888a3e5e61@kernel.org/
-Link: https://lkml.kernel.org/r/20260211215447.2194189-1-gourry@gourry.net
-Signed-off-by: Gregory Price <gourry@gourry.net>
-Suggested-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-Suggested-by: "David Hildenbrand (arm)" <david@kernel.org>
-Reviewed-by: Ben Cheatham <benjamin.cheatham@amd.com>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Reviewed-by: Davidlohr Bueso <dave@stgolabs.net>
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-Cc: Danilo Krummrich <dakr@kernel.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Liam Howlett <liam.howlett@oracle.com>
-Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Mike Rapoport <rppt@kernel.org>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Vlastimil Babka <vbabka@suse.cz>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Stable-dep-of: 2ebce860bdd7 ("mm/mm_init: handle alloc_percpu failure in free_area_init_core_hotplug")
+Fixes: 4e1ea33292ff ("bpftool: Support dumping a map with btf_vmlinux_value_type_id")
+Signed-off-by: Yichong Chen <chenyichong@uniontech.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
+Link: https://lore.kernel.org/bpf/9072F43B3F74DF91+20260624025055.1574875-2-chenyichong@uniontech.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/memory.c          |  2 +-
- include/linux/memory.h         |  3 ++-
- include/linux/memory_hotplug.h | 16 ++++++++--------
- mm/memory_hotplug.c            | 10 +++++-----
- 4 files changed, 16 insertions(+), 15 deletions(-)
+ tools/bpf/bpftool/map.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/base/memory.c b/drivers/base/memory.c
-index cd1e6e15bb719..889e653781453 100644
---- a/drivers/base/memory.c
-+++ b/drivers/base/memory.c
-@@ -435,7 +435,7 @@ static ssize_t phys_device_show(struct device *dev,
- static int print_allowed_zone(char *buf, int len, int nid,
- 			      struct memory_group *group,
- 			      unsigned long start_pfn, unsigned long nr_pages,
--			      int online_type, struct zone *default_zone)
-+			      enum mmop online_type, struct zone *default_zone)
- {
- 	struct zone *zone;
+diff --git a/tools/bpf/bpftool/map.c b/tools/bpf/bpftool/map.c
+index b89bd792c1d51..332e040677154 100644
+--- a/tools/bpf/bpftool/map.c
++++ b/tools/bpf/bpftool/map.c
+@@ -787,6 +787,12 @@ static int maps_have_btf(int *fds, int nb_fds)
  
-diff --git a/include/linux/memory.h b/include/linux/memory.h
-index a334f1382b21d..f6109556ed105 100644
---- a/include/linux/memory.h
-+++ b/include/linux/memory.h
-@@ -19,6 +19,7 @@
- #include <linux/node.h>
- #include <linux/compiler.h>
- #include <linux/mutex.h>
-+#include <linux/memory_hotplug.h>
+ static struct btf *btf_vmlinux;
  
- #define MIN_MEMORY_BLOCK_SIZE     (1UL << SECTION_SIZE_BITS)
- 
-@@ -79,7 +80,7 @@ enum memory_block_state {
- struct memory_block {
- 	unsigned long start_section_nr;
- 	enum memory_block_state state;	/* serialized by the dev->lock */
--	int online_type;		/* for passing data to online routine */
-+	enum mmop online_type;	/* for passing data to online routine */
- 	int nid;			/* NID for this memory block */
- 	/*
- 	 * The single zone of this memory block if all PFNs of this memory block
-diff --git a/include/linux/memory_hotplug.h b/include/linux/memory_hotplug.h
-index 0cbf14756d129..1b6b9ed7887db 100644
---- a/include/linux/memory_hotplug.h
-+++ b/include/linux/memory_hotplug.h
-@@ -16,11 +16,8 @@ struct resource;
- struct vmem_altmap;
- struct dev_pagemap;
- 
--#ifdef CONFIG_MEMORY_HOTPLUG
--struct page *pfn_to_online_page(unsigned long pfn);
--
- /* Types for control the zone type of onlined and offlined memory */
--enum {
-+enum mmop {
- 	/* Offline the memory. */
- 	MMOP_OFFLINE = 0,
- 	/* Online the memory. Zone depends, see default_zone_for_pfn(). */
-@@ -31,6 +28,9 @@ enum {
- 	MMOP_ONLINE_MOVABLE,
- };
- 
-+#ifdef CONFIG_MEMORY_HOTPLUG
-+struct page *pfn_to_online_page(unsigned long pfn);
++static void free_btf_vmlinux(void)
++{
++	btf__free(btf_vmlinux);
++	btf_vmlinux = NULL;
++}
 +
- /* Flags for add_memory() and friends to specify memory hotplug details. */
- typedef int __bitwise mhp_t;
- 
-@@ -303,8 +303,8 @@ static inline void __remove_memory(u64 start, u64 size) {}
- 
- #ifdef CONFIG_MEMORY_HOTPLUG
- /* Default online_type (MMOP_*) when new memory blocks are added. */
--extern int mhp_get_default_online_type(void);
--extern void mhp_set_default_online_type(int online_type);
-+extern enum mmop mhp_get_default_online_type(void);
-+extern void mhp_set_default_online_type(enum mmop online_type);
- extern void __ref free_area_init_core_hotplug(struct pglist_data *pgdat);
- extern int __add_memory(int nid, u64 start, u64 size, mhp_t mhp_flags);
- extern int add_memory(int nid, u64 start, u64 size, mhp_t mhp_flags);
-@@ -327,8 +327,8 @@ extern void sparse_remove_section(unsigned long pfn, unsigned long nr_pages,
- 				  struct dev_pagemap *pgmap);
- extern struct page *sparse_decode_mem_map(unsigned long coded_mem_map,
- 					  unsigned long pnum);
--extern struct zone *zone_for_pfn_range(int online_type, int nid,
--		struct memory_group *group, unsigned long start_pfn,
-+extern struct zone *zone_for_pfn_range(enum mmop online_type,
-+		int nid, struct memory_group *group, unsigned long start_pfn,
- 		unsigned long nr_pages);
- extern int arch_create_linear_mapping(int nid, u64 start, u64 size,
- 				      struct mhp_params *params);
-diff --git a/mm/memory_hotplug.c b/mm/memory_hotplug.c
-index 6426be4d82995..4d764f4ec213b 100644
---- a/mm/memory_hotplug.c
-+++ b/mm/memory_hotplug.c
-@@ -220,7 +220,7 @@ void put_online_mems(void)
- bool movable_node_enabled = false;
- 
- static int mhp_default_online_type = -1;
--int mhp_get_default_online_type(void)
-+enum mmop mhp_get_default_online_type(void)
+ static int get_map_kv_btf(const struct bpf_map_info *info, struct btf **btf)
  {
- 	if (mhp_default_online_type >= 0)
- 		return mhp_default_online_type;
-@@ -239,7 +239,7 @@ int mhp_get_default_online_type(void)
- 	return mhp_default_online_type;
+ 	int err = 0;
+@@ -955,7 +961,7 @@ static int do_dump(int argc, char **argv)
+ 		close(fds[i]);
+ exit_free:
+ 	free(fds);
+-	btf__free(btf_vmlinux);
++	free_btf_vmlinux();
+ 	return err;
  }
  
--void mhp_set_default_online_type(int online_type)
-+void mhp_set_default_online_type(enum mmop online_type)
- {
- 	mhp_default_online_type = online_type;
+@@ -1046,7 +1052,7 @@ static void print_key_value(struct bpf_map_info *info, void *key,
+ 		btf_wtr = get_btf_writer();
+ 		if (!btf_wtr) {
+ 			p_info("failed to create json writer for btf. falling back to plain output");
+-			btf__free(btf);
++			free_map_kv_btf(btf);
+ 			btf = NULL;
+ 			print_entry_plain(info, key, value);
+ 		} else {
+@@ -1062,7 +1068,7 @@ static void print_key_value(struct bpf_map_info *info, void *key,
+ 	} else {
+ 		print_entry_plain(info, key, value);
+ 	}
+-	btf__free(btf);
++	free_map_kv_btf(btf);
  }
-@@ -1060,7 +1060,7 @@ static inline struct zone *default_zone_for_pfn(int nid, unsigned long start_pfn
- 	return movable_node_enabled ? movable_zone : kernel_zone;
- }
  
--struct zone *zone_for_pfn_range(int online_type, int nid,
-+struct zone *zone_for_pfn_range(enum mmop online_type, int nid,
- 		struct memory_group *group, unsigned long start_pfn,
- 		unsigned long nr_pages)
- {
-@@ -2349,7 +2349,7 @@ EXPORT_SYMBOL_GPL(remove_memory);
- 
- static int try_offline_memory_block(struct memory_block *mem, void *arg)
- {
--	uint8_t online_type = MMOP_ONLINE_KERNEL;
-+	enum mmop online_type = MMOP_ONLINE_KERNEL;
- 	uint8_t **online_types = arg;
- 	struct page *page;
- 	int rc;
-@@ -2382,7 +2382,7 @@ static int try_reonline_memory_block(struct memory_block *mem, void *arg)
- 	int rc;
- 
- 	if (**online_types != MMOP_OFFLINE) {
--		mem->online_type = **online_types;
-+		mem->online_type = (enum mmop)**online_types;
- 		rc = device_online(&mem->dev);
- 		if (rc < 0)
- 			pr_warn("%s: Failed to re-online memory: %d",
+ static int do_lookup(int argc, char **argv)
 -- 
 2.53.0
 
