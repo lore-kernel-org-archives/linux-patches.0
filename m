@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E04847D45A;
-	Sat, 12 Sep 2026 12:59:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9DDC47CC79;
+	Sat, 12 Sep 2026 12:59:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789217973; cv=none; b=DjoO6Rs65tnhwhJP08fPMG767U2Ua4mvJObvIqHKzVUdQqsewX35/tyfjUH4P4N6o8eNnAcGnT+2C7tP6RtQQOTzGQwG6sW0SsiOpZCFuVcJCYSbhmFC8wYh9fBFrp+GURp0iTAN8gxITsocrj7olNpRLtBckV+WOFLuSEOxc6A=
+	t=1789217978; cv=none; b=bBeZIk0jf+lauyEk9b3FFpHeHXwKrJ+xhI4qidnr9+YzHxb7SmF8b2FsOyoE8Nm0VvWGzCSxYWqJ1lG75aPFQ1fkGa+Bs6Gfq5iRkky+HOs/QJzMaEgp4G5V9tSfQyIKQa4YAawD5jX+9tMCyG3aJcPNhD5Rf7TCGhNMahw4MTw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789217973; c=relaxed/simple;
-	bh=RhohSxJVJO95A6/YK1i4IfdTsgGpignUizPInK8YSG8=;
+	s=arc-20240116; t=1789217978; c=relaxed/simple;
+	bh=zOpzp8XvzDwQK46/ZoBVKFkCKIW6j7UOcTluP4mVdPM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FzmUyYIOStljHvMouN/L7XY+5L3lJ/Q+Fh73tlf9RLOusRpxAczypeDho4b4O/b6XIdUYLRW8iOr3OJYdkLg4kkc21fcPdEGnEu8bR+RNeRfHfYuVWNOL8Fsx4Q0cy6FGKx4OmC/cxX2cZiGg2p5lWHJKFQQU4ytg1gxyEQ8QsE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XMJVyIp4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YaPfUDwaoHb2ajE0ioAil/AUAMRU+o+2oqXZvzHDPvP9+V1ImXsomMF3HcpRvxi/p8Zd7BT0p7paLRliWZ3CSstuOHkZXdoTHw3D86TzugDAw2A3Lx6nh4A0l6WmNdVXzatmdEUBrteVzxBTqSgSF3L8EEsoqXMiZebVq4DsxUY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qpo/7eOx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XMJVyIp4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E0341F000FF;
-	Sat, 12 Sep 2026 12:59:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qpo/7eOx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B6D21F00893;
+	Sat, 12 Sep 2026 12:59:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789217971;
-	bh=hpp7AKsnq8tWfLfhwZHjJUfNcvMGbKUZJEhCs/UYkSg=;
+	s=korg; t=1789217976;
+	bh=RFibF3YR2G2128Nx7ncx155qrWiuW4+eU1qBsj0/zrs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XMJVyIp4ownJZhkJGhFJp7pMPqDsaTs9J31FL4LxqrWjYK+I2DuOwqYrDhYqdz9mB
-	 uhyGkwtcuBifggFuJsFwucdUwOPL9qm+gDngsbPQmmzfZcDacmAQBhL0gSgB6YRlA4
-	 G380yGQu+S3kDTsqmD9+FnSv+6MYY80d4RCtuGA0=
+	b=Qpo/7eOxyE2zPezqQ0ADb4ZdVESJDu8pq/tmtU07SDpn4dv3QJJvsuKw0rafKfs2U
+	 w/8okwhda245rWHneKTAV1NFRAsY7TnG9dwr1t1H/laHluzZDSJuAfSdcZV45mm5I9
+	 UynNBKutLUTuCuVIR6Ij9TrJafpA/ggZd2QgRrmE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Thorsten Blum <thorsten.blum@linux.dev>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
 	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1048/1376] powerpc/vdso: Add a page for non-time data
-Date: Sat, 12 Sep 2026 08:57:54 +0200
-Message-ID: <20260912065630.916360938@linuxfoundation.org>
+Subject: [PATCH 6.12 1049/1376] powerpc: Use str_enabled_disabled() helper function
+Date: Sat, 12 Sep 2026 08:57:55 +0200
+Message-ID: <20260912065630.938263914@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,248 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe Leroy <christophe.leroy@csgroup.eu>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-[ Upstream commit c39b1dcf055d420a498d1047c645b776e4d1a7aa ]
+[ Upstream commit 19e0a70e6c3c1bf800b8ce9eb45864aa9e1e2781 ]
 
-The page containing VDSO time data is swapped with the one containing
-TIME namespace data when a process uses a non-root time namespace.
-For other data like powerpc specific data and RNG data, it means
-tracking whether time namespace is the root one or not to know which
-page to use.
+Remove hard-coded strings by using the str_enabled_disabled() helper
+function.
 
-Simplify the logic behind by moving time data out of first data page
-so that the first data page which contains everything else always
-remains the first page. Time data is in the second or third page
-depending on selected time namespace.
-
-While we are playing with get_datapage macro, directly take into
-account the data offset inside the macro instead of adding that offset
-afterwards.
-
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
 Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://patch.msgid.link/0557d3ec898c1d0ea2fc59fa8757618e524c5d94.1727858295.git.christophe.leroy@csgroup.eu
+Link: https://patch.msgid.link/20241027222219.1173-2-thorsten.blum@linux.dev
 Stable-dep-of: 3f7c9f9c36b4 ("s390/irqflags: Add out-of-line definitions of arch_local_irq_*() for KMSAN")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/include/asm/vdso_datapage.h | 24 +++++++-----------------
- arch/powerpc/kernel/vdso.c               | 16 ++++++++++------
- arch/powerpc/kernel/vdso/cacheflush.S    |  2 +-
- arch/powerpc/kernel/vdso/datapage.S      |  4 ++--
- arch/powerpc/kernel/vdso/getrandom.S     |  3 +--
- arch/powerpc/kernel/vdso/gettimeofday.S  |  5 ++---
- arch/powerpc/kernel/vdso/vdso32.lds.S    |  2 +-
- arch/powerpc/kernel/vdso/vdso64.lds.S    |  2 +-
- 8 files changed, 25 insertions(+), 33 deletions(-)
+ arch/powerpc/kernel/secure_boot.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/arch/powerpc/include/asm/vdso_datapage.h b/arch/powerpc/include/asm/vdso_datapage.h
-index 248dee138f7bf..33069afccb3c6 100644
---- a/arch/powerpc/include/asm/vdso_datapage.h
-+++ b/arch/powerpc/include/asm/vdso_datapage.h
-@@ -82,8 +82,9 @@ struct vdso_arch_data {
- 	__u32 syscall_map[SYSCALL_MAP_SIZE];	/* Map of syscalls  */
- 	__u32 compat_syscall_map[SYSCALL_MAP_SIZE];	/* Map of compat syscalls */
- 
--	struct vdso_data data[CS_BASES];
- 	struct vdso_rng_data rng_data;
-+
-+	struct vdso_data data[CS_BASES] __aligned(1 << CONFIG_PAGE_SHIFT);
- };
- 
- #else /* CONFIG_PPC64 */
-@@ -95,8 +96,9 @@ struct vdso_arch_data {
- 	__u64 tb_ticks_per_sec;		/* Timebase tics / sec		0x38 */
- 	__u32 syscall_map[SYSCALL_MAP_SIZE]; /* Map of syscalls */
- 	__u32 compat_syscall_map[0];	/* No compat syscalls on PPC32 */
--	struct vdso_data data[CS_BASES];
- 	struct vdso_rng_data rng_data;
-+
-+	struct vdso_data data[CS_BASES] __aligned(1 << CONFIG_PAGE_SHIFT);
- };
- 
- #endif /* CONFIG_PPC64 */
-@@ -105,29 +107,17 @@ extern struct vdso_arch_data *vdso_data;
- 
- #else /* __ASSEMBLY__ */
- 
--.macro get_datapage ptr
-+.macro get_datapage ptr offset=0
- 	bcl	20, 31, .+4
- 999:
- 	mflr	\ptr
--	addis	\ptr, \ptr, (_vdso_datapage - 999b)@ha
--	addi	\ptr, \ptr, (_vdso_datapage - 999b)@l
-+	addis	\ptr, \ptr, (_vdso_datapage - 999b + \offset)@ha
-+	addi	\ptr, \ptr, (_vdso_datapage - 999b + \offset)@l
- .endm
- 
- #include <asm/asm-offsets.h>
- #include <asm/page.h>
- 
--.macro get_realdatapage ptr scratch
--	get_datapage \ptr
--#ifdef CONFIG_TIME_NS
--	lwz	\scratch, VDSO_CLOCKMODE_OFFSET(\ptr)
--	xoris	\scratch, \scratch, VDSO_CLOCKMODE_TIMENS@h
--	xori	\scratch, \scratch, VDSO_CLOCKMODE_TIMENS@l
--	cntlzw	\scratch, \scratch
--	rlwinm	\scratch, \scratch, PAGE_SHIFT - 5, 1 << PAGE_SHIFT
--	add	\ptr, \ptr, \scratch
--#endif
--.endm
--
- #endif /* __ASSEMBLY__ */
- 
- #endif /* __KERNEL__ */
-diff --git a/arch/powerpc/kernel/vdso.c b/arch/powerpc/kernel/vdso.c
-index ee4b9d676cff5..6166c1862c06f 100644
---- a/arch/powerpc/kernel/vdso.c
-+++ b/arch/powerpc/kernel/vdso.c
-@@ -48,12 +48,13 @@ long sys_ni_syscall(void);
+diff --git a/arch/powerpc/kernel/secure_boot.c b/arch/powerpc/kernel/secure_boot.c
+index 9e0efb657f393..3a28795b4ed82 100644
+--- a/arch/powerpc/kernel/secure_boot.c
++++ b/arch/powerpc/kernel/secure_boot.c
+@@ -5,6 +5,7 @@
   */
- static union {
- 	struct vdso_arch_data	data;
--	u8			page[PAGE_SIZE];
-+	u8			page[2 * PAGE_SIZE];
- } vdso_data_store __page_aligned_data;
- struct vdso_arch_data *vdso_data = &vdso_data_store.data;
+ #include <linux/types.h>
+ #include <linux/of.h>
++#include <linux/string_choices.h>
+ #include <asm/secure_boot.h>
  
- enum vvar_pages {
--	VVAR_DATA_PAGE_OFFSET,
-+	VVAR_BASE_PAGE_OFFSET,
-+	VVAR_TIME_PAGE_OFFSET,
- 	VVAR_TIMENS_PAGE_OFFSET,
- 	VVAR_NR_PAGES,
- };
-@@ -119,7 +120,7 @@ static struct vm_special_mapping vdso64_spec __ro_after_init = {
- #ifdef CONFIG_TIME_NS
- struct vdso_data *arch_get_vdso_data(void *vvar_page)
- {
--	return ((struct vdso_arch_data *)vvar_page)->data;
-+	return vvar_page;
+ static struct device_node *get_ppc_fw_sb_node(void)
+@@ -38,7 +39,7 @@ bool is_ppc_secureboot_enabled(void)
+ 	of_node_put(node);
+ 
+ out:
+-	pr_info("Secure boot mode %s\n", enabled ? "enabled" : "disabled");
++	pr_info("Secure boot mode %s\n", str_enabled_disabled(enabled));
+ 
+ 	return enabled;
  }
+@@ -62,7 +63,7 @@ bool is_ppc_trustedboot_enabled(void)
+ 	of_node_put(node);
  
- /*
-@@ -153,11 +154,14 @@ static vm_fault_t vvar_fault(const struct vm_special_mapping *sm,
- 	unsigned long pfn;
+ out:
+-	pr_info("Trusted boot mode %s\n", enabled ? "enabled" : "disabled");
++	pr_info("Trusted boot mode %s\n", str_enabled_disabled(enabled));
  
- 	switch (vmf->pgoff) {
--	case VVAR_DATA_PAGE_OFFSET:
-+	case VVAR_BASE_PAGE_OFFSET:
-+		pfn = virt_to_pfn(vdso_data);
-+		break;
-+	case VVAR_TIME_PAGE_OFFSET:
- 		if (timens_page)
- 			pfn = page_to_pfn(timens_page);
- 		else
--			pfn = virt_to_pfn(vdso_data);
-+			pfn = virt_to_pfn(vdso_data->data);
- 		break;
- #ifdef CONFIG_TIME_NS
- 	case VVAR_TIMENS_PAGE_OFFSET:
-@@ -170,7 +174,7 @@ static vm_fault_t vvar_fault(const struct vm_special_mapping *sm,
- 		 */
- 		if (!timens_page)
- 			return VM_FAULT_SIGBUS;
--		pfn = virt_to_pfn(vdso_data);
-+		pfn = virt_to_pfn(vdso_data->data);
- 		break;
- #endif /* CONFIG_TIME_NS */
- 	default:
-diff --git a/arch/powerpc/kernel/vdso/cacheflush.S b/arch/powerpc/kernel/vdso/cacheflush.S
-index 3b2479bd2f9a1..0085ae464dac9 100644
---- a/arch/powerpc/kernel/vdso/cacheflush.S
-+++ b/arch/powerpc/kernel/vdso/cacheflush.S
-@@ -30,7 +30,7 @@ END_FTR_SECTION_IFSET(CPU_FTR_COHERENT_ICACHE)
- #ifdef CONFIG_PPC64
- 	mflr	r12
-   .cfi_register lr,r12
--	get_realdatapage	r10, r11
-+	get_datapage	r10
- 	mtlr	r12
-   .cfi_restore	lr
- #endif
-diff --git a/arch/powerpc/kernel/vdso/datapage.S b/arch/powerpc/kernel/vdso/datapage.S
-index 2b19b6201a33a..db8e167f01667 100644
---- a/arch/powerpc/kernel/vdso/datapage.S
-+++ b/arch/powerpc/kernel/vdso/datapage.S
-@@ -28,7 +28,7 @@ V_FUNCTION_BEGIN(__kernel_get_syscall_map)
- 	mflr	r12
-   .cfi_register lr,r12
- 	mr.	r4,r3
--	get_realdatapage	r3, r11
-+	get_datapage	r3
- 	mtlr	r12
- #ifdef __powerpc64__
- 	addi	r3,r3,CFG_SYSCALL_MAP64
-@@ -52,7 +52,7 @@ V_FUNCTION_BEGIN(__kernel_get_tbfreq)
-   .cfi_startproc
- 	mflr	r12
-   .cfi_register lr,r12
--	get_realdatapage	r3, r11
-+	get_datapage	r3
- #ifndef __powerpc64__
- 	lwz	r4,(CFG_TB_TICKS_PER_SEC + 4)(r3)
- #endif
-diff --git a/arch/powerpc/kernel/vdso/getrandom.S b/arch/powerpc/kernel/vdso/getrandom.S
-index f3bbf931931ca..3deddcf89f99b 100644
---- a/arch/powerpc/kernel/vdso/getrandom.S
-+++ b/arch/powerpc/kernel/vdso/getrandom.S
-@@ -31,8 +31,7 @@
- 	PPC_STL		r2, PPC_MIN_STKFRM + STK_GOT(r1)
-   .cfi_rel_offset r2, PPC_MIN_STKFRM + STK_GOT
- #endif
--	get_realdatapage	r8, r11
--	addi		r8, r8, VDSO_RNG_DATA_OFFSET
-+	get_datapage	r8 VDSO_RNG_DATA_OFFSET
- 	bl		CFUNC(DOTSYM(\funct))
- 	PPC_LL		r0, PPC_MIN_STKFRM + PPC_LR_STKOFF(r1)
- #ifdef __powerpc64__
-diff --git a/arch/powerpc/kernel/vdso/gettimeofday.S b/arch/powerpc/kernel/vdso/gettimeofday.S
-index 5540d7021fa25..5333848322ca6 100644
---- a/arch/powerpc/kernel/vdso/gettimeofday.S
-+++ b/arch/powerpc/kernel/vdso/gettimeofday.S
-@@ -32,11 +32,10 @@
- 	PPC_STL		r2, PPC_MIN_STKFRM + STK_GOT(r1)
-   .cfi_rel_offset r2, PPC_MIN_STKFRM + STK_GOT
- #endif
--	get_datapage	r5
- 	.ifeq	\call_time
--	addi		r5, r5, VDSO_DATA_OFFSET
-+		get_datapage	r5 VDSO_DATA_OFFSET
- 	.else
--	addi		r4, r5, VDSO_DATA_OFFSET
-+		get_datapage	r4 VDSO_DATA_OFFSET
- 	.endif
- 	bl		CFUNC(DOTSYM(\funct))
- 	PPC_LL		r0, PPC_MIN_STKFRM + PPC_LR_STKOFF(r1)
-diff --git a/arch/powerpc/kernel/vdso/vdso32.lds.S b/arch/powerpc/kernel/vdso/vdso32.lds.S
-index 7b41d5d256e81..1a1b0b6d681a9 100644
---- a/arch/powerpc/kernel/vdso/vdso32.lds.S
-+++ b/arch/powerpc/kernel/vdso/vdso32.lds.S
-@@ -16,7 +16,7 @@ OUTPUT_ARCH(powerpc:common)
- 
- SECTIONS
- {
--	PROVIDE(_vdso_datapage = . - 2 * PAGE_SIZE);
-+	PROVIDE(_vdso_datapage = . - 3 * PAGE_SIZE);
- 	. = SIZEOF_HEADERS;
- 
- 	.hash          	: { *(.hash) }			:text
-diff --git a/arch/powerpc/kernel/vdso/vdso64.lds.S b/arch/powerpc/kernel/vdso/vdso64.lds.S
-index 9481e4b892ed1..e21b5506cad62 100644
---- a/arch/powerpc/kernel/vdso/vdso64.lds.S
-+++ b/arch/powerpc/kernel/vdso/vdso64.lds.S
-@@ -16,7 +16,7 @@ OUTPUT_ARCH(powerpc:common64)
- 
- SECTIONS
- {
--	PROVIDE(_vdso_datapage = . - 2 * PAGE_SIZE);
-+	PROVIDE(_vdso_datapage = . - 3 * PAGE_SIZE);
- 	. = SIZEOF_HEADERS;
- 
- 	.hash		: { *(.hash) }			:text
+ 	return enabled;
+ }
 -- 
 2.53.0
 
