@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C62534752E;
-	Sat, 12 Sep 2026 07:56:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF92F3148DA;
+	Sat, 12 Sep 2026 07:56:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789199806; cv=none; b=hFxEnIZj0yoXmKRl6Usxhtj+uReY4aYu2uE9V0O7EAFcAZcuqzelC+DfnbbcWqIygmAMmrev+yiUqjXmLIizacaY5EbjQvzGJo5Yx9YcI8UaRhwHN1NVEGpxePrMly4wAAYl96syQSxYNA0sHgw+woVANRsVdvOSxbTDfflSeAc=
+	t=1789199811; cv=none; b=RgS8T54q6PyyPzmNId1+dBF/MOFlsiAj4BX7dgGsJcmJTZPBT9JdtAV/Y57S7ETbw8rMoOLzIXZVzUD5uVtmzUw3kqk9gO4ru4L++WYrj1ZAr5WN4WFWLDpY7ZbkBBe8nJAkcepviIS1fSFCndCr3o8od3U/lOcgZEocPyhonNQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789199806; c=relaxed/simple;
-	bh=K/YQLjdd1zwEbumeSPeZjxv4rbQf2i2RiLd64meyYps=;
+	s=arc-20240116; t=1789199811; c=relaxed/simple;
+	bh=8EcYfIkmtuOCIlnTlW3Lt6/AKRiAs1dP18tf4C9ZfAk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HJu7ATodpy95heyvs6omGE5O8QqiKuMar+M4PgxVOzDHZME822YXWS2vUamZyGwyb+/IpN7d+h4LLOfBZ2GROUdZcc/hhSr8hWLptt7IyVJxYN+tmkRsuRalTdDIzxx1zBkz6aFr+syoQl4vD2f9gG0fPpiLYW4/4cOpKIr6eW8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MNFOSZjs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=idmyGj1uY0cjO9rlD/5Uxw8JAKV47lku7NknDty3HCzuML12z3DWAWxEGTsnKi1fiA/h+PsrJqW9xwoV4u3LECu2U8+x6MHVcLv8EtCu/am1WVtCMPS5/n/5Nj1572Dfc/RouftbzaZoXqe9pQ74u9X7bm6mTst2hMYigsdglDo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lvp0E1GX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MNFOSZjs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EE9B1F000FF;
-	Sat, 12 Sep 2026 07:56:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lvp0E1GX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4B141F000FF;
+	Sat, 12 Sep 2026 07:56:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789199805;
-	bh=U+bufcH1cL5kT7sClz6s+xLxHgSz7ipl/pvHlsOLXI8=;
+	s=korg; t=1789199809;
+	bh=sbKrI5SXlfzBWFIFKQosphlxVWZpBEunOvXyHdgHgkw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MNFOSZjsNRX3BQGqWwyeUiDFjrU4uv9mGikkPit3NuKlaig6qb0ZcEg2rSMMRkfJU
-	 Qc40SCExOCvaAEaef/U5mkXridAcDc7l8kFTrT4WgqpFqvl0iOo2+0IMQ+eUKvHc0/
-	 lWbWzaRCxzeCsreZP9DEi4nr7YXmgLxhs1+6MCXE=
+	b=Lvp0E1GXVcmzGMZvoTpmw1SfNA851HcVmoFrmfEnTHSBq3huimXdY5LrH+DbC0qwj
+	 ACsIBK2z5Hfxn6neIYDIJ98XbZIxj8sZzHc4vDPy+J1RymevJih5Uucg+CZhLZqrqd
+	 tbSVIn65sitySlEoQLjSiW1j9m74a8/SteknRoUw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Matlack <dmatlack@google.com>,
-	Pasha Tatashin <pasha.tatashin@soleen.com>,
-	"Pratyush Yadav (Google)" <pratyush@kernel.org>,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	Justin Yeh <justin.yeh@mediatek.com>,
+	Chen-Yu Tsai <wenst@chromium.org>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0660/1815] liveupdate: Remember FLB retrieve() status
-Date: Sat, 12 Sep 2026 08:40:10 +0200
-Message-ID: <20260912065704.374137786@linuxfoundation.org>
+Subject: [PATCH 7.2 0661/1815] pinctrl: mediatek: use devm_gpiochip_add_data() for GPIO chip
+Date: Sat, 12 Sep 2026 08:40:11 +0200
+Message-ID: <20260912065704.397173793@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -53,116 +52,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Matlack <dmatlack@google.com>
+From: Justin Yeh <justin.yeh@mediatek.com>
 
-[ Upstream commit 5c4a03afcb21783987ffc64562b76ddd5a21b12b ]
+[ Upstream commit 9c650317ba553d297f3fc5f0ae40ec53d86f9dab ]
 
-LUO keeps track of successful retrieve attempts on an FLB. It does so
-to avoid multiple retrievals of the same FLB. Multiple retrievals cause
-problems because once the FLB is retrieved, the serialized data
-structures are likely freed and the FLB is likely in a very different
-state from what the code expects.
+The gpio_chip is allocated with device-managed memory but registered with
+the non-managed gpiochip_add_data(). This was harmless while the drivers
+were built-in, but once they can be built as modules and unbound/rmmod'd,
+devm frees the gpio_chip's memory while it is still registered, causing a
+use-after-free.
 
-All this works well when retrieve succeeds. When it fails,
-luo_flb_retrieve_one() returns the error immediately, without ever
-storing anywhere that a retrieve was attempted or what its error code
-was. If the user attempts to retrieve another file registered with the
-same FLB, LUO will attempt to call the FLB's retrieve() callback again.
+Register it with devm_gpiochip_add_data() so it shares the same
+device-managed lifecycle, which also lets the manual gpiochip_remove()
+error paths go away.
 
-The retry is problematic for much of the same reasons listed above. The
-FLB is likely in a very different state than what the retrieve logic
-normally expects (e.g. some KHO pages may have already been restored and
-freed).
-
-There is no sane way of attempting the retrieve again. Remember the
-error retrieve returned and directly return it on a retry.
-
-This is done by changing the retrieved bool to a retrieve_status
-integer. A value of 0 means retrieve was never attempted, a positive
-value means it succeeded, and a negative value means it failed and the
-error code is the value.
-
-This is similar to commit f85b1c6af5bc ("liveupdate: luo_file: remember
-retrieve() status") which did the same for LUO files.
-
-Fixes: cab056f2aae7 ("liveupdate: luo_flb: introduce File-Lifecycle-Bound global state")
-Assisted-by: Gemini:gemini-3-pro-preview
-Signed-off-by: David Matlack <dmatlack@google.com>
-Reviewed-by: Pasha Tatashin <pasha.tatashin@soleen.com>
-Reviewed-by: Pratyush Yadav (Google) <pratyush@kernel.org>
-Link: https://patch.msgid.link/20260528174140.1921129-3-dmatlack@google.com
-Signed-off-by: Pasha Tatashin <pasha.tatashin@soleen.com>
-Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Fixes: a6df410d420a ("pinctrl: mediatek: Add Pinctrl/GPIO driver for mt8135.")
+Fixes: 805250982bb5 ("pinctrl: mediatek: add pinctrl-paris that implements the vendor dt-bindings")
+Fixes: e78d57b2f87c ("pinctrl: mediatek: add pinctrl-moore that implements the generic pinctrl dt-bindings")
+Signed-off-by: Justin Yeh <justin.yeh@mediatek.com>
+Reviewed-by: Chen-Yu Tsai <wenst@chromium.org>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/liveupdate.h  |  6 ++++--
- kernel/liveupdate/luo_flb.c | 10 +++++++---
- 2 files changed, 11 insertions(+), 5 deletions(-)
+ drivers/pinctrl/mediatek/pinctrl-moore.c      |  6 ++----
+ drivers/pinctrl/mediatek/pinctrl-mtk-common.c | 14 ++++----------
+ drivers/pinctrl/mediatek/pinctrl-paris.c      |  2 +-
+ 3 files changed, 7 insertions(+), 15 deletions(-)
 
-diff --git a/include/linux/liveupdate.h b/include/linux/liveupdate.h
-index c344bf987b63a..63ea5417de849 100644
---- a/include/linux/liveupdate.h
-+++ b/include/linux/liveupdate.h
-@@ -173,7 +173,9 @@ struct liveupdate_flb_ops {
-  * @lock:      A mutex that protects all fields within this structure, providing
-  *             the synchronization service for the FLB's ops.
-  * @finished:  True once the FLB's finish() callback has run.
-- * @retrieved: True once the FLB's retrieve() callback has run.
-+ * @retrieve_status: Status code indicating whether retrieve() has been
-+ *                   attempted. 0 means not attempted, 1 means successful,
-+ *                   and negative value means it failed with that error code.
-  */
- struct luo_flb_private_state {
- 	refcount_t count;
-@@ -181,7 +183,7 @@ struct luo_flb_private_state {
- 	void *obj;
- 	struct mutex lock;
- 	bool finished;
--	bool retrieved;
-+	int retrieve_status;
- };
+diff --git a/drivers/pinctrl/mediatek/pinctrl-moore.c b/drivers/pinctrl/mediatek/pinctrl-moore.c
+index 17e30f83dc197..38f15dbe9a283 100644
+--- a/drivers/pinctrl/mediatek/pinctrl-moore.c
++++ b/drivers/pinctrl/mediatek/pinctrl-moore.c
+@@ -594,7 +594,7 @@ static int mtk_build_gpiochip(struct mtk_pinctrl *hw)
+ 	chip->base		= -1;
+ 	chip->ngpio		= hw->soc->npins;
  
- /*
-diff --git a/kernel/liveupdate/luo_flb.c b/kernel/liveupdate/luo_flb.c
-index 02b449e1e98ba..cd715a7c1d992 100644
---- a/kernel/liveupdate/luo_flb.c
-+++ b/kernel/liveupdate/luo_flb.c
-@@ -168,7 +168,10 @@ static int luo_flb_retrieve_one(struct liveupdate_flb *flb)
- 	if (private->incoming.finished)
- 		return -ENODATA;
+-	ret = gpiochip_add_data(chip, hw);
++	ret = devm_gpiochip_add_data(hw->dev, chip, hw);
+ 	if (ret < 0)
+ 		return ret;
  
--	if (private->incoming.retrieved)
-+	if (private->incoming.retrieve_status < 0)
-+		return private->incoming.retrieve_status;
-+
-+	if (private->incoming.retrieve_status > 0)
- 		return 0;
- 
- 	if (!fh->active)
-@@ -194,12 +197,13 @@ static int luo_flb_retrieve_one(struct liveupdate_flb *flb)
- 
- 	err = flb->ops->retrieve(&args);
- 	if (err) {
-+		private->incoming.retrieve_status = err;
- 		module_put(flb->ops->owner);
- 		return err;
+@@ -608,10 +608,8 @@ static int mtk_build_gpiochip(struct mtk_pinctrl *hw)
+ 	if (!of_property_present(hw->dev->of_node, "gpio-ranges")) {
+ 		ret = gpiochip_add_pin_range(chip, dev_name(hw->dev), 0, 0,
+ 					     chip->ngpio);
+-		if (ret < 0) {
+-			gpiochip_remove(chip);
++		if (ret < 0)
+ 			return ret;
+-		}
  	}
  
- 	private->incoming.obj = args.obj;
--	private->incoming.retrieved = true;
-+	private->incoming.retrieve_status = 1;
+ 	return 0;
+diff --git a/drivers/pinctrl/mediatek/pinctrl-mtk-common.c b/drivers/pinctrl/mediatek/pinctrl-mtk-common.c
+index dd2c8aa039385..791eddd7a2c63 100644
+--- a/drivers/pinctrl/mediatek/pinctrl-mtk-common.c
++++ b/drivers/pinctrl/mediatek/pinctrl-mtk-common.c
+@@ -1130,30 +1130,24 @@ int mtk_pctrl_init(struct platform_device *pdev,
+ 	pctl->chip->parent = &pdev->dev;
+ 	pctl->chip->base = -1;
+ 
+-	ret = gpiochip_add_data(pctl->chip, pctl);
++	ret = devm_gpiochip_add_data(&pdev->dev, pctl->chip, pctl);
+ 	if (ret)
+ 		return -EINVAL;
+ 
+ 	/* Register the GPIO to pin mappings. */
+ 	ret = gpiochip_add_pin_range(pctl->chip, dev_name(&pdev->dev),
+ 			0, 0, pctl->devdata->npins);
+-	if (ret) {
+-		ret = -EINVAL;
+-		goto chip_error;
+-	}
++	if (ret)
++		return -EINVAL;
+ 
+ 	/* Only initialize EINT if we have EINT pins */
+ 	if (data->eint_hw.ap_num > 0) {
+ 		ret = mtk_eint_init(pctl, pdev);
+ 		if (ret)
+-			goto chip_error;
++			return ret;
+ 	}
  
  	return 0;
+-
+-chip_error:
+-	gpiochip_remove(pctl->chip);
+-	return ret;
  }
-@@ -213,7 +217,7 @@ void liveupdate_flb_put_incoming(struct liveupdate_flb *flb)
- 		if (!refcount_dec_and_test(&private->incoming.count))
- 			return;
  
--		if (!private->incoming.retrieved) {
-+		if (private->incoming.retrieve_status <= 0) {
- 			int err = luo_flb_retrieve_one(flb);
+ int mtk_pctrl_common_probe(struct platform_device *pdev)
+diff --git a/drivers/pinctrl/mediatek/pinctrl-paris.c b/drivers/pinctrl/mediatek/pinctrl-paris.c
+index 23f04b24fd65e..09098b68f7257 100644
+--- a/drivers/pinctrl/mediatek/pinctrl-paris.c
++++ b/drivers/pinctrl/mediatek/pinctrl-paris.c
+@@ -957,7 +957,7 @@ static int mtk_build_gpiochip(struct mtk_pinctrl *hw)
+ 	chip->base		= -1;
+ 	chip->ngpio		= hw->soc->npins;
  
- 			if (WARN_ON(err))
+-	ret = gpiochip_add_data(chip, hw);
++	ret = devm_gpiochip_add_data(hw->dev, chip, hw);
+ 	if (ret < 0)
+ 		return ret;
+ 
 -- 
 2.53.0
 
