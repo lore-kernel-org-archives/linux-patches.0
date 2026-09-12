@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AE56384230;
-	Sat, 12 Sep 2026 15:17:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 948AF389114;
+	Sat, 12 Sep 2026 15:17:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789226251; cv=none; b=qlqebCGpDQoGelZuQ9tk8d5f0Mr9dLM7M/dkq96Sy2ovhrMuoVeSkO6+sNpEdR7Ihviv/HpsNnO83BXQCeoaQkQIvIxgYhK9DG6BPDrAk7vhTWgIRVKdUBv2ZDGO9FNXsu77GkxU7bbRMbiveqlnduLRZXcOV3G2ksJDdQOIKRk=
+	t=1789226257; cv=none; b=hl9JBpDEHmKt/IY5BobI+W7YBLb0vfiuW451g0zzBWB2OERxaKbyCO0LrIy8PfpnJFpRZzQe9r7sDVZhGytO7D5lwPSbzdQ1hjJGP1E2NUwuxNNkvlJgKoi/DRBlhLaB3jr/x8SZ3Gqut0pcWFYuSLOhITTa8t4kH2NEAUS/ems=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789226251; c=relaxed/simple;
-	bh=guWM9JwZAuhiXUYQoHs7RdvmwfaWp+4HxEEw5zdv6AM=;
+	s=arc-20240116; t=1789226257; c=relaxed/simple;
+	bh=8jH0tfhhkViflmgkAbM5+F5LY2eH7DQEMZhOJ41DsJQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k1SqL+NxbzH5wnz+x7CJpAIhjtgWJ7NfxT+BStfHIDDOanrkpe8ePCdyeOWDJTucawwqWvvUiIhkoSlld+Mj4WoaU7Q6LWmEp+dDMvgHN+gk2A8RrRNM7FJ5NY/Qe1fin9ZWcCC61juYd4rGqnqlv8sD/OIaNsWC3kOYKOrweso=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r+cMskUL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=htrqoYrJI3jozjKeQ8SXks8md+yYGe15fdJD3qVzJKVIGEODoTI9sA//PKZEyvm9Lx0hCYw5Rkv21g85hvhZiUUhpsoDp4NdNWjkvNwMQhifoT9uxLE7At+yln+HbL+xCpzM+NHIV3QxXNHAJANqx0ZmCcRT01FnDe27fZW/t+s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sxJFwHmg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r+cMskUL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C80101F000FF;
-	Sat, 12 Sep 2026 15:17:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sxJFwHmg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECCB81F000FF;
+	Sat, 12 Sep 2026 15:17:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789226249;
-	bh=Awfe07GGQF5qfecbnAKsXcj4UVWjDlO8Gtg6A6DbvtA=;
+	s=korg; t=1789226253;
+	bh=WjbEvK2TzrsRxsvJFt5b1LdKRBh/SSvd7AN8gI0df7I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=r+cMskULqdjyoiy4xvg7n0e++PL1LLDeodQNIO0Vcjq1EEqG8mZVKaQbm7Pq35hCZ
-	 UWi2L6qZUQRgekYcl9aanmKse6yo+PcolIZQjLZsS5+/5AW9sp3RUEg29BHwB5fCS+
-	 8geIOGcH5X/WUvqRxRQnZgTqtwozuYCFyGtfSQ6M=
+	b=sxJFwHmg0zJDIAGkBu52Izm9uz1TD21C4Rdj10IXiW/kQSCLC/vJDTLb3mBjeQ09Q
+	 VMd1QWa3iVx8LjqIXcqYQXnA9wSM/vkHbuW6Tf1zU8M8GHtHI+FKBEMSckvETWHwOR
+	 YGjDei6u1xatkCAXkVE3fAEmLZek9owuJNK7+Xyk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	vega@nebusec.ai,
-	Victor Nogueira <victor@mojatatu.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Serhat Kumral <serhatkumral1@gmail.com>,
+	Leon Romanovsky <leon@kernel.org>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1362/1424] net/sched: fq_codel: clamp default quantum and mtu
-Date: Sat, 12 Sep 2026 09:03:14 +0200
-Message-ID: <20260912065637.765574160@linuxfoundation.org>
+Subject: [PATCH 6.6 1323/1424] RDMA/ucma: Allow path records to exactly fit the output buffer
+Date: Sat, 12 Sep 2026 09:02:35 +0200
+Message-ID: <20260912065636.887847301@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -53,70 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jamal Hadi Salim <jhs@mojatatu.com>
+From: Serhat Kumral <serhatkumral1@gmail.com>
 
-[ Upstream commit d9ebd8f9aa8b2773235889cb903fafd61f2d8585 ]
+[ Upstream commit 8049741ac93acd3a590dac070e12571fddf0e294 ]
 
-fq_codel_init() sets q->quantum = psched_mtu(qdisc_dev(sch)) without
-clamping. A device with a huge MTU (e.g. dummy with max_mtu == 0
-accepting MTU 2147483634) makes psched_mtu() return 0x80000000, which
-overflows the signed flow->deficit to INT_MIN in fq_codel_dequeue(),
-causing an infinite loop and soft lockup. Emulate fq_codel_change()
-and constrain to [256, FQ_CODEL_QUANTUM_MAX].
+ucma_query_path() emits a path record only when the remaining output
+buffer is strictly larger than struct ib_path_rec_data. A buffer sized
+exactly for the response header and N complete records therefore gets
+only N - 1 records, while resp->num_paths still advertises N. A caller
+sizing its buffer for a single record gets a header claiming one path
+and no path data at all.
 
-The same unclamped psched_mtu() is assigned to q->cparams.mtu a bit
-below, and fq_codel_change() never updates it. codel_should_drop()
-tests "*backlog <= params->mtu"; with mtu == 0x80000000 (~2 GiB) and
-the default 32 MiB memory_limit, the test is always true, so CoDel is
-silently and completely disabled (no drops, no ECN). Declare a single
-clamped mtu and assign both q->quantum and q->cparams.mtu from it,
-which also removes the double psched_mtu() call.
+ucma_query_ib_service() in the same file computes the record count with
+a plain division and so accepts an exact fit; make ucma_query_path()
+behave the same way.
 
-Conditions to recreate the bug: a device whose MTU (plus
-hard_header_len) wraps psched_mtu() into the sign bit (e.g. a dummy
-device with max_mtu == 0 accepting MTU 2147483634). Requires
-CAP_NET_ADMIN in a user namespace.
+Current librdmacm is unaffected because it always sizes the response for
+six records while the kernel currently reports at most two paths. Other
+users of the UAPI that provide an exactly sized buffer can observe the
+truncated response.
 
-Fixes: 4b549a2ef4be ("fq_codel: Fair Queue Codel AQM")
-Reported-by: vega@nebusec.ai
-Tested-by: Victor Nogueira <victor@mojatatu.com>
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/20260822195509.112717-3-jhs@mojatatu.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: ac53b264b2f3 ("RDMA/ucma: Support querying when IB paths are not reversible")
+Signed-off-by: Serhat Kumral <serhatkumral1@gmail.com>
+Link: https://patch.msgid.link/20260806201358.147478-1-serhatkumral1@gmail.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_fq_codel.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/infiniband/core/ucma.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/sched/sch_fq_codel.c b/net/sched/sch_fq_codel.c
-index e059d6c145741..ac2f643dd8427 100644
---- a/net/sched/sch_fq_codel.c
-+++ b/net/sched/sch_fq_codel.c
-@@ -495,6 +495,7 @@ static int fq_codel_init(struct Qdisc *sch, struct nlattr *opt,
- 			 struct netlink_ext_ack *extack)
- {
- 	struct fq_codel_sched_data *q = qdisc_priv(sch);
-+	u32 mtu;
- 	int i;
- 	int err;
+diff --git a/drivers/infiniband/core/ucma.c b/drivers/infiniband/core/ucma.c
+index 1defc9629f544..48d708edf0e7b 100644
+--- a/drivers/infiniband/core/ucma.c
++++ b/drivers/infiniband/core/ucma.c
+@@ -923,7 +923,7 @@ static ssize_t ucma_query_path(struct ucma_context *ctx,
  
-@@ -502,13 +503,14 @@ static int fq_codel_init(struct Qdisc *sch, struct nlattr *opt,
- 	q->flows_cnt = 1024;
- 	q->memory_limit = 32 << 20; /* 32 MBytes */
- 	q->drop_batch_size = 64;
--	q->quantum = psched_mtu(qdisc_dev(sch));
-+	mtu = clamp_t(u32, psched_mtu(qdisc_dev(sch)), 256, FQ_CODEL_QUANTUM_MAX);
-+	q->quantum = mtu;
- 	INIT_LIST_HEAD(&q->new_flows);
- 	INIT_LIST_HEAD(&q->old_flows);
- 	codel_params_init(&q->cparams);
- 	codel_stats_init(&q->cstats);
- 	q->cparams.ecn = true;
--	q->cparams.mtu = psched_mtu(qdisc_dev(sch));
-+	q->cparams.mtu = mtu;
+ 	resp->num_paths = ctx->cm_id->route.num_pri_alt_paths;
+ 	for (i = 0, out_len -= sizeof(*resp);
+-	     i < resp->num_paths && out_len > sizeof(struct ib_path_rec_data);
++	     i < resp->num_paths && out_len >= sizeof(struct ib_path_rec_data);
+ 	     i++, out_len -= sizeof(struct ib_path_rec_data)) {
+ 		struct sa_path_rec *rec = &ctx->cm_id->route.path_rec[i];
  
- 	if (opt) {
- 		err = fq_codel_change(sch, opt, extack);
 -- 
 2.53.0
 
