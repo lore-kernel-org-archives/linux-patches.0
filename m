@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 116AA479891;
-	Sat, 12 Sep 2026 11:35:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FC9935201F;
+	Sat, 12 Sep 2026 11:35:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789212918; cv=none; b=BiDzWihwV1nWC69WAf+R5d0TR5/CbnQ2WC3j9F3P+YbRtcHd/fyHBf1fTu15zStNbhh/Sr+LI67busBxbEqdaJNCEhlqFjPfLMx8tRQNDkFXxskcRBm5+pwcSlcQCHOjdl+M7IDKjDEsu97sG3NlbvmnNq1ky9yR9W3rZp55SMM=
+	t=1789212919; cv=none; b=Uc3gsK3tf3P3+SLDt0FTXLo3hQAmxxHQK3kY4o3orRqh5bHo4Diq2o7iURiy8r61siYeZcxEunRk+CG/d3DHjYQgvF7UGKNMqA5YkAvy4i2n8Out5GF9A0GY7hTMZZmIfszRopBHu72CUphmZWasK1iGPs5os2C0+dona1+GIpc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789212918; c=relaxed/simple;
-	bh=z5zoOwchvXCdOhaTJqmWkuCm+BvrbeXZoWJ3j13RM3U=;
+	s=arc-20240116; t=1789212919; c=relaxed/simple;
+	bh=mGDV5pHUAxchPlDMMBYCpmpTnVVItt7quW0o/BbT3f8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YfYjqX2+N26tkVkr8qm3pQZ5JkNoCyPP3sUj3fa41nXLiuTIz+n7d/GYww9X/d/y2jblY8gX2mSGw/vBpx5FE+2U1aWZgees9p82+an2aYy5VJEu3nmk53qKweV1hjUnELivs/mDbHfnHdyAlW6Ai0eORoyyt1WlYvcDj5WNjbs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=du31Mxpj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=m8/+cSfeg76FmHqACF4DaVc5pcF0+tMxKeWmgMs8slNhXgEwEcXTqIB0Az7RhrxJAS2awywmEclKM10HH+CKlvLSVJLPmIJ30DtimGIvM6pXaR+6+siKx8RPVUCj1YmlL8HdASOq3mmGjkF/6cHKtcsVh+yldzk6LFu8ETr19m8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VlSawo6k; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="du31Mxpj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07A4D1F000FF;
-	Sat, 12 Sep 2026 11:35:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VlSawo6k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25F271F00893;
+	Sat, 12 Sep 2026 11:35:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789212911;
-	bh=ybSZC73nJS45ya75nfEjojWGkEtuLRanAAGgL3GUV6o=;
+	s=korg; t=1789212916;
+	bh=IWOAYCnHXC1KATVWPkkOf6msB3SQPuKLowwY0OMxzsw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=du31MxpjthOBf8YmhbvAiea7oc4Ide7lCkHrv7hv5puUosgndFa0mZQjR4EZdrJPd
-	 m+92Fmzz2gDMWTeBWlBW67kKjbN9latdTo27EG75sfEh7uFN4HcyjzySpu3Uq2NlOl
-	 ehns311b9U681NDY7qTf7tlFDXxQSzDZS86vthbc=
+	b=VlSawo6kHoGMI7BLXEF3FE0tnJ220qPtI8KzgJjItcaLFErIWaj3CY1ZVTO75Z31b
+	 lWs+OrW3dyS3xxf9vnDWu2M9rcKIqu+9cExgEpgdcqKvkEtOC8US3bdD6K0r9X6GX9
+	 E10i8Bu5EtxxBWdRJQ25ch6HJqnEYEiZYOmuFDHs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Koichiro Den <den@valinux.co.jp>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0015/1376] net: ntb_netdev: Fix TX busy and drop handling
-Date: Sat, 12 Sep 2026 08:40:41 +0200
-Message-ID: <20260912065607.888734949@linuxfoundation.org>
+	Alex Hung <alex.hung@amd.com>,
+	Hari Mishal <harimishal1@gmail.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.12 0016/1376] drm/amd/display: fix division by zero in get_estimated_bw()
+Date: Sat, 12 Sep 2026 08:40:42 +0200
+Message-ID: <20260912065607.911642002@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -52,99 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Koichiro Den <den@valinux.co.jp>
+From: Hari Mishal <harimishal1@gmail.com>
 
-[ Upstream commit 8aaa47351db0f93a5c5297fbafdfa8bc75e8ae49 ]
+commit f63de9054da858d57054474c32464106f8375e0d upstream.
 
-Currently, ntb_netdev returns NETDEV_TX_BUSY for every enqueue error. It
-also increments the drop and error counters while leaving the skb owned
-by the qdisc, and may return BUSY with the subqueue still awake.
-Retrying a permanent error cannot succeed either.
+get_estimated_bw() divides by link->dpia_bw_alloc_config.bw_granularity,
+which is zeroed by reset_bw_alloc_struct() and only populated once
+DP_TUNNELING_BW_ALLOC_CAP_CHANGED has been handled.
 
-The unconditional BUSY return and premature accounting date back to the
-initial driver. The error-path queue stop was later removed without
-changing that return value. The current flow-control code includes a
-resource check, but ntb_netdev does not honor its result before enqueue.
+link_dp_dpia_handle_bw_alloc_status(), the DPCD interrupt handler,
+calls get_estimated_bw() whenever DP_TUNNELING_ESTIMATED_BW_CHANGED
+is set, independently of whether DP_TUNNELING_BW_ALLOC_CAP_CHANGED
+has ever fired for that link. A connected USB4/DPIA tunneling device
+that reports an estimated-bandwidth change before ever reporting a
+capability change drives a division by zero in this IRQ path.
 
-Honor the resource check before enqueue. For -EAGAIN and -EBUSY, stop
-the subqueue, arm the existing reaper timer, and return BUSY without
-touching the skb. For other errors, free the skb, increment tx_dropped,
-and return NETDEV_TX_OK.
+link_dpia_send_bw_alloc_request() already guards the same
+bw_granularity division; add the identical guard here rather than
+introducing a new pattern.
 
-Fixes: 548c237c0a99 ("net: Add support for NTB virtual ethernet device")
-Fixes: d723485cb4ca ("ntb_netdev: remove tx timeout")
-Fixes: e74bfeedad08 ("NTB: Add flow control to the ntb_netdev")
+Fixes: 8e5cfe547bf3 ("drm/amd/display: upstream link_dp_dpia_bw.c")
+Reviewed-by: Alex Hung <alex.hung@amd.com>
+Assisted-by: gkh_clanker_t1000
+Signed-off-by: Hari Mishal <harimishal1@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit f2a961457c33dc34223aad5c9e8971de34a4eed3)
 Cc: stable@vger.kernel.org
-Signed-off-by: Koichiro Den <den@valinux.co.jp>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://patch.msgid.link/20260817053519.4135287-3-den@valinux.co.jp
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[den: adapt to the single-queue implementation, as 6.12.y lacks commit:
- ee970634c777 ("net: ntb_netdev: Introduce per-queue context")]
-Stable-dep-of: 873ce713fef5 ("NTB: ntb_transport: Fail TX enqueue when the QP link is down")
-Stable-dep-of: a4f2387db6f1 ("NTB: ntb_transport: Reject oversized TX buffers")
-Signed-off-by: Koichiro Den <den@valinux.co.jp>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ntb_netdev.c | 27 +++++++++++++++++++--------
- 1 file changed, 19 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_dpia_bw.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/net/ntb_netdev.c b/drivers/net/ntb_netdev.c
-index ec5c6be874469..bf11812438aae 100644
---- a/drivers/net/ntb_netdev.c
-+++ b/drivers/net/ntb_netdev.c
-@@ -164,8 +164,10 @@ static int __ntb_netdev_maybe_stop_tx(struct net_device *netdev,
- static int ntb_netdev_maybe_stop_tx(struct net_device *ndev,
- 				    struct ntb_transport_qp *qp, int size)
+--- a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_dpia_bw.c
++++ b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_dpia_bw.c
+@@ -102,6 +102,11 @@ static int get_estimated_bw(struct dc_li
  {
--	if (netif_queue_stopped(ndev) ||
--	    (ntb_transport_tx_free_entry(qp) >= size))
-+	if (netif_queue_stopped(ndev))
-+		return -EBUSY;
-+
-+	if (ntb_transport_tx_free_entry(qp) >= size)
- 		return 0;
+ 	uint8_t bw_estimated_bw = 0;
  
- 	return __ntb_netdev_maybe_stop_tx(ndev, qp, size);
-@@ -208,21 +210,30 @@ static netdev_tx_t ntb_netdev_start_xmit(struct sk_buff *skb,
- 	struct ntb_netdev *dev = netdev_priv(ndev);
- 	int rc;
- 
--	ntb_netdev_maybe_stop_tx(ndev, dev->qp, tx_stop);
-+	if (unlikely(ntb_netdev_maybe_stop_tx(ndev, dev->qp, tx_stop)))
-+		return NETDEV_TX_BUSY;
- 
- 	rc = ntb_transport_tx_enqueue(dev->qp, skb, skb->data, skb->len);
--	if (rc)
--		goto err;
-+	if (rc) {
-+		if (rc == -EAGAIN || rc == -EBUSY) {
-+			netif_stop_queue(ndev);
-+			mod_timer(&dev->tx_timer,
-+				  jiffies + usecs_to_jiffies(tx_time));
-+			return NETDEV_TX_BUSY;
-+		}
-+
-+		goto drop;
++	if (link->dpia_bw_alloc_config.bw_granularity == 0) {
++		DC_LOG_ERROR("%s: BW granularity is zero!\n", __func__);
++		return 0;
 +	}
- 
- 	/* check for next submit */
- 	ntb_netdev_maybe_stop_tx(ndev, dev->qp, tx_stop);
- 
- 	return NETDEV_TX_OK;
- 
--err:
-+drop:
-+	dev_kfree_skb_any(skb);
- 	ndev->stats.tx_dropped++;
--	ndev->stats.tx_errors++;
--	return NETDEV_TX_BUSY;
-+	return NETDEV_TX_OK;
- }
- 
- static void ntb_netdev_tx_timer(struct timer_list *t)
--- 
-2.53.0
-
++
+ 	core_link_read_dpcd(
+ 			link,
+ 			ESTIMATED_BW,
 
 
