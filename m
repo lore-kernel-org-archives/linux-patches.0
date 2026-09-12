@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4939A331A6E;
-	Sat, 12 Sep 2026 18:42:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 584492F617C;
+	Sat, 12 Sep 2026 18:42:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789238559; cv=none; b=elKSr23JIWsnTkB2E5UxiIGSbCoyjRcEOHJ2abJmpZKwhCZUSsJsXm/gW7d+C6SGxJch9ysjlrCWhMnwye+bLBSuG6XBWU0HgwvU5KMD5U4mh3n0y+DMWHeJMDv8xUlKv90udTdPCDXodDBckSjwkIbX32tM8gdpfz9i+mP+EAE=
+	t=1789238563; cv=none; b=WKaa8l7ecDJXfwrRSNVUjCtvTfTvNgza/4Fe+T4/kuwfRaL0C8cltqg7Mhp9mpG2iE7VrK4mPxavw/Oag+Us8Xpo4rVsR1pLFLRwAe5ebSAKDAjFweRAF53KQ3swBn97KFxJqVmM/bT3OhoWdLFHfV4mcGTmM/DxuXJGQxuYiyw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789238559; c=relaxed/simple;
-	bh=uwH3wn544SS23/xtPJFdf0DssEBUsti8rbUkfPYRAAY=;
+	s=arc-20240116; t=1789238563; c=relaxed/simple;
+	bh=fA28I+ivPo67t9iBP0FJxG6JrFyc4IQZBA22UJaONX4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ghsdxqz6DSYmKpOEINJ5GI8WGBCY44Yq34n8oWdngYDA0jsdN9ZEravg0bYBtqhfebF1quj1fcvKrO1/9tFwEFNsTVj1BYCsBxJKkb6p8CModtjla0NJSLrAL2ADlIoDby5kSLaFO2z84mly4gFlZdEYoEq+fPu6iFVY6qwvwp0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nTG6DaNG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Hx0UWyc2GM15RzNx1pwV9wOtR1uU97P7/tfyulai/NnbfMrK/zMkky9g70FbuJTBRuUeyayBefOVVkQiNvbEIEraDZieOkWICWX4m7v6rnIaAfYd/UTZ3GuhNTrLVEa3jIiRpJ/RoVdTMdYHohoh9djtdZxXwulDETwqob379c4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1a/uVxbw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nTG6DaNG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEA5A1F000FF;
-	Sat, 12 Sep 2026 18:42:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1a/uVxbw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45D051F000FF;
+	Sat, 12 Sep 2026 18:42:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789238557;
-	bh=rnOBwptMwcajURSX0NctdRcfQV7CnAonSeBAiwekNEs=;
+	s=korg; t=1789238562;
+	bh=e8lGPFJBGoL7FdVmA9TDWQkFvFPrnF6Tnfv2zD4rsHI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nTG6DaNGqE7uOuFef8hKaDQrC3MCdvW3dUdj4p73sxRlHtCWXMDprJlgx1Hpi4SYx
-	 fL2Yx04BliO9jIX7FhggVq5ClAXRJEdn0bQo5IRKz38gcLFHx3GUyYEuD6VZwoYyLE
-	 ao7JvKmkQwGeZdCVG3jFBzIjDBZyoosTvFSppfMs=
+	b=1a/uVxbwrsty9pBUR4F2WGZDb43EL0aQpFRJKo1cObCHtxnNMyMYg9ekXxINWSEfm
+	 BmGPXQUrfm7vTtVygy7+UTYq00IpCNtBEgy1xu2HaAxna70/DTLDClOoVHCvdod3LV
+	 AvHdDDZf2EqljwH9dqfsdNXEuP6ALEOFwb8QYeiI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cosmo Chou <chou.cosmo@gmail.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-	Lee Jones <lee@kernel.org>,
+	Armin Wolf <W_Armin@gmx.de>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 484/935] leds: pca9532: Fix inverted GPIO output polarity
-Date: Sat, 12 Sep 2026 08:58:34 +0200
-Message-ID: <20260912065537.922100356@linuxfoundation.org>
+Subject: [PATCH 5.15 485/935] platform/x86: dell-privacy: Fix race condition
+Date: Sat, 12 Sep 2026 08:58:35 +0200
+Message-ID: <20260912065537.944678206@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -46,63 +45,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cosmo Chou <chou.cosmo@gmail.com>
+From: Armin Wolf <W_Armin@gmx.de>
 
-[ Upstream commit 65a38a28a0b04af19a5e1fbf3869051412eeac96 ]
+[ Upstream commit ca9338dbc64759b30741b12017c050b33c94dfa2 ]
 
-The pca9532_gpio_set_value() function incorrectly mapped the requested
-value to PCA9532_ON and PCA9532_OFF, inverting the GPIO output polarity.
-A requested logical high (val=1) incorrectly enabled the LED output
-driver, which on this open-drain device pulls the pin low, while a
-requested logical low (val=0) released the pin.
+Accessing priv->features_present needs to happen with the list mutex
+being held, otherwise priv can be freed at any moment.
 
-Correct the mapping so that val=1 yields PCA9532_OFF (pin released /
-high-impedance) and val=0 yields PCA9532_ON (pin driven low).
-
-pca9532_gpio_direction_input() is also updated to pass val=1 to
-pca9532_gpio_set_value() to align with the corrected polarity mapping,
-ensuring the pin remains not driven when configured as an input.
-
-Fixes: 3c1ab50d0a31 ("drivers/leds/leds-pca9532.c: add gpio capability")
-Signed-off-by: Cosmo Chou <chou.cosmo@gmail.com>
-Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260703014201.69829-1-chou.cosmo@gmail.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+Fixes: 8af9fa37b8a3 ("platform/x86: dell-privacy: Add support for Dell hardware privacy")
+Signed-off-by: Armin Wolf <W_Armin@gmx.de>
+Link: https://patch.msgid.link/20260612173451.467629-2-W_Armin@gmx.de
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/leds/leds-pca9532.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/platform/x86/dell/dell-wmi-privacy.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/leds/leds-pca9532.c b/drivers/leds/leds-pca9532.c
-index 017794bb87ae4..9ddcaf2bb4ff6 100644
---- a/drivers/leds/leds-pca9532.c
-+++ b/drivers/leds/leds-pca9532.c
-@@ -285,9 +285,9 @@ static void pca9532_gpio_set_value(struct gpio_chip *gc, unsigned offset, int va
- 	struct pca9532_led *led = &data->leds[offset];
- 
- 	if (val)
--		led->state = PCA9532_ON;
--	else
- 		led->state = PCA9532_OFF;
-+	else
-+		led->state = PCA9532_ON;
- 
- 	pca9532_setled(led);
- }
-@@ -305,7 +305,7 @@ static int pca9532_gpio_get_value(struct gpio_chip *gc, unsigned offset)
- static int pca9532_gpio_direction_input(struct gpio_chip *gc, unsigned offset)
+diff --git a/drivers/platform/x86/dell/dell-wmi-privacy.c b/drivers/platform/x86/dell/dell-wmi-privacy.c
+index 7b79e987ca088..7fe491d28c134 100644
+--- a/drivers/platform/x86/dell/dell-wmi-privacy.c
++++ b/drivers/platform/x86/dell/dell-wmi-privacy.c
+@@ -69,11 +69,11 @@ bool dell_privacy_has_mic_mute(void)
  {
- 	/* To use as input ensure pin is not driven */
--	pca9532_gpio_set_value(gc, offset, 0);
-+	pca9532_gpio_set_value(gc, offset, 1);
+ 	struct privacy_wmi_data *priv;
  
- 	return 0;
+-	mutex_lock(&list_mutex);
++	guard(mutex)(&list_mutex);
++
+ 	priv = list_first_entry_or_null(&wmi_list,
+ 			struct privacy_wmi_data,
+ 			list);
+-	mutex_unlock(&list_mutex);
+ 
+ 	return priv && (priv->features_present & BIT(DELL_PRIVACY_TYPE_AUDIO));
  }
 -- 
 2.53.0
