@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B81D318BB3;
-	Sat, 12 Sep 2026 13:47:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21010322749;
+	Sat, 12 Sep 2026 13:47:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789220846; cv=none; b=sByWPkDPSFLOv3ef7MNHnYlz19c15qV3t+oPqkcWNQ3pj8BOvpLh0uLDX7cDvEVuCseJeAC6JRUXk5DABB2uDZ+LrTGmM4xAPPui/kAYHk9h4NH0uT5aJHjIOj/ThECc8X0d0fVBU7culXwYTrM1CPZfamQHJjeKnMIlu9yLXPQ=
+	t=1789220851; cv=none; b=htZAUJSgv2yUdA+Fvl61OHjaXp4j+WEPcePOBBrjiUBvwnmXQ9z2pbA15b+NVPbS0Omq93fJa/hYBfInqYuot4Cf4lPITdzKnmbh7wnn1uGXqlRkgwSxtwPgN2+TeZhL6eXIN3tuYhdndKUrWOt0FWR1rBsuj8KAGJNNAZo9+U0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789220846; c=relaxed/simple;
-	bh=NGLI2jJzty8yqnozyxaqxt+TQBKrYL0pHXj1D1+jOhs=;
+	s=arc-20240116; t=1789220851; c=relaxed/simple;
+	bh=GON0NlaoJSc3Tr/DeS3wegtNl5ZwOxh3Sgn3obMcXew=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ktRtlJGYlHVuXX47hbpNrTHh0kG1RhMGV2UvKtmnaFJAENHubbSxcsBlDY8oR2qifaLE4fPJrVh+q26OoQ8R3A5PQivHUzj+jD6LlRczeECPkMlAcoQrJNokt9vK5r6q7f64PId+XPOUqVmE/xiXqP/UsXryAkE9ldY9Nqy4Th0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uzhs76Ev; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Z+Rkxlul9EUEXocHcVqUc04w638884m8Zs3VXLP/ogaRxWvuliH5PSEnbqA+n9glP1bUSwsecmTuGKrVXfrKemL1oqbZzvAqT3jnEaTAamC5o+BGfNYNKLcUdCjwb/DOboxsvkiVa2EsNXTlZuaZxIJerYQRhggm4jyI5ONsCaM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CAtlQ2Uh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uzhs76Ev"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06C4E1F000FF;
-	Sat, 12 Sep 2026 13:47:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CAtlQ2Uh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DAA31F000FF;
+	Sat, 12 Sep 2026 13:47:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789220845;
-	bh=YfjrvcdYIs4bxNQG7Rn88vk2tcVfBmtPEmwxdwpHAks=;
+	s=korg; t=1789220850;
+	bh=LVOXoud3VaBIz1GtTXRabb7QYauMydPx0nt7uSby2NU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uzhs76Evi5wOTPFgMn1K883NK9yMQ4fFbifHafhEKwL+u7W8tLusCPTYxqPIiN2hM
-	 MSvwOxe1d70+rgmzvl9h/7NpxZFB4RSps+MWdsikIFKMmlTXJlZ8IxcD1WDN+OXx/X
-	 4ZS48LjFy3fSc9adKE8j1ImNPGzyXqBuYmXjfQBY=
+	b=CAtlQ2UhDKgoP8AwMovgIKLtU89DAdMYcqS/rqyXyoLSyApWOnhj2xK0MUrUM8RVg
+	 o8sVVezPGDLMGiF0N1+wmHpSpgQ6At9YZq6Ysonye+Myba8QoL/5aQC9mmuCyqMU+1
+	 xrznIKxMCf37Seczv1RrpigEN+04fdAKh4jMnwHY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fan Ye <fy15309206903@gmail.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Simon Horman <horms@kernel.org>,
+	Koichiro Den <den@valinux.co.jp>,
+	Dave Jiang <dave.jiang@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 0262/1424] net: thunderbolt: Mark the connection down when bringing it up fails
-Date: Sat, 12 Sep 2026 08:44:54 +0200
-Message-ID: <20260912065613.145916827@linuxfoundation.org>
+Subject: [PATCH 6.6 0263/1424] NTB: ntb_transport: Recycle TX entries before client callbacks
+Date: Sat, 12 Sep 2026 08:44:55 +0200
+Message-ID: <20260912065613.168467445@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -52,72 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Ye <fy15309206903@gmail.com>
+From: Koichiro Den <den@valinux.co.jp>
 
-commit 3c8b26ebf525ba5960510f48c6e9936a79ebe76f upstream.
+commit 256496397287334a19ed80ec7be92bffcae76b9d upstream.
 
-Every failure path in tbnet_connected_work() undoes its own work and
-returns without clearing login_sent, so the connection still looks
-established. The next tbnet_tear_down() therefore takes its main branch
-and repeats a teardown that already happened: it stops rings that are
-already stopped, which is a dev_WARN() and fatal under panic_on_warn,
-and it releases net->remote_transmit_path even on the HopID mismatch
-path, where this connection never owned that id, silently freeing one
-that someone else is still using.
+ntb_tx_copy_callback() invokes the client callback before returning the
+entry to tx_free_q. The callback may wake a stopped client queue, only
+for the next enqueue to find no local entry and return -EBUSY. The window
+is narrow, but the retry is unnecessary.
 
-Clear login_sent on those paths. That is enough for tbnet_tear_down() to
-leave the unwound state alone, and login_received has to stay set: it
-records that the peer has logged in and carries the transmit path it gave
-us, which nothing on this side can make the peer send again. Two things
-change beyond keeping the teardown out of the way: the logout request in
-that block is no longer sent, and the peer's next login request now
-re-queues our login work rather than connected_work, giving the
-connection a fresh login instead of a retry on stale state.
+Save the callback data and length, then return the entry to tx_free_q
+before invoking the client. A completion callback then means both the
+client buffer and transport entry are ready for reuse.
 
-Fixes: e69b6c02b4c3 ("net: Add support for networking over Thunderbolt cable")
-Cc: <stable@vger.kernel.org> # 5.13+
-Signed-off-by: Fan Ye <fy15309206903@gmail.com>
-Acked-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260811-b4-tbnet-hopid-v3-2-9e75d1b51331@gmail.com
+Fixes: fce8a7bb5b4b ("PCI-Express Non-Transparent Bridge Support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Koichiro Den <den@valinux.co.jp>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Link: https://patch.msgid.link/20260817053519.4135287-2-den@valinux.co.jp
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/thunderbolt/main.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/ntb/ntb_transport.c |   23 ++++++++++++++---------
+ 1 file changed, 14 insertions(+), 9 deletions(-)
 
---- a/drivers/net/thunderbolt/main.c
-+++ b/drivers/net/thunderbolt/main.c
-@@ -629,6 +629,14 @@ static int tbnet_alloc_tx_buffers(struct
- 	return 0;
- }
- 
-+static void tbnet_connect_failed(struct tbnet *net)
-+{
-+	/* Leave login_received set: only the peer can make it true again. */
-+	mutex_lock(&net->connection_lock);
-+	net->login_sent = false;
-+	mutex_unlock(&net->connection_lock);
-+}
-+
- static void tbnet_connected_work(struct work_struct *work)
+--- a/drivers/ntb/ntb_transport.c
++++ b/drivers/ntb/ntb_transport.c
+@@ -1745,9 +1745,16 @@ static void ntb_transport_rxc_db(unsigne
+ static void ntb_tx_copy_callback(void *data,
+ 				 const struct dmaengine_result *res)
  {
- 	struct tbnet *net = container_of(work, typeof(*net), connected_work);
-@@ -652,6 +660,7 @@ static void tbnet_connected_work(struct
- 		netdev_err(net->dev, "failed to allocate Rx HopID\n");
- 		if (ret >= 0)
- 			tb_xdomain_release_in_hopid(net->xd, ret);
-+		tbnet_connect_failed(net);
- 		return;
- 	}
++	struct ntb_payload_header __iomem *hdr;
+ 	struct ntb_queue_entry *entry = data;
+-	struct ntb_transport_qp *qp = entry->qp;
+-	struct ntb_payload_header __iomem *hdr = entry->tx_hdr;
++	struct ntb_transport_qp *qp;
++	unsigned int len;
++	void *cb_data;
++
++	qp = entry->qp;
++	hdr = entry->tx_hdr;
++	cb_data = entry->cb_data;
++	len = entry->len;
  
-@@ -696,6 +705,7 @@ err_stop_rings:
- 	tb_ring_stop(net->rx_ring.ring);
- 	tb_ring_stop(net->tx_ring.ring);
- 	tb_xdomain_release_in_hopid(net->xd, net->remote_transmit_path);
-+	tbnet_connect_failed(net);
+ 	/* we need to check DMA results if we are using DMA */
+ 	if (res) {
+@@ -1787,15 +1794,13 @@ static void ntb_tx_copy_callback(void *d
+ 	 * "link down" or similar.  Since no payload is being sent in these
+ 	 * cases, there is nothing to add to the completion queue.
+ 	 */
+-	if (entry->len > 0) {
+-		qp->tx_bytes += entry->len;
+-
+-		if (qp->tx_handler)
+-			qp->tx_handler(qp, qp->cb_data, entry->cb_data,
+-				       entry->len);
+-	}
++	if (len > 0)
++		qp->tx_bytes += len;
+ 
+ 	ntb_list_add(&qp->ntb_tx_free_q_lock, &entry->entry, &qp->tx_free_q);
++
++	if (len > 0 && qp->tx_handler)
++		qp->tx_handler(qp, qp->cb_data, cb_data, len);
  }
  
- static void tbnet_login_work(struct work_struct *work)
+ static void ntb_memcpy_tx(struct ntb_queue_entry *entry, void __iomem *offset)
 
 
