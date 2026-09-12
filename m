@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F076426AC5;
-	Sat, 12 Sep 2026 15:58:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D40D26AC5;
+	Sat, 12 Sep 2026 15:58:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789228732; cv=none; b=cL0yFQik7arwBsOxPIMl+1Qqe6urRDJeyQYhHXrdR3P1QxdUbJJN1m/jZHvEEVdCXsXDjnD+mefXyzA41IoimNqKwzED78xfLaEeBBT2K+7lrjag3zaV7r0MO/bu+SQG9nDpMcqPmLZQiz0fAe8rmV9tfM+VWmHVYsNa9pZA38w=
+	t=1789228737; cv=none; b=f8I1EAlyGddm6bJMPVinrLLvzUgTRf+P56lHlDncRf7mgjikzzTTwCYOHJYXzVuqlkGi61jSvNBTOVwrInjPdSdrQaAFJjd6GPpZ0703lAp6Toxc8DpMEHrLKB6i1+DlPkRNTXEK9MNNBgf3Q6WvVv1a9Sn76vcJzUiV91PQ0Ck=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789228732; c=relaxed/simple;
-	bh=llMVa8uHOHsK93aP0IT8EdNOMLerAznzkrLDLSat4KA=;
+	s=arc-20240116; t=1789228737; c=relaxed/simple;
+	bh=N6pIiE1TFsAJ5mROXfsGn4LeFODaZfrjBy9WifCfaMA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JKU/UoMIfNwSOFNStneXyhrPIWI/pE0fZN1ZK73TMHPmOuwk23lsTFpdLH1at17Nr0o0g83Nd0ydVVk4bfu3yxnp8uPqIHeBwJpJa0Uwo9k9QhyG/Emjaf5uX2fI64mh6E2CYAd0WFCwkRLBpk5A66t/R0YWjyeZXNqSMnWYrmc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zUJgU/vS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XvB1wRh0uCKhj2PxvznYGFIfU00CJlfr56RF3rYQ2WokPc1pkTUBb5z0dTsnbLXWRdWGZrL6ZLUlWMXB6DFy58rGBRl/5GlD99RZs3THC0r9i7w4mHjXTJrZKdafmDI7l3AnIwB0Raft4fwH3JCkRHWbXNpEQtzuBLhzYMo+Fak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rCQtVH2W; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zUJgU/vS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0136B1F000FF;
-	Sat, 12 Sep 2026 15:58:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rCQtVH2W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E09BC1F000FF;
+	Sat, 12 Sep 2026 15:58:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789228730;
-	bh=zCgnH6Z10u2bbWBi0z2OF5sEDMgTaO1/FhkF4cOKYjo=;
+	s=korg; t=1789228735;
+	bh=oxPR9q83fZoV+zywgjI2MQ/5iKoAQ4Ud8FpCHqrzEJA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zUJgU/vSMwTUJdJLBa2JQp7eiuUoIewUMZKUdevEc1BLLECnnGZ/3py6914pFiafP
-	 G9XA4sJ4JRoJSXLpXNUSrO0Cex4O0898zk+41a6zI8dp2/cidgMXwYvUjSYCDC8b+E
-	 0CiXUNIwUcAwMwCnOmVeelif6iVL07an0zp8T67M=
+	b=rCQtVH2WfFjgSJwxikIEGzroJb//QjxoAzjlUczWoNMmx5+nWdVezCLso7Rvr8oV+
+	 VbeXSa9Dhu6DO47yOpqD3v9t6/gjZKZ4zoe8t5+177BSS6ogfJgq0A1AUZ9vQBMoL4
+	 gfuAU3BqApGU+S3YmJY1/0avCL414JJksXhQrYbk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	P Praneesh <quic_ppranees@quicinc.com>,
-	Kang Yang <quic_kangyang@quicinc.com>,
-	Kalle Valo <kvalo@kernel.org>,
-	Jeff Johnson <quic_jjohnson@quicinc.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0445/1191] wifi: ath11k: fix RCU stall while reaping monitor destination ring
-Date: Sat, 12 Sep 2026 08:52:53 +0200
-Message-ID: <20260912065558.227213301@linuxfoundation.org>
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Yongbang Shi <shiyongbang@huawei.com>,
+	Rongrong Zou <zourongrong@gmail.com>,
+	Sean Paul <seanpaul@chromium.org>,
+	Xinliang Liu <xinliang.liu@linaro.org>,
+	Dmitry Baryshkov <lumag@kernel.org>,
+	Baihan Li <libaihan@huawei.com>
+Subject: [PATCH 6.1 0419/1191] drm/hibmc: Fix list of formats on the primary plane
+Date: Sat, 12 Sep 2026 08:52:27 +0200
+Message-ID: <20260912065557.651016372@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -54,65 +55,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: P Praneesh <quic_ppranees@quicinc.com>
+From: Thomas Zimmermann <tzimmermann@suse.de>
 
-[ Upstream commit 16c6c35c03ea73054a1f6d3302a4ce4a331b427d ]
+commit 0e682e136c466ae37c62f18099f591c096260ee0 upstream.
 
-While processing the monitor destination ring, MSDUs are reaped from the
-link descriptor based on the corresponding buf_id.
+Remove all formats from the primary plane that are unsupported for
+various reasons.
 
-However, sometimes the driver cannot obtain a valid buffer corresponding
-to the buf_id received from the hardware. This causes an infinite loop
-in the destination processing, resulting in a kernel crash.
+* Formats with alpha channel: planes should not announce alpha channels
+unless they support transparency. There's no transparency support in
+the primary plane's implementation.
 
-kernel log:
-ath11k_pci 0000:58:00.0: data msdu_pop: invalid buf_id 309
-ath11k_pci 0000:58:00.0: data dp_rx_monitor_link_desc_return failed
-ath11k_pci 0000:58:00.0: data msdu_pop: invalid buf_id 309
-ath11k_pci 0000:58:00.0: data dp_rx_monitor_link_desc_return failed
+* Formats with BGR order. The common format is in RGB channel order.
+There's no BGR support in the primary plane's implementation.
 
-Fix this by skipping the problematic buf_id and reaping the next entry,
-replacing the break with the next MSDU processing.
+* RGB888: atomic_update programs the format from cpp[0] * 8 / 16. For
+RGB888's cpp value of 3 this returns 1.5; rounded to 1. Programming
+the value of 1 to HIBMC_CRT_DISP_CTL_FORMAT sets up RGB565. Hence, the
+output is distorted. This can be tested by booting with video=1024x768-24.
 
-Tested-on: WCN6855 hw2.0 PCI WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.30
-Tested-on: QCN9074 hw1.0 PCI WLAN.HK.2.7.0.1-01744-QCAHKSWPL_SILICONZ-1
+Removing all unsupported formats leaves XRGB8888 and RGB565. Both of
+which are supported and work correctly.
 
-Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
-Signed-off-by: P Praneesh <quic_ppranees@quicinc.com>
-Signed-off-by: Kang Yang <quic_kangyang@quicinc.com>
-Acked-by: Kalle Valo <kvalo@kernel.org>
-Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
-Link: https://patch.msgid.link/20241219110531.2096-2-quic_kangyang@quicinc.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Fixes: da52605eea8f ("drm/hisilicon/hibmc: Add support for display engine")
+Reviewed-by: Yongbang Shi <shiyongbang@huawei.com>
+Cc: Rongrong Zou <zourongrong@gmail.com>
+Cc: Sean Paul <seanpaul@chromium.org>
+Cc: Xinliang Liu <xinliang.liu@linaro.org>
+Cc: Dmitry Baryshkov <lumag@kernel.org>
+Cc: Yongbang Shi <shiyongbang@huawei.com>
+Cc: Baihan Li <libaihan@huawei.com>
+Cc: <stable@vger.kernel.org> # v4.10+
+Link: https://patch.msgid.link/20260618123142.92298-3-tzimmermann@suse.de
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/ath/ath11k/dp_rx.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_de.c |    6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath11k/dp_rx.c b/drivers/net/wireless/ath/ath11k/dp_rx.c
-index ac9796e8cd595..8064e505aad5e 100644
---- a/drivers/net/wireless/ath/ath11k/dp_rx.c
-+++ b/drivers/net/wireless/ath/ath11k/dp_rx.c
-@@ -4714,7 +4714,7 @@ ath11k_dp_rx_mon_mpdu_pop(struct ath11k *ar, int mac_id,
- 			if (!msdu) {
- 				ath11k_dbg(ar->ab, ATH11K_DBG_DATA,
- 					   "msdu_pop: invalid buf_id %d\n", buf_id);
--				break;
-+				goto next_msdu;
- 			}
- 			rxcb = ATH11K_SKB_RXCB(msdu);
- 			if (!rxcb->unmapped) {
-@@ -5348,7 +5348,7 @@ ath11k_dp_rx_full_mon_mpdu_pop(struct ath11k *ar,
- 					   "full mon msdu_pop: invalid buf_id %d\n",
- 					    buf_id);
- 				spin_unlock_bh(&rx_ring->idr_lock);
--				break;
-+				goto next_msdu;
- 			}
- 			idr_remove(&rx_ring->bufs_idr, buf_id);
- 			spin_unlock_bh(&rx_ring->idr_lock);
--- 
-2.53.0
-
+--- a/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_de.c
++++ b/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_de.c
+@@ -153,10 +153,8 @@ static void hibmc_plane_atomic_update(st
+ }
+ 
+ static const u32 channel_formats1[] = {
+-	DRM_FORMAT_RGB565, DRM_FORMAT_BGR565, DRM_FORMAT_RGB888,
+-	DRM_FORMAT_BGR888, DRM_FORMAT_XRGB8888, DRM_FORMAT_XBGR8888,
+-	DRM_FORMAT_RGBA8888, DRM_FORMAT_BGRA8888, DRM_FORMAT_ARGB8888,
+-	DRM_FORMAT_ABGR8888
++	DRM_FORMAT_XRGB8888,
++	DRM_FORMAT_RGB565,
+ };
+ 
+ static const struct drm_plane_funcs hibmc_plane_funcs = {
 
 
