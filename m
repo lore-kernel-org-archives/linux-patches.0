@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F0A23876C5;
-	Sat, 12 Sep 2026 09:43:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB498355803;
+	Sat, 12 Sep 2026 09:43:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789206230; cv=none; b=Q1eVaDbacUuOCy1+BTP71GF8dQE8X6ilwoEBD5kMMAQXBaSQWU7pW9xqsfaSPLrQnbzromMzOe8Xp6Dn443pEBYFcufP+n/vwSGUumMEkIL04XeL5RVeYxCD7aFYsYASvOOrn0DPMUOBgZsXA75KJGfEkDiw2R6AlrtLV/hmN8I=
+	t=1789206236; cv=none; b=cxta4L8MkTK8cMCNioe8SvToeHNXJHvfuC+n0QjtnADUKF0BooZIKfIdVe/hEPkgKHWimEg+IR1/ucy42zII7JpPvYj4hM5kNeHEBBToqt+DMyJaxP0KktSwtMHkC7LUl4u5pakvMVIDjz3G7Olirzg3iTbOalwk04YnV8oC1/c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789206230; c=relaxed/simple;
-	bh=R+j/oSMfau3kbhlQelHfZ3fKTdWoatQbUYkOhqkl7WM=;
+	s=arc-20240116; t=1789206236; c=relaxed/simple;
+	bh=4iwX3pyYd8uXkTkmwaDzpBANyp73Uc26cp0zDGXwLS8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oN1Gcxx4+IpWYG9b/Jp7HgRUkyeOEb6uSnaImJ3rKzybJuw/XN5aXk+J851WUjwMxxV86DNsGB9GdLI44gm+kt940tPnCwrZehKW9fPUqIvJymyK3LX+6Cs4r22YpF4neGarOxNhd8q7Dzy6nZtUuzxtiIIwuVWHZkVO5Bneftw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i1czIXoN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IzB6/nnr7Kn3KTQV9Fjo1nnpZdJKJT6CJAvbIdXyMlHmwKXLlHeSbrKlMYSMgp5g/xOCyRX4ORR97IGxwBbR/L7pVqRQnOVzp4VmOAZJmJJWZmXDmvUAMqdbMefyrWgHXa3q1t4R620GnUiB3nktulTK+NezsXJ1q79cvvPQnwU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q4cyt924; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i1czIXoN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F143B1F000FF;
-	Sat, 12 Sep 2026 09:43:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q4cyt924"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00F5B1F000FF;
+	Sat, 12 Sep 2026 09:43:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789206229;
-	bh=/Iod/fGTboxd5imT4RfsIJ71A88b/lU1oEOiKchFZes=;
+	s=korg; t=1789206234;
+	bh=xmxK7C/Fun3MFHZtMQTZK6dP50aAwqXVk6y3TPCBjkw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=i1czIXoN231t4sgcU52RgZVWcsPM+7C3Re3RV+ppRlnzFf86tni8CVYG7O67eBkBx
-	 F/eSHdi8M6dun0fN4SeJ4eoSeEdo6QxXgihwo9r7hI/3WJ0mX2FjP5paLfherqS2+Z
-	 7rodkdwTfJ1Z0W4WFoy39GAYZh8vp8d6qWZxqBeU=
+	b=q4cyt924gdHOrKuMbbB/1ENqVxK5EczhSaSFqA1BQG5LqSbtE0VZ/e+3PhSr+KPRr
+	 98rivsuQ3Nyx28xeC6eGDHLY/Mvi5+HqgtShVfF1ZvOdcr+e+fDtcyhlbbv4gmL4E/
+	 DYUKYxED2H9X6KS66McSbmrhpjAqniflyxqA3PRE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Ian Rogers <irogers@google.com>,
+	James Clark <james.clark@linaro.org>,
 	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0164/1518] perf tests: Fix flakiness in BPF counters test on hybrid systems
-Date: Sat, 12 Sep 2026 08:38:53 +0200
-Message-ID: <20260912065627.206542077@linuxfoundation.org>
+Subject: [PATCH 6.18 0165/1518] perf test: Fixes for check branch stack sampling
+Date: Sat, 12 Sep 2026 08:38:54 +0200
+Message-ID: <20260912065627.229312105@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -53,113 +54,260 @@ Content-Transfer-Encoding: 8bit
 
 From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit b02027776ac5bf737f1b76f3759f405e376097e5 ]
+[ Upstream commit 86d1095fdb7017a93e9d7be875775f7e5aa5c2f5 ]
 
-The `perf stat --bpf-counters test` fails intermittently on hybrid
-architectures or systems with dynamic frequency scaling (DVFS). This
-happens because the test workload (`sqrtloop`) runs for a fixed 1-second
-duration, and the CPU frequency can scale dynamically between idle and
-maximum frequency. As the first run runs on a cold CPU and the second run
-runs on a warmed-up CPU (or vice versa), the number of instructions
-executed in 1 second differs by up to 2.2x, violating the comparison
-tolerance.
+When filtering branch stack samples on user events they sample in user
+land but may have come from the kernel. Aarch64 avoids leaking the
+kernel address for kaslr reasons but other platforms, for now,
+don't. Be more permissive in allowing kernel addresses in the source
+of user branch stacks.
 
-Also, when running as root, BPF tracepoints and scheduling programs
-trigger frequently. Since standard `perf stat -e instructions` measures
-both user and kernel space instructions, it counts BPF helper and program
-execution overheads, whereas the BPF counters themselves do not self-
-measure. This introduces a large kernel-space instruction count
-discrepancy between standard and BPF counters.
+When filtering branch stack samples on kernel events they sample in
+kernel land but may have come from user land. Avoid the target being a
+user address but allow the source to be in user land. Aarch64 may not
+leak the user land addresses (making them 0) but other platforms
+do. As the kernel address sampling implies privelege, just allow this.
 
-Fix these issues by:
-1. Switching the workload to a strictly deterministic, iteration-based
-   workload: `awk 'BEGIN { for (i=0; i<10000000; i++) sum+=i }'`. We pin
-the
-   workload to a single random allowed CPU using `taskset -c $CPU` via a
-bash array.
-2. Restricting the counted event to user-space only (`instructions:u` or
-`/u`).
-3. Tightening the comparison tolerance from 20% to 15%.
+Increase the duration of the system call sampling test to make the
+likelihood of sampling a system call higher (increased from 1000 to
+8000 loops - a number found through experimentation on an Intel
+Tigerlake laptop), also make the period of the event a prime number.
 
-These modifications isolate the measurements to user-space instructions of
-the deterministic loop, which executes a virtually identical number of
-instructions on both runs (with less than 0.001% variation), eliminating
-Dynamic Frequency Scaling (DVFS), kernel scheduling noise, and BPF helper
-self-measurement overheads.
+Put unneeded perf record output into a temporary file so that the test
+output isn't cluttered. More clearly state which test is running and
+the pass, fail or skipped result of the test.
 
-Fixes: 2c0cb9f56020 ("perf test: Add a shell test for 'perf stat --bpf-counters' new option")
-Assisted-by: Antigravity:gemini-3.1-pro
+These changes make the test on an Intel tigerlake laptop reliably pass
+rather than reliably fail.
+
 Signed-off-by: Ian Rogers <irogers@google.com>
+Reviewed-by: James Clark <james.clark@linaro.org>
 Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Stable-dep-of: 344d3aec164d ("perf tests: Fix flakiness in branch stack sampling tests")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/tests/shell/stat_bpf_counters.sh | 28 +++++++++++++--------
- 1 file changed, 18 insertions(+), 10 deletions(-)
+ tools/perf/tests/shell/test_brstack.sh | 146 ++++++++++++++++---------
+ 1 file changed, 96 insertions(+), 50 deletions(-)
 
-diff --git a/tools/perf/tests/shell/stat_bpf_counters.sh b/tools/perf/tests/shell/stat_bpf_counters.sh
-index 35463358b273c..11de77ee38ad4 100755
---- a/tools/perf/tests/shell/stat_bpf_counters.sh
-+++ b/tools/perf/tests/shell/stat_bpf_counters.sh
-@@ -4,21 +4,26 @@
+diff --git a/tools/perf/tests/shell/test_brstack.sh b/tools/perf/tests/shell/test_brstack.sh
+index 85233d435be63..eb5837f82e390 100755
+--- a/tools/perf/tests/shell/test_brstack.sh
++++ b/tools/perf/tests/shell/test_brstack.sh
+@@ -38,9 +38,13 @@ is_arm64() {
+ 	[ "$(uname -m)" = "aarch64" ];
+ }
  
- set -e
- 
--workload="perf test -w sqrtloop"
-+# Get the first allowed CPU
-+CPU=$(taskset -c -p $$ | awk -F': ' '{print $2}' | awk -F'[,-]' '{print $1}')
-+if [ -z "$CPU" ]; then
-+	CPU=0
-+fi
-+workload=(taskset -c "$CPU" awk 'BEGIN { for (i=0; i<10000000; i++) sum+=i }')
- 
--# check whether $2 is within +/- 20% of $1
-+# check whether $2 is within +/- 15% of $1
- compare_number()
- {
- 	first_num=$1
- 	second_num=$2
- 
--	# upper bound is first_num * 120%
--	upper=$(expr $first_num + $first_num / 5 )
--	# lower bound is first_num * 80%
--	lower=$(expr $first_num - $first_num / 5 )
-+	# upper bound is first_num * 115%
-+	upper=$(expr $first_num + $first_num / 20 \* 3 )
-+	# lower bound is first_num * 85%
-+	lower=$(expr $first_num - $first_num / 20 \* 3 )
- 
- 	if [ $second_num -gt $upper ] || [ $second_num -lt $lower ]; then
--		echo "The difference between $first_num and $second_num are greater than 20%."
-+		echo "The difference between $first_num and $second_num are greater than 15%."
- 		exit 1
++has_kaslr_bug() {
++	[ "$(uname -m)" != "aarch64" ];
++}
++
+ check_branches() {
+ 	if ! tr -s ' ' '\n' < "$TMPDIR/perf.script" | grep -E -m1 -q "$1"; then
+-		echo "Branches missing $1"
++		echo "ERROR: Branches missing $1"
+ 		err=1
  	fi
  }
-@@ -41,11 +46,12 @@ check_counts()
- test_bpf_counters()
- {
- 	printf "Testing --bpf-counters "
--	base_instructions=$(perf stat --no-big-num -e instructions -- $workload 2>&1 | \
-+	base_instructions=$(perf stat --no-big-num -e instructions:u -- "${workload[@]}" 2>&1 | \
- 				awk -v i=0 -v c=0 '/instructions/ { \
- 					if ($1 != "<not") { i++; c += $1 } \
- 				} END { if (i > 0) printf "%.0f", c; else print "<not" }')
--	bpf_instructions=$(perf stat --no-big-num --bpf-counters -e instructions -- $workload  2>&1 | \
-+	bpf_instructions=$(perf stat --no-big-num --bpf-counters -e instructions:u \
-+				-- "${workload[@]}"  2>&1 | \
- 				awk -v i=0 -v c=0 '/instructions/ { \
- 					if ($1 != "<not") { i++; c += $1 } \
- 				} END { if (i > 0) printf "%.0f", c; else print "<not" }')
-@@ -57,7 +63,9 @@ test_bpf_counters()
- test_bpf_modifier()
- {
- 	printf "Testing bpf event modifier "
--	stat_output=$(perf stat --no-big-num -e instructions/name=base_instructions/,instructions/name=bpf_instructions/b -- $workload 2>&1)
-+	stat_output=$(perf stat --no-big-num \
-+		-e instructions/name=base_instructions/u,instructions/name=bpf_instructions/bu \
-+		-- "${workload[@]}" 2>&1)
- 	base_instructions=$(echo "$stat_output"| \
- 				awk -v i=0 -v c=0 '/base_instructions/ { \
- 					if ($1 != "<not") { i++; c += $1 } \
+@@ -48,6 +52,8 @@ check_branches() {
+ test_user_branches() {
+ 	echo "Testing user branch stack sampling"
+ 
++	start_err=$err
++	err=0
+ 	perf record -o "$TMPDIR/perf.data" --branch-filter any,save_type,u -- ${TESTPROG} > "$TMPDIR/record.txt" 2>&1
+ 	perf script -i "$TMPDIR/perf.data" --fields brstacksym > "$TMPDIR/perf.script"
+ 
+@@ -73,59 +79,88 @@ test_user_branches() {
+ 	perf script -i "$TMPDIR/perf.data" --fields brstack | \
+ 		tr ' ' '\n' > "$TMPDIR/perf.script"
+ 
+-	# There should be no kernel addresses with the u option, in either
+-	# source or target addresses.
+-	if grep -E -m1 "0x[89a-f][0-9a-f]{15}" $TMPDIR/perf.script; then
+-		echo "ERROR: Kernel address found in user mode"
++	# There should be no kernel addresses in the target with the u option.
++	local regex="0x[89a-f][0-9a-f]{15}"
++	if has_kaslr_bug; then
++		# If the system has a kaslr bug that may leak kernel addresses
++		# in the source of something like an ERET/SYSRET. Make the regex
++		# more specific and just check the target address is in user
++		# code.
++		regex="^0x[0-9a-f]{0,16}/0x[89a-f][0-9a-f]{15}/"
++	fi
++	if grep -q -E -m1 "$regex" $TMPDIR/perf.script; then
++		echo "Testing user branch stack sampling [Failed kernel address found in user mode]"
+ 		err=1
+ 	fi
+ 	# some branch types are still not being tested:
+ 	# IND COND_CALL COND_RET SYSRET SERROR NO_TX
++	if [ $err -eq 0 ]; then
++		echo "Testing user branch stack sampling [Passed]"
++		err=$start_err
++	else
++		echo "Testing user branch stack sampling [Failed]"
++	fi
+ }
+ 
+ test_trap_eret_branches() {
+ 	echo "Testing trap & eret branches"
++
+ 	if ! is_arm64; then
+-		echo "skip: not arm64"
++		echo "Testing trap & eret branches [Skipped not arm64]"
++		return
++	fi
++	start_err=$err
++	err=0
++	perf record -o $TMPDIR/perf.data --branch-filter any,save_type,u,k -- \
++		perf test -w traploop 1000 > "$TMPDIR/record.txt" 2>&1
++	perf script -i $TMPDIR/perf.data --fields brstacksym | \
++		tr ' ' '\n' > $TMPDIR/perf.script
++
++	# BRBINF<n>.TYPE == TRAP are mapped to PERF_BR_IRQ by the BRBE driver
++	check_branches "^trap_bench\+[^ ]+/[^ ]/IRQ/"
++	check_branches "^[^ ]+/trap_bench\+[^ ]+/ERET/"
++	if [ $err -eq 0 ]; then
++		echo "Testing trap & eret branches [Passed]"
++		err=$start_err
+ 	else
+-		perf record -o $TMPDIR/perf.data --branch-filter any,save_type,u,k -- \
+-			perf test -w traploop 1000
+-		perf script -i $TMPDIR/perf.data --fields brstacksym | \
+-			tr ' ' '\n' > $TMPDIR/perf.script
+-
+-		# BRBINF<n>.TYPE == TRAP are mapped to PERF_BR_IRQ by the BRBE driver
+-		check_branches "^trap_bench\+[^ ]+/[^ ]/IRQ/"
+-		check_branches "^[^ ]+/trap_bench\+[^ ]+/ERET/"
++		echo "Testing trap & eret branches [Failed]"
+ 	fi
+ }
+ 
+ test_kernel_branches() {
+-	echo "Testing that k option only includes kernel source addresses"
++	echo "Testing kernel branch sampling"
+ 
+-	if ! perf record --branch-filter any,k -o- -- true > /dev/null; then
+-		echo "skip: not enough privileges"
++	if ! perf record --branch-filter any,k -o- -- true > "$TMPDIR/record.txt" 2>&1; then
++		echo "Testing that k option [Skipped not enough privileges]"
++		return
++	fi
++	start_err=$err
++	err=0
++	perf record -o $TMPDIR/perf.data --branch-filter any,k -- \
++		perf bench syscall basic --loop 1000 > "$TMPDIR/record.txt" 2>&1
++	perf script -i $TMPDIR/perf.data --fields brstack | \
++		tr ' ' '\n' > $TMPDIR/perf.script
++
++	# Example of branch entries:
++	#       "0xffffffff93bda241/0xffffffff93bda20f/M/-/-/..."
++	# Source addresses come first in user or kernel code. Next is the target
++	# address that must be in the kernel.
++
++	# Look for source addresses with top bit set
++	if ! grep -q -E -m1 "^0x[89a-f][0-9a-f]{15}" $TMPDIR/perf.script; then
++		echo "Testing kernel branch sampling [Failed kernel branches missing]"
++		err=1
++	fi
++	# Look for no target addresses without top bit set
++	if grep -q -E -m1 "^0x[0-9a-f]{0,16}/0x[0-7][0-9a-f]{1,15}/" $TMPDIR/perf.script; then
++		echo "Testing kernel branch sampling [Failed user branches found]"
++		err=1
++	fi
++	if [ $err -eq 0 ]; then
++		echo "Testing kernel branch sampling [Passed]"
++		err=$start_err
+ 	else
+-		perf record -o $TMPDIR/perf.data --branch-filter any,k -- \
+-			perf bench syscall basic --loop 1000
+-		perf script -i $TMPDIR/perf.data --fields brstack | \
+-			tr ' ' '\n' > $TMPDIR/perf.script
+-
+-		# Example of branch entries:
+-		#       "0xffffffff93bda241/0xffffffff93bda20f/M/-/-/..."
+-		# Source addresses come first and target address can be either
+-		# userspace or kernel even with k option, as long as the source
+-		# is in kernel.
+-
+-		#Look for source addresses with top bit set
+-		if ! grep -E -m1 "^0x[89a-f][0-9a-f]{15}" $TMPDIR/perf.script; then
+-			echo "ERROR: Kernel branches missing"
+-			err=1
+-		fi
+-		# Look for no source addresses without top bit set
+-		if grep -E -m1 "^0x[0-7][0-9a-f]{0,15}" $TMPDIR/perf.script; then
+-			echo "ERROR: User branches found with kernel filter"
+-			err=1
+-		fi
++		echo "Testing kernel branch sampling [Failed]"
+ 	fi
+ }
+ 
+@@ -136,14 +171,15 @@ test_filter() {
+ 	test_filter_expect=$2
+ 
+ 	echo "Testing branch stack filtering permutation ($test_filter_filter,$test_filter_expect)"
+-	perf record -o "$TMPDIR/perf.data" --branch-filter "$test_filter_filter,save_type,u" -- ${TESTPROG}  > "$TMPDIR/record.txt" 2>&1
++	perf record -o "$TMPDIR/perf.data" --branch-filter "$test_filter_filter,save_type,u" -- \
++		${TESTPROG}  > "$TMPDIR/record.txt" 2>&1
+ 	perf script -i "$TMPDIR/perf.data" --fields brstack > "$TMPDIR/perf.script"
+ 
+ 	# fail if we find any branch type that doesn't match any of the expected ones
+ 	# also consider UNKNOWN branch types (-)
+ 	if [ ! -s "$TMPDIR/perf.script" ]
+ 	then
+-		echo "Empty script output"
++		echo "Testing branch stack filtering [Failed empty script output]"
+ 		err=1
+ 		return
+ 	fi
+@@ -154,26 +190,36 @@ test_filter() {
+ 	  > "$TMPDIR/perf.script-filtered" || true
+ 	if [ -s "$TMPDIR/perf.script-filtered" ]
+ 	then
+-		echo "Unexpected branch filter in script output"
++		echo "Testing branch stack filtering [Failed unexpected branch filter]"
+ 		cat "$TMPDIR/perf.script"
+ 		err=1
+ 		return
+ 	fi
++	echo "Testing branch stack filtering [Passed]"
+ }
+ 
+ test_syscall() {
+ 	echo "Testing syscalls"
+ 	# skip if perf doesn't have enough privileges
+-	if ! perf record --branch-filter any,k -o- -- true > /dev/null; then
+-		echo "skip: not enough privileges"
++	if ! perf record --branch-filter any,k -o- -- true > "$TMPDIR/record.txt" 2>&1; then
++		echo "Testing syscalls [Skipped: not enough privileges]"
++		return
++	fi
++	start_err=$err
++	err=0
++	perf record -o $TMPDIR/perf.data --branch-filter \
++		any_call,save_type,u,k -c 10007 -- \
++		perf bench syscall basic --loop 8000  > "$TMPDIR/record.txt" 2>&1
++	perf script -i $TMPDIR/perf.data --fields brstacksym | \
++		tr ' ' '\n' > $TMPDIR/perf.script
++
++	check_branches "getppid[^ ]*/SYSCALL/"
++
++	if [ $err -eq 0 ]; then
++		echo "Testing syscalls [Passed]"
++		err=$start_err
+ 	else
+-		perf record -o $TMPDIR/perf.data --branch-filter \
+-			any_call,save_type,u,k -c 10000 -- \
+-			perf bench syscall basic --loop 1000
+-		perf script -i $TMPDIR/perf.data --fields brstacksym | \
+-			tr ' ' '\n' > $TMPDIR/perf.script
+-
+-		check_branches "getppid[^ ]*/SYSCALL/"
++		echo "Testing syscalls [Failed]"
+ 	fi
+ }
+ set -e
 -- 
 2.53.0
 
