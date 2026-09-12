@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE2BF3624CC;
-	Sat, 12 Sep 2026 18:19:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D26383624CC;
+	Sat, 12 Sep 2026 18:19:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789237184; cv=none; b=YqcGtRcVlaJM+rvk2qSOv8K7woR7Nx2X8Cniz55iK9e9iB1bEDzUY1u//tnpZ+RSyBozc0CnMtl6wB6s4kXNFTE6ugPjxb4//hTOtLmckfpwlWR/hsAdRnhlTKPI2+P9LahEuyoeH2EVYMyedZxBuTDab927TqQAxFCEpKFRGHU=
+	t=1789237189; cv=none; b=t0fmJyntacLxXbMfKDcrFFXGWIDif6x9pnOSkDiuI6SK2pCKZhYCMw/pxZ4+jC1zPZDr0QXwiwZGOaRzgEUh3VFPmsHfoY1G5chk5xXPvrt0GoLKL38Vso3ahJ4Oazl7HziHV4+Mu+T84a27xC0TQY2QuIExQzg5NqVXmCq+NPA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789237184; c=relaxed/simple;
-	bh=dq8TrEH/Uv7Ol6y6dISR32Zu+hnvkI7zLRbq45O/714=;
+	s=arc-20240116; t=1789237189; c=relaxed/simple;
+	bh=hEhV8HFmnPIRYrqnsa0+0StpCjUnIrXrkp0xtdyW0cE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ABVHX00caV3hn7pYUvdbfN12RtH47Hu967MGGdRB5LJ0hJLSO+lQ2OYiEzmpy8zMi2Hpr5Os7AJq3uCM/fjpPwsxP9pmrTL7nwcsRmCoJ1UA7v/p0wZaaWrIdRpXcYn2f+zBSH8AsuhLELXrtJOFJRdBMJSHMnIa8mDzpR+vcsI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UU4FJWdw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DUmKaJA+SCOP5iilpY75kv5i5YJYE18zlCsMuGLBOo9IoVe2JCqLgazJwdRYgd8Upud2Bo8JXsm42ruM3hKO7nm0ZuV3DjI/lDt9t4YfyWJAM0b3k02j9vP0AU8cY4lqAYJy8iY+VFtZDN1QQRRODDjvYr6FKrlJUw9zo5WG4p0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XxycNlXe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UU4FJWdw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58D8A1F000FF;
-	Sat, 12 Sep 2026 18:19:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XxycNlXe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 741F31F000FF;
+	Sat, 12 Sep 2026 18:19:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789237183;
-	bh=F/EFCBJ7Su3BN/S8Mn0DD90sY9acBgxldXaa8u49Iws=;
+	s=korg; t=1789237188;
+	bh=23D7fjLjeyuxJiPFK77Oy1HwYUPDWZQ5MRGjawi21o4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UU4FJWdwiV90NXcFMfx9bbi36RZkzJwc711y847ekhPy800rjeFXimnCVkWupEd4b
-	 1HlQCAEUdZECw2dM7VT+j/9kqKwuGk4fmkkRU8dRb35jdBP6IXjWsNgoVsRLZU77jN
-	 CYvvrtcqurg9utYThzWqlIu2Rui7RBbb9BKzCGq8=
+	b=XxycNlXeOd/BQrm9dNXgRfz4vAy2oQR0X1CTZVGbmSxOHiD5dcBDiMRR79z0Ki/8l
+	 qIiqP8jncbWfmzub1XvUBGW8EELuuVGnmQih60YGvwAxqWYgFlhTtwaNJ8LCmwNb5b
+	 iMWac2HtPVFm2DzI3ApD/ERuAMpa4JrvKLT22xno=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
-	Ping-Ke Shih <pkshih@realtek.com>
-Subject: [PATCH 5.15 206/935] wifi: rtw88: Fix potential memory leak in rtw_txq_push_skb()
-Date: Sat, 12 Sep 2026 08:53:56 +0200
-Message-ID: <20260912065531.545175374@linuxfoundation.org>
+	Yousef Alhouseen <alhouseenyousef@gmail.com>,
+	Corey Minyard <corey@minyard.net>
+Subject: [PATCH 5.15 171/935] ipmi: ipmb: validate write message length
+Date: Sat, 12 Sep 2026 08:53:21 +0200
+Message-ID: <20260912065530.740087794@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -50,35 +50,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+From: Yousef Alhouseen <alhouseenyousef@gmail.com>
 
-commit 9f2948010764d708bda27369d09ce6f194abe8e3 upstream.
+commit 53637506884dbd5c91a89b1a3547d99d80f8ed2c upstream.
 
-The skb passed to the rtw_hci_tx_write() is expected to be freed when
-the function fails, but the error path in rtw_txq_push_skb() does not
-free the skb before returning. This can lead to a memory leak in
-rtw_txq_push() where a dequeued skb is passed to rtw_txq_push_skb().
+ipmb_write() read message fields before validating the length byte.
 
-Fixes: aaab5d0e6737 ("rtw88: kick off TX packets once for higher efficiency")
+A zero or short write can read uninitialized stack bytes.
+
+A length smaller than the SMBus header underflows the block write length.
+
+Require a non-empty buffer and the minimum IPMB request length.
+
+Also require the length byte plus payload before parsing the message.
+
+Fixes: 51bd6f291583 ("Add support for IPMB driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20260727064223.61836-1-nihaal@cse.iitm.ac.in
+Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
+Message-ID: <20260624175353.8592-1-alhouseenyousef@gmail.com>
+Signed-off-by: Corey Minyard <corey@minyard.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/realtek/rtw88/tx.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/char/ipmi/ipmb_dev_int.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/net/wireless/realtek/rtw88/tx.c
-+++ b/drivers/net/wireless/realtek/rtw88/tx.c
-@@ -547,6 +547,7 @@ static int rtw_txq_push_skb(struct rtw_d
- 	ret = rtw_hci_tx_write(rtwdev, &pkt_info, skb);
- 	if (ret) {
- 		rtw_err(rtwdev, "failed to write TX skb to HCI\n");
-+		ieee80211_free_txskb(rtwdev->hw, skb);
- 		return ret;
- 	}
- 	rtwtxq->last_push = jiffies;
+--- a/drivers/char/ipmi/ipmb_dev_int.c
++++ b/drivers/char/ipmi/ipmb_dev_int.c
+@@ -141,13 +141,14 @@ static ssize_t ipmb_write(struct file *f
+ 	u8 msg[MAX_MSG_LEN];
+ 	ssize_t ret;
+ 
+-	if (count > sizeof(msg))
++	if (!count || count > sizeof(msg))
+ 		return -EINVAL;
+ 
+ 	if (copy_from_user(&msg, buf, count))
+ 		return -EFAULT;
+ 
+-	if (count < msg[0])
++	if (msg[IPMB_MSG_LEN_IDX] < IPMB_REQUEST_LEN_MIN ||
++	    count < (size_t)msg[IPMB_MSG_LEN_IDX] + 1)
+ 		return -EINVAL;
+ 
+ 	rq_sa = GET_7BIT_ADDR(msg[RQ_SA_8BIT_IDX]);
 
 
