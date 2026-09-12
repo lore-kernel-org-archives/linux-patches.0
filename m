@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BEDD1DC198;
-	Sat, 12 Sep 2026 08:35:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15B213A1690;
+	Sat, 12 Sep 2026 08:35:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789202144; cv=none; b=W8YNSYyMscd0cUtt9ONM4VNMDp2pOTr9LzhqiXyxoQqjIP1D27754JEPKiWl4Qoo9xtkumKWvDgGklBahGmi8CenLNbv9PGerDJSqX/vXopz7bx+CmKhe/AvSC3k+agB/07UgA2IoxS5tegvVHBYNI0kyVObYZ4Xm0zK2AYqK3c=
+	t=1789202149; cv=none; b=l9At3y3kfA9fAfCNWOV7xa/CMEDdTqUlTPGieoWCbFSwhNtg6qJOa5l1hDeoTCMEM3+Zp4BPYH6ChZ3kg3rIeTKHOJziCV10Cd0jpIREp4Tf8J333Cvam0YV5ZxhVVnNBfncPDngABMBAcA4QA1Ok+/huuuQ46Z1nNzisM+f7/4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789202144; c=relaxed/simple;
-	bh=8gEtrBqS+oFCg0adBD9NXumtfDFhdqIK6hdBN+T0erQ=;
+	s=arc-20240116; t=1789202149; c=relaxed/simple;
+	bh=YgdOCZcjWXJAewW+E2nFDWMU/0fs4PyNMckANAncYYA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HBmlTwH3jCxNNsCDndM0D0Cn8UPevutxNgQV43wLxX6fsrkNSgzHa1Xtcfa4EcbfdMsL99MgHlWH/qx6aio84CqJ8s5LE6fHbhiIk4ffj3WBlyALWqZsKuI3QeiInJ2F9biGbxu+dUS6hNjVb3yVojGTv+9dZXyIqcA04GVbSVo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zyVZzfCO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JyTV0AQxqX7/gLqyJ7wwWgNsS73TPnjADP5kz5WyVMIxhtdiDeTJXBZEAn6k0mY9fx6Gv4ApKma2yRA+PNSAsiI4PpE35tAhIyEDtUbKbUPH1NgCYJWIHqI+2u/dnCyuhrV9ImeOgpWISEW8eqlaM2dfYYPYQQCSHSKMF8eXUhE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c2ClGzhs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zyVZzfCO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A840D1F000FF;
-	Sat, 12 Sep 2026 08:35:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c2ClGzhs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DED6C1F000FF;
+	Sat, 12 Sep 2026 08:35:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789202142;
-	bh=Y7K7WkfB+ujszT2PuGzhJ19jmLPfKJzlzrYqPH5ndic=;
+	s=korg; t=1789202147;
+	bh=q6eiENV8rK9dBg8BbMsH2YSqDl5SM6+VzME5up2jf9Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zyVZzfCOibSV4EK7pf+5jXZk4sCXFQw5tqlqOl/uS8iEIskcHE0Z2UcNZUkK3YzAW
-	 +EbO288NHXjDgqmWk9anl8WvxKIuWaukWQPL99SczI5VY/af9A225/+pCwzuj9KNgm
-	 zDOMGFMM6VH+IhNzXV7Cg22ocQwrwSE6285/X0aU=
+	b=c2ClGzhsvB/Vu/2G30IxVnFP7BbvZqy6EAqMhjtzTWu/6AGEyiy3RwE1R3M0vELsm
+	 x25AZqtUvmui0yRARkBLWocA7ngtLsjh+OTuXvqI7oSCMg80DBWRdmIrqadhB8jEca
+	 4s6zmh/jkvZKpL0fl/Sf2P0GZxhT55iCg9OjyJXM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Julian Silver <mendaxca@gmail.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Sergei Litvin <litvindev@gmail.com>,
+	Miguel Ojeda <ojeda@kernel.org>,
+	Nicolas Schier <n.schier@fritz.com>,
+	Nicolas Schier <nsc@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1099/1815] intel_idle: Avoid using deep idle states during initialization
-Date: Sat, 12 Sep 2026 08:47:29 +0200
-Message-ID: <20260912065714.818671308@linuxfoundation.org>
+Subject: [PATCH 7.2 1100/1815] scripts/tags.sh: Prevent binary files appearing in cscope.files
+Date: Sat, 12 Sep 2026 08:47:30 +0200
+Message-ID: <20260912065714.841224300@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,94 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Sergei Litvin <litvindev@gmail.com>
 
-[ Upstream commit 9eadbed788df453289b5927327bd22edb542f472 ]
+[ Upstream commit a9b93c34625a27bed5dc0f80ee2a359ceb955172 ]
 
-Commit c0f691388992 ("intel_idle: Use subsys_initcall_sync() for
-initialization") effectively made intel_idle initialize earlier which
-turns out to interfere with USB EHCI probing on some platforms [1].
-Investigation led to the conclusion that this was related to allowing
-package idle states to be used earlier than before.
+When executing the command `make COMPILED_SOURCE=1 cscope`, the resulting
+`cscope.files` file contains filenames with the extensions *.rlib, *.rmeta,
+and *.so.
 
-Work around that issue by making intel_idle set a CPU latency QoS
-request to prevent package idle states from being used on all platforms
-supported by it for the duration of the device_initcall() initialization
-phase.
+To fix this, modify the regular expression in the `all_compiled_sources()`
+function so that only files with the extensions *.h, *.c, *.S, and *.rs are
+accepted.
 
-Fixes: c0f691388992 ("intel_idle: Use subsys_initcall_sync() for initialization")
-Reported-by: Julian Silver <mendaxca@gmail.com>
-Tested-by: Julian Silver <mendaxca@gmail.com>
-Closes: https://lore.kernel.org/linux-acpi/3353bdf3-4f33-44b1-809b-b0378bee5816@gmail.com/
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://patch.msgid.link/5120454.31r3eYUQgx@rafael.j.wysocki
+The issue has been introduced by commit 4f491bb6ea2a ("scripts/tags.sh:
+collect compiled source precisely") which implemented the parsing of
+compiled sources from *.cmd files instead of using the "find" command.
+
+Fixes: 4f491bb6ea2a ("scripts/tags.sh: collect compiled source precisely")
+Signed-off-by: Sergei Litvin <litvindev@gmail.com>
+Acked-by: Miguel Ojeda <ojeda@kernel.org>
+Tested-by: Nicolas Schier <n.schier@fritz.com>
+Reviewed-by: Nicolas Schier <n.schier@fritz.com>
+Link: https://patch.msgid.link/20260714083331.69482-1-litvindev@gmail.com
+[nsc: cleaned-up commit message line breaks and removed cc trailers]
+Signed-off-by: Nicolas Schier <nsc@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/idle/intel_idle.c | 23 +++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
+ scripts/tags.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/idle/intel_idle.c b/drivers/idle/intel_idle.c
-index d74b478db2804..49c4ac9c7bb6e 100644
---- a/drivers/idle/intel_idle.c
-+++ b/drivers/idle/intel_idle.c
-@@ -53,6 +53,7 @@
- #include <linux/notifier.h>
- #include <linux/cpu.h>
- #include <linux/moduleparam.h>
-+#include <linux/pm_qos.h>
- #include <linux/sysfs.h>
- #include <asm/cpuid/api.h>
- #include <asm/cpu_device_id.h>
-@@ -2697,6 +2698,9 @@ static void __init cmdline_table_adjust(struct cpuidle_driver *drv)
- 	pr_info("Failed to adjust C-states with data from 'intel_idle.table'\n");
- }
- 
-+#define INTEL_IDLE_INIT_QOS	20
-+static struct pm_qos_request qos_req __initdata;
-+
- static int __init intel_idle_init(void)
- {
- 	const struct x86_cpu_id *id;
-@@ -2766,6 +2770,13 @@ static int __init intel_idle_init(void)
- 	if (retval)
- 		pr_warn("failed to initialized sysfs");
- 
-+	/*
-+	 * Some platforms, in particular the Intel S1200BTL motherboard, have a
-+	 * problem with using package idle states too early, so prevent that
-+	 * from taking place until the device_initcall() phase is over.
-+	 */
-+	cpu_latency_qos_add_request(&qos_req, INTEL_IDLE_INIT_QOS);
-+
- 	retval = cpuidle_register_driver(&intel_idle_driver);
- 	if (retval) {
- 		struct cpuidle_driver *drv = cpuidle_get_driver();
-@@ -2790,6 +2801,9 @@ static int __init intel_idle_init(void)
- 	intel_idle_cpuidle_devices_uninit();
- 	cpuidle_unregister_driver(&intel_idle_driver);
- init_driver_fail:
-+	if (cpu_latency_qos_request_active((&qos_req)))
-+		cpu_latency_qos_remove_request(&qos_req);
-+
- 	intel_idle_sysfs_uninit();
- 	free_percpu(intel_idle_cpuidle_devices);
- 	return retval;
-@@ -2797,6 +2811,15 @@ static int __init intel_idle_init(void)
- }
- subsys_initcall_sync(intel_idle_init);
- 
-+static int __init intel_idle_init_complete(void)
-+{
-+	if (cpu_latency_qos_request_active((&qos_req)))
-+		cpu_latency_qos_remove_request(&qos_req);
-+
-+	return 0;
-+}
-+device_initcall_sync(intel_idle_init_complete);
-+
- /*
-  * We are not really modular, but we used to support that.  Meaning we also
-  * support "intel_idle.max_cstate=..." at boot and also a read-only export of
+diff --git a/scripts/tags.sh b/scripts/tags.sh
+index 243373683f98a..c9dc2763a505e 100755
+--- a/scripts/tags.sh
++++ b/scripts/tags.sh
+@@ -100,7 +100,7 @@ all_compiled_sources()
+ 	{
+ 		echo include/generated/autoconf.h
+ 		find $ignore -name "*.cmd" -exec \
+-			grep -Poh '(?<=^  )\S+|(?<== )\S+[^\\](?=$)' {} \+ |
++			grep -Poh '(?<=^  )\S+\.([chS]|rs)(?=\s)|(?<== )\S+\.(?1)(?=$)' {} \+ |
+ 		awk '!a[$0]++'
+ 	} | xargs realpath -esq $([ -z "$KBUILD_ABS_SRCTREE" ] && echo --relative-to=.) |
+ 	sort -u
 -- 
 2.53.0
 
