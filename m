@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFFF0337699;
-	Sat, 12 Sep 2026 08:48:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4E95337699;
+	Sat, 12 Sep 2026 08:49:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789202939; cv=none; b=E3gWx1aA8Pi5x9QJT048S7gJqh/qDyG9wT7NzY8XX1bOgs4VaiRIxXsJgpdCVk85aIvhtU4pWceVKPl01EsYDlPzUO5mXvsqJ0FEEkKMPUWmkyLru78v3qnMpjOgghcd4IJbdzf9iJMjkzT/e91Al+ckocHi61Cr+0rLwPGHW3w=
+	t=1789202944; cv=none; b=Z05J5d/NW8I07ZRDFzxGwcoBi72W5hmctCuJx9fib7f510ovkF+9linlYzXwzBhHmvjAiiojhJJ3ln0fR4v8cEYVW2zCeqp8xFrLv9iLuRTFim60gjVpoAtd2khbFcHDK+xj2+aYckIUf2BLWfn0W13xVp/RfkP3mt0aZ6NQrj8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789202939; c=relaxed/simple;
-	bh=U1uYcLUDMtckdiUzLZV9BzckfNfWqcyY70ODygw5X5Q=;
+	s=arc-20240116; t=1789202944; c=relaxed/simple;
+	bh=I+rKr57/JrHQLgNYhB6k09DLM0vqSNDAv5m/6ppQrwk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ujwXWxR93p5NDkbQphhE5emrbod2OrN1bqjw1H2m5KaUELiN+2AbR8CrTRNL1XL7CXkjhLNW7dhOEpG11uwbktnMI2ap00B8DxgSr5wJzmPKf+8chIWYh2RGu7cA39KRrEOzSwCB/cGsgDOT5Lq8QoFMFaLlV4vgnA5H98q7MSY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d1iTVsux; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Mf1y2lJXx2xhAr7Bv0pWJSpJB9LHmywwxiJ4TjEc9fJa7qx0Vah4sBh3H1Lp6OxJw6viKVDW9/ZDyDAkWEfd/VqkCOjLgcad7HiOhnQWi4HJUT9onL3xez+BBuIKX+4oiPj6Y8CXTksn/++fo8Wne/weEC3+Y9Y7e32oXPgLmtE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dWoDNHGC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d1iTVsux"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08C691F000FF;
-	Sat, 12 Sep 2026 08:48:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dWoDNHGC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D54BB1F000FF;
+	Sat, 12 Sep 2026 08:49:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789202937;
-	bh=wVDwPPhQS+j7JYLlGw73N4rOiCkEG5QWT0wLU95UaKQ=;
+	s=korg; t=1789202942;
+	bh=pmcsfFFjH6REkGunN/DpnakPzlkotmRwAgTUbHjsXX0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=d1iTVsux91TbvUlyTN3dZPdVlZAGntO6L3/ZEbE8V9hObMT8eiacD0Yp5cw6zOiS2
-	 9AFa7lucrWBCjR5zhJYyazLQf5gXpvFf4rM0XMo1zOoJFM9fXefQvddu44wQwyIokT
-	 NdGu8u5JDSKz2FdlrveZR2K8uFcMeJWLv0B9T0pg=
+	b=dWoDNHGC+w2FkaxXvkR6K8aXQcAlCP7GrOhvMPnrXJbE8+2ImyyuhexNzVf/Okrxy
+	 bju/W/JpE121JorGSmyRJZG7YdEnBlIh8G72eANv9S4j3MShrpjcvXqlE0SK7VMOV0
+	 /MCocrivD16fL986829iWKWqhYZGB0+qjzrhsDkk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Chuck Lever <cel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1306/1815] xdrgen: Emit a blank line ahead of enum declarations
-Date: Sat, 12 Sep 2026 08:50:56 +0200
-Message-ID: <20260912065719.678645278@linuxfoundation.org>
+Subject: [PATCH 7.2 1307/1815] xdrgen: Do not declare union XDR functions in the definitions header
+Date: Sat, 12 Sep 2026 08:50:57 +0200
+Message-ID: <20260912065719.701603398@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,175 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 From: Chuck Lever <cel@kernel.org>
 
-[ Upstream commit ec5a7c2dceb09caf36262ecbd633eb7d4f9e4d3d ]
+[ Upstream commit d4ca0b0a6c62bc12407060754df11b23a90f3e57 ]
 
-Clean up.
+Unlike the struct, enum, typedef, and pointer templates, the union
+definitions template also emits xdrgen_decode_*() and
+xdrgen_encode_*() prototypes for a public union into that header.
+Those prototypes name struct xdr_stream, which the definitions
+header neither includes nor forward-declares, so any translation
+unit that includes the definitions header without xdr.h already in
+scope draws -Wvisibility warnings. The same public prototypes are
+emitted into the declarations header, which does include
+<linux/sunrpc/xdr.h>, making the definitions-header copies
+redundant.
 
-The declaration templates for structs, pointers, and typedefs each
-begin with a blank line, which keeps successive declarations and the
-include block above them visually separated. The enum declaration
-template omits that blank line. trim_blocks collapses the template's
-lone comment line to nothing, so the omission stayed invisible as
-long as every generated header happened to lead with a non-enum
-declaration.
+Drop the prototype emission from the union definitions template so
+it matches the other type templates. Public unions keep their
+encode and decode prototypes through the declarations header.
 
-Fixes: 4329010ad9c3 ("xdrgen: Address some checkpatch whitespace complaints")
-Link: https://patch.msgid.link/20260712193122.116845-2-cel@kernel.org
+Fixes: 4b132aacb076 ("tools: Add xdrgen")
+Link: https://patch.msgid.link/20260712193122.116845-4-cel@kernel.org
 Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/lockd/nlm3xdr_gen.c                                       | 2 +-
- fs/lockd/nlm3xdr_gen.h                                       | 2 +-
- fs/lockd/nlm4xdr_gen.c                                       | 2 +-
- fs/lockd/nlm4xdr_gen.h                                       | 2 +-
- fs/nfsd/nfs4xdr_gen.c                                        | 2 +-
- fs/nfsd/nfs4xdr_gen.h                                        | 5 ++++-
- include/linux/sunrpc/xdrgen/nfs4_1.h                         | 2 +-
- include/linux/sunrpc/xdrgen/nlm3.h                           | 2 +-
- include/linux/sunrpc/xdrgen/nlm4.h                           | 2 +-
- tools/net/sunrpc/xdrgen/templates/C/enum/declaration/enum.j2 | 1 +
- 10 files changed, 13 insertions(+), 9 deletions(-)
+ .../net/sunrpc/xdrgen/templates/C/union/definition/close.j2 | 6 ------
+ 1 file changed, 6 deletions(-)
 
-diff --git a/fs/lockd/nlm3xdr_gen.c b/fs/lockd/nlm3xdr_gen.c
-index 352a694ca0f5f..df14692ce37f2 100644
---- a/fs/lockd/nlm3xdr_gen.c
-+++ b/fs/lockd/nlm3xdr_gen.c
-@@ -1,7 +1,7 @@
- // SPDX-License-Identifier: GPL-2.0
- // Generated by xdrgen. Manual edits will be lost.
- // XDR specification file: ../../Documentation/sunrpc/xdr/nlm3.x
--// XDR specification modification time: Mon Jun 29 20:39:34 2026
-+// XDR specification modification time: Mon Jun 29 20:42:29 2026
- 
- #include <linux/sunrpc/svc.h>
- 
-diff --git a/fs/lockd/nlm3xdr_gen.h b/fs/lockd/nlm3xdr_gen.h
-index d24cbb887b7f1..3824ffe2aae46 100644
---- a/fs/lockd/nlm3xdr_gen.h
-+++ b/fs/lockd/nlm3xdr_gen.h
-@@ -1,7 +1,7 @@
- /* SPDX-License-Identifier: GPL-2.0 */
- /* Generated by xdrgen. Manual edits will be lost. */
- /* XDR specification file: ../../Documentation/sunrpc/xdr/nlm3.x */
--/* XDR specification modification time: Mon Jun 29 20:39:34 2026 */
-+/* XDR specification modification time: Mon Jun 29 20:42:29 2026 */
- 
- #ifndef _LINUX_XDRGEN_NLM3_DECL_H
- #define _LINUX_XDRGEN_NLM3_DECL_H
-diff --git a/fs/lockd/nlm4xdr_gen.c b/fs/lockd/nlm4xdr_gen.c
-index 004ea01c689e8..5a60aff067147 100644
---- a/fs/lockd/nlm4xdr_gen.c
-+++ b/fs/lockd/nlm4xdr_gen.c
-@@ -1,7 +1,7 @@
- // SPDX-License-Identifier: GPL-2.0
- // Generated by xdrgen. Manual edits will be lost.
- // XDR specification file: ../../Documentation/sunrpc/xdr/nlm4.x
--// XDR specification modification time: Mon Jun 29 20:39:36 2026
-+// XDR specification modification time: Mon Jun 29 20:42:29 2026
- 
- #include <linux/sunrpc/svc.h>
- 
-diff --git a/fs/lockd/nlm4xdr_gen.h b/fs/lockd/nlm4xdr_gen.h
-index b5898f0e0689f..ce9dda0a052a3 100644
---- a/fs/lockd/nlm4xdr_gen.h
-+++ b/fs/lockd/nlm4xdr_gen.h
-@@ -1,7 +1,7 @@
- /* SPDX-License-Identifier: GPL-2.0 */
- /* Generated by xdrgen. Manual edits will be lost. */
- /* XDR specification file: ../../Documentation/sunrpc/xdr/nlm4.x */
--/* XDR specification modification time: Mon Jun 29 20:39:36 2026 */
-+/* XDR specification modification time: Mon Jun 29 20:42:29 2026 */
- 
- #ifndef _LINUX_XDRGEN_NLM4_DECL_H
- #define _LINUX_XDRGEN_NLM4_DECL_H
-diff --git a/fs/nfsd/nfs4xdr_gen.c b/fs/nfsd/nfs4xdr_gen.c
-index 14ada378f2dfe..d92dbae5db0fc 100644
---- a/fs/nfsd/nfs4xdr_gen.c
-+++ b/fs/nfsd/nfs4xdr_gen.c
-@@ -1,7 +1,7 @@
- // SPDX-License-Identifier: GPL-2.0
- // Generated by xdrgen. Manual edits will be lost.
- // XDR specification file: ../../Documentation/sunrpc/xdr/nfs4_1.x
--// XDR specification modification time: Tue Jun 30 11:56:05 2026
-+// XDR specification modification time: Tue Jun 30 11:57:21 2026
- 
- #include <linux/sunrpc/svc.h>
- 
-diff --git a/fs/nfsd/nfs4xdr_gen.h b/fs/nfsd/nfs4xdr_gen.h
-index 6527633ba4176..d7725bd5648ae 100644
---- a/fs/nfsd/nfs4xdr_gen.h
-+++ b/fs/nfsd/nfs4xdr_gen.h
-@@ -1,7 +1,7 @@
- /* SPDX-License-Identifier: GPL-2.0 */
- /* Generated by xdrgen. Manual edits will be lost. */
- /* XDR specification file: ../../Documentation/sunrpc/xdr/nfs4_1.x */
--/* XDR specification modification time: Tue Jun 30 11:56:05 2026 */
-+/* XDR specification modification time: Tue Jun 30 11:57:21 2026 */
- 
- #ifndef _LINUX_XDRGEN_NFS4_1_DECL_H
- #define _LINUX_XDRGEN_NFS4_1_DECL_H
-@@ -21,10 +21,13 @@ bool xdrgen_encode_fattr4_time_deleg_access(struct xdr_stream *xdr, const fattr4
- 
- bool xdrgen_decode_fattr4_time_deleg_modify(struct xdr_stream *xdr, fattr4_time_deleg_modify *ptr);
- bool xdrgen_encode_fattr4_time_deleg_modify(struct xdr_stream *xdr, const fattr4_time_deleg_modify *value);
-+
- bool xdrgen_decode_aclmodel4(struct xdr_stream *xdr, aclmodel4 *ptr);
- bool xdrgen_encode_aclmodel4(struct xdr_stream *xdr, aclmodel4 value);
-+
- bool xdrgen_decode_aclscope4(struct xdr_stream *xdr, aclscope4 *ptr);
- bool xdrgen_encode_aclscope4(struct xdr_stream *xdr, aclscope4 value);
-+
- bool xdrgen_decode_posixacetag4(struct xdr_stream *xdr, posixacetag4 *ptr);
- bool xdrgen_encode_posixacetag4(struct xdr_stream *xdr, posixacetag4 value);
- 
-diff --git a/include/linux/sunrpc/xdrgen/nfs4_1.h b/include/linux/sunrpc/xdrgen/nfs4_1.h
-index f165e9e9b2e21..ed6df7690b5fb 100644
---- a/include/linux/sunrpc/xdrgen/nfs4_1.h
-+++ b/include/linux/sunrpc/xdrgen/nfs4_1.h
-@@ -1,7 +1,7 @@
- /* SPDX-License-Identifier: GPL-2.0 */
- /* Generated by xdrgen. Manual edits will be lost. */
- /* XDR specification file: ../../Documentation/sunrpc/xdr/nfs4_1.x */
--/* XDR specification modification time: Tue Jun 30 11:56:05 2026 */
-+/* XDR specification modification time: Tue Jun 30 11:57:21 2026 */
- 
- #ifndef _LINUX_XDRGEN_NFS4_1_DEF_H
- #define _LINUX_XDRGEN_NFS4_1_DEF_H
-diff --git a/include/linux/sunrpc/xdrgen/nlm3.h b/include/linux/sunrpc/xdrgen/nlm3.h
-index 3cc69a09c1c7f..0fc627031d8a9 100644
---- a/include/linux/sunrpc/xdrgen/nlm3.h
-+++ b/include/linux/sunrpc/xdrgen/nlm3.h
-@@ -1,7 +1,7 @@
- /* SPDX-License-Identifier: GPL-2.0 */
- /* Generated by xdrgen. Manual edits will be lost. */
- /* XDR specification file: ../../Documentation/sunrpc/xdr/nlm3.x */
--/* XDR specification modification time: Mon Jun 29 20:39:34 2026 */
-+/* XDR specification modification time: Mon Jun 29 20:42:29 2026 */
- 
- #ifndef _LINUX_XDRGEN_NLM3_DEF_H
- #define _LINUX_XDRGEN_NLM3_DEF_H
-diff --git a/include/linux/sunrpc/xdrgen/nlm4.h b/include/linux/sunrpc/xdrgen/nlm4.h
-index 7b6f10ea28385..77860a3d1c1e9 100644
---- a/include/linux/sunrpc/xdrgen/nlm4.h
-+++ b/include/linux/sunrpc/xdrgen/nlm4.h
-@@ -1,7 +1,7 @@
- /* SPDX-License-Identifier: GPL-2.0 */
- /* Generated by xdrgen. Manual edits will be lost. */
- /* XDR specification file: ../../Documentation/sunrpc/xdr/nlm4.x */
--/* XDR specification modification time: Mon Jun 29 20:39:36 2026 */
-+/* XDR specification modification time: Mon Jun 29 20:42:29 2026 */
- 
- #ifndef _LINUX_XDRGEN_NLM4_DEF_H
- #define _LINUX_XDRGEN_NLM4_DEF_H
-diff --git a/tools/net/sunrpc/xdrgen/templates/C/enum/declaration/enum.j2 b/tools/net/sunrpc/xdrgen/templates/C/enum/declaration/enum.j2
-index c7ae506076bb4..d1405c7c5354a 100644
---- a/tools/net/sunrpc/xdrgen/templates/C/enum/declaration/enum.j2
-+++ b/tools/net/sunrpc/xdrgen/templates/C/enum/declaration/enum.j2
-@@ -1,3 +1,4 @@
+diff --git a/tools/net/sunrpc/xdrgen/templates/C/union/definition/close.j2 b/tools/net/sunrpc/xdrgen/templates/C/union/definition/close.j2
+index 5fc1937ba7744..19ee759d70c6a 100644
+--- a/tools/net/sunrpc/xdrgen/templates/C/union/definition/close.j2
++++ b/tools/net/sunrpc/xdrgen/templates/C/union/definition/close.j2
+@@ -1,9 +1,3 @@
  {# SPDX-License-Identifier: GPL-2.0 #}
-+
- bool xdrgen_decode_{{ name }}(struct xdr_stream *xdr, {{ name }} *ptr);
- bool xdrgen_encode_{{ name }}(struct xdr_stream *xdr, {{ name }} value);
+ 	} u;
+ };
+-{%- if name in public_apis %}
+-
+-
+-bool xdrgen_decode_{{ name }}(struct xdr_stream *xdr, struct {{ name }} *ptr);
+-bool xdrgen_encode_{{ name }}(struct xdr_stream *xdr, const struct {{ name }} *ptr);
+-{%- endif -%}
 -- 
 2.53.0
 
