@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65503346A08;
-	Sat, 12 Sep 2026 07:09:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A5823BE141;
+	Sat, 12 Sep 2026 07:09:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789196983; cv=none; b=aGrInHwYwQe5kio2hTiXsoZ2VAr/OkyvCb2L501Pm2ZA5UYI4o61O6ft8lFdph3GMqrM4gEd/szlT5IyVvelYEo6i96/L6KWQtfrIakpiVjagv7HUbgIGoRNa0foH2VYf5YtNgFzR9ZWSDOsLfxW/IFJci4BS3cjdlsekwU7rIQ=
+	t=1789196989; cv=none; b=JBHnfGcMrPEMfBLCL5YnLVml+dC8OgwCcDL4UvPi9qnEa0/zlEKw3C8up5HTdu5nogeHUEMIjsRzKknYZIFqHRdWe1bZElPqRI2wq7F66PV+6VdVdLHlM8fapFQaOcQqNuoMA7mXHRooSKIHJET0uyq4ZHODJ3ulwodxD2shzZA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789196983; c=relaxed/simple;
-	bh=/1aMngbOEeykKgZzfGIHy/UuV2n/b5YODivoEDWiK0w=;
+	s=arc-20240116; t=1789196989; c=relaxed/simple;
+	bh=GdAi13wHyaS32inI5M2ZM9vRLGgOxlkHldJ1MIpMPiI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lBtHTRl6eRkl1LXwrcdOJ5OYpZRWEXW1qGd92mJfIy4V2q9aHcQN4N/Qa4QALQG4WSpdFWX3KluyhXHzc/cOwyiP0IV+uvWnzACfdla/0JhBcoWMGzxRFiWUktdM1FIrbAPZw2uoWbr7oOEH1iiUIw5za4CHf/qEEbGlXkOeKKE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OEP/QbNt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qdaPFlt7KYLt2p15PoG+SMkfkyYrYP0oR3pUxSGUK1Nnc+EPWLZuPlAk/5t6whMGYIezCU3PdReItAyRkJNPmbzyqwKGbeI8XtQgHiib6AK4klpRMaSAGbq4m1Ev1uYxEmXswTZ3Z26PtNGpJuPoaThnUazkqDbury9RgBrxUYg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z4D490T0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OEP/QbNt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 035071F000FF;
-	Sat, 12 Sep 2026 07:09:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z4D490T0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2ADF1F000FF;
+	Sat, 12 Sep 2026 07:09:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789196982;
-	bh=Xc3ZCiDdOUdzInIeM9/GD9DDx7GT1wKyla3rRL2r5g8=;
+	s=korg; t=1789196987;
+	bh=04puTAVnwiYmRHKc91SyPGdjrPOGBxqOszcOiq88Ink=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OEP/QbNtj3ZiskV/r1v30w9bc5KUv3JPwjYRLifjzT70NkEhhM4wz1eHPeWF/6Uc+
-	 gQyITiH5Q3hnA3wJX6h1bJwgxU0APjLB/BX+VFr2km52vxWE2Ry+oExuvlIwo4HVLu
-	 wsqYaiNppBJSKFKIkyXHZ3UQD0W1dM37Q3+djWas=
+	b=Z4D490T0s1wTFum4KtbQ7lDpIndvYwakmLfhw58jTEwd5vcus1ZRiFc1SfKlp8uNN
+	 AQ7uAgsNZxXxFl9X9c6h1pk+QF7Y7dCHSNjnd7nQxWKeZlKxYx6gUOvKN2P+GGvUMN
+	 g/U8WMvXaJPbc40M6IVpq7PAysADCRp55Ptyj+x4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Cheng <icheng@nvidia.com>,
-	Wei Hou <wei.hou@scaleflux.com>,
-	Li Ming <ming.li@zohomail.com>,
-	Dave Jiang <dave.jiang@intel.com>,
+	Yuho Choi <dbgh9129@gmail.com>,
+	Martin Kaiser <martin@kaiser.cx>,
+	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0076/1815] cxl/pci: Remove incorrect mbox.valid check in cxl_pci_type3_init_mailbox()
-Date: Sat, 12 Sep 2026 08:30:26 +0200
-Message-ID: <20260912065650.797038729@linuxfoundation.org>
+Subject: [PATCH 7.2 0077/1815] ARM: imx: avic: Fix OF node reference leaks
+Date: Sat, 12 Sep 2026 08:30:27 +0200
+Message-ID: <20260912065650.820205131@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -53,71 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wei Hou <wei.hou@scaleflux.com>
+From: Yuho Choi <dbgh9129@gmail.com>
 
-[ Upstream commit d79b81893d0cc93737e811a465b9ef9a00156fd5 ]
+[ Upstream commit b24c12e1bad863d27141e4e9c19d25eebd68c4a6 ]
 
-The driver's design intent is that missing or malformed component
-registers should not prevent mailbox initialization. cxl_pci_probe()
-already reflects this: the CXL_REGLOC_RBI_COMPONENT setup path only
-emits a dev_warn() and continues when component registers are absent,
-rather than returning an error.
+of_find_compatible_node() returns a device node with its reference count
+incremented. mxc_init_irq() looks up the i.MX25 CCM node for of_iomap()
+and the AVIC node for irq_domain_create_legacy(), but does not release
+either temporary reference.
 
-The check 'if (!cxlds->reg_map.device_map.mbox.valid)' violates this
-intent and is also technically incorrect for two reasons:
+of_iomap() does not consume the node reference, and
+irq_domain_create_legacy() takes its own fwnode reference for the domain.
+Drop the temporary OF node references after each use.
 
-1. Wrong struct: the MEMDEV register block is enumerated into a local
-   variable 'map', not into 'cxlds->reg_map'. The device_map.mbox.valid
-   field inside cxlds->reg_map is never written by the MEMDEV probe and
-   will always read as zero regardless of actual hardware capability.
-
-2. Already validated: cxl_pci_setup_regs(CXL_REGLOC_RBI_MEMDEV) calls
-   cxl_probe_regs() which explicitly checks mbox.valid and returns
-   -ENXIO if the mailbox is absent. If that check passes, the mailbox is
-   guaranteed to be present by the time cxl_pci_type3_init_mailbox() is
-   called.
-
-The value that the check actually reads is component_map.ras.valid,
-which aliases device_map.mbox.valid in the union. This is populated by
-the COMPONENT probe, not the MEMDEV probe. On devices where the
-component register BAR does not implement a CXL Component Capability
-Array (e.g. certain DCD devices), cxl_probe_component_regs() returns
-early leaving ras.valid=false. Through the union, this makes mbox.valid
-read as false, causing cxl_pci_type3_init_mailbox() to return -ENODEV
-(-19) even though the mailbox hardware is fully functional.
-
-Remove the check. Mailbox presence has already been validated by
-cxl_pci_setup_regs(CXL_REGLOC_RBI_MEMDEV). The presence or absence of
-component registers is irrelevant to mailbox initialization.
-
-Fixes: 8d8081cecfb9 ("cxl: Move mailbox related bits to the same context")
-Reviewed-by: Richard Cheng <icheng@nvidia.com>
-Signed-off-by: Wei Hou <wei.hou@scaleflux.com>
-Reviewed-by: Li Ming <ming.li@zohomail.com>
-Link: https://patch.msgid.link/20260628155857.239866-1-wei.hou@scaleflux.com
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+Fixes: 9b454d16e57d ("ARM: imx: avic: set low-power interrupt mask for imx25")
+Fixes: 544496ab5cbd ("ARM: imx: move irq_domain_add_legacy call into avic driver")
+Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
+Reviewed-by: Martin Kaiser <martin@kaiser.cx>
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/pci.c | 6 ------
- 1 file changed, 6 deletions(-)
+ arch/arm/mach-imx/avic.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/cxl/pci.c b/drivers/cxl/pci.c
-index 7c6faee7f85ed..3e79038a686bc 100644
---- a/drivers/cxl/pci.c
-+++ b/drivers/cxl/pci.c
-@@ -691,12 +691,6 @@ static int cxl_pci_type3_init_mailbox(struct cxl_dev_state *cxlds)
- {
- 	int rc;
+diff --git a/arch/arm/mach-imx/avic.c b/arch/arm/mach-imx/avic.c
+index 3067c06b4b8eb..6873a50bbe2c0 100644
+--- a/arch/arm/mach-imx/avic.c
++++ b/arch/arm/mach-imx/avic.c
+@@ -173,6 +173,7 @@ static void __init mxc_init_irq(void __iomem *irqbase)
  
--	/*
--	 * Fail the init if there's no mailbox. For a type3 this is out of spec.
--	 */
--	if (!cxlds->reg_map.device_map.mbox.valid)
--		return -ENODEV;
--
- 	rc = cxl_mailbox_init(&cxlds->cxl_mbox, cxlds->dev);
- 	if (rc)
- 		return rc;
+ 	np = of_find_compatible_node(NULL, NULL, "fsl,imx25-ccm");
+ 	mx25_ccm_base = of_iomap(np, 0);
++	of_node_put(np);
+ 
+ 	if (mx25_ccm_base) {
+ 		/*
+@@ -203,6 +204,7 @@ static void __init mxc_init_irq(void __iomem *irqbase)
+ 	np = of_find_compatible_node(NULL, NULL, "fsl,avic");
+ 	domain = irq_domain_create_legacy(of_fwnode_handle(np), AVIC_NUM_IRQS, irq_base, 0,
+ 					  &irq_domain_simple_ops, NULL);
++	of_node_put(np);
+ 	WARN_ON(!domain);
+ 
+ 	for (i = 0; i < AVIC_NUM_IRQS / 32; i++, irq_base += 32)
 -- 
 2.53.0
 
