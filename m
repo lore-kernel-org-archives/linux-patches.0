@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9944529DB64;
-	Sat, 12 Sep 2026 15:54:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38B5A29DB64;
+	Sat, 12 Sep 2026 15:54:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789228477; cv=none; b=Qbk5nO4vLV6yNiVF66Wq6wc//8ByclA5TNvi42kw8e30TgSl23MF8qoNBFmqcC0Erdy/oCDve5ICIKn5S9x2Jfgx108pueTV+ITlI8vO92lk/qgMnMejat2ySKJJhZ4eDwydFBxXXeqcsajujVW/sv0fEn7X3Iw6rlDU3z5ky+U=
+	t=1789228482; cv=none; b=Cim3thyhKwd3E8p5Vs2oHD0OPad7Vb9CQOxcUQE8jsN5hZEGOmZg4ztTAAxXpzYzYLbExjBPuMEM4d3Dlrts5Wog5JCntnVRxFRJMtApQj6oEQWlXY5EB0qKjko0StwMh4gJLDeJ8qsLfs5VWEbE2bZMcqK7qz8ERYGBTHR6Fi4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789228477; c=relaxed/simple;
-	bh=bPZP+LrofvjI2D+oVZRNkpTSLLvodp+LAi1Nl0VN1Bw=;
+	s=arc-20240116; t=1789228482; c=relaxed/simple;
+	bh=4zeBYJT9Si4kxn3DHQ2qah8C/xIUkEsa23BpIu0UQgM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HLNQ3//HhUchm0b2dUcDJH0XCltakC8o3cHckeGKaLuWiWP0YStd/ssSTKpYFD2xEQMP6oyXLXRCxR6+qu9rC7qNDSQAZS7RdHqwURaDsaGWjm2CNyPHKOK1AHL584hjzTMAFFRxolzxlilEociUsiPKg4AW90wKoBfNu4kZwCA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ov3oM7LQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hf6L/mqRcn0JRzJlGuyKncs3kexmRFjEvmzjrtTgMGI+Vy2vV7mG76snRDSdPbVWlq84UtW1jpT85vgoLdMqmOPmP4BjvcoUK6XWVwqAuH//KwPf6YgELSJgy7pCy03VEs3pB/8/0h1qKLtCel7OZ1ODFbtZ207kcebYlpP3hRE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BkRkk3VZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ov3oM7LQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 533761F000FF;
-	Sat, 12 Sep 2026 15:54:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BkRkk3VZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CD821F000FF;
+	Sat, 12 Sep 2026 15:54:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789228476;
-	bh=xXAtgWrTBJc3vcO/m6Aq7MM9crybYJ3WnJEW5uMGOrQ=;
+	s=korg; t=1789228481;
+	bh=TwuLAeQ4Y1uP4vKwacmP5H5/6YjGtBjEPrXGNhaJW74=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ov3oM7LQelYq/68lrmr8fygdi0dVkPkRfnX4Uv7AR40cLjdeg2+GotjM2KSzvCgVQ
-	 u6FiQnQadfXcpFTvWpE4oSLMbdWKKw/4F7sjx1I4Ii8cyGfK75i7U0jxEDqNgtRLpV
-	 enh7o/QIF9l9bhBsRfLk40Z+USS+SXt0ROjqVz3c=
+	b=BkRkk3VZA6m9PHHu3R4U9WYtbWclwWuGhdO4ubtgyFmwDqOBVBVhPjsnmJZhymQil
+	 OCYqNMr4O/vlb/h+RXnULQzot++xe+mHyyVKyIM6M9BlUaMy9yho+UlDWRp3vSXHrr
+	 00+RTtFX9RBYF2x7G8ss+niEhYMXB/nzAauwXNfc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Nilesh Javali <njavali@marvell.com>,
 	Hannes Reinecke <hare@kernel.org>,
 	"Martin K. Petersen (Oracle)" <mkp@kernel.org>
-Subject: [PATCH 6.1 0393/1191] scsi: qla2xxx: Check entry_status in qla24xx_modify_vp_config()
-Date: Sat, 12 Sep 2026 08:52:01 +0200
-Message-ID: <20260912065557.063703162@linuxfoundation.org>
+Subject: [PATCH 6.1 0394/1191] scsi: qla2xxx: Bound image count in qla2x00_update_fru_versions()
+Date: Sat, 12 Sep 2026 08:52:02 +0200
+Message-ID: <20260912065557.087247091@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -53,51 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 From: Nilesh Javali <njavali@marvell.com>
 
-commit 9101c51649f5b6773a97bf5271785c948589ea1d upstream.
+commit de62cf265dbe309f34f144a6cdbca9240317727e upstream.
 
-The Modify VP Config completion handler labelled its first error branch
-"error status" but tested vpmod->comp_status instead of
-vpmod->entry_status. Because CS_COMPLETE is 0, the following
-"comp_status != CS_COMPLETE" branch duplicated that test and was dead
-code, and entry_status was never examined at all.
+qla2x00_update_fru_versions() copies the user-supplied BSG request into
+a fixed 256-byte stack buffer (bsg[DMA_POOL_SIZE]) and then iterates
+list->count times over the qla_image_version array embedded in that
+buffer, advancing the image pointer each iteration. count is taken
+directly from user input with no upper bound, while only (DMA_POOL_SIZE
+- sizeof(list->count)) / sizeof(struct qla_image_version) = 6 entries
+actually fit. A larger count walks the image pointer off the end of the
+stack buffer, reading adjacent kernel stack memory and sending it to the
+device via qla2x00_write_sfp().
 
-When firmware rejects the IOCB early it sets entry_status while leaving
-comp_status zero. As the IOCB is allocated with dma_pool_zalloc(), both
-comp_status branches evaluate false and the handler falls through to the
-success path, calling fc_vport_set_state(FC_VPORT_INITIALIZING) for a
-configuration the firmware never accepted. This can leave the virtual
-port enabled on top of an invalid config and surface later as login
-timeouts or follow-on firmware errors.
+Reject requests whose declared count does not fit in the buffer.
 
-Test entry_status in the first branch, matching qla_ctrlvp_completed()
-and the login/logout/abort/reset IOCB handlers; the comp_status branch
-then becomes the live completion-status check.
-
-Fixes: 2c3dfe3f6ad8 ("[SCSI] qla2xxx: add support for NPIV")
+Fixes: 697a4bc69159 ("[SCSI] qla2xxx: Provide method for updating I2C attached VPD.")
 Cc: stable@vger.kernel.org
 Signed-off-by: Nilesh Javali <njavali@marvell.com>
 Reviewed-by: Hannes Reinecke <hare@kernel.org>
-Link: https://patch.msgid.link/20260723050413.3897522-50-njavali@marvell.com
+Link: https://patch.msgid.link/20260723050413.3897522-56-njavali@marvell.com
 Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_mbx.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/scsi/qla2xxx/qla_bsg.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/scsi/qla2xxx/qla_mbx.c
-+++ b/drivers/scsi/qla2xxx/qla_mbx.c
-@@ -4276,10 +4276,10 @@ qla24xx_modify_vp_config(scsi_qla_host_t
- 	if (rval != QLA_SUCCESS) {
- 		ql_dbg(ql_dbg_mbx, vha, 0x10bd,
- 		    "Failed to issue VP config IOCB (%x).\n", rval);
--	} else if (vpmod->comp_status != 0) {
-+	} else if (vpmod->entry_status != 0) {
- 		ql_dbg(ql_dbg_mbx, vha, 0x10be,
- 		    "Failed to complete IOCB -- error status (%x).\n",
--		    vpmod->comp_status);
-+		    vpmod->entry_status);
- 		rval = QLA_FUNCTION_FAILED;
- 	} else if (vpmod->comp_status != cpu_to_le16(CS_COMPLETE)) {
- 		ql_dbg(ql_dbg_mbx, vha, 0x10bf,
+--- a/drivers/scsi/qla2xxx/qla_bsg.c
++++ b/drivers/scsi/qla2xxx/qla_bsg.c
+@@ -1578,6 +1578,13 @@ qla2x00_update_fru_versions(struct bsg_j
+ 
+ 	image = list->version;
+ 	count = list->count;
++
++	if (struct_size(list, version, count) > sizeof(bsg)) {
++		bsg_reply->reply_data.vendor_reply.vendor_rsp[0] =
++		    EXT_STATUS_INVALID_PARAM;
++		goto dealloc;
++	}
++
+ 	while (count--) {
+ 		memcpy(sfp, &image->field_info, sizeof(image->field_info));
+ 		rval = qla2x00_write_sfp(vha, sfp_dma, sfp,
 
 
