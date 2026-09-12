@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FEDB315D49;
-	Sat, 12 Sep 2026 12:53:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72D1447CA72;
+	Sat, 12 Sep 2026 12:53:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789217584; cv=none; b=khxJa6jNvtPeCBISfKVodBvF6avICcvPDq8exlwV6oI0WIA93seREqVaXBfIc9lmaT+xVLY5cvL5x+DOhJMQZoZXg8d0bokI7PRIJZ1Y0K9bPh/1D6AEYfff3vJL97Odn4+bMowyp71SaY9ZiFnl3liNZ7V+CaU6nI0VEaeEq48=
+	t=1789217589; cv=none; b=lHmlah6E/BHSlcw7UvLuDhU0aiW7TdubALwKAUCMhJxTt4UScaD8l0IExWLxl5/LkhnDNGkj80noHs9blTB+Bb6m6LhxbOlu0gJxqQQh6P6UHWVMTRkOltsRvpB2Rfhz4rqrUKFoqMBhG3vpyqJ75vqniLiVnz252/BtHSL7GSQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789217584; c=relaxed/simple;
-	bh=MKwa17w9Z90hxjtLNjQoV7WPjJbHdroVhW3NQ4C9hVs=;
+	s=arc-20240116; t=1789217589; c=relaxed/simple;
+	bh=n+CljSyJ2HzIAIUu7BUuct797ZKuXPzJ9dyWTIUnlms=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lsrni5VpG/iZQd1snSQAP/VME2ZheJ7Y1wjlvUTnac06VaXHZacArBuarFfybGuEusnGrKE/SLSF6qaEIu7uvadFQI5J/egPk4ByXV398XpqXWkMLRpeWwmpz4xHmnV+NqqhPKUQ7XpQaPoOylOOP473R5hPKWmtFmORqgOJp4w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OEFKXNrS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lEusJ7TM4zKy/jCaF657XudMHcfq4VktGHiH/J0xF2c4GMjLcRHn9f+rNiewvj+48+9x4Og/Kjf9EPyozso3Z5Bs/b/ZR1hp0B4rVhKkZvfbOQx7NxqNLj7/+UMoHqDNMFAaD3xGaSh0pnB58B/piqUyjC0b557veLHXHc5eGGw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x82K5Oi9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OEFKXNrS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C0CE1F000FF;
-	Sat, 12 Sep 2026 12:53:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x82K5Oi9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BE781F000FF;
+	Sat, 12 Sep 2026 12:53:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789217583;
-	bh=CJ8AytVf5mlMX0TlopS3Y5WclKoBzTBWjDckov6obIc=;
+	s=korg; t=1789217588;
+	bh=uHgS38r3/PsKe1IlIEU6YALgXpKlEEe0ugCTkCPN+kk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OEFKXNrSWhz3vMlEfMIhAmXLvcDLVxgO3VNJSaIMAzFwg1IMQd+VITZXvuRBLVSOl
-	 PC58Op96RYaQNka3iwejYsuGnJoRNArZpTeDlAS+1VnT8LQr4nmdpuzBHzB2nSuFdD
-	 vdtMmIsBdx7EqwvQ+1gM3YFeWkGvLymotzse4Eek=
+	b=x82K5Oi9m6mL6xAXV13PVARTz0Ytpgi2KRACOtb7DKE/Hw2TtY/uJHCxe0gilXN9+
+	 bZojAHdXuHhYpVOnqwu9RR06wQ4RSY1CsA2Pjx5TB800oJJgkIjtsKwSq/4s+aPvjI
+	 HFgqGNSWuqiQMPgKPIinMxHKZmZPsfFqz9iOx5GU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jie Gan <jie.gan@oss.qualcomm.com>,
-	Leo Yan <leo.yan@arm.com>,
-	Yeoreum Yun <yeoreum.yun@arm.com>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0961/1376] coresight: etm4x: fix leaked trace id
-Date: Sat, 12 Sep 2026 08:56:27 +0200
-Message-ID: <20260912065628.978276585@linuxfoundation.org>
+Subject: [PATCH 6.12 0962/1376] regulator: qcom-rpmh: Fix PMIC5 BOB bypass mode handling
+Date: Sat, 12 Sep 2026 08:56:28 +0200
+Message-ID: <20260912065628.999755705@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -53,43 +53,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yeoreum Yun <yeoreum.yun@arm.com>
+From: Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>
 
-[ Upstream commit 467e5862ccb0eed907002f4c6d3badfe34360940 ]
+[ Upstream commit abd14bebb87e0fa2749371272c8b31d6ee5f0a36 ]
 
-If etm4_enable_sysfs() fails in cscfg_csdev_enable_active_config(),
-the trace ID may be leaked because it is not released.
+Currently, when `rpmh_regulator_set_mode_bypass()` helper function
+is called to set bypass mode, it sends PMIC4's BOB bypass mode
+value for even if its a PMIC5 BOB.
 
-To address this, call etm4_release_trace_id() when etm4_enable_sysfs()
-fails in cscfg_csdev_enable_active_config().
+To fix this, introduce new hw_data parameter`pmic_bypass_mode`
+to store bypass mode value. Use it to send correct PMIC bypass
+mode value that corresponds to PMIC4/5 BOB regulators from the
+helper function.
 
-Fixes: 7ebd0ec6cf94 ("coresight: configfs: Allow configfs to activate configuration")
-Reviewed-by: Jie Gan <jie.gan@oss.qualcomm.com>
-Reviewed-by: Leo Yan <leo.yan@arm.com>
-Signed-off-by: Yeoreum Yun <yeoreum.yun@arm.com>
-Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Link: https://lore.kernel.org/r/20260725113645.57519-4-yeoreum.yun@arm.com
+Fixes: 610f29e5cc0e8d58 ("regulator: qcom-rpmh: Update PMIC modes for PMIC5")
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Signed-off-by: Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260801-b4-read-rpmh-v5-v6-2-9fcb54928523@oss.qualcomm.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwtracing/coresight/coresight-etm4x-core.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/regulator/qcom-rpmh-regulator.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hwtracing/coresight/coresight-etm4x-core.c b/drivers/hwtracing/coresight/coresight-etm4x-core.c
-index 0157dc5b08928..312abd57ddce9 100644
---- a/drivers/hwtracing/coresight/coresight-etm4x-core.c
-+++ b/drivers/hwtracing/coresight/coresight-etm4x-core.c
-@@ -854,8 +854,10 @@ static int etm4_enable_sysfs(struct coresight_device *csdev)
- 	cscfg_config_sysfs_get_active_cfg(&cfg_hash, &preset);
- 	if (cfg_hash) {
- 		ret = cscfg_csdev_enable_active_config(csdev, cfg_hash, preset);
--		if (ret)
-+		if (ret) {
-+			etm4_release_trace_id(drvdata);
- 			return ret;
-+		}
- 	}
+diff --git a/drivers/regulator/qcom-rpmh-regulator.c b/drivers/regulator/qcom-rpmh-regulator.c
+index 7870722b6ee21..62fd0da48407a 100644
+--- a/drivers/regulator/qcom-rpmh-regulator.c
++++ b/drivers/regulator/qcom-rpmh-regulator.c
+@@ -77,6 +77,7 @@ enum rpmh_regulator_type {
+  * @hpm_min_load_uA:		Minimum load current in microamps that requires
+  *				high power mode (HPM) operation.  This is used
+  *				for LDO hardware type regulators only.
++ * @pmic_bypass_mode:		The PMIC bypass mode value.
+  * @pmic_mode_map:		Array indexed by regulator framework mode
+  *				containing PMIC hardware modes.  Must be large
+  *				enough to index all framework modes supported
+@@ -91,6 +92,7 @@ struct rpmh_vreg_hw_data {
+ 	int					n_linear_ranges;
+ 	int					n_voltages;
+ 	int					hpm_min_load_uA;
++	int					pmic_bypass_mode;
+ 	const int				*pmic_mode_map;
+ 	unsigned int			      (*of_map_mode)(unsigned int mode);
+ };
+@@ -277,7 +279,7 @@ static int rpmh_regulator_vrm_set_mode_bypass(struct rpmh_vreg *vreg,
+ 		return pmic_mode;
  
- 	spin_lock(&drvdata->spinlock);
+ 	if (bypassed)
+-		cmd.data = PMIC4_BOB_MODE_PASS;
++		cmd.data = vreg->hw_data->pmic_bypass_mode;
+ 	else
+ 		cmd.data = pmic_mode;
+ 
+@@ -692,6 +694,7 @@ static const struct rpmh_vreg_hw_data pmic4_bob = {
+ 	},
+ 	.n_linear_ranges = 1,
+ 	.n_voltages = 84,
++	.pmic_bypass_mode = PMIC4_BOB_MODE_PASS,
+ 	.pmic_mode_map = pmic_mode_map_pmic4_bob,
+ 	.of_map_mode = rpmh_regulator_pmic4_bob_of_map_mode,
+ };
+@@ -900,6 +903,7 @@ static const struct rpmh_vreg_hw_data pmic5_bob = {
+ 	},
+ 	.n_linear_ranges = 1,
+ 	.n_voltages = 32,
++	.pmic_bypass_mode = PMIC5_BOB_MODE_PASS,
+ 	.pmic_mode_map = pmic_mode_map_pmic5_bob,
+ 	.of_map_mode = rpmh_regulator_pmic4_bob_of_map_mode,
+ };
 -- 
 2.53.0
 
