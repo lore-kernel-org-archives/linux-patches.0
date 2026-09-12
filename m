@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB833299920;
-	Sat, 12 Sep 2026 10:29:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E12E0299920;
+	Sat, 12 Sep 2026 10:29:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789208965; cv=none; b=Le14cnZnESbs/Al+N2//CD8K5CXIEXQukJqvVMWWEeXfLWRBEmIlqYEBX/kzDEXr0R1ElMfXSCU9sW1w5pnPZQrm9Acys3jUbEuf6E2+aBiEgTYRkepkRUu2uWcXiKWsEWQ+hNXGj7aTDIpZ/fPpXNYkTS6Q/lmbO7RT1J7n4hc=
+	t=1789208970; cv=none; b=RRsWKjD4/HhWiQSLx3pzRU0WmXgF53XFUjJXuPG7mN8vWQDnPu7FdZJb/x188nr8Lq814iyd26OH7hDDzIROFUc2+QfbjNAXy94xZgOp1nV+ZXgBB7o0oA09mscgr7d1PCgfz7zfQyfPadnfIG9blb8NIFz6wr56Etlcjq9WBD4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789208965; c=relaxed/simple;
-	bh=7y+z1sfxf5gG8fXbz1HrdYVKDHj2hHL3bClknfRN/QA=;
+	s=arc-20240116; t=1789208970; c=relaxed/simple;
+	bh=q+tXdRctdjZppQVmfsZOS0IKHKd+FziuoNXSAKAy5Po=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WcsYYKZgqBWwRqOxVmpwdCweefHAAtjVWNIAwHpTsPYKOlYzIaO1xysB/ZHUGJiqVOX85syBr35As/GZWo6d8ZFrmgEExvMxTuWZSJGA/14zW9RICdg4mH8se6ZmE1qd4+y85ILkn5pcRtca5qI3Xmb4TCCP4w6hCyL8HQ/d7e0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yUmmgIDN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Q0iM1bSf0HZWMviubg8c4jzXDLAc1gu+ZPuloC+isWhJeWUOI8l84v4idBd5jJI0IEgm5RS9AmG3g7FDAVPNRiWU0m0do7USx/OrCxoVSL8eRsFS5gGeP+7SysZrsCEU62tDPbS/mzojma3RxucEYLuzb9wOLcxNPzdHnxS4E7k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h2mDElN9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yUmmgIDN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E36751F00893;
-	Sat, 12 Sep 2026 10:29:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h2mDElN9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D2591F000FF;
+	Sat, 12 Sep 2026 10:29:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789208964;
-	bh=8gNN6+dFPZgETE2FFQTqGa4xpfqdkvaiM8Yto+oAYe8=;
+	s=korg; t=1789208969;
+	bh=Bpopo9sdwmzTrxbAxt3+xrHHSOwtfke0RpDKhCmQTmU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yUmmgIDNqZUowWdKgqqpPr0eH8uYIGdoQJy5zcwkuYqic77h8LlixwsB+kCeQ2TIg
-	 coHPhziQwU87JQmJ4I+ntKBLy4X0J/eJC0j+yiarGehpwZ87R/K8MHC8jZeYJxWSbA
-	 tpftmXoQP0ikEQ/FQTn/0AfJ4l+NFFLwnLTNTIoI=
+	b=h2mDElN9J6dK5uOiT30HXDVV6pQhv9oZ6X8w0kiKMPsvU16eD0g9J2gKKem6rzhtM
+	 d8Au90sTPJ/2QUrh6SH5CACBhCBSgw0RvyM8c0XlOlA8CgchPe2vPw/Q6yFPvsZb9v
+	 cTnqhxJikf5lKmov+fNvxkZVwmHmdTNyaF8yKFZY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yichong Chen <chenyichong@uniontech.com>,
-	Jan Kara <jack@suse.cz>,
+	Dmitry Gomzyakov <nicerok11@gmail.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0724/1518] fanotify: report full event length for FIONREAD
-Date: Sat, 12 Sep 2026 08:48:13 +0200
-Message-ID: <20260912065639.813866605@linuxfoundation.org>
+Subject: [PATCH 6.18 0725/1518] wifi: mt76: connac: add MT7991A (0x7991) to is_mt7996()
+Date: Sat, 12 Sep 2026 08:48:14 +0200
+Message-ID: <20260912065639.835723442@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,60 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yichong Chen <chenyichong@uniontech.com>
+From: Dmitry Gomzyakov <nicerok11@gmail.com>
 
-[ Upstream commit 68615158c12de36220446dfea5cfdf9ba6c19690 ]
+[ Upstream commit 574bd79955d166c00c2b1531fed591ee70b6ba04 ]
 
-fanotify_ioctl(FIONREAD) reports the number of bytes available to read
-from the event queue.  It currently accounts only FAN_EVENT_METADATA_LEN
-for each queued event.
+The MT7991A chipset uses PCI device ID 0x7991 (MT7996_DEVICE_ID_2),
+but is_mt7996() only checks for 0x7990. This causes MT7991A devices
+to use incorrect chip-specific settings, such as:
+- MSDU_CNT_V2 instead of MSDU_CNT in TX descriptors
+- Wrong WTBL BMC size (32 instead of 64)
+- Incorrect prefetch depth for MCU queues
 
-That underestimates events that carry additional information records, such
-as FAN_REPORT_DFID_NAME events.  A userspace program that uses FIONREAD to
-size its read buffer can receive a length that is smaller than the next
-event.  Reading with that buffer then fails with -EINVAL, while a larger
-buffer succeeds and reports a larger metadata.event_len.
-
-Use fanotify_event_len() when summing queued events so FIONREAD includes
-all info records.
-
-Fixes: 5e469c830fdb ("fanotify: copy event fid info to user")
-Signed-off-by: Yichong Chen <chenyichong@uniontech.com>
-Link: https://patch.msgid.link/20260731021827.602479-1-chenyichong@uniontech.com
-Signed-off-by: Jan Kara <jack@suse.cz>
+Fixes: 7014fe535860 ("wifi: mt76: mt7996: add macros for pci device ids")
+Signed-off-by: Dmitry Gomzyakov <nicerok11@gmail.com>
+Link: https://patch.msgid.link/20260510102911.1883849-2-kyoto1337@protonmail.com
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/notify/fanotify/fanotify_user.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/net/wireless/mediatek/mt76/mt76_connac.h | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/notify/fanotify/fanotify_user.c b/fs/notify/fanotify/fanotify_user.c
-index 9dbe33cf2ceaa..629407c3e8737 100644
---- a/fs/notify/fanotify/fanotify_user.c
-+++ b/fs/notify/fanotify/fanotify_user.c
-@@ -1158,11 +1158,13 @@ static long fanotify_ioctl(struct file *file, unsigned int cmd, unsigned long ar
+diff --git a/drivers/net/wireless/mediatek/mt76/mt76_connac.h b/drivers/net/wireless/mediatek/mt76/mt76_connac.h
+index 192dcc374a642..670f59f55605a 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt76_connac.h
++++ b/drivers/net/wireless/mediatek/mt76/mt76_connac.h
+@@ -224,7 +224,8 @@ static inline bool is_mt798x(struct mt76_dev *dev)
+ 
+ static inline bool is_mt7996(struct mt76_dev *dev)
  {
- 	struct fsnotify_group *group;
- 	struct fsnotify_event *fsn_event;
-+	unsigned int info_mode;
- 	void __user *p;
- 	int ret = -ENOTTY;
- 	size_t send_len = 0;
+-	return mt76_chip(dev) == 0x7990;
++	u16 chip = mt76_chip(dev);
++	return chip == 0x7990 || chip == 0x7991;
+ }
  
- 	group = file->private_data;
-+	info_mode = FAN_GROUP_FLAG(group, FANOTIFY_INFO_MODES);
- 
- 	p = (void __user *) arg;
- 
-@@ -1170,7 +1172,8 @@ static long fanotify_ioctl(struct file *file, unsigned int cmd, unsigned long ar
- 	case FIONREAD:
- 		spin_lock(&group->notification_lock);
- 		list_for_each_entry(fsn_event, &group->notification_list, list)
--			send_len += FAN_EVENT_METADATA_LEN;
-+			send_len += fanotify_event_len(info_mode,
-+						       FANOTIFY_E(fsn_event));
- 		spin_unlock(&group->notification_lock);
- 		ret = put_user(send_len, (int __user *) p);
- 		break;
+ static inline bool is_mt7992(struct mt76_dev *dev)
 -- 
 2.53.0
 
