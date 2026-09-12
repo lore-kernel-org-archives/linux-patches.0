@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E2BC25A640;
-	Sat, 12 Sep 2026 15:44:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 167A23FD956;
+	Sat, 12 Sep 2026 15:44:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789227852; cv=none; b=sSemFVlnXKPIA88u/fo8pdbDr6JFmWdjZakd0Np58DKc4OSpvLNWy2Lm7PkHbdurp5teIvgBz6flz5rln9RxpGzzetE1Ok8xdewH+CbZfEk2cDH8FgA5lOR+kra98jEW/DWGmQiTaj//UITDCP5m9aJc5bbMq+Tl8/F/Dn1SFvk=
+	t=1789227860; cv=none; b=HqrW+cqh3kKLm9DyJw1HWZkX+l54NrKnts+ZEe3/3HFrzu7BpYd39UaxVn2fXUaQV71J8PTd2D6vDS0NbxJqDad6qh4GMNs87W55ELu7Az3ylT74FfUlD7BrjX6lEQdLc0ujaWJ1Igs/AjRNL1bred+/IInWH3aZdu1LNKm1PQo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789227852; c=relaxed/simple;
-	bh=Xbs4jCFAvFuFSH4UR3ECp3KECMEmgAuz+VHr7dnCpeQ=;
+	s=arc-20240116; t=1789227860; c=relaxed/simple;
+	bh=UYVP4g/MNJorJpyiZ9cTKq+4dtKERQqN4yubz2eXVCc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qnmIAvxOIsVzjNeMHs3XBQ2Z9ieJsdKoZq7VKEZSOBkbmOITH7EXAxsXDxtVROjmNJA9LZkOgy/rJScasExSbCfsP9ZByOBGH6d+nPhKEQbg8fatm7j7DGmN2xiYAwYBTPH/z3zvMfoKmyYz4+GRHuGxcrAzgF6YTISZKmxQuJg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GDKSgwxK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=djRLed38lYasyAQj8eiPkZ7EI5IjqmEcAUsBiRod8hWz5KcckyBoWYk3ijIBXS727t4j1BYZdwXNu8prCqDFNp2fZ3/JZDzct0LEHLz58M5vcBJ7H8ULGDGJPxDEP4pxX3JzZgaaeduAne0bm5/GaLq+ZzW2FlHF/3ZcYJaAChw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lZqGi623; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GDKSgwxK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76A711F00893;
-	Sat, 12 Sep 2026 15:44:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lZqGi623"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48BBF1F000FF;
+	Sat, 12 Sep 2026 15:44:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789227851;
-	bh=1JgjsQS7PE+9LENW1QHS7PGURivhbAyMRk+UwE6ySws=;
+	s=korg; t=1789227856;
+	bh=pFl6qpnz98+wWlFUBWpxsNTbszYh9ecb9ddKYBFKZlA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GDKSgwxK2rdNaK/SyRyjteTp5qeVoxJW1ei1BXJBCwwMFUVDEAQrMzgRh28rKJvIl
-	 YyD8oq3NI9IsM+S7gx7R0LeIWa7nwIpMqgLZ+tqHcbiCY71bVJovmHCSrLv5ixCxDn
-	 ClKF9zuwn75p2siFykGL6WxF6KaXTISngfczdXC4=
+	b=lZqGi623zDspdmHzHdE8VXZu8KGTVbufQMoa2ko1ZO+Nkv7p8B64Fqg+evhgxf0Td
+	 H1qYny3F5rw0w0687SAXjcIc1KSH5n0WQ93QG9RDk5KHeVapvNCZtOhoR5Ddg4sZ2t
+	 CXL/q+DobJY7oQlZ2NwbQR5XFg5WCJkDVr8aXSWo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stanislaw Gruszka <stf_xl@wp.pl>,
-	Ping-Ke Shih <pkshih@realtek.com>,
-	stable@kernel.org
-Subject: [PATCH 6.1 0239/1191] wifi: rtl818x: initialize eeprom_93cx6 struct to zero
-Date: Sat, 12 Sep 2026 08:49:27 +0200
-Message-ID: <20260912065553.580019328@linuxfoundation.org>
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Alexander Martyniuk <alexevgmart@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 0266/1191] tracing/mmiotrace: Add NULL check for mmio_trace_array in logging functions
+Date: Sat, 12 Sep 2026 08:49:54 +0200
+Message-ID: <20260912065554.196536560@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -51,53 +52,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stanislaw Gruszka <stf_xl@wp.pl>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-commit 799b5f45cb8194ebd06c9c89e0afdad5bedd2cc5 upstream.
+commit 12b80cdbc54cf615b4717a4e8180063408091ea2 upstream.
 
-Commit 7738a7ab9d12 ("misc: eeprom: eeprom_93cx6: Add quirk for extra
-read clock cycle") added extra 'quirk' field to struct eeprom_93cx6.
+mmio_trace_rw() and mmio_trace_mapping() retrieve mmio_trace_array into
+tr and pass it to __trace_mmiotrace_rw() and __trace_mmiotrace_map().
+If these functions are invoked while mmio_trace_array is NULL (e.g. before
+initialization or after disabled), accessing tr->array_buffer.buffer will
+result in a NULL pointer dereference crash.
 
-Many existing users of eeprom_93cx6, including rtl818x drivers, allocate
-the structure on the stack without initializing all fields. As a result,
-the added quirk field has an undefined value and can randomly cause
-reading wrong data from the EEPROM.
+Fix this by adding an explicit NULL check for tr at the beginning of
+__trace_mmiotrace_rw() and __trace_mmiotrace_map().
 
-Fix by initializing the structures with {}.
-
-Fixes: 7738a7ab9d12 ("misc: eeprom: eeprom_93cx6: Add quirk for extra read clock cycle")
-Cc: stable@kernel.org # v6.13+
-Signed-off-by: Stanislaw Gruszka <stf_xl@wp.pl>
-Reviewed-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20260723110640.8588-1-stf_xl@wp.pl
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://patch.msgid.link/178524300062.56416.8362487250709962380.stgit@devnote2
+Fixes: f984b51e0779 ("ftrace: add mmiotrace plugin")
+Assisted-by: Antigravity:gemini-3.6-flash
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Signed-off-by: Alexander Martyniuk <alexevgmart@gmail.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtl818x/rtl8180/dev.c |    2 +-
- drivers/net/wireless/realtek/rtl818x/rtl8187/dev.c |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ kernel/trace/trace_mmiotrace.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
---- a/drivers/net/wireless/realtek/rtl818x/rtl8180/dev.c
-+++ b/drivers/net/wireless/realtek/rtl818x/rtl8180/dev.c
-@@ -1647,7 +1647,7 @@ static void rtl8180_eeprom_register_writ
- 
- static void rtl8180_eeprom_read(struct rtl8180_priv *priv)
+diff --git a/kernel/trace/trace_mmiotrace.c b/kernel/trace/trace_mmiotrace.c
+index 74f378fca5187..f4ebf7d9cc25a 100644
+--- a/kernel/trace/trace_mmiotrace.c
++++ b/kernel/trace/trace_mmiotrace.c
+@@ -295,11 +295,15 @@ static void __trace_mmiotrace_rw(struct trace_array *tr,
+ 				struct mmiotrace_rw *rw)
  {
--	struct eeprom_93cx6 eeprom;
-+	struct eeprom_93cx6 eeprom = {};
- 	int eeprom_cck_table_adr;
- 	u16 eeprom_val;
- 	int i;
---- a/drivers/net/wireless/realtek/rtl818x/rtl8187/dev.c
-+++ b/drivers/net/wireless/realtek/rtl818x/rtl8187/dev.c
-@@ -1440,7 +1440,7 @@ static int rtl8187_probe(struct usb_inte
- 	struct usb_device *udev = interface_to_usbdev(intf);
- 	struct ieee80211_hw *dev;
- 	struct rtl8187_priv *priv;
--	struct eeprom_93cx6 eeprom;
-+	struct eeprom_93cx6 eeprom = {};
- 	struct ieee80211_channel *channel;
- 	const char *chip_name;
- 	u16 txpwr, reg;
+ 	struct trace_event_call *call = &event_mmiotrace_rw;
+-	struct trace_buffer *buffer = tr->array_buffer.buffer;
++	struct trace_buffer *buffer;
+ 	struct ring_buffer_event *event;
+ 	struct trace_mmiotrace_rw *entry;
+ 	unsigned int trace_ctx;
+ 
++	if (!tr)
++		return;
++
++	buffer = tr->array_buffer.buffer;
+ 	trace_ctx = tracing_gen_ctx_flags(0);
+ 	event = trace_buffer_lock_reserve(buffer, TRACE_MMIO_RW,
+ 					  sizeof(*entry), trace_ctx);
+@@ -324,11 +328,15 @@ static void __trace_mmiotrace_map(struct trace_array *tr,
+ 				struct mmiotrace_map *map)
+ {
+ 	struct trace_event_call *call = &event_mmiotrace_map;
+-	struct trace_buffer *buffer = tr->array_buffer.buffer;
++	struct trace_buffer *buffer;
+ 	struct ring_buffer_event *event;
+ 	struct trace_mmiotrace_map *entry;
+ 	unsigned int trace_ctx;
+ 
++	if (!tr)
++		return;
++
++	buffer = tr->array_buffer.buffer;
+ 	trace_ctx = tracing_gen_ctx_flags(0);
+ 	event = trace_buffer_lock_reserve(buffer, TRACE_MMIO_MAP,
+ 					  sizeof(*entry), trace_ctx);
+-- 
+2.53.0
+
 
 
