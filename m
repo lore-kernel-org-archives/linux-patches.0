@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F494364049;
-	Sat, 12 Sep 2026 08:28:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B49DE364059;
+	Sat, 12 Sep 2026 08:28:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789201722; cv=none; b=HQkd6/S84ODFuWfjFjs2544Rx+5OVKA18UtRSwzSOmM/9DsTDMe4hwI0/w7ExRmPk0/hFZU2KZfbzY6AVuycHdqnlH9BniTofNfOAxD1UySkfL3+svwai8m+wg0+YBSzxqi8KMTEwZeA/2sK1QOAFv6oR05F8/nCxaI88dnqxfE=
+	t=1789201726; cv=none; b=uoMYywDaJbY3fKL8zi+JO7Cwur2kKMMZ5jyAag5aEfDRWZXY1bIZ4QqlcWD+0RknKy2K2AdkqjbXhKB/utYfBuztOMMHiEctZLFPCITuY2Et6LUfn9X80GUFGeGeajfh8oDqft3n/02TPPrTQsyxVB8yW4+T1ElVnPFF/ktr2oc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789201722; c=relaxed/simple;
-	bh=n0PSchhVGzKA9IavJx0U7b1/fmIrsMIGAtsrrjsQ7Xw=;
+	s=arc-20240116; t=1789201726; c=relaxed/simple;
+	bh=Je12Cx58+lI/3tD1qD4/gs5a2yRI9swrtXj/dJHFCfI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uZFE3jGetJ5SfEnMcXpgfgZEKJ9cg7Pb96xO8EHOhC1mfx5a+v2pXTdVrnvtclqDQiVc/qmoAHk+an2aP/YetOIC/9z+ysy1thAExIwMiCHWxIlrcBY+i/l87p8afyIZYz/rSaQ7BYwWAlsvM8U3oR1Zd6AcW8RvEupZ8KIi3CI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=znjTM1dY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hUUAXUNtPBn5OKbgumumEAxvhAWy5uh/6Lyqv+nVtYqGwXdNmIW9+Tm3mQH3LqCeyy7RoHymd0aFcdrUVF/Ll4dz0jl2RhMujEE1mJ1FeXGKAh4xHReHx+Fp5mRm8sltc2tgSpeM56g2cyMp2Di9lXvcuqwlxbi4QI94ndYYev0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YunEwMbW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="znjTM1dY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 919E21F000FF;
-	Sat, 12 Sep 2026 08:28:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YunEwMbW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C7BA1F000FF;
+	Sat, 12 Sep 2026 08:28:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789201720;
-	bh=SylP9a57zTZQRtMoQfJ+VGmTFsjKsuDlytKc2SxsBK8=;
+	s=korg; t=1789201725;
+	bh=6b6dZQP5j90SN8pw9RhAIBglZbW93Q1I27rsVfikHr0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=znjTM1dYAZ2W0mF0tR39pUq8qeWWkh6V9ns6xcebuWNcpy8S6DZi5vnp8FQQBXf4G
-	 Nl4jjtNhK9wepFtsWO0yBG6z3K8z+BrmtbN6UL4dt2fnBbbyw+1Hx/6u/cneR8wUyL
-	 4dhbywEvQihHnDxqNr8Flixlrb3h9a3hLGj8LQ6s=
+	b=YunEwMbWeoxky6QqpNg0A4FP/6mLs+rsClMendwHFwsKhMExZJSGJG3Z5iZbdHXGO
+	 BbO1+XWN12pgeb/LYQO4cbtV7Xvnf8lMpi/qmk0PDJqIyfkY6br1ozvrbUunMMGpAf
+	 bAA0TU9ddqU1VLwepjFTGN8tyTkSS2fLnVMl9KIY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vicki Pfau <vi@endrift.com>,
-	Jiri Kosina <jkosina@suse.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1012/1815] HID: steam: Add support for sensor events on the Steam Controller (2015)
-Date: Sat, 12 Sep 2026 08:46:02 +0200
-Message-ID: <20260912065712.766157549@linuxfoundation.org>
+Subject: [PATCH 7.2 1003/1815] PCI: dwc: ep: Fix unmap potentially unmapping the wrong iATU
+Date: Sat, 12 Sep 2026 08:45:53 +0200
+Message-ID: <20260912065712.553408640@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,356 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vicki Pfau <vi@endrift.com>
+From: Niklas Cassel <cassel@kernel.org>
 
-[ Upstream commit 2eb7cf02b52156ebd19c7c14a7f5228c6adfcf97 ]
+[ Upstream commit 9de09b807a1942d179ac5dbcb4982b5301dcc8fd ]
 
-Sensor support was added for the Steam Deck previously, but Steam
-Controller sensor events were never added. This adds that missing support,
-bringing Steam Controller support much closer to feature parity with things
-like SDL and Steam itself.
+The MSI path in dw_pcie_ep_raise_msi_irq() keeps its outbound iATU window
+mapped across writes as a cache. The MSI-X path in
+dw_pcie_ep_raise_msix_irq() maps and unmaps a window around every write.
+Both use the same local aperture, ep->msi_mem_phys, as the CPU side address
+that the iATU translates to the host's MSI or MSI-X target.
 
-Signed-off-by: Vicki Pfau <vi@endrift.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
-Stable-dep-of: 33ff7b49c38b ("HID: steam: Reject short reads")
+If dw_pcie_ep_raise_msi_irq() has cached its mapping and
+dw_pcie_ep_raise_msix_irq() is then called, dw_pcie_ep_map_addr() allocates
+a fresh outbound window for the MSI-X target. It does not notice that
+ep->msi_mem_phys is already mapped by the MSI window, because
+dw_pcie_ep_outbound_atu() only looks for a free window and does not
+deduplicate by address. The controller now has two iATU windows whose
+outbound_addr[] entry equals ep->msi_mem_phys.
+
+When dw_pcie_ep_raise_msix_irq() later calls dw_pcie_ep_unmap_addr() to
+tear down its own window, the lookup in dw_pcie_find_index() walks
+ob_window_map in ascending index order and returns the first match. That is
+the MSI window, since it was mapped first. The MSI window is torn down, the
+MSI-X window is left in place, and ep->msi_iatu_mapped is never cleared.
+The next MSI writel() therefore takes the cached fast path, writes into an
+aperture whose iATU has been disabled, and the interrupt is silently lost.
+
+To fix this issue, unmap the cached MSI iATU in dw_pcie_ep_raise_msix_irq()
+before the MSI-X map, and clear ep->msi_iatu_mapped so that the next MSI
+writel() reprograms the window. This guarantees that at most one iATU
+window maps ep->msi_mem_phys at any time, so the subsequent
+dw_pcie_find_index() call unambiguously returns the MSI-X window.
+
+Fixes: 8719c64e76bf ("PCI: dwc: ep: Cache MSI outbound iATU mapping")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
+[mani: commit log]
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Link: https://lore.kernel.org/linux-pci/20260729051542.DC2741F000E9@smtp.kernel.org/
+Link: https://patch.msgid.link/20260730133123.1420413-6-cassel@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-steam.c | 214 ++++++++++++++++++++++++++++++++--------
- 1 file changed, 175 insertions(+), 39 deletions(-)
+ drivers/pci/controller/dwc/pcie-designware-ep.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/drivers/hid/hid-steam.c b/drivers/hid/hid-steam.c
-index 3eff6d0b13b2c..efecbc9d8e014 100644
---- a/drivers/hid/hid-steam.c
-+++ b/drivers/hid/hid-steam.c
-@@ -69,13 +69,14 @@ static LIST_HEAD(steam_devices);
- /* Joystick runs are about 5 mm and 32768 units */
- #define STEAM_DECK_JOYSTICK_RESOLUTION 6553
- /* Accelerometer has 16 bit resolution and a range of +/- 2g */
--#define STEAM_DECK_ACCEL_RES_PER_G 16384
--#define STEAM_DECK_ACCEL_RANGE 32768
-+#define STEAM_ACCEL_RES_PER_G 16384
-+#define STEAM_ACCEL_RANGE 32768
-+#define STEAM_ACCEL_FUZZ 128
- #define STEAM_DECK_ACCEL_FUZZ 32
- /* Gyroscope has 16 bit resolution and a range of +/- 2000 dps */
--#define STEAM_DECK_GYRO_RES_PER_DPS 16
--#define STEAM_DECK_GYRO_RANGE 32768
--#define STEAM_DECK_GYRO_FUZZ 1
-+#define STEAM_GYRO_RES_PER_DPS 16
-+#define STEAM_GYRO_RANGE 32768
-+#define STEAM_GYRO_FUZZ 0
- 
- #define STEAM_PAD_FUZZ 256
- 
-@@ -254,6 +255,31 @@ enum
- 	ID_CONTROLLER_DECK_STATE = 9
- };
- 
-+/* Read-only attributes */
-+enum {
-+	ATTRIB_UNIQUE_ID, // deprecated
-+	ATTRIB_PRODUCT_ID,
-+	ATTRIB_PRODUCT_REVISON, // deprecated
-+	ATTRIB_CAPABILITIES = ATTRIB_PRODUCT_REVISON, // intentional aliasing
-+	ATTRIB_FIRMWARE_VERSION, // deprecated
-+	ATTRIB_FIRMWARE_BUILD_TIME,
-+	ATTRIB_RADIO_FIRMWARE_BUILD_TIME,
-+	ATTRIB_RADIO_DEVICE_ID0,
-+	ATTRIB_RADIO_DEVICE_ID1,
-+	ATTRIB_DONGLE_FIRMWARE_BUILD_TIME,
-+	ATTRIB_HW_ID, // AKA BOARD_REVISION,
-+	ATTRIB_BOOTLOADER_BUILD_TIME,
-+	ATTRIB_CONNECTION_INTERVAL_IN_US,
-+	ATTRIB_SECONDARY_FIRMWARE_BUILD_TIME,
-+	ATTRIB_SECONDARY_BOOTLOADER_BUILD_TIME,
-+	ATTRIB_SECONDARY_HW_ID, // AKA BOARD_REVISION,
-+	ATTRIB_STREAMING,
-+	ATTRIB_TRACKPAD_ID,
-+	ATTRIB_SECONDARY_TRACKPAD_ID,
-+
-+	ATTRIB_COUNT
-+};
-+
- /* String attribute identifiers */
- enum {
- 	ATTRIB_STR_BOARD_SERIAL,
-@@ -283,6 +309,11 @@ enum {
- 	TRACKPAD_GESTURE_KEYBOARD,
- };
- 
-+struct steam_controller_attribute {
-+	unsigned char tag;
-+	__le32 value;
-+} __packed;
-+
- /* Pad identifiers for the deck */
- #define STEAM_PAD_LEFT 0
- #define STEAM_PAD_RIGHT 1
-@@ -314,6 +345,7 @@ struct steam_device {
- 	u16 rumble_left;
- 	u16 rumble_right;
- 	unsigned int sensor_timestamp_us;
-+	unsigned int sensor_update_rate_us;
- 	struct work_struct unregister_work;
- };
- 
-@@ -467,6 +499,38 @@ static int steam_get_serial(struct steam_device *steam)
- 	return ret;
- }
- 
-+static int steam_get_attributes(struct steam_device *steam)
-+{
-+	int ret = 0;
-+	u8 cmd[] = {ID_GET_ATTRIBUTES_VALUES, 0};
-+	u8 reply[64] = {};
-+	u8 size;
-+	int i;
-+	struct steam_controller_attribute *attr;
-+
-+	guard(mutex)(&steam->report_mutex);
-+	ret = steam_send_report(steam, cmd, sizeof(cmd));
-+	if (ret < 0)
-+		return ret;
-+	ret = steam_recv_report(steam, reply, sizeof(reply));
-+	if (ret < 0)
-+		return ret;
-+	if (reply[0] != ID_GET_ATTRIBUTES_VALUES || reply[1] < 2)
-+		return -EIO;
-+
-+	size = min(reply[1], sizeof(reply) - 2);
-+	for (i = 0; i + sizeof(*attr) <= size; i += sizeof(*attr)) {
-+		attr = (struct steam_controller_attribute *)&reply[i + 2];
-+		if (attr->tag == ATTRIB_CONNECTION_INTERVAL_IN_US) {
-+			steam->sensor_update_rate_us = get_unaligned_le32(&attr->value);
-+			hid_dbg(steam->hdev, "Sensor update rate: %uus\n",
-+				steam->sensor_update_rate_us);
-+		}
-+	}
-+
-+	return 0;
-+}
-+
- /*
-  * This command requests the wireless adaptor to post an event
-  * with the connection status. Useful if this driver is loaded when
-@@ -625,6 +689,42 @@ static void steam_input_close(struct input_dev *dev)
+diff --git a/drivers/pci/controller/dwc/pcie-designware-ep.c b/drivers/pci/controller/dwc/pcie-designware-ep.c
+index 9e50c589b308f..0b915824963af 100644
+--- a/drivers/pci/controller/dwc/pcie-designware-ep.c
++++ b/drivers/pci/controller/dwc/pcie-designware-ep.c
+@@ -1127,6 +1127,17 @@ int dw_pcie_ep_raise_msix_irq(struct dw_pcie_ep *ep, u8 func_no,
+ 		return -EPERM;
  	}
- }
  
-+static int steam_sensor_open(struct input_dev *dev)
-+{
-+	struct steam_device *steam = input_get_drvdata(dev);
-+	unsigned long flags;
-+	bool client_opened;
-+
-+	spin_lock_irqsave(&steam->lock, flags);
-+	client_opened = steam->client_opened;
-+	spin_unlock_irqrestore(&steam->lock, flags);
-+	if (client_opened)
-+		return 0;
-+
-+	guard(mutex)(&steam->report_mutex);
-+	steam_write_settings(steam, SETTING_IMU_MODE,
-+			SETTING_IMU_MODE_SEND_RAW_ACCEL | SETTING_IMU_MODE_SEND_RAW_GYRO,
-+			0);
-+
-+	return 0;
-+}
-+
-+static void steam_sensor_close(struct input_dev *dev)
-+{
-+	struct steam_device *steam = input_get_drvdata(dev);
-+	unsigned long flags;
-+	bool client_opened;
-+
-+	spin_lock_irqsave(&steam->lock, flags);
-+	client_opened = steam->client_opened;
-+	spin_unlock_irqrestore(&steam->lock, flags);
-+	if (client_opened)
-+		return;
-+
-+	guard(mutex)(&steam->report_mutex);
-+	steam_write_settings(steam, SETTING_IMU_MODE, 0, 0);
-+}
-+
- static enum power_supply_property steam_battery_props[] = {
- 	POWER_SUPPLY_PROP_PRESENT,
- 	POWER_SUPPLY_PROP_SCOPE,
-@@ -838,9 +938,6 @@ static int steam_sensors_register(struct steam_device *steam)
- 	struct input_dev *sensors;
- 	int ret;
- 
--	if (!(steam->quirks & STEAM_QUIRK_DECK))
--		return 0;
--
- 	rcu_read_lock();
- 	sensors = rcu_dereference(steam->sensors);
- 	rcu_read_unlock();
-@@ -855,8 +952,14 @@ static int steam_sensors_register(struct steam_device *steam)
- 
- 	input_set_drvdata(sensors, steam);
- 	sensors->dev.parent = &hdev->dev;
-+	if (!(steam->quirks & STEAM_QUIRK_DECK)) {
-+		sensors->open = steam_sensor_open;
-+		sensors->close = steam_sensor_close;
++	/*
++	 * ep->msi_iatu_mapped means that an MSI target address is cached,
++	 * unmap it first so that we can reuse ep->msi_mem_phys for MSI-X.
++	 */
++	if (ep->msi_iatu_mapped) {
++		/* flush posted write before unmap */
++		readl(ep->msi_mem + ep->msi_iatu_mapped_offset);
++		dw_pcie_ep_unmap_addr(epc, func_no, 0, ep->msi_mem_phys);
++		ep->msi_iatu_mapped = false;
 +	}
- 
--	sensors->name = "Steam Deck Motion Sensors";
-+	sensors->name = steam->quirks & STEAM_QUIRK_DECK ?
-+		"Steam Deck Motion Sensors" :
-+		"Steam Controller Motion Sensors";
- 	sensors->phys = hdev->phys;
- 	sensors->uniq = steam->serial_no;
- 	sensors->id.bustype = hdev->bus;
-@@ -868,25 +971,34 @@ static int steam_sensors_register(struct steam_device *steam)
- 	__set_bit(EV_MSC, sensors->evbit);
- 	__set_bit(MSC_TIMESTAMP, sensors->mscbit);
- 
--	input_set_abs_params(sensors, ABS_X, -STEAM_DECK_ACCEL_RANGE,
--			STEAM_DECK_ACCEL_RANGE, STEAM_DECK_ACCEL_FUZZ, 0);
--	input_set_abs_params(sensors, ABS_Y, -STEAM_DECK_ACCEL_RANGE,
--			STEAM_DECK_ACCEL_RANGE, STEAM_DECK_ACCEL_FUZZ, 0);
--	input_set_abs_params(sensors, ABS_Z, -STEAM_DECK_ACCEL_RANGE,
--			STEAM_DECK_ACCEL_RANGE, STEAM_DECK_ACCEL_FUZZ, 0);
--	input_abs_set_res(sensors, ABS_X, STEAM_DECK_ACCEL_RES_PER_G);
--	input_abs_set_res(sensors, ABS_Y, STEAM_DECK_ACCEL_RES_PER_G);
--	input_abs_set_res(sensors, ABS_Z, STEAM_DECK_ACCEL_RES_PER_G);
--
--	input_set_abs_params(sensors, ABS_RX, -STEAM_DECK_GYRO_RANGE,
--			STEAM_DECK_GYRO_RANGE, STEAM_DECK_GYRO_FUZZ, 0);
--	input_set_abs_params(sensors, ABS_RY, -STEAM_DECK_GYRO_RANGE,
--			STEAM_DECK_GYRO_RANGE, STEAM_DECK_GYRO_FUZZ, 0);
--	input_set_abs_params(sensors, ABS_RZ, -STEAM_DECK_GYRO_RANGE,
--			STEAM_DECK_GYRO_RANGE, STEAM_DECK_GYRO_FUZZ, 0);
--	input_abs_set_res(sensors, ABS_RX, STEAM_DECK_GYRO_RES_PER_DPS);
--	input_abs_set_res(sensors, ABS_RY, STEAM_DECK_GYRO_RES_PER_DPS);
--	input_abs_set_res(sensors, ABS_RZ, STEAM_DECK_GYRO_RES_PER_DPS);
-+	if (steam->quirks & STEAM_QUIRK_DECK) {
-+		input_set_abs_params(sensors, ABS_X, -STEAM_ACCEL_RANGE,
-+				STEAM_ACCEL_RANGE, STEAM_DECK_ACCEL_FUZZ, 0);
-+		input_set_abs_params(sensors, ABS_Y, -STEAM_ACCEL_RANGE,
-+				STEAM_ACCEL_RANGE, STEAM_DECK_ACCEL_FUZZ, 0);
-+		input_set_abs_params(sensors, ABS_Z, -STEAM_ACCEL_RANGE,
-+				STEAM_ACCEL_RANGE, STEAM_DECK_ACCEL_FUZZ, 0);
-+	} else {
-+		input_set_abs_params(sensors, ABS_X, -STEAM_ACCEL_RANGE,
-+				STEAM_ACCEL_RANGE, STEAM_ACCEL_FUZZ, 0);
-+		input_set_abs_params(sensors, ABS_Y, -STEAM_ACCEL_RANGE,
-+				STEAM_ACCEL_RANGE, STEAM_ACCEL_FUZZ, 0);
-+		input_set_abs_params(sensors, ABS_Z, -STEAM_ACCEL_RANGE,
-+				STEAM_ACCEL_RANGE, STEAM_ACCEL_FUZZ, 0);
-+	}
-+	input_abs_set_res(sensors, ABS_X, STEAM_ACCEL_RES_PER_G);
-+	input_abs_set_res(sensors, ABS_Y, STEAM_ACCEL_RES_PER_G);
-+	input_abs_set_res(sensors, ABS_Z, STEAM_ACCEL_RES_PER_G);
 +
-+	input_set_abs_params(sensors, ABS_RX, -STEAM_GYRO_RANGE,
-+			STEAM_GYRO_RANGE, STEAM_GYRO_FUZZ, 0);
-+	input_set_abs_params(sensors, ABS_RY, -STEAM_GYRO_RANGE,
-+			STEAM_GYRO_RANGE, STEAM_GYRO_FUZZ, 0);
-+	input_set_abs_params(sensors, ABS_RZ, -STEAM_GYRO_RANGE,
-+			STEAM_GYRO_RANGE, STEAM_GYRO_FUZZ, 0);
-+	input_abs_set_res(sensors, ABS_RX, STEAM_GYRO_RES_PER_DPS);
-+	input_abs_set_res(sensors, ABS_RY, STEAM_GYRO_RES_PER_DPS);
-+	input_abs_set_res(sensors, ABS_RZ, STEAM_GYRO_RES_PER_DPS);
- 
- 	ret = input_register_device(sensors);
- 	if (ret)
-@@ -917,9 +1029,6 @@ static void steam_sensors_unregister(struct steam_device *steam)
- {
- 	struct input_dev *sensors;
- 
--	if (!(steam->quirks & STEAM_QUIRK_DECK))
--		return;
--
- 	rcu_read_lock();
- 	sensors = rcu_dereference(steam->sensors);
- 	rcu_read_unlock();
-@@ -967,6 +1076,12 @@ static int steam_register(struct steam_device *steam)
- 			strscpy(steam->serial_no, "XXXXXXXXXX",
- 					sizeof(steam->serial_no));
- 
-+		ret = steam_get_attributes(steam);
-+		if (ret < 0)
-+			hid_err(steam->hdev,
-+				"%s:steam_get_attributes failed with error %d\n",
-+				__func__, ret);
-+
- 		hid_info(steam->hdev, "Steam Controller '%s' connected",
- 				steam->serial_no);
- 
-@@ -1245,6 +1360,10 @@ static int steam_probe(struct hid_device *hdev,
- 	INIT_LIST_HEAD(&steam->list);
- 	INIT_WORK(&steam->rumble_work, steam_haptic_rumble_cb);
- 	steam->sensor_timestamp_us = 0;
-+	if (steam->quirks & STEAM_QUIRK_DECK)
-+		steam->sensor_update_rate_us = 4000;
-+	else
-+		steam->sensor_update_rate_us = 9000;
- 	INIT_WORK(&steam->unregister_work, steam_work_unregister_cb);
- 
- 	/*
-@@ -1490,6 +1609,16 @@ static const struct steam_axis_mapping steam_controller_axis_mappings[] = {
- 	{ /* sentinel */ },
- };
- 
-+static const struct steam_axis_mapping steam_controller_imu_mappings[] = {
-+	{ ABS_X,   1, 28 },
-+	{ ABS_Z,  -1, 30 },
-+	{ ABS_Y,   1, 32 },
-+	{ ABS_RX,  1, 34 },
-+	{ ABS_RZ,  1, 36 },
-+	{ ABS_RY,  1, 38 },
-+	{ /* sentinel */ },
-+};
-+
- static void steam_do_input_event(struct steam_device *steam,
- 		struct input_dev *input, u8 *data)
- {
-@@ -1532,6 +1661,17 @@ static void steam_do_input_event(struct steam_device *steam,
- 	input_sync(input);
- }
- 
-+static void steam_do_sensors_event(struct steam_device *steam,
-+		struct input_dev *sensors, u8 *data)
-+{
-+	steam->sensor_timestamp_us += steam->sensor_update_rate_us;
-+
-+	input_event(sensors, EV_MSC, MSC_TIMESTAMP, steam->sensor_timestamp_us);
-+	steam_map_axes(sensors, steam_controller_imu_mappings, data);
-+
-+	input_sync(sensors);
-+}
-+
- /*
-  * The size for this message payload is 56.
-  * The known values are:
-@@ -1726,14 +1866,7 @@ static void steam_do_deck_input_event(struct steam_device *steam,
- static void steam_do_deck_sensors_event(struct steam_device *steam,
- 		struct input_dev *sensors, u8 *data)
- {
--	/*
--	 * The deck input report is received every 4 ms on average,
--	 * with a jitter of +/- 4 ms even though the USB descriptor claims
--	 * that it uses 1 kHz.
--	 * Since the HID report does not include a sensor timestamp,
--	 * use a fixed increment here.
--	 */
--	steam->sensor_timestamp_us += 4000;
-+	steam->sensor_timestamp_us += steam->sensor_update_rate_us;
- 
- 	if (!steam->gamepad_mode && lizard_mode)
- 		return;
-@@ -1818,6 +1951,9 @@ static int steam_raw_event(struct hid_device *hdev,
- 		input = rcu_dereference(steam->input);
- 		if (likely(input))
- 			steam_do_input_event(steam, input, data);
-+		sensors = rcu_dereference(steam->sensors);
-+		if (likely(sensors))
-+			steam_do_sensors_event(steam, sensors, data);
- 		rcu_read_unlock();
- 		break;
- 	case ID_CONTROLLER_DECK_STATE:
+ 	msg_addr = dw_pcie_ep_align_addr(epc, msg_addr, &map_size, &offset);
+ 	ret = dw_pcie_ep_map_addr(epc, func_no, 0, ep->msi_mem_phys, msg_addr,
+ 				  map_size);
 -- 
 2.53.0
 
