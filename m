@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 685CB31618C;
-	Sat, 12 Sep 2026 13:57:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C018B2FD7C3;
+	Sat, 12 Sep 2026 13:57:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789221438; cv=none; b=BAhYRXDQASCNmnbkpMrm9Ik3FEYg9B0xKiR5hKYbxxnkz/P0yg0OV9IBkXAF9nAdHAXMyDEThUvWvCovvvZ26Pa9K1m6WDqEaqfAf+nru/rg97D2NChYHEzgs+0Hb50ZXj5JZ1yln9rzNEm2pRiZHgJW32B1+3A6W8k9eEsRpdc=
+	t=1789221442; cv=none; b=Tg2D2ZDkbnLn4voiZgtvUgYerAx1hlV3EHvx00UwQDOgvDmFZ0o4+5sRPy1pDDEVVSA+aRMYyW1ikxMVlkSpo/5tl6BrcRGMU6x41c+Muy9eWtAXrh08/fSx39q1OmB1EFzN8lMdhzfLuTSwwM7IA6iroNv8uarLGTHyTVhdFnc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789221438; c=relaxed/simple;
-	bh=FF5Kd7z4e0RM/esE9hVjwki09MFjsfj7x2B4Epte5uw=;
+	s=arc-20240116; t=1789221442; c=relaxed/simple;
+	bh=cJZ6AvXAnHsbECAC3sMxjxYI6fRvimJAgO5VVbIMOg4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uGsKLH9R8q6WJLLpHi4lnKnYL2RZS7Z24anwc6wquW1sRurgtXZEe61oXF1ouyM2VVpQRn6P4Urj4bSDhu+C9YjuN60UAfPZ4BjrcrgYWjICEHB41OGmrBZdPSZaBVzE/BwVWDlLStu977ntbFvb1RaFRKq0PImjNKBptogQ+g0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0qQceSZK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Bj/oDh9c1Vy1pvcPGsdY2jrO+2Neg4TG2TcEexaI76x2nzZyEK+pfXFCGKE25y/02lVtIWGRUzbLht89eI+5d47Wt8sa/epCz4n2+WiRF/DhMvVfci/YtNC8c+aRpSxh2cfpEwtc3+zpnBUzg1gsL6nF5ExCN/CPQwEOL5Mz/gU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2UeObv0a; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0qQceSZK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC6E81F000FF;
-	Sat, 12 Sep 2026 13:57:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2UeObv0a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C52BA1F000FF;
+	Sat, 12 Sep 2026 13:57:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789221436;
-	bh=7rw/aSC3G+o+ZPzZ7HoJi7PNGYPGzUbwLfwX56mGbn4=;
+	s=korg; t=1789221440;
+	bh=82EzSlyF3wmH74ikHpX0rc/TGZFCiOmMkdrMBA//4zY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0qQceSZKmLxjiNSGj5cGyQqi5kLhJ1S4MxQr0vFH4Cu2gpGmeTdCVOwMH6RTCq5Uw
-	 TceHP00q4zAtGg8YGag4e1DOVsxrgSSUzogNtprzNG9vGEztXMByAeGrWLVw/+9OuJ
-	 X9YTm+jjPzxYZGOFEJVGt4y2ZDEbEE7PFmFSiD1Q=
+	b=2UeObv0aelknXdO/Ch6J0UkjsCZuX3wyDXL5mTYqF5GML0w7q+uDDFhKnnbeT8kv4
+	 TRxTwwwh+Y/0nNsH45/qlmXkGNrwgm3euLaQULYWw9AcjhsRgNSeKXV4UC/O67g4Kb
+	 SXgYeVxw6iUxhdGXmIJFPAuYSmK+Q5qpZ2PuIF/0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
 	Sourabh Jain <sourabhjain@linux.ibm.com>,
 	Madhavan Srinivasan <maddy@linux.ibm.com>
-Subject: [PATCH 6.6 0381/1424] powerpc/pseries: Handle and log pseries-wdt registration failures
-Date: Sat, 12 Sep 2026 08:46:53 +0200
-Message-ID: <20260912065615.824641985@linuxfoundation.org>
+Subject: [PATCH 6.6 0382/1424] powerpc/pseries: Move H_WATCHDOG definitions to a common header
+Date: Sat, 12 Sep 2026 08:46:54 +0200
+Message-ID: <20260912065615.847194015@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -53,48 +53,155 @@ Content-Transfer-Encoding: 8bit
 
 From: Sourabh Jain <sourabhjain@linux.ibm.com>
 
-commit e65b526affa621b50646cafdf6b06505af07032e upstream.
+commit 516a254918453ec99660201263d01189c082332c upstream.
 
-The pseries watchdog initialization registers the pseries-wdt platform
-device using platform_device_register_simple(), but currently ignores
-its return value.
+The H_WATCHDOG input and output definitions are currently local to the
+pseries watchdog driver. The next patch in this series also needs these
+definitions to issue H_WATCHDOG hypercalls outside the watchdog driver.
 
-Check the returned pointer for errors, log a descriptive error message
-when registration fails, and propagate the failure code to the caller.
-This avoids silently ignoring platform device registration failures.
+Move the H_WATCHDOG definitions to a new common header,
+asm/papr-watchdog.h, so they can be shared without duplicating the
+PAPR watchdog definitions.
+
+No functional changes.
 
 Cc: stable@vger.kernel.org
-Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Suggested-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
 Signed-off-by: Sourabh Jain <sourabhjain@linux.ibm.com>
 Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20260727053416.276317-3-sourabhjain@linux.ibm.com
+Link: https://patch.msgid.link/20260727053416.276317-2-sourabhjain@linux.ibm.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/platforms/pseries/setup.c |   14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ arch/powerpc/include/asm/papr-watchdog.h |   58 +++++++++++++++++++++++++++++++
+ drivers/watchdog/pseries-wdt.c           |   53 ----------------------------
+ 2 files changed, 59 insertions(+), 52 deletions(-)
+ create mode 100644 arch/powerpc/include/asm/papr-watchdog.h
 
---- a/arch/powerpc/platforms/pseries/setup.c
-+++ b/arch/powerpc/platforms/pseries/setup.c
-@@ -193,8 +193,18 @@ static void __init fwnmi_init(void)
-  */
- static __init int pseries_wdt_init(void)
- {
--	if (firmware_has_feature(FW_FEATURE_WATCHDOG))
--		platform_device_register_simple("pseries-wdt", 0, NULL, 0);
-+	struct platform_device *pdev;
+--- /dev/null
++++ b/arch/powerpc/include/asm/papr-watchdog.h
+@@ -0,0 +1,58 @@
++/* SPDX-License-Identifier: GPL-2.0-only */
 +
-+	if (!firmware_has_feature(FW_FEATURE_WATCHDOG))
-+		return 0;
++#ifndef _ASM_POWERPC_PAPR_WATCHDOG_H
++#define _ASM_POWERPC_PAPR_WATCHDOG_H
 +
-+	pdev = platform_device_register_simple("pseries-wdt", 0, NULL, 0);
++/*
++ * H_WATCHDOG Input
++ *
++ * R4: "flags":
++ *
++ *         Bits 48-55: "operation"
++ */
++#define PSERIES_WDTF_OP_START	0x100UL		/* start timer */
++#define PSERIES_WDTF_OP_STOP	0x200UL		/* stop timer */
++#define PSERIES_WDTF_OP_QUERY	0x300UL		/* query timer capabilities */
 +
-+	if (IS_ERR(pdev)) {
-+		pr_err("Failed to register pseries-wdt platform device\n");
-+		return PTR_ERR(pdev);
-+	}
++/*
++ *         Bits 56-63: "timeoutAction" (for "Start Watchdog" only)
++ */
++#define PSERIES_WDTF_ACTION_HARD_POWEROFF	0x1UL	/* poweroff */
++#define PSERIES_WDTF_ACTION_HARD_RESTART	0x2UL	/* restart */
++#define PSERIES_WDTF_ACTION_DUMP_RESTART	0x3UL	/* dump + restart */
 +
- 	return 0;
- }
- machine_subsys_initcall(pseries, pseries_wdt_init);
++/*
++ * H_WATCHDOG Output
++ *
++ * R3: Return code
++ *
++ *     H_SUCCESS    The operation completed.
++ *
++ *     H_BUSY	    The hypervisor is too busy; retry the operation.
++ *
++ *     H_PARAMETER  The given "flags" are somehow invalid.  Either the
++ *                  "operation" or "timeoutAction" is invalid, or a
++ *                  reserved bit is set.
++ *
++ *     H_P2         The given "watchdogNumber" is zero or exceeds the
++ *                  supported maximum value.
++ *
++ *     H_P3         The given "timeoutInMs" is below the supported
++ *                  minimum value.
++ *
++ *     H_NOOP       The given "watchdogNumber" is already stopped.
++ *
++ *     H_HARDWARE   The operation failed for ineffable reasons.
++ *
++ *     H_FUNCTION   The H_WATCHDOG hypercall is not supported by this
++ *                  hypervisor.
++ *
++ * R4:
++ *
++ * - For the "Query Watchdog Capabilities" operation, a 64-bit
++ *   structure:
++ */
++#define PSERIES_WDTQ_MIN_TIMEOUT(cap)	(((cap) >> 48) & 0xffff)
++#define PSERIES_WDTQ_MAX_NUMBER(cap)	(((cap) >> 32) & 0xffff)
++
++#endif /* _ASM_POWERPC_PAPR_WATCHDOG_H */
+--- a/drivers/watchdog/pseries-wdt.c
++++ b/drivers/watchdog/pseries-wdt.c
+@@ -13,61 +13,10 @@
+ #include <linux/platform_device.h>
+ #include <linux/time64.h>
+ #include <linux/watchdog.h>
++#include <asm/papr-watchdog.h>
+ 
+ #define DRV_NAME "pseries-wdt"
+ 
+-/*
+- * H_WATCHDOG Input
+- *
+- * R4: "flags":
+- *
+- *         Bits 48-55: "operation"
+- */
+-#define PSERIES_WDTF_OP_START	0x100UL		/* start timer */
+-#define PSERIES_WDTF_OP_STOP	0x200UL		/* stop timer */
+-#define PSERIES_WDTF_OP_QUERY	0x300UL		/* query timer capabilities */
+-
+-/*
+- *         Bits 56-63: "timeoutAction" (for "Start Watchdog" only)
+- */
+-#define PSERIES_WDTF_ACTION_HARD_POWEROFF	0x1UL	/* poweroff */
+-#define PSERIES_WDTF_ACTION_HARD_RESTART	0x2UL	/* restart */
+-#define PSERIES_WDTF_ACTION_DUMP_RESTART	0x3UL	/* dump + restart */
+-
+-/*
+- * H_WATCHDOG Output
+- *
+- * R3: Return code
+- *
+- *     H_SUCCESS    The operation completed.
+- *
+- *     H_BUSY	    The hypervisor is too busy; retry the operation.
+- *
+- *     H_PARAMETER  The given "flags" are somehow invalid.  Either the
+- *                  "operation" or "timeoutAction" is invalid, or a
+- *                  reserved bit is set.
+- *
+- *     H_P2         The given "watchdogNumber" is zero or exceeds the
+- *                  supported maximum value.
+- *
+- *     H_P3         The given "timeoutInMs" is below the supported
+- *                  minimum value.
+- *
+- *     H_NOOP       The given "watchdogNumber" is already stopped.
+- *
+- *     H_HARDWARE   The operation failed for ineffable reasons.
+- *
+- *     H_FUNCTION   The H_WATCHDOG hypercall is not supported by this
+- *                  hypervisor.
+- *
+- * R4:
+- *
+- * - For the "Query Watchdog Capabilities" operation, a 64-bit
+- *   structure:
+- */
+-#define PSERIES_WDTQ_MIN_TIMEOUT(cap)	(((cap) >> 48) & 0xffff)
+-#define PSERIES_WDTQ_MAX_NUMBER(cap)	(((cap) >> 32) & 0xffff)
+-
+ static const unsigned long pseries_wdt_action[] = {
+ 	[0] = PSERIES_WDTF_ACTION_HARD_POWEROFF,
+ 	[1] = PSERIES_WDTF_ACTION_HARD_RESTART,
 
 
