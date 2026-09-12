@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E1CA47ACF0;
-	Sat, 12 Sep 2026 12:44:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2C9A32779D;
+	Sat, 12 Sep 2026 12:44:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789217076; cv=none; b=aEq4FaQ0iUf2DifcYVhvXgqlZYYzKxwmZ86acNQbMkbhzCfrtHBTOO75WEEMzt1H9hFS/w/yWr4IVkrjehzIwRiUEtW2r7IvCShmPtyy+qQWB6DNUPBSeNU1YM9oyxW3UmQoJZQ72oXBCQPvqz6GOW/WdctDqcRpI/EoDzUyfoM=
+	t=1789217081; cv=none; b=NWiMSQOhJMPdjw5QRfrQhdV+ReUFBKrf53LDmQYi49Jeltmha5uGFPFFbj9WLehajIGjDxHJjsIJcpCN1zNOz6ha5JMVda+7h7E3sSp9Au7ykdZNh+cmmnW3otJTkVvRXgmZT2S/WxK3RqHEMbcC5k0UqFI4ZeHj0iF+wVV1ZUk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789217076; c=relaxed/simple;
-	bh=e1PzIrRKMdfnwcKVetBZrv0CWa45r3HNFTUU4PAVk4k=;
+	s=arc-20240116; t=1789217081; c=relaxed/simple;
+	bh=tzf+W8NA/Fu/Zi0PbgoTpuC3hPnGGm8Zq7p7LrvztKE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lNaDSiVtBFLJwfN07Eak+cRnBfuVJs/IsvmVybfzBwf/3zVfjTqAombVqU/9dxKIVwvVcqVPfxcPUKUnOqrmEvNNMZneq7AiQUuvtQ2WnQUWs9Srv4aCUWP02p/7SvG7dFDax+UGwvTFop56lHxGATLyDnOJiTi15sfb0a/FF2w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BUUbhQBz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=OW3W13yf5pzf6qD9Nzo5FCC7j8AAIW3QzSywRkeerCYGAHJDMon+5DGC0WPBOmeL3OrT+SYe/beXw7WTeI3JFM8Tvknug6PX69YPMJLLCsdck1/VvGvEHojm+YddAv417DmmkRx6TS/sHUJ2oekM37EWuROxcBturUeY06EKh+I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1BJNzedV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BUUbhQBz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70DA71F00893;
-	Sat, 12 Sep 2026 12:44:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1BJNzedV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6FA61F000FF;
+	Sat, 12 Sep 2026 12:44:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789217075;
-	bh=42nCRhHqMmdsbq79A7a6CJeATppr5U+nE0J5McMXUwA=;
+	s=korg; t=1789217080;
+	bh=P+LJ7RMQn5AeMx2KqWKoAocSPRR/0tmTKpEKt9JJD4g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BUUbhQBz8IXaS91Qwa2iNX9+YBeV6cQIz4da2/6cftaTPN8pcmBbwoo8Mswq4O8hv
-	 L/p8WogsjM8OdWLl9USQn+pk9jHEOr+NyQzALT9A2rx4Qn6fVo6Kvhd7pZC9VQllyU
-	 4aoU/FxxSg4BduC8akrNnC2nApqpCOagZEORgJjQ=
+	b=1BJNzedV+KLVaxnDnBcqaRlVGSH8UvRu7twLiRcrSjspgzUlafmtE1oNc2zTNoK2+
+	 0M6uohZU/86GDUibkqIxvxixrRLBe5wusbauUlRQnsEU/J9LienmAzXsi8KJVjD+tt
+	 jsYTC968DryiJFswRcJpbUuSFixHWzPaJ4OeaoJg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -33,9 +33,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Adrian Hunter <adrian.hunter@intel.com>,
 	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0866/1376] perf thread-stack: Fix heap buffer overflow on branch stack wrap copy
-Date: Sat, 12 Sep 2026 08:54:52 +0200
-Message-ID: <20260912065626.859656520@linuxfoundation.org>
+Subject: [PATCH 6.12 0867/1376] perf auxtrace: Fix queue grow overflow and old array leak
+Date: Sat, 12 Sep 2026 08:54:53 +0200
+Message-ID: <20260912065626.881303162@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -48,6 +48,7 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
@@ -56,23 +57,20 @@ Content-Transfer-Encoding: 8bit
 
 From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit ab9c84d1cd59e6b3b73de34982a35a76e3a9b032 ]
+[ Upstream commit 96fcc9ea5f18c083a1fa73da23afef7e953f7dca ]
 
-thread_stack__br_sample() copies the wrap-around portion of the branch
-stack ring buffer with:
+auxtrace_queues__grow() has two bugs:
 
-  nr = min(ts->br_stack_pos, sz);
-  memcpy(be, &src->entries[0], bsz * ts->br_stack_pos);
+1. When idx is UINT_MAX, the caller passes new_nr_queues = idx + 1 = 0.
+   The function skips growing (since any nr_queues >= 0), returns
+   success, and the caller accesses queue_array[UINT_MAX] — an OOB
+   heap write.  Fix by rejecting new_nr_queues == 0 up front.
 
-'nr' is correctly bounded to min(br_stack_pos, sz) but the memcpy uses
-the unbounded ts->br_stack_pos directly.  When br_stack_pos exceeds
-the remaining destination space 'sz', this writes past the destination
-buffer.
+2. The function allocates a new queue_array via calloc and copies
+   elements from the old array, but never frees the old array.  Fix
+   by saving the old pointer and freeing it after the copy.
 
-Use 'nr' (the bounded value) in the memcpy size, matching the pattern
-of the first memcpy in the same function.
-
-Fixes: 86d67180b920 ("perf thread-stack: Add branch stack support")
+Fixes: e502789302a6ece9 ("perf auxtrace: Add helpers for queuing AUX area tracing data")
 Reported-by: sashiko-bot <sashiko-bot@kernel.org>
 Assisted-by: Claude:claude-opus-4.6
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
@@ -81,22 +79,49 @@ Reviewed-by: Adrian Hunter <adrian.hunter@intel.com>
 Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/thread-stack.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/perf/util/auxtrace.c | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
-diff --git a/tools/perf/util/thread-stack.c b/tools/perf/util/thread-stack.c
-index c6a0a27b12c2a..47d5922efdee3 100644
---- a/tools/perf/util/thread-stack.c
-+++ b/tools/perf/util/thread-stack.c
-@@ -642,7 +642,7 @@ void thread_stack__br_sample(struct thread *thread, int cpu,
- 		sz -= nr;
- 		be = &dst->entries[nr];
- 		nr = min(ts->br_stack_pos, sz);
--		memcpy(be, &src->entries[0], bsz * ts->br_stack_pos);
-+		memcpy(be, &src->entries[0], bsz * nr);
- 	}
- }
+diff --git a/tools/perf/util/auxtrace.c b/tools/perf/util/auxtrace.c
+index ca8682966fae4..0927cfb42b7c5 100644
+--- a/tools/perf/util/auxtrace.c
++++ b/tools/perf/util/auxtrace.c
+@@ -237,8 +237,12 @@ static int auxtrace_queues__grow(struct auxtrace_queues *queues,
+ {
+ 	unsigned int nr_queues = queues->nr_queues;
+ 	struct auxtrace_queue *queue_array;
++	struct auxtrace_queue *old_array = queues->queue_array;
+ 	unsigned int i;
  
++	if (!new_nr_queues)
++		return -EINVAL;
++
+ 	if (!nr_queues)
+ 		nr_queues = AUXTRACE_INIT_NR_QUEUES;
+ 
+@@ -253,16 +257,17 @@ static int auxtrace_queues__grow(struct auxtrace_queues *queues,
+ 		return -ENOMEM;
+ 
+ 	for (i = 0; i < queues->nr_queues; i++) {
+-		list_splice_tail(&queues->queue_array[i].head,
++		list_splice_tail(&old_array[i].head,
+ 				 &queue_array[i].head);
+-		queue_array[i].tid = queues->queue_array[i].tid;
+-		queue_array[i].cpu = queues->queue_array[i].cpu;
+-		queue_array[i].set = queues->queue_array[i].set;
+-		queue_array[i].priv = queues->queue_array[i].priv;
++		queue_array[i].tid = old_array[i].tid;
++		queue_array[i].cpu = old_array[i].cpu;
++		queue_array[i].set = old_array[i].set;
++		queue_array[i].priv = old_array[i].priv;
+ 	}
+ 
+ 	queues->nr_queues = nr_queues;
+ 	queues->queue_array = queue_array;
++	free(old_array);
+ 
+ 	return 0;
+ }
 -- 
 2.53.0
 
