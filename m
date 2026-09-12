@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B608D47D442;
-	Sat, 12 Sep 2026 12:59:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50E5B47CC92;
+	Sat, 12 Sep 2026 12:59:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789217983; cv=none; b=GCRmS99puFyZV2OuXTNWevUV1zX1DIANzdoFrcxfiPtuB1LnbKaWG8saDlrupJ7cp9y+mVP2CjpXmoCnoL1/A4sl6RVEefLaeC6IZVhh64fqtLsqdljqs1vZs0N7mzAi+fhfsRZ91hR1+Es6Sq1s7OQacBZ7czSjAg6Ft2guGYo=
+	t=1789217989; cv=none; b=G5BirPIbSryJXbmwHxdpt4y0pHb6XAPCvXl4ln9Rhroe3630x9FvkNKyNgu1EUZ8dfULwhT6ZMeqdwvMdHgArevKRnWlVHlxdj8lBsVIvmJopmJ3ry/H3BCCsrLdg/6P3RHVC1nGXD0uf1V6SQtKkH5Ni+exsJDKasMzJSxtCd8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789217983; c=relaxed/simple;
-	bh=K+4Yrm+X1Id+AulY4FNxu9orJoRac+cQTAALkLhreDc=;
+	s=arc-20240116; t=1789217989; c=relaxed/simple;
+	bh=u8TPZfKsfXUKw8C4yp/VMot5EupXgwUvmTtgdglXW2M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hzgh0YnhrcjXbkqSp6NDnlQRna51ayrytuOP7a83JLgoxcF8QF1e3hXNZ09foEoX6oeCf5EN+fSL4q6D1MdTWddCXnup7EZsRWJzHtMH25+lV/TnajtclqgQ3jhaO8HuNZ0ieJf1vnu+TALHFhnwWDdPuumta/U55RRlkyNwcU8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NZiVOP22; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Q8fxG6WGukoNKJNXTRCiE9RV3q/vTI3YfZalzavXKMooG0TEN9W6hF/clVDZIfHtYgnVZydzbJn2GIvS3w22JgS3Q9qsIS/4IMIt9WzUBob94evqOTF/4QScEn1UDsN1Fp9BfwdopcueH5+F4aCjU1skEigO4O8UD0FufU+GCYY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E9kcVO0u; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NZiVOP22"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61B1E1F000FF;
-	Sat, 12 Sep 2026 12:59:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E9kcVO0u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9822A1F000FF;
+	Sat, 12 Sep 2026 12:59:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789217981;
-	bh=QdvdAnfELDA2/Bxazdbtgpjv+vJzWzGwZGP2gAxJO54=;
+	s=korg; t=1789217986;
+	bh=CZN/zHw+CQZdP2aBFCeDxxKanXbtCY3tLyebA1qveWY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NZiVOP22OEyPr22pYy+upOBWEh+pTzOtiPApp/FLtUAegvabiUy2kP3h6MMpfQEy9
-	 kW135wtUCpDTi7Yei6vxTp/JbVQ6rbuaiKKc5WOHKsfLzgaUlegF2y2SCHV8MnhAlT
-	 4EpgZxg5P/ZdclKSsT88mobXzXT4LtL2ACNfZ8+k=
+	b=E9kcVO0uixZhTuPM2iA18WOx2K8yemVZHQ3HbaMC61oT0wMdiBPU4KCKJ43U0+Moh
+	 9s9DT9ICvO+OInW+XPoFn1+4q0uBtF4N3+w95OE1ruPjOaymSKxAb+5d+yAH6xJ/SB
+	 8DLSAcFFLFp4eCVB9apoFRsjc7HMX2nG0BS4XlOQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roberto Sassu <roberto.sassu@huawei.com>,
 	Coiby Xu <coxu@redhat.com>,
-	Ard Biesheuvel <ardb@kernel.org>,
+	Alexander Egorenkov <egorenar@linux.ibm.com>,
 	Mimi Zohar <zohar@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1050/1376] integrity: Make arch_ima_get_secureboot integrity-wide
-Date: Sat, 12 Sep 2026 08:57:56 +0200
-Message-ID: <20260912065630.961862605@linuxfoundation.org>
+Subject: [PATCH 6.12 1051/1376] s390: Drop unnecessary CONFIG_IMA_SECURE_AND_OR_TRUSTED_BOOT
+Date: Sat, 12 Sep 2026 08:57:57 +0200
+Message-ID: <20260912065630.985079443@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -55,433 +54,82 @@ Content-Transfer-Encoding: 8bit
 
 From: Coiby Xu <coxu@redhat.com>
 
-[ Upstream commit 31a6a07eefeb4c84bd6730fbe9e95fd9221712cf ]
+[ Upstream commit a2e507afd9a25e333b7a58082f5db8c4de2bd12d ]
 
-EVM and other LSMs need the ability to query the secure boot status of
-the system, without directly calling the IMA arch_ima_get_secureboot
-function. Refactor the secure boot status check into a general function
-named arch_get_secureboot.
+Commit b5ca117365d9 ("ima: prevent kexec_load syscall based on runtime
+secureboot flag") and commit 268a78404973 ("s390/kexec_file: Disable
+kexec_load when IPLed secure") disabled the kexec_load syscall based
+on the secureboot mode. Commit 9e2b4be377f0 ("ima: add a new CONFIG
+for loading arch-specific policies") needed to detect the secure boot
+mode, not to load an IMA architecture specific policy. Since there is
+the new CONFIG_INTEGRITY_SECURE_BOOT, drop
+CONFIG_IMA_SECURE_AND_OR_TRUSTED_BOOT for s390.
 
-Reported-and-suggested-by: Mimi Zohar <zohar@linux.ibm.com>
-Suggested-by: Roberto Sassu <roberto.sassu@huawei.com>
 Signed-off-by: Coiby Xu <coxu@redhat.com>
-Acked-by: Ard Biesheuvel <ardb@kernel.org>
+Tested-by: Alexander Egorenkov <egorenar@linux.ibm.com>
+[Vasily Gorbik: Fix missing arch_get_secureboot() prototype warning]
+link: https://lore.kernel.org/linux-integrity/c00-01.ttbfdx5@ub.hpns/
 Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
 Stable-dep-of: 3f7c9f9c36b4 ("s390/irqflags: Add out-of-line definitions of arch_local_irq_*() for KMSAN")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- MAINTAINERS                                   |  1 +
- arch/powerpc/kernel/ima_arch.c                |  5 --
- arch/powerpc/kernel/secure_boot.c             |  6 ++
- arch/s390/kernel/ima_arch.c                   |  6 --
- arch/s390/kernel/ipl.c                        |  5 ++
- arch/x86/include/asm/efi.h                    |  4 +-
- arch/x86/platform/efi/efi.c                   |  2 +-
- include/linux/ima.h                           |  7 +--
- include/linux/secure_boot.h                   | 19 +++++++
- security/integrity/Makefile                   |  3 +-
- security/integrity/efi_secureboot.c           | 56 +++++++++++++++++++
- security/integrity/ima/ima_appraise.c         |  2 +-
- security/integrity/ima/ima_efi.c              | 47 +---------------
- security/integrity/ima/ima_main.c             |  3 +-
- security/integrity/integrity.h                |  1 +
- security/integrity/platform_certs/load_uefi.c |  2 +-
- security/integrity/secure_boot.c              | 16 ++++++
- 17 files changed, 115 insertions(+), 70 deletions(-)
- create mode 100644 include/linux/secure_boot.h
- create mode 100644 security/integrity/efi_secureboot.c
- create mode 100644 security/integrity/secure_boot.c
+ arch/s390/Kconfig           | 1 -
+ arch/s390/kernel/Makefile   | 1 -
+ arch/s390/kernel/ima_arch.c | 8 --------
+ arch/s390/kernel/ipl.c      | 1 +
+ 4 files changed, 1 insertion(+), 10 deletions(-)
+ delete mode 100644 arch/s390/kernel/ima_arch.c
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index d5d394a5ad6b9..a9a03029ecb8a 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -11257,6 +11257,7 @@ R:	Eric Snowberg <eric.snowberg@oracle.com>
- L:	linux-integrity@vger.kernel.org
- S:	Supported
- T:	git git://git.kernel.org/pub/scm/linux/kernel/git/zohar/linux-integrity.git
-+F:	include/linux/secure_boot.h
- F:	security/integrity/
- F:	security/integrity/ima/
+diff --git a/arch/s390/Kconfig b/arch/s390/Kconfig
+index 28e900e5212ca..53dd642281776 100644
+--- a/arch/s390/Kconfig
++++ b/arch/s390/Kconfig
+@@ -57,7 +57,6 @@ config S390
+ 	#
+ 	# Note: keep this list sorted alphabetically
+ 	#
+-	imply IMA_SECURE_AND_OR_TRUSTED_BOOT
+ 	select ALTERNATE_USER_ADDRESS_SPACE
+ 	select ARCH_32BIT_USTAT_F_TINODE
+ 	select ARCH_BINFMT_ELF_STATE
+diff --git a/arch/s390/kernel/Makefile b/arch/s390/kernel/Makefile
+index 48caae8c7e104..7981b91fc264e 100644
+--- a/arch/s390/kernel/Makefile
++++ b/arch/s390/kernel/Makefile
+@@ -73,7 +73,6 @@ obj-$(CONFIG_JUMP_LABEL)	+= jump_label.o
+ obj-$(CONFIG_KEXEC_FILE)	+= machine_kexec_file.o kexec_image.o
+ obj-$(CONFIG_KEXEC_FILE)	+= kexec_elf.o
+ obj-$(CONFIG_CERT_STORE)	+= cert_store.o
+-obj-$(CONFIG_IMA_SECURE_AND_OR_TRUSTED_BOOT)	+= ima_arch.o
  
-diff --git a/arch/powerpc/kernel/ima_arch.c b/arch/powerpc/kernel/ima_arch.c
-index b7029beed847d..0d8892a035266 100644
---- a/arch/powerpc/kernel/ima_arch.c
-+++ b/arch/powerpc/kernel/ima_arch.c
-@@ -7,11 +7,6 @@
- #include <linux/ima.h>
- #include <asm/secure_boot.h>
- 
--bool arch_ima_get_secureboot(void)
--{
--	return is_ppc_secureboot_enabled();
--}
--
- /*
-  * The "secure_rules" are enabled only on "secureboot" enabled systems.
-  * These rules verify the file signatures against known good values.
-diff --git a/arch/powerpc/kernel/secure_boot.c b/arch/powerpc/kernel/secure_boot.c
-index 3a28795b4ed82..28436c1599e08 100644
---- a/arch/powerpc/kernel/secure_boot.c
-+++ b/arch/powerpc/kernel/secure_boot.c
-@@ -5,6 +5,7 @@
-  */
- #include <linux/types.h>
- #include <linux/of.h>
-+#include <linux/secure_boot.h>
- #include <linux/string_choices.h>
- #include <asm/secure_boot.h>
- 
-@@ -44,6 +45,11 @@ bool is_ppc_secureboot_enabled(void)
- 	return enabled;
- }
- 
-+bool arch_get_secureboot(void)
-+{
-+	return is_ppc_secureboot_enabled();
-+}
-+
- bool is_ppc_trustedboot_enabled(void)
- {
- 	struct device_node *node;
+ obj-$(CONFIG_PERF_EVENTS)	+= perf_event.o
+ obj-$(CONFIG_PERF_EVENTS)	+= perf_cpum_cf.o perf_cpum_sf.o
 diff --git a/arch/s390/kernel/ima_arch.c b/arch/s390/kernel/ima_arch.c
-index f3c3e6e1c5d38..6ccbe34ce4087 100644
+deleted file mode 100644
+index 6ccbe34ce4087..0000000000000
 --- a/arch/s390/kernel/ima_arch.c
-+++ b/arch/s390/kernel/ima_arch.c
-@@ -1,12 +1,6 @@
- // SPDX-License-Identifier: GPL-2.0
- 
- #include <linux/ima.h>
--#include <asm/boot_data.h>
++++ /dev/null
+@@ -1,8 +0,0 @@
+-// SPDX-License-Identifier: GPL-2.0
 -
--bool arch_ima_get_secureboot(void)
+-#include <linux/ima.h>
+-
+-const char * const *arch_get_ima_policy(void)
 -{
--	return ipl_secure_flag;
+-	return NULL;
 -}
- 
- const char * const *arch_get_ima_policy(void)
- {
 diff --git a/arch/s390/kernel/ipl.c b/arch/s390/kernel/ipl.c
-index f5a56c3415014..b6ce3cea3aea0 100644
+index b6ce3cea3aea0..d4a4d965a9557 100644
 --- a/arch/s390/kernel/ipl.c
 +++ b/arch/s390/kernel/ipl.c
-@@ -2486,6 +2486,11 @@ void *ipl_report_finish(struct ipl_report *report)
- 	return buf;
- }
- 
-+bool arch_get_secureboot(void)
-+{
-+	return ipl_secure_flag;
-+}
-+
- int ipl_report_free(struct ipl_report *report)
- {
- 	struct ipl_report_component *comp, *ncomp;
-diff --git a/arch/x86/include/asm/efi.h b/arch/x86/include/asm/efi.h
-index 69920800da369..222410af815cf 100644
---- a/arch/x86/include/asm/efi.h
-+++ b/arch/x86/include/asm/efi.h
-@@ -398,9 +398,9 @@ extern int __init efi_memmap_split_count(efi_memory_desc_t *md,
- extern void __init efi_memmap_insert(struct efi_memory_map *old_memmap,
- 				     void *buf, struct efi_mem_range *mem);
- 
--extern enum efi_secureboot_mode __x86_ima_efi_boot_mode(void);
-+enum efi_secureboot_mode __x86_efi_boot_mode(void);
- 
--#define arch_ima_efi_boot_mode	__x86_ima_efi_boot_mode()
-+#define arch_efi_boot_mode __x86_efi_boot_mode()
- 
- #ifdef CONFIG_EFI_RUNTIME_MAP
- int efi_get_runtime_map_size(void);
-diff --git a/arch/x86/platform/efi/efi.c b/arch/x86/platform/efi/efi.c
-index 6727cff19d920..e005d0a4143e6 100644
---- a/arch/x86/platform/efi/efi.c
-+++ b/arch/x86/platform/efi/efi.c
-@@ -949,7 +949,7 @@ umode_t efi_attr_is_visible(struct kobject *kobj, struct attribute *attr, int n)
- 	return attr->mode;
- }
- 
--enum efi_secureboot_mode __x86_ima_efi_boot_mode(void)
-+enum efi_secureboot_mode __x86_efi_boot_mode(void)
- {
- 	return boot_params.secure_boot;
- }
-diff --git a/include/linux/ima.h b/include/linux/ima.h
-index abf8923f8fc51..8e08baf16c2fd 100644
---- a/include/linux/ima.h
-+++ b/include/linux/ima.h
-@@ -11,6 +11,7 @@
- #include <linux/fs.h>
- #include <linux/security.h>
- #include <linux/kexec.h>
+@@ -21,6 +21,7 @@
+ #include <linux/crash_dump.h>
+ #include <linux/debug_locks.h>
+ #include <linux/vmalloc.h>
 +#include <linux/secure_boot.h>
- #include <crypto/hash_info.h>
- struct linux_binprm;
- 
-@@ -73,14 +74,8 @@ int ima_validate_range(phys_addr_t phys, size_t size);
- #endif
- 
- #ifdef CONFIG_IMA_SECURE_AND_OR_TRUSTED_BOOT
--extern bool arch_ima_get_secureboot(void);
- extern const char * const *arch_get_ima_policy(void);
- #else
--static inline bool arch_ima_get_secureboot(void)
--{
--	return false;
--}
--
- static inline const char * const *arch_get_ima_policy(void)
- {
- 	return NULL;
-diff --git a/include/linux/secure_boot.h b/include/linux/secure_boot.h
-new file mode 100644
-index 0000000000000..3ded3f03655c3
---- /dev/null
-+++ b/include/linux/secure_boot.h
-@@ -0,0 +1,19 @@
-+/* SPDX-License-Identifier: GPL-2.0-only */
-+/*
-+ * Copyright (C) 2026 Red Hat, Inc. All Rights Reserved.
-+ *
-+ * Author: Coiby Xu <coxu@redhat.com>
-+ */
-+
-+#ifndef _LINUX_SECURE_BOOT_H
-+#define _LINUX_SECURE_BOOT_H
-+
-+#include <linux/types.h>
-+
-+/*
-+ * Returns true if the platform secure boot is enabled.
-+ * Returns false if disabled or not supported.
-+ */
-+bool arch_get_secureboot(void);
-+
-+#endif /* _LINUX_SECURE_BOOT_H */
-diff --git a/security/integrity/Makefile b/security/integrity/Makefile
-index 92b63039c654c..548665e2b702e 100644
---- a/security/integrity/Makefile
-+++ b/security/integrity/Makefile
-@@ -5,7 +5,7 @@
- 
- obj-$(CONFIG_INTEGRITY) += integrity.o
- 
--integrity-y := iint.o
-+integrity-y := iint.o secure_boot.o
- integrity-$(CONFIG_INTEGRITY_AUDIT) += integrity_audit.o
- integrity-$(CONFIG_INTEGRITY_SIGNATURE) += digsig.o
- integrity-$(CONFIG_INTEGRITY_ASYMMETRIC_KEYS) += digsig_asymmetric.o
-@@ -18,6 +18,7 @@ integrity-$(CONFIG_LOAD_IPL_KEYS) += platform_certs/load_ipl_s390.o
- integrity-$(CONFIG_LOAD_PPC_KEYS) += platform_certs/efi_parser.o \
-                                      platform_certs/load_powerpc.o \
-                                      platform_certs/keyring_handler.o
-+integrity-$(CONFIG_EFI) += efi_secureboot.o
- # The relative order of the 'ima' and 'evm' LSMs depends on the order below.
- obj-$(CONFIG_IMA)			+= ima/
- obj-$(CONFIG_EVM)			+= evm/
-diff --git a/security/integrity/efi_secureboot.c b/security/integrity/efi_secureboot.c
-new file mode 100644
-index 0000000000000..bfd4260a83a33
---- /dev/null
-+++ b/security/integrity/efi_secureboot.c
-@@ -0,0 +1,56 @@
-+// SPDX-License-Identifier: GPL-1.0+
-+/*
-+ * Copyright (C) 2018 IBM Corporation
-+ */
-+#include <linux/efi.h>
-+#include <linux/secure_boot.h>
-+#include <asm/efi.h>
-+
-+#ifndef arch_efi_boot_mode
-+#define arch_efi_boot_mode efi_secureboot_mode_unset
-+#endif
-+
-+static enum efi_secureboot_mode get_sb_mode(void)
-+{
-+	enum efi_secureboot_mode mode;
-+
-+	if (!efi_rt_services_supported(EFI_RT_SUPPORTED_GET_VARIABLE)) {
-+		pr_info("integrity: secureboot mode unknown, no efi\n");
-+		return efi_secureboot_mode_unknown;
-+	}
-+
-+	mode = efi_get_secureboot_mode(efi.get_variable);
-+	if (mode == efi_secureboot_mode_disabled)
-+		pr_info("integrity: secureboot mode disabled\n");
-+	else if (mode == efi_secureboot_mode_unknown)
-+		pr_info("integrity: secureboot mode unknown\n");
-+	else
-+		pr_info("integrity: secureboot mode enabled\n");
-+	return mode;
-+}
-+
-+/*
-+ * Query secure boot status
-+ *
-+ * Note don't call this function too early e.g. in __setup hook otherwise the
-+ * kernel may hang when calling efi_get_secureboot_mode.
-+ *
-+ */
-+bool arch_get_secureboot(void)
-+{
-+	static enum efi_secureboot_mode sb_mode;
-+	static bool initialized;
-+
-+	if (!initialized && efi_enabled(EFI_BOOT)) {
-+		sb_mode = arch_efi_boot_mode;
-+
-+		if (sb_mode == efi_secureboot_mode_unset)
-+			sb_mode = get_sb_mode();
-+		initialized = true;
-+	}
-+
-+	if (sb_mode == efi_secureboot_mode_enabled)
-+		return true;
-+	else
-+		return false;
-+}
-diff --git a/security/integrity/ima/ima_appraise.c b/security/integrity/ima/ima_appraise.c
-index 5ff5c254740b6..7eb2c25076118 100644
---- a/security/integrity/ima/ima_appraise.c
-+++ b/security/integrity/ima/ima_appraise.c
-@@ -26,7 +26,7 @@ core_param(ima_appraise, ima_appraise_cmdline_default, charp, 0);
- void __init ima_appraise_parse_cmdline(void)
- {
- 	const char *str = ima_appraise_cmdline_default;
--	bool sb_state = arch_ima_get_secureboot();
-+	bool sb_state = arch_get_secureboot();
- 	int appraisal_state = ima_appraise;
- 
- 	if (!str)
-diff --git a/security/integrity/ima/ima_efi.c b/security/integrity/ima/ima_efi.c
-index 138029bfcce1e..78191879dd98f 100644
---- a/security/integrity/ima/ima_efi.c
-+++ b/security/integrity/ima/ima_efi.c
-@@ -2,52 +2,9 @@
- /*
-  * Copyright (C) 2018 IBM Corporation
-  */
--#include <linux/efi.h>
- #include <linux/module.h>
- #include <linux/ima.h>
--#include <asm/efi.h>
--
--#ifndef arch_ima_efi_boot_mode
--#define arch_ima_efi_boot_mode efi_secureboot_mode_unset
--#endif
--
--static enum efi_secureboot_mode get_sb_mode(void)
--{
--	enum efi_secureboot_mode mode;
--
--	if (!efi_rt_services_supported(EFI_RT_SUPPORTED_GET_VARIABLE)) {
--		pr_info("ima: secureboot mode unknown, no efi\n");
--		return efi_secureboot_mode_unknown;
--	}
--
--	mode = efi_get_secureboot_mode(efi.get_variable);
--	if (mode == efi_secureboot_mode_disabled)
--		pr_info("ima: secureboot mode disabled\n");
--	else if (mode == efi_secureboot_mode_unknown)
--		pr_info("ima: secureboot mode unknown\n");
--	else
--		pr_info("ima: secureboot mode enabled\n");
--	return mode;
--}
--
--bool arch_ima_get_secureboot(void)
--{
--	static enum efi_secureboot_mode sb_mode;
--	static bool initialized;
--
--	if (!initialized && efi_enabled(EFI_BOOT)) {
--		sb_mode = arch_ima_efi_boot_mode;
--
--		if (sb_mode == efi_secureboot_mode_unset)
--			sb_mode = get_sb_mode();
--		initialized = true;
--	}
--
--	if (sb_mode == efi_secureboot_mode_enabled)
--		return true;
--	else
--		return false;
--}
-+#include <linux/secure_boot.h>
- 
- /* secureboot arch rules */
- static const char * const sb_arch_rules[] = {
-@@ -67,7 +24,7 @@ static const char * const sb_arch_rules[] = {
- 
- const char * const *arch_get_ima_policy(void)
- {
--	if (IS_ENABLED(CONFIG_IMA_ARCH_POLICY) && arch_ima_get_secureboot()) {
-+	if (IS_ENABLED(CONFIG_IMA_ARCH_POLICY) && arch_get_secureboot()) {
- 		if (IS_ENABLED(CONFIG_MODULE_SIG))
- 			set_module_sig_enforced();
- 		if (IS_ENABLED(CONFIG_KEXEC_SIG))
-diff --git a/security/integrity/ima/ima_main.c b/security/integrity/ima/ima_main.c
-index a0948057209e4..62dc15ade5594 100644
---- a/security/integrity/ima/ima_main.c
-+++ b/security/integrity/ima/ima_main.c
-@@ -907,8 +907,7 @@ static int ima_load_data(enum kernel_load_data_id id, bool contents)
- 
- 	switch (id) {
- 	case LOADING_KEXEC_IMAGE:
--		if (IS_ENABLED(CONFIG_KEXEC_SIG)
--		    && arch_ima_get_secureboot()) {
-+		if (IS_ENABLED(CONFIG_KEXEC_SIG) && arch_get_secureboot()) {
- 			pr_err("impossible to appraise a kernel image without a file descriptor; try using kexec_file_load syscall.\n");
- 			return -EACCES;
- 		}
-diff --git a/security/integrity/integrity.h b/security/integrity/integrity.h
-index c2c2da6911233..17b037b3fd096 100644
---- a/security/integrity/integrity.h
-+++ b/security/integrity/integrity.h
-@@ -14,6 +14,7 @@
- 
- #include <linux/types.h>
- #include <linux/integrity.h>
-+#include <linux/secure_boot.h>
- #include <crypto/sha1.h>
- #include <crypto/hash.h>
- #include <linux/key.h>
-diff --git a/security/integrity/platform_certs/load_uefi.c b/security/integrity/platform_certs/load_uefi.c
-index d1fdd113450a6..c0d6948446c30 100644
---- a/security/integrity/platform_certs/load_uefi.c
-+++ b/security/integrity/platform_certs/load_uefi.c
-@@ -212,7 +212,7 @@ static int __init load_uefi_certs(void)
- 	}
- 
- 	/* the MOK/MOKx can not be trusted when secure boot is disabled */
--	if (!arch_ima_get_secureboot())
-+	if (!arch_get_secureboot())
- 		return 0;
- 
- 	mokx = get_cert_list(L"MokListXRT", &mok_var, &mokxsize, &status);
-diff --git a/security/integrity/secure_boot.c b/security/integrity/secure_boot.c
-new file mode 100644
-index 0000000000000..fc2693c286f8b
---- /dev/null
-+++ b/security/integrity/secure_boot.c
-@@ -0,0 +1,16 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * Copyright (C) 2026 Red Hat, Inc. All Rights Reserved.
-+ *
-+ * Author: Coiby Xu <coxu@redhat.com>
-+ */
-+#include <linux/secure_boot.h>
-+
-+/*
-+ * Default weak implementation.
-+ * Architectures that support secure boot must override this.
-+ */
-+__weak bool arch_get_secureboot(void)
-+{
-+	return false;
-+}
+ #include <asm/asm-extable.h>
+ #include <asm/diag.h>
+ #include <asm/ipl.h>
 -- 
 2.53.0
 
