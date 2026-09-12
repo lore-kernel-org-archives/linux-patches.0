@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A9FE385D75;
-	Sat, 12 Sep 2026 15:59:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD92C3CDBB5;
+	Sat, 12 Sep 2026 15:59:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789228761; cv=none; b=IDQq24PjHbbVyfz3RRIxQSP5cSBFObx7cF70o/6/KNtdM+k3QKwH085lsVASXtYo9mGDtOsVZ90ooFBQr3DR2jXFfczj7oxcEap0XdnDfU68Nmxt5NkkDMVurr4Qq5NPcGvcMasSm52Rv+IeDsE2AXPmsQCnaD887+V9HjkDwuk=
+	t=1789228765; cv=none; b=GQ55xx8zvuCxDNhCYcJcGUKaVyEZ2h0dRJYAC6o96/PL+rLmX5yoh5cch4gQmk+VWLn2hwCubw+zFrM1vEqNvmD/tXWxQqeSF15PO6e6V2AQbtGDoogyNJuDhFVnGOzRBSskuq67eg4JB/XIBFrQGf4sJZFTnf2oAplXM8V4kEo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789228761; c=relaxed/simple;
-	bh=AHy/lrh/Ve2r6Epw14nTKZTJj66lIxc8Bq3BDppJ8wQ=;
+	s=arc-20240116; t=1789228765; c=relaxed/simple;
+	bh=ayCvz/0qbY43qCObapC7cGCe10axLjdTNmNC7ARsgJo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LdCY2iLtv4fi6LalErCzPVWUEpb0gQfQ7JgUoio1BzGifNp60g4HDc7PqeauX2o3NUq3KLE5l0KK+xsLn+dR/1nX6bjJ2T4twmCitKfHPlQefuBbsc+cXaobyFQ8bAtZ6KMM9yFIeuxDLlFXTb3Vg14CVF8BxHeOqooEJGgFFpU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F7L0ywci; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=K+YazlQ49iTx+gHdt8Iy3sVpo/f8lUs/nVXVC9Nttnzb3bkhkLpxIupJBKpGp53XnnsnioxJrmkPglJVwU53t8WwXqXd9sXMmC+GkxbnqpewR5JIUF4lTJPTai5GQHx5OoqkbyjvWn3bidCNafgyzGcNe8UOM1u/hXmqXP9ngXE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S1/E5HVt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F7L0ywci"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1572F1F000FF;
-	Sat, 12 Sep 2026 15:59:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S1/E5HVt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77F701F000FF;
+	Sat, 12 Sep 2026 15:59:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789228760;
-	bh=cM2ZCyQv6UWI6eirIastuAXr0IUSGWre+4K2eVgNlFA=;
+	s=korg; t=1789228764;
+	bh=9MTDhob0SJ0HmL1llcEm3Ar6zfbzV4Ta8wcuOfsM2OU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F7L0ywcibrLS9JkCOI24KnF8FJ4wNU6L4XBlKbaEpQm8fQUq1Wk8bv1THD2kdxkE6
-	 8K0J4JNNjVTzvk7iwnmBSwzwsh3Qqez4CRMU6iV9T/3RNvO2Imb6SZ/RVBSJHn4d7t
-	 LMdBq9Z4IoxN/6HyXRjfqo7Yi3b6xv0bJurCIuFI=
+	b=S1/E5HVt1mWgSh9ApR72qEWcKLt3vTMeYBJrVlWp/B7mx5/rKP8/nI8xLwtRp58lc
+	 oT4/c4INBZ7ve4ceppqN5dq+ZTMptDWkAoKKlkHb0lJ7PZU9Xgc9anBHTfEK3qg4lx
+	 DsMDfcljGLT6eN9E6rCKqWYjQnXUl7l+VhXJ1pbc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Brian Witte <brianwitte@mailfence.com>,
+	Tobi Gaertner <tob.gaertner@me.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0450/1191] netfilter: nft_counter: serialize reset with spinlock
-Date: Sat, 12 Sep 2026 08:52:58 +0200
-Message-ID: <20260912065558.339539302@linuxfoundation.org>
+Subject: [PATCH 6.1 0451/1191] net: usb: cdc_ncm: add ndpoffset to NDP16 nframes bounds check
+Date: Sat, 12 Sep 2026 08:52:59 +0200
+Message-ID: <20260912065558.362114276@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -51,84 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Brian Witte <brianwitte@mailfence.com>
+From: Tobi Gaertner <tob.gaertner@me.com>
 
-[ Upstream commit 779c60a5190c42689534172f4b49e927c9959e4e ]
+[ Upstream commit 2aa8a4fa8d5b7d0e1ebcec100e1a4d80a1f4b21a ]
 
-Add a global static spinlock to serialize counter fetch+reset
-operations, preventing concurrent dump-and-reset from underrunning
-values.
+cdc_ncm_rx_verify_ndp16() validates that the NDP header and its DPE
+entries fit within the skb. The first check correctly accounts for
+ndpoffset:
 
-The lock is taken before fetching the total so that two parallel
-resets cannot both read the same counter values and then both
-subtract them.
+  if ((ndpoffset + sizeof(struct usb_cdc_ncm_ndp16)) > skb_in->len)
 
-A global lock is used for simplicity since resets are infrequent.
-If this becomes a bottleneck, it can be replaced with a per-net
-lock later.
+but the second check omits it:
 
-Fixes: bd662c4218f9 ("netfilter: nf_tables: Add locking for NFT_MSG_GETOBJ_RESET requests")
-Fixes: 3d483faa6663 ("netfilter: nf_tables: Add locking for NFT_MSG_GETSETELEM_RESET requests")
-Fixes: 3cb03edb4de3 ("netfilter: nf_tables: Add locking for NFT_MSG_GETRULE_RESET requests")
-Suggested-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Brian Witte <brianwitte@mailfence.com>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+  if ((sizeof(struct usb_cdc_ncm_ndp16) +
+       ret * (sizeof(struct usb_cdc_ncm_dpe16))) > skb_in->len)
+
+This validates the DPE array size against the total skb length as if
+the NDP were at offset 0, rather than at ndpoffset. When the NDP is
+placed near the end of the NTB (large wNdpIndex), the DPE entries can
+extend past the skb data buffer even though the check passes.
+cdc_ncm_rx_fixup() then reads out-of-bounds memory when iterating
+the DPE array.
+
+Add ndpoffset to the nframes bounds check and use struct_size_t() to
+express the NDP-plus-DPE-array size more clearly.
+
+Fixes: ff06ab13a4cc ("net: cdc_ncm: splitting rx_fixup for code reuse")
+Signed-off-by: Tobi Gaertner <tob.gaertner@me.com>
+Link: https://patch.msgid.link/20260314054640.2895026-2-tob.gaertner@me.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_counter.c | 20 ++++++++++++++++----
- 1 file changed, 16 insertions(+), 4 deletions(-)
+ drivers/net/usb/cdc_ncm.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/net/netfilter/nft_counter.c b/net/netfilter/nft_counter.c
-index 7411bba75d4cb..224c7487b7a3e 100644
---- a/net/netfilter/nft_counter.c
-+++ b/net/netfilter/nft_counter.c
-@@ -32,6 +32,9 @@ struct nft_counter_percpu_priv {
+diff --git a/drivers/net/usb/cdc_ncm.c b/drivers/net/usb/cdc_ncm.c
+index c3b1e9af922b1..72f97a6d04bcc 100644
+--- a/drivers/net/usb/cdc_ncm.c
++++ b/drivers/net/usb/cdc_ncm.c
+@@ -1655,6 +1655,7 @@ int cdc_ncm_rx_verify_ndp16(struct sk_buff *skb_in, int ndpoffset)
+ 	struct usbnet *dev = netdev_priv(skb_in->dev);
+ 	struct usb_cdc_ncm_ndp16 *ndp16;
+ 	int ret = -EINVAL;
++	size_t ndp_len;
  
- static DEFINE_PER_CPU(struct u64_stats_sync, nft_counter_sync);
+ 	if ((ndpoffset + sizeof(struct usb_cdc_ncm_ndp16)) > skb_in->len) {
+ 		netif_dbg(dev, rx_err, dev->net, "invalid NDP offset  <%u>\n",
+@@ -1674,8 +1675,8 @@ int cdc_ncm_rx_verify_ndp16(struct sk_buff *skb_in, int ndpoffset)
+ 					sizeof(struct usb_cdc_ncm_dpe16));
+ 	ret--; /* we process NDP entries except for the last one */
  
-+/* control plane only: sync fetch+reset */
-+static DEFINE_SPINLOCK(nft_counter_lock);
-+
- static inline void nft_counter_do_eval(struct nft_counter_percpu_priv *priv,
- 				       struct nft_regs *regs,
- 				       const struct nft_pktinfo *pkt)
-@@ -148,13 +151,25 @@ static void nft_counter_fetch(struct nft_counter_percpu_priv *priv,
+-	if ((sizeof(struct usb_cdc_ncm_ndp16) +
+-	     ret * (sizeof(struct usb_cdc_ncm_dpe16))) > skb_in->len) {
++	ndp_len = struct_size_t(struct usb_cdc_ncm_ndp16, dpe16, ret);
++	if (ndpoffset + ndp_len > skb_in->len) {
+ 		netif_dbg(dev, rx_err, dev->net, "Invalid nframes = %d\n", ret);
+ 		ret = -EINVAL;
  	}
- }
- 
-+static void nft_counter_fetch_and_reset(struct nft_counter_percpu_priv *priv,
-+					struct nft_counter_tot *total)
-+{
-+	spin_lock(&nft_counter_lock);
-+	nft_counter_fetch(priv, total);
-+	nft_counter_reset(priv, total);
-+	spin_unlock(&nft_counter_lock);
-+}
-+
- static int nft_counter_do_dump(struct sk_buff *skb,
- 			       struct nft_counter_percpu_priv *priv,
- 			       bool reset)
- {
- 	struct nft_counter_tot total;
- 
--	nft_counter_fetch(priv, &total);
-+	if (unlikely(reset))
-+		nft_counter_fetch_and_reset(priv, &total);
-+	else
-+		nft_counter_fetch(priv, &total);
- 
- 	if (nla_put_be64(skb, NFTA_COUNTER_BYTES, cpu_to_be64(total.bytes),
- 			 NFTA_COUNTER_PAD) ||
-@@ -162,9 +177,6 @@ static int nft_counter_do_dump(struct sk_buff *skb,
- 			 NFTA_COUNTER_PAD))
- 		goto nla_put_failure;
- 
--	if (reset)
--		nft_counter_reset(priv, &total);
--
- 	return 0;
- 
- nla_put_failure:
 -- 
 2.53.0
 
