@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EE962E7622;
-	Sat, 12 Sep 2026 14:46:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB67C23BD06;
+	Sat, 12 Sep 2026 14:46:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789224384; cv=none; b=qLBhA4cE6hBBPCMGZZ2tad935qyn0YDRwzIMCqL37Xsx5+5tsKUcMxWrlXFKQDU20qv9ZqmgGxvdaJwetgSfiFhCZhSddWj0kaBielDa+W8IXJqC5RRWSaMLaB0mcsqjh6mxyFH3UHSWC79Cy/Vpu54yGPZaVwmJt+eyuFgNBRE=
+	t=1789224388; cv=none; b=WMrvqvFeOodGxmREtPPmp0QGFSpoeZZ+u0oBXRduym7g2SuPfMcZ7TjAOWObUFA1DEhnCOlnhI+2GgIMHqxXYxDNZYr1NQX5Rr+sBiAH6cjDutR7/e4q+YuNZwE/5VBHgVEMOs8sFUl36QGDBTI6O3Y/A7H05CX5g1oamFFXlLE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789224384; c=relaxed/simple;
-	bh=Eiv6xg+lerLt6CZzvPbxfx0d+lCiplHsqmlWy9CRQNA=;
+	s=arc-20240116; t=1789224388; c=relaxed/simple;
+	bh=6VCHJH3EXh76s+CKzS4FA+OkiS/+Ql8GtVD2z747Eqc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JUsFNhNJ/glfr2MWKbHiXzgsqVcdugbFjMOtcqn9WF5TY3gxsAK260//PKl3YNoQbtnl47E2n1WZXljqzGkrK4KPndWkQUkkM+DutXwntTnttBlZk/aej2MlPwo3fR+MY1eh3FMXIqGoLoSCcQpik7IyYxV7tHHnuaQXyOyyuew=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JgbJN4wo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qV0KVzmNP6eN5geVuK6pEGgITgrCvkQpCwfm4DivZhbKY8os3Z6WoW32p+DKA6IZ4JHpCtr3AuILkJ5CE5DiLrP99wzTRy1WZqWfsDYPyRKC01KknpDv0FIUa5sZ5yOMfXISC5o5wHI5FALRYPTYqPab0NiMdPEI+cbFtv9Ax9E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H83hFJGy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JgbJN4wo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5A901F000FF;
-	Sat, 12 Sep 2026 14:46:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H83hFJGy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76B991F000FF;
+	Sat, 12 Sep 2026 14:46:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789224382;
-	bh=eLYcLvh4n5/HDRCX3OQRDqrUgUk7sPm8X3WSNolfinY=;
+	s=korg; t=1789224387;
+	bh=xDftsYHhCXwBxTqULRc9dNeAh5qcObZh8qx6o5Ouu1U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JgbJN4worRf1IgyUSmwVmNfaBUq/Vsx9hQNfE2wWZSenAhK7HEb2sdhjTU4JQcPB5
-	 QPn+AjFbIZ68z8zwogOL4pXIbXp20elw6Hp/JFWqfHFR31bbLOyIfDQQen67SqR190
-	 MJPQgTRalSQO6ix6fapYdCYFZ4cj9qWJJ/lL3p6c=
+	b=H83hFJGy2OKwkw+GhxgMVrc0mC1nmdUADRFZQbW5TDcqxJBtwJwaudKDTK7ntHQyS
+	 vgeF1sWxLJzKToFIfRyc9Qd1R2uhBz24AgMuht6TWMdT+Mx9u6ujqz/qNAwaxD2CIE
+	 1eUnPZlEJeZYM9c28pVarPNUnAOg84//tOqhUKts=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Can Peng <pengcan@kylinos.cn>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Leo Yan <leo.yan@arm.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0981/1424] ACPI: processor: Unregister cpufreq notifier on init failure
-Date: Sat, 12 Sep 2026 08:56:53 +0200
-Message-ID: <20260912065629.283691063@linuxfoundation.org>
+Subject: [PATCH 6.6 0982/1424] perf: arm_spe: Make wakeup range check overflow safe
+Date: Sat, 12 Sep 2026 08:56:54 +0200
+Message-ID: <20260912065629.307542363@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -51,46 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Can Peng <pengcan@kylinos.cn>
+From: Leo Yan <leo.yan@arm.com>
 
-[ Upstream commit 06f32dd67e6b23a05bef0d8183c5335af91c0c3b ]
+[ Upstream commit fcc5eaea2d234162dfb8258372dd897bc2a1b862 ]
 
-acpi_processor_driver_init() registers the cpufreq policy notifier before
-registering the ACPI processor driver and setting up CPU hotplug state.
+The current code checks whether the wakeup point is in the current
+writable range by comparing it with handle->head + handle->size.
 
-If driver_register() or cpuhp_setup_state() fails, the error path only
-unregisters the ACPI processor driver and the idle driver. The cpufreq
-notifier remains registered even though initialization failed.
+The perf AUX head is a monotonically increasing index, so that addition
+can overflow when head is close to ULONG_MAX. In that case, a wakeup
+point which is still inside the free space range can be missed.
 
-Mirror the module exit path on the init failure path and unregister the
-cpufreq notifier when it has been registered.
+Use unsigned subtraction to compare the distance from head to wakeup
+against the handle->size. This can dismiss the issue when addition
+overflow.
 
-Fixes: c0e0421a60bf ("ACPI: processor: Reorder acpi_processor_driver_init()")
-Signed-off-by: Can Peng <pengcan@kylinos.cn>
-Link: https://patch.msgid.link/20260729023605.197367-1-pengcan@kylinos.cn
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+This is unlikely to happen in practice, but the change makes the
+watermark check logically correct.
+
+Fixes: d5d9696b0380 ("drivers/perf: Add support for ARMv8.2 Statistical Profiling Extension")
+Signed-off-by: Leo Yan <leo.yan@arm.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/processor_driver.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/perf/arm_spe_pmu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/acpi/processor_driver.c b/drivers/acpi/processor_driver.c
-index ccf8d93c314b7..c076e1d5a228e 100644
---- a/drivers/acpi/processor_driver.c
-+++ b/drivers/acpi/processor_driver.c
-@@ -293,6 +293,12 @@ static int __init acpi_processor_driver_init(void)
- unregister_idle_drv:
- 	acpi_processor_unregister_idle_driver();
+diff --git a/drivers/perf/arm_spe_pmu.c b/drivers/perf/arm_spe_pmu.c
+index 5164078c06d25..1966de0af58f2 100644
+--- a/drivers/perf/arm_spe_pmu.c
++++ b/drivers/perf/arm_spe_pmu.c
+@@ -489,7 +489,7 @@ static u64 __arm_spe_pmu_next_off(struct perf_output_handle *handle)
+ 	 * the page boundary following it. Keep the tail boundary if
+ 	 * that's lower.
+ 	 */
+-	if (handle->wakeup < (handle->head + handle->size) && head <= wakeup)
++	if ((handle->wakeup - handle->head) < handle->size && head <= wakeup)
+ 		limit = min(limit, round_up(wakeup, PAGE_SIZE));
  
-+	if (acpi_processor_cpufreq_init) {
-+		cpufreq_unregister_notifier(&acpi_processor_notifier_block,
-+					    CPUFREQ_POLICY_NOTIFIER);
-+		acpi_processor_cpufreq_init = false;
-+	}
-+
- 	return result;
- }
- 
+ 	if (limit > head)
 -- 
 2.53.0
 
