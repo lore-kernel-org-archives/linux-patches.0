@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBB4FF4F1;
-	Sat, 12 Sep 2026 16:29:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6E08F4F1;
+	Sat, 12 Sep 2026 16:29:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789230552; cv=none; b=DhTJISqO3uAR80RjsznXj/9fF/IWkoC1zXvSw3bl/gyEw146UHqZ4vBaUOBUK/JtFb45BupHopIRDMmPzRuqoCsJOMFlwoXOYk8KHMddF4e+fHuv4fpxqIxj7zyvuSmMaY3nx7GF1jXrAXiVXRaXUGNX8EqOQDO4nKBcsY3At7s=
+	t=1789230557; cv=none; b=PaJ4jaSfVENIkepuxxb5tY5ibggBFlhzI8zSttA8bIr4vq032NPaacaieVrrRTFJsHW5A3SCZBZIEg1mPOIDv6GeydcT7vYwn1Fmy3/wHpTdAKuAz9HW5/wzPrMtT95RZ3zMOyNa/ENyNsjeq2LXQjRuVfC5CjqpuJYbVct6nCA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789230552; c=relaxed/simple;
-	bh=REs4SIyeQtXOW3mGg+e4cQ2FG4h3qnrxqNAFzuK2GrU=;
+	s=arc-20240116; t=1789230557; c=relaxed/simple;
+	bh=ganYfWtQGEcLBQp6Hpg/e3Z0x/3poP3rA0A/Ye0dx3U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I/vI3X5X2/0AHEZ4YS7XLQYpkw645DGhqHv9pJFN+NXJ0auDVTIwHfGJBIK492USHzAWMGpvayTzdZtgq1SC9RXJ+ZvUOcmTDpuJ7ljXoxCOvlD1jqUJJErX2QmCS64A+KWAMsUAGGr66UPfqc6kvkqiJ9/sRGB2TI6bG+4v/Bo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sz+4oZ9J; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FjlPEMWllR4psH8iswPGAasXLeKaj+fPUVFMGQywVOGVAdOztuYQZ2ro8Hb9noPzSqmPBsFMP+biq9qigr63CXaGHnZjZ97E3cwH/3rZWGy7+LqrNYZbnWURiWwmSEad4cDbb1IlKOJW4UjRso+3PuNPiPf63m/5ICcYMWR2Rvc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1IAIHQtT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sz+4oZ9J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75F8D1F000FF;
-	Sat, 12 Sep 2026 16:29:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1IAIHQtT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 483A41F000FF;
+	Sat, 12 Sep 2026 16:29:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789230551;
-	bh=ZMSmIxxWs4lvu+0mffKD3sykoVgP8zjuDMLPHWVPntc=;
+	s=korg; t=1789230556;
+	bh=J8srSptl1ERc6ahlRSIicSiB1LMGYw4I6lPOkZEG/i8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Sz+4oZ9J6mcnpuIwwk94XVvQb7QdZjsstECrlaWZteZHQ+J3VoYhHeqgx30qrpIS+
-	 WhCewxZX1VrIifwln67aKlvKE+FqaolcI/1uN1r/SSSBhk/eiTOuMk0H5emEOFLk4/
-	 pAFXaS1S+/9ccKc72Fp26IQMrIdpYnQyQ0lgjWRo=
+	b=1IAIHQtTLTJjn/DR5OwU86vPNNCPnoi51fs22savq+WJQwB421MSB9Fg8W3i8An2h
+	 yPkbUP983zmdxUYbNm+THt3/CVL7NT89F4aLBh5s0kY5g09b/NFjlt1jfSDY/rCNF/
+	 r5vzwPCCRqU9pQ2fY66C8pApGDoO2FAzDAMrVzoA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	"Zhang, Yanmin" <yanmin_zhang@linux.intel.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0816/1191] perf machine: Check snprintf truncation for guest kallsyms path
-Date: Sat, 12 Sep 2026 08:59:04 +0200
-Message-ID: <20260912065606.596643578@linuxfoundation.org>
+Subject: [PATCH 6.1 0817/1191] wifi: mt76: mt7915: unlink TWT flow if the MCU rejects the agreement
+Date: Sat, 12 Sep 2026 08:59:05 +0200
+Message-ID: <20260912065606.620096620@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -53,51 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit d04ef71492fad7230d474efe33d05f4c0563d409 ]
+[ Upstream commit 16a04441eab0dcd4d7126a6f66b370adbf28f96d ]
 
-machines__create_guest_kernel_maps() builds the guest kallsyms path
-with snprintf() without checking the return value.  A truncated path
-could pass the access() check if a prefix directory happens to contain
-a file named "kallsyms", leading to the wrong file being used for
-symbol resolution.
+The flow is added to dev->twt_list before sending the agreement to the
+firmware, but the error path leaves it linked while flowid_mask is
+never set. The flow slot can then be reused and memset while still on
+the list, corrupting twt_list, and station removal leaves a dangling
+entry behind that mt7915_mac_twt_sched_list_add() later walks.
 
-Check for truncation and skip the directory.
-
-Fixes: a1645ce12adb ("perf: 'perf kvm' tool for monitoring guest performance from host")
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Cc: Zhang, Yanmin <yanmin_zhang@linux.intel.com>
-Assisted-by: Claude:claude-opus-4.6
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Fixes: 3782b69d03e7 ("mt76: mt7915: introduce mt7915_mac_add_twt_setup routine")
+Link: https://patch.msgid.link/20260724124813.3961474-17-nbd@nbd.name
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/machine.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7915/mac.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/tools/perf/util/machine.c b/tools/perf/util/machine.c
-index d4a39b147df64..f1bf5c23b4bd3 100644
---- a/tools/perf/util/machine.c
-+++ b/tools/perf/util/machine.c
-@@ -1374,9 +1374,14 @@ int machines__create_guest_kernel_maps(struct machines *machines)
- 				free(namelist[i]);
- 				continue;
- 			}
--			snprintf(path, sizeof(path), "%s/%s/proc/kallsyms",
--				 symbol_conf.guestmount,
--				 namelist[i]->d_name);
-+			if (snprintf(path, sizeof(path), "%s/%s/proc/kallsyms",
-+				     symbol_conf.guestmount,
-+				     namelist[i]->d_name) >= (int)sizeof(path)) {
-+				pr_debug("Guest kallsyms path too long for %s. Skipping.\n",
-+					 namelist[i]->d_name);
-+				free(namelist[i]);
-+				continue;
-+			}
- 			if (access(path, R_OK)) {
- 				pr_debug("Can't access file %s\n", path);
- 				free(namelist[i]);
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/mac.c b/drivers/net/wireless/mediatek/mt76/mt7915/mac.c
+index 36c4bfb7776b1..f4f8953254970 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/mac.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/mac.c
+@@ -2125,8 +2125,10 @@ void mt7915_mac_add_twt_setup(struct ieee80211_hw *hw,
+ 	}
+ 	flow->tsf = le64_to_cpu(twt_agrt->twt);
+ 
+-	if (mt7915_mcu_twt_agrt_update(dev, msta->vif, flow, MCU_TWT_AGRT_ADD))
++	if (mt7915_mcu_twt_agrt_update(dev, msta->vif, flow, MCU_TWT_AGRT_ADD)) {
++		list_del(&flow->list);
+ 		goto unlock;
++	}
+ 
+ 	setup_cmd = TWT_SETUP_CMD_ACCEPT;
+ 	dev->twt.table_mask |= BIT(table_id);
 -- 
 2.53.0
 
