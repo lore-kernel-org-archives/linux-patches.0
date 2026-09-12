@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F884399351;
-	Sat, 12 Sep 2026 20:00:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B95938F656;
+	Sat, 12 Sep 2026 20:00:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789243255; cv=none; b=USm7aHxMvk13Cm9H+cwFxU9wpN1hyNOSiKWkczf+LE61GJJUlwN5ShHcHmZSg6ke9pCOgG8AnMm8KBnUBCzFHNuIpljHlL252jVdlrk9xvF9t1JsRe7+Tkb9GucZh2YjFJjqm7adDPXEKzV1Uhi+KeprRHBoyRjYwtICr3nmZG4=
+	t=1789243258; cv=none; b=IyRUR30PR+LYkJ11d+bGX3yP8mM/4NckEKUUcswd0b42bC/a1vt9y0O7xjR102Rz3SJbyeiGjgbyCp9akmLHwx/tSQbcycxHyU0oQCmNZTerVHI+0hnwTc+wM3/hnW8FhZ+NlWScDbYmOQT68fITBbsyAthzEORZ/digjz6o4UE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789243255; c=relaxed/simple;
-	bh=/0ltlKIwohv3P8E/n6woQFcVPWeS+mosnYDz2h62lt0=;
+	s=arc-20240116; t=1789243258; c=relaxed/simple;
+	bh=nktIc+CiBAlq0ffSUOxwXi3TX0QOfRdUah2OghCiSo0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t/acF0fUbvLeUzDgHe/aV+RhJNuwAfyrA2aFtkad6h1X3ikJyTHG+/Xb54oGkaxr2s2bE+Ai39fZ5Mz8LIRPWfBCE75aQTZhhRz/N6gnARpKHkg0sRhBLotwyEZGL/hupVxGNI+GhZETV29Pxlo8vMFAbGZw2hFbL7JbABOvweQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e80xAm93; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IcjnsWXG6BNPinsyEq6ZvNS1sXQ5zvs34ymF+5AT0hRjNo4o9oZEfLHVsOes875MxAaVAxyowF4r2pyZ4PKLCklsBVw16uar23HkbxW4NzdQCKc5ugk5q/4p48CUk5Vn9AsrBC7HoZJLB1oO76soHAmmZ0V/EvmHiGoZzhFNSXg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pp/7ZSs0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e80xAm93"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 992341F000FF;
-	Sat, 12 Sep 2026 20:00:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pp/7ZSs0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77A031F000FF;
+	Sat, 12 Sep 2026 20:00:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789243254;
-	bh=vAwc8RaCJnMp4ggUuW2VlapOVA70VHQX1tuUKw0NMzg=;
+	s=korg; t=1789243257;
+	bh=qFZVeo0ogW389B5L5EmHeW6/CkoMZhSh9vN7MftG0nw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e80xAm931b7uEgznObSCznm4kt1joAP6dzXv9lo0PgvB10nCdQm+It6J4fzgL4Bjm
-	 Ow5FGiqXajSRaORz7tHea0vh9tndastLfF5+q8jpuo0JV3eVRDkSyfcdTwAyJjKXKT
-	 PSh+rG/Z7PNJaXT/999jZKrRY4dukvdfgcAni1ts=
+	b=pp/7ZSs0VMfJ7aBxXiFZQ4Bmjk4/XS7/ZRcYj7SY8q4ncCPvTME3zg81QAb37TIev
+	 vuzMm07KMUIt8t/IrzHkHQqRY50T3RCEtgqmRf9wj58E7gsDXy8p1FObVt5uYQJnDW
+	 60j9PogwxmcS9u7uSfjD1S+0oWhTo78pFBAQg1lE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abaci Robot <abaci@linux.alibaba.com>,
-	Yang Li <yang.lee@linux.alibaba.com>,
 	Zhihao Cheng <chengzhihao1@huawei.com>,
 	Richard Weinberger <richard@nod.at>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 689/798] ubi: Simplify bool conversion
-Date: Sat, 12 Sep 2026 09:05:17 +0200
-Message-ID: <20260912065532.892902439@linuxfoundation.org>
+Subject: [PATCH 5.10 690/798] ubi: fastmap: Wait until there are enough free PEBs before filling pools
+Date: Sat, 12 Sep 2026 09:05:18 +0200
+Message-ID: <20260912065532.916261360@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -53,36 +51,230 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Li <yang.lee@linux.alibaba.com>
+From: Zhihao Cheng <chengzhihao1@huawei.com>
 
-[ Upstream commit ef5031137b90c5338792f7073ba3bf38d14c8cf1 ]
+[ Upstream commit a2ea69dac674df0fba59c66146a21145108a85ed ]
 
-./drivers/mtd/ubi/build.c:1261:33-38: WARNING: conversion to bool not needed here
+Wait until there are enough free PEBs before filling pool/wl_pool,
+sometimes erase_worker is not scheduled in time, which causes two
+situations:
+ A. There are few PEBs filled in pool, which makes ubi_update_fastmap
+    is frequently called and leads first 64 PEBs are erased more times
+    than other PEBs. So waiting free PEBs before filling pool reduces
+    fastmap updating frequency and prolongs flash service life.
+ B. In situation that space is nearly running out, ubi_refill_pools()
+    cannot make sure pool and wl_pool are filled with free PEBs, caused
+    by the delay of erase_worker. After this patch applied, there must
+    exist free PEBs in pool after one call of ubi_update_fastmap.
 
-Reported-by: Abaci Robot <abaci@linux.alibaba.com>
-Link: https://bugzilla.openanolis.cn/show_bug.cgi?id=4061
-Signed-off-by: Yang Li <yang.lee@linux.alibaba.com>
-Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Besides, this patch is a preparetion for fixing large erase counter in
+fastmap data block and fixing lapsed wear leveling for first 64 PEBs.
+
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=217787
+Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
 Signed-off-by: Richard Weinberger <richard@nod.at>
 Stable-dep-of: 5b0a6b554e12 ("ubi: Fix rollback for explicit UBI device numbers")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/ubi/build.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mtd/ubi/eba.c        |  3 --
+ drivers/mtd/ubi/fastmap-wl.c | 53 ++++++++++++++++++++++++++++++++++--
+ drivers/mtd/ubi/fastmap.c    |  6 +---
+ drivers/mtd/ubi/ubi.h        |  5 +++-
+ drivers/mtd/ubi/wl.c         | 14 +++++++---
+ 5 files changed, 65 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/mtd/ubi/build.c b/drivers/mtd/ubi/build.c
-index ed87f33f3a0fa..0d9f8d36130f8 100644
---- a/drivers/mtd/ubi/build.c
-+++ b/drivers/mtd/ubi/build.c
-@@ -1274,7 +1274,7 @@ static int __init ubi_init(void)
- 		mutex_lock(&ubi_devices_mutex);
- 		err = ubi_attach_mtd_dev(mtd, p->ubi_num,
- 					 p->vid_hdr_offs, p->max_beb_per1024,
--					 p->enable_fm == 0 ? true : false);
-+					 p->enable_fm == 0);
- 		mutex_unlock(&ubi_devices_mutex);
- 		if (err < 0) {
- 			pr_err("UBI error: cannot attach mtd%d\n",
+diff --git a/drivers/mtd/ubi/eba.c b/drivers/mtd/ubi/eba.c
+index 43a8bb64b671c..5ebafe606a124 100644
+--- a/drivers/mtd/ubi/eba.c
++++ b/drivers/mtd/ubi/eba.c
+@@ -33,9 +33,6 @@
+ #include <linux/err.h>
+ #include "ubi.h"
+ 
+-/* Number of physical eraseblocks reserved for atomic LEB change operation */
+-#define EBA_RESERVED_PEBS 1
+-
+ /**
+  * struct ubi_eba_entry - structure encoding a single LEB -> PEB association
+  * @pnum: the physical eraseblock number attached to the LEB
+diff --git a/drivers/mtd/ubi/fastmap-wl.c b/drivers/mtd/ubi/fastmap-wl.c
+index 69592be33adfc..005ff4ccc3534 100644
+--- a/drivers/mtd/ubi/fastmap-wl.c
++++ b/drivers/mtd/ubi/fastmap-wl.c
+@@ -97,6 +97,46 @@ struct ubi_wl_entry *ubi_wl_get_fm_peb(struct ubi_device *ubi, int anchor)
+ 	return e;
+ }
+ 
++/*
++ * wait_free_pebs_for_pool - wait until there enough free pebs
++ * @ubi: UBI device description object
++ *
++ * Wait and execute do_work until there are enough free pebs, fill pool
++ * as much as we can. This will reduce pool refilling times, which can
++ * reduce the fastmap updating frequency.
++ */
++static void wait_free_pebs_for_pool(struct ubi_device *ubi)
++{
++	struct ubi_fm_pool *wl_pool = &ubi->fm_wl_pool;
++	struct ubi_fm_pool *pool = &ubi->fm_pool;
++	int free, expect_free, executed;
++	/*
++	 * There are at least following free pebs which reserved by UBI:
++	 * 1. WL_RESERVED_PEBS[1]
++	 * 2. EBA_RESERVED_PEBS[1]
++	 * 3. fm pebs - 1: Twice fastmap size deducted by fastmap and fm_anchor
++	 * 4. beb_rsvd_pebs: This value should be get under lock ubi->wl_lock
++	 */
++	int reserved = WL_RESERVED_PEBS + EBA_RESERVED_PEBS +
++		       ubi->fm_size / ubi->leb_size - 1;
++
++	do {
++		spin_lock(&ubi->wl_lock);
++		free = ubi->free_count;
++		free += pool->size - pool->used + wl_pool->size - wl_pool->used;
++		expect_free = reserved + ubi->beb_rsvd_pebs;
++		spin_unlock(&ubi->wl_lock);
++
++		/*
++		 * Break out if there are no works or work is executed failure,
++		 * given the fact that erase_worker will schedule itself when
++		 * -EBUSY is returned from mtd layer caused by system shutdown.
++		 */
++		if (do_work(ubi, &executed) || !executed)
++			break;
++	} while (free < expect_free);
++}
++
+ /*
+  * has_enough_free_count - whether ubi has enough free pebs to fill fm pools
+  * @ubi: UBI device description object
+@@ -125,16 +165,23 @@ static bool has_enough_free_count(struct ubi_device *ubi, bool is_wl_pool)
+ }
+ 
+ /**
+- * ubi_refill_pools - refills all fastmap PEB pools.
++ * ubi_refill_pools_and_lock - refills all fastmap PEB pools and takes fm locks.
+  * @ubi: UBI device description object
+  */
+-void ubi_refill_pools(struct ubi_device *ubi)
++void ubi_refill_pools_and_lock(struct ubi_device *ubi)
+ {
+ 	struct ubi_fm_pool *wl_pool = &ubi->fm_wl_pool;
+ 	struct ubi_fm_pool *pool = &ubi->fm_pool;
+ 	struct ubi_wl_entry *e;
+ 	int enough;
+ 
++	if (!ubi->ro_mode && !ubi->fm_disabled)
++		wait_free_pebs_for_pool(ubi);
++
++	down_write(&ubi->fm_protect);
++	down_write(&ubi->work_sem);
++	down_write(&ubi->fm_eba_sem);
++
+ 	spin_lock(&ubi->wl_lock);
+ 
+ 	return_unused_pool_pebs(ubi, wl_pool);
+@@ -210,7 +257,7 @@ static int produce_free_peb(struct ubi_device *ubi)
+ 
+ 	while (!ubi->free.rb_node && ubi->works_count) {
+ 		dbg_wl("do one work synchronously");
+-		err = do_work(ubi);
++		err = do_work(ubi, NULL);
+ 
+ 		if (err)
+ 			return err;
+diff --git a/drivers/mtd/ubi/fastmap.c b/drivers/mtd/ubi/fastmap.c
+index bdb83eb87d162..0777f0fd20fe7 100644
+--- a/drivers/mtd/ubi/fastmap.c
++++ b/drivers/mtd/ubi/fastmap.c
+@@ -1492,11 +1492,7 @@ int ubi_update_fastmap(struct ubi_device *ubi)
+ 	struct ubi_fastmap_layout *new_fm, *old_fm;
+ 	struct ubi_wl_entry *tmp_e;
+ 
+-	down_write(&ubi->fm_protect);
+-	down_write(&ubi->work_sem);
+-	down_write(&ubi->fm_eba_sem);
+-
+-	ubi_refill_pools(ubi);
++	ubi_refill_pools_and_lock(ubi);
+ 
+ 	if (ubi->ro_mode || ubi->fm_disabled) {
+ 		up_write(&ubi->fm_eba_sem);
+diff --git a/drivers/mtd/ubi/ubi.h b/drivers/mtd/ubi/ubi.h
+index 12f5ccccb2525..0ee7f4bce7634 100644
+--- a/drivers/mtd/ubi/ubi.h
++++ b/drivers/mtd/ubi/ubi.h
+@@ -82,6 +82,9 @@ void ubi_err(const struct ubi_device *ubi, const char *fmt, ...);
+ #define UBI_DFS_DIR_NAME "ubi%d"
+ #define UBI_DFS_DIR_LEN  (3 + 2 + 1)
+ 
++/* Number of physical eraseblocks reserved for atomic LEB change operation */
++#define EBA_RESERVED_PEBS 1
++
+ /*
+  * Error codes returned by the I/O sub-system.
+  *
+@@ -917,7 +920,7 @@ struct ubi_wl_entry *ubi_wl_get_fm_peb(struct ubi_device *ubi, int anchor);
+ int ubi_wl_put_fm_peb(struct ubi_device *ubi, struct ubi_wl_entry *used_e,
+ 		      int lnum, int torture);
+ int ubi_is_erase_work(struct ubi_work *wrk);
+-void ubi_refill_pools(struct ubi_device *ubi);
++void ubi_refill_pools_and_lock(struct ubi_device *ubi);
+ int ubi_ensure_anchor_pebs(struct ubi_device *ubi);
+ int ubi_bitflip_check(struct ubi_device *ubi, int pnum, int force_scrub);
+ 
+diff --git a/drivers/mtd/ubi/wl.c b/drivers/mtd/ubi/wl.c
+index 0e45f14a12f98..be7a5bf94b6e8 100644
+--- a/drivers/mtd/ubi/wl.c
++++ b/drivers/mtd/ubi/wl.c
+@@ -181,11 +181,13 @@ static void wl_entry_destroy(struct ubi_device *ubi, struct ubi_wl_entry *e)
+ /**
+  * do_work - do one pending work.
+  * @ubi: UBI device description object
++ * @executed: whether there is one work is executed
+  *
+  * This function returns zero in case of success and a negative error code in
+- * case of failure.
++ * case of failure. If @executed is not NULL and there is one work executed,
++ * @executed is set as %1, otherwise @executed is set as %0.
+  */
+-static int do_work(struct ubi_device *ubi)
++static int do_work(struct ubi_device *ubi, int *executed)
+ {
+ 	int err;
+ 	struct ubi_work *wrk;
+@@ -203,9 +205,13 @@ static int do_work(struct ubi_device *ubi)
+ 	if (list_empty(&ubi->works)) {
+ 		spin_unlock(&ubi->wl_lock);
+ 		up_read(&ubi->work_sem);
++		if (executed)
++			*executed = 0;
+ 		return 0;
+ 	}
+ 
++	if (executed)
++		*executed = 1;
+ 	wrk = list_entry(ubi->works.next, struct ubi_work, list);
+ 	list_del(&wrk->list);
+ 	ubi->works_count -= 1;
+@@ -1685,7 +1691,7 @@ int ubi_thread(void *u)
+ 		}
+ 		spin_unlock(&ubi->wl_lock);
+ 
+-		err = do_work(ubi);
++		err = do_work(ubi, NULL);
+ 		if (err) {
+ 			ubi_err(ubi, "%s: work failed with error code %d",
+ 				ubi->bgt_name, err);
+@@ -2096,7 +2102,7 @@ static int produce_free_peb(struct ubi_device *ubi)
+ 		spin_unlock(&ubi->wl_lock);
+ 
+ 		dbg_wl("do one work synchronously");
+-		err = do_work(ubi);
++		err = do_work(ubi, NULL);
+ 
+ 		spin_lock(&ubi->wl_lock);
+ 		if (err)
 -- 
 2.53.0
 
