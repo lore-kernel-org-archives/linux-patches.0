@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02D48345EB9;
-	Sat, 12 Sep 2026 16:24:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA579331203;
+	Sat, 12 Sep 2026 16:24:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789230245; cv=none; b=JoyMHjSbkrCKwIlqz5oQGw5sQJjJNZve+W3GRBwA1XD0xo3wOoPRBQTytyDxlw/OVidhzd+3x/62VP5Y0fgchBH9CSOaJIfSR+AYviykozaRs8ph6WuLPhLTmala9cHj3rGTXrCpfPc4k0rIm4B+NxZeUMa5Z8C/ts/paMyFDW8=
+	t=1789230250; cv=none; b=WCPFIoWn1QUcQe6Z1wsnxJLLjInLBbgw0s6MZeEbOs6wommXlsSMEp9/jmm2FXItu0ZTN0/ZMVyt+yD2BIrJ88fy2ydiHUAv+iVrEnRwh2EPmT3yyBd+wFB6mi9xbu+dpbLI8c5aYzek334OdAmJFc7DtA1eGnerA6m3qnWNxwA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789230245; c=relaxed/simple;
-	bh=+XhP38IR3aUu1Y8FlB9rUBodHyuqTg+LLmgJcZ1UvK0=;
+	s=arc-20240116; t=1789230250; c=relaxed/simple;
+	bh=lFfqyWM6+u8SfHEZUk3sLePw8AC8tkenq7HRiIT7Pvg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qyzid00prITPHiFIR6wl/5wEvM7tVWLVI2hZxCq5IzGBIFaB9MDJ+V9a7TEjRdi6Os06Qa5mnXYbnb2vWqe2CXXeOd3zsu7CThUL9WDtHPeKeRhnLJc9gXgYEOiHlLz4kEAmhyWPG9qyqHWZYHWpV7dQk58KcSf4COG4bzqMyDU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GL7FLPpK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GRsjB4z5NqDU7fLeCAZPxShevBa937OIEIhnqX5STBFwMBDly3TN3sTz/BG8vsj4Z74J6VDmrMBjkyyIhooEjltO06ZpllwAEIcDJnWec7HzGZEqH7nYHE/baV3iog+qW925gOW0jrs2f2wgpdPeBPfnLDk/CeSLIE+4x6vUyIs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P4Nuzezx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GL7FLPpK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDE061F000FF;
-	Sat, 12 Sep 2026 16:24:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P4Nuzezx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8A7E1F000FF;
+	Sat, 12 Sep 2026 16:24:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789230243;
-	bh=+Bk3nUKSDJjAStNTw52BYtpz0tIXgUDiHYWoGimoSLk=;
+	s=korg; t=1789230248;
+	bh=LNLOd0A5eEr4JogpP7c686GeCpBJNgE84JEnOTzBFSI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GL7FLPpKl6aJK0NsBFRLFExtP+hZgDd7657qDTfnRrCtQgCwn0y3NY3bUY6lirDh/
-	 I/tkNYEykN6mHIJd56IXTdcy1QpC7F5Kz0tlBwWJeOblfMkswgqp9GPuUm9oRJray8
-	 UqZnOHV+Q7GyrVn8/C8KZs9iU0kH4xvq/YqN0Jdc=
+	b=P4NuzezxkKuuw+PlzQEfSk4FlccBYgvG0mgpYXnd8dkHpuPPCTmC2dtLIdM2gstvZ
+	 kLchMJP2z+YtVuMaVjg3ksRjeSeASuBltSaBtMFkAwTpRPwruqYeSEIFMb+tH1YWNQ
+	 to42cNH2fV2Pvmd3Idx+fdHFlwBJS+0QoidTvoZk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Juri Lelli <juri.lelli@redhat.com>,
-	Clark Williams <williams@redhat.com>,
-	Bagas Sanjaya <bagasdotme@gmail.com>,
-	Daniel Bristot de Oliveira <bristot@kernel.org>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
+	Brian Masney <bmasney@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0755/1191] tracing/osnoise: Add PANIC_ON_STOP option
-Date: Sat, 12 Sep 2026 08:58:03 +0200
-Message-ID: <20260912065605.237081193@linuxfoundation.org>
+Subject: [PATCH 6.1 0738/1191] clk: palmas: Manage external-control prepare with devm
+Date: Sat, 12 Sep 2026 08:57:46 +0200
+Message-ID: <20260912065604.857717451@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -56,66 +52,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Bristot de Oliveira <bristot@kernel.org>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-[ Upstream commit 1603dda47714cebe8a29b2154407da7a929d13f4 ]
+[ Upstream commit ccda84fcbf3a972973f772384935928f41817b3a ]
 
-Often the latency observed in a CPU is not caused by the work being done
-in the CPU itself, but by work done on another CPU that causes the
-hardware to stall all CPUs. In this case, it is interesting to know
-what is happening on ALL CPUs, and the best way to do this is via
-crash dump analysis.
+palmas_clks_init_configure() prepares the clock when an external control
+pin is configured. The current driver only drops that prepare reference
+when external control configuration fails.
 
-Add the PANIC_ON_STOP option to osnoise/timerlat tracers. The default
-behavior is having this option off. When enabled by the user, the system
-will panic after hitting a stop tracing condition.
+If provider registration fails after that point, or if the driver is later
+removed, the prepare reference remains held.
 
-This option was motivated by a real scenario that Juri Lelli and I
-were debugging.
+Register a device-managed action after clk_prepare() succeeds. This
+balances the prepare reference on subsequent probe failure and driver
+removal.
 
-Link: https://lkml.kernel.org/r/249ce4287c6725543e6db845a6e0df621dc67db5.1670623111.git.bristot@kernel.org
-
-Cc: Juri Lelli <juri.lelli@redhat.com>
-Cc: Clark Williams <williams@redhat.com>
-Cc: Bagas Sanjaya <bagasdotme@gmail.com>
-Cc: Daniel Bristot de Oliveira <bristot@kernel.org>
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Jonathan Corbet <corbet@lwn.net>
-Signed-off-by: Daniel Bristot de Oliveira <bristot@kernel.org>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Stable-dep-of: 27d73e81195b ("rcu: Mark accesses to ->rcu_urgent_qs and ->rcu_need_heavy_qs")
+Fixes: 942d1d674931 ("clk: Add driver for Palmas clk32kg and clk32kgaudio clocks")
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Reviewed-by: Brian Masney <bmasney@redhat.com>
+Signed-off-by: Brian Masney <bmasney@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_osnoise.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/clk/clk-palmas.c | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/trace/trace_osnoise.c b/kernel/trace/trace_osnoise.c
-index 3319f940d78e6..37653a871d75d 100644
---- a/kernel/trace/trace_osnoise.c
-+++ b/kernel/trace/trace_osnoise.c
-@@ -54,10 +54,11 @@
- enum osnoise_options_index {
- 	OSN_DEFAULTS = 0,
- 	OSN_WORKLOAD,
-+	OSN_PANIC_ON_STOP,
- 	OSN_MAX
- };
+diff --git a/drivers/clk/clk-palmas.c b/drivers/clk/clk-palmas.c
+index b8c3d0da1918b..2ea25c04c5932 100644
+--- a/drivers/clk/clk-palmas.c
++++ b/drivers/clk/clk-palmas.c
+@@ -195,6 +195,13 @@ static void palmas_clks_get_clk_data(struct platform_device *pdev,
+ 	cinfo->ext_control_pin = prop;
+ }
  
--static const char * const osnoise_options_str[OSN_MAX] = { "DEFAULTS", "OSNOISE_WORKLOAD" };
-+static const char * const osnoise_options_str[OSN_MAX] = { "DEFAULTS", "OSNOISE_WORKLOAD", "PANIC_ON_STOP" };
- 
- #define OSN_DEFAULT_OPTIONS	0x2
- unsigned long osnoise_options	= OSN_DEFAULT_OPTIONS;
-@@ -1271,6 +1272,9 @@ static __always_inline void osnoise_stop_tracing(void)
- 		trace_array_printk_buf(tr->array_buffer.buffer, _THIS_IP_,
- 				"stop tracing hit on cpu %d\n", smp_processor_id());
- 
-+		if (test_bit(OSN_PANIC_ON_STOP, &osnoise_options))
-+			panic("tracer hit stop condition on CPU %d\n", smp_processor_id());
++static void palmas_clks_unprepare_ext_control(void *data)
++{
++	struct palmas_clock_info *cinfo = data;
 +
- 		tracer_tracing_off(tr);
++	clk_unprepare(cinfo->hw.clk);
++}
++
+ static int palmas_clks_init_configure(struct palmas_clock_info *cinfo)
+ {
+ 	int ret;
+@@ -215,13 +222,18 @@ static int palmas_clks_init_configure(struct palmas_clock_info *cinfo)
+ 			return ret;
+ 		}
+ 
++		ret = devm_add_action_or_reset(cinfo->dev,
++					       palmas_clks_unprepare_ext_control,
++					       cinfo);
++		if (ret)
++			return ret;
++
+ 		ret = palmas_ext_control_req_config(cinfo->palmas,
+ 					cinfo->clk_desc->sleep_reqstr_id,
+ 					cinfo->ext_control_pin, true);
+ 		if (ret < 0) {
+ 			dev_err(cinfo->dev, "Ext config for %s failed, %d\n",
+ 				cinfo->clk_desc->clk_name, ret);
+-			clk_unprepare(cinfo->hw.clk);
+ 			return ret;
+ 		}
  	}
- 	rcu_read_unlock();
 -- 
 2.53.0
 
