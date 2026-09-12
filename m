@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B687E364038;
-	Sat, 12 Sep 2026 09:48:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6CBD364038;
+	Sat, 12 Sep 2026 09:48:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789206504; cv=none; b=CfqF9GoSJ6oY7TXgg71dqqTV3OWX/G8ZYVQXzqytVMfsG1B8OxJwN9Syag1CA6XlKeQIuqIVxp2IcHgRrst2FVe3lcq7f0TgOGBnsS/mRFHQb8geL8Lu6xaS/Zt9EKLQW2cvG5hslAM0+VAAHx1q6+QrJILEzTz5dwMUtE13xrY=
+	t=1789206510; cv=none; b=PiGhf2whcC00f6aFWwBOlK8DUE8gczzs8//pzYVNDhymkzgpS48CvqJU8vQ0BLzcrhkwqMrwbGyXHkm4nz04FUrQMVKao0hKBaJEvgyapNEpUsso4TQaGh0OUbNFzhugI3rZzQhN8Adl2WdJOEq7VN+vwghddXclPF01QvvxKas=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789206504; c=relaxed/simple;
-	bh=UlwsJQgIZuprl37UE+EfCw4xPvJqp+J1MCSNPAhNUNk=;
+	s=arc-20240116; t=1789206510; c=relaxed/simple;
+	bh=DuzE8bN4iypaBGRftXR2EGpWuZeiJXzq5ZHTlXig5pI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a8ZQQ891j3WPsEl4OlRcE+hnmVr0bU3Lr8aQohnbt/cz05SJFQJr8JZmhhv1y+zmKmSKdwMGagiRAL6KengwmT7baSm/DKL9DKhr0tOggIs3MrfRuYyWf8b3fI8rdG3OMD0JEj/uFEHfrA9kd/19CmBSR7F9naGy+69/5TkXgPI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m6HGIXw4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AVqfeV1sIGDbRL2tq1awPHY36yKbpx/Yj6QLroAchy0/FhSCNf8ZiyV5naUV+cTMqN8+QVoZUZd+BoMQc0fgRNbfB7Fltfe5gMgaGCkE7VLkn0Zd1mNNm2SAk3wXI5NLASxzDXdPlK/8ooKXVPj8mKcDS+VLKF864iXVPZlZxRg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ifUUOGlp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m6HGIXw4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DB4E1F000FF;
-	Sat, 12 Sep 2026 09:48:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ifUUOGlp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D3B51F000FF;
+	Sat, 12 Sep 2026 09:48:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789206503;
-	bh=eZyObHOgFMR637B4d86Arq8AOAdWUB57DNx9jpSE38E=;
+	s=korg; t=1789206508;
+	bh=RMxkPPJ/o95bbv9u+wqNckn4009xyP51m7YNU8IVBXU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=m6HGIXw491PBJmvCd0kVCsj3bQDFVB0Jb7h/qFq+W4eEeyHvlSY4hAfUBkEvBqff8
-	 sPd+9+I5exSK17wypISP/gj58l/3y3oPVh4v5PSruKvCT9UH9F1uzWLO/Wb4KH2vVK
-	 rubVKFerPFw7pmMQpbzHTld/0Nzu/LEBQznpPzSw=
+	b=ifUUOGlpHZu7Cpv7ymECjTpCkTO+3ltjR6ReChIUP0oXUiJKXUXq8/mKFKW6bhZCh
+	 vIq2AvMhu9c+GR2HuarqCx2qcHxemFHiduKZmzV5xqo73BjS3pbr0tuMyN/jYOPRyK
+	 5UFOE7PUGTszfFd40Gn0C3KhrEbKpCVlmkvcu8nk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Abel Vesa <abel.vesa@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Sanjay Chitroda <sanjayembeddedse@gmail.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+	Jonathan Cameron <jic23@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0220/1518] arm64: dts: qcom: hamoa: Fix clocks for HSPHYs
-Date: Sat, 12 Sep 2026 08:39:49 +0200
-Message-ID: <20260912065628.465531768@linuxfoundation.org>
+Subject: [PATCH 6.18 0185/1518] iio: orientation: hid-sensor-rotation: Avoid race between callback setup and device exposure
+Date: Sat, 12 Sep 2026 08:39:14 +0200
+Message-ID: <20260912065627.676386130@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,45 +53,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+From: Sanjay Chitroda <sanjayembeddedse@gmail.com>
 
-[ Upstream commit 115894bc201b0cd1799d239875a1b40924f0ef7b ]
+[ Upstream commit 0e32649a7cf3cd784862f8dc0c68a5134731bfff ]
 
-The tertiary controller's HSPHY has its own toggle in TCSR, while the
-primary one is wired directly to the XO clock. Fix that.
+The driver currently exposes the IIO device to userspace before
+completing sensor hub callback registration, and similarly removes
+callbacks while the device can still be accessed during teardown.
 
-Fixes: 4af46b7bd66f ("arm64: dts: qcom: x1e80100: Add USB nodes")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260518-topic-hamoa_hsphy_clk-v1-1-d85203756505@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+This creates a timing window where userspace may enable the buffer
+before callbacks are available. In such cases:
+- samples can be dropped,
+- buffered reads may observe stale or no data.
+
+Reorder probe and remove paths to ensure callbacks are active before
+device exposure and are removed after device is no longer accessible.
+
+This avoids a race window leading to data loss.
+
+Signed-off-by: Sanjay Chitroda <sanjayembeddedse@gmail.com>
+Fixes: fc18dddc0625 ("iio: hid-sensors: Added device rotation support")
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+Signed-off-by: Jonathan Cameron <jic23@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/hamoa.dtsi | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/iio/orientation/hid-sensor-rotation.c | 20 +++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/hamoa.dtsi b/arch/arm64/boot/dts/qcom/hamoa.dtsi
-index adb18c10dbd9f..6a456b3694fc9 100644
---- a/arch/arm64/boot/dts/qcom/hamoa.dtsi
-+++ b/arch/arm64/boot/dts/qcom/hamoa.dtsi
-@@ -2826,7 +2826,7 @@ usb_1_ss0_hsphy: phy@fd3000 {
- 			reg = <0 0x00fd3000 0 0x154>;
- 			#phy-cells = <0>;
+diff --git a/drivers/iio/orientation/hid-sensor-rotation.c b/drivers/iio/orientation/hid-sensor-rotation.c
+index 83a0b0283605b..061934f0cb999 100644
+--- a/drivers/iio/orientation/hid-sensor-rotation.c
++++ b/drivers/iio/orientation/hid-sensor-rotation.c
+@@ -353,12 +353,6 @@ static int hid_dev_rot_probe(struct platform_device *pdev)
+ 		return ret;
+ 	}
  
--			clocks = <&tcsr TCSR_USB2_1_CLKREF_EN>;
-+			clocks = <&rpmhcc RPMH_CXO_CLK>;
- 			clock-names = "ref";
+-	ret = iio_device_register(indio_dev);
+-	if (ret) {
+-		dev_err(&pdev->dev, "device register failed\n");
+-		goto error_remove_trigger;
+-	}
+-
+ 	rot_state->callbacks.send_event = dev_rot_proc_event;
+ 	rot_state->callbacks.capture_sample = dev_rot_capture_sample;
+ 	rot_state->callbacks.pdev = pdev;
+@@ -366,13 +360,19 @@ static int hid_dev_rot_probe(struct platform_device *pdev)
+ 					&rot_state->callbacks);
+ 	if (ret) {
+ 		dev_err(&pdev->dev, "callback reg failed\n");
+-		goto error_iio_unreg;
++		goto error_remove_trigger;
++	}
++
++	ret = iio_device_register(indio_dev);
++	if (ret) {
++		dev_err(&pdev->dev, "device register failed\n");
++		goto error_remove_callback;
+ 	}
  
- 			resets = <&gcc GCC_QUSB2PHY_PRIM_BCR>;
-@@ -2968,7 +2968,7 @@ usb_1_ss2_hsphy: phy@fde000 {
- 			reg = <0 0x00fde000 0 0x154>;
- 			#phy-cells = <0>;
+ 	return 0;
  
--			clocks = <&tcsr TCSR_USB2_1_CLKREF_EN>;
-+			clocks = <&tcsr TCSR_USB2_2_CLKREF_EN>;
- 			clock-names = "ref";
+-error_iio_unreg:
+-	iio_device_unregister(indio_dev);
++error_remove_callback:
++	sensor_hub_remove_callback(hsdev, hsdev->usage);
+ error_remove_trigger:
+ 	hid_sensor_remove_trigger(indio_dev, &rot_state->common_attributes);
+ 	return ret;
+@@ -385,8 +385,8 @@ static void hid_dev_rot_remove(struct platform_device *pdev)
+ 	struct iio_dev *indio_dev = platform_get_drvdata(pdev);
+ 	struct dev_rot_state *rot_state = iio_priv(indio_dev);
  
- 			resets = <&gcc GCC_QUSB2PHY_TERT_BCR>;
+-	sensor_hub_remove_callback(hsdev, hsdev->usage);
+ 	iio_device_unregister(indio_dev);
++	sensor_hub_remove_callback(hsdev, hsdev->usage);
+ 	hid_sensor_remove_trigger(indio_dev, &rot_state->common_attributes);
+ }
+ 
 -- 
 2.53.0
 
