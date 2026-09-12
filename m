@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33BBA2D9792;
-	Sat, 12 Sep 2026 19:05:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EBB03939B3;
+	Sat, 12 Sep 2026 19:05:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789239909; cv=none; b=ZVLlhUhWwwGJu9VAP05+erTSOcrNbqEAAtskOCftPZc4JpSnwuwGIrD/x2k2kueXD9zs+Oq2QYeYBF++6QNZ7eW11Ue4El2FDKIhx8tH8DpI/ZLf2wbvTNHgqXCyqW75+HeLr5pLni9B8mjwcHpJCHPI4b2OHnp8I0skX/nkjRk=
+	t=1789239914; cv=none; b=u7h8731GOWWzoOo2slz4APbM2M4DvOojz21NvUosZZSWrxtW1b2Ucdygemy0mNvJtRYo6ci3BoOSnnV68LHjOh9Rgb0G41a/6zgg3UhotXaR7hfnDYPecm8pvkiQDsKuYIkn39UaPejquuPkrDZ9WkGeV+mXt37PGuenXCTBjyg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789239909; c=relaxed/simple;
-	bh=sO0+7kOK+v9c/9LFcXdum43UTQBIQz3qJ0GEFWb5OzA=;
+	s=arc-20240116; t=1789239914; c=relaxed/simple;
+	bh=aKQbOdFg9DKZNtHWAoF+fVP88xIWH0n8AWlkHXmpIMw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=YNKsGK67q6tE30qQDqOwSy1CFV0P+pMrn23Loe47wIhmfSNYn+aH8llNfipTS9brDRJuRYnTc+zbAEAA2B7ELLYoxTHMHCeqwZt1n61DrW1Uue5jlFblQa1S4LHj81SKRGIJXx4ZnKn5dxBaoEYXr3oriWPvfXvXsl33mS8QN9U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HkHTTnPC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=djswnxWHKXCAbwlGuS4iaqx5tW6Yr0oFboeB1dhO6YuVRsisoIKBa4GQSGW371G/xxU8c1a73YWLDaliFXr3UlJKBPmJAofAELMDt4zPQ9REDJblntSdgCx0FD1LNhvfuSK5pA9tn6ZtFlCn0dtZz9r3A6XLq2m0731bmnd3DMw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zmjDyfWF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HkHTTnPC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E22691F000FF;
-	Sat, 12 Sep 2026 19:05:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zmjDyfWF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CD9A1F000FF;
+	Sat, 12 Sep 2026 19:05:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789239908;
-	bh=q84ScQ70SrmGlRH+ngsVzi4xY40vOoGYAcv8rzCRje0=;
+	s=korg; t=1789239913;
+	bh=c0/C4ifTpLsUHoLNh47/ELHUg6+XmwsxxbkgS96WsIA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HkHTTnPCZqbMeF796h6Scb0nsWER4047FbykWSHL2fNZEvYP9NL/tkPRtil/HgQfU
-	 TtHjIK4BXqprWwbyX9XF1Z14wLkTHuBeK8g6Hp5ncidwvMJT00cNEme3T9iI/Fio+B
-	 lMEkHo8S/GDsut3QRPqPSJdCRMG6reSw+VNagqGg=
+	b=zmjDyfWFpJXPv16RvW7PKbd+SJtGk/Go9Wb2glMawVlQdYVzNI1+xQiXVaHeRszjq
+	 CZcqCJHL/vLd5ZAqil5U+kimTUqnSQwoJ2+XNQpfOHJn/uShw9so7pbH+PXAmm+6rK
+	 jSbHK3ardfcO3KWhn8GC55Se+Mruu8Ypjhgvn5+k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Tom=C3=A1=C5=A1=20Macholda?= <tomas.macholda@nic.cz>,
+	Rosen Penev <rosenp@gmail.com>,
 	Gregory CLEMENT <gregory.clement@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 758/935] arm64: dts: turris-mox: fix usb3 phys
-Date: Sat, 12 Sep 2026 09:03:08 +0200
-Message-ID: <20260912065544.216968359@linuxfoundation.org>
+Subject: [PATCH 5.15 759/935] ARM: dts: helios4: add vcc-supply to EEPROM
+Date: Sat, 12 Sep 2026 09:03:09 +0200
+Message-ID: <20260912065544.240751437@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -45,50 +45,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tomáš Macholda <tomas.macholda@nic.cz>
+From: Rosen Penev <rosenp@gmail.com>
 
-[ Upstream commit 0c2a8eed95160e41b367a1fa605a2c1b24a9639a ]
+[ Upstream commit ef65cf08bd1aa723de2854d02fb8eb8cca273c90 ]
 
-After commit 00e6d608fe80b0f6 ("arm64: dts: marvell: armada-37xx: swap
-PHYs' order in USB3 controller node") swapped USB3 PHY order, USB
-initialization breaks on Turris MOX.
+The at24 driver requests a 'vcc' supply for the EEPROM, producing
+'supply vcc not found, using dummy regulator' at boot when the
+property is missing.
 
-This regression was exposed by commit 91ddf6f722084383 ("phy: marvell:
-mvebu-a3700-utmi: fix incorrect USB2_PHY_CTRL register access") which
-made USB2 devices not work at all.
+The EEPROM sits on the Helios 4 and is powered by the
+same always-on 3.3V rail used by other on-board I2C devices.
+Add vcc-supply = <&reg_3p3v> to silence the warning.
 
-Fix the issue by explicitly adding all USB3 PHYs and PHY names to
-Turris MOX device-tree.
-
-Fixes: 7109d817db2e ("arm64: dts: marvell: add DTS for Turris Mox")
-Signed-off-by: Tomáš Macholda <tomas.macholda@nic.cz>
+Fixes: ced8025b569e ("ARM: dts: armada388-helios4")
+Assisted-by: opencode:big-pickle
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
 Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/marvell/armada-3720-turris-mox.dts | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/arm/boot/dts/armada-388-helios4.dts | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/marvell/armada-3720-turris-mox.dts b/arch/arm64/boot/dts/marvell/armada-3720-turris-mox.dts
-index 7006d6883402d..b30d94cc28b6e 100644
---- a/arch/arm64/boot/dts/marvell/armada-3720-turris-mox.dts
-+++ b/arch/arm64/boot/dts/marvell/armada-3720-turris-mox.dts
-@@ -291,7 +291,8 @@ connector {
+diff --git a/arch/arm/boot/dts/armada-388-helios4.dts b/arch/arm/boot/dts/armada-388-helios4.dts
+index ec134e22bae3e..61fc3adab54bb 100644
+--- a/arch/arm/boot/dts/armada-388-helios4.dts
++++ b/arch/arm/boot/dts/armada-388-helios4.dts
+@@ -201,6 +201,10 @@ temp_sensor: temp@4c {
+ 					reg = <0x4c>;
+ 					vcc-supply = <&reg_3p3v>;
+ 				};
++
++				eeprom@53 {
++					vcc-supply = <&reg_3p3v>;
++				};
+ 			};
  
- &usb3 {
- 	status = "okay";
--	phys = <&comphy2 0>;
-+	phys = <&usb2_utmi_otg_phy>, <&comphy2 0>;
-+	phy-names = "usb2-phy", "usb3-phy";
- };
- 
- &mdio {
+ 			i2c@11100 {
 -- 
 2.53.0
 
