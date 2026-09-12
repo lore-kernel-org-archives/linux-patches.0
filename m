@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86F912737FC;
-	Sat, 12 Sep 2026 09:38:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 724F62737FC;
+	Sat, 12 Sep 2026 09:38:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789205926; cv=none; b=dm0by2Ym+ZbjyKx718fbaueEa2jEzHmM+WadNwYs/38z6NSn/93xblVuG5cRHZnSho5026udI85YKTqSuydKZjQMrP/oTORuxylrLrxuMknfwXc+eQ8Ja50Bz/kv9+AYbx1qFYzRB8ZtScby6O7u2y01fWpwpeCp996KQxA0h+s=
+	t=1789205931; cv=none; b=alshl/mza8s/dJP9lLKUKhjmDvAfov2smXFnR5omlK5lVqRbIlFNPFTiV3lO7VYiFmjB6zOpcKF89dsGnz8hsa4flF40zTV+TpKa2Pvys9bAEGYqbSDSZ0vgFV1P7QxfOYzNZBLCBX8/l6MSzwQjYp6M3f7Nlkj7pA0JGODNHcI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789205926; c=relaxed/simple;
-	bh=YPAiYbMnNEIFcjF67rdJrYhxbee+5opdRHLR6b9OWPQ=;
+	s=arc-20240116; t=1789205931; c=relaxed/simple;
+	bh=MORZd+SJxjjp/ZH0bPQppU2XYbRnJf4Fx23o0uaMXM4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BgOpStocJFEFkpj4oSTkba3U/9WInjmrIgXNmeWFWptDodL0DkQnGqT40w3Y/Jsy4CYpgzOdP/+T0EFFVOhyQcvu6C/+SYfSd/DqJ0sx7A/wclSWo87UO8GNAFLty+3G1qR5wktK4Q4+r3VfVICY6mA+j4ff8iFF6WsNbZDI6kU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FK3773an; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Zm6fcZ7bzm5F5tJQLuJEfTj77sx6Ons1BbTTutxKuMfslmbNt4aGGH1OKuKaf26ICD3iX5QQaanf4Cwl7WIiYrPkttrG+44bzHKx4jHsP86Q3xbO9HHwgN6WdNNw1dxqongcBhFs1gxgLXIo+04OZa/EPfKv077T/Tq674Cv8DM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y4HSSNP6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FK3773an"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA5341F000FF;
-	Sat, 12 Sep 2026 09:38:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y4HSSNP6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E2951F000FF;
+	Sat, 12 Sep 2026 09:38:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789205925;
-	bh=KDmUpVo5/5tpo/TpcMWZbKQUbO4zfXzMfzHCHMgq7Vw=;
+	s=korg; t=1789205930;
+	bh=aOVNv8gFy336/viXy+9V4Vil2hxhFHdUU4CO/mp8rGk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FK3773anQ7oDk+uE3hLgRNlJ0LEiQfJ9x5I8tUEYTE/1Jiz4LYg7eTYZTL9pg997T
-	 enkpSZr5oETFXydNfnKN99vLsvKRcBVClad19BIDTy54QeKZwb2BP5ueaL8Iy3qd6V
-	 Qj2iJiDD2qGdqEc+r0h9hSTm9B5lNLYvq2Tae77g=
+	b=y4HSSNP68vlrJjb5FAW1C5B82er8K31puvW0Uv47emYUnMINqjwl6gBLLiOt+AGpJ
+	 cA7rhipxs8WsVM3rp/mO5ZZd/PRYWdcM9QDHU0514DfOABwLP+hw+Mfea1cHZAvapo
+	 W4oRhbGKiMeJDKQbDoM1SOUTMyWw43tKTJ1B1P9k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Damon Ding <damon.ding@rock-chips.com>,
 	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0102/1518] drm/rockchip: analogix_dp: Enable hclk for RK3588
-Date: Sat, 12 Sep 2026 08:37:51 +0200
-Message-ID: <20260912065625.786657727@linuxfoundation.org>
+Subject: [PATCH 6.18 0103/1518] drm/rockchip: analogix_dp: Fix OF node reference leak via auto cleanup
+Date: Sat, 12 Sep 2026 08:37:52 +0200
+Message-ID: <20260912065625.809217189@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -53,50 +53,73 @@ Content-Transfer-Encoding: 8bit
 
 From: Damon Ding <damon.ding@rock-chips.com>
 
-[ Upstream commit 104f20616d72825fdcf56cfdc5f89f4e96fd8dbe ]
+[ Upstream commit 87e060521371257ddbb77964b66e60d80afcc7b2 ]
 
-Acquire and enable the HCLK_VO1 bus clock explicitly for RK3588
-eDP controller to guarantee register and datapath access.
+Sashiko reported a reference leak in rockchip_dp_drm_encoder_enable(),
+the of_get_child_by_name() function does not call of_node_put() in a
+symmetrical way [1].
 
-The clock was previously enabled implicitly via rockchip,vo-grf
-phandle reference, which relies on side effect and is fragile.
-
-Fetch optional "hclk" clock in driver to align with updated device
-tree binding and keep consistent with hardware clock dependency.
+Fix the device node reference leak by using __free(device_node) to
+automatically manage of_node_put() for all device nodes.
 
 Fixes: 729f8eefdcad ("drm/rockchip: analogix_dp: Add support for RK3588")
+Link: https://sashiko.dev/#/patchset/20260527024336.191433-1-damon.ding@rock-chips.com?part=5 #1
 Signed-off-by: Damon Ding <damon.ding@rock-chips.com>
 Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://patch.msgid.link/20260601065100.1103873-6-damon.ding@rock-chips.com
+Link: https://patch.msgid.link/20260601065100.1103873-7-damon.ding@rock-chips.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/rockchip/analogix_dp-rockchip.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/gpu/drm/rockchip/analogix_dp-rockchip.c | 16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
 
 diff --git a/drivers/gpu/drm/rockchip/analogix_dp-rockchip.c b/drivers/gpu/drm/rockchip/analogix_dp-rockchip.c
-index b905e28afa074..33e9183837487 100644
+index 33e9183837487..7100fcb1650aa 100644
 --- a/drivers/gpu/drm/rockchip/analogix_dp-rockchip.c
 +++ b/drivers/gpu/drm/rockchip/analogix_dp-rockchip.c
-@@ -328,6 +328,7 @@ static int rockchip_dp_of_probe(struct rockchip_dp_device *dp)
- {
- 	struct device *dev = dp->dev;
- 	struct device_node *np = dev->of_node;
-+	struct clk *clk;
+@@ -8,6 +8,7 @@
+  *         Jeff Chen <jeff.chen@rock-chips.com>
+  */
  
- 	dp->grf = syscon_regmap_lookup_by_phandle(np, "rockchip,grf");
- 	if (IS_ERR(dp->grf)) {
-@@ -351,6 +352,11 @@ static int rockchip_dp_of_probe(struct rockchip_dp_device *dp)
- 		return PTR_ERR(dp->pclk);
- 	}
++#include <linux/cleanup.h>
+ #include <linux/component.h>
+ #include <linux/mfd/syscon.h>
+ #include <linux/of.h>
+@@ -223,7 +224,6 @@ static void rockchip_dp_drm_encoder_enable(struct drm_encoder *encoder,
+ 	struct drm_crtc *crtc;
+ 	struct drm_crtc_state *old_crtc_state;
+ 	struct of_endpoint endpoint;
+-	struct device_node *remote_port, *remote_port_parent;
+ 	char name[32];
+ 	u32 port_id;
+ 	int ret;
+@@ -247,18 +247,22 @@ static void rockchip_dp_drm_encoder_enable(struct drm_encoder *encoder,
+ 	if (ret < 0)
+ 		return;
  
-+	clk = devm_clk_get_optional_enabled(dev, "hclk");
-+	if (IS_ERR(clk))
-+		return dev_err_probe(dev, PTR_ERR(clk),
-+				     "failed to get hclk property\n");
+-	remote_port_parent = of_graph_get_remote_port_parent(endpoint.local_node);
++	struct device_node *remote_port_parent __free(device_node) =
++		of_graph_get_remote_port_parent(endpoint.local_node);
+ 	if (remote_port_parent) {
+-		if (of_get_child_by_name(remote_port_parent, "ports")) {
+-			remote_port = of_graph_get_remote_port(endpoint.local_node);
++		struct device_node *ports __free(device_node) =
++			of_get_child_by_name(remote_port_parent, "ports");
 +
- 	dp->rst = devm_reset_control_get(dev, "dp");
- 	if (IS_ERR(dp->rst)) {
- 		DRM_DEV_ERROR(dev, "failed to get dp reset control\n");
++		if (ports) {
++			struct device_node *remote_port __free(device_node) =
++				of_graph_get_remote_port(endpoint.local_node);
++
+ 			of_property_read_u32(remote_port, "reg", &port_id);
+-			of_node_put(remote_port);
+ 			sprintf(name, "%s vp%d", remote_port_parent->full_name, port_id);
+ 		} else {
+ 			sprintf(name, "%s %s",
+ 				remote_port_parent->full_name, endpoint.id ? "vopl" : "vopb");
+ 		}
+-		of_node_put(remote_port_parent);
+ 
+ 		DRM_DEV_DEBUG(dp->dev, "vop %s output to dp\n", (ret) ? "LIT" : "BIG");
+ 	}
 -- 
 2.53.0
 
