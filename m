@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4044F478E5D;
-	Sat, 12 Sep 2026 11:42:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BB60478E5D;
+	Sat, 12 Sep 2026 11:43:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789213378; cv=none; b=fQYnJLQFf2B8JmgZz9+U4kmySnL5Dp8OVoHmPfePSLb3Jfpnr4i8r+CoFxRMVMybjkhoUIlRyWnZ+vym5Rrrm2h/0MSruRK5rMxi1GLgJnQGwR0zCXKW78Dqdw1Y/5io6ybj25CrvjsQt7ZAenIPM4zPk24hgKi/znyYu0u18sw=
+	t=1789213383; cv=none; b=agXZQaI32Gh//nlt7ksGtJ3VsCbJhSNiIwz/V9puINEb/XfiXv9eJRDTItOtUEQpczahnNiyKS5KFHtuFTjUhAfBMqZ2IVzAauSLgPqyQiKYe6welYh8z4qgtVroSX5Pl9GLD4sp3SdTPAtVq7GTq13lcdC7AkUNzAzUERwC8Ww=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789213378; c=relaxed/simple;
-	bh=DgNdLe5yR4dINcclrv6M0daYT/POAAiHlVz8DfSc96Q=;
+	s=arc-20240116; t=1789213383; c=relaxed/simple;
+	bh=yPQIuf+G1q7j3tGlKiQceC43eSwy3Ft/RqZbNzwVSmw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hvj8rnIJxy8WO7wX6PkTU1g7+uKtZHIyrUucvZrWhvgBmFIhV3AtF+gz4yyFqqj7f4PqnW7iPelTXh53SHzBi3nP6MNPNeJOKUxIp8cIFkjp5jmurGT7Rm795a9fnPC65J+HjylHUM+7HHlFyu5xJmpSFIf+Ln6Vxe3bq+0S9I0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UnlaZL5h; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lAD/KplO+fTPPWmvbiE4kHilcPyHisuAx6QBgmEJjOhdOjsIQbgfHL8mU3m2SNY8BimZQpBlQqgUGV3onBoAA01xVe9KK/kfI5M7JY27u11davRvM0u7K9turYvFLLXpbF1qRdC70HtClbT563QfA71N047xCuBSX/8uMmvpIjo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XZ9gwaFm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UnlaZL5h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAC161F000FF;
-	Sat, 12 Sep 2026 11:42:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XZ9gwaFm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B79A71F000FF;
+	Sat, 12 Sep 2026 11:42:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789213375;
-	bh=gQeQIDGbcp5Zwgon/EpkBwFeWZ35USGKF+drcCmh1Jg=;
+	s=korg; t=1789213380;
+	bh=xbEW1qv8RXMrOoyepzoWuVcNH+Oo91ZGk6eQuvLC3LQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UnlaZL5hLS1SwvbqUo+jvfCQ3NwJu8Y48zNkPwGcvvL0P2aih0Yda2a07lNpH/zjH
-	 Q40HudgVeQH0WBGZzC+Qq2yTAowFyZJA5pt/wi/xzP0Hlv/DbX6PC/ngqqFHezwGUE
-	 xohetcvUoP4z3yuPqV8UvoelylVAM5xpODwVu07o=
+	b=XZ9gwaFm8Yfr9N1hl5wZtd/vdcIMtJ86LMNO/YGqzg8/CAzCOmjZwp3wPXy3yK6W5
+	 vhVob0HVqM/Pv5BgLDMakWWgPgBVwA8WH4h883hXxUbf+7S/8tIlQZo9neHqLqZ59x
+	 QHq3b+aEUFh3hUHW0/HjZrLoiIwsvJbnfIo3huA4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	Alison Schofield <alison.schofield@intel.com>
-Subject: [PATCH 6.12 0092/1376] nvdimm/btt: reject an arena whose nfree is below the lane count
-Date: Sat, 12 Sep 2026 08:41:58 +0200
-Message-ID: <20260912065609.613227578@linuxfoundation.org>
+	Xu Rao <raoxu@uniontech.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: [PATCH 6.12 0110/1376] mtd: mtdoops: free page bitmap when the backing MTD is removed
+Date: Sat, 12 Sep 2026 08:42:16 +0200
+Message-ID: <20260912065610.007427443@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -50,51 +50,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Xu Rao <raoxu@uniontech.com>
 
-commit 6a1f2e5ed9267ca19187038ac635393c165213ac upstream.
+commit 956e7da12c114f13c63d126ab1d79c3b6a819060 upstream.
 
-The BTT info block's nfree field, the number of reserve free blocks, is
-read from the medium without validation.  btt_freelist_init() and
-btt_rtt_init() size the per-lane freelist[] and rtt[] arrays by nfree,
-but the I/O path indexes them by the lane from nd_region_acquire_lane(),
-which is bounded by nd_region->num_lanes (ND_MAX_LANES), not by nfree.
-A crafted or foreign arena whose nfree is below the lane count makes
-freelist[lane]/rtt[lane] run past the allocation: an out-of-bounds write.
+mtdoops_notify_add() allocates oops_page_used when the configured MTD
+device is registered.  mtdoops_notify_remove() detaches from that device
+but leaves the bitmap allocated.  If the same MTD device is later
+registered again, the add path allocates a new bitmap and overwrites the
+old pointer, leaking one vmalloc allocation per remove/add cycle.
 
-btt.rst documents the nlanes = min(nfree, num_cpus) invariant, which the
-code does not currently honor: num_lanes is ND_MAX_LANES regardless of
-nfree.  Reject an arena whose nfree is below num_lanes at discovery,
-before the per-lane arrays are allocated, enforcing that invariant.
+This is only visible when the backing MTD device can disappear and be
+registered again while mtdoops remains loaded, so the usual static MTD
+case does not expose it.
 
-Fixes: 5212e11fde4d ("nd_btt: atomic sector updates")
+Free the bitmap after unregistering the dumper and flushing the pending
+workers, then clear the pointer and page count before a later attach can
+allocate fresh state.  Clearing the pointer also keeps the module exit
+path from freeing the same bitmap a second time after a remove event.
+
+Fixes: be95745f0167 ("mtd: mtdoops: keep track of used/unused pages in an array")
 Cc: stable@vger.kernel.org
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Reviewed-by: Alison Schofield <alison.schofield@intel.com>
-Tested-by: Alison Schofield <alison.schofield@intel.com>
-Link: https://patch.msgid.link/20260620-b4-disp-88b2514b-v1-1-3834e707d232@proton.me
-Signed-off-by: Alison Schofield <alison.schofield@intel.com>
+Signed-off-by: Xu Rao <raoxu@uniontech.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvdimm/btt.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/mtd/mtdoops.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/nvdimm/btt.c
-+++ b/drivers/nvdimm/btt.c
-@@ -885,6 +885,14 @@ static int discover_arenas(struct btt *b
- 		arena->external_lba_start = cur_nlba;
- 		parse_arena_meta(arena, super, cur_off);
+--- a/drivers/mtd/mtdoops.c
++++ b/drivers/mtd/mtdoops.c
+@@ -393,6 +393,9 @@ static void mtdoops_notify_remove(struct
+ 	cxt->mtd = NULL;
+ 	flush_work(&cxt->work_erase);
+ 	flush_work(&cxt->work_write);
++	vfree(cxt->oops_page_used);
++	cxt->oops_page_used = NULL;
++	cxt->oops_pages = 0;
+ }
  
-+		if (arena->nfree < btt->nd_region->num_lanes) {
-+			dev_err(to_dev(arena),
-+				"nfree %u smaller than lane count %d\n",
-+				arena->nfree, btt->nd_region->num_lanes);
-+			ret = -ENODEV;
-+			goto out;
-+		}
-+
- 		ret = log_set_indices(arena);
- 		if (ret) {
- 			dev_err(to_dev(arena),
+ 
 
 
