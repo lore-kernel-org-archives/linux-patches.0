@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EDA82DE702;
-	Sat, 12 Sep 2026 13:44:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCD3247A87A;
+	Sat, 12 Sep 2026 13:44:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789220671; cv=none; b=GfeCOi2uiHRuFhS3gFSnqPM6QYvebPeqmigslNRQfueNOCCVfhdZEXCaa328hqA9Vyl6G5/8h2fP4RpcHYhmPHJGvstt/TB8zHCVIvVm/xLNRZmRLG7+ZWKpli+Wmx4rws9F9Cn8HN9/75h/qllUaFSXbEIKhbOPXyg+JgUl/pU=
+	t=1789220677; cv=none; b=l539m5GnQAxcJPJwe+1CwWqPlIWJRguUXtKrEhW/q0F8HyPYnY6vsQdrgQailv+7HIH6DQjoOrZJijbQW2InoG5P73hwXSP55nbdH38VUNTYpGBHKaqCarYnZjHiyJIUV6+KNQYkUCwBWNAjhzPX3a2hG3PC599TdGVVaRtVvtc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789220671; c=relaxed/simple;
-	bh=5J0TJBNNeYWVDnrAXHqISON0LaHK4Ksud0XQi1c4uik=;
+	s=arc-20240116; t=1789220677; c=relaxed/simple;
+	bh=un/5m7ga3HWWoV/WuM8PbxM87OSaW4SwZwFAMPJmWsI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DTJ4/2x0oeYrYo3GNltkLujKHO4oVUJx13EUdQRCM8Ai7PFHzFzm2q5B1t9LjOpXGwPMu+oI87lhWxFmPDRAbBYQd8NZ8bxCGZuvREvAoJ6LdPuWceO/vaQoXM4gtw49UX2Fe5C6p2IN2UeamoGSCXb8IvBHuPJTMQ/7RO4XaEw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MxvTaP0f; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NxBF3uyduhxQ1DPTq+MZrNtH9neWSXHFzwIGqHOryMLGBojCjxERKUCOVuXi/QiJ7pjd487QuyyVxZE6PdSSUwbNAmofk0XRnMd83uOoAbJjMNankcmI6IWTdDPsNO4eGJMj2T+LljgWcBqB2/l63c4yMYn8PJZXvlMsIF3jTw0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y8Ym0/VR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MxvTaP0f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 391BC1F000FF;
-	Sat, 12 Sep 2026 13:44:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y8Ym0/VR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2517E1F000FF;
+	Sat, 12 Sep 2026 13:44:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789220670;
-	bh=FZPhdnFDo1E1PKcfbimx0JxUIVfCpIYNOAE9cOatzFc=;
+	s=korg; t=1789220675;
+	bh=kCK9hHYJ1mq/VayEcpLcSDmujUlxcJUMkHqsuALmQDs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MxvTaP0fNx7q+tph4pkbBA7eJDBJSFOCVXecvjYv/kq9c0PHvEDfx94F/UbbloiyV
-	 4Yff4RLJiA6Up//nm4CKkTIyXT6KQcRjRd/zbyrSR5VxhyJIGocgSmLThsoZ5j9Quy
-	 OaHl3PyNaCMUosnfl8bJ6wOzwoTBp3Q8kOFhLNNk=
+	b=y8Ym0/VR2s8tGLxIiOs1q/NvF4xRb5E/9774Nojzouqxt71d+HIUAdUwcOreuDPVi
+	 UXQjz0sHVuYmeJq/lRm6RiAorkxaOTMUnzfHD73/umC5uW3y4cxaHvjaoNMFRsM5nA
+	 kR9Ikl+nwcL2kUlebWhM1tKVYPXXq7/+quOZENl8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Ke <make_ruc2021@163.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>
-Subject: [PATCH 6.6 0208/1424] power: supply: bq25890: Fix power_supply reference leak
-Date: Sat, 12 Sep 2026 08:44:00 +0200
-Message-ID: <20260912065611.945888891@linuxfoundation.org>
+	Farhan Ali <alifm@linux.ibm.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Thomas Gleixner <tglx@kernel.org>,
+	Niklas Schnelle <schnelle@linux.ibm.com>
+Subject: [PATCH 6.6 0226/1424] PCI/MSI: Enable memory decoding before restoring MSI-X messages
+Date: Sat, 12 Sep 2026 08:44:18 +0200
+Message-ID: <20260912065612.345967267@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -50,60 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Ke <make_ruc2021@163.com>
+From: Farhan Ali <alifm@linux.ibm.com>
 
-commit 863c32a83e4235eb0cbf6106f2b124e645302156 upstream.
+commit 231c7a57d19304beb0931e6cbe3a4929daf49747 upstream.
 
-bq25890_fw_probe() acquires a reference to a secondary charger using
-power_supply_get_by_name(), but the reference is not released on later
-probe failures or on driver detach.
+The current MSI-X restoration path assumes the Command register Memory bit
+is enabled when writing MSI-X messages. But it's possible the last saved
+and restored state of a device may not have the Memory bit enabled, even if
+a device driver later enables Memory bit and MSI-X. Attempting to access
+Memory space without Memory bit enabled can lead to Unsupported Request
+(UR) from the device. Fix this by enabling Memory bit and restore it
+afterwards.
 
-In particular, failures after bq25890_fw_probe() returns successfully,
-such as a failure in bq25890_hw_init(), also leak the reference.
-
-Register a device-managed cleanup action immediately after acquiring
-the secondary charger. This releases the reference on all subsequent
-probe failures and on driver detach.
-
-Found by code review.
-
-Signed-off-by: Ma Ke <make_ruc2021@163.com>
+Fixes: 41017f0cac92 ("[PATCH] PCI: MSI(X) save/restore for suspend/resume")
+Signed-off-by: Farhan Ali <alifm@linux.ibm.com>
+[bhelgaas: comment]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Thomas Gleixner <tglx@kernel.org>
+Reviewed-by: Niklas Schnelle <schnelle@linux.ibm.com>
 Cc: stable@vger.kernel.org
-Fixes: d54bf877fd87 ("power: supply: bq25890: Add support for having a secondary charger IC")
-Link: https://patch.msgid.link/20260722044416.1623621-1-make_ruc2021@163.com
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Link: https://patch.msgid.link/20260805165518.794-6-alifm@linux.ibm.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/power/supply/bq25890_charger.c |   12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/pci/msi/msi.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/drivers/power/supply/bq25890_charger.c
-+++ b/drivers/power/supply/bq25890_charger.c
-@@ -1389,6 +1389,14 @@ static int bq25890_fw_read_u32_props(str
- 	return 0;
+--- a/drivers/pci/msi/msi.c
++++ b/drivers/pci/msi/msi.c
+@@ -858,6 +858,7 @@ void __pci_restore_msix_state(struct pci
+ {
+ 	struct msi_desc *entry;
+ 	bool write_msg;
++	u16 cmd;
+ 
+ 	if (!dev->msix_enabled)
+ 		return;
+@@ -867,6 +868,14 @@ void __pci_restore_msix_state(struct pci
+ 	pci_msix_clear_and_set_ctrl(dev, 0,
+ 				PCI_MSIX_FLAGS_ENABLE | PCI_MSIX_FLAGS_MASKALL);
+ 
++	/*
++	 * The restored device state may not have Memory Space enabled.
++	 * Since the MSI-X Table and PBA are in Memory Space, enable it
++	 * while restoring them.
++	 */
++	pci_read_config_word(dev, PCI_COMMAND, &cmd);
++	pci_write_config_word(dev, PCI_COMMAND, cmd | PCI_COMMAND_MEMORY);
++
+ 	write_msg = arch_restore_msi_irqs(dev);
+ 
+ 	msi_lock_descs(&dev->dev);
+@@ -877,6 +886,7 @@ void __pci_restore_msix_state(struct pci
+ 	}
+ 	msi_unlock_descs(&dev->dev);
+ 
++	pci_write_config_word(dev, PCI_COMMAND, cmd);
+ 	pci_msix_clear_and_set_ctrl(dev, PCI_MSIX_FLAGS_MASKALL, 0);
  }
  
-+static void bq25890_release_secondary_chrg(void *data)
-+{
-+	struct bq25890_device *bq = data;
-+
-+	power_supply_put(bq->secondary_chrg);
-+	bq->secondary_chrg = NULL;
-+}
-+
- static int bq25890_fw_probe(struct bq25890_device *bq)
- {
- 	int ret;
-@@ -1401,6 +1409,10 @@ static int bq25890_fw_probe(struct bq258
- 		bq->secondary_chrg = power_supply_get_by_name(str);
- 		if (!bq->secondary_chrg)
- 			return -EPROBE_DEFER;
-+
-+		ret = devm_add_action_or_reset(bq->dev, bq25890_release_secondary_chrg, bq);
-+		if (ret)
-+			return ret;
- 	}
- 
- 	/* Optional, left at 0 if property is not present */
 
 
