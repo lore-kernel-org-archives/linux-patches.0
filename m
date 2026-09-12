@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08FF647CA67;
-	Sat, 12 Sep 2026 16:57:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDDE533993;
+	Sat, 12 Sep 2026 16:57:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789232252; cv=none; b=ZQjTsAyj9IGOm0sJwyaKD9CFZ/SzlNweX4VsWk07VrM3dZY4d4X505yKOV0p8+N3qr46Y6oMpohCLrtarEKHX4TkNKTG97hkgxzMhH2Zm/fJ57YxkJO8QO4GVCRKqw89gyySw/LYbaDEe0e1iaEGUMHynzGeA2QaG1dcUREPuUo=
+	t=1789232255; cv=none; b=rVUbAFL4L7nH5+84kIn0Rluc9sK3w2+uxq0PMPTZti9vd8EIEgYBc7fiVZ6hwRJ90gbI5dFDSHu/CJ2oyIT6PJiuYGd1yWLedBqdjBo8ZRhspt0dUF3V/e1Alyrb9MwTGgccOQ68d9F4Z+CxZwvpXenc+bbJtW6uLrYGNpHZSBM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789232252; c=relaxed/simple;
-	bh=INsweksKQSseEQZ+3LUUiKJpSMdYat7g1eMGCJ5KDXI=;
+	s=arc-20240116; t=1789232255; c=relaxed/simple;
+	bh=GHQqRlQ33nctM08GRdrLT62CtEImzwFNeX8f8hPzyMI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=evLvuqOpLavDpZhRkSz+5slRyJELOQqEkdcSLIKD72c9xdzmvv9yfQgTCgEIUpVl31AVQolGy+bxbxEEFPFYWjiFsGu6F9Q9AK2ueeCVw4aEsVXzsgYs/x3g3s6Qv1b5aWNRM0n97GUAD+2UPAO8+Uzi6kaRdRdFbzW4I43m+44=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w+PGkZ4I; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YQbOOIQpCiQacX/pz8dwkVdH7l/TEtY/0Mri/hThFX86Fe49soVZ2qHYXKnvTKSb2aw9hclfOD0uiLeSReQZIts3KSeGxGY379fquSqXksuv50SsiBAMnolPi60fmzmfjFHl5nBN48o6HOwW2NLJEGJroo3ky1+HULIXuMiAaw4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RHgHNzPZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w+PGkZ4I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EB0C1F000FF;
-	Sat, 12 Sep 2026 16:57:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RHgHNzPZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A854A1F000FF;
+	Sat, 12 Sep 2026 16:57:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789232249;
-	bh=HFhC8VXla0QQ7seqpRzuoGfsgs9yfOsf9H6x/zU9Ej8=;
+	s=korg; t=1789232253;
+	bh=v9EFWfZcMQglBl9+Ws1TCnSi9vKebOcGWoLIoh5eTOw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=w+PGkZ4I22fZ23jR1ChJqPTdNmhUb9+/JNC2QubQOot/s2gi1yJkcW0gE7bW2485+
-	 3UpNwZ4Y3ixnpRpbUvI9zrhiaw0pEpxjyizwElBzPBrEf0O0hLufYwANMyd8XL/Tws
-	 w1SrdCuLnfQoVUAtRkfCQ35atQUxppTuBzE2sXe8=
+	b=RHgHNzPZuphR34WW1UdSn/bY4ieUQh+hPuSjcjdf0WwSKW8n7Ia1bRA2nFWEtWl/R
+	 J93/zLptpic+1jc9i4EnfeZhg8XRaj2SbTgKzoB2BPw+C9sxi5Zee1OxHK9CUmH5eZ
+	 lzisF93ov6xu+vsMTtcBDtQSQgrFT0mxYs8U3epI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1165/1191] arm64: dts: qcom: sm8550: Fix the PCI I/O port range
-Date: Sat, 12 Sep 2026 09:04:53 +0200
-Message-ID: <20260912065614.307955628@linuxfoundation.org>
+Subject: [PATCH 6.1 1166/1191] arm64: dts: qcom: sm8550: Mark QUPs and GPI dma-coherent
+Date: Sat, 12 Sep 2026 09:04:54 +0200
+Message-ID: <20260912065614.329705305@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -52,54 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-[ Upstream commit 565c633940312b4eea7785a0a58e1944258c47e9 ]
+[ Upstream commit 91fc74458d833dbc999aa04ca34c2a197711a0b6 ]
 
-For 1MiB of the I/O region, the I/O ports of the legacy PCI devices are
-located in the range of 0x0 to 0x100000. Hence, fix the bogus PCI addresses
-(0x60200000, 0x40200000) specified in the ranges property for I/O region.
+These peripherals are DMA-coherent on 8550. Mark them as such.
 
-While at it, let's use the missing 0x prefix for the addresses.
+Interestingly enough, the I2C master hubs are not.
 
-Fixes: 7d1158c984d3 ("arm64: dts: qcom: sm8550: Add PCIe PHYs and controllers nodes")
-Reported-by: Arnd Bergmann <arnd@arndb.de>
-Link: https://lore.kernel.org/linux-arm-msm/7c5dfa87-41df-4ba7-b0e4-72c8386402a8@app.fastmail.com/
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Reviewed-by: Arnd Bergmann <arnd@arndb.de>
+Fixes: ffc50b2d3828 ("arm64: dts: qcom: Add base SM8550 dtsi")
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://lore.kernel.org/r/20240210-topic-1v-v1-3-fda0db38e29b@linaro.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230228164752.55682-5-manivannan.sadhasivam@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8550.dtsi | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ arch/arm64/boot/dts/qcom/sm8550.dtsi | 4 ++++
+ 1 file changed, 4 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-index aa9c25541e900..de74499bbfd9c 100644
+index de74499bbfd9c..c09458cc4de94 100644
 --- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
 +++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-@@ -1377,8 +1377,8 @@ pcie0: pci@1c00000 {
- 			reg-names = "parf", "dbi", "elbi", "atu", "config";
- 			#address-cells = <3>;
- 			#size-cells = <2>;
--			ranges = <0x01000000 0x0 0x60200000 0 0x60200000 0x0 0x100000>,
--				 <0x02000000 0x0 0x60300000 0 0x60300000 0x0 0x3d00000>;
-+			ranges = <0x01000000 0x0 0x00000000 0x0 0x60200000 0x0 0x100000>,
-+				 <0x02000000 0x0 0x60300000 0x0 0x60300000 0x0 0x3d00000>;
- 			bus-range = <0x00 0xff>;
+@@ -683,6 +683,7 @@ gpi_dma2: dma-controller@800000 {
+ 			dma-channels = <12>;
+ 			dma-channel-mask = <0x3e>;
+ 			iommus = <&apps_smmu 0x436 0>;
++			dma-coherent;
+ 			status = "disabled";
+ 		};
  
- 			dma-coherent;
-@@ -1477,8 +1477,8 @@ pcie1: pci@1c08000 {
- 			reg-names = "parf", "dbi", "elbi", "atu", "config";
- 			#address-cells = <3>;
+@@ -694,6 +695,7 @@ qupv3_id_1: geniqup@8c0000 {
+ 			clocks = <&gcc GCC_QUPV3_WRAP_2_M_AHB_CLK>,
+ 				 <&gcc GCC_QUPV3_WRAP_2_S_AHB_CLK>;
+ 			iommus = <&apps_smmu 0x423 0>;
++			dma-coherent;
+ 			#address-cells = <2>;
  			#size-cells = <2>;
--			ranges = <0x01000000 0x0 0x40200000 0 0x40200000 0x0 0x100000>,
--				 <0x02000000 0x0 0x40300000 0 0x40300000 0x0 0x1fd00000>;
-+			ranges = <0x01000000 0x0 0x00000000 0x0 0x40200000 0x0 0x100000>,
-+				 <0x02000000 0x0 0x40300000 0x0 0x40300000 0x0 0x1fd00000>;
- 			bus-range = <0x00 0xff>;
+ 			status = "disabled";
+@@ -998,6 +1000,7 @@ gpi_dma1: dma-controller@a00000 {
+ 			dma-channels = <12>;
+ 			dma-channel-mask = <0x1e>;
+ 			iommus = <&apps_smmu 0xb6 0>;
++			dma-coherent;
+ 			status = "disabled";
+ 		};
  
- 			dma-coherent;
+@@ -1011,6 +1014,7 @@ qupv3_id_0: geniqup@ac0000 {
+ 			iommus = <&apps_smmu 0xa3 0>;
+ 			interconnects = <&clk_virt MASTER_QUP_CORE_1 0 &clk_virt SLAVE_QUP_CORE_1 0>;
+ 			interconnect-names = "qup-core";
++			dma-coherent;
+ 			#address-cells = <2>;
+ 			#size-cells = <2>;
+ 			status = "disabled";
 -- 
 2.53.0
 
