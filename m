@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A173637204A;
-	Sat, 12 Sep 2026 07:11:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4287B37F729;
+	Sat, 12 Sep 2026 07:11:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789197096; cv=none; b=NVnm6hJFgmB6zZHndYrvpd1ZAt1AkoXuG8dF9fkjGgF4enBll65I2KLSKHnA6AsTHQ68DmquJgxN1+2OSLOWApijMb80VnAVyUBVK8ALkxWfPc93mY7nLgy5CnfFyG/dSIXJlKgj/n86o+OipMN9PVAfln/3vF06VvB4vx9fJXE=
+	t=1789197101; cv=none; b=HzbeaZmfC8U9P5CgkF0fP720LOonHmhBkD4fHsO0EyFhgd2qmwaxQjIS8bGmScrnRAMGiH3fKqbYLrKaVhwehQ76twAWHPj6SwEr9b0K/SlHBjKPhd1t+2v/YDwVqS8wzq4ywdzFUN5806L85yh/RU5T4nHkSn88qZ2FB6eoTvE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789197096; c=relaxed/simple;
-	bh=VXlCN0spRYEP+yJ0c01UcGK/cgbzJfTdwgZrpgloHRQ=;
+	s=arc-20240116; t=1789197101; c=relaxed/simple;
+	bh=7jpMQ1FGMD/VZbp6doj0luPygqXRnEYarORJb4J2yLQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JY+8BacLONieD5odJsw7dOE+InLOU9kiDSjB7VgPF3bp40jYVngYPpQLe24VHVSHFFfIp/KABqxgbzPC1QTZkB4WGohxZr8HbGTkaB+Cs/7n7749zylMfMc8Osu3rTua96iLLhJPmka/ILr+ANppG16/CtMC0sr2rF3W53GWywU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XN6Gumwu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SFwr4rhIv53eIJfoEOTYBq3mPT4pmsjpmjEo/SzlPGitPYDf6K8UVRP+zoXY26urYGosgx05j2VxcWUmBoWTkp9k/uPB95Ku5dpwY0Qzg9S0PsQCg23RyCoK2PfJs9bfrznkiyDSS6m9lTCEEQ9gcUsnctZXppJ98ORgjgRIXrc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zPKW6WEV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XN6Gumwu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5978B1F000FF;
-	Sat, 12 Sep 2026 07:11:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zPKW6WEV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDACA1F000FF;
+	Sat, 12 Sep 2026 07:11:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789197095;
-	bh=gzb+HP++sZh3wkj9jkmfF7AbViFwuz54+fTORZiZL5g=;
+	s=korg; t=1789197100;
+	bh=ZT3JwjjB2l1uONlpo7Eok93PSLI6HiycC6HqNARxvxU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XN6Gumwuwg3XyAMDkC4zd/Ag5eiEUwObuDJgcKSz3+m4k5saPWb+l9JsNxirbqaSc
-	 3ZoAZ378r7APg2+JBMxqHMG453WTX+vay3B7zcvfp8f9x2AVN0ZqZJ5H/qTyjN5MCw
-	 igiOs15rOzGSRFhB/4BkiiHWG1CuFwD0UvO0smW8=
+	b=zPKW6WEVCnj/0WP6TUeM6zBoymIDajfc7Slb1TQ8twpKPAeVs3GrWzFXeOJojwsw5
+	 yv8rSTxQk32mXDvw0uLmH8DnJ2x+T5K2dOXPpZJRaXmsB/pcvBobbt4u27AVjT1jBj
+	 m9KFbu+Fys3k+jRtTeRYhWHrwxqE44lghCbzWl2E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Yu <yu.c.chen@intel.com>,
+	Zide Chen <zide.chen@intel.com>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Ian Rogers <irogers@google.com>,
+	Dapeng Mi <dapeng1.mi@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0101/1815] sched/fair: Fix overflow in update_tg_cfs_runnable()
-Date: Sat, 12 Sep 2026 08:30:51 +0200
-Message-ID: <20260912065651.380309613@linuxfoundation.org>
+Subject: [PATCH 7.2 0102/1815] perf/x86/intel/uncore: Keep PCI PMUs working when MMIO/MSR setup fails
+Date: Sat, 12 Sep 2026 08:30:52 +0200
+Message-ID: <20260912065651.402701873@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,96 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen, Yu C <yu.c.chen@intel.com>
+From: Zide Chen <zide.chen@intel.com>
 
-[ Upstream commit 4f166adb5cb0525d9e32d45729fd8f28c80acbee ]
+[ Upstream commit 3012af7df3430788eddd30b3c6654d0a0a5f06c6 ]
 
-A divide-by-zero crash is observed when running hackbench:
+uncore_event_cpu_online() returns -ENOMEM early when both the MSR and
+MMIO box allocations fail.  This also aborts PCI uncore setup, even
+though PCI PMUs are independent of the MSR/MMIO paths.
 
-   [14697.488452] CPU: 112 UID: 0 PID: 124791 Comm: hackbench Not tainted 7.1.0-rc2+
-   [14697.492627] RIP: 0010:propagate_entity_load_avg+0x35f/0x3e0
-   [14697.506799]  <TASK>
-   [14697.507411]  __dequeue_task+0x2b4/0xc70
-   [14697.508677]  dequeue_task_fair+0x36/0x370
-   [14697.509047]  dequeue_task+0x101/0x2f0
-   [14697.509426]  __schedule+0x1b1/0x1a00
-   [14697.510868]  anon_pipe_read+0x3da/0x450
-   [14697.511400]  vfs_read+0x361/0x390
-   [14697.512053]  __x64_sys_read+0x19/0x30
+Remove the early return so PCI uncore setup always runs regardless
+of whether MSR or MMIO box allocation succeeds.
 
-The divide-by-zero happens here:
-
-  if (scale_load_down(gcfs_rq->load.weight)) {
-           load_sum = div_u64(gcfs_rq->avg.load_sum,
-                              scale_load_down(gcfs_rq->load.weight));
-  }
-
-gcfs_rq->load.weight is an insane large value and is truncated
-to the lower 32 bits by div_u64, which happen to be 0.
-
-Using AI for investigation, the cause is a u32 overflow in
-update_tg_cfs_runnable(), and flat pickup became a victim when using
-tg_tasks():
-
-   u32 new_sum, divider;
-   ...
-   new_sum = se->avg.runnable_avg * divider; <-- boom
-
-The following sequence shows how this triggers the crash:
-
-   propagate_entity_load_avg()
-     update_tg_cfs_runnable()     # u32 overflow corrupts runnable_sum
-
-   __update_load_avg_cfs_rq()
-     ___update_load_avg()         # computes insane runnable_avg
-   update_tg_load_avg()           # propagates to tg->runnable_avg
-
-   update_cfs_group()
-     calc_concur_shares()
-       tg_tasks()                 # long-to-int truncation, negative nr
-     reweight_entity()            # corrupted se->load.weight
-       update_load_add()          # corrupted cfs_rq->load.weight
-
-   propagate_entity_load_avg()
-     update_tg_cfs_load()
-       div_u64()                  # divide-by-zero
-
-Fix by widening new_sum from u32 to u64 (no need to force tg_tasks()
-to return unsigned long after this fix)
-
-Fixes: 95246d1ec80b ("sched/pelt: Relax the sync of runnable_sum with runnable_avg")
-Assisted-by: Claude:claude-opus-4.6
-Signed-off-by: Chen Yu <yu.c.chen@intel.com>
+Fixes: 3da04b8a00dd ("perf/x86/intel/uncore: Support MMIO type uncore blocks")
+Signed-off-by: Zide Chen <zide.chen@intel.com>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://patch.msgid.link/a22eea2b-4c4a-4623-9a44-d7b18c0c91c8@intel.com
+Reviewed-by: Ian Rogers <irogers@google.com>
+Reviewed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
+Link: https://patch.msgid.link/20260611160033.66760-5-zide.chen@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/fair.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ arch/x86/events/intel/uncore.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index c36f1e8bff647..bfe0972abd5f3 100644
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -5174,7 +5174,8 @@ static inline void
- update_tg_cfs_runnable(struct cfs_rq *cfs_rq, struct sched_entity *se, struct cfs_rq *gcfs_rq)
- {
- 	long delta_sum, delta_avg = gcfs_rq->avg.runnable_avg - se->avg.runnable_avg;
--	u32 new_sum, divider;
-+	u64 new_sum;
-+	u32 divider;
+diff --git a/arch/x86/events/intel/uncore.c b/arch/x86/events/intel/uncore.c
+index 7857959c6e823..cb61f2a65d853 100644
+--- a/arch/x86/events/intel/uncore.c
++++ b/arch/x86/events/intel/uncore.c
+@@ -1631,8 +1631,6 @@ static int uncore_event_cpu_online(unsigned int cpu)
+ 	die = topology_logical_die_id(cpu);
+ 	msr_ret = uncore_box_ref(uncore_msr_uncores, die, cpu);
+ 	mmio_ret = uncore_box_ref(uncore_mmio_uncores, die, cpu);
+-	if (msr_ret && mmio_ret)
+-		return -ENOMEM;
  
- 	/* Nothing to update */
- 	if (!delta_avg)
-@@ -5188,7 +5189,7 @@ update_tg_cfs_runnable(struct cfs_rq *cfs_rq, struct sched_entity *se, struct cf
- 
- 	/* Set new sched_entity's runnable */
- 	se->avg.runnable_avg = gcfs_rq->avg.runnable_avg;
--	new_sum = se->avg.runnable_avg * divider;
-+	new_sum = (u64)se->avg.runnable_avg * divider;
- 	delta_sum = (long)new_sum - (long)se->avg.runnable_sum;
- 	se->avg.runnable_sum = new_sum;
- 
+ 	/*
+ 	 * Check if there is an online cpu in the package
 -- 
 2.53.0
 
