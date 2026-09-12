@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21D3843E07C;
-	Sat, 12 Sep 2026 12:30:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDF1B47ACF4;
+	Sat, 12 Sep 2026 12:30:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789216215; cv=none; b=UOmjsFZ44QwQ2pddnxLGggtFdbP8hdnR/9t6TSI3lDjtoDqbdxMFTjzNdPlkBh9f8Xmimd+h8lF78kajqJTjWcmOfPMppHhhIf47RSJFdXWN+1U/JVErg2SNOlz3izr2Y2a+uEFY1Mg+QJ4ZxqvzGtJfmjIUy8LDYty6Viv/mek=
+	t=1789216222; cv=none; b=Kh1JJRrmYI+ulcsB8urd+kTUAzzT8M+8Jv1Jm/YJbL1krbgsUdn0R3OvL2B/l7sWi7Hjz6024HSr4TVa7GllqbQ0uUY+RRgT7MB3whoFT341Av6bj6PZWSCn/2sYf4pkq8+yuRkxE0JaIkWohtr6gaaAHyppUEscc8Z2G0a4m7g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789216215; c=relaxed/simple;
-	bh=VxYNABKcRhtsG98UGWJd5qGwaTKZeybe3HL8B9Asb/g=;
+	s=arc-20240116; t=1789216222; c=relaxed/simple;
+	bh=yWPUIBLCPjySVnWYmhen201206e11GL5Ry8Q6Ptb7SI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WKtbC837vtnJMgkrkW5uZHSPjEPo4K3w+KHiP90OlxCagCi1wgECPBwA1BMha2W0kDQzCqvpLelzVNc4ab2nxsj0wQX1a1qUfOGhzceslNjJ31NWhVzwaOC5I+I+xJwqzSgY4+i2yMii6YcG3G44gmyoZdaZRyA/SjEQrGm/F1c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uko2IZun; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=t/63sIXVz4HqLsAMBylo344Ys3KIt986VtLVEI7SndksJtb4kDrCLoETjjJ3QVDcH718UTdinpUWdvalIbuSzzO3V0EaijcHJn3dkFJSnAo8YTccAUx1D6nuEfzuB64zjZirXprIhO3M3RttcjJcwJ9pX2HnskkQuEyfJ0QhSNw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hULlLtH1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uko2IZun"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8D031F000FF;
-	Sat, 12 Sep 2026 12:30:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hULlLtH1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6C911F000FF;
+	Sat, 12 Sep 2026 12:30:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789216213;
-	bh=tJJrBUxB9r8XEoL36P0iU3iVPt8jaWxGslbguUFGQY4=;
+	s=korg; t=1789216219;
+	bh=YYzQe9rgQ8UFVEa3Ou8PkBQVSp8qUc98Lzxs0fVMYiY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uko2IZunTdxWoNpB/w8A2XwWJb62icNeO22yHbPXMgfER+a4l/elzU9lyyjqMcE/W
-	 5IZgMJViSTtXs6/B91Nc+aMBK1/GdplslYxLj1Hz9wwLDQTVf1XdcZcUjWY17LdG/Z
-	 Pptl/xWcIOTxIcaD2vkxM7geMK1c+NdOffyBX6xg=
+	b=hULlLtH1nVCiLQKie2sRfSwtS9egxHe3uIsuZPewlcDZ5KXeDwC3RoB3eiRhzyBmr
+	 eWw3t7cecyxyNgJIQMrzGzSNvaGk8yCDCbTZLyFBljdISmmuVeZTDd9Lf4vW4+NP4P
+	 Ou/qcATIslI3A2sL19OrMdBcNkgwYKKljqTHDcT4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pierre Gondois <pierre.gondois@arm.com>,
-	Lifeng Zheng <zhenglifeng1@huawei.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Justin Yeh <justin.yeh@mediatek.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0654/1376] ACPI: CPPC: Add IS_OPTIONAL_CPC_REG macro to judge if a cpc_reg is optional
-Date: Sat, 12 Sep 2026 08:51:20 +0200
-Message-ID: <20260912065622.118491869@linuxfoundation.org>
+Subject: [PATCH 6.12 0690/1376] pinctrl: mediatek: free EINT resources on unbind
+Date: Sat, 12 Sep 2026 08:51:56 +0200
+Message-ID: <20260912065622.925207893@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -53,52 +52,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lifeng Zheng <zhenglifeng1@huawei.com>
+From: Justin Yeh <justin.yeh@mediatek.com>
 
-[ Upstream commit e3d7935a6c6138da51626d2b956a079dd0e6671b ]
+[ Upstream commit 88292b7103d260e3e606eb3bb2794060a5fde48e ]
 
-In ACPI 6.5, s8.4.6.1 _CPC (Continuous Performance Control), whether
-each of the per-cpu cpc_regs[] is mandatory or optional is defined.
+mtk_eint_do_init() creates an IRQ domain, populates it with a mapping for
+every EINT line and installs a chained handler on the parent interrupt,
+but none of these are ever released. This was harmless while the drivers
+were built-in, but now that they can be built as modules and
+unbound/rmmod'd it leaves behind a dangling IRQ domain, interrupt mappings
+whose chip data points at freed memory, and a chained handler that keeps
+firing into that freed data.
 
-Since the CPC_SUPPORTED() check is only for optional _CPC fields,
-another macro to check if the field is optional is needed.
+The plain allocations in mtk_eint_do_init() already use the device-managed
+devm_*() helpers, so tear the remaining resources down the same way:
+register a devm action that detaches the chained handler, waits for any
+in-flight handler to finish, disposes of the per-line mappings and removes
+the IRQ domain. This mirrors the device-managed lifecycle adopted for the
+GPIO chip and keeps the whole EINT setup self-cleaning on unbind.
 
-Reviewed-by: Pierre Gondois <pierre.gondois@arm.com>
-Signed-off-by: Lifeng Zheng <zhenglifeng1@huawei.com>
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
-Link: https://patch.msgid.link/20250411093855.982491-2-zhenglifeng1@huawei.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Stable-dep-of: 9dfd13f80c85 ("cpufreq/amd-pstate: Toggle auto_sel in active mode on shared memory systems")
+Fixes: e46df235b4e6 ("pinctrl: mediatek: refactor EINT related code for all MediaTek pinctrl can fit")
+Signed-off-by: Justin Yeh <justin.yeh@mediatek.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/cppc_acpi.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/pinctrl/mediatek/mtk-eint.c | 25 ++++++++++++++++++++++++-
+ 1 file changed, 24 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/acpi/cppc_acpi.c b/drivers/acpi/cppc_acpi.c
-index fd6a83e3d4301..9f158353b3603 100644
---- a/drivers/acpi/cppc_acpi.c
-+++ b/drivers/acpi/cppc_acpi.c
-@@ -129,6 +129,20 @@ static DEFINE_PER_CPU(struct cpc_desc *, cpc_desc_ptr);
- #define CPC_SUPPORTED(cpc) ((cpc)->type == ACPI_TYPE_INTEGER ?		\
- 				!!(cpc)->cpc_entry.int_value :		\
- 				!IS_NULL_REG(&(cpc)->cpc_entry.reg))
+diff --git a/drivers/pinctrl/mediatek/mtk-eint.c b/drivers/pinctrl/mediatek/mtk-eint.c
+index c2e452c699cfa..6787596167b92 100644
+--- a/drivers/pinctrl/mediatek/mtk-eint.c
++++ b/drivers/pinctrl/mediatek/mtk-eint.c
+@@ -12,8 +12,10 @@
+  */
+ 
+ #include <linux/delay.h>
++#include <linux/device.h>
+ #include <linux/err.h>
+ #include <linux/gpio/driver.h>
++#include <linux/interrupt.h>
+ #include <linux/io.h>
+ #include <linux/irqchip/chained_irq.h>
+ #include <linux/irqdomain.h>
+@@ -504,6 +506,27 @@ int mtk_eint_find_irq(struct mtk_eint *eint, unsigned long eint_n)
+ }
+ EXPORT_SYMBOL_GPL(mtk_eint_find_irq);
+ 
++static void mtk_eint_teardown(void *data)
++{
++	struct mtk_eint *eint = data;
++	unsigned int i, virq;
 +
-+/*
-+ * Each bit indicates the optionality of the register in per-cpu
-+ * cpc_regs[] with the corresponding index. 0 means mandatory and 1
-+ * means optional.
-+ */
-+#define REG_OPTIONAL (0x1FC7D0)
++	/* Detach the demux handler so it can no longer reference freed data. */
++	irq_set_chained_handler_and_data(eint->irq, NULL, NULL);
 +
-+/*
-+ * Use the index of the register in per-cpu cpc_regs[] to check if
-+ * it's an optional one.
-+ */
-+#define IS_OPTIONAL_CPC_REG(reg_idx) (REG_OPTIONAL & (1U << (reg_idx)))
++	/* Wait for any in-flight handler to finish before tearing down. */
++	synchronize_irq(eint->irq);
 +
- /*
-  * Arbitrary Retries in case the remote processor is slow to respond
-  * to PCC commands. Keeping it high enough to cover emulators where
++	/* Dispose of all child mappings before the domain is removed. */
++	for (i = 0; i < eint->hw->ap_num; i++) {
++		virq = irq_find_mapping(eint->domain, i);
++		if (virq)
++			irq_dispose_mapping(virq);
++	}
++
++	irq_domain_remove(eint->domain);
++}
++
+ int mtk_eint_do_init(struct mtk_eint *eint, struct mtk_eint_pin *eint_pin)
+ {
+ 	unsigned int size, i, port, virq, inst = 0;
+@@ -589,7 +612,7 @@ int mtk_eint_do_init(struct mtk_eint *eint, struct mtk_eint_pin *eint_pin)
+ 	irq_set_chained_handler_and_data(eint->irq, mtk_eint_irq_handler,
+ 					 eint);
+ 
+-	return 0;
++	return devm_add_action_or_reset(eint->dev, mtk_eint_teardown, eint);
+ 
+ err_eint:
+ 	for (i = 0; i < eint->nbase; i++) {
 -- 
 2.53.0
 
