@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5820233BBAF;
-	Sat, 12 Sep 2026 13:55:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47490384232;
+	Sat, 12 Sep 2026 13:55:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789221338; cv=none; b=pSPCUM97t1HMjm5Uthl/T/ba9g+34zudYs2bFr4+yHcQvN/z8iV7R0JvkZ5TnHK4xHezkSVxIdUTiF1fiJovWppSYCWYo3Sih16fMS9d4sSjiYYWNwD3K7ApH9o3IPG0Bcnj/BzfOBVduZQyCDYwwt1z0Bgb8uCmZmpTgJndqgo=
+	t=1789221340; cv=none; b=p7y1txdXH4pCrJMGK8EDHdXkJcP64SZgvOPZ97GuJ46x0P7ayZnp2OcdqJSf79IHqOaDlXCnstDHMaDQvGYaNIUVL1vHF6OedWEj9hXYKY32DQxJPVk0Br3Z2iXRaJvr9BfLMT7uECvhOkRWGXClZgt/6WbB9r3xuXgpb6mHB60=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789221338; c=relaxed/simple;
-	bh=xNBisfIygmRDNxnC3+NF85SbFdV2kPtBA76v70ln5GE=;
+	s=arc-20240116; t=1789221340; c=relaxed/simple;
+	bh=0hVLKChkSI0OJ/Zj3vuP2llf4Qqpxd1GRKWOOYmXA2E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eolQs5s5v8cp2Lnkx6OF79GR5NAgyvZWJncLlsxDy7D4lDQDiOPYRFwefUk4xFHhhBWtDztbgvuDa3NPH/90LuQlB/1eWJYijY3EwyBC9Og0dersyiBKo3lDgK5pl+EPGncAe/kzHh+24kkap0WjPpPRRqVmr5fXAXGtNfYI4Iw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PmwCbXMl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=R2b6bEJf6hbZnLtTiL7538uk7lpdUGxGhcagMbzPsDzN1EcIRsGNHcpMZNd1ebdVa2hfthHlWLHvw5NJhwRv8X4TOubEX2GmzORKvCVP7HCS8Kciw35t8w9dO+TAlh/Okgb6ioqtwXnvaSMfKmJYwJIYtwl49KZkuwA+f/jW3gM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NY91KZNf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PmwCbXMl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B73421F00893;
-	Sat, 12 Sep 2026 13:55:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NY91KZNf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A30701F00899;
+	Sat, 12 Sep 2026 13:55:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789221327;
-	bh=36LrI1BPnONLPJbaZAWyR+7U7d3gtagIgeIwCE8bFKM=;
+	s=korg; t=1789221332;
+	bh=JQOIaFWn3gXUvMmSV/srLwUYi4zfFKP2CjzVuJKUSFk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PmwCbXMllGLEvHBGd+M839o9hHPC03UO7DZmzu3sag79iNHT2TvVpJAkx9UHFqwYw
-	 z5xZ6QIz+MneiWtyE+JJcF9b+3xq4yNMpNelrMJME9x+PYNaqk658T7pfJUaLWg6Zh
-	 XjH+a67JtwhC5AbHyhaurjgZkVFfhtPsY/+eJ92g=
+	b=NY91KZNfiCFYNkr9rBoqmCntuEE0bkI5m1BF5gadejDriLz7GoeRQm5oIIpPPcrET
+	 3om5O7KjxZFYjFsGEUfZbvHfgQw2J7pSt9AaYs/20YZMTYgWhSrJBe4WRmcY22VMVU
+	 I5hiKBe+ljsG/RIhgptANag7xlaoY4mgeIPpDBc8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
-Subject: [PATCH 6.6 0361/1424] kprobes: Protect kprobe_blacklist with RCU
-Date: Sat, 12 Sep 2026 08:46:33 +0200
-Message-ID: <20260912065615.373951954@linuxfoundation.org>
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Miguel Garcia <miguelgarciaroman8@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 0362/1424] Input: aiptek - validate raw macro indices before updating state
+Date: Sat, 12 Sep 2026 08:46:34 +0200
+Message-ID: <20260912065615.396121841@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -50,85 +52,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-commit 0c4256196b3a105307e2235fbfd85e768bbcdd0f upstream.
+[ Upstream commit 95dffe32a66cbed07fbfa7afed39d56d5014e04f ]
 
-__within_kprobe_blacklist() traverses kprobe_blacklist without holding
-kprobe_mutex. When a module is unloaded, kprobe_remove_area_blacklist()
-removes blacklist entries and immediately frees them with kfree().
-A concurrent call to within_kprobe_blacklist() can therefore dereference
-freed memory.
+aiptek_irq() derives macro key indices directly from tablet reports and
+then uses them to index macroKeyEvents[]. Report types 4 and 5 also save
+the derived value in aiptek->lastMacro and later use that state to
+release the previous key.
 
-Furthermore, within_kprobe_blacklist() can be called in atomic or
-non-preemptible contexts where the sleeping kprobe_mutex cannot be taken.
+Validate the raw macro index once before it enters that state machine, so
+lastMacro only ever stores an in-range macro key. Keep direct bounds
+checks for report type 6, which reads the macro number from the packet
+body and uses it immediately.
 
-Protect kprobe_blacklist with RCU. Use guard(rcu)() and
-list_for_each_entry_rcu() for traversal, list_add_tail_rcu() for
-insertions, list_del_rcu() for deletions, and kfree_rcu() to reclaim
-entries safely after a grace period.
-
-Link: https://lore.kernel.org/all/178810004323.64882.16493230858653316962.stgit@devnote2/
-
-Fixes: 376e242429bf ("kprobes: Introduce NOKPROBE_SYMBOL() macro to maintain kprobes blacklist")
-Cc: stable@vger.kernel.org
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/all/20260807155802.F06041F000E9@smtp.kernel.org/
-Assisted-by: Antigravity:gemini-3.7-flash
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260329001711.88076-1-pengpeng@iscas.ac.cn
+[dtor: fix macro fallback in report 5s to use -1]
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Miguel Garcia <miguelgarciaroman8@gmail.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/kprobes.h |    1 +
- kernel/kprobes.c        |   14 ++++++++++----
- 2 files changed, 11 insertions(+), 4 deletions(-)
+ drivers/input/tablet/aiptek.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
---- a/include/linux/kprobes.h
-+++ b/include/linux/kprobes.h
-@@ -186,6 +186,7 @@ struct kprobe_blacklist_entry {
- 	struct list_head list;
- 	unsigned long start_addr;
- 	unsigned long end_addr;
-+	struct rcu_head rcu;
- };
+diff --git a/drivers/input/tablet/aiptek.c b/drivers/input/tablet/aiptek.c
+index baabc51547b83..6210cd99d6291 100644
+--- a/drivers/input/tablet/aiptek.c
++++ b/drivers/input/tablet/aiptek.c
+@@ -658,6 +658,8 @@ static void aiptek_irq(struct urb *urb)
+ 		pck = (data[1] & aiptek->curSetting.stylusButtonUpper) != 0 ? 1 : 0;
  
- #ifdef CONFIG_KPROBES
---- a/kernel/kprobes.c
-+++ b/kernel/kprobes.c
-@@ -1394,8 +1394,14 @@ static bool __within_kprobe_blacklist(un
- 	/*
- 	 * If 'kprobe_blacklist' is defined, check the address and
- 	 * reject any probe registration in the prohibited area.
-+	 * Note: this can return true during transition period where
-+	 * (start_addr, end_addr) in the black list is shrinking
-+	 * but old entry has not been removed yet. This is acceptable
-+	 * because the worst case is that we reject more probes than
-+	 * we should.
+ 		macro = dv && p && tip && !(data[3] & 1) ? (data[3] >> 1) : -1;
++		if (macro >= ARRAY_SIZE(macroKeyEvents))
++			macro = -1;
+ 		z = get_unaligned_le16(data + 4);
+ 
+ 		if (dv) {
+@@ -699,7 +701,9 @@ static void aiptek_irq(struct urb *urb)
+ 		left = (data[1]& aiptek->curSetting.mouseButtonLeft) != 0 ? 1 : 0;
+ 		right = (data[1] & aiptek->curSetting.mouseButtonRight) != 0 ? 1 : 0;
+ 		middle = (data[1] & aiptek->curSetting.mouseButtonMiddle) != 0 ? 1 : 0;
+-		macro = dv && p && left && !(data[3] & 1) ? (data[3] >> 1) : 0;
++		macro = dv && p && left && !(data[3] & 1) ? (data[3] >> 1) : -1;
++		if (macro >= ARRAY_SIZE(macroKeyEvents))
++			macro = -1;
+ 
+ 		if (dv) {
+ 		        /* If the selected tool changed, reset the old
+@@ -737,11 +741,11 @@ static void aiptek_irq(struct urb *urb)
  	 */
--	list_for_each_entry(ent, &kprobe_blacklist, list) {
-+	guard(rcu)();
-+	list_for_each_entry_rcu(ent, &kprobe_blacklist, list) {
- 		if (addr >= ent->start_addr && addr < ent->end_addr)
- 			return true;
- 	}
-@@ -2487,7 +2493,7 @@ int kprobe_add_ksym_blacklist(unsigned l
- 	ent->start_addr = entry;
- 	ent->end_addr = entry + size;
- 	INIT_LIST_HEAD(&ent->list);
--	list_add_tail(&ent->list, &kprobe_blacklist);
-+	list_add_tail_rcu(&ent->list, &kprobe_blacklist);
+ 	else if (data[0] == 6) {
+ 		macro = get_unaligned_le16(data + 1);
+-		if (macro > 0) {
++		if (macro > 0 && macro - 1 < ARRAY_SIZE(macroKeyEvents)) {
+ 			input_report_key(inputdev, macroKeyEvents[macro - 1],
+ 					 0);
+ 		}
+-		if (macro < 25) {
++		if (macro + 1 < ARRAY_SIZE(macroKeyEvents)) {
+ 			input_report_key(inputdev, macroKeyEvents[macro + 1],
+ 					 0);
+ 		}
+@@ -760,7 +764,8 @@ static void aiptek_irq(struct urb *urb)
+ 				aiptek->curSetting.toolMode;
+ 		}
  
- 	return (int)size;
- }
-@@ -2516,8 +2522,8 @@ static void kprobe_remove_area_blacklist
- 	list_for_each_entry_safe(ent, n, &kprobe_blacklist, list) {
- 		if (ent->start_addr < start || ent->start_addr >= end)
- 			continue;
--		list_del(&ent->list);
--		kfree(ent);
-+		list_del_rcu(&ent->list);
-+		kfree_rcu(ent, rcu);
- 	}
- }
- 
+-		input_report_key(inputdev, macroKeyEvents[macro], 1);
++		if (macro < ARRAY_SIZE(macroKeyEvents))
++			input_report_key(inputdev, macroKeyEvents[macro], 1);
+ 		input_report_abs(inputdev, ABS_MISC,
+ 				 1 | AIPTEK_REPORT_TOOL_UNKNOWN);
+ 		input_sync(inputdev);
+-- 
+2.53.0
+
 
 
