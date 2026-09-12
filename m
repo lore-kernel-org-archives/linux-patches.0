@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA74C1FC110;
-	Sat, 12 Sep 2026 07:45:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4B651FC110;
+	Sat, 12 Sep 2026 07:46:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789199160; cv=none; b=m7L+C1Be/OayRozXm+3nxzDAZH+kVLssx4MPzGkG9S2hFnQCMrybIVzFg3zL9vFigBO8HfcbsUm4NhBU5TWfsyFwlPQNZcYE8QXrk7R3FWiz5QnNK7X6NUWeiXn/pvyY/ksaGM1+Mg47Q/uZ75SRjelNqL4b/W5UYcbQ+BwZh+Q=
+	t=1789199165; cv=none; b=Ko6ZG8uCSo9sS28qZHfUAHWOVRPeKOs4saBNJn5GRgH5sCREzjbmI/+rWXWUYCk9DhL+NdRcmuD1V2ysaPcO23xXgHymB/x7mwkTqnOJghgbW4nq1tQjJyBXOCHg2cYxisOgLq3MrFlU1c6Sjfb6jMiXgVFafegm706kUL56f38=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789199160; c=relaxed/simple;
-	bh=wz5GkSfO6kL3T8LiFC8G5lZ9cDJAI7rqAd2UWaRVdlQ=;
+	s=arc-20240116; t=1789199165; c=relaxed/simple;
+	bh=XPZzzfdoeDqlMCTxh8fY3rRDLmLIeCZa4BP/MR4ve34=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GSRdg012KRSGgNYwySDXPTOExigmeEvqFE05t6ExcgvpPxDLE+mydcb5Hl+bmvY905Bhajl73MR9TcZ15MQ7MqYISVYuHnmRdwKruruWkApPN8Ahnxig24vyo7f6Q8hCCu72MNxLPn3O8y4lqdUVbLHmbagZeQ7cBMLEN9mAsJA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i97XXMbg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ehXd7L4DmMnLF/eVC3nSr6BdeNPb3M1znKxjkobXlesJ1tzll2tY6O8qk9tyQ9SsqvRWs/FESshmSuCXCCT+EEwiO9e/Qi1UJJc4u4V1s1ziJQO6bBf/t4oeicL8YMMGFaTg2OWbH8cCfsTC40Pqwcz7MhpPYpHgfAWeqOloKWM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eXNSE9zh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i97XXMbg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD4281F000FF;
-	Sat, 12 Sep 2026 07:45:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eXNSE9zh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8B671F000FF;
+	Sat, 12 Sep 2026 07:46:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789199158;
-	bh=JI6IzlDZfgJLygJlkDrB60ufauugUn3/sxB3RAJTGek=;
+	s=korg; t=1789199163;
+	bh=f9fKueXBLl7IPlWfxDocGRL2oNPerj96EAUS7G/rrYk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=i97XXMbg72SiJGJA9aYbAqYl1WMpGCNUdphtnlza02AVTjgamPIhMO8Ucqd3esYv6
-	 WOvnHpKK1ecCp5O1STBlSAhmiaGW3DjEdRqCtM+aPP9Do6YV1LdTfD5gHbyds+8Glk
-	 Ecap401XSjfl5YFgUu80uVBbNH/JcWBnNfn/Rdvo=
+	b=eXNSE9zhq3xMr8l6PNxZTHig43Rrv99p57pQQnbW4yx0nTh8ImMRkZCJfxrwTXQo8
+	 4Eks1rLkdsNuUYSY8jDVX5JmyCaYCaPs4wxzm8Q0yRFkjGGK8CG6nTfUuEzVgXqiuM
+	 iS9bhtjOuJGDPbMx9hueMtkOySGqWlyndD/bbTEI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Leon Hwang <leon.hwang@linux.dev>,
 	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0528/1815] bpf: Disallow interpreter fallback for gotox insn
-Date: Sat, 12 Sep 2026 08:37:58 +0200
-Message-ID: <20260912065701.281318081@linuxfoundation.org>
+Subject: [PATCH 7.2 0529/1815] bpf: Disallow interpreter fallback for BPF_ADDR_PERCPU insn
+Date: Sat, 12 Sep 2026 08:37:59 +0200
+Message-ID: <20260912065701.302504202@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -53,42 +53,91 @@ Content-Transfer-Encoding: 8bit
 
 From: Leon Hwang <leon.hwang@linux.dev>
 
-[ Upstream commit 905f716362e1186c1a23447ca279e6d21f795cdb ]
+[ Upstream commit 7a0855e73757ee9cf25ba635a1c735018ecba742 ]
 
-The interpreter does not recognize the BPF_JMP|BPF_JA|BPF_X insn, which
-is used for insn_array map. Thereafter, it would hit the BUG_ON() in
-___bpf_prog_run() at run time.
+The BPF_MOV64_PERCPU_REG insn requires JIT to emit native code to for
+'dst_reg = src_reg + <percpu_base_off>'.
 
-[    2.563726] BPF interpreter: unknown opcode 0d (imm: 0x0)
-[    2.564557] ------------[ cut here ]------------
-[    2.565206] kernel BUG at kernel/bpf/core.c:2349!
-[    2.565882] Oops: invalid opcode: 0000 [#1] SMP PTI
+However, the interpreter ignores the 'off' at its ALU64_MOV_X label.
+The 'off' indicates the insn is BPF_MOV64_PERCPU_REG insn. Then, when
+the interpreter loads memory from the register, it will hit a page
+fault.
 
-Set jit_required as true when insn_array map is used in the prog in
-order to disallow interpreter fallback for gotox insn in
-core.c::__bpf_prog_select_runtime().
+[    2.545572] BUG: unable to handle page fault for address: ffffffffacaaf034
+[    2.546485] #PF: supervisor read access in kernel mode
+[    2.547167] #PF: error_code(0x0000) - not-present page
+[    2.547850] PGD 134e63067 P4D 134e63067 PUD 134e64063 PMD 10021c063 PTE 800ffffeca550062
+[    2.548912] Oops: Oops: 0000 [#1] SMP PTI
 
-Fixes: 493d9e0d6083 ("bpf, x86: add support for indirect jumps")
+Set jit_required as true in order to disallow interpreter fallback in
+core.c::__bpf_prog_select_runtime(), if any BPF_ADDR_PERCPU insn is
+patched to the prog.
+
+BTW, rename the helper bpf_map_supports_cpu_flags() to
+bpf_map_is_percpu_map().
+
+Fixes: 7bdbf7446305 ("bpf: add special internal-only MOV instruction to resolve per-CPU addrs")
 Signed-off-by: Leon Hwang <leon.hwang@linux.dev>
-Link: https://lore.kernel.org/bpf/20260715141122.15783-3-leon.hwang@linux.dev
+Link: https://lore.kernel.org/bpf/20260715141122.15783-4-leon.hwang@linux.dev
 Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 1 +
- 1 file changed, 1 insertion(+)
+ include/linux/bpf.h | 4 ++--
+ kernel/bpf/fixups.c | 5 +++++
+ 2 files changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 2c4b52ba52413..22a122403a2e3 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -17899,6 +17899,7 @@ static int __add_used_map(struct bpf_verifier_env *env, struct bpf_map *map)
- 			return err;
- 		}
- 		env->insn_array_maps[env->insn_array_map_cnt++] = map;
-+		env->prog->jit_required = true;
- 	}
+diff --git a/include/linux/bpf.h b/include/linux/bpf.h
+index b1271f53905c7..31c1fef6b59b1 100644
+--- a/include/linux/bpf.h
++++ b/include/linux/bpf.h
+@@ -4164,7 +4164,7 @@ bpf_prog_update_insn_ptrs(struct bpf_prog *prog, u32 *offsets, void *image)
+ }
+ #endif
  
- 	return env->used_map_cnt - 1;
+-static inline bool bpf_map_supports_cpu_flags(enum bpf_map_type map_type)
++static inline bool bpf_map_is_percpu_map(enum bpf_map_type map_type)
+ {
+ 	switch (map_type) {
+ 	case BPF_MAP_TYPE_PERCPU_ARRAY:
+@@ -4191,7 +4191,7 @@ static inline int bpf_map_check_op_flags(struct bpf_map *map, u64 flags, u64 all
+ 		return -EINVAL;
+ 
+ 	if (flags & (BPF_F_CPU | BPF_F_ALL_CPUS)) {
+-		if (!bpf_map_supports_cpu_flags(map->map_type))
++		if (!bpf_map_is_percpu_map(map->map_type))
+ 			return -EINVAL;
+ 		if ((flags & BPF_F_CPU) && (flags & BPF_F_ALL_CPUS))
+ 			return -EINVAL;
+diff --git a/kernel/bpf/fixups.c b/kernel/bpf/fixups.c
+index d9019ebe71a9c..31e9c9f335636 100644
+--- a/kernel/bpf/fixups.c
++++ b/kernel/bpf/fixups.c
+@@ -2008,6 +2008,9 @@ int bpf_do_misc_fixups(struct bpf_verifier_env *env)
+ 					return -EFAULT;
+ 				}
+ 
++				if (bpf_map_is_percpu_map(map_ptr->map_type))
++					prog->jit_required = true;
++
+ 				new_prog = bpf_patch_insn_data(env, i + delta,
+ 							       insn_buf, cnt);
+ 				if (!new_prog)
+@@ -2112,6 +2115,7 @@ int bpf_do_misc_fixups(struct bpf_verifier_env *env)
+ 			 * way, it's fine to back out this inlining logic
+ 			 */
+ #ifdef CONFIG_SMP
++			prog->jit_required = true;
+ 			insn_buf[0] = BPF_MOV64_IMM(BPF_REG_0, (u32)(unsigned long)&cpu_number);
+ 			insn_buf[1] = BPF_MOV64_PERCPU_REG(BPF_REG_0, BPF_REG_0);
+ 			insn_buf[2] = BPF_LDX_MEM(BPF_W, BPF_REG_0, BPF_REG_0, 0);
+@@ -2133,6 +2137,7 @@ int bpf_do_misc_fixups(struct bpf_verifier_env *env)
+ 		/* Implement bpf_get_current_task() and bpf_get_current_task_btf() inline. */
+ 		if ((insn->imm == BPF_FUNC_get_current_task || insn->imm == BPF_FUNC_get_current_task_btf) &&
+ 		    bpf_verifier_inlines_helper_call(env, insn->imm)) {
++			prog->jit_required = true;
+ 			insn_buf[0] = BPF_MOV64_IMM(BPF_REG_0, (u32)(unsigned long)&current_task);
+ 			insn_buf[1] = BPF_MOV64_PERCPU_REG(BPF_REG_0, BPF_REG_0);
+ 			insn_buf[2] = BPF_LDX_MEM(BPF_DW, BPF_REG_0, BPF_REG_0, 0);
 -- 
 2.53.0
 
