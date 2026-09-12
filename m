@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2986D35201F;
-	Sat, 12 Sep 2026 11:33:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4795C37DEBF;
+	Sat, 12 Sep 2026 11:33:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789212829; cv=none; b=OHLOziAv4YFy/iXJ6dVT7QPR23hSSMTycVVbt3qAuk4MhEsPW7Mfidj16DnYPKMKBIQh6yX5POIO6ITq0oXHCBoe4vgKUViEpQvsjomeKUEcmQy1pooYoHY8ri0BIf2OqoKmnDqU2uEQaCj3r9PQpOqgmU0p2a30phidXUpIuWc=
+	t=1789212834; cv=none; b=Ag0mRzMEBuhnLRAjTcxeYJ5sYiohH4zSViAKk2W6lmJS3cYg+93e8R8rB64AQ7ajE2D67f2VVTIYOChFZzGN+aOY7XOEJxhsRPQy7ky/5eW8EgaX+pEiWq8jBuUaTcrSMpjx5UzuMBVcgngkTk69nkosJj25qLFVQt8NQ4ATtdc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789212829; c=relaxed/simple;
-	bh=s9ShMI9MNgywpW8zOWvUDIaMPYL1KP4TntWUvs07zFk=;
+	s=arc-20240116; t=1789212834; c=relaxed/simple;
+	bh=c9kfDe+VdRw9p6mAM565CDv/dwaSPi0fO9Lz4k0KUdk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kKkxMKF+5m0WreO9wcVpKpgpabopKP61XFJ8hyihh1PN8U4Fc8JobXjH/VgHCGbepyrelTgkJRe52aBo3fFSexc0aLybzGSgYsxhJclSckYYhvc2dIr0jNrBGIDTVqRjwetNss538QDeqU7VH3HBv3mG9JhlvYhu3Mg8kLdo5JE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VNb+eNm7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pMKblBIR/V3vhR2d4cwovidEoJBk67CppzKQQoh5JGVS05aNf0JSdgjyKrVPnqlcq9LDvFfh9dSlBF3AYr+58SYTmT4PfKBOOqVYb0MUiygwPcejS4TNyjBCqhuEwFnQoHCVqTmwC+xBaFUfGAJ/9lkpkKlKe+FzPzJ04Tg06yQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ETiNXIG6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VNb+eNm7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F13CC1F000FF;
-	Sat, 12 Sep 2026 11:33:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ETiNXIG6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0301B1F000FF;
+	Sat, 12 Sep 2026 11:33:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789212828;
-	bh=aTtEgCsYm0gaC6LAu1fBMCrqYrnsTA0hrUxV3UJbHaI=;
+	s=korg; t=1789212833;
+	bh=R9SIerK5NpEPOLAnhX4D20pAfJ5OLvdzbKHehcknsb4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VNb+eNm7UYxIzES2OJBUm4LL63L32WV78pQ2SSQBHg92yK8+ccL6fselolrWcCFcX
-	 ZynY1p8CVR5aRT+Px3GVf2NElXSIrn9fKqt/FYOiYDtqgQ3w/huidf3E0Ez+BlA+xj
-	 gOnKT/AtMZ/gzMpe5kROuSrL0Q3UEYeGDB0kggdQ=
+	b=ETiNXIG67z9EOJ1LcNeo7mBGZzJx8uX0bkfzcU30DlD419BSCGdzYmB8RCd12Y2kf
+	 dsGQtR8mVBxyulZTr94M/n1xjF/ARZ2YzmraYwFSXROp+4LQjNNoKldhtdl7cwqLHU
+	 A8QtQPMKN7B+JCRrHpzy0FtX8TU4qr1ULjJS/mu0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
 	K Prateek Nayak <kprateek.nayak@amd.com>,
-	"Mario Limonciello (AMD)" <superm1@kernel.org>,
+	kernel test robot <lkp@intel.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1472/1518] cpufreq/amd-pstate: Grab "amd_pstate_driver_lock" when toggling dynamic_epp
-Date: Sat, 12 Sep 2026 09:00:41 +0200
-Message-ID: <20260912065656.854778489@linuxfoundation.org>
+Subject: [PATCH 6.18 1473/1518] cpufreq/amd-pstate: Add POWER_SUPPLY select for dynamic EPP
+Date: Sat, 12 Sep 2026 09:00:42 +0200
+Message-ID: <20260912065656.876869188@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,66 +53,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: K Prateek Nayak <kprateek.nayak@amd.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit 9228169d2ae055ed09a163887fc59a710a5eb73b ]
+[ Upstream commit 679343977588781bd3effba79e9644aee4ee046c ]
 
-Concurrently changing driver mode and dynamic_epp with:
+The dynamic EPP feature uses power_supply_reg_notifier() and
+power_supply_unreg_notifier() but doesn't declare a dependency on
+POWER_SUPPLY, causing linker errors when POWER_SUPPLY is not enabled.
 
-    echo passive > /sys/devices/system/cpu/amd_pstate/status&
-    echo disable > /sys/devices/system/cpu/amd_pstate/dynamic_epp&
+Add POWER_SUPPLY to the selects.
 
-hits the WARN_ON_ONCE() in static_key_disable_cpuslocked() and hangs the
-system since both sysfs writes are trying to do
-amd_pstate_change_driver_mode() without any synchronization.
-
-Grab the "amd_pstate_driver_lock" mutex when modifying "dynamic_epp" to
-prevent the two paths from racing with each other. Add a lockdep
-assertion for "amd_pstate_driver_lock" in
-amd_pstate_change_driver_mode() to formalize the dependency.
-
-Since "cppc_mode" is stable under "amd_pstate_driver_lock", only reload
-the driver when in "AMD_PSTATE_ACTIVE" mode and reject all writes when
-in passive or guided mode, or if the driver is not loaded, since only
-active mode operates on EPP.
-
+Suggested-by: K Prateek Nayak <kprateek.nayak@amd.com>
 Fixes: e30ca6dd5345 ("cpufreq/amd-pstate: Add dynamic energy performance preference")
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: K Prateek Nayak <kprateek.nayak@amd.com>
-Link: https://lore.kernel.org/r/20260508051748.10484-2-kprateek.nayak@amd.com
-Signed-off-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202604040742.ySEdkuAa-lkp@intel.com/
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Link: https://patch.msgid.link/20260407194949.310114-1-mario.limonciello@amd.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/amd-pstate.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/cpufreq/Kconfig.x86 | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/cpufreq/amd-pstate.c b/drivers/cpufreq/amd-pstate.c
-index 067f6aabf3222..eed7ed42c391c 100644
---- a/drivers/cpufreq/amd-pstate.c
-+++ b/drivers/cpufreq/amd-pstate.c
-@@ -1576,6 +1576,8 @@ static int amd_pstate_change_driver_mode(int mode)
- {
- 	int ret;
- 
-+	lockdep_assert_held(&amd_pstate_driver_lock);
-+
- 	ret = amd_pstate_unregister_driver(0);
- 	if (ret)
- 		return ret;
-@@ -1691,6 +1693,13 @@ static ssize_t dynamic_epp_store(struct device *a, struct device_attribute *b,
- 	if (ret)
- 		return ret;
- 
-+	guard(mutex)(&amd_pstate_driver_lock);
-+
-+	if (cppc_state != AMD_PSTATE_ACTIVE) {
-+		pr_debug("dynamic_epp can only be toggled in active mode\n");
-+		return -EINVAL;
-+	}
-+
- 	if (dynamic_epp == enabled)
- 		return -EINVAL;
- 
+diff --git a/drivers/cpufreq/Kconfig.x86 b/drivers/cpufreq/Kconfig.x86
+index a0dbb9808ae99..027e6ea2e0384 100644
+--- a/drivers/cpufreq/Kconfig.x86
++++ b/drivers/cpufreq/Kconfig.x86
+@@ -41,6 +41,7 @@ config X86_AMD_PSTATE
+ 	select ACPI_CPPC_LIB if X86_64
+ 	select CPU_FREQ_GOV_SCHEDUTIL if SMP
+ 	select ACPI_PLATFORM_PROFILE
++	select POWER_SUPPLY
+ 	help
+ 	  This driver adds a CPUFreq driver which utilizes a fine grain
+ 	  processor performance frequency control range instead of legacy
 -- 
 2.53.0
 
