@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7A8535AC09;
-	Sat, 12 Sep 2026 10:15:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7BC6422E08;
+	Sat, 12 Sep 2026 10:15:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789208121; cv=none; b=kPuG5FnvPb0k4gQ0Oha2UTZwLDH/OuNbfmkv4moyfzxQ4CFYkhvPNO3kEeCkxCe8+7Lski1hR1Ffg8jsaM73TGm6JOpUfkmfmGfiVrgenjvxn6qEphbDo/ojL8K9M5ruYRo9xx/56yHkPPCWyl2CzlyGQpcNEXvZICyo4xOhMe4=
+	t=1789208125; cv=none; b=ZcXtJMdoqdfkb7iJ00VCyFgEWo7O98Hty+0hsllLTBDxzOKvfpHauwstNY09cAXkB53jn8xq1+S1J4Y73nmrvRG0vQLJQ5qFoAJp2nu4OH8iniwZnLbhCSzWPBI8BCh2auQZts/arZGATbhClIBCj+EaOIDq72t0NfPC0sn1Mb8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789208121; c=relaxed/simple;
-	bh=cx0KPW/yxgYQyoDLuLzt+bvn+H4N5yKWycJ1Com9nBU=;
+	s=arc-20240116; t=1789208125; c=relaxed/simple;
+	bh=BLeHgtVRXoBNcbp73kVn+QN2L7GekQNvfl9gjfBIDHQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dX+XQFQCGMoa3JvOHXm5R36jB6bJCg+jAyb6N+dhEbn7Agl/zmn957d3X+qeQ+yM7DY9TBQMygP3CbfCtg8kiJwX9NDg3+bC6Zbp+bxDMFy6kywe2wV/ndmq7CeyK0ptRrASnab+qinQUm8ixNR32QhkgvlwgQgmgOVn+nmoN4k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oICKq+XM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sNRARIJx6XH7gVduxqVBXTwHXv8qs/G9CM794OAxLOaeFZ0XToeUuTeKQhd7sAh+Yy4NcGVUbuOe/5XNJ1Y/YKf7A+5jYTXlrODRpMjjtEYrBnxPW581ATPyYrA3Fp8TjehlZlFrzA8WhIAq18LrPOXbwUM/Ssv11yS/KOFG8u0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p+oBpJ1y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oICKq+XM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFFFB1F000FF;
-	Sat, 12 Sep 2026 10:15:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p+oBpJ1y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB7AD1F000FF;
+	Sat, 12 Sep 2026 10:15:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789208119;
-	bh=rAUGq5lkQf1vqKApd3DFFnxGaK3+ofkLO3mPXIotO54=;
+	s=korg; t=1789208124;
+	bh=0NlqeCBxqgu40OgUD6SNuu7W8obXLdMwuRwAN8EJ7Gk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oICKq+XMfbcsFFsELsi+AMd8/du7BpraAI4A5WVbLLi1I/aqauxgkp69+/wEzsb8M
-	 UaEukAYx3btFLW06rgR+HDrSmebf+d3cEtz+T6sbeo8QIiJjmq2PgApDkJ1QFfSXRm
-	 FkOzHSWiYkCG/fA5WaXOA6lJxn/hZTR0rcC9CJ60=
+	b=p+oBpJ1yaMzEDry50B6xXaO7m+2hpYzyx9SbyK447SsM3aLE6NgYIE5prR0UiISIE
+	 gHrlo85eYZDLzcvAS6mN3Aki5wAWLsjjZOZgGvLU7Q/HFnGliZfNi6jrkTjC/enEpG
+	 XI4diB9uU9qqEHwgmLWd7kvs2RB15Vwag4eHnmYY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
-	Cheng Xu <chengyou@linux.alibaba.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Konstantin Taranov <kotaranov@microsoft.com>,
+	Long Li <longli@microsoft.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0510/1518] RDMA/erdma: Fix CEQ tasklet use-after-free on removal
-Date: Sat, 12 Sep 2026 08:44:39 +0200
-Message-ID: <20260912065634.982090317@linuxfoundation.org>
+Subject: [PATCH 6.18 0511/1518] RDMA/mana_ib: drain QP references after partial table insertion
+Date: Sat, 12 Sep 2026 08:44:40 +0200
+Message-ID: <20260912065635.004938933@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -53,50 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Leon Romanovsky <leonro@nvidia.com>
 
-[ Upstream commit 0ca79979384f031d710c4b3bae065dcb5d95aca3 ]
+[ Upstream commit 97f7c2262c28ebcae64fc957ee978646684a5ed9 ]
 
-Each CEQ interrupt handler only schedules eqc->tasklet. The tasklet calls
-erdma_ceq_completion_handler(), which reads the DMA-coherent EQ ring
-through get_next_valid_eqe() and updates eq->dbrec through notify_eq().
+mana_table_store_ud_qp() publishes a QP at its send-queue id before
+inserting the receive-queue id, dropping the XArray lock between the two
+xa_insert_irq() calls. A concurrent completion handler can look up the QP
+and take a transient reference. When the second insertion fails, the
+rollback erased only the send-queue entry and returned, leaving both the
+initial table reference and the transient reference outstanding while RDMA
+core frees the QP, causing a use-after-free.
 
-erdma_ceqs_uninit() frees each CEQ IRQ and then destroys its EQ.
-free_irq() prevents another hard IRQ and waits for an in-flight handler,
-but it does not drain a tasklet that the handler already scheduled. The
-tasklet can therefore access eq->qbuf or eq->dbrec after
-erdma_eq_destroy() frees them.
+Drain the reference as normal destruction does: drop the initial reference
+and wait for qp->free, releasing the QP only after every concurrent lookup
+returns its reference.
 
-Clearing ceq_cb->ready does not synchronize with a tasklet that already
-passed the check at the start of erdma_ceq_completion_handler().
-
-Kill the tasklet after free_irq(), when no handler can schedule it again,
-and before erdma_ceq_uninit_one() releases the EQ buffers.
-
-Fixes: f2a0a630b953 ("RDMA/erdma: Add event queue implementation")
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Link: https://patch.msgid.link/20260721082545.47395-1-mhun512@gmail.com
-Acked-by: Cheng Xu <chengyou@linux.alibaba.com>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 8001e9257eca ("RDMA/mana_ib: extend mana QP table")
+Link: https://patch.msgid.link/20260721-if-mana-table-store-qp-qids-partiall-v1-1-8fb3d2d2b559@nvidia.com
+Reviewed-by: Konstantin Taranov <kotaranov@microsoft.com>
+Reviewed-by: Long Li <longli@microsoft.com>
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/erdma/erdma_eq.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/infiniband/hw/mana/qp.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/hw/erdma/erdma_eq.c b/drivers/infiniband/hw/erdma/erdma_eq.c
-index 6486234a23600..5610e7f4c6bf7 100644
---- a/drivers/infiniband/hw/erdma/erdma_eq.c
-+++ b/drivers/infiniband/hw/erdma/erdma_eq.c
-@@ -219,6 +219,7 @@ static void erdma_free_ceq_irq(struct erdma_dev *dev, u16 ceqn)
- 
- 	irq_set_affinity_hint(eqc->irq.msix_vector, NULL);
- 	free_irq(eqc->irq.msix_vector, eqc);
-+	tasklet_kill(&eqc->tasklet);
+diff --git a/drivers/infiniband/hw/mana/qp.c b/drivers/infiniband/hw/mana/qp.c
+index f00bf3b015e73..285b3702198b7 100644
+--- a/drivers/infiniband/hw/mana/qp.c
++++ b/drivers/infiniband/hw/mana/qp.c
+@@ -459,6 +459,12 @@ static void mana_table_remove_rc_qp(struct mana_ib_dev *mdev, struct mana_ib_qp
+ 	xa_erase_irq(&mdev->qp_table_wq, qp->ibqp.qp_num);
  }
  
- static int create_eq_cmd(struct erdma_dev *dev, u32 eqn, struct erdma_eq *eq)
++static void mana_table_drain_qp_ref(struct mana_ib_qp *qp)
++{
++	mana_put_qp_ref(qp);
++	wait_for_completion(&qp->free);
++}
++
+ static int mana_table_store_ud_qp(struct mana_ib_dev *mdev, struct mana_ib_qp *qp)
+ {
+ 	u32 qids = qp->ud_qp.queues[MANA_UD_SEND_QUEUE].id | MANA_SENDQ_MASK;
+@@ -477,6 +483,7 @@ static int mana_table_store_ud_qp(struct mana_ib_dev *mdev, struct mana_ib_qp *q
+ 
+ remove_sq:
+ 	xa_erase_irq(&mdev->qp_table_wq, qids);
++	mana_table_drain_qp_ref(qp);
+ 	return err;
+ }
+ 
+@@ -524,8 +531,7 @@ static void mana_table_remove_qp(struct mana_ib_dev *mdev,
+ 			  qp->ibqp.qp_type);
+ 		return;
+ 	}
+-	mana_put_qp_ref(qp);
+-	wait_for_completion(&qp->free);
++	mana_table_drain_qp_ref(qp);
+ }
+ 
+ static int mana_ib_create_rc_qp(struct ib_qp *ibqp, struct ib_pd *ibpd,
 -- 
 2.53.0
 
