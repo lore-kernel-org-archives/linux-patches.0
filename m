@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3A5F18A93F;
-	Sat, 12 Sep 2026 14:27:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FF031FCFFC;
+	Sat, 12 Sep 2026 14:27:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789223273; cv=none; b=cuUdt5ihOrlKWv4EJpQaHy5D3MhD1kzeDP8X6AE2IeD/KBe5nk/YamzU0whjQdKIJ7UazJh3fjmXTLuCqlf1I7bxcPFwOIsjSqNelJ+rDla8VoCEcg5F5npFtdmdWK94hXWGVApz1EGPfR5yHjVH0NxVy5/QkODHfxs70cLOWeM=
+	t=1789223277; cv=none; b=iPIheGv06um0Datta90IZm1JL3Q5r/2goxG7y3YtNFdT/Y+UkKcBa1fwDuQjkPBaLzqYJ8kOsv0AwCJJDcDqZhAEr/R+Fu2Nx8lK3Xq5nYqv18+pCLadSSoQcM7P+nbSLye1xfJCq0vTPSOTYVqKs75eaHVURs/F+LkvTCN1QNo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789223273; c=relaxed/simple;
-	bh=Jvs3BfXUcA5FN78M2vi2z6zqaJ2EaD5TQ8U3/NX2itE=;
+	s=arc-20240116; t=1789223277; c=relaxed/simple;
+	bh=ljtMnjE47V/D6BVBbCyWGIweFiIXE0QieTAEU5rW8W4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WfeZkLhRpPlUamy+Hj/AARQYXokt/CdWpyJNAXF6v2IrcWe25lRxplI0XSPr+4NAqhtrayTuyzfeu8aPbvNHOLcbLf/vFupS2cskGMdQnKB4PxXHnNm358maraCmRqZOOkRkeJA9YfWzozELxYagL2Bt1IlCFYhYGQNNCmfdGwU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B/y2G7HO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jS2JdEqznii3IjOraLzlypOrZCdVY1zJt5+DNl8qyVVLt6e0BwpQgOiLfdQatKU7hVf0LuPWENPOg8rUpULqIpcYJ3CKiLXaUSdvvgzCYFvBBuA7n+VVBHeqHoND/3RWuG/WTlBLFN6vYzzV/VKwHcRaaPwjPP9QsTWGMVkLiQk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O1NDaNo6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B/y2G7HO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65B3C1F000FF;
-	Sat, 12 Sep 2026 14:27:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O1NDaNo6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50DB01F000FF;
+	Sat, 12 Sep 2026 14:27:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789223271;
-	bh=xTZ6Lh4RN+y2pfXXMW0pR+kukEye6DdN3eVvm3jqtwg=;
+	s=korg; t=1789223276;
+	bh=QJ7FMUHu4TaInxSP7YgDLKzjs3F025uXbITwDtSoYjE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=B/y2G7HO6WVJAKApJUtisAGVAc2cb32M3HNzLkjqj1Ibwylrb0eHFXJomx4WqxHqv
-	 bxw+T4fou8c9oc0gCkjN2xXSklIzWk9cwwd+juhCgeMbsaFS38q0Fjy/oPHC13cTIv
-	 +I1mx56qCcIlnf8aoruBq25FICT8zVfiKGDevc04=
+	b=O1NDaNo6HXHn/gk/2/iH+QPlZM4mUbDpe2srhboPtVsYLm3+TxrG6nTLaovoT/UJS
+	 ytl52db03K5QujmIha6/6Jij9NqVvilYmpGTmRc4g+nCI2voSTBzCqThHRxLKCGNN/
+	 d2IlCushYDOPTA6a+QJ6qIGvLxiewbMQxqj6ii0k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Sudeep Holla <sudeep.holla@kernel.org>,
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	Alison Schofield <alison.schofield@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0755/1424] firmware: arm_scmi: Drop handle on protocol bind failures
-Date: Sat, 12 Sep 2026 08:53:07 +0200
-Message-ID: <20260912065624.204779688@linuxfoundation.org>
+Subject: [PATCH 6.6 0756/1424] libnvdimm/labels: Bound the on-media label size before the shift
+Date: Sat, 12 Sep 2026 08:53:08 +0200
+Message-ID: <20260912065624.226888223@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -51,117 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sudeep Holla <sudeep.holla@kernel.org>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-[ Upstream commit e3a5c30d233ca5d3e799a80da806554c703bda13 ]
+[ Upstream commit 18f9124248ed7a9da1c31973b629dceef76a9b0c ]
 
-The SCMI bus notifier acquires an SCMI handle when the driver core emits
-BUS_NOTIFY_BIND_DRIVER, before invoking the protocol driver probe
-callback. The protocol probe path only checks whether sdev->handle is
-set.
+For a v1.2+ index, __nd_label_validate() computes the label size as
+1 << (7 + nsindex[i]->labelsize), where labelsize is a u8 read from
+the label storage medium.  A value of 25 or more makes the shift count
+reach or exceed the width of int -- undefined behavior -- and 24 already
+shifts into the sign bit.  Only 0 (128-byte) and 1 (256-byte) are valid.
 
-If device_link_add() fails after the handle has been acquired, the
-protocol device can still bind with a valid handle but without the
-dependency link to the SCMI parent. A concurrent parent unbind can then
-miss the child and tear down the SCMI instance while the child still
-holds a handle into it.
+Reject a labelsize above 1 before the shift.  The result was rejected by
+the following size comparison anyway, so this only removes the undefined
+shift on a crafted or corrupted medium; conforming labels are unaffected.
 
-If the protocol driver probe later fails, for example with
--EPROBE_DEFER, the driver core emits BUS_NOTIFY_DRIVER_NOT_BOUND rather
-than BUS_NOTIFY_UNBOUND_DRIVER. The SCMI notifier only released the
-handle on BUS_NOTIFY_UNBOUND_DRIVER, so each failed protocol-device bind
-leaked the SCMI instance users refcount and left sdev->handle set after
-the failed probe.
-
-Make the link helper report failure and drop the acquired handle if the
-link cannot be created. Also handle BUS_NOTIFY_DRIVER_NOT_BOUND in the
-same cleanup path used for unbind so failed probes balance the earlier
-BUS_NOTIFY_BIND_DRIVER acquisition.
-
-Fixes: 971fc0665f13 ("firmware: arm_scmi: Move handle get/set helpers")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Link: https://patch.msgid.link/20260714-scmi_core_fixes-v6-10-3afe499d46e3@kernel.org
-Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
+Fixes: 564e871aa66f ("libnvdimm, label: add v1.2 nvdimm label definitions")
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Reviewed-by: Alison Schofield <alison.schofield@intel.com>
+Link: https://patch.msgid.link/20260624-b4-disp-d8279485-v3-2-cdb6cab28b41@proton.me
+Signed-off-by: Alison Schofield <alison.schofield@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_scmi/driver.c | 31 ++++++++++++++++++++++--------
- 1 file changed, 23 insertions(+), 8 deletions(-)
+ drivers/nvdimm/label.c | 15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/firmware/arm_scmi/driver.c b/drivers/firmware/arm_scmi/driver.c
-index 99c9666235398..d253e9d41d848 100644
---- a/drivers/firmware/arm_scmi/driver.c
-+++ b/drivers/firmware/arm_scmi/driver.c
-@@ -2287,21 +2287,31 @@ static int scmi_handle_put(const struct scmi_handle *handle)
- 	return 0;
- }
+diff --git a/drivers/nvdimm/label.c b/drivers/nvdimm/label.c
+index 584a9c27ce4bf..93ff219d91fc5 100644
+--- a/drivers/nvdimm/label.c
++++ b/drivers/nvdimm/label.c
+@@ -145,10 +145,21 @@ static int __nd_label_validate(struct nvdimm_drvdata *ndd)
+ 		/* label sizes larger than 128 arrived with v1.2 */
+ 		version = __le16_to_cpu(nsindex[i]->major) * 100
+ 			+ __le16_to_cpu(nsindex[i]->minor);
+-		if (version >= 102)
++		if (version >= 102) {
++			/*
++			 * labelsize feeds the shift below; only 0 (128-byte)
++			 * and 1 (256-byte) are valid -- a larger value would
++			 * overflow or exceed the width of int.
++			 */
++			if (nsindex[i]->labelsize > 1) {
++				dev_dbg(dev, "nsindex%d labelsize: %d invalid\n",
++					i, nsindex[i]->labelsize);
++				continue;
++			}
+ 			labelsize = 1 << (7 + nsindex[i]->labelsize);
+-		else
++		} else {
+ 			labelsize = 128;
++		}
  
--static void scmi_device_link_add(struct device *consumer,
-+static bool scmi_device_link_add(struct device *consumer,
- 				 struct device *supplier)
- {
- 	struct device_link *link;
- 
- 	link = device_link_add(consumer, supplier, DL_FLAG_AUTOREMOVE_CONSUMER);
- 
--	WARN_ON(!link);
-+	return !WARN_ON(!link);
-+}
-+
-+static void scmi_clear_handle(struct scmi_device *scmi_dev)
-+{
-+	if (!scmi_dev->handle)
-+		return;
-+
-+	scmi_handle_put(scmi_dev->handle);
-+	scmi_dev->handle = NULL;
- }
- 
- static void scmi_set_handle(struct scmi_device *scmi_dev)
- {
- 	scmi_dev->handle = scmi_handle_get(&scmi_dev->dev);
--	if (scmi_dev->handle)
--		scmi_device_link_add(&scmi_dev->dev, scmi_dev->handle->dev);
-+	if (scmi_dev->handle &&
-+	    !scmi_device_link_add(&scmi_dev->dev, scmi_dev->handle->dev))
-+		scmi_clear_handle(scmi_dev);
- }
- 
- static int __scmi_xfer_info_init(struct scmi_info *sinfo,
-@@ -2581,6 +2591,7 @@ static int scmi_bus_notifier(struct notifier_block *nb,
- {
- 	struct scmi_info *info = bus_nb_to_scmi_info(nb);
- 	struct scmi_device *sdev = to_scmi_dev(data);
-+	const char *status;
- 
- 	/* Skip transport devices and devices of different SCMI instances */
- 	if (!strncmp(sdev->name, "__scmi_transport_device", 23) ||
-@@ -2591,18 +2602,22 @@ static int scmi_bus_notifier(struct notifier_block *nb,
- 	case BUS_NOTIFY_BIND_DRIVER:
- 		/* setup handle now as the transport is ready */
- 		scmi_set_handle(sdev);
-+		status = "about to be BOUND.";
-+		break;
-+	case BUS_NOTIFY_DRIVER_NOT_BOUND:
-+		scmi_clear_handle(sdev);
-+		status = "NOT BOUND.";
- 		break;
- 	case BUS_NOTIFY_UNBOUND_DRIVER:
--		scmi_handle_put(sdev->handle);
--		sdev->handle = NULL;
-+		scmi_clear_handle(sdev);
-+		status = "UNBOUND.";
- 		break;
- 	default:
- 		return NOTIFY_DONE;
- 	}
- 
- 	dev_dbg(info->dev, "Device %s (%s) is now %s\n", dev_name(&sdev->dev),
--		sdev->name, action == BUS_NOTIFY_BIND_DRIVER ?
--		"about to be BOUND." : "UNBOUND.");
-+		sdev->name, status);
- 
- 	return NOTIFY_OK;
- }
+ 		if (labelsize != sizeof_namespace_label(ndd)) {
+ 			dev_dbg(dev, "nsindex%d labelsize %d invalid\n",
 -- 
 2.53.0
 
