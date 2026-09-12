@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01CD331E823;
-	Sat, 12 Sep 2026 19:35:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38E6831E823;
+	Sat, 12 Sep 2026 19:35:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789241722; cv=none; b=hdAhYGWyeRpT8JUM6BsL5c9NNoCWrgVUsqHi/1gcPLJVNlarlWt0AGmHkNTEE0abZfS4MzwCrXeJ1IJQys00J6bWco13+C36DrMNOHm6xs6VKHsu+fOIAsSMVYyrrNwmtm4QC2ycraLg8cVAL6Q31yTBOvnHuW4fyaFHYOr9aUk=
+	t=1789241727; cv=none; b=rL6rxIQ7rusWJEyIn43l/ltONf/Wcr1H8Ni/L0RwfYJtW6YWX+V9p/PblomigtqlMI2EMREZXmMQBgi7JAwHCPnpZx28XcbBHJv85kOnf8zOQsBSx5f/j9vEOPYyACjH0YfgRSgISrp4RvRL33grbrp3muq4P4sxptJHNFBv2Yc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789241722; c=relaxed/simple;
-	bh=PcHzyygwPv1/eH3Nybb9f8iZH13yPB13F5kUU28Z7eM=;
+	s=arc-20240116; t=1789241727; c=relaxed/simple;
+	bh=/hMpzi2BL+fbZua89N5WPfAbA6HHBstmVxW2A2f4kiU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FVbGvDIOt3mn7ORc1sSGl+4W7d7dSvlpznt1Y8ubPFmHu5oGEy/d9n/x+FvO8J2+8x2K9sTk+0esIxXMeColYuGsPm5bgGCFh3G8EGs2N459BeXD4kGEjZpITRyCLUYOcV3wD9EK3vfJRzugrcLtfzkwQAKKgdfeNYPTdA4mW0A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oNtFIYTy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=L7r/kpB0iUf/g3q1ZTG86l5dmFk/sGNT+q5s6/tdzsr84NqnVfM+9aKZtHO0p+kboHyIsZ/g9WpbPPBgEYbGNhKpyvIGUpjmeVVkFjrBBcD0VhvBoytvPiUme5mJxyupISVjuzdyYeMo1m/F+skEYS//407Wgv04dF7Ry+ChNM8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dgnc2N+B; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oNtFIYTy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 091CB1F000FF;
-	Sat, 12 Sep 2026 19:35:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dgnc2N+B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E715D1F000FF;
+	Sat, 12 Sep 2026 19:35:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789241720;
-	bh=kOobrLjXynoSxFm7TiIgI2YF4p+TKcDCRqs4ZiyyM2g=;
+	s=korg; t=1789241726;
+	bh=uA6BRO2+TE/mjWysh9qF8pNkMzNcxCyYk/NuktZQ7YQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oNtFIYTy0vORLvrjnya+0TIYScndbaiD4kGyB1xXCjt/3YfafiG8zs/wK/IwS47sX
-	 S+b8LBTb/ARdMxKn/dFW8ZNmCaIFomnmSB8pBl4QZU8KG+RIiRxpu1gCrevW6kI4aD
-	 ifp2QFaDJUCMmrxqpEevORkFs0d837Iw7gMN53yU=
+	b=Dgnc2N+B32fCi9MkI9ndwpvpZMSYkNYHbJY+fEnf5/BFrafMLviCQqRR26+/v22Bl
+	 fqYPTTwOjQyXed57CNv/MfqCtbxmOgpm038Bwm/h6UTI2aWlXX197Dt+YxLtIOLR5A
+	 InyfM89fs6aFUmI6ScCWN8BSi/Bjad41brS8cptg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilya Maximets <i.maximets@ovn.org>,
-	Norbert Szetei <norbert@doyensec.com>,
-	Jongmin Jang <payload.jang@gmail.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 192/798] net: skbuff: dont touch shared zerocopy state in skb_tx_error()
-Date: Sat, 12 Sep 2026 08:57:00 +0200
-Message-ID: <20260912065521.460584882@linuxfoundation.org>
+	Seiji Nishikawa <snishika@redhat.com>,
+	Corey Minyard <corey@minyard.net>
+Subject: [PATCH 5.10 152/798] ipmi: si: Fix NULL pointer dereference after failed registration
+Date: Sat, 12 Sep 2026 08:56:20 +0200
+Message-ID: <20260912065520.489991824@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -54,66 +50,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Norbert Szetei <norbert@doyensec.com>
+From: Seiji Nishikawa <snishika@redhat.com>
 
-[ Upstream commit f66bdb1cc0fcd227a062378f8be0b5873aa5600a ]
+commit 6d920a75df9a83ab096b3cde7a643b656e4fdfeb upstream.
 
-skb_tx_error() completes the zerocopy uarg and clears
-SKBFL_ALL_ZEROCOPY, and skb_zcopy_downgrade_managed() clears
-SKBFL_MANAGED_FRAG_REFS. Both live in skb_shinfo(), which every clone
-shares, while the caller only owns the reference it is about to drop.
-Through a clone it tells the producer its pages are free and drops
-SKBFL_SHARED_FRAG for an skb that is still in flight.
+try_smi_init() allocates new_smi->si_sm and later calls
+ipmi_register_smi_mod(), which maps to ipmi_add_smi().
 
-Open vSwitch reaches this with a non-last OVS_ACTION_ATTR_RECIRC:
-clone_execute() sends a skb_clone() into ovs_dp_process_packet() while
-do_execute_actions() keeps forwarding the original, and skb_clone()
-does not privatise the frags here -- skb_orphan_frags() returns early
-on SKBFL_DONT_ORPHAN. A flow miss on the clone then strips the marker
-from the packet still being forwarded, and a later local ESP delivery
-decrypts in place over frags it does not own privately.
+During ipmi_add_smi(), the upper IPMI message handler obtains the
+initial BMC device information through __bmc_get_device_id(). This can
+fail if the BMC does not return a successful response to the Get Device
+ID command.
 
-Skip it for a cloned skb. Nothing is lost: skb_release_data() clears
-the zerocopy state once the last reference to the shared data goes.
+When the BMC returns a nonzero completion code, the device-id helper
+retries the command and eventually returns -EIO if the device ID still
+cannot be fetched.
 
-Fixes: 25121173f7b1 ("skb: api to report errors for zero copy skbs")
+On this failure path, ipmi_add_smi() logs "Unable to get the device id"
+and goes to out_err_started, where it invokes the lower driver's
+shutdown callback. try_smi_init() then logs the returned registration
+failure:
+
+ ipmi_si IPI0001:00: IPMI message handler: Unable to get the device id: -5
+ ipmi_si IPI0001:00: Unable to register device: error -5
+
+For ipmi_si, the shutdown callback is shutdown_smi(), which cleans up
+the SI state machine data, frees smi_info->si_sm, and sets
+smi_info->si_sm and smi_info->intf to NULL.
+
+However, intf->in_shutdown is not set on this failed-registration
+rollback path. Therefore, the asynchronous redo_bmc_reg work item can
+still retry BMC device-id probing after the lower driver has already
+cleared its SI state machine data. In the observed case, that retry path
+reached start_next_msg(), which passed the NULL smi_info->si_sm pointer
+to the selected KCS state machine handler:
+
+BUG: unable to handle kernel NULL pointer dereference at 0000000000000000
+Workqueue: events redo_bmc_reg [ipmi_msghandler]
+RIP: start_kcs_transaction+0x2c/0x190 [ipmi_si]
+Call Trace:
+ start_next_msg+0x50/0x80 [ipmi_si]
+ check_start_timer_thread.part.9+0x3b/0x50 [ipmi_si]
+ sender+0x69/0x80 [ipmi_si]
+ i_ipmi_request+0x2ac/0x9d0 [ipmi_msghandler]
+ __get_device_id.isra.29+0xaa/0x180 [ipmi_msghandler]
+ __bmc_get_device_id+0xef/0x950 [ipmi_msghandler]
+ redo_bmc_reg+0x52/0x60 [ipmi_msghandler]
+ process_one_work+0x1a7/0x360
+
+Set intf->in_shutdown on the out_err_started path before invoking the
+lower driver's shutdown callback. This prevents later redo_bmc_reg
+retries from using an interface whose lower driver state has been
+cleaned up, and applies the same shutdown state to other IPMI interfaces
+as well.
+
+Fixes: 2512e40e48d2 ("ipmi: Rework SMI registration failure")
 Cc: stable@vger.kernel.org
-Suggested-by: Ilya Maximets <i.maximets@ovn.org>
-Signed-off-by: Norbert Szetei <norbert@doyensec.com>
-Reviewed-by: Ilya Maximets <i.maximets@ovn.org>
-Tested-by: Jongmin Jang <payload.jang@gmail.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/CFAB292A-674B-4C14-BB2C-BB8830AD5659@doyensec.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-[ There was no 'if' on 5.x as there is no skb_zcopy_downgrade_managed(). ]
-Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Seiji Nishikawa <snishika@redhat.com>
+Message-ID: <20260630174348.1483814-1-snishika@redhat.com>
+Signed-off-by: Corey Minyard <corey@minyard.net>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/skbuff.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/char/ipmi/ipmi_msghandler.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/core/skbuff.c b/net/core/skbuff.c
-index 793b58979e5ca..9d7ebb9216773 100644
---- a/net/core/skbuff.c
-+++ b/net/core/skbuff.c
-@@ -825,10 +825,14 @@ EXPORT_SYMBOL(skb_dump);
-  *
-  *	Report xmit error if a device callback is tracking this skb.
-  *	skb must be freed afterwards.
-+ *
-+ *	Does nothing for a cloned skb: the zerocopy state lives in
-+ *	skb_shinfo(), which the clones share.
-  */
- void skb_tx_error(struct sk_buff *skb)
- {
--	skb_zcopy_clear(skb, true);
-+	if (skb && !skb_cloned(skb))
-+		skb_zcopy_clear(skb, true);
- }
- EXPORT_SYMBOL(skb_tx_error);
- 
--- 
-2.53.0
-
+--- a/drivers/char/ipmi/ipmi_msghandler.c
++++ b/drivers/char/ipmi/ipmi_msghandler.c
+@@ -3531,6 +3531,7 @@ int ipmi_add_smi(struct module         *
+  out_err_bmc_reg:
+ 	ipmi_bmc_unregister(intf);
+  out_err_started:
++	intf->in_shutdown = true;
+ 	if (intf->handlers->shutdown)
+ 		intf->handlers->shutdown(intf->send_info);
+  out_err:
 
 
