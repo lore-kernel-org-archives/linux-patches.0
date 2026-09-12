@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA3AB30DEA3;
-	Sat, 12 Sep 2026 14:21:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 364693264F5;
+	Sat, 12 Sep 2026 14:21:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789222897; cv=none; b=nlE9RZbc/5SeqLjI6Bqed072dKpj9+LUVv9R6C5QcqbJUePcKfA4axlQAGYlCgWsJmnNbBgOTYTAKkJ9sLEfadCB+aIUNJYo/DZov0xyVgRrbR43FHKDzJXzXM4zN6JPv7kLlbzfTSC2lGwPhTz5GipGMzqebH8hWFCr0umd7/8=
+	t=1789222902; cv=none; b=lLAARuvul+E/E47VfEvhPYhN2n61bl+tPlGARx5/BPwnKJkpAyH/QKoH8emu++8TOlcsXFpDIKnhRf5q/OhhXRoz1kljBsJ3CEB6Zu2Oyl+2fgvyXBHS+W0FJ9VxHqA2c+0Qq4ELRQkIIjNadtFgUf/c5Tves8YIcbrdRONKEEA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789222897; c=relaxed/simple;
-	bh=HUX+lQfc4peNXv5dSRB0efF/dWtSv9rlMzayONtX85U=;
+	s=arc-20240116; t=1789222902; c=relaxed/simple;
+	bh=g8Nt7G5gfqmadQnQS45RZWSM160tFJdZff+rj2vTcDw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D1pIA2jiBi7ddT2fJ/lKo4xN82CbvOiAFfT47Oufq0fmpD8V0eiVgc4/1O0gfSPMlUtfOMfudZlbpC0PguZOXI9YVECgKMLkBYJ9LgJqnIOob5rDo6LP57WmTXqCgrnxJFiItfAzhbwoe8heNwo2G6p1qYJG3p1ezlK2sILqft0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iDkW+N7X; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rxTCJ7YmRibmyvDxHwhmkedEYTgPEUsVffT6J2cW/8b9WSOi8exgEXjyHa7wgbFk1hFqux0NU5pwlJ3KnoSDBJfdjIiUvs8xCEKoj7aCwPfcGwga5sW+JKaXX2yegACSMHPmO/JBFDqGBjIqEfWu3Pqhb/mprvDT+/4DNhDP5ac=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RpmSaQOR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iDkW+N7X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADDF81F000FF;
-	Sat, 12 Sep 2026 14:21:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RpmSaQOR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9B841F000FF;
+	Sat, 12 Sep 2026 14:21:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789222895;
-	bh=kBW1a6VIx1GnnAekXXijjFkIX+ti6GHHnkAtxBxb/Xs=;
+	s=korg; t=1789222901;
+	bh=LI+mQyTGZilbqpm5ktJF0N1Aw/h+dnCRSF4Ra06W6vI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iDkW+N7XKGY4676H4+f1FwID8O3SgbGuH1LZsENFF70ARwW32S1mRPZTybLpDSpLo
-	 5R64biZrZ91NUXDF6Mu31xg+lJE1+GXkUvmkjLE9g9muquMwYD4zQXx1oeBBCDRIav
-	 a7Zd+nNUgMtqFHiupu1dV2lpoit8lZIuv0/GLrtk=
+	b=RpmSaQOR4eeLjA00jV3H+RsyQbp0J/5pcyCHbS/V+kPXcvuCyhKyUH1ZPaVwkZUn/
+	 wHnQ1vATu0px8c6OT5+Fy1/2B/jw/urCT+HeCgJ7hUJE4MC0SsJ2AtFI7ecr54dZL8
+	 HCqnq2TnhiONl29dxnm+iLDfD/QdxtivGbCNIA4I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sandipan Das <sandipan.das@amd.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Ingo Molnar <mingo@kernel.org>,
+	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
+	Ahsan Atta <ahsan.atta@intel.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0636/1424] perf/x86/amd/uncore: Add group validation
-Date: Sat, 12 Sep 2026 08:51:08 +0200
-Message-ID: <20260912065621.533453162@linuxfoundation.org>
+Subject: [PATCH 6.6 0637/1424] crypto: qat - clear AES key schedule from stack
+Date: Sat, 12 Sep 2026 08:51:09 +0200
+Message-ID: <20260912065621.555432063@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -52,81 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sandipan Das <sandipan.das@amd.com>
+From: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
 
-[ Upstream commit edda9051e267b7390c7ce24b1b71434414ad156e ]
+[ Upstream commit d41a9fcfb7f9ee36e4a4aaf5e7996bca6be1e7a9 ]
 
-The amd_uncore driver currently does not validate event groups and
-allows creation of groups with more events than the number of available
-hardware counters. Because of this, pmu->event_init() succeeds but
-counter assignment fails later in pmu->add() which returns -EBUSY once
-all counters are exhausted.
+qat_alg_xts_reverse_key() expands the forward XTS AES key on the stack.
+That schedule contains key material and can remain in the stack frame.
 
-Address this by introducing group validation in the pmu->event_init()
-path. Since the uncore PMUs have no per-event constraints and all
-counters of a PMU are interchangeable, validation is reduced to just
-counting the group members that target a PMU and ensuring that they fit
-within the available set of counters.
+Clear the temporary crypto_aes_ctx with memzero_explicit() after the copy.
 
-Fixes: c43ca5091a37 ("perf/x86/amd: Add support for AMD NB and L2I "uncore" counters")
-Signed-off-by: Sandipan Das <sandipan.das@amd.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Link: https://patch.msgid.link/750877d66e208603c3047f13eed6399625d43969.1782884387.git.sandipan.das@amd.com
+Fixes: 5106dfeaeabe ("crypto: qat - add AES-XTS support for QAT GEN4 devices")
+Signed-off-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+Reviewed-by: Ahsan Atta <ahsan.atta@intel.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/amd/uncore.c | 31 +++++++++++++++++++++++++++++++
- 1 file changed, 31 insertions(+)
+ drivers/crypto/intel/qat/qat_common/qat_algs.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/x86/events/amd/uncore.c b/arch/x86/events/amd/uncore.c
-index ffcecda13d654..cc84ed9cc63af 100644
---- a/arch/x86/events/amd/uncore.c
-+++ b/arch/x86/events/amd/uncore.c
-@@ -167,6 +167,29 @@ static void amd_uncore_del(struct perf_event *event, int flags)
- 	hwc->idx = -1;
+diff --git a/drivers/crypto/intel/qat/qat_common/qat_algs.c b/drivers/crypto/intel/qat/qat_common/qat_algs.c
+index d69cc1e5e0239..274bcc83a1fc2 100644
+--- a/drivers/crypto/intel/qat/qat_common/qat_algs.c
++++ b/drivers/crypto/intel/qat/qat_common/qat_algs.c
+@@ -481,6 +481,7 @@ static void qat_alg_xts_reverse_key(const u8 *key_forward, unsigned int keylen,
+ 		memcpy(key_reverse + AES_BLOCK_SIZE, key - AES_BLOCK_SIZE,
+ 		       AES_BLOCK_SIZE);
+ 	}
++	memzero_explicit(&aes_expanded, sizeof(aes_expanded));
  }
  
-+static bool amd_uncore_group_valid(struct perf_event *event)
-+{
-+	struct amd_uncore_pmu *pmu = event_to_amd_uncore_pmu(event);
-+	struct perf_event *leader = event->group_leader;
-+	struct perf_event *sibling;
-+	int counters = 0;
-+
-+	if (leader->pmu == event->pmu)
-+		counters++;
-+
-+	for_each_sibling_event(sibling, leader) {
-+		if (sibling->pmu == event->pmu &&
-+		    sibling->state > PERF_EVENT_STATE_OFF)
-+			counters++;
-+	}
-+
-+	/*
-+	 * When pmu->event_init() is called, the event is yet to be linked to
-+	 * its leader's sibling list, so it is counted separately
-+	 */
-+	return (counters + 1) <= pmu->num_counters;
-+}
-+
- static int amd_uncore_event_init(struct perf_event *event)
- {
- 	struct amd_uncore_pmu *pmu;
-@@ -184,6 +207,14 @@ static int amd_uncore_event_init(struct perf_event *event)
- 	if (!ctx)
- 		return -ENODEV;
- 
-+	/*
-+	 * Ensure that all events in a group can be scheduled together so that
-+	 * a failure can be reported at perf_event_open() time rather than
-+	 * silently at pmu->add() time when no free counter is found
-+	 */
-+	if (event->group_leader != event && !amd_uncore_group_valid(event))
-+		return -EINVAL;
-+
- 	/*
- 	 * NB and Last level cache counters (MSRs) are shared across all cores
- 	 * that share the same NB / Last level cache.  On family 16h and below,
+ static void qat_alg_skcipher_init_dec(struct qat_alg_skcipher_ctx *ctx,
 -- 
 2.53.0
 
