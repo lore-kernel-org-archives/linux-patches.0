@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B445341B8C6;
-	Sat, 12 Sep 2026 12:11:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DA35478870;
+	Sat, 12 Sep 2026 12:11:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789215066; cv=none; b=QEHxigseqDmbUZvguC5JhLlUltIc15hFKIziWGLQjWthBqBE3M+BaF2LySXjj9wnmWWHBtQ7QxXyVLgaBzxSp2EiPIKzDtsfj5CMY4N+2pOVD+WxKxRpCt1LRR06x6Zz1WhCfJTWNK93mIrksbheIgFzMi6cuRhuMxZ59GTXY6Q=
+	t=1789215071; cv=none; b=VTYbnpyNhq6Bu/CWzGncHrUK0F5bO8imladhUKPkV1ljV4LB7k2TfKhQ+wmn9lTd3xeVHGe3oWTd6KE+xzNF5cJGe7CsEDQGx9J/KpP6umwYjPHp0M5ZQn1vsukIWjIqZXiuiBG1+BUHFsYPwoY45pamT8eOumsoqoFN7nzqlGI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789215066; c=relaxed/simple;
-	bh=LXZMjwltYopXmbC71rSrkZ4SN1kq3Hyo123DOAFvB0A=;
+	s=arc-20240116; t=1789215071; c=relaxed/simple;
+	bh=z5pcrdMAMznHjByH2JqUrTqRQQfekZFBPWcWXNtZiDI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sQwgPaVhhC7VjXyv15lrA9z/6nBHoMTW3p6M7OozRMAINye2F6yXtHbnUbcGEfgbJaHLg+mQYg1F1gwVu/GKqO6OmLP4x8u33CEeDX840R7fwgjjqbRqoYn9/jX+s37nnbSpgjD+kSFTOP0FUV7N6Kwv3yzegY+RmN7dsd8Z4x8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hsaoML2i; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=L0aamLqHPHwEnDqNCrUzdoSU0wt0RxLhoTRSbAbQfxFSAHjq1pHptRIGs/s6AjW6KKRvGAiOIQ8uZJrGf1vl5N4RGzbcsTe80awPdH8mybnboC6DD4z4fF8TnpCANSEzrITqXaGzk0HEIvd/ZOnpTX9Lotj+wMxJmF7Tpjy7ayo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AGNwULAN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hsaoML2i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BCE91F000FF;
-	Sat, 12 Sep 2026 12:11:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AGNwULAN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1EED1F000FF;
+	Sat, 12 Sep 2026 12:11:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789215065;
-	bh=EaffjH/vk8zIC0v6eALJ483HgZzH7/NImvvlk17kcpE=;
+	s=korg; t=1789215070;
+	bh=Ma1CBzisSwqlRmxht5V/B23x7HqW0CLnWoAuxXSSpqg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hsaoML2ijccnlNnw/FcN/1U5S2XwXrbpNeeLsraALG5I2P2RQY/fjWy7xvJyfokh3
-	 JAvEAJIDSkFVhNAxlumIS8G7Pm1u9wX/txvK3WrAPa4n7yQDnZv0P2B4ZaNf8tyVyr
-	 n6sgixv40vvxTqmpqA27f9OVeRtHXGmVMBSlJ6IY=
+	b=AGNwULAN5tGi/b1HT0wTHI4j/0OsUgC/4ZRKcM9gQZy+9zH4uoOe9TgAH1yOmuOc4
+	 8y0n7P19tSXynikzOI6tU0/lUoJn6cuaYSttvkpypQyaum3Q2M0s/j5BM0l8gwKSfq
+	 8T4V9K9wBoejb5Bi/hHvf8FUt3Miuf1FpgKjOb8k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tanushree Shah <tshah@linux.ibm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0454/1376] perf dso: Fix kallsyms DSO detection with fallback logic
-Date: Sat, 12 Sep 2026 08:48:00 +0200
-Message-ID: <20260912065617.651394739@linuxfoundation.org>
+Subject: [PATCH 6.12 0455/1376] bpf: Fix vmlinux BTF prep race in bpf_get_btf_vmlinux
+Date: Sat, 12 Sep 2026 08:48:01 +0200
+Message-ID: <20260912065617.672750655@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,123 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tanushree Shah <tshah@linux.ibm.com>
+From: Daniel Borkmann <daniel@iogearbox.net>
 
-[ Upstream commit 8c5f60344b07f839267c0c835962e2206143be85 ]
+[ Upstream commit 92863e678070f57c17c868e4bfa2441a5c61ad2b ]
 
-The current kallsyms detection in dso__is_kallsyms() uses the
-dso_binary_type enum which fixes the issue of kallsyms being cached in
-the build-id cache for out-of-tree modules.
+bpf_get_btf_vmlinux() lazily parses the vmlinux BTF under the
+bpf_verifier_lock, but publishes the result through a plain store
+and re-checks it through a plain lockless load. Nothing orders
+the stores initializing the struct btf inside btf_parse_vmlinux()
+against the store publishing the pointer: On a weakly ordered
+arch, a concurrent first-time caller taking the lockless fast
+path could in principle observe the pointer before the parsed
+contents are visible. The mutex_unlock() does not help such a
+reader given it only synchronizes with a later acquisition of the
+same lock. Thus, publish the pointer with smp_store_release()
+and read it on the fast path with smp_load_acquire().
 
-However, during build-id injection in perf record/inject, dso_binary_type
-has not been explicitly set yet,so dso__binary_type() returns
-DSO_BINARY_TYPE__NOT_FOUND instead of DSO_BINARY_TYPE__KALLSYMS for the
-kernel DSO. The current check then fails to identify it as kallsyms,
-causing build-id symlinks to not be created in ~/.debug/.build-id/ and
-perf archive to fail with "Cannot stat" errors.
+Acquire semantics are needed rather than a dependency-ordered
+READ_ONCE(): btf_parse_vmlinux() also populates globals outside
+the returned object (e.g. bpf_ctx_convert.t). An address
+dependency would only order accesses performed through the
+pointer and not cover other globals.
 
-Steps to reproduce the issue:
-1. rm -rf ~/.debug/.build-id
-2. perf record sleep 1
-3. perf archive
-
-Fix by falling back to matching long_name against the known kallsyms
-strings explicitly when binary_type is not yet set
-(== DSO_BINARY_TYPE__NOT_FOUND). Use strcmp() for exact matching of
-fixed names and strict validation for guest kallsyms with embedded PID
-to prevent path traversal attacks.
-
-Fixes: ebf0b332732d ("perf dso: fix dso__is_kallsyms() check")
-Signed-off-by: Tanushree Shah <tshah@linux.ibm.com>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Fixes: 8580ac9404f6 ("bpf: Process in-kernel BTF")
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/bpf/20260708211537.371874-2-daniel@iogearbox.net
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/dso.h | 57 ++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 56 insertions(+), 1 deletion(-)
+ kernel/bpf/verifier.c | 20 ++++++++++++++++----
+ 1 file changed, 16 insertions(+), 4 deletions(-)
 
-diff --git a/tools/perf/util/dso.h b/tools/perf/util/dso.h
-index c0472a41147c3..bb0238acd583d 100644
---- a/tools/perf/util/dso.h
-+++ b/tools/perf/util/dso.h
-@@ -9,6 +9,7 @@
- #include <stdbool.h>
- #include <stdio.h>
- #include <linux/bitops.h>
-+#include <string.h>
- #include "build-id.h"
- #include "mutex.h"
- #include <internal/rc_check.h>
-@@ -19,6 +20,40 @@ struct perf_env;
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 99b3f539e431f..f9f2095eab4a0 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -22781,13 +22781,25 @@ static int check_attach_btf_id(struct bpf_verifier_env *env)
  
- #define DSO__NAME_KALLSYMS	"[kernel.kallsyms]"
- #define DSO__NAME_KCORE		"[kernel.kcore]"
-+#define DSO__NAME_GUEST_KALLSYMS		"[guest.kernel.kallsyms]"
-+#define DSO__NAME_GUEST_KALLSYMS_PID_PREFIX	"[guest.kernel.kallsyms."
-+
-+/*
-+ * Validate names of the form "[guest.kernel.kallsyms.<pid>]", where
-+ * <pid> is the PID of the guest VM and varies per guest, so it
-+ * cannot be matched with strcmp() against a fixed string.
-+ *
-+ * Every character after the fixed prefix must be a decimal digit,
-+ * with ']' immediately terminating the digit run and nothing
-+ * following it. This rules out '/', "..", or any other character
-+ * being smuggled into the name.
-+ */
-+static inline bool is_guest_kallsyms_pid_name(const char *name)
-+{
-+	const size_t prefix_len = sizeof(DSO__NAME_GUEST_KALLSYMS_PID_PREFIX) - 1;
-+	size_t digits;
-+
-+	if (strncmp(name, DSO__NAME_GUEST_KALLSYMS_PID_PREFIX, prefix_len) != 0)
-+		return false;
-+
-+	digits = strspn(name + prefix_len, "0123456789");
-+	if (digits == 0)
-+		return false;
-+
-+	/* ']' must terminate the digit run, with nothing trailing it */
-+	if (name[prefix_len + digits] != ']')
-+		return false;
-+
-+	if (name[prefix_len + digits + 1] != '\0')
-+		return false;
-+
-+	return true;
-+}
- 
- enum dso_binary_type {
- 	DSO_BINARY_TYPE__KALLSYMS = 0,
-@@ -809,8 +844,28 @@ static inline bool dso__is_kcore(const struct dso *dso)
- static inline bool dso__is_kallsyms(const struct dso *dso)
+ struct btf *bpf_get_btf_vmlinux(void)
  {
- 	enum dso_binary_type bt = dso__binary_type(dso);
-+	const char *name;
+-	if (!btf_vmlinux && IS_ENABLED(CONFIG_DEBUG_INFO_BTF)) {
++	/* Pairs with the smp_store_release() on the parse path below. */
++	struct btf *btf = smp_load_acquire(&btf_vmlinux);
 +
-+	if (bt == DSO_BINARY_TYPE__KALLSYMS || bt == DSO_BINARY_TYPE__GUEST_KALLSYMS)
-+		return true;
-+
-+	if (bt != DSO_BINARY_TYPE__NOT_FOUND)
-+		return false;
-+
-+	if (!dso__kernel(dso))
-+		return false;
-+
-+	name = dso__long_name(dso);
-+	if (!name)
-+		return false;
-+
-+	if (!strcmp(name, DSO__NAME_KALLSYMS))
-+		return true;
-+
-+	if (!strcmp(name, DSO__NAME_GUEST_KALLSYMS))
-+		return true;
- 
--	return bt == DSO_BINARY_TYPE__KALLSYMS || bt == DSO_BINARY_TYPE__GUEST_KALLSYMS;
-+	return is_guest_kallsyms_pid_name(name);
++	if (!btf && IS_ENABLED(CONFIG_DEBUG_INFO_BTF)) {
+ 		mutex_lock(&bpf_verifier_lock);
+-		if (!btf_vmlinux)
+-			btf_vmlinux = btf_parse_vmlinux();
++		btf = btf_vmlinux;
++		if (!btf) {
++			btf = btf_parse_vmlinux();
++			/*
++			 * Order the parsed BTF contents and the globals the
++			 * parse populated (e.g. bpf_ctx_convert.t) before
++			 * the pointer publication. Pairs with the acquire
++			 * on the lockless fast path above.
++			 */
++			smp_store_release(&btf_vmlinux, btf);
++		}
+ 		mutex_unlock(&bpf_verifier_lock);
+ 	}
+-	return btf_vmlinux;
++	return btf;
  }
  
- bool dso__is_object_file(const struct dso *dso);
+ int bpf_check(struct bpf_prog **prog, union bpf_attr *attr, bpfptr_t uattr, __u32 uattr_size)
 -- 
 2.53.0
 
