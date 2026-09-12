@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F67D3246ED;
-	Sat, 12 Sep 2026 13:54:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA38033D505;
+	Sat, 12 Sep 2026 13:54:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789221254; cv=none; b=EWn1dLu4GbbkjIf3Zi2AfKtzuLbU9ypug8fTR+5c3I7YmDyR4YTbsVqi0R1rNJmnmJ6BBx92lnEw/mDM9CaUoHTJUunVIXOmdejSiVHc4hmTuPVqfuaPz7aLm05aUvhsrr8pNgv2OtKLCDNoc4TuBdsZ2x0wYoytrwMEofVJOns=
+	t=1789221259; cv=none; b=gP/mb6zfPnoDjjb7U9xgZHKpHrTNfxJfMy76pePXEg/I3i8/catGH0vV86ZmzFgatVgqk0sv1uE83EwW3v6feg0QIYhvYJwWqGN2xUN+PZ1sE9kXVfCLDid7ijNgx6B1K1j2ENRoW9FNb2D/kW9XiNjFr/Rep68DNbFqhUSjTy4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789221254; c=relaxed/simple;
-	bh=lLSIl7AgNoEQRB2EeIHRxV8eyCUVY9JzwKWcH7V6WVE=;
+	s=arc-20240116; t=1789221259; c=relaxed/simple;
+	bh=IzhYvGpZT6//pB5tlhSN2pLWEzJJaZE+VtCKXY++AmU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AbZ+GOlxLBO6usMeXdvrbPtbhZ1A2DlNdn7SL3OTpFA/TF31KKaEYkSya0iTpi/0RBcHMrD8+cqriXqkMiNM6d9mKxstBZkFJwnCG/HO5BGzGtxaRDivXMrSbvn5qOlG2AnjRxvDTvbWu/WnLFX4e3yRFDkPB6dsGhXouxjCunA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vB8485AE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aRElgxT0kJ/aF8N3LqLsgDQ+U5UNUPAR447b6KstV7N09fnNYkKrZW8nDEm9ovxuj8Xm3+yOQXqTLyb/1xPmdOTegSLfJ2HpGdenaMo457RmM6RuKmH1nNfSLrVinqooxSovr7mKZVETE2oqDWyw+r0RlgNE+2wY1JA1IZ3Bobs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r7sSKdcJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vB8485AE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A4AD1F00893;
-	Sat, 12 Sep 2026 13:54:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r7sSKdcJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D3061F000FF;
+	Sat, 12 Sep 2026 13:54:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789221250;
-	bh=+1TnT6JEXNoBJWmxCzJAFVLKQhKgkzIkwQI8IXMognI=;
+	s=korg; t=1789221255;
+	bh=Vtu4Z7fSrwLDVEIlbrVV1TduMK51qOu29BAnTuGzf+c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vB8485AECF+VUTi13Ivf+xtqMZjMAGuVvzSC7ZVaiff+P6y5FlvV8/vlcWVhpOKRe
-	 2GXcvc/9RCXbdThQClPrTctmReckZNSlG2YKQV6q1suWH1cTW0GyN3iQQqed4IIklI
-	 BdcguGAZiEKZaF01bGYX4eKaPlEumcukh4Zlpz/c=
+	b=r7sSKdcJ8WoSTRVRq2+ViyDpVVadVOekADmt/4DmAEa4RasVefEXZkitGL6JFMnHv
+	 UasJ9fODDFnl4bE6wen4Zm0aclXuJAG76T1RDKdlbhIJlL1NUs10KXeU5oiKmkbh6R
+	 7+Gf54hXU9gfvDZ517I+bLpqsUFmMJw2j/5VQdEM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sujal Tuladhar <sujaltuladhar1231@gmail.com>,
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Jack Wang <jinpu.wang@cloud.ionos.com>,
 	"Martin K. Petersen (Oracle)" <mkp@kernel.org>
-Subject: [PATCH 6.6 0342/1424] scsi: target: iscsi: Reserve a terminator byte for the login payload
-Date: Sat, 12 Sep 2026 08:46:14 +0200
-Message-ID: <20260912065614.943828945@linuxfoundation.org>
+Subject: [PATCH 6.6 0343/1424] scsi: pm8001: Use rollback index when freeing MSI-X vectors
+Date: Sat, 12 Sep 2026 08:46:15 +0200
+Message-ID: <20260912065614.967239814@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -50,57 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sujal Tuladhar <sujaltuladhar1231@gmail.com>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-commit f4825922d2fb371e2b969697d792077f1b62b62c upstream.
+commit 3f92a64545165bdbb36dee8fa35626b295463313 upstream.
 
-iscsi_target_check_login_request() rejects a login PDU whose
-DataSegmentLength exceeds MAX_KEY_VALUE_PAIRS, but the test is '>' and
-login->req_buf is allocated with exactly MAX_KEY_VALUE_PAIRS
-bytes. Since iscsit_get_login_rx() receives payload_length + padding
-bytes, where
+pm8001_request_msix() unwinds previously registered handlers with
+free_irq() when request_irq() fails. The rollback loop uses the failing
+index i for every iteration instead of the already registered vector
+index j.
 
-	padding = ((-payload_length) & 3);
+That passes the wrong IRQ/dev_id pair to free_irq() and leaves the
+earlier handlers installed. Use j for both pci_irq_vector() and the
+matching irq_vector entry in the rollback loop.
 
-any payload_length from 8189 to 8192 fills the whole 8192 byte
-buffer. The write stays in bounds, but no byte is left for a NUL
-terminator.
-
-The buffer is subsequently consumed as a C string. In the CHAP path
-chap_check_algorithm() calls kstrdup(a_str), and extract_param() calls
-strstr(in_buf, pattern) followed by strlen_semi(), none of which take a
-length. convert_null_to_semi() additionally rewrites every embedded NUL
-to ';', so even a payload made of well formed NUL separated key=value
-records is left without a terminator. These walk past the end of the
-object into adjacent slab memory. It is reachable by an unauthenticated
-initiator against a portal configured for CHAP; when authentication is
-not required iscsi_login_zero_tsih_s2() rewrites AuthMethod to None and
-the CHAP path is never entered.
-
-Allocate one extra byte. kzalloc() zeroes it and nothing ever writes to
-it, as every writer copies to offset 0 for at most MAX_KEY_VALUE_PAIRS
-bytes, so the buffer is always terminated.
-
-Fixes: e48354ce078c ("iscsi-target: Add iSCSI fabric support for target v4.1")
-Assisted-by: Claude Opus5 (custom harness)
+Fixes: a76037ff3479 ("scsi: pm8001: switch to pci_irq_alloc_vectors")
 Cc: stable@vger.kernel.org
-Signed-off-by: Sujal Tuladhar <sujaltuladhar1231@gmail.com>
+Assisted-by: Codex:GPT-5
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Acked-by: Jack Wang <jinpu.wang@cloud.ionos.com>
+Link: https://patch.msgid.link/20260824113618.2239100-1-runyu.xiao@seu.edu.cn
 Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/target/iscsi/iscsi_target_login.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/pm8001/pm8001_init.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/target/iscsi/iscsi_target_login.c
-+++ b/drivers/target/iscsi/iscsi_target_login.c
-@@ -48,7 +48,7 @@ static struct iscsi_login *iscsi_login_i
- 	login->conn = conn;
- 	login->first_request = 1;
- 
--	login->req_buf = kzalloc(MAX_KEY_VALUE_PAIRS, GFP_KERNEL);
-+	login->req_buf = kzalloc(MAX_KEY_VALUE_PAIRS + 1, GFP_KERNEL);
- 	if (!login->req_buf) {
- 		pr_err("Unable to allocate memory for response buffer.\n");
- 		goto out_login;
+--- a/drivers/scsi/pm8001/pm8001_init.c
++++ b/drivers/scsi/pm8001/pm8001_init.c
+@@ -1014,8 +1014,8 @@ static u32 pm8001_request_msix(struct pm
+ 			&(pm8001_ha->irq_vector[i]));
+ 		if (rc) {
+ 			for (j = 0; j < i; j++) {
+-				free_irq(pci_irq_vector(pm8001_ha->pdev, i),
+-					&(pm8001_ha->irq_vector[i]));
++				free_irq(pci_irq_vector(pm8001_ha->pdev, j),
++					 &pm8001_ha->irq_vector[j]);
+ 			}
+ 			pci_free_irq_vectors(pm8001_ha->pdev);
+ 			break;
 
 
