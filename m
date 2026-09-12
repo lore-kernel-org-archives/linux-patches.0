@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 037C92F617C;
-	Sat, 12 Sep 2026 12:21:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9ADA2F617C;
+	Sat, 12 Sep 2026 12:21:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789215709; cv=none; b=JHUYv+HqAwPGe7e0TQvJMHt7WT1NLzzrJOTRzoikEdisi2mi98Rg7n3vo7TSqoyyRrzZr7XjX2mdkfXeFdXBYa7g2nGe8deb024P6oJuQoQQQAkY18BscCiHW7Y2Nc07cCwd3nnIPs4koytuE70Q3U2GqUP9+4a/xpbbLP15SpA=
+	t=1789215713; cv=none; b=Miyl5mMpA4fZkOxY5SGhRkrj3ogKpZ8b55hc8+NYb4q8J9/ypEPi3Cb/2Wcqj1426N09z72R6WztegMxKWaVVRGA3Urox/P5pbtubrBtgiqXAY33egczSYt0m1Rh9itKnpPSXjiWHd1KRghI++IYdAxhmsuq6ogELwBa7a6wS3Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789215709; c=relaxed/simple;
-	bh=pz8QHMfcfCpiX08ihsh8Xl3dc5hLq+OPD5qm4nYLLsM=;
+	s=arc-20240116; t=1789215713; c=relaxed/simple;
+	bh=k6KlX9aq2d+Q0DbpgyasCVt1MtlaAv+kvtTOlwMAd84=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=notu39BP754E7NqkXN02l+81F0YnbOsQZCEJ7ttXBPbKZr2NKZuOBi+3ATBBTgF57ohHW/3k8Xpsp/oPu08yeOlgjDEy/QKpD+slDfLQgPzkcGt+gof6RQsVM6XcftqFpe2Bp5corliDfz+alBA32tdUc7KQWzSEKfIjOjUAVIw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lv4ErHbm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jqJNIJLi9lppu5XZr56wH8BWA8tlG95tvbpQ/1JA92IK/VN5tHXNBhoiBlxQTnebVQr2kl7U7POtt5gP3dfYRzVM+tU4rvQmRksolwZ32TrTg84QBj0A3euo4oOUoWi1mGxgYLXN2cS3WNd68o0YcEqTS4c3MfYE5S70FnIgep4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N0zq5nhs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lv4ErHbm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C37581F000FF;
-	Sat, 12 Sep 2026 12:21:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N0zq5nhs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E16EC1F000FF;
+	Sat, 12 Sep 2026 12:21:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789215707;
-	bh=/XqloterBnOqwxSHWZ7JcOwO3V717v+uvIIUT9k8/1I=;
+	s=korg; t=1789215712;
+	bh=iZxfCzmAih5E/g4qI767SKrp67hbEFvDgBOY9vQBQbI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lv4ErHbm0QrrljKFQzG9AbX3gP6wEvxuj/ecXc1wOlA4ykPUrnnrf/vY+LRs1PMJO
-	 BglmKKAq74APR0doahBr2ioVIg2k/Oh01DCFIN7HCstprnjHI/Cuhat4PWKPukZMjM
-	 i0XqDUB/0BKughFnIAp4s1mgJ22RQ1+GryVLg8Gk=
+	b=N0zq5nhs4SYX9apQaGZfWo/e7TknQs5Ylu7dlZDTyNRjfCogl197G/oSD99msPcPv
+	 TWOSy0XD8G5/H7vX+gqh23dMUzpXPMuGQS/lkc57/9DbzvWmD2nzFgmUHIQDsGc2AT
+	 6YBtYFtz0cN6SBNFhYd1LTYmeFH/C6AtB6JK7/1g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
-	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0587/1376] char: xilinx_hwicap: unregister class on init errors
-Date: Sat, 12 Sep 2026 08:50:13 +0200
-Message-ID: <20260912065620.615273783@linuxfoundation.org>
+Subject: [PATCH 6.12 0561/1376] arm64: dts: qcom: sm8250: sort out Iris power domains
+Date: Sat, 12 Sep 2026 08:49:47 +0200
+Message-ID: <20260912065620.037309792@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -52,58 +53,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-[ Upstream commit e7e12b4cc0f0c3a2782aea084d4215e23f5512b3 ]
+[ Upstream commit d5c8efda722eb1f67cfe299b71f13dab93746934 ]
 
-hwicap_module_init() registers icap_class before reserving the
-character-device region and registering the platform driver.  If either
-of those later steps fails, the init path must undo the successful class
-registration before returning an error.
+On SM8250 Iris core requires two power rails to function, MX (for PLLs)
+and MMCX (for everything else). The commit fa245b3f06cd ("arm64: dts:
+qcom: sm8250: Add venus DT node") added only MX power rail, but omitted
+MMCX voltage levels.
 
-Route the chrdev registration failure through a class unwind label, and
-let the platform-driver registration failure fall through the existing
-chrdev unwind before unregistering the class.  The normal module exit path
-is unchanged.
+Add MMCX domain to the Iris device node.
 
-This issue was identified during our ongoing static-analysis research while
-reviewing kernel code.
-
-Fixes: ef141a0bb0dc ("[POWERPC] Xilinx: hwicap driver")
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Reviewed-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
-Link: https://patch.msgid.link/20260623085604.89284-1-mhun512@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: fa245b3f06cd ("arm64: dts: qcom: sm8250: Add venus DT node")
+Reported-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Reviewed-by: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260604-iris-venus-fix-sm8250-v7-1-7bd2f0e5bae8@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/xilinx_hwicap/xilinx_hwicap.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/sm8250.dtsi | 20 ++++++++++++++------
+ 1 file changed, 14 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/char/xilinx_hwicap/xilinx_hwicap.c b/drivers/char/xilinx_hwicap/xilinx_hwicap.c
-index 4f6c3cb8aa413..259900a9ee211 100644
---- a/drivers/char/xilinx_hwicap/xilinx_hwicap.c
-+++ b/drivers/char/xilinx_hwicap/xilinx_hwicap.c
-@@ -760,7 +760,7 @@ static int __init hwicap_module_init(void)
- 					HWICAP_DEVICES,
- 					DRIVER_NAME);
- 	if (retval < 0)
--		return retval;
-+		goto failed_class;
+diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+index 4cb91f31340db..12c1d60ec3e76 100644
+--- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+@@ -4310,8 +4310,12 @@ venus: video-codec@aa00000 {
+ 			interrupts = <GIC_SPI 174 IRQ_TYPE_LEVEL_HIGH>;
+ 			power-domains = <&videocc MVS0C_GDSC>,
+ 					<&videocc MVS0_GDSC>,
+-					<&rpmhpd RPMHPD_MX>;
+-			power-domain-names = "venus", "vcodec0", "mx";
++					<&rpmhpd RPMHPD_MX>,
++					<&rpmhpd RPMHPD_MMCX>;
++			power-domain-names = "venus",
++					     "vcodec0",
++					     "mx",
++					     "mmcx";
+ 			operating-points-v2 = <&venus_opp_table>;
  
- 	retval = platform_driver_register(&hwicap_platform_driver);
- 	if (retval)
-@@ -771,6 +771,9 @@ static int __init hwicap_module_init(void)
-  failed:
- 	unregister_chrdev_region(devt, HWICAP_DEVICES);
+ 			clocks = <&gcc GCC_VIDEO_AXI0_CLK>,
+@@ -4345,22 +4349,26 @@ venus_opp_table: opp-table {
  
-+ failed_class:
-+	class_unregister(&icap_class);
-+
- 	return retval;
- }
+ 				opp-720000000 {
+ 					opp-hz = /bits/ 64 <720000000>;
+-					required-opps = <&rpmhpd_opp_low_svs>;
++					required-opps = <&rpmhpd_opp_svs>,
++							<&rpmhpd_opp_low_svs>;
+ 				};
  
+ 				opp-1014000000 {
+ 					opp-hz = /bits/ 64 <1014000000>;
+-					required-opps = <&rpmhpd_opp_svs>;
++					required-opps = <&rpmhpd_opp_svs>,
++							<&rpmhpd_opp_svs>;
+ 				};
+ 
+ 				opp-1098000000 {
+ 					opp-hz = /bits/ 64 <1098000000>;
+-					required-opps = <&rpmhpd_opp_svs_l1>;
++					required-opps = <&rpmhpd_opp_svs_l1>,
++							<&rpmhpd_opp_svs_l1>;
+ 				};
+ 
+ 				opp-1332000000 {
+ 					opp-hz = /bits/ 64 <1332000000>;
+-					required-opps = <&rpmhpd_opp_nom>;
++					required-opps = <&rpmhpd_opp_svs_l1>,
++							<&rpmhpd_opp_nom>;
+ 				};
+ 			};
+ 		};
 -- 
 2.53.0
 
