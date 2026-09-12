@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B1443F2101;
-	Sat, 12 Sep 2026 07:28:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15F0D35E92B;
+	Sat, 12 Sep 2026 07:28:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789198083; cv=none; b=TQ0oXOjnfHGwvh3OIcTClgkcIRTdOP+yQVCeRw5egMWLN91ob7axDzcAHtPpiCBzT8uMF2/5qvADzygGd9MLTQOBWRqWw589M6thVLqVu60rCF6SwNq6CVNQxtp374q2kI0nzvy9V0jeagVv9cHnqdJX5p+a0UogpLEtsHuez/M=
+	t=1789198087; cv=none; b=LhmWREkwOWzOXTY0tt02XG5v0q4QUSUuKDhw7NmbDX6geHT+pG3cJOrYe4qvKrQeQNPXyzml8UtnVTyA/QZAEVqYBsMlxEXkASuRbjDuO7PPK/xaDXgMg2UMLkVYofXzz5NF2bS8WhQbzJ+aQc6FvyOnLPJH+0npR9xsaGY4/84=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789198083; c=relaxed/simple;
-	bh=FtQbEq6/GD4WNyNwS+t+ZwhAPHR9pawUfoktTnTbYDE=;
+	s=arc-20240116; t=1789198087; c=relaxed/simple;
+	bh=CGM+cWhandlBu31eVd1j8hGAdQjBw4e7ynhsvJI2XxI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dcGNoyccamZ9N/cNjReCm682P9dlSkJDrmqiPHk/cD54NjXPerHLbzOBIGVGwdiK9kg2K/azjZUURtlRZNCLLaJD1P/IuROfICdOSOYlYE12xYYF/JSlVqNrrVTVp2H8uO5SdZnd3+xvEmBNybDLHKZMI99NYUDHzVufy5s6g+k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YD5/ss/Z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AI2qc1M5xStlixdiAAcgzVloIXLMhLrJRZbnn5IEj4m+JWXM2tQ7HUoAmpGffab/e/InGaa/P1tJ7WjgrQqINj3PqTZbNPvY3EZuKpWNULoe0rIpY3wcDky+meVCq2yrEzlSmFdeFQ2Bcd52q8pM2oPPiR4TjCycPOfo2tB1tUc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QqGuMf1s; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YD5/ss/Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 121CA1F000FF;
-	Sat, 12 Sep 2026 07:27:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QqGuMf1s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 164621F000FF;
+	Sat, 12 Sep 2026 07:28:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789198081;
-	bh=Vkk8yIkD6SWE/IymouvrTHOcs6jZTF6vxCacPAZ1HZk=;
+	s=korg; t=1789198085;
+	bh=a6mY8yabhLDsMhUKL7KbwVsnQaWgZAiMYiopr0dsFGo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YD5/ss/Z4DybS/ISARLDddg4HnyBiZ839hkpnTibGrQ1gPOeQ0w2Xb9kqPyFt5rT9
-	 2N04F0Ub0X9lVQZIxikCqhBUClF680Th5Wv3FelUM5tKtpAccric1il3RqX1YHB4dV
-	 SOzDg28vl26MybhXhPQDcrm+Wb692F0XCzvbhMzE=
+	b=QqGuMf1sJnUCeJl0qsIU8/V7InvaijGVETSMuiQSGuSdSwX0uVcdDfPyoVVOGd/5h
+	 rbmIsWmBnbs/sclzsGjCvDNl7lvlRHc7tafXx0+K/8L97uhfMVBXv9wZU3hwGoRFDb
+	 zbxFODlFdIhxrDl6hgrIF3FIRrn3/Sf30pToMy9U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Armin Wolf <W_Armin@gmx.de>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	STAR Labs SG <info@starlabs.sg>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Eduard Zingerman <eddyz87@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0306/1815] platform/x86: lg-laptop: Fix LED resource handling
-Date: Sat, 12 Sep 2026 08:34:16 +0200
-Message-ID: <20260912065656.130646807@linuxfoundation.org>
+Subject: [PATCH 7.2 0307/1815] bpf: Drop scalar id on sign-extending narrowing stack fills
+Date: Sat, 12 Sep 2026 08:34:17 +0200
+Message-ID: <20260912065656.153595974@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -45,98 +46,69 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Armin Wolf <W_Armin@gmx.de>
+From: Daniel Borkmann <daniel@iogearbox.net>
 
-[ Upstream commit 3e91964aa74ab261aa15d9d96318eded2fd9d22a ]
+[ Upstream commit 2cb5f4ca695ebe552647e5ba4aad6934d6a43bae ]
 
-The event notification callback might access kbd_backlight even
-when it was not successfully registered with the LED subsystem.
-The same happens inside acpi_remove(), where the LED devices are
-unregistered unconditionally.
+When a spilled scalar is filled back with a sign-extending narrowing load
+(BPF_MEMSX), check_stack_read_fixed_off() copies the spilled register
+including its scalar id, but coerce_reg_to_size_sx() then sign-extends the
+filled register's value. If the same slot is also filled with a plain
+zero-extending load (BPF_MEM), both destination registers share the id yet
+hold different values. A later 'if <zext-reg> == const' then refines the
+sign-extended register through sync_linked_regs() to a value it does not
+have at runtime (e.g. the verifier believes 0x80000000 while the register
+is 0xffffffff80000000), which can be turned into an out-of-bounds access.
 
-Fix this by tracking the availability of the kbd_backlight LED
-device and use devm_led_classdev_register() to let devres take
-care of unregistering the LED devices during removal. For this
-the parent device of the LED devices is changed to the native
-platform device.
+Drop the shared scalar id at the sign-extension site in check_mem_access()
+when sign extension actually changes the value, mirroring the BPF_MOVSX
+handling in check_alu_op() (no_sext = reg_umax < 2^(size*8-1)).
 
-Fixes: ae26278829a8 ("platform/x86: lg-laptop: Use correct event for keyboard backlight FN-key")
-Signed-off-by: Armin Wolf <W_Armin@gmx.de>
-Link: https://patch.msgid.link/20260708195553.7762-2-W_Armin@gmx.de
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Fixes: 3cd5c890652b ("bpf: Let the verifier assign ids on stack fills")
+Reported-by: STAR Labs SG <info@starlabs.sg>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/lg-laptop.c | 21 ++++++++++++++-------
- 1 file changed, 14 insertions(+), 7 deletions(-)
+ kernel/bpf/verifier.c | 16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/platform/x86/lg-laptop.c b/drivers/platform/x86/lg-laptop.c
-index a8f2f465ef3f9..a2db9657027e5 100644
---- a/drivers/platform/x86/lg-laptop.c
-+++ b/drivers/platform/x86/lg-laptop.c
-@@ -100,6 +100,7 @@ static u32 inited;
- #define INIT_SPARSE_KEYMAP      0x80
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 283fdf6e2f28f..a3b66adbc83c7 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -6328,11 +6328,23 @@ static int check_mem_access(struct bpf_verifier_env *env, int insn_idx, struct b
  
- static int battery_limit_use_wmbb;
-+static bool kbd_backlight_available;
- static struct led_classdev kbd_backlight;
- static enum led_brightness get_kbd_backlight_level(struct device *dev);
- 
-@@ -214,6 +215,7 @@ static union acpi_object *lg_wmbb(struct device *dev, u32 method_id, u32 arg1, u
- static void wmi_notify(union acpi_object *obj, void *context)
- {
- 	long data = (long)context;
-+	unsigned int brightness;
- 
- 	pr_debug("event guid %li\n", data);
- 	if (!obj)
-@@ -224,8 +226,11 @@ static void wmi_notify(union acpi_object *obj, void *context)
- 		struct key_entry *key;
- 
- 		if (eventcode == 0x10000000) {
--			led_classdev_notify_brightness_hw_changed(
--				&kbd_backlight, get_kbd_backlight_level(kbd_backlight.dev->parent));
-+			if (kbd_backlight_available) {
-+				brightness = get_kbd_backlight_level(kbd_backlight.dev->parent);
-+				led_classdev_notify_brightness_hw_changed(&kbd_backlight,
-+									  brightness);
-+			}
- 		} else {
- 			key = sparse_keymap_entry_from_scancode(
- 				wmi_input_dev, eventcode);
-@@ -865,8 +870,13 @@ static int acpi_probe(struct platform_device *pdev)
- 		goto out_platform_device;
- 
- 	/* LEDs are optional */
--	led_classdev_register(&pf_device->dev, &kbd_backlight);
--	led_classdev_register(&pf_device->dev, &tpad_led);
-+	ret = devm_led_classdev_register(&pdev->dev, &kbd_backlight);
-+	if (ret < 0)
-+		kbd_backlight_available = false;
-+	else
-+		kbd_backlight_available = true;
+ 	if (!err && size < BPF_REG_SIZE && value_regno >= 0 && t == BPF_READ &&
+ 	    regs[value_regno].type == SCALAR_VALUE) {
+-		if (!is_ldsx)
++		if (!is_ldsx) {
+ 			/* b/h/w load zero-extends, mark upper bits as known 0 */
+ 			coerce_reg_to_size(&regs[value_regno], size);
+-		else
++		} else {
++			/*
++			 * Sign-extension can change the register value relative
++			 * to a scalar it is linked with by id (e.g. a zero-
++			 * extending fill of the same spilled stack slot), thus
++			 * drop the shared id in that case.
++			 */
++			bool no_sext = reg_umax(&regs[value_regno]) <
++					(1ULL << (size * BITS_PER_BYTE - 1));
 +
-+	devm_led_classdev_register(&pdev->dev, &tpad_led);
- 
- 	wmi_input_setup();
- 	battery_hook_register(&battery_hook);
-@@ -884,9 +894,6 @@ static void acpi_remove(struct platform_device *pdev)
- {
- 	sysfs_remove_group(&pf_device->dev.kobj, &dev_attribute_group);
- 
--	led_classdev_unregister(&tpad_led);
--	led_classdev_unregister(&kbd_backlight);
--
- 	battery_hook_unregister(&battery_hook);
- 	wmi_input_destroy();
- 	platform_device_unregister(pf_device);
+ 			coerce_reg_to_size_sx(&regs[value_regno], size);
++			if (!no_sext)
++				clear_scalar_id(&regs[value_regno]);
++		}
+ 	}
+ 	return err;
+ }
 -- 
 2.53.0
 
