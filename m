@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46C564BEE54;
-	Sat, 12 Sep 2026 09:37:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEDC6299920;
+	Sat, 12 Sep 2026 09:37:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789205876; cv=none; b=OH/LgsUXhr9BPnkys6O16TnmEznUFC7RHMsJ8ak2HWE1jMNj2Hdxkb36bWGW7hZg4BwbeMmep9WGC554rUPGhLQ69q4gSOmWQVBwxZF7VVQNVcKMW9rXacgGMzGsAKhzFp1pPFm6JoyVuBF9aU6GFJbICH8wi8DAKA03BCkm6ZU=
+	t=1789205880; cv=none; b=rS2LhtDXaXbUjiACUXinU6v/IhShfi5Dapu1FrTkF8d5bNAEJ3GcaWL9RIBqS3TPh4ANme1Xh64eCPkO6/qoy0ghkvGibmLjEfebLhF8EOdSeyJ4JO64bwjABABVzlS/62WjabAwJV1A3EFuTwsAWGi6/PQ5jcZEcpGtHCIuEdQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789205876; c=relaxed/simple;
-	bh=H1VDCYDkPjWyhoU3wj2YK/zRqL/1U47jUbZQPTf8kqc=;
+	s=arc-20240116; t=1789205880; c=relaxed/simple;
+	bh=iSSVdQWr919BA1P5eG2AlqrzVr3NKwaDSv/YeBkbWL0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UIMIhKtG4oS2BQovC+NwNglpMUjuMOGjnj/93JePLA5UCj1xbJciGHDtbFMzRy2TGUxxHx9zW7JxUeOLfoVtyZV2aQsw66t34FUbvYhIqGFs+9SwJ7jYXfybrplKUe+QySqOhJqb/+xaOR2qBrS8Nozh/htKdJbNG+4yOKecCTU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QJPmdT4h; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=C7wh1uNdah4PdhT4GlGVSnK+pLH1CKEOnwLhrruZFsK+rOQZlll7L1n1metoyk6VkTlVWnMUO+IJqt+Lf+PJpqGWGsDo1hfedNZTvSv+ZhJMXvmVurkQ3m+bo2bdgBrPvMxJj0iPSmiOmjkUvT2GaW8M2+Y3BpQtj+M4ZDIqJ7Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PXfCjZNt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QJPmdT4h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D86A71F000FF;
-	Sat, 12 Sep 2026 09:37:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PXfCjZNt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C56401F000FF;
+	Sat, 12 Sep 2026 09:37:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789205875;
-	bh=jCD4jJjnvp1SiUJCejoFoXVFp8tOqavDPvGDU1S5Ce8=;
+	s=korg; t=1789205879;
+	bh=Ndg5BfRh4ybCOVkUJeMDLk+F4ZEhX1GqTBOc/VmBAwo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QJPmdT4hM1RY4c7mE4d+fToWKA7DXoWSzBC27CHAg3HXlG2P/b49RQwgUtqeZZPh7
-	 kswxU2nJNQzaY3jsjM4Kt6B59gSmf1zAQvjrRYIQ2EVh4m3vBwrQFrPoaftsdpEmFs
-	 T26QK6kH7ejwTI6pxe7LbgeNxzzvj9OoN3xRuV1k=
+	b=PXfCjZNtNREjDxw/oDOtcRwXI+92fWeeFfgytVBHghD6/4ULhYPajirqjuxl3l6Nx
+	 XaNEgP2xAfpZ8d/9BxhqZ1PF7pW74uaVHx/kVhqSeNAdcw+VkIl92BDr7UyRLBnE1T
+	 glmtNiE3DChAkQ2sB4+4yDwBVQSsMenrIb6BbbeY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yosry Ahmed <yosry@kernel.org>,
-	Sean Christopherson <seanjc@google.com>,
-	Kai Huang <kai.huang@intel.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0089/1518] KVM: x86: Rename __{g,s}et_sregs2() => kvm_vcpu_ioctl_x86_{g,s}et_sregs2()
-Date: Sat, 12 Sep 2026 08:37:38 +0200
-Message-ID: <20260912065625.479007174@linuxfoundation.org>
+Subject: [PATCH 6.18 0049/1518] io_uring/waitid: have io_waitid_complete() remove wait queue entry
+Date: Sat, 12 Sep 2026 08:36:58 +0200
+Message-ID: <20260912065624.549431253@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -53,83 +50,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-[ Upstream commit bd130c8d72a1c7dde5523b3f3fae9867eafaa1dc ]
+[ Upstream commit a48c0cbf28c03f6c590a14ceb31bf6e619c2f6da ]
 
-Rename the KVM_{G,S}ET_SREGS2 helpers in anticipation of moving them out of
-x86.c (while leaving the ioctl dispatch behind).  Having globally visible
-APIs named __{g,s}et_sregs2() would be "fine", but ugly, given that
-__{g,s}et_sregs() will NOT be globally visible.  As a bonus, this makes it
-a bit more obvious that the helpers implement newer versions of
-kvm_arch_vcpu_ioctl_set_sregs().
+Both callers of this need the entry potentially removed, so shift the
+removal into the completion side and kill it from the two callers.
 
-No functional change intended.
+While at it, add a helper for removing the wait_queue_entry based
+on the passed in io_kiocb.
 
-Cc: Yosry Ahmed <yosry@kernel.org>
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Reviewed-by: Kai Huang <kai.huang@intel.com>
-Message-ID: <20260613000329.732085-4-seanjc@google.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Stable-dep-of: 184bd464bdb6 ("KVM: x86: Check EFER validity on KVM_SET_SREGS*")
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Stable-dep-of: 14572de82e50 ("io_uring/waitid: honor task_work cancellation")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/x86.c |   16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ io_uring/waitid.c |   26 ++++++++++++++++++++------
+ 1 file changed, 20 insertions(+), 6 deletions(-)
 
---- a/arch/x86/kvm/x86.c
-+++ b/arch/x86/kvm/x86.c
-@@ -124,8 +124,10 @@ static void store_regs(struct kvm_vcpu *
- static int sync_regs(struct kvm_vcpu *vcpu);
- static int kvm_vcpu_do_singlestep(struct kvm_vcpu *vcpu);
+--- a/io_uring/waitid.c
++++ b/io_uring/waitid.c
+@@ -109,6 +109,22 @@ static int io_waitid_finish(struct io_ki
+ 	return ret;
+ }
  
--static int __set_sregs2(struct kvm_vcpu *vcpu, struct kvm_sregs2 *sregs2);
--static void __get_sregs2(struct kvm_vcpu *vcpu, struct kvm_sregs2 *sregs2);
-+static int kvm_vcpu_ioctl_x86_set_sregs2(struct kvm_vcpu *vcpu,
-+					 struct kvm_sregs2 *sregs2);
-+static void kvm_vcpu_ioctl_x86_get_sregs2(struct kvm_vcpu *vcpu,
-+					  struct kvm_sregs2 *sregs2);
++static void io_waitid_remove_wq(struct io_kiocb *req)
++{
++	struct io_waitid *iw = io_kiocb_to_cmd(req, struct io_waitid);
++	struct wait_queue_head *head;
++
++	head = READ_ONCE(iw->head);
++	if (head) {
++		struct io_waitid_async *iwa = req->async_data;
++
++		iw->head = NULL;
++		spin_lock_irq(&head->lock);
++		list_del_init(&iwa->wo.child_wait.entry);
++		spin_unlock_irq(&head->lock);
++	}
++}
++
+ static void io_waitid_complete(struct io_kiocb *req, int ret)
+ {
+ 	struct io_waitid *iw = io_kiocb_to_cmd(req, struct io_waitid);
+@@ -119,6 +135,7 @@ static void io_waitid_complete(struct io
+ 	lockdep_assert_held(&req->ctx->uring_lock);
  
- static DEFINE_MUTEX(vendor_module_lock);
- static void kvm_load_guest_fpu(struct kvm_vcpu *vcpu);
-@@ -6653,7 +6655,7 @@ long kvm_arch_vcpu_ioctl(struct file *fi
- 		r = -ENOMEM;
- 		if (!u.sregs2)
- 			goto out;
--		__get_sregs2(vcpu, u.sregs2);
-+		kvm_vcpu_ioctl_x86_get_sregs2(vcpu, u.sregs2);
- 		r = -EFAULT;
- 		if (copy_to_user(argp, u.sregs2, sizeof(struct kvm_sregs2)))
- 			goto out;
-@@ -6672,7 +6674,7 @@ long kvm_arch_vcpu_ioctl(struct file *fi
- 			u.sregs2 = NULL;
- 			goto out;
+ 	hlist_del_init(&req->hash_node);
++	io_waitid_remove_wq(req);
+ 
+ 	ret = io_waitid_finish(req, ret);
+ 	if (ret < 0)
+@@ -129,7 +146,8 @@ static void io_waitid_complete(struct io
+ static bool __io_waitid_cancel(struct io_kiocb *req)
+ {
+ 	struct io_waitid *iw = io_kiocb_to_cmd(req, struct io_waitid);
+-	struct io_waitid_async *iwa = req->async_data;
++
++	lockdep_assert_held(&req->ctx->uring_lock);
+ 
+ 	/*
+ 	 * Mark us canceled regardless of ownership. This will prevent a
+@@ -141,9 +159,6 @@ static bool __io_waitid_cancel(struct io
+ 	if (atomic_fetch_inc(&iw->refs) & IO_WAITID_REF_MASK)
+ 		return false;
+ 
+-	spin_lock_irq(&iw->head->lock);
+-	list_del_init(&iwa->wo.child_wait.entry);
+-	spin_unlock_irq(&iw->head->lock);
+ 	io_waitid_complete(req, -ECANCELED);
+ 	io_req_queue_tw_complete(req, -ECANCELED);
+ 	return true;
+@@ -209,8 +224,7 @@ static void io_waitid_cb(struct io_kiocb
+ 				io_waitid_drop_issue_ref(req);
+ 				return;
+ 			}
+-
+-			remove_wait_queue(iw->head, &iwa->wo.child_wait);
++			/* fall through to complete, will kill waitqueue */
  		}
--		r = __set_sregs2(vcpu, u.sregs2);
-+		r = kvm_vcpu_ioctl_x86_set_sregs2(vcpu, u.sregs2);
- 		break;
  	}
- 	case KVM_HAS_DEVICE_ATTR:
-@@ -12157,7 +12159,8 @@ static void __get_sregs(struct kvm_vcpu
- 			(unsigned long *)sregs->interrupt_bitmap);
- }
  
--static void __get_sregs2(struct kvm_vcpu *vcpu, struct kvm_sregs2 *sregs2)
-+static void kvm_vcpu_ioctl_x86_get_sregs2(struct kvm_vcpu *vcpu,
-+					  struct kvm_sregs2 *sregs2)
- {
- 	int i;
- 
-@@ -12425,7 +12428,8 @@ static int __set_sregs(struct kvm_vcpu *
- 	return 0;
- }
- 
--static int __set_sregs2(struct kvm_vcpu *vcpu, struct kvm_sregs2 *sregs2)
-+static int kvm_vcpu_ioctl_x86_set_sregs2(struct kvm_vcpu *vcpu,
-+					 struct kvm_sregs2 *sregs2)
- {
- 	int mmu_reset_needed = 0;
- 	bool valid_pdptrs = sregs2->flags & KVM_SREGS2_FLAGS_PDPTRS_VALID;
 
 
