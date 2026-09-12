@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDCDB29DB64;
-	Sat, 12 Sep 2026 15:55:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8D54223328;
+	Sat, 12 Sep 2026 15:55:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789228548; cv=none; b=bONvMCKHv/hP8KjR4SKG/17zn/dUk6yWqJgiU4wnDfeAOhZCsAVEJHe0lDf519qtGlPx4tzr5EpwBN5zPru4B7qwX8k8CGpBxE2Sl68I9Fbob6gTBG9UyyM98CESYcVWVIUH3sO+SlPBIb8Gwggukrx+GhDFg4ENm3jKsw3PuLQ=
+	t=1789228553; cv=none; b=iQ66E1GDi/2oLsNbSjC8gZeCyGAyb7vb3EFGCtmn9ZIvtSBVWSzOYwkRyhIFc+R9Mj6TWSVJFw4Sis1l1Wn6I2scXiwOf2yrNelR1m++U22/QDQHTWYKPkfC1zZ3+Nvnl7FQFGMmYshdwHOYHmI2ulkOWXSTvob91NubmYJt03Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789228548; c=relaxed/simple;
-	bh=58j4spw2euLaQuWVibD3UUwRA2V3r5zXkN7lYS1kH/g=;
+	s=arc-20240116; t=1789228553; c=relaxed/simple;
+	bh=2NQwFJdN0vQPg3k1g2ElIKOez83vg7zHQ/fON5sfFNc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N67dhtmDajMdoxcQRyLRP5rT4HbG6/rIpHF8wSoe4KqYf3ArytopqWZZfCFu0kL84DeyZyi+BwyeKoowKsiGPSRglw68nRCBxUW/4ma98Dz1rOEZEOB8fF/oT56N/nhrxGSvOaO0CnAFaE39PBa6vPwbMLfm1uHCr9q0qOjKEVk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RIVicajl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cR06j9BVmJjQ24GNZSZWJaAwAik3C75zNgPc6cMtIcrEUIRi4+3Xr6JpxqZb96AK/MhuLXwFGYi1wPUvknG53QlJQmvq3pWL3yjOjzB+AQ70FMx+HrrzZ/eW8MHZwoYbbYlY6F5i0qx5RlWvyVgoq2At7NJmKuf82/0QBQh3fXs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nFjzDbhN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RIVicajl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6ED41F000FF;
-	Sat, 12 Sep 2026 15:55:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nFjzDbhN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD2541F000FF;
+	Sat, 12 Sep 2026 15:55:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789228546;
-	bh=5QqUMXtulbXtb53aJ980WUHndfMvIZELeO2z7QDzYdo=;
+	s=korg; t=1789228551;
+	bh=eN5kyTvWPgjkmgvC6y9vD59qiJ2wdDLuvJBaRx1Q6fc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RIVicajlzJiDmq7A4vG0orUPWaA/zRKJkvmd7k3WsOJHwkq5NcpllrK0vIAzSuC0+
-	 nmLJ0/6GpxiDMnHWH+3zSpGDZXk3kKeo+w/rC+8+08kcp86h15QuZ7AKgLjwxmonc+
-	 EBcX611N6ZXqe9bm0hJ5EQRWl5zOXlsCaRmDyz18=
+	b=nFjzDbhN6Ws8bkywUtoc5V7E1um04eGc7XxjnLHjW+tCUGqbvlvx+GXJnluZn+0MV
+	 BsA8PLaxSRAzHwy471YDk7WUNmrIV83Tda6cflgmPGwOwLIinZU67Z8ufcunng78O7
+	 cPvR5fG40fZ57aHDtFmtDeV7Tl62w9v8QkBF5JgE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sashiko <sashiko-dev@google.com>,
 	Nilesh Javali <njavali@marvell.com>,
 	"Martin K. Petersen (Oracle)" <mkp@kernel.org>
-Subject: [PATCH 6.1 0406/1191] scsi: qla2xxx: Avoid req_q_map double-read in qla2x00_error_entry()
-Date: Sat, 12 Sep 2026 08:52:14 +0200
-Message-ID: <20260912065557.359088641@linuxfoundation.org>
+Subject: [PATCH 6.1 0407/1191] scsi: qla2xxx: Drop vport reference under lock in report ID acquisition
+Date: Sat, 12 Sep 2026 08:52:15 +0200
+Message-ID: <20260912065557.380868233@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -53,47 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 From: Nilesh Javali <njavali@marvell.com>
 
-commit deb8abde83a799d2501f3977f6d6051000253f5e upstream.
+commit 1154b16439ffc562f9461494c4508c63446eb684 upstream.
 
-qla2x00_error_entry() reads ha->req_q_map[que] twice: once for the NULL
-check and again when assigning it to req. The map slot is cleared by
-qla25xx_free_req_que() (ha->req_q_map[que_id] = NULL under mq_lock)
-during queue teardown, while the response-queue interrupt that drives
-qla2x00_error_entry() is still registered (the IRQ is released later in
-qla25xx_free_rsp_que()). If the slot is set to NULL between the two
-reads, req becomes NULL and is dereferenced.
+qla24xx_report_id_acquisition() format-1 handling takes the vport
+reference under vport_slock but drops it outside the lock, after setting
+vp->vp_flags and vp->dpc_flags:
 
-Read the slot once into req and NULL-check the local before use. mq_lock
-is a mutex and cannot be taken from interrupt context, so the single
-read plus local check is the appropriate fix for the reported NULL
-dereference.
+	set_bit(VP_IDX_ACQUIRED, &vp->vp_flags);
+	set_bit(REGISTER_FC4_NEEDED, &vp->dpc_flags);
+	set_bit(REGISTER_FDMI_NEEDED, &vp->dpc_flags);
 
-Fixes: a6fe35c052c4 ("[SCSI] qla2xxx: Avoid invalid request queue dereference for bad response packets.")
+	atomic_dec(&vp->vref_count);
+
+Neither set_bit() nor atomic_dec() imply a memory barrier, so on a weakly
+ordered architecture the decrement can become visible before the flag
+stores. qla24xx_deallocate_vp_id() polls vref_count under vport_slock and
+unlinks the vport once it reads zero, after which qla24xx_vport_delete()
+frees it via scsi_host_put(). The poller could therefore observe
+vref_count == 0 early and tear the vport down while the pending vp_flags/
+dpc_flags stores land on freed memory.
+
+Drop the reference under vport_slock, as is done for the matching
+increment and by every other vref_count user. The unlock release pairs
+with the deallocate poller's lock acquire so the flag stores are ordered
+before vref_count == 0 can be observed.
+
+Fixes: 793cedee296f ("scsi: qla2xxx: Hold vport reference in qla24xx_report_id_acquisition()")
 Cc: stable@vger.kernel.org
 Reported-by: Sashiko <sashiko-dev@google.com>
 Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://patch.msgid.link/20260730155838.2119230-17-njavali@marvell.com
+Link: https://patch.msgid.link/20260730155838.2119230-23-njavali@marvell.com
 Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_isr.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/scsi/qla2xxx/qla_mbx.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/scsi/qla2xxx/qla_isr.c
-+++ b/drivers/scsi/qla2xxx/qla_isr.c
-@@ -3661,10 +3661,12 @@ qla2x00_error_entry(scsi_qla_host_t *vha
- 	    "iocb type %xh with error status %xh, handle %xh, rspq id %d\n",
- 	    pkt->entry_type, pkt->entry_status, pkt->handle, rsp->id);
+--- a/drivers/scsi/qla2xxx/qla_mbx.c
++++ b/drivers/scsi/qla2xxx/qla_mbx.c
+@@ -4167,7 +4167,9 @@ qla24xx_report_id_acquisition(scsi_qla_h
+ 			set_bit(REGISTER_FC4_NEEDED, &vp->dpc_flags);
+ 			set_bit(REGISTER_FDMI_NEEDED, &vp->dpc_flags);
  
--	if (que >= ha->max_req_queues || !ha->req_q_map[que])
-+	if (que >= ha->max_req_queues)
- 		goto fatal;
- 
- 	req = ha->req_q_map[que];
-+	if (!req)
-+		goto fatal;
- 
- 	if (pkt->entry_status & RF_BUSY)
- 		res = DID_BUS_BUSY << 16;
++			spin_lock_irqsave(&ha->vport_slock, flags);
+ 			atomic_dec(&vp->vref_count);
++			spin_unlock_irqrestore(&ha->vport_slock, flags);
+ 		}
+ 		set_bit(VP_DPC_NEEDED, &vha->dpc_flags);
+ 		qla2xxx_wake_dpc(vha);
 
 
