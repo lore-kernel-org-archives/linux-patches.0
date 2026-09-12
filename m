@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C4102E06E4;
-	Sat, 12 Sep 2026 12:19:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCF9F479899;
+	Sat, 12 Sep 2026 12:19:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789215557; cv=none; b=ctlNLLn8q28YaK2zjdvQPclkULLYvUmO0HaYRXJiR+NaXSz8r6YZC5TVTiOUhWGzYrv42B82O1wTu4mv6xdN86lOl0B/KZtjMx8CPNdv87TdVEXXkkiPILP42TUKQsqvx+hw+GftA7FMwL9cn4z7YHekT60a9TVdFDruqXXORyo=
+	t=1789215562; cv=none; b=AnEaytUH9lWXM7Q8yuE9kcMyRNlJMj4w0BEq2g2jCSbTNwFt5X4INf2doPUaN1X9vS7me9PyDnIzkTi9ESeOvHJNNpFhE5VFp/zMz9zZ6Nurjr4IlH1aGHnFbs1WelX7rLoKykFtqkcKbQe973Gt/jVpaF7zSM91QQF9wTr+ZO0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789215557; c=relaxed/simple;
-	bh=HClDEhvDx0q00p84JkVb/M7ZjGoDMrCD7RWxEbYsKnA=;
+	s=arc-20240116; t=1789215562; c=relaxed/simple;
+	bh=2n++VWTYAl9eomn7oV1Wcz+ip9qlIL3y5yilFAfrc9s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GLdr1mchGVe3CX6m+5dKlhpIcknEfcmPXaEMamuEEdIF33X/YLEaW0l7tiXO4Wwf2ebwUTjzN3gLks98rHXAPhI0eyds7kuj+z0Fwm25Srlh/c2ja2KCeVoLxNje8k4U773OpGD7kcdDwuAbpEJE79m/xcP9+7laCZK/PcU882I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ojt9VIi/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AqdjR4OPbe18mzMDhS9OdF21g26+gzl/CoqYOPJtUGxEqYK1GynkGxhQWKjYhY9Fd71kb/0dHCRtGjtZ/qYLRUk9zFzotSz6OEgQk1Cj71eT9yl61nRkdDEvf5PY3gggB1bbDC5Hl7d2smwvQCJgPoDno4QRMBUn2nNv6/XAfIA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NBJnmy8H; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ojt9VIi/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC1741F000FF;
-	Sat, 12 Sep 2026 12:19:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NBJnmy8H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EDE21F000FF;
+	Sat, 12 Sep 2026 12:19:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789215555;
-	bh=oq2d209xcbW2TpXWw2IrinJ511ECYqlBceJZO9rvm7s=;
+	s=korg; t=1789215560;
+	bh=bR6upFK15DLbwP84gbn++VkIcvlcfLmby+ukl3onxq8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ojt9VIi/UaFO0Jn0+pkAFNOui/5X7TuLdXIKQDZHJxef5cyonzh8hIGSxkcgbIFRn
-	 X75XOY+0dfQ9FWUJFKle5CutevgpebXvmehOXLx3N2KlY94rTzEZhvH9J/0jV7KnbU
-	 dz1RpqkVoaW7HYVM53PxUNJmT2BRF6bTuH/mfy+Q=
+	b=NBJnmy8HB0HLEPGODMN+MCjtCUYDc+Cn3nf+HGjMFPMfr9RTpSxiBPAZtQY8JyQY6
+	 9Fe/e6/FZW6RW1pHFKDaR/2CvCYiZQuEgz61H0InFZnvrVXocbphZ8fHDJM2B5UkP9
+	 GpQ2GpdruaNZuNWKqWz7pJiCyISStYtxbH88SOcg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gleb Markov <markov.gi@npc-ksb.ru>,
-	George Zhang <george.zhang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0554/1376] drm/amd/display: Remove unused-but-set variable hubp from
-Date: Sat, 12 Sep 2026 08:49:40 +0200
-Message-ID: <20260912065619.883931361@linuxfoundation.org>
+Subject: [PATCH 6.12 0555/1376] cpufreq: intel_pstate: Fix setting minimum P-state at init time
+Date: Sat, 12 Sep 2026 08:49:41 +0200
+Message-ID: <20260912065619.905552074@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -52,44 +50,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gleb Markov <markov.gi@npc-ksb.ru>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit b736792e5bd4a62f24e8d1e310bf4a75bfbeaaaa ]
+[ Upstream commit db53c573d31d07d5d782c5312d37cb33be788eba ]
 
-The final check of hubp for NULL covers all remaining lines of code, since
-the value of hubp does not change until the end of the method.
+If HWP is enabled, writes to MSR_IA32_PERF_CTL have no effect,
+so intel_pstate_get_cpu_pstates() should not attempt to call
+intel_pstate_set_min_pstate() to set the minimum P-state for the
+given CPU in that case.
 
-This check is redundant because hubp1 is already dereferenced within the
-macro.
-If it were NULL, the program would have already failed to proceed.
+Accordingly, remove the intel_pstate_set_min_pstate()
+call from intel_pstate_get_cpu_pstates() and make both
+intel_pstate_cpu_init() and intel_cpufreq_cpu_init() call
+that function in their non-HWP code paths.
 
-Remove the left part of the expression with the logical "&&".
+The HWP code path in intel_pstate_cpu_init() does not need to update
+the current P-state of the CPU directly at all because it is taken
+care of the processor automatically, but the HWP code path of
+intel_cpufreq_cpu_init() should update it in principle to
+initialize the DESIRED_PERF field in MSR_HWP_REQUEST.  For this
+purpose, make it call intel_cpufreq_hwp_update() and pass
+the minimum P-state limit to it as the current target value along
+with the current minimum and maximum limits.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: be1fb44389ca ("drm/amd/display: Check null pointers before used").
-Signed-off-by: Gleb Markov <markov.gi@npc-ksb.ru>
-Reviewed-by: George Zhang <george.zhang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: f6ebbcf08f37 ("cpufreq: intel_pstate: Implement passive mode with HWP enabled")
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://patch.msgid.link/5090465.GXAFRqVoOG@rafael.j.wysocki
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/hubp/dcn10/dcn10_hubp.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/cpufreq/intel_pstate.c | 19 +++++++++++--------
+ 1 file changed, 11 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/hubp/dcn10/dcn10_hubp.c b/drivers/gpu/drm/amd/display/dc/hubp/dcn10/dcn10_hubp.c
-index da963f73829f6..c8ae19b37d844 100644
---- a/drivers/gpu/drm/amd/display/dc/hubp/dcn10/dcn10_hubp.c
-+++ b/drivers/gpu/drm/amd/display/dc/hubp/dcn10/dcn10_hubp.c
-@@ -755,8 +755,7 @@ bool hubp1_is_flip_pending(struct hubp *hubp)
- 	if (flip_pending)
- 		return true;
+diff --git a/drivers/cpufreq/intel_pstate.c b/drivers/cpufreq/intel_pstate.c
+index 818507586cd93..f1910f9109f01 100644
+--- a/drivers/cpufreq/intel_pstate.c
++++ b/drivers/cpufreq/intel_pstate.c
+@@ -2300,8 +2300,6 @@ static void intel_pstate_get_cpu_pstates(struct cpudata *cpu)
  
--	if (hubp &&
--	    earliest_inuse_address.grph.addr.quad_part != hubp->request_address.grph.addr.quad_part)
-+	if (earliest_inuse_address.grph.addr.quad_part != hubp->request_address.grph.addr.quad_part)
- 		return true;
+ 	if (pstate_funcs.get_vid)
+ 		pstate_funcs.get_vid(cpu);
+-
+-	intel_pstate_set_min_pstate(cpu);
+ }
  
- 	return false;
+ /*
+@@ -3008,6 +3006,7 @@ static int __intel_pstate_cpu_init(struct cpufreq_policy *policy)
+ static int intel_pstate_cpu_init(struct cpufreq_policy *policy)
+ {
+ 	int ret = __intel_pstate_cpu_init(policy);
++	struct cpudata *cpu;
+ 
+ 	if (ret)
+ 		return ret;
+@@ -3018,11 +3017,11 @@ static int intel_pstate_cpu_init(struct cpufreq_policy *policy)
+ 	 */
+ 	policy->policy = CPUFREQ_POLICY_POWERSAVE;
+ 
+-	if (hwp_active) {
+-		struct cpudata *cpu = all_cpu_data[policy->cpu];
+-
++	cpu = all_cpu_data[policy->cpu];
++	if (hwp_active)
+ 		cpu->epp_cached = intel_pstate_get_epp(cpu, 0);
+-	}
++	else
++		intel_pstate_set_min_pstate(cpu);
+ 
+ 	return 0;
+ }
+@@ -3246,8 +3245,6 @@ static int intel_cpufreq_cpu_init(struct cpufreq_policy *policy)
+ 		return ret;
+ 
+ 	policy->cpuinfo.transition_latency = INTEL_CPUFREQ_TRANSITION_LATENCY;
+-	/* This reflects the intel_pstate_get_cpu_pstates() setting. */
+-	policy->cur = policy->cpuinfo.min_freq;
+ 
+ 	req = kcalloc(2, sizeof(*req), GFP_KERNEL);
+ 	if (!req) {
+@@ -3268,9 +3265,15 @@ static int intel_cpufreq_cpu_init(struct cpufreq_policy *policy)
+ 		WRITE_ONCE(cpu->hwp_req_cached, value);
+ 
+ 		cpu->epp_cached = intel_pstate_get_epp(cpu, value);
++
++		intel_cpufreq_hwp_update(cpu, cpu->pstate.min_pstate,
++					 cpu->pstate.max_pstate,
++					 cpu->pstate.min_pstate, false);
+ 	} else {
+ 		policy->transition_delay_us = INTEL_CPUFREQ_TRANSITION_DELAY;
++		intel_pstate_set_min_pstate(cpu);
+ 	}
++	policy->cur = policy->cpuinfo.min_freq;
+ 
+ 	freq = DIV_ROUND_UP(cpu->pstate.turbo_freq * global.min_perf_pct, 100);
+ 
 -- 
 2.53.0
 
