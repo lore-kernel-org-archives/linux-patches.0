@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2094E4BEE54;
-	Sat, 12 Sep 2026 09:37:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E23244BEE54;
+	Sat, 12 Sep 2026 09:37:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789205857; cv=none; b=nMKycYvZm60k4Gp/O2aJ7t7n2ayAr08V+PHIGwF4MwCAaUeX3s2V4swrR5hRwxf6tcrDx9cYt6JthfBH28NKOAoV3HHlMat2yNYkD+4efJrN3Iqdw2kezZerqdi/OIo+fsWKquL09ncbFeGX3tO9NmcguXrtxfseB4riaXmGbjk=
+	t=1789205862; cv=none; b=qVjGX2IJzkCsCMpJuEJXGn5iTr/Sv8LyYSS7rQIIUN+Do4JmtlYuhROerc8Syhm6QoRI4BFzIiDNCC2FKxSak/dFmzHDmVepQpYrTkl5JA4mNQIYBCML06oNqdhZMEZPrpvU2lvOIIiGQMwrb4qiTH0fkC2j8XXEFC6D/6jCpSk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789205857; c=relaxed/simple;
-	bh=dxNHw9mxzn/OL+vpnHYYJ2bTsHyfRn/fG3bSpXptDKs=;
+	s=arc-20240116; t=1789205862; c=relaxed/simple;
+	bh=wFHm52lR3cjaIztp9HvyotyK3DMZG3a/k0Dq/M38ECM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JTm3sEZ2N8ieCriZckcSksc++jHf+bQo14cQNCEizH1EJsXREUM1NUCD+oNSifIz3RkGwKnKCW4CWe0P2qU0vk4aog+WOjLr5D/ledEuatJNlTq9D4hoSDLbvYcJCEDbt4IUbyCdgcX6oYQhTCFp4b/AFBec5tNtvrKcL5DJmMY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dvppJRbO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=s1jJf8Nt5jhGea1DW6Bm0eru0xx1eHnFoiaQ8GKnayfLOtsSai/ct6HIe+HUtFQlpog59u6pAsPuObi06Z8/9DBbfeHziOWj611edfXABJisIBtn7xsthcaxRhoSwKdoyR12wltAsvcZiRscRyjqjuF0DpjbZF/av5qi9AnsqH0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uy/7VyOf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dvppJRbO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3A141F000FF;
-	Sat, 12 Sep 2026 09:37:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uy/7VyOf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8C561F000FF;
+	Sat, 12 Sep 2026 09:37:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789205856;
-	bh=kbr0VypVN1cqnbYi4FVIKnw7vUd2WNZwHHJVASFYG9c=;
+	s=korg; t=1789205860;
+	bh=xlMlU+IxkC7IbQ7hBerhr3EPTl/mbMPnUyfpwTI22IM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dvppJRbOdVoWEgBZVKbJG4vTqdd6Lt9GD3cKBsPBv0suuhCxpDTvFawFL09RP/l7O
-	 lCkCnlkXiLsoBlPhvyS6REZKlZp7pbNdfsCojXcKp5hpFF0NymChye2O/3W9q4agIk
-	 ARfXlgz+4N57/hya2He9Ozl8s9yAiPb0KWIsfazI=
+	b=Uy/7VyOfzberURn0+GsnVt7yrczqrNgNH+e+KGn+B01h2tK3XIeJsxCeRW5GzyTyJ
+	 u/xgnwUbzLg3RTLNS9xDyfDiyvsF20/kmGzZ3RsQp0lxeOKYDdxG/454FnzcVKon6r
+	 NcTTojCTOKD+DWwe5nTHyf7XESV1JPyGsTHB1rhQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Yao <yaoyuan@linux.alibaba.com>,
-	Marc Zyngier <maz@kernel.org>,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	Oliver Upton <oupton@kernel.org>,
+	Yosry Ahmed <yosry@kernel.org>,
+	Sean Christopherson <seanjc@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0085/1518] KVM: arm64: Remove VM-wide VNCR mapping counter
-Date: Sat, 12 Sep 2026 08:37:34 +0200
-Message-ID: <20260912065625.384054052@linuxfoundation.org>
+Subject: [PATCH 6.18 0086/1518] KVM: x86: Disallow EFER.LME and EFER.LMA if long mode is not supported
+Date: Sat, 12 Sep 2026 08:37:35 +0200
+Message-ID: <20260912065625.407653815@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -53,94 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Zyngier <maz@kernel.org>
+From: Yosry Ahmed <yosry@kernel.org>
 
-[ Upstream commit c55bc773b6e814406658fae7dc5c15f639ed816e ]
+[ Upstream commit e62392bf39ebfdf60d1d082799397fe1cbf8dfc5 ]
 
-The global VNCR mapping counter is used to decide whether an L1
-provided VNCR page is mapped in L0 on any CPU at the point of
-dealing with a TLB invalidation. It is incremented when a mapping
-is made in the fixmap, and decremented when unmapped.
+Remove EFER.LME and EFER.LMA from EFER reserved bits only if long mode
+is actually supported. KVM does check long-mode support before allowing
+the bits for guest writes and userspace writes through KVM_SET_SREGS*
+(in __kvm_valid_efer()), but userspace writes through KVM_SET_MSRS only
+check reserved bits.
 
-As it turns out, this tracking has several flaws:
+In practice, this doesn't really matter. The true motiviation is getting
+rid of the #ifdeffery when initializing efer_reserved_bits.
 
-- we are trying to invalidate TLBs, and the mapping is only an
-  opportunistic consequence of the TLB. Checking this counter to
-  decide whether a TLB needs to be invalidated may result in missed
-  invalidations.
-
-- an L1 vcpu invalidating its own TLB (a very likely case) will not
-  succeed in invalidating the VNCR pseudo TLB because that page is
-  not mapped in L0 at this stage.
-
-Given that this tracking fails at delivering the minimum guarantees
-that are required and is only a performance optimisation, remove it
-completely.
-
-Fixes: 4ffa72ad8f37e ("KVM: arm64: nv: Add S1 TLB invalidation primitive for VNCR_EL2")
-Reviewed-by: Yuan Yao <yaoyuan@linux.alibaba.com>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
 Cc: stable@vger.kernel.org
-Acked-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Link: https://patch.msgid.link/20260806091026.620700-2-maz@kernel.org
-Signed-off-by: Oliver Upton <oupton@kernel.org>
+Signed-off-by: Yosry Ahmed <yosry@kernel.org>
+Link: https://patch.msgid.link/20260713181020.2735367-3-yosry@kernel.org
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+[ relocated hunks to x86.c and its kvm_x86_vendor_init() because msrs.c and kvm_setup_efer_caps() are absent. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/include/asm/kvm_host.h |    3 ---
- arch/arm64/kvm/hyp/vhe/switch.c   |    3 +--
- arch/arm64/kvm/nested.c           |    3 ---
- 3 files changed, 1 insertion(+), 8 deletions(-)
+ arch/x86/kvm/x86.c |   13 ++++---------
+ 1 file changed, 4 insertions(+), 9 deletions(-)
 
---- a/arch/arm64/include/asm/kvm_host.h
-+++ b/arch/arm64/include/asm/kvm_host.h
-@@ -397,9 +397,6 @@ struct kvm_arch {
- 	/* Masks for VNCR-backed and general EL2 sysregs */
- 	struct kvm_sysreg_masks	*sysreg_masks;
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -106,16 +106,8 @@ EXPORT_SYMBOL_FOR_KVM_INTERNAL(kvm_host)
+ #define emul_to_vcpu(ctxt) \
+ 	((struct kvm_vcpu *)(ctxt)->vcpu)
  
--	/* Count the number of VNCR_EL2 currently mapped */
--	atomic_t vncr_map_count;
--
- 	/*
- 	 * For an untrusted host VM, 'pkvm.handle' is used to lookup
- 	 * the associated pKVM instance in the hypervisor.
---- a/arch/arm64/kvm/hyp/vhe/switch.c
-+++ b/arch/arm64/kvm/hyp/vhe/switch.c
-@@ -427,8 +427,7 @@ static bool kvm_hyp_handle_tlbi_el2(stru
- 	 * If we have to check for any VNCR mapping being invalidated,
- 	 * go back to the slow path for further processing.
- 	 */
--	if (vcpu_el2_e2h_is_set(vcpu) && vcpu_el2_tge_is_set(vcpu) &&
--	    atomic_read(&vcpu->kvm->arch.vncr_map_count))
-+	if (vcpu_el2_e2h_is_set(vcpu) && vcpu_el2_tge_is_set(vcpu))
- 		return false;
+-/* EFER defaults:
+- * - enable syscall per default because its emulated by KVM
+- * - enable LME and LMA per default on 64 bit KVM
+- */
+-#ifdef CONFIG_X86_64
+-static
+-u64 __read_mostly efer_reserved_bits = ~((u64)(EFER_SCE | EFER_LME | EFER_LMA));
+-#else
++/* Enable syscall by default because its emulated by KVM */
+ static u64 __read_mostly efer_reserved_bits = ~((u64)EFER_SCE);
+-#endif
  
- 	__kvm_skip_instr(vcpu);
---- a/arch/arm64/kvm/nested.c
-+++ b/arch/arm64/kvm/nested.c
-@@ -48,7 +48,6 @@ void kvm_init_nested(struct kvm *kvm)
- {
- 	kvm->arch.nested_mmus = NULL;
- 	kvm->arch.nested_mmus_size = 0;
--	atomic_set(&kvm->arch.vncr_map_count, 0);
- }
+ #define KVM_EXIT_HYPERCALL_VALID_MASK (1 << KVM_HC_MAP_GPA_RANGE)
  
- static int init_nested_s2_mmu(struct kvm *kvm, struct kvm_s2_mmu *mmu)
-@@ -806,7 +805,6 @@ static void this_cpu_reset_vncr_fixmap(s
- 	if (unmap_l1_vncr(vcpu->arch.vncr_tlb) == -1)
- 		clear_fixmap(vncr_fixmap(smp_processor_id()));
- 	host_data_clear_flag(L1_VNCR_MAPPED);
--	atomic_dec(&vcpu->kvm->arch.vncr_map_count);
- }
+@@ -10157,6 +10149,9 @@ int kvm_x86_vendor_init(struct kvm_x86_i
+ 	if (r != 0)
+ 		goto out_mmu_exit;
  
- void kvm_vcpu_put_hw_mmu(struct kvm_vcpu *vcpu)
-@@ -1492,7 +1490,6 @@ static void kvm_map_l1_vncr(struct kvm_v
- 		atomic_set(&vt->cpu, smp_processor_id());
- 		__set_fixmap(vncr_fixmap(atomic_read(&vt->cpu)), vt->hpa, prot);
- 		host_data_set_flag(L1_VNCR_MAPPED);
--		atomic_inc(&vcpu->kvm->arch.vncr_map_count);
- 	}
- }
++	if (kvm_cpu_cap_has(X86_FEATURE_LM))
++		kvm_enable_efer_bits(EFER_LME | EFER_LMA);
++
+ 	enable_device_posted_irqs &= enable_apicv &&
+ 				     irq_remapping_cap(IRQ_POSTING_CAP);
  
 
 
