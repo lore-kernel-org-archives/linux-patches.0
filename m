@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9344479899;
-	Sat, 12 Sep 2026 12:24:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46A4947A87A;
+	Sat, 12 Sep 2026 12:24:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789215864; cv=none; b=KorFFVHtT4jJfMemE4MN3+neOCNF1LpQNfB79CRzuX4r2bTwN/rjxFYTSbwf7JdmkJ9BzgHUUVtBupab9bJHo0TvwEJefHok6gRGz+y7I3tPZqAWMmxPNn7CbnwS/v8CqtbNR6xZZn5ZN/q0Na9KA5y3JBQWshA6QK9L9RO86/0=
+	t=1789215873; cv=none; b=ktRCmZRgPgcchc1HwXQ1ryh2xE58fizYoLjsojuZ8WLt3TBHwa4To7AeWMPkYmElYyUaOVLZqIrptIxE1On/5ZzZbJcOOO/aPD5id4KPvBEDQtnVuwxF0O2Zj9nCbzmZ91l7SqyqbL3PcA/X1NPmy57fr8BsKJiPjFGD8G2P/so=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789215864; c=relaxed/simple;
-	bh=58zbfECBdXaHBOJJviu/bcb7sHukTNMDdKWpVWwlug0=;
+	s=arc-20240116; t=1789215873; c=relaxed/simple;
+	bh=YJznvmNYeuSFJDdscKxCMQvJvNPCIJPeS3oV1Q/SgPM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U9sJyCteyACh+LMb/PJrm2KS/t9pAr/RNMmk3csXH8bTJfiO3jiLthndqPsgMWjWHaVPmtaLUuXY8pJJ6gvTOPWh+2b6+AtSselFisNMkjHVcI8D0VWhKz31KcEOdhkQcOm8JyVXO911FY6UP0uLxtL8QQi5tihBZFRonf0kymQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ehktIlhh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Qj97aieaCD/66ZEZO9z4sUkoJbYARYWJC9MNUEm392ebH+yNiMeXZ7HOmvQozWc67jEhhMblbAmkSX0n2xbHL/8RRg9BzZqSSxHanRN/C/FkPYM28YhTyfaRrY5KDCTPMUCjqkB4IHQA4odqh2elFacHpOIOJ3W1tJqaBW61vLQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eYgnwK4X; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ehktIlhh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4C181F000FF;
-	Sat, 12 Sep 2026 12:24:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eYgnwK4X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D03A71F00898;
+	Sat, 12 Sep 2026 12:24:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789215862;
-	bh=kC997AM/TtCCb2Ft4zz0iETUsSi6Krpt9qRztmzqu6w=;
+	s=korg; t=1789215867;
+	bh=i+ywreugqMo/5OBoKXz2dVH7luuKXOkBgzzK7wo2G48=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ehktIlhh8/lz8dWPfuXHCbomH3K7wItLZ632CpPNYUCUjyn2sKpkpi2UZSGyB2Yly
-	 O5s6/dl79npyy8DOIyXzRski9GlgP+V7Inw6FrFNE49h1f6CEnx8RpFM8M7v0VB1uk
-	 vZa4BMnmiV2ui8ufAZEc0Zd3778d+lLzTMFymBWI=
+	b=eYgnwK4Xo30Nn2+Qm7J1s+Dpop3d1P7q32fpJJ/oKZEmeS1an9GETRvA0puAu6oa3
+	 YvessaAa2UO0l1gL0jyhiCKf96I7shj3sZhDQGPexi6HtMxampaq8GraaSzAFhqC68
+	 b8v/Aq8sVOYX9axdkWNjemJWTlpfKxZFKgaXhls0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+5d19358d7eb30ffb0cc5@syzkaller.appspotmail.com,
-	Yun Zhou <yun.zhou@windriver.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
+	"=?UTF-8?q?Ricardo=20B . =20Marli=C3=A8re?=" <rbm@suse.com>,
+	Ihor Solodrai <ihor.solodrai@linux.dev>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0620/1376] ext4: skip extra isize expansion during mount to prevent deadlock
-Date: Sat, 12 Sep 2026 08:50:46 +0200
-Message-ID: <20260912065621.361574321@linuxfoundation.org>
+Subject: [PATCH 6.12 0621/1376] libbpf: Search /lib64 and /lib in resolve_full_path()
+Date: Sat, 12 Sep 2026 08:50:47 +0200
+Message-ID: <20260912065621.384619671@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -47,71 +46,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yun Zhou <yun.zhou@windriver.com>
+From: Ricardo B. Marlière <rbm@suse.com>
 
-[ Upstream commit 7461c60b9c6a839b13ad4c3490681a0cf5aa0637 ]
+[ Upstream commit 7b5ae0481efdac040cea72b4fabd1398109f975b ]
 
-ext4_try_to_expand_extra_isize() is called from __ext4_mark_inode_dirty()
-while holding an active jbd2 handle.  During mount (!SB_ACTIVE), the
-expand path may move xattrs to external blocks and release ea_inodes via
-iput().  When !SB_ACTIVE, iput() calls write_inode_now() which acquires
-s_writepages_rwsem, creating a circular lock dependency:
+attach_probe/uprobe-lib and uprobe_autoattach selftests fail with "failed
+to resolve full path for libc.so.6" on older non-usrmerged distros, where
+libc.so.6 lives under a top-level /lib64 or /lib rather than /usr/lib64 or
+/usr/lib. Add /lib64:/lib to the search paths, alongside the existing
+/usr/lib64:/usr/lib and Debian multiarch entries.
 
-  s_writepages_rwsem --> jbd2_handle --> xattr_sem --> s_writepages_rwsem
-
-This can be triggered via:
-
-  ext4_process_orphan() -> ext4_truncate() -> ext4_mark_inode_dirty()
-    -> ext4_try_to_expand_extra_isize()
-
-or:
-
-  ext4_evict_inode() -> ext4_mark_inode_dirty()
-    -> ext4_try_to_expand_extra_isize()
-
-Skip expansion when !SB_ACTIVE.  This is a minor loss of functionality
-(extra isize won't grow for these inodes during mount), which e2fsck
-can resolve later if needed.
-
-Reported-by: syzbot+5d19358d7eb30ffb0cc5@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=5d19358d7eb30ffb0cc5
-Fixes: c8585c6fcaf2 ("ext4: fix races between changing inode journal mode and ext4_writepages")
-Signed-off-by: Yun Zhou <yun.zhou@windriver.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20260623061903.2148767-1-yun.zhou@windriver.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Fixes: 1ce3a60e3c28 ("libbpf: auto-resolve programs/libraries when necessary for uprobes")
+Signed-off-by: Ricardo B. Marlière <rbm@suse.com>
+Acked-by: Ihor Solodrai <ihor.solodrai@linux.dev>
+Link: https://lore.kernel.org/bpf/20260720-selftests-bpf_fixes-v2-3-b450eda93dfe@suse.com
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/inode.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ tools/lib/bpf/libbpf.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/ext4/inode.c b/fs/ext4/inode.c
-index de8ad1f90af13..b299c0a5f2ec2 100644
---- a/fs/ext4/inode.c
-+++ b/fs/ext4/inode.c
-@@ -5975,6 +5975,16 @@ static int ext4_try_to_expand_extra_isize(struct inode *inode,
- 	if (ext4_test_inode_state(inode, EXT4_STATE_NO_EXPAND))
- 		return -EOVERFLOW;
+diff --git a/tools/lib/bpf/libbpf.c b/tools/lib/bpf/libbpf.c
+index 9bbf7a3b87de7..ffb0d1f7e9a08 100644
+--- a/tools/lib/bpf/libbpf.c
++++ b/tools/lib/bpf/libbpf.c
+@@ -11946,13 +11946,14 @@ static const char *arch_specific_lib_paths(void)
+ /* Get full path to program/shared library. */
+ static int resolve_full_path(const char *file, char *result, size_t result_sz)
+ {
+-	const char *search_paths[3] = {};
++	const char *search_paths[4] = {};
+ 	int i, perm;
  
-+	/*
-+	 * Skip expansion during mount (!SB_ACTIVE).  Expanding extra isize
-+	 * may move xattrs to external blocks and release ea_inodes via iput.
-+	 * When !SB_ACTIVE, iput triggers write_inode_now() which acquires
-+	 * s_writepages_rwsem, causing a deadlock with the caller's active
-+	 * jbd2 handle (lock order: s_writepages_rwsem -> jbd2_handle).
-+	 */
-+	if (unlikely(!(inode->i_sb->s_flags & SB_ACTIVE)))
-+		return -EBUSY;
-+
- 	/*
- 	 * In nojournal mode, we can immediately attempt to expand
- 	 * the inode.  When journaled, we first need to obtain extra
+ 	if (str_has_sfx(file, ".so") || strstr(file, ".so.")) {
+ 		search_paths[0] = getenv("LD_LIBRARY_PATH");
+ 		search_paths[1] = "/usr/lib64:/usr/lib";
+ 		search_paths[2] = arch_specific_lib_paths();
++		search_paths[3] = "/lib64:/lib";
+ 		perm = R_OK;
+ 	} else {
+ 		search_paths[0] = getenv("PATH");
 -- 
 2.53.0
 
