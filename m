@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D30547254B;
-	Sat, 12 Sep 2026 11:20:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08B802EC09B;
+	Sat, 12 Sep 2026 11:20:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789212014; cv=none; b=MCXzDvg96t0RWuuVUflALcPlAb1UuOUS9tNsYj3LMySe0YWnMWUyStHPJbZlCIcE7GPBQOTraMP887b9rW6NIfefc3GfcF/qsn8Poe/cSed0R3skU9CWJ/VsHYheVKvOK0/HmVvFnObDeufSlA+J7z/MzCORimgIrYArZIrbZpk=
+	t=1789212017; cv=none; b=UBge7u4BApMc5sdA8Xu/c+4s1UWtm3FIKlST96wompxN9UKSKgIZp8Gmj1pMgRteBsFgOPokI/v2E0cD8NjAKAWiyG9Tg60gQYh0V5ld75TJPO9GXojnjiPKwQa2zmyCKTWIpG/oH/GlaGCRWR5rlEXmhnhV598nqvwBXdlGCQg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789212014; c=relaxed/simple;
-	bh=l7FtfJ4pykd+/TtFzhBr+veUug+/JNHd61G8F6cGIqQ=;
+	s=arc-20240116; t=1789212017; c=relaxed/simple;
+	bh=AdHpxXUVwqSTBcKk4AO8bLfRwCv9Dy86E1G/sZFqnGI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q53dDeSa/3yjw0lV55uoBnY+BL1n5KLhP+x/PYuPbfSpCsXvcguV85M2gBKwGj4UZ+th4rCYdEywHGKWClwxIrXEtD8KG7lYreyMD18pDakdfY4XL6nbWZKSKFZTT+GVRM9ZeUlm8ttIKy1uP6IXqydqYQykFgiAwfBleHtoohU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FkS1ypDj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ObcdGaqYqh9szf72JjwHv05tgq7BrEmb4plxQ4C7IXLgJUfdNNvUK46FjEwckKgenutLadZ1uix2sEKq4HM3kNUoGGgW4F6q9d6nsCraktGgxnDjuDlbo0OMNPVCbPJsjqbAE1ycq1j/HrkA6inAd/Xf9YV5xX0XP36vTfqYjSU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q3SqmORR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FkS1ypDj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AD2C1F000FF;
-	Sat, 12 Sep 2026 11:20:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q3SqmORR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF3011F000FF;
+	Sat, 12 Sep 2026 11:20:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789212011;
-	bh=RD3eZwleGj0OfOUSrEEw+7A2hcsAPC0N1664Q/wef8I=;
+	s=korg; t=1789212015;
+	bh=fHeUobzjx75jCz3DOv3KQC3ljEhuMfuw2VytVfRLgvo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FkS1ypDjdLH6mPU1RIi17HZEmrA9n3MyqLPrsqEipdQ6XXF6i/kqCVHUF+u9jSoxc
-	 RJtj1ly2yfprFCZ4rn5+WpJchdQvChht4DBUdD9wgPARwsmllR6XBwpPfui2KtoIgl
-	 JhvarkA4HXkz7b0goP3KOusNcJ0ZEgW7mrx4k+y8=
+	b=q3SqmORRLNDJsASnu3xxvX4iu0I+icewmRI8z80KpheGllF6+4lDiGmmq5FGCsKeA
+	 wfQ4eCxyELJuFq5Zvy6qh1bb+/agX9SBRa1HMkJFHkL85/ERp2wgUutJ6VyV/5oD7E
+	 2pyfjGiqEQG1dpjcfkskA2yVSgnX1o8pkAx7Oo4A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Victor Nogueira <victor@mojatatu.com>,
-	Simon Horman <horms@kernel.org>,
+	syzbot+483a6efbc4882c1201ee@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1332/1518] net/sched: add get_fill_size callbacks for actions missing them
-Date: Sat, 12 Sep 2026 08:58:21 +0200
-Message-ID: <20260912065653.663288325@linuxfoundation.org>
+Subject: [PATCH 6.18 1350/1518] netdevsim: update queue NAPI association on queue reset
+Date: Sat, 12 Sep 2026 08:58:39 +0200
+Message-ID: <20260912065654.068427805@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -54,455 +53,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Victor Nogueira <victor@mojatatu.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 8e2efb3f45a5c6f7c8f68685c1c4709040aa2fa0 ]
+[ Upstream commit 07e98a4d5e9c292eae97c9cc5ab0937384e48492 ]
 
-Several tc actions - act_police, act_bpf, act_pedit, act_ife, act_sample,
-act_ct, act_ctinfo and act_tunnel_key among them - provide no
-get_fill_size() callback, so tcf_action_fill_size() falls back to
-tcf_action_shared_attrs_size() which does not account for the
-action-specific netlink attributes emitted inside TCA_ACT_OPTIONS by
-their dump functions.
+In netdevsim, receive queues (struct nsim_rq) embed their own struct
+napi_struct. When queue reset is performed (e.g. via queue_reset
+debugfs), nsim_queue_start() swaps in a newly allocated struct nsim_rq,
+and nsim_queue_mem_free() later deletes and frees the old one.
 
-When an RTM_NEWACTION request with NLM_F_ECHO (or an RTNLGRP_TC
-listener) creates several actions, tcf_add_notify_msg() allocates the
-echo skb from this underestimated size. When this happens, the act_api
-code fails to add all of the fields to the netlink message and, thus,
-fails to send it. Issue is that, when that happens, this failure doesn't
-stop the action instances from being added. So any user watching these
-events will be under the false impression that no actions were created at
-all.
+However, nsim_queue_start() failed to update the queue-to-NAPI mapping
+via netif_queue_set_napi(). As a result, dev->_rx[idx].napi continued to
+point to the old NAPI struct. After the old queue was freed, a subsequent
+queue dump via Netlink (NETDEV_CMD_QUEUE_GET) triggered a KASAN
+slab-use-after-free read in nla_put_napi_id() when accessing
+rxq->napi->napi_id.
 
-For example, act_pedit overruns with 32 actions of four munge keys each,
-act_police with 32 policers once the optional rate/peakrate/result/avrate
-attributes are present.
+Fix this by calling netif_queue_set_napi() in nsim_queue_start() to
+associate the new NAPI with the RX queue, and clear the association
+with netif_queue_set_napi(..., NULL) in nsim_del_napi() during teardown.
 
-To fix this, add the missing get_fill_size callbacks returning the
-worst-case size of each action's dump attributes, following the pattern
-used by act_gact/act_skbedit/act_vlan. Also widen the TCA_GACT_TM
-accounting in tcf_action_shared_attrs_size() to nla_total_size_64bit(),
-since actions dump their tcf_t with nla_put_64bit(), which may be
-preceded by an NLA_PAD attribute.
-
-Note: We only provided fixes for the actions we reproduced this bug with
-as of today. We can send a separate hardening patch for the remaining
-actions to net-next later. The other pre-existing issues, pointed out by
-Clashiko [1], will be fixed in upcoming patches.
-
-[1] https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260810164357.1653956-1-victor%40mojatatu.com
-
-Fixes: 4e76e75d6aba ("net sched actions: calculate add/delete event message size")
-Reported-by: Vega <vega@nebusec.ai>
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Signed-off-by: Victor Nogueira <victor@mojatatu.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260816201327.2435335-1-victor@mojatatu.com
+Fixes: 5bc8e8dbef27 ("netdevsim: add queue management API support")
+Reported-by: syzbot+483a6efbc4882c1201ee@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/6a82c3d4.f7a79266.2f965f.0024.GAE@google.com/T/#u
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Link: https://patch.msgid.link/20260817082511.2300402-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/act_api.c        |  5 ++-
- net/sched/act_bpf.c        | 26 +++++++++++++
- net/sched/act_ct.c         | 46 ++++++++++++++++++++++
- net/sched/act_ctinfo.c     | 11 ++++++
- net/sched/act_ife.c        | 23 +++++++++++
- net/sched/act_pedit.c      | 24 ++++++++++++
- net/sched/act_police.c     | 12 ++++++
- net/sched/act_sample.c     |  9 +++++
- net/sched/act_tunnel_key.c | 80 ++++++++++++++++++++++++++++++++++++++
- 9 files changed, 235 insertions(+), 1 deletion(-)
+ drivers/net/netdevsim/netdev.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/sched/act_api.c b/net/sched/act_api.c
-index 3578fd5ac4fbd..3909715bbf76c 100644
---- a/net/sched/act_api.c
-+++ b/net/sched/act_api.c
-@@ -452,7 +452,10 @@ static size_t tcf_action_shared_attrs_size(const struct tc_action *act)
- 		/* TCA_STATS_QUEUE */
- 		+ nla_total_size_64bit(sizeof(struct gnet_stats_queue))
- 		+ nla_total_size(0) /* TCA_ACT_OPTIONS nested */
--		+ nla_total_size(sizeof(struct tcf_t)); /* TCA_GACT_TM */
-+		/* TCA_GACT_TM; actions dump their tcf_t with nla_put_64bit(),
-+		 * which may emit an extra NLA_PAD attribute.
-+		 */
-+		+ nla_total_size_64bit(sizeof(struct tcf_t));
- }
+diff --git a/drivers/net/netdevsim/netdev.c b/drivers/net/netdevsim/netdev.c
+index 7a8e17bf46bdb..37260e488b9e8 100644
+--- a/drivers/net/netdevsim/netdev.c
++++ b/drivers/net/netdevsim/netdev.c
+@@ -576,6 +576,7 @@ static void nsim_del_napi(struct netdevsim *ns)
+ 	for (i = 0; i < dev->num_rx_queues; i++) {
+ 		struct nsim_rq *rq = ns->rq[i];
  
- static size_t tcf_action_full_attrs_size(size_t sz)
-diff --git a/net/sched/act_bpf.c b/net/sched/act_bpf.c
-index 284800b7d3c55..e99b9269ea1a9 100644
---- a/net/sched/act_bpf.c
-+++ b/net/sched/act_bpf.c
-@@ -389,6 +389,31 @@ static void tcf_bpf_cleanup(struct tc_action *act)
- 	tcf_bpf_cfg_cleanup(&tmp);
- }
++		netif_queue_set_napi(dev, i, NETDEV_QUEUE_TYPE_RX, NULL);
+ 		napi_disable_locked(&rq->napi);
+ 		__netif_napi_del_locked(&rq->napi);
+ 	}
+@@ -839,6 +840,7 @@ nsim_queue_start(struct net_device *dev, struct netdev_queue_config *qcfg,
+ 	}
  
-+static size_t tcf_bpf_get_fill_size(const struct tc_action *act)
-+{
-+	struct tcf_bpf *prog = to_bpf(act);
-+	size_t size = nla_total_size(sizeof(struct tc_act_bpf));
-+
-+	/* bpf_ops and bpf_num_ops are published as separate stores under
-+	 * tcf_lock, so take it here as tcf_bpf_dump() does.
-+	 */
-+	spin_lock_bh(&prog->tcf_lock);
-+	if (tcf_bpf_is_ebpf(prog)) {
-+		/* TCA_ACT_BPF_NAME */
-+		size += nla_total_size(ACT_BPF_NAME_LEN + 1);
-+		size += nla_total_size(sizeof(u32)); /* TCA_ACT_BPF_ID */
-+		size += nla_total_size(BPF_TAG_SIZE); /* TCA_ACT_BPF_TAG */
-+	} else {
-+		size += nla_total_size(sizeof(u16)); /* TCA_ACT_BPF_OPS_LEN */
-+		/* TCA_ACT_BPF_OPS */
-+		size += nla_total_size(prog->bpf_num_ops *
-+				       sizeof(struct sock_filter));
-+	}
-+	spin_unlock_bh(&prog->tcf_lock);
-+
-+	return size;
-+}
-+
- static struct tc_action_ops act_bpf_ops __read_mostly = {
- 	.kind		=	"bpf",
- 	.id		=	TCA_ID_BPF,
-@@ -397,6 +422,7 @@ static struct tc_action_ops act_bpf_ops __read_mostly = {
- 	.dump		=	tcf_bpf_dump,
- 	.cleanup	=	tcf_bpf_cleanup,
- 	.init		=	tcf_bpf_init,
-+	.get_fill_size	=	tcf_bpf_get_fill_size,
- 	.size		=	sizeof(struct tcf_bpf),
- };
- MODULE_ALIAS_NET_ACT("bpf");
-diff --git a/net/sched/act_ct.c b/net/sched/act_ct.c
-index cdf095818f738..cbac27ba76afc 100644
---- a/net/sched/act_ct.c
-+++ b/net/sched/act_ct.c
-@@ -1655,6 +1655,51 @@ static int tcf_ct_offload_act_setup(struct tc_action *act, void *entry_data,
+ 	ns->rq[idx] = qmem->rq;
++	netif_queue_set_napi(dev, idx, NETDEV_QUEUE_TYPE_RX, &ns->rq[idx]->napi);
+ 	napi_enable_locked(&ns->rq[idx]->napi);
+ 
  	return 0;
- }
- 
-+static size_t tcf_ct_get_fill_size(const struct tc_action *act)
-+{
-+	const struct tcf_ct_params *p;
-+	size_t size;
-+
-+	size = nla_total_size(sizeof(struct tc_ct)) /* TCA_CT_PARMS */
-+		+ nla_total_size(sizeof(u16)); /* TCA_CT_ACTION */
-+
-+	rcu_read_lock();
-+	p = rcu_dereference(to_ct(act)->params);
-+
-+	if (p->ct_action & TCA_CT_ACT_CLEAR)
-+		goto out;
-+
-+	/* TCA_CT_MARK, TCA_CT_MARK_MASK */
-+	if (IS_ENABLED(CONFIG_NF_CONNTRACK_MARK))
-+		size += nla_total_size(sizeof(p->mark))
-+			+ nla_total_size(sizeof(p->mark_mask));
-+
-+	/* TCA_CT_LABELS, TCA_CT_LABELS_MASK */
-+	if (IS_ENABLED(CONFIG_NF_CONNTRACK_LABELS))
-+		size += nla_total_size(sizeof(p->labels))
-+			+ nla_total_size(sizeof(p->labels_mask));
-+
-+	if (IS_ENABLED(CONFIG_NF_CONNTRACK_ZONES))
-+		size += nla_total_size(sizeof(p->zone)); /* TCA_CT_ZONE */
-+
-+	if (p->ct_action & TCA_CT_ACT_NAT)
-+		/* TCA_CT_NAT_IPV6_{MIN,MAX}, the larger of the two address
-+		 * variants, plus TCA_CT_NAT_PORT_{MIN,MAX}.
-+		 */
-+		size += 2 * nla_total_size(sizeof(struct in6_addr))
-+			+ 2 * nla_total_size(sizeof(__be16));
-+
-+	/* TCA_CT_HELPER_{NAME,FAMILY,PROTO} */
-+	if (p->helper)
-+		size += nla_total_size(NF_CT_HELPER_NAME_LEN)
-+			+ nla_total_size(sizeof(u8))
-+			+ nla_total_size(sizeof(u8));
-+out:
-+	rcu_read_unlock();
-+
-+	return size;
-+}
-+
- static struct tc_action_ops act_ct_ops = {
- 	.kind		=	"ct",
- 	.id		=	TCA_ID_CT,
-@@ -1664,6 +1709,7 @@ static struct tc_action_ops act_ct_ops = {
- 	.init		=	tcf_ct_init,
- 	.cleanup	=	tcf_ct_cleanup,
- 	.stats_update	=	tcf_stats_update,
-+	.get_fill_size	=	tcf_ct_get_fill_size,
- 	.offload_act_setup =	tcf_ct_offload_act_setup,
- 	.size		=	sizeof(struct tcf_ct),
- };
-diff --git a/net/sched/act_ctinfo.c b/net/sched/act_ctinfo.c
-index 71efe04d00b5c..0517225c144e4 100644
---- a/net/sched/act_ctinfo.c
-+++ b/net/sched/act_ctinfo.c
-@@ -355,6 +355,16 @@ static void tcf_ctinfo_cleanup(struct tc_action *a)
- 		kfree_rcu(cp, rcu);
- }
- 
-+static size_t tcf_ctinfo_get_fill_size(const struct tc_action *act)
-+{
-+	return nla_total_size(sizeof(struct tc_ctinfo)) /* TCA_CTINFO_ACT */
-+		+ nla_total_size(sizeof(u16)) /* TCA_CTINFO_ZONE */
-+		/* TCA_CTINFO_PARMS_{DSCP_MASK,DSCP_STATEMASK,CPMARK_MASK} */
-+		+ 3 * nla_total_size(sizeof(u32))
-+		/* TCA_CTINFO_STATS_{DSCP_SET,DSCP_ERROR,CPMARK_SET} */
-+		+ 3 * nla_total_size_64bit(sizeof(u64));
-+}
-+
- static struct tc_action_ops act_ctinfo_ops = {
- 	.kind	= "ctinfo",
- 	.id	= TCA_ID_CTINFO,
-@@ -363,6 +373,7 @@ static struct tc_action_ops act_ctinfo_ops = {
- 	.dump	= tcf_ctinfo_dump,
- 	.init	= tcf_ctinfo_init,
- 	.cleanup= tcf_ctinfo_cleanup,
-+	.get_fill_size = tcf_ctinfo_get_fill_size,
- 	.size	= sizeof(struct tcf_ctinfo),
- };
- MODULE_ALIAS_NET_ACT("ctinfo");
-diff --git a/net/sched/act_ife.c b/net/sched/act_ife.c
-index 4ad01d4e820db..a90d7959fc432 100644
---- a/net/sched/act_ife.c
-+++ b/net/sched/act_ife.c
-@@ -878,6 +878,28 @@ TC_INDIRECT_SCOPE int tcf_ife_act(struct sk_buff *skb,
- 	return tcf_ife_decode(skb, a, res);
- }
- 
-+static size_t tcf_ife_get_fill_size(const struct tc_action *act)
-+{
-+	struct tcf_ife_info *ife = to_ife(act);
-+	const struct tcf_ife_params *p;
-+	struct tcf_meta_info *e;
-+	size_t size = nla_total_size(sizeof(struct tc_ife)) /* TCA_IFE_PARMS */
-+		+ nla_total_size(ETH_ALEN) /* TCA_IFE_DMAC */
-+		+ nla_total_size(ETH_ALEN) /* TCA_IFE_SMAC */
-+		+ nla_total_size(2) /* TCA_IFE_TYPE */
-+		+ nla_total_size(0); /* TCA_IFE_METALST */
-+
-+	rcu_read_lock();
-+	p = rcu_dereference(ife->params);
-+	if (p) {
-+		list_for_each_entry_rcu(e, &p->metalist, metalist)
-+			size += nla_total_size(sizeof(u32));
-+	}
-+	rcu_read_unlock();
-+
-+	return size;
-+}
-+
- static struct tc_action_ops act_ife_ops = {
- 	.kind = "ife",
- 	.id = TCA_ID_IFE,
-@@ -886,6 +908,7 @@ static struct tc_action_ops act_ife_ops = {
- 	.dump = tcf_ife_dump,
- 	.cleanup = tcf_ife_cleanup,
- 	.init = tcf_ife_init,
-+	.get_fill_size = tcf_ife_get_fill_size,
- 	.size =	sizeof(struct tcf_ife_info),
- };
- MODULE_ALIAS_NET_ACT("ife");
-diff --git a/net/sched/act_pedit.c b/net/sched/act_pedit.c
-index 5aa91fb145a27..7ce50e303575e 100644
---- a/net/sched/act_pedit.c
-+++ b/net/sched/act_pedit.c
-@@ -622,6 +622,29 @@ static int tcf_pedit_offload_act_setup(struct tc_action *act, void *entry_data,
- 	return 0;
- }
- 
-+static size_t tcf_pedit_get_fill_size(const struct tc_action *act)
-+{
-+	const struct tcf_pedit_parms *parms;
-+	size_t size;
-+
-+	rcu_read_lock();
-+	parms = rcu_dereference(to_pedit(act)->parms);
-+	size = nla_total_size(struct_size_t(struct tc_pedit, keys,
-+					    parms->tcfp_nkeys));
-+	if (parms->tcfp_keys_ex) {
-+		/* TCA_PEDIT_KEYS_EX, holding one TCA_PEDIT_KEY_EX nest with a
-+		 * HTYPE and a CMD attribute per key.
-+		 */
-+		size += nla_total_size(0)
-+			+ parms->tcfp_nkeys * (nla_total_size(0)
-+					       + nla_total_size(sizeof(u16))
-+					       + nla_total_size(sizeof(u16)));
-+	}
-+	rcu_read_unlock();
-+
-+	return size;
-+}
-+
- static struct tc_action_ops act_pedit_ops = {
- 	.kind		=	"pedit",
- 	.id		=	TCA_ID_PEDIT,
-@@ -631,6 +654,7 @@ static struct tc_action_ops act_pedit_ops = {
- 	.dump		=	tcf_pedit_dump,
- 	.cleanup	=	tcf_pedit_cleanup,
- 	.init		=	tcf_pedit_init,
-+	.get_fill_size	=	tcf_pedit_get_fill_size,
- 	.offload_act_setup =	tcf_pedit_offload_act_setup,
- 	.size		=	sizeof(struct tcf_pedit),
- };
-diff --git a/net/sched/act_police.c b/net/sched/act_police.c
-index 1ec08627c9a18..775e8b1840434 100644
---- a/net/sched/act_police.c
-+++ b/net/sched/act_police.c
-@@ -490,6 +490,17 @@ static int tcf_police_offload_act_setup(struct tc_action *act, void *entry_data,
- 	return 0;
- }
- 
-+static size_t tcf_police_get_fill_size(const struct tc_action *act)
-+{
-+	return nla_total_size(sizeof(struct tc_police)) /* TCA_POLICE_TBF */
-+		+ nla_total_size_64bit(sizeof(u64)) /* TCA_POLICE_RATE64 */
-+		+ nla_total_size_64bit(sizeof(u64)) /* TCA_POLICE_PEAKRATE64 */
-+		+ nla_total_size_64bit(sizeof(u64)) /* TCA_POLICE_PKTRATE64 */
-+		+ nla_total_size_64bit(sizeof(u64)) /* TCA_POLICE_PKTBURST64 */
-+		+ nla_total_size(sizeof(u32)) /* TCA_POLICE_RESULT */
-+		+ nla_total_size(sizeof(u32)); /* TCA_POLICE_AVRATE */
-+}
-+
- MODULE_AUTHOR("Alexey Kuznetsov");
- MODULE_DESCRIPTION("Policing actions");
- MODULE_LICENSE("GPL");
-@@ -503,6 +514,7 @@ static struct tc_action_ops act_police_ops = {
- 	.dump		=	tcf_police_dump,
- 	.init		=	tcf_police_init,
- 	.cleanup	=	tcf_police_cleanup,
-+	.get_fill_size	=	tcf_police_get_fill_size,
- 	.offload_act_setup =	tcf_police_offload_act_setup,
- 	.size		=	sizeof(struct tcf_police),
- };
-diff --git a/net/sched/act_sample.c b/net/sched/act_sample.c
-index 2ceb4d141b713..44319a159b55d 100644
---- a/net/sched/act_sample.c
-+++ b/net/sched/act_sample.c
-@@ -315,6 +315,14 @@ static int tcf_sample_offload_act_setup(struct tc_action *act, void *entry_data,
- 	return 0;
- }
- 
-+static size_t tcf_sample_get_fill_size(const struct tc_action *act)
-+{
-+	return nla_total_size(sizeof(struct tc_sample)) /* TCA_SAMPLE_PARMS */
-+		+ nla_total_size(sizeof(u32)) /* TCA_SAMPLE_RATE */
-+		+ nla_total_size(sizeof(u32)) /* TCA_SAMPLE_TRUNC_SIZE */
-+		+ nla_total_size(sizeof(u32)); /* TCA_SAMPLE_PSAMPLE_GROUP */
-+}
-+
- static struct tc_action_ops act_sample_ops = {
- 	.kind	  = "sample",
- 	.id	  = TCA_ID_SAMPLE,
-@@ -324,6 +332,7 @@ static struct tc_action_ops act_sample_ops = {
- 	.dump	  = tcf_sample_dump,
- 	.init	  = tcf_sample_init,
- 	.cleanup  = tcf_sample_cleanup,
-+	.get_fill_size = tcf_sample_get_fill_size,
- 	.get_psample_group = tcf_sample_get_group,
- 	.offload_act_setup    = tcf_sample_offload_act_setup,
- 	.size	  = sizeof(struct tcf_sample),
-diff --git a/net/sched/act_tunnel_key.c b/net/sched/act_tunnel_key.c
-index b14807761d829..ff401ace4f3da 100644
---- a/net/sched/act_tunnel_key.c
-+++ b/net/sched/act_tunnel_key.c
-@@ -835,6 +835,85 @@ static int tcf_tunnel_key_offload_act_setup(struct tc_action *act,
- 	return 0;
- }
- 
-+static size_t
-+tunnel_key_geneve_opts_fill_size(const struct ip_tunnel_info *info)
-+{
-+	const u8 *src = ip_tunnel_info_opts(info);
-+	int len = info->options_len;
-+	size_t size = 0;
-+
-+	while (len > 0) {
-+		const struct geneve_opt *opt = (const struct geneve_opt *)src;
-+
-+		/* TCA_TUNNEL_KEY_ENC_OPT_GENEVE_{CLASS,TYPE,DATA} */
-+		size += nla_total_size(2)
-+			+ nla_total_size(1)
-+			+ nla_total_size(opt->length * 4);
-+
-+		len -= sizeof(struct geneve_opt) + opt->length * 4;
-+		src += sizeof(struct geneve_opt) + opt->length * 4;
-+	}
-+
-+	return size;
-+}
-+
-+static size_t tunnel_key_opts_fill_size(const struct ip_tunnel_info *info)
-+{
-+	size_t size;
-+
-+	if (!info->options_len)
-+		return 0;
-+
-+	/* TCA_TUNNEL_KEY_ENC_OPTS and the per-protocol nest inside it */
-+	size = nla_total_size(0) + nla_total_size(0);
-+
-+	if (test_bit(IP_TUNNEL_GENEVE_OPT_BIT, info->key.tun_flags)) {
-+		size += tunnel_key_geneve_opts_fill_size(info);
-+	} else if (test_bit(IP_TUNNEL_VXLAN_OPT_BIT, info->key.tun_flags)) {
-+		/* TCA_TUNNEL_KEY_ENC_OPT_VXLAN_GBP */
-+		size += nla_total_size(sizeof(u32));
-+	} else if (test_bit(IP_TUNNEL_ERSPAN_OPT_BIT, info->key.tun_flags)) {
-+		/* TCA_TUNNEL_KEY_ENC_OPT_ERSPAN_{VER,INDEX,DIR,HWID} */
-+		size += nla_total_size(sizeof(u8))
-+			+ nla_total_size(sizeof(__be32))
-+			+ nla_total_size(sizeof(u8))
-+			+ nla_total_size(sizeof(u8));
-+	}
-+
-+	return size;
-+}
-+
-+static size_t tunnel_key_get_fill_size(const struct tc_action *act)
-+{
-+	struct tcf_tunnel_key *t = to_tunnel_key(act);
-+	const struct tcf_tunnel_key_params *params;
-+	/* TCA_TUNNEL_KEY_PARMS */
-+	size_t size = nla_total_size(sizeof(struct tc_tunnel_key));
-+
-+	rcu_read_lock();
-+	params = rcu_dereference(t->params);
-+	if (params->tcft_action == TCA_TUNNEL_KEY_ACT_SET) {
-+		const struct ip_tunnel_info *info =
-+			&params->tcft_enc_metadata->u.tun_info;
-+
-+		/* In dump order: TCA_TUNNEL_KEY_ENC_KEY_ID, the IPv6 address
-+		 * pair (larger than the IPv4 one), ..._ENC_DST_PORT,
-+		 * ..._NO_CSUM, ..._NO_FRAG, the options and ..._ENC_{TOS,TTL}.
-+		 */
-+		size += nla_total_size(sizeof(__be32))
-+			+ 2 * nla_total_size(sizeof(struct in6_addr))
-+			+ nla_total_size(sizeof(__be16))
-+			+ nla_total_size(sizeof(u8))
-+			+ nla_total_size(0)
-+			+ tunnel_key_opts_fill_size(info)
-+			+ nla_total_size(sizeof(u8))
-+			+ nla_total_size(sizeof(u8));
-+	}
-+	rcu_read_unlock();
-+
-+	return size;
-+}
-+
- static struct tc_action_ops act_tunnel_key_ops = {
- 	.kind		=	"tunnel_key",
- 	.id		=	TCA_ID_TUNNEL_KEY,
-@@ -843,6 +922,7 @@ static struct tc_action_ops act_tunnel_key_ops = {
- 	.dump		=	tunnel_key_dump,
- 	.init		=	tunnel_key_init,
- 	.cleanup	=	tunnel_key_release,
-+	.get_fill_size	=	tunnel_key_get_fill_size,
- 	.offload_act_setup =	tcf_tunnel_key_offload_act_setup,
- 	.size		=	sizeof(struct tcf_tunnel_key),
- };
 -- 
 2.53.0
 
