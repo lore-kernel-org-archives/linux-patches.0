@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C0BE368D66;
-	Sat, 12 Sep 2026 11:39:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D9D5478E57;
+	Sat, 12 Sep 2026 11:39:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789213148; cv=none; b=scbsMbHnxj8jpNDrJEDBZ3fKfhktRyAbxv6lrmaxVAt6NJnh62ykvS8ulgDJk7xiCmL9TS1RN84e51KUlNdu241AzYY5XY8TwkwUL55z26MFOa2wdTNECpQKr52M+NEFJpktCl5QU+OawqXXEJ+pVyrT7xg8zijx7ekdH24J5l8=
+	t=1789213156; cv=none; b=pt2quvd4g11n+sEGqBX5wMjW5TXE/9MfZ9CRAjekXwBex8i35TxChOaT/pO1rIV3chHUZQecfSSCbsndPWEEtsfcRR7KNyeQEO991o07fhkt3Ofd9HW0TEP1mrAy39sXm9DdBVZi4GmSxPHvBAoStRDn9SqYe7ow/UqETIiMeR4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789213148; c=relaxed/simple;
-	bh=GouOJriobPHj8QHO9wejSkwL0Ij23kh8lBSjeeAj6Bs=;
+	s=arc-20240116; t=1789213156; c=relaxed/simple;
+	bh=Ftf+qOeA8MIbbsRCRvlRSKOSEWEdGOitYu/R4jbcI5E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W5ROGY+heE5bFC91OZkADOXiyuCLe/0vQKanDmY/oy1KOFlFANoaIoqBgt+cLsiDWhCdzBVbZJL7g0zyH9meS2S+JTekwSpmSb1CvIDDcrJ2hyg5SYu8lK2NASOdbtD9TzkcnyKIvliYnXiQWBJ5hWmJiecIoB34e+Z916Z4Nk8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KRS4B4Mk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Qvn6wkW7IjYVAuuSYahJZ4vVmOB/7RL2xePkXXUaWJQwUxtE/CSDkirVuKc7vpR5Sge/Kx/DL9TE2Gl4MJW0xlG1iaisnRJvYrU27BnKNw+KaJjLqeUmt+WsBFbNM73JUJULxKd1HgWulfk/ojYCC3psuKDF1Ug6DbwJPSMIaT0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MnkdgmwE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KRS4B4Mk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA3371F000FF;
-	Sat, 12 Sep 2026 11:39:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MnkdgmwE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D74421F000FF;
+	Sat, 12 Sep 2026 11:39:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789213146;
-	bh=qTC+IKi9ssPW4oxDGWPlbLPt+K19CScIpiQ7O3Mrzrw=;
+	s=korg; t=1789213152;
+	bh=Qy6PnSh9SVYdG0kjYuum4rZ6T5e+fHW5+kxXmTF1cVY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KRS4B4MkB2uv/CHN+UdoyZbh1nI0JNSuJZ3CGtZvPUHfz61JNvSo+9Kzj0LkQ7E7R
-	 sjPo8qDZZOlUnroyczGhkvw1JiX5e2ve+O/P3Ea+Ly509mf9qMIdMpj9MU5j5ChVxE
-	 SUWTlcptIds0mcKRerI3XxGADDtxjnMPAWgQFqq4=
+	b=MnkdgmwEP+rOJMhyzVfAHo9nveemjylrjKVNkn8x8o+3SEnS3nGkmJxmh5JjC6wez
+	 O/eEKwtO5SGJUgVkziU+AYoGpkmOaneKhp6dXMIg/EJd/hS6OL10TMjYXiYWJkr/Wc
+	 rdTB/Sa8InlJtcGIulkg5XXF0HoQ4Zc+Kq9j6p34=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Hannes Reinecke <hare@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Hannes Reinecke <hare@suse.de>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.12 0063/1376] block: flag zoned disks with GENHD_FL_NO_PART
-Date: Sat, 12 Sep 2026 08:41:29 +0200
-Message-ID: <20260912065608.964995186@linuxfoundation.org>
+	Max Kellermann <max.kellermann@ionos.com>,
+	Alex Markuze <amarkuze@redhat.com>,
+	Ilya Dryomov <idryomov@gmail.com>
+Subject: [PATCH 6.12 0064/1376] ceph: lock mutex in ceph_mds_check_access()
+Date: Sat, 12 Sep 2026 08:41:30 +0200
+Message-ID: <20260912065608.987794958@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -54,58 +51,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Damien Le Moal <dlemoal@kernel.org>
+From: Max Kellermann <max.kellermann@ionos.com>
 
-commit 3f9c7a108c0e8f14425384912017071b71341e3b upstream.
+commit a61c6ae1dae2611082b831b4aaa780878099c012 upstream.
 
-Zoned block devices do not support partitions. However, the partition
-table is nevertheless still inspected, and any partition found ignored
-with a warning in add_partition(). While this is generally not a problem,
-and in fact beneficial to the user as it indicates an invalid use of a
-zoned block device, scanning for a partition table on the device may
-result in issuing read operations to offline zones (e.g. after a disk head
-is depopulated for disks that support head management operations).
+MDS session OPEN handling replaces mdsc->s_cap_auths under
+mdsc->mutex, freeing the previous array and its strings.
 
-Since partitions are ignored anyway, completely disable partition scanning
-for zoned gendisks by setting the flag GENHD_FL_NO_PART in __add_disk().
-The existing check in add_partition() is left as-is to ensure that we
-still get a warning if for whatever reason, despite GENHD_FL_NO_PART, we
-still endup trying to add partitions.
+ceph_mds_check_access() traverses this array without holding the
+mutex.  A concurrent session reopen can therefore free the array while
+it is being inspected, resulting in a use-after-free like this:
 
-Flagging zoned disks with GENHD_FL_NO_PART also has the benefit to expose
-through sysfs the ext_range attribute with the value of 1 instead of the
-default DISK_MAX_PARTS, thus correctly advertizing the fact that zoned
-disks do not support partitions.
+  Unable to handle kernel paging request at virtual address 003aaad64b2c8bb9
+  [...]
+  Internal error: Oops: 0000000096000004 [#1]  SMP
+  Modules linked in:
+  CPU: 56 UID: 2953037534 PID: 1253231 Comm: php-cgi8.4 Not tainted 6.18.45-i2-ampere #1146 NONE
+  [..]
+  pc : ceph_mds_check_access+0xd4/0x550
+  lr : ceph_mds_check_access+0xc8/0x550
+  [...]
+  Call trace:
+   ceph_mds_check_access+0xd4/0x550 (P)
+   ceph_atomic_open+0x138/0xbe8
+   path_openat+0xa24/0xfa8
+   do_filp_open+0x94/0x158
+   do_sys_openat2+0x88/0xf8
 
-Fixes: 5eac3eb30c9a ("block: Remove partition support for zoned block devices")
 Cc: stable@vger.kernel.org
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Reviewed-by: Hannes Reinecke <hare@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Hannes Reinecke <hare@suse.de>
-Link: https://patch.msgid.link/20260831025050.667758-1-dlemoal@kernel.org
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 596afb0b8933 ("ceph: add ceph_mds_check_access() helper")
+Signed-off-by: Max Kellermann <max.kellermann@ionos.com>
+Reviewed-by: Alex Markuze <amarkuze@redhat.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/genhd.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ fs/ceph/mds_client.c |    4 ++++
+ fs/ceph/mds_client.h |    1 +
+ 2 files changed, 5 insertions(+)
 
---- a/block/genhd.c
-+++ b/block/genhd.c
-@@ -437,6 +437,13 @@ int __must_check device_add_disk(struct
- 		bdev_set_flag(disk->part0, BD_HAS_SUBMIT_BIO);
+--- a/fs/ceph/mds_client.c
++++ b/fs/ceph/mds_client.c
+@@ -5795,11 +5795,13 @@ int ceph_mds_check_access(struct ceph_md
+ 	doutc(cl, "tpath '%s', mask %d, caller_uid %d, caller_gid %d\n",
+ 	      tpath, mask, caller_uid, caller_gid);
  
- 	/*
-+	 * We do not support partitions with zoned block devices, so do not try
-+	 * to scan the partitions table.
-+	 */
-+	if (blk_queue_is_zoned(disk->queue))
-+		disk->flags |= GENHD_FL_NO_PART;
-+
-+	/*
- 	 * If the driver provides an explicit major number it also must provide
- 	 * the number of minors numbers supported, and those will be used to
- 	 * setup the gendisk.
++	mutex_lock(&mdsc->mutex);
+ 	for (i = 0; i < mdsc->s_cap_auths_num; i++) {
+ 		struct ceph_mds_cap_auth *s = &mdsc->s_cap_auths[i];
+ 
+ 		err = ceph_mds_auth_match(mdsc, s, cred, tpath);
+ 		if (err < 0) {
++			mutex_unlock(&mdsc->mutex);
+ 			put_cred(cred);
+ 			return err;
+ 		} else if (err > 0) {
+@@ -5821,6 +5823,7 @@ int ceph_mds_check_access(struct ceph_md
+ 	doutc(cl, "root_squash_perms %d, rw_perms_s %p\n", root_squash_perms,
+ 	      rw_perms_s);
+ 	if (root_squash_perms && rw_perms_s == NULL) {
++		mutex_unlock(&mdsc->mutex);
+ 		doutc(cl, "access allowed\n");
+ 		return 0;
+ 	}
+@@ -5835,6 +5838,7 @@ int ceph_mds_check_access(struct ceph_md
+ 		      !!(mask & MAY_READ), !!(mask & MAY_WRITE));
+ 	}
+ 	doutc(cl, "access denied\n");
++	mutex_unlock(&mdsc->mutex);
+ 	return -EACCES;
+ }
+ 
+--- a/fs/ceph/mds_client.h
++++ b/fs/ceph/mds_client.h
+@@ -540,6 +540,7 @@ struct ceph_mds_client {
+ 	struct rw_semaphore     pool_perm_rwsem;
+ 	struct rb_root		pool_perm_tree;
+ 
++	/* protected by mutex */
+ 	u32			 s_cap_auths_num;
+ 	struct ceph_mds_cap_auth *s_cap_auths;
+ 
 
 
