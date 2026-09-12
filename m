@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF8F934252D;
-	Sat, 12 Sep 2026 07:37:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B208B2737FC;
+	Sat, 12 Sep 2026 07:37:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789198673; cv=none; b=JG2oF/scrBsp/BIe2p1oXB1ID5YVgHvsT+vSP4QbQOwJcD9KXjqowg2hmphComHFkdoZkIKp4L2tQjP9S0hLVoRHBFNHK+nr0WKY4vnOrZkk1XZB7KkbbONC3gkdyoBdbuUzLhmdhB0kkM1xz5x6E9mgwyN6bsyjLIJWJwDqoTQ=
+	t=1789198678; cv=none; b=ho+097anR8pofNpw38ueWPMLdmDvPIsnoQlZuQ00ldOiaEUVTFi9hvpGMttE11rw5EqZpS9KEmMjDkfj6xJF43N70m/oVFJmsKesaUmhNaC2p1Vtbbqz3iFVVkYasp36CWAt9Jlbfzfva7qljgeF08DSvofP4YAPycWxBGC2aSY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789198673; c=relaxed/simple;
-	bh=LpvQaAtqoOph6DWGfXnYKcJjQqE5y10+vsXGr2zXsl8=;
+	s=arc-20240116; t=1789198678; c=relaxed/simple;
+	bh=V5a2htPZ/xi2NyTlejX0/1uhtdQ28TyyL+DQOa3MqjU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EUOPB3gl0UHULuDb5Lp62tsoov5hehY6si5qYEnwY8WoBkuL2/x0/kWNcku255QfG2L0Cy+BFceC2m7Lj/BuUqJdVfPNyPaJp94Q14lP8kdQmriCwpIW2D8aKbWfv5Pquw3X3s91+XTtTpl2rnO5EPEKMVymuDVPdgOGfcX940g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ViOQXYo7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rOksEuTaEx+jAckADnE2Zd8//8WaouUglqgKnLrux0zIjnyVHaBs+k6ZXBj0kWHT8GxV1z0Iejq5i8LP1TiwWHw2cqDVF+A97XYFNcvVTcnPNG9qH4b5DtbhYm239FuGNJpZ6E9i2j09JYXTgmo07lvAVUmGxL3Q+5cFypPDZSg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MfM7+c7m; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ViOQXYo7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8571A1F000FF;
-	Sat, 12 Sep 2026 07:37:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MfM7+c7m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55ED71F000FF;
+	Sat, 12 Sep 2026 07:37:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789198672;
-	bh=vInmgxpzn6RGOMUv3R20Iyisgjr59sNJJ+8kO2929C4=;
+	s=korg; t=1789198677;
+	bh=yI4OeTvenhlkx9IgBAAgporyIg88o9bLRHJVN9qvork=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ViOQXYo7fDTSrDTabu7cJRzMqWjMHPS700FYd/kRUUj0wr9RrQZ0g7ebRUmP6+b/q
-	 f78S94C6zVZcKXqTDGspsQU7Wv080tK+xptEuAPg9eCISoouwEbvoR2by7TCSkNA5B
-	 59tcUGWBNj6JjyLlQ5NHkN3Fjfj/VInwQlyZprso=
+	b=MfM7+c7mrnscdRaT+C56qp8JyrtnslqETVsI4/rK+61cbPZHTyTYVMoVzWAnK+gJF
+	 4Hq73V6G4J3PT6WpKqE1ll+YAFLJ3Ej00f1pAwlVBlniL2xgm9bxaquAeu0QbeMud1
+	 Xxnhp5F0p+AT32rXKB8y/Di6xyy4YPOl/z5rmumw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Biren Pandya <birenpandya@gmail.com>,
+	Julian Braha <julianbraha@gmail.com>,
+	Bin Du <bin.du@amd.com>,
 	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0429/1815] media: i2c: rdacm21: Fix missing media_entity_cleanup()
-Date: Sat, 12 Sep 2026 08:36:19 +0200
-Message-ID: <20260912065658.966689126@linuxfoundation.org>
+Subject: [PATCH 7.2 0430/1815] media: platform: amd: fix unmet dependency for VIDEO_V4L2_SUBDEV_API
+Date: Sat, 12 Sep 2026 08:36:20 +0200
+Message-ID: <20260912065658.989910802@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,51 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Biren Pandya <birenpandya@gmail.com>
+From: Julian Braha <julianbraha@gmail.com>
 
-[ Upstream commit 04c053379c3a33460b581953c4f5b36de39439ac ]
+[ Upstream commit 95a99456ff354a1bad4b4032ed1d044d608bd438 ]
 
-The driver misses calling media_entity_cleanup() on the probe error path
-and during remove, leaking resources if probe fails after entity
-initialization or when the driver is unloaded.
+Currently, VIDEO_AMD_ISP4_CAPTURE selects VIDEO_V4L2_SUBDEV_API without
+ensuring MEDIA_CONTROLLER is enabled, causing an unmet dependency:
 
-Fix this by adding media_entity_cleanup() to the rdacm21_probe() error
-handling path and to rdacm21_remove().
+WARNING: unmet direct dependencies detected for VIDEO_V4L2_SUBDEV_API
+  Depends on [n]: MEDIA_SUPPORT [=m] && VIDEO_DEV [=m] && MEDIA_CONTROLLER [=n]
+  Selected by [m]:
+  - VIDEO_AMD_ISP4_CAPTURE [=m] && MEDIA_SUPPORT [=m] && MEDIA_PLATFORM_SUPPORT [=y] && MEDIA_PLATFORM_DRIVERS [=y] && DRM_AMDGPU [=m] && DRM_AMD_ISP [=y] && HAS_DMA [=y] && VIDEO_DEV [=m]
 
-Fixes: a59f853b3b4b ("media: i2c: Add driver for RDACM21 camera module")
-Signed-off-by: Biren Pandya <birenpandya@gmail.com>
+Many other options in this subsystem select MEDIA_CONTROLLER, let's do the
+same here.
+
+This unmet dependency bug was detected by kconfirm, a static analysis tool
+for Kconfig.
+
+Fixes: 9a54c285630c ("media: platform: amd: Introduce amd isp4 capture driver")
+Signed-off-by: Julian Braha <julianbraha@gmail.com>
+Reviewed-by: Bin Du <bin.du@amd.com>
 Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/rdacm21.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/media/platform/amd/isp4/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/media/i2c/rdacm21.c b/drivers/media/i2c/rdacm21.c
-index bcab462708c70..ece8a410e7ced 100644
---- a/drivers/media/i2c/rdacm21.c
-+++ b/drivers/media/i2c/rdacm21.c
-@@ -588,10 +588,12 @@ static int rdacm21_probe(struct i2c_client *client)
- 
- 	ret = v4l2_async_register_subdev(&dev->sd);
- 	if (ret)
--		goto error_free_ctrls;
-+		goto error_entity_cleanup;
- 
- 	return 0;
- 
-+error_entity_cleanup:
-+	media_entity_cleanup(&dev->sd.entity);
- error_free_ctrls:
- 	v4l2_ctrl_handler_free(&dev->ctrls);
- error:
-@@ -606,6 +608,7 @@ static void rdacm21_remove(struct i2c_client *client)
- 
- 	v4l2_async_unregister_subdev(&dev->sd);
- 	v4l2_ctrl_handler_free(&dev->ctrls);
-+	media_entity_cleanup(&dev->sd.entity);
- 	i2c_unregister_device(dev->isp);
- }
- 
+diff --git a/drivers/media/platform/amd/isp4/Kconfig b/drivers/media/platform/amd/isp4/Kconfig
+index 9d1927af1cb8c..77b61fae82bab 100644
+--- a/drivers/media/platform/amd/isp4/Kconfig
++++ b/drivers/media/platform/amd/isp4/Kconfig
+@@ -5,6 +5,7 @@ config VIDEO_AMD_ISP4_CAPTURE
+ 	depends on DRM_AMDGPU && DRM_AMD_ISP
+ 	depends on HAS_DMA
+ 	depends on VIDEO_DEV
++	select MEDIA_CONTROLLER
+ 	select VIDEOBUF2_CORE
+ 	select VIDEOBUF2_MEMOPS
+ 	select VIDEOBUF2_V4L2
 -- 
 2.53.0
 
