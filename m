@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B16523093A6;
-	Sat, 12 Sep 2026 15:03:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C5951C5799;
+	Sat, 12 Sep 2026 15:03:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789225424; cv=none; b=Tuwji3y3786ea5+NClUeP/XYEwWVlBG0/4oNlkJjPFxzSAKgrQXUud9w7Jw/k4VWH+PpXII1ZxLJHB71Okp3hh0ntqO4BWuF8FJYggdjFwTMUEuctWY85HIOWZPPWcsXkg3uqd3fdvzTEbsb+bMT7awJMnIw3WvaYu9uiCYFFN0=
+	t=1789225429; cv=none; b=r7s+kKHwd+C3o8a69nNGCH4X6ANjdk4WPAitr8UAOsAdOlztwyTGdIqoi7MWK6HbvaqbyM4kjqcd610Cl0RniU3EL4+XRKcGa3hn2AjcVz4haHLRXai8lIXK2aFPj2KIbZsfyRg51/y27mdXg6odweVr03bE3VShLML0AyE2PQA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789225424; c=relaxed/simple;
-	bh=y6fY1P1pU9SsNe53flUV41l0zJ9tk/QO0qd+YY9qWTE=;
+	s=arc-20240116; t=1789225429; c=relaxed/simple;
+	bh=talOZBWYhudH1YOJ6fZrAkqlN8LxcF2xykY1w3G+XzY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M8zdZUUTsfTBH0G9q108yjzukH99RWKbvzUNc/8bgf4rObsZXGOJWz90q7sg26kvCUuAFHX9BAOxdtZDGBj1LLCKZBfpm1KKlkkUDbR0vGskUn7gJGyHIPLXCVuRxrx5b8+KtIDJ1u7y2N9D9VIv21yO4xxdxTvbiPQTwQ45Y4M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WQkV51JU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=lz5rn5eNVpy8ElSv4MR1ZKgla/5GAHHxuqK3FbVmc4qjGKlM0tfqFg08jkQJoz4BcpYOcILk9LX+bqxnlQnV0oNMM5svXHk8IK/yu/lFSnoqSlDjrDNRBji3Hp2Q2jZ3H2ul8mAUjn0VVlFF+Wqe0i7H1WFJVum+mNtwq4KXDRA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hvWNI7LR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WQkV51JU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58FCF1F000FF;
-	Sat, 12 Sep 2026 15:03:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hvWNI7LR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 457A71F000FF;
+	Sat, 12 Sep 2026 15:03:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789225423;
-	bh=RaabOj3QfBovSkFvE2rX+pY+NhlXQedrbfeIs2+pXY4=;
+	s=korg; t=1789225428;
+	bh=yLa/3Ms6q5kg+DAg5Gl3s3boE3YhSkxVgLivszrphw8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WQkV51JUSQYb55KaBMRBBe/+z8gialG3UvbeD/BODNJKN5RoEFmLx8Id1ozozFRzR
-	 s0DMYAhACSv2Gy8AE8Ugd4g9kFhxCZmHOaHvZeye+V55Qb++j781lg3/yCG/4WN+lE
-	 LgAS+ci2felGsPH6FNXp1GIdYpDae2QtZAw0y0F0=
+	b=hvWNI7LRbeCVwL+i3ZPC/MFbrUXT6VfvZ9MorSYgDbJHS7nHjO7NG69DoYAkqIVVb
+	 BR4FzsYIRxOzu/v6RTpY6CHkslOJufHorQfLC/NJFcdsgHinBSKr/wK68DIDYDAW2l
+	 po895o6h7A/3iLmoG9ucRmZH3pSdYYm7G/TDzui0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Gu <ustc.gu@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Matti Vaittinen <mazziesaccount@gmail.com>,
+	Kalle Niemi <kaleposti@gmail.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1196/1424] spi: img-spfi: dont disable runtime PM on DMA deferred probe
-Date: Sat, 12 Sep 2026 09:00:28 +0200
-Message-ID: <20260912065634.069339173@linuxfoundation.org>
+Subject: [PATCH 6.6 1197/1424] power: supply: bd99954: Drop bad register fields
+Date: Sat, 12 Sep 2026 09:00:29 +0200
+Message-ID: <20260912065634.092568320@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -45,62 +46,83 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Felix Gu <ustc.gu@gmail.com>
+From: Matti Vaittinen <mazziesaccount@gmail.com>
 
-[ Upstream commit 923e41ed59511cffe98357c7d58d0294a1c157ee ]
+[ Upstream commit 177299384a224377b4152242d875e752e5958c02 ]
 
-When dma_request_chan() returns -EPROBE_DEFER, the error path jumps to
-disable_pm and calls pm_runtime_disable() even though pm_runtime_enable()
-was never called, leaving disable_depth unbalanced and the device
-permanently PM-disabled.
+The bd99954 driver creates regmap fields for all the registers. All the
+fields for VBUS_UCD_FCTRL_SET (extended command 0x33) are accidentally
+created for VCC_UCD_FCTRL_SET (extended command 0x2b), causing all
+reads/writes for the fields to access wrong register. Luckily the fields
+for VBUS_UCD_FCTRL_SET are unused.
 
-Route the defer path through free_dma to skip pm_runtime_disable().
+Taking a look at the data-sheet all the fields in the VBUS_UCD_FCTRL_SET
+are marked as: "In normal operation, please don’t set these registers"
+with not much of additional documentation. As the fields are wrong and
+because there seems to be no users of the fields - it is better to just
+drop them. This will also decrease the memory footprint.
 
-Fixes: 6bfbf4d0aa0c ("spi: img-spfi: Use dma_request_chan() instead dma_request_slave_channel()")
-Signed-off-by: Felix Gu <ustc.gu@gmail.com>
-Link: https://patch.msgid.link/20260808-spfi-v1-1-6bc4345be430@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Drop incorrect VBUS_UCD_FCTRL_SET fields.
+
+Datasheet: https://fscdn.rohm.com/en/products/databook/datasheet/ic/power/battery_management/bd99954xxx-e.pdf
+Signed-off-by: Matti Vaittinen <mazziesaccount@gmail.com>
+Fixes: 0902f8366491 ("power: supply: Support ROHM bd99954 charger")
+Tested-by: Kalle Niemi <kaleposti@gmail.com>
+Link: https://patch.msgid.link/758fd430d02286a6f18603a8aecfe443f5ddeb8e.1786356145.git.mazziesaccount@gmail.com
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-img-spfi.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/power/supply/bd99954-charger.h | 23 +----------------------
+ 1 file changed, 1 insertion(+), 22 deletions(-)
 
-diff --git a/drivers/spi/spi-img-spfi.c b/drivers/spi/spi-img-spfi.c
-index 1e2a8cf9290fa..07fd38ae959e5 100644
---- a/drivers/spi/spi-img-spfi.c
-+++ b/drivers/spi/spi-img-spfi.c
-@@ -616,7 +616,7 @@ static int img_spfi_probe(struct platform_device *pdev)
- 		ret = PTR_ERR(spfi->tx_ch);
- 		spfi->tx_ch = NULL;
- 		if (ret == -EPROBE_DEFER)
--			goto disable_pm;
-+			goto free_dma;
- 	}
+diff --git a/drivers/power/supply/bd99954-charger.h b/drivers/power/supply/bd99954-charger.h
+index f588979253830..d053ac901274c 100644
+--- a/drivers/power/supply/bd99954-charger.h
++++ b/drivers/power/supply/bd99954-charger.h
+@@ -279,17 +279,7 @@ enum bd9995x_fields {
+ 	F_VBUS_EXTID,
+ 	F_VBUS_IDRDET,
+ 	F_VBUS_INDO,
+-	F_VBUS_UCDSWEN,
+-	F_VBUS_RREF_EN,
+-	F_VBUS_DPPU_EN,
+-	F_VBUS_DPREF_EN,
+-	F_VBUS_DMREF_EN,
+-	F_VBUS_DPDET_EN,
+-	F_VBUS_DMDET_EN,
+-	F_VBUS_DPSINK_EN,
+-	F_VBUS_DMSINK_EN,
+-	F_VBUS_DP_BUFF_EN,
+-	F_VBUS_DM_BUFF_EN,
++
+ 	F_VBUS_EXTCLKENBL,
+ 	F_VBUS_PLSTESTEN,
+ 	F_VBUS_UCDSWEN_TSTENB,
+@@ -626,17 +616,6 @@ static const struct reg_field bd9995x_reg_fields[] = {
+ 	    [F_VBUS_EXTID] = REG_FIELD(VBUS_IDD_STATUS, 5, 5),
+ 	    [F_VBUS_IDRDET] = REG_FIELD(VBUS_IDD_STATUS, 4, 4),
+ 	    [F_VBUS_INDO] = REG_FIELD(VBUS_IDD_STATUS, 0, 3),
+-	    [F_VBUS_UCDSWEN] = REG_FIELD(VCC_UCD_FCTRL_SET, 10, 10),
+-	    [F_VBUS_RREF_EN] = REG_FIELD(VCC_UCD_FCTRL_SET, 9, 9),
+-	    [F_VBUS_DPPU_EN] = REG_FIELD(VCC_UCD_FCTRL_SET, 8, 8),
+-	    [F_VBUS_DPREF_EN] = REG_FIELD(VCC_UCD_FCTRL_SET, 7, 7),
+-	    [F_VBUS_DMREF_EN] = REG_FIELD(VCC_UCD_FCTRL_SET, 6, 6),
+-	    [F_VBUS_DPDET_EN] = REG_FIELD(VCC_UCD_FCTRL_SET, 5, 5),
+-	    [F_VBUS_DMDET_EN] = REG_FIELD(VCC_UCD_FCTRL_SET, 4, 4),
+-	    [F_VBUS_DPSINK_EN] = REG_FIELD(VCC_UCD_FCTRL_SET, 3, 3),
+-	    [F_VBUS_DMSINK_EN] = REG_FIELD(VCC_UCD_FCTRL_SET, 2, 2),
+-	    [F_VBUS_DP_BUFF_EN] = REG_FIELD(VCC_UCD_FCTRL_SET, 1, 1),
+-	    [F_VBUS_DM_BUFF_EN] = REG_FIELD(VCC_UCD_FCTRL_SET, 0, 0),
  
- 	spfi->rx_ch = dma_request_chan(spfi->dev, "rx");
-@@ -624,7 +624,7 @@ static int img_spfi_probe(struct platform_device *pdev)
- 		ret = PTR_ERR(spfi->rx_ch);
- 		spfi->rx_ch = NULL;
- 		if (ret == -EPROBE_DEFER)
--			goto disable_pm;
-+			goto free_dma;
- 	}
- 
- 	if (!spfi->tx_ch || !spfi->rx_ch) {
-@@ -652,6 +652,7 @@ static int img_spfi_probe(struct platform_device *pdev)
- 
- disable_pm:
- 	pm_runtime_disable(spfi->dev);
-+free_dma:
- 	if (spfi->rx_ch)
- 		dma_release_channel(spfi->rx_ch);
- 	if (spfi->tx_ch)
+ 	    [F_VBUS_EXTCLKENBL] = REG_FIELD(VBUS_UCD_FCTRL_EN, 15, 15),
+ 	    [F_VBUS_PLSTESTEN] = REG_FIELD(VBUS_UCD_FCTRL_EN, 14, 14),
 -- 
 2.53.0
 
