@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 428E534AB14;
-	Sat, 12 Sep 2026 10:30:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24D5D42376B;
+	Sat, 12 Sep 2026 10:30:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789209041; cv=none; b=eg2Lezg67TslsZa5sXXeit6EckTwLJZQEHuHaxHwAbdjKuu4POONUApOOd/NhshAY6nOL1dIosBanBIheAGQFV/1Mhjz7siUyyasLVwHOrV3lG6cKWta7w4DjfdfSbwSpf0FUf3j/hr9C+78e567OFCEbV2HxHWbHpl15fmkTkA=
+	t=1789209048; cv=none; b=QDHEnDouO6f/DDMVWhx1O8Em6rPf2DSCTqt8zqR1AbP7KAetGhZD5bQMPbCmZSXSsCypg1Nb3fXEc14niQYVuY5SrQVmvP69X3S8Jr5LLgjexCKG4ffB9KNJ0GxEjsxilmgAY3jJHE4Yoc3kMYCxOc6ESWyU5liBQ91N9UZgaRM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789209041; c=relaxed/simple;
-	bh=jacBBin+qXeOCu0cVlqjmyBMaErqWCW5ZRN04CwaJDk=;
+	s=arc-20240116; t=1789209048; c=relaxed/simple;
+	bh=PyhFntxsxFZWmFwUdKpf7Ddo1wF0KaZ1wFDxlMGUJDs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hIcjwm0ti72JFXxAm+Q/Iyc6pzX1KOvTtCa6sWwPrHj/gnqn81Yhf0/UTZCRSxYAhC0Oc1Tqx969FXzEDaOkY5SnJYHpK5TBl3uXrHFfwd7aUEnJWaFXhokBFFqgM37cXNht7rCLqDs5yOgo/eMdNCqV4iWnoBHd7zptt5GSlRo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lfC312Kc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZtWxM85VzmgDdq01KjT8ej+QE1DFOkuLsYdKKc/i9nbwf3HrS76wUhNkz+c4D7u1oGr3CTLu7rjXf1x8+cBPA6Oez+jxeIWjAunJP0gW6Uu+QBRbyjjRWq04QVsSWh2wBeqITuBTGwgQUQkiI9HYoEuibMNxXbUfujye75jAkuk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SHOF0od6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lfC312Kc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2BED1F000FF;
-	Sat, 12 Sep 2026 10:30:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SHOF0od6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32BF71F000FF;
+	Sat, 12 Sep 2026 10:30:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789209040;
-	bh=Ost70rYyD/cbT+xGRXhlfpbivhf4uET/cl6MBF20VuA=;
+	s=korg; t=1789209045;
+	bh=JvnIfAN0+0LKp9fpUnK1TRksG1+KQVkje2JrKFAG/+8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lfC312Kcy5ErJvVNvlsbZRPUUiNZBm4uRu56qS6x8kv4W7dc52ABCwaz0g0wi5Zoo
-	 S5UxRImc9me+EjIUAzrqBtF1iRJrpjIhf3ToGAVeTpTzpQApmm+ou9t0vy4r8l1zLF
-	 kLnUJJX9/2Sy3PgdLm44pQiu1uS95ybpibF7gemU=
+	b=SHOF0od6CSeuJlRbilk7hukPCd1hW7PyXWwTSwc3DZtS6LjfJTZ232ilQ1J08L7xc
+	 wIVraUr2yJFPZNRq+NnCWunQ6gC1cli1ZxSK+v4UUaARBlcNZAxZwvCZT9UvT+XuPw
+	 Q9o94aj6P6ZqMMK4ohe/++psgakJPJYMFhSou7iI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Odelu Kukatla <odelu.kukatla@oss.qualcomm.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0697/1518] arm64: dts: qcom: sa8775p: Add reg and clocks for QoS configuration
-Date: Sat, 12 Sep 2026 08:47:46 +0200
-Message-ID: <20260912065639.202457668@linuxfoundation.org>
+Subject: [PATCH 6.18 0688/1518] arm64: dts: qcom: sm8350: Fix the PCIe iommu-map entries
+Date: Sat, 12 Sep 2026 08:47:37 +0200
+Message-ID: <20260912065639.003591300@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,244 +53,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Odelu Kukatla <odelu.kukatla@oss.qualcomm.com>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 
-[ Upstream commit e7fc2fee4212714485d0efb12cdd9fbb51dde078 ]
+[ Upstream commit 80337ea3a154230621c0b4e3c831f5d81712ba18 ]
 
-Add register addresses and clocks which need to be enabled for
-configuring QoS on sa8775p SoC.
+The IOMMU provider apps_smmu uses '#iommu-cells = <2>', but the PCIe
+iommu-map entries specify only one cell for the SID, omitting the SID
+mask. This went unnoticed until the OF core started warning with commit
+ccb2fd725d41 ("of: Respect #{iommu,msi}-cells in maps"):
 
-Signed-off-by: Odelu Kukatla <odelu.kukatla@oss.qualcomm.com>
+  iommu-map has 1-cell entries targeting 2-cell #iommu-cells, treating as 1-cell output
+
+So fix the entries to match the provider's '#iommu-cells' property.
+
+Fixes: 6daee40678a0 ("arm64: dts: qcom: sm8350: add PCIe devices")
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20251001073344.6599-4-odelu.kukatla@oss.qualcomm.com
+Link: https://lore.kernel.org/r/20260730-iommu-map-fix-v1-8-83405d37ba41@oss.qualcomm.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Stable-dep-of: 19b4c47fc973 ("arm64: dts: qcom: lemans: Fix the PCIe iommu-map entries")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/lemans.dtsi | 163 +++++++++++++++------------
- 1 file changed, 91 insertions(+), 72 deletions(-)
+ arch/arm64/boot/dts/qcom/sm8350.dtsi | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/lemans.dtsi b/arch/arm64/boot/dts/qcom/lemans.dtsi
-index 72d8270cf3af0..7dbd31a238d44 100644
---- a/arch/arm64/boot/dts/qcom/lemans.dtsi
-+++ b/arch/arm64/boot/dts/qcom/lemans.dtsi
-@@ -518,90 +518,18 @@ scm {
- 		};
- 	};
+diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+index af892b76322fd..2bbc1f28be88b 100644
+--- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+@@ -1575,8 +1575,8 @@ pcie0: pcie@1c00000 {
+ 				      "aggre1",
+ 				      "aggre0";
  
--	aggre1_noc: interconnect-aggre1-noc {
--		compatible = "qcom,sa8775p-aggre1-noc";
--		#interconnect-cells = <2>;
--		qcom,bcm-voters = <&apps_bcm_voter>;
--	};
--
--	aggre2_noc: interconnect-aggre2-noc {
--		compatible = "qcom,sa8775p-aggre2-noc";
--		#interconnect-cells = <2>;
--		qcom,bcm-voters = <&apps_bcm_voter>;
--	};
--
- 	clk_virt: interconnect-clk-virt {
- 		compatible = "qcom,sa8775p-clk-virt";
- 		#interconnect-cells = <2>;
- 		qcom,bcm-voters = <&apps_bcm_voter>;
- 	};
+-			iommu-map = <0x0   &apps_smmu 0x1c00 0x1>,
+-				    <0x100 &apps_smmu 0x1c01 0x1>;
++			iommu-map = <0x0   &apps_smmu 0x1c00 0x0 0x1>,
++				    <0x100 &apps_smmu 0x1c01 0x0 0x1>;
  
--	config_noc: interconnect-config-noc {
--		compatible = "qcom,sa8775p-config-noc";
--		#interconnect-cells = <2>;
--		qcom,bcm-voters = <&apps_bcm_voter>;
--	};
--
--	dc_noc: interconnect-dc-noc {
--		compatible = "qcom,sa8775p-dc-noc";
--		#interconnect-cells = <2>;
--		qcom,bcm-voters = <&apps_bcm_voter>;
--	};
--
--	gem_noc: interconnect-gem-noc {
--		compatible = "qcom,sa8775p-gem-noc";
--		#interconnect-cells = <2>;
--		qcom,bcm-voters = <&apps_bcm_voter>;
--	};
--
--	gpdsp_anoc: interconnect-gpdsp-anoc {
--		compatible = "qcom,sa8775p-gpdsp-anoc";
--		#interconnect-cells = <2>;
--		qcom,bcm-voters = <&apps_bcm_voter>;
--	};
--
--	lpass_ag_noc: interconnect-lpass-ag-noc {
--		compatible = "qcom,sa8775p-lpass-ag-noc";
--		#interconnect-cells = <2>;
--		qcom,bcm-voters = <&apps_bcm_voter>;
--	};
--
- 	mc_virt: interconnect-mc-virt {
- 		compatible = "qcom,sa8775p-mc-virt";
- 		#interconnect-cells = <2>;
- 		qcom,bcm-voters = <&apps_bcm_voter>;
- 	};
+ 			resets = <&gcc GCC_PCIE_0_BCR>;
+ 			reset-names = "pci";
+@@ -1684,8 +1684,8 @@ pcie1: pcie@1c08000 {
+ 				      "ddrss_sf_tbu",
+ 				      "aggre1";
  
--	mmss_noc: interconnect-mmss-noc {
--		compatible = "qcom,sa8775p-mmss-noc";
--		#interconnect-cells = <2>;
--		qcom,bcm-voters = <&apps_bcm_voter>;
--	};
--
--	nspa_noc: interconnect-nspa-noc {
--		compatible = "qcom,sa8775p-nspa-noc";
--		#interconnect-cells = <2>;
--		qcom,bcm-voters = <&apps_bcm_voter>;
--	};
--
--	nspb_noc: interconnect-nspb-noc {
--		compatible = "qcom,sa8775p-nspb-noc";
--		#interconnect-cells = <2>;
--		qcom,bcm-voters = <&apps_bcm_voter>;
--	};
--
--	pcie_anoc: interconnect-pcie-anoc {
--		compatible = "qcom,sa8775p-pcie-anoc";
--		#interconnect-cells = <2>;
--		qcom,bcm-voters = <&apps_bcm_voter>;
--	};
--
--	system_noc: interconnect-system-noc {
--		compatible = "qcom,sa8775p-system-noc";
--		#interconnect-cells = <2>;
--		qcom,bcm-voters = <&apps_bcm_voter>;
--	};
--
- 	/* Will be updated by the bootloader. */
- 	memory@80000000 {
- 		device_type = "memory";
-@@ -2689,6 +2617,62 @@ rng: rng@10d2000 {
- 			reg = <0 0x010d2000 0 0x1000>;
- 		};
+-			iommu-map = <0x0   &apps_smmu 0x1c80 0x1>,
+-				    <0x100 &apps_smmu 0x1c81 0x1>;
++			iommu-map = <0x0   &apps_smmu 0x1c80 0x0 0x1>,
++				    <0x100 &apps_smmu 0x1c81 0x0 0x1>;
  
-+		config_noc: interconnect@14c0000 {
-+			compatible = "qcom,sa8775p-config-noc";
-+			reg = <0x0 0x014c0000 0x0 0x13080>;
-+			#interconnect-cells = <2>;
-+			qcom,bcm-voters = <&apps_bcm_voter>;
-+		};
-+
-+		system_noc: interconnect@1680000 {
-+			compatible = "qcom,sa8775p-system-noc";
-+			reg = <0x0 0x01680000 0x0 0x15080>;
-+			#interconnect-cells = <2>;
-+			qcom,bcm-voters = <&apps_bcm_voter>;
-+		};
-+
-+		aggre1_noc: interconnect@16c0000 {
-+			compatible = "qcom,sa8775p-aggre1-noc";
-+			reg = <0x0 0x016c0000 0x0 0x18080>;
-+			#interconnect-cells = <2>;
-+			qcom,bcm-voters = <&apps_bcm_voter>;
-+			clocks = <&gcc GCC_AGGRE_UFS_PHY_AXI_CLK>,
-+				 <&gcc GCC_AGGRE_NOC_QUPV3_AXI_CLK>,
-+				 <&gcc GCC_AGGRE_USB2_PRIM_AXI_CLK>,
-+				 <&gcc GCC_AGGRE_USB3_PRIM_AXI_CLK>,
-+				 <&gcc GCC_AGGRE_USB3_SEC_AXI_CLK>;
-+		};
-+
-+		aggre2_noc: interconnect@1700000 {
-+			compatible = "qcom,sa8775p-aggre2-noc";
-+			reg = <0x0 0x01700000 0x0 0x1b080>;
-+			#interconnect-cells = <2>;
-+			qcom,bcm-voters = <&apps_bcm_voter>;
-+			clocks = <&gcc GCC_AGGRE_UFS_CARD_AXI_CLK>,
-+				 <&rpmhcc RPMH_IPA_CLK>;
-+		};
-+
-+		pcie_anoc: interconnect@1760000 {
-+			compatible = "qcom,sa8775p-pcie-anoc";
-+			reg = <0x0 0x01760000 0x0 0xc080>;
-+			#interconnect-cells = <2>;
-+			qcom,bcm-voters = <&apps_bcm_voter>;
-+		};
-+
-+		gpdsp_anoc: interconnect@1780000 {
-+			compatible = "qcom,sa8775p-gpdsp-anoc";
-+			reg = <0x0 0x01780000 0x0 0xe080>;
-+			#interconnect-cells = <2>;
-+			qcom,bcm-voters = <&apps_bcm_voter>;
-+		};
-+
-+		mmss_noc: interconnect@17a0000 {
-+			compatible = "qcom,sa8775p-mmss-noc";
-+			reg = <0x0 0x017a0000 0x0 0x40000>;
-+			#interconnect-cells = <2>;
-+			qcom,bcm-voters = <&apps_bcm_voter>;
-+		};
-+
- 		ufs_mem_hc: ufshc@1d84000 {
- 			compatible = "qcom,sa8775p-ufshc", "qcom,ufshc", "jedec,ufs-2.0";
- 			reg = <0x0 0x01d84000 0x0 0x3000>;
-@@ -2785,6 +2769,13 @@ crypto: crypto@1dfa000 {
- 			interconnect-names = "memory";
- 		};
- 
-+		lpass_ag_noc: interconnect@3c40000 {
-+			compatible = "qcom,sa8775p-lpass-ag-noc";
-+			reg = <0x0 0x03c40000 0x0 0x17200>;
-+			#interconnect-cells = <2>;
-+			qcom,bcm-voters = <&apps_bcm_voter>;
-+		};
-+
- 		ctcu@4001000 {
- 			compatible = "qcom,sa8775p-ctcu";
- 			reg = <0x0 0x04001000 0x0 0x1000>;
-@@ -3997,6 +3988,20 @@ refgen: regulator@891c000 {
- 			reg = <0x0 0x0891c000 0x0 0x84>;
- 		};
- 
-+		dc_noc: interconnect@90e0000 {
-+			compatible = "qcom,sa8775p-dc-noc";
-+			reg = <0x0 0x090e0000 0x0 0x5080>;
-+			#interconnect-cells = <2>;
-+			qcom,bcm-voters = <&apps_bcm_voter>;
-+		};
-+
-+		gem_noc: interconnect@9100000 {
-+			compatible = "qcom,sa8775p-gem-noc";
-+			reg = <0x0 0x09100000 0x0 0xf6080>;
-+			#interconnect-cells = <2>;
-+			qcom,bcm-voters = <&apps_bcm_voter>;
-+		};
-+
- 		usb_0: usb@a600000 {
- 			compatible = "qcom,sa8775p-dwc3", "qcom,snps-dwc3";
- 			reg = <0 0x0a600000 0 0xfc100>;
-@@ -6906,6 +6911,13 @@ &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
- 			status = "disabled";
- 		};
- 
-+		nspa_noc: interconnect@260c0000 {
-+			compatible = "qcom,sa8775p-nspa-noc";
-+			reg = <0x0 0x260c0000 0x0 0x16080>;
-+			#interconnect-cells = <2>;
-+			qcom,bcm-voters = <&apps_bcm_voter>;
-+		};
-+
- 		remoteproc_cdsp0: remoteproc@26300000 {
- 			compatible = "qcom,sa8775p-cdsp0-pas";
- 			reg = <0x0 0x26300000 0x0 0x10000>;
-@@ -7038,6 +7050,13 @@ compute-cb@11 {
- 			};
- 		};
- 
-+		nspb_noc: interconnect@2a0c0000 {
-+			compatible = "qcom,sa8775p-nspb-noc";
-+			reg = <0x0 0x2a0c0000 0x0 0x16080>;
-+			#interconnect-cells = <2>;
-+			qcom,bcm-voters = <&apps_bcm_voter>;
-+		};
-+
- 		remoteproc_cdsp1: remoteproc@2a300000 {
- 			compatible = "qcom,sa8775p-cdsp1-pas";
- 			reg = <0x0 0x2A300000 0x0 0x10000>;
+ 			resets = <&gcc GCC_PCIE_1_BCR>;
+ 			reset-names = "pci";
 -- 
 2.53.0
 
