@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F209D34752E;
-	Sat, 12 Sep 2026 11:55:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDC38343893;
+	Sat, 12 Sep 2026 11:55:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789214131; cv=none; b=OyXW2cfGjV0n0OLLDE+RGWwHr+XcRfxDi9ES1FvxzEBk61D4a3MtaV8pG/veUFkxRYLyi/spO6ttP0/eYyBUBLPjOALNaOfZcNeny1WfNSc1ZWAZmYcBLzjrZYHAwj6ti99Z7PnDm5vXf2C1UU2vRFQKLVmUXzbPJ6cOBKcFViM=
+	t=1789214136; cv=none; b=b71/HEnIVLZrOSSIpM7ipjNHLpugN2/tXm7rDU3XPBTrUbGNOO/ugkkVg5kz7j/iUkMZtXa+bm0+WVOld9ANZf18MrMoXPRyPxv4+IVHyYdiFIDeahWc9W4hBqFqATi+EFLsRgiw3VghyN1VarfwxGxgZkFqSGwZrNAM8he1ZNU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789214131; c=relaxed/simple;
-	bh=i08uMt9XW6vvigzysJlIuKiXgPFUd/OAkqHY8BKJXzI=;
+	s=arc-20240116; t=1789214136; c=relaxed/simple;
+	bh=6dKPV0io/D7PZ+EEAC8PHaxCXE05+y7Wu345QOwelUc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s5C82iCwnqXtNDY9WM/Xy/jxteHKEvtYZdcnW4qn/tPWAlG0Z9WREF6EjovEqczSr5AgMN9KA7VHorU3EZ2XYWP/jUzTPuB40RGspzpqPAUfl6a+oxfGgCrMjw97iCKUp06We/594yiMWnn6wB50UdDh1XNbCUa91JZ5Y0Wj6Ek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vCqMQQah; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=d0YJPerqAHdlyCw6KqEIHWfM4TyaQo8aes2X94/H5PbUj//LeaCDUKvGY/klE8IxDmbPwxnQ1o5XSGUgB6bFuPPtnrSKnLUS7ohR//EMc84B+07idJOKTin/TSyt75tufKib0nxRexUlFIYtZ/zvuXkZ2gA6snUJlf7Majpztl4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w7c775qs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vCqMQQah"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 367FC1F000FF;
-	Sat, 12 Sep 2026 11:55:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w7c775qs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97C8C1F000FF;
+	Sat, 12 Sep 2026 11:55:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789214129;
-	bh=EjuilKq/jCyhLT0BQRLK+w14RAr8WrHD3gXS8+c9UsU=;
+	s=korg; t=1789214134;
+	bh=OT8mPtXIlYdaEE2QaKd3pAwel9Krwplgyo9+uXEn2R8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vCqMQQah0cw0eo1/BC7e7iAEyVr2EFa/TOtBLrqulkDgPhk/4dS21DK5+GWtw6s6f
-	 k+3rLtve/8UWYVCWOSYvUFmRK3b0AUzQN1u+63bSO/J53wIHpwX+AeOMiogqweT/22
-	 hqWI5q9vh18D9XAUVr2QFMcgSyP0wqghPAG/TRq8=
+	b=w7c775qs13nCn15DuoAZ/c42jWmFUIWLnfn+zOHOkI/q7MAF05Jj1TdlU6GBZLF5F
+	 49PtTfPht761EbG6x/SCK6tKbiELvutAzaiSsilzIbHw/u1zauRv119j3TnaTlSdQ0
+	 f4I3/IyqywF+obF0ZXI0qtKj5hm3bTNnV8F4ZGOQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Chen-Yu Tsai <wens@kernel.org>
-Subject: [PATCH 6.12 0264/1376] drm/sun4i: fix refcount leak in sun4i_backend_init_sat()
-Date: Sat, 12 Sep 2026 08:44:50 +0200
-Message-ID: <20260912065613.424259503@linuxfoundation.org>
+	Amit Barzilai <amit.barzilai22@gmail.com>,
+	Javier Martinez Canillas <javierm@redhat.com>
+Subject: [PATCH 6.12 0265/1376] drm/ssd130x: fix column and row end address in partial updates in ssd133x
+Date: Sat, 12 Sep 2026 08:44:51 +0200
+Message-ID: <20260912065613.447176671@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,43 +50,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Amit Barzilai <amit.barzilai22@gmail.com>
 
-commit f7a56ff6240e6fd0cb36a3c0a911a1cd54789ce2 upstream.
+commit b7fcb70162acd7f15ed20bc64a14c150db34256f upstream.
 
-When sun4i_backend_init_sat() calls reset_control_deassert() it
-increments the deassert_count of the reset controller, and must
-pair that with a reset_control_assert() call to decrement it.
-In the error path where clk_prepare_enable() fails, the function
-returns immediately without calling reset_control_assert(), leaking
-the reference count.  Other error paths, like the devm_clk_get()
-failure, correctly jump to the err_assert_reset label which performs
-the missing assert.
+On partial screen updates, SSD133X controllers expect to get the
+rectangle addresses as arguments of the "Set Column Address" and "Set
+Row Address" commands. Each command expects the start address and end
+address of the row/column in absolute format, however the end
+addresses were being sent in a relative format (relative to the start
+address).
 
-Fix the leak by using the existing err_assert_reset label in the
-clk_prepare_enable error path instead of returning directly.
+The relative end addresses work only when the start address is 0. In
+those situations, there is no value difference between relative and
+absolute addresses.
 
+Fixes: b4299c936d8fd ("drm/ssd130x: Add support for the SSD133x OLED controller family")
 Cc: stable@vger.kernel.org
-Fixes: 440d2c7b127a ("drm/sun4i: backend: Handle the SAT")
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Reviewed-by: Jernej Skrabec <jernej.skrabec@gmail.com>
-Link: https://patch.msgid.link/20260607030950.83636-1-vulab@iscas.ac.cn
-Signed-off-by: Chen-Yu Tsai <wens@kernel.org>
+Signed-off-by: Amit Barzilai <amit.barzilai22@gmail.com>
+Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
+Link: https://patch.msgid.link/20260622122604.32500-4-amit.barzilai22@gmail.com
+Signed-off-by: Javier Martinez Canillas <javierm@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/sun4i/sun4i_backend.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/solomon/ssd130x.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/sun4i/sun4i_backend.c
-+++ b/drivers/gpu/drm/sun4i/sun4i_backend.c
-@@ -685,7 +685,7 @@ static int sun4i_backend_init_sat(struct
- 	ret = clk_prepare_enable(backend->sat_clk);
- 	if (ret) {
- 		dev_err(dev, "Couldn't enable the SAT clock\n");
--		return ret;
-+		goto err_assert_reset;
- 	}
+--- a/drivers/gpu/drm/solomon/ssd130x.c
++++ b/drivers/gpu/drm/solomon/ssd130x.c
+@@ -915,12 +915,12 @@ static int ssd133x_update_rect(struct ss
+ 	 */
  
- 	return 0;
+ 	/* Set column start and end */
+-	ret = ssd130x_write_cmd(ssd130x, 3, SSD133X_SET_COL_RANGE, x, columns - 1);
++	ret = ssd130x_write_cmd(ssd130x, 3, SSD133X_SET_COL_RANGE, x, x + columns - 1);
+ 	if (ret < 0)
+ 		return ret;
+ 
+ 	/* Set row start and end */
+-	ret = ssd130x_write_cmd(ssd130x, 3, SSD133X_SET_ROW_RANGE, y, rows - 1);
++	ret = ssd130x_write_cmd(ssd130x, 3, SSD133X_SET_ROW_RANGE, y, y + rows - 1);
+ 	if (ret < 0)
+ 		return ret;
+ 
 
 
