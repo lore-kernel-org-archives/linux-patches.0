@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1FDE479891;
-	Sat, 12 Sep 2026 11:57:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89AB647A0AB;
+	Sat, 12 Sep 2026 11:57:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789214233; cv=none; b=t+guSKputFneG4xxk2ar5uBZzpQQBFwB5hJMzwwoQq6AsGtP/bmh8ytzP9HMsp4SFU5QGR/lp8GlDKdM1y76Ru4aNJgzHbHnz4xZn/BL0GcfVuH9TnwOIqtLz8HrYN26/GN53VsktV27vPzpDj5gFD5F0fVe/Uxn2GuWwy9aO4o=
+	t=1789214239; cv=none; b=P8Mcbi+mWwfKO/bHynYfxMgLe42bcPRlulJZHocpTDxIYlnr5KKtLu5IrVlxajAIKHeHM9eYE1ueo0B8aVQYqo1VOiXuqV3fdrwVAned5p/8YV1OF5hJi3JAmDQMbrvMNodsmPZ0EB/EaTRvWnyMyysTm316el9j0ffAyCwfM8k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789214233; c=relaxed/simple;
-	bh=bofHpDNNPUMnOhZWZ8LVMSx8EWPGmvjLn222VnJQ4Gc=;
+	s=arc-20240116; t=1789214239; c=relaxed/simple;
+	bh=zEoi2Ap0EQZu0DaB/Qw78HDYnxfhScE8CxCMAQWw+GY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KFUSMG2esq5q5YUmr7E6WQwLoG0A7Fb5gXIVdAe5NuaHjP74bmFGX71o9bEflggnZ5eKF8hWCTtNiT2bPWhtSWwERda8vDEdzZXwPNNeyRYZhAPs4umuzp1diavTHBXgtIGHEHnfia1bs+t46rmqOcC5nbOBegwm3eLpvoIR+7k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GqV6HJqa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uroBAVUzxXUVdTQQDhuYytzh50PYBp/8qJXC+CIrXwlHobdYfQgfArMkgKTIMhs/dRD4zrpBf8/aWKDHEWr8R8sTN/FVx7PN3E3zNV2oLTt7uJK1dSC1ae6AK67/uDfcpNRa84yahknpPs0gEb/vjTW7YBwlCELBGwTY9CeaAjk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NoNphXo+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GqV6HJqa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4640C1F000FF;
-	Sat, 12 Sep 2026 11:57:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NoNphXo+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4979F1F000FF;
+	Sat, 12 Sep 2026 11:57:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789214231;
-	bh=oUJNVkZs+Yp7Yc5z6bw6o2Rn0dlMMlPAyHYCUrZy0LA=;
+	s=korg; t=1789214236;
+	bh=MKpxnbaUyz+Pa5x+x3k2JLiJucJAOzW0JPFUlHweLy8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GqV6HJqazQ7nuenmLF9O+AAAa+Dd/qc4cpae8xiEjrrLjBenAXVRgzIyedT282FEB
-	 S5/+HW0xR8P7VY5lpOIymlrFrPru7BkfX0as3ZTQVr0mN6e0lCw30N0+yXaWExtCee
-	 vCdDnB25KshnO/wieNIypADM3uMj0WnB2qpXal2s=
+	b=NoNphXo+Mf8cNCZ/C50dI1FJp/RIZ1Q2oHX84ntkkskB8lIbGvTyTGKA47dBUuARe
+	 zPP9wggDEBzWCp180O8KmNKs+fJG8ZStR0ZoII2QyJE8egprVkglV8KB/vQ6lY7kiM
+	 i/yBfVifjSJq1FfpYMvZycxxnFQnvHS+pzVi5BFQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuhao Jiang <danisjiang@gmail.com>,
-	Zhenhao Wan <whi4ed0g@gmail.com>,
-	Lyude Paul <lyude@redhat.com>,
-	Danilo Krummrich <dakr@kernel.org>
-Subject: [PATCH 6.12 0283/1376] drm/nouveau/uvmm: fix NULL deref unwinding an OP_MAP_SPARSE op
-Date: Sat, 12 Sep 2026 08:45:09 +0200
-Message-ID: <20260912065613.852784424@linuxfoundation.org>
+	Zhan Xusheng <zhanxusheng@xiaomi.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>
+Subject: [PATCH 6.12 0254/1376] f2fs: fix i_size when pinned fallocate partially fails
+Date: Sat, 12 Sep 2026 08:44:40 +0200
+Message-ID: <20260912065613.201152410@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -52,48 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhenhao Wan <whi4ed0g@gmail.com>
+From: Zhan Xusheng <zhanxusheng1024@gmail.com>
 
-commit 412a6ceb56d501ef2f8202e26ab4b5d4dfbca566 upstream.
+commit 0f448bb3767ef6119f5cdeabcae3f10d6e75aed6 upstream.
 
-Each bind_job_op is zeroed by kzalloc_obj() in bind_job_op_from_uop(),
-and the OP_MAP_SPARSE case in nouveau_uvmm_bind_job_submit() only creates
-a region, so op->ops stays NULL for a successfully processed sparse map.
+From: Zhan Xusheng <zhanxusheng@xiaomi.com>
 
-If a later op in the same job fails, the reverse unwind loop revisits that
-op and calls drm_gpuva_ops_free(&uvmm->base, op->ops) unconditionally.
-drm_gpuva_ops_free() dereferences its argument right away
-(list_for_each_entry_safe on &ops->list), so a NULL op->ops oopses. The
-path is reachable by any render-node fd holder, since NOUVEAU_VM_BIND is
-DRM_RENDER_ALLOW.
+Commit 4275b59673eb ("f2fs: fix to round down start offset of fallocate
+for pin file") moved the allocation loop's start down to a section
+boundary, but the error path still converts @expanded against @pg_start,
+which holds the unrounded start.
 
-Guard the free with IS_ERR_OR_NULL(), as nouveau_uvmm_bind_job_cleanup()
-already does for the identical free.
+@pg_start exists for that conversion: commit 88f2cfc5fa90 ("f2fs: fix to
+update last i_size if fallocate partially succeeds") added it as an
+immutable base because map.m_lblk moves every round.  Each round now maps
+exactly sec_blks blocks starting from rounddown(pg_start, sec_blks), so
+pg_start + expanded overshoots the last allocated block by
+pg_start % sec_blks, and a partial failure leaves i_size covering a tail
+that was never allocated.  Nothing corrects that afterwards either, since
+file_dont_truncate() has already cleared FADVISE_TRUNC_BIT.
 
-Fixes: b88baab82871 ("drm/nouveau: implement new VM_BIND uAPI")
-Reported-by: Yuhao Jiang <danisjiang@gmail.com>
-Assisted-by: Claude:claude-opus-5
+It needs a start offset that is not section aligned plus a fallocate that
+hits ENOSPC partway, so the error path runs with expanded > 0.  On an
+80 MiB image with 2 MiB sections:
+
+  truncate -s 80M img
+  mkfs.f2fs -s 1 -f img
+  mount -o loop img /mnt
+  touch /mnt/pinned
+  f2fs_io pinfile set /mnt/pinned
+  # 2093056 = block 511, so pg_start % sec_blks = 511
+  f2fs_io fallocate 0 2093056 536870912 /mnt/pinned
+  stat -c %s /mnt/pinned
+  filefrag -v /mnt/pinned
+
+The last extent ends at block 10737 either way.  Before, i_size is
+46075904, block 11249, so 511 blocks of it were never allocated, and
+filefrag does not mark the last extent eof.  After, i_size is 43982848,
+block 10738, and eof is back.  A kernel from before that commit also
+shows no overshoot.
+
+Keep @pg_start pointing at where allocation actually begins.
+
+Fixes: 4275b59673eb ("f2fs: fix to round down start offset of fallocate for pin file")
 Cc: stable@vger.kernel.org
-Signed-off-by: Zhenhao Wan <whi4ed0g@gmail.com>
-Reviewed-by: Lyude Paul <lyude@redhat.com>
-Link: https://patch.msgid.link/20260811-nouveau-uvmm-vmbind-fixes-v2-1-aaee4b395d04@gmail.com
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Signed-off-by: Zhan Xusheng <zhanxusheng@xiaomi.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/nouveau/nouveau_uvmm.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/f2fs/file.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/nouveau/nouveau_uvmm.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_uvmm.c
-@@ -1418,7 +1418,8 @@ unwind:
- 			break;
- 		}
+--- a/fs/f2fs/file.c
++++ b/fs/f2fs/file.c
+@@ -1844,8 +1844,9 @@ static int f2fs_expand_inode_data(struct
+ 		block_t sec_len;
  
--		drm_gpuva_ops_free(&uvmm->base, op->ops);
-+		if (!IS_ERR_OR_NULL(op->ops))
-+			drm_gpuva_ops_free(&uvmm->base, op->ops);
- 		op->ops = NULL;
- 		op->reg = NULL;
- 	}
+ 		if (map.m_lblk % sec_blks) {
+-			map.m_lblk = rounddown(map.m_lblk, sec_blks);
+-			map.m_len = pg_end - map.m_lblk;
++			pg_start = rounddown(map.m_lblk, sec_blks);
++			map.m_lblk = pg_start;
++			map.m_len = pg_end - pg_start;
+ 			if (off_end)
+ 				map.m_len++;
+ 		}
 
 
