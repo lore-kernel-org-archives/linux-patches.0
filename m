@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 727E3308F3B;
-	Sat, 12 Sep 2026 14:30:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 702862882DE;
+	Sat, 12 Sep 2026 14:30:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789223424; cv=none; b=k/r2H7q64jT6QohaEnkxGcwl9UK5qF4CiC1DH+vrKF2NZIiehlvASDvHBxEfHBGuBk2Rtdh7uJNS8Dl0E6qBrDV8XpxAF+pyG/HXV1K9h/vjkZEgmnIRKq1E6XUsoxP0kftGYIBLiEMipi6s5B+nLtld9Hu2CtAcMYApkfrk4rg=
+	t=1789223429; cv=none; b=apetYHFFrR8StaSTgc1ws1KC5AiIA285sFgjnN0gDodcsiNxiSRVaFBqNaXJFiDB4lndsj/JrTPkhhUU2I4WdiukLMptddkz1O+x2inTeGGJoeRyQFUaumyzwJGQ64V9Dlh5qIIcKV9OzftANJx9ma/H9F8RS30o50nr6E5m9kE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789223424; c=relaxed/simple;
-	bh=liyC3b7n97UFqdJ59RTKiAyjonsOg83VozUalW5Jizw=;
+	s=arc-20240116; t=1789223429; c=relaxed/simple;
+	bh=maWjWY3VNovV4tSxREguN2iWlbPJJawGlIOPAqSti1s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a8DsqqxIgvYh7A9zonPG/ZY+Wr9ZMuj3QGjo45P4ntLa1KwsV0qrrWq4nUxDAsCCZvkCxQy5fa16mDAxqIH5VQiPrtspOKvKF7Su8xcXZHEsVhk3sYFRRTtKwFf4uJ8jT4iezUW/9yE2OmB5lOzWaKHFVa6eAR9Rw6M5R0Enj2o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v/TfjI2J; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XlFVoJ9B3viP3QLUVUn+rVjYUJIveFMsJhGS5EpTyqDgVwvwvB0HIU1Xl4DVjqrfHSGMVgCEsi0BkiyUD7rlaEU/0nGdlXPbrlpVyPMSsGekuUjmQ5ia82IvCKaDtqIC2MSoWfPqiNyE/atbDKfCJyhKx+u5ZPmfiFwgaGQNSB4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m1r6OmdU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v/TfjI2J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 113331F000FF;
-	Sat, 12 Sep 2026 14:30:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m1r6OmdU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 172411F000FF;
+	Sat, 12 Sep 2026 14:30:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789223423;
-	bh=ytITYzfgZCK25BAuZC+rFgTqUFClY1VXk6g4o1VD5FI=;
+	s=korg; t=1789223428;
+	bh=WssNqXQznMudoq6Ygiwxu2slI28gwPA6sXz5ptj0YV8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=v/TfjI2J8s5sazqpdS0+y/IHMMLjZEQ2a4f84zj2RxG9zwRReA7FmvK+dclK8cMQn
-	 CNjPRI/qO/pWPsjNSp77WGWDUli8kRkE9EcSoUvwUXF8AXMOHYdRiDBiQt49594W4T
-	 fvfTjRCtVFw3Wo22RSdATneKsMYA6kJJJ1/SaBZw=
+	b=m1r6OmdUah4THpw+wcXvkmbVaYAP6q1oCqpbmvEh76hcJVFoHr101UPwtDj45SB4o
+	 Ctxjkj5voCBKZKKVnDB2atNSinvVk4ZK1xrY5j++v6Mo64QYvcnY66MvgSAQWO0RSp
+	 RJ0KdPfNXU62yy7wlYtNYhZR202IxyH+rD8+A38A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Pu Lehui <pulehui@huawei.com>,
-	Eduard Zingerman <eddyz87@gmail.com>,
+	Thorsten Blum <thorsten.blum@linux.dev>,
+	Linus Walleij <linusw@kernel.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0787/1424] bpf: Sync tail_call_reachable with callee state on entry
-Date: Sat, 12 Sep 2026 08:53:39 +0200
-Message-ID: <20260912065624.923073650@linuxfoundation.org>
+Subject: [PATCH 6.6 0788/1424] crypto: sl3516 - drop invalid sg_dma_len checks before DMA mapping
+Date: Sat, 12 Sep 2026 08:53:40 +0200
+Message-ID: <20260912065624.945534634@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -52,54 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pu Lehui <pulehui@huawei.com>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-[ Upstream commit 3513ea9dab6c1a3d2dc8e6160c41f690206948b6 ]
+[ Upstream commit 3ae59a2eba64b3648f069aa52eeaaeefdfe4bb2f ]
 
-Currently in check_max_stack_depth_subprog, when the verifier enters a
-new callee branch, the local tail_call_reachable is not properly
-synchronized with the callee's state.
+sg_dma_len() is only valid after mapping the scatterlist with
+dma_map_sg(). However, sl3516_ce_need_fallback() checks it before the
+source and destination scatterlists are mapped. Thus, a stale DMA length
+that is not a multiple of 16 could incorrectly force a software fallback
+when CONFIG_NEED_SG_DMA_LENGTH=y.
 
-Consider a main prog branching into multiple subprogs:
+Remove the invalid checks; the existing scatterlist length checks are
+sufficient.
 
-       subprog0 -> tailcall
-main <
-       subprog1 -> subprog2
-
-When the verifier finishes checking subprog0 and backtracks to main
-prog, the local tail_call_reachable state is left as true. As it
-proceeds to subprog1, this uncleared state leaks into the new branch,
-falsely marking subprog1 and subprog2 as tailcall reachable.
-
-Fix this by explicitly syncing tail_call_reachable with the callee's
-has_tail_call state on entry. The caller's state is safely preserved and
-restored via the existing backtracking logic.
-
-Fixes: ebf7d1f508a7 ("bpf, x64: rework pro/epilogue and tailcall handling in JIT")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Signed-off-by: Pu Lehui <pulehui@huawei.com>
-Link: https://patch.msgid.link/20260716120157.835937-2-pulehui@huaweicloud.com
-Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
+Fixes: 46c5338db7bd ("crypto: sl3516 - Add sl3516 crypto engine")
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Acked-by: Linus Walleij <linusw@kernel.org>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/crypto/gemini/sl3516-ce-cipher.c | 8 --------
+ 1 file changed, 8 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index f7f5f54dc4485..509809ac40b9b 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -6027,8 +6027,8 @@ static int check_max_stack_depth_subprog(struct bpf_verifier_env *env, int idx)
- 		i = next_insn;
- 		idx = sidx;
- 
--		if (subprog[idx].has_tail_call)
--			tail_call_reachable = true;
-+		/* sync tail_call_reachable with callee state on entry */
-+		tail_call_reachable = subprog[idx].has_tail_call;
- 
- 		frame++;
- 		if (frame >= MAX_CALL_FRAMES) {
+diff --git a/drivers/crypto/gemini/sl3516-ce-cipher.c b/drivers/crypto/gemini/sl3516-ce-cipher.c
+index 49dce9e0a8343..d1b4732e18e78 100644
+--- a/drivers/crypto/gemini/sl3516-ce-cipher.c
++++ b/drivers/crypto/gemini/sl3516-ce-cipher.c
+@@ -56,10 +56,6 @@ static bool sl3516_ce_need_fallback(struct skcipher_request *areq)
+ 			ce->fallback_mod16++;
+ 			return true;
+ 		}
+-		if ((sg_dma_len(sg) % 16) != 0) {
+-			ce->fallback_mod16++;
+-			return true;
+-		}
+ 		if (!IS_ALIGNED(sg->offset, 16)) {
+ 			ce->fallback_align16++;
+ 			return true;
+@@ -72,10 +68,6 @@ static bool sl3516_ce_need_fallback(struct skcipher_request *areq)
+ 			ce->fallback_mod16++;
+ 			return true;
+ 		}
+-		if ((sg_dma_len(sg) % 16) != 0) {
+-			ce->fallback_mod16++;
+-			return true;
+-		}
+ 		if (!IS_ALIGNED(sg->offset, 16)) {
+ 			ce->fallback_align16++;
+ 			return true;
 -- 
 2.53.0
 
