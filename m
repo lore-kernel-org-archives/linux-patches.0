@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F2D3416124;
-	Sat, 12 Sep 2026 09:18:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06751416124;
+	Sat, 12 Sep 2026 09:18:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789204706; cv=none; b=DWbyOiVhYbpOtdBm542MPgzFrWjs3wDSRb/n2M6a0TsbSNrd1O7Ihh1xIhjZlt+gdyaLTuDLq18HmQafKoVOBEy0krWgcRI+5kyEQ92/wfJ243wr0vQ2EbmhmeLUbKMR1e0zAzWmS5qiaD9Y+qGbRxGGHBNa7ldf4CIjvn3bd9w=
+	t=1789204709; cv=none; b=LgyPPmYpAUiilW4gswxg8/4d/2FhGb1EIb7HQfpE3I8MpssiZUFSPczcnyFzNqeuIlCbNbChqnSX1SBqJxR9txNoLAm/x3R2DMviSEOUj3eWgscjFHR4faDjlGY7di+MW8aMbD3EfLf3EBqjgNt5PRjIAKBcXM0hOLI6oojDw88=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789204706; c=relaxed/simple;
-	bh=AOAv9pRmCEXogAjp45Yy8L+d0tgZVDtPLLKoydLgYKg=;
+	s=arc-20240116; t=1789204709; c=relaxed/simple;
+	bh=FZOJnmPY/kqPgpE8oO0ZDsMDToyZCrOsBFP06nYNnGk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FZkYNCUp4Qwrqn7GJZ4gREGOHVguOTD2e7oqc4sxXOJZRDRF7zvGtJ46hd5uRZTTkBuIdd4DUMmW/ZYBtqVuUeKFZY9hfskBPfTUHIjJd/f9sTPuWprN64Yvbrnz8JjtYMVFqeXfbZ1gzZrQcAzm5oJmlrIse/2ZnbDt9y+oCOw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AVFa6OAg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qi9blARZbon0xq1xRIYH7rMe2hQvGXhemerf4PjDZCHTJDJPMkF1WobC8r1ptoeglr8gdkhZ26r2WbFhe7YdfsSI6bosqvNuXX/87U4EnN/JAT9qOJYYaq4H79ayLR48/8qau3OC1938Bpv8NF/k+wpKlISoK0MUU2lg3s5KMDg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JZzDdSmT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AVFa6OAg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF4591F000FF;
-	Sat, 12 Sep 2026 09:18:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JZzDdSmT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B06F41F00893;
+	Sat, 12 Sep 2026 09:18:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789204702;
-	bh=es0/SsPO7BPPybBRyl0WukQoghLNSzqDSGfAWAwkk6E=;
+	s=korg; t=1789204707;
+	bh=YkS92oZt0ygP5ZZNYVLLjwyu15GdjpPzDLNk2uFvUv0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AVFa6OAguGB3QEO6CcXa89h5dxm0JgIQyDrBFwTmyh8SmrqZQzmAfkb9lU0FYqCSm
-	 g6UorP8+OJUCcLsuJO826hUS+7+N4r3GjdQkOaXzjx2+/tYio2xOuEmlnC7XSeAg7g
-	 NG5fpfx8oux5zyPUWqQuLTUzADB299sL/VqnXl5Y=
+	b=JZzDdSmT1Em1S1Fyh3R8PXDquqeOYUvHiWBQxFOhujrGGiKatEGTrAe2fgOUpw22y
+	 GJs6YUzJlGt8LirIh964iOGEjrlUtzeLQLpi+16Uydylgcz9PlGiz8b96qhwp8b+V0
+	 rcNRSsdf0yJv1gF37BF6oNNdTlAriiw6I7WqWfi8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AutonomousCodeSecurity@microsoft.com,
-	"Cen Zhang (Microsoft)" <blbllhy@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Jason Xing <kerneljasonxing@gmail.com>,
+	Ruoyu Wang <ruoyuw560@gmail.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
 	"David S. Miller" <davem@davemloft.net>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1667/1815] xsk: fix NULL pointer dereference in __xsk_rcv()
-Date: Sat, 12 Sep 2026 08:56:57 +0200
-Message-ID: <20260912065728.125299563@linuxfoundation.org>
+Subject: [PATCH 7.2 1668/1815] net: bridge: Reject descending VLAN tunnel ranges
+Date: Sat, 12 Sep 2026 08:56:58 +0200
+Message-ID: <20260912065728.148256691@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -55,111 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang (Microsoft) <blbllhy@gmail.com>
+From: Ruoyu Wang <ruoyuw560@gmail.com>
 
-[ Upstream commit e37b2abca80473e106176e41712a369fd2f72117 ]
+[ Upstream commit b74a072d8fb71d3c9ffba4a17d5943e63266fb38 ]
 
-In the __xsk_rcv() multi-buffer path, xsk_buff_alloc() is called in a
-loop without checking its return value. xsk_buff_can_alloc() only
-counts fill queue entries without validating their addresses, so it
-can succeed while xsk_buff_alloc() rejects all remaining entries and
-returns NULL.
+A pair of descending VLAN and tunnel IDs can pass the tunnel range span
+check. The VLAN subtraction produces a negative int, which is converted
+to unsigned when compared with the u32 tunnel ID subtraction. It can
+therefore equal the wrapped tunnel ID delta.
 
-  Oops: general protection fault, probably for non-canonical address
-   0xdffffc0000000000
-  KASAN: null-ptr-deref in range
-   [0x0000000000000000-0x0000000000000007]
-  RIP: 0010:__xsk_rcv+0x426/0xc20 (net/xdp/xsk.c:350)
-  Call Trace:
-   xsk_generic_rcv+0x26d/0x5f0
-   xdp_do_generic_redirect+0x3c5/0xcf0
-   do_xdp_generic+0x92f/0xe70
-   __netif_receive_skb_core.constprop.0+0xf7e/0x2b30
+The range loop then performs no iterations. Since the batched
+notification handling added a post-loop error check, this leaves err
+uninitialized and makes the request's return value unpredictable.
 
-Fix this with a two-stage transaction. First allocate and stage all
-buffers required for the packet, recycling all staged buffers with
-xsk_buff_free() if any allocation fails. Only after this stage
-succeeds, copy the data, reserve the RX descriptors, and release the
-buffers in an error-free loop.
+Reject descending VLAN ranges before comparing the spans. Valid
+ascending and single-entry ranges remain unchanged, while malformed
+descending ranges consistently return -EINVAL.
 
-Fixes: 804627751b42 ("xsk: add support for AF_XDP multi-buffer on Rx path")
-Reported-by: AutonomousCodeSecurity@microsoft.com
-Signed-off-by: Cen Zhang (Microsoft) <blbllhy@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Jason Xing <kerneljasonxing@gmail.com>
-Link: https://patch.msgid.link/20260813215328.99311-1-blbllhy@gmail.com
+This issue was found by a static analysis checker and confirmed by
+manual source review.
+
+Fixes: 94339443686b ("net: bridge: notify on vlan tunnel changes done via the old api")
+Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
+Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
+Link: https://patch.msgid.link/20260814134053.1387275-1-ruoyuw560@gmail.com
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xdp/xsk.c | 30 +++++++++++++++++++++++++++---
- 1 file changed, 27 insertions(+), 3 deletions(-)
+ net/bridge/br_netlink_tunnel.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/xdp/xsk.c b/net/xdp/xsk.c
-index 7855ee09c4b64..33475b180ea6f 100644
---- a/net/xdp/xsk.c
-+++ b/net/xdp/xsk.c
-@@ -298,9 +298,11 @@ static int __xsk_rcv(struct xdp_sock *xs, struct xdp_buff *xdp, u32 len)
- 	u32 frame_size = __xsk_pool_get_rx_frame_size(xs->pool);
- 	void *copy_from = xsk_copy_xdp_start(xdp), *copy_to;
- 	u32 from_len, meta_len, rem, num_desc;
--	struct xdp_buff_xsk *xskb;
-+	struct xdp_buff_xsk *xskb, *tmp;
- 	struct xdp_buff *xsk_xdp;
-+	LIST_HEAD(xsk_buffs);
- 	skb_frag_t *frag;
-+	u32 i;
+diff --git a/net/bridge/br_netlink_tunnel.c b/net/bridge/br_netlink_tunnel.c
+index a713668ea34f0..e7eceab5b515d 100644
+--- a/net/bridge/br_netlink_tunnel.c
++++ b/net/bridge/br_netlink_tunnel.c
+@@ -302,7 +302,8 @@ int br_process_vlan_tunnel_info(const struct net_bridge *br,
  
- 	from_len = xdp->data_end - copy_from;
- 	meta_len = xdp->data - copy_from;
-@@ -343,23 +345,45 @@ static int __xsk_rcv(struct xdp_sock *xs, struct xdp_buff *xdp, u32 len)
- 		frag =  &sinfo->frags[0];
- 	}
- 
-+	for (i = 0; i < num_desc; i++) {
-+		xsk_xdp = xsk_buff_alloc(xs->pool);
-+		if (!xsk_xdp)
-+			goto err_alloc;
-+
-+		xskb = container_of(xsk_xdp, struct xdp_buff_xsk, xdp);
-+		if (unlikely(!list_empty(&xskb->list_node)))
-+			goto err_alloc;
-+
-+		list_add_tail(&xskb->list_node, &xsk_buffs);
-+	}
-+
- 	do {
- 		u32 to_len = frame_size + meta_len;
- 		u32 copied;
- 
--		xsk_xdp = xsk_buff_alloc(xs->pool);
-+		xskb = list_first_entry(&xsk_buffs, struct xdp_buff_xsk,
-+					list_node);
-+		list_del_init(&xskb->list_node);
-+		xsk_xdp = &xskb->xdp;
- 		copy_to = xsk_xdp->data - meta_len;
- 
- 		copied = xsk_copy_xdp(copy_to, &copy_from, to_len, &from_len, &frag, rem);
- 		rem -= copied;
- 
--		xskb = container_of(xsk_xdp, struct xdp_buff_xsk, xdp);
- 		__xsk_rcv_zc_safe(xs, xskb, copied - meta_len,
- 				  rem ? XDP_PKT_CONTD : 0);
- 		meta_len = 0;
- 	} while (rem);
- 
- 	return 0;
-+
-+err_alloc:
-+	list_for_each_entry_safe(xskb, tmp, &xsk_buffs, list_node) {
-+		list_del_init(&xskb->list_node);
-+		xsk_buff_free(&xskb->xdp);
-+	}
-+	xs->rx_dropped++;
-+	return -ENOMEM;
- }
- 
- static bool xsk_tx_writeable(struct xdp_sock *xs)
+ 		if (!(tinfo_last->flags & BRIDGE_VLAN_INFO_RANGE_BEGIN))
+ 			return -EINVAL;
+-		if ((tinfo_curr->vid - tinfo_last->vid) !=
++		if (tinfo_curr->vid < tinfo_last->vid ||
++		    (tinfo_curr->vid - tinfo_last->vid) !=
+ 		    (tinfo_curr->tunid - tinfo_last->tunid))
+ 			return -EINVAL;
+ 		t = tinfo_last->tunid;
 -- 
 2.53.0
 
