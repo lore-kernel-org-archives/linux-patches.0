@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AEED3D9DC0;
-	Sat, 12 Sep 2026 11:56:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 061BB47A0C3;
+	Sat, 12 Sep 2026 11:56:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789214208; cv=none; b=a/cRHvCjLhF2R8eGqDn2s1ubrAa7dZb3mqvhOW1QuCgRDIAmI3vUPJxL5+xtw7Gt7If8FYBGit1hJtKvGF1PbgxvtzVChQ7MxMK8Xy/oAw9XEMmWkJHFmzc0I9mtsNXyd3ylIlNv5MLUtNvm8cFOOuZ+xWZm4LGlpXk5fn210X8=
+	t=1789214213; cv=none; b=YDl3NQhcgLr8cDUkPAjpFs71zMbGYbVrpJkSGaF3tDdlykqcVI22yFEb5vU3HyP9igMuGoO/SHWPduixHQWDvadA/AJ4xrSoQfoNnTLtQ/EIIvrbAjBE6LmHL+Po7pPdy9CH/b8Lwv8HOz69JrloOVyfV7ZEDJ/mpoFfydkONXI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789214208; c=relaxed/simple;
-	bh=OyIm6Kc/cIZrgfq88mTZ8slHmKFSKuUGFddXpg4YtwA=;
+	s=arc-20240116; t=1789214213; c=relaxed/simple;
+	bh=E7MaoLy54svGXBXyUrTlUk40rFwo70gtydvl+I/2scc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=r2/IlHDpccHpVF9E2DfW/uLYF8INFwl2C43HFPR5mORl78AmcQqMKywauEjKePkXf/GfV/xL0qDZ5JAgQx6VKtr4XGZ78L4IE8NAQjDnI/7G6E1Vf6p22WQYB1zKx8LRR7pUVX4BQyiVD6rge8deowCFknln1DFb4qEf7ErrIoM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nttrc68Y; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lqwENGaX1darEfV+EmJDwCb8CvVS4u4LK1qz/Q0BRqPxC05acbI5tnHPot0wE/QKHyAekJTxYCbfVl9S3CeX9YurhEd2tL87t0DQmUA33EXF4uBQCqheMiamJJQaRxkQaJoxhkbcwvL52RkJwEckNZ8TzbwJh1RjTuLXKcA7nrE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QdDngwcf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nttrc68Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C76081F00893;
-	Sat, 12 Sep 2026 11:56:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QdDngwcf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E206E1F000FF;
+	Sat, 12 Sep 2026 11:56:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789214206;
-	bh=+KXdiI73XsEDnP4tHxUNTkFap7hQOyNqRr2vOlX9mJk=;
+	s=korg; t=1789214211;
+	bh=vB4vGL9f5oHfo07TqEpxoV86Unbh/l5V1OF9+6m2KY4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nttrc68YL7FtX2eC+EgzHF0UvgUUrJ3HdjglsjPbSjerAiKG0/mDMN+TCORXXkOsJ
-	 DHFpK+8DDnLgYxBFpmhP1f1G/YMJaIm/whLq8sgExaqFvIzG7tayHmjyrY6nKtWBPX
-	 CoyKdLUSVenXwaG1qBtVCEzNaV9dqs0zhVEU8nt0=
+	b=QdDngwcf45w8tnDwR51qqxS9EfyUABnhkYdXFnFFu1sdG4ZV1YvgO2PCxe2Ke33mG
+	 EXIe5siZTS0q2qii67LvDU+k6cfOWSz7YqHIMrcf6Xm6cIhsvRkrq4wvVLkLCG8MtP
+	 MH6wkpsdr6nO2h9ML4nh7FmTURoY/WzDmABa2tXE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Marioukhine <Vladimir.Marioukhine@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.12 0279/1376] drm/amdkfd: guard against NULL restore_mqd in CRIU queue restore
-Date: Sat, 12 Sep 2026 08:45:05 +0200
-Message-ID: <20260912065613.764926899@linuxfoundation.org>
+	Daeho Jeong <daehojeong@google.com>,
+	Sunmin Jeong <s_min.jeong@samsung.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>
+Subject: [PATCH 6.12 0253/1376] f2fs: fix to migrate all curseg types during free_segment_range
+Date: Sat, 12 Sep 2026 08:44:39 +0200
+Message-ID: <20260912065613.178670335@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -44,67 +46,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vladimir Marioukhine <Vladimir.Marioukhine@amd.com>
+From: Daeho Jeong <daehojeong@google.com>
 
-commit 6aa530642f95d5c48aa336416f94a35e7949b647 upstream.
+commit 8ec06f50ddd8d201bd7e55b896ae28ed9d4cb7d1 upstream.
 
-Both create_queue_cpsch() and create_queue_nocpsch() unconditionally
-call mqd_mgr->restore_mqd() when a CRIU restore is in progress
-(qd != NULL), with no NULL guard. On any system where restore_mqd is
-not implemented for the given queue type, a user holding
-CAP_CHECKPOINT_RESTORE can trigger a kernel NULL pointer dereference
-and panic the machine by issuing KFD_IOC_CRIU_OP_RESTORE with a
-crafted queue restore object. Note that checkpoint_mqd is likewise
-unimplemented on GFX12, so no legitimate CRIU image can reach this
-path — only a hand-crafted restore payload.
+In free_segment_range(), the curseg evacuation loop only iterates up to
+NR_CURSEG_PERSIST_TYPE (0..5), missing non-persistent in-memory curseg
+types such as CURSEG_COLD_DATA_PINNED and CURSEG_ALL_DATA_ATGC.
 
-Add a NULL guard for restore_mqd immediately after mqd_mgr is
-resolved, unwinding via the existing error labels and returning
--EOPNOTSUPP if the callback is not implemented. This mirrors the
-existing checkpoint_mqd guard in checkpoint_mqd().
+Even though these in-memory curseg types are not saved in the on-disk
+checkpoint header, they still occupy active physical segments at runtime.
+If an active in-memory curseg happens to be allocated within the segment
+range being truncated during filesystem shrink, failing to evacuate it
+will cause subsequent writes to the curseg attempting out-of-bounds I/O
+on the truncated storage range.
 
-Fixes: 48f0bdf4e38e ("drm/amdkfd: Added MQD manager files for GFX12.")
+Fix this by expanding the curseg evacuation loop upper bound to
+NR_CURSEG_TYPE to ensure all active curseg types are safely migrated
+out of the target range.
+
+Fixes: d0b9e42ab615 ("f2fs: introduce inmem curseg")
 Cc: stable@vger.kernel.org
-Signed-off-by: Vladimir Marioukhine <Vladimir.Marioukhine@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Daeho Jeong <daehojeong@google.com>
+Signed-off-by: Sunmin Jeong <s_min.jeong@samsung.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ fs/f2fs/gc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
-@@ -617,6 +617,11 @@ static int create_queue_nocpsch(struct d
+--- a/fs/f2fs/gc.c
++++ b/fs/f2fs/gc.c
+@@ -2171,7 +2171,7 @@ static int free_segment_range(struct f2f
+ 	mutex_unlock(&DIRTY_I(sbi)->seglist_lock);
  
- 	mqd_mgr = dqm->mqd_mgrs[get_mqd_type_from_queue_type(
- 			q->properties.type)];
-+	if (qd && !mqd_mgr->restore_mqd) {
-+		pr_debug("restore_mqd not implemented for this GPU\n");
-+		retval = -EOPNOTSUPP;
-+		goto deallocate_vmid;
-+	}
- 	if (q->properties.type == KFD_QUEUE_TYPE_COMPUTE) {
- 		retval = allocate_hqd(dqm, q);
- 		if (retval)
-@@ -1967,6 +1972,11 @@ static int create_queue_cpsch(struct dev
- 
- 	mqd_mgr = dqm->mqd_mgrs[get_mqd_type_from_queue_type(
- 			q->properties.type)];
-+	if (qd && !mqd_mgr->restore_mqd) {
-+		pr_debug("restore_mqd not implemented for this GPU\n");
-+		retval = -EOPNOTSUPP;
-+		goto out_deallocate_doorbell;
-+	}
- 
- 	if (q->properties.type == KFD_QUEUE_TYPE_SDMA ||
- 		q->properties.type == KFD_QUEUE_TYPE_SDMA_XGMI)
+ 	/* Move out cursegs from the target range */
+-	for (type = CURSEG_HOT_DATA; type < NR_CURSEG_PERSIST_TYPE; type++) {
++	for (type = CURSEG_HOT_DATA; type < NR_CURSEG_TYPE; type++) {
+ 		err = f2fs_allocate_segment_for_resize(sbi, type, start, end);
+ 		if (err)
+ 			goto out;
 
 
