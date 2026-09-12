@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4C2D379982;
-	Sat, 12 Sep 2026 07:29:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F003819D8BC;
+	Sat, 12 Sep 2026 07:29:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789198180; cv=none; b=Dl7QfGqn7bN5zJvbd1sJa+ScTZGlwf8mQORTmHoC32iX9e2HVspaE8mWLij60mcLpZMjC96m8fGu0UFDTP6hRjnVcW4zbWinWa/l89omuwzWojIM+xRhDVc8vOc5gLXmTQfW+22RRuVictzbHu30LGSzEyIBRaAP2jSsHiCsu+E=
+	t=1789198184; cv=none; b=Qi250h78HqurwpP0ObNKbUvCt79fHYYdOdZELsduBb5OBbOQzZGE00YBY3eoDiyZNsT7j3t5z3Gr8Ab7SnlAeQR837StiTYbFqDsmJw9CBAxrI3X+Lvz2y7L0ZCcI7641EYl8wDocXJWWIux6TM0Qsz5mU0DBECYU++6eqsXTIg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789198180; c=relaxed/simple;
-	bh=iwYok0MXXiGawq3BIgxN1xt4pPc9CQ5ZgSjk0+4oT+0=;
+	s=arc-20240116; t=1789198184; c=relaxed/simple;
+	bh=gn4WdO/J7smx+ZO47TXQ60Tz0NzybT58MUIN+QJKbUY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=aiRURNgdhElWLvCUltwkVk1lALUT+W5ZAJrHTGrKSdzW3GwRorG2vYGOfmF98yS7ZNi4UzTZ5kwOS7SQMjLDM6Ly1Fn0XYgggn/jNB7pj3m7D61xdDCZItcmTZ1Sq7u4KxMEq3Opkuq/P/+F7sgpnMWlfggRz0Jcc2J8ts4yHrQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QGbAfDuy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=g9bJoy6GwFpL629gOX5T5B1KkVDSIheha3bzV6w02hFXTkYvRYPqQkC0kDN+ji9ySK+Ok4SfGnrGK/eAzoPmvUAD30UiqmH2YAuW/9r7cwzULphbQXNAqg77wPnBb6owfek535p50Yi7yyURb5EZ7x9Dt6hTnhOIug5QLQv90J4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vf6YeVQg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QGbAfDuy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1E291F00893;
-	Sat, 12 Sep 2026 07:29:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vf6YeVQg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E68481F000FF;
+	Sat, 12 Sep 2026 07:29:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789198173;
-	bh=pHw19jl0pvrSU0rYEbT35kf+S+eGetK6kouvVYQpLhs=;
+	s=korg; t=1789198178;
+	bh=ydmPkfW9KGW3NNhtGlNYrBa7HoLfeVh2i8pZrsMHWUo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QGbAfDuyks0MVfmbcjumToJQbiXmuJ0YgcN4pptBM0ZPmelJpTlCwi7pz8VxXLdks
-	 DLaF3jNdM4j9qiSRNQejOB8Zpqxyz1rSXkZ7bJvshbbZNTM+E5xaEpqy2e88dfrv2i
-	 V/BU0IsUDxsi5WzlQg54RjqTUej0xeAGEp7TtsSg=
+	b=vf6YeVQgrKo3TDc3SQ8UR6v4TiVr17nVep7Wi/NfPMJg3FiTjHWPDSv85S0gPlDB2
+	 SZqNS0rzT+GYETJ4TBYyfDZHd36d2Okxtbcz/tXEdlkOkRIDdNwCSw4zEzdSSCZurf
+	 TKveSuspKdDJWc64i2SeJzJ3tbr+/C2RO+jhdomg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marco Scardovi <scardracs@disroot.org>,
+	Linmao Li <lilinmao@kylinos.cn>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0327/1815] platform/x86: asus-wmi: fix resource leaks on probe failure
-Date: Sat, 12 Sep 2026 08:34:37 +0200
-Message-ID: <20260912065656.608265546@linuxfoundation.org>
+Subject: [PATCH 7.2 0328/1815] platform/mellanox: mlxbf-pmc: Check ACPI_COMPANION() against NULL
+Date: Sat, 12 Sep 2026 08:34:38 +0200
+Message-ID: <20260912065656.630342343@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,67 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marco Scardovi <scardracs@disroot.org>
+From: Linmao Li <lilinmao@kylinos.cn>
 
-[ Upstream commit ef3daa2b84a2b8499ce9e2ce1c865dca36d39f95 ]
+[ Upstream commit c38cce70adef874c2a7b5132c14d6c221401deff ]
 
-During driver initialization in asus_wmi_add(), various subsystems are
-registered sequentially. However, the error path labels are out of order
-relative to the registration sequence.
+Every platform driver can be forced to match a device that doesn't match
+its list of device IDs because of device_match_driver_override(), so
+platform drivers that rely on the existence of a device's ACPI companion
+object need to verify its presence.
 
-Specifically:
-1. If asus_wmi_custom_fan_curve_init() fails, the driver jumps to
-   fail_custom_fan_curve. Because this label is placed below fail_sysfs,
-   it bypasses the cleanup calls for the input device and sysfs groups,
-   which were successfully registered before, leaking those resources.
-2. If asus_screenpad_init() fails, the driver jumps to fail_screenpad.
-   Because fail_screenpad is placed below fail_backlight, it bypasses the
-   cleanup calls for backlight and rfkill, leaking those resources.
+mlxbf_pmc_probe() passes the result of ACPI_COMPANION() to
+acpi_device_hid(), which dereferences it, so force-binding the driver to
+a device without an ACPI companion leads to a NULL pointer dereference.
 
-Fix these resource leaks by reordering the error path labels in
-asus_wmi_add() to match the exact reverse order of the resource
-allocations.
+Accordingly, add a requisite ACPI_COMPANION() check against NULL to the
+mlxbf-pmc driver and return -ENODEV when the companion is missing.
 
-Fixes: 0f0ac158d28f ("platform/x86: asus-wmi: Add support for custom fan curves")
-Fixes: 2c97d3e55b70 ("platform/x86: asus-wmi: add support for ASUS screenpad")
-Assisted-by: Antigravity:gemini-3.5-flash
-Signed-off-by: Marco Scardovi <scardracs@disroot.org>
-Link: https://patch.msgid.link/20260617155104.10111-1-scardracs@disroot.org
+Fixes: 1a218d312e65 ("platform/mellanox: mlxbf-pmc: Add Mellanox BlueField PMC driver")
+Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
+Link: https://patch.msgid.link/20260706012056.524096-1-lilinmao@kylinos.cn
 Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/asus-wmi.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/platform/mellanox/mlxbf-pmc.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/platform/x86/asus-wmi.c b/drivers/platform/x86/asus-wmi.c
-index e835779b6f5f1..c162fbdb5b106 100644
---- a/drivers/platform/x86/asus-wmi.c
-+++ b/drivers/platform/x86/asus-wmi.c
-@@ -5244,20 +5244,20 @@ static int asus_wmi_add(struct platform_device *pdev)
- 	return 0;
+diff --git a/drivers/platform/mellanox/mlxbf-pmc.c b/drivers/platform/mellanox/mlxbf-pmc.c
+index 5ec1ad4716967..2ad9e2b0493c4 100644
+--- a/drivers/platform/mellanox/mlxbf-pmc.c
++++ b/drivers/platform/mellanox/mlxbf-pmc.c
+@@ -2262,13 +2262,19 @@ static int mlxbf_pmc_map_counters(struct device *dev)
  
- fail_wmi_handler:
-+	asus_screenpad_exit(asus);
-+fail_screenpad:
- 	asus_wmi_backlight_exit(asus);
- fail_backlight:
- 	asus_wmi_rfkill_exit(asus);
--fail_screenpad:
--	asus_screenpad_exit(asus);
- fail_rfkill:
- 	asus_wmi_led_exit(asus);
- fail_leds:
-+fail_custom_fan_curve:
- fail_hwmon:
- 	asus_wmi_input_exit(asus);
- fail_input:
- 	asus_wmi_sysfs_exit(asus->platform_device);
- fail_sysfs:
--fail_custom_fan_curve:
- fail_platform_profile_setup:
- fail_fan_boost_mode:
- fail_platform:
+ static int mlxbf_pmc_probe(struct platform_device *pdev)
+ {
+-	struct acpi_device *acpi_dev = ACPI_COMPANION(&pdev->dev);
+-	const char *hid = acpi_device_hid(acpi_dev);
+ 	struct device *dev = &pdev->dev;
++	struct acpi_device *acpi_dev;
+ 	struct arm_smccc_res res;
++	const char *hid;
+ 	guid_t guid;
+ 	int ret;
+ 
++	acpi_dev = ACPI_COMPANION(&pdev->dev);
++	if (!acpi_dev)
++		return -ENODEV;
++
++	hid = acpi_device_hid(acpi_dev);
++
+ 	/* Ensure we have the UUID we expect for this service. */
+ 	arm_smccc_smc(MLXBF_PMC_SIP_SVC_UID, 0, 0, 0, 0, 0, 0, 0, &res);
+ 	guid_parse(mlxbf_pmc_svc_uuid_str, &guid);
 -- 
 2.53.0
 
