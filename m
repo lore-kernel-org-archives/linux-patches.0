@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 635AA471D03;
-	Sat, 12 Sep 2026 12:41:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E9BF35F5F8;
+	Sat, 12 Sep 2026 12:41:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789216889; cv=none; b=JFeyBkTDzKgYlxu56u+BuDkddg08N21+fiPYMl+koVN1dzLGK8q4QHlG8ZKZ1NIU/bibX+asKQMGg1aRRzsB9htFT322hUWOpI1bGM/Ob8053+3KrYlRUGXV8+JOsuP83iW08BFgXFsIcMQYQsrK0olpbsruYCsGr4CbvG9ogpY=
+	t=1789216896; cv=none; b=UAE7GnV8nSB+WqMhdoqM0rgVusbipcoU+bOiHmKnWArQqNPM3c4q4wEWTEA2f9MKxDgkHmgZpB28TVt9jR6d42VjmK1Kv04VDcf4Tuv0fOjXCEKmNfQEMO+yOIECagaTQ9gC171D4d4DgwPZqCeD9KbXWeDABEBI3G/H5BKKxMo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789216889; c=relaxed/simple;
-	bh=yrXu4qzLvFtBN8uy92ghExtjbk+kDdNeyApa71xanJA=;
+	s=arc-20240116; t=1789216896; c=relaxed/simple;
+	bh=u0NHyaIyOQRchfIvRebmWN+2UjO78OwhLhbUOFkvKNw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k9zj2zhnlH7h9bCALbXwf/ckFMnYdQ2h4me2YRy2feBIjXYWbyzjr58djeR9E9mIuB+TJ3RhsKNgVvoDX5GIIr+nFMqpu2UHdXiFHe9yMr27vDnV9nrxyi29SYDRsfCIx+ac4SNl2vjfbRJmv8hR0IBX/EQqEA+H5bTVzLmODGY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=psZYSz2f; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ni+X9KCPP7MtptJL+FJfZPnzIu4b5z/wfiL+MuO80bZrHtSfF2VtCjSjRUR2/HnlAaKZxT4TDIlDGAcyjYlrB5cyc/Dx9/mnv/aIm8WMXAEBF48FZNK4eCRih8usMQAkfp/e1b2KQOEkmrtaE0H2C+K61DtTQNgaRLj9JWQfds0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qrx/zHMe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="psZYSz2f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEAAD1F000FF;
-	Sat, 12 Sep 2026 12:41:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qrx/zHMe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EE911F000FF;
+	Sat, 12 Sep 2026 12:41:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789216887;
-	bh=UdWw7YKUtmValtL7fIyPSpnbCmwy6mYYg/q9dHK5QaA=;
+	s=korg; t=1789216891;
+	bh=5OeDObey2D96ceJSSR7oAYw1VPYWxBXb6dG9RDxUsro=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=psZYSz2fz8EfNCsia1N792WbcJ4IiU/un/zmzrFRANh9DYZW2E6jhzxRwMcc2xKV1
-	 TpfBbWTewDev1CdQNLoYsqKqr5hqLnB36w6sFA3k5S2N+UljtEMURIoV19CiMNCPZg
-	 QXmuC5OCv19imDfz06Ke817ucQNiz29gD+lWiRrY=
+	b=qrx/zHMeWtz8pO0Q7XTHdMlvkwfqG7c7UW4AhtS1WojGsDZVFY+JKMsPjjALEMQeX
+	 L8mQejQ/x+h7mc6nx6VtKD+MSBvTlATkfevTvIROgpEe9bd5tpnap0M1XSsZ1epu/z
+	 WaXYRO1xxZ2/Bp129V8veEylhc7ZUvc+RKPa4Q4o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai@fnnas.com>,
-	Li Nan <linan122@huawei.com>,
+	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0791/1376] md: merge mddev faillast_dev into mddev_flags
-Date: Sat, 12 Sep 2026 08:53:37 +0200
-Message-ID: <20260912065625.166213012@linuxfoundation.org>
+Subject: [PATCH 6.12 0827/1376] wifi: ath11k: fix leak in ath11k_service_ready_ext_event()
+Date: Sat, 12 Sep 2026 08:54:13 +0200
+Message-ID: <20260912065625.977155538@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,160 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yu Kuai <yukuai@fnnas.com>
+From: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 
-[ Upstream commit 4f6d2e648cbe963b328cb8815290676da3866434 ]
+[ Upstream commit 0293be2212d319d59589082461abf2a9b626cd1c ]
 
-There is not need to use a separate field in struct mddev, there are no
-functional changes.
+Currently, during ath11k_service_ready_ext_event() processing,
+svc_rdy_ext.mac_phy_caps can be allocated during TLV parsing. This is a
+temporary allocation that is freed on the success path, but not on the
+error path. If parsing succeeds far enough to allocate mac_phy_caps and
+then fails on a later TLV, the allocation leaks. So free the allocation
+on the error path.
 
-Link: https://lore.kernel.org/linux-raid/20260114171241.3043364-4-yukuai@fnnas.com
-Signed-off-by: Yu Kuai <yukuai@fnnas.com>
-Reviewed-by: Li Nan <linan122@huawei.com>
-Stable-dep-of: 140234b2380f ("md/raid1: create serial pool adding rdev to array with serialize_policy=1")
+Compile tested only.
+
+Fixes: 5b90fc760db5 ("ath11k: fix wmi service ready ext tlv parsing")
+Assisted-by: Claude:claude-sonnet-4-6
+Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260727-ath11k_service_ready_ext_event-memleak-v1-1-e8373d27bdd1@oss.qualcomm.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/md.c     | 10 ++++++----
- drivers/md/md.h     |  3 ++-
- drivers/md/raid0.c  |  3 ++-
- drivers/md/raid1.c  |  4 ++--
- drivers/md/raid10.c |  4 ++--
- drivers/md/raid5.c  |  5 ++++-
- 6 files changed, 18 insertions(+), 11 deletions(-)
+ drivers/net/wireless/ath/ath11k/wmi.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/md/md.c b/drivers/md/md.c
-index 6d0ab9a471316..dc168f45cfb02 100644
---- a/drivers/md/md.c
-+++ b/drivers/md/md.c
-@@ -5582,11 +5582,11 @@ __ATTR(consistency_policy, S_IRUGO | S_IWUSR, consistency_policy_show,
+diff --git a/drivers/net/wireless/ath/ath11k/wmi.c b/drivers/net/wireless/ath/ath11k/wmi.c
+index 540faacee41d8..a184a7e3452c0 100644
+--- a/drivers/net/wireless/ath/ath11k/wmi.c
++++ b/drivers/net/wireless/ath/ath11k/wmi.c
+@@ -5077,6 +5077,7 @@ static int ath11k_service_ready_ext_event(struct ath11k_base *ab,
+ 	return 0;
  
- static ssize_t fail_last_dev_show(struct mddev *mddev, char *page)
- {
--	return sprintf(page, "%d\n", mddev->fail_last_dev);
-+	return sprintf(page, "%d\n", test_bit(MD_FAILLAST_DEV, &mddev->flags));
+ err:
++	kfree(svc_rdy_ext.mac_phy_caps);
+ 	ath11k_wmi_free_dbring_caps(ab);
+ 	return ret;
  }
- 
- /*
-- * Setting fail_last_dev to true to allow last device to be forcibly removed
-+ * Setting MD_FAILLAST_DEV to allow last device to be forcibly removed
-  * from RAID1/RAID10.
-  */
- static ssize_t
-@@ -5599,8 +5599,10 @@ fail_last_dev_store(struct mddev *mddev, const char *buf, size_t len)
- 	if (ret)
- 		return ret;
- 
--	if (value != mddev->fail_last_dev)
--		mddev->fail_last_dev = value;
-+	if (value)
-+		set_bit(MD_FAILLAST_DEV, &mddev->flags);
-+	else
-+		clear_bit(MD_FAILLAST_DEV, &mddev->flags);
- 
- 	return len;
- }
-diff --git a/drivers/md/md.h b/drivers/md/md.h
-index e5b37aafc0591..4a410683a788e 100644
---- a/drivers/md/md.h
-+++ b/drivers/md/md.h
-@@ -313,6 +313,7 @@ struct md_cluster_info;
-  * @MD_BROKEN: This is used to stop writes and mark array as failed.
-  * @MD_DELETED: This device is being deleted
-  * @MD_HAS_SUPERBLOCK: There is persistence sb in member disks.
-+ * @MD_FAILLAST_DEV: Allow last rdev to be removed.
-  *
-  * change UNSUPPORTED_MDDEV_FLAGS for each array type if new flag is added
-  */
-@@ -329,6 +330,7 @@ enum mddev_flags {
- 	MD_BROKEN,
- 	MD_DELETED,
- 	MD_HAS_SUPERBLOCK,
-+	MD_FAILLAST_DEV,
- };
- 
- enum mddev_sb_flags {
-@@ -589,7 +591,6 @@ struct mddev {
- 	/* The sequence number for sync thread */
- 	atomic_t sync_seq;
- 
--	bool	fail_last_dev:1;
- 	bool	serialize_policy:1;
- };
- 
-diff --git a/drivers/md/raid0.c b/drivers/md/raid0.c
-index d02f5f0614663..b88ad9c2423c0 100644
---- a/drivers/md/raid0.c
-+++ b/drivers/md/raid0.c
-@@ -27,7 +27,8 @@ module_param(default_layout, int, 0644);
- 	 (1L << MD_JOURNAL_CLEAN) |	\
- 	 (1L << MD_FAILFAST_SUPPORTED) |\
- 	 (1L << MD_HAS_PPL) |		\
--	 (1L << MD_HAS_MULTIPLE_PPLS))
-+	 (1L << MD_HAS_MULTIPLE_PPLS) |	\
-+	 (1L << MD_FAILLAST_DEV))
- 
- /*
-  * inform the user of the raid configuration
-diff --git a/drivers/md/raid1.c b/drivers/md/raid1.c
-index a6ee8d3c01cec..7bb28732a2e8f 100644
---- a/drivers/md/raid1.c
-+++ b/drivers/md/raid1.c
-@@ -1741,7 +1741,7 @@ static void raid1_status(struct seq_file *seq, struct mddev *mddev)
-  *	- &mddev->degraded is bumped.
-  *
-  * @rdev is marked as &Faulty excluding case when array is failed and
-- * &mddev->fail_last_dev is off.
-+ * MD_FAILLAST_DEV is not set.
-  */
- static void raid1_error(struct mddev *mddev, struct md_rdev *rdev)
- {
-@@ -1754,7 +1754,7 @@ static void raid1_error(struct mddev *mddev, struct md_rdev *rdev)
- 	    (conf->raid_disks - mddev->degraded) == 1) {
- 		set_bit(MD_BROKEN, &mddev->flags);
- 
--		if (!mddev->fail_last_dev) {
-+		if (!test_bit(MD_FAILLAST_DEV, &mddev->flags)) {
- 			conf->recovery_disabled = mddev->recovery_disabled;
- 			spin_unlock_irqrestore(&conf->device_lock, flags);
- 			return;
-diff --git a/drivers/md/raid10.c b/drivers/md/raid10.c
-index e45008b01c41e..06189fa95490b 100644
---- a/drivers/md/raid10.c
-+++ b/drivers/md/raid10.c
-@@ -1994,7 +1994,7 @@ static int enough(struct r10conf *conf, int ignore)
-  *	- &mddev->degraded is bumped.
-  *
-  * @rdev is marked as &Faulty excluding case when array is failed and
-- * &mddev->fail_last_dev is off.
-+ * MD_FAILLAST_DEV is not set.
-  */
- static void raid10_error(struct mddev *mddev, struct md_rdev *rdev)
- {
-@@ -2006,7 +2006,7 @@ static void raid10_error(struct mddev *mddev, struct md_rdev *rdev)
- 	if (test_bit(In_sync, &rdev->flags) && !enough(conf, rdev->raid_disk)) {
- 		set_bit(MD_BROKEN, &mddev->flags);
- 
--		if (!mddev->fail_last_dev) {
-+		if (!test_bit(MD_FAILLAST_DEV, &mddev->flags)) {
- 			spin_unlock_irqrestore(&conf->device_lock, flags);
- 			return;
- 		}
-diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
-index 78f3f2d4d1dcb..d631ab8be69b4 100644
---- a/drivers/md/raid5.c
-+++ b/drivers/md/raid5.c
-@@ -56,7 +56,10 @@
- #include "md-bitmap.h"
- #include "raid5-log.h"
- 
--#define UNSUPPORTED_MDDEV_FLAGS	(1L << MD_FAILFAST_SUPPORTED)
-+#define UNSUPPORTED_MDDEV_FLAGS		\
-+	((1L << MD_FAILFAST_SUPPORTED) |	\
-+	 (1L << MD_FAILLAST_DEV))
-+
- 
- #define cpu_to_group(cpu) cpu_to_node(cpu)
- #define ANY_GROUP NUMA_NO_NODE
 -- 
 2.53.0
 
