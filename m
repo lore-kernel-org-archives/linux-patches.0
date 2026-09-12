@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 145BD2D0C94;
-	Sat, 12 Sep 2026 11:32:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A4592D0C94;
+	Sat, 12 Sep 2026 11:32:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789212774; cv=none; b=SsHlhOe9B3ni9m8Bf+XLfvao8xJ4fnd37GxKrxyGgqh7hjf7FPucBuntlQOeGPEQLZa6fmsAnvXiRPFhCLy5JC9Tmfi0KKLmaDxt5ungypflQ9isVdeIGRlmxs3gOtVD3oYBG8b8I59DMMhH0ioRL5RecWuLGWbpyTDF3JE7X/I=
+	t=1789212779; cv=none; b=c7lldDEDZv/SFB7E47b5i6RL7nR2bhiZWklMOwQedHmmkFNo6Wl611hCsl9DmrzT46eVvebwEDvXaDQPqciNyx51dSM53e0h/LFoHV/fXv7HeaSgWlyiYCJBDJSP666KcRcmU5xXKxp0b81XkaIHWUkVsV2lKeqt/ZmYZ2LSDzc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789212774; c=relaxed/simple;
-	bh=+BbHapoSuX4/TAxuSIKC9TCsCPp1n5KzJEQ0jJJr6So=;
+	s=arc-20240116; t=1789212779; c=relaxed/simple;
+	bh=7A6JgKsTpsAXCQNBeQ0IkIwbdThhDSu0mcx+I4Jv72o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VOFlqmsLUzuu06sTxjMzRaLVocNhRVDT+xJT8o0TUiKEz4m8NWnCzMQT+12VnC3skX5b5l5KDW76/77EC6Z/fTNMXXBF17xaI+pc2r9T8ALP5fevUkCwcAGmZWZmuKo0xLm5m9sQJfbnNTrQvQ2rqWdcWxM8+KpIZLM1ApoEsO8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JCBHm6CQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jfGrsUo+uS3tFfwZZM/DbGY1IM8NreJjXvGZqJ9GXlR9SclvwXlNR2c9XBJpcfUHa/KJ9Jq06L+OzRbXpcB1aYfbLXnteZCV6nvspI/EateqWfaYYx6WVpL+DBwl5/IxPfxRtJVykfUxpQ3Ouu6z3fdU3HPcOUuzsRP8mSzd1gQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aGoaXuRT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JCBHm6CQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C13001F000FF;
-	Sat, 12 Sep 2026 11:32:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aGoaXuRT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37C1E1F000FF;
+	Sat, 12 Sep 2026 11:32:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789212773;
-	bh=lw08+do9hquy8a19Qny7zNspZqaAHHi8TBkTJv9+e2o=;
+	s=korg; t=1789212778;
+	bh=yyCV5d8JPdgWSA2P3wm02b6fJTaQYwFheMsaMFcDAVw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JCBHm6CQ6bMFeplpHiSwM/8pYVvUf6CeAxzTJrBbrYpVuouoD8atXxca9+ylmIKnU
-	 Z+5P5THZqFWXJcVbZ/sHI20d/UfK+TSD5oub/rov48auhvrxgr3eBvkt9qBYbmsjOm
-	 EpAIFZcnB2vObcbz1h2a/BH6fsCaKzMJNrpsfgEU=
+	b=aGoaXuRTTg/9dyoekPJDT/VW7YfGfMc98hD3wP8q77qqDxk//lN8+q/FnvDL8YGv8
+	 45WuM7jQ0hTCODixFdOXDW4+pc0efyylPAHGDNB/flqJ1r40jv9H0X7lODC8BLt0T5
+	 jgZcGjtQPLVrmOmcpMKeeTxfaqnlLXduIYQL8Dh8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	syzbot+eb441775f4f948a0902f@syzkaller.appspotmail.com,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1504/1518] io_uring/waitid: use io_waitid_remove_wq() consistently
-Date: Sat, 12 Sep 2026 09:01:13 +0200
-Message-ID: <20260912065657.588169135@linuxfoundation.org>
+Subject: [PATCH 6.18 1505/1518] io_uring/waitid: fix KCSAN warning on io_waitid->head
+Date: Sat, 12 Sep 2026 09:01:14 +0200
+Message-ID: <20260912065657.610807104@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,87 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Jens Axboe <axboe@kernel.dk>
 
-[ Upstream commit ab673c1bcaf20ac70352eeb6bf5b828462676693 ]
+[ Upstream commit b994ace83a2bc7699420f6a4c6b860c8da133159 ]
 
-Use it everywhere that the wait_queue_entry is removed from the head,
-and be a bit more cautious in zeroing out iw->head whenever the entry is
-removed from the list.
+Storing of the iw->head entry inside the wait_queue callback, or when
+removing a waitid item, really should use proper load/store
+acquire/release semantics, and KCSAN correctly warns of that. Ensure
+that they do so.
 
+Reported-by: syzbot+eb441775f4f948a0902f@syzkaller.appspotmail.com
+Fixes: a48c0cbf28c0 ("io_uring/waitid: have io_waitid_complete() remove wait queue entry")
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Stable-dep-of: b994ace83a2b ("io_uring/waitid: fix KCSAN warning on io_waitid->head")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/waitid.c | 15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ io_uring/waitid.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/io_uring/waitid.c b/io_uring/waitid.c
-index 41d5eed6c5723..1137e3a166d12 100644
+index 1137e3a166d12..2b756017423f0 100644
 --- a/io_uring/waitid.c
 +++ b/io_uring/waitid.c
-@@ -193,18 +193,18 @@ bool io_waitid_remove_all(struct io_ring_ctx *ctx, struct io_uring_task *tctx,
- static inline bool io_waitid_drop_issue_ref(struct io_kiocb *req)
- {
+@@ -114,11 +114,11 @@ static void io_waitid_remove_wq(struct io_kiocb *req)
  	struct io_waitid *iw = io_kiocb_to_cmd(req, struct io_waitid);
--	struct io_waitid_async *iwa = req->async_data;
+ 	struct wait_queue_head *head;
  
- 	if (!atomic_sub_return(1, &iw->refs))
- 		return false;
+-	head = READ_ONCE(iw->head);
++	head = smp_load_acquire(&iw->head);
+ 	if (head) {
+ 		struct io_waitid_async *iwa = req->async_data;
  
-+	io_waitid_remove_wq(req);
-+
- 	/*
- 	 * Wakeup triggered, racing with us. It was prevented from
- 	 * completing because of that, queue up the tw to do that.
- 	 */
- 	req->io_task_work.func = io_waitid_cb;
- 	io_req_task_work_add(req);
--	remove_wait_queue(iw->head, &iwa->wo.child_wait);
- 	return true;
- }
- 
-@@ -265,6 +265,7 @@ static int io_waitid_wait(struct wait_queue_entry *wait, unsigned mode,
+-		iw->head = NULL;
++		smp_store_release(&iw->head, NULL);
+ 		spin_lock_irq(&head->lock);
+ 		list_del_init(&iwa->wo.child_wait.entry);
+ 		spin_unlock_irq(&head->lock);
+@@ -265,7 +265,7 @@ static int io_waitid_wait(struct wait_queue_entry *wait, unsigned mode,
  		return 0;
  
  	list_del_init(&wait->entry);
-+	iw->head = NULL;
+-	iw->head = NULL;
++	smp_store_release(&iw->head, NULL);
  
  	/* cancel is in progress */
  	if (atomic_fetch_inc(&iw->refs) & IO_WAITID_REF_MASK)
-@@ -291,6 +292,7 @@ int io_waitid_prep(struct io_kiocb *req, const struct io_uring_sqe *sqe)
- 	iw->which = READ_ONCE(sqe->len);
- 	iw->upid = READ_ONCE(sqe->fd);
- 	iw->options = READ_ONCE(sqe->file_index);
-+	iw->head = NULL;
- 	iw->infop = u64_to_user_ptr(READ_ONCE(sqe->addr2));
- 	memset(&iw->info, 0, sizeof(iw->info));
- 	return 0;
-@@ -322,11 +324,16 @@ int io_waitid(struct io_kiocb *req, unsigned int issue_flags)
- 	 * callback.
- 	 */
- 	io_ring_submit_lock(ctx, issue_flags);
-+
-+	/*
-+	 * iw->head is valid under the ring lock, and as long as the request
-+	 * is on the waitid_list where cancelations may find it.
-+	 */
-+	iw->head = &current->signal->wait_chldexit;
- 	hlist_add_head(&req->hash_node, &ctx->waitid_list);
- 
- 	init_waitqueue_func_entry(&iwa->wo.child_wait, io_waitid_wait);
- 	iwa->wo.child_wait.private = req->tctx->task;
--	iw->head = &current->signal->wait_chldexit;
- 	add_wait_queue(iw->head, &iwa->wo.child_wait);
- 
- 	ret = __do_wait(&iwa->wo);
-@@ -349,7 +356,7 @@ int io_waitid(struct io_kiocb *req, unsigned int issue_flags)
- 	}
- 
- 	hlist_del_init(&req->hash_node);
--	remove_wait_queue(iw->head, &iwa->wo.child_wait);
-+	io_waitid_remove_wq(req);
- 	ret = io_waitid_finish(req, ret);
- 
- 	io_ring_submit_unlock(ctx, issue_flags);
 -- 
 2.53.0
 
