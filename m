@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A1D231E824;
-	Sat, 12 Sep 2026 13:59:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34DC335203A;
+	Sat, 12 Sep 2026 13:59:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789221546; cv=none; b=AAPXDkt7lUreNMaEBsIv3Xb4bPjMQNcwNB78VCmbvZZYp1IoZ8XRCDeDJ8HCG78TDRC2pU0XylvlEpQZjLTjTsIRkLNSMbKrpnw43BS0DhFqyXMuIPsDDaXu4sfOly6IBil1E/nWBdKX6v5uxJf5ILv+GFKJIXIKZI19CqQK3zA=
+	t=1789221553; cv=none; b=Nji/EVDDiSO/4PZXqHuje3G4dzw79lPPtxsWGKYhCB13DDgydYPkKurTdGGga2F57NgtwBDWXRPG3Hfb0a+G1puwl/7ZjTkCQqNZxAkiBIRvLf5YKPQEJAuAG35DxSh0VarS3qBj4Gu7Lbxxg410c0sSy7ZYMHS9XOmwc8AL+OQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789221546; c=relaxed/simple;
-	bh=tUX+/av76y9BJhN2Ahp/nX4zyVvY1Qdy5rfE/oe2rew=;
+	s=arc-20240116; t=1789221553; c=relaxed/simple;
+	bh=YpAHCND/7tfja3qqA6h6fwLNQO/35zNlcThNfmu8Hhg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h0xiVpoP77uO9fqCfCUK7zZHVVGW9bAgmw+Ll+EOpZdnnsE1fSpN/hRzgcVjzSImalO3PJXS5bks8/QAQTbH6/sRVHPFfRpOaCxtGtpVyC+vKInXu6FosLma6wGtqmQvPNyOx+/Hi7MJR1w2plIsJhJ77/PN6gGqUSWhKUkuK2o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kSOzYAp8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=e+dOtjZItGovs+6i0fGF/WUiVJWkXfZ8Sb0CrjJV4+wlBy9i+96gJwKB+nxz+vqCbay5AUXD++NCtkDeq86jhsQyC35FuA4GebZZ3Rvnxkd7mDXvOAqhTtA2It2YDDZokTSUrzTOj2WqhBoMhvcT0H7wfD6/Flx6JL+LI6dlxQI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H3PR4idB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kSOzYAp8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5D801F000FF;
-	Sat, 12 Sep 2026 13:59:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H3PR4idB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D3221F000FF;
+	Sat, 12 Sep 2026 13:59:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789221544;
-	bh=lLYON3Q4MsBiIzM3OvPUrqXGpw3XjUoP/O/nfjsVjc8=;
+	s=korg; t=1789221549;
+	bh=In9VPg8ZHOLBx1x5MRuUpyApmBPta4uEvoxvnZTHzm4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kSOzYAp8p639w1kfYNNiei2gMcBTdQFCVybe+15ZIkIZn5MNkauMbKm+HIf+9KOtD
-	 HjVyvUbqqyYyDJL1rAC3PhZ5TLp5OS/c+0VoGYXr9gN3lGBSd2SsS+FoLDU3uXG72f
-	 M+NshMgbzeJY01krrXndLjUdhgqYq/iWtEPvWTNE=
+	b=H3PR4idBGa1/VJLCsLVoqEdU2FGeNPcbrjjGfoIBBHyccv9yJ69EzsQvHFxT6N2Vr
+	 UAhf+SS9WrRENEmBrU4y536S1AOURK+MhaJrhqkhfOdwX9Vo0EzEXAtKeQdRNjmW4/
+	 vUh7+Hy6Z3zug4DX4s8gY7wY8I3nNdtEhiS7C/nQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Taniya Das <taniya.das@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Stephan Gerhold <stephan.gerhold@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.6 0405/1424] clk: qcom: gcc-mdm9607: Fix halt_reg for gcc_apss_axi_clk
-Date: Sat, 12 Sep 2026 08:47:17 +0200
-Message-ID: <20260912065616.355797698@linuxfoundation.org>
+Subject: [PATCH 6.6 0406/1424] clk: qcom: gcc-mdm9607: Drop incorrect BIMC PLL and related clocks
+Date: Sat, 12 Sep 2026 08:47:18 +0200
+Message-ID: <20260912065616.377495526@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -54,34 +53,314 @@ Content-Transfer-Encoding: 8bit
 
 From: Stephan Gerhold <stephan.gerhold@linaro.org>
 
-commit ca7e6cc30cde4f0cbeff2e205a84bedf431e9156 upstream.
+commit e111ddda092ad961870a634e4c9263c10a3e8485 upstream.
 
-gcc_apss_axi_clk specifies a halt_reg of 0x4601c, but this is already used
-by gcc_apss_ahb_clk. The correct value according to the downstream driver
-is 0x46020.
+The gcc-mdm9607 driver was originally based on gcc-msm8916, but a closer
+match nowadays is gcc-msm8909. Looking at the differences between
+gcc-mdm9607 and gcc-msm8909, there is quite some confusion around the
+definitions for the BIMC PLL.
+
+It turns out the BIMC PLL on MDM9607 is actually an Alpha PLL just like on
+MSM8909. We can vote for it using BIT(2), which explains why BIT(3) was
+used for GPLL2.
+
+In practice, the BIMC PLL is exclusively controlled by the RPM firmware and
+Linux should not touch it. So far, it was defined to model the full clock
+hierarchy, but even in read-only mode with CLK_GET_RATE_NOCACHE this is
+problematic since the RPM will silently change the clock parents without
+notifying Linux about it. The clock framework reads the clock parent only
+once during boot, so the resulting rates will still be often wrong.
+
+Follow the example of more recent SoCs and drop the BIMC PLL and all
+remaining related clocks to avoid reporting stale status data. This means
+we cannot determine the rate of these clocks anymore. This is not a big
+problem in practice, since these are NoC-related clocks that are
+independently managed through the interconnect subsystem.
 
 Cc: stable@vger.kernel.org
 Fixes: 48b7253264ea ("clk: qcom: Add MDM9607 GCC driver")
-Reviewed-by: Taniya Das <taniya.das@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
-Link: https://lore.kernel.org/r/20260706-qcom-clk-mdm9607-fixes-v2-4-745565101869@linaro.org
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260706-qcom-clk-mdm9607-fixes-v2-8-745565101869@linaro.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/qcom/gcc-mdm9607.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/clk/qcom/gcc-mdm9607.c |  125 -----------------------------------------
+ 1 file changed, 1 insertion(+), 124 deletions(-)
 
 --- a/drivers/clk/qcom/gcc-mdm9607.c
 +++ b/drivers/clk/qcom/gcc-mdm9607.c
-@@ -1414,7 +1414,7 @@ static struct clk_branch gcc_apss_ahb_cl
+@@ -26,7 +26,6 @@
+ 
+ enum {
+ 	P_XO,
+-	P_BIMC,
+ 	P_GPLL0,
+ 	P_GPLL1,
+ 	P_GPLL2,
+@@ -121,7 +120,7 @@ static struct clk_alpha_pll gpll2_early
+ 	.regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_DEFAULT],
+ 	.clkr = {
+ 		.enable_reg = 0x45000,
+-		.enable_mask = BIT(3), /* Yeah, apparently it's not 2 */
++		.enable_mask = BIT(3), /* BIT(2) is used for BIMC PLL */
+ 		.hw.init = &(struct clk_init_data)
+ 		{
+ 			.name = "gpll2_early",
+@@ -178,68 +177,6 @@ static struct clk_rcg2 apss_ahb_clk_src
+ 	},
  };
  
- static struct clk_branch gcc_apss_axi_clk = {
--	.halt_reg = 0x4601c,
-+	.halt_reg = 0x46020,
- 	.halt_check = BRANCH_HALT_VOTED,
+-static struct clk_pll bimc_pll = {
+-	.l_reg = 0x23004,
+-	.m_reg = 0x23008,
+-	.n_reg = 0x2300c,
+-	.config_reg = 0x23010,
+-	.mode_reg = 0x23000,
+-	.status_reg = 0x2301c,
+-	.status_bit = 17,
+-	.clkr.hw.init = &(struct clk_init_data){
+-		.name = "bimc_pll",
+-		.parent_data = &(const struct clk_parent_data){
+-			.fw_name = "xo",
+-		},
+-		.num_parents = 1,
+-		.ops = &clk_pll_ops,
+-	},
+-};
+-
+-static struct clk_regmap bimc_pll_vote = {
+-	.enable_reg = 0x45000,
+-	.enable_mask = BIT(3),
+-	.hw.init = &(struct clk_init_data){
+-		.name = "bimc_pll_vote",
+-		.parent_hws = (const struct clk_hw *[]){ &bimc_pll.clkr.hw },
+-		.num_parents = 1,
+-		.ops = &clk_pll_vote_ops,
+-	},
+-};
+-
+-static const struct parent_map gcc_xo_gpll0_bimc_map[] = {
+-	{ P_XO, 0 },
+-	{ P_GPLL0, 1 },
+-	{ P_BIMC, 2 },
+-};
+-
+-static const struct clk_parent_data gcc_xo_gpll0_bimc[] = {
+-	{ .fw_name = "xo" },
+-	{ .hw = &gpll0.clkr.hw },
+-	{ .hw = &bimc_pll_vote.hw },
+-};
+-
+-static const struct freq_tbl ftbl_pcnoc_bfdcd_clk_src[] = {
+-	F(19200000, P_XO, 1, 0, 0),
+-	F(50000000, P_GPLL0, 16, 0, 0),
+-	F(100000000, P_GPLL0, 8, 0, 0),
+-	{ }
+-};
+-
+-static struct clk_rcg2 pcnoc_bfdcd_clk_src = {
+-	.cmd_rcgr = 0x27000,
+-	.freq_tbl = ftbl_pcnoc_bfdcd_clk_src,
+-	.hid_width = 5,
+-	.parent_map = gcc_xo_gpll0_bimc_map,
+-	.clkr.hw.init = &(struct clk_init_data){
+-		.name = "pcnoc_bfdcd_clk_src",
+-		.parent_data = gcc_xo_gpll0_bimc,
+-		.num_parents = ARRAY_SIZE(gcc_xo_gpll0_bimc),
+-		.ops = &clk_rcg2_ops,
+-		.flags = CLK_IS_CRITICAL,
+-	},
+-};
+-
+ static const struct freq_tbl ftbl_gcc_blsp1_qup1_6_i2c_apps_clk[] = {
+ 	F(19200000, P_XO, 1, 0, 0),
+ 	F(50000000, P_GPLL0, 16, 0, 0),
+@@ -735,8 +672,6 @@ static struct clk_branch gcc_blsp1_ahb_c
+ 		.enable_mask = BIT(10),
+ 		.hw.init = &(struct clk_init_data){
+ 			.name = "gcc_blsp1_ahb_clk",
+-			.parent_hws = (const struct clk_hw *[]){ &pcnoc_bfdcd_clk_src.clkr.hw },
+-			.num_parents = 1,
+ 			.ops = &clk_branch2_ops,
+ 		},
+ 	},
+@@ -1038,8 +973,6 @@ static struct clk_branch gcc_boot_rom_ah
+ 		.enable_mask = BIT(7),
+ 		.hw.init = &(struct clk_init_data){
+ 			.name = "gcc_boot_rom_ahb_clk",
+-			.parent_hws = (const struct clk_hw *[]){ &pcnoc_bfdcd_clk_src.clkr.hw },
+-			.num_parents = 1,
+ 			.ops = &clk_branch2_ops,
+ 		},
+ 	},
+@@ -1053,9 +986,6 @@ static struct clk_branch gcc_crypto_ahb_
+ 		.enable_mask = BIT(0),
+ 		.hw.init = &(struct clk_init_data){
+ 			.name = "gcc_crypto_ahb_clk",
+-			.parent_hws = (const struct clk_hw *[]){ &pcnoc_bfdcd_clk_src.clkr.hw },
+-			.num_parents = 1,
+-			.flags = CLK_SET_RATE_PARENT,
+ 			.ops = &clk_branch2_ops,
+ 		},
+ 	},
+@@ -1069,9 +999,6 @@ static struct clk_branch gcc_crypto_axi_
+ 		.enable_mask = BIT(1),
+ 		.hw.init = &(struct clk_init_data){
+ 			.name = "gcc_crypto_axi_clk",
+-			.parent_hws = (const struct clk_hw *[]){ &pcnoc_bfdcd_clk_src.clkr.hw },
+-			.num_parents = 1,
+-			.flags = CLK_SET_RATE_PARENT,
+ 			.ops = &clk_branch2_ops,
+ 		},
+ 	},
+@@ -1145,9 +1072,6 @@ static struct clk_branch gcc_mss_cfg_ahb
+ 		.enable_mask = BIT(0),
+ 		.hw.init = &(struct clk_init_data){
+ 			.name = "gcc_mss_cfg_ahb_clk",
+-			.parent_hws = (const struct clk_hw *[]){ &pcnoc_bfdcd_clk_src.clkr.hw },
+-			.num_parents = 1,
+-			.flags = CLK_SET_RATE_PARENT,
+ 			.ops = &clk_branch2_ops,
+ 		},
+ 	},
+@@ -1175,9 +1099,6 @@ static struct clk_branch gcc_pdm_ahb_clk
+ 		.enable_mask = BIT(0),
+ 		.hw.init = &(struct clk_init_data){
+ 			.name = "gcc_pdm_ahb_clk",
+-			.parent_hws = (const struct clk_hw *[]){ &pcnoc_bfdcd_clk_src.clkr.hw },
+-			.num_parents = 1,
+-			.flags = CLK_SET_RATE_PARENT,
+ 			.ops = &clk_branch2_ops,
+ 		},
+ 	},
+@@ -1191,9 +1112,6 @@ static struct clk_branch gcc_prng_ahb_cl
+ 		.enable_mask = BIT(8),
+ 		.hw.init = &(struct clk_init_data){
+ 			.name = "gcc_prng_ahb_clk",
+-			.parent_hws = (const struct clk_hw *[]){ &pcnoc_bfdcd_clk_src.clkr.hw },
+-			.num_parents = 1,
+-			.flags = CLK_SET_RATE_PARENT,
+ 			.ops = &clk_branch2_ops,
+ 		},
+ 	},
+@@ -1206,9 +1124,6 @@ static struct clk_branch gcc_sdcc1_ahb_c
+ 		.enable_mask = BIT(0),
+ 		.hw.init = &(struct clk_init_data){
+ 			.name = "gcc_sdcc1_ahb_clk",
+-			.parent_hws = (const struct clk_hw *[]){ &pcnoc_bfdcd_clk_src.clkr.hw },
+-			.num_parents = 1,
+-			.flags = CLK_SET_RATE_PARENT,
+ 			.ops = &clk_branch2_ops,
+ 		},
+ 	},
+@@ -1236,9 +1151,6 @@ static struct clk_branch gcc_sdcc2_ahb_c
+ 		.enable_mask = BIT(0),
+ 		.hw.init = &(struct clk_init_data){
+ 			.name = "gcc_sdcc2_ahb_clk",
+-			.parent_hws = (const struct clk_hw *[]){ &pcnoc_bfdcd_clk_src.clkr.hw },
+-			.num_parents = 1,
+-			.flags = CLK_SET_RATE_PARENT,
+ 			.ops = &clk_branch2_ops,
+ 		},
+ 	},
+@@ -1259,19 +1171,6 @@ static struct clk_branch gcc_sdcc2_apps_
+ 	},
+ };
+ 
+-static struct clk_rcg2 bimc_ddr_clk_src = {
+-	.cmd_rcgr = 0x32004,
+-	.hid_width = 5,
+-	.parent_map = gcc_xo_gpll0_bimc_map,
+-	.clkr.hw.init = &(struct clk_init_data){
+-		.name = "bimc_ddr_clk_src",
+-		.parent_data = gcc_xo_gpll0_bimc,
+-		.num_parents = 3,
+-		.ops = &clk_rcg2_ops,
+-		.flags = CLK_GET_RATE_NOCACHE,
+-	},
+-};
+-
+ static struct clk_branch gcc_mss_q6_bimc_axi_clk = {
+ 	.halt_reg = 0x49004,
  	.clkr = {
- 		.enable_reg = 0x45004,
+@@ -1279,9 +1178,6 @@ static struct clk_branch gcc_mss_q6_bimc
+ 		.enable_mask = BIT(0),
+ 		.hw.init = &(struct clk_init_data){
+ 			.name = "gcc_mss_q6_bimc_axi_clk",
+-			.parent_hws = (const struct clk_hw *[]){ &bimc_ddr_clk_src.clkr.hw },
+-			.num_parents = 1,
+-			.flags = CLK_SET_RATE_PARENT,
+ 			.ops = &clk_branch2_ops,
+ 		},
+ 	},
+@@ -1295,8 +1191,6 @@ static struct clk_branch gcc_apss_tcu_cl
+ 		.enable_mask = BIT(1),
+ 		.hw.init = &(struct clk_init_data){
+ 			.name = "gcc_apss_tcu_clk",
+-			.parent_hws = (const struct clk_hw *[]){ &bimc_ddr_clk_src.clkr.hw },
+-			.num_parents = 1,
+ 			.ops = &clk_branch2_ops,
+ 		},
+ 	},
+@@ -1310,9 +1204,6 @@ static struct clk_branch gcc_smmu_cfg_cl
+ 		.enable_mask = BIT(12),
+ 		.hw.init = &(struct clk_init_data){
+ 			.name = "gcc_smmu_cfg_clk",
+-			.parent_hws = (const struct clk_hw *[]){ &pcnoc_bfdcd_clk_src.clkr.hw },
+-			.num_parents = 1,
+-			.flags = CLK_SET_RATE_PARENT,
+ 			.ops = &clk_branch2_ops,
+ 		},
+ 	},
+@@ -1360,9 +1251,6 @@ static struct clk_branch gcc_usb_hs_phy_
+ 		.enable_mask = BIT(0),
+ 		.hw.init = &(struct clk_init_data){
+ 			.name = "gcc_usb_hs_phy_cfg_ahb_clk",
+-			.parent_hws = (const struct clk_hw *[]){ &pcnoc_bfdcd_clk_src.clkr.hw },
+-			.num_parents = 1,
+-			.flags = CLK_SET_RATE_PARENT,
+ 			.ops = &clk_branch2_ops,
+ 		},
+ 	},
+@@ -1375,9 +1263,6 @@ static struct clk_branch gcc_usb_hs_ahb_
+ 		.enable_mask = BIT(0),
+ 		.hw.init = &(struct clk_init_data){
+ 			.name = "gcc_usb_hs_ahb_clk",
+-			.parent_hws = (const struct clk_hw *[]){ &pcnoc_bfdcd_clk_src.clkr.hw },
+-			.num_parents = 1,
+-			.flags = CLK_SET_RATE_PARENT,
+ 			.ops = &clk_branch2_ops,
+ 		},
+ 	},
+@@ -1406,8 +1291,6 @@ static struct clk_branch gcc_apss_ahb_cl
+ 		.enable_mask = BIT(14),
+ 		.hw.init = &(struct clk_init_data){
+ 			.name = "gcc_apss_ahb_clk",
+-			.parent_hws = (const struct clk_hw *[]){ &pcnoc_bfdcd_clk_src.clkr.hw },
+-			.num_parents = 1,
+ 			.ops = &clk_branch2_ops,
+ 		},
+ 	},
+@@ -1421,8 +1304,6 @@ static struct clk_branch gcc_apss_axi_cl
+ 		.enable_mask = BIT(13),
+ 		.hw.init = &(struct clk_init_data){
+ 			.name = "gcc_apss_axi_clk",
+-			.parent_hws = (const struct clk_hw *[]){ &pcnoc_bfdcd_clk_src.clkr.hw },
+-			.num_parents = 1,
+ 			.ops = &clk_branch2_ops,
+ 		},
+ 	},
+@@ -1435,10 +1316,6 @@ static struct clk_regmap *gcc_mdm9607_cl
+ 	[GPLL1_VOTE] = &gpll1_vote,
+ 	[GPLL2] = &gpll2.clkr,
+ 	[GPLL2_EARLY] = &gpll2_early.clkr,
+-	[BIMC_PLL] = &bimc_pll.clkr,
+-	[BIMC_PLL_VOTE] = &bimc_pll_vote,
+-	[BIMC_DDR_CLK_SRC] = &bimc_ddr_clk_src.clkr,
+-	[PCNOC_BFDCD_CLK_SRC] = &pcnoc_bfdcd_clk_src.clkr,
+ 	[APSS_AHB_CLK_SRC] = &apss_ahb_clk_src.clkr,
+ 	[BLSP1_QUP1_I2C_APPS_CLK_SRC] = &blsp1_qup1_i2c_apps_clk_src.clkr,
+ 	[BLSP1_QUP1_SPI_APPS_CLK_SRC] = &blsp1_qup1_spi_apps_clk_src.clkr,
 
 
