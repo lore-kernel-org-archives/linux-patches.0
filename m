@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8E5F41D4E9;
-	Sat, 12 Sep 2026 09:09:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEE1138736C;
+	Sat, 12 Sep 2026 09:10:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789204199; cv=none; b=CC3JAmeLPEF9UInumnTcfkfWOdH/XJO3OY5+axZH11eX0RTx0+PR8LHnyQDW6te2iohLBOJwJ1N3Uv8hT4bvlT1XUBMGGZVLuENQeCuqIZxB/Md4JnEpuGbJ7Lr2KAJ5DCvRKL9w6WwYb12O7g5ChKVcOuq4DwGm0dx4/3whCBs=
+	t=1789204204; cv=none; b=Kr1BAfwsKyeyThfVuV3dGYWFZrj16Sp0fcNx9Zt7ygiytTXrmBkvSVj3a5TxsqV62XzC/So6IhjtUtdKao/fr1TW7uIzp1bpzeK2cdHuWv7VlpY2i2V4QebsZLrFCCqBb8akBfJKhv4hRoPPrJyvLtPYXseW/fs7bDvkKbRNuSE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789204199; c=relaxed/simple;
-	bh=Bwvm17gThHb0I581STH7xE2t4eSp5W0IWwrV+XB97m4=;
+	s=arc-20240116; t=1789204204; c=relaxed/simple;
+	bh=yYkjKUP0OU6bSYIOQ5gTQ5vjV+3xA9188uMigHWXS3k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eGaqeWa3I18Ngu+hFyOZuiJ+db6ovRCsrHLLR8qWKFeRyUqx+79S2jngRRZzjY5Qs9mD6Nm6Zr7KsdVQYdTRbNtfMFPyNQlsV7T6CmP+VzOjnHptiqYVo4tWXrvrs0uH3kJho+oReyxAP85mQ1y/2tvh/4ifWEvDZn6kOIZQ1So=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TPU4bzoE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=P3OWwbvDMkGjSlXC2ThRfTLUn17wj0hAjJh2Pcudukx4aT0V3Hp+j0Q8PXUIWfoIU98daMWX1PUCBI/zPtZSCSQ1hqEKrZSbXyYE9aKqagMXHSClq280LurAhms3vjPENid8pTUWeGVFbqbMyHSYrqQRwtVKfXWPRG9jxQnUVz8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0VaCw/Yg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TPU4bzoE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8ACF71F000FF;
-	Sat, 12 Sep 2026 09:09:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0VaCw/Yg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 776F01F000FF;
+	Sat, 12 Sep 2026 09:10:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789204197;
-	bh=iDSwphTSftRucSSzUCBm0wrrWg1cQ5xTX14hPvoV6CU=;
+	s=korg; t=1789204202;
+	bh=/tOhBYmZfakRw/ZCmEyTDHVLvPRpMFjtr9n20wEb3u4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TPU4bzoEfM2wKIbApAdXPjIXnSjHTfQKg9JdBJT08+sX/E5cLYTy2w2Jc/6jtCNPN
-	 awRWH50FEixbGcGZ/VtXRiqT9jlp06/zq3syP0LlHkvOZi59kdOGOWAgjcQTZDXrHt
-	 oT7EWb4OCq4OElgYgA5ORGZK3GGIQzFrhKViUmVQ=
+	b=0VaCw/YgtGUJAkOxxauAVGG6kPGiVYcxMCWnPUPsXApp1UFirOn6ZpfWg6kmDevZ4
+	 34mM6iX34NX2qRb9o4vWOIjBRFOlh7qFNtbquZop+13lDV69dMJbxImgX8T2OynSRS
+	 pqZyfg9RZerBhv1k9ZS6iQMyctqqQxiYC4MzO6mk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Prabu Thayalan <prabu.ponrajthayalan@amd.com>,
-	Eric Joyner <eric.joyner@amd.com>,
-	Brett Creeley <brett.creeley@amd.com>,
-	Simon Horman <horms@kernel.org>,
+	Petr Oros <poros@redhat.com>,
+	Ivan Vecera <ivecera@redhat.com>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1564/1815] ionic: fix completion descriptor access with 2x desc size
-Date: Sat, 12 Sep 2026 08:55:14 +0200
-Message-ID: <20260912065725.709990012@linuxfoundation.org>
+Subject: [PATCH 7.2 1565/1815] dpll: fix NULL deref in dpll_device_ops() during teardown race
+Date: Sat, 12 Sep 2026 08:55:15 +0200
+Message-ID: <20260912065725.734411377@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -54,111 +53,342 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Prabu Thayalan <prabu.ponrajthayalan@amd.com>
+From: Petr Oros <poros@redhat.com>
 
-[ Upstream commit 5da6ec6f06f235166bd084466b3386c638e26675 ]
+[ Upstream commit 33f016b23a219fe034213849b51436b8e79df251 ]
 
-The old ionic_rx_service() and ionic_tx_service() used array
-indexing to access completion descriptors:
+When the last owner of a dpll device unregisters while a foreign driver
+still holds a pin on it via dpll_pin_on_pin_register(), the dpll object
+stays alive with an empty registration list. A pin notification queued
+before the unregister (e.g. ice reacting to zl3073x_i2c removal) then
+walks pin->dpll_refs into dpll_device_ops(), which trips the WARN_ON and
+dereferences the missing registration. dpll_lock cannot help because the
+notification work was queued before the unregistering driver took the
+lock.
 
-    comp = &((struct ionic_rxq_comp *)cq->base)[cq->tail_idx];
+Treat the empty registration list as a legitimate transient state. Make
+dpll_priv() and dpll_device_ops() return NULL in that case and make
+every pin netlink path that resolves a device from a pin skip such
+dplls. dpll_cmd_pin_get_one() picks a ref with a live registration and
+returns -ENODEV when there is none, the pin dumpit skips such a pin
+instead of aborting the dump, dpll_msg_add_pin_dplls() and the
+frequency, esync, reference sync and phase adjust set paths skip dead
+refs, and dpll_pin_parent_device_set() validates the parent with
+dpll_device_get_by_id(). dpll_pin_register() is the last caller that
+dereferenced the device ops without a check, so move its frequency
+monitor validation under dpll_lock and tolerate a missing registration
+there as well.
 
-This assumes the stride is sizeof(struct ionic_rxq_comp) = 16 bytes.
-However, when the IONIC_Q_F_2X_CQ_DESC flag is set, the actual
-completion descriptor size is 32 bytes (2 * sizeof(comp)), and the
-completion itself is located at the end of that 32-byte slot. Array
-indexing with a 16-byte stride would access the wrong offset.
+The empty registration list is equivalent to a cleared DPLL_REGISTERED
+mark, both transitions happen under dpll_lock in dpll_device_register()
+and dpll_device_unregister(). A pin notification for a pin whose dplls
+are all gone is now dropped with -ENODEV instead of crashing, all
+callers in the core ignore that return value.
 
-Use pointer arithmetic that accounts for the actual descriptor size
-from cq->desc_size:
+ WARNING: drivers/dpll/dpll_core.c:1092 at dpll_device_ops+0x24/0x40,
+ CPU#83: kworker/u576:3/23471
+ Modules linked in: ... ice ... zl3073x_i2c(-) ... zl3073x ...
+ Workqueue: ice_dpll_wq ice_dpll_pin_notify_work [ice]
+ RIP: 0010:dpll_device_ops+0x24/0x40
+ Call Trace:
+  <TASK>
+  dpll_cmd_pin_get_one+0x336/0x520
+  dpll_pin_event_send+0x82/0x140
+  dpll_pin_on_pin_unregister+0xbb/0x160
+  ice_dpll_pin_notify_work+0x1bc/0x1f0 [ice]
+  process_one_work+0x19e/0x370
+  worker_thread+0x1a6/0x310
+  kthread+0xe4/0x120
+  ret_from_fork+0x1a1/0x270
+  ret_from_fork_asm+0x1a/0x30
+  </TASK>
+ ---[ end trace 0000000000000000 ]---
+ BUG: kernel NULL pointer dereference, address: 0000000000000010
+ #PF: supervisor read access in kernel mode
+ #PF: error_code(0x0000) - not-present page
 
-    comp = cq->base +
-           cq->desc_size * cq->tail_idx +
-           cq->desc_size - sizeof(*comp);
-
-This correctly calculates the completion location regardless of
-descriptor size. For the common case where desc_size equals
-sizeof(*comp), use array indexing in a likely() fast path to avoid
-performance regression.
-
-Fixes: 65e548f6b0ff ("ionic: remove the cq_info to save more memory")
-Signed-off-by: Prabu Thayalan <prabu.ponrajthayalan@amd.com>
-Signed-off-by: Eric Joyner <eric.joyner@amd.com>
-Reviewed-by: Brett Creeley <brett.creeley@amd.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260811195039.1315045-3-eric.joyner@amd.com
+Fixes: 9431063ad323 ("dpll: core: Add DPLL framework base functions")
+Signed-off-by: Petr Oros <poros@redhat.com>
+Tested-by: Ivan Vecera <ivecera@redhat.com>
+Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Link: https://patch.msgid.link/20260813140817.1051388-1-poros@redhat.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/pensando/ionic/ionic_txrx.c  | 27 ++++++++++---------
- 1 file changed, 14 insertions(+), 13 deletions(-)
+ drivers/dpll/dpll_core.c    | 24 +++++++++------
+ drivers/dpll/dpll_netlink.c | 59 ++++++++++++++++++++++++++++++++-----
+ 2 files changed, 67 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/net/ethernet/pensando/ionic/ionic_txrx.c b/drivers/net/ethernet/pensando/ionic/ionic_txrx.c
-index c3bcfdd1a1405..e436e3231e864 100644
---- a/drivers/net/ethernet/pensando/ionic/ionic_txrx.c
-+++ b/drivers/net/ethernet/pensando/ionic/ionic_txrx.c
-@@ -706,11 +706,7 @@ static void ionic_rx_clean(struct ionic_queue *q,
- 		__le64 *cq_desc_hwstamp;
- 		u64 hwstamp;
- 
--		cq_desc_hwstamp =
--			(void *)comp +
--			qcq->cq.desc_size -
--			sizeof(struct ionic_rxq_comp) -
--			IONIC_HWSTAMP_CQ_NEGOFFSET;
-+		cq_desc_hwstamp = (void *)comp - IONIC_HWSTAMP_CQ_NEGOFFSET;
- 
- 		hwstamp = le64_to_cpu(*cq_desc_hwstamp);
- 
-@@ -734,7 +730,12 @@ static bool __ionic_rx_service(struct ionic_cq *cq, struct bpf_prog *xdp_prog)
- 	struct ionic_queue *q = cq->bound_q;
- 	struct ionic_rxq_comp *comp;
- 
--	comp = &((struct ionic_rxq_comp *)cq->base)[cq->tail_idx];
-+	if (likely(cq->desc_size == sizeof(*comp)))
-+		comp = &((struct ionic_rxq_comp *)cq->base)[cq->tail_idx];
-+	else
-+		comp = cq->base +
-+		       cq->desc_size * cq->tail_idx +
-+		       cq->desc_size - sizeof(*comp);
- 
- 	if (!color_match(comp->pkt_type_color, cq->done_color))
- 		return false;
-@@ -1187,7 +1188,6 @@ static void ionic_tx_clean(struct ionic_queue *q,
- 			   bool in_napi)
+diff --git a/drivers/dpll/dpll_core.c b/drivers/dpll/dpll_core.c
+index 43d51d942eadd..a320eeb829ad2 100644
+--- a/drivers/dpll/dpll_core.c
++++ b/drivers/dpll/dpll_core.c
+@@ -876,19 +876,25 @@ int
+ dpll_pin_register(struct dpll_device *dpll, struct dpll_pin *pin,
+ 		  const struct dpll_pin_ops *ops, void *priv)
  {
- 	struct ionic_tx_stats *stats = q_to_tx_stats(q);
--	struct ionic_qcq *qcq = q_to_qcq(q);
- 	struct sk_buff *skb;
++	const struct dpll_device_ops *dev_ops;
+ 	int ret;
  
- 	if (desc_info->xdpf) {
-@@ -1212,11 +1212,7 @@ static void ionic_tx_clean(struct ionic_queue *q,
- 			__le64 *cq_desc_hwstamp;
- 			u64 hwstamp;
+ 	if (WARN_ON(!ops) ||
+ 	    WARN_ON(!ops->state_on_dpll_get) ||
+ 	    WARN_ON(!ops->direction_get) ||
+-	    WARN_ON(ops->measured_freq_get &&
+-		    (!dpll_device_ops(dpll)->freq_monitor_get ||
+-		     !dpll_device_ops(dpll)->freq_monitor_set)) ||
+ 	    WARN_ON(ops->supported_ffo && !ops->ffo_get))
+ 		return -EINVAL;
  
--			cq_desc_hwstamp =
--				(void *)comp +
--				qcq->cq.desc_size -
--				sizeof(struct ionic_txq_comp) -
--				IONIC_HWSTAMP_CQ_NEGOFFSET;
-+			cq_desc_hwstamp = (void *)comp - IONIC_HWSTAMP_CQ_NEGOFFSET;
+ 	mutex_lock(&dpll_lock);
  
- 			hwstamp = le64_to_cpu(*cq_desc_hwstamp);
++	dev_ops = dpll_device_ops(dpll);
++	if (WARN_ON(ops->measured_freq_get &&
++		    (!dev_ops || !dev_ops->freq_monitor_get ||
++		     !dev_ops->freq_monitor_set))) {
++		ret = -EINVAL;
++		goto out_unlock;
++	}
++
+ 	/*
+ 	 * For pins identified via firmware (pin->fwnode), allow registration
+ 	 * even if the pin's (module, clock_id) differs from the target DPLL.
+@@ -1081,12 +1087,8 @@ EXPORT_SYMBOL_GPL(dpll_pin_ref_sync_pair_add);
+ static struct dpll_device_registration *
+ dpll_device_registration_first(struct dpll_device *dpll)
+ {
+-	struct dpll_device_registration *reg;
+-
+-	reg = list_first_entry_or_null((struct list_head *)&dpll->registration_list,
+-				       struct dpll_device_registration, list);
+-	WARN_ON(!reg);
+-	return reg;
++	return list_first_entry_or_null((struct list_head *)&dpll->registration_list,
++					struct dpll_device_registration, list);
+ }
  
-@@ -1251,7 +1247,12 @@ static bool ionic_tx_service(struct ionic_cq *cq,
- 	unsigned int pkts = 0;
- 	u16 index;
+ void *dpll_priv(struct dpll_device *dpll)
+@@ -1094,6 +1096,8 @@ void *dpll_priv(struct dpll_device *dpll)
+ 	struct dpll_device_registration *reg;
  
--	comp = &((struct ionic_txq_comp *)cq->base)[cq->tail_idx];
-+	if (likely(cq->desc_size == sizeof(*comp)))
-+		comp = &((struct ionic_txq_comp *)cq->base)[cq->tail_idx];
-+	else
-+		comp = cq->base +
-+		       cq->desc_size * cq->tail_idx +
-+		       cq->desc_size - sizeof(*comp);
+ 	reg = dpll_device_registration_first(dpll);
++	if (!reg)
++		return NULL;
+ 	return reg->priv;
+ }
  
- 	if (!color_match(comp->color, cq->done_color))
- 		return false;
+@@ -1102,6 +1106,8 @@ const struct dpll_device_ops *dpll_device_ops(struct dpll_device *dpll)
+ 	struct dpll_device_registration *reg;
+ 
+ 	reg = dpll_device_registration_first(dpll);
++	if (!reg)
++		return NULL;
+ 	return reg->ops;
+ }
+ 
+diff --git a/drivers/dpll/dpll_netlink.c b/drivers/dpll/dpll_netlink.c
+index afb31c0040382..9e55745e33e4f 100644
+--- a/drivers/dpll/dpll_netlink.c
++++ b/drivers/dpll/dpll_netlink.c
+@@ -66,6 +66,22 @@ static bool dpll_pin_available(struct dpll_pin *pin)
+ 	return false;
+ }
+ 
++static bool dpll_device_registered(struct dpll_device *dpll)
++{
++	return dpll_device_ops(dpll);
++}
++
++static struct dpll_pin_ref *dpll_pin_first_registered_ref(struct dpll_pin *pin)
++{
++	struct dpll_pin_ref *ref;
++	unsigned long i;
++
++	xa_for_each(&pin->dpll_refs, i, ref)
++		if (dpll_device_registered(ref->dpll))
++			return ref;
++	return NULL;
++}
++
+ /**
+  * dpll_msg_add_pin_handle - attach pin handle attribute to a given message
+  * @msg: pointer to sk_buff message to attach a pin handle
+@@ -656,6 +672,8 @@ dpll_msg_add_pin_dplls(struct sk_buff *msg, struct dpll_pin *pin,
+ 	int ret;
+ 
+ 	xa_for_each(&pin->dpll_refs, index, ref) {
++		if (!dpll_device_registered(ref->dpll))
++			continue;
+ 		attr = nla_nest_start(msg, DPLL_A_PIN_PARENT_DEVICE);
+ 		if (!attr)
+ 			return -EMSGSIZE;
+@@ -700,9 +718,10 @@ dpll_cmd_pin_get_one(struct sk_buff *msg, struct dpll_pin *pin,
+ 	int ret;
+ 
+ 	ref = dpll_pin_own_dpll_ref_first(pin);
++	if (!ref || !dpll_device_registered(ref->dpll))
++		ref = dpll_pin_first_registered_ref(pin);
+ 	if (!ref)
+-		ref = dpll_xa_ref_dpll_first(&pin->dpll_refs);
+-	ASSERT_NOT_NULL(ref);
++		return -ENODEV;
+ 
+ 	ret = dpll_msg_add_pin_handle(msg, pin);
+ 	if (ret)
+@@ -1091,6 +1110,8 @@ dpll_pin_freq_set(struct dpll_pin *pin, struct nlattr *a,
+ 	}
+ 
+ 	xa_for_each(&pin->dpll_refs, i, ref) {
++		if (!dpll_device_registered(ref->dpll))
++			continue;
+ 		ops = dpll_pin_ops(ref);
+ 		if ((!ops->frequency_set || !ops->frequency_get) &&
+ 		    ref->dpll->module == pin->module &&
+@@ -1101,7 +1122,7 @@ dpll_pin_freq_set(struct dpll_pin *pin, struct nlattr *a,
+ 		}
+ 	}
+ 	ref = dpll_pin_own_dpll_ref_first(pin);
+-	if (!ref) {
++	if (!ref || !dpll_device_registered(ref->dpll)) {
+ 		NL_SET_ERR_MSG(extack, "pin owner dpll not found");
+ 		return -ENODEV;
+ 	}
+@@ -1117,6 +1138,8 @@ dpll_pin_freq_set(struct dpll_pin *pin, struct nlattr *a,
+ 		return 0;
+ 
+ 	xa_for_each(&pin->dpll_refs, i, ref) {
++		if (!dpll_device_registered(ref->dpll))
++			continue;
+ 		ops = dpll_pin_ops(ref);
+ 		if (!ops->frequency_set)
+ 			continue;
+@@ -1138,6 +1161,8 @@ dpll_pin_freq_set(struct dpll_pin *pin, struct nlattr *a,
+ 	xa_for_each(&pin->dpll_refs, i, ref) {
+ 		if (ref == failed)
+ 			break;
++		if (!dpll_device_registered(ref->dpll))
++			continue;
+ 		ops = dpll_pin_ops(ref);
+ 		if (!ops->frequency_set)
+ 			continue;
+@@ -1163,6 +1188,8 @@ dpll_pin_esync_set(struct dpll_pin *pin, struct nlattr *a,
+ 	int ret;
+ 
+ 	xa_for_each(&pin->dpll_refs, i, ref) {
++		if (!dpll_device_registered(ref->dpll))
++			continue;
+ 		ops = dpll_pin_ops(ref);
+ 		if ((!ops->esync_set || !ops->esync_get) &&
+ 		    ref->dpll->module == pin->module &&
+@@ -1173,7 +1200,7 @@ dpll_pin_esync_set(struct dpll_pin *pin, struct nlattr *a,
+ 		}
+ 	}
+ 	ref = dpll_pin_own_dpll_ref_first(pin);
+-	if (!ref) {
++	if (!ref || !dpll_device_registered(ref->dpll)) {
+ 		NL_SET_ERR_MSG(extack, "pin owner dpll not found");
+ 		return -ENODEV;
+ 	}
+@@ -1199,6 +1226,8 @@ dpll_pin_esync_set(struct dpll_pin *pin, struct nlattr *a,
+ 	xa_for_each(&pin->dpll_refs, i, ref) {
+ 		void *pin_dpll_priv;
+ 
++		if (!dpll_device_registered(ref->dpll))
++			continue;
+ 		ops = dpll_pin_ops(ref);
+ 		if (!ops->esync_set)
+ 			continue;
+@@ -1224,6 +1253,8 @@ dpll_pin_esync_set(struct dpll_pin *pin, struct nlattr *a,
+ 
+ 		if (ref == failed)
+ 			break;
++		if (!dpll_device_registered(ref->dpll))
++			continue;
+ 		ops = dpll_pin_ops(ref);
+ 		if (!ops->esync_set)
+ 			continue;
+@@ -1262,7 +1293,7 @@ dpll_pin_ref_sync_state_set(struct dpll_pin *pin,
+ 		return -EINVAL;
+ 	}
+ 	ref = dpll_pin_own_dpll_ref_first(pin);
+-	if (!ref) {
++	if (!ref || !dpll_device_registered(ref->dpll)) {
+ 		NL_SET_ERR_MSG(extack, "pin owner dpll not found");
+ 		return -ENODEV;
+ 	}
+@@ -1283,6 +1314,8 @@ dpll_pin_ref_sync_state_set(struct dpll_pin *pin,
+ 	if (state == old_state)
+ 		return 0;
+ 	xa_for_each(&pin->dpll_refs, i, ref) {
++		if (!dpll_device_registered(ref->dpll))
++			continue;
+ 		ops = dpll_pin_ops(ref);
+ 		if (!ops->ref_sync_set)
+ 			continue;
+@@ -1307,6 +1340,8 @@ dpll_pin_ref_sync_state_set(struct dpll_pin *pin,
+ 	xa_for_each(&pin->dpll_refs, i, ref) {
+ 		if (ref == failed)
+ 			break;
++		if (!dpll_device_registered(ref->dpll))
++			continue;
+ 		ops = dpll_pin_ops(ref);
+ 		if (!ops->ref_sync_set)
+ 			continue;
+@@ -1500,6 +1535,8 @@ dpll_pin_phase_adj_set(struct dpll_pin *pin, struct nlattr *phase_adj_attr,
+ 	}
+ 
+ 	xa_for_each(&pin->dpll_refs, i, ref) {
++		if (!dpll_device_registered(ref->dpll))
++			continue;
+ 		ops = dpll_pin_ops(ref);
+ 		if ((!ops->phase_adjust_set || !ops->phase_adjust_get) &&
+ 		    ref->dpll->module == pin->module &&
+@@ -1509,7 +1546,7 @@ dpll_pin_phase_adj_set(struct dpll_pin *pin, struct nlattr *phase_adj_attr,
+ 		}
+ 	}
+ 	ref = dpll_pin_own_dpll_ref_first(pin);
+-	if (!ref) {
++	if (!ref || !dpll_device_registered(ref->dpll)) {
+ 		NL_SET_ERR_MSG(extack, "pin owner dpll not found");
+ 		return -ENODEV;
+ 	}
+@@ -1526,6 +1563,8 @@ dpll_pin_phase_adj_set(struct dpll_pin *pin, struct nlattr *phase_adj_attr,
+ 		return 0;
+ 
+ 	xa_for_each(&pin->dpll_refs, i, ref) {
++		if (!dpll_device_registered(ref->dpll))
++			continue;
+ 		ops = dpll_pin_ops(ref);
+ 		if (!ops->phase_adjust_set)
+ 			continue;
+@@ -1550,6 +1589,8 @@ dpll_pin_phase_adj_set(struct dpll_pin *pin, struct nlattr *phase_adj_attr,
+ 	xa_for_each(&pin->dpll_refs, i, ref) {
+ 		if (ref == failed)
+ 			break;
++		if (!dpll_device_registered(ref->dpll))
++			continue;
+ 		ops = dpll_pin_ops(ref);
+ 		if (!ops->phase_adjust_set)
+ 			continue;
+@@ -1581,7 +1622,7 @@ dpll_pin_parent_device_set(struct dpll_pin *pin, struct nlattr *parent_nest,
+ 		return -EINVAL;
+ 	}
+ 	pdpll_idx = nla_get_u32(tb[DPLL_A_PIN_PARENT_ID]);
+-	dpll = xa_load(&dpll_device_xa, pdpll_idx);
++	dpll = dpll_device_get_by_id(pdpll_idx);
+ 	if (!dpll) {
+ 		NL_SET_ERR_MSG(extack, "parent device not found");
+ 		return -EINVAL;
+@@ -1873,6 +1914,10 @@ int dpll_nl_pin_get_dumpit(struct sk_buff *skb, struct netlink_callback *cb)
+ 		ret = dpll_cmd_pin_get_one(skb, pin, cb->extack);
+ 		if (ret) {
+ 			genlmsg_cancel(skb, hdr);
++			if (ret == -ENODEV) {
++				ret = 0;
++				continue;
++			}
+ 			break;
+ 		}
+ 		genlmsg_end(skb, hdr);
 -- 
 2.53.0
 
