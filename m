@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B0E13264F4;
-	Sat, 12 Sep 2026 13:51:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9C1917A30A;
+	Sat, 12 Sep 2026 13:51:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789221091; cv=none; b=VwhZ4w1oAq8boCCXWezg6J2tgpn7t28/Iue99UlvXhiGOnKdODEoECy6etnrpd6XZfyTa/Ksf6j2m2yjoQvEVX7jGzFfNpBF7i0ZDc/pcRoOn+wKTIMU0HcSuRAcy/7n9ov0gYqephj8V4gPpOBlAMNKpyYNcyoB9Cles7peO/w=
+	t=1789221096; cv=none; b=kfOIps/yo22TOHULFLwfU05yKPMFoIAKzprPYZ9Dl5mHl0y1HsL6CT08SoxiqHWuMQjECdWGSPw2tGvC/FjrVJTv6CDvgbIS0v8/EMFG3mXZcDIKG3MTBiDxtzlROXpG+UbWih+0w7xl2JkGOXI5NPtw9EY79LXyVtvKE2+GGAA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789221091; c=relaxed/simple;
-	bh=DmEpjlniHltQjeOdyZ/nfoWGJYskKLCWBZEpS9r1Utw=;
+	s=arc-20240116; t=1789221096; c=relaxed/simple;
+	bh=tEXoziZFhqC5FRnizWd5qNNmGMzhouAJykNnjWaCUp4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ta1LRHyE7Abg7laHZVEYjYCqVVWj2y2VFayzDksVm8k+2U9j4NPffCKSPhjHrla9wH296S4g4H+4CM8PLE4EvIev/fG6DCXfpqx1u4qoDCi2FuWOZ5X36zs9MX5TMJ/xyzqzhlI8426GgdCCJA582ObwVZabuha3Np+inCA+wao=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NGg/FaVo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=udj/EckU1vvJKgIvdezItdlaCQXK0fSOyP4oQ5RQNqDvhAcLu1M1LBnxKb1rLsJWFId9CweSEHBvX+G9xearTv+ovOSTfI1/hGH13oBkD8vFWr5DUGiClLTWdfFyjSHccobucUWQPBCFEmK0Nfvmcc+e+7DITeWO86Sj6Mfnv+8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zt2R9W9V; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NGg/FaVo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44C451F000FF;
-	Sat, 12 Sep 2026 13:51:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zt2R9W9V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 304EE1F000FF;
+	Sat, 12 Sep 2026 13:51:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789221090;
-	bh=BPwWnNq/Z3Z+xJoWN9w9P3GQoB2YocfcYNV4ZAyFalA=;
+	s=korg; t=1789221095;
+	bh=83a9g64OZF0Ygth4xr0f5m3Fsc3JCJ3tRshaeOFAquQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NGg/FaVo8bz7IQnKqXfN5ltGfboSEGU1QsOaZhcAmHpy/XPE/UtB58LsoVzWYfSa5
-	 yxD+xwccRKmXXudoW52EvnaJUS8aXJOMTXtCI2AQQsDV1q1dNys1+Co0ISUxQhLmu5
-	 N2Pu0mQ9ASBlxCEq6vmLmsBLyP4YaJ3A9IgHFV0k=
+	b=Zt2R9W9VbP9UXJ0xHWgg4M2hj188O1KUn0FplxZlDAXmu8ymvBSBVIRn9PcEgCXvn
+	 gUddc73b2vN4wfGlzq05o4FtJ7NzcYYjqbNpbkX6V3TDpTRSlGTKPhsqDxzZ2gPUal
+	 6rlwFqvRmhuMRYVolvYUH1/cOxVCc3Te2PyroSBw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laxman Acharya Padhya <acharyalaxman8848@gmail.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	Jan Kara <jack@suse.cz>,
+	Amir Goldstein <amir73il@gmail.com>,
+	Youngjae Kwon <yjkwon0026@snu.ac.kr>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0313/1424] wifi: mt76: mt7996: validate default EEPROM firmware size
-Date: Sat, 12 Sep 2026 08:45:45 +0200
-Message-ID: <20260912065614.293028740@linuxfoundation.org>
+Subject: [PATCH 6.6 0314/1424] fsnotify: Fix stale object mask after concurrent mark updates
+Date: Sat, 12 Sep 2026 08:45:46 +0200
+Message-ID: <20260912065614.316350966@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -51,45 +52,133 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Laxman Acharya Padhya <acharyalaxman8848@gmail.com>
+From: Youngjae Kwon <yjkwon0026@snu.ac.kr>
 
-[ Upstream commit 653c6e289b13cc6942f3e8f8e3c568e70fa42d1f ]
+[ Upstream commit e422777fdd4746de1109575c51e65038d4c5c1be ]
 
-The default EEPROM firmware is parsed and copied as a full EEPROM
-without checking its length. A truncated file can make the driver
-read beyond the firmware buffer during variant validation or the
-fallback copy.
+When a mark gets a new event bit, fanotify and inotify may avoid
+recalculating the object mask if the cached aggregate already contains that
+bit. This is racy with a recalculation triggered by a concurrent update to
+another mark on the same connector.
 
-Reject files shorter than MT7996_EEPROM_SIZE before parsing or
-copying the firmware.
+The concurrent scan can read the mark before the new bit is added, while
+the updater reads the old aggregate before that scan publishes its result.
+The updater then skips recalculation and the scan publishes a mask without
+the bit, leaving the object mask stale after both updates complete.
 
-Fixes: 98686cd21624 ("wifi: mt76: mt7996: add driver for MediaTek Wi-Fi 7 (802.11be) devices")
-Cc: stable@vger.kernel.org
-Signed-off-by: Laxman Acharya Padhya <acharyalaxman8848@gmail.com>
-Link: https://patch.msgid.link/20260713115412.67095-1-acharyalaxman8848@gmail.com
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+This can be reproduced with two fanotify groups watching the same inode:
+one thread removes FAN_MODIFY from one existing mark while another thread
+adds FAN_MODIFY to the other mark. After both fanotify_mark() calls return,
+writes can fail to produce FAN_MODIFY for the group whose mark now contains
+the bit. This was reproduced on an unmodified v6.12.95 kernel. The
+equivalent inotify interleaving loses IN_MODIFY events.
+
+For normal fanotify additions, recalculate whenever the raw mark mask
+changes. The normal mask is not cleared asynchronously, so an unchanged
+addition cannot introduce missing interest. Always recalculate ignore-mask
+updates because FS_MODIFY handling may clear the ignore mask without taking
+mark->lock, making snapshot comparisons unreliable.
+
+Always recalculate after updating an existing inotify watch. Its replace
+path temporarily sets mark->mask to zero, so a concurrent scan can observe
+zero even when the old and final masks are equal. Assigning the replacement
+mask directly would avoid the transient zero, but existing-watch updates
+are infrequent, so unconditional recalculation is simpler.
+
+Link: https://lore.kernel.org/all/CACwKKmCZdiZDoFuYm6LZhQ=XvHPk0fNKH=X3LmoXMqakYqJaNw@mail.gmail.com/
+Fixes: 63c882a05416 ("inotify: reimplement inotify using fsnotify")
+Fixes: 912ee3946c5e ("fanotify: do not call fanotify_update_object_mask in fanotify_add_mark")
+Cc: stable@vger.kernel.org # needs adjustments for <= 7.0
+Suggested-by: Jan Kara <jack@suse.cz>
+Suggested-by: Amir Goldstein <amir73il@gmail.com>
+Signed-off-by: Youngjae Kwon <yjkwon0026@snu.ac.kr>
+Link: https://patch.msgid.link/20260802015801.2426818-1-yjkwon0026@snu.ac.kr
+Signed-off-by: Jan Kara <jack@suse.cz>
+(cherry picked from commit e422777fdd4746de1109575c51e65038d4c5c1be)
+[yjkwon0026: Resolve the inotify conflict by retaining the branch-native
+inode->i_fsnotify_marks argument to fsnotify_recalc_mask(). This tree
+lacks 35ceae44742e ("fsnotify: Avoid data race between
+fsnotify_recalc_mask() and fsnotify_object_watched()") and
+4520b96b8136 ("fsnotify: inotify: pass mark connector to
+fsnotify_recalc_mask()"). The differing READ_ONCE() line and connector
+call are in the conditional deleted by this patch, so neither commit is
+a prerequisite for this fix.]
+Signed-off-by: Youngjae Kwon <yjkwon0026@snu.ac.kr>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7996/eeprom.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/notify/fanotify/fanotify_user.c | 12 +++++++-----
+ fs/notify/inotify/inotify_user.c   | 15 +--------------
+ 2 files changed, 8 insertions(+), 19 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/eeprom.c b/drivers/net/wireless/mediatek/mt76/mt7996/eeprom.c
-index 544b6c6f1ea32..8cc1d7ae4d988 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/eeprom.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/eeprom.c
-@@ -43,6 +43,12 @@ mt7996_eeprom_load_default(struct mt7996_dev *dev)
- 		goto out;
- 	}
+diff --git a/fs/notify/fanotify/fanotify_user.c b/fs/notify/fanotify/fanotify_user.c
+index f4798d613dc22..763ca835d8fd5 100644
+--- a/fs/notify/fanotify/fanotify_user.c
++++ b/fs/notify/fanotify/fanotify_user.c
+@@ -1186,16 +1186,18 @@ static bool fanotify_mark_update_flags(struct fsnotify_mark *fsn_mark,
+ static bool fanotify_mark_add_to_mask(struct fsnotify_mark *fsn_mark,
+ 				      __u32 mask, unsigned int fan_flags)
+ {
++	__u32 old_mask;
+ 	bool recalc;
  
-+	if (fw->size < MT7996_EEPROM_SIZE) {
-+		dev_err(dev->mt76.dev, "Invalid default bin size\n");
-+		ret = -EINVAL;
-+		goto out;
+ 	spin_lock(&fsn_mark->lock);
+-	if (!(fan_flags & FANOTIFY_MARK_IGNORE_BITS))
++	if (!(fan_flags & FANOTIFY_MARK_IGNORE_BITS)) {
++		old_mask = fsn_mark->mask;
+ 		fsn_mark->mask |= mask;
+-	else
++		recalc = old_mask != fsn_mark->mask;
++	} else {
+ 		fsn_mark->ignore_mask |= mask;
+-
+-	recalc = fsnotify_calc_mask(fsn_mark) &
+-		~fsnotify_conn_mask(fsn_mark->connector);
++		recalc = true;
 +	}
-+
- 	memcpy(eeprom, fw->data, MT7996_EEPROM_SIZE);
- 	dev->flash_mode = true;
  
+ 	recalc |= fanotify_mark_update_flags(fsn_mark, fan_flags);
+ 	spin_unlock(&fsn_mark->lock);
+diff --git a/fs/notify/inotify/inotify_user.c b/fs/notify/inotify/inotify_user.c
+index 804af9d6078b0..b2c75477f5497 100644
+--- a/fs/notify/inotify/inotify_user.c
++++ b/fs/notify/inotify/inotify_user.c
+@@ -540,7 +540,6 @@ static int inotify_update_existing_watch(struct fsnotify_group *group,
+ {
+ 	struct fsnotify_mark *fsn_mark;
+ 	struct inotify_inode_mark *i_mark;
+-	__u32 old_mask, new_mask;
+ 	int replace = !(arg & IN_MASK_ADD);
+ 	int create = (arg & IN_MASK_CREATE);
+ 	int ret;
+@@ -556,27 +555,15 @@ static int inotify_update_existing_watch(struct fsnotify_group *group,
+ 	i_mark = container_of(fsn_mark, struct inotify_inode_mark, fsn_mark);
+ 
+ 	spin_lock(&fsn_mark->lock);
+-	old_mask = fsn_mark->mask;
+ 	if (replace) {
+ 		fsn_mark->mask = 0;
+ 		fsn_mark->flags &= ~INOTIFY_MARK_FLAGS;
+ 	}
+ 	fsn_mark->mask |= inotify_arg_to_mask(inode, arg);
+ 	fsn_mark->flags |= inotify_arg_to_flags(arg);
+-	new_mask = fsn_mark->mask;
+ 	spin_unlock(&fsn_mark->lock);
+ 
+-	if (old_mask != new_mask) {
+-		/* more bits in old than in new? */
+-		int dropped = (old_mask & ~new_mask);
+-		/* more bits in this fsn_mark than the inode's mask? */
+-		int do_inode = (new_mask & ~inode->i_fsnotify_mask);
+-
+-		/* update the inode with this new fsn_mark */
+-		if (dropped || do_inode)
+-			fsnotify_recalc_mask(inode->i_fsnotify_marks);
+-
+-	}
++	fsnotify_recalc_mask(inode->i_fsnotify_marks);
+ 
+ 	/* return the wd */
+ 	ret = i_mark->wd;
 -- 
 2.53.0
 
