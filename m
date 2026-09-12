@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E534A2DC321;
-	Sat, 12 Sep 2026 15:21:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E39F42DC321;
+	Sat, 12 Sep 2026 15:21:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789226464; cv=none; b=CbgHB1Nrth9Ahzr7gfhQaCBTM5KyJN4L9xAK3QAJEiYNnv6jxrr4pZuS4vldkfdBRKrQA8bwqeMLOZpm4gFJhPBR4JjzIXSJ8SMOuyD0iRhMJpSJPQlN38aUAPzcDnwOw0jiVnRjhBFzm4ETY4sbf2fKsbqyu8LDCH0KTwI6r6g=
+	t=1789226469; cv=none; b=ZY1rxF9sm+ZRFtPzLX5EX6dZKrbzDZnlpPLGA/AkhXXnJfa6PQBTb7w0TjFZHqqntJbeYB3/orlJjGhCOPNjC2SXRqpgweLySjyNr4p9WGrsVPAPqq40Vjs4vmX5Id8WhyZcmNO9gyYgKkoO4//d9u3AElySYRr3tqC1pJNOu4M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789226464; c=relaxed/simple;
-	bh=0a/ASyWkNslnxZtlSolBNemjmEjLZu/NHwNc6F7uf8A=;
+	s=arc-20240116; t=1789226469; c=relaxed/simple;
+	bh=LBJ1AY2gqxKWa0h6uxYLo8BYdzIhaQYX0TK8+ZrwQ6w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=flftHaWXf9EsAtezy4cvhogaBNQl5NFmI3dOBQYdT0boc/+pcEUkGLY0UjBG0Ps2HtE6fSqhUZ8Tzazp0M5fKVFwHrdo7lC5Ive97j9EF3jY3+AI63KIWEFPQ1AG9/7HYxdVIiRdhG2BXaHoff5YlQuw3j1byf0ZBVpWV+/qnQI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FCq0kdjy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tWXEuohsML/IVand5ENGe0CjQll5ophZ4jowNxCauVUZ35qJrVFAjm7yJH4v4M9ifRXsD1OAlHgOfhjqAfKbG3GL0qHqIiPiSp8tZbiYo1PLBUizzWz3oKa1ONWf1AyvPpQlxF4ADWLexrx+0nQnH7co43fvNRwij/hF47V1PQc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=06Bn2yFb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FCq0kdjy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AAEB1F000FF;
-	Sat, 12 Sep 2026 15:21:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="06Bn2yFb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84A501F000FF;
+	Sat, 12 Sep 2026 15:21:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789226462;
-	bh=9vmSdZfZiV7DGQ/7df6TfDPuAotdlx5aYmIOWTw7iEk=;
+	s=korg; t=1789226467;
+	bh=DhwKnNe/+dj50LQTxcwIaulFzinDW6lPIM2sMeK6NEk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FCq0kdjyq8F5ZTAcN3sOBRcxXqUH7vsl84CNE3Vt2knNwVlZvvDr/yfQvja/2eto1
-	 PR9Rm/QPVnnt2e/41NzbNgnKPVu7VK2PIY8Zf7ZTjhUlLWxSjFNj+SCSO2vt+WGPrs
-	 g+kQBRXoo8meLP9L7Z6rj0XZT9plGWRYxi8cxrZo=
+	b=06Bn2yFbL7j6F7i3VVb4g0ZHFIPv8jFdHwFv4zKa++kvhm2MTcu3SSH4mH0ZcP4wM
+	 TJ8sqwNBuXhPBfiooKSCNUfPVoYeNOHi/tmAubGdbDT5o61h4gMxvbVENZ8ANZX5Kc
+	 B855tPFpeeHmePxxeHBCcWWNefNKcws90YQnmEHE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	"Mario Limonciello (AMD)" <superm1@kernel.org>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Sven Peter <sven@kernel.org>,
+	Nick Chan <towinchenmi@gmail.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1405/1424] ACPI: processor: Update cpuidle driver check in __acpi_processor_start()
-Date: Sat, 12 Sep 2026 09:03:57 +0200
-Message-ID: <20260912065638.723225248@linuxfoundation.org>
+Subject: [PATCH 6.6 1406/1424] nvme-apple: Prevent shared tags across queues on Apple A11
+Date: Sat, 12 Sep 2026 09:03:58 +0200
+Message-ID: <20260912065638.746879383@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -52,45 +52,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Nick Chan <towinchenmi@gmail.com>
 
-[ Upstream commit 0089ce1c056aee547115bdc25c223f8f88c08498 ]
+[ Upstream commit 6fe0687245e8406bf26143bd45eb16441bbe5280 ]
 
-Commit 7a8c994cbb2d ("ACPI: processor: idle: Optimize ACPI idle
-driver registration") moved the ACPI idle driver registration to
-acpi_processor_driver_init() and acpi_processor_power_init() does
-not register an idle driver any more.
+On Apple A11, tags of pending commands must be unique across the admin
+and IO queues, else the firmware crashes with
+"duplicate tag error for tag N", with N being the tag.
 
-Accordingly, the cpuidle driver check in __acpi_processor_start() needs
-to be updated to avoid calling acpi_processor_power_init() without a
-cpuidle driver, in which case the registration of the cpuidle device
-in that function would lead to a NULL pointer dereference in
-__cpuidle_register_device().
+Apply the existing workaround for M1 of reserving two tags for the admin
+queue to A11.
 
-Fixes: 7a8c994cbb2d ("ACPI: processor: idle: Optimize ACPI idle driver registration")
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
-Tested-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://patch.msgid.link/20251223100914.2407069-4-lihuisong@huawei.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Cc: stable@vger.kernel.org
+Fixes: 04d8ecf37b5e ("nvme: apple: Add Apple A11 support")
+Reviewed-by: Sven Peter <sven@kernel.org>
+Signed-off-by: Nick Chan <towinchenmi@gmail.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/processor_driver.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/nvme/host/apple.c | 12 ++++--------
+ 1 file changed, 4 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/acpi/processor_driver.c b/drivers/acpi/processor_driver.c
-index c076e1d5a228e..53fad034703e2 100644
---- a/drivers/acpi/processor_driver.c
-+++ b/drivers/acpi/processor_driver.c
-@@ -168,7 +168,7 @@ static int __acpi_processor_start(struct acpi_device *device)
- 	if (result && !IS_ENABLED(CONFIG_ACPI_CPU_FREQ_PSS))
- 		dev_dbg(&device->dev, "CPPC data invalid or not present\n");
+diff --git a/drivers/nvme/host/apple.c b/drivers/nvme/host/apple.c
+index 6e9e0b6e00369..0470941e38988 100644
+--- a/drivers/nvme/host/apple.c
++++ b/drivers/nvme/host/apple.c
+@@ -239,7 +239,7 @@ static unsigned int apple_nvme_queue_depth(struct apple_nvme_queue *q)
+ {
+ 	struct apple_nvme *anv = queue_to_apple_nvme(q);
  
--	if (!cpuidle_get_driver() || cpuidle_get_driver() == &acpi_idle_driver)
-+	if (cpuidle_get_driver() == &acpi_idle_driver)
- 		acpi_processor_power_init(pr);
+-	if (q->is_adminq && anv->hw->has_lsq_nvmmu)
++	if (q->is_adminq)
+ 		return APPLE_NVME_AQ_DEPTH;
  
- 	acpi_pss_perf_init(pr);
+ 	return anv->hw->max_queue_depth;
+@@ -317,7 +317,7 @@ static void apple_nvme_submit_cmd_t8015(struct apple_nvme_queue *q,
+ 		memcpy((void *)q->sqes + (q->sq_tail << APPLE_NVME_IOSQES),
+ 			cmd, sizeof(*cmd));
+ 
+-	if (++q->sq_tail == anv->hw->max_queue_depth)
++	if (++q->sq_tail == apple_nvme_queue_depth(q))
+ 		q->sq_tail = 0;
+ 
+ 	writel(q->sq_tail, q->sq_db);
+@@ -1128,10 +1128,7 @@ static void apple_nvme_reset_work(struct work_struct *work)
+ 	}
+ 
+ 	/* Setup the admin queue */
+-	if (anv->hw->has_lsq_nvmmu)
+-		aqa = APPLE_NVME_AQ_DEPTH - 1;
+-	else
+-		aqa = anv->hw->max_queue_depth - 1;
++	aqa = APPLE_NVME_AQ_DEPTH - 1;
+ 	aqa |= aqa << 16;
+ 	writel(aqa, anv->mmio_nvme + NVME_REG_AQA);
+ 	writeq(anv->adminq.sq_dma_addr, anv->mmio_nvme + NVME_REG_ASQ);
+@@ -1314,8 +1311,7 @@ static int apple_nvme_alloc_tagsets(struct apple_nvme *anv)
+ 	 * both queues. The admin queue gets the first APPLE_NVME_AQ_DEPTH which
+ 	 * must be marked as reserved in the IO queue.
+ 	 */
+-	if (anv->hw->has_lsq_nvmmu)
+-		anv->tagset.reserved_tags = APPLE_NVME_AQ_DEPTH;
++	anv->tagset.reserved_tags = APPLE_NVME_AQ_DEPTH;
+ 	anv->tagset.queue_depth = anv->hw->max_queue_depth - 1;
+ 	anv->tagset.timeout = NVME_IO_TIMEOUT;
+ 	anv->tagset.numa_node = NUMA_NO_NODE;
 -- 
 2.53.0
 
