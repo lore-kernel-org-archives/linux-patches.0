@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60C6341D10B;
-	Sat, 12 Sep 2026 10:13:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A218041F5CA;
+	Sat, 12 Sep 2026 10:13:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789207988; cv=none; b=Y1bqNs2kictQcHF3P+yZOqVPCEP9nwW1hVRDE7fp60w4vOrGCttZHaapJsP7FBEFtogv7eu99gZHiW2UUmCNmqbLQuCdkxQdEtDZUyOUDG1rw8xuXH3Zmuuu0FfREcr9xYdOnJ8cosbypiYbC0+cXMr52YtvK3CZ+cILR1hSpso=
+	t=1789207993; cv=none; b=sJeEqCGJFSnqRsYp3qOM2/X+NsUeaUIZOZbrO1TQNhBmML4hCaafjIHh5+UHvJbQo/6x4bxXagcSom8WE0qMURKbhno/6qBJtm+BLDo5KzdtG1nDay/mnf2xY/GcPWxEUKka6yyCv1eRrJf4ZXiM9APjDK0+nB336Y2XCUoMhIE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789207988; c=relaxed/simple;
-	bh=A02CLaBXs83g4hvJbxcUXDUuIXoEAgnRC9XYsAoj4Xk=;
+	s=arc-20240116; t=1789207993; c=relaxed/simple;
+	bh=egBK1uNKOcsQt7UWOyX+8AFVRB+wpZDJOQ8V9a+hxR4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=RxtbreSzbW2f4zf6qMyWoFEuKgL+EtHM1QJQwNAoczkMjX6a00qaIM63TdHt5/o/95Q4K9u+W1lEc8IP7uzdbtabBjwC26iO3rA/7HD8HbjZwOrYWLVQETAL2jmH7r7jG+2yu9xQ1hNp+oITBLg602x/5fmxn0VCNxAVZQe85A4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AshVXwuo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jPjsAXr66aGswgWjZI4x6MctnOfSFNexJThxqkXXzlzMrwxtMKSvCF1tTnfpXVGFRTvNSM2Nj804ZCvEX77WMmneTN6Uq5qf0Wp8wCq4976Dtvf976fZeVGCUTKUkr++WMgh1B7g+raizBMvbZl1+lTv83DYwkdSLyHQgVGCAAA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QC0ep/Zk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AshVXwuo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B5401F00893;
-	Sat, 12 Sep 2026 10:13:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QC0ep/Zk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A8E11F000FF;
+	Sat, 12 Sep 2026 10:13:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789207985;
-	bh=txxvTQfoWPTyD2CmSThjn+wfSgPQJEDpi7azP1oYkTE=;
+	s=korg; t=1789207989;
+	bh=YPdXZglIvJtcBROijswRFqd9Y4IvP82U8RWCMHd4W6o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AshVXwuoV17wp4B8AIN+NLUkeCMxKw52Owiyc0/8vos1JdjQUMJ0V7VepidsZBiGA
-	 CbxesPmCr++OVVGQzZ/ChHIRsRwm1O/GN1bNZ7freU8Co0jDlNQDeB4uuGObcR02ku
-	 8PQ4i0xRwCgxIqL2a4nHtRIpqWKqfKTQzOTeAXVc=
+	b=QC0ep/ZkJhhXQeEwtLiB/1pn2W55o8wTf3KpUPPjYSuUofMu3vRXqJIWgm2dSBwNf
+	 2ENM4VaYbe7yXmmeoA8h58WSiuEHaU3MXsc9hYfjg3uOGkalHaSM/FWJHrHXj7o3yx
+	 w6ChBTEH2mF+ZF3l+sLsoCjJlYFBVGH4FqX4Zryw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
+	kernel test robot <lkp@intel.com>,
+	Nicolin Chen <nicolinc@nvidia.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Pranjal Shrivastava <praan@google.com>,
 	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0525/1518] iommu/qcom: Fix inverted fault report check in qcom_iommu_fault()
-Date: Sat, 12 Sep 2026 08:44:54 +0200
-Message-ID: <20260912065635.322377463@linuxfoundation.org>
+Subject: [PATCH 6.18 0526/1518] iommu/arm-smmu-v3: Declare eats_s1chk and eats_trans as host-endian u64
+Date: Sat, 12 Sep 2026 08:44:55 +0200
+Message-ID: <20260912065635.344229634@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -46,47 +48,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+From: Nicolin Chen <nicolinc@nvidia.com>
 
-[ Upstream commit 1f33b8208a1978b0c0d6ad60a47fe4bb7a235e58 ]
+[ Upstream commit 4455286274474e95f223c68c215d32c864404889 ]
 
-report_iommu_fault() returns 0 when a fault handler successfully handles
-the fault, and -ENOSYS when no handler is installed. The condition
-'!report_iommu_fault()' evaluates to true (printing "Unhandled context
-fault") precisely when the fault *was* handled, and stays silent when no
-handler is present — the opposite of what is intended.
+arm_smmu_get_ste_update_safe() declares the eats_s1chk and eats_trans
+locals as __le64, but initializes them from FIELD_PREP(), which returns a
+host-endian value, and passes them through cpu_to_le64() at the use sites.
 
-Remove the '!' so the driver logs unhandled faults correctly.
+Sparse reports the following warnings:
 
-Fixes: 049541e178d5 ("iommu: qcom: wire up fault handler")
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+>> drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c:1122:38: sparse: sparse: cast from restricted __le64
+   drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c:1124:33: sparse: sparse: cast from restricted __le64
+
+Declare both locals as u64 so the type matches FIELD_PREP() and the
+existing cpu_to_le64() at the use sites performs the host-to-little-endian
+conversion. No functional change.
+
+Fixes: 7cad80048595 ("iommu/arm-smmu-v3: Mark EATS_TRANS safe when computing the update sequence")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/all/202606151017.QU0evpH9-lkp@intel.com/
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Reviewed-by: Pranjal Shrivastava <praan@google.com>
 Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/arm/arm-smmu/qcom_iommu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/iommu/arm/arm-smmu/qcom_iommu.c b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
-index 0a1255cacdb06..82c3ffe0c7836 100644
---- a/drivers/iommu/arm/arm-smmu/qcom_iommu.c
-+++ b/drivers/iommu/arm/arm-smmu/qcom_iommu.c
-@@ -200,7 +200,7 @@ static irqreturn_t qcom_iommu_fault(int irq, void *dev)
- 	fsynr = iommu_readl(ctx, ARM_SMMU_CB_FSYNR0);
- 	iova = iommu_readq(ctx, ARM_SMMU_CB_FAR);
+diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+index 01f448acd8dce..d645f7edbd107 100644
+--- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
++++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+@@ -1097,9 +1097,9 @@ VISIBLE_IF_KUNIT
+ void arm_smmu_get_ste_update_safe(const __le64 *cur, const __le64 *target,
+ 				  __le64 *safe_bits)
+ {
+-	const __le64 eats_s1chk =
++	const u64 eats_s1chk =
+ 		FIELD_PREP(STRTAB_STE_1_EATS, STRTAB_STE_1_EATS_S1CHK);
+-	const __le64 eats_trans =
++	const u64 eats_trans =
+ 		FIELD_PREP(STRTAB_STE_1_EATS, STRTAB_STE_1_EATS_TRANS);
  
--	if (!report_iommu_fault(ctx->domain, ctx->dev, iova, 0)) {
-+	if (report_iommu_fault(ctx->domain, ctx->dev, iova, 0)) {
- 		dev_err_ratelimited(ctx->dev,
- 				    "Unhandled context fault: fsr=0x%x, "
- 				    "iova=0x%016llx, fsynr=0x%x, cb=%d\n",
+ 	/*
 -- 
 2.53.0
 
