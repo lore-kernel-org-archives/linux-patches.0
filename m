@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0494F427FBD;
-	Sat, 12 Sep 2026 15:19:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E96F38F949;
+	Sat, 12 Sep 2026 15:19:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789226383; cv=none; b=rKWBmxLtObu24fFiCJDoZSxf6aG1ZRkBRxCAs2JIoldwPjspBJeQE4clO9XTNbNopa+D6EdT0vxvYoyEODVdp6cjy175lc42yTV7yO7FyKOXQ9nD6DWKyhYMCd6PSciTbhS6aa/JEmklAxnczh9/A73BXxYNhpAN0D/puzjbbjk=
+	t=1789226392; cv=none; b=tn+pf23FPwJhbqEVEPwmAKk02U8LTFc5SRKh0zByR+O2imfGiFl2L2Ktf+i10UPkmj+UOeLRcv2jia5GSlKkZDttE3icNYGQIFTg4MfG1hIQ8Q3eMhXzFDEpWd3MOLE8KTs8ZhHqSUz+itkzWIhN8/PR2/C0vtG9PkOiI9T2f9s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789226383; c=relaxed/simple;
-	bh=UsTHKNvKkz6QEJQwUIyHaGVRV55Q1Rz8VCUOCT4uRsk=;
+	s=arc-20240116; t=1789226392; c=relaxed/simple;
+	bh=rLD9lQyE/9TyxgdFIWcYd0ItUTWouRkKwhBeF0Hxe3A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BByEjD2G6NhQ+0AcGxxgWGW6Ui87L4WdoHRAuxr+1vkQn4Dl2zi7+lQOCXGyOCoV4PeNREfXJyfTNDseWVL6GZPij+lTH7O7L3nYCNEfKNi8TzpoH21/3qixdWvp38bbLdfkXdbXknCAEaRHoL3xja1TENwgngq8Cox5Ov7gJgk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jq93S60l; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qUb+qSGqhdKJ6+MNvzOAl0aoYJ1DCkJdeJvDiAy53e4JInuaVbHQUxucLC/SvpGrrICeLRonv40Vdwey5pmSUTUHMIPNVDf5QLJa/37h50vaJ9hA5RiVzjA9qoBowt0nVa+WRB+o6qE0GOXAlzTBs7sUY+mVdGpfuNUOZ/SKCQc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OcTi3oWD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jq93S60l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A67A51F000FF;
-	Sat, 12 Sep 2026 15:19:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OcTi3oWD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD1071F000FF;
+	Sat, 12 Sep 2026 15:19:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789226379;
-	bh=3HRbsoo7Noolfh5QyX++ZMl1MSQJz+itxUk7mspvzF8=;
+	s=korg; t=1789226385;
+	bh=m0+70WjoDhTy1oQJkxlclPip7xUlrAuQjiSCGzjm/Z4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jq93S60ldhbWOKSYl/dsJ4c9nscjKaJxRG8am69I4OMXLtHVIoTML/ekNrrOWyVbn
-	 v+8nFuG5yCPPqTHWHBrakOEkkKVmQTSSqtO8VUDT16wZaoYhSc24h0n4peBBYenus7
-	 sd2C2LibRrDNxgujUDuzKUsmoea9UqDa1gQu6G40=
+	b=OcTi3oWDsjLvCdAYdmjsr0rmCBnmOSwzKi46HrnyfqIZJOyNSw+2I9mTkmZeDV/ZB
+	 GWOVl2TLBS/qutiuMwCvYzXKR2RboySyQP86Bxg1weuAv8fBpLWq8w699cVKmRX3oT
+	 PC4BaFrxXRRHlwwRr5gC56OT6EVHd4wbboasd35M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Andrew Lunn <andrew@lunn.ch>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1390/1424] net: stmmac: dwxgmac: Account for the primary MAC address for UC filtering
-Date: Sat, 12 Sep 2026 09:03:42 +0200
-Message-ID: <20260912065638.388313769@linuxfoundation.org>
+Subject: [PATCH 6.6 1391/1424] net: stmmac: selftests: Account for the UC filter list for filtering tests
+Date: Sat, 12 Sep 2026 09:03:43 +0200
+Message-ID: <20260912065638.411442364@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -54,35 +54,92 @@ Content-Transfer-Encoding: 8bit
 
 From: Maxime Chevallier <maxime.chevallier@bootlin.com>
 
-[ Upstream commit 2739d6f9a2b8729b0d85cbe0dc93e1d68670b6f2 ]
+[ Upstream commit cd8c3b2752c684141eab2282e294cae2971a9759 ]
 
-The same filter slots are used to store the main MAC address as well as
-the address for the unicast filter. Let's account for that when deciding
-whether or not to use promisc when programming the UC list in hardware.
+On dwmac, one of the Unicast filter entries is used to store the local
+HW addr. This means that we have to use promisc mode for any kind of
+unicast filtering if we only have one slot in our unicast filter.
 
-Fixes: 0efedbf11f07 ("net: stmmac: xgmac: Fix XGMAC selftests")
+The number of slots available depends on how the IP is integrated, and
+we can't autodiscover how many of these slots we have available, so
+the DT property snps,perfect-filter-entries can be used to specify how
+many are available.
+
+Most IP variants default to 1 if this isn't specified, which is the case
+for the amlogic variants (in this case, S905X3).
+
+The stmmac selftests for UC filtering look if we have enough slots in
+the filter to store the dev->uc list, but doesn't account for the
+device's own MAC address. The dev->uc list's size we get with
+netdev_uc_count() also doesn't account for the HW addr.
+
+As the selftest only requires one available slot, in the case of
+single-slot platforms, that means we erroneously consider we have enough
+room for the test, when we actually don't, and the filtering test fails.
+
+Fixes: 091810dbded9 ("net: stmmac: Introduce selftests support")
 Signed-off-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
 Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20260826140500.616466-5-maxime.chevallier@bootlin.com
+Link: https://patch.msgid.link/20260826140500.616466-6-maxime.chevallier@bootlin.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../stmicro/stmmac/stmmac_selftests.c         | 21 ++++++++++++++++---
+ 1 file changed, 18 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c b/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c
-index aab02328a6130..29863ec5526cc 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c
-@@ -540,7 +540,7 @@ static void dwxgmac2_set_filter(struct mac_device_info *hw,
- 	dwxgmac2_set_mchash(ioaddr, mc_filter, mcbitslog2);
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
+index 87c6501c6c7a2..83e78613d0d9e 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
+@@ -499,6 +499,21 @@ static int stmmac_filter_check(struct stmmac_priv *priv)
+ 	return -EOPNOTSUPP;
+ }
  
- 	/* Handle multiple unicast addresses */
--	if (netdev_uc_count(dev) > hw->unicast_filter_entries) {
-+	if (netdev_uc_count(dev) + 1 > hw->unicast_filter_entries) {
- 		value |= XGMAC_FILTER_PR;
- 	} else {
- 		struct netdev_hw_addr *ha;
++static int stmmac_uc_filter_check(struct stmmac_priv *priv)
++{
++	/* For tests involving the UC filter, we need at least one empty
++	 * slot in the UC filter. The UC filters contains netdev_uc_count() + 1
++	 * entries: The dev->uc list + one entry for the HW address.
++	 *
++	 * Having an empty slot therefore means netdev_uc_count() + 2 entries
++	 * can fit in the filter
++	 */
++	if (netdev_uc_count(priv->dev) + 2 > priv->hw->unicast_filter_entries)
++		return -EOPNOTSUPP;
++
++	return 0;
++}
++
+ static bool stmmac_hash_check(struct stmmac_priv *priv, unsigned char *addr)
+ {
+ 	int mc_offset = 32 - priv->hw->mcast_bits_log2;
+@@ -590,7 +605,7 @@ static int stmmac_test_pfilt(struct stmmac_priv *priv)
+ 
+ 	if (stmmac_filter_check(priv))
+ 		return -EOPNOTSUPP;
+-	if (netdev_uc_count(priv->dev) >= priv->hw->unicast_filter_entries)
++	if (stmmac_uc_filter_check(priv))
+ 		return -EOPNOTSUPP;
+ 
+ 	while (--tries) {
+@@ -634,7 +649,7 @@ static int stmmac_test_mcfilt(struct stmmac_priv *priv)
+ 
+ 	if (stmmac_filter_check(priv))
+ 		return -EOPNOTSUPP;
+-	if (netdev_uc_count(priv->dev) >= priv->hw->unicast_filter_entries)
++	if (stmmac_uc_filter_check(priv))
+ 		return -EOPNOTSUPP;
+ 	if (netdev_mc_count(priv->dev) >= priv->hw->multicast_filter_bins)
+ 		return -EOPNOTSUPP;
+@@ -680,7 +695,7 @@ static int stmmac_test_ucfilt(struct stmmac_priv *priv)
+ 
+ 	if (stmmac_filter_check(priv))
+ 		return -EOPNOTSUPP;
+-	if (netdev_uc_count(priv->dev) >= priv->hw->unicast_filter_entries)
++	if (stmmac_uc_filter_check(priv))
+ 		return -EOPNOTSUPP;
+ 	if (netdev_mc_count(priv->dev) >= priv->hw->multicast_filter_bins)
+ 		return -EOPNOTSUPP;
 -- 
 2.53.0
 
