@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E879142586B;
-	Sat, 12 Sep 2026 13:04:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2CCD2594BD;
+	Sat, 12 Sep 2026 13:04:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789218252; cv=none; b=orL+PtGpgT0jaT0PhZmTwsLPLPMpVDRffcH+0wTDK0Lvah7ug4L2F2NhGi20Q6TUEs07PPIFol+O420GMMdVk1NRrB/IKPNqKzIFxpRFrc0q7NFL2MhfScn5RmnJrKMkixKT61dbOtl5kzxrCOqP7RFExCXBq+1JW/iR76hDHKM=
+	t=1789218257; cv=none; b=ekA11ai+mdtPADT0yAcuTb+GVZjMN2yyPDXewmv8pO5TgpHMEYB8QgApd3qNr53BNy4GUuB6T156iMThM+JBz7Q2vYPVrkWctIhcxCur1XRzXMEbuuII5IZF9g8ibD8ewa70s0HyCAFg3s+ujpF9jUUriABhmZpTajrEe9TzOyo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789218252; c=relaxed/simple;
-	bh=A2O4Zm4hz568BLhYIfGkZSfu87PFFXNLI+kjAkCe2UI=;
+	s=arc-20240116; t=1789218257; c=relaxed/simple;
+	bh=p3CL+ug23sK1podbYKUbCMd6z8d1H74/hnl0h1qLLpY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g3BtIW7Js0UQaz2l1WbLAKJHlYLw31NTg0kJ5M/UZ0TQTx6PWKpnyS81qdX1Aa61VL1g8RraFu3MNfENeB2bLWomPvJbeCZsbT9oJ5wi3B8RnhTuusKUsLS6OFivnnRiwqUovRaWCEgdZ8/cRCbXTXl5kSBgCRCWxw1k/ZuYyXs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YPE5gEsf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=W4FORkYkhtc7WvDFfpV7FGTl800GDkZGgptFKBLI+ZMrtTHRp7gsVIlaG33+o4ksp5dF99aNznIj2FNeA8kYac+djfYRt9t5AAmV0wEFmtKrv1uQYwoyYZPx8RzMYNymW2dLiDAUCUxUIQdw6mtuMeSU3USPhUUOQk15iqheaw0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sU/cc+lJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YPE5gEsf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2A2C1F000FF;
-	Sat, 12 Sep 2026 13:04:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sU/cc+lJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B42981F000FF;
+	Sat, 12 Sep 2026 13:04:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789218250;
-	bh=v8zXpehKazI1Q7Zzu38/G4548vpBRRS6oe3X1XpY2iE=;
+	s=korg; t=1789218255;
+	bh=99aSGlvs4Ex9DPXUJ8ZTLr1YSobNoW7gTT12gJS6XvM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YPE5gEsfw2NKZ2kQ0FowJn1bglMA1Zeec5A47knvCjSPR4OPYFQrWX2K9zz7qlxZi
-	 TpAt1iOJ9ZNb8laUzefRKmbTDdlVhONxND0DoypTQtXZzUTRePqfdpTvTmY4NVpAFa
-	 Hjf+YToYzjeeXXt8RxfBJfqQJAN58JUHBoarp7EI=
+	b=sU/cc+lJ3OE6XBj3/LakkJ/nQB9Gz2FypCz37+0voTe57mojo3FqJCyYS/YZoU/ox
+	 eUZoJTB7EgJo5ypZBDbIBaZ3uzFUxIwbPVcnaGuuC7HLLeGU9F0hMJdElS/9aUY4nv
+	 gEmfnFYZb2caxjmFaRNsYQqFMhmDIYdzh2So/xVU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Henrik Grimler <henrik.grimler@axis.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Yuho Choi <dbgh9129@gmail.com>,
+	Juergen Gross <jgross@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1104/1376] power: supply: bq27xxx: bq27z561: fix invalid AverageEnergy address
-Date: Sat, 12 Sep 2026 08:58:50 +0200
-Message-ID: <20260912065632.164554238@linuxfoundation.org>
+Subject: [PATCH 6.12 1105/1376] xenbus: Unregister reboot notifier on init failure
+Date: Sat, 12 Sep 2026 08:58:51 +0200
+Message-ID: <20260912065632.187135101@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,38 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Henrik Grimler <henrik.grimler@axis.com>
+From: Yuho Choi <dbgh9129@gmail.com>
 
-[ Upstream commit 2da28b059e0ddcd2e1956eeae383246207965573 ]
+[ Upstream commit d330fb86a7170f845123ae82d95df440fad9b707 ]
 
-bq27z561 currently uses the AveragePower reg, 0x22, for reading both
-AveragePower and AvailableEnergy. The technical reference manual does
-not mention AvailableEnergy, and it does not make sense to read a
-cumulative, always positive, property like AvailableEnergy from a rate
-property like AveragePower. Set REG_AE as invalid to fix it.
+xs_init() registers xs_reboot_nb before initializing XenStore
+communications and starting xenwatch. If either operation fails, the
+notifier remains registered and a later initialization attempt can hit a
+duplicate registration.
 
-Fixes: 6f24ff97e323 ("power: supply: bq27xxx_battery: Add the BQ27Z561 Battery monitor")
-Signed-off-by: Henrik Grimler <henrik.grimler@axis.com>
-Link: https://patch.msgid.link/20260811-bq27z746-v1-5-3a4fa38205cc@axis.com
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Check the notifier registration result and unregister it on every
+subsequent failure path.
+
+Fixes: fd8aa9095a95 ("xen: optimize xenbus driver for multiple concurrent xenstore accesses")
+Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Message-ID: <20260807032326.940377-1-dbgh9129@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/bq27xxx_battery.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/xen/xenbus/xenbus_xs.c | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/power/supply/bq27xxx_battery.c b/drivers/power/supply/bq27xxx_battery.c
-index 34a230e54cfea..fb16354fcb975 100644
---- a/drivers/power/supply/bq27xxx_battery.c
-+++ b/drivers/power/supply/bq27xxx_battery.c
-@@ -489,7 +489,7 @@ static u8
- 		[BQ27XXX_REG_RC] = 0x10,
- 		[BQ27XXX_REG_FCC] = 0x12,
- 		[BQ27XXX_REG_CYCT] = 0x2a,
--		[BQ27XXX_REG_AE] = 0x22,
-+		[BQ27XXX_REG_AE] = INVALID_REG_ADDR,
- 		[BQ27XXX_REG_SOC] = 0x2c,
- 		[BQ27XXX_REG_DCAP] = 0x3c,
- 		[BQ27XXX_REG_AP] = 0x22,
+diff --git a/drivers/xen/xenbus/xenbus_xs.c b/drivers/xen/xenbus/xenbus_xs.c
+index dcf9182c8451a..75efacd0125b4 100644
+--- a/drivers/xen/xenbus/xenbus_xs.c
++++ b/drivers/xen/xenbus/xenbus_xs.c
+@@ -952,19 +952,27 @@ int xs_init(void)
+ 	int err;
+ 	struct task_struct *task;
+ 
+-	register_reboot_notifier(&xs_reboot_nb);
++	err = register_reboot_notifier(&xs_reboot_nb);
++	if (err)
++		return err;
+ 
+ 	/* Initialize the shared memory rings to talk to xenstored */
+ 	err = xb_init_comms();
+ 	if (err)
+-		return err;
++		goto err_unregister_reboot_notifier;
+ 
+ 	task = kthread_run(xenwatch_thread, NULL, "xenwatch");
+-	if (IS_ERR(task))
+-		return PTR_ERR(task);
++	if (IS_ERR(task)) {
++		err = PTR_ERR(task);
++		goto err_unregister_reboot_notifier;
++	}
+ 
+ 	/* shutdown watches for kexec boot */
+ 	xs_reset_watches();
+ 
+ 	return 0;
++
++err_unregister_reboot_notifier:
++	unregister_reboot_notifier(&xs_reboot_nb);
++	return err;
+ }
 -- 
 2.53.0
 
