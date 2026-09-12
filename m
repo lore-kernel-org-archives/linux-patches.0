@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D860B30E83F;
-	Sat, 12 Sep 2026 18:49:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE59230E83F;
+	Sat, 12 Sep 2026 18:49:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789238973; cv=none; b=HHH9Cd+CYBVFVQPAQc0exv42w21+D9I4xOolaehBRlx4pF9LDAnc87cQg+BeSMiAKZ80GUS7lxxbpqkhJQGsSCxXrJ5LDhYr2mxhVMGPhK9/IBtM2qnvz7oCtSN/O63zthRysfL3yX8JggHUU0ZzMHT+pK2i/kaaW5E0yCyd5yE=
+	t=1789238977; cv=none; b=Pif+oNIpAUlEgB5pXGqerX5qLUWEi86kuh2NjvxDHmo6XOkgKJguXBQ8wXQoSw+NXTY79AC+84ZlYiVJ3Ua7SKQbkgNlb5pN3AntV817hBtlJILR1nSvI1sqj2v09Af+a9XvnvzSlcOBssgi74YSrEXZ7pJaF1GHOkyGz6ue5hk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789238973; c=relaxed/simple;
-	bh=js5bklMms0usSI0Atc/PdnaO+kTT2FkROty0C0fZAxg=;
+	s=arc-20240116; t=1789238977; c=relaxed/simple;
+	bh=dVrsoDjDsOkzVdZW7wxYzrPk7iVs1tKrFg5Ma/QnyEQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D3ghXz8R7zGTcwI1kwNqI8fLAU/Ii6hA52wXUvslz4decZJHrY+PSPvFIzGaH9uvM1X+F9A+dJC2Nu2CcCU61m5i5w7R+ku2xPMlLWps1OLlo6ntQxBQZmt5wn/EadZ54kCsEL0GvYE/DjcWLXVWEvN7v8fpSbh/b8qLFb2AtvI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xXNFWGqR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HdAN+K1oBn4g74KHJ8fO4jD7oJenvyUFRDjPuHXbSGac4exDMUordboqf6LIxGl28UU3+30FwpSe4KzKLWWVkgjQuTbmOZaPwGOTiS9SIVOjxMymntkOUIFxjgU2ozjfu5FT7khoX4FEXQom1DvRSEq4+an3HmDhXOFHNfGASHM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yrkt1t/v; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xXNFWGqR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D0B11F000FF;
-	Sat, 12 Sep 2026 18:49:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yrkt1t/v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2A891F000FF;
+	Sat, 12 Sep 2026 18:49:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789238971;
-	bh=ZKCalOAtKXJf3V+AB62XwChPBTSEeuFfvMW2ZZHdyzc=;
+	s=korg; t=1789238976;
+	bh=4MofCUepNwegcGjrcR0cwe7aBY4LZVcu6l1B0UYb4dM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xXNFWGqRdwbrADN/wJpVgH6j/Lx9+9ddgWLRlpJaY3NIlJnIb5jdn+bKS2bYfnGkL
-	 vr0sdFqYpfoQcmW1d5/Nsu6KkUzf2ERq0scrgP/VG07bRcaoiVrhNMzzgsSEYZkx0F
-	 XVy2akvvLY25GeflYzeGz5ejT9v10nkAfmd9PzWo=
+	b=yrkt1t/vBBUmHEuXFnNPl3oX6mqQJqMLTmGUFZACqtQJfK6U1GLBVKftPZD8kVOph
+	 le+VlZL7B8jQQ7aMvugLIssio1cCSN1X3DQeIThyvwZmKC9cgy12YduK0/Bxici9vB
+	 5EPjjumKMUeXr8wFJ6bagfDLupQso4+tqL6RR3To=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko AI review <sashiko-bot@kernel.org>,
-	Chen Pei <cp0613@linux.alibaba.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 569/935] ACPI: PCI: Clear driver_data on all paths that free the acpi_pci_root
-Date: Sat, 12 Sep 2026 08:59:59 +0200
-Message-ID: <20260912065539.888759657@linuxfoundation.org>
+Subject: [PATCH 5.15 570/935] ext4: fix out-of-bounds read in ext4_read_inline_dir()
+Date: Sat, 12 Sep 2026 09:00:00 +0200
+Message-ID: <20260912065539.911912379@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -52,69 +53,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Pei <cp0613@linux.alibaba.com>
+From: Xiang Mei <xmei5@asu.edu>
 
-[ Upstream commit 8a742141f7ab84975aa758b775567ef4740ef0cf ]
+[ Upstream commit 9333cc809f0a89e001b814155a6cb8903a6274df ]
 
-acpi_pci_root_add() assigns the freshly allocated root to
-device->driver_data before dmar_device_add() and pci_acpi_scan_root().
-Both failure paths reach the end: label where root is kfree()'d, but
-only the pci_acpi_scan_root() path clears driver_data first.
+ext4_read_inline_dir() can read a dirent header past the end of its inline
+buffer, triggering a slab-out-of-bounds read during getdents64():
 
-When dmar_device_add() fails during a hot-add, root is freed while
-device->driver_data still points at it.  The ACPI core does not clear
-driver_data on attach failure, so a later acpi_pci_find_root() call may
-dereference this dangling pointer.
+  BUG: KASAN: slab-out-of-bounds in __ext4_check_dir_entry
+  Read of size 2 at addr ffff88800f3dd23c by task exploit/148
+   ...
+   __ext4_check_dir_entry
+   ext4_read_inline_dir
+   iterate_dir
 
-acpi_pci_root_remove() has the same problem: it frees root without
-clearing device->driver_data, leaving a dangling pointer behind after
-the root bridge is removed.
+The dirent payload lives in a buffer of exactly inline_size bytes:
 
-Move the NULL assignment to the shared end: label so every error path in
-acpi_pci_root_add() clears driver_data before freeing root, and clear it
-in acpi_pci_root_remove() as well, so the object is never left reachable
-through driver_data after being freed.
+	dir_buf = kmalloc(inline_size, GFP_NOFS);
 
-Fixes: db89b4f0dbab ("ACPI: catch calls of acpi_driver_data on pointer of wrong type")
-Reported-by: Sashiko AI review <sashiko-bot@kernel.org>
-Link: https://sashiko.dev/#/patchset/20260526025118.38935-1-cp0613@linux.alibaba.com
-Link: https://sashiko.dev/#/patchset/20260707121258.11640-1-cp0613@linux.alibaba.com
-Signed-off-by: Chen Pei <cp0613@linux.alibaba.com>
-Link: https://patch.msgid.link/20260715135048.3278-1-cp0613@linux.alibaba.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+but iteration runs in a position space extra_offset bytes larger
+(extra_size = extra_offset + inline_size) so the synthetic "." and ".."
+land at their block-dir offsets. A dirent is formed at "dir_buf + pos -
+extra_offset", yet the ext4_check_dir_entry() length argument uses the
+larger extra_size. A position whose dirent header would extend past
+extra_size is therefore accepted, and the rescan loop's rec_len probe and
+ext4_check_dir_entry() dereference de->rec_len before the entry is rejected.
+
+Reject a position whose minimum-size dirent header would not fit within
+extra_size before forming de, in both the rescan and main loops, and pass
+inline_size rather than extra_size to ext4_check_dir_entry() so the length
+check matches the physical buffer.
+
+Fixes: c4d8b0235aa9 ("ext4: fix readdir error in case inline_data+^dir_index.")
+Reported-by: Weiming Shi <bestswngs@gmail.com>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://patch.msgid.link/20260615190519.946736-1-xmei5@asu.edu
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/pci_root.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/ext4/inline.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/acpi/pci_root.c b/drivers/acpi/pci_root.c
-index 223aa010dd8da..19ce7cb7512b5 100644
---- a/drivers/acpi/pci_root.c
-+++ b/drivers/acpi/pci_root.c
-@@ -599,7 +599,6 @@ static int acpi_pci_root_add(struct acpi_device *device,
- 		dev_err(&device->dev,
- 			"Bus %04x:%02x not present in PCI namespace\n",
- 			root->segment, (unsigned int)root->secondary.start);
--		device->driver_data = NULL;
- 		result = -ENODEV;
- 		goto remove_dmar;
- 	}
-@@ -635,6 +634,7 @@ static int acpi_pci_root_add(struct acpi_device *device,
- 	if (hotadd)
- 		dmar_device_remove(handle);
- end:
-+	device->driver_data = NULL;
- 	kfree(root);
- 	return result;
- }
-@@ -658,6 +658,7 @@ static void acpi_pci_root_remove(struct acpi_device *device)
+diff --git a/fs/ext4/inline.c b/fs/ext4/inline.c
+index 5d5f99ed97468..911656c07d732 100644
+--- a/fs/ext4/inline.c
++++ b/fs/ext4/inline.c
+@@ -1586,6 +1586,8 @@ int ext4_read_inline_dir(struct file *file,
+ 			/* for other entry, the real offset in
+ 			 * the buf has to be tuned accordingly.
+ 			 */
++			if (i + ext4_dir_rec_len(1, NULL) > extra_size)
++				break;
+ 			de = (struct ext4_dir_entry_2 *)
+ 				(dir_buf + i - extra_offset);
+ 			/* It's too expensive to do a full
+@@ -1620,10 +1622,17 @@ int ext4_read_inline_dir(struct file *file,
+ 			continue;
+ 		}
  
- 	pci_unlock_rescan_remove();
- 
-+	device->driver_data = NULL;
- 	kfree(root);
- }
- 
++		/*
++		 * de lives at dir_buf + ctx->pos - extra_offset, within the
++		 * kmalloc(inline_size) buffer.  Make sure its header fits before
++		 * ext4_check_dir_entry() dereferences de->rec_len.
++		 */
++		if (ctx->pos + ext4_dir_rec_len(1, NULL) > extra_size)
++			goto out;
+ 		de = (struct ext4_dir_entry_2 *)
+ 			(dir_buf + ctx->pos - extra_offset);
+ 		if (ext4_check_dir_entry(inode, file, de, iloc.bh, dir_buf,
+-					 extra_size, ctx->pos))
++					 inline_size, ctx->pos))
+ 			goto out;
+ 		if (le32_to_cpu(de->inode)) {
+ 			if (!dir_emit(ctx, de->name, de->name_len,
 -- 
 2.53.0
 
