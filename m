@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A650B23BD03;
-	Sat, 12 Sep 2026 12:13:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91BFA23BD03;
+	Sat, 12 Sep 2026 12:13:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789215192; cv=none; b=hSt/7CzW10NuWMJilR7BSVBDuMbr3Y1uoQiFHtUtKbnir0KKG4Y7iXFNWU1TSK+jjWrOkYzOwXAdYVpOubpQmPfecXsxZ/op8skXRuCgXax00TyBkynDB+yVkwAuZbDVJF1tkfN0fPhvv/gnZly53VSC0SlBU4za1V0v/7kCrNY=
+	t=1789215197; cv=none; b=KcXljp81KPcPTMctGY62VT5t/ZqZNMFxvg6pnvsFCmwAiP9GJNvDVX6rc/hOfbDYc9cUQLKV2nfaHZJUOVpDr48K3nSnkVCJ7BiUBYOaCK4/zHzpwGQx/tPRJIKTffkolW86/AKlhISHEhHYDeG5jnMlD6sNclwHXH42g7nvW3E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789215192; c=relaxed/simple;
-	bh=1rg1Z38SyEZCvOxOdFxveRkvHeYx6ThWhuHJzMxkggg=;
+	s=arc-20240116; t=1789215197; c=relaxed/simple;
+	bh=3SDAxnSNlq7MKz5n+1kKMEr+9wrKG+RsJWM2EQSzAc4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZYo7R88UbG5j3ccmD3LvrRiIk9g1ZwE7XrhSgIGGpveUAJyankVUspsCq882RqoEqQDyqXf3D2rT3PXXr+Nk0TP2hxIQwAxJ5WBjxNDSp2hfTQC/80pxPj4+YRhzI0Zm69SvvtZS4XKbOgj2F9ftbZofNiUjs+dZP9PymgeBiW8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CuHbfVET; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cgxsI6J8SI+46TxGHeF7u3cja2FXhKdx1cvPjShFtw4bnzd+8yIRZm+gkIyI87PqPweskdK6idzxlNXWuEJEisiyGSl43mgRmX0yDfiTEiMY1CrW1AgF+d+k8XcIp1Ql1ItO8CPTv7MCVR7DecF2ZpyPppKJi7dD4ff1u8WpUTQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0xX4XT1q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CuHbfVET"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60E431F000FF;
-	Sat, 12 Sep 2026 12:13:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0xX4XT1q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9612D1F000FF;
+	Sat, 12 Sep 2026 12:13:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789215191;
-	bh=iMKtOmKjTfx3wPzGFJAXhaFQgPReXaZp6s8SbG7zhxc=;
+	s=korg; t=1789215196;
+	bh=ntaY/y0/JU59KeBb93eWrHbZ0GI4/OL7vKNv4Id9EcQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CuHbfVETOuNukvIPFwbWoaQMXvFH3xL6Wzjw7GsqOXgbjk1irKkxxBcPhzz7YBb+N
-	 SBSejcq1cd/x9nZMxptGVwkfSwGtijQ321oO2/QdBFOUzS1EZhgIIDEzdnyyLupTmq
-	 0pbPhHEciGa8AJCaWnIAQIIKOaSqbtZJylD8Dt9o=
+	b=0xX4XT1qhopsbYlJ/lH4kJxk6xS4ZDaKmYNsDijYn0gx4NsI5jeEHwJ/V/3WJlBDy
+	 Mnb+M8whx/h6iMvgsWRhMlRPJR2+O3MrmxE8nGkVg2ALeeQPEIcwqg9OGT/acmDeMW
+	 1/RRvVQjaUm/1o7m+oowJ4sgIr+d6pDwefjdUhCM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuho Choi <dbgh9129@gmail.com>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0482/1376] serial: ma35d1: Fix OF node reference leaks in console init
-Date: Sat, 12 Sep 2026 08:48:28 +0200
-Message-ID: <20260912065618.278496934@linuxfoundation.org>
+Subject: [PATCH 6.12 0483/1376] serial: qcom-geni: do not advance stale DMA completions
+Date: Sat, 12 Sep 2026 08:48:29 +0200
+Message-ID: <20260912065618.301037007@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -50,62 +50,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuho Choi <dbgh9129@gmail.com>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-[ Upstream commit 8dfea56f350b3dc826f35711802ad6ae8fae0748 ]
+[ Upstream commit 7ea38c49e7178960926657863299face6dc0e1b0 ]
 
-ma35d1serial_console_init_port() stores matching UART device nodes in
-ma35d1serial_uart_nodes[] with an extra of_node_get() so that console
-setup can later read the "reg" property.  However, the stored references
-are never released after console setup has finished using them.
+The qcom GENI serial DMA TX completion path advances the transmit fifo by
+the number of bytes recorded in port->tx_remaining.
 
-Drop the stored node reference after ma35d1serial_console_setup() reads
-the "reg" property, and clear the array slot to avoid leaving a stale
-pointer behind.  Also release the iterator reference before breaking out
-of for_each_matching_node(), since the normal iterator advance will not
-run in that path.
+If uart_flush_buffer() runs after the hardware has completed a DMA
+transfer but before the DMA completion interrupt has been handled, the
+serial core resets the transmit fifo while port->tx_remaining still
+describes the old DMA transfer.
 
-Fixes: 930cbf92db01 ("tty: serial: Add Nuvoton ma35d1 serial driver support")
-Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
-Link: https://patch.msgid.link/20260630214043.1887351-1-dbgh9129@gmail.com
+A previous fix avoided advancing an empty fifo by checking that the fifo
+length is at least tx_remaining. That still does not distinguish the old
+DMA payload from new bytes written after the flush. If userspace writes
+new data before the stale DMA completion interrupt is handled, the fifo
+can again contain at least tx_remaining bytes and the stale completion
+can advance and discard those new bytes.
+
+Mark an in-flight DMA transfer stale when the transmit fifo is flushed.
+The later completion still unprepares the original DMA mapping using the
+saved length, but it no longer advances the transmit fifo.
+
+Fixes: 2aaa43c70778 ("tty: serial: qcom-geni-serial: add support for serial engine DMA")
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Link: https://patch.msgid.link/20260708131726.768692-1-lgs201920130244@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/ma35d1_serial.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ drivers/tty/serial/qcom_geni_serial.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/tty/serial/ma35d1_serial.c b/drivers/tty/serial/ma35d1_serial.c
-index 3b4206e815fe9..2c1c8d7480230 100644
---- a/drivers/tty/serial/ma35d1_serial.c
-+++ b/drivers/tty/serial/ma35d1_serial.c
-@@ -608,8 +608,14 @@ static int __init ma35d1serial_console_setup(struct console *co, char *options)
- 	if (!np || !p)
- 		return -ENODEV;
+diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
+index 6e5b31ebd5d64..0cccc26e932b2 100644
+--- a/drivers/tty/serial/qcom_geni_serial.c
++++ b/drivers/tty/serial/qcom_geni_serial.c
+@@ -132,6 +132,7 @@ struct qcom_geni_serial_port {
  
--	if (of_property_read_u32_array(np, "reg", val32, ARRAY_SIZE(val32)) != 0)
-+	if (of_property_read_u32_array(np, "reg", val32, ARRAY_SIZE(val32)) != 0) {
-+		of_node_put(np);
-+		ma35d1serial_uart_nodes[co->index] = NULL;
- 		return -EINVAL;
-+	}
-+
-+	of_node_put(np);
-+	ma35d1serial_uart_nodes[co->index] = NULL;
- 
- 	p->port.iobase = val32[1];
- 	p->port.membase = ioremap(p->port.iobase, MA35_UART_REG_SIZE);
-@@ -648,8 +654,10 @@ static void ma35d1serial_console_init_port(void)
- 			of_node_get(np);
- 			ma35d1serial_uart_nodes[i] = np;
- 			i++;
--			if (i == MA35_UART_NR)
-+			if (i == MA35_UART_NR) {
-+				of_node_put(np);
- 				break;
-+			}
- 		}
+ 	unsigned int tx_remaining;
+ 	unsigned int tx_queued;
++	bool tx_dma_stale;
+ 	int wakeup_irq;
+ 	bool rx_tx_swap;
+ 	bool cts_rts_swap;
+@@ -659,6 +660,7 @@ static void qcom_geni_serial_start_tx_dma(struct uart_port *uport)
  	}
+ 
+ 	port->tx_remaining = xmit_size;
++	port->tx_dma_stale = false;
  }
+ 
+ static void qcom_geni_serial_start_tx_fifo(struct uart_port *uport)
+@@ -991,6 +993,7 @@ static void qcom_geni_serial_handle_tx_dma(struct uart_port *uport)
+ 	struct qcom_geni_serial_port *port = to_dev_port(uport);
+ 	struct tty_port *tport = &uport->state->port;
+ 	unsigned int fifo_len = kfifo_len(&tport->xmit_fifo);
++	bool tx_dma_stale = port->tx_dma_stale;
+ 
+ 	/*
+ 	 * Only advance the kfifo if it still contains the bytes that were
+@@ -1001,12 +1004,13 @@ static void qcom_geni_serial_handle_tx_dma(struct uart_port *uport)
+ 	 * kfifo->in, making kfifo_len() wrap to UART_XMIT_SIZE - tx_remaining
+ 	 * and triggering a spurious large DMA transfer of stale data.
+ 	 */
+-	if (fifo_len >= port->tx_remaining)
++	if (!tx_dma_stale && fifo_len >= port->tx_remaining)
+ 		uart_xmit_advance(uport, port->tx_remaining);
+ 
+ 	geni_se_tx_dma_unprep(&port->se, port->tx_dma_addr, port->tx_remaining);
+ 	port->tx_dma_addr = 0;
+ 	port->tx_remaining = 0;
++	port->tx_dma_stale = false;
+ 
+ 	if (!kfifo_is_empty(&tport->xmit_fifo))
+ 		qcom_geni_serial_start_tx_dma(uport);
+@@ -1142,6 +1146,10 @@ static void qcom_geni_serial_shutdown(struct uart_port *uport)
+ 
+ static void qcom_geni_serial_flush_buffer_fifo(struct uart_port *uport)
+ {
++	struct qcom_geni_serial_port *port = to_dev_port(uport);
++
++	if (port->tx_dma_addr)
++		port->tx_dma_stale = true;
+ 	qcom_geni_serial_cancel_tx_cmd(uport);
+ }
+ 
 -- 
 2.53.0
 
