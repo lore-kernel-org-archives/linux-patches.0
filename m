@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F7EA2D8DA8;
-	Sat, 12 Sep 2026 13:56:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A6BA2D8DA8;
+	Sat, 12 Sep 2026 13:56:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789221398; cv=none; b=iC2HEW0I6ECw5iG7U5uctkV3NyXhQeQueqVDP9hJ/WZJcXBZaBmZOVWv2uSSkKx/H8YLW2pXQaCV1Ct26Fe63CtC7UHTtIdmPfyhwExgbZhKhds4wOXr9SF3O3fdevIbjQFhGqD428cNTPlElY10fVUGnbnZLVvJwIdomFwtWlQ=
+	t=1789221403; cv=none; b=S2LIOLaxzWb4RPM92wwdmUo01UbMBKpWRM5rvO+6nPSJw79+DRYO8+GlQ+z1kGooqZQoDMUW3ZcZUP6sOawWk/E6k7LlfhsEZ2Q3sSVhqMe0DAwmB3HjnnnUX2i0ei0WDb31kkQhfWqPUX1YzbQRWKSqSjhovs3a6bAsjB2GQJw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789221398; c=relaxed/simple;
-	bh=OLIQiDKHHkZEattZqMsFKQDyfeoPs+9XRBgRapkipTY=;
+	s=arc-20240116; t=1789221403; c=relaxed/simple;
+	bh=HjUOeYVdV9fBItIOEK+6yEvpxWkLMgs4yUQLi83ojZQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dhhP8CU0wi7Q1j6aeaR/BmrNZVUqN62mdCeP8EyJciRbI6xy1m3Ox30aZKAoyhyWsF2VT5/m/4IfvxX+R9ecuJmz2k4cVjQnVpOzMHBGRgVxproGxb0xVh+V1w5HOEDx8iyAYZmjQS8P36xwHIoAmlqEi2+k3+H+hBmKX3RMntE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DzQoNflW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LLKdTbNmpl/dRhFd1criRpSiUSHyL7FkUm3rGj392tcUg9xczoKqS3huB+WX+7TOZzwRXvuoZpr+4uSjJ9Hl+noh11+QyX75wApJgmMsfyLcKwaQYHHBt+LRBe5ixdweMVWML1OVXbPUS9bKevzpsUoG9sZPceUqFVoo7HECCxU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I3ZwFKpT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DzQoNflW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D74BE1F000FF;
-	Sat, 12 Sep 2026 13:56:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I3ZwFKpT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 772091F000FF;
+	Sat, 12 Sep 2026 13:56:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789221396;
-	bh=ht+vGhY+W28DwxGloiXOcW+HAhG4eKWOQOQrKNf0yxM=;
+	s=korg; t=1789221401;
+	bh=+zYJ+U/5rdnlD0/6vEoO3c7RMICeqw0Wxz8bv+DW3nw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DzQoNflWDaSDWSeCsxEqGt74TzMTJNqEvH03thboqnieyFli/lNv83RyLobMH1vN4
-	 5oE7fVE5M5Fhh+SCIL3dBnG2O4lafGzcr30+XXdnWmtFvQopG4AjMT3i6ns2+ycbhf
-	 Q/Ls5un5DqgloEgZH3o+ojz9Rw6qSrF5GlAxwWO8=
+	b=I3ZwFKpT8RTHbv1AIoiSJ0XVLS0DfoWrm4oMQV1Bxi2HlMMBi5BOtC9U9js9aq5i/
+	 RwZsHb3BUcjOWk3AKFGiwcXcgcgPAMip5QESlIuC7cTZUY2Bmql1Nh8J+t18ihvHEg
+	 20I4RWOgzn9S5qNpMba4TxCylsvJII4r4veW8geY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SJ Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 0347/1424] mm/damon/sysfs: kobject_del() region and target (error) dirs
-Date: Sat, 12 Sep 2026 08:46:19 +0200
-Message-ID: <20260912065615.060421467@linuxfoundation.org>
+	Sagi Grimberg <sagi@grimberg.me>,
+	Shivam Kumar <kumar.shivam43666@gmail.com>,
+	Keith Busch <kbusch@kernel.org>
+Subject: [PATCH 6.6 0374/1424] nvmet-tcp: reject unsolicited H2CData PDUs
+Date: Sat, 12 Sep 2026 08:46:46 +0200
+Message-ID: <20260912065615.667548649@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -50,55 +51,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SJ Park <sj@kernel.org>
+From: Shivam Kumar <kumar.shivam43666@gmail.com>
 
-commit 2603ef6f6ec3d3f7de2d6a07e7c9a683cebac419 upstream.
+commit db62b35cbca052860c519cbcabe7650708528738 upstream.
 
-On CONFIG_DEBUG_KOBJECT_RELEASE enabled kernel, lack of kobject_del()
-could cause directories creation failures due to the name conflicts.  Fix
-those issues for the normal creation path of region directories and the
-error path of target directories, by adding kobject_del() calls.
+nvmet_tcp_handle_h2c_data_pdu() accepts an H2CData PDU after only checking
+that its TTAG is a valid in-range command index and that the command's
+data buffers are mapped. It never checks that the target has actually
+solicited that data by sending an R2T for the command.
 
-Link: https://lore.kernel.org/20260628220121.97360-3-sj@kernel.org
-Fixes: 2031b14ea757 ("mm/damon/sysfs: support the physical address space monitoring")
-Signed-off-by: SJ Park <sj@kernel.org>
-Cc: <stable@vger.kernel.org> # 5.18.x
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+A remote host can abuse this. It submits a write command that takes the
+R2T path and, before the target transmits the R2T, sends an H2CData PDU
+for that command's tag. The data completes the command early, and when
+the command then fails synchronously (e.g. a length mismatch caught by
+nvmet_check_transfer_len()), it is completed a second time. Each
+completion calls nvmet_tcp_queue_response(), so the same command is added
+to queue->resp_list twice while it is still linked; the second llist_add()
+makes the node point to itself (lentry->next == lentry).
+
+nvmet_tcp_process_resp_list() then walks that self-referential node and
+adds the command to resp_send_list twice. With CONFIG_DEBUG_LIST this
+trips the "list_add double add" check (kernel BUG); without it the loop
+never terminates and the nvmet_tcp workqueue wedges (soft-lockup). It is
+remotely triggerable and needs no authentication on an allow_any_host
+subsystem.
+
+Track whether an R2T has been transmitted for a command and reject an
+H2CData PDU that arrives before it. The flag is cleared on command reuse
+(nvmet_tcp_get_cmd() zeroes cmd->flags) and stays set across the multiple
+H2CData PDUs of a single solicited transfer.
+
+Fixes: 872d26a391da ("nvmet-tcp: add NVMe over TCP target driver")
+Cc: stable@vger.kernel.org
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Signed-off-by: Shivam Kumar <kumar.shivam43666@gmail.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/damon/sysfs.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/nvme/target/tcp.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/mm/damon/sysfs.c
-+++ b/mm/damon/sysfs.c
-@@ -107,8 +107,10 @@ static void damon_sysfs_regions_rm_dirs(
- 	struct damon_sysfs_region **regions_arr = regions->regions_arr;
- 	int i;
+--- a/drivers/nvme/target/tcp.c
++++ b/drivers/nvme/target/tcp.c
+@@ -88,6 +88,7 @@ enum nvmet_tcp_recv_state {
  
--	for (i = 0; i < regions->nr; i++)
-+	for (i = 0; i < regions->nr; i++) {
-+		kobject_del(&regions_arr[i]->kobj);
- 		kobject_put(&regions_arr[i]->kobj);
-+	}
- 	regions->nr = 0;
- 	kfree(regions_arr);
- 	regions->regions_arr = NULL;
-@@ -343,13 +345,15 @@ static int damon_sysfs_targets_add_dirs(
+ enum {
+ 	NVMET_TCP_F_INIT_FAILED = (1 << 0),
++	NVMET_TCP_F_R2T_SENT	= (1 << 1),
+ };
  
- 		err = damon_sysfs_target_add_dirs(target);
- 		if (err)
--			goto out;
-+			goto del_out;
+ struct nvmet_tcp_cmd {
+@@ -761,6 +762,7 @@ static int nvmet_try_send_r2t(struct nvm
+ 		return -EAGAIN;
  
- 		targets_arr[i] = target;
- 		targets->nr++;
+ 	cmd->queue->snd_cmd = NULL;
++	cmd->flags |= NVMET_TCP_F_R2T_SENT;
+ 	return 1;
+ }
+ 
+@@ -1036,6 +1038,12 @@ static int nvmet_tcp_handle_h2c_data_pdu
+ 		cmd = &queue->connect;
  	}
- 	return 0;
  
-+del_out:
-+	kobject_del(&target->kobj);
- out:
- 	damon_sysfs_targets_rm_dirs(targets);
- 	kobject_put(&target->kobj);
++	if (unlikely(!(cmd->flags & NVMET_TCP_F_R2T_SENT))) {
++		pr_err("queue %d: unsolicited H2CData (ttag %u)\n",
++		       queue->idx, data->ttag);
++		goto err_proto;
++	}
++
+ 	if (le32_to_cpu(data->data_offset) != cmd->rbytes_done) {
+ 		pr_err("ttag %u unexpected data offset %u (expected %u)\n",
+ 			data->ttag, le32_to_cpu(data->data_offset),
 
 
