@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C05BF32A3DA;
-	Sat, 12 Sep 2026 14:27:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3A5F18A93F;
+	Sat, 12 Sep 2026 14:27:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789223267; cv=none; b=mh364t0eAqgddVcWo1iz5r0PMAowNYwfS4Moc28G3ieC3aPY6JIgM5Uk9QO/GH+UWsSTmdsQ34GijuxHM1bIVp1b/TDHMB82SbCJWQq/OSg5QmdkVh6zz3vcQ1b87RxBFgXX7NzV2KCSgKdlX3WTuunKHTj1HQGgbNGiuvIxHVk=
+	t=1789223273; cv=none; b=cuUdt5ihOrlKWv4EJpQaHy5D3MhD1kzeDP8X6AE2IeD/KBe5nk/YamzU0whjQdKIJ7UazJh3fjmXTLuCqlf1I7bxcPFwOIsjSqNelJ+rDla8VoCEcg5F5npFtdmdWK94hXWGVApz1EGPfR5yHjVH0NxVy5/QkODHfxs70cLOWeM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789223267; c=relaxed/simple;
-	bh=50tl4/TJGdReFhRSVHeMeLxtIVPBWNe6XdCvxsRt/tU=;
+	s=arc-20240116; t=1789223273; c=relaxed/simple;
+	bh=Jvs3BfXUcA5FN78M2vi2z6zqaJ2EaD5TQ8U3/NX2itE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=trrdy1/HAVbaLF7f73Xm+2hlv7mUf6I9D6JNzZS8jtw+xMqMyojwWayFsKCVM1MQpTYUlknj/La4pFptTlPR2YyDpIpAeVKvBTqpNRve+QqImnsD/BX9ZqGQp+738zvNTd7LaCQu455Vqdz9HWlAfxSGaa/STpWKUA+H3lqbsyY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y3GUM0yZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WfeZkLhRpPlUamy+Hj/AARQYXokt/CdWpyJNAXF6v2IrcWe25lRxplI0XSPr+4NAqhtrayTuyzfeu8aPbvNHOLcbLf/vFupS2cskGMdQnKB4PxXHnNm358maraCmRqZOOkRkeJA9YfWzozELxYagL2Bt1IlCFYhYGQNNCmfdGwU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B/y2G7HO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y3GUM0yZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C553A1F000FF;
-	Sat, 12 Sep 2026 14:27:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B/y2G7HO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65B3C1F000FF;
+	Sat, 12 Sep 2026 14:27:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789223266;
-	bh=3MF0gnhXu2YBlFA8Junct8etJuOR6lXwRI4ZeF0HQp0=;
+	s=korg; t=1789223271;
+	bh=xTZ6Lh4RN+y2pfXXMW0pR+kukEye6DdN3eVvm3jqtwg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y3GUM0yZFtgJwi1NFx+wjMPy5BWokj0TBOQs2FHuDxD7l9YeA4Y8E3Bdj4Q/GoUCb
-	 54i260yWRiF9BaU8psbFwtqCBWsFi9cgNBMWeIsxwgQPhB7jxQyHCbMGVrMpC/df1b
-	 rBU6I/3zwUf27BgagNj72CTBVPeDeuEHY6aeUY9g=
+	b=B/y2G7HO6WVJAKApJUtisAGVAc2cb32M3HNzLkjqj1Ibwylrb0eHFXJomx4WqxHqv
+	 bxw+T4fou8c9oc0gCkjN2xXSklIzWk9cwwd+juhCgeMbsaFS38q0Fjy/oPHC13cTIv
+	 +I1mx56qCcIlnf8aoruBq25FICT8zVfiKGDevc04=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sashiko <sashiko-bot@kernel.org>,
 	Sudeep Holla <sudeep.holla@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0754/1424] firmware: arm_scmi: Protect device request lookup with RCU
-Date: Sat, 12 Sep 2026 08:53:06 +0200
-Message-ID: <20260912065624.182791764@linuxfoundation.org>
+Subject: [PATCH 6.6 0755/1424] firmware: arm_scmi: Drop handle on protocol bind failures
+Date: Sat, 12 Sep 2026 08:53:07 +0200
+Message-ID: <20260912065624.204779688@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -53,47 +53,115 @@ Content-Transfer-Encoding: 8bit
 
 From: Sudeep Holla <sudeep.holla@kernel.org>
 
-[ Upstream commit e6a0e7a49d83e4fa4e1db68d74f99282eb97aa49 ]
+[ Upstream commit e3a5c30d233ca5d3e799a80da806554c703bda13 ]
 
-The SCMI device request notifier looks up protocol OF nodes from the
-active_protocols IDR. The IDR lookup can run concurrently with protocol
-activation while probe is still registering protocols and creating their
-SCMI devices.
+The SCMI bus notifier acquires an SCMI handle when the driver core emits
+BUS_NOTIFY_BIND_DRIVER, before invoking the protocol driver probe
+callback. The protocol probe path only checks whether sdev->handle is
+set.
 
-Wrap the lookup in an RCU read-side critical section as required by the
-IDR API for lockless readers.
+If device_link_add() fails after the handle has been acquired, the
+protocol device can still bind with a valid handle but without the
+dependency link to the SCMI parent. A concurrent parent unbind can then
+miss the child and tear down the SCMI instance while the child still
+holds a handle into it.
 
-Fixes: 53b8c25df708 ("firmware: arm_scmi: Add common notifier helpers")
+If the protocol driver probe later fails, for example with
+-EPROBE_DEFER, the driver core emits BUS_NOTIFY_DRIVER_NOT_BOUND rather
+than BUS_NOTIFY_UNBOUND_DRIVER. The SCMI notifier only released the
+handle on BUS_NOTIFY_UNBOUND_DRIVER, so each failed protocol-device bind
+leaked the SCMI instance users refcount and left sdev->handle set after
+the failed probe.
+
+Make the link helper report failure and drop the acquired handle if the
+link cannot be created. Also handle BUS_NOTIFY_DRIVER_NOT_BOUND in the
+same cleanup path used for unbind so failed probes balance the earlier
+BUS_NOTIFY_BIND_DRIVER acquisition.
+
+Fixes: 971fc0665f13 ("firmware: arm_scmi: Move handle get/set helpers")
 Reported-by: Sashiko <sashiko-bot@kernel.org>
-Link: https://patch.msgid.link/20260714-scmi_core_fixes-v6-9-3afe499d46e3@kernel.org
+Link: https://patch.msgid.link/20260714-scmi_core_fixes-v6-10-3afe499d46e3@kernel.org
 Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_scmi/driver.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/firmware/arm_scmi/driver.c | 31 ++++++++++++++++++++++--------
+ 1 file changed, 23 insertions(+), 8 deletions(-)
 
 diff --git a/drivers/firmware/arm_scmi/driver.c b/drivers/firmware/arm_scmi/driver.c
-index 1f025559ae1f2..99c9666235398 100644
+index 99c9666235398..d253e9d41d848 100644
 --- a/drivers/firmware/arm_scmi/driver.c
 +++ b/drivers/firmware/arm_scmi/driver.c
-@@ -31,6 +31,7 @@
- #include <linux/of.h>
- #include <linux/platform_device.h>
- #include <linux/processor.h>
-+#include <linux/rcupdate.h>
- #include <linux/refcount.h>
- #include <linux/slab.h>
+@@ -2287,21 +2287,31 @@ static int scmi_handle_put(const struct scmi_handle *handle)
+ 	return 0;
+ }
  
-@@ -2613,7 +2614,9 @@ static int scmi_device_request_notifier(struct notifier_block *nb,
- 	struct scmi_device_id *id_table = data;
- 	struct scmi_info *info = req_nb_to_scmi_info(nb);
+-static void scmi_device_link_add(struct device *consumer,
++static bool scmi_device_link_add(struct device *consumer,
+ 				 struct device *supplier)
+ {
+ 	struct device_link *link;
  
-+	rcu_read_lock();
- 	np = idr_find(&info->active_protocols, id_table->protocol_id);
-+	rcu_read_unlock();
- 	if (!np)
+ 	link = device_link_add(consumer, supplier, DL_FLAG_AUTOREMOVE_CONSUMER);
+ 
+-	WARN_ON(!link);
++	return !WARN_ON(!link);
++}
++
++static void scmi_clear_handle(struct scmi_device *scmi_dev)
++{
++	if (!scmi_dev->handle)
++		return;
++
++	scmi_handle_put(scmi_dev->handle);
++	scmi_dev->handle = NULL;
+ }
+ 
+ static void scmi_set_handle(struct scmi_device *scmi_dev)
+ {
+ 	scmi_dev->handle = scmi_handle_get(&scmi_dev->dev);
+-	if (scmi_dev->handle)
+-		scmi_device_link_add(&scmi_dev->dev, scmi_dev->handle->dev);
++	if (scmi_dev->handle &&
++	    !scmi_device_link_add(&scmi_dev->dev, scmi_dev->handle->dev))
++		scmi_clear_handle(scmi_dev);
+ }
+ 
+ static int __scmi_xfer_info_init(struct scmi_info *sinfo,
+@@ -2581,6 +2591,7 @@ static int scmi_bus_notifier(struct notifier_block *nb,
+ {
+ 	struct scmi_info *info = bus_nb_to_scmi_info(nb);
+ 	struct scmi_device *sdev = to_scmi_dev(data);
++	const char *status;
+ 
+ 	/* Skip transport devices and devices of different SCMI instances */
+ 	if (!strncmp(sdev->name, "__scmi_transport_device", 23) ||
+@@ -2591,18 +2602,22 @@ static int scmi_bus_notifier(struct notifier_block *nb,
+ 	case BUS_NOTIFY_BIND_DRIVER:
+ 		/* setup handle now as the transport is ready */
+ 		scmi_set_handle(sdev);
++		status = "about to be BOUND.";
++		break;
++	case BUS_NOTIFY_DRIVER_NOT_BOUND:
++		scmi_clear_handle(sdev);
++		status = "NOT BOUND.";
+ 		break;
+ 	case BUS_NOTIFY_UNBOUND_DRIVER:
+-		scmi_handle_put(sdev->handle);
+-		sdev->handle = NULL;
++		scmi_clear_handle(sdev);
++		status = "UNBOUND.";
+ 		break;
+ 	default:
  		return NOTIFY_DONE;
+ 	}
  
+ 	dev_dbg(info->dev, "Device %s (%s) is now %s\n", dev_name(&sdev->dev),
+-		sdev->name, action == BUS_NOTIFY_BIND_DRIVER ?
+-		"about to be BOUND." : "UNBOUND.");
++		sdev->name, status);
+ 
+ 	return NOTIFY_OK;
+ }
 -- 
 2.53.0
 
