@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9EC6364059;
-	Sat, 12 Sep 2026 08:48:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C69DA400DF6;
+	Sat, 12 Sep 2026 08:48:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789202900; cv=none; b=jEdJPywWJuL5U07k9TRIZy5HcQJN1uCZBBS0oqxiyLQUPjmIHbjZGnApK+fTPQDIVnne85e6XhTiOS7YDP9vmu123xYXu7QSf69G1K58zn7HprJi7ny2AtCu8RLsR6HHDrekbg3p/2zIoB+T2krDBs5+/fImJjmmajFv1I3HGyE=
+	t=1789202905; cv=none; b=mh4MJxiiW/BsgUoW/SiVZIDq20Rt0mhWDRzPyMAzzO5Qy8zpcO9yCLOkGmZL+S9C2M2JLNHxk3CKWrNk2OdTSQGdEMKJL8gXqiMBzaNDHReuGMNokJUz5uYzap02HSZtbiS2deEtrSfzDrGL1qS9gsuwbkunAnK7rAE9O5NE9Mc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789202900; c=relaxed/simple;
-	bh=T8vuJaI7mUNYp/jxWziHCC5bqS7yNOn+kLnIQ8PpV0o=;
+	s=arc-20240116; t=1789202905; c=relaxed/simple;
+	bh=WWjT9xYaJvcN/zI1O0a4c+XKCRxy2Pde2+y5kU/taRU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ErCx9SNIECIyPzunGURVlQCUCByN9R2s4QZqBfFb2NoSc9bh2wnsXDBnbYlDmjuVWWWk5Xwf9WoGRO2LNaL4Kiwbsd68s5Fo5g1wlDIzkYScekZ6aRf0eTkd/43f3xMvR7mroH4Gfy93Gt+aeP6AtVef/vdZqc3iVdS75sYNcwU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KOtwhM3/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hHx4VYNt/UHWYTByJIA4Z/ouRurw7p2i7ghZHw3V9psaB92lRbqUfQe5ETTGOExIHBwDeVVCanVdqFS2hfsFDYODnxkvcKoDIKLWLo3Io3mWZ05TNwxFcx02ovQIE/x5+OtT4UZcDbGN+r3wDeEqM73ATZkolBR50CdP5P3c5fM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x+VDWFvT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KOtwhM3/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEABB1F000FF;
-	Sat, 12 Sep 2026 08:48:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x+VDWFvT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 999011F00893;
+	Sat, 12 Sep 2026 08:48:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789202898;
-	bh=Zi0bWp3+TLSlONSRnWIPEjQyXs//EOh11J1JSGswv8o=;
+	s=korg; t=1789202903;
+	bh=FF7p49A0d+/KCFZEhvQkt5Dpb8pe/cWddRfXgoeH7kg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KOtwhM3/GuggNJrH/1C2lzJt8kyBr+V1fCaEBNizVKkIz/l7+fSnyTeHi20qaIDIE
-	 hVMoIBI8RleGeXw5ZhJXkHMuC5OaY5ircX7kkEnix5K8DAZN6MP1CTQccwWUYk5puq
-	 5KRZrnDaVi6aBe/qYLf+FXAq6RHqYbyspjNVscy0=
+	b=x+VDWFvTfGMp5LX8LyGNzIjyJr1XUcdQCFjKvxCkQsMy8iK556LeHl4vJAw4l91o/
+	 YHILB4y0uxUr2YAnlBxo4grWnBkSyEAQb+Ah85vhGgcCZ8GGiOj8mKIZKuDadOqy92
+	 qADV/+Q6MZFZqAxf/mKzvEMnsy7Gpz3VQOl6BFOQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Bin Du <bin.du@amd.com>,
 	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1298/1815] media: amd: isp4: release partial allocations in isp4if_alloc_fw_gpumem()
-Date: Sat, 12 Sep 2026 08:50:48 +0200
-Message-ID: <20260912065719.488633437@linuxfoundation.org>
+Subject: [PATCH 7.2 1299/1815] media: amd: isp4: fix self-deadlock in isp4sd_pwron_and_init() error path
+Date: Sat, 12 Sep 2026 08:50:49 +0200
+Message-ID: <20260912065719.511883945@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -54,53 +54,91 @@ Content-Transfer-Encoding: 8bit
 
 From: Yifei Gao <gyf161023@gmail.com>
 
-[ Upstream commit fea97ee13c5332f67850733d6cefc1fe99460bde ]
+[ Upstream commit ef46d80a7015269a98c9505b5912a83798799199 ]
 
-isp4if_alloc_fw_gpumem() allocates several GPU memory pools in sequence.
-If one of them fails, it jumps to error_no_memory and returns -ENOMEM
-without releasing the pools that were already allocated, leaking them.
+isp4sd_pwron_and_init() holds ops_mutex via guard(mutex) and, on any
+init failure, jumps to err_deinit and calls isp4sd_pwroff_and_deinit().
+That helper takes the same ops_mutex, re-acquiring a non-recursive mutex
+already held by the current thread, so any init failure deadlocks.
 
-Release the already-allocated pools before returning. isp4if_gpu_mem_free()
-is a no-op on pools that were not allocated, so calling
-isp4if_dealloc_fw_gpumem() here safely frees exactly the pools that
-succeeded.
+Unwind the error path in stages instead, releasing only what each
+failure point acquired. This also avoids the issues that an
+unconditional teardown would hit at the earlier failures, such as a
+runtime-PM underflow from pm_runtime_resume_and_get() and MMIO access
+while the device is unpowered.
 
-isp4if_gpu_mem_free() previously logged an error for a NULL entry, which
-is a normal case during partial-allocation cleanup, so make it silent.
-
-Fixes: 4c5feef6a62c ("media: platform: amd: Add isp4 fw and hw interface")
+Fixes: 4e5e7a7ddb4a ("media: platform: amd: isp4 subdev and firmware loading handling added")
+Assisted-by: Claude:claude-opus-4-8 smatch
 Signed-off-by: Yifei Gao <gyf161023@gmail.com>
 Reviewed-by: Bin Du <bin.du@amd.com>
 Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/amd/isp4/isp4_interface.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/media/platform/amd/isp4/isp4_subdev.c | 28 +++++++++++++++----
+ 1 file changed, 22 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/media/platform/amd/isp4/isp4_interface.c b/drivers/media/platform/amd/isp4/isp4_interface.c
-index 00a8179092921..4801617f95599 100644
---- a/drivers/media/platform/amd/isp4/isp4_interface.c
-+++ b/drivers/media/platform/amd/isp4/isp4_interface.c
-@@ -148,12 +148,9 @@ static void isp4if_gpu_mem_free(struct isp4_interface *ispif,
- 				struct isp4if_gpu_mem_info **mem_info_ptr)
- {
- 	struct isp4if_gpu_mem_info *mem_info = *mem_info_ptr;
--	struct device *dev = ispif->dev;
+diff --git a/drivers/media/platform/amd/isp4/isp4_subdev.c b/drivers/media/platform/amd/isp4/isp4_subdev.c
+index 2a8bc12078434..6716ab9c128a0 100644
+--- a/drivers/media/platform/amd/isp4/isp4_subdev.c
++++ b/drivers/media/platform/amd/isp4/isp4_subdev.c
+@@ -687,7 +687,7 @@ int isp4sd_pwron_and_init(struct v4l2_subdev *sd)
+ 		if (ret) {
+ 			dev_err(dev, "fail to power on isp_subdev ret %d\n",
+ 				ret);
+-			goto err_deinit;
++			goto err_module_disable;
+ 		}
  
--	if (!mem_info) {
--		dev_err(dev, "invalid mem_info\n");
-+	if (!mem_info)
- 		return;
--	}
+ 		/* ISPPG ISP Power Status */
+@@ -697,7 +697,7 @@ int isp4sd_pwron_and_init(struct v4l2_subdev *sd)
+ 			dev_err(dev,
+ 				"fail to set performance state %u, ret %d\n",
+ 				perf_state, ret);
+-			goto err_deinit;
++			goto err_power_off;
+ 		}
  
- 	*mem_info_ptr = NULL;
- 	isp_kernel_buffer_free(&mem_info->mem_handle, &mem_info->gpu_mc_addr,
-@@ -201,6 +198,7 @@ static int isp4if_alloc_fw_gpumem(struct isp4_interface *ispif)
+ 		ispif->status = ISP4IF_STATUS_PWR_ON;
+@@ -709,12 +709,12 @@ int isp4sd_pwron_and_init(struct v4l2_subdev *sd)
+ 	ret = isp4if_start(ispif);
+ 	if (ret) {
+ 		dev_err(dev, "fail to start isp_subdev interface\n");
+-		goto err_deinit;
++		goto err_perf_restore;
+ 	}
  
- error_no_memory:
- 	dev_err(dev, "failed to allocate gpu memory\n");
-+	isp4if_dealloc_fw_gpumem(ispif);
- 	return -ENOMEM;
+ 	if (isp4sd_start_resp_proc_threads(isp_subdev)) {
+ 		dev_err(dev, "isp_start_resp_proc_threads fail\n");
+-		goto err_deinit;
++		goto err_stop_interface;
+ 	}
+ 
+ 	dev_dbg(dev, "create resp threads ok\n");
+@@ -724,8 +724,24 @@ int isp4sd_pwron_and_init(struct v4l2_subdev *sd)
+ 	isp_subdev->irq_enabled = true;
+ 
+ 	return 0;
+-err_deinit:
+-	isp4sd_pwroff_and_deinit(sd);
++
++err_stop_interface:
++	isp4if_stop(ispif);
++err_perf_restore:
++	ret = dev_pm_genpd_set_performance_state(dev, ISP4SD_PERFORMANCE_STATE_LOW);
++	if (ret)
++		dev_err(dev, "fail to set performance state %u, ret %d\n",
++			ISP4SD_PERFORMANCE_STATE_LOW, ret);
++err_power_off:
++	isp4hw_wreg(isp_subdev->mmio, ISP_SOFT_RESET, 0);
++	isp4hw_wreg(isp_subdev->mmio, ISP_POWER_STATUS, 0);
++	ret = pm_runtime_put_sync(dev);
++	if (ret)
++		dev_err(dev, "power off isp_subdev fail %d\n", ret);
++	ispif->status = ISP4IF_STATUS_PWR_OFF;
++err_module_disable:
++	isp4sd_module_enable(isp_subdev, false);
++	msleep(20);
+ 	return -EINVAL;
  }
  
 -- 
