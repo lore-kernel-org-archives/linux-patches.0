@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 931D937E5CF;
-	Sat, 12 Sep 2026 12:05:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ED343AEF51;
+	Sat, 12 Sep 2026 12:05:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789214711; cv=none; b=dXZNxX/SMvPBdVYxomY9Q6rOQt42x0ZFI2hTZqdO3lkRULNqCGr9FKp7jB2dztKDegUa4cmonu6C2CIm3cnq6q3x836/PMtfyMI1TX95iOWv+O9kTV+h4sOn3Y9oU1/1GroRmhqI22X5icxSp6g+F/1S0f8iSDyI2tv9Owh2rEU=
+	t=1789214716; cv=none; b=YdvjZDViofdW42RBTCcHq8VluKmhNM8F0HN2bN0r+5mCtPANg9TsuZ9jo9Yu3hy2i55T9mpNZGqL0XkgV+bBapV6hor7V451oYFaJIT1NErDloxXuxJrgK1Hr5TS2BIkRd6tUOyDHcRnmXfaOCkuU9EhHzz8FH2V1zRtO5zDvmc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789214711; c=relaxed/simple;
-	bh=yoeg3113QYCHz9lFJC0Ev5HJmwW/qqK6BGYHT1vIhlE=;
+	s=arc-20240116; t=1789214716; c=relaxed/simple;
+	bh=lE8F1+xt6g0qTt8fRVT2TpesEujAleKUHBo+mbT5DlI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OALBfQIFAHqnnI4I3N/aLHClSRjg+1h/QvZwd8dgjfjdoNClYT4VEok4mYmAFNTGyw3fcHoqaIo5W31BogDJ9jOGTDSM6l/0zpSiFr9eArugMl9s+XwCazaN62hqRA7iSN7CHPCs4Qhuc1UKY7LX/U9t6dZiGrk/FOu2RQ7KOpg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HIM7mk1U; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=clXY2/T/y4sjhEF7m+J8eIr9srTKi2pFfAtbRopyH7r3y/qqUFSO+jPB2qVxJfexHbSi73LT0lSeh/GtyUmPdaCYETE3vseRyMZagJUFCj/ssVnBP+zlhjsohQ2UP+4BfRsoXMtEu6LWcz4VI3f9KpJF/QFRfcyi3pncu3/WN1Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v3eH6vKD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HIM7mk1U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 338481F000FF;
-	Sat, 12 Sep 2026 12:05:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v3eH6vKD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39D861F000FF;
+	Sat, 12 Sep 2026 12:05:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789214710;
-	bh=d6aAEy2TS5dtYuKbAbE0t64mwEdn8FzJBQYjiQVAm00=;
+	s=korg; t=1789214715;
+	bh=CxOlu6SYn6ipN0/LBZgL8ynbhTH6odzt2cgrn7GCb38=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HIM7mk1UztWeCHLTwsRm6YkObTcK7GfmmRQQKAhS0dAK87+x42yB4w2gtdqWiG1MV
-	 OAmYNBa369ZBf6jtxqoSAbHgau4SKsK+Rc67fDoM4rWbxviDX61ej+fRyR3kU0Sja2
-	 +WfjPjgCuXI3drfSiTCJ2sp0P29YXCIaryOQ+vIE=
+	b=v3eH6vKDJlp2joD13kvHAJir9zuIwptUOjoldD4MzwzDKUSiExwuG8YMRI2PAhFo+
+	 EyV9pYnKaBb5N8gV9HPsOXNdOM1gUOAwlVxHmNNYmC4fxl2+H6LCxZ83gg1L6c5ygY
+	 UwFJTQl89CkibEdUodrorFAcS/rbudpeRE0u5j+M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Alexander A. Klimov" <grandmaster@al2klimov.de>,
-	Brian Masney <bmasney@redhat.com>,
+	Yichong Chen <chenyichong@uniontech.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Emil Tsalapatis <emil@etsalapatis.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0330/1376] clk: moxart: remove unused variables, fix refcount leak
-Date: Sat, 12 Sep 2026 08:45:56 +0200
-Message-ID: <20260912065614.901902833@linuxfoundation.org>
+Subject: [PATCH 6.12 0376/1376] tools/bpf/bpftool: Reset vmlinux BTF after struct_ops commands
+Date: Sat, 12 Sep 2026 08:46:42 +0200
+Message-ID: <20260912065615.927943042@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,68 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander A. Klimov <grandmaster@al2klimov.de>
+From: Yichong Chen <chenyichong@uniontech.com>
 
-[ Upstream commit 9f275f2ee9ca60ea4c092bdc0195987945ad8ad8 ]
+[ Upstream commit f7f540e19751face50c68bb9ce58460fcb46c293 ]
 
-Not only these error checks are redundand,
-those of_clk_get() return values weren't cleaned up via clk_put().
+struct_ops frees the global btf_vmlinux object.
 
-Fixes: c7bb4fc16ead ("clk: add MOXA ART SoCs clock driver")
-Signed-off-by: Alexander A. Klimov <grandmaster@al2klimov.de>
-Reviewed-by: Brian Masney <bmasney@redhat.com>
-Signed-off-by: Brian Masney <bmasney@redhat.com>
+In batch mode, a later struct_ops command can reuse stale state.
+
+Reset the BTF pointer and cached map info state.
+
+Fixes: 65c93628599d ("bpftool: Add struct_ops support")
+Signed-off-by: Yichong Chen <chenyichong@uniontech.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
+Link: https://lore.kernel.org/bpf/9F9017160ABE125F+20260624025055.1574875-3-chenyichong@uniontech.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/clk-moxart.c | 14 --------------
- 1 file changed, 14 deletions(-)
+ tools/bpf/bpftool/struct_ops.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/clk/clk-moxart.c b/drivers/clk/clk-moxart.c
-index 3786a0153ad17..40663ef3ef0ae 100644
---- a/drivers/clk/clk-moxart.c
-+++ b/drivers/clk/clk-moxart.c
-@@ -17,7 +17,6 @@ static void __init moxart_of_pll_clk_init(struct device_node *node)
- {
- 	void __iomem *base;
- 	struct clk_hw *hw;
--	struct clk *ref_clk;
- 	unsigned int mul;
- 	const char *name = node->name;
- 	const char *parent_name;
-@@ -34,12 +33,6 @@ static void __init moxart_of_pll_clk_init(struct device_node *node)
- 	mul = readl(base + 0x30) >> 3 & 0x3f;
- 	iounmap(base);
+diff --git a/tools/bpf/bpftool/struct_ops.c b/tools/bpf/bpftool/struct_ops.c
+index aa43dead249cb..835e5e561f7fc 100644
+--- a/tools/bpf/bpftool/struct_ops.c
++++ b/tools/bpf/bpftool/struct_ops.c
+@@ -643,6 +643,10 @@ int do_struct_ops(int argc, char **argv)
+ 	err = cmd_select(cmds, argc, argv, do_help);
  
--	ref_clk = of_clk_get(node, 0);
--	if (IS_ERR(ref_clk)) {
--		pr_err("%pOF: of_clk_get failed\n", node);
--		return;
--	}
--
- 	hw = clk_hw_register_fixed_factor(NULL, name, parent_name, 0, mul, 1);
- 	if (IS_ERR(hw)) {
- 		pr_err("%pOF: failed to register clock\n", node);
-@@ -56,7 +49,6 @@ static void __init moxart_of_apb_clk_init(struct device_node *node)
- {
- 	void __iomem *base;
- 	struct clk_hw *hw;
--	struct clk *pll_clk;
- 	unsigned int div, val;
- 	unsigned int div_idx[] = { 2, 3, 4, 6, 8};
- 	const char *name = node->name;
-@@ -78,12 +70,6 @@ static void __init moxart_of_apb_clk_init(struct device_node *node)
- 		val = 0;
- 	div = div_idx[val] * 2;
+ 	btf__free(btf_vmlinux);
++	btf_vmlinux = NULL;
++	map_info_type = NULL;
++	map_info_alloc_len = 0;
++	map_info_type_id = 0;
  
--	pll_clk = of_clk_get(node, 0);
--	if (IS_ERR(pll_clk)) {
--		pr_err("%pOF: of_clk_get failed\n", node);
--		return;
--	}
--
- 	hw = clk_hw_register_fixed_factor(NULL, name, parent_name, 0, 1, div);
- 	if (IS_ERR(hw)) {
- 		pr_err("%pOF: failed to register clock\n", node);
+ 	return err;
+ }
 -- 
 2.53.0
 
