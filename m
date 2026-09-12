@@ -1,118 +1,112 @@
-Received: from mail-wr2-f12.google.com (mail-wr2-f12.google.com [74.125.225.76])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D42EB37FF53
-	for <patches@lists.linux.dev>; Sat, 12 Sep 2026 16:27:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.76
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03BB43905E6;
+	Sat, 12 Sep 2026 16:27:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789230474; cv=none; b=sdr6tPMfOhsSgcVVwiJVKdM0PZYgrRXu+6AsJzlxKWYBd1Jhi+8UnrcwokL8PntzSXdSm8caHd4nsID8pOTzTuxVq6aKIVzsuZbvhpDKL8eL/kvvhosTwLUGoxxohDSWSfOCrsRPEn5RyBqSUzIG3cKl5rzbE5zjUfSWc4gmifE=
+	t=1789230475; cv=none; b=iIf8XGrxL7WJCTo0W/f+DzkUTPuM610XZ51UPiajuE7oO+QRV1S5R+3SwMk4BTLiGG7gEdG2c+TP9GEpuFppW77X08VfyMxzufXF1Xt4dqDK8ljlqt1/M+6Uxfu+ss0+gPl9NdnuxXVQYBh5PNS5SekJ19XqIErIfPHiMYy94+g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789230474; c=relaxed/simple;
-	bh=SB+7ZypI2a/DHX9aPHHGLY95kw1SSDbas/xPaFVh4bA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=qwck1NVGVlGp74Jt3NhvVWokQieRunXY0SsKgkVuEYlrq4kvTBtMxh20MMc5KiCHGBGv0FS4rfL4AjvYSzyk+9S/m/RRfvYVr63WX9lRuYCyVbNpLq1lZji/z81HusYPemst4O3hxXJdNYcKd3VO0z5Ovc9xiS2zAZ5keRgMsvU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com; spf=pass smtp.mailfrom=googlemail.com; dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b=RLScpSTH; arc=none smtp.client-ip=74.125.225.76
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
+	s=arc-20240116; t=1789230475; c=relaxed/simple;
+	bh=PCIefjN9U/2LJZDfO0kDerza3uzHHTWKPHFztnEl7p0=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=pzf9Cr8bi+ppOgIRPJAqYlIdVOAqAOKWiUGvyRXqX6p/KRtLXNMq7LOT89ydTiK7W0tfmuwH6dz9xB7GpLdROBbB5lU4ej7/Aet4NeieBYQ7mQGuXDRGZcGPqE3/gu+273Ls6bFPXpGQA00dRFnYrCkbthkT/b340QDht4ejoaI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PnO7xfd4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="RLScpSTH"
-Received: by mail-wr2-f12.google.com with SMTP id ffacd0b85a97d-482f6350f88so294117f8f.2
-        for <patches@lists.linux.dev>; Sat, 12 Sep 2026 09:27:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20251104; t=1789230470; x=1789835270; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=uLwPFVSH6fenxtAVKVtDZP5Su/rpOuHfnYhbGoS9nnQ=;
-        b=RLScpSTHoqURYTU5InxqfUmitU6FWxX/n0UZOa98rR7bTijc6CaerFQJs8UgeNhhWr
-         t4cfFuvU++rEjo7oiy1wOKOc8zKL878al4r6GdltbXR1fFpt8EnA6CXNaW+psbzAaspo
-         WlaRi2bkfQWeRGYQf/RmXXP+6hYnoaTpLt7aUq8m5q6/iSUlK4gBN1KktZsDuzxLJwHI
-         MYwHO3DOFKDk6KnAVyJ3CJDNmKm9qiBiTRCLLXw0TN2e1zfwSIGn8nkILRX1WaXWSNi6
-         M853rftDU3C1daqkSGiuSHboYD2CG5suydgzsIuvDBy9Xh77C46ftHV7v1CadegcEBcv
-         lB3Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1789230470; x=1789835270;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=uLwPFVSH6fenxtAVKVtDZP5Su/rpOuHfnYhbGoS9nnQ=;
-        b=ZUNnDVYfG/jYfFn/T0UAKETjjAM2HCxUSPlrQ6yElThhIPlI8AGGd+ECGuKROW6HnB
-         +TVmsyRDw7beAuCuJy4T6ZKnXoiOv1d7mYfLihB3SHor0abl2wz//N5Zq1rFY1jrd439
-         bQGd0UAg5JDeznUNKh+yFw68W8pp8BWiPJ/ZOJ0hOCmqrDMSXyZES82MVGJt5jVwGwrF
-         IPJJy1KHT22dX0ZkIkFRLQSLI6MMwJSGe1oRTmEGRgjX1Ci5PePYcCUmAlJhe2hFSsNy
-         Da32/0+gWTdaa+mZLOJLEYGQEBk7enqrTVV7hh9b67Wxvmk9evu7uDzi0W/RoumzRnBz
-         u0ng==
-X-Gm-Message-State: AFuF++lFr/RBE/Q6gh2QJ/2ERng094VZG4laA1ITfv7OerlD9JnagWr/
-	tARtTOcJ3lrQsTKDnEZkuMQrXvZxTcmyV6s4m8TQO8Qn/RMIN+pFbXc=
-X-Gm-Gg: AYBFou3yNv69IPYLLxQOgsL28diAfHagY81mJ7D4jRy0GjcMZZfgCaD1aVDSBggiXcY
-	YUFYpreL+E7oGCJlZ5eYvt40s67v4iWGUOgLY4NqybbC//esuACZc40385kmDolQtVlARd53clk
-	6sRKgU7xivRTe24soV17xP2fPfoMlcGgbpafAeQgDrDNENd9A5n+R9/B5u1oxwr7bNXOB0i0SiX
-	8kVUvkkix25ApnSqeLQK4cQuX8wyASYeZ0w/0LBanKBF/91duWWaSFSY6sIsr2kjpyGczyTgcPK
-	Sutso/RYGKQdZLsZqKPsYvoYRB+ERxISq7d+Q7yK+u2tApzVyb6MEGghRgh5VxMixP3O+AYKowl
-	/82YmA+DXdYLuUctnvkmrHhbjv6mp78qbteYnhR//HAlWK7kdAhORurHBdqJ7xGoVZrgFawM3A9
-	RF+/kwOO8lsdUdnMFH6fNM/9fEuKrABWx2VyHt7l1cvglA2tlb0DVrP2QgmFkpRbZqiiUl5H/aS
-	XNnPTjj+fleuOvw7NHaGQnboQ13PCa4vAH47GV+5Pq5yQ2c/rM=
-X-Received: by 2002:a05:600c:a04:b0:49e:63cd:31fb with SMTP id 5b1f17b1804b1-49e6caa2662mr32416415e9.9.1789230469857;
-        Sat, 12 Sep 2026 09:27:49 -0700 (PDT)
-Received: from [192.168.1.3] (p5b2ac4da.dip0.t-ipconnect.de. [91.42.196.218])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49e60ad0614sm183298795e9.10.2026.09.12.09.27.48
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 12 Sep 2026 09:27:49 -0700 (PDT)
-Message-ID: <473b0515-41b9-45cd-823c-11c759a7ada4@googlemail.com>
-Date: Sat, 12 Sep 2026 18:27:48 +0200
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PnO7xfd4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 836951F000FF;
+	Sat, 12 Sep 2026 16:27:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1789230472;
+	bh=bgYYCyLkpaIzR+AyP4PTiHg2tKMPh1CX7Xhr/GYH6Vw=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=PnO7xfd4b9FooHoaqCoNH9xarqeJZ79Swz1md+4kAqBNSYNGULKW+NdPjukgwPIhB
+	 UhB02E5FXmhzv7vm1K3n3WX+Ha7mgKGJDTab+RUfdxu8ZIu4eUQll/npjJVxH2s1rj
+	 2VERTXM5i/0KpzkWkZKeIJ4Hv6Zp5JSNqYmbeA28=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 0784/1191] power: supply: sc2731_charger: Convert to platform remove callback returning void
+Date: Sat, 12 Sep 2026 08:58:32 +0200
+Message-ID: <20260912065605.886553406@linuxfoundation.org>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
+References: <20260912065548.086904252@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Betterbird (Windows)
-Subject: Re: [PATCH 6.12 0000/1376] 6.12.110-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
- conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
- achill@achill.org, sr@sladewatkins.com
-References: <20260912065607.535295758@linuxfoundation.org>
-Content-Language: de-DE
-From: Peter Schneider <pschneider1968@googlemail.com>
-In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Am 12.09.2026 um 08:40 schrieb Greg Kroah-Hartman:
-> This is the start of the stable review cycle for the 6.12.110 release.
-> There are 1376 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
-Builds, boots and seems to work on my 2-socket Ivy Bridge Xeon E5-2697v2 server.
-However, I see the following dmesg warnings in this rc1:
+------------------
 
-[    2.357525] Driver 'sr' needs updating - please use bus_type methods
-...
-[   82.818407] Driver 'ses' needs updating - please use bus_type methods
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-These warnings are not present when booting into 6.12.109. I don't know if they are significant or not.
+[ Upstream commit 0569d4cfa800ba303647dbf8170d1e89bdee3ed9 ]
 
+The .remove() callback for a platform driver returns an int which makes
+many driver authors wrongly assume it's possible to do error handling by
+returning an error code. However the value returned is ignored (apart
+from emitting a warning) and this typically results in resource leaks.
+To improve here there is a quest to make the remove callback return
+void. In the first step of this quest all drivers are converted to
+.remove_new() which already returns void. Eventually after all drivers
+are converted, .remove_new() is renamed to .remove().
 
-Tested-by: Peter Schneider <pschneider1968@googlemail.com>
+Trivially convert this driver from always returning zero in the remove
+callback to the void returning variant.
 
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Link: https://lore.kernel.org/r/20230918133700.1254499-25-u.kleine-koenig@pengutronix.de
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Stable-dep-of: dfc859bb8d33 ("power: supply: sc2731_charger: cancel work on remove")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/power/supply/sc2731_charger.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-Beste Grüße,
-Peter Schneider
-
+diff --git a/drivers/power/supply/sc2731_charger.c b/drivers/power/supply/sc2731_charger.c
+index 9ac17cf7a1260..b3d8b1ca97da7 100644
+--- a/drivers/power/supply/sc2731_charger.c
++++ b/drivers/power/supply/sc2731_charger.c
+@@ -511,13 +511,11 @@ static int sc2731_charger_probe(struct platform_device *pdev)
+ 	return 0;
+ }
+ 
+-static int sc2731_charger_remove(struct platform_device *pdev)
++static void sc2731_charger_remove(struct platform_device *pdev)
+ {
+ 	struct sc2731_charger_info *info = platform_get_drvdata(pdev);
+ 
+ 	usb_unregister_notifier(info->usb_phy, &info->usb_notify);
+-
+-	return 0;
+ }
+ 
+ static const struct of_device_id sc2731_charger_of_match[] = {
+@@ -532,7 +530,7 @@ static struct platform_driver sc2731_charger_driver = {
+ 		.of_match_table = sc2731_charger_of_match,
+ 	},
+ 	.probe = sc2731_charger_probe,
+-	.remove = sc2731_charger_remove,
++	.remove_new = sc2731_charger_remove,
+ };
+ 
+ module_platform_driver(sc2731_charger_driver);
 -- 
-Climb the mountain not to plant your flag, but to embrace the challenge,
-enjoy the air and behold the view. Climb it so you can see the world,
-not so the world can see you.                    -- David McCullough Jr.
+2.53.0
 
-OpenPGP:  0xA3828BD796CCE11A8CADE8866E3A92C92C3FF244
-Download: https://www.peters-netzplatz.de/download/pschneider1968_pub.asc
-https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@googlemail.com
-https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@gmail.com
+
+
