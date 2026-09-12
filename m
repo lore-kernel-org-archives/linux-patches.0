@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B55341A57D;
-	Sat, 12 Sep 2026 09:25:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B16436728D;
+	Sat, 12 Sep 2026 09:25:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789205116; cv=none; b=eXaXq/w+0wQlf3SCVtNH4mEwkDXUQo9XJVfhjYcm376VlIaoVgYQAIHqrJReozWNEbdmfY+JKRoKQgD9Qhb54CvzE+xZ2i412MD2jl4TdsolGyznFmcPxB43CbT6vlqHywKWArTVuHHoOnI1AFKCk/X4WJ/IY5ye0Xpv69giNeo=
+	t=1789205118; cv=none; b=UXGqWJTPRDbJywUrLWDLXge8QlR3dwAEO0C6Xa1rdiXHytlNTUEJI7EVvIEXCtndP1FhdqKJwl+nh9u3g3SWgSJDKVZpKCaKr78Sr2MvA49lwPRMgMEQL3JuYZU2wo9WYluTFYdh2/35QbX2DXlggPdGc+bUEShZxetcIdDHsq0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789205116; c=relaxed/simple;
-	bh=fc8dFQ7UElqU9KeLM0e9UlsK4MTZl7LPrkWLJNEiQgw=;
+	s=arc-20240116; t=1789205118; c=relaxed/simple;
+	bh=WLFFtna0QtPgdWS0nZ0v6rGy7pGC1Lo1QkfycD51Bao=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sDbYA3vdxB6ZVbjzdKzdA3AvlmyvPru6UvfyvTiecdqAck9dZj1bv+qEaQ5v//fyZSUmV4yeknBIiQ8Zuy7XRyHuZNK6a6Q8sRdCEE1tJZkXjUaJv4DiNcNe1g+fNUAmFA3ENUOpwtqQDOKUlG7LR3eG11/R7GAnlAmEpv2Xn/4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JkxGwpeY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=d8zhMzYBPfOss0XnuEicv4n6Yaidzl6t72jwusU3bIrsHm7S3VdvRpqTcOM4y/RLOHtf65Klb/irenTWfWPc+N/iEZf7N0Urfa1dXyyaT+u/9NyD3uWRkQvIE8pgGUvOhyX5RB3AegKmr2MK/pa2Nt7z0GbW7P0MGEVucnbFU4U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ztlfOZlL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JkxGwpeY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A8101F000FF;
-	Sat, 12 Sep 2026 09:25:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ztlfOZlL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 064181F00893;
+	Sat, 12 Sep 2026 09:25:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789205112;
-	bh=kKN9WFGyBjABZOoBZxVPYjy7Erg7/c60bv8iV7eqkZ0=;
+	s=korg; t=1789205117;
+	bh=Iti/Lwk23mrJqjOAEvdEmBNFwkSzjduR0Zot9PRqJDQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JkxGwpeYksUyX3vg0tRD4hmsjM4dq53mUTdGJtnFNenv6ypsGFKCFJo3XHupOxLvQ
-	 bEVRgo7y8nevEqeLLBoLz/ZDNIwf/6eOofX7l4wHqzgp13RDMG1BA4z7+iT6vog0if
-	 oVqYfXpy4gPkNWTD4BGugrh280sCoYEZHFTKQhZk=
+	b=ztlfOZlLsIqKttUddP8rU3NdNGmsY/VDlFe5Widk/eYDtrwASS8MAwsEAAb1GNy5/
+	 Yvpbd1i6mlyMuCpmqulfRXKrI6xqWdKVmChb4PcE8csVkiC91y1euEow9g54nBq5GQ
+	 5GerVTBfUNJKJinfCU+XTVoxNfRJA32ZklGJXwV0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Liam R. Howlett (Oracle)" <liam@infradead.org>,
-	Chris Mason <clm@meta.com>,
-	Chuck Lever <cel@kernel.org>,
 	Boqun Feng <boqun.feng@gmail.com>,
 	Breno Leitao <leitao@debian.org>,
+	Chris Mason <clm@meta.com>,
+	Chuck Lever <cel@kernel.org>,
 	Ingo Molnar <mingo@redhat.com>,
 	Jason Gunthorpe <jgg@ziepe.ca>,
 	Joe Perches <joe@perches.com>,
@@ -41,9 +41,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Will Deacon <will@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1752/1815] maple_tree: catch race in mas_alloc_cyclic()
-Date: Sat, 12 Sep 2026 08:58:22 +0200
-Message-ID: <20260912065730.116052016@linuxfoundation.org>
+Subject: [PATCH 7.2 1753/1815] maple_tree: fix argument name in header
+Date: Sat, 12 Sep 2026 08:58:23 +0200
+Message-ID: <20260912065730.139811679@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -64,30 +64,17 @@ Content-Transfer-Encoding: 8bit
 
 From: Liam R. Howlett (Oracle) <liam@infradead.org>
 
-[ Upstream commit 35f1342e5b893a740eff2ef9ab337bfaa63ab76d ]
+[ Upstream commit 00f67814a14e614b749ebe54076ef1e3e6454f2b ]
 
-If mas_alloc_cyclic() is called during a low memory situation, it is
-possible the lock may be dropped so reclaim can occur.  There is a window
-where some other task may allocate the same id and cause the mas_insert()
-to fail with -EEXIST.  In this scenario the function will return -EEXIST,
-which is not expected.
+The mas_prev_range() function takes a min and not a max.
 
-Modifying the retry on mas_nomem() to re-search for a slot means that any
-race with other writes will not matter as the lock will be held between
-finding the index and writing the index.
-
-Moving the flag logic avoids cases where the flag is modified on drop
-lock/reacquire or when the write fails after clearing the flag.
-
-No existing users are exposed to this issue.
-
-Link: https://lore.kernel.org/20260821192627.4085470-13-liam@infradead.org
-Fixes: 9b6713cc7522 ("maple_tree: Add mtree_alloc_cyclic()")
+Link: https://lore.kernel.org/20260821192627.4085470-18-liam@infradead.org
+Fixes: 6b9e93e01020 ("maple_tree: add mas_prev_range() and mas_find_range_rev interface")
 Signed-off-by: Liam R. Howlett (Oracle) <liam@infradead.org>
-Reported-by: Chris Mason <clm@meta.com>
-Reviewed-by: Chuck Lever <cel@kernel.org>
 Cc: Boqun Feng <boqun.feng@gmail.com>
 Cc: Breno Leitao <leitao@debian.org>
+Cc: Chris Mason <clm@meta.com>
+Cc: Chuck Lever <cel@kernel.org>
 Cc: Ingo Molnar <mingo@redhat.com>
 Cc: Jason Gunthorpe <jgg@ziepe.ca>
 Cc: Joe Perches <joe@perches.com>
@@ -98,73 +85,22 @@ Cc: Will Deacon <will@kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/maple_tree.c | 43 ++++++++++++++++++++++++-------------------
- 1 file changed, 24 insertions(+), 19 deletions(-)
+ include/linux/maple_tree.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/lib/maple_tree.c b/lib/maple_tree.c
-index e52876435b77f..1a3815973add0 100644
---- a/lib/maple_tree.c
-+++ b/lib/maple_tree.c
-@@ -3793,35 +3793,40 @@ int mas_alloc_cyclic(struct ma_state *mas, unsigned long *startp,
- 		void *entry, unsigned long range_lo, unsigned long range_hi,
- 		unsigned long *next, gfp_t gfp)
- {
--	unsigned long min = range_lo;
--	int ret = 0;
--
--	range_lo = max(min, *next);
--	ret = mas_empty_area(mas, range_lo, range_hi, 1);
--	if ((mas->tree->ma_flags & MT_FLAGS_ALLOC_WRAPPED) && ret == 0) {
--		mas->tree->ma_flags &= ~MT_FLAGS_ALLOC_WRAPPED;
--		ret = 1;
--	}
--	if (ret < 0 && range_lo > min) {
--		mas_reset(mas);
--		ret = mas_empty_area(mas, min, range_hi, 1);
--		if (ret == 0)
--			ret = 1;
--	}
--	if (ret < 0)
--		return ret;
-+	int ret;
-+	unsigned long min;
+diff --git a/include/linux/maple_tree.h b/include/linux/maple_tree.h
+index 4a5631906affb..0d712e7be6ddc 100644
+--- a/include/linux/maple_tree.h
++++ b/include/linux/maple_tree.h
+@@ -572,7 +572,7 @@ void maple_tree_init(void);
+ void mas_destroy(struct ma_state *mas);
  
-+	min = range_lo;
- 	do {
-+		range_lo = max(min, *next);
-+		ret = mas_empty_area(mas, range_lo, range_hi, 1);
-+		if (ret < 0 && range_lo > min) {
-+			mas_reset(mas);
-+			ret = mas_empty_area(mas, min, range_hi, 1);
-+			if (ret == 0)
-+				ret = 1;
-+		}
-+		if (ret < 0)
-+			goto out;
-+
- 		mas_insert(mas, entry);
- 	} while (mas_nomem(mas, gfp));
--	if (mas_is_err(mas))
--		return xa_err(mas->node);
+ void *mas_prev(struct ma_state *mas, unsigned long min);
+-void *mas_prev_range(struct ma_state *mas, unsigned long max);
++void *mas_prev_range(struct ma_state *mas, unsigned long min);
+ void *mas_next(struct ma_state *mas, unsigned long max);
+ void *mas_next_range(struct ma_state *mas, unsigned long max);
  
-+	if (mas_is_err(mas)) {
-+		ret = xa_err(mas->node);
-+		goto out;
-+	}
-+
-+	if ((mas->tree->ma_flags & MT_FLAGS_ALLOC_WRAPPED) && ret == 0) {
-+		mas->tree->ma_flags &= ~MT_FLAGS_ALLOC_WRAPPED;
-+		ret = 1;
-+	}
- 	*startp = mas->index;
- 	*next = *startp + 1;
- 	if (*next == 0)
- 		mas->tree->ma_flags |= MT_FLAGS_ALLOC_WRAPPED;
- 
-+out:
- 	mas_destroy(mas);
- 	return ret;
- }
 -- 
 2.53.0
 
