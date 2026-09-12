@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B8E6343893;
-	Sat, 12 Sep 2026 12:04:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F3EE343893;
+	Sat, 12 Sep 2026 12:04:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789214684; cv=none; b=EmZy3OnE78HGACm7vBDaWTjUZG8ZrxgIi7LueSMqWZqwwq++Zff0kABXzliDjxYuzj2YCmVQtxABDRzYHQbZRzLONFLY+dxsXgDvFOVNbtz7pKTI5dfs7+0jlAtQ4eB2/mNACKym0GMderW9nLDLZCg8NgGxw4oTud9JX64JjA4=
+	t=1789214687; cv=none; b=We9+n1wr4UPRobcV2IMmUY80KenGMgs8sVcy7GNaif7XdCgV4siAOZ2hAdKlRAGXl/adsO2gZ9eHlXZhoogeUGkDaE8WlwCSBYI+GqHkipa4qS3FSOZkXdFVRzPu0MoLuO8TWRi7+/ch24tcaBlI80EOGmv6t9dVJvk24El622M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789214684; c=relaxed/simple;
-	bh=/hYIET3C3Ds9RL1FJMSk71+bhbZU6ZYvbw2+QbiMBCs=;
+	s=arc-20240116; t=1789214687; c=relaxed/simple;
+	bh=M1d5+ZT8YJ0WTK6/U0s0xqr6aqevq06Drd4qZMyz+E8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UZAbnpy9jDK0EhSr5WWVhlHNKdtWkTY0qQxCl7Evuo+3N0ctFwLOTgreWKW8lJEkNhyZUCPwwkWfTKVmste0eoA5hlIyLQJZC6c8IGij44p0C1vDFuLfzf9K5KHOM8SZbW/fbeBz3Wp3O6DswrumnQM+dcj2q+2w8W5CFoBkKzw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Iq7TITql; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CRBB8cVzi5AXPmtmgFtif6ok+qXMZIfUMj2XYpY6WRoR9PTqJzhRzmSiRIcPth1fznRbMdCY71rDILa8hl85AqxcFZErOu/Jjj8M/uuriU1z8DwnAflQi41tMy5hL8iCEKvLZDp43puUU81I2lFqvXTG4N29aaycV3NK0aSpLqw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T1+SlG56; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Iq7TITql"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C91C81F000FF;
-	Sat, 12 Sep 2026 12:04:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T1+SlG56"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E845F1F000FF;
+	Sat, 12 Sep 2026 12:04:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789214681;
-	bh=3UMjRLuQ8CV/Uh6k2EEnGqxihhnHZ4HSBs3JDbO6xJw=;
+	s=korg; t=1789214686;
+	bh=JH6dxLkfZVjPgFWrbyka9KLnxIdC1guNdPah3JDWecI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Iq7TITqll9DVpWbA3CJLkhpYbgbB8T6T7lzgOJ7WG7iO+fqE1kOnrlqbpP6iBSUgc
-	 IgaM8Wqj23IhTCHNf9glqr2N2ORF4exTWCPdcsEZIPPQmPPVVPeNGRI0s6+DNJ7788
-	 6F2QCm3IAI2Rbn+dZWo3dukP73oq8sRgMPAI60UI=
+	b=T1+SlG56l90jKg8xSNeeT9shV8jVjqQZy4YMX0m47YoKRWsi5bdTr9Oj1MmZgFLuO
+	 kNKcDFFzGUdJUt33U9TFSvVtlyEAaR/cGM5HpQUaqoUr6TPZXx5/Brq8ubEQrCV0ps
+	 ZkOLRFrh5h4kOxWI2AcX9SygLAi6hIpg2sNma6kc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Asad Kamal <asad.kamal@amd.com>,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	Hawking Zhang <Hawking.Zhang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0374/1376] drm/amdgpu/pm/powerplay: bounds-check voltage index in Vega10 lookup
-Date: Sat, 12 Sep 2026 08:46:40 +0200
-Message-ID: <20260912065615.882512071@linuxfoundation.org>
+Subject: [PATCH 6.12 0335/1376] ASoC: rt700-sdw: always drain jack work on remove
+Date: Sat, 12 Sep 2026 08:46:01 +0200
+Message-ID: <20260912065615.016522545@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -53,97 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Asad Kamal <asad.kamal@amd.com>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-[ Upstream commit 6fa33f594e46e775a94097f71b486d7b006b6917 ]
+[ Upstream commit 612ccf42acd14bb2685fa60c3495ca13e63e8989 ]
 
-vddInd, vddciInd and mvddInd from VBIOS-parsed tables index into vddc,
-vddci and vddmem lookup tables without bounds checks across nine sites.
-Return -EINVAL when any index is out of range.
+rt700_sdw_remove() drains jack_detect_work and jack_btn_check_work only
+when rt700->hw_init is true. That state bit is cleared by
+rt700_update_status() when the SoundWire slave becomes UNATTACHED, but a
+jack work item can already have been queued by rt700_interrupt_callback()
+or rt700_jack_init() while the device was initialized.
 
-Fixes: f83a9991648b ("drm/amd/powerplay: add Vega10 powerplay support (v5)")
-Signed-off-by: Asad Kamal <asad.kamal@amd.com>
-Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
-Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Do not use hw_init as the remove-time guard for draining these work
+objects. The delayed works are initialized during rt700_init(), so remove
+can cancel them unconditionally and pair the object lifetime with the
+codec-private data lifetime instead of a mutable hardware state bit.
+
+This issue was found by our static analysis tool and then confirmed by
+manual review of the SoundWire status, interrupt and remove paths. The
+remove path should drain work based on whether the work object exists, not
+on a runtime hardware state bit that can change after the work was queued.
+
+A QEMU PoC queued jack_detect_work, simulated SDW_SLAVE_UNATTACHED, and
+then entered remove. DEBUG_OBJECTS reported an active timer/work object
+associated with the rt700 jack work path after remove skipped the cancel.
+
+This is sent as an RFC because the practical trigger depends on SoundWire
+core remove ordering after an UNATTACHED status update. If remove cannot
+run after hw_init has been cleared while jack work is still pending, this
+is a defensive lifecycle cleanup rather than a reachable race on current
+systems.
+
+Fixes: 737ee8bdf682 ("ASoC: rt700-sdw: use cancel_work_sync() in .remove as well as .suspend")
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Link: https://patch.msgid.link/20260619122325.2504287-1-runyu.xiao@seu.edu.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c | 35 ++++++++++++++++++-
- 1 file changed, 34 insertions(+), 1 deletion(-)
+ sound/soc/codecs/rt700-sdw.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c
-index 9ace863792d48..b3fed2a478aab 100644
---- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c
-@@ -685,10 +685,18 @@ static int vega10_patch_voltage_dependency_tables_with_lookup_table(
- 			case 3: vdt = table_info->vdd_dep_on_pixclk; break;
- 			case 4: vdt = table_info->vdd_dep_on_dispclk; break;
- 			case 5: vdt = table_info->vdd_dep_on_phyclk; break;
-+			default:
-+				continue;
- 		}
+diff --git a/sound/soc/codecs/rt700-sdw.c b/sound/soc/codecs/rt700-sdw.c
+index 24cb895b759f3..366a09aa32ee2 100644
+--- a/sound/soc/codecs/rt700-sdw.c
++++ b/sound/soc/codecs/rt700-sdw.c
+@@ -459,10 +459,8 @@ static int rt700_sdw_remove(struct sdw_slave *slave)
+ {
+ 	struct rt700_priv *rt700 = dev_get_drvdata(&slave->dev);
  
- 		for (entry_id = 0; entry_id < vdt->count; entry_id++) {
- 			voltage_id = vdt->entries[entry_id].vddInd;
-+			if (voltage_id >= table_info->vddc_lookup_table->count) {
-+				pr_err("amdgpu: clk_dep[%u][%u] vddc index %u out of bounds (%u)\n",
-+				       i, entry_id, voltage_id,
-+				       table_info->vddc_lookup_table->count);
-+				return -EINVAL;
-+			}
- 			vdt->entries[entry_id].vddc =
- 					table_info->vddc_lookup_table->entries[voltage_id].us_vdd;
- 		}
-@@ -696,23 +704,48 @@ static int vega10_patch_voltage_dependency_tables_with_lookup_table(
+-	if (rt700->hw_init) {
+-		cancel_delayed_work_sync(&rt700->jack_detect_work);
+-		cancel_delayed_work_sync(&rt700->jack_btn_check_work);
+-	}
++	cancel_delayed_work_sync(&rt700->jack_detect_work);
++	cancel_delayed_work_sync(&rt700->jack_btn_check_work);
  
- 	for (entry_id = 0; entry_id < mm_table->count; ++entry_id) {
- 		voltage_id = mm_table->entries[entry_id].vddcInd;
-+		if (voltage_id >= table_info->vddc_lookup_table->count) {
-+			pr_err("amdgpu: mm[%u] vddc index %u out of bounds (%u)\n",
-+			       entry_id, voltage_id,
-+			       table_info->vddc_lookup_table->count);
-+			return -EINVAL;
-+		}
- 		mm_table->entries[entry_id].vddc =
- 			table_info->vddc_lookup_table->entries[voltage_id].us_vdd;
- 	}
+ 	pm_runtime_disable(&slave->dev);
  
- 	for (entry_id = 0; entry_id < mclk_table->count; ++entry_id) {
- 		voltage_id = mclk_table->entries[entry_id].vddInd;
-+		if (voltage_id >= table_info->vddc_lookup_table->count) {
-+			pr_err("amdgpu: mclk[%u] vddc index %u out of bounds (%u)\n",
-+			       entry_id, voltage_id,
-+			       table_info->vddc_lookup_table->count);
-+			return -EINVAL;
-+		}
- 		mclk_table->entries[entry_id].vddc =
- 				table_info->vddc_lookup_table->entries[voltage_id].us_vdd;
-+
- 		voltage_id = mclk_table->entries[entry_id].vddciInd;
-+		if (voltage_id >= table_info->vddci_lookup_table->count) {
-+			pr_err("amdgpu: mclk[%u] vddci index %u out of bounds (%u)\n",
-+			       entry_id, voltage_id,
-+			       table_info->vddci_lookup_table->count);
-+			return -EINVAL;
-+		}
- 		mclk_table->entries[entry_id].vddci =
- 				table_info->vddci_lookup_table->entries[voltage_id].us_vdd;
-+
- 		voltage_id = mclk_table->entries[entry_id].mvddInd;
-+		if (voltage_id >= table_info->vddmem_lookup_table->count) {
-+			pr_err("amdgpu: mclk[%u] vddmem index %u out of bounds (%u)\n",
-+			       entry_id, voltage_id,
-+			       table_info->vddmem_lookup_table->count);
-+			return -EINVAL;
-+		}
- 		mclk_table->entries[entry_id].mvdd =
- 				table_info->vddmem_lookup_table->entries[voltage_id].us_vdd;
- 	}
- 
--
- 	return 0;
- 
- }
 -- 
 2.53.0
 
