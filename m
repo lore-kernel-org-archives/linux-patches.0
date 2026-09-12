@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 021D046EF8D;
-	Sat, 12 Sep 2026 10:50:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF4BD470EB9;
+	Sat, 12 Sep 2026 10:50:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789210220; cv=none; b=G0Iuj9suf2kex5xCoc9w1eLsczy3ur4UOpPYg1yGgkB8S3tiSW5RfIDgaCmZxTc2yl90F3ijHESOWCQSLynlweWdbKsUA72kkQXMhYnOfVOjxcXjrjP+HYKP9LjhqGkytqnUjCMJnbWV9Mg1Op4SDwST9qJ9EYulcQPph6+8gp4=
+	t=1789210225; cv=none; b=UTdJgcueBIibIYVoG/6xpzlMmnaIpC5CKZzt6PUjEf2qFI6JA1FlEzVA42XDPEhxlIkalkhh1gnAIRoojxR7qKiucuJqq1SDAdSu8CzB8Rt3JuTf+ADkfL/WW6LG3DRhA7X7SK5P/vKVbooSJqFirsQIJDQGjnlZEHkb6M66av8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789210220; c=relaxed/simple;
-	bh=m+6BnnHIbLzIy6Ogwn3oO98ykyKTNt+NHeI0NOOzl7s=;
+	s=arc-20240116; t=1789210225; c=relaxed/simple;
+	bh=amG6Ckpn/V1ILXXqlfGJUsZLxup+/WTLUbTKoewSjUI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L9rXkQBu1P8SLTuVsELAwegP2Lox9O43l3HyI6wvBrpMxonEIEc5HT+MV4pSHpHUvkpgXtE5viGqzB7Q2nQT+OIqHt3utUIK13g30my7IImopKD+rBQ4aHVMefoXiMS6sSWVJC8iHYn1Et4yPagc8KyKqdZGyPexcZ1117kFWGs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uxGkz0fq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OGQARRYQkB67YPeaKRgTUtcI/Z51CHwp7KdUmMY0pjPfDeYUE7yDA5U9oPqfg45W6mgYn+qhG7DopqkVjHwhqjGQvAlD7cZREwNgORmIEUCaFldQ2q8hQbq13tdK/f/cK4ZsIhWivE6nSqo2RZhRpoKFPzLks9u+PpxzgzzIKAk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qrVkupcy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uxGkz0fq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78D011F000FF;
-	Sat, 12 Sep 2026 10:50:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qrVkupcy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64A921F000FF;
+	Sat, 12 Sep 2026 10:50:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789210217;
-	bh=usNhiAN/0d12vqbJMixk+dQjnhmbAz4rLw13Fy4MemM=;
+	s=korg; t=1789210222;
+	bh=sy8y590Hc4A6L1BWW4YVMCwbjDui46M+ntSn+94gUjI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uxGkz0fqVLdAR5qjtPZjD7kRuLfe7Vw53RVp2lO39S7/dyegS7/MMh4s2Y4ruaG8Z
-	 lpwBUrFrTTvCnJS3nTvNS3RnXNAbIz5Vt6NH8YwLAH6JScCkzcGApXyEXeuF3vskWI
-	 dQlpDw1wF4hEF47vwpUQGDnBQPZTN0IK89/6gvaM=
+	b=qrVkupcyrJF9MbmlSUmWzzA0Y4y3/7Y3AhlftSsbX1En4vWlsbebcqxmKR4T3EtXK
+	 18AYM+Te+82Nej9qtaA/FR09rAvtv2A0RGiavGw8aGDa3/zdYSN3bSEQo9KHWvayQc
+	 qkVkjZZHUb35scVdynYBcZF2tdJRpiusRj0vV3KQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Yi Lai <yi1.lai@intel.com>,
+	Mykola Marzhan <mykola@meshstor.io>,
+	Yu Kuai <yukuai@fygo.io>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0982/1518] perf/x86/intel/pt: Fix stop/start with no update
-Date: Sat, 12 Sep 2026 08:52:31 +0200
-Message-ID: <20260912065645.672572396@linuxfoundation.org>
+Subject: [PATCH 6.18 0965/1518] md/md-llbitmap: prevent create failure bitmap UAF
+Date: Sat, 12 Sep 2026 08:52:14 +0200
+Message-ID: <20260912065645.290552759@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,176 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: Yu Kuai <yukuai@fygo.io>
 
-[ Upstream commit 2e17bf3a469a41457a3bc31b1f8fd66b6ce94a6d ]
+[ Upstream commit 2116c2f0a0e547615886900e2ed8c529c016499b ]
 
-If pt_event_stop() is called without PERF_EF_UPDATE flag, then
-perf_aux_output_end() is not called.  A subsequent call to pt_event_start()
-will call perf_aux_output_begin() again which violates the rule against
-nesting and triggers a WARNING in perf_aux_output_begin().
+llbitmap_create() publishes mddev->bitmap before reading the bitmap
+superblock. This is needed because llbitmap_read_sb() can initialize a
+new bitmap and flush it through helpers that use mddev->bitmap.
 
-Originally, pt_event_stop() was never called without PERF_EF_UPDATE,
-because the only code paths to do so are from event overflow, and Intel PT
-does not do that.
+If llbitmap_read_sb() fails, the old cleanup dropped bitmap_info.mutex
+and freed llbitmap before clearing mddev->bitmap. Readers such as
+/proc/mdstat rely on bitmap_info.mutex to keep the bitmap pointer stable
+while collecting bitmap stats, so they could observe the stale pointer
+after the failed create path released the mutex.
 
-However the introduction of group throttling by commit 9734e25fbf5ae
-("perf: Fix the throttle logic for a group") meant that an Intel PT event
-could be throttled if it was part of a group.  Throttling calls PMU
- ->stop() / ->start() callbacks without flags.
+Clear mddev->bitmap while still holding bitmap_info.mutex, then free the
+failed llbitmap after dropping the mutex. This makes mutex-protected
+readers see either a live bitmap or no bitmap.
 
-An example is when AUX area sampling is used. The following commands
-hit the issue:
-
-  echo 10000 > /proc/sys/kernel/perf_event_max_sample_rate
-
-  perf record -F32000 --aux-sample -e '{intel_pt//u,cycles:u}' \
-  -- bash -c 'for i in `seq 1 100000` ; do true ; done'
-
-Use PERF_HES_UPTODATE to track whether perf_aux_output_begin() and
-perf_aux_output_end() are balanced.  A cleared PERF_HES_UPTODATE bit
-indicates that an AUX output context is still open.
-
-Amend pt_event_start() / pt_event_stop() accordingly so that begin/end
-stay balanced:
-
- - In non-snapshot mode, stop() always closes the buffer (the buffer may
-   have run out of space, and that accounting is done by the update), so
-   a following start() opens a fresh one as before.
-
- - In snapshot/overwrite mode, stop() without PERF_EF_UPDATE leaves the
-   buffer open so that pt_event_snapshot_aux() can still copy from it,
-   and start() then only re-enables tracing instead of calling
-   perf_aux_output_begin() again.
-
-Note that pt_event_del() calls pt_event_stop() with PERF_EF_UPDATE flag set
-(as is required by the documentation), so a final call to
-perf_aux_output_end() is assured.
-
-Fixes: 52ca9ced3f707 ("perf/x86/intel/pt: Add Intel PT PMU driver")
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Tested-by: Yi Lai <yi1.lai@intel.com>
-Link: https://patch.msgid.link/20260721070254.13557-4-adrian.hunter@intel.com
+Fixes: 5ab829f1971d ("md/md-llbitmap: introduce new lockless bitmap")
+Tested-by: Mykola Marzhan <mykola@meshstor.io>
+Link: https://patch.msgid.link/20260802195038.164272-9-yukuai@kernel.org
+Signed-off-by: Yu Kuai <yukuai@fygo.io>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/intel/pt.c | 45 ++++++++++++++++++++++++++++++--------
- 1 file changed, 36 insertions(+), 9 deletions(-)
+ drivers/md/md-llbitmap.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/x86/events/intel/pt.c b/arch/x86/events/intel/pt.c
-index 70bee69c598bc..a2937f82ccd44 100644
---- a/arch/x86/events/intel/pt.c
-+++ b/arch/x86/events/intel/pt.c
-@@ -1539,6 +1539,8 @@ void intel_pt_interrupt(void)
- 
- 	perf_aux_output_end(&pt->handle, local_xchg(&buf->data_size, 0));
- 
-+	event->hw.state |= PERF_HES_UPTODATE;
-+
- 	if (!(event->hw.state & PERF_HES_STOPPED)) {
- 		int ret;
- 
-@@ -1560,6 +1562,8 @@ void intel_pt_interrupt(void)
- 
- 		pt_config_buffer(buf);
- 		pt_config_start(event);
-+
-+		event->hw.state &= ~PERF_HES_UPTODATE;
- 	}
- }
- 
-@@ -1629,6 +1633,18 @@ static void pt_event_start(struct perf_event *event, int mode)
- 		return;
+diff --git a/drivers/md/md-llbitmap.c b/drivers/md/md-llbitmap.c
+index dc9b72494a81a..b4738fe6e2463 100644
+--- a/drivers/md/md-llbitmap.c
++++ b/drivers/md/md-llbitmap.c
+@@ -999,10 +999,11 @@ static int llbitmap_create(struct mddev *mddev)
+ 	mutex_lock(&mddev->bitmap_info.mutex);
+ 	mddev->bitmap = llbitmap;
+ 	ret = llbitmap_read_sb(llbitmap);
++	if (ret)
++		mddev->bitmap = NULL;
+ 	mutex_unlock(&mddev->bitmap_info.mutex);
+ 	if (ret) {
+ 		kfree(llbitmap);
+-		mddev->bitmap = NULL;
  	}
  
-+	/*
-+	 * Re-start subsequent to a call to pt_event_stop() without the
-+	 * PERF_EF_UPDATE flag. Absence of PERF_HES_UPTODATE indicates that
-+	 * perf_aux_output_begin() has already been called. This path can
-+	 * come about only in snapshot/overwrite mode - see pt_event_stop().
-+	 */
-+	if (!(hwc->state & PERF_HES_UPTODATE)) {
-+		hwc->state &= ~PERF_HES_STOPPED;
-+		pt_config_enable(event);
-+		return;
-+	}
-+
- 	buf = perf_aux_output_begin(&pt->handle, event);
- 	if (!buf)
- 		goto fail_stop;
-@@ -1639,7 +1655,7 @@ static void pt_event_start(struct perf_event *event, int mode)
- 			goto fail_end_stop;
- 	}
- 
--	hwc->state &= ~PERF_HES_STOPPED;
-+	hwc->state &= ~(PERF_HES_STOPPED | PERF_HES_UPTODATE);
- 
- 	pt_config_buffer(buf);
- 	pt_config(event);
-@@ -1649,12 +1665,13 @@ static void pt_event_start(struct perf_event *event, int mode)
- fail_end_stop:
- 	perf_aux_output_end(&pt->handle, 0);
- fail_stop:
--	hwc->state |= PERF_HES_STOPPED;
-+	hwc->state |= PERF_HES_STOPPED | PERF_HES_UPTODATE;
- }
- 
- static void pt_event_stop(struct perf_event *event, int mode)
- {
- 	struct pt *pt = this_cpu_ptr(&pt_ctx);
-+	struct pt_buffer *buf;
- 
- 	if (mode & PERF_EF_PAUSE) {
- 		if (READ_ONCE(pt->pause_allowed))
-@@ -1680,17 +1697,24 @@ static void pt_event_stop(struct perf_event *event, int mode)
- 
- 	pt_config_stop(event);
- 
--	if (event->hw.state & PERF_HES_STOPPED)
--		return;
--
- 	event->hw.state |= PERF_HES_STOPPED;
- 
--	if (mode & PERF_EF_UPDATE) {
--		struct pt_buffer *buf = perf_get_aux(&pt->handle);
-+	if (event->hw.state & PERF_HES_UPTODATE)
-+		return;
- 
--		if (!buf)
--			return;
-+	buf = perf_get_aux(&pt->handle);
-+	if (!buf)
-+		return;
- 
-+	/*
-+	 * When not in snapshot/overwrite mode, there is a possibility that the
-+	 * buffer has run out of space. The accounting for that is handled by
-+	 * the update, so always update in that case. Snapshot/overwrite mode is
-+	 * treated differently to allow for pt_event_snapshot_aux() which can
-+	 * still get called if the AUX-sampling event is not stopped until after
-+	 * PT is stopped.
-+	 */
-+	if ((mode & PERF_EF_UPDATE) || !buf->snapshot) {
- 		if (WARN_ON_ONCE(pt->handle.event != event))
- 			return;
- 
-@@ -1705,6 +1729,7 @@ static void pt_event_stop(struct perf_event *event, int mode)
- 				local_xchg(&buf->data_size,
- 					   buf->nr_pages << PAGE_SHIFT);
- 		perf_aux_output_end(&pt->handle, local_xchg(&buf->data_size, 0));
-+		event->hw.state |= PERF_HES_UPTODATE;
- 	}
- }
- 
-@@ -1775,6 +1800,8 @@ static int pt_event_add(struct perf_event *event, int mode)
- 	if (pt->handle.event)
- 		goto fail;
- 
-+	event->hw.state |= PERF_HES_UPTODATE;
-+
- 	if (mode & PERF_EF_START) {
- 		pt_event_start(event, 0);
- 		ret = -EINVAL;
+ 	return ret;
 -- 
 2.53.0
 
