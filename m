@@ -1,44 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEE83439341;
-	Sat, 12 Sep 2026 13:27:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA01347CC9C;
+	Sat, 12 Sep 2026 13:27:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789219633; cv=none; b=BD+2lorTh1BzOonrHpDW9EY0PyJe3mIAROw/bOdIgkqchdid3JGB7XyOPGRsW37yLHU4llXFyoP2OQhShegogrE4z1QPk3/Nfto2vcfas+PzstiC5dJvDI1oprQthi4SZf61kSIpv5n4zFBV/OT+Md9vI3S57WmZdpd6p4/cgA0=
+	t=1789219638; cv=none; b=hvHm9w9I0oAktQBVi88jDDLz6xyV7Fnx0EYtZpYWCCLrsfoPMeh8uX13AxbL7cf/OIOByzShY+B9i79OYQKdd/s5pqHFquXYcxnCmMeaex+wtdCu+hP/Z/AjMzegPDlB0kZp8bUI7jbtEiPMpWW72AWz0KHpWY/k5B9duoIOm6E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789219633; c=relaxed/simple;
-	bh=TMy9bOLlJWCuZ3g5zTfG8AnOzIpF6d3e9bpgg6pMabk=;
+	s=arc-20240116; t=1789219638; c=relaxed/simple;
+	bh=dXSW3wVc2PVccuNLDhnQVtIplDYig6ko1txGE8TVkl8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VD1h6SrbIAizT4O58x8JC7KkEC/xHRQ/eX5ZO0rg/WQBFwWTPPrlrBGOdu4Tnmx4Cvju5oD9kZ4sWvQYiRu5i/fsXTw2snXPkAqNI3pPg1MVPBqapNN+y2jY5koEZy1DFip3ZUA04eFSyW23NI+UPuQ4dj3dD8aRobtDTbsDt+I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iDKajnaR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VQWRfkyfRdaRYwpm5v/CmjcaDoS9USj/JsQfuHqRhEfI3VBQKD9o6o4iK/dk01kYqrVLER+VGYb3kiQlS0E4Njt2AWfy02U7syQS6yyb3/gGCeGWzvIZeQy3HNIgY4TIReEwTHIeE02yQJIA+J8pQnogc9rTU4k0cCHjOGyp9Y0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LIQ/vj46; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iDKajnaR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F02BE1F000FF;
-	Sat, 12 Sep 2026 13:27:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LIQ/vj46"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94B0E1F000FF;
+	Sat, 12 Sep 2026 13:27:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789219631;
-	bh=8+w4Ih8FglIHqNN0EwyBSdhwtc23bGcx5gHl2ySnAsY=;
+	s=korg; t=1789219636;
+	bh=nd1SczQaQpGy+eFn+Y1lA6Bk1xZsNx0xy+0R6RvMbwA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iDKajnaRLNCL2kAC2YUJCBB3RYceRUWgs8/D3OINuzwqJqZmtCyBObMWratMAUsYm
-	 A90KgtRr6F7/1gDlC3j90gQQBGB33fF97geWi4g1bUq4nXx7EKSj7axcG2C4+nmbf8
-	 QFi41n/C6blAaMNoARUfkxrkCYPz7Qg5WRFjU/DE=
+	b=LIQ/vj46244cCh8aMhJOS3AsgrwPK3dMI3FbKht6RDEeNmCZn/J15yxD77tFWQDQc
+	 1zphbtdsPPFCuGNfMvjuwJsf6dtIlNGW9VE13p2+g61FBxNyCgmyLNMY9TttBewBpQ
+	 Xy4Ny1QfL+eRAhwhman3wlAA/5py3JqD71kr28fs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jordan R Abrahams-Whitehead <ajordanr@google.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Eric Dumazet <edumazet@google.com>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Giuliano Procida <gprocida@google.com>,
-	Yabin Cui <yabinc@google.com>,
-	Bill Wendling <morbo@google.com>,
-	Justin Stitt <justinstitt@google.com>,
+	Breno Leitao <leitao@debian.org>,
+	Zi Yan <ziy@nvidia.com>,
+	Gregory Price <gourry@gourry.net>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Alistair Popple <apopple@nvidia.com>,
+	Byungchul Park <byungchul@sk.com>,
+	"Huang, Ying" <ying.huang@linux.alibaba.com>,
+	Joshua Hahn <joshua.hahnjy@gmail.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Rakie Kim <rakie.kim@sk.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 0014/1424] include/linux/list.h: mark list_add and __list_add as __always_inline
-Date: Sat, 12 Sep 2026 08:40:46 +0200
-Message-ID: <20260912065607.613925535@linuxfoundation.org>
+Subject: [PATCH 6.6 0015/1424] mm/migrate: report RCU-tasks quiescent states in migrate_pages_batch()
+Date: Sat, 12 Sep 2026 08:40:47 +0200
+Message-ID: <20260912065607.637164096@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -57,92 +60,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jordan R Abrahams-Whitehead <ajordanr@google.com>
+From: Breno Leitao <leitao@debian.org>
 
-commit 2780860eddecba9ffe210bb9436eee3cf22bfcdd upstream.
+commit efe8f86c0916f0f74eea74ae21a3b37f728c6bad upstream.
 
-This commit resolves an issue where modpost section verification fails due
-to section mismatches between list_add and its callers.
+migrate_pages_batch() unmaps each folio before moving it, and every
+unmap runs the mmu_notifier invalidate callbacks.  On KVM hosts
+try_to_migrate() ends up in kvm_mmu_notifier_invalidate_range_start() ->
+tdp_mmu_zap_leafs(), which is expensive, so unmapping a large batch keeps
+the CPU busy for a long time.
 
-At present, list_add (and its internal __list_add) are called from both
-.text and .init code sections.  Since inlining can vary per call site,
-list_add can be 4 different states:
+The loop already calls cond_resched(), but on PREEMPTION kernels that is
+a no-op, and involuntary preemption is not a Tasks-RCU quiescent state.
 
-  list_add in text with arguments to non-.init.data values
-  list_add in init with arguments to static .init.data values
-  list_add in init with arguments to non-.init.data values
-  list_add in text with arguments to static .init.data values
+A long batch therefore never reports a quiescent state, and the
+migrating task (e.g. kcompactd) becomes a Tasks-RCU holdout, stalling the
+Tasks-RCU grace period for minutes, which is common at Meta fleet:
 
-It is last instance that ends up causing the section mismatch caused by
-constant propagation of the address of static libs inside the `dir_add` as
-seen below (with the dir_list being defined statically in initramfs.c,
-resting in .init.data).
+  INFO: rcu_tasks detected stalls on tasks:
+  0000000055349ecc: .. nvcsw: 1157401/1157401 holdout: 1 idle_cpu: -1/56 task:kcompactd0      state:R  running task
+  Call Trace:
+   tdp_mmu_zap_leafs
+   tdp_mmu_next_root
+   gfn_to_pfn_cache_invalidate_start
+   kvm_mmu_notifier_invalidate_range_start
+   __mmu_notifier_invalidate_range_start
+   try_to_migrate_one
+   try_to_migrate
+   migrate_pages_batch
+   migrate_pages
+   compact_zone
+   compact_node
+   kcompactd
+   kthread
 
-  WARNING: modpost: vmlinux.o: section mismatch in reference: __list_add
-  (section: .text.unlikely.) -> dir_list (section: .init.data)
+Use cond_resched_tasks_rcu_qs() so a quiescent state is reported even
+when cond_resched() does nothing.
 
-Because of these section matching requirements, semantically, __list_add
-and list_add MUST be inlined.  This will then ensure callers inside .init
-will receive a list_add that exists and refers to only .init data, and
-list_add code in .text sections will only refer to non-init data.
+This has also been discussed at [1]
 
-This issue manifests predominently in AutoFDO with clang, which is very
-hesitant to inline cold functions such as list_add even when marked
-`inline`.  Marking them as `__always_inline` therefore matches the
-existing semantic constraints imposed by modpost's section mismatch
-checks.
-
-Link: https://lore.kernel.org/20260731-always-inline-list-add-v1-1-d29f54ce5477@google.com
-Link: https://lore.kernel.org/all/CANn89iJVQe=wedLheJmjZjOTJsWHijT0jZs=iRxKssJZbjAxHw@mail.gmail.com/
-Signed-off-by: Jordan R Abrahams-Whitehead <ajordanr@google.com>
-Suggested-by: Nathan Chancellor <nathan@kernel.org>
-Suggested-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
-Tested-by: Nick Desaulniers <ndesaulniers@google.com>
-Reported-by: Giuliano Procida <gprocida@google.com>
-Reported-by: Yabin Cui <yabinc@google.com>
-Closes: https://github.com/ClangBuiltLinux/linux/issues/2173
-Cc: Bill Wendling <morbo@google.com>
-Cc: Justin Stitt <justinstitt@google.com>
+Link: https://lore.kernel.org/20260727-kcompact-v1-1-bdfefddd6874@debian.org
+Link: https://lore.kernel.org/all/amdWVTs0WKOxguxP@gmail.com/ [1]
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Acked-by: Zi Yan <ziy@nvidia.com>
+Reviewed-by: Gregory Price <gourry@gourry.net>
+Reviewed-by: Paul E. McKenney <paulmck@kernel.org>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Cc: Alistair Popple <apopple@nvidia.com>
+Cc: Byungchul Park <byungchul@sk.com>
+Cc: "Huang, Ying" <ying.huang@linux.alibaba.com>
+Cc: Joshua Hahn <joshua.hahnjy@gmail.com>
+Cc: Matthew Brost <matthew.brost@intel.com>
+Cc: Rakie Kim <rakie.kim@sk.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/list.h |   15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ mm/migrate.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/include/linux/list.h
-+++ b/include/linux/list.h
-@@ -142,10 +142,13 @@ static inline bool __list_del_entry_vali
-  *
-  * This is only for internal list manipulation where we know
-  * the prev/next entries already!
-+ *
-+ * Must be inlined to ensure it can be safely called
-+ * with initdata arguments.
-  */
--static inline void __list_add(struct list_head *new,
--			      struct list_head *prev,
--			      struct list_head *next)
-+static __always_inline void __list_add(struct list_head *new,
-+				       struct list_head *prev,
-+				       struct list_head *next)
- {
- 	if (!__list_add_valid(new, prev, next))
- 		return;
-@@ -163,8 +166,12 @@ static inline void __list_add(struct lis
-  *
-  * Insert a new entry after the specified head.
-  * This is good for implementing stacks.
-+ *
-+ * Must be inlined to ensure it can be safely called
-+ * with initdata arguments.
-  */
--static inline void list_add(struct list_head *new, struct list_head *head)
-+static __always_inline void list_add(struct list_head *new,
-+				     struct list_head *head)
- {
- 	__list_add(new, head, head->next);
- }
+--- a/mm/migrate.c
++++ b/mm/migrate.c
+@@ -1644,7 +1644,7 @@ static int migrate_pages_batch(struct li
+ 			is_thp = is_large && folio_test_pmd_mappable(folio);
+ 			nr_pages = folio_nr_pages(folio);
+ 
+-			cond_resched();
++			cond_resched_tasks_rcu_qs();
+ 
+ 			/*
+ 			 * Large folio migration might be unsupported or
 
 
