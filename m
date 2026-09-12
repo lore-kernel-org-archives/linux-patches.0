@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81F3A37AA92;
-	Sat, 12 Sep 2026 10:45:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B79AC3F23BE;
+	Sat, 12 Sep 2026 10:45:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789209940; cv=none; b=GSc8F1eAzw++i2F2xHYqF8ZIVxAFPT1f/SY070b7VlmMfFaoH31zWWVnAOGWEWyMRYSuGQvyWuisAOE98qe0cAKoKyrOpvWnZ05bp2DbJvCf4lxybb7QDMa526eURgx9zsAelt4x+ei89tYF0WZqUx2mT3sOoquDXblCQPiPHgg=
+	t=1789209945; cv=none; b=LuwriXu0AqF+ApQDxL/20S+sODo3B29sHyDkgxtuNdMaYwtf2ba20tL2PQbsCPdxnayWbkqbmIq0Fx5ws61S+UDRsn6VX8I4dtGUoEo+1DuzBs35VpqGbsfAlTuwEEcJu17uz3kEdda3VeCE55WOlLiE8RGEr9iwNKPN0c5ZuQE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789209940; c=relaxed/simple;
-	bh=TFzyHR2XYzUAx8g4WeMhkd9ZTEtd+WZ7a2FhoapachI=;
+	s=arc-20240116; t=1789209945; c=relaxed/simple;
+	bh=5+DZrKr/uXWiGsz71Y0TAhYw7UL2PZxblXuUkpIWiPA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YxXovGnYtTE4qK66R1j50NuzvBITYHkpGdVa9rMuzvxrBMvGVUodYnw2Y+qIsebTQ6Mpq77xskJwjVV3OoNIQrf8ZntSf8ZQTjzvwSmhonQooy0SIFYw3F7IcSXzbjcLebEFq7mIzmZnNcgc9Ql3nQElttF55ozmnBtlsmjfS/Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pB0zfGMV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=U8WB6C9JlfYpipgzdQYq9oN308ksrry4HYxdTIx0jalOeFdg+Xn5A17myR2hAKtC7r82kjoDYElP/4hp8A8jqWzFr7aLAxlXR3FaJ+78MlG4tQIzZF9viZJqU0GK57arU/rdAGi7TyKpx7iCqTHiXVJKzD0P/xtMcv4VuHcTAQ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oyVkvETP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pB0zfGMV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 866E81F000FF;
-	Sat, 12 Sep 2026 10:45:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oyVkvETP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71F021F000FF;
+	Sat, 12 Sep 2026 10:45:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789209938;
-	bh=mKpXqDoc2Bt0sgWH44F4AcYwyWAjJAKmrTbJpfGWooY=;
+	s=korg; t=1789209943;
+	bh=XT59j6RzWvIrMmSxHdDwPOP1Fuk/58fDdIDuMySSK5s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pB0zfGMV/gCofKhOsBVgg1SpXb2xZcsPIlorYHaUnW+b7YlvZ3KJ1unK20b1midrQ
-	 Jc3CcxMt46GFRc/w6CkN/CPrliUPsPuXlPX4kGvXNst1oBe7PRvvxhKwkmgBRG35t9
-	 0OCbgVWxzUqjUddToAuCbT0vLi4jxTKl5oQ3F0Bc=
+	b=oyVkvETP6RqXjhrt7cgrGgxflxlBXm362K1OFlZlVLasnFMcyB/FTyxfm9UUyhdTI
+	 /3wYERwgVI6OncynajDa3wjF9PB3fIAHg6+5oTBqGOkHrStMDTy/LpspLsPjWQ+7BN
+	 6grAqwom1PhJo6HVI5Wgz8H+m0QxX8bIJxzQZ2EE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Alexandre Bounine <alex.bou9@gmail.com>,
-	Matt Porter <mporter@kernel.crashing.org>,
-	Yang yingliang <yangyingliang@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Chen-Yu Tsai <wens@kernel.org>,
+	Chen-Yu Tsai <wens@csie.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0872/1518] rapidio: clear mport->net when rio_add_net() fails
-Date: Sat, 12 Sep 2026 08:50:41 +0200
-Message-ID: <20260912065643.175183883@linuxfoundation.org>
+Subject: [PATCH 6.18 0918/1518] drm/sun4i: hdmi-phy: Fix H6 8-bit MPLL config at 594 MHz
+Date: Sat, 12 Sep 2026 08:51:27 +0200
+Message-ID: <20260912065644.217855018@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -54,47 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Jernej Skrabec <jernej.skrabec@gmail.com>
 
-[ Upstream commit b74030fbf187b43c1f85b66a7082e9946511cb5d ]
+[ Upstream commit 0ba6deddaae74f0539c0303bfb5f860adbe1a68b ]
 
-rio_alloc_net() stores the newly allocated rio_net in mport->net before
-rio_scan_alloc_net() registers the device.
+The 8-bit entry of the last MPLL row (594 MHz) doesn't lock reliably on
+H6. 4K@60 RGB/YUV444, which is the mode that reaches this entry, doesn't
+come up.
 
-If rio_add_net() fails, rio_scan_alloc_net() drops the device reference
-with put_device(), which releases the rio_net through the device release
-callback.  However, mport->net is left pointing at the freed object.
+Align the value with the vendor driver. Other entries are left alone,
+they are used by lower pixel clocks which work fine.
 
-A later mport unregister path can then dereference the dangling mport->net
-pointer and may try to free the same rio_net again.
+Tested with 4K@60 on a LG TV.
 
-Clear mport->net in the rio_add_net() failure path, matching the cleanup
-done for the destID table allocation failure path.
-
-Link: https://lore.kernel.org/20260708070628.721010-1-lgs201920130244@gmail.com
-Fixes: e842f9a1edf3 ("rapidio: add check for rio_add_net() in rio_scan_alloc_net()")
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Cc: Alexandre Bounine <alex.bou9@gmail.com>
-Cc: Matt Porter <mporter@kernel.crashing.org>
-Cc: Yang yingliang <yangyingliang@huawei.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 0fb4b858b102 ("drm/sun4i: Add support for H6 HDMI PHY")
+Signed-off-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Acked-by: Chen-Yu Tsai <wens@kernel.org>
+Reviewed-by: Chen-Yu Tsai <wens@csie.org>
+Link: https://patch.msgid.link/aec9060209473b8176eb43bc7c63c20b21306adf.1785772659.git.jernej.skrabec@gmail.com
+Signed-off-by: Chen-Yu Tsai <wens@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rapidio/rio-scan.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/sun4i/sun8i_hdmi_phy.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/rapidio/rio-scan.c b/drivers/rapidio/rio-scan.c
-index dcd6619a4b027..3cc25d0534513 100644
---- a/drivers/rapidio/rio-scan.c
-+++ b/drivers/rapidio/rio-scan.c
-@@ -874,6 +874,7 @@ static struct rio_net *rio_scan_alloc_net(struct rio_mport *mport,
- 		net->dev.release = rio_scan_release_dev;
- 		if (rio_add_net(net)) {
- 			put_device(&net->dev);
-+			mport->net = NULL;
- 			net = NULL;
- 		}
- 	}
+diff --git a/drivers/gpu/drm/sun4i/sun8i_hdmi_phy.c b/drivers/gpu/drm/sun4i/sun8i_hdmi_phy.c
+index 4fa69c463dc46..489ea94693ffa 100644
+--- a/drivers/gpu/drm/sun4i/sun8i_hdmi_phy.c
++++ b/drivers/gpu/drm/sun4i/sun8i_hdmi_phy.c
+@@ -91,7 +91,7 @@ static const struct dw_hdmi_mpll_config sun50i_h6_mpll_cfg[] = {
+ 		},
+ 	},  {
+ 		594000000, {
+-			{ 0x1a40, 0x0003 },
++			{ 0x1a7c, 0x0003 },
+ 			{ 0x3b4c, 0x0003 },
+ 			{ 0x5a64, 0x0003 },
+ 		},
 -- 
 2.53.0
 
