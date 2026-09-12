@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8DC82737FC;
-	Sat, 12 Sep 2026 07:42:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECE26346A08;
+	Sat, 12 Sep 2026 07:42:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789198924; cv=none; b=JHc5eGYN7reztZsbzBQifQVm/uVT2nZ4fsfaZ6cLocCG3kAYE5wKg3Kz9vzsInj30gRo5icByQd+figI70EYkP3q98rsFOhPygUI9/uI4fqHBawKz+8+hORYwRMCRO77zfWuQHEI4By0QDlqsC6POLhxF+W0qQ4LJHeSfzH0E+M=
+	t=1789198932; cv=none; b=SWqJ/stmSX40MeyqWT0Hkfm90zInAPZY8gBelvyDD2K7cZ2dLr0sDa6Y2PfNPxpmun2ppgh+vcMPRqr+lqr5ShINYbExNcE6yf5gF3d6BKzeNQIYpn02l1ZBFxKwgCtmZDgYp6GGSXF5NTLOvfSVIFylyy7DRhZKUdXfKS2b/To=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789198924; c=relaxed/simple;
-	bh=gpVowBlscZ9938HSnbqmwjI3o+KuBfjDhjqFbwBSzXY=;
+	s=arc-20240116; t=1789198932; c=relaxed/simple;
+	bh=/m1P2IX2xcHaakhgJc36kLWrGkJW4La0ONPKD6jxKNQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hdEqOe/dVjy+giS5VvtiknPqaEuaTXwkn+3+1iOXFLQshybtxq6laXr9DFWJpw/1waXIyF4wKTyxEEGaVz1Z3rU91M/gf86Otq0HiNLyAvq8keZS91c5pclywPyXY+GVIP/YpUI4cIElscuATQ2fsxzmWZ7i/FgQ+5pYGs0gdmI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nes8pcjE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JwMl++4SYYZGAP1Au6x7rNX/B130iDOLXaPQ195xRwO6DBXNPlNQmWGI7uHiLW4fThqYdcsCuQOUoc5ZP4FUo8tm029qOJ6OOfh9NYvgKgTHupl5M+0QqF0cbP8rixT4oGWq8KIYaFZvAjRynQFxCYJs1a9wCwvi4yk4/hScTSc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nKPS33Xy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nes8pcjE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA8491F000FF;
-	Sat, 12 Sep 2026 07:42:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nKPS33Xy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55CBD1F000FF;
+	Sat, 12 Sep 2026 07:42:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789198923;
-	bh=x4tjQRg/KithZ42oF9VpN7yW54J+Y0lU662lBvCF/Ho=;
+	s=korg; t=1789198928;
+	bh=XtmmHxOHUZaa+nI4BfK0tKR7YNcOGS8edSjRcPrt/zA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Nes8pcjEOSruMXJ4iq8SeSxA5GC+P/TqArl5CXJRGgIKrWqycnoJcC0DDj0Vl6qDn
-	 /Ytpem3CbhVkioNqN6BCBIYcUSv9nsWRqYJ6kbCVQgNWyGZ5lx0qYlMwGoS2a0wXya
-	 /ykPTHeMe3TIlgntgBxA9oBWm6rRjahQyS/sKcWY=
+	b=nKPS33Xy/gzq8tUjkl1eHaQrrliSZUi6LnSXgs6f4rfjPuyMiEbZ69D94CkZkCzFZ
+	 ZWRRJgE3PEGGCZ/6sXtvSzXZMgOnkSbpJ2gknHGNsl+lOpjJ7IzahcSsP2CTIyDpJj
+	 zfOcmTr33lqcG/meKJMFiqrSKavX3hF5dqK8A/zc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Pu Lehui <pulehui@huawei.com>,
-	Eduard Zingerman <eddyz87@gmail.com>,
+	Can Guo <can.guo@oss.qualcomm.com>,
+	Ziqi Chen <ziqi.chen@oss.qualcomm.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0480/1815] bpf: Sync tail_call_reachable with callee state on entry
-Date: Sat, 12 Sep 2026 08:37:10 +0200
-Message-ID: <20260912065700.157950187@linuxfoundation.org>
+Subject: [PATCH 7.2 0481/1815] scsi: ufs: core: Avoid possible memory reclaim deadlock in TX EQTR context
+Date: Sat, 12 Sep 2026 08:37:11 +0200
+Message-ID: <20260912065700.182399454@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,54 +53,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pu Lehui <pulehui@huawei.com>
+From: Can Guo <can.guo@oss.qualcomm.com>
 
-[ Upstream commit 3513ea9dab6c1a3d2dc8e6160c41f690206948b6 ]
+[ Upstream commit 760fc6f0e25a72832c2fcf37ecf5f1b770ec8374 ]
 
-Currently in check_max_stack_depth_subprog, when the verifier enters a
-new callee branch, the local tail_call_reachable is not properly
-synchronized with the callee's state.
+TX EQTR may run while devfreq gear scaling has quiesced the UFS
+tagset. In that context, functions ufshcd_tx_eqtr(), __ufshcd_tx_eqtr()
+and ufs_qcom_get_rx_fom() allocate memory with GFP_KERNEL. If direct
+reclaim is triggered, reclaim/writeback can depend on I/O to UFS
+device. Because the queue is quiesced, this can cause deadlock.
 
-Consider a main prog branching into multiple subprogs:
+Use memalloc_noio_save/restore() in ufshcd_tx_eqtr() to cover all
+allocations in the TX EQTR call tree, including:
 
-       subprog0 -> tailcall
-main <
-       subprog1 -> subprog2
+ - params->eqtr_record in ufshcd_tx_eqtr()
 
-When the verifier finishes checking subprog0 and backtracks to main
-prog, the local tail_call_reachable state is left as true. As it
-proceeds to subprog1, this uncleared state leaks into the new branch,
-falsely marking subprog1 and subprog2 as tailcall reachable.
+ - eqtr_data in __ufshcd_tx_eqtr()
 
-Fix this by explicitly syncing tail_call_reachable with the callee's
-has_tail_call state on entry. The caller's state is safely preserved and
-restored via the existing backtracking logic.
+ - params in ufs_qcom_get_rx_fom()
 
-Fixes: ebf7d1f508a7 ("bpf, x64: rework pro/epilogue and tailcall handling in JIT")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Signed-off-by: Pu Lehui <pulehui@huawei.com>
-Link: https://patch.msgid.link/20260716120157.835937-2-pulehui@huaweicloud.com
-Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
+This is preferred over tagging individual call sites with GFP_NOIO, as it
+automatically covers any future allocations added anywhere in the call tree
+without requiring each caller to be aware of this constraint.
+
+[mkp: fix label as suggested by Bart]
+
+Fixes: 03e5d38e2f98 ("scsi: ufs: core: Add support for TX Equalization")
+Closes: https://sashiko.dev/#/patchset/20260615132834.2985346-1-can.guo@oss.qualcomm.com?part=2
+Signed-off-by: Can Guo <can.guo@oss.qualcomm.com>
+Reviewed-by: Ziqi Chen <ziqi.chen@oss.qualcomm.com>
+Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+Link: https://patch.msgid.link/20260618140941.902000-1-can.guo@oss.qualcomm.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/ufs/core/ufs-txeq.c | 27 +++++++++++++++++++++------
+ 1 file changed, 21 insertions(+), 6 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 2cfe54d848b6a..b8b45044ab65a 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -5211,8 +5211,8 @@ static int check_max_stack_depth_subprog(struct bpf_verifier_env *env, int idx,
- 		if (!priv_stack_supported)
- 			subprog[idx].priv_stack_mode = NO_PRIV_STACK;
+diff --git a/drivers/ufs/core/ufs-txeq.c b/drivers/ufs/core/ufs-txeq.c
+index aa64f2bf4f1ef..7df3d3b18cbec 100644
+--- a/drivers/ufs/core/ufs-txeq.c
++++ b/drivers/ufs/core/ufs-txeq.c
+@@ -10,6 +10,7 @@
+ #include <linux/delay.h>
+ #include <linux/errno.h>
+ #include <linux/kernel.h>
++#include <linux/sched/mm.h>
+ #include <ufs/ufshcd.h>
+ #include <ufs/unipro.h>
+ #include "ufshcd-priv.h"
+@@ -1216,14 +1217,25 @@ static int ufshcd_tx_eqtr(struct ufs_hba *hba,
+ 			  struct ufs_pa_layer_attr *pwr_mode)
+ {
+ 	struct ufs_pa_layer_attr old_pwr_info;
++	unsigned int noio_flag;
+ 	int ret;
  
--		if (subprog[idx].has_tail_call)
--			tail_call_reachable = true;
-+		/* sync tail_call_reachable with callee state on entry */
-+		tail_call_reachable = subprog[idx].has_tail_call;
++	/*
++	 * ufshcd_tx_eqtr() is called from a power-mode-change context where
++	 * I/O is suspended. Use memalloc_noio_save() to propagate GFP_NOIO
++	 * to all allocations in the call tree instead of tagging each call
++	 * site individually.
++	 */
++	noio_flag = memalloc_noio_save();
++
+ 	if (!params->eqtr_record) {
+ 		params->eqtr_record = devm_kzalloc(hba->dev,
+ 						   sizeof(*params->eqtr_record),
+ 						   GFP_KERNEL);
+-		if (!params->eqtr_record)
+-			return -ENOMEM;
++		if (!params->eqtr_record) {
++			ret = -ENOMEM;
++			goto out_noio_restore;
++		}
+ 	}
  
- 		frame = bpf_subprog_is_global(env, idx) ? 0 : frame + 1;
- 		if (frame >= MAX_CALL_FRAMES) {
+ 	memcpy(&old_pwr_info, &hba->pwr_info, sizeof(struct ufs_pa_layer_attr));
+@@ -1231,23 +1243,26 @@ static int ufshcd_tx_eqtr(struct ufs_hba *hba,
+ 	ret = ufshcd_tx_eqtr_prepare(hba, pwr_mode);
+ 	if (ret) {
+ 		dev_err(hba->dev, "Failed to prepare TX EQTR: %d\n", ret);
+-		goto out;
++		goto out_unprepare;
+ 	}
+ 
+ 	ret = ufshcd_vops_tx_eqtr_notify(hba, PRE_CHANGE, pwr_mode);
+ 	if (ret)
+-		goto out;
++		goto out_unprepare;
+ 
+ 	ret = __ufshcd_tx_eqtr(hba, params, pwr_mode);
+ 	if (ret)
+-		goto out;
++		goto out_unprepare;
+ 
+ 	ret = ufshcd_vops_tx_eqtr_notify(hba, POST_CHANGE, pwr_mode);
+ 
+-out:
++out_unprepare:
+ 	if (ret)
+ 		ufshcd_tx_eqtr_unprepare(hba, &old_pwr_info);
+ 
++out_noio_restore:
++	memalloc_noio_restore(noio_flag);
++
+ 	return ret;
+ }
+ 
 -- 
 2.53.0
 
