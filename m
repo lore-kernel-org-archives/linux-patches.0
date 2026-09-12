@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CCD13ACA42;
-	Sat, 12 Sep 2026 20:05:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56D833ADB92;
+	Sat, 12 Sep 2026 20:05:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789243508; cv=none; b=iPHBQ7dre1Ymjsz4MO6Pb2sukZJ/Nva7Uj15U4XUz2sbObSTrIeY0d+snJP5BuHxA9y9kDD8KXGl/VrKwo96VDfPujfcE12SDIXGqur76KSdCMqNiXT/UOLrn96o56tJppd/SCO0+a0guso30Gmd9GBVdtFS9TZyVukbAks0AC0=
+	t=1789243513; cv=none; b=t+XPzuReqIgAmj0oqgbFdjdHnzPeWe3PL7nNqmJAbWlemHxWgNHoMW7WUTmqcktut5ZnV3UZ01gZAt4qFsXgAFptrXl1yHbtZx+dk3F0oDh8ETlvIeTreJ9P9u1/Xb2GRhBi3rtNUl9pvIvK93J4ccyKtYbKqiXzBkpGyFr/Byo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789243508; c=relaxed/simple;
-	bh=UHPVuOMTAG0J50tQffRY7DAufIoV2sG4Ihnvj+jSEZ4=;
+	s=arc-20240116; t=1789243513; c=relaxed/simple;
+	bh=GYTFtxvle+eCr5EtKP/eYbmlqfSBooQgS+7Kfbbbomo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XvL4P2+UnQ/ojwqdeEaKd0lq09fhEE7mEau+LGDKO/rBVwdoshaWSKrpkLPMA31xyKa1ItiTjBgqT3Cgak7w5vI6P1aauiw2Difz2WfDvG+p3S7ZMgJe2yW+GUNkkMXmc/T956P1lPx97UroEg/0RhPnQr67bT6B/vmjVrPHFco=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eCbl7B0D; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GhRMb3wG6SgcgGO0eZfwlCay7RCovRo6hGOkIppDWg6PzIjzxe+IFXBiHyxYu/jN9o/CbZnFLqvXgIdYtqW9eG0ZhzWOut1/onVVZ0N28SiZN+9xC5VB2DNM2FaPgglADNxb3B7LVr7tG7lRqgIwm5K7ydl7Q0JfRPil6VMa20M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r6SMUmcF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eCbl7B0D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 128551F00898;
-	Sat, 12 Sep 2026 20:05:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r6SMUmcF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB4B01F0089A;
+	Sat, 12 Sep 2026 20:05:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789243501;
-	bh=w8vTxLnc3qOvM/99U8agwpAzQAY+zW3PtwcC4k1wAZg=;
+	s=korg; t=1789243507;
+	bh=CV5QQFb3yHZlrwjgdSJO4Nsfel4A9bND/PH/Y24L+UI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eCbl7B0DXV+lrSK4SvbxORwg7URs7mcmqoo0JA746SgjFJKkU5j/wnjuU+fzhRyJ/
-	 DqO8fnvTvNmNMruMPQcwaA+eoGeRXXAO4YAr52QkwKCuqlsrNM0k/BH2Nf14FAa5WD
-	 vDKQtpf3Y2BWcycRQFpX9RofgnfeKl06/BntakVI=
+	b=r6SMUmcFIY14gaRlvJUB6ErVgfaHC9eD8A029aeqKwUlzlg4F2bUVyRdZOPXyJAf4
+	 fPr2BZP/5EKz47Mr+/tfzKO4PrijA18CaTJIQQN5alzs2Eto7IBNk9Cf9+4TLsekiK
+	 mz+pUds2+i4M/Ho9I1Z0sfUm6dcJUk9Z+NRHVecM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 776/798] netfilter: x_tables: replace pr_{info,err}() by pr_info_ratelimited()
-Date: Sat, 12 Sep 2026 09:06:44 +0200
-Message-ID: <20260912065534.855122018@linuxfoundation.org>
+Subject: [PATCH 5.10 778/798] net: stmmac: selftests: Check multiple MMC counters
+Date: Sat, 12 Sep 2026 09:06:46 +0200
+Message-ID: <20260912065534.901041862@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -50,104 +52,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Maxime Chevallier <maxime.chevallier@bootlin.com>
 
-[ Upstream commit 793d9eda4821f75b5f7cc9e6a870b72a58b44c2b ]
+[ Upstream commit d29b399150b07796dfa81d8778d4804c08c2a41d ]
 
-Several xtables extension still use pr_err() or pr_info() without
-ratelimit.
+The MMC counters report MAC statistics. Multiple counters can be
+enabled when the IP is integrated, however there's no way to know
+exactly which ones. Un-implemented counters seem to report 0.
 
-For xt_cgroup, while at this, remove redundant "xt_cgroup:" prefix
-since pr_fmt is already set on.
+It was found that on StarFive JH7110 and Amlogic SM1, the counter that's
+used by the selftest (mmc_tx_framecount_g) isn't implemented, triggering
+an MMC selftest failure.
 
-Fixes: c38c4597e4bf ("netfilter: implement xt_cgroup cgroup2 path match")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Both the above SoCs seem to implement mmc_rx_framecount_gb, let's use
+this counter as well for MMC counter validation.
+
+Note that this doesn't guarantee that we won't encounter the same issue
+again if another IP implements yet another set of counters that don't
+include that new one.
+
+If the game of whack-a-mole with implemented counters becomes too hard to
+maintain, we may simply consider removing the MMC selftest entirely.
+
+Fixes: 091810dbded9 ("net: stmmac: Introduce selftests support")
+Signed-off-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20260826140500.616466-2-maxime.chevallier@bootlin.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/xt_cgroup.c | 12 ++++++------
- net/netfilter/xt_hl.c     |  4 ++--
- 2 files changed, 8 insertions(+), 8 deletions(-)
+ .../net/ethernet/stmicro/stmmac/stmmac_selftests.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/net/netfilter/xt_cgroup.c b/net/netfilter/xt_cgroup.c
-index b182b9e0882b6..d9943c4f5ee4d 100644
---- a/net/netfilter/xt_cgroup.c
-+++ b/net/netfilter/xt_cgroup.c
-@@ -23,7 +23,7 @@ MODULE_DESCRIPTION("Xtables: process control group matching");
- MODULE_ALIAS("ipt_cgroup");
- MODULE_ALIAS("ip6t_cgroup");
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
+index ea7200b7b6477..702ba192f803d 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
+@@ -415,11 +415,17 @@ static int stmmac_test_mmc(struct stmmac_priv *priv)
+ 	stmmac_mmc_read(priv, priv->mmcaddr, &final);
  
--#define NET_CLS_CLASSID_INVALID_MSG "xt_cgroup: classid invalid without net_cls cgroups\n"
-+#define NET_CLS_CLASSID_INVALID_MSG "classid invalid without net_cls cgroups\n"
- 
- static int cgroup_mt_check_v0(const struct xt_mtchk_param *par)
- {
-@@ -33,7 +33,7 @@ static int cgroup_mt_check_v0(const struct xt_mtchk_param *par)
+ 	/*
+-	 * The number of MMC counters available depends on HW configuration
+-	 * so we just use this one to validate the feature. I hope there is
+-	 * not a version without this counter.
++	 * The number of MMC counters available depends on HW configuration,
++	 * and there doesn't seem to be a way to enumerate the implemented
++	 * counters.
++	 *
++	 * Let's check a hand-picked set of counters, knowing that :
++	 *  - Starfive JH7110 doesn't implement mmc_tx_framecount_g
++	 *  - Amlogic SM1 doesn't implement any mmc_tx_*
++	 *
+ 	 */
+-	if (final.mmc_tx_framecount_g <= initial.mmc_tx_framecount_g)
++	if (final.mmc_tx_framecount_g <= initial.mmc_tx_framecount_g &&
++	    final.mmc_rx_framecount_gb <= initial.mmc_rx_framecount_gb)
  		return -EINVAL;
  
- 	if (!IS_ENABLED(CONFIG_CGROUP_NET_CLASSID)) {
--		pr_info(NET_CLS_CLASSID_INVALID_MSG);
-+		pr_info_ratelimited(NET_CLS_CLASSID_INVALID_MSG);
- 		return -EINVAL;
- 	}
- 
-@@ -49,7 +49,7 @@ static int cgroup_mt_check_v1(const struct xt_mtchk_param *par)
- 		return -EINVAL;
- 
- 	if (!info->has_path && !info->has_classid) {
--		pr_info("xt_cgroup: no path or classid specified\n");
-+		pr_info_ratelimited("no path or classid specified\n");
- 		return -EINVAL;
- 	}
- 
-@@ -59,7 +59,7 @@ static int cgroup_mt_check_v1(const struct xt_mtchk_param *par)
- 	}
- 
- 	if (info->has_classid && !IS_ENABLED(CONFIG_CGROUP_NET_CLASSID)) {
--		pr_info(NET_CLS_CLASSID_INVALID_MSG);
-+		pr_info_ratelimited(NET_CLS_CLASSID_INVALID_MSG);
- 		return -EINVAL;
- 	}
- 
-@@ -89,7 +89,7 @@ static int cgroup_mt_check_v2(const struct xt_mtchk_param *par)
- 		return -EINVAL;
- 
- 	if (!info->has_path && !info->has_classid) {
--		pr_info("xt_cgroup: no path or classid specified\n");
-+		pr_info_ratelimited("no path or classid specified\n");
- 		return -EINVAL;
- 	}
- 
-@@ -99,7 +99,7 @@ static int cgroup_mt_check_v2(const struct xt_mtchk_param *par)
- 	}
- 
- 	if (info->has_classid && !IS_ENABLED(CONFIG_CGROUP_NET_CLASSID)) {
--		pr_info(NET_CLS_CLASSID_INVALID_MSG);
-+		pr_info_ratelimited(NET_CLS_CLASSID_INVALID_MSG);
- 		return -EINVAL;
- 	}
- 
-diff --git a/net/netfilter/xt_hl.c b/net/netfilter/xt_hl.c
-index 4a12a757ecbf8..59e93d97b5072 100644
---- a/net/netfilter/xt_hl.c
-+++ b/net/netfilter/xt_hl.c
-@@ -28,7 +28,7 @@ static int ttl_mt_check(const struct xt_mtchk_param *par)
- 	const struct ipt_ttl_info *info = par->matchinfo;
- 
- 	if (info->mode > IPT_TTL_GT) {
--		pr_err("Unknown TTL match mode: %d\n", info->mode);
-+		pr_info_ratelimited("Unknown TTL match mode: %d\n", info->mode);
- 		return -EINVAL;
- 	}
- 
-@@ -59,7 +59,7 @@ static int hl_mt6_check(const struct xt_mtchk_param *par)
- 	const struct ip6t_hl_info *info = par->matchinfo;
- 
- 	if (info->mode > IP6T_HL_GT) {
--		pr_err("Unknown Hop Limit match mode: %d\n", info->mode);
-+		pr_info_ratelimited("Unknown Hop Limit match mode: %d\n", info->mode);
- 		return -EINVAL;
- 	}
- 
+ 	return 0;
 -- 
 2.53.0
 
