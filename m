@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9093372EF0;
-	Sat, 12 Sep 2026 11:55:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17F2F372EF0;
+	Sat, 12 Sep 2026 11:55:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789214155; cv=none; b=ab/OjZfWwtx1Wbo0Zy9BxfD/8Y5FPawDXHXjlstxrd6/1J0RvYfhMReBCcnh+nedG/jqnLzJdzZ0hrVE5IP8qiNKMquMm/lO+jqy3Lz3VKBY7cdWV50bwvO8c2E3BAAHWJ70nJeCowEvH7VfbHTXjWFdrugX1whjf09LI40bxQQ=
+	t=1789214160; cv=none; b=F4lXdf3aWDpijfZWEsOHRSXtDcOYw++yIAzuvbGmPViseD93pjhgHlOU4b3rK3ciAxs9o2W7WDT8YuMkRF9PcaEPO5eJHWij+1seCEZbjfQ/PjdNd5ydS21B+z8V9X06MaOhcY4YKSRbErNUVYcfBYsdao+++eyjbxrLxsU/9nQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789214155; c=relaxed/simple;
-	bh=5SGAB0bUis3UaP13pOsh2sTaZKuLs0Wu/qLy3FIf4Jk=;
+	s=arc-20240116; t=1789214160; c=relaxed/simple;
+	bh=xdZzYmzCqTcQFfiwEwM0JyLDf3CN1huLRnzsbdpp9XA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZXYQCN2iMU9V+pxopgRTWx8EGLx1ThC+FU8RqxAD+mZd9ok2La04XbZb7VXZZTyPDfY15/RxOCrieJ4B3pofmsfo4o+0WpGsU/v8Ty62aXN0DbUhv8WVFCVqy1z4SrkBg+qbuXlMdkf8J6vm5IVc9paaiqyEqaf203OZ95KahUU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EdXpIT3U; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZrWO5/WolxmZ8TPZFTUwfWHHFNZo1f4LYgMm+hRNM7jHbr/zUcs1Mr9P3UDSOjkvVVYjVx0S0UXKuV970QoFVDMKT5xnMIMLIbOyyYLZB8j0ztaPf+WygY3iHebjwwlrVW6rUCKIp2A5Wmo41zzdND2wmY/SlXDS8dViZnmUkoM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QKCfdTSi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EdXpIT3U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF9201F000FF;
-	Sat, 12 Sep 2026 11:55:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QKCfdTSi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DC9B1F000FF;
+	Sat, 12 Sep 2026 11:55:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789214153;
-	bh=39+zSbdPqPx1BW/d7p24sjQFfxrtSxqG6148FYLfDAQ=;
+	s=korg; t=1789214158;
+	bh=/ahg7QgU3kPjbJTiXs6s8Zz4j5s4L2ijIs5SItRL4RI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EdXpIT3UtcsFD/IhsoEwNSz6lzS+8YndL1HkJlii7l/uJApMZCaRbhQP/3sNAiRQs
-	 ilggiweuEoP+BwBEEpTDJj8TiAzRrAd3NSJUoxOinNfI95o0qbZeuUMD5YWB6htRRt
-	 NnQCwA90oFfScuhQgn2sm2RmObZg11sYdIHwZdNM=
+	b=QKCfdTSiOLdFBXKz71JGXRK1CLCJDWogSETRumW6OmmmxhlSIcytnTwR0qeD3N4h0
+	 Y1koPUis+xen9qOK2ATFMoEEz3YxPKaWUnR92k8v43+1925SH0Gw0f4yU/aLCJetxg
+	 kMINOH0rMiWBQ06kPBxkN2PX8FTJ4+wHc1nXNgRk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harry Wentland <harry.wentland@amd.com>,
-	Melissa Wen <mwen@igalia.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.12 0269/1376] drm/amd/display: validate plane degamma LUT size for private color prop
-Date: Sat, 12 Sep 2026 08:44:55 +0200
-Message-ID: <20260912065613.539517002@linuxfoundation.org>
+	stable@kernel.org,
+	Wenjie Qi <qiwenjie@xiaomi.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>
+Subject: [PATCH 6.12 0252/1376] f2fs: avoid NULL checkpoint thread access in sysfs
+Date: Sat, 12 Sep 2026 08:44:38 +0200
+Message-ID: <20260912065613.157418526@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -52,52 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harry Wentland <harry.wentland@amd.com>
+From: Wenjie Qi <qwjhust@gmail.com>
 
-commit e4c3ab59021e7c146a84b6671f0d530972bd58b4 upstream.
+commit 5cb33b00c8fbb6e8f1fa3d281c3036d5f7c7c41f upstream.
 
-Unlike the CRTC degamma path, which is guarded by
-amdgpu_dm_verify_lut_sizes(), the per-plane degamma LUT size was never
-validated before use. __set_dm_plane_degamma() passed the user-supplied
-size straight into __is_lut_linear() and, for a non-linear LUT, into
-__set_input_tf() -> __drm_lut_to_dc_gamma(), the latter always iterating
-MAX_COLOR_LUT_ENTRIES entries regardless of the actual LUT size.
+checkpoint_merge can be enabled even when no checkpoint merge thread is
+running. A read-only mount is one case: f2fs does not start
+f2fs_issue_ckpt there, but ckpt_thread_ioprio is still writable through
+sysfs.
 
-A malformed AMD_PLANE_DEGAMMA_LUT blob (e.g. a single entry) could thus
-trigger a divide-by-zero in __is_lut_linear() or an out-of-bounds read in
-__drm_lut_to_dc_gamma(). Reject any plane degamma LUT whose size does not
-match MAX_COLOR_LUT_ENTRIES, mirroring the invariant the code already
-asserts a few lines below (and which the CRTC path enforces).
+The ckpt_thread_ioprio store path updates the saved ioprio value and,
+when checkpoint_merge is enabled, calls set_task_ioprio() for the
+checkpoint thread. If cprc->f2fs_issue_ckpt is NULL, that dereferences a
+NULL task pointer.
 
-The AMD_PLANE_DEGAMMA_LUT property is only exposed on builds with
-AMD_PRIVATE_COLOR defined.
+Protect ckpt_thread_ioprio sysfs writes with s_umount as well, so the
+checkpoint thread cannot disappear under the store path while updating
+its ioprio.
 
-Fixes: 980f8710075a ("drm/amd/display: add plane degamma TF and LUT support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Harry Wentland <harry.wentland@amd.com>
-Reviewed-by: Melissa Wen <mwen@igalia.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: e65920661708 ("f2fs: add ckpt_thread_ioprio sysfs node")
+Cc: stable@kernel.org
+Signed-off-by: Wenjie Qi <qiwenjie@xiaomi.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_color.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ fs/f2fs/sysfs.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_color.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_color.c
-@@ -1149,6 +1149,13 @@ __set_dm_plane_degamma(struct drm_plane_
- 	degamma_lut = __extract_blob_lut(dm_plane_state->degamma_lut,
- 					 &degamma_size);
+--- a/fs/f2fs/sysfs.c
++++ b/fs/f2fs/sysfs.c
+@@ -528,7 +528,7 @@ out:
+ 			return -EINVAL;
  
-+	if (degamma_lut && degamma_size != MAX_COLOR_LUT_ENTRIES) {
-+		drm_dbg(plane_state->state->dev,
-+			"Invalid Plane Degamma LUT size. Should be %u but got %u.\n",
-+			MAX_COLOR_LUT_ENTRIES, degamma_size);
-+		return -EINVAL;
-+	}
-+
- 	has_degamma_lut = degamma_lut &&
- 			  !__is_lut_linear(degamma_lut, degamma_size);
+ 		cprc->ckpt_thread_ioprio = IOPRIO_PRIO_VALUE(class, level);
+-		if (test_opt(sbi, MERGE_CHECKPOINT)) {
++		if (cprc->f2fs_issue_ckpt) {
+ 			ret = set_task_ioprio(cprc->f2fs_issue_ckpt,
+ 					cprc->ckpt_thread_ioprio);
+ 			if (ret)
+@@ -924,13 +924,14 @@ static ssize_t f2fs_sbi_store(struct f2f
+ 	ssize_t ret;
+ 	bool gc_entry = (!strcmp(a->attr.name, "gc_urgent") ||
+ 					a->struct_type == GC_THREAD);
++	bool thread_entry = !strcmp(a->attr.name, "ckpt_thread_ioprio");
  
+-	if (gc_entry) {
++	if (gc_entry || thread_entry) {
+ 		if (!down_read_trylock(&sbi->sb->s_umount))
+ 			return -EAGAIN;
+ 	}
+ 	ret = __sbi_store(a, sbi, buf, count);
+-	if (gc_entry)
++	if (gc_entry || thread_entry)
+ 		up_read(&sbi->sb->s_umount);
+ 
+ 	return ret;
 
 
