@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4954278161;
-	Sat, 12 Sep 2026 15:27:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 032642D5C68;
+	Sat, 12 Sep 2026 15:27:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789226829; cv=none; b=h8upxI20FnrR7xE8cHr6SSeyOknPaK435H8T+fD0C165s29AU8KFUP2TUvA9QS3LJ6pNBbPR81dnEXsWL7aZ0TLMDyKYnl9+uRzRFG9YwsSaT1HTAV6Br5ESmf+rbWoVGBaxkMQAiOBSvb5FyLap9zPKT28qt5bcFPFC7w+O5as=
+	t=1789226835; cv=none; b=JG5qsis9HKhfIDfKHTh4plScXOQBIrc7pJLNshsaq64lXXcoX7NpFdFLqTpOJiauTOP1vO5loSHl6OxXDxpdeKWxkgY/TPQ3c0GQku5d7N7eO0hgE0U8Ju1R5cXxV8PHUp04q2SE7h14Wx38FXklxio2d/dUu77IMkcbKn1X8uE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789226829; c=relaxed/simple;
-	bh=3dwHToInXiIWpPjEi7qa4FWF4uGWwvgLFhYR31aMVWs=;
+	s=arc-20240116; t=1789226835; c=relaxed/simple;
+	bh=9fJ1tndi96oy+RIu0PDn23Gj18Vyb1HTuynJIQHg+14=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t/JWvP1RVwBPJi9TN0KVyMihe9QO0T7UzFe9sx9IyciWPEhaEy/2y9F0hZiow3arm7jHLnwR+W4Vw1CLW8t8rO3AmnGp89UzOz6zVxdYDm/oe08KxdFMvZvPCZx9J9HETbc1mmwvHNs3tdU6zCfHb/QiDI1+wE3Jbvx3BEmgpto=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lwcrCLO/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nOqVYSNaAOVe70t3StrumFTzq/xvgBUUBWQuUXK119KndeSOBYY0Tslhhcv17rQFTZmZgC2LUogJdEB2Pjn0qTkOHEoX8PAhyeRlumWj4X6pHs8j6WUsi8CoCguE7eCPTdki2iDJDa80uVAmhnLjmsrgcUoil2h2MeQr73zooN4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Aj7hqZ5q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lwcrCLO/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C69C21F000FF;
-	Sat, 12 Sep 2026 15:27:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Aj7hqZ5q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 664671F000FF;
+	Sat, 12 Sep 2026 15:27:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789226828;
-	bh=lZvAkX2a593ay1BNwnyPQoGhqA1GTD6s+uLbEZV+5HQ=;
+	s=korg; t=1789226833;
+	bh=l63BVZpp52OHJyWANisySyHilUWXbRqWeC/SfNzfv4M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lwcrCLO/L/kcY8FbWG2cH6OoxL0LdGf/lnq0czHzV0L7eivQek92oMeHC/E+mppe+
-	 Kdal252o4KA0kAOqxOK+UITEQRHQZFt3WymKKTupwT/ZRwZ3/5t00hGzsG3POlww13
-	 T/TEmZ9WsK0VBpr8ZM8FjoxDgCfyZvmql0qI2qrI=
+	b=Aj7hqZ5qnn8OjJtxFuhT0Acsv2YiHAgtXhTQlidYVsyzZ8P1ngMjcQuhZds5X5wgV
+	 8Rr5gGd/6dHDy1fmts9MSws+c93LdGkBg4+8is00M+IU/hpOzTb6HfmmqdgDVeenHc
+	 242207l4d44z4YtcsFap1O6IQxE4S/mge30i3LeA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Kiryl Shutsemau (Meta)" <kas@kernel.org>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.1 0014/1191] x86/insn-eval: Move assign_register() out of KVM as insn_assign_reg()
-Date: Sat, 12 Sep 2026 08:45:42 +0200
-Message-ID: <20260912065548.428382585@linuxfoundation.org>
+	Sanman Pradhan <psanman@juniper.net>,
+	Sizhe Liu <liusizhe5@huawei.com>,
+	Yicong Yang <yangyccccc@gmail.com>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>
+Subject: [PATCH 6.1 0015/1191] hwtracing: hisi_ptt: Propagate DMA reset timeout in trace_start()
+Date: Sat, 12 Sep 2026 08:45:43 +0200
+Message-ID: <20260912065548.451918061@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -51,149 +52,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kiryl Shutsemau (Meta) <kas@kernel.org>
+From: Sanman Pradhan <psanman@juniper.net>
 
-commit 1fe104b048d77d6cb25bd938e6a67450fb50e61d upstream.
+commit 75d42d990335322852ed5f7ce324b701c0949d79 upstream.
 
-KVM's instruction emulator has a small helper, assign_register(), that
-writes a value into a register following the x86 rules for writes to
-general-purpose registers: an 8- or 16-bit write leaves the rest of the
-register untouched, a 32-bit write zero-extends the result to 64 bits,
-and a 64-bit write replaces the whole register.
+hisi_ptt_wait_dma_reset_done() discards the return value of
+readl_poll_timeout_atomic(). If the DMA engine does not complete its
+reset within the timeout, hisi_ptt_trace_start() proceeds to start
+tracing regardless.
 
-The TDX guest #VE handler needs the same logic for port I/O emulation
-to get 32-bit zero-extension right.  Rather than add a third copy of
-the same switch, move the helper verbatim to <asm/insn-eval.h>, rename
-it to insn_assign_reg(), and route KVM's callers through it.
+Return a bool from hisi_ptt_wait_dma_reset_done(), consistent with the
+other wait helpers in this driver. On timeout, log an error, de-assert
+the reset bit, and return -ETIMEDOUT. Move ctrl->started to the
+successful path so a failed start does not leave the trace marked as
+active.
 
-Add <asm/insn.h> to the header's includes so it builds standalone in
-callers that have not pulled it in transitively.
-
-No functional change.
-
-Signed-off-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Acked-by: Sean Christopherson <seanjc@google.com>
-Cc:stable@vger.kernel.org
-Link: https://patch.msgid.link/20260713133753.223947-3-kirill@shutemov.name
+Fixes: ff0de066b463 ("hwtracing: hisi_ptt: Add trace function support for HiSilicon PCIe Tune and Trace device")
+Cc: stable@vger.kernel.org
+Signed-off-by: Sanman Pradhan <psanman@juniper.net>
+Reviewed-by: Sizhe Liu <liusizhe5@huawei.com>
+Reviewed-by: Yicong Yang <yangyccccc@gmail.com>
+Tested-by: Sizhe Liu <liusizhe5@huawei.com>
+Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Link: https://lore.kernel.org/r/20260414172451.14331-2-sanman.pradhan@hpe.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/insn-eval.h |   36 ++++++++++++++++++++++++++++++++++++
- arch/x86/kvm/emulate.c           |   26 ++++----------------------
- 2 files changed, 40 insertions(+), 22 deletions(-)
+ drivers/hwtracing/ptt/hisi_ptt.c |   20 +++++++++++++-------
+ 1 file changed, 13 insertions(+), 7 deletions(-)
 
---- a/arch/x86/include/asm/insn-eval.h
-+++ b/arch/x86/include/asm/insn-eval.h
-@@ -9,6 +9,7 @@
- #include <linux/compiler.h>
- #include <linux/bug.h>
- #include <linux/err.h>
-+#include <asm/insn.h>
- #include <asm/ptrace.h>
- 
- #define INSN_CODE_SEG_ADDR_SZ(params) ((params >> 4) & 0xf)
-@@ -44,4 +45,39 @@ enum mmio_type {
- 
- enum mmio_type insn_decode_mmio(struct insn *insn, int *bytes);
- 
-+/*
-+ * Write @val into *@reg following the x86 rules for writes to
-+ * general-purpose registers (Intel SDM Vol. 1, "General-Purpose
-+ * Registers in 64-Bit Mode"): an 8- or 16-bit write leaves the rest of
-+ * the register untouched, a 32-bit write zero-extends the result into
-+ * the upper 32 bits, and a 64-bit write replaces the whole register.
-+ *
-+ * @bytes is the width of the write, not a property of the instruction:
-+ * an instruction that, say, sign-extends a 32-bit immediate into a
-+ * 64-bit register does a 64-bit write here.
-+ *
-+ * @reg need not be 8-byte aligned: KVM's instruction emulator offsets
-+ * the pointer by one byte to address the high-byte registers (AH, CH,
-+ * DH, BH).  Use narrow stores for the sub-word cases so the access
-+ * width matches @bytes and the adjacent bytes are left alone.
-+ */
-+static inline void insn_assign_reg(unsigned long *reg, u64 val, int bytes)
-+{
-+	switch (bytes) {
-+	case 1:
-+		*(u8 *)reg = (u8)val;
-+		break;
-+	case 2:
-+		*(u16 *)reg = (u16)val;
-+		break;
-+	case 4:
-+		/* A 32-bit write zero-extends into the upper 32 bits. */
-+		*reg = (u32)val;
-+		break;
-+	case 8:
-+		*reg = val;
-+		break;
-+	}
-+}
-+
- #endif /* _ASM_X86_INSN_EVAL_H */
---- a/arch/x86/kvm/emulate.c
-+++ b/arch/x86/kvm/emulate.c
-@@ -23,6 +23,7 @@
- #include "kvm_emulate.h"
- #include <linux/stringify.h>
- #include <asm/debugreg.h>
-+#include <asm/insn-eval.h>
- #include <asm/nospec-branch.h>
- #include <asm/ibt.h>
- 
-@@ -519,25 +520,6 @@ static void assign_masked(ulong *dest, u
- 	*dest = (*dest & ~mask) | (src & mask);
+--- a/drivers/hwtracing/ptt/hisi_ptt.c
++++ b/drivers/hwtracing/ptt/hisi_ptt.c
+@@ -171,13 +171,13 @@ static bool hisi_ptt_wait_trace_hw_idle(
+ 					  HISI_PTT_WAIT_TRACE_TIMEOUT_US);
  }
  
--static void assign_register(unsigned long *reg, u64 val, int bytes)
--{
--	/* The 4-byte case *is* correct: in 64-bit mode we zero-extend. */
--	switch (bytes) {
--	case 1:
--		*(u8 *)reg = (u8)val;
--		break;
--	case 2:
--		*(u16 *)reg = (u16)val;
--		break;
--	case 4:
--		*reg = (u32)val;
--		break;	/* 64b: zero-extend */
--	case 8:
--		*reg = val;
--		break;
--	}
--}
--
- static inline unsigned long ad_mask(struct x86_emulate_ctxt *ctxt)
+-static void hisi_ptt_wait_dma_reset_done(struct hisi_ptt *hisi_ptt)
++static bool hisi_ptt_wait_dma_reset_done(struct hisi_ptt *hisi_ptt)
  {
- 	return (1UL << (ctxt->ad_bytes << 3)) - 1;
-@@ -585,7 +567,7 @@ register_address_increment(struct x86_em
- {
- 	ulong *preg = reg_rmw(ctxt, reg);
+ 	u32 val;
  
--	assign_register(preg, *preg + inc, ctxt->ad_bytes);
-+	insn_assign_reg(preg, *preg + inc, ctxt->ad_bytes);
+-	readl_poll_timeout_atomic(hisi_ptt->iobase + HISI_PTT_TRACE_WR_STS,
+-				  val, !val, HISI_PTT_RESET_POLL_INTERVAL_US,
+-				  HISI_PTT_RESET_TIMEOUT_US);
++	return !readl_poll_timeout_atomic(hisi_ptt->iobase + HISI_PTT_TRACE_WR_STS,
++					  val, !val, HISI_PTT_RESET_POLL_INTERVAL_US,
++					  HISI_PTT_RESET_TIMEOUT_US);
  }
  
- static void rsp_increment(struct x86_emulate_ctxt *ctxt, int inc)
-@@ -1800,7 +1782,7 @@ static int load_segment_descriptor(struc
- 
- static void write_register_operand(struct operand *op)
- {
--	return assign_register(op->addr.reg, op->val, op->bytes);
-+	return insn_assign_reg(op->addr.reg, op->val, op->bytes);
- }
- 
- static int writeback(struct x86_emulate_ctxt *ctxt, struct operand *op)
-@@ -2034,7 +2016,7 @@ static int em_popa(struct x86_emulate_ct
- 		rc = emulate_pop(ctxt, &val, ctxt->op_bytes);
- 		if (rc != X86EMUL_CONTINUE)
- 			break;
--		assign_register(reg_rmw(ctxt, reg), val, ctxt->op_bytes);
-+		insn_assign_reg(reg_rmw(ctxt, reg), val, ctxt->op_bytes);
- 		--reg;
+ static void hisi_ptt_trace_end(struct hisi_ptt *hisi_ptt)
+@@ -198,14 +198,18 @@ static int hisi_ptt_trace_start(struct h
+ 		return -EBUSY;
  	}
- 	return rc;
+ 
+-	ctrl->started = true;
+-
+ 	/* Reset the DMA before start tracing */
+ 	val = readl(hisi_ptt->iobase + HISI_PTT_TRACE_CTRL);
+ 	val |= HISI_PTT_TRACE_CTRL_RST;
+ 	writel(val, hisi_ptt->iobase + HISI_PTT_TRACE_CTRL);
+ 
+-	hisi_ptt_wait_dma_reset_done(hisi_ptt);
++	if (!hisi_ptt_wait_dma_reset_done(hisi_ptt)) {
++		pci_err(hisi_ptt->pdev, "timed out waiting for DMA reset\n");
++		val = readl(hisi_ptt->iobase + HISI_PTT_TRACE_CTRL);
++		val &= ~HISI_PTT_TRACE_CTRL_RST;
++		writel(val, hisi_ptt->iobase + HISI_PTT_TRACE_CTRL);
++		return -ETIMEDOUT;
++	}
+ 
+ 	val = readl(hisi_ptt->iobase + HISI_PTT_TRACE_CTRL);
+ 	val &= ~HISI_PTT_TRACE_CTRL_RST;
+@@ -230,6 +234,8 @@ static int hisi_ptt_trace_start(struct h
+ 	if (!hisi_ptt->trace_ctrl.is_port)
+ 		val |= HISI_PTT_TRACE_CTRL_FILTER_MODE;
+ 
++	ctrl->started = true;
++
+ 	/* Start the Trace */
+ 	val |= HISI_PTT_TRACE_CTRL_EN;
+ 	writel(val, hisi_ptt->iobase + HISI_PTT_TRACE_CTRL);
 
 
