@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D7CB34252D;
-	Sat, 12 Sep 2026 07:37:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA50D332610;
+	Sat, 12 Sep 2026 07:37:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789198648; cv=none; b=NW4q89lEqO+AvrCItt6hFtSCs3VwyT6IOjW1F78AKMGltomht2i/uY/KNiglhITKT3+GYRQCYKOFgNWPSYqL50F7pBEM2aGtMnDNNN1BQzXCs9FHdectFDFOMZ7L1yKirGdrADkeJhTfB4R+ZuWl6LSNNy/LouQGoNUn6R4GCTU=
+	t=1789198653; cv=none; b=mGdNgybWZxTWJXvKhcaMdXZGgym3v7aMAp4TplFuAkSH3WNzOZCukFTE+yZbmNf6HSqFJlwGsbmyqVuYO/Tm1FYBi3yu/Ao4SoPwzZlHKANyjRj4km+w5ILSMctD0xYe5x/H/jrbfIrf2hT8co8zheYc1ZxydEDV/y6MAn4Ysao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789198648; c=relaxed/simple;
-	bh=fZHKb9Bs0VJTPkkEpvcOx6uMntUXq7Vc0o8nC3xeNuw=;
+	s=arc-20240116; t=1789198653; c=relaxed/simple;
+	bh=OQrurZhHjPy/cM24JP1UMQ8WdHBpZp7YveKtLnpK2O0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SX9eZLCanrGxZge/tPs5S21wKMGb8xcf6U5muPvRowFrfDYkI3v2m7KFXSTIAqKJBVvLrHXqO9TPGZsuc0kvz1ZVAz0lMacuiGk2+1KX0Wyv1WZbJd4pz9pQh67YXDCQ+jU4J5Fgqu7Pr2MB0RjvHbkRdazNhPk3b/j2MbHsiKg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f2PtVb1z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=H3TnQn0pZE64xxqnHtZ1IH/Td8ifZFfIsm5jbjwjzXF4rpgWUbxnLAndcUHS41m/1DZ0tWMqgejjrYxAun1XeGHzyipxLLf9SfLIafknz1iwuby3heM9CaUxwWWnu2AQVmN9kSmgqX2MGO7l/kFnFXXvjwRzgcar4iMWIhEfJaU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w7U3Mbpy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f2PtVb1z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 552B71F000FF;
-	Sat, 12 Sep 2026 07:37:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w7U3Mbpy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 418BE1F000FF;
+	Sat, 12 Sep 2026 07:37:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789198647;
-	bh=Ur1q22f5CNS7lRxLnZYx8rJcKtT8V6n+ZppfnAlzPsk=;
+	s=korg; t=1789198652;
+	bh=/Y6h1ok6p/YqOB5sCTu0BtWKJeZK8jJ80FcHU/OaLyo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=f2PtVb1z7cz4bdsDDEMhPTpnstYqWor3NT4Ea6ndt5op5dZf28KrkZ89GTzcPd9/G
-	 99GOwnZzNEflpPMpFOlkGQogQELs8ADHa8fRc0xB6zMPyxeBgL608DXgaUxixkv4SD
-	 m8YZcKU5ySgSAxaKFTglyBeGr8JfWUp1xSclCSqM=
+	b=w7U3MbpyxQJ2VpKfme8qgdwvsOev+pFA0XWhO2wFnEZOViQAV7rG5m7zAFFsEZd5h
+	 eaiGD4DVtN9SU5awV6s3VTGARvc6sxKgsUI03MEWucV9US0CbQ/V3tpOElNwHr+/tS
+	 1dRhYikgJymnpzcavKk0i8XOZxIdh2JVhoXL7F4E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Yuho Choi <dbgh9129@gmail.com>,
 	Manivannan Sadhasivam <mani@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0425/1815] PCI: xgene: Drop unnecessary OF node reference
-Date: Sat, 12 Sep 2026 08:36:15 +0200
-Message-ID: <20260912065658.873323717@linuxfoundation.org>
+Subject: [PATCH 7.2 0426/1815] PCI: keystone: Fix OF node reference leak in init
+Date: Sat, 12 Sep 2026 08:36:16 +0200
+Message-ID: <20260912065658.896246184@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -53,63 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Yuho Choi <dbgh9129@gmail.com>
 
-[ Upstream commit 4869db344e76c9adfb1d9654df442db5371fac71 ]
+[ Upstream commit 3260336defeb292a91de29e4d1d93469e3cec663 ]
 
-xgene_pcie_probe() stores dev->of_node in port->node with
-of_node_get(), but the cached node is only used during probe by
-xgene_pcie_parse_map_dma_ranges(). The driver never releases the extra
-reference, so the node reference is leaked.
+of_find_matching_node() returns a device node with its reference count
+incremented. ks_pcie_init() only uses the returned node to decide whether
+to register the ARM external abort fault handler, but never drops the
+reference.
 
-There is no need for private OF node ownership here. Use the device's
-existing of_node directly in xgene_pcie_parse_map_dma_ranges() and remove
-the cached port->node pointer.
+Store the lookup result in a temporary variable and release it with
+of_node_put() once the existence check has been made.
 
-Fixes: 5f6b6ccdbe1c ("PCI: xgene: Add APM X-Gene PCIe driver")
+Fixes: bc10d0ad540d ("PCI: keystone: Add support to build as a loadable module")
 Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
 Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Link: https://patch.msgid.link/20260630195234.1871951-1-dbgh9129@gmail.com
+Link: https://patch.msgid.link/20260630202938.1877632-1-dbgh9129@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/pci-xgene.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ drivers/pci/controller/dwc/pci-keystone.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pci/controller/pci-xgene.c b/drivers/pci/controller/pci-xgene.c
-index b95afa35201d0..83c9a2930eeca 100644
---- a/drivers/pci/controller/pci-xgene.c
-+++ b/drivers/pci/controller/pci-xgene.c
-@@ -58,7 +58,6 @@
- #define XGENE_PCIE_IP_VER_2		2
+diff --git a/drivers/pci/controller/dwc/pci-keystone.c b/drivers/pci/controller/dwc/pci-keystone.c
+index 278d2dba1db08..f1b27aed488de 100644
+--- a/drivers/pci/controller/dwc/pci-keystone.c
++++ b/drivers/pci/controller/dwc/pci-keystone.c
+@@ -1389,13 +1389,17 @@ static int ks_pcie_fault(unsigned long addr, unsigned int fsr,
  
- struct xgene_pcie {
--	struct device_node	*node;
- 	struct device		*dev;
- 	struct clk		*clk;
- 	void __iomem		*csr_base;
-@@ -526,7 +525,7 @@ static void xgene_pcie_setup_ib_reg(struct xgene_pcie *port,
- 
- static int xgene_pcie_parse_map_dma_ranges(struct xgene_pcie *port)
+ static int __init ks_pcie_init(void)
  {
--	struct device_node *np = port->node;
-+	struct device_node *np = port->dev->of_node;
- 	struct of_pci_range range;
- 	struct of_pci_range_parser parser;
- 	struct device *dev = port->dev;
-@@ -612,7 +611,6 @@ static bool xgene_check_pcie_msi_ready(void)
- static int xgene_pcie_probe(struct platform_device *pdev)
- {
- 	struct device *dev = &pdev->dev;
--	struct device_node *dn = dev->of_node;
- 	struct xgene_pcie *port;
- 	struct pci_host_bridge *bridge;
- 	int ret;
-@@ -627,7 +625,6 @@ static int xgene_pcie_probe(struct platform_device *pdev)
++	struct device_node *np;
+ 	/*
+ 	 * PCIe access errors that result into OCP errors are caught by ARM as
+ 	 * "External aborts"
+ 	 */
+-	if (of_find_matching_node(NULL, ks_pcie_of_match))
++	np = of_find_matching_node(NULL, ks_pcie_of_match);
++	if (np) {
++		of_node_put(np);
+ 		hook_fault_code(17, ks_pcie_fault, SIGBUS, 0,
+ 				"Asynchronous external abort");
++	}
  
- 	port = pci_host_bridge_priv(bridge);
- 
--	port->node = of_node_get(dn);
- 	port->dev = dev;
- 	port->version = XGENE_PCIE_IP_VER_1;
- 
+ 	return platform_driver_register(&ks_pcie_driver);
+ }
 -- 
 2.53.0
 
