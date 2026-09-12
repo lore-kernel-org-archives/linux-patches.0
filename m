@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E9C529B799;
-	Sat, 12 Sep 2026 07:49:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78BC9346ADC;
+	Sat, 12 Sep 2026 07:49:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789199354; cv=none; b=ih2OzXQr4CD0ixV6Xt/d5aREaWi2MI0qNQZAMcezPIqd96HigErVUbrBcBdBG0oWb3Z23yc7Id2xaiE/UmoElXcAKzqa0mnOhIunuGn7k0veZ9NoXbX5tKpEDRmIqwxDk1HUbMrRHBGegm1I+BUE9TdAxxDTmfbW4YnSo3Q/WiI=
+	t=1789199359; cv=none; b=tNhXM5Gddet2MNY8YjKwsSHxEBDqGWDeFbvwR9Jr3vqlfKKOubI/FI/v0j2gyYWPS8ufUzGHutphxLxzCPjtITV/pgwOzl4QiaYE9T4i43X8Rsfjox0FhwVUAWnBWlfDlNtoFi6s9NVqMHto+6EDlpwV2o9JVzJjNt0ZlNyKHUc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789199354; c=relaxed/simple;
-	bh=P9kbdas3zzS+yZz4kID5zVzHWWHlMBQSIzQTvVPtjFY=;
+	s=arc-20240116; t=1789199359; c=relaxed/simple;
+	bh=SOAMb7GJ3u895QoHbhXI76Q9WygW9VzDK2gutEIiH5o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PNvNlTG1oQM78zDvazpzIlwqdHpBgJNIRA416HFwc5YOEl2V1AX2Mih5x3kWl4QI2BTCd2+wTQ4a9yzs1RZK6nIoe0yKT1zFKCahU2QcwYItvMrF5ATRYAv1NXBASeMlE9rZjVC0/Z+25Ac0XKZIEmWnGpAc5KjFkTqzJ2283Kg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a95/xL6k; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=EyYWKW9YG5kt3YBY7APSPy0wLQVv1h8P+zjyMDfxwbTyjU85HPxVDNrwXgnVao7AAAoytOScX4KC6o/mnPs1IhmNoRB3iKL6wQt+aP/HFA4UKdEcjyT6O48FFuhs4+eKJLR5odZi1dE1eyuJtqLLrXEHWl4IubDD0KwSWor/YCY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GdFcq34c; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a95/xL6k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA6A11F000FF;
-	Sat, 12 Sep 2026 07:49:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GdFcq34c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD9231F000FF;
+	Sat, 12 Sep 2026 07:49:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789199353;
-	bh=9z0FHcnA3o5eO1mX9HMYcp7ajRZvtHYAv5Tnk58wowA=;
+	s=korg; t=1789199358;
+	bh=dRY2icsqqRCRHGj/ykCxADcLByCnotF40LqLs4/jh8A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=a95/xL6kOv2C7ppzclTitMgN5jBDp7wcAkLrwqCEIE94MbwTo07Mp6DyBYq4CIZSr
-	 xVEMPtPabE2OYE3WZQ2o4WD/Zgu2U7Bt91sfSu2C61QFLF0XQuFgtnEUjKJMSB4YX/
-	 efLAqPh9MV5pobixxAi+ZoYhDm3jk9kLKs958nRk=
+	b=GdFcq34c6AbId4L55w7+Uqj1Ki2XrVs6EX7/9eDppLL+tBlLYCcOG7BBQt0OZaaBT
+	 EbGCgGgs8F6GImaEark2zI4g6ZY9O8uhXTdQt/kNwC+etcfqhJD9TCBgWtWWqSsRmb
+	 5vHNa4BRvGZTMf2+hEQNeVWC5eoORpihD63k0hRc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@kernel.org>,
 	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0567/1815] riscv, bpf: Fix memory leak in bpf_jit_free
-Date: Sat, 12 Sep 2026 08:38:37 +0200
-Message-ID: <20260912065702.192463005@linuxfoundation.org>
+Subject: [PATCH 7.2 0568/1815] riscv, bpf: Fix kernel stack corruption in tailcall with CFI
+Date: Sat, 12 Sep 2026 08:38:38 +0200
+Message-ID: <20260912065702.215659793@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -56,44 +56,57 @@ Content-Transfer-Encoding: 8bit
 
 From: Pu Lehui <pulehui@huawei.com>
 
-[ Upstream commit 369e4635d04801f394d5bd42556f21029e95ff93 ]
+[ Upstream commit 52fb1756ea1d2759dfef2d86245be00b05dac3a2 ]
 
-When bpf_int_jit_compile() is called for subprograms, it returns early
-during the first pass (!prog->is_func || extra_pass is false), keeping
-ctx->offset alive for the subsequent extra pass.
+When CONFIG_CFI_CLANG is enabled, prog->bpf_func already skips the kcfi
+instruction during setup. Including it again in the tailcall jump offset
+causes it to jump over an extra 4 bytes, skipping the stack pointer
+adjustment, which will result in kernel stack corruption.
 
-If JIT compilation fails for a later subprogram, the BPF core aborts
-and calls bpf_jit_free() to clean up the first subprogram. However,
-bpf_jit_free() fails to free jit_data->ctx.offset, which causes a
-memory leak of the JIT context offsets array.
-
-Fix this by adding the missing kfree(jit_data->ctx.offset) in
-bpf_jit_free().
-
-Fixes: 48a8f78c50bd ("bpf, riscv: use prog pack allocator in the BPF JIT")
+Fixes: 30a59cc79754 ("riscv, bpf: Fix possible infinite tailcall when CONFIG_CFI_CLANG is enabled")
 Reported-by: Sashiko <sashiko-bot@kernel.org>
 Signed-off-by: Pu Lehui <pulehui@huawei.com>
 Reviewed-by: Björn Töpel <bjorn@kernel.org>
 Acked-by: Björn Töpel <bjorn@kernel.org>
-Link: https://lore.kernel.org/bpf/20260708064436.2971933-3-pulehui@huaweicloud.com
+Link: https://lore.kernel.org/bpf/20260708064436.2971933-5-pulehui@huaweicloud.com
 Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/net/bpf_jit_core.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/riscv/net/bpf_jit_comp64.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/arch/riscv/net/bpf_jit_core.c b/arch/riscv/net/bpf_jit_core.c
-index ce3bd3762e08c..7cce191186190 100644
---- a/arch/riscv/net/bpf_jit_core.c
-+++ b/arch/riscv/net/bpf_jit_core.c
-@@ -234,6 +234,7 @@ void bpf_jit_free(struct bpf_prog *prog)
- 		 */
- 		if (jit_data) {
- 			bpf_jit_binary_pack_finalize(jit_data->ro_header, jit_data->header);
-+			kfree(jit_data->ctx.offset);
- 			kfree(jit_data);
- 		}
- 		hdr = bpf_jit_binary_pack_hdr(prog);
+diff --git a/arch/riscv/net/bpf_jit_comp64.c b/arch/riscv/net/bpf_jit_comp64.c
+index 0942116e59bc1..47177db842fd2 100644
+--- a/arch/riscv/net/bpf_jit_comp64.c
++++ b/arch/riscv/net/bpf_jit_comp64.c
+@@ -18,7 +18,6 @@
+ #define RV_MAX_REG_ARGS 8
+ #define RV_FENTRY_NINSNS 2
+ #define RV_FENTRY_NBYTES (RV_FENTRY_NINSNS * 4)
+-#define RV_KCFI_NINSNS (IS_ENABLED(CONFIG_CFI) ? 1 : 0)
+ /* imm that allows emit_imm to emit max count insns */
+ #define RV_MAX_COUNT_IMM 0x7FFF7FF7FF7FF7FF
+ 
+@@ -272,8 +271,8 @@ static void __build_epilogue(bool is_tail_call, struct rv_jit_context *ctx)
+ 	if (!is_tail_call)
+ 		emit_addiw(RV_REG_A0, RV_REG_A5, 0, ctx);
+ 	emit_jalr(RV_REG_ZERO, is_tail_call ? RV_REG_T3 : RV_REG_RA,
+-		  /* kcfi, fentry and TCC init insns will be skipped on tailcall */
+-		  is_tail_call ? (RV_KCFI_NINSNS + RV_FENTRY_NINSNS + 1) * 4 : 0,
++		  /* fentry and TCC init insns will be skipped on tailcall */
++		  is_tail_call ? (RV_FENTRY_NINSNS + 1) * 4 : 0,
+ 		  ctx);
+ }
+ 
+@@ -2033,6 +2032,8 @@ void bpf_jit_build_prologue(struct rv_jit_context *ctx, bool is_subprog)
+ 	/* emit kcfi type preamble immediately before the  first insn */
+ 	emit_kcfi(is_subprog ? cfi_bpf_subprog_hash : cfi_bpf_hash, ctx);
+ 
++	/* bpf prog starts here as kcfi skipped during prog->bpf_func setup */
++
+ 	/* nops reserved for auipc+jalr pair */
+ 	for (i = 0; i < RV_FENTRY_NINSNS; i++)
+ 		emit(rv_nop(), ctx);
 -- 
 2.53.0
 
