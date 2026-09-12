@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E9944BEE2A;
-	Sat, 12 Sep 2026 10:56:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F37484BEE2A;
+	Sat, 12 Sep 2026 10:56:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789210586; cv=none; b=ZyHxCDx17EZrM+mYNJpsBKx1cx1dj13jBnWhtboccDwqTGhQFyopos74qkDfuU8R+avPe0hu6c1XACZ9C3Trscd++8VIcBSBV+Y2zepDXUxlC4Y9axc1W/DG0ejSTM1YElcmQyONzVK/B/kfDP2nH1ECmjivYYagHTJn/NctZWk=
+	t=1789210591; cv=none; b=NrWv0PnEYBgdJD41Ao8K1prqC9tS11H0FOcfOEuXWFp9OZ93LZiK0yzR0UqgGwnEhSOiBBUle5tqqNVNS9NC4WA4GaNQS6xa2VlWhwa7C4ha1uzGtbvV7LTJTgCj4Lu4YBnjj7aE+avj0YyIkOvsxDL2kIbcZc0gS6+JMpQbMlA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789210586; c=relaxed/simple;
-	bh=N0vSvEKpVZ/aJrP8dn0bhkYucBmKPw3U6jnwIpW+ymI=;
+	s=arc-20240116; t=1789210591; c=relaxed/simple;
+	bh=7zi/Af+AI7P4saXxKr5h+Lhyw4PqbHNh11y9w7jp/jw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Oz5/cREZH0P2RaQEslQ6dgibKE38h/cFIAEeJGThnL+XgEoaVa5Qqz9BHdc4ny0rZkyZHF3BewOzZJS0AcQLO+5dlIkuUe8UZZ9kwOoUbQB50PqL/qF5Sv+hEoe9ivd2ayo+blNLjTkX0f1g1c9HwvkYY5TWLaM/RKzyikhhHE4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x4JcHiUe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Q6uPr8mbsZT5qbhFhqtis51LpWRhqQaT2f65j9ddEXTuH9aULAVIqOUlwOocQZRihgw0UDiPj+j35Y3saJURzopomHStWtTHkmyvpVLNa8WFHFZwtCIeVtrFtukTJazCg4ZUhCzJC8mrtaqLAYhjTPcsHDWaT0iRT/zyTc7fATg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zrHAE1jY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x4JcHiUe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0214C1F000FF;
-	Sat, 12 Sep 2026 10:56:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zrHAE1jY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C84E71F00893;
+	Sat, 12 Sep 2026 10:56:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789210585;
-	bh=CLn/+DPDths1KkAo60sUvAP5yDgrH4RCTz5VaIjty2A=;
+	s=korg; t=1789210589;
+	bh=h/Wqq54H3LsAulttLPv9L3hRCkXhcdvdzekgHuGBmog=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=x4JcHiUeWr1WSlDRKyRQ0gIwbBtZ92aN6QzZzjb0p9Q5lTzLLnzA3Z+TTquqZe5sQ
-	 KUoc84beWtT/QjrCHTS4Of1Y3IpkS+WZu0pTnE5ZL1P/eQwJ+wmXiKF8nQsqzvz9AB
-	 g177H3shtzULK8e10EUWMoNomi9Dda6+O/UVytrU=
+	b=zrHAE1jYxLDAQALUU0gBPWREVI/3qrK0OTaWePKBbdqc/cpxPCDRA/9s1Wsg6Gt9X
+	 BXtt92fhrtJrk7x86qAI6E0P02DEJK3Rq6X7O75weaBI6cL3BTMY+tqK4GzAWGkTA7
+	 M1wFvrfZMWYb+yXLcTsWizw+etHTecLaiDW8icts=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Mikhail Kshevetskiy <mikhail.kshevetskiy@iopsys.eu>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1054/1518] perf python: Check counts_values size in set_values
-Date: Sat, 12 Sep 2026 08:53:43 +0200
-Message-ID: <20260912065647.294312060@linuxfoundation.org>
+Subject: [PATCH 6.18 1014/1518] pinctrl: airoha: fix pwm pin function for an7581 and an7583
+Date: Sat, 12 Sep 2026 08:53:03 +0200
+Message-ID: <20260912065646.391229864@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,96 +51,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Mikhail Kshevetskiy <mikhail.kshevetskiy@iopsys.eu>
 
-[ Upstream commit 612aca22a978d43f6e6765272676a17afdba8572 ]
+[ Upstream commit 08a5af468e613b6d8cd9725d284c9e6be288d364 ]
 
-The set_values function incorrectly assumed the list contained exactly
-5 elements. Add a check to prevent out-of-bounds access.
+AN7581 have 47 valid GPIOs only (gpio0-gpio46), so gpio47 is a fiction.
+AN7583 have 49 valid GPIOs (gpio0-gpio48), so gpio48 is missed
 
-Fixes: 877108e42b1b ("perf tools: Initial python binding")
-Signed-off-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+To fix an issue
+ * create AN7583 specific pwm pin function,
+ * remove gpio47 from AN7581 pwm pin function.
+
+Fixes: 3ffeb17a9a27 ("pinctrl: airoha: add support for Airoha AN7583 PINs")
+Signed-off-by: Mikhail Kshevetskiy <mikhail.kshevetskiy@iopsys.eu>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+Stable-dep-of: 739bc85aed14 ("pinctrl: airoha: an7581: fix mux/conf of pcie_reset pins")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/python.c | 38 ++++++++++++++++++++++++++++++--------
- 1 file changed, 30 insertions(+), 8 deletions(-)
+ drivers/pinctrl/mediatek/pinctrl-airoha.c | 74 ++++++++++++++++++++++-
+ 1 file changed, 72 insertions(+), 2 deletions(-)
 
-diff --git a/tools/perf/util/python.c b/tools/perf/util/python.c
-index 779fe1280a567..4a66ce4e8dd76 100644
---- a/tools/perf/util/python.c
-+++ b/tools/perf/util/python.c
-@@ -872,11 +872,11 @@ static void pyrf_counts_values__delete(struct pyrf_counts_values *pcounts_values
- 	  0, help }
- 
- static PyMemberDef pyrf_counts_values_members[] = {
--	counts_values_member_def(val, T_ULONG, "Value of event"),
--	counts_values_member_def(ena, T_ULONG, "Time for which enabled"),
--	counts_values_member_def(run, T_ULONG, "Time for which running"),
--	counts_values_member_def(id, T_ULONG, "Unique ID for an event"),
--	counts_values_member_def(lost, T_ULONG, "Num of lost samples"),
-+	counts_values_member_def(val, T_ULONGLONG, "Value of event"),
-+	counts_values_member_def(ena, T_ULONGLONG, "Time for which enabled"),
-+	counts_values_member_def(run, T_ULONGLONG, "Time for which running"),
-+	counts_values_member_def(id, T_ULONGLONG, "Unique ID for an event"),
-+	counts_values_member_def(lost, T_ULONGLONG, "Num of lost samples"),
- 	{ .name = NULL, },
+diff --git a/drivers/pinctrl/mediatek/pinctrl-airoha.c b/drivers/pinctrl/mediatek/pinctrl-airoha.c
+index 8939b4a617d3d..460e56ec9e2c8 100644
+--- a/drivers/pinctrl/mediatek/pinctrl-airoha.c
++++ b/drivers/pinctrl/mediatek/pinctrl-airoha.c
+@@ -905,7 +905,30 @@ static const char *const pwm_groups[] = { "gpio0", "gpio1",
+ 					  "gpio40", "gpio41",
+ 					  "gpio42", "gpio43",
+ 					  "gpio44", "gpio45",
+-					  "gpio46", "gpio47" };
++					  "gpio46" };
++static const char *const an7583_pwm_groups[] = { "gpio0", "gpio1",
++						 "gpio2", "gpio3",
++						 "gpio4", "gpio5",
++						 "gpio6", "gpio7",
++						 "gpio8", "gpio9",
++						 "gpio10", "gpio11",
++						 "gpio12", "gpio13",
++						 "gpio14", "gpio15",
++						 "gpio16", "gpio17",
++						 "gpio18", "gpio19",
++						 "gpio20", "gpio21",
++						 "gpio22", "gpio23",
++						 "gpio24", "gpio25",
++						 "gpio26", "gpio27",
++						 "gpio28", "gpio29",
++						 "gpio30", "gpio31",
++						 "gpio36", "gpio37",
++						 "gpio38", "gpio39",
++						 "gpio40", "gpio41",
++						 "gpio42", "gpio43",
++						 "gpio44", "gpio45",
++						 "gpio46", "gpio47",
++						 "gpio48" };
+ static const char *const phy1_led0_groups[] = { "gpio33", "gpio34",
+ 						"gpio35", "gpio42" };
+ static const char *const phy2_led0_groups[] = { "gpio33", "gpio34",
+@@ -1503,7 +1526,54 @@ static const struct airoha_pinctrl_func_group pwm_func_group[] = {
+ 	AIROHA_PINCTRL_PWM_EXT("gpio44", GPIO44_FLASH_MODE_CFG),
+ 	AIROHA_PINCTRL_PWM_EXT("gpio45", GPIO45_FLASH_MODE_CFG),
+ 	AIROHA_PINCTRL_PWM_EXT("gpio46", GPIO46_FLASH_MODE_CFG),
++};
++
++static const struct airoha_pinctrl_func_group an7583_pwm_func_group[] = {
++	AIROHA_PINCTRL_PWM("gpio0", GPIO0_FLASH_MODE_CFG),
++	AIROHA_PINCTRL_PWM("gpio1", GPIO1_FLASH_MODE_CFG),
++	AIROHA_PINCTRL_PWM("gpio2", GPIO2_FLASH_MODE_CFG),
++	AIROHA_PINCTRL_PWM("gpio3", GPIO3_FLASH_MODE_CFG),
++	AIROHA_PINCTRL_PWM("gpio4", GPIO4_FLASH_MODE_CFG),
++	AIROHA_PINCTRL_PWM("gpio5", GPIO5_FLASH_MODE_CFG),
++	AIROHA_PINCTRL_PWM("gpio6", GPIO6_FLASH_MODE_CFG),
++	AIROHA_PINCTRL_PWM("gpio7", GPIO7_FLASH_MODE_CFG),
++	AIROHA_PINCTRL_PWM("gpio8", GPIO8_FLASH_MODE_CFG),
++	AIROHA_PINCTRL_PWM("gpio9", GPIO9_FLASH_MODE_CFG),
++	AIROHA_PINCTRL_PWM("gpio10", GPIO10_FLASH_MODE_CFG),
++	AIROHA_PINCTRL_PWM("gpio11", GPIO11_FLASH_MODE_CFG),
++	AIROHA_PINCTRL_PWM("gpio12", GPIO12_FLASH_MODE_CFG),
++	AIROHA_PINCTRL_PWM("gpio13", GPIO13_FLASH_MODE_CFG),
++	AIROHA_PINCTRL_PWM("gpio14", GPIO14_FLASH_MODE_CFG),
++	AIROHA_PINCTRL_PWM("gpio15", GPIO15_FLASH_MODE_CFG),
++	AIROHA_PINCTRL_PWM_EXT("gpio16", GPIO16_FLASH_MODE_CFG),
++	AIROHA_PINCTRL_PWM_EXT("gpio17", GPIO17_FLASH_MODE_CFG),
++	AIROHA_PINCTRL_PWM_EXT("gpio18", GPIO18_FLASH_MODE_CFG),
++	AIROHA_PINCTRL_PWM_EXT("gpio19", GPIO19_FLASH_MODE_CFG),
++	AIROHA_PINCTRL_PWM_EXT("gpio20", GPIO20_FLASH_MODE_CFG),
++	AIROHA_PINCTRL_PWM_EXT("gpio21", GPIO21_FLASH_MODE_CFG),
++	AIROHA_PINCTRL_PWM_EXT("gpio22", GPIO22_FLASH_MODE_CFG),
++	AIROHA_PINCTRL_PWM_EXT("gpio23", GPIO23_FLASH_MODE_CFG),
++	AIROHA_PINCTRL_PWM_EXT("gpio24", GPIO24_FLASH_MODE_CFG),
++	AIROHA_PINCTRL_PWM_EXT("gpio25", GPIO25_FLASH_MODE_CFG),
++	AIROHA_PINCTRL_PWM_EXT("gpio26", GPIO26_FLASH_MODE_CFG),
++	AIROHA_PINCTRL_PWM_EXT("gpio27", GPIO27_FLASH_MODE_CFG),
++	AIROHA_PINCTRL_PWM_EXT("gpio28", GPIO28_FLASH_MODE_CFG),
++	AIROHA_PINCTRL_PWM_EXT("gpio29", GPIO29_FLASH_MODE_CFG),
++	AIROHA_PINCTRL_PWM_EXT("gpio30", GPIO30_FLASH_MODE_CFG),
++	AIROHA_PINCTRL_PWM_EXT("gpio31", GPIO31_FLASH_MODE_CFG),
++	AIROHA_PINCTRL_PWM_EXT("gpio36", GPIO36_FLASH_MODE_CFG),
++	AIROHA_PINCTRL_PWM_EXT("gpio37", GPIO37_FLASH_MODE_CFG),
++	AIROHA_PINCTRL_PWM_EXT("gpio38", GPIO38_FLASH_MODE_CFG),
++	AIROHA_PINCTRL_PWM_EXT("gpio39", GPIO39_FLASH_MODE_CFG),
++	AIROHA_PINCTRL_PWM_EXT("gpio40", GPIO40_FLASH_MODE_CFG),
++	AIROHA_PINCTRL_PWM_EXT("gpio41", GPIO41_FLASH_MODE_CFG),
++	AIROHA_PINCTRL_PWM_EXT("gpio42", GPIO42_FLASH_MODE_CFG),
++	AIROHA_PINCTRL_PWM_EXT("gpio43", GPIO43_FLASH_MODE_CFG),
++	AIROHA_PINCTRL_PWM_EXT("gpio44", GPIO44_FLASH_MODE_CFG),
++	AIROHA_PINCTRL_PWM_EXT("gpio45", GPIO45_FLASH_MODE_CFG),
++	AIROHA_PINCTRL_PWM_EXT("gpio46", GPIO46_FLASH_MODE_CFG),
+ 	AIROHA_PINCTRL_PWM_EXT("gpio47", GPIO47_FLASH_MODE_CFG),
++	AIROHA_PINCTRL_PWM_EXT("gpio48", GPIO48_FLASH_MODE_CFG),
  };
  
-@@ -886,8 +886,15 @@ static PyObject *pyrf_counts_values_get_values(struct pyrf_counts_values *self,
- 
- 	if (!vals)
- 		return NULL;
--	for (int i = 0; i < 5; i++)
--		PyList_SetItem(vals, i, PyLong_FromLong(self->values.values[i]));
-+	for (int i = 0; i < 5; i++) {
-+		PyObject *val = PyLong_FromUnsignedLongLong(self->values.values[i]);
-+
-+		if (!val) {
-+			Py_DECREF(vals);
-+			return NULL;
-+		}
-+		PyList_SetItem(vals, i, val);
-+	}
- 
- 	return vals;
- }
-@@ -898,19 +905,34 @@ static int pyrf_counts_values_set_values(struct pyrf_counts_values *self, PyObje
- 	Py_ssize_t size;
- 	PyObject *item = NULL;
- 
-+	if (list == NULL) {
-+		PyErr_SetString(PyExc_TypeError, "cannot delete attribute");
-+		return -1;
-+	}
-+
- 	if (!PyList_Check(list)) {
- 		PyErr_SetString(PyExc_TypeError, "Value assigned must be a list");
- 		return -1;
- 	}
- 
- 	size = PyList_Size(list);
-+	if (size != 5) {
-+		PyErr_SetString(PyExc_ValueError, "List must have exactly 5 entries");
-+		return -1;
-+	}
-+
- 	for (Py_ssize_t i = 0; i < size; i++) {
-+		unsigned long long val;
-+
- 		item = PyList_GetItem(list, i);
- 		if (!PyLong_Check(item)) {
- 			PyErr_SetString(PyExc_TypeError, "List members should be numbers");
- 			return -1;
- 		}
--		self->values.values[i] = PyLong_AsLong(item);
-+		val = PyLong_AsUnsignedLongLong(item);
-+		if (val == (unsigned long long)-1 && PyErr_Occurred())
-+			return -1;
-+		self->values.values[i] = val;
- 	}
- 
- 	return 0;
+ #define AIROHA_PINCTRL_PHY_LED0(gpio, mux_val, map_mask, map_val)	\
+@@ -1758,7 +1828,7 @@ static const struct airoha_pinctrl_func an7583_pinctrl_funcs[] = {
+ 	PINCTRL_FUNC_DESC("emmc", emmc),
+ 	PINCTRL_FUNC_DESC("pnand", pnand),
+ 	PINCTRL_FUNC_DESC("pcie_reset", an7583_pcie_reset),
+-	PINCTRL_FUNC_DESC("pwm", pwm),
++	PINCTRL_FUNC_DESC("pwm", an7583_pwm),
+ 	PINCTRL_FUNC_DESC("phy1_led0", an7583_phy1_led0),
+ 	PINCTRL_FUNC_DESC("phy2_led0", an7583_phy2_led0),
+ 	PINCTRL_FUNC_DESC("phy3_led0", an7583_phy3_led0),
 -- 
 2.53.0
 
