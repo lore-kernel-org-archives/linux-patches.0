@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FBDC481A81;
-	Sat, 12 Sep 2026 19:12:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BB7E32B126;
+	Sat, 12 Sep 2026 19:12:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789240345; cv=none; b=qcmWKUciP4FvtygaeHn1SLhTdXuKTTLyMVHYc6/dYT1fRx7A8D00i51iKze7CLvlNUavRTx4Xt9hRkLbaYyeF2ScwLcVKnR/gIdLuYQBlFOYWh1t0OePl+OobAEFlhIEx8N0K+h/0TYpdhvTRh6ML7aowi7kGNcWUXtv+azgi2I=
+	t=1789240350; cv=none; b=bE5RoftaFA7SSP9ntHOAtWJmBQtC/Nv0BAY6VdQ38+tzCvkBUWpEbHJ8kKH1+QJNL0h5eMZdrU2qTfP4D9CDrrw5pcRfhm6RQFAJhx9y19nk+zgCv17u+GOQkU6F1J6UeeWSyqBIOFYx5toLVa3q6/Qdc5dBlJYQRX+x/TUw8Pw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789240345; c=relaxed/simple;
-	bh=P3XM05Ng96AMTaLYPLV8BiASewK5IMgNVbUbHvQv2pI=;
+	s=arc-20240116; t=1789240350; c=relaxed/simple;
+	bh=WdO5Jnah5XKHdp/6Gvgv2ny4h1NgZSjhWU3QhIwC27E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aPy+Z/kYg+LJbwmqmSjA2uLvLgHvkRGJLhll8IM7DotNSsSBzJbTCHo5PRmqHy48bXBEqp06kUqgyfZl4Tv5Qs7D2WmLVm0aoxC29Pxl9hVJ44m6q8cHnrl76jjypywrWdDiAWjYC1joecucAM03yhm3LVbEYlM2K/h0Z6kfJ1g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nytis+Vw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Yq223PywQIHnGB45dQ6KJT7qeOPp3P3gxKaXDyb6xVW9UgGii/LHg4zFS2lxZseC7VmVyinHym3jF0xDBGcet57KjFCO+9Gok8gnNRQrkdrz4fZyMnND3Is4ZL0Hq6JE+5TF+mYskFMtc2PTSt+gBrF3TdnmVunAMXpLUwA+M6g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ekYknS4s; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nytis+Vw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27CB81F00898;
-	Sat, 12 Sep 2026 19:12:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ekYknS4s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1083C1F000FF;
+	Sat, 12 Sep 2026 19:12:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789240344;
-	bh=lVo//3qyRR+8uZREMDmEyMKx7URBUEApoqY0tb+Rys0=;
+	s=korg; t=1789240348;
+	bh=wxoyFhXPGld9WIardt0TQxKhY+qkyCIZWTGof44fzGg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nytis+VwEX+e0CXTqafsm5AYobxWKHzt6mr8RH4RP35PiJB4nionJWJ+GimGcByCY
-	 I2mQzLePDBdF6x449drwTqSn+dy949l98xGn8J5msRUKquqFIYdr7/AXL960gvcJHS
-	 9109EBRbEqIwUbJR579x2xpe08K48zkT7f3wgvLA=
+	b=ekYknS4shu944kAvdj67Ot5JD2kUGWbK8MCJx+Fwsq2QOS2A1Dy0R1uBnYG9V0BBx
+	 PB5o2zojyV/aWHAdVLEJuNR7HdQp2JoI+S/ZvLFs81qDBUkgMDUjS1JOb/nhl5+3Dz
+	 e0ksaO3UxEhY1gSBpl5msZGDcGBHQYoEvqJIWKEk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Weiming Shi <bestswngs@gmail.com>,
 	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 848/935] fs/ntfs3: fix out-of-bounds read in read_log_rec_buf()
-Date: Sat, 12 Sep 2026 09:04:38 +0200
-Message-ID: <20260912065546.278701262@linuxfoundation.org>
+Subject: [PATCH 5.15 849/935] fs/ntfs3: validate ef->size covers the records name and value
+Date: Sat, 12 Sep 2026 09:04:39 +0200
+Message-ID: <20260912065546.301019922@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -52,68 +52,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+From: Weiming Shi <bestswngs@gmail.com>
 
-[ Upstream commit de603b9d377fab57a5e6432fa84a9f36b32c1636 ]
+[ Upstream commit c22f91d82cb9a29d22bdffdce6c803467984ad0c ]
 
-read_log_rec_buf() copies a log record into a caller buffer starting at
+When an EA record has a non-zero ef->size, ntfs_read_ea() only checks
+that the record fits in the remaining buffer (ea_size > bytes), not that
+ef->size is large enough to hold the record's own name_len + 1 + elength.
 
-	u32 off = lsn_to_page_off(log, lsn) + log->record_header_len;
+A crafted image can pass validation with, e.g., ef->size = 24 but
+elength = 0xffff. ntfs_get_ea() then trusts elength and copies it out of
+the undersized record, reading past the kmalloc(info->size) allocation
+and leaking heap memory to userspace via getxattr():
 
-log->record_header_len (and log->data_off, used for the following pages)
-comes verbatim from the on-disk restart area and is only checked for
-8-byte alignment in is_rst_area_valid(), so off can exceed
-log->page_size. "tail = log->page_size - off" then underflows and
-memcpy() reads past the page_size-sized buffer returned by
-read_log_page(), spilling adjacent slab memory into the replay buffer.
+ BUG: KASAN: slab-out-of-bounds in ntfs_get_ea (fs/ntfs3/xattr.c:302)
+ Read of size 65535 at addr ffff888100794550 by task exploit
+  __asan_memcpy (mm/kasan/shadow.c:105)
+  ntfs_get_ea (fs/ntfs3/xattr.c:302)
+  ntfs_getxattr (fs/ntfs3/xattr.c:848)
+  __vfs_getxattr (fs/xattr.c:441)
+  vfs_getxattr (fs/xattr.c:474)
+  do_getxattr (fs/xattr.c:800)
+  path_getxattrat (fs/xattr.c:868)
+  do_syscall_64 (arch/x86/entry/syscall_64.c:94)
 
-This is reachable by mounting a crafted NTFS image:
+ The buggy address is located 80 bytes inside of
+  allocated 84-byte region in cache kmalloc-96
 
- BUG: KASAN: slab-out-of-bounds in read_log_rec_buf+0x216/0x580
- Read of size 64 at addr ffff88800a877ff8 by task exploit/127
-  read_log_rec_buf fs/ntfs3/fslog.c:2299
-  log_replay fs/ntfs3/fslog.c:4216
-  ntfs_loadlog_and_replay fs/ntfs3/fsntfs.c:324
-  ntfs_fill_super fs/ntfs3/super.c:1392
-  get_tree_bdev_flags fs/super.c:1694
-  __x64_sys_mount fs/namespace.c:4360
- The buggy address is located 4088 bytes to the right of
- the 4096-byte region [ffff88800a876000, ffff88800a877000)
+Compute the size the record needs and require ef->size to cover it.
 
-Reject an in-page offset outside the current page before the copy.
-
-Fixes: b46acd6a6a62 ("fs/ntfs3: Add NTFS journal")
-Assisted-by: Claude:claude-opus-4-8
+Fixes: 0e8235d28f3a ("fs/ntfs3: Check fields while reading")
 Reported-by: Xiang Mei <xmei5@asu.edu>
+Assisted-by: Claude:claude-opus-4-8
 Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-[almaz.alexandrovich@paragon-software.com: replaced the >= sign with >]
 Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/fslog.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ fs/ntfs3/xattr.c | 21 ++++++++++++---------
+ 1 file changed, 12 insertions(+), 9 deletions(-)
 
-diff --git a/fs/ntfs3/fslog.c b/fs/ntfs3/fslog.c
-index d0f2fa1a6f91d..f9a7e17031b04 100644
---- a/fs/ntfs3/fslog.c
-+++ b/fs/ntfs3/fslog.c
-@@ -2303,7 +2303,15 @@ static int read_log_rec_buf(struct ntfs_log *log,
- 	 */
- 	for (;;) {
- 		bool usa_error;
--		u32 tail = log->page_size - off;
-+		u32 tail;
-+
-+		/* off comes from the on-disk restart area; bound it. */
-+		if (off > log->page_size) {
-+			err = -EINVAL;
-+			goto out;
-+		}
-+
-+		tail = log->page_size - off;
+diff --git a/fs/ntfs3/xattr.c b/fs/ntfs3/xattr.c
+index 84d0d8b46883f..d922d0c9cd7c7 100644
+--- a/fs/ntfs3/xattr.c
++++ b/fs/ntfs3/xattr.c
+@@ -145,26 +145,29 @@ static int ntfs_read_ea(struct ntfs_inode *ni, struct EA_FULL **ea,
+ 	for (off = 0; off < size; off += ea_size) {
+ 		const struct EA_FULL *ef = Add2Ptr(ea_p, off);
+ 		u32 bytes = size - off;
++		size_t need;
  
- 		if (tail >= data_len)
- 			tail = data_len;
+ 		/* Check if we can use field ea->size. */
+ 		if (bytes < sizeof(ef->size))
+ 			goto out1;
+ 
++		/* Check if we can use fields ef->name_len and ef->elength. */
++		if (bytes < offsetof(struct EA_FULL, name))
++			goto out1;
++
++		/* Size needed to hold this record's name and value. */
++		need = struct_size(ef, name,
++				   1 + ef->name_len + le16_to_cpu(ef->elength));
++
+ 		if (ef->size) {
+ 			ea_size = le32_to_cpu(ef->size);
+-			if (ea_size > bytes)
++			/* ef->size must fit the list and cover the record. */
++			if (ea_size > bytes || ea_size < need)
+ 				goto out1;
+ 			continue;
+ 		}
+ 
+-		/* Check if we can use fields ef->name_len and ef->elength. */
+-		if (bytes < offsetof(struct EA_FULL, name))
+-			goto out1;
+-
+-		ea_size = ALIGN(struct_size(ef, name,
+-					    1 + ef->name_len +
+-						    le16_to_cpu(ef->elength)),
+-				4);
++		ea_size = ALIGN(need, 4);
+ 		if (ea_size > bytes)
+ 			goto out1;
+ 	}
 -- 
 2.53.0
 
