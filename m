@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6BEB343889;
-	Sat, 12 Sep 2026 10:35:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA01229DB64;
+	Sat, 12 Sep 2026 10:35:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789209331; cv=none; b=kMSZ1tgacvBo6nOk1PnbKckY9spI97QPJigaMxgiTvfIkfAbmQ8XJZrsR7HXef3jJmUD7ja5n6ake2gi6P5VdTdJQFZWkAU7JEikTfpo6rkpDAsh+DRtX1lEaum7LxV842IkdnHEddv8PQsUcOjgzxZwS7DK320PmpNcfaA/eh4=
+	t=1789209336; cv=none; b=d6hhnvVx8efctXuJInUGXdO0IjXTPFQaQCv/W3aoj6DI9u1C8XGEtvq3GAPMMcrbohLVIbKwEJYJHJabuL1+qnHIRhIQqPhnnYMLcwY1RIkOBvTmtTRpnGoli+i2GB7p3gdVfhz1lIquyKqm+EX7Ij8jf6ysQ4IEDj1TkNovsDc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789209331; c=relaxed/simple;
-	bh=jDxoLEInKzJEuzYmaJZszJfU/r6JdZ6BRa8OaQ3R0aU=;
+	s=arc-20240116; t=1789209336; c=relaxed/simple;
+	bh=Ly1GiSIIjKJi2HwKABIL1I7zWipXKF2OvrT3Gr8zrWc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hUKWqCtU1yfONMl7ga+lbG5SlVYOio7T2QN8kH3qO0KbWUx9L4Sfo2lo90UvilzVC/3CReUME3OPQ35MuRrcoWpamDRH4Q1yMATxT71cyw5YhUwqtwjYI8EBrgLZg6GQLq4GweklYC2XNRhYL016znlufhGVATlMUjp1SrOc43c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rRoEWMwR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=O6tsNTkPp5rh2PpzaRTxavSF31+yEdztF5J+tHChXuoxQddL/VQWicoulGl2Bfa7C70DiP078bFJWZqptX8lUcAkrtISyn0hNamnhjaDHCFiz44IR5h503m8acbINTdxlgK1Qcj79QYWZdOj90P/pZM8dooqmsJDpGFp/tV5dRE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lr5vxtjg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rRoEWMwR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92BEA1F0089A;
-	Sat, 12 Sep 2026 10:35:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lr5vxtjg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D3F31F00893;
+	Sat, 12 Sep 2026 10:35:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789209330;
-	bh=FvpZUzBdhhe153XCrd37kUMRACAyKnEOmng83suNaSE=;
+	s=korg; t=1789209335;
+	bh=iuhzfDbx5NV3LvQbPstiRuk3iWHWfrGdBDTDhDdOG/M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rRoEWMwRc9aT1iiv2Flp9VWdJSIzzVQzyoDSrUELAk5WtUFHQgrBJv5zRThAM6XTs
-	 1SGeSiVg6dm7hBHBo3rbGkPb9I5w3HFGRU531cZlSRKLigYjFKIUih2oTzj1W1/tbF
-	 czNmXoYjtWRHwlBQ1JSyvx0bFzpr4f+6dKh2FPGo=
+	b=lr5vxtjgKN6tMQSg7V5om1qzkC05U7PcrQcWkt/gYP8DaJQDbjpSRmHJ/mwNvBYWT
+	 qqFSmCAQc63vuJ+uGp4KYOtKJ+PXib68a4EKnFjHkwICfirBDQ7zz1RRI8cw7EIkyL
+	 1gIE54RvnJLJhlhVy2gfoofQgCF6NQ4GRIvkZmyQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	"Zhang, Yanmin" <yanmin_zhang@linux.intel.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Peter Chiu <chui-hao.chiu@mediatek.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0782/1518] perf machine: Check snprintf truncation in machines__findnew()
-Date: Sat, 12 Sep 2026 08:49:11 +0200
-Message-ID: <20260912065641.127599640@linuxfoundation.org>
+Subject: [PATCH 6.18 0800/1518] wifi: mt76: fix queue assignment for disassoc packets
+Date: Sat, 12 Sep 2026 08:49:29 +0200
+Message-ID: <20260912065641.530460311@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -53,45 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Peter Chiu <chui-hao.chiu@mediatek.com>
 
-[ Upstream commit cc6abe0012bf8c04af8275266f8ed7c55ba4a5fb ]
+[ Upstream commit 3999d15cfcc72a946ec419c4059b0e0cd7860053 ]
 
-The guestmount path is built with snprintf() into a PATH_MAX buffer
-without checking the return value.  If symbol_conf.guestmount is long
-enough to cause truncation, the truncated path could match a different
-directory, causing the wrong guest to be associated with the pid.
+Like deauth, a disassoc frame sent to a client in powersave mode can get
+stuck in a tx queue along with other buffered frames, filling up hardware
+queues with frames that are only released after the WTBL slot is reused
+for another client.
 
-Check for truncation and bail out early.
+Move disassoc packets to the ALTX queue, matching the existing deauth
+handling.
 
-Fixes: a1645ce12adb ("perf: 'perf kvm' tool for monitoring guest performance from host")
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Cc: Zhang, Yanmin <yanmin_zhang@linux.intel.com>
-Assisted-by: Claude:claude-opus-4.6
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Fixes: dedf2ec30fe4 ("wifi: mt76: fix queue assignment for deauth packets")
+Signed-off-by: Peter Chiu <chui-hao.chiu@mediatek.com>
+Link: https://patch.msgid.link/20260727150434.1778520-11-nbd@nbd.name
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/machine.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/net/wireless/mediatek/mt76/tx.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tools/perf/util/machine.c b/tools/perf/util/machine.c
-index 25591f9969e15..8455cd94756e1 100644
---- a/tools/perf/util/machine.c
-+++ b/tools/perf/util/machine.c
-@@ -327,7 +327,12 @@ struct machine *machines__findnew(struct machines *machines, pid_t pid)
- 	if ((pid != HOST_KERNEL_ID) &&
- 	    (pid != DEFAULT_GUEST_KERNEL_ID) &&
- 	    (symbol_conf.guestmount)) {
--		snprintf(path, sizeof(path), "%s/%d", symbol_conf.guestmount, pid);
-+		if (snprintf(path, sizeof(path), "%s/%d",
-+			     symbol_conf.guestmount, pid) >= (int)sizeof(path)) {
-+			pr_err("Guest path too long for pid %d\n", pid);
-+			machine = NULL;
-+			goto out;
-+		}
- 		if (access(path, R_OK)) {
- 			static struct strlist *seen;
+diff --git a/drivers/net/wireless/mediatek/mt76/tx.c b/drivers/net/wireless/mediatek/mt76/tx.c
+index 26463d84b7898..28630d75bdb21 100644
+--- a/drivers/net/wireless/mediatek/mt76/tx.c
++++ b/drivers/net/wireless/mediatek/mt76/tx.c
+@@ -615,6 +615,7 @@ mt76_txq_schedule_pending_wcid(struct mt76_phy *phy, struct mt76_wcid *wcid,
+ 		    !ieee80211_is_data(hdr->frame_control) &&
+ 		    (!ieee80211_is_bufferable_mmpdu(skb) ||
+ 		     ieee80211_is_deauth(hdr->frame_control) ||
++		     ieee80211_is_disassoc(hdr->frame_control) ||
+ 		     head == &wcid->tx_offchannel))
+ 			qid = MT_TXQ_PSD;
  
 -- 
 2.53.0
