@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 346C0221F26;
-	Sat, 12 Sep 2026 11:04:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AE60221F26;
+	Sat, 12 Sep 2026 11:04:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789211074; cv=none; b=NM8VM+uknkvCy+g0ClvRfDOMlRnyWTFHDBfWDjOfWh3/X3Q5KBAdOLUwGKZnOf3N/Dea1ItjdGfosJnV6blOsqnM6xliLTiEHAJKizUdvT60hMlLV09wGts25ahw8LCF05Hx9EKMHkyECnM7wx/OwyZ4zo5bmaTp4BJKRAXraUc=
+	t=1789211078; cv=none; b=HxnBJXXo0Tubjg5mnrBTH+dk/Ijs951eXfOPAOsE8E/E2eJ+andkkrfC1g9xRPaPapqdpotGXCd/ld07Zp21YTGOHYc70StIVKcAN2WJQ+yN3Qd7DBr6IrdIXwL6O8E4S3jY4yhgv9fDacVowFLKJ6LihlmL+nOXWd1sYooFtoE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789211074; c=relaxed/simple;
-	bh=RLFlKHJ+W29+B4VvjP7VOTM4WatWK3pNGgcSQr2hJFc=;
+	s=arc-20240116; t=1789211078; c=relaxed/simple;
+	bh=d16SQjJHjMLD4LFYcffLcAgvXlRVxEUSynDOJTevhe4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U0qiflldGJUX6yRGpumU80D5u/rQ4EJDYGRkIOsZ5GUqwcMx8H9yFYi8LqCUHxMWITjcdULiSkoXL/GPKUd3Fd4c3HzTWhN9+pGnYgt9+jbqFhv9BQWIsnnOSJYW9b+/a+1BK/SewYOtP6hfQl8JXlcLFIez0wA7hxFOgjItz/s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fxbbuymr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JcXkQC14RXtB59Ub4izR23TFAdW/UD3oGFPGf4+kQOkoENCSQLrE5r/60IXJtGISr2/IdqUNpAdlHX/R0IWrOirapG67YqBbA7GtIgtKbko0+6o8MdQ5tOl/6vFVHRUYTypW75cL0ElZpL0nxg/WNpUxTXWquUn1+RUDpEL8IiQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZBtoQg/h; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fxbbuymr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B52A71F000FF;
-	Sat, 12 Sep 2026 11:04:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZBtoQg/h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA1061F000FF;
+	Sat, 12 Sep 2026 11:04:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789211072;
-	bh=hMCPZkamzZrzqv6bJrUvXeegO/0MMN5lAUH0Hb3xCa4=;
+	s=korg; t=1789211077;
+	bh=Ts5L0aPXMx7gxG12QuqRKP9LgaTznyUAm52jU1sPmTQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Fxbbuymr15bKTRnhWUenc75jBKpYfQmPz6uQ9crNQqDDJV5WEsSuuEIFXKLotCAgX
-	 LF97A55OB3VWsZjQq9EBX3IdQt3F8Z2vwZiR2Cf87/OfP3MuPrIoCWu3FeIa5nDEOW
-	 Akr3p67ZxOHSXWvjdVPkckpDzzwr2lwnbtT+XAwY=
+	b=ZBtoQg/hxcLc9jCh8fsZXs6jNAmvZ13ktHhhNUwtpvDyOuvwm2B/rZMiDSsMvH/4R
+	 jbH5h/pAwp7sOdGkDoQW9WB3xBfHfni6NxJBQaDoR844rdumImlFFC/Q7tjlcOTpUy
+	 KF5zRxSNMIe+tm/7iKBRjLmz2oSwuR55LT9erq+o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Mohammad Abu-Khader <mohammad.abukhader@hotmail.com>,
+	David Gow <david@davidgow.net>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1157/1518] perf build: Remove leftover feature tests for removed cxx and clang support
-Date: Sat, 12 Sep 2026 08:55:26 +0200
-Message-ID: <20260912065649.630593084@linuxfoundation.org>
+Subject: [PATCH 6.18 1158/1518] kunit: tool: fix _list_tests filtering wrong variable when list has TAP prefix
+Date: Sat, 12 Sep 2026 08:55:27 +0200
+Message-ID: <20260912065649.654726408@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,92 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Mohammad Abu-Khader <mohammad.abukhader@hotmail.com>
 
-[ Upstream commit b60f6bc128b972e018de6bcfa7007b4021f4a31a ]
+[ Upstream commit dea754ded9518b51740c417d2c1e02ff540784c6 ]
 
-56b11a2126bf2f42 ("perf bpf: Remove support for embedding clang for
-compiling BPF events (-e foo.c)") removed the test-cxx.cpp and
-test-clang.cpp sources, but left behind their entries in the feature
-test FILES list, the build rules and the cxx and clang entries in
-FEATURE_TESTS_EXTRA.
+`_list_tests()` runs the kernel to list tests, strips printk timestamp
+lines via `extract_tap_lines()`, then drops the dummy TAP header from
+the cleaned `lines`.  However the subsequent regex filter mistakenly
+operates on the original `output` instead of the cleaned `lines`.  When
+the kernel output includes timestamp prefixes (common with UML or slower
+setups), e.g.:
 
-Since the sources no longer exist, those rules would always fail,
-making the artificial feature-cxx and feature-clang results to be
-perpetually disabled/absent, remove the leftover entries, making the
-feature test scripts list match the available sources.
+  [    0.100000] suite.test1
+  [    0.100000] suite.test2
 
-Fixes: 56b11a2126bf2f42 ("perf bpf: Remove support for embedding clang for compiling BPF events (-e foo.c)")
-Cc: Ian Rogers <irogers@google.com>
-Assisted-by: opencode:deepseek-v4-flash-free
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+the anchored regex `^[^\s.]+\.[^\s.]+$` rejects them and `--list_tests`
+returns an empty list.
+
+Filter `lines` instead of `output`, matching the behavior of the
+adjacent `_list_tests_attr()` which already returns the cleaned list.
+
+Add a regression test with timestamp-prefixed input to verify the fix.
+
+Link: https://lore.kernel.org/r/20260803190059.36491-1-mohammad.abukhader@hotmail.com
+Fixes: 723c8258c8fe ("kunit: tool: Add command line interface to filter and report attributes")
+Signed-off-by: Mohammad Abu-Khader <mohammad.abukhader@hotmail.com>
+Reviewed-by: David Gow <david@davidgow.net>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/build/Makefile.feature |  2 --
- tools/build/feature/Makefile | 14 --------------
- 2 files changed, 16 deletions(-)
+ tools/testing/kunit/kunit.py           |  2 +-
+ tools/testing/kunit/kunit_tool_test.py | 12 ++++++++++++
+ 2 files changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/tools/build/Makefile.feature b/tools/build/Makefile.feature
-index 32bbe29fe5f6c..a0133d52aa8a0 100644
---- a/tools/build/Makefile.feature
-+++ b/tools/build/Makefile.feature
-@@ -119,9 +119,7 @@ FEATURE_TESTS_EXTRA :=                  \
-          libbfd-liberty-z               \
-          libopencsd                     \
-          libperl                        \
--         cxx                            \
-          llvm                           \
--         clang                          \
-          libbpf                         \
-          libpfm4                        \
-          libdebuginfod			\
-diff --git a/tools/build/feature/Makefile b/tools/build/feature/Makefile
-index 95646290cb89c..c972304c32117 100644
---- a/tools/build/feature/Makefile
-+++ b/tools/build/feature/Makefile
-@@ -58,7 +58,6 @@ FILES=                                          \
-          test-libbpf.bin                        \
-          test-get_cpuid.bin                     \
-          test-sdt.bin                           \
--         test-cxx.bin                           \
-          test-gettid.bin			\
-          test-jvmti.bin				\
-          test-jvmti-cmlr.bin			\
-@@ -66,7 +65,6 @@ FILES=                                          \
-          test-sched_getcpu.bin			\
-          test-setns.bin				\
-          test-libopencsd.bin			\
--         test-clang.bin				\
-          test-llvm.bin				\
-          test-llvm-perf.bin   \
-          test-libaio.bin			\
-@@ -330,9 +328,6 @@ $(OUTPUT)test-libbpf.bin:
- $(OUTPUT)test-sdt.bin:
- 	$(BUILD)
+diff --git a/tools/testing/kunit/kunit.py b/tools/testing/kunit/kunit.py
+index cd99c1956331d..f3392cb3b7af7 100755
+--- a/tools/testing/kunit/kunit.py
++++ b/tools/testing/kunit/kunit.py
+@@ -123,7 +123,7 @@ def _list_tests(linux: kunit_kernel.LinuxSourceTree, request: KunitExecRequest)
+ 	lines.pop()
  
--$(OUTPUT)test-cxx.bin:
--	$(BUILDXX) -std=gnu++11
--
- $(OUTPUT)test-gettid.bin:
- 	$(BUILD)
+ 	# Filter out any extraneous non-test output that might have gotten mixed in.
+-	return [l for l in output if re.match(r'^[^\s.]+\.[^\s.]+$', l)]
++	return [l for l in lines if re.match(r'^[^\s.]+\.[^\s.]+$', l)]
  
-@@ -358,15 +353,6 @@ $(OUTPUT)test-llvm-perf.bin:
- 		$(shell $(LLVM_CONFIG) --system-libs)		\
- 		> $(@:.bin=.make.output) 2>&1
+ def _list_tests_attr(linux: kunit_kernel.LinuxSourceTree, request: KunitExecRequest) -> Iterable[str]:
+ 	args = ['kunit.action=list_attr']
+diff --git a/tools/testing/kunit/kunit_tool_test.py b/tools/testing/kunit/kunit_tool_test.py
+index 0eb61de9abd4b..a8eb223e57e10 100755
+--- a/tools/testing/kunit/kunit_tool_test.py
++++ b/tools/testing/kunit/kunit_tool_test.py
+@@ -896,6 +896,18 @@ class KUnitMainTest(unittest.TestCase):
+ 		self.linux_source_mock.run_kernel.assert_called_once_with(
+ 			args=['kunit.action=list'], build_dir='.kunit', filter_glob='suite*', filter='', filter_action=None, timeout=300)
  
--$(OUTPUT)test-clang.bin:
--	$(BUILDXX) -std=gnu++17					\
--		-I$(shell $(LLVM_CONFIG) --includedir) 		\
--		-L$(shell $(LLVM_CONFIG) --libdir)		\
--		-Wl,--start-group -lclang-cpp -Wl,--end-group	\
--		$(shell $(LLVM_CONFIG) --libs Core option)	\
--		$(shell $(LLVM_CONFIG) --system-libs)		\
--		> $(@:.bin=.make.output) 2>&1
--
- -include $(OUTPUT)*.d
- 
- $(OUTPUT)test-libaio.bin:
++	def test_list_tests_with_prefix(self):
++		want = ['suite.test1', 'suite.test2', 'suite2.test1']
++		self.linux_source_mock.run_kernel.return_value = [
++			'[    0.100000] TAP version 14',
++			'[    0.200000] suite.test1',
++			'[    0.200000] suite.test2',
++			'[    0.300000] suite2.test1']
++
++		got = kunit._list_tests(self.linux_source_mock,
++				     kunit.KunitExecRequest(None, None, None, False, False, '.kunit', 300, 'suite*', '', None, None, 'suite', False, False, False))
++		self.assertEqual(got, want)
++
+ 	@mock.patch.object(kunit, '_list_tests')
+ 	def test_run_isolated_by_suite(self, mock_tests):
+ 		mock_tests.return_value = ['suite.test1', 'suite.test2', 'suite2.test1']
 -- 
 2.53.0
 
