@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 975F0352032;
-	Sat, 12 Sep 2026 17:01:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39FD32FFF90;
+	Sat, 12 Sep 2026 17:02:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789232517; cv=none; b=WKFoKuvP97W1xLlwd3uYbymBvd/j/YH4Y1Mk5BBYR8UCjX+ZM3oLOh6xQ24IITeaS+G9OlMLL243PitcUS8nPKkO92t3DsVc2N1C4W9sM+q4/JGjkeq7TmeflU2DIHniZ/naKMiA97z3EXPWT1kxeryCinrmYGyGYmhXeNkV1Ls=
+	t=1789232522; cv=none; b=hIcjRWh7ktjNc8j7jz2ysYyVz732Kzjz/M47zUrBdr9LjKbt9O6HPpSDdaaHn8dW4f7TjPRHh2XWrTAA9T14QuPCZ2PtkFnnruQRVLWax+NLkeOq9LjwfgdBdEpMXIA6mAqNHo7BbaQk9iDKXfTPqSD3uiEkfi+vpgZSH0wxI3U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789232517; c=relaxed/simple;
-	bh=aT+JLX/C9fMUmBxLSvjU3NKtr93cBtm0o0vJa/65doo=;
+	s=arc-20240116; t=1789232522; c=relaxed/simple;
+	bh=wO6oQ7IEsFVux0HTOxZ4BMb5mpfOwh39QIWlJy/PLeI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s+Yg+uYFrr6GVN9GbWJ36j5F1A9Vj6xxSVkiS2v1H1wFZuwkzZoBEB+VOhylwXhq+0izfmtwW5HRfmgOeDqKDu/bKClzE79xKvEqIeH1BM6nNLyF2kABNg0bsvxM9gpFIujzpJ505dulSGOhbj6k1L8SqKhb/1ajY2iBl1ByLOY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j49y7jL7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IqiDl2/LqNVtCsEABwNNmbNoKQSLhyocTvipx7Wl7RW+ESWsqJJws/TBxxK+HORLsMlWPGOUsFgZznm6ZFr98jb2VpWu5fVd7R9Ui5OCXFW7ikkeV9MSR6KSkZ8iMm8v6UTeuUOukUkjapi9lkMTMY7Qjm6wTDlePVKnEeBV/sQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mx4WwLff; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j49y7jL7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A02EA1F000FF;
-	Sat, 12 Sep 2026 17:01:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mx4WwLff"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFEE41F000FF;
+	Sat, 12 Sep 2026 17:01:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789232516;
-	bh=ER4YQUk2Jjg0f/I7wsaMNQQeBE36CA9NicYaz7BgmjA=;
+	s=korg; t=1789232521;
+	bh=cdcMWB5aUYty0Que8GCUhe86d96n5BPBV1Jp8dFSklM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=j49y7jL7blxAXEyZPmueoc8XxNMk5hDLThfZy4jfkIPTNE6EvltdC2eLGwVA2hS0A
-	 q3l5vcBf1wRE77tDt4SbWzfY3fvr9pcu1iv7o6eC/Pwdl+cLzQ6bniZTQ8KgvRi0jR
-	 M/CGk81oP6PxLUtDXj7jdmA4JnAd65xQ68nPn7FA=
+	b=Mx4WwLffwUBxUMtQYAtOPPAGPmvIISU081Lf/7MdgzcRXdN70svkEniKTbWlFwrKN
+	 M0YyE5q/KaLwtW72YBcUzWREY/dhV2cbvA7BKR8HA4PWSjKcGfaaUWLdf1HeXgo5M+
+	 7NvzN5HpLUXQMv1nRQx9c5SZpuZBIekkXw6oVKvA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weigang He <geoffreyhe2@gmail.com>,
+	Yuhao Jiang <danisjiang@gmail.com>,
+	Junrui Luo <moonafterrain@outlook.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 5.15 026/935] media: cec: stm32: prevent out-of-bounds write on RX overflow
-Date: Sat, 12 Sep 2026 08:50:56 +0200
-Message-ID: <20260912065527.439587294@linuxfoundation.org>
+Subject: [PATCH 5.15 027/935] media: vicodec: fix out-of-bounds write in FWHT encoder
+Date: Sat, 12 Sep 2026 08:50:57 +0200
+Message-ID: <20260912065527.461885003@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -50,55 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weigang He <geoffreyhe2@gmail.com>
+From: Junrui Luo <moonafterrain@outlook.com>
 
-commit fb9dda38d4b9e90db07ed9a0ee2d35bf85494035 upstream.
+commit cf4500ebf6fb57bf4ab83c3dd349a40257dbe2a9 upstream.
 
-stm32_rx_done() appends each received CEC byte to rx_msg.msg[] using
-rx_msg.len as the write index, incrementing it on every RXBR
-(receive-byte-ready) interrupt without checking it against the buffer
-size:
+vidioc_s_fmt_vid_out() sizes the encoder CAPTURE buffer from the
+compressed descriptor pixfmt_fwht, whose sizeimage_mult is 3:
+coded_w * coded_h * 3 + sizeof(struct fwht_cframe_hdr). fwht_encode_frame()
+encodes one plane per component, and an incompressible plane takes the
+FWHT_FRAME_UNENCODED path in encode_plane(), copying the plane verbatim.
 
-	cec->rx_msg.msg[cec->rx_msg.len++] = val & 0xFF;
+For a 4-component pixel format all four planes are full resolution
+(width_div == height_div == 1), so a frame that forces every plane
+through the unencoded fallback writes
+sizeof(struct fwht_cframe_hdr) + 4 * coded_w * coded_h bytes, overrunning
+the plane by coded_w * coded_h, which can result in corruption
+of adjacent kernel heap memory.
 
-rx_msg.msg[] is a fixed CEC_MAX_MSG_SIZE (16) byte array in struct
-cec_msg, and rx_msg.len is only reset on RXACKE/RXOVR or after a
-completed message (RXEND). The number of bytes received before RXEND is
-decided by the remote CEC device (it sets EOM), not by the driver. A
-peer that keeps sending bytes without ending the message drives RXBR
-repeatedly, pushing rx_msg.len past 16 and writing peer-controlled bytes
-out of bounds into the surrounding memory. This is reachable in normal
-operation once the driver has probed and receiving is enabled, from the
-IRQ thread, without any local privilege.
+Bump pixfmt_fwht.sizeimage_mult from 3 to 4, matching the largest
+components_num among the supported raw formats, so the capture buffer is
+always large enough for the unencoded fallback.
 
-The length check in the CEC core runs on the consumer side, after the
-byte has been stored, so it does not prevent the overflow. Bound the
-index in the driver before the store, as the other platform CEC drivers
-already do (e.g. tegra_cec), dropping the excess bytes of an overlong
-frame.
-
-Found by static analysis tool CodeQL.
-
-Fixes: d69ae57453c8 ("[media] cec: add STM32 cec driver")
+Fixes: 16ecf6dff97c ("media: vicodec: Add support for 4 planes formats")
+Reported-by: Yuhao Jiang <danisjiang@gmail.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Weigang He <geoffreyhe2@gmail.com>
+Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/cec/platform/stm32/stm32-cec.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/media/test-drivers/vicodec/vicodec-core.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/media/cec/platform/stm32/stm32-cec.c
-+++ b/drivers/media/cec/platform/stm32/stm32-cec.c
-@@ -133,7 +133,8 @@ static void stm32_rx_done(struct stm32_c
- 		u32 val;
+--- a/drivers/media/test-drivers/vicodec/vicodec-core.c
++++ b/drivers/media/test-drivers/vicodec/vicodec-core.c
+@@ -61,11 +61,11 @@ struct pixfmt_info {
+ };
  
- 		regmap_read(cec->regmap, CEC_RXDR, &val);
--		cec->rx_msg.msg[cec->rx_msg.len++] = val & 0xFF;
-+		if (cec->rx_msg.len < CEC_MAX_MSG_SIZE)
-+			cec->rx_msg.msg[cec->rx_msg.len++] = val & 0xFF;
- 	}
+ static const struct v4l2_fwht_pixfmt_info pixfmt_fwht = {
+-	V4L2_PIX_FMT_FWHT, 0, 3, 1, 1, 1, 1, 1, 0, 1
++	V4L2_PIX_FMT_FWHT, 0, 4, 1, 1, 1, 1, 1, 0, 1
+ };
  
- 	if (cec->irq_status & RXEND) {
+ static const struct v4l2_fwht_pixfmt_info pixfmt_stateless_fwht = {
+-	V4L2_PIX_FMT_FWHT_STATELESS, 0, 3, 1, 1, 1, 1, 1, 0, 1
++	V4L2_PIX_FMT_FWHT_STATELESS, 0, 4, 1, 1, 1, 1, 1, 0, 1
+ };
+ 
+ static void vicodec_dev_release(struct device *dev)
 
 
