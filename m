@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C245B347FEC;
-	Sat, 12 Sep 2026 13:13:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61F5141A503;
+	Sat, 12 Sep 2026 13:13:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789218788; cv=none; b=JT0QC8CelobCA8VqAqupDIMtS8gJ4gXpnsjMC3AnNZT5xn/tqE47eSuI6R62r2GGOOSU9zSz4AHGQnk9BMp9fOMHfJmCmr9JCwpzbQJDsfyqipZFi44Ch1wZStSp6ZskpZEVJxYI1VmYclyqZtk6iJE2jOioMGEDYm0IXbZtxOM=
+	t=1789218794; cv=none; b=B8lJ7GsN/fjTWljmZ8mjPPPq+9pOytGlY3vrNiSJFB/6FbXe3EIn75bVcz3WSn9FEbW6YopA2UcXrsN514clatjnOILzxRVelmhtGwJxLiYuZSBkreLP7W5nopEb3nfpCrjTHGmS4FLWeqW+SYTpudRDP5pHXPxIOEXpTN30Px4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789218788; c=relaxed/simple;
-	bh=c0BvMMpkTwqbomr8TS/MnRYwb6eceZMNeKyvY1dhozA=;
+	s=arc-20240116; t=1789218794; c=relaxed/simple;
+	bh=D2mjVTYfH5O1M7cE7kA/M60LO0nYKzyWTLPBa4uhme4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jdrJ4cVF0QUFH5uR+Pcn9koXuFq3wTsFO44q0S/l9F6H1aThX8LalvGHwa2+MwQBqSPUJffleayTj4li+i3mj7tP4ryrW5LilnmPhYnDln/hUnX+JLhmobrwIK1WTzBhm3kMm9rRdcYAELAdFlWql0aJCatwSNMwfuYIfi2VPHU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HbimWyHZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dQu3PtL2SXwXXbQmO1+87dpcYNP32LRupT2leDZjQIf5YZ71RdcInobAUoUZ0dTIsZ4YiNt9y3yKsm6jdkJuII9Iq0ZZawOXst4OMnNk9xC7UNaT8loYOXgIzYA0XcJQAIxPIjNLWHrczUfJLzHqAvt6wQn8G5G574N+ejWJW4M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MO4FEWaw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HbimWyHZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C53921F000FF;
-	Sat, 12 Sep 2026 13:13:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MO4FEWaw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96AD21F000FF;
+	Sat, 12 Sep 2026 13:13:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789218787;
-	bh=3pvE9x1LLJKu+fyX/rhw1aUD4A4w7SfWEie8ENhkkUI=;
+	s=korg; t=1789218792;
+	bh=aX+t85g9r+EddtjQ0809hdGHi3dqPNCaHlQ0EIGu46U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HbimWyHZrxGFmJkiDXtTO3ehbZPvY2JHXxs+zAxb0bVhXI0zy4GapARo1Cn5tF2Mj
-	 IwdW2bH6t49VJr0AGr99beh9l1fPvdXF1cZc/4Px5c0VRg2EToMINRFmkK1UWaondf
-	 4RfehVhy+/i14BQCzuqEtMmXqYang9mjUj2Fl9QU=
+	b=MO4FEWawByYFQqgjDU9Ms1XuF6dcXDmhjGAceMbipflW8HQ/1hHiROc3m838fjt7v
+	 vwT81GRjOikyrDtusXjGEqVmP8ZTF0F23D5NE0WS+NUkNYKlCtGYP/ifjCS6dO7nFG
+	 521UpmkSOzM+2w5fUjeMtczWAagYeO/nNf04Px0k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+1b2c9c4a0f8708082678@syzkaller.appspotmail.com,
-	Michal Luczaj <mhal@rbox.co>,
-	Nguyen Dinh Phi <phind.uet@gmail.com>,
+	Wupeng Ma <mawupeng1@huawei.com>,
 	Stefano Garzarella <sgarzare@redhat.com>,
+	Nguyen Dinh Phi <phind.uet@gmail.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1218/1376] vsock: dont check the listeners sk_err in vsock_accept()
-Date: Sat, 12 Sep 2026 09:00:44 +0200
-Message-ID: <20260912065634.697278815@linuxfoundation.org>
+Subject: [PATCH 6.12 1219/1376] vsock: use sock_error() to consume sk_err after a failed connect
+Date: Sat, 12 Sep 2026 09:00:45 +0200
+Message-ID: <20260912065634.719397104@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -56,87 +55,52 @@ Content-Transfer-Encoding: 8bit
 
 From: Nguyen Dinh Phi <phind.uet@gmail.com>
 
-[ Upstream commit b8c899cf5e7be29840a172c183dedd8d3e7a0287 ]
+[ Upstream commit 96cbf89993091a163bfedec52a3bd683dc94b3b4 ]
 
-Syzbot reported an issue which can be reproduced with these steps:
-	r0 = socket(AF_VSOCK, SOCK_STREAM, 0)
-	bind(r0, {VMADDR_CID_ANY, PORT})
-	connect(r0, {VMADDR_CID_LOCAL, PORT}) -> -1, EPROTO (self-connect)
-	listen(r0, backlog)                   -> 0
-	r1 = socket(AF_VSOCK, SOCK_STREAM, 0)
-	connect(r1, {VMADDR_CID_LOCAL, PORT}) -> 0
-	accept(r0)                            -> -1, EPROTO (stale sk_err)
+vsock_connect() returns sk_err to userspace but does not clear it:
+  if (sk->sk_err) {
+            err = -sk->sk_err;
 
-Basically, it creates a socket (r0) and triggers a self-connect after
-binding it. This self-connect fails with EPROTO because it loops back
-to r0 while the socket is still in the TCP_SYN_SENT state, causing it
-to be incorrectly dispatched to the connecting-client path. The
-unexpected packet type encountered there sets sk_err to EPROTO.
+For a blocking connect() the error has already been delivered as
+connect()'s return value, so leaving it set causes subsequent operations
+like poll()/epoll() to keep reporting POLLERR even though the connect
+failure was already delivered.
 
-After that, it invokes a listen() call on the same socket. This
-listen() call succeeds because the kernel's listening path never
-inspects or clears sk_err. Then, a new socket (r1) is created as a
-normal client and connects to r0. However, vsock_accept() rejects this
-incoming connection because the listener's sk_err still holds the
-EPROTO error from the earlier failed self-connect.
-
-This rejection causes the child socket created for r1's connection to
-never be freed on virtio or hyperv transports; only the VMCI transport
-implements pending_work to revisit and clean up a rejected socket.
-
-For a non-blocking connect(), vsock_connect() may return -EINPROGRESS
-immediately, and vsock_connect_timeout() can later set sk->sk_err
-asynchronously.
-
-Since no vsock transport ever sets sk_err on a socket while it is in
-TCP_LISTEN state, checking it in vsock_accept() serves no purpose and
-only carries forward errors left behind by earlier, unrelated
-connection attempts on the same socket. Remove the checks so accept()
-no longer rejects valid incoming connections because of a stale
-error, which also avoids the resource leak described above.
+The error should be consumed once it has been returned to userspace.
+Switch to sock_error(), which reads and clears sk_err atomically,
+matching the behavior of other protocol implementations such as
+__inet_stream_connect().
 
 Fixes: d021c344051a ("VSOCK: Introduce VM Sockets")
-Reported-by: syzbot+1b2c9c4a0f8708082678@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=1b2c9c4a0f8708082678
-Suggested-by: Michal Luczaj <mhal@rbox.co>
-Signed-off-by: Nguyen Dinh Phi <phind.uet@gmail.com>
+Tested-by: Wupeng Ma <mawupeng1@huawei.com>
 Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-Link: https://patch.msgid.link/20260813173024.2362935-2-phind.uet@gmail.com
+Signed-off-by: Nguyen Dinh Phi <phind.uet@gmail.com>
+Link: https://patch.msgid.link/20260813173024.2362935-4-phind.uet@gmail.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/vmw_vsock/af_vsock.c | 10 +++-------
- 1 file changed, 3 insertions(+), 7 deletions(-)
+ net/vmw_vsock/af_vsock.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
 diff --git a/net/vmw_vsock/af_vsock.c b/net/vmw_vsock/af_vsock.c
-index f406b6ce70c15..33928aee05aca 100644
+index 33928aee05aca..0cbe5a1a40d33 100644
 --- a/net/vmw_vsock/af_vsock.c
 +++ b/net/vmw_vsock/af_vsock.c
-@@ -1717,7 +1717,7 @@ static int vsock_accept(struct socket *sock, struct socket *newsock,
- 	timeout = sock_rcvtimeo(listener, arg->flags & O_NONBLOCK);
- 
- 	while ((connected = vsock_dequeue_accept(listener)) == NULL &&
--	       listener->sk_err == 0 && timeout != 0) {
-+		timeout != 0) {
- 		prepare_to_wait(sk_sleep(listener), &wait, TASK_INTERRUPTIBLE);
- 		release_sock(listener);
- 		timeout = schedule_timeout(timeout);
-@@ -1730,13 +1730,9 @@ static int vsock_accept(struct socket *sock, struct socket *newsock,
- 		}
+@@ -1671,12 +1671,10 @@ static int vsock_connect(struct socket *sock, struct sockaddr *addr,
+ 		prepare_to_wait(sk_sleep(sk), &wait, TASK_INTERRUPTIBLE);
  	}
  
--	if (listener->sk_err) {
--		err = -listener->sk_err;
--	} else if (!connected) {
-+	if (!connected) {
- 		err = -EAGAIN;
--	}
--
--	if (connected) {
-+	} else {
- 		sk_acceptq_removed(listener);
+-	if (sk->sk_err) {
+-		err = -sk->sk_err;
++	err = sock_error(sk);
++	if (err) {
+ 		sk->sk_state = TCP_CLOSE;
+ 		sock->state = SS_UNCONNECTED;
+-	} else {
+-		err = 0;
+ 	}
  
- 		lock_sock_nested(connected, SINGLE_DEPTH_NESTING);
+ out_wait:
 -- 
 2.53.0
 
