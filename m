@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EB3F282F1F;
-	Sat, 12 Sep 2026 15:39:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ACFD345CCE;
+	Sat, 12 Sep 2026 15:39:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789227586; cv=none; b=paihgLJgExwMUa3WC23yw+2Tf6busSRMWWuWinxw7XIHTMOOSnM2g6iGA9i77iay/oVm6jSIAk92e9YL8teALWDkuiPFeUrVfd7ZrsKvv0o6bjRzGHTRz1prv6yzrcnnm8Y31VnPb+GqW0Mrd1ZO7NWxrOhhZbces/cBI8PIHzs=
+	t=1789227591; cv=none; b=eKZbzGtsspsEBR/EmYNX7VcE7SLcqSsn2q+mX+WkpTGFboX4AWX+OZibTPUjUi1adqio+csI86W7dzQLDz/C+0pPbtBxw8gajq+LsBMmeIh1uru/YD+08jdcCOJ4cFmuIJuPmsR4DwEp5Qnfk2H36sz/WptodIzVEcAnBrh6RHw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789227586; c=relaxed/simple;
-	bh=FTptnRdEQ6zOmEjQdy5JtvSvLQPoNmmiRA5J5jKXXZg=;
+	s=arc-20240116; t=1789227591; c=relaxed/simple;
+	bh=IzMRqoXZLbcuIHZ1GLBKU34qwKKMh/VKspIDF4A8YTc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=REuRf0KJwsDRd3jP4cGWQRnhaPEpP14AUeBtfpfC9dC/xS+Ep/2HEGV8lQpzF86MIiVpzaWmr4MNUR5vOC2ttQ0CGIuENbTIhLxJ4gkrK1Httjsmpj7bzHSFY1KOZka9YQr2fyhO5ivXrqM110j2X7+8+Ob/s54A4mKLMjV/gpw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nXdcUdXU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QRfZVYbm/Oqfwa8ovpf7uMkN/VNfPrsz6sxHSmoSeOBSPBvFqsrnIHyFCd8sToD8Oop16OqFxy3zdi2MarpgZYW7XmfZoEQ94m2YabakQUHYypWLjyxRHMxBUh0hGbveMzT2sVxo0Iw8SelexSCPeAc8ySeTJNAWuasE1HYj9Bs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XDPT++kQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nXdcUdXU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 226F61F000FF;
-	Sat, 12 Sep 2026 15:39:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XDPT++kQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FBC21F000FF;
+	Sat, 12 Sep 2026 15:39:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789227585;
-	bh=+YADl1hdcekVtPP+mEQkh7SFcLKqFP2vBCBTxWs65LA=;
+	s=korg; t=1789227589;
+	bh=KB3dVOuzacI6aalK8WfbmOZrPsWcSJCyydJhG/A/lfw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nXdcUdXUhaJvYqMIfh4FOVSDB9KLOqEa20qpgy0IC1D4Q6DxCUI3vzciny73a436n
-	 niVsyZE7APwhqesfRCsj9+J5kiyIEEUSyEtYnIwTL5pCtnUt8NWiu79RhkkCvBoeNv
-	 /au2/dKU1QXqnsLzGbFgg7f+gg1pmU4EdtXI0GYY=
+	b=XDPT++kQyYDlzLNeI397gZgtbl1mKxRcQ3lRPx/OdsGOauni4olLOYgkrYQiox4Tj
+	 ZuADR4O3jSIAE6ixTIYcWtXhmAJ4Vuk8/3xhDaMtZp/kYNMTUsUBMsKAih+WEzwTwR
+	 AGfRPUdHk46TG6zdaZEFv4nryMIwHTGfrYlX9lk8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Koichiro Den <den@valinux.co.jp>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 0211/1191] NTB: ntb_transport: Reject oversized TX buffers
-Date: Sat, 12 Sep 2026 08:48:59 +0200
-Message-ID: <20260912065552.949308027@linuxfoundation.org>
+	Jakub Kicinski <kuba@kernel.org>,
+	Koichiro Den <den@valinux.co.jp>
+Subject: [PATCH 6.1 0212/1191] net: ntb_netdev: Avoid double-accounting netif_rx() drops
+Date: Sat, 12 Sep 2026 08:49:00 +0200
+Message-ID: <20260912065552.973669783@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -53,56 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 From: Koichiro Den <den@valinux.co.jp>
 
-commit a4f2387db6f1cc2f03abba7f3a6807ad61e26ff7 upstream.
+commit 82e15be2d8b9efa6fb1750528d9b6f40e6a8eea7 upstream.
 
-ntb_process_tx() handles an oversized buffer by calling tx_handler()
-with a NULL data pointer and returning success. ntb_netdev therefore
-neither frees the skb in its completion callback nor takes its enqueue
-error path, leaking it.
+netif_rx() already accounts packets it drops in the core rx_dropped
+counter. ntb_netdev counts them again as both errors and drops.
 
-Reject oversized buffers in ntb_transport_tx_enqueue() before acquiring
-a queue entry and return -EMSGSIZE. The caller retains ownership of the
-buffer, and the preceding netdev patch frees the skb when enqueue
-returns this permanent error.
+Leave netif_rx() drops to the core. Count the packet and bytes
+unconditionally since it was received successfully by the driver.
 
-Fixes: fce8a7bb5b4b ("PCI-Express Non-Transparent Bridge Support")
+Fixes: 548c237c0a99 ("net: Add support for NTB virtual ethernet device")
 Cc: stable@vger.kernel.org
+Suggested-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Koichiro Den <den@valinux.co.jp>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://patch.msgid.link/20260817053519.4135287-5-den@valinux.co.jp
+Link: https://patch.msgid.link/20260819172539.1450821-2-den@valinux.co.jp
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ntb/ntb_transport.c |   12 +++---------
- 1 file changed, 3 insertions(+), 9 deletions(-)
+ drivers/net/ntb_netdev.c |   10 +++-------
+ 1 file changed, 3 insertions(+), 7 deletions(-)
 
---- a/drivers/ntb/ntb_transport.c
-+++ b/drivers/ntb/ntb_transport.c
-@@ -1924,15 +1924,6 @@ static int ntb_process_tx(struct ntb_tra
- 		return -EAGAIN;
- 	}
+--- a/drivers/net/ntb_netdev.c
++++ b/drivers/net/ntb_netdev.c
+@@ -125,13 +125,9 @@ static void ntb_netdev_rx_handler(struct
+ 	skb->protocol = eth_type_trans(skb, ndev);
+ 	skb->ip_summed = CHECKSUM_NONE;
  
--	if (entry->len > qp->tx_max_frame - sizeof(struct ntb_payload_header)) {
--		if (qp->tx_handler)
--			qp->tx_handler(qp, qp->cb_data, NULL, -EIO);
--
--		ntb_list_add(&qp->ntb_tx_free_q_lock, &entry->entry,
--			     &qp->tx_free_q);
--		return 0;
+-	if (netif_rx(skb) == NET_RX_DROP) {
+-		ndev->stats.rx_errors++;
+-		ndev->stats.rx_dropped++;
+-	} else {
+-		ndev->stats.rx_packets++;
+-		ndev->stats.rx_bytes += len;
 -	}
--
- 	ntb_async_tx(qp, entry);
++	netif_rx(skb);
++	ndev->stats.rx_packets++;
++	ndev->stats.rx_bytes += len;
  
- 	qp->tx_index++;
-@@ -2307,6 +2298,9 @@ int ntb_transport_tx_enqueue(struct ntb_
- 	if (!qp->link_is_up)
- 		return -ENOLINK;
+ 	skb = new_skb;
  
-+	if (len > qp->tx_max_frame - sizeof(struct ntb_payload_header))
-+		return -EMSGSIZE;
-+
- 	entry = ntb_list_rm(&qp->ntb_tx_free_q_lock, &qp->tx_free_q);
- 	if (!entry) {
- 		qp->tx_err_no_buf++;
 
 
