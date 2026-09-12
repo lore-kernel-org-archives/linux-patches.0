@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FEB23DB326;
-	Sat, 12 Sep 2026 08:35:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F7DA1DC198;
+	Sat, 12 Sep 2026 08:35:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789202123; cv=none; b=srcuACCq2lo/BQtzaUkeLdlLw1dEZ1yVodxmUgQM+ToIcABQhU+/ONsa+x0SdySWF9r7Yspb2IsqUp0Q6jLEOQJo5DybJ5xXbRoorJnRv3UfOn1sMfiqUo0dghJUKGBpBcM3VI5if3hn/LhfWvTIGwjNQAX2eesGLVEu2UHW6P0=
+	t=1789202128; cv=none; b=Zkz7ZrkNXCkiF7VKDmnLxe92+RiG4DyFTfcdDq0XcdeOvbIqeOi8UZmkHUa+4LIjzteH3YU+gXfSMUAV/94pA9KX64yOc+my/lX8s5m4DntGOylGkJAKc8SBX7VuDg5r4qeAom/U9PfrQSmp4qsm2wwa563geiRQFYDoR6+Cld8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789202123; c=relaxed/simple;
-	bh=fga3MCArABhQRrDz8hUw+MFWBf86o24PZS+aFEz8jyc=;
+	s=arc-20240116; t=1789202128; c=relaxed/simple;
+	bh=EiNmQFBTFTVY2NaQOO+w8+fm5vvwhdYltohoowW4Ys4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DOX/JY7yVSy8gl8K9KVO1O/I0PurUSuPfmU39ajm0Vykt6AkWxDINZtEFEw5qv18B0StD4TkP4aDVmZPBzvWDmvh+CmNWzSxdU7XAvJRR9uN8BbX7Q+gePLu2sIg8TWJyT/2HRTneEc+q0lNN2me6hbQ+JMSTg4JYAVnrshOTLQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vi7nHe0q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eFAklpzxKpgC4gdgk5p3warbTAf7fQnNTyzencCv3v9Qyw6aWUsq4sruA/mCoDNYjQy8iaAGDjswyLcHo7wZkXSpItALscub1mgLOPHBamXWb5X1xhzJlHP4zsRN3+oTiyU2xcfQ4v99bRsQUP78+nv1Z+LCA3M2+SjSPf5YZ+o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bNCQa3b1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vi7nHe0q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A3B01F000FF;
-	Sat, 12 Sep 2026 08:35:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bNCQa3b1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 508971F000FF;
+	Sat, 12 Sep 2026 08:35:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789202122;
-	bh=4aGQHdoat+qRQwGZkruiBgbkn953/T4s/wStalWcmEc=;
+	s=korg; t=1789202127;
+	bh=6FzZczjYgnLzWT7DVYs6k10ugiY1RvPLyDO1IQP+nq8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vi7nHe0qnExfcDUkAi7pBBQ8xQyHOtbobWt3gKzRtrJRIQdASUaABlom/CTRGsEep
-	 BBI90AQ+8RSYCanbovF9dnY3rCP54xk7Azu0jrTqMSlNPJ+G17Ukk++lKa79fQf4YK
-	 flbRTEz6ygl8KfqBgYD5MobpIkRqPck/im1/L/nY=
+	b=bNCQa3b1ZpuiS9ucvvNr2i/TiLJsREN5pXoQON0hyLyChS+A4TZGgiUxBDz0eH+7K
+	 KSrZ6+bzLgvDkrzacbu0G29gGw3gzWpy0gDiaKtbICoNfch8yzzsGBW+WlML2ih2Yl
+	 hlhoNMQTR/qK4m75By0jDDD90q2Y2Jn58YZQD35U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Chen-Yu Tsai <wens@kernel.org>,
-	Chen-Yu Tsai <wens@csie.org>,
+	Dylan Zueck <dzueck@uci.edu>,
+	Yuan Tan <ytan089@ucr.edu>,
+	Priya Bala Govindasamy <pgovind2@uci.edu>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1136/1815] drm/sun4i: hdmi-phy: Fix H6 8-bit MPLL config at 594 MHz
-Date: Sat, 12 Sep 2026 08:48:06 +0200
-Message-ID: <20260912065715.690640437@linuxfoundation.org>
+Subject: [PATCH 7.2 1137/1815] rust: cpufreq: Add CPUFREQ_TABLE_END as last table entry in TableBuilder::to_table
+Date: Sat, 12 Sep 2026 08:48:07 +0200
+Message-ID: <20260912065715.712325236@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,43 +53,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jernej Skrabec <jernej.skrabec@gmail.com>
+From: Priya Bala Govindasamy <pgovind2@uci.edu>
 
-[ Upstream commit 0ba6deddaae74f0539c0303bfb5f860adbe1a68b ]
+[ Upstream commit b5e4771f20a37fdf19eac0824bf062dffb4e291f ]
 
-The 8-bit entry of the last MPLL row (594 MHz) doesn't lock reliably on
-H6. 4K@60 RGB/YUV444, which is the mode that reaches this entry, doesn't
-come up.
+The `TableBuilder::to_table` function adds `Hertz(c_ulong::MAX).as_khz()`
+as the last frequency entry in the frequency table.
+But the C API expects the last entry to have frequency set to
+`CPUFREQ_TABLE_END` which is `~1u` as per include/linux/cpufreq.h.
 
-Align the value with the vendor driver. Other entries are left alone,
-they are used by lower pixel clocks which work fine.
+Fix this by setting the last frequency entry to `CPUFREQ_TABLE_END`
+instead of `Hertz(c_ulong::MAX).as_khz()`.
 
-Tested with 4K@60 on a LG TV.
-
-Fixes: 0fb4b858b102 ("drm/sun4i: Add support for H6 HDMI PHY")
-Signed-off-by: Jernej Skrabec <jernej.skrabec@gmail.com>
-Acked-by: Chen-Yu Tsai <wens@kernel.org>
-Reviewed-by: Chen-Yu Tsai <wens@csie.org>
-Link: https://patch.msgid.link/aec9060209473b8176eb43bc7c63c20b21306adf.1785772659.git.jernej.skrabec@gmail.com
-Signed-off-by: Chen-Yu Tsai <wens@kernel.org>
+Fixes: 2207856ff0bc8d953d6e89bda70b8978c2de8bab ("rust: cpufreq: Add initial abstractions for cpufreq framework")
+Reported-by: Dylan Zueck<dzueck@uci.edu>
+Reported-by: Yuan Tan<ytan089@ucr.edu>
+Assisted-by: ChatGPT:gpt-5.6-terra
+Signed-off-by: Priya Bala Govindasamy<pgovind2@uci.edu>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/sun4i/sun8i_hdmi_phy.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ rust/kernel/cpufreq.rs | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/sun4i/sun8i_hdmi_phy.c b/drivers/gpu/drm/sun4i/sun8i_hdmi_phy.c
-index 4fa69c463dc46..489ea94693ffa 100644
---- a/drivers/gpu/drm/sun4i/sun8i_hdmi_phy.c
-+++ b/drivers/gpu/drm/sun4i/sun8i_hdmi_phy.c
-@@ -91,7 +91,7 @@ static const struct dw_hdmi_mpll_config sun50i_h6_mpll_cfg[] = {
- 		},
- 	},  {
- 		594000000, {
--			{ 0x1a40, 0x0003 },
-+			{ 0x1a7c, 0x0003 },
- 			{ 0x3b4c, 0x0003 },
- 			{ 0x5a64, 0x0003 },
- 		},
+diff --git a/rust/kernel/cpufreq.rs b/rust/kernel/cpufreq.rs
+index 58ac04c650a11..f360eb9578f32 100644
+--- a/rust/kernel/cpufreq.rs
++++ b/rust/kernel/cpufreq.rs
+@@ -361,23 +361,28 @@ impl TableBuilder {
+         }
+     }
+ 
+-    /// Adds a new entry to the table.
+-    pub fn add(&mut self, freq: Hertz, flags: u32, driver_data: u32) -> Result {
++    /// Adds a raw frequency-table entry.
++    fn push(&mut self, frequency: u32, flags: u32, driver_data: u32) -> Result {
+         // Adds the new entry at the end of the vector.
+         Ok(self.entries.push(
+             bindings::cpufreq_frequency_table {
+                 flags,
+                 driver_data,
+-                frequency: freq.as_khz() as u32,
++                frequency,
+             },
+             GFP_KERNEL,
+         )?)
+     }
+ 
++    /// Adds a new entry to the table.
++    pub fn add(&mut self, freq: Hertz, flags: u32, driver_data: u32) -> Result {
++        self.push(freq.as_khz() as u32, flags, driver_data)
++    }
++
+     /// Consumes the [`TableBuilder`] and returns [`TableBox`].
+     pub fn to_table(mut self) -> Result<TableBox> {
+         // Add last entry to the table.
+-        self.add(Hertz(c_ulong::MAX), 0, 0)?;
++        self.push(bindings::CPUFREQ_TABLE_END as u32, 0, 0)?;
+ 
+         TableBox::new(self.entries)
+     }
 -- 
 2.53.0
 
