@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD2AD36B924;
-	Sat, 12 Sep 2026 08:04:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E240373BF3;
+	Sat, 12 Sep 2026 08:04:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789200250; cv=none; b=dE1/hKQnCZo6TC8eR92E2BMwQnVPGY71Aq1wzKptIERdd6zAOx1nR3DmDg3PNf1dDbauRhQndejyWh30xJIw/JSvo6+2SF2xASvDE/P7a7WmRDIDKN4YOGjo5SDv75pQ9OjIzc64E8hvgUaxyXmilc1le+fuPH44Ku6QBHD+IKQ=
+	t=1789200256; cv=none; b=Bps1hOeISGEBU/p0kduS9olpt3yhWc7yygxsRhZivSRmLn5YPKRXt6ri1Vuh3qMFjA38cFXInMppCu2u7pgfakPavE2GFwP8Ko3aZmShKmRXX3IspO9exrvBT7UioQ0ggMLroKvf8jwyQVz/MP7RNFSjaavp3+H17UFG6wUJTSU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789200250; c=relaxed/simple;
-	bh=AzM+g3KAcuwn2iqzAAKI4ppO3Dso3P4HZZKnAMwhzrs=;
+	s=arc-20240116; t=1789200256; c=relaxed/simple;
+	bh=9ngGdscmeuyPU+vC4QA33LPUhg+4ArsZageZXjXhOJc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=h27toxr6u5T/J1uEolXQTh0ypgLwbJDbBE0R/02+sG4xzhDfxQhQmEPaUPEvYApE/2MUJziLvE/byW34nxlLETTml+/KXNtRXicT1bJhkWgJgOwU0bdYXRyLiKa4da2Y6wJOYPRfr64HGvwb+Gp25B+LghleXc/LkFUO7usO+L8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WNt8/lEp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OAUwflnzV7zY6guXzCNjaaNINZC4cQPsK8mQGZXlHOBoCAD9rlrXrBW3JbVZjrpj2565GNOzwMjqxKczoelGqYbjWkZuhhtVQncagODbR0yKjm6zbl+uT3Nuv4msudksrlg231caihp7oGk8rY67TUcHFZv8XjN+DZN9J9EsXqU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gUZCIx6u; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WNt8/lEp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C14EF1F00893;
-	Sat, 12 Sep 2026 08:04:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gUZCIx6u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EBF21F000FF;
+	Sat, 12 Sep 2026 08:04:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789200248;
-	bh=HpBdj0mYEmEoEUSNidxqrY8Vdonb07f+51AVdCtA7/o=;
+	s=korg; t=1789200253;
+	bh=3cMa0K8jGEPpN/2pMNycTu9GVyK+aJyzX12gN0rRq68=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WNt8/lEpx9lsFN+F/tJaxTcqZHh3m/v256i/UUwo6UNjFK2q36uWDsRsP+zdi2iGi
-	 K/k0tUBtKVet0vCuH6Kx47DJnutdRAHZXQBIecgdV/2hexqdh5flGYLBgJhO7HSNTv
-	 dhnEOC3DfNQbuigjDBZWqrTMph4t6uOvg51I59+A=
+	b=gUZCIx6uDxbjWgHCPW413aETy9pJfJrQsXcGgo6qEBgOM72CDtQj71jtDHBpuHNcB
+	 wTfNB5zxzkcXj+BB3Qd2b8BX5CSppj17ZpfYZvffre4wFyf/Zg6hUZ3w/z/FFmK5Na
+	 AFbsoxHbTj8UhGuN0PP74ZqU3KZPCojdjiQ/UZ/k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
 	Vishnu Reddy <busanna.reddy@oss.qualcomm.com>,
 	Bryan ODonoghue <bod@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0751/1815] media: qcom: iris: Fix bitmask test in iris_allow_cmd()
-Date: Sat, 12 Sep 2026 08:41:41 +0200
-Message-ID: <20260912065706.536688621@linuxfoundation.org>
+Subject: [PATCH 7.2 0752/1815] media: qcom: iris: Remove duplicate HFI_PROP_OPB_ENABLE entry
+Date: Sat, 12 Sep 2026 08:41:42 +0200
+Message-ID: <20260912065706.560091658@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -47,7 +47,6 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
@@ -56,36 +55,34 @@ Content-Transfer-Encoding: 8bit
 
 From: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
 
-[ Upstream commit 0ac05c4d9f1fa25d0692fb154de36bd3baf2e7ce ]
+[ Upstream commit 727a87c71b4ef794cdf552dae585d6f67be690ee ]
 
-iris_allow_cmd() incorrectly checks a sub‑state flag using a logical
-equality comparison. Since sub_state is a bitmask, this allows STOP to
-pass when IRIS_INST_SUB_DRAIN is set alongside other bits, violating the
-intended drain semantics. Fix this by using a proper bitmask test.
+HFI_PROP_OPB_ENABLE/iris_hfi_gen2_set_opb_enable appeared twice in the
+dispatch table, causing the property to be sent to firmware twice on every
+config-params call.
 
-Fixes: d09100763bed ("media: iris: add support for drain sequence")
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Fixes: 2af481a459a4 ("media: iris: Define AV1-specific platform capabilities and properties")
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 Signed-off-by: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
 Signed-off-by: Vishnu Reddy <busanna.reddy@oss.qualcomm.com>
 Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/qcom/iris/iris_state.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/media/platform/qcom/iris/iris_state.c b/drivers/media/platform/qcom/iris/iris_state.c
-index e991f34916ec6..5552725c614ea 100644
---- a/drivers/media/platform/qcom/iris/iris_state.c
-+++ b/drivers/media/platform/qcom/iris/iris_state.c
-@@ -269,7 +269,7 @@ bool iris_allow_cmd(struct iris_inst *inst, u32 cmd)
- 				return true;
- 	} else if (cmd == V4L2_DEC_CMD_STOP || cmd == V4L2_ENC_CMD_STOP) {
- 		if (vb2_is_streaming(src_q))
--			if (inst->sub_state != IRIS_INST_SUB_DRAIN)
-+			if (!(inst->sub_state & IRIS_INST_SUB_DRAIN))
- 				return true;
- 	}
+diff --git a/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c b/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c
+index ca2954f8bd3ad..ee2730c293bcd 100644
+--- a/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c
++++ b/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c
+@@ -692,7 +692,6 @@ static int iris_hfi_gen2_session_set_config_params(struct iris_inst *inst, u32 p
+ 		{HFI_PROP_FRAME_RATE,                 iris_hfi_gen2_set_frame_rate             },
+ 		{HFI_PROP_AV1_FILM_GRAIN_PRESENT,     iris_hfi_gen2_set_film_grain             },
+ 		{HFI_PROP_AV1_SUPER_BLOCK_ENABLED,    iris_hfi_gen2_set_super_block            },
+-		{HFI_PROP_OPB_ENABLE,                 iris_hfi_gen2_set_opb_enable             },
+ 	};
  
+ 	if (inst->domain == DECODER) {
 -- 
 2.53.0
 
