@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A35EB30FF08;
-	Sat, 12 Sep 2026 09:45:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 435F4384CE2;
+	Sat, 12 Sep 2026 09:45:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789206336; cv=none; b=OFNEtgFLofNg69t9UfHsrrcd/VWjaH0qvyExZc5mgwkRs45caS7o+iiZ2U/aemow8teCp+IoQx01csPJF5s4sPR2xp4kUKbLsLzkAR9kLAxIRxDdCUv0ti27b08GGvxa8BwR40rmAxx3ssPeB8TCJKl2bi96SNTztzSKIZ1/3CM=
+	t=1789206341; cv=none; b=CrGosMcwzSyPAWoe3pkViHMTuyMdZDfPvh3MCLUIaGWvhEH8lFAjmJGbftg4mZVT2jbcCIvItdN5BK7p9vtPnlWczDD/H1GSYRlZtF9HFBemIwRAlVRl/Ne7MAOLNfmOZQVxk1ZaLOGh6XKzeGIk3s2fYAjMWpwtp60kOYBpE0g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789206336; c=relaxed/simple;
-	bh=MfLCGX4QvoCdK530fP4Yq7su0n6pWt5X5gTgfFdxZGI=;
+	s=arc-20240116; t=1789206341; c=relaxed/simple;
+	bh=3i9YEbtBae1MeRG5xMil2xAT8N/k+nfpeoikGFz3Yf4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c6R/raMWXjAWvJC/gdHXNdC0nV0ruB+FR/2qzVse7UFcD/rXw37x47QoLSaMQwNyUYF/HKw8LDPTTpfGIJ9rU7wO1Q1qPsJd3vWZcAaXf5yhZ0W/rQLRLcUqYqXo/6DSC6+9UB85gW/jSldankPUx+/le8t4t9i8mj6IrdZ8haU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YKCMtD2x; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BDcVNvxjfK4umiLBw6lBBakbf9ByzmsddjRFVctfDrYHV/lo4SVWPVtkCl9Zx/VgSkN62cKvrFNT9vUA6OqpCkfPIxeyo6hzHjrxrZvffdtQcGTMpLT8AUNUFKRg1easI/W4Y0UmX0DXMtHpeiUw756JlPuxW2lsbqyR3y6ex2w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NgJW1s6V; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YKCMtD2x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A84591F000FF;
-	Sat, 12 Sep 2026 09:45:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NgJW1s6V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 161761F000FF;
+	Sat, 12 Sep 2026 09:45:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789206335;
-	bh=qngxIdzHF4KJC5KRDW7ZenBsF9VICH4aBTRS6+i+a5o=;
+	s=korg; t=1789206340;
+	bh=CxfDGxmLg3RyOtGwdivq0kNUM5/6yzCL2Dp1HKS2bN4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YKCMtD2xWHT3eJeq9OS7elFubFQGdVm7HVpLJSx9X8ry7E0GbnaFjPswefYhycX1r
-	 jrU7d7rrWEPsNtTnqkyFLnzlf95grTFO8WbnpIv7GvjVmprc2E+zu/4ETGSoCnOIKj
-	 pKccow32XKVD+hS75iB60sjQ+SP2kAxpK069wxUI=
+	b=NgJW1s6VptMuniYOEcaC/kmalsWw0PCpPD0wFra2iZU6l10Z0sTQHcAEFpPKrl0Id
+	 MJPUHe7bFvLo8+J5PyklUOGEuKxPWEvGYN2AQ//r3jDc/7OJ5Jq07xALwtnJGAVUVW
+	 +vzfoOsfbI3jfUIMxphojp7gUsCRmBQUV78gC9ek=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guo Ren <guoren@kernel.org>,
-	Baoquan He <bhe@redhat.com>,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	Sean Young <sean@mess.org>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0144/1518] riscv: kexec_file: Fix crashk_low_res not exclude bug
-Date: Sat, 12 Sep 2026 08:38:33 +0200
-Message-ID: <20260912065626.750396591@linuxfoundation.org>
+Subject: [PATCH 6.18 0145/1518] media: keymaps: Remove obsolete RC_MAP_RC5_TV keymap define
+Date: Sat, 12 Sep 2026 08:38:34 +0200
+Message-ID: <20260912065626.774997395@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -53,73 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Sean Young <sean@mess.org>
 
-[ Upstream commit 5fc6e7d45373571d03cd04fd4c6069c0a97fa75a ]
+[ Upstream commit 5370facb7b4461166a4610d456fefeb92ef50a82 ]
 
-As done in commit 944a45abfabc ("arm64: kdump: Reimplement crashkernel=X")
-and commit 4831be702b95 ("arm64/kexec: Fix missing extra range for
-crashkres_low.") for arm64, while implementing crashkernel=X,[high,low],
-riscv should have excluded the "crashk_low_res" reserved ranges from
-the crash kernel memory to prevent them from being exported through
-/proc/vmcore, and the exclusion would need an extra crash_mem range.
+Since commit 206241069ecf ("[media] rc/keymaps: Remove the obsolete
+rc-rc5-tv keymap"), the rc-rc5-tv keymap is no longer in the tree.
 
-Just simply tested on qemu with crashkernel=4G with kexec in [1] mentioned
-in [2]. And the second kernel can be started normally.
-
-	# dmesg | grep crash
-	[    0.000000] crashkernel low memory reserved: 0xf8000000 - 0x100000000 (128 MB)
-	[    0.000000] crashkernel reserved: 0x000000017fe00000 - 0x000000027fe00000 (4096 MB)
-
-[1]: https://github.com/chenjh005/kexec-tools/tree/build-test-riscv-v2
-[2]: https://lore.kernel.org/all/20230726175000.2536220-1-chenjiahao16@huawei.com/
-
-Cc: Guo Ren <guoren@kernel.org>
-Cc: Baoquan He <bhe@redhat.com>
-Fixes: 5882e5acf18d ("riscv: kdump: Implement crashkernel=X,[high,low]")
-Reviewed-by: Guo Ren <guoren@kernel.org>
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Link: https://github.com/chenjh005/kexec-tools/tree/build-test-riscv-v2
-Link: https://lore.kernel.org/all/20230726175000.2536220-1-chenjiahao16@huawei.com/
-Link: https://patch.msgid.link/20260629094746.191843-2-ruanjinjie@huawei.com
-Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Fixes: 206241069ecf ("[media] rc/keymaps: Remove the obsolete rc-rc5-tv keymap")
+Signed-off-by: Sean Young <sean@mess.org>
+Acked-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kernel/machine_kexec_file.c | 14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ include/media/rc-map.h | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/arch/riscv/kernel/machine_kexec_file.c b/arch/riscv/kernel/machine_kexec_file.c
-index dd9d92a965174..6ef5bd34d130a 100644
---- a/arch/riscv/kernel/machine_kexec_file.c
-+++ b/arch/riscv/kernel/machine_kexec_file.c
-@@ -61,7 +61,7 @@ static int prepare_elf_headers(void **addr, unsigned long *sz)
- 	unsigned int nr_ranges;
- 	int ret;
- 
--	nr_ranges = 1; /* For exclusion of crashkernel region */
-+	nr_ranges = 2; /* For exclusion of crashkernel region */
- 	walk_system_ram_res(0, -1, &nr_ranges, get_nr_ram_ranges_callback);
- 
- 	cmem = kmalloc(struct_size(cmem, ranges, nr_ranges), GFP_KERNEL);
-@@ -76,8 +76,16 @@ static int prepare_elf_headers(void **addr, unsigned long *sz)
- 
- 	/* Exclude crashkernel region */
- 	ret = crash_exclude_mem_range(cmem, crashk_res.start, crashk_res.end);
--	if (!ret)
--		ret = crash_prepare_elf64_headers(cmem, true, addr, sz);
-+	if (ret)
-+		goto out;
-+
-+	if (crashk_low_res.end) {
-+		ret = crash_exclude_mem_range(cmem, crashk_low_res.start, crashk_low_res.end);
-+		if (ret)
-+			goto out;
-+	}
-+
-+	ret = crash_prepare_elf64_headers(cmem, true, addr, sz);
- 
- out:
- 	kfree(cmem);
+diff --git a/include/media/rc-map.h b/include/media/rc-map.h
+index d90e4611b0664..950d702aee3bb 100644
+--- a/include/media/rc-map.h
++++ b/include/media/rc-map.h
+@@ -309,7 +309,6 @@ struct rc_map *rc_map_get(const char *name);
+ #define RC_MAP_PROTEUS_2309              "rc-proteus-2309"
+ #define RC_MAP_PURPLETV                  "rc-purpletv"
+ #define RC_MAP_PV951                     "rc-pv951"
+-#define RC_MAP_RC5_TV                    "rc-rc5-tv"
+ #define RC_MAP_RC6_MCE                   "rc-rc6-mce"
+ #define RC_MAP_REAL_AUDIO_220_32_KEYS    "rc-real-audio-220-32-keys"
+ #define RC_MAP_REDDO                     "rc-reddo"
 -- 
 2.53.0
 
