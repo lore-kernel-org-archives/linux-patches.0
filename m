@@ -1,40 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75CA31DE4EF;
-	Sat, 12 Sep 2026 14:14:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0D4E2EEE60;
+	Sat, 12 Sep 2026 14:15:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789222500; cv=none; b=MA7MLbiPXD0pr6eqp3HNsTk26gNtSjdr4maDZRKsKHv6sRBLMkm/Oo4q5WWtHsNps+Ak9Jekt6QBSdZj3WDLGq4YU20Vetvdg6uGn5lAUYGI4O1T/zSWFgjZRr7Ec+EezC8tRGIX4tgnfjZ4Rt6Bwi8MXCh3AOu9Cj4cg5tmQfs=
+	t=1789222507; cv=none; b=H/tO+L9luXb+b+xzOMxpL7Ur5t4+dRzX5NJIl9xg6ojLtuMiu0WxfkAVPieHUCuPlghy/DeAmY8AuYzrchDxPIxFyMqFLSQjFQ/NDHi38r10O9gBpEoGiGH3a3LZO6DZJzKm0Qv3r69nBtXcdAyaXvjc6wVbToK4pchn1Dvv2TI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789222500; c=relaxed/simple;
-	bh=+zcEN06PFHV0YOVbHP6AQZnZVJ+lQOn8IKnsxZ5suqQ=;
+	s=arc-20240116; t=1789222507; c=relaxed/simple;
+	bh=jl4mS6aXZhMBJIZeofp1BqKWulCz4x22ke2gNWtP078=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ua0LdpcrorAXMX6hYOo/YIXormrDbsiiGXmdyAAybB2lU+CVJoNXwv5LsK6EnIW91GjeHjdgoiXOiKXztkne3CvBbepu0BQLED5HR3FKN0nWfZIY2z8WEczHQQhRTWW42eCoN5mDL4xigt4jXlAumoPuI2LNWjAtBfLeJQ+Wbag=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LtRB+ylh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Wf/W8UsCseDYDT3hmJm5Iiccl5bqKzzSy0WQVJwing1UtguCUfc1zUjABiuiA4ZV8gKtL5Ozp3nu/Wr/wEmxdb62+WOIU8/s8mRUVu77w2UfxVvPCwQPL+AgwkqwYlQrlStSBwxF6E9jtn83cXXjO4E7Cvlh23phJDpjsjPE/fU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MRv93XZQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LtRB+ylh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BC401F000FF;
-	Sat, 12 Sep 2026 14:14:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MRv93XZQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B5541F000FF;
+	Sat, 12 Sep 2026 14:15:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789222499;
-	bh=EA1ZpdCsDrzNdx1t0rQ348CGADCgOQkNL5JOP4fyIus=;
+	s=korg; t=1789222504;
+	bh=0I+dC+EzQlG+SEqA+Ea9hfilks9caFXrpC2kQcwJXso=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LtRB+ylhsETHy410wmpuKrpl6yRAGh7c2iHOUsG3XOxMbkAA3foyDomnarjfma5mR
-	 SlRTOmNN0f/pKf6EpQ5tYJtzuks86jvlRuHsD2qfGO4pdqfKrjf1s8rkcAEiEqIIRf
-	 U1V+P0uu44wxT83pMk5+KUMtIKhmuE+IxXXJ5EgY=
+	b=MRv93XZQmbibrdVknh/m6NmXHtNq2RrndwoUahzfZF0W9VfXxEPq4uMmjrLQ/PXOG
+	 PnPcLX6gea8QoTQFIrYwGLFtlnQzfq8923l7l4pXv1UL3xg9PoDQhzoDjJIn2nfNBC
+	 tnaWK+SPzKRxzSNfsUOBh9Q48ztsSOPxn125X2Ac=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Richter <tmricht@linux.ibm.com>,
 	Namhyung Kim <namhyung@kernel.org>,
-	James Clark <james.clark@linaro.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
 	Ian Rogers <irogers@google.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	James Clark <james.clark@linaro.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0600/1424] perf test all metrics: Fully ignore Default metric failures
-Date: Sat, 12 Sep 2026 08:50:32 +0200
-Message-ID: <20260912065620.729494036@linuxfoundation.org>
+Subject: [PATCH 6.6 0601/1424] perf test: Do not skip when some metrics tests succeeded
+Date: Sat, 12 Sep 2026 08:50:33 +0200
+Message-ID: <20260912065620.752351985@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -53,132 +57,447 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Namhyung Kim <namhyung@kernel.org>
 
-[ Upstream commit 41b67ab3d2f5be9d0b6e5ba9cbec97c820fc50e8 ]
+[ Upstream commit 1c89bc1b95fa9058f3e7cd37f1142939261417d5 ]
 
-Determine if a metric is default from `perf list --raw-dump $m` eg:
-```
-$ perf list --raw-dump l1_prefetch_miss_rate
-Default4 l1_prefetch_miss_rate
-```
-If a metric has "not supported" or "no supported events" then ignore
-these failures for default metrics. Tidy up the skip/fail messages in
-the output to make them easier to spot/read.
+I think the return value of SKIP (2) should be used when it skipped the
+entire test suite rather than a few of them.  While the FAIL should be
+reserved if any of test failed.
 
-```
-$ perf list -vv "all metrics"
-...
-Testing llc_miss_rate
-[Ignored llc_miss_rate] failed but as a Default metric this can be expected
-Error: No supported events found. The LLC-loads event is not supported.
-...
-```
+  $ perf test -vv 110
+  110: perf all metrics test:
+  --- start ---
+  test child forked, pid 2496399
+  Testing tma_core_bound
+  Testing tma_info_core_ilp
+  Testing tma_info_memory_l2mpki
+  Testing tma_memory_bound
+  Testing tma_bottleneck_irregular_overhead
+  Testing tma_bottleneck_mispredictions
+  Testing tma_info_bad_spec_branch_misprediction_cost
+  Testing tma_info_bad_spec_ipmisp_cond_ntaken
+  Testing tma_info_bad_spec_ipmisp_cond_taken
+  Testing tma_info_bad_spec_ipmisp_indirect
+  Testing tma_info_bad_spec_ipmisp_ret
+  Testing tma_info_bad_spec_ipmispredict
+  Testing tma_info_branches_callret
+  Testing tma_info_branches_cond_nt
+  Testing tma_info_branches_cond_tk
+  Testing tma_info_branches_jump
+  Testing tma_info_branches_other_branches
+  Testing tma_branch_mispredicts
+  Testing tma_clears_resteers
+  Testing tma_machine_clears
+  Testing tma_mispredicts_resteers
+  Testing tma_bottleneck_big_code
+  Testing tma_icache_misses
+  Testing tma_itlb_misses
+  Testing tma_unknown_branches
+  Testing tma_info_bad_spec_spec_clears_ratio
+  Testing tma_other_mispredicts
+  Testing tma_branch_instructions
+  Testing tma_info_frontend_tbpc
+  Testing tma_info_inst_mix_bptkbranch
+  Testing tma_info_inst_mix_ipbranch
+  Testing tma_info_inst_mix_ipcall
+  Testing tma_info_inst_mix_iptb
+  Testing tma_info_system_ipfarbranch
+  Testing tma_info_thread_uptb
+  Testing tma_bottleneck_branching_overhead
+  Testing tma_nop_instructions
+  Testing tma_bottleneck_compute_bound_est
+  Testing tma_divider
+  Testing tma_ports_utilized_3m
+  Testing tma_bottleneck_instruction_fetch_bw
+  Testing tma_frontend_bound
+  Testing tma_assists
+  Testing tma_other_nukes
+  Testing tma_serializing_operation
+  Testing tma_bottleneck_data_cache_memory_bandwidth
+  Testing tma_fb_full
+  Testing tma_mem_bandwidth
+  Testing tma_sq_full
+  Testing tma_bottleneck_data_cache_memory_latency
+  Testing tma_l1_latency_dependency
+  Testing tma_l2_bound
+  Testing tma_l3_hit_latency
+  Testing tma_mem_latency
+  Testing tma_store_latency
+  Testing tma_bottleneck_memory_synchronization
+  Testing tma_contested_accesses
+  Testing tma_data_sharing
+  Testing tma_false_sharing
+  Testing tma_bottleneck_memory_data_tlbs
+  Testing tma_dtlb_load
+  Testing tma_dtlb_store
+  Testing tma_backend_bound
+  Testing tma_bottleneck_other_bottlenecks
+  Testing tma_bottleneck_useful_work
+  Testing tma_retiring
+  Testing tma_info_memory_fb_hpki
+  Testing tma_info_memory_l1mpki
+  Testing tma_info_memory_l1mpki_load
+  Testing tma_info_memory_l2hpki_all
+  Testing tma_info_memory_l2hpki_load
+  Testing tma_info_memory_l2mpki_all
+  Testing tma_info_memory_l2mpki_load
+  Testing tma_l1_bound
+  Testing tma_l3_bound
+  Testing tma_info_memory_l2mpki_rfo
+  Testing tma_fp_scalar
+  Testing tma_fp_vector
+  Testing tma_fp_vector_128b
+  Testing tma_fp_vector_256b
+  Testing tma_fp_vector_512b
+  Testing tma_port_0
+  Testing tma_x87_use
+  Testing tma_info_botlnk_l0_core_bound_likely
+  Testing tma_info_core_fp_arith_utilization
+  Testing tma_info_pipeline_execute
+  Testing tma_info_system_gflops
+  Testing tma_info_thread_execute_per_issue
+  Testing tma_dsb
+  Testing tma_info_botlnk_l2_dsb_bandwidth
+  Testing tma_info_frontend_dsb_coverage
+  Testing tma_decoder0_alone
+  Testing tma_dsb_switches
+  Testing tma_info_botlnk_l2_dsb_misses
+  Testing tma_info_frontend_dsb_switch_cost
+  Testing tma_info_frontend_ipdsb_miss_ret
+  Testing tma_mite
+  Testing tma_mite_4wide
+  Testing CPUs_utilized
+  Testing backend_cycles_idle
+  [Ignored backend_cycles_idle] failed but as a Default metric this can be expected
+  Performance counter stats for 'perf test -w noploop': <not counted> cpu-cycles:u <not supported> stalled-cycles-backend:u 1.014051473 seconds time elapsed 1.005718000 seconds user 0.008013000 seconds sys
+  Testing branch_frequency
+  Testing branch_miss_rate
+  Testing cs_per_second
+  Testing cycles_frequency
+  Testing frontend_cycles_idle
+  [Ignored frontend_cycles_idle] failed but as a Default metric this can be expected
+  Performance counter stats for 'perf test -w noploop': <not counted> cpu-cycles:u <not supported> stalled-cycles-frontend:u 1.012813656 seconds time elapsed 1.004603000 seconds user 0.008004000 seconds sys
+  Testing insn_per_cycle
+  Testing migrations_per_second
+  Testing page_faults_per_second
+  Testing stalled_cycles_per_instruction
+  [Ignored stalled_cycles_per_instruction] failed but as a Default metric this can be expected
+  Error: No supported events found. The stalled-cycles-backend:u event is not supported.
+  Testing tma_bad_speculation
+  Testing l1d_miss_rate
+  Testing llc_miss_rate
+  Testing dtlb_miss_rate
+  Testing itlb_miss_rate
+  [Ignored itlb_miss_rate] failed but as a Default metric this can be expected
+  Performance counter stats for 'perf test -w noploop': <not supported> iTLB-loads:u 3,097 iTLB-load-misses:u 1.012766732 seconds time elapsed 1.004318000 seconds user 0.008002000 seconds sys
+  Testing l1i_miss_rate
+  [Ignored l1i_miss_rate] failed but as a Default metric this can be expected
+  Performance counter stats for 'perf test -w noploop': <not counted> L1-icache-load-misses:u <not supported> L1-icache-loads:u 1.013606395 seconds time elapsed 1.001371000 seconds user 0.011968000 seconds sys
+  Testing l1_prefetch_miss_rate
+  [Ignored l1_prefetch_miss_rate] failed but as a Default metric this can be expected
+  Error: No supported events found. The L1-dcache-prefetches:u event is not supported.
+  Testing tma_info_botlnk_l2_ic_misses
+  Testing tma_info_frontend_fetch_upc
+  Testing tma_info_frontend_icache_miss_latency
+  Testing tma_info_frontend_ipunknown_branch
+  Testing tma_info_frontend_lsd_coverage
+  Testing tma_info_memory_tlb_code_stlb_mpki
+  Testing tma_info_pipeline_fetch_dsb
+  Testing tma_info_pipeline_fetch_lsd
+  Testing tma_info_pipeline_fetch_mite
+  Testing tma_info_pipeline_fetch_ms
+  Testing tma_fetch_bandwidth
+  Testing tma_lsd
+  Testing tma_branch_resteers
+  Testing tma_code_l2_hit
+  Testing tma_code_l2_miss
+  Testing tma_code_stlb_hit
+  Testing tma_code_stlb_miss
+  Testing tma_code_stlb_miss_2m
+  Testing tma_code_stlb_miss_4k
+  Testing tma_lcp
+  Testing tma_ms_switches
+  Testing tma_info_core_flopc
+  Testing tma_info_inst_mix_iparith
+  Testing tma_info_inst_mix_iparith_avx128
+  Testing tma_info_inst_mix_iparith_avx256
+  Testing tma_info_inst_mix_iparith_avx512
+  Testing tma_info_inst_mix_iparith_scalar_dp
+  Testing tma_info_inst_mix_iparith_scalar_sp
+  Testing tma_info_inst_mix_ipflop
+  Testing tma_info_inst_mix_ippause
+  Testing tma_fetch_latency
+  Testing tma_fp_arith
+  Testing tma_fp_assists
+  Testing tma_info_system_cpu_utilization
+  Testing tma_info_system_dram_bw_use
+  [Skipped tma_info_system_dram_bw_use] Not supported events
+  Performance counter stats for 'perf test -w noploop': <not supported> UNC_ARB_TRK_REQUESTS.ALL:u <not supported> UNC_ARB_COH_TRK_REQUESTS.ALL:u 1,013,554,749 duration_time 1.013527265 seconds time elapsed 1.005417000 seconds user 0.008011000 seconds sys
+  Testing tma_info_frontend_l2mpki_code
+  Testing tma_info_frontend_l2mpki_code_all
+  Testing tma_info_inst_mix_ipload
+  Testing tma_info_inst_mix_ipstore
+  Testing tma_info_memory_latency_load_l2_miss_latency
+  Testing tma_lock_latency
+  Testing tma_info_memory_core_l1d_cache_fill_bw_2t
+  Testing tma_info_memory_core_l2_cache_fill_bw_2t
+  Testing tma_info_memory_core_l3_cache_access_bw_2t
+  Testing tma_info_memory_core_l3_cache_fill_bw_2t
+  Testing tma_info_memory_l1d_cache_fill_bw
+  Testing tma_info_memory_l2_cache_fill_bw
+  Testing tma_info_memory_l3_cache_access_bw
+  Testing tma_info_memory_l3_cache_fill_bw
+  Testing tma_info_memory_l3mpki
+  Testing tma_info_memory_load_miss_real_latency
+  Testing tma_info_memory_mix_bus_lock_pki
+  Testing tma_info_memory_mix_uc_load_pki
+  Testing tma_info_memory_mlp
+  Testing tma_info_memory_tlb_load_stlb_mpki
+  Testing tma_info_memory_tlb_page_walks_utilization
+  Testing tma_info_memory_tlb_store_stlb_mpki
+  Testing tma_info_system_mem_parallel_reads
+  [Skipped tma_info_system_mem_parallel_reads] Not supported events
+  Performance counter stats for 'perf test -w noploop': <not supported> UNC_ARB_DAT_OCCUPANCY.RD:u <not counted> UNC_ARB_DAT_OCCUPANCY.RD/cmask=1/ 1.013354884 seconds time elapsed 1.009239000 seconds user 0.004004000 seconds sys
+  Testing tma_info_system_mem_read_latency
+  [Skipped tma_info_system_mem_read_latency] Not supported events
+  Performance counter stats for 'perf test -w noploop': <not supported> UNC_ARB_DAT_OCCUPANCY.RD:u <not counted> UNC_ARB_TRK_OCCUPANCY.RD <not counted> UNC_ARB_TRK_REQUESTS.RD 1.012882143 seconds time elapsed 1.004600000 seconds user 0.008036000 seconds sys
+  Testing tma_info_thread_cpi
+  Testing tma_streaming_stores
+  Testing tma_dram_bound
+  Testing tma_store_bound
+  Testing tma_l2_hit_latency
+  Testing tma_load_stlb_hit
+  Testing tma_load_stlb_miss
+  Testing tma_load_stlb_miss_1g
+  Testing tma_load_stlb_miss_2m
+  Testing tma_load_stlb_miss_4k
+  Testing tma_store_stlb_hit
+  Testing tma_store_stlb_miss
+  Testing tma_store_stlb_miss_1g
+  Testing tma_store_stlb_miss_2m
+  Testing tma_store_stlb_miss_4k
+  Testing tma_info_memory_latency_data_l2_mlp
+  Testing tma_info_memory_latency_load_l2_mlp
+  Testing tma_info_pipeline_ipassist
+  Testing tma_microcode_sequencer
+  Testing tma_ms
+  Testing tma_info_system_kernel_cpi
+  [Failed tma_info_system_kernel_cpi] Metric contains missing events
+  Error: No supported events found. Access to performance monitoring and observability operations is limited. Consider adjusting /proc/sys/kernel/perf_event_paranoid setting to open access to performance monitoring and observability operations for processes without CAP_PERFMON, CAP_SYS_PTRACE or CAP_SYS_ADMIN Linux capability. More information can be found at 'Perf events and tool security' document: https://www.kernel.org/doc/html/latest/admin-guide/perf-security.html perf_event_paranoid setting is 2: -1: Allow use of (almost) all events by all users Ignore mlock limit after perf_event_mlock_kb without CAP_IPC_LOCK >= 0: Disallow raw and ftrace function tracepoint access >= 1: Disallow CPU event access >= 2: Disallow kernel profiling To make the adjusted perf_event_paranoid setting permanent preserve it in /etc/sysctl.conf (e.g. kernel.perf_event_paranoid = <setting>)
+  Testing tma_info_system_kernel_utilization
+  [Failed tma_info_system_kernel_utilization] Metric contains missing events
+  Error: No supported events found. Access to performance monitoring and observability operations is limited. Consider adjusting /proc/sys/kernel/perf_event_paranoid setting to open access to performance monitoring and observability operations for processes without CAP_PERFMON, CAP_SYS_PTRACE or CAP_SYS_ADMIN Linux capability. More information can be found at 'Perf events and tool security' document: https://www.kernel.org/doc/html/latest/admin-guide/perf-security.html perf_event_paranoid setting is 2: -1: Allow use of (almost) all events by all users Ignore mlock limit after perf_event_mlock_kb without CAP_IPC_LOCK >= 0: Disallow raw and ftrace function tracepoint access >= 1: Disallow CPU event access >= 2: Disallow kernel profiling To make the adjusted perf_event_paranoid setting permanent preserve it in /etc/sysctl.conf (e.g. kernel.perf_event_paranoid = <setting>)
+  Testing tma_info_pipeline_retire
+  Testing tma_info_thread_clks
+  Testing tma_info_thread_uoppi
+  Testing tma_memory_operations
+  Testing tma_other_light_ops
+  Testing tma_ports_utilization
+  Testing tma_ports_utilized_0
+  Testing tma_ports_utilized_1
+  Testing tma_ports_utilized_2
+  Testing C10_Pkg_Residency
+  [Failed C10_Pkg_Residency] Metric contains missing events
+  WARNING: grouped events cpus do not match. Events with CPUs not matching the leader will be removed from the group. anon group { cstate_pkg/c10-residency/, msr/tsc/ } Error: No supported events found. Invalid event (cstate_pkg/c10-residency/u) in per-thread mode, enable system wide with '-a'.
+  Testing C2_Pkg_Residency
+  [Failed C2_Pkg_Residency] Metric contains missing events
+  WARNING: grouped events cpus do not match. Events with CPUs not matching the leader will be removed from the group. anon group { cstate_pkg/c2-residency/, msr/tsc/ } Error: No supported events found. Invalid event (cstate_pkg/c2-residency/u) in per-thread mode, enable system wide with '-a'.
+  Testing C3_Pkg_Residency
+  [Failed C3_Pkg_Residency] Metric contains missing events
+  WARNING: grouped events cpus do not match. Events with CPUs not matching the leader will be removed from the group. anon group { msr/tsc/, cstate_pkg/c3-residency/ } Error: No supported events found. Invalid event (msr/tsc/u) in per-thread mode, enable system wide with '-a'.
+  Testing C6_Core_Residency
+  [Failed C6_Core_Residency] Metric contains missing events
+  WARNING: grouped events cpus do not match. Events with CPUs not matching the leader will be removed from the group. anon group { cstate_core/c6-residency/, msr/tsc/ } Error: No supported events found. Invalid event (cstate_core/c6-residency/u) in per-thread mode, enable system wide with '-a'.
+  Testing C6_Pkg_Residency
+  [Failed C6_Pkg_Residency] Metric contains missing events
+  WARNING: grouped events cpus do not match. Events with CPUs not matching the leader will be removed from the group. anon group { cstate_pkg/c6-residency/, msr/tsc/ } Error: No supported events found. Invalid event (cstate_pkg/c6-residency/u) in per-thread mode, enable system wide with '-a'.
+  Testing C7_Core_Residency
+  [Failed C7_Core_Residency] Metric contains missing events
+  WARNING: grouped events cpus do not match. Events with CPUs not matching the leader will be removed from the group. anon group { cstate_core/c7-residency/, msr/tsc/ } Error: No supported events found. Invalid event (cstate_core/c7-residency/u) in per-thread mode, enable system wide with '-a'.
+  Testing C7_Pkg_Residency
+  [Failed C7_Pkg_Residency] Metric contains missing events
+  WARNING: grouped events cpus do not match. Events with CPUs not matching the leader will be removed from the group. anon group { cstate_pkg/c7-residency/, msr/tsc/ } Error: No supported events found. Invalid event (cstate_pkg/c7-residency/u) in per-thread mode, enable system wide with '-a'.
+  Testing C8_Pkg_Residency
+  [Failed C8_Pkg_Residency] Metric contains missing events
+  WARNING: grouped events cpus do not match. Events with CPUs not matching the leader will be removed from the group. anon group { cstate_pkg/c8-residency/, msr/tsc/ } Error: No supported events found. Invalid event (cstate_pkg/c8-residency/u) in per-thread mode, enable system wide with '-a'.
+  Testing C9_Pkg_Residency
+  [Failed C9_Pkg_Residency] Metric contains missing events
+  WARNING: grouped events cpus do not match. Events with CPUs not matching the leader will be removed from the group. anon group { cstate_pkg/c9-residency/, msr/tsc/ } Error: No supported events found. Invalid event (cstate_pkg/c9-residency/u) in per-thread mode, enable system wide with '-a'.
+  Testing tma_info_core_epc
+  Testing tma_info_system_core_frequency
+  Testing tma_info_system_power
+  [Skipped tma_info_system_power] Not supported events
+  Performance counter stats for 'perf test -w noploop': <not supported> Joules power/energy-pkg/u 1,013,238,256 duration_time 1.013223072 seconds time elapsed 0.995924000 seconds user 0.011903000 seconds sys
+  Testing tma_info_system_power_license0_utilization
+  Testing tma_info_system_power_license1_utilization
+  Testing tma_info_system_power_license2_utilization
+  Testing tma_info_system_turbo_utilization
+  Testing tma_info_inst_mix_ipswpf
+  Testing tma_info_memory_prefetches_useless_hwpf
+  Testing tma_info_core_coreipc
+  Testing tma_info_thread_ipc
+  Testing tma_heavy_operations
+  Testing tma_light_operations
+  Testing tma_info_core_core_clks
+  Testing tma_info_system_smt_2t_utilization
+  Testing tma_info_thread_slots_utilization
+  Testing UNCORE_FREQ
+  [Skipped UNCORE_FREQ] Not supported events
+  Performance counter stats for 'perf test -w noploop': <not supported> UNC_CLOCK.SOCKET:u 1,015,993,466 duration_time 1.015949387 seconds time elapsed 1.007676000 seconds user 0.008029000 seconds sys
+  Testing tma_info_system_socket_clks
+  [Failed tma_info_system_socket_clks] Metric contains missing events
+  Error: No supported events found. Invalid event (UNC_CLOCK.SOCKET:u) in per-thread mode, enable system wide with '-a'.
+  Testing tma_info_inst_mix_instructions
+  Testing tma_info_system_cpus_utilized
+  Testing tma_info_system_mux
+  Testing tma_info_system_time
+  Testing tma_info_thread_slots
+  Testing tma_few_uops_instructions
+  Testing tma_4k_aliasing
+  Testing tma_cisc
+  Testing tma_fp_divider
+  Testing tma_int_divider
+  Testing tma_slow_pause
+  Testing tma_split_loads
+  Testing tma_split_stores
+  Testing tma_store_fwd_blk
+  Testing tma_alu_op_utilization
+  Testing tma_load_op_utilization
+  Testing tma_mixing_vectors
+  Testing tma_store_op_utilization
+  Testing tma_port_1
+  Testing tma_port_5
+  Testing tma_port_6
+  Testing smi_cycles
+  [Skipped smi_cycles] Not supported events
+  Performance counter stats for 'perf test -w noploop': <not supported> msr/smi/u <not supported> msr/aperf/u 3,965,789,327 cycles:u 1.012779591 seconds time elapsed 1.004579000 seconds user 0.007972000 seconds sys
+  Testing smi_num
+  [Failed smi_num] Metric contains missing events
+  Error: No supported events found. Invalid event (msr/smi/u) in per-thread mode, enable system wide with '-a'.
+  Testing tsx_aborted_cycles
+  Testing tsx_cycles_per_elision
+  Testing tsx_cycles_per_transaction
+  Testing tsx_transactional_cycles
+  ---- end(-1) ----
+  110: perf all metrics test                                           : FAILED!
 
-Reported-by: Thomas Richter <tmricht@linux.ibm.com>
-Closes: https://lore.kernel.org/linux-perf-users/20251119104751.51960-1-tmricht@linux.ibm.com/
-Reported-by: Namhyung Kim <namhyung@kernel.org>
-Reported-by: James Clark <james.clark@linaro.org>
-Closes: https://lore.kernel.org/lkml/aRi9xnwdLh3Dir9f@google.com/
-Signed-off-by: Ian Rogers <irogers@google.com>
-Reviewed-by: James Clark <james.clark@linaro.org>
-Tested-by: Thomas Richter <tmricht@linux.ibm.com>
 Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Tested-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Ingo Molnar <mingo@kernel.org>
+Cc: James Clark <james.clark@linaro.org>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Stable-dep-of: 8953bfd8820b ("perf tests: Skip metrics validation if system-wide recording lacks permission")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/tests/shell/stat_all_metrics.sh | 27 ++++++++++++++--------
- 1 file changed, 17 insertions(+), 10 deletions(-)
+ tools/perf/tests/shell/stat_all_metrics.sh | 29 ++++++++++++++++------
+ 1 file changed, 22 insertions(+), 7 deletions(-)
 
 diff --git a/tools/perf/tests/shell/stat_all_metrics.sh b/tools/perf/tests/shell/stat_all_metrics.sh
-index a7edf01b39433..3dabb39c7cc8c 100755
+index 3dabb39c7cc8c..b582d23f28c9e 100755
 --- a/tools/perf/tests/shell/stat_all_metrics.sh
 +++ b/tools/perf/tests/shell/stat_all_metrics.sh
-@@ -27,19 +27,20 @@ for m in $(perf list --raw-dump metrics); do
+@@ -15,7 +15,8 @@ then
+   test_prog="perf test -w noploop"
+ fi
+ 
+-err=0
++skip=0
++err=3
+ for m in $(perf list --raw-dump metrics); do
+   echo "Testing $m"
+   result=$(perf stat -M "$m" $system_wide_flag -- $test_prog 2>&1)
+@@ -23,6 +24,10 @@ for m in $(perf list --raw-dump metrics); do
+   if [[ $result_err -eq 0 && "$result" =~ ${m:0:50} ]]
+   then
+     # No error result and metric shown.
++    if [[ "$err" -ne 1 ]]
++    then
++      err=0
++    fi
+     continue
    fi
    if [[ "$result" =~ "Cannot resolve IDs for" || "$result" =~ "No supported events found" ]]
-   then
--    if [[ "$m" == @(l1_prefetch_miss_rate|stalled_cycles_per_instruction) ]]
-+    if [[ $(perf list --raw-dump $m) == "Default"* ]]
-     then
--      # Default metrics that may use unsupported events.
-+      echo "[Ignored $m] failed but as a Default metric this can be expected"
-+      echo $result
-       continue
-     fi
--    echo "Metric contains missing events"
-+    echo "[Failed $m] Metric contains missing events"
-     echo $result
-     err=1 # Fail
-     continue
-   elif [[ "$result" =~ \
-         "Access to performance monitoring and observability operations is limited" ]]
-   then
--    echo "Permission failure"
-+    echo "[Skipped $m] Permission failure"
+@@ -44,7 +49,7 @@ for m in $(perf list --raw-dump metrics); do
      echo $result
      if [[ $err -eq 0 ]]
      then
-@@ -48,7 +49,7 @@ for m in $(perf list --raw-dump metrics); do
+-      err=2 # Skip
++      skip=1
+     fi
      continue
    elif [[ "$result" =~ "in per-thread mode, enable system wide" ]]
-   then
--    echo "Permissions - need system wide mode"
-+    echo "[Skipped $m] Permissions - need system wide mode"
+@@ -53,7 +58,7 @@ for m in $(perf list --raw-dump metrics); do
      echo $result
      if [[ $err -eq 0 ]]
      then
-@@ -57,7 +58,13 @@ for m in $(perf list --raw-dump metrics); do
+-      err=2 # Skip
++      skip=1
+     fi
      continue
    elif [[ "$result" =~ "<not supported>" ]]
-   then
--    echo "Not supported events"
-+    if [[ $(perf list --raw-dump $m) == "Default"* ]]
-+    then
-+      echo "[Ignored $m] failed but as a Default metric this can be expected"
-+      echo $result
-+      continue
-+    fi
-+    echo "[Skipped $m] Not supported events"
+@@ -68,7 +73,7 @@ for m in $(perf list --raw-dump metrics); do
      echo $result
      if [[ $err -eq 0 ]]
      then
-@@ -66,7 +73,7 @@ for m in $(perf list --raw-dump metrics); do
+-      err=2 # Skip
++      skip=1
+     fi
      continue
    elif [[ "$result" =~ "<not counted>" ]]
-   then
--    echo "Not counted events"
-+    echo "[Skipped $m] Not counted events"
+@@ -77,7 +82,7 @@ for m in $(perf list --raw-dump metrics); do
      echo $result
      if [[ $err -eq 0 ]]
      then
-@@ -75,7 +82,7 @@ for m in $(perf list --raw-dump metrics); do
+-      err=2 # Skip
++      skip=1
+     fi
      continue
    elif [[ "$result" =~ "FP_ARITH" || "$result" =~ "AMX" ]]
-   then
--    echo "FP issues"
-+    echo "[Skipped $m] FP issues"
+@@ -86,7 +91,7 @@ for m in $(perf list --raw-dump metrics); do
      echo $result
      if [[ $err -eq 0 ]]
      then
-@@ -84,7 +91,7 @@ for m in $(perf list --raw-dump metrics); do
+-      err=2 # Skip
++      skip=1
+     fi
      continue
    elif [[ "$result" =~ "PMM" ]]
-   then
--    echo "Optane memory issues"
-+    echo "[Skipped $m] Optane memory issues"
+@@ -95,7 +100,7 @@ for m in $(perf list --raw-dump metrics); do
      echo $result
      if [[ $err -eq 0 ]]
      then
-@@ -101,7 +108,7 @@ for m in $(perf list --raw-dump metrics); do
-     # No error result and metric shown.
+-      err=2 # Skip
++      skip=1
+     fi
      continue
    fi
--  echo "Metric '$m' has non-zero error '$result_err' or not printed in:"
-+  echo "[Failed $m] has non-zero error '$result_err' or not printed in:"
-   echo "$result"
+@@ -106,6 +111,10 @@ for m in $(perf list --raw-dump metrics); do
+   if [[ $result_err -eq 0 && "$result" =~ ${m:0:50} ]]
+   then
+     # No error result and metric shown.
++    if [[ "$err" -ne 1 ]]
++    then
++      err=0
++    fi
+     continue
+   fi
+   echo "[Failed $m] has non-zero error '$result_err' or not printed in:"
+@@ -113,4 +122,10 @@ for m in $(perf list --raw-dump metrics); do
    err=1
  done
+ 
++# return SKIP only if no success returned
++if [[ "$err" -eq 3 && "$skip" -eq 1 ]]
++then
++  err=2
++fi
++
+ exit "$err"
 -- 
 2.53.0
 
