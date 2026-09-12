@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 952C737FF46;
-	Sat, 12 Sep 2026 10:40:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6FA542BEB0;
+	Sat, 12 Sep 2026 10:40:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789209601; cv=none; b=B0XIu1h9ziv6Civg5ocjZleBu20GhLK0Wn6b1gVYFpeGUzlkV1ja1ReJpe03nyko8mKoRZ+c3hDTWJyrKnltGIDcGpUzrvomVP3AI7Ej8s582MoO4w7j8DTJpELdDyuaH5Eo4txpuS/EOsrNfGiKtuf9Yb5mlhUv2st5Y8mjaZQ=
+	t=1789209608; cv=none; b=LtO9+wPxKifENj1n2TZ7wPNq0eRCMgzMpJr3Ka/inONa8f44HbezDJvwAghUrnz0YT4PL0WOLCXI3ElRVhmNrSIga18je86jzpc6Ez9a2dOxJabI3VT6z8Gnpvcff+w6c0I5zBJ1BufO96HIL8kIH7zmEp8Cvm9YWRfmpwrb/Jc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789209601; c=relaxed/simple;
-	bh=FZHMXO16OSdTUJWqGX1o+4m9RQOqOvBqMiMP+sfbPLQ=;
+	s=arc-20240116; t=1789209608; c=relaxed/simple;
+	bh=UDwTFw/H54TNvmhK5DkaEwJaf5TQYp1Ef6a0dPZcYkM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WeDVS3y3tEy88JXDaPqsWZmwozUp3auBJiZ4FLfydQvXv2TQ51f6mPywCpI8GbX7S1lhj05t/RI7/1tMMOuLdBToFFGX+ejE3varL6yI+eCTB7WknKn7ahqdWqP6wW2ZA4+z1IJT9iDMHdYvBH05TZdq5XNDB3Bo9As3eEcSKEE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YSdIDRON; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=J95X77DSphBumaR/07ZSc9QOMSZNvT6nqxYwieEZKqpld3Upn8w/exD5uklhgyFjdzHBuaUFQOcimoN7yXo34cgguOvcJZLRPogIAn5x1SCSLq60zvxhLe86vR8jCnvExuWE+ha0LJ7jOLDqcywY816iGd/g8iAyt/9upXUe5E8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bfZltqKu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YSdIDRON"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9984E1F000FF;
-	Sat, 12 Sep 2026 10:39:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bfZltqKu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 855B51F000FF;
+	Sat, 12 Sep 2026 10:40:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789209600;
-	bh=MXRwQsqNMjv3C/GglTGXUAgqL3CUvIg2ZThcM3iIbpE=;
+	s=korg; t=1789209605;
+	bh=fnGTCDhA+O59h9nNTLnja3Pk8hzmSBytkaPeQnih1OM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YSdIDRONqplHlOywFHtLMNkOYNgLvsO/hlbccthyE+zjiiuYwaTy1VObS569U1n8p
-	 cZ3WvRsdmMi6/CKldmqVFRdfGnm6bgSIbfuM8eemjjUd1zH8KquCANF7RUfi9pMEQV
-	 q5cPtBo0LMtsKdt3yA2wQPz+XHw8vwmdTw/IYSgE=
+	b=bfZltqKux0TZEBzGcZwuMJBE4j7wxEgGu+eAeKzfWfvmlSBZlr17G86u852NH5msh
+	 VJqsXi1TFx7NnffdoVfxWjKI9530Jsd/jruvngAIqcX4aRjuP3ibvTap3vJleIKVtX
+	 SIIC5aE/drCFGAskyuHEbCTW5lsyfEK9/9cyiUYA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	James Clark <james.clark@linaro.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Yuanshen Cao <alex.caoys@gmail.com>,
+	David Lechner <dlechner@baylibre.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0854/1518] perf arm-spe: Reject zero nr_cpu in metadata to prevent division by zero
-Date: Sat, 12 Sep 2026 08:50:23 +0200
-Message-ID: <20260912065642.770248238@linuxfoundation.org>
+Subject: [PATCH 6.18 0855/1518] iio: light: tsl2772: fix ALS calibscale readback
+Date: Sat, 12 Sep 2026 08:50:24 +0200
+Message-ID: <20260912065642.792420088@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -54,46 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Yuanshen Cao <alex.caoys@gmail.com>
 
-[ Upstream commit d67241d43b709af4d13051bb8494892b654aba41 ]
+[ Upstream commit ac75550ab5b5d73649bffea245c2075fd9249bd0 ]
 
-arm_spe__alloc_metadata() reads nr_cpu from the auxtrace_info priv
-array without validation.  When a crafted perf.data provides nr_cpu=0,
-the per_cpu_sz calculation divides by zero:
+The read_raw() implementation uses IIO_LIGHT to distinguish between the
+ambient light and proximity channels when handling
+IIO_CHAN_INFO_CALIBSCALE.
 
-  per_cpu_sz = (metadata_size - (hdr_sz * sizeof(u64))) / (*nr_cpu);
+However, the ALS channel is registered as IIO_INTENSITY, while
+write_raw() correctly writes to IIO_INTENSITY. As a result, reading
+in_intensity0_calibscale incorrectly returns the proximity gain instead
+of the ALS gain.
 
-Reject nr_cpu <= 0 early, before the division.  The caller already
-treats NULL return with metadata_ver != 1 as a parse failure.
+This causes the following user-visible behavior:
+- Writing in_intensity0_calibscale appears to have no effect because the
+  readback reports the proximity gain.
+- Writing in_proximity0_calibscale causes both in_proximity0_calibscale
+  and in_intensity0_calibscale to report the same value.
 
-Fixes: 7842a4b6ff698 ("perf arm-spe: Support metadata version 2")
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Assisted-by: Claude:claude-opus-4.6
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Reviewed-by: James Clark <james.clark@linaro.org>
-Reviewed-by: Adrian Hunter <adrian.hunter@intel.com>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Fix this by checking for IIO_INTENSITY in read_raw(), matching the
+channel definition and the existing write_raw() implementation.
+
+Fixes: 3c97c08b5735 ("staging: iio: add TAOS tsl2x7x driver")
+Signed-off-by: Yuanshen Cao <alex.caoys@gmail.com>
+Reviewed-by: David Lechner <dlechner@baylibre.com>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/arm-spe.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/iio/light/tsl2772.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/perf/util/arm-spe.c b/tools/perf/util/arm-spe.c
-index 71be979f50771..cc99b06e59802 100644
---- a/tools/perf/util/arm-spe.c
-+++ b/tools/perf/util/arm-spe.c
-@@ -1543,6 +1543,10 @@ static u64 **arm_spe__alloc_metadata(struct perf_record_auxtrace_info *info,
- 	hdr_sz = ptr[ARM_SPE_HEADER_SIZE];
- 	*nr_cpu = ptr[ARM_SPE_CPUS_NUM];
- 
-+	/* nr_cpu is used as a divisor below */
-+	if (*nr_cpu <= 0)
-+		return NULL;
-+
- 	metadata = calloc(*nr_cpu, sizeof(*metadata));
- 	if (!metadata)
- 		return NULL;
+diff --git a/drivers/iio/light/tsl2772.c b/drivers/iio/light/tsl2772.c
+index 0b171106441ab..ffbde15401141 100644
+--- a/drivers/iio/light/tsl2772.c
++++ b/drivers/iio/light/tsl2772.c
+@@ -1263,7 +1263,7 @@ static int tsl2772_read_raw(struct iio_dev *indio_dev,
+ 		}
+ 		break;
+ 	case IIO_CHAN_INFO_CALIBSCALE:
+-		if (chan->type == IIO_LIGHT)
++		if (chan->type == IIO_INTENSITY)
+ 			*val = tsl2772_als_gain[chip->settings.als_gain];
+ 		else
+ 			*val = tsl2772_prox_gain[chip->settings.prox_gain];
 -- 
 2.53.0
 
