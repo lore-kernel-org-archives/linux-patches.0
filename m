@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B875A24CEEA;
-	Sat, 12 Sep 2026 11:01:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AC0A4772A1;
+	Sat, 12 Sep 2026 11:01:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789210865; cv=none; b=N2/yQvKdrf6bL8LXsWADWCM/bs1NIDytRNDpDOAhJRsuNs16Ji/oFFQ0Hrzuv+lZdNc8VHiOQSlZWUJCEs5s8bh2zYWf9W+vTF9iL6hYqy/tpsxa8PVGSostia/6OmrJuVR0t1wO2DvVHD/qkAUxyDfLVtogrhkBT+xkDAubTHg=
+	t=1789210871; cv=none; b=FYfFHcdxxXLu1nvUh8jULoA+s9oCLnh4Uvdae3+WBjl6CuhlsZHhKj9j9Y9bZLsI5YMUHlESqFV1iwOIR+YtTGe/xjG1Apr7dKmEfreT4sWstfpGfnNnBspg33N33czWQ503LOR9+O7Vu7yostyebYSA3Yw2ZMO21ZhVvy3HF2w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789210865; c=relaxed/simple;
-	bh=fCndc7/s0KnzwcLgCkcK/oczazAlfNyEoOdKDbtY49c=;
+	s=arc-20240116; t=1789210871; c=relaxed/simple;
+	bh=UCi3hmgUrZvv4UMYbnSR3woMwA6b18BziABTsEpYZIo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mob+ZZZ3TpxYNiaSwmYWYaBiz6FRSFwDY8ZNgT2RotE/yIY7jaGf499PwToC4020xzi9MJQ9QFScx+VT0cDg6A9xSFSS7gS9kDVFhuj/J8LMvbytuVyUqHhRbISjsA+nZwcj20VahI+6+D1r5H+lYImmMg/yJZs24sHsgRLBIUA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YuW9+mFi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=B18UDrURp5DMTARhdtk4+GWT7zH1lbORvvcyl6R5TcdQhw1HItxRPRqvEg4Jn45wLYYokPHHkwuH3lljnr4vkb5Y3qiIrFuxePB9qUZF+1+fHMrP/fy3vJusO4LV4FVRl3jKvTibsH5R7Ufe3GYpb6vQowIKyug9yvqKM5zeejk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YPL6XXVZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YuW9+mFi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74F921F000FF;
-	Sat, 12 Sep 2026 11:01:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YPL6XXVZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7C5E1F000FF;
+	Sat, 12 Sep 2026 11:01:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789210864;
-	bh=lLozXqj2jDRDzVjEx8OOSXQ5/VZ5RwkFJtrqmq523vU=;
+	s=korg; t=1789210869;
+	bh=iaMg9+GZ9y7gndD0azwAEauTNAC2cfCVFv9w7zNGTB8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YuW9+mFiziDA0Vb8UVVGBRkU5n8XpCAM/sUAyl8kNx9ya7egIZ/ynlO9OVEVuZTop
-	 yIdd4eI54cAEYQcR7ja7hm6JDpiEyiRmqBs0vFw2IRJofJgPmidwIHYMKp2qAZku/m
-	 LWPsrj8DaUXnZCEyItZdyEbOngwI/0IWWdBTcav4=
+	b=YPL6XXVZMRDDYFRoThNKoc0Z/kMljaX0gUeLaZ1nFv5srjPWWMvh7qOyw/FsYH1aX
+	 G7NUluMohbDsi6bF9stC0sXCVSTQKitheDQbjmm9F3qZXHJb5D0m1soN+KLKO3S+nr
+	 b+7oeYvVsCfjsluMu09AJccbQ5fgQksCUDO7iTx8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Nick Chan <towinchenmi@gmail.com>,
 	Sven Peter <sven@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1114/1518] nvme-apple: Dont set a DMA direction for commands without a data transfer
-Date: Sat, 12 Sep 2026 08:54:43 +0200
-Message-ID: <20260912065648.653374073@linuxfoundation.org>
+Subject: [PATCH 6.18 1115/1518] nvme-apple: Never set the opcode in the NVMMU TCB
+Date: Sat, 12 Sep 2026 08:54:44 +0200
+Message-ID: <20260912065648.676278863@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -55,12 +55,10 @@ Content-Transfer-Encoding: 8bit
 
 From: Sven Peter <sven@kernel.org>
 
-[ Upstream commit 94dd5804938d6681dbf26f023b1356d511f4fc48 ]
+[ Upstream commit cc0fec9b42cfbc69d70cb4c4b616408a7037b445 ]
 
-Setting the DMA direction for commands that don't do any transfer likely
-triggered the PRP NULL check for which we needed a chicken bit. That bit
-has disappeared starting with macOS 15 so let's just do this correctly
-instead.
+macOS always sets this to zero and the firmware starting with macOS 15
+has started to complain about what we're doing here.
 
 Fixes: 5bd2927aceba ("nvme-apple: Add initial Apple SoC NVMe driver")
 Tested-by: Joshua Peisach <jpeisach@ubuntu.com>
@@ -69,24 +67,22 @@ Tested-by: Nick Chan <towinchenmi@gmail.com>
 Signed-off-by: Sven Peter <sven@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/apple.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/nvme/host/apple.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/nvme/host/apple.c b/drivers/nvme/host/apple.c
-index ef3a969d68430..ff2b5d063024b 100644
+index ff2b5d063024b..450f385074bed 100644
 --- a/drivers/nvme/host/apple.c
 +++ b/drivers/nvme/host/apple.c
-@@ -341,7 +341,9 @@ static void apple_nvme_submit_cmd_t8103(struct apple_nvme_queue *q,
- 	tcb->length = cmd->rw.length;
- 	tcb->command_id = tag;
+@@ -335,7 +335,7 @@ static void apple_nvme_submit_cmd_t8103(struct apple_nvme_queue *q,
+ 	u32 tag = nvme_tag_from_cid(cmd->common.command_id);
+ 	struct apple_nvmmu_tcb *tcb = &q->tcbs[tag];
  
--	if (nvme_is_write(cmd))
-+	if (!cmd->common.dptr.prp1)
-+		tcb->dma_flags = 0;
-+	else if (nvme_is_write(cmd))
- 		tcb->dma_flags = APPLE_ANS_TCB_DMA_TO_DEVICE;
- 	else
- 		tcb->dma_flags = APPLE_ANS_TCB_DMA_FROM_DEVICE;
+-	tcb->opcode = cmd->common.opcode;
++	tcb->opcode = 0;
+ 	tcb->prp1 = cmd->common.dptr.prp1;
+ 	tcb->prp2 = cmd->common.dptr.prp2;
+ 	tcb->length = cmd->rw.length;
 -- 
 2.53.0
 
