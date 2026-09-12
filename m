@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 375D9275AEB;
-	Sat, 12 Sep 2026 15:33:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 204BB275AEB;
+	Sat, 12 Sep 2026 15:33:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789227232; cv=none; b=HDX0C/aPqtAF4qYmheA6b8x/+Ehk6nFMS2LriVrwXMUGDSt/w3DQwNuV5x3fvfzMUyhqa78A/FJRvFPKV950WzNNYg+FKIRosYvME4HZkoChfGi6icJthOfpJ+7jH34l+ceouWj5YIeb6Ypn7eQg7cm4JTm4a9dZipsp34Y6CNw=
+	t=1789227237; cv=none; b=OVRe6EEhsySmnTg4jVlYqbaTtugbqx2hoZCR/syVyvLJ8qY/ynDQRbjLGyK5BsFPg7qXCG9fNlQXBx9M0hepDO2/7aOqKFGFoW+rex0uO4nVIJPuMrHRBTu/64iYm4BqO5UNWPLgE3N8OnLWv62hTFkuHeFlZBrqXTr98Rd9cPg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789227232; c=relaxed/simple;
-	bh=5L33lfpHZW4Ze8IqvHm0VXK1XNGxvzSnsxuDF40bnms=;
+	s=arc-20240116; t=1789227237; c=relaxed/simple;
+	bh=c1POgySNzeIG1ejeV+AbVLoX/cfXWlFEiXE1rKHAcoo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o/+vsxEQdOeavF1axSJb6CSvfRF0klaRTTqdEPlUhaLghv9toBeZuMyIeDm9Y5kinTdscPm7FCyVhlulMxKyq9tLSsbrwgOkKLaQzJ00U+VRJMr+xpdkGTzfiEZnbhFReFy1CZVOc4FcAbnXher8FInvvTsFtC7SJy79jG15CXw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mSxjtzCJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ccjg/n1WgfUNRhae+CJ1by9lrtHxQPNURAqExWMVApjdl0jfmJREWrp7e9gdh+Y/CfugKbEEeqRfQQ+BXwump0DBwU2z4CmMlCEBzRJ+EYbVKlpo5Pi+1vkxYyWNm+DYRlFDSlXZ2nRVM/iBZtocwMFC3FgF3IrR0F2c3tpiaDg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rUEyf3Q8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mSxjtzCJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CE631F000FF;
-	Sat, 12 Sep 2026 15:33:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rUEyf3Q8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0F5C1F000FF;
+	Sat, 12 Sep 2026 15:33:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789227231;
-	bh=lHcUKjMmK4/VPBQOkv/I/sN0mONENmTYQIpM1JGqLGI=;
+	s=korg; t=1789227236;
+	bh=qRlX0jGhN1MrkFSqJjT5LoJGOWGXdnNQ3TclnG8wWcQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mSxjtzCJzPSFD940sj5/5zAzy/GzBfzvV8b3D8Xwfk8TYXNgDhYGfxN0owWngeloy
-	 8kKv4/aoZo5KUFb8t43f0OlgyPx2BaOHLEUY/T47s/kOr8z8UxSFmfFrj6BxKDKBWh
-	 6P+syAFUCryuClR9N4nN28CJjlMpOklqqOd9kYro=
+	b=rUEyf3Q8kYf4UQLVLElUK40KjKOzJC0227aWk517tbtGkZgRJlEpXa/CoSWA0mT0Z
+	 ki69yAZa4WAtlRd0Pdl9tXIr74rRB9fDuADIMKEdeMtk1bY/AUzyZIAKzjVkX+FO1+
+	 3nvPXeUmNrCDdiaa33fckaeDvxfXRfC5qiZEZOIk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Doruk Tan Ozturk <doruk@0sec.ai>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Subject: [PATCH 6.1 0137/1191] wifi: ath6kl: clamp assoc request/response lengths before subtracting IE offsets
-Date: Sat, 12 Sep 2026 08:47:45 +0200
-Message-ID: <20260912065551.275053072@linuxfoundation.org>
+	Hao-Qun Huang <alvinhuang0603@gmail.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 6.1 0138/1191] staging: media: tegra-video: vi: fix probe failure on skipped last port
+Date: Sat, 12 Sep 2026 08:47:46 +0200
+Message-ID: <20260912065551.298215669@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -50,49 +50,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Doruk Tan Ozturk <doruk@0sec.ai>
+From: Hao-Qun Huang <alvinhuang0603@gmail.com>
 
-commit 3bbd05723d15dd06f0560bcd94fbf9a91b5f5613 upstream.
+commit ae15adeed9f7ec54989175fe3c9e0815186821bc upstream.
 
-ath6kl_cfg80211_connect_event() subtracts fixed IE offsets from
-assoc_req_len (-= 4) and assoc_resp_len (-= 6), both u8, with no lower
-bound. The aggregate check recently added to ath6kl_wmi_connect_event_rx()
-bounds the declared lengths from above (their sum must fit the received
-event), but an assoc request/response shorter than its fixed offset still
-underflows here: the u8 wraps to ~250, and cfg80211_connect_result() /
-cfg80211_roamed() then treat that wrapped value as the IE length and copy
-that many bytes out of the small assoc_info buffer to user space via
-nl80211, disclosing adjacent slab memory.
+tegra_vi_channels_alloc() iterates over port nodes and skips those
+whose reg property cannot be read or whose remote endpoint fails
+v4l2_fwnode_endpoint_parse(), leaving the negative result of the
+failed call in ret. If that happens on the last port node, the loop
+ends with ret still negative and tegra_vi_init() fails the whole VI
+probe.
 
-Clamp both lengths to their offsets before subtracting.
+The same defective port earlier in the ports node is skipped silently,
+so probing succeeds or fails depending on the order of the port nodes.
+The CSI equivalent, tegra_csi_channels_alloc(), returns 0
+unconditionally after its loop and does not have this problem.
 
-Found by 0sec (https://0sec.ai) using automated source analysis; the
-missing lower bound is evident from source. Compile-tested.
+Use a separate variable for the per-port checks so that only fatal
+errors end up in ret.
 
-Fixes: bdcd81707973 ("Add ath6kl cleaned up driver")
+Fixes: 1ebaeb09830f ("media: tegra-video: Add support for external sensor capture")
+Fixes: 2ac4035a78c9 ("media: tegra-video: Add support for x8 captures with gang ports")
 Cc: stable@vger.kernel.org
-Assisted-by: 0sec:claude-opus-4-8
-Signed-off-by: Doruk Tan Ozturk <doruk@0sec.ai>
-Link: https://patch.msgid.link/20260713213251.21161-1-doruk@0sec.ai
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Assisted-by: Claude:claude-fable-5
+Signed-off-by: Hao-Qun Huang <alvinhuang0603@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/ath/ath6kl/cfg80211.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/staging/media/tegra-video/vi.c |    9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
---- a/drivers/net/wireless/ath/ath6kl/cfg80211.c
-+++ b/drivers/net/wireless/ath/ath6kl/cfg80211.c
-@@ -753,6 +753,11 @@ void ath6kl_cfg80211_connect_event(struc
- 	u8 *assoc_resp_ie = assoc_info + beacon_ie_len + assoc_req_len +
- 	    assoc_resp_ie_offset;
+--- a/drivers/staging/media/tegra-video/vi.c
++++ b/drivers/staging/media/tegra-video/vi.c
+@@ -1359,6 +1359,7 @@ static int tegra_vi_channels_alloc(struc
+ 	struct device_node *parent;
+ 	struct v4l2_fwnode_endpoint v4l2_ep = { .bus_type = 0 };
+ 	unsigned int lanes;
++	int err;
+ 	int ret = 0;
  
-+	if (assoc_req_len < assoc_req_ie_offset)
-+		assoc_req_len = assoc_req_ie_offset;
-+	if (assoc_resp_len < assoc_resp_ie_offset)
-+		assoc_resp_len = assoc_resp_ie_offset;
-+
- 	assoc_req_len -= assoc_req_ie_offset;
- 	assoc_resp_len -= assoc_resp_ie_offset;
+ 	ports = of_get_child_by_name(node, "ports");
+@@ -1369,8 +1370,8 @@ static int tegra_vi_channels_alloc(struc
+ 		if (!of_node_name_eq(port, "port"))
+ 			continue;
  
+-		ret = of_property_read_u32(port, "reg", &port_num);
+-		if (ret < 0)
++		err = of_property_read_u32(port, "reg", &port_num);
++		if (err < 0)
+ 			continue;
+ 
+ 		if (port_num > vi->soc->vi_max_channels) {
+@@ -1392,10 +1393,10 @@ static int tegra_vi_channels_alloc(struc
+ 
+ 		ep = of_graph_get_endpoint_by_regs(parent, 0, 0);
+ 		of_node_put(parent);
+-		ret = v4l2_fwnode_endpoint_parse(of_fwnode_handle(ep),
++		err = v4l2_fwnode_endpoint_parse(of_fwnode_handle(ep),
+ 						 &v4l2_ep);
+ 		of_node_put(ep);
+-		if (ret)
++		if (err)
+ 			continue;
+ 
+ 		lanes = v4l2_ep.bus.mipi_csi2.num_data_lanes;
 
 
