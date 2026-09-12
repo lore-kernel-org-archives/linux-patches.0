@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F640455162;
-	Sat, 12 Sep 2026 11:40:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C8632D0C75;
+	Sat, 12 Sep 2026 11:40:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789213236; cv=none; b=NrTP5sQ0csTmJUsHFC+7KRJcbM9MPqaGv0osCosEftJxlGkr6N1ITlJ4cxoZWac7O3n2akeIgLbySoWVdLjO2VPRb1nANtOELQCxjK6sPPRkHcpppIw43Zb1r0LcJS8TqzQQP89uUJC0mQZbf0otsKLWiCsi6AiFgK6cI02cdpE=
+	t=1789213241; cv=none; b=U0ykjYyR+mOotHVBD/w4aBAnOhRXBNnDLs76bCaoNz5BSYS+kEPYSgOoi7iLU6kW+Mk8NTZoE4CnYjcBg2AzzYyTaJ1dJqyQ2nJtNqnKfMVDH8hFueojLpIs9nSErM10BY3t6nqKXlkq8nhO5KHHeaVDBplNvT4+477re5zcHCk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789213236; c=relaxed/simple;
-	bh=EU0Yvn28BPZHqBRFt0lmDM7yc0hlyqmiuKf05zTyoOg=;
+	s=arc-20240116; t=1789213241; c=relaxed/simple;
+	bh=h9CGirHo/alTqEV8RyfatgSuJ3WArGxcZiaC+m5ZCsI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CrOtqswUXAd4WIJkabg4lfJR4lCAX0LsvEK8+Bo5NNVBca8lOiJbuyqiuF4B22528+p0IQFFFd7kelKeFioibBQZiE8EjMbYM4PYdKNEPANXzyHhFHdb8B+XWhsLu6jRUQsyZNOwLnTb36OfIbaHDLmVL//C++48915t39vyjbo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=svpTxd0Y; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TsWm4YS2iliOELTpagYGZiX7U1hjKbFjCWWyTa9J0A0y/Oad3u8NURX/5oAaK66LvRujtuQSf6M0R52Xy6OrFv6MZwWOb6yy6orQRmxL6p0fGE6f2GTM4wfyN2HyINzN0bcTphoYs/nMjpd5JWURUE7uPmDz6hwKZ2Moz580Fzs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jZ1yONvj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="svpTxd0Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B3431F000FF;
-	Sat, 12 Sep 2026 11:40:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jZ1yONvj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 247AF1F000FF;
+	Sat, 12 Sep 2026 11:40:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789213235;
-	bh=YrmOEH/P0xu8nL6PySaoGSDxL9z4Szq5of7LNuy1Qw0=;
+	s=korg; t=1789213240;
+	bh=RM7pBYMpuuqCk2Lz4F/pVhG56aoI5doovXiXh0I2LYk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=svpTxd0YfnBB0771IOcPFmFSFFXdB8+n0+YII730mYQWa0uyn/NMDH1dxzwmYqm+S
-	 nK01We+rSgd1qDQQSo0TIGtQpCqRdV/x+vJ+PpjxyE+TsK1/Zy46ZkBEJX7439/LT3
-	 225oxOFmQ7KmNLayWnhR7oXEwIv+3B+NjkFvue/k=
+	b=jZ1yONvj/WSeRFzVu8ar9coVe7Re3JuTzkukCNcsfy9soABwL27oxGiWTYJLqR1xO
+	 Vjran4HGATQpDCKff5ZZrKcQDSjAghN3i0BmYpIH9LRN6HZPPNRmKwsuv9GJLnhSwU
+	 fp2eGkL6fHoavADKI29LsAfmod8w8nHqcOani6fU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+23ad911c819b923238b7@syzkaller.appspotmail.com,
-	Vasileios Almpanis <vasilisalmpanis@gmail.com>,
+	Ahmad Byagowi <ahmadexp@gmail.com>,
+	Peter Rosin <peda@lysator.liu.se>,
 	Andi Shyti <andi.shyti@kernel.org>
-Subject: [PATCH 6.12 0079/1376] i2c: core: fix debugfs UAF on adapter removal
-Date: Sat, 12 Sep 2026 08:41:45 +0200
-Message-ID: <20260912065609.320099686@linuxfoundation.org>
+Subject: [PATCH 6.12 0080/1376] i2c: mux: Fix channel node leak on adapter add failure
+Date: Sat, 12 Sep 2026 08:41:46 +0200
+Message-ID: <20260912065609.342988742@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,58 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vasileios Almpanis <vasilisalmpanis@gmail.com>
+From: Ahmad Byagowi <ahmadexp@gmail.com>
 
-commit b15b548d52b43ba8ac4652bc2c7244a8dd1e9622 upstream.
+commit 385c7af4e3b95d0769fd211831674e83b16a2ebf upstream.
 
-i2c_del_adapter() frees the adapter's debugfs directory before it
-unregisters the adapter device, but the new_device sysfs attribute
-stays writable until device_del(). A write racing with removal still
-reaches i2c_device_probe(), which passes the freed adap->debugfs to
-debugfs_create_dir() as the new client's parent:
+i2c_mux_add_adapter() takes a reference to the Device Tree channel node
+before registering the new adapter. If adapter registration fails, the
+error path frees the private data without dropping that reference.
 
-  BUG: KASAN: slab-use-after-free in lookup_noperm_common+0x407/0x430
-  Read of size 4 at addr ffff88803ef87810 by task syz.0.61/6090
-   lookup_noperm_common+0x407/0x430
-   simple_start_creating+0x9c/0x110
-   debugfs_start_creating+0xdb/0x1a0
-   debugfs_create_dir+0x24/0x350
-   i2c_device_probe+0x814/0xbf0
+Release the channel node before freeing the private data.
 
-It's technically possible to create a client after i2c_deregister_clients
-has run. That client will never be unregistered and make
-wait_for_completion hang.
-
-Close the window by removing the new_device attribute at the start of
-i2c_del_adapter(). device_remove_file() will drain any clients left.
-
-Fixes: 73febd775bdb ("i2c: create debugfs entry per adapter")
-Reported-by: syzbot+23ad911c819b923238b7@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=23ad911c819b923238b7
-Signed-off-by: Vasileios Almpanis <vasilisalmpanis@gmail.com>
-Cc: <stable@vger.kernel.org> # v6.8+
-Tested-by: syzbot+23ad911c819b923238b7@syzkaller.appspotmail.com
+Fixes: bc45449b1444 ("i2c/of: Automatically populate i2c mux busses from device tree data.")
+Signed-off-by: Ahmad Byagowi <ahmadexp@gmail.com>
+Cc: <stable@vger.kernel.org> # v3.5+
+Acked-by: Peter Rosin <peda@lysator.liu.se>
 Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://patch.msgid.link/20260812-i2c-v2-1-5efaab4c3334@gmail.com
+Link: https://patch.msgid.link/b3e46bbee781b3cb4029aca9a71316cc5e36dc17.1787502619.git.ahmadexp@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/i2c-core-base.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/i2c/i2c-mux.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/i2c/i2c-core-base.c
-+++ b/drivers/i2c/i2c-core-base.c
-@@ -1805,6 +1805,12 @@ void i2c_del_adapter(struct i2c_adapter
- 		return;
- 	}
+--- a/drivers/i2c/i2c-mux.c
++++ b/drivers/i2c/i2c-mux.c
+@@ -411,6 +411,7 @@ int i2c_mux_add_adapter(struct i2c_mux_c
+ 	return 0;
  
-+	/*
-+	 * This drains any in-flight writers, so all
-+	 * clients will be caught by i2c_deregister_clients().
-+	 */
-+	device_remove_file(&adap->dev, &dev_attr_new_device);
-+
- 	i2c_acpi_remove_space_handler(adap);
- 
- 	i2c_deregister_clients(adap);
+ err_free_priv:
++	of_node_put(priv->adap.dev.of_node);
+ 	kfree(priv);
+ 	return ret;
+ }
 
 
