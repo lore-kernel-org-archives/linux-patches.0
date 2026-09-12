@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C39A02D0C75;
-	Sat, 12 Sep 2026 12:26:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B314366052;
+	Sat, 12 Sep 2026 12:26:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789215987; cv=none; b=UXpB+hX8tSBcCF4fIxOg6ESKUM/N1tsTwHuGDzMq2+l7kfW/4SoilBDXsM+jFfl7L9IBgCi/FE3p+UwpShA5olu/dAhZFr642N4J/0b0ExBrKn0khwiSlQfPo6J9d9hSGK9dOkEKK7y2Yd6SUmiFhYp/Lewqagr+fNhU2sg/U/U=
+	t=1789215991; cv=none; b=AEIEKYjsxoN2DQxqExYH02Hiqon6f/Y9ogsTwzBBDBsgpafHWCOOpFmhkAfXo/mSCBAAySFVo3mnoPG7u6dDJ/TsnT/OTYvNFFsNtXqpEDRBGkinixOfSvXsbeAPE2tPax6EkEGKSYZj7KaKQXz+AEEaxpr7rzordjfl41awYyI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789215987; c=relaxed/simple;
-	bh=v8ueEmsJvfgJDKHwh7F72aMwu6CIOYcZK7+i6lQlNLg=;
+	s=arc-20240116; t=1789215991; c=relaxed/simple;
+	bh=cutG1DFV1/y+FjWmXFUjeiP96xEK52To7SrPCL7Fx5s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MKrY6opj7GZI2kfi0hcIppvEagtx3CS96coLAh0aSwR9ZrKWOGd7FsnmVp4dmdpsf+6uJ1slFf5aAzJYDjlJxEdOD5ltzHhXMv75y/Gpro9PJoADPwHdZh63rtAoz/WoWH97B/MNnEPAlNlVT3u64jfcS0P37m6NJjBvlQc1xvg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b6kSFzKi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ja6z9L1Q+pR78+HDwDHiAYUCURh86rEXDG98923Cf47KMLu8hP4SdGhaOVSCrNpeiLPneeoRN/YNTGkmr298RhIy9OWR4D0vBNHZMAZWQaP5owAPvUdEaIyxH1iL7ekPC2Na6kFqt4kc6vVuPASChh4/D2G78slnaMeoPDy2XJY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NJopbHu6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b6kSFzKi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D28A1F000FF;
-	Sat, 12 Sep 2026 12:26:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NJopbHu6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4C091F000FF;
+	Sat, 12 Sep 2026 12:26:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789215985;
-	bh=32m6JFbOCkHOKwNfzStsYqvzhOh+Fo4j6EpVfC5FibI=;
+	s=korg; t=1789215990;
+	bh=x9UcAsddH7POJu/pRwk8fNe3tDZgNz6jHCB/IEeFnE8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=b6kSFzKimvg6PX9Yxvh0zLBlAyJSfzQXr9pKxgzKRtFIanJzJ+FaK9wQPPUuVEx5v
-	 lLrz4/rWlJI7/BgrOTVGMxusRBWLLe5CCxFkRIzzDcSlxR6ujrXsmBuItlxfn84SWl
-	 nGLHqtY+qHSXAeMxJpfJIj+Yj71aj+3odZI2bgxY=
+	b=NJopbHu6OXPCynUIXhyIx+Ko/5i4OPK5/BSdzp6XP/t4lE+ygARgau+zCq+KV7LJ2
+	 zsVW6C6HErtpDTmA7Z+NDwFeAoALNTTpilRK2+2bjUa/ULlcvhAk5B1gKTjvGKXOIR
+	 AKa45UMfqzHvrUFT9VLBac/JQCxPDL9GQo4iqbao=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Baokun Li <libaokun@linux.alibaba.com>,
-	Theodore Tso <tytso@mit.edu>,
+	Zhu Yanjun <yanjun.zhu@linux.dev>,
+	Ibrahim Hashimov <security@auditcode.ai>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0643/1376] ext4: drain in-flight DIO before buffered write fallback
-Date: Sat, 12 Sep 2026 08:51:09 +0200
-Message-ID: <20260912065621.871926657@linuxfoundation.org>
+Subject: [PATCH 6.12 0608/1376] RDMA/rxe: Validate num_sge/cur_sge before indexing wqe->dma.sge[]
+Date: Sat, 12 Sep 2026 08:50:34 +0200
+Message-ID: <20260912065621.090990948@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -53,104 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baokun Li <libaokun@linux.alibaba.com>
+From: Ibrahim Hashimov <security@auditcode.ai>
 
-[ Upstream commit 15cdefd0c0522f9d5e12d947fa04f4c11649b699 ]
+[ Upstream commit 126c757e4cd46f866ddc283143b58eb4d9bf52cd ]
 
-generic/746 started failing intermittently on ext3 (no-extent inodes).
-The test triggers 'Page cache invalidation failure on direct I/O'
-warnings and subsequent fsync returns -EIO. Adding a 50ms delay
-between ext4_buffered_write_iter() and filemap_write_and_wait_range()
-in ext4_dio_write_iter() makes the race almost always reproducible.
+For a user QP, qp->sq.queue is a ring the application writes directly,
+so rxe_post_send() takes the is_user branch and only schedules send_task
+without validating the WQE. rxe_requester() consumes it in place via
+req_next_wqe() and calls copy_data(), which indexes
+&wqe->dma.sge[cur_sge] with the attacker-controlled num_sge/cur_sge.
+Only the kernel path bounds num_sge (validate_send_wr()); the user WQE
+is never checked, so a local unprivileged user can post a WQE with an
+out-of-range cur_sge or oversized num_sge and force an out-of-bounds
+read of the per-WQE sge array in copy_data() (vmalloc OOB read, local
+DoS).
 
-On no-extent inodes, DIO writes to holes cannot use unwritten extents,
-so ext4_iomap_alloc() leaves m_flags=0 and ext4_map_blocks() returns 0.
-The iomap layer then returns -ENOTBLK, causing fallback to buffered I/O.
+Bound num_sge to qp->sq.max_sge in rxe_requester() before use, the way
+get_srq_wqe() already guards SRQ entries, and bound cur_sge only when
+the WQE carries payload (dma.resid): copy_data() returns early on a
+zero-length copy before touching dma->sge[], so a zero-payload WQE --
+the only kind a max_sge == 0 QP can post -- stays valid.
 
-The fallback path in ext4_dio_write_iter() calls
-ext4_buffered_write_iter() which dirties pages, then does flush and
-invalidate. However, there's an unprotected window between
-ext4_buffered_write_iter() returning (with inode lock released) and
-the subsequent flush+invalidate.
+Reproduced under KASAN; the vmalloc-out-of-bounds in copy_data() is gone.
 
-Concurrent async DIO completions from other threads can run
-kiocb_invalidate_post_direct_write() during this window. If pages have
-been re-dirtied, post-invalidation finds dirty pages and triggers the
-warning, setting -EIO in the error sequence.
-
-Consider a file with two 4k extents: [hole][written]. Thread A does
-DIO to the written extent, while thread B does DIO spanning both:
-
-  kworker A (4k DIO, allocated block)    kworker B (8k DIO, fallback)
-  -----------------------------------    ----------------------------
-  inode_lock_shared()                    inode_lock_shared()
-  iomap_dio_rw():                        iomap_dio_rw():
-    kiocb_invalidate_pages -> clean        iomap_begin -> -ENOTBLK
-    submit_bio (async)                     dio->size = 0
-  inode_unlock_shared()                  inode_unlock_shared()
-
-  [bio pending in block layer]           /* fallback: lock released */
-                                         ext4_buffered_write_iter()
-                                           inode_lock(exclusive)
-                                           generic_perform_write()
-                                             -> dirty pages [0, 8k]
-                                           inode_unlock(exclusive)
-
-                                         /* pages dirty, no lock */
-  [bio completes]                        filemap_write_and_wait_range()
-  iomap_dio_complete()                     -> flush dirty pages
-    kiocb_invalidate_post_direct_write() invalidate_mapping_pages()
-      invalidate_inode_pages2_range()
-      -> finds dirty page!
-      -> dio_warn_stale_pagecache()
-      -> errseq_set(-EIO)
-
-This issue can be triggered through normal I/O paths, not just
-intentionally overlapping DIO writes from userspace. For example,
-generic/746 uses a loop device where multiple kworkers issue concurrent
-I/O to the backing file. Additionally, when block_size < folio_size,
-non-overlapping DIO writes that share a large folio can also trigger
-the race.
-
-Add inode_dio_wait() in ext4_buffered_write_iter() before
-ext4_write_checks() to drain all in-flight DIO. This ensures that
-all DIO clears existing pages before submitting IO (via
-kiocb_invalidate_pages()), all BIO waits for all DIO to complete
-(via inode_dio_wait()), and ext4_write_checks() observes the inode
-size after all completed DIO so that ext4_block_zero_eof() does not
-race with in-flight DIO, thus eliminating the race.
-
-Fixes: 378f32bab371 ("ext4: introduce direct I/O write using iomap infrastructure")
-Suggested-by: Zhang Yi <yi.zhang@huawei.com>
-Link: https://patch.msgid.link/d1adcf7c-c276-458d-9cac-68a4410f7626@gmail.com
-Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Baokun Li <libaokun@linux.alibaba.com>
-Link: https://patch.msgid.link/20260629113827.4074335-3-libaokun@linux.alibaba.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Fixes: 8700e3e7c485 ("Soft RoCE driver")
+Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
+Signed-off-by: Ibrahim Hashimov <security@auditcode.ai>
+Link: https://patch.msgid.link/20260712122149.78142-1-security@auditcode.ai
+Assisted-by: AuditCode-AI:2026.07
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/file.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/infiniband/sw/rxe/rxe_req.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/fs/ext4/file.c b/fs/ext4/file.c
-index 7d949ed0ab5fa..fe990ce16ddb5 100644
---- a/fs/ext4/file.c
-+++ b/fs/ext4/file.c
-@@ -292,6 +292,13 @@ static ssize_t ext4_buffered_write_iter(struct kiocb *iocb,
- 		return -EOPNOTSUPP;
+diff --git a/drivers/infiniband/sw/rxe/rxe_req.c b/drivers/infiniband/sw/rxe/rxe_req.c
+index d08ebb048cb0f..3a4fa0ca36a77 100644
+--- a/drivers/infiniband/sw/rxe/rxe_req.c
++++ b/drivers/infiniband/sw/rxe/rxe_req.c
+@@ -702,6 +702,21 @@ int rxe_requester(struct rxe_qp *qp)
+ 	if (unlikely(!wqe))
+ 		goto exit;
  
- 	inode_lock(inode);
-+
 +	/*
-+	 * Prevent concurrent direct I/O and buffered I/O to the same file
-+	 * range. Wait for in-flight DIO to finish before dirtying pages.
++	 * Don't trust user space data: a user QP's WQE comes from an mmap'd
++	 * ring, so num_sge/cur_sge are attacker-controlled. Bound num_sge like
++	 * get_srq_wqe(); bound cur_sge only when payload exists (dma.resid),
++	 * since copy_data() skips dma->sge[] on a zero-length copy (all a
++	 * max_sge == 0 QP can post).
 +	 */
-+	inode_dio_wait(inode);
++	if (unlikely(wqe->dma.num_sge > qp->sq.max_sge ||
++		     (wqe->dma.resid &&
++		      wqe->dma.cur_sge >= qp->sq.max_sge))) {
++		rxe_dbg_qp(qp, "invalid num_sge/cur_sge in send wqe\n");
++		wqe->status = IB_WC_LOC_QP_OP_ERR;
++		goto err;
++	}
 +
- 	ret = ext4_write_checks(iocb, from);
- 	if (ret <= 0)
- 		goto out;
+ 	if (rxe_wqe_is_fenced(qp, wqe)) {
+ 		qp->req.wait_fence = 1;
+ 		goto exit;
 -- 
 2.53.0
 
