@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C32B2594BD;
-	Sat, 12 Sep 2026 10:19:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EE34370D47;
+	Sat, 12 Sep 2026 10:19:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789208360; cv=none; b=mnibsmaocHx7c0yVnRDy9EXYFTwABYllNk87UVGf2n9KV5A8D9WhlGqYI+6AtOF1pPTFarI3TGel54c8qZQ6AfjGvL1AiNeNV/9xc6CchzkgfBooJahhxbvBaeJlAva+Gf8J/iP8ERxZacDIFKHIlGBYupUHiGxl2Aw1nFVYZzo=
+	t=1789208364; cv=none; b=nuU1FlMc+4/d/pRUn33UcHsCTx+2WME25r2ej5DppVgyN9+ZzrCpknsIAejBPDMIzICXXgWAQcgud8pegIDgWrjY/j+nekZ9ZtW5t7+zHtHZ8JjEp5/SsOLFbfAWt1wB8qsFJrP3AaR60GV5C8bUCsv0/MYevfdrdlGGh3kKzW4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789208360; c=relaxed/simple;
-	bh=oW81/SY8it3/vQLJfykQlgBWtIQjlSUwdxE+BUnWbuA=;
+	s=arc-20240116; t=1789208364; c=relaxed/simple;
+	bh=jCSL0i1k9FsezifNz5LaAxajcKjx5qFsAtLg+j6A4Vc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SLpAWvGqi6pIuQBywlePSLMyfSmHX8ustKLu3+1zgrwCZRKel+o4Z3HCBhcSOUoQas49RP9bGnOkZiFm60uoTyFOiVfsuIXQ0EaO9Ep7FGyct3NbpfE0csyI2xlf+R7m8tQr+7wWQ2d40fNhdvh2uEdF8iP+hp4ymzUYJmBarjk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y243xisK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cN8r17iFrp2bQDNReydPHvLQt25eqSWF11osxKKTIGRr3ro9FeTWFHnQv2ty0S7BXEPKDFEy3QxGuV+77Dtbq03lDuHUw9yU4tYLhT6A41hMFHmQUsx2ZKBFMhUseTfb/zlorF5EblIV8yZxhfDWKprBjX4NLKvvT8bsuzTr2k8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2s2vDq3h; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y243xisK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31B481F000FF;
-	Sat, 12 Sep 2026 10:19:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2s2vDq3h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 367091F000FF;
+	Sat, 12 Sep 2026 10:19:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789208358;
-	bh=ju9VNXRGYpbzgm3XypsqyuGD2albIpKdUwOa2C10Xjw=;
+	s=korg; t=1789208363;
+	bh=07IkdugGf4HLG+qoQvuX8fxrnHRmaYIZsfCQICFs6VE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y243xisKXtn9B9EUVbmBZHa8bfPhvZz8WNMXR7fC5hKKAZZQr5QzkjnogHrtxHCg7
-	 RvmCModVeRD6/kLPcTKak2JXwWPdcTyaNa/OBC3Epzg2R41+yef9p7V/8Dq8Yn4fCB
-	 2VbmooAkUGZy27h4VmuG+LElo8gNwFTppdWf8hD4=
+	b=2s2vDq3h/VgTIso24vh/R8MU4D9pvrmi00pi6I4HquSSkzv7TcP9aZCHvkk1T1PV5
+	 d5AOoJpGvbNiB36J0YnhY1t1WvN4jTuTCZKHoI9xjnT8LxMdjZpm0kEOu6SYaN8/mm
+	 1CK5hQmTnZGhed/0ESc6wGGhAOjatqJSwiuobncQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Suyash Mahar <smahar@meta.com>,
-	Leo Yan <leo.yan@arm.com>,
-	James Clark <james.clark@linaro.org>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Sanghyun Park <sanghyun.park.cnu@gmail.com>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0557/1518] perf cs-etm: Avoid truncating AUX buffer sizes to int
-Date: Sat, 12 Sep 2026 08:45:26 +0200
-Message-ID: <20260912065636.037707929@linuxfoundation.org>
+Subject: [PATCH 6.18 0558/1518] xfrm: Fix skb double-free in xfrm_dev_direct_output()
+Date: Sat, 12 Sep 2026 08:45:27 +0200
+Message-ID: <20260912065636.059172207@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -53,107 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leo Yan <leo.yan@arm.com>
+From: Sanghyun Park <sanghyun.park.cnu@gmail.com>
 
-[ Upstream commit ec99be8a31db999a4f866be74ea7db61dbb19f24 ]
+[ Upstream commit 2aed51fc58d9ce450e2c116efb956160fd06fa02 ]
 
-cs_etm__get_trace() returns an int, but it used to return etmq->buf_len
-on success. That value comes from auxtrace_buffer::size, which is a
-size_t. For a large AUX trace block, returning the byte count through an
-int can overflow and make a valid buffer look like a negative error.
+A return value other than 1 from local_out() means that the skb has been
+consumed or its ownership was transferred. xfrm_dev_direct_output()
+nevertheless frees the skb on this path, causing a double-free when
+netfilter drops the packet and invalidating any other owner.
 
-The callers do not need the actual byte count from cs_etm__get_trace().
-The buffer length is already stored in the etmq->buf_len. The callers
-only need to distinguish three states:
+Return the local_out() result directly, matching the ownership handling
+in xfrm_output_resume().
 
-  < 0: error
-  = 0: no more AUX buffers
-  > 0: data is available
-
-Make cs_etm__get_trace() return 0 for all non-error cases and use
-etmq->buf_len to indicate whether a new buffer was found. Then make
-cs_etm__get_data_block() return 1 whenever data is available, instead of
-returning the buffer length.
-
-Also refactor cs_etm__get_data_block() to make its return value
-semantics clearer.
-
-Reported-by: Suyash Mahar <smahar@meta.com>
-Fixes: 8224531cf5a1 ("perf cs-etm: Modularize auxtrace_buffer fetch function")
-Signed-off-by: Leo Yan <leo.yan@arm.com>
-Reviewed-by: James Clark <james.clark@linaro.org>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Fixes: 5eddd76ec2fd ("xfrm: fix tunnel mode TX datapath in packet offload mode")
+Signed-off-by: Sanghyun Park <sanghyun.park.cnu@gmail.com>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/cs-etm.c | 46 +++++++++++++++++++++++-----------------
- 1 file changed, 26 insertions(+), 20 deletions(-)
+ net/xfrm/xfrm_output.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/tools/perf/util/cs-etm.c b/tools/perf/util/cs-etm.c
-index 215414a8f61f1..15f99c2c2775a 100644
---- a/tools/perf/util/cs-etm.c
-+++ b/tools/perf/util/cs-etm.c
-@@ -1509,8 +1509,7 @@ cs_etm__get_trace(struct cs_etm_queue *etmq)
- 	etmq->buf_used = 0;
- 	etmq->buf_len = aux_buffer->size;
- 	etmq->buf = aux_buffer->data;
--
--	return etmq->buf_len;
-+	return 0;
- }
+diff --git a/net/xfrm/xfrm_output.c b/net/xfrm/xfrm_output.c
+index 54222fcbd7fd8..b152edf50feca 100644
+--- a/net/xfrm/xfrm_output.c
++++ b/net/xfrm/xfrm_output.c
+@@ -629,10 +629,8 @@ static int xfrm_dev_direct_output(struct sock *sk, struct xfrm_state *x,
+ 	nf_reset_ct(skb);
  
- /*
-@@ -2116,26 +2115,33 @@ static int cs_etm__get_data_block(struct cs_etm_queue *etmq)
- {
- 	int ret;
- 
--	if (!etmq->buf_len) {
--		ret = cs_etm__get_trace(etmq);
--		if (ret <= 0)
--			return ret;
--		/*
--		 * We cannot assume consecutive blocks in the data file
--		 * are contiguous, reset the decoder to force re-sync.
--		 */
--		ret = cs_etm_decoder__reset(etmq->decoder);
--		if (ret)
--			return ret;
-+	/* The current block is not finished */
-+	if (etmq->buf_len)
-+		return 1;
- 
--		/*
--		 * Since the decoder is reset, this causes a global trace
--		 * discontinuity. Flush all thread stacks.
--		 */
--		cs_etm__flush_all_stack(etmq);
+ 	err = skb_dst(skb)->ops->local_out(net, sk, skb);
+-	if (unlikely(err != 1)) {
+-		kfree_skb(skb);
++	if (unlikely(err != 1))
+ 		return err;
 -	}
-+	ret = cs_etm__get_trace(etmq);
-+	if (ret < 0)
-+		return ret;
-+
-+	/* No more buffer to read */
-+	if (!etmq->buf_len)
-+		return 0;
-+
-+	/*
-+	 * We cannot assume consecutive blocks in the data file
-+	 * are contiguous, reset the decoder to force re-sync.
-+	 */
-+	ret = cs_etm_decoder__reset(etmq->decoder);
-+	if (ret)
-+		return ret;
-+
-+	/*
-+	 * Since the decoder is reset, this causes a global trace
-+	 * discontinuity. Flush all thread stacks.
-+	 */
-+	cs_etm__flush_all_stack(etmq);
  
--	return etmq->buf_len;
-+	return 1;
- }
- 
- static bool cs_etm__is_svc_instr(struct cs_etm_queue *etmq,
+ 	/* In transport mode, network destination is
+ 	 * directly reachable, while in tunnel mode,
 -- 
 2.53.0
 
