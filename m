@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACF1D4825A1;
-	Sat, 12 Sep 2026 18:31:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 358673AC0D9;
+	Sat, 12 Sep 2026 18:31:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789237867; cv=none; b=gBMvP+1BXCb8WwB7K4Yyv/d52PWQZ6fHk3s750HrhQjwy71+MVb8BRsArrOe6DTpW/5OGebXT/UNU25vcrcou/FGgEIF0TQOcQoVHab5Jz6Vdv6T3WPGCFfpSpwKl80y1S9iRFB0kwa5SIwuvc4S/4YQTjWqAHHjMDhFTknhkos=
+	t=1789237870; cv=none; b=nOz7cMAB/jZu+ReEP3gUhXnIPYFmRGaHegQMzt7G1008IClWtAeG4Q96XEUs/krOXMJhWZOU1PcbUi4OtpNtsFSdu0YucO7bhret1EIELZAdpkcvRiMxkLd+n1h+I4hbFAVxotiOqpiKdqVSjYwOhSlmfiaq8IcNY0yb6w6c0ak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789237867; c=relaxed/simple;
-	bh=zOSF+AFZzTvPZhdeyELcnx020nxprJJ1LoV7L9kVfwo=;
+	s=arc-20240116; t=1789237870; c=relaxed/simple;
+	bh=JMeWSlQWGbrmEIXy1R0FCP8NieZKj3fNj52pMy9C3mQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OhFLXFAlyQ8mvo5Wv1rn3zKQCBvk8dgV3wh4qTJT+EcvVVesmaQb8F7zxnzyEo2duN6Gr3Q8lVsp9AVJ+EXI32XgJUB9k2arHJ1nVvR/VB0iVL3hIhosHHvT1sUUTrWDjvx5jVmwJd9dOY3uUXAleuoQXCNPcNf9cqAf+JlT6qM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I+Xgz03+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=irt9cXCiq4cqHz9vOYp5Six1zskUCbelvaQq8Ia8y53upIYx5hdw+BXWqIAN3o4K0hhOm+SvpO21sHo1Ssb7waHNUqCn4oe869HMf4/vj3KIsAvyW+d1z858oZa+aNtVcx9HumXRYTtILuXqaAKqqPy1DwFtFelh/08Z8C7/LCI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q1K9sEum; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I+Xgz03+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E5101F000FF;
-	Sat, 12 Sep 2026 18:31:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q1K9sEum"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 071E61F000FF;
+	Sat, 12 Sep 2026 18:31:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789237864;
-	bh=19LOc5mVcIujZb3LibM2gh6PM2xoZYTFs5t63X+n47Q=;
+	s=korg; t=1789237869;
+	bh=pqfJlOYwNRJo0D3OhJAYbq+OAgf8/pbdDZUDoqX+cak=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I+Xgz03+iQLtZhYbHsrPsyKG53FX+Lf1B4Gl60gx7XGiLb9fFEtFRVgnyN0jWuJRj
-	 vCXa9HTDD1kn2IV52iPiuqViLuKng81rFQNL8EdBfkZS0ENUJ/CVZZFNTKKZRfZiG7
-	 r2XSdLU5ZfXhxPt7i1jJSNTNL5cigh40PsFn7Mig=
+	b=Q1K9sEumkuTkQvLS9hxjcdIhW638GrhBjnQ9aPA3L5ntlNSW7RR9IhoX06KsAuKHh
+	 C0+Enx76c4yXZsHBG1PvhEaK7eN1lCnQdVRlJt+tHhdyB41QI3lFor++iDBjwje6ne
+	 LidYbowSLHjkDBs+n1irglNQxEx/YXqTEaBFWrNI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
-	Valery Borovsky <vebohr@gmail.com>
-Subject: [PATCH 5.15 308/935] media: airspy: use vb2_video_unregister_device() on disconnect to fix NULL deref
-Date: Sat, 12 Sep 2026 08:55:38 +0200
-Message-ID: <20260912065533.871070083@linuxfoundation.org>
+	Sashiko <sashiko-dev@google.com>,
+	Nilesh Javali <njavali@marvell.com>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>
+Subject: [PATCH 5.15 344/935] scsi: qla2xxx: Zero mailbox struct in qla2x00_get_firmware_state()
+Date: Sat, 12 Sep 2026 08:56:14 +0200
+Message-ID: <20260912065534.697212277@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -50,78 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Valery Borovsky <vebohr@gmail.com>
+From: Nilesh Javali <njavali@marvell.com>
 
-commit 2f378dc45e685fc825d2dd08e7864666d6fcc009 upstream.
+commit 9efaa782845b4d5fb3e01242be0d06ebc7428d8f upstream.
 
-airspy_disconnect() clears s->udev under v4l2_lock, but
-airspy_stop_streaming() unconditionally calls airspy_ctrl_msg() and
-airspy_free_stream_bufs() afterwards. If a streaming user closes the
-device after disconnect, stop_streaming() runs and dereferences the
-NULL s->udev:
+The mbx_cmd_t is allocated on the stack but left uninitialized.
+qla2x00_mailbox_command() has several early-return paths (PCI permanent
+failure, device failed, EEH busy, ISP abort pending, mailbox access
+timeout, purge mbox) that return without writing the input mailbox
+registers back into mcp->mb[]. qla2x00_get_firmware_state() then
+unconditionally copies mcp->mb[1..6] (and mb[12]) into the caller's
+states[] array regardless of the return value.
 
-  airspy_stop_streaming()
-    airspy_ctrl_msg(s, CMD_RECEIVER_MODE, 0, 0, NULL, 0)
-      usb_sndctrlpipe(s->udev, 0)         /* NULL deref */
-    airspy_free_stream_bufs(s)
-      usb_free_coherent(s->udev, ...)     /* NULL deref */
+On such a failure the copied values are uninitialized kernel stack
+memory, which is then exposed to userspace via the fw_state and
+mpi_fw_state sysfs handlers. Zero the mailbox struct so a failed query
+yields deterministic zeroed state instead of leaking stack contents.
 
-The airspy driver uses vb2_fop_release() in its file_operations, so
-replace video_unregister_device(&s->vdev) with
-vb2_video_unregister_device(&s->vdev) and move it before clearing
-s->udev. vb2_video_unregister_device() releases the vb2 queue, which
-synchronously runs airspy_stop_streaming() if streaming is active, so
-the URBs, coherent DMA stream buffers and the hardware stop control
-message all execute while s->udev is still valid.
-
-vb2_video_unregister_device() locks vdev->queue->lock (vb_queue_lock)
-internally, and stop_streaming() locks v4l2_lock, so the previous outer
-mutex_lock(&s->vb_queue_lock) / mutex_lock(&s->v4l2_lock) pair around
-the unregister sequence would self-deadlock and has been removed. A
-short v4l2_lock critical section around s->udev = NULL remains so any
-ioctl path that still holds the file descriptor sees coherent state.
-
-Issue identified by automated review of the INV-003 series at
-https://sashiko.dev/
-
-Fixes: 634fe5033951 ("[media] airspy: AirSpy SDR driver")
+Fixes: 4d4df1932b6b ("[SCSI] qla2xxx: Add ISP84XX support.")
 Cc: stable@vger.kernel.org
-Suggested-by: Hans Verkuil <hverkuil+cisco@kernel.org>
-Signed-off-by: Valery Borovsky <vebohr@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Reported-by: Sashiko <sashiko-dev@google.com>
+Signed-off-by: Nilesh Javali <njavali@marvell.com>
+Link: https://patch.msgid.link/20260730155838.2119230-9-njavali@marvell.com
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/airspy/airspy.c |   17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
+ drivers/scsi/qla2xxx/qla_mbx.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/media/usb/airspy/airspy.c
-+++ b/drivers/media/usb/airspy/airspy.c
-@@ -461,14 +461,21 @@ static void airspy_disconnect(struct usb
+--- a/drivers/scsi/qla2xxx/qla_mbx.c
++++ b/drivers/scsi/qla2xxx/qla_mbx.c
+@@ -2208,6 +2208,8 @@ qla2x00_get_firmware_state(scsi_qla_host
+ 	if (!ha->flags.fw_started)
+ 		return QLA_FUNCTION_FAILED;
  
- 	dev_dbg(s->dev, "\n");
- 
--	mutex_lock(&s->vb_queue_lock);
-+	/*
-+	 * vb2_video_unregister_device() releases the vb2 queue, which
-+	 * triggers airspy_stop_streaming() if streaming is active.
-+	 * stop_streaming() dereferences s->udev via airspy_ctrl_msg() and
-+	 * airspy_free_stream_bufs(), so it must run before s->udev is
-+	 * cleared. vb2_video_unregister_device() locks vb_queue_lock
-+	 * internally and stop_streaming() locks v4l2_lock, so neither may
-+	 * be held by the caller.
-+	 */
-+	v4l2_device_disconnect(&s->v4l2_dev);
-+	vb2_video_unregister_device(&s->vdev);
++	memset(&mc, 0, sizeof(mc));
 +
- 	mutex_lock(&s->v4l2_lock);
--	/* No need to keep the urbs around after disconnection */
- 	s->udev = NULL;
--	v4l2_device_disconnect(&s->v4l2_dev);
--	video_unregister_device(&s->vdev);
- 	mutex_unlock(&s->v4l2_lock);
--	mutex_unlock(&s->vb_queue_lock);
- 
- 	v4l2_device_put(&s->v4l2_dev);
- }
+ 	mcp->mb[0] = MBC_GET_FIRMWARE_STATE;
+ 	mcp->out_mb = MBX_0;
+ 	if (IS_FWI2_CAPABLE(vha->hw))
 
 
