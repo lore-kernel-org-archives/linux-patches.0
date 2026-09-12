@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7EC12737FC;
-	Sat, 12 Sep 2026 10:18:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D216311597;
+	Sat, 12 Sep 2026 10:18:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789208298; cv=none; b=bzeCc3nF0/wISa+owiRH0KK9RT1pjkVqHiz35Z7l6W9tghdaN01MVTIg1+p9+9ipOXTX6e3dx2VrnPwJBYVhflfH2a64S3Gq3vL1ozV92tnXbyqC/lyUcKew1pLhlaO87/tuzDj94ixLOE9KnoewFajJMNZp2hhEJK2HHfdEEL4=
+	t=1789208303; cv=none; b=VhKNpCeN4lYfLpS1Uat9EiIEc1njAjv0HeFEnWR9DtxIyPASbmjsgdeoHFD/4EJqpGrzBKMV110XlN+mF4XJMsbPdmPm7mbW7Dw8I5s4sqrfzEONU5IYyvy4H+es6gtyx5hAck075eD57wMPJ49PDiQxZPntUePAWHLMt09JGWw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789208298; c=relaxed/simple;
-	bh=7V5UGDHJIXVQNVan1CgYl9f9SADzpWN2eSFPKrJC0Rc=;
+	s=arc-20240116; t=1789208303; c=relaxed/simple;
+	bh=aYj7ti1OjRVuj5VDn1kz1eLZpgnNYBEBMu36KInmWQg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S1gWE3AMmN5riIrdHVxEINlQFFd9jefEfaO6mAQmq6XHGKJTLacPge0qUSanQqo2Fd704GAmKJWp1KbULc0r0P3GLen0FnD5fUqJv7zsnopOpI20xbWheHAqrXXV6rgn3CM4Q8uU2Bf7vwlcNbytoU65cfACqsi4I2f1vXvEhOo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LP9mft4h; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=m3xuXt9prjqNgi78bZLfLfOtPpHOwfG0I7RFvjC8B401oUT6//3dB+D4n8qqikXN7q7bf0J16H/X5/1CDru/0npp02bU5iue9CRd0S+xEnlSt3qnwcnXoQCfk291t2KnIGjfwHWvqe5xt1w0y8twoxwK48EeGcyrv4l2uHW4kLA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zKTM3Rqd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LP9mft4h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1BAD1F000FF;
-	Sat, 12 Sep 2026 10:18:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zKTM3Rqd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E69B71F000FF;
+	Sat, 12 Sep 2026 10:18:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789208296;
-	bh=oJGhkRdL+b5xR6fJX432Rr03cT+LULtVj1JeoPaZG+s=;
+	s=korg; t=1789208301;
+	bh=HA+yuVqkoLL7BDFX99+SomDMjTbKkKycEkG1/yr3pVY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LP9mft4hb1UOksP7MlFuwuaNi86Gj9drrz46uJ2IWdrL5XisUeVXQA6WkBRHUQtLf
-	 rRcaa6cK3DXvOEP61veg+pzKduPIx7Btk1qIzzU3a24gB3BrHNqn7LeeH07QCLfJSl
-	 4tTSYN1A8xl1+iXaZCa/rqoxEg0SG60+qcm2wQ9E=
+	b=zKTM3RqdHqVe9CgSHH5mM4d0q0D1FgKRZq9JrLkaaVS8pLK1N8wy2EIUE6CnC/JW/
+	 H+a2a7+cWFO7mrvcUMzHLmrGDnMrorg5OlmLX1+sAxgC3B20Ej0xmD8l4ymxH7ErMd
+	 IinOY+1KwXucxAOOcireTK4UW7C9WKqx3CwaNK3Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yichong Chen <chenyichong@uniontech.com>,
-	Jan Kara <jack@suse.cz>,
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
+	Brian Masney <bmasney@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0588/1518] isofs: release zisofs block pointer buffer head
-Date: Sat, 12 Sep 2026 08:45:57 +0200
-Message-ID: <20260912065636.729266454@linuxfoundation.org>
+Subject: [PATCH 6.18 0589/1518] clk: mediatek: mt6735: Unregister PLLs on probe failure
+Date: Sat, 12 Sep 2026 08:45:58 +0200
+Message-ID: <20260912065636.751122940@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,36 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yichong Chen <chenyichong@uniontech.com>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-[ Upstream commit 2f7dd9b86fe4076059e6a4a2a2c5d565afd76b9e ]
+[ Upstream commit 935ad6242c47b37380d0cb7ec366516fe11855b4 ]
 
-zisofs_fill_pages() reads the compressed block pointer table.  The error
-paths release the current buffer_head, the loop also releases the old
-buffer_head when it advances. However, the success path leaves the last
-buffer_head referenced. Release it before returning success.
+mtk_clk_register_plls() registers the apmixedsys PLL clocks manually, while
+clk_mt6735_apmixed_remove() unregisters them on driver removal.
 
-Fixes: 59bc055211b8 ("zisofs: Implement reading of compressed files when PAGE_CACHE_SIZE > compress block size")
-Signed-off-by: Yichong Chen <chenyichong@uniontech.com>
-Link: https://patch.msgid.link/20260721091152.1450622-1-chenyichong@uniontech.com
-Signed-off-by: Jan Kara <jack@suse.cz>
+If devm_of_clk_add_hw_provider() fails after the PLL registration succeeds,
+probe returns the error directly and the remove callback is not run. This
+leaves the registered PLL clocks behind on the probe failure path.
+
+Unregister the PLLs in that failure branch before returning the error.
+
+Fixes: 43c04ed79189 ("clk: mediatek: Add drivers for MediaTek MT6735 main clock and reset drivers")
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Reviewed-by: Brian Masney <bmasney@redhat.com>
+Signed-off-by: Brian Masney <bmasney@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/isofs/compress.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/clk/mediatek/clk-mt6735-apmixedsys.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/fs/isofs/compress.c b/fs/isofs/compress.c
-index 172faf79a259d..4500b14f802a6 100644
---- a/fs/isofs/compress.c
-+++ b/fs/isofs/compress.c
-@@ -293,6 +293,7 @@ static int zisofs_fill_pages(struct inode *inode, int full_page, int pcount,
- 		memzero_page(*pages, poffset, PAGE_SIZE - poffset);
- 		SetPageUptodate(*pages);
- 	}
-+	brelse(bh);
- 	return 0;
- }
+diff --git a/drivers/clk/mediatek/clk-mt6735-apmixedsys.c b/drivers/clk/mediatek/clk-mt6735-apmixedsys.c
+index e0949911e8f7d..be51b97cab1f3 100644
+--- a/drivers/clk/mediatek/clk-mt6735-apmixedsys.c
++++ b/drivers/clk/mediatek/clk-mt6735-apmixedsys.c
+@@ -102,9 +102,12 @@ static int clk_mt6735_apmixed_probe(struct platform_device *pdev)
  
+ 	ret = devm_of_clk_add_hw_provider(&pdev->dev, of_clk_hw_onecell_get,
+ 					  clk_data);
+-	if (ret)
++	if (ret) {
+ 		dev_err(&pdev->dev,
+ 			"Failed to register clock provider: %d\n", ret);
++		mtk_clk_unregister_plls(apmixedsys_plls, ARRAY_SIZE(apmixedsys_plls),
++					clk_data);
++	}
+ 
+ 	return ret;
+ }
 -- 
 2.53.0
 
