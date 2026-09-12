@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA0EB3749FA;
-	Sat, 12 Sep 2026 16:41:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D891D288B9;
+	Sat, 12 Sep 2026 16:41:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789231299; cv=none; b=F0l/aqoZxEeIiQGFz46Uf424oof1r4YInct2rO0J58wX2Qbuab3exJS4n8FELjmuZgG7ZaDl8KnMVg/71DQJqSLvpMO0kZ2nN9qyNlt0HTQ3Xo4mn1yiQxqGykUwdgAHSu4YtUS8WclfnRzFhRoohWA0vdsYiJr6Rms+kPfhnP0=
+	t=1789231304; cv=none; b=CdXWFH5RNvxHUkxmAZBY0he7/396l8VetkeAkITJFiqRVA9/ZNnROTjsXlkQgll3ciN+g658oTGKN8sctMxg+y1BORGoUM8ALTo1U642i8vKQCfzPvRq7aTtNNbebusSaimi1RnKVj34WlXm6/GwP5WjumpqT1A6/lpTLyxHnn8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789231299; c=relaxed/simple;
-	bh=NTGTqSf61JgBdobL9GFN8Sm5eRLR0jKShHEIn9oSYrs=;
+	s=arc-20240116; t=1789231304; c=relaxed/simple;
+	bh=zm6E96WNIbcVgeGKyQKYbC57eb56JJhFYP1NYZPNWlw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SKyF4pgB0XGGEMVKEugqnZC2VMFQOA9V+tRhA3yG0BK2aFY+D6WCZiFg+hy0CKfPDIfWCApM16r+eZ/kPHGuk8bEPxqJNbUpmsqdu+lsU/G+Q31DXgzirzQMKdvyXAmNsGz9uYEKSH/hY7nQaymUZBNo+7VwTTvnCHegIp/J5OE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CfkMC/+I; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=LzLU6rH+5sSAsNXSHOueQIc5OM+ORYNvz+lYlvUlskA8RuxdnVjgKInbNGTh93btqappmlokZSYrHTtQlAnI1o3xibkUWxbARkW2svmqQD3SyXJdn2RhniPP/EIafh6mCl3ojIMZ7tQQZ65PIZTYzWVzM0kZjdMOGDGMlRVy1HI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iLrDS580; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CfkMC/+I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F163B1F000FF;
-	Sat, 12 Sep 2026 16:41:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iLrDS580"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD2281F000FF;
+	Sat, 12 Sep 2026 16:41:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789231298;
-	bh=rbclUscVM682MaGATk1aqjsXaudDQ1BbtIqlW3QJYGE=;
+	s=korg; t=1789231302;
+	bh=29/IDWZ8SMDPpBqKRtsG2iTioKoYWdHKtMOfjVEIvZ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CfkMC/+IfO1iOy4mbDfdXWNoSaZIZXWKXL3NTARAyRK6Y5prTSY8pgKg+yY2cqHVY
-	 BdqaAryLwKG1ARN2IemMTChfE12R2xUMNQTzYMbURw7kBTx5dDaNVgHJ9SJ4mavlOP
-	 VsSEf2fIsqXViCasMBeOQwIXZy8ke1xRcdGgW7GU=
+	b=iLrDS580WxxINTWQOlfb9XUMOSotQV0aXoNbhS4eHeUxDmKOGazNyvAyk7uYSyEU6
+	 xJiNs8oZ28zLTpnuS+eQvGhsPcERfQZB4WVkOsL5LICu5fCaCMjarjqdXwjtd6OEDC
+	 0Jo6YKuy9oHg7JyjuWzlSF5Ygsghup3lk++5U4v4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	HyeongJun An <sammiee5311@gmail.com>,
+	=?UTF-8?q?Jonas=20Dre=C3=9Fler?= <verdre@v0yd.nl>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0927/1191] Bluetooth: virtio_bt: avoid OOB read of build info string
-Date: Sat, 12 Sep 2026 09:00:55 +0200
-Message-ID: <20260912065609.051080130@linuxfoundation.org>
+Subject: [PATCH 6.1 0928/1191] Bluetooth: hci_event: Use HCI error defines instead of magic values
+Date: Sat, 12 Sep 2026 09:00:56 +0200
+Message-ID: <20260912065609.073236247@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -45,60 +45,84 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: HyeongJun An <sammiee5311@gmail.com>
+From: Jonas Dreßler <verdre@v0yd.nl>
 
-[ Upstream commit 502adc06ba76dee19c292ae4a07d74d202fe734d ]
+[ Upstream commit 79c0868ad65a8fc7cdfaa5f2b77a4b70d0b0ea16 ]
 
-The virtbt_setup_zephyr() sends the Zephyr vendor command 0xfc08 (Read
-Build Information) and hands the response to bt_dev_info() and
-hci_set_fw_info() as a "%s" string starting at skb->data + 1, without
-checking the length. A backend that answers with status only leaves that
-pointer past the end of the received data, so the walk reads adjacent
-slab memory until it meets a NUL. Those bytes reach the kernel log and
-the firmware-info debugfs file.
+We have error defines already, so let's use them.
 
-To fix this, print the string with a bounded "%.*s" limited to
-skb->len - 1. A short or unterminated response then prints as much as
-arrived instead of failing setup.
-
-This mirrors commit dd068ef04412 ("Bluetooth: bpa10x: avoid OOB read of
-revision string in bpa10x_setup()"), which fixed the identical pattern.
-
-Fixes: afd2daa26c7a ("Bluetooth: Add support for virtio transport driver")
-Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
-Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Jonas Dreßler <verdre@v0yd.nl>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Stable-dep-of: 42de40abe25d ("Bluetooth: hci_conn: fix the SCO setup context lifetime")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/virtio_bt.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ include/net/bluetooth/hci.h | 2 ++
+ net/bluetooth/hci_event.c   | 8 ++++----
+ 2 files changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/bluetooth/virtio_bt.c b/drivers/bluetooth/virtio_bt.c
-index e543196a91518..f7438735884ab 100644
---- a/drivers/bluetooth/virtio_bt.c
-+++ b/drivers/bluetooth/virtio_bt.c
-@@ -112,9 +112,13 @@ static int virtbt_setup_zephyr(struct hci_dev *hdev)
- 	if (IS_ERR(skb))
- 		return PTR_ERR(skb);
+diff --git a/include/net/bluetooth/hci.h b/include/net/bluetooth/hci.h
+index 22b9c031986a2..403988938ea1f 100644
+--- a/include/net/bluetooth/hci.h
++++ b/include/net/bluetooth/hci.h
+@@ -623,6 +623,7 @@ enum {
+ #define HCI_ERROR_PIN_OR_KEY_MISSING	0x06
+ #define HCI_ERROR_MEMORY_EXCEEDED	0x07
+ #define HCI_ERROR_CONNECTION_TIMEOUT	0x08
++#define HCI_ERROR_COMMAND_DISALLOWED	0x0c
+ #define HCI_ERROR_REJ_LIMITED_RESOURCES	0x0d
+ #define HCI_ERROR_REJ_BAD_ADDR		0x0f
+ #define HCI_ERROR_INVALID_PARAMETERS	0x12
+@@ -631,6 +632,7 @@ enum {
+ #define HCI_ERROR_REMOTE_POWER_OFF	0x15
+ #define HCI_ERROR_LOCAL_HOST_TERM	0x16
+ #define HCI_ERROR_PAIRING_NOT_ALLOWED	0x18
++#define HCI_ERROR_UNSUPPORTED_REMOTE_FEATURE	0x1e
+ #define HCI_ERROR_INVALID_LL_PARAMS	0x1e
+ #define HCI_ERROR_UNSPECIFIED		0x1f
+ #define HCI_ERROR_ADVERTISING_TIMEOUT	0x3c
+diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
+index e48df723afcdd..aa879b0b64cf5 100644
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -90,11 +90,11 @@ static u8 hci_cc_inquiry_cancel(struct hci_dev *hdev, void *data,
+ 	/* It is possible that we receive Inquiry Complete event right
+ 	 * before we receive Inquiry Cancel Command Complete event, in
+ 	 * which case the latter event should have status of Command
+-	 * Disallowed (0x0c). This should not be treated as error, since
++	 * Disallowed. This should not be treated as error, since
+ 	 * we actually achieve what Inquiry Cancel wants to achieve,
+ 	 * which is to end the last Inquiry session.
+ 	 */
+-	if (rp->status == 0x0c && !test_bit(HCI_INQUIRY, &hdev->flags)) {
++	if (rp->status == HCI_ERROR_COMMAND_DISALLOWED && !test_bit(HCI_INQUIRY, &hdev->flags)) {
+ 		bt_dev_warn(hdev, "Ignoring error of Inquiry Cancel command");
+ 		rp->status = 0x00;
+ 	}
+@@ -2245,7 +2245,7 @@ static void hci_cs_create_conn(struct hci_dev *hdev, __u8 status)
  
--	bt_dev_info(hdev, "%s", (char *)(skb->data + 1));
-+	/* Bounded print: the backend controls skb->len. */
-+	if (skb->len > 1) {
-+		int len = skb->len - 1;
- 
--	hci_set_fw_info(hdev, "%s", skb->data + 1);
-+		bt_dev_info(hdev, "%.*s", len, (char *)(skb->data + 1));
-+		hci_set_fw_info(hdev, "%.*s", len, skb->data + 1);
-+	}
- 
- 	kfree_skb(skb);
- 	return 0;
+ 	if (status) {
+ 		if (conn && conn->state == BT_CONNECT) {
+-			if (status != 0x0c || conn->attempt > 2) {
++			if (status != HCI_ERROR_COMMAND_DISALLOWED || conn->attempt > 2) {
+ 				conn->state = BT_CLOSED;
+ 				hci_connect_cfm(conn, status);
+ 				hci_conn_del(conn);
+@@ -6410,7 +6410,7 @@ static void hci_le_remote_feat_complete_evt(struct hci_dev *hdev, void *data,
+ 			 * transition into connected state and mark it as
+ 			 * successful.
+ 			 */
+-			if (!conn->out && ev->status == 0x1a &&
++			if (!conn->out && ev->status == HCI_ERROR_UNSUPPORTED_REMOTE_FEATURE &&
+ 			    (hdev->le_features[0] & HCI_LE_PERIPHERAL_FEATURES))
+ 				status = 0x00;
+ 			else
 -- 
 2.53.0
 
