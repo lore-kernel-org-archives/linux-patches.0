@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C33E747DFBF;
-	Sat, 12 Sep 2026 13:30:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AA1F47DFBF;
+	Sat, 12 Sep 2026 13:30:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789219838; cv=none; b=qREBUKBF2VPBaeGGlpvkNyjsF1eumSkqkMolivAsByv9otKB6/RwRr4ShtYIKX7VL0R+cIxhRACZRYLXpL0VB2WJjWev/jWynDAqRGflwn9t3jj3zHmn/rN3CrC5PKq4IcSlJ2WwG4AAHftxxx+3Z9Zfv+Sa5zxGgzXcoSdGgrM=
+	t=1789219843; cv=none; b=L1dMeVtIpMdPRbQZ9w3ygyyY2o9gkx4ImG4xWSioqv1l/9IQGyd8YW95H2TzXRHy1HU8Gf4W1I/O2TzrUcWuRVoAaYBFDGKwah25pw64AfJCRwTZITSPq2BBOS6N9IuV7E4DfGp5x4XZD6WrUe5xjCZiqNJU5ZfzuOlJg85QelA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789219838; c=relaxed/simple;
-	bh=bbKMgmc00xYrPw0Zu+biq4Vr2iu01cF0leisw9XFPWg=;
+	s=arc-20240116; t=1789219843; c=relaxed/simple;
+	bh=rvu2/8+QF1p9Jl+Z72AhHEeb/STVu5nA6IBIazI8xuU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jZV8fiyCIdGHjMBTQGEVWiErabQg5hZ6cZhdjHdSz9Zh6AtXOppIKsIG2M3D1qmeJqfvsYnh8TmWNQat16ugYaWZeQSJZdnAIE9hLz1wEIlqjhP98+pxFQ19ExybT+IYIZ6PMZdVG6ZTI9ERBa70HX1PXTeRJIWmvOq60nOSsyA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dcAuy/47; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JHcbU6boNukbzEkzUas8Z7DRh1tljV5R4h9yZuzJ92IX4EHyM8OeViGtXBU+Hm7xrfI5gCM1vTodZAFwv0VOxZ6XTA/wYvMRRoNVMoykeisSu2CRq//ycpGaHWJ7ZLPzYZO0PuobA7fG8MWnUM4eTDzGrAl6cAvLim9krZ5tJTc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mnV4xeJG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dcAuy/47"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C4B91F000FF;
-	Sat, 12 Sep 2026 13:30:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mnV4xeJG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EDD61F000FF;
+	Sat, 12 Sep 2026 13:30:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789219837;
-	bh=cg4CuJOkGcJNru2YjK9iL1hVemKhp1GAFwj2w8dSGwk=;
+	s=korg; t=1789219842;
+	bh=6USDRgFSVG63X8gPRZvXlzkDbrw33TJLBhIB6XCozZ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dcAuy/47cSl1g7LnhtkTL+RJ1rx2mBvO5yq1KFqyLrC841sa02peprE6dSYR2tByz
-	 qlR8KGoJ2O0e4w7UTgAKFAil/ayHmjTjO+wmxl3eUSBzY5izI/N1LaXrmwZR+nc42f
-	 K2v6k6maGrP4LaEOlETOB8cyyWXxRH/IuqBL7Lv0=
+	b=mnV4xeJGSnNy3AAg63TWBAs6jl3huxZFtqa83JDB0Xfoij90rCGtWSCpaf3kZ4zdE
+	 SJBN1ikDCKAHt07V9cO6uy+8AQLKb2wv2kAWD9RjAILT4A6P0rcf08tzFgaPYn/vKi
+	 Nen7gJVIMDg6L3vceG4X0RKOUMsaWELXmNgOxBNM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Chris Mason <clm@meta.com>,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.6 0054/1424] nfsd: sample writeback error cursor before async COPY loop
-Date: Sat, 12 Sep 2026 08:41:26 +0200
-Message-ID: <20260912065608.512229811@linuxfoundation.org>
+Subject: [PATCH 6.6 0055/1424] nfsd: validate symlink target length in NFSv4 CREATE
+Date: Sat, 12 Sep 2026 08:41:27 +0200
+Message-ID: <20260912065608.534246298@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -50,61 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Jeff Layton <jlayton@kernel.org>
 
-commit 20a67a7d18221af736f124770c2c5e859b479046 upstream.
+commit 041f57056e5fb9c80adc088269322d2c61074406 upstream.
 
-_nfsd_copy_file_range() samples dst->f_wb_err into "since"
-after the copy loop, then uses it to detect writeback errors
-via filemap_check_wb_err() once vfs_fsync_range() returns.
-Because the nfsd_file cache reuses a single struct file
-across requests targeting the same inode, a concurrent
-COMMIT or stable WRITE on dst advances dst->f_wb_err to the
-current mapping->wb_err via file_check_and_advance_wb_err()
-during its own vfs_fsync_range(). If that advancement lands
-between the writeback error appearing in mapping->wb_err
-and the COPY worker sampling "since", the worker captures
-the already-advanced cursor, errseq_check() sees cur ==
-since and returns zero, and NFSD4_COPY_F_COMMITTED is set
-even though writeback failed. CB_OFFLOAD then encodes
-wr_stable_how = FILE_SYNC4, the client treats the copied
-data as durable, and the failure becomes silent data loss.
+nfsd4_decode_create() accepts an unbounded cr_datalen from the wire for
+NF4LNK symlink targets, allowing a client to force a kmalloc of up to
+the maximum RPC payload size (several MiB) per COMPOUND op that persists
+until compound teardown.  The VFS rejects oversized targets with
+ENAMETOOLONG, but the allocation has already occurred.
 
-Sample since once at the start of the function. The cursor
-then reflects state in effect before this COPY issues any
-writes, and filemap_check_wb_err() detects any error that
-occurs during the copy regardless of which thread first
-observes it. This matches the pattern used by
-nfsd_vfs_write() and nfsd4_clone_file_range().
+Reject cr_datalen == 0 early with nfserr_inval and cr_datalen greater
+than NFS4_MAXPATHLEN (PATH_MAX) with nfserr_nametoolong to bound the
+allocation.
 
-Closes: https://sashiko.dev/#/patchset/20260522194441.436065-1-cel@kernel.org?part=1
-Fixes: 555dbf1a9aac ("nfsd: Replace use of rwsem with errseq_t")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260522214558.460859-1-cel@kernel.org
+Assisted-by: kres:claude-opus-4-7
+Reported-by: Chris Mason <clm@meta.com>
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Link: https://patch.msgid.link/20260530-nfsd-fixes-v2-9-f27e8eb4d974@kernel.org
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4proc.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/nfsd/nfs4xdr.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/fs/nfsd/nfs4proc.c
-+++ b/fs/nfsd/nfs4proc.c
-@@ -1639,6 +1639,7 @@ static ssize_t _nfsd_copy_file_range(str
- 	/* See RFC 7862 p.67: */
- 	if (bytes_total == 0)
- 		bytes_total = ULLONG_MAX;
-+	since = READ_ONCE(dst->f_wb_err);
- 	do {
- 		if (kthread_should_stop())
- 			break;
-@@ -1653,7 +1654,6 @@ static ssize_t _nfsd_copy_file_range(str
- 	} while (bytes_total > 0 && nfsd4_copy_is_async(copy));
- 	/* for a non-zero asynchronous copy do a commit of data */
- 	if (nfsd4_copy_is_async(copy) && copy->cp_res.wr_bytes_written > 0) {
--		since = READ_ONCE(dst->f_wb_err);
- 		end = copy->cp_dst_pos + copy->cp_res.wr_bytes_written - 1;
- 		status = vfs_fsync_range(dst, copy->cp_dst_pos, end, 0);
- 		if (!status)
+--- a/fs/nfsd/nfs4xdr.c
++++ b/fs/nfsd/nfs4xdr.c
+@@ -801,6 +801,10 @@ nfsd4_decode_create(struct nfsd4_compoun
+ 	case NF4LNK:
+ 		if (xdr_stream_decode_u32(argp->xdr, &create->cr_datalen) < 0)
+ 			return nfserr_bad_xdr;
++		if (create->cr_datalen == 0)
++			return nfserr_inval;
++		if (create->cr_datalen > NFS4_MAXPATHLEN)
++			return nfserr_nametoolong;
+ 		p = xdr_inline_decode(argp->xdr, create->cr_datalen);
+ 		if (!p)
+ 			return nfserr_bad_xdr;
 
 
