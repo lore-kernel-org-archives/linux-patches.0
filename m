@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5117924CEEA;
-	Sat, 12 Sep 2026 10:54:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01E2434752E;
+	Sat, 12 Sep 2026 10:55:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789210498; cv=none; b=K8aC92wNWeJHvIKzRrV1rhOoUkHMRhCWzZczPcnIdm1Xwb9Xkj+Jap/RSiBmBeb0RH1EAcT/NL8RlyONSDpGj2X0MAScDG6KAqj9I428Cd821Z98ape1KaiUQRF04o/M+Rl2BkOsU7lQn3m5urMQW2Oun65zkKS2lv4v7t0BtbE=
+	t=1789210503; cv=none; b=cd+7y/EmA2NzuE5gx7AMFvClCc4daPTnxWaPu8n5z4UVboRD/rUKbPQOB6UX8o/cwF9IPtsY6iT0U7JsRGDtGgrbmDbvOkkbRE/549NQdtkwCsiGC971mN14/Cv7y9sCXvO96oWOdg6KmDIPoI0PjuMHDQ2m8Y6cmOVF0L8Rnr0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789210498; c=relaxed/simple;
-	bh=X4XAuA7ta4SovhvKjXKY/GuXw7LHEnOKQEyOpoqtuiM=;
+	s=arc-20240116; t=1789210503; c=relaxed/simple;
+	bh=awukT3iJjsqEcXDqVIyG3ptJ5I725U3j/0tB0UAybSM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TRFsCLDNoerI/nPJ3jLSlezbuT7VfrBaN0QiKJQ4RJLVLsi//HjBEZq6OgVCXI1iyp4s7uRiAOXZJSJAqhXIhsRLQVuDGbkYc9fSM0GWMJvJc10rgUQWch4jX4i9VlHeXOC2g/qg7jg/o5Jm9vlYr4zbi3ZGDtCwZ1vMll5kT+E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EzuYxmrZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XrOScwBjQB9DH8Ymf2PGPWAGa9K4O61sSx1pbztK10z95Ob7CY9kZjhV9KTfFOPQVKTziZlnIOgZGzlBY44fF1pkyNywgdcVLPXkySYd+q3mMZXSwH04X+BmwgOSJ5MoJgy3R9xdJ4RG7JFIvMM699Z6O0wYXfiqNHmQbeYp5zE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vh8dWU3A; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EzuYxmrZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 559EC1F000FF;
-	Sat, 12 Sep 2026 10:54:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vh8dWU3A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAEC81F000FF;
+	Sat, 12 Sep 2026 10:55:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789210497;
-	bh=uLA6EyDPrJnjLbLdcSo9alOlnVVDva0LoXbdR0MZd68=;
+	s=korg; t=1789210501;
+	bh=yx5fy3xZgVlOd7C2PVJ9TUKXFDlwUm+bFI3l/Y6qgZE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EzuYxmrZkMRdbqQMiGhqqa4NM1SI5nip+6Ori0jnbsxY+XYvqrdvMCoE9vk9Wwjz4
-	 4Rh08vYp4N092U3+p3n6ytS/ZN0HnMoy1A5zxetXZ3/3UGt8sz/XLBR4N6BusOImsX
-	 QlmSR01G5wEn4PtJeDN7INaYUwrM73Ce5tApOYMw=
+	b=vh8dWU3Abg7KCPIemuhO/zc2ZoUwdj8QhqA+iEphldZ3h9K6H17wbpZN2S85K2Fkp
+	 6rfPKrNDTQXl10MiHnboLOt1QCFhbQxGHf64wq/wmfm11RAJMsaooU0NfZh7+DXk4f
+	 b6vcWynLcVC1mOftrxgculjoFb4pUCYbmvoApbEQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Victor Nogueira <victor@mojatatu.com>,
-	TencentOS Corvus AI <corvus@tencent.com>,
-	Aohan Mei <henrymei@tencent.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Mikhail Kshevetskiy <mikhail.kshevetskiy@iopsys.eu>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1038/1518] net/sched: cls_api: fix teardown of an adopted proto on insert-race loss
-Date: Sat, 12 Sep 2026 08:53:27 +0200
-Message-ID: <20260912065646.932223379@linuxfoundation.org>
+Subject: [PATCH 6.18 1012/1518] pinctrl: airoha: an7583: fix I2C0_SDA_PD register bit order
+Date: Sat, 12 Sep 2026 08:53:01 +0200
+Message-ID: <20260912065646.345800796@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -55,119 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Victor Nogueira <victor@mojatatu.com>
+From: Mikhail Kshevetskiy <mikhail.kshevetskiy@iopsys.eu>
 
-[ Upstream commit d4e359b3608a0e184bbe8d61a5c3b50d0831c44a ]
+[ Upstream commit d560e28bdca824781898023496658404df01be9f ]
 
-In tc_new_tfilter() the create branch sets tp_created = 1 before calling
-tcf_chain_tp_insert_unique(). When the caller loses the race (another
-request inserted a proto at the same chain/prio first), insert_unique()
-destroys the caller's own tp_new and returns the winner's proto with an
-extra reference. tp_created was never cleared, so the loser's errout
-path treated the winner's live proto as its own and called
-tcf_chain_tp_delete_empty() on it, silently unlinking an active
-classifier that the winning request already advertised via
-RTM_NEWTFILTER.
+I2C1_SCL_PD and RG_I2C1_SDA_PD bits are swapped, fix it.
 
-Track the outcome of the insert step in a single tri-state variable so
-each errout path reacts correctly:
-
-- TP_NOT_CREATED: no proto created; pursue the old path.
-- TP_CREATED: proto inserted successfully; same code path as before.
-- TP_NOT_OWNED: New - lost the insert race; tp is another request's proto
-  (chain ref already released by tp_new's destroy)
-
-Both errout reactions are single expressions derived from the state.
-
-This fix is motivated by the Sashiko's automated review of Patch
-(net/sched: cls_api: Always acquire rtnl_lock when destroying locked
-classifiers) [1][2]. The review identified the silent-unlink behaviour of
-an adopted proto's teardown when a request loses the
-tcf_chain_tp_insert_unique() race.
-
-[1] https://sashiko.dev/#/patchset/20260801125632.360365-1-jhs%40mojatatu.com
-[2] https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260801125632.360365-1-jhs%40mojatatu.com
-
-Fixes: 8b64678e0af8 ("net: sched: refactor tp insert/delete for concurrent execution")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260801125632.360365-1-jhs%40mojatatu.com
-Closes: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260801125632.360365-1-jhs%40mojatatu.com
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Signed-off-by: Victor Nogueira <victor@mojatatu.com>
-Reported-by: TencentOS Corvus AI <corvus@tencent.com>
-Tested-by: Aohan Mei <henrymei@tencent.com>
-Link: https://patch.msgid.link/20260805134049.927864-1-victor@mojatatu.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 3ffeb17a9a27 ("pinctrl: airoha: add support for Airoha AN7583 PINs")
+Signed-off-by: Mikhail Kshevetskiy <mikhail.kshevetskiy@iopsys.eu>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/cls_api.c | 18 +++++++++++++-----
- 1 file changed, 13 insertions(+), 5 deletions(-)
+ drivers/pinctrl/mediatek/pinctrl-airoha.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/sched/cls_api.c b/net/sched/cls_api.c
-index 21a70cc9940ce..d274514cd84df 100644
---- a/net/sched/cls_api.c
-+++ b/net/sched/cls_api.c
-@@ -2248,6 +2248,12 @@ static bool is_ingress_or_clsact(struct tcf_block *block, struct Qdisc *q)
- 	return tcf_block_shared(block) || (q && !!(q->flags & TCQ_F_INGRESS));
- }
+diff --git a/drivers/pinctrl/mediatek/pinctrl-airoha.c b/drivers/pinctrl/mediatek/pinctrl-airoha.c
+index 57352ebfaadd5..3729da8f7df5e 100644
+--- a/drivers/pinctrl/mediatek/pinctrl-airoha.c
++++ b/drivers/pinctrl/mediatek/pinctrl-airoha.c
+@@ -185,8 +185,8 @@
+ #define I2C_SDA_PU_MASK				BIT(0)
  
-+enum tcf_tp_insert_state {
-+	TP_NOT_CREATED = 0, /* did not create and insert a new tp */
-+	TP_CREATED, /* created and inserted a new tp */
-+	TP_NOT_OWNED, /* created a proto but failed to insert */
-+};
-+
- static int tc_new_tfilter(struct sk_buff *skb, struct nlmsghdr *n,
- 			  struct netlink_ext_ack *extack)
- {
-@@ -2268,12 +2274,12 @@ static int tc_new_tfilter(struct sk_buff *skb, struct nlmsghdr *n,
- 	unsigned long cl;
- 	void *fh;
- 	int err;
--	int tp_created;
-+	enum tcf_tp_insert_state tp_state;
- 	bool rtnl_held = false;
- 	u32 flags;
- 
- replay:
--	tp_created = 0;
-+	tp_state = TP_NOT_CREATED;
- 
- 	err = nlmsg_parse_deprecated(n, sizeof(*t), tca, TCA_MAX,
- 				     rtm_tca_policy, extack);
-@@ -2395,13 +2401,15 @@ static int tc_new_tfilter(struct sk_buff *skb, struct nlmsghdr *n,
- 			goto errout_tp;
- 		}
- 
--		tp_created = 1;
-+		tp_state = TP_CREATED;
- 		tp = tcf_chain_tp_insert_unique(chain, tp_new, protocol, prio,
- 						rtnl_held);
- 		if (IS_ERR(tp)) {
- 			err = PTR_ERR(tp);
- 			goto errout_tp;
- 		}
-+		if (tp != tp_new)
-+			tp_state = TP_NOT_OWNED;
- 	} else {
- 		mutex_unlock(&chain->filter_chain_lock);
- 	}
-@@ -2455,13 +2463,13 @@ static int tc_new_tfilter(struct sk_buff *skb, struct nlmsghdr *n,
- 	}
- 
- errout:
--	if (err && tp_created)
-+	if (err && tp_state == TP_CREATED)
- 		tcf_chain_tp_delete_empty(chain, tp, rtnl_held, NULL);
- errout_tp:
- 	if (chain) {
- 		if (tp && !IS_ERR(tp))
- 			tcf_proto_put(tp, rtnl_held, NULL);
--		if (!tp_created)
-+		if (tp_state == TP_NOT_CREATED)
- 			tcf_chain_put(chain);
- 	}
- 	tcf_block_release(q, block, rtnl_held);
+ #define REG_I2C_SDA_PD				0x0048
+-#define AN7583_I2C1_SDA_PD_MASK			BIT(16)
+-#define AN7583_I2C1_SCL_PD_MASK			BIT(15)
++#define AN7583_I2C1_SCL_PD_MASK			BIT(16)
++#define AN7583_I2C1_SDA_PD_MASK			BIT(15)
+ #define SPI_MISO_PD_MASK			BIT(14)
+ #define SPI_MOSI_PD_MASK			BIT(13)
+ #define SPI_CLK_PD_MASK				BIT(12)
 -- 
 2.53.0
 
