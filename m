@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E12D352003;
-	Sat, 12 Sep 2026 09:03:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD775352003;
+	Sat, 12 Sep 2026 09:03:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789203797; cv=none; b=qAO0462obQ0QCNU45XVwyPXcoPC0OhGat5Yf0kzLILEn71/M8I+3GT3b157fKmXHvRX0dnIAu/n4gbOMDpYFOHoV0BgE0kwRWKIwSVTTwxY8nLrtzBsSHnXvAPVDDuVxlboUqAhsUBqKvKqi05MT2WN3srYUJ7B+SIx8WTSFyl0=
+	t=1789203802; cv=none; b=PIwLcNTKZLlrXDlOS57M4E8nRZYZqFESQedYbhS3iZlmkYQjKjoJewmzmzm3Uh1O104ucBIB7GFLe5XbKuAsOZGhWC3CT4hs7m901MVO3T2auK9D91Zm0kZkoGGDIxJFtH281qY4fOtIUXYRj7h8WhU61YbUQarlq+EF9dxWh0o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789203797; c=relaxed/simple;
-	bh=9yvBMLxOPZp+KzFEy1eGNh0R8Ih2gQB2WdS4wyonwj8=;
+	s=arc-20240116; t=1789203802; c=relaxed/simple;
+	bh=CLiqT17TlHRlyB3iNU0uDwyxUYTSI2Ba/j4RyqyChD8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CayuUna2hkOWzb6XzmE3vzupPtyBw6UXe2jIgzi3ErTHG3RW5JyaFr7mQAZEFCvB6c0uZKUybxG8hKZVQnnF/y4tvhmHwbEyqCFRIkf2rKN0Mm2JLkLcQIpOX2UAuBWHferjrBnuZ7bu7xm0XyuPes4j2r+KMIxPdPsRywmArm0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D2XUfZSM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qRlUXLcKdrXFwjnVkAfSm4Q9Gm/WLlOwtqEtiWXeSpapvOAc3EUcFuabqWG+S8htU/gwrGszUavZi05O4HL6J0Jw9e9BoOzB4XysPCTsusH9tFfHRfV7PSJAux/BorQyzrhl2UQksmg3jczZj7SayVIbv2yB+eO6q/EdnYY+k2w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ji0+tw1A; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D2XUfZSM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A22421F000FF;
-	Sat, 12 Sep 2026 09:03:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ji0+tw1A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAF131F000FF;
+	Sat, 12 Sep 2026 09:03:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789203796;
-	bh=pzjWPlq4vdHQ0+Pq3EsNldfBI3owER0a6X42GG3VBqE=;
+	s=korg; t=1789203800;
+	bh=kUrJDkXutX6mhdf+AA/q6JlBfwPQJTMIeuUU3k+YP7w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D2XUfZSMD9nph9CbEXM/dgcbBQkNMmwk7a5b+8DsdoceUHKQ3468iwlj+HsE62YKP
-	 zg87QoBVLRLQ1QrM9Xc9IOj7OYWsvPgNUXxLFjaCrP1ZJlQJHosfugq6kyz3a6xYye
-	 46O8vYkItQ8tchOWty1Frk041JNed+n6gHg5kq2Y=
+	b=ji0+tw1AqzywZyNJQE1K+22iNVFVZBpZHDSNwUpPTSYOaSoxewIyS/Rmwb+e3fkh9
+	 mKG37Cxg8u8AZLF11Tyb09MOuni2sMW+mczC3t46cJZarWswGAArylVf4Tpyu/vvmd
+	 33ACcEJN1ynpdMCQZJ3Fl4lu0Kx+QFfXlzjsb5Rw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bart Van Assche <bvanassche@acm.org>,
 	Zizhi Wo <wozizhi@huawei.com>,
 	Damien Le Moal <dlemoal@kernel.org>,
+	Bart Van Assche <bvanassche@acm.org>,
 	Nilay Shroff <nilay@linux.ibm.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1481/1815] null_blk: use DEFINE_MUTEX for the file-scope mutex
-Date: Sat, 12 Sep 2026 08:53:51 +0200
-Message-ID: <20260912065723.774858300@linuxfoundation.org>
+Subject: [PATCH 7.2 1482/1815] null_blk: register configfs subsystem after creating default devices
+Date: Sat, 12 Sep 2026 08:53:52 +0200
+Message-ID: <20260912065723.797934847@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -56,71 +56,101 @@ Content-Transfer-Encoding: 8bit
 
 From: Zizhi Wo <wozizhi@huawei.com>
 
-[ Upstream commit 017dac7670909eaea3eb36e6b3b5a8be9ce0a14d ]
+[ Upstream commit c9d293d6bb0575fcb1f3408129453187e2a28a4e ]
 
-In null_init(), mutex_init(&lock) currently happens after
-configfs_register_subsystem(), which exposes the nullb subsystem to
-userspace. A racing mkdir() into /sys/kernel/config/nullb/ can reach
-null_find_dev_by_name() -> mutex_lock(&lock) before the mutex is
-initialized, trigger warning:
+In null_init(), configfs_register_subsystem() currently runs before
+register_blkdev(), so when null_blk is built as a module, a racing mkdir()
++ poweron from userspace can reach null_add_dev() while null_major is still
+0. __add_disk() then hits WARN_ON(disk->minors) (major=0 with minors!=0)
+and fails:
 
-[  123.137788] DEBUG_LOCKS_WARN_ON(lock->magic != lock)
-[  123.137796] WARNING: kernel/locking/mutex.c:159 at mutex_lock+0x171/0x1c0, CPU#13: mkdir/1301
-[  123.140090] Modules linked in: null_blk(+) nft_fib_inet nft_fib_ipv4
+[root@fedora ~]# [ 2366.521436] WARNING: block/genhd.c:476 at __add_disk+0x8a7/0xde0,
+[ 2366.523552] Modules linked in: null_blk(+) nft_fib_inet nft_fib_ipv4 nft_fib_ipv6 nft_fib
+[ 2366.529081] CPU: 26 UID: 0 PID: 1600 Comm: sh Not tainted 7.2.0-rc1+ #66 PREEMPT(full)
 ......
-[  123.154926] Call Trace:
-[  123.155172]  <TASK>
-[  123.155419]  ? __pfx_mutex_lock+0x10/0x10
-[  123.156181]  ? __pfx__raw_spin_lock+0x10/0x10
-[  123.156571]  nullb_group_make_group+0x20/0x100 [null_blk]
-[  123.157011]  configfs_mkdir+0x47b/0xc70
-[  123.157337]  ? __pfx_configfs_mkdir+0x10/0x10
-[  123.157719]  ? may_create_dentry+0x242/0x2e0
-[  123.158061]  vfs_mkdir+0x2a9/0x6c0
-[  123.158352]  filename_mkdirat+0x3dc/0x500
-[  123.158710]  ? __pfx_filename_mkdirat+0x10/0x10
-[  123.159070]  ? strncpy_from_user+0x3a/0x1d0
-[  123.159413]  __x64_sys_mkdir+0x6b/0x90
-[  123.159760]  do_syscall_64+0xea/0x600
+[ 2366.547251] Call Trace:
+[ 2366.547575]  <TASK>
+[ 2366.547831]  ? _raw_spin_lock+0x84/0xe0
+[ 2366.548260]  add_disk_fwnode+0x114/0x560
+[ 2366.548739]  null_add_dev+0x102d/0x1b80 [null_blk]
+[ 2366.549310]  ? __pfx_null_add_dev+0x10/0x10 [null_blk]
+[ 2366.549906]  ? mutex_lock+0xde/0x1c0
+[ 2366.550361]  ? __pfx_mutex_lock+0x10/0x10
+[ 2366.550827]  nullb_device_power_store+0x1e7/0x280 [null_blk]
+[ 2366.551499]  ? __pfx_nullb_device_power_store+0x10/0x10 [null_blk]
+[ 2366.552177]  ? __kmalloc_cache_noprof+0x1f5/0x470
+[ 2366.552748]  ? configfs_write_iter+0x35c/0x4e0
+[ 2366.553242]  configfs_write_iter+0x286/0x4e0
+[ 2366.553787]  vfs_write+0x52d/0xd00
+[ 2366.554169]  ? __pfx_vfs_write+0x10/0x10
+[ 2366.554679]  ? __pfx___css_rstat_updated+0x10/0x10
+[ 2366.555196]  ? fdget_pos+0x1cf/0x4c0
+[ 2366.555649]  ksys_write+0xfc/0x1d0
+......
 
-Replace the runtime mutex_init(&lock) with a static DEFINE_MUTEX(lock)
-declaration to fix this issue.
+Additionally, the err_dev path destroys all devices on nullb_list while
+configfs is still registered. If a racing mkdir() + poweron puts a user
+device on the list, null_destroy_dev()->null_free_dev() kfrees the user
+device's nullb_device but /sys/kernel/config/nullb/<name> is still
+reachable. Any userspace access to the item will trigger a UAF.
 
-Fixes: 49c3b9266a71 ("block: null_blk: Improve device creation with configfs")
-Suggested-by: Bart Van Assche <bvanassche@acm.org>
+For simplicity, move configfs_register_subsystem() to the end to solve
+the problems above.
+
+Fixes: 3bf2bd20734e ("nullb: add configfs interface")
 Signed-off-by: Zizhi Wo <wozizhi@huawei.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
 Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
 Reviewed-by: Nilay Shroff <nilay@linux.ibm.com>
-Link: https://patch.msgid.link/20260725022509.714271-2-wozizhi@huaweicloud.com
+Link: https://patch.msgid.link/20260725022509.714271-3-wozizhi@huaweicloud.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/null_blk/main.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/block/null_blk/main.c | 16 ++++++----------
+ 1 file changed, 6 insertions(+), 10 deletions(-)
 
 diff --git a/drivers/block/null_blk/main.c b/drivers/block/null_blk/main.c
-index f8c0fd57e041a..eba204b277854 100644
+index eba204b277854..4613035222cd5 100644
 --- a/drivers/block/null_blk/main.c
 +++ b/drivers/block/null_blk/main.c
-@@ -66,7 +66,7 @@ struct nullb_page {
- #define NULLB_PAGE_FREE (MAP_SZ - 2)
+@@ -2162,15 +2162,9 @@ static int __init null_init(void)
+ 	config_group_init(&nullb_subsys.su_group);
+ 	mutex_init(&nullb_subsys.su_mutex);
  
- static LIST_HEAD(nullb_list);
--static struct mutex lock;
-+static DEFINE_MUTEX(lock);
- static int null_major;
- static DEFINE_IDA(nullb_indexes);
- static struct blk_mq_tag_set tag_set;
-@@ -2166,8 +2166,6 @@ static int __init null_init(void)
- 	if (ret)
- 		return ret;
- 
--	mutex_init(&lock);
+-	ret = configfs_register_subsystem(&nullb_subsys);
+-	if (ret)
+-		return ret;
 -
  	null_major = register_blkdev(0, "nullb");
- 	if (null_major < 0) {
- 		ret = null_major;
+-	if (null_major < 0) {
+-		ret = null_major;
+-		goto err_conf;
+-	}
++	if (null_major < 0)
++		return null_major;
+ 
+ 	for (i = 0; i < nr_devices; i++) {
+ 		ret = null_create_dev();
+@@ -2178,6 +2172,10 @@ static int __init null_init(void)
+ 			goto err_dev;
+ 	}
+ 
++	ret = configfs_register_subsystem(&nullb_subsys);
++	if (ret)
++		goto err_dev;
++
+ 	pr_info("module loaded\n");
+ 	return 0;
+ 
+@@ -2187,8 +2185,6 @@ static int __init null_init(void)
+ 		null_destroy_dev(nullb);
+ 	}
+ 	unregister_blkdev(null_major, "nullb");
+-err_conf:
+-	configfs_unregister_subsystem(&nullb_subsys);
+ 	return ret;
+ }
+ 
 -- 
 2.53.0
 
