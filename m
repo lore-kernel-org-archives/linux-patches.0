@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB8F035E1D5;
-	Sat, 12 Sep 2026 16:47:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 209DD47AF69;
+	Sat, 12 Sep 2026 16:47:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789231669; cv=none; b=aF2tiyOHPWQ3jObHDthQc5caKD7B0EbBLnayLxsFoxtIjW7rhfF6Awe3sKajEy3meavB2BlgztYCnjJH4SVI5CEhLDuqKY3r9obbqtrWLqZ4G0bdHwcLpIX55T6eiSZoAGFyHbHgOX/+RiW8C6bVxmb8XvADLkUJRq+Jpp/ESTs=
+	t=1789231674; cv=none; b=mbZ1GdRVpDf1zMEYHwnFun4R8c3uEJufT9B8w0swxrDQ5AOtEDxxixEY9hjcnS5lGOdZBJGfP0IeTKO40TlcXAXHiZvnEPzM276r1KO3MeBPsBEB6iMSNU+23HasyqeqRQjPOJ59RtCtG1hA4OSwOmLIsd3zmyGyCE4FXhslhW8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789231669; c=relaxed/simple;
-	bh=pkkPkT3MUdYK2O90lNLRwJJWHPA1AkGnw8r7nKD2aQk=;
+	s=arc-20240116; t=1789231674; c=relaxed/simple;
+	bh=mGQANhlgj9U3SzLf1gJEZ0jaU9YJb+o3Q2sWl+LZO7g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bx5M8+h42xDk541+2Gx7iz/IH+nTYVaCBfaX6pw/n/SpMZhqvIIPxQ/7nxdobzGzR4qCFFSTpDkdN0zcs7eYTxvQgAEI+HAaiCkMz8572wLHmwwKzac/XybyNDmZflLdT3tVIOvaORSVsKHEsRRijh7zId9/SUddP7vQLpHCK/M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n+7nkbml; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pJCl35a1os8LIDM2BlGBhadFb6Q9/q5NX1kLxcHzzcajYOV4qQRUh4Jk6LBoc6cuvk9FMT+R44/Q3tQNfZtV1FQobH4NkwQEMF5xJNQQKmPuGmnqbU1ylaYTHSw8Gh7jO07KPaLzTrxVjVn4cjQ6PoPem7vA812VPlL9wco2It8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lYcvgVCb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n+7nkbml"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D08601F000FF;
-	Sat, 12 Sep 2026 16:47:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lYcvgVCb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1240D1F000FF;
+	Sat, 12 Sep 2026 16:47:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789231668;
-	bh=SAtC5wfm5CFOytzoXrDyVXlmxZUHPcqvSdNxb/ssD+o=;
+	s=korg; t=1789231672;
+	bh=nIVCzKV3fe0ZRRrTIUMur3U2/i4vg53RsdST0CI2Qa8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=n+7nkbmlvr3hZfWwHLzxUCcCAon6a7OhFUPL4sVA06BsUIvqnT5XLJrWQ2UlW5FEA
-	 lwTfTGZUvpOVGNNywjsV7mpGK9mAvZ1Lz4y70hGPhQFP2FQnHyiWntNeiP6n50lqXP
-	 herrcXGnAacSEKoDGp47BJ0TdVvbJizHC6SUAbwQ=
+	b=lYcvgVCbI5AYlsNfKmz6Z36+0AW29W2JU1I3Exu9RW/3ELMMuDOYP2/nVd+J2vxgI
+	 Txzke8xCfvkwYZ6ed2GMwYoDYD0fm6P7ZOCogF1A+1jo271o2d3x/uK1LcWIBGl48c
+	 +TPhHXeje+C494fat0k+hUVb4ENi8ykP2WLndTtA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Qingfang Deng <qingfang.deng@linux.dev>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1045/1191] net: dsa: b53: fix error propagation from b53_fdb_dump()
-Date: Sat, 12 Sep 2026 09:02:53 +0200
-Message-ID: <20260912065611.648367166@linuxfoundation.org>
+Subject: [PATCH 6.1 1046/1191] pppox: drain queued packets on channel handoff
+Date: Sat, 12 Sep 2026 09:02:54 +0200
+Message-ID: <20260912065611.669832186@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -52,46 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vladimir Oltean <vladimir.oltean@nxp.com>
+From: Qingfang Deng <qingfang.deng@linux.dev>
 
-[ Upstream commit 4f1d06cf8aaa9d2cb18e5ee8835aff6177256bc6 ]
+[ Upstream commit 92c1bf630abf0af646562398eaa36f80b5ff677d ]
 
-The blamed commit replaced "return ret" statements in b53_fdb_dump()
-with "break;" which jumps to the mutex_unlock() -> return 0 section.
+PPPIOCGCHAN both returns the channel index and marks a PPPOX socket as
+bound to generic PPP, despite its getter semantic. Packets received
+before that transition are queued on sk_receive_queue, but a bound
+socket is no longer readable. Such packets therefore remain queued until
+the socket is destroyed.
 
-This is notably problematic because it swallows errors from the
-b53_fdb_copy() -> cb() path, and this will result in FDB dump truncation
-when the netlink skb overflows - see commit 21b52fed928e ("net: dsa:
-sja1105: fix broken backpressure in .port_fdb_dump").
+After marking a socket bound, wait for receive paths that observed the
+old state to finish queueing packets, and then drain the queue into
+generic PPP.
 
-Let's go back to "return ret". We don't need to preinitialize "ret" with
-0, because the "do {} while" block guarantees we cannot reach the end of
-the function without at least once calling b53_arl_search_wait(), which
-will have initialized ret to some valid value.
-
-Fixes: f7eb4a1c0864 ("net: dsa: b53: serialize access to the ARL table")
-Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20260812201121.2012356-1-vladimir.oltean@nxp.com
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Qingfang Deng <qingfang.deng@linux.dev>
+Link: https://patch.msgid.link/20260811035314.302878-1-qingfang.deng@linux.dev
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/b53/b53_common.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ppp/pppox.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-diff --git a/drivers/net/dsa/b53/b53_common.c b/drivers/net/dsa/b53/b53_common.c
-index 49fb610db484e..aaf9fbaefd6b9 100644
---- a/drivers/net/dsa/b53/b53_common.c
-+++ b/drivers/net/dsa/b53/b53_common.c
-@@ -1863,7 +1863,7 @@ int b53_fdb_dump(struct dsa_switch *ds, int port,
+diff --git a/drivers/net/ppp/pppox.c b/drivers/net/ppp/pppox.c
+index 08364f10a43fa..61b3453469dce 100644
+--- a/drivers/net/ppp/pppox.c
++++ b/drivers/net/ppp/pppox.c
+@@ -74,7 +74,9 @@ int pppox_ioctl(struct socket *sock, unsigned int cmd, unsigned long arg)
  
- 	mutex_unlock(&priv->arl_mutex);
+ 	switch (cmd) {
+ 	case PPPIOCGCHAN: {
++		struct sk_buff *skb;
+ 		int index;
++
+ 		rc = -ENOTCONN;
+ 		if (!(sk->sk_state & PPPOX_CONNECTED))
+ 			break;
+@@ -85,7 +87,22 @@ int pppox_ioctl(struct socket *sock, unsigned int cmd, unsigned long arg)
+ 			break;
  
--	return 0;
-+	return ret;
- }
- EXPORT_SYMBOL(b53_fdb_dump);
- 
+ 		rc = 0;
++		/* PPPIOCGCHAN historically marks the userspace handoff to
++		 * generic PPP; pppd then attaches the returned channel to
++		 * /dev/ppp.
++		 */
+ 		sk->sk_state |= PPPOX_BOUND;
++		/* Let lockless receive paths finish queueing against the old
++		 * state.
++		 */
++		synchronize_net();
++		/* Drain packets queued before the handoff because a bound
++		 * socket is no longer readable.
++		 */
++		while ((skb = skb_dequeue(&sk->sk_receive_queue))) {
++			skb_orphan(skb);
++			ppp_input(&po->chan, skb);
++		}
+ 		break;
+ 	}
+ 	default:
 -- 
 2.53.0
 
