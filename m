@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20FCF455622;
-	Sat, 12 Sep 2026 13:32:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7DDF47D466;
+	Sat, 12 Sep 2026 13:32:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789219964; cv=none; b=Ok1oxrjbmFhZ1V8ndPV3RCzunTBAsG4CZXN92malu08jIQjDecKBOx3Sfl2IQF13ZxLwsQnv2tGRacOKIFAfg/dVotpVfyDCdhWRPeLaHNCjfybuCOMEDwCVTr3WU29L64U5OTWIMu7A3E16+lxGxugrKs9VdG6ddB1Mx9KqHjc=
+	t=1789219968; cv=none; b=L0cAvqLvoz1N51FWfkViST0sPOHkgTnj7ISNTC2xtvet1cyWwyb8ilmKoB1IJsIa7vd9WqLXVv3z8uOEPou786IFeCW6EVPkmoEfNuy3hd0Qtw9vGvVzpozUjTnb6Jp5aKQhW3wfNAga6g5qIAZh9s6lfXXUEfBkMZJy4U0pftc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789219964; c=relaxed/simple;
-	bh=BcxQja5PqyVrEO6zCCr5P3X4wL2CnRsuQzAND027n94=;
+	s=arc-20240116; t=1789219968; c=relaxed/simple;
+	bh=YznhDNnlmeKAMEzRymbppXCqFKSdpzxRFvpoSYqdHKo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z/0lVUggmXAknsMmALyl0kFLCsJMXNTwv/AGuH0qsUcIgGKEWZLSWjxpLY4uIv4sEHvdYC5JEJE7aVvLK8YaNOei4fwDC+UQDadCJAPERzfIgbHCz1YzsLcyp9Y+EwO8IiWMhf0F5G+vgkblp3cAOetpmYoXXaWQZL6WNyz56bE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gt+qb7ma; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZG9avNNpFXI+s33ZGULdmNQ0fdBxe4tQHwvVC6aF53SCDxHp2UL8XYNOmMHjfqNFtClG8eli0eCIQuUg63xUHkN3odT+DChVOTPahjd2CQDDw71x8B4jrvlMfSD9XKtZAQLmpZ2il3XMNtPIgwohWJfIwg45DCQL+UFHZ8Zgl3g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RFbuyxv1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gt+qb7ma"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 850A01F000FF;
-	Sat, 12 Sep 2026 13:32:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RFbuyxv1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB2681F000FF;
+	Sat, 12 Sep 2026 13:32:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789219962;
-	bh=7uvvKgNU5NGUcV9vTjtOVW6BTWs/6KpN8ee7oHdBn7A=;
+	s=korg; t=1789219967;
+	bh=WYzgZ35BAV3hz7mIub3hkmxna6HPItVFa0BoBVZZRsA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gt+qb7maJlWYRnkM4l3xn0dnAfn47EzSpjBLkiItyyZ8sCIIOWpo2UwQUzw1P/Cy/
-	 VrF0ZF3y+o2DzDc3uZNpn7TqqqleVTTxZ4H+Ss8c3c/MnIw/44kg8yBjH45TUK01he
-	 O9yKdVC+t3r1oALBDIFDU5N6UZFol43iin65RJGk=
+	b=RFbuyxv1SolqY7offpAlYYaKrzmXwCyhqi0ih7IK8FPgbieVpOaXf1FTcuoiL5RRU
+	 FEZBcOnnJ5DZrygzpJZ02mICTWwyobbMB0vAYwL8/2d/BO9fKTsD5B0I5rYgNzxa6H
+	 6YMJ+WbVQlsbREVBHMFQCpBuToZYyWz7Rz4dSK6E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Paulo Alcantara <pc@manguebit.org>,
 	Frank Sorenson <sorenson@redhat.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Paulo Alcantara <pc@manguebit.org>
-Subject: [PATCH 6.6 0081/1424] smb: client: fix ALIGN() overflow in symlink_data() error context loop
-Date: Sat, 12 Sep 2026 08:41:53 +0200
-Message-ID: <20260912065609.123426690@linuxfoundation.org>
+	Namjae Jeon <linkinjeon@kernel.org>
+Subject: [PATCH 6.6 0082/1424] smb: client: fix copy-paste error in WSL EA length accounting for $LXDEV
+Date: Sat, 12 Sep 2026 08:41:54 +0200
+Message-ID: <20260912065609.145172550@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -53,43 +53,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Frank Sorenson <sorenson@redhat.com>
 
-commit 62656b024efc21c3230eade1a847f25871c3d2bb upstream.
+commit 5d14030b46af1a958fd104b020fbb93631c98822 upstream.
 
-The check added by commit 7d9a7f1f96cd ("smb/client: fix possible
-infinite loop and oob read in symlink_data()") compared the post-ALIGN
-length against the remaining buffer, but ALIGN() itself can overflow:
-for ErrorDataLength near UINT32_MAX (e.g. 0xFFFFFFF9), ALIGN(x, 8)
-wraps to 0, so the subsequent bounds check passes, and the loop
-advances by zero bytes leaving 'p' pointing into stale data.
+The LXDEV block in cifs_query_path_info() uses SMB2_WSL_XATTR_MODE_SIZE
+(4) instead of SMB2_WSL_XATTR_DEV_SIZE (8), undercounting eas_len by 4
+bytes per $LXDEV EA.
 
-Fix by checking the raw ErrorDataLength against the remaining space
-before applying ALIGN(), then checking again after.  Since raw_len is
-bounded by the buffer, raw_len + 7 cannot overflow, so the second check
-is an exact post-alignment bounds guard.
+eas_len is used only as a zero/non-zero presence flag so there is no
+current functional impact, but the value is incorrect and misleading.
 
-Fixes: 76894f3e2f71 ("cifs: improve symlink handling for smb2+")
+Fixes: 97db41604555 ("smb: client: parse uid, gid, mode and dev from WSL reparse points")
 Cc: stable@vger.kernel.org
+Cc: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Frank Sorenson <sorenson@redhat.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/smb2file.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ fs/smb/client/smb1ops.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/smb/client/smb2file.c
-+++ b/fs/smb/client/smb2file.c
-@@ -48,7 +48,10 @@ static struct smb2_symlink_err_rsp *syml
- 			cifs_dbg(FYI, "%s: skipping unhandled error context: 0x%x\n",
- 				 __func__, le32_to_cpu(p->ErrorId));
- 
--			len = ALIGN(le32_to_cpu(p->ErrorDataLength), 8);
-+			len = le32_to_cpu(p->ErrorDataLength);
-+			if (len > end - ((u8 *)p + sizeof(*p)))
-+				return ERR_PTR(-EINVAL);
-+			len = ALIGN(len, 8);
- 			if (len > end - ((u8 *)p + sizeof(*p)))
- 				return ERR_PTR(-EINVAL);
- 
+--- a/fs/smb/client/smb1ops.c
++++ b/fs/smb/client/smb1ops.c
+@@ -747,7 +747,7 @@ static int cifs_query_path_info(const un
+ 			ea->ea_value_length = cpu_to_le16(SMB2_WSL_XATTR_DEV_SIZE);
+ 			memcpy(&ea->ea_data[0], SMB2_WSL_XATTR_DEV, SMB2_WSL_XATTR_NAME_LEN + 1);
+ 			data->wsl.eas_len += ALIGN(sizeof(*ea) + SMB2_WSL_XATTR_NAME_LEN + 1 +
+-						   SMB2_WSL_XATTR_MODE_SIZE, 4);
++						   SMB2_WSL_XATTR_DEV_SIZE, 4);
+ 			rc = 0;
+ 		} else if (rc >= 0) {
+ 			/* It is an error if EA $LXDEV has wrong size. */
 
 
