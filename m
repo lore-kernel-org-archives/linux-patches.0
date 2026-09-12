@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3EC3208D0;
-	Sat, 12 Sep 2026 09:38:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0EBE299920;
+	Sat, 12 Sep 2026 09:38:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789205900; cv=none; b=klfU2sulHJtKOnpRo+HU6DnEG0v7kd9akyWt9zHAW0kBB1QnIlDQwKLOjIsiT5hF8rYRlzU5ULZxmdAOzDWl9M9Hvnp8i6YXs6UHFGYeKexZDyWBxgrUnJCIb4fjAf9vrKKKiXYKKX6hbW2+xlKfyKKe0Ex6ZFe5Zfkr6ZRi2is=
+	t=1789205906; cv=none; b=PPO3cUJ49AYhVPZUmH9qx3cuw8VYboZNeHvGjj+LXvKXdLC9Y6BhcOQlU8Ck9zCQfPG+yXZwDoUWrQPeH2c8AfGWGu1PZG9lPieEtWxVLy++D/o3cLztuiDMMAs1OZPZhLEzTZoUDZ75JYDY11pwMTWtgjOBhKTb+AkKzjF37fw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789205900; c=relaxed/simple;
-	bh=hdHzlCalMgDW8HpbCB9ZTTmvw8eUSkiJ9bws3eVhilM=;
+	s=arc-20240116; t=1789205906; c=relaxed/simple;
+	bh=w6K9yxjxb/8o1rkK3OExk6s612GWww391i+DLrBFiw0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bx5RIMshSyZ62G/IYujISkpDLmODe2GtxdFhbz3W5wQW3073K5sEnwkljK3qgvSg2+tnGsOA6pbu6EXU1FcBjH+MsELLRBRJeWjKwfkZoNSvrPT5l3Uhsy9P9nsdgKr5HZJsgsYLxDoecti7VdYpeGeANESmx75n3BrRtrI64vM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QmwCSVf3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cdGOzm7IiiML7/ehG6dUdWP5vLAtbEc8xjNw3qjB2uxSn91to3DKTwHGqPKoNweIaY3LIUIinVCrxdvtFUqyVEsqQDT9A0n4UyEccpVnfQUqIHNfLBSi2sF8HR43auIeiGUjKOhIb1ciLtAULBxEig5Nj9atMsXuHZ9CG2flwHc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ztd035WD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QmwCSVf3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB34F1F000FF;
-	Sat, 12 Sep 2026 09:38:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ztd035WD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6D181F000FF;
+	Sat, 12 Sep 2026 09:38:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789205899;
-	bh=x/MOUtvrJKcQYTvcj3flHlkontubyTO8F9RnSpWqyvI=;
+	s=korg; t=1789205904;
+	bh=ruqhlc/egxzEDzEcPxIzYKJL5wnTec/Nkhy0+/tLR9U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QmwCSVf3r9hXzLmp87KMhtba+Ra5xxFy8G9Q2BTuJv97t1eSS3P0g+heGwDm1YPy+
-	 5MR+MBIPNI0QlU76Y0wLYIWFeGxa556VX7pyIZQE3mPz6D/7k9L4oJvVQWklFQ8Lp2
-	 yS8y0jxX/sc7H1UgGxjCg+65cqnkKmT9LxIJ5fvs=
+	b=ztd035WDjY4++jx6dhj3s50eYfr19fcsx6h2h38cYW7oy8IgAYW0g+oGH8XR7pqxT
+	 qsjKRgDx02pGKA5em57tj9SMWRZaCDMw3Sc/0JucL7JeYzDEGb1HmG4OhalOjDsmYK
+	 3C0UvQhtC7WAzPFG43Pi2wBd2YkyfIVTi7Tp/xLo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
+	Sashiko <sashiko-bot@kernel.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
 	Steven Rostedt <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0053/1518] tracing: Take trace_array reference when opening options file
-Date: Sat, 12 Sep 2026 08:37:02 +0200
-Message-ID: <20260912065624.644270574@linuxfoundation.org>
+Subject: [PATCH 6.18 0044/1518] tracing/probes: Fix BTF kflag check for anonymous struct member access
+Date: Sat, 12 Sep 2026 08:36:53 +0200
+Message-ID: <20260912065624.432405851@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,125 +52,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt <rostedt@goodmis.org>
+From: "Masami Hiramatsu (Google)" <mhiramat@kernel.org>
 
-[ Upstream commit f2951ebd15c36a1ea4820a7f0cbb0b5f1c028b73 ]
+[ Upstream commit 47e93045a2db80d24f5fef65adecc6b2b32efa23 ]
 
-The options files do not take the trace_array reference for the options
-they represent. This could cause a use-after-free kernel crash if one of
-these files is opened by one task and another task removes the instance
-that the option is for. Because it doesn't take a reference upon opening,
-it will not stop the removal which will free the options descriptor that
-is being used.
+btf_find_struct_member() traverses into nested anonymous structures and
+unions to find a struct member. However, get_bitoffset_of_field() in
+trace_probe.c checked btf_type_kflag(type) using the outer parent type
+instead of the actual anonymous structure/union that directly contains
+the found member.
 
-As the options are somewhat dynamic in their creation at boot up, each
-file represents a flag in the trace_array. The trace_array has an array of
-indexes to represent each of these flags that is stored in the
-trace_flags_index array. The address of the index array element is used to
-pass to the inode->i_private pointer. Then that element is read which
-holds the index (which represents the flag) and then the index is used to
-calculate the trace_array descriptor from its trace_flags_index array.
+If the parent structure and anonymous structure have mismatched kflags
+(e.g., the parent has kflag=0 while the anonymous structure has kflag=1
+because it contains bitfields), the bitfield size encoded in the upper
+8 bits of member->offset is erroneously treated as part of the byte/bit
+offset, corrupting the resolved offset and failing to set last_bitsize.
+Similarly, btf_find_struct_member() pushed anonymous member offsets
+onto anon_stack without masking BTF_MEMBER_BIT_OFFSET() when kflag is set.
 
-One issue is that the index element can not be referenced until the
-trace_array's reference is taken. To handle this, create a new helper
-function called: trace_array_options_get() that will iterate all the
-existing trace_arrays in the ftrace_trace_arrays list (under the
-trace_types_lock), and compare the passed in address of the index element
-with the entire array of the trace_array's trace_flags_index array.
-If it matches, then up the corresponding trace_array's reference and
-return.
+To fix this problem, update btf_find_struct_member() to return actual
+containing structure/union type via member_type, use appropriate
+__btf_member_bit_offset() to get bit offset, and use member_type for
+btf_type_kflag() in get_bitoffset_of_field().
 
+Link: https://lore.kernel.org/all/178827250904.123716.17452648791331881284.stgit@devnote2/
+
+Fixes: c440adfbe302 ("tracing/probes: Support BTF based data structure field access")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260902121918.5a9e9d1b@gandalf.local.home
-Fixes: 577b785f55168 ("tracing: add tracer dependent options to options directory")
-Reported-by: sashiko-bot@kernel.org
-Closes: https://lore.kernel.org/linux-trace-kernel/20260828135858.2AC501F000E9@smtp.kernel.org/
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
-[ replaced the unavailable __trace_array_get(tr) call with tr->ref++ and return 0. ]
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://lore.kernel.org/all/20260822095110.0772E1F000E9@smtp.kernel.org/
+Assisted-by: Antigravity:gemini-3.7-flash
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Reviewed-by: Steven Rostedt <rostedt@goodmis.org>
+[ applied changes to parse_btf_field() because get_bitoffset_of_field() is absent. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace.c |   69 ++++++++++++++++++++++++++++++++++++++++++++++++---
- 1 file changed, 65 insertions(+), 4 deletions(-)
+ kernel/trace/trace_btf.c   |   19 +++++++++++--------
+ kernel/trace/trace_btf.h   |    3 ++-
+ kernel/trace/trace_probe.c |    5 +++--
+ 3 files changed, 16 insertions(+), 11 deletions(-)
 
---- a/kernel/trace/trace.c
-+++ b/kernel/trace/trace.c
-@@ -9393,11 +9393,72 @@ trace_options_core_write(struct file *fi
- 	return cnt;
- }
+--- a/kernel/trace/trace_btf.c
++++ b/kernel/trace/trace_btf.c
+@@ -61,16 +61,17 @@ struct btf_anon_stack {
  
-+/*
-+ * The tr_index is the address of a trace_array->trace_flags_index[]
-+ * element that holds the index of the trace flag. But since the
-+ * trace_array reference has not been taken yet, it cannot be referenced
-+ * as it could have been freed by a rmdir of the instance the trace_array
-+ * represents.
-+ *
-+ * Search the list of trace_arrays and compare the tr_index to the
-+ * address of the entire trace_array trace_flags_index array for each
-+ * trace_array in the list. If one is matched, then take the reference
-+ * and return it. If not, the trace_array no longer exits.
-+ */
-+static int trace_array_options_get(void *tr_index)
-+{
-+	struct trace_array *tr;
-+	int ret;
-+
-+	ret = security_locked_down(LOCKDOWN_TRACEFS);
-+	if (ret)
-+		return ret;
-+
-+	if (tracing_disabled)
-+		return -ENODEV;
-+
-+	guard(mutex)(&trace_types_lock);
-+	list_for_each_entry(tr, &ftrace_trace_arrays, list) {
-+		if (tr_index >= (void *)&tr->trace_flags_index[0] &&
-+		    tr_index < (void *)&tr->trace_flags_index[TRACE_FLAGS_MAX_SIZE]) {
-+			tr->ref++;
-+			return 0;
-+		}
-+	}
-+	return -ENODEV;
-+}
-+
-+static int trace_options_open(struct inode *inode, struct file *filp)
-+{
-+	void *tr_index = inode->i_private;
-+
-+	if (trace_array_options_get(tr_index) < 0)
-+		return -ENODEV;
-+
-+	filp->private_data = tr_index;
-+
-+	return 0;
-+}
-+
-+static int trace_options_release(struct inode *inode, struct file *filp)
-+{
-+	void *tr_index = filp->private_data;
-+	struct trace_array *tr;
-+	unsigned int index;
-+
-+	get_tr_index(tr_index, &tr, &index);
-+
-+	trace_array_put(tr);
-+
-+	return 0;
-+}
-+
- static const struct file_operations trace_options_core_fops = {
--	.open = tracing_open_generic,
--	.read = trace_options_core_read,
--	.write = trace_options_core_write,
--	.llseek = generic_file_llseek,
-+	.open		= trace_options_open,
-+	.read		= trace_options_core_read,
-+	.write		= trace_options_core_write,
-+	.llseek		= generic_file_llseek,
-+	.release	= trace_options_release,
- };
+ /*
+  * Find a member of data structure/union by name and return it.
+- * Return NULL if not found, or -EINVAL if parameter is invalid.
+- * If the member is an member of anonymous union/structure, the offset
+- * of that anonymous union/structure is stored into @anon_offset. Caller
+- * can calculate the correct offset from the root data structure by
+- * adding anon_offset to the member's offset.
++ * Return NULL if not found, or ERR_PTR(-EINVAL) if parameter is invalid.
++ * If the member is a member of an anonymous union/structure, the bit offset
++ * of that anonymous union/structure is stored into @anon_offset.
++ * If @member_type is non-NULL, the actual containing structure/union type
++ * of the found member is stored into @member_type.
+  */
+ const struct btf_member *btf_find_struct_member(struct btf *btf,
+ 						const struct btf_type *type,
+ 						const char *member_name,
+-						u32 *anon_offset)
++						u32 *anon_offset,
++						const struct btf_type **member_type)
+ {
+ 	struct btf_anon_stack *anon_stack;
+ 	const struct btf_member *member;
+@@ -94,14 +95,16 @@ retry:
+ 			if (btf_type_skip_modifiers(btf, member->type, &tid) &&
+ 			    top < BTF_ANON_STACK_MAX) {
+ 				anon_stack[top].tid = tid;
+-				anon_stack[top++].offset =
+-					cur_offset + member->offset;
++				anon_stack[top++].offset = cur_offset +
++					__btf_member_bit_offset(type, member);
+ 			}
+ 		} else {
+ 			name = btf_name_by_offset(btf, member->name_off);
+ 			if (name && !strcmp(member_name, name)) {
+ 				if (anon_offset)
+ 					*anon_offset = cur_offset;
++				if (member_type)
++					*member_type = type;
+ 				goto out;
+ 			}
+ 		}
+--- a/kernel/trace/trace_btf.h
++++ b/kernel/trace/trace_btf.h
+@@ -8,4 +8,5 @@ const struct btf_param *btf_get_func_par
+ const struct btf_member *btf_find_struct_member(struct btf *btf,
+ 						const struct btf_type *type,
+ 						const char *member_name,
+-						u32 *anon_offset);
++						u32 *anon_offset,
++						const struct btf_type **member_type);
+--- a/kernel/trace/trace_probe.c
++++ b/kernel/trace/trace_probe.c
+@@ -577,6 +577,7 @@ static int parse_btf_field(char *fieldna
+ {
+ 	struct fetch_insn *code = *pcode;
+ 	const struct btf_member *field;
++	const struct btf_type *mtype;
+ 	u32 bitoffs, anon_offs;
+ 	bool is_struct = ctx->struct_btf != NULL;
+ 	struct btf *btf = ctx_btf(ctx);
+@@ -611,7 +612,7 @@ static int parse_btf_field(char *fieldna
  
- struct dentry *trace_create_file(const char *name,
+ 			anon_offs = 0;
+ 			field = btf_find_struct_member(btf, type, fieldname,
+-						       &anon_offs);
++						       &anon_offs, &mtype);
+ 			if (IS_ERR(field)) {
+ 				trace_probe_log_err(ctx->offset, BAD_BTF_TID);
+ 				return PTR_ERR(field);
+@@ -624,7 +625,7 @@ static int parse_btf_field(char *fieldna
+ 			bitoffs += anon_offs;
+ 
+ 			/* Accumulate the bit-offsets of the dot-connected fields */
+-			if (btf_type_kflag(type)) {
++			if (btf_type_kflag(mtype)) {
+ 				bitoffs += BTF_MEMBER_BIT_OFFSET(field->offset);
+ 				ctx->last_bitsize = BTF_MEMBER_BITFIELD_SIZE(field->offset);
+ 			} else {
 
 
