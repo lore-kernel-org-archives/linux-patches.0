@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52BA01D7E5C;
-	Sat, 12 Sep 2026 14:54:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F29AB38DC72;
+	Sat, 12 Sep 2026 14:54:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789224882; cv=none; b=uOJqEdhXgxesVXGo9LFlWdgkuXHUzHqPgTwkYjP0Jek+ClBPf4tGZq7JL6qtIs79evd9Q7tGlNeQ8X7Xw4jkenoUHWvf2p8dMxlVncw2u8fqeow8dQKjQhaM0kNqT8DaqDY3gprNcEcTzaNFVF5kLUJz2iJfPXWBKdwAoZe7INw=
+	t=1789224888; cv=none; b=Xn+i+i3ne8tTFwO1XJW5ya5SPmHT8g8lCQQVSzCQq6pIaikXLueyiGlg140tuh46tgxxyAdt8i693qhSjvhu4BG8FUYHMtrrsvmlim0Rd1nsPjHaTsO582drpchiMjD7B+e2mhO7tMVK59rVAwSBOtSA4ycgf6cqn/n0vHn0dzo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789224882; c=relaxed/simple;
-	bh=GL3dqg062ZV9CxRySnadmfgbJNlkPQFFPt2jr6avaUw=;
+	s=arc-20240116; t=1789224888; c=relaxed/simple;
+	bh=avBKaNIkR01s3zHa+KLIoCS9ns1n7Ic3DCkSpvovM3M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V294LyAbuacrnYw5oTGoYAOQN0lXFYL+li0h0sb0+tb5//+GTVCqn6izGSidSSxjyWAZ0koDc10DMQAfgcfYIO61kaAxF6ssHHPn5oblDcIow4G66qLb/atg6ZhgpO6vs0WWu3A/+iQOtyZPt/KsmGrGYWs4WRCLZ/cB+So5XLY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S7MyBYvw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Nr1W8kIvbwk3+CafoUKUFC3TPLdX8Zjk0PJZEASoUH6a+CAd6n1b3XOMMIMWA/N4TDqjlm1vXmgzayZQM9IwlnJbyctkxm8q/qWcF7RoD3/OLRb4PKQnoNE22Btp8ysu29NuzCP69ysEq0UPwS/FhdIB3C0COCX+YJ1EaPbu9Sw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JaOovjJu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S7MyBYvw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 251251F000FF;
-	Sat, 12 Sep 2026 14:54:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JaOovjJu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43F671F000FF;
+	Sat, 12 Sep 2026 14:54:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789224881;
-	bh=cM49mdDmu9214LPQVCqoAcx9/G+RZyD7/mqpZQxMpcw=;
+	s=korg; t=1789224886;
+	bh=IxfabEz29Vafke8xYVzYXaOm4UEvX6v0JSse9ge8zuA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S7MyBYvw7TFhPYSj4RWyWtbmqMt4jHgltV0ZzU3XkR5vbKG6vkgiSgb//8Z6H6nbo
-	 /4jfcycahBzRh6Pri57V7Zx07/cka0jjrIEtAxqX8LIyrCt8MSDFZENPfgZSnnYYJx
-	 wZ3h98HxyrrhzdLtZmUUl/vxV7lCkd9Omyaq7mvA=
+	b=JaOovjJujDvajhJWe3K4XGkUfgc0XV1c9k49MMTdqlCUl1EZRvTfObXPgz+qO5Izd
+	 oVZmaExSNNhcMXpCqgJgtjN87ixx667uGyiagXaRKP0FBk4oWO1zussvHzWIJh7vcT
+	 W/yeGZpcYNytb8wC2SRDk0KDffVbe9wX2etIcs9g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
+	Shuangpeng Bai <shuangpeng.kernel@gmail.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1047/1424] remoteproc: use rsc_table_for_each_entry() in rproc_handle_resources()
-Date: Sat, 12 Sep 2026 08:57:59 +0200
-Message-ID: <20260912065630.753737313@linuxfoundation.org>
+Subject: [PATCH 6.6 1083/1424] RDMA/siw: Fix use-after-free in siw_accept()
+Date: Sat, 12 Sep 2026 08:58:35 +0200
+Message-ID: <20260912065631.559543973@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -50,199 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+From: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
 
-[ Upstream commit 49abb5d6e1ac8169cdfc0c3aa4408e0d90ee5696 ]
+[ Upstream commit a9394971825933074032794a5feee5211509c774 ]
 
-Replace the open-coded resource table iteration loop in
-rproc_handle_resources() with the rsc_table_for_each_entry() helper.
+siw_accept() looks up the QP supplied by userspace. If that QP is
+already in RTS, the function jumps to error cleanup before associating
+the incoming CEP with it.
 
-The remoteproc-specific dispatch logic (vendor resource handling via
-rproc_handle_rsc(), RSC_LAST bounds check, handler table lookup) is
-moved into a local callback rproc_handle_rsc_entry(), keeping the
-iteration mechanics in one canonical place.
+The cleanup tests whether qp->cep is non-NULL and assumes the current
+call installed the association. However, qp->cep can point to the CEP
+of an existing connection. The cleanup then drops a reference from the
+incoming cep, not qp->cep. Once the incoming endpoint loses its
+remaining references, this can free it before the subsequent cep->qp
+store, causing a use-after-free. It also clears the existing QP
+association.
 
-The callback receives the payload offset within the table so that
-handlers which write back into the resource table (e.g.
-rproc_handle_carveout() recording a dynamically allocated address via
-rsc_offset) continue to work correctly.
+Only release the association reference when qp->cep is the incoming
+CEP. This preserves an existing association and avoids accessing the
+freed endpoint.
 
-No functional change.
-
-Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260506050107.1985033-3-mukesh.ojha@oss.qualcomm.com
-Stable-dep-of: bb840ea69347 ("remoteproc: fix OOB read via signed offset in rsc_table_for_each_entry()")
+Fixes: 6c52fdc244b5 ("rdma/siw: connection management")
+Signed-off-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+Link: https://patch.msgid.link/20260801213632.1086548-1-shuangpeng.kernel@gmail.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/remoteproc_core.c | 81 +++++++++++++---------------
- include/linux/rsc_table.h            | 53 ++++++++++++++++++
- 2 files changed, 91 insertions(+), 43 deletions(-)
+ drivers/infiniband/sw/siw/siw_cm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/remoteproc/remoteproc_core.c b/drivers/remoteproc/remoteproc_core.c
-index 44029cec53a88..1e4bae2786dbe 100644
---- a/drivers/remoteproc/remoteproc_core.c
-+++ b/drivers/remoteproc/remoteproc_core.c
-@@ -1015,60 +1015,55 @@ static rproc_handle_resource_t rproc_loading_handlers[RSC_LAST] = {
- 	[RSC_VDEV] = rproc_handle_vdev,
- };
+diff --git a/drivers/infiniband/sw/siw/siw_cm.c b/drivers/infiniband/sw/siw/siw_cm.c
+index 6ce8150278dd4..a04c1fcabfcc4 100644
+--- a/drivers/infiniband/sw/siw/siw_cm.c
++++ b/drivers/infiniband/sw/siw/siw_cm.c
+@@ -1717,7 +1717,7 @@ int siw_accept(struct iw_cm_id *id, struct iw_cm_conn_param *params)
+ 	cep->state = SIW_EPSTATE_CLOSED;
  
--/* handle firmware resource entries before booting the remote processor */
--static int rproc_handle_resources(struct rproc *rproc,
--				  rproc_handle_resource_t handlers[RSC_LAST])
-+struct rproc_rsc_cb_data {
-+	struct rproc *rproc;
-+	rproc_handle_resource_t *handlers;
-+};
-+
-+static int rproc_handle_rsc_entry(u32 type, void *rsc, int offset,
-+				  int avail, void *data)
- {
-+	struct rproc_rsc_cb_data *d = data;
-+	struct rproc *rproc = d->rproc;
- 	struct device *dev = &rproc->dev;
- 	rproc_handle_resource_t handler;
--	int ret = 0, i;
--
--	if (!rproc->table_ptr)
--		return 0;
-+	int ret;
- 
--	for (i = 0; i < rproc->table_ptr->num; i++) {
--		int offset = rproc->table_ptr->offset[i];
--		struct fw_rsc_hdr *hdr = (void *)rproc->table_ptr + offset;
--		int avail = rproc->table_sz - offset - sizeof(*hdr);
--		void *rsc = (void *)hdr + sizeof(*hdr);
-+	dev_dbg(dev, "rsc: type %d\n", type);
- 
--		/* make sure table isn't truncated */
--		if (avail < 0) {
--			dev_err(dev, "rsc table is truncated\n");
--			return -EINVAL;
--		}
--
--		dev_dbg(dev, "rsc: type %d\n", hdr->type);
-+	if (type >= RSC_VENDOR_START && type <= RSC_VENDOR_END) {
-+		ret = rproc_handle_rsc(rproc, type, rsc, offset, avail);
-+		if (ret == RSC_HANDLED)
-+			return 0;
-+		if (ret < 0)
-+			return ret;
-+		dev_warn(dev, "unsupported vendor resource %d\n", type);
-+		return 0;
-+	}
- 
--		if (hdr->type >= RSC_VENDOR_START &&
--		    hdr->type <= RSC_VENDOR_END) {
--			ret = rproc_handle_rsc(rproc, hdr->type, rsc,
--					       offset + sizeof(*hdr), avail);
--			if (ret == RSC_HANDLED)
--				continue;
--			else if (ret < 0)
--				break;
-+	if (type >= RSC_LAST) {
-+		dev_warn(dev, "unsupported resource %d\n", type);
-+		return 0;
-+	}
- 
--			dev_warn(dev, "unsupported vendor resource %d\n",
--				 hdr->type);
--			continue;
--		}
-+	handler = d->handlers[type];
-+	if (!handler)
-+		return 0;
- 
--		if (hdr->type >= RSC_LAST) {
--			dev_warn(dev, "unsupported resource %d\n", hdr->type);
--			continue;
--		}
-+	return handler(rproc, rsc, offset, avail);
-+}
- 
--		handler = handlers[hdr->type];
--		if (!handler)
--			continue;
-+/* handle firmware resource entries before booting the remote processor */
-+static int rproc_handle_resources(struct rproc *rproc,
-+				  rproc_handle_resource_t handlers[RSC_LAST])
-+{
-+	struct rproc_rsc_cb_data d = { .rproc = rproc, .handlers = handlers };
- 
--		ret = handler(rproc, rsc, offset + sizeof(*hdr), avail);
--		if (ret)
--			break;
--	}
-+	if (!rproc->table_ptr)
-+		return 0;
- 
--	return ret;
-+	return rsc_table_for_each_entry(rproc->table_ptr, rproc->table_sz,
-+					&rproc->dev, rproc_handle_rsc_entry, &d);
- }
- 
- static int rproc_prepare_subdevices(struct rproc *rproc)
-diff --git a/include/linux/rsc_table.h b/include/linux/rsc_table.h
-index c32c8b6cd2a77..c6d6d553d8f11 100644
---- a/include/linux/rsc_table.h
-+++ b/include/linux/rsc_table.h
-@@ -303,4 +303,57 @@ struct fw_rsc_vdev {
- 	struct fw_rsc_vdev_vring vring[];
- } __packed;
- 
-+/**
-+ * rsc_table_for_each_entry() - iterate over all entries in a resource table
-+ * @table:    pointer to the resource table
-+ * @table_sz: total size of the table buffer in bytes
-+ * @dev:      device used for error logging
-+ * @cb:       callback invoked for each entry:
-+ *              @type   - value from enum fw_resource_type
-+ *              @rsc    - pointer to the entry payload (past struct fw_rsc_hdr)
-+ *              @offset - byte offset of the payload within the table; callers
-+ *                        that write back into the table (e.g. to record a
-+ *                        dynamically allocated address) use this to locate the
-+ *                        entry for later update
-+ *              @avail  - bytes available in the payload
-+ *              @data   - caller-supplied private pointer
-+ *            Return 0 to continue iteration, non-zero to stop.
-+ * @data:     private pointer forwarded to @cb on every call
-+ *
-+ * Iterates over every resource entry in @table, performing the standard
-+ * truncation check, and invokes @cb for each one. Iteration stops on the
-+ * first non-zero return from @cb or on a malformed table.
-+ *
-+ * Returns 0 after a complete iteration, -EINVAL if the table is truncated,
-+ * or the first non-zero value returned by @cb.
-+ */
-+static inline int rsc_table_for_each_entry(struct resource_table *table,
-+					   size_t table_sz,
-+					   struct device *dev,
-+					   int (*cb)(u32 type, void *rsc,
-+						     int offset, int avail,
-+						     void *data),
-+					   void *data) {
-+	int i, ret;
-+
-+	for (i = 0; i < table->num; i++) {
-+		int offset = table->offset[i];
-+		struct fw_rsc_hdr *hdr = (void *)table + offset;
-+		int avail = table_sz - offset - sizeof(*hdr);
-+		int rsc_offset = offset + sizeof(*hdr);
-+		void *rsc = (void *)hdr + sizeof(*hdr);
-+
-+		if (avail < 0) {
-+			dev_err(dev, "rsc table is truncated\n");
-+			return -EINVAL;
-+		}
-+
-+		ret = cb(hdr->type, rsc, rsc_offset, avail, data);
-+		if (ret)
-+			return ret;
-+	}
-+
-+	return 0;
-+}
-+
- #endif /* RSC_TABLE_H */
+ 	siw_free_cm_id(cep);
+-	if (qp->cep) {
++	if (qp->cep == cep) {
+ 		siw_cep_put(cep);
+ 		qp->cep = NULL;
+ 	}
 -- 
 2.53.0
 
