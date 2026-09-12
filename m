@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE4C4322C88;
-	Sat, 12 Sep 2026 13:51:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14F92322C88;
+	Sat, 12 Sep 2026 13:51:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789221061; cv=none; b=VEL9wcWrrWpeaw6N4qZDjdWlDmW96niHR5e4E8YFZNfBLiFJUMGlmpD8Y52iQgqm5aHXWmFcuibA510QITcnsPLRHZrqzlyQjUNUl6PMffzQK6kzpllpSws5roOXbOb3IyBfwpCKuu9BOt+u6JIZ7NehDijk+L9+74301jW5ZyQ=
+	t=1789221067; cv=none; b=VAAPUcEKpOKrabHr9T+vm3P0OKeTOjANQQs5WV5pkyo0cjWDytTkOJmmcFVXPFE3Z6DX8xewfZkyoiNriI3CNb2tE30KSG4viv6Z309ZI/5U8xqNT8yr0IDOpE/BJUOKU2Cmjs/HXQ11ga2imhct8bjwPgtI91xzAtrKqnwDako=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789221061; c=relaxed/simple;
-	bh=t5hJaJhA60vrrwc4B+0wfo0uz5p3XOaKPh531adWmpk=;
+	s=arc-20240116; t=1789221067; c=relaxed/simple;
+	bh=1egqQ+Yql81RRCre7blC++VUDeJmgLbajIl3SNcToes=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M6zZaNLH7+Bi2nCOVc6MxrCdB9SRzBT+zbgWEUV68GVwbpTmy1TTzrrB0FH7q5xXi2iej0KhwWYfmwCS5ZjvLtlUpyz5c5sKnZtdOIw5J6znrUc7+nFc0/IOO7Bwg4pQI7oZ26GIaHVfoBZYgFpuxFCDVbc0BqmHNjGsJLOxAJg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LhCyrz4s; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Jh8YQPY9fVG0lXgcsG/sY36/UjhB8rlge+7bBm3DUGpNspEwpndNA5b+WzezlMJZLDZOjNM6yf67prNJiyv6YqdfMnRsqIBirG/Rzd+oMmqcH6fr66xr/UulxuxYhOAMHs6MiMPQ/peLnceyX5mm6TEe/srGaJC0KSF2tRhgpS8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dxpm4cbp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LhCyrz4s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0EBB1F000FF;
-	Sat, 12 Sep 2026 13:50:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dxpm4cbp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC5431F000FF;
+	Sat, 12 Sep 2026 13:51:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789221060;
-	bh=T+2k+QyaUg9vN9Rt+GDz18vKWcPHgE3sSpfWSMRZi7s=;
+	s=korg; t=1789221065;
+	bh=bfjn4R3SarLwc3BWCkrVSGAl18u79rqeoClryWhUJt0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LhCyrz4sdf4R9MECzsYQ8Qq0YN6JoqOl0sHzZCm6OAPpj32cVqdXoRXaEbNpbo1HZ
-	 HhzRRZGMmFmqN1Qg+Kn9yWf/YuHEoCDIwbsyLIw7wAlSLDWa1/VJoE0Ig5k/Hzjp/q
-	 lQT8Xym3FBuS5OIZxmMu2HCyJKDGpx26SxuUiS80=
+	b=dxpm4cbp8vViofKv+GCtoiFgZ1ZO369uD1meU8wFjuLyc1L/OEEEZ05hSyqs2Ko6l
+	 IgnUBYMMuQuR3Djj1vACHju0LFNPysRRmhiU81I3/jTbZa3vUUfotY+h3EWn/Dm5mA
+	 /JDbEcBf/65L/cg86P3URL1SChMQvtk+ylK4BdhM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maoyi Xie <maoyixie.tju@gmail.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Krzysztof Kozlowski <krzk@kernel.org>
-Subject: [PATCH 6.6 0299/1424] w1: ds28e17: reject an oversize length on an I2C block read
-Date: Sat, 12 Sep 2026 08:45:31 +0200
-Message-ID: <20260912065613.982291274@linuxfoundation.org>
+	Tomasz Figa <tfiga@chromium.org>,
+	Tzung-Bi Shih <tzungbi@kernel.org>
+Subject: [PATCH 6.6 0308/1424] platform/chrome: sensorhub: Fix dropped timestamp events and log spam
+Date: Sat, 12 Sep 2026 08:45:40 +0200
+Message-ID: <20260912065614.180214147@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -51,62 +50,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maoyi Xie <maoyixie.tju@gmail.com>
+From: Tzung-Bi Shih <tzungbi@kernel.org>
 
-commit 169ae5e65e5aaf213b6a578f6478a9fd2e523606 upstream.
+commit 9a3f43b30373c61477d0d3ab52946c05f9492bf9 upstream.
 
-w1_f19_i2c_master_transfer() is the master_xfer for the DS28E17 1-Wire
-to I2C bridge. On an I2C_M_RECV_LEN read, it takes the length from the
-device. The downstream slave puts a length byte in buf[0]. The driver
-then reads that many bytes into buf[1] with w1_f19_i2c_read().
+Commit 833740a2333c ("platform/chrome: sensorhub: Bound the EC-reported
+sensor number") evaluated the `sensor_num` against the bounds limit even
+for timestamp events.  A timestamp event typically has a `sensor_num` of
+0xff [1], causing the driver to flag it as invalid and skip to the next
+event.
 
-buf[0] is controlled by the device and can be 0 to 255.
-w1_f19_i2c_read() only rejects a zero count. The caller buffer is
-I2C_SMBUS_BLOCK_MAX + 2, so 34 bytes. A length above 32 makes the read
-run past it, up to about 222 bytes out of bounds.
+As a result, we'd see a flooding of "Invalid sensor number 255 from EC"
+warning logs and these timestamp events were being dropped.
 
-The SMBus core does check buf[0] against I2C_SMBUS_BLOCK_MAX. That
-check runs after master_xfer returns. By then the write is already
-done. i2c-algo-bit rejects an oversize length before it copies, and
-returns -EPROTO.
+Move the bounds-check into cros_ec_sensor_ring_process_event() and
+evaluate it only after standalone timestamp events have already been
+processed and returned early.
 
-Reject a length above I2C_SMBUS_BLOCK_MAX at both RECV_LEN sites, the
-same way i2c-algo-bit does.
+[1] https://crrev.com/219ca6ef82ba266da788b673ee4ad50bd3ea1285/common/motion_sense_fifo.c#427
 
-Fixes: ebc4768ac497 ("add w1_ds28e17 driver for the DS28E17 Onewire to I2C master bridge")
-Cc: stable@vger.kernel.org
-Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
-Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://patch.msgid.link/20260629121043.199487-1-maoyixie.tju@gmail.com
-Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+Fixes: 833740a2333c ("platform/chrome: sensorhub: Bound the EC-reported sensor number")
+Reviewed-by: Tomasz Figa <tfiga@chromium.org>
+Link: https://lore.kernel.org/r/20260715024454.4127571-1-tzungbi@kernel.org
+Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/w1/slaves/w1_ds28e17.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/platform/chrome/cros_ec_sensorhub_ring.c |   27 ++++++++++++-----------
+ 1 file changed, 15 insertions(+), 12 deletions(-)
 
---- a/drivers/w1/slaves/w1_ds28e17.c
-+++ b/drivers/w1/slaves/w1_ds28e17.c
-@@ -389,6 +389,10 @@ static int w1_f19_i2c_master_transfer(st
- 			 * another simple read in that case.
- 			 */
- 			if (msgs[i+1].flags & I2C_M_RECV_LEN) {
-+				if (msgs[i+1].buf[0] > I2C_SMBUS_BLOCK_MAX) {
-+					i = -EPROTO;
-+					goto error;
-+				}
- 				result = w1_f19_i2c_read(sl, msgs[i+1].addr,
- 					&(msgs[i+1].buf[1]), msgs[i+1].buf[0]);
- 				if (result < 0) {
-@@ -415,6 +419,10 @@ static int w1_f19_i2c_master_transfer(st
- 			 * another simple read in that case.
- 			 */
- 			if (msgs[i].flags & I2C_M_RECV_LEN) {
-+				if (msgs[i].buf[0] > I2C_SMBUS_BLOCK_MAX) {
-+					i = -EPROTO;
-+					goto error;
-+				}
- 				result = w1_f19_i2c_read(sl,
- 					msgs[i].addr,
- 					&(msgs[i].buf[1]),
+--- a/drivers/platform/chrome/cros_ec_sensorhub_ring.c
++++ b/drivers/platform/chrome/cros_ec_sensorhub_ring.c
+@@ -436,6 +436,21 @@ cros_ec_sensor_ring_process_event(struct
+ 						  fifo_timestamp,
+ 						  *current_timestamp,
+ 						  now);
++
++		/*
++		 * A standalone timestamp event typically has a sensor_num of
++		 * 0xff.  Return early here to prevent it from hitting the
++		 * bounds check below and spamming the logs.
++		 */
++		return false;
++	}
++
++	/* Skip event if sensor_num from EC is out of bounds. */
++	if (in->sensor_num >= sensorhub->sensor_num) {
++		dev_warn_ratelimited(sensorhub->dev,
++				     "Invalid sensor number %u from EC\n",
++				     in->sensor_num);
++		return false;
+ 	}
+ 
+ 	if (in->flags & MOTIONSENSE_SENSOR_FLAG_ODR) {
+@@ -463,10 +478,6 @@ cros_ec_sensor_ring_process_event(struct
+ 		return true;
+ 	}
+ 
+-	if (in->flags & MOTIONSENSE_SENSOR_FLAG_TIMESTAMP)
+-		/* If we just have a timestamp, skip this entry. */
+-		return false;
+-
+ 	/* Regular sample */
+ 	out->sensor_id = in->sensor_num;
+ 	trace_cros_ec_sensorhub_data(in->sensor_num,
+@@ -851,14 +862,6 @@ static void cros_ec_sensorhub_ring_handl
+ 
+ 		for (in = sensorhub->resp->fifo_read.data, j = 0;
+ 		     j < number_data; j++, in++) {
+-			/* Skip event if sensor_num from EC is out of bounds. */
+-			if (in->sensor_num >= sensorhub->sensor_num) {
+-				dev_warn_ratelimited(sensorhub->dev,
+-						     "Invalid sensor number %u from EC\n",
+-						     in->sensor_num);
+-				continue;
+-			}
+-
+ 			if (cros_ec_sensor_ring_process_event(
+ 						sensorhub, fifo_info,
+ 						fifo_timestamp,
 
 
