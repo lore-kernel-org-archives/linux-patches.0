@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 001EB370ACA;
-	Sat, 12 Sep 2026 10:04:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6641F3F9F47;
+	Sat, 12 Sep 2026 10:04:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789207451; cv=none; b=PTtzNQdsmlM5H/cNKSyAVIpm6GJKqCwdci/2M/dJLGkWjduoPWa8/X8e9RWfCS4lf0NkcHRe7LQ7K2CrFtGB9FFxz/jqL4HOORy/wXqCGFc4t+AmMwKNJFQZO+u5Y965rJqrTTa7sPN9WRUX18QCpQc5mZhN3rRpbHrEyXqds8o=
+	t=1789207457; cv=none; b=ToCfYqnjchTRM3myiqSq1yjBrM1Fz3sY6UBGeWfKgdED42gB6TxruTbtfapF/HMnKtb50H2aXfqL9FCGGxU4Ldh30hQ6dl6olzMNnr9KMTG7W18qFfx/p/5EX7wWts7LyBNjvC5mMfogSj4gKCJSpFyiaZSg2NUz0Z9dm5Uh+WA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789207451; c=relaxed/simple;
-	bh=GdEYDLMeR6bfphBFqqz7bhcxsUP8pIvFTUWi0+AFxrM=;
+	s=arc-20240116; t=1789207457; c=relaxed/simple;
+	bh=WuBhz0RyrDIG/pS+meYZmiBuJrCMtmfn6QW93I95bm4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eobQ8DLdhvi/2SVcgORsvNlyEqX++1QTONpsUvud2bwbs+MXsQEdi3Bz7Id7vS1Yk59t1XGervN3YiOY6kELX6NESxzNWebKeGtozoH9PBD9FurbKUHFqB6Qcq5lroUZLe2VudvHzpuqav00IS6T2bERe2UQ2uDYB/9MwwJ/rGE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ptiE2JPG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GccV7iSbwwW3Bi1aqmkFCgLq5J2CKhYrALZhDpSp5NyWqyojI8X9Yo9Rd7iJIQhULFsabMlXwz4LX735ELzKlqfvyua7fgGAzpIQY8OX6YizSJ0buD7SnMmibBpax6KBL5uRKZG/cHDpA3sNr6MSJ10QTmTkGENdAr0aDSv3Uj4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y9HovUKs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ptiE2JPG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 029491F000FF;
-	Sat, 12 Sep 2026 10:04:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y9HovUKs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9E121F000FF;
+	Sat, 12 Sep 2026 10:04:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789207449;
-	bh=mpw4sIy7pgFVtjZX5mn50/8jfxxA4vilVKGtGJoAUfc=;
+	s=korg; t=1789207454;
+	bh=NkfCyz4WTEa4mzW97cNjHBqiyUcYZeMCJT03mI75GFM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ptiE2JPGQ2zUyqqv/UxbyC+IYuDN21htIdBK88GNJWZ9mLBwUTPpprvUEKGTK9a4K
-	 oZ2HnQVHjsttMyarh3xzRXOPVYR9Fvf/zMHsWNUqnzStlKft3tZIAEUvU2Z0jP5nB/
-	 5MtIC/sbgn9yRdSmF5UCywjz474UdauVyYSYx43s=
+	b=y9HovUKsRuPOnJVCPdHNrSB+SrjRki2Ja4+gIMI+QvMr6c5fXgGR6X0dcLXGVHNHm
+	 AgE18prUpbDJdwP5Pqk/ay2N41nZjZHvmDw2CjyGiyYgmCf7SyBJk2kS60zRcSB/wg
+	 CTL1RhGHr4DO8/tYPfrRtug6P0aLtzvUNNNt8ZBQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
 	Alison Schofield <alison.schofield@intel.com>,
+	Li Ming <ming.li@zohomail.com>,
 	Dave Jiang <dave.jiang@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0372/1518] cxl/pci: Honor -EPROBE_DEFER from component register setup
-Date: Sat, 12 Sep 2026 08:42:21 +0200
-Message-ID: <20260912065631.881933713@linuxfoundation.org>
+Subject: [PATCH 6.18 0373/1518] cxl/port: Restart port enumeration when a sibling adds the dport first
+Date: Sat, 12 Sep 2026 08:42:22 +0200
+Message-ID: <20260912065631.905382369@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,55 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Jiang <dave.jiang@intel.com>
+From: Alison Schofield <alison.schofield@intel.com>
 
-[ Upstream commit 430c502c80e542e77bcf97db13ec0e8cdf9addb0 ]
+[ Upstream commit a623128bc2a1c257cbad97d0582f355fbe7be927 ]
 
-cxl_pci_setup_regs() for CXL_REGLOC_RBI_COMPONENT can return
--EPROBE_DEFER on a Restricted CXL Host (RCD) when the upstream port
-has not yet been enumerated and the Component Registers must be
-extracted from the RCRB. cxl_pci_probe() treats every non-zero return
-from that call as the benign "component registers not found" case,
-logs a warning, and continues. The rc is then immediately overwritten
-by the subsequent cxl_pci_type3_init_mailbox() call, so the deferral
-is silently swallowed.
+Endpoint probes can race while enumerating a shared switch. If a
+sibling probe adds the dport first, the losing probe finds the dport
+already present, gets -EBUSY, and fails to enumerate the endpoint.
 
-Return -EPROBE_DEFER instead of continuing so the probe is retried
-once the upstream port is available.
+Treat this race the same as the existing port-created case by
+restarting the port walk, allowing it to find the existing dport
+and continue enumeration.
 
-Fixes: 733b57f262b0 ("cxl/pci: Early setup RCH dport component registers from RCRB")
-Reported-by: sashiko-bot@kernel.org
-Closes: https://lore.kernel.org/linux-cxl/ajzhsubot_PSYtHQ@MWDK4CY14F/T/#m063bbf76b1c9c293ade52ab311018ae6bba11a44
-Assisted-by: Claude:claude-opus-4-8
-Reviewed-by: Alison Schofield <alison.schofield@intel.com>
-Link: https://lore.kernel.org/linux-cxl/ajzhsubot_PSYtHQ@MWDK4CY14F/T/#m063bbf76b1c9c293ade52ab311018ae6bba11a44
-Link: https://patch.msgid.link/20260706224322.714934-1-dave.jiang@intel.com
+This race was discovered while testing a cxl_test mixed-granularity
+topology, where twelve endpoints behind shared switches are probed in
+parallel during module load.
+
+Fixes: 4f06d81e7c6a ("cxl: Defer dport allocation for switch ports")
+Signed-off-by: Alison Schofield <alison.schofield@intel.com>
+Tested-by: Li Ming <ming.li@zohomail.com>
+Reviewed-by: Li Ming <ming.li@zohomail.com>
+Link: https://patch.msgid.link/20260714020438.1822669-1-alison.schofield@intel.com
 Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/pci.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/cxl/core/port.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/cxl/pci.c b/drivers/cxl/pci.c
-index 24fb1b230ca02..59c6d503437be 100644
---- a/drivers/cxl/pci.c
-+++ b/drivers/cxl/pci.c
-@@ -946,10 +946,13 @@ static int cxl_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
- 	 */
- 	rc = cxl_pci_setup_regs(pdev, CXL_REGLOC_RBI_COMPONENT,
- 				&cxlds->reg_map);
--	if (rc)
-+	if (rc) {
-+		if (rc == -EPROBE_DEFER)
-+			return rc;
- 		dev_warn(&pdev->dev, "No component registers (%d)\n", rc);
--	else if (!cxlds->reg_map.component_map.ras.valid)
-+	} else if (!cxlds->reg_map.component_map.ras.valid) {
- 		dev_dbg(&pdev->dev, "RAS registers not found\n");
-+	}
- 
- 	rc = cxl_map_component_regs(&cxlds->reg_map, &cxlds->regs.component,
- 				    BIT(CXL_CM_CAP_CAP_ID_RAS));
+diff --git a/drivers/cxl/core/port.c b/drivers/cxl/core/port.c
+index c53a13d4f1662..2b9e166ea4e0e 100644
+--- a/drivers/cxl/core/port.c
++++ b/drivers/cxl/core/port.c
+@@ -1732,8 +1732,8 @@ static int add_port_attach_ep(struct cxl_memdev *cxlmd,
+ 					     parent_dport, uport_dev,
+ 					     dport_dev);
+ 		if (IS_ERR(dport)) {
+-			/* Port already exists, restart iteration */
+-			if (PTR_ERR(dport) == -EAGAIN)
++			/* Port or dport already exists, restart iteration */
++			if (PTR_ERR(dport) == -EAGAIN || PTR_ERR(dport) == -EBUSY)
+ 				return 0;
+ 			return PTR_ERR(dport);
+ 		}
 -- 
 2.53.0
 
