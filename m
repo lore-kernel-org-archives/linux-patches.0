@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 352542F531B;
-	Sat, 12 Sep 2026 15:12:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB6A32F531B;
+	Sat, 12 Sep 2026 15:12:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789225939; cv=none; b=fVDGszAWovQWHJzkMJ8xyETGC2rooZj6juJ+NWC8PPTqlXnlv2R0CKfhYspbcQcioKiFB+FwtlHzTGMQYds10xhO4suV6gqlegxZXDwQuR3IDyd4d9h5CgcNpqKWagWbMTYBRQj8awHM8Kfh8YEsLhd/6eDCM/4/6NObKsePiWI=
+	t=1789225944; cv=none; b=dM67jE+vsNdC19/qLN1YvnkqJIUabKCm/OJn92X4mT8+DalIk/I+t1W7WAyMGwICXWc/FAEmIiRmzCgL9sAB9Ib18DEnld3gdUyEeco5yfLXVDWFVIpb815MBlKiTExGSZEoRhcc+ME8hgQ0efrX+35LqN9ffsy+07VOza3jXTo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789225939; c=relaxed/simple;
-	bh=s4w2gBZ7mhgZffLRppjqJEA9QY+cOkEItb0TKBvTIjw=;
+	s=arc-20240116; t=1789225944; c=relaxed/simple;
+	bh=DqE9z1+K+BVvfSHSk/ZsxGNbPjjEiojwuR5PnVE2cZk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=scGtPsXWlsFWhxppudJM9/iqz0wbwtfUDVmgEe6NcsuWAS5Gf7Mj/nmwMvisRPEAeBz7fBFZwkl9TrwX/Z0m39hAj7OXpOK/XQcmtZn1CZ0/4ds/h01hRj2SyMcrRiykDsDXVwHybHZ1WoixPCUPU2G3S60fZ7NGNn0KdB7Yz/w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iItpRkAq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=elPmu8cH+pnlXS9q24nH+e5dlDdjSWPJunCmorNXipenW6OyBrZfjdrNtzvK2DvOnyzhFto8cETd6R11b9s/Ut2EqHibcdc6NwB6S5vD0NyYoOds4hnufWacFRWpWy9DDBzuhVAwb0GQCBqCz9nRUHX8eKcXAwQF4AJDcGJjSxA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y6WfQ1LC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iItpRkAq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E39701F000FF;
-	Sat, 12 Sep 2026 15:12:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y6WfQ1LC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8271D1F000FF;
+	Sat, 12 Sep 2026 15:12:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789225937;
-	bh=LP91/d5sHRS3rvJG0tkpVzIr6aj9KO+rIGWm7ItpI7c=;
+	s=korg; t=1789225942;
+	bh=js/+E7BEOmi+4W1h8UUff80i7aEC4qSZlB8qLa9lNZ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iItpRkAqJGmJ9eFL4YdWnd5dZ5N/kmf9KqwnuaaWcaDRpKTM232056AF2HknKb+Zj
-	 tbpwtRiItlhwX1OCuc6egKwwooX+nYk7Ecq5KxyybeHrQKs9i2ODPSf9Bmn2zGQDkx
-	 JzAIYW+SivNpYxPNxatCX2D4Zpnpp/ygPa21ZC4E=
+	b=y6WfQ1LCm9VpylgtKjS6OpzAH7rsKSjrO7qUg4RNByQQ6P8UN1/ZtK4++AI7dccBc
+	 iyl/w8NBUbvcu7YxY3KLDPYyJiCaUJSRXEtjW5FXUGUwRfAr7yCAux8D3CGJEv5uC4
+	 zSGoh/f9ebbHBctvloD24aDwjDhk2kb6e/oM3gZw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ruoyu Wang <ruoyuw560@gmail.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Jay Vosburgh <jv@jvosburgh.net>,
-	Hangbin Liu <liuhangbin@kylinos.cn>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Jarkko Nikula <jarkko.nikula@linux.intel.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1300/1424] bonding: initialize err for empty target lists
-Date: Sat, 12 Sep 2026 09:02:12 +0200
-Message-ID: <20260912065636.380811642@linuxfoundation.org>
+Subject: [PATCH 6.6 1301/1424] i3c: mipi-i3c-hci: Fix DAT/DCT entry sizes
+Date: Sat, 12 Sep 2026 09:02:13 +0200
+Message-ID: <20260912065636.402270491@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -54,47 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruoyu Wang <ruoyuw560@gmail.com>
+From: Jarkko Nikula <jarkko.nikula@linux.intel.com>
 
-[ Upstream commit 8ccc9bf9afeeb46a437081c07154fbf5964682b2 ]
+[ Upstream commit 0676bfebf5766f0a60549f74ba597115028fa39c ]
 
-Empty NLA_NESTED attributes are valid, and bonding uses them to clear
-the ARP and NS target lists. When either target attribute is empty,
-nla_for_each_nested() does not execute, so err retains an uninitialized
-value before it is tested. The request can consequently return an
-unpredictable error after clearing the targets.
+MIPI I3C HCI specification v1.1 describes the ENTRY_SIZE field for the
+Device Address Table (DAT) and the Device Characteristics Table (DCT)
+section offset registers (DAT_SECTION_OFFSET and DCT_SECTION_OFFSET).
+That field is not documented in earlier version.
 
-Initialize err to zero so an empty target list completes successfully.
-Non-empty lists still propagate errors from __bond_opt_set() unchanged.
+ENTRY_SIZE value 0 is meant to be backward compatible. For the DAT entry
+size it is interpreted as 2 DWORDs (8-bytes) and for the DCT entry size
+as 4 DWORDs (16-bytes). Values 1-15 are reserved for future use.
 
-This issue was found by a static analysis checker and confirmed by manual
-source review.
+New version I believe fixes also the TABLE_SIZE field description.
+Before it was defined in DWORDs which I believe is incorrect since the
+DAT/DCT table entry structures, and sizes, are described having
+8-bytes/16-bytes entries.
 
-Fixes: 4fb0ef585eb2 ("bonding: convert arp_ip_target to use the new option API")
-Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
-Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
-Acked-by: Jay Vosburgh <jv@jvosburgh.net>
-Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
-Link: https://patch.msgid.link/20260813153126.3952893-1-ruoyuw560@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+This is more clear in the specification v1.1 which states the TABLE_SIZE
+fields are interpreted as number of entries in the DAT/DCT tables. I
+believe this same holds also in earlier version, at least it makes more
+sense.
+
+Fix code accordingly and let the DAT_entry_size and the DCT_entry_size
+variables carry the size as bytes. Which is how it is already
+interpreted in the dat_v1.c: hci_dat_v1_init().
+
+Signed-off-by: Jarkko Nikula <jarkko.nikula@linux.intel.com>
+Link: https://lore.kernel.org/r/20230921055704.1087277-4-jarkko.nikula@linux.intel.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Stable-dep-of: 308ecb824db3 ("i3c: mipi-i3c-hci: Fix missing STAT_IBI_STATUS_THLD in PIO mode")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/bonding/bond_netlink.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/i3c/master/mipi-i3c-hci/core.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/bonding/bond_netlink.c b/drivers/net/bonding/bond_netlink.c
-index f771d569524f3..749d51160e03c 100644
---- a/drivers/net/bonding/bond_netlink.c
-+++ b/drivers/net/bonding/bond_netlink.c
-@@ -217,7 +217,7 @@ static int bond_changelink(struct net_device *bond_dev, struct nlattr *tb[],
- 	struct bonding *bond = netdev_priv(bond_dev);
- 	struct bond_opt_value newval;
- 	int miimon = 0;
--	int err;
-+	int err = 0;
+diff --git a/drivers/i3c/master/mipi-i3c-hci/core.c b/drivers/i3c/master/mipi-i3c-hci/core.c
+index 8bceced3c305e..63d5e869dc8ad 100644
+--- a/drivers/i3c/master/mipi-i3c-hci/core.c
++++ b/drivers/i3c/master/mipi-i3c-hci/core.c
+@@ -610,17 +610,17 @@ static int i3c_hci_init(struct i3c_hci *hci)
+ 	offset = FIELD_GET(DAT_TABLE_OFFSET, regval);
+ 	hci->DAT_regs = offset ? hci->base_regs + offset : NULL;
+ 	hci->DAT_entries = FIELD_GET(DAT_TABLE_SIZE, regval);
+-	hci->DAT_entry_size = FIELD_GET(DAT_ENTRY_SIZE, regval);
++	hci->DAT_entry_size = FIELD_GET(DAT_ENTRY_SIZE, regval) ? 0 : 8;
+ 	dev_info(&hci->master.dev, "DAT: %u %u-bytes entries at offset %#x\n",
+-		 hci->DAT_entries, hci->DAT_entry_size * 4, offset);
++		 hci->DAT_entries, hci->DAT_entry_size, offset);
  
- 	if (!data)
- 		return 0;
+ 	regval = reg_read(DCT_SECTION);
+ 	offset = FIELD_GET(DCT_TABLE_OFFSET, regval);
+ 	hci->DCT_regs = offset ? hci->base_regs + offset : NULL;
+ 	hci->DCT_entries = FIELD_GET(DCT_TABLE_SIZE, regval);
+-	hci->DCT_entry_size = FIELD_GET(DCT_ENTRY_SIZE, regval);
++	hci->DCT_entry_size = FIELD_GET(DCT_ENTRY_SIZE, regval) ? 0 : 16;
+ 	dev_info(&hci->master.dev, "DCT: %u %u-bytes entries at offset %#x\n",
+-		 hci->DCT_entries, hci->DCT_entry_size * 4, offset);
++		 hci->DCT_entries, hci->DCT_entry_size, offset);
+ 
+ 	regval = reg_read(RING_HEADERS_SECTION);
+ 	offset = FIELD_GET(RING_HEADERS_OFFSET, regval);
 -- 
 2.53.0
 
