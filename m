@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9148A17DFFA;
-	Sat, 12 Sep 2026 09:54:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71E8C17DFFA;
+	Sat, 12 Sep 2026 09:54:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789206843; cv=none; b=KiZqFljxt9H6de7Xsxm73VQEL9gDfZI5iHnL/HsGs1lpQeczt7hWTeSrhtMsuDJVlGdpHRRKIOMdW3127XDobKOp4LLuCr693PwfKw16ddBAbvl8NmsCZHXbC4F+8Oh5J0zaQUbrcgRARmcxIOrY2R0o93zy1+QINtgV4vyOR6E=
+	t=1789206848; cv=none; b=g9nhmHHknEXuppoUBSDmSftl/Cgz1ZyfiUAatEtKa7bRzRSindE/bv6Xboun1NcU8qGOxk2dX4sicD69TwjoIixyCzaBeK8OBqT93duOsEag2XgW0CruUZJrqvHCwSaDJrEPfHzlNZmQLhKYFxhfa9R3/teHPjqqG8qCMxqC3tk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789206843; c=relaxed/simple;
-	bh=XVccJqorxBtC69Ms5haswlYYSSB5x8N35snBuMwdMWQ=;
+	s=arc-20240116; t=1789206848; c=relaxed/simple;
+	bh=3hi77XyZC8tU18ofFQRLFfbs7c0juDkb+TapI2Tbieo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O/UTU0y6MA70Luz0pNjZoNHsgzvz1J+DmTQdtwAnsENC6cXzKy+mYD0kiC7irbLyAtcxknyBA2QeA26Dw0tpUahctJLzzQDt5LWtroYQYoMPOCVHTiCcAkl4PaAaHPXsBZ0bBJZuVvuY+zcHZSbBnBCff0+lmSw0nRlLXCRpB6U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O0DLzk1F; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ms9Qhc42ma1fQ/DQRMPjfiASx6hTVR03s135J7DdWC2LZAX4AaG810RJUukf7+DSF3GRlyqWCTt8d0RI9YHaZ2rA4Wvz8czC3jitiZlPTyEOZOr42tHMd8kxy6dwfqg+QU9pMqF/r0Lc+fgFgD6lg7LyQwTgnpn2IeWX3ouGndI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cFuur928; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O0DLzk1F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 401DC1F000FF;
-	Sat, 12 Sep 2026 09:54:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cFuur928"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BA721F000FF;
+	Sat, 12 Sep 2026 09:54:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789206842;
-	bh=pK0YHVAuTK7JpcZ0mj7VFvHFAq+myNbB7fLKOyQrE8Y=;
+	s=korg; t=1789206847;
+	bh=dNZmuIwiDtG0kc0vK+IWqgetHe/cTWC7KCv3KfV8c6I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O0DLzk1F5sv51WmloSAGdD2ylipIF1A96m6IYHPWh0WACzft74/Z5B/6mNeL/Pfsr
-	 HVHVE1AwKRDiaEgkusipY/+wCvmWPDxpBCFLpk1tSJZJPtvrGmQyGCGNbZ0VQ8AWAc
-	 pJeM6SCCJkI6pgC1A3rOm0FuXvse+b60sjSFxHSk=
+	b=cFuur928/mbGk38atZl4UBO7zqGWajv0kV1/iOGQCLzRRiO280gJjwdd6vP6KzB3k
+	 ShvFcvPFI4Dn2zxzXahqGe0t6jcbyNgtxF+HQz9g+RmQuBiNMG3hcpjzQB3cY5VbFc
+	 CEMrPFlOVs1F1eCUZw705wgpaCnvD1K8qk8ewbrA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Manuel Fombuena <fombuena@outlook.com>,
 	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0291/1518] leds: st1202: Disable channel when brightness is set to zero
-Date: Sat, 12 Sep 2026 08:41:00 +0200
-Message-ID: <20260912065630.064405951@linuxfoundation.org>
+Subject: [PATCH 6.18 0292/1518] leds: st1202: Validate LED reg property against channel count
+Date: Sat, 12 Sep 2026 08:41:01 +0200
+Message-ID: <20260912065630.087651021@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -53,126 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Manuel Fombuena <fombuena@outlook.com>
 
-[ Upstream commit 0767335233a8cbab00bbe260a4e4bd380c7677fd ]
+[ Upstream commit cf197514bdfd3877f42b5dce1efd40b7b686547e ]
 
-When brightness_set() is called with LED_OFF, only the ILED register is
-zeroed; the channel enable bit is left set from probe time. A hardware
-channel enabled with ILED=0 still draws a small residual current, causing
-a dim glow even when the LED is supposed to be off.
-
-Fix this by splitting st1202_channel_set() into a lockless inner function
-__st1202_channel_set() and a locking wrapper, then calling the inner
-function from brightness_set() while it already holds the mutex. The
-channel is now disabled when value is zero and re-enabled when non-zero,
-in the same lock region as the ILED write.
+The reg property from the device tree is used directly as an array index
+into chip->leds[] without bounds checking. A value >= ST1202_MAX_LEDS
+would cause an out-of-bounds write during probe.
 
 Fixes: 259230378c65 ("leds: Add LED1202 I2C driver")
 Signed-off-by: Manuel Fombuena <fombuena@outlook.com>
 Assisted-by: Claude:claude-sonnet-4-6
-Link: https://patch.msgid.link/GV1PR08MB8497F11B30FE7D74CAA25135C5F52@GV1PR08MB8497.eurprd08.prod.outlook.com
+Link: https://patch.msgid.link/GV1PR08MB849718B43321DB7E5A05D17BC5F52@GV1PR08MB8497.eurprd08.prod.outlook.com
 Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/leds/leds-st1202.c | 68 ++++++++++++++++++++++----------------
- 1 file changed, 39 insertions(+), 29 deletions(-)
+ drivers/leds/leds-st1202.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/leds/leds-st1202.c b/drivers/leds/leds-st1202.c
-index 680ccb4395773..61b7fe715b880 100644
+index 61b7fe715b880..f5b53a9ed59c6 100644
 --- a/drivers/leds/leds-st1202.c
 +++ b/drivers/leds/leds-st1202.c
-@@ -129,39 +129,11 @@ static int st1202_duration_pattern_write(struct st1202_chip *chip, int pattern,
- 				st1202_prescalar_to_miliseconds(value));
- }
- 
--static void st1202_brightness_set(struct led_classdev *led_cdev,
--				enum led_brightness value)
--{
--	struct st1202_led *led = cdev_to_st1202_led(led_cdev);
--	struct st1202_chip *chip = led->chip;
--
--	guard(mutex)(&chip->lock);
--
--	for (int patt = 0; patt < ST1202_MAX_PATTERNS; patt++)
--		st1202_pwm_pattern_write(chip, led->led_num, patt, ST1202_PATTERN_PWM_FULL);
--	st1202_write_reg(chip, ST1202_ILED_REG0 + led->led_num, value);
--}
--
--static enum led_brightness st1202_brightness_get(struct led_classdev *led_cdev)
--{
--	struct st1202_led *led = cdev_to_st1202_led(led_cdev);
--	struct st1202_chip *chip = led->chip;
--	u8 value = 0;
--
--	guard(mutex)(&chip->lock);
--
--	st1202_read_reg(chip, ST1202_ILED_REG0 + led->led_num, &value);
--
--	return value;
--}
--
--static int st1202_channel_set(struct st1202_chip *chip, int led_num, bool active)
-+static int __st1202_channel_set(struct st1202_chip *chip, int led_num, bool active)
+@@ -278,13 +278,19 @@ static int st1202_dt_init(struct st1202_chip *chip)
  {
- 	u8 chan_low, chan_high;
- 	int ret;
+ 	struct device *dev = &chip->client->dev;
+ 	struct st1202_led *led;
+-	int err, reg;
++	int err;
++	u32 reg;
  
--	guard(mutex)(&chip->lock);
--
- 	if (led_num <= 7) {
- 		ret = st1202_read_reg(chip, ST1202_CHAN_ENABLE_LOW, &chan_low);
- 		if (ret < 0)
-@@ -189,6 +161,40 @@ static int st1202_channel_set(struct st1202_chip *chip, int led_num, bool active
- 	return 0;
- }
+ 	for_each_available_child_of_node_scoped(dev_of_node(dev), child) {
+ 		err = of_property_read_u32(child, "reg", &reg);
+ 		if (err)
+ 			return dev_err_probe(dev, err, "Invalid register\n");
  
-+static int st1202_channel_set(struct st1202_chip *chip, int led_num, bool active)
-+{
-+	guard(mutex)(&chip->lock);
++		if (reg >= ST1202_MAX_LEDS)
++			return dev_err_probe(dev, -EINVAL,
++					"LED reg %u out of range [0, %d]\n",
++					reg, ST1202_MAX_LEDS - 1);
 +
-+	return __st1202_channel_set(chip, led_num, active);
-+}
-+
-+static void st1202_brightness_set(struct led_classdev *led_cdev,
-+				enum led_brightness value)
-+{
-+	struct st1202_led *led = cdev_to_st1202_led(led_cdev);
-+	struct st1202_chip *chip = led->chip;
-+
-+	guard(mutex)(&chip->lock);
-+
-+	for (int patt = 0; patt < ST1202_MAX_PATTERNS; patt++)
-+		st1202_pwm_pattern_write(chip, led->led_num, patt, ST1202_PATTERN_PWM_FULL);
-+	st1202_write_reg(chip, ST1202_ILED_REG0 + led->led_num, value);
-+	__st1202_channel_set(chip, led->led_num, !!value);
-+}
-+
-+static enum led_brightness st1202_brightness_get(struct led_classdev *led_cdev)
-+{
-+	struct st1202_led *led = cdev_to_st1202_led(led_cdev);
-+	struct st1202_chip *chip = led->chip;
-+	u8 value = 0;
-+
-+	guard(mutex)(&chip->lock);
-+
-+	st1202_read_reg(chip, ST1202_ILED_REG0 + led->led_num, &value);
-+
-+	return value;
-+}
-+
- static int st1202_led_set(struct led_classdev *ldev, enum led_brightness value)
- {
- 	struct st1202_led *led = cdev_to_st1202_led(ldev);
-@@ -256,6 +262,10 @@ static int st1202_led_pattern_set(struct led_classdev *ldev,
- 	if (ret != 0)
- 		return ret;
- 
-+	ret = __st1202_channel_set(chip, led->led_num, true);
-+	if (ret != 0)
-+		return ret;
-+
- 	ret = st1202_write_reg(chip, ST1202_CONFIG_REG, (ST1202_CONFIG_REG_PATSR |
- 							ST1202_CONFIG_REG_PATS | ST1202_CONFIG_REG_SHFT));
- 	if (ret != 0)
+ 		led = &chip->leds[reg];
+ 		led->is_active = true;
+ 		led->fwnode = of_fwnode_handle(child);
 -- 
 2.53.0
 
