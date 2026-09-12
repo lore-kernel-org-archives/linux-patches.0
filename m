@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D64633BE141;
-	Sat, 12 Sep 2026 07:07:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E885E3BE175;
+	Sat, 12 Sep 2026 07:07:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789196836; cv=none; b=DZE4X8vNUKuUIMb6q+ncNOS7bgY6r5TUUeQoovdbhbJIMj6fXZE86x/Y2OdHFK2gJWWCr/xudCXfZWXd+9AwfWo2oZiz4TYRYH+5LNUuk5jsgSytYu2uY9nRSUnZcSiPdodffrXUvfT2uo8zktklTBJMmlKhD4ZR45uwE4VhJmc=
+	t=1789196840; cv=none; b=nR/bXakgbw3Z5c2MgCOq8Pn9x8KZc2e5Ekr31ABT9GssHKbmSGsjMMkIgPRsoEX+d+4Dx1o7ivc2zwPZtA1oac+ggpJ2LFO+3G0Vq29Ks5XlYZP6siA7FgdFxz+0SMTMRByMRZL1kX9+jj/+FubhlxWKjxmsTR3975MgNDomXPU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789196836; c=relaxed/simple;
-	bh=Xji0Jf2MT8eBXh68JqEAw74SYFdWHQ8AzkIv7OUxq/Q=;
+	s=arc-20240116; t=1789196840; c=relaxed/simple;
+	bh=l+DM7feP/mXUQ4Stj9HrUB1S5pS4Gqh5B8dyFgApMiM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aj+49ry/fulSIkd4T406Ef+N8uCjA2PuLWq8j4TAwmkWnGb3IR784z05e8aF4oZME/nt7codnr1Hxn9+b84P4hz0P8nu/Ug4JSQ3c0VMQh4ao6WmbNPYm4WwLz/TEscsNmkg/K5opk5C7Lxrvdk4S9KSVfQo+j0dPxgQTT+o804=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Iyr5R2zi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GOtVU2VSzOj1tItAUajZlpXPxTeTyII3MFNmNkUwn50wb1R4WmbZIq2TGU7CV/xuumTQpPXd/qBzeAliTKbBfaeKBha+nwMQdjV9a066ZcdeyRX8BsFEYzZgDb28FPU4pbA7evJttFFZdxK64AFrnDyLVadSHM+xXDQEUBoG5kA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KZ4E/8qm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Iyr5R2zi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8AAE1F000FF;
-	Sat, 12 Sep 2026 07:07:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KZ4E/8qm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 921E61F00893;
+	Sat, 12 Sep 2026 07:07:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789196831;
-	bh=JRLKQ0VwEOsXs2hN/knLyYaxNIRM0LKmXUguzJ39EUQ=;
+	s=korg; t=1789196836;
+	bh=0quOBzUVXuTcb8KAEoVvXduYX/6F3n/WeTv9hwFsWSk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Iyr5R2zi7b8iRzwLtYtL09Xbvh3hJL+cchBE1aSblmyVqoLhDXgm5yyiTTFfIzdYu
-	 WujTdo6A9B7Th0jvTDhB6oV6r0ICQ2Pry2uJ/2uLfMpvgE9wKOg6LZKm36sQE1+WwO
-	 IAHnALFZ23jeqQZCHMXqTDd+67CckoBAc3BX+E5s=
+	b=KZ4E/8qm/+folUEglT9jrl9dw8xtOgyCBPzrB6BV5pyO1+wnUtZkyvko7OObCIwZ/
+	 QKSi0R3a2RQVoGF1BElVCuplYNgtfyd2rAmcuLaOJzylOPke2ikDobJFWWuEtmtOh0
+	 c3MknvW4VTl7OlyG8x4qYKVminGqAXFaaYhAEc4M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	Mikulas Patocka <mpatocka@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0006/1815] i3c: master: Fix recursive locking during device registration
-Date: Sat, 12 Sep 2026 08:29:16 +0200
-Message-ID: <20260912065649.157760598@linuxfoundation.org>
+Subject: [PATCH 7.2 0007/1815] dm-pcache: validate seg_id fields from persistent memory
+Date: Sat, 12 Sep 2026 08:29:17 +0200
+Message-ID: <20260912065649.180533179@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,146 +51,228 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-[ Upstream commit 456f832e5fc26fbfd3b8200fd4553eee520cc377 ]
+[ Upstream commit 90c990a68460d7b5720e5634cf650eccdf0f4098 ]
 
-i3c_master_register_new_i3c_devs() registers newly discovered devices
-while holding i3c_bus_normaluse_lock(), a down_read().  device_register()
-can immediately probe the device, and probe callbacks typically invoke
-I3C helpers that take i3c_bus_normaluse_lock() again, leading to a
-recursive acquisition of the same rwsem.  rwsems do not support recursive
-read locking and can deadlock when a writer is waiting.  See the
-"Recursive read locks" section of Documentation/locking/lockdep-design.rst.
+cache_pos_decode(), cache_key_decode() and the last-kset branches of
+cache_replay(), the writeback worker and the GC worker take a cache
+segment id from the cache device metadata and index cache->segments[]
+with it without checking it against cache->n_segs. That metadata is only
+CRC-protected with a fixed public seed, so whoever supplies the cache
+device on a table load (CAP_SYS_ADMIN) controls the id; an out-of-range
+value forms a wild pcache_cache_segment pointer that is dereferenced and
+written through -- an out-of-bounds read and write driven by on-disk data.
 
-For example, with Intel LPSS I3C, LOCKDEP generates a WARNING like:
-  # echo intel-lpss-i3c.0 > /sys/bus/platform/drivers/mipi-i3c-hci/unbind
-  # echo intel-lpss-i3c.0 > /sys/bus/platform/drivers/mipi-i3c-hci/bind
-  WARNING: possible recursive locking detected
-  kworker/5:1/94 is trying to acquire lock:
-  ffff88811c810d78 (&i3cbus->lock){++++}-{4:4}, at: i3c_device_match_id+0x45/0x370
-  but task is already holding lock:
-  ffff88811c810d78 (&i3cbus->lock){++++}-{4:4}, at: i3c_master_reg_work_fn+0x21/0x5f0
+Add cache_seg_id_valid() and reject an out-of-range id at each decode
+site, failing the operation with -EIO instead of indexing past the array.
+Bound the id against the initialized-segment count (cache_info.n_segs)
+rather than the physical device total. A forged cache_info.n_segs below
+seg_num otherwise leaves segments[cache_info.n_segs..seg_num) as zeroed
+structs whose data pointer is NULL, so a forged id in that window would
+still be dereferenced. A later patch guarantees cache_info.n_segs <=
+seg_num, and a driver-created cache sets the two equal, so valid images
+are unaffected.
 
-Fix this by separating device creation from device registration.
-Populate desc->dev under the maintenance lock, collect the devices that
-still need registration into a local list, then release the lock before
-calling device_register().  Finally retake the lock and clean up any
-devices that failed to register.
-
-Use the maintenance lock rather than the normal-use lock while adding
-device objects.  A write-side maintenance lock prevents readers from
-observing a partially initialized desc->dev during initial device
-population, or desc->dev disappearing if registration fails.
-
-The local list requires a list node, so add a list node member to struct
-i3c_device.
-
-Fixes: 3a379bbcea0a ("i3c: Add core I3C infrastructure")
+Fixes: 1d57628ff95b ("dm-pcache: add persistent cache target in device-mapper")
 Cc: stable@vger.kernel.org
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260807145638.168865-2-adrian.hunter@intel.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+[ adjusted cache_replay() context to preserve the existing hop-limit check before segment-ID validation ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i3c/master.c       |   45 +++++++++++++++++++++++++++++++++------------
- include/linux/i3c/master.h |    3 +++
- 2 files changed, 36 insertions(+), 12 deletions(-)
+ drivers/md/dm-pcache/cache.c           |    4 ++++
+ drivers/md/dm-pcache/cache.h           |   15 +++++++++++++++
+ drivers/md/dm-pcache/cache_gc.c        |   16 ++++++++++++++--
+ drivers/md/dm-pcache/cache_key.c       |   11 +++++++++++
+ drivers/md/dm-pcache/cache_writeback.c |   23 +++++++++++++++++++----
+ 5 files changed, 63 insertions(+), 6 deletions(-)
 
---- a/drivers/i3c/master.c
-+++ b/drivers/i3c/master.c
-@@ -1898,12 +1898,21 @@ err_free_dev:
- static void
- i3c_master_register_new_i3c_devs(struct i3c_master_controller *master)
- {
-+	struct i3c_device *i3cdev, *tmp;
- 	struct i3c_dev_desc *desc;
-+	LIST_HEAD(i3c_unreg_devs);
- 	int ret;
+--- a/drivers/md/dm-pcache/cache.c
++++ b/drivers/md/dm-pcache/cache.c
+@@ -118,6 +118,9 @@ int cache_pos_decode(struct pcache_cache
+ 	if (!latest_addr)
+ 		return -EIO;
  
- 	if (!master->init_done)
- 		return;
++	if (!cache_seg_id_valid(cache, latest.cache_seg_id))
++		return -EIO;
++
+ 	pos->cache_seg = &cache->segments[latest.cache_seg_id];
  
-+	i3c_bus_maintenance_lock(&master->bus);
-+
-+	if (master->shutting_down) {
-+		i3c_bus_maintenance_unlock(&master->bus);
-+		return;
-+	}
-+
- 	i3c_bus_for_each_i3cdev(&master->bus, desc) {
- 		if (desc->dev || !desc->info.dyn_addr || desc == master->this)
- 			continue;
-@@ -1924,25 +1933,37 @@ i3c_master_register_new_i3c_devs(struct
- 		if (desc->boardinfo)
- 			desc->dev->dev.of_node = desc->boardinfo->of_node;
+ 	if (latest.seg_off >= pos->cache_seg->segment.data_size)
+@@ -159,6 +162,7 @@ static int cache_init(struct dm_pcache *
+ 	cache->cache_dev = &pcache->cache_dev;
+ 	cache->n_segs = cache_dev->seg_num;
+ 	atomic_set(&cache->gc_errors, 0);
++	atomic_set(&cache->writeback_errors, 0);
+ 	spin_lock_init(&cache->seg_map_lock);
+ 	spin_lock_init(&cache->key_head_lock);
  
--		ret = device_register(&desc->dev->dev);
--		if (ret) {
--			dev_err(&master->dev,
--				"Failed to add I3C device (err = %d)\n", ret);
--			desc->dev->desc = NULL;
--			put_device(&desc->dev->dev);
--			desc->dev = NULL;
--		}
-+		list_add_tail(&desc->dev->node, &i3c_unreg_devs);
- 	}
-+
-+	i3c_bus_maintenance_unlock(&master->bus);
-+
-+	list_for_each_entry_safe(i3cdev, tmp, &i3c_unreg_devs, node) {
-+		ret = device_register(&i3cdev->dev);
-+		if (ret)
-+			dev_err(&master->dev, "Failed to add I3C device (err = %d)\n", ret);
-+		else
-+			list_del_init(&i3cdev->node);
-+	}
-+
-+	i3c_bus_maintenance_lock(&master->bus);
-+
-+	list_for_each_entry_safe(i3cdev, tmp, &i3c_unreg_devs, node) {
-+		list_del(&i3cdev->node);
-+		desc = i3cdev->desc;
-+		i3cdev->desc = NULL;
-+		put_device(&i3cdev->dev);
-+		desc->dev = NULL;
-+	}
-+
-+	i3c_bus_maintenance_unlock(&master->bus);
- }
+--- a/drivers/md/dm-pcache/cache.h
++++ b/drivers/md/dm-pcache/cache.h
+@@ -180,6 +180,7 @@ struct pcache_cache {
+ 		u32 advance;
+ 		int ret;
+ 	} writeback_ctx;
++	atomic_t		writeback_errors;
  
- static void i3c_master_reg_work_fn(struct work_struct *work)
- {
- 	struct i3c_master_controller *master = container_of(work, typeof(*master), reg_work);
- 
--	i3c_bus_normaluse_lock(&master->bus);
--	if (!master->shutting_down)
--		i3c_master_register_new_i3c_devs(master);
--	i3c_bus_normaluse_unlock(&master->bus);
-+	i3c_master_register_new_i3c_devs(master);
+ 	char gc_kset_onmedia_buf[PCACHE_KSET_ONMEDIA_SIZE_MAX];
+ 	struct delayed_work	gc_work;
+@@ -421,6 +422,20 @@ static inline bool cache_seg_is_ctrl_seg
  }
  
  /**
---- a/include/linux/i3c/master.h
-+++ b/include/linux/i3c/master.h
-@@ -228,6 +228,8 @@ struct i3c_dev_desc {
-  *	  every time the I3C device is rediscovered with a different dynamic
-  *	  address assigned
-  * @bus: I3C bus this device is attached to
-+ * @node: unregistered device list node, only for use by
-+ *	  i3c_master_register_new_i3c_devs(), it is not protected by a lock
-  *
-  * I3C device object exposed to I3C device drivers. The takes care of linking
-  * this object to the relevant &struct_i3c_dev_desc one.
-@@ -238,6 +240,7 @@ struct i3c_device {
- 	struct device dev;
- 	struct i3c_dev_desc *desc;
- 	struct i3c_bus *bus;
-+	struct list_head node;
- };
++ * cache_seg_id_valid - Validate a cache segment id read from the cache device.
++ * @cache: Pointer to the pcache_cache structure.
++ * @cache_seg_id: Segment id decoded from on-media metadata.
++ *
++ * On-media segment ids are only protected by a CRC, which an attacker who can
++ * format the cache device computes over their chosen value. Reject any id that
++ * would index cache->segments[] out of bounds before it is dereferenced.
++ */
++static inline bool cache_seg_id_valid(struct pcache_cache *cache, u32 cache_seg_id)
++{
++	return cache_seg_id < cache->cache_info.n_segs;
++}
++
++/**
+  * cache_key_cutfront - Cuts a specified length from the front of a cache key.
+  * @key: Pointer to pcache_cache_key structure.
+  * @cut_len: Length to cut from the front.
+--- a/drivers/md/dm-pcache/cache_gc.c
++++ b/drivers/md/dm-pcache/cache_gc.c
+@@ -74,11 +74,17 @@ static bool need_gc(struct pcache_cache
+  * @cache: Pointer to the pcache_cache structure.
+  * @kset_onmedia: Pointer to the kset_onmedia structure for the last kset.
+  */
+-static void last_kset_gc(struct pcache_cache *cache, struct pcache_cache_kset_onmedia *kset_onmedia)
++static int last_kset_gc(struct pcache_cache *cache, struct pcache_cache_kset_onmedia *kset_onmedia)
+ {
+ 	struct dm_pcache *pcache = CACHE_TO_PCACHE(cache);
+ 	struct pcache_cache_segment *cur_seg, *next_seg;
  
- /*
++	if (!cache_seg_id_valid(cache, kset_onmedia->next_cache_seg_id)) {
++		pcache_dev_err(pcache, "invalid next_cache_seg_id %u in gc (n_segs %u)\n",
++				kset_onmedia->next_cache_seg_id, cache->n_segs);
++		return -EIO;
++	}
++
+ 	cur_seg = cache->key_tail.cache_seg;
+ 
+ 	next_seg = &cache->segments[kset_onmedia->next_cache_seg_id];
+@@ -94,6 +100,8 @@ static void last_kset_gc(struct pcache_c
+ 	spin_lock(&cache->seg_map_lock);
+ 	__clear_bit(cur_seg->cache_seg_id, cache->seg_map);
+ 	spin_unlock(&cache->seg_map_lock);
++
++	return 0;
+ }
+ 
+ void pcache_cache_gc_fn(struct work_struct *work)
+@@ -130,7 +138,11 @@ void pcache_cache_gc_fn(struct work_stru
+ 			if (dirty_tail.cache_seg == key_tail.cache_seg)
+ 				break;
+ 
+-			last_kset_gc(cache, kset_onmedia);
++			ret = last_kset_gc(cache, kset_onmedia);
++			if (ret) {
++				atomic_inc(&cache->gc_errors);
++				return;
++			}
+ 			continue;
+ 		}
+ 
+--- a/drivers/md/dm-pcache/cache_key.c
++++ b/drivers/md/dm-pcache/cache_key.c
+@@ -94,6 +94,12 @@ int cache_key_decode(struct pcache_cache
+ 	key->off = key_onmedia->off;
+ 	key->len = key_onmedia->len;
+ 
++	if (!cache_seg_id_valid(cache, key_onmedia->cache_seg_id)) {
++		pcache_dev_err(pcache, "invalid cache_seg_id %u in cache key (n_segs %u)\n",
++				key_onmedia->cache_seg_id, cache->n_segs);
++		return -EIO;
++	}
++
+ 	key->cache_pos.cache_seg = &cache->segments[key_onmedia->cache_seg_id];
+ 	key->cache_pos.seg_off = key_onmedia->cache_seg_off;
+ 
+@@ -800,6 +806,11 @@ int cache_replay(struct pcache_cache *ca
+ 				ret = -EIO;
+ 				goto out;
+ 			}
++
++			if (!cache_seg_id_valid(cache, kset_onmedia->next_cache_seg_id)) {
++				ret = -EIO;
++				goto out;
++			}
+ 
+ 			next_seg = &cache->segments[kset_onmedia->next_cache_seg_id];
+ 
+--- a/drivers/md/dm-pcache/cache_writeback.c
++++ b/drivers/md/dm-pcache/cache_writeback.c
+@@ -196,12 +196,18 @@ clear_tree:
+ 	return ret;
+ }
+ 
+-static void last_kset_writeback(struct pcache_cache *cache,
++static int last_kset_writeback(struct pcache_cache *cache,
+ 		struct pcache_cache_kset_onmedia *last_kset_onmedia)
+ {
+ 	struct dm_pcache *pcache = CACHE_TO_PCACHE(cache);
+ 	struct pcache_cache_segment *next_seg;
+ 
++	if (!cache_seg_id_valid(cache, last_kset_onmedia->next_cache_seg_id)) {
++		pcache_dev_err(pcache, "invalid next_cache_seg_id %u in writeback (n_segs %u)\n",
++				last_kset_onmedia->next_cache_seg_id, cache->n_segs);
++		return -EIO;
++	}
++
+ 	pcache_dev_debug(pcache, "last kset, next: %u\n", last_kset_onmedia->next_cache_seg_id);
+ 
+ 	next_seg = &cache->segments[last_kset_onmedia->next_cache_seg_id];
+@@ -211,6 +217,8 @@ static void last_kset_writeback(struct p
+ 	cache->dirty_tail.seg_off = 0;
+ 	cache_encode_dirty_tail(cache);
+ 	mutex_unlock(&cache->dirty_tail_lock);
++
++	return 0;
+ }
+ 
+ void cache_writeback_fn(struct work_struct *work)
+@@ -229,6 +237,9 @@ void cache_writeback_fn(struct work_stru
+ 	if (pcache_is_stopping(pcache))
+ 		goto unlock;
+ 
++	if (atomic_read(&cache->writeback_errors))
++		goto unlock;
++
+ 	kset_onmedia = (struct pcache_cache_kset_onmedia *)cache->wb_kset_onmedia_buf;
+ 
+ 	mutex_lock(&cache->dirty_tail_lock);
+@@ -241,15 +252,19 @@ void cache_writeback_fn(struct work_stru
+ 	}
+ 
+ 	if (kset_onmedia->flags & PCACHE_KSET_FLAGS_LAST) {
+-		last_kset_writeback(cache, kset_onmedia);
++		ret = last_kset_writeback(cache, kset_onmedia);
++		if (ret) {
++			atomic_inc(&cache->writeback_errors);
++			goto unlock;
++		}
+ 		delay = 0;
+ 		goto queue_work;
+ 	}
+ 
+ 	ret = cache_kset_insert_tree(cache, kset_onmedia);
+ 	if (ret) {
+-		delay = PCACHE_CACHE_WRITEBACK_INTERVAL;
+-		goto queue_work;
++		atomic_inc(&cache->writeback_errors);
++		goto unlock;
+ 	}
+ 
+ 	cache_wb_tree_writeback(cache, get_kset_onmedia_size(kset_onmedia));
 
 
