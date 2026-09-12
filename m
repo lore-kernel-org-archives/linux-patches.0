@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCD29214A84;
-	Sat, 12 Sep 2026 12:31:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B890D214A84;
+	Sat, 12 Sep 2026 12:31:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789216283; cv=none; b=GfT+vj+CbFfWSQr8L7tWt11emCRi2gtIv9hFGm5wL/40EIA6oeTbSG0owrqgAvwCJI/x9njgw2Ry5muhwkXmG8V5NMWMZHfUkGYFKQApK8rywEAQMdH+S2SH6f2XpqF93a14DcI7D9y+Avx6fWr9tHaR4pTc4iqo0hWwVXTtRxU=
+	t=1789216288; cv=none; b=jKqzYQmRwDX8iirraAjTaR+s6ZrvfExyojOtyPKZgoyccLJITi/GqgstBmOkqadV+1yh5e59WUuagVGVE+ImoskHi5qJkPjk+T5LWqFxM7a8MdUCnpoTIHDN2dph0FOW1hWpRfyf68ydU/QAcvffoWJ219oi3vjf9f82mvnC/WI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789216283; c=relaxed/simple;
-	bh=o+G1fKwVKZwcHqoWIH6EwTdtIbYoW6sIZmrPWl+4JAU=;
+	s=arc-20240116; t=1789216288; c=relaxed/simple;
+	bh=dnBPKvh10GgUkHHiqyTguwGWzS+t5ED2rJhlYQeoOxY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fO+nN2tMk1NeVMn7vBShrsyWQhf0gD+EsXmRWRoVQlgGK2GqxR3vxX+T+tC6YuSeAfdwlseRwMPKOQiqjjGUOYlVK3MriLa3wGQAI1pRMQoLzhTJbwp76KgTvbUbe2BdcKC0t3xx2BXE33BB5MUM6Ml8AjrmfXibTj/IdOCQu4U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U/DD+h9i; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bgGVjmvzcCVlUNRMF4+Q5Z75Im28LAg02aEwLPUzkTYWGKNysCBwqWB8aUjSqUDILUUkklK79DvV55u4sx7fpeByipFLWDVfauoWwIpJv1jMXgLLsFUnY1PO4GDpHBB7VqAmH9U4XaA20DChGUfqq7XsuK4IWLb09kDboAUupGc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K+AgN676; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U/DD+h9i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E38F1F000FF;
-	Sat, 12 Sep 2026 12:31:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K+AgN676"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 790A11F000FF;
+	Sat, 12 Sep 2026 12:31:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789216282;
-	bh=Hp0A+WT2s7x3eRwYZJE3cqhfqIQH628wIIlaWnG25Zg=;
+	s=korg; t=1789216287;
+	bh=X1geb0ROBxn98XgVqsrt96VUpxQrgJLqzNqkTHV7uIQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=U/DD+h9irIT/8LpOiVd7N98+57ZQ73S4HnuRlT4HQzAK6TbhHDFKcwCgd/uxcNUV9
-	 6wOyJmHcoPeFoqzFuJ50oz7Xw8LYSRGeSbecIziRhqBCIel4JeXaGrn/MB1uyi/+f+
-	 cBhoR1RB2vNxFqLC8uyqeYg1UjyoVvqVDckZVSs0=
+	b=K+AgN676i+6lmzCSUzr2MSEtpZPSXYyvwXGeQCAhuysSC0k/6XtT8z4Mr5r69jH06
+	 mNujOOCxcOoBnN+iunfKth9yLFSPP4+mb9EBns9Yqy/wU9CMjJTRgc/aI1LK9lzmDm
+	 YTMmKMg8n8pho75/aZdI4B4MrrX06EZjS+hYrosc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ivy Lopez <skunkolee@gmail.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0706/1376] staging: rtl8723bs: use kfree_sensitive() for key material
-Date: Sat, 12 Sep 2026 08:52:12 +0200
-Message-ID: <20260912065623.280878102@linuxfoundation.org>
+Subject: [PATCH 6.12 0707/1376] fs/ntfs3: reject restart table growth beyond U16_MAX entries
+Date: Sat, 12 Sep 2026 08:52:13 +0200
+Message-ID: <20260912065623.303181319@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -50,64 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ivy Lopez <skunkolee@gmail.com>
+From: Weiming Shi <bestswngs@gmail.com>
 
-[ Upstream commit d205dfa8cb825f1954ca1cfa474fc50bf06ee4aa ]
+[ Upstream commit 111f8d74a19d85942ecbb3aba78f6f3c88e59391 ]
 
-The set_stakey_parm struct contains a 16-byte encryption key.
-Use kfree_sensitive() instead of kfree() to ensure the key
-material is zeroed before the memory is freed, preventing
-potential information leaks.
+During $LogFile replay, log_replay() indexes the transaction table by the
+transact_id taken from the log record header.  check_log_rec() only
+verifies that transact_id is non-zero and properly aligned, not its
+magnitude, so a crafted image can request an arbitrarily large index.
 
-Fixes: 554c0a3abf21 ("staging: Add rtl8723bs sdio wifi driver")
-Signed-off-by: Ivy Lopez <skunkolee@gmail.com>
-Link: https://patch.msgid.link/20260717220135.17836-1-skunkolee@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+alloc_rsttbl_from_idx() grows the table to cover that index via
+extend_rsttbl(), which passes the new entry count to init_rsttbl():
+
+	rt = init_rsttbl(esize, used + add);
+
+used + add is computed as u32 but init_rsttbl() takes a u16, and the
+count is stored in struct RESTART_TABLE as a __le16.  When used + add
+exceeds U16_MAX it is truncated, init_rsttbl() allocates a table far
+smaller than the index requires, and alloc_rsttbl_from_idx() then
+dereferences and writes at the original, untruncated offset -- an
+out-of-bounds access past the allocation, reachable by mounting a
+crafted NTFS image.
+
+ BUG: KASAN: use-after-free in alloc_rsttbl_from_idx (fs/ntfs3/fslog.c:950)
+ Read of size 4 at addr ffff8880327ffff8 by task exploit
+  alloc_rsttbl_from_idx (fs/ntfs3/fslog.c:950)
+  log_replay (fs/ntfs3/fslog.c:4562)
+  ntfs_loadlog_and_replay (fs/ntfs3/fsntfs.c:324)
+  ntfs_fill_super (fs/ntfs3/super.c:1393)
+  get_tree_bdev_flags
+  vfs_get_tree
+  path_mount
+  __x64_sys_mount
+
+A restart table is limited to U16_MAX entries by its __le16 count, so a
+larger growth request is invalid input.  Reject it in extend_rsttbl();
+all callers already handle a NULL return.
+
+Fixes: b46acd6a6a62 ("fs/ntfs3: Add NTFS journal")
+Reported-by: Xiang Mei <xmei5@asu.edu>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/rtl8723bs/core/rtw_cmd.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ fs/ntfs3/fslog.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/staging/rtl8723bs/core/rtw_cmd.c b/drivers/staging/rtl8723bs/core/rtw_cmd.c
-index 84ce7307d8f3d..e9a95a2733ad9 100644
---- a/drivers/staging/rtl8723bs/core/rtw_cmd.c
-+++ b/drivers/staging/rtl8723bs/core/rtw_cmd.c
-@@ -894,7 +894,7 @@ u8 rtw_setstakey_cmd(struct adapter *padapter, struct sta_info *sta, u8 unicast_
- 	if (enqueue) {
- 		ph2c = rtw_zmalloc(sizeof(struct cmd_obj));
- 		if (!ph2c) {
--			kfree(psetstakey_para);
-+			kfree_sensitive(psetstakey_para);
- 			res = _FAIL;
- 			goto exit;
- 		}
-@@ -902,7 +902,7 @@ u8 rtw_setstakey_cmd(struct adapter *padapter, struct sta_info *sta, u8 unicast_
- 		psetstakey_rsp = rtw_zmalloc(sizeof(struct set_stakey_rsp));
- 		if (!psetstakey_rsp) {
- 			kfree(ph2c);
--			kfree(psetstakey_para);
-+			kfree_sensitive(psetstakey_para);
- 			res = _FAIL;
- 			goto exit;
- 		}
-@@ -913,7 +913,7 @@ u8 rtw_setstakey_cmd(struct adapter *padapter, struct sta_info *sta, u8 unicast_
- 		res = rtw_enqueue_cmd(pcmdpriv, ph2c);
- 	} else {
- 		set_stakey_hdl(padapter, (u8 *)psetstakey_para);
--		kfree(psetstakey_para);
-+		kfree_sensitive(psetstakey_para);
- 	}
- exit:
- 	return res;
-@@ -953,7 +953,7 @@ u8 rtw_clearstakey_cmd(struct adapter *padapter, struct sta_info *sta, u8 enqueu
- 		psetstakey_rsp = rtw_zmalloc(sizeof(struct set_stakey_rsp));
- 		if (!psetstakey_rsp) {
- 			kfree(ph2c);
--			kfree(psetstakey_para);
-+			kfree_sensitive(psetstakey_para);
- 			res = _FAIL;
- 			goto exit;
- 		}
+diff --git a/fs/ntfs3/fslog.c b/fs/ntfs3/fslog.c
+index 49f4ce2e676f9..09dc29e434e3b 100644
+--- a/fs/ntfs3/fslog.c
++++ b/fs/ntfs3/fslog.c
+@@ -875,6 +875,9 @@ static inline struct RESTART_TABLE *extend_rsttbl(struct RESTART_TABLE *tbl,
+ 	u32 used = le16_to_cpu(tbl->used);
+ 	struct RESTART_TABLE *rt;
+ 
++	if (used + add > U16_MAX)
++		return NULL;
++
+ 	rt = init_rsttbl(esize, used + add);
+ 	if (!rt)
+ 		return NULL;
 -- 
 2.53.0
 
