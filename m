@@ -1,154 +1,162 @@
-Received: from relay.yourmailgateway.de (relay.yourmailgateway.de [188.68.63.170])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6244A29DB64;
-	Sat, 12 Sep 2026 10:26:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=188.68.63.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EBFE2DE702;
+	Sat, 12 Sep 2026 10:26:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789208803; cv=none; b=KqPj//bpPHnFWablGTDsZwSKW1Oegq8miHwe4LL4wBop30ktCKfJlNj6ozy/ps+JcYynA2V58mvl9yN1D5PSyX+QlUiqLokx3jZ+A4y9fm1UAZmOw8LtGw1Z818XAYZPLiVxlvCbxzTAH791sKhFyqjgfkqfJg0JDwPO/BX4k9I=
+	t=1789208804; cv=none; b=dTusFduZ9bPI21rd23TicTzEplLbccCKnxQbLn4vqDGH/WqQNfgROzf7Jj4yCLWxdXJbF9MUFG07Y5bOGBSJgphRKXeTBWZH3McaMSB0FqJYxej9PQPdSd1mPASX79o6dBlQodnFwfnWmUhWCptJSAkkccA3V3sv5p04jMO+ELE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789208803; c=relaxed/simple;
-	bh=d8G+8siRWTaw4oHGN2aZES9/78IL9mdii44AKdP4+Wg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=u55uphtgvI0njH1RDR4lzjORAMTcm4ojVJ5TSvG2MFiSirxxJ+hbSEAAQ4v0EwSJfIOqXmM4/HlU3pSiLyKXy+lyeh2HJBQJlAs1GD5esg032sX1QKmgo29/ihT5lGyhICZztZ/ckJhpEIBgeIgbDB4WRfq7GZI3ZOpkVxR+dac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=leemhuis.info; spf=pass smtp.mailfrom=leemhuis.info; dkim=pass (2048-bit key) header.d=leemhuis.info header.i=@leemhuis.info header.b=b2pu7MFB; arc=none smtp.client-ip=188.68.63.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=leemhuis.info
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=leemhuis.info
+	s=arc-20240116; t=1789208804; c=relaxed/simple;
+	bh=JLFdxy/PFqR34awFiRraU8ThZ4NZDzRUloKoGCNOEn4=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=d4fBN/3mloBqFe167aSuQzEoYhLK9QkNrVuWRMUUDphiiJ2VetHG8JSEWOmplfJYy+t86R47S9qqv89dqwIUAjWPJTKq6OcLm1jrFXm9dFV7nQcHCBGHP12i10XGWrEnL1BJ2JsbiYbro2uLB3t/U4JxLliKzmxwSJ/9i6HOhQY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YmceqCQp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=leemhuis.info header.i=@leemhuis.info header.b="b2pu7MFB"
-Received: from mors-relay8203.netcup.net (localhost [127.0.0.1])
-	by mors-relay8203.netcup.net (Postfix) with ESMTPS id 4hhnSn4JHhz8n8s;
-	Sat, 12 Sep 2026 10:19:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=leemhuis.info;
-	s=key2; t=1789208345;
-	bh=d8G+8siRWTaw4oHGN2aZES9/78IL9mdii44AKdP4+Wg=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=b2pu7MFBUCSmFMMlstTSLsHaZJR7cZFi8yaD+kfHDt6MFCfqtGkeh6o2L27lwONBK
-	 gPqmAnUeb9OD2bWYXl1ClGSTvqoJOGctd0ARbTF3X91lkqqN6/fRr+LN8oUH7iv0c6
-	 3U37E1zd6PuhYZCjX9NWmmoAwYzb7RZ4188nucYBY05z6cpH1WLLyB5zbKUBPeLCdm
-	 HSpQoC+aHLYaXCfiXpLdWaGy9wCjoUI67k3n4CWQDCsHPQz4QnXeoIASATgVnLShJ7
-	 L2QldoJkGbNvMWZVyQnJxEmQ0PlmyOA+6iVTs1ODxatLnS+qhm/uvG7LKQ2Z+CTHiy
-	 dY4cr8Kw9fwwQ==
-Received: from policy02-mors.netcup.net (unknown [46.38.225.35])
-	by mors-relay8203.netcup.net (Postfix) with ESMTPS id 4hhnSn3ZXzz8n8H;
-	Sat, 12 Sep 2026 10:19:05 +0000 (UTC)
-Received: from mxe9fb.netcup.net (unknown [10.243.12.53])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by policy02-mors.netcup.net (Postfix) with ESMTPS id 4hhnSl03dTz8sbH;
-	Sat, 12 Sep 2026 12:19:02 +0200 (CEST)
-Received: from [IPV6:2a02:8108:8984:1d00:a0cf:1912:4be:477f] (unknown [IPv6:2a02:8108:8984:1d00:a0cf:1912:4be:477f])
-	by mxe9fb.netcup.net (Postfix) with ESMTPSA id A50C25F8E7;
-	Sat, 12 Sep 2026 12:18:57 +0200 (CEST)
-Authentication-Results: mxe9fb;
-        spf=pass (sender IP is 2a02:8108:8984:1d00:a0cf:1912:4be:477f) smtp.mailfrom=linux@leemhuis.info smtp.helo=[IPV6:2a02:8108:8984:1d00:a0cf:1912:4be:477f]
-Received-SPF: pass (mxe9fb: connection is authenticated)
-Message-ID: <5babfab4-ebf7-42b8-88f2-ac2f5b6b2d7f@leemhuis.info>
-Date: Sat, 12 Sep 2026 12:18:56 +0200
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YmceqCQp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 227AF1F000FF;
+	Sat, 12 Sep 2026 10:26:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1789208802;
+	bh=bpRrEuNPpC99rIlkQW5pKMVAYUX9eAvvoQ5Z0fSi+LA=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=YmceqCQpHizdzeh8EfkOSQXcikc5Ex0wOHc7XYgRDyruadcHPviSg5imtcexjlLml
+	 q8wOQADVpDZOPf1uYRADyuw3HIBHWWuZmXn1BtYtoLCyA49H8j51+eUiwQzqvbqxA0
+	 KKuxXLQZdTIcFs4Pqp0R/Gh+dwUKEdsfO1b1ITsc=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Chen Cheng <chencheng@fnnas.com>,
+	Yu Kuai <yukuai@fygo.io>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 0650/1518] md/raid5: protect bitmap batch counters aka seq_flush/seq_write consistency
+Date: Sat, 12 Sep 2026 08:46:59 +0200
+Message-ID: <20260912065638.134623605@linuxfoundation.org>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
+References: <20260912065623.398859879@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 7.2 0000/1815] 7.2.6-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
- conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
- achill@achill.org, sr@sladewatkins.com,
- Linux kernel regressions list <regressions@lists.linux.dev>
-References: <20260912065648.999753832@linuxfoundation.org>
-From: Thorsten Leemhuis <linux@leemhuis.info>
-Content-Language: de-DE, en-US
-Autocrypt: addr=linux@leemhuis.info; keydata=
- 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 MEK4
-In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-PPP-Message-ID: 
- <178920833844.1659599.12775412309326834949@mxe9fb.netcup.net>
-X-Rspamd-Server: rspamd-worker-8404
-X-Rspamd-Queue-Id: A50C25F8E7
-X-NC-CID: l8TEAt+miKn7LL83ewAZEBNk1qllbLtJwEfXIQDBCHaKhRxfKUU=
 
-On 9/12/26 08:29, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 7.2.6 release.
-> There are 1815 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> [...]
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
-My builds failed while compiling perf:
+------------------
 
->> ui/browsers/hists.c: In function ‘evsel__hists_browse’:
->> ui/browsers/hists.c:3191:41: error: ‘hotkey_act’ undeclared (first use in this function)
->>  3191 |                                 memset(&hotkey_act, 0, sizeof(hotkey_act));
->>       |                                         ^~~~~~~~~~
->> ui/browsers/hists.c:3191:41: note: each undeclared identifier is reported only once for each function it appears in
-Reverting "perf ui hists: In report UI ensure thread is set with
-reference counting" fixes this. Haven't tried, but maybe including
-bd86119c3ee6ed ("perf ui hists: Fix dso_filter reference leak and exit
-zoom cleanup") will fix this, too.
+From: Chen Cheng <chencheng@fnnas.com>
 
-That got me a little further, but then I ran into this:
+[ Upstream commit f565925810cb8bc799421485770e15d922ef766a ]
 
->> tools/perf/util/python.c: In function ‘pyrf_evsel__open’:
->> tools/perf/util/python.c:1104:9: error: implicit declaration of function ‘CHECK_INITIALIZED’ [-Wimplicit-function-declaration]
->>  1104 |         CHECK_INITIALIZED(evsel, "evsel");
->>       |         ^~~~~~~~~~~~~~~~~
->> tools/perf/util/python.c: In function ‘pyrf_evsel__set_tracking’:
->> tools/perf/util/python.c:1295:9: error: implicit declaration of function ‘CHECK_INITIALIZED_INT’ [-Wimplicit-function-declaration]
->>  1295 |         CHECK_INITIALIZED_INT(pevsel->evsel, "evsel");
->>       |         ^~~~~~~~~~~~~~~~~~~~~
+kcsan detect race :
+- raid5d() closes the current bitmap batch by updating
+	conf->seq_flush under conf->device_lock.
+- __add_stripe_bio() read conf->seq_flush without that
+	lock when assigning sh->bm_seq.
 
-Only looked briefly, but didn't spot a simple way to work around that
-through a simple revert or two (but it's quite likely I missed something).
+so, protect seq_flush/seq_write consistency for multiple CPUs by
+READ_ONCE()/WRITE_ONCE() under the path without held device_lock.
 
-Ciao, Thorsten
+re-explain the stripe batch sequence number update flow:
+1. sh->bm_seq declare which batch number the stripe belongs to
+   when perform bitmap-related write.
+	==> bm_seq = seq_flush+1
+
+2. stripe be handled,
+	* if sh->bm_seq - conf->seq_write > 0, means the
+	  batch stripes **newer than** the last written
+	  batch, it cannot proceed yet, queued on bitmap_list.
+	* otherwise , has already proceed.
+
+3. raid5d() `++seq_flush` to closes the current batch, means
+	* no more stripes join that old batch
+	* just-closed batch ready to write-out to disk
+
+4. raid5d() calls bitmap hooks unplug() or writeout, then,
+   `++seq_write` to the same as bm_seq.
+
+- seq_flush - for producer, to close batches.
+- seq_write - for consumer, the checkpoint number.
+
+the report:
+====================================
+BUG: KCSAN: data-race in __add_stripe_bio / raid5d
+
+write to 0xffff88ba5625d470 of 4 bytes by task 82401 on cpu 0:
+ raid5d+0x1d9/0xba0
+ [.....]
+
+read to 0xffff88ba5625d470 of 4 bytes by task 82421 on cpu 8:
+ __add_stripe_bio+0x332/0x400
+ raid5_make_request+0x6ac/0x2930
+ md_handle_request+0x4a2/0xa40
+ md_submit_bio+0x109/0x1a0
+ __submit_bio+0x2ec/0x390
+ [.....]
+
+Fixes: 7c13edc87510 ("md: incorporate new plugging into raid5.")
+
+v1 -> v2:
+- remove WRITE_ONCE(conf->seq_write) in held device_lock path.
+- remove READ_ONCE(conf->seq_flush) in held device_lock path.
+
+Signed-off-by: Chen Cheng <chencheng@fnnas.com>
+Reviewed-by: Yu Kuai <yukuai@fygo.io>
+Link: https://patch.msgid.link/20260622124649.1780233-1-chencheng@fnnas.com
+Signed-off-by: Yu Kuai <yukuai@fygo.io>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/md/raid5.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
+
+diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
+index b19d870e41719..98763a349fba0 100644
+--- a/drivers/md/raid5.c
++++ b/drivers/md/raid5.c
+@@ -3541,7 +3541,7 @@ static void __add_stripe_bio(struct stripe_head *sh, struct bio *bi,
+ 		 sh->dev[dd_idx].sector);
+ 
+ 	if (conf->mddev->bitmap && firstwrite && !sh->batch_head) {
+-		sh->bm_seq = conf->seq_flush+1;
++		sh->bm_seq = READ_ONCE(conf->seq_flush) + 1;
+ 		set_bit(STRIPE_BIT_DELAY, &sh->state);
+ 	}
+ }
+@@ -5767,7 +5767,7 @@ static void make_discard_request(struct mddev *mddev, struct bio *bi)
+ 		}
+ 		spin_unlock_irq(&sh->stripe_lock);
+ 		if (conf->mddev->bitmap) {
+-			sh->bm_seq = conf->seq_flush + 1;
++			sh->bm_seq = READ_ONCE(conf->seq_flush) + 1;
+ 			set_bit(STRIPE_BIT_DELAY, &sh->state);
+ 		}
+ 
+@@ -6802,12 +6802,14 @@ static void raid5d(struct md_thread *thread)
+ 		if (
+ 		    !list_empty(&conf->bitmap_list)) {
+ 			/* Now is a good time to flush some bitmap updates */
+-			conf->seq_flush++;
++			int seq = conf->seq_flush + 1;
++
++			WRITE_ONCE(conf->seq_flush, seq);
+ 			spin_unlock_irq(&conf->device_lock);
+ 			if (md_bitmap_enabled(mddev, true))
+ 				mddev->bitmap_ops->unplug(mddev, true);
+ 			spin_lock_irq(&conf->device_lock);
+-			conf->seq_write = conf->seq_flush;
++			conf->seq_write = seq;
+ 			activate_bit_delay(conf, conf->temp_inactive_list);
+ 		}
+ 		raid5_activate_delayed(conf);
+-- 
+2.53.0
+
+
+
