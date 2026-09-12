@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4389F2F6931;
-	Sat, 12 Sep 2026 19:17:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5291037C0ED;
+	Sat, 12 Sep 2026 19:17:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789240643; cv=none; b=tsTjQFKlxKVKoGrdzbidCDjY7k96i7zfrWdpBo2g878tJwuVRqGQbe5et+PYO5sImU21jbC+1VRtUp1+1kVPiqpclAWiVS8u2OLMPM6l8QF27tdcTDIEEO6jgJVNKdNCtgFr0tpjeot7+V62PCAtALuSNURLiYBECxydq/ZDeZk=
+	t=1789240649; cv=none; b=GziNG8s/gb6yhF7RCNEL6+cGE0FoeidckgZcjEnaE5bRuYZfuM3fehxx5HS6iXtrA6DWCnkyejuiWeRua8wCVoMjKbLvCNXXY90fSVV5BJ0c6oFD1vy4i0dI3mFU0QEOq/OpNqniVwm8IyDfox0/rBDNvX+eElog0sx/D7Uue14=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789240643; c=relaxed/simple;
-	bh=yqZ2uTaSbzYjjZPPHFr9NgeFgUMX63lqcuxD8UE6koY=;
+	s=arc-20240116; t=1789240649; c=relaxed/simple;
+	bh=GRLrA/ly0RMb4XHWwpi13xxtCfW2dFydk8g6Rsrwd50=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oKRbgF7GVhhFgNPN4Rgu42vU2jBguo3XV590hP3m9h868FYY1BftlYqmdxCkRGsgdogi4cpw7V9saMyJR7/C2CVGNuw/J35uAiX/zukHwsl8GZynNoQUj8XczfZ6R6kCKvX8XdswAFmbWkdGAkEaDMOkAZkRXE2zY7bOsi/zHvY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=faze05Vp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bxgWciBPr9ZuqZgA9GkrGixGXUqBBvMj48Odg368xSBipCglBQ66LgMeSmcCwordZ2EZ+FfquZ6XrHyrfmNXgZSwiVlxzdKqIFkTI8gxQwMR4O18EmeTp7DW8WpqUfuknziTREwlifuQAmk7HiVkLdfxgfkV92dKJ5JNXjjnoBM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vago2xM+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="faze05Vp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBAD81F000FF;
-	Sat, 12 Sep 2026 19:17:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vago2xM+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7B3F1F000FF;
+	Sat, 12 Sep 2026 19:17:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789240641;
-	bh=0iteFKYFu9vQEIXFP0j0gp+LCO6OvcdfhlBa3GnIVq0=;
+	s=korg; t=1789240647;
+	bh=QJD8uHybSmpC4ddjyls4V1OXGRH4TSrFwabTFjGWvrg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=faze05VppbuOmsdNH+E5Zz4YQ2QWSLN/BrQq0TPbefSZVXr9DOilaBGLrcLztAkht
-	 Xj9S7WD/M67U5rC/J7Z2un9arOOMuZg9XiCwyO8QOEoreiWqK+m2s1Ku3Bo65MjeLk
-	 HDUkRuJIcjBKmW0s42TwONmqKGJne+i91qfEXd68=
+	b=vago2xM+EkiGPyXHCna4qlAnsa3rtNEztXFgxxp+w9ycCIUhO0zFC5agZLwXcxAOQ
+	 nm/DmbPRf3BZR+61AEHlEOM7t7Dln382+BTZLkYpTlCR/o9cCu8Xc95TrrO1A50kU1
+	 YHKnqz64zaD5uAQzmarzDTShjXxn1KRQgZ0usuBo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+faed97c4ed43bfe7fee5@syzkaller.appspotmail.com,
-	John Johansen <john.johansen@canonical.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 903/935] apparmor: policy_int make sure list heads are initialized before fail path
-Date: Sat, 12 Sep 2026 09:05:33 +0200
-Message-ID: <20260912065547.524607520@linuxfoundation.org>
+Subject: [PATCH 5.15 912/935] netfilter: x_tables: replace pr_{info,err}() by pr_info_ratelimited()
+Date: Sat, 12 Sep 2026 09:05:42 +0200
+Message-ID: <20260912065547.734046383@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -51,84 +50,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Johansen <john.johansen@canonical.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 3daad923a8685adb66087e0d819559b7eb6ba975 ]
+[ Upstream commit 793d9eda4821f75b5f7cc9e6a870b72a58b44c2b ]
 
-If profile create fails before policy_init is complete the list heads
-are not properly initialized causing profile_free() sanity checks to
-trigger the following splat.
+Several xtables extension still use pr_err() or pr_info() without
+ratelimit.
 
-AppArmor WARN aa_policy_destroy: (((!list_empty(&policy->profiles) && (&policy->profiles)->prev != ((void *) 0x122 + (0xdead000000000000UL))))):
-WARNING: security/apparmor/lib.c:509 at aa_policy_destroy+0x164/0x1b0 security/apparmor/lib.c:509, CPU#0: syz.0.17/5541
-Modules linked in:
-CPU: 0 UID: 0 PID: 5541 Comm: syz.0.17 Not tainted syzkaller #0 PREEMPT(full)
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-RIP: 0010:aa_policy_destroy+0x16b/0x1b0 security/apparmor/lib.c:509
-Code: 85 ed 7e 4d e8 96 bc 37 fd 5b 41 5c 41 5e 41 5f 5d e9 19 27 4e 07 cc e8 83 bc 37 fd 48 8d 3d 0c f0 d3 0b 48 c7 c6 a4 eb 38 8e <67> 48 0f b9 3a e9 04 ff ff ff e8 66 bc 37 fd 48 8d 3d ff ef d3 0b
-RSP: 0018:ffffc9000345eaa0 EFLAGS: 00010293
-RAX: ffffffff848f530d RBX: ffff88803f734800 RCX: ffff88801af2a580
-RDX: 0000000000000000 RSI: ffffffff8e38eba4 RDI: ffffffff90634320
-RBP: 0000000000000000 R08: 0000000000000cc0 R09: 00000000ffffffff
-R10: dffffc0000000000 R11: fffffbfff1d95913 R12: dead000000000122
-R13: ffff88803f734800 R14: ffff88803f734828 R15: dffffc0000000000
-FS:  00007f5f6a1836c0(0000) GS:ffff88808c519000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 000055d02407b048 CR3: 0000000012aa9000 CR4: 0000000000352ef0
-Call Trace:
- <TASK>
- aa_free_profile+0x9d/0x9f0 security/apparmor/policy.c:334
- aa_alloc_profile+0x1e4/0x3e0 security/apparmor/policy.c:416
- unpack_profile security/apparmor/policy_unpack.c:1153 [inline]
- aa_unpack+0x17db/0x7430 security/apparmor/policy_unpack.c:1748
- aa_replace_profiles+0x226/0x2a20 security/apparmor/policy.c:1183
- policy_update+0x234/0x4a0 security/apparmor/apparmorfs.c:505
- profile_load+0x1cb/0x320 security/apparmor/apparmorfs.c:522
- vfs_write+0x296/0xba0 fs/read_write.c:685
- ksys_write+0x150/0x270 fs/read_write.c:739
- do_syscall_x64 arch/x86/entry/syscall_64.c:61 [inline]
- do_syscall_64+0x166/0x520 arch/x86/entry/syscall_64.c:84
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: 0033:0x7f5f6939e0d9
-Code: ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 44 00 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 e8 ff ff ff f7 d8 64 89 01 48
-RSP: 002b:00007f5f6a183028 EFLAGS: 00000246 ORIG_RAX: 0000000000000001
-RAX: ffffffffffffffda RBX: 00007f5f69625fa0 RCX: 00007f5f6939e0d9
-RDX: 0000000000000041 RSI: 0000200000000400 RDI: 0000000000000003
-RBP: 00007f5f6a183090 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000001
-R13: 00007f5f69626038 R14: 00007f5f69625fa0 R15: 00007ffe23725c18
+For xt_cgroup, while at this, remove redundant "xt_cgroup:" prefix
+since pr_fmt is already set on.
 
-Reported-by: syzbot+faed97c4ed43bfe7fee5@syzkaller.appspotmail.com
-Link: https://syzkaller.appspot.com/bug?extid=faed97c4ed43bfe7fee5
-Fixes: fe6bb31f590c9 ("apparmor: split out shared policy_XXX fns to lib")
-Signed-off-by: John Johansen <john.johansen@canonical.com>
+Fixes: c38c4597e4bf ("netfilter: implement xt_cgroup cgroup2 path match")
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/lib.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/netfilter/xt_cgroup.c | 12 ++++++------
+ net/netfilter/xt_hl.c     |  4 ++--
+ 2 files changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/security/apparmor/lib.c b/security/apparmor/lib.c
-index d393c96d732dc..a7510d14df4da 100644
---- a/security/apparmor/lib.c
-+++ b/security/apparmor/lib.c
-@@ -491,6 +491,8 @@ bool aa_policy_init(struct aa_policy *policy, const char *prefix,
- 	char *hname;
- 	size_t hname_sz;
+diff --git a/net/netfilter/xt_cgroup.c b/net/netfilter/xt_cgroup.c
+index b182b9e0882b6..d9943c4f5ee4d 100644
+--- a/net/netfilter/xt_cgroup.c
++++ b/net/netfilter/xt_cgroup.c
+@@ -23,7 +23,7 @@ MODULE_DESCRIPTION("Xtables: process control group matching");
+ MODULE_ALIAS("ipt_cgroup");
+ MODULE_ALIAS("ip6t_cgroup");
  
-+	INIT_LIST_HEAD(&policy->list);
-+	INIT_LIST_HEAD(&policy->profiles);
- 	hname_sz = (prefix ? strlen(prefix) + 2 : 0) + strlen(name) + 1;
- 	/* freed by policy_free */
- 	hname = aa_str_alloc(hname_sz, gfp);
-@@ -503,8 +505,6 @@ bool aa_policy_init(struct aa_policy *policy, const char *prefix,
- 	policy->hname = hname;
- 	/* base.name is a substring of fqname */
- 	policy->name = basename(policy->hname);
--	INIT_LIST_HEAD(&policy->list);
--	INIT_LIST_HEAD(&policy->profiles);
+-#define NET_CLS_CLASSID_INVALID_MSG "xt_cgroup: classid invalid without net_cls cgroups\n"
++#define NET_CLS_CLASSID_INVALID_MSG "classid invalid without net_cls cgroups\n"
  
- 	return true;
- }
+ static int cgroup_mt_check_v0(const struct xt_mtchk_param *par)
+ {
+@@ -33,7 +33,7 @@ static int cgroup_mt_check_v0(const struct xt_mtchk_param *par)
+ 		return -EINVAL;
+ 
+ 	if (!IS_ENABLED(CONFIG_CGROUP_NET_CLASSID)) {
+-		pr_info(NET_CLS_CLASSID_INVALID_MSG);
++		pr_info_ratelimited(NET_CLS_CLASSID_INVALID_MSG);
+ 		return -EINVAL;
+ 	}
+ 
+@@ -49,7 +49,7 @@ static int cgroup_mt_check_v1(const struct xt_mtchk_param *par)
+ 		return -EINVAL;
+ 
+ 	if (!info->has_path && !info->has_classid) {
+-		pr_info("xt_cgroup: no path or classid specified\n");
++		pr_info_ratelimited("no path or classid specified\n");
+ 		return -EINVAL;
+ 	}
+ 
+@@ -59,7 +59,7 @@ static int cgroup_mt_check_v1(const struct xt_mtchk_param *par)
+ 	}
+ 
+ 	if (info->has_classid && !IS_ENABLED(CONFIG_CGROUP_NET_CLASSID)) {
+-		pr_info(NET_CLS_CLASSID_INVALID_MSG);
++		pr_info_ratelimited(NET_CLS_CLASSID_INVALID_MSG);
+ 		return -EINVAL;
+ 	}
+ 
+@@ -89,7 +89,7 @@ static int cgroup_mt_check_v2(const struct xt_mtchk_param *par)
+ 		return -EINVAL;
+ 
+ 	if (!info->has_path && !info->has_classid) {
+-		pr_info("xt_cgroup: no path or classid specified\n");
++		pr_info_ratelimited("no path or classid specified\n");
+ 		return -EINVAL;
+ 	}
+ 
+@@ -99,7 +99,7 @@ static int cgroup_mt_check_v2(const struct xt_mtchk_param *par)
+ 	}
+ 
+ 	if (info->has_classid && !IS_ENABLED(CONFIG_CGROUP_NET_CLASSID)) {
+-		pr_info(NET_CLS_CLASSID_INVALID_MSG);
++		pr_info_ratelimited(NET_CLS_CLASSID_INVALID_MSG);
+ 		return -EINVAL;
+ 	}
+ 
+diff --git a/net/netfilter/xt_hl.c b/net/netfilter/xt_hl.c
+index 4a12a757ecbf8..59e93d97b5072 100644
+--- a/net/netfilter/xt_hl.c
++++ b/net/netfilter/xt_hl.c
+@@ -28,7 +28,7 @@ static int ttl_mt_check(const struct xt_mtchk_param *par)
+ 	const struct ipt_ttl_info *info = par->matchinfo;
+ 
+ 	if (info->mode > IPT_TTL_GT) {
+-		pr_err("Unknown TTL match mode: %d\n", info->mode);
++		pr_info_ratelimited("Unknown TTL match mode: %d\n", info->mode);
+ 		return -EINVAL;
+ 	}
+ 
+@@ -59,7 +59,7 @@ static int hl_mt6_check(const struct xt_mtchk_param *par)
+ 	const struct ip6t_hl_info *info = par->matchinfo;
+ 
+ 	if (info->mode > IP6T_HL_GT) {
+-		pr_err("Unknown Hop Limit match mode: %d\n", info->mode);
++		pr_info_ratelimited("Unknown Hop Limit match mode: %d\n", info->mode);
+ 		return -EINVAL;
+ 	}
+ 
 -- 
 2.53.0
 
