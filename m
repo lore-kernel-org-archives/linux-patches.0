@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA12F37E2F3;
-	Sat, 12 Sep 2026 19:19:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBD2D37F8D7;
+	Sat, 12 Sep 2026 19:19:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789240748; cv=none; b=Ai5mb2dtygDAEBJG7pMlYpokfrV7e5RF3pKlp4hljcC99PFpnBJqEgml7TicVwOAl9Cc0I0k2FO/+0U9bOzq8ynsHyC4RCLNsFOglxkw+Y30ZPADBJqevoEgcOAgcshYot4T6ATIG3FpIL2CMhh8wtYqIFHKK1IWJq2D/kMe0u4=
+	t=1789240753; cv=none; b=FakhGz2KQ735hCFCwWR9aw3DCv07Gho40U33X+QcoDlqvTdWilFa0/Hm4J9t+v25y4XBEC2WtT50yWdvLoAJOUljA6VCQZoMHmBVWykVnL8DFyv9HEOmGFAw8DXWLjiyTQyooQ+9ip7zFAPO5d0O23AuX8gT3xfSCeFVx4WxPwY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789240748; c=relaxed/simple;
-	bh=brpna8QAr+8AfZUhGQQQP8ANzuPUEvAbRmKBN/1YY9w=;
+	s=arc-20240116; t=1789240753; c=relaxed/simple;
+	bh=QZBqV7xkxTMWkVD514KprfLrzmb7AE4+lAR1gaPJ/bk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RAoWzxWJY4/+L0MYufDdKrzgkgwsuEFy7okZ4JRElmsz9N0m0Yb1+ekqVoxmSFe64gAg8pf3GCQWVNYJ31w3kfjr9kWl2An6VmWcyLLvPJE4MAShrtje0NEcPamd9gB5FeaZEd51OQqNiMSa1vtFIX+dwnxwIDu/6svLh3PF22s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yeF/8obE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rHcrOrL0JGAim8YPh+2tC4IVQAbRK1JU/eCpbYUffY6VrT5iryF1hLWf/DUGoiDg04mdF0S8gLzvBAQ+1x+Cs+3mzGt/KMT3yssu1wyCQefzsg+V7NQHoW5vOjkIzHQHFfylsEbMcdgUW804BCxu1Lm7JP4Yh74+5qXEhiUk3/o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lHz6fgIU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yeF/8obE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F7031F000FF;
-	Sat, 12 Sep 2026 19:19:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lHz6fgIU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6B6F1F000FF;
+	Sat, 12 Sep 2026 19:19:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789240746;
-	bh=3Ac9rUaDkAkricXFV8crdmO7AOEE7RLIfkD0kuj5zSo=;
+	s=korg; t=1789240751;
+	bh=8EJK80gUFurUU35yj3zBtEuXY7nm5PYObjx3ngGsxiE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yeF/8obEVbeYcJsvvIoZ3LgdjefolVIrTZCmG/fPbR060mcdfZxPuLnGNwQOG4YHC
-	 hGScpvO+pqR/R5B6DHIqAf7oilPF6Qf3KwLUHcil7LpDr5Y8Czs/IAptIRTcdrCQpk
-	 Tc+3bp5sTsFzlLihqaJYm3U8cGHzKxv7B4A+hHcw=
+	b=lHz6fgIU6yTe2ZZ3lhhMKGafoHC66XPNbTvEj6puftUkwKqiFoFovedgqQxksoBOt
+	 69MM7qxmY7EChTNELMuPal9NfZX+S/mpjz0ywaa5qbAr/54mz9e3yyt60cyf+R1J97
+	 qQnAc9Eusp7BVYhVn5HWuVMTO/8nLQXSRQagT6K0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Chen <zhangchen01@kylinos.cn>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	syzbot+87c7c2d63c44e41c77a3@syzkaller.appspotmail.com,
+	Aleksandr Nogikh <nogikh@google.com>,
+	Alex Markuze <amarkuze@redhat.com>,
+	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 931/935] Bluetooth: L2CAP: Fix send LE flow credits in ACL link
-Date: Sat, 12 Sep 2026 09:06:01 +0200
-Message-ID: <20260912065548.175787565@linuxfoundation.org>
+Subject: [PATCH 5.15 905/935] libceph: validate banner payload length
+Date: Sat, 12 Sep 2026 09:05:35 +0200
+Message-ID: <20260912065547.571292453@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -51,47 +53,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Chen <zhangchen01@kylinos.cn>
+From: Aleksandr Nogikh <nogikh@google.com>
 
-[ Upstream commit f39f905e55f529b036321220af1ba4f4085564a5 ]
+[ Upstream commit f374967fcdf04001c9b66df1c19106fa83cd91f7 ]
 
-When the L2CAP channel mode is L2CAP_MODE_ERTM/L2CAP_MODE_STREAMING,
-l2cap_publish_rx_avail will be called and le flow credits will be sent in
-l2cap_chan_rx_avail, even though the link type is ACL.
+When parsing the Ceph messenger v2 protocol banner, the `payload_len` field
+is decoded from the banner prefix. If a client sends a banner with a
+`payload_len` of 0, the kernel sets up a 0-length socket read. This
+violates an invariant in the state machine, triggering a warning in
+`populate_in_iter()`:
 
-The logs in question as follows:
-> ACL Data RX: Handle 129 flags 0x02 dlen 12
-      L2CAP: Unknown (0x16) ident 4 len 4
-        40 00 ed 05
-< ACL Data TX: Handle 129 flags 0x00 dlen 10
-      L2CAP: Command Reject (0x01) ident 4 len 2
-        Reason: Command not understood (0x0000)
+------------[ cut here ]------------
+!iov_iter_count(&con->v2.in_iter)
+WARNING: net/ceph/messenger_v2.c:3129 at populate_in_iter
+net/ceph/messenger_v2.c:3129 [inline], CPU#1: kworker/1:3/5070
+WARNING: net/ceph/messenger_v2.c:3129 at ceph_con_v2_try_read+0x6634/0x6810
+net/ceph/messenger_v2.c:3159, CPU#1: kworker/1:3/5070
+...
+Call Trace:
+ <TASK>
+ ceph_con_workfn+0x1f5/0x14a0 net/ceph/messenger.c:1575
+ process_one_work kernel/workqueue.c:3322 [inline]
+ process_scheduled_works+0xa8e/0x14e0 kernel/workqueue.c:3405
+ worker_thread+0xa47/0xfb0 kernel/workqueue.c:3486
+ kthread+0x388/0x470 kernel/kthread.c:436
+ ret_from_fork+0x514/0xb70 arch/x86/kernel/process.c:158
+ ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:245
+ </TASK>
 
-Bluetooth: Unknown BR/EDR signaling command 0x16
-Bluetooth: Wrong link type (-22)
+According to the msgr2 protocol specification, the banner payload is
+expected to contain at least two 64-bit integers (`server_feat` and
+`server_req_feat`). Therefore, `payload_len` must be at least 16 bytes.
 
-Fixes: ce60b9231b66 ("Bluetooth: compute LE flow credits based on recvbuf space")
-Signed-off-by: Zhang Chen <zhangchen01@kylinos.cn>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fix this by adding a check in `process_banner_prefix()` to reject a
+`payload_len` smaller than 16 bytes. This prevents the 0-length read and
+correctly aborts the connection with a protocol error.
+
+Fixes: cd1a677cad99 ("libceph, ceph: implement msgr2.1 protocol (crc and secure modes)")
+Assisted-by: Gemini:gemini-3.5-flash Gemini:gemini-3.1-pro-preview syzbot
+Reported-by: syzbot+87c7c2d63c44e41c77a3@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=87c7c2d63c44e41c77a3
+Link: https://syzkaller.appspot.com/ai_job?id=c8ca3d63-717a-4933-89ec-f3d761b8690d
+Signed-off-by: Aleksandr Nogikh <nogikh@google.com>
+Reviewed-by: Alex Markuze <amarkuze@redhat.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_core.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ net/ceph/messenger_v2.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index f9a5d118e5e67..bd9dfd35f9097 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -7771,6 +7771,10 @@ static void l2cap_chan_le_send_credits(struct l2cap_chan *chan)
- 	struct l2cap_le_credits pkt;
- 	u16 return_credits = l2cap_le_rx_credits(chan);
+diff --git a/net/ceph/messenger_v2.c b/net/ceph/messenger_v2.c
+index c3b1371e41f8c..dfde05e0f3ed4 100644
+--- a/net/ceph/messenger_v2.c
++++ b/net/ceph/messenger_v2.c
+@@ -1835,6 +1835,11 @@ static int process_banner_prefix(struct ceph_connection *con)
+ 	payload_len = ceph_decode_16(&p);
+ 	dout("%s con %p payload_len %d\n", __func__, con, payload_len);
  
-+	if (chan->mode != L2CAP_MODE_LE_FLOWCTL &&
-+	    chan->mode != L2CAP_MODE_EXT_FLOWCTL)
-+		return;
++	if (payload_len < sizeof(u64) + sizeof(u64)) {
++		con->error_msg = "protocol error, bad banner payload len";
++		return -EINVAL;
++	}
 +
- 	if (chan->rx_credits >= return_credits)
- 		return;
+ 	return prepare_read_banner_payload(con, payload_len);
+ }
  
 -- 
 2.53.0
