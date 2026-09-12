@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1C1C34252D;
-	Sat, 12 Sep 2026 07:33:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62CEC343893;
+	Sat, 12 Sep 2026 07:33:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789198395; cv=none; b=FL+cgRzc1qQIBeBSFJz8rlaMUaW+19GFuEe6rKEUIC3SQ4aipfFnXhIYDJZqdsJDh9tMmgBqAJ8Ton8jsWhltzhWiJI3+cVKhJD1z+ByaB84muBxH5JcBv+9YDz1dP9t97xvfuopdjSio7DAY1ffTeuh2pSpvBIKt7F8jMwOBF8=
+	t=1789198400; cv=none; b=FgWPfA/5q++ZEskJTjPE4aIuhgXUW6FjUIhOMYCSzWKB1R+2vtzY79WSnE5VyObM3BlUgVplujLo2GEoVL66QDoP8bGuLEw4Z6jB794o6IANX+dlDwLEdr+eapYN0LIGXs0TtrvwpA9RNBwmJmdlOTRYTeU0gsrkA7kVLUGAi6Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789198395; c=relaxed/simple;
-	bh=VQggUJ/bAgr1UALDBHLB0g9AhJY9NRBwvLgxJVFv3Gs=;
+	s=arc-20240116; t=1789198400; c=relaxed/simple;
+	bh=NWNWgGw6hjm6xrIqAqp/HiBUE7vuNQNxIBWdU+hZRqM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T/CL+QMUO/KwWTkul9L8txu7Z7VB1XUKPBuMT3zADTcaVcJm9ksS2LtBMMQPR6M3ZOMqWLEaaYWvqy7vE4dacxdth8eIUXp8YF2ZhT8HPziVKUIRS+euv8AwWWn24ymKZ1XvJzFOXOTF9hYdkBkixCYjxYLThjBfFuX3pFVaLUU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f5+MA8Lw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=ZNHHMVX9caC7jaI9FDguq3oAEfA4MAfXg6EcL1ZBTDPjk5ymDrsbsWASUc0jTgUwCKJEWyraMrbKJ4se/hQ9gJ15+jzal1lvVkv9/s/s06xrjztE4VInBgE0ZBunDqs8GrU8YORIuWavpAKHAsBrEU3dy9Lz3G0swPjQoCa+0xU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zmnDwrBs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f5+MA8Lw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD9961F000FF;
-	Sat, 12 Sep 2026 07:33:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zmnDwrBs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B01071F000FF;
+	Sat, 12 Sep 2026 07:33:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789198393;
-	bh=zkMS+WFV5kWo/5CQsrmYcrVPf4tNCQXJj+QVtaAgZ5E=;
+	s=korg; t=1789198399;
+	bh=YSM8GIP/lZcINixHfTks0ZSG6Sb/KCRgbVFZbPGRlb0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=f5+MA8LwRZjrzWUzvYBTnNKIESRNNIc2mRnr3hThgIZvsNF3d4qd6Y4D1BAdTToE1
-	 nSCOGzOsqA9SU5T+tlITCb40dqXwtu9L5u3NMNueQi6EUns3phdtb/QYErZ/YrjQji
-	 mDk91W+DeYwZHO6/79SxFZb5oTbsEKHBf6TfNjok=
+	b=zmnDwrBsE4mrAW4p6JPcwtRh0u6YFQ+xEXZI6XphqMhTn8Vs0MX/ZBRBPzHCFb66I
+	 rgagDBkoie4yyyaGTqZdYxfRfi1ikMRyq0UxvcofArK2v0/hpcbFRgAkefmO1G15jx
+	 i1Rzx2pFcBn8sc3SIwwODnye2Kf0Auvf4+V0WVY4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Reinette Chatre <reinette.chatre@intel.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Ben Horgan <ben.horgan@arm.com>,
-	Tony Luck <tony.luck@intel.com>,
+	Dmitry Ilvokhin <d@ilvokhin.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0372/1815] fs/resctrl: Prevent use-after-free in rdtgroup_kn_put()
-Date: Sat, 12 Sep 2026 08:35:22 +0200
-Message-ID: <20260912065657.638017355@linuxfoundation.org>
+Subject: [PATCH 7.2 0373/1815] perf record: Return the written size from process_comp_header()
+Date: Sat, 12 Sep 2026 08:35:23 +0200
+Message-ID: <20260912065657.660569064@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -48,101 +45,161 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Reinette Chatre <reinette.chatre@intel.com>
+From: Dmitry Ilvokhin <d@ilvokhin.com>
 
-[ Upstream commit f5bcf539484d2d604c2f2330e09487ea090b21c7 ]
+[ Upstream commit 757155c142f2bc9793e888ab101a5eea2d53f8f8 ]
 
-A struct rdtgroup is reference counted via rdtgroup::waitcount. Callers that
-need the structure to remain valid across a sleep (while waiting on acquiring
-rdtgroup_mutex) take a reference with rdtgroup_kn_get() and release it with
-rdtgroup_kn_put().
+process_comp_header() is called from zstd_compress_stream_to_records()
+twice per record: once with data_size == 0 to write the record header,
+and once with the payload size to finalize it. It returns the increment
+it was passed, and the loop separately decides whether a record still
+fits by comparing the remaining 'dst_size' against the header size.
 
-The release path is intended to serve as the fallback freer: if the count
-drops to zero and the group has already been marked RDT_DELETED,
-rdtgroup_kn_put() frees the structure.
+With the fit check split from the code that writes the record,
+process_comp_header() cannot reject a record on its own, so any bytes it
+writes into 'dst' have to be bounds-checked by the caller instead of
+where they are produced.
 
-The bulk teardown paths free_all_child_rdtgrp() and rmdir_all_sub() resulting
-from a resctrl directory remove or resctrl fs unmount act as the primary
-freer: they hold rdtgroup_mutex and free each rdtgroup whose waitcount is
-zero, otherwise they set RDT_DELETED and leave the freeing to the last waiter.
+Pass the space left in 'dst' to process_comp_header(), let it return the
+number of bytes written or -1 when the header does not fit, and account
+the compressed payload in the loop.
 
-These two freers race. rdtgroup_kn_put() commits waitcount == 0 with
-atomic_dec_and_test() outside rdtgroup_mutex, then reads rdtgroup::flags.
-Between those two operations a concurrent caller of free_all_child_rdtgrp()
-or rmdir_all_sub() (which holds the mutex) can observe waitcount == 0 via
-atomic_read(), call rdtgroup_remove(), and kfree() the structure.
+No functional change intended.
 
-The subsequent read of rdtgroup::flags in rdtgroup_kn_put() is then
-a use-after-free, and the structure may even be freed twice if the freed
-memory happens to satisfy the RDT_DELETED flag check.
-
-Replace the bare atomic_dec_and_test() with atomic_dec_and_mutex_lock() so
-that the decrement-to-zero takes rdtgroup_mutex before the count becomes
-globally visible. The inspection of rdtgroup::flags then runs under the same
-mutex held by the bulk freers, making the two paths mutually exclusive.
-
-The common case where the count does not reach zero remains lock-free. Defer
-kernfs_unbreak_active_protection() until after the mutex is dropped since
-kernfs active protections functionally wrap rdtgroup_mutex. Remove resource
-group, which in turn drops its kernfs reference, after kernfs protection is
-restored.
-
-  [ bp: Split the commit messsages into smaller, easier-parseable paragraphs. ]
-
-Fixes: b8511ccc75c0 ("x86/resctrl: Fix use-after-free when deleting resource groups")
-Closes: https://sashiko.dev/#/patchset/20260515193944.15114-1-tony.luck%40intel.com?part=1
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Assisted-by: GitHub_Copilot:gemini-3.1-pro
-Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Ben Horgan <ben.horgan@arm.com>
-Reviewed-by: Tony Luck <tony.luck@intel.com>
-Link: https://patch.msgid.link/8d028bbea582dc382a4cc166b235f75bd5901aea.1783963505.git.reinette.chatre@intel.com
+Signed-off-by: Dmitry Ilvokhin <d@ilvokhin.com>
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Stable-dep-of: ad40a000ea59 ("perf record: Fix multiple PERF_RECORD_COMPRESSED2 records per push")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/resctrl/rdtgroup.c | 19 ++++++++++++++-----
- 1 file changed, 14 insertions(+), 5 deletions(-)
+ tools/perf/builtin-record.c | 17 +++++++++++++----
+ tools/perf/util/compress.h  |  6 ++++--
+ tools/perf/util/zstd.c      | 25 ++++++++++++++-----------
+ 3 files changed, 31 insertions(+), 17 deletions(-)
 
-diff --git a/fs/resctrl/rdtgroup.c b/fs/resctrl/rdtgroup.c
-index cc9966ff6cdfb..ad280dca301e9 100644
---- a/fs/resctrl/rdtgroup.c
-+++ b/fs/resctrl/rdtgroup.c
-@@ -2608,15 +2608,24 @@ static void rdtgroup_kn_get(struct rdtgroup *rdtgrp, struct kernfs_node *kn)
- 
- static void rdtgroup_kn_put(struct rdtgroup *rdtgrp, struct kernfs_node *kn)
- {
--	if (atomic_dec_and_test(&rdtgrp->waitcount) &&
--	    (rdtgrp->flags & RDT_DELETED)) {
-+	bool needs_free;
-+
-+	if (!atomic_dec_and_mutex_lock(&rdtgrp->waitcount, &rdtgroup_mutex)) {
-+		kernfs_unbreak_active_protection(kn);
-+		return;
-+	}
-+
-+	needs_free = rdtgrp->flags & RDT_DELETED;
-+
-+	mutex_unlock(&rdtgroup_mutex);
-+
-+	kernfs_unbreak_active_protection(kn);
-+
-+	if (needs_free) {
- 		if (rdtgrp->mode == RDT_MODE_PSEUDO_LOCKSETUP ||
- 		    rdtgrp->mode == RDT_MODE_PSEUDO_LOCKED)
- 			rdtgroup_pseudo_lock_remove(rdtgrp);
--		kernfs_unbreak_active_protection(kn);
- 		rdtgroup_remove(rdtgrp);
--	} else {
--		kernfs_unbreak_active_protection(kn);
+diff --git a/tools/perf/builtin-record.c b/tools/perf/builtin-record.c
+index d1276382b77a2..294bdd4b8d004 100644
+--- a/tools/perf/builtin-record.c
++++ b/tools/perf/builtin-record.c
+@@ -1592,16 +1592,25 @@ static void record__adjust_affinity(struct record *rec, struct mmap *map)
  	}
  }
  
+-static size_t process_comp_header(void *record, size_t increment)
++/*
++ * Called once with data_size == 0 to start a record, then once with
++ * data_size == compressed payload size to finalize.
++ * Returns the bytes written, or -1 if it won't fit.
++ */
++static ssize_t process_comp_header(void *record, size_t dst_size,
++				   size_t data_size)
+ {
+ 	struct perf_record_compressed2 *event = record;
+ 	size_t size = sizeof(*event);
+ 
+-	if (increment) {
+-		event->header.size += increment;
+-		return increment;
++	if (data_size) {
++		event->header.size += data_size;
++		return 0;
+ 	}
+ 
++	if (size > dst_size)
++		return -1;
++
+ 	event->header.type = PERF_RECORD_COMPRESSED2;
+ 	event->header.size = size;
+ 
+diff --git a/tools/perf/util/compress.h b/tools/perf/util/compress.h
+index 6cfecfca16f24..ec6c38129e248 100644
+--- a/tools/perf/util/compress.h
++++ b/tools/perf/util/compress.h
+@@ -54,7 +54,8 @@ int zstd_fini(struct zstd_data *data);
+ 
+ ssize_t zstd_compress_stream_to_records(struct zstd_data *data, void *dst, size_t dst_size,
+ 				       void *src, size_t src_size, size_t max_record_size,
+-				       size_t process_header(void *record, size_t increment));
++				       ssize_t process_header(void *record, size_t dst_size,
++							      size_t data_size));
+ 
+ size_t zstd_decompress_stream(struct zstd_data *data, void *src, size_t src_size,
+ 			      void *dst, size_t dst_size);
+@@ -75,7 +76,8 @@ ssize_t zstd_compress_stream_to_records(struct zstd_data *data __maybe_unused,
+ 				       void *dst __maybe_unused, size_t dst_size __maybe_unused,
+ 				       void *src __maybe_unused, size_t src_size __maybe_unused,
+ 				       size_t max_record_size __maybe_unused,
+-				       size_t process_header(void *record, size_t increment) __maybe_unused)
++				       ssize_t process_header(void *record, size_t dst_size,
++							      size_t data_size) __maybe_unused)
+ {
+ 	return 0;
+ }
+diff --git a/tools/perf/util/zstd.c b/tools/perf/util/zstd.c
+index 21a0eb58597c2..d98014902f012 100644
+--- a/tools/perf/util/zstd.c
++++ b/tools/perf/util/zstd.c
+@@ -31,9 +31,11 @@ int zstd_fini(struct zstd_data *data)
+ 
+ ssize_t zstd_compress_stream_to_records(struct zstd_data *data, void *dst, size_t dst_size,
+ 				       void *src, size_t src_size, size_t max_record_size,
+-				       size_t process_header(void *record, size_t increment))
++				       ssize_t process_header(void *record, size_t dst_size,
++							      size_t data_size))
+ {
+-	size_t ret, size, compressed = 0;
++	size_t ret, compressed = 0;
++	ssize_t size;
+ 	ZSTD_inBuffer input = { src, src_size, 0 };
+ 	ZSTD_outBuffer output;
+ 	void *record;
+@@ -55,12 +57,9 @@ ssize_t zstd_compress_stream_to_records(struct zstd_data *data, void *dst, size_
+ 
+ 	while (input.pos < input.size) {
+ 		record = dst;
+-		/* process_header writes the event header into record */
+-		if (dst_size < sizeof(struct perf_event_header))
+-			goto reset;
+-		size = process_header(record, 0);
++		size = process_header(record, dst_size, 0);
+ 		/* Output buffer full — cannot fit even the record header */
+-		if (size > dst_size)
++		if (size < 0)
+ 			goto reset;
+ 		compressed += size;
+ 		dst += size;
+@@ -74,17 +73,21 @@ ssize_t zstd_compress_stream_to_records(struct zstd_data *data, void *dst, size_
+ 				(long)src_size, ZSTD_getErrorName(ret));
+ 			goto reset;
+ 		}
+-		size = output.pos;
++		compressed += output.pos;
++		dst += output.pos;
++		dst_size -= output.pos;
+ 		/*
+ 		 * No progress: ZSTD couldn't emit any bytes into the
+ 		 * remaining output buffer.  Calling process_header
+-		 * with size=0 would re-trigger header initialization,
++		 * with output.pos=0 would re-trigger header initialization,
+ 		 * double-subtracting the header size from dst_size and
+ 		 * underflowing the unsigned counter.
+ 		 */
+-		if (size == 0)
++		if (output.pos == 0)
++			goto reset;
++		size = process_header(record, dst_size, output.pos);
++		if (size < 0)
+ 			goto reset;
+-		size = process_header(record, size);
+ 		compressed += size;
+ 		dst += size;
+ 		dst_size -= size;
 -- 
 2.53.0
 
