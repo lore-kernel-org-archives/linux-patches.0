@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A87C3002B3;
-	Sat, 12 Sep 2026 10:34:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25B543002B3;
+	Sat, 12 Sep 2026 10:34:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789209257; cv=none; b=jSxlyMKhfsanHU6fm6M3VK2ZypYc7BaKwk2s22PqIA2mNnoDnXGrp8MMrMFACr8K/Np9UkO2NrxZuk82z3KIXIpR62K3BcFRs/1Tx1Muqct1dPgLQq4QFwZ2i83cQZEw3U7XlM9gRZxzuFWq9pZv2Y5Tmiax+1H2S8X28VF8H44=
+	t=1789209262; cv=none; b=LrAACZ8q+H0tq4inAMFGjaiLAYohpfa4eOArm/AEKynV5nL8X+eNDpzK4GhY28aR81PG4xudDFNxYaXrgHTtgi/SGbZjKNGDVFLrwqbrolAZ6za8yeXOBpLHCqj/tIYrF+XGdInAm4Z1v4/xhBqAzv2ma+azetABmTgtOuR1aKk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789209257; c=relaxed/simple;
-	bh=iLiFDGGkh0E1jDXD0IqRLVUMRDxct+ibD7NSsSIxz1k=;
+	s=arc-20240116; t=1789209262; c=relaxed/simple;
+	bh=RUjWtJsFuP5HEYhL0Y0/Vv2bWtsPVE/HSXqi3Jnt5Gc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Lt+LZOKjMTtErc6uB8xnPU1rj2Nfy/vVxSwoMGmqyM2+a0cZ+ZRu0j7/jBoavHkxXtZmzGqOGxqwy+scUz+RS005MEoXKuz/GBxAQ27CySSFQeOaTBAFNi6Y94jJ0W3M39KWre9cfbXKJsNrbHVAXvfw4ZRED2G3C4QEKRrrYF8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ksxHN9Xs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MuYPZNts2fAui9nrMu1cmLWGsJEUn3c7f0TcgoV9XVFvTPwJh3KPb4JoN4WUL4OvqYWEL9Uz8wIBEmGk2n4ryOFvhcJLf6z4N5uyuKBL/rVwDMATyKjJQ9VQinWkWA/P34ZFtYL/J5Q+Q5YABZDIuswPzFlPB6MZQref3vihndM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MM0lbaed; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ksxHN9Xs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24CA91F000FF;
-	Sat, 12 Sep 2026 10:34:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MM0lbaed"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A2AC1F000FF;
+	Sat, 12 Sep 2026 10:34:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789209256;
-	bh=dZDk1R7efeCRFF/lmDhTRLKzKHiOeVap3iakPLo15C4=;
+	s=korg; t=1789209261;
+	bh=WX0OWzmfvWJB/67fMCB4lA4Kwqd99Fiv50YbRjWNIIw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ksxHN9XsFREhFrN2oVoLGFmY4VeNeqLty/IWwhA08pjI8PkWA3QYaWpqWoP3X9MNT
-	 NO8Xf7fupmXudhX5xsEmteq/pNyW68qW8uCQUh5jZ9/zjUtDAZDjsI9GpkCBX9dLRt
-	 4ah2DHIZyGp09vE8iaTRHYDL1jwiXgcc9JnF/97M=
+	b=MM0lbaedAFXQE8txdi/q0nFPWZ/BAjGXVLwvVcUa/16xnCxW6LnJz4znc72OlSLHW
+	 WJCGsbKb/BbNNEzjQI5kNSdrOZbKFFzKk6zAZSmAJbJh7n5/OYLw5u8QcdPZivmXzx
+	 zZF/oMfBWD4De1apNKEKKTd3w6ycXBTgEOgXR0KU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chad Monroe <chad@monroe.io>,
+	Peter Chiu <chui-hao.chiu@mediatek.com>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0741/1518] wifi: mt76: mt7996: fix out-of-bounds array access during hardware restart
-Date: Sat, 12 Sep 2026 08:48:30 +0200
-Message-ID: <20260912065640.195668456@linuxfoundation.org>
+Subject: [PATCH 6.18 0742/1518] wifi: mt76: mt7996: fix MLD ID in MAC TXD and HIF TXP
+Date: Sat, 12 Sep 2026 08:48:31 +0200
+Message-ID: <20260912065640.218142399@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,286 +51,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Peter Chiu <chui-hao.chiu@mediatek.com>
 
-[ Upstream commit 7ec087fef32a88410488b764b0f5eef68e51175f ]
+[ Upstream commit ce35ecffc96e6d097d27b6fe30677a2cfe2e0461 ]
 
-During hardware restart, link_id can be IEEE80211_LINK_UNSPECIFIED,
-causing an out-of-bounds array access on msta->link[].
+Problem:
+MCU command timeout while the firmware state is normal, and the
+firmware keeps showing the error log "ERROR!! NO PAUSE...".
 
-Add mt7996_sta_link() and mt7996_sta_link_protected() helper functions
-for accessing sta links with proper RCU handling and bounds checking.
-Use them for any sta link RCU access.
+Root cause:
+If the MLD_ID field in the TXD is neither the primary link id nor the
+secondary link id, it may lead to a firmware busy loop when the third
+link is in power saving mode.
 
-Reported-by: Chad Monroe <chad@monroe.io>
-Link: https://patch.msgid.link/20260324154904.2555603-1-nbd@nbd.name
+Remap frames directed to a third link to the primary link wcid. Since
+TX status events and txfree completions carry the wcid the firmware
+saw, use the remapped wcid for packet id tracking and non-AQL packet
+accounting as well, while the frame keeps its original link context
+for addressing, band and OMAC selection.
+
+Fixes: 85cd5534a3f2 ("wifi: mt76: mt7996: use correct link_id when filling TXD and TXP")
+Signed-off-by: Peter Chiu <chui-hao.chiu@mediatek.com>
+Link: https://patch.msgid.link/20260722082610.2699628-3-nbd@nbd.name
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
-Stable-dep-of: ce35ecffc96e ("wifi: mt76: mt7996: fix MLD ID in MAC TXD and HIF TXP")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../wireless/mediatek/mt76/mt7996/debugfs.c   |  4 ++--
- .../net/wireless/mediatek/mt76/mt7996/mac.c   |  6 ++---
- .../net/wireless/mediatek/mt76/mt7996/main.c  | 17 +++++++-------
- .../net/wireless/mediatek/mt76/mt7996/mcu.c   | 22 +++++++++----------
- .../wireless/mediatek/mt76/mt7996/mt7996.h    | 19 ++++++++++++++++
- 5 files changed, 43 insertions(+), 25 deletions(-)
+ .../net/wireless/mediatek/mt76/mt7996/mac.c   | 29 +++++++++++++++++++
+ .../net/wireless/mediatek/mt76/mt7996/main.c  |  2 +-
+ .../wireless/mediatek/mt76/mt7996/mt7996.h    |  1 +
+ 3 files changed, 31 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/debugfs.c b/drivers/net/wireless/mediatek/mt76/mt7996/debugfs.c
-index 0526fa1c26ad2..1d8b8bec8e0e5 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/debugfs.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/debugfs.c
-@@ -645,7 +645,7 @@ mt7996_sta_hw_queue_read(void *data, struct ieee80211_sta *sta)
- 		if (!mlink)
- 			continue;
- 
--		msta_link = rcu_dereference(msta->link[link_id]);
-+		msta_link = mt7996_sta_link(msta, link_id);
- 		if (!msta_link)
- 			continue;
- 
-@@ -1018,7 +1018,7 @@ static ssize_t mt7996_link_sta_fixed_rate_set(struct file *file,
- 
- 	mutex_lock(&dev->mt76.mutex);
- 
--	msta_link = mt76_dereference(msta->link[link_sta->link_id], &dev->mt76);
-+	msta_link = mt7996_sta_link_protected(dev, msta, link_sta->link_id);
- 	if (!msta_link) {
- 		ret = -EINVAL;
- 		goto out;
 diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mac.c b/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
-index 60687064f7368..1b695823533d3 100644
+index 1b695823533d3..21b3e0b20888f 100644
 --- a/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
 +++ b/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
-@@ -87,7 +87,7 @@ static struct mt76_wcid *mt7996_rx_get_wcid(struct mt7996_dev *dev,
- 		if (mlink->band_idx != band_idx)
- 			continue;
+@@ -893,6 +893,33 @@ mt7996_mac_write_txwi_80211(struct mt7996_dev *dev, __le32 *txwi,
+ 		txwi[6] |= cpu_to_le32(MT_TXD6_DIS_MAT);
+ }
  
--		msta_link = rcu_dereference(msta->link[i]);
-+		msta_link = mt7996_sta_link(msta, i);
- 		break;
++/* The WLAN_IDX in the TXD and TXP must belong to the primary or secondary
++ * link of an MLD station; any other link id can make the firmware spin when
++ * that link is in powersave. Completion events carry the same index, so the
++ * wcid used for status tracking and accounting must match it
++ */
++struct mt76_wcid *mt7996_get_tx_wcid(struct mt76_wcid *wcid)
++{
++	struct mt7996_sta_link *msta_link;
++	struct mt7996_sta *msta;
++
++	if (!wcid->sta)
++		return wcid;
++
++	msta_link = container_of(wcid, struct mt7996_sta_link, wcid);
++	msta = msta_link->sta;
++
++	if (!msta || wcid->link_id == msta->seclink_id ||
++	    wcid->link_id == msta->deflink_id)
++		return wcid;
++
++	msta_link = mt7996_sta_link(msta, msta->deflink_id);
++	if (msta_link)
++		return &msta_link->wcid;
++
++	return wcid;
++}
++
+ void mt7996_mac_write_txwi(struct mt7996_dev *dev, __le32 *txwi,
+ 			   struct sk_buff *skb, struct mt76_wcid *wcid,
+ 			   struct ieee80211_key_conf *key, int pid,
+@@ -1130,6 +1157,8 @@ int mt7996_tx_prepare_skb(struct mt76_dev *mdev, void *txwi_ptr,
+ 					   tx_info->buf[1].len, DMA_TO_DEVICE);
  	}
  
-@@ -1077,7 +1077,7 @@ int mt7996_tx_prepare_skb(struct mt76_dev *mdev, void *txwi_ptr,
- 	if (link_id != wcid->link_id && link_id != IEEE80211_LINK_UNSPECIFIED) {
- 		if (msta) {
- 			struct mt7996_sta_link *msta_link =
--				rcu_dereference(msta->link[link_id]);
-+				mt7996_sta_link(msta, link_id);
- 
- 			if (msta_link)
- 				wcid = &msta_link->wcid;
-@@ -1413,7 +1413,7 @@ mt7996_mac_tx_free(struct mt7996_dev *dev, void *data, int len)
- 					 IEEE80211_MLD_MAX_NUM_LINKS) {
- 				struct mt7996_sta_link *msta_link;
- 
--				msta_link = rcu_dereference(msta->link[id]);
-+				msta_link = mt7996_sta_link(msta, id);
- 				if (!msta_link)
- 					continue;
- 
++	wcid = mt7996_get_tx_wcid(wcid);
++
+ 	pid = mt76_tx_status_skb_add(mdev, wcid, tx_info->skb);
+ 	memset(txwi_ptr, 0, MT_TXD_SIZE);
+ 	/* Transmit non qos data by 802.11 header and need to fill txd by host*/
 diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/main.c b/drivers/net/wireless/mediatek/mt76/mt7996/main.c
-index d363f9022c4a6..58bc6f30ab772 100644
+index 58bc6f30ab772..103851e011583 100644
 --- a/drivers/net/wireless/mediatek/mt76/mt7996/main.c
 +++ b/drivers/net/wireless/mediatek/mt76/mt7996/main.c
-@@ -207,8 +207,7 @@ mt7996_set_hw_key(struct ieee80211_hw *hw, enum set_key_cmd cmd,
- 		struct mt7996_sta *msta;
- 
- 		msta = (struct mt7996_sta *)sta->drv_priv;
--		msta_link = mt76_dereference(msta->link[link_id],
--					     &dev->mt76);
-+		msta_link = mt7996_sta_link_protected(dev, msta, link_id);
- 		if (!msta_link)
- 			return 0;
- 
-@@ -1236,7 +1235,7 @@ mt7996_mac_sta_event(struct mt7996_dev *dev, struct ieee80211_vif *vif,
- 		if (!link)
- 			continue;
- 
--		msta_link = mt76_dereference(msta->link[link_id], &dev->mt76);
-+		msta_link = mt7996_sta_link_protected(dev, msta, link_id);
- 		if (!msta_link)
- 			continue;
- 
-@@ -1426,7 +1425,7 @@ static void mt7996_tx(struct ieee80211_hw *hw,
- 	if (msta) {
- 		struct mt7996_sta_link *msta_link;
- 
--		msta_link = rcu_dereference(msta->link[link_id]);
-+		msta_link = mt7996_sta_link(msta, link_id);
+@@ -1429,7 +1429,7 @@ static void mt7996_tx(struct ieee80211_hw *hw,
  		if (msta_link)
  			wcid = &msta_link->wcid;
  	}
-@@ -1792,7 +1791,7 @@ static void mt7996_link_sta_rc_update(struct ieee80211_hw *hw,
- 
- 	rcu_read_lock();
- 
--	msta_link = rcu_dereference(msta->link[link_sta->link_id]);
-+	msta_link = mt7996_sta_link(msta, link_sta->link_id);
- 	if (msta_link) {
- 		struct mt7996_dev *dev = mt7996_hw_dev(hw);
- 
-@@ -1813,7 +1812,7 @@ static void mt7996_sta_rate_ctrl_update(void *data, struct ieee80211_sta *sta)
- 	if (msta->vif != mvif)
- 		return;
- 
--	msta_link = rcu_dereference(msta->link[msta->deflink_id]);
-+	msta_link = mt7996_sta_link(msta, msta->deflink_id);
- 	if (msta_link)
- 		mt7996_link_rate_ctrl_update(&changed, msta_link);
+-	mt76_tx(mphy, control->sta, wcid, skb);
++	mt76_tx(mphy, control->sta, mt7996_get_tx_wcid(wcid), skb);
+ unlock:
+ 	rcu_read_unlock();
  }
-@@ -1862,7 +1861,7 @@ static void mt7996_sta_set_4addr(struct ieee80211_hw *hw,
- 		if (!link)
- 			continue;
- 
--		msta_link = mt76_dereference(msta->link[link_id], &dev->mt76);
-+		msta_link = mt7996_sta_link_protected(dev, msta, link_id);
- 		if (!msta_link)
- 			continue;
- 
-@@ -1900,7 +1899,7 @@ static void mt7996_sta_set_decap_offload(struct ieee80211_hw *hw,
- 		if (!link)
- 			continue;
- 
--		msta_link = mt76_dereference(msta->link[link_id], &dev->mt76);
-+		msta_link = mt7996_sta_link_protected(dev, msta, link_id);
- 		if (!msta_link)
- 			continue;
- 
-@@ -2242,7 +2241,7 @@ mt7996_net_fill_forward_path(struct ieee80211_hw *hw,
- 	if (!mlink)
- 		return -EIO;
- 
--	msta_link = rcu_dereference(msta->link[msta->deflink_id]);
-+	msta_link = mt7996_sta_link(msta, msta->deflink_id);
- 	if (!msta_link)
- 		return -EIO;
- 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
-index c591606c1765c..5df5c3a2121f5 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
-@@ -1063,7 +1063,7 @@ mt7996_mcu_bss_basic_tlv(struct sk_buff *skb,
- 				struct mt7996_sta_link *msta_link;
- 				int link_id = link_conf->link_id;
- 
--				msta_link = rcu_dereference(msta->link[link_id]);
-+				msta_link = mt7996_sta_link(msta, link_id);
- 				if (msta_link)
- 					sta_wlan_idx = msta_link->wcid.idx;
- 			}
-@@ -1255,7 +1255,7 @@ int mt7996_mcu_add_tx_ba(struct mt7996_dev *dev,
- 		struct mt7996_sta_link *msta_link;
- 		struct mt7996_vif_link *link;
- 
--		msta_link = mt76_dereference(msta->link[link_id], &dev->mt76);
-+		msta_link = mt7996_sta_link_protected(dev, msta, link_id);
- 		if (!msta_link)
- 			continue;
- 
-@@ -1289,7 +1289,7 @@ int mt7996_mcu_add_rx_ba(struct mt7996_dev *dev,
- 		struct mt7996_sta_link *msta_link;
- 		struct mt7996_vif_link *link;
- 
--		msta_link = mt76_dereference(msta->link[link_id], &dev->mt76);
-+		msta_link = mt7996_sta_link_protected(dev, msta, link_id);
- 		if (!msta_link)
- 			continue;
- 
-@@ -2023,7 +2023,7 @@ int mt7996_mcu_set_fixed_field(struct mt7996_dev *dev, struct mt7996_sta *msta,
- 	if (!mlink)
- 		goto error_unlock;
- 
--	msta_link = rcu_dereference(msta->link[link_id]);
-+	msta_link = mt7996_sta_link(msta, link_id);
- 	if (!msta_link)
- 		goto error_unlock;
- 
-@@ -2112,7 +2112,7 @@ mt7996_mcu_add_rate_ctrl_fixed(struct mt7996_dev *dev, struct mt7996_sta *msta,
- 	if (!link)
- 		goto error_unlock;
- 
--	msta_link = rcu_dereference(msta->link[link_id]);
-+	msta_link = mt7996_sta_link(msta, link_id);
- 	if (!msta_link)
- 		goto error_unlock;
- 
-@@ -2319,7 +2319,7 @@ int mt7996_mcu_add_rate_ctrl(struct mt7996_dev *dev, struct mt7996_sta *msta,
- 	if (!link)
- 		goto error_unlock;
- 
--	msta_link = rcu_dereference(msta->link[link_id]);
-+	msta_link = mt7996_sta_link(msta, link_id);
- 	if (!msta_link)
- 		goto error_unlock;
- 
-@@ -2408,7 +2408,7 @@ mt7996_mcu_sta_mld_setup_tlv(struct mt7996_dev *dev, struct sk_buff *skb,
- 	unsigned int link_id;
- 	struct tlv *tlv;
- 
--	msta_link = mt76_dereference(msta->link[msta->deflink_id], &dev->mt76);
-+	msta_link = mt7996_sta_link_protected(dev, msta, msta->deflink_id);
- 	if (!msta_link)
- 		return;
- 
-@@ -2422,8 +2422,8 @@ mt7996_mcu_sta_mld_setup_tlv(struct mt7996_dev *dev, struct sk_buff *skb,
- 	mld_setup->primary_id = cpu_to_le16(msta_link->wcid.idx);
- 
- 	if (nlinks > 1) {
--		msta_link = mt76_dereference(msta->link[msta->seclink_id],
--					     &dev->mt76);
-+		msta_link = mt7996_sta_link_protected(dev, msta,
-+						      msta->seclink_id);
- 		if (!msta_link)
- 			return;
- 	}
-@@ -2434,7 +2434,7 @@ mt7996_mcu_sta_mld_setup_tlv(struct mt7996_dev *dev, struct sk_buff *skb,
- 	for_each_sta_active_link(vif, sta, link_sta, link_id) {
- 		struct mt7996_vif_link *link;
- 
--		msta_link = mt76_dereference(msta->link[link_id], &dev->mt76);
-+		msta_link = mt7996_sta_link_protected(dev, msta, link_id);
- 		if (!msta_link)
- 			continue;
- 
-@@ -2578,7 +2578,7 @@ void mt7996_mcu_update_sta_rec_bw(void *data, struct ieee80211_sta *sta)
- 	if (!link_sta)
- 		return;
- 
--	msta_link = mt76_dereference(msta->link[link_id], &dev->mt76);
-+	msta_link = mt7996_sta_link_protected(dev, msta, link_id);
- 	if (!msta_link)
- 		return;
- 
 diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h b/drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h
-index 26c04cd08caea..e1af2a2b24bda 100644
+index e1af2a2b24bda..e371b2f174e58 100644
 --- a/drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h
 +++ b/drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h
-@@ -618,6 +618,25 @@ mt7996_vif_conf_link(struct mt7996_dev *dev, struct ieee80211_vif *vif,
- 							    link_conf);
- }
- 
-+static inline struct mt7996_sta_link *
-+mt7996_sta_link(struct mt7996_sta *msta, u8 link_id)
-+{
-+	if (link_id >= IEEE80211_MLD_MAX_NUM_LINKS)
-+		return NULL;
-+
-+	return rcu_dereference(msta->link[link_id]);
-+}
-+
-+static inline struct mt7996_sta_link *
-+mt7996_sta_link_protected(struct mt7996_dev *dev, struct mt7996_sta *msta,
-+			  u8 link_id)
-+{
-+	if (link_id >= IEEE80211_MLD_MAX_NUM_LINKS)
-+		return NULL;
-+
-+	return mt76_dereference(msta->link[link_id], &dev->mt76);
-+}
-+
- #define mt7996_for_each_phy(dev, phy)					\
- 	for (int __i = 0; __i < ARRAY_SIZE((dev)->radio_phy); __i++)	\
- 		if (((phy) = (dev)->radio_phy[__i]) != NULL)
+@@ -832,6 +832,7 @@ bool mt7996_mac_wtbl_update(struct mt7996_dev *dev, int idx, u32 mask);
+ void mt7996_mac_reset_counters(struct mt7996_phy *phy);
+ void mt7996_mac_cca_stats_reset(struct mt7996_phy *phy);
+ void mt7996_mac_enable_nf(struct mt7996_dev *dev, u8 band);
++struct mt76_wcid *mt7996_get_tx_wcid(struct mt76_wcid *wcid);
+ void mt7996_mac_write_txwi(struct mt7996_dev *dev, __le32 *txwi,
+ 			   struct sk_buff *skb, struct mt76_wcid *wcid,
+ 			   struct ieee80211_key_conf *key, int pid,
 -- 
 2.53.0
 
