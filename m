@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBDF547D451;
-	Sat, 12 Sep 2026 18:19:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA0BB3624CC;
+	Sat, 12 Sep 2026 18:19:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789237175; cv=none; b=hf726Q/cjw3Av2dh3zY+T/qbPKdqxJEzKioJo0VMcjGo3ZD9lGz6ud09Sworb+J9nquygFxf8381pmTM21urYQFtXRaRPX1HoYtm8d5fTpmywL3hxRBT4RsJSmttU7yhJj643QeiORpn3TVXfJirl3udWun+r2vFPuRuWYu982I=
+	t=1789237179; cv=none; b=RJd13cVZrgrd62swJDGRKGymxMnPGKnXIux3sbE66k57xA2c0yil+kenLZzN7Y/hAntA4qvXuEdZcEHcoiK1p6OWojjKASHimOr0fCvlt4IWunMBTstOyDUI0tWa9OIQj4/zDpS0Jnm2tkxZtJIZ36ajodZXhe6VqZzrOkUmNkg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789237175; c=relaxed/simple;
-	bh=u3OzvjvKhZSkHC4z5md2X/SyJkdQgtGlLN6uLMvnhRo=;
+	s=arc-20240116; t=1789237179; c=relaxed/simple;
+	bh=ou2qRgWxqSXb1aXekkYYnvnP74OC/oLJcTx7YKPdUzM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IugTYBFhCv1l+hLafif/dpXwQ+UuGJ26Wr6GBT9F/yPes4D3WBFO3JphaPpuGHYw9jaCalFDQEW7h7XsiZmirSwUzpDzjz2i1miFEo/5DzDEk9dYqchZFfn3QybXPtIGTrgNoYR50atDbA+n1KZfSyzcMiPOChtP5zMOJDu1ag4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Me5+VJvK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uE80yoEmLQjWX1JRPNbEhJDNFY/2BRYOG3EJk+rzNaQlfhc08FRz9ZVERmEaeJCIHlKVdKcsA6Y/5fu768qP6JP/ShEwipq/++trJp2YATip+H1PQdPLPncRmZRrjt2V2hYxABer3A7dx8S6bGVGYtdl46PdxEWAC3NoXsi25GE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=171wSNjd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Me5+VJvK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FB3D1F000FF;
-	Sat, 12 Sep 2026 18:19:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="171wSNjd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5206B1F000FF;
+	Sat, 12 Sep 2026 18:19:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789237173;
-	bh=DvOSI3M3xdC7XRLy9MRgRz1l8Qbryl3BKht3doWm6P4=;
+	s=korg; t=1789237178;
+	bh=aj7BftHEzDU2GtYntKhXDPSeUuJXcGfHlrU7kdVUpS8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Me5+VJvKauo09KoGtHIbuu7cLMiq1ywzh/tLhml/AlutsDbo7ozkt2Bn32M44kpmX
-	 kEFc923SQQvNiqK0jISUufdkt5J1oF7k/eV1vKt7sCHv6c+bo+xifRrbSRB7o8j9vC
-	 MzFzmP+ItgkjKFna/RwpaeSsx/nov5wc9CN/lIGA=
+	b=171wSNjdSUS7QUGDmyck8mdd1UopissBijavqj7HQJXA3thv1EbASdKiGO4PoyF4h
+	 KSQStmL9AFQbev2ZOinlmHzcV0vsWyiFMREuPPqWLwC5t5WDlB9gz+/rI8h8fIhXWN
+	 ecS/hGsH6OU151J28yCf0omZU1fal6OuSTLTvSL0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabio Estevam <festevam@nabladev.com>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 5.15 204/935] wifi: mwifiex: Detach sync cmd buffer on interrupted wait
-Date: Sat, 12 Sep 2026 08:53:54 +0200
-Message-ID: <20260912065531.496958432@linuxfoundation.org>
+	Stanislaw Gruszka <stf_xl@wp.pl>,
+	Ping-Ke Shih <pkshih@realtek.com>,
+	stable@kernel.org
+Subject: [PATCH 5.15 205/935] wifi: rtl818x: initialize eeprom_93cx6 struct to zero
+Date: Sat, 12 Sep 2026 08:53:55 +0200
+Message-ID: <20260912065531.521009722@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -50,84 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fabio Estevam <festevam@nabladev.com>
+From: Stanislaw Gruszka <stf_xl@wp.pl>
 
-commit ef06882c7d8a7400b67d0d003b1008093dd589ed upstream.
+commit 799b5f45cb8194ebd06c9c89e0afdad5bedd2cc5 upstream.
 
-mwifiex synchronous commands keep the caller-provided data buffer in
-cmd_node->data_buf. Several callers pass stack-allocated objects there.
+Commit 7738a7ab9d12 ("misc: eeprom: eeprom_93cx6: Add quirk for extra
+read clock cycle") added extra 'quirk' field to struct eeprom_93cx6.
 
-If wait_event_interruptible_timeout() is interrupted, the caller can
-return and release that stack object while the firmware command is still
-the current command. A late firmware response then reaches the normal
-response handler, which can copy data through cmd_node->data_buf into the
-stale stack address.
+Many existing users of eeprom_93cx6, including rtl818x drivers, allocate
+the structure on the stack without initializing all fields. As a result,
+the added quirk field has an undefined value and can randomly cause
+reading wrong data from the EEPROM.
 
-This fixes a stack corruption observed during repeated association and
-disassociation cycles. The panic trace showed the command wait being
-interrupted immediately before a bad pointer dereference:
+Fix by initializing the structures with {}.
 
-  cmd_wait_q terminated: -512
-  Unable to handle kernel paging request at virtual address 002c583837384662
-  Kernel panic - not syncing: stack-protector: Kernel stack is corrupted
-  ...
-  Tainted: [M]=MACHINE_CHECK
-
-The fault address decodes as little-endian ASCII:
-
-  0x002c583837384662 -> "bF878X,\0"
-
-which is a fragment of the VERSION_EXT firmware string exposed as
-debugfs "verext":
-
-  w8997o-V4, RF878X, FP92, 16.92.21.p153.7
-
-The same runs also showed corrupted control data containing:
-
-  0x2400372e333531 -> "153.7\0$"
-
-which is the tail of the same VERSION_EXT string. This points at a late
-VERSION_EXT response writing through a stale stack-backed data_buf after
-the interrupted wait returned.
-
-After cancelling pending commands on an interrupted or timed-out wait,
-detach the caller-owned data buffer from the still-current command. This
-preserves the existing command cancellation behaviour while preventing a
-late response from writing through a pointer whose lifetime ended with the
-waiting caller.
-
-Tested on an i.MX8MP board using an 88W8997.
-
-Cc: stable@vger.kernel.org
-Fixes: 3d026d09b28d ("mwifiex: cancel pending commands for signal")
-Signed-off-by: Fabio Estevam <festevam@nabladev.com>
-Link: https://patch.msgid.link/20260724203320.78793-1-festevam@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 7738a7ab9d12 ("misc: eeprom: eeprom_93cx6: Add quirk for extra read clock cycle")
+Cc: stable@kernel.org # v6.13+
+Signed-off-by: Stanislaw Gruszka <stf_xl@wp.pl>
+Reviewed-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20260723110640.8588-1-stf_xl@wp.pl
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/marvell/mwifiex/sta_ioctl.c |   12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/net/wireless/realtek/rtl818x/rtl8180/dev.c |    2 +-
+ drivers/net/wireless/realtek/rtl818x/rtl8187/dev.c |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/net/wireless/marvell/mwifiex/sta_ioctl.c
-+++ b/drivers/net/wireless/marvell/mwifiex/sta_ioctl.c
-@@ -69,6 +69,18 @@ int mwifiex_wait_queue_complete(struct m
- 		mwifiex_dbg(adapter, ERROR, "cmd_wait_q terminated: %d\n",
- 			    status);
- 		mwifiex_cancel_all_pending_cmd(adapter);
-+
-+		/* The command response path writes through cmd_node->data_buf.
-+		 * On an interrupted wait, the caller can return and release a
-+		 * stack-allocated data_buf before a late firmware response is
-+		 * processed. Detach the caller-owned buffer from the current
-+		 * command so a late response cannot corrupt freed stack memory.
-+		 */
-+		spin_lock_bh(&adapter->mwifiex_cmd_lock);
-+		if (adapter->curr_cmd == cmd_queued)
-+			adapter->curr_cmd->data_buf = NULL;
-+		spin_unlock_bh(&adapter->mwifiex_cmd_lock);
-+
- 		return status;
- 	}
+--- a/drivers/net/wireless/realtek/rtl818x/rtl8180/dev.c
++++ b/drivers/net/wireless/realtek/rtl818x/rtl8180/dev.c
+@@ -1646,7 +1646,7 @@ static void rtl8180_eeprom_register_writ
  
+ static void rtl8180_eeprom_read(struct rtl8180_priv *priv)
+ {
+-	struct eeprom_93cx6 eeprom;
++	struct eeprom_93cx6 eeprom = {};
+ 	int eeprom_cck_table_adr;
+ 	u16 eeprom_val;
+ 	int i;
+--- a/drivers/net/wireless/realtek/rtl818x/rtl8187/dev.c
++++ b/drivers/net/wireless/realtek/rtl818x/rtl8187/dev.c
+@@ -1439,7 +1439,7 @@ static int rtl8187_probe(struct usb_inte
+ 	struct usb_device *udev = interface_to_usbdev(intf);
+ 	struct ieee80211_hw *dev;
+ 	struct rtl8187_priv *priv;
+-	struct eeprom_93cx6 eeprom;
++	struct eeprom_93cx6 eeprom = {};
+ 	struct ieee80211_channel *channel;
+ 	const char *chip_name;
+ 	u16 txpwr, reg;
 
 
