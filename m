@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2A8735F602;
-	Sat, 12 Sep 2026 09:09:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36C5E35F602;
+	Sat, 12 Sep 2026 09:09:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789204154; cv=none; b=gbvmlnzAPBBB3H0ayeVRRR0BtVq+OrjH/mkgj9z+WF9jxUpq74t62boRjVhTSlU+xdLrqigmDlhMY+nRbbaLKR/90ew1lrNdwAgSdprTZ2wnQAqp6hjKqX0ORmriDclqBRoJbCUQHiBUHeoT9qEaVyHjDuPrBQc2wlhdu3Kgt6U=
+	t=1789204159; cv=none; b=IW6odppsDMFjRRZYJDH12Oc2vx2CwQYnrYIpY5SUu8wQwMRPKQ7G53LudIyu6OvtG23HdbKdY6DAHdaCHWZSl1HglGJEz2WE1wwnIYMu5Uv5pOavxqPGG2zvsk4WMCARKsWXEcK7xBnhGNjrfxKxVtBEdoY4K7ifFknVprC4llY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789204154; c=relaxed/simple;
-	bh=ufsNMLLQu0aK5KV+Yw8eYMYmuNfbZGRKbUkT3De7gbM=;
+	s=arc-20240116; t=1789204159; c=relaxed/simple;
+	bh=y8NYOw/3/Bdc2iSZa7eP1ME3oJ4xGn7Qh+x38n4RGP4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C2WCIQikgNuo/RnCFZN8LP16RaC21GsUWbzgDRJiQxVoJU5MJlOe7VwhjgEkS+mUZFmFsCD7KKSGqZRTvryyuOPImnjUVUbAQ8TsmAAaTG4HAdItnsxDiARNN5KqFRnLUiFKpk4rf44IpXV+q3DTaQeVNyynJxghaPJyz6FkIkM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2fDBdZlU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Z+9AeZw5ot1O1AtVE3PNnfJu7pXGHCPmbM1gspTE9qnyFpdr2cBi2bhTD3YD22H2UkP50qCqezdE/EvDgMAhXxgxf6qaql7LEIoeNZZlAlPesL+wgZdPQfnyR05OWYjwpr7H7TdaGJDKnrkF4SV8i1sahG7XXr93nYf3FgtAkhg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cJ+cRUvx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2fDBdZlU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF71C1F000FF;
-	Sat, 12 Sep 2026 09:09:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cJ+cRUvx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E57061F000FF;
+	Sat, 12 Sep 2026 09:09:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789204153;
-	bh=yw0WzFQK1/rfgykXzziVsiN8Z7Qx9pBlojf0LzOGP9w=;
+	s=korg; t=1789204158;
+	bh=ilPfmrNo7VjavkmWWxfyBWpLpvE4rhFK1rorVV83k5o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2fDBdZlUmWeRVvfzGZ4OuRP7aZQQZ8sRgXrC8BSdauaSb9xP9AgtV+bYk6RkQJUgL
-	 31PLpniyd8FczW2OM8VsA+QDkMIJEtEhUvZwDZpG3RzgFMNLXb6Hk3HpH3gVPqHRGJ
-	 MOs5fF+hTSQaXZjQ7nNkFx2vLoEdVt3J5G8V3ueo=
+	b=cJ+cRUvxyI0RTb8e8yYfaEMSo8hKCu4FAYnu4kwIzYPv3zjQrLYC/J99Wy7eBrQ44
+	 r9XtvnUyCJ4/YKkRHrkCQSfqdaLP//ST2gNNEJk40wDHa0MSijGJIQ0b6B4hFHkkFd
+	 pI2AxqdapDsqn/3r0slsfGwi/7SU8+NWhvpPs8Hc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhansong Gao <zhsgao@hotmail.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1552/1815] NFSv4: Fix incorrect argument passed to nfs4_delete_lease() in nfs4_add_lease()
-Date: Sat, 12 Sep 2026 08:55:02 +0200
-Message-ID: <20260912065725.434707238@linuxfoundation.org>
+Subject: [PATCH 7.2 1512/1815] ksmbd: retain connection for pending notify work
+Date: Sat, 12 Sep 2026 08:54:22 +0200
+Message-ID: <20260912065724.494376008@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,45 +50,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhansong Gao <zhsgao@hotmail.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 468e458ffde907ba19acd2102ca1fbb8f6fbede2 ]
+[ Upstream commit f495154703cbcc0050cfd53469bd56965791616b ]
 
-When nfs4_add_lease() races with a delegation return, it calls
-nfs4_delete_lease() to clean up. Previously, it passed priv,
-which can legitimately be NULL. Passing a NULL priv eventually
-leads to a NULL pointer dereference in generic_setlease().
+Deferred CHANGE_NOTIFY work keeps an async message ID after the original
+request work is released. A durable handle can outlive its connection, so
+the connection teardown can destroy its async IDA before the handle close
+releases the pending notify work.
 
-Fixes: e93a5e9306a5 ("NFSv4: Add support for application leases underpinned by a delegation")
-Signed-off-by: Zhansong Gao <zhsgao@hotmail.com>
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Give the synthetic deferred work a connection reference. Release it after
+the async ID in ksmbd_free_work_struct(). This keeps the async IDA alive
+until the deferred work is released, even when the original connection has
+already left the connection list.
+
+During server shutdown there is no client to receive a cleanup response.
+Skip the write and only release the pending work.
+
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Stable-dep-of: b0148dc5625d ("ksmbd: serialize oplock close with pending break ownership")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/nfs4proc.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/smb/server/ksmbd_work.c | 2 ++
+ fs/smb/server/ksmbd_work.h | 2 ++
+ fs/smb/server/smb2pdu.c    | 4 +++-
+ 3 files changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
-index 5709c6fea85bb..2edd16e4981a2 100644
---- a/fs/nfs/nfs4proc.c
-+++ b/fs/nfs/nfs4proc.c
-@@ -7762,6 +7762,7 @@ static int nfs4_add_lease(struct file *file, int arg, struct file_lease **lease,
- {
- 	struct inode *inode = file_inode(file);
- 	fmode_t type = arg == F_RDLCK ? FMODE_READ : FMODE_WRITE;
-+	fl_owner_t owner = (*lease)->c.flc_owner;
- 	int ret;
+diff --git a/fs/smb/server/ksmbd_work.c b/fs/smb/server/ksmbd_work.c
+index 97502273a49c0..c3f8915c39523 100644
+--- a/fs/smb/server/ksmbd_work.c
++++ b/fs/smb/server/ksmbd_work.c
+@@ -86,6 +86,8 @@ void ksmbd_free_work_struct(struct ksmbd_work *work)
  
- 	/* No delegation, no lease */
-@@ -7771,7 +7772,8 @@ static int nfs4_add_lease(struct file *file, int arg, struct file_lease **lease,
- 	if (ret || nfs4_have_delegation(inode, type, 0))
- 		return ret;
- 	/* We raced with a delegation return */
--	nfs4_delete_lease(file, priv);
-+	dprintk("%s: raced with a delegation return\n", __func__);
-+	nfs4_delete_lease(file, &owner);
- 	return -EAGAIN;
+ 	if (work->async_id)
+ 		ksmbd_release_id(&work->conn->async_ida, work->async_id);
++	if (work->owns_conn_ref)
++		ksmbd_conn_put(work->conn);
+ 	kmem_cache_free(work_cache, work);
  }
  
+diff --git a/fs/smb/server/ksmbd_work.h b/fs/smb/server/ksmbd_work.h
+index 50c4aa779647d..e35a40d764d6e 100644
+--- a/fs/smb/server/ksmbd_work.h
++++ b/fs/smb/server/ksmbd_work.h
+@@ -90,6 +90,8 @@ struct ksmbd_work {
+ 	bool                            compress_response:1;
+ 	/* Is this SYNC or ASYNC ksmbd_work */
+ 	bool                            asynchronous:1;
++	/* Work owns a reference to @conn. */
++	bool				owns_conn_ref:1;
+ 	bool                            need_invalidate_rkey:1;
+ 
+ 	unsigned int                    remote_key;
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index 14ba8ed098ffa..ba00678c66193 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -9851,7 +9851,9 @@ int smb2_notify(struct ksmbd_work *work)
+ 
+ 	smb2_send_interim_resp(work, STATUS_PENDING);
+ 
+-	in_work->conn = work->conn;
++	/* Keep the async IDA alive until the deferred work is released. */
++	in_work->conn = ksmbd_conn_get(work->conn);
++	in_work->owns_conn_ref = true;
+ 	in_hdr = smb_get_msg(in_work->response_buf);
+ 	memcpy(in_hdr, ksmbd_resp_buf_next(work), __SMB2_HEADER_STRUCTURE_SIZE);
+ 	in_hdr->Flags |= SMB2_FLAGS_ASYNC_COMMAND;
 -- 
 2.53.0
 
