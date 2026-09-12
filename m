@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EFEA455181;
-	Sat, 12 Sep 2026 10:54:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D48F357CFA;
+	Sat, 12 Sep 2026 10:54:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789210444; cv=none; b=craGCoMjRjjh1U2o2Hk1gXZVAQZ6HHv9OHsA2gTwrZbFIwY84VK1ERTeiyfu+58d32z6Hwa/2Epxc7Ix6OPrJIaDJFnnDq25WkhaSCarzeboI5VKEyNmrk6I5BbnLrwlZBm8xPS/lF4He9zBYyI03XZzY1e4NZCXnhKnPfL3Xew=
+	t=1789210449; cv=none; b=oo8YS8eKGyEx2XMyuMxlpP37zz5ZKBBmWSYkMsbAF+XTtdMBJeZdSnmcK2253HXkmVOOut9fP/H65FNAr+VteVpPLomFVq410IMUAIU5Z2Nq2GJXoTmh6318B51wNG2L1ULOA3hbrnW4NTsBVkkWNQFMqI2pSr98n7rEGDGPQRE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789210444; c=relaxed/simple;
-	bh=Y9893PataQ8AWr4TOqFf+HB6QCjl5m4IBDl57TVoJ/4=;
+	s=arc-20240116; t=1789210449; c=relaxed/simple;
+	bh=pBg5Ts6jk1KfOMicYMSGuVS+JeNZoQZmurS/kBbJugM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bCoNONZGQonwfIimTtW1aGKAiA5ncM/VFvc/qbSYL8YuuX+ezyRwoIF8ET+JISlD3TL2quJYTUm/ZivCQQcsA3jVXni3kVuh3s+aan2IlfMaIAADwiIflJEF+X+bMN4DXd+1EEcI/Ub/NQx94STHFTB4kkAxz7JzV9cT8rUUb5E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GmmJxjkO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FDdCLAGWNq+dtIiT11J05XIB9a3i6gEbvlAUW0VrtGb24DNQWFz0mt4nUFIcBvWz9aBKcek9/lpoA4taJ5d/s/+mXJHogwN4POKVoZLmTgLeCsnY2AeMlCKuPmmRLwah54j9iOZUpDWWnm9xRL6FzEaZ6N2zYAvp83Q3Z7v8vW8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fXZy7RRf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GmmJxjkO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 901F21F000FF;
-	Sat, 12 Sep 2026 10:54:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fXZy7RRf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 309C11F000FF;
+	Sat, 12 Sep 2026 10:54:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789210443;
-	bh=5gEDuvPx4/LWt00Dam7aOUm3gHkwxs1KuP4m65xVZOg=;
+	s=korg; t=1789210448;
+	bh=jBhxHMX0LHVdd7Egu+pfGPalSrlKj0u4prdUmjb7Oko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GmmJxjkOooVtgiGD1idaAh9CRs3caVYe+nUb+arF+JMPhRFnAH20deRgZeE+Vz8P6
-	 zh7aKYGiVgfnbAt8RLfhSpjMUVwQ0MDalHjHyqaE7bqNrIHfQ2eUB38KRZ05B37MHH
-	 7HszXUgpXwsANvsNv9Tx5UnVWMe2SDSswnB0s3Rg=
+	b=fXZy7RRf5BeZ0nWnrJJNI4HT3uF/AwpdRTiq2+bU6L1UYNvRaH4ihUT62yqbW8zoD
+	 XFiP3XPhtlhnV3fGwhs/l5NveBqEoXS5GB7G0djvZJT/nvKLW68aMX+sLrDyQfGBgK
+	 KzXRbbK3TFPq0fy6HUiDBcM+Lz/saY1EAJJ3guI8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linmao Li <lilinmao@kylinos.cn>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Mikhail Kshevetskiy <mikhail.kshevetskiy@iopsys.eu>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1028/1518] Bluetooth: MGMT: free the HCI command when it is cancelled
-Date: Sat, 12 Sep 2026 08:53:17 +0200
-Message-ID: <20260912065646.704926710@linuxfoundation.org>
+Subject: [PATCH 6.18 1011/1518] pinctrl: airoha: an7581: fix pinconf of i2c_scl/i2c_sda pins
+Date: Sat, 12 Sep 2026 08:53:00 +0200
+Message-ID: <20260912065646.324192111@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,73 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linmao Li <lilinmao@kylinos.cn>
+From: Mikhail Kshevetskiy <mikhail.kshevetskiy@iopsys.eu>
 
-[ Upstream commit 414b365ecea6c30357adee6b8a7c5edc03a03575 ]
+[ Upstream commit 65ce9d5d781f872596194771d62ad6e1260fcf4f ]
 
-mgmt_hci_cmd_sync() queues the pending command with a NULL destroy
-callback, so it is only freed if send_hci_cmd_sync() runs. A cancelled
-entry is leaked, as _hci_cmd_sync_cancel_entry() does not release
-entry->data when there is no destroy callback, and hci_cmd_sync_clear()
-cancels every pending entry when the controller is unregistered. Nothing
-else reclaims it either: mgmt_pending_new() does not put the command on
-hdev->mgmt_pending.
+Pinconfs of i2c_sda/i2c_scl pins are swapped, this needs to be fixed.
 
-The leak also pins the socket reference taken by mgmt_pending_new(), so
-the mgmt socket is never released.
-
-Free the command from a destroy callback. The now-empty done label is
-replaced by a direct return.
-
-Fixes: 827af4787e74 ("Bluetooth: MGMT: Add initial implementation of MGMT_OP_HCI_CMD_SYNC")
-Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 1c8ace2d0725 ("pinctrl: airoha: Add support for EN7581 SoC")
+Signed-off-by: Mikhail Kshevetskiy <mikhail.kshevetskiy@iopsys.eu>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/mgmt.c | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ drivers/pinctrl/mediatek/pinctrl-airoha.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
-index 5fac2ce4340dd..62f496b446e7a 100644
---- a/net/bluetooth/mgmt.c
-+++ b/net/bluetooth/mgmt.c
-@@ -2650,7 +2650,7 @@ static int send_hci_cmd_sync(struct hci_dev *hdev, void *data)
- 	if (IS_ERR(skb)) {
- 		mgmt_cmd_status(cmd->sk, hdev->id, MGMT_OP_HCI_CMD_SYNC,
- 				mgmt_status(PTR_ERR(skb)));
--		goto done;
-+		return 0;
- 	}
- 
- 	mgmt_cmd_complete(cmd->sk, hdev->id, MGMT_OP_HCI_CMD_SYNC, 0,
-@@ -2658,12 +2658,14 @@ static int send_hci_cmd_sync(struct hci_dev *hdev, void *data)
- 
- 	kfree_skb(skb);
- 
--done:
--	mgmt_pending_free(cmd);
--
- 	return 0;
- }
- 
-+static void send_hci_cmd_sync_destroy(struct hci_dev *hdev, void *data, int err)
-+{
-+	mgmt_pending_free(data);
-+}
-+
- static int mgmt_hci_cmd_sync(struct sock *sk, struct hci_dev *hdev,
- 			     void *data, u16 len)
- {
-@@ -2689,7 +2691,8 @@ static int mgmt_hci_cmd_sync(struct sock *sk, struct hci_dev *hdev,
- 	if (!cmd)
- 		err = -ENOMEM;
- 	else
--		err = hci_cmd_sync_queue(hdev, send_hci_cmd_sync, cmd, NULL);
-+		err = hci_cmd_sync_queue(hdev, send_hci_cmd_sync, cmd,
-+					 send_hci_cmd_sync_destroy);
- 
- 	if (err < 0) {
- 		err = mgmt_cmd_status(sk, hdev->id, MGMT_OP_HCI_CMD_SYNC,
+diff --git a/drivers/pinctrl/mediatek/pinctrl-airoha.c b/drivers/pinctrl/mediatek/pinctrl-airoha.c
+index a33e18b4e0f0a..57352ebfaadd5 100644
+--- a/drivers/pinctrl/mediatek/pinctrl-airoha.c
++++ b/drivers/pinctrl/mediatek/pinctrl-airoha.c
+@@ -2101,8 +2101,8 @@ static const struct airoha_pinctrl_func an7583_pinctrl_funcs[] = {
+ static const struct airoha_pinctrl_conf en7581_pinctrl_pullup_conf[] = {
+ 	PINCTRL_CONF_DESC(0, REG_I2C_SDA_PU, UART1_TXD_PU_MASK),
+ 	PINCTRL_CONF_DESC(1, REG_I2C_SDA_PU, UART1_RXD_PU_MASK),
+-	PINCTRL_CONF_DESC(2, REG_I2C_SDA_PU, I2C_SDA_PU_MASK),
+-	PINCTRL_CONF_DESC(3, REG_I2C_SDA_PU, I2C_SCL_PU_MASK),
++	PINCTRL_CONF_DESC(2, REG_I2C_SDA_PU, I2C_SCL_PU_MASK),
++	PINCTRL_CONF_DESC(3, REG_I2C_SDA_PU, I2C_SDA_PU_MASK),
+ 	PINCTRL_CONF_DESC(4, REG_I2C_SDA_PU, SPI_CS0_PU_MASK),
+ 	PINCTRL_CONF_DESC(5, REG_I2C_SDA_PU, SPI_CLK_PU_MASK),
+ 	PINCTRL_CONF_DESC(6, REG_I2C_SDA_PU, SPI_MOSI_PU_MASK),
+@@ -2218,8 +2218,8 @@ static const struct airoha_pinctrl_conf an7583_pinctrl_pullup_conf[] = {
+ static const struct airoha_pinctrl_conf en7581_pinctrl_pulldown_conf[] = {
+ 	PINCTRL_CONF_DESC(0, REG_I2C_SDA_PD, UART1_TXD_PD_MASK),
+ 	PINCTRL_CONF_DESC(1, REG_I2C_SDA_PD, UART1_RXD_PD_MASK),
+-	PINCTRL_CONF_DESC(2, REG_I2C_SDA_PD, I2C_SDA_PD_MASK),
+-	PINCTRL_CONF_DESC(3, REG_I2C_SDA_PD, I2C_SCL_PD_MASK),
++	PINCTRL_CONF_DESC(2, REG_I2C_SDA_PD, I2C_SCL_PD_MASK),
++	PINCTRL_CONF_DESC(3, REG_I2C_SDA_PD, I2C_SDA_PD_MASK),
+ 	PINCTRL_CONF_DESC(4, REG_I2C_SDA_PD, SPI_CS0_PD_MASK),
+ 	PINCTRL_CONF_DESC(5, REG_I2C_SDA_PD, SPI_CLK_PD_MASK),
+ 	PINCTRL_CONF_DESC(6, REG_I2C_SDA_PD, SPI_MOSI_PD_MASK),
+@@ -2335,8 +2335,8 @@ static const struct airoha_pinctrl_conf an7583_pinctrl_pulldown_conf[] = {
+ static const struct airoha_pinctrl_conf en7581_pinctrl_drive_e2_conf[] = {
+ 	PINCTRL_CONF_DESC(0, REG_I2C_SDA_E2, UART1_TXD_E2_MASK),
+ 	PINCTRL_CONF_DESC(1, REG_I2C_SDA_E2, UART1_RXD_E2_MASK),
+-	PINCTRL_CONF_DESC(2, REG_I2C_SDA_E2, I2C_SDA_E2_MASK),
+-	PINCTRL_CONF_DESC(3, REG_I2C_SDA_E2, I2C_SCL_E2_MASK),
++	PINCTRL_CONF_DESC(2, REG_I2C_SDA_E2, I2C_SCL_E2_MASK),
++	PINCTRL_CONF_DESC(3, REG_I2C_SDA_E2, I2C_SDA_E2_MASK),
+ 	PINCTRL_CONF_DESC(4, REG_I2C_SDA_E2, SPI_CS0_E2_MASK),
+ 	PINCTRL_CONF_DESC(5, REG_I2C_SDA_E2, SPI_CLK_E2_MASK),
+ 	PINCTRL_CONF_DESC(6, REG_I2C_SDA_E2, SPI_MOSI_E2_MASK),
+@@ -2452,8 +2452,8 @@ static const struct airoha_pinctrl_conf an7583_pinctrl_drive_e2_conf[] = {
+ static const struct airoha_pinctrl_conf en7581_pinctrl_drive_e4_conf[] = {
+ 	PINCTRL_CONF_DESC(0, REG_I2C_SDA_E4, UART1_TXD_E4_MASK),
+ 	PINCTRL_CONF_DESC(1, REG_I2C_SDA_E4, UART1_RXD_E4_MASK),
+-	PINCTRL_CONF_DESC(2, REG_I2C_SDA_E4, I2C_SDA_E4_MASK),
+-	PINCTRL_CONF_DESC(3, REG_I2C_SDA_E4, I2C_SCL_E4_MASK),
++	PINCTRL_CONF_DESC(2, REG_I2C_SDA_E4, I2C_SCL_E4_MASK),
++	PINCTRL_CONF_DESC(3, REG_I2C_SDA_E4, I2C_SDA_E4_MASK),
+ 	PINCTRL_CONF_DESC(4, REG_I2C_SDA_E4, SPI_CS0_E4_MASK),
+ 	PINCTRL_CONF_DESC(5, REG_I2C_SDA_E4, SPI_CLK_E4_MASK),
+ 	PINCTRL_CONF_DESC(6, REG_I2C_SDA_E4, SPI_MOSI_E4_MASK),
 -- 
 2.53.0
 
