@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01CC8455162;
-	Sat, 12 Sep 2026 11:20:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0F692EC09B;
+	Sat, 12 Sep 2026 11:20:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789212047; cv=none; b=HvcrOtCPcIPjnlmeBSQK68SS4bXFSyVN8h+u0JLMSnMWid5mMe7cCiFUte5VJfWHi01po5gODGWZubwmIZq/uN/VppZOkmRtbiEpTQYahE2EoC54cZDaEd63blShN0Rt/ogUpZWQobNAwk2mr+N6R1PPPnQA1wPpHSwueZWEHc0=
+	t=1789212052; cv=none; b=HspmaiTW14CNEOkOO93wk64D2QY2RuZWIvZDunpBBt8fgby/HgJapXmh9ezhmh5WWXn5J+FHDQwDJiR4Aiwv2tIBhPhFFaSG9DDKFnI54rZEzQgMbRFgM8tNW5LupNZPoXinObqWwkEMb5DSPRgZFWgCvsPhxFfxD3jAYpqc2yg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789212047; c=relaxed/simple;
-	bh=n+C9VIThMX0I/I+jpoN7l5QNA0WVK1o6vfTzoZUcAv8=;
+	s=arc-20240116; t=1789212052; c=relaxed/simple;
+	bh=fyhlEb4kZimoWgTu3fHuIkU/YDnHx+cuyBBHEbWZr30=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QEvYLmr2sHjetTEyhuBTXzn7aeyqCmVLnLI+3rir4N92nd7wkGLdBIzj8P5OJURUQlqLXMktNXguJWPkHYVPsW3Mu4JBGUiEbkWDrn9JhWz38skUgcq7ujFsqx4lqT+boJzngjKA83lCG1jviP3NZYbujRkyx3/rgNB9mWlHuyc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ceMk2C3u; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ILPKXIs/0Legdr1P7RFbFDuH7LXfy5ZQR8Y+DzogyBBeWxoNQ8ipiv6HubpByEu35+httVMfltzlCZ6RXCv0kh3bO7rw5XrKesjLdEY5Ay88dWHcIKhWnxIABidNU5aZCgTWoviU/xeLPoWGx2relOkik7LpCvBT4Iuglh3eRbE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DYdJuUa4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ceMk2C3u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E92101F000FF;
-	Sat, 12 Sep 2026 11:20:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DYdJuUa4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B0EE1F000FF;
+	Sat, 12 Sep 2026 11:20:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789212045;
-	bh=sdkmmMU1gqaNxDyC6Pc23MehM76VazBk6beJ9W8wuNQ=;
+	s=korg; t=1789212050;
+	bh=4Q3XGy54nWJpB7794pe6TNe1oNhrs5OKuNWcHxHFr14=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ceMk2C3uElYl2i6DmGeJa9zX1mBsAeoM5v09IbScr5FK4GQpVS2UfdLdD6NlHH9yi
-	 VPIWG+gDQWvug5TJE3T+Sm/ObSNCEQgGX7xRaWZ8B4AlFqdRcs2Xrk3WmhbxfY1cX8
-	 4TKVAxuQ05Ry1GiSmPCd7pkOv7ludBn7UTd/bNTI=
+	b=DYdJuUa4OjAqh3Vx6gW5a7JBbnxpUBq2DvJJCHgclqTWXWuzRN9GIsRuCzz2pTi5M
+	 Kr9kd5BDyjzzL70o9AX4ECXXK7W14oKL5jP/N2nhnjNr6LsUA1ax/rgWpVru5ueosB
+	 Q58oM2OmTkb2h4Y+Z/qR9mKT2B7+pWY73oqTZpkM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1356/1518] ipmr: Convert ipmr_net_exit_batch() to ->exit_rtnl().
-Date: Sat, 12 Sep 2026 08:58:45 +0200
-Message-ID: <20260912065654.206736724@linuxfoundation.org>
+Subject: [PATCH 6.18 1357/1518] ipmr: Remove RTNL in ipmr_rules_init() and ipmr_net_init().
+Date: Sat, 12 Sep 2026 08:58:46 +0200
+Message-ID: <20260912065654.229995234@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -54,122 +54,100 @@ Content-Transfer-Encoding: 8bit
 
 From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit b22b01867406bcafbf61b61dccdf5b0afbd89fdc ]
+[ Upstream commit 4a11adcd9eefb841d4595267bbd4df304a98ded6 ]
 
-ipmr_net_ops uses ->exit_batch() to acquire RTNL only once
-for dying network namespaces.
+When ipmr_free_table() is called from ipmr_rules_init() or
+ipmr_net_init(), the netns is not yet published.
 
-ipmr does not depend on the ordering of ->exit_rtnl() and
-->exit_batch() of other pernet_operations (unlike fib_net_ops).
+Thus, no device should have been registered, and
+mroute_clean_tables() will not call vif_delete(), so
+unregister_netdevice_many() is unnecessary.
 
-Once ipmr_free_table() is called and all devices are
-queued for destruction in ->exit_rtnl(), later during
-NETDEV_UNREGISTER, ipmr_device_event() will not see anything
-in vif table and just do nothing.
+unregister_netdevice_many() does nothing if the list is empty,
+but it requires RTNL due to the unconditional ASSERT_RTNL()
+at the entry of unregister_netdevice_many_notify().
 
-Let's convert ipmr_net_exit_batch() to ->exit_rtnl().
+Let's remove unnecessary RTNL and ASSERT_RTNL() and instead
+add WARN_ON_ONCE() in ipmr_free_table().
 
-Note that fib_rules_unregister() does not need RTNL and
-we will remove RTNL and unregister_netdevice_many() in
-ipmr_net_init().
+Note that we use a local list for the new WARN_ON_ONCE() because
+dev_kill_list passed from ipmr_rules_exit_rtnl() may have some
+devices when other ops->init() fails after ipmr durnig setup_net().
 
 Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
 Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260228221800.1082070-10-kuniyu@google.com
+Link: https://patch.msgid.link/20260228221800.1082070-11-kuniyu@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Stable-dep-of: 235b42b58601 ("ip6mr: do not clone dst in ip6mr_cache_report()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/ipmr.c | 31 +++++++++++++------------------
- 1 file changed, 13 insertions(+), 18 deletions(-)
+ net/ipv4/ipmr.c | 15 +++++----------
+ 1 file changed, 5 insertions(+), 10 deletions(-)
 
 diff --git a/net/ipv4/ipmr.c b/net/ipv4/ipmr.c
-index 8fd75eae7314c..df5620fb5dad7 100644
+index df5620fb5dad7..18e3ad5ae8be2 100644
 --- a/net/ipv4/ipmr.c
 +++ b/net/ipv4/ipmr.c
-@@ -285,18 +285,17 @@ static int __net_init ipmr_rules_init(struct net *net)
- 	return err;
- }
+@@ -276,10 +276,7 @@ static int __net_init ipmr_rules_init(struct net *net)
+ 	return 0;
  
--static void __net_exit ipmr_rules_exit(struct net *net)
-+static void __net_exit ipmr_rules_exit_rtnl(struct net *net,
-+					    struct list_head *dev_kill_list)
+ err2:
+-	rtnl_lock();
+ 	ipmr_free_table(mrt, &dev_kill_list);
+-	unregister_netdevice_many(&dev_kill_list);
+-	rtnl_unlock();
+ err1:
+ 	fib_rules_unregister(ops);
+ 	return err;
+@@ -290,7 +287,6 @@ static void __net_exit ipmr_rules_exit_rtnl(struct net *net,
  {
  	struct mr_table *mrt, *next;
--	LIST_HEAD(dev_kill_list);
  
- 	ASSERT_RTNL();
+-	ASSERT_RTNL();
  	list_for_each_entry_safe(mrt, next, &net->ipv4.mr_tables, list) {
  		list_del(&mrt->list);
--		ipmr_free_table(mrt, &dev_kill_list);
-+		ipmr_free_table(mrt, dev_kill_list);
- 	}
- 
--	unregister_netdevice_many(&dev_kill_list);
- 	fib_rules_unregister(net->ipv4.mr_rules_ops);
- }
- 
-@@ -353,14 +352,12 @@ static int __net_init ipmr_rules_init(struct net *net)
- 	return 0;
- }
- 
--static void __net_exit ipmr_rules_exit(struct net *net)
-+static void __net_exit ipmr_rules_exit_rtnl(struct net *net,
-+					    struct list_head *dev_kill_list)
+ 		ipmr_free_table(mrt, dev_kill_list);
+@@ -355,8 +351,6 @@ static int __net_init ipmr_rules_init(struct net *net)
+ static void __net_exit ipmr_rules_exit_rtnl(struct net *net,
+ 					    struct list_head *dev_kill_list)
  {
--	LIST_HEAD(dev_kill_list);
+-	ASSERT_RTNL();
 -
- 	ASSERT_RTNL();
- 
--	ipmr_free_table(net->ipv4.mrt, &dev_kill_list);
--	unregister_netdevice_many(&dev_kill_list);
-+	ipmr_free_table(net->ipv4.mrt, dev_kill_list);
+ 	ipmr_free_table(net->ipv4.mrt, dev_kill_list);
  
  	net->ipv4.mrt = NULL;
- }
-@@ -3251,6 +3248,7 @@ static void __net_exit ipmr_notifier_exit(struct net *net)
- /* Setup for IP multicast routing */
- static int __net_init ipmr_net_init(struct net *net)
+@@ -436,15 +430,19 @@ static struct mr_table *ipmr_new_table(struct net *net, u32 id)
+ static void ipmr_free_table(struct mr_table *mrt, struct list_head *dev_kill_list)
  {
-+	LIST_HEAD(dev_kill_list);
- 	int err;
+ 	struct net *net = read_pnet(&mrt->net);
++	LIST_HEAD(ipmr_dev_kill_list);
  
- 	err = ipmr_notifier_init(net);
-@@ -3277,7 +3275,8 @@ static int __net_init ipmr_net_init(struct net *net)
+ 	WARN_ON_ONCE(!mr_can_free_table(net));
+ 
+ 	timer_shutdown_sync(&mrt->ipmr_expire_timer);
+ 	mroute_clean_tables(mrt, MRT_FLUSH_VIFS | MRT_FLUSH_VIFS_STATIC |
+ 			    MRT_FLUSH_MFC | MRT_FLUSH_MFC_STATIC,
+-			    dev_kill_list);
++			    &ipmr_dev_kill_list);
+ 	rhltable_destroy(&mrt->mfc_hash);
+ 	kfree(mrt);
++
++	WARN_ON_ONCE(!net_initialized(net) && !list_empty(&ipmr_dev_kill_list));
++	list_splice(&ipmr_dev_kill_list, dev_kill_list);
+ }
+ 
+ /* Service routines creating virtual interfaces: DVMRP tunnels and PIMREG */
+@@ -3274,10 +3272,7 @@ static int __net_init ipmr_net_init(struct net *net)
+ proc_cache_fail:
  	remove_proc_entry("ip_mr_vif", net->proc_net);
  proc_vif_fail:
- 	rtnl_lock();
--	ipmr_rules_exit(net);
-+	ipmr_rules_exit_rtnl(net, &dev_kill_list);
-+	unregister_netdevice_many(&dev_kill_list);
- 	rtnl_unlock();
+-	rtnl_lock();
+ 	ipmr_rules_exit_rtnl(net, &dev_kill_list);
+-	unregister_netdevice_many(&dev_kill_list);
+-	rtnl_unlock();
  #endif
  ipmr_rules_fail:
-@@ -3295,20 +3294,16 @@ static void __net_exit ipmr_net_exit(struct net *net)
  	ipmr_notifier_exit(net);
- }
- 
--static void __net_exit ipmr_net_exit_batch(struct list_head *net_list)
-+static void __net_exit ipmr_net_exit_rtnl(struct net *net,
-+					  struct list_head *dev_kill_list)
- {
--	struct net *net;
--
--	rtnl_lock();
--	list_for_each_entry(net, net_list, exit_list)
--		ipmr_rules_exit(net);
--	rtnl_unlock();
-+	ipmr_rules_exit_rtnl(net, dev_kill_list);
- }
- 
- static struct pernet_operations ipmr_net_ops = {
- 	.init = ipmr_net_init,
- 	.exit = ipmr_net_exit,
--	.exit_batch = ipmr_net_exit_batch,
-+	.exit_rtnl = ipmr_net_exit_rtnl,
- };
- 
- static const struct rtnl_msg_handler ipmr_rtnl_msg_handlers[] __initconst = {
 -- 
 2.53.0
 
