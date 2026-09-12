@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 460DB47886D;
-	Sat, 12 Sep 2026 12:05:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 931D937E5CF;
+	Sat, 12 Sep 2026 12:05:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789214706; cv=none; b=tPAhkLaTdaGijQftKK+/WRlxvNZT33ROtm7/4M0Q0p140/yIaGibmlsWmCSSGBCafedOUJWrh1Uo0TwFRP3jkbGrUWChgcOL9Tp3y/Y4NcCQ4Moq2LldXWmd9r0TKCgajnyLGSP9Nwi2Wfv3ncm9QTAMDU7QycGe7VPo1rICs1A=
+	t=1789214711; cv=none; b=dXZNxX/SMvPBdVYxomY9Q6rOQt42x0ZFI2hTZqdO3lkRULNqCGr9FKp7jB2dztKDegUa4cmonu6C2CIm3cnq6q3x836/PMtfyMI1TX95iOWv+O9kTV+h4sOn3Y9oU1/1GroRmhqI22X5icxSp6g+F/1S0f8iSDyI2tv9Owh2rEU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789214706; c=relaxed/simple;
-	bh=t6ek7LN5W/9qXgNhg0KGXUMlbn4j81g18Hz7qzDxlv0=;
+	s=arc-20240116; t=1789214711; c=relaxed/simple;
+	bh=yoeg3113QYCHz9lFJC0Ev5HJmwW/qqK6BGYHT1vIhlE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qKcppN6U2Xg4xgtu1GqVBJyMw9kKnHgPd80gv59qtopOCjOxghKXWULiZ1h2sOobI/pR6ww9U5h3KTv/tqaP7P45vQZE/0UGIqqTvkjNbmMNfi9A77C4sbKkV9YWZvDOO80NUvbgHcJAmenqVRVsRwZbUCMCL5J+UO1GxMSxcWY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kxd5Fe/y; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OALBfQIFAHqnnI4I3N/aLHClSRjg+1h/QvZwd8dgjfjdoNClYT4VEok4mYmAFNTGyw3fcHoqaIo5W31BogDJ9jOGTDSM6l/0zpSiFr9eArugMl9s+XwCazaN62hqRA7iSN7CHPCs4Qhuc1UKY7LX/U9t6dZiGrk/FOu2RQ7KOpg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HIM7mk1U; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kxd5Fe/y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61D051F000FF;
-	Sat, 12 Sep 2026 12:05:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HIM7mk1U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 338481F000FF;
+	Sat, 12 Sep 2026 12:05:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789214705;
-	bh=lO1v74ocHu4JaM+kJJet6nbirctKotDrrKarB+OZCKo=;
+	s=korg; t=1789214710;
+	bh=d6aAEy2TS5dtYuKbAbE0t64mwEdn8FzJBQYjiQVAm00=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Kxd5Fe/ykJ7YRL7tgysfvJ8fyR40XUcYrFhqakGEquj4sBwuZQMxUQsC432FLnSas
-	 +ESjY6Qw38UwWIXOlYU9mGHiXtlk3eVVL5lCg0UbVbmh3Zi2H74P3bLYxeVcgMm9ed
-	 EBalepCMlgeICPkPgvvHFG3UZrCtGW5bstOyivKE=
+	b=HIM7mk1UztWeCHLTwsRm6YkObTcK7GfmmRQQKAhS0dAK87+x42yB4w2gtdqWiG1MV
+	 OAmYNBa369ZBf6jtxqoSAbHgau4SKsK+Rc67fDoM4rWbxviDX61ej+fRyR3kU0Sja2
+	 +WfjPjgCuXI3drfSiTCJ2sp0P29YXCIaryOQ+vIE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weigang He <geoffreyhe2@gmail.com>,
-	Frank Li <Frank.Li@nxp.com>,
+	"Alexander A. Klimov" <grandmaster@al2klimov.de>,
+	Brian Masney <bmasney@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0339/1376] ARM: imx: fix device_node refcount leaks in imx7_src_init()
-Date: Sat, 12 Sep 2026 08:46:05 +0200
-Message-ID: <20260912065615.107567462@linuxfoundation.org>
+Subject: [PATCH 6.12 0330/1376] clk: moxart: remove unused variables, fix refcount leak
+Date: Sat, 12 Sep 2026 08:45:56 +0200
+Message-ID: <20260912065614.901902833@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,58 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weigang He <geoffreyhe2@gmail.com>
+From: Alexander A. Klimov <grandmaster@al2klimov.de>
 
-[ Upstream commit 3de939b2ac843d56d88e2ab1e1b1f667cba9e1d4 ]
+[ Upstream commit 9f275f2ee9ca60ea4c092bdc0195987945ad8ad8 ]
 
-imx7_src_init() obtains two device_node references via
-of_find_compatible_node() - one for "fsl,imx7d-src" and one for
-"fsl,imx7d-gpc" - reusing the same np variable, but never calls
-of_node_put() on either. On every i.MX7D boot up to two device_node
-refcounts are leaked:
+Not only these error checks are redundand,
+those of_clk_get() return values weren't cleaned up via clk_put().
 
-  - The "fsl,imx7d-src" node is leaked both when of_iomap() fails (the
-    early return after the mapping) and when it succeeds, because np is
-    then overwritten by the second of_find_compatible_node() call
-    without releasing the prior reference.
-  - The "fsl,imx7d-gpc" node is leaked on every path leaving the
-    function after it is acquired.
-
-Release each reference immediately after of_iomap() consumes the node.
-of_iomap() maps the node's registers but does not retain a reference to
-the device_node, so it is safe to put the node once mapped; this also
-drops the first reference before np is reused for the second lookup.
-
-Found by static analysis tool CodeQL.
-
-Fixes: e34645f45805 ("ARM: imx: add smp support for imx7d")
-Signed-off-by: Weigang He <geoffreyhe2@gmail.com>
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Fixes: c7bb4fc16ead ("clk: add MOXA ART SoCs clock driver")
+Signed-off-by: Alexander A. Klimov <grandmaster@al2klimov.de>
+Reviewed-by: Brian Masney <bmasney@redhat.com>
+Signed-off-by: Brian Masney <bmasney@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mach-imx/src.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/clk/clk-moxart.c | 14 --------------
+ 1 file changed, 14 deletions(-)
 
-diff --git a/arch/arm/mach-imx/src.c b/arch/arm/mach-imx/src.c
-index f28bfb653a88f..c3c80b4c3d53b 100644
---- a/arch/arm/mach-imx/src.c
-+++ b/arch/arm/mach-imx/src.c
-@@ -196,6 +196,7 @@ void __init imx7_src_init(void)
- 		return;
+diff --git a/drivers/clk/clk-moxart.c b/drivers/clk/clk-moxart.c
+index 3786a0153ad17..40663ef3ef0ae 100644
+--- a/drivers/clk/clk-moxart.c
++++ b/drivers/clk/clk-moxart.c
+@@ -17,7 +17,6 @@ static void __init moxart_of_pll_clk_init(struct device_node *node)
+ {
+ 	void __iomem *base;
+ 	struct clk_hw *hw;
+-	struct clk *ref_clk;
+ 	unsigned int mul;
+ 	const char *name = node->name;
+ 	const char *parent_name;
+@@ -34,12 +33,6 @@ static void __init moxart_of_pll_clk_init(struct device_node *node)
+ 	mul = readl(base + 0x30) >> 3 & 0x3f;
+ 	iounmap(base);
  
- 	src_base = of_iomap(np, 0);
-+	of_node_put(np);
- 	if (!src_base)
- 		return;
+-	ref_clk = of_clk_get(node, 0);
+-	if (IS_ERR(ref_clk)) {
+-		pr_err("%pOF: of_clk_get failed\n", node);
+-		return;
+-	}
+-
+ 	hw = clk_hw_register_fixed_factor(NULL, name, parent_name, 0, mul, 1);
+ 	if (IS_ERR(hw)) {
+ 		pr_err("%pOF: failed to register clock\n", node);
+@@ -56,7 +49,6 @@ static void __init moxart_of_apb_clk_init(struct device_node *node)
+ {
+ 	void __iomem *base;
+ 	struct clk_hw *hw;
+-	struct clk *pll_clk;
+ 	unsigned int div, val;
+ 	unsigned int div_idx[] = { 2, 3, 4, 6, 8};
+ 	const char *name = node->name;
+@@ -78,12 +70,6 @@ static void __init moxart_of_apb_clk_init(struct device_node *node)
+ 		val = 0;
+ 	div = div_idx[val] * 2;
  
-@@ -204,6 +205,7 @@ void __init imx7_src_init(void)
- 		return;
- 
- 	gpc_base = of_iomap(np, 0);
-+	of_node_put(np);
- 	if (!gpc_base)
- 		return;
- }
+-	pll_clk = of_clk_get(node, 0);
+-	if (IS_ERR(pll_clk)) {
+-		pr_err("%pOF: of_clk_get failed\n", node);
+-		return;
+-	}
+-
+ 	hw = clk_hw_register_fixed_factor(NULL, name, parent_name, 0, 1, div);
+ 	if (IS_ERR(hw)) {
+ 		pr_err("%pOF: failed to register clock\n", node);
 -- 
 2.53.0
 
