@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3D312F6931;
-	Sat, 12 Sep 2026 17:04:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94E992FFF90;
+	Sat, 12 Sep 2026 17:05:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789232699; cv=none; b=Uu5OqqUAUawkaNoBc32CpMLajU5QorVA0OvDdhwczax9PMskOl3+yDC3VHYPKZAdQUC8U9Ywx/pV/rX8pzeFzzjxBI+RpTFTy6pStBq3pbMomF0A/zIAClQLbSBRVHT0yCy/QSv3MlnlzqECHWf9nGZJ8hnvwwXYThMMewhmrGY=
+	t=1789232704; cv=none; b=UHT346oyzzFR2ysXTQezgsIMl4ojI1BwEJU0x48dcwrGedTmJI9Lyg4PBLnHwwR0Q5N/It3RJ+kf9ERPKj456BDHnB1s7BQfgXYXS/RZfCJHDlioQY1eXwv6xSPM6QXXA/HDN7Ttbd9IRSgCL0xUo+yJFpseIL+UWUMlznoP1SI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789232699; c=relaxed/simple;
-	bh=7MkhR+tBfWnMro5q4gKP2xU95Y6Ovyj0JxbUrhV1feQ=;
+	s=arc-20240116; t=1789232704; c=relaxed/simple;
+	bh=cs8dDHKgGW2jjKDAtEOo18ySf+m9+RzyORP8+T2MU+0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EszJ3FMXB1elYVMGtTo6pVYf89pObXyhskpTg+/aifPB05Iej3Bshp/RqTbVBwszGlzS0X5dVomLC4tWSIkVtsSEdGi8K/v3UHtF7OE5gBbEi2NJrP7abvhTIHXPEU8Jvk8E/BlK+Sp+Sqq68T3hGPAMe0BXxxbIbXugwEj3uKM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hWgDDHMo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jPpmOhClosv0Y2YQc+3fajgD0yE8qnQMZoBmEPXo0s3Sp03ahTEhYvKjd59EgQTK2dZ537iWboU6n6khcJubG88eJ1dgkqeiUs0m2177cPNUWqcaEfLI86U574feYjxz1nAUH4bA/zt+abhUH4xEAVjJWjcWyyzfzTCACecP6sg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=otg96lxO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hWgDDHMo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C9AA1F000FF;
-	Sat, 12 Sep 2026 17:04:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="otg96lxO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B31A71F000FF;
+	Sat, 12 Sep 2026 17:05:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789232698;
-	bh=5uY9MBkGHIt6GSFtQZLJeoxAn607XWNgSLNwbfHJApw=;
+	s=korg; t=1789232703;
+	bh=nwcg9T6WLl0zw5fX1+/fxvlsgt+8OQw/t8ffTPOIvhs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hWgDDHMoxGa5NzP8sRC24wkUqR1hwKQzxaMd/l2d6V5xqW9JBhpSwXslD4PaPkSKI
-	 Em4zMLsdjrE+xYogynUKCz2Biq0LLrGSNoE6/b8Uet5k8cLXE/b9JX53WzfvO9Z2VC
-	 nsSjcr7qqIsWbgbohtTWVU5YQT753KvW1yeYbGNs=
+	b=otg96lxORTBNHDwbnT/zNYTj/CTHWG0TAMVeqMwTakkEgBqrDRJ+4o2ueO15rFCE2
+	 ZXw2UZE+IxcfSvqvOVOCDdA9pQwm8YGGdpIWCbCjVKQu2IMFRAazer/OL7w7JCpm+D
+	 YTGZP2hy7iMTul0pPykm4xF7f6/d9IigZHkL0R6I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiangshan Yi <yijiangshan@kylinos.cn>,
-	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 5.15 062/935] HID: mcp2221: validate report size in mcp2221_raw_event()
-Date: Sat, 12 Sep 2026 08:51:32 +0200
-Message-ID: <20260912065528.262231339@linuxfoundation.org>
+	Weiming Shi <bestswngs@gmail.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Subject: [PATCH 5.15 063/935] fs/ntfs3: validate dirty page table on log replay
+Date: Sat, 12 Sep 2026 08:51:33 +0200
+Message-ID: <20260912065528.284996018@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -50,53 +51,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiangshan Yi <yijiangshan@kylinos.cn>
+From: Xiang Mei <xmei5@asu.edu>
 
-commit 2c9a6998c19503626c57a2267bf279e204113079 upstream.
+commit 006cb7713dec10368e699abc4367e5faa334c9a5 upstream.
 
-mcp2221_raw_event() never validates the size of incoming HID reports.
-In the MCP2221_I2C_GET_DATA path it trusts the device-supplied data[3]
-as the copy length without checking that 4 + data[3] bytes actually
-exist in the received report. A malicious or misbehaving USB device can
-send a short report with a large data[3], causing the memcpy to read
-past the valid report data in the HID transfer buffer and leak
-uninitialized kernel memory back to userspace through the I2C/SMBus
-read path.
+Each DIR_PAGE_ENTRY ends in a page_lcns[] array whose length is the on-disk
+lcns_follow field. check_rstbl() validates the table bookkeeping but never
+checks that this array fits in the entry, so a crafted lcns_follow lets the
+v0->v1 conversion memmove and later replay passes run off the entry.
 
-Add a minimum size check at entry and validate that the source range
-fits within the received report before the copy.
+Add check_dp_table() to reject, right after check_rstbl(), any entry larger
+than its size claims via struct_size() (the same expression used to allocate
+these entries, so the check is overflow-safe by construction). All consumers
+can then trust lcns_follow as the real capacity. This covers every
+page_lcns[] access whose index is bounded by the entry itself (the
+conversion memmove, the HotFix store via find_dp(), and the self-bounded
+scan loops). Accesses whose index comes from the log record need a separate
+bound and are handled in a follow-up patch.
 
-Fixes: 67a95c21463d ("HID: mcp2221: add usb to i2c-smbus host bridge")
+Fixes: b46acd6a6a62 ("fs/ntfs3: Add NTFS journal")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jiangshan Yi <yijiangshan@kylinos.cn>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Reported-by: Weiming Shi <bestswngs@gmail.com>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-mcp2221.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ fs/ntfs3/fslog.c |   19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
 
---- a/drivers/hid/hid-mcp2221.c
-+++ b/drivers/hid/hid-mcp2221.c
-@@ -739,6 +739,9 @@ static int mcp2221_raw_event(struct hid_
- 	u8 *buf;
- 	struct mcp2221 *mcp = hid_get_drvdata(hdev);
+--- a/fs/ntfs3/fslog.c
++++ b/fs/ntfs3/fslog.c
+@@ -789,6 +789,20 @@ static bool check_rstbl(const struct RES
+ 	return true;
+ }
  
-+	if (size < 4)
-+		return 0;
++static bool check_dp_table(const struct RESTART_TABLE *dptbl)
++{
++	u32 rsize = le16_to_cpu(dptbl->size);
++	struct DIR_PAGE_ENTRY *dp = NULL;
 +
- 	switch (data[0]) {
++	while ((dp = enum_rstbl((struct RESTART_TABLE *)dptbl, dp))) {
++		if (struct_size(dp, page_lcns, le32_to_cpu(dp->lcns_follow)) >
++		    rsize)
++			return false;
++	}
++
++	return true;
++}
++
+ /*
+  * free_rsttbl_idx - Free a previously allocated index a Restart Table.
+  */
+@@ -4278,6 +4292,11 @@ check_dirty_page_table:
+ 		err = -EINVAL;
+ 		goto out;
+ 	}
++
++	if (!check_dp_table(rt)) {
++		err = -EINVAL;
++		goto out;
++	}
  
- 	case MCP2221_I2C_WR_DATA:
-@@ -797,6 +800,10 @@ static int mcp2221_raw_event(struct hid_
- 					mcp->status = -EINVAL;
- 					break;
- 				}
-+				if (4 + data[3] > size) {
-+					mcp->status = -EINVAL;
-+					break;
-+				}
- 				buf = mcp->rxbuf;
- 				memcpy(&buf[mcp->rxbuf_idx], &data[4], data[3]);
- 				mcp->rxbuf_idx = mcp->rxbuf_idx + data[3];
+ 	dptbl = kmemdup(rt, t32, GFP_NOFS);
+ 	if (!dptbl) {
 
 
