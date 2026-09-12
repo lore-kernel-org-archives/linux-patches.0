@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 244AB33555F;
-	Sat, 12 Sep 2026 14:03:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 127393438BA;
+	Sat, 12 Sep 2026 14:04:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789221842; cv=none; b=mKw2cDIIHgTusyLWyc3zCwZRqQW9XymT2YqXHiyOrQNutf6Sh4Q4r3wAHyQ+AZHkZgnstnV9VLYWO6Gv09hxlhrRVnebmpdTxaTUPmxp6NZAP6qyYSE9Z54xiPJRDq2wtmG3soYAYjq4Js7fQ0BV056sR2JpgXP1ME+QF1bKbqI=
+	t=1789221844; cv=none; b=IUtpnGTLclBdOWDhWWpIp7hFcL7xrqkKwvPrfXs/WFv8nGztzMgytSV/MqoHV4FxivgHOfeKpKsI5AymlkWYnVz8K3nrnBJ9JlyFFvz4Y2IE77K2XBspt2i0e+MI66TM5+Iu+TEkqzaPo8IvuRUptGf+/nm/yCpWkUi4o/1DsEQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789221842; c=relaxed/simple;
-	bh=DkBOAe8xRFvC86rvaRRiUxzDwqb52x62uNduzTswBaE=;
+	s=arc-20240116; t=1789221844; c=relaxed/simple;
+	bh=DgQQ07W+hWXtq2uIkqBNRIQAJmblYloFuCQdwdq8/GE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HJJiv6ojTlCbp9d5WllZ9EZ24laO1+JbJdPgnUnaYJZ0gcjAQFY7Z6yB7R3/8ylNnLeKFqcu6+HUceyDmg0WCc9o8ehj0NmiouWnUXg3vjmZALPQJqc6TES+REEw7cw7KOIDsIENpjkE7y/PpGh1oEhABbjE+unoWhwfndA9X1M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=obYuhhvF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=obd7gZNLmYc3NB/IBNda5wditYOOeACd9xxIqsYR/E4iJ4ssnpie+sf5Ago6gSbloaLtIZuOeLDjN2Vihy4YYBYmNncDG5TE1B9dY5owmHnHI80rBFvGTbV86v00fHZKSrooR8oEczsdxEdxaNALk8PysnJwWzCHrgJd3qwDlq4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NbD8crZe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="obYuhhvF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D21611F00893;
-	Sat, 12 Sep 2026 14:03:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NbD8crZe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 167501F000FF;
+	Sat, 12 Sep 2026 14:03:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789221836;
-	bh=TsINv1FMQm6v2/Xl7lBkwCJ2A4eGoy5wdVznDKiSmjw=;
+	s=korg; t=1789221841;
+	bh=xnfTpqTODw4CS6RQwxes1k+adR4N4HNdn+dOXNbIYDg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=obYuhhvFOcE8LUsqskQ9oFlX/w19YUs6HwGe9vGeiyaidlZPjG9REMO9nBgEofInT
-	 /ITNh9JyV0BEdnYSvq98vQUUikDIJzHL0s8Gl3mOxg/tiZO/4x/rtzlaUb6uum3lq4
-	 A4PRk61WRw/nFc73ltdIfHrpiVI989pzDE9xMHJE=
+	b=NbD8crZeKyuYDYLCVZsBreBI6tjYvdu3zT+Ce1NGydiomqa2i1CBUp8OEcjdCW5yk
+	 +8tELpdz2psu729cKyg438KO7lo3vF6bNxfc4vTj5az2bH7Ec86qUcZNJzaMv7VaN2
+	 I2gdTXKoYCmr7Z38GP1kN7aGbCWnudwcoM9PH3+8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilya Krutskih <devsec@tpz.ru>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.6 0464/1424] media: tda18250: fix possible integer overflow
-Date: Sat, 12 Sep 2026 08:48:16 +0200
-Message-ID: <20260912065617.678050858@linuxfoundation.org>
+	Xu Rao <raoxu@uniontech.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>
+Subject: [PATCH 6.6 0465/1424] media: v4l2-async: avoid deleting unlinked ASC entry on link error
+Date: Sat, 12 Sep 2026 08:48:17 +0200
+Message-ID: <20260912065617.700644451@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -50,34 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilya Krutskih <devsec@tpz.ru>
+From: Xu Rao <raoxu@uniontech.com>
 
-commit 6dd8e257f7cafda7fbf10d81b3c55c9bba4825f4 upstream.
+commit 47d82b605351c0e04f6365e42c8ffe2fcfdba615 upstream.
 
-Integer overflow may occur, when variable exp equals to zero. Result
-of shift 1 << (exp - 1) may then leads to undefined behavior.
+v4l2_async_match_notify() creates ancillary media links before adding
+asc->asc_subdev_entry to sd->asc_list.
 
-Fixes: 148abd3b5b14 ("media: tda18250: support for new silicon tuner")
+If ancillary link creation fails, the function jumps to
+err_call_unbind while asc_subdev_entry has not been linked yet. Async
+connections are zero-allocated, so the list entry still has NULL next
+and prev pointers on this path. Calling list_del() on it can therefore
+dereference NULL instead of returning the original link creation error.
+
+Do not delete asc_subdev_entry from err_call_unbind. There is no list
+insertion to undo on this path; the bound callback and sub-device
+registration are the operations that need to be rolled back.
+
+Fixes: 28a1295795d8 ("media: v4l: async: Allow multiple connections between entities")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ilya Krutskih <devsec@tpz.ru>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Xu Rao <raoxu@uniontech.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/tuners/tda18250.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/media/v4l2-core/v4l2-async.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/drivers/media/tuners/tda18250.c
-+++ b/drivers/media/tuners/tda18250.c
-@@ -440,8 +440,8 @@ static int tda18250_pll_calc(struct dvb_
- 		goto err;
+--- a/drivers/media/v4l2-core/v4l2-async.c
++++ b/drivers/media/v4l2-core/v4l2-async.c
+@@ -388,7 +388,6 @@ static int v4l2_async_match_notify(struc
  
- 	exp = (uval & 0x70) >> 4;
--	if (exp > 5)
--		exp = 0;
-+	if (exp == 0 || exp > 5)
-+		exp = 1;
- 	lopd = 1 << (exp - 1);
- 	scale = uval & 0x0f;
- 	fvco = lopd * scale * ((c->frequency / 1000) + dev->if_frequency);
+ err_call_unbind:
+ 	v4l2_async_nf_call_unbind(notifier, sd, asc);
+-	list_del(&asc->asc_subdev_entry);
+ 
+ err_unregister_subdev:
+ 	if (registered)
 
 
