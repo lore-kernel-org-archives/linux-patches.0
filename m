@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16F332D23A6;
-	Sat, 12 Sep 2026 13:25:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65ADE376BCD;
+	Sat, 12 Sep 2026 13:25:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789219544; cv=none; b=kAUTc8B/UIi3gwz3L2PuCoHpTxmErkyY4ExLDFEGpHlAo36xCUr6snRLGYjl16kwV82PiaZFsA6MHNJ7wWavN+zEMecHR4BmDrPUGLkoY6gMv+W8bqA1wniBXpeBjTNZgl+LS0ak4ZchDfOU1k6Y2TOgIapXqAir4iZiNYd9r2E=
+	t=1789219549; cv=none; b=J1WdaOYtk34VsqzpTeibLeTps0lXurX5Mrw24+xSFN4KDlKcZviZOajlH1wfYi9E2q1rnZVzDTgc1X2t2TnxAQct1flP4x7y2USr1kWGgbCelqluKNQXTPTJPM2KY9cPcFS0tpNOz5XptZ4E6CHdSDPnHmUUbi2ndr4ifENkgx8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789219544; c=relaxed/simple;
-	bh=7PapSkT0EHdZRW2m7HD3sWzW+6pcd9CtN6WWUwHyV/I=;
+	s=arc-20240116; t=1789219549; c=relaxed/simple;
+	bh=rLNYVlkmiEQNvXP6y8WJlzVtRjSn6fORUZ08UrXKnoo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BdvvpfUbXYDcPwerL4MUCwIYLuoz4KS2B2YbX2hTyfTFA2JVgP2Hi3/5Z3jN6hxDObx6xZGRO7R6QiToQHpmEIhR64pv1BVwequ9dvG2mFkpmYzikURLr27/U4D4tDAZ3lh0gbLTullvg7UW7ZQsRJnELwaQdJGQ/CjsEztVQ4E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iTmgOpA4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KvqiyOQJEyO+gWWUPQsFTzTRIfBhRBcxnAA8051KMaCXBLQUTxTVyYK28T7BfuTPPP/dLAoud0UmyYSH553da9Ln80XIpor6K5n9rtd6X5ZNzdt9vtTz32nHbPZez9BuNOW6BC3PigieIoWQjJoQ7eldDxE5MA7DvN8LvIJR+S4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WquqiQS2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iTmgOpA4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35CDF1F00898;
-	Sat, 12 Sep 2026 13:25:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WquqiQS2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 064DD1F000FF;
+	Sat, 12 Sep 2026 13:25:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789219543;
-	bh=XcU9rhXJlQiIZy5zcWKao/P6IwmXlIjfL79rCm25l1o=;
+	s=korg; t=1789219548;
+	bh=G+J21hQz+bFu3dGFyLf49avBtNcC0X3YE/v1PpDHw28=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iTmgOpA4VkbaHYA4L1q0jgQRq/sFEu76lcGblK6a890XurEXcZBPGQEJCcBzremqq
-	 5f1JHutzb/GItnrV8nCS6MSO32+1tXcuOAtDb/iU+SL0d4ykckdh0Bd3xYo9rEUjTR
-	 KkJdaG87x01I1V7nPotfiQddpJwkL3IKh56AWuhI=
+	b=WquqiQS2g0Vhq0B2CtcEfBuxPaRJ4e1o89UEMhnSTW6MqQWf8eZOwlNbA0TQG6hKH
+	 IfuGQ6ls/Z4qlBgZY6/GAYGDP1YDw05y70EP/DTNTnAp+WluHsGVBakl+HKALbQS4N
+	 OBErvLkTmQIgeQ6kwSUWEdFZ4slBhO4CmBX9fJEo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Kacur <jkacur@redhat.com>,
-	Luis Goncalves <lgoncalv@redhat.com>,
-	Venkat Rao Bagalkote <venkat88@linux.ibm.com>,
-	Quentin Monnet <qmo@kernel.org>,
-	Tomas Glozar <tglozar@redhat.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.12 1371/1376] tools/build: Use SYSTEM_BPFTOOL for system bpftool
-Date: Sat, 12 Sep 2026 09:03:17 +0200
-Message-ID: <20260912065638.090976541@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Linus Walleij <linus.walleij@linaro.org>
+Subject: [PATCH 6.12 1372/1376] pinctrl: mediatek: common-v1: Fix error checking in mtk_eint_init()
+Date: Sat, 12 Sep 2026 09:03:18 +0200
+Message-ID: <20260912065638.112999517@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -54,65 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tomas Glozar <tglozar@redhat.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-commit 814d051ebed40b27285ab3c5e2454bd01a0f9631 upstream.
+commit 446d28584723e5d4bcdb18cf6ef87cb2bb597dd8 upstream.
 
-The feature test for system bpftool uses BPFTOOL as the variable to set
-its path, defaulting to just "bpftool" if not set by the user.
+The devm_kzalloc() function doesn't return error pointers, it returns
+NULL on error.  Then on the next line it checks the same pointer again
+by mistake, "->base" instead of "->base[0]".
 
-This conflicts with selftests and a few other utilities, which expect
-BPFTOOL to be set to the in-tree bpftool path by default. For example,
-bpftool selftests fail to build:
-
-$ make -C tools/testing/selftests/bpf/
-make: Entering directory '/home/tglozar/dev/linux/tools/testing/selftests/bpf'
-
-make: *** No rule to make target 'bpftool', needed by '/home/tglozar/dev/linux/tools/testing/selftests/bpf/tools/include/vmlinux.h'.  Stop.
-make: Leaving directory '/home/tglozar/dev/linux/tools/testing/selftests/bpf'
-
-Fix the problem by renaming the variable used for system bpftool from
-BPFTOOL to SYSTEM_BPFTOOL, so that the new usage does not conflict with
-the existing one of BPFTOOL.
-
-Cc: John Kacur <jkacur@redhat.com>
-Cc: Luis Goncalves <lgoncalv@redhat.com>
-Link: https://lore.kernel.org/20250326004018.248357-1-tglozar@redhat.com
-Fixes: 8a635c3856dd ("tools/build: Add bpftool-skeletons feature test")
-Closes: https://lore.kernel.org/linux-kernel/5df6968a-2e5f-468e-b457-fc201535dd4c@linux.ibm.com/
-Reported-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
-Tested-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
-Suggested-by: Quentin Monnet <qmo@kernel.org>
-Acked-by: Quentin Monnet <qmo@kernel.org>
-Signed-off-by: Tomas Glozar <tglozar@redhat.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Fixes: fe412e3a6c97 ("pinctrl: mediatek: common-v1: Fix EINT breakage on older controllers")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://lore.kernel.org/aAijc10fHka1WAMX@stanley.mountain
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/build/feature/Makefile   |    2 +-
- tools/scripts/Makefile.include |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/pinctrl/mediatek/pinctrl-mtk-common.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/tools/build/feature/Makefile
-+++ b/tools/build/feature/Makefile
-@@ -427,7 +427,7 @@ $(OUTPUT)test-libpfm4.bin:
- 	$(BUILD) -lpfm
+--- a/drivers/pinctrl/mediatek/pinctrl-mtk-common.c
++++ b/drivers/pinctrl/mediatek/pinctrl-mtk-common.c
+@@ -1018,12 +1018,12 @@ static int mtk_eint_init(struct mtk_pinc
+ 	pctl->eint->nbase = 1;
+ 	/* mtk-eint expects an array */
+ 	pctl->eint->base = devm_kzalloc(pctl->dev, sizeof(pctl->eint->base), GFP_KERNEL);
+-	if (IS_ERR(pctl->eint->base))
++	if (!pctl->eint->base)
+ 		return -ENOMEM;
  
- $(OUTPUT)test-bpftool-skeletons.bin:
--	$(BPFTOOL) version | grep '^features:.*skeletons' \
-+	$(SYSTEM_BPFTOOL) version | grep '^features:.*skeletons' \
- 		> $(@:.bin=.make.output) 2>&1
- ###############################
+ 	pctl->eint->base[0] = devm_platform_ioremap_resource(pdev, 0);
+-	if (IS_ERR(pctl->eint->base))
+-		return PTR_ERR(pctl->eint->base);
++	if (IS_ERR(pctl->eint->base[0]))
++		return PTR_ERR(pctl->eint->base[0]);
  
---- a/tools/scripts/Makefile.include
-+++ b/tools/scripts/Makefile.include
-@@ -95,7 +95,7 @@ endif
- CC_NO_CLANG := $(shell $(CC) -dM -E -x c /dev/null | grep -Fq "__clang__"; echo $$?)
- 
- # Some tools require bpftool
--BPFTOOL		?= bpftool
-+SYSTEM_BPFTOOL	?= bpftool
- 
- ifeq ($(CC_NO_CLANG), 1)
- EXTRA_WARNINGS += -Wstrict-aliasing=3
+ 	pctl->eint->irq = irq_of_parse_and_map(np, 0);
+ 	if (!pctl->eint->irq)
 
 
