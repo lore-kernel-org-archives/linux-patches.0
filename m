@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D650369990;
-	Sat, 12 Sep 2026 08:08:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DF1837998A;
+	Sat, 12 Sep 2026 08:08:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789200504; cv=none; b=Ir26+3VsPwmdWdyLv//lDhRbaAz9bWGH+T0bE4w/nOuCnmuKaa7+qu3OzL9KdBTOaxao/jtie1rXFa7mcGDLtvqOAUMwpuoEmWPPEgyf5tEjeWeVAoZfuZ88RsI3m50DARGOWppHHU2Lm8yCPf+2b1JSMlBXGGOApVoRTgo7ly8=
+	t=1789200508; cv=none; b=N6PFGsWjxNd03/WRa5Hfo+cOFpupslJK88q2Zv5Dd8jOxpNcnFuGjVKkgg6f9jCNOiKb5XGeTaawWWmYMbxaOne0Yur0osA6tbkvtWxsjDkMfEBPuVA03MsH+c8B80BDNSSOPJN333sUNEK3ezqHL8gZQL8RSW2mT5CT030Bn8E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789200504; c=relaxed/simple;
-	bh=L+HRDpzuBY1TmIHOcV1sbtfxIY4pnOKQJciF1WGbSDY=;
+	s=arc-20240116; t=1789200508; c=relaxed/simple;
+	bh=XQW2RG2B3388XT/aQ9TpYm3m2KeDoM+T/LXzJ9RNQSg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cOMAYY9dBmJJ5OaNWS6VlhahAxs/TdKEkyQm5/la5w18d2SUrp7U7E0u10BO0TeRhh4/qYyON8IMjKGhXIiqY+zT1RoAj65Yc8CwYW1ZBUtS2l6Mv0EM+Fwto7FILkXZZmeWaRVFhpkpPefCruhGP4i6fzG0uuYMGKu7xFTH4KI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ztN7u6+m; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NvWdyOLP5L3MG0W9B/+UweC5GauTyhHiJQx28ayJd95Dj9Dt+32qN41YvLkEShtL0W5bA1SnaaFHIMN8d7o7//2Y4g1m0NKzJaJv5nBvmOyWdau40fsdHTxIhe+tb2cPzF3XzpXXS83+/8+cOas0Tc1EX1UlYAUU+NojLD2Bj/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xSwfyzjv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ztN7u6+m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 844471F000FF;
-	Sat, 12 Sep 2026 08:08:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xSwfyzjv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A292C1F000FF;
+	Sat, 12 Sep 2026 08:08:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789200502;
-	bh=Ji8KSRMb2EP+mQRCRMln4yOvVZuxRPIvlci6PMvYP6Q=;
+	s=korg; t=1789200507;
+	bh=+WMc6zk8gNcyzNXy7Qb2L43ZXiPyloro/o8DeTaEOrM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ztN7u6+mi7dowMZOhmWPxt/EDk6DyXHTMuNv0s3fGKX9t+I0+gSVVong/JgS2FUOm
-	 rMUFZQ/+ZIKyBY7TnYJWVGcd5AV2sNeNRw5QAG0+oxLiQrWBxHreJqQGCmKSx5iCXG
-	 Db1IFB1xxM6GuKKSmjJKpeXhxDwmzZgpMqNt3gWg=
+	b=xSwfyzjvCOpEMotasdMWJfD6Vw1DmBe1mSZekAsZFPuLA1ppCMMn3XeT9dNn1mpMT
+	 m0gE4iKQ8F4znm+FkbeXv7Jdn1jbdMcZGPS+wcLvoSO5Lckam/eS7YjepOOfvMH25Y
+	 FzPtP6jGRJBtrkypMJu5eFwWBWIxcxFfSEWQN/iQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>,
-	Yu Kuai <yukuai@fygo.io>,
-	John Garry <john.g.garry@oracle.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0776/1815] md/raid10: consistently fail atomic writes that require splitting
-Date: Sat, 12 Sep 2026 08:42:06 +0200
-Message-ID: <20260912065707.127518247@linuxfoundation.org>
+Subject: [PATCH 7.2 0803/1815] arm64: dts: qcom: sm8350: Fix the PCIe iommu-map entries
+Date: Sat, 12 Sep 2026 08:42:33 +0200
+Message-ID: <20260912065707.763440327@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,69 +53,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 
-[ Upstream commit 3409bf2f9678d769a4c33bd232a3571c51fac481 ]
+[ Upstream commit 80337ea3a154230621c0b4e3c831f5d81712ba18 ]
 
-RAID10 currently handles one badblock path explicitly by failing atomic
-writes with EIO. However, another badblock path can also reduce the
-writable range and force the bio through bio_submit_split_bioset(),
-which implicitly completes the bio with EINVAL.
+The IOMMU provider apps_smmu uses '#iommu-cells = <2>', but the PCIe
+iommu-map entries specify only one cell for the SID, omitting the SID
+mask. This went unnoticed until the OF core started warning with commit
+ccb2fd725d41 ("of: Respect #{iommu,msi}-cells in maps"):
 
-Fix this by handling atomic writes in the common split check. If RAID10
-determines that an atomic write would require splitting, complete the
-bio with EIO.
+  iommu-map has 1-cell entries targeting 2-cell #iommu-cells, treating as 1-cell output
 
-Fixes: a1d9b4fd42d9 ("md/raid10: Atomic write support")
-Signed-off-by: Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>
-Reviewed-by: Yu Kuai <yukuai@fygo.io>
-Reviewed-by: John Garry <john.g.garry@oracle.com>
-Link: https://patch.msgid.link/20260710101521.1714-4-abd.masalkhi@gmail.com
-Signed-off-by: Yu Kuai <yukuai@fygo.io>
+So fix the entries to match the provider's '#iommu-cells' property.
+
+Fixes: 6daee40678a0 ("arm64: dts: qcom: sm8350: add PCIe devices")
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260730-iommu-map-fix-v1-8-83405d37ba41@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid10.c | 14 ++++----------
- 1 file changed, 4 insertions(+), 10 deletions(-)
+ arch/arm64/boot/dts/qcom/sm8350.dtsi | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/md/raid10.c b/drivers/md/raid10.c
-index 3c7f883e93bb0..8c419033a9bf3 100644
---- a/drivers/md/raid10.c
-+++ b/drivers/md/raid10.c
-@@ -1333,6 +1333,7 @@ static bool raid10_write_request(struct mddev *mddev, struct bio *bio,
- 	int i, k;
- 	sector_t sectors;
- 	int max_sectors;
-+	bool atomic = bio->bi_opf & REQ_ATOMIC;
+diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+index c830953156ec6..20c3ab9465d2e 100644
+--- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+@@ -1575,8 +1575,8 @@ pcie0: pcie@1c00000 {
+ 				      "aggre1",
+ 				      "aggre0";
  
- 	if ((mddev_is_clustered(mddev) &&
- 	     mddev->cluster_ops->area_resyncing(mddev, WRITE,
-@@ -1420,16 +1421,6 @@ static bool raid10_write_request(struct mddev *mddev, struct bio *bio,
- 			if (is_bad) {
- 				int good_sectors;
+-			iommu-map = <0x0   &apps_smmu 0x1c00 0x1>,
+-				    <0x100 &apps_smmu 0x1c01 0x1>;
++			iommu-map = <0x0   &apps_smmu 0x1c00 0x0 0x1>,
++				    <0x100 &apps_smmu 0x1c01 0x0 0x1>;
  
--				/*
--				 * We cannot atomically write this, so just
--				 * error in that case. It could be possible to
--				 * atomically write other mirrors, but the
--				 * complexity of supporting that is not worth
--				 * the benefit.
--				 */
--				if (bio->bi_opf & REQ_ATOMIC)
--					goto err_handle;
--
- 				good_sectors = first_bad - dev_sector;
- 				if (good_sectors < max_sectors)
- 					max_sectors = good_sectors;
-@@ -1449,6 +1440,9 @@ static bool raid10_write_request(struct mddev *mddev, struct bio *bio,
- 		r10_bio->sectors = max_sectors;
+ 			resets = <&gcc GCC_PCIE_0_BCR>;
+ 			reset-names = "pci";
+@@ -1684,8 +1684,8 @@ pcie1: pcie@1c08000 {
+ 				      "ddrss_sf_tbu",
+ 				      "aggre1";
  
- 	if (r10_bio->sectors < bio_sectors(bio)) {
-+		if (atomic)
-+			goto err_handle;
-+
- 		allow_barrier(conf);
- 		bio = bio_submit_split_bioset(bio, r10_bio->sectors,
- 					      &conf->bio_split);
+-			iommu-map = <0x0   &apps_smmu 0x1c80 0x1>,
+-				    <0x100 &apps_smmu 0x1c81 0x1>;
++			iommu-map = <0x0   &apps_smmu 0x1c80 0x0 0x1>,
++				    <0x100 &apps_smmu 0x1c81 0x0 0x1>;
+ 
+ 			resets = <&gcc GCC_PCIE_1_BCR>;
+ 			reset-names = "pci";
 -- 
 2.53.0
 
