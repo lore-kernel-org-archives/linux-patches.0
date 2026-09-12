@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 387F4353A6B;
-	Sat, 12 Sep 2026 18:15:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8751232D7F8;
+	Sat, 12 Sep 2026 18:15:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789236923; cv=none; b=XG7zPFT2yKcKX4Qz8Bfm8v3LsyyWzQ4qNM9tRS5UNsv1QAzdbAxG0PzoNLT/VaZmYRhNuhfLEPGng6a8C5CEGLrsAqUQItZBK/WUFeTQAbRMKLTVwoxLm5aNA/L1r9WgaPRmi8DhEJc6gnZHOkvWKB9WhFs/k3d4K9b+SPNURPw=
+	t=1789236929; cv=none; b=THNh+Hn28z3SWGCS/bYWduQWX6nxyw4ONEQDdumfl9ybQ5P16ZVNjdX6OR7hz5VW3X+3RKX1QbaxvZVnuDDukluZb6KW+WvUPoY1O6uVF/JpHKSmnL0eNXfxPKB7xvZAUuZFsaiLYjNWjudYRlf20F8sSk5hQo3xNN/2l2tiurw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789236923; c=relaxed/simple;
-	bh=t0eDmVQEXRvBNhkeEMnMwrrJck1hGrsE4qSGh/Fm5Ts=;
+	s=arc-20240116; t=1789236929; c=relaxed/simple;
+	bh=QwybWYh9QF7etRnshQV2CY6xMVC4/RZ7qAD9dcq64mo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VdOGQjaIU3M82JjvdQvXDWExbw9rmL2pCL69DZ+h4WYgiIVHbqtYxRE4bmKR0rXP0k6mVqq1GQ/KVT19AoWeW06d2fDap35XTi24UA3NqlHJq3V2NwTz+Yw6b4Lggv9pVeTbQEmyCcfQBcCKvsdYBG4Wwe2qi19PJMUITxu+LSI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PJJ3UVlk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OcVeLbNmTz/pI6k6ybLbDH+QIXkv26wgjMIzYd5b7K0c24evj0+EFnSXlc6eT4prfrcoqyajm6Q2CCZkI0NFfOropHcojXXDGZY8EdtPP40vidCCesVPVx5E4VzlSvmYXw36bXslLACVBYHo5TG45jTinb9RYhYM0qQ/jn+kcZM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AIoz3r6H; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PJJ3UVlk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E383C1F000FF;
-	Sat, 12 Sep 2026 18:15:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AIoz3r6H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE3BC1F000FF;
+	Sat, 12 Sep 2026 18:15:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789236921;
-	bh=wOBdRkPeLGxKoh6d+XxM9C7YvhvNQwSu9P5RLghaZ7s=;
+	s=korg; t=1789236927;
+	bh=mHqIvTB2CiGtS+hoDRTQe6ygDo8vpZEto968qwKf6po=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PJJ3UVlkWplzihGO58TyHJoj13aW+aEmG7X6Dh3aJXipmO4iiaiP46uE5WQJBIUhU
-	 oPpTAGavhZKcMGhSwcMwBoR5Fmv04tzuZwqYnTyDVW3J8aXP4qPxnyhQIgFLIHllfZ
-	 jXkZo58nB1mlvMj6wMOceaOMeSeYcM1gqWE3iNuY=
+	b=AIoz3r6HCaAcEgOnOnRxR77BfA3/oA1UehukT9hIXq3MkEK7V2UV2POgHqvQZF55C
+	 thi8Dx3srQPIWZvOGaFCm9PXnZFjrxkH19PDu0oi8YRuCPMctVqum4RT9N3mKNToFq
+	 vUKcLbHjIUV+80wZYe1KBzVjD7ytF74F4Gd6sNSw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jameson Thies <jthies@google.com>,
-	Benson Leung <bleung@chromium.org>,
+	Fan Wu <fanwu01@zju.edu.cn>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>
-Subject: [PATCH 5.15 153/935] power: supply: cros_usbpd: Limit port counts to EC_USB_PD_MAX_PORTS
-Date: Sat, 12 Sep 2026 08:53:03 +0200
-Message-ID: <20260912065530.333323015@linuxfoundation.org>
+Subject: [PATCH 5.15 154/935] power: supply: lp8727: fix use-after-free in lp8727_release_irq()
+Date: Sat, 12 Sep 2026 08:53:04 +0200
+Message-ID: <20260912065530.355718981@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -51,56 +50,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jameson Thies <jthies@google.com>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-commit 657cd3a42e937276262c0a8ae6b01a87004309de upstream.
+commit ceb6ac43b0f591722401922ceb958ce2616935e0 upstream.
 
-Currently the cros_usbpd-charger driver probe iterates based on raw
-charger port count returned by the embedded controller. The only check
-is against the number of USB PD ports which the embedded controller
-also defines. A malicious embedded controller could return an inaccurate
-port count (up to 255) resulting in an out of bounds write and
-subsequent memory corruption.
+lp8727_isr_func(), the threaded IRQ handler, is the only caller that arms
+pchg->work via schedule_delayed_work().  lp8727_release_irq() currently
+cancels the work before freeing the IRQ, so an IRQ delivered in between
+can re-arm the work through the threaded handler.  After .remove returns
+the devm layer frees pchg while lp8727_delayed_func() may still run and
+dereference it.
 
-Update helper functions in cros_usbpd-charger to limit port counts to
-EC_USB_PD_MAX_PORTS.
+Free the IRQ first so the threaded handler is quiesced and can no longer
+queue work, then cancel the delayed work to drain the final generation.
 
-Fixes: 3af15cfacd1e ("power: supply: cros: add support for dedicated port")
+This issue was found by an in-house static analysis tool.
+
+Fixes: d71fda016102 ("lp8727_charger: Clean up the interrupt handler")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jameson Thies <jthies@google.com>
-Reviewed-by: Benson Leung <bleung@chromium.org>
-Link: https://patch.msgid.link/20260722195059.1420738-1-jthies@google.com
+Assisted-by: Codex:gpt-5.6
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Link: https://patch.msgid.link/20260807033520.8551-1-fanwu01@zju.edu.cn
 Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/power/supply/cros_usbpd-charger.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/power/supply/lp8727_charger.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/power/supply/cros_usbpd-charger.c
-+++ b/drivers/power/supply/cros_usbpd-charger.c
-@@ -136,6 +136,11 @@ static int cros_usbpd_charger_get_num_po
- 	if (ret < 0)
- 		return ret;
+--- a/drivers/power/supply/lp8727_charger.c
++++ b/drivers/power/supply/lp8727_charger.c
+@@ -280,10 +280,10 @@ static int lp8727_setup_irq(struct lp872
  
-+	if (resp.port_count > EC_USB_PD_MAX_PORTS) {
-+		dev_warn(charger->dev, "Charge port count out of bounds\n");
-+		return EC_USB_PD_MAX_PORTS;
-+	}
+ static void lp8727_release_irq(struct lp8727_chg *pchg)
+ {
+-	cancel_delayed_work_sync(&pchg->work);
+-
+ 	if (pchg->irq)
+ 		free_irq(pchg->irq, pchg);
 +
- 	return resp.port_count;
++	cancel_delayed_work_sync(&pchg->work);
  }
  
-@@ -149,6 +154,11 @@ static int cros_usbpd_charger_get_usbpd_
- 	if (ret < 0)
- 		return ret;
- 
-+	if (resp.num_ports > EC_USB_PD_MAX_PORTS) {
-+		dev_warn(charger->dev, "USB PD port count out of bounds\n");
-+		return EC_USB_PD_MAX_PORTS;
-+	}
-+
- 	return resp.num_ports;
- }
- 
+ static enum power_supply_property lp8727_charger_prop[] = {
 
 
