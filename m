@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B28E390CBE;
-	Sat, 12 Sep 2026 11:46:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1DC7403B1E;
+	Sat, 12 Sep 2026 11:46:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789213561; cv=none; b=uapt17ErxZm5JQO2s8TI/j2RZFa1vphdWYe5RDVPXc5qamN05o3+trFRHVULmv6yJnEdEbkDLzeLOddwn3nex8Xgs4OiRZgoFYktLQqNzsBfNQyB8CaPpmLlXSuNLz5Q4VPzky2ydRlpvZECftk7InMuxC87kgWCxXySJkBpkt0=
+	t=1789213566; cv=none; b=BHQSRp0OiVk27QVxtHMcvKQzy/7o8Y8nOnIRZhA158IlROsqJ/8qE7/Q852Qv6RvaogOxBmUrHZOr3VW7Z+OXNd5a0WwTQ55Q/hRnMaDu6w1apJNtJRmjMaQTonStQc366Kgpye8111FV4Gr19Ac85fbJZiSrB/IegYC1J4bm8A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789213561; c=relaxed/simple;
-	bh=hSf6e4BGG9JI47lFSJLdI+4kQtCoIyX/709ONr0W94o=;
+	s=arc-20240116; t=1789213566; c=relaxed/simple;
+	bh=VzIvXkRsOXzHes3kC5ct5aJA9R6XRlIkZmuteZccCS0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r1/qwFotWUBYcNwhG+z0fVbcx8Tt+hwCXBC4W8ma3h+rcRHblAdOJZO9p0lIGhBpI/EVUmZXd4Repdbr7DPjmehmhJxFbJVBa0zHSX3I2F5Vx9IZGFRwRfmFI9h+KxaemJIUeSX+ESnlfXB3we0O5iW3qVOk0QiO91N0ka6NjmI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bMux0EyB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eRJ9mBBv1/5R1A53T2JgofUTU0wZYwVN1vz1eWijWs0/WhYXelfraaxwTA3yrpDP3WLWTj5a1veBhV8ul6ZtbB5AcUY6A6j3OSnafaUi1YoSWkkMjBUjqL6DTSGCZ8JnzELaSMganALO+uy/MYKRASjf+oVJeMneuboWw7CCDXI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fhG9EJJY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bMux0EyB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FFBA1F000FF;
-	Sat, 12 Sep 2026 11:45:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fhG9EJJY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C3691F000FF;
+	Sat, 12 Sep 2026 11:46:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789213560;
-	bh=o2T43PKFwbMJNYpZ8nTDsl0pCzRjrpqJPD+pG++e2u4=;
+	s=korg; t=1789213565;
+	bh=JyKDDq7oNc0Qkj0gx1c8SOYEwkOZwsDEng7uA1P9HuM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bMux0EyBLteI65CSWi+ZNVCDix1D8b65lYzzl7vxNE9UIQzJGzWJ3ae1PrYmfO0wY
-	 IaA3J5+mJ2rX+5EyrWS2bBxbpOIfFM8u8gzFkh/BX4hig3sLeuDLfwscn3vD1B/5tu
-	 4UhnBa6C5rFFMG5C2iMOi8OCU2JIJcSzc5s41W3Q=
+	b=fhG9EJJYjoIAu+DF8FxRSFDMAiUJsU0ty+NrugzW1+5Wkp8AM9c6355g6BMMa/bhJ
+	 3E16YiD0TlUMXxNTssoy5/HeQAND/JW64pkPYefQvyxDGLBfnsgV2vkj/8FDiGOcQ4
+	 LTXDCNQnqmEs5j2GBpY8rKiNhgMz/5fHdb8fIgYM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	jonathan.cameron@oss.qualcomm.com,
-	Can Peng <pengcan@kylinos.cn>
-Subject: [PATCH 6.12 0148/1376] iio: pressure: mpl115: Fix runtime PM cleanup
-Date: Sat, 12 Sep 2026 08:42:54 +0200
-Message-ID: <20260912065610.850968734@linuxfoundation.org>
+	Cong Nguyen <congnt264@gmail.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Subject: [PATCH 6.12 0149/1376] iio: srf04: fix pm_runtime handling on probe error path
+Date: Sat, 12 Sep 2026 08:42:55 +0200
+Message-ID: <20260912065610.873141976@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -50,63 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Can Peng <pengcan@kylinos.cn>
+From: Cong Nguyen <congnt264@gmail.com>
 
-commit 0b5e142ced4bcf20532da051934bd694d1bbd470 upstream.
+commit a40b2e7a17f26e38ab054363c9c7cde149588357 upstream.
 
-mpl115_probe() enables runtime PM when a shutdown GPIO is present and
-then returns the result of devm_iio_device_register(). If registration
-fails, runtime PM remains enabled and autosuspend remains selected.
+When pm_runtime_set_active() fails during probe, the driver logs the
+error and unregisters the IIO device, but then falls through and still
+calls pm_runtime_enable() before returning the error.
 
-The same unmanaged runtime PM state is also left behind on driver
-unbind, as the IIO device registration is managed but the runtime PM
-setup is not.
+Since probe returns an error, srf04_remove() is never called, so
+runtime PM is left enabled without a matching pm_runtime_disable().
+This leaks the enable and triggers an "Unbalanced pm_runtime_enable!"
+warning on a subsequent bind of the device.
 
-Use devm_pm_runtime_enable() so runtime PM is disabled automatically on
-probe failure and driver unbind, and check pm_runtime_set_active() so
-setup errors are reported.
+Return the error right after unregistering the IIO device so that
+runtime PM is not enabled on the failure path.
 
-Set the autosuspend parameters before enabling runtime PM. Once probe
-has completed, the driver core queues an idle request for the device, so
-an explicit pm_runtime_get_noresume()/pm_runtime_put() pair is not
-needed to start autosuspend.
-
-Fixes: 0c3a333524a3 ("iio: pressure: mpl115: Implementing low power mode by shutdown gpio")
+Fixes: 2251157b335b ("iio: srf04: add power management feature")
 Cc: stable@vger.kernel.org
-Suggested-by: jonathan.cameron@oss.qualcomm.com
-Signed-off-by: Can Peng <pengcan@kylinos.cn>
+Signed-off-by: Cong Nguyen <congnt264@gmail.com>
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/pressure/mpl115.c |   11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ drivers/iio/proximity/srf04.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/iio/pressure/mpl115.c
-+++ b/drivers/iio/pressure/mpl115.c
-@@ -203,9 +203,9 @@ int mpl115_probe(struct device *dev, con
- 
- 	if (data->shutdown) {
- 		/* Enable runtime PM */
--		pm_runtime_get_noresume(dev);
--		pm_runtime_set_active(dev);
--		pm_runtime_enable(dev);
-+		ret = pm_runtime_set_active(dev);
-+		if (ret)
+--- a/drivers/iio/proximity/srf04.c
++++ b/drivers/iio/proximity/srf04.c
+@@ -335,6 +335,7 @@ static int srf04_probe(struct platform_d
+ 		if (ret) {
+ 			dev_err(data->dev, "pm_runtime_set_active: %d\n", ret);
+ 			iio_device_unregister(indio_dev);
 +			return ret;
+ 		}
  
- 		/*
- 		 * As the device takes 3 ms to come up with a fresh
-@@ -215,7 +215,10 @@ int mpl115_probe(struct device *dev, con
- 		 */
- 		pm_runtime_set_autosuspend_delay(dev, 2000);
- 		pm_runtime_use_autosuspend(dev);
--		pm_runtime_put(dev);
-+
-+		ret = devm_pm_runtime_enable(dev);
-+		if (ret)
-+			return ret;
- 
- 		dev_dbg(dev, "low-power mode enabled");
- 	} else
+ 		pm_runtime_enable(data->dev);
 
 
