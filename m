@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AF131EB5FD;
-	Sat, 12 Sep 2026 07:20:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 381F51A6813;
+	Sat, 12 Sep 2026 07:20:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789197624; cv=none; b=erKNzWLsWZ1guDNqeeHhqA0ooZGQsyfgU/H2Vfx6MH8oAFnzgZUNROXZkoDrwJ5eUV3CLVlVMsGX4SlS3IZVaLgDZpXt1Cgwo3K67/cuK7bCQtgdCBuvEiC7ZsM9xtoiuyDI1333sI4kz0YUwARtrhpgtrPApaEgyokrM1H7dxw=
+	t=1789197629; cv=none; b=QXh1fVznQACSidzg8tblFj4RE/U6iJ7ouwY7+tY2qu8RuvLmCAMTkpPcix+ikSj7OsXobU4YmXV0mXQYETY7JhHi5ibXL4t+MTP49bz3GjWXXALjYNYk5zVxeH9ArpXWFQDR+4eAZvoaOORr4y8thstIs5I0m6vBJHwAmifLuiw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789197624; c=relaxed/simple;
-	bh=k28Kt6DC1DDPc8LZSxD1VyBr2lP56yfmMyB5xN8E+Z8=;
+	s=arc-20240116; t=1789197629; c=relaxed/simple;
+	bh=tpZ+kEerZp9JBMNbBHah7puWCK2pe7tSXs59UWgrucA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mdglhR5FZ7b7tziGYP0sWzl33w3NgYFRDGXrnIcEYHZ229hRN4Zoxqr70atn5+e9OtDgfbMPq8/PwEPnMAjyi9A/OSebuM7KwoPR4hefyD/6Qmh9NZmvHCyAoS5HBkjTW80vNV8xN+zjKcl6NPtv8SpbM6MrIVSUg5GO3NSCPZ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qls20N86; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CLGQp5Er/YGsjOlENoxI29qudigodwkDbwnI9OQXv+ozPFNNkS0IhVXPTRd6q+tZEzfZjemu/DiRi9K6qD3CI/acF/sPv0yvseatAQ5uaeIKnrWKzia7E6nImYQw3z98sCzpexT0vPz7Guhs/Vxm372CNoNj1a5iXImuBFwdoFg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1RCOlC4Q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qls20N86"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21EEC1F000FF;
-	Sat, 12 Sep 2026 07:20:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1RCOlC4Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E1061F000FF;
+	Sat, 12 Sep 2026 07:20:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789197622;
-	bh=FNcmeLIAHc9HksuMpMweXdMmjMbRmGzeR38adbjrxPA=;
+	s=korg; t=1789197627;
+	bh=D0zTcg1zRvvRhhTRrXdXuksBxO9BHZGlLcb0lSd2oYk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qls20N86O7j0WMVKWaTAt6dmW93V4QZJFp+jnQZ+zMtmvAwZbTyrK531png7aUN8y
-	 sLbwpqOYDsr0hXZlMvb7loB2noC3e3q6YanOne+Oe230e8rSIUEWKg1LlTMcN75i13
-	 pkIEEZtvEauXkaZUvkjCuOKn1DR3CkiuILY0Jsls=
+	b=1RCOlC4QB03A871oJrLFhunwexYgG1ROzesYfXF2drT0cqXIun4ZhAd6477yNb2KZ
+	 3oJqO/+4ioXLpqIst4SBhGEPDXW8AhDnhZzQm+CmWZqCntqzp3TEXwXHuwaRHgauVG
+	 PNUTe8D7rct+idmcPOGp4VmrdcNQZu6prrZkmd1M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengyu Luo <mitltlatltl@gmail.com>,
-	Alexander Koskovich <akoskovich@pm.me>,
+	Jie Gan <jie.gan@oss.qualcomm.com>,
 	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Taniya Das <taniya.das@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0212/1815] clk: qcom: gxclkctl: Use custom disable callback for gx_gdsc
-Date: Sat, 12 Sep 2026 08:32:42 +0200
-Message-ID: <20260912065653.971696545@linuxfoundation.org>
+Subject: [PATCH 7.2 0213/1815] arm64: dts: qcom: monaco: fix wrong connection for the replicator
+Date: Sat, 12 Sep 2026 08:32:43 +0200
+Message-ID: <20260912065653.993887173@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -54,52 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Taniya Das <taniya.das@oss.qualcomm.com>
+From: Jie Gan <jie.gan@oss.qualcomm.com>
 
-[ Upstream commit badf361c00c802738c776fb5f4e8b08b4d0bad1c ]
+[ Upstream commit bf949e86fb5c3034b70b62c9ee31b3d88d5f7fb5 ]
 
-The GX GDSC represents a special GPU power domain that must not be
-disabled during normal runtime PM flows. As per the GMU architecture,
-GX GDSC should only be force-disabled during GMU/GPU recovery, where the
-OS explicitly resets the GX power domain.
+Fix the wrong connection for the qdss replicator device.
 
-However, when managed by the generic GDSC runtime PM path, GX GDSC may be
-disabled during GMU runtime suspend, resulting in warnings such as:
-
-  gx_clkctl_gx_gdsc status stuck at 'on'
-
-and failures in gdsc_toggle_logic() during rpm suspend.
-
-Use the newly added custom disable callback for gx_gdsc to ensure the
-GDSC is toggled only in recovery scenarios, while preventing unintended
-disable attempts during normal GMU runtime PM operations.
-
-Reported-by: Pengyu Luo <mitltlatltl@gmail.com>
-Closes: https://lore.kernel.org/all/CAH2e8h4Vp9fJYAUUbOmoHSKB25wakPBvmpwa62BTRqgRQbMWuw@mail.gmail.com/
-Reported-by: Alexander Koskovich <akoskovich@pm.me>
-Closes: https://lore.kernel.org/all/gwVAH2mJerU4dBInw8pKmOs5aQK55Q7W6q_UQAlLFCsEgX6eyvSgXAWbNNMqAX4WmPlYCKUSMhfkr5Jry4Ps5EqnxYZqEEDd3Whwv7ZXGlc=@pm.me/
-Fixes: 5af11acae660 ("clk: qcom: Add a driver for SM8750 GPU clocks")
+Fixes: 4f791e008807a ("arm64: dts: qcom: monaco: Add CTCU and ETR nodes")
+Signed-off-by: Jie Gan <jie.gan@oss.qualcomm.com>
 Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Taniya Das <taniya.das@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260427-gfx-clk-fixes-v2-2-797e54b3d464@oss.qualcomm.com
+Link: https://lore.kernel.org/r/20260428-fix-monaco-coresight-dt-v2-1-2293259bbd10@oss.qualcomm.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/gxclkctl-kaanapali.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/boot/dts/qcom/monaco.dtsi | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/clk/qcom/gxclkctl-kaanapali.c b/drivers/clk/qcom/gxclkctl-kaanapali.c
-index 10c1a8976c56c..a03da61489b4d 100644
---- a/drivers/clk/qcom/gxclkctl-kaanapali.c
-+++ b/drivers/clk/qcom/gxclkctl-kaanapali.c
-@@ -25,6 +25,7 @@ static struct gdsc gx_clkctl_gx_gdsc = {
- 	.pd = {
- 		.name = "gx_clkctl_gx_gdsc",
- 		.power_on = gdsc_gx_do_nothing_enable,
-+		.power_off = gdsc_gx_disable,
- 	},
- 	.pwrsts = PWRSTS_OFF_ON,
- 	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
+diff --git a/arch/arm64/boot/dts/qcom/monaco.dtsi b/arch/arm64/boot/dts/qcom/monaco.dtsi
+index a350a8ba48fa3..3a0749cd3e788 100644
+--- a/arch/arm64/boot/dts/qcom/monaco.dtsi
++++ b/arch/arm64/boot/dts/qcom/monaco.dtsi
+@@ -3017,14 +3017,6 @@ in-ports {
+ 				#address-cells = <1>;
+ 				#size-cells = <0>;
+ 
+-				port@0 {
+-					reg = <0>;
+-
+-					swao_rep_out0: endpoint {
+-						remote-endpoint = <&qdss_rep_in>;
+-					};
+-				};
+-
+ 				port@1 {
+ 					reg = <1>;
+ 
+@@ -3734,6 +3726,14 @@ out-ports {
+ 				#address-cells = <1>;
+ 				#size-cells = <0>;
+ 
++				port@0 {
++					reg = <0>;
++
++					swao_rep_out0: endpoint {
++						remote-endpoint = <&qdss_rep_in>;
++					};
++				};
++
+ 				port@1 {
+ 					reg = <1>;
+ 
 -- 
 2.53.0
 
