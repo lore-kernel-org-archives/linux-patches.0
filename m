@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DA9937E5D1;
-	Sat, 12 Sep 2026 12:35:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79375242D65;
+	Sat, 12 Sep 2026 12:35:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789216510; cv=none; b=XyQ2PIdJHUvZhKERpF/26s99mMSM4SJG2+vFIirIW+5crzcYr18Ol7uxju96ZYGjbbGSke6XoRijq0XTa2iLBHgIkoyr27SLJUwNqxHMxYOTEv0al+nsNOsN1cqejVp0SagV9najlN/bPii+63OXlolQW6l7WhIrdU9pH6DcE40=
+	t=1789216515; cv=none; b=IYE9F20stXCgJTsjOr3fkXBjho+MgWx6w7CGg/aV5Ni0loRGqNDNezyPjmFVvvn4rbQ7iIsuzhMuvpBAMRow2BxyvsRZOZpuJ8arPS4GVI436PAjG9iy0DFGRgfB5y31GbIedj0r7Uen12wgmOYbGJPUzxhNOV/EBnUG4Rpcnfc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789216510; c=relaxed/simple;
-	bh=daTF/MfbWXdTCtEmLFm/F4fxwvFH/Z9efc1RP0FLxr4=;
+	s=arc-20240116; t=1789216515; c=relaxed/simple;
+	bh=iAIsNbckQOPa8Xf9IQfwa6Z8Ns2dy8bhe5kcbCY1Tyk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CWHhBYd9kJn8XLcWZjt4OTRxy1WpSWlhNaVJgzJgwRf/WMQ4f6VrinVucYEcqTPqdyIMZU780xLT98qqxUUBNIXwcQ5g1/PwNwhwgaB04uum9RUmYq0nErSedPR1ax/23vCJMG8MWXJwuXJEaqWZgarD3rxeSMW4G6GsQdDlQGM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yakh43pp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Xt8Em17NP3890giS9ENAVEGl5YnZh1nAzOLzzkOS8au+5mOsWQrFIMJMSwM88ydZ6ZWl4BwRJWtK/IYhiTgNBIuZQoMiGty/eTEY13vjyINfJuEXAMvazYQoWRGQrMa7jiZNPxFfU/ySvqRlZccRSWzprT1zu3cTxJXwGsQvPrw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z7KhmxHe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yakh43pp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3A421F000FF;
-	Sat, 12 Sep 2026 12:35:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z7KhmxHe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3294C1F000FF;
+	Sat, 12 Sep 2026 12:35:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789216509;
-	bh=0ov9d0/XPrZSc9V2LtIqql93Wh3BWnuauLGZ9wHprQs=;
+	s=korg; t=1789216514;
+	bh=6ZEv8JZwRV45vukL9AjTCaR82lr3GfwYCOGt9O3ssg4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Yakh43ppwCzWeFwbmqsS0o3lf4OSd5iPJw+Wh5gaLY9lKJJ9pJLLGQ394dbBRe4yJ
-	 vRv0y3w57vdNTTjonbBRNxwFGm/ph44R9hql4tRgYmb6vCCzmle+B8enC2LY8auWVl
-	 xR7criVHczJkiJ6pAQ75fCQl+fhC43kmn4r2zQn0=
+	b=Z7KhmxHe/Ri5FDrhwnkE67AA0Y1wx9SRtxj/WJV0F6nHRbj/u0c03c1s9VtgX0Z4O
+	 OAZzlnOvzi9O9TxtUd7A31GBSwl4urDhia421kQkn/ZoTU+4O6tgdwd6tjiyI8nnxK
+	 aZIfdkTYut8NfPa2aiiegGXgFLbODPmDgpN6SYBM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Itai Handler <itai.handler@gmail.com>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0752/1376] wifi: ath11k: fix stride mismatch in mac_phy_caps_parse()
-Date: Sat, 12 Sep 2026 08:52:58 +0200
-Message-ID: <20260912065624.303816107@linuxfoundation.org>
+Subject: [PATCH 6.12 0753/1376] rcu: Mark accesses to ->rcu_urgent_qs and ->rcu_need_heavy_qs
+Date: Sat, 12 Sep 2026 08:52:59 +0200
+Message-ID: <20260912065624.325573985@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -52,63 +51,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+From: Itai Handler <itai.handler@gmail.com>
 
-[ Upstream commit 7a246c72132eb943b5844ba79dad597b47429dba ]
+[ Upstream commit 27d73e81195b395270117ff77c47be2ed9b09b12 ]
 
-Currently, in ath11k_wmi_tlv_mac_phy_caps_parse(), kcalloc() sizes the
-mac_phy_caps buffer as tot_phy_id * len, where len is clamped to
-min(firmware_len, sizeof(struct wmi_mac_phy_capabilities)). The subsequent
-memcpy() destination advances by sizeof(full struct) per slot via C
-pointer arithmetic, not by the clamped len. When firmware sends short
-TLVs, the second and later slots are written past the end of the
-allocation.
+rcu_all_qs() and rcu_note_context_switch() read/clear the per-CPU
+->rcu_urgent_qs and ->rcu_need_heavy_qs flags with plain raw_cpu_read()
+and this_cpu_write(), while the RCU core clears them with WRITE_ONCE() in
+rcu_disable_urgency_upon_qs().  KCSAN flags the resulting same-CPU race:
 
-The reader in ath11k_pull_mac_phy_cap_svc_ready_ext() also indexes the
-buffer with full-struct pointer arithmetic, so the allocation must match
-that stride.
+  BUG: KCSAN: data-race in rcu_all_qs / rcu_disable_urgency_upon_qs
 
-Fix by using kzalloc_objs(), which derives the element size from the
-pointer type, making allocation size and pointer stride provably
-consistent regardless of what len the firmware provides.
+It is benign -- the flags are advisory and rcu_all_qs() re-reads
+->rcu_urgent_qs with smp_load_acquire() before acting on it -- but these
+are the last unmarked accesses to the two flags; every other access
+already uses READ_ONCE()/WRITE_ONCE()/smp_*.  Mark them to match.  No
+functional change.
 
-Compile tested only.
+Reproduced on a PREEMPT_NONE, CONFIG_KCSAN_INTERRUPT_WATCHER=y kernel with
+a pthreads program whose threads (two per CPU) loop reading a large file:
 
-Fixes: 5b90fc760db5 ("ath11k: fix wmi service ready ext tlv parsing")
-Assisted-by: Claude:claude-sonnet-4-6
-Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260728-mac_phy_caps_parse-stride-mismatch-v1-2-27a9c1a3fbd0@oss.qualcomm.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+	for (;;) {
+		int fd = open("/proc/kallsyms", O_RDONLY);
+		while (read(fd, buf, sizeof(buf)) > 0)
+			;
+		close(fd);
+	}
+
+The read()s drive cond_resched() -> rcu_all_qs() while the busy CPUs keep
+the grace period urgent, so the RCU core clears the flags concurrently.
+
+Fixes: 2dba13f0b6c2 ("rcu: Switch urgent quiescent-state requests to rcu_data structure")
+Signed-off-by: Itai Handler <itai.handler@gmail.com>
+Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/wmi.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ kernel/rcu/tree_plugin.h | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath11k/wmi.c b/drivers/net/wireless/ath/ath11k/wmi.c
-index d0dbc1871ee7f..540faacee41d8 100644
---- a/drivers/net/wireless/ath/ath11k/wmi.c
-+++ b/drivers/net/wireless/ath/ath11k/wmi.c
-@@ -4756,14 +4756,16 @@ static int ath11k_wmi_tlv_mac_phy_caps_parse(struct ath11k_base *soc,
- 	if (svc_rdy_ext->n_mac_phy_caps >= svc_rdy_ext->tot_phy_id)
- 		return -ENOBUFS;
+diff --git a/kernel/rcu/tree_plugin.h b/kernel/rcu/tree_plugin.h
+index 47a44f6dede0c..8708ca2609298 100644
+--- a/kernel/rcu/tree_plugin.h
++++ b/kernel/rcu/tree_plugin.h
+@@ -973,7 +973,7 @@ void rcu_all_qs(void)
+ {
+ 	unsigned long flags;
  
--	len = min_t(u16, len, sizeof(struct wmi_mac_phy_capabilities));
- 	if (!svc_rdy_ext->n_mac_phy_caps) {
--		svc_rdy_ext->mac_phy_caps = kcalloc(svc_rdy_ext->tot_phy_id,
--						    len, GFP_ATOMIC);
-+		svc_rdy_ext->mac_phy_caps =
-+			kzalloc_objs(*svc_rdy_ext->mac_phy_caps,
-+				     svc_rdy_ext->tot_phy_id,
-+				     GFP_ATOMIC);
- 		if (!svc_rdy_ext->mac_phy_caps)
- 			return -ENOMEM;
+-	if (!raw_cpu_read(rcu_data.rcu_urgent_qs))
++	if (!READ_ONCE(*raw_cpu_ptr(&rcu_data.rcu_urgent_qs)))
+ 		return;
+ 	preempt_disable();  // For CONFIG_PREEMPT_COUNT=y kernels
+ 	/* Load rcu_urgent_qs before other flags. */
+@@ -981,8 +981,8 @@ void rcu_all_qs(void)
+ 		preempt_enable();
+ 		return;
  	}
- 
-+	len = min_t(u16, len, sizeof(struct wmi_mac_phy_capabilities));
- 	memcpy(svc_rdy_ext->mac_phy_caps + svc_rdy_ext->n_mac_phy_caps, ptr, len);
- 	svc_rdy_ext->n_mac_phy_caps++;
- 	return 0;
+-	this_cpu_write(rcu_data.rcu_urgent_qs, false);
+-	if (unlikely(raw_cpu_read(rcu_data.rcu_need_heavy_qs))) {
++	WRITE_ONCE(*this_cpu_ptr(&rcu_data.rcu_urgent_qs), false);
++	if (unlikely(READ_ONCE(*this_cpu_ptr(&rcu_data.rcu_need_heavy_qs)))) {
+ 		local_irq_save(flags);
+ 		rcu_momentary_eqs();
+ 		local_irq_restore(flags);
+@@ -1002,8 +1002,8 @@ void rcu_note_context_switch(bool preempt)
+ 	/* Load rcu_urgent_qs before other flags. */
+ 	if (!smp_load_acquire(this_cpu_ptr(&rcu_data.rcu_urgent_qs)))
+ 		goto out;
+-	this_cpu_write(rcu_data.rcu_urgent_qs, false);
+-	if (unlikely(raw_cpu_read(rcu_data.rcu_need_heavy_qs)))
++	WRITE_ONCE(*this_cpu_ptr(&rcu_data.rcu_urgent_qs), false);
++	if (unlikely(READ_ONCE(*this_cpu_ptr(&rcu_data.rcu_need_heavy_qs))))
+ 		rcu_momentary_eqs();
+ out:
+ 	rcu_tasks_qs(current, preempt);
 -- 
 2.53.0
 
