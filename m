@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5E5A2D23A6;
-	Sat, 12 Sep 2026 14:08:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E40524CEEA;
+	Sat, 12 Sep 2026 14:09:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789222137; cv=none; b=OAs52g3Pn9Ot2520jCu4MsrSSOFwj+L5x9HYeFlwyavUC/phxB4WduJQ6SBHlcqG4wvgiE4FX8Cux9fwKRe1MwySFxUI44Xzq9CWf4LPDNdC75uwoiawDOXfm1+iDrNndtrlioupf9Tp4M6FEVWCJAMeZw6Py0a6CTe+7wxDFl8=
+	t=1789222142; cv=none; b=kR0ogMUp8jHxDwiVmq2VMXO4HWlILtfJsVnIfyqdV+e2TgXtkxyfYiX5i2R08a8z5FMYmtFUFkz5eUbKS4qeHfbakRwLOw71HrVWA+xroGkZL0aYFJvBb57pLJOAvF+ou0KrLyeAS1lCDPLZR6DZIcHY71UiyznAp50Job1SQiw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789222137; c=relaxed/simple;
-	bh=DPqwC7v30NBZ7HUQoYsFtfvu411NnFf1b+c0R7HQwOU=;
+	s=arc-20240116; t=1789222142; c=relaxed/simple;
+	bh=Y3mt8SCBhEqPbF56YclaQsl4kjGdi+WYPXkbVOOVCsk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YPRvzrh7SpOpRr0LtAAqydszj6SS/rlCVLOnY55URJl1HPBzoprP2znN4iAxbAIT0lasmVSP0xVmnJAKZzzky5YulVYMc+HiA8mOHqpUoWHPPT5qBvkAcX5SpluagRZ+srUEJx4m6zUP8Hf9yySDZP7B7N4EcnBvsoZ5qRhf4M8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fAFrhRal; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RxtuzmSYp9Qd/r6wGTqBUlQEpGGf/qWlg/VTVNgmg9cKxZOx50BKSnI46bUjUCPbxQuie2EPpAQJsATRS/FX7+RazkrzxAFjw/xNIm+qm7cU+jzKmsQMfjfRf43Fj9FKmGPlfIkz+xQODjlUAwrKoIVH15yXuhS7Q5yYZjtW/7E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cBoQ9r51; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fAFrhRal"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9FB01F000FF;
-	Sat, 12 Sep 2026 14:08:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cBoQ9r51"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3BE01F000FF;
+	Sat, 12 Sep 2026 14:08:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789222135;
-	bh=yjLYnC8qzvIBP6N8oPvkA88o8PPTgCZjfJC8FefU1rw=;
+	s=korg; t=1789222141;
+	bh=aSF2DkeflrDIxNo5Od4LldhnTOTSsdEZ8uFgslhZ7ic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fAFrhRalNlACg6YTTodSerlMWY2ALxGdcL5xpnL1U56QSUoE8HQ/QD8bHGxvk55dr
-	 yMjN5c1mAsUzzYuU3esthYRL0Q+NNqfFj/siHQZqnoJCizFoxz0kWoM2Sfd21nCFZ+
-	 3tESmFXy3E0kJqaJ2WniIzVQ7LOiC9pp2aLvApGo=
+	b=cBoQ9r51dgnvpE1vgMgoXoDvxJA+etUhz3a4dEU4xoNumQKmAAnYiKMKkCNVecX7g
+	 C8zjuo+YtdnMx+EJMXZMj0HTjnCLESHfaz7Jtfv8ORPBz+ghSzN6SbXWCe28nTUkMR
+	 wzmVvFerLEgPicRYKCBdL3ec/LNOzL8DuFcrsTMM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Faith Ekstrand <faith.ekstrand@collabora.com>,
-	Aaron Kling <webgeek1234@gmail.com>,
+	Yuhao Jiang <danisjiang@gmail.com>,
+	Zhenhao Wan <whi4ed0g@gmail.com>,
+	Lyude Paul <lyude@redhat.com>,
 	Danilo Krummrich <dakr@kernel.org>
-Subject: [PATCH 6.6 0525/1424] drm/nouveau: Use write-combined maps for coherent
-Date: Sat, 12 Sep 2026 08:49:17 +0200
-Message-ID: <20260912065619.049784145@linuxfoundation.org>
+Subject: [PATCH 6.6 0526/1424] drm/nouveau/uvmm: fix premature region free on failed OP_UNMAP_SPARSE
+Date: Sat, 12 Sep 2026 08:49:18 +0200
+Message-ID: <20260912065619.071477768@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -51,43 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Faith Ekstrand <faith.ekstrand@collabora.com>
+From: Zhenhao Wan <whi4ed0g@gmail.com>
 
-commit 774b73428e6eabb4f0382aeeb76e569c7b106a29 upstream.
+commit ccf930812f23b8259ef64fd3394d53b093e4651a upstream.
 
-On Tegra devices, uncached maps translate to device memory, causing
-unaligned accesses by userspace resulting in a SIGBUS. Instead, use
-write-combined maps to ensure proper access.
+In nouveau_uvmm_bind_job_submit()'s OP_UNMAP_SPARSE arm, op->reg is set
+from nouveau_uvma_region_find(), which only looks the region up and takes
+no reference; a region's sole reference is its membership in
+uvmm->region_mt. Two failure paths leave op->reg set: the -ENOENT check
+when the region is busy, and the drm_gpuvm_sm_unmap_ops_create() failure.
+The sibling nouveau_uvmm_sm_unmap_prepare() failure just below clears
+op->reg; these two do not.
 
-This would also affect discrete cards on any Arm device. It was
-determined that discrete cards regardless of cpu arch should use
-write-combined maps for coherent anyways. Thus this change is made for
-all gpu types.
+unwind_continue steps back one op, so the failing op is skipped by the
+unwind loop and its op->reg stays set. nouveau_uvmm_bind_job_cleanup()
+then enters its if (op->reg) branch and calls nouveau_uvma_region_remove()
+and nouveau_uvma_region_put() on it, dropping the tree's sole reference
+and freeing a region this job never created. The comment above the
+cleanup loop documents the broken invariant: op->reg must be NULL on
+submit failure.
 
+This frees a live region on an unrelated failure, reachable single-job
+when drm_gpuvm_sm_unmap_ops_create() returns -ENOMEM; if another job owns
+the same region, its cleanup then removes and puts the freed region, a
+use-after-free. Clear op->reg on both failure paths.
+
+Fixes: b88baab82871 ("drm/nouveau: implement new VM_BIND uAPI")
+Reported-by: Yuhao Jiang <danisjiang@gmail.com>
+Assisted-by: Claude:claude-opus-5
 Cc: stable@vger.kernel.org
-Signed-off-by: Faith Ekstrand <faith.ekstrand@collabora.com>
-Co-developed-by: Aaron Kling <webgeek1234@gmail.com>
-Signed-off-by: Aaron Kling <webgeek1234@gmail.com>
-Fixes: 1b4ea4c5980f ("drm/ttm: set the tt caching state at creation time")
-Link: https://patch.msgid.link/20260821-tegra-coherent-wc-v2-1-2b1ddb67bf18@gmail.com
+Signed-off-by: Zhenhao Wan <whi4ed0g@gmail.com>
+Reviewed-by: Lyude Paul <lyude@redhat.com>
+Link: https://patch.msgid.link/20260811-nouveau-uvmm-vmbind-fixes-v2-2-aaee4b395d04@gmail.com
 Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/nouveau/nouveau_sgdma.c |    4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/gpu/drm/nouveau/nouveau_uvmm.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/gpu/drm/nouveau/nouveau_sgdma.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_sgdma.c
-@@ -72,9 +72,7 @@ nouveau_sgdma_create_ttm(struct ttm_buff
- 	struct nouveau_sgdma_be *nvbe;
- 	enum ttm_caching caching;
+--- a/drivers/gpu/drm/nouveau/nouveau_uvmm.c
++++ b/drivers/gpu/drm/nouveau/nouveau_uvmm.c
+@@ -1191,6 +1191,7 @@ nouveau_uvmm_bind_job_submit(struct nouv
+ 							   op->va.range);
+ 			if (!op->reg || op->reg->dirty) {
+ 				ret = -ENOENT;
++				op->reg = NULL;
+ 				goto unwind_continue;
+ 			}
  
--	if (nvbo->force_coherent)
--		caching = ttm_uncached;
--	else if (drm->agp.bridge)
-+	if (nvbo->force_coherent || drm->agp.bridge)
- 		caching = ttm_write_combined;
- 	else
- 		caching = ttm_cached;
+@@ -1199,6 +1200,7 @@ nouveau_uvmm_bind_job_submit(struct nouv
+ 								op->va.range);
+ 			if (IS_ERR(op->ops)) {
+ 				ret = PTR_ERR(op->ops);
++				op->reg = NULL;
+ 				goto unwind_continue;
+ 			}
+ 
 
 
