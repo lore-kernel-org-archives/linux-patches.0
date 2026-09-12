@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70EFB221F26;
-	Sat, 12 Sep 2026 11:05:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC807221F26;
+	Sat, 12 Sep 2026 11:05:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789211139; cv=none; b=udxIlTXUNaKR+9L0eSH6xpP7KMXBNUl6uziRHxwVq0XwB1KUEUq+d5G6aeJARymLVpO+Iquy52oY/K3iA/CnGfClwwHsijhHsqypv7M9C3QR/ZA1d4RJrx4sxbfRjtSML5SRWzVHL5VeGPiTVW+/9FfI354+RztTK8CePqP2ZG0=
+	t=1789211145; cv=none; b=qQmVcE2CHQ8VMoV6kVwPaFXiI+TWpJXEX3LJPjpsxDp08+FKdZiwCiZOVhJv5YwY1dG032Y1zMqWvVdxXY2UQfHLbefh4pf8flTUS4eCqp4Cjpdm3xXXCSXwGkjFCqSUbtgzRq4wrcaCTG9r6iztDQVwspPQhVyr7BYt39NjUbs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789211139; c=relaxed/simple;
-	bh=Vpfo7ohezuQNajKzul7/f6aHAcwi39B1CeSw2Y+68nY=;
+	s=arc-20240116; t=1789211145; c=relaxed/simple;
+	bh=gbitzdbs9kq4SemFqJmQm7XlEWQEWp/YxGgVTWUQtJM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Tpb/XZn85cgmOzPILpCqCBhMFLYw4Cnilq+nGmHv7Ppeo1q95gXAFyFFjjM+4FtEGVREubZ1yAcDBGq/K4QNjHq2rbFZ0TE3VAuHlbAqrg+KOKpYzpfCsuHTJY4A+xbJKQ2IZLlp3vtlrJ2azJxWs1NoMI97HwkyYQ776H6OYyI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p9xEQ7J0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PDaj7355r55E4iJDZgS0ctLpvModG6SODgqAdr2mW5QcY0mBn1U6iHQ+32zzEo+uIaoR85U+B56dgPgB+zOuPL/EnS5tnJ/ILg8JQ9IfZs31np3I3psDXLfw4aPYeMEyu1SilgpKEKD/USEEA8mtPcj54akbMZXc3gW6LRhYYMY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hMleJ602; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p9xEQ7J0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BC641F000FF;
-	Sat, 12 Sep 2026 11:05:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hMleJ602"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 620DB1F000FF;
+	Sat, 12 Sep 2026 11:05:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789211138;
-	bh=Fxns/xo6uzzMiJR7g873aa3imj6sifQxCMrqgh/bbWk=;
+	s=korg; t=1789211143;
+	bh=ByYVC8CBOXy18nqvPW/Gh+k5B7tWRFdCHi0gaWLNLmA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=p9xEQ7J0ZhjNCPzpn4+exdjHy8z7Qur3PmEhHvR1rFx8D84rXYozXPAnuH9PHmdX3
-	 6l2iRJoRz205BObzSdNmA4lQIukbqUan4wkIX8YHhfrVSYvI2nn3sdnxhN2TwXxb63
-	 +pa4Qjsr8yWXQxmuhKFIFlUJMKnLL/36zmhckJYA=
+	b=hMleJ602FH3/8ZCbqL4FENN8Izk8vrcRwlL8XAIBYdeL8aU262TFezjrluxX1KZ29
+	 ojfzl7sYSG7jaqxv35uTR7jflnDGlkzEvzX+ehxmw7Eua7WLEwks4hu0QLVaMo5xyT
+	 qiUePIBefLWquYpf5PI3/OKIF1JGieVsMg2lWQkU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Oberparleiter <oberpar@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Daniel Lezcano <daniel.lezcano@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1169/1518] s390/debug: Fix deadlock during unregister
-Date: Sat, 12 Sep 2026 08:55:38 +0200
-Message-ID: <20260912065649.910962391@linuxfoundation.org>
+Subject: [PATCH 6.18 1170/1518] clocksource/drivers/clps711x: Do not unmap clocksource MMIO
+Date: Sat, 12 Sep 2026 08:55:39 +0200
+Message-ID: <20260912065649.933294562@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,72 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Oberparleiter <oberpar@linux.ibm.com>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-[ Upstream commit 445c31ac638fd1af203d79bdf25fc0cb3149fbbc ]
+[ Upstream commit e998c6300ef4e062a704ee17b5a812c0b595cf42 ]
 
-Unregistering an s390dbf debug area while one of the associated debugfs
-files is being written to can cause a deadlock:
+clps711x_clksrc_init() stores the timer base address in the static tcd
+pointer and registers it as both the clocksource MMIO address and the
+sched_clock read address.
 
-$ echo >.../vmur/level    $ rmmod vmur
-===================================================
-debugfs write
-debugfs_file_get()
-                          debug_unregister()
-                          mutex_lock(debug_mutex)
-                          debugfs_remove()
-                          wait for debugfs_file_put()
-debug_file_ops.write()
-debug_input()
-mutex_lock(debug_mutex) ==> DEADLOCK
+The clocksource init path must therefore keep the mapping alive after
+clps711x_timer_init() returns. However, the shared unmap_io exit path is
+also reached after successful clocksource registration, so the MMIO
+mapping is torn down while the clocksource and sched_clock readers may
+still access it.
 
-Fix this by splitting debug_unregister() into an s390dbf and debugfs
-part, and running only the s390dbf part with debug_mutex locked.
+Return directly after successful clocksource registration and leave the
+mapping alive for the registered readers. Keep the unmap_io path for the
+error paths and for the clockevent init path.
 
-Fixes: 9372a82892c2 ("s390/debug: fix debug area life cycle")
-Signed-off-by: Peter Oberparleiter <oberpar@linux.ibm.com>
-Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Fixes: cd32e596f02f ("clocksource/drivers/clps711x: Fix resource leaks in error paths")
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
+Link: https://patch.msgid.link/20260704175451.256364-1-lgs201920130244@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/kernel/debug.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/clocksource/clps711x-timer.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/s390/kernel/debug.c b/arch/s390/kernel/debug.c
-index 112cf7b40dace..f5359b0100517 100644
---- a/arch/s390/kernel/debug.c
-+++ b/arch/s390/kernel/debug.c
-@@ -906,8 +906,8 @@ void debug_register_static(debug_info_t *id, int pages_per_area, int nr_areas)
- 	mutex_unlock(&debug_mutex);
- }
- 
--/* Remove debugfs entries and remove from internal list. */
--static void _debug_unregister(debug_info_t *id)
-+/* Remove debugfs entries. */
-+static void _debug_unregister_debugfs(debug_info_t *id)
- {
- 	int i;
- 
-@@ -917,6 +917,11 @@ static void _debug_unregister(debug_info_t *id)
- 		debugfs_remove(id->debugfs_entries[i]);
- 	}
- 	debugfs_remove(id->debugfs_root_entry);
-+}
-+
-+/* Remove from internal list. */
-+static void _debug_unregister(debug_info_t *id)
-+{
- 	if (id == debug_area_first)
- 		debug_area_first = id->next;
- 	if (id == debug_area_last)
-@@ -942,6 +947,7 @@ void debug_unregister(debug_info_t *id)
- 	mutex_lock(&debug_mutex);
- 	_debug_unregister(id);
- 	mutex_unlock(&debug_mutex);
-+	_debug_unregister_debugfs(id);
- 
- 	debug_info_put(id);
- }
+diff --git a/drivers/clocksource/clps711x-timer.c b/drivers/clocksource/clps711x-timer.c
+index bbceb0289d457..95f8a50ba1ebb 100644
+--- a/drivers/clocksource/clps711x-timer.c
++++ b/drivers/clocksource/clps711x-timer.c
+@@ -94,7 +94,7 @@ static int __init clps711x_timer_init(struct device_node *np)
+ 	switch (of_alias_get_id(np, "timer")) {
+ 	case CLPS711X_CLKSRC_CLOCKSOURCE:
+ 		clps711x_clksrc_init(clock, base);
+-		break;
++		return 0;
+ 	case CLPS711X_CLKSRC_CLOCKEVENT:
+ 		ret =  _clps711x_clkevt_init(clock, base, irq);
+ 		break;
 -- 
 2.53.0
 
