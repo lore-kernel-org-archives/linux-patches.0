@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B37E19D074;
-	Sat, 12 Sep 2026 20:01:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8933739A067;
+	Sat, 12 Sep 2026 20:01:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789243280; cv=none; b=nVwXkFaSUiSxL0jvjrqQSoet4aLIpZ/w2NPPcfvLCsptoCK27do4CouA39Io+B6nW3WVaGfehYOXYhrqcQpPXzbgdbmRU1+AlF3+fX1dkUAlMi9ItkkrAvSLG2ee0Ip2IoNvh1nGvdrR4Q4/TPJ1/LI8g4Ai7BnvpLz2ITfZxGE=
+	t=1789243284; cv=none; b=KcGjomZ0cVHOIzyC8n2r7NWAi5xa5U2CYZHN3aAXgZ4X/jk2INKGX4fZ5Z+iHJXWLA0+z1oRMp0azvTaIw/gdDr9xE7U568nlGQeUEp5i1kwfkyM28u9iJruYsd3QBy6Na1MUV1aEBsOw5gp55K1lGAAN0MbltGAuXlM0IeJBDA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789243280; c=relaxed/simple;
-	bh=O/PpsILUZI3e/oaXv7CwTloo4w7rVUtg9Hq57BI2RJA=;
+	s=arc-20240116; t=1789243284; c=relaxed/simple;
+	bh=5EmwhACvRuGbnqtVSKk1uROy7amPW7VnEto4B8esl0U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NxX95/qptdfAE1v0KhkFpIxpq7g+yDySk+Nhm7GaPYA3YoKZNuNjWt9rJY3DIRZhzaHP4UzlJ2DRjO83AkaVXwKW+FV4xCZhwjgUHbpLlsUCucfyy+lGtWJ4ylVFktpQAmEEXjmNtvdRcy7x5YbS+QIUDBdfVkjxu6oyITnZrY8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jyHnK2Uq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tSLBDWUxT90+XznIVERjClQvXlARvIZGdKr5jHOHLKu7ATx85ZMdHowqXwP57CNneoEGXJlzqwoWIgiOgFH7DuCsselirycjSRmdZ2iDuazXOZeCDx1E3rSnTmYhDoxB93HiXc64X0dFOUK6LuKPGnWag+uKjaeDNnIXuzqCewA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tmxq3gr3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jyHnK2Uq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6C311F000FF;
-	Sat, 12 Sep 2026 20:01:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tmxq3gr3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE0C31F000FF;
+	Sat, 12 Sep 2026 20:01:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789243279;
-	bh=SOQisBJBV+ZN5np7kXA/4pEU/qbWuSuWkACf05XJ3vU=;
+	s=korg; t=1789243282;
+	bh=DQd/Fq4lwdANreCmvTT3MlDEeMn7+fKapit+PQ80blw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jyHnK2Uqd8Sph8pJk4DKSMCnEiwFCNEpw+0wATskBMCKjXCaVdzRsb7Rp9h//Jg6o
-	 NzLUwQLu6UmfsmkMW953Nc6cAgEPfIYgaCSYzU4cT0xchmaND+NTg5r1ji8m9l3GTk
-	 G5O51okOBoTK61o2UXgRT/E5f+b9ec2yp/7lrif4=
+	b=Tmxq3gr3Ka66aSi1YnuyzvoNngYeqBY8mwUdbQp2JxVrD7P1J9iTfrkn61kvdwXcK
+	 P5KjnQhbojb+mk8oWtL+q8JNxDK4uZKjTd7xDlUS9WkPYJ0a+ZFuHtsn2XWezHpK6w
+	 p4SXXBsB34tuo8cMYzAmSPWPuzLyJ6/mTXBmmD/Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rosen Penev <rosenp@gmail.com>,
-	Gregory CLEMENT <gregory.clement@bootlin.com>,
+	Ricardo Neri <ricardo.neri-calderon@linux.intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Christian Loehle <christian.loehle@arm.com>,
+	Chen Yu <yu.c.chen@intel.com>,
+	Tim Chen <tim.c.chen@linux.intel.com>,
+	Vincent Guittot <vincent.guittot@linaro.org>,
+	Andrea Righi <arighi@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 657/798] ARM: dts: helios4: add SATA regulator supplies
-Date: Sat, 12 Sep 2026 09:04:45 +0200
-Message-ID: <20260912065532.170779561@linuxfoundation.org>
+Subject: [PATCH 5.10 648/798] sched/fair: Check CPU capacity before comparing group types during load balance
+Date: Sat, 12 Sep 2026 09:04:36 +0200
+Message-ID: <20260912065531.964775432@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -51,73 +56,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rosen Penev <rosenp@gmail.com>
+From: Ricardo Neri <ricardo.neri-calderon@linux.intel.com>
 
-[ Upstream commit 7a90520e8c9a8f48fe6f3e741cf34d8c2b6dbc61 ]
+[ Upstream commit 50b101f6e586b4417d060a976fd831cd87e86e2b ]
 
-The ahci-mvebu driver and libahci_platform request three supplies
-on SATA controller and port nodes:
-  - ahci-supply  (controller power)
-  - phy-supply   (PHY power)
-  - target-supply (disk power per port)
+update_sd_pick_busiest() may incorrectly select a fully_busy group as the
+busiest group when its per-CPU capacity exceeds that of the destination
+CPU. This happens because the type of busiest group is initialized to
+group_has_spare and allows the fully_busy group to win the type comparison.
 
-Without them the regulator core prints notices at boot, e.g.:
-  supply ahci not found, using dummy regulator
-  supply phy not found, using dummy regulator
-  supply target not found, using dummy regulator
+update_sd_pick_busiest() should not choose a candidate scheduling group
+with at most one runnable task if its per-CPU capacity is greater than that
+of the destination CPU. Such a check already exists, but it is done too
+late: after the type comparison, preventing a subsequent fully_busy group
+of equal per-CPU capacity from being correctly selected.
 
-The SATA controller and PHY inside the Armada 388 SoC are powered
-by the 3.3V I/O rail; the four disk bays are powered by the 5V HDD
-rail.  Wire the existing fixed regulators accordingly.
+Move this check to occur before comparing group types.
 
-Fixes: ced8025b569e ("ARM: dts: armada388-helios4")
-Assisted-by: opencode:big-pickle
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
+Fixes: 0b0695f2b34a ("sched/fair: Rework load_balance()")
+Signed-off-by: Ricardo Neri <ricardo.neri-calderon@linux.intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Christian Loehle <christian.loehle@arm.com>
+Reviewed-by: Chen Yu <yu.c.chen@intel.com>
+Reviewed-by: Tim Chen <tim.c.chen@linux.intel.com>
+Reviewed-by: Vincent Guittot <vincent.guittot@linaro.org>
+Tested-by: Christian Loehle <christian.loehle@arm.com>
+Tested-by: Andrea Righi <arighi@nvidia.com>
+Link: https://patch.msgid.link/20260720-rneri-fix-cas-clusters-v6-3-bb500bf4afd4@linux.intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/armada-388-helios4.dts | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ kernel/sched/fair.c | 22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
 
-diff --git a/arch/arm/boot/dts/armada-388-helios4.dts b/arch/arm/boot/dts/armada-388-helios4.dts
-index a018de69da83a..1ba824f6fb206 100644
---- a/arch/arm/boot/dts/armada-388-helios4.dts
-+++ b/arch/arm/boot/dts/armada-388-helios4.dts
-@@ -222,13 +222,17 @@ sata@a8000 {
- 				status = "okay";
- 				#address-cells = <1>;
- 				#size-cells = <0>;
-+				ahci-supply = <&reg_3p3v>;
-+				phy-supply = <&reg_3p3v>;
+diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+index 6e564b06efac5..a2842a6cece63 100644
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -8773,6 +8773,17 @@ static bool update_sd_pick_busiest(struct lb_env *env,
+ 	     sds->local_stat.group_type != group_has_spare))
+ 		return false;
  
- 				sata0: sata-port@0 {
- 					reg = <0>;
-+					target-supply = <&reg_5p0v_hdd>;
- 				};
++	/*
++	 * Candidate sg has no more than one task per CPU and has higher
++	 * per-CPU capacity. Migrating tasks to less capable CPUs may harm
++	 * throughput. Maximize throughput, power/energy consequences are not
++	 * considered.
++	 */
++	if ((env->sd->flags & SD_ASYM_CPUCAPACITY) &&
++	    (sgs->group_type <= group_fully_busy) &&
++	    (capacity_greater(sg->sgc->min_capacity, capacity_of(env->dst_cpu))))
++		return false;
++
+ 	if (sgs->group_type > busiest->group_type)
+ 		return true;
  
- 				sata1: sata-port@1 {
- 					reg = <1>;
-+					target-supply = <&reg_5p0v_hdd>;
- 				};
- 			};
+@@ -8845,17 +8856,6 @@ static bool update_sd_pick_busiest(struct lb_env *env,
+ 		break;
+ 	}
  
-@@ -236,13 +240,17 @@ sata@e0000 {
- 				status = "okay";
- 				#address-cells = <1>;
- 				#size-cells = <0>;
-+				ahci-supply = <&reg_3p3v>;
-+				phy-supply = <&reg_3p3v>;
- 
- 				sata2: sata-port@0 {
- 					reg = <0>;
-+					target-supply = <&reg_5p0v_hdd>;
- 				};
- 
- 				sata3: sata-port@1 {
- 					reg = <1>;
-+					target-supply = <&reg_5p0v_hdd>;
- 				};
- 			};
+-	/*
+-	 * Candidate sg has no more than one task per CPU and has higher
+-	 * per-CPU capacity. Migrating tasks to less capable CPUs may harm
+-	 * throughput. Maximize throughput, power/energy consequences are not
+-	 * considered.
+-	 */
+-	if ((env->sd->flags & SD_ASYM_CPUCAPACITY) &&
+-	    (sgs->group_type <= group_fully_busy) &&
+-	    (capacity_greater(sg->sgc->min_capacity, capacity_of(env->dst_cpu))))
+-		return false;
+-
+ 	return true;
+ }
  
 -- 
 2.53.0
