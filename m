@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4CAE32D7F8;
-	Sat, 12 Sep 2026 18:18:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EBCB32D7F8;
+	Sat, 12 Sep 2026 18:19:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789237138; cv=none; b=sbQFMl4Q4wawZaPlzlBVjpkj3YKEP2TQfXTlvU/HJbCo6bRM+9VhJqigLiu+I0Gq2IX3y/lKIdufNw4R+UMvQmCPT6JV8teYEP41x58FxwDq9eg57vw1jTa/4IuYF244is7BcckQuUXmWTOCYQSUn7grNXwUfabHLy46dXtoD48=
+	t=1789237143; cv=none; b=ius/W1Y4jUfEzaGSCx0bxU6BjZqNl7uWKWYbFtdDndfCLGl/TzXOiU9jLI1xcMjNF1F4sNR6Qz4V1niEYrJ3vDjvbAfaK7NrvO8jjNkvSJuq7oWWfb5TfiqvoAC4l9e5cIVT5daeM0FjOg6lOQgarRGnPXe2KCvEcyFMQSNR8lE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789237138; c=relaxed/simple;
-	bh=g26HpcW74ivP2Nx/skeC1p/yju9qPo79xsMOGdI2w0c=;
+	s=arc-20240116; t=1789237143; c=relaxed/simple;
+	bh=g5MoJKeTxoFR9MsV66jXvJcO5Kv1ggJ6Mhc4ebgt8UU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lIuNrR42YahiCRI7E9EyeeUKsELDSiFOScOwKCTysQ5ica4aDYO5ZZWu+wYj+O4VgpE5fMi4eSlV1mPWN6mcJFVXagl6HyBTrkHZo/kMQk14ymt9+vSGAKPA0XOTp+5ydKsws0SgTH94TUj9o5vG6svI8OX+RCD3Jo/x61Uak2s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GTsizOAk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MgXDdw3k2LABhBT4dJ3MS99D0E+2cPYX3VKlDEGNmq52weCBo9WbLet3q/uhKBIybM/zmjD3U4M1R4TnyJB9ZgMYMmVAkgwSUYaoZGae5UkIv8O83h2O1lkZn+3WCZl7Rpp9hg2A4/z03h46fmmyv43oP6PC904j5W3vhYlPAX8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OJvw5fXI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GTsizOAk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9D2A1F000FF;
-	Sat, 12 Sep 2026 18:18:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OJvw5fXI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B4901F000FF;
+	Sat, 12 Sep 2026 18:19:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789237137;
-	bh=c4JldvJzNOnH4+NbBA4OULK9LrQ/gAexMPBHEo+qrsM=;
+	s=korg; t=1789237142;
+	bh=lydVdr2XIbfQ5uBYm3QqYFF9ajlblTzZWiv6nYculcE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GTsizOAkoP3B66zUxEmCL91PM2v+l15nterc1WLW/zjQgYSbJ3+0rwoFVjFip6KT/
-	 struJm/SP8M2RpYx1UAcxMnYW7zUD/GnirMA7/+AH38kY1ftHCWCXOpFI4H2JwQE2q
-	 QS3aUVYfIO43Y2hmBI5a03tuIYn4m0BnRRzguT/I=
+	b=OJvw5fXIx+Ey+ZpDhSkmqjgTaWg0vG9Aagmkvgo+NqYEEj0ROgUNyWAMAbzkXtBMi
+	 TTxviTIEInBt6VbEgTjpdxVbx+EiIsztYAnZDxylTXR6q8Kl99viMIZI7X8AmBhZlP
+	 WqoLpg7Il8OJbM5b3Pb1D8QgkRqg1Gd1pBSiEQkA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Long Li <longli@microsoft.com>,
-	Thomas Gleixner <tglx@kernel.org>,
-	Aditya Garg <gargaditya@linux.microsoft.com>,
-	Shradha Gupta <shradhagupta@linux.microsoft.com>,
-	Naman Jain <namjain@linux.microsoft.com>,
-	Michael Kelley <mhklinux@outlook.com>,
-	Wei Liu <wei.liu@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 197/935] PCI: hv: Set irq_retrigger callback for the Hyper-V PCI MSI irqchip
-Date: Sat, 12 Sep 2026 08:53:47 +0200
-Message-ID: <20260912065531.332541006@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>,
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	Kees Cook <kees@kernel.org>,
+	Bill Wendling <morbo@google.com>,
+	Justin Stitt <justinstitt@google.com>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.15 198/935] arch_numa: avoid false positive fortify warning in setup_node_to_cpumask_map()
+Date: Sat, 12 Sep 2026 08:53:48 +0200
+Message-ID: <20260912065531.356433869@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -56,52 +55,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Naman Jain <namjain@linux.microsoft.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-[ Upstream commit 86bdd16e8f390d51bae9e77a4bc4164ca2f580fe ]
+commit f2b1cb39d5ccab090d8353788f186f7e7a1fffd4 upstream.
 
-The Hyper-V vPCI MSI irqchip never installs an irq_retrigger() callback.
+When building ARCH=riscv using clang with CONFIG_FORTIFY_SOURCE and
+CONFIG_UBSAN_BOUNDS enabled, CONFIG_NR_CPUS > 64, and the default value of
+2 for CONFIG_NODES_SHIFT, there is a compiletime warning from the fortify
+routines.
 
-On CPU hot-unplug fixup_irqs() migrates the interrupts which are affine to
-the outgoing CPU to a new target. If an interrupt still has its pending bit
-set in the outgoing CPU's IRR at that point, fixup_irqs() resends it on the
-new target through the irqchip's irq_retrigger() callback. As the Hyper-V
-PCI/MSI chip does not provide that callback, the pending interrupt is
-silently dropped, which can result in lost interrupts, stalls and "No irq
-handler for vector" messages during CPU hotplug.
+  In file included from mm/arch_numa.c:11:
+  In file included from include/linux/acpi.h:14:
+  In file included from include/linux/resource_ext.h:11:
+  In file included from include/linux/slab.h:17:
+  In file included from include/linux/gfp.h:7:
+  In file included from include/linux/mmzone.h:8:
+  In file included from include/linux/spinlock.h:60:
+  In file included from include/linux/interrupt_rc.h:17:
+  In file included from include/linux/smp.h:13:
+  In file included from include/linux/cpumask.h:11:
+  In file included from include/linux/bitmap.h:13:
+  In file included from include/linux/string.h:383:
+  include/linux/fortify-string.h:430:4: warning: call to '__write_overflow_field' declared with 'warning' attribute: detected write beyond size of field (1st parameter); maybe use struct_group()? [-Wattribue-warning]
+    430 |                         __write_overflow_field(p_size_field, size);
+        |                         ^
+  include/linux/fortify-string.h:430:4: note: called by function 'fortify_memset_chk(unsigned long, unsigned long, unsigned long)'
+  include/linux/bitmap.h:248:3: note: inlined by function 'setup_node_to_cpumask_map'
+    248 |                 memset(dst, 0, len);
+        |                 ^
+  include/linux/fortify-string.h:462:25: note: expanded from macro 'memset'
+    462 | #define memset(p, c, s) __fortify_memset_chk(p, c, s,                   \
+        |                         ^
+  include/linux/fortify-string.h:453:2: note: expanded from macro '__fortify_memset_chk'
+    453 |         fortify_memset_chk(__fortify_size, p_size, p_size_field),       \
+        |         ^
+  include/linux/fortify-string.h:430:4: note: use '-gline-directives-only' (implied by '-g1') or higher for more accurate inlining chain locations
+    430 |                         __write_overflow_field(p_size_field, size);
+        |                         ^
+  1 warning generated.
 
-Install irq_chip_retrigger_hierarchy() as the irq_retrigger() callback for
-the Hyper-V PCI/MSI irqchip, so that a pending interrupt is resent on its
-new target CPU via the parent x86 vector domain.
+In this configuration, MAX_NUMNODES is 4.  clang unrolls the for loop in
+setup_node_to_cpumask_map() past this, which triggers the fortify check
+when accessing node_to_cpumask_map on the theoretical fifth loop iteration
+because it would be an out of bounds write.
 
-Fixes: 4daace0d8ce85 ("PCI: hv: Add paravirtual PCI front-end for Microsoft Hyper-V VMs")
-Cc: stable@vger.kernel.org
-Suggested-by: Long Li <longli@microsoft.com>
-Suggested-by: Thomas Gleixner <tglx@kernel.org>
-Reviewed-by: Aditya Garg <gargaditya@linux.microsoft.com>
-Reviewed-by: Shradha Gupta <shradhagupta@linux.microsoft.com>
-Signed-off-by: Naman Jain <namjain@linux.microsoft.com>
-Reviewed-by: Michael Kelley <mhklinux@outlook.com>
-Signed-off-by: Wei Liu <wei.liu@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Make it clear to clang that nr_node_ids is bounded by MAX_NUMNODES due to
+the logic in setup_nr_node_ids() by early returning in
+setup_node_to_cpumask_map() should that condition be violated.
+
+Link: https://lore.kernel.org/20260813-arch_numa-avoid-fortify-warning-v2-1-093ad97a78df@kernel.org
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Closes: https://github.com/ClangBuiltLinux/linux/issues/2174
+Reviewed-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Cc: Kees Cook <kees@kernel.org>
+Cc: Bill Wendling <morbo@google.com>
+Cc: Justin Stitt <justinstitt@google.com>
+Cc: Nathan Chancellor <nathan@kernel.org>
+Cc: Nick Desaulniers <ndesaulniers@google.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/pci-hyperv.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/base/arch_numa.c |   12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/drivers/pci/controller/pci-hyperv.c b/drivers/pci/controller/pci-hyperv.c
-index 7917ed426f6a7..ef3beda509186 100644
---- a/drivers/pci/controller/pci-hyperv.c
-+++ b/drivers/pci/controller/pci-hyperv.c
-@@ -1655,6 +1655,7 @@ static struct irq_chip hv_msi_irq_chip = {
- 	.irq_compose_msi_msg	= hv_compose_msi_msg,
- 	.irq_set_affinity	= hv_set_affinity,
- 	.irq_ack		= irq_chip_ack_parent,
-+	.irq_retrigger		= irq_chip_retrigger_hierarchy,
- 	.irq_mask		= hv_irq_mask,
- 	.irq_unmask		= hv_irq_unmask,
- };
--- 
-2.53.0
-
+--- a/drivers/base/arch_numa.c
++++ b/drivers/base/arch_numa.c
+@@ -105,6 +105,18 @@ static void __init setup_node_to_cpumask
+ 	if (nr_node_ids == MAX_NUMNODES)
+ 		setup_nr_node_ids();
+ 
++	/*
++	 * This check should never be true but it makes it clear to compilers
++	 * that node_to_cpumask_map is bound by nr_node_ids, avoiding false
++	 * positive fortify warnings when accessing node_to_cpumask_map in the
++	 * for loop below.
++	 */
++	if (unlikely(nr_node_ids > MAX_NUMNODES)) {
++		pr_err("nr_node_ids (%u) is larger than MAX_NUMNODES (%u)\n",
++		       nr_node_ids, MAX_NUMNODES);
++		return;
++	}
++
+ 	/* allocate and clear the mapping */
+ 	for (node = 0; node < nr_node_ids; node++) {
+ 		alloc_bootmem_cpumask_var(&node_to_cpumask_map[node]);
 
 
