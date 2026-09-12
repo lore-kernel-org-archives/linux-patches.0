@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38C12344DB5;
-	Sat, 12 Sep 2026 08:49:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7680344DB5;
+	Sat, 12 Sep 2026 08:49:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789202978; cv=none; b=IL5ZbA+rLX9Iz3rE0/ujtqPl4x1JxWjPQQRFjh8QzVhGQVye7EM6xB2LVlhD0TuQgf5OaJbO3NFV2Bvt6WX88Tlzyh7tvxz0vHwvxtc0IZs30pLSHrs4XCJeqzEQ+j3nxJdCiWGpPkSQlE7bE4PRDgtkXatD+Ktb/MfJybGndbc=
+	t=1789202983; cv=none; b=gJxbwZmoZDmb4SpRlSwb4NhweOQA7uwCClsR4+QRqYYEymIvsTT23bMfNZZbKjVmlt/O5etZQvvW6WvmCTNfq0oBBkVBRvKjSvwfWOM29OYDxaKQnrGF51NK7UIF4DpM9IXZxnTINQ/SiucCT4oYeHR40EVazud89v2B5rcySBg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789202978; c=relaxed/simple;
-	bh=I070RhAngmxvNu64gUpaofGmsF4kQ36X34E5IF68uNA=;
+	s=arc-20240116; t=1789202983; c=relaxed/simple;
+	bh=lcgG/n3k5Xz6J/UhRFneC1MnkuEo6Qq7rx+ObUVS+n0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mJL0S9QNZeiUHN9uy7oXLIa5ub1buXZTBrAkk3tOINSsW07KfkTdW7uzALzAXcikXOjJqUs8ts/2LTgiZU/YxoHfWS9eszkl8gEtdlbbZTZOMWZdpeWDRLHfL7T2P2ELqoJKjlmVxLHmnk7DmflAouRceOBRuLW8eq3wqtWez20=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mRUWTALM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Sgz8UhkT0Bk50nb9iEWOc5+JuN8tx8FJeeADKfCxndnEo6raHC+lUT422IEV2xJt5hz/XPFORSLNi2/0UabL8A22eUw4H1+0QrOQldFVV0yhczIfB9VKluxsODYx9otm+iyGVpsfx4yTa5Vvo8WEK9MH1jeBMW6tkgb3QmhatZA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zI8uEhdH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mRUWTALM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56DCA1F000FF;
-	Sat, 12 Sep 2026 08:49:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zI8uEhdH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29B9B1F000FF;
+	Sat, 12 Sep 2026 08:49:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789202977;
-	bh=u8qrdODkwKVUx4ZTvzW918vXbc4JOX1z9iYPg0Rifdc=;
+	s=korg; t=1789202982;
+	bh=Shz2yEfvOPLll2ivxvr7Koo8NXT3dKgFovy5svW4HSs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mRUWTALM9YjFAxbcst7QNJxFm0ziL0pqqJFEwgiNdqGkbclFVbLDerdeef2qkRNRb
-	 zRl9H53FaR6jk6OPx58q1/elUK4ibQGuRD7ny7+yZCLfZ3Jggd2OpmYYzOaUD6o4e9
-	 lbTgIZh8lqHJj4o/HtmZwFtozeD1i+TgeRwaq/os=
+	b=zI8uEhdHOy1l2vPLq0mgANz+Ip39ixj9osgX4aqvfPs8WGjO+ZSjDeS6a8c0kGEss
+	 PLkNKdwEWRr7pN/UbM+ZDI0jhzolzstpZ9Nz0X83W9VfGrse9mEQPpvDsk2B0sR9MP
+	 6hdZhANQ/vn/57CS+ggwkH2L2MbLCEmvNFwlhjkU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	surendra <kr494167@gmail.com>,
 	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1313/1815] hwmon: (cros_ec) Synchronize EC access from the thermal device callbacks
-Date: Sat, 12 Sep 2026 08:51:03 +0200
-Message-ID: <20260912065719.843596825@linuxfoundation.org>
+Subject: [PATCH 7.2 1314/1815] hwmon: (pmbus/ltc4283) Add missing MODULE_DEVICE_TABLE for OF match table
+Date: Sat, 12 Sep 2026 08:51:04 +0200
+Message-ID: <20260912065719.866918110@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -45,61 +45,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <linux@weissschuh.net>
+From: surendra <kr494167@gmail.com>
 
-[ Upstream commit 26db273640887276a24ca2546b06e334508871f8 ]
+[ Upstream commit bd300460cee457c50a16a42654d6de4c85562785 ]
 
-To guarantee consistency for the read-modify-write access in
-cros_ec_hwmon_cooling_set_cur_state(), locking is necessary.
+The driver registers ltc4283_of_match as the platform driver's
+.of_match_table so the kernel probes the device when a DT node with
+compatible "adi,ltc4283" is present, but the corresponding
+MODULE_DEVICE_TABLE(of, ...) call is absent.
 
-Use the existing hwmon device lock to do so.
+Without it the module alias table (modules.alias) does not contain an
+"of:N*T*Cadi,ltc4283" entry, so udev / kmod cannot auto-load the
+module when the DT node appears, breaking modules-based deployments
+while built-in configurations happen to work by accident.
 
-Fixes: 5798b62867b4 ("hwmon: (cros_ec) register fans into thermal framework cooling devices")
-Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
-Link: https://lore.kernel.org/r/20260711-cros_ec-hwmon-locking-v1-3-cb6d0fdbb2d3@weissschuh.net
+Add the missing MODULE_DEVICE_TABLE() to fix module auto-loading.
+
+Fixes: dd63353a0b5e ("hwmon: ltc4283: Add support for the LTC4283 Swap Controller")
+Signed-off-by: surendra <kr494167@gmail.com>
+Link: https://lore.kernel.org/r/20260721055022.34629-1-kr494167@gmail.com
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/cros_ec_hwmon.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/hwmon/ltc4283.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/hwmon/cros_ec_hwmon.c b/drivers/hwmon/cros_ec_hwmon.c
-index 12d0f1bb2a0d3..b65518fa7c9cc 100644
---- a/drivers/hwmon/cros_ec_hwmon.c
-+++ b/drivers/hwmon/cros_ec_hwmon.c
-@@ -5,6 +5,7 @@
-  *  Copyright (C) 2024 Thomas Weißschuh <linux@weissschuh.net>
-  */
+diff --git a/drivers/hwmon/ltc4283.c b/drivers/hwmon/ltc4283.c
+index 9b85293ea6649..9ec409bc26482 100644
+--- a/drivers/hwmon/ltc4283.c
++++ b/drivers/hwmon/ltc4283.c
+@@ -1772,6 +1772,7 @@ static const struct of_device_id ltc4283_of_match[] = {
+ 	{ .compatible = "adi,ltc4283" },
+ 	{ }
+ };
++MODULE_DEVICE_TABLE(of, ltc4283_of_match);
  
-+#include <linux/cleanup.h>
- #include <linux/device.h>
- #include <linux/hwmon.h>
- #include <linux/math.h>
-@@ -402,6 +403,8 @@ static int cros_ec_hwmon_cooling_get_cur_state(struct thermal_cooling_device *cd
- 	u8 read_val;
- 	int ret;
- 
-+	guard(hwmon_lock)(priv->hwmon_priv->hwmon_dev);
-+
- 	ret = cros_ec_hwmon_read_pwm_value(priv->hwmon_priv->cros_ec, priv->index, &read_val);
- 	if (ret)
- 		return ret;
-@@ -415,6 +418,8 @@ static int cros_ec_hwmon_cooling_set_cur_state(struct thermal_cooling_device *cd
- {
- 	const struct cros_ec_hwmon_cooling_priv *priv = cdev->devdata;
- 
-+	guard(hwmon_lock)(priv->hwmon_priv->hwmon_dev);
-+
- 	return cros_ec_hwmon_write_pwm_input(priv->hwmon_priv->cros_ec, priv->index, val);
- }
- 
+ static const struct i2c_device_id ltc4283_i2c_id[] = {
+ 	{ "ltc4283" },
 -- 
 2.53.0
 
