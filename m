@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A08F214A84;
-	Sat, 12 Sep 2026 12:34:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0F1F214A84;
+	Sat, 12 Sep 2026 12:34:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789216442; cv=none; b=qAOWjflMqGZl8D1pnaaXuHCjIoLu6/LdhzsDI8wrKzJXOMYookmjHPegG96eXTjjqImicRQkwHTzIRXO6+wZl+mbKl0GYZg1b9oqE+AfMczNTsxgZ2+gYQwCH67UncgOsOaVhjae2/Dj4PjmyNtQh8JRvxfAzLELqBON3jQJwoo=
+	t=1789216447; cv=none; b=EZRAQ5OZBi3cjag6oYLdKRazPGhXcUOvazZJNga55v8eArs6TNwLff40RgMflHVPWP/0EhYiBuciSJfvfVTbaWofWnitCb6wCiUdVlTYih7131vpS7tsF+PRWgOt3nibwjNCkVr7UMJYLxE8xWmP2dS+HraS4tafqAz2rH+FTaE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789216442; c=relaxed/simple;
-	bh=NcrNdCGvmeExxLzQVOrLvBi5AY2HLvv+ZZ3BKG/fzFQ=;
+	s=arc-20240116; t=1789216447; c=relaxed/simple;
+	bh=UvjH8t/d3DHCQ2jLCqVeM2iKqSXx05MwMku5ng2KRl0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ePXSbWpMokoMluGY57HvuyMUAr4/poT10Q+PdtAdWbsXfvTo4IPq+l0dCELkx/kmr31rzDmSu9J6d6qzwf9KTraQ66A5Dr8MyLw+PoM/pGrMPYGn4yEY6PWhBWPq8CAPoXnvfXp7Kp2Ow+4NV/his4b2ysfRUSyN8T52RKDBjNQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J3BWhW+L; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UrwT89brBpjlFJCGDFtdGJLjndMO0NUGF4AFLJcLOTaZujXAMbx6HKLxYAxtYVREf4CwSF1Wn/2MoVLK+y+K+SfGQEhmcGSKqyZJBfhNKf6wLp24mQZO2Rmdih44itT/Bwiao9N4vi7RxapOqtEfzRpb+vx1K8sWJ2kxIUrccH0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IFhaQEcC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J3BWhW+L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 169811F000FF;
-	Sat, 12 Sep 2026 12:33:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IFhaQEcC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A95A1F000FF;
+	Sat, 12 Sep 2026 12:34:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789216441;
-	bh=DJa+/Hp793pZ75TEswmOXB6puY9MYxEUcCL2L+3G/uY=;
+	s=korg; t=1789216445;
+	bh=Mx5ERmnEJba3EYZHQnXcV6MasPv2p7KBmHxnXQ3gY0g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J3BWhW+L4PGxgZkZvVpkdzz9muiRoY8EI/W/4ZXaF/DcfYHnwPxtXzBUjyhMjePl4
-	 U1ybZdZfPJQO0LR7ipwU51UVayUYhbAOgb0A3ZUaTFqLb9R4REa9Y9WEU2JVLrYnd8
-	 iFKfSpnKyZraUB4+/9XwUBlx8wuSQcYjE54uFKnI=
+	b=IFhaQEcCisyzGQe2WADQo7bDFWP/UFefg4vOZtllbQWNbvK8fwpDS/XsolSFAp4DD
+	 mZ5/AJVK2LpF+/2DMMXgEvU3dm65ULMGT1a0UI2uvBtVu2e07GGlZOaX+I785DeF16
+	 7WCYDupSBiRmIg3qLxqmfTg/rkoPa3oYbK+vG7oc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	Alex Williamson <alex@shazbot.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Jeff Hugo <jeff.hugo@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0735/1376] wifi: rtlwifi: pci: fix error path in rtl_pci_probe()
-Date: Sat, 12 Sep 2026 08:52:41 +0200
-Message-ID: <20260912065623.925978274@linuxfoundation.org>
+Subject: [PATCH 6.12 0736/1376] bus: mhi: host: Flush the posted write after writing to MHI_SOC_RESET_REQ_OFFSET
+Date: Sat, 12 Sep 2026 08:52:42 +0200
+Message-ID: <20260912065623.947039838@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,49 +53,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 
-[ Upstream commit 3c2999d13eeb222ae56631aeb7ca248090f2b210 ]
+[ Upstream commit 24f4423cbc89548def2b05ae86de6175086dbf94 ]
 
-In the last error path in rtl_pci_probe(), the cleanup functions are
-skipped due to a wrong goto label. Moreover, the successful call to
-rtl_init_rfkill(), ieee80211_register_hw(), rtl_debug_add_one() have to
-be reverted. Fix this issue by updating the labels and adding the
-relevant cleanup functions to the last error path.
+mhi_soc_reset() tries to reset the device by writing to the
+MHI_SOC_RESET_REQ_OFFSET register. But it doesn't do a read-back to ensure
+that the write gets flushed to the device before returning to the caller.
 
-Fixes: 0c8173385e54 ("rtl8192ce: Add new driver")
-Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20260723120118.145383-1-nihaal@cse.iitm.ac.in
+This may lead to the delay (if implemented) on the caller to be
+insufficient, if the posted write doesn't reach the device before the
+delay.
+
+So add a read-back after writing to the MHI_SOC_RESET_REQ_OFFSET register.
+
+Fixes: b5a8d233a588 ("bus: mhi: core: Add device hardware reset support")
+Reported-by: Alex Williamson <alex@shazbot.org>
+Closes: https://lore.kernel.org/linux-pci/20260622160822.09350246@shazbot.org
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Reviewed-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260623145134.43976-1-manivannan.sadhasivam@oss.qualcomm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtlwifi/pci.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/bus/mhi/host/main.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/net/wireless/realtek/rtlwifi/pci.c b/drivers/net/wireless/realtek/rtlwifi/pci.c
-index f0010336e78c1..8fb9604c3c533 100644
---- a/drivers/net/wireless/realtek/rtlwifi/pci.c
-+++ b/drivers/net/wireless/realtek/rtlwifi/pci.c
-@@ -2226,13 +2226,17 @@ int rtl_pci_probe(struct pci_dev *pdev,
- 		rtl_dbg(rtlpriv, COMP_INIT, DBG_DMESG,
- 			"%s: failed to register IRQ handler\n",
- 			wiphy_name(hw->wiphy));
--		goto fail3;
-+		goto fail6;
- 	}
- 	rtlpci->irq_alloc = 1;
+diff --git a/drivers/bus/mhi/host/main.c b/drivers/bus/mhi/host/main.c
+index 45ec1b585577d..846aee2a42a0b 100644
+--- a/drivers/bus/mhi/host/main.c
++++ b/drivers/bus/mhi/host/main.c
+@@ -170,6 +170,9 @@ EXPORT_SYMBOL_GPL(mhi_get_mhi_state);
  
- 	set_bit(RTL_STATUS_INTERFACE_START, &rtlpriv->status);
- 	return 0;
+ void mhi_soc_reset(struct mhi_controller *mhi_cntrl)
+ {
++	int __maybe_unused ret;
++	u32 tmp;
++
+ 	if (mhi_cntrl->reset) {
+ 		mhi_cntrl->reset(mhi_cntrl);
+ 		return;
+@@ -178,6 +181,9 @@ void mhi_soc_reset(struct mhi_controller *mhi_cntrl)
+ 	/* Generic MHI SoC reset */
+ 	mhi_write_reg(mhi_cntrl, mhi_cntrl->regs, MHI_SOC_RESET_REQ_OFFSET,
+ 		      MHI_SOC_RESET_REQ);
++	/* Flush the posted write to the device (ignore return value) */
++	ret = mhi_read_reg(mhi_cntrl, mhi_cntrl->regs, MHI_SOC_RESET_REQ_OFFSET,
++			   &tmp);
+ }
+ EXPORT_SYMBOL_GPL(mhi_soc_reset);
  
-+fail6:
-+	rtl_deinit_rfkill(hw);
-+	rtl_debug_remove_one(hw);
-+	ieee80211_unregister_hw(hw);
- fail5:
- 	rtl_pci_deinit(hw);
- fail4:
 -- 
 2.53.0
 
