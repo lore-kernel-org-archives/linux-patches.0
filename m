@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D719D1DE4EF;
-	Sat, 12 Sep 2026 14:11:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7726F330647;
+	Sat, 12 Sep 2026 14:11:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789222299; cv=none; b=PZ0AJ/zZxxGOWZbnlGQlu3QjhdL5wZ74/5X6trcrMNqFET/LSDykO+qybQLbZK+9K6KwYKv1V8ut9xXLjZxSX7rGiZ7seqToh9nS3L9g9bJ0x4nRs9deXe1ZkYf+yZCawn/x1ncRHOLY7J4zfYsHJB4fsCUP7wimiUE7ro87cKc=
+	t=1789222303; cv=none; b=o2OAjjXv6Kq5yPUfXiu/1kahmcL6q5/Ws+Z0dZ1eUsD7Jie4KUXB//EnESY9QnCaI7wMoHqtELjyTHOHt1k7fUB1KyBqjWXOk/rnt5X43mc358NqL5xeGhlA/JWweonPcOKAHaQ9ymA5Ve67TMXwd8Y3giGVkYuuNE68/EwJ94Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789222299; c=relaxed/simple;
-	bh=vHjeHx5dlVmNXH93IXE2ykKi0UKSzgd/BpbEKh1eleE=;
+	s=arc-20240116; t=1789222303; c=relaxed/simple;
+	bh=VHAjLjAE6LuwAbVkuWVNnxSxtPAw9eTg0Q68W9EPKQs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XX/i4wWEq5u+JlPnZlstToER5SsuYJI8XwtFJqYkUCkHLJwekzjvPPSEpLPwDUb2C0Dc8mvwlIaHT/HSDUp6YrXN5PWHlD68qMr2PHQJvL/3Q5wpCTwlOKLTDwDF1fit1RN09xB/B4K0kpxrrt/3/7VVHjT/jHt5zWoKjtP1354=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NHXT0sdB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BP9X2H+CRQJHQao7S1W4cwYh1P1qIs3xq11hn1CrMkLn2xTh3aWa5km3H7uZbn7xpshrHGCeuvDa+V9cOPCe4NG3vldza3NPlB/A+ciUs3VB2RWHXRZL9G+lUau5YFCw9v392rbrETPw1nc6PXbMeSx47wqSRcxfUfBPjxc9V9Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ndYzKKxA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NHXT0sdB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB9C31F000FF;
-	Sat, 12 Sep 2026 14:11:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ndYzKKxA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 805111F000FF;
+	Sat, 12 Sep 2026 14:11:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789222297;
-	bh=In3RDmwVYpSsVCSNO1bQZrKb//F5Jm9wL4roTVuYeSY=;
+	s=korg; t=1789222302;
+	bh=n+96PSctEp7IfQ8QSd6s5AdonjiM8BZt4QTKmWf+uMc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NHXT0sdBaJQnxl4XdpjbaVotuPVfdmyp9AAbaHQ2WmopEOnv7BQpFV5CwzD+PqPsY
-	 WUWlQqQFOI45a8edpcovOPz5yR/+wJq3y/YFpM3ae+GDRAOyxbTIjdmn/AQ6Sopciz
-	 ERU3Iff1SLmq1wH0qZWLqC2QKzIuto55q0zTyCKc=
+	b=ndYzKKxAUHCqUcC4kKiDqU76BLZDDsPCbJu8tRiRpEbXB4tefoJx8B3TeZuH2hMf9
+	 /9kukpAK1yzEdW3TIOhV1TO1xoxBLUqBfe7WdxmtGCsKiCUfjR2/Ktcg6xslkbRHUx
+	 F+GxRzUY5cB7SHQTt5EM2kLdsfBlF0J17BxyePTo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Hewitt <christianshewitt@gmail.com>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Jerome Brunet <jbrunet@baylibre.com>,
+	Huang Wei <huangwei@kylinos.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0558/1424] clk: meson: align gxbb_32k_clk_sel number of parents with actual count
-Date: Sat, 12 Sep 2026 08:49:50 +0200
-Message-ID: <20260912065619.800071826@linuxfoundation.org>
+Subject: [PATCH 6.6 0559/1424] usb: typec: ucsi: use UCSI_TIMEOUT_MS for sync command completion
+Date: Sat, 12 Sep 2026 08:49:51 +0200
+Message-ID: <20260912065619.822713170@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -52,90 +50,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+From: Huang Wei <huangwei@kylinos.cn>
 
-[ Upstream commit 628b6fee9fca292f12d07f0f1bcf1edefa949d81 ]
+commit eb4573cf2fd860b20adfae050c3f6ec6ddc3abdb upstream.
 
-The following out-of-bounds read has been observed by Christian on a
-GXBB WeTek Hub:
-==================================================================
-BUG: KASAN: global-out-of-bounds in __clk_register+0x1b70/0x2418
-Read of size 8 at addr ffffd66320cf88e0 by task swapper/0/1
+The synchronous command completion path in ucsi_acpi_sync_write() hardcodes
+a 5 second (5 * HZ) timeout when waiting for the PPM to signal command
+completion via ACPI notification. This value matched UCSI_TIMEOUT_MS when it
+was still 5000 ms, but it was not updated when that macro was later raised
+to 10000 ms to fix PPM reset timeouts.
 
-CPU: 0 UID: 0 PID: 1 Comm: swapper/0 Not tainted 7.0.0-rc5 #1 PREEMPT
-Hardware name: WeTek Hub (DT)
-Call trace:
- show_stack+0x14/0x20 (C)
- dump_stack_lvl+0x74/0x94
- print_report+0x164/0x4b0
- kasan_report+0x98/0xd8
- __asan_report_load8_noabort+0x1c/0x24
- __clk_register+0x1b70/0x2418
- devm_clk_hw_register+0x74/0x15c
- meson_clkc_init+0xd4/0x20c
- meson_clkc_syscon_probe+0x5c/0x94
- platform_probe+0xbc/0x17c
- really_probe+0x184/0x844
- __driver_probe_device+0x154/0x35c
- driver_probe_device+0x60/0x188
- __driver_attach+0x168/0x4a0
- bus_for_each_dev+0xec/0x180
- driver_attach+0x38/0x58
- bus_add_driver+0x238/0x4c0
- driver_register+0x150/0x388
- __platform_driver_register+0x54/0x7c
- gxbb_clkc_driver_init+0x18/0x20
- do_one_initcall+0xb8/0x340
- kernel_init_freeable+0x49c/0x52c
- kernel_init+0x24/0x148
- ret_from_fork+0x10/0x20
+As a result, the two PPM communication paths are now inconsistent: the
+polling path in ucsi_reset_ppm() respects the 10 second timeout, while the
+event-driven completion path still uses 5 seconds. On machines where the
+firmware is slow to respond during boot (e.g. some Lenovo ThinkPad models
+such as the E14 Gen 7), commands sent after the PPM reset, such as
+SET_NOTIFICATION_ENABLE and GET_CAPABILITY, can exceed 5 seconds and cause
+UCSI initialization to fail with:
 
-The buggy address belongs to the variable:
- gxbb_32k_clk_parents+0x60/0x400
+    ucsi_acpi USBC000:00: error -ETIMEDOUT: PPM init failed
 
-The buggy address belongs to a vmalloc virtual mapping
-The buggy address belongs to the physical page:
+Once UCSI init aborts, USB-C PD negotiation never completes, which in turn
+blocks USB-C dock enumeration since the dock depends on a successful PD
+contract.
 
-Memory state around the buggy address:
- ffffd66320cf8780: 00 00 00 00 f9 f9 f9 f9 00 f9 f9 f9 f9 f9 f9 f9
- ffffd66320cf8800: 00 04 f9 f9 f9 f9 f9 f9 00 04 f9 f9 f9 f9 f9 f9
->ffffd66320cf8880: 00 00 00 00 00 00 00 00 00 00 00 00 f9 f9 f9 f9
-                                                       ^
- ffffd66320cf8900: 00 01 f9 f9 f9 f9 f9 f9 00 06 f9 f9 f9 f9 f9 f9
- ffffd66320cf8980: 00 00 02 f9 f9 f9 f9 f9 00 00 02 f9 f9 f9 f9 f9
-==================================================================
+Replace the hardcoded 5 * HZ with msecs_to_jiffies(UCSI_TIMEOUT_MS) so that
+both communication paths share a single, consistent timeout value. Move the
+UCSI_TIMEOUT_MS definition to ucsi.h so the ACPI backend can use it.
 
-Commit 7915d7d5407c ("clk: amlogic: gxbb: drop non existing 32k clock
-parent") dropped a non-existing clock parent from the gxbb_32k_clk_sel
-mux but didn't adjust the hard-coded num_parents field. Fix the actual
-number of parents of that mux by using ARRAY_SIZE instead (avoiding
-similar problems in future).
-
-Fixes: 7915d7d5407c ("clk: amlogic: gxbb: drop non existing 32k clock parent")
-Reported-by: Christian Hewitt <christianshewitt@gmail.com>
-Cc: stable@vger.kernel.org
-Tested-by: Christian Hewitt <christianshewitt@gmail.com>
-Signed-off-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Link: https://patch.msgid.link/20260623201956.1324992-1-martin.blumenstingl@googlemail.com
-Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
+Fixes: bf4f9ae1cb08c ("usb: typec: ucsi: increase timeout for PPM reset operations")
+Signed-off-by: Huang Wei <huangwei@kylinos.cn>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/meson/gxbb.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/typec/ucsi/ucsi.c      | 10 ----------
+ drivers/usb/typec/ucsi/ucsi.h      |  3 +++
+ drivers/usb/typec/ucsi/ucsi_acpi.c |  3 ++-
+ 3 files changed, 5 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/clk/meson/gxbb.c b/drivers/clk/meson/gxbb.c
-index 00eaca92b388a..a6b46ad047949 100644
---- a/drivers/clk/meson/gxbb.c
-+++ b/drivers/clk/meson/gxbb.c
-@@ -1305,7 +1305,7 @@ static struct clk_regmap gxbb_32k_clk_sel = {
- 		.name = "32k_clk_sel",
- 		.ops = &clk_regmap_mux_ops,
- 		.parent_data = gxbb_32k_clk_parent_data,
--		.num_parents = 4,
-+		.num_parents = ARRAY_SIZE(gxbb_32k_clk_parent_data),
- 		.flags = CLK_SET_RATE_PARENT,
- 	},
- };
+diff --git a/drivers/usb/typec/ucsi/ucsi.c b/drivers/usb/typec/ucsi/ucsi.c
+index b0d5f071664fe..8cfde3cb85af0 100644
+--- a/drivers/usb/typec/ucsi/ucsi.c
++++ b/drivers/usb/typec/ucsi/ucsi.c
+@@ -17,16 +17,6 @@
+ #include "ucsi.h"
+ #include "trace.h"
+ 
+-/*
+- * UCSI_TIMEOUT_MS - PPM communication timeout
+- *
+- * Ideally we could use MIN_TIME_TO_RESPOND_WITH_BUSY (which is defined in UCSI
+- * specification) here as reference, but unfortunately we can't. It is very
+- * difficult to estimate the time it takes for the system to process the command
+- * before it is actually passed to the PPM.
+- */
+-#define UCSI_TIMEOUT_MS		10000
+-
+ /*
+  * UCSI_SWAP_TIMEOUT_MS - Timeout for role swap requests
+  *
+diff --git a/drivers/usb/typec/ucsi/ucsi.h b/drivers/usb/typec/ucsi/ucsi.h
+index 9ac5ad87f4015..f0cf52c6ddeba 100644
+--- a/drivers/usb/typec/ucsi/ucsi.h
++++ b/drivers/usb/typec/ucsi/ucsi.h
+@@ -26,6 +26,9 @@ struct dentry;
+ #define UCSI_MESSAGE_OUT		32
+ #define UCSIv2_MESSAGE_OUT		272
+ 
++/* PPM communication timeout in milliseconds */
++#define UCSI_TIMEOUT_MS		10000
++
+ /* UCSI versions */
+ #define UCSI_VERSION_1_2	0x0120
+ #define UCSI_VERSION_2_0	0x0200
+diff --git a/drivers/usb/typec/ucsi/ucsi_acpi.c b/drivers/usb/typec/ucsi/ucsi_acpi.c
+index e40f3bf650ad8..1054947497bb2 100644
+--- a/drivers/usb/typec/ucsi/ucsi_acpi.c
++++ b/drivers/usb/typec/ucsi/ucsi_acpi.c
+@@ -88,7 +88,8 @@ static int ucsi_acpi_sync_write(struct ucsi *ucsi, unsigned int offset,
+ 	if (ret)
+ 		goto out_clear_bit;
+ 
+-	if (!wait_for_completion_timeout(&ua->complete, 5 * HZ))
++	if (!wait_for_completion_timeout(&ua->complete,
++					 msecs_to_jiffies(UCSI_TIMEOUT_MS)))
+ 		ret = -ETIMEDOUT;
+ 
+ out_clear_bit:
 -- 
 2.53.0
 
