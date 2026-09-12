@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 429DD1DE4EF;
-	Sat, 12 Sep 2026 15:42:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16F77345CCE;
+	Sat, 12 Sep 2026 15:42:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789227769; cv=none; b=ZOuMR9xcMSfki93cPhVWbuYvnVlmCKJSIW4iauB7uKHoD+8B/QgVFwX7b0Xdd+SeDBREinK6Y61IL5MnU7eTH4QeesFEzEoTcU0kldQH6+1tCoFi/c6iMF1PBteXCdU28bD/v29UQNQR85EqK+2nyfUPTpTzLzhQCo3QB/WKkCE=
+	t=1789227774; cv=none; b=DBXjkBR/EIDldgGrePiIuTtdyNjWPdVOAy3IXDnj4GS8m+/pExZnRswA3d8R5GGzq19WekI0p7Z2L242oIQNQVkYFySzQ7D3oyNyVI2Lh2c6VEr2+nXsFcOWI/p3adI4XMZy78uWT6IZ/ChLVFd/HyIQD2ZZuko1naAcXt2lSmM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789227769; c=relaxed/simple;
-	bh=i5m1mRQltKoiiVR3fwuFQrLPz2WOmYQ615HCgdWxtBc=;
+	s=arc-20240116; t=1789227774; c=relaxed/simple;
+	bh=Eo+L7jrhOeHcSvKGr3Ci2f/t4bYT76TGKpXFJdYIkqU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YH3CY/w7LX6ePaYDfSMI47MjMBKd7ynN9KjpvCNuVBU3o4pix5VaBpg0lWdJSh6xko0Pqho37cpVwdfycbhTpuyB6/vLG1RUUm8KVbdt08+VMed4JDUe1b2BsAgNZB70+qmK5usmlYzCT7ilD4Y+f+jc5+sionpxU0l1N25yyXI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=um5VZf0O; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Iz6fjBp3oNu8faZPISzOl28Zx8BeG1KpQs0qdlFnm1q/llGKZl7E2nPkidgH7Rto2maIPg1g6le90bQG/0/zMR3qjbh2XmkdaJvdS0YtH/h4evmka+j4HYXidm3MJxiADWGXbagIWi+DWiIdvYfy5bD9ZzcBOMXZPbD3qMxpXYo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yjMEwfCX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="um5VZf0O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E23DC1F000FF;
-	Sat, 12 Sep 2026 15:42:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yjMEwfCX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86E4E1F00893;
+	Sat, 12 Sep 2026 15:42:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789227768;
-	bh=m3kulppaiWAGdzcMqS+vhSkWoNCKRARbMDZjjjL0q64=;
+	s=korg; t=1789227772;
+	bh=UBiZPkaFgxM4HvZCju0CKKhda5sqnXwBQ+Ma4ymYEEc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=um5VZf0OyWEH+uukwFw9FTyYpbIPfrCDtjz0pMSUFAJcNZ1NN1h9tu84WM56zKR6d
-	 fEWRl6lA6JbAzqxRT/xn7cMrd0hxuZoyXtqElqMVPYUm1n9TYhWh1kxYHGV/vGbDp8
-	 CfyiUqhJ1T7bKtPvmfYVNv1wmUIE0S0gGoKgl8D8=
+	b=yjMEwfCXp5swqgMZrKPtLMBUuho/9AYjw9z8+OM0MZZJWdVgxqyQfSis0FvzrHgsf
+	 SIEakUYiOyx0as3WNaP/wBevk3SNv3p3hRB60kpuk1WV88mP3eDGUmb2gkvgA9OHDu
+	 jHrIqVVMuJ4X7Ayvl8Bh/p/SbfAycRRey01FcgMA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhan Xusheng <zhanxusheng@xiaomi.com>,
-	Jan Kara <jack@suse.cz>
-Subject: [PATCH 6.1 0250/1191] udf: Fix i_lenExtents truncation on 32-bit kernels
-Date: Sat, 12 Sep 2026 08:49:38 +0200
-Message-ID: <20260912065553.833360908@linuxfoundation.org>
+	Tomasz Figa <tfiga@chromium.org>,
+	Tzung-Bi Shih <tzungbi@kernel.org>
+Subject: [PATCH 6.1 0251/1191] platform/chrome: sensorhub: Fix dropped timestamp events and log spam
+Date: Sat, 12 Sep 2026 08:49:39 +0200
+Message-ID: <20260912065553.855095362@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -50,46 +50,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhan Xusheng <zhanxusheng1024@gmail.com>
+From: Tzung-Bi Shih <tzungbi@kernel.org>
 
-commit a5a5ed23b1340ff0f32a14a7ca8585f7c4e9b2e2 upstream.
+commit 9a3f43b30373c61477d0d3ab52946c05f9492bf9 upstream.
 
-In udf_do_extend_file() the total extent length is rounded up to a block
-boundary with:
+Commit 833740a2333c ("platform/chrome: sensorhub: Bound the EC-reported
+sensor number") evaluated the `sensor_num` against the bounds limit even
+for timestamp events.  A timestamp event typically has a `sensor_num` of
+0xff [1], causing the driver to flag it as invalid and skip to the next
+event.
 
-	iinfo->i_lenExtents = (iinfo->i_lenExtents + sb->s_blocksize - 1) &
-			      ~(sb->s_blocksize - 1);
+As a result, we'd see a flooding of "Invalid sensor number 255 from EC"
+warning logs and these timestamp events were being dropped.
 
-i_lenExtents is a __u64, but sb->s_blocksize is unsigned long.  On 32-bit
-kernels unsigned long is 32-bit, so ~(sb->s_blocksize - 1) is a 32-bit
-value (e.g. 0xfffff800 for a 2 KiB block) that is zero-extended in the AND,
-clearing the upper 32 bits of i_lenExtents.  For UDF files whose total
-extent length exceeds 4 GiB this truncates i_lenExtents when the file is
-extended, corrupting the tracked extent length.
+Move the bounds-check into cros_ec_sensor_ring_process_event() and
+evaluate it only after standalone timestamp events have already been
+processed and returned early.
 
-Cast the block size to 64-bit before forming the mask.  64-bit kernels are
-unaffected.
+[1] https://crrev.com/219ca6ef82ba266da788b673ee4ad50bd3ea1285/common/motion_sense_fifo.c#427
 
-Fixes: 48d6d8ff7dca ("udf: cache struct udf_inode_info")
-Cc: stable@vger.kernel.org
-Signed-off-by: Zhan Xusheng <zhanxusheng@xiaomi.com>
-Link: https://patch.msgid.link/20260722082425.213311-1-zhanxusheng@xiaomi.com
-Signed-off-by: Jan Kara <jack@suse.cz>
+Fixes: 833740a2333c ("platform/chrome: sensorhub: Bound the EC-reported sensor number")
+Reviewed-by: Tomasz Figa <tfiga@chromium.org>
+Link: https://lore.kernel.org/r/20260715024454.4127571-1-tzungbi@kernel.org
+Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/udf/inode.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/platform/chrome/cros_ec_sensorhub_ring.c |   27 ++++++++++++-----------
+ 1 file changed, 15 insertions(+), 12 deletions(-)
 
---- a/fs/udf/inode.c
-+++ b/fs/udf/inode.c
-@@ -398,7 +398,7 @@ static int udf_do_extend_file(struct ino
- 			  sb->s_blocksize - 1) & ~(sb->s_blocksize - 1));
- 		iinfo->i_lenExtents =
- 			(iinfo->i_lenExtents + sb->s_blocksize - 1) &
--			~(sb->s_blocksize - 1);
-+			~((u64)sb->s_blocksize - 1);
+--- a/drivers/platform/chrome/cros_ec_sensorhub_ring.c
++++ b/drivers/platform/chrome/cros_ec_sensorhub_ring.c
+@@ -436,6 +436,21 @@ cros_ec_sensor_ring_process_event(struct
+ 						  fifo_timestamp,
+ 						  *current_timestamp,
+ 						  now);
++
++		/*
++		 * A standalone timestamp event typically has a sensor_num of
++		 * 0xff.  Return early here to prevent it from hitting the
++		 * bounds check below and spamming the logs.
++		 */
++		return false;
++	}
++
++	/* Skip event if sensor_num from EC is out of bounds. */
++	if (in->sensor_num >= sensorhub->sensor_num) {
++		dev_warn_ratelimited(sensorhub->dev,
++				     "Invalid sensor number %u from EC\n",
++				     in->sensor_num);
++		return false;
  	}
  
- 	/* Can we merge with the previous extent? */
+ 	if (in->flags & MOTIONSENSE_SENSOR_FLAG_ODR) {
+@@ -463,10 +478,6 @@ cros_ec_sensor_ring_process_event(struct
+ 		return true;
+ 	}
+ 
+-	if (in->flags & MOTIONSENSE_SENSOR_FLAG_TIMESTAMP)
+-		/* If we just have a timestamp, skip this entry. */
+-		return false;
+-
+ 	/* Regular sample */
+ 	out->sensor_id = in->sensor_num;
+ 	trace_cros_ec_sensorhub_data(in->sensor_num,
+@@ -851,14 +862,6 @@ static void cros_ec_sensorhub_ring_handl
+ 
+ 		for (in = sensorhub->resp->fifo_read.data, j = 0;
+ 		     j < number_data; j++, in++) {
+-			/* Skip event if sensor_num from EC is out of bounds. */
+-			if (in->sensor_num >= sensorhub->sensor_num) {
+-				dev_warn_ratelimited(sensorhub->dev,
+-						     "Invalid sensor number %u from EC\n",
+-						     in->sensor_num);
+-				continue;
+-			}
+-
+ 			if (cros_ec_sensor_ring_process_event(
+ 						sensorhub, fifo_info,
+ 						fifo_timestamp,
 
 
