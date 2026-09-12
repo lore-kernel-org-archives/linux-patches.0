@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DFBF41B357;
-	Sat, 12 Sep 2026 08:39:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8DFC41CB39;
+	Sat, 12 Sep 2026 08:39:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789202391; cv=none; b=D2loy/7AjjRsxUMOkhb3p6v6ubXPnAhBo9BVIhW7NOZqVgHt7x7oZcyARHf52iYhTLeRxOS1GjKecuqOPSKxx4fcHfJCQYJetqYcQcDqksk0HV8ecGk54eD81aJPetPEWPUUmm8jg0TBofllZqGO984c9GAgJrZGPTp5VxBcjNs=
+	t=1789202396; cv=none; b=h0uie7kly0EHGca/fXyz2iKUg3CgTT6pitMwuqXkQb9J2HaJllHnKuZ3Ca+fq9AKPHDKjoO+vXNzsBkjWt0mT7Qu/tKLIvtkKE2Dh/3ovRFm+tg3tWEdqwEtvOUTuMH5EzSc51+a/uR1/KR1nF8BXwMIKlYF4Z46GVx9CxZvbDQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789202391; c=relaxed/simple;
-	bh=EEVyZNxdQMih2m3fK//hwusdpt1/wzHYnu2NesmGeto=;
+	s=arc-20240116; t=1789202396; c=relaxed/simple;
+	bh=Qv5tpvYoiKXTfVqELpX9sIeVHDxYRDgBYGjLNwubWNk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZYzuFEXGa56oPuA4v+qLQvYpp1M8Nc6IcLgyLLG+MBSxjZpKzwVBZP83lNZ3f0CK4aMub4yo9yQsOphXSrjRUF41Y/oDp2/K7dQbUAgFzuOK9+MWvWCaHQ2mI/G38v1Sk/BcXXR1eHw89wXv+RjdQvuM/hLCp1CvaMZvG/etjX0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NHeIf4ys; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pV7zrgEm5b8kYys4jT9rpmtMWIxoW2ptINvY14nFmkfVcrKF5mm+xU9QBJEhNcC4U2jcRkiHZfM7P6J1q7iIH4BcKp7/cmIXuEnmYIL7JGUwANNAgUsrbXZj3omdNIzC1OyMaYmMiNfiPYJq5LH+0DBUKe/4Zj2QhXEGD1yyMqw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IsasG/8B; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NHeIf4ys"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94BB21F000FF;
-	Sat, 12 Sep 2026 08:39:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IsasG/8B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E34E1F000FF;
+	Sat, 12 Sep 2026 08:39:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789202390;
-	bh=TbWFSI4sUP4lcnBnrH8p33K18S2Bb/L94gXfprBn18g=;
+	s=korg; t=1789202395;
+	bh=MtR4aAz3SIjCfYJLQrXz2zBMRHmz12JmbpY6iZKtHEc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NHeIf4ysMagiRZp9eFyTvKC7U+YXHTW+BofVz1MUfS7y8P7BjpWpngX8FqMmR6opf
-	 HA+Zeg8U+JVcsRd3H6Wi9skSZ+jtqvbuOEFmiPbzbXeEvqq632pjfI9NLpF+4+NG3e
-	 RGSofGa/VYy7xoMBlewZwCTm4YKeBCM+5kwfaX5U=
+	b=IsasG/8BvJzBxgcO3/0R7Kru/07rwCN9MsV3lNUA90T5eqTcJYy/etD2xGv73YoxA
+	 bMK4ZWKZNhp5WMTSDQns8cBexsE6ChCcAl2FvqTLhLvHc3GuaJrjU2nqK3v2bVwvgQ
+	 wDWHJbZbtYsKJ0pl2VCt2IX48NQJTyVi/ITJyDDs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
+	Esteban Urrutia <esteuwu@proton.me>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1140/1815] cpufreq: imx6q: fix out-of-bounds write when probed more than once
-Date: Sat, 12 Sep 2026 08:48:10 +0200
-Message-ID: <20260912065715.781327177@linuxfoundation.org>
+Subject: [PATCH 7.2 1187/1815] phy: qcom: qmp-pcie: Add pcs_lane1 offset to V5 offsets
+Date: Sat, 12 Sep 2026 08:48:57 +0200
+Message-ID: <20260912065716.877852062@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,62 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Esteban Urrutia <esteuwu@proton.me>
 
-[ Upstream commit 8c3afcf27fa4582c1ab912503dc8a4ebb8dc0f82 ]
+[ Upstream commit f8b4493d5e7e19682abcf538a9faad012b5ef69e ]
 
-imx6_soc_volt is allocated fresh on every probe, sized to the number of
-ARM OPPs:
+Some SoCs such as SM8475 write data to registers using this offset,
+specifically SW_CTRL2 and MX_CTRL2.
+Add pcs_lane1 offset to V5 offsets to support this.
 
-	imx6_soc_volt = devm_kcalloc(cpu_dev, num, sizeof(*imx6_soc_volt),
-				     GFP_KERNEL);
-
-but it is filled through soc_opp_count, which has static storage and is
-never reset. A second bind after an unbind keeps indexing from where the
-first one stopped, and writes past the end of the new array.
-
-Unbinding and rebinding the driver on qemu's mcimx6ul-evk, under KASAN:
-
-  BUG: KASAN: slab-out-of-bounds in imx6q_cpufreq_probe+0x3b0/0xa34
-  Write of size 4 at addr c5e90480 by task binder/73
-   imx6q_cpufreq_probe from platform_probe+0x88/0xe4
-   platform_probe from really_probe+0x108/0x384
-   bind_store from kernfs_fop_write_iter+0x1b4/0x28c
-
-The write lands one u32 past the end of the allocation.
-
-soc_opp_count is only read a few lines below the loop that fills it, so it
-never needed static storage. Make it a local.
-
-Fixes: b4573d1d657a ("cpufreq: imx6q: correct VDDSOC/PU voltage scaling when cpufreq is changed")
-Assisted-by: Claude:claude-opus-5
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+Signed-off-by: Esteban Urrutia <esteuwu@proton.me>
+Fixes: 0fd0b31965b0 ("phy: qualcomm: qmp-pcie: add support for SAR2130P")
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260715-sm8475-bup-pcie-v2-2-48bd91a19abf@proton.me
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/imx6q-cpufreq.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/cpufreq/imx6q-cpufreq.c b/drivers/cpufreq/imx6q-cpufreq.c
-index 8110c95059e0e..731f5721ff1ed 100644
---- a/drivers/cpufreq/imx6q-cpufreq.c
-+++ b/drivers/cpufreq/imx6q-cpufreq.c
-@@ -55,7 +55,6 @@ static unsigned int max_freq;
- static unsigned int transition_latency;
- 
- static u32 *imx6_soc_volt;
--static u32 soc_opp_count;
- 
- static int imx6q_set_target(struct cpufreq_policy *policy, unsigned int index)
- {
-@@ -330,6 +329,7 @@ static int imx6q_cpufreq_probe(struct platform_device *pdev)
- 	const struct property *prop;
- 	const __be32 *val;
- 	u32 nr, i, j;
-+	u32 soc_opp_count = 0;
- 
- 	cpu_dev = get_cpu_device(0);
- 	if (!cpu_dev) {
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+index d3effad7a074b..3618812e84d5f 100644
+--- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
++++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+@@ -3554,6 +3554,7 @@ static const struct qmp_pcie_offsets qmp_pcie_offsets_v5 = {
+ 	.pcs_misc	= 0x0600,
+ 	.tx		= 0x0e00,
+ 	.rx		= 0x1000,
++	.pcs_lane1	= 0x1400,
+ 	.tx2		= 0x1600,
+ 	.rx2		= 0x1800,
+ };
 -- 
 2.53.0
 
