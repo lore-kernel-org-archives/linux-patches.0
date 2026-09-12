@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 611593750D6;
-	Sat, 12 Sep 2026 09:37:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B435C416870;
+	Sat, 12 Sep 2026 09:37:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789205838; cv=none; b=XYCSQo83LeB2Lq8yABmbTAc93xHu6AqkHh/VUub2WG70i83D8dcFv+ZyOBF9QqS++ZQYKGZlBQbO2stShGdV7i6aUa5cwE/VTStH98nWbyBcjgIczmPIE+9BXPCuTZwmhrY8oITN0kHJdScLUnVM3Jmgy8Ei44MSz3Qnw/gW+7k=
+	t=1789205845; cv=none; b=HBLHkC/HyEHzAmrmesVEZVL+aGtlVLLiUis8+iJBV0iYKbBItSEofIwqneBjBpb7WHElcVy0aIICiaRMzVTRwJquu/MTwmAYO1yPomnXCNPmlUG7qhLMiRNtve4xRcAbedvU9Unm3f0zfgUz5m+iJNw71+yHbIlJp+H70+cim0U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789205838; c=relaxed/simple;
-	bh=u+z0WwHTVOwB/+JaeMFSB92zsUxQFZaO4FE+lBpHmdQ=;
+	s=arc-20240116; t=1789205845; c=relaxed/simple;
+	bh=pPETfpyUwBYfTm4ytEUTSn/aReAd1bT6ma3RBHNLGTE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o1KJn8vxkjycvNBTcJAuKU+HTzi9prLAJyGyovx+2BnEa/+oItyqAw4hYiXhAnG4HPhLOneA791N9lN09y/bSQTGzHtCynOsKy81IGoXTwr48fl8NBVgkp5WCxQByPP9TDps3RxaioRF8YRQ4ekPWvyblLvhN1RnqhMBXbhoogI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E3qXnJ36; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HF1gkGoqpoxBPpFjJ5e4yWh3qQRu8PNThI6zXg7OyCL7RBtxiDPk068Dn6i/bcJELPWKPTig5AeGZVZkOOaz1XFGXIP0hOfplxoA1quQvK0BXdrj5wguFxeXOU73PrnMi4kiTGHEcRT1hiHezAIBveip5P0bw0za3hosM/jxLQk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XnyVsPET; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E3qXnJ36"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3B311F000FF;
-	Sat, 12 Sep 2026 09:37:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XnyVsPET"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACA321F000FF;
+	Sat, 12 Sep 2026 09:37:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789205837;
-	bh=yGSJmxlIG9ojhHdLMyqcl7dVau9OISb7HelQg7kSz9k=;
+	s=korg; t=1789205841;
+	bh=8HsFTpvdayAq0KCIpa6MXFrwGZEvHirMHU2YgSpZ5p4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=E3qXnJ36PXWROEU4eodKRobpUILsvBwa5bF1ukXQaQr/mNIZsM7Rz7LPEix1/YL1f
-	 Lzo4/raYsP8L2WsUdsEHUgI0StjOSNfkXfivCchDBtu/ig90neJzBRdk9S16+dp2A6
-	 xb30aaDWHnjWh55JvQ8lDVuZniFgBREoKxPnW6OE=
+	b=XnyVsPETBy5HkZ/flpVNVGt9ZvZhCWwoa3Fu6zLR2XiPsLFIfj/788NySiGrbxClg
+	 GAGe+QV4FSmjHHQkrNq+R4uL9CoHHoQjiWXhVsZJMasQ9gnr0/nE6cU2WHmMOKJnf+
+	 cYON4huQGOeDJho4f1edUDwv9hbsAusHkSBA3CFc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Upton <oupton@kernel.org>,
+	sashiko-bot@kernel.org,
 	Marc Zyngier <maz@kernel.org>,
+	Yuan Yao <yaoyuan@linux.alibaba.com>,
+	Oliver Upton <oupton@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0082/1518] KVM: arm64: nv: Fully update VNCR fixmap state in kvm_translate_vncr()
-Date: Sat, 12 Sep 2026 08:37:31 +0200
-Message-ID: <20260912065625.313296397@linuxfoundation.org>
+Subject: [PATCH 6.18 0083/1518] KVM: arm64: Handle VNCR TLB invalidation race with vcpu_put() VNCR unmapping
+Date: Sat, 12 Sep 2026 08:37:32 +0200
+Message-ID: <20260912065625.336805303@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,79 +53,136 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Upton <oupton@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
 
-[ Upstream commit 5949004d7032767e8fde1e8c986a33f241b2a192 ]
+[ Upstream commit 38640bc32be3fcf9526d477155bc19d3f146231f ]
 
-kvm_translate_vncr() first invalidates the pseudo-TLB entry and
-corresponding fixmap in anticipation of installing a new translation.
+While VNCR TLB invalidation always occurs under the MMU lock,
+vcpu_put() doesn't, while it unmaps the VNCR page.
 
-While the fixmap invalidation does clear the mapping from host stage-1,
-it does not clear the L1_VNCR_MAPPED flag. Depending on the state of the
-VNCR TLB at vcpu_put(), this could potentially precipitate a BUG_ON() if
-vt->cpu is reset.
+The problem is that the invalidation evaluates vncr_tlb::cpu to
+decide whether an unmapping needs to take place (cpu != -1) before
+performing it. On the other hand, this_cpu_reset_vncr_fixmap()
+unconditionally unmaps if L1_VNCR_MAPPED is set.
 
-Share a helper with kvm_vcpu_put_hw_mmu(), ensuring that KVM's view of
-the VNCR fixmap is in sync with the state of the VNCR TLB. Give it a
-slightly verbose name to make it obvious that it is meant to be used
-local to a CPU, unlike other VNCR TLB maintenance.
+These two obviously can race, with a TOCTOU pattern on the TLBI
+path, and a BUG_ON() on the vcpu_put() path. And the two can end-up
+calling vncr_fixmap(-1), with extra lethal effects.
 
-Fixes: 069a05e535496 ("KVM: arm64: nv: Handle VNCR_EL2-triggered faults")
-Signed-off-by: Oliver Upton <oupton@kernel.org>
-Link: https://patch.msgid.link/20260602235450.103057-3-oupton@kernel.org
+Move the reset of vncr_tlb::cpu to -1 to a common function, and make
+this update atomic so that only a single thread can reset the field
+and perform the corresponding unmap. The vcpu_put() still need to
+unconditionally unmap the current VNCR to close another ugly race.
+
+Finally, the assignment of vncr_tlb::cpu is moved to be kept in sync
+with the actual mapping, similar to L1_VNCR_MAPPED being set.
+
+Fixes: 7270cc9157f47 ("KVM: arm64: nv: Handle VNCR_EL2 invalidation from MMU notifiers")
+Reported-by: sashiko-bot@kernel.org
+Link: https://lore.kernel.org/r/20260801130237.0FD8F1F00ACA@smtp.kernel.org
 Signed-off-by: Marc Zyngier <maz@kernel.org>
-Stable-dep-of: 38640bc32be3 ("KVM: arm64: Handle VNCR TLB invalidation race with vcpu_put() VNCR unmapping")
+Cc: stable@vger.kernel.org
+Reviewed-by: Yuan Yao <yaoyuan@linux.alibaba.com>
+Link: https://patch.msgid.link/20260806091026.620700-6-maz@kernel.org
+Signed-off-by: Oliver Upton <oupton@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kvm/nested.c |   27 +++++++++++++++++----------
- 1 file changed, 17 insertions(+), 10 deletions(-)
+ arch/arm64/kvm/nested.c |   42 ++++++++++++++++++++++++++++++++----------
+ 1 file changed, 32 insertions(+), 10 deletions(-)
 
 --- a/arch/arm64/kvm/nested.c
 +++ b/arch/arm64/kvm/nested.c
-@@ -771,18 +771,24 @@ void kvm_vcpu_load_hw_mmu(struct kvm_vcp
+@@ -27,7 +27,7 @@ struct vncr_tlb {
+ 	bool			hpa_writable;
+ 
+ 	/* -1 when not mapped on a CPU */
+-	int			cpu;
++	atomic_t		cpu;
+ 
+ 	/*
+ 	 * true if the TLB is valid. Can only be changed with the
+@@ -771,16 +771,40 @@ void kvm_vcpu_load_hw_mmu(struct kvm_vcp
  	}
  }
  
-+static void this_cpu_reset_vncr_fixmap(struct kvm_vcpu *vcpu)
++/*
++ * Unmapping an L1 VNCR can happen concurrently without the mmu lock being
++ * effective (vcpu_put() vs TLBI handling). The atomic_xchg below ensures
++ * that only one CPU sets it to -1 while getting a valid CPU number back.
++ */
++static int unmap_l1_vncr(struct vncr_tlb *vt)
 +{
-+	if (!host_data_test_flag(L1_VNCR_MAPPED))
-+		return;
++	int cpu = atomic_xchg_relaxed(&vt->cpu, -1);
 +
-+	BUG_ON(vcpu->arch.vncr_tlb->cpu != smp_processor_id());
-+	BUG_ON(is_hyp_ctxt(vcpu));
++	if (cpu != -1)
++		clear_fixmap(vncr_fixmap(cpu));
 +
-+	clear_fixmap(vncr_fixmap(vcpu->arch.vncr_tlb->cpu));
-+	vcpu->arch.vncr_tlb->cpu = -1;
-+	host_data_clear_flag(L1_VNCR_MAPPED);
-+	atomic_dec(&vcpu->kvm->arch.vncr_map_count);
++	return cpu;
 +}
 +
- void kvm_vcpu_put_hw_mmu(struct kvm_vcpu *vcpu)
+ static void this_cpu_reset_vncr_fixmap(struct kvm_vcpu *vcpu)
  {
- 	/* Unconditionally drop the VNCR mapping if we have one */
--	if (host_data_test_flag(L1_VNCR_MAPPED)) {
--		BUG_ON(vcpu->arch.vncr_tlb->cpu != smp_processor_id());
--		BUG_ON(is_hyp_ctxt(vcpu));
+ 	if (!host_data_test_flag(L1_VNCR_MAPPED))
+ 		return;
+ 
+-	BUG_ON(vcpu->arch.vncr_tlb->cpu != smp_processor_id());
+ 	BUG_ON(is_hyp_ctxt(vcpu));
+ 
+-	clear_fixmap(vncr_fixmap(vcpu->arch.vncr_tlb->cpu));
+-	vcpu->arch.vncr_tlb->cpu = -1;
++	/*
++	 * Unconditionally unmap the local VNCR if we have lost the race
++	 * against a concurrent TLBI. Otherwise we could end-up running
++	 * another vcpu with VNCR still mapped if the TLBI thread is
++	 * preempted between the exchange and the clear_fixmap().
++	 *
++	 * Note that we do not care about the TLBI nuking the fixmap behind
++	 * the back of an running vcpu. This will only generate a fault and
++	 * possibly a retranslation.
++	 */
++	if (unmap_l1_vncr(vcpu->arch.vncr_tlb) == -1)
++		clear_fixmap(vncr_fixmap(smp_processor_id()));
+ 	host_data_clear_flag(L1_VNCR_MAPPED);
+ 	atomic_dec(&vcpu->kvm->arch.vncr_map_count);
+ }
+@@ -870,8 +894,7 @@ u16 get_asid_by_regime(struct kvm_vcpu *
+ static void invalidate_vncr(struct vncr_tlb *vt)
+ {
+ 	vt->valid = false;
+-	if (vt->cpu != -1)
+-		clear_fixmap(vncr_fixmap(vt->cpu));
++	unmap_l1_vncr(vt);
+ }
+ 
+ static bool vncr_tlb_intersects(struct vncr_tlb *vt, u64 addr,
+@@ -1321,7 +1344,7 @@ static int kvm_translate_vncr(struct kvm
+ 		vt->hpa = pfn << PAGE_SHIFT;
+ 		vt->hpa_writable = writable;
+ 		vt->valid = true;
+-		vt->cpu = -1;
++		atomic_set(&vt->cpu, -1);
+ 
+ 		kvm_make_request(KVM_REQ_MAP_L1_VNCR_EL2, vcpu);
+ 		kvm_release_faultin_page(vcpu->kvm, page, false, vt->wr.pw && vt->hpa_writable);
+@@ -1452,8 +1475,6 @@ static void kvm_map_l1_vncr(struct kvm_v
+ 	if (vt->wr.nG && get_asid_by_regime(vcpu, TR_EL20) != vt->wr.asid)
+ 		return;
+ 
+-	vt->cpu = smp_processor_id();
 -
--		clear_fixmap(vncr_fixmap(vcpu->arch.vncr_tlb->cpu));
--		vcpu->arch.vncr_tlb->cpu = -1;
--		host_data_clear_flag(L1_VNCR_MAPPED);
--		atomic_dec(&vcpu->kvm->arch.vncr_map_count);
--	}
-+	this_cpu_reset_vncr_fixmap(vcpu);
- 
- 	/*
- 	 * Keep a reference on the associated stage-2 MMU if the vCPU is
-@@ -1244,7 +1250,8 @@ static int kvm_translate_vncr(struct kvm
- 	 * We also prepare the next walk wilst we're at it.
+ 	if (vt->hpa_writable && vt->wr.pw && vt->wr.pr)
+ 		prot = PAGE_KERNEL;
+ 	else if (vt->wr.pr)
+@@ -1468,7 +1489,8 @@ static void kvm_map_l1_vncr(struct kvm_v
+ 	 * FIXME: WO doesn't work at all, need POE support in the kernel.
  	 */
- 	scoped_guard(write_lock, &vcpu->kvm->mmu_lock) {
--		invalidate_vncr(vt);
-+		this_cpu_reset_vncr_fixmap(vcpu);
-+		vt->valid = false;
- 
- 		vt->wi = (struct s1_walk_info) {
- 			.regime	= TR_EL20,
+ 	if (pgprot_val(prot) != pgprot_val(PAGE_NONE)) {
+-		__set_fixmap(vncr_fixmap(vt->cpu), vt->hpa, prot);
++		atomic_set(&vt->cpu, smp_processor_id());
++		__set_fixmap(vncr_fixmap(atomic_read(&vt->cpu)), vt->hpa, prot);
+ 		host_data_set_flag(L1_VNCR_MAPPED);
+ 		atomic_inc(&vcpu->kvm->arch.vncr_map_count);
+ 	}
 
 
