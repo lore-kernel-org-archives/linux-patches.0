@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79A3E3DB31A;
-	Sat, 12 Sep 2026 12:57:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32C7342882B;
+	Sat, 12 Sep 2026 12:57:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789217846; cv=none; b=jnnxGyifrlKb/0PgnwIgBZqjjtrQDWE+WIuPfjtO+8TCIzvismU0AoUYQFlYKxEywtGS6W+qvF1buL6bvFRhgpZAm+/NhMcp2fkAxIB8Mep1xb9IbI9ITwDa+yMFeU9f3V8+GRf5t7i3eAQXFzq/8qwpLCLiDLSXbpopYnTks2c=
+	t=1789217851; cv=none; b=lXYCG7nF+bsnEoNbHn7y+nwBwACBuaJBXc+5WPorRtRR9ZLy3u5duDIcPCZZDZyXjw2bGYc/GLzqVSVSSzGXpIrnnqzJqdKGd70tz7x/DapC2eYMUhhGtRx9NA2dfE6gH0KwoZKkV7w2kJF0tofmpcmb7EBE0FqWX7Uj4+1npeM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789217846; c=relaxed/simple;
-	bh=W1zExpLmg99NOz3E6HGULmMpK+rceWnWhit0fi74WlY=;
+	s=arc-20240116; t=1789217851; c=relaxed/simple;
+	bh=6BFRSMmleX5oqvrVFz+Z5okcNl1621HIeD+pRIyQLtc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BZ/R15QDgm7PX1rclyMT1zRabekOVcHJUbVqej+qVd+W5VwExA+w0U44ePgE743s3yUpUbSs2KEgOOVDl8xGVq+K33t+KDBqUzAqAKNpntuQdjc+xUY30znlY8on2vu3EqBFNOf9tSN+qAWuUPl7q6ORFKL85bXZvsMQrtQP0YI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yNHjOquR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CTOukQzbwbG2tpqRCOYoFfLwwIfH72PSevA4FafvQ8PZL6EBeYqH9B3KrG8ualr4v9I6158xEz7PTSVI+KJeKGaNDis97l36lS3Ih1rEK/9UGkQ35qgI+z1iNHL88Fy54lAoKD8P1tyjupsTyjUCL1AHln5R63KHvxbQIp4IgH0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aVoKZxlx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yNHjOquR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 981BC1F000FF;
-	Sat, 12 Sep 2026 12:57:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aVoKZxlx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36FFD1F000FF;
+	Sat, 12 Sep 2026 12:57:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789217845;
-	bh=Ihi+0s9QGXYyrGLau4nPEUcj83a0NBGZDXK9iw5N6Aw=;
+	s=korg; t=1789217850;
+	bh=/wdOvYWzoO9l8TGWuosIyxicvmxJ6IpAP7VwksN1VHo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yNHjOquRXtYIIX7+J/Q9CIeU08DgfnUPUGTz8OacQK5AmKb4c4h83dL82cyErHDIY
-	 oWVoV1vmkY/rZr02UouBxsZpzZN7J+cYDIzyeGI0tkCrdRT9zmLQAYP7xeOSh0KHOJ
-	 boYEvxXrnkG3Y2Bep5wUIMY/0GCKCJXaNBk/O+1s=
+	b=aVoKZxlxkT/pvGkd0Ajjft9pdzpX9E6iVzGRzP3r6eZYj7njzbe47t0rIHoeNSb1T
+	 lApQliUPDSeMyg+xiSDrpDyQZihCA/0q01i24U9GRA2Ou6/RdaEior6VOF4asXnaIP
+	 ecFJDjkwnDdFRD2SThKg5OiE1wRLQeSwlAokOqMo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Himanshu Madhani <himanshu.madhani@oracle.com>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Johan Hovold <johan@kernel.org>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0980/1376] scsi: sd: Move the sd_config_discard() function definition
-Date: Sat, 12 Sep 2026 08:56:46 +0200
-Message-ID: <20260912065629.408528307@linuxfoundation.org>
+Subject: [PATCH 6.12 0971/1376] Bluetooth: btusb: refactor endpoint lookup
+Date: Sat, 12 Sep 2026 08:56:37 +0200
+Message-ID: <20260912065629.205856108@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -54,164 +51,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit c0daf4836114fcbdf64bf817cab00b75ce712945 ]
+[ Upstream commit 5c31aaa05624b54dc18c9e313bcee5a88c025593 ]
 
-Move the sd_config_discard() function definition such that its
-forward declaration can be removed.
+Use the common USB helper for looking up bulk and interrupt endpoints
+instead of open coding.
 
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://patch.msgid.link/20260114175054.4118163-3-bvanassche@acm.org
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Stable-dep-of: bb31844d88b7 ("scsi: sd: Fix special_vec mempool leak when scsi_alloc_sgtables() fails")
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Stable-dep-of: 33c6a8d01889 ("Bluetooth: btusb: QCA: Fix populating devcoredump fields on unenabled devices")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/sd.c | 114 +++++++++++++++++++++++-----------------------
- 1 file changed, 56 insertions(+), 58 deletions(-)
+ drivers/bluetooth/btusb.c | 51 ++++++---------------------------------
+ 1 file changed, 8 insertions(+), 43 deletions(-)
 
-diff --git a/drivers/scsi/sd.c b/drivers/scsi/sd.c
-index 01e8d71c02547..d5f8701659a5a 100644
---- a/drivers/scsi/sd.c
-+++ b/drivers/scsi/sd.c
-@@ -102,8 +102,6 @@ MODULE_ALIAS_SCSI_DEVICE(TYPE_ZBC);
- 
- #define SD_MINORS	16
- 
--static void sd_config_discard(struct scsi_disk *sdkp, struct queue_limits *lim,
--		unsigned int mode);
- static void sd_config_write_same(struct scsi_disk *sdkp,
- 		struct queue_limits *lim);
- static int  sd_revalidate_disk(struct gendisk *);
-@@ -120,6 +118,62 @@ static const char *sd_cache_types[] = {
- 	"write back, no read (daft)"
- };
- 
-+static void sd_disable_discard(struct scsi_disk *sdkp)
-+{
-+	sdkp->provisioning_mode = SD_LBP_DISABLE;
-+	blk_queue_disable_discard(sdkp->disk->queue);
-+}
-+
-+static void sd_config_discard(struct scsi_disk *sdkp, struct queue_limits *lim,
-+		unsigned int mode)
-+{
-+	unsigned int logical_block_size = sdkp->device->sector_size;
-+	unsigned int max_blocks = 0;
-+
-+	lim->discard_alignment = sdkp->unmap_alignment * logical_block_size;
-+	lim->discard_granularity = max(sdkp->physical_block_size,
-+			sdkp->unmap_granularity * logical_block_size);
-+	sdkp->provisioning_mode = mode;
-+
-+	switch (mode) {
-+
-+	case SD_LBP_FULL:
-+	case SD_LBP_DISABLE:
-+		break;
-+
-+	case SD_LBP_UNMAP:
-+		max_blocks = min_not_zero(sdkp->max_unmap_blocks,
-+					  (u32)SD_MAX_WS16_BLOCKS);
-+		break;
-+
-+	case SD_LBP_WS16:
-+		if (sdkp->device->unmap_limit_for_ws)
-+			max_blocks = sdkp->max_unmap_blocks;
-+		else
-+			max_blocks = sdkp->max_ws_blocks;
-+
-+		max_blocks = min_not_zero(max_blocks, (u32)SD_MAX_WS16_BLOCKS);
-+		break;
-+
-+	case SD_LBP_WS10:
-+		if (sdkp->device->unmap_limit_for_ws)
-+			max_blocks = sdkp->max_unmap_blocks;
-+		else
-+			max_blocks = sdkp->max_ws_blocks;
-+
-+		max_blocks = min_not_zero(max_blocks, (u32)SD_MAX_WS10_BLOCKS);
-+		break;
-+
-+	case SD_LBP_ZERO:
-+		max_blocks = min_not_zero(sdkp->max_ws_blocks,
-+					  (u32)SD_MAX_WS10_BLOCKS);
-+		break;
-+	}
-+
-+	lim->max_hw_discard_sectors = max_blocks *
-+		(logical_block_size >> SECTOR_SHIFT);
-+}
-+
- static void sd_set_flush_flag(struct scsi_disk *sdkp,
- 		struct queue_limits *lim)
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index 75e84a7e5abfd..4299ba57d48f8 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -3597,31 +3597,14 @@ static inline int __set_diag_interface(struct hci_dev *hdev)
  {
-@@ -835,62 +889,6 @@ static unsigned char sd_setup_protect_cmnd(struct scsi_cmnd *scmd,
- 	return protect;
- }
+ 	struct btusb_data *data = hci_get_drvdata(hdev);
+ 	struct usb_interface *intf = data->diag;
+-	int i;
++	int ret;
  
--static void sd_disable_discard(struct scsi_disk *sdkp)
--{
--	sdkp->provisioning_mode = SD_LBP_DISABLE;
--	blk_queue_disable_discard(sdkp->disk->queue);
--}
+ 	if (!data->diag)
+ 		return -ENODEV;
+ 
+-	data->diag_tx_ep = NULL;
+-	data->diag_rx_ep = NULL;
 -
--static void sd_config_discard(struct scsi_disk *sdkp, struct queue_limits *lim,
--		unsigned int mode)
--{
--	unsigned int logical_block_size = sdkp->device->sector_size;
--	unsigned int max_blocks = 0;
+-	for (i = 0; i < intf->cur_altsetting->desc.bNumEndpoints; i++) {
+-		struct usb_endpoint_descriptor *ep_desc;
 -
--	lim->discard_alignment = sdkp->unmap_alignment * logical_block_size;
--	lim->discard_granularity = max(sdkp->physical_block_size,
--			sdkp->unmap_granularity * logical_block_size);
--	sdkp->provisioning_mode = mode;
+-		ep_desc = &intf->cur_altsetting->endpoint[i].desc;
 -
--	switch (mode) {
+-		if (!data->diag_tx_ep && usb_endpoint_is_bulk_out(ep_desc)) {
+-			data->diag_tx_ep = ep_desc;
+-			continue;
+-		}
 -
--	case SD_LBP_FULL:
--	case SD_LBP_DISABLE:
--		break;
--
--	case SD_LBP_UNMAP:
--		max_blocks = min_not_zero(sdkp->max_unmap_blocks,
--					  (u32)SD_MAX_WS16_BLOCKS);
--		break;
--
--	case SD_LBP_WS16:
--		if (sdkp->device->unmap_limit_for_ws)
--			max_blocks = sdkp->max_unmap_blocks;
--		else
--			max_blocks = sdkp->max_ws_blocks;
--
--		max_blocks = min_not_zero(max_blocks, (u32)SD_MAX_WS16_BLOCKS);
--		break;
--
--	case SD_LBP_WS10:
--		if (sdkp->device->unmap_limit_for_ws)
--			max_blocks = sdkp->max_unmap_blocks;
--		else
--			max_blocks = sdkp->max_ws_blocks;
--
--		max_blocks = min_not_zero(max_blocks, (u32)SD_MAX_WS10_BLOCKS);
--		break;
--
--	case SD_LBP_ZERO:
--		max_blocks = min_not_zero(sdkp->max_ws_blocks,
--					  (u32)SD_MAX_WS10_BLOCKS);
--		break;
+-		if (!data->diag_rx_ep && usb_endpoint_is_bulk_in(ep_desc)) {
+-			data->diag_rx_ep = ep_desc;
+-			continue;
+-		}
 -	}
 -
--	lim->max_hw_discard_sectors = max_blocks *
--		(logical_block_size >> SECTOR_SHIFT);
--}
--
- static void *sd_set_special_bvec(struct request *rq, unsigned int data_len)
+-	if (!data->diag_tx_ep || !data->diag_rx_ep) {
++	ret = usb_find_common_endpoints(intf->cur_altsetting, &data->diag_rx_ep,
++					&data->diag_tx_ep, NULL, NULL);
++	if (ret) {
+ 		bt_dev_err(hdev, "invalid diagnostic descriptors");
+ 		return -ENODEV;
+ 	}
+@@ -3822,12 +3805,11 @@ static const struct file_operations force_poll_sync_fops = {
+ static int btusb_probe(struct usb_interface *intf,
+ 		       const struct usb_device_id *id)
  {
- 	struct page *page;
+-	struct usb_endpoint_descriptor *ep_desc;
+ 	struct gpio_desc *reset_gpio;
+ 	struct btusb_data *data;
+ 	struct hci_dev *hdev;
+ 	unsigned ifnum_base;
+-	int i, err, priv_size;
++	int err, priv_size;
+ 
+ 	BT_DBG("intf %p id %p", intf, id);
+ 
+@@ -3864,26 +3846,9 @@ static int btusb_probe(struct usb_interface *intf,
+ 	if (!data)
+ 		return -ENOMEM;
+ 
+-	for (i = 0; i < intf->cur_altsetting->desc.bNumEndpoints; i++) {
+-		ep_desc = &intf->cur_altsetting->endpoint[i].desc;
+-
+-		if (!data->intr_ep && usb_endpoint_is_int_in(ep_desc)) {
+-			data->intr_ep = ep_desc;
+-			continue;
+-		}
+-
+-		if (!data->bulk_tx_ep && usb_endpoint_is_bulk_out(ep_desc)) {
+-			data->bulk_tx_ep = ep_desc;
+-			continue;
+-		}
+-
+-		if (!data->bulk_rx_ep && usb_endpoint_is_bulk_in(ep_desc)) {
+-			data->bulk_rx_ep = ep_desc;
+-			continue;
+-		}
+-	}
+-
+-	if (!data->intr_ep || !data->bulk_tx_ep || !data->bulk_rx_ep) {
++	err = usb_find_common_endpoints(intf->cur_altsetting, &data->bulk_rx_ep,
++					&data->bulk_tx_ep, &data->intr_ep, NULL);
++	if (err) {
+ 		kfree(data);
+ 		return -ENODEV;
+ 	}
 -- 
 2.53.0
 
