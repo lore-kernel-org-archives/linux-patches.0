@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB53C3C0A15;
-	Sat, 12 Sep 2026 10:07:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 894363C0A15;
+	Sat, 12 Sep 2026 10:07:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789207671; cv=none; b=kpjJ257McKRhBV0o8moKxCgEN+7ZVcPguIf/JP7Td5/ds2yLWAoIhNUp3w98aQOEl7ERS52FGKgjo3WK0gui3Mx5MTmCYAkJK7HY4nTWggWLae0Oa7lwVrASMsjH2GWeBJFSjvZo9HC8cMq0gqnUQ4zP7O4lqk5Hcl4l3J6wsd8=
+	t=1789207676; cv=none; b=N7icxpAYqLm2B5R0moOrOe5oc7Ye1Zy1JEW4vI6rlv8Fzo7bGw6T6XqwKNZkr4ErfRVbZie+Vpfwe7XcgEWL4ylwDAWtsw8YjOLke1yRC78w/QLgWKVXsRB8PLZvtwwzxUzY38zxw6r4R4GFXBnrSXkkoviK2berlMJM3awkVvQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789207671; c=relaxed/simple;
-	bh=flj8llYNm7rl1Pk4WYLpnFcNysF9QpoXJVF9EPgBbJM=;
+	s=arc-20240116; t=1789207676; c=relaxed/simple;
+	bh=92Diz5gkQS7m9QBLfnGgzLBVNctZsZYdrW0vmadk4s8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UCh0RDTa/n6A2Pp3b/NMyMlwDcQkWvkUvnaosmROwkXporhczYFO0AcvwezCizyLaikEva9LUma1VvSXPOcnJzJmsLuQnfQf515z+UsxeNDZkAwi++BGhHsHFRtE836oO1JT1mVstqITW4tq4H8Koe/Dal7nxbNWiXl70kxhN3o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qh8UVUo0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LScW0XYbfueAmEbO4WkjzJokSsvDFBBhXW0IoIGm+G4n7n2hYRErMpV79yGck2qdCCxzwXgWZrkhABr00cXV999e7DEySQZmEcTA0F/HXDH5IHzwn0rve4gXbe4tDg4YqAOjBOlxKwG5QxEpCEq0tSBSpmV4JJjtN0I6tjw0Vho=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O6VE+hPf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qh8UVUo0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 769261F000FF;
-	Sat, 12 Sep 2026 10:07:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O6VE+hPf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 167DF1F000FF;
+	Sat, 12 Sep 2026 10:07:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789207670;
-	bh=ZYAzuq7XSQvGrIvz/OHWDDCnTqNqsXtcocN/ZX9eoP4=;
+	s=korg; t=1789207675;
+	bh=au9uXw8VfVTpGhj7ZCKEfAxM7TJ8qaSKcMn1EWh/PTA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qh8UVUo005MFBhbHaF7hN2rS7YdGYehEjpsJy6mDK5jxNw1+o5pyp9Bk0yxnVo9JN
-	 sNmuvu4Axu+S1bJvQB3otONqd1apwAQNcOZF8Neyipu6KwEE+UwzIKZoiBrVVWAW31
-	 c5IZ4OZnKjadMFhcGTL0xSb8ITbpGo15rdR54CsU=
+	b=O6VE+hPfsO4oiJAMrZLliXOO+ZN0806S3cX23FVWRu6RBChNupQwEY6brdCKZfxrF
+	 tvRPqV5KeFmPaXZKXocC/cCdJrdvuWisGEv2EguyHNOX95Nui++KzGnjnrYmCNcwLh
+	 QaPKUsaH7gEMealqGkGYQGYW9AsC0BqML63TP9tQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nazar Kazakov <nazar.kazakov@codethink.co.uk>,
-	Ian Rogers <irogers@google.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Abel Vesa <abel.vesa@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0417/1518] perf jevents: Add more components to the metric sorting order
-Date: Sat, 12 Sep 2026 08:43:06 +0200
-Message-ID: <20260912065632.886714361@linuxfoundation.org>
+Subject: [PATCH 6.18 0418/1518] clk: qcom: gcc-glymur: Enable runtime PM
+Date: Sat, 12 Sep 2026 08:43:07 +0200
+Message-ID: <20260912065632.908208534@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,64 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Abel Vesa <abel.vesa@oss.qualcomm.com>
 
-[ Upstream commit 557f8b3ca8c8e58d5bc3084734bc7a470b043922 ]
+[ Upstream commit 8d4f342369d0d77f32a0211692442d3b6d455872 ]
 
-Nazar Kazakov reported non-deterministic builds due to the metrics
-being reordered in the jevents.py output. The metrics were largely
-only being sorted by name, add in the expressions and descriptions.
+Enable runtime PM for the controller so the common GCC probe path resumes
+the attached domain while registering clocks, resets and GDSCs.
 
-Reported-by: Nazar Kazakov <nazar.kazakov@codethink.co.uk>
-Closes: https://lore.kernel.org/linux-perf-users/20260706175624.692736-1-nazar.kazakov@codethink.co.uk/
-Fixes: 40769665b63d ("perf jevents: Parse metrics during conversion")
-Tested-by: Nazar Kazakov <nazar.kazakov@codethink.co.uk>
-Signed-off-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+This lets GDSC consumers propagate their votes through the GCC provider to
+the CX parent domain.
+
+Fixes: efe504300a17 ("clk: qcom: gcc: Add support for Global Clock Controller")
+Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260715-glymur-fix-gcc-cx-scaling-v3-2-72eb5adad156@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/pmu-events/jevents.py | 5 +++--
- tools/perf/pmu-events/metric.py  | 6 +++++-
- 2 files changed, 8 insertions(+), 3 deletions(-)
+ drivers/clk/qcom/gcc-glymur.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tools/perf/pmu-events/jevents.py b/tools/perf/pmu-events/jevents.py
-index 168c044dd7cc3..59426ba68de55 100755
---- a/tools/perf/pmu-events/jevents.py
-+++ b/tools/perf/pmu-events/jevents.py
-@@ -559,13 +559,14 @@ const struct pmu_table_entry {_pending_events_tblname}[] = {{
- def print_pending_metrics() -> None:
-   """Optionally close metrics table."""
+diff --git a/drivers/clk/qcom/gcc-glymur.c b/drivers/clk/qcom/gcc-glymur.c
+index 9e84f3e7c6a9b..7adbe59915f0f 100644
+--- a/drivers/clk/qcom/gcc-glymur.c
++++ b/drivers/clk/qcom/gcc-glymur.c
+@@ -8551,6 +8551,7 @@ static const struct qcom_cc_desc gcc_glymur_desc = {
+ 	.num_resets = ARRAY_SIZE(gcc_glymur_resets),
+ 	.gdscs = gcc_glymur_gdscs,
+ 	.num_gdscs = ARRAY_SIZE(gcc_glymur_gdscs),
++	.use_rpm = true,
+ 	.driver_data = &gcc_glymur_driver_data,
+ };
  
--  def metric_cmp_key(j: JsonEvent) -> Tuple[bool, str, str]:
-+  def metric_cmp_key(j: JsonEvent) -> Tuple[str, str, str, str]:
-     def fix_none(s: Optional[str]) -> str:
-       if s is None:
-         return ''
-       return s
- 
--    return (j.desc is not None, fix_none(j.pmu), fix_none(j.metric_name))
-+    return (fix_none(j.pmu), fix_none(j.metric_name), j.metric_expr.ToPerfJson(),
-+            fix_none(j.desc))
- 
-   global _pending_metrics
-   if not _pending_metrics:
-diff --git a/tools/perf/pmu-events/metric.py b/tools/perf/pmu-events/metric.py
-index 92acd89ed97aa..ac322891c4f1b 100644
---- a/tools/perf/pmu-events/metric.py
-+++ b/tools/perf/pmu-events/metric.py
-@@ -445,7 +445,11 @@ class Metric:
- 
-   def __lt__(self, other):
-     """Sort order."""
--    return self.name < other.name
-+    if self.name != other.name:
-+      return self.name < other.name
-+    if not self.expr.Equals(other.expr):
-+      return self.expr.ToPerfJson() < other.expr.ToPerfJson()
-+    return self.description < other.description
- 
-   def AddToMetricGroup(self, group):
-     """Callback used when being added to a MetricGroup."""
 -- 
 2.53.0
 
