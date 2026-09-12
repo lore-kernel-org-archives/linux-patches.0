@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 557EF37E5F3;
-	Sat, 12 Sep 2026 08:53:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F75D344DB5;
+	Sat, 12 Sep 2026 08:53:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789203217; cv=none; b=n3sjTE4OYGqYTr9AgcSbY1zPM/IfvGZSAbQenkTAu275fsExCVpM5LifM6i+z7DVqxu/9yKNEWIjaiTztNGUU0xa6Jlf6FNx650gB8GS8bm6wNNzKDx35XxsWS5NdmxKFgBtE1/E+5LyH/fVHY+7rM03KLlX0d6qkMlQKSO7YZA=
+	t=1789203222; cv=none; b=dqeWPh65sG5A7ObmylELBDONJ3URSu6As+4p1NrvXM9e6TM0ZcJStbXGmomJasdLrDt+OiMrhLyZBndh2yNPKborb3W5ZyvIaBYTitraaWlQUCVP8HDaH5F9o4he19k+1BvvyGC6fBJurr6pu4OdZc85023v5HG8eOUJXSW9FxI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789203217; c=relaxed/simple;
-	bh=R3EWBHzaTPCSOEWYB5azE25Yq+WmWFt3qOi4zMM1RiY=;
+	s=arc-20240116; t=1789203222; c=relaxed/simple;
+	bh=kJBtjy+Xz1EXJvbx169hsxD+FIcGSkkftdLk02ZGZUo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o9hwQJ/+SRIjXEIPxHlWcaYgQnp3N1oBwTrMmZn370HBeEwiYoJ75COXwvTXX/I7B+JT24TlGBY7k5lZe9F7kZSgf5APhagRai5yK3fjQyR+ruuT+z+aS1tD/2bdipcOxOZraZCrQ2FTv88+kSaivI168PB7XOx+AzpCCCX5Yx4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ke2LtaZ9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=a3uhWb+cII+WJT7GhR12n2pem2zR53L6xQxzkSp8vP8uYj5jBIaIU3CDLN78ZrQi3iptw3nFgYliqybPD4KvrH5iyWQi313IOGvooDOYBOkICbNWqxYZCo8oCTuEjQ16zX0I7oFuKmH6nX4udFXS+IppjDJzefrHR3oRxRgh4H8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0TAyqe7U; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ke2LtaZ9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7EAE1F000FF;
-	Sat, 12 Sep 2026 08:53:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0TAyqe7U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC7991F000FF;
+	Sat, 12 Sep 2026 08:53:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789203216;
-	bh=8GO63EURfoirSbBuuZZjLJyR8C1ZvlKzhqsrVRc04uc=;
+	s=korg; t=1789203220;
+	bh=F5vx5xflM8lpb41muzE9zTHicPKo6GxJGbYc+RXaBJ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ke2LtaZ9+t3PV4iZz6V1E8SrUPvr4ZeO1UI2TddaU1Gw3ZV+P15je2JaGD37y/Dph
-	 TLjubN8T8RCjCX5HNgc0bYcx/zagCtIbNazx7j2uQemuiozjQm4y0zs/6aqnzE7RnC
-	 DW9ytCk/9dmAYZwa/f++VQKCxE4aTlP2JiVSAt9Y=
+	b=0TAyqe7UHjOg1zSyjiYFjvkY0y9Dfpt1AFoHF+37kkDpdS+z2wY0Fda8uYHjv+YQ2
+	 X24CGNLjemXziuNgJunBytNPlP4sHl3IM+5oxGuYsDEShlnLjMJu182UnyfqDJ9HEP
+	 oNeJgBNtrdNNyBwwYdkR6SZCXvYj1oAsGFAbVClQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Sashiko <sashiko-bot@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Andy Yan <andy.yan@rock-chips.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
 	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
 	Vinod Koul <vkoul@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1362/1815] phy: rockchip: samsung-hdptx: Guard against clk rate integer underflow
-Date: Sat, 12 Sep 2026 08:51:52 +0200
-Message-ID: <20260912065721.002720633@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	Diederik de Haas <diederik@cknow-tech.com>
+Subject: [PATCH 7.2 1363/1815] phy: rockchip: samsung-hdptx: Fix rate recalculation for 3.2GHz FRL
+Date: Sat, 12 Sep 2026 08:51:53 +0200
+Message-ID: <20260912065721.025149478@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -54,57 +58,78 @@ Content-Transfer-Encoding: 8bit
 
 From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
 
-[ Upstream commit 229788526ff24e0607726e93b74dd2ef157a99cd ]
+[ Upstream commit 9ac3daadb9060360e937a5993a5fd88360d6fdad ]
 
-The 'fout' subtraction in rk_hdptx_phy_clk_calc_rate_from_pll_cfg()
-could result in an integer underflow, if the hardware registers are
-misconfigured or contain uninitialized values, such that the computed
-sigma-delta modulator offset sdm exceeds the base frequency fout.
+rk_hdptx_phy_clk_calc_rate_from_pll_cfg() is currently unable to handle
+cascade mode for the 3.2GHz FRL operating mode, as it relies solely on
+LCPLL_LCVCO_MODE_EN_MASK to determinate the rate from the
+rk_hdptx_frl_lcpll_cfg array.  Since there is no entry for this
+particular rate, the function returns 0.
 
-This might lead to an absurdly high clock rate being returned to the
-Common Clock Framework, with unpredictable effects on downstream clk
-consumers.
-
-Provide the necessary sanitization to avoid trusting the hardware state.
+This is the only rate which requires LC_REF_CLK_SEL to be set in
+GRF_HDPTX_CON0, hence extend the FRL matching accordingly.
 
 Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/all/20260611235702.0E9691F000E9@smtp.kernel.org/
-Fixes: 3481fc04d969 ("phy: rockchip: samsung-hdptx: Compute clk rate from PLL config")
+Closes: https://sashiko.dev/#/patchset/20260611-hdptx-clk-fixes-v3-0-67b1b0c00e16@collabora.com?part=1
+Fixes: de5dba833118 ("phy: rockchip: samsung-hdptx: Add HDMI 2.1 FRL support")
+Tested-by: Diederik de Haas <diederik@cknow-tech.com>  # NanoPC-T6 LTS
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reviewed-by: Andy Yan <andy.yan@rock-chips.com>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
-Link: https://patch.msgid.link/20260811-hdptx-clk-fixes-v6-3-75bca0ee5753@collabora.com
+Link: https://patch.msgid.link/20260811-hdptx-clk-fixes-v6-4-75bca0ee5753@collabora.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/rockchip/phy-rockchip-samsung-hdptx.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ .../phy/rockchip/phy-rockchip-samsung-hdptx.c | 35 +++++++++++++------
+ 1 file changed, 25 insertions(+), 10 deletions(-)
 
 diff --git a/drivers/phy/rockchip/phy-rockchip-samsung-hdptx.c b/drivers/phy/rockchip/phy-rockchip-samsung-hdptx.c
-index d67ced2bf7b2c..3a65c26f3efab 100644
+index 3a65c26f3efab..d7d8414fdddd6 100644
 --- a/drivers/phy/rockchip/phy-rockchip-samsung-hdptx.c
 +++ b/drivers/phy/rockchip/phy-rockchip-samsung-hdptx.c
-@@ -2285,10 +2285,20 @@ static u64 rk_hdptx_phy_clk_calc_rate_from_pll_cfg(struct rk_hdptx_phy *hdptx)
- 		sdm = div_u64(PLL_REF_CLK * ropll_hw.sdc_deno *
- 			      ropll_hw.pms_mdiv * ropll_hw.sdm_num, val);
+@@ -2206,16 +2206,31 @@ static u64 rk_hdptx_phy_clk_calc_rate_from_pll_cfg(struct rk_hdptx_phy *hdptx)
+ 			return 0;
+ 		lcpll_hw.sdc_n = (val & LCPLL_SDC_N_MASK) >> 1;
  
--		if (ropll_hw.sdm_num_sign)
-+		if (ropll_hw.sdm_num_sign) {
-+			if (sdm > fout) {
-+				/*
-+				 * Similarly to the case above, it is expected
-+				 * the next .set_rate() will help with recovery.
-+				 */
-+				dev_dbg(hdptx->dev, "Invalid ROPLL hw state: sdm > fout\n");
-+				return 0;
-+			}
+-		for (i = 0; i < ARRAY_SIZE(rk_hdptx_frl_lcpll_cfg); i++) {
+-			const struct lcpll_config *cfg = &rk_hdptx_frl_lcpll_cfg[i];
+-
+-			if (cfg->pms_mdiv == lcpll_hw.pms_mdiv &&
+-			    cfg->pms_sdiv == lcpll_hw.pms_sdiv &&
+-			    cfg->sdm_num_sign == lcpll_hw.sdm_num_sign &&
+-			    cfg->sdm_num == lcpll_hw.sdm_num &&
+-			    cfg->sdm_deno == lcpll_hw.sdm_deno &&
+-			    cfg->sdc_n == lcpll_hw.sdc_n)
+-				return cfg->rate;
++		ret = regmap_read(hdptx->grf, GRF_HDPTX_CON0, &val);
++		if (ret)
++			return 0;
 +
- 			fout = fout - sdm;
--		else
++		if (val & LC_REF_CLK_SEL) {
++			if (lcpll_hw.pms_mdiv == 0x6b &&
++			    lcpll_hw.sdm_num_sign == 0x01 &&
++			    lcpll_hw.sdm_num == 0x02 &&
++			    lcpll_hw.sdm_deno == 0x09 &&
++			    lcpll_hw.sdc_n == FIELD_GET(LCPLL_SDC_N_MASK, 0x02))
++				return FRL_8G4L_RATE;
 +		} else {
- 			fout = fout + sdm;
-+		}
- 	}
++			const struct lcpll_config *cfg;
++
++			for (i = 0; i < ARRAY_SIZE(rk_hdptx_frl_lcpll_cfg); i++) {
++				cfg = &rk_hdptx_frl_lcpll_cfg[i];
++
++				if (cfg->pms_mdiv == lcpll_hw.pms_mdiv &&
++				    cfg->pms_sdiv == lcpll_hw.pms_sdiv &&
++				    cfg->sdm_num_sign == lcpll_hw.sdm_num_sign &&
++				    cfg->sdm_num == lcpll_hw.sdm_num &&
++				    cfg->sdm_deno == lcpll_hw.sdm_deno &&
++				    cfg->sdc_n == lcpll_hw.sdc_n)
++					return cfg->rate;
++			}
+ 		}
  
- 	return DIV_ROUND_CLOSEST_ULL(fout * 2 * 8, ropll_hw.pms_sdiv * 10 * bpc);
+ 		dev_dbg(hdptx->dev, "%s no FRL match found\n", __func__);
 -- 
 2.53.0
 
