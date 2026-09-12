@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9006B37757A;
-	Sat, 12 Sep 2026 09:29:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01D8037C118;
+	Sat, 12 Sep 2026 09:29:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789205374; cv=none; b=fpTRAGUPlWPFLiuO+5+Pn4Q/GF1xKZBpdqv9dLO1vcxDTocofLhO7IkgHiiNGIT7c+uekEl+HMWB3lSC8NJAiLxXUMqYlRUwzDBdk0gVJAGD1mEwDOpUllw6nBuvqMRr05s/Kae9LqaDB44ISFIFXawD7dE/Yj0aNX25Joh31Vg=
+	t=1789205380; cv=none; b=MKSttpv9+2noTkMYFixqYfIjRWecI4ucgsPPFy910tZT35xEtjZlIfrlsePfxqVq/6PZL6pS7XcGAd4PrnSbzPwmhkS17QYdPQEI4SSwUDx+h8ec5fSgmnCgiP2bkj8vtCl8oMXRoGeTMek78W6Ehxr46x8LOb1Wzv6bS5UDRFA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789205374; c=relaxed/simple;
-	bh=Lb5yUvGHZqZSaveYqJ2Sw+imv8UX20zlJS83KT37KWc=;
+	s=arc-20240116; t=1789205380; c=relaxed/simple;
+	bh=mrfI7UStcx1obEd9GevDuuHWV5opiQmTzz5PZVU655M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QGJY8lbDg8719aMqMjf1s2ghIhearY6tAGzCEN6KL9C56glxIuG3/AsI/iEn6pzJDsXzFHSmVAcWVnW+n6pzCZbP3TsRPV3nSBTc39+z7rfG5E9+gLHJFqOWdFY6SOPr27bnYA/bjUPh0uxbEHw/OXVl4UWVPXX0kLOOOZpUihM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yuk68wU5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PHTAw5oiFkUCG95rS4MperpEbieOUVAqHjTicuuEEGJ3Aed+GRu+x2sewGp54XqzxONSVXwf7SUF0icfm/wRHb+c9I/qV58gy35pcRTcOPp8TY8Rzub0xga6QQCNZCX7rDdaxigjLRnTCL8FpqILmidCDwppIx25fTNXAOkdw3I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iVqbhvDJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yuk68wU5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49FBF1F000FF;
-	Sat, 12 Sep 2026 09:29:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iVqbhvDJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34FAE1F000FF;
+	Sat, 12 Sep 2026 09:29:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789205372;
-	bh=Pxz25+tm7t4Jb963ZrY7zzl/XQHC7/fPqw0dnuhH7iw=;
+	s=korg; t=1789205377;
+	bh=r6f2eRw/KVAjRDMzLRzQ/LBDHDssPPK8RbdbtLBidWk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yuk68wU5+gD2cOuYiIZIhGRpUU9c1o9hb9ZOkb37hpg4VWvDqNnOsD1WgZiWGyVsM
-	 sZiXR5yZvyNGv55B0ExTYlSgoy/38BdVWyzq0Z5tyIbOdqy5hMB1P43uW8AzcRvigr
-	 P+CTQcX3ayrcO8KbqQWj6YFvt7XyMadKSaLfWqPY=
+	b=iVqbhvDJiQp22JjVd1xAT2DUPeQXSCdFIifsfjMNSZ+Ch2YF8egk9drxsdUTQYT7S
+	 gf3ASldozf5R32GireEuoUtJZA69xQre5Oq4eUa9YOiSOjOrvsBIL7L9rWvavyqeqD
+	 QMjKzKEo6vawdNHZ2jVFTVMJmqdQ8akpi4k75mvY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Baldin <DBaldin@dspace.de>,
-	Pascal Kneuper <PKneuper@dspace.de>,
+	Edoardo Pinci <epinci@outlook.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1804/1815] net: stmmac: restore NET_IP_ALIGN in the RX DMA offset
-Date: Sat, 12 Sep 2026 08:59:14 +0200
-Message-ID: <20260912065731.386897006@linuxfoundation.org>
+Subject: [PATCH 7.2 1805/1815] net: dsa: mxl862xx: enable assisted learning on CPU port
+Date: Sat, 12 Sep 2026 08:59:15 +0200
+Message-ID: <20260912065731.410634786@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,90 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pascal Kneuper <PKneuper@dspace.de>
+From: Edoardo Pinci <epinci@outlook.com>
 
-[ Upstream commit 23680bf5f8c69c923546b84a8e6c401bef8b88fe ]
+[ Upstream commit 88c71cc0ad9800d8814bd3627b21a0da9028e057 ]
 
-Since the RX path was converted to zero-copy, the page pool page is handed
-to the stack directly as the skb head, and the offset the DMA engine writes
-at is what determines the alignment of the packet headers.
+The MxL862xx driver enables FDB isolation but does not enable assisted
+learning on the CPU port. Consequently, MAC addresses learned through a
+physical switch port are not updated in hardware when the corresponding
+station moves to a foreign bridge port, such as a Wi-Fi interface.
 
-Before the conversion the payload was copied into an skb obtained from
-napi_alloc_skb(), which reserves NET_SKB_PAD + NET_IP_ALIGN. The
-conversion moved the headroom into stmmac_rx_offset() but did not carry
-over NET_IP_ALIGN, so on architectures where NET_IP_ALIGN is 2 the IP
-header now lands misaligned:
+The stale hardware FDB entry continues directing return traffic toward
+the original physical port. Traffic entering that same port is then
+filtered instead of being forwarded to the CPU and software bridge. This
+causes downstream unicast traffic, including DHCP OFFER and ACK packets,
+to disappear after a client roams to a local wireless interface. The
+client eventually considers the connection unusable and disconnects.
 
-  64 (NET_SKB_PAD) + 14 (ethernet) + 20 (IP) = 98
+Enable assisted CPU-port learning so DSA installs foreign bridge FDB
+entries on the CPU port. This keeps the hardware FDB synchronized with
+the software bridge and allows return traffic to reach locally attached
+Wi-Fi clients after roaming.
 
-Same for the XDP branch:
+Tested on a BPI R4 PRO with a MxL862xx switch and a BE14000 WiFi interface.
+- Without patch, wired uplink on lan6 port (mxl path)
+  Wifi clients connect but roam away not getting DHCP offers
+- Without patch, wired uplink on wan port (no mxl path)
+  Wifi clients connect and roam successfully
+- With this patch, uplink on lan6 (mxl path)
+  Wifi clients connect and roam successfully
 
-  256 (XDP_PACKET_HEADROOM) + 14 (ethernet) + 20 (IP) = 290
-
-On ARM32 this is fatal, because ldm and ldrd trap on unaligned addresses
-even when CONFIG_HAVE_EFFICIENT_UNALIGNED_ACCESS is set.
-
-Any received echo request panics the machine, e.g:
-
-  Unhandled fault: alignment exception (0x001) at 0x81873062
-  Internal error: : 1 [#1] SMP ARM
-  Hardware name: Altera SOCFPGA Arria10
-  PC is at icmp_echo+0x38/0xa8
-  LR is at icmp_rcv+0x22c/0x370
-  Call trace:
-   icmp_echo from icmp_rcv+0x22c/0x370
-   icmp_rcv from ip_protocol_deliver_rcu+0x2c/0x224
-   ip_protocol_deliver_rcu from ip_local_deliver+0xc8/0x1a0
-   ip_local_deliver from ip_sublist_rcv_finish+0x3c/0x50
-   ip_sublist_rcv_finish from ip_list_rcv_finish+0x110/0x118
-   ip_list_rcv_finish from ip_list_rcv+0xc8/0xdc
-   ip_list_rcv from __netif_receive_skb_list_core+0x170/0x1c0
-   ...
-   napi_complete_done from stmmac_napi_poll_rx+0xcb0/0x1030
-  Code: e24dd068 e59020a0 e28dc010 e0822001 (e8920003)
-  Kernel panic - not syncing: Fatal exception in interrupt
-
-The faulting instruction is the ldm of *icmp_hdr(skb) in icmp_echo().
-
-Fix by adding NET_IP_ALIGN back to the RX offset, which restores the
-alignment the stack used to get.
-
-Note that commit a955318fe67e ("stmmac: align RX buffers") made a similar
-change in 2021 and was reverted by commit 12d125b4574b ("stmmac: Revert
-"stmmac: align RX buffers"") because it caused packet corruption. That
-patch raised the offset from 0 without adjusting the buffer size
-accounting, so the DMA engine could arguably write past the end of the RX
-buffers, though this was never root caused.
-Commit df542f669307 ("net: stmmac: Switch to zero-copy in non-XDP RX
-path") since derives the page pool allocation from stmmac_rx_offset(), so
-the extra bytes are accounted for.
-
-Fixes: df542f669307 ("net: stmmac: Switch to zero-copy in non-XDP RX path")
-Cc: Daniel Baldin <DBaldin@dspace.de>
-Signed-off-by: Pascal Kneuper <PKneuper@dspace.de>
-Link: https://patch.msgid.link/20260824125014.47862-1-PKneuper@dspace.de
+Fixes: 340bdf984613 ("net: dsa: mxl862xx: implement bridge offloading")
+Signed-off-by: Edoardo Pinci <epinci@outlook.com>
+Link: https://patch.msgid.link/DU0P251MB069949C6DEB4D1D51F31FE87C4A02@DU0P251MB0699.EURP251.PROD.OUTLOOK.COM
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/dsa/mxl862xx/mxl862xx.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index 33cb2067be0aa..3a437409f78ae 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -1531,9 +1531,9 @@ static void stmmac_display_rings(struct stmmac_priv *priv,
- static unsigned int stmmac_rx_offset(struct stmmac_priv *priv)
- {
- 	if (stmmac_xdp_is_enabled(priv))
--		return XDP_PACKET_HEADROOM;
-+		return XDP_PACKET_HEADROOM + NET_IP_ALIGN;
+diff --git a/drivers/net/dsa/mxl862xx/mxl862xx.c b/drivers/net/dsa/mxl862xx/mxl862xx.c
+index 45d237b3a40f1..cfa7e3e269a28 100644
+--- a/drivers/net/dsa/mxl862xx/mxl862xx.c
++++ b/drivers/net/dsa/mxl862xx/mxl862xx.c
+@@ -2111,6 +2111,7 @@ static int mxl862xx_probe(struct mdio_device *mdiodev)
+ 	ds->ops = &mxl862xx_switch_ops;
+ 	ds->phylink_mac_ops = &mxl862xx_phylink_mac_ops;
+ 	ds->num_ports = MXL862XX_MAX_PORTS;
++	ds->assisted_learning_on_cpu_port = true;
+ 	ds->fdb_isolation = true;
+ 	ds->max_num_bridges = MXL862XX_MAX_BRIDGES;
  
--	return NET_SKB_PAD;
-+	return NET_SKB_PAD + NET_IP_ALIGN;
- }
- 
- static int stmmac_set_bfsize(int mtu)
 -- 
 2.53.0
 
