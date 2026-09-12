@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 030813AAF46;
-	Sat, 12 Sep 2026 20:04:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52FED3AA9F4;
+	Sat, 12 Sep 2026 20:04:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789243480; cv=none; b=BsLR7S1RCw7ozX9QwUa0YGAAAsnUlGvDGPV6MEZw5i89vKjG81rE31062vLSLFll2kQPShN5GWlljvQ0qJH+Tl77+Iac9VUFiacgIK5ac/PD3xWEeup7X05tV68c8JQKJB7VIc4/nP7rppYzdDWF62FvDj5f5DVlxC5pSf4VXak=
+	t=1789243485; cv=none; b=AapY8tdU8XxzOxHFpp90S9OI/oguVZgCuwHqCbeG4u2xQ18WpMoFXM05uK2QB9D6Aqpg8rod+mLQAeNVnwBK7gosKRReXwC7BDTlpfzVGg90wq5ezPyaxg+aazVTpzFZKKh/M3bfjXIwfV6x63N9q56nbhKM162IudnGdevGfz4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789243480; c=relaxed/simple;
-	bh=HpR+LA15YV1lesf9kS7IlMkO0flSaQ9qrYglNdJLPO8=;
+	s=arc-20240116; t=1789243485; c=relaxed/simple;
+	bh=xsf8w/yV7YhIuqT90B34n+IBDPXjy6JjYhzHeAFChzE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y7S6fF7iLG43s3qA7dy7Uk3sKteSLP95jwBczG6Z2zU4+9tMYEk+DyPy7EZeoV/qVeUfgbQ9IhvUVpweKfRj7gj7Yg28BTERQDuTUSCGPF++mL5E5zrcehdOfRnIlfQvugC9yZrR4b2mLUtoVCwc9efk9n0WlmzI4F348ZFnopk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Q3xXEgJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=p/r7YrnKJKhFWD3diwQdSy1bLSEBvo7zoscO3pUwxhA+BLvB5GmwgOw1vA3LHvReW9HUdszWkv7002LoxWwS4APFUoGaI6hF/w4W0jBx7a6/eXeX6YkRnzU6fjx3XoufC2+cEuAThRFMsHS+nLS45wlZud8U4MWTlxLM/NmDwYs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cs8Ry8aG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Q3xXEgJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A87DA1F000FF;
-	Sat, 12 Sep 2026 20:04:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cs8Ry8aG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D0E91F00893;
+	Sat, 12 Sep 2026 20:04:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789243476;
-	bh=NzUBhxckMdxl++X0bpUpuS7l849EglkOOZRn1bk+D2Q=;
+	s=korg; t=1789243479;
+	bh=Qtwya6m7w7m5vYc3Pg8FALJqIGGp31veDP2TjkXDaUE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2Q3xXEgJiTKEGI6iz+xc2xz57cnBemk8ZCT4FJoRaC4PjnqDsXTMKw2iyNO1jQjWC
-	 55+e6O79bB7dqlE9LzTLt4tqJ/FsvxRbaoo+zyPfib6FmNpDmjua7uGqRktmKdxqUL
-	 zyHXVTZch3AhfjB9vurxnxu6mfuh3wkPiPtsXDag=
+	b=Cs8Ry8aG+y5vJJ6vVLAlJlLGcRU4oIz50NKgHg9aMryQYVGu9Qr9xMkdgmAAnb2mM
+	 mTBzx+fCMvv+IQZRYPSb+cKyE9MMnAOYzZbm7X7rewlr6l4GoGuoPiOO5ChvhjX51a
+	 fFP1N11NCP8D/m12nygJE196vOyasvVT6A5sGIp4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ruoyu Wang <ruoyuw560@gmail.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
+	Serge Hallyn <serge@hallyn.com>,
+	Thorsten Blum <thorsten.blum@linux.dev>,
+	John Johansen <john.johansen@canonical.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 768/798] tpm: st33zp24: Validate locality read result
-Date: Sat, 12 Sep 2026 09:06:36 +0200
-Message-ID: <20260912065534.671833956@linuxfoundation.org>
+Subject: [PATCH 5.10 769/798] apparmor: Replace sprintf/strcpy with scnprintf/strscpy in aa_policy_init
+Date: Sat, 12 Sep 2026 09:06:37 +0200
+Message-ID: <20260912065534.693884143@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -51,50 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruoyu Wang <ruoyuw560@gmail.com>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-[ Upstream commit 264216889d39df509b9c8045df53529480b0b718 ]
+[ Upstream commit b31d3f7385fbb49681d44e7104cfa033cba4b1e8 ]
 
-check_locality() treats every nonzero transport return as success. SPI
-errors remain negative, while the I2C path can convert a negative write
-error through its byte-sized status variable. Either result is nonzero
-even though the TPM_ACCESS byte can remain unwritten, so indeterminate
-ACTIVE_LOCALITY and VALID bits can falsely report an active locality.
+strcpy() is deprecated and sprintf() does not perform bounds checking
+either. Although an overflow is unlikely, it's better to proactively
+avoid it by using the safer strscpy() and scnprintf(), respectively.
 
-Require recv() to return exactly the requested byte before examining
-TPM_ACCESS. Transport errors and short reads now report an inactive
-locality, while successful reads retain the existing behavior.
+Additionally, unify memory allocation for 'hname' to simplify and
+improve aa_policy_init().
 
-This issue was found by a static analysis checker and confirmed by manual
-source review.
-
-Fixes: 251a7b08213a ("TPM: STMicroelectronics ST33 I2C KERNEL 3.x")
-Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
-Link: https://lore.kernel.org/r/20260813153032.3951878-2-ruoyuw560@gmail.com
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Closes: https://github.com/KSPP/linux/issues/88
+Reviewed-by: Serge Hallyn <serge@hallyn.com>
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Signed-off-by: John Johansen <john.johansen@canonical.com>
+Stable-dep-of: 3daad923a868 ("apparmor: policy_int make sure list heads are initialized before fail path")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/tpm/st33zp24/st33zp24.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ security/apparmor/lib.c | 16 +++++++---------
+ 1 file changed, 7 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/char/tpm/st33zp24/st33zp24.c b/drivers/char/tpm/st33zp24/st33zp24.c
-index f4f77548a6152..016bf31114115 100644
---- a/drivers/char/tpm/st33zp24/st33zp24.c
-+++ b/drivers/char/tpm/st33zp24/st33zp24.c
-@@ -113,10 +113,10 @@ static bool check_locality(struct tpm_chip *chip)
+diff --git a/security/apparmor/lib.c b/security/apparmor/lib.c
+index fa49b81eb54ca..d393c96d732dc 100644
+--- a/security/apparmor/lib.c
++++ b/security/apparmor/lib.c
+@@ -489,19 +489,17 @@ bool aa_policy_init(struct aa_policy *policy, const char *prefix,
+ 		    const char *name, gfp_t gfp)
  {
- 	struct st33zp24_dev *tpm_dev = dev_get_drvdata(&chip->dev);
- 	u8 data;
--	u8 status;
-+	int status;
+ 	char *hname;
++	size_t hname_sz;
  
- 	status = tpm_dev->ops->recv(tpm_dev->phy_id, TPM_ACCESS, &data, 1);
--	if (status && (data &
-+	if (status == 1 && (data &
- 		(TPM_ACCESS_ACTIVE_LOCALITY | TPM_ACCESS_VALID)) ==
- 		(TPM_ACCESS_ACTIVE_LOCALITY | TPM_ACCESS_VALID))
- 		return true;
++	hname_sz = (prefix ? strlen(prefix) + 2 : 0) + strlen(name) + 1;
+ 	/* freed by policy_free */
+-	if (prefix) {
+-		hname = aa_str_alloc(strlen(prefix) + strlen(name) + 3, gfp);
+-		if (hname)
+-			sprintf(hname, "%s//%s", prefix, name);
+-	} else {
+-		hname = aa_str_alloc(strlen(name) + 1, gfp);
+-		if (hname)
+-			strcpy(hname, name);
+-	}
++	hname = aa_str_alloc(hname_sz, gfp);
+ 	if (!hname)
+ 		return false;
++	if (prefix)
++		scnprintf(hname, hname_sz, "%s//%s", prefix, name);
++	else
++		strscpy(hname, name, hname_sz);
+ 	policy->hname = hname;
+ 	/* base.name is a substring of fqname */
+ 	policy->name = basename(policy->hname);
 -- 
 2.53.0
 
