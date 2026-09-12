@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1B9038E8B9;
-	Sat, 12 Sep 2026 19:52:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81C1538DC7B;
+	Sat, 12 Sep 2026 19:52:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789242746; cv=none; b=VEZyNvxv+aQLRNse4MPDPqABFzFMJ41XXVZqDK04GArVtlJac6dpdz+KIRr5XY/r1tsi0WZgB4edo/Jg8qYMr4PvxiTUn0dG6ZGHUxgVKnIM4A7rvFK+fH5tG73zEJTHb69I54HYfvwI0LrXmplD3LhKjf2+jtIPecYzYcKnh9M=
+	t=1789242749; cv=none; b=AfyGabXcmNReWz32+Iy0/+WiCtJtZeKSXDVQEjhTf8cUBZG9U2T1LCbykkG6cIyuCvxKjE5rH8DJ+wWIEg8hafk3vvPWe5H9l7p0LTR6aPT7WQq8Z6Eg1bWWWXVhSC6KSJaRUBdu0QedTHgLJS+I5hc2ssgD0ZHKxmIfGvL5g5w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789242746; c=relaxed/simple;
-	bh=Hv42/WVKlbiBFwgJ6jpyxj0sL4K+bM7q+Zx/khupOGg=;
+	s=arc-20240116; t=1789242749; c=relaxed/simple;
+	bh=oxc5btXZwmj3E5gAQuCCmGuw97BohtmHyBzVGMtiP04=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XAdY2a3jTEVc4m8EC12sVBt5SPQQVs/PXFPP3JU4+0jkBpXgAgh/BWJxU3MqjampwOLmYYh9uYO4qXUjD6uc7llrTXkzpyWloUxWGpZyv4e4/hK6DzNl9eVlufn7Kt4fazYh1bcjOBxz4+s9E0ToqZ1NERqd1UJ7QBdw4cLj4Dg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nJv25FMu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Gh2ZTIB2od11bDt823fgaOQaNI7QM40ES9Gz6WyA/NO0MgeCkHMYMKf1Ij4tuKuSug+D/C5k+0KA15fT8t1IaaBez91IQxN9CInvE6hrsI+CNcc2BoX2NEA3rWNXz40kT0YDSwfURaLojap1kS9KE0ePG712Efp9GZJ997vMYo4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TEsRAcoE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nJv25FMu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A3341F000FF;
-	Sat, 12 Sep 2026 19:52:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TEsRAcoE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAFA71F000FF;
+	Sat, 12 Sep 2026 19:52:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789242745;
-	bh=er/KHh2E4+7YJnTI8MIzkLv2lIjwWMSL8/g9XSFIlBw=;
+	s=korg; t=1789242748;
+	bh=CdeVhHi3MblflJ+O2RdX4TVKYPQYc3XGKBuUX+9yqDg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nJv25FMukxxfsYpOTyPTKxNZcYNzTASLu+GaewOAA6ZWIZWGFDIQ5364oA+V1Uxyi
-	 JkOLErSeWkTSLdq7lGNftm22bPwy3UXF+i0WNn/TPLMy7FRt4/rLeVKLZ8h1cVGagY
-	 gqUVGQS3iM3mqF6n63Uqj6aG0mjgDn5lI5yePXxw=
+	b=TEsRAcoEzi2PjpxU/fYrEzTzYom6znJ+Cc/kwotp8qepqI3eUV8pVJLNrR/jOwVJ+
+	 nut6OY8j/XHW+UOn+VdsOhp+7U5qHis+ppOK47Okz5n1o98orby6LtYE5E6QyOnwYM
+	 /wT7ZH1Nr759KIG3aR8pd+jg/5+am8Yi6ItQiI2M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Chen-Yu Tsai <wenst@chromium.org>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 510/798] netfilter: nf_nat_sip: rewind offset when NAT shrinks the packet
-Date: Sat, 12 Sep 2026 09:02:18 +0200
-Message-ID: <20260912065528.823560378@linuxfoundation.org>
+Subject: [PATCH 5.10 511/798] arm64: dts: rockchip: Add gru-scarlet-dumo board
+Date: Sat, 12 Sep 2026 09:02:19 +0200
+Message-ID: <20260912065528.846867361@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -51,50 +51,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Chen-Yu Tsai <wenst@chromium.org>
 
-[ Upstream commit 16aecbe3036f6097c26b51b12e4c1cf207769690 ]
+[ Upstream commit 5707e34166f546bf1fcdfd3da600e8187d04d937 ]
 
-sashiko says:
- If map_addr() changes the packet length, such as when the public NAT IP
- string is shorter or longer than the internal IP, coff will still point to
- the offset relative to the pre-mangled packet.
- If the packet shrinks, coff could overshoot the correct position,
- potentially causing the next ct_sip_parse_header_uri() call to silently
- skip bytes and miss subsequent Contact headers. Could this lead to a
- failure to NAT those subsequent headers and leak internal network details?
+Dumo is another variant of Scarlet, also known as the ASUS Chromebook
+Tablet CT100. This is almost the same as Scarlet-Innolux, but uses a
+board-specific calibration variant for the WiFi module.
 
-Fixes: c978cd3a9371 ("[NETFILTER]: nf_nat_sip: translate all Contact headers")
-Assisted-by: Claude:claude-sonnet-4-6
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Add a new device tree for it.
+
+Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
+Link: https://lore.kernel.org/r/20210812094753.2359087-3-wenst@chromium.org
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Stable-dep-of: a761818d9ee1 ("arm64: dts: rockchip: Fix Gru WLAN sideband interrupt")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_nat_sip.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ arch/arm64/boot/dts/rockchip/Makefile         |  1 +
+ .../dts/rockchip/rk3399-gru-scarlet-dumo.dts  | 41 +++++++++++++++++++
+ 2 files changed, 42 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/rockchip/rk3399-gru-scarlet-dumo.dts
 
-diff --git a/net/netfilter/nf_nat_sip.c b/net/netfilter/nf_nat_sip.c
-index 7687d3d15df22..a77881c218ebf 100644
---- a/net/netfilter/nf_nat_sip.c
-+++ b/net/netfilter/nf_nat_sip.c
-@@ -267,12 +267,17 @@ static unsigned int nf_nat_sip(struct sk_buff *skb, unsigned int protoff,
- 				       SIP_HDR_CONTACT, &in_header,
- 				       &matchoff, &matchlen,
- 				       &addr, &port) > 0) {
-+		int old_len = skb->len, delta;
+diff --git a/arch/arm64/boot/dts/rockchip/Makefile b/arch/arm64/boot/dts/rockchip/Makefile
+index 26661c7b736b7..bfa3b5d0e674b 100644
+--- a/arch/arm64/boot/dts/rockchip/Makefile
++++ b/arch/arm64/boot/dts/rockchip/Makefile
+@@ -20,6 +20,7 @@ dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3399-ficus.dtb
+ dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3399-firefly.dtb
+ dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3399-gru-bob.dtb
+ dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3399-gru-kevin.dtb
++dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3399-gru-scarlet-dumo.dtb
+ dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3399-gru-scarlet-inx.dtb
+ dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3399-gru-scarlet-kd.dtb
+ dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3399-hugsun-x99.dtb
+diff --git a/arch/arm64/boot/dts/rockchip/rk3399-gru-scarlet-dumo.dts b/arch/arm64/boot/dts/rockchip/rk3399-gru-scarlet-dumo.dts
+new file mode 100644
+index 0000000000000..853e88455e750
+--- /dev/null
++++ b/arch/arm64/boot/dts/rockchip/rk3399-gru-scarlet-dumo.dts
+@@ -0,0 +1,41 @@
++// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
++/*
++ * Google Gru-Scarlet Rev5+ (SKU-0) board device tree source
++ *
++ * Copyright 2021 Google LLC.
++ */
 +
- 		if (!map_addr(skb, protoff, dataoff, dptr, datalen,
- 			      matchoff, matchlen,
- 			      &addr, port)) {
- 			nf_ct_helper_log(skb, ct, "cannot mangle contact");
- 			return NF_DROP;
- 		}
++/dts-v1/;
 +
-+		delta = (int)skb->len - old_len;
-+		coff += delta;
- 	}
- 
- 	if (!map_sip_addr(skb, protoff, dataoff, dptr, datalen, SIP_HDR_FROM) ||
++#include "rk3399-gru-scarlet.dtsi"
++
++/ {
++	model = "Google Scarlet";
++	compatible = "google,scarlet-rev15-sku0", "google,scarlet-rev15",
++		     "google,scarlet-rev14-sku0", "google,scarlet-rev14",
++		     "google,scarlet-rev13-sku0", "google,scarlet-rev13",
++		     "google,scarlet-rev12-sku0", "google,scarlet-rev12",
++		     "google,scarlet-rev11-sku0", "google,scarlet-rev11",
++		     "google,scarlet-rev10-sku0", "google,scarlet-rev10",
++		     "google,scarlet-rev9-sku0",  "google,scarlet-rev9",
++		     "google,scarlet-rev8-sku0",  "google,scarlet-rev8",
++		     "google,scarlet-rev7-sku0",  "google,scarlet-rev7",
++		     "google,scarlet-rev6-sku0",  "google,scarlet-rev6",
++		     "google,scarlet-rev5-sku0",  "google,scarlet-rev5",
++		     "google,scarlet", "google,gru", "rockchip,rk3399";
++};
++
++&mipi_panel {
++	compatible = "innolux,p097pfg";
++	avdd-supply = <&ppvarp_lcd>;
++	avee-supply = <&ppvarn_lcd>;
++};
++
++&pci_rootport {
++	wifi@0,0 {
++		compatible = "qcom,ath10k";
++		reg = <0x00010000 0x0 0x00000000 0x0 0x00000000>,
++		      <0x03010010 0x0 0x00000000 0x0 0x00200000>;
++		qcom,ath10k-calibration-variant = "GO_DUMO";
++	};
++};
 -- 
 2.53.0
 
