@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 140BF353EF7;
-	Sat, 12 Sep 2026 10:10:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A81FF37E5C4;
+	Sat, 12 Sep 2026 10:11:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789207860; cv=none; b=FZItlA+A3TVlUgPqb/o1MgeG8ACu7TMCwack2DycHgePpc1c7+Rq5YqSVYX7WAj+iFuRmXSde2kQH9jDvrs35uku0W3CbAknpL8F/bTzXXuHU4jm2HSIx9wP4S/AAxRrB8fRo3PeGehglMXXQ2A8+8UcJh8Lqm8wd+RgRCZ0b2g=
+	t=1789207864; cv=none; b=pmnQO+z5XK0mmLZ319AeZ9oRQv1+q9WCbneeaWnlcYJZ5vBjX/TfzmNydjP23fHxgZsniGt4HTB791SuVnmidtuPDYN4K6aPiOEn4xDVmg4yAKFAxEQQj8O3l+oNFGzXlOpA09DnL63FftZIbWlZws7f8BVEF/6xTHQu2pjZaSg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789207860; c=relaxed/simple;
-	bh=H5mBUUKOXfyl6sgZmBILZs9K/Nak178fWEeZNgsnvZU=;
+	s=arc-20240116; t=1789207864; c=relaxed/simple;
+	bh=fsZ6U6Jl9fB8/fwwCUQ3/lqWW+MtNAUvSj4CHpQBCFY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qWxAhWSUEDugulpNw9SDmIyJk9hfYyjYseprpXWpoXFLE0BQxdMhZv46AbAEVgsfzTd5ViXHK4h/JrBo6dxzDTwY8NjnQcXjRtv9JDHY7vNgEs63G2p3UuUfs/9Zr7Kd1Ti9MaxXEr+W4X4F0asH+AyKgdNM+vd5gdwIcayU3TE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uu8HZX6i; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rQjXpoEgeQfoJ1qJ0rnbdoAxRWWOnUCy9duCOujXWJsmLL2R9pGS/sM/8V/pOKOj4QkHRyXLT2KorxBnYVwXvQuA8ZWVA+pLVNY8Qvki4+ip/AyEAPTrX5AfYzGRY92rPGOWRNAR/zN2HWSLgzxtYDuXz9j639tCcbxVoNX1iyc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sFqbQ1tG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uu8HZX6i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F38211F000FF;
-	Sat, 12 Sep 2026 10:10:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sFqbQ1tG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD5511F000FF;
+	Sat, 12 Sep 2026 10:11:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789207859;
-	bh=gHL9ub9rWN21zuIUgdYqk1gvbplKqZnDvwdv9IrzbqU=;
+	s=korg; t=1789207863;
+	bh=7NasJvm4p8XwZonRAgZvelVuJTuLcgzmbR9iHibQ8C0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Uu8HZX6iCESTzQTM11m13FpCs2EY57sAlN8sHslWtT7CXlm3mZFR/IXrIGo0SDwu8
-	 vdlcXdCUtyucTueUmA5JXMUUwB6SWzMV3xPqwRos5j3EfYntkXHNGvR0MwAHDZVZT4
-	 VIlaKsnGBQtrUHSBJ+KowaFg4NZC4MOtGVamgUD0=
+	b=sFqbQ1tGqGAAnpKnPXUt033VN1ZzWF4lom3EUjMtiQkEL+d3l0DQSXdld3l+2NtdH
+	 NheQyYQ/spCDcs6MC/z8JlNuBnrIwHV5I3KHCTYmEkPN/lDlosIR1s1TXexPfZQNep
+	 BAnilFsk4L1o4njKmctTwEN154ZK5n1NyXpRRBYA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Nishanth Menon <nm@ti.com>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Emil Tsalapatis <emil@etsalapatis.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0462/1518] soc: ti: knav_qmss: Remove debugfs file on teardown
-Date: Sat, 12 Sep 2026 08:43:51 +0200
-Message-ID: <20260912065633.898324238@linuxfoundation.org>
+Subject: [PATCH 6.18 0498/1518] bpf: Zero queue and stack outputs on lock failure
+Date: Sat, 12 Sep 2026 08:44:27 +0200
+Message-ID: <20260912065634.711041757@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,66 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 
-[ Upstream commit 3c817862759913097f11467ed4ed2bbf974dabaf ]
+[ Upstream commit 7ac6e1ae41a09f1dd4baeeff1d028ae49ee01232 ]
 
-knav_queue_probe() creates the global qmss debugfs file whose show
-callback reads the global knav_qdev state. knav_queue_remove() tears
-down the queue manager resources but leaves the debugfs file published.
+Queue and stack pop/peek helpers accept an uninitialized output buffer
+because the verifier expects the helper to initialize it. The empty-map
+error path clears the buffer, but a failed lock acquisition returns
+-EBUSY without writing it.
 
-Save the debugfs dentry in struct knav_device and remove it during
-teardown before the resources used by the show callback are released.
-While touching the debugfs_create_file() call, spell the unchanged read-
-only file mode as 0444.
+Clear the output before returning -EBUSY so BPF programs cannot observe
+uninitialized stack contents after a failed helper call.
 
-Fixes: 41f93af900a2 ("soc: ti: add Keystone Navigator QMSS driver")
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260706144706.96313-1-pengpeng@iscas.ac.cn
-Signed-off-by: Nishanth Menon <nm@ti.com>
+Fixes: a34a9f1a19af ("bpf: Avoid deadlock when using queue and stack maps from NMI")
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
+Link: https://lore.kernel.org/bpf/20260719125419.1782196-1-memxor@gmail.com
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/ti/knav_qmss.h       | 1 +
- drivers/soc/ti/knav_qmss_queue.c | 7 +++++--
- 2 files changed, 6 insertions(+), 2 deletions(-)
+ kernel/bpf/queue_stack_maps.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/soc/ti/knav_qmss.h b/drivers/soc/ti/knav_qmss.h
-index 9325e8ce2e25c..bd3426a30d958 100644
---- a/drivers/soc/ti/knav_qmss.h
-+++ b/drivers/soc/ti/knav_qmss.h
-@@ -304,6 +304,7 @@ struct knav_device {
- 	struct list_head			pools;
- 	struct list_head			pdsps;
- 	struct list_head			qmgrs;
-+	struct dentry				*debugfs_file;
- 	enum qmss_version			version;
- };
+diff --git a/kernel/bpf/queue_stack_maps.c b/kernel/bpf/queue_stack_maps.c
+index 9a5f94371e506..c1c9dee4dcdd0 100644
+--- a/kernel/bpf/queue_stack_maps.c
++++ b/kernel/bpf/queue_stack_maps.c
+@@ -99,8 +99,10 @@ static long __queue_map_get(struct bpf_map *map, void *value, bool delete)
+ 	int err = 0;
+ 	void *ptr;
  
-diff --git a/drivers/soc/ti/knav_qmss_queue.c b/drivers/soc/ti/knav_qmss_queue.c
-index 3557ee5779b96..6d775a261737c 100644
---- a/drivers/soc/ti/knav_qmss_queue.c
-+++ b/drivers/soc/ti/knav_qmss_queue.c
-@@ -1868,8 +1868,9 @@ static int knav_queue_probe(struct platform_device *pdev)
- 		goto err;
- 	}
+-	if (raw_res_spin_lock_irqsave(&qs->lock, flags))
++	if (raw_res_spin_lock_irqsave(&qs->lock, flags)) {
++		memset(value, 0, qs->map.value_size);
+ 		return -EBUSY;
++	}
  
--	debugfs_create_file("qmss", S_IFREG | S_IRUGO, NULL, NULL,
--			    &knav_queue_debug_fops);
-+	knav_qdev->debugfs_file =
-+		debugfs_create_file("qmss", 0444, NULL, NULL,
-+				    &knav_queue_debug_fops);
- 	device_ready = true;
- 	return 0;
+ 	if (queue_stack_map_is_empty(qs)) {
+ 		memset(value, 0, qs->map.value_size);
+@@ -130,8 +132,10 @@ static long __stack_map_get(struct bpf_map *map, void *value, bool delete)
+ 	void *ptr;
+ 	u32 index;
  
-@@ -1887,6 +1888,8 @@ static void knav_queue_remove(struct platform_device *pdev)
- 	struct knav_device *kdev = platform_get_drvdata(pdev);
+-	if (raw_res_spin_lock_irqsave(&qs->lock, flags))
++	if (raw_res_spin_lock_irqsave(&qs->lock, flags)) {
++		memset(value, 0, qs->map.value_size);
+ 		return -EBUSY;
++	}
  
- 	device_ready = false;
-+	debugfs_remove(kdev->debugfs_file);
-+	kdev->debugfs_file = NULL;
- 	knav_queue_stop_pdsps(kdev);
- 	knav_queue_free_regions(kdev);
- 	knav_free_queue_ranges(kdev);
+ 	if (queue_stack_map_is_empty(qs)) {
+ 		memset(value, 0, qs->map.value_size);
 -- 
 2.53.0
 
