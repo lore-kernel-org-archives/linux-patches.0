@@ -1,35 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1497C3B47D5;
-	Sat, 12 Sep 2026 09:24:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4D484189B9;
+	Sat, 12 Sep 2026 09:25:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789205099; cv=none; b=axxvkhGB7Pf/RReYrwnmFE+I7NzHZEQ12c2utg0u3QU9jMdAGoRzTyIYTe4pvzaprZtvy+KpJuzW1hdkCSOZsgh4Drd14YONwA21tw4SkWhP/72DS80Nmw4q5IpfRlO+DSteSSqMwii/9dWAc8xckGQf9NyODtS52ZDlulEsdh0=
+	t=1789205105; cv=none; b=T8X7hS4NObbhDPhjU7ReAJF5VsDP6vP8Z9G8LpgFVHtvXfmi/PQ7aNxtW/2tceC3u3ek3k3jmAdzEZ+yfmiokfuvOi8DvxWqhQdbVeH+g3+7I5fX4vHBuLNHR3FhgNiRz2pFhDGLwBR61JElR7tpYeFeItNAja+wCxqBJjvWwTg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789205099; c=relaxed/simple;
-	bh=6crDRp9QY8FnH6POvV8QAot55lhJL7bKekIkwpNslds=;
+	s=arc-20240116; t=1789205105; c=relaxed/simple;
+	bh=fgDAY8cA8fahYvd2Agj7pp/qs2Op+9qIh+ImTTAhdRs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JgZBx7nEqRTlSA+TWxLPsbjfe7rU3RsW/35DH8zRZY5lBYcm7CvqMpi8O8z0waFYvDC8XYVVg51abSgUgXDA06WcUJLJVGyE7z/XPw90UHa+gMD6YGkIc2RWM1sqsM0NlCrSAdn37fsJX8OgySN9fqg62dfsUjMUEbSNOHbvQCM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ub9MN12f; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FbP5MVGDGq0Dm2DQW6HYh10C4HVURays1lNO9Qz6N+WFuDj8w0v6xloZGGFu5v7a5jFoLijR78HxtPoo6Yu1DPHlaeCKjArOOFCsTe0hiwWtDWOATU2YTptqhWKrgyfL379b1uSzgMmrXy1/XCxdhXunnWD0/OaC1dE5Y+gl9EU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M7l73OcU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ub9MN12f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A46241F00893;
-	Sat, 12 Sep 2026 09:24:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M7l73OcU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FBDD1F000FF;
+	Sat, 12 Sep 2026 09:25:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789205097;
-	bh=TcCVprR5k3itkyLaDmbIOomKPFoaNRdPuxPAWK3RUH8=;
+	s=korg; t=1789205102;
+	bh=w5j5jWBeMV2MjRo2LPGtMOMUm3jpAJ5AiFJXHOuoOj8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ub9MN12felzGfb11uwIf2UGwVDtJGlVDp4N1HsKkvb/S81MiccdYKj1JbvtQ+RLRM
-	 i5G4A8Qm3q9oTfxIVmPXzVFXgSKNkc119GOQFxeK8KCx76SYxQtQnUDuWhqROdnA0e
-	 mTesmxTlcOIfohv9qb5n7jol0A1KmHi3JNsjYvi4=
+	b=M7l73OcUH7gK3wSRIlMyLPYxX88Cud4+s/Yd/M+6fEpyhLCOu+mrgBH764g7XuRd6
+	 n7P0RsAL0q1T/4JAVG1E+gXxbLXAqVc7SLzArrhWqlzmwc4o6icY6H7gF7bDVqpzWd
+	 uxQZcTBWCumdKwzm6OgUWJmkE+6hi07/sTGnmEmY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Usama Anjum <usama.anjum@arm.com>,
-	Sarthak Sharma <sarthak.sharma@arm.com>,
-	Usama Arif <usama.arif@linux.dev>,
+	Hongfu Li <lihongfu@kylinos.cn>,
 	"David Hildenbrand (Arm)" <david@kernel.org>,
 	Baolin Wang <baolin.wang@linux.alibaba.com>,
 	Barry Song <baohua@kernel.org>,
@@ -37,11 +35,8 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Lance Yang <lance.yang@linux.dev>,
 	"Liam R. Howlett" <liam@infradead.org>,
 	Lorenzo Stoakes <ljs@kernel.org>,
-	Miaohe Lin <linmiaohe@huawei.com>,
 	Michal Hocko <mhocko@suse.com>,
 	Mike Rapoport <rppt@kernel.org>,
-	Naoya Horiguchi <nao.horiguchi@gmail.com>,
-	Nico Pache <npache@redhat.com>,
 	Ryan Roberts <ryan.roberts@arm.com>,
 	Shuah Khan <shuah@kernel.org>,
 	Suren Baghdasaryan <surenb@google.com>,
@@ -49,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Zi Yan <ziy@nvidia.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1749/1815] selftests/mm: skip COW tmpfile cases when fallocate() is unsupported
-Date: Sat, 12 Sep 2026 08:58:19 +0200
-Message-ID: <20260912065730.044887060@linuxfoundation.org>
+Subject: [PATCH 7.2 1750/1815] selftests/mm: fix read_file() return value check
+Date: Sat, 12 Sep 2026 08:58:20 +0200
+Message-ID: <20260912065730.067557448@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -70,42 +65,20 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Muhammad Usama Anjum <usama.anjum@arm.com>
+From: Hongfu Li <lihongfu@kylinos.cn>
 
-[ Upstream commit 4004c130c358b1561a55323b0e747f20f5133f7b ]
+[ Upstream commit 4050b5b0b60c93160a816d68ea1eb9ae92739a73 ]
 
-Patch series "selftests/mm: Handle unsupported and transient test
-conditions", v3.
+read_file() returns 0 on open/read failures and never returns negative
+values.  Existing < 0 error checks never trigger, so read failures are
+silently ignored.  Check for zero return to detect read_file() failures.
 
-Several MM selftests report failures when the test environment lacks
-an underlying prerequisite, such as fallocate() support, MADV_REMOVE,
-local page-cache semantics, or swap.
+Also fix misleading error message in get_finfo().  The error string
+incorrectly references read_num when reading uevent files.
 
-This series converts those unsupported cases to SKIP while preserving
-failures for unexpected errors. It also allows migration tests to retry
-transient move_pages() failures.
-
-This patch (of 4):
-
-The tmpfile-backed COW cases allocate a one-page file with fallocate()
-before exercising private and shared mappings.  When the filesystem
-backing tmpfile() does not implement fallocate(), setup fails with
-EOPNOTSUPP and no COW behavior is exercised.
-
-This occurs when the temporary directory resides on a filesystem with
-limited allocation support, such as NFSv3.  Reporting a failure adds noise
-because the test prerequisite is absent rather than the COW implementation
-being broken.
-
-Report EOPNOTSUPP as a skip.  Continue treating every other fallocate()
-error as a failure so unexpected setup regressions remain visible.
-
-Link: https://lore.kernel.org/20260727095225.372655-1-usama.anjum@arm.com
-Link: https://lore.kernel.org/20260727095225.372655-2-usama.anjum@arm.com
-Fixes: f8664f3c4a08 ("selftests/vm: cow: basic COW tests for non-anonymous pages")
-Signed-off-by: Muhammad Usama Anjum <usama.anjum@arm.com>
-Tested-by: Sarthak Sharma <sarthak.sharma@arm.com>
-Acked-by: Usama Arif <usama.arif@linux.dev>
+Link: https://lore.kernel.org/20260807013555.36525-1-hongfu.li@linux.dev
+Fixes: e0c13f9761df ("khugepaged: add self test")
+Signed-off-by: Hongfu Li <lihongfu@kylinos.cn>
 Acked-by: David Hildenbrand (Arm) <david@kernel.org>
 Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
 Cc: Barry Song <baohua@kernel.org>
@@ -113,11 +86,8 @@ Cc: Dev Jain <dev.jain@arm.com>
 Cc: Lance Yang <lance.yang@linux.dev>
 Cc: Liam R. Howlett <liam@infradead.org>
 Cc: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Miaohe Lin <linmiaohe@huawei.com>
 Cc: Michal Hocko <mhocko@suse.com>
 Cc: Mike Rapoport <rppt@kernel.org>
-Cc: Naoya Horiguchi <nao.horiguchi@gmail.com>
-Cc: Nico Pache <npache@redhat.com>
 Cc: Ryan Roberts <ryan.roberts@arm.com>
 Cc: Shuah Khan <shuah@kernel.org>
 Cc: Suren Baghdasaryan <surenb@google.com>
@@ -126,29 +96,38 @@ Cc: Zi Yan <ziy@nvidia.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/mm/cow.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ tools/testing/selftests/mm/khugepaged.c | 4 ++--
+ tools/testing/selftests/mm/vm_util.c    | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/tools/testing/selftests/mm/cow.c b/tools/testing/selftests/mm/cow.c
-index 0c627ea89ff7b..c1b8920e29342 100644
---- a/tools/testing/selftests/mm/cow.c
-+++ b/tools/testing/selftests/mm/cow.c
-@@ -1718,8 +1718,13 @@ static void run_with_tmpfile(non_anon_test_fn fn, const char *desc)
+diff --git a/tools/testing/selftests/mm/khugepaged.c b/tools/testing/selftests/mm/khugepaged.c
+index 10e8dedcb087d..506310d4b4d5c 100644
+--- a/tools/testing/selftests/mm/khugepaged.c
++++ b/tools/testing/selftests/mm/khugepaged.c
+@@ -138,8 +138,8 @@ static void get_finfo(const char *dir)
+ 		     major(path_stat.st_dev), minor(path_stat.st_dev))
+ 	    >= sizeof(path))
+ 		ksft_exit_fail_msg("%s: Pathname is too long\n", __func__);
+-	if (read_file(path, buf, sizeof(buf)) < 0)
+-		ksft_exit_fail_perror("read_file(read_num)");
++	if (!read_file(path, buf, sizeof(buf)))
++		ksft_exit_fail_perror("read_file(uevent)");
+ 	if (strstr(buf, "DEVTYPE=disk")) {
+ 		/* Found it */
+ 		if (snprintf(finfo.dev_queue_read_ahead_path,
+diff --git a/tools/testing/selftests/mm/vm_util.c b/tools/testing/selftests/mm/vm_util.c
+index ef1ea11981a74..2697d50d07f4f 100644
+--- a/tools/testing/selftests/mm/vm_util.c
++++ b/tools/testing/selftests/mm/vm_util.c
+@@ -755,7 +755,7 @@ unsigned long read_num(const char *path)
+ {
+ 	char buf[21];
  
- 	/* File consists of a single page filled with zeroes. */
- 	if (fallocate(fd, 0, 0, pagesize)) {
--		ksft_perror("fallocate() failed");
--		log_test_result(KSFT_FAIL);
-+		if (errno == EOPNOTSUPP) {
-+			ksft_print_msg("fallocate() not supported by filesystem\n");
-+			log_test_result(KSFT_SKIP);
-+		} else {
-+			ksft_perror("fallocate() failed");
-+			log_test_result(KSFT_FAIL);
-+		}
- 		goto close;
- 	}
+-	if (read_file(path, buf, sizeof(buf)) < 0)
++	if (!read_file(path, buf, sizeof(buf)))
+ 		ksft_exit_fail_perror("read_file()");
  
+ 	return strtoul(buf, NULL, 10);
 -- 
 2.53.0
 
