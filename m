@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E568D3542F8;
-	Sat, 12 Sep 2026 09:21:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DAA3374A12;
+	Sat, 12 Sep 2026 09:21:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789204902; cv=none; b=qgSIL1Ixp1HxGDuW+mIaUWSgn6S4EhQKjkW6MJHry17buGILuUZpmFSK7YIuvScGV/T+oKZJi9WSh5+e3Z1/csyEV/JGo6urqLOb4lbpS7ShEfnvmolGtE2XYfW2FomjJuzz6v6DGCSdi1Ln/am8FCVGJx3pU2J6X7rPfsYYHN8=
+	t=1789204906; cv=none; b=FM/yMkvsIxgrkjCu6h0tv1iQTjaIuVCYkEQ39neOqrUTlTMGBdfj0c1xkAQ99GYvroezOohow2WjboUi9W3/gUbqjMyHviczX85OGSiFU9OTibclqoUK+FiNP9HsZrq4+MQBiP/9XvKVjeua0GG1jWZ8fGjx1tuzRH3svU87pxk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789204902; c=relaxed/simple;
-	bh=VmDI5enPnl8dpbe/Vr0wp+xs26lHEpvRWkQjA71Mnc8=;
+	s=arc-20240116; t=1789204906; c=relaxed/simple;
+	bh=oMkN3II1tnqd7IiT2BKhyLrI6/gUwcQuSx6F46ARYnY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ifT7fiCGTbGi5gXJNpdULSPhkNHuAcNU73KsAkfJ2QwK/jplonWirAzojQbcGSW7nC1ohzx6/75WlHypUu+PQ5GIrC92QJQzLtcgN0Cg8V1JAumXEqtF+unc1RWjXsvR4mO8obkKltGgavOQbT7FEHkicuuUtTXEcGMTthmQ4RI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VK/6uGi/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aBDcvWc5HaH0VgFtuKpHBzH6WGm0WYtS1Y8pOSEpZvz7odQlw7lGEO/H5RVHNIq+BtzeBkVYgN6dYJw++ItsMb1gS5K/tAd7ToIZVMf9zb573BBtlbh10uFDFzM0PwqwA3Vo3M1wlcdiSBoBO+L/xqND3MBoKOCaTAMbefvIvF0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aO6e2KNT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VK/6uGi/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B66E11F000FF;
-	Sat, 12 Sep 2026 09:21:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aO6e2KNT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1FFA1F000FF;
+	Sat, 12 Sep 2026 09:21:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789204900;
-	bh=DU74uBN8XQ4OOgpH4dPPrUM9dg0CtMbHNE7yhfKGubE=;
+	s=korg; t=1789204905;
+	bh=4XaaFogjBSrgEhUlFXw7cQ7FolB+r1ih68kaFbh7Nvg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VK/6uGi/ee+boGDSsjo2VTMiq9UOhwbYDIyk26Lq0Yt9uRAbncWOAu5KpG5nnxwSw
-	 Zw83z7z38y0ewyOyxlHdSo30TcPsJN95AeyV3O114ninhO3/Pup1n/xPi3sRbAWZuf
-	 7ZwiDC8gXbjr2upsmaqkl/D/NNPja7ArdpTTwAfA=
+	b=aO6e2KNTBQJbfmcrWnmUSY9lYodC21Vsc5XS1VYNnxQwLMPraPjqd310mm/zVIiKC
+	 Wki5Ug/20qrOu5JfkqHWVvw/lAhqmtFmjyyiythjAP6JI4EkXtPxF/alZYLa9doYm1
+	 USRCyDqMHKPMp5jnlCv+AFVb/5G7I/iUEBmmvOto=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baokun Li <libaokun@linux.alibaba.com>,
-	Bernd Schubert <bernd@bsbernd.com>,
+	Joanne Koong <joannelkoong@gmail.com>,
 	Miklos Szeredi <mszeredi@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1709/1815] fuse: invalidate the correct range after O_APPEND direct write
-Date: Sat, 12 Sep 2026 08:57:39 +0200
-Message-ID: <20260912065729.098519383@linuxfoundation.org>
+Subject: [PATCH 7.2 1710/1815] fuse: use release/acquire for fch->initialized
+Date: Sat, 12 Sep 2026 08:57:40 +0200
+Message-ID: <20260912065729.121502330@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,93 +51,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baokun Li <libaokun@linux.alibaba.com>
+From: Joanne Koong <joannelkoong@gmail.com>
 
-[ Upstream commit 26d7e1f5c407b5859122b5cd47d7ebbf4b4c1cd2 ]
+[ Upstream commit 4ef7c8cc9894fccc7aa5fdaf6b39faa45c58c23e ]
 
-fuse_direct_write_iter() captures pos before generic_write_checks(),
-which moves ki_pos to EOF for O_APPEND writes:
+fuse_chan_set_initialized() sets values for the connection state and
+then sets fch->initialized to true, but lockless readers read
+fch->initialized and if true, go to read the connection state values,
+without using any barriers.
 
-  fuse_direct_write_iter()
-  {
-      pos = iocb->ki_pos;           /* 0 (user-supplied)       */
-      generic_write_checks();       /* ki_pos -> EOF           */
-      fuse_direct_io();             /* writes at EOF, correct  */
-      invalidate(pos, pos + res);   /* [0, res) -- wrong       */
-  }
+There are a few instances where this happens (fuse_uring_cmd() before
+dispatching register / commit-and-fetch cmds, fuse_dev_do_wriite() for
+handling notify retrieves, etc).
 
-The post-write invalidation targets a stale range instead of the
-actual written range at EOF.
+To make this as simple as possible, use release/acquire semantics for
+writing/reading fch->initialized. Add the missing read barriers.
+This is not marked for stable as these are not realistically reachable
+on a well-behaved server, and buggy/malicious servers who trigger this
+path fail benignly rather than crash or deadlock the kernel.
 
-This can cause data inconsistency when the file size is not
-page-aligned.  The tail page straddling EOF has a valid portion
-before EOF that concurrent readers can fault back in during the
-DIO write window:
-
-  Tail page (file size X not page-aligned):
-
-    page_start         X (EOF)   page_end
-    |--- valid data ----|-- stale --|
-
-  CPU0 (O_APPEND DIO writer)    CPU1 (buffered reader)
-  --------------------------    ----------------------
-  invalidate [X, X+len)
-    tail page evicted
-  FUSE_WRITE in flight ...
-                                read [page_start, X)
-                                  tail page re-faulted
-                                  [X, page_end) = stale
-  FUSE_WRITE completes
-  i_size = X + len
-  invalidate [0, len)  <- WRONG
-    tail page still cached
-                                read [X, X+len)
-                                  hits stale tail page
-                                  returns old data
-
-Fix by reading pos back from iocb->ki_pos after generic_write_checks(),
-as generic_file_direct_write() does.
-
-Also fix a typo in the comment ("may have" -> "may have competed").
-
-Fixes: 2b0408d0284f ("fuse: invalidate page cache after DIO and async DIO writes")
-Signed-off-by: Baokun Li <libaokun@linux.alibaba.com>
-Reviewed-by: Bernd Schubert <bernd@bsbernd.com>
+Signed-off-by: Joanne Koong <joannelkoong@gmail.com>
 Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
+Stable-dep-of: 1f59015e9581 ("fuse: Fix the condition to enable over-io-uring")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fuse/file.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ fs/fuse/cuse.c      |  3 ++-
+ fs/fuse/dev.c       | 14 ++++++--------
+ fs/fuse/dev_uring.c |  4 +++-
+ 3 files changed, 11 insertions(+), 10 deletions(-)
 
-diff --git a/fs/fuse/file.c b/fs/fuse/file.c
-index e7b2a839f0814..5820def81d9f5 100644
---- a/fs/fuse/file.c
-+++ b/fs/fuse/file.c
-@@ -1801,13 +1801,14 @@ static ssize_t fuse_direct_write_iter(struct kiocb *iocb, struct iov_iter *from)
- {
- 	struct inode *inode = file_inode(iocb->ki_filp);
- 	struct address_space *mapping = inode->i_mapping;
--	loff_t pos = iocb->ki_pos;
- 	ssize_t res;
- 	bool exclusive;
+diff --git a/fs/fuse/cuse.c b/fs/fuse/cuse.c
+index 1c71783ca5a51..4079cf8e5974a 100644
+--- a/fs/fuse/cuse.c
++++ b/fs/fuse/cuse.c
+@@ -530,7 +530,8 @@ static int cuse_channel_open(struct inode *inode, struct file *file)
  
- 	fuse_dio_lock(iocb, from, &exclusive);
- 	res = generic_write_checks(iocb, from);
- 	if (res > 0) {
-+		loff_t pos = iocb->ki_pos;
-+
- 		task_io_account_write(res);
- 		if (!is_sync_kiocb(iocb)) {
- 			res = fuse_direct_IO(iocb, from);
-@@ -1822,7 +1823,7 @@ static ssize_t fuse_direct_write_iter(struct kiocb *iocb, struct iov_iter *from)
- 			/*
- 			 * As in generic_file_direct_write(), invalidate after
- 			 * write, to invalidate read-ahead cache that may have
--			 * with the write.
-+			 * competed with the write.
- 			 */
- 			invalidate_inode_pages2_range(mapping,
- 				pos >> PAGE_SHIFT,
+ 	INIT_LIST_HEAD(&cc->list);
+ 
+-	cc->fc.chan->initialized = 1;
++	/* Pairs with smp_load_acquire() readers of fch->initialized */
++	smp_store_release(&cc->fc.chan->initialized, 1);
+ 	rc = cuse_send_init(cc);
+ 	if (rc) {
+ 		fuse_dev_put(fud);
+diff --git a/fs/fuse/dev.c b/fs/fuse/dev.c
+index e7da62a7293dc..a82cf763f50db 100644
+--- a/fs/fuse/dev.c
++++ b/fs/fuse/dev.c
+@@ -80,20 +80,17 @@ void fuse_chan_set_initialized(struct fuse_chan *fch, struct fuse_chan_param *pa
+ 			fuse_uring_conn_init(fch);
+ 	}
+ 
+-	/* Make sure stores before this are seen on another CPU */
+-	smp_wmb();
+-	fch->initialized = 1;
++	/* Pairs with smp_load_acquire() readers of fch->initialized */
++	smp_store_release(&fch->initialized, 1);
+ 	wake_up_all(&fch->blocked_waitq);
+ }
+ 
+ static bool fuse_block_alloc(struct fuse_chan *fch, bool for_background)
+ {
+-	if (!fch->initialized)
++	/* Pairs with smp_store_release() in fuse_chan_set_initialized() */
++	if (!smp_load_acquire(&fch->initialized))
+ 		return true;
+ 
+-	/* Pairs with smp_wmb() in fuse_chan_set_initialized() */
+-	smp_rmb();
+-
+ 	return (for_background && fch->blocked) ||
+ 	       (fch->io_uring && fch->connected && !fuse_uring_ready(fch));
+ }
+@@ -1891,7 +1888,8 @@ static ssize_t fuse_dev_do_write(struct fuse_dev *fud,
+ 		 * initialized and connected state
+ 		 */
+ 		err = -EINVAL;
+-		if (!fch->initialized || !fch->connected)
++		/* Pairs with smp_store_release() in fuse_chan_set_initialized() */
++		if (!smp_load_acquire(&fch->initialized) || !fch->connected)
+ 			goto copy_finish;
+ 
+ 		/* Don't try to move folios (yet) */
+diff --git a/fs/fuse/dev_uring.c b/fs/fuse/dev_uring.c
+index 82da15a9cc787..bda2b2cda190e 100644
+--- a/fs/fuse/dev_uring.c
++++ b/fs/fuse/dev_uring.c
+@@ -1251,8 +1251,10 @@ int fuse_uring_cmd(struct io_uring_cmd *cmd, unsigned int issue_flags)
+ 	/*
+ 	 * fuse_uring_register() needs the ring to be initialized,
+ 	 * we need to know the max payload size
++	 *
++	 * Pairs with smp_store_release() in fuse_chan_set_initialized()
+ 	 */
+-	if (!fch->initialized)
++	if (!smp_load_acquire(&fch->initialized))
+ 		return -EAGAIN;
+ 
+ 	switch (cmd_op) {
 -- 
 2.53.0
 
