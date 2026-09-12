@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB498355803;
-	Sat, 12 Sep 2026 09:43:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3382A343893;
+	Sat, 12 Sep 2026 09:43:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789206236; cv=none; b=cxta4L8MkTK8cMCNioe8SvToeHNXJHvfuC+n0QjtnADUKF0BooZIKfIdVe/hEPkgKHWimEg+IR1/ucy42zII7JpPvYj4hM5kNeHEBBToqt+DMyJaxP0KktSwtMHkC7LUl4u5pakvMVIDjz3G7Olirzg3iTbOalwk04YnV8oC1/c=
+	t=1789206240; cv=none; b=HU9KqSgEBJF62A03ndIB+RTTLuu6k3HLgXmpSJgaX5xtFLbRmys6ILdeisZn38/8IqeR4/41HF7eIM013d+YfMtZQ6S1njB1X5W0NwggLjVqqx31VLu6AX682b1PJIJf+RMY1MV2gnyGQBB3s0DnO3yWXsaqiICB+0QubHOdb6I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789206236; c=relaxed/simple;
-	bh=4iwX3pyYd8uXkTkmwaDzpBANyp73Uc26cp0zDGXwLS8=;
+	s=arc-20240116; t=1789206240; c=relaxed/simple;
+	bh=qMaPtJq9Vbyi8SXjXeUpEtBnPtZo45VyL4tX61l6B9c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IzB6/nnr7Kn3KTQV9Fjo1nnpZdJKJT6CJAvbIdXyMlHmwKXLlHeSbrKlMYSMgp5g/xOCyRX4ORR97IGxwBbR/L7pVqRQnOVzp4VmOAZJmJJWZmXDmvUAMqdbMefyrWgHXa3q1t4R620GnUiB3nktulTK+NezsXJ1q79cvvPQnwU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q4cyt924; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IplTReFGq4IdfauOSnmSo6DZyCT2JkCgtLzOV9N1gPdROnuByeF7NsUSeCrLcv7zEcvPp+4ki7lowsOfhuym5T1oqnQVLGlLRGQX2fl7dxfH/v2mcgtNKLq5d+BbPxcsp8FU1FbwMzDlkGIZPNV1HJk09RknQEwFlj/626HRTes=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=URN73jrQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q4cyt924"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00F5B1F000FF;
-	Sat, 12 Sep 2026 09:43:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="URN73jrQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E50D1F000FF;
+	Sat, 12 Sep 2026 09:43:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789206234;
-	bh=xmxK7C/Fun3MFHZtMQTZK6dP50aAwqXVk6y3TPCBjkw=;
+	s=korg; t=1789206239;
+	bh=bqY1TzUlk+sId4HExK0UyRCOvFE8mrdieLlQay53EL4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=q4cyt924gdHOrKuMbbB/1ENqVxK5EczhSaSFqA1BQG5LqSbtE0VZ/e+3PhSr+KPRr
-	 98rivsuQ3Nyx28xeC6eGDHLY/Mvi5+HqgtShVfF1ZvOdcr+e+fDtcyhlbbv4gmL4E/
-	 DYUKYxED2H9X6KS66McSbmrhpjAqniflyxqA3PRE=
+	b=URN73jrQiziRrSNLBYbSkdoB2ew4uScLkZRwlbuRo+FU9NrXeBKn7LVbr6aNuWuy0
+	 11aTjKjB/lusiJFmfl5ISvjxnrJQZ2MSDOEefnwnmFiNwzpXlMyKoWi712b6UdJFyi
+	 +ZivVu82YpfpFsMCaDT5Nl26guzYrgSYnxxGLq9w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	James Clark <james.clark@linaro.org>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Henrik Grimler <henrik.grimler@axis.com>,
+	Qiang Yu <yuq825@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0165/1518] perf test: Fixes for check branch stack sampling
-Date: Sat, 12 Sep 2026 08:38:54 +0200
-Message-ID: <20260912065627.229312105@linuxfoundation.org>
+Subject: [PATCH 6.18 0139/1518] drm/lima: call drm_mm_init() with a valid allocation range
+Date: Sat, 12 Sep 2026 08:38:28 +0200
+Message-ID: <20260912065626.639411362@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,262 +51,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Henrik Grimler <henrik.grimler@axis.com>
 
-[ Upstream commit 86d1095fdb7017a93e9d7be875775f7e5aa5c2f5 ]
+[ Upstream commit 3b3bce4a692ac60d9f4a341e6b597dd1fd0a28f9 ]
 
-When filtering branch stack samples on user events they sample in user
-land but may have come from the kernel. Aarch64 avoids leaking the
-kernel address for kaslr reasons but other platforms, for now,
-don't. Be more permissive in allowing kernel addresses in the source
-of user branch stacks.
+lima_vm_create() is currently run before va_start and va_end are set up,
+meaning they are both 0. lima_vm_create() runs drm_mm_init() with them
+as arguments for the allocator, and if DRM_DEBUG_MM is enabled the
+DRM_MM_BUG_ON check in drm_mm_init then fires, as seen here on
+exynos4412-odroid-u2:
 
-When filtering branch stack samples on kernel events they sample in
-kernel land but may have come from user land. Avoid the target being a
-user address but allow the source to be in user land. Aarch64 may not
-leak the user land addresses (making them 0) but other platforms
-do. As the kernel address sampling implies privelege, just allow this.
+[    1.736297] ------------[ cut here ]------------
+[    1.740370] kernel BUG at drivers/gpu/drm/drm_mm.c:931!
+[    1.745574] Internal error: Oops - BUG: 0 [#1] SMP ARM
+[    1.750697] Modules linked in:
+[    1.753734] CPU: 0 UID: 0 PID: 41 Comm: kworker/u16:1 Not tainted 7.0.10-postmarketos-exynos4 #11 PREEMPT
+[    1.763372] Hardware name: Samsung Exynos (Flattened Device Tree)
+[    1.769446] Workqueue: events_unbound deferred_probe_work_func
+[    1.775261] PC is at drm_mm_init+0x9c/0xa4
+[    1.779339] LR is at lima_vm_create+0x144/0x17c
+[ ... ]
 
-Increase the duration of the system call sampling test to make the
-likelihood of sampling a system call higher (increased from 1000 to
-8000 loops - a number found through experimentation on an Intel
-Tigerlake laptop), also make the period of the event a prime number.
+Fix the issue by moving the lima_vm_create() call after va_start and
+va_end are set up.
 
-Put unneeded perf record output into a temporary file so that the test
-output isn't cluttered. More clearly state which test is running and
-the pass, fail or skipped result of the test.
-
-These changes make the test on an Intel tigerlake laptop reliably pass
-rather than reliably fail.
-
-Signed-off-by: Ian Rogers <irogers@google.com>
-Reviewed-by: James Clark <james.clark@linaro.org>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
-Stable-dep-of: 344d3aec164d ("perf tests: Fix flakiness in branch stack sampling tests")
+Fixes: a1d2a6339961 ("drm/lima: driver for ARM Mali4xx GPUs")
+Signed-off-by: Henrik Grimler <henrik.grimler@axis.com>
+Signed-off-by: Qiang Yu <yuq825@gmail.com>
+Link: https://patch.msgid.link/20260601-lima-alloc-fix-v1-1-16d3f3b7b780@axis.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/tests/shell/test_brstack.sh | 146 ++++++++++++++++---------
- 1 file changed, 96 insertions(+), 50 deletions(-)
+ drivers/gpu/drm/lima/lima_device.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/tools/perf/tests/shell/test_brstack.sh b/tools/perf/tests/shell/test_brstack.sh
-index 85233d435be63..eb5837f82e390 100755
---- a/tools/perf/tests/shell/test_brstack.sh
-+++ b/tools/perf/tests/shell/test_brstack.sh
-@@ -38,9 +38,13 @@ is_arm64() {
- 	[ "$(uname -m)" = "aarch64" ];
- }
+diff --git a/drivers/gpu/drm/lima/lima_device.c b/drivers/gpu/drm/lima/lima_device.c
+index 0bf7105c8748b..7c873e62c16da 100644
+--- a/drivers/gpu/drm/lima/lima_device.c
++++ b/drivers/gpu/drm/lima/lima_device.c
+@@ -368,12 +368,6 @@ int lima_device_init(struct lima_device *ldev)
+ 	if (err)
+ 		goto err_out0;
  
-+has_kaslr_bug() {
-+	[ "$(uname -m)" != "aarch64" ];
-+}
-+
- check_branches() {
- 	if ! tr -s ' ' '\n' < "$TMPDIR/perf.script" | grep -E -m1 -q "$1"; then
--		echo "Branches missing $1"
-+		echo "ERROR: Branches missing $1"
- 		err=1
- 	fi
- }
-@@ -48,6 +52,8 @@ check_branches() {
- test_user_branches() {
- 	echo "Testing user branch stack sampling"
- 
-+	start_err=$err
-+	err=0
- 	perf record -o "$TMPDIR/perf.data" --branch-filter any,save_type,u -- ${TESTPROG} > "$TMPDIR/record.txt" 2>&1
- 	perf script -i "$TMPDIR/perf.data" --fields brstacksym > "$TMPDIR/perf.script"
- 
-@@ -73,59 +79,88 @@ test_user_branches() {
- 	perf script -i "$TMPDIR/perf.data" --fields brstack | \
- 		tr ' ' '\n' > "$TMPDIR/perf.script"
- 
--	# There should be no kernel addresses with the u option, in either
--	# source or target addresses.
--	if grep -E -m1 "0x[89a-f][0-9a-f]{15}" $TMPDIR/perf.script; then
--		echo "ERROR: Kernel address found in user mode"
-+	# There should be no kernel addresses in the target with the u option.
-+	local regex="0x[89a-f][0-9a-f]{15}"
-+	if has_kaslr_bug; then
-+		# If the system has a kaslr bug that may leak kernel addresses
-+		# in the source of something like an ERET/SYSRET. Make the regex
-+		# more specific and just check the target address is in user
-+		# code.
-+		regex="^0x[0-9a-f]{0,16}/0x[89a-f][0-9a-f]{15}/"
-+	fi
-+	if grep -q -E -m1 "$regex" $TMPDIR/perf.script; then
-+		echo "Testing user branch stack sampling [Failed kernel address found in user mode]"
- 		err=1
- 	fi
- 	# some branch types are still not being tested:
- 	# IND COND_CALL COND_RET SYSRET SERROR NO_TX
-+	if [ $err -eq 0 ]; then
-+		echo "Testing user branch stack sampling [Passed]"
-+		err=$start_err
-+	else
-+		echo "Testing user branch stack sampling [Failed]"
-+	fi
- }
- 
- test_trap_eret_branches() {
- 	echo "Testing trap & eret branches"
-+
- 	if ! is_arm64; then
--		echo "skip: not arm64"
-+		echo "Testing trap & eret branches [Skipped not arm64]"
-+		return
-+	fi
-+	start_err=$err
-+	err=0
-+	perf record -o $TMPDIR/perf.data --branch-filter any,save_type,u,k -- \
-+		perf test -w traploop 1000 > "$TMPDIR/record.txt" 2>&1
-+	perf script -i $TMPDIR/perf.data --fields brstacksym | \
-+		tr ' ' '\n' > $TMPDIR/perf.script
-+
-+	# BRBINF<n>.TYPE == TRAP are mapped to PERF_BR_IRQ by the BRBE driver
-+	check_branches "^trap_bench\+[^ ]+/[^ ]/IRQ/"
-+	check_branches "^[^ ]+/trap_bench\+[^ ]+/ERET/"
-+	if [ $err -eq 0 ]; then
-+		echo "Testing trap & eret branches [Passed]"
-+		err=$start_err
- 	else
--		perf record -o $TMPDIR/perf.data --branch-filter any,save_type,u,k -- \
--			perf test -w traploop 1000
--		perf script -i $TMPDIR/perf.data --fields brstacksym | \
--			tr ' ' '\n' > $TMPDIR/perf.script
+-	ldev->empty_vm = lima_vm_create(ldev);
+-	if (!ldev->empty_vm) {
+-		err = -ENOMEM;
+-		goto err_out1;
+-	}
 -
--		# BRBINF<n>.TYPE == TRAP are mapped to PERF_BR_IRQ by the BRBE driver
--		check_branches "^trap_bench\+[^ ]+/[^ ]/IRQ/"
--		check_branches "^[^ ]+/trap_bench\+[^ ]+/ERET/"
-+		echo "Testing trap & eret branches [Failed]"
- 	fi
- }
+ 	ldev->va_start = 0;
+ 	if (ldev->id == lima_gpu_mali450) {
+ 		ldev->va_end = LIMA_VA_RESERVE_START;
+@@ -387,6 +381,12 @@ int lima_device_init(struct lima_device *ldev)
+ 	} else
+ 		ldev->va_end = LIMA_VA_RESERVE_END;
  
- test_kernel_branches() {
--	echo "Testing that k option only includes kernel source addresses"
-+	echo "Testing kernel branch sampling"
- 
--	if ! perf record --branch-filter any,k -o- -- true > /dev/null; then
--		echo "skip: not enough privileges"
-+	if ! perf record --branch-filter any,k -o- -- true > "$TMPDIR/record.txt" 2>&1; then
-+		echo "Testing that k option [Skipped not enough privileges]"
-+		return
-+	fi
-+	start_err=$err
-+	err=0
-+	perf record -o $TMPDIR/perf.data --branch-filter any,k -- \
-+		perf bench syscall basic --loop 1000 > "$TMPDIR/record.txt" 2>&1
-+	perf script -i $TMPDIR/perf.data --fields brstack | \
-+		tr ' ' '\n' > $TMPDIR/perf.script
++	ldev->empty_vm = lima_vm_create(ldev);
++	if (!ldev->empty_vm) {
++		err = -ENOMEM;
++		goto err_out1;
++	}
 +
-+	# Example of branch entries:
-+	#       "0xffffffff93bda241/0xffffffff93bda20f/M/-/-/..."
-+	# Source addresses come first in user or kernel code. Next is the target
-+	# address that must be in the kernel.
-+
-+	# Look for source addresses with top bit set
-+	if ! grep -q -E -m1 "^0x[89a-f][0-9a-f]{15}" $TMPDIR/perf.script; then
-+		echo "Testing kernel branch sampling [Failed kernel branches missing]"
-+		err=1
-+	fi
-+	# Look for no target addresses without top bit set
-+	if grep -q -E -m1 "^0x[0-9a-f]{0,16}/0x[0-7][0-9a-f]{1,15}/" $TMPDIR/perf.script; then
-+		echo "Testing kernel branch sampling [Failed user branches found]"
-+		err=1
-+	fi
-+	if [ $err -eq 0 ]; then
-+		echo "Testing kernel branch sampling [Passed]"
-+		err=$start_err
- 	else
--		perf record -o $TMPDIR/perf.data --branch-filter any,k -- \
--			perf bench syscall basic --loop 1000
--		perf script -i $TMPDIR/perf.data --fields brstack | \
--			tr ' ' '\n' > $TMPDIR/perf.script
--
--		# Example of branch entries:
--		#       "0xffffffff93bda241/0xffffffff93bda20f/M/-/-/..."
--		# Source addresses come first and target address can be either
--		# userspace or kernel even with k option, as long as the source
--		# is in kernel.
--
--		#Look for source addresses with top bit set
--		if ! grep -E -m1 "^0x[89a-f][0-9a-f]{15}" $TMPDIR/perf.script; then
--			echo "ERROR: Kernel branches missing"
--			err=1
--		fi
--		# Look for no source addresses without top bit set
--		if grep -E -m1 "^0x[0-7][0-9a-f]{0,15}" $TMPDIR/perf.script; then
--			echo "ERROR: User branches found with kernel filter"
--			err=1
--		fi
-+		echo "Testing kernel branch sampling [Failed]"
- 	fi
- }
- 
-@@ -136,14 +171,15 @@ test_filter() {
- 	test_filter_expect=$2
- 
- 	echo "Testing branch stack filtering permutation ($test_filter_filter,$test_filter_expect)"
--	perf record -o "$TMPDIR/perf.data" --branch-filter "$test_filter_filter,save_type,u" -- ${TESTPROG}  > "$TMPDIR/record.txt" 2>&1
-+	perf record -o "$TMPDIR/perf.data" --branch-filter "$test_filter_filter,save_type,u" -- \
-+		${TESTPROG}  > "$TMPDIR/record.txt" 2>&1
- 	perf script -i "$TMPDIR/perf.data" --fields brstack > "$TMPDIR/perf.script"
- 
- 	# fail if we find any branch type that doesn't match any of the expected ones
- 	# also consider UNKNOWN branch types (-)
- 	if [ ! -s "$TMPDIR/perf.script" ]
- 	then
--		echo "Empty script output"
-+		echo "Testing branch stack filtering [Failed empty script output]"
- 		err=1
- 		return
- 	fi
-@@ -154,26 +190,36 @@ test_filter() {
- 	  > "$TMPDIR/perf.script-filtered" || true
- 	if [ -s "$TMPDIR/perf.script-filtered" ]
- 	then
--		echo "Unexpected branch filter in script output"
-+		echo "Testing branch stack filtering [Failed unexpected branch filter]"
- 		cat "$TMPDIR/perf.script"
- 		err=1
- 		return
- 	fi
-+	echo "Testing branch stack filtering [Passed]"
- }
- 
- test_syscall() {
- 	echo "Testing syscalls"
- 	# skip if perf doesn't have enough privileges
--	if ! perf record --branch-filter any,k -o- -- true > /dev/null; then
--		echo "skip: not enough privileges"
-+	if ! perf record --branch-filter any,k -o- -- true > "$TMPDIR/record.txt" 2>&1; then
-+		echo "Testing syscalls [Skipped: not enough privileges]"
-+		return
-+	fi
-+	start_err=$err
-+	err=0
-+	perf record -o $TMPDIR/perf.data --branch-filter \
-+		any_call,save_type,u,k -c 10007 -- \
-+		perf bench syscall basic --loop 8000  > "$TMPDIR/record.txt" 2>&1
-+	perf script -i $TMPDIR/perf.data --fields brstacksym | \
-+		tr ' ' '\n' > $TMPDIR/perf.script
-+
-+	check_branches "getppid[^ ]*/SYSCALL/"
-+
-+	if [ $err -eq 0 ]; then
-+		echo "Testing syscalls [Passed]"
-+		err=$start_err
- 	else
--		perf record -o $TMPDIR/perf.data --branch-filter \
--			any_call,save_type,u,k -c 10000 -- \
--			perf bench syscall basic --loop 1000
--		perf script -i $TMPDIR/perf.data --fields brstacksym | \
--			tr ' ' '\n' > $TMPDIR/perf.script
--
--		check_branches "getppid[^ ]*/SYSCALL/"
-+		echo "Testing syscalls [Failed]"
- 	fi
- }
- set -e
+ 	ldev->iomem = devm_platform_ioremap_resource(pdev, 0);
+ 	if (IS_ERR(ldev->iomem)) {
+ 		dev_err(ldev->dev, "fail to ioremap iomem\n");
 -- 
 2.53.0
 
