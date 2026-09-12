@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4A5D46D572;
-	Sat, 12 Sep 2026 10:49:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 125BD46D572;
+	Sat, 12 Sep 2026 10:49:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789210166; cv=none; b=sVXIeuOpG2PufDUI9QhDEOVtA2Lo1J3WKXu63pqypDCmXN7DVQXXLJrTUqt0s1ZqvMcjRCTiplSODa1+CyC1whg67D07laIYX6/9CNcwhoLBv5oGQlcYNh1NHGy1Dht8AQZKL9rQefIU/hVZy8dXj9UYKIz08ZUqSa0JPap91Xc=
+	t=1789210173; cv=none; b=oDRdbEVWZfwg8uMFRQmo5RVbX09E/LTS1DdM7Ij94Hy0MU36WMN9kVZ0HXOqOHp7m8IGSjcsLf2XKrzNB3S1kDMrh4CBIDNnTEWXbeg7k9Kh5EBJfIvYlAfUdbg0+cb61sNP+GzvKFU3dyfyAZEMUHe6RmLGPJ1fkUcpoQ7+STc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789210166; c=relaxed/simple;
-	bh=cXBjpUbK7vet/mGw1lvkRRV1VildjmuXEf4cWnn4urA=;
+	s=arc-20240116; t=1789210173; c=relaxed/simple;
+	bh=Pr9a/dPVM6D/QzwB0zFGPJd9hNwMJs4oSyJKCY/xubQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WSlRlr3yef7c9qm6NnfC9H18wEcNwkO/kJgzUDVLU3MTaLHzmgTsnyOI8f75uEk0t6hCRdcdi5PGkG36gtqZaA4XQ77Jieem/pTIeZ8ZN0Np0T0ax6d6df/QXZ6EaBF9l0SXgnVOfMIelx+eHkRsoVV+LqZxdXy97VgkQgq4rbs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qul3ktM9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Dntvf/1Xd0HtkkLUWqtPSmPBE5jrUOJX7KZdP3GmNejhTZYOum1wdonLH3xoB/IbpprQMHSNzXWVaUZJkeXBTmDUsGQjhdqYaDWPYLi+MVJDJ6LZnKnDEMGe7Q2HJyXW7okUl5i3kjr6AesG9G1x4Sm8H091kKzGmpyj6Kw+fOY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fxER5LcL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qul3ktM9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05AFF1F000FF;
-	Sat, 12 Sep 2026 10:49:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fxER5LcL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 093301F000FF;
+	Sat, 12 Sep 2026 10:49:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789210163;
-	bh=06aJI767Akx803phyXSaSzNunFaFqNvq9F7s7JyIgg0=;
+	s=korg; t=1789210168;
+	bh=AbuX6jv6alDxqcThCoXdO9Aeh+KdBhl+Ajvt7OsWdKQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qul3ktM9i7IQNp43vCU3DJtJrNuxyBUEcOr64SOYRI/p9FxqWvTm6wBB2wNQHFH1i
-	 tIaFOv1fUtMflky1ZIw1bbpMNIGBHmiRRO1jd3Op280xARjTkYLmd1lf365xAJU6U9
-	 OdQasaittsjSUmVoJcyj2UDEpqv2PIHFiJBabTUQ=
+	b=fxER5LcL3SWsl/vTTaGe0nLU8boMKqH1guUAfN/1UpxODONpp1H0Tf/5oGMGXoMak
+	 Q5+RUPDf55m7B1sLt970+rzkvU6/0PfOdCi1oqjhm5o3rRS4CYUz3LbckMRcxPIKij
+	 nswPsXIJG5y+n1pKyuhJX1Jbp7C/PIAb17PEXbGA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Chen-Yu Tsai <wens@kernel.org>,
+	Mykola Marzhan <mykola@meshstor.io>,
+	Yu Kuai <yukuai@fygo.io>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0917/1518] drm/sun4i: dw-hdmi: Drop TCON TOP port reference
-Date: Sat, 12 Sep 2026 08:51:26 +0200
-Message-ID: <20260912065644.195971150@linuxfoundation.org>
+Subject: [PATCH 6.18 0964/1518] md: avoid stale clone I/O accounting timestamps
+Date: Sat, 12 Sep 2026 08:52:13 +0200
+Message-ID: <20260912065645.267981449@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,36 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jernej Skrabec <jernej.skrabec@gmail.com>
+From: Yu Kuai <yukuai@fygo.io>
 
-[ Upstream commit d2a242e5688a17b79c89cd966cd31820c5096d80 ]
+[ Upstream commit 45102fc8330525d35675b1c193242bba101df5ee ]
 
-When the HDMI controller is fed by TCON TOP, the port node used to
-enumerate the possible CRTCs is never released.
+md_clone_bio() always allocates the clone from mddev->io_clone_set, even
+when queue I/O stats are disabled. In that case it does not call
+bio_start_io_acct(), but it also left md_io_clone->start_time untouched.
 
-Fixes: 57e23de02f48 ("drm/sun4i: DW HDMI: Expand algorithm for possible crtcs")
-Signed-off-by: Jernej Skrabec <jernej.skrabec@gmail.com>
-Acked-by: Chen-Yu Tsai <wens@kernel.org>
-Link: https://patch.msgid.link/43ffcc17f7c3f94c1d7bd1ee89134c766e84df35.1785772659.git.jernej.skrabec@gmail.com
-Signed-off-by: Chen-Yu Tsai <wens@kernel.org>
+The clone private data comes from a mempool and can contain data from a
+previous user. md_end_clone_io() checks start_time to decide whether it
+needs to call bio_end_io_acct(), so a stale non-zero value can make the
+completion path end accounting that was never started for this bio.
+
+Set start_time to 0 in the no-stats branch. This keeps the end path tied
+to whether bio_start_io_acct() actually ran.
+
+Fixes: c687297b8845 ("md: also clone new io if io accounting is disabled")
+Tested-by: Mykola Marzhan <mykola@meshstor.io>
+Link: https://patch.msgid.link/20260802195038.164272-8-yukuai@kernel.org
+Signed-off-by: Yu Kuai <yukuai@fygo.io>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/sun4i/sun8i_dw_hdmi.c | 2 ++
+ drivers/md/md.c | 2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/sun4i/sun8i_dw_hdmi.c b/drivers/gpu/drm/sun4i/sun8i_dw_hdmi.c
-index 96532709c2a7e..51cdfa1ae3bf4 100644
---- a/drivers/gpu/drm/sun4i/sun8i_dw_hdmi.c
-+++ b/drivers/gpu/drm/sun4i/sun8i_dw_hdmi.c
-@@ -83,6 +83,8 @@ static u32 sun8i_dw_hdmi_find_possible_crtcs(struct drm_device *drm,
- 				of_node_put(remote_port);
- 			}
- 		}
-+
-+		of_node_put(port);
- 	} else {
- 		crtcs = drm_of_find_possible_crtcs(drm, node);
- 	}
+diff --git a/drivers/md/md.c b/drivers/md/md.c
+index 2e8e32e15e735..d03d0fdf763db 100644
+--- a/drivers/md/md.c
++++ b/drivers/md/md.c
+@@ -9313,6 +9313,8 @@ static void md_clone_bio(struct mddev *mddev, struct bio **bio)
+ 	md_io_clone->mddev = mddev;
+ 	if (blk_queue_io_stat(bdev->bd_disk->queue))
+ 		md_io_clone->start_time = bio_start_io_acct(*bio);
++	else
++		md_io_clone->start_time = 0;
+ 
+ 	if (bio_data_dir(*bio) == WRITE && md_bitmap_enabled(mddev, false)) {
+ 		md_io_clone->offset = (*bio)->bi_iter.bi_sector;
 -- 
 2.53.0
 
