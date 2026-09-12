@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D21583806DD;
-	Sat, 12 Sep 2026 09:58:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD5AB3932D3;
+	Sat, 12 Sep 2026 09:58:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789207082; cv=none; b=Rxr/ETD2k9IXOn/KIR6+T7/fraYbmkt1sGITfmZyFp0AtU3HlKLYwESvHNvQIycJXYFgZyTaJ64Eaexpdj2C5GDPt66iYiaXpYLIqTPchr96NuEAvmIKE4xTD4du7GDGmuq97gx2g1hSczstWkNOk5L4SPtb1peKojJ0QG5D3hk=
+	t=1789207087; cv=none; b=k/L0mBRYwUBXiMdm6us0yX9LvtTdxe3RkV4Imff475+TsxEIjcHdQzmsBZcEkLYLzN3pJ8nVTOOoEVc4usg0d8RIEB/0xN/v9DWrbD02LIykSkQ2qPmIGrELIoO1bnIusIK9QqlvjaWWhD7L1mwYhFxi6/NTZ6wIMmqHu8qr49k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789207082; c=relaxed/simple;
-	bh=0RtOwW7ZsOUbDGKk9yypZ9RwvuA2N/DsZ0YLTKqJDSY=;
+	s=arc-20240116; t=1789207087; c=relaxed/simple;
+	bh=FXvKxO9oi/01yBBAiVQogR9HSXbc2TpZu0dc0IlmV4k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UP0odF+H6d18FnBvZX2NenHDA9KHGz7P8PsuhdJOHfZsk5GOLzULFiOVlxM6t5bYVl4DY/66x6D1ouX2wsNFNK4Y2ZOJMoGoIRb8AlWvv2lMOfPm9RJPWNTNLuowmXwF2azI618pdIANsXluWV/ATCLGV2+vwzZOAfxzGh2XwQE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TlMJigOG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UHGxJMahapRGEv88YJ0ADL7eVYSyYFSONnTEU4FEWTerxaXoL1TYeUrp2McN6Bh+PybdNo0xplDD5NdIv5XuZ7hX7V0+W9MGcnEU+3RsHUu5HsTcZR40nVvX1XS+6xvXXVRhNcv1dn+WaxsmGvk1/r89Z+WQUWWATZ81jm4wC8g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kEmOuCwA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TlMJigOG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C3C91F000FF;
-	Sat, 12 Sep 2026 09:58:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kEmOuCwA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2F691F000FF;
+	Sat, 12 Sep 2026 09:58:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789207081;
-	bh=BcfEEnpmXEMaYQg/NiVApnzhuHedqR3eIfwZBHNdXfg=;
+	s=korg; t=1789207086;
+	bh=Ojt7AhI8H4RCmyH6o+jTXO612UzJ/81IzlylSsCtVDo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TlMJigOGuw9Wci6BF5pTiu2tcahB3f2VYbsHtfW+chI9C6vITOJiNZApHeodVYlGh
-	 PY1G8pWjmj/zP5Cbtr6cZh8ZMRuIUEVVcFYELpwTvenxENboAb6N7G9vtzu/PvJqiv
-	 EMoAYzHiL4Nz9O+6O+mQMNFgV1uQHSRu0CecrZKs=
+	b=kEmOuCwAEnPNJasH4pvrcx5PBbqPbs0TN2NUKSPqfIyWImcfO1fL2LRCyaqa3dvtp
+	 DPiQ1QjUcwQJw7Yw6Wb1V8/QtoShZW0Ao14BnGCQvLLsN9Ez5kCb+zjY/COgiYf9BO
+	 HjGQbgaDhc+t3ZXjhJRnnsTMrtD9lp+hrRRwGebw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fei Shao <fshao@chromium.org>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Leon Romanovsky <leonro@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0322/1518] usb: mtu3: allow system suspend during active gadget connection
-Date: Sat, 12 Sep 2026 08:41:31 +0200
-Message-ID: <20260912065630.761193432@linuxfoundation.org>
+Subject: [PATCH 6.18 0340/1518] RDMA/core: Wait for RCU callbacks before unloading ib_core
+Date: Sat, 12 Sep 2026 08:41:49 +0200
+Message-ID: <20260912065631.166672712@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -50,56 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fei Shao <fshao@chromium.org>
+From: Leon Romanovsky <leonro@nvidia.com>
 
-[ Upstream commit e69027c25361b6044c7928715667586cc5469063 ]
+[ Upstream commit 7d75592114d1664623c8cf191a12b38052c04483 ]
 
-When operating in gadget mode connected to a USB host, system suspend
-fails with -EBUSY because active peripheral connections block suspend
-entry.
+put_gid_ndev() is queued with call_rcu() and implemented in ib_core.
+Stopping the workqueues does not drain callbacks already queued, so RCU
+could invoke it after the module code has been unloaded.
 
-Fix this by restricting the -EBUSY check to runtime autosuspend
-(PMSG_IS_AUTO). For system suspend (!PMSG_IS_AUTO), perform soft
-disconnect to disconnect from the bus and allow MAC sleep.
+synchronize_rcu() does not wait for callbacks. Wait for them after all
+producers have stopped.
 
-Fixes: 427c66422e14 ("usb: mtu3: support suspend/resume for device mode")
-Signed-off-by: Fei Shao <fshao@chromium.org>
-Link: https://patch.msgid.link/20260626082218.2750459-2-fshao@chromium.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 943bd984b108 ("RDMA/core: Allow detaching gid attribute netdevice for RoCE")
+Reported-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Closes: https://lore.kernel.org/linux-rdma/20260708092316.Qb39F_B0@linutronix.de/
+Link: https://patch.msgid.link/20260709-unload-rcu-v1-1-fccd27211e5a@nvidia.com
+Acked-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/mtu3/mtu3_core.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ drivers/infiniband/core/device.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/usb/mtu3/mtu3_core.c b/drivers/usb/mtu3/mtu3_core.c
-index a3a6282893d09..ca8cb6c3a01bf 100644
---- a/drivers/usb/mtu3/mtu3_core.c
-+++ b/drivers/usb/mtu3/mtu3_core.c
-@@ -1037,9 +1037,14 @@ int ssusb_gadget_suspend(struct ssusb_mtk *ssusb, pm_message_t msg)
- 	if (!mtu->gadget_driver)
- 		return 0;
- 
--	if (mtu->connected)
-+	/* Prevent runtime suspend when active connection exists */
-+	if (mtu->connected && PMSG_IS_AUTO(msg))
- 		return -EBUSY;
- 
-+	/* Perform soft disconnect for system suspend */
-+	if (mtu->softconnect && !PMSG_IS_AUTO(msg))
-+		mtu3_dev_on_off(mtu, 0);
-+
- 	mtu3_dev_suspend(mtu);
- 	synchronize_irq(mtu->irq);
- 
-@@ -1055,5 +1060,9 @@ int ssusb_gadget_resume(struct ssusb_mtk *ssusb, pm_message_t msg)
- 
- 	mtu3_dev_resume(mtu);
- 
-+	/* Restore soft connect for system resume */
-+	if (mtu->softconnect && !PMSG_IS_AUTO(msg))
-+		mtu3_dev_on_off(mtu, 1);
-+
- 	return 0;
+diff --git a/drivers/infiniband/core/device.c b/drivers/infiniband/core/device.c
+index ac9aaef1e5e61..404fc1edbe60b 100644
+--- a/drivers/infiniband/core/device.c
++++ b/drivers/infiniband/core/device.c
+@@ -3169,6 +3169,7 @@ static void __exit ib_core_cleanup(void)
+ 	/* Make sure that any pending umem accounting work is done. */
+ 	destroy_workqueue(ib_wq);
+ 	destroy_workqueue(ib_unreg_wq);
++	rcu_barrier();
+ 	WARN_ON(!xa_empty(&clients));
+ 	WARN_ON(!xa_empty(&devices));
  }
 -- 
 2.53.0
