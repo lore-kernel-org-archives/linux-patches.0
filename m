@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D916E29D288;
-	Sat, 12 Sep 2026 12:47:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C7021A6816;
+	Sat, 12 Sep 2026 12:48:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789217279; cv=none; b=o9K/ckxxION01bUwS8mh3KU1DD7BkXwN4y0hvJ6QYtQyQbft4f8bloArRO3uuSx6zuEy+wZYtTDTYBhBiWIlA9zp2E1OvX5FvTH0mH6yMD29WOwAZyJmFDVLVhGlkBTABJ0fW66wi8xk1aF1Isyp6m66rygvvr4lgwDrGGNvpjM=
+	t=1789217284; cv=none; b=pryJ39WFRkEFtnSuGLhI/vOtPvx4rO4SvcMYxaGqiIb7cFgg6o4iuhO0x1boCbw5YFVz4OaU4ZEBML1emyeQrsnC0xAYsRzmYsT+yvdkbM9/fZL8EugurG7XEnwcir6e+/rYcucHEBBBEf3rTwHltbds1feMxc0bjFz2/wRorYE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789217279; c=relaxed/simple;
-	bh=9YT7U2RSNm9/8PCe1+5XfWmQXqPK4na9gYPFk/YY188=;
+	s=arc-20240116; t=1789217284; c=relaxed/simple;
+	bh=Ruk33ypZEzJg0pRyQGR9tLb111EYDZttTA+FvcjiXaI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J5Pr33MzffxPFGDcscOgt5xh6Z15fjcULR2mfXsQd9bXYTnWE9PR9qifENpMr91tva0LViSMJP/6dtV9P1mVqnU9h5JcXisx/8fkBihlQSyCEFoELhKZNZ2ZTEIElHs8H7DW5vBEnUWpaFoD4heNOAG3a4SLbfUD9zKsTQhmIvM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y99sFygz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=O9tjY8zrVWbrpiJDmbjtDeBENCIxmiyMC45nQy4n67Jmi8qp2Y/s9med3WWCMfWT9PngieXslIQHoY03yX/gjzVCKxhmULErzycewHtRp+0RCrFnZqKhqwDnog9psfjFl/wvdhB3BOWWBDAkZ8IDVJEa/J2yuONZ/D/OUhPmb80=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GgFP4RnP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y99sFygz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92C481F000FF;
-	Sat, 12 Sep 2026 12:47:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GgFP4RnP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06E561F000FF;
+	Sat, 12 Sep 2026 12:48:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789217277;
-	bh=9z5zE8PMYdU53lyyuADwWhI38BWHknCiTx6q9ZaluGw=;
+	s=korg; t=1789217283;
+	bh=bnoIGk4cEvrOsyOGa7BDrhkHfl0/SH1f8Fbugh25Wy8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=y99sFygzb3CDuCeCa2Y51gq3b/4PBjQ/nSlxEQyiQoxdBJDazsnUhDpc6074yTNDf
-	 tGlHjadoxE6ZhUUA4hyWrRAiw9NXqVlPWq8M0gzhmRHqDlQ41hgS8xTU8h8wAhIqmF
-	 Y26BRGdzvquuTN5gREkpOqyrDn0DtiFSTgAB5u+c=
+	b=GgFP4RnPmmgdg1hEJvmPf/impyJpH6+0dpVypWT5e15+QZpzBLD6hAt4oOOSRTpST
+	 7iT8yW1Oib0YqONi5xkDrKV+uSrO4by0VHqooCKs+/6YqaiItsza43G5iGE37a5nZA
+	 qoLpHC11Xs+l8DlsH3gkD0+6zvNSSmIffpoKqgA4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	slipher <slipher@protonmail.com>,
-	Mark Rutland <mark.rutland@arm.com>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
 	Linus Walleij <linusw@kernel.org>,
+	Qi Xi <xiqi2@huawei.com>,
+	Xie Yuanbin <xieyuanbin1@huawei.com>,
 	Russell King <rmk+kernel@armlinux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0908/1376] ARM: 9481/2: breakpoint: CFI breakpoints only on demand
-Date: Sat, 12 Sep 2026 08:55:34 +0200
-Message-ID: <20260912065627.803846640@linuxfoundation.org>
+Subject: [PATCH 6.12 0909/1376] ARM: 9485/1: mm: acquire mmap write lock around show_pte() for user faults
+Date: Sat, 12 Sep 2026 08:55:35 +0200
+Message-ID: <20260912065627.826818350@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -53,65 +54,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linusw@kernel.org>
+From: Xie Yuanbin <xieyuanbin1@huawei.com>
 
-[ Upstream commit 8ed9bff906cf8036531d1559f10e82733a52b41f ]
+[ Upstream commit 1039bffd6ae9c75b42b7d148d6c1106134107b66 ]
 
-This removes the stub hw_breakpoint_cfi_handler() from ARM, making
-it not steal breakpoint type 0x03 (ARM_ENTRY_CFI_BREAKPOINT) unless
-CFI is actively used in the kernel.
+When CONFIG_DEBUG_USER=y, and cmdline "user_debug=31" is set,
+a user fault may trigger show_pte() without any lock.
+If another thread in the same process concurrently calls munmap(),
+the page table pages may be freed while show_pte() is still traversing
+them, causing a use-after-free in show_pte().
 
-When not instrumenting with CFI, or when a breakpoint is issued in
-userspace, we fall through to return 1 from hw_breakpoint_pending()
-"unhandled fault" so userspace can make use of this breakpoint.
+If CONFIG_ARM_LPAE=y, this may cause a kernel panic if the pages table
+of PMD are freed when show_pte() is running.
 
-Tested with LKDTM and this command line:
-echo CFI_FORWARD_PROTO > /sys/kernel/debug/provoke-crash/DIRECT
-still works as expected.
+Acquire mmap_write_lock() around show_pte() for user faults to fix the
+contention.
 
-Closes: https://lore.kernel.org/lkml/kJqktbpLphg_Pk5I5SPptgTLjl3E3eq5mN5UzCslyFj7Q1Irp-wDid4mj5eQVd2iZtRGXgeZd8goq195EkXdjyt864YMc8mVb2B9NGH91NQ=@protonmail.com/
+For user faults, additionally restrict that show_pte() is called only
+when the addr is a user-space address (addr < TASK_SIZE). This is because
+the lock of tsk->mm only protects the virtual memory of user address space,
+furthermore, dumping the page tables of a kernel-space address for user
+faults is unnecessary and may have security implications.
 
-Fixes: c3f89986fde7 ("ARM: 9391/2: hw_breakpoint: Handle CFI breakpoints")
-Reported-by: slipher <slipher@protonmail.com>
-Suggested-by: Mark Rutland <mark.rutland@arm.com>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
+Keep everything unchanged for kernel faults, because the kernel is
+already in the "oops" state, acquiring a lock may risk a deadlock.
+
+Co-developed-by: Qi Xi <xiqi2@huawei.com>
+
+Fixes: 6d021b724481 ("ARM: dump pgd, pmd and pte states on unhandled data abort faults")
+Link: https://lore.kernel.org/20260716014022.2823-1-xieyuanbin1@huawei.com
+Acked-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Reviewed-by: Linus Walleij <linusw@kernel.org>
+Signed-off-by: Qi Xi <xiqi2@huawei.com>
+Signed-off-by: Xie Yuanbin <xieyuanbin1@huawei.com>
 Signed-off-by: Russell King <rmk+kernel@armlinux.org.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/kernel/hw_breakpoint.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ arch/arm/mm/fault.c | 16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm/kernel/hw_breakpoint.c b/arch/arm/kernel/hw_breakpoint.c
-index a12efd0f43e81..6819d4c1f3521 100644
---- a/arch/arm/kernel/hw_breakpoint.c
-+++ b/arch/arm/kernel/hw_breakpoint.c
-@@ -929,10 +929,6 @@ static void hw_breakpoint_cfi_handler(struct pt_regs *regs)
- 		break;
+diff --git a/arch/arm/mm/fault.c b/arch/arm/mm/fault.c
+index 16b5a7d214808..6763a7c660780 100644
+--- a/arch/arm/mm/fault.c
++++ b/arch/arm/mm/fault.c
+@@ -205,7 +205,11 @@ __do_user_fault(unsigned long addr, unsigned int fsr, unsigned int sig,
+ 		pr_err("8<--- cut here ---\n");
+ 		pr_err("%s: unhandled page fault (%d) at 0x%08lx, code 0x%03x\n",
+ 		       tsk->comm, sig, addr, fsr);
+-		show_pte(KERN_ERR, tsk->mm, addr);
++		if (likely(addr < TASK_SIZE)) {
++			mmap_write_lock(tsk->mm);
++			show_pte(KERN_ERR, tsk->mm, addr);
++			mmap_write_unlock(tsk->mm);
++		}
+ 		show_regs(regs);
  	}
- }
--#else
--static void hw_breakpoint_cfi_handler(struct pt_regs *regs)
--{
--}
  #endif
+@@ -649,7 +653,15 @@ do_DataAbort(unsigned long addr, unsigned int fsr, struct pt_regs *regs)
+ 	pr_alert("8<--- cut here ---\n");
+ 	pr_alert("Unhandled fault: %s (0x%03x) at 0x%08lx\n",
+ 		inf->name, fsr, addr);
+-	show_pte(KERN_ALERT, current->mm, addr);
++	if (likely(user_mode(regs))) {
++		if (addr < TASK_SIZE) {
++			mmap_write_lock(current->mm);
++			show_pte(KERN_ALERT, current->mm, addr);
++			mmap_write_unlock(current->mm);
++		}
++	} else {
++		show_pte(KERN_ALERT, current->mm, addr);
++	}
  
- /*
-@@ -964,9 +960,14 @@ static int hw_breakpoint_pending(unsigned long addr, unsigned int fsr,
- 	case ARM_ENTRY_SYNC_WATCHPOINT:
- 		watchpoint_handler(addr, fsr, regs);
- 		break;
-+#ifdef CONFIG_CFI
- 	case ARM_ENTRY_CFI_BREAKPOINT:
--		hw_breakpoint_cfi_handler(regs);
-+		if (user_mode(regs))
-+			ret = 1; /* Don't handle userspace BKPT */
-+		else
-+			hw_breakpoint_cfi_handler(regs);
- 		break;
-+#endif
- 	default:
- 		ret = 1; /* Unhandled fault. */
- 	}
+ 	arm_notify_die("", regs, inf->sig, inf->code, (void __user *)addr,
+ 		       fsr, 0);
 -- 
 2.53.0
 
