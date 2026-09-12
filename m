@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD8343815F8;
-	Sat, 12 Sep 2026 19:40:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86FB832B125;
+	Sat, 12 Sep 2026 19:40:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789242048; cv=none; b=QrpcxVo1H06ix+sQuFl2M4SBPsz+5m52ezWlO2b4Vf1m6Eyx+84O9vcUNIULC0LwpDGNRzXXv7InOsZgIYL59GJP/5RukTmyGiyyRGROkJFl04Re1M8/TEaYYQ3DrxPLQ8MHVS0a11Z2G/IcoB2uZx597YBU7esuOAjs74xhYaE=
+	t=1789242051; cv=none; b=iNqmEyp8bVmCDJrpR/KMVCbh7/TlYoflpAO6OXa0MPbEo98/wzP9vq3BoMNhDHRIkYSXpDb1HcdpXhF5f3NnQLUiISjGChWo325g4guWwBedO9oQNlFSmuBoz4b/yE+HwJv0fhHJITGbW/jXmIt70rCjvWbVA9MnD/8CODo6z58=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789242048; c=relaxed/simple;
-	bh=yoOhoKTRtPB7VjbrbVk2xT2nA+BoAnrGxOMIM6kklE8=;
+	s=arc-20240116; t=1789242051; c=relaxed/simple;
+	bh=+7I/UDtnwGHZF8SkIlkSU4hRtxFZARJWuRM6d+rgvXk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Nbj3QKr6DeBHxsiEDiSHKWBNSbZEqzEOI+StC1+hJYB7bez3uP9JMzr9GxDuHKy56t6s5leYizS7QIu7keDfuvWWNeG7iB82hJPPzgfchZwdnsVlYXwuuKmEfCrEJtFEZ3fnChCJZIa5tynN0O8L1cP94WlprWEWtg03D5uJZE8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HtORuMfp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Bm8szdMCrcBIew63+nBSStu9U9eAUUfJqLkPoMG6Lmt3t0TDY61O4MWqtHh+bCFyqY6kMA0VlgMh8WA03F8upSaV73kdhuonYyG44rIvY34k4tYjJnOUwF4GrkTHbDb0eQQkIwTdAHBnhVA5cuvLAnNrI3M3MQZAgmICOAkvCXM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nUSxuDWR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HtORuMfp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEC991F000FF;
-	Sat, 12 Sep 2026 19:40:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nUSxuDWR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3DB91F000FF;
+	Sat, 12 Sep 2026 19:40:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789242047;
-	bh=L0DPM+TENWM2RLJh0qSQIHpJTBR0WXB2JR6Ynq03anM=;
+	s=korg; t=1789242050;
+	bh=CSfPj4OZ6ZX4AzCBsO43k3bCXN1C5ZsigfNUDknidk0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HtORuMfpYFftOIggNuGo/J8qBN0w0cbBVHPK2Wyt2r521dOLiKki8Jjmhz0PNOoLq
-	 rcYoz1T1/7iJMD0pvfw1RcoMwEma4pquzySLJOdw2hxPdVPq/lbpS63Xj24G/r61at
-	 +VuhWSS0EIPj6eOrleYmGMK+/Nigkla2JJBtTVzE=
+	b=nUSxuDWRan4H0ZDqdSsSWsGoJ2Y0EC3nFd1YgciS7CuigSKGnrtGSleJr5gSUlN6K
+	 SbIbREbJz8IE76Let6tEvqWrzsKFBnapM3kEKW6lwh6j2bsMp4820bhYgM0J/eecCi
+	 wOVUVPKi72fi6e6SHY1+YoJQL1/6sK4iygcQrDHo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	Matthew Rosato <mjrosato@linux.ibm.com>,
 	Claudio Imbrenda <imbrenda@linux.ibm.com>
-Subject: [PATCH 5.10 267/798] KVM: s390: Zero initialize irq in reinject_machine_check
-Date: Sat, 12 Sep 2026 08:58:15 +0200
-Message-ID: <20260912065523.276471842@linuxfoundation.org>
+Subject: [PATCH 5.10 268/798] KVM: s390: Restore sigset on error path
+Date: Sat, 12 Sep 2026 08:58:16 +0200
+Message-ID: <20260912065523.299308810@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -53,46 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 From: Christian Borntraeger <borntraeger@linux.ibm.com>
 
-commit b239410c7653ff6781d4cf1d63cfc52a1bb71788 upstream.
+commit c44d36d8e6501c4934412d9014e5e02da9efdb8f upstream.
 
-kvm_s390_reinject_machine_check() fills cr14, mcic, ext_damage_code and
-failing_storage_address of the on-stack struct kvm_s390_irq, but struct
-kvm_s390_mchk_info also has a pad word and a 16 byte fixed_logout array.
-struct mcck_volatile_info carries no logout data, so there is nothing to
-copy there and both stay whatever was on the stack.
+kvm_sigset_activate() installs vcpu->sigset via sigprocmask() and
+stashes the caller's mask in current->real_blocked; only
+kvm_sigset_deactivate() restores it.
 
-__inject_mchk() then memcpy()s fixed_logout into the vcpu local
-interrupt state unconditionally. This will reach the guest during
-deliver and userspace during migration.
+For KVM_RUN on a STOPPED vcpu the error path will not restore the
+userspace mask.  Re-arrange the error handling to also restore the
+signal mask.
 
-Reflecting zeroes is the correct behaviour here, as KVM has no logout
-data for a reinjected machine check.
-
-This needs a host machine check while the cpu is in SIE so not trivial
-to trigger.
-
-Fixes: 4d62fcc0b692 ("KVM: s390: Inject machine check into the guest")
+Fixes: 6352e4d2dd9a3 ("KVM: s390: implement KVM_(S|G)ET_MP_STATE for user space state control")
 Cc: stable@vger.kernel.org
 Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
 Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
 Signed-off-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
-Message-ID: <20260805110455.7200-4-borntraeger@linux.ibm.com>
+Message-ID: <20260811153738.206885-5-borntraeger@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/kvm/interrupt.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/s390/kvm/kvm-s390.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/arch/s390/kvm/interrupt.c
-+++ b/arch/s390/kvm/interrupt.c
-@@ -2857,7 +2857,7 @@ void kvm_s390_reinject_machine_check(str
- 				     struct mcck_volatile_info *mcck_info)
- {
- 	struct kvm_s390_interrupt_info inti;
--	struct kvm_s390_irq irq;
-+	struct kvm_s390_irq irq = {};
- 	struct kvm_s390_mchk_info *mchk;
- 	union mci mci;
- 	__u64 cr14 = 0;         /* upper bits are not used */
+--- a/arch/s390/kvm/kvm-s390.c
++++ b/arch/s390/kvm/kvm-s390.c
+@@ -4401,7 +4401,7 @@ int kvm_arch_vcpu_ioctl_run(struct kvm_v
+ 		pr_err_ratelimited("can't run stopped vcpu %d\n",
+ 				   vcpu->vcpu_id);
+ 		rc = -EINVAL;
+-		goto out;
++		goto out_sigset;
+ 	}
+ 
+ 	sync_regs(vcpu);
+@@ -4428,9 +4428,11 @@ int kvm_arch_vcpu_ioctl_run(struct kvm_v
+ 	disable_cpu_timer_accounting(vcpu);
+ 	store_regs(vcpu);
+ 
++	vcpu->stat.exit_userspace++;
++
++out_sigset:
+ 	kvm_sigset_deactivate(vcpu);
+ 
+-	vcpu->stat.exit_userspace++;
+ out:
+ 	vcpu_put(vcpu);
+ 	return rc;
 
 
