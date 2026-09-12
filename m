@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15690364059;
-	Sat, 12 Sep 2026 08:28:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F40F379DA;
+	Sat, 12 Sep 2026 08:28:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789201692; cv=none; b=eBjSx+ijGw5hkLnNdwX0gEwX2FqpvCB+yscrL6HhiORQvRrv+9qju5X2KlO16ELaqSf7Xv0x3hIJPDTHoucP7DsavuqEPUXz5z++ZbA8KyouHrdQav4zLt3D2MMq/03OQr+EkiPzIoCYQVyJVjPVh/IGenhnz1byitZrOGLFriY=
+	t=1789201697; cv=none; b=PCngIyYVgybdVhhWQTDzGaLp3HXOkO6pjYL6d0X0K86/wj/F2utRsoecFKKQxYT4IiAv5K+Qtn6yHR1Rvyye2cK1aVgB5BfOYFqMpc1GYniHQ2p8llvUUiWr6gbTUSr1r7Ulvo0qS45MXECfy/wBm46EW61khZ0qYEWTMgOzk7E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789201692; c=relaxed/simple;
-	bh=iPylLVNwRgljdfghuORlPuwuSPraNrzHHgEdIqfsX9U=;
+	s=arc-20240116; t=1789201697; c=relaxed/simple;
+	bh=2L430yZITExgCGfjnri4VMPD6yNBJ761SLaCXvOr9to=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kaOlPwnOmvsiFhHI1rbtPz+2eVi4olP8SwKwidoI32Z/3ZwYZB+EwTiKX1fTOUn7j7L+0isipIuZrk6QPIl0hC4fqAM+oNHPkvufq7yIfwnfrB8XpCpmG8Rit1zndGmlEdVioQidCHKvFu0Xj8LCPs7bdyVP03b1f2kF8K84UqM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vNEFgx+j; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aLzCT+g7l/pV+xhLBART4wp/PQK0wK4N8bSMVM9iVmNV0nvYwrw37xnJ5JFXKwbuCrm6IYlC/8MNYSToQlFKskq+GyYNyNUMbPG378NMeB22qFMRYT2TRGmpeYa1TPJGejB3nkSEMzDrC671WMiaZcIlZHz4uBNisYWgevpKgYs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JBuS7AoC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vNEFgx+j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 198F81F00893;
-	Sat, 12 Sep 2026 08:28:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JBuS7AoC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF3041F000FF;
+	Sat, 12 Sep 2026 08:28:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789201691;
-	bh=AliwTgBWFDSaAMQCcR9qrsncA9k6lBdPx1hcANWwfJY=;
+	s=korg; t=1789201695;
+	bh=bzUoPaToJa/U0EZGfmZEERDEscD1VujsAUjH9FvIT3A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vNEFgx+jUMTrvteZiJFZwggvwRFuAcwks0TjjOGQQ6PBiHY3X/WRy5P2JcvSiHGwL
-	 WW8A4CsZ8goq87Jd774BBH1A5n00Ira//X6y5VNqoNsS8RS9whpLLYH+aS73CMU+Sq
-	 5sIoOKuOygbpoHSMFqSIfqQH0vXt6bSKgIQgoLJw=
+	b=JBuS7AoCGVGoW3PBuCKmRL1jMTuLglVZKNYgvcr1bxqjlYUzh5GKaJd0SbgaT4Z/N
+	 kJmjvMvBu6Kjy4sgz4avGOFblXyd/qn01oWk4/QioZeCpYozTd0vMLJ/kjjgvqC4AW
+	 ZaoyAT3x4865wFxFfxomZs7Xa87LJjew91Rvukvg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yichong Chen <chenyichong@uniontech.com>,
-	OGAWA Hirofumi <hirofumi@mail.parknet.co.jp>,
-	Christian Brauner <brauner@kernel.org>,
-	Amit Sahrawat <a.sahrawat@samsung.com>,
-	Namjae Jeon <namjae.jeon@samsung.com>,
-	Ravishankar N <ravi.n1@samsung.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Ning Ding <dingning04@gmail.com>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1046/1815] fat: release buffer head after rebuilding parent
-Date: Sat, 12 Sep 2026 08:46:36 +0200
-Message-ID: <20260912065713.573085341@linuxfoundation.org>
+Subject: [PATCH 7.2 1047/1815] bpf: Invalidate RCU pointers after final spin unlock
+Date: Sat, 12 Sep 2026 08:46:37 +0200
+Message-ID: <20260912065713.596219404@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -56,49 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yichong Chen <chenyichong@uniontech.com>
+From: Ning Ding <dingning04@gmail.com>
 
-[ Upstream commit 83e98dbf19ab64e8528e101e20f8d50e1aaa68a8 ]
+[ Upstream commit 180c7000712db77063b3a26f4c97e7dd9038f449 ]
 
-fat_scan_logstart() leaves the matching directory entry's buffer head in
-sinfo.bh for the caller to release, just like fat_scan().
+In a sleepable BPF program, a spin lock can provide the only RCU protection
+for a kptr. The final bpf_spin_unlock() ends that protection, but the
+verifier leaves the pointer valid. Another CPU can then free the object
+before the pointer is used. A capability-limited runtime PoC triggered a
+task_struct use-after-free in __bpf_get_task_stack().
 
-fat_rebuild_parent() uses the directory entry to rebuild the parent inode
-for the nostale_ro NFS export path, but does not release sinfo.bh after a
-successful scan.  Release it once fat_build_inode() has consumed the
-directory entry data.
+Record whether the program is in an RCU-protected context before releasing
+the lock. Invalidate RCU-protected pointers only when the unlock leaves the
+final such context. This preserves valid pointers in non-sleepable programs
+and inside an explicit RCU read-side section.
 
-Link: https://lore.kernel.org/20260715020957.1096309-1-chenyichong@uniontech.com
-Fixes: f1e6fb0ab451 ("fat (exportfs): rebuild directory-inode if fat_dget()")
-Signed-off-by: Yichong Chen <chenyichong@uniontech.com>
-Acked-by: OGAWA Hirofumi <hirofumi@mail.parknet.co.jp>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: Amit Sahrawat <a.sahrawat@samsung.com>
-Cc: chenyichong <chenyichong@uniontech.com>
-Cc: Namjae Jeon <namjae.jeon@samsung.com>
-Cc: Ravishankar N <ravi.n1@samsung.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 5861d1e8dbc4 ("bpf: Allow bpf_spin_{lock,unlock} in sleepable progs")
+Assisted-by: Codex:gpt-5.6-sol
+Assisted-by: ChatGPT:GPT-5.6-Pro
+Signed-off-by: Ning Ding <dingning04@gmail.com>
+Link: https://lore.kernel.org/bpf/20260803112615.3362122-2-dingning04@gmail.com
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fat/nfs.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ kernel/bpf/verifier.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/fs/fat/nfs.c b/fs/fat/nfs.c
-index 509eea96a457d..6e1b371711edd 100644
---- a/fs/fat/nfs.c
-+++ b/fs/fat/nfs.c
-@@ -250,8 +250,10 @@ struct inode *fat_rebuild_parent(struct super_block *sb, int parent_logstart)
- 		MSDOS_I(dummy_grand_parent)->i_pos = -1;
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 345987b1ae0e7..a26f38f637bff 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -204,6 +204,7 @@ static int acquire_reference(struct bpf_verifier_env *env, int insn_idx, int par
+ static int release_reference_nomark(struct bpf_verifier_state *state, int id);
+ static int release_reference(struct bpf_verifier_env *env, int id);
+ static void invalidate_non_owning_refs(struct bpf_verifier_env *env);
++static void invalidate_rcu_protected_refs(struct bpf_verifier_env *env);
+ static bool in_rbtree_lock_required_cb(struct bpf_verifier_env *env);
+ static bool is_tracing_prog_type(enum bpf_prog_type type);
+ static int ref_set_non_owning(struct bpf_verifier_env *env,
+@@ -7065,6 +7066,7 @@ static int process_spin_lock(struct bpf_verifier_env *env, struct bpf_reg_state
+ 			return err;
+ 		}
+ 	} else {
++		bool was_in_rcu_cs;
+ 		void *ptr;
+ 		int type;
+ 
+@@ -7092,10 +7094,13 @@ static int process_spin_lock(struct bpf_verifier_env *env, struct bpf_reg_state
+ 			verbose(env, "%s_unlock cannot be out of order\n", lock_str);
+ 			return -EINVAL;
+ 		}
++		was_in_rcu_cs = in_rcu_cs(env);
+ 		if (release_lock_state(cur, type, reg->id, ptr)) {
+ 			verbose(env, "%s_unlock of different lock\n", lock_str);
+ 			return -EINVAL;
+ 		}
++		if (was_in_rcu_cs && !in_rcu_cs(env))
++			invalidate_rcu_protected_refs(env);
+ 
+ 		invalidate_non_owning_refs(env);
  	}
- 
--	if (!fat_scan_logstart(dummy_grand_parent, clus_to_match, &sinfo))
-+	if (!fat_scan_logstart(dummy_grand_parent, clus_to_match, &sinfo)) {
- 		parent = fat_build_inode(sb, sinfo.de, sinfo.i_pos);
-+		brelse(sinfo.bh);
-+	}
- 
- 	brelse(parent_bh);
- 	iput(dummy_grand_parent);
 -- 
 2.53.0
 
