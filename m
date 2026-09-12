@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B5254A35;
-	Sat, 12 Sep 2026 19:49:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1390B1FBEA6;
+	Sat, 12 Sep 2026 19:49:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789242579; cv=none; b=OWGsgHeRecouSDl5hElBL7ug1pjpkUnk019SfR0Zi642xi1gYfujk9BCedCC3TKAXJRgUvAkKEFlHjaErNc9S1oZs3noEkS8OlRh4elnd8Evj/9NCkIvDu8IBrtrjYE067PsvA12ueDJ+4r5TZxROLZebAI0aQttfcEwNlkueus=
+	t=1789242582; cv=none; b=QDMivBON1Yppy3Vg7GBesyTohAeSwo2DN3eZlYRnkSLtx16VBAb+9YgFzyFcNppyPu43tmgypYtCJMSS/0ABXQdsGrxrTWcaJMSrB7OxOWBosNceyWFtCe9z4x6K5Va+R91vaL1mvzNt3mJ1dr5sHg0T/v415xNYJIVFaOxypwQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789242579; c=relaxed/simple;
-	bh=yitFuTCyvMjZzF8jlETWkyfGL5tV47y46ESv6CLPH0Q=;
+	s=arc-20240116; t=1789242582; c=relaxed/simple;
+	bh=ESdIj3E/Y88gyTBVyio4ORmIAscstzLRXGpiFMoqQ50=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hKkzEdFHs2hrYDDKeTXrWubNmEYrcUmHfrBMawyM/JCwcpdsxRZ89hhtaSdj2SuVgXQyfRNHlS2z8f3ZScDvhBg2Wz95xCBaiuOBvN6utZ2mwmrhdDB+So7ZhyA1fgW3aPISsJZdUxkjyAM0By7nNgNEmgPx0MvL8JJiw6NcX+8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Roui312O; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QP7vu5zr+LLjHHMKiIFzHhgmOMTtf4nBrhDxHu+/iuomgk7letiaWBvtG+hzIVei3wi7BHSZOnQ4R6q8s72b76z0xn/IzLx6qx+ah/wJ+LBSVvvt94LYmElM21f/vbnfB4OJsE2KdpaTOth+bp2wexI0Im2xpXf33+B86wLCF8o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rLoRELOj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Roui312O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AD191F000FF;
-	Sat, 12 Sep 2026 19:49:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rLoRELOj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 739971F000FF;
+	Sat, 12 Sep 2026 19:49:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789242578;
-	bh=CDjdxDWSO145mOO3WYUviVMsjiQlXDrYHrpRo/C75lI=;
+	s=korg; t=1789242581;
+	bh=cywAp0l+9CT/Vxy3YHPwz/6ct4sgP15MVNozncvgBLI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Roui312OuwdUZ4014MYoQQSyyGB6FSlHH9P7jxjpeOQ8gBbUS01T5W9fEIoWcu+c/
-	 wNHTWc8lztRyyisGz8GKyBOyGcHgi0kQYMYdmxDPoVyyCmmIXpN6X2plCikp+sDU4N
-	 aM/pVeyKVxyO3oNYu74rEIaO/X7dkb6EaYNXEN7Y=
+	b=rLoRELOjcxbbN6j1KqN9dn1I/yJbZrzzUn6us/NfYvF4rRhKYuxBY2Cld9Yy/Strb
+	 rqfeH+1Hu/lXxFQzfiV1mlhV4mOgWwfLR/bmFkThrkZ8D1KTea/B+AYjPnvCoBEPUn
+	 odrFz2kEqqufGxwsje3Rm7UWmSFDRcrxCPF9HPKM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikko Perttunen <mperttunen@nvidia.com>,
-	Thierry Reding <treding@nvidia.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Daniel Scally <djrscally@gmail.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 452/798] gpu: host1x: Avoid stack over-read in debug output helpers
-Date: Sat, 12 Sep 2026 09:01:20 +0200
-Message-ID: <20260912065527.501464434@linuxfoundation.org>
+Subject: [PATCH 5.10 453/798] media: ACPI / bus: Add acpi_dev_get_next_match_dev() and helper macro
+Date: Sat, 12 Sep 2026 09:01:21 +0200
+Message-ID: <20260912065527.525786941@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -51,54 +54,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikko Perttunen <mperttunen@nvidia.com>
+From: Daniel Scally <djrscally@gmail.com>
 
-[ Upstream commit bc17ac285fb708f22a8fa2c0ed32eceb1d37e6d6 ]
+[ Upstream commit bf263f64e804a74ace9bd37f49341d68a653e5e6 ]
 
-host1x_debug_output() and host1x_debug_cont() used vsnprintf(), which
-returns the length the formatted string would have reached with an
-unbounded buffer. That return value was passed straight to o->fn as
-the number of bytes to emit.
+To ensure we handle situations in which multiple sensors of the same
+model (and therefore _HID) are present in a system, we need to be able
+to iterate over devices matching a known _HID but unknown _UID and _HRV
+ - add acpi_dev_get_next_match_dev() to accommodate that possibility and
+change acpi_dev_get_first_match_dev() to simply call the new function
+with a NULL starting point. Add an iterator macro for convenience.
 
-This could cause a read past end of the output buffer if a call to
-host1x_debug_* produced a string longer than 256 bytes. This only
-affected the debugfs files as the printk debug sink ignores the
-number of bytes. In practice, this is very unlikely to occur.
-
-Fix by switching to vscnprintf(), which returns the number of bytes
-actually written.
-
-Fixes: 6236451d83a7 ("gpu: host1x: Add debug support")
-Signed-off-by: Mikko Perttunen <mperttunen@nvidia.com>
-Signed-off-by: Thierry Reding <treding@nvidia.com>
-Link: https://patch.msgid.link/20260609-b4-host1x-small-fixes-a-v1-4-7c1131c0b3ad@nvidia.com
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Suggested-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Daniel Scally <djrscally@gmail.com>
+Acked-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Stable-dep-of: d5c13047a132 ("ACPI: processor: idle: Expand _LPI package sanity checks")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/host1x/debug.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/acpi/utils.c    | 30 ++++++++++++++++++++++++++----
+ include/acpi/acpi_bus.h |  7 +++++++
+ 2 files changed, 33 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/host1x/debug.c b/drivers/gpu/host1x/debug.c
-index 1b4997bda1c79..85df342f9a79d 100644
---- a/drivers/gpu/host1x/debug.c
-+++ b/drivers/gpu/host1x/debug.c
-@@ -30,7 +30,7 @@ void host1x_debug_output(struct output *o, const char *fmt, ...)
- 	int len;
+diff --git a/drivers/acpi/utils.c b/drivers/acpi/utils.c
+index d5411a166685c..ddca1550cce6f 100644
+--- a/drivers/acpi/utils.c
++++ b/drivers/acpi/utils.c
+@@ -843,12 +843,13 @@ bool acpi_dev_present(const char *hid, const char *uid, s64 hrv)
+ EXPORT_SYMBOL(acpi_dev_present);
  
- 	va_start(args, fmt);
--	len = vsnprintf(o->buf, sizeof(o->buf), fmt, args);
-+	len = vscnprintf(o->buf, sizeof(o->buf), fmt, args);
- 	va_end(args);
+ /**
+- * acpi_dev_get_first_match_dev - Return the first match of ACPI device
++ * acpi_dev_get_next_match_dev - Return the next match of ACPI device
++ * @adev: Pointer to the previous acpi_device matching this @hid, @uid and @hrv
+  * @hid: Hardware ID of the device.
+  * @uid: Unique ID of the device, pass NULL to not check _UID
+  * @hrv: Hardware Revision of the device, pass -1 to not check _HRV
+  *
+- * Return the first match of ACPI device if a matching device was present
++ * Return the next match of ACPI device if another matching device was present
+  * at the moment of invocation, or NULL otherwise.
+  *
+  * The caller is responsible to call put_device() on the returned device.
+@@ -856,8 +857,9 @@ EXPORT_SYMBOL(acpi_dev_present);
+  * See additional information in acpi_dev_present() as well.
+  */
+ struct acpi_device *
+-acpi_dev_get_first_match_dev(const char *hid, const char *uid, s64 hrv)
++acpi_dev_get_next_match_dev(struct acpi_device *adev, const char *hid, const char *uid, s64 hrv)
+ {
++	struct device *start = adev ? &adev->dev : NULL;
+ 	struct acpi_dev_match_info match = {};
+ 	struct device *dev;
  
- 	o->fn(o->ctx, o->buf, len, false);
-@@ -42,7 +42,7 @@ void host1x_debug_cont(struct output *o, const char *fmt, ...)
- 	int len;
+@@ -865,9 +867,29 @@ acpi_dev_get_first_match_dev(const char *hid, const char *uid, s64 hrv)
+ 	match.uid = uid;
+ 	match.hrv = hrv;
  
- 	va_start(args, fmt);
--	len = vsnprintf(o->buf, sizeof(o->buf), fmt, args);
-+	len = vscnprintf(o->buf, sizeof(o->buf), fmt, args);
- 	va_end(args);
+-	dev = bus_find_device(&acpi_bus_type, NULL, &match, acpi_dev_match_cb);
++	dev = bus_find_device(&acpi_bus_type, start, &match, acpi_dev_match_cb);
+ 	return dev ? to_acpi_device(dev) : NULL;
+ }
++EXPORT_SYMBOL(acpi_dev_get_next_match_dev);
++
++/**
++ * acpi_dev_get_first_match_dev - Return the first match of ACPI device
++ * @hid: Hardware ID of the device.
++ * @uid: Unique ID of the device, pass NULL to not check _UID
++ * @hrv: Hardware Revision of the device, pass -1 to not check _HRV
++ *
++ * Return the first match of ACPI device if a matching device was present
++ * at the moment of invocation, or NULL otherwise.
++ *
++ * The caller is responsible to call put_device() on the returned device.
++ *
++ * See additional information in acpi_dev_present() as well.
++ */
++struct acpi_device *
++acpi_dev_get_first_match_dev(const char *hid, const char *uid, s64 hrv)
++{
++	return acpi_dev_get_next_match_dev(NULL, hid, uid, hrv);
++}
+ EXPORT_SYMBOL(acpi_dev_get_first_match_dev);
  
- 	o->fn(o->ctx, o->buf, len, true);
+ /*
+diff --git a/include/acpi/acpi_bus.h b/include/acpi/acpi_bus.h
+index 0f5366792d22e..0ed6b799b1699 100644
+--- a/include/acpi/acpi_bus.h
++++ b/include/acpi/acpi_bus.h
+@@ -685,9 +685,16 @@ static inline bool acpi_device_can_poweroff(struct acpi_device *adev)
+ 
+ bool acpi_dev_hid_uid_match(struct acpi_device *adev, const char *hid2, const char *uid2);
+ 
++struct acpi_device *
++acpi_dev_get_next_match_dev(struct acpi_device *adev, const char *hid, const char *uid, s64 hrv);
+ struct acpi_device *
+ acpi_dev_get_first_match_dev(const char *hid, const char *uid, s64 hrv);
+ 
++#define for_each_acpi_dev_match(adev, hid, uid, hrv)			\
++	for (adev = acpi_dev_get_first_match_dev(hid, uid, hrv);	\
++	     adev;							\
++	     adev = acpi_dev_get_next_match_dev(adev, hid, uid, hrv))
++
+ static inline void acpi_dev_put(struct acpi_device *adev)
+ {
+ 	if (adev)
 -- 
 2.53.0
 
