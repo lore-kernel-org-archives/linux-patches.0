@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A10C2BDC0E;
-	Sat, 12 Sep 2026 11:27:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12EA1455626;
+	Sat, 12 Sep 2026 11:27:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789212465; cv=none; b=gXluxAOITO9ZoeI1NZLOrhsIvGffn2WVOAiyjhHNd1Fx86n7HVC+raTaYZKCzuuN8HUW8Wh6n6ZsEDqkWNiKsD5dQl/IPpn1IaOTKaWmhq7Z89DJl/umCKGERWhGhqpcVZtIWzVrpe+DtZOj4AI1JPEIqTfNUObEFAmBK+0v598=
+	t=1789212471; cv=none; b=T8QkF24eag/NArUf4WajRvNXPsKn8AwPSQbASP8FccPFQ1Cr9SQmXQQXNzOmA6HdvWSzIhuTaIRhHv9gG9BOADne1bUWFQ22n6/wDv4qrwyK6m15/S6XGMPrx50RRFPqllv6UsEzUTTpdo6fY0Ia2hqLZvMETf6FNt8NEk7Diyw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789212465; c=relaxed/simple;
-	bh=wbuKDSgN1fGgOBs703c2pN9I+I4i6JZcvDsDUNisHNo=;
+	s=arc-20240116; t=1789212471; c=relaxed/simple;
+	bh=3F779O8ML3+Ezzoq36vSZUGy7ViHXjvFQzFNTc+7/9k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aybD3EccvRDsO9x2Y6PlM/01LlbWqwCo3T4iGzAk/OswNstWz19FcTqwlN6/OevT+knruy7j8RlR8kuwFkVZupiZotMK5fLQqGDGzY44JG205JGYVPK1N8MmUo+gUb2E0hIzt8Rp+TiKBVb2FmHRFUb3IzwJkPq066QpSEzZGDI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d8AKdaUS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=I02u4G/79zPIkZnoXBCt2x9Nu0pFD9N4nbQfdPI+ZGwjP45rcghVSgK2WFwMTFx3JLiWrGDPVc+nhgdxzWhCOghkfmYTKeVF/pqCDdLNG47IQ0nB4yaeFL4cxKFLoRuyoXqjlAEaOZCRd/JzLlXuYH1RmWAjuSOWiLy9SoRexzo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bIjYRcCl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d8AKdaUS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6F3A1F000FF;
-	Sat, 12 Sep 2026 11:27:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bIjYRcCl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED16D1F000FF;
+	Sat, 12 Sep 2026 11:27:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789212463;
-	bh=I8zoYQSFmd4QVJrWy+4jRjRmZMKGi3D5cygC3n1LSsg=;
+	s=korg; t=1789212468;
+	bh=5UVeytUkd+vu6ok6iIQZxb0mlKUGANFFu7xPuDEl3iI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=d8AKdaUSjoXgALZJV0qI9HhMmu2tYpUCpt2L92gFKlYBM+WcGRHJqvUaVDqpmrdbE
-	 3KVQzOIwrxG+F8Sk7Ar3K5Ao7ql8pnh0sO7l0Stlq/lfxsnlZ9FpvTTUqjq5xtf3V1
-	 OHAvZt77Wc8KXY+pt2ELANqmCxR9e+b7SHW9VFxo=
+	b=bIjYRcClar6dWTuDg1xA5l2TrQ911PXs7zTOxPIx2ddj54eK7ClHaMFfY9lkSK6gL
+	 JllRYEs7LHH/7vRRmkqwv2RQcvHL94kTXpxReJzxEr6ZHox+h3Jss0JeAIN3HAmniC
+	 k+oqX/HOoS4+vg8qFn/3RkESRtlBaO5DQpMDDTWo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Marino Dzalto <marino.dzalto@gmail.com>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1442/1518] netfilter: nf_tables: move hardware offload step after building the chain blob
-Date: Sat, 12 Sep 2026 09:00:11 +0200
-Message-ID: <20260912065656.176746983@linuxfoundation.org>
+Subject: [PATCH 6.18 1443/1518] netfilter: xt_HL: add pr_fmt and checkentry validation
+Date: Sat, 12 Sep 2026 09:00:12 +0200
+Message-ID: <20260912065656.198764281@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -50,53 +51,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Marino Dzalto <marino.dzalto@gmail.com>
 
-[ Upstream commit b1881d362e1924b66f6016c3efd28807032b41bf ]
+[ Upstream commit 24bd5c2679caf8a228d90cafa221da4b47fd6642 ]
 
-Allocate the chain blob before the ruleset offload to reduce chances of
-entering an inconsistent state where the offloaded ruleset in the nic
-and the software ruleset differ.
+Add pr_fmt to prefix log messages with the module name for
+easier debugging in dmesg.
 
-Fixes: c9626a2cbdb2 ("netfilter: nf_tables: add hardware offload support")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Add checkentry functions for IPv4 (ttl_mt_check) and IPv6
+(hl_mt6_check) to validate the match mode at rule registration
+time, rejecting invalid modes with -EINVAL.
+
+The evaluation function returns false in case the mode is
+unknown, so this is a cleanup, not a bug fix.
+
+Signed-off-by: Marino Dzalto <marino.dzalto@gmail.com>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Stable-dep-of: 793d9eda4821 ("netfilter: x_tables: replace pr_{info,err}() by pr_info_ratelimited()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ net/netfilter/xt_hl.c | 27 +++++++++++++++++++++++++++
+ 1 file changed, 27 insertions(+)
 
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index d01f96d32f282..a3a66b6268cd6 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -10774,10 +10774,6 @@ static int nf_tables_commit(struct net *net, struct sk_buff *skb)
- 		return -EAGAIN;
- 	}
+diff --git a/net/netfilter/xt_hl.c b/net/netfilter/xt_hl.c
+index c1a70f8f04417..4a12a757ecbf8 100644
+--- a/net/netfilter/xt_hl.c
++++ b/net/netfilter/xt_hl.c
+@@ -6,6 +6,7 @@
+  * Hop Limit matching module
+  * (C) 2001-2002 Maciej Soltysiak <solt@dns.toxicfilms.tv>
+  */
++#define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
  
--	err = nft_flow_rule_offload_commit(net);
--	if (err < 0)
--		return err;
--
- 	/* 1.  Allocate space for next generation rules_gen_X[] */
- 	list_for_each_entry_safe(trans, next, &nft_net->commit_list, list) {
- 		struct nft_table *table = trans->table;
-@@ -10802,6 +10798,16 @@ static int nf_tables_commit(struct net *net, struct sk_buff *skb)
- 		}
- 	}
+ #include <linux/ip.h>
+ #include <linux/ipv6.h>
+@@ -22,6 +23,18 @@ MODULE_LICENSE("GPL");
+ MODULE_ALIAS("ipt_ttl");
+ MODULE_ALIAS("ip6t_hl");
  
-+	/* must be last, so audit and chain blob set up does not leave hardware
-+	 * in consistent state.
-+	 */
-+	err = nft_flow_rule_offload_commit(net);
-+	if (err < 0) {
-+		nf_tables_commit_chain_prepare_cancel(net);
-+		nf_tables_commit_audit_free(&adl);
-+		return err;
++static int ttl_mt_check(const struct xt_mtchk_param *par)
++{
++	const struct ipt_ttl_info *info = par->matchinfo;
++
++	if (info->mode > IPT_TTL_GT) {
++		pr_err("Unknown TTL match mode: %d\n", info->mode);
++		return -EINVAL;
 +	}
 +
- 	/* step 2.  Make rules_gen_X visible to packet path */
- 	list_for_each_entry(table, &nft_net->tables, list) {
- 		list_for_each_entry(chain, &table->chains, list)
++	return 0;
++}
++
+ static bool ttl_mt(const struct sk_buff *skb, struct xt_action_param *par)
+ {
+ 	const struct ipt_ttl_info *info = par->matchinfo;
+@@ -41,6 +54,18 @@ static bool ttl_mt(const struct sk_buff *skb, struct xt_action_param *par)
+ 	return false;
+ }
+ 
++static int hl_mt6_check(const struct xt_mtchk_param *par)
++{
++	const struct ip6t_hl_info *info = par->matchinfo;
++
++	if (info->mode > IP6T_HL_GT) {
++		pr_err("Unknown Hop Limit match mode: %d\n", info->mode);
++		return -EINVAL;
++	}
++
++	return 0;
++}
++
+ static bool hl_mt6(const struct sk_buff *skb, struct xt_action_param *par)
+ {
+ 	const struct ip6t_hl_info *info = par->matchinfo;
+@@ -65,6 +90,7 @@ static struct xt_match hl_mt_reg[] __read_mostly = {
+ 		.name       = "ttl",
+ 		.revision   = 0,
+ 		.family     = NFPROTO_IPV4,
++		.checkentry = ttl_mt_check,
+ 		.match      = ttl_mt,
+ 		.matchsize  = sizeof(struct ipt_ttl_info),
+ 		.me         = THIS_MODULE,
+@@ -73,6 +99,7 @@ static struct xt_match hl_mt_reg[] __read_mostly = {
+ 		.name       = "hl",
+ 		.revision   = 0,
+ 		.family     = NFPROTO_IPV6,
++		.checkentry = hl_mt6_check,
+ 		.match      = hl_mt6,
+ 		.matchsize  = sizeof(struct ip6t_hl_info),
+ 		.me         = THIS_MODULE,
 -- 
 2.53.0
 
