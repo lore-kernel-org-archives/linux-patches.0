@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B42D3603D5;
-	Sat, 12 Sep 2026 16:49:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 861773603D5;
+	Sat, 12 Sep 2026 16:50:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789231796; cv=none; b=OX0uSwQqigJXhuo8lh0/nH0H8iEAqZuPEttCngrTgL2qkDd6UxRWCydAXe0fdAgdbb84dUid35BL3WLwi1HReGNoK4WByZ2fcf+ateUOb8qERSbnvlhF31U14IRf6XyPZQrJvQkWhrcrWLuktk6WgrBNN2V/SrIElv2uYxcEuGk=
+	t=1789231801; cv=none; b=KSS/3vAMlos69f1ViQxewIlhhCOxgUk3UQUFJqP0J1Eeyyfp+gVUDa2zFiSJEUxuRzsnhTvih/cWRi6800ibLoFJOcAwajfJFILprXZ8ed3UHhzJOdLjRpYpTDXA1gmCmbiHu9yzLA9e+L3sP3ejRBliwhwgbWnuHI7i53JL5cI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789231796; c=relaxed/simple;
-	bh=eO9AkKER9VZVL8eZl0yq5WJPyDZytHUhT1gb1rnlB2Y=;
+	s=arc-20240116; t=1789231801; c=relaxed/simple;
+	bh=j1/q3BgE+1y3fR7CdWg239iCYpmSxkNmikO+XkIcTQM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sBXawqtug9Zrsb/+DK+UEWgperhqeeConCoPdcri72KA3v9GXfoCzyYlN8Tv6/Uty56F+e10tqZpb1sL6DkpQtgmwMNeef5qAVuRGzQBbS0jhWjYzi6EHizZVNVHxFOmSg9IJ0MTU1qeZdk8qklBwKO4bOFVtqyyxdfWt3X/eC4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NzAhoR74; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lZNdQ1Gvo5lN8KRdcnkSQaTkvHjPNwP4QYHxJxj4d64IA8zgYqP7quTgXKihKDter3njp1TZSW4C9KDtMp45IOnG00NSGt4UDR7J2RQv4CLHDflbM2R45hUNCVuH/sGzQDfExJXuD9vQla24oboKGpMsOT19dLiRaPRQHWuJSgM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ncS+1IZA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NzAhoR74"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 535261F000FF;
-	Sat, 12 Sep 2026 16:49:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ncS+1IZA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70EB01F000FF;
+	Sat, 12 Sep 2026 16:49:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789231795;
-	bh=/GOuKqhpwAUT4/sf9H3Smg7ccwr3Hr1rOFtu8WZwoxI=;
+	s=korg; t=1789231800;
+	bh=gzqkrRTjOCZc1LCucXqsLaSxirknFlgPNdxS0FKvuxQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NzAhoR74DYRpRQHU1MvSlH3RVo+pA/f3COTcSByxGun5wVh+HP2IpRqNymbqfYTtB
-	 /YpVmjM4icNNJerBviXZfRLg5n+IV9vPVCC1er1KQNixODTwYpFKZj+nXDL4aLySFD
-	 e9xPNXO6wBHbR+8CI5Xy3qibJCKq5l/oSvs1KDqw=
+	b=ncS+1IZA5WWJJO4SxSgiWpMBaQwiLh5/yCqEgJVm4IhHrnb7WZyXkQmJSZWYA3/Fd
+	 nwi/uzEBn8C7jsdKaB6AfqKKpiQgB9sJzsKzdzyRI+Ubnn/R9otjvp0xktdYij5Vq0
+	 IEPP3eu1GSf0dAau5jTAYiyvFGaydmMdBq6GttVg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Biju Das <biju.das.jz@bp.renesas.com>,
-	Thomas Gleixner <tglx@kernel.org>,
+	Linkai Gong <gonglinkai@kylinos.cn>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1073/1191] irqchip/renesas-rzg2l: Fix loss of interrupt
-Date: Sat, 12 Sep 2026 09:03:21 +0200
-Message-ID: <20260912065612.272625104@linuxfoundation.org>
+Subject: [PATCH 6.1 1074/1191] rtc: gamecube: check return value of devm_rtc_register_device()
+Date: Sat, 12 Sep 2026 09:03:22 +0200
+Message-ID: <20260912065612.294584555@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -51,59 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Biju Das <biju.das.jz@bp.renesas.com>
+From: Linkai Gong <gonglinkai@kylinos.cn>
 
-[ Upstream commit 50b10bd0c2d721ad38abd1abe3acdefb6caa0944 ]
+[ Upstream commit ca45cfa74370644d371b552bef57938c19e3c80c ]
 
-rzg2l_clear_irq_int() and rzg2l_clear_tint_int() perform a
-read-modify-write on the ISCR/TSCR status registers to clear the bit
-for the interrupt just handled. Since these registers are
-write-0-to-clear per bit, this is racy:
+gamecube_rtc_probe() ignored the return value of
+devm_rtc_register_device() and always returned success. Propagate the
+error so probe fails when RTC registration fails.
 
-If another interrupt's status bit gets set between the read and the write,
-that bit is written back as 0 by the software-constructed value, clearing
-an interrupt that hasn't been serviced yet and losing it.
-
-This can be reproduced by triggering multiple interrupts at once, e.g.:
-
-  gpioset -c gpiochip0 355=0 353=0 328=0 352=0
-
-Fix this by writing back only the bit being cleared, with all other bits
-set to 1, instead of read-modify-writing the whole register.  Since 1-bits
-are left unchanged by hardware, concurrently-set status bits for other
-interrupts are preserved.
-
-Fixes: 3fed09559cd8 ("irqchip: Add RZ/G2L IA55 Interrupt Controller driver")
-Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Link: https://patch.msgid.link/20260818110937.5816-1-biju.das.jz@bp.renesas.com
+Fixes: 86559400b3ef ("rtc: gamecube: Add a RTC driver for the GameCube, Wii and Wii U")
+Signed-off-by: Linkai Gong <gonglinkai@kylinos.cn>
+Link: https://patch.msgid.link/20260731080458.417532-1-gonglinkai@kylinos.cn
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-renesas-rzg2l.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/rtc/rtc-gamecube.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/irqchip/irq-renesas-rzg2l.c b/drivers/irqchip/irq-renesas-rzg2l.c
-index 5df559252c6ef..ededb389bf5e6 100644
---- a/drivers/irqchip/irq-renesas-rzg2l.c
-+++ b/drivers/irqchip/irq-renesas-rzg2l.c
-@@ -100,7 +100,7 @@ static void rzg2l_clear_irq_int(struct rzg2l_irqc_priv *priv, unsigned int hwirq
- 	 * falling/rising-edge.
- 	 */
- 	if ((iscr & bit) && (iitsr & IITSR_IITSEL_MASK(hw_irq))) {
--		writel_relaxed(iscr & ~bit, priv->base + ISCR);
-+		writel_relaxed(~bit, priv->base + ISCR);
- 		/*
- 		 * Enforce that the posted write is flushed to prevent that the
- 		 * just handled interrupt is raised again.
-@@ -116,7 +116,7 @@ static void rzg2l_clear_tint_int(struct rzg2l_irqc_priv *priv, unsigned int hwir
+diff --git a/drivers/rtc/rtc-gamecube.c b/drivers/rtc/rtc-gamecube.c
+index 045d5d45ab4b0..889028cecf4a5 100644
+--- a/drivers/rtc/rtc-gamecube.c
++++ b/drivers/rtc/rtc-gamecube.c
+@@ -355,9 +355,7 @@ static int gamecube_rtc_probe(struct platform_device *pdev)
+ 	rtc->range_max = U32_MAX;
+ 	rtc->ops = &gamecube_rtc_ops;
  
- 	reg = readl_relaxed(priv->base + TSCR);
- 	if (reg & bit) {
--		writel_relaxed(reg & ~bit, priv->base + TSCR);
-+		writel_relaxed(~bit, priv->base + TSCR);
- 		/*
- 		 * Enforce that the posted write is flushed to prevent that the
- 		 * just handled interrupt is raised again.
+-	devm_rtc_register_device(rtc);
+-
+-	return 0;
++	return devm_rtc_register_device(rtc);
+ }
+ 
+ static const struct of_device_id gamecube_rtc_of_match[] = {
 -- 
 2.53.0
 
