@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2EB83546E1;
-	Sat, 12 Sep 2026 08:57:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BFC43546E1;
+	Sat, 12 Sep 2026 08:57:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789203428; cv=none; b=idaO/HsKOJAVYITv0YCnITxK830ZfKMf4CurKAjrL7fHxyHQ5qSsDH5XCA/dslnLlCjGlyfWTtaR17AfxmFplmKVQFW5Z1FurhQfHeCu2RvjpTOAHcGiTvi2kuDFjZ85Iftu3q4voF2wFS1gRTrEV+zRy+XnFQBDAlTEyici6uU=
+	t=1789203435; cv=none; b=S6CPHMHqIX6XuwZDpTaZgZrzRi4PQ+/binuGyiYsUhcH0IBRilQFuqdHLXzkz6leX3ffSJaJxfAQlJ1kvWC1qjMxLK93WjeckOT9FOnFT/QCeVrx+CYx0/cAGhGnSIcZlg2W2tw//PJ5ECkr+wQ7k1tQuRUS0lWysU0Ex2Av0U4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789203428; c=relaxed/simple;
-	bh=tx2X6JFBtRHAcRT8dPIA1svL34at7Pce+uZZ8otRlnU=;
+	s=arc-20240116; t=1789203435; c=relaxed/simple;
+	bh=JLoLNBJpLJ0IIk3SK6A5WIznGgJIdOXilUGemL64mxY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A7nVBomPYlx9mm0ySp1OaaXRofwa7p9OU3BEM5Vo4fvx6bNtMsRRZjE+W7KyXZYkONm8Y0CSrqXLHqSOgaqmVnkft0hAWrzrGWklppmdDzut98dFHCj1xsXLZRKmbg6giUGUVQtnhTw7h9VESzMwVcQkB4xQyGFCYzFaKUwFPfM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kLEWZ0Fd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MNRWfkTDAGO4r9CQcgXSWPx/fv4MQAjJ9Z1msdOHmTydbRy9fplUOp9NsE6vsGFwfqW/QapQ79wySTiL1NsJYJS/AkluAq7JzIlPVbxMdoIG5YkWmfa0zlsAI2fJpl+NyqMiW/DNvZi+OcSzAbBhYIqF0LRaFyhUWMeVfPrtjhE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V6oLSe+D; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kLEWZ0Fd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B04451F000FF;
-	Sat, 12 Sep 2026 08:57:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V6oLSe+D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50AFE1F000FF;
+	Sat, 12 Sep 2026 08:57:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789203427;
-	bh=atfjO1mqGb1vvGObPAWqIpP6E3mRYTGQ8qI9k7dXN+8=;
+	s=korg; t=1789203432;
+	bh=Gr5zLD1kEBExa8ZLZLpxmHd1hsq05T3kbnlLIr23xnY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kLEWZ0Fdv/CN7xlVxudM1eWga8yziBh3gAS1wMDEhp62NQNW0s6bIxJUeG7VXF+v6
-	 ispxt7+Yf1DySBVDdPLrrZOGglbOp/t83flZqZ2fzEGk0/w5eaxhNmh2BHD7eNJ8ur
-	 1nPpInlYKylP+uukV5jBeuFcTGZEigFps/U/Ueao=
+	b=V6oLSe+D0A+scvNIMC+DgTGcDLZV6MJYANIpoAQaXzD2efPAK5vUQm7EOaCqLXOOe
+	 M+Vu8SMfLpkHifiv4738MBW02ohN157oQle372wi1hY+YLqvncmlyYeOmwNL/zoAON
+	 OZ0JzV+P2vMaUZLRaI5Mx8MYsxvjTBPUA/eFek/c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Puranjay Mohan <puranjay@kernel.org>,
 	Eduard Zingerman <eddyz87@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1405/1815] bpf, x86: Clear fetch destination on faulting arena atomic
-Date: Sat, 12 Sep 2026 08:52:35 +0200
-Message-ID: <20260912065722.007445187@linuxfoundation.org>
+Subject: [PATCH 7.2 1406/1815] bpf, arm64: Clear fetch destination on faulting arena atomic
+Date: Sat, 12 Sep 2026 08:52:36 +0200
+Message-ID: <20260912065722.030545590@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -54,131 +54,156 @@ Content-Transfer-Encoding: 8bit
 
 From: Daniel Borkmann <daniel@iogearbox.net>
 
-[ Upstream commit cf92a108601a3f2465b550e44a98c8a78cabf8d1 ]
+[ Upstream commit ea3f20cb5918fea8e3786899b78fc7bb867c6a5e ]
 
-populate_extable() encodes "there is no destination register to clear" as
-DONT_CLEAR in the DST_REG field of the exception table metadata, and later
-ex_handler_bpf() then reuses that very value to derive the direction it
-reports the fault with is_write = (reg == DONT_CLEAR). The two coincide
-for a plain load or store, but not for a RMW carrying BPF_FETCH. Such an
-atomic writes memory, so it has to be reported as a WRITE, and it also reads
-the old value into a register, src_reg for BPF_ADD | BPF_FETCH and BPF_XCHG,
-r0 for BPF_CMPXCHG, so that register has to be cleared on fault. A single
-DONT_CLEAR cannot say both, and the store branch picks it unconditionally:
+Same problem as on x86-64: add_exception_handler() folds "there is no
+destination register to clear" and "this is a store" into one DONT_CLEAR
+value ...
 
-  [...]
-  } else {
-          arena_reg = reg2pt_regs[dst_reg];
-          fixup_reg = DONT_CLEAR;
-  }
-  [...]
+  if (BPF_CLASS(insn->code) != BPF_LDX && !bpf_atomic_is_load_acq(insn))
+          dst_reg = DONT_CLEAR;
 
-The reported direction is therefore right, but on a fault over an unmapped
-arena page the fetch destination keeps whatever it held before the atomic,
-where every other BPF_PROBE_* access delivers 0. Give the metadata its own
-ARENA_WRITE bit so that the reported direction no longer depends on whether
-there is a register to clear, and fill DST_REG in from bpf_atomic_load_reg().
-BPF_{AND,OR,XOR} | BPF_FETCH need no handling here, bpf_jit_supports_insn()
-already rejects those in the arena.
+... which ex_handler_bpf() then reads back as the access direction:
 
-Fixes: d503a04f8bc0 ("bpf: Add support for certain atomics in bpf_arena to x86 JIT")
+  bool is_write = (dst_reg == DONT_CLEAR);
+
+A RMW carrying BPF_FETCH is both. emit_lse_atomic() reads the old value
+into src_reg for BPF_{ADD,AND,OR,XOR} | BPF_FETCH and BPF_XCHG, and into
+r0 for BPF_CMPXCHG, so a fault over an unmapped arena page is correctly
+reported as a WRITE but leaves that register holding a stale value instead
+of the 0 that every other BPF_PROBE_* access delivers. Same as on x86-64,
+add a separate ARENA_WRITE bit for the direction.
+
+FIXUP_REG is now filled in by the callers of add_exception_handler(), the
+BPF_PROBE_ATOMIC one deriving it from bpf_atomic_load_reg(), so that the
+helper only has to determine the direction. This is how the riscv64 JIT
+already does it, and it stops the two store callers from handing in a
+dst_reg that was only going to be overwritten with DONT_CLEAR anyway.
+
+Fixes: e612b5c1d3ee ("bpf, arm64: Add support for lse atomics in bpf_arena")
 Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
 Reviewed-by: Puranjay Mohan <puranjay@kernel.org>
-Acked-by: Eduard Zingerman <eddyz87@gmail.com>
-Link: https://patch.msgid.link/20260811131600.506721-3-daniel@iogearbox.net
+Link: https://patch.msgid.link/20260811131600.506721-4-daniel@iogearbox.net
 Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/net/bpf_jit_comp.c | 35 +++++++++++++++++++++++++++--------
- 1 file changed, 27 insertions(+), 8 deletions(-)
+ arch/arm64/net/bpf_jit_comp.c | 44 ++++++++++++++++++++++++-----------
+ 1 file changed, 30 insertions(+), 14 deletions(-)
 
-diff --git a/arch/x86/net/bpf_jit_comp.c b/arch/x86/net/bpf_jit_comp.c
-index f1e042fb3556e..ea74ff1d166cd 100644
---- a/arch/x86/net/bpf_jit_comp.c
-+++ b/arch/x86/net/bpf_jit_comp.c
-@@ -1473,17 +1473,20 @@ static int emit_atomic_ld_st_index(u8 **pprog, u32 atomic_op, u32 size,
+diff --git a/arch/arm64/net/bpf_jit_comp.c b/arch/arm64/net/bpf_jit_comp.c
+index 8bc604dd9aab8..6d9d2ecc4fe46 100644
+--- a/arch/arm64/net/bpf_jit_comp.c
++++ b/arch/arm64/net/bpf_jit_comp.c
+@@ -1082,23 +1082,27 @@ static void build_epilogue(struct jit_ctx *ctx, bool was_classic)
   *
   * Bit layout of `fixup` (32-bit):
   *
-- * +-----------+--------+-----------+---------+----------+
-- * | 31        | 30-24  |   23-16   |   15-8  |    7-0   |
-- * |           |        |           |         |          |
-- * | ARENA_ACC | Unused | ARENA_REG | DST_REG | INSN_LEN |
-- * +-----------+--------+-----------+---------+----------+
-+ * +-----------+-------------+--------+-----------+---------+----------+
-+ * | 31        | 30          | 29-24  |   23-16   |   15-8  |    7-0   |
-+ * |           |             |        |           |         |          |
-+ * | ARENA_ACC | ARENA_WRITE | Unused | ARENA_REG | DST_REG | INSN_LEN |
-+ * +-----------+-------------+--------+-----------+---------+----------+
+- * +-----------+--------+-----------+-----------+----------+
+- * |   31-27   | 26-22  |     21    |   20-16   |   15-0   |
+- * |           |        |           |           |          |
+- * | FIXUP_REG | Unused | ARENA_ACC | ARENA_REG |  OFFSET  |
+- * +-----------+--------+-----------+-----------+----------+
++ * +-----------+--------+-------------+-----------+-----------+----------+
++ * |   31-27   | 26-23  |      22     |     21    |   20-16   |   15-0   |
++ * |           |        |             |           |           |          |
++ * | FIXUP_REG | Unused | ARENA_WRITE | ARENA_ACC | ARENA_REG |  OFFSET  |
++ * +-----------+--------+-------------+-----------+-----------+----------+
   *
-  * - INSN_LEN (8 bits): Length of faulting insn (max x86 insn = 15 bytes (fits in 8 bits)).
-  * - DST_REG  (8 bits): Offset of dst_reg from reg2pt_regs[] (max offset = 112 (fits in 8 bits)).
-- *                      This is set to DONT_CLEAR if the insn is a store.
-+ *                      This is set to DONT_CLEAR if the insn does not read into a register.
-  * - ARENA_REG (8 bits): Offset of the register that is used to calculate the
-  *                       address for load/store when accessing the arena region.
-+ * - ARENA_WRITE (1 bit): This bit is set when the faulting instruction wrote to the arena region.
-+ *                        It is independent of DST_REG, since a read-modify-write both writes to
-+ *                        memory and reads the old value into a register.
+  * - OFFSET (16 bits): Offset used to compute address for Load/Store instruction.
+  * - ARENA_REG (5 bits): Register that is used to calculate the address for load/store when
+  *                       accessing the arena region.
   * - ARENA_ACCESS (1 bit): This bit is set when the faulting instruction accessed the arena region.
-  *
-  * Bit layout of `data` (32-bit):
-@@ -1502,6 +1505,7 @@ static int emit_atomic_ld_st_index(u8 **pprog, u32 atomic_op, u32 size,
- #define FIXUP_INSN_LEN_MASK	GENMASK(7, 0)
- #define FIXUP_REG_MASK		GENMASK(15, 8)
- #define FIXUP_ARENA_REG_MASK	GENMASK(23, 16)
-+#define FIXUP_ARENA_WRITE	BIT(30)
- #define FIXUP_ARENA_ACCESS	BIT(31)
- #define DATA_ARENA_OFFSET_MASK	GENMASK(31, 16)
++ * - ARENA_WRITE (1 bit): This bit is set when the faulting instruction wrote to the arena region.
++ *                        It is independent of FIXUP_REG, since a read-modify-write both writes to
++ *                        memory and reads the old value into a register.
+  * - FIXUP_REG (5 bits): Destination register for the load instruction (cleared on fault) or set to
+- *                       DONT_CLEAR if it is a store instruction.
++ *                       DONT_CLEAR if the instruction does not read into a register.
+  */
  
-@@ -1510,7 +1514,7 @@ bool ex_handler_bpf(const struct exception_table_entry *x, struct pt_regs *regs)
- 	u32 reg = FIELD_GET(FIXUP_REG_MASK, x->fixup);
- 	u32 insn_len = FIELD_GET(FIXUP_INSN_LEN_MASK, x->fixup);
- 	bool is_arena = !!(x->fixup & FIXUP_ARENA_ACCESS);
--	bool is_write = (reg == DONT_CLEAR);
-+	bool is_write = !!(x->fixup & FIXUP_ARENA_WRITE);
+ #define BPF_FIXUP_OFFSET_MASK      GENMASK(15, 0)
+ #define BPF_FIXUP_ARENA_REG_MASK   GENMASK(20, 16)
+ #define BPF_ARENA_ACCESS           BIT(21)
++#define BPF_ARENA_WRITE            BIT(22)
+ #define BPF_FIXUP_REG_MASK	GENMASK(31, 27)
+ #define DONT_CLEAR 5 /* Unused ARM64 register from BPF's POV */
+ 
+@@ -1109,7 +1113,7 @@ bool ex_handler_bpf(const struct exception_table_entry *ex,
+ 	s16 off = FIELD_GET(BPF_FIXUP_OFFSET_MASK, ex->fixup);
+ 	int arena_reg = FIELD_GET(BPF_FIXUP_ARENA_REG_MASK, ex->fixup);
+ 	bool is_arena = !!(ex->fixup & BPF_ARENA_ACCESS);
+-	bool is_write = (dst_reg == DONT_CLEAR);
++	bool is_write = !!(ex->fixup & BPF_ARENA_WRITE);
  	unsigned long addr;
- 	s16 off;
- 	u32 arena_reg;
-@@ -2304,6 +2308,7 @@ st:			insn_off = insn->off;
- 				struct exception_table_entry *ex;
- 				u8 *_insn = image + proglen + (start_of_ldx - temp);
- 				u32 arena_reg, fixup_reg;
-+				bool is_write;
- 				s64 delta;
  
- 				if (!bpf_prog->aux->extable)
-@@ -2340,15 +2345,29 @@ st:			insn_off = insn->off;
- 				    bpf_atomic_is_load_acq(insn)) {
- 					arena_reg = reg2pt_regs[src_reg];
- 					fixup_reg = reg2pt_regs[dst_reg];
-+					is_write = false;
- 				} else {
-+					/*
-+					 * A store has no destination register to clear,
-+					 * except for a read-modify-write with BPF_FETCH,
-+					 * which also reads the old value into src_reg, or
-+					 * into r0 for a BPF_CMPXCHG. Either way the access
-+					 * is still reported as a write.
-+					 */
-+					int load_reg = bpf_atomic_load_reg(insn);
+ 	if (is_arena) {
+@@ -1132,7 +1136,7 @@ static int add_exception_handler(const struct bpf_insn *insn,
+ {
+ 	off_t ins_offset;
+ 	s16 off = insn->off;
+-	bool is_arena;
++	bool is_arena, is_write;
+ 	int arena_reg;
+ 	unsigned long pc;
+ 	struct exception_table_entry *ex;
+@@ -1181,15 +1185,18 @@ static int add_exception_handler(const struct bpf_insn *insn,
+ 	/*
+ 	 * A load-acquire is of BPF_STX class, but reads from src_reg into
+ 	 * dst_reg like a BPF_LDX does, hence it must not be treated as a store
+-	 * here.
++	 * here. A read-modify-write carrying BPF_FETCH is reported as a write
++	 * even though it does have a register to clear, see the callers.
+ 	 */
+-	if (BPF_CLASS(insn->code) != BPF_LDX && !bpf_atomic_is_load_acq(insn))
+-		dst_reg = DONT_CLEAR;
++	is_write = BPF_CLASS(insn->code) != BPF_LDX &&
++		   !bpf_atomic_is_load_acq(insn);
+ 
+ 	ex->fixup = FIELD_PREP(BPF_FIXUP_REG_MASK, dst_reg);
+ 
+ 	if (is_arena) {
+ 		ex->fixup |= BPF_ARENA_ACCESS;
++		if (is_write)
++			ex->fixup |= BPF_ARENA_WRITE;
+ 		/*
+ 		 * insn->src_reg/dst_reg holds the address in the arena region with upper 32-bits
+ 		 * being zero because of a preceding addr_space_cast(r<n>, 0x0, 0x1) instruction.
+@@ -1876,7 +1883,7 @@ static int build_insn(const struct bpf_verifier_env *env, const struct bpf_insn
+ 			break;
+ 		}
+ 
+-		ret = add_exception_handler(insn, ctx, dst);
++		ret = add_exception_handler(insn, ctx, DONT_CLEAR);
+ 		if (ret)
+ 			return ret;
+ 		break;
+@@ -1943,7 +1950,7 @@ static int build_insn(const struct bpf_verifier_env *env, const struct bpf_insn
+ 			break;
+ 		}
+ 
+-		ret = add_exception_handler(insn, ctx, dst);
++		ret = add_exception_handler(insn, ctx, DONT_CLEAR);
+ 		if (ret)
+ 			return ret;
+ 		break;
+@@ -1966,7 +1973,16 @@ static int build_insn(const struct bpf_verifier_env *env, const struct bpf_insn
+ 			return ret;
+ 
+ 		if (BPF_MODE(insn->code) == BPF_PROBE_ATOMIC) {
+-			ret = add_exception_handler(insn, ctx, dst);
++			/*
++			 * A load-acquire reads into dst_reg, and a read-modify-write
++			 * carrying BPF_FETCH reads the old value into src_reg, or into
++			 * r0 for a BPF_CMPXCHG. Clear that register on fault, the
++			 * remaining atomics have no destination register.
++			 */
++			int load_reg = bpf_atomic_load_reg(insn);
 +
- 					arena_reg = reg2pt_regs[dst_reg];
--					fixup_reg = DONT_CLEAR;
-+					fixup_reg = load_reg < 0 ? DONT_CLEAR :
-+						    reg2pt_regs[load_reg];
-+					is_write = true;
- 				}
- 
- 				ex->fixup = FIELD_PREP(FIXUP_INSN_LEN_MASK, prog - start_of_ldx) |
- 					    FIELD_PREP(FIXUP_ARENA_REG_MASK, arena_reg) |
- 					    FIELD_PREP(FIXUP_REG_MASK, fixup_reg);
- 				ex->fixup |= FIXUP_ARENA_ACCESS;
-+				if (is_write)
-+					ex->fixup |= FIXUP_ARENA_WRITE;
- 
- 				ex->data |= FIELD_PREP(DATA_ARENA_OFFSET_MASK, insn->off);
- 			}
++			ret = add_exception_handler(insn, ctx, load_reg < 0 ?
++						    DONT_CLEAR : bpf2a64[load_reg]);
+ 			if (ret)
+ 				return ret;
+ 		}
 -- 
 2.53.0
 
