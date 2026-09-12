@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD2FF3C1F46;
-	Sat, 12 Sep 2026 07:11:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71B6E3C1419;
+	Sat, 12 Sep 2026 07:11:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789197087; cv=none; b=HWIgPb+Xj1M/MD0suYmufFeDWbRuzeeXTepQFXwjNjF47BoNTVgzQN5K5winexDVeTKfHGA1C8PfvYsHj8EOvSn5q7U4SL1G1OS8jn+HzlxO+/XbiOXTrzAuaFJ/tFTPZ5wimHAGdvcBNe5Nt+P9jstkU2AZKl3LIhXLSyY4E9Q=
+	t=1789197091; cv=none; b=SlXGlBLXGrcW0u3iwJLrVRhgC/8le5NaHEx78FU8pSRYoj7haajUxab0/ogEk/3BVBAnIwpkkYPscoDjTNgbjM4jIHZhYwxZG3oKHGQZK8tVMnfpNWGZk9ZFLhpoGkrLF4qET8CdEwrlGvSonQzx9ZFwIFsZc1zO/U5YRLxchN0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789197087; c=relaxed/simple;
-	bh=UsznuHz3pPJu2CWkaKs0sqQvc+BwlxKvcI9BE6MaUrA=;
+	s=arc-20240116; t=1789197091; c=relaxed/simple;
+	bh=z78W7OdLuOH0P8WLRqpF/r+3UcVETR7gFJqfvaa/5OI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BxcvNubFZBSFrcDoItiyTIoOZ2R85mhBgdryftl9zIXgH+BZzIHx7lhCBKpuTAeJYlr3e4RhOTj5cQZs0xkGogfTdHSXK69q2/MWMBhLRh1SCJD5/4yQYGQ01jxGnDl/FVz7V8TAscs06CiX/FRwWx9Z/CnF8Jbr4CKREzC7k+k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X8B+C9bv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HS4/4Xs2j4QEvq4rMIET/Z57ihNGVDljU2q3L+ayXjcvR6DGfNQy7RkrKO3LZMWCpFbbwH+EIRa3YqwMfSSefosxfcG6JjPcQlA5G/vRId4/NC9msvn6nHGy57CZCajHU5W4D4WyYAu5DNW/hHvkQkT4adzE9CvjGUZrfI3Kk7w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xX6Wbedc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X8B+C9bv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDADB1F000FF;
-	Sat, 12 Sep 2026 07:11:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xX6Wbedc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 703E31F000FF;
+	Sat, 12 Sep 2026 07:11:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789197085;
-	bh=qOgwFB9IWC6YdtI1KqgAKEd80aLj8cFI+QB9imwpkaE=;
+	s=korg; t=1789197090;
+	bh=jOhh+TeF5fJqf6Uh/ifz6fixCaCLB2fFsC4UGTy/ky4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X8B+C9bvDFJIFKdAvwvMIXt/DaBUWAxFE/caF7Ez6ZyBKTeQ99VtRG2X5UjLAQ7d+
-	 Kx5lKe0ybO/ZP7izlwkjop8YiBjfp3Jnr75aoCIxQs/7SedweWhaOSifHBh8E/gwwM
-	 KlFeSFs1Bz3Exli1ys69sX0z/mEmxdK8u/7LPZ34=
+	b=xX6WbedcY3s9LnYeX5eFwY0zAaqjftkuDK+9zvtNtogtbX/ckGp8o566HPoh69Jky
+	 oIVyuU+v3RkIOB2Mxz7J7J4jlbtoGNl72s0s4+J40ex2Y8zAK7ol0orgR1QCEmp+2u
+	 ajd3W7zPSwcKpsG4fTXGSShVxiKedf3TP9XDR3ls=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Yang <richard.weiyang@gmail.com>,
-	Yuan Liu <yuan1.liu@intel.com>,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0099/1815] mm/mm_init: fix incorrect node_spanned_pages
-Date: Sat, 12 Sep 2026 08:30:49 +0200
-Message-ID: <20260912065651.334238271@linuxfoundation.org>
+Subject: [PATCH 7.2 0100/1815] sched/core: Fix inter-class wakeup_preempt()
+Date: Sat, 12 Sep 2026 08:30:50 +0200
+Message-ID: <20260912065651.358027678@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,103 +50,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wei Yang <richard.weiyang@gmail.com>
+From: Peter Zijlstra <peterz@infradead.org>
 
-[ Upstream commit 7783dcd79ae9c4aa48bc47bd4275772445dc4b2a ]
+[ Upstream commit fa02b2868420d9f33d64ddcb15ef0f96880b2a6d ]
 
-Current node_spanned_pages is got as a summation of all zone's spanned page
-in calculate_node_totalpages(). Generally this is good, but if we use
-kernelcore=mirror, it is would be wrong.
+The way wakeup_preempt() works since commit 704069649b5b ("sched/core: Rework
+sched_class::wakeup_preempt() and rq_modified_*()") is that it will call
+rq->next_class->wakeup_preempt(rq, p) when p is of an equal or higher class,
+and raise ->next_class when higher.
 
-Without kernelcore=mirror:
+This means that:
 
-    The test machine has below memory layout:
+	running idle task
 
-      memory[0x0]     [0x0000000000001000-0x000000000009efff], 0x000000000009e000 bytes on node 0 flags: 0x0
-      memory[0x1]     [0x0000000000100000-0x00000000bffdefff], 0x00000000bfedf000 bytes on node 0 flags: 0x0
-      memory[0x2]     [0x0000000100000000-0x00000001bfffffff], 0x00000000c0000000 bytes on node 0 flags: 0x0
+	wakeup fair-A
+	  (next_class == idle)
+	  if (sched_class_above(fair, idle)) {
+	     wakeup_preempt_idle(fair-A);
+	     resched_curr(rq);
+	     next_class = fair;
+	  }
 
-    And the Zone range is:
+	wakeup fair-B
+	  (next_class == fair)
+	  if (fair == fair)
+	    wakeup_preempt_fair(fair-B);
+	      (but current is idle)
 
-      DMA      [mem 0x0000000000001000-0x0000000000ffffff]
-      DMA32    [mem 0x0000000001000000-0x00000000ffffffff]
-      Normal   [mem 0x0000000100000000-0x00000001bfffffff]
+All wakeup_preempt_$class() methods, except for wakeup_preempt_scx() (for whoem
+this was build) ignore cross-class wakeups by testing if @p is of the right
+class, but per the above case, it also should check current.
 
-    Then we see, with spanned_pages printed:
+This is mostly harmless in the current form, but will lead to trouble with
+later patches.
 
-      On node 0 spanned_pages: 1835007 totalpages: 1572733
-
-With kernelcore=mirror:
-
-    The test machine has below memory layout:
-
-      memory[0x0]     [0x0000000000001000-0x000000000009efff], 0x000000000009e000 bytes on node 0 flags: 0x2
-      memory[0x1]     [0x0000000000100000-0x00000000bffdefff], 0x00000000bfedf000 bytes on node 0 flags: 0x2
-      memory[0x2]     [0x0000000100000000-0x000000013fffffff], 0x0000000040000000 bytes on node 0 flags: 0x2
-      memory[0x3]     [0x0000000140000000-0x00000001bfffffff], 0x0000000080000000 bytes on node 0 flags: 0x0
-
-    And the Zone range is:
-
-      DMA      [mem 0x0000000000001000-0x0000000000ffffff]
-      DMA32    [mem 0x0000000001000000-0x00000000ffffffff]
-      Normal   [mem 0x0000000100000000-0x00000001bfffffff]
-      Device   empty
-    Movable zone start for each node
-      Node 0: 0x0000000140000000
-
-    Then we see, with spanned_pages printed:
-
-      On node 0 spanned_pages: 2359295 totalpages: 1572733
-
-The total range of memory on node 0 doesn't change, but the spanned_pages
-becomes much larger.
-
-The reason is when kernelcore=mirror is specified, the range of Zone Normal
-and Zone Movable would overlap. So the overlapped range would be calculated
-twice.
-
-A wrong node_spanned_pages would effect defer_init(), since each
-zone_end_pfn is less than pgdat_end_pfn().
-
-As we already passed in node_start_pfn and node_end_pfn, fix this by get it
-from (node_start_pfn - node_end_pfn) directly.
-
-Fixes: 342332e6a925 ("mm/page_alloc.c: introduce kernelcore=mirror option")
-Signed-off-by: Wei Yang <richard.weiyang@gmail.com>
-Cc: Yuan Liu <yuan1.liu@intel.com>
-Link: https://patch.msgid.link/20260622022403.16375-1-richard.weiyang@gmail.com
-Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Fixes: 704069649b5b ("sched/core: Rework sched_class::wakeup_preempt() and rq_modified_*()")
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://patch.msgid.link/20260626074605.GB2568396%40noisy.programming.kicks-ass.net
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/mm_init.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ kernel/sched/deadline.c | 6 ++++--
+ kernel/sched/fair.c     | 3 ++-
+ kernel/sched/rt.c       | 3 ++-
+ 3 files changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/mm/mm_init.c b/mm/mm_init.c
-index ab42850818692..d52eea4e63479 100644
---- a/mm/mm_init.c
-+++ b/mm/mm_init.c
-@@ -1338,7 +1338,7 @@ static void __init calculate_node_totalpages(struct pglist_data *pgdat,
- 						unsigned long node_start_pfn,
- 						unsigned long node_end_pfn)
+diff --git a/kernel/sched/deadline.c b/kernel/sched/deadline.c
+index 200300043fa54..857dbe3519a86 100644
+--- a/kernel/sched/deadline.c
++++ b/kernel/sched/deadline.c
+@@ -2734,15 +2734,17 @@ static int balance_dl(struct rq *rq, struct rq_flags *rf)
+  */
+ static void wakeup_preempt_dl(struct rq *rq, struct task_struct *p, int flags)
  {
--	unsigned long realtotalpages = 0, totalpages = 0;
-+	unsigned long realtotalpages = 0;
- 	enum zone_type i;
++	struct task_struct *donor = rq->donor;
+ 	/*
+ 	 * Can only get preempted by stop-class, and those should be
+ 	 * few and short lived, doesn't really make sense to push
+ 	 * anything away for that.
+ 	 */
+-	if (p->sched_class != &dl_sched_class)
++	if (p->sched_class != &dl_sched_class ||
++	    donor->sched_class != &dl_sched_class)
+ 		return;
  
- 	for (i = 0; i < MAX_NR_ZONES; i++) {
-@@ -1368,11 +1368,10 @@ static void __init calculate_node_totalpages(struct pglist_data *pgdat,
- 		zone->present_early_pages = real_size;
- #endif
- 
--		totalpages += spanned;
- 		realtotalpages += real_size;
+-	if (dl_entity_preempt(&p->dl, &rq->donor->dl)) {
++	if (dl_entity_preempt(&p->dl, &donor->dl)) {
+ 		resched_curr(rq);
+ 		return;
  	}
+diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+index f15f5764818eb..c36f1e8bff647 100644
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -9780,7 +9780,8 @@ static void wakeup_preempt_fair(struct rq *rq, struct task_struct *p, int wake_f
+ 	/*
+ 	 * XXX Getting preempted by higher class, try and find idle CPU?
+ 	 */
+-	if (p->sched_class != &fair_sched_class)
++	if (p->sched_class != &fair_sched_class ||
++	    donor->sched_class != &fair_sched_class)
+ 		return;
  
--	pgdat->node_spanned_pages = totalpages;
-+	pgdat->node_spanned_pages = node_end_pfn - node_start_pfn;
- 	pgdat->node_present_pages = realtotalpages;
- 	pr_debug("On node %d totalpages: %lu\n", pgdat->node_id, realtotalpages);
- }
+ 	if (unlikely(se == pse))
+diff --git a/kernel/sched/rt.c b/kernel/sched/rt.c
+index e474c31d8fe66..e6e5f8a2caafb 100644
+--- a/kernel/sched/rt.c
++++ b/kernel/sched/rt.c
+@@ -1629,7 +1629,8 @@ static void wakeup_preempt_rt(struct rq *rq, struct task_struct *p, int flags)
+ 	/*
+ 	 * XXX If we're preempted by DL, queue a push?
+ 	 */
+-	if (p->sched_class != &rt_sched_class)
++	if (p->sched_class != &rt_sched_class ||
++	    donor->sched_class != &rt_sched_class)
+ 		return;
+ 
+ 	if (p->prio < donor->prio) {
 -- 
 2.53.0
 
