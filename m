@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 570BD346E75;
-	Sat, 12 Sep 2026 07:17:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 286F019D8BC;
+	Sat, 12 Sep 2026 07:17:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789197433; cv=none; b=QPdQ2CcF1lJI0uFBzjZvlQ77c6O28zCW4ALvoOIRR7iy22CWWjmozSittq4EOf+8KPZ++U/YB2dvGQ+GEiDkJyc2TOAcy0Nz68sbiU3ReZu+3+wI/tB/ABkKLFNkwYGb/J9PzcLwVz3g1/x/Rs0GUc/QEIQx8Nv5bvBdg34+Sm0=
+	t=1789197438; cv=none; b=b4w2wV5Hx52I4fI36TiQoI3xyEhLvCNYkdgN+acyDvkQmNgnmaNGFpYX+nNRSKAPdXc2RozjXtbyZEjtBDGH4IfgQn/huiP7IGXk3DmmD837NX47S579mxycaSD02xepCAg0zRs1tjxa/OmgT5hrUnjnCKxYUyDo1pZomMxcrb4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789197433; c=relaxed/simple;
-	bh=k7K1bbPgvgVN30E5blHtBXfZFGeVqSq7W/1npG46Lhg=;
+	s=arc-20240116; t=1789197438; c=relaxed/simple;
+	bh=wbgCuXTsoA2DjbyzP7/SIJ0CSPMFBkf585ufSeaCsDQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d0NemUauY/YE1j6k5UA2i95qvYQokE1KgNVktbi1lMVFL19Hy/wRs+YF+sAQLxXZgNEHD6ZNAB9U8A3B5dgahmLN933nG/BBOglquypWadv5c1V6NBm3rdUvix+0Gf1pTbFVOrDLS9BZAZiNPODOyTUsVansD3QPG8FopK6dFaU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VkMUWeg2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PY5aKQtthCnHC6OxRXsrNurZuYJQlSsdKwLlMIV6jLrNoSJbVdS0ubF8kKq9FMlV7N2v7agaXJnqx5fRbkcca9G+hz6eEgrfvj01fid38dUBUWYdbp3ADfddngnJc6qNNfzk5SgSd58ITFbs1EEV73Af4CO5wdZjy8NTKHA2tk4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=juacGBLO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VkMUWeg2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB6E31F000FF;
-	Sat, 12 Sep 2026 07:17:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="juacGBLO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE19B1F000FF;
+	Sat, 12 Sep 2026 07:17:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789197432;
-	bh=a5VuUMEoWvGpXSRNeaW5FTTcM8ADhq0K+Y3pCtPuG1A=;
+	s=korg; t=1789197437;
+	bh=xKdOe+Gksqc67MxrVUFngGokq/rShZAo1FEoi+5btqE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VkMUWeg2JSNGLBphsCpKpAhOOSSlnUlSKP73iXk0sctmBU6syLjJWZUqbyPibhqAa
-	 7BNe3uLJzgcVazbin37JcDSWMcQuLxuwImadO+pkz1uwrOHvdg2kkwI3zYeorMBop2
-	 aPk8yqIblK1A4Welgc69H7o+58T0rSSJHSTBfNkY=
+	b=juacGBLOllODSSwRiIEn9jybECqSLC/FL5vfqOaaghJRtpL+XAKNQxokoUEW7tNdp
+	 MOr0CWSc0nHrhU1gDeybK8r+XMwY+BnlmH0AdCIrCfwaPVtpvHKvjmwYoRwe/wZ4mQ
+	 V4Pmb2sby/lnJaKpsw1PFsVO8WgzZX0yTAFO1w5s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Oleg Nesterov <oleg@redhat.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0172/1815] wifi: rtw89: fix HE extended capability length check
-Date: Sat, 12 Sep 2026 08:32:02 +0200
-Message-ID: <20260912065653.044537622@linuxfoundation.org>
+Subject: [PATCH 7.2 0173/1815] uprobes/x86: Remove struct uprobe_trampoline object
+Date: Sat, 12 Sep 2026 08:32:03 +0200
+Message-ID: <20260912065653.068901521@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,39 +53,242 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Jiri Olsa <jolsa@kernel.org>
 
-[ Upstream commit 2aba608a86e9b099c9af2ea70b620552dee2b628 ]
+[ Upstream commit 38af0dd6a266057002eacb170c08298ea912fb0a ]
 
-rtw89_mac_check_he_obss_narrow_bw_ru_iter() reads extended capability
-byte 10, but rejects only datalen values below 10.  Byte 10 requires at
-least 11 bytes.
+Removing struct uprobe_trampoline object and it's tracking code,
+because it's not needed. We can do same thing directly on top of
+struct vm_area_struct objects.
 
-Require datalen >= 11 before reading data[10].
+This makes the code simpler and allows easy propagation of the
+trampoline vma object into child process in following change.
 
-Fixes: 8d540f9d2916 ("wifi: rtw89: disable 26-tone RU HE TB PPDU transmissions")
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/2026063009025530.2-ccfa108-0024-wifi-rtw89-fix-HE-extended--pengpeng@iscas.ac.cn
+Note the original code called destroy_uprobe_trampoline if the
+optimiation failed, but it only freed the struct uprobe_trampoline
+object, not the vma. The new vma leak is fixed in following change.
+
+Signed-off-by: Jiri Olsa <jolsa@kernel.org>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Oleg Nesterov <oleg@redhat.com>
+Acked-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://patch.msgid.link/20260703114917.238144-3-jolsa@kernel.org
+Stable-dep-of: 07c308eb2bcf ("uprobes/x86: Do not leak trampoline vma mapping on optimization failure")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw89/mac.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/kernel/uprobes.c | 106 ++++++++------------------------------
+ include/linux/uprobes.h   |   5 --
+ kernel/events/uprobes.c   |  10 ----
+ kernel/fork.c             |   1 -
+ 4 files changed, 22 insertions(+), 100 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/mac.c b/drivers/net/wireless/realtek/rtw89/mac.c
-index 8c395517bd2fe..99de1b2029768 100644
---- a/drivers/net/wireless/realtek/rtw89/mac.c
-+++ b/drivers/net/wireless/realtek/rtw89/mac.c
-@@ -5167,7 +5167,7 @@ static void rtw89_mac_check_he_obss_narrow_bw_ru_iter(struct wiphy *wiphy,
- 	elem = cfg80211_find_elem(WLAN_EID_EXT_CAPABILITY, ies->data,
- 				  ies->len);
+diff --git a/arch/x86/kernel/uprobes.c b/arch/x86/kernel/uprobes.c
+index 3af979fb41d38..a76203a33a7b0 100644
+--- a/arch/x86/kernel/uprobes.c
++++ b/arch/x86/kernel/uprobes.c
+@@ -631,11 +631,6 @@ static struct vm_special_mapping tramp_mapping = {
+ 	.pages  = tramp_mapping_pages,
+ };
  
--	if (!elem || elem->datalen < 10 ||
-+	if (!elem || elem->datalen < 11 ||
- 	    !(elem->data[10] & WLAN_EXT_CAPA10_OBSS_NARROW_BW_RU_TOLERANCE_SUPPORT))
- 		*tolerated = false;
- 	rcu_read_unlock();
+-struct uprobe_trampoline {
+-	struct hlist_node	node;
+-	unsigned long		vaddr;
+-};
+-
+ static bool is_reachable_by_call(unsigned long vtramp, unsigned long vaddr)
+ {
+ 	long delta = (long)(vaddr + 5 - vtramp);
+@@ -682,83 +677,28 @@ static unsigned long find_nearest_trampoline(unsigned long vaddr)
+ 	return high_tramp;
+ }
+ 
+-static struct uprobe_trampoline *create_uprobe_trampoline(unsigned long vaddr)
++static struct vm_area_struct *get_uprobe_trampoline(struct mm_struct *mm, unsigned long vaddr)
+ {
+-	struct pt_regs *regs = task_pt_regs(current);
+-	struct mm_struct *mm = current->mm;
+-	struct uprobe_trampoline *tramp;
++	VMA_ITERATOR(vmi, mm, 0);
+ 	struct vm_area_struct *vma;
+ 
+-	if (!user_64bit_mode(regs))
+-		return NULL;
++	if (vaddr > TASK_SIZE || vaddr < PAGE_SIZE)
++		return ERR_PTR(-EINVAL);
++
++	for_each_vma(vmi, vma) {
++		if (!vma_is_special_mapping(vma, &tramp_mapping))
++			continue;
++		if (is_reachable_by_call(vma->vm_start, vaddr))
++			return vma;
++	}
+ 
+ 	vaddr = find_nearest_trampoline(vaddr);
+ 	if (IS_ERR_VALUE(vaddr))
+-		return NULL;
++		return ERR_PTR(vaddr);
+ 
+-	tramp = kzalloc_obj(*tramp);
+-	if (unlikely(!tramp))
+-		return NULL;
+-
+-	tramp->vaddr = vaddr;
+-	vma = _install_special_mapping(mm, tramp->vaddr, PAGE_SIZE,
++	return _install_special_mapping(mm, vaddr, PAGE_SIZE,
+ 				VM_READ|VM_EXEC|VM_MAYEXEC|VM_MAYREAD|VM_DONTCOPY|VM_IO,
+ 				&tramp_mapping);
+-	if (IS_ERR(vma)) {
+-		kfree(tramp);
+-		return NULL;
+-	}
+-	return tramp;
+-}
+-
+-static struct uprobe_trampoline *get_uprobe_trampoline(unsigned long vaddr, bool *new)
+-{
+-	struct uprobes_state *state = &current->mm->uprobes_state;
+-	struct uprobe_trampoline *tramp = NULL;
+-
+-	if (vaddr > TASK_SIZE || vaddr < PAGE_SIZE)
+-		return NULL;
+-
+-	hlist_for_each_entry(tramp, &state->head_tramps, node) {
+-		if (is_reachable_by_call(tramp->vaddr, vaddr)) {
+-			*new = false;
+-			return tramp;
+-		}
+-	}
+-
+-	tramp = create_uprobe_trampoline(vaddr);
+-	if (!tramp)
+-		return NULL;
+-
+-	*new = true;
+-	hlist_add_head(&tramp->node, &state->head_tramps);
+-	return tramp;
+-}
+-
+-static void destroy_uprobe_trampoline(struct uprobe_trampoline *tramp)
+-{
+-	/*
+-	 * We do not unmap and release uprobe trampoline page itself,
+-	 * because there's no easy way to make sure none of the threads
+-	 * is still inside the trampoline.
+-	 */
+-	hlist_del(&tramp->node);
+-	kfree(tramp);
+-}
+-
+-void arch_uprobe_init_state(struct mm_struct *mm)
+-{
+-	INIT_HLIST_HEAD(&mm->uprobes_state.head_tramps);
+-}
+-
+-void arch_uprobe_clear_state(struct mm_struct *mm)
+-{
+-	struct uprobes_state *state = &mm->uprobes_state;
+-	struct uprobe_trampoline *tramp;
+-	struct hlist_node *n;
+-
+-	hlist_for_each_entry_safe(tramp, n, &state->head_tramps, node)
+-		destroy_uprobe_trampoline(tramp);
+ }
+ 
+ static bool __in_uprobe_trampoline(struct mm_struct *mm, unsigned long ip)
+@@ -1111,21 +1051,19 @@ int set_orig_insn(struct arch_uprobe *auprobe, struct vm_area_struct *vma,
+ static int __arch_uprobe_optimize(struct arch_uprobe *auprobe, struct mm_struct *mm,
+ 				  unsigned long vaddr)
+ {
+-	struct uprobe_trampoline *tramp;
+-	struct vm_area_struct *vma;
+-	bool new = false;
+-	int err = 0;
++	struct pt_regs *regs = task_pt_regs(current);
++	struct vm_area_struct *vma, *tramp;
++	int ret;
+ 
++	if (!user_64bit_mode(regs))
++		return -EINVAL;
+ 	vma = find_vma(mm, vaddr);
+ 	if (!vma)
+ 		return -EINVAL;
+-	tramp = get_uprobe_trampoline(vaddr, &new);
+-	if (!tramp)
+-		return -EINVAL;
+-	err = swbp_optimize(auprobe, vma, vaddr, tramp->vaddr);
+-	if (WARN_ON_ONCE(err) && new)
+-		destroy_uprobe_trampoline(tramp);
+-	return err;
++	tramp = get_uprobe_trampoline(mm, vaddr);
++	if (IS_ERR(tramp))
++		return PTR_ERR(tramp);
++	return WARN_ON_ONCE(swbp_optimize(auprobe, vma, vaddr, tramp->vm_start));
+ }
+ 
+ void arch_uprobe_optimize(struct arch_uprobe *auprobe, unsigned long vaddr)
+diff --git a/include/linux/uprobes.h b/include/linux/uprobes.h
+index f548fea2adec8..18be159bbc341 100644
+--- a/include/linux/uprobes.h
++++ b/include/linux/uprobes.h
+@@ -186,9 +186,6 @@ struct xol_area;
+ 
+ struct uprobes_state {
+ 	struct xol_area		*xol_area;
+-#ifdef CONFIG_X86_64
+-	struct hlist_head	head_tramps;
+-#endif
+ };
+ 
+ typedef int (*uprobe_write_verify_t)(struct page *page, unsigned long vaddr,
+@@ -238,8 +235,6 @@ extern void uprobe_handle_trampoline(struct pt_regs *regs);
+ extern void *arch_uretprobe_trampoline(unsigned long *psize);
+ extern unsigned long uprobe_get_trampoline_vaddr(void);
+ extern void uprobe_copy_from_page(struct page *page, unsigned long vaddr, void *dst, int len);
+-extern void arch_uprobe_clear_state(struct mm_struct *mm);
+-extern void arch_uprobe_init_state(struct mm_struct *mm);
+ extern void handle_syscall_uprobe(struct pt_regs *regs, unsigned long bp_vaddr);
+ extern void arch_uprobe_optimize(struct arch_uprobe *auprobe, unsigned long vaddr);
+ extern unsigned long arch_uprobe_get_xol_area(void);
+diff --git a/kernel/events/uprobes.c b/kernel/events/uprobes.c
+index 6300b216012cb..e4f526c9bfbf0 100644
+--- a/kernel/events/uprobes.c
++++ b/kernel/events/uprobes.c
+@@ -1806,14 +1806,6 @@ static struct xol_area *get_xol_area(void)
+ 	return area;
+ }
+ 
+-void __weak arch_uprobe_clear_state(struct mm_struct *mm)
+-{
+-}
+-
+-void __weak arch_uprobe_init_state(struct mm_struct *mm)
+-{
+-}
+-
+ /*
+  * uprobe_clear_state - Free the area allocated for slots.
+  */
+@@ -1825,8 +1817,6 @@ void uprobe_clear_state(struct mm_struct *mm)
+ 	delayed_uprobe_remove(NULL, mm);
+ 	mutex_unlock(&delayed_uprobe_lock);
+ 
+-	arch_uprobe_clear_state(mm);
+-
+ 	if (!area)
+ 		return;
+ 
+diff --git a/kernel/fork.c b/kernel/fork.c
+index f0e2e131a9a5a..abc2f01ac3573 100644
+--- a/kernel/fork.c
++++ b/kernel/fork.c
+@@ -1069,7 +1069,6 @@ static void mm_init_uprobes_state(struct mm_struct *mm)
+ {
+ #ifdef CONFIG_UPROBES
+ 	mm->uprobes_state.xol_area = NULL;
+-	arch_uprobe_init_state(mm);
+ #endif
+ }
+ 
 -- 
 2.53.0
 
