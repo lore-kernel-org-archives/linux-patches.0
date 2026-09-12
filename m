@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 364D133F368;
-	Sat, 12 Sep 2026 14:40:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9069346774;
+	Sat, 12 Sep 2026 14:40:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789224021; cv=none; b=eJ5+sa27i0yYNPxAq1J+2Nv7YzuXKtG8s2MR6wZGYby3TJOEz8oj66VGTUQ81TtqKkFOp75HJqeBxyJqsjlLQUP6csVZQUsrA0NC4xqwSoLk9DBb/ayhIIz01iszfZRL3p4QaaY3Do47ugS3b9RHhgRLqhD+KNmgxuKS2jZV8D4=
+	t=1789224027; cv=none; b=lA1fnlhkOjFf/RhRAWpcH84qD3WET5meqfOqQBcOH94O/3yrD7aRM6OLQnc3KyR2eIgcYyCYHUYgKW6wPmoQgjvY57bqX87tLm/yRQzM94kU6W7wG0wH9zVA+he6J1T+WhLEoB7tRIHp+wsftkex/sGrcu+w4xfpK2NwCG0Gouw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789224021; c=relaxed/simple;
-	bh=s4iBnDcbQqx6ik4hb43uampdEZkiN+JOjDrfZr+Buqw=;
+	s=arc-20240116; t=1789224027; c=relaxed/simple;
+	bh=ArBSaf4E0oX++U1Oc/7+7qt0eA51li0UaBeWcfcYGYA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ugssh3nHUSjGz5iA1j2VF7+Mf7GPzy9Kmuf5tqRua8eEche+/Hq0nqGZk2Mnp9RAT2mzehRivYudcyuT73R/EtWtGPlS3Yjd0wXLyMLMrkq4a5z8DlNrjyPLFjz/cOb1dE9dG4L2vSx+iTnn7p1y+Lw2hCDrcT2+FCmpOa1mLr0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=izfyAMF5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=D8yA8IGQpTd2kQGuRsWK2xKr7POJiTa47H9pjuhDdX9ZP55fc7JubG55aBsWoRu/ymcHHS3OgcC2Ht6DtUSgQjsklfTcNpHk4OlOatCEPURqOujoaOPI+7QDgP+i8NjmElDzJQcNpvDYmXWlkI+10jGMfIJXS+4fW7WDBTm7xFU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=psyTXzbh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="izfyAMF5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 105B11F000FF;
-	Sat, 12 Sep 2026 14:40:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="psyTXzbh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A537A1F000FF;
+	Sat, 12 Sep 2026 14:40:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789224019;
-	bh=LvW8lWqGxMCKkcdtewWLHEF5Mmw+/q45nkEiqCBZPO0=;
+	s=korg; t=1789224024;
+	bh=0xbotA1ZKrUK4NyJkwvTymV/FI/2lHB5RD9UFH+bPrA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=izfyAMF5g5e7dLzvTFfvoTmbfX/wvN5wxq3LJP6e1gdIT4RDVVy7yvZWh4kGFC2vV
-	 9MakO8c6N9Dc+Bfb7ABfFs86bl+BC3NL0Xom7rh/1RnUWp0strbcdvl7yleSJbK7YG
-	 80CyVBJC4QjObmchT2/ch3Fv4yo2iYyCH7X4esw8=
+	b=psyTXzbhu/4TGAeDDYkH9fTrXG4512X11smdWA4+EnOiBlxa8r5MhHiZXodiPcTKE
+	 NPUH4QpGBdWt4MIPda9uBNWht9xZxvCrXGVArNH5H6yqsiQ5fDCTopHyykUia3eq1s
+	 fgIr4Z93VnZMfEwXhkEH1ly9FnAGsHjMrFvbUJwY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Sudeep Holla <sudeep.holla@kernel.org>,
+	James Clark <james.clark@linaro.org>,
+	Leo Yan <leo.yan@arm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0864/1424] firmware: arm_scmi: Unrequest devices if driver registration fails
-Date: Sat, 12 Sep 2026 08:54:56 +0200
-Message-ID: <20260912065626.667431047@linuxfoundation.org>
+Subject: [PATCH 6.6 0865/1424] perf cs-etm: Flush thread stacks after decoder reset
+Date: Sat, 12 Sep 2026 08:54:57 +0200
+Message-ID: <20260912065626.689646933@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -51,51 +52,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sudeep Holla <sudeep.holla@kernel.org>
+From: Leo Yan <leo.yan@arm.com>
 
-[ Upstream commit 9f7cd6a62aa754ed6b48cbd5d50de40add1bcc86 ]
+[ Upstream commit ea5075e3776846d4941dddf1549426ebd3feb81f ]
 
-scmi_driver_register() requests protocol devices before registering the
-driver. If driver_register() fails, those requests remain in the global
-IDR and retain pointers to the module's ID table. Once the failed module
-load releases that storage, later request matching or SCMI device creation
-can dereference the stale pointers.
+Perf resets the CoreSight decoder when moving to a new AUX trace buffer,
+this causes trace discontinunity globally.
 
-Unrequest the complete protocol table before returning the registration
-failure. At this point table registration succeeded, so every entry is
-owned by the current registration attempt.
+For callchain synthesis, keeping thread-stack state after decoder reset
+can leave stale call/return history attached to threads that are decoded
+later, producing incorrect synthesized callchains.
 
-Fixes: d3cd7c525fd2 ("firmware: arm_scmi: Refactor protocol device creation")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Link: https://patch.msgid.link/20260722173521.2184378-2-sudeep.holla@kernel.org
-Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
+Flush all host thread stacks after a decoder reset. When virtualization
+is present, flush the guest thread stacks as well.
+
+Reviewed-by: James Clark <james.clark@linaro.org>
+Signed-off-by: Leo Yan <leo.yan@arm.com>
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Stable-dep-of: ec99be8a31db ("perf cs-etm: Avoid truncating AUX buffer sizes to int")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_scmi/bus.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ tools/perf/util/cs-etm.c | 45 ++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 45 insertions(+)
 
-diff --git a/drivers/firmware/arm_scmi/bus.c b/drivers/firmware/arm_scmi/bus.c
-index 3a3c3a3d6581e..8d7f90594ee72 100644
---- a/drivers/firmware/arm_scmi/bus.c
-+++ b/drivers/firmware/arm_scmi/bus.c
-@@ -305,10 +305,14 @@ int scmi_driver_register(struct scmi_driver *driver, struct module *owner,
- 	driver->driver.mod_name = mod_name;
+diff --git a/tools/perf/util/cs-etm.c b/tools/perf/util/cs-etm.c
+index de99a53376bfb..0aedb9924184b 100644
+--- a/tools/perf/util/cs-etm.c
++++ b/tools/perf/util/cs-etm.c
+@@ -1946,6 +1946,45 @@ static int cs_etm__end_block(struct cs_etm_queue *etmq,
  
- 	retval = driver_register(&driver->driver);
--	if (!retval)
--		pr_debug("Registered new scmi driver %s\n", driver->name);
-+	if (retval) {
-+		scmi_protocol_table_unregister(driver->id_table);
-+		return retval;
-+	}
- 
--	return retval;
-+	pr_debug("Registered new scmi driver %s\n", driver->name);
-+
-+	return 0;
+ 	return 0;
  }
- EXPORT_SYMBOL_GPL(scmi_driver_register);
++
++static int cs_etm__flush_stack_cb(struct thread *thread,
++				  void *data __maybe_unused)
++{
++	thread_stack__flush(thread);
++	return 0;
++}
++
++static void cs_etm__flush_machine_stack(struct cs_etm_queue *etmq, pid_t pid)
++{
++	struct machine *machine;
++
++	machine = machines__find(&etmq->etm->session->machines, pid);
++	if (machine)
++		machine__for_each_thread(machine, cs_etm__flush_stack_cb, NULL);
++}
++
++static void cs_etm__flush_all_stack(struct cs_etm_queue *etmq)
++{
++	enum cs_etm_pid_fmt pid_fmt = cs_etm__get_pid_fmt(etmq);
++
++	if (!etmq->etm->synth_opts.last_branch)
++		return;
++
++	switch (pid_fmt) {
++	case CS_ETM_PIDFMT_CTXTID2:
++		/* Clear the guest stack if virtualization is supported */
++		cs_etm__flush_machine_stack(etmq, DEFAULT_GUEST_KERNEL_ID);
++		fallthrough;
++	case CS_ETM_PIDFMT_CTXTID:
++		cs_etm__flush_machine_stack(etmq, HOST_KERNEL_ID);
++		break;
++	case CS_ETM_PIDFMT_NONE:
++	default:
++		break;
++
++	}
++}
++
+ /*
+  * cs_etm__get_data_block: Fetch a block from the auxtrace_buffer queue
+  *			   if need be.
+@@ -1968,6 +2007,12 @@ static int cs_etm__get_data_block(struct cs_etm_queue *etmq)
+ 		ret = cs_etm_decoder__reset(etmq->decoder);
+ 		if (ret)
+ 			return ret;
++
++		/*
++		 * Since the decoder is reset, this causes a global trace
++		 * discontinuity. Flush all thread stacks.
++		 */
++		cs_etm__flush_all_stack(etmq);
+ 	}
  
+ 	return etmq->buf_len;
 -- 
 2.53.0
 
