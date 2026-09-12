@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E569E478865;
-	Sat, 12 Sep 2026 11:15:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E138E4746B8;
+	Sat, 12 Sep 2026 11:15:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789211713; cv=none; b=MhggaO3V7y09+bMWdr6yS1q64pbkUNXiLUd9a9uPNOQWZ0I7Sss4/eAiIuLy1GhyIwBuV4S8iG0ztc8jpyyZQls9ZTkMd/0aEk+8QO4Cvna1Eih77lCHZXRe8IZYoelziq2nQOuCnId9OPHLe47N5q50AwB/xkECkslJ91GbG/0=
+	t=1789211718; cv=none; b=kVj1oJaeR+1ruEOld2PI+wQHyQPlOYRvCg1NGwW1mZDS0Jkr+Iujf0W9Ch5RhjZmI8dEO5D2vJF3oU1nW3yLWIUwqp30bAPH0X44pTkjjt7pqjLYdSx0/W0zxI166ZNckpkDoagU7TU0RYeI9kgMaHSdWsdJQu1FQ+VyYS5bxO0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789211713; c=relaxed/simple;
-	bh=NfTNr7xWXkvLU4t9xrHoAgQkZLkuYBZ8C6oACPBdmsc=;
+	s=arc-20240116; t=1789211718; c=relaxed/simple;
+	bh=O8f5Sh+bQkKEK6ROA/RkUpc7TqB0jD958PRE8pgUrgA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kELBxLdGNScoyWKDCasLR4S6fPHekfvHiJWZB8J/R64d2IlE5TVsbjseFrjPBXMbZ2fbp0ewAvuuuY19NX0MWYfLbGY8JKUDAiYCLNeKLUAB9lFZWJoRGpqECW7u2oBsuHjIUDeXJHj8nWLXe0LATPSB3jYS+sTG1lUwj6FuUNk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=olKr2QjV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oslhJ0/KpdVn0U8faVslY9wjphuZdZIZ9bI1/nVvZKrlQiwlbQj7Ev/kncNxZdydl/oy25n5xS5Kakz3IpdySh5hK8SmCIwZhLVuflrwB/gX44PAihA/xyXM2Pa51dfJu4bpgkiqlNEXCL9kjQrRjTysf6ES+YnBJ7ArfxbcR64=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PU44fwtJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="olKr2QjV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64E051F000FF;
-	Sat, 12 Sep 2026 11:15:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PU44fwtJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B6241F000FF;
+	Sat, 12 Sep 2026 11:15:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789211711;
-	bh=Dt5gqRTkf7lKt+i1lDRT32EBSxXYQ7yLLpAyNhOpecU=;
+	s=korg; t=1789211716;
+	bh=YMHhN3tc7MJzyf/0mIHdF0niP/Ns1BVeNQJg7m5o52A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=olKr2QjV+aWB/xnhSHyktm68tu6r62WRsABscU4QwUvlQQbC8yPjPz7rSWEfQHBYX
-	 IJMfS6cJyxND7DZhaLrXr+7rhTenA5doo6UtUsay9Ns/TVBdWhdny98KpgzS4jdGcr
-	 K+0ZExiMm/a1imTsaaPmVMbKXPWjifWRULRjP2ts=
+	b=PU44fwtJ0U3sqlk/vADq+ItCtd1eYWZaJyiVaBvWSx+ZLJaHqdF/JPrR6qsDAZ2Kn
+	 EZo1kGg+PzUcR0+smwa9RvFLrWuBYK0DeIL5Y6NqCDZt4lMCTog8YMuJXlR/VpRa9v
+	 Lg+0P+8039RLBVDUJI5uW48G2TKC1/yqU+fH19CE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hang Nan <2122295973@qq.com>,
+	Ze Tan <tanze@kylinos.cn>,
 	ChenXiaoSong <chenxiaosong@kylinos.cn>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1244/1518] ksmbd: bound smb_check_perm_dacl() ACE walks by DACL size
-Date: Sat, 12 Sep 2026 08:56:53 +0200
-Message-ID: <20260912065651.649111712@linuxfoundation.org>
+Subject: [PATCH 6.18 1245/1518] smb/server: fix session leak in ksmbd_session_register()
+Date: Sat, 12 Sep 2026 08:56:54 +0200
+Message-ID: <20260912065651.672386127@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,61 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hang Nan <2122295973@qq.com>
+From: Ze Tan <tanze@kylinos.cn>
 
-[ Upstream commit 79decd88dd3f0d42e7fb0689b1a7853bfa302459 ]
+[ Upstream commit 99b25b046e47e4904373cfeb445c5483f1633d88 ]
 
-smb_check_perm_dacl() validates that the DACL fits inside the NT
-security descriptor, but then bounds its two ACE walks by the
-remaining NTSD length (acl_size) rather than the DACL's declared
-size (pdacl_size).
+See the procedure below:
 
-When pdacl->size is smaller than the trailing NTSD buffer, bytes
-after the declared DACL boundary - still inside the stored security
-descriptor - are parsed as ACEs during access checks.  A crafted
-DACL can place an access-granting ACE beyond pdacl->size, and the
-current code accepts it during SMB2_CREATE access validation, while
-parse_dacl() and smb_inherit_dacl() stop at pdacl_size.
+  smb2_sess_setup
+    ksmbd_smb2_session_create
+      __session_create
+        atomic_set(&sess->refcnt, 2)
+        hash_add(sessions_table, &sess->hlist, sess->id)
+    ksmbd_session_register
+      xa_store(&conn->sessions, sess->id, sess) // fail
+    ksmbd_user_session_put
+      atomic_dec(&sess->refcnt) // refcnt is 1, session is not freed
 
-Bound both ACE walks by pdacl_size to match the DACL boundary
-semantics used elsewhere in the server.
+Remove the session from sessions_table and drop its table reference if
+xa_store() fails.
 
-Validation:
-- semantic KUnit harness shows the post-boundary ACE is selected
-  before the fix and rejected (EACCES) after it
-- linux master (7.2-rc6), x86_64
-
-Fixes: 8f0541186e9a ("ksmbd: fix heap-based overflow in set_ntacl_dacl()")
-Signed-off-by: Hang Nan <2122295973@qq.com>
+Fixes: f5c779b7ddbd ("ksmbd: fix racy issue from session setup and logoff")
+Signed-off-by: Ze Tan <tanze@kylinos.cn>
 Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smbacl.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/smb/server/mgmt/user_session.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/fs/smb/server/smbacl.c b/fs/smb/server/smbacl.c
-index d3d0a22620f96..0879012aa63c8 100644
---- a/fs/smb/server/smbacl.c
-+++ b/fs/smb/server/smbacl.c
-@@ -1471,7 +1471,7 @@ int smb_check_perm_dacl(struct ksmbd_conn *conn, const struct path *path,
- 			DELETE;
+diff --git a/fs/smb/server/mgmt/user_session.c b/fs/smb/server/mgmt/user_session.c
+index b15531665ed5e..e815915665211 100644
+--- a/fs/smb/server/mgmt/user_session.c
++++ b/fs/smb/server/mgmt/user_session.c
+@@ -212,10 +212,21 @@ static void ksmbd_expire_session(struct ksmbd_conn *conn)
+ int ksmbd_session_register(struct ksmbd_conn *conn,
+ 			   struct ksmbd_session *sess)
+ {
++	int ret;
++
+ 	sess->dialect = conn->dialect;
+ 	memcpy(sess->ClientGUID, conn->ClientGUID, SMB2_CLIENT_GUID_SIZE);
+ 	ksmbd_expire_session(conn);
+-	return xa_err(xa_store(&conn->sessions, sess->id, sess, KSMBD_DEFAULT_GFP));
++	ret = xa_err(xa_store(&conn->sessions, sess->id, sess,
++			      KSMBD_DEFAULT_GFP));
++	if (ret) {
++		down_write(&sessions_table_lock);
++		hash_del(&sess->hlist);
++		up_write(&sessions_table_lock);
++		ksmbd_user_session_put(sess);
++	}
++
++	return ret;
+ }
  
- 		ace = (struct smb_ace *)((char *)pdacl + sizeof(struct smb_acl));
--		aces_size = acl_size - sizeof(struct smb_acl);
-+		aces_size = pdacl_size - sizeof(struct smb_acl);
- 		for (i = 0; i < le16_to_cpu(pdacl->num_aces); i++) {
- 			if (aces_size < offsetof(struct smb_ace, sid) +
- 			    CIFS_SID_BASE_SIZE)
-@@ -1495,7 +1495,7 @@ int smb_check_perm_dacl(struct ksmbd_conn *conn, const struct path *path,
- 	id_to_sid(uid, sid_type, &sid);
- 
- 	ace = (struct smb_ace *)((char *)pdacl + sizeof(struct smb_acl));
--	aces_size = acl_size - sizeof(struct smb_acl);
-+	aces_size = pdacl_size - sizeof(struct smb_acl);
- 	for (i = 0; i < le16_to_cpu(pdacl->num_aces); i++) {
- 		if (aces_size < offsetof(struct smb_ace, sid) +
- 		    CIFS_SID_BASE_SIZE)
+ static int ksmbd_chann_del(struct ksmbd_conn *conn, struct ksmbd_session *sess)
 -- 
 2.53.0
 
