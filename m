@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71B6E3C1419;
-	Sat, 12 Sep 2026 07:11:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A173637204A;
+	Sat, 12 Sep 2026 07:11:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789197091; cv=none; b=SlXGlBLXGrcW0u3iwJLrVRhgC/8le5NaHEx78FU8pSRYoj7haajUxab0/ogEk/3BVBAnIwpkkYPscoDjTNgbjM4jIHZhYwxZG3oKHGQZK8tVMnfpNWGZk9ZFLhpoGkrLF4qET8CdEwrlGvSonQzx9ZFwIFsZc1zO/U5YRLxchN0=
+	t=1789197096; cv=none; b=NVnm6hJFgmB6zZHndYrvpd1ZAt1AkoXuG8dF9fkjGgF4enBll65I2KLSKHnA6AsTHQ68DmquJgxN1+2OSLOWApijMb80VnAVyUBVK8ALkxWfPc93mY7nLgy5CnfFyG/dSIXJlKgj/n86o+OipMN9PVAfln/3vF06VvB4vx9fJXE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789197091; c=relaxed/simple;
-	bh=z78W7OdLuOH0P8WLRqpF/r+3UcVETR7gFJqfvaa/5OI=;
+	s=arc-20240116; t=1789197096; c=relaxed/simple;
+	bh=VXlCN0spRYEP+yJ0c01UcGK/cgbzJfTdwgZrpgloHRQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HS4/4Xs2j4QEvq4rMIET/Z57ihNGVDljU2q3L+ayXjcvR6DGfNQy7RkrKO3LZMWCpFbbwH+EIRa3YqwMfSSefosxfcG6JjPcQlA5G/vRId4/NC9msvn6nHGy57CZCajHU5W4D4WyYAu5DNW/hHvkQkT4adzE9CvjGUZrfI3Kk7w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xX6Wbedc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JY+8BacLONieD5odJsw7dOE+InLOU9kiDSjB7VgPF3bp40jYVngYPpQLe24VHVSHFFfIp/KABqxgbzPC1QTZkB4WGohxZr8HbGTkaB+Cs/7n7749zylMfMc8Osu3rTua96iLLhJPmka/ILr+ANppG16/CtMC0sr2rF3W53GWywU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XN6Gumwu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xX6Wbedc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 703E31F000FF;
-	Sat, 12 Sep 2026 07:11:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XN6Gumwu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5978B1F000FF;
+	Sat, 12 Sep 2026 07:11:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789197090;
-	bh=jOhh+TeF5fJqf6Uh/ifz6fixCaCLB2fFsC4UGTy/ky4=;
+	s=korg; t=1789197095;
+	bh=gzb+HP++sZh3wkj9jkmfF7AbViFwuz54+fTORZiZL5g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xX6WbedcY3s9LnYeX5eFwY0zAaqjftkuDK+9zvtNtogtbX/ckGp8o566HPoh69Jky
-	 oIVyuU+v3RkIOB2Mxz7J7J4jlbtoGNl72s0s4+J40ex2Y8zAK7ol0orgR1QCEmp+2u
-	 ajd3W7zPSwcKpsG4fTXGSShVxiKedf3TP9XDR3ls=
+	b=XN6Gumwuwg3XyAMDkC4zd/Ag5eiEUwObuDJgcKSz3+m4k5saPWb+l9JsNxirbqaSc
+	 3ZoAZ378r7APg2+JBMxqHMG453WTX+vay3B7zcvfp8f9x2AVN0ZqZJ5H/qTyjN5MCw
+	 igiOs15rOzGSRFhB/4BkiiHWG1CuFwD0UvO0smW8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Chen Yu <yu.c.chen@intel.com>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0100/1815] sched/core: Fix inter-class wakeup_preempt()
-Date: Sat, 12 Sep 2026 08:30:50 +0200
-Message-ID: <20260912065651.358027678@linuxfoundation.org>
+Subject: [PATCH 7.2 0101/1815] sched/fair: Fix overflow in update_tg_cfs_runnable()
+Date: Sat, 12 Sep 2026 08:30:51 +0200
+Message-ID: <20260912065651.380309613@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -50,102 +51,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Chen, Yu C <yu.c.chen@intel.com>
 
-[ Upstream commit fa02b2868420d9f33d64ddcb15ef0f96880b2a6d ]
+[ Upstream commit 4f166adb5cb0525d9e32d45729fd8f28c80acbee ]
 
-The way wakeup_preempt() works since commit 704069649b5b ("sched/core: Rework
-sched_class::wakeup_preempt() and rq_modified_*()") is that it will call
-rq->next_class->wakeup_preempt(rq, p) when p is of an equal or higher class,
-and raise ->next_class when higher.
+A divide-by-zero crash is observed when running hackbench:
 
-This means that:
+   [14697.488452] CPU: 112 UID: 0 PID: 124791 Comm: hackbench Not tainted 7.1.0-rc2+
+   [14697.492627] RIP: 0010:propagate_entity_load_avg+0x35f/0x3e0
+   [14697.506799]  <TASK>
+   [14697.507411]  __dequeue_task+0x2b4/0xc70
+   [14697.508677]  dequeue_task_fair+0x36/0x370
+   [14697.509047]  dequeue_task+0x101/0x2f0
+   [14697.509426]  __schedule+0x1b1/0x1a00
+   [14697.510868]  anon_pipe_read+0x3da/0x450
+   [14697.511400]  vfs_read+0x361/0x390
+   [14697.512053]  __x64_sys_read+0x19/0x30
 
-	running idle task
+The divide-by-zero happens here:
 
-	wakeup fair-A
-	  (next_class == idle)
-	  if (sched_class_above(fair, idle)) {
-	     wakeup_preempt_idle(fair-A);
-	     resched_curr(rq);
-	     next_class = fair;
-	  }
+  if (scale_load_down(gcfs_rq->load.weight)) {
+           load_sum = div_u64(gcfs_rq->avg.load_sum,
+                              scale_load_down(gcfs_rq->load.weight));
+  }
 
-	wakeup fair-B
-	  (next_class == fair)
-	  if (fair == fair)
-	    wakeup_preempt_fair(fair-B);
-	      (but current is idle)
+gcfs_rq->load.weight is an insane large value and is truncated
+to the lower 32 bits by div_u64, which happen to be 0.
 
-All wakeup_preempt_$class() methods, except for wakeup_preempt_scx() (for whoem
-this was build) ignore cross-class wakeups by testing if @p is of the right
-class, but per the above case, it also should check current.
+Using AI for investigation, the cause is a u32 overflow in
+update_tg_cfs_runnable(), and flat pickup became a victim when using
+tg_tasks():
 
-This is mostly harmless in the current form, but will lead to trouble with
-later patches.
+   u32 new_sum, divider;
+   ...
+   new_sum = se->avg.runnable_avg * divider; <-- boom
 
-Fixes: 704069649b5b ("sched/core: Rework sched_class::wakeup_preempt() and rq_modified_*()")
+The following sequence shows how this triggers the crash:
+
+   propagate_entity_load_avg()
+     update_tg_cfs_runnable()     # u32 overflow corrupts runnable_sum
+
+   __update_load_avg_cfs_rq()
+     ___update_load_avg()         # computes insane runnable_avg
+   update_tg_load_avg()           # propagates to tg->runnable_avg
+
+   update_cfs_group()
+     calc_concur_shares()
+       tg_tasks()                 # long-to-int truncation, negative nr
+     reweight_entity()            # corrupted se->load.weight
+       update_load_add()          # corrupted cfs_rq->load.weight
+
+   propagate_entity_load_avg()
+     update_tg_cfs_load()
+       div_u64()                  # divide-by-zero
+
+Fix by widening new_sum from u32 to u64 (no need to force tg_tasks()
+to return unsigned long after this fix)
+
+Fixes: 95246d1ec80b ("sched/pelt: Relax the sync of runnable_sum with runnable_avg")
+Assisted-by: Claude:claude-opus-4.6
+Signed-off-by: Chen Yu <yu.c.chen@intel.com>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://patch.msgid.link/20260626074605.GB2568396%40noisy.programming.kicks-ass.net
+Link: https://patch.msgid.link/a22eea2b-4c4a-4623-9a44-d7b18c0c91c8@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/deadline.c | 6 ++++--
- kernel/sched/fair.c     | 3 ++-
- kernel/sched/rt.c       | 3 ++-
- 3 files changed, 8 insertions(+), 4 deletions(-)
+ kernel/sched/fair.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/sched/deadline.c b/kernel/sched/deadline.c
-index 200300043fa54..857dbe3519a86 100644
---- a/kernel/sched/deadline.c
-+++ b/kernel/sched/deadline.c
-@@ -2734,15 +2734,17 @@ static int balance_dl(struct rq *rq, struct rq_flags *rf)
-  */
- static void wakeup_preempt_dl(struct rq *rq, struct task_struct *p, int flags)
- {
-+	struct task_struct *donor = rq->donor;
- 	/*
- 	 * Can only get preempted by stop-class, and those should be
- 	 * few and short lived, doesn't really make sense to push
- 	 * anything away for that.
- 	 */
--	if (p->sched_class != &dl_sched_class)
-+	if (p->sched_class != &dl_sched_class ||
-+	    donor->sched_class != &dl_sched_class)
- 		return;
- 
--	if (dl_entity_preempt(&p->dl, &rq->donor->dl)) {
-+	if (dl_entity_preempt(&p->dl, &donor->dl)) {
- 		resched_curr(rq);
- 		return;
- 	}
 diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index f15f5764818eb..c36f1e8bff647 100644
+index c36f1e8bff647..bfe0972abd5f3 100644
 --- a/kernel/sched/fair.c
 +++ b/kernel/sched/fair.c
-@@ -9780,7 +9780,8 @@ static void wakeup_preempt_fair(struct rq *rq, struct task_struct *p, int wake_f
- 	/*
- 	 * XXX Getting preempted by higher class, try and find idle CPU?
- 	 */
--	if (p->sched_class != &fair_sched_class)
-+	if (p->sched_class != &fair_sched_class ||
-+	    donor->sched_class != &fair_sched_class)
- 		return;
+@@ -5174,7 +5174,8 @@ static inline void
+ update_tg_cfs_runnable(struct cfs_rq *cfs_rq, struct sched_entity *se, struct cfs_rq *gcfs_rq)
+ {
+ 	long delta_sum, delta_avg = gcfs_rq->avg.runnable_avg - se->avg.runnable_avg;
+-	u32 new_sum, divider;
++	u64 new_sum;
++	u32 divider;
  
- 	if (unlikely(se == pse))
-diff --git a/kernel/sched/rt.c b/kernel/sched/rt.c
-index e474c31d8fe66..e6e5f8a2caafb 100644
---- a/kernel/sched/rt.c
-+++ b/kernel/sched/rt.c
-@@ -1629,7 +1629,8 @@ static void wakeup_preempt_rt(struct rq *rq, struct task_struct *p, int flags)
- 	/*
- 	 * XXX If we're preempted by DL, queue a push?
- 	 */
--	if (p->sched_class != &rt_sched_class)
-+	if (p->sched_class != &rt_sched_class ||
-+	    donor->sched_class != &rt_sched_class)
- 		return;
+ 	/* Nothing to update */
+ 	if (!delta_avg)
+@@ -5188,7 +5189,7 @@ update_tg_cfs_runnable(struct cfs_rq *cfs_rq, struct sched_entity *se, struct cf
  
- 	if (p->prio < donor->prio) {
+ 	/* Set new sched_entity's runnable */
+ 	se->avg.runnable_avg = gcfs_rq->avg.runnable_avg;
+-	new_sum = se->avg.runnable_avg * divider;
++	new_sum = (u64)se->avg.runnable_avg * divider;
+ 	delta_sum = (long)new_sum - (long)se->avg.runnable_sum;
+ 	se->avg.runnable_sum = new_sum;
+ 
 -- 
 2.53.0
 
