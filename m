@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A0EA384CE9;
-	Sat, 12 Sep 2026 09:55:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB45919D8BC;
+	Sat, 12 Sep 2026 09:55:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789206940; cv=none; b=AYBDqvLWKyqI+s5lO1LUa+8mrXhGRRPOKH0UXtI6aexa03pGyUMJh8vj+Ru0jS7Qf34Dx6wF2ieHS2lIIalOma6OIQwF2qUFi4Hj5x040ntqPvWKQTDAgdMvbTJ0eINWkYyhvNGlfDNGbEf7kj0lgQvrEwONmP4nr1pgUyRxecU=
+	t=1789206945; cv=none; b=YncBYwPBkF4+X+kW9cMleAP98F+qfCf2LlAp1tHc63XzJ9SgFfqwI5GVBuJ+d1a0CHqs7Z9qG2P6yvLhlzOTklW2ZNsdqDSpcqQQIR4V1pKwWl/glphaybb4Xg1+7Q4HdOoQv10g+EqUmfIBo8xBBK6PCtVvgG5WMpbzcb2MH4Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789206940; c=relaxed/simple;
-	bh=gmTriCUigHBuEVK3EGLP1o2LrX0Vn6dRDhpwRrixoDg=;
+	s=arc-20240116; t=1789206945; c=relaxed/simple;
+	bh=PmsU1u6EOoSU3x/zAiClpj4oGE3rzpfMiwb1j8tdH+s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RpOmvjYyt94LUr7F9U7evzUR5gpAo22bM0+ziD2nZKo8Kt6j+jw0agevwsFWNCGORwBbZJoQclX1/jsjQUt2jO9KtqxrG/WvPILMCSCQX7hUFfOSpbVjpKHeil/96fje6vdxqkypE13bP/Y8JjE94c4VzgGuQqOiQDI5+wKPe1s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mMHBwHM9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ld8zR0nwyHj0qV/2sEYxXJOXov346xJq0s5SNx/eawOxuJfRFS1EEgTJHE/BlvK6CDMKddISlqnBUO24M0kHyZusk0WuBl204Ux0/BjpY6k4oX1v4hBaScYclccOA3ax563V6juzX+hx11a94i60mnOHEp4BpZz2jnML9eAnEPk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jzNR5G6L; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mMHBwHM9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FB191F000FF;
-	Sat, 12 Sep 2026 09:55:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jzNR5G6L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8904C1F000FF;
+	Sat, 12 Sep 2026 09:55:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789206939;
-	bh=4+GHTWZvZUrSQnYFtAcW4SsuHi73gXfBCyxW6Ug1meI=;
+	s=korg; t=1789206944;
+	bh=0WZOwkqFTB1C9DhDkN7SPxYb5JIUZuL0N730CZ6Ozhk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mMHBwHM9eSNMqTV3vbv/kSPtgUzGPWNgIiqd63olj4PUX/fn6p32ue4f09qfgUnSy
-	 hjc4iNk0xttOvMJirSo6tnHc0ABAmSI990J0KohdBLyJU45qRdQTvKTj8RXpHhZvnI
-	 6K0P4Ttrh4dD7p8Ap+O2hrDjN6XYAbyFTsfuUxaI=
+	b=jzNR5G6LR3s/IP2FA7HAVuHoQfqmzZtyc5tvPuY5O6jnpDACpzat0e0eolp+umjRB
+	 zH3yqgz+K9IrpF7RvDOKxJcLLwkevtCFxzCKPjo/N4EtnVmStuil+SNIb8FOSj3+/P
+	 ACZHeKm7M5cSkhwWDUZHhskirPeQKO3/tPRZeV44=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	John Ogness <john.ogness@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0309/1518] serial: Replace driver usage of UPF_CONS_FLOW
-Date: Sat, 12 Sep 2026 08:41:18 +0200
-Message-ID: <20260912065630.471900344@linuxfoundation.org>
+Subject: [PATCH 6.18 0310/1518] serial: 8250: Set cons_flow on port registration
+Date: Sat, 12 Sep 2026 08:41:19 +0200
+Message-ID: <20260912065630.493697722@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,188 +52,33 @@ Content-Transfer-Encoding: 8bit
 
 From: John Ogness <john.ogness@linutronix.de>
 
-[ Upstream commit bf558715d91cfa28f283de7105a879a92da31fb7 ]
+[ Upstream commit f69ec492244d54068f08c20f90979274d8ac3655 ]
 
-Rather than using the UPF_CONS_FLOW bit of uart_port.flags to track
-the user configuration of console flow control, use the newly added
-uart_port.cons_flow (via its getter/setter functions).
-
-A coccinelle script was used to perform the search/replace.
-
-Note1: The sh-sci driver is blindly copying platform data configuration
-       flags to uart_port.flags. Thus UPF_CONS_FLOW could get set for
-       uart_port.flags. A follow-up commit will address this.
-
-Note2: The samsung_tty driver is using UPF_CONS_FLOW as a platform data
-       configuration flag. However, the driver explicitly checks for
-       this configuration flag and thus setting UPF_CONS_FLOW in
-       uart_port.flags is avoided.
+Since console flow control policy is no longer part of uart_port.flags,
+explicitly set the policy for the port.
 
 Signed-off-by: John Ogness <john.ogness@linutronix.de>
-Link: https://patch.msgid.link/20260506121606.5805-3-john.ogness@linutronix.de
+Link: https://patch.msgid.link/20260511152706.151498-2-john.ogness@linutronix.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Stable-dep-of: d338ab1d9060 ("serial: 8250: Clear CON_PRINTBUFFER on port re-registration")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/8250/8250_port.c | 4 ++--
- drivers/tty/serial/bcm63xx_uart.c   | 2 +-
- drivers/tty/serial/omap-serial.c    | 2 +-
- drivers/tty/serial/pch_uart.c       | 2 +-
- drivers/tty/serial/pxa.c            | 2 +-
- drivers/tty/serial/samsung_tty.c    | 8 ++++----
- drivers/tty/serial/serial_txx9.c    | 4 ++--
- drivers/tty/serial/sunsu.c          | 2 +-
- 8 files changed, 13 insertions(+), 13 deletions(-)
+ drivers/tty/serial/8250/8250_core.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/tty/serial/8250/8250_port.c b/drivers/tty/serial/8250/8250_port.c
-index 0c633639f7657..9d560ddc81d1d 100644
---- a/drivers/tty/serial/8250/8250_port.c
-+++ b/drivers/tty/serial/8250/8250_port.c
-@@ -1991,7 +1991,7 @@ static void wait_for_xmitr(struct uart_8250_port *up, int bits)
- 	wait_for_lsr(up, bits);
+diff --git a/drivers/tty/serial/8250/8250_core.c b/drivers/tty/serial/8250/8250_core.c
+index bfa421ab32536..d8baeee9cca52 100644
+--- a/drivers/tty/serial/8250/8250_core.c
++++ b/drivers/tty/serial/8250/8250_core.c
+@@ -742,6 +742,8 @@ int serial8250_register_8250_port(const struct uart_8250_port *up)
+ 	uart->lsr_save_mask	= up->lsr_save_mask;
+ 	uart->dma		= up->dma;
  
- 	/* Wait up to 1s for flow control if necessary */
--	if (up->port.flags & UPF_CONS_FLOW) {
-+	if (uart_cons_flow_enabled(&up->port)) {
- 		for (tmout = 1000000; tmout; tmout--) {
- 			unsigned int msr = serial_in(up, UART_MSR);
- 			up->msr_saved_flags |= msr & MSR_SAVE_FLAGS;
-@@ -3354,7 +3354,7 @@ void serial8250_console_write(struct uart_8250_port *up, const char *s,
- 		 * it regardless of the CTS state. Therefore, only use fifo
- 		 * if we don't use control flow.
- 		 */
--		!(up->port.flags & UPF_CONS_FLOW);
-+		!uart_cons_flow_enabled(&up->port);
- 
- 	if (likely(use_fifo))
- 		serial8250_console_fifo_write(up, s, count);
-diff --git a/drivers/tty/serial/bcm63xx_uart.c b/drivers/tty/serial/bcm63xx_uart.c
-index 51df9d2d8bfc5..544695cb184c3 100644
---- a/drivers/tty/serial/bcm63xx_uart.c
-+++ b/drivers/tty/serial/bcm63xx_uart.c
-@@ -675,7 +675,7 @@ static void wait_for_xmitr(struct uart_port *port)
- 	}
- 
- 	/* Wait up to 1s for flow control if necessary */
--	if (port->flags & UPF_CONS_FLOW) {
-+	if (uart_cons_flow_enabled(port)) {
- 		tmout = 1000000;
- 		while (--tmout) {
- 			unsigned int val;
-diff --git a/drivers/tty/serial/omap-serial.c b/drivers/tty/serial/omap-serial.c
-index 0b85f47ff19e0..a689d190940cf 100644
---- a/drivers/tty/serial/omap-serial.c
-+++ b/drivers/tty/serial/omap-serial.c
-@@ -1092,7 +1092,7 @@ static void __maybe_unused wait_for_xmitr(struct uart_omap_port *up)
- 	} while (!uart_lsr_tx_empty(status));
- 
- 	/* Wait up to 1s for flow control if necessary */
--	if (up->port.flags & UPF_CONS_FLOW) {
-+	if (uart_cons_flow_enabled(&up->port)) {
- 		for (tmout = 1000000; tmout; tmout--) {
- 			unsigned int msr = serial_in(up, UART_MSR);
- 
-diff --git a/drivers/tty/serial/pch_uart.c b/drivers/tty/serial/pch_uart.c
-index 9992fa231e4e8..c3f32e0590b7f 100644
---- a/drivers/tty/serial/pch_uart.c
-+++ b/drivers/tty/serial/pch_uart.c
-@@ -1451,7 +1451,7 @@ static void wait_for_xmitr(struct eg20t_port *up, int bits)
- 	}
- 
- 	/* Wait up to 1s for flow control if necessary */
--	if (up->port.flags & UPF_CONS_FLOW) {
-+	if (uart_cons_flow_enabled(&up->port)) {
- 		unsigned int tmout;
- 		for (tmout = 1000000; tmout; tmout--) {
- 			unsigned int msr = ioread8(up->membase + UART_MSR);
-diff --git a/drivers/tty/serial/pxa.c b/drivers/tty/serial/pxa.c
-index e395ff29c1a2c..027d936b50239 100644
---- a/drivers/tty/serial/pxa.c
-+++ b/drivers/tty/serial/pxa.c
-@@ -573,7 +573,7 @@ static void wait_for_xmitr(struct uart_pxa_port *up)
- 	} while (!uart_lsr_tx_empty(status));
- 
- 	/* Wait up to 1s for flow control if necessary */
--	if (up->port.flags & UPF_CONS_FLOW) {
-+	if (uart_cons_flow_enabled(&up->port)) {
- 		tmout = 1000000;
- 		while (--tmout &&
- 		       ((serial_in(up, UART_MSR) & UART_MSR_CTS) == 0))
-diff --git a/drivers/tty/serial/samsung_tty.c b/drivers/tty/serial/samsung_tty.c
-index 7a0b89d856c2d..59d58fb743a31 100644
---- a/drivers/tty/serial/samsung_tty.c
-+++ b/drivers/tty/serial/samsung_tty.c
-@@ -311,7 +311,7 @@ static void s3c24xx_serial_stop_tx(struct uart_port *port)
- 	ourport->tx_enabled = 0;
- 	ourport->tx_in_progress = 0;
- 
--	if (port->flags & UPF_CONS_FLOW)
-+	if (uart_cons_flow_enabled(port))
- 		s3c24xx_serial_rx_enable(port);
- 
- 	ourport->tx_mode = 0;
-@@ -485,7 +485,7 @@ static void s3c24xx_serial_start_tx(struct uart_port *port)
- 	struct tty_port *tport = &port->state->port;
- 
- 	if (!ourport->tx_enabled) {
--		if (port->flags & UPF_CONS_FLOW)
-+		if (uart_cons_flow_enabled(port))
- 			s3c24xx_serial_rx_disable(port);
- 
- 		ourport->tx_enabled = 1;
-@@ -773,7 +773,7 @@ static void s3c24xx_serial_rx_drain_fifo(struct s3c24xx_uart_port *ourport)
- 		uerstat = rd_regl(port, S3C2410_UERSTAT);
- 		ch = rd_reg(port, S3C2410_URXH);
- 
--		if (port->flags & UPF_CONS_FLOW) {
-+		if (uart_cons_flow_enabled(port)) {
- 			bool txe = s3c24xx_serial_txempty_nofifo(port);
- 
- 			if (ourport->rx_enabled) {
-@@ -1828,7 +1828,7 @@ static int s3c24xx_serial_init_port(struct s3c24xx_uart_port *ourport,
- 
- 	if (cfg->uart_flags & UPF_CONS_FLOW) {
- 		dev_dbg(port->dev, "enabling flow control\n");
--		port->flags |= UPF_CONS_FLOW;
-+		uart_set_cons_flow_enabled(port, true);
- 	}
- 
- 	/* sort our the physical and virtual addresses for each UART */
-diff --git a/drivers/tty/serial/serial_txx9.c b/drivers/tty/serial/serial_txx9.c
-index 436a559234dfe..4ae9a45c8e3a3 100644
---- a/drivers/tty/serial/serial_txx9.c
-+++ b/drivers/tty/serial/serial_txx9.c
-@@ -422,7 +422,7 @@ static void wait_for_xmitr(struct uart_port *up)
- 		udelay(1);
- 
- 	/* Wait up to 1s for flow control if necessary */
--	if (up->flags & UPF_CONS_FLOW) {
-+	if (uart_cons_flow_enabled(up)) {
- 		tmout = 1000000;
- 		while (--tmout &&
- 		       (sio_in(up, TXX9_SICISR) & TXX9_SICISR_CTSS))
-@@ -857,7 +857,7 @@ serial_txx9_console_write(struct console *co, const char *s, unsigned int count)
- 	 *	Disable flow-control if enabled (and unnecessary)
- 	 */
- 	flcr = sio_in(up, TXX9_SIFLCR);
--	if (!(up->flags & UPF_CONS_FLOW) && (flcr & TXX9_SIFLCR_TES))
-+	if (!uart_cons_flow_enabled(up) && (flcr & TXX9_SIFLCR_TES))
- 		sio_out(up, TXX9_SIFLCR, flcr & ~TXX9_SIFLCR_TES);
- 
- 	uart_console_write(up, s, count, serial_txx9_console_putchar);
-diff --git a/drivers/tty/serial/sunsu.c b/drivers/tty/serial/sunsu.c
-index 383141fe7ba0d..f71937fbe8aa9 100644
---- a/drivers/tty/serial/sunsu.c
-+++ b/drivers/tty/serial/sunsu.c
-@@ -1245,7 +1245,7 @@ static void wait_for_xmitr(struct uart_sunsu_port *up)
- 	} while (!uart_lsr_tx_empty(status));
- 
- 	/* Wait up to 1s for flow control if necessary */
--	if (up->port.flags & UPF_CONS_FLOW) {
-+	if (uart_cons_flow_enabled(&up->port)) {
- 		tmout = 1000000;
- 		while (--tmout &&
- 		       ((serial_in(up, UART_MSR) & UART_MSR_CTS) == 0))
++	uart_set_cons_flow_enabled(&uart->port, uart_cons_flow_enabled(&up->port));
++
+ 	/* Take tx_loadsz from fifosize if it wasn't set separately */
+ 	if (uart->port.fifosize && !uart->tx_loadsz)
+ 		uart->tx_loadsz = uart->port.fifosize;
 -- 
 2.53.0
 
