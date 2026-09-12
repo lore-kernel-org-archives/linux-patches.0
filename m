@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 485BB390615;
-	Sat, 12 Sep 2026 16:30:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25407390615;
+	Sat, 12 Sep 2026 16:30:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789230645; cv=none; b=Hlq1/E4FRKeWM+4G7Heo1Jux6u1oGy1oxyRX8hyhQzrC/3MYqlsV9sWYv9nYghs4lonw/ujQ1Xzz913MP6oiMYCFT5S3wdzicXuAJyDWg8jDKwl80P7YrVFpeEtrTJ7Y9W/sG6kwYwhChhPvxf2pi9c/DKPosAzmW5YBb/k62m4=
+	t=1789230650; cv=none; b=ijwKaQmCE7gEGjQCBuG7o1sHIRrQ+mADv11MIVD+IfoCdl8LzZc/L77yt9NLxo3Sslr4r4ZLZKx5Rj72F0frwMeUbhPvrb5UVUkXWDjjc2YdI028PqO42Fj0PRkP+ZpOQcfTeLoEO96DR48rfjKQInV/DOuB1XYjhkiK960BYPw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789230645; c=relaxed/simple;
-	bh=06OGquHv2FAeOylaH1DJiK4BfNU1Sl9EiUcZuR4cQp8=;
+	s=arc-20240116; t=1789230650; c=relaxed/simple;
+	bh=BBeTytEuVYasTqLG2XCaE2suz2BGECIKA4SawYQOAfA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hb6MU17okp/Z0vLFyUqmqA88+39X2E5oMwTjJJRJhD8sD0Pa6kdrfJQWIoP+nqyVlJjrd/eiRzC/3ezmJCUlsRBYQS7jW4o8TqK3GGDIMt648ZeYJ9r3q/sn8GgAYdINMTL+h9pqowU6JKVG93myrEZkMMP5VMznyOJU7CPD3i8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i6DVDzzU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FXD2robpuzLd3qvHy8up9qBcBaYHPirmtJNoBXs7nBzoArvDvPXD4Gz5eugBlZN7IraTiTAkwWIYqgLeUnj4/hQY3frHMFJ+iz4h01yrz4wf239lOhcuAddgffEY2ruRIp7o1oz0gy6o6ajyz8kS0pf2V6ymsC3kWEPqicoAFNg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=femtd+q/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i6DVDzzU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E86C41F000FF;
-	Sat, 12 Sep 2026 16:30:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="femtd+q/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10CB01F000FF;
+	Sat, 12 Sep 2026 16:30:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789230644;
-	bh=VGmmENCqBNRz14FhHDJo+2Vrzu2cJnWkhdFGJGwfKJs=;
+	s=korg; t=1789230649;
+	bh=W1pztZhCZbUECrmlrhlaeLpTjS2TlFxCAxjtB/0TPUM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=i6DVDzzUdozmtIBWEgJ1Gs7GkfL73ExWQVQF/S5eNOVbfAgrGkk/Xldy8/3IRKjYj
-	 IIq3JX39s1T1xqONFs7tW+PNOjlOBlHppr0yjIn4pc8Yz/sqF4xQ/sXws4T1XLUmJY
-	 aUmir8YSllou+fZl/F9esLN2h3W5ENRFf3h9OLKE=
+	b=femtd+q/cbXS6dSiCuH755Cuc+X/hPMUOgz0ebXgI6VDaSEYpmk/bol3Nq8HeDop0
+	 1JaIGqML1+qBRkcA6VHZgD/CAA/yKeGJqK5z09+SHaT4NWiMC+9mvXj7Kq8ZdkEFU7
+	 wn3DVcBqxHEIbcFLGO/hFVuwcyh3DSsTm2iIsxnY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephen Boyd <swboyd@chromium.org>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Jiri Kosina <jkosina@suse.cz>,
+	syzbot+9eebf5f6544c5e873858@syzkaller.appspotmail.com,
+	Yousef Alhouseen <alhouseenyousef@gmail.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0837/1191] HID: ensure timely release of driver-allocated resources
-Date: Sat, 12 Sep 2026 08:59:25 +0200
-Message-ID: <20260912065607.059817852@linuxfoundation.org>
+Subject: [PATCH 6.1 0838/1191] HID: synchronize input before cleaning up a failed probe
+Date: Sat, 12 Sep 2026 08:59:26 +0200
+Message-ID: <20260912065607.080935400@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -52,95 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Yousef Alhouseen <alhouseenyousef@gmail.com>
 
-[ Upstream commit 62c68e7cee332e08e625af3bca3318814086490d ]
+[ Upstream commit 207853d46f7ef2e28042344a1468da8754c3ddbf ]
 
-More and more drivers rely on devres to manage their resources, however
-if bus' probe() and release() methods are not trivial and control some
-of resources as well (for example enable or disable clocks, or attach
-device to a power domain), we need to make sure that driver-allocated
-resources are released immediately after driver's remove() method
-returns, and not postponed until driver core gets around to releasing
-resources.
+hid_device_io_start() allows reports to run concurrently with probe. If
+the probe subsequently fails, __hid_device_probe() releases driver
+resources and clears hdev->driver without first excluding those report
+callbacks.
 
-In case of HID we should not try to close the report and release
-associated memory until after all devres callbacks are executed. To fix
-that we open a new devres group before calling driver's probe() and
-explicitly release it when we return from driver's remove().
+For example, a report may enter hidraw_report_event() while the failure
+path frees the associated hidraw object, leading to a use-after-free when
+the report takes the object's list lock.
 
-This is similar to what we did for I2C bus in commit 5b5475826c52 ("i2c:
-ensure timely release of driver-allocated resources"). It is tempting to
-try and move this into driver core, but actually doing so is challenging,
-we need to split bus' remove() method into pre- and post-remove methods,
-which would make the logic even less clear.
+Stop input before performing failed-probe cleanup. This reacquires
+driver_input_lock and waits for any report callback already in progress.
 
-Reported-by: Stephen Boyd <swboyd@chromium.org>
-Link: https://lore.kernel.org/r/20230505232417.1377393-1-swboyd@chromium.org
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.cz>
-Stable-dep-of: 207853d46f7e ("HID: synchronize input before cleaning up a failed probe")
+Fixes: c849a6143bec ("HID: Separate struct hid_device's driver_lock into two locks.")
+Reported-by: syzbot+9eebf5f6544c5e873858@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=9eebf5f6544c5e873858
+Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-core.c | 17 +++++++++++++++++
- include/linux/hid.h    |  1 +
- 2 files changed, 18 insertions(+)
+ drivers/hid/hid-core.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/drivers/hid/hid-core.c b/drivers/hid/hid-core.c
-index b09ff4cabd53a..6a0552884c7d7 100644
+index 6a0552884c7d7..d02a9b1b1467a 100644
 --- a/drivers/hid/hid-core.c
 +++ b/drivers/hid/hid-core.c
-@@ -2666,6 +2666,10 @@ static int __hid_device_probe(struct hid_device *hdev, struct hid_driver *hdrv)
- 	if (!hid_check_device_match(hdev, hdrv, &id))
- 		return -ENODEV;
+@@ -2691,6 +2691,8 @@ static int __hid_device_probe(struct hid_device *hdev, struct hid_driver *hdrv)
+ 	 */
  
-+	hdev->devres_group_id = devres_open_group(&hdev->dev, NULL, GFP_KERNEL);
-+	if (!hdev->devres_group_id)
-+		return -ENOMEM;
-+
- 	/* reset the quirks that has been previously set */
- 	hdev->quirks = hid_lookup_quirk(hdev);
- 	hdev->driver = hdrv;
-@@ -2678,7 +2682,16 @@ static int __hid_device_probe(struct hid_device *hdev, struct hid_driver *hdrv)
- 			ret = hid_hw_start(hdev, HID_CONNECT_DEFAULT);
- 	}
- 
-+	/*
-+	 * Note that we are not closing the devres group opened above so
-+	 * even resources that were attached to the device after probe is
-+	 * run are released when hid_device_remove() is executed. This is
-+	 * needed as some drivers would allocate additional resources,
-+	 * for example when updating firmware.
-+	 */
-+
  	if (ret) {
-+		devres_release_group(&hdev->dev, hdev->devres_group_id);
++		if (hdev->io_started)
++			hid_device_io_stop(hdev);
+ 		devres_release_group(&hdev->dev, hdev->devres_group_id);
  		hid_close_report(hdev);
  		hdev->driver = NULL;
- 	}
-@@ -2721,6 +2734,10 @@ static void hid_device_remove(struct device *dev)
- 			hdrv->remove(hdev);
- 		else /* default remove */
- 			hid_hw_stop(hdev);
-+
-+		/* Release all devres resources allocated by the driver */
-+		devres_release_group(&hdev->dev, hdev->devres_group_id);
-+
- 		hid_close_report(hdev);
- 		hdev->driver = NULL;
- 	}
-diff --git a/include/linux/hid.h b/include/linux/hid.h
-index 54b794c26f6e5..536a4750b905b 100644
---- a/include/linux/hid.h
-+++ b/include/linux/hid.h
-@@ -625,6 +625,7 @@ struct hid_device {							/* device report descriptor */
- 	struct semaphore driver_input_lock;				/* protects the current driver */
- 	struct device dev;						/* device */
- 	struct hid_driver *driver;
-+	void *devres_group_id;						/* ID of probe devres group	*/
- 
- 	struct hid_ll_driver *ll_driver;
- 	struct mutex ll_open_lock;
 -- 
 2.53.0
 
