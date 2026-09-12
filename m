@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C089F37AA97;
-	Sat, 12 Sep 2026 08:13:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3987369990;
+	Sat, 12 Sep 2026 08:13:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789200788; cv=none; b=hqDil373dMhw0LoppKAv9zjwl18znBFRAUUFNygMYdn2WD4tqaHI2RIHYmr1mg+PCHkaY+HPKtyvPmiOsCx/1t7J7XJP+N5sp+rpnu4Wok+huGObbnCh1Alc4yBSOBqM3Ou4E9BgfmgoKate90MRmHWUBcYhrCKExiwAgtmZg3I=
+	t=1789200793; cv=none; b=R/597ghUaL2E2CEnCdl5uk4Cxuh6oiX7JlDR/Oj5nVDa2fJzHqsWWA5xZLbQaqNDs4sbChySwvJhgRLFbzNWSoYmsZ0+EX1igO0xA4nCHPl4nTnyNCrfIPF4dSUTpZhxbKHiJyA/xe/9HrGK3oDjfHJyCWnonpL1hs9K7W0hOW4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789200788; c=relaxed/simple;
-	bh=CIcKzWmJYkq1lv6S6UgNRKxo+7jcLPqDwYGrcQgaRvM=;
+	s=arc-20240116; t=1789200793; c=relaxed/simple;
+	bh=xMFdSRJV05Ca6l8Zm9DXb4qiY2jDRsRUCFXMJP/c1S0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ljzutjTz2mZbdETnTFgiSW/xH1ukkwQmRxji3i6fQ43grJVZQen79P7C0saX0F8peJ1BinzdMLEcq+CcgxY69h0bgrMX5hl+m91k8nNNgF90fJTBTvQoofQWCeEwKLAY9wQCAxLtLtOVY++GFC8La5nxXrAu/vd3wY1jlWQnxbE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JjLLVz86; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RAhRO1n+Mm6fKIlXZx8E/Wl+a2j9gXO/ko46uN2RpgqfFs6pYO9aO19jR0DaD+ZJd8e6FojWjVukpajFAHt2CwpRSgnJVVJmM5V/j0UWjTXDPNV7Zn0mKSuc/c9tJgE5V4NuZ0xFX+Lfv4fK3oxRhZGEb6Kk3ur7zSQVot/mNjQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qq9jUv24; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JjLLVz86"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C465D1F000FF;
-	Sat, 12 Sep 2026 08:13:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qq9jUv24"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D7071F000FF;
+	Sat, 12 Sep 2026 08:13:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789200786;
-	bh=mVWSavR5DbGjYnFj0SN9swZ7t6yOYFfTpjtEytCJTok=;
+	s=korg; t=1789200791;
+	bh=e3C9y1Fg12oGvZSuz8kHrm9TTbPGaCuO1vWxQqgPizk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JjLLVz86OfhTH6E4SBxbw2qoKyCb6NcMHEAat4OwDXfBF4i/8BXHkCBRf5OKd3ZgD
-	 HKEsJ3Tv8x0Q9fvj9xxE6eDm4QHayAP/rNix99vwkoN5OPE7bUtKgQcu+iV35Nvggc
-	 ApcLoK2HVaenl3LtgJeqLQ5YcPS7FKp7rHoPptGM=
+	b=qq9jUv24sJN7Gyfmuh+AmfilgwZBvi8V2NvYdrwAq9UNICTHw36NVRQFZnpL+TwxD
+	 pyinyrxpf23GCgwC/HsUqpMdxb2EP8Z7srQ9vFA7Iuf4rZM/wPgEO3z2y3SY05/Sji
+	 QX0ptUpaWBkW021WMIRbT2R+Nm4MjBf1ScV7PmXk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rex Lu <rex.lu@mediatek.com>,
-	Shayne Chen <shayne.chen@mediatek.com>,
+	Sean Wang <sean.wang@mediatek.com>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0860/1815] wifi: mt76: fix handling channel context with different bands in mt76_switch_vif_chanctx()
-Date: Sat, 12 Sep 2026 08:43:30 +0200
-Message-ID: <20260912065709.114428105@linuxfoundation.org>
+Subject: [PATCH 7.2 0861/1815] wifi: mt76: mt792x: stop USB register access after bus hang
+Date: Sat, 12 Sep 2026 08:43:31 +0200
+Message-ID: <20260912065709.136526945@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,149 +51,208 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shayne Chen <shayne.chen@mediatek.com>
+From: Sean Wang <sean.wang@mediatek.com>
 
-[ Upstream commit 70869cc429fffc77de51e7777c0ecb651e8fca07 ]
+[ Upstream commit e137e5fd245cb6c0ae378607cc8090c913d984b2 ]
 
-When performing channel switches on different radios within a short
-timeframe, channel contexts with different bands can be carried for
-each struct ieee80211_vif_chanctx_switch.
+Mark the mt792x USB bus hung on the first control timeout and switch
+register access to no-op bus ops. Each failed vendor request may spend
+up to MT_VEND_REQ_MAX_RETRY * MT_VEND_REQ_TOUT_MS, about 3 seconds, and
+teardown/reset paths can keep issuing such requests after the device has
+stopped responding.
 
-Rework mt76_switch_vif_chanctx() to properly handle this scenario.
+Also skip the USB WFSYS reset path after bus_hung is set, since it uses
+UHW vendor requests as well.
 
-Fixes: 82334623af0c ("wifi: mt76: add chanctx functions for multi-channel phy support")
-Co-developed-by: Rex Lu <rex.lu@mediatek.com>
-Signed-off-by: Rex Lu <rex.lu@mediatek.com>
-Signed-off-by: Shayne Chen <shayne.chen@mediatek.com>
-Link: https://patch.msgid.link/20260720090102.190729-1-shayne.chen@mediatek.com
+mt7925u 1-2:1.3: vendor request req:63 off:0018 failed:-110
+mt7925u 1-2:1.3: vendor request req:63 off:0018 failed:-110
+mt7925u 1-2:1.3: vendor request req:63 off:0018 failed:-110
+mt7925u 1-2:1.3: vendor request req:63 off:0018 failed:-110
+mt7925u 1-2:1.3: vendor request req:63 off:0018 failed:-110
+
+Avoid repeating those register reads after the bus is known to be hung by
+switching register access to no-op handlers.
+
+Fixes: 0d2afe09fad5 ("mt76: mt7921: add mt7921u driver")
+Fixes: c948b5da6bbe ("wifi: mt76: mt7925: add Mediatek Wi-Fi7 driver for mt7925 chips")
+Signed-off-by: Sean Wang <sean.wang@mediatek.com>
+Link: https://patch.msgid.link/20260613224131.2396026-4-sean.wang@kernel.org
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/channel.c | 92 +++++++++++---------
- 1 file changed, 49 insertions(+), 43 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt76.h     |  1 +
+ .../net/wireless/mediatek/mt76/mt792x_usb.c   | 91 ++++++++++++++++---
+ drivers/net/wireless/mediatek/mt76/usb.c      | 11 +++
+ 3 files changed, 90 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/channel.c b/drivers/net/wireless/mediatek/mt76/channel.c
-index 6edcb3b8f2798..28ad7bcaffd45 100644
---- a/drivers/net/wireless/mediatek/mt76/channel.c
-+++ b/drivers/net/wireless/mediatek/mt76/channel.c
-@@ -186,68 +186,74 @@ int mt76_switch_vif_chanctx(struct ieee80211_hw *hw,
- 			    int n_vifs,
- 			    enum ieee80211_chanctx_switch_mode mode)
+diff --git a/drivers/net/wireless/mediatek/mt76/mt76.h b/drivers/net/wireless/mediatek/mt76/mt76.h
+index 3822eb8fd88fc..0ecc5b0bff870 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt76.h
++++ b/drivers/net/wireless/mediatek/mt76/mt76.h
+@@ -672,6 +672,7 @@ struct mt76_usb {
+ 
+ 	u8 out_ep[__MT_EP_OUT_MAX];
+ 	u8 in_ep[__MT_EP_IN_MAX];
++	void (*ctrl_timeout)(struct mt76_dev *dev, int err);
+ 	bool sg_en;
+ 
+ 	struct mt76u_mcu {
+diff --git a/drivers/net/wireless/mediatek/mt76/mt792x_usb.c b/drivers/net/wireless/mediatek/mt76/mt792x_usb.c
+index 910132e94956a..47f80c9ec4e7d 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt792x_usb.c
++++ b/drivers/net/wireless/mediatek/mt76/mt792x_usb.c
+@@ -31,10 +31,75 @@ static void mt792xu_reset_work(struct work_struct *work)
+ 	atomic_set(&dev->usb_reset_pending, 0);
+ }
+ 
++static void mt792xu_queue_usb_reset(struct mt792x_dev *dev, int err)
++{
++	if (!atomic_xchg(&dev->usb_reset_pending, 1)) {
++		dev_warn(dev->mt76.dev,
++			 "USB transport access failed (%d), queueing device reset\n",
++			 err);
++
++		schedule_work(&dev->usb_reset_work);
++	}
++}
++
++static u32 mt792xu_bus_hung_rr(struct mt76_dev *mdev, u32 offset)
++{
++	return 0;
++}
++
++static void mt792xu_bus_hung_wr(struct mt76_dev *mdev, u32 offset, u32 val)
++{
++}
++
++static u32 mt792xu_bus_hung_rmw(struct mt76_dev *mdev, u32 offset,
++				u32 mask, u32 val)
++{
++	return 0;
++}
++
++static void mt792xu_bus_hung_write_copy(struct mt76_dev *mdev, u32 offset,
++					const void *data, int len)
++{
++}
++
++static void mt792xu_bus_hung_read_copy(struct mt76_dev *mdev, u32 offset,
++				       void *data, int len)
++{
++	memset(data, 0, len);
++}
++
++static const struct mt76_bus_ops mt792xu_bus_hung_ops = {
++	.rr = mt792xu_bus_hung_rr,
++	.wr = mt792xu_bus_hung_wr,
++	.rmw = mt792xu_bus_hung_rmw,
++	.write_copy = mt792xu_bus_hung_write_copy,
++	.read_copy = mt792xu_bus_hung_read_copy,
++	.type = MT76_BUS_USB,
++};
++
++static void mt792xu_set_bus_hung(struct mt792x_dev *dev)
++{
++	atomic_set(&dev->mt76.bus_hung, true);
++
++	if (READ_ONCE(dev->mt76.bus) == &mt792xu_bus_hung_ops)
++		return;
++
++	WRITE_ONCE(dev->mt76.bus, &mt792xu_bus_hung_ops);
++}
++
++static void mt792xu_ctrl_timeout(struct mt76_dev *mdev, int err)
++{
++	struct mt792x_dev *dev = container_of(mdev, struct mt792x_dev, mt76);
++
++	mt792xu_set_bus_hung(dev);
++	mt792xu_queue_usb_reset(dev, err);
++}
++
+ void mt792xu_reset_work_init(struct mt792x_dev *dev)
  {
--	struct mt76_chanctx *old_ctx = (struct mt76_chanctx *)vifs->old_ctx->drv_priv;
--	struct mt76_chanctx *new_ctx = (struct mt76_chanctx *)vifs->new_ctx->drv_priv;
--	struct ieee80211_chanctx_conf *conf = vifs->new_ctx;
--	struct mt76_phy *old_phy = old_ctx->phy;
--	struct mt76_phy *phy = hw->priv;
-+	struct ieee80211_vif_chanctx_switch *v;
-+	struct mt76_chanctx *old_ctx, *new_ctx;
-+	struct mt76_phy *old_phy, *phy = hw->priv;
- 	struct mt76_dev *dev = phy->dev;
- 	struct mt76_vif_link *mlink;
--	bool update_chan;
-+	bool need_update[__MT_MAX_BAND] = {};
- 	int i, ret = 0;
+ 	INIT_WORK(&dev->usb_reset_work, mt792xu_reset_work);
+ 	atomic_set(&dev->usb_reset_pending, 0);
++	dev->mt76.usb.ctrl_timeout = mt792xu_ctrl_timeout;
+ }
+ EXPORT_SYMBOL_GPL(mt792xu_reset_work_init);
  
--	if (mode == CHANCTX_SWMODE_SWAP_CONTEXTS)
--		phy = new_ctx->phy = dev->band_phys[conf->def.chan->band];
--	else
--		phy = new_ctx->phy;
--	if (!phy)
--		return -EINVAL;
-+	for (i = 0; i < n_vifs; i++) {
-+		v = &vifs[i];
-+		new_ctx = (struct mt76_chanctx *)v->new_ctx->drv_priv;
-+		if (mode == CHANCTX_SWMODE_SWAP_CONTEXTS)
-+			phy = new_ctx->phy = dev->band_phys[v->new_ctx->def.chan->band];
-+		else
-+			phy = new_ctx->phy;
+@@ -62,26 +127,23 @@ EXPORT_SYMBOL_GPL(mt792xu_check_bus);
  
--	update_chan = phy->chanctx != new_ctx;
--	if (update_chan) {
--		if (dev->scan.phy == phy)
--			mt76_abort_scan(dev);
-+		if (!phy)
-+			return -EINVAL;
+ int mt792xu_reset_on_bus_error(struct mt792x_dev *dev)
+ {
+-	int err = 0;
++	int err;
  
--		cancel_delayed_work_sync(&phy->mac_work);
-+		if (need_update[phy->band_idx])
-+			continue;
-+
-+		if (phy->chanctx != new_ctx) {
-+			if (dev->scan.phy == phy)
-+				mt76_abort_scan(dev);
-+
-+			cancel_delayed_work_sync(&phy->mac_work);
-+			need_update[phy->band_idx] = true;
-+		}
+-	if (!atomic_read(&dev->mt76.bus_hung))
+-		err = mt792xu_check_bus(dev);
++	/* Once hung, the no-op bus ops stay installed until the queued USB
++	 * reset re-probes the device. Do not clear bus_hung here, or the caller
++	 * would run a full reset over dropped register I/O and report success.
++	 */
++	if (atomic_read(&dev->mt76.bus_hung))
++		return -EIO;
+ 
++	err = mt792xu_check_bus(dev);
+ 	if (err) {
+-		atomic_set(&dev->mt76.bus_hung, true);
+-
+-		if (!atomic_xchg(&dev->usb_reset_pending, 1)) {
+-			dev_warn(dev->mt76.dev,
+-				 "USB transport access failed (%d), queueing device reset\n",
+-				 err);
+-
+-			schedule_work(&dev->usb_reset_work);
+-		}
++		mt792xu_set_bus_hung(dev);
++		mt792xu_queue_usb_reset(dev, err);
+ 
+ 		return err;
  	}
  
- 	mutex_lock(&dev->mutex);
+-	atomic_set(&dev->mt76.bus_hung, false);
+ 	return 0;
+ }
+ EXPORT_SYMBOL_GPL(mt792xu_reset_on_bus_error);
+@@ -344,6 +406,9 @@ int mt792xu_wfsys_reset(struct mt792x_dev *dev)
+ 	u32 val;
+ 	int i;
  
--	if (mode == CHANCTX_SWMODE_SWAP_CONTEXTS &&
--	    phy != old_phy && old_phy->chanctx == old_ctx)
--		old_phy->chanctx = NULL;
-+	for (i = 0; i < n_vifs; i++) {
-+		v = &vifs[i];
-+		old_ctx = (struct mt76_chanctx *)v->old_ctx->drv_priv;
-+		old_phy = old_ctx->phy;
++	if (atomic_read(&dev->mt76.bus_hung))
++		return -EIO;
 +
-+		new_ctx = (struct mt76_chanctx *)v->new_ctx->drv_priv;
-+		phy = new_ctx->phy;
+ 	mt792xu_epctl_rst_opt(dev, false);
  
--	if (update_chan)
--		ret = mt76_phy_update_channel(phy, vifs->new_ctx);
-+		if (mode == CHANCTX_SWMODE_SWAP_CONTEXTS && old_phy->chanctx &&
-+		    old_phy->chanctx == old_ctx && phy != old_phy)
-+			old_phy->chanctx = NULL;
+ 	val = mt792xu_uhw_rr(&dev->mt76, desc->rst_reg);
+diff --git a/drivers/net/wireless/mediatek/mt76/usb.c b/drivers/net/wireless/mediatek/mt76/usb.c
+index d9638a9b749b6..345f1d9c1947c 100644
+--- a/drivers/net/wireless/mediatek/mt76/usb.c
++++ b/drivers/net/wireless/mediatek/mt76/usb.c
+@@ -30,6 +30,8 @@ int __mt76u_vendor_request(struct mt76_dev *dev, u8 req, u8 req_type,
+ 	for (i = 0; i < MT_VEND_REQ_MAX_RETRY; i++) {
+ 		if (test_bit(MT76_REMOVED, &dev->phy.state))
+ 			return -EIO;
++		if (dev->usb.ctrl_timeout && atomic_read(&dev->bus_hung))
++			return -EIO;
  
--	if (ret)
--		goto out;
-+		if (need_update[phy->band_idx]) {
-+			ret = mt76_phy_update_channel(phy, v->new_ctx);
-+			if (ret)
-+				goto out;
+ 		ret = usb_control_msg(udev, pipe, req, req_type, val,
+ 				      offset, buf, len, MT_VEND_REQ_TOUT_MS);
+@@ -42,6 +44,15 @@ int __mt76u_vendor_request(struct mt76_dev *dev, u8 req, u8 req_type,
  
--	if (old_phy == phy)
--		goto skip_link_replace;
-+			need_update[phy->band_idx] = false;
-+		}
- 
--	for (i = 0; i < n_vifs; i++) {
--		mlink = mt76_vif_conf_link(dev, vifs[i].vif, vifs[i].link_conf);
-+		mlink = mt76_vif_conf_link(dev, v->vif, v->link_conf);
- 		if (!mlink)
- 			continue;
- 
--		dev->drv->vif_link_remove(old_phy, vifs[i].vif,
--					  vifs[i].link_conf, mlink);
--
--		ret = dev->drv->vif_link_add(phy, vifs[i].vif,
--					     vifs[i].link_conf, mlink);
--		if (ret)
--			goto out;
--
--	}
-+		if (old_phy != phy) {
-+			dev->drv->vif_link_remove(old_phy, v->vif, v->link_conf,
-+						  mlink);
- 
--skip_link_replace:
--	for (i = 0; i < n_vifs; i++) {
--		mlink = mt76_vif_conf_link(dev, vifs[i].vif, vifs[i].link_conf);
--		if (!mlink)
--			continue;
-+			ret = dev->drv->vif_link_add(phy, v->vif, v->link_conf,
-+						     mlink);
-+			if (ret)
-+				goto out;
-+		}
- 
--		mlink->ctx = vifs->new_ctx;
-+		mlink->ctx = v->new_ctx;
- 		if (mlink->beacon_mon_interval)
- 			WRITE_ONCE(mlink->beacon_mon_last, jiffies);
- 	}
+ 	dev_err(dev->dev, "vendor request req:%02x off:%04x failed:%d\n",
+ 		req, offset, ret);
++
++	if (dev->usb.ctrl_timeout) {
++		atomic_set(&dev->bus_hung, true);
++		dev_err(dev->dev, "vendor request req:%02x off:%04x timed out, marking bus hung\n",
++			req, offset);
++		dev->usb.ctrl_timeout(dev, ret);
++		return ret;
++	}
++
+ 	return ret;
+ }
+ EXPORT_SYMBOL_GPL(__mt76u_vendor_request);
 -- 
 2.53.0
 
