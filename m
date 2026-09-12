@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76603345CCE;
-	Sat, 12 Sep 2026 15:38:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E952282F1F;
+	Sat, 12 Sep 2026 15:38:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789227503; cv=none; b=RFhg6399NaoCuWZ6lcD6NP6zmoaPjo2r45sPfUSve/2Ss6dfdWUDNM8AVpBDd/0Y65XFQiSr11wlUfKSmA6Q2unlnBSr3HJPzK3ClsT14r2nfZxnDWw9VTV/fQ2fA3R2QfnD6s9ykrrN59zYyGyPe9Q5sNBuyr2ousUhAXQavbw=
+	t=1789227508; cv=none; b=HMd96VSzS0qh4+vJe1T+r32jo1C0rYqahHiagvvN8MNMziA7/x1gxNXp9iVw4fHRGJlOoLXs3PgSm/UCt2wuKlFxb+Kiy4zVtcxYEcMLSoriaDcjiTQZmJq+WakkkYu87YBBt/lYAY0fhlYpc+nuPuhGORm/B/UWOmo/9legZ/E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789227503; c=relaxed/simple;
-	bh=f+8pm9xj4vu7etJ7ruJ0snxA7mZOyFP2jNC6m9FIrZ4=;
+	s=arc-20240116; t=1789227508; c=relaxed/simple;
+	bh=g2jJPQ/fA7IjrLAlrx/AeVDK0xovwKpf32LRfj+BQxQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bQVXe5Ttn8uNiBdGKFLY5LmNgmeAo0RWuNQJBvq8C7CT2m/zxgAZ3ED6H1BE1Ul4AmHIifyNRrcQ6SAOoh2alUywc+lmwWzB6T4l1QKfX8bOgrmte5yr8ueDp8MaLIgDg6rX/OM3U25r+lTeqOExLWW0MORgfpcBAkm7/TyHKMs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rSCQm4hz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=j2egAHGD0jF1+8vPRNwYfiDmQkXzXoZCmE6D9Fx1Ra27ztECOyEX84HKNApU2DBc1L/+07TMgG3/6uhxbkENTBJNCZ/9hzcWT76niZGvo+zppGJSBLid3rbsXRO7WtStM2I8LUUoKHCBRHVOfJMstjI/btQV21OB2Zzq+zej9vo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vI5YcVPV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rSCQm4hz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B3E51F000FF;
-	Sat, 12 Sep 2026 15:38:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vI5YcVPV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BAD61F000FF;
+	Sat, 12 Sep 2026 15:38:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789227502;
-	bh=R63pk6/b5BQ00dN3uIEgnBUn465gzgTNTaxvrE60onI=;
+	s=korg; t=1789227506;
+	bh=7nJGosw9I5np2R8zEjxR87kzf7dh5ZWsQXyt1xzDKFI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rSCQm4hzIBPhPjFuxS4dDLPBNd26D1Q/y38wWo/g5H9zMoBFV/3e/m5jrLTqb/jKO
-	 OLkestL4HniMIu9JxvjbY/NhaVoipUHDnpSgHevOtXmb8FEdYY20cVnuz1QJ8cJsXT
-	 QR8H7Jhy4C9rCo+3QUAUsFcUPGeWy9EC/l6N6wMQ=
+	b=vI5YcVPVJCCrtFpHCeY/lDvumLI5qYruh1zcZ5ChDgdx4R48JmHHf+QFkHh9efwCs
+	 B6hTWkfyy0MUrGizK7C8ntZTZB3blb7CUdH6Q8TW01DTU1k8whdzwlADocVTfYcxBa
+	 YRd/3fPgP4yEDvWRGis8xISCMLsci3EPdBeUC1F4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ibrahim Hashimov <security@auditcode.ai>,
 	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
 	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
 	Heming Zhao <heming.zhao@suse.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Jun Piao <piaojun@huawei.com>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Mark Fasheh <mark@fasheh.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 0152/1191] ocfs2: validate rl_used against rl_count in refcount block validator
-Date: Sat, 12 Sep 2026 08:48:00 +0200
-Message-ID: <20260912065551.618541873@linuxfoundation.org>
+Subject: [PATCH 6.1 0153/1191] ocfs2: cluster: dont sleep while holding o2hb_live_lock in o2hb_region_pin()
+Date: Sat, 12 Sep 2026 08:48:01 +0200
+Message-ID: <20260912065551.641638050@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -51,145 +50,297 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ibrahim Hashimov <security@auditcode.ai>
+From: Joseph Qi <joseph.qi@linux.alibaba.com>
 
-commit 4ca62df6bc0708947b48da3f6a712ecb8e73929c upstream.
+commit af09df89db9a68a1d76df0f75667998135bc8d65 upstream.
 
-ocfs2_find_refcount_rec_in_rl() walks the on-disk refcount record array
-with:
+Patch series "ocfs2: cluster: o2hb_region_pin() fixes", v2.
 
-	for (; i < le16_to_cpu(rb->rf_records.rl_used); i++) {
-		rec = &rb->rf_records.rl_recs[i];
-		...
+This series fixes three related issues in o2hb_region_pin(), all are from
+the original implementation in commit: 58a3158a5d17 ("ocfs2/cluster:
+Pin/unpin o2hb regions"):
 
-rl_recs[] lives in a single metadata block (4096 bytes on the common
-configuration), so its real capacity is fixed by
-ocfs2_refcount_recs_per_rb(sb) (247 records for a 4K block with the
-16-byte ocfs2_refcount_rec).  rl_used and rl_count are both read directly
-off disk by ocfs2_validate_refcount_block() and are never checked against
-that capacity, nor against each other, before any refcount/reflink/CoW
-operation walks the array.
+1) It is called with o2hb_live_lock (a spinlock) held, but the
+   underlying configfs_depend_item() sleeps (takes inode rwsem and
+   pins the filesystem).  This triggers BUG under
+   CONFIG_DEBUG_ATOMIC_SLEEP.
 
-A crafted (or corrupted) refcount block with rl_used == 0xffff makes the
-loop above walk far past the end of the block, dereferencing rl_recs[i]
-for i up to 65534.  The resulting index is then handed to the sibling
-ocfs2_insert_refcount_rec(), whose insert-shift does:
+2) When called from the configfs drop_item callback, it creates a
+   lock order inversion: parent inode_lock -> configfs root
+   inode_lock, which can deadlock against subsystem unregistration
+   paths taking root -> parent.
 
-	if (index < le16_to_cpu(rf_list->rl_used))
-		memmove(&rf_list->rl_recs[index + 1],
-			&rf_list->rl_recs[index],
-			(le16_to_cpu(rf_list->rl_used) - index) *
-			 sizeof(struct ocfs2_refcount_rec));
+3) If pinning fails partway through o2hb_region_inc_user(), the
+   o2hb_dependent_users counter is leaked and partially-pinned
+   regions are never released, leaving heartbeat regions
+   unprotected on subsequent mounts.
 
-i.e.  a memmove() of up to (0xffff - index) * 16 bytes (~1 MiB) from an
-offset already past the block.  This is reachable from an ordinary reflink
-(FICLONE) against a crafted/corrupted ocfs2 image: attaching an extent
-whose cpos sorts past every real record in the leaf forces the lookup to
-run off the end instead of returning early on a match.  The attacker model
-is local: CAP_SYS_ADMIN mounting a crafted or corrupted ocfs2 image, or a
-raw write to the block device backing an already-mounted ocfs2 filesystem.
+Patch 1 reworks o2hb_region_pin() to drop o2hb_live_lock across each
+sleeping configfs_depend_item() call, using a config_item reference to
+keep the region alive while unlocked.
 
-ocfs2_validate_refcount_block() already validates the block's ECC,
-signature, rf_blkno and rf_fs_generation, but never rl_count/rl_used
-against the block's actual on-disk capacity.  This is the same class of
-gap that ocfs2_validate_extent_block() (fs/ocfs2/alloc.c) already closes
-for the sibling extent-list header, which checks both the record capacity
-and the "used" bound before any code walks h_list.l_recs[]:
+Patch 2 adds a from_callback parameter to select
+configfs_depend_item_unlocked() when called from configfs context,
+avoiding the inode_lock nesting.
 
-	if (le16_to_cpu(eb->h_list.l_count) != ocfs2_extent_recs_per_eb(sb)) {
-		rc = ocfs2_error(...);
-		goto bail;
-	}
+Patch 3 fixes the error path in o2hb_region_inc_user() to unpin and
+decrement the counter on failure.
 
-	if (le16_to_cpu(eb->h_list.l_next_free_rec) >
-	    le16_to_cpu(eb->h_list.l_count)) {
-		rc = ocfs2_error(...);
-		goto bail;
-	}
 
-Add the equivalent pair of checks to ocfs2_validate_refcount_block():
-reject a refcount block whose rl_count does not match the fixed per-block
-capacity returned by ocfs2_refcount_recs_per_rb(), and reject rl_used >
-rl_count.  Both checks are skipped when OCFS2_REFCOUNT_TREE_FL is set,
-because in that case the same union bytes hold an ocfs2_extent_list
-(rf_list), not the refcount record list (rf_records) -- that layout is
-already validated separately by ocfs2_validate_extent_block() when the
-referenced extent block is read.  This mirrors the existing
-"!(rb->rf_flags & OCFS2_REFCOUNT_TREE_FL)" guard used elsewhere in this
-file (e.g.  ocfs2_get_refcount_rec()) to decide whether rf_records or
-rf_list is the live member of the union.
+This patch (of 3):
 
-With this in place, a forged rl_used/rl_count is caught at block
-validation time (ocfs2_error()), consistent with every other corruption
-check in this function, instead of driving an out-of-bounds read in
-ocfs2_find_refcount_rec_in_rl() and a subsequent out-of-bounds memmove()
-in ocfs2_insert_refcount_rec().
+o2hb_region_pin() is always called with the o2hb_live_lock spinlock held
+(from o2hb_region_inc_user() and o2hb_heartbeat_group_drop_item()), but it
+calls o2nm_depend_item() -> configfs_depend_item(), which sleeps: it pins
+the configfs filesystem and takes the configfs root inode rwsem.  Under
+CONFIG_DEBUG_ATOMIC_SLEEP this triggers:
 
-Verified against a crafted image on a v6.19 KASAN (KASAN_GENERIC) build:
-replaying the same reflink (FICLONE) reliably hit a KASAN report in
-__ocfs2_increase_refcount()/ocfs2_insert_refcount_rec() before this patch,
-and triggers no report once ocfs2_validate_refcount_block() rejects the
-forged rl_used/rl_count.
+  BUG: sleeping function called from invalid context at kernel/locking/rwsem.c
+  in_atomic(): 1, ... name: mount.ocfs2
+    down_write
+    configfs_depend_item
+    o2hb_region_pin
+    o2hb_region_inc_user
+    o2hb_register_callback
+    dlm_register_domain_handlers
+    ...
+    ocfs2_dlm_init
+    ocfs2_mount_volume
+    ocfs2_fill_super
 
-Link: https://lore.kernel.org/20260709132609.44233-1-security@auditcode.ai
-Fixes: f2c870e3b12e ("ocfs2: Add ocfs2_read_refcount_block.")
-Signed-off-by: Ibrahim Hashimov <security@auditcode.ai>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Rework o2hb_region_pin() to pin one region at a time with the lock dropped
+across the sleeping call: under o2hb_live_lock find the next eligible
+region and take a config_item reference to keep it alive, drop the lock,
+call o2nm_depend_item(), then retake the lock and record the pin.  The
+config_item_put() is done with the lock released as well, since
+o2hb_region_release() also acquires o2hb_live_lock and can sleep.  The
+region list may change while unlocked, so the scan restarts from the top
+after each pin.  Local heartbeat still pins only the matching region;
+global heartbeat pins all eligible regions.
+
+The unpin path is unaffected: configfs_undepend_item() only takes a
+spinlock and does not sleep.
+
+Link: https://lore.kernel.org/20260722124933.430554-1-joseph.qi@linux.alibaba.com
+Link: https://lore.kernel.org/20260722124933.430554-2-joseph.qi@linux.alibaba.com
+Fixes: 58a3158a5d17 ("ocfs2/cluster: Pin/unpin o2hb regions")
+Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
 Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
 Cc: Heming Zhao <heming.zhao@suse.com>
-Assisted-by: AuditCode-AI:2026.07
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Mark Fasheh <mark@fasheh.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/refcounttree.c |   27 +++++++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+ fs/ocfs2/cluster/heartbeat.c |  126 ++++++++++++++++++++++++++++++++++---------
+ 1 file changed, 101 insertions(+), 25 deletions(-)
 
---- a/fs/ocfs2/refcounttree.c
-+++ b/fs/ocfs2/refcounttree.c
-@@ -116,6 +116,33 @@ static int ocfs2_validate_refcount_block
- 				 le32_to_cpu(rb->rf_fs_generation));
- 		goto out;
- 	}
-+
-+	/*
-+	 * rf_records (rl_count/rl_used/rl_recs[]) is only meaningful when
-+	 * this block is not an interior tree block (OCFS2_REFCOUNT_TREE_FL);
-+	 * in that case the same union bytes hold an extent list (rf_list)
-+	 * instead, which is validated by ocfs2_validate_extent_block().
-+	 */
-+	if (!(le32_to_cpu(rb->rf_flags) & OCFS2_REFCOUNT_TREE_FL)) {
-+		if (le16_to_cpu(rb->rf_records.rl_count) !=
-+		    ocfs2_refcount_recs_per_rb(sb)) {
-+			rc = ocfs2_error(sb,
-+					 "Refcount block #%llu has an invalid rl_count of %u\n",
-+					 (unsigned long long)bh->b_blocknr,
-+					 le16_to_cpu(rb->rf_records.rl_count));
-+			goto out;
-+		}
-+
-+		if (le16_to_cpu(rb->rf_records.rl_used) >
-+		    le16_to_cpu(rb->rf_records.rl_count)) {
-+			rc = ocfs2_error(sb,
-+					 "Refcount block #%llu has an invalid rl_used of %u (rl_count %u)\n",
-+					 (unsigned long long)bh->b_blocknr,
-+					 le16_to_cpu(rb->rf_records.rl_used),
-+					 le16_to_cpu(rb->rf_records.rl_count));
-+			goto out;
-+		}
-+	}
- out:
- 	return rc;
+--- a/fs/ocfs2/cluster/heartbeat.c
++++ b/fs/ocfs2/cluster/heartbeat.c
+@@ -42,6 +42,14 @@ static DECLARE_RWSEM(o2hb_callback_sem);
+  * whenever any of the threads sees activity from the node in its region.
+  */
+ static DEFINE_SPINLOCK(o2hb_live_lock);
++/*
++ * Serializes region pin/unpin dependency management (o2hb_dependent_users
++ * and the o2nm_depend_item()/o2nm_undepend_item() calls). o2hb_region_pin()
++ * has to drop o2hb_live_lock across the sleeping o2nm_depend_item(), so the
++ * spinlock alone can no longer keep pin and unpin mutually exclusive; this
++ * mutex, taken outside o2hb_live_lock, does.
++ */
++static DEFINE_MUTEX(o2hb_dependency_mutex);
+ static struct list_head o2hb_live_slots[O2NM_MAX_NODES];
+ static unsigned long o2hb_live_node_bitmap[BITS_TO_LONGS(O2NM_MAX_NODES)];
+ static LIST_HEAD(o2hb_node_events);
+@@ -2108,6 +2116,7 @@ static void o2hb_heartbeat_group_drop_it
+ 	 * If global heartbeat active and there are dependent users,
+ 	 * pin all regions if quorum region count <= CUT_OFF
+ 	 */
++	mutex_lock(&o2hb_dependency_mutex);
+ 	spin_lock(&o2hb_live_lock);
+ 
+ 	if (!o2hb_dependent_users)
+@@ -2119,6 +2128,7 @@ static void o2hb_heartbeat_group_drop_it
+ 
+ unlock:
+ 	spin_unlock(&o2hb_live_lock);
++	mutex_unlock(&o2hb_dependency_mutex);
  }
+ 
+ static ssize_t o2hb_heartbeat_group_dead_threshold_show(struct config_item *item,
+@@ -2257,46 +2267,108 @@ EXPORT_SYMBOL_GPL(o2hb_setup_callback);
+  */
+ static int o2hb_region_pin(const char *region_uuid)
+ {
+-	int ret = 0, found = 0;
+-	struct o2hb_region *reg;
++	int ret = 0, found;
++	struct o2hb_region *reg, *pinned;
+ 	char *uuid;
+ 
+ 	assert_spin_locked(&o2hb_live_lock);
+ 
+-	list_for_each_entry(reg, &o2hb_all_regions, hr_all_item) {
+-		if (reg->hr_item_dropped)
+-			continue;
++	do {
++		found = 0;
++		pinned = NULL;
+ 
+-		uuid = config_item_name(&reg->hr_item);
++		list_for_each_entry(reg, &o2hb_all_regions, hr_all_item) {
++			if (reg->hr_item_dropped)
++				continue;
+ 
+-		/* local heartbeat */
+-		if (region_uuid) {
+-			if (strcmp(region_uuid, uuid))
++			uuid = config_item_name(&reg->hr_item);
++
++			/* local heartbeat */
++			if (region_uuid) {
++				if (strcmp(region_uuid, uuid))
++					continue;
++				found = 1;
++			}
++
++			if (reg->hr_item_pinned || reg->hr_item_dropped) {
++				if (found)
++					break;
+ 				continue;
+-			found = 1;
++			}
++
++			/*
++			 * Found a region that needs pinning. Take a reference
++			 * so it stays alive while we drop the lock below.
++			 */
++			pinned = reg;
++			config_item_get(&reg->hr_item);
++			break;
+ 		}
+ 
+-		if (reg->hr_item_pinned || reg->hr_item_dropped)
+-			goto skip_pin;
++		if (!pinned)
++			break;
++
++		uuid = config_item_name(&pinned->hr_item);
++
++		/*
++		 * o2nm_depend_item() -> configfs_depend_item() can sleep (it
++		 * takes the configfs root inode rwsem), so it must not run
++		 * under o2hb_live_lock. Drop the lock across it; @pinned is
++		 * kept alive by the reference taken above. The region list may
++		 * change while unlocked, so we rescan from the top afterwards.
++		 */
++		spin_unlock(&o2hb_live_lock);
+ 
+ 		/* Ignore ENOENT only for local hb (userdlm domain) */
+-		ret = o2nm_depend_item(&reg->hr_item);
++		ret = o2nm_depend_item(&pinned->hr_item);
++
++		spin_lock(&o2hb_live_lock);
+ 		if (!ret) {
+-			mlog(ML_CLUSTER, "Pin region %s\n", uuid);
+-			reg->hr_item_pinned = 1;
+-		} else {
+-			if (ret == -ENOENT && found)
+-				ret = 0;
+-			else {
+-				mlog(ML_ERROR, "Pin region %s fails with %d\n",
+-				     uuid, ret);
++			/*
++			 * o2hb_live_lock was dropped across o2nm_depend_item().
++			 * o2hb_set_quorum_device() runs in the heartbeat thread
++			 * without o2hb_dependency_mutex, so for global heartbeat
++			 * it may have crossed O2HB_PIN_CUT_OFF and unpinned the
++			 * regions while we slept. If that happened this pin is
++			 * no longer wanted; undo it and stop rather than
++			 * resurrecting it on the rescan below.
++			 */
++			if (!region_uuid &&
++			    bitmap_weight(o2hb_quorum_region_bitmap,
++					  O2NM_MAX_REGIONS) > O2HB_PIN_CUT_OFF) {
++				o2nm_undepend_item(&pinned->hr_item);
++				spin_unlock(&o2hb_live_lock);
++				config_item_put(&pinned->hr_item);
++				spin_lock(&o2hb_live_lock);
+ 				break;
+ 			}
++			mlog(ML_CLUSTER, "Pin region %s\n", uuid);
++			pinned->hr_item_pinned = 1;
++		} else if (ret == -ENOENT && (found || !region_uuid)) {
++			/*
++			 * For local hb (found): ignore ENOENT from userdlm
++			 * domains as before.  For global hb (!region_uuid):
++			 * the region may have been detached from configfs
++			 * while the lock was dropped — skip it and continue
++			 * pinning the remaining regions.
++			 */
++			ret = 0;
++		} else {
++			mlog(ML_ERROR, "Pin region %s fails with %d\n",
++			     uuid, ret);
+ 		}
+-skip_pin:
+-		if (found)
+-			break;
+-	}
++
++		/*
++		 * config_item_put() may drop the last reference and run
++		 * o2hb_region_release(), which also grabs o2hb_live_lock and
++		 * can sleep, so it must happen with the lock released.
++		 */
++		spin_unlock(&o2hb_live_lock);
++		config_item_put(&pinned->hr_item);
++		spin_lock(&o2hb_live_lock);
++
++		/* local hb pins a single matching region */
++	} while (!ret && !region_uuid);
+ 
+ 	return ret;
+ }
+@@ -2341,6 +2413,7 @@ static int o2hb_region_inc_user(const ch
+ {
+ 	int ret = 0;
+ 
++	mutex_lock(&o2hb_dependency_mutex);
+ 	spin_lock(&o2hb_live_lock);
+ 
+ 	/* local heartbeat */
+@@ -2363,11 +2436,13 @@ static int o2hb_region_inc_user(const ch
+ 
+ unlock:
+ 	spin_unlock(&o2hb_live_lock);
++	mutex_unlock(&o2hb_dependency_mutex);
+ 	return ret;
+ }
+ 
+ static void o2hb_region_dec_user(const char *region_uuid)
+ {
++	mutex_lock(&o2hb_dependency_mutex);
+ 	spin_lock(&o2hb_live_lock);
+ 
+ 	/* local heartbeat */
+@@ -2386,6 +2461,7 @@ static void o2hb_region_dec_user(const c
+ 
+ unlock:
+ 	spin_unlock(&o2hb_live_lock);
++	mutex_unlock(&o2hb_dependency_mutex);
+ }
+ 
+ int o2hb_register_callback(const char *region_uuid,
 
 
