@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A032490BE6;
-	Sat, 12 Sep 2026 19:06:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F4063C07A;
+	Sat, 12 Sep 2026 19:06:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789239992; cv=none; b=t6QE5BV9ZXThgqVxTri+haVUFF25enp8dHaRVwbl64BKuE4Y7Ij38MRfWNJd5xAblsqdYoF4yhrYdiSTVNoHYsovU5b/lxw+DH8OZ1kz/k1hm486peD8L4mr93eMCC6z6cUnwTQOzgajP5u79oSt3DA+lXEVEbGvpVAnsP1XAvM=
+	t=1789239996; cv=none; b=NowyMc2zdTbDVk4XemMIqUHVlCaXdAFBI3eQXG95BR5WlzIyePR6eb4I+dhZ7KsaWPa4e6pqzelT1aQTv4j3WisRNEU/RkqlmtqUgdnyh7YEJZik6rKmoBje0jGwTTQk/GWpY5zNGw62ONMR7MQU1XmNZvzSVWL39QatFbeFqCE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789239992; c=relaxed/simple;
-	bh=BxQq/oSWL6h/hOsD6G9zU/Bp8Qg/VzDlk7R2PqpIxaU=;
+	s=arc-20240116; t=1789239996; c=relaxed/simple;
+	bh=XG2U8Jw3ls8ZZn5+6W7C/QNTQJSYVy+btpIGO1MWYMA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fIOhAF4bn21fKtUtGCYlifXHpdcwnmCRpDBgc0NsIKRg+IvbAYNtUPN6S9M5tM/ghdZFx/zMjfEeuwzrb1VDK4ghga9hjlTkYjLsFD1RQlueLVMdz6X2xcvHWLOa8X/sBW3vlqfX5JF+NOgieYjCrqQ9yc39S9GvUW71eLWavaM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c4D43rLR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DSncs1zrxE8vSM13nLJhpcTBV5VzLS4ViFZZ4AZrvDa45eavQAo7J3WRMOIa8/4JNUwmVSDUBoI/LV58cOLaLGYYxzjZVcyNGxzVLKWFrR2JCRRRJ1pPz6oZNTeYnyg84BAoq2oZS+wnO0MCgZzGEtyM4Ho/4Arn1AFL3GpwKaA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tKU9zoWt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c4D43rLR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 256F31F000FF;
-	Sat, 12 Sep 2026 19:06:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tKU9zoWt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 297451F00893;
+	Sat, 12 Sep 2026 19:06:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789239990;
-	bh=yoaJpJ1ueKlbH60BqQfk1xt8Y0Z5ZsfmTVKwwkLOJ+g=;
+	s=korg; t=1789239995;
+	bh=tgFwc+y3UcTHnbPWDfX/VqDcnNHnv+bNYLQaEkoI6PU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=c4D43rLRhi2kEuEZGpzLYeznlhFL9RhSwErPvNYjur6m94GHhTH5BRHan637udbKQ
-	 hZ/oRAtcKNr4u2JEg5bz5VhStjrn8YAK/NcUg4KjW4mdmB00JFkaVdqyw8QNoCxBv/
-	 xjJjOGhuNk4uNiISIAwE3SbxEzQhIMQma+CDsXOQ=
+	b=tKU9zoWtA+4jdUwBmv4Oedjrf9N3XCuTKrLSqjVUdU6hGpC6wFy0+0PjzErNXPBwb
+	 jRlz9w/umib0fuBtTtUKA3L91mKbs7BkTzUDbOWM7i1XJFDQwWLbVtFRmD1d8OsQ2v
+	 PhLKia5eaeRhR92xM6zACsXx7hQdd5T+XF3+Sq0E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linmao Li <lilinmao@kylinos.cn>,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	syzbot+46ca2592193f2fb3debc@syzkaller.appspotmail.com,
+	Yun Zhou <yun.zhou@windriver.com>,
 	David Heidelberg <david@ixit.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 778/935] nfc: digital: Do not dump a NULL response in command completion
-Date: Sat, 12 Sep 2026 09:03:28 +0200
-Message-ID: <20260912065544.669651941@linuxfoundation.org>
+Subject: [PATCH 5.15 779/935] nfc: nci: fix use of uninitialized memory in CORE_INIT_RSP parsing
+Date: Sat, 12 Sep 2026 09:03:29 +0200
+Message-ID: <20260912065544.693344282@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -52,54 +52,121 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linmao Li <lilinmao@kylinos.cn>
+From: Yun Zhou <yun.zhou@windriver.com>
 
-[ Upstream commit 1c7dd70c0adfa58fd66b5cbd03efb747ad6d8d8d ]
+[ Upstream commit d56575a2595ee1f597f39e8a1cfb67ed3501678d ]
 
-digital_wq_cmd_complete() dumps the response data whenever cmd->resp is
-not an error pointer.  However, a driver can legitimately complete a
-command with no response skb at all.
+nci_core_init_rsp_packet_v1() and nci_core_init_rsp_packet_v2() parse
+the CORE_INIT_RSP packet without validating that the skb contains
+enough data. A malformed response (e.g. injected via virtual_ncidev)
+can declare a large num_supported_rf_interfaces while providing
+insufficient data, causing reads of uninitialized slab memory. This
+is later used in nci_init_complete_req(), triggering a KMSAN
+uninit-value warning.
 
-digital_tg_send_psl_res() is the only caller that passes timeout=0,
-meaning no response is expected once the command has been transmitted.
-On that path trf7970a completes the command with
+Add skb length checks before accessing packet fields:
+- Validate the skb has at least 1 byte for the status field.
+- Validate the skb can hold the fixed-size header before parsing.
+- In v2, bounds-check each variable-length rf_interface entry and its
+  extension parameters within the parsing loop.
+- In v1, verify the skb is large enough for both the variable-length
+  rf_interfaces array and the trailing rsp_2 structure.
 
-	trf->rx_skb = ERR_PTR(0);
-
-which evaluates to NULL.  IS_ERR(NULL) is false, so the NULL response
-passes the !IS_ERR() check and cmd->resp->data and cmd->resp->len are
-dereferenced whenever the debug print site is enabled.  The driver
-guards its own dump with "trf->rx_skb && !IS_ERR(trf->rx_skb)"; the
-digital layer is missing the NULL half of that test.
-
-Use IS_ERR_OR_NULL() so that NULL responses are skipped as well.  The
-callback on that path, digital_tg_send_psl_res_complete(), never
-dereferences resp and dev_kfree_skb() accepts NULL, so only the debug
-dump needs fixing.
-
-Fixes: 59ee2361c924 ("NFC Digital: Implement driver commands mechanism")
-Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Link: https://patch.msgid.link/20260710061254.80975-1-lilinmao@kylinos.cn
+Reported-by: syzbot+46ca2592193f2fb3debc@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=46ca2592193f2fb3debc
+Fixes: bcd684aace34 ("net/nfc/nci: Support NCI 2.x initial sequence")
+Signed-off-by: Yun Zhou <yun.zhou@windriver.com>
+Link: https://patch.msgid.link/20260527052625.3309581-1-yun.zhou@windriver.com
 Signed-off-by: David Heidelberg <david@ixit.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/nfc/digital_core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/nfc/nci/rsp.c | 41 ++++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 38 insertions(+), 3 deletions(-)
 
-diff --git a/net/nfc/digital_core.c b/net/nfc/digital_core.c
-index d63d2e5dc60c9..a6cf04cedd50a 100644
---- a/net/nfc/digital_core.c
-+++ b/net/nfc/digital_core.c
-@@ -127,7 +127,7 @@ static void digital_wq_cmd_complete(struct work_struct *work)
+diff --git a/net/nfc/nci/rsp.c b/net/nfc/nci/rsp.c
+index fccd7ce69bb7b..e5d6ce71ca330 100644
+--- a/net/nfc/nci/rsp.c
++++ b/net/nfc/nci/rsp.c
+@@ -50,11 +50,27 @@ static u8 nci_core_init_rsp_packet_v1(struct nci_dev *ndev,
+ 	const struct nci_core_init_rsp_1 *rsp_1 = (void *)skb->data;
+ 	const struct nci_core_init_rsp_2 *rsp_2;
  
- 	mutex_unlock(&ddev->cmd_lock);
++	/* Ensure that the status field can be accessed. */
++	if (skb_headlen(skb) < 1)
++		return NCI_STATUS_SYNTAX_ERROR;
++
+ 	pr_debug("status 0x%x\n", rsp_1->status);
  
--	if (!IS_ERR(cmd->resp))
-+	if (!IS_ERR_OR_NULL(cmd->resp))
- 		print_hex_dump_debug("DIGITAL RX: ", DUMP_PREFIX_NONE, 16, 1,
- 				     cmd->resp->data, cmd->resp->len, false);
+ 	if (rsp_1->status != NCI_STATUS_OK)
+ 		return rsp_1->status;
  
++	/* Success response must contain the full fixed-size header */
++	if (skb_headlen(skb) < sizeof(*rsp_1))
++		return NCI_STATUS_SYNTAX_ERROR;
++
++	/* Ensure the variable-length rf_interfaces array and trailing
++	 * rsp_2 structure are fully contained within the skb.
++	 */
++	if (skb_headlen(skb) < sizeof(*rsp_1) +
++			       rsp_1->num_supported_rf_interfaces +
++			       sizeof(*rsp_2))
++		return NCI_STATUS_SYNTAX_ERROR;
++
+ 	ndev->nfcc_features = __le32_to_cpu(rsp_1->nfcc_features);
+ 	ndev->num_supported_rf_interfaces = rsp_1->num_supported_rf_interfaces;
+ 
+@@ -87,15 +103,25 @@ static u8 nci_core_init_rsp_packet_v2(struct nci_dev *ndev,
+ 				      const struct sk_buff *skb)
+ {
+ 	const struct nci_core_init_rsp_nci_ver2 *rsp = (void *)skb->data;
+-	const u8 *supported_rf_interface = rsp->supported_rf_interfaces;
++	const u8 *supported_rf_interface;
+ 	u8 rf_interface_idx = 0;
+ 	u8 rf_extension_cnt = 0;
+ 
++	/* Ensure that the status field can be accessed. */
++	if (skb_headlen(skb) < 1)
++		return NCI_STATUS_SYNTAX_ERROR;
++
+ 	pr_debug("status %x\n", rsp->status);
+ 
+ 	if (rsp->status != NCI_STATUS_OK)
+ 		return rsp->status;
+ 
++	/* Success response must contain the full fixed-size header */
++	if (skb_headlen(skb) < sizeof(*rsp))
++		return NCI_STATUS_SYNTAX_ERROR;
++
++	supported_rf_interface = rsp->supported_rf_interfaces;
++
+ 	ndev->nfcc_features = __le32_to_cpu(rsp->nfcc_features);
+ 	ndev->num_supported_rf_interfaces = rsp->num_supported_rf_interfaces;
+ 
+@@ -104,13 +130,22 @@ static u8 nci_core_init_rsp_packet_v2(struct nci_dev *ndev,
+ 		    NCI_MAX_SUPPORTED_RF_INTERFACES);
+ 
+ 	while (rf_interface_idx < ndev->num_supported_rf_interfaces) {
+-		ndev->supported_rf_interfaces[rf_interface_idx++] = *supported_rf_interface++;
++		/* Each entry: [rf_interface_type (1B)] [ext_count (1B)] [ext...] */
++		if (supported_rf_interface + 2 > skb_tail_pointer(skb))
++			break;
++		ndev->supported_rf_interfaces[rf_interface_idx] = *supported_rf_interface++;
+ 
+-		/* skip rf extension parameters */
+ 		rf_extension_cnt = *supported_rf_interface++;
++		if (supported_rf_interface + rf_extension_cnt > skb_tail_pointer(skb))
++			break;
++
++		/* Only count the entry after full validation */
++		rf_interface_idx++;
+ 		supported_rf_interface += rf_extension_cnt;
+ 	}
+ 
++	ndev->num_supported_rf_interfaces = rf_interface_idx;
++
+ 	ndev->max_logical_connections = rsp->max_logical_connections;
+ 	ndev->max_routing_table_size =
+ 			__le16_to_cpu(rsp->max_routing_table_size);
 -- 
 2.53.0
 
