@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E217035DA40;
-	Sat, 12 Sep 2026 18:33:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2628F35DA40;
+	Sat, 12 Sep 2026 18:33:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789238016; cv=none; b=lbowSauQn3yP9bxsWF2X7wS5jfo6gBfuq+WUjZr7L7Cs+JGWDievjoHdF5iJFTyfSjVzTm7H0EpBxvW5N4a4zPkYL+hcVMClz6Y6Pc94GMcYDfow+qnjjYnza5N3HKITSf9zIB/b3z9Lg9pcscVwvjg4bZhVgdXfwN1MY+tZbUQ=
+	t=1789238021; cv=none; b=UeNV6UnpdYbljb/Ub2vwpEQWtA/Er7Afp4ib8PDuus08I936fwJcsCjGoBGo6/hZvBhCHzBwTr9SwLlf8x0B3jnRJpU/mlSiNPYYcZ34Qdi3gpFBNAC728YUTHRhRJHG95iAnlTBM+MxWb8EJ6Fz3m50OneyQO90x3NfDHqs2Yk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789238016; c=relaxed/simple;
-	bh=TYkPkuxzCjgTdwye8WC7InNXt99ROumig4vb7mTI3ho=;
+	s=arc-20240116; t=1789238021; c=relaxed/simple;
+	bh=0FFKDNyMDEBVR8hDh9mv7clyu5/xxSA8Q7O626chZE4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K+25YMZfTGkwM10GvhUTf9M+S8Wur+swmI7UHCdulB2qI5rIBm+GLs+mjgZLWgSqwYcAMwgbwaF3EFVaLsCdwjAWbi1tONJ8kX7jPNd+QQDoHG5bTNXfAlhFo4nyKhE5ey7oOyUTzZqx37HycWb2JWUk2XMCa21E9yPSS8/bB+E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YL+w7376; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=elT2+92bo1Ib8CzK1OHzHeZvQOkSa/OMsP1biOeDu7v48sUCyizGtgcQ4s6upjbBGpIIvgezWyHz+lDNWGCPlVKumvTYpm3PUCW+/H+Srx+vOd0JU1MuyirtEqc8vNNbPO2WgZ0rLEE3kvR/z+IiTGbMoaQLKNxF+Weo84yf73M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eS7OoH4F; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YL+w7376"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7FD41F000FF;
-	Sat, 12 Sep 2026 18:33:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eS7OoH4F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB0A21F000FF;
+	Sat, 12 Sep 2026 18:33:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789238014;
-	bh=46rCirSWciLWZ3D0MOxRbdXmO96tHF05QQJLzxC5Rn4=;
+	s=korg; t=1789238020;
+	bh=DQwh2LLp56Ev5bB+cXXU6WQvXhyPKDFZp2F/6ey/uUw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YL+w73769ebk/qqNypAqgo+R6+JQZWBCjEf+S6bUMt9sXjjm8d3fG3DfkeX5H3vcn
-	 9MZBDTRhUdMcWZVwfEZylZxQrcyuasxAEw7j9udFdgPqeWcxy4xkdCI4lmLP3Q/TqU
-	 Kr6zsL6W0yeng+KtU7azk6i1v1Dug+5Fp2A+N1Us=
+	b=eS7OoH4FASZwdNLt8J0kKatRTQUJ+OobDi6VeDMi5QsVZ05yNIWAb9b47TLXj7tMl
+	 aoTxnk1LmD2Qbwz3AF2sqbu/dcjynFXdnU+hDfLzSVN94uiL0RhNnnMBkfdB/4IUpV
+	 47HF2QPliPNKAn0+FzvC6TTmQJi4KNtuagL0oaNI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steve Wahl <steve.wahl@hpe.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Pavin Joseph <me@pavinjoseph.com>,
-	Sarah Brofeldt <srhb@dbc.dk>,
-	Eric Hagberg <ehagberg@gmail.com>,
+	Andrii Nakryiko <andrii.nakryiko@gmail.com>,
+	Andrei Matei <andreimatei1@gmail.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 376/935] x86/mm/ident_map: Use gbpages only where full GB page should be mapped.
-Date: Sat, 12 Sep 2026 08:56:46 +0200
-Message-ID: <20260912065535.440003659@linuxfoundation.org>
+Subject: [PATCH 5.15 377/935] bpf: Guard stack limits against 32bit overflow
+Date: Sat, 12 Sep 2026 08:56:47 +0200
+Message-ID: <20260912065535.463154437@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -54,80 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steve Wahl <steve.wahl@hpe.com>
+From: Andrei Matei <andreimatei1@gmail.com>
 
-[ Upstream commit cc31744a294584a36bf764a0ffa3255a8e69f036 ]
+[ Upstream commit 1d38a9ee81570c4bd61f557832dead4d6f816760 ]
 
-When ident_pud_init() uses only GB pages to create identity maps, large
-ranges of addresses not actually requested can be included in the resulting
-table; a 4K request will map a full GB.  This can include a lot of extra
-address space past that requested, including areas marked reserved by the
-BIOS.  That allows processor speculation into reserved regions, that on UV
-systems can cause system halts.
+This patch promotes the arithmetic around checking stack bounds to be
+done in the 64-bit domain, instead of the current 32bit. The arithmetic
+implies adding together a 64-bit register with a int offset. The
+register was checked to be below 1<<29 when it was variable, but not
+when it was fixed. The offset either comes from an instruction (in which
+case it is 16 bit), from another register (in which case the caller
+checked it to be below 1<<29 [1]), or from the size of an argument to a
+kfunc (in which case it can be a u32 [2]). Between the register being
+inconsistently checked to be below 1<<29, and the offset being up to an
+u32, it appears that we were open to overflowing the `int`s which were
+currently used for arithmetic.
 
-Only use GB pages when map creation requests include the full GB page of
-space.  Fall back to using smaller 2M pages when only portions of a GB page
-are included in the request.
+[1] https://github.com/torvalds/linux/blob/815fb87b753055df2d9e50f6cd80eb10235fe3e9/kernel/bpf/verifier.c#L7494-L7498
+[2] https://github.com/torvalds/linux/blob/815fb87b753055df2d9e50f6cd80eb10235fe3e9/kernel/bpf/verifier.c#L11904
 
-No attempt is made to coalesce mapping requests. If a request requires a
-map entry at the 2M (pmd) level, subsequent mapping requests within the
-same 1G region will also be at the pmd level, even if adjacent or
-overlapping such requests could have been combined to map a full GB page.
-Existing usage starts with larger regions and then adds smaller regions, so
-this should not have any great consequence.
-
-Signed-off-by: Steve Wahl <steve.wahl@hpe.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Tested-by: Pavin Joseph <me@pavinjoseph.com>
-Tested-by: Sarah Brofeldt <srhb@dbc.dk>
-Tested-by: Eric Hagberg <ehagberg@gmail.com>
-Link: https://lore.kernel.org/all/20240717213121.3064030-3-steve.wahl@hpe.com
+Reported-by: Andrii Nakryiko <andrii.nakryiko@gmail.com>
+Signed-off-by: Andrei Matei <andreimatei1@gmail.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Acked-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20231207041150.229139-4-andreimatei1@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/mm/ident_map.c | 23 ++++++++++++++++++-----
- 1 file changed, 18 insertions(+), 5 deletions(-)
+ kernel/bpf/verifier.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/x86/mm/ident_map.c b/arch/x86/mm/ident_map.c
-index 968d7005f4a72..a204a332c71fc 100644
---- a/arch/x86/mm/ident_map.c
-+++ b/arch/x86/mm/ident_map.c
-@@ -26,18 +26,31 @@ static int ident_pud_init(struct x86_mapping_info *info, pud_t *pud_page,
- 	for (; addr < end; addr = next) {
- 		pud_t *pud = pud_page + pud_index(addr);
- 		pmd_t *pmd;
-+		bool use_gbpage;
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index a0163090309a4..8950f949377a3 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -4294,7 +4294,7 @@ static int check_ptr_to_map_access(struct bpf_verifier_env *env,
+  * The minimum valid offset is -MAX_BPF_STACK for writes, and
+  * -state->allocated_stack for reads.
+  */
+-static int check_stack_slot_within_bounds(int off,
++static int check_stack_slot_within_bounds(s64 off,
+ 					  struct bpf_func_state *state,
+ 					  enum bpf_access_type t)
+ {
+@@ -4323,7 +4323,7 @@ static int check_stack_access_within_bounds(
+ 	struct bpf_reg_state *regs = cur_regs(env);
+ 	struct bpf_reg_state *reg = regs + regno;
+ 	struct bpf_func_state *state = func(env, reg);
+-	int min_off, max_off;
++	s64 min_off, max_off;
+ 	int err;
+ 	char *err_extra;
  
- 		next = (addr & PUD_MASK) + PUD_SIZE;
- 		if (next > end)
- 			next = end;
+@@ -4336,7 +4336,7 @@ static int check_stack_access_within_bounds(
+ 		err_extra = " write to";
  
--		if (info->direct_gbpages) {
--			pud_t pudval;
-+		/* if this is already a gbpage, this portion is already mapped */
-+		if (pud_leaf(*pud))
-+			continue;
-+
-+		/* Is using a gbpage allowed? */
-+		use_gbpage = info->direct_gbpages;
- 
--			if (pud_present(*pud))
--				continue;
-+		/* Don't use gbpage if it maps more than the requested region. */
-+		/* at the begining: */
-+		use_gbpage &= ((addr & ~PUD_MASK) == 0);
-+		/* ... or at the end: */
-+		use_gbpage &= ((next & ~PUD_MASK) == 0);
-+
-+		/* Never overwrite existing mappings */
-+		use_gbpage &= !pud_present(*pud);
-+
-+		if (use_gbpage) {
-+			pud_t pudval;
- 
--			addr &= PUD_MASK;
- 			pudval = __pud((addr - info->offset) | info->page_flag);
- 			set_pud(pud, pudval);
- 			continue;
+ 	if (tnum_is_const(reg->var_off)) {
+-		min_off = reg->var_off.value + off;
++		min_off = (s64)reg->var_off.value + off;
+ 		max_off = min_off + access_size;
+ 	} else {
+ 		if (reg->smax_value >= BPF_MAX_VAR_OFF ||
 -- 
 2.53.0
 
