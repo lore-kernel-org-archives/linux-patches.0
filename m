@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C18C3AA9E2;
-	Sat, 12 Sep 2026 19:29:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD2FC37E2F3;
+	Sat, 12 Sep 2026 19:29:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789241377; cv=none; b=UcyfIeeUEse0AXl0p5fnfmpd5P1c0VNejXrodw0wEhA5VBcC+LI+pXb+v5kY3N9J+22BM4Tb8MztSczBb2/6FG3/DgIjEEx1IuW607Ws0fCCpML1YFfF6QN0nObWuy2Rkuhz6Fd7eebJffFcm3Q9tvBQ+G63cCKlDIenUcdG5wE=
+	t=1789241380; cv=none; b=kbZc/dP/JwEsFQfsaoZiPS0HwvnE78N3zpzvrB4Bg3rUbYtK0lKvW3BevGHr3VDwJ4cj4Cd/1Otx64K8SGECru/343soXOqxgjH6RIJ4QNWO0hVl6vwvHWyeRLBkEgn1qp838+QUg/qKPcL5BmmdmmPHyuvDyzk0rAuEA87Kw8s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789241377; c=relaxed/simple;
-	bh=vIHtf+SFeyQtT55UnHqwvpBSTgTk1pePLy7QK7Wc4rQ=;
+	s=arc-20240116; t=1789241380; c=relaxed/simple;
+	bh=KD+F4yqWvieh1WP9IVOeHo7U8YjJpsyYkVlXZR6ad5M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ceq7u4UPsGCwfGY3Ztiiw4MQCKq2CSZh+0ZaIrpjOsqH5eakLu1T2oe4ipu16DXOtAwSR2O+ful8/flZVJPY/zW4bIMK2Zswtidybk4sG96He22De9OEfLe8LxMRQrW/V36eQGpFOTGq9vi5CTB87/sgtxRqkNQkM0TF317ImTU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rg9W78np; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DIOBisl1PkCkJZ7cPMq0h3XjpFvRPPFcDVcG8/Z47ptNeTU3KElP/OENqiFUkWEVivR3teK6HuwJvj4SduEZLK2Da7PKWSiQSFMk4FdJvAtM0INx1SwphNzOWvNGk5lu3Aoafp9D32Aj4jSRFBHqxJtrqUYsf/Hw7GXEOBqii5g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bZDFPpIW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rg9W78np"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7F791F000FF;
-	Sat, 12 Sep 2026 19:29:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bZDFPpIW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B412C1F000FF;
+	Sat, 12 Sep 2026 19:29:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789241374;
-	bh=ABLYiaRWi04Tsfo/c40NixUlZTSdA+R2pBnkEl+SeFg=;
+	s=korg; t=1789241379;
+	bh=1wB3r87ZRzuNOqtV9NxWGxI3pJONwaTRhDuYNv8mZR8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rg9W78npshO2gDSEc51ItL+5pdng1CW937EPN/p7YN0cSj3Ia9BIqv28JvcAH1+7O
-	 xxYAApdKRYUlB9n8KHTzLtClpkKel6XrCQeRKpd0+hE3wgsP6NLznS0FTW3qPKBhC1
-	 Qy7s15jYIPmhXUqx3+SvZ0lAu7aaLdbjc1+s+Kh0=
+	b=bZDFPpIWWmDJ8gSxVsYkjYSCQ+bORi2FE5nhp0qQhR0Xa7k81FiKWyj9106VDmT7E
+	 hHMHcEBnMuytWexY++vrb5+MCeIY563AMidfKVJkgSF1LSIBPAgZY+iIZNcEF4ZdGD
+	 MelaDPAppY+0n4BxwJmFk+D2FC/hqlur2zc1pKGE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Norbert Szetei <norbert@doyensec.com>,
-	Ilya Maximets <i.maximets@ovn.org>,
-	Jongmin Jang <payload.jang@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 5.10 123/798] openvswitch: only skb_tx_error() a packet we are about to drop
-Date: Sat, 12 Sep 2026 08:55:51 +0200
-Message-ID: <20260912065519.794772616@linuxfoundation.org>
+	Cong Nguyen <congnt264@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 5.10 124/798] hwmon: (max6621) fix negative temperature offset and crit readings
+Date: Sat, 12 Sep 2026 08:55:52 +0200
+Message-ID: <20260912065519.817351677@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -52,67 +50,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Norbert Szetei <norbert@doyensec.com>
+From: Cong Nguyen <congnt264@gmail.com>
 
-commit 0dbc2398fca3bb33eda963849f865ddb1b3aa05e upstream.
+commit acc52bd431e2d8698fae8d82a74ac45d79b62e0a upstream.
 
-queue_userspace_packet() borrows the packet skb -- it only copies it into
-a private netlink message (user_skb) and does not own it; on return
-do_execute_actions() keeps forwarding it through the flow's remaining
-actions. Its error path nevertheless calls skb_tx_error(skb), which via
-skb_zcopy_clear() does skb_shinfo(skb)->flags &= ~SKBFL_ALL_ZEROCOPY,
-stripping SKBFL_SHARED_FRAG from that live skb (skb_tx_error()'s kerneldoc
-says "skb must be freed afterwards").
+max6621_read() reads the CONFIG2 offset and the critical alert threshold
+registers into a u32 and scales them without sign extension:
 
-For a MSG_ZEROCOPY skb carrying page-cache frags, SKBFL_SHARED_FRAG is
-what makes esp_input() skb_cow_data() before in-place AEAD; once it is
-stripped a later local ESP-in-UDP delivery decrypts in place over pages
-the sender does not own -- an unprivileged page-cache write (the
-"Fragnesia" primitive).
-do_execute_actions() ignores output_userspace()'s return value, so any
-action after a failed USERSPACE upcall inherits the stripped skb.
+	/* offset */ *val = (regval >> MAX6621_REG_TEMP_SHIFT) * 1000L;
+	/* crit   */ *val = regval * 1000L;
 
-Move the skb_tx_error() to the flow-miss drop path - the "default"
-branch of ovs_dp_process_packet()'s switch(error), before kfree_skb().
+Both attributes are writable and their write paths clamp to a negative
+minimum and encode negative values, so a value written as negative is read
+back as a large positive number. For example, writing a -10 degrees C
+offset stores max6621_temp_mc2reg(-10000) = (-10 << 6) = 0xfd80; the read
+then computes 0xfd80 >> 6 = 1014 -> 1014000 instead of -10000.
 
-The call has been here since commit 36d5fe6a0007 ("core, nfqueue,
-openvswitch: Orphan frags in skb_zerocopy and handle errors") but was
-harmless until esp_input() began relying on SKBFL_SHARED_FRAG to gate
-in-place decrypt; only then did stripping it on a still-forwarded skb
-become a page-cache write primitive.
+Cast the register value to s16 before scaling so the read preserves the
+sign the write path encodes. The temperature input path already uses an s8
+intermediate and is left unchanged.
 
-Fixes: 36d5fe6a0007 ("core, nfqueue, openvswitch: Orphan frags in skb_zerocopy and handle errors")
-Fixes: f4c50a4034e6 ("xfrm: esp: avoid in-place decrypt on shared skb frags")
+Fixes: 92b64580f14b ("hwmon: (max6621) Add support for Maxim MAX6621 temperature sensor")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-5
-Signed-off-by: Norbert Szetei <norbert@doyensec.com>
-Reviewed-by: Ilya Maximets <i.maximets@ovn.org>
-Tested-by: Jongmin Jang <payload.jang@gmail.com>
-Link: https://patch.msgid.link/55A52703-7548-4A55-A9CE-2A37145BDCAD@doyensec.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Assisted-by: Claude:claude-opus-4
+Signed-off-by: Cong Nguyen <congnt264@gmail.com>
+Link: https://lore.kernel.org/r/ad0baddbd6163cf73545c8e9273258136718585c.1786334038.git.congnt264@gmail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/openvswitch/datapath.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/hwmon/max6621.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/net/openvswitch/datapath.c
-+++ b/net/openvswitch/datapath.c
-@@ -249,6 +249,7 @@ void ovs_dp_process_packet(struct sk_buf
- 			consume_skb(skb);
- 			break;
- 		default:
-+			skb_tx_error(skb);
- 			kfree_skb(skb);
- 			break;
- 		}
-@@ -544,8 +545,6 @@ static int queue_userspace_packet(struct
- 	err = genlmsg_unicast(ovs_dp_get_net(dp), user_skb, upcall_info->portid);
- 	user_skb = NULL;
- out:
--	if (err)
--		skb_tx_error(skb);
- 	consume_skb(user_skb);
- 	consume_skb(nskb);
+--- a/drivers/hwmon/max6621.c
++++ b/drivers/hwmon/max6621.c
+@@ -239,7 +239,7 @@ max6621_read(struct device *dev, enum hw
+ 			if (ret)
+ 				return ret;
  
+-			*val = (regval >> MAX6621_REG_TEMP_SHIFT) *
++			*val = ((s16)regval >> MAX6621_REG_TEMP_SHIFT) *
+ 			       1000L;
+ 
+ 			break;
+@@ -254,7 +254,7 @@ max6621_read(struct device *dev, enum hw
+ 			if (ret)
+ 				return ret;
+ 
+-			*val = regval * 1000L;
++			*val = (s16)regval * 1000L;
+ 
+ 			break;
+ 		case hwmon_temp_crit_alarm:
 
 
