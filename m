@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91B433BE643;
-	Sat, 12 Sep 2026 12:37:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D7603BE643;
+	Sat, 12 Sep 2026 12:37:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789216643; cv=none; b=cccqlkFKVVxwI0ZFrUUlO/7LAyi7NEyCBQRuZ9uazM6MtX7I58jfND0fSk/sgfuq/WAJ+W3l6tRGWX76iYGfO8yCp2Gc2+LsQFMIwcyDn2PSSXB2/tDmD2FvCK0crhh+di/y33QiT66eAfnrZwTruVFVbaEnVlq6b/IXWYfl4ig=
+	t=1789216651; cv=none; b=VCffu3YX8IhGjEwoQ0qovtK67e8swGMW0hOi0/JnuhyTgTHv79N3A1cLTxDAiOta+TwuGwlJpczKKsIKlDk2aN3tU0DhK/3Jljbwah2hm6dp4UTj4bnL1WWtKbGnupgiC1ONLv5iOu8hZIB4xYW+SAp69l9W+yw8mc1yNmji/48=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789216643; c=relaxed/simple;
-	bh=9MRbTrMmvrqfk8gZKm+8GG3rDkab/MlR7HKsW9ViA94=;
+	s=arc-20240116; t=1789216651; c=relaxed/simple;
+	bh=ZjhF4V2xJbv8ZlbcOScVh4wowQadoS/nIz/7cvlgHU8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dEdUDFXsfCI//jiNc0TyzMrptvWn0Nznp76bgVyhXpipjdsSRM/DOHsBLsbl6VFsEY3394xxwE2iTryh31LIn9WA36lR6d0cqagYJyeTCibyNjPEy/hCEoMjSyLsw5xnPeTTFaS/GINukNHZrLWj1Ji0+8tnwX1f6hlWNE5ac58=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PzqgcUuD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PsCZbHCOxMQ/03E4jXT3VdsyCZIMrfRsAnQQhuIHx5g3dgalu8ES0iUhHffAfVQcei1KD2SKts19JnnW60NHSpIqyoeglPeAw4HcUocep6WCkOyb0B8zW78h5NtgqTcGUxrAun6pw3XjS3tPyFJ594KCEhlIBf3KblJQmhL5VnE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oO+I2sxb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PzqgcUuD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96E131F000FF;
-	Sat, 12 Sep 2026 12:37:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oO+I2sxb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36CC81F000FF;
+	Sat, 12 Sep 2026 12:37:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789216642;
-	bh=MYper460T5+6sbi/UtZIyN8coe3PkXyt+qtBRIdbaus=;
+	s=korg; t=1789216647;
+	bh=9rsUVmcE1hx+vWmEkqhSaX41UMAeMBy+IJVKHACQODQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PzqgcUuDrns+IuaE5AoFlP4aoC6/8t3HmWLjv5cdRjKjXsPVjljMztchr5bWKuO8Y
-	 Hrd8+be+IHALWS74f42+dSl6tVAC6uFl+6wbCQmNEJKWgeNQL9nlnyEGI/6vPwbq51
-	 wWBtPO2Baqy1NiwpmZP4krfCk94Y+p9c7b2LAYNE=
+	b=oO+I2sxbnNjdF/9/EYaMFF7wZIf7+joUAty333chH8Bq/JCqNwNQ4B4+6F2AciOk2
+	 ZhKGVvtqPw8Q1v6qEK12VJeWeZuR7vUsmPnEd8mapes2bL8ooQBHczNHdHGwouywYb
+	 yHQJHvkv1nWfT1/1cxQMEeBr/i6sCs+NEBxUVjWs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,12 +30,13 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sashiko <sashiko-bot@kernel.org>,
 	Pu Lehui <pulehui@huawei.com>,
 	Andrii Nakryiko <andrii@kernel.org>,
-	Amery Hung <ameryhung@gmail.com>,
 	Emil Tsalapatis <emil@etsalapatis.com>,
+	Amery Hung <ameryhung@gmail.com>,
+	Leon Hwang <leon.hwang@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0777/1376] bpf: Fix potential UAF in bpf_netns_link_update_prog
-Date: Sat, 12 Sep 2026 08:53:23 +0200
-Message-ID: <20260912065624.855436979@linuxfoundation.org>
+Subject: [PATCH 6.12 0778/1376] bpf: Fix potential UAF when reading bpf link info
+Date: Sat, 12 Sep 2026 08:53:24 +0200
+Message-ID: <20260912065624.877602779@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -56,87 +57,91 @@ Content-Transfer-Encoding: 8bit
 
 From: Pu Lehui <pulehui@huawei.com>
 
-[ Upstream commit 5c5997836381010fc5907b36bc17d3b19407e933 ]
+[ Upstream commit 863f3ddd0b8ac65abfb50d3be0869268ac0e277b ]
 
-In bpf_netns_link_update_prog, the checks for old_prog and prog type
-are currently performed locklessly before acquiring netns_bpf_mutex.
-This creates a race condition that can lead to a UAF issue.
+In bpf_link_show_fdinfo and bpf_link_get_info_by_fd, link->prog is
+accessed without holding any locks. If the prog is concurrently replaced
+via bpf_link_update, the old prog can be freed, leading to a potential
+UAF issue.
 
-If two threads concurrently execute BPF_LINK_UPDATE on the same netns
-link, the following execution path can trigger a UAF:
+Fix this by accessing link->prog under RCU protection to safely fetch
+the pointer and guarantee its lifetime while reading its fields.
 
-CPU0                                          CPU1
-bpf_netns_link_update_prog
-  if (old_prog && old_prog != link->prog)
-    return -EPERM;
-                                              bpf_netns_link_update_prog
-                                                if (old_prog && old_prog != link->prog)
-                                                ...
-                                                old_prog = xchg(&link->prog, new_prog);
-                                                bpf_prog_put(old_prog);
-  if (new_prog->type != link->prog->type) <-- trigger UAF
-
-Fix this by moving the old_prog and prog->type checks inside the
-netns_bpf_mutex critical section. Meanwhile, use guard() to simplify
-lock management and avoid all the goto jumping.
-
-Fixes: 7f045a49fee0 ("bpf: Add link-based BPF program attachment to network namespace")
+Fixes: 0c991ebc8c69 ("bpf: Implement bpf_prog replacement for an active bpf_cgroup_link")
 Reported-by: Sashiko <sashiko-bot@kernel.org>
 Signed-off-by: Pu Lehui <pulehui@huawei.com>
 Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Reviewed-by: Amery Hung <ameryhung@gmail.com>
 Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
+Reviewed-by: Amery Hung <ameryhung@gmail.com>
+Acked-by: Leon Hwang <leon.hwang@linux.dev>
 Link: https://lore.kernel.org/bpf/f87b53c0-8f00-45a6-82db-8242fa9b143f@huaweicloud.com [0]
-Link: https://lore.kernel.org/bpf/20260728023259.2813482-1-pulehui@huaweicloud.com
+Link: https://lore.kernel.org/bpf/20260728025457.2814876-1-pulehui@huaweicloud.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/net_namespace.c | 17 ++++++-----------
- 1 file changed, 6 insertions(+), 11 deletions(-)
+ kernel/bpf/syscall.c | 21 +++++++++++++++++----
+ 1 file changed, 17 insertions(+), 4 deletions(-)
 
-diff --git a/kernel/bpf/net_namespace.c b/kernel/bpf/net_namespace.c
-index 868cc2c438997..a1d14bcb67c57 100644
---- a/kernel/bpf/net_namespace.c
-+++ b/kernel/bpf/net_namespace.c
-@@ -172,33 +172,28 @@ static int bpf_netns_link_update_prog(struct bpf_link *link,
- 	struct net *net;
- 	int idx, ret;
+diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
+index 3bdfac9b4418a..fc41d87263aac 100644
+--- a/kernel/bpf/syscall.c
++++ b/kernel/bpf/syscall.c
+@@ -3091,9 +3091,10 @@ static const char *bpf_link_type_strs[] = {
+ static void bpf_link_show_fdinfo(struct seq_file *m, struct file *filp)
+ {
+ 	const struct bpf_link *link = filp->private_data;
+-	const struct bpf_prog *prog = link->prog;
++	const struct bpf_prog *prog;
+ 	enum bpf_link_type type = link->type;
+ 	char prog_tag[sizeof(prog->tag) * 2 + 1] = { };
++	u32 prog_id = 0;
  
-+	guard(mutex)(&netns_bpf_mutex);
+ 	if (type < ARRAY_SIZE(bpf_link_type_strs) && bpf_link_type_strs[type]) {
+ 		seq_printf(m, "link_type:\t%s\n", bpf_link_type_strs[type]);
+@@ -3103,13 +3104,20 @@ static void bpf_link_show_fdinfo(struct seq_file *m, struct file *filp)
+ 	}
+ 	seq_printf(m, "link_id:\t%u\n", link->id);
+ 
++	rcu_read_lock();
++	prog = READ_ONCE(link->prog);
+ 	if (prog) {
+ 		bin2hex(prog_tag, prog->tag, sizeof(prog->tag));
++		prog_id = prog->aux->id;
++	}
++	rcu_read_unlock();
 +
- 	if (old_prog && old_prog != link->prog)
- 		return -EPERM;
- 	if (new_prog->type != link->prog->type)
- 		return -EINVAL;
++	if (prog) {
+ 		seq_printf(m,
+ 			   "prog_tag:\t%s\n"
+ 			   "prog_id:\t%u\n",
+ 			   prog_tag,
+-			   prog->aux->id);
++			   prog_id);
+ 	}
+ 	if (link->ops->show_fdinfo)
+ 		link->ops->show_fdinfo(link, m);
+@@ -4917,6 +4925,7 @@ static int bpf_link_get_info_by_fd(struct file *file,
+ {
+ 	struct bpf_link_info __user *uinfo = u64_to_user_ptr(attr->info.info);
+ 	struct bpf_link_info info;
++	const struct bpf_prog *prog;
+ 	u32 info_len = attr->info.info_len;
+ 	int err;
  
--	mutex_lock(&netns_bpf_mutex);
--
- 	net = net_link->net;
--	if (!net || !check_net(net)) {
-+	if (!net || !check_net(net))
- 		/* Link auto-detached or netns dying */
--		ret = -ENOLINK;
--		goto out_unlock;
--	}
-+		return -ENOLINK;
+@@ -4931,8 +4940,12 @@ static int bpf_link_get_info_by_fd(struct file *file,
  
- 	run_array = rcu_dereference_protected(net->bpf.run_array[type],
- 					      lockdep_is_held(&netns_bpf_mutex));
- 	idx = link_index(net, type, net_link);
- 	ret = bpf_prog_array_update_at(run_array, idx, new_prog);
- 	if (ret)
--		goto out_unlock;
-+		return ret;
+ 	info.type = link->type;
+ 	info.id = link->id;
+-	if (link->prog)
+-		info.prog_id = link->prog->aux->id;
++
++	rcu_read_lock();
++	prog = READ_ONCE(link->prog);
++	if (prog)
++		info.prog_id = prog->aux->id;
++	rcu_read_unlock();
  
- 	old_prog = xchg(&link->prog, new_prog);
- 	bpf_prog_put(old_prog);
--
--out_unlock:
--	mutex_unlock(&netns_bpf_mutex);
--	return ret;
-+	return 0;
- }
- 
- static int bpf_netns_link_fill_info(const struct bpf_link *link,
+ 	if (link->ops->fill_link_info) {
+ 		err = link->ops->fill_link_info(link, &info);
 -- 
 2.53.0
 
