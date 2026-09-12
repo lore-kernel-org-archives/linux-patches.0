@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 338D436A36A;
-	Sat, 12 Sep 2026 09:49:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8635041DEC8;
+	Sat, 12 Sep 2026 09:49:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789206565; cv=none; b=iI7mU5Uu67DXLaEyQDBb8+sO4zjmlE4hQqY/y8FkyGMXKaUxJW5yxKtLmiSZzad8XChhoT/8o3ykitRiVcDHXADIaWjDdnDv5HEhVPJ2tdhwEQROARjRyEwNLZ3LUrnIBSJproS0ik91yTtRY132WqYWRHrL81URR59NqsLleJE=
+	t=1789206570; cv=none; b=FBHrwtbCKYyR6jJc4X+zjdv20N+/QJ0vVKluIs6FzUAVOKc7C/pkSRKgQL6LHPF9iol3e5XWnLud9VOPWi/5TmnxcTQ5r/x15U9r4dUVkmxQyyZtK3D8yRyyF/qBeKoc5RbSSM2SphmLj4RKtmpnlkLAco6OgL0vGLojlIwgaw8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789206565; c=relaxed/simple;
-	bh=x+BIsZRVoUz+bdwBQ74jnCCe6XV9v2I2yZbNehzZluw=;
+	s=arc-20240116; t=1789206570; c=relaxed/simple;
+	bh=/jkzMVrbifJnj/xpqFqXGxMtpEb0GIhPMjy13TGa9Es=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N6kXoc899Yix1Ewo8KuUlnTup2m1s5nLPkNy+fkwtXke2+eO+B17phf9VNnT1w36Y+mqVi89qcNwys1vZqbiYg11t2Sg/lwjb+M8qj91tWjlW+x6NRhdqafjjHtF11yqTIfb+BTDciscE8nuN0pwGt2VERXklelhF08upTX1Cc4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a3SCDgCE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ncvktej1DlC4fuDWQx1AORrZ3YiceqR2lTnMES+C5qw4lSQLdPGIeE7iXGqdc/MJ+BLbl7PrghVogLIPYPYwP0PLDoHsvh8YjCVjbvPP2TRH7mv2rNmUtkcmO659OM5qc/Kjar2Gq5qgMfWsHwtO9dEvmgLLqAYe29Ktc4fQjPs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d2cqjxtc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a3SCDgCE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE0F51F000FF;
-	Sat, 12 Sep 2026 09:49:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d2cqjxtc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 205E21F000FF;
+	Sat, 12 Sep 2026 09:49:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789206563;
-	bh=pc8MCMWSd2ioHgqq1SfYXXzwkagoi/A7mNquskO4FL4=;
+	s=korg; t=1789206568;
+	bh=WhG8ZFHCChw5nHffnoZkEZijKt8/k5CIx1eLaLBB5o0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=a3SCDgCE1pNXGZk5ZFz2lN3QPMN+v3Y6Zsk3sRLQYMzXGxbWrsLWHgdVogMsys6H8
-	 Xm5dNEpGvmpTcgIAfj22viMeSE8Hdlv0TdO94AZvuzVB9O1JRwXMMpw7U4bIdzWKF7
-	 TBIacuRW20wff7dgtfoIviIMzJy2V8iqg0aPi770=
+	b=d2cqjxtcAe+yj4PwrHzE0BwbpaTG4vcFGFeJynt+/+mMfl+4/RlOttucztLM/XMAS
+	 fsKEFyiO//d8nfxwDIuUluOMvIFB5BcY8iftgEadU2wJ1rWpL0GK07ZTU9CLxkU1Wm
+	 sZreQ6Lg3TEXVQ2HRFZxQmDNR1O12hnWnnvbLGrI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Chih-Kang Chang <gary.chang@realtek.com>,
 	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0189/1518] wifi: rtw89: fill addr cam H2C command by struct
-Date: Sat, 12 Sep 2026 08:39:18 +0200
-Message-ID: <20260912065627.765180530@linuxfoundation.org>
+Subject: [PATCH 6.18 0190/1518] wifi: rtw89: update format of addr cam H2C command
+Date: Sat, 12 Sep 2026 08:39:19 +0200
+Message-ID: <20260912065627.787782936@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -50,709 +51,322 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ping-Ke Shih <pkshih@realtek.com>
+From: Chih-Kang Chang <gary.chang@realtek.com>
 
-[ Upstream commit 239dd70d776cf94f39000740b307c91e4f72d615 ]
+[ Upstream commit 9dab26b9fa457ee538be650ca0bddf352c059e79 ]
 
-The addr cam is used to tell firmware the MAC address and BSSID associated
-to connected stations. Use struct instead of macros with pointer arithmetic
-to fill the data.
+The addr cam H2C command is to tell firmware the addr related info.
+For RTL8922D and RTL8922A after firmware version 0.35.84.0, the addr cam
+must be updated with update mode to avoid clearing previously set
+fields. Update it accordingly.
 
+Signed-off-by: Chih-Kang Chang <gary.chang@realtek.com>
 Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20251114060128.35363-12-pkshih@realtek.com
+Link: https://patch.msgid.link/20251114060128.35363-14-pkshih@realtek.com
 Stable-dep-of: a8cddb62c573 ("wifi: rtw89: check return values in rtw89_ops_start_ap()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw89/cam.c | 150 ++++----
- drivers/net/wireless/realtek/rtw89/cam.h | 431 +++++------------------
- drivers/net/wireless/realtek/rtw89/fw.c  |  17 +-
- 3 files changed, 173 insertions(+), 425 deletions(-)
+ drivers/net/wireless/realtek/rtw89/cam.c      | 10 ++++---
+ drivers/net/wireless/realtek/rtw89/cam.h      | 12 ++++++---
+ drivers/net/wireless/realtek/rtw89/core.c     | 12 ++++++---
+ drivers/net/wireless/realtek/rtw89/core.h     |  1 +
+ drivers/net/wireless/realtek/rtw89/fw.c       | 26 ++++++++++++++++---
+ drivers/net/wireless/realtek/rtw89/fw.h       |  3 ++-
+ drivers/net/wireless/realtek/rtw89/mac.c      |  4 +--
+ drivers/net/wireless/realtek/rtw89/mac80211.c |  4 +--
+ drivers/net/wireless/realtek/rtw89/wow.c      |  6 +++--
+ 9 files changed, 56 insertions(+), 22 deletions(-)
 
 diff --git a/drivers/net/wireless/realtek/rtw89/cam.c b/drivers/net/wireless/realtek/rtw89/cam.c
-index 385a238fe5cc2..8233d91024e8e 100644
+index 8233d91024e8e..93a0294396351 100644
 --- a/drivers/net/wireless/realtek/rtw89/cam.c
 +++ b/drivers/net/wireless/realtek/rtw89/cam.c
-@@ -760,7 +760,8 @@ int rtw89_cam_init(struct rtw89_dev *rtwdev, struct rtw89_vif_link *rtwvif_link)
- 
+@@ -236,7 +236,8 @@ static int __rtw89_cam_detach_sec_cam(struct rtw89_dev *rtwdev,
+ 		if (ret)
+ 			rtw89_err(rtwdev,
+ 				  "failed to update dctl cam del key: %d\n", ret);
+-		ret = rtw89_fw_h2c_cam(rtwdev, rtwvif_link, rtwsta_link, NULL);
++		ret = rtw89_fw_h2c_cam(rtwdev, rtwvif_link, rtwsta_link, NULL,
++				       RTW89_ROLE_INFO_CHANGE);
+ 		if (ret)
+ 			rtw89_err(rtwdev, "failed to update cam del key: %d\n", ret);
+ 	}
+@@ -276,7 +277,8 @@ static int __rtw89_cam_attach_sec_cam(struct rtw89_dev *rtwdev,
+ 			  ret);
+ 		return ret;
+ 	}
+-	ret = rtw89_fw_h2c_cam(rtwdev, rtwvif_link, rtwsta_link, NULL);
++	ret = rtw89_fw_h2c_cam(rtwdev, rtwvif_link, rtwsta_link, NULL,
++			       RTW89_ROLE_INFO_CHANGE);
+ 	if (ret) {
+ 		rtw89_err(rtwdev, "failed to update addr cam sec entry: %d\n",
+ 			  ret);
+@@ -761,7 +763,7 @@ int rtw89_cam_init(struct rtw89_dev *rtwdev, struct rtw89_vif_link *rtwvif_link)
  int rtw89_cam_fill_bssid_cam_info(struct rtw89_dev *rtwdev,
  				  struct rtw89_vif_link *rtwvif_link,
--				  struct rtw89_sta_link *rtwsta_link, u8 *cmd)
-+				  struct rtw89_sta_link *rtwsta_link,
-+				  struct rtw89_h2c_addr_cam *h2c)
+ 				  struct rtw89_sta_link *rtwsta_link,
+-				  struct rtw89_h2c_addr_cam *h2c)
++				  struct rtw89_h2c_addr_cam_v0 *h2c)
  {
  	struct rtw89_bssid_cam_entry *bssid_cam = rtw89_get_bssid_cam_of(rtwvif_link,
  									 rtwsta_link);
-@@ -780,20 +781,19 @@ int rtw89_cam_fill_bssid_cam_info(struct rtw89_dev *rtwdev,
- 
- 	rcu_read_unlock();
- 
--	FWCMD_SET_ADDR_BSSID_IDX(cmd, bssid_cam->bssid_cam_idx);
--	FWCMD_SET_ADDR_BSSID_OFFSET(cmd, bssid_cam->offset);
--	FWCMD_SET_ADDR_BSSID_LEN(cmd, bssid_cam->len);
--	FWCMD_SET_ADDR_BSSID_VALID(cmd, bssid_cam->valid);
--	FWCMD_SET_ADDR_BSSID_MASK(cmd, bss_mask);
--	FWCMD_SET_ADDR_BSSID_BB_SEL(cmd, bssid_cam->phy_idx);
--	FWCMD_SET_ADDR_BSSID_BSS_COLOR(cmd, bss_color);
--
--	FWCMD_SET_ADDR_BSSID_BSSID0(cmd, bssid_cam->bssid[0]);
--	FWCMD_SET_ADDR_BSSID_BSSID1(cmd, bssid_cam->bssid[1]);
--	FWCMD_SET_ADDR_BSSID_BSSID2(cmd, bssid_cam->bssid[2]);
--	FWCMD_SET_ADDR_BSSID_BSSID3(cmd, bssid_cam->bssid[3]);
--	FWCMD_SET_ADDR_BSSID_BSSID4(cmd, bssid_cam->bssid[4]);
--	FWCMD_SET_ADDR_BSSID_BSSID5(cmd, bssid_cam->bssid[5]);
-+	h2c->w12 = le32_encode_bits(bssid_cam->bssid_cam_idx, ADDR_CAM_W12_BSSID_IDX) |
-+		   le32_encode_bits(bssid_cam->offset, ADDR_CAM_W12_BSSID_OFFSET) |
-+		   le32_encode_bits(bssid_cam->len, ADDR_CAM_W12_BSSID_LEN);
-+	h2c->w13 = le32_encode_bits(bssid_cam->valid, ADDR_CAM_W13_BSSID_VALID) |
-+		   le32_encode_bits(bss_mask, ADDR_CAM_W13_BSSID_MASK) |
-+		   le32_encode_bits(bssid_cam->phy_idx, ADDR_CAM_W13_BSSID_BB_SEL) |
-+		   le32_encode_bits(bss_color, ADDR_CAM_W13_BSSID_BSS_COLOR) |
-+		   le32_encode_bits(bssid_cam->bssid[0], ADDR_CAM_W13_BSSID_BSSID0) |
-+		   le32_encode_bits(bssid_cam->bssid[1], ADDR_CAM_W13_BSSID_BSSID1);
-+	h2c->w14 = le32_encode_bits(bssid_cam->bssid[2], ADDR_CAM_W14_BSSID_BSSID2) |
-+		   le32_encode_bits(bssid_cam->bssid[3], ADDR_CAM_W14_BSSID_BSSID3) |
-+		   le32_encode_bits(bssid_cam->bssid[4], ADDR_CAM_W14_BSSID_BSSID4) |
-+		   le32_encode_bits(bssid_cam->bssid[5], ADDR_CAM_W14_BSSID_BSSID5);
- 
- 	return 0;
- }
-@@ -813,7 +813,7 @@ void rtw89_cam_fill_addr_cam_info(struct rtw89_dev *rtwdev,
+@@ -813,7 +815,7 @@ void rtw89_cam_fill_addr_cam_info(struct rtw89_dev *rtwdev,
  				  struct rtw89_vif_link *rtwvif_link,
  				  struct rtw89_sta_link *rtwsta_link,
  				  const u8 *scan_mac_addr,
--				  u8 *cmd)
-+				  struct rtw89_h2c_addr_cam *h2c)
+-				  struct rtw89_h2c_addr_cam *h2c)
++				  struct rtw89_h2c_addr_cam_v0 *h2c)
  {
  	struct ieee80211_vif *vif = rtwvif_link_to_vif(rtwvif_link);
  	struct rtw89_addr_cam_entry *addr_cam =
-@@ -845,69 +845,65 @@ void rtw89_cam_fill_addr_cam_info(struct rtw89_dev *rtwdev,
- 	sma_hash = rtw89_cam_addr_hash(sma_start, sma);
- 	tma_hash = rtw89_cam_addr_hash(tma_start, tma);
- 
--	FWCMD_SET_ADDR_IDX(cmd, addr_cam->addr_cam_idx);
--	FWCMD_SET_ADDR_OFFSET(cmd, addr_cam->offset);
--	FWCMD_SET_ADDR_LEN(cmd, addr_cam->len);
--
--	FWCMD_SET_ADDR_VALID(cmd, addr_cam->valid);
--	FWCMD_SET_ADDR_NET_TYPE(cmd, rtwvif_link->net_type);
--	FWCMD_SET_ADDR_BCN_HIT_COND(cmd, rtwvif_link->bcn_hit_cond);
--	FWCMD_SET_ADDR_HIT_RULE(cmd, rtwvif_link->hit_rule);
--	FWCMD_SET_ADDR_BB_SEL(cmd, rtwvif_link->phy_idx);
--	FWCMD_SET_ADDR_ADDR_MASK(cmd, addr_cam->addr_mask);
--	FWCMD_SET_ADDR_MASK_SEL(cmd, addr_cam->mask_sel);
--	FWCMD_SET_ADDR_SMA_HASH(cmd, sma_hash);
--	FWCMD_SET_ADDR_TMA_HASH(cmd, tma_hash);
--
--	FWCMD_SET_ADDR_BSSID_CAM_IDX(cmd, addr_cam->bssid_cam_idx);
--
--	FWCMD_SET_ADDR_SMA0(cmd, sma[0]);
--	FWCMD_SET_ADDR_SMA1(cmd, sma[1]);
--	FWCMD_SET_ADDR_SMA2(cmd, sma[2]);
--	FWCMD_SET_ADDR_SMA3(cmd, sma[3]);
--	FWCMD_SET_ADDR_SMA4(cmd, sma[4]);
--	FWCMD_SET_ADDR_SMA5(cmd, sma[5]);
--
--	FWCMD_SET_ADDR_TMA0(cmd, tma[0]);
--	FWCMD_SET_ADDR_TMA1(cmd, tma[1]);
--	FWCMD_SET_ADDR_TMA2(cmd, tma[2]);
--	FWCMD_SET_ADDR_TMA3(cmd, tma[3]);
--	FWCMD_SET_ADDR_TMA4(cmd, tma[4]);
--	FWCMD_SET_ADDR_TMA5(cmd, tma[5]);
--
--	FWCMD_SET_ADDR_PORT_INT(cmd, rtwvif_link->port);
--	FWCMD_SET_ADDR_TSF_SYNC(cmd, rtwvif_link->port);
--	FWCMD_SET_ADDR_TF_TRS(cmd, rtwvif_link->trigger);
--	FWCMD_SET_ADDR_LSIG_TXOP(cmd, rtwvif_link->lsig_txop);
--	FWCMD_SET_ADDR_TGT_IND(cmd, rtwvif_link->tgt_ind);
--	FWCMD_SET_ADDR_FRM_TGT_IND(cmd, rtwvif_link->frm_tgt_ind);
--	FWCMD_SET_ADDR_MACID(cmd, rtwsta_link ? rtwsta_link->mac_id :
--						rtwvif_link->mac_id);
-+	h2c->w1 = le32_encode_bits(addr_cam->addr_cam_idx, ADDR_CAM_W1_IDX) |
-+		  le32_encode_bits(addr_cam->offset, ADDR_CAM_W1_OFFSET) |
-+		  le32_encode_bits(addr_cam->len, ADDR_CAM_W1_LEN);
-+	h2c->w2 = le32_encode_bits(addr_cam->valid, ADDR_CAM_W2_VALID) |
-+		  le32_encode_bits(rtwvif_link->net_type, ADDR_CAM_W2_NET_TYPE) |
-+		  le32_encode_bits(rtwvif_link->bcn_hit_cond, ADDR_CAM_W2_BCN_HIT_COND) |
-+		  le32_encode_bits(rtwvif_link->hit_rule, ADDR_CAM_W2_HIT_RULE) |
-+		  le32_encode_bits(rtwvif_link->phy_idx, ADDR_CAM_W2_BB_SEL) |
-+		  le32_encode_bits(addr_cam->addr_mask, ADDR_CAM_W2_ADDR_MASK) |
-+		  le32_encode_bits(addr_cam->mask_sel, ADDR_CAM_W2_MASK_SEL) |
-+		  le32_encode_bits(sma_hash, ADDR_CAM_W2_SMA_HASH) |
-+		  le32_encode_bits(tma_hash, ADDR_CAM_W2_TMA_HASH);
-+	h2c->w3 = le32_encode_bits(addr_cam->bssid_cam_idx, ADDR_CAM_W3_BSSID_CAM_IDX);
-+	h2c->w4 = le32_encode_bits(sma[0], ADDR_CAM_W4_SMA0) |
-+		  le32_encode_bits(sma[1], ADDR_CAM_W4_SMA1) |
-+		  le32_encode_bits(sma[2], ADDR_CAM_W4_SMA2) |
-+		  le32_encode_bits(sma[3], ADDR_CAM_W4_SMA3);
-+	h2c->w5 = le32_encode_bits(sma[4], ADDR_CAM_W5_SMA4) |
-+		  le32_encode_bits(sma[5], ADDR_CAM_W5_SMA5) |
-+		  le32_encode_bits(tma[0], ADDR_CAM_W5_TMA0) |
-+		  le32_encode_bits(tma[1], ADDR_CAM_W5_TMA1);
-+	h2c->w6 = le32_encode_bits(tma[2], ADDR_CAM_W6_TMA2) |
-+		  le32_encode_bits(tma[3], ADDR_CAM_W6_TMA3) |
-+		  le32_encode_bits(tma[4], ADDR_CAM_W6_TMA4) |
-+		  le32_encode_bits(tma[5], ADDR_CAM_W6_TMA5);
-+	h2c->w8 = le32_encode_bits(rtwvif_link->port, ADDR_CAM_W8_PORT_INT) |
-+		  le32_encode_bits(rtwvif_link->port, ADDR_CAM_W8_TSF_SYNC) |
-+		  le32_encode_bits(rtwvif_link->trigger, ADDR_CAM_W8_TF_TRS) |
-+		  le32_encode_bits(rtwvif_link->lsig_txop, ADDR_CAM_W8_LSIG_TXOP) |
-+		  le32_encode_bits(rtwvif_link->tgt_ind, ADDR_CAM_W8_TGT_IND) |
-+		  le32_encode_bits(rtwvif_link->frm_tgt_ind, ADDR_CAM_W8_FRM_TGT_IND) |
-+		  le32_encode_bits(rtwsta_link ? rtwsta_link->mac_id :
-+						 rtwvif_link->mac_id, ADDR_CAM_W8_MACID);
-+
- 	if (rtwvif_link->net_type == RTW89_NET_TYPE_INFRA)
--		FWCMD_SET_ADDR_AID12(cmd, vif->cfg.aid & 0xfff);
-+		h2c->w9 = le32_encode_bits(vif->cfg.aid & 0xfff, ADDR_CAM_W9_AID12);
- 	else if (rtwvif_link->net_type == RTW89_NET_TYPE_AP_MODE)
--		FWCMD_SET_ADDR_AID12(cmd, sta ? sta->aid & 0xfff : 0);
--	FWCMD_SET_ADDR_WOL_PATTERN(cmd, rtwvif_link->wowlan_pattern);
--	FWCMD_SET_ADDR_WOL_UC(cmd, rtwvif_link->wowlan_uc);
--	FWCMD_SET_ADDR_WOL_MAGIC(cmd, rtwvif_link->wowlan_magic);
--	FWCMD_SET_ADDR_WAPI(cmd, addr_cam->wapi);
--	FWCMD_SET_ADDR_SEC_ENT_MODE(cmd, addr_cam->sec_ent_mode);
--	FWCMD_SET_ADDR_SEC_ENT0_KEYID(cmd, addr_cam->sec_ent_keyid[0]);
--	FWCMD_SET_ADDR_SEC_ENT1_KEYID(cmd, addr_cam->sec_ent_keyid[1]);
--	FWCMD_SET_ADDR_SEC_ENT2_KEYID(cmd, addr_cam->sec_ent_keyid[2]);
--	FWCMD_SET_ADDR_SEC_ENT3_KEYID(cmd, addr_cam->sec_ent_keyid[3]);
--	FWCMD_SET_ADDR_SEC_ENT4_KEYID(cmd, addr_cam->sec_ent_keyid[4]);
--	FWCMD_SET_ADDR_SEC_ENT5_KEYID(cmd, addr_cam->sec_ent_keyid[5]);
--	FWCMD_SET_ADDR_SEC_ENT6_KEYID(cmd, addr_cam->sec_ent_keyid[6]);
--
--	FWCMD_SET_ADDR_SEC_ENT_VALID(cmd, addr_cam->sec_cam_map[0] & 0xff);
--	FWCMD_SET_ADDR_SEC_ENT0(cmd, addr_cam->sec_ent[0]);
--	FWCMD_SET_ADDR_SEC_ENT1(cmd, addr_cam->sec_ent[1]);
--	FWCMD_SET_ADDR_SEC_ENT2(cmd, addr_cam->sec_ent[2]);
--	FWCMD_SET_ADDR_SEC_ENT3(cmd, addr_cam->sec_ent[3]);
--	FWCMD_SET_ADDR_SEC_ENT4(cmd, addr_cam->sec_ent[4]);
--	FWCMD_SET_ADDR_SEC_ENT5(cmd, addr_cam->sec_ent[5]);
--	FWCMD_SET_ADDR_SEC_ENT6(cmd, addr_cam->sec_ent[6]);
-+		h2c->w9 = le32_encode_bits(sta ? sta->aid & 0xfff : 0, ADDR_CAM_W9_AID12);
-+
-+	h2c->w9 |= le32_encode_bits(rtwvif_link->wowlan_pattern, ADDR_CAM_W9_WOL_PATTERN) |
-+		   le32_encode_bits(rtwvif_link->wowlan_uc, ADDR_CAM_W9_WOL_UC) |
-+		   le32_encode_bits(rtwvif_link->wowlan_magic, ADDR_CAM_W9_WOL_MAGIC) |
-+		   le32_encode_bits(addr_cam->wapi, ADDR_CAM_W9_WAPI) |
-+		   le32_encode_bits(addr_cam->sec_ent_mode, ADDR_CAM_W9_SEC_ENT_MODE) |
-+		   le32_encode_bits(addr_cam->sec_ent_keyid[0], ADDR_CAM_W9_SEC_ENT0_KEYID) |
-+		   le32_encode_bits(addr_cam->sec_ent_keyid[1], ADDR_CAM_W9_SEC_ENT1_KEYID) |
-+		   le32_encode_bits(addr_cam->sec_ent_keyid[2], ADDR_CAM_W9_SEC_ENT2_KEYID) |
-+		   le32_encode_bits(addr_cam->sec_ent_keyid[3], ADDR_CAM_W9_SEC_ENT3_KEYID) |
-+		   le32_encode_bits(addr_cam->sec_ent_keyid[4], ADDR_CAM_W9_SEC_ENT4_KEYID) |
-+		   le32_encode_bits(addr_cam->sec_ent_keyid[5], ADDR_CAM_W9_SEC_ENT5_KEYID) |
-+		   le32_encode_bits(addr_cam->sec_ent_keyid[6], ADDR_CAM_W9_SEC_ENT6_KEYID);
-+	h2c->w10 = le32_encode_bits(addr_cam->sec_cam_map[0] & 0xff, ADDR_CAM_W10_SEC_ENT_VALID) |
-+		   le32_encode_bits(addr_cam->sec_ent[0], ADDR_CAM_W10_SEC_ENT0) |
-+		   le32_encode_bits(addr_cam->sec_ent[1], ADDR_CAM_W10_SEC_ENT1) |
-+		   le32_encode_bits(addr_cam->sec_ent[2], ADDR_CAM_W10_SEC_ENT2);
-+	h2c->w11 = le32_encode_bits(addr_cam->sec_ent[3], ADDR_CAM_W11_SEC_ENT3) |
-+		   le32_encode_bits(addr_cam->sec_ent[4], ADDR_CAM_W11_SEC_ENT4) |
-+		   le32_encode_bits(addr_cam->sec_ent[5], ADDR_CAM_W11_SEC_ENT5) |
-+		   le32_encode_bits(addr_cam->sec_ent[6], ADDR_CAM_W11_SEC_ENT6);
- 
- 	rcu_read_unlock();
- }
 diff --git a/drivers/net/wireless/realtek/rtw89/cam.h b/drivers/net/wireless/realtek/rtw89/cam.h
-index 8fd2d776408ea..2bc8fbf79c0b8 100644
+index 2bc8fbf79c0b8..4436bacf0348e 100644
 --- a/drivers/net/wireless/realtek/rtw89/cam.h
 +++ b/drivers/net/wireless/realtek/rtw89/cam.h
-@@ -12,345 +12,92 @@
+@@ -12,7 +12,7 @@
  #define RTW89_BSSID_MATCH_ALL GENMASK(5, 0)
  #define RTW89_BSSID_MATCH_5_BYTES GENMASK(4, 0)
  
--static inline void FWCMD_SET_ADDR_IDX(void *cmd, u32 value)
--{
--	le32p_replace_bits((__le32 *)(cmd) + 1, value, GENMASK(7, 0));
--}
--
--static inline void FWCMD_SET_ADDR_OFFSET(void *cmd, u32 value)
--{
--	le32p_replace_bits((__le32 *)(cmd) + 1, value, GENMASK(15, 8));
--}
--
--static inline void FWCMD_SET_ADDR_LEN(void *cmd, u32 value)
--{
--	le32p_replace_bits((__le32 *)(cmd) + 1, value, GENMASK(23, 16));
--}
--
--static inline void FWCMD_SET_ADDR_VALID(void *cmd, u32 value)
--{
--	le32p_replace_bits((__le32 *)(cmd) + 2, value, BIT(0));
--}
--
--static inline void FWCMD_SET_ADDR_NET_TYPE(void *cmd, u32 value)
--{
--	le32p_replace_bits((__le32 *)(cmd) + 2, value, GENMASK(2, 1));
--}
--
--static inline void FWCMD_SET_ADDR_BCN_HIT_COND(void *cmd, u32 value)
--{
--	le32p_replace_bits((__le32 *)(cmd) + 2, value, GENMASK(4, 3));
--}
--
--static inline void FWCMD_SET_ADDR_HIT_RULE(void *cmd, u32 value)
--{
--	le32p_replace_bits((__le32 *)(cmd) + 2, value, GENMASK(6, 5));
--}
--
--static inline void FWCMD_SET_ADDR_BB_SEL(void *cmd, u32 value)
--{
--	le32p_replace_bits((__le32 *)(cmd) + 2, value, BIT(7));
--}
--
--static inline void FWCMD_SET_ADDR_ADDR_MASK(void *cmd, u32 value)
--{
--	le32p_replace_bits((__le32 *)(cmd) + 2, value, GENMASK(13, 8));
--}
--
--static inline void FWCMD_SET_ADDR_MASK_SEL(void *cmd, u32 value)
--{
--	le32p_replace_bits((__le32 *)(cmd) + 2, value, GENMASK(15, 14));
--}
--
--static inline void FWCMD_SET_ADDR_SMA_HASH(void *cmd, u32 value)
--{
--	le32p_replace_bits((__le32 *)(cmd) + 2, value, GENMASK(23, 16));
--}
--
--static inline void FWCMD_SET_ADDR_TMA_HASH(void *cmd, u32 value)
--{
--	le32p_replace_bits((__le32 *)(cmd) + 2, value, GENMASK(31, 24));
--}
--
--static inline void FWCMD_SET_ADDR_BSSID_CAM_IDX(void *cmd, u32 value)
--{
--	le32p_replace_bits((__le32 *)(cmd) + 3, value, GENMASK(5, 0));
--}
--
--static inline void FWCMD_SET_ADDR_SMA0(void *cmd, u32 value)
--{
--	le32p_replace_bits((__le32 *)(cmd) + 4, value, GENMASK(7, 0));
--}
--
--static inline void FWCMD_SET_ADDR_SMA1(void *cmd, u32 value)
--{
--	le32p_replace_bits((__le32 *)(cmd) + 4, value, GENMASK(15, 8));
--}
--
--static inline void FWCMD_SET_ADDR_SMA2(void *cmd, u32 value)
--{
--	le32p_replace_bits((__le32 *)(cmd) + 4, value, GENMASK(23, 16));
--}
--
--static inline void FWCMD_SET_ADDR_SMA3(void *cmd, u32 value)
--{
--	le32p_replace_bits((__le32 *)(cmd) + 4, value, GENMASK(31, 24));
--}
--
--static inline void FWCMD_SET_ADDR_SMA4(void *cmd, u32 value)
--{
--	le32p_replace_bits((__le32 *)(cmd) + 5, value, GENMASK(7, 0));
--}
--
--static inline void FWCMD_SET_ADDR_SMA5(void *cmd, u32 value)
--{
--	le32p_replace_bits((__le32 *)(cmd) + 5, value, GENMASK(15, 8));
--}
--
--static inline void FWCMD_SET_ADDR_TMA0(void *cmd, u32 value)
--{
--	le32p_replace_bits((__le32 *)(cmd) + 5, value, GENMASK(23, 16));
--}
--
--static inline void FWCMD_SET_ADDR_TMA1(void *cmd, u32 value)
--{
--	le32p_replace_bits((__le32 *)(cmd) + 5, value, GENMASK(31, 24));
--}
--
--static inline void FWCMD_SET_ADDR_TMA2(void *cmd, u32 value)
--{
--	le32p_replace_bits((__le32 *)(cmd) + 6, value, GENMASK(7, 0));
--}
--
--static inline void FWCMD_SET_ADDR_TMA3(void *cmd, u32 value)
--{
--	le32p_replace_bits((__le32 *)(cmd) + 6, value, GENMASK(15, 8));
--}
--
--static inline void FWCMD_SET_ADDR_TMA4(void *cmd, u32 value)
--{
--	le32p_replace_bits((__le32 *)(cmd) + 6, value, GENMASK(23, 16));
--}
--
--static inline void FWCMD_SET_ADDR_TMA5(void *cmd, u32 value)
--{
--	le32p_replace_bits((__le32 *)(cmd) + 6, value, GENMASK(31, 24));
--}
--
--static inline void FWCMD_SET_ADDR_MACID(void *cmd, u32 value)
--{
--	le32p_replace_bits((__le32 *)(cmd) + 8, value, GENMASK(7, 0));
--}
--
--static inline void FWCMD_SET_ADDR_PORT_INT(void *cmd, u32 value)
--{
--	le32p_replace_bits((__le32 *)(cmd) + 8, value, GENMASK(10, 8));
--}
--
--static inline void FWCMD_SET_ADDR_TSF_SYNC(void *cmd, u32 value)
--{
--	le32p_replace_bits((__le32 *)(cmd) + 8, value, GENMASK(13, 11));
--}
--
--static inline void FWCMD_SET_ADDR_TF_TRS(void *cmd, u32 value)
--{
--	le32p_replace_bits((__le32 *)(cmd) + 8, value, BIT(14));
--}
--
--static inline void FWCMD_SET_ADDR_LSIG_TXOP(void *cmd, u32 value)
--{
--	le32p_replace_bits((__le32 *)(cmd) + 8, value, BIT(15));
--}
--
--static inline void FWCMD_SET_ADDR_TGT_IND(void *cmd, u32 value)
--{
--	le32p_replace_bits((__le32 *)(cmd) + 8, value, GENMASK(26, 24));
--}
--
--static inline void FWCMD_SET_ADDR_FRM_TGT_IND(void *cmd, u32 value)
--{
--	le32p_replace_bits((__le32 *)(cmd) + 8, value, GENMASK(29, 27));
--}
--
--static inline void FWCMD_SET_ADDR_AID12(void *cmd, u32 value)
--{
--	le32p_replace_bits((__le32 *)(cmd) + 9, value, GENMASK(11, 0));
--}
--
--static inline void FWCMD_SET_ADDR_AID12_0(void *cmd, u32 value)
--{
--	le32p_replace_bits((__le32 *)(cmd) + 9, value, GENMASK(7, 0));
--}
--
--static inline void FWCMD_SET_ADDR_AID12_1(void *cmd, u32 value)
--{
--	le32p_replace_bits((__le32 *)(cmd) + 9, value, GENMASK(11, 8));
--}
--
--static inline void FWCMD_SET_ADDR_WOL_PATTERN(void *cmd, u32 value)
--{
--	le32p_replace_bits((__le32 *)(cmd) + 9, value, BIT(12));
--}
--
--static inline void FWCMD_SET_ADDR_WOL_UC(void *cmd, u32 value)
--{
--	le32p_replace_bits((__le32 *)(cmd) + 9, value, BIT(13));
--}
--
--static inline void FWCMD_SET_ADDR_WOL_MAGIC(void *cmd, u32 value)
--{
--	le32p_replace_bits((__le32 *)(cmd) + 9, value, BIT(14));
--}
--
--static inline void FWCMD_SET_ADDR_WAPI(void *cmd, u32 value)
--{
--	le32p_replace_bits((__le32 *)(cmd) + 9, value, BIT(15));
--}
--
--static inline void FWCMD_SET_ADDR_SEC_ENT_MODE(void *cmd, u32 value)
--{
--	le32p_replace_bits((__le32 *)(cmd) + 9, value, GENMASK(17, 16));
--}
--
--static inline void FWCMD_SET_ADDR_SEC_ENT0_KEYID(void *cmd, u32 value)
--{
--	le32p_replace_bits((__le32 *)(cmd) + 9, value, GENMASK(19, 18));
--}
--
--static inline void FWCMD_SET_ADDR_SEC_ENT1_KEYID(void *cmd, u32 value)
--{
--	le32p_replace_bits((__le32 *)(cmd) + 9, value, GENMASK(21, 20));
--}
--
--static inline void FWCMD_SET_ADDR_SEC_ENT2_KEYID(void *cmd, u32 value)
--{
--	le32p_replace_bits((__le32 *)(cmd) + 9, value, GENMASK(23, 22));
--}
--
--static inline void FWCMD_SET_ADDR_SEC_ENT3_KEYID(void *cmd, u32 value)
--{
--	le32p_replace_bits((__le32 *)(cmd) + 9, value, GENMASK(25, 24));
--}
--
--static inline void FWCMD_SET_ADDR_SEC_ENT4_KEYID(void *cmd, u32 value)
--{
--	le32p_replace_bits((__le32 *)(cmd) + 9, value, GENMASK(27, 26));
--}
--
--static inline void FWCMD_SET_ADDR_SEC_ENT5_KEYID(void *cmd, u32 value)
--{
--	le32p_replace_bits((__le32 *)(cmd) + 9, value, GENMASK(29, 28));
--}
--
--static inline void FWCMD_SET_ADDR_SEC_ENT6_KEYID(void *cmd, u32 value)
--{
--	le32p_replace_bits((__le32 *)(cmd) + 9, value, GENMASK(31, 30));
--}
--
--static inline void FWCMD_SET_ADDR_SEC_ENT_VALID(void *cmd, u32 value)
--{
--	le32p_replace_bits((__le32 *)(cmd) + 10, value, GENMASK(7, 0));
--}
--
--static inline void FWCMD_SET_ADDR_SEC_ENT0(void *cmd, u32 value)
--{
--	le32p_replace_bits((__le32 *)(cmd) + 10, value, GENMASK(15, 8));
--}
--
--static inline void FWCMD_SET_ADDR_SEC_ENT1(void *cmd, u32 value)
--{
--	le32p_replace_bits((__le32 *)(cmd) + 10, value, GENMASK(23, 16));
--}
--
--static inline void FWCMD_SET_ADDR_SEC_ENT2(void *cmd, u32 value)
--{
--	le32p_replace_bits((__le32 *)(cmd) + 10, value, GENMASK(31, 24));
--}
--
--static inline void FWCMD_SET_ADDR_SEC_ENT3(void *cmd, u32 value)
--{
--	le32p_replace_bits((__le32 *)(cmd) + 11, value, GENMASK(7, 0));
--}
--
--static inline void FWCMD_SET_ADDR_SEC_ENT4(void *cmd, u32 value)
--{
--	le32p_replace_bits((__le32 *)(cmd) + 11, value, GENMASK(15, 8));
--}
--
--static inline void FWCMD_SET_ADDR_SEC_ENT5(void *cmd, u32 value)
--{
--	le32p_replace_bits((__le32 *)(cmd) + 11, value, GENMASK(23, 16));
--}
--
--static inline void FWCMD_SET_ADDR_SEC_ENT6(void *cmd, u32 value)
--{
--	le32p_replace_bits((__le32 *)(cmd) + 11, value, GENMASK(31, 24));
--}
--
--static inline void FWCMD_SET_ADDR_BSSID_IDX(void *cmd, u32 value)
--{
--	le32p_replace_bits((__le32 *)(cmd) + 12, value, GENMASK(7, 0));
--}
--
--static inline void FWCMD_SET_ADDR_BSSID_OFFSET(void *cmd, u32 value)
--{
--	le32p_replace_bits((__le32 *)(cmd) + 12, value, GENMASK(15, 8));
--}
--
--static inline void FWCMD_SET_ADDR_BSSID_LEN(void *cmd, u32 value)
--{
--	le32p_replace_bits((__le32 *)(cmd) + 12, value, GENMASK(23, 16));
--}
--
--static inline void FWCMD_SET_ADDR_BSSID_VALID(void *cmd, u32 value)
--{
--	le32p_replace_bits((__le32 *)(cmd) + 13, value, BIT(0));
--}
--
--static inline void FWCMD_SET_ADDR_BSSID_BB_SEL(void *cmd, u32 value)
--{
--	le32p_replace_bits((__le32 *)(cmd) + 13, value, BIT(1));
--}
--
--static inline void FWCMD_SET_ADDR_BSSID_MASK(void *cmd, u32 value)
--{
--	le32p_replace_bits((__le32 *)(cmd) + 13, value, GENMASK(7, 2));
--}
--
--static inline void FWCMD_SET_ADDR_BSSID_BSS_COLOR(void *cmd, u32 value)
--{
--	le32p_replace_bits((__le32 *)(cmd) + 13, value, GENMASK(13, 8));
--}
--
--static inline void FWCMD_SET_ADDR_BSSID_BSSID0(void *cmd, u32 value)
--{
--	le32p_replace_bits((__le32 *)(cmd) + 13, value, GENMASK(23, 16));
--}
--
--static inline void FWCMD_SET_ADDR_BSSID_BSSID1(void *cmd, u32 value)
--{
--	le32p_replace_bits((__le32 *)(cmd) + 13, value, GENMASK(31, 24));
--}
--
--static inline void FWCMD_SET_ADDR_BSSID_BSSID2(void *cmd, u32 value)
--{
--	le32p_replace_bits((__le32 *)(cmd) + 14, value, GENMASK(7, 0));
--}
--
--static inline void FWCMD_SET_ADDR_BSSID_BSSID3(void *cmd, u32 value)
--{
--	le32p_replace_bits((__le32 *)(cmd) + 14, value, GENMASK(15, 8));
--}
--
--static inline void FWCMD_SET_ADDR_BSSID_BSSID4(void *cmd, u32 value)
--{
--	le32p_replace_bits((__le32 *)(cmd) + 14, value, GENMASK(23, 16));
--}
-+struct rtw89_h2c_addr_cam {
-+	__le32 w0;
-+	__le32 w1;
-+	__le32 w2;
-+	__le32 w3;
-+	__le32 w4;
-+	__le32 w5;
-+	__le32 w6;
-+	__le32 w7;
-+	__le32 w8;
-+	__le32 w9;
-+	__le32 w10;
-+	__le32 w11;
-+	__le32 w12;
-+	__le32 w13;
-+	__le32 w14;
-+} __packed;
+-struct rtw89_h2c_addr_cam {
++struct rtw89_h2c_addr_cam_v0 {
+ 	__le32 w0;
+ 	__le32 w1;
+ 	__le32 w2;
+@@ -30,6 +30,11 @@ struct rtw89_h2c_addr_cam {
+ 	__le32 w14;
+ } __packed;
  
--static inline void FWCMD_SET_ADDR_BSSID_BSSID5(void *cmd, u32 value)
--{
--	le32p_replace_bits((__le32 *)(cmd) + 14, value, GENMASK(31, 24));
--}
-+#define ADDR_CAM_W1_IDX GENMASK(7, 0)
-+#define ADDR_CAM_W1_OFFSET GENMASK(15, 8)
-+#define ADDR_CAM_W1_LEN GENMASK(23, 16)
-+#define ADDR_CAM_W2_VALID BIT(0)
-+#define ADDR_CAM_W2_NET_TYPE GENMASK(2, 1)
-+#define ADDR_CAM_W2_BCN_HIT_COND GENMASK(4, 3)
-+#define ADDR_CAM_W2_HIT_RULE GENMASK(6, 5)
-+#define ADDR_CAM_W2_BB_SEL BIT(7)
-+#define ADDR_CAM_W2_ADDR_MASK GENMASK(13, 8)
-+#define ADDR_CAM_W2_MASK_SEL GENMASK(15, 14)
-+#define ADDR_CAM_W2_SMA_HASH GENMASK(23, 16)
-+#define ADDR_CAM_W2_TMA_HASH GENMASK(31, 24)
-+#define ADDR_CAM_W3_BSSID_CAM_IDX GENMASK(5, 0)
-+#define ADDR_CAM_W4_SMA0 GENMASK(7, 0)
-+#define ADDR_CAM_W4_SMA1 GENMASK(15, 8)
-+#define ADDR_CAM_W4_SMA2 GENMASK(23, 16)
-+#define ADDR_CAM_W4_SMA3 GENMASK(31, 24)
-+#define ADDR_CAM_W5_SMA4 GENMASK(7, 0)
-+#define ADDR_CAM_W5_SMA5 GENMASK(15, 8)
-+#define ADDR_CAM_W5_TMA0 GENMASK(23, 16)
-+#define ADDR_CAM_W5_TMA1 GENMASK(31, 24)
-+#define ADDR_CAM_W6_TMA2 GENMASK(7, 0)
-+#define ADDR_CAM_W6_TMA3 GENMASK(15, 8)
-+#define ADDR_CAM_W6_TMA4 GENMASK(23, 16)
-+#define ADDR_CAM_W6_TMA5 GENMASK(31, 24)
-+#define ADDR_CAM_W8_MACID GENMASK(7, 0)
-+#define ADDR_CAM_W8_PORT_INT GENMASK(10, 8)
-+#define ADDR_CAM_W8_TSF_SYNC GENMASK(13, 11)
-+#define ADDR_CAM_W8_TF_TRS BIT(14)
-+#define ADDR_CAM_W8_LSIG_TXOP BIT(15)
-+#define ADDR_CAM_W8_TGT_IND GENMASK(26, 24)
-+#define ADDR_CAM_W8_FRM_TGT_IND GENMASK(29, 27)
-+#define ADDR_CAM_W9_AID12 GENMASK(11, 0)
-+#define ADDR_CAM_W9_AID12_0 GENMASK(7, 0)
-+#define ADDR_CAM_W9_AID12_1 GENMASK(11, 8)
-+#define ADDR_CAM_W9_WOL_PATTERN BIT(12)
-+#define ADDR_CAM_W9_WOL_UC BIT(13)
-+#define ADDR_CAM_W9_WOL_MAGIC BIT(14)
-+#define ADDR_CAM_W9_WAPI BIT(15)
-+#define ADDR_CAM_W9_SEC_ENT_MODE GENMASK(17, 16)
-+#define ADDR_CAM_W9_SEC_ENT0_KEYID GENMASK(19, 18)
-+#define ADDR_CAM_W9_SEC_ENT1_KEYID GENMASK(21, 20)
-+#define ADDR_CAM_W9_SEC_ENT2_KEYID GENMASK(23, 22)
-+#define ADDR_CAM_W9_SEC_ENT3_KEYID GENMASK(25, 24)
-+#define ADDR_CAM_W9_SEC_ENT4_KEYID GENMASK(27, 26)
-+#define ADDR_CAM_W9_SEC_ENT5_KEYID GENMASK(29, 28)
-+#define ADDR_CAM_W9_SEC_ENT6_KEYID GENMASK(31, 30)
-+#define ADDR_CAM_W10_SEC_ENT_VALID GENMASK(7, 0)
-+#define ADDR_CAM_W10_SEC_ENT0 GENMASK(15, 8)
-+#define ADDR_CAM_W10_SEC_ENT1 GENMASK(23, 16)
-+#define ADDR_CAM_W10_SEC_ENT2 GENMASK(31, 24)
-+#define ADDR_CAM_W11_SEC_ENT3 GENMASK(7, 0)
-+#define ADDR_CAM_W11_SEC_ENT4 GENMASK(15, 8)
-+#define ADDR_CAM_W11_SEC_ENT5 GENMASK(23, 16)
-+#define ADDR_CAM_W11_SEC_ENT6 GENMASK(31, 24)
-+#define ADDR_CAM_W12_BSSID_IDX GENMASK(7, 0)
-+#define ADDR_CAM_W12_BSSID_OFFSET GENMASK(15, 8)
-+#define ADDR_CAM_W12_BSSID_LEN GENMASK(23, 16)
-+#define ADDR_CAM_W13_BSSID_VALID BIT(0)
-+#define ADDR_CAM_W13_BSSID_BB_SEL BIT(1)
-+#define ADDR_CAM_W13_BSSID_MASK GENMASK(7, 2)
-+#define ADDR_CAM_W13_BSSID_BSS_COLOR GENMASK(13, 8)
-+#define ADDR_CAM_W13_BSSID_BSSID0 GENMASK(23, 16)
-+#define ADDR_CAM_W13_BSSID_BSSID1 GENMASK(31, 24)
-+#define ADDR_CAM_W14_BSSID_BSSID2 GENMASK(7, 0)
-+#define ADDR_CAM_W14_BSSID_BSSID3 GENMASK(15, 8)
-+#define ADDR_CAM_W14_BSSID_BSSID4 GENMASK(23, 16)
-+#define ADDR_CAM_W14_BSSID_BSSID5 GENMASK(31, 24)
++struct rtw89_h2c_addr_cam {
++	struct rtw89_h2c_addr_cam_v0 v0;
++	__le32 w15;
++} __packed;
++
+ #define ADDR_CAM_W1_IDX GENMASK(7, 0)
+ #define ADDR_CAM_W1_OFFSET GENMASK(15, 8)
+ #define ADDR_CAM_W1_LEN GENMASK(23, 16)
+@@ -98,6 +103,7 @@ struct rtw89_h2c_addr_cam {
+ #define ADDR_CAM_W14_BSSID_BSSID3 GENMASK(15, 8)
+ #define ADDR_CAM_W14_BSSID_BSSID4 GENMASK(23, 16)
+ #define ADDR_CAM_W14_BSSID_BSSID5 GENMASK(31, 24)
++#define ADDR_CAM_W15_UPD_MODE GENMASK(2, 0)
  
  struct rtw89_h2c_dctlinfo_ud_v1 {
  	__le32 c0;
-@@ -552,9 +299,10 @@ int rtw89_cam_init_bssid_cam(struct rtw89_dev *rtwdev,
- void rtw89_cam_deinit_bssid_cam(struct rtw89_dev *rtwdev,
- 				struct rtw89_bssid_cam_entry *bssid_cam);
- void rtw89_cam_fill_addr_cam_info(struct rtw89_dev *rtwdev,
--				  struct rtw89_vif_link *vif,
-+				  struct rtw89_vif_link *rtwvif_link,
+@@ -302,7 +308,7 @@ void rtw89_cam_fill_addr_cam_info(struct rtw89_dev *rtwdev,
+ 				  struct rtw89_vif_link *rtwvif_link,
  				  struct rtw89_sta_link *rtwsta_link,
--				  const u8 *scan_mac_addr, u8 *cmd);
-+				  const u8 *scan_mac_addr,
-+				  struct rtw89_h2c_addr_cam *h2c);
+ 				  const u8 *scan_mac_addr,
+-				  struct rtw89_h2c_addr_cam *h2c);
++				  struct rtw89_h2c_addr_cam_v0 *h2c);
  void rtw89_cam_fill_dctl_sec_cam_info_v1(struct rtw89_dev *rtwdev,
  					 struct rtw89_vif_link *rtwvif_link,
  					 struct rtw89_sta_link *rtwsta_link,
-@@ -565,7 +313,8 @@ void rtw89_cam_fill_dctl_sec_cam_info_v2(struct rtw89_dev *rtwdev,
- 					 struct rtw89_h2c_dctlinfo_ud_v2 *h2c);
+@@ -314,7 +320,7 @@ void rtw89_cam_fill_dctl_sec_cam_info_v2(struct rtw89_dev *rtwdev,
  int rtw89_cam_fill_bssid_cam_info(struct rtw89_dev *rtwdev,
  				  struct rtw89_vif_link *rtwvif_link,
--				  struct rtw89_sta_link *rtwsta_link, u8 *cmd);
-+				  struct rtw89_sta_link *rtwsta_link,
-+				  struct rtw89_h2c_addr_cam *h2c);
+ 				  struct rtw89_sta_link *rtwsta_link,
+-				  struct rtw89_h2c_addr_cam *h2c);
++				  struct rtw89_h2c_addr_cam_v0 *h2c);
  int rtw89_cam_sec_key_add(struct rtw89_dev *rtwdev,
  			  struct ieee80211_vif *vif,
  			  struct ieee80211_sta *sta,
-diff --git a/drivers/net/wireless/realtek/rtw89/fw.c b/drivers/net/wireless/realtek/rtw89/fw.c
-index 15ac357bbdbac..04040efdf1f1b 100644
---- a/drivers/net/wireless/realtek/rtw89/fw.c
-+++ b/drivers/net/wireless/realtek/rtw89/fw.c
-@@ -2110,28 +2110,31 @@ void rtw89_fw_log_dump(struct rtw89_dev *rtwdev, u8 *buf, u32 len)
+diff --git a/drivers/net/wireless/realtek/rtw89/core.c b/drivers/net/wireless/realtek/rtw89/core.c
+index 018857d3569a8..5fd15fc840d8c 100644
+--- a/drivers/net/wireless/realtek/rtw89/core.c
++++ b/drivers/net/wireless/realtek/rtw89/core.c
+@@ -4703,7 +4703,8 @@ int rtw89_core_sta_link_disconnect(struct rtw89_dev *rtwdev,
+ 	}
  
+ 	/* update cam aid mac_id net_type */
+-	ret = rtw89_fw_h2c_cam(rtwdev, rtwvif_link, rtwsta_link, NULL);
++	ret = rtw89_fw_h2c_cam(rtwdev, rtwvif_link, rtwsta_link, NULL,
++			       RTW89_ROLE_CON_DISCONN);
+ 	if (ret) {
+ 		rtw89_warn(rtwdev, "failed to send h2c cam\n");
+ 		return ret;
+@@ -4777,7 +4778,8 @@ int rtw89_core_sta_link_assoc(struct rtw89_dev *rtwdev,
+ 	}
+ 
+ 	/* update cam aid mac_id net_type */
+-	ret = rtw89_fw_h2c_cam(rtwdev, rtwvif_link, rtwsta_link, NULL);
++	ret = rtw89_fw_h2c_cam(rtwdev, rtwvif_link, rtwsta_link, NULL,
++			       RTW89_ROLE_CON_DISCONN);
+ 	if (ret) {
+ 		rtw89_warn(rtwdev, "failed to send h2c cam\n");
+ 		return ret;
+@@ -5895,7 +5897,8 @@ void rtw89_core_scan_start(struct rtw89_dev *rtwdev, struct rtw89_vif_link *rtwv
+ 	rtw89_phy_config_edcca(rtwdev, bb, true);
+ 	rtw89_tas_scan(rtwdev, true);
+ 
+-	rtw89_fw_h2c_cam(rtwdev, rtwvif_link, NULL, mac_addr);
++	rtw89_fw_h2c_cam(rtwdev, rtwvif_link, NULL, mac_addr,
++			 RTW89_ROLE_INFO_CHANGE);
  }
  
--#define H2C_CAM_LEN 60
+ void rtw89_core_scan_complete(struct rtw89_dev *rtwdev,
+@@ -5915,7 +5918,8 @@ void rtw89_core_scan_complete(struct rtw89_dev *rtwdev,
+ 
+ 	rcu_read_unlock();
+ 
+-	rtw89_fw_h2c_cam(rtwdev, rtwvif_link, NULL, NULL);
++	rtw89_fw_h2c_cam(rtwdev, rtwvif_link, NULL, NULL,
++			 RTW89_ROLE_INFO_CHANGE);
+ 
+ 	rtw89_chip_rfk_scan(rtwdev, rtwvif_link, false);
+ 	rtw89_btc_ntfy_scan_finish(rtwdev, rtwvif_link->phy_idx);
+diff --git a/drivers/net/wireless/realtek/rtw89/core.h b/drivers/net/wireless/realtek/rtw89/core.h
+index 7e35168e8d606..30bc177808352 100644
+--- a/drivers/net/wireless/realtek/rtw89/core.h
++++ b/drivers/net/wireless/realtek/rtw89/core.h
+@@ -4640,6 +4640,7 @@ enum rtw89_fw_feature {
+ 	RTW89_FW_FEATURE_RFK_NTFY_MCC_V0,
+ 	RTW89_FW_FEATURE_LPS_DACK_BY_C2H_REG,
+ 	RTW89_FW_FEATURE_BEACON_TRACKING,
++	RTW89_FW_FEATURE_ADDR_CAM_V0,
+ };
+ 
+ struct rtw89_fw_suit {
+diff --git a/drivers/net/wireless/realtek/rtw89/fw.c b/drivers/net/wireless/realtek/rtw89/fw.c
+index 04040efdf1f1b..81cd3ea2c3b69 100644
+--- a/drivers/net/wireless/realtek/rtw89/fw.c
++++ b/drivers/net/wireless/realtek/rtw89/fw.c
+@@ -870,6 +870,7 @@ static const struct __fw_feat_cfg fw_feat_tbl[] = {
+ 	__CFG_FW_FEAT(RTL8922A, ge, 0, 35, 76, 0, LPS_DACK_BY_C2H_REG),
+ 	__CFG_FW_FEAT(RTL8922A, ge, 0, 35, 79, 0, CRASH_TRIGGER_TYPE_1),
+ 	__CFG_FW_FEAT(RTL8922A, ge, 0, 35, 80, 0, BEACON_TRACKING),
++	__CFG_FW_FEAT(RTL8922A, lt, 0, 35, 84, 0, ADDR_CAM_V0),
+ };
+ 
+ static void rtw89_fw_iterate_feature_cfg(struct rtw89_fw_info *fw,
+@@ -2111,25 +2112,42 @@ void rtw89_fw_log_dump(struct rtw89_dev *rtwdev, u8 *buf, u32 len)
+ }
+ 
  int rtw89_fw_h2c_cam(struct rtw89_dev *rtwdev, struct rtw89_vif_link *rtwvif_link,
- 		     struct rtw89_sta_link *rtwsta_link, const u8 *scan_mac_addr)
+-		     struct rtw89_sta_link *rtwsta_link, const u8 *scan_mac_addr)
++		     struct rtw89_sta_link *rtwsta_link, const u8 *scan_mac_addr,
++		     enum rtw89_upd_mode upd_mode)
  {
-+	struct rtw89_h2c_addr_cam *h2c;
-+	u32 len = sizeof(*h2c);
++	const struct rtw89_chip_info *chip = rtwdev->chip;
++	struct rtw89_h2c_addr_cam_v0 *h2c_v0;
+ 	struct rtw89_h2c_addr_cam *h2c;
+ 	u32 len = sizeof(*h2c);
  	struct sk_buff *skb;
++	u8 ver = U8_MAX;
  	int ret;
  
--	skb = rtw89_fw_h2c_alloc_skb_with_hdr(rtwdev, H2C_CAM_LEN);
-+	skb = rtw89_fw_h2c_alloc_skb_with_hdr(rtwdev, len);
++	if (RTW89_CHK_FW_FEATURE(ADDR_CAM_V0, &rtwdev->fw) ||
++	    chip->chip_gen == RTW89_CHIP_AX) {
++		len = sizeof(*h2c_v0);
++		ver = 0;
++	}
++
+ 	skb = rtw89_fw_h2c_alloc_skb_with_hdr(rtwdev, len);
  	if (!skb) {
  		rtw89_err(rtwdev, "failed to alloc skb for fw dl\n");
  		return -ENOMEM;
  	}
--	skb_put(skb, H2C_CAM_LEN);
--	rtw89_cam_fill_addr_cam_info(rtwdev, rtwvif_link, rtwsta_link, scan_mac_addr,
--				     skb->data);
--	rtw89_cam_fill_bssid_cam_info(rtwdev, rtwvif_link, rtwsta_link, skb->data);
-+	skb_put(skb, len);
-+	h2c = (struct rtw89_h2c_addr_cam *)skb->data;
-+
-+	rtw89_cam_fill_addr_cam_info(rtwdev, rtwvif_link, rtwsta_link,
-+				     scan_mac_addr, h2c);
-+	rtw89_cam_fill_bssid_cam_info(rtwdev, rtwvif_link, rtwsta_link, h2c);
+ 	skb_put(skb, len);
+-	h2c = (struct rtw89_h2c_addr_cam *)skb->data;
++	h2c_v0 = (struct rtw89_h2c_addr_cam_v0 *)skb->data;
  
+ 	rtw89_cam_fill_addr_cam_info(rtwdev, rtwvif_link, rtwsta_link,
+-				     scan_mac_addr, h2c);
+-	rtw89_cam_fill_bssid_cam_info(rtwdev, rtwvif_link, rtwsta_link, h2c);
++				     scan_mac_addr, h2c_v0);
++	rtw89_cam_fill_bssid_cam_info(rtwdev, rtwvif_link, rtwsta_link, h2c_v0);
+ 
++	if (ver == 0)
++		goto hdr;
++
++	h2c = (struct rtw89_h2c_addr_cam *)skb->data;
++	h2c->w15 = le32_encode_bits(upd_mode, ADDR_CAM_W15_UPD_MODE);
++
++hdr:
  	rtw89_h2c_pkt_set_hdr(rtwdev, skb, FWCMD_TYPE_H2C,
  			      H2C_CAT_MAC,
  			      H2C_CL_MAC_ADDR_CAM_UPDATE,
- 			      H2C_FUNC_MAC_ADDR_CAM_UPD, 0, 1,
--			      H2C_CAM_LEN);
-+			      len);
+diff --git a/drivers/net/wireless/realtek/rtw89/fw.h b/drivers/net/wireless/realtek/rtw89/fw.h
+index 47e5cbec306d2..7c3cb6d85ca5d 100644
+--- a/drivers/net/wireless/realtek/rtw89/fw.h
++++ b/drivers/net/wireless/realtek/rtw89/fw.h
+@@ -4827,7 +4827,8 @@ int rtw89_fw_h2c_tbtt_tuning(struct rtw89_dev *rtwdev,
+ 			     struct rtw89_vif_link *rtwvif_link, u32 offset);
+ int rtw89_fw_h2c_pwr_lvl(struct rtw89_dev *rtwdev, struct rtw89_vif_link *rtwvif_link);
+ int rtw89_fw_h2c_cam(struct rtw89_dev *rtwdev, struct rtw89_vif_link *vif,
+-		     struct rtw89_sta_link *rtwsta_link, const u8 *scan_mac_addr);
++		     struct rtw89_sta_link *rtwsta_link, const u8 *scan_mac_addr,
++		     enum rtw89_upd_mode upd_mode);
+ int rtw89_fw_h2c_dctl_sec_cam_v1(struct rtw89_dev *rtwdev,
+ 				 struct rtw89_vif_link *rtwvif_link,
+ 				 struct rtw89_sta_link *rtwsta_link);
+diff --git a/drivers/net/wireless/realtek/rtw89/mac.c b/drivers/net/wireless/realtek/rtw89/mac.c
+index 71194ea68bcee..8194ae570ee94 100644
+--- a/drivers/net/wireless/realtek/rtw89/mac.c
++++ b/drivers/net/wireless/realtek/rtw89/mac.c
+@@ -4786,7 +4786,7 @@ int rtw89_mac_vif_init(struct rtw89_dev *rtwdev, struct rtw89_vif_link *rtwvif_l
+ 	if (ret)
+ 		return ret;
  
- 	ret = rtw89_h2c_tx(rtwdev, skb, false);
+-	ret = rtw89_fw_h2c_cam(rtwdev, rtwvif_link, NULL, NULL);
++	ret = rtw89_fw_h2c_cam(rtwdev, rtwvif_link, NULL, NULL, RTW89_ROLE_CREATE);
+ 	if (ret)
+ 		return ret;
+ 
+@@ -4811,7 +4811,7 @@ int rtw89_mac_vif_deinit(struct rtw89_dev *rtwdev, struct rtw89_vif_link *rtwvif
+ 
+ 	rtw89_cam_deinit(rtwdev, rtwvif_link);
+ 
+-	ret = rtw89_fw_h2c_cam(rtwdev, rtwvif_link, NULL, NULL);
++	ret = rtw89_fw_h2c_cam(rtwdev, rtwvif_link, NULL, NULL, RTW89_ROLE_REMOVE);
+ 	if (ret)
+ 		return ret;
+ 
+diff --git a/drivers/net/wireless/realtek/rtw89/mac80211.c b/drivers/net/wireless/realtek/rtw89/mac80211.c
+index 968d0346a87f4..7c8ec4f3c77e9 100644
+--- a/drivers/net/wireless/realtek/rtw89/mac80211.c
++++ b/drivers/net/wireless/realtek/rtw89/mac80211.c
+@@ -745,7 +745,7 @@ static void rtw89_ops_link_info_changed(struct ieee80211_hw *hw,
+ 	if (changed & BSS_CHANGED_BSSID) {
+ 		ether_addr_copy(rtwvif_link->bssid, conf->bssid);
+ 		rtw89_cam_bssid_changed(rtwdev, rtwvif_link);
+-		rtw89_fw_h2c_cam(rtwdev, rtwvif_link, NULL, NULL);
++		rtw89_fw_h2c_cam(rtwdev, rtwvif_link, NULL, NULL, RTW89_ROLE_INFO_CHANGE);
+ 		WRITE_ONCE(rtwvif_link->sync_bcn_tsf, 0);
+ 	}
+ 
+@@ -804,7 +804,7 @@ static int rtw89_ops_start_ap(struct ieee80211_hw *hw,
+ 	rtw89_chip_h2c_assoc_cmac_tbl(rtwdev, rtwvif_link, NULL);
+ 	rtw89_fw_h2c_role_maintain(rtwdev, rtwvif_link, NULL, RTW89_ROLE_TYPE_CHANGE);
+ 	rtw89_fw_h2c_join_info(rtwdev, rtwvif_link, NULL, true);
+-	rtw89_fw_h2c_cam(rtwdev, rtwvif_link, NULL, NULL);
++	rtw89_fw_h2c_cam(rtwdev, rtwvif_link, NULL, NULL, RTW89_ROLE_TYPE_CHANGE);
+ 	rtw89_chip_rfk_channel(rtwdev, rtwvif_link);
+ 
+ 	if (RTW89_CHK_FW_FEATURE(NOTIFY_AP_INFO, &rtwdev->fw)) {
+diff --git a/drivers/net/wireless/realtek/rtw89/wow.c b/drivers/net/wireless/realtek/rtw89/wow.c
+index f34cd863d1009..f6cdbc15dcc4a 100644
+--- a/drivers/net/wireless/realtek/rtw89/wow.c
++++ b/drivers/net/wireless/realtek/rtw89/wow.c
+@@ -1225,7 +1225,8 @@ static int rtw89_wow_cfg_wake(struct rtw89_dev *rtwdev, bool wow)
+ 		}
+ 	}
+ 
+-	ret = rtw89_fw_h2c_cam(rtwdev, rtwvif_link, rtwsta_link, NULL);
++	ret = rtw89_fw_h2c_cam(rtwdev, rtwvif_link, rtwsta_link, NULL,
++			       RTW89_ROLE_INFO_CHANGE);
  	if (ret) {
+ 		rtw89_warn(rtwdev, "failed to send h2c cam\n");
+ 		return ret;
+@@ -1322,7 +1323,8 @@ static int rtw89_wow_swap_fw(struct rtw89_dev *rtwdev, bool wow)
+ 		return ret;
+ 	}
+ 
+-	ret = rtw89_fw_h2c_cam(rtwdev, rtwvif_link, rtwsta_link, NULL);
++	ret = rtw89_fw_h2c_cam(rtwdev, rtwvif_link, rtwsta_link, NULL,
++			       RTW89_ROLE_FW_RESTORE);
+ 	if (ret) {
+ 		rtw89_warn(rtwdev, "failed to send h2c cam\n");
+ 		return ret;
 -- 
 2.53.0
 
