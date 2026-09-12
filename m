@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8595C3909A4;
-	Sat, 12 Sep 2026 19:56:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60EF53909A5;
+	Sat, 12 Sep 2026 19:56:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789242988; cv=none; b=nKBHk+p5E3DD6L80HA9UyIeB69ucyel+YoEERCNmzGIrQR8vvKjM6k/FZ1KR9PocsbgWd9j1HS0w8FNMqdJQP+TJWoVTq3hZ4MhvyCjfz3/GRVcaD6sjzJdwTDTRjuFYXBRMVNnkLQ1O9HzpDOihfByBTR9YV6fl7Q/0nGe+pEk=
+	t=1789242991; cv=none; b=h+Y1G6gTYPPu0jUibS18YUUBJoYtUWDMqlh5PJOkeH4Mi+5cQITXLKZvxhDn69TbD74GhVrAVzevC7RGxol66myl4qyRxZQFi+xivohVCS6r9WZ6txRK+MxZvXaoO7tCMBmnuxXVJCsOVCaDyE9OToM+iFkwOh3dy9qBsXb1DsA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789242988; c=relaxed/simple;
-	bh=YY9JCXQ2wnkpsJ6X34Bi2MMuhCz/FarTvsKDlllSgGc=;
+	s=arc-20240116; t=1789242991; c=relaxed/simple;
+	bh=YIB73XVhzHhc/uNSLIT1AEEqN+RPIPrX3fmx3QgG0QQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aMyvI9mnZ2ex14pvcH0eogGXVcKFrVfPjJhXoUEg8/OAHiyVwNW9niLqW5Cu1LdyySE7WnouNdYuEK6XKhssXP1zypDwRvZnrps3aZtAV5On8lQgzgqAIJjskq7MGxiIcPN2nNoaJEynFzmNh+wIGNGGqecRcjBxT/A1NUeRNj4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZjhiDHqU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CLZNUlBgNs+CVJqtC4fxRSIHMuqgppBuqXkbWmjaI+HT0cDOh5tGPy3s8UwMlPnLrxKp3vWCw8+YUYo40OwsyGTHLzMGpUka2nGpeAvAeDhbbeV9OGYl44nbFD9U/l91DyT2591/dt9MxoPpr7J43ABBqisV56TSx3W/95z6a1Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wwGzFrp2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZjhiDHqU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0A701F000FF;
-	Sat, 12 Sep 2026 19:56:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wwGzFrp2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9DEB1F000FF;
+	Sat, 12 Sep 2026 19:56:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789242987;
-	bh=dlZSJo0Q82xJoiAq0dA16kH+hb1mg+wk0e7Tqqf45JM=;
+	s=korg; t=1789242990;
+	bh=l2ZCQamzW7VqYf0l0+mrTnJXr7l/t/mJlMyMlEPZaq8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZjhiDHqULUgAJdPBB46HH8Ef2rCAnQPVmIr8YG3xS2OyVKsfrvDasKD64aO7PT7ZI
-	 DwjNlnl8AfdhDkZ4k3E5BBFExg571R+W8bpM7ZXqXVI5XCjleLiKlUN/bUa/mwwAf+
-	 Gxvu97yrjFI5y8EyJ+Rd26s1DBhWlCHQ9k9nR1qk=
+	b=wwGzFrp2fIz426mlsVdOHFxpZPGhudJq7mvxZf2+XQxffXTVqik2CVhPwFtojXop7
+	 fsBVgq+aZh5L3RupK1bkvdN39f75fH0NYwZ4AtnK04iiPus/dN6Q8fUEcmetobGTGg
+	 lb2xu59F706duo/Jj7KmdHvLemmw9hTZyKILrotE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Tao Cui <cuitao@kylinos.cn>,
+	Yu Kuai <yukuai@fygo.io>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 560/798] wifi: ath11k: fix leak in ath11k_service_ready_ext_event()
-Date: Sat, 12 Sep 2026 09:03:08 +0200
-Message-ID: <20260912065529.963145697@linuxfoundation.org>
+Subject: [PATCH 5.10 596/798] block/kyber-iosched: flush per-cpu latency buckets over possible CPUs
+Date: Sat, 12 Sep 2026 09:03:44 +0200
+Message-ID: <20260912065530.784392345@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -52,42 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+From: Tao Cui <cuitao@kylinos.cn>
 
-[ Upstream commit 0293be2212d319d59589082461abf2a9b626cd1c ]
+[ Upstream commit 482fc257de95ab181688e9d1dfcc6b6a58857b1e ]
 
-Currently, during ath11k_service_ready_ext_event() processing,
-svc_rdy_ext.mac_phy_caps can be allocated during TLV parsing. This is a
-temporary allocation that is freed on the success path, but not on the
-error path. If parsing succeeds far enough to allocate mac_phy_caps and
-then fails on a later TLV, the allocation leaks. So free the allocation
-on the error path.
+kyber_timer_fn() sums the per-cpu latency histograms with
+for_each_online_cpu().  A CPU that goes offline mid-interval leaves its
+bucket un-flushed; the samples are lost from the current decision and
+re-appear (stale) when the CPU is onlined again.
 
-Compile tested only.
-
-Fixes: 5b90fc760db5 ("ath11k: fix wmi service ready ext tlv parsing")
-Assisted-by: Claude:claude-sonnet-4-6
-Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
-Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260727-ath11k_service_ready_ext_event-memleak-v1-1-e8373d27bdd1@oss.qualcomm.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Fixes: 6e25cb01ea20 ("kyber: implement improved heuristics")
+Signed-off-by: Tao Cui <cuitao@kylinos.cn>
+Reviewed-by: Yu Kuai <yukuai@fygo.io>
+Link: https://patch.msgid.link/20260720093726.28965-5-cui.tao@linux.dev
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/wmi.c | 1 +
- 1 file changed, 1 insertion(+)
+ block/kyber-iosched.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/ath/ath11k/wmi.c b/drivers/net/wireless/ath/ath11k/wmi.c
-index fad0a4a4a0240..6434d3ff0ac6d 100644
---- a/drivers/net/wireless/ath/ath11k/wmi.c
-+++ b/drivers/net/wireless/ath/ath11k/wmi.c
-@@ -3952,6 +3952,7 @@ static int ath11k_service_ready_ext_event(struct ath11k_base *ab,
- 	return 0;
+diff --git a/block/kyber-iosched.c b/block/kyber-iosched.c
+index 7f9ef773bf444..db6e6f146ac1e 100644
+--- a/block/kyber-iosched.c
++++ b/block/kyber-iosched.c
+@@ -281,7 +281,7 @@ static void kyber_timer_fn(struct timer_list *t)
+ 	bool bad = false;
  
- err:
-+	kfree(svc_rdy_ext.mac_phy_caps);
- 	ath11k_wmi_free_dbring_caps(ab);
- 	return ret;
- }
+ 	/* Sum all of the per-cpu latency histograms. */
+-	for_each_online_cpu(cpu) {
++	for_each_possible_cpu(cpu) {
+ 		struct kyber_cpu_latency *cpu_latency;
+ 
+ 		cpu_latency = per_cpu_ptr(kqd->cpu_latency, cpu);
 -- 
 2.53.0
 
