@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F02C1423EB9;
-	Sat, 12 Sep 2026 10:30:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF8C842376B;
+	Sat, 12 Sep 2026 10:30:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789209021; cv=none; b=HHAgJ0OEoRoztROjr8UMkmdGzn5OLM6HJ+/NHWPZAQCkCqfIsk0lcR6Y7W3/q5WUstdJOb7TntWpBcxZYgHdxmDWyaTqjbzwwP83MahdyqEMSpMlXmp8vBF3BWKqbXw2+bp8yWSvneW/rIUAod9NISTj70FaQAjRokRgc/XTql0=
+	t=1789209026; cv=none; b=qRHncqSzdtyDtgwbAvSdvUI1MqV7mqqmEgvoTHcZr3NxjPPMQXLOBhVrJSIUFSOC+zn6eX4OM8Qu3xeH0QQBp9BhoR/uaR8a5I2j1dw3NNltTEca86suq/5zwsmRwCVU0F7VvGh+1HPauFmCMdQHZRYn+S3GD6EgSOU0vcqPet8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789209021; c=relaxed/simple;
-	bh=2PELbCWkXKxLdAK52QEL8bg8ZbWHnhH1TfXQpSGzm9k=;
+	s=arc-20240116; t=1789209026; c=relaxed/simple;
+	bh=jiJbyXyiWTsJlyRNnKB8MoKzhqhhBepfkCz7cjK1mjw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XupScyAMUGbFW0uG7uAR6d6OEy9p0wfwHP21cbbsTh+kqORFQZFHRWU1R2zZNk56fP2HROYprxcMtZaQeCC1prGOb6m1fOiRehExrTi1I++ptq8bmv6yMbuSEnD76ebehWIx+fZIXQQzSfCOQZx1kOypg8V0ry7edmgKmi2EVXo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dnU+4pmy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LPvGZnMEVSFODLLUHr3IBfNYRrSWGvzNLxk+YXi+WWj+1urg4+7UDrgfjpGh5txvC92jzYxxFKO4Z8uxrHuuLN1eZWo331U8i4E41ErStZjaqB8uPT/Yge3NhZ51JlQtG9BAWhKqe1aif6QlCHqVpNjLAyQP2kVSSjWHdC/Kxk0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sRfYI646; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dnU+4pmy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0505C1F00893;
-	Sat, 12 Sep 2026 10:30:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sRfYI646"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E39961F000FF;
+	Sat, 12 Sep 2026 10:30:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789209019;
-	bh=bovl9vayTE7rLkAgLiX9AGt7w2PYL5HzzkRYbpdgffw=;
+	s=korg; t=1789209024;
+	bh=iIgL31nPDZorfbyqmMXsd0AU7zKsxg+Mio+/6N9p2R0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dnU+4pmy6ecuJnULLPd3p7nbL66IPG80CafY+iBTiHBWM8btPNPOKfKWgS/7mAW0z
-	 ODCFLcJTZq5IQuPkwNxX1DeCO64/7vo0Oh4RWyFsM5656CzdmMMvarfSzR12Ax5l0h
-	 z7bZ3WHzaMCND5WA+wTfzbffUMp+pez7+K4eUJ/o=
+	b=sRfYI646ysE7acJ/o3MMXOd5QmpjXT3xMHfxlyqGdDRMDot36d8eXD2C4S88nNJiA
+	 t3VyluAKXpSaubpNLYOm5S0wAU8SGPhYcEB2yQe5dC5I3ltZCk4854NnQQc8+2+3Oy
+	 zK8TAtkKFLXrsV0OU8iBMVLIvYr7s7r81rkd/3Cc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0693/1518] arm64: dts: qcom: talos: Fix the PCIe iommu-map entries
-Date: Sat, 12 Sep 2026 08:47:42 +0200
-Message-ID: <20260912065639.114853675@linuxfoundation.org>
+Subject: [PATCH 6.18 0694/1518] arm64: dts: qcom: lemans: move USB PHYs to a proper place
+Date: Sat, 12 Sep 2026 08:47:43 +0200
+Message-ID: <20260912065639.136651974@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -53,45 +52,155 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-[ Upstream commit f7e687d6050f27a03847abadc12d6821576d06ee ]
+[ Upstream commit 883e20433fe586a6d3e1332d25f5e675921fefd9 ]
 
-The IOMMU provider apps_smmu uses '#iommu-cells = <2>', but the PCIe
-iommu-map entries specify only one cell for the SID, omitting the SID
-mask. This went unnoticed until the OF core started warning with commit
-ccb2fd725d41 ("of: Respect #{iommu,msi}-cells in maps"):
+Sort the lemans.dtsi, moving USB1 and USB2 PHYs to a proper place,
+making the DT file sorted by the address.
 
-  iommu-map has 1-cell entries targeting 2-cell #iommu-cells, treating as 1-cell output
-
-So fix the entries to match the provider's '#iommu-cells' property.
-
-Fixes: 718cc7542a00 ("arm64: dts: qcom: qcs615: enable pcie")
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260730-iommu-map-fix-v1-13-83405d37ba41@oss.qualcomm.com
+Link: https://lore.kernel.org/r/20250921-refgen-v1-2-9d93e64133ea@oss.qualcomm.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Stable-dep-of: 19b4c47fc973 ("arm64: dts: qcom: lemans: Fix the PCIe iommu-map entries")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm6150.dtsi | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/qcom/lemans.dtsi | 100 +++++++++++++--------------
+ 1 file changed, 50 insertions(+), 50 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm6150.dtsi b/arch/arm64/boot/dts/qcom/sm6150.dtsi
-index a066ad5ffde57..ff3ae5688f03e 100644
---- a/arch/arm64/boot/dts/qcom/sm6150.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm6150.dtsi
-@@ -1175,8 +1175,8 @@ &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
- 					 &config_noc SLAVE_PCIE_0 QCOM_ICC_TAG_ACTIVE_ONLY>;
- 			interconnect-names = "pcie-mem", "cpu-pcie";
+diff --git a/arch/arm64/boot/dts/qcom/lemans.dtsi b/arch/arm64/boot/dts/qcom/lemans.dtsi
+index 496e319d7b111..085129870e42a 100644
+--- a/arch/arm64/boot/dts/qcom/lemans.dtsi
++++ b/arch/arm64/boot/dts/qcom/lemans.dtsi
+@@ -3905,6 +3905,32 @@ usb_0_hsphy: phy@88e4000 {
+ 			status = "disabled";
+ 		};
  
--			iommu-map = <0x0 &apps_smmu 0x400 0x1>,
--				    <0x100 &apps_smmu 0x401 0x1>;
-+			iommu-map = <0x0 &apps_smmu 0x400 0x0 0x1>,
-+				    <0x100 &apps_smmu 0x401 0x0 0x1>;
++		usb_1_hsphy: phy@88e6000 {
++			compatible = "qcom,sa8775p-usb-hs-phy",
++				     "qcom,usb-snps-hs-5nm-phy";
++			reg = <0 0x088e6000 0 0x120>;
++			clocks = <&gcc GCC_USB_CLKREF_EN>;
++			clock-names = "ref";
++			resets = <&gcc GCC_USB2_PHY_SEC_BCR>;
++
++			#phy-cells = <0>;
++
++			status = "disabled";
++		};
++
++		usb_2_hsphy: phy@88e7000 {
++			compatible = "qcom,sa8775p-usb-hs-phy",
++				     "qcom,usb-snps-hs-5nm-phy";
++			reg = <0 0x088e7000 0 0x120>;
++			clocks = <&gcc GCC_USB_CLKREF_EN>;
++			clock-names = "ref";
++			resets = <&gcc GCC_USB3_PHY_TERT_BCR>;
++
++			#phy-cells = <0>;
++
++			status = "disabled";
++		};
++
+ 		usb_0_qmpphy: phy@88e8000 {
+ 			compatible = "qcom,sa8775p-qmp-usb3-uni-phy";
+ 			reg = <0 0x088e8000 0 0x2000>;
+@@ -3929,6 +3955,30 @@ usb_0_qmpphy: phy@88e8000 {
+ 			status = "disabled";
+ 		};
  
- 			resets = <&gcc GCC_PCIE_0_BCR>;
- 			reset-names = "pci";
++		usb_1_qmpphy: phy@88ea000 {
++			compatible = "qcom,sa8775p-qmp-usb3-uni-phy";
++			reg = <0 0x088ea000 0 0x2000>;
++
++			clocks = <&gcc GCC_USB3_SEC_PHY_AUX_CLK>,
++				 <&gcc GCC_USB_CLKREF_EN>,
++				 <&gcc GCC_USB3_SEC_PHY_COM_AUX_CLK>,
++				 <&gcc GCC_USB3_SEC_PHY_PIPE_CLK>;
++			clock-names = "aux", "ref", "com_aux", "pipe";
++
++			resets = <&gcc GCC_USB3_PHY_SEC_BCR>,
++				 <&gcc GCC_USB3PHY_PHY_SEC_BCR>;
++			reset-names = "phy", "phy_phy";
++
++			power-domains = <&gcc USB30_SEC_GDSC>;
++
++			#clock-cells = <0>;
++			clock-output-names = "usb3_sec_phy_pipe_clk_src";
++
++			#phy-cells = <0>;
++
++			status = "disabled";
++		};
++
+ 		usb_0: usb@a600000 {
+ 			compatible = "qcom,sa8775p-dwc3", "qcom,snps-dwc3";
+ 			reg = <0 0x0a600000 0 0xfc100>;
+@@ -3977,43 +4027,6 @@ usb_0: usb@a600000 {
+ 			status = "disabled";
+ 		};
+ 
+-		usb_1_hsphy: phy@88e6000 {
+-			compatible = "qcom,sa8775p-usb-hs-phy",
+-				     "qcom,usb-snps-hs-5nm-phy";
+-			reg = <0 0x088e6000 0 0x120>;
+-			clocks = <&gcc GCC_USB_CLKREF_EN>;
+-			clock-names = "ref";
+-			resets = <&gcc GCC_USB2_PHY_SEC_BCR>;
+-
+-			#phy-cells = <0>;
+-
+-			status = "disabled";
+-		};
+-
+-		usb_1_qmpphy: phy@88ea000 {
+-			compatible = "qcom,sa8775p-qmp-usb3-uni-phy";
+-			reg = <0 0x088ea000 0 0x2000>;
+-
+-			clocks = <&gcc GCC_USB3_SEC_PHY_AUX_CLK>,
+-				 <&gcc GCC_USB_CLKREF_EN>,
+-				 <&gcc GCC_USB3_SEC_PHY_COM_AUX_CLK>,
+-				 <&gcc GCC_USB3_SEC_PHY_PIPE_CLK>;
+-			clock-names = "aux", "ref", "com_aux", "pipe";
+-
+-			resets = <&gcc GCC_USB3_PHY_SEC_BCR>,
+-				 <&gcc GCC_USB3PHY_PHY_SEC_BCR>;
+-			reset-names = "phy", "phy_phy";
+-
+-			power-domains = <&gcc USB30_SEC_GDSC>;
+-
+-			#clock-cells = <0>;
+-			clock-output-names = "usb3_sec_phy_pipe_clk_src";
+-
+-			#phy-cells = <0>;
+-
+-			status = "disabled";
+-		};
+-
+ 		usb_1: usb@a800000 {
+ 			compatible = "qcom,sa8775p-dwc3", "qcom,snps-dwc3";
+ 			reg = <0 0x0a800000 0 0xfc100>;
+@@ -4062,19 +4075,6 @@ usb_1: usb@a800000 {
+ 			status = "disabled";
+ 		};
+ 
+-		usb_2_hsphy: phy@88e7000 {
+-			compatible = "qcom,sa8775p-usb-hs-phy",
+-				     "qcom,usb-snps-hs-5nm-phy";
+-			reg = <0 0x088e7000 0 0x120>;
+-			clocks = <&gcc GCC_USB_CLKREF_EN>;
+-			clock-names = "ref";
+-			resets = <&gcc GCC_USB3_PHY_TERT_BCR>;
+-
+-			#phy-cells = <0>;
+-
+-			status = "disabled";
+-		};
+-
+ 		usb_2: usb@a400000 {
+ 			compatible = "qcom,sa8775p-dwc3", "qcom,snps-dwc3";
+ 			reg = <0 0x0a400000 0 0xfc100>;
 -- 
 2.53.0
 
