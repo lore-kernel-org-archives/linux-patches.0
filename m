@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09A0E332610;
-	Sat, 12 Sep 2026 11:49:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72BAC332610;
+	Sat, 12 Sep 2026 11:49:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789213749; cv=none; b=OZqUlPFlSx3I09iZg/jM10AEWsA9PxjfzEwd7VENxLfL4g9RuZV/vBVm+JWfRlIYA8ZUOetLDjyGEfDijSa2jno72gQVyVtxzoNbjXB7o1VtWwlnrQdhw4+rf59Y+SFA+VGf+lwvU+hA1dnhXkpyX6rkD1SdQUQdbaBubymZ3hE=
+	t=1789213754; cv=none; b=Acsi/oiw/WQ8B4bzJSOWML7leUivd9dEQQqdaWJuvGp0ounCdX2gfihYHJmaM68tAUzsp3YkRdeWvEWz1/Wi4iAod4MVZYBh8nghW+WL0yxbX5ON8+JxtIebRYnS3yim9PaUwVARPj6KhK1/BkdbIZJe8bu3FmGEJ45vIwdOC64=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789213749; c=relaxed/simple;
-	bh=FJ9ieRMdIlAS1Is4FXYqA4sDoIoyJQU1naLNEVe1UiE=;
+	s=arc-20240116; t=1789213754; c=relaxed/simple;
+	bh=ojpqU58q5mqxkpyoqqBVXjVtc+c2NxsvJs9yYTr0Btk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u1m2mmQb5We64mbJ3i5zpFJ5s5kYNbpIG1O0rc37pHmv0ewwg+sMIIO4bo8Qr2QDCtCXaaTjJ63HmtfKVb6D95tK2Yh4czhfSqTDTr29XwnGYm6r5NzFBrGTIN9IM1s5bChJFsMH99qAaCjSza4uSj/AuSDsFSh8fZFG1nLwzEs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FMTPVGJt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Wj/H+VwYAvDkE9G53x8/nraGzxCh7ZwDxzWD2wnMAepMepcY0VnTwpnwI7dL+Vm3G5nJytsiXCTYEfgs+JcEOGGrkv39S6ZR6ertvvTnBuIaWJSLs6rp0sUopSvK5E6etLmoRrq0zrlwUu6nouz8osq7Lbxwp4tOnZTRzRldtsg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tYTWXY55; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FMTPVGJt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA6621F000FF;
-	Sat, 12 Sep 2026 11:49:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tYTWXY55"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC04D1F000FF;
+	Sat, 12 Sep 2026 11:49:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789213747;
-	bh=Hf3zKfEQGIhYJ5HoPTYqU/jA+BaXUdHVwoY+v3QBSAg=;
+	s=korg; t=1789213752;
+	bh=nAjndws6cfcfV66bQ0ctfAMZesFH8yMf5OALWCfhO3k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FMTPVGJtcgzQeKO7JyjXVal8Txl1XAWwHnEvVbq7JsH3jxbUXpXD1GKMw9VlScS/X
-	 pQOCwgpdcvhSu2WOGVC3qffeZXjsVulCk5pOUJ2IaeBN7OqAix7ry7HsCOkY0QRxbZ
-	 9/lMUAryKUfs0+znW0k7zfRKA2RFI+QjUA5a2Pjw=
+	b=tYTWXY55J11CzIVpdjVfLTp92ivTjoncwmqG2lxFok2rdB9zHBdeXKPbayuVlfkJK
+	 uJV3ndBgxffW8iaUT/Oupyt2x6pzKGTqURzZr/9fCzMb9O14AeK8Lo6F04vqLkeq1i
+	 vWggVS6ugwjeLS0QQzxT1RCzMQyyF6+lfkmhvpJI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linmao Li <lilinmao@kylinos.cn>,
-	Joshua Crofts <joshua.crofts1@gmail.com>,
-	Stable@vger.kernel.org,
+	Sashiko <sashiko-bot@kernel.org>,
+	Erick Henrique <erick.henrique.rodrigues@usp.br>,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Subject: [PATCH 6.12 0141/1376] iio: chemical: sgp30: Handle IAQ thread creation failure
-Date: Sat, 12 Sep 2026 08:42:47 +0200
-Message-ID: <20260912065610.695559345@linuxfoundation.org>
+Subject: [PATCH 6.12 0142/1376] iio: dac: m62332: Fix regulator reference count imbalance
+Date: Sat, 12 Sep 2026 08:42:48 +0200
+Message-ID: <20260912065610.719312889@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -52,36 +51,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linmao Li <lilinmao@kylinos.cn>
+From: Erick Henrique <erick.henrique.rodrigues@usp.br>
 
-commit 1135d6875d2dbda3f6ec718f3421a6ce4378bd63 upstream.
+commit a130404ce0b69ca1438126bd81c1985d3b4d2e6f upstream.
 
-kthread_run() can fail and return an error pointer, but sgp_probe() stores
-it and returns success, so the device is registered without its IAQ thread
-and sgp_remove() later passes the error pointer to kthread_stop(). Return
-the error from probe instead.
+m62332_set_value() enables the Vcc regulator on every write of a
+non-zero value and disables it on every write of zero, without tracking
+the channel's current state. Because the regulator is reference counted,
+changing a channel directly from one non-zero value to another enables
+it more than once, while a later write of zero disables it only once.
+The reference count never returns to zero and the regulator is left
+enabled indefinitely.
 
-Fixes: ce514124161a ("iio: chemical: sgp30: Support Sensirion SGP30/SGPC3 sensors")
-Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
-Reviewed-by: Joshua Crofts <joshua.crofts1@gmail.com>
-Cc: <Stable@vger.kernel.org>
+Only enable the regulator on the transition from zero to non-zero, and
+only disable it on the transition from non-zero to zero, using the
+previously stored channel value to detect the edge. Balance the
+regulator on the I2C error path so the reference count stays consistent
+if the write fails.
+
+Fixes: b87b0c0f81e8 ("iio: add m62332 DAC driver")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20260418130322.106769-1-erick.henrique.rodrigues%40usp.br
+Cc: stable@vger.kernel.org
+Signed-off-by: Erick Henrique <erick.henrique.rodrigues@usp.br>
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/chemical/sgp30.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/iio/dac/m62332.c |   17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
 
---- a/drivers/iio/chemical/sgp30.c
-+++ b/drivers/iio/chemical/sgp30.c
-@@ -548,6 +548,9 @@ static int sgp_probe(struct i2c_client *
+--- a/drivers/iio/dac/m62332.c
++++ b/drivers/iio/dac/m62332.c
+@@ -32,6 +32,7 @@ static int m62332_set_value(struct iio_d
+ {
+ 	struct m62332_data *data = iio_priv(indio_dev);
+ 	struct i2c_client *client = data->client;
++	bool enabling, disabling;
+ 	u8 outbuf[2];
+ 	int res;
  
- 	data->iaq_thread = kthread_run(sgp_iaq_threadfn, data,
- 				       "%s-iaq", data->client->name);
-+	if (IS_ERR(data->iaq_thread))
-+		return dev_err_probe(dev, PTR_ERR(data->iaq_thread),
-+				     "failed to start IAQ thread\n");
+@@ -43,7 +44,10 @@ static int m62332_set_value(struct iio_d
+ 
+ 	mutex_lock(&data->mutex);
+ 
+-	if (val) {
++	enabling = val && !data->raw[channel];
++	disabling = !val && data->raw[channel];
++
++	if (enabling) {
+ 		res = regulator_enable(data->vcc);
+ 		if (res)
+ 			goto out;
+@@ -52,14 +56,17 @@ static int m62332_set_value(struct iio_d
+ 	res = i2c_master_send(client, outbuf, ARRAY_SIZE(outbuf));
+ 	if (res >= 0 && res != ARRAY_SIZE(outbuf))
+ 		res = -EIO;
+-	if (res < 0)
++	if (res < 0) {
++		if (enabling)
++			regulator_disable(data->vcc);
+ 		goto out;
++	}
+ 
+-	data->raw[channel] = val;
+-
+-	if (!val)
++	if (disabling)
+ 		regulator_disable(data->vcc);
+ 
++	data->raw[channel] = val;
++
+ 	mutex_unlock(&data->mutex);
  
  	return 0;
- }
 
 
