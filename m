@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 777322D0C75;
-	Sat, 12 Sep 2026 12:23:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D8962D0C75;
+	Sat, 12 Sep 2026 12:23:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789215824; cv=none; b=vA1wzI3ZhlXJ8ZaPLqltRCphXRSfiFK3uE2tzzlBWwMNQgyXmotn66Ir5MygRyEW5nyIm1AL7OJ/w1cE3zF4d8oWt0leESUlm90r4LNGChpgvrXjL4wm8sB7tCJ/C1hDWn7CquvO+FM1T+3Z7Kj8Vu7/6qnZwsGdUyrhyluSHmc=
+	t=1789215829; cv=none; b=DM4C7TepAMrnRK4b8HoUNcQ1a7161ztNhl4z3L83re6VA16ytoSAn/z2wYi2hZvfJUDg0mZjbfhK+BQn0muB8UFF13d9pecQBugTvQfUTKFWcep8BoLREpsO9jkpfaNNA0t0NYYCGeePcngZrUZMmd9BOANNGwJDiiM8lZ00La4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789215824; c=relaxed/simple;
-	bh=JOpptYUwb+PEFDOIa0tUh8rb6X4wITM+WiNu5M9ZVL0=;
+	s=arc-20240116; t=1789215829; c=relaxed/simple;
+	bh=2+/FB73sn3j1RtMqvoRYZpisnY3QyxlWeTUx6P1Fbsg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NUVSfeOXCqY8UFqELuDzmcFcMITbm4tMwpdAHN3jnxFj84VxfeQzukj2EqMLD+MPAVT/RAqdP/7JyqSXuwgkxqL/sHIOPJ9sw7jfdGKpn6AJ1NHXTbl+0GBhGNmK7SS9wddWs7QsHGqP/OaWE4ko/pKYJbKmzCgHVn3EjYxgbVw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UFyqGsnA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BITvYOmUU8Jn4CfiBW4+EcgLdXgh8XWqrnQ6aZh/WI+ApNIYRYhUxGrp+lBEOECTf+v9YD5/aSI0qoW27hud9r4Q4BEKdaq3A5yCIx/0yjLfAMfrir30G/jV5WMMgMQkUjoKKor22jVQaBPyBBHUKxAHTvRZN7ntsm4DivPn6Gk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1fnwurSp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UFyqGsnA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9529B1F000FF;
-	Sat, 12 Sep 2026 12:23:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1fnwurSp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 815161F000FF;
+	Sat, 12 Sep 2026 12:23:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789215823;
-	bh=4kf8Dxl0dl7Y5XXZoMQFtvoRgs9NC2Nsp+IJbZI5k4c=;
+	s=korg; t=1789215828;
+	bh=JpmK8YeGYf6goGShSx6ZQFabdr8wzHFEEai6ceMXQ7Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UFyqGsnAfpuzQUQ2mwxPaLVpOhrlLwedCGXt7kc6iiVX/Vs1ETABcg4UvDx9qzsIk
-	 26WMHCsrOvMXm2h1D+63L/f5cXdo+H0eQkqWUOfnT2jeou/A9A99uYN+mlie4KNKzl
-	 8jRLVbx2Gli4eAjlWmezqDa0O5WYGrN6DWpab25s=
+	b=1fnwurSp+LNDqnNBS5Sq5RiDOlYpANVUOM6ix5dI0qP2Fh3TVGwyg9ii9NzcVnSz4
+	 EuiTvBEQoyHBFe6GLL0SlLhAH2ZcYbRRxTT9RjIrm0Oas9Jf+4g7X82QO5K+1VVs7m
+	 MZGpwGLrXF2pk3Xjd1g5NF7jhVBzX2XuG0y30euI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kaixuan Li <kaixuan.li@ntu.edu.sg>,
-	Maoyi Xie <maoyixie.tju@gmail.com>,
-	Douglas Anderson <dianders@chromium.org>,
+	Jun Yan <jerrysteve1101@gmail.com>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0558/1376] drm/bridge: tc358767: clamp the reported AUX read size to the request
-Date: Sat, 12 Sep 2026 08:49:44 +0200
-Message-ID: <20260912065619.972359992@linuxfoundation.org>
+Subject: [PATCH 6.12 0605/1376] arm64: dts: amlogic: meson-axg: Add missing nand_rb0 pin to nand_all_pins
+Date: Sat, 12 Sep 2026 08:50:31 +0200
+Message-ID: <20260912065621.019351229@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -52,56 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maoyi Xie <maoyixie.tju@gmail.com>
+From: Jun Yan <jerrysteve1101@gmail.com>
 
-[ Upstream commit ec6444a00c49e6c2b5e9a507272a28126677f9ee ]
+[ Upstream commit 45eb76f9ab6854f79690d56d04df227429a536b8 ]
 
-tc_aux_transfer() clamps an AUX read to the payload limit:
+The nand_all_pins pinctrl node was missing the nand_rb0 (ready/busy)
+pin description, which is required for NAND controller operation.
 
-	size_t size = min_t(size_t, DP_AUX_MAX_PAYLOAD_BYTES - 1, msg->size);
+Add it to the pinmux list.
 
-After the transfer it replaces size with the byte count the controller
-reports in AUX_BYTES:
-
-	if (size)
-		size = FIELD_GET(AUX_BYTES, auxstatus);
-
-AUX_BYTES is GENMASK(15, 8), so it can be up to 255. Nothing clamps it
-back to the request. tc_aux_read_data() reads that many bytes into the
-16-byte auxrdata stack buffer, then copies them into the caller buffer. A
-reported count of 255 makes the read run to 256 bytes and overruns both.
-
-The controller should never report more than it was asked to transfer, so
-this is defense in depth rather than a live hole. The reported count is
-only lightly trusted, and the check is cheap. Clamp it back to the request,
-the same way ti-sn65dsi86 does in commit aca58eac52b8 ("drm/bridge:
-ti-sn65dsi86: Never store more than msg->size bytes in AUX xfer").
-
-Fixes: 12dfe7c4d9c5 ("drm/bridge: tc358767: Use reported AUX transfer size")
-Co-developed-by: Kaixuan Li <kaixuan.li@ntu.edu.sg>
-Signed-off-by: Kaixuan Li <kaixuan.li@ntu.edu.sg>
-Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Link: https://patch.msgid.link/20260701064440.1541418-1-maoyixie.tju@gmail.com
+Fixes: be18d53c32b2 ("arm64: dts: amlogic: meson-axg: pinctrl node for NAND")
+Signed-off-by: Jun Yan <jerrysteve1101@gmail.com>
+Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Link: https://patch.msgid.link/20260624135650.727077-3-jerrysteve1101@gmail.com
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/tc358767.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/amlogic/meson-axg.dtsi | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/bridge/tc358767.c b/drivers/gpu/drm/bridge/tc358767.c
-index 47189587643a1..47c9b2d4369ea 100644
---- a/drivers/gpu/drm/bridge/tc358767.c
-+++ b/drivers/gpu/drm/bridge/tc358767.c
-@@ -519,7 +519,7 @@ static ssize_t tc_aux_transfer(struct drm_dp_aux *aux,
- 	 * address-only transfer
- 	 */
- 	if (size)
--		size = FIELD_GET(AUX_BYTES, auxstatus);
-+		size = min_t(size_t, size, FIELD_GET(AUX_BYTES, auxstatus));
- 	msg->reply = FIELD_GET(AUX_STATUS, auxstatus);
- 
- 	switch (request) {
+diff --git a/arch/arm64/boot/dts/amlogic/meson-axg.dtsi b/arch/arm64/boot/dts/amlogic/meson-axg.dtsi
+index 4717c9666f2a5..ff05b997f6fe8 100644
+--- a/arch/arm64/boot/dts/amlogic/meson-axg.dtsi
++++ b/arch/arm64/boot/dts/amlogic/meson-axg.dtsi
+@@ -454,7 +454,8 @@ mux {
+ 							 "nand_ale",
+ 							 "nand_cle",
+ 							 "nand_wen_clk",
+-							 "nand_ren_wr";
++							 "nand_ren_wr",
++							 "nand_rb0";
+ 						function = "nand";
+ 						input-enable;
+ 						bias-pull-up;
 -- 
 2.53.0
 
