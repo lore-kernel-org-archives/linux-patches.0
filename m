@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A04F525B0AA;
-	Sat, 12 Sep 2026 10:11:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D116537F8B2;
+	Sat, 12 Sep 2026 10:11:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789207869; cv=none; b=qJjGBmIH17+lbVMqm0o01g3nFJ8QOKXAe6XlXkxjZE+5wdCihiFlc6i8Kh4BJ+q/gRxEgdA3JEMoTHSvX9SJcxVEAl9Ziwpg5H2QhRXlD3EWSjHE5HZcEL1ceflD2mhvrJDrBQpNGeAxr0y+dSfukpsrNs9ZY5Cjl4xJOo5H7KE=
+	t=1789207875; cv=none; b=cfx1Wj56KeBlnEn6GeDRN9Ra/PIK65SBb9K/ev8ot5ezx8uaFpyIGv/KGCLr7A/w3gsYR1VCQx2hRN9S/mp9Wk96LsXCGWMEPi1x0h1R8/4P1DLi4Bj5+vCgO7hhAR8cF/UWJZI8Kq+Ysu8M6i1XeIbQ6IYkBXQFKoulaOvcFTI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789207869; c=relaxed/simple;
-	bh=w2peagsUgAOKuedPHOBwza2N9SK16zSacBWjkqjrmqY=;
+	s=arc-20240116; t=1789207875; c=relaxed/simple;
+	bh=qH+Nsv8+Hmr2hNJ8/0ufiJIT++mgogd7z9eBXVxrHis=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BaZRXDm50zavHiY/eezzfN6kQpsOV+N4VZAZhbO+u/jm6WFnBjeGoyYDNdIfUMJlgrimkwWwlUmcXk7Wvs6T7GD0wPCC+8AieRF/UcRYo+au+bW0UnFVBAsGFtFJ7yDj/gjou54F2JA6E3uA4B9KHnCRqPOt9vgdOMRZPGBdxdg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MZP1wD6R; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=T5SFsWEoEDbkJVdtTC5ukBWydqsvRZ/1l1rEwEMbXlIxxTHPc6EFsp9Kz5XcTwEOP1VRb4cJ7KBP4BJNA/6S0uX82zpwuVdzd2uWMKS3iCqGZ+sQYP5yzwtaQUDShzZP5Fra2mvNtH+P3IMTgKyRKsJf7uK38PVMZFk67QA8cBU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MOR1Qlje; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MZP1wD6R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DB0E1F000FF;
-	Sat, 12 Sep 2026 10:11:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MOR1Qlje"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83E751F000FF;
+	Sat, 12 Sep 2026 10:11:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789207868;
-	bh=rGuofXSpMPppCHS6clqIbN/nryKSTCJMMQJko95MkRw=;
+	s=korg; t=1789207873;
+	bh=98y5xieykSukXW+QuFBOqJ3LXWwALU8D5VimDJ4TIXg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MZP1wD6Ryl5WpJpWk+iUVU/KDka6+ZQT1Nirbo1WOebdT7QO7BNlxpB2tl36RHWD/
-	 V5a0GkT96Z1e00rPEHXVO6pL2IEuPGi3uH+y9nl/r8X6LfmM9Nbfdvb15C7A/C1rKf
-	 pOIQV5OxP7D+hykV8eTNHGm94MaGPwiHoUlsMRKM=
+	b=MOR1Qljen6YRWuMVVR59JY7LcjsoS7e8+2CnoAX+g58BzrAc/LmNxAeg7xbK6YqQv
+	 pCWVvt1xaJVfkh02pomTr9Q1Jr8UwtpAqmTYWNhFopFPgykYSKwOcn5TnZua2QDbvc
+	 kJ5aQat/Tg7fjgTq79nzkWvkKBGOMOEVOPzNCba8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"=?UTF-8?q?Ricardo=20B . =20Marli=C3=A8re?=" <rbm@suse.com>,
-	Ihor Solodrai <ihor.solodrai@linux.dev>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Pu Lehui <pulehui@huawei.com>,
+	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@kernel.org>,
 	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0499/1518] libbpf: Search /lib64 and /lib in resolve_full_path()
-Date: Sat, 12 Sep 2026 08:44:28 +0200
-Message-ID: <20260912065634.732676360@linuxfoundation.org>
+Subject: [PATCH 6.18 0500/1518] riscv, bpf: Fix memory leak in bpf_jit_free
+Date: Sat, 12 Sep 2026 08:44:29 +0200
+Message-ID: <20260912065634.754865666@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -53,46 +54,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ricardo B. Marlière <rbm@suse.com>
+From: Pu Lehui <pulehui@huawei.com>
 
-[ Upstream commit 7b5ae0481efdac040cea72b4fabd1398109f975b ]
+[ Upstream commit 369e4635d04801f394d5bd42556f21029e95ff93 ]
 
-attach_probe/uprobe-lib and uprobe_autoattach selftests fail with "failed
-to resolve full path for libc.so.6" on older non-usrmerged distros, where
-libc.so.6 lives under a top-level /lib64 or /lib rather than /usr/lib64 or
-/usr/lib. Add /lib64:/lib to the search paths, alongside the existing
-/usr/lib64:/usr/lib and Debian multiarch entries.
+When bpf_int_jit_compile() is called for subprograms, it returns early
+during the first pass (!prog->is_func || extra_pass is false), keeping
+ctx->offset alive for the subsequent extra pass.
 
-Fixes: 1ce3a60e3c28 ("libbpf: auto-resolve programs/libraries when necessary for uprobes")
-Signed-off-by: Ricardo B. Marlière <rbm@suse.com>
-Acked-by: Ihor Solodrai <ihor.solodrai@linux.dev>
-Link: https://lore.kernel.org/bpf/20260720-selftests-bpf_fixes-v2-3-b450eda93dfe@suse.com
+If JIT compilation fails for a later subprogram, the BPF core aborts
+and calls bpf_jit_free() to clean up the first subprogram. However,
+bpf_jit_free() fails to free jit_data->ctx.offset, which causes a
+memory leak of the JIT context offsets array.
+
+Fix this by adding the missing kfree(jit_data->ctx.offset) in
+bpf_jit_free().
+
+Fixes: 48a8f78c50bd ("bpf, riscv: use prog pack allocator in the BPF JIT")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Signed-off-by: Pu Lehui <pulehui@huawei.com>
+Reviewed-by: Björn Töpel <bjorn@kernel.org>
+Acked-by: Björn Töpel <bjorn@kernel.org>
+Link: https://lore.kernel.org/bpf/20260708064436.2971933-3-pulehui@huaweicloud.com
 Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/libbpf.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/riscv/net/bpf_jit_core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tools/lib/bpf/libbpf.c b/tools/lib/bpf/libbpf.c
-index 3baa6025ecba0..94ee5f52b8661 100644
---- a/tools/lib/bpf/libbpf.c
-+++ b/tools/lib/bpf/libbpf.c
-@@ -12148,13 +12148,14 @@ static const char *arch_specific_lib_paths(void)
- /* Get full path to program/shared library. */
- static int resolve_full_path(const char *file, char *result, size_t result_sz)
- {
--	const char *search_paths[3] = {};
-+	const char *search_paths[4] = {};
- 	int i, perm;
- 
- 	if (str_has_sfx(file, ".so") || strstr(file, ".so.")) {
- 		search_paths[0] = getenv("LD_LIBRARY_PATH");
- 		search_paths[1] = "/usr/lib64:/usr/lib";
- 		search_paths[2] = arch_specific_lib_paths();
-+		search_paths[3] = "/lib64:/lib";
- 		perm = R_OK;
- 	} else {
- 		search_paths[0] = getenv("PATH");
+diff --git a/arch/riscv/net/bpf_jit_core.c b/arch/riscv/net/bpf_jit_core.c
+index e4ab5bb9c9f64..09bd4eaac63e8 100644
+--- a/arch/riscv/net/bpf_jit_core.c
++++ b/arch/riscv/net/bpf_jit_core.c
+@@ -251,6 +251,7 @@ void bpf_jit_free(struct bpf_prog *prog)
+ 		 */
+ 		if (jit_data) {
+ 			bpf_jit_binary_pack_finalize(jit_data->ro_header, jit_data->header);
++			kfree(jit_data->ctx.offset);
+ 			kfree(jit_data);
+ 		}
+ 		hdr = bpf_jit_binary_pack_hdr(prog);
 -- 
 2.53.0
 
