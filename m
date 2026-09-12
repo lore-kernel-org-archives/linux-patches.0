@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94915479887;
-	Sat, 12 Sep 2026 12:11:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF46733F59A;
+	Sat, 12 Sep 2026 12:11:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789215078; cv=none; b=HJjQ7MbbUGklIIgmaVSYEUZG3sz5nLYqKqlHICj63cOcaxgPdolWcbCsngw669VN9L2Rtmf6v6C+Ndjz09QEBalZxwtONxZ+eYtTIUGmGCOJRv8ne4T9+gjeLClI9J+fLOZCy5ccTWXcvFY4oCQoGAuFjzfi534UJAOM05EtyUw=
+	t=1789215081; cv=none; b=qXSKl67s1LOr+Ql+baFDvbL51k0OvjjpuggEx33lEteLQKchJPCU5U8iCiESDxyw1r64LC+YNZMtgNWZpnYyBDwRgJ4viZE6VxAl/nr54mcz9GY9i6f59/EVE8f5WKRx5ICm6OHpUwO9xV3BOeOLKBYaHFk9i8JrCL25xMsqD30=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789215078; c=relaxed/simple;
-	bh=IqMSqsdo6BAQr/B2z7hSa0iLri/x5jQ2fQaagztiQcI=;
+	s=arc-20240116; t=1789215081; c=relaxed/simple;
+	bh=mKdZ3lmczpLuvakwv9DGzUfgPW/VS0RgoMVWOVEd00E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bucnjI7fn8TdZ07z9vUN5IInIUlaWj7HI4ADlVEpWhoiaE2FKQoCL99Vf67r88lLZL8hYlwpkYtQMMSwXIpZ/9mePJ5dETJ7a0BYjYsxCSULJNR0ZvKtcETqZoUVbMSexTsB5xL7ebZkCQdvnLWKUNX8Fl397dEExE5jUe6ciHM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bAniG3H/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eCEOlyEbImqZCQC8x6EAQtFe5fnGubVypxsoMJjk3eU2aY4Sh6V1cblWSy/UocYZMSNbs/e/w90uv/a8jFKPP1Y1agJYntAVM8BfahlzAOUIoPvHlyDmP8jos5v+Ed5T4BZo4oVQXCmuAuzqwG59thS7XjqQI2v44pp9J8/OW7U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NzPNlNTY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bAniG3H/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DF131F000FF;
-	Sat, 12 Sep 2026 12:11:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NzPNlNTY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 794931F000FF;
+	Sat, 12 Sep 2026 12:11:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789215075;
-	bh=1CogdlDnbhFeD5Y4R60DZMfUqGSp4Fk9LOH0DxkDOtk=;
+	s=korg; t=1789215080;
+	bh=4XY/gmOgy58GGBkEpGKnTtT76/PlpNG72gJYa5FKtEA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bAniG3H/1Rh8u/2WGAqxSaXY4SJoLg4Th8IH6syiOEJaRWKlj2b+VHVPl+FnEpyAC
-	 /3VA3+/e5K4U9L18nBUB0IYvrck6IIEYSDG0RH+zr666Aroi8Tugx9h5TcDn16onNl
-	 LgVhdZ1PA475yzd+3HfyYvpUDP9T109KF7F9RWoc=
+	b=NzPNlNTY0RmQb86AlFFq0FggYmgJCY0vCZf9gN82j76HNCEgraoxfMSMaOKdI8CA+
+	 Ew8wFQ9scWejdbukEQtB1nac+0OldVGcQiSSH0vNlBYo1mznICVV5LMsYWI7KeUE6c
+	 CR9aQA5Qw++JIXwveHzEDR0064to/Aqo9oSYxchs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	Ard Biesheuvel <ardb@kernel.org>,
+	Sanghyun Park <sanghyun.park.cnu@gmail.com>,
+	Puranjay Mohan <puranjay@kernel.org>,
+	Yonghong Song <yonghong.song@linux.dev>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0456/1376] efi: fix stale reference to efi_recover_from_page_fault()
-Date: Sat, 12 Sep 2026 08:48:02 +0200
-Message-ID: <20260912065617.694657186@linuxfoundation.org>
+Subject: [PATCH 6.12 0457/1376] bpf: Fix use-after-free on mm_struct in bpf_find_vma()
+Date: Sat, 12 Sep 2026 08:48:03 +0200
+Message-ID: <20260912065617.716828726@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,37 +53,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Sanghyun Park <sanghyun.park.cnu@gmail.com>
 
-[ Upstream commit 718ee46ba4d95d28d50d3f6437afbbe2be531175 ]
+[ Upstream commit 47b079e2117a2ee52e21f8b72935900c702fc0b5 ]
 
-efi_recover_from_page_fault() was renamed to
-efi_crash_gracefully_on_page_fault(), but the comment above enum
-efi_rts_ids was not updated. Use the current name.
+bpf_find_vma() reads task->mm and calls mmap_read_trylock(mm) without
+holding a reference on the mm. On a foreign task, a concurrent exit_mm()
+can free the mm_struct between the lockless read and the trylock,
+resulting in a use-after-free. mm_struct is not SLAB_TYPESAFE_BY_RCU.
 
-Fixes: c46f52231e79 ("x86/{fault,efi}: Fix and rename efi_recover_from_page_fault()")
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+For the current task, task->mm is stable. For a foreign task, pin the mm
+under task->alloc_lock and release it with mmput_async(), mirroring commit
+d8e27d2d22b6 ("bpf: fix mm lifecycle in open-coded task_vma iterator").
+Use spin_trylock() instead of get_task_mm() so BPF context does not block
+on alloc_lock. Reject irqs-disabled contexts and !CONFIG_MMU on the
+foreign-task path because dropping the mm reference is not safe there.
+
+Race:
+
+  CPU0 (BPF program)                  CPU1 (exiting task)
+  ============================        ==========================
+  bpf_find_vma(foreign_task):
+    mm = task->mm
+                                      exit_mm():
+                                        task->mm = NULL
+                                        mmput(mm) -> frees mm_struct
+    mmap_read_trylock(mm)
+        // UAF on mm
+
+Fixes: 7c7e3d31e785 ("bpf: Introduce helper bpf_find_vma")
+Signed-off-by: Sanghyun Park <sanghyun.park.cnu@gmail.com>
+Reviewed-by: Puranjay Mohan <puranjay@kernel.org>
+Acked-by: Yonghong Song <yonghong.song@linux.dev>
+Link: https://lore.kernel.org/bpf/20260708072106.199637-2-sanghyun.park.cnu@gmail.com
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/efi.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/bpf/task_iter.c | 36 +++++++++++++++++++++++++++++++++---
+ 1 file changed, 33 insertions(+), 3 deletions(-)
 
-diff --git a/include/linux/efi.h b/include/linux/efi.h
-index 2f1bfd7562eb2..06e8d3c69f9e6 100644
---- a/include/linux/efi.h
-+++ b/include/linux/efi.h
-@@ -1239,8 +1239,8 @@ efi_call_acpi_prm_handler(efi_status_t (__efiapi *handler_addr)(u64, void *),
+diff --git a/kernel/bpf/task_iter.c b/kernel/bpf/task_iter.c
+index fc5f463ca529a..f3a7a96a77d7d 100644
+--- a/kernel/bpf/task_iter.c
++++ b/kernel/bpf/task_iter.c
+@@ -760,6 +760,7 @@ BPF_CALL_5(bpf_find_vma, struct task_struct *, task, u64, start,
+ 	struct mmap_unlock_irq_work *work = NULL;
+ 	struct vm_area_struct *vma;
+ 	bool irq_work_busy = false;
++	bool __maybe_unused mmput_needed = false;
+ 	struct mm_struct *mm;
+ 	int ret = -ENOENT;
  
- /*
-  * efi_runtime_service() function identifiers.
-- * "NONE" is used by efi_recover_from_page_fault() to check if the page
-- * fault happened while executing an efi runtime service.
-+ * "NONE" is used by efi_crash_gracefully_on_page_fault() to check if the
-+ * page fault happened while executing an efi runtime service.
-  */
- enum efi_rts_ids {
- 	EFI_NONE,
+@@ -769,14 +770,38 @@ BPF_CALL_5(bpf_find_vma, struct task_struct *, task, u64, start,
+ 	if (!task)
+ 		return -ENOENT;
+ 
+-	mm = task->mm;
++	if (task == current) {
++		mm = task->mm;
++	} else {
++		/*
++		 * Foreign task: pin task->mm against a concurrent exit_mm().
++		 * Use trylock on alloc_lock instead of get_task_mm()'s
++		 * blocking task_lock() to avoid deadlocking the target task.
++		 */
++		if (!IS_ENABLED(CONFIG_MMU))
++			return -EOPNOTSUPP;
++		if (irqs_disabled())
++			return -EBUSY;
++		if (!spin_trylock(&task->alloc_lock))
++			return -EBUSY;
++		mm = task->mm;
++		if (mm && !(task->flags & PF_KTHREAD)) {
++			mmget(mm);
++			mmput_needed = true;
++		} else {
++			mm = NULL;
++		}
++		spin_unlock(&task->alloc_lock);
++	}
+ 	if (!mm)
+ 		return -ENOENT;
+ 
+ 	irq_work_busy = bpf_mmap_unlock_get_irq_work(&work);
+ 
+-	if (irq_work_busy || !mmap_read_trylock(mm))
+-		return -EBUSY;
++	if (irq_work_busy || !mmap_read_trylock(mm)) {
++		ret = -EBUSY;
++		goto out;
++	}
+ 
+ 	vma = find_vma(mm, start);
+ 
+@@ -786,6 +811,11 @@ BPF_CALL_5(bpf_find_vma, struct task_struct *, task, u64, start,
+ 		ret = 0;
+ 	}
+ 	bpf_mmap_unlock_mm(work, mm);
++out:
++#ifdef CONFIG_MMU
++	if (mmput_needed)
++		mmput_async(mm);
++#endif
+ 	return ret;
+ }
+ 
 -- 
 2.53.0
 
