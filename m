@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62115381E98;
-	Sat, 12 Sep 2026 09:57:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3657B369D56;
+	Sat, 12 Sep 2026 09:57:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789207033; cv=none; b=haX0T5TGBMS8+4uCoOJhLp/BO/Fxag8+gJ6ra8oO5NWt09ctmyt95BhrKOtFt2SToxtBb2PH9S2zp9xaxI7Oxm5EKTELe7StqR8I+y/IcWIY3fCiBrisr2VcxutiSjxUaOSB8UggnIzeS41tQffEZidHMVbgI9XoQrkqy6eqvrA=
+	t=1789207038; cv=none; b=N5gVG8E1XdbXyny3hbiallkeFwao/rjcPzwQD4vFnhDmoW8OsZVIM2XdTlyaqTg0wnF3TmRNdYaqemIT10ne0Yv5vXDRZpVDaYF5Q50tt+qpcUSFQ9ha/H1jESPR6fu7SDLQxTz5U4Ru8F6rHdMgMV0qjRZRFY8LFaA5kaswFQc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789207033; c=relaxed/simple;
-	bh=cEAM652LIiqbW92aDW8WR5omY0mYGIloIOG9XNL6Z4o=;
+	s=arc-20240116; t=1789207038; c=relaxed/simple;
+	bh=T4H6AqRK5YfVKrMhQUtq4ZfWqADfzsg+uIrvay9tKCs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ayhuq3L5XIUrLPJ0eX/5QEYos37EG7DmkcYlgomro/EuaJWTo4Urt6GmBHWAbF4esgUj2aCTcYjkHoZc9K2Gy0ZXTc6GRVuIcg4MVXMNeYeMuMCNwDBRwxsJxzEa7R9XBAUJS3VUlUdc8wjgyoodYlrDVDVgD5i00Nv1SiossaA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D4i2+rgB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OF5DYy9ql3FH5YA41yvw9I87XYe13cCHmnRiAhw82EtloHqZRKPH4Ckt7L4D+Vdr9+9ESU+xe7U+Fny37uuuXvU5+Inh6U0SZIrvVfGW3UGW+H6CMfKyn9bmTzOEMbYJ3Yk/N8PDERvT83dMCDDjff57+Z/E5qMl0DMJ268l0rQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NO5qU7jn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D4i2+rgB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6887A1F000FF;
-	Sat, 12 Sep 2026 09:57:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NO5qU7jn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 077E81F000FF;
+	Sat, 12 Sep 2026 09:57:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789207032;
-	bh=eFlqWpLt9L03p9DDxD6WbcptRJXDLG2ZoJ2Ytmr4j3w=;
+	s=korg; t=1789207037;
+	bh=GA6mTYA8bdQxrYJW68HlO7TGTINqS7AhbctuEmzAL8k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D4i2+rgBskOi0OfJWAEDji1oxFx+3RWe4tkIYQzGelEtZM2oCz8IAcURUx4iJOMFE
-	 c62f/ztOhJZ2wMekpMY8UFFmgywFIik2htqszmsoVXpEw+A5+nA+LJXiVbYGWafkUH
-	 7gfIu/edMuRgrBf05THsOQdVoXWTKeJCTYdDYoDU=
+	b=NO5qU7jn8FX0IoRs5DYdnOKZONUxinFO+IvnRjccMgr26r3cFBmVXdbzpuQrYjtV+
+	 Q5Uq0Ok8RpOMU/kQF2SLrtCNn0BTr29jBRgGJjpaQ3dZfSvEwt62xXq7JZHRK/lwK3
+	 k1dYfFzjPxVrV05P8QPyLwfsmQXUzeDllpKdh32Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>,
-	Brian Masney <bmasney@redhat.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Changwoo Min <changwoo@igalia.com>,
+	Andrea Righi <arighi@nvidia.com>,
+	Emil Tsalapatis <emil@etsalapatis.com>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0330/1518] clk: qcom: camcc-sc8280xp: unregister CAMCC_GDSC_CLK
-Date: Sat, 12 Sep 2026 08:41:39 +0200
-Message-ID: <20260912065630.937290473@linuxfoundation.org>
+Subject: [PATCH 6.18 0331/1518] tools/sched_ext: Strip compatibility macros for cgroup and dispatch APIs
+Date: Sat, 12 Sep 2026 08:41:40 +0200
+Message-ID: <20260912065630.959272829@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -55,120 +53,235 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Brian Masney <bmasney@redhat.com>
+From: Tejun Heo <tj@kernel.org>
 
-[ Upstream commit 499b4cb6710f9a351d8b57a2132f9b4389d8464a ]
+[ Upstream commit 111a79800aeda615797f20b3a00ef116edce9e03 ]
 
-With the introduction of sync_state support in the clk and pmdomain
-subsystems, the following warning happens when the unused clocks are
-shutdown in camcc-sc8280xp:
+Enough time has passed since the introduction of scx_bpf_task_cgroup() and
+the scx_bpf_dispatch* -> scx_bpf_dsq* kfunc renaming. Strip the compatibility
+macros.
 
-    [   15.408367] titan_top_gdsc status stuck at 'on'
-    [   15.408429] WARNING: drivers/clk/qcom/gdsc.c:178 at gdsc_toggle_logic+0x14c/0x160, CPU#2: kworker/u32:1/14
-    [   15.408462] Modules linked in: bnep vfat fat ath11k_pci(+) ath11k mac80211 cfg80211 mhi libarc4 snd_soc_wcd938x snd_soc_wcd938x_sdw snd_soc_wcd_classh hci_uart snd_soc_wcd_common
-    snd_soc_sc8280xp soundwire_qcom snd_soc_wcd_mbhc snd_soc_qcom_sdw slimbus snd_soc_qcom_common regmap_sdw btqca btrtl qcom_camss soundwire_bus btbcm btintel snd_soc_sdca snd_soc_lpass_wsa_macro
-    bluetooth snd_soc_lpass_tx_macro snd_soc_lpass_va_macro snd_soc_lpass_rx_macro snd_soc_hdmi_codec snd_soc_lpass_macro_common videobuf2_dma_sg ov5675 v4l2_fwnode videobuf2_memops
-    qcom_spmi_adc5 snd_soc_core qcom_spmi_adc_tm5 videobuf2_v4l2 snd_seq snd_seq_device videobuf2_common v4l2_async qcom_vadc_common qcom_spmi_temp_alarm pm8941_pwrkey industrialio videodev
-    snd_compress rfkill ac97_bus snd_pcm_dmaengine qcom_tsens mc qcom_edac snd_pcm pci_pwrctrl_pwrseq qcom_cpufreq_hw snd_timer snd qcomtee soundcore tee leds_gpio joydev binfmt_misc zram
-    lz4hc_compress governor_simpleondemand panel_edp msm xhci_plat_hcd nvme nvme_core dwc3 qcom_pm8008_regulator
-    [   15.408688]  ucsi_glink nvme_keyring nvme_auth pmic_glink_altmode udc_core typec_ucsi aux_hpd_bridge qcom_battmgr ulpi ubwc_config socinfo ocmem drm_gpuvm qcom_q6v5_pas drm_exec
-    qcom_pil_info leds_qcom_lpg gpu_sched led_class_multicolor rtc_pm8xxx qcom_pbs qcom_common drm_display_helper qcom_pon qcom_glink_smem qcom_glink ghash_ce pwrseq_qcom_wcn gpio_sbu_mux
-    qcom_stats phy_qcom_qmp_combo qcom_q6v5 gf128mul cec dispcc_sc8280xp phy_qcom_edp camcc_sc8280xp i2c_qcom_cci qcom_sysmon drm_dp_aux_bus mdt_loader aux_bridge qcom_pm8008 i2c_hid_of_elan
-    dwc3_qcom_legacy llcc_qcom icc_bwmon gpi typec qcom_refgen_regulator phy_qcom_qmp_usb nvmem_qfprom qcom_ipcc phy_qcom_snps_femto_v2 gpucc_sc8280xp pinctrl_sc8280xp_lpass_lpi qcom_hwspinlock
-    pinctrl_lpass_lpi lpasscc_sc8280xp qrtr qcom_aoss pmic_glink pdr_interface phy_qcom_qmp_pcie qcom_smd qcom_pdr_msg icc_osm_l3 qcom_wdt qmi_helpers qcom_rng smp2p rpmsg_core gpio_keys pwm_bl
-    smem hid_multitouch fuse i2c_dev
-    [   15.408928] CPU: 2 UID: 0 PID: 14 Comm: kworker/u32:1 Not tainted 7.1.0+ #2 PREEMPT(lazy)
-    [   15.408937] Hardware name: LENOVO 21BX0016US/21BX0016US, BIOS N3HET88W (1.60 ) 03/14/2024
-    [   15.408942] Workqueue: pm pm_runtime_work
-    [   15.408959] pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-    [   15.408967] pc : gdsc_toggle_logic+0x14c/0x160
-    [   15.408978] lr : gdsc_toggle_logic+0x14c/0x160
-    [   15.408987] sp : ffff8000800f3b40
-    [   15.408991] x29: ffff8000800f3b40 x28: 0000000000000000 x27: 0000000000000000
-    [   15.409003] x26: 0000000000000000 x25: 0000000000000000 x24: 0000000000000000
-    [   15.409014] x23: 0000000000000000 x22: 0000000000000001 x21: ffffa33f298fca88
-    [   15.409024] x20: 0000000000000000 x19: ffffa33f298fc5b0 x18: 00cd15db75dacefd
-    [   15.409035] x17: 000000040044ffff x16: ffffa33f3b1a3d88 x15: 726f776b80000002
-    [   15.409045] x14: ffffffffffffffff x13: 0000000000000028 x12: 0101010101010101
-    [   15.409056] x11: 7f7f7f7f7f7f7f7f x10: fefeff3039313274 x9 : ffffa33f3a5edafc
-    [   15.409067] x8 : ffff8000800f3780 x7 : 0000000000000001 x6 : 0000000000000001
-    [   15.409078] x5 : ffff000bf3ca1288 x4 : 0000000000000000 x3 : ffff5cccb6a3f000
-    [   15.409088] x2 : 0000000000000000 x1 : 0000000000000000 x0 : ffff000080ae0000
-    [   15.409098] Call trace:
-    [   15.409103]  gdsc_toggle_logic+0x14c/0x160 (P)
-    [   15.409115]  gdsc_disable+0x4c/0x190
-    [   15.409126]  _genpd_power_off+0xa0/0x1a8
-    [   15.409137]  genpd_power_off.part.0+0x180/0x2a0
-    [   15.409149]  genpd_runtime_suspend+0x218/0x310
-    [   15.409155]  __rpm_callback+0x50/0x1f8
-    [   15.409166]  rpm_callback+0x7c/0x90
-    [   15.409175]  rpm_suspend+0xe8/0x690
-    [   15.409185]  pm_runtime_work+0xd0/0xe0
-    [   15.409195]  process_one_work+0x18c/0x518
-    [   15.409208]  worker_thread+0x190/0x320
-    [   15.409218]  kthread+0x110/0x130
-    [   15.409227]  ret_from_fork+0x10/0x20
-
-This clock is force enabled to be on in the probe, and registered with
-the Common Clk Framework, resulting in them being toggled off after
-unused clocks are shutdown. This clock is required for the GDSC
-transitions.
-
-Similar to the fix in commit b60521eff227 ("clk: qcom: gcc-x1e80100:
-Unregister GCC_GPU_CFG_AHB_CLK/GCC_DISP_XO_CLK"), let's just unregister
-this clock.
-
-Link: https://lore.kernel.org/linux-clk/20260626-camcc-sc8280xp-titan-top-v1-1-2ca246886493@redhat.com/
-Fixes: ff93872a9c616 ("clk: qcom: camcc-sc8280xp: Add sc8280xp CAMCC")
-Suggested-by: Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>
-Signed-off-by: Brian Masney <bmasney@redhat.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Link: https://lore.kernel.org/r/20260708-camcc-sc8280xp-remove-gdsc-v1-1-dfaab98a3bf5@redhat.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Acked-by: Changwoo Min <changwoo@igalia.com>
+Acked-by: Andrea Righi <arighi@nvidia.com>
+Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
+Stable-dep-of: 8740156ad33b ("bpf: Require a BPF cpumask for bpf_cpumask_populate()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/camcc-sc8280xp.c | 19 -------------------
- 1 file changed, 19 deletions(-)
+ tools/sched_ext/include/scx/compat.bpf.h | 108 +----------------------
+ tools/sched_ext/scx_flatcg.bpf.c         |  10 +--
+ tools/sched_ext/scx_qmap.bpf.c           |  14 ++-
+ 3 files changed, 12 insertions(+), 120 deletions(-)
 
-diff --git a/drivers/clk/qcom/camcc-sc8280xp.c b/drivers/clk/qcom/camcc-sc8280xp.c
-index 18f5a3eb313e1..1de238a85ab9f 100644
---- a/drivers/clk/qcom/camcc-sc8280xp.c
-+++ b/drivers/clk/qcom/camcc-sc8280xp.c
-@@ -1754,24 +1754,6 @@ static struct clk_branch camcc_csiphy3_clk = {
- 	},
- };
+diff --git a/tools/sched_ext/include/scx/compat.bpf.h b/tools/sched_ext/include/scx/compat.bpf.h
+index dd9144624dc99..d979f16a3ae2b 100644
+--- a/tools/sched_ext/include/scx/compat.bpf.h
++++ b/tools/sched_ext/include/scx/compat.bpf.h
+@@ -15,121 +15,17 @@
+ 	__ret;									\
+ })
  
--static struct clk_branch camcc_gdsc_clk = {
--	.halt_reg = 0xc1e4,
--	.halt_check = BRANCH_HALT,
--	.clkr = {
--		.enable_reg = 0xc1e4,
--		.enable_mask = BIT(0),
--		.hw.init = &(struct clk_init_data){
--			.name = "camcc_gdsc_clk",
--			.parent_hws = (const struct clk_hw*[]){
--				&camcc_xo_clk_src.clkr.hw,
--			},
--			.num_parents = 1,
--			.flags = CLK_SET_RATE_PARENT,
--			.ops = &clk_branch2_ops,
--		},
--	},
--};
+-/* v6.12: 819513666966 ("sched_ext: Add cgroup support") */
+-#define __COMPAT_scx_bpf_task_cgroup(p)						\
+-	(bpf_ksym_exists(scx_bpf_task_cgroup) ?					\
+-	 scx_bpf_task_cgroup((p)) : NULL)
 -
- static struct clk_branch camcc_icp_ahb_clk = {
- 	.halt_reg = 0xc0d8,
- 	.halt_check = BRANCH_HALT,
-@@ -2840,7 +2822,6 @@ static struct clk_regmap *camcc_sc8280xp_clocks[] = {
- 	[CAMCC_CSIPHY2_CLK] = &camcc_csiphy2_clk.clkr,
- 	[CAMCC_CSIPHY3_CLK] = &camcc_csiphy3_clk.clkr,
- 	[CAMCC_FAST_AHB_CLK_SRC] = &camcc_fast_ahb_clk_src.clkr,
--	[CAMCC_GDSC_CLK] = &camcc_gdsc_clk.clkr,
- 	[CAMCC_ICP_AHB_CLK] = &camcc_icp_ahb_clk.clkr,
- 	[CAMCC_ICP_CLK] = &camcc_icp_clk.clkr,
- 	[CAMCC_ICP_CLK_SRC] = &camcc_icp_clk_src.clkr,
+ /*
+- * v6.13: The verb `dispatch` was too overloaded and confusing. kfuncs are
+- * renamed to unload the verb.
+- *
+- * Build error is triggered if old names are used. New binaries work with both
+- * new and old names. The compat macros will be removed on v6.15 release.
++ * v6.15: 950ad93df2fc ("bpf: add kfunc for populating cpumask bits")
+  *
+- * scx_bpf_dispatch_from_dsq() and friends were added during v6.12 by
+- * 4c30f5ce4f7a ("sched_ext: Implement scx_bpf_dispatch[_vtime]_from_dsq()").
+- * Preserve __COMPAT macros until v6.15.
++ * Compat macro will be dropped on v6.19 release.
+  */
+-void scx_bpf_dispatch___compat(struct task_struct *p, u64 dsq_id, u64 slice, u64 enq_flags) __ksym __weak;
+-void scx_bpf_dispatch_vtime___compat(struct task_struct *p, u64 dsq_id, u64 slice, u64 vtime, u64 enq_flags) __ksym __weak;
+-bool scx_bpf_consume___compat(u64 dsq_id) __ksym __weak;
+-void scx_bpf_dispatch_from_dsq_set_slice___compat(struct bpf_iter_scx_dsq *it__iter, u64 slice) __ksym __weak;
+-void scx_bpf_dispatch_from_dsq_set_vtime___compat(struct bpf_iter_scx_dsq *it__iter, u64 vtime) __ksym __weak;
+-bool scx_bpf_dispatch_from_dsq___compat(struct bpf_iter_scx_dsq *it__iter, struct task_struct *p, u64 dsq_id, u64 enq_flags) __ksym __weak;
+-bool scx_bpf_dispatch_vtime_from_dsq___compat(struct bpf_iter_scx_dsq *it__iter, struct task_struct *p, u64 dsq_id, u64 enq_flags) __ksym __weak;
+ int bpf_cpumask_populate(struct cpumask *dst, void *src, size_t src__sz) __ksym __weak;
+ 
+-#define scx_bpf_dsq_insert(p, dsq_id, slice, enq_flags)				\
+-	(bpf_ksym_exists(scx_bpf_dsq_insert) ?					\
+-	 scx_bpf_dsq_insert((p), (dsq_id), (slice), (enq_flags)) :		\
+-	 scx_bpf_dispatch___compat((p), (dsq_id), (slice), (enq_flags)))
+-
+-#define scx_bpf_dsq_insert_vtime(p, dsq_id, slice, vtime, enq_flags)		\
+-	(bpf_ksym_exists(scx_bpf_dsq_insert_vtime) ?				\
+-	 scx_bpf_dsq_insert_vtime((p), (dsq_id), (slice), (vtime), (enq_flags)) : \
+-	 scx_bpf_dispatch_vtime___compat((p), (dsq_id), (slice), (vtime), (enq_flags)))
+-
+-#define scx_bpf_dsq_move_to_local(dsq_id)					\
+-	(bpf_ksym_exists(scx_bpf_dsq_move_to_local) ?				\
+-	 scx_bpf_dsq_move_to_local((dsq_id)) :					\
+-	 scx_bpf_consume___compat((dsq_id)))
+-
+-#define __COMPAT_scx_bpf_dsq_move_set_slice(it__iter, slice)			\
+-	(bpf_ksym_exists(scx_bpf_dsq_move_set_slice) ?				\
+-	 scx_bpf_dsq_move_set_slice((it__iter), (slice)) :			\
+-	 (bpf_ksym_exists(scx_bpf_dispatch_from_dsq_set_slice___compat) ?	\
+-	  scx_bpf_dispatch_from_dsq_set_slice___compat((it__iter), (slice)) :	\
+-	  (void)0))
+-
+-#define __COMPAT_scx_bpf_dsq_move_set_vtime(it__iter, vtime)			\
+-	(bpf_ksym_exists(scx_bpf_dsq_move_set_vtime) ?				\
+-	 scx_bpf_dsq_move_set_vtime((it__iter), (vtime)) :			\
+-	 (bpf_ksym_exists(scx_bpf_dispatch_from_dsq_set_vtime___compat) ?	\
+-	  scx_bpf_dispatch_from_dsq_set_vtime___compat((it__iter), (vtime)) :	\
+-	  (void) 0))
+-
+-#define __COMPAT_scx_bpf_dsq_move(it__iter, p, dsq_id, enq_flags)		\
+-	(bpf_ksym_exists(scx_bpf_dsq_move) ?					\
+-	 scx_bpf_dsq_move((it__iter), (p), (dsq_id), (enq_flags)) :		\
+-	 (bpf_ksym_exists(scx_bpf_dispatch_from_dsq___compat) ?			\
+-	  scx_bpf_dispatch_from_dsq___compat((it__iter), (p), (dsq_id), (enq_flags)) : \
+-	  false))
+-
+-#define __COMPAT_scx_bpf_dsq_move_vtime(it__iter, p, dsq_id, enq_flags)		\
+-	(bpf_ksym_exists(scx_bpf_dsq_move_vtime) ?				\
+-	 scx_bpf_dsq_move_vtime((it__iter), (p), (dsq_id), (enq_flags)) :	\
+-	 (bpf_ksym_exists(scx_bpf_dispatch_vtime_from_dsq___compat) ?		\
+-	  scx_bpf_dispatch_vtime_from_dsq___compat((it__iter), (p), (dsq_id), (enq_flags)) : \
+-	  false))
+-
+ #define __COMPAT_bpf_cpumask_populate(cpumask, src, size__sz)		\
+ 	(bpf_ksym_exists(bpf_cpumask_populate) ?			\
+ 	 (bpf_cpumask_populate(cpumask, src, size__sz)) : -EOPNOTSUPP)
+ 
+-#define scx_bpf_dispatch(p, dsq_id, slice, enq_flags)				\
+-	_Static_assert(false, "scx_bpf_dispatch() renamed to scx_bpf_dsq_insert()")
+-
+-#define scx_bpf_dispatch_vtime(p, dsq_id, slice, vtime, enq_flags)		\
+-	_Static_assert(false, "scx_bpf_dispatch_vtime() renamed to scx_bpf_dsq_insert_vtime()")
+-
+-#define scx_bpf_consume(dsq_id) ({						\
+-	_Static_assert(false, "scx_bpf_consume() renamed to scx_bpf_dsq_move_to_local()"); \
+-	false;									\
+-})
+-
+-#define scx_bpf_dispatch_from_dsq_set_slice(it__iter, slice)		\
+-	_Static_assert(false, "scx_bpf_dispatch_from_dsq_set_slice() renamed to scx_bpf_dsq_move_set_slice()")
+-
+-#define scx_bpf_dispatch_from_dsq_set_vtime(it__iter, vtime)		\
+-	_Static_assert(false, "scx_bpf_dispatch_from_dsq_set_vtime() renamed to scx_bpf_dsq_move_set_vtime()")
+-
+-#define scx_bpf_dispatch_from_dsq(it__iter, p, dsq_id, enq_flags) ({	\
+-	_Static_assert(false, "scx_bpf_dispatch_from_dsq() renamed to scx_bpf_dsq_move()"); \
+-	false;									\
+-})
+-
+-#define scx_bpf_dispatch_vtime_from_dsq(it__iter, p, dsq_id, enq_flags) ({  \
+-	_Static_assert(false, "scx_bpf_dispatch_vtime_from_dsq() renamed to scx_bpf_dsq_move_vtime()"); \
+-	false;									\
+-})
+-
+-#define __COMPAT_scx_bpf_dispatch_from_dsq_set_slice(it__iter, slice)		\
+-	_Static_assert(false, "__COMPAT_scx_bpf_dispatch_from_dsq_set_slice() renamed to __COMPAT_scx_bpf_dsq_move_set_slice()")
+-
+-#define __COMPAT_scx_bpf_dispatch_from_dsq_set_vtime(it__iter, vtime)		\
+-	_Static_assert(false, "__COMPAT_scx_bpf_dispatch_from_dsq_set_vtime() renamed to __COMPAT_scx_bpf_dsq_move_set_vtime()")
+-
+-#define __COMPAT_scx_bpf_dispatch_from_dsq(it__iter, p, dsq_id, enq_flags) ({	\
+-	_Static_assert(false, "__COMPAT_scx_bpf_dispatch_from_dsq() renamed to __COMPAT_scx_bpf_dsq_move()"); \
+-	false;									\
+-})
+-
+-#define __COMPAT_scx_bpf_dispatch_vtime_from_dsq(it__iter, p, dsq_id, enq_flags) ({  \
+-	_Static_assert(false, "__COMPAT_scx_bpf_dispatch_vtime_from_dsq() renamed to __COMPAT_scx_bpf_dsq_move_vtime()"); \
+-	false;									\
+-})
+-
+ /**
+  * __COMPAT_is_enq_cpu_selected - Test if SCX_ENQ_CPU_SELECTED is on
+  * in a compatible way. We will preserve this __COMPAT helper until v6.16.
+diff --git a/tools/sched_ext/scx_flatcg.bpf.c b/tools/sched_ext/scx_flatcg.bpf.c
+index eab9dafc8cb31..cd9bf93d70b1f 100644
+--- a/tools/sched_ext/scx_flatcg.bpf.c
++++ b/tools/sched_ext/scx_flatcg.bpf.c
+@@ -382,7 +382,7 @@ void BPF_STRUCT_OPS(fcg_enqueue, struct task_struct *p, u64 enq_flags)
+ 		return;
+ 	}
+ 
+-	cgrp = __COMPAT_scx_bpf_task_cgroup(p);
++	cgrp = scx_bpf_task_cgroup(p);
+ 	cgc = find_cgrp_ctx(cgrp);
+ 	if (!cgc)
+ 		goto out_release;
+@@ -508,7 +508,7 @@ void BPF_STRUCT_OPS(fcg_runnable, struct task_struct *p, u64 enq_flags)
+ {
+ 	struct cgroup *cgrp;
+ 
+-	cgrp = __COMPAT_scx_bpf_task_cgroup(p);
++	cgrp = scx_bpf_task_cgroup(p);
+ 	update_active_weight_sums(cgrp, true);
+ 	bpf_cgroup_release(cgrp);
+ }
+@@ -521,7 +521,7 @@ void BPF_STRUCT_OPS(fcg_running, struct task_struct *p)
+ 	if (fifo_sched)
+ 		return;
+ 
+-	cgrp = __COMPAT_scx_bpf_task_cgroup(p);
++	cgrp = scx_bpf_task_cgroup(p);
+ 	cgc = find_cgrp_ctx(cgrp);
+ 	if (cgc) {
+ 		/*
+@@ -564,7 +564,7 @@ void BPF_STRUCT_OPS(fcg_stopping, struct task_struct *p, bool runnable)
+ 	if (!taskc->bypassed_at)
+ 		return;
+ 
+-	cgrp = __COMPAT_scx_bpf_task_cgroup(p);
++	cgrp = scx_bpf_task_cgroup(p);
+ 	cgc = find_cgrp_ctx(cgrp);
+ 	if (cgc) {
+ 		__sync_fetch_and_add(&cgc->cvtime_delta,
+@@ -579,7 +579,7 @@ void BPF_STRUCT_OPS(fcg_quiescent, struct task_struct *p, u64 deq_flags)
+ {
+ 	struct cgroup *cgrp;
+ 
+-	cgrp = __COMPAT_scx_bpf_task_cgroup(p);
++	cgrp = scx_bpf_task_cgroup(p);
+ 	update_active_weight_sums(cgrp, false);
+ 	bpf_cgroup_release(cgrp);
+ }
+diff --git a/tools/sched_ext/scx_qmap.bpf.c b/tools/sched_ext/scx_qmap.bpf.c
+index 4f65a7550fb2d..b76702bbf1ee8 100644
+--- a/tools/sched_ext/scx_qmap.bpf.c
++++ b/tools/sched_ext/scx_qmap.bpf.c
+@@ -320,12 +320,9 @@ static bool dispatch_highpri(bool from_timer)
+ 
+ 		if (tctx->highpri) {
+ 			/* exercise the set_*() and vtime interface too */
+-			__COMPAT_scx_bpf_dsq_move_set_slice(
+-				BPF_FOR_EACH_ITER, slice_ns * 2);
+-			__COMPAT_scx_bpf_dsq_move_set_vtime(
+-				BPF_FOR_EACH_ITER, highpri_seq++);
+-			__COMPAT_scx_bpf_dsq_move_vtime(
+-				BPF_FOR_EACH_ITER, p, HIGHPRI_DSQ, 0);
++			scx_bpf_dsq_move_set_slice(BPF_FOR_EACH_ITER, slice_ns * 2);
++			scx_bpf_dsq_move_set_vtime(BPF_FOR_EACH_ITER, highpri_seq++);
++			scx_bpf_dsq_move_vtime(BPF_FOR_EACH_ITER, p, HIGHPRI_DSQ, 0);
+ 		}
+ 	}
+ 
+@@ -342,9 +339,8 @@ static bool dispatch_highpri(bool from_timer)
+ 		else
+ 			cpu = scx_bpf_pick_any_cpu(p->cpus_ptr, 0);
+ 
+-		if (__COMPAT_scx_bpf_dsq_move(BPF_FOR_EACH_ITER, p,
+-					      SCX_DSQ_LOCAL_ON | cpu,
+-					      SCX_ENQ_PREEMPT)) {
++		if (scx_bpf_dsq_move(BPF_FOR_EACH_ITER, p, SCX_DSQ_LOCAL_ON | cpu,
++				     SCX_ENQ_PREEMPT)) {
+ 			if (cpu == this_cpu) {
+ 				dispatched = true;
+ 				__sync_fetch_and_add(&nr_expedited_local, 1);
 -- 
 2.53.0
 
