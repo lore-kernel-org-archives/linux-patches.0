@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 417F0432304;
-	Sat, 12 Sep 2026 10:42:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5849A439341;
+	Sat, 12 Sep 2026 10:42:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789209760; cv=none; b=cpneFbt8F2h40Rfv2lBr+MG+pj+38zp5hY7w7EP+iE7rpJDG1LbMnpDiV2Tl+EEUTaAGA7D1cey3X/PeAloXD0CaWeeDjCCrjHuILU6Rs3tK2okPnEI76Nsy4HCHN8i7TGcU5SFlFUvf6oGqnxvgkqCR/pPk4cApoLm72wiYFiY=
+	t=1789209764; cv=none; b=KlfUXF8OZRQGLa1TgvHozv39tQGu54UL+HJH6HrTO++8/Vc0JpFa46+pZj+i4VuEsB4HxolzrHjSepGZZsUM3bB83AmIsYq1vx7isudXYyp6Ngm5x8ZeMjIcjQ0yuzx2Ud09ezhL9EsLf7EwBlPiiJM8jXCEB1nBvIfy+DBxo4k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789209760; c=relaxed/simple;
-	bh=g6PgE9Tu+H6MO3DielnYjqeVod/a/Y8ppaND8MSKj/E=;
+	s=arc-20240116; t=1789209764; c=relaxed/simple;
+	bh=iSO8xNEtjYI6FA/D2b3XKfmgJeILO8W759JIsCQH6Ac=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QgPi4ProO2Htz6/byd7wcNpbLnAv2sbWHUPrfV4RZ2sNlbLsCaAGlZZzjsB3BXAywNKfuUjI9tvPdOeJshme7wNZ2gkG8b3frLI7h3dlk26ztM1Y+rPi/Kv1YlurEAXmIW4F5m9oGmbRmzLyIBe0DcUldCciuyAZUaHWqUEG4Wk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xAcQQ0sk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Bn7E4zTtEbpRxTnd/2cV8doVYbZj9efJBhNDO+DYzUDlFK25sflMvalqh4dh9dnBB2A34XxGkynSpY2fEDSRmxzQ34RdcpNQwLMoVkTpR4HkxJcjCnuuhZL7o3+xOG8dGJieN+9+pON/PbGvv95rWCQqRUBIcPofeIeYhf9V/sc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LSzeR+sT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xAcQQ0sk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BE481F00893;
-	Sat, 12 Sep 2026 10:42:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LSzeR+sT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DAD41F000FF;
+	Sat, 12 Sep 2026 10:42:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789209755;
-	bh=6DkprZIpePdq9bCW4pYXIUdqw+FfFDsaufrfaq3Iouo=;
+	s=korg; t=1789209760;
+	bh=lc1jF8kpqlGiQuDhWxmK8m9yW/hwLGbKre6dA0oCzU8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xAcQQ0skihTcqvVWYGycnpI2mAmXjS+86lYAwCsMB5mL9McFmHcafDzr/Beqbsnz0
-	 m5SFXT01s/LmPBIMrglEIGbvADPsswcRAbX4sAjyiB/SX4g8DB3uTkpCWfM6vBr844
-	 avOxKfjRyK5ByFI/QiMrnOz0O/0+Cnjgr3aAxfWk=
+	b=LSzeR+sTLHRqa4LNp98cOnbVxG5XJSFVmiWX+228RPvuNOq1SENUrrusQofFM1fJI
+	 2ry6JzGuawyw+9HS2I+xXSsnWxwi+IkL4AyvzjJUc4WkHt04iQkSFp2GKeOFM3MrdY
+	 y7RJ3CmWqwo+wa7rwFIyJARg1h94Zpiyhh3lQgu0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	STAR Labs SG <info@starlabs.sg>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Eduard Zingerman <eddyz87@gmail.com>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0887/1518] arm64: dts: qcom: sar2130p: Fix swapped USB QMP PHY vdda-phy/vdda-pll supplies
-Date: Sat, 12 Sep 2026 08:50:56 +0200
-Message-ID: <20260912065643.514438029@linuxfoundation.org>
+Subject: [PATCH 6.18 0888/1518] bpf: Check load-acquire src ptr type before the load
+Date: Sat, 12 Sep 2026 08:50:57 +0200
+Message-ID: <20260912065643.537798833@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,43 +53,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+From: Daniel Borkmann <daniel@iogearbox.net>
 
-[ Upstream commit 9d883d21fc12c873eee2f864f706c38a289bef59 ]
+[ Upstream commit b87803391baa7e0bef60549d8841f12e549ad057 ]
 
-The QMP PHY expects the vdda-phy supply to be around 0.88V and the
-vdda-pll supply to be 1.2V. But these two supplies are swapped for the
-USB QMP PHY on this board, feeding 1.2V to vdda-phy and 0.9V to
-vdda-pll.
+check_atomic_load() calls check_load_mem() before atomic_ptr_type_ok().
+For a load-acquire that fetches into its own source register (dst_reg ==
+src_reg), check_load_mem() overwrites src_reg's type with the type of the
+loaded value, so the subsequent atomic_ptr_type_ok() no longer sees the
+source pointer and fails to reject the disallowed types (ctx, pkt,
+flow_keys, sock).
 
-Fix it by swapping the two supplies back.
+Since bpf_convert_ctx_accesses() does not rewrite atomic loads, the raw
+access to the underlying kernel object is left in place. The destination
+type is taken from the ctx access itself, so a load-acquire of the sk
+field of struct __sk_buff for example leaves the register typed as
+PTR_TO_SOCK_COMMON_OR_NULL, which type_is_sk_pointer() does not match
+either, while it actually holds unconverted struct sk_buff bytes. Once
+the NULL check has passed this is a type confusion, not just a leak of
+kernel data.
 
-Fixes: 6339e41fa39b ("arm64: dts: qcom: sar2130p: add QAR2130P board file")
-Reported-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Assisted-by: Claude:opus-4-8
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260803-phy-supply-fix-v1-22-5880630cde3e@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Validate src_reg with check_reg_arg() and check the source pointer type
+with atomic_ptr_type_ok() before the load again, mirroring
+check_atomic_rmw(). Out-of-range register numbers are already rejected
+earlier by check_and_resolve_insns() (commit 503d21ef8eac ("bpf: Do
+register range validation early")), and the only exemption there,
+is_stack_arg_ldx(), requires BPF_LDX | BPF_MEM | BPF_DW and thus never
+matches a BPF_ATOMIC insn. atomic_ptr_type_ok() can therefore not
+dereference register state out of bounds, that is, the out-of-bounds
+read addressed by the Fixes commit below does not reappear (as proven
+also via selftest).
+
+Fixes: c03bb2fa327e ("bpf: Fix out-of-bounds read in check_atomic_load/store()")
+Reported-by: STAR Labs SG <info@starlabs.sg>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: Eduard Zingerman <eddyz87@gmail.com>
+Link: https://lore.kernel.org/bpf/20260804201917.253491-1-daniel@iogearbox.net
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sar2130p-qar2130p.dts | 4 ++--
+ kernel/bpf/verifier.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sar2130p-qar2130p.dts b/arch/arm64/boot/dts/qcom/sar2130p-qar2130p.dts
-index 74778a5b19ba6..80428c0b3b4e6 100644
---- a/arch/arm64/boot/dts/qcom/sar2130p-qar2130p.dts
-+++ b/arch/arm64/boot/dts/qcom/sar2130p-qar2130p.dts
-@@ -551,8 +551,8 @@ &usb_1_hsphy {
- };
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 39f45a08ab83c..23c9f7b5f522a 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -7975,7 +7975,7 @@ static int check_atomic_load(struct bpf_verifier_env *env,
+ {
+ 	int err;
  
- &usb_dp_qmpphy {
--	vdda-phy-supply = <&vreg_l3a_1p2>;
--	vdda-pll-supply = <&vreg_l1a_0p91>;
-+	vdda-phy-supply = <&vreg_l1a_0p91>;
-+	vdda-pll-supply = <&vreg_l3a_1p2>;
+-	err = check_load_mem(env, insn, true, false, false, "atomic_load");
++	err = check_reg_arg(env, insn->src_reg, SRC_OP);
+ 	if (err)
+ 		return err;
  
- 	status = "okay";
- };
+@@ -7986,7 +7986,7 @@ static int check_atomic_load(struct bpf_verifier_env *env,
+ 		return -EACCES;
+ 	}
+ 
+-	return 0;
++	return check_load_mem(env, insn, true, false, false, "atomic_load");
+ }
+ 
+ static int check_atomic_store(struct bpf_verifier_env *env,
 -- 
 2.53.0
 
