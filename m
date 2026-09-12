@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA7372BDC0E;
-	Sat, 12 Sep 2026 11:27:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CD592EC09B;
+	Sat, 12 Sep 2026 11:27:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789212454; cv=none; b=IL0yHgCToQW+UcxCASk4Pupzmmez/V4/j29ALnXk8rHto0c7zEkrfsni5DLQruWT5KX1WdBfBmGexZtbzzyuNjSqO21t0uxDWQYGm68jwr1n99tWxhpuKMnDbccggfqG945TEYQ8u9B2vFvQQgJ0kVOO7O/keO+GIFcRRwEoa1I=
+	t=1789212460; cv=none; b=u10aeCcIx+HmDYQ3nZiQAeuHr3jYi9SQspNOYITuF19TTliBFyM9hKuqtBY9qSbUf+lyeeKDfkr5GMhgxUnO7uFLNm0V7XNZqxRtsqWlIQCTEA9MrPkmVCqUVq0+UotWIGM+irpw7PsLfgb39kTJvQBf/ReEWUMpN2iDRHL2eKA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789212454; c=relaxed/simple;
-	bh=EYG6YFxuw9j3ou9DdOVcyczOsXGyTohl5wKdJqEsDBQ=;
+	s=arc-20240116; t=1789212460; c=relaxed/simple;
+	bh=6bBEPA7pgAsP1i8dWCN/MPPSC0XbrtO38eHFZ16FNQs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rKPrOyGxd+9Bb/xIfsBZpGfLW1z9M8T67b6CB7RKcuzu3WbGVZ2KSlqmNKuOuQHXDiz2iwOH2nK7lzupW/RGFdp31p6mOm5Q0R6TAPgsSk/jUxkEMcu2KJzjyasXrM7QskjKzzhpXVDhSZOseM9Ni0R+B70q5KReoFzJ7KOHrtY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C6OI+3rW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Aub1cR27//4/kpPpT14gos1g5/cQR/SWwMbBJAtAYS2Ccuw0k//cdKxBm8wrIy6KsLnoB4tpW/N4GqCuxHTNVB24pbda0jzr4+MhrwhIyDNRZkm1KPP3liIkeIcpk6ZuksiBgwC4yF0mhoTRTzXe8A7Oa5LptgEXQzH0zQhqt8A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ljUQzXfB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C6OI+3rW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95EE91F00893;
-	Sat, 12 Sep 2026 11:27:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ljUQzXfB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBFFD1F000FF;
+	Sat, 12 Sep 2026 11:27:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789212453;
-	bh=wPWTH5xJzkWARsuquQ8wi0Zk7CgAWCGeT/rkOPDrlNk=;
+	s=korg; t=1789212458;
+	bh=JgV+toqMoZMPXIf0vgImxfWjDo6NsZeni7HPotPaiBo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=C6OI+3rWgwSGIfQ1dXv7M8mEKT4w+/N/kl6olRjx1j1Ee8tBcPwH0faptnaldnD+2
-	 l0uJHv4310H+36yLaa8yfHch1JS/+m5V3A3rd9BmSwdqBfVyoiw+ett+ko60yHfS9b
-	 jy7eGzLg+/76wUgxb9WXLp2ujZvZP/iUsLT4h3u4=
+	b=ljUQzXfBajSy/mnre4JqhDeKFH21NqH8hvWl6FV6lmxX0qwxmNz206oiG/HTSeGs/
+	 i/Tshgt7fRw1/QqRJEvCjlTUetLKBTE9ProD1U6MfLweMiD7TDQEhxgRD7CNv80O70
+	 5nI4b7wwvnQ18vCj0pQEXohrIo9sNv+OD78WtB0s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alice Mikityanska <alice@isovalent.com>,
-	Eric Dumazet <edumazet@google.com>,
+	Vega <vega@nebusec.ai>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Victor Nogueira <victor@mojatatu.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1441/1518] virtio-net: Ensure that TCP packets dont overflow gso_segs
-Date: Sat, 12 Sep 2026 09:00:10 +0200
-Message-ID: <20260912065656.154195313@linuxfoundation.org>
+Subject: [PATCH 6.18 1424/1518] net/sched: sch_teql: restore skb->dev on the slave failure path
+Date: Sat, 12 Sep 2026 08:59:53 +0200
+Message-ID: <20260912065655.764274439@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,52 +53,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alice Mikityanska <alice@isovalent.com>
+From: Victor Nogueira <victor@mojatatu.com>
 
-[ Upstream commit c27c449d455aafd9018a3cbab150f1c42c87923f ]
+[ Upstream commit dc4b95b8fee95113587e93ca116356032d271371 ]
 
-The user can specify any gso_size in a packet crafted with an AF_PACKET
-PACKET_VNET_HDR socket, even smaller than TCP_MIN_GSO_SIZE = 8. At the
-same time, GSO_MAX_SIZE = 8 * GSO_MAX_SEGS = 8 * 65535. When the user
-crafts a packet with gso_size < 8, there is a risk for partial GSO to
-overflow the 16-bit gso_segs field when dividing the SKB length by
-gso_size.
+teql_master_xmit() sets skb->dev = slave before calling the slave's
+ndo_start_xmit(), but never restores it when that transmit fails. The
+skb then walks on to the next slave still pointing at the previous one.
 
-Adjust gso_size of TCP packets to be at least TCP_MIN_GSO_SIZE = 8. Keep
-gso_size of UDP GSO packets, as gso_size=1 is valid and explicitly
-tested at tools/testing/selftests/net/tun.c:649.
+If a later slave has no resolved neighbour, teql_resolve() hands the skb
+to neigh_event_send(), which queues it on that neighbour's arp_queue
+with the stale skb->dev. skb->dev holds no reference, so deleting the
+previous slave frees the net_device while the skb is still queued.
+Whatever runs next on that skb - arp_error_report() on timeout, or
+neigh_direct_output() -> dev_queue_xmit() once the neighbour resolves -
+causes a UAF like the one below:
 
-Fixes: 7c6d2ecbda83 ("net: be more gentle about silly gso requests coming from user")
-Signed-off-by: Alice Mikityanska <alice@isovalent.com>
-Suggested-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260822120117.1163423-2-alice.kernel@fastmail.im
+BUG: KASAN: slab-use-after-free in __icmp_send (net/ipv4/icmp.c:914 (discriminator 2))
+Read of size 4 at addr ffff888106e100b0 by task flood_packet/527
+CPU: 0 UID: 0 PID: 527 Comm: flood_packet Not tainted 7.2.0-rc6-g594d90519502 #1 PREEMPT(lazy)
+Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+Call Trace:
+<IRQ>
+dump_stack_lvl (lib/dump_stack.c:94 lib/dump_stack.c:120)
+print_report (mm/kasan/report.c:378 mm/kasan/report.c:482)
+? __pfx__raw_spin_lock_irqsave (./include/asm-generic/qrwlock.h:122 (discriminator 4))
+? __icmp_send (net/ipv4/icmp.c:914 (discriminator 2))
+kasan_report (mm/kasan/report.c:595)
+? __icmp_send (net/ipv4/icmp.c:914 (discriminator 2))
+__icmp_send (net/ipv4/icmp.c:914 (discriminator 2))
+[...]
+ipv4_link_failure (net/ipv4/route.c:1251 net/ipv4/route.c:1258)
+? __pfx_ipv4_link_failure (./include/linux/skbuff.h:4327)
+? _raw_write_lock (./include/linux/instrumented.h:55 ./include/linux/atomic/atomic-instrumented.h:1301 ./include/asm-generic/qrwlock.h:98 ./include/linux/rwlock_api_smp.h:230 kernel/locking/spinlock.c:304)
+? __pfx__raw_write_lock (kernel/locking/spinlock.c:175)
+arp_error_report (./include/net/dst.h:438 net/ipv4/arp.c:296)
+neigh_invalidate (net/core/neighbour.c:1077)
+neigh_timer_handler (net/core/neighbour.c:1169)
+[...]
+Allocated by task 505:
+kasan_save_stack (mm/kasan/common.c:57)
+kasan_save_track (mm/kasan/common.c:78)
+__kasan_kmalloc (mm/kasan/common.c:398 mm/kasan/common.c:415)
+__kvmalloc_node_noprof (./include/linux/kasan.h:263 mm/slub.c:5334 mm/slub.c:6905)
+alloc_netdev_mqs (net/core/dev.c:12055 (discriminator 2))
+rtnl_create_link (net/core/rtnetlink.c:3721)
+rtnl_newlink (net/core/rtnetlink.c:3903 net/core/rtnetlink.c:4044 net/core/rtnetlink.c:4159)
+rtnetlink_rcv_msg (net/core/rtnetlink.c:7076)
+[...]
+Freed by task 536:
+kasan_save_stack (mm/kasan/common.c:57)
+kasan_save_track (mm/kasan/common.c:78)
+kasan_save_free_info (mm/kasan/generic.c:584)
+__kasan_slab_free (mm/kasan/common.c:253 mm/kasan/common.c:285)
+kfree (./include/linux/kasan.h:235 mm/slub.c:2677 mm/slub.c:6377 mm/slub.c:6692)
+device_release (drivers/base/core.c:2636)
+kobject_put (lib/kobject.c:689 lib/kobject.c:720 ./include/linux/kref.h:65 lib/kobject.c:737)
+netdev_run_todo (net/core/dev.c:11756)
+rtnl_dellink (net/core/rtnetlink.c:157 ./include/linux/rtnetlink.h:135 net/core/rtnetlink.c:3651)
+rtnetlink_rcv_msg (net/core/rtnetlink.c:7076)
+[...]
+
+Fix this by restoring skb->dev to the master at the end of each slave's
+iteration.
+
+Fixes: 0cc0c2e661af ("net/sched: teql: fix NULL pointer dereference in iptunnel_xmit on TEQL slave xmit")
+Reported-by: Vega <vega@nebusec.ai>
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Signed-off-by: Victor Nogueira <victor@mojatatu.com>
+Link: https://patch.msgid.link/20260824115928.4099988-1-victor@mojatatu.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/virtio_net.h | 4 ++++
- 1 file changed, 4 insertions(+)
+ net/sched/sch_teql.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/include/linux/virtio_net.h b/include/linux/virtio_net.h
-index f36d21b5bc19e..c381b916c1b54 100644
---- a/include/linux/virtio_net.h
-+++ b/include/linux/virtio_net.h
-@@ -6,6 +6,7 @@
- #include <linux/ip.h>
- #include <linux/ipv6.h>
- #include <linux/udp.h>
-+#include <net/tcp.h>
- #include <uapi/linux/tcp.h>
- #include <uapi/linux/virtio_net.h>
- 
-@@ -179,6 +180,9 @@ static inline int __virtio_net_hdr_to_skb(struct sk_buff *skb,
- 			if (skb->ip_summed == CHECKSUM_PARTIAL &&
- 			    skb->csum_offset != offsetof(struct tcphdr, check))
- 				return -EINVAL;
-+
-+			BUILD_BUG_ON(TCP_MIN_GSO_SIZE * GSO_MAX_SEGS < GSO_MAX_SIZE);
-+			gso_size = max(gso_size, TCP_MIN_GSO_SIZE);
+diff --git a/net/sched/sch_teql.c b/net/sched/sch_teql.c
+index 4d463ba5ce725..eb424b20027e5 100644
+--- a/net/sched/sch_teql.c
++++ b/net/sched/sch_teql.c
+@@ -377,6 +377,7 @@ static netdev_tx_t teql_master_xmit(struct sk_buff *skb, struct net_device *dev)
+ 			nores = 1;
  			break;
  		}
++		skb->dev = dev;
+ 		__skb_pull(skb, skb_network_offset(skb));
+ 	} while ((q = rcu_dereference(NEXT_SLAVE(q))) != start);
  
 -- 
 2.53.0
