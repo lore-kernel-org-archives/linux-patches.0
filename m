@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD40835F602;
-	Sat, 12 Sep 2026 09:21:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFB7C3624A5;
+	Sat, 12 Sep 2026 09:21:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789204867; cv=none; b=eDqyhFZqjZXdvwp5nATzd6GYQzEeCnUfE4o0ZfwamU8Nomckstpd2y8KvzfMhQJkXsq4FmaQ87tDSFjy2z6nzmGgQasVMvBzlpB/fhUvRz+QVH1V6VUHsqRm+CInqIrGVFes2attdpaSYSag1ySWODk7BN96j6PwBKyxI4yQIp8=
+	t=1789204871; cv=none; b=Z++rY0YcxoaUaLW52u90hWP789OLGenOe3kZ8isURfatXeKZ4YWU0xdaPhZWS209Ig/yI2Sxa4RyIbs5XEmi/+h5WGtPE7PO6YKn9S0GZgpURMePIMz51NOVfPunSJ7E3fN5Bu8IZFYVDFqgYPcyu1H9gdqL8t7HOVYDEKRoshw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789204867; c=relaxed/simple;
-	bh=ibdF8jSlBr7XbT3vwv6c+6YrYzVT6br9KHiutKDnUxE=;
+	s=arc-20240116; t=1789204871; c=relaxed/simple;
+	bh=VnGg3SPrBQKcnrp40/0n87FdfQMD9UzklpI9KNT/o+A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=sJ6cxuFldigR/xN0ZMYb+Hw9V6GG5sEZLhNXlf/e0Jq+ay2abYRut06qSsOyGb7sqp1jyoBQla3876r8NTuQX6OoZ6Op0E7PKnkLNeblXSRyhtkhlOjMnn9slqsixlJB7BZTQsoIEiS6GyrAV4/pSsxybyLx1PkDJDFdixFKJHk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ogKu7isI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DzjczWHOulxkMbmjc5uYcfvXNEPiMLkVCF5LEICu1yyqZFevEiMj4gElTHhKg99Yv84gRLAQRxqdQi73Jb9Jwhod86N1btF0oxvm9y1qixcpNSaPGj5VeRJUlCuI1yMWjLGOY+bY0O7wjqHX47r/tMDPxaEIrJ0Z6tTTIibvAY0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N6xVu7uj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ogKu7isI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66DA61F000FF;
-	Sat, 12 Sep 2026 09:21:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N6xVu7uj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 547C71F000FF;
+	Sat, 12 Sep 2026 09:21:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789204865;
-	bh=DM0E3WwfZJX2BV4O1Ytvi7vzaEtNpoEYaMrFRcHi4qs=;
+	s=korg; t=1789204870;
+	bh=4zsntrsh/xFaRlDiUyANN8dM1d2Kt6Jj0UGWCItSVFM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ogKu7isIW6elc9raj6GWRzqZcK8R0hMl+njuwQ1O9jF17IyOW3m3ndOcmr0LNafX/
-	 TuTGVaAFY6qb1B98h5bxqISRmduHHc1W2wWKZbLs+wFFRk0RhLKQUbSjMdlol6sZys
-	 kzPcT8E+gxrSURmADiN6qzd5wJT/g+JOSptGwTV4=
+	b=N6xVu7ujYktoU+vbXtf2epwkvFlmxR2DLkQjtldKgvwqpK+v8xVDoAsRHBFpVilk3
+	 SPkSLhGiKFE+d5wrkMZ18bUzpU7u/zafqqOCvyZIKI19nnyPcanIEjf6Dunr6S086Q
+	 /Ztn8jtlwGTrTYiZZs/KN/yL7oaLtD+VOZzp98t4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rong Zhang <i@rong.moe>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1702/1815] net: page_pool: Remove zone/policy GFP flags when allocating XArray entries
-Date: Sat, 12 Sep 2026 08:57:32 +0200
-Message-ID: <20260912065728.935187706@linuxfoundation.org>
+Subject: [PATCH 7.2 1703/1815] net_sched: sch_fq: fix pacing delay underflow with pacing offload
+Date: Sat, 12 Sep 2026 08:57:33 +0200
+Message-ID: <20260912065728.958891485@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -46,94 +46,61 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rong Zhang <i@rong.moe>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 039f248a6cc1f4dec895c001de2c600842022e58 ]
+[ Upstream commit 137b8ae233cabe7fc77cce86f5ba33bf1b369e26 ]
 
-Net drivers request GFP flags according to both the current context and
-the device constraints, but the XArray entry itself is by no mean used
-by the device. Passing though device constraints to XArray allocation is
-a bug and will be warned and fixed up by slab, e.g.:
+When pacing offload is enabled (q->offload_horizon > 0),
+FQ can dequeue packets early (now < f->time_next_packet).
 
-    Unexpected gfp: 0x4 (GFP_DMA32). Fixing up to gfp: 0x82820 (GFP_ATOMIC|__GFP_NOWARN|__GFP_NOMEMALLOC). Fix your code!
-    CPU: 2 UID: 0 PID: 1071629 Comm: kworker/u80:1 Not tainted 7.2.0-rc7+ #1 PREEMPT(lazy)
-    Hardware name: LENOVO 21Q4/LNVNB161216, BIOS PXCN27WW 10/20/2025
-    Workqueue: mt76 mt792x_pm_wake_work [mt792x_lib]
-    Call Trace:
-     <TASK>
-     dump_stack_lvl+0x6e/0x90
-     kmalloc_fix_flags+0x4d/0x6a
-     refill_objects+0x10a/0x330
-     __pcs_replace_empty_main+0x292/0x5c0
-     kmem_cache_alloc_lru_noprof+0x4c2/0x680
-     ? __xas_nomem+0x3a/0x120
-     __xas_nomem+0x3a/0x120
-     __xa_alloc+0xd4/0x190
-     page_pool_dma_map+0xef/0x400
-     __page_pool_alloc_netmems_slow+0xed/0x480
-     ? lock_release+0x280/0x490
-     page_pool_alloc_frag_netmem+0xe0/0x3a0
-     page_pool_alloc_frag+0xe/0x20
-     mt76_dma_rx_fill_buf+0x1f6/0x580 [mt76]
-     mt76_dma_rx_reset+0x1cf/0x230 [mt76]
-     mt792x_wpdma_reset+0x183/0x1b0 [mt792x_lib]
-     mt792x_wpdma_reinit_cond+0x5e/0xa0 [mt792x_lib]
-     mt792xe_mcu_drv_pmctrl+0x28/0x60 [mt792x_lib]
-     mt792x_mcu_drv_pmctrl+0x3e/0x90 [mt792x_lib]
-     mt792x_pm_wake_work+0x2d/0x1d0 [mt792x_lib]
-     ? process_one_work+0x20e/0x600
-     process_one_work+0x230/0x600
-     ? process_one_work+0x256/0x600
-     worker_thread+0x1ec/0x3c0
-     ? rescuer_thread+0x610/0x610
-     kthread+0xf2/0x130
-     ? kthread_affine_node+0x140/0x140
-     ret_from_fork+0x2a5/0x380
-     ? kthread_affine_node+0x140/0x140
-     ret_from_fork_asm+0x11/0x20
-     </TASK>
+In this case, the drift calculation (now - f->time_next_packet)
+underflows to a large unsigned value.
 
-Currently mt76 and stmmac may allocate page pool pages with GFP_DMA32.
+min(len/2, now - f->time_next_packet) then evaluates to len/2,
+incorrectly halving the pacing delay for the next packet.
 
-Fix it by removing zone/policy GFP flags when allocating XArray entries.
-This is inspired by commit 96d578088085 ("iommu/dma: Use the gfp
-parameter in __iommu_dma_alloc_noncontiguous()").
+Fix this by only applying drift compensation if now > f->time_next_packet.
 
-Fixes: ee62ce7a1d90 ("page_pool: Track DMA-mapped pages and unmap them when destroying the pool")
-Signed-off-by: Rong Zhang <i@rong.moe>
-Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
-Link: https://patch.msgid.link/20260821-page-pool-xa-drop-dma32-v1-1-6eab295c3478@rong.moe
+This bug was triggered when flow_max_rate was set on the qdisc
+or for non EDT packets (packets with a zero skb->tstamp).
+
+Fixes: f26080d47007 ("net_sched: sch_fq: add the ability to offload pacing")
+Reported-by: Willem de Bruijn <willemb@google.com>
+Closes: https://lore.kernel.org/netdev/CANn89iK6O7ujR9zCJzd04MNLQoDi3mA+HWsR-hgQWYzLS3gZfw@mail.gmail.com/
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20260820120706.1995449-1-willemdebruijn.kernel@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/page_pool.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ net/sched/sch_fq.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/net/core/page_pool.c b/net/core/page_pool.c
-index 50ee550fef73a..8f8956fb061be 100644
---- a/net/core/page_pool.c
-+++ b/net/core/page_pool.c
-@@ -484,6 +484,13 @@ static int page_pool_register_dma_index(struct page_pool *pool,
- 	if (unlikely(!PP_DMA_INDEX_BITS))
- 		goto out;
- 
-+	/*
-+	 * Drivers request GFP flags according to both the current context and
-+	 * the device constraints, but the XArray entry itself is by no mean
-+	 * used by the device, so remove zone/policy flags.
-+	 */
-+	gfp &= ~(__GFP_DMA | __GFP_DMA32 | __GFP_HIGHMEM | __GFP_COMP);
+diff --git a/net/sched/sch_fq.c b/net/sched/sch_fq.c
+index 7cae082a98472..4b5f6d896c6d5 100644
+--- a/net/sched/sch_fq.c
++++ b/net/sched/sch_fq.c
+@@ -828,8 +828,12 @@ static struct sk_buff *fq_dequeue(struct Qdisc *sch)
+ 		 * f->time_next_packet was set when prior packet was sent,
+ 		 * and current time (@now) can be too late by tens of us.
+ 		 */
+-		if (f->time_next_packet)
+-			len -= min(len/2, now - f->time_next_packet);
++		if (f->time_next_packet) {
++			s64 drift = now - f->time_next_packet;
 +
- 	if (in_softirq())
- 		err = xa_alloc(&pool->dma_mapped, &id, netmem_to_page(netmem),
- 			       PP_DMA_INDEX_LIMIT, gfp);
++			if (drift > 0)
++				len -= min_t(u64, len / 2, drift);
++		}
+ 		f->time_next_packet = now + len;
+ 	}
+ out:
 -- 
 2.53.0
 
