@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1466352003;
-	Sat, 12 Sep 2026 10:11:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF019353EF7;
+	Sat, 12 Sep 2026 10:11:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789207903; cv=none; b=d5Qk7MpKcNdlEsyxULcfhXFErMd1zWWkmvmEumOk1eT/H+RmffF+D4HNkScQJpXfVwniq28jj6g97ONum7PdllC1sahA6uEaT+kisuLOnfW1RcxTa0foxMQ4ldifoXmP9qcuD4xggBv7/Uv0m82fFHByoYtnkToAfgVnOWWLYzA=
+	t=1789207908; cv=none; b=dVLYLLfQY3t+/JKSoWaK2vVCuT5OUVFYlcb0pAkx/wP+2FmotpgMw0EQUemtl/s+9XKFIzMnSdHTEjPFgA4PXfFODh/PXPhblxhAWZruoDmpuGv9/X/0twwrvxCkNa/ounZ0X32St6hPgH6ekot/lNxITJPcWsVXZ73pvpUrGu8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789207903; c=relaxed/simple;
-	bh=tAdaaO5D+Uz1y75gEzz/S8VkTzTOloD+atlQKn6kaX4=;
+	s=arc-20240116; t=1789207908; c=relaxed/simple;
+	bh=rxWr9XwB+QgyWh0lPd+hRAtiG1/3naSUs19U1jmJZ54=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EoJ7C2YMw7rI3C8isSkMf75ex9wn32vdFNMcdf1Lk0GhC1dg72ccjLj0vTkm4fQGMI9YcqBdCcPmD39X8/KCDbFqjohwY48P7shfr+9iu22rSQk7wzrw3RapqKfhlpqL4ipg8OWvWU2FaDo/sF82vPMBkYwnGOW5vmts/T404jc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KDOz4Eoc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=G9UVkFCOnhcJSJUKwHMNeoCokDmsY99W5s55akh7xFRVb3Xl52WCvqx/CfzqAd8L/RWAj5YHRCmXxqcXmPzimwH3b6WbF5uBXg+87mt8NbDd2fNFZzFho+uPH4pbhMNkKVOoIUIZR1Yf2YBCNHrBdCL7trvTCAHmdEIjTKFY9Lw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VnFLartl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KDOz4Eoc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C45221F000FF;
-	Sat, 12 Sep 2026 10:11:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VnFLartl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3E1A1F000FF;
+	Sat, 12 Sep 2026 10:11:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789207901;
-	bh=39VSgtsx9fksRiTO7NLFSBkgh0sgXdehUv8G0KBBWWM=;
+	s=korg; t=1789207906;
+	bh=X2ayS3ZwEcR5LYM8qbpwdSSK9QOrMhi4er1oiQgMe0o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KDOz4Eoc9e+Pri2hXmpWP88PKIJ20pBMdJ7CKvOlxITFAQDMWsAu18L/1+UNuQPog
-	 IUimPqZMrdmQv1IfiPWAQ5xgj3iybnTby/Uv7MtHJYEjyiSdnp/35vuxazGR5K+CxF
-	 551Q5whknQXfFqs2y6v7GgDEDFGgOFFehw1gSUlk=
+	b=VnFLartl5eudYSUH77GrVh3pUo3SIx6MVkOv/Pb40GP1vEP1SDHRQkAvLGJOKYmsO
+	 t1XmaOUyYy/J+/tdrda9sLRExkAWmkgB+fJZXGpxQ+lkbIgvyM38IT8F/m+tRRDmk8
+	 w67Aeg8JaljfeRZIR1fgVi7jv6O8GECSa/JqTFNQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ruoyu Wang <ruoyuw560@gmail.com>,
+	zhouminqiang <zhouminqiang2@huawei.com>,
+	Zhihao Cheng <chengzhihao1@huawei.com>,
 	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0465/1518] mtd: mtdswap: Avoid freeing registered blktrans device twice
-Date: Sat, 12 Sep 2026 08:43:54 +0200
-Message-ID: <20260912065633.966638957@linuxfoundation.org>
+Subject: [PATCH 6.18 0466/1518] mtd: part: reject MTDPART_OFS_RETAIN in mtd_add_partition()
+Date: Sat, 12 Sep 2026 08:43:55 +0200
+Message-ID: <20260912065633.988487902@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,46 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruoyu Wang <ruoyuw560@gmail.com>
+From: zhouminqiang <zhouminqiang2@huawei.com>
 
-[ Upstream commit 779aa4c66a96bf43d2d62982ea1a9096a9128d87 ]
+[ Upstream commit b759d5bb6265419344ee9729fd0dc07ad85719d8 ]
 
-In mtdswap_add_mtd(), debugfs setup failure after successful blktrans
-registration can free mbd_dev twice.
+mtd_add_partition() does not reject the special offset value
+MTDPART_OFS_RETAIN (-3), which leads to a WARN_ON in
+add_mtd_device() when called through the BLKPG ioctl on NAND
+devices. The RETAIN value depends on cur_offset being the end of
+the previous partition, but in the dynamic partition path
+cur_offset equals the offset argument itself, causing undefined
+behavior.
 
-add_mtd_blktrans_dev() initializes the blktrans device reference and
-publishes the disk. Once that succeeds, del_mtd_blktrans_dev() tears the
-disk down and drops the blktrans reference; when that reference reaches
-zero, blktrans_dev_release() frees the mtd_blktrans_dev.
+Commit 5daa7b21496a ("mtd: prepare partition add and del functions
+for ioctl requests") introduced mtd_add_partition() and correctly
+rejected MTDPART_OFS_APPEND (-1) and MTDPART_OFS_NXTBLK (-2),
+since those special offsets rely on cur_offset tracking the
+previous partition's end. However, commit 1a31368bf92e ("mtd: add a flags
+for partitions which should just leave smth. after them")
+later added MTDPART_OFS_RETAIN (-3) for the static
+partition table path without updating mtd_add_partition() to
+also reject this value.
 
-The debugfs failure path called del_mtd_blktrans_dev(mbd_dev), then fell
-through the common cleanup label and called kfree(mbd_dev) again. Clear
-the local pointer after deregistration so the common cleanup can still
-release the mtdswap state without freeing the blktrans object twice.
+With offset=-3 passed via BLKPG, the RETAIN size calculation in
+allocate_partition() underflows (parent_size - 0xFFFFFFFFFFFFFFFD
+= parent_size + 3). If the underflow result does not appear to
+leave enough space, allocate_partition() jumps to out_register via
+goto, skipping erasesize initialization. This results in
+erasesize=0, which triggers:
 
-This issue was found by a static analysis checker and confirmed by
-manual source review.
+WARN_ON((!mtd->erasesize || !master->_erase) &&
+		!(mtd->flags & MTD_NO_ERASE))
 
-Fixes: e8e3edb95ce6 ("mtd: create per-device and module-scope debugfs entries")
-Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
+in add_mtd_device(). If the underflow result appears to leave
+enough space, a bogus partition size is calculated, but the
+"out of reach" sanity check catches the invalid offset and
+creates a disabled empty partition (offset=0, size=0) instead
+of returning an error.
+
+Fix this by adding MTDPART_OFS_RETAIN to the rejection list in
+mtd_add_partition(), consistent with the existing handling of
+APPEND and NXTBLK.
+
+Fixes: 1a31368bf92e ("mtd: add a flags for partitions which should just leave smth. after them")
+
+Signed-off-by: zhouminqiang <zhouminqiang2@huawei.com>
+Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
 Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/mtdswap.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/mtd/mtdpart.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/mtd/mtdswap.c b/drivers/mtd/mtdswap.c
-index 42ff7deace80c..d38528210350c 100644
---- a/drivers/mtd/mtdswap.c
-+++ b/drivers/mtd/mtdswap.c
-@@ -1452,6 +1452,7 @@ static void mtdswap_add_mtd(struct mtd_blktrans_ops *tr, struct mtd_info *mtd)
+diff --git a/drivers/mtd/mtdpart.c b/drivers/mtd/mtdpart.c
+index 2876501a78145..fb92b7a0ed5f7 100644
+--- a/drivers/mtd/mtdpart.c
++++ b/drivers/mtd/mtdpart.c
+@@ -254,7 +254,8 @@ int mtd_add_partition(struct mtd_info *parent, const char *name,
  
- debugfs_failed:
- 	del_mtd_blktrans_dev(mbd_dev);
-+	mbd_dev = NULL;
+ 	/* the direct offset is expected */
+ 	if (offset == MTDPART_OFS_APPEND ||
+-	    offset == MTDPART_OFS_NXTBLK)
++	    offset == MTDPART_OFS_NXTBLK ||
++	    offset == MTDPART_OFS_RETAIN)
+ 		return -EINVAL;
  
- cleanup:
- 	mtdswap_cleanup(d);
+ 	if (length == MTDPART_SIZ_FULL)
 -- 
 2.53.0
 
