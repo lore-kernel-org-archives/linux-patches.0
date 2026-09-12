@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40B75417BF9;
-	Sat, 12 Sep 2026 08:41:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0808B41BA94;
+	Sat, 12 Sep 2026 08:41:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789202463; cv=none; b=UV3lSttKXZkKq6b/7OXpo22+Ok083obfLPz+KGoPArDs/vR6cOY/tkB+hudSpo9iGQjnMTte3iqt1811/exZofoVe3ilVQXVJJoUeHfc2MABSWIAhjTZZlQpMJL9Oqz+oGsdOziD3QEU+rWSrTQwDn/R2vTDrYos0/znhbHTLa8=
+	t=1789202468; cv=none; b=OOeM86i9B1Ae72jGxfOco6svGLWi1Wygw25z/4/9/1FcVpUCVh+EuyPlnLX8D+MFcEqEOcv5LlDKsCn3TiMkXwLi3S++b9XewzEMs3cq7ZH0QnxoTumfFPaYlvAKrMyI1mdWaPwqyj/k0knMsudmrXzgAqEZkOkOPr3PJxT+VIo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789202463; c=relaxed/simple;
-	bh=zlfinY0ivBYzEzEQYyvoBbZ45o9Ul1VPnpJQ8M+bnD8=;
+	s=arc-20240116; t=1789202468; c=relaxed/simple;
+	bh=osa/EGvIY0pVzo5KbBUu8fD5yYa5m1KQ9+BstqVyX+I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IvMTd3PuLTyU3poRFEHHMyypmlkhuZ44NhkN7seZ1UJNLICA/l/O+Ybi/uRpFl7fqOfnNXnhTQ0H7kVnWXB+01VvmbspA2ET7FZHQHhBl0SgCBR7QPpnrxhLP3FOHnkL7iGtOHtDct9iiTzOA5c9FIZRczxOHJtFpObuY4VriuA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CXSxhHkS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=k1Y6NlCA/uJsv4xmkKbkaoM+Ux8rQc2unOKsj/D1H2SQHDHJGT1d/IZ9L13N/1ioM+wPmDdBGKBKtfjgmSqHc9ySYOTmNmymo3+NCqZsJVyk+u46jYHA5miZoG7LiZ4WyExhOjnIOa2iSDBnwQsmNMjFhY/FqHy0ePE5gDTIO3Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U6nrrNXo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CXSxhHkS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBE981F000FF;
-	Sat, 12 Sep 2026 08:41:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U6nrrNXo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C04C61F000FF;
+	Sat, 12 Sep 2026 08:41:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789202462;
-	bh=kE8iti82A994kndcKsNEBzwypWXg5uPJOmJ0wN8hJvU=;
+	s=korg; t=1789202466;
+	bh=RV8BajK8CWYUei+6weDch4C2ndt/QlILbqPIm1x6UdM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CXSxhHkSVH0jqT6jGGAEQfgy+zVpR1erZ5VF4K+WX3kYoaqSa8wU1fvoeXkbDxchV
-	 XjpQbR5lxE0HUJmw1XFiLfYMexZePdB39KCZaX61keI5rfYTr8z7ajQW2pXW7QxDqW
-	 9kndUPTiLd8Y7DBA3z09L1umFMsaVvNh4ifmQLP0=
+	b=U6nrrNXopF6T5OB7Ce8IlBhN37nkCPT/TJz/I/F/JPo6uiljRYYFEeDMipQPzXYt8
+	 o4CvuWqtI0bGM4bl4WZzdCZ6gVIdjncC8YnlMHi5UlMdR4i19pK+NWuh1rs9zNQ53K
+	 lNSYJe0WwXEoWR+xE3tRavqPYE9aYyizSN6bfhMI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	surendra <kr494167@gmail.com>,
-	Daniel Lezcano <daniel.lezcano@kernel.org>,
+	Yuho Choi <dbgh9129@gmail.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1208/1815] thermal/drivers/spacemit: Validate clamped trip thresholds
-Date: Sat, 12 Sep 2026 08:49:18 +0200
-Message-ID: <20260912065717.366632309@linuxfoundation.org>
+Subject: [PATCH 7.2 1209/1815] ACPI: video: Release PCI device reference after lookup
+Date: Sat, 12 Sep 2026 08:49:19 +0200
+Message-ID: <20260912065717.389187504@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -45,51 +45,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: surendra <kr494167@gmail.com>
+From: Yuho Choi <dbgh9129@gmail.com>
 
-[ Upstream commit 68b78ad1e3533c1330dc9b7517947491c1a909c3 ]
+[ Upstream commit 3d7ed9b8ef47b8bcae1fc3e12f7590a217862a89 ]
 
-k1_tsensor_set_trips() checks the requested trip temperatures before
-converting them to the sensor register representation. Distinct
-out-of-range temperatures can clamp to the same hardware value, leaving the
-sensor with an invalid low/high threshold pair.
+video_detect_portege_r100() uses pci_get_device() only as a boolean
+check for the Trident CyberBlade XP4m32 device. pci_get_device() takes a
+reference on a matching PCI device, but the callback returns without
+releasing it.
 
-Validate the ordering after conversion and clamping.
+Drop the reference after selecting the vendor backlight quirk so the PCI
+device can be released normally.
 
-Fixes: 296a977f2bac ("thermal/drivers/spacemit/k1: Add thermal sensor support")
-Signed-off-by: surendra <kr494167@gmail.com>
-Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
-Link: https://patch.msgid.link/20260720103606.93924-1-kr494167@gmail.com
+Fixes: 35a341c9b25d ("ACPI: video: Add acpi_backlight=vendor quirk for Toshiba Portégé R100")
+Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
+Link: https://patch.msgid.link/20260807015734.913361-1-dbgh9129@gmail.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/spacemit/k1_tsensor.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/acpi/video_detect.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/thermal/spacemit/k1_tsensor.c b/drivers/thermal/spacemit/k1_tsensor.c
-index 79222d233129d..a9eaedefdac3b 100644
---- a/drivers/thermal/spacemit/k1_tsensor.c
-+++ b/drivers/thermal/spacemit/k1_tsensor.c
-@@ -156,13 +156,12 @@ static int k1_tsensor_set_trips(struct thermal_zone_device *tz, int low, int hig
- 	struct k1_tsensor *ts = ch->ts;
- 	u32 val;
- 
--	if (low >= high)
--		return -EINVAL;
--
- 	low = clamp_val(low / 1000 + TEMPERATURE_OFFSET, TEMPERATURE_OFFSET,
- 			FIELD_MAX(K1_TSENSOR_THRSH_LOW_MASK));
- 	high = clamp_val(high / 1000 + TEMPERATURE_OFFSET, TEMPERATURE_OFFSET,
- 			 FIELD_MAX(K1_TSENSOR_THRSH_HIGH_MASK));
-+	if (low >= high)
-+		return -EINVAL;
- 
- 	val = readl(ts->base + K1_TSENSOR_THRSH_REG(ch->id));
+diff --git a/drivers/acpi/video_detect.c b/drivers/acpi/video_detect.c
+index 458efa4fe9d4b..4c1c3b0b5499d 100644
+--- a/drivers/acpi/video_detect.c
++++ b/drivers/acpi/video_detect.c
+@@ -137,8 +137,10 @@ static int video_detect_portege_r100(const struct dmi_system_id *d)
+ 	struct pci_dev *dev;
+ 	/* Search for Trident CyberBlade XP4m32 to confirm Portégé R100 */
+ 	dev = pci_get_device(PCI_VENDOR_ID_TRIDENT, 0x2100, NULL);
+-	if (dev)
++	if (dev) {
+ 		acpi_backlight_dmi = acpi_backlight_vendor;
++		pci_dev_put(dev);
++	}
+ 	return 0;
+ }
  
 -- 
 2.53.0
