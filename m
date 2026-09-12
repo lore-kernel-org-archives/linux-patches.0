@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 609E1378D70;
-	Sat, 12 Sep 2026 13:26:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C44C847CA62;
+	Sat, 12 Sep 2026 13:26:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789219609; cv=none; b=JWO2v0bFlcLhVWgN2hiCec5qJrT0GjxL7bLZY0RuSgUPAsl7tf0jjBZ2aZVu7PpD7Ej8hgG/0RWTxJBT25437Z9tSXCVbHYjVc5uohNrtoDU45q54A4sL+KXoiOQ0QFG97mVjlOxDGcDV/yzWa+9A4fdzYiTLoykI72wEvNw7ig=
+	t=1789219614; cv=none; b=CMaJosZ4QSFTUj30qaQqsPRN0HUzsOHzFO55Ta8QOgnohtXc7Jf7s3u/T7lKC/tdrHdSUNTJanT9BgK7RcGrNVriSSIW//INRAUsKgZmUUtayYlI1x0C24ZFM7BRub9d3Q7BY3d3fDlHAkfYeXRwmt3Ry4nObd+CJU3E2C7J0PA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789219609; c=relaxed/simple;
-	bh=K4MvyMIKlRYeROCNJktRa5PXAf8FqLs/pUR96vtlcXs=;
+	s=arc-20240116; t=1789219614; c=relaxed/simple;
+	bh=w15yS+CVemWKzZ0cbmceUjz3n3w2qn3liedaE/CUexg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tfrgOXtxsIiOBN4i/TFy01DmsTC9lCG+hkmnUeK3BHITmNB/tlhWtybYidd334YwcON8OgbdRCPFZe7F0ikPJ+bxabSSFDB5nms4tfzXQlSmEHxh3yrQ9YZqwhebItK6txCZXWBMLspQ4c6BDZj0Qf/hil7CQJd0j8xRFsDcNRo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nMHJMDo/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uky4qR/BC5RjqA2t17v+NPiw86sWGIWP9NHKfy4OhYwNi7JHNRULqpgy+55JTDX5hLZKrTMYI8NTqCzUkPcOEeOUtqj5o7/zUEJmV2YXe9/hGWC8jyP+jxMT+RwQhQpHUnToldieeW7jn0J8tMzU5l1gIjdFfPd2s4XCJ3/cv5c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JOYWx2NF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nMHJMDo/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A2471F00893;
-	Sat, 12 Sep 2026 13:26:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JOYWx2NF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B7461F000FF;
+	Sat, 12 Sep 2026 13:26:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789219608;
-	bh=ztueiZewScT0P9+DYpc/XdnlQ2J9nt2Tnep8NnzJRtw=;
+	s=korg; t=1789219612;
+	bh=NLJT0kuh2gUfEwLqVrlFbhIbOqmKVwcS7P70RB7AakY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nMHJMDo/JXnxCEh16LI9DiIn4CU/5ESPhmS4xJnSVWeRr6iusK2atDTBIkANSDJnC
-	 JuOpDgGwLdiuZTOuIO+6wBKX6FqGYLNrTBYCABEN72JmTRGQHxo3+RhPg4Pk/Fwoe2
-	 V3eqRh3sFDy+E2kFZU+EcxZswItiAZNzjYHrW030=
+	b=JOYWx2NF42tFMbZVbdEOAv01tr5x6PJ22hY68PNBL7jtJyscFT9uXSB4a2e91kLxv
+	 NboZZ7TpegQanuXWg5Ak7DIH5+haGha8oCFZ3dl4krRnPsQyFKZ3ozGKiHXYXWiIwj
+	 52hFZkVBsTrRpYo/6mgWBZzGNyelCjxCzqjsJopI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0001/1424] Revert "arm64: mm: Dont remap pgtables for allocate vs populate"
-Date: Sat, 12 Sep 2026 08:40:33 +0200
-Message-ID: <20260912065607.318772104@linuxfoundation.org>
+	Matt Turner <mattst88@gmail.com>,
+	Magnus Lindholm <linmag7@gmail.com>
+Subject: [PATCH 6.6 0010/1424] alpha: dont leak hardware-fabricated FP exception bits to user space
+Date: Sat, 12 Sep 2026 08:40:42 +0200
+Message-ID: <20260912065607.522093217@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -50,161 +50,228 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Matt Turner <mattst88@gmail.com>
 
-This reverts commit 54322d95309d9aa4cb77b34ee4b6c8b541f3e21f.
+commit bcfe3187412e342b4619efb92c945f073855ebc0 upstream.
 
-The 6.6.y backport removes the clearing performed by
-early_pgtable_alloc(). Its replacement clears allocations made by the
-generic page-table walkers, but 6.6's create_idmap() still allocates an
-extra root level directly when a sub-48-bit VA kernel is loaded
-sufficiently high in physical memory.
+On EV6 and later the hardware records exception status bits in the FPCR
+before delivering a software completion trap, and those bits can be wrong
+for the instruction that trapped.  Converting a double that is exactly
+representable as a subnormal float sets FPCR_UNF even though the result
+is exact, and an underflow trap additionally sets FPCR_INE even when the
+emulated operation turns out to be exact.
 
-memblock_phys_alloc_range() does not zero the returned memory. The direct
-caller can therefore publish an uncleared root page. A stale entry can
-trip the bad-descriptor BUG_ON or be followed as a page-table descriptor,
-preventing the kernel from booting.
+alpha_fp_emul() only wrote the FPCR when soft-fp raised an exception, so
+whenever it determined that the instruction was exact the fabricated bits
+stayed in the FPCR and were reported to user space by fetestexcept().
 
-Mainline is not affected because commit e6128a8e523c ("arm64: mm: Use
-48-bit virtual addressing for the permanent ID map") removed the dynamic
-extra level before commit 0e9df1c905d8 ("arm64: mm: Don't remap pgtables
-for allocate vs populate") moved page-table initialization out of the
-allocator.
+Pass the exception summary register down from do_entArith() so the
+handler can tell which exceptions the hardware attributed to the trapping
+instruction, and always write the FPCR.  Clear the exceptions that the
+trap reported but that soft-fp did not raise.  EXC_SUM reports only the
+underflow or overflow when the hardware also set INE, so treat INE as a
+candidate in that case, and treat a trap with no reported exception as a
+denormal operand trap, for which the hardware can fabricate INE and UNF
+as well.  Bits that software has already confirmed in ieee_state belong
+to this or an earlier instruction and are never cleared.
 
-Revert the optimization in 6.6.y to restore allocation-time clearing for
-all callers.
+The imprecise path passes no summary.  There the trap was taken somewhere
+in the trap shadow, so EXC_SUM is not attribution for the instruction
+being re-executed -- and only EV6, which traps precisely and so never
+takes that path, has fabricated bits to clear.  For the same reason the
+clearing is guarded by implver(), matching swcr_update_status().
 
-Fixes: 54322d95309d ("arm64: mm: Don't remap pgtables for allocate vs populate")
-Link: https://lore.kernel.org/r/2026083151-mascot-unshaken-5f46@gregkh
-Assisted-by: LLM
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+On an UP1500 (EV68) this takes the glibc math testsuite from 831 failures
+to 28, the remainder being unrelated to exception status.
+
+This belongs with the preceding fix to ieee_swcr_to_fpcr(), and should
+not be backported without it -- nor it without this.  That fix stops
+FPCR_DNOD being set unconditionally, so denormal operand traps start
+firing again.  Those traps very often find an exact result, which is
+precisely the case where the old code left the FPCR unwritten and the
+fabricated bits visible.  Applied alone it would make spurious exception
+flags more common, not less.
+
+One case cannot be resolved here: an inexact instruction without the
+software completion suffix never traps, so its INE reaches the FPCR
+without being recorded anywhere else.  Such a bit is indistinguishable
+from an INE the hardware fabricated for a trapping instruction, and is
+lost if an underflow or overflow trap with an exact result follows it.
+The FPCR is the only record of those instructions and it carries no
+attribution.
+
+The bug predates the git history, so there is no commit to reference in a
+Fixes tag.
+
+Cc: stable@vger.kernel.org # 5.15+
+Signed-off-by: Matt Turner <mattst88@gmail.com>
+Reviewed-by: Magnus Lindholm <linmag7@gmail.com>
+Tested-by: Magnus Lindholm <linmag7@gmail.com>
+Link: https://lore.kernel.org/r/20260803-alpha-fp-exceptions-v1-2-c99d75608e60@gmail.com
+Signed-off-by: Magnus Lindholm <linmag7@gmail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/mm/mmu.c | 58 ++++++++++++++++++++++-----------------------
- 1 file changed, 29 insertions(+), 29 deletions(-)
+ arch/alpha/kernel/traps.c  |    6 +--
+ arch/alpha/math-emu/math.c |   88 +++++++++++++++++++++++++++++++++++++++------
+ 2 files changed, 80 insertions(+), 14 deletions(-)
 
-diff --git a/arch/arm64/mm/mmu.c b/arch/arm64/mm/mmu.c
-index e075792d72257..c49cf99161881 100644
---- a/arch/arm64/mm/mmu.c
-+++ b/arch/arm64/mm/mmu.c
-@@ -106,12 +106,28 @@ EXPORT_SYMBOL(phys_mem_access_prot);
- static phys_addr_t __init early_pgtable_alloc(int shift)
+--- a/arch/alpha/kernel/traps.c
++++ b/arch/alpha/kernel/traps.c
+@@ -198,12 +198,12 @@ static long dummy_emul(void) { return 0;
+ long (*alpha_fp_emul_imprecise)(struct pt_regs *regs, unsigned long writemask)
+   = (void *)dummy_emul;
+ EXPORT_SYMBOL_GPL(alpha_fp_emul_imprecise);
+-long (*alpha_fp_emul) (unsigned long pc)
++long (*alpha_fp_emul) (unsigned long pc, unsigned long summary)
+   = (void *)dummy_emul;
+ EXPORT_SYMBOL_GPL(alpha_fp_emul);
+ #else
+ long alpha_fp_emul_imprecise(struct pt_regs *regs, unsigned long writemask);
+-long alpha_fp_emul (unsigned long pc);
++long alpha_fp_emul (unsigned long pc, unsigned long summary);
+ #endif
+ 
+ asmlinkage void
+@@ -217,7 +217,7 @@ do_entArith(unsigned long summary, unsig
+ 		   emulate the instruction.  If the processor supports
+ 		   precise exceptions, we don't have to search.  */
+ 		if (!amask(AMASK_PRECISE_TRAP))
+-			si_code = alpha_fp_emul(regs->pc - 4);
++			si_code = alpha_fp_emul(regs->pc - 4, summary);
+ 		else
+ 			si_code = alpha_fp_emul_imprecise(regs, write_mask);
+ 		if (si_code == 0)
+--- a/arch/alpha/math-emu/math.c
++++ b/arch/alpha/math-emu/math.c
+@@ -57,13 +57,13 @@ MODULE_DESCRIPTION("FP Software completi
+ MODULE_LICENSE("GPL v2");
+ 
+ extern long (*alpha_fp_emul_imprecise)(struct pt_regs *, unsigned long);
+-extern long (*alpha_fp_emul) (unsigned long pc);
++extern long (*alpha_fp_emul) (unsigned long pc, unsigned long summary);
+ 
+ static long (*save_emul_imprecise)(struct pt_regs *, unsigned long);
+-static long (*save_emul) (unsigned long pc);
++static long (*save_emul) (unsigned long pc, unsigned long summary);
+ 
+ long do_alpha_fp_emul_imprecise(struct pt_regs *, unsigned long);
+-long do_alpha_fp_emul(unsigned long);
++long do_alpha_fp_emul(unsigned long, unsigned long);
+ 
+ static int alpha_fp_emul_init_module(void)
  {
- 	phys_addr_t phys;
-+	void *ptr;
+@@ -91,7 +91,22 @@ module_exit(alpha_fp_emul_cleanup_module
  
- 	phys = memblock_phys_alloc_range(PAGE_SIZE, PAGE_SIZE, 0,
- 					 MEMBLOCK_ALLOC_NOLEAKTRACE);
- 	if (!phys)
- 		panic("Failed to allocate page table page\n");
  
+ /*
+- * Emulate the floating point instruction at address PC.  Returns -1 if the
++ * Exception bits of the exception summary register (EXC_SUM).  Bit 0 is the
++ * software completion bit; bits 1 through 5 report the exceptions the
++ * hardware attributed to the trapping instruction, and lie at the same
++ * positions as the corresponding IEEE_TRAP_ENABLE_* bits.
++ */
++#define EXC_SUM_INV	(1UL << 1)
++#define EXC_SUM_DZE	(1UL << 2)
++#define EXC_SUM_OVF	(1UL << 3)
++#define EXC_SUM_UNF	(1UL << 4)
++#define EXC_SUM_INE	(1UL << 5)
++#define EXC_SUM_MASK	(EXC_SUM_INV | EXC_SUM_DZE | EXC_SUM_OVF	\
++			 | EXC_SUM_UNF | EXC_SUM_INE)
++
++/*
++ * Emulate the floating point instruction at address PC.  SUMMARY is the
++ * exception summary register the trap was delivered with.  Returns -1 if the
+  * instruction to be emulated is illegal (such as with the opDEC trap), else
+  * the SI_CODE for a SIGFPE signal, else 0 if everything's ok.
+  *
+@@ -100,7 +115,7 @@ module_exit(alpha_fp_emul_cleanup_module
+  * stick the result of the operation into the appropriate register.
+  */
+ long
+-alpha_fp_emul (unsigned long pc)
++alpha_fp_emul (unsigned long pc, unsigned long summary)
+ {
+ 	FP_DECL_EX;
+ 	FP_DECL_S(SA); FP_DECL_S(SB); FP_DECL_S(SR);
+@@ -305,12 +320,56 @@ done:
+ 		swcr |= (_fex << IEEE_STATUS_TO_EXCSUM_SHIFT);
+ 		current_thread_info()->ieee_state
+ 		  |= (_fex << IEEE_STATUS_TO_EXCSUM_SHIFT);
++	}
+ 
+-		/* Update hardware control register.  */
+-		fpcr &= (~FPCR_MASK | FPCR_DYN_MASK);
+-		fpcr |= ieee_swcr_to_fpcr(swcr);
+-		wrfpcr(fpcr);
 +	/*
-+	 * The FIX_{PGD,PUD,PMD} slots may be in active use, but the FIX_PTE
-+	 * slot will be free, so we can (ab)use the FIX_PTE slot to initialise
-+	 * any level of table.
++	 * EV6 records exception status bits in the FPCR before delivering the
++	 * software completion trap, and swcr_update_status() above merged them
++	 * into SWCR.  Some can be wrong for the instruction we just emulated:
++	 * a CVTTS of a value exactly representable as a subnormal sets FPCR_UNF
++	 * even though the result is exact.  Clear the exceptions the trap
++	 * reported but that soft-fp did not raise.
 +	 */
-+	ptr = pte_set_fixmap(phys);
++	if (implver() == IMPLVER_EV6) {
++		unsigned long spurious = summary & EXC_SUM_MASK;
 +
-+	memset(ptr, 0, PAGE_SIZE);
++		if (spurious & (EXC_SUM_UNF | EXC_SUM_OVF)) {
++			/*
++			 * EXC_SUM reports only the underflow or overflow,
++			 * but the hardware sets INE alongside it in the FPCR.
++			 */
++			spurious |= EXC_SUM_INE;
++		} else if (!spurious) {
++			/*
++			 * No exception reported, so this was a denormal
++			 * operand trap, for which INE and UNF can be
++			 * fabricated as well.
++			 */
++			spurious = EXC_SUM_INE | EXC_SUM_UNF;
++		}
+ 
++		/*
++		 * Never clear an exception software has confirmed.  Every
++		 * instruction that genuinely raises one traps for software
++		 * completion and is recorded in ieee_state above, so a bit
++		 * found there -- including one just set from _fex -- belongs
++		 * to this or an earlier instruction and must survive.
++		 */
++		spurious &= ~(current_thread_info()->ieee_state
++			      >> IEEE_STATUS_TO_EXCSUM_SHIFT);
++
++		swcr &= ~(spurious << IEEE_STATUS_TO_EXCSUM_SHIFT);
++	}
 +
 +	/*
-+	 * Implicit barriers also ensure the zeroed page is visible to the page
-+	 * table walker
++	 * Update hardware control register.  This has to happen even when
++	 * soft-fp raised nothing, to clear any fabricated bits.
 +	 */
-+	pte_clear_fixmap();
++	fpcr &= (~FPCR_MASK | FPCR_DYN_MASK);
++	fpcr |= ieee_swcr_to_fpcr(swcr);
++	wrfpcr(fpcr);
 +
- 	return phys;
- }
- 
-@@ -153,14 +169,6 @@ bool pgattr_change_is_safe(u64 old, u64 new)
- 	return ((old ^ new) & ~mask) == 0;
- }
- 
--static void init_clear_pgtable(void *table)
--{
--	clear_page(table);
--
--	/* Ensure the zeroing is observed by page table walks. */
--	dsb(ishst);
--}
--
- static void init_pte(pte_t *ptep, unsigned long addr, unsigned long end,
- 		     phys_addr_t phys, pgprot_t prot)
- {
-@@ -203,15 +211,12 @@ static void alloc_init_cont_pte(pmd_t *pmdp, unsigned long addr,
- 			pmdval |= PMD_TABLE_PXN;
- 		BUG_ON(!pgtable_alloc);
- 		pte_phys = pgtable_alloc(PAGE_SHIFT);
--		ptep = pte_set_fixmap(pte_phys);
--		init_clear_pgtable(ptep);
--		ptep += pte_index(addr);
- 		__pmd_populate(pmdp, pte_phys, pmdval);
--	} else {
--		BUG_ON(pmd_bad(pmd));
--		ptep = pte_set_fixmap_offset(pmdp, addr);
-+		pmd = READ_ONCE(*pmdp);
- 	}
-+	BUG_ON(pmd_bad(pmd));
- 
-+	ptep = pte_set_fixmap_offset(pmdp, addr);
- 	do {
- 		pgprot_t __prot = prot;
- 
-@@ -290,15 +295,12 @@ static void alloc_init_cont_pmd(pud_t *pudp, unsigned long addr,
- 			pudval |= PUD_TABLE_PXN;
- 		BUG_ON(!pgtable_alloc);
- 		pmd_phys = pgtable_alloc(PMD_SHIFT);
--		pmdp = pmd_set_fixmap(pmd_phys);
--		init_clear_pgtable(pmdp);
--		pmdp += pmd_index(addr);
- 		__pud_populate(pudp, pmd_phys, pudval);
--	} else {
--		BUG_ON(pud_bad(pud));
--		pmdp = pmd_set_fixmap_offset(pudp, addr);
-+		pud = READ_ONCE(*pudp);
- 	}
-+	BUG_ON(pud_bad(pud));
- 
-+	pmdp = pmd_set_fixmap_offset(pudp, addr);
- 	do {
- 		pgprot_t __prot = prot;
- 
-@@ -336,15 +338,12 @@ static void alloc_init_pud(pgd_t *pgdp, unsigned long addr, unsigned long end,
- 			p4dval |= P4D_TABLE_PXN;
- 		BUG_ON(!pgtable_alloc);
- 		pud_phys = pgtable_alloc(PUD_SHIFT);
--		pudp = pud_set_fixmap(pud_phys);
--		init_clear_pgtable(pudp);
--		pudp += pud_index(addr);
- 		__p4d_populate(p4dp, pud_phys, p4dval);
--	} else {
--		BUG_ON(p4d_bad(p4d));
--		pudp = pud_set_fixmap_offset(p4dp, addr);
-+		p4d = READ_ONCE(*p4dp);
- 	}
-+	BUG_ON(p4d_bad(p4d));
- 
-+	pudp = pud_set_fixmap_offset(p4dp, addr);
- 	do {
- 		pud_t old_pud = READ_ONCE(*pudp);
- 
-@@ -426,10 +425,11 @@ void create_kpti_ng_temp_pgd(pgd_t *pgdir, phys_addr_t phys, unsigned long virt,
- 
- static phys_addr_t __pgd_pgtable_alloc(int shift)
- {
--	/* Page is zeroed by init_clear_pgtable() so don't duplicate effort. */
--	void *ptr = (void *)__get_free_page(GFP_PGTABLE_KERNEL & ~__GFP_ZERO);
--
-+	void *ptr = (void *)__get_free_page(GFP_PGTABLE_KERNEL);
- 	BUG_ON(!ptr);
-+
-+	/* Ensure the zeroed page is visible to the page table walker */
-+	dsb(ishst);
- 	return __pa(ptr);
- }
- 
--- 
-2.53.0
-
++	if (_fex) {
+ 		/* Do we generate a signal?  */
+ 		_fex = _fex & swcr & IEEE_TRAP_ENABLE_MASK;
+ 		si_code = 0;
+@@ -392,9 +451,16 @@ alpha_fp_emul_imprecise (struct pt_regs
+ 			break;
+ 		}
+ 		if (!write_mask) {
+-			/* Re-execute insns in the trap-shadow.  */
++			/*
++			 * Re-execute insns in the trap-shadow.  Pass no
++			 * exception summary: it describes the trap, which
++			 * was taken anywhere in the shadow, and so is not
++			 * attribution for this instruction.  Nothing is
++			 * lost, since only EV6 -- which traps precisely and
++			 * never comes this way -- needs it.
++			 */
+ 			regs->pc = trigger_pc + 4;
+-			si_code = alpha_fp_emul(trigger_pc);
++			si_code = alpha_fp_emul(trigger_pc, 0);
+ 			goto egress;
+ 		}
+ 		trigger_pc -= 4;
 
 
