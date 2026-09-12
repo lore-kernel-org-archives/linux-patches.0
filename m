@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF904477281;
-	Sat, 12 Sep 2026 11:35:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B9C038B7D2;
+	Sat, 12 Sep 2026 11:35:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789212937; cv=none; b=XJmKBcxvDbfCiGHL/rp/m9e8bu6Get5EjFai1QE3Y/87kd2LKdlRa6T43GLDtq63Gzj+m90/PHPhfEpVZoV96BbVUcrzuxHooW1FgU6RMygmi8d+XAIHi2Qo/+c6dc1JFefU/M80wfcVNSvMrb6x7dTDNyMVvNuHZOkZNnvQHoQ=
+	t=1789212941; cv=none; b=Fs3gtyrvJ1vNtMClg/BAg8eB4f2voTp1OTnKbNsKEWEtVc4OF2cpFiUdRmPxv1ax5kVOFnw54lUZ3M0cjq5c+0ygNEa2KKC4jqPIqIQP1jscYtyrjKADBJD2giBS1/Fyket/gkch/8RbnrGzap2hjbGlixtvdaF+R5ByIHnYhWA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789212937; c=relaxed/simple;
-	bh=O8ET9WMw8h/9pRnjKQh8V5ogCirVX/bcxayHHKfIkL0=;
+	s=arc-20240116; t=1789212941; c=relaxed/simple;
+	bh=kIHCNYZDCnxt5ICIoe9MbCJbyzwwda7ahX91MDmm7fo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EIDtlQY7O/Gl3scoq9IpXO0Epa2YXyn/EdfBG040uML1nBoW4jOGtJ23UdrD6AHMFTYZjPNrLiHG7KRBFOW3oENoG9a9rH2sAxMqiAqUtyBLW9wJixmf/i7OJ2Yp6I6roplZYOSqkinjyeiKv8xQS/jNPrf1TBkVahKfksAedlA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uwRUwAMs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SgNMEKA/cHzbICz4J4h/KIMzrD/xENabUGsRZKuXQq+W4ttxJm0ryhQITdwgLeB7HDBei80moneA748tH25ZAzuAnjC4pgoTXK7lbjeRMwLg0dRzpLTp0z75T09DjE2tKduAVwsWtbtoHQz3/Kg+Dub2TRWPcfnGaEZvrttOF5c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VT8v6ZEp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uwRUwAMs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 941B61F000FF;
-	Sat, 12 Sep 2026 11:35:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VT8v6ZEp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 806681F000FF;
+	Sat, 12 Sep 2026 11:35:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789212935;
-	bh=W4CiPrnArO/kysLucZY3IqpMYXM0uhrxduCrlDXxcUg=;
+	s=korg; t=1789212940;
+	bh=VOPnCazks1KggxNU4DvKhuQJscu+zqZoPoTpvC0aUSg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uwRUwAMsJC6qlEHccBQaOKKsnaPgOmb4jr6yH6qVoJSRX0+CiVnS7ow21BXc3Obum
-	 lOkdPH7AElaBQV+Rgbl1laRiYShTnzHNd63dyc8NL1oE5Xdu2VNPDFlMMUsidJ97lT
-	 zEgNfbSiu87OTguEWv7Xm01KncU/CqqskoLwMPVY=
+	b=VT8v6ZEp8rC5L+sjid0kkSr2QtYwtVbsfdwyk/66szbGM9372hhMEFvy1evAmTH65
+	 dKwZp0r3wwSoljC/grSZHRgTfQkndRH3zGNuMEPKIAiKDsrUeC+hyZBX7RH9j67t6e
+	 knKpUWxCVrDl6zjMJP0YXvBOGFi7Gzk5XEXXgA60=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilya Maximets <i.maximets@ovn.org>,
-	Eelco Chaudron <echaudro@redhat.com>,
-	Aaron Conole <aconole@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0002/1376] net: openvswitch: fix kernel-doc warnings in internal headers
-Date: Sat, 12 Sep 2026 08:40:28 +0200
-Message-ID: <20260912065607.599034611@linuxfoundation.org>
+	Shuangpeng Bai <shuangpeng.kernel@gmail.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 6.12 0020/1376] media: usbtv: keep device alive while ALSA card exists
+Date: Sat, 12 Sep 2026 08:40:46 +0200
+Message-ID: <20260912065607.999108430@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -53,156 +50,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilya Maximets <i.maximets@ovn.org>
+From: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
 
-[ Upstream commit 6bb0dcb3d321c14be7ca33b71a149034d6a2cde8 ]
+commit fc530fe168bb2b745a93f553ad21fc25fd9cba3d upstream.
 
-Some field descriptions were missing, some were not very accurate.
-Not touching the uAPI header or .c files for now.
+The ALSA PCM callbacks store the driver state in pcm->private_data. An
+open PCM file can outlive USB disconnect because usbtv_audio_free() uses
+snd_card_free_when_closed(). The disconnect path can then drop the V4L2
+device reference and free struct usbtv before ALSA releases the substream,
+so a later close dereferences freed memory in snd_usbtv_pcm_close().
 
-Formatting of those comments isn't great in general, but at least
-they are not missing anything now.
+Take a V4L2 device reference for the ALSA card and drop it from the card
+private_free callback. This keeps struct usbtv valid until ALSA has closed
+the remaining files and freed the card.
 
-Before:
-  $ ./scripts/kernel-doc -none -Wall net/openvswitch/*.h 2>&1 | wc -l
-  16
-
-After:
-  $ ./scripts/kernel-doc -none -Wall net/openvswitch/*.h 2>&1 | wc -l
-  0
-
-Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
-Acked-by: Eelco Chaudron <echaudro@redhat.com>
-Reviewed-by: Aaron Conole <aconole@redhat.com>
-Link: https://patch.msgid.link/20250320224431.252489-1-i.maximets@ovn.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Closes: https://lore.kernel.org/r/178144969601.60470.4852887710381872458@gmail.com
+Fixes: 63ddf68de52e ("[media] usbtv: add audio support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/openvswitch/datapath.h | 20 ++++++++++++++------
- net/openvswitch/vport.h    |  9 +++++++++
- 2 files changed, 23 insertions(+), 6 deletions(-)
+ drivers/media/usb/usbtv/usbtv-audio.c |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/net/openvswitch/datapath.h b/net/openvswitch/datapath.h
-index 8453da5507e11..67250d7df1ab2 100644
---- a/net/openvswitch/datapath.h
-+++ b/net/openvswitch/datapath.h
-@@ -29,8 +29,8 @@
-  * datapath.
-  * @n_hit: Number of received packets for which a matching flow was found in
-  * the flow table.
-- * @n_miss: Number of received packets that had no matching flow in the flow
-- * table.  The sum of @n_hit and @n_miss is the number of packets that have
-+ * @n_missed: Number of received packets that had no matching flow in the flow
-+ * table.  The sum of @n_hit and @n_missed is the number of packets that have
-  * been received by the datapath.
-  * @n_lost: Number of received packets that had no matching flow in the flow
-  * table that could not be sent to userspace (normally due to an overflow in
-@@ -40,6 +40,7 @@
-  *   up per packet.
-  * @n_cache_hit: The number of received packets that had their mask found using
-  * the mask cache.
-+ * @syncp: Synchronization point for 64bit counters.
-  */
- struct dp_stats_percpu {
- 	u64 n_hit;
-@@ -74,8 +75,10 @@ struct dp_nlsk_pids {
-  * ovs_mutex and RCU.
-  * @stats_percpu: Per-CPU datapath statistics.
-  * @net: Reference to net namespace.
-- * @max_headroom: the maximum headroom of all vports in this datapath; it will
-+ * @user_features: Bitmap of enabled %OVS_DP_F_* features.
-+ * @max_headroom: The maximum headroom of all vports in this datapath; it will
-  * be used by all the internal vports in this dp.
-+ * @meter_tbl: Meter table.
-  * @upcall_portids: RCU protected 'struct dp_nlsk_pids'.
-  *
-  * Context: See the comment on locking at the top of datapath.c for additional
-@@ -128,10 +131,13 @@ struct ovs_skb_cb {
- #define OVS_CB(skb) ((struct ovs_skb_cb *)(skb)->cb)
- 
- /**
-- * struct dp_upcall - metadata to include with a packet to send to userspace
-+ * struct dp_upcall_info - metadata to include with a packet sent to userspace
-  * @cmd: One of %OVS_PACKET_CMD_*.
-  * @userdata: If nonnull, its variable-length value is passed to userspace as
-  * %OVS_PACKET_ATTR_USERDATA.
-+ * @actions: If nonnull, its variable-length value is passed to userspace as
-+ * %OVS_PACKET_ATTR_ACTIONS.
-+ * @actions_len: The length of the @actions.
-  * @portid: Netlink portid to which packet should be sent.  If @portid is 0
-  * then no packet is sent and the packet is accounted in the datapath's @n_lost
-  * counter.
-@@ -152,6 +158,10 @@ struct dp_upcall_info {
-  * struct ovs_net - Per net-namespace data for ovs.
-  * @dps: List of datapaths to enable dumping them all out.
-  * Protected by genl_mutex.
-+ * @dp_notify_work: A work notifier to handle port unregistering.
-+ * @masks_rebalance: A work to periodically optimize flow table caches.
-+ * @ct_limit_info: A hash table of conntrack zone connection limits.
-+ * @xt_label: Whether connlables are configured for the network or not.
-  */
- struct ovs_net {
- 	struct list_head dps;
-@@ -160,8 +170,6 @@ struct ovs_net {
- #if	IS_ENABLED(CONFIG_NETFILTER_CONNCOUNT)
- 	struct ovs_ct_limit_info *ct_limit_info;
- #endif
--
--	/* Module reference for configuring conntrack. */
- 	bool xt_label;
+--- a/drivers/media/usb/usbtv/usbtv-audio.c
++++ b/drivers/media/usb/usbtv/usbtv-audio.c
+@@ -317,6 +317,13 @@ static const struct snd_pcm_ops snd_usbt
+ 	.pointer = snd_usbtv_pointer,
  };
  
-diff --git a/net/openvswitch/vport.h b/net/openvswitch/vport.h
-index 3e71ca8ad8a78..9f67b9dd49f98 100644
---- a/net/openvswitch/vport.h
-+++ b/net/openvswitch/vport.h
-@@ -97,6 +97,8 @@ struct vport {
-  * @desired_ifindex: New vport's ifindex.
-  * @dp: New vport's datapath.
-  * @port_no: New vport's port number.
-+ * @upcall_portids: %OVS_VPORT_ATTR_UPCALL_PID attribute from Netlink message,
-+ * %NULL if none was supplied.
-  */
- struct vport_parms {
- 	const char *name;
-@@ -125,6 +127,8 @@ struct vport_parms {
-  * have any configuration.
-  * @send: Send a packet on the device.
-  * zero for dropped packets or negative for error.
-+ * @owner: Module that implements this vport type.
-+ * @list: List entry in the global list of vport types.
-  */
- struct vport_ops {
- 	enum ovs_vport_type type;
-@@ -144,6 +148,7 @@ struct vport_ops {
- /**
-  * struct vport_upcall_stats_percpu - per-cpu packet upcall statistics for
-  * a given vport.
-+ * @syncp:     Synchronization point for 64bit counters.
-  * @n_success: Number of packets that upcall to userspace succeed.
-  * @n_fail:    Number of packets that upcall to userspace failed.
-  */
-@@ -164,6 +169,8 @@ void ovs_vport_free(struct vport *);
-  *
-  * @vport: vport to access
-  *
-+ * Returns: A void pointer to a private data allocated in the @vport.
-+ *
-  * If a nonzero size was passed in priv_size of vport_alloc() a private data
-  * area was allocated on creation.  This allows that area to be accessed and
-  * used for any purpose needed by the vport implementer.
-@@ -178,6 +185,8 @@ static inline void *vport_priv(const struct vport *vport)
-  *
-  * @priv: Start of private data area.
-  *
-+ * Returns: A reference to a vport structure that contains @priv.
-+ *
-  * It is sometimes useful to translate from a pointer to the private data
-  * area to the vport, such as in the case where the private data pointer is
-  * the result of a hash table lookup.  @priv must point to the start of the
--- 
-2.53.0
-
++static void usbtv_audio_card_free(struct snd_card *card)
++{
++	struct usbtv *usbtv = card->private_data;
++
++	v4l2_device_put(&usbtv->v4l2_dev);
++}
++
+ int usbtv_audio_init(struct usbtv *usbtv)
+ {
+ 	int rv;
+@@ -331,6 +338,10 @@ int usbtv_audio_init(struct usbtv *usbtv
+ 	if (rv < 0)
+ 		return rv;
+ 
++	v4l2_device_get(&usbtv->v4l2_dev);
++	card->private_data = usbtv;
++	card->private_free = usbtv_audio_card_free;
++
+ 	strscpy(card->driver, usbtv->dev->driver->name, sizeof(card->driver));
+ 	strscpy(card->shortname, "usbtv", sizeof(card->shortname));
+ 	snprintf(card->longname, sizeof(card->longname),
 
 
