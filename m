@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CA832ECD1D;
-	Sat, 12 Sep 2026 14:56:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C08738DC7F;
+	Sat, 12 Sep 2026 14:56:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789224973; cv=none; b=dur+5PEfxdv0Ch9nsUbhAZFd5Fbr7Kh/vB78S/TtrnsDe+uh7G4YcZoKmMy1f2XZj+yAPppfIfApk8iZjRrJVRt0l0u01c5ssk6hvtSe1lMtDOmhhaLf24HR4DO1eH4aHzOhq41wcOrt2ohm1mki1mWt3DzH73G/oHroY6GNozc=
+	t=1789224979; cv=none; b=pdRvW3pfL3oNVVaMLHfVaFjc/fJxD+KemtbIaNlDzAWG+K0BB5UIrP2WpRz6NawpeFNQx1/JD92UyA5Ab3r8wICGFxgNkFVRV4NHDfCwmh0rgi4ss2bfFPLQVPlskg38u+tmOQ8p5zYFnX7ETx7ORXDhgfZo46O3ETKM5HQX53Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789224973; c=relaxed/simple;
-	bh=pthgFT9e08utnnIyuOv3JQ/N7oVX4ATHmtqjBj7Twdo=;
+	s=arc-20240116; t=1789224979; c=relaxed/simple;
+	bh=gAnEjcD23hoYydOgyvFFu5ZFD3nQO5+lq1yY8kCL74U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l21HA9TrW8YEqpGOFs+ettJC5ywMFuyKwqtIwlwJXasTIUr6PDEMNliYJyDJyDMXIyCj8rNa8RFvVFf3Ykc3GkpG2YXzXyQKzOBP2uNYgmExYYr4cJBuP+NMXBBPbi2XJUOKW5mVpGQMmfCEr1e1AXpLhZZGYNVEOu2SP5rCwYk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=khA1LB/o; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=REyeEYEkfUTDBFGdB1cYuLaUgG29bxFOXHgsfwcw//a+r7rQN7EoWoO8FTIxW1erCimyMDmzhqGGJDA5nxOfLJyQ0Imz6DO6Y/mUhedXZYCJRLhgBdGcPUbXJF3uA8E+McaPcCKsH3sCyz1p6g+ietQhd0sxTJOa20lvLS7Mgik=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mn2Q2DBB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="khA1LB/o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 145CE1F000FF;
-	Sat, 12 Sep 2026 14:56:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mn2Q2DBB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A85701F000FF;
+	Sat, 12 Sep 2026 14:56:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789224972;
-	bh=qsAVj4SZxxyKTZczUgskbmO7cnsVxzOKKFxLKW9aP9M=;
+	s=korg; t=1789224976;
+	bh=HrNj60uaMhpScrHqJFVMxfjOxYQBWI7OUaUbZJFCqwg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=khA1LB/oe3xcOAzK+VqJQskm2VN6MNhT0dfwSu8DbBt4dCEl+bq3wZnqmkanWSX1V
-	 2Yc9Us0dcjqbyK0hyM3hf/UBcVRhIIVOnRc0zhB2GNJ44zwHtCwAqlKKCBJvCcRKUT
-	 vFWWqpy1LXsVNVed/Jg0guchl4CpOxCoiX9/ZeQA=
+	b=mn2Q2DBBZbQLjHQUYmMVrF/eT9FK+gkuC/fHnoxFzxOYQ153ya6kNJ8pgnUKAx8hK
+	 m4p6xnZGG+8Uv0X9XVm8Rv1sPMdlUxJcd3x3Q//plIElsI5CsgOx9C9LGVatAPpgFa
+	 ZpuXrGOACs1epPKaZyprhJkfmgyGtPRl4pguS+Bs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mohd Ayaan Anwar <mohd.anwar@oss.qualcomm.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	Abel Vesa <abel.vesa@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Loic Poulain <loic.poulain@oss.qualcomm.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1104/1424] phy: qcom: sgmii-eth: vote for both voltage rails with correct current loads
-Date: Sat, 12 Sep 2026 08:58:56 +0200
-Message-ID: <20260912065632.028189076@linuxfoundation.org>
+Subject: [PATCH 6.6 1105/1424] phy: qcom: qmp-usb-legacy: Fix possible NULL-deref on early runtime suspend
+Date: Sat, 12 Sep 2026 08:58:57 +0200
+Message-ID: <20260912065632.049733053@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -52,119 +53,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mohd Ayaan Anwar <mohd.anwar@oss.qualcomm.com>
+From: Loic Poulain <loic.poulain@oss.qualcomm.com>
 
-[ Upstream commit 4f81684a1d1018d7d0e5579f08d95e7701279358 ]
+[ Upstream commit 8e3687f7e18fe84372e86875709d56c37e7525a8 ]
 
-The SerDes PHY has two voltage supply rails, vdda-0p9 and vdda-1p2,
-that must both be enabled for calibration to succeed. Without them:
+There is a small window where the runtime suspend callback may run
+after pm_runtime_enable() and before pm_runtime_forbid(). In this
+case, a crash occurs because runtime suspend/resume dereferences
+qmp->phy pointer, which is not yet initialized:
+        `if (!qmp->phy->init_count) {`
 
-  qcom-dwmac-sgmii-phy 8909000.phy: QSERDES_COM_C_READY_STATUS timed-out
-  qcom-ethqos 23040000.ethernet eth0: __stmmac_open: Serdes powerup failed
+This can also happen if user re-enables runtime-pm via the sysfs
+attribute before qmp phy is initialized.
 
-The driver relied solely on the PHY framework's implicit enable of
-'phy-supply', which only voted for a single rail and set no current
-load. Use devm_regulator_bulk_get_const() to acquire both supplies and
-set the peak current loads (46 mA for vdda-0p9, 15 mA for vdda-1p2)
-as required by the hardware.
+Similarly to other qcom phy drivers, introduce a qmp->phy_initialized
+variable that can be used to avoid relying on the possibly uninitialized
+phy pointer.
 
-Fixes: 601d06277007 ("phy: qcom: add the SGMII SerDes PHY driver")
-Signed-off-by: Mohd Ayaan Anwar <mohd.anwar@oss.qualcomm.com>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260804-b4-sgmiieth_serdes_regulator-v2-2-c4bc688177dd@oss.qualcomm.com
+Fixes: e464a3180a43 ("phy: qcom-qmp-usb: split off the legacy USB+dp_com support")
+Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260722-qcom-usb-phy-fix-null-v6-3-534f7e61b9a6@oss.qualcomm.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/qualcomm/phy-qcom-sgmii-eth.c | 37 ++++++++++++++++++++---
- 1 file changed, 33 insertions(+), 4 deletions(-)
+ drivers/phy/qualcomm/phy-qcom-qmp-usb-legacy.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-sgmii-eth.c b/drivers/phy/qualcomm/phy-qcom-sgmii-eth.c
-index 43ff0c5551e3b..9a2a6d0c15423 100644
---- a/drivers/phy/qualcomm/phy-qcom-sgmii-eth.c
-+++ b/drivers/phy/qualcomm/phy-qcom-sgmii-eth.c
-@@ -10,6 +10,7 @@
- #include <linux/phy/phy.h>
- #include <linux/platform_device.h>
- #include <linux/regmap.h>
-+#include <linux/regulator/consumer.h>
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-usb-legacy.c b/drivers/phy/qualcomm/phy-qcom-qmp-usb-legacy.c
+index 65d2923f83b3d..bfea335d554bc 100644
+--- a/drivers/phy/qualcomm/phy-qcom-qmp-usb-legacy.c
++++ b/drivers/phy/qualcomm/phy-qcom-qmp-usb-legacy.c
+@@ -563,6 +563,8 @@ struct qmp_usb {
  
- #define QSERDES_QMP_PLL					0x0
- #define QSERDES_COM_BIN_VCOCAL_CMP_CODE1_MODE0		(QSERDES_QMP_PLL + 0x1ac)
-@@ -104,7 +105,15 @@
- #define QSERDES_PCS_SGMIIPHY_READY			BIT(7)
- #define QSERDES_COM_C_PLL_LOCKED			BIT(1)
+ 	enum phy_mode mode;
  
-+static const struct regulator_bulk_data qcom_dwmac_sgmii_phy_vregs[] = {
-+	{ .supply = "vdda-0p9", .init_load_uA = 46000 },
-+	{ .supply = "vdda-1p2", .init_load_uA = 15000 },
-+};
++	bool phy_initialized;
 +
-+#define QCOM_SGMII_NUM_SUPPLIES		ARRAY_SIZE(qcom_dwmac_sgmii_phy_vregs)
-+
- struct qcom_dwmac_sgmii_phy_data {
-+	struct regulator_bulk_data *vregs;
- 	struct regmap *regmap;
- 	struct clk *refclk;
- 	int speed;
-@@ -348,13 +357,24 @@ static int qcom_dwmac_sgmii_phy_power_on(struct phy *phy)
- 	struct qcom_dwmac_sgmii_phy_data *data = phy_get_drvdata(phy);
+ 	struct phy *phy;
+ 
+ 	struct clk_fixed_rate pipe_clk_fixed;
+@@ -928,6 +930,7 @@ static int qmp_usb_legacy_power_off(struct phy *phy)
+ 
+ static int qmp_usb_legacy_enable(struct phy *phy)
+ {
++	struct qmp_usb *qmp = phy_get_drvdata(phy);
  	int ret;
  
--	ret = clk_prepare_enable(data->refclk);
--	if (ret < 0)
-+	ret = regulator_bulk_enable(QCOM_SGMII_NUM_SUPPLIES, data->vregs);
-+	if (ret)
- 		return ret;
- 
-+	ret = clk_prepare_enable(data->refclk);
-+	if (ret)
-+		goto err_disable_regulators;
-+
- 	ret = qcom_dwmac_sgmii_phy_calibrate(phy);
--	if (ret < 0)
--		clk_disable_unprepare(data->refclk);
-+	if (ret)
-+		goto err_disable_clk;
-+
-+	return 0;
-+
-+err_disable_clk:
-+	clk_disable_unprepare(data->refclk);
-+err_disable_regulators:
-+	regulator_bulk_disable(QCOM_SGMII_NUM_SUPPLIES, data->vregs);
+ 	ret = qmp_usb_legacy_init(phy);
+@@ -937,14 +940,19 @@ static int qmp_usb_legacy_enable(struct phy *phy)
+ 	ret = qmp_usb_legacy_power_on(phy);
+ 	if (ret)
+ 		qmp_usb_legacy_exit(phy);
++	else
++		qmp->phy_initialized = true;
  
  	return ret;
  }
-@@ -371,6 +391,8 @@ static int qcom_dwmac_sgmii_phy_power_off(struct phy *phy)
  
- 	clk_disable_unprepare(data->refclk);
+ static int qmp_usb_legacy_disable(struct phy *phy)
+ {
++	struct qmp_usb *qmp = phy_get_drvdata(phy);
+ 	int ret;
  
-+	regulator_bulk_disable(QCOM_SGMII_NUM_SUPPLIES, data->vregs);
++	qmp->phy_initialized = false;
 +
- 	return 0;
- }
+ 	ret = qmp_usb_legacy_power_off(phy);
+ 	if (ret)
+ 		return ret;
+@@ -1021,7 +1029,7 @@ static int __maybe_unused qmp_usb_legacy_runtime_suspend(struct device *dev)
  
-@@ -410,6 +432,7 @@ static int qcom_dwmac_sgmii_phy_probe(struct platform_device *pdev)
- 	struct phy_provider *provider;
- 	void __iomem *base;
- 	struct phy *phy;
-+	int ret;
+ 	dev_vdbg(dev, "Suspending QMP phy, mode:%d\n", qmp->mode);
  
- 	data = devm_kzalloc(dev, sizeof(*data), GFP_KERNEL);
- 	if (!data)
-@@ -434,6 +457,12 @@ static int qcom_dwmac_sgmii_phy_probe(struct platform_device *pdev)
- 	if (IS_ERR(data->refclk))
- 		return PTR_ERR(data->refclk);
+-	if (!qmp->phy->init_count) {
++	if (!qmp->phy_initialized) {
+ 		dev_vdbg(dev, "PHY not initialized, bailing out\n");
+ 		return 0;
+ 	}
+@@ -1042,7 +1050,7 @@ static int __maybe_unused qmp_usb_legacy_runtime_resume(struct device *dev)
  
-+	ret = devm_regulator_bulk_get_const(dev, QCOM_SGMII_NUM_SUPPLIES,
-+					    qcom_dwmac_sgmii_phy_vregs,
-+					    &data->vregs);
-+	if (ret)
-+		return ret;
-+
- 	provider = devm_of_phy_provider_register(dev, of_phy_simple_xlate);
- 	if (IS_ERR(provider))
- 		return PTR_ERR(provider);
+ 	dev_vdbg(dev, "Resuming QMP phy, mode:%d\n", qmp->mode);
+ 
+-	if (!qmp->phy->init_count) {
++	if (!qmp->phy_initialized) {
+ 		dev_vdbg(dev, "PHY not initialized, bailing out\n");
+ 		return 0;
+ 	}
 -- 
 2.53.0
 
