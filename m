@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E78AD4BEE43;
-	Sat, 12 Sep 2026 16:19:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 878DB4BEE43;
+	Sat, 12 Sep 2026 16:19:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789229959; cv=none; b=unDeOHIscBRXIWz6JxxjPaEeuhrw/gl7YzDpc8w2vAqNFmis5XGgF+KM92d6hMgBrb1Gv5MFhr7R1lpXhfTx3cixINlyDTNUH9DUljxVf9IrZD8tFhFOm5v3u+XuromNDMQk1yQvGf0eKaNUNLG9vKX8+DsTnCtcJAegCTXSP4Y=
+	t=1789229963; cv=none; b=EeBOvEMxn6i3GqwYDpG7N86rgmIcFY8huEEWjde2mV9sxpgdMv7QqlFnifjGxZ6qle4zOUewvvF/f/j0kFlGaWEffbrJl6SLGAYWTJnY5467bx6omZq2sDXffn5mwNfJElraGIyGs7zqyJlK80wJV01AQZUHK5TPw/QzXJlfpv0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789229959; c=relaxed/simple;
-	bh=pSCaYTCO5xyMGj/OlZCYykURjoniy0bvAaMWmsh0A/4=;
+	s=arc-20240116; t=1789229963; c=relaxed/simple;
+	bh=WR/wLYxLsUXJxWEvWRitubqKxQK6hgmeNKKWhVzvvJE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I1FHWIb2ZnqH481DwD0QE6mmb5PoIS1ycwTCp7M/bv33cj2OwTj8sV+eNj8hDBjxLgJMKEFjpDTD1fpeHkVKeNVk3/iIUT/kOB/GyK2KW69t4v+/V3hJeWmQFBz+LsSRySXlJG8JRYlQ4PCbxdRBTkntEXSQM384KGjNmlcOyZU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wqor5tgq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=quDxOBrvpjMiGCKlIsPehTX41WzRIqWLMoBxm3eMhHU9EZjsNW07yQXeS9L/Zgg8yjwK0l5j4kih3RoAlbbdO9zWhIGGJ1EiNJIkAl9uJJOJxD2FpCutm14lgBSP2eJkTHEFf2X72EQ9osNeKmABJjZk2DGknADUmw3CTcCTCvU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DQgd1FNp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wqor5tgq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1B981F000FF;
-	Sat, 12 Sep 2026 16:19:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DQgd1FNp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D2811F000FF;
+	Sat, 12 Sep 2026 16:19:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789229957;
-	bh=U+2EA2uIJcUj7ulqGMyIAuBrvHgGrwsYhds7mUEFbeo=;
+	s=korg; t=1789229962;
+	bh=Ggznd7CHHMyPuXAs5yL1wJ3kg9sx9YcLgW3pXUYjfro=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Wqor5tgqrDdxmwYwDjFMcgZ26M1uRGioME2bz25SAVSqLdxzHk95l/xFi4DbCCOix
-	 jCiUb741Gez54xBi9WIRz3AbZiTIuEQlgcj5GLb+THHZSuu6KZdk4O+OmGPAAMjOlo
-	 /0y1c76a7A7QU88s3yTLJvukx/WnGE2Drtleo5GA=
+	b=DQgd1FNpwPbxc3uXSa+uXv8DAI5EU/fZz291aAiWstImZX4UEjjfkuY6Ij5k4t17R
+	 KsWlWdyKou5LgGkER/txg4ze/Vp5oVvKMki5U4Ud/CZSQXi4d68dqn8cpLEDYFQY/z
+	 xLD3u3iW15kjILXtCgfDAioNVVwBnxNdAZXBWnwI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
-	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
+	Linmao Li <lilinmao@kylinos.cn>,
+	Arnd Bergmann <arnd@arndb.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0653/1191] char: xilinx_hwicap: unregister class on init errors
-Date: Sat, 12 Sep 2026 08:56:21 +0200
-Message-ID: <20260912065602.923597337@linuxfoundation.org>
+Subject: [PATCH 6.1 0644/1191] ppdev: prevent overflow when setting port timeout
+Date: Sat, 12 Sep 2026 08:56:12 +0200
+Message-ID: <20260912065602.719396374@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -52,57 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Linmao Li <lilinmao@kylinos.cn>
 
-[ Upstream commit e7e12b4cc0f0c3a2782aea084d4215e23f5512b3 ]
+[ Upstream commit 3c0cf801ea2fa40daa5e7d1e6d32adca5ff75ad9 ]
 
-hwicap_module_init() registers icap_class before reserving the
-character-device region and registering the platform driver.  If either
-of those later steps fails, the init path must undo the successful class
-registration before returning an error.
+PPSETTIME64 supplies the timeval fields as s64 values, but
+pp_set_timeout() narrows tv_usec to int and calculates tv_sec * HZ in a
+signed long. Large positive values can therefore be truncated or overflow
+and install an unintended timeout.
 
-Route the chrdev registration failure through a class unwind label, and
-let the platform-driver registration failure fall through the existing
-chrdev unwind before unregistering the class.  The normal module exit path
-is unchanged.
+Keep both fields as s64, reject a non-canonical microsecond value, and
+use timespec64_to_jiffies() to cap excessively large timeouts at
+MAX_JIFFY_OFFSET. This is a behavior change because both PPSETTIME
+ioctls could previously accept values with tv_usec >= USEC_PER_SEC.
+The validation follows the precedent set by sock_set_timeout().
 
-This issue was identified during our ongoing static-analysis research while
-reviewing kernel code.
-
-Fixes: ef141a0bb0dc ("[POWERPC] Xilinx: hwicap driver")
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Reviewed-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
-Link: https://patch.msgid.link/20260623085604.89284-1-mhun512@gmail.com
+Fixes: 3b9ab374a1e6 ("ppdev: convert to y2038 safe")
+Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
+Reviewed-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://patch.msgid.link/20260716013923.19494-1-lilinmao@kylinos.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/xilinx_hwicap/xilinx_hwicap.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/char/ppdev.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/char/xilinx_hwicap/xilinx_hwicap.c b/drivers/char/xilinx_hwicap/xilinx_hwicap.c
-index 74a4928aea1d3..b691eba3912bb 100644
---- a/drivers/char/xilinx_hwicap/xilinx_hwicap.c
-+++ b/drivers/char/xilinx_hwicap/xilinx_hwicap.c
-@@ -864,7 +864,7 @@ static int __init hwicap_module_init(void)
- 					HWICAP_DEVICES,
- 					DRIVER_NAME);
- 	if (retval < 0)
--		return retval;
-+		goto failed_class;
- 
- 	retval = platform_driver_register(&hwicap_platform_driver);
- 	if (retval)
-@@ -875,6 +875,9 @@ static int __init hwicap_module_init(void)
-  failed:
- 	unregister_chrdev_region(devt, HWICAP_DEVICES);
- 
-+ failed_class:
-+	class_unregister(&icap_class);
-+
- 	return retval;
+diff --git a/drivers/char/ppdev.c b/drivers/char/ppdev.c
+index a97edbf7455a6..8ab4617592eab 100644
+--- a/drivers/char/ppdev.c
++++ b/drivers/char/ppdev.c
+@@ -340,15 +340,17 @@ static enum ieee1284_phase init_phase(int mode)
+ 	return IEEE1284_PH_FWD_IDLE;
  }
+ 
+-static int pp_set_timeout(struct pardevice *pdev, long tv_sec, int tv_usec)
++static int pp_set_timeout(struct pardevice *pdev, s64 tv_sec, s64 tv_usec)
+ {
++	struct timespec64 ts;
+ 	long to_jiffies;
+ 
+-	if ((tv_sec < 0) || (tv_usec < 0))
++	if (tv_sec < 0 || tv_usec < 0 || tv_usec >= USEC_PER_SEC)
+ 		return -EINVAL;
+ 
+-	to_jiffies = usecs_to_jiffies(tv_usec);
+-	to_jiffies += tv_sec * HZ;
++	ts.tv_sec = tv_sec;
++	ts.tv_nsec = tv_usec * NSEC_PER_USEC;
++	to_jiffies = timespec64_to_jiffies(&ts);
+ 	if (to_jiffies <= 0)
+ 		return -EINVAL;
  
 -- 
 2.53.0
