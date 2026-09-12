@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B4FD2F617C;
-	Sat, 12 Sep 2026 07:47:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DA79380FF3;
+	Sat, 12 Sep 2026 07:47:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789199274; cv=none; b=OgY2ZEiLPtLKJp5kEo7RP3qPuIiw0s5063RqFNe6L7/MYtzHvF3PwRL04oNumz/qgho17kVVwS8lMrJ9If+2E4Iu16ZCjrjHy1qBJTyucfhg796/jxyXGnY5WSPsVK0B+bL/1AIv/sFKW2dBb+OTQKNsgRS4MlW0ocRMcRM9BI4=
+	t=1789199279; cv=none; b=iob1RhRYnJqbibsVgZEzZNLl2lYIFUjuy5l8GOFegrtEC4M6mZ4JK4CAGwSRoKgxZlsgfoY9dNm74nBK23suVfUcS6HnwLWZJ7p1akrXSNy4acpUmTbozctsPDFqOHpW5BpwS8qYAPFFWAij1WqfDZOJVZvP4idRZNwZe7sBKyw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789199274; c=relaxed/simple;
-	bh=gtO/RPjiPCkhHEzYj4N3Ps2CEHsMBWCRY4xMsWBtBSs=;
+	s=arc-20240116; t=1789199279; c=relaxed/simple;
+	bh=ca/VqoKOjVUzr/AQomq4U12U3NtA0TF5k1d52WkO1LE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qTHyIaEFMtmGPzbt82Zrssus27PAQ+6bEWtTzt3afJNBocByZBzUDaN2x+wjaQMHUX/RWSJCFa7q+/XUbzpQeXFdgTFO38xkKqrW6TjcJLVbARBndYWZ02F27p13sclDxuDIiZAYAM4Q7NEAHEAmWXZ27Is18Dgg2inlhbd8g58=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IQL0Iape; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=D0ONxWHDJBsQf1C1fayQ1SDof9qKB0I/vk6BGfzhiBXqaBj6W2qngGssbhX4Jb3mYr5VZSD6TOOFmeIJ9yI8A8ohdeBzeUTajvUo8XCMufuVQ3hNuCDcOHaCcSq48Z4FzmX8ohR2cG1xJsRUkW9pKMy+oV0PP2qaa7sYiCCby/8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dIC9N+mj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IQL0Iape"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D4A91F000FF;
-	Sat, 12 Sep 2026 07:47:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dIC9N+mj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B18D31F000FF;
+	Sat, 12 Sep 2026 07:47:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789199273;
-	bh=rreX8Nt6ha11J87MyEcS06pMXuXq8n2Q0DxpKlIc9NA=;
+	s=korg; t=1789199277;
+	bh=8nFV6eYVkIpkVPPjzN9bE/CVKjLrF3MiuPmK8RKOmps=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IQL0IapeIlxxnWWbnZdR9QLyZ/c7VKJgkDrqfFFGM9BACOlMr7HyrJ6svuRofRn/r
-	 buEQ99c6+4jcIeSTrQuIuprRDecyWicZtzshzx5DUd/Nq4MKGRBveHEN31Fs2j1SQB
-	 iA5yQ4SdOpfKjSxih+qcYlO9ON5WXOncPbA+gOWc=
+	b=dIC9N+mjvZAGAS73ufzT+xvMffKYdqh6PzIY2//xmM+gsFsLowSm/0UWaWeJoP2kI
+	 uXvUuMOC6JkyfV8EQ4/mjMLlcEXwWMrtZkg6rbELMf4EMIsKLscpoMEJX6ws0el4R2
+	 huLKUh2RE3//nPUu2yXtavrlPyrc0eN2nAtJwM9k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Raag Jadav <raag.jadav@intel.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0509/1815] mtd: intel-dg: Fix runtime PM error path in probe
-Date: Sat, 12 Sep 2026 08:37:39 +0200
-Message-ID: <20260912065700.839181575@linuxfoundation.org>
+Subject: [PATCH 7.2 0500/1815] misc: ad525x_dpot: use driver core groups for sysfs files
+Date: Sat, 12 Sep 2026 08:37:30 +0200
+Message-ID: <20260912065700.630833199@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,43 +50,307 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit df6f582df3377af316a60ca8ee0d590b2d03924d ]
+[ Upstream commit e3a8557e88eb26278eda60bf64f2ef33ce7de8bf ]
 
-intel_dg_mtd_probe() allocates region names before enabling runtime PM
-and before calling pm_runtime_resume_and_get().
+ad_dpot_probe() creates per-RDAC sysfs files manually and then
+optionally creates the command sysfs group. This leaves probe responsible
+for rolling back partial sysfs state and makes remove responsible for
+matching every file that probe created.
 
-If kasprintf() fails while building a region name, the error path jumps
-to err, which calls pm_runtime_put(). At that point there has not been a
-successful pm_runtime_resume_and_get() call to balance, so the runtime PM
-usage count can underflow.
+Move the device attributes into driver core dev_groups for the I2C and
+SPI drivers and use an is_visible() callback to expose only the
+attributes supported by the probed device. With this shape, the driver
+core creates the sysfs files only after probe succeeds and removes them
+before the remove callback frees the driver data.
 
-Jump to err_norpm from the kasprintf() failure path, as the runtime PM
-reference has not been acquired yet.
-
-Fixes: 779c59274d03 ("mtd: intel-dg: Fix accessing regions before setting nregions")
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Reviewed-by: Raag Jadav <raag.jadav@intel.com>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Fixes: 4eb174bee6f8 ("ad525x_dpot: new driver for AD525x digital potentiometers")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260623015643.36508-1-pengpeng@iscas.ac.cn
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/devices/mtd_intel_dg.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/misc/ad525x_dpot-i2c.c |   1 +
+ drivers/misc/ad525x_dpot-spi.c |   1 +
+ drivers/misc/ad525x_dpot.c     | 177 ++++++++++++++++++++-------------
+ drivers/misc/ad525x_dpot.h     |   3 +
+ 4 files changed, 112 insertions(+), 70 deletions(-)
 
-diff --git a/drivers/mtd/devices/mtd_intel_dg.c b/drivers/mtd/devices/mtd_intel_dg.c
-index f2fa8f68d1905..a566e86eb5e3a 100644
---- a/drivers/mtd/devices/mtd_intel_dg.c
-+++ b/drivers/mtd/devices/mtd_intel_dg.c
-@@ -780,7 +780,7 @@ static int intel_dg_mtd_probe(struct auxiliary_device *aux_dev,
- 				       dev_name(&aux_dev->dev), invm->regions[i].name);
- 		if (!name) {
- 			ret = -ENOMEM;
--			goto err;
-+			goto err_norpm;
+diff --git a/drivers/misc/ad525x_dpot-i2c.c b/drivers/misc/ad525x_dpot-i2c.c
+index 469478f7a1d33..896ad61bb9e17 100644
+--- a/drivers/misc/ad525x_dpot-i2c.c
++++ b/drivers/misc/ad525x_dpot-i2c.c
+@@ -105,6 +105,7 @@ MODULE_DEVICE_TABLE(i2c, ad_dpot_id);
+ static struct i2c_driver ad_dpot_i2c_driver = {
+ 	.driver = {
+ 		.name	= "ad_dpot",
++		.dev_groups = ad_dpot_groups,
+ 	},
+ 	.probe		= ad_dpot_i2c_probe,
+ 	.remove		= ad_dpot_i2c_remove,
+diff --git a/drivers/misc/ad525x_dpot-spi.c b/drivers/misc/ad525x_dpot-spi.c
+index 263055bda48b7..1ebe629715a84 100644
+--- a/drivers/misc/ad525x_dpot-spi.c
++++ b/drivers/misc/ad525x_dpot-spi.c
+@@ -131,6 +131,7 @@ MODULE_DEVICE_TABLE(spi, ad_dpot_spi_id);
+ static struct spi_driver ad_dpot_spi_driver = {
+ 	.driver = {
+ 		.name	= "ad_dpot",
++		.dev_groups = ad_dpot_groups,
+ 	},
+ 	.probe		= ad_dpot_spi_probe,
+ 	.remove		= ad_dpot_spi_remove,
+diff --git a/drivers/misc/ad525x_dpot.c b/drivers/misc/ad525x_dpot.c
+index 57bead9fba1be..a4e22fd4a1072 100644
+--- a/drivers/misc/ad525x_dpot.c
++++ b/drivers/misc/ad525x_dpot.c
+@@ -630,66 +630,132 @@ static struct attribute *ad525x_attributes_commands[] = {
+ 	NULL
+ };
+ 
+-static const struct attribute_group ad525x_group_commands = {
+-	.attrs = ad525x_attributes_commands,
++static struct attribute *ad525x_attributes[] = {
++	&dev_attr_rdac0.attr,
++	&dev_attr_rdac1.attr,
++	&dev_attr_rdac2.attr,
++	&dev_attr_rdac3.attr,
++	&dev_attr_rdac4.attr,
++	&dev_attr_rdac5.attr,
++	&dev_attr_eeprom0.attr,
++	&dev_attr_eeprom1.attr,
++	&dev_attr_eeprom2.attr,
++	&dev_attr_eeprom3.attr,
++	&dev_attr_eeprom4.attr,
++	&dev_attr_eeprom5.attr,
++	&dev_attr_tolerance0.attr,
++	&dev_attr_tolerance1.attr,
++	&dev_attr_tolerance2.attr,
++	&dev_attr_tolerance3.attr,
++	&dev_attr_tolerance4.attr,
++	&dev_attr_tolerance5.attr,
++	&dev_attr_otp0.attr,
++	&dev_attr_otp1.attr,
++	&dev_attr_otp2.attr,
++	&dev_attr_otp3.attr,
++	&dev_attr_otp4.attr,
++	&dev_attr_otp5.attr,
++	&dev_attr_otp0en.attr,
++	&dev_attr_otp1en.attr,
++	&dev_attr_otp2en.attr,
++	&dev_attr_otp3en.attr,
++	&dev_attr_otp4en.attr,
++	&dev_attr_otp5en.attr,
++	&dev_attr_inc_all.attr,
++	&dev_attr_dec_all.attr,
++	&dev_attr_inc_all_6db.attr,
++	&dev_attr_dec_all_6db.attr,
++	NULL
+ };
+ 
+-static int ad_dpot_add_files(struct device *dev,
+-		unsigned int features, unsigned int rdac)
++static int ad525x_attr_index(struct attribute *attr,
++			     const struct attribute * const *attrs)
+ {
+-	int err = sysfs_create_file(&dev->kobj,
+-		dpot_attrib_wipers[rdac]);
+-	if (features & F_CMD_EEP)
+-		err |= sysfs_create_file(&dev->kobj,
+-			dpot_attrib_eeprom[rdac]);
+-	if (features & F_CMD_TOL)
+-		err |= sysfs_create_file(&dev->kobj,
+-			dpot_attrib_tolerance[rdac]);
+-	if (features & F_CMD_OTP) {
+-		err |= sysfs_create_file(&dev->kobj,
+-			dpot_attrib_otp_en[rdac]);
+-		err |= sysfs_create_file(&dev->kobj,
+-			dpot_attrib_otp[rdac]);
+-	}
++	int i;
+ 
+-	if (err)
+-		dev_err(dev, "failed to register sysfs hooks for RDAC%d\n",
+-			rdac);
++	for (i = 0; attrs[i]; i++)
++		if (attr == attrs[i])
++			return i;
+ 
+-	return err;
++	return -ENOENT;
+ }
+ 
+-static inline void ad_dpot_remove_files(struct device *dev,
+-		unsigned int features, unsigned int rdac)
++static bool ad525x_is_command_attr(struct attribute *attr)
+ {
+-	sysfs_remove_file(&dev->kobj,
+-		dpot_attrib_wipers[rdac]);
+-	if (features & F_CMD_EEP)
+-		sysfs_remove_file(&dev->kobj,
+-			dpot_attrib_eeprom[rdac]);
+-	if (features & F_CMD_TOL)
+-		sysfs_remove_file(&dev->kobj,
+-			dpot_attrib_tolerance[rdac]);
+-	if (features & F_CMD_OTP) {
+-		sysfs_remove_file(&dev->kobj,
+-			dpot_attrib_otp_en[rdac]);
+-		sysfs_remove_file(&dev->kobj,
+-			dpot_attrib_otp[rdac]);
++	int i;
++
++	for (i = 0; ad525x_attributes_commands[i]; i++) {
++		if (attr == ad525x_attributes_commands[i])
++			return true;
+ 	}
++
++	return false;
++}
++
++static umode_t ad525x_is_visible(struct kobject *kobj, struct attribute *attr,
++				 int n)
++{
++	struct device *dev = kobj_to_dev(kobj);
++	struct dpot_data *data = dev_get_drvdata(dev);
++	int rdac;
++
++	if (!data)
++		return 0;
++
++	rdac = ad525x_attr_index(attr, dpot_attrib_wipers);
++	if (rdac >= 0)
++		return data->wipers & BIT(rdac) ? attr->mode : 0;
++
++	rdac = ad525x_attr_index(attr, dpot_attrib_eeprom);
++	if (rdac >= 0)
++		return (data->wipers & BIT(rdac)) && (data->feat & F_CMD_EEP) ?
++			attr->mode : 0;
++
++	rdac = ad525x_attr_index(attr, dpot_attrib_tolerance);
++	if (rdac >= 0)
++		return (data->wipers & BIT(rdac)) && (data->feat & F_CMD_TOL) ?
++			attr->mode : 0;
++
++	rdac = ad525x_attr_index(attr, dpot_attrib_otp);
++	if (rdac >= 0)
++		return (data->wipers & BIT(rdac)) && (data->feat & F_CMD_OTP) ?
++			attr->mode : 0;
++
++	rdac = ad525x_attr_index(attr, dpot_attrib_otp_en);
++	if (rdac >= 0)
++		return (data->wipers & BIT(rdac)) && (data->feat & F_CMD_OTP) ?
++			attr->mode : 0;
++
++	if (ad525x_is_command_attr(attr))
++		return data->feat & F_CMD_INC ? attr->mode : 0;
++
++	return attr->mode;
+ }
+ 
++static const struct attribute_group ad525x_group = {
++	.attrs = ad525x_attributes,
++	.is_visible = ad525x_is_visible,
++};
++
++const struct attribute_group *ad_dpot_groups[] = {
++	&ad525x_group,
++	NULL
++};
++EXPORT_SYMBOL(ad_dpot_groups);
++
+ int ad_dpot_probe(struct device *dev,
+ 		struct ad_dpot_bus_data *bdata, unsigned long devid,
+ 			    const char *name)
+ {
+ 
+ 	struct dpot_data *data;
+-	int i, err = 0;
++	int i;
+ 
+ 	data = kzalloc_obj(struct dpot_data);
+ 	if (!data) {
+-		err = -ENOMEM;
+-		goto exit;
++		dev_err(dev, "failed to create client for %s ID 0x%lX\n",
++			name, devid);
++		return -ENOMEM;
+ 	}
+ 
+ 	dev_set_drvdata(dev, data);
+@@ -705,51 +771,22 @@ int ad_dpot_probe(struct device *dev,
+ 	data->wipers = DPOT_WIPERS(devid);
+ 
+ 	for (i = DPOT_RDAC0; i < MAX_RDACS; i++)
+-		if (data->wipers & (1 << i)) {
+-			err = ad_dpot_add_files(dev, data->feat, i);
+-			if (err)
+-				goto exit_remove_files;
++		if (data->wipers & BIT(i)) {
+ 			/* power-up midscale */
+ 			if (data->feat & F_RDACS_WONLY)
+ 				data->rdac_cache[i] = data->max_pos / 2;
  		}
  
- 		nvm->regions[n].name = name;
+-	if (data->feat & F_CMD_INC)
+-		err = sysfs_create_group(&dev->kobj, &ad525x_group_commands);
+-
+-	if (err) {
+-		dev_err(dev, "failed to register sysfs hooks\n");
+-		goto exit_free;
+-	}
+-
+ 	dev_info(dev, "%s %d-Position Digital Potentiometer registered\n",
+ 		 name, data->max_pos);
+ 
+ 	return 0;
+-
+-exit_remove_files:
+-	for (i = DPOT_RDAC0; i < MAX_RDACS; i++)
+-		if (data->wipers & (1 << i))
+-			ad_dpot_remove_files(dev, data->feat, i);
+-
+-exit_free:
+-	kfree(data);
+-	dev_set_drvdata(dev, NULL);
+-exit:
+-	dev_err(dev, "failed to create client for %s ID 0x%lX\n",
+-		name, devid);
+-	return err;
+ }
+ EXPORT_SYMBOL(ad_dpot_probe);
+ 
+ void ad_dpot_remove(struct device *dev)
+ {
+ 	struct dpot_data *data = dev_get_drvdata(dev);
+-	int i;
+-
+-	for (i = DPOT_RDAC0; i < MAX_RDACS; i++)
+-		if (data->wipers & (1 << i))
+-			ad_dpot_remove_files(dev, data->feat, i);
+ 
+ 	kfree(data);
+ }
+diff --git a/drivers/misc/ad525x_dpot.h b/drivers/misc/ad525x_dpot.h
+index 72a9d6801937c..2e877c89523b5 100644
+--- a/drivers/misc/ad525x_dpot.h
++++ b/drivers/misc/ad525x_dpot.h
+@@ -10,6 +10,8 @@
+ 
+ #include <linux/types.h>
+ 
++struct attribute_group;
++
+ #define DPOT_CONF(features, wipers, max_pos, uid) \
+ 		(((features) << 18) | (((wipers) & 0xFF) << 10) | \
+ 		((max_pos & 0xF) << 6) | (uid & 0x3F))
+@@ -210,5 +212,6 @@ struct ad_dpot_bus_data {
+ int ad_dpot_probe(struct device *dev, struct ad_dpot_bus_data *bdata,
+ 		  unsigned long devid, const char *name);
+ void ad_dpot_remove(struct device *dev);
++extern const struct attribute_group *ad_dpot_groups[];
+ 
+ #endif
 -- 
 2.53.0
 
