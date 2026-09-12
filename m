@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68271377ABA;
-	Sat, 12 Sep 2026 18:53:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82B9D377ABA;
+	Sat, 12 Sep 2026 18:53:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789239219; cv=none; b=MHqMtdFWGcoHujE/D0Wg7Rc1+FJRRl5VR/LEzZdHAGtBiyxbSPPLSTCdbWCVY2C+sZw7BDqel2jlwR+T0Y82AmGqfHFudM171uuSGuTDfiQi+7wds49xITAttBKz7/YJ6EaxThMzwKbpeVYnKOjoWDRE4DYuN4OC/kinBrA44yo=
+	t=1789239223; cv=none; b=fLt0ju/Xdtyev9q8YldOpi0gGmBs4cb3M8502n+WLCKuZ5vOpbw9GGm8EYg+lpEUW3HRX5PiEZyX65ZNGIXeQjQnE4FUthf19hKmM4qwrFlT1jelyyCELBsRVeOHj03/jecpgATJ0GFfzioNTdSFMvqinFvW+wnVv/1gBsZCEik=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789239219; c=relaxed/simple;
-	bh=Inh6/KVzfcVBJlQKn95bkzzVT2lSNY6gfWL6ObdKwHE=;
+	s=arc-20240116; t=1789239223; c=relaxed/simple;
+	bh=LjQtD+8Ip6KUZkZpckFl2BHpS3APKgyX2GOGVBuv55o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EfZjtOz8Gd4lGMZLtxDGP5NpvdIPRKS2PfltVYWBOwpgRbUJ0DdxZN5+NDtxKMFxi50w0a7mGRztenZPAYwu19wmWkvp136/ettx5elQ/qqgOm6G5Enf8flhSaBPUA726nW2cQxqeddBnCaKY/UeZO7KJmKUf9s8jcOkx2TXzwI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nmC5q1Jx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jSLDfrrX4dbaeCUSq5NMs6vnrROx24Z8fYwTUqEYgCbKC12PcSIr4CsrGFNSWOXnPUfcmdQomfIpsf4+TuLQ+ZyqYR7qTo3LFGtoeOJAofFxwYaTY7Fhz65aO+fbbxjG8lWt1jbhKiNOqUqarDchsc4Prrv7yRG1HGPw4ts+nOo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WzmlSnpS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nmC5q1Jx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 915291F000FF;
-	Sat, 12 Sep 2026 18:53:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WzmlSnpS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E8861F000FF;
+	Sat, 12 Sep 2026 18:53:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789239218;
-	bh=3O8nGSlCMDTHFZItZN5KCnHyLCV3yJUOeTtKubbYTfE=;
+	s=korg; t=1789239222;
+	bh=Nko/LD4E+THN2bPaGohMjcQfbe/Z1seNxJccGiiOdk4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nmC5q1Jxvm4GcpNX/TgKXZIfTtp+zIqLlxyUdLzPDxcOTSohkoIhChL0GbUu5Ly4Z
-	 YhNcyxTgngZp8qXgg5FrpiMEONVLXxj8JGmPO8f/gdHAz02rxDB99hqtfsCnnBWAeD
-	 pRMQou4b7xED0ETpegBQnih8uv8kZLnCSgbtoNl0=
+	b=WzmlSnpSs26dcjj2jmbNhMCI3XjXpNnGexZIk5XldU8TWdaBaY9N3DjlnTXxh9dTk
+	 1kebVCyhmaxgJ9Ffi76RoMxvwHnCO+xFCb0bYjipAStecxQIDvZBzjc4hBxT7Hqokp
+	 uE0hm2+s81MUfI5kToI0yuFBeP8aCzrOOBd0cRUU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Block <bblock@linux.ibm.com>,
 	Bart Van Assche <bvanassche@acm.org>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 619/935] scsi: core: Register sysfs attributes earlier
-Date: Sat, 12 Sep 2026 09:00:49 +0200
-Message-ID: <20260912065541.035531340@linuxfoundation.org>
+Subject: [PATCH 5.15 620/935] scsi: smartpqi: Switch to attribute groups
+Date: Sat, 12 Sep 2026 09:00:50 +0200
+Message-ID: <20260912065541.057595328@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -54,289 +53,97 @@ Content-Transfer-Encoding: 8bit
 
 From: Bart Van Assche <bvanassche@acm.org>
 
-[ Upstream commit 92c4b58b15c56298b1b225c1d2e533165b3e32af ]
+[ Upstream commit 64fc9015fbeb041ed0b2ebf645764c06e0ad7753 ]
 
-A quote from Documentation/driver-api/driver-model/device.rst:
-"Word of warning:  While the kernel allows device_create_file() and
-device_remove_file() to be called on a device at any time, userspace has
-strict expectations on when attributes get created.  When a new device is
-registered in the kernel, a uevent is generated to notify userspace (like
-udev) that a new device is available.  If attributes are added after the
-device is registered, then userspace won't get notified and userspace will
-not know about the new attributes."
+struct device supports attribute groups directly but does not support
+struct device_attribute directly. Hence switch to attribute groups.
 
-Hence register SCSI host sysfs attributes before the SCSI host shost_dev
-uevent is emitted instead of after that event has been emitted.
-
-Link: https://lore.kernel.org/r/20211012233558.4066756-2-bvanassche@acm.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Reviewed-by: Benjamin Block <bblock@linux.ibm.com>
+Link: https://lore.kernel.org/r/20211012233558.4066756-43-bvanassche@acm.org
 Signed-off-by: Bart Van Assche <bvanassche@acm.org>
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Stable-dep-of: 225548863f0a ("scsi: smartpqi: Fix AIO retry marker cleared by SCSI core between dispatches.")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/hosts.c       | 23 ++++++++++-
- drivers/scsi/scsi_priv.h   |  4 +-
- drivers/scsi/scsi_sysfs.c  | 81 +++++++++++++++++++-------------------
- include/scsi/scsi_device.h |  7 ++++
- include/scsi/scsi_host.h   | 12 ++++++
- 5 files changed, 84 insertions(+), 43 deletions(-)
+ drivers/scsi/smartpqi/smartpqi_init.c | 46 +++++++++++++++------------
+ 1 file changed, 25 insertions(+), 21 deletions(-)
 
-diff --git a/drivers/scsi/hosts.c b/drivers/scsi/hosts.c
-index cf842c97639a7..b339c006cc35f 100644
---- a/drivers/scsi/hosts.c
-+++ b/drivers/scsi/hosts.c
-@@ -387,7 +387,7 @@ static struct device_type scsi_host_type = {
- struct Scsi_Host *scsi_host_alloc(struct scsi_host_template *sht, int privsize)
- {
- 	struct Scsi_Host *shost;
--	int index;
-+	int index, i, j = 0;
+diff --git a/drivers/scsi/smartpqi/smartpqi_init.c b/drivers/scsi/smartpqi/smartpqi_init.c
+index f1ba5087e0eed..6ecc56fb9fb25 100644
+--- a/drivers/scsi/smartpqi/smartpqi_init.c
++++ b/drivers/scsi/smartpqi/smartpqi_init.c
+@@ -6664,20 +6664,22 @@ static DEVICE_ATTR(enable_r5_writes, 0644,
+ static DEVICE_ATTR(enable_r6_writes, 0644,
+ 	pqi_host_enable_r6_writes_show, pqi_host_enable_r6_writes_store);
  
- 	shost = kzalloc(sizeof(struct Scsi_Host) + privsize, GFP_KERNEL);
- 	if (!shost)
-@@ -492,7 +492,26 @@ struct Scsi_Host *scsi_host_alloc(struct scsi_host_template *sht, int privsize)
- 	shost->shost_dev.parent = &shost->shost_gendev;
- 	shost->shost_dev.class = &shost_class;
- 	dev_set_name(&shost->shost_dev, "host%d", shost->host_no);
--	shost->shost_dev.groups = scsi_sysfs_shost_attr_groups;
-+	shost->shost_dev.groups = shost->shost_dev_attr_groups;
-+	shost->shost_dev_attr_groups[j++] = &scsi_shost_attr_group;
-+	if (sht->shost_attrs) {
-+		shost->lld_attr_group = (struct attribute_group){
-+			.attrs = scsi_convert_dev_attrs(&shost->shost_gendev,
-+							sht->shost_attrs)
-+		};
-+		if (shost->lld_attr_group.attrs)
-+			shost->shost_dev_attr_groups[j++] =
-+				&shost->lld_attr_group;
-+	}
-+	if (sht->shost_groups) {
-+		for (i = 0; sht->shost_groups[i] &&
-+			     j < ARRAY_SIZE(shost->shost_dev_attr_groups);
-+		     i++, j++) {
-+			shost->shost_dev_attr_groups[j] =
-+				sht->shost_groups[i];
-+		}
-+	}
-+	WARN_ON_ONCE(j >= ARRAY_SIZE(shost->shost_dev_attr_groups));
- 
- 	shost->ehandler = kthread_run(scsi_error_handler, shost,
- 			"scsi_eh_%d", shost->host_no);
-diff --git a/drivers/scsi/scsi_priv.h b/drivers/scsi/scsi_priv.h
-index b531dec3d4206..87c714b0bfba2 100644
---- a/drivers/scsi/scsi_priv.h
-+++ b/drivers/scsi/scsi_priv.h
-@@ -138,13 +138,15 @@ extern int scsi_sysfs_add_sdev(struct scsi_device *);
- extern int scsi_sysfs_add_host(struct Scsi_Host *);
- extern int scsi_sysfs_register(void);
- extern void scsi_sysfs_unregister(void);
-+struct attribute **scsi_convert_dev_attrs(struct device *dev,
-+					  struct device_attribute **dev_attr);
- extern void scsi_sysfs_device_initialize(struct scsi_device *);
- extern int scsi_sysfs_target_initialize(struct scsi_device *);
- extern struct scsi_transport_template blank_transport_template;
- extern void __scsi_remove_device(struct scsi_device *);
- 
- extern struct bus_type scsi_bus_type;
--extern const struct attribute_group *scsi_sysfs_shost_attr_groups[];
-+extern const struct attribute_group scsi_shost_attr_group;
- 
- /* scsi_netlink.c */
- #ifdef CONFIG_SCSI_NETLINK
-diff --git a/drivers/scsi/scsi_sysfs.c b/drivers/scsi/scsi_sysfs.c
-index 7d3cbf4e6bc6e..2d7e394556c7e 100644
---- a/drivers/scsi/scsi_sysfs.c
-+++ b/drivers/scsi/scsi_sysfs.c
-@@ -424,15 +424,10 @@ static struct attribute *scsi_sysfs_shost_attrs[] = {
+-static struct device_attribute *pqi_shost_attrs[] = {
+-	&dev_attr_driver_version,
+-	&dev_attr_firmware_version,
+-	&dev_attr_model,
+-	&dev_attr_serial_number,
+-	&dev_attr_vendor,
+-	&dev_attr_rescan,
+-	&dev_attr_lockup_action,
+-	&dev_attr_enable_stream_detection,
+-	&dev_attr_enable_r5_writes,
+-	&dev_attr_enable_r6_writes,
++static struct attribute *pqi_shost_attrs[] = {
++	&dev_attr_driver_version.attr,
++	&dev_attr_firmware_version.attr,
++	&dev_attr_model.attr,
++	&dev_attr_serial_number.attr,
++	&dev_attr_vendor.attr,
++	&dev_attr_rescan.attr,
++	&dev_attr_lockup_action.attr,
++	&dev_attr_enable_stream_detection.attr,
++	&dev_attr_enable_r5_writes.attr,
++	&dev_attr_enable_r6_writes.attr,
  	NULL
  };
  
--static struct attribute_group scsi_shost_attr_group = {
-+const struct attribute_group scsi_shost_attr_group = {
- 	.attrs =	scsi_sysfs_shost_attrs,
++ATTRIBUTE_GROUPS(pqi_shost);
++
+ static ssize_t pqi_unique_id_show(struct device *dev,
+ 	struct device_attribute *attr, char *buffer)
+ {
+@@ -6948,17 +6950,19 @@ static DEVICE_ATTR(ssd_smart_path_enabled, 0444, pqi_ssd_smart_path_enabled_show
+ static DEVICE_ATTR(raid_level, 0444, pqi_raid_level_show, NULL);
+ static DEVICE_ATTR(raid_bypass_cnt, 0444, pqi_raid_bypass_cnt_show, NULL);
+ 
+-static struct device_attribute *pqi_sdev_attrs[] = {
+-	&dev_attr_lunid,
+-	&dev_attr_unique_id,
+-	&dev_attr_path_info,
+-	&dev_attr_sas_address,
+-	&dev_attr_ssd_smart_path_enabled,
+-	&dev_attr_raid_level,
+-	&dev_attr_raid_bypass_cnt,
++static struct attribute *pqi_sdev_attrs[] = {
++	&dev_attr_lunid.attr,
++	&dev_attr_unique_id.attr,
++	&dev_attr_path_info.attr,
++	&dev_attr_sas_address.attr,
++	&dev_attr_ssd_smart_path_enabled.attr,
++	&dev_attr_raid_level.attr,
++	&dev_attr_raid_bypass_cnt.attr,
+ 	NULL
  };
  
--const struct attribute_group *scsi_sysfs_shost_attr_groups[] = {
--	&scsi_shost_attr_group,
--	NULL
--};
--
- static void scsi_device_cls_release(struct device *class_dev)
- {
- 	struct scsi_device *sdev;
-@@ -1358,7 +1353,7 @@ static int scsi_target_add(struct scsi_target *starget)
-  **/
- int scsi_sysfs_add_sdev(struct scsi_device *sdev)
- {
--	int error, i;
-+	int error;
- 	struct scsi_target *starget = sdev->sdev_target;
- 
- 	error = scsi_target_add(starget);
-@@ -1412,23 +1407,6 @@ int scsi_sysfs_add_sdev(struct scsi_device *sdev)
- 		}
- 	}
- 
--	/* add additional host specific attributes */
--	if (sdev->host->hostt->sdev_attrs) {
--		for (i = 0; sdev->host->hostt->sdev_attrs[i]; i++) {
--			error = device_create_file(&sdev->sdev_gendev,
--					sdev->host->hostt->sdev_attrs[i]);
--			if (error)
--				return error;
--		}
--	}
--
--	if (sdev->host->hostt->sdev_groups) {
--		error = sysfs_create_groups(&sdev->sdev_gendev.kobj,
--				sdev->host->hostt->sdev_groups);
--		if (error)
--			return error;
--	}
--
- 	scsi_autopm_put_device(sdev);
- 	return error;
- }
-@@ -1468,10 +1446,6 @@ void __scsi_remove_device(struct scsi_device *sdev)
- 		if (res != 0)
- 			return;
- 
--		if (sdev->host->hostt->sdev_groups)
--			sysfs_remove_groups(&sdev->sdev_gendev.kobj,
--					sdev->host->hostt->sdev_groups);
--
- 		if (IS_ENABLED(CONFIG_BLK_DEV_BSG) && sdev->bsg_dev)
- 			bsg_unregister_queue(sdev->bsg_dev);
- 		device_unregister(&sdev->sdev_dev);
-@@ -1611,23 +1585,31 @@ EXPORT_SYMBOL(scsi_register_interface);
-  **/
- int scsi_sysfs_add_host(struct Scsi_Host *shost)
- {
--	int error, i;
--
--	/* add host specific attributes */
--	if (shost->hostt->shost_attrs) {
--		for (i = 0; shost->hostt->shost_attrs[i]; i++) {
--			error = device_create_file(&shost->shost_dev,
--					shost->hostt->shost_attrs[i]);
--			if (error)
--				return error;
--		}
--	}
--
- 	transport_register_device(&shost->shost_gendev);
- 	transport_configure_device(&shost->shost_gendev);
- 	return 0;
- }
- 
-+/*
-+ * Convert an array of struct device_attribute pointers into an array of
-+ * struct attribute pointers.
-+ */
-+struct attribute **scsi_convert_dev_attrs(struct device *dev,
-+					  struct device_attribute **dev_attr)
-+{
-+	struct attribute **attrs;
-+	int i;
++ATTRIBUTE_GROUPS(pqi_sdev);
 +
-+	for (i = 0; dev_attr[i]; i++)
-+		;
-+	attrs = devm_kzalloc(dev, (i + 1) * sizeof(*attrs), GFP_KERNEL);
-+	if (!attrs)
-+		return NULL;
-+	for (i = 0; dev_attr[i]; i++)
-+		attrs[i] = &dev_attr[i]->attr;
-+	return attrs;
-+}
-+
- static struct device_type scsi_dev_type = {
- 	.name =		"scsi_device",
- 	.release =	scsi_device_dev_release,
-@@ -1636,8 +1618,10 @@ static struct device_type scsi_dev_type = {
+ static struct scsi_host_template pqi_driver_template = {
+ 	.module = THIS_MODULE,
+ 	.name = DRIVER_NAME_SHORT,
+@@ -6973,8 +6977,8 @@ static struct scsi_host_template pqi_driver_template = {
+ 	.slave_configure = pqi_slave_configure,
+ 	.slave_destroy = pqi_slave_destroy,
+ 	.map_queues = pqi_map_queues,
+-	.sdev_attrs = pqi_sdev_attrs,
+-	.shost_attrs = pqi_shost_attrs,
++	.sdev_groups = pqi_sdev_groups,
++	.shost_groups = pqi_shost_groups,
+ };
  
- void scsi_sysfs_device_initialize(struct scsi_device *sdev)
- {
-+	int i, j = 0;
- 	unsigned long flags;
- 	struct Scsi_Host *shost = sdev->host;
-+	struct scsi_host_template *hostt = shost->hostt;
- 	struct scsi_target  *starget = sdev->sdev_target;
- 
- 	device_initialize(&sdev->sdev_gendev);
-@@ -1645,6 +1629,23 @@ void scsi_sysfs_device_initialize(struct scsi_device *sdev)
- 	sdev->sdev_gendev.type = &scsi_dev_type;
- 	dev_set_name(&sdev->sdev_gendev, "%d:%d:%d:%llu",
- 		     sdev->host->host_no, sdev->channel, sdev->id, sdev->lun);
-+	sdev->gendev_attr_groups[j++] = &scsi_sdev_attr_group;
-+	if (hostt->sdev_attrs) {
-+		sdev->lld_attr_group = (struct attribute_group){
-+			.attrs = scsi_convert_dev_attrs(&sdev->sdev_gendev,
-+							hostt->sdev_attrs)
-+		};
-+		if (sdev->lld_attr_group.attrs)
-+			sdev->gendev_attr_groups[j++] = &sdev->lld_attr_group;
-+	}
-+	if (hostt->sdev_groups) {
-+		for (i = 0; hostt->sdev_groups[i] &&
-+			     j < ARRAY_SIZE(sdev->gendev_attr_groups);
-+		     i++, j++) {
-+			sdev->gendev_attr_groups[j] = hostt->sdev_groups[i];
-+		}
-+	}
-+	WARN_ON_ONCE(j >= ARRAY_SIZE(sdev->gendev_attr_groups));
- 
- 	device_initialize(&sdev->sdev_dev);
- 	sdev->sdev_dev.parent = get_device(&sdev->sdev_gendev);
-diff --git a/include/scsi/scsi_device.h b/include/scsi/scsi_device.h
-index 3b3dbc37653da..d65cc2d577d8d 100644
---- a/include/scsi/scsi_device.h
-+++ b/include/scsi/scsi_device.h
-@@ -226,6 +226,13 @@ struct scsi_device {
- 
- 	struct device		sdev_gendev,
- 				sdev_dev;
-+	struct attribute_group	lld_attr_group;
-+	/*
-+	 * The array size 6 provides space for one attribute group for the
-+	 * SCSI core, four attribute groups defined by SCSI LLDs and one
-+	 * terminating NULL pointer.
-+	 */
-+	const struct attribute_group *gendev_attr_groups[6];
- 
- 	struct execute_work	ew; /* used to get process context on put */
- 	struct work_struct	requeue_work;
-diff --git a/include/scsi/scsi_host.h b/include/scsi/scsi_host.h
-index 3ed93982dbf07..e4188b2a6bd79 100644
---- a/include/scsi/scsi_host.h
-+++ b/include/scsi/scsi_host.h
-@@ -483,6 +483,11 @@ struct scsi_host_template {
- 	 */
- 	struct device_attribute **sdev_attrs;
- 
-+	/*
-+	 * Pointer to the SCSI host sysfs attribute groups, NULL terminated.
-+	 */
-+	const struct attribute_group **shost_groups;
-+
- 	/*
- 	 * Pointer to the SCSI device attribute groups for this host,
- 	 * NULL terminated.
-@@ -698,6 +703,13 @@ struct Scsi_Host {
- 
- 	/* ldm bits */
- 	struct device		shost_gendev, shost_dev;
-+	struct attribute_group	lld_attr_group;
-+	/*
-+	 * The array size 3 provides space for one attribute group defined by
-+	 * the SCSI core, one attribute group defined by the SCSI LLD and one
-+	 * terminating NULL pointer.
-+	 */
-+	const struct attribute_group *shost_dev_attr_groups[3];
- 
- 	/*
- 	 * Points to the transport data (if any) which is allocated
+ static int pqi_register_scsi(struct pqi_ctrl_info *ctrl_info)
 -- 
 2.53.0
 
