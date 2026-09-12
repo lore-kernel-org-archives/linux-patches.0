@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2566E412276;
-	Sat, 12 Sep 2026 11:26:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65545472074;
+	Sat, 12 Sep 2026 11:26:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789212408; cv=none; b=R1CQXcUt8nv9dyyu5UsEL5ii9+o5vN3h3kM3Uu56T0vGCv45zgrntcg6wjS2+5+VGHY48HWq/FUcesQRbleftBTRq+ti5NerYeI3dVumqZfBHhnzGP0xGbxYdCgxBeNyduDENICvcoPSIyay/HYFDZ1dBhLo5wn1YgisJeqjjac=
+	t=1789212414; cv=none; b=ouvvkBvrE1VJb3mEkX98rPgdMeC9rg+rZhxAqhalHE2M9Yep/25kFjs+ziUT5Ix54cXGH1C/Svju8w8FcV1xwqelbx5ykAwbXQaesubspO1EMcw548WxmvAN+0F4PqQhxp41gIUhNoJP6m5iOhGJ0r+FsKn+zv/eWCzslSgSd8w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789212408; c=relaxed/simple;
-	bh=ZcYIBBeVwG7eBDLyGhPeDqaF5U2BJl7izYtKRaeX4Bk=;
+	s=arc-20240116; t=1789212414; c=relaxed/simple;
+	bh=WatgLBTrmXGHRjVB7gWIUK8235BiXD+t9usf5PgKcWU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iBhwNcsJZBtlMfdNnQO95CVKiR3Q0Y/qKJAviHPbEdTfmdeN5g0Pvn/jX1LC8LLECmCfeJ5GXNlBFX6PzQI3ykJ9mpHkelnvNJSagAJWBNIrWB7tOdAmtyFSiuVqKgNB6Ah7JH/grTzeBcHIFzmdo81HoAX9n1pY21p+cSXwj58=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BcAkjoHQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=osEkzVUBfevEHRFyta7d/p6lesGBEQxpklDhHhdf3UnL54pM/pkfctNEmyfwzOMXoor7kGEUSr1alp2FMVgaZPILgzjBfTQYzDAY2ThYFVIYywXqYf2jf0ZUITvSmo+yTGnI3s7BUS0HbWSammWnJYX0i+j8A1AZSlf4UWHm2u4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w48DUgCm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BcAkjoHQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 938B11F000FF;
-	Sat, 12 Sep 2026 11:26:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w48DUgCm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B34261F000FF;
+	Sat, 12 Sep 2026 11:26:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789212406;
-	bh=eO11D2wyb7bEyrW+taXDlrxxnGvU67Um0AsrWCEK9+o=;
+	s=korg; t=1789212411;
+	bh=xGV5YQ8pOTTqt7r9dXgUE38E9ev72mEYf3iSb+v7AQI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BcAkjoHQ26Qb8sgFCWPEK/lG2JfJUTg+pYyeGzsUr7avuucv52ILY2Rlkf6WZsbiu
-	 7GSDY7wcGkQwil+ilO2qGgBHV1Z976ADQ4eyuug4GCgCdkeiGmx5l4KGpIGU70CPfb
-	 +WLKcZV4s6hp6dvF2eRMO6E243RFLzEMdnWyTyWA=
+	b=w48DUgCm4Dim0RXplOWNtJVmEOOH5Wk0O4DlSmn3rNRgASdsNjUq+TOBLCksmQLg8
+	 5kvVUeTo3Gm2bUO3+UW9RtLerrJvj+QkPseT2HC3ncRYLtxPF+qRj56yEyU/XL28en
+	 A5e32XsqJuCK4d+a++H4zyElbe6ozEMn0vTQf5CQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	vega@nebusec.ai,
-	Victor Nogueira <victor@mojatatu.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Xiubo Li <xiubo.li@clyso.com>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
+	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1423/1518] net/sched: sfq: clamp quantum to avoid signed overflow soft lockup
-Date: Sat, 12 Sep 2026 08:59:52 +0200
-Message-ID: <20260912065655.742175378@linuxfoundation.org>
+Subject: [PATCH 6.18 1432/1518] ceph: revalidate ki_pos for O_APPEND writes after cap acquisition
+Date: Sat, 12 Sep 2026 09:00:01 +0200
+Message-ID: <20260912065655.946161389@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -53,51 +52,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jamal Hadi Salim <jhs@mojatatu.com>
+From: Xiubo Li <xiubo.li@clyso.com>
 
-[ Upstream commit 816e90057ab1879562a5b7cc688e35bb9027ae97 ]
+[ Upstream commit d2a8d446a09c74c8ddfe108b50dd791c889983fc ]
 
-sfq_init() sets q->quantum = psched_mtu(qdisc_dev(sch)) (unsigned). A
-device with a huge MTU (e.g. dummy with max_mtu == 0 accepting MTU
-2147483634) makes psched_mtu() return 0x80000000, so slot->allot = INT_MIN
-and INT_MIN + INT_MIN toggles between INT_MIN and 0 forever, spinning
-sfq_dequeue() under the qdisc lock.
+For O_APPEND writes, ki_pos is set to the current EOF via
+generic_write_checks() after fetching i_size from the MDS.  However,
+ceph_get_caps() may need to wait for Fwx exclusive caps if the write
+extends the file (endoff > i_max_size).  While waiting for Fwx, the
+previous Fwx holder (another client) may have already extended the
+file.  When the MDS grants us Fwx, the cap grant message updates the
+local i_size, but ki_pos remains at the old EOF, causing the append
+write to land at a stale offset and overwrite data from the other
+client.
 
-Clamp the quantum to [256, 1 << 20] so the refill loop terminates. The
-lower bound also covers q->quantum == 0 (psched_mtu() returning 0),
-which spins sfq_dequeue() identically. sfq_change() already rejects a
-negative quantum, so only the init path was exposed.
+Fix by re-reading i_size_read(inode) after ceph_get_caps() returns.
+At this point we hold Fwx exclusive caps, no other client can modify
+the file, and i_size reflects the true EOF from the MDS cap grant.
+No extra MDS round-trip is needed.  Only adjust ki_pos when the EOF
+has actually changed.
 
-Conditions to recreate the bug: a device whose MTU (plus
-hard_header_len) wraps psched_mtu() into the sign bit (e.g. a dummy
-device with max_mtu == 0 accepting MTU 2147483634). Requires
-CAP_NET_ADMIN in a user namespace.
+After adjusting ki_pos forward, the write range [pos, pos+count) may
+now exceed the i_max_size that was validated by ceph_get_caps() for
+the old range.  Re-check against i_max_size and truncate the write
+if necessary to stay within the MDS-granted limit.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: vega@nebusec.ai
-Tested-by: Victor Nogueira <victor@mojatatu.com>
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/20260822195509.112717-7-jhs@mojatatu.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Link: https://tracker.ceph.com/issues/7333
+Fixes: 8e4473bb50a1 ("ceph: do not execute direct write in parallel if O_APPEND is specified")
+Signed-off-by: Xiubo Li <xiubo.li@clyso.com>
+Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_sfq.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/ceph/file.c | 48 ++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 48 insertions(+)
 
-diff --git a/net/sched/sch_sfq.c b/net/sched/sch_sfq.c
-index 96eb2f122973a..645e40f2f402d 100644
---- a/net/sched/sch_sfq.c
-+++ b/net/sched/sch_sfq.c
-@@ -796,7 +796,8 @@ static int sfq_init(struct Qdisc *sch, struct nlattr *opt,
- 	q->tail = NULL;
- 	q->divisor = SFQ_DEFAULT_HASH_DIVISOR;
- 	q->maxflows = SFQ_DEFAULT_FLOWS;
--	q->quantum = psched_mtu(qdisc_dev(sch));
-+	q->quantum = clamp_t(u32, psched_mtu(qdisc_dev(sch)),
-+			     256, 1 << 20);
- 	q->perturb_period = 0;
- 	get_random_bytes(&q->perturbation, sizeof(q->perturbation));
+diff --git a/fs/ceph/file.c b/fs/ceph/file.c
+index f640aff749edc..fa582c8537c5f 100644
+--- a/fs/ceph/file.c
++++ b/fs/ceph/file.c
+@@ -2412,6 +2412,54 @@ static ssize_t ceph_write_iter(struct kiocb *iocb, struct iov_iter *from)
+ 	if (err < 0)
+ 		goto out;
  
++	/*
++	 * For O_APPEND writes we may have waited for Fwx exclusive caps
++	 * while the previous Fwx holder (another client) extended the
++	 * file.  i_size has been updated via the cap grant message from
++	 * the MDS, but ki_pos is still the old EOF.  Re-read i_size here
++	 * (no extra MDS round-trip needed) and adjust ki_pos to the true
++	 * EOF.  Since we hold Fwx, no other client can change the file.
++	 */
++	if (iocb->ki_flags & IOCB_APPEND) {
++		loff_t cur_eof = i_size_read(inode);
++
++		if (cur_eof != pos) {
++			doutc(cl,
++			      "%p %llx.%llx O_APPEND: pos adjusted %lld -> %lld\n",
++			      inode, ceph_vinop(inode), pos, cur_eof);
++			iocb->ki_pos = cur_eof;
++			pos = cur_eof;
++			if (pos >= limit) {
++				err = -EFBIG;
++				goto out_caps;
++			}
++			iov_iter_truncate(from, limit - pos);
++			count = iov_iter_count(from);
++
++			/*
++			 * ceph_get_caps() validated the old endoff
++			 * against i_max_size; adjusting ki_pos forward
++			 * may have shifted the write range beyond the
++			 * granted max_size.  Re-check and truncate if
++			 * necessary.
++			 */
++			spin_lock(&ci->i_ceph_lock);
++			if (pos + count > (loff_t)ci->i_max_size) {
++				loff_t max_size = ci->i_max_size;
++
++				spin_unlock(&ci->i_ceph_lock);
++				if (pos >= max_size) {
++					err = -EFBIG;
++					goto out_caps;
++				}
++				iov_iter_truncate(from, max_size - pos);
++				count = iov_iter_count(from);
++			} else {
++				spin_unlock(&ci->i_ceph_lock);
++			}
++		}
++	}
++
+ 	err = file_update_time(file);
+ 	if (err)
+ 		goto out_caps;
 -- 
 2.53.0
 
