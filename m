@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52FED3AA9F4;
-	Sat, 12 Sep 2026 20:04:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C03E83ABD96;
+	Sat, 12 Sep 2026 20:04:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789243485; cv=none; b=AapY8tdU8XxzOxHFpp90S9OI/oguVZgCuwHqCbeG4u2xQ18WpMoFXM05uK2QB9D6Aqpg8rod+mLQAeNVnwBK7gosKRReXwC7BDTlpfzVGg90wq5ezPyaxg+aazVTpzFZKKh/M3bfjXIwfV6x63N9q56nbhKM162IudnGdevGfz4=
+	t=1789243487; cv=none; b=aRUGLqWq91ATTKYI4iX+H23hCemml+mJAiJYrHmyUb0wd+Xuj80J3mxqZfCwCLDklnQt3fE719V99Npr7I3Qq1mwH+8dxV1LECin9g2k3XMTie5V6zCzpGw3cH0HmeH2QAgKMzN7HWHcxGClzkqJmswPA2KKQkcIuHdM44qATCk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789243485; c=relaxed/simple;
-	bh=xsf8w/yV7YhIuqT90B34n+IBDPXjy6JjYhzHeAFChzE=;
+	s=arc-20240116; t=1789243487; c=relaxed/simple;
+	bh=+tVI98R5QDKbQFVW2Gy7yJIaRyAJf16jEz4JOh2CICQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p/r7YrnKJKhFWD3diwQdSy1bLSEBvo7zoscO3pUwxhA+BLvB5GmwgOw1vA3LHvReW9HUdszWkv7002LoxWwS4APFUoGaI6hF/w4W0jBx7a6/eXeX6YkRnzU6fjx3XoufC2+cEuAThRFMsHS+nLS45wlZud8U4MWTlxLM/NmDwYs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cs8Ry8aG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ag/cWppkDSK7oS6U9z5s/4xuI6bl8Cd6FirxizaDuqm37NrOox4HTAtQl3A80aFBMWF/jjNoAMaurzHYZUPubJe1TBkKUv7eD7XjCCRAtQzcCp29nLlYmhI1MLaO1+Jmlg+QRj4ObX4hCuW65znzNAwjRro8JkNY9MHhSt3+d3o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wwq0XFeV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cs8Ry8aG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D0E91F00893;
-	Sat, 12 Sep 2026 20:04:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wwq0XFeV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BFCD1F0089B;
+	Sat, 12 Sep 2026 20:04:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789243479;
-	bh=Qtwya6m7w7m5vYc3Pg8FALJqIGGp31veDP2TjkXDaUE=;
+	s=korg; t=1789243481;
+	bh=c0Dbkt5cOs2mqRZDjhEz/oXXbYYlM9fBUzMvCesInC8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Cs8Ry8aG+y5vJJ6vVLAlJlLGcRU4oIz50NKgHg9aMryQYVGu9Qr9xMkdgmAAnb2mM
-	 mTBzx+fCMvv+IQZRYPSb+cKyE9MMnAOYzZbm7X7rewlr6l4GoGuoPiOO5ChvhjX51a
-	 fFP1N11NCP8D/m12nygJE196vOyasvVT6A5sGIp4=
+	b=wwq0XFeVwXmD/u+V/62v38HWd83C3Qw7NioKroJNFgqDOzmD0N/XQ9bNwN9JQaQN7
+	 +jON7IyhEOtc0rsb3LC5dJf/uQ5BJlNbvQzp9U/OcPYNwe7apIHnZBTsZ3K4t4cikl
+	 bDsF7tyARznFAEWhExqsenOb8+f6P/S9MFitT+Z8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Serge Hallyn <serge@hallyn.com>,
-	Thorsten Blum <thorsten.blum@linux.dev>,
-	John Johansen <john.johansen@canonical.com>,
+	Hidayath Khan <hidayath@linux.ibm.com>,
+	Mahanta Jambigi <mjambigi@linux.ibm.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 769/798] apparmor: Replace sprintf/strcpy with scnprintf/strscpy in aa_policy_init
-Date: Sat, 12 Sep 2026 09:06:37 +0200
-Message-ID: <20260912065534.693884143@linuxfoundation.org>
+Subject: [PATCH 5.10 743/798] net/smc: free pending qentry in smc_llc_flow_stop() before memset
+Date: Sat, 12 Sep 2026 09:06:11 +0200
+Message-ID: <20260912065534.103441046@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -52,58 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@linux.dev>
+From: Mahanta Jambigi <mjambigi@linux.ibm.com>
 
-[ Upstream commit b31d3f7385fbb49681d44e7104cfa033cba4b1e8 ]
+[ Upstream commit 5ee0ceddc7785c6dcf4a8107fef01f0414a354f4 ]
 
-strcpy() is deprecated and sprintf() does not perform bounds checking
-either. Although an overflow is unlikely, it's better to proactively
-avoid it by using the safer strscpy() and scnprintf(), respectively.
+smc_llc_flow_stop() resets a flow struct with a blind memset:
 
-Additionally, unify memory allocation for 'hname' to simplify and
-improve aa_policy_init().
+	spin_lock_bh(&lgr->llc_flow_lock);
+	memset(flow, 0, sizeof(*flow));
+	flow->type = SMC_LLC_FLOW_NONE;
+	spin_unlock_bh(&lgr->llc_flow_lock);
 
-Closes: https://github.com/KSPP/linux/issues/88
-Reviewed-by: Serge Hallyn <serge@hallyn.com>
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
-Signed-off-by: John Johansen <john.johansen@canonical.com>
-Stable-dep-of: 3daad923a868 ("apparmor: policy_int make sure list heads are initialized before fail path")
+If flow->qentry is non-NULL at this point the pointer is overwritten without the
+allocation being freed, leaking one kmalloc object.
+
+A late-arriving duplicate CONFIRM_LINK or ADD_LINK_CONT message can set
+flow->qentry after the legitimate message has been consumed by the waiter via
+smc_llc_flow_qentry_clr() (which NULLs the pointer but leaves flow->type
+non-zero) but before the flow completes and smc_llc_flow_stop() runs.  In that
+window the duplicate is stashed into flow->qentry, and then lost when
+smc_llc_flow_stop() zeros the struct.
+
+Call smc_llc_flow_qentry_del() inside the lock before the memset.
+smc_llc_flow_qentry_del() already checks flow->qentry before freeing, so the
+normal case where no entry is pending is a no-op.
+
+Fixes: 555da9af827d ("net/smc: add event-based llc_flow framework")
+Reviewed-by: Hidayath Khan <hidayath@linux.ibm.com>
+Signed-off-by: Mahanta Jambigi <mjambigi@linux.ibm.com>
+Link: https://patch.msgid.link/20260818073943.1108383-1-mjambigi@linux.ibm.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/lib.c | 16 +++++++---------
- 1 file changed, 7 insertions(+), 9 deletions(-)
+ net/smc/smc_llc.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/security/apparmor/lib.c b/security/apparmor/lib.c
-index fa49b81eb54ca..d393c96d732dc 100644
---- a/security/apparmor/lib.c
-+++ b/security/apparmor/lib.c
-@@ -489,19 +489,17 @@ bool aa_policy_init(struct aa_policy *policy, const char *prefix,
- 		    const char *name, gfp_t gfp)
+diff --git a/net/smc/smc_llc.c b/net/smc/smc_llc.c
+index 572d02bfd3eda..e4d2abec8ec86 100644
+--- a/net/smc/smc_llc.c
++++ b/net/smc/smc_llc.c
+@@ -276,6 +276,7 @@ int smc_llc_flow_initiate(struct smc_link_group *lgr,
+ void smc_llc_flow_stop(struct smc_link_group *lgr, struct smc_llc_flow *flow)
  {
- 	char *hname;
-+	size_t hname_sz;
- 
-+	hname_sz = (prefix ? strlen(prefix) + 2 : 0) + strlen(name) + 1;
- 	/* freed by policy_free */
--	if (prefix) {
--		hname = aa_str_alloc(strlen(prefix) + strlen(name) + 3, gfp);
--		if (hname)
--			sprintf(hname, "%s//%s", prefix, name);
--	} else {
--		hname = aa_str_alloc(strlen(name) + 1, gfp);
--		if (hname)
--			strcpy(hname, name);
--	}
-+	hname = aa_str_alloc(hname_sz, gfp);
- 	if (!hname)
- 		return false;
-+	if (prefix)
-+		scnprintf(hname, hname_sz, "%s//%s", prefix, name);
-+	else
-+		strscpy(hname, name, hname_sz);
- 	policy->hname = hname;
- 	/* base.name is a substring of fqname */
- 	policy->name = basename(policy->hname);
+ 	spin_lock_bh(&lgr->llc_flow_lock);
++	smc_llc_flow_qentry_del(flow);
+ 	memset(flow, 0, sizeof(*flow));
+ 	flow->type = SMC_LLC_FLOW_NONE;
+ 	spin_unlock_bh(&lgr->llc_flow_lock);
 -- 
 2.53.0
 
