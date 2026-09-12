@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E6EB400DF6;
-	Sat, 12 Sep 2026 09:28:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2770641A4F5;
+	Sat, 12 Sep 2026 09:28:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789205295; cv=none; b=B+j6r2tEnBTLbhtTUdDt9N4E5tWexYXFwPdeyAZIo8w07u/3G2IVSSdvhrW7vPeMV/ngQxtr4PaoEYKR5IU3Ko9cWAUQh16Y6oSqqyuYfccFYT3Lwr5DdnExPM4fc2u0jMeccIfdL7P2I+iOjTj4KvltfTb+JXLxtUyTLM1zvVg=
+	t=1789205299; cv=none; b=pbsZ0AdaoRSKVKIkxfGL+m3I3rhlc/SfdIEy6og4W8DbEKvUyZz/A4UIsfYPavaJheEqxJyeLK6YNIEcovEPBS4UQEeAzkwZJkuXeAhVBUc9+LlCW9Tf12QFzrmhKNMkS6zC7GzWl6f3nC/TsuFRwHHBFdtv/RxCdH0+P4teKxI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789205295; c=relaxed/simple;
-	bh=d9TyJ86uZAb/DLwbarw5kshSgHu+/oWA8LXME7S2pvk=;
+	s=arc-20240116; t=1789205299; c=relaxed/simple;
+	bh=/gT2HaJ/o/PGzGq+yXTjrH1V6OiYcrITx3rH/XQ5kH8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hnYyyXFB42mkqrlFpQTVwsoH9uZoWzO7FHdU0Wrdy+rrkfBoCp8X0qjwMEn73fgcnwaAMGRC6tvIQsORTgBWJhf4lMygG+ZI6fcDNr1RLSlxeRJpOKLBhjlABGseYps8pr+1qdvTE53FTssO/uekjCtLvgR8hh2LK4fAaozOUDQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AqEo88ak; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qPcifUaCXTN5v5PdeXcQl1IvmiUmub7DnMsUDpF11SU6E4oH5aXIPGLTONvXuiqVs4zT1//ZQrh7aN/ykM2dm4ROPvPoEIXS+dIDXgiz3EM4twQMY+PqhKih8i2orm27/Ndwrg3t4DHQxmtYDU+g+QI8YXR7OH0Q6fi4lp/RnQ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VGpFvrMs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AqEo88ak"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B42AB1F000FF;
-	Sat, 12 Sep 2026 09:28:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VGpFvrMs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC9D41F000FF;
+	Sat, 12 Sep 2026 09:28:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789205292;
-	bh=Tem2y0bJlWbebbfIsIWbDwclO3uHWKGoYEHVa1niXi0=;
+	s=korg; t=1789205297;
+	bh=wdP5FZqVlDFBCzOX+4E89zQxl1tqwy23xOPPGELrADE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AqEo88akK44Ga0BRzU8SiYW/1NjiiWiWxWGRiYzeQomdhz5ULtq5IvCdK13gcdTpd
-	 EQmiSb9eXnEG6D3mOMeFTRY8+UzhUpdhPrn3DKvqWgXhb7LBIhgzr9wS4u8o3iahDN
-	 5nUmZIHthCp9Kn43Pobc0VR/2iK9BA+gTfHCJn1g=
+	b=VGpFvrMsLfiQR9k14tql1AFx36SVK565qhT2Y46s85wB9tZ0fOauKm3IYKfbIoSEk
+	 ysmnZPrBXIRReaMmUCfV15O1sYKIKNB0oT3owRwFFmvVGk9sMiIAedY7BCELqea877
+	 9+BNUoKVaqAxjgIcyviQ9mBTVTiPflK0QQK4KYMw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sai Krishna <saikrishnag@marvell.com>,
-	Ratheesh Kannoth <rkannoth@marvell.com>,
-	Simon Horman <horms@kernel.org>,
+	Wei Fang <wei.fang@nxp.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1746/1815] octeontx2-af: fix cn20k mailbox lifetime on repeated rvu_mbox_init()
-Date: Sat, 12 Sep 2026 08:58:16 +0200
-Message-ID: <20260912065729.972667351@linuxfoundation.org>
+Subject: [PATCH 7.2 1737/1815] net: enetc: extract common helpers for MAC hash filter configuration
+Date: Sat, 12 Sep 2026 08:58:07 +0200
+Message-ID: <20260912065729.758469477@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -53,184 +51,313 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sai Krishna <saikrishnag@marvell.com>
+From: Wei Fang <wei.fang@nxp.com>
 
-[ Upstream commit 3b11a77f69980932c3924054d66e565c9a135747 ]
+[ Upstream commit 0ce10770963e7b4bf252fe0f0283326504bcbb36 ]
 
-rvu_mbox_init() is called separately for AF-PF mailboxes during probe
-and for AF-VF mailboxes when SR-IOV is enabled.  Each call used to
-allocate a new ng_rvu object, leaking the first allocation when the
-pointer was overwritten on the second call.
+The PSIUMHFR and PSIMMHFR registers in ENETC v4 have the same bit layout
+as in ENETC v1. The only difference between the two hardware generations
+is the register address offsets.
 
-Sharing one ng_rvu across both paths exposed several teardown bugs:
-the error path freed all cn20k mailbox DMA and kfree()d ng_rvu even
-when only the failing init type should be unwound, leaving live AF-PF
-mailbox memory in use after an AF-VF init failure.  mutex_init() was
-also re-run on the AF-VF path while AF-PF mailbox handlers could still
-hold rvu->mbox_lock.  Probe and SR-IOV failure paths did not release
-cn20k mailbox DMA either, since cleanup only happened in rvu_remove().
+Since the register functionality is identical, the MAC hash filter
+configuration code can be shared between the ENETC v1 and v4 drivers.
+Extract two new common helper functions, enetc_set_si_uc_hash_filter()
+and enetc_set_si_mc_hash_filter(), into enetc_pf_common.c. These helpers
+select the correct register offset based on the hardware revision via
+is_enetc_rev1().
 
-Allocate ng_rvu once with devm_kzalloc(), initialize mbox_lock in the
-same block, unwind only the mailbox memory for the failing init type,
-and free cn20k mailbox DMA from the probe and pci_enable_sriov()
-error paths.
+Remove v1-specific enetc_clear_mac_ht_flt() and enetc_set_mac_ht_flt()
+from enetc_pf.c, and v4-specific enetc4_pf_set_si_uc_hash_filter() and
+enetc4_pf_set_si_mc_hash_filter() from enetc4_pf.c, as they are now
+superseded by the shared implementations.
 
-Fixes: e53ee4acb220 ("octeontx2-af: CN20k basic mbox operations and structures")
-Signed-off-by: Sai Krishna <saikrishnag@marvell.com>
-Signed-off-by: Ratheesh Kannoth <rkannoth@marvell.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260821102337.2989169-1-rkannoth@marvell.com
+Signed-off-by: Wei Fang <wei.fang@nxp.com>
+Link: https://patch.msgid.link/20260720014317.1059359-3-wei.fang@oss.nxp.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: fa1a8457b858 ("net: enetc: restore RX ring congestion mode for ENETC v4")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/marvell/octeontx2/af/cn20k/api.h |  1 +
- .../marvell/octeontx2/af/cn20k/mbox_init.c    | 21 +++++++++-
- .../net/ethernet/marvell/octeontx2/af/rvu.c   | 39 +++++++++++--------
- 3 files changed, 42 insertions(+), 19 deletions(-)
+ .../net/ethernet/freescale/enetc/enetc4_pf.c  | 43 +++++++---------
+ .../net/ethernet/freescale/enetc/enetc_pf.c   | 51 +++++--------------
+ .../freescale/enetc/enetc_pf_common.c         | 40 +++++++++++++++
+ .../freescale/enetc/enetc_pf_common.h         |  2 +
+ 4 files changed, 73 insertions(+), 63 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/cn20k/api.h b/drivers/net/ethernet/marvell/octeontx2/af/cn20k/api.h
-index 4285b5d6a6a29..f36a1d5f236f6 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/cn20k/api.h
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/cn20k/api.h
-@@ -21,6 +21,7 @@ int cn20k_rvu_mbox_init(struct rvu *rvu, int type, int num);
- int cn20k_rvu_get_mbox_regions(struct rvu *rvu, void **mbox_addr,
- 			       int num, int type, unsigned long *pf_bmap);
- void cn20k_free_mbox_memory(struct rvu *rvu);
-+void cn20k_free_mbox_memory_type(struct rvu *rvu, int type);
- int cn20k_register_afpf_mbox_intr(struct rvu *rvu);
- int cn20k_register_afvf_mbox_intr(struct rvu *rvu, int pf_vec_start);
- void cn20k_rvu_enable_mbox_intr(struct rvu *rvu);
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/cn20k/mbox_init.c b/drivers/net/ethernet/marvell/octeontx2/af/cn20k/mbox_init.c
-index 71401dec0d776..01f32adac5992 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/cn20k/mbox_init.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/cn20k/mbox_init.c
-@@ -335,13 +335,30 @@ int cn20k_rvu_mbox_init(struct rvu *rvu, int type, int ndevs)
- 	return rvu_alloc_mbox_memory(rvu, type, ndevs, MBOX_SIZE);
+diff --git a/drivers/net/ethernet/freescale/enetc/enetc4_pf.c b/drivers/net/ethernet/freescale/enetc/enetc4_pf.c
+index 304ec069654dc..48a74db90ed5c 100644
+--- a/drivers/net/ethernet/freescale/enetc/enetc4_pf.c
++++ b/drivers/net/ethernet/freescale/enetc/enetc4_pf.c
+@@ -75,20 +75,6 @@ static void enetc4_pf_get_si_primary_mac(struct enetc_hw *hw, int si,
+ 	put_unaligned_le16(lower, addr + 4);
  }
  
-+void cn20k_free_mbox_memory_type(struct rvu *rvu, int type)
-+{
-+	if (!is_cn20k(rvu->pdev) || !rvu->ng_rvu)
-+		return;
-+
-+	switch (type) {
-+	case TYPE_AFPF:
-+		qmem_free(rvu->dev, rvu->ng_rvu->pf_mbox_addr);
-+		rvu->ng_rvu->pf_mbox_addr = NULL;
-+		break;
-+	case TYPE_AFVF:
-+		qmem_free(rvu->dev, rvu->ng_rvu->vf_mbox_addr);
-+		rvu->ng_rvu->vf_mbox_addr = NULL;
-+		break;
-+	}
-+}
-+
- void cn20k_free_mbox_memory(struct rvu *rvu)
+-static void enetc4_pf_set_si_uc_hash_filter(struct enetc_hw *hw, int si,
+-					    u64 hash)
+-{
+-	enetc_port_wr(hw, ENETC4_PSIUMHFR0(si), lower_32_bits(hash));
+-	enetc_port_wr(hw, ENETC4_PSIUMHFR1(si), upper_32_bits(hash));
+-}
+-
+-static void enetc4_pf_set_si_mc_hash_filter(struct enetc_hw *hw, int si,
+-					    u64 hash)
+-{
+-	enetc_port_wr(hw, ENETC4_PSIMMHFR0(si), lower_32_bits(hash));
+-	enetc_port_wr(hw, ENETC4_PSIMMHFR1(si), upper_32_bits(hash));
+-}
+-
+ static void enetc4_pf_set_loopback(struct net_device *ndev, bool en)
  {
- 	if (!is_cn20k(rvu->pdev))
- 		return;
+ 	struct enetc_ndev_priv *priv = netdev_priv(ndev);
+@@ -147,11 +133,12 @@ static int enetc4_pf_set_uc_exact_filter(struct enetc_pf *pf)
+ 	int max_num_mfe = pf->caps.mac_filter_num;
+ 	struct enetc_mac_filter mac_filter = {};
+ 	struct net_device *ndev = pf->si->ndev;
+-	struct enetc_hw *hw = &pf->si->hw;
+ 	struct enetc_mac_addr *mac_tbl;
++	struct enetc_si *si = pf->si;
+ 	struct netdev_hw_addr *ha;
+ 	int i = 0, err;
+ 	int mac_cnt;
++	u64 hash;
  
--	qmem_free(rvu->dev, rvu->ng_rvu->pf_mbox_addr);
--	qmem_free(rvu->dev, rvu->ng_rvu->vf_mbox_addr);
-+	cn20k_free_mbox_memory_type(rvu, TYPE_AFPF);
-+	cn20k_free_mbox_memory_type(rvu, TYPE_AFVF);
+ 	netif_addr_lock_bh(ndev);
+ 
+@@ -159,7 +146,7 @@ static int enetc4_pf_set_uc_exact_filter(struct enetc_pf *pf)
+ 	if (!mac_cnt) {
+ 		netif_addr_unlock_bh(ndev);
+ 		/* clear both MAC hash and exact filters */
+-		enetc4_pf_set_si_uc_hash_filter(hw, 0, 0);
++		enetc_set_si_uc_hash_filter(si, 0, 0);
+ 		enetc4_pf_clear_maft_entries(pf);
+ 
+ 		return 0;
+@@ -186,11 +173,13 @@ static int enetc4_pf_set_uc_exact_filter(struct enetc_pf *pf)
+ 	/* Set temporary unicast hash filters in case of Rx loss when
+ 	 * updating MAC address filter table
+ 	 */
+-	enetc4_pf_set_si_uc_hash_filter(hw, 0, *mac_filter.mac_hash_table);
++	bitmap_to_arr64(&hash, mac_filter.mac_hash_table,
++			ENETC_MADDR_HASH_TBL_SZ);
++	enetc_set_si_uc_hash_filter(si, 0, hash);
+ 	enetc4_pf_clear_maft_entries(pf);
+ 
+ 	if (!enetc4_pf_add_maft_entries(pf, mac_tbl, i))
+-		enetc4_pf_set_si_uc_hash_filter(hw, 0, 0);
++		enetc_set_si_uc_hash_filter(si, 0, 0);
+ 
+ 	kfree(mac_tbl);
+ 
+@@ -206,8 +195,9 @@ static void enetc4_pf_set_mac_hash_filter(struct enetc_pf *pf, int type)
+ {
+ 	struct net_device *ndev = pf->si->ndev;
+ 	struct enetc_mac_filter *mac_filter;
+-	struct enetc_hw *hw = &pf->si->hw;
++	struct enetc_si *si = pf->si;
+ 	struct netdev_hw_addr *ha;
++	u64 hash;
+ 
+ 	netif_addr_lock_bh(ndev);
+ 	if (type & ENETC_MAC_FILTER_TYPE_UC) {
+@@ -216,8 +206,9 @@ static void enetc4_pf_set_mac_hash_filter(struct enetc_pf *pf, int type)
+ 		netdev_for_each_uc_addr(ha, ndev)
+ 			enetc_add_mac_addr_ht_filter(mac_filter, ha->addr);
+ 
+-		enetc4_pf_set_si_uc_hash_filter(hw, 0,
+-						*mac_filter->mac_hash_table);
++		bitmap_to_arr64(&hash, mac_filter->mac_hash_table,
++				ENETC_MADDR_HASH_TBL_SZ);
++		enetc_set_si_uc_hash_filter(si, 0, hash);
+ 	}
+ 
+ 	if (type & ENETC_MAC_FILTER_TYPE_MC) {
+@@ -226,8 +217,9 @@ static void enetc4_pf_set_mac_hash_filter(struct enetc_pf *pf, int type)
+ 		netdev_for_each_mc_addr(ha, ndev)
+ 			enetc_add_mac_addr_ht_filter(mac_filter, ha->addr);
+ 
+-		enetc4_pf_set_si_mc_hash_filter(hw, 0,
+-						*mac_filter->mac_hash_table);
++		bitmap_to_arr64(&hash, mac_filter->mac_hash_table,
++				ENETC_MADDR_HASH_TBL_SZ);
++		enetc_set_si_mc_hash_filter(si, 0, hash);
+ 	}
+ 	netif_addr_unlock_bh(ndev);
+ }
+@@ -480,7 +472,6 @@ static void enetc4_psi_do_set_rx_mode(struct work_struct *work)
+ 	struct enetc_si *si = container_of(work, struct enetc_si, rx_mode_task);
+ 	struct enetc_pf *pf = enetc_si_priv(si);
+ 	struct net_device *ndev = si->ndev;
+-	struct enetc_hw *hw = &si->hw;
+ 	bool uc_promisc = false;
+ 	bool mc_promisc = false;
+ 	int type = 0;
+@@ -501,12 +492,12 @@ static void enetc4_psi_do_set_rx_mode(struct work_struct *work)
+ 	enetc_set_si_mc_promisc(si, 0, mc_promisc);
+ 
+ 	if (uc_promisc) {
+-		enetc4_pf_set_si_uc_hash_filter(hw, 0, 0);
++		enetc_set_si_uc_hash_filter(si, 0, 0);
+ 		enetc4_pf_clear_maft_entries(pf);
+ 	}
+ 
+ 	if (mc_promisc)
+-		enetc4_pf_set_si_mc_hash_filter(hw, 0, 0);
++		enetc_set_si_mc_hash_filter(si, 0, 0);
+ 
+ 	/* Set new MAC filter */
+ 	enetc4_pf_set_mac_filter(pf, type);
+diff --git a/drivers/net/ethernet/freescale/enetc/enetc_pf.c b/drivers/net/ethernet/freescale/enetc/enetc_pf.c
+index 30bc3e37f1f17..bdfe6bc056b52 100644
+--- a/drivers/net/ethernet/freescale/enetc/enetc_pf.c
++++ b/drivers/net/ethernet/freescale/enetc/enetc_pf.c
+@@ -80,37 +80,6 @@ static void enetc_add_mac_addr_em_filter(struct enetc_mac_filter *filter,
+ 	filter->mac_addr_cnt++;
  }
  
- void cn20k_rvu_disable_afvf_intr(struct rvu *rvu, int vfs)
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu.c
-index 43062390aa4ca..74c041ab5280a 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu.c
-@@ -2585,12 +2585,6 @@ static int rvu_mbox_init(struct rvu *rvu, struct mbox_wq_info *mw,
- 	if (!pf_bmap)
- 		return -ENOMEM;
- 
--	ng_rvu_mbox = kzalloc_obj(*ng_rvu_mbox);
--	if (!ng_rvu_mbox) {
--		err = -ENOMEM;
--		goto free_bitmap;
+-static void enetc_clear_mac_ht_flt(struct enetc_si *si, int si_idx, int type)
+-{
+-	bool err = si->errata & ENETC_ERR_UCMCSWP;
+-
+-	if (type == UC) {
+-		enetc_port_wr(&si->hw, ENETC_PSIUMHFR0(si_idx, err), 0);
+-		enetc_port_wr(&si->hw, ENETC_PSIUMHFR1(si_idx), 0);
+-	} else { /* MC */
+-		enetc_port_wr(&si->hw, ENETC_PSIMMHFR0(si_idx, err), 0);
+-		enetc_port_wr(&si->hw, ENETC_PSIMMHFR1(si_idx), 0);
 -	}
+-}
 -
- 	/* RVU VFs */
- 	if (type == TYPE_AFVF)
- 		bitmap_set(pf_bmap, 0, num);
-@@ -2604,15 +2598,22 @@ static int rvu_mbox_init(struct rvu *rvu, struct mbox_wq_info *mw,
- 		}
- 	}
- 
--	rvu->ng_rvu = ng_rvu_mbox;
-+	if (!rvu->ng_rvu) {
-+		ng_rvu_mbox = devm_kzalloc(rvu->dev, sizeof(*ng_rvu_mbox), GFP_KERNEL);
-+		if (!ng_rvu_mbox) {
-+			err = -ENOMEM;
-+			goto free_bitmap;
-+		}
-+
-+		rvu->ng_rvu = ng_rvu_mbox;
- 
--	rvu->ng_rvu->rvu_mbox_ops = &rvu_mbox_ops;
-+		rvu->ng_rvu->rvu_mbox_ops = &rvu_mbox_ops;
-+		mutex_init(&rvu->mbox_lock);
-+	}
- 
- 	err = cn20k_rvu_mbox_init(rvu, type, num);
- 	if (err)
--		goto free_mem;
+-static void enetc_set_mac_ht_flt(struct enetc_si *si, int si_idx, int type,
+-				 unsigned long hash)
+-{
+-	bool err = si->errata & ENETC_ERR_UCMCSWP;
 -
--	mutex_init(&rvu->mbox_lock);
-+		goto free_bitmap;
- 
- 	mbox_regions = kcalloc(num, sizeof(void __iomem *), GFP_KERNEL);
- 	if (!mbox_regions) {
-@@ -2702,14 +2703,18 @@ static int rvu_mbox_init(struct rvu *rvu, struct mbox_wq_info *mw,
- free_regions:
- 	kfree(mbox_regions);
- free_qmem:
--	cn20k_free_mbox_memory(rvu);
--free_mem:
--	kfree(rvu->ng_rvu);
-+	cn20k_free_mbox_memory_type(rvu, type);
- free_bitmap:
- 	bitmap_free(pf_bmap);
- 	return err;
- }
- 
-+static void rvu_free_cn20k_mbox_memory(struct rvu *rvu)
-+{
-+	if (is_cn20k(rvu->pdev))
-+		cn20k_free_mbox_memory(rvu);
-+}
-+
- static void rvu_mbox_destroy(struct mbox_wq_info *mw)
+-	if (type == UC) {
+-		enetc_port_wr(&si->hw, ENETC_PSIUMHFR0(si_idx, err),
+-			      lower_32_bits(hash));
+-		enetc_port_wr(&si->hw, ENETC_PSIUMHFR1(si_idx),
+-			      upper_32_bits(hash));
+-	} else { /* MC */
+-		enetc_port_wr(&si->hw, ENETC_PSIMMHFR0(si_idx, err),
+-			      lower_32_bits(hash));
+-		enetc_port_wr(&si->hw, ENETC_PSIMMHFR1(si_idx),
+-			      upper_32_bits(hash));
+-	}
+-}
+-
+ static void enetc_sync_mac_filters(struct enetc_pf *pf)
  {
- 	struct otx2_mbox *mbox = &mw->mbox;
-@@ -3519,6 +3524,7 @@ static int rvu_enable_sriov(struct rvu *rvu)
- 	if (err) {
- 		rvu_disable_afvf_intr(rvu);
- 		rvu_mbox_destroy(&rvu->afvf_wq_info);
-+		cn20k_free_mbox_memory_type(rvu, TYPE_AFVF);
- 		return err;
+ 	struct enetc_mac_filter *f = pf->mac_filter;
+@@ -122,12 +91,16 @@ static void enetc_sync_mac_filters(struct enetc_pf *pf)
+ 	for (i = 0; i < MADDR_TYPE; i++, f++) {
+ 		bool em = (f->mac_addr_cnt == 1) && (i == UC);
+ 		bool clear = !f->mac_addr_cnt;
++		u64 hash;
+ 
+ 		if (clear) {
+-			if (i == UC)
++			if (i == UC) {
+ 				enetc_clear_mac_flt_entry(si, pos);
++				enetc_set_si_uc_hash_filter(si, 0, 0);
++			} else {
++				enetc_set_si_mc_hash_filter(si, 0, 0);
++			}
+ 
+-			enetc_clear_mac_ht_flt(si, 0, i);
+ 			continue;
+ 		}
+ 
+@@ -135,7 +108,7 @@ static void enetc_sync_mac_filters(struct enetc_pf *pf)
+ 		if (em) {
+ 			int err;
+ 
+-			enetc_clear_mac_ht_flt(si, 0, UC);
++			enetc_set_si_uc_hash_filter(si, 0, 0);
+ 
+ 			err = enetc_set_mac_flt_entry(si, pos, f->mac_addr,
+ 						      BIT(0));
+@@ -147,11 +120,15 @@ static void enetc_sync_mac_filters(struct enetc_pf *pf)
+ 				 err);
+ 		}
+ 
++		bitmap_to_arr64(&hash, f->mac_hash_table,
++				ENETC_MADDR_HASH_TBL_SZ);
+ 		/* hash table filter, clear EM filter for UC entries */
+-		if (i == UC)
++		if (i == UC) {
+ 			enetc_clear_mac_flt_entry(si, pos);
+-
+-		enetc_set_mac_ht_flt(si, 0, i, *f->mac_hash_table);
++			enetc_set_si_uc_hash_filter(si, 0, hash);
++		} else {
++			enetc_set_si_mc_hash_filter(si, 0, hash);
++		}
  	}
- 
-@@ -3681,6 +3687,7 @@ static int rvu_probe(struct pci_dev *pdev, const struct pci_device_id *id)
- err_mbox:
- 	rvu_mbox_destroy(&rvu->afpf_wq_info);
- err_hwsetup:
-+	rvu_free_cn20k_mbox_memory(rvu);
- 	rvu_cgx_exit(rvu);
- 	rvu_fwdata_exit(rvu);
- 	rvu_mcs_exit(rvu);
-@@ -3723,9 +3730,7 @@ static void rvu_remove(struct pci_dev *pdev)
- 	pci_set_drvdata(pdev, NULL);
- 
- 	devm_kfree(&pdev->dev, rvu->hw);
--	if (is_cn20k(rvu->pdev))
--		cn20k_free_mbox_memory(rvu);
--	kfree(rvu->ng_rvu);
-+	rvu_free_cn20k_mbox_memory(rvu);
- 	devm_kfree(&pdev->dev, rvu);
- 	atomic_set(&device_bound, 0);
  }
+ 
+diff --git a/drivers/net/ethernet/freescale/enetc/enetc_pf_common.c b/drivers/net/ethernet/freescale/enetc/enetc_pf_common.c
+index b0c0dc668e347..3597cb81a7ccb 100644
+--- a/drivers/net/ethernet/freescale/enetc/enetc_pf_common.c
++++ b/drivers/net/ethernet/freescale/enetc/enetc_pf_common.c
+@@ -131,6 +131,46 @@ void enetc_set_si_mc_promisc(struct enetc_si *si, int si_id, bool promisc)
+ }
+ EXPORT_SYMBOL_GPL(enetc_set_si_mc_promisc);
+ 
++void enetc_set_si_uc_hash_filter(struct enetc_si *si, int si_id, u64 hash)
++{
++	int psiumhfr0_off, psiumhfr1_off;
++	struct enetc_hw *hw = &si->hw;
++
++	if (is_enetc_rev1(si)) {
++		bool err = si->errata & ENETC_ERR_UCMCSWP;
++
++		psiumhfr0_off = ENETC_PSIUMHFR0(si_id, err);
++		psiumhfr1_off = ENETC_PSIUMHFR1(si_id);
++	} else {
++		psiumhfr0_off = ENETC4_PSIUMHFR0(si_id);
++		psiumhfr1_off = ENETC4_PSIUMHFR1(si_id);
++	}
++
++	enetc_port_wr(hw, psiumhfr0_off, lower_32_bits(hash));
++	enetc_port_wr(hw, psiumhfr1_off, upper_32_bits(hash));
++}
++EXPORT_SYMBOL_GPL(enetc_set_si_uc_hash_filter);
++
++void enetc_set_si_mc_hash_filter(struct enetc_si *si, int si_id, u64 hash)
++{
++	int psimmhfr0_off, psimmhfr1_off;
++	struct enetc_hw *hw = &si->hw;
++
++	if (is_enetc_rev1(si)) {
++		bool err = si->errata & ENETC_ERR_UCMCSWP;
++
++		psimmhfr0_off = ENETC_PSIMMHFR0(si_id, err);
++		psimmhfr1_off = ENETC_PSIMMHFR1(si_id);
++	} else {
++		psimmhfr0_off = ENETC4_PSIMMHFR0(si_id);
++		psimmhfr1_off = ENETC4_PSIMMHFR1(si_id);
++	}
++
++	enetc_port_wr(hw, psimmhfr0_off, lower_32_bits(hash));
++	enetc_port_wr(hw, psimmhfr1_off, upper_32_bits(hash));
++}
++EXPORT_SYMBOL_GPL(enetc_set_si_mc_hash_filter);
++
+ void enetc_pf_netdev_setup(struct enetc_si *si, struct net_device *ndev,
+ 			   const struct net_device_ops *ndev_ops)
+ {
+diff --git a/drivers/net/ethernet/freescale/enetc/enetc_pf_common.h b/drivers/net/ethernet/freescale/enetc/enetc_pf_common.h
+index a619fb8fed9c5..bf9029b0a0173 100644
+--- a/drivers/net/ethernet/freescale/enetc/enetc_pf_common.h
++++ b/drivers/net/ethernet/freescale/enetc/enetc_pf_common.h
+@@ -19,6 +19,8 @@ int enetc_vlan_rx_del_vid(struct net_device *ndev, __be16 prot, u16 vid);
+ int enetc_init_sriov_resources(struct enetc_pf *pf);
+ void enetc_set_si_uc_promisc(struct enetc_si *si, int si_id, bool promisc);
+ void enetc_set_si_mc_promisc(struct enetc_si *si, int si_id, bool promisc);
++void enetc_set_si_uc_hash_filter(struct enetc_si *si, int si_id, u64 hash);
++void enetc_set_si_mc_hash_filter(struct enetc_si *si, int si_id, u64 hash);
+ 
+ static inline u16 enetc_get_ip_revision(struct enetc_hw *hw)
+ {
 -- 
 2.53.0
 
