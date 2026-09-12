@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AFC8429CC7;
-	Sat, 12 Sep 2026 10:40:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E62F042CB17;
+	Sat, 12 Sep 2026 10:40:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789209626; cv=none; b=Ty1hJkcwDlSgTwy7u5zrUJbaMtNhvmm6RXDLxVMyntPdj3WKr+1WeG64DhPGLhxFtEVFPC25XLt8J8kEPsAKS0mdLXxPepl+x9qztzKsY/vbZTn/7HGjbnqQxLN5o//0O3/4rUfxZAbBjtK3q5FgIhVhzfsu+FLP4gKT2bbjBT8=
+	t=1789209631; cv=none; b=NgNl8iWf/gkqJip/WzcUU+2IK6V9+zqyVTx9x4xV2QAu2KHwPQ3Vk4byKUUqtYUJ5TVwEEhl2HJAy8yVxOLv0QDNS4byB94Zvczg5YNgUV5bQL3DhyiukJBPUp3YvC+lQPmOMnXZqlEQX9/aAZi6CWqqNfCxz4rRQeDLKvgOKxo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789209626; c=relaxed/simple;
-	bh=NhAysi8Li8I6VU9JlshdgUmBwTJBdrmoMBfQGm6fPtE=;
+	s=arc-20240116; t=1789209631; c=relaxed/simple;
+	bh=ej3zmFYSgbf9akCiE6FMoMdADTtLyfzlnaMsOtiMkEk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Cg+qlVj0IyVxlG+mKuB26mNEtqFz1/UO8c/X8GJdBE2UDfI/y527H7W5D65iKyu2j1iKkMkesRBI3/OMMmthDJMldpMoPiDKd5mk2GMVpJhqWDp+5LEOJivJw5ebfqWhgue1KO4bwXqvvhrUXEBpnklLghC/45sZZLMvxvN67s0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oBAcE82C; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=oU7sebqlob95dmfLuhH77jBLwBHRf0u9OxpFjfJRB+UVJ0C2/tqLmuJ539FqAXCZwad2BrAaq+Jw7VoakPxObJZNmieZtQ4oVRi1d7sUGA05uNEP6aU6gjRO+vzj9DBXRf68JiYLUS50Tlb2ba2J4Zcpa1mTPBNAkoAW59elzdI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iNUIMT6b; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oBAcE82C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F40A21F00899;
-	Sat, 12 Sep 2026 10:40:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iNUIMT6b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C73341F00893;
+	Sat, 12 Sep 2026 10:40:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789209624;
-	bh=MR5Mx/uZIwT52UbNViq9MjWQoYj9a3Ghz9Gb1FbFE9I=;
+	s=korg; t=1789209629;
+	bh=M7+3gmbNBknqSx9l7e0D8tdNfHWY/gyR6g9LYPy056E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oBAcE82CetMGCkTg5P2ufUZcNsiluHHEGSXCfuQ61juY/zHaKTKHHfXyrYTb0MFf0
-	 bMZnRDsYg3B38hon1SB8utB/KrWj6I6p4qakv0R9DbZ6GrvfxJhfJ/KZIRdrsTxeu4
-	 BRDo35h4EkAANuTTSyLX+b+jXqxeJqemfyqOUuVo=
+	b=iNUIMT6bJF9ZyPc4Y5YqGDmej1ga7G06FR+FG1a0Q2SSiATD1eEAqelsZiHWRuXVj
+	 TdJeVxJsIkZg19As6KA+OuflrYZ74ILgM8LhhK1rXAZ6ponsXIK8jm54dW5PhDCsAV
+	 i8RTrdNWz3EVPTtHa/PL22i27/wiREXCbxdk4EQg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zxyan Zhu <zxyan0222@gmail.com>,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	=?UTF-8?q?R=C3=A9mi=20Denis-Courmont?= <remi@remlab.net>,
+	Joe Damato <joe@dama.to>,
+	Stanislav Fomichev <sdf@fomichev.me>,
+	Breno Leitao <leitao@debian.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0858/1518] net: stmmac: Skip PHY attach if custom PCS is in use
-Date: Sat, 12 Sep 2026 08:50:27 +0200
-Message-ID: <20260912065642.859024962@linuxfoundation.org>
+Subject: [PATCH 6.18 0859/1518] phonet: pep: do not write beyond optlen in getsockopt
+Date: Sat, 12 Sep 2026 08:50:28 +0200
+Message-ID: <20260912065642.882020037@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -46,52 +48,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zxyan Zhu <zxyan0222@gmail.com>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit af4d934164457f0578bf90e92ae0fcc5348260cb ]
+[ Upstream commit 77e5eb0e192aec6710c03ca8144582fd2af36ca4 ]
 
-When a platform provides a custom PCS via the pcs_init callback,
-the MAC's phylink_pcs is already configured. In this case, no
-traditional PHY device is needed.
+pep_getsockopt() clamps the reported length to the caller's buffer with
+min_t(), but then stores the value with put_user(val, (int __user *)
+optval), which always writes sizeof(int) bytes. A getsockopt() call with
+an optlen smaller than sizeof(int) thus reports the clamped length yet
+writes a full int, one to three bytes past the user buffer.
 
-Without this, stmmac_init_phy() falls through to the no-phy-node
-path and errors out with "no phy found" when the DT has no
-phy-handle for such interfaces.
+Write the value with copy_to_user() bounded by len, so at most optlen
+bytes are copied, matching the length reported back to userspace.
 
-Skip the PHY attach when priv->hw->phylink_pcs is set and
-phy_addr is invalid.
-
-Fixes: f0ef433fc264 ("net: stmmac: introduce pcs_init/pcs_exit stmmac operations")
-Signed-off-by: Zxyan Zhu <zxyan0222@gmail.com>
-Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Link: https://patch.msgid.link/20260729074237.2624940-2-zxyan0222@gmail.com
+Fixes: 02a47617cdce ("Phonet: implement GPRS virtual interface over PEP socket")
+Acked-by: Rémi Denis-Courmont <remi@remlab.net>
+Reviewed-by: Joe Damato <joe@dama.to>
+Acked-by: Stanislav Fomichev <sdf@fomichev.me>
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Link: https://patch.msgid.link/20260729-getsockopt_phase4-v4-4-c44576757c17@debian.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ net/phonet/pep.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index bf2fa56b861be..4b458a39ab9f5 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -1126,6 +1126,10 @@ static int stmmac_init_phy(struct net_device *dev)
- 		struct phy_device *phydev;
- 
- 		if (addr < 0) {
-+			/* If a custom PCS is in use, no PHY is needed */
-+			if (priv->hw->phylink_pcs)
-+				return 0;
-+
- 			netdev_err(priv->dev, "no phy found\n");
- 			return -ENODEV;
- 		}
+diff --git a/net/phonet/pep.c b/net/phonet/pep.c
+index 5910dcd26555e..36c85811fd08b 100644
+--- a/net/phonet/pep.c
++++ b/net/phonet/pep.c
+@@ -1116,7 +1116,7 @@ static int pep_getsockopt(struct sock *sk, int level, int optname,
+ 	len = min_t(unsigned int, sizeof(int), len);
+ 	if (put_user(len, optlen))
+ 		return -EFAULT;
+-	if (put_user(val, (int __user *) optval))
++	if (copy_to_user(optval, &val, len))
+ 		return -EFAULT;
+ 	return 0;
+ }
 -- 
 2.53.0
 
