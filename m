@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E89141B8C6;
-	Sat, 12 Sep 2026 15:19:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F99141A795;
+	Sat, 12 Sep 2026 15:19:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789226395; cv=none; b=ZuBYDDupAYdj6I8DVtsLQ+tnF8vVo5/U4tjjCxNjecsjx1BUwuHNqvUZcQkB5I8+KAvjZhCnCclW5YxeGEv5y4rIW84L/jiTKdg8+gUz37ICKVgcNS5cPGvRl6Kq0CpgcdOAcgSu78bVNn0pRRAGoSDD2OJ/4Hdz5W8mO5Krhq4=
+	t=1789226399; cv=none; b=bHMCrEI39K2oe2qXtFNLRVbcx+bepISjuatwobBSb/4tig7n96qX3X4GdrDRx69EBcBHfWskgZGQUpfQJND3zTxvbGE0GU7NHuHCfNyuGX9kAxAxaeYQYDscf474xyAyc7DA8WGjqX3HAe4Afko6Jv16LZPDohyMVtm+Jer+Ekg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789226395; c=relaxed/simple;
-	bh=I56Cb5kdFxVbm2rZtejJqPBySChi5sp0gwKJ+5gjqS0=;
+	s=arc-20240116; t=1789226399; c=relaxed/simple;
+	bh=HMbMvu6UGvSVYh8rBjWN8N23WtAI+tIYL9F2G+g/bBg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bFWvpcJiA9Lhf6ssTHxOUDzsXofD2OzuIyFQjTODV0P4Q50j3L1gF6CcqfoYKrl9EJ02nt649+y+NgZPym0NGKS27Fhe4Rr4L57n4+aE5xqipiGbxPENFxWUQiqaedBRyjDVIv72UjVX/k3Cil44hcIQd47OYMYMzwUVZjpHs3s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QoVUmVL2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ufdCjCopf1dDLmpRxyKr5L5DFOw7clkH0rmhXHO/jOkPpkpUPNV8q1bzRCpFlmScH1gM4te1953CfL3eC7Yvkfe/1T/EkE6Qmnc8qnPJNfsOeN5xM/Abd4+hfTvg8GG4QjZoUzGV7CXmHUb0uhbc7hu4bxkH+jLxA83d9EO3uhc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P8H9JzSV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QoVUmVL2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF7E01F00893;
-	Sat, 12 Sep 2026 15:19:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P8H9JzSV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 561D81F000FF;
+	Sat, 12 Sep 2026 15:19:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789226390;
-	bh=aIDDbfrgjcZ93BLQi1JTBsW1c46e/GUO3sh/+6lHuE8=;
+	s=korg; t=1789226395;
+	bh=Uf299pUzn8cFRzc5Kb1K9G7UsxRmpEkWA2uEJOmukvc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QoVUmVL24c2ZkK7eFZk0PiYR4wR/z12s5dciioKxAME9tpSLpjtXAkb+Bpj8Ben9G
-	 KaWI0cD2rie0V+0DVTx6Imlz9iXsqShLiuKNkgwt9+Kl1+Tb9xKIjsqBENKCFA802L
-	 cFMA/WigFsaKwOgRofxsoiL7yqj68i1b5HjgH99w=
+	b=P8H9JzSVVkzmySnJvjVnjYIznACVR9lvjkCwWh/RxiXwnXO+oOnljCyBglLAN6H1z
+	 K2ceLEjOeAXuezk6drQ1FbIC1VajIGYCxbvKeA/Nxwt2LSa0UBi/hx2aauGoI1AArj
+	 DkN3PhUJ7NJmwa0JftSZdE5NakSfYIBDkOnr7saA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,11 +30,11 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	vega@nebusec.ai,
 	Victor Nogueira <victor@mojatatu.com>,
 	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1392/1424] net/sched: bound qdisc_pkt_len to prevent qdisc soft lockup
-Date: Sat, 12 Sep 2026 09:03:44 +0200
-Message-ID: <20260912065638.434995707@linuxfoundation.org>
+Subject: [PATCH 6.6 1366/1424] net/sched: sfq: clamp quantum to avoid signed overflow soft lockup
+Date: Sat, 12 Sep 2026 09:03:18 +0200
+Message-ID: <20260912065637.853846356@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -55,81 +55,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-[ Upstream commit 8f735d64382dcf162f4276d6699d03ad2f859c0b ]
+[ Upstream commit 816e90057ab1879562a5b7cc688e35bb9027ae97 ]
 
-qdisc_get_stab() accepts a user-supplied size table, and
-__qdisc_calculate_pkt_len() amplifies qdisc_pkt_len() through the
-overhead, the size-table data (u16), and size_log (up to
-STAB_SIZE_LOG_MAX). A crafted stab can therefore set qdisc_pkt_len()
-to ~1 GiB for an ordinary skb. Per-flow deficit schedulers such as
-DRR and ETS replenish one quantum per loop iteration; with a tiny
-quantum (1) they spin billions of times under the qdisc lock,
-producing a soft lockup / RCU stall as illustrated by vega@nebusec.ai.
+sfq_init() sets q->quantum = psched_mtu(qdisc_dev(sch)) (unsigned). A
+device with a huge MTU (e.g. dummy with max_mtu == 0 accepting MTU
+2147483634) makes psched_mtu() return 0x80000000, so slot->allot = INT_MIN
+and INT_MIN + INT_MIN toggles between INT_MIN and 0 forever, spinning
+sfq_dequeue() under the qdisc lock.
 
-Cap the final qdisc_pkt_len() to QDISC_PKT_LEN_MAX so the size-table
-amplification cannot drive deficit schedulers into an unbounded loop.
-A legitimate size table (e.g. qfq's overhead 999999999, which is
-handled by dropping) is still accepted.
+Clamp the quantum to [256, 1 << 20] so the refill loop terminates. The
+lower bound also covers q->quantum == 0 (psched_mtu() returning 0),
+which spins sfq_dequeue() identically. sfq_change() already rejects a
+negative quantum, so only the init path was exposed.
 
-Introduce cap QDISC_PKT_LEN_MAX (1 << 20) = 1 MiB which is well above
-any legitimate single-skb wire length: the largest current skb->len
-is GSO_MAX_SIZE (524280), and an ATM-style size table (53/48 cell tax)
-amplifies that to ~578 KB, both comfortably below 1 MiB. At the same
-time, 1 MiB bounds the deficit refill loop to ~1M iterations per
-packet with quantum=1, which completes in a few milliseconds well
-under the demonstrated softlockup threshold (~10^9 iterations).
-
-Conditions to recreate the bug:
-- CONFIG_NET_SCHED=y, CONFIG_NET_SCH_DRR=y (or CONFIG_NET_SCH_ETS=y).
-- Attach a DRR (or ETS) root qdisc with a crafted TCA_STAB that
-  amplifies qdisc_pkt_len to ~1 GiB (e.g. size_log=15, data=[32768]).
-- Add a class with a tiny quantum of 1 and send one small packet; the
-  deficit loop spins billions of times under the qdisc lock and trips
-  the softlockup detector (panic with kernel.softlockup_panic=1).
-- Reachable as root or from an unprivileged user in a fresh user+net
-  namespace (unshare -Urn) with namespace-local CAP_NET_ADMIN.
+Conditions to recreate the bug: a device whose MTU (plus
+hard_header_len) wraps psched_mtu() into the sign bit (e.g. a dummy
+device with max_mtu == 0 accepting MTU 2147483634). Requires
+CAP_NET_ADMIN in a user namespace.
 
 Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Reported-by: vega@nebusec.ai
 Tested-by: Victor Nogueira <victor@mojatatu.com>
 Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/20260825081403.133992-1-jhs@mojatatu.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://patch.msgid.link/20260822195509.112717-7-jhs@mojatatu.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/pkt_sched.h | 1 +
- net/sched/sch_api.c     | 7 +++++--
- 2 files changed, 6 insertions(+), 2 deletions(-)
+ net/sched/sch_sfq.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/include/net/pkt_sched.h b/include/net/pkt_sched.h
-index 9b5698b86986c..1cce0a3970b94 100644
---- a/include/net/pkt_sched.h
-+++ b/include/net/pkt_sched.h
-@@ -12,6 +12,7 @@
- 
- #define DEFAULT_TX_QUEUE_LEN	1000
- #define STAB_SIZE_LOG_MAX	30
-+#define QDISC_PKT_LEN_MAX	(1 << 20)	/* 1 MiB */
- 
- struct qdisc_walker {
- 	int	stop;
-diff --git a/net/sched/sch_api.c b/net/sched/sch_api.c
-index 22210e628ab34..6aa39c3c6ff44 100644
---- a/net/sched/sch_api.c
-+++ b/net/sched/sch_api.c
-@@ -608,8 +608,11 @@ void __qdisc_calculate_pkt_len(struct sk_buff *skb,
- 
- 	pkt_len <<= stab->szopts.size_log;
- out:
--	if (unlikely(pkt_len < 1))
--		pkt_len = 1;
-+	/* A size table can inflate qdisc_pkt_len() beyond any real packet
-+	 * (via overhead, the data table, or size_log); cap it so deficit
-+	 * schedulers such as DRR/ETS terminate their refill loops.
-+	 */
-+	pkt_len = clamp_t(int, pkt_len, 1, QDISC_PKT_LEN_MAX);
- 	qdisc_skb_cb(skb)->pkt_len = pkt_len;
- }
+diff --git a/net/sched/sch_sfq.c b/net/sched/sch_sfq.c
+index e871cb53946a3..a53ea6ac2296f 100644
+--- a/net/sched/sch_sfq.c
++++ b/net/sched/sch_sfq.c
+@@ -796,7 +796,8 @@ static int sfq_init(struct Qdisc *sch, struct nlattr *opt,
+ 	q->tail = NULL;
+ 	q->divisor = SFQ_DEFAULT_HASH_DIVISOR;
+ 	q->maxflows = SFQ_DEFAULT_FLOWS;
+-	q->quantum = psched_mtu(qdisc_dev(sch));
++	q->quantum = clamp_t(u32, psched_mtu(qdisc_dev(sch)),
++			     256, 1 << 20);
+ 	q->perturb_period = 0;
+ 	get_random_bytes(&q->perturbation, sizeof(q->perturbation));
  
 -- 
 2.53.0
