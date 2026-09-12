@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D9A52F9D82;
-	Sat, 12 Sep 2026 07:30:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5E23346AE3;
+	Sat, 12 Sep 2026 07:30:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789198253; cv=none; b=R1MKY6NcQ9UzlXj+7bBLe0C/LpLZsZ4r1027oR7ce02MQ5OHBB5SpQnlWJSBBa01BpvSyAxMaTFhCVBVR5Qv8Nz9w8d9ED1F+JDZHaq2mUNem2L58lTR/uQrCMKHDAkHBHJ6aV09qgamObdCLaPEht+KY3KU8ogqZOVpZijc+AM=
+	t=1789198259; cv=none; b=mKsrLguDpX2uKeZSZ2qQ9LQ2hSRvx0e8d7HuK3wv4TBWozMc476VQ2+T5FFDdLJ6trDrR+Mz5IaJlEznE8FkymAV5+CEX6WdlnLrC9pis4AIDGLQWmMsIqFP+nbvfYAf6CA2n99XdqJjcTctRyrk+gBOlG8n3VAT4dCBLpPRkCs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789198253; c=relaxed/simple;
-	bh=3dnxgQT4YnpJ8PKpQjenXdw62pdGLqdl36D+EVOGXhY=;
+	s=arc-20240116; t=1789198259; c=relaxed/simple;
+	bh=yBnNBrJCVTkjIueIzQR4AZzfPF3QDHACNywJqByII7c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ezE0FvWFWXBPvuesthAxI8V6UT7VC0ceY3AQqEEtphAA+OdSJPtjXjm6pI+oC1Cd7RKkXRy/ebbKfovP+f8La4d0PBoUzN39pbfjFSkVlhcBzeGJlZJMbXEOwXyGR4QOwocY1fjcABwH8/LzhsbssBeSe7MibDHKKyCt9MnAliw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GXur/YZU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=X/ww/2ExB75+OWKlNl3/kbEeK834wOPDKX+8Apfezv9zLhuZd4REKDS7ImW/0gDctNFYMVug5NQfIhPwmRgIURgA2c6rg+leckWHiyaLTywsawn+iv1kpaInt29kiOonu61yzVkIiqDtYqQ4E9ahh+XUbWJhZUcac5uLNx4irjM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xAkYhgzk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GXur/YZU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 911211F000FF;
-	Sat, 12 Sep 2026 07:30:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xAkYhgzk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3179F1F000FF;
+	Sat, 12 Sep 2026 07:30:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789198252;
-	bh=2nGX2JdKk4/aClBvAK9vpoTtcxVOMk1ZWovZX/1tk1Y=;
+	s=korg; t=1789198257;
+	bh=bZ8iw8jS/jIUxZtaiS2pVoWRn0S5j/ubhly8KJzVbCs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GXur/YZUAhp7Pi2hmO3jlpFx/Jk4r0Kzia+jGE927BxMrSA0sQWaOM6EXknHVbShY
-	 vn1nvtcC7vm1gQ3ZqE5eVhwKgddqnu3pK+Cz1JfPbyEnNAR643/qQOTnapqNtbPjOJ
-	 xX2TaN5rOdM+Tl1TJKdvPkBvvNErMoHAETk7rs+8=
+	b=xAkYhgzkUcqw+B3HZvx8hsar3XivQEgDWGy394dndag4CbzBuyS8uAUB2vdpFa1OW
+	 dcGw0DTbgEAbEaKOpb11DHUzcFqBY8dsWsSYFE/sm08WEfKsx6fjbZrAPmSz41n2I6
+	 rDK68izBec3Qc0IWY7z6OPAP4b2b9N5UldHZymwQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leon Hwang <leon.hwang@linux.dev>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Chih-Kang Chang <gary.chang@realtek.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0342/1815] bpf: Mark tracing_multi trampolines as ftrace managed
-Date: Sat, 12 Sep 2026 08:34:52 +0200
-Message-ID: <20260912065656.942828292@linuxfoundation.org>
+Subject: [PATCH 7.2 0343/1815] wifi: rtw89: 8852a: fix RSSI report when average beacon RSSI is not ready
+Date: Sat, 12 Sep 2026 08:34:53 +0200
+Message-ID: <20260912065656.965509767@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,44 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leon Hwang <leon.hwang@linux.dev>
+From: Chih-Kang Chang <gary.chang@realtek.com>
 
-[ Upstream commit 30bdd6d1384d894931f113eb595636092d8e650c ]
+[ Upstream commit 9bf6bd6ed5accb57544d04ded911a2ef1642d48f ]
 
-Since tracing_multi link does not set ftrace_managed, it would fail to
-release the tracing_multi link when attaching tracing_multi link and
-then attaching fentry link.
+8852A uses the average beacon RSSI to smooth the RSSI. However, before
+the average beacon RSSI is available, the RSSI should use the PPDU
+status RSSI of the received packet to avoid reporting the RSSI as -110 dBm.
 
-[    3.714215] WARNING: kernel/bpf/trampoline.c:1727 at bpf_trampoline_multi_detach+0x20b/0x240, CPU#1: test_progs/97
-...
-[    3.733170]  bpf_tracing_multi_link_release+0x14/0x30
-[    3.733890]  bpf_link_free+0x58/0x130
-[    3.734414]  bpf_link_release+0x23/0x30
-
-Fix it by setting 'ftrace_managed = true' in register_fentry_multi().
-
-Fixes: aef4dfa790b2 ("bpf: Add bpf_trampoline_multi_attach/detach functions")
-Signed-off-by: Leon Hwang <leon.hwang@linux.dev>
-Acked-by: Jiri Olsa <jolsa@kernel.org>
-Link: https://lore.kernel.org/bpf/20260711124822.29406-2-leon.hwang@linux.dev
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Fixes: f0f3bf4b370c ("wifi: rtw89: 8852a: report average RSSI to avoid unnecessary scanning")
+Signed-off-by: Chih-Kang Chang <gary.chang@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20260707091056.42771-13-pkshih@realtek.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/trampoline.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/wireless/realtek/rtw89/rtw8852a.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/trampoline.c b/kernel/bpf/trampoline.c
-index 1a721fc4bef56..6eadf64f7ec90 100644
---- a/kernel/bpf/trampoline.c
-+++ b/kernel/bpf/trampoline.c
-@@ -1536,6 +1536,7 @@ static int register_fentry_multi(struct bpf_trampoline *tr, struct bpf_tramp_ima
- 	if (bpf_trampoline_use_jmp(tr->flags))
- 		addr = ftrace_jmp_set(addr);
+diff --git a/drivers/net/wireless/realtek/rtw89/rtw8852a.c b/drivers/net/wireless/realtek/rtw89/rtw8852a.c
+index 2c1f166e687f0..e27a81bd8b77d 100644
+--- a/drivers/net/wireless/realtek/rtw89/rtw8852a.c
++++ b/drivers/net/wireless/realtek/rtw89/rtw8852a.c
+@@ -2212,7 +2212,7 @@ static void rtw8852a_query_ppdu(struct rtw89_dev *rtwdev,
+ 	u8 raw;
  
-+	tr->func.ftrace_managed = true;
- 	ftrace_hash_add(data->reg, data->entry, ip, addr);
- 	tr->cur_image = im;
- 	return 0;
+ 	if (!status->signal) {
+-		if (phy_ppdu->to_self)
++		if (phy_ppdu->to_self && ewma_rssi_read(&bb->bcn_rssi))
+ 			raw = ewma_rssi_read(&bb->bcn_rssi);
+ 		else
+ 			raw = max(rx_power[RF_PATH_A], rx_power[RF_PATH_B]);
 -- 
 2.53.0
 
