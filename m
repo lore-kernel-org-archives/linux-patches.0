@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39B333C2BA2;
-	Sat, 12 Sep 2026 07:07:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADB7C3B813A;
+	Sat, 12 Sep 2026 07:07:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789196851; cv=none; b=PV9VtOJinhgxM6m9KPxR2UPyQqKNl3VqmDef0L8b3AiMnNxgo9QxCrmEfvsWIHoSQETm3MpQo3wgqmr1MScut8gIMIFF2VkdtC7pq6ScjL/JZeKj6O5YO2vG0UTvk/v68SvJ3yQDHqZQLZTedMKW3UOjTsJtRBglrc6Q0b8X4Sk=
+	t=1789196859; cv=none; b=DL6C/KqMFPQ0YODpY9dBnAGCtqIVZZ4+YUfnjDdvv5AKWtqnIVZ7r66rv2LIhWEJWvzjAUwxZvJr37QiNqySjLBmExmvLOZZNR4fVL/50HknjxLj1nzDcmGGlovtiJM65HZCaDiGAryUiHXWyeUsi6Ci2F2RM5RQY1v/w/Mldj8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789196851; c=relaxed/simple;
-	bh=4zMrLh3DrSaDMwcMwJ7AFbGyQfY10co6w0ym04n6xXI=;
+	s=arc-20240116; t=1789196859; c=relaxed/simple;
+	bh=Y7ExEs4x6Ev3IkZW5HVYmTCNztpBPQ9z2PK5W7q7dag=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=riqEiggDTLy7xAWfFXXEDBLMCZQtr+ZeaLXFPAxYdhUflLZKXN9a5jbRaXG9a3M4TaHDlotoiKl+15BfXyDKQZ7WGyur2vgXdZICg/Tjct5HE/BfrgXxjhKnFVsDkrVcMUJwZUC2GAZx4dkqV6qWdvNXEcmBgK45b9jCYtqzQEk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rS8X1JLZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mmcY6r6Cw3RZjfstjECpXWWBndWG/XNyyDHpDlu3L4WErMl1vhylTdvh86mN2gijyUhFjrxmQz/0t2gOxC37voLHeLcdqyuPLhK3mcJB8h312w31U+2CY/bxtFxsFw/om8JjEbMwA+1uXNLhqD9Smb+/2KNI6+bRmfMIj4+qVvk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QZHL7YnG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rS8X1JLZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3FCD1F00893;
-	Sat, 12 Sep 2026 07:07:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QZHL7YnG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64CFD1F00893;
+	Sat, 12 Sep 2026 07:07:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789196846;
-	bh=0XTu9Xgnj1RZEV5dMIETHBA50Cv+69y6TOrGGhHJggY=;
+	s=korg; t=1789196858;
+	bh=BphdMsmSdYy7Hjrp/vPL5DZ61Lb9rXwylVTC7l+EJJk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rS8X1JLZSohwnXQoVSy1lTZ+Bk4n5W57D268Ta3V9hnAlWwAb6QMUdbjoypjJoNji
-	 FYPXswaQq1OV5qsoQp31DsAnTu2E3KVcKjWz+PWJBDt12EG1FdBAt0y7mHgnVcXm4m
-	 SdPyIlNGIxrk1fsFczasDV9/8nXQ5LlI0YQf1TOU=
+	b=QZHL7YnG0dt9iG807jvBB7Pa1TN2I/0U2Ijc8EUUlPMmm0aHevPp99XQzSkoUt+mM
+	 Bd3y2eMd4iGpOIjuhbeAnI2TNwzRVC4Nn/dMawII2pGN6ezhdZFw4sauyHGcXahSFO
+	 2EuBVCAgoBrXsHlKk90tKnRJwSM90N6nA/tnRm9Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Mukesh Savaliya <mukesh.savaliya@oss.qualcomm.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Damon Ding <damon.ding@rock-chips.com>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0009/1815] i3c: master: Do not treat master device as a duplicate target
-Date: Sat, 12 Sep 2026 08:29:19 +0200
-Message-ID: <20260912065649.226499454@linuxfoundation.org>
+Subject: [PATCH 7.2 0044/1815] drm/rockchip: analogix_dp: Enable hclk for RK3588
+Date: Sat, 12 Sep 2026 08:29:54 +0200
+Message-ID: <20260912065650.055460938@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -47,51 +45,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: Damon Ding <damon.ding@rock-chips.com>
 
-[ Upstream commit 4dc1b3eeba7991905a5b5b8129ebea51be7d87b7 ]
+[ Upstream commit 104f20616d72825fdcf56cfdc5f89f4e96fd8dbe ]
 
-i3c_master_search_i3c_dev_duplicate() searches the bus for another I3C
-device with the same PID as the reference device.  The search can match
-master->this, causing the controller itself to be returned as a
-duplicate.
+Acquire and enable the HCLK_VO1 bus clock explicitly for RK3588
+eDP controller to guarantee register and datapath access.
 
-Since the controller is not a target device, it cannot be a duplicate of
-one.  Exclude master->this from matching so that the function only
-returns real duplicate target devices.
+The clock was previously enabled implicitly via rockchip,vo-grf
+phandle reference, which relies on side effect and is fragile.
 
-Fixes: 3a379bbcea0a ("i3c: Add core I3C infrastructure")
-Cc: stable@vger.kernel.org
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Acked-by: Mukesh Savaliya <mukesh.savaliya@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260807145638.168865-4-adrian.hunter@intel.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-[ adjusted the duplicate-device comparison to match the older branch’s PID handling without nonzero-PID checks. ]
+Fetch optional "hclk" clock in driver to align with updated device
+tree binding and keep consistent with hardware clock dependency.
+
+Fixes: 729f8eefdcad ("drm/rockchip: analogix_dp: Add support for RK3588")
+Signed-off-by: Damon Ding <damon.ding@rock-chips.com>
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://patch.msgid.link/20260601065100.1103873-6-damon.ding@rock-chips.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i3c/master.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/rockchip/analogix_dp-rockchip.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/i3c/master.c
-+++ b/drivers/i3c/master.c
-@@ -2349,7 +2349,8 @@ i3c_master_search_i3c_dev_duplicate(stru
- 	struct i3c_dev_desc *i3cdev;
+diff --git a/drivers/gpu/drm/rockchip/analogix_dp-rockchip.c b/drivers/gpu/drm/rockchip/analogix_dp-rockchip.c
+index 06072efd7fca3..d2af5eb29dbb5 100644
+--- a/drivers/gpu/drm/rockchip/analogix_dp-rockchip.c
++++ b/drivers/gpu/drm/rockchip/analogix_dp-rockchip.c
+@@ -311,6 +311,7 @@ static int rockchip_dp_of_probe(struct rockchip_dp_device *dp)
+ {
+ 	struct device *dev = dp->dev;
+ 	struct device_node *np = dev->of_node;
++	struct clk *clk;
  
- 	i3c_bus_for_each_i3cdev(&master->bus, i3cdev) {
--		if (i3cdev != refdev && i3cdev->info.pid == refdev->info.pid)
-+		if (i3cdev != refdev && i3cdev->info.pid == refdev->info.pid &&
-+		    i3cdev != master->this)
- 			return i3cdev;
- 	}
+ 	dp->grf = syscon_regmap_lookup_by_phandle(np, "rockchip,grf");
+ 	if (IS_ERR(dp->grf))
+@@ -327,6 +328,11 @@ static int rockchip_dp_of_probe(struct rockchip_dp_device *dp)
+ 		return dev_err_probe(dev, PTR_ERR(dp->pclk),
+ 				     "failed to get pclk property\n");
  
++	clk = devm_clk_get_optional_enabled(dev, "hclk");
++	if (IS_ERR(clk))
++		return dev_err_probe(dev, PTR_ERR(clk),
++				     "failed to get hclk property\n");
++
+ 	dp->rst = devm_reset_control_get(dev, "dp");
+ 	if (IS_ERR(dp->rst))
+ 		return dev_err_probe(dev, PTR_ERR(dp->rst),
+-- 
+2.53.0
+
 
 
