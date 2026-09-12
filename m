@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1867335C6AA;
-	Sat, 12 Sep 2026 11:41:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7BE5478E5D;
+	Sat, 12 Sep 2026 11:41:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789213292; cv=none; b=OAeQwYdXwapboPwqPcTBIsElaqpTOeBKAQ8A1EncxNh1mo0CouC7Wc8H3h6qZ5kx4l77MJW5oG6Nyu+zcGdQYjWu1rlppKMuNIb/yiPy/c2uqU9WOTa+cHm73Zdrc54ut34AHBqkw+hzSjuIvmRVT5tq0pHIpKMH44lsNU2pv+4=
+	t=1789213296; cv=none; b=miiGLoPk+MBw5SBvgEMkJDthW1vzkltCuoqhX/WoAoa2AaelmQvZ4YlCuaiswBwGozZmyzvXZd2BhsrmSEW1Ux2Ik+MX3O/7Rio9wBCLBLhHu5iL1zet8OAaVyyDAACaaXDLxW4Ii3J88/Xvl/WMgsWJMCCVrQdIyq2zP7px2b4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789213292; c=relaxed/simple;
-	bh=VQAiinVI2PrLZgOsl/Iq8uHoh0xeRap6Tt7JoW1jMzU=;
+	s=arc-20240116; t=1789213296; c=relaxed/simple;
+	bh=E0e9A1Rs/xcOgzlhb6RuTFgov8U0NS6l0BBXw501pwE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C9hJ2Q77zJLaMASClVRHGj68YBboPJfufq8BEb4doXliHTsmZYgyXJO6O43caxUwZAqTt+50QUpad2v36p4GEPloW6iZiFwyFVHxMOUVc9eHIXOmcrCdVl4iDNnQuaTYM0+OpexjQhTJjNwA72MDd2YVOxzuunjRuXlRvBFvMaQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AYCohGoK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IkU0cfTDsMda3ogzI+sClkfHTXkXwTChT5Ul+J7/z9PHBCk/62is89Bo44gM3eR0m3O7/DrdJTfLXkk2FnZ4M34U5aRSxMxTMTGi4XWU5yF9MCc2pYo1RJI290x0Zq0ogET6WIiyCycS/RjxyTReY7HYEufL0b8jclVxno5ut6Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gDySdIl8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AYCohGoK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6CA81F000FF;
-	Sat, 12 Sep 2026 11:41:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gDySdIl8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66F101F000FF;
+	Sat, 12 Sep 2026 11:41:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789213289;
-	bh=BJMr4S06+bHA9FceFz78LY6rsp4kXTqI/if2ieuXRjo=;
+	s=korg; t=1789213294;
+	bh=NnpUkz5fzxjLAJrUrk2QRtA+Vlw9wM535wA9EqDubwM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AYCohGoKvQDPtPY/za2ru5kWTuC0MdWT+qI/8c33gAMXn6r8Rw2HHEIlaxxcTsNtS
-	 vyyAUYx2BF00qWYxkm2S/bWaPLOwUVF1zTVH4t09rmTEyY4kgVR9uNEKxwhgMMCvqN
-	 gsuIXM2fJG0QMFkesby5Zi7f3yi/9AlWnadgVC2U=
+	b=gDySdIl8KQbdqZ5xOXudzi5L4Byi9OUkHgL/RlqTP14ct22FV0R9Unl+nA926cOK/
+	 diUY2IHLOO3nHVqOe5+vbiSRTrUtnsrEvP4Z7jh+iHeBJVySOjer18qAEUx5yOHbBw
+	 bujmKuMpcR5XUIamxfgzGQLbC8EwSRyESfiIJ364=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Shivam Kumar <kumar.shivam43666@gmail.com>,
-	Keith Busch <kbusch@kernel.org>
-Subject: [PATCH 6.12 0089/1376] nvmet-tcp: reject unsolicited H2CData PDUs
-Date: Sat, 12 Sep 2026 08:41:55 +0200
-Message-ID: <20260912065609.543973619@linuxfoundation.org>
+	Yao Kai <yaokai34@huawei.com>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Thomas Gleixner <tglx@kernel.org>
+Subject: [PATCH 6.12 0050/1376] futex: Prevent rcuwait use-after-free during requeue PI
+Date: Sat, 12 Sep 2026 08:41:16 +0200
+Message-ID: <20260912065608.675064692@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,76 +51,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shivam Kumar <kumar.shivam43666@gmail.com>
+From: Yao Kai <yaokai34@huawei.com>
 
-commit db62b35cbca052860c519cbcabe7650708528738 upstream.
+commit a3b8d46fe401cba3a5c46dea610e6eb3dc15370e upstream.
 
-nvmet_tcp_handle_h2c_data_pdu() accepts an H2CData PDU after only checking
-that its TTAG is a valid in-range command index and that the command's
-data buffers are mapped. It never checks that the target has actually
-solicited that data by sending an R2T for the command.
+On PREEMPT_RT, FUTEX_CMP_REQUEUE_PI can trigger a KASAN report
+(slab-out-of-bounds) in futex_requeue_pi_complete() invocation of
+rcuwait_wake_up().
 
-A remote host can abuse this. It submits a write command that takes the
-R2T path and, before the target transmits the R2T, sends an H2CData PDU
-for that command's tag. The data completes the command early, and when
-the command then fails synchronously (e.g. a length mismatch caught by
-nvmet_check_transfer_len()), it is completed a second time. Each
-completion calls nvmet_tcp_queue_response(), so the same command is added
-to queue->resp_list twice while it is still linked; the second llist_add()
-makes the node point to itself (lentry->next == lentry).
+The futex_q used by futex_wait_requeue_pi() is allocated on the waiter's
+stack. An early wakeup can race with a PI requeue as follows:
 
-nvmet_tcp_process_resp_list() then walks that self-referential node and
-adds the command to resp_send_list twice. With CONFIG_DEBUG_LIST this
-trips the "list_add double add" check (kernel BUG); without it the loop
-never terminates and the nvmet_tcp workqueue wedges (soft-lockup). It is
-remotely triggerable and needs no authentication on an allow_any_host
-subsystem.
+        waiter                          requeue task
+        ------                          ------------
+futex_wait_requeue_pi()
+  futex_do_wait()
+    schedule()
+                                       futex_requeue
+                                         futex_proxy_trylock_atomic()
+                                           futex_requeue_pi_prepare()
+                                            Q_REQUEUE_PI_NONE -> Q_REQUEUE_PI_IN_PROGRESS
+* timeout/ signal wakes waiter *
+  futex_requeue_pi_wakeup_sync()
+   Q_REQUEUE_PI_IN_PROGRESS -> Q_REQUEUE_PI_WAIT
+                                           requeue_pi_wake_futex
+                                             futex_requeue_pi_complete()
+                                               cmpxchg Q_REQUEUE_PI_WAIT -> Q_REQUEUE_PI_LOCKED
+    rcuwait_wait_event()
+      if (atomic_read(&q->requeue_state) != Q_REQUEUE_PI_WAIT)
+       break /* no schedule() */
 
-Track whether an R2T has been transmitted for a command and reject an
-H2CData PDU that arrives before it. The flag is cleared on command reuse
-(nvmet_tcp_get_cmd() zeroes cmd->flags) and stays set across the multiple
-H2CData PDUs of a single solicited transfer.
+ /* q.pi_state->owner == current */
+ futex_private_hash_put()
+ /* return from syscall */
+                                              rcuwait_wake_up(&q->requeue_wait)
+                                                /* q is gone */
 
-Fixes: 872d26a391da ("nvmet-tcp: add NVMe over TCP target driver")
+futex_requeue_pi_complete() publishes Q_REQUEUE_PI_LOCKED before
+calling rcuwait_wake_up(). The waiter observes this state in
+rcuwait_wait_event() before invoking schedule() in rcuwait_wait_event().
+Here, the waiter is free leave the syscall before requeue task can
+complete the wake.
+
+To address this race skip rcuwait_wake_up() in the Q_REQUEUE_PI_LOCKED
+case.
+This state is only published by requeue_pi_wake_futex(), which saves
+q->task before futex_requeue_pi_complete() and wakes the waiter via
+wake_up_state().
+
+This wake is intended to wake the waiter from its futex_do_wait() sleep.
+If the waiter is still sleeping there, it can not get into the
+Q_REQUEUE_PI_WAIT state (and require this removed wake).
+Should the waiter be woken up from futex_do_wait() by other means (as in
+this example) and sleep in futex_requeue_pi_wakeup_sync() then the
+wake_up_state() from requeue_pi_wake_futex() will wake it, too.
+Should the waiter task terminate before wake_up_state() had a chance to
+wake the task then the task pointer does not become invalid because the
+futex_hash_bucket::lock is held and the task pointer is RCU protected.
+
+[bigeasy: Updated comment and commit message]
+
+Fixes: 07d91ef510fb1 ("futex: Prevent requeue_pi() lock nesting issue on RT")
+Signed-off-by: Yao Kai <yaokai34@huawei.com>
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Cc: stable@vger.kernel.org
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Signed-off-by: Shivam Kumar <kumar.shivam43666@gmail.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Link: https://patch.msgid.link/20260901135453.3121948-3-bigeasy@linutronix.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/target/tcp.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ kernel/futex/requeue.c |   12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
---- a/drivers/nvme/target/tcp.c
-+++ b/drivers/nvme/target/tcp.c
-@@ -104,6 +104,7 @@ enum nvmet_tcp_recv_state {
+--- a/kernel/futex/requeue.c
++++ b/kernel/futex/requeue.c
+@@ -149,8 +149,16 @@ static inline void futex_requeue_pi_comp
+ 	} while (!atomic_try_cmpxchg(&q->requeue_state, &old, new));
  
- enum {
- 	NVMET_TCP_F_INIT_FAILED = (1 << 0),
-+	NVMET_TCP_F_R2T_SENT	= (1 << 1),
- };
- 
- struct nvmet_tcp_cmd {
-@@ -785,6 +786,7 @@ static int nvmet_try_send_r2t(struct nvm
- 		return -EAGAIN;
- 
- 	cmd->queue->snd_cmd = NULL;
-+	cmd->flags |= NVMET_TCP_F_R2T_SENT;
- 	return 1;
+ #ifdef CONFIG_PREEMPT_RT
+-	/* If the waiter interleaved with the requeue let it know */
+-	if (unlikely(old == Q_REQUEUE_PI_WAIT))
++	/*
++	 * The waiter in futex_requeue_pi_wakeup_sync() can interleave with the
++	 * wake below: It will assign Q_REQUEUE_PI_IN_PROGRESS and here it will
++	 * be updated to Q_REQUEUE_PI_LOCKED (locked = 1). The rcuwait_wait_event()
++	 * will already read Q_REQUEUE_PI_LOCKED and skip the schedule() invocation,
++	 * leading to an access of futex_q::requeue_wait after the waiter returned.
++	 * In this case only we skip the wake here and rely on following wake in
++	 * requeue_pi_wake_futex() to perform the wake if needed.
++	 */
++	if (unlikely(old == Q_REQUEUE_PI_WAIT) && new != Q_REQUEUE_PI_LOCKED)
+ 		rcuwait_wake_up(&q->requeue_wait);
+ #endif
  }
- 
-@@ -1061,6 +1063,12 @@ static int nvmet_tcp_handle_h2c_data_pdu
- 		cmd = &queue->connect;
- 	}
- 
-+	if (unlikely(!(cmd->flags & NVMET_TCP_F_R2T_SENT))) {
-+		pr_err("queue %d: unsolicited H2CData (ttag %u)\n",
-+		       queue->idx, data->ttag);
-+		goto err_proto;
-+	}
-+
- 	if (le32_to_cpu(data->data_offset) != cmd->rbytes_done) {
- 		pr_err("ttag %u unexpected data offset %u (expected %u)\n",
- 			data->ttag, le32_to_cpu(data->data_offset),
 
 
