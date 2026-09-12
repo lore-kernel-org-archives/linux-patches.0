@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8071373BF2;
-	Sat, 12 Sep 2026 12:37:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F116337E5D1;
+	Sat, 12 Sep 2026 12:37:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789216663; cv=none; b=nLB0zqBnCaqlz48jjjH5NLOvhMbfHFYSliF4wfE+SdhN0Su5ak1KWWp7XBiIf2A52D17/M1UMNGsABpsA1dPShQRxhaZeACNGEe2izARAUl05yxxT+MmfcNI1F5FD3wP4v19doJPU7SqTwIRSzKiB1iyscqrHFvifTKE9Kbn3ao=
+	t=1789216668; cv=none; b=Dz58TJ694VSJIVyLPiiZsEqse6WWA5wrtlZk1IUkevS9qX3mEXBFgiEHUbBxqZ2ay4FsLGivu1vgrI/PmNmw5vF/jW6Oio3V8NOY/RKdMdX2QDIKJHjA17SDO7OHHZBW6+YHxBEZCL347k3W/P8BarYIxPSJcmya47InZDJvpJA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789216663; c=relaxed/simple;
-	bh=kGPNCa7Q83cZRZpvm4jY/vBB6DfAdxor/EYE7qiXuj4=;
+	s=arc-20240116; t=1789216668; c=relaxed/simple;
+	bh=jFmlKHEiPHzO2D6fpgcuib9QGV/MBLnIMibJivwRwZ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pcKuZdkJlNwxjNQ8CeMNGD27QOpNH6CXDPRvRhadExloaQXbEeIabAOZavFWFz6seNw4ODwCV/6N00ogvRm9JuuwXv25mzptw2huV562sox00iEj9BHB1duo3EGnsuzpwplpW6bzgz764KgPWTimoNA7LWcH27JNUdp7pKB0LAY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZTI122vp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KAWWt91mBkxvuJ7MmWrn+FHC8GDN6irR+Q5SJunjH8J/heWORxNaEtizmBA0A/iAFNNXIzPgQjObtsh6PKnN79rkMPASybO4ebc+5UND3aQgRGe3SNl7h/Ibcv5t9Wc21rMgebxx5EaT8vQaejBi/298kZwLLvyc/ieHVLfR3IY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UBTm4ZAS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZTI122vp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E27981F00893;
-	Sat, 12 Sep 2026 12:37:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UBTm4ZAS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D76821F00893;
+	Sat, 12 Sep 2026 12:37:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789216661;
-	bh=Ajxbf9op7Zuxj2j5Y6IzGMp83lnySEXjtzMnbDTIJEQ=;
+	s=korg; t=1789216666;
+	bh=AD0hmiafu6AZjKmL8nVojeuDuErYkjLaHrmryzrEqjs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZTI122vp7yCWsOhJej09x+p+u2QbnDS5odnq952gk7DUZh++5sE5qOHdJklgVD3kZ
-	 dnVK1TBU/LDP14/AFFxzO+XVwcKeaJqbORs7Eias+RiKutbRIsNYiAxxWhsaHNyle8
-	 Y/McPGYQ5+1jEDNIMc6rFPJLb+BVMksJ/AMp8kpM=
+	b=UBTm4ZASlovy6A3bNM2hCZp2CaeXipFv9EvDm7/ZS6fZS+Dawrgrw8J9mqs79jh0Z
+	 LjAPdz92KWrLUo3+k7PHhx9hbNLUguQp6LkSIC2mxXVXVvw+zwx6HE3a1CygZdYsoG
+	 vCTwaPe6lwPvmP95yMMkR5w5enhqXDXAH0P4Pg8M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Zapolskiy <vz@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	sashiko-bot <sashiko-bot@kernel.org>,
+	Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>,
+	Yu Kuai <yukuai@fygo.io>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0781/1376] clk: qcom: Return expected ENOMEM error on dynamic allocation failure
-Date: Sat, 12 Sep 2026 08:53:27 +0200
-Message-ID: <20260912065624.944353832@linuxfoundation.org>
+Subject: [PATCH 6.12 0746/1376] md: recheck spare changes before starting sync
+Date: Sat, 12 Sep 2026 08:52:52 +0200
+Message-ID: <20260912065624.170376735@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -52,46 +52,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vladimir Zapolskiy <vz@kernel.org>
+From: Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>
 
-[ Upstream commit 22d9257f08913b6eec3e8ece4d13d9c41f14428b ]
+[ Upstream commit c7d34d17ea43ebc86b45d439ebb435e11ca44bca ]
 
-If a dynamic memory allocation fails, the returned error code in clock
-controller driver probe functions on a few legacy platforms should be
-set to -ENOMEM instead of -EINVAL.
+remove_spares() and remove_and_add_spares() modify the array's rdev
+configuration. These operations are only safe after the array has been
+suspended.
 
-Fixes: ee15faffef11 ("clk: qcom: common: Add API to register board clocks backwards compatibly")
-Signed-off-by: Vladimir Zapolskiy <vz@kernel.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260629162127.3910603-1-vz@kernel.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+md_start_sync() checks whether spare configuration changes are needed
+before taking reconfig_mutex. However, the rdev state can change before
+the mutex is acquired, so the initial check can become stale. In that
+case, md_choose_sync_action() may remove or replace rdevs while normal
+I/O is still accessing them.
+
+The race can occur as follows:
+
+raid10d          Worker                      Normal IO
+____________     _______________________     ______________________
+
+                                             raid10_write_request()
+                                             wait_blocked_dev()
+set Blocked
+set Faulty
+                                             Skip Faulty rdev
+                                             rrdev->nr_pending++
+                                             .repl_bio = bio
+                 removeable_rdev = false     .
+                 array not suspended         .
+lock mddev                                   goto err_handle
+                 lock mddev (wait)
+                 .
+update sb        .
+clear Blocked    .
+                 .
+unlock mddev     .
+                 lock mddev (acquires)
+                 remove_spares()
+                 removeable_rdev = true
+
+                 raid10_remove_disk()
+                 rdev = replacement
+                 replacement = NULL
+                                             rdev_dec_pending(NULL)
+                 unlock mddev                (NULL)->nr_pending--
+
+In this case, rdev_dec_pending() is called with a NULL pointer,
+resulting in a NULL pointer dereference when attempting to decrement
+nr_pending.
+
+Fix this by suspending the array when spare configuration changes are
+needed, including for non-read-write arrays, and checking again after
+taking reconfig_mutex. If the array was not already suspended and a
+change is now needed, release the mutex, suspend the array, and
+reacquire the mutex before continuing.
+
+Fixes: bc08041b32ab ("md: suspend array in md_start_sync() if array need reconfiguration")
+Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20260628142420.1051027-1-abd.masalkhi@gmail.com?part=3
+Signed-off-by: Abd-Alrhman Masalkhi <abd.masalkhi@gmail.com>
+Reviewed-by: Yu Kuai <yukuai@fygo.io>
+Link: https://patch.msgid.link/20260708112003.474537-1-abd.masalkhi@gmail.com
+Signed-off-by: Yu Kuai <yukuai@fygo.io>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/common.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/md/md.c | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/clk/qcom/common.c b/drivers/clk/qcom/common.c
-index e1a83ec481509..8061d0bf590ae 100644
---- a/drivers/clk/qcom/common.c
-+++ b/drivers/clk/qcom/common.c
-@@ -165,7 +165,7 @@ static int _qcom_cc_register_board_clk(struct device *dev, const char *path,
- 	if (!node) {
- 		fixed = devm_kzalloc(dev, sizeof(*fixed), GFP_KERNEL);
- 		if (!fixed)
--			return -EINVAL;
-+			return -ENOMEM;
+diff --git a/drivers/md/md.c b/drivers/md/md.c
+index 889711a24b1cb..3e683b9626df5 100644
+--- a/drivers/md/md.c
++++ b/drivers/md/md.c
+@@ -9583,13 +9583,25 @@ static void md_start_sync(struct work_struct *ws)
+ 	 * If reshape is still in progress, spares won't be added or removed
+ 	 * from conf until reshape is done.
+ 	 */
+-	if (mddev->reshape_position == MaxSector &&
++	if ((mddev->reshape_position == MaxSector || !md_is_rdwr(mddev)) &&
+ 	    md_spares_need_change(mddev)) {
+ 		suspend = true;
+ 		mddev_suspend(mddev, false);
+ 	}
  
- 		fixed->fixed_rate = rate;
- 		fixed->hw.init = &init_data;
-@@ -182,7 +182,7 @@ static int _qcom_cc_register_board_clk(struct device *dev, const char *path,
- 	if (add_factor) {
- 		factor = devm_kzalloc(dev, sizeof(*factor), GFP_KERNEL);
- 		if (!factor)
--			return -EINVAL;
-+			return -ENOMEM;
- 
- 		factor->mult = factor->div = 1;
- 		factor->hw.init = &init_data;
+ 	mddev_lock_nointr(mddev);
++
++	/*
++	 * The spare configuration can change before reconfig_mutex is acquired.
++	 * Recheck while holding the lock and suspend if needed.
++	 */
++	if (!suspend && (mddev->reshape_position == MaxSector || !md_is_rdwr(mddev)) &&
++	    md_spares_need_change(mddev)) {
++		mddev_unlock(mddev);
++		mddev_suspend_and_lock_nointr(mddev);
++		suspend = true;
++	}
++
+ 	if (!md_is_rdwr(mddev)) {
+ 		/*
+ 		 * On a read-only array we can:
 -- 
 2.53.0
 
