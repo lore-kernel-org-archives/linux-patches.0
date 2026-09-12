@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6106E4BEE56;
-	Sat, 12 Sep 2026 12:12:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7379C23BD03;
+	Sat, 12 Sep 2026 12:13:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789215180; cv=none; b=fCMv1KHemNr0l5yyfIZSdf5DMxq/D3IuFlsCC9BOMfcwFKwHTzN6P+3t8af5cyFAJ4TvtLW944aZ3jj6ETxQmSE0SIeX9sA8lp7L6CkcPNice5qOJxQxtbtGvtCTYYfNz8ctROsbuyRe4GaAu/DEZyLIP0FB32vv+zwK1PrN0DE=
+	t=1789215184; cv=none; b=XIAzp+yIaf0wFed5b6x6U41WFxG61AZnFb5eJAYuySETxvRblOiBvAjzJgXnSnJrNLHxv0ZeTcbxM8N+zVRXx721vvVZgn+mxc9pPuG6jC946RlvwhTpw2BB8Z8LloK0tqQe9f1UbNKJlqGgDmrmCMMV5te5FOCariVLlwGD7Y8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789215180; c=relaxed/simple;
-	bh=nIYZ5b28BtTDEztAuC3k0cDQrJ6FNj2Wq4uWAUf5cog=;
+	s=arc-20240116; t=1789215184; c=relaxed/simple;
+	bh=yyWHSH9qNRoUMkEvXgYGMETc528bewoB/Satc/Stgy4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IHnfDZmmU4P9yfHffap+u0xC0H7buUWyNjVpy1S9W2xs21lzld27ov7iGPIKqnmoGeh+84U7F/ucaixkOnbl4tx74Tj5kY5Tc13QhCbmjn/GeaEgo3nMFGcGObLuhMZs3OLarFHEAsiTb5RdS7f9N3ZhRnVuYlx9gp6qcfhxc24=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pg254sDU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hsRkr6R/2IhOzKPqCprMcguQ8cF0RPPea/nQqZ/FZZe/UtQHFXRZLelWyKEZqxtmz++p5jW232DTabnLlEXEOG+g2/gjvKYRbBGW+UDOoNPKAqf6LumA0bVhLDJJD8QwKAYwNQAsfrz2lYW0Cfp8d4muoXTKyj1ELrZV9dLVkB4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xw2EHO+P; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pg254sDU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00A421F000FF;
-	Sat, 12 Sep 2026 12:12:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xw2EHO+P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E41461F000FF;
+	Sat, 12 Sep 2026 12:13:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789215179;
-	bh=ImvA6pCSVtStpUoFPYxVcBu9nlBbdt5U0WTLFkjpxfE=;
+	s=korg; t=1789215183;
+	bh=1+vZjPc8EjFUf1ZNMVDQ7z1xzQrb8Sjp/TCX0nvT0FI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Pg254sDUaFu1IOf9N7A3wORUijNkBg4SDTV2Yv+ogOoqU8DKEqloEhcqEpU0gjv3l
-	 bSh4NpF6HBYRtr4h7VPPl+Xd0ISUj28C+zpOm6Itw2Ms/wNpIoJG5b8cGrgFHkkT/F
-	 66G21jVE9pUGGDBOu1S1ARm/cI11qfv7do9+cof8=
+	b=Xw2EHO+P6ro/Jw31jPoFvzBOtIUvCEwJoJVp2EcRb0TrrGMeco5Gg6NJhqoqAMpRs
+	 z8+CJGE3HVjhzWgMP4G7LlDcHr4ACcg68PzL6FUcmba5zgmm/uAcpo09uLk3S36yjL
+	 9f7hHYfQ/+4wRC7THEMhL/vJmgyZN3rh2cIqIcMs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Gu <gu_0233@qq.com>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0479/1376] remoteproc: qcom_q6v5_adsp: Fix reference leak for device node
-Date: Sat, 12 Sep 2026 08:48:25 +0200
-Message-ID: <20260912065618.210555705@linuxfoundation.org>
+Subject: [PATCH 6.12 0480/1376] hwspinlock: propagate errno when registering single lock
+Date: Sat, 12 Sep 2026 08:48:26 +0200
+Message-ID: <20260912065618.232169919@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,35 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Gu <gu_0233@qq.com>
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 
-[ Upstream commit 8c952807c2cebd5e9e9b37146c9383229794c129 ]
+[ Upstream commit e088ffa9a00eaaaf90da74763e774ca160969c26 ]
 
-When calling of_parse_phandle_with_args(), the caller is responsible
-to call of_node_put() to release the reference of device node.
-In adsp_map_carveout, it does not release the reference.
+hwspin_lock_register_single() always returns 0 despite checking the
+result from radix_tree_insert(). Propagate the errno to make sanity
+checks in callers of this function actually meaningful.
 
-Fixes: f22eedff28af ("remoteproc: qcom: Add support for memory sandbox")
-Signed-off-by: Felix Gu <gu_0233@qq.com>
-Link: https://lore.kernel.org/r/tencent_EDC2253D3B1C22217E1259E07765D269100A@qq.com
+Fixes: 300bab9770e2 ("hwspinlock/core: register a bank of hwspinlocks in a single API call")
+Link: https://sashiko.dev/#/patchset/20260319105947.6237-1-wsa%2Brenesas%40sang-engineering.com # review of patch 14
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Link: https://lore.kernel.org/r/20260512084856.30497-2-wsa+renesas@sang-engineering.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/qcom_q6v5_adsp.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/hwspinlock/hwspinlock_core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/remoteproc/qcom_q6v5_adsp.c b/drivers/remoteproc/qcom_q6v5_adsp.c
-index 223f6ca0745d3..80ac739621bed 100644
---- a/drivers/remoteproc/qcom_q6v5_adsp.c
-+++ b/drivers/remoteproc/qcom_q6v5_adsp.c
-@@ -355,6 +355,7 @@ static int adsp_map_carveout(struct rproc *rproc)
- 		return ret;
+diff --git a/drivers/hwspinlock/hwspinlock_core.c b/drivers/hwspinlock/hwspinlock_core.c
+index 6505261e60686..b27a2e33a6117 100644
+--- a/drivers/hwspinlock/hwspinlock_core.c
++++ b/drivers/hwspinlock/hwspinlock_core.c
+@@ -472,7 +472,7 @@ static int hwspin_lock_register_single(struct hwspinlock *hwlock, int id)
  
- 	sid = args.args[0] & SID_MASK_DEFAULT;
-+	of_node_put(args.np);
+ out:
+ 	mutex_unlock(&hwspinlock_tree_lock);
+-	return 0;
++	return ret;
+ }
  
- 	/* Add SID configuration for ADSP Firmware to SMMU */
- 	iova =  adsp->mem_phys | (sid << 32);
+ static struct hwspinlock *hwspin_lock_unregister_single(unsigned int id)
 -- 
 2.53.0
 
