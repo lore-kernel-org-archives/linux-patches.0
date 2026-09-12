@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE1CE309F08;
-	Sat, 12 Sep 2026 15:24:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAED73328FC;
+	Sat, 12 Sep 2026 15:24:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789226645; cv=none; b=QK9+ZAKj6dGhayTGyDWOsFMqJcDe/TYGiX/CkoQlkf2kxNy5EzksKTc3+1zVynytJe5OEfB3EKUWsnOEwVaN+xg5UaTiVJf1v5NFYphiwhGmGrltdOafh8ZGMEjsNFLtbQo/Tq2XFvhX6gKJj+wVf6sKzN6toc2Yi5aOJcouUEk=
+	t=1789226651; cv=none; b=Y/e+LxpMe/JbcHetdmKOk+7Wvr8Woz2hfcX6ULgIF7XzCXb0pajxLkrMF/d2qzfWsSptDPGiGN6XFSo8YNFJSzwQ8Wb1Vavuo80p3UYS7rXlUCvwwMZkUFb02M6MNGCBT/CJfF+ftTnKVxqvI1rwlnpqYCoT8Tc/gzG48KpGPFw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789226645; c=relaxed/simple;
-	bh=xv7yoXPCgCL5dozO/FRrrqb9wqdMmuzvjrpndONu5mE=;
+	s=arc-20240116; t=1789226651; c=relaxed/simple;
+	bh=bA/wp9QjUz788UFsQWvhder0P1CZEVFzl5Dvxlp0wWQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UqUOWvMkRqbPpOpiCMsOKS1JcszcaFtvqo/R8W6YsyGFZEGmqfYAGArh/GBqLEJhu/BP/4pT0OyPqEnWFthN3/cfH+A4C2vMCol0CzTK6Or0PTdZIUbBxTYp+V7j4YSN4v/oFOUXezEbcCihG/3mgdce+crpBzTn1lyvdkuk6Tc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YKBE9+6z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Rzi+v614JjejzRfz1RyxuyP1x6t7aJ+BqnNqa7zH6l7eLCmHLI3NPpgFLGO8RudqwBw1xS1q5LQjMtNoD8/gsObJek/KpvUSv8k2/HDEzlmtB5qV0uT7Lio5kaFpLZYv7CZUD6Lcth3yJsljSbXxLjVocVyb9C93ZQPMLaVXjLE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YDBuwmEq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YKBE9+6z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2A381F000FF;
-	Sat, 12 Sep 2026 15:24:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YDBuwmEq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADC6A1F000FF;
+	Sat, 12 Sep 2026 15:24:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789226644;
-	bh=0OdM0PoHslGxeGA7npcmjkSFZ3t2Ze6rAPT+3A3SFBQ=;
+	s=korg; t=1789226649;
+	bh=OkF8u1XGF3/pf44Lu6mduTmlqqxpkWHTkXvTxaDEtqo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YKBE9+6zC5GfZLakfAGDTvc7nCLzY3M+lUJoHM4S7Au7FEnZHf4xqrEgNjeiGCnr3
-	 mhdwUZd8WpLgXFgAGnPm6ErRq2HebdoWJO9w/sbR3rbyXwKkDvJ2ByWZxtWay9EWZ5
-	 ak8Vj2j1iHOz8r4XGkt68cBFWAsqYYc2XcdXCK3k=
+	b=YDBuwmEq8Xuo5sMGUtfERbHeR16I6Lfd92w8rGtcUgavkF0SVzNjqTQyWbrwEbOxz
+	 OTDv/TtS7FwnUVnZwjen0JzUZQ4ZCDXfDN8Ws40vcxMSKyzKfVy0MLaOAJROv/w9ZS
+	 vslQHEPg+z56uV+h+NXpbGYjuV047Uyi/OCGpPHY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Kim <james010kim@gmail.com>,
-	Dan Carpenter <error27@gmail.com>,
-	Alexandre Bounine <alex.bou9@gmail.com>,
-	Matt Porter <mporter@kernel.crashing.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 0020/1191] rapidio: mport_cdev: fix use-after-free in dma_req_free()
-Date: Sat, 12 Sep 2026 08:45:48 +0200
-Message-ID: <20260912065548.567718736@linuxfoundation.org>
+	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 6.1 0021/1191] Revert "media: v4l2-dev: fix error handling in __video_register_device()"
+Date: Sat, 12 Sep 2026 08:45:49 +0200
+Message-ID: <20260912065548.591822494@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -53,56 +50,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: James Kim <james010kim@gmail.com>
+From: Hans Verkuil <hverkuil+cisco@kernel.org>
 
-commit 5cbef379a94b161726c5f504598bf4791d45cedc upstream.
+commit e7600f5cee5de14065f950807931d6e6d40fb2d7 upstream.
 
-dma_req_free() acquires buf_mutex through req->map, drops the mapping
-reference with kref_put(), and then dereferences req->map again to unlock
-the mutex.
+This reverts commit 2a934fdb01db6458288fc9386d3d8ceba6dd551a.
 
-If kref_put() drops the last reference, mport_release_mapping() frees the
-mapping, and the subsequent mutex_unlock() dereferences a freed object.
-This is a use-after-free.
+The intentions of that patch were good, but it doesn't work.
 
-Fix this by caching map and md before kref_put(), clearing req->map while
-holding buf_mutex, and using the cached md for mutex unlocking.
+The idea is that if device_register fails, you have to do a put_device
+to let the ref counter release resources.
 
-The bug is reachable from userspace via the RapidIO mport character device
-interface.
+However, the V4L2 API says that if video_register_device() fails, then
+you have to call video_device_release(), which kfree()s the video_device
+struct.
 
-Link: https://lore.kernel.org/20260723235220.588424-1-james010kim@gmail.com
-Fixes: e8de370188d0 ("rapidio: add mport char device driver")
-Signed-off-by: James Kim <james010kim@gmail.com>
-Reviewed-by: Dan Carpenter <error27@gmail.com>
-Cc: Alexandre Bounine <alex.bou9@gmail.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Matt Porter <mporter@kernel.crashing.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+But the put_device() will already have freed the struct, so you end
+up in a double-free scenario.
+
+There is not really a good way of fixing this without breaking
+video_register_device() into two parts, one that initializes everything,
+and one that does the actual device_register, and then converting all
+V4L2 drivers to this new model.
+
+That is a massive job, and it is very unlikely that device_register
+will fail.
+
+So rather than ending up in a double-free scenario, just revert this
+patch, and in that case we'll have a small memory leak. Which is a lot
+more robust.
+
+Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+Fixes: 2a934fdb01db ("media: v4l2-dev: fix error handling in __video_register_device()")
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/linux-media/20260520090624.1071139-1-lgs201920130244@gmail.com/
+Link: https://lore.kernel.org/all/2026042058-charm-storable-4ad8@gregkh/
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/rapidio/devices/rio_mport_cdev.c |   10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/media/v4l2-core/v4l2-dev.c |   14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
---- a/drivers/rapidio/devices/rio_mport_cdev.c
-+++ b/drivers/rapidio/devices/rio_mport_cdev.c
-@@ -582,9 +582,13 @@ static void dma_req_free(struct kref *re
+--- a/drivers/media/v4l2-core/v4l2-dev.c
++++ b/drivers/media/v4l2-core/v4l2-dev.c
+@@ -1032,25 +1032,25 @@ int __video_register_device(struct video
+ 	vdev->dev.class = &video_class;
+ 	vdev->dev.devt = MKDEV(VIDEO_MAJOR, vdev->minor);
+ 	vdev->dev.parent = vdev->dev_parent;
+-	vdev->dev.release = v4l2_device_release;
+ 	dev_set_name(&vdev->dev, "%s%d", name_base, vdev->num);
+-
+-	/* Increase v4l2_device refcount */
+-	v4l2_device_get(vdev->v4l2_dev);
+-
+ 	mutex_lock(&videodev_lock);
+ 	ret = device_register(&vdev->dev);
+ 	if (ret < 0) {
+ 		mutex_unlock(&videodev_lock);
+ 		pr_err("%s: device_register failed\n", __func__);
+-		put_device(&vdev->dev);
+-		return ret;
++		goto cleanup;
  	}
++	/* Register the release callback that will be called when the last
++	   reference to the device goes away. */
++	vdev->dev.release = v4l2_device_release;
  
- 	if (req->map) {
--		mutex_lock(&req->map->md->buf_mutex);
--		kref_put(&req->map->ref, mport_release_mapping);
--		mutex_unlock(&req->map->md->buf_mutex);
-+		struct rio_mport_mapping *map = req->map;
-+		struct mport_dev *md = map->md;
+ 	if (nr != -1 && nr != vdev->num && warn_if_nr_in_use)
+ 		pr_warn("%s: requested %s%d, got %s\n", __func__,
+ 			name_base, nr, video_device_node_name(vdev));
+ 
++	/* Increase v4l2_device refcount */
++	v4l2_device_get(vdev->v4l2_dev);
 +
-+		mutex_lock(&md->buf_mutex);
-+		req->map = NULL;
-+		kref_put(&map->ref, mport_release_mapping);
-+		mutex_unlock(&md->buf_mutex);
- 	}
+ 	/* Part 5: Register the entity. */
+ 	ret = video_register_media_controller(vdev);
  
- 	kref_put(&priv->dma_ref, mport_release_dma);
 
 
