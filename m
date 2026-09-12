@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 470C4317145;
-	Sat, 12 Sep 2026 15:43:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4422525A640;
+	Sat, 12 Sep 2026 15:43:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789227798; cv=none; b=ThkdVwBRKHkVcAkfe4BZlIUDOx3lt8KwlUwtuOF8zHrlT0FiAlGhaQPsQIIMX1Gp++qi/jLvPoPh0J8/7uvaxd3aW2T5TL+/6VsSBXd8uamyIQY62YCiZRBj48Ii6LF+0wp4mshQ43WKq9GkJ2MpZVjpSea4JmCfXZud0enaAEo=
+	t=1789227803; cv=none; b=AlMoTS1ILkKA1cXfn078v/1nvD+0sNp8Uc1e1gU+bQRS+0Lzmz5oBEcvbWVaAzrtyPoowMC3RZ35eaCqf8tdDnwDHLifKdXQW1udSnF45F9EXg4Y32suzCBBEIjLEpw5Ifo0eO8eLsvq5nDRl5xGuQK/GNAVX2Fp1T9pN8HtfQE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789227798; c=relaxed/simple;
-	bh=Hhp33pWoQcfjmACzq7j7kWrIJdyp8wh4lJV6jSFHcWY=;
+	s=arc-20240116; t=1789227803; c=relaxed/simple;
+	bh=4j/IraHCijsgS7aA63RE2lYWiPi+yzYflUOlmY+hBLs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jcX5OOPEhvUiZCVkQZLK0mTJb6GpojKxqI/R/lt8v+AZ0eZpr+2Go1JdFnmIjsr0pmK88fGyHqV6JDyrfgF2oHEQ6rxoMvPynMn+QDXFNjAWUyHiBLbIIIkvh5+XCFpHymtlfxZko/ouim3bkLd99uFogtEMM9PajhkZa00Z2/k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SFcngsu8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=R4izYz8swVRy/S3JM5MJXKJjXSazfckeNUmQRdQfqdwQzLELQfaaxPyrZIdK0dL3qRv36Dn0/58k3mjkYOA+L7OyscrPZofnBpZgcc1c20+fJcjuR0CE+V78HTXGrTApmUYs1Haz/dgFyefB1o6EZvrtxIQobdg4zzIymjU02nk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SF5Chemb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SFcngsu8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B0851F000FF;
-	Sat, 12 Sep 2026 15:43:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SF5Chemb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01E2C1F000FF;
+	Sat, 12 Sep 2026 15:43:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789227796;
-	bh=D3G7516hjehHEgW6Ipf9ZYB9k7u9djSxaS4ot99tlfQ=;
+	s=korg; t=1789227801;
+	bh=5q4iMMFapUJ+KrYRU2oPk3CP7NIHjm6K6zUw4KWKU3k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SFcngsu8OSW9P41bPbuxmSa/kDE5rEwiP+jWbif0qw+Jh3bS2ge4NJEUirN/VPUec
-	 mfyxKnTAAs9EUMZ4uOro+BgzqKhTtUcL/q1DvTq5lnV9o02c7K8DsO7irBws08fdZT
-	 b9JrjVwbCAFVczoPeFpWTkZiXclk4GTXwjvc1tj8=
+	b=SF5ChembtbMuDttpUHh2ATdL9CSAVw8MvloNMa9y6HSkNvkFAxG/zWlbLxs+8Zhiu
+	 A/pLtcsNF0R71ymFRime4lR1GoRXY+UJ8E1jIYJLN/WjBioCHHgSnZAXElCpVO8y+k
+	 FwnJmlnwhUV0NwXn/ubwowi8YLYXoOAOu5n6DvgU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabio Estevam <festevam@nabladev.com>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.1 0238/1191] wifi: mwifiex: Detach sync cmd buffer on interrupted wait
-Date: Sat, 12 Sep 2026 08:49:26 +0200
-Message-ID: <20260912065553.557366827@linuxfoundation.org>
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Suraj Jitindar Singh <surajjs@amazon.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 0256/1191] netfilter: nf_tables: make nft_object rhltable per table
+Date: Sat, 12 Sep 2026 08:49:44 +0200
+Message-ID: <20260912065553.968742605@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -50,84 +52,220 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fabio Estevam <festevam@nabladev.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-commit ef06882c7d8a7400b67d0d003b1008093dd589ed upstream.
+commit f4f699790590bd0896c48a71e9232a65198f92f0 upstream.
 
-mwifiex synchronous commands keep the caller-provided data buffer in
-cmd_node->data_buf. Several callers pass stack-allocated objects there.
+The nft_object rhltable is global, this allows for accessing objects
+that are being dismangled from lookup path by other existing netns.
+Given the nft_obj_destroy() releases the object inmediately, this might
+lead to use-after-free of these objects that are being released.
+Make the existing rhltable per table to address this issue to deal with
+with the nft_rcv_nl_event() path too.
 
-If wait_event_interruptible_timeout() is interrupted, the caller can
-return and release that stack object while the firmware command is still
-the current command. A late firmware response then reaches the normal
-response handler, which can copy data through cmd_node->data_buf into the
-stale stack address.
+Update nft_obj_lookup() to take the table as non-const, otherwise,
+compiler complains when passing the objname_ht to rhltable_lookup().
 
-This fixes a stack corruption observed during repeated association and
-disassociation cycles. The panic trace showed the command wait being
-interrupted immediately before a bad pointer dereference:
+Fixes: 4d44175aa5bb ("netfilter: nf_tables: handle nft_object lookups via rhltable")
+Suggested-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+[ 6.1: Conflicts in nf_tables_api.c because 6.1 lacks three mainline
+  refactors: 0be908750162 ("netfilter: nf_tables: pass nft_table to
+  destroy function", v6.11), e169285f8c56 ("netfilter: nf_tables: do
+  not store nft_ctx in transaction objects", v6.11) and f80a612dd77c
+  ("netfilter: nf_tables: add support to destroy operation", v6.3).
+  As a result 6.1's nf_tables_table_destroy() still takes an nft_ctx;
+  struct nft_trans still embeds an nft_ctx (so the owning table is
+  trans->ctx.table, not a per-transaction table local); and the commit
+  path has no NFT_MSG_DESTROYOBJ case. Resolved by destroying the
+  per-table objname_ht via ctx->table in nf_tables_table_destroy(), and
+  by passing the owning table trans->ctx.table to nft_obj_del() in the
+  commit and abort paths; 6.1's single NFT_MSG_DELOBJ case is retained.
+  The header and all other hunks applied cleanly. ]
+Signed-off-by: Suraj Jitindar Singh <surajjs@amazon.com>
 
-  cmd_wait_q terminated: -512
-  Unable to handle kernel paging request at virtual address 002c583837384662
-  Kernel panic - not syncing: stack-protector: Kernel stack is corrupted
-  ...
-  Tainted: [M]=MACHINE_CHECK
-
-The fault address decodes as little-endian ASCII:
-
-  0x002c583837384662 -> "bF878X,\0"
-
-which is a fragment of the VERSION_EXT firmware string exposed as
-debugfs "verext":
-
-  w8997o-V4, RF878X, FP92, 16.92.21.p153.7
-
-The same runs also showed corrupted control data containing:
-
-  0x2400372e333531 -> "153.7\0$"
-
-which is the tail of the same VERSION_EXT string. This points at a late
-VERSION_EXT response writing through a stale stack-backed data_buf after
-the interrupted wait returned.
-
-After cancelling pending commands on an interrupted or timed-out wait,
-detach the caller-owned data buffer from the still-current command. This
-preserves the existing command cancellation behaviour while preventing a
-late response from writing through a pointer whose lifetime ended with the
-waiting caller.
-
-Tested on an i.MX8MP board using an 88W8997.
-
-Cc: stable@vger.kernel.org
-Fixes: 3d026d09b28d ("mwifiex: cancel pending commands for signal")
-Signed-off-by: Fabio Estevam <festevam@nabladev.com>
-Link: https://patch.msgid.link/20260724203320.78793-1-festevam@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/marvell/mwifiex/sta_ioctl.c |   12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ include/net/netfilter/nf_tables.h |  4 +++-
+ net/netfilter/nf_tables_api.c     | 34 +++++++++++++++----------------
+ 2 files changed, 19 insertions(+), 19 deletions(-)
 
---- a/drivers/net/wireless/marvell/mwifiex/sta_ioctl.c
-+++ b/drivers/net/wireless/marvell/mwifiex/sta_ioctl.c
-@@ -57,6 +57,18 @@ int mwifiex_wait_queue_complete(struct m
- 		mwifiex_dbg(adapter, ERROR, "cmd_wait_q terminated: %d\n",
- 			    status);
- 		mwifiex_cancel_all_pending_cmd(adapter);
-+
-+		/* The command response path writes through cmd_node->data_buf.
-+		 * On an interrupted wait, the caller can return and release a
-+		 * stack-allocated data_buf before a late firmware response is
-+		 * processed. Detach the caller-owned buffer from the current
-+		 * command so a late response cannot corrupt freed stack memory.
-+		 */
-+		spin_lock_bh(&adapter->mwifiex_cmd_lock);
-+		if (adapter->curr_cmd == cmd_queued)
-+			adapter->curr_cmd->data_buf = NULL;
-+		spin_unlock_bh(&adapter->mwifiex_cmd_lock);
-+
- 		return status;
- 	}
+diff --git a/include/net/netfilter/nf_tables.h b/include/net/netfilter/nf_tables.h
+index e0b6c328d5377..7e63281f2d5a8 100644
+--- a/include/net/netfilter/nf_tables.h
++++ b/include/net/netfilter/nf_tables.h
+@@ -1212,6 +1212,7 @@ static inline void nft_use_inc_restore(u32 *use)
+  *	@sets: sets in the table
+  *	@objects: stateful objects in the table
+  *	@flowtables: flow tables in the table
++ *	@objname_ht: hashtable for objects lookup by name
+  *	@hgenerator: handle generator state
+  *	@handle: table handle
+  *	@use: number of chain references to this table
+@@ -1227,6 +1228,7 @@ struct nft_table {
+ 	struct list_head		sets;
+ 	struct list_head		objects;
+ 	struct list_head		flowtables;
++	struct rhltable			objname_ht;
+ 	u64				hgenerator;
+ 	u64				handle;
+ 	u32				use;
+@@ -1305,7 +1307,7 @@ static inline void *nft_obj_data(const struct nft_object *obj)
+ #define nft_expr_obj(expr)	*((struct nft_object **)nft_expr_priv(expr))
  
+ struct nft_object *nft_obj_lookup(const struct net *net,
+-				  const struct nft_table *table,
++				  struct nft_table *table,
+ 				  const struct nlattr *nla, u32 objtype,
+ 				  u8 genmask);
+ 
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index b6f74fa699f22..1baf5253d635a 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -42,8 +42,6 @@ enum {
+ 	NFT_VALIDATE_DO,
+ };
+ 
+-static struct rhltable nft_objname_ht;
+-
+ static u32 nft_chain_hash(const void *data, u32 len, u32 seed);
+ static u32 nft_chain_hash_obj(const void *data, u32 len, u32 seed);
+ static int nft_chain_hash_cmp(struct rhashtable_compare_arg *, const void *);
+@@ -1415,6 +1413,10 @@ static int nf_tables_newtable(struct sk_buff *skb, const struct nfnl_info *info,
+ 	if (err)
+ 		goto err_chain_ht;
+ 
++	err = rhltable_init(&table->objname_ht, &nft_objname_ht_params);
++	if (err < 0)
++		goto err_obj_ht;
++
+ 	INIT_LIST_HEAD(&table->chains);
+ 	INIT_LIST_HEAD(&table->sets);
+ 	INIT_LIST_HEAD(&table->objects);
+@@ -1433,6 +1435,8 @@ static int nf_tables_newtable(struct sk_buff *skb, const struct nfnl_info *info,
+ 	list_add_tail_rcu(&table->list, &nft_net->tables);
+ 	return 0;
+ err_trans:
++	rhltable_destroy(&table->objname_ht);
++err_obj_ht:
+ 	rhltable_destroy(&table->chains_ht);
+ err_chain_ht:
+ 	kfree(table->udata);
+@@ -1595,6 +1599,7 @@ static void nf_tables_table_destroy(struct nft_ctx *ctx)
+ 		return;
+ 
+ 	rhltable_destroy(&ctx->table->chains_ht);
++	rhltable_destroy(&ctx->table->objname_ht);
+ 	kfree(ctx->table->name);
+ 	kfree(ctx->table->udata);
+ 	kfree(ctx->table);
+@@ -7149,7 +7154,7 @@ void nft_unregister_obj(struct nft_object_type *obj_type)
+ EXPORT_SYMBOL_GPL(nft_unregister_obj);
+ 
+ struct nft_object *nft_obj_lookup(const struct net *net,
+-				  const struct nft_table *table,
++				  struct nft_table *table,
+ 				  const struct nlattr *nla, u32 objtype,
+ 				  u8 genmask)
+ {
+@@ -7165,7 +7170,7 @@ struct nft_object *nft_obj_lookup(const struct net *net,
+ 		     !lockdep_commit_lock_is_held(net));
+ 
+ 	rcu_read_lock();
+-	list = rhltable_lookup(&nft_objname_ht, &k, nft_objname_ht_params);
++	list = rhltable_lookup(&table->objname_ht, &k, nft_objname_ht_params);
+ 	if (!list)
+ 		goto out;
+ 
+@@ -7444,7 +7449,7 @@ static int nf_tables_newobj(struct sk_buff *skb, const struct nfnl_info *info,
+ 	if (err < 0)
+ 		goto err_trans;
+ 
+-	err = rhltable_insert(&nft_objname_ht, &obj->rhlhead,
++	err = rhltable_insert(&table->objname_ht, &obj->rhlhead,
+ 			      nft_objname_ht_params);
+ 	if (err < 0)
+ 		goto err_obj_ht;
+@@ -7640,8 +7645,8 @@ nf_tables_getobj_single(u32 portid, const struct nfnl_info *info,
+ 	struct netlink_ext_ack *extack = info->extack;
+ 	u8 genmask = nft_genmask_cur(info->net);
+ 	u8 family = info->nfmsg->nfgen_family;
+-	const struct nft_table *table;
+ 	struct net *net = info->net;
++	struct nft_table *table;
+ 	struct nft_object *obj;
+ 	struct sk_buff *skb2;
+ 	u32 objtype;
+@@ -9319,9 +9324,9 @@ static void nf_tables_commit_chain(struct net *net, struct nft_chain *chain)
+ 		nf_tables_commit_chain_free_rules_old(g0);
+ }
+ 
+-static void nft_obj_del(struct nft_object *obj)
++static void nft_obj_del(struct nft_table *table, struct nft_object *obj)
+ {
+-	rhltable_remove(&nft_objname_ht, &obj->rhlhead, nft_objname_ht_params);
++	rhltable_remove(&table->objname_ht, &obj->rhlhead, nft_objname_ht_params);
+ 	list_del_rcu(&obj->list);
+ }
+ 
+@@ -9972,7 +9977,7 @@ static int nf_tables_commit(struct net *net, struct sk_buff *skb)
+ 			}
+ 			break;
+ 		case NFT_MSG_DELOBJ:
+-			nft_obj_del(nft_trans_obj(trans));
++			nft_obj_del(trans->ctx.table, nft_trans_obj(trans));
+ 			nf_tables_obj_notify(&trans->ctx, nft_trans_obj(trans),
+ 					     NFT_MSG_DELOBJ);
+ 			break;
+@@ -10231,7 +10236,7 @@ static int __nf_tables_abort(struct net *net, enum nfnl_abort_action action)
+ 				nft_trans_destroy(trans);
+ 			} else {
+ 				nft_use_dec_restore(&trans->ctx.table->use);
+-				nft_obj_del(nft_trans_obj(trans));
++				nft_obj_del(trans->ctx.table, nft_trans_obj(trans));
+ 			}
+ 			break;
+ 		case NFT_MSG_DELOBJ:
+@@ -10870,7 +10875,7 @@ static void __nft_release_table(struct net *net, struct nft_table *table)
+ 		nft_set_destroy(&ctx, set);
+ 	}
+ 	list_for_each_entry_safe(obj, ne, &table->objects, list) {
+-		nft_obj_del(obj);
++		nft_obj_del(table, obj);
+ 		nft_use_dec(&table->use);
+ 		nft_obj_destroy(&ctx, obj);
+ 	}
+@@ -11033,10 +11038,6 @@ static int __init nf_tables_module_init(void)
+ 	if (err < 0)
+ 		goto err_netdev_notifier;
+ 
+-	err = rhltable_init(&nft_objname_ht, &nft_objname_ht_params);
+-	if (err < 0)
+-		goto err_rht_objname;
+-
+ 	err = nft_offload_init();
+ 	if (err < 0)
+ 		goto err_offload;
+@@ -11059,8 +11060,6 @@ static int __init nf_tables_module_init(void)
+ err_netlink_notifier:
+ 	nft_offload_exit();
+ err_offload:
+-	rhltable_destroy(&nft_objname_ht);
+-err_rht_objname:
+ 	unregister_netdevice_notifier(&nf_tables_flowtable_notifier);
+ err_netdev_notifier:
+ 	nf_tables_core_module_exit();
+@@ -11084,7 +11083,6 @@ static void __exit nf_tables_module_exit(void)
+ 	cancel_work_sync(&trans_gc_work);
+ 	cancel_work_sync(&trans_destroy_work);
+ 	rcu_barrier();
+-	rhltable_destroy(&nft_objname_ht);
+ 	nf_tables_core_module_exit();
+ }
+ 
+-- 
+2.53.0
+
 
 
