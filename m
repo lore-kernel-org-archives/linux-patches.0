@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54C5B1A6816;
-	Sat, 12 Sep 2026 19:13:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEBE2486647;
+	Sat, 12 Sep 2026 19:13:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789240418; cv=none; b=q3iBDtrP7j79cvKOl8BP6jrenWlFrMZyjYS1YMPoLO+w8V+GsnevfSed5rk6l/uF4SpQ+LBaMtPsTDgGMyoaPXq1WXKeCevQ1zhanw6qejjQR14OluDRa9uLIqA6WXu7E4AxdEI7XVO3DZ74NXhMzq+ZRHAPdGvA92GRSgAGZzw=
+	t=1789240424; cv=none; b=Ysy5askyUTIatTzNXJQ8htDLAUzjtHq4CqDF/DCjC1triQlcimC1BYE/TdRhj9J2OS+ByT3l4/55lXbgVqNsJtWoi5ffNWDWymsKI8tlPcLWY78BXfsjQjia/wwAEs7XXl3n/YJhlx01jAPz5xXB3QE7vhINCJccUQCZESxNzLg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789240418; c=relaxed/simple;
-	bh=rBEAISIceeWfaw2Msx/0HgxxHT2ao9jDj992IgPPIBk=;
+	s=arc-20240116; t=1789240424; c=relaxed/simple;
+	bh=MF8ItjXmWRNx1+4y4A4q6aoTvErlA2qtIkGvSp+kjNk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=MnaDJkcKh8CLYf6Irm/eXKsQIeJEd9JsiD74CTd2qEnQVyvWbu+XAqlXkY7rywCVUJPD6+klyEnQObZ+ad7WFcFFgleW7UZnZH/nEkIX2TGmOaniCDMNCCF4gGLBL8PWh4aRQ86mFma+W39Ut/Gtbw3CnO4ga8vfVrCAx2hhGdY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=igAWYXsF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=T2C1555rFxTVkIKokgZ+gaI1EHG1ktkKJDyy2avLzhep/0bhdVrE8+WG6vMVmQYX9spKCekhlv9N50c0FkFp0fZCGkGa7da5Z6a6t+g0enGHt6/xxdA5j+PYx3WsPNzX54A7w1AtijFrGt5VeMKxPiTkMMeKOCF1MkSoIRY+pTE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G+wCbdcu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="igAWYXsF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 427F21F000FF;
-	Sat, 12 Sep 2026 19:13:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G+wCbdcu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E4D71F000FF;
+	Sat, 12 Sep 2026 19:13:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789240417;
-	bh=Gg3VIMDrkDSYEh22PRBucC+yu0I6+IzNT853hMCoT7E=;
+	s=korg; t=1789240422;
+	bh=EBy24brare31EINix9UN65vwSM/sTvpJj155ESgjALs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=igAWYXsFsXaQzxGX8SECvc6RyFIjhr4b11p8qZLivZy656lgSWRG2zzhAe29TB2LI
-	 OL75Xjwjd27dND1kJtDCv1LiCfBYrKQ9vWc8a3LI/j+NCLyz7m/JdqIHNAju/NsiC9
-	 dFq5vGQ1aeF2e4anfALyRsqKmKc5C7IXtXA+RngM=
+	b=G+wCbdcus8H0Kv/pEVd6/CEf4+vZfU0W/lcWArH7WaoHoUyvO6sP9997/xk7k8+Fn
+	 YJNGuNZc/N4HCfbq9oOu77w5GDIVVXkTIBgeL86cRDZ9Wuq6if4KNxVOKcAmrm8IBj
+	 wr+pkDoDhJhBOpNt4paOLccPvF9/ezwO3BckXZIw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matti Vaittinen <mazziesaccount@gmail.com>,
-	Kalle Niemi <kaleposti@gmail.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 811/935] power: supply: bd99954: Drop bad register fields
-Date: Sat, 12 Sep 2026 09:04:01 +0200
-Message-ID: <20260912065545.440137029@linuxfoundation.org>
+Subject: [PATCH 5.15 858/935] i3c: mipi-i3c-hci: Switch PIO data allocation to devm_kzalloc()
+Date: Sat, 12 Sep 2026 09:04:48 +0200
+Message-ID: <20260912065546.504829327@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -46,83 +46,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Matti Vaittinen <mazziesaccount@gmail.com>
+From: Adrian Hunter <adrian.hunter@intel.com>
 
-[ Upstream commit 177299384a224377b4152242d875e752e5958c02 ]
+[ Upstream commit 11d17c2855bfc04550557017eae02e92f3eeab1c ]
 
-The bd99954 driver creates regmap fields for all the registers. All the
-fields for VBUS_UCD_FCTRL_SET (extended command 0x33) are accidentally
-created for VCC_UCD_FCTRL_SET (extended command 0x2b), causing all
-reads/writes for the fields to access wrong register. Luckily the fields
-for VBUS_UCD_FCTRL_SET are unused.
+The driver already uses managed resources, so convert the PIO data
+structure allocation to devm_zalloc().  Remove the manual kfree().
 
-Taking a look at the data-sheet all the fields in the VBUS_UCD_FCTRL_SET
-are marked as: "In normal operation, please don’t set these registers"
-with not much of additional documentation. As the fields are wrong and
-because there seems to be no users of the fields - it is better to just
-drop them. This will also decrease the memory footprint.
-
-Drop incorrect VBUS_UCD_FCTRL_SET fields.
-
-Datasheet: https://fscdn.rohm.com/en/products/databook/datasheet/ic/power/battery_management/bd99954xxx-e.pdf
-Signed-off-by: Matti Vaittinen <mazziesaccount@gmail.com>
-Fixes: 0902f8366491 ("power: supply: Support ROHM bd99954 charger")
-Tested-by: Kalle Niemi <kaleposti@gmail.com>
-Link: https://patch.msgid.link/758fd430d02286a6f18603a8aecfe443f5ddeb8e.1786356145.git.mazziesaccount@gmail.com
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260113072702.16268-7-adrian.hunter@intel.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Stable-dep-of: 308ecb824db3 ("i3c: mipi-i3c-hci: Fix missing STAT_IBI_STATUS_THLD in PIO mode")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/bd99954-charger.h | 23 +----------------------
- 1 file changed, 1 insertion(+), 22 deletions(-)
+ drivers/i3c/master/mipi-i3c-hci/pio.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/power/supply/bd99954-charger.h b/drivers/power/supply/bd99954-charger.h
-index f588979253830..d053ac901274c 100644
---- a/drivers/power/supply/bd99954-charger.h
-+++ b/drivers/power/supply/bd99954-charger.h
-@@ -279,17 +279,7 @@ enum bd9995x_fields {
- 	F_VBUS_EXTID,
- 	F_VBUS_IDRDET,
- 	F_VBUS_INDO,
--	F_VBUS_UCDSWEN,
--	F_VBUS_RREF_EN,
--	F_VBUS_DPPU_EN,
--	F_VBUS_DPREF_EN,
--	F_VBUS_DMREF_EN,
--	F_VBUS_DPDET_EN,
--	F_VBUS_DMDET_EN,
--	F_VBUS_DPSINK_EN,
--	F_VBUS_DMSINK_EN,
--	F_VBUS_DP_BUFF_EN,
--	F_VBUS_DM_BUFF_EN,
-+
- 	F_VBUS_EXTCLKENBL,
- 	F_VBUS_PLSTESTEN,
- 	F_VBUS_UCDSWEN_TSTENB,
-@@ -626,17 +616,6 @@ static const struct reg_field bd9995x_reg_fields[] = {
- 	    [F_VBUS_EXTID] = REG_FIELD(VBUS_IDD_STATUS, 5, 5),
- 	    [F_VBUS_IDRDET] = REG_FIELD(VBUS_IDD_STATUS, 4, 4),
- 	    [F_VBUS_INDO] = REG_FIELD(VBUS_IDD_STATUS, 0, 3),
--	    [F_VBUS_UCDSWEN] = REG_FIELD(VCC_UCD_FCTRL_SET, 10, 10),
--	    [F_VBUS_RREF_EN] = REG_FIELD(VCC_UCD_FCTRL_SET, 9, 9),
--	    [F_VBUS_DPPU_EN] = REG_FIELD(VCC_UCD_FCTRL_SET, 8, 8),
--	    [F_VBUS_DPREF_EN] = REG_FIELD(VCC_UCD_FCTRL_SET, 7, 7),
--	    [F_VBUS_DMREF_EN] = REG_FIELD(VCC_UCD_FCTRL_SET, 6, 6),
--	    [F_VBUS_DPDET_EN] = REG_FIELD(VCC_UCD_FCTRL_SET, 5, 5),
--	    [F_VBUS_DMDET_EN] = REG_FIELD(VCC_UCD_FCTRL_SET, 4, 4),
--	    [F_VBUS_DPSINK_EN] = REG_FIELD(VCC_UCD_FCTRL_SET, 3, 3),
--	    [F_VBUS_DMSINK_EN] = REG_FIELD(VCC_UCD_FCTRL_SET, 2, 2),
--	    [F_VBUS_DP_BUFF_EN] = REG_FIELD(VCC_UCD_FCTRL_SET, 1, 1),
--	    [F_VBUS_DM_BUFF_EN] = REG_FIELD(VCC_UCD_FCTRL_SET, 0, 0),
+diff --git a/drivers/i3c/master/mipi-i3c-hci/pio.c b/drivers/i3c/master/mipi-i3c-hci/pio.c
+index 653cee2d0645a..9f0e12d2b906a 100644
+--- a/drivers/i3c/master/mipi-i3c-hci/pio.c
++++ b/drivers/i3c/master/mipi-i3c-hci/pio.c
+@@ -141,7 +141,7 @@ static int hci_pio_init(struct i3c_hci *hci)
+ 	struct hci_pio_data *pio;
+ 	u32 val, size_val, rx_thresh, tx_thresh, ibi_val;
  
- 	    [F_VBUS_EXTCLKENBL] = REG_FIELD(VBUS_UCD_FCTRL_EN, 15, 15),
- 	    [F_VBUS_PLSTESTEN] = REG_FIELD(VBUS_UCD_FCTRL_EN, 14, 14),
+-	pio = kzalloc(sizeof(*pio), GFP_KERNEL);
++	pio = devm_kzalloc(hci->master.dev.parent, sizeof(*pio), GFP_KERNEL);
+ 	if (!pio)
+ 		return -ENOMEM;
+ 
+@@ -219,8 +219,6 @@ static void hci_pio_cleanup(struct i3c_hci *hci)
+ 		BUG_ON(pio->curr_rx);
+ 		BUG_ON(pio->curr_tx);
+ 		BUG_ON(pio->curr_resp);
+-		kfree(pio);
+-		hci->io_data = NULL;
+ 	}
+ }
+ 
 -- 
 2.53.0
 
