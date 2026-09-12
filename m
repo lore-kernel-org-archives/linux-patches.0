@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E8FE38C415;
-	Sat, 12 Sep 2026 15:41:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3819C348C75;
+	Sat, 12 Sep 2026 15:41:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789227693; cv=none; b=bU+Me5ftem0QfKBqjdVZ4azGzhp73oq2wVX4t+Wn9J7xtdVnvrWAbSeFEkkH85uGJQTCSoE3LjkrMMiHY7blvTscmvfvIpFm8dZYjl6ug5boeUkXCvJhJdN5FTMHRaVpf0p+BaImQmWro9mfFo4M9huljZYBH28Uw6bq7X/g+WM=
+	t=1789227697; cv=none; b=Ixt1hM+SH0zv/hQRjdx2yXIHwDAk0EOUhfZkY6qg8xfYw64tFtW1TfCIYsoZ0BeRsZ7qR2q6gpon+cekmGoitsZth+sLO5JSqprPIOf1s4tOHuOlBxu/7auql7CRgiiwbBgpQJgsnp+azXObw0QElbb7ccsiDcyO3Q3QP1OdYjE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789227693; c=relaxed/simple;
-	bh=hFa3AawmKnbJYRs/qKwhXPya/6NMbQ6FtjqkxBO0sMk=;
+	s=arc-20240116; t=1789227697; c=relaxed/simple;
+	bh=n2h/vwThMPpk+cjbfi3PWEz6StJ7la//73syQ17Jiqc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gb1/rslDzR/rCfZ4WPboES+dBzFLaSHtitr3Emjd7t+xWECAT7VwOYeoRAR0nKIsYNhnuIMFGjbtW3ImaIczmMbVjfwNyvkyFvmMKvLOxA/E0yag/Tcdyx1OYf2VcPHydNYL7GyIuu7SCCFn28EIKBgfV9clpOjQpqUs5s51gWQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wt3dVGBQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gpLFt89B4KCv0o7M7m9sPvvP/Gjgc/cHrA+USdNY6/GXTvP4qMRZZZPeP6fjHefHdDlf1muYWetMXIlB5Hx0qoVdl5qvwjcBqyMj7jabbdatwKmb+5Mx2YF0TcmymGnd0FEBi6nrcyaWUPaX1PiYDG2yauJG2Q39qZ43xTZq+X8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I6qmvvXG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wt3dVGBQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C16A1F000FF;
-	Sat, 12 Sep 2026 15:41:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I6qmvvXG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 556EA1F000FF;
+	Sat, 12 Sep 2026 15:41:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789227691;
-	bh=3t1fD4eSg6B3+D2NAHwfQqQ/90SazYx53k49U/OglVU=;
+	s=korg; t=1789227696;
+	bh=+QdoHDKWo/ISXgHR5KggeUwToJnh3JanI7dpF4HEcf8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wt3dVGBQhqw5GnHbCdsUqgfGY3nlwawrf2IbYp/d57D+Jik21yH2N6BY7tF9bislR
-	 +hlLA4RmLu9KNSxYImo6gBksuDGY4yEAYfTZqbOyNt2D8UjckAHE0hG/QvIM2hHtZK
-	 MNpNFCyL5jHjLbva+9dbBKE7C1c1IgzzKOTibrIk=
+	b=I6qmvvXG/nlRE4ojLLDuZqhU8YBngNR2eVhJ9kprcOv+ATKcGDdSSCFUcnGAWJfHX
+	 KJGmiUb8FNf3hDKeliAo6Lb+Y2wYqgEFrG9wlCgC3Bw/4Eo2PhzDEnEWhqzTCYqLlj
+	 VfTAv5LQqJBt+r0Xng0r5We/2Q2oh6VWZcuKGA4E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Borys Tsyrulnikov <tsyrulnikov.borys@gmail.com>,
-	"Kiryl Shutsemau (Meta)" <kas@kernel.org>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Binbin Wu <binbin.wu@linux.intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0231/1191] x86/tdx: Fix zero-extension for 32-bit port I/O
-Date: Sat, 12 Sep 2026 08:49:19 +0200
-Message-ID: <20260912065553.397277145@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>,
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	Kees Cook <kees@kernel.org>,
+	Bill Wendling <morbo@google.com>,
+	Justin Stitt <justinstitt@google.com>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 0232/1191] arch_numa: avoid false positive fortify warning in setup_node_to_cpumask_map()
+Date: Sat, 12 Sep 2026 08:49:20 +0200
+Message-ID: <20260912065553.419706321@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -53,62 +55,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kiryl Shutsemau (Meta) <kas@kernel.org>
+From: Nathan Chancellor <nathan@kernel.org>
 
-[ Upstream commit 941370fc93cc3474e26811f4d3b062903eefe2cf ]
+commit f2b1cb39d5ccab090d8353788f186f7e7a1fffd4 upstream.
 
-According to x86 architecture rules, 32-bit operations zero-extend the
-result to 64 bits. The current implementation of handle_in() only masks
-the lower 32 bits, which preserves the upper 32 bits of RAX when a
-32-bit port IN instruction is emulated.
+When building ARCH=riscv using clang with CONFIG_FORTIFY_SOURCE and
+CONFIG_UBSAN_BOUNDS enabled, CONFIG_NR_CPUS > 64, and the default value of
+2 for CONFIG_NODES_SHIFT, there is a compiletime warning from the fortify
+routines.
 
-Use insn_assign_reg() to write the result back into RAX with proper
-partial-register-write semantics: 1- and 2-byte forms leave the upper
-bits untouched, the 4-byte form zero-extends to the full register.
+  In file included from mm/arch_numa.c:11:
+  In file included from include/linux/acpi.h:14:
+  In file included from include/linux/resource_ext.h:11:
+  In file included from include/linux/slab.h:17:
+  In file included from include/linux/gfp.h:7:
+  In file included from include/linux/mmzone.h:8:
+  In file included from include/linux/spinlock.h:60:
+  In file included from include/linux/interrupt_rc.h:17:
+  In file included from include/linux/smp.h:13:
+  In file included from include/linux/cpumask.h:11:
+  In file included from include/linux/bitmap.h:13:
+  In file included from include/linux/string.h:383:
+  include/linux/fortify-string.h:430:4: warning: call to '__write_overflow_field' declared with 'warning' attribute: detected write beyond size of field (1st parameter); maybe use struct_group()? [-Wattribue-warning]
+    430 |                         __write_overflow_field(p_size_field, size);
+        |                         ^
+  include/linux/fortify-string.h:430:4: note: called by function 'fortify_memset_chk(unsigned long, unsigned long, unsigned long)'
+  include/linux/bitmap.h:248:3: note: inlined by function 'setup_node_to_cpumask_map'
+    248 |                 memset(dst, 0, len);
+        |                 ^
+  include/linux/fortify-string.h:462:25: note: expanded from macro 'memset'
+    462 | #define memset(p, c, s) __fortify_memset_chk(p, c, s,                   \
+        |                         ^
+  include/linux/fortify-string.h:453:2: note: expanded from macro '__fortify_memset_chk'
+    453 |         fortify_memset_chk(__fortify_size, p_size, p_size_field),       \
+        |         ^
+  include/linux/fortify-string.h:430:4: note: use '-gline-directives-only' (implied by '-g1') or higher for more accurate inlining chain locations
+    430 |                         __write_overflow_field(p_size_field, size);
+        |                         ^
+  1 warning generated.
 
-Fixes: 03149948832a ("x86/tdx: Port I/O: Add runtime hypercalls")
-Reported-by: Borys Tsyrulnikov <tsyrulnikov.borys@gmail.com>
-Signed-off-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Reviewed-by: Binbin Wu <binbin.wu@linux.intel.com>
-Link: https://lore.kernel.org/all/CAKw_Dz96rfSQc6Rn+9QBcUFHhmkK+9zu+P=bxowfZwxrATCBRg@mail.gmail.com/
-Cc:stable@vger.kernel.org
-Link: https://patch.msgid.link/20260713133753.223947-4-kirill@shutemov.name
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+In this configuration, MAX_NUMNODES is 4.  clang unrolls the for loop in
+setup_node_to_cpumask_map() past this, which triggers the fortify check
+when accessing node_to_cpumask_map on the theoretical fifth loop iteration
+because it would be an out of bounds write.
+
+Make it clear to clang that nr_node_ids is bounded by MAX_NUMNODES due to
+the logic in setup_nr_node_ids() by early returning in
+setup_node_to_cpumask_map() should that condition be violated.
+
+Link: https://lore.kernel.org/20260813-arch_numa-avoid-fortify-warning-v2-1-093ad97a78df@kernel.org
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Closes: https://github.com/ClangBuiltLinux/linux/issues/2174
+Reviewed-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Cc: Kees Cook <kees@kernel.org>
+Cc: Bill Wendling <morbo@google.com>
+Cc: Justin Stitt <justinstitt@google.com>
+Cc: Nathan Chancellor <nathan@kernel.org>
+Cc: Nick Desaulniers <ndesaulniers@google.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/coco/tdx/tdx.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ drivers/base/arch_numa.c |   12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/arch/x86/coco/tdx/tdx.c b/arch/x86/coco/tdx/tdx.c
-index a896d2d6f21f8..2f42892b456e5 100644
---- a/arch/x86/coco/tdx/tdx.c
-+++ b/arch/x86/coco/tdx/tdx.c
-@@ -462,8 +462,8 @@ static bool handle_in(struct pt_regs *regs, int size, int port)
- 		.r13 = PORT_READ,
- 		.r14 = port,
- 	};
--	u64 mask = GENMASK(BITS_PER_BYTE * size - 1, 0);
- 	bool success;
-+	u64 val;
+--- a/drivers/base/arch_numa.c
++++ b/drivers/base/arch_numa.c
+@@ -105,6 +105,18 @@ static void __init setup_node_to_cpumask
+ 	if (nr_node_ids == MAX_NUMNODES)
+ 		setup_nr_node_ids();
  
- 	/*
- 	 * Emulate the I/O read via hypercall. More info about ABI can be found
-@@ -471,11 +471,9 @@ static bool handle_in(struct pt_regs *regs, int size, int port)
- 	 * "TDG.VP.VMCALL<Instruction.IO>".
- 	 */
- 	success = !__tdx_hypercall(&args, TDX_HCALL_HAS_OUTPUT);
-+	val = success ? args.r11 : 0;
- 
--	/* Update part of the register affected by the emulated instruction */
--	regs->ax &= ~mask;
--	if (success)
--		regs->ax |= args.r11 & mask;
-+	insn_assign_reg(&regs->ax, val, size);
- 
- 	return success;
- }
--- 
-2.53.0
-
++	/*
++	 * This check should never be true but it makes it clear to compilers
++	 * that node_to_cpumask_map is bound by nr_node_ids, avoiding false
++	 * positive fortify warnings when accessing node_to_cpumask_map in the
++	 * for loop below.
++	 */
++	if (unlikely(nr_node_ids > MAX_NUMNODES)) {
++		pr_err("nr_node_ids (%u) is larger than MAX_NUMNODES (%u)\n",
++		       nr_node_ids, MAX_NUMNODES);
++		return;
++	}
++
+ 	/* allocate and clear the mapping */
+ 	for (node = 0; node < nr_node_ids; node++) {
+ 		alloc_bootmem_cpumask_var(&node_to_cpumask_map[node]);
 
 
