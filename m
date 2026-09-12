@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCC6528B4FA;
-	Sat, 12 Sep 2026 08:49:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF02724CEEA;
+	Sat, 12 Sep 2026 08:49:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789202992; cv=none; b=len0IU9BTgEWLMF0KKA5Gesy1A7SLlqkFpNU2mkA2vrDyH4O8Y/E5je+WWNqUFvw0mBLmKzBLkn3ihjLHnsV7J0nfeiNHkIT2vHEHmGnhDmA8sNLFvbg3S5BT53Cd+qAe7qdlZJXiPujxKbyKKjl5ttcXeO7herdgSlg2sPJjss=
+	t=1789202998; cv=none; b=pRvPNFXPaOmZEXgGod7bBIDbqaIBqDp7eaWRCoW3cjw2Rpqfkm488wUnGNRz8+q0Zxm92lK750u8e6mf/eGlSCzo8FJtPMBVMQwBx6+1I4/oVpGw8rD1sCeQAWn+Xo0R0N6brTA5cjhMELvOdtvNFRl6GGwox+iRg8Fr33ja828=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789202992; c=relaxed/simple;
-	bh=WiswbM8rjDyua33eam/FFbBK0toqHn+L8LrKPznIyhg=;
+	s=arc-20240116; t=1789202998; c=relaxed/simple;
+	bh=vXu0eh9QiiIKii9kuj6whXBmIflGsH5sjh9RIa4NBuQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jamfr8GZPK3E6agrTks8k872TH4YPQPHASPCoGRgVa953JapSLdY0dfbwLsLosmXqQ+tnVQLtmWQXJaYnMdgYs6/tVpPrK6j8oQSMw4X5fEXhDU1hTtzMzDUQbHC5BJy9SKwohFlTI3REwyLSCIr9pHxy/7vaQQCW8I/fkcBrh0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t4QDYLok; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=enfiLwrGH7h93CpFXwFWYgeHtY8NhKpN6+tAN6hXkMuiC95qHmw48DrmoaMPJ04AK9/l6VJn5m6mhMwy5rErcPg09Me2EBWyOaEaXSztgl/8cqNoOFwVqAaTPtljfLsU+mQJpFV/6J34gdIbQxsdLQD95OQUCHmTSEM7FrRn1u0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x8W3baui; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t4QDYLok"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C15861F000FF;
-	Sat, 12 Sep 2026 08:49:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x8W3baui"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF8311F000FF;
+	Sat, 12 Sep 2026 08:49:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789202991;
-	bh=nfoZ1gEQO08OGYItliXClkR0OhA5N0umldOqJGJKPLA=;
+	s=korg; t=1789202996;
+	bh=48Kdrh6d/ejkFwiYlKmSrnjZdLO8NXKoKLbhC6QzW6Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=t4QDYLokG4Zoy4jaaDOaKOLjLcs/WMo1TBKEY61CbWcZFtkVjd/cpdUNq9J0LuRAu
-	 ncn962Vpqli2hY1uZ3XuoA2E0zD628Exmb+mQaRuUjvOhX5XFxSe0DP2jcXw7kdbxq
-	 fUSemhg74ewSk+qihGrdqWubrnVRwB2ifOT7sYtE=
+	b=x8W3bauiA07cr55NXsYf9qA1KNYhJ1+3za4E/+GLf3k/SwvBm7Ux+vyEX8OBhqi9N
+	 e+UQbuMxCW1sKXEoHz26nFbaU9PMnH5NV+sxdBaGsVGhHCEWHVpsIMQnNPxCkYYRWs
+	 NqkF0xPo/DbmUeFuOaLArsXIEdvLJY7Adgc+EFoM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Chuck Lever <cel@kernel.org>,
 	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1316/1815] sunrpc: xprtsock: annotate shared socket callbacks with READ_ONCE/WRITE_ONCE
-Date: Sat, 12 Sep 2026 08:51:06 +0200
-Message-ID: <20260912065719.915836254@linuxfoundation.org>
+Subject: [PATCH 7.2 1317/1815] NFS: Return a delegation the client fails to record
+Date: Sat, 12 Sep 2026 08:51:07 +0200
+Message-ID: <20260912065719.940001004@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,110 +51,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Chuck Lever <cel@kernel.org>
 
-[ Upstream commit 33930840b5f0a79f826e7c69dc6cd78f72a67481 ]
+[ Upstream commit 220af23d863995091f0edeb1e6aa0945b3db8b37 ]
 
-xprtsock replaces and restores sk->sk_data_ready and
-sk->sk_write_space on live sockets with plain stores, and
-xs_udp_do_set_buffer_size() invokes sk->sk_write_space via a plain
-load. These callback pointers are shared with generic socket and
-protocol paths that may read or invoke them concurrently, so xprtsock
-needs the same READ_ONCE()/WRITE_ONCE() callback visibility contract
-that the validated 4022 family applied elsewhere.
+When an NFS server grants a delegation in an OPEN reply,
+nfs_inode_set_delegation() records it on the client. However, three
+of its error flows return without sending DELEGRETURN.
 
-When SUNRPC takes over an AF_LOCAL, UDP, or TCP socket and later
-restores the lower-socket callbacks during teardown, another CPU may
-still hold an earlier callback snapshot. The plain replace/restore
-pattern leaves the same visibility hole as the validated 4022 family,
-so a stale snapshot can still invoke xs_data_ready() or
-xs_udp_write_space() after the live callback fields have already been
-restored to the lower-socket handlers.
+A delegation can be relinquished only by DELEGRETURN (RFC 8881
+Section 20.2.4), so dropping one silently leaves the server believing
+the client still holds it. If the server happens to recall that
+delegation, the client answers CB_RECALL with NFS4ERR_BADHANDLE
+because it has no record of the stateid. The server revokes the
+delegation and moves it onto its cl_revoked list, because the client
+never sends the FREE_STATEID that would drain it. Every subsequent
+SEQUENCE reply then carries SEQ4_STATUS_RECALLABLE_STATE_REVOKED,
+and the client's state manager loops issuing TEST_STATEID across its
+delegations without ever clearing the condition.
 
-Use WRITE_ONCE() for the shared sk_data_ready and sk_write_space
-stores in xs_local_finish_connecting(), xs_udp_finish_connecting(),
-xs_tcp_finish_connecting(), and xs_restore_old_callbacks(). Use
-READ_ONCE() for the direct sk_write_space invocation in
-xs_udp_do_set_buffer_size(). This matches the required callback
-visibility contract while leaving adjacent sk_state_change and
-sk_error_report handling unchanged.
+The window is easy to reach now that a server offers a write
+delegation on any write OPEN: a delegation recalled for one opener
+races a re-open that the server answers with a fresh write
+delegation.
 
-Fixes: a246b0105bbd ("[PATCH] RPC: introduce client-side transport switch")
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Instead of dropping it, hand the delegation back during these error
+flows.
+
+Fixes: ade04647dd56 ("NFSv4: Ensure we honour NFS_DELEGATION_RETURNING in nfs_inode_set_delegation()")
+Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/xprtsock.c | 20 +++++++++++---------
- 1 file changed, 11 insertions(+), 9 deletions(-)
+ fs/nfs/delegation.c | 18 ++++++++++++++----
+ 1 file changed, 14 insertions(+), 4 deletions(-)
 
-diff --git a/net/sunrpc/xprtsock.c b/net/sunrpc/xprtsock.c
-index 5f7955e4c4045..7f60723fa64d8 100644
---- a/net/sunrpc/xprtsock.c
-+++ b/net/sunrpc/xprtsock.c
-@@ -1202,9 +1202,9 @@ static void xs_save_old_callbacks(struct sock_xprt *transport, struct sock *sk)
+diff --git a/fs/nfs/delegation.c b/fs/nfs/delegation.c
+index 9546d2195c25f..284437fa3f872 100644
+--- a/fs/nfs/delegation.c
++++ b/fs/nfs/delegation.c
+@@ -447,11 +447,14 @@ int nfs_inode_set_delegation(struct inode *inode, const struct cred *cred,
+ 	struct nfs_inode *nfsi = NFS_I(inode);
+ 	struct nfs_delegation *delegation, *old_delegation;
+ 	struct nfs_delegation *freeme = NULL;
++	bool orphaned = false;
+ 	int status = 0;
  
- static void xs_restore_old_callbacks(struct sock_xprt *transport, struct sock *sk)
- {
--	sk->sk_data_ready = transport->old_data_ready;
-+	WRITE_ONCE(sk->sk_data_ready, transport->old_data_ready);
- 	sk->sk_state_change = transport->old_state_change;
--	sk->sk_write_space = transport->old_write_space;
-+	WRITE_ONCE(sk->sk_write_space, transport->old_write_space);
- 	sk->sk_error_report = transport->old_error_report;
- }
- 
-@@ -1664,6 +1664,7 @@ static void xs_udp_do_set_buffer_size(struct rpc_xprt *xprt)
- {
- 	struct sock_xprt *transport = container_of(xprt, struct sock_xprt, xprt);
- 	struct sock *sk = transport->inet;
-+	void (*write_space)(struct sock *sock);
- 
- 	if (transport->rcvsize) {
- 		sk->sk_userlocks |= SOCK_RCVBUF_LOCK;
-@@ -1672,7 +1673,8 @@ static void xs_udp_do_set_buffer_size(struct rpc_xprt *xprt)
- 	if (transport->sndsize) {
- 		sk->sk_userlocks |= SOCK_SNDBUF_LOCK;
- 		sk->sk_sndbuf = transport->sndsize * xprt->max_reqs * 2;
--		sk->sk_write_space(sk);
-+		write_space = READ_ONCE(sk->sk_write_space);
-+		write_space(sk);
+ 	delegation = kmalloc_obj(*delegation, GFP_KERNEL_ACCOUNT);
+-	if (delegation == NULL)
++	if (delegation == NULL) {
++		nfs4_proc_delegreturn(inode, cred, stateid, NULL, 0);
+ 		return -ENOMEM;
++	}
+ 	nfs4_stateid_copy(&delegation->stateid, stateid);
+ 	refcount_set(&delegation->refcount, 1);
+ 	delegation->type = type;
+@@ -500,11 +503,15 @@ int nfs_inode_set_delegation(struct inode *inode, const struct cred *cred,
+ 			goto out;
+ 		}
+ 		if (test_and_set_bit(NFS_DELEGATION_RETURNING,
+-					&old_delegation->flags))
++					&old_delegation->flags)) {
++			orphaned = true;
+ 			goto out;
++		}
  	}
- }
- 
-@@ -1988,8 +1990,8 @@ static int xs_local_finish_connecting(struct rpc_xprt *xprt,
- 		xs_save_old_callbacks(transport, sk);
- 
- 		sk->sk_user_data = xprt;
--		sk->sk_data_ready = xs_data_ready;
--		sk->sk_write_space = xs_udp_write_space;
-+		WRITE_ONCE(sk->sk_data_ready, xs_data_ready);
-+		WRITE_ONCE(sk->sk_write_space, xs_udp_write_space);
- 		sk->sk_state_change = xs_local_state_change;
- 		sk->sk_error_report = xs_error_report;
- 		sk->sk_use_task_frag = false;
-@@ -2191,8 +2193,8 @@ static void xs_udp_finish_connecting(struct rpc_xprt *xprt, struct socket *sock)
- 		xs_save_old_callbacks(transport, sk);
- 
- 		sk->sk_user_data = xprt;
--		sk->sk_data_ready = xs_data_ready;
--		sk->sk_write_space = xs_udp_write_space;
-+		WRITE_ONCE(sk->sk_data_ready, xs_data_ready);
-+		WRITE_ONCE(sk->sk_write_space, xs_udp_write_space);
- 		sk->sk_use_task_frag = false;
- 
- 		xprt_set_connected(xprt);
-@@ -2378,9 +2380,9 @@ static int xs_tcp_finish_connecting(struct rpc_xprt *xprt, struct socket *sock)
- 		xs_save_old_callbacks(transport, sk);
- 
- 		sk->sk_user_data = xprt;
--		sk->sk_data_ready = xs_data_ready;
-+		WRITE_ONCE(sk->sk_data_ready, xs_data_ready);
- 		sk->sk_state_change = xs_tcp_state_change;
--		sk->sk_write_space = xs_tcp_write_space;
-+		WRITE_ONCE(sk->sk_write_space, xs_tcp_write_space);
- 		sk->sk_error_report = xs_error_report;
- 		sk->sk_use_task_frag = false;
- 
+-	if (!nfs_detach_delegations_locked(nfsi, old_delegation, clp))
++	if (!nfs_detach_delegations_locked(nfsi, old_delegation, clp)) {
++		orphaned = true;
+ 		goto out;
++	}
+ 	freeme = old_delegation;
+ add_new:
+ 	/*
+@@ -539,8 +546,11 @@ int nfs_inode_set_delegation(struct inode *inode, const struct cred *cred,
+ 		nfs_update_delegated_mtime(inode);
+ out:
+ 	spin_unlock(&clp->cl_lock);
+-	if (delegation != NULL)
++	if (delegation != NULL) {
++		if (orphaned)
++			nfs_do_return_delegation(inode, delegation, 0);
+ 		__nfs_free_delegation(delegation);
++	}
+ 	if (freeme != NULL) {
+ 		nfs_do_return_delegation(inode, freeme, 0);
+ 		nfs_mark_delegation_revoked(server, freeme);
 -- 
 2.53.0
 
