@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31EAC1EB5FD;
-	Sat, 12 Sep 2026 07:22:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 805AE2BDC0E;
+	Sat, 12 Sep 2026 07:22:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789197755; cv=none; b=IV0jqWQT8N4FNM9+MyeClkj/cd5trY/kQ+ZKbYOIMHedn1hRvM1wqSi7LBiuBWfsf7GR5qhnX37HQJW6S8wsGz0k6MR/29ULrJtyyRiXRUA4hWSCqcmts/6cBAWLswmX+dEQmlYRmAnH1VgqNsQ9mU8D1zamkonHzzXB+QXgmz0=
+	t=1789197760; cv=none; b=E9R3f/11QQkXoVUWfc8Z2fwtk8P6UyKHpP9IlA07a2xKT2J8gOs9rDtDmNDaVMOebgq1ORCQKc0oJp8Ba3L4FcACaLJ+r7+TzWe0UN0Z6PWORx6wndMEX7gdURX042IEPQZ0fJ18SSj1RnvAES++4b8I8+a8usYY1ugMmZUNxL4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789197755; c=relaxed/simple;
-	bh=NCdR2RL42J75Cj8nMoXfIP5/5os10yEpnx3Go35Ie24=;
+	s=arc-20240116; t=1789197760; c=relaxed/simple;
+	bh=NiHnRDm9G6iEyO71Sn4kQUs9cku+EUwkX8hUAADShyM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jxqS+YomAxz6B12k3wBOM70hshgdArEfuL0zauzIahsyd/j+0fk9KrHykt+M6KiR9XuD6po+dqWJ3oJ1HFkd2ogCqSkOuMWTQYyY47SxSNCDHLX6QsDQvfzh6i9AVvVN5AshTz/9lc77z/ARKibDExavbEiRzgSvB7W7adbkCZ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DaghqtZO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YATSrxdWS39BOBmmHjgQM91RxCgL5RKA1aiDZrkdwkzZaIagKyvPDODTb2ke+DKVHeOiX8s+7aLf7yGkvGNDWfd2YzOOX3fJfzri4va3M7coOuznP+vGi4LEQV0hisza3JiXSuoUlT1Iu5uX7jjkfzQQeANkdiwIWUCmIPqRnBs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=adqRoiiJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DaghqtZO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 014531F000FF;
-	Sat, 12 Sep 2026 07:22:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="adqRoiiJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EBA81F000FF;
+	Sat, 12 Sep 2026 07:22:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789197754;
-	bh=A3gOrA4yILMJwIN0V9Xsdx/M3BqxR6gVtN2j6R6NZDU=;
+	s=korg; t=1789197759;
+	bh=VjbgSmv/7u7sankD92wgP3sDzYfgLWryuyn8iwl3tcM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DaghqtZOSgEVGsDXuTdh3T6rs8yRqGjC0F0wCQCloJ9eASjUC5FEtQHEWjrlqx6V0
-	 Npia74v/zX5olZefmGQ9mZLAwuF7TkJ4IP+7WVZlvQGym0DHP1QbAqaTp64pCIxuCg
-	 W2f+dIiBuoEjiwZ/8aY4HtnW/O0+YbQ1pcmkYGiw=
+	b=adqRoiiJQRoDzfyKOMePZVY7QovPkSWVFlW9yZ93/B5mltYisQxyReHAu4mjd9/R6
+	 lr+dhzvdCW/1ssQJvx6dznDuQFwC9FodVbsDsYTVzm0aUq/FepWtJDdkYs9x2PpNde
+	 t50OFPORHKCe0jaJJ8h73+SOcwWeXqWquYdYugA8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxim Khmelevskii <max@linux.ibm.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Ilya Leoshkevich <iii@linux.ibm.com>,
+	Feng Yang <yangfeng@kylinos.cn>,
+	John Fastabend <john.fastabend@gmail.com>,
 	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0241/1815] s390/bpf: Replace ly instruction with llgf
-Date: Sat, 12 Sep 2026 08:33:11 +0200
-Message-ID: <20260912065654.647284345@linuxfoundation.org>
+Subject: [PATCH 7.2 0242/1815] selftests/bpf: Fix memory leak in msg_alloc_iov
+Date: Sat, 12 Sep 2026 08:33:12 +0200
+Message-ID: <20260912065654.670368534@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -53,40 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maxim Khmelevskii <max@linux.ibm.com>
+From: Feng Yang <yangfeng@kylinos.cn>
 
-[ Upstream commit 5f6cc299938b561cb01e343bab7042611fcee12a ]
+[ Upstream commit 602701718649936eb287bf6c7ecf870ec54c6f71 ]
 
-cpu_nr is a 32 bit value and BPF_REG_0 is a 64 bit register, when ly loads
-the cpu_nr into BPF_REG_0 it does not zero the upper bits, but llgf does.
+In the msg_alloc_iov function, the iov pointer is only assigned to
+msg->msg_iov after all memory allocations complete successfully.
+Therefore, when a calloc failure triggers the unwind_iov cleanup branch,
+we should use the local variable iov instead of msg->msg_iov.
 
-Fixes: 9012cf2491e3 ("s390/bpf: Inline smp_processor_id and current_task")
-Signed-off-by: Maxim Khmelevskii <max@linux.ibm.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Link: https://sashiko.dev/#/patchset/20260414142930.528751-1-max%40linux.ibm.com
-Link: https://lore.kernel.org/bpf/20260703125648.919196-5-max@linux.ibm.com
+Fixes: 753fb2ee0934 ("bpf: sockmap, add msg_peek tests to test_sockmap")
+Signed-off-by: Feng Yang <yangfeng@kylinos.cn>
+Reviewed-by: John Fastabend <john.fastabend@gmail.com>
+Link: https://lore.kernel.org/bpf/20260707081434.539327-1-yangfeng59949@163.com
 Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/net/bpf_jit_comp.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tools/testing/selftests/bpf/test_sockmap.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/s390/net/bpf_jit_comp.c b/arch/s390/net/bpf_jit_comp.c
-index 31749c0362ca2..9ddd89f71f282 100644
---- a/arch/s390/net/bpf_jit_comp.c
-+++ b/arch/s390/net/bpf_jit_comp.c
-@@ -1783,8 +1783,8 @@ static noinline int bpf_jit_insn(struct bpf_jit *jit, struct bpf_prog *fp,
- 		    insn->imm == BPF_FUNC_get_smp_processor_id) {
- 			const u32 *cpu_nr = &get_lowcore()->cpu_nr;
- 
--			/* ly %b0, cpu_nr */
--			EMIT6_DISP_LH(0xe3000000, 0x0058, BPF_REG_0, REG_0, REG_0,
-+			/* llgf %b0, cpu_nr */
-+			EMIT6_DISP_LH(0xe3000000, 0x0016, BPF_REG_0, REG_0, REG_0,
- 				      (unsigned long)cpu_nr);
- 			break;
- 		}
+diff --git a/tools/testing/selftests/bpf/test_sockmap.c b/tools/testing/selftests/bpf/test_sockmap.c
+index 3e6be455d1583..aaf2050e88450 100644
+--- a/tools/testing/selftests/bpf/test_sockmap.c
++++ b/tools/testing/selftests/bpf/test_sockmap.c
+@@ -435,7 +435,7 @@ static int msg_alloc_iov(struct msghdr *msg,
+ 	return 0;
+ unwind_iov:
+ 	for (i--; i >= 0 ; i--)
+-		free(msg->msg_iov[i].iov_base);
++		free(iov[i].iov_base);
+ 	free(iov);
+ 	return -ENOMEM;
+ }
 -- 
 2.53.0
 
