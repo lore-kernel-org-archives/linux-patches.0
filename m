@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B24342882B;
-	Sat, 12 Sep 2026 13:44:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A7922DB788;
+	Sat, 12 Sep 2026 13:45:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789220700; cv=none; b=JrNWG8pmX7x9vxzQ4lCD2BRbGY46xqjSJuBa1YauKdNHe0YyvYzFaMI31JyL7k9exreq8sXuqr0zhiuPNXSk2fjzaGQSDz+N0xTxdk5TlW6xz5oGivEBdEKKkTD1uZ/IANsRKUHgslgUacad1dWftR1ZjOct06CEHRG+kKVmUFk=
+	t=1789220705; cv=none; b=XIOhDzz0UiDem+DvcSYiRX4puByJx5WdgN23YkKjijlC71xuybdgcmwKtsVd/EzUliVlIZdnwrhg6iBvspsYHo9aua1XhEtreEpwU4zvOJ1DojrRP2thZghzcxlgt2VgtNAgptlo+gRxdj7/qSza+rj65RsqvzpeOYSIlCRobWM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789220700; c=relaxed/simple;
-	bh=YJVXcJMTUSunxEmPVzkamn/SR8/Cc8RPYBDFA6B25w0=;
+	s=arc-20240116; t=1789220705; c=relaxed/simple;
+	bh=f647RdlNDgYNHsh98f6MZJpSOqh2NsHFILp7QULYAf4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bRmE8l/eMBOb2OJBj/GxPvrTwPkLYVOTV4ql1IwzmGj7oBwABAJ/LeEn5jXC9jZTz0QU9+tzrfroUkatVgO1Q3ufxpCMA/wNjzvVyq7PtS/M5ZjrhaYLe0MzobCJWh1X4ZcxA+Ce0AC4gkbCXd8KgD5sFnR3TqU8qu/SUT+5s3Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qra5uw5S; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=a3wdAPCnQ5Fu9+7k5/MnnfAxZ8sYEX8DCe86ga6cKnlQ6ZijG3OE4I2e5qP7qKv4H9P16TynkTo98ODcZerYkcjbR9Jqp2ytyamRTxIGNCsIpbYq+9MFIDgwaRSz2p9vSZ8o4Q6fxff3f9YR9Uek8rYdTEIoMHMveG+G8LgpjhE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hZQLoZA1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qra5uw5S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 342181F000FF;
-	Sat, 12 Sep 2026 13:44:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hZQLoZA1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A5D31F000FF;
+	Sat, 12 Sep 2026 13:45:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789220699;
-	bh=zdW+xQAMDSQ6hau4b+FXriGx2Whd4k5k5D6eKvZFjyM=;
+	s=korg; t=1789220704;
+	bh=urqaz9eEQLEkP/RMY2F39i2RadXagXZSU2RpZIZFwPA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Qra5uw5SbLCjeM0O/eN3MHvWls0HR2mI3DghggwwdDdseoYujZwyXx6pKOm1gczRP
-	 8Q9Uo0fN+Td0imG3jtUnpwRQZlh5Qz1WrKB/ytrQB2D1kxmzMdn8TWgutZxzVvGdBt
-	 cA4J507b9x9QyRsq1dqd3EbXZadOjmhnKK+0jXi0=
+	b=hZQLoZA1Am/FrJctdRuyEB7QGimkeUkGuVMws7BLXAQSa6QJkl96Yhs4F2LBYH8q/
+	 SQOYPpYKdton/oXQbdjujRkyNAouCboDGTLVRizgOAiKuS5bUQADP+yYxjKCpfnKkM
+	 R0xVrqyMht6OIMUm7f2oK59cy+yosdcGSIT4id2g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kevin Tian <kevin.tian@intel.com>,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	Joerg Roedel <joerg.roedel@amd.com>
-Subject: [PATCH 6.6 0231/1424] iommu/vt-d: Force requesting ACS when tboot is enabled
-Date: Sat, 12 Sep 2026 08:44:23 +0200
-Message-ID: <20260912065612.456178403@linuxfoundation.org>
+	HyeongJun An <sammiee5311@gmail.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
+Subject: [PATCH 6.6 0232/1424] platform/x86: dell-wmi-sysman: Dont hex dump attribute security buffer
+Date: Sat, 12 Sep 2026 08:44:24 +0200
+Message-ID: <20260912065612.477237924@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -45,94 +44,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kevin Tian <kevin.tian@intel.com>
+From: HyeongJun An <sammiee5311@gmail.com>
 
-commit 607432b2618b61df81134be0ef2562b8300c1216 upstream.
+commit 83c80495e45eddf64c6525fb582d8db68f256b71 upstream.
 
-Currently the conditions of requesting ACS in detect_intel_iommu()
-don't include tboot, leading to a possible misconfiguration with ACS
-disabled (e.g. due to user opts) while iommu is later forced on by
-tboot_force_iommu().
+set_attribute() populates the security area of the BIOS attribute request
+buffer with the current admin password via populate_security_buffer(), then
+dumps the whole request buffer with print_hex_dump_bytes(). This can expose
+the plaintext admin password in the kernel log.
 
-Fix it by checking tboot in detect_intel_iommu().
+The same issue was fixed for the password attribute path by
+commit d1a196e0a6dc ("platform/x86: dell-wmi-sysman: Don't hex dump
+plaintext password data"). Remove the remaining dump from the BIOS
+attribute path.
 
-Fixes: 5d990b627537 ("PCI: add pci_request_acs")
+Fixes: e8a60aa7404b ("platform/x86: Introduce support for Systems Management Driver over WMI for Dell Systems")
 Cc: stable@vger.kernel.org
-Signed-off-by: Kevin Tian <kevin.tian@intel.com>
-Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+Assisted-by: Codex:gpt-5
+Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
+Link: https://patch.msgid.link/20260614045353.143500-1-sammiee5311@gmail.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/intel/dmar.c  |   15 +++++++++++++--
- drivers/iommu/intel/iommu.c |    2 +-
- drivers/iommu/intel/iommu.h |    2 ++
- 3 files changed, 16 insertions(+), 3 deletions(-)
+ drivers/platform/x86/dell/dell-wmi-sysman/biosattr-interface.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/drivers/iommu/intel/dmar.c
-+++ b/drivers/iommu/intel/dmar.c
-@@ -914,6 +914,18 @@ dmar_validate_one_drhd(struct acpi_dmar_
- 	return 0;
- }
+--- a/drivers/platform/x86/dell/dell-wmi-sysman/biosattr-interface.c
++++ b/drivers/platform/x86/dell/dell-wmi-sysman/biosattr-interface.c
+@@ -84,7 +84,6 @@ int set_attribute(const char *a_name, co
+ 	if (ret < 0)
+ 		goto out;
  
-+static bool dmar_required(void)
-+{
-+	/* tboot supersedes any user/platform opt */
-+	if (!intel_iommu_tboot_noforce && tboot_enabled())
-+		return true;
-+
-+	if (!no_iommu && (!dmar_disabled || dmar_platform_optin()))
-+		return true;
-+
-+	return false;
-+}
-+
- void __init detect_intel_iommu(void)
- {
- 	int ret;
-@@ -927,8 +939,7 @@ void __init detect_intel_iommu(void)
- 	if (!ret)
- 		ret = dmar_walk_dmar_table((struct acpi_table_dmar *)dmar_tbl,
- 					   &validate_drhd_cb);
--	if (!ret && !no_iommu && !iommu_detected &&
--	    (!dmar_disabled || dmar_platform_optin())) {
-+	if (!ret && !iommu_detected && dmar_required()) {
- 		iommu_detected = 1;
- 		/* Make sure ACS will be enabled */
- 		pci_request_acs();
---- a/drivers/iommu/intel/iommu.c
-+++ b/drivers/iommu/intel/iommu.c
-@@ -139,7 +139,7 @@ static int rwbf_quirk;
-  * (used when kernel is launched w/ TXT)
-  */
- static int force_on = 0;
--static int intel_iommu_tboot_noforce;
-+int intel_iommu_tboot_noforce;
- static int no_platform_optin;
- 
- #define ROOT_ENTRY_NR (VTD_PAGE_SIZE/sizeof(struct root_entry))
---- a/drivers/iommu/intel/iommu.h
-+++ b/drivers/iommu/intel/iommu.h
-@@ -910,6 +910,7 @@ static inline bool ecmd_has_pmu_essentia
- 
- extern int dmar_disabled;
- extern int intel_iommu_enabled;
-+extern int intel_iommu_tboot_noforce;
- #else
- static inline int iommu_calculate_agaw(struct intel_iommu *iommu)
- {
-@@ -922,6 +923,7 @@ static inline int iommu_calculate_max_sa
- #define dmar_disabled	(1)
- #define intel_iommu_enabled (0)
- #define intel_iommu_sm (0)
-+#define intel_iommu_tboot_noforce (0)
- #endif
- 
- static inline const char *decode_prq_descriptor(char *str, size_t size,
+-	print_hex_dump_bytes("set attribute data: ", DUMP_PREFIX_NONE, buffer, buffer_size);
+ 	ret = call_biosattributes_interface(wmi_priv.bios_attr_wdev,
+ 					    buffer, buffer_size,
+ 					    SETATTRIBUTE_METHOD_ID);
 
 
