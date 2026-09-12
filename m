@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01EE047ACF4;
-	Sat, 12 Sep 2026 12:35:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54C4547ACFB;
+	Sat, 12 Sep 2026 12:35:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789216556; cv=none; b=TyrDMaJGap5uXJarb+eVqI45I7p7zBk/Yijw3ZBJ3maeYKp4n/eIbuHUwhunyyEky/ACgBnrZcKuPCfAOggt3uLuIXJ2pDbot+xfa3F/p2shbN1oSPriHAQrn8+Al9CmTh9r/skiu8XlYIu4RdAdYAc9kdkLBIlHeuDunJ1hUJk=
+	t=1789216560; cv=none; b=jfJ/1rL/zRF2BF892kI7nEfwW0P3LX403a1NzN23z3Bi5e7Fm1LZlBMnG0s5BKJusf9xmOuZcjxn/6u4kOrsG+psPwDZ19QenhKQVdy18tCeDEFB4o+48oIckOfWgQUi1X4gX963HqCZ+B00WM7MLvOk7seUKoVb3D95IsfDJ7U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789216556; c=relaxed/simple;
-	bh=XyyBlKv4L0qUylSIcWhslI9BwVkrKkokO6rQ9/kBDcw=;
+	s=arc-20240116; t=1789216560; c=relaxed/simple;
+	bh=CsmPIlgI2qz+P6WEKOYPR45tHRuegQXxt7X5upvphoY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LNcpbzkAPpRS51nyDN0XEc9c+WcFVoG8SMC8LhXpqd2bqlIspyM1dALOCmxgOzMXiRTRkAm4POB6EsJR0TlvpRj2kJlw3/akGm2UcbSDqsc0l9YgzBKg92JBhQemVU89ZHScD96VKgjtiLQf8z0zLoQpXRZ18zM+pKMtq5sreYw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uDl3rkS3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XPM4uYfLyHGN8uASw7DDcWS1kKL1rF7kZGxkU/5FGGFgNyA4lJb8xFibmuVH9ODvnzAp20E2yCn1g3QzmK3PQjBk2pfWMHQv3mSPMj22MCsL30ccY9KP/GuNu8rBAGhbO3iILsp5dbhiKNc72tObLpTByydWPRiwV+6aal7AEeU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CCQZxrPz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uDl3rkS3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AF9B1F00893;
-	Sat, 12 Sep 2026 12:35:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CCQZxrPz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DF4C1F00893;
+	Sat, 12 Sep 2026 12:35:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789216554;
-	bh=dvMXVZuFv3ALjd5WIEukL0wODo7W3KIbaLU8OT+R4u0=;
+	s=korg; t=1789216559;
+	bh=9WYAVwGKIaqxWS5cgl17pbthFXLZyS06n/S1YuKh/n8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uDl3rkS35ut77OLkAsvSPnvmbiqHK9VMOP/eF9cAKdXq3DbVJg24sFIRPNL7OkiVc
-	 BhTrxvyQUcYpHzUIh9Z6ANwMTho+5kxSOK95agCHD3vZxk5mgHqi/3kupjc6sEqTbc
-	 0BkqCqGy78s6pt8Qh26w1+gUi49MWLiLYiokMq1w=
+	b=CCQZxrPzB5st0BvVk3jUkE3tXLcBdNZEryJ6SKoXCBllggkByc+B8cjznl4n/g9/A
+	 fM7pDcDlUn1qGwqbjbRC3MyTDA76po3AWhwb1AFrZ/ALPDR/dJdBhMegUHKyRNA1K5
+	 YwUCSszFqQQvf1KtMU3pc+wzrxBKz5jU98IUTB8I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Yuvaraj Ranganathan <yuvaraj.ranganathan@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Chen Cheng <chencheng@fnnas.com>,
+	Yu Kuai <yukuai@fygo.io>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0761/1376] firmware: qcom: scm: add trace events for the SMC call interface
-Date: Sat, 12 Sep 2026 08:53:07 +0200
-Message-ID: <20260912065624.500548763@linuxfoundation.org>
+Subject: [PATCH 6.12 0744/1376] md/raid5: protect lockless recovery_offset accesses during reshape
+Date: Sat, 12 Sep 2026 08:52:50 +0200
+Message-ID: <20260912065624.126655930@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -52,208 +51,208 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuvaraj Ranganathan <yuvaraj.ranganathan@oss.qualcomm.com>
+From: Chen Cheng <chencheng@fnnas.com>
 
-[ Upstream commit f6bb2daa4584229af155c2488b83151999315293 ]
+[ Upstream commit a47431dfb3538a1485f65b68a0605a05307b5b2d ]
 
-The SCM SMC call path is opaque at runtime. Stalls caused by firmware
-congestion, QCOM_SCM_WAITQ_SLEEP/RESUME cycles, and EBUSY retry loops
-are invisible without recompiling the kernel with temporary printk
-statements or attaching a hardware debugger.
+During reshape:
+- reshape_request() advances rdev->recovery_offset for non-In_sync
+  devices locklessly.
+- analyse_stripe() reads rdev->recovery_offset locklessly to decide:
+    a. use a replacement device to read ?
+    b. a device can already be treated as in-sync for the current
+       stripe ?
 
-Add five TRACE_EVENTs covering the complete lifecycle of an SCM call:
+one possible scenario is:
 
-  scm_smc_request
-    Emit before each arm_smccc_smc_quirk() invocation. Records the
-    SMC function ID, decoded service and command identifiers, argument
-    count, and up to six register arguments in hex and decimal. Because
-    the caller loops on QCOM_SCM_INTERRUPTED, this event fires once per
-    physical SMC instruction including inte
+CPU1                            CPU2
+reshape_request()
+-> mddev->curr_resync_completed = sector_nr
+-> if (!mddev->reshape_backwards)
+-> rdev->recovery_offset = sector_nr
+                                analyse_stripe(sh)
+                                -> rdev = conf->disks[i].replacement
+                                -> if (rdev->recovery_offset >=
+                                      sh->sector + stripe_sectors)
+                                   set_bit(R5_ReadRepl)
+                                -> or
+                                -> if (sh->sector + stripe_sectors <=
+                                      rdev->recovery_offset)
+                                   set_bit(R5_Insync)
 
-  scm_smc_done
-    Emit after the outer __scm_smc_do() returns, pairing each
-    request with its final outcome. Records the SMC function ID, the
-    kernel error code returned to the caller, and the four firmware
-    result registers a0-a3.
+And it could be:
 
-  scm_waitq_sleep
-    Emit when the firmware returns QCOM_SCM_WAITQ_SLEEP. Records
-    the wait-queue context and the SMC call context handles required
-    to issue the matching WAITQ_RESUME.
+- reading from a replacement before it is recovered far enough; or
+- treating a not-yet-recovered device as in-sync for the current stripe.
 
-  scm_waitq_resume
-    Emit just before constructing and sending the WAITQ_RESUME
-    follow-up call. Records the SMC call context handle being resumed.
+Fixes: db0505d32066 ("md: be cautious about using ->curr_resync_completed for ->recovery_offset")
 
-  scm_waitq_get_wq_ctx
-    Emit after a successful WAITQ_GET_WQ_CTX fast-call. Records
-    the returned wait-queue context, flags, and more_pending indicator.
+The race report:
+==================================================================
+BUG: KCSAN: data-race in ops_run_io / reshape_request
 
-These events let ftrace and perf reconstruct the full sequence of
-firmware interactions, measure per-call and end-to-end latency, and
-attribute waitqueue stalls to specific service/command pairs without
-modifying driver source.
+write to 0xffff8bdee168b270 of 8 bytes by task 1704 on cpu 10:
+ reshape_request+0x1292/0x17b0
+ raid5_sync_request+0x815/0xa00
+ md_do_sync.cold+0xf8d/0x1516
+ [......]
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Yuvaraj Ranganathan <yuvaraj.ranganathan@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260522-scm-tracepoints-v2-1-e27cdbe0c585@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Stable-dep-of: 966d23c7e68e ("firmware: qcom: scm: Fix NULL dereference in IRQ handler before __scm is published")
+read to 0xffff8bdee168b270 of 8 bytes by task 1696 on cpu 9:
+ ops_run_io+0xc25/0x1960
+ handle_stripe+0x2273/0x4570
+ handle_active_stripes.isra.0+0x6e0/0xa50
+ raid5d+0x7d5/0xb90
+ [......]
+
+value changed: 0x0000000000091a00 -> 0x0000000000091b00
+==================================================================
+
+Signed-off-by: Chen Cheng <chencheng@fnnas.com>
+Reviewed-by: Yu Kuai <yukuai@fygo.io>
+Link: https://patch.msgid.link/20260627102519.136940-1-chencheng@fnnas.com
+Signed-off-by: Yu Kuai <yukuai@fygo.io>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/qcom/qcom_scm_trace.h | 143 +++++++++++++++++++++++++
- 1 file changed, 143 insertions(+)
- create mode 100644 drivers/firmware/qcom/qcom_scm_trace.h
+ drivers/md/raid5.c | 50 +++++++++++++++++++++++-----------------------
+ 1 file changed, 25 insertions(+), 25 deletions(-)
 
-diff --git a/drivers/firmware/qcom/qcom_scm_trace.h b/drivers/firmware/qcom/qcom_scm_trace.h
-new file mode 100644
-index 0000000000000..6c911124fc56b
---- /dev/null
-+++ b/drivers/firmware/qcom/qcom_scm_trace.h
-@@ -0,0 +1,143 @@
-+/* SPDX-License-Identifier: GPL-2.0-only */
-+/*
-+ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-+ */
-+
-+#undef TRACE_SYSTEM
-+#define TRACE_SYSTEM qcom_scm
-+
-+#if !defined(_TRACE_SCM_SMC_INTERFACE_H) || defined(TRACE_HEADER_MULTI_READ)
-+
-+#define _TRACE_SCM_SMC_INTERFACE_H
-+
-+#include <linux/tracepoint.h>
-+
-+TRACE_EVENT(scm_smc_request,
-+
-+	TP_PROTO(unsigned long a0, const struct arm_smccc_args *smc),
-+
-+	TP_ARGS(a0, smc),
-+
-+	TP_STRUCT__entry(
-+		__field(u64, smc_id)
-+		__field(u8, svc_id)
-+		__field(u8, cmd_id)
-+		__field(u8, args_cnt)
-+		__dynamic_array(unsigned long, args,
-+				min_t(u8, (smc->args[1] & 0xF), (u8)6))
-+	),
-+
-+	TP_fast_assign(
-+		__entry->smc_id = a0;
-+		__entry->svc_id = (smc->args[0] >> 8) & 0xFF;
-+		__entry->cmd_id = smc->args[0] & 0xFF;
-+		u8 n = min_t(u8, (smc->args[1] & 0xF), (u8)6);
-+
-+		__entry->args_cnt = n;
-+
-+		unsigned long *dst = __get_dynamic_array(args);
-+
-+		for (int i = 0; i < n; i++)
-+			dst[i] = smc->args[2 + i];
-+	),
-+
-+	TP_printk("smc_id:0x%08llx svc_id:0x%02x cmd_id:0x%02x args_cnt:%u args:%s",
-+		  __entry->smc_id, __entry->svc_id, __entry->cmd_id, __entry->args_cnt,
-+		  __print_dynamic_array(args, sizeof(unsigned long)))
-+);
-+
-+TRACE_EVENT(scm_waitq_sleep,
-+
-+	TP_PROTO(u32 wq_ctx, u32 smc_ctx),
-+
-+	TP_ARGS(wq_ctx, smc_ctx),
-+
-+	TP_STRUCT__entry(
-+		__field(u32, wq_ctx)
-+		__field(u32, smc_call_ctx)
-+	),
-+
-+	TP_fast_assign(
-+		__entry->wq_ctx = wq_ctx;
-+		__entry->smc_call_ctx = smc_ctx;
-+	),
-+
-+	TP_printk("wq_ctx:%u, smc_call_ctx:%u", __entry->wq_ctx, __entry->smc_call_ctx)
-+);
-+
-+TRACE_EVENT(scm_waitq_resume,
-+
-+	TP_PROTO(u32 smc_ctx),
-+
-+	TP_ARGS(smc_ctx),
-+
-+	TP_STRUCT__entry(
-+		__field(u32, smc_call_ctx)
-+	),
-+
-+	TP_fast_assign(
-+		__entry->smc_call_ctx = smc_ctx;
-+	),
-+
-+	TP_printk("smc_call_ctx:%u", __entry->smc_call_ctx)
-+);
-+
-+TRACE_EVENT(scm_waitq_get_wq_ctx,
-+
-+	TP_PROTO(u32 wq_ctx, u32 flags, u32 pending),
-+
-+	TP_ARGS(wq_ctx, flags, pending),
-+
-+	TP_STRUCT__entry(
-+		__field(u32, wq_ctx)
-+		__field(u32, flags)
-+		__field(u32, more_pending)
-+	),
-+
-+	TP_fast_assign(
-+		__entry->wq_ctx = wq_ctx;
-+		__entry->flags = flags;
-+		__entry->more_pending = pending;
-+	),
-+
-+	TP_printk("wq_ctx:%u, flags:%u, more_pending:%u",
-+		  __entry->wq_ctx, __entry->flags, __entry->more_pending)
-+);
-+
-+TRACE_EVENT(scm_smc_done,
-+
-+	TP_PROTO(int ret, u64 smc_id, struct arm_smccc_res *smc_res),
-+
-+	TP_ARGS(ret, smc_id, smc_res),
-+
-+	TP_STRUCT__entry(
-+		__field(int, ret)
-+		__field(u64, smc_id)
-+		__field(unsigned long, res)
-+		__field(unsigned long, res0)
-+		__field(unsigned long, res1)
-+		__field(unsigned long, res2)
-+	),
-+
-+	TP_fast_assign(
-+		__entry->ret = ret;
-+		__entry->smc_id = smc_id;
-+		__entry->res = smc_res->a0;
-+		__entry->res0 = smc_res->a1;
-+		__entry->res1 = smc_res->a2;
-+		__entry->res2 = smc_res->a3;
-+	),
-+
-+	TP_printk("smc_id:0x%08llx, ret:%d res_to_callee:0x%lx res0:0x%lx res1:0x%lx res2:0x%lx",
-+		  __entry->smc_id, __entry->ret, __entry->res,
-+		  __entry->res0, __entry->res1, __entry->res2)
-+);
-+
-+#endif /* _TRACE_SCM_SMC_INTERFACE_H */
-+
-+#undef TRACE_INCLUDE_PATH
-+#define TRACE_INCLUDE_PATH .
-+#define TRACE_INCLUDE_FILE qcom_scm_trace
-+
-+#include <trace/define_trace.h>
-+
+diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
+index bcff3e9bcd749..1daf043a5e524 100644
+--- a/drivers/md/raid5.c
++++ b/drivers/md/raid5.c
+@@ -3744,11 +3744,10 @@ static int want_replace(struct stripe_head *sh, int disk_idx)
+ 	int rv = 0;
+ 
+ 	rdev = sh->raid_conf->disks[disk_idx].replacement;
+-	if (rdev
+-	    && !test_bit(Faulty, &rdev->flags)
+-	    && !test_bit(In_sync, &rdev->flags)
+-	    && (rdev->recovery_offset <= sh->sector
+-		|| rdev->mddev->resync_offset <= sh->sector))
++	if (rdev && !test_bit(Faulty, &rdev->flags) &&
++	    !test_bit(In_sync, &rdev->flags) &&
++	    (READ_ONCE(rdev->recovery_offset) <= sh->sector ||
++	     rdev->mddev->resync_offset <= sh->sector))
+ 		rv = 1;
+ 	return rv;
+ }
+@@ -4665,7 +4664,8 @@ static void analyse_stripe(struct stripe_head *sh, struct stripe_head_state *s)
+ 		 */
+ 		rdev = conf->disks[i].replacement;
+ 		if (rdev && !test_bit(Faulty, &rdev->flags) &&
+-		    rdev->recovery_offset >= sh->sector + RAID5_STRIPE_SECTORS(conf) &&
++		    READ_ONCE(rdev->recovery_offset) >=
++		    sh->sector + RAID5_STRIPE_SECTORS(conf) &&
+ 		    !rdev_has_badblock(rdev, sh->sector,
+ 				       RAID5_STRIPE_SECTORS(conf)))
+ 			set_bit(R5_ReadRepl, &dev->flags);
+@@ -4708,7 +4708,7 @@ static void analyse_stripe(struct stripe_head *sh, struct stripe_head_state *s)
+ 		} else if (test_bit(In_sync, &rdev->flags))
+ 			set_bit(R5_Insync, &dev->flags);
+ 		else if (sh->sector + RAID5_STRIPE_SECTORS(conf) <=
+-			 rdev->recovery_offset) {
++			 READ_ONCE(rdev->recovery_offset)) {
+ 			/*
+ 			 * in sync if:
+ 			 *  - normal IO, or
+@@ -5441,13 +5441,13 @@ static int raid5_read_one_chunk(struct mddev *mddev, struct bio *raid_bio)
+ 
+ 	rdev = conf->disks[dd_idx].replacement;
+ 	if (!rdev || test_bit(Faulty, &rdev->flags) ||
+-	    rdev->recovery_offset < end_sector) {
++	    READ_ONCE(rdev->recovery_offset) < end_sector) {
+ 		rdev = conf->disks[dd_idx].rdev;
+ 		if (!rdev)
+ 			return 0;
+ 		if (test_bit(Faulty, &rdev->flags) ||
+ 		    !(test_bit(In_sync, &rdev->flags) ||
+-		      rdev->recovery_offset >= end_sector))
++		      READ_ONCE(rdev->recovery_offset) >= end_sector))
+ 			return 0;
+ 	}
+ 
+@@ -6376,8 +6376,8 @@ static sector_t reshape_request(struct mddev *mddev, sector_t sector_nr, int *sk
+ 				if (rdev->raid_disk >= 0 &&
+ 				    !test_bit(Journal, &rdev->flags) &&
+ 				    !test_bit(In_sync, &rdev->flags) &&
+-				    rdev->recovery_offset < sector_nr)
+-					rdev->recovery_offset = sector_nr;
++				    READ_ONCE(rdev->recovery_offset) < sector_nr)
++					WRITE_ONCE(rdev->recovery_offset, sector_nr);
+ 
+ 		conf->reshape_checkpoint = jiffies;
+ 		set_bit(MD_SB_CHANGE_DEVS, &mddev->sb_flags);
+@@ -6485,8 +6485,8 @@ static sector_t reshape_request(struct mddev *mddev, sector_t sector_nr, int *sk
+ 				if (rdev->raid_disk >= 0 &&
+ 				    !test_bit(Journal, &rdev->flags) &&
+ 				    !test_bit(In_sync, &rdev->flags) &&
+-				    rdev->recovery_offset < sector_nr)
+-					rdev->recovery_offset = sector_nr;
++				    READ_ONCE(rdev->recovery_offset) < sector_nr)
++					WRITE_ONCE(rdev->recovery_offset, sector_nr);
+ 		conf->reshape_checkpoint = jiffies;
+ 		set_bit(MD_SB_CHANGE_DEVS, &mddev->sb_flags);
+ 		md_wakeup_thread(mddev->thread);
+@@ -7996,9 +7996,9 @@ static int raid5_run(struct mddev *mddev)
+ 		/* Hack because v0.91 doesn't store recovery_offset properly. */
+ 		if (mddev->major_version == 0 &&
+ 		    mddev->minor_version > 90)
+-			rdev->recovery_offset = reshape_offset;
++			WRITE_ONCE(rdev->recovery_offset, reshape_offset);
+ 
+-		if (rdev->recovery_offset < reshape_offset) {
++		if (READ_ONCE(rdev->recovery_offset) < reshape_offset) {
+ 			/* We need to check old and new layout */
+ 			if (!only_parity(rdev->raid_disk,
+ 					 conf->algorithm,
+@@ -8149,10 +8149,10 @@ static int raid5_spare_active(struct mddev *mddev)
+ 	for (i = 0; i < conf->raid_disks; i++) {
+ 		rdev = conf->disks[i].rdev;
+ 		replacement = conf->disks[i].replacement;
+-		if (replacement
+-		    && replacement->recovery_offset == MaxSector
+-		    && !test_bit(Faulty, &replacement->flags)
+-		    && !test_and_set_bit(In_sync, &replacement->flags)) {
++		if (replacement &&
++		    READ_ONCE(replacement->recovery_offset) == MaxSector &&
++		    !test_bit(Faulty, &replacement->flags) &&
++		    !test_and_set_bit(In_sync, &replacement->flags)) {
+ 			/* Replacement has just become active. */
+ 			if (!rdev
+ 			    || !test_and_clear_bit(In_sync, &rdev->flags))
+@@ -8167,10 +8167,10 @@ static int raid5_spare_active(struct mddev *mddev)
+ 					rdev->sysfs_state);
+ 			}
+ 			sysfs_notify_dirent_safe(replacement->sysfs_state);
+-		} else if (rdev
+-		    && rdev->recovery_offset == MaxSector
+-		    && !test_bit(Faulty, &rdev->flags)
+-		    && !test_and_set_bit(In_sync, &rdev->flags)) {
++		} else if (rdev &&
++			   READ_ONCE(rdev->recovery_offset) == MaxSector &&
++			   !test_bit(Faulty, &rdev->flags) &&
++			   !test_and_set_bit(In_sync, &rdev->flags)) {
+ 			count++;
+ 			sysfs_notify_dirent_safe(rdev->sysfs_state);
+ 		}
+@@ -8540,7 +8540,7 @@ static int raid5_start_reshape(struct mddev *mddev)
+ 					    >= conf->previous_raid_disks)
+ 						set_bit(In_sync, &rdev->flags);
+ 					else
+-						rdev->recovery_offset = 0;
++						WRITE_ONCE(rdev->recovery_offset, 0);
+ 
+ 					/* Failure here is OK */
+ 					sysfs_link_rdev(mddev, rdev);
+@@ -8592,7 +8592,7 @@ static void end_reshape(struct r5conf *conf)
+ 			if (rdev->raid_disk >= 0 &&
+ 			    !test_bit(Journal, &rdev->flags) &&
+ 			    !test_bit(In_sync, &rdev->flags))
+-				rdev->recovery_offset = MaxSector;
++				WRITE_ONCE(rdev->recovery_offset, MaxSector);
+ 		spin_unlock_irq(&conf->device_lock);
+ 		wake_up(&conf->wait_for_reshape);
+ 
 -- 
 2.53.0
 
