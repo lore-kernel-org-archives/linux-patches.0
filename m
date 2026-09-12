@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50E3A27EC7C;
-	Sat, 12 Sep 2026 09:40:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86EEA35C6B2;
+	Sat, 12 Sep 2026 09:40:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789206019; cv=none; b=j06/0MJ9IcXyPyYi+sNLeyI2PH+33uz9r1P8W2widmhNH74kSdWtuU6r4xDfQlsLtP5JXCsO1v2uFRL1hjlGcvvJHuujQaYRtK/9v2NZU9K14+vb+yQMY8yXZ4R2BRwmGcCv1kdwos3EcFO1Q61uI1icwVoTTtE/E6x967pmKzU=
+	t=1789206025; cv=none; b=f6gG111pfMQ133aG0TnhiPZVayYOo+HMbDMcAFfP4jnjGaP+w6Ij2SYb5mWUgqrc3+C2ir//pEPN9SCRSTHJybeFBoUda+gWQIQxEtoRpyYcNem8IYhKSu7kcinHfdYfiBVdQOiZOGEZSi+46wc/x+JfSJ4EPdQKkZYNElofJUk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789206019; c=relaxed/simple;
-	bh=2XbXiB+4DThp/iUMdPckZ/VRkLsVZ6TUihTgCwv5Nlw=;
+	s=arc-20240116; t=1789206025; c=relaxed/simple;
+	bh=ZJmJLDV4LXG9lSmZU5FZwPyeFdenxKYw6HUpmtSoSUE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tmFEa7IOa3xTIIQcbCyv1NXq3FdTW7l2SlXnEzzO803LADeqS3dBvhPP7uKHuktkhIwNL2ASzQoKMx2K6UJK8tHkZedseUoXDICETyiHL6DcQFadIzSXNdHKFoG73xLwMGxjus6rZMAC2XvfKjSWDdr1ryAYsChGsfajAkOyD10=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gWqIiUWF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qsDG+9YNeubhQv02CCnixwAwEWjKQvNHAeA6LoQR6XFUg4i9DQhwIvJAJ2LAv9aOD5G3WL1IzesFxfqkke0t236S30YbA08I0/oKZvZJQmCCmF+iwZSxSN0ZGo0UHKOWRINxHsn1n4s5lHYedV+8N3oL5WoZg8O0hZjX9dYhlcc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JamTWcvP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gWqIiUWF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E529E1F000FF;
-	Sat, 12 Sep 2026 09:40:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JamTWcvP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9B1C1F000FF;
+	Sat, 12 Sep 2026 09:40:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789206018;
-	bh=6tG7WqxHy8hQ5iVMHEjuJt/8Yn5dCVYMw3f+PSpntac=;
+	s=korg; t=1789206023;
+	bh=Z2jWEbmtv3lsE7zsyJbgmEm5vJsC9x9Cji04EkD6tyc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gWqIiUWFxL4P0b8/h5c77PDe+LNTW9UasiDHsWg0wSKViMyMvieY6LD8bjzkuLde7
-	 2dFDNjNvgwrnSHwW1cjTyl2Hs9uDpPWDWztOoFIOgQ+CB1YnaKZR5UupJCS2/guUwY
-	 pxOSoVCovNi1AWvNKQzz17J+Qg3+6fS0pbB0qQy8=
+	b=JamTWcvPy1F2W/ffSi1v8qJtZeOTASd0P40VgNsVIYq5z42hvnZWRBAwaqDDo4Hm3
+	 L3nPAiYkpHrQeKiLlpCemdjDijIejJld1pl9rpEABkdrTLVSzBCkFnXgtgr71+K7pv
+	 OaiJahllD+fRgan1/AyKfDdS5N9xkdYYXsVUX8uE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yicong Hui <yiconghui@gmail.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
+	Christos Maragkos <whitetowersoftware@gmail.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0093/1518] drm: Remove unused header in drm_dumb_buffers.c
-Date: Sat, 12 Sep 2026 08:37:42 +0200
-Message-ID: <20260912065625.579429672@linuxfoundation.org>
+Subject: [PATCH 6.18 0120/1518] HID: nintendo: Fix imu_timestamp_us double increment per report
+Date: Sat, 12 Sep 2026 08:38:09 +0200
+Message-ID: <20260912065626.203441941@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,43 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yicong Hui <yiconghui@gmail.com>
+From: Christos Maragkos <whitetowersoftware@gmail.com>
 
-[ Upstream commit 38b4ce17ef3421fb0e5e6dbdab1974282bde1165 ]
+[ Upstream commit 1f9b25d3fb65b9384dec16d9db13a3e71abd9145 ]
 
-Remove the header #include "drm_internal.h" from drm_dumb_buffers.c,
-which is included but not used.
+Previously, the imu_timestamp_us variable was incremented twice per
+report, causing it to advance by two times the desired amount.
 
-Header was introduced in commit 47f10854ca89 ("drm: Don't export the
-drm_gem_dumb_destroy() function") when moving functions, but was not
-removed in commit 96a7b60f6ddb ("drm: remove dumb_destroy callback")
-when the drm_gem_dumb_destroy function was removed.
+This resulted in incorrect jumps in IMU timestamps reported using
+MSC_TIMESTAMP, so userspace applications saw corrupted timing on
+functions such as gyroscope-based aim and motion controls.
 
-Compiles successfully with DRM enabled, pass kunit tests and
-IGT-tests in a vng virtual machine.
+This is fixed by removing the redundant increment at the start of the
+report handling so the remaining can account for the full report
+interval.
 
-Fixes: 96a7b60f6ddb ("drm: remove dumb_destroy callback")
-Signed-off-by: Yicong Hui <yiconghui@gmail.com>
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://patch.msgid.link/20260409154826.8955-1-yiconghui@gmail.com
+Fixes: 4ff5b10840a88 ("HID: nintendo: add IMU support")
+Signed-off-by: Christos Maragkos <whitetowersoftware@gmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_dumb_buffers.c | 1 -
+ drivers/hid/hid-nintendo.c | 1 -
  1 file changed, 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/drm_dumb_buffers.c b/drivers/gpu/drm/drm_dumb_buffers.c
-index 70032bba1c97e..7b4ba9fab299a 100644
---- a/drivers/gpu/drm/drm_dumb_buffers.c
-+++ b/drivers/gpu/drm/drm_dumb_buffers.c
-@@ -29,7 +29,6 @@
- #include <drm/drm_mode.h>
- 
- #include "drm_crtc_internal.h"
--#include "drm_internal.h"
- 
- /**
-  * DOC: overview
+diff --git a/drivers/hid/hid-nintendo.c b/drivers/hid/hid-nintendo.c
+index d5f049424f080..34642352b439d 100644
+--- a/drivers/hid/hid-nintendo.c
++++ b/drivers/hid/hid-nintendo.c
+@@ -1453,7 +1453,6 @@ static void joycon_parse_imu_report(struct joycon_ctlr *ctlr,
+ 		dropped_threshold = ctlr->imu_avg_delta_ms * 3 / 2;
+ 		dropped_pkts = (delta - min(delta, dropped_threshold)) /
+ 				ctlr->imu_avg_delta_ms;
+-		ctlr->imu_timestamp_us += 1000 * ctlr->imu_avg_delta_ms;
+ 		if (dropped_pkts > JC_IMU_DROPPED_PKT_WARNING) {
+ 			hid_warn_ratelimited(ctlr->hdev,
+ 				 "compensating for %u dropped IMU reports\n",
 -- 
 2.53.0
 
