@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 628DD331203;
-	Sat, 12 Sep 2026 15:43:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D963345CCE;
+	Sat, 12 Sep 2026 15:43:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789227808; cv=none; b=k2PnYbx6TfZcynaICHbOBxdvSUOW9FkDpmg6i5/QFPPnEXKJwMvBbpMg1JTHNS/W8gRTIG5eAY6sNFFFPxG22CxqR4aOh77Es/FXFJNAtSh7mDiP1Dfcqumz+4uUAbkoC6/noHePiU7mj2r8VyLfzzrFtIacrkJTOmvT46rHVoM=
+	t=1789227814; cv=none; b=ZmEhFTy+J8sWJoMui03rV220c54SohowoLUp3IdL2ahfCpCyq6G1fxDDj6IuUryDnSXmF1DXEhaxw42Q6K6ZB86OGBt6uBaZOnb3MA+YkgY7PMrTAtt5kksnRsXa53QcF5wpQMU4OHrruCxau/XmJQ79JYUHz1H7uncmxUCSKLU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789227808; c=relaxed/simple;
-	bh=q5sho56/5qsmNVICq97NeimuS/r/6AjOt4E/d1Rfo4A=;
+	s=arc-20240116; t=1789227814; c=relaxed/simple;
+	bh=s4cLqFi6/WLJpG9DjPNUIgVkGEuLNr41rg0OQDm/JcM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bnTu5icL6z20zPcGpNHRq5+OaInVRaZiHOIt+jLCoRxQ3UcRDAbDdoj5u0J27d8DZkFjAuREIQFS5+K/MQXE37rwdaMpaHv6/aLY7G0MuZHCPxvkp8PNAPcWCtRiSuvVFO5tPfl3pAw5mDHra4XiU22/ayG+undom+bY2c6YKSw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SLYtDcN0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NaNrrMaIq3JhIotb5HoonTzFDaem9+2UDmUZvdVOGf2iHdX8cJd2CxA0aVXLKRP6RaK7jvW31STYh39EVFqer9+zd/Gfy5psMQSYzKcz2S9kIj/izXw+G3yzwmvdmXcYK67IT9NqX5npld16oBZb2m93Ih3SS/QFCs9ZLd25Pg4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2ibw7Xy3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SLYtDcN0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5B3F1F000FF;
-	Sat, 12 Sep 2026 15:43:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2ibw7Xy3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F4091F000FF;
+	Sat, 12 Sep 2026 15:43:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789227807;
-	bh=j07BB4QO758ExFGuoj1aeFaisOFrKVG1cBOFIXJMv20=;
+	s=korg; t=1789227812;
+	bh=DfEGxa+3gZEvmrYeynqHPv1A0pS71t5hfyFqVo4CfVg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SLYtDcN02SkYZBoDV8K51ncem3RO2BJBvuz7h1ae2MROHh6lPzA0yP5NqtUHhgJpn
-	 W9dh2vdIT0umOUn80ruC1ouULyjTyxi8slvhkyWAabl++YlUdUA0iVvam/8NbSaIjT
-	 Psdg7ZXnZ8hyvzGoQbtZZGR0WDBWYQRSyX9ID178=
+	b=2ibw7Xy3100PGeupbWXD4tlZqV8oiOTKwkscZvX3ITPJnFRb/gLKu1Bry2CaOEv8M
+	 osLMAUKP0B24Nd68lcslLV8pijif836DHcIJD64bfB0Z8LATdyPwxyzYajPsmMlW+C
+	 HnZ8pazWVvpWDFth3cGBheXs75Tad832rkNOpTJY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Amir Goldstein <amir73il@gmail.com>,
-	Youngjae Kwon <yjkwon0026@snu.ac.kr>,
+	syzbot+937b5bbb6a815b3e5d0b@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0257/1191] fsnotify: Fix stale object mask after concurrent mark updates
-Date: Sat, 12 Sep 2026 08:49:45 +0200
-Message-ID: <20260912065553.991982127@linuxfoundation.org>
+Subject: [PATCH 6.1 0258/1191] tcp: fix potential race in tcp_v6_syn_recv_sock()
+Date: Sat, 12 Sep 2026 08:49:46 +0200
+Message-ID: <20260912065554.014924723@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -52,133 +54,394 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Youngjae Kwon <yjkwon0026@snu.ac.kr>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit e422777fdd4746de1109575c51e65038d4c5c1be ]
+[ Upstream commit 858d2a4f67ff69e645a43487ef7ea7f28f06deae ]
 
-When a mark gets a new event bit, fanotify and inotify may avoid
-recalculating the object mask if the cached aggregate already contains that
-bit. This is racy with a recalculation triggered by a concurrent update to
-another mark on the same connector.
+Code in tcp_v6_syn_recv_sock() after the call to tcp_v4_syn_recv_sock()
+is done too late.
 
-The concurrent scan can read the mark before the new bit is added, while
-the updater reads the old aggregate before that scan publishes its result.
-The updater then skips recalculation and the scan publishes a mask without
-the bit, leaving the object mask stale after both updates complete.
+After tcp_v4_syn_recv_sock(), the child socket is already visible
+from TCP ehash table and other cpus might use it.
 
-This can be reproduced with two fanotify groups watching the same inode:
-one thread removes FAN_MODIFY from one existing mark while another thread
-adds FAN_MODIFY to the other mark. After both fanotify_mark() calls return,
-writes can fail to produce FAN_MODIFY for the group whose mark now contains
-the bit. This was reproduced on an unmodified v6.12.95 kernel. The
-equivalent inotify interleaving loses IN_MODIFY events.
+Since newinet->pinet6 is still pointing to the listener ipv6_pinfo
+bad things can happen as syzbot found.
 
-For normal fanotify additions, recalculate whenever the raw mark mask
-changes. The normal mask is not cleared asynchronously, so an unchanged
-addition cannot introduce missing interest. Always recalculate ignore-mask
-updates because FS_MODIFY handling may clear the ignore mask without taking
-mark->lock, making snapshot comparisons unreliable.
+Move the problematic code in tcp_v6_mapped_child_init()
+and call this new helper from tcp_v4_syn_recv_sock() before
+the ehash insertion.
 
-Always recalculate after updating an existing inotify watch. Its replace
-path temporarily sets mark->mask to zero, so a concurrent scan can observe
-zero even when the old and final masks are equal. Assigning the replacement
-mask directly would avoid the transient zero, but existing-watch updates
-are infrequent, so unconditional recalculation is simpler.
+This allows the removal of one tcp_sync_mss(), since
+tcp_v4_syn_recv_sock() will call it with the correct
+context.
 
-Link: https://lore.kernel.org/all/CACwKKmCZdiZDoFuYm6LZhQ=XvHPk0fNKH=X3LmoXMqakYqJaNw@mail.gmail.com/
-Fixes: 63c882a05416 ("inotify: reimplement inotify using fsnotify")
-Fixes: 912ee3946c5e ("fanotify: do not call fanotify_update_object_mask in fanotify_add_mark")
-Cc: stable@vger.kernel.org # needs adjustments for <= 7.0
-Suggested-by: Jan Kara <jack@suse.cz>
-Suggested-by: Amir Goldstein <amir73il@gmail.com>
-Signed-off-by: Youngjae Kwon <yjkwon0026@snu.ac.kr>
-Link: https://patch.msgid.link/20260802015801.2426818-1-yjkwon0026@snu.ac.kr
-Signed-off-by: Jan Kara <jack@suse.cz>
-(cherry picked from commit e422777fdd4746de1109575c51e65038d4c5c1be)
-[yjkwon0026: Resolve the inotify conflict by retaining the branch-native
-inode->i_fsnotify_marks argument to fsnotify_recalc_mask(). This tree
-lacks 35ceae44742e ("fsnotify: Avoid data race between
-fsnotify_recalc_mask() and fsnotify_object_watched()") and
-4520b96b8136 ("fsnotify: inotify: pass mark connector to
-fsnotify_recalc_mask()"). The differing READ_ONCE() line and connector
-call are in the conditional deleted by this patch, so neither commit is
-a prerequisite for this fix.]
-Signed-off-by: Youngjae Kwon <yjkwon0026@snu.ac.kr>
+[florian:
+ - net/ipv6/tcp_ipv6.c:
+   - Set `newnp->ipv6_fl_list = NULL` instead of `newinet->ipv6_fl_list = NULL`,
+     as `ipv6_fl_list` is in `struct ipv6_pinfo`.
+   - Guarded `af_specific` assignment with `#ifdef CONFIG_TCP_MD5SIG` instead
+     of checking `CONFIG_TCP_AO`.
+   - Used `if (tcp_inet6_sk(sk)->repflow)` instead of `inet6_test_bit(REPFLOW, sk)`.
+ - net/dccp/:
+   - Updated `syn_recv_sock` implementations and call sites for DCCP, which was
+     removed in upstream kernels prior to this commit.]
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzbot+937b5bbb6a815b3e5d0b@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/69949275.050a0220.2eeac1.0145.GAE@google.com/
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20260217161205.2079883-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Assisted-by: Cursor:gemini-3.7-flash
+Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/notify/fanotify/fanotify_user.c | 12 +++++++-----
- fs/notify/inotify/inotify_user.c   | 15 +--------------
- 2 files changed, 8 insertions(+), 19 deletions(-)
+ include/net/inet_connection_sock.h |  4 +-
+ include/net/tcp.h                  |  4 +-
+ net/dccp/dccp.h                    |  4 +-
+ net/dccp/ipv4.c                    |  4 +-
+ net/dccp/ipv6.c                    |  7 ++-
+ net/dccp/minisocks.c               |  2 +-
+ net/ipv4/syncookies.c              |  2 +-
+ net/ipv4/tcp_fastopen.c            |  2 +-
+ net/ipv4/tcp_ipv4.c                |  8 ++-
+ net/ipv4/tcp_minisocks.c           |  2 +-
+ net/ipv6/tcp_ipv6.c                | 97 +++++++++++++-----------------
+ net/mptcp/subflow.c                |  6 +-
+ net/smc/af_smc.c                   |  6 +-
+ 13 files changed, 78 insertions(+), 70 deletions(-)
 
-diff --git a/fs/notify/fanotify/fanotify_user.c b/fs/notify/fanotify/fanotify_user.c
-index 9df5db0f10ff2..48984f039fded 100644
---- a/fs/notify/fanotify/fanotify_user.c
-+++ b/fs/notify/fanotify/fanotify_user.c
-@@ -1126,16 +1126,18 @@ static bool fanotify_mark_update_flags(struct fsnotify_mark *fsn_mark,
- static bool fanotify_mark_add_to_mask(struct fsnotify_mark *fsn_mark,
- 				      __u32 mask, unsigned int fan_flags)
+diff --git a/include/net/inet_connection_sock.h b/include/net/inet_connection_sock.h
+index 7649d4901f0c4..3d19420dce511 100644
+--- a/include/net/inet_connection_sock.h
++++ b/include/net/inet_connection_sock.h
+@@ -42,7 +42,9 @@ struct inet_connection_sock_af_ops {
+ 				      struct request_sock *req,
+ 				      struct dst_entry *dst,
+ 				      struct request_sock *req_unhash,
+-				      bool *own_req);
++				      bool *own_req,
++				      void (*opt_child_init)(struct sock *newsk,
++							     const struct sock *sk));
+ 	u16	    net_header_len;
+ 	u16	    net_frag_header_len;
+ 	u16	    sockaddr_len;
+diff --git a/include/net/tcp.h b/include/net/tcp.h
+index 9632ac801e016..b54fd01c5bedb 100644
+--- a/include/net/tcp.h
++++ b/include/net/tcp.h
+@@ -468,7 +468,9 @@ struct sock *tcp_v4_syn_recv_sock(const struct sock *sk, struct sk_buff *skb,
+ 				  struct request_sock *req,
+ 				  struct dst_entry *dst,
+ 				  struct request_sock *req_unhash,
+-				  bool *own_req);
++				  bool *own_req,
++				  void (*opt_child_init)(struct sock *newsk,
++							 const struct sock *sk));
+ int tcp_v4_do_rcv(struct sock *sk, struct sk_buff *skb);
+ int tcp_v4_connect(struct sock *sk, struct sockaddr *uaddr, int addr_len);
+ int tcp_connect(struct sock *sk);
+diff --git a/net/dccp/dccp.h b/net/dccp/dccp.h
+index 9ddc3a9e89e40..c4dc2d1b5fb18 100644
+--- a/net/dccp/dccp.h
++++ b/net/dccp/dccp.h
+@@ -267,7 +267,9 @@ struct sock *dccp_v4_request_recv_sock(const struct sock *sk, struct sk_buff *sk
+ 				       struct request_sock *req,
+ 				       struct dst_entry *dst,
+ 				       struct request_sock *req_unhash,
+-				       bool *own_req);
++				       bool *own_req,
++				       void (*opt_child_init)(struct sock *newsk,
++							      const struct sock *sk));
+ struct sock *dccp_check_req(struct sock *sk, struct sk_buff *skb,
+ 			    struct request_sock *req);
+ 
+diff --git a/net/dccp/ipv4.c b/net/dccp/ipv4.c
+index db8d54fb88060..98ac28fb07e1f 100644
+--- a/net/dccp/ipv4.c
++++ b/net/dccp/ipv4.c
+@@ -409,7 +409,9 @@ struct sock *dccp_v4_request_recv_sock(const struct sock *sk,
+ 				       struct request_sock *req,
+ 				       struct dst_entry *dst,
+ 				       struct request_sock *req_unhash,
+-				       bool *own_req)
++				       bool *own_req,
++				       void (*opt_child_init)(struct sock *newsk,
++							      const struct sock *sk))
  {
-+	__u32 old_mask;
- 	bool recalc;
- 
- 	spin_lock(&fsn_mark->lock);
--	if (!(fan_flags & FANOTIFY_MARK_IGNORE_BITS))
-+	if (!(fan_flags & FANOTIFY_MARK_IGNORE_BITS)) {
-+		old_mask = fsn_mark->mask;
- 		fsn_mark->mask |= mask;
--	else
-+		recalc = old_mask != fsn_mark->mask;
-+	} else {
- 		fsn_mark->ignore_mask |= mask;
--
--	recalc = fsnotify_calc_mask(fsn_mark) &
--		~fsnotify_conn_mask(fsn_mark->connector);
-+		recalc = true;
-+	}
- 
- 	recalc |= fanotify_mark_update_flags(fsn_mark, fan_flags);
- 	spin_unlock(&fsn_mark->lock);
-diff --git a/fs/notify/inotify/inotify_user.c b/fs/notify/inotify/inotify_user.c
-index 804af9d6078b0..b2c75477f5497 100644
---- a/fs/notify/inotify/inotify_user.c
-+++ b/fs/notify/inotify/inotify_user.c
-@@ -540,7 +540,6 @@ static int inotify_update_existing_watch(struct fsnotify_group *group,
+ 	struct inet_request_sock *ireq;
+ 	struct inet_sock *newinet;
+diff --git a/net/dccp/ipv6.c b/net/dccp/ipv6.c
+index 8f5f56b1e5f8f..aa74fe3beafe5 100644
+--- a/net/dccp/ipv6.c
++++ b/net/dccp/ipv6.c
+@@ -416,7 +416,9 @@ static struct sock *dccp_v6_request_recv_sock(const struct sock *sk,
+ 					      struct request_sock *req,
+ 					      struct dst_entry *dst,
+ 					      struct request_sock *req_unhash,
+-					      bool *own_req)
++					      bool *own_req,
++					      void (*opt_child_init)(struct sock *newsk,
++								     const struct sock *sk))
  {
- 	struct fsnotify_mark *fsn_mark;
- 	struct inotify_inode_mark *i_mark;
--	__u32 old_mask, new_mask;
- 	int replace = !(arg & IN_MASK_ADD);
- 	int create = (arg & IN_MASK_CREATE);
- 	int ret;
-@@ -556,27 +555,15 @@ static int inotify_update_existing_watch(struct fsnotify_group *group,
- 	i_mark = container_of(fsn_mark, struct inotify_inode_mark, fsn_mark);
+ 	struct inet_request_sock *ireq = inet_rsk(req);
+ 	struct ipv6_pinfo *newnp;
+@@ -431,7 +433,8 @@ static struct sock *dccp_v6_request_recv_sock(const struct sock *sk,
+ 		 *	v6 mapped
+ 		 */
+ 		newsk = dccp_v4_request_recv_sock(sk, skb, req, dst,
+-						  req_unhash, own_req);
++						  req_unhash, own_req,
++						  opt_child_init);
+ 		if (newsk == NULL)
+ 			return NULL;
  
- 	spin_lock(&fsn_mark->lock);
--	old_mask = fsn_mark->mask;
- 	if (replace) {
- 		fsn_mark->mask = 0;
- 		fsn_mark->flags &= ~INOTIFY_MARK_FLAGS;
+diff --git a/net/dccp/minisocks.c b/net/dccp/minisocks.c
+index 64d805b27adde..0210d38442ec8 100644
+--- a/net/dccp/minisocks.c
++++ b/net/dccp/minisocks.c
+@@ -193,7 +193,7 @@ struct sock *dccp_check_req(struct sock *sk, struct sk_buff *skb,
+ 		 goto drop;
+ 
+ 	child = inet_csk(sk)->icsk_af_ops->syn_recv_sock(sk, skb, req, NULL,
+-							 req, &own_req);
++							 req, &own_req, NULL);
+ 	if (child) {
+ 		child = inet_csk_complete_hashdance(sk, child, req, own_req);
+ 		goto out;
+diff --git a/net/ipv4/syncookies.c b/net/ipv4/syncookies.c
+index f9514cf87649e..d7202f86566a4 100644
+--- a/net/ipv4/syncookies.c
++++ b/net/ipv4/syncookies.c
+@@ -199,7 +199,7 @@ struct sock *tcp_get_cookie_sock(struct sock *sk, struct sk_buff *skb,
+ 	bool own_req;
+ 
+ 	child = icsk->icsk_af_ops->syn_recv_sock(sk, skb, req, dst,
+-						 NULL, &own_req);
++						 NULL, &own_req, NULL);
+ 	if (child) {
+ 		refcount_set(&req->rsk_refcnt, 1);
+ 		tcp_sk(child)->tsoffset = tsoff;
+diff --git a/net/ipv4/tcp_fastopen.c b/net/ipv4/tcp_fastopen.c
+index cbce1306bb08c..c99f10786c1f9 100644
+--- a/net/ipv4/tcp_fastopen.c
++++ b/net/ipv4/tcp_fastopen.c
+@@ -247,7 +247,7 @@ static struct sock *tcp_fastopen_create_child(struct sock *sk,
+ 	bool own_req;
+ 
+ 	child = inet_csk(sk)->icsk_af_ops->syn_recv_sock(sk, skb, req, NULL,
+-							 NULL, &own_req);
++							 NULL, &own_req, NULL);
+ 	if (!child)
+ 		return NULL;
+ 
+diff --git a/net/ipv4/tcp_ipv4.c b/net/ipv4/tcp_ipv4.c
+index 753a881ce3cdf..ec3b0aa0a6260 100644
+--- a/net/ipv4/tcp_ipv4.c
++++ b/net/ipv4/tcp_ipv4.c
+@@ -1509,7 +1509,9 @@ struct sock *tcp_v4_syn_recv_sock(const struct sock *sk, struct sk_buff *skb,
+ 				  struct request_sock *req,
+ 				  struct dst_entry *dst,
+ 				  struct request_sock *req_unhash,
+-				  bool *own_req)
++				  bool *own_req,
++				  void (*opt_child_init)(struct sock *newsk,
++							 const struct sock *sk))
+ {
+ 	struct inet_request_sock *ireq;
+ 	bool found_dup_sk = false;
+@@ -1565,6 +1567,10 @@ struct sock *tcp_v4_syn_recv_sock(const struct sock *sk, struct sk_buff *skb,
  	}
- 	fsn_mark->mask |= inotify_arg_to_mask(inode, arg);
- 	fsn_mark->flags |= inotify_arg_to_flags(arg);
--	new_mask = fsn_mark->mask;
- 	spin_unlock(&fsn_mark->lock);
+ 	sk_setup_caps(newsk, dst);
  
--	if (old_mask != new_mask) {
--		/* more bits in old than in new? */
--		int dropped = (old_mask & ~new_mask);
--		/* more bits in this fsn_mark than the inode's mask? */
--		int do_inode = (new_mask & ~inode->i_fsnotify_mask);
++#if IS_ENABLED(CONFIG_IPV6)
++	if (opt_child_init)
++		opt_child_init(newsk, sk);
++#endif
+ 	tcp_ca_openreq_child(newsk, dst);
+ 
+ 	tcp_sync_mss(newsk, dst_mtu(dst));
+diff --git a/net/ipv4/tcp_minisocks.c b/net/ipv4/tcp_minisocks.c
+index 22b5748a6ee2c..67735100f9acf 100644
+--- a/net/ipv4/tcp_minisocks.c
++++ b/net/ipv4/tcp_minisocks.c
+@@ -780,7 +780,7 @@ struct sock *tcp_check_req(struct sock *sk, struct sk_buff *skb,
+ 	 * socket is created, wait for troubles.
+ 	 */
+ 	child = inet_csk(sk)->icsk_af_ops->syn_recv_sock(sk, skb, req, NULL,
+-							 req, &own_req);
++							 req, &own_req, NULL);
+ 	if (!child)
+ 		goto listen_overflow;
+ 
+diff --git a/net/ipv6/tcp_ipv6.c b/net/ipv6/tcp_ipv6.c
+index 3d909982d8187..d3952b058453f 100644
+--- a/net/ipv6/tcp_ipv6.c
++++ b/net/ipv6/tcp_ipv6.c
+@@ -1191,11 +1191,48 @@ static void tcp_v6_restore_cb(struct sk_buff *skb)
+ 		sizeof(struct inet6_skb_parm));
+ }
+ 
++/* Called from tcp_v4_syn_recv_sock() for v6_mapped children. */
++static void tcp_v6_mapped_child_init(struct sock *newsk, const struct sock *sk)
++{
++	struct inet_sock *newinet = inet_sk(newsk);
++	struct ipv6_pinfo *newnp;
++
++	newinet->pinet6 = newnp = tcp_inet6_sk(newsk);
++
++	memcpy(newnp, tcp_inet6_sk(sk), sizeof(struct ipv6_pinfo));
++
++	newnp->saddr = newsk->sk_v6_rcv_saddr;
++
++	inet_csk(newsk)->icsk_af_ops = &ipv6_mapped;
++	if (sk_is_mptcp(newsk))
++		mptcpv6_handle_mapped(newsk, true);
++	newsk->sk_backlog_rcv = tcp_v4_do_rcv;
++#ifdef CONFIG_TCP_MD5SIG
++	tcp_sk(newsk)->af_specific = &tcp_sock_ipv6_mapped_specific;
++#endif
++
++	newnp->ipv6_mc_list = NULL;
++	newnp->ipv6_ac_list = NULL;
++	newnp->ipv6_fl_list = NULL;
++	newnp->pktoptions  = NULL;
++	newnp->opt	   = NULL;
++
++	/* tcp_v4_syn_recv_sock() has initialized newinet->mc_{index,ttl} */
++	newnp->mcast_oif   = newinet->mc_index;
++	newnp->mcast_hops  = newinet->mc_ttl;
++
++	newnp->rcv_flowinfo = 0;
++	if (tcp_inet6_sk(sk)->repflow)
++		newnp->flow_label = 0;
++}
++
+ static struct sock *tcp_v6_syn_recv_sock(const struct sock *sk, struct sk_buff *skb,
+ 					 struct request_sock *req,
+ 					 struct dst_entry *dst,
+ 					 struct request_sock *req_unhash,
+-					 bool *own_req)
++					 bool *own_req,
++					 void (*opt_child_init)(struct sock *newsk,
++								const struct sock *sk))
+ {
+ 	struct inet_request_sock *ireq;
+ 	struct ipv6_pinfo *newnp;
+@@ -1211,60 +1248,10 @@ static struct sock *tcp_v6_syn_recv_sock(const struct sock *sk, struct sk_buff *
+ #endif
+ 	struct flowi6 fl6;
+ 
+-	if (skb->protocol == htons(ETH_P_IP)) {
+-		/*
+-		 *	v6 mapped
+-		 */
 -
--		/* update the inode with this new fsn_mark */
--		if (dropped || do_inode)
--			fsnotify_recalc_mask(inode->i_fsnotify_marks);
+-		newsk = tcp_v4_syn_recv_sock(sk, skb, req, dst,
+-					     req_unhash, own_req);
 -
+-		if (!newsk)
+-			return NULL;
+-
+-		inet_sk(newsk)->pinet6 = tcp_inet6_sk(newsk);
+-
+-		newnp = tcp_inet6_sk(newsk);
+-		newtp = tcp_sk(newsk);
+-
+-		memcpy(newnp, np, sizeof(struct ipv6_pinfo));
+-
+-		newnp->saddr = newsk->sk_v6_rcv_saddr;
+-
+-		inet_csk(newsk)->icsk_af_ops = &ipv6_mapped;
+-		if (sk_is_mptcp(newsk))
+-			mptcpv6_handle_mapped(newsk, true);
+-		newsk->sk_backlog_rcv = tcp_v4_do_rcv;
+-#ifdef CONFIG_TCP_MD5SIG
+-		newtp->af_specific = &tcp_sock_ipv6_mapped_specific;
+-#endif
+-
+-		newnp->ipv6_mc_list = NULL;
+-		newnp->ipv6_ac_list = NULL;
+-		newnp->ipv6_fl_list = NULL;
+-		newnp->pktoptions  = NULL;
+-		newnp->opt	   = NULL;
+-		newnp->mcast_oif   = inet_iif(skb);
+-		newnp->mcast_hops  = ip_hdr(skb)->ttl;
+-		newnp->rcv_flowinfo = 0;
+-		if (np->repflow)
+-			newnp->flow_label = 0;
+-
+-		/*
+-		 * No need to charge this sock to the relevant IPv6 refcnt debug socks count
+-		 * here, tcp_create_openreq_child now does this for us, see the comment in
+-		 * that function for the gory details. -acme
+-		 */
+-
+-		/* It is tricky place. Until this moment IPv4 tcp
+-		   worked with IPv6 icsk.icsk_af_ops.
+-		   Sync it now.
+-		 */
+-		tcp_sync_mss(newsk, inet_csk(newsk)->icsk_pmtu_cookie);
+-
+-		return newsk;
 -	}
-+	fsnotify_recalc_mask(inode->i_fsnotify_marks);
+-
++	if (skb->protocol == htons(ETH_P_IP))
++		return tcp_v4_syn_recv_sock(sk, skb, req, dst,
++					    req_unhash, own_req,
++					    tcp_v6_mapped_child_init);
+ 	ireq = inet_rsk(req);
  
- 	/* return the wd */
- 	ret = i_mark->wd;
+ 	if (sk_acceptq_is_full(sk))
+diff --git a/net/mptcp/subflow.c b/net/mptcp/subflow.c
+index bdf7f439cf2c3..d9734bfb7283b 100644
+--- a/net/mptcp/subflow.c
++++ b/net/mptcp/subflow.c
+@@ -699,7 +699,9 @@ static struct sock *subflow_syn_recv_sock(const struct sock *sk,
+ 					  struct request_sock *req,
+ 					  struct dst_entry *dst,
+ 					  struct request_sock *req_unhash,
+-					  bool *own_req)
++					  bool *own_req,
++					  void (*opt_child_init)(struct sock *newsk,
++								 const struct sock *sk))
+ {
+ 	struct mptcp_subflow_context *listener = mptcp_subflow_ctx(sk);
+ 	struct mptcp_subflow_request_sock *subflow_req;
+@@ -745,7 +747,7 @@ static struct sock *subflow_syn_recv_sock(const struct sock *sk,
+ 
+ create_child:
+ 	child = listener->icsk_af_ops->syn_recv_sock(sk, skb, req, dst,
+-						     req_unhash, own_req);
++						     req_unhash, own_req, opt_child_init);
+ 
+ 	if (child && *own_req) {
+ 		struct mptcp_subflow_context *ctx = mptcp_subflow_ctx(child);
+diff --git a/net/smc/af_smc.c b/net/smc/af_smc.c
+index d069e5b156e51..6713296fffd99 100644
+--- a/net/smc/af_smc.c
++++ b/net/smc/af_smc.c
+@@ -118,7 +118,9 @@ static struct sock *smc_tcp_syn_recv_sock(const struct sock *sk,
+ 					  struct request_sock *req,
+ 					  struct dst_entry *dst,
+ 					  struct request_sock *req_unhash,
+-					  bool *own_req)
++					  bool *own_req,
++					  void (*opt_child_init)(struct sock *newsk,
++								 const struct sock *sk))
+ {
+ 	struct smc_sock *smc;
+ 	struct sock *child;
+@@ -143,7 +145,7 @@ static struct sock *smc_tcp_syn_recv_sock(const struct sock *sk,
+ 
+ 	/* passthrough to original syn recv sock fct */
+ 	child = smc->ori_af_ops->syn_recv_sock(sk, skb, req, dst, req_unhash,
+-					       own_req);
++					       own_req, opt_child_init);
+ 	/* child must not inherit smc or its ops */
+ 	if (child) {
+ 		rcu_assign_sk_user_data(child, NULL);
 -- 
 2.53.0
 
