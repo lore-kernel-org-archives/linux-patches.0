@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50EAD45C6FD;
-	Sat, 12 Sep 2026 10:48:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EBA945D92D;
+	Sat, 12 Sep 2026 10:48:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789210086; cv=none; b=bfztWojb2Knir/ZNMH1vH/XUY+gPBgiB2yQLZSaGdx76/gBtGtqQatIkrOxdXaERQjWiZUMbe2L5hQyNO/LKSd8ocw+08C3a+QYaaS4iPhpT9SPX32WmZ+t/ablacFlnW1iz9HQ2p9Ya0TJd2SIDS57Ws6Y7Ldiuv+PXlJDLeDc=
+	t=1789210091; cv=none; b=BJ4GujJsZyTVhUK1HMOXPj1l1AJmc+KqHECVjCC+B6bNWXqrqYAgUBG8F4dhEoLIUK5g0aF73mmIix507UP3LXFFmqlzg6GiHfgJwqTZJ5aZlUYHyXe4G0TLxkxBAaNIncdCtE2UL0UaLeJa2/LALzlgbeREyM7dnvGRxEUkevw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789210086; c=relaxed/simple;
-	bh=FhAlyDVlwuHj9TFukxCIaUiDs/122iABqNyYDJG3yKM=;
+	s=arc-20240116; t=1789210091; c=relaxed/simple;
+	bh=u/7/5DjNvdRrTu+qenTYrqROz2zsX5E3SDK/o2t7OSI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GQ4T/tuu7rYjR28SgNURTN8fbVj9ZSPUxTBXnDp/J8mfxmyheGjg6xf04560xP+NwS02YwIMTQAOb3QaMBZudsTngwlrIVlsY4ypQO3PCeuL9MqhKvuRUqOH7vt3P4N1ddCVrojQ8RMQAqTwUch6YycSU3abcSRvE8OCh2z927I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=njVqPktd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=O5Au6/wneU4xGfWOqmhhI69E7x4W4sGOFSyIJZ4DGfziGvskcDHNSrE6Rw0/DQjW+lZ1LtqIhdAGBhf5FyNUw/LhC+V3Q+NgsThb63NfzHN35uQq7GOUUvjTIveEsfA/N8Rw1iaFq3igfD9DeQ2fgJEuB0PDqaXGcsHchRrmziE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NvwZQ7ve; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="njVqPktd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16FFD1F000FF;
-	Sat, 12 Sep 2026 10:48:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NvwZQ7ve"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 017AF1F000FF;
+	Sat, 12 Sep 2026 10:48:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789210085;
-	bh=/+18UHypG4xAfgKFzMMdiKMh63zvya55WXvBUQMvFUk=;
+	s=korg; t=1789210089;
+	bh=NldoUPAN8nm3C1TUZwJKCucLeXhaVCb+0updCuAKnJQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=njVqPktdrVlC7+QwO8AJW3F7AkAwBFTTDootrZZTBBqTcOjD7ekJP0irqCfueocLl
-	 czY0cYQthSR4/SOV9M31LIAM0krSZXHrFycSdq71hfqlvFoLBi5Xo77xyFqPVL5TSs
-	 RH70j4aG+utbOte7EOfdgAyRzg22yuF0kdZT7yhE=
+	b=NvwZQ7veK9wsv0mEEr9RCA+ybJu5eRIHzmk14FYd1Q4lwIy1DWhpVxhBRFBmZfkcQ
+	 WI7S2rfh24frL6ZX9iUaT98wibGHKcFBSp6g2njBWQj84FBKc+4tQ2Ob17uF8p9XqM
+	 oFvdCg5EAFFIuPnKeUqs86TgpcoqHAw9TyZoKYiE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Glass <sjg@chromium.org>,
-	Linus Walleij <linusw@kernel.org>,
+	Yichong Chen <chenyichong@uniontech.com>,
+	David Hildenbrand <david@kernel.org>,
+	Muchun Song <muchun.song@linux.dev>,
+	Oscar Salvador <osalvador@suse.de>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0953/1518] pinctrl: rockchip: Reset the pin count when recalculating SoC data
-Date: Sat, 12 Sep 2026 08:52:02 +0200
-Message-ID: <20260912065645.016131117@linuxfoundation.org>
+Subject: [PATCH 6.18 0954/1518] hugetlbfs: release subpool on fill_super failure
+Date: Sat, 12 Sep 2026 08:52:03 +0200
+Message-ID: <20260912065645.038476517@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,58 +54,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Simon Glass <sjg@chromium.org>
+From: Yichong Chen <chenyichong@uniontech.com>
 
-[ Upstream commit 5b695c191cc85f0fd62eec885b55d01468dc9f2c ]
+[ Upstream commit 308ab73e97c87bd0e142b11758faab7f88d82854 ]
 
-rockchip_pinctrl_get_soc_data() mutates the static per-SoC data. The
-iomux and drive offsets are recalculated idempotently, since a rerun
-anchors at the values calculated before, but the total pin count only
-accumulates: each run adds every bank's pins again. When the probe is
-deferred and runs a second time, nr_pins doubles and every bank's
-pin_base shifts, so later pin lookups resolve to the wrong bank and
-the wrong registers.
+hugetlbfs_fill_super() allocates a hugepage subpool when size or min_size
+mount options are specified.  hugepage_new_subpool() may also reserve huge
+pages for min_size.
 
-Reset the pin count at the start of the calculation, so that a rerun
-produces the same values.
+If root dentry creation fails after the subpool is created, the failure
+path frees the subpool with kfree().  This bypasses hugepage_put_subpool()
+and can leave min_size reservations charged.
 
-This is verified on a Luckfox Pico Mini B (RV1103, with the pending
-RV1106 series applied) by forcing the probe to defer once: without
-this patch the second probe calculates nr_pins=304 instead of 152 and
-no GPIO bank comes up; with it the recalculation matches the first
-run and all banks work.
+Use hugepage_put_subpool() on the failure path, matching the normal
+put_super path.
 
-Fixes: d3e5116119bd ("pinctrl: add pinctrl driver for Rockchip SoCs")
-Link: https://sashiko.dev/#/patchset/20260729132736.3807082-1-sjg@chromium.org?part=4
-Assisted-by: Claude:claude-opus-5
-Signed-off-by: Simon Glass <sjg@chromium.org>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
+Link: https://lore.kernel.org/20260720021900.1376309-1-chenyichong@uniontech.com
+Fixes: 7ca02d0ae586 ("hugetlbfs: accept subpool min_size mount option and setup accordingly")
+Signed-off-by: Yichong Chen <chenyichong@uniontech.com>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Muchun Song <muchun.song@linux.dev>
+Cc: Oscar Salvador <osalvador@suse.de>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/pinctrl-rockchip.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ fs/hugetlbfs/inode.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pinctrl/pinctrl-rockchip.c b/drivers/pinctrl/pinctrl-rockchip.c
-index f1cba3d2367a3..834229831de99 100644
---- a/drivers/pinctrl/pinctrl-rockchip.c
-+++ b/drivers/pinctrl/pinctrl-rockchip.c
-@@ -3675,6 +3675,16 @@ static struct rockchip_pin_ctrl *rockchip_pinctrl_get_soc_data(
- 	pmu_offs = ctrl->pmu_mux_offset;
- 	drv_pmu_offs = ctrl->pmu_drv_offset;
- 	drv_grf_offs = ctrl->grf_drv_offset;
-+
-+	/*
-+	 * This function mutates the static per-SoC data. Most of it is
-+	 * idempotent: recalculated iomux and drv offsets anchor at the
-+	 * values calculated by a previous run. The pin count is not, so
-+	 * reset it here; otherwise it accumulates when the probe runs
-+	 * again after a probe deferral, shifting every bank's pin_base.
-+	 */
-+	ctrl->nr_pins = 0;
-+
- 	bank = ctrl->pin_banks;
- 	for (i = 0; i < ctrl->nr_banks; ++i, ++bank) {
- 		int bank_pins = 0;
+diff --git a/fs/hugetlbfs/inode.c b/fs/hugetlbfs/inode.c
+index f42548ee9083c..34ed9966f2ea8 100644
+--- a/fs/hugetlbfs/inode.c
++++ b/fs/hugetlbfs/inode.c
+@@ -1433,7 +1433,8 @@ hugetlbfs_fill_super(struct super_block *sb, struct fs_context *fc)
+ 		goto out_free;
+ 	return 0;
+ out_free:
+-	kfree(sbinfo->spool);
++	if (sbinfo->spool)
++		hugepage_put_subpool(sbinfo->spool);
+ 	kfree(sbinfo);
+ 	return -ENOMEM;
+ }
 -- 
 2.53.0
 
