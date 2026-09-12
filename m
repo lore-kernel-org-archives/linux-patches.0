@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08399331EA8;
-	Sat, 12 Sep 2026 19:24:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1D4E331EA8;
+	Sat, 12 Sep 2026 19:24:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789241079; cv=none; b=YRbvM0ktItyS/pKAqfssn7+zRLlqUB5UdIOcIzXIS37JiEcA47pbD+QBhIpMDCVE1DAvzguZ31TfqqcNRSXWswtXyeil0zzjrHoG+k6rM6fDe6EXikdGv1KcKsHhGLJCuXDj1hoNhP7ApdI6V1A2fVHOE7wOvLFzxXmMxJ0GwTk=
+	t=1789241084; cv=none; b=khgzhX4vj7PRt/G/Kk2tSvKSfmnksHBGlJ1rQzn898U0k/rcm/Ev5gAs15RFmN4cpKD3Hh5adDraemmi+kPKZSTr5VLYoh9ux6/YCGfSnnTSi9YaOAqTpAkah6eX6SNS7kVibD4A5v8jA81yOP+Ic29Zlu8+TgkUvZziekgfRBY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789241079; c=relaxed/simple;
-	bh=v0W2UE5474OWYMpVmRDYBGAioRiVEAkrsVpDFwGhzR4=;
+	s=arc-20240116; t=1789241084; c=relaxed/simple;
+	bh=lpSFigDjEOuMihgCcmLEcgzIJEJuxUPeZ7WEbHZvts4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=epYTLz6MzFp6lC+IRPNFLikbMAvQKQsu7+EgNMjF+XUnCnykiCu7Rmq48DP2+htHgvtF9zfIsAhfnS8T3JKLcDMPwaMNWeGdDA3j4fWsnFpKCUliMtmTLEBs/YGQgTtxvTmJac6tTk+dS6MpxBHKYPBM92ZMxUXljDgefI6BssQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EJzihjzu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EJSKeuTtnRHEO9fpYdTtfMVXu8eNLL9i/eQYBfSrebqxYym8W4pdpBVyvpLwJHUQ840Rluwrnu/n9FqCcy4gN8Y1IXHUVju68TS8Y1mNHlf2KIhEiXceaIsHiKz9983YXO8ICW45GDKPi/SaCmiiuseiyTTSfDGrJ/6vTLCqY04=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iJkAsV/W; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EJzihjzu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B94521F000FF;
-	Sat, 12 Sep 2026 19:24:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iJkAsV/W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDFD61F000FF;
+	Sat, 12 Sep 2026 19:24:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789241077;
-	bh=2lOXm4Zb8JMy4+VmKz5dCD6xLRG+PoSaLCI9UDOcqa4=;
+	s=korg; t=1789241082;
+	bh=sIXLgP3FvCgNDbp9CIf8E10INb97WAkkqcwuwx8S4pc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EJzihjzueAKPelORGowMCv0gsPzOuwgigDLAhi4WgGTl/ECC2aTudqTqinie+BBYP
-	 Eb+T1RKV4j4pc0/QCbHFAVU2J/6nmrYlvr0QP/BubWbFIUshIT7bJtISXPVeBM2kcS
-	 c+bsY3DkE81md3igMF1xGQjY3He8CoSYtUqghkNc=
+	b=iJkAsV/WgZXa35NFHaf7+gqzr9fxHyx5tg+FEobMnarEKwLwzjbv/HHZViXp5fSD6
+	 J+ZHU5vUrEVWbAQcn++7bMDd7jCcV/FrD1TeNwFPciW3Y6Rl0T36UWG9lxAiTrAkDC
+	 3C4lorlAjYn4cXTTlX3V3LGEjvYl/2czP9J4rk8Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Kiryl Shutsemau (Meta)" <kas@kernel.org>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 5.10 009/798] x86/insn-eval: Move assign_register() out of KVM as insn_assign_reg()
-Date: Sat, 12 Sep 2026 08:53:57 +0200
-Message-ID: <20260912065517.173842362@linuxfoundation.org>
+	Jiangshan Yi <yijiangshan@kylinos.cn>,
+	Jiri Kosina <jkosina@suse.com>
+Subject: [PATCH 5.10 056/798] HID: mcp2221: validate report size in mcp2221_raw_event()
+Date: Sat, 12 Sep 2026 08:54:44 +0200
+Message-ID: <20260912065518.245904740@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -51,149 +50,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kiryl Shutsemau (Meta) <kas@kernel.org>
+From: Jiangshan Yi <yijiangshan@kylinos.cn>
 
-commit 1fe104b048d77d6cb25bd938e6a67450fb50e61d upstream.
+commit 2c9a6998c19503626c57a2267bf279e204113079 upstream.
 
-KVM's instruction emulator has a small helper, assign_register(), that
-writes a value into a register following the x86 rules for writes to
-general-purpose registers: an 8- or 16-bit write leaves the rest of the
-register untouched, a 32-bit write zero-extends the result to 64 bits,
-and a 64-bit write replaces the whole register.
+mcp2221_raw_event() never validates the size of incoming HID reports.
+In the MCP2221_I2C_GET_DATA path it trusts the device-supplied data[3]
+as the copy length without checking that 4 + data[3] bytes actually
+exist in the received report. A malicious or misbehaving USB device can
+send a short report with a large data[3], causing the memcpy to read
+past the valid report data in the HID transfer buffer and leak
+uninitialized kernel memory back to userspace through the I2C/SMBus
+read path.
 
-The TDX guest #VE handler needs the same logic for port I/O emulation
-to get 32-bit zero-extension right.  Rather than add a third copy of
-the same switch, move the helper verbatim to <asm/insn-eval.h>, rename
-it to insn_assign_reg(), and route KVM's callers through it.
+Add a minimum size check at entry and validate that the source range
+fits within the received report before the copy.
 
-Add <asm/insn.h> to the header's includes so it builds standalone in
-callers that have not pulled it in transitively.
-
-No functional change.
-
-Signed-off-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Acked-by: Sean Christopherson <seanjc@google.com>
-Cc:stable@vger.kernel.org
-Link: https://patch.msgid.link/20260713133753.223947-3-kirill@shutemov.name
+Fixes: 67a95c21463d ("HID: mcp2221: add usb to i2c-smbus host bridge")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jiangshan Yi <yijiangshan@kylinos.cn>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/insn-eval.h |   36 ++++++++++++++++++++++++++++++++++++
- arch/x86/kvm/emulate.c           |   26 ++++----------------------
- 2 files changed, 40 insertions(+), 22 deletions(-)
+ drivers/hid/hid-mcp2221.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/arch/x86/include/asm/insn-eval.h
-+++ b/arch/x86/include/asm/insn-eval.h
-@@ -9,6 +9,7 @@
- #include <linux/compiler.h>
- #include <linux/bug.h>
- #include <linux/err.h>
-+#include <asm/insn.h>
- #include <asm/ptrace.h>
+--- a/drivers/hid/hid-mcp2221.c
++++ b/drivers/hid/hid-mcp2221.c
+@@ -739,6 +739,9 @@ static int mcp2221_raw_event(struct hid_
+ 	u8 *buf;
+ 	struct mcp2221 *mcp = hid_get_drvdata(hdev);
  
- #define INSN_CODE_SEG_ADDR_SZ(params) ((params >> 4) & 0xf)
-@@ -29,4 +30,39 @@ int insn_fetch_from_user_inatomic(struct
- bool insn_decode_from_regs(struct insn *insn, struct pt_regs *regs,
- 			   unsigned char buf[MAX_INSN_SIZE], int buf_size);
- 
-+/*
-+ * Write @val into *@reg following the x86 rules for writes to
-+ * general-purpose registers (Intel SDM Vol. 1, "General-Purpose
-+ * Registers in 64-Bit Mode"): an 8- or 16-bit write leaves the rest of
-+ * the register untouched, a 32-bit write zero-extends the result into
-+ * the upper 32 bits, and a 64-bit write replaces the whole register.
-+ *
-+ * @bytes is the width of the write, not a property of the instruction:
-+ * an instruction that, say, sign-extends a 32-bit immediate into a
-+ * 64-bit register does a 64-bit write here.
-+ *
-+ * @reg need not be 8-byte aligned: KVM's instruction emulator offsets
-+ * the pointer by one byte to address the high-byte registers (AH, CH,
-+ * DH, BH).  Use narrow stores for the sub-word cases so the access
-+ * width matches @bytes and the adjacent bytes are left alone.
-+ */
-+static inline void insn_assign_reg(unsigned long *reg, u64 val, int bytes)
-+{
-+	switch (bytes) {
-+	case 1:
-+		*(u8 *)reg = (u8)val;
-+		break;
-+	case 2:
-+		*(u16 *)reg = (u16)val;
-+		break;
-+	case 4:
-+		/* A 32-bit write zero-extends into the upper 32 bits. */
-+		*reg = (u32)val;
-+		break;
-+	case 8:
-+		*reg = val;
-+		break;
-+	}
-+}
++	if (size < 4)
++		return 0;
 +
- #endif /* _ASM_X86_INSN_EVAL_H */
---- a/arch/x86/kvm/emulate.c
-+++ b/arch/x86/kvm/emulate.c
-@@ -24,6 +24,7 @@
- #include <linux/stringify.h>
- #include <asm/fpu/api.h>
- #include <asm/debugreg.h>
-+#include <asm/insn-eval.h>
- #include <asm/nospec-branch.h>
+ 	switch (data[0]) {
  
- #include "x86.h"
-@@ -526,25 +527,6 @@ static void assign_masked(ulong *dest, u
- 	*dest = (*dest & ~mask) | (src & mask);
- }
- 
--static void assign_register(unsigned long *reg, u64 val, int bytes)
--{
--	/* The 4-byte case *is* correct: in 64-bit mode we zero-extend. */
--	switch (bytes) {
--	case 1:
--		*(u8 *)reg = (u8)val;
--		break;
--	case 2:
--		*(u16 *)reg = (u16)val;
--		break;
--	case 4:
--		*reg = (u32)val;
--		break;	/* 64b: zero-extend */
--	case 8:
--		*reg = val;
--		break;
--	}
--}
--
- static inline unsigned long ad_mask(struct x86_emulate_ctxt *ctxt)
- {
- 	return (1UL << (ctxt->ad_bytes << 3)) - 1;
-@@ -592,7 +574,7 @@ register_address_increment(struct x86_em
- {
- 	ulong *preg = reg_rmw(ctxt, reg);
- 
--	assign_register(preg, *preg + inc, ctxt->ad_bytes);
-+	insn_assign_reg(preg, *preg + inc, ctxt->ad_bytes);
- }
- 
- static void rsp_increment(struct x86_emulate_ctxt *ctxt, int inc)
-@@ -1884,7 +1866,7 @@ static int load_segment_descriptor(struc
- 
- static void write_register_operand(struct operand *op)
- {
--	return assign_register(op->addr.reg, op->val, op->bytes);
-+	return insn_assign_reg(op->addr.reg, op->val, op->bytes);
- }
- 
- static int writeback(struct x86_emulate_ctxt *ctxt, struct operand *op)
-@@ -2118,7 +2100,7 @@ static int em_popa(struct x86_emulate_ct
- 		rc = emulate_pop(ctxt, &val, ctxt->op_bytes);
- 		if (rc != X86EMUL_CONTINUE)
- 			break;
--		assign_register(reg_rmw(ctxt, reg), val, ctxt->op_bytes);
-+		insn_assign_reg(reg_rmw(ctxt, reg), val, ctxt->op_bytes);
- 		--reg;
- 	}
- 	return rc;
+ 	case MCP2221_I2C_WR_DATA:
+@@ -797,6 +800,10 @@ static int mcp2221_raw_event(struct hid_
+ 					mcp->status = -EINVAL;
+ 					break;
+ 				}
++				if (4 + data[3] > size) {
++					mcp->status = -EINVAL;
++					break;
++				}
+ 				buf = mcp->rxbuf;
+ 				memcpy(&buf[mcp->rxbuf_idx], &data[4], data[3]);
+ 				mcp->rxbuf_idx = mcp->rxbuf_idx + data[3];
 
 
