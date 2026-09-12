@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F264538C42B;
-	Sat, 12 Sep 2026 10:03:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D513B384CE2;
+	Sat, 12 Sep 2026 10:04:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789207441; cv=none; b=YlaT6ojts/iuVp/0jMDAXP3qX/vMN9/V2c9nST0P4NxPUcGYRQChVP7cFSYPKvukuHtDGF2TQr5EAMXfCPwsk92RKJKe2Q12jmeidDPqQT47h8PaK3E4tNS0DogLGW2DJnLLIx1wtRpzZgsaTinpsHOHeq7ZSVodcamSt7fAJxY=
+	t=1789207446; cv=none; b=NEt2ux4L83DXMWR00vcq4rEi3jqMHc7aULwfQHCdiTCG0DIaTyST2jwzI6iyKj4Oabw5EZOXj56D6nRHZHd2/0qvL+DIeQU744HkFTt2p5/Rg6jELEvp9A7WTUcTaji16jGG/XsY9nzGBO0284NABSd2DAY0TO2TwkmWNi3vPeI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789207441; c=relaxed/simple;
-	bh=NRCnGTls4Vmi+VRlBicQICu2ypV+8SkfY4cB5O1AEl4=;
+	s=arc-20240116; t=1789207446; c=relaxed/simple;
+	bh=jRulM9b9QEj23XUo0P6/vEr1I6/KMV6BKAdC4zKKRX8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Da/EmWtvgn2ZxcocqMh/zGBPDeMGaN6KTqJ2T9ZWXvHkQaa9WY2WBrvDVqNDPHbRJa7DaxX4CCt64eixfV9G/bdKfZgxaX61+RIk+h5IZzZiwg9OQViXeHx5o53WJo7V5aoOnGTRh5Ft3Rvw4oqKwLav1WAFM7Kk2tc1JsYQApA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i62M7wnp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=D6J/w20k97HK80VkdV7woLBLz6ftPuiRDJhYFGrIb7qWJbCiOyMmcWuPIjOCwlfJy9mtWSROHSBB6n/CRrfE2zfvSkt2tTkgMKA9mNTfD0AYqofbh2umNQBaxxGCDyBu7fy9vi/0BSPm4ph593OS+dmLKeSgKRPJxSFfzHWvlUk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d6xiRgF6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i62M7wnp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE12C1F000FF;
-	Sat, 12 Sep 2026 10:03:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d6xiRgF6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A946C1F000FF;
+	Sat, 12 Sep 2026 10:04:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789207439;
-	bh=WukTiOmHIQk/RQnyW1VqVRExLBw/c9qfnGm46ma9R70=;
+	s=korg; t=1789207444;
+	bh=IiIhh29c8cTUz13OcAsMadxOoUOnwtVmNIxdLsaLSXQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=i62M7wnpOtlL5cmTxXzA8vt/Iuo2p/XgiYPntnrvZ7aUCDYw2gJX34bTY5PYwAHV9
-	 rG9n8gx7dJ8T9RukbdfV6wIsvzQopw2MqqNJHL4HFwa724+LZowyudyjXSWm7B4gPL
-	 ogvCib/tteP8k1HxoLgHKNsyKkK+ysqbGklluf94=
+	b=d6xiRgF6QG/wTQ0ecE48hLQyzF7KtvoQmclfD9PyiwSw43LheXbFG7HSN3dSfI09k
+	 QoPWwqgiEilg3zd+VNb1p1o2E6KMqKS6Pmaxv53+z4JFFDRNjY3SQ5glcWeAnXkO6U
+	 oqeO0/qWRMliUJ6KDu7XhPdaQQ9xTSz6Ji5K7Et0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Alison Schofield <alison.schofield@intel.com>,
+	Dave Jiang <dave.jiang@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0411/1518] arm64: dts: qcom: msm8996-xiaomi-gemini: Fix up ti,drv2604 enable GPIO
-Date: Sat, 12 Sep 2026 08:43:00 +0200
-Message-ID: <20260912065632.754278556@linuxfoundation.org>
+Subject: [PATCH 6.18 0371/1518] cxl/mbox: Break poison list loop on an empty payload
+Date: Sat, 12 Sep 2026 08:42:20 +0200
+Message-ID: <20260912065631.860270496@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -52,37 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+From: Dave Jiang <dave.jiang@intel.com>
 
-[ Upstream commit 569413a98a1761782a0770aa85d20a2c78893279 ]
+[ Upstream commit 8b301c4afbce4bc3f94528441d8d5ce1366504ad ]
 
-Update the 'enable-gpio' property name to 'enable-gpios' to conform to
-the bindings for the TI DRV2604 haptics module. While at it, use the
-GPIO_ACTIVE_HIGH define instead of the raw literal.
+A device that returns count == 0 with CXL_POISON_FLAG_MORE set on every
+iteration never advances nr_records, so the max_errors guard never
+trips and the do/while loops forever while holding poison.mutex. That
+hangs the sysfs-triggered scan thread and blocks all subsequent poison
+operations on the device. The existing "Protect against an uncleared
+_FLAG_MORE" guard was intended to bound a misbehaving device but does
+not cover the count == 0 case.
 
-Fixes: 4ac46b3682c5 ("arm64: dts: qcom: msm8996: xiaomi-gemini: Add support for Xiaomi Mi 5")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260625-topic-ti_drv2604_dtwarn-v1-1-76e91fcafbe8@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Stop the loop on an empty payload so a malfunctioning or malicious
+device cannot wedge the poison scan.
+
+Link: https://sashiko.dev/#/patchset/20260702090849.47501-1-icheng@nvidia.com?part=3
+Fixes: ed83f7ca398b ("cxl/mbox: Add GET_POISON_LIST mailbox command")
+Assisted-by: Claude:claude-opus-4-8
+Reviewed-by: Alison Schofield <alison.schofield@intel.com>
+Link: https://patch.msgid.link/20260709155714.1893280-1-dave.jiang@intel.com
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/cxl/core/mbox.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dts b/arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dts
-index bd3f39e1b98fb..9a9c674501202 100644
---- a/arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dts
-@@ -39,7 +39,7 @@ &blsp2_i2c3 {
- 	haptics: drv2604@5a {
- 		compatible = "ti,drv2604";
- 		reg = <0x5a>;
--		enable-gpio = <&tlmm 93 0x00>;
-+		enable-gpios = <&tlmm 93 GPIO_ACTIVE_HIGH>;
- 		mode = <DRV260X_LRA_MODE>;
- 		library-sel = <DRV260X_LIB_LRA>;
- 		pinctrl-names = "default","sleep";
+diff --git a/drivers/cxl/core/mbox.c b/drivers/cxl/core/mbox.c
+index fa775f50fe75e..e1c23aae2a2ed 100644
+--- a/drivers/cxl/core/mbox.c
++++ b/drivers/cxl/core/mbox.c
+@@ -1449,6 +1449,11 @@ int cxl_mem_get_poison(struct cxl_memdev *cxlmd, u64 offset, u64 len,
+ 		if (rc)
+ 			break;
+ 
++		if (!le16_to_cpu(po->count)) {
++			dev_dbg(&cxlmd->dev, "Poison empty payload!\n");
++			break;
++		}
++
+ 		for (int i = 0; i < le16_to_cpu(po->count); i++)
+ 			trace_cxl_poison(cxlmd, cxlr, &po->record[i],
+ 					 po->flags, po->overflow_ts,
 -- 
 2.53.0
 
