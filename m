@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C4BC34AB14;
-	Sat, 12 Sep 2026 10:37:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8877734AB14;
+	Sat, 12 Sep 2026 10:37:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789209445; cv=none; b=dVpPG51h3X/V/qq8e4DQlbWCF3Lr0nT+H/BDALR1C1LW+Ue6cN8zDD5ZbsYH/lIlyHGjViZ5RSgf0GJ4HjbZnQy/VDOssHtx9BNG7k4nvfrCQ0fIiHldTWBtcPT1m5Mb+DsWQcM+stolDCPsm9dxtYYXmG3P4wE/Dcb2ZC5kOeM=
+	t=1789209449; cv=none; b=GeG9ytbAkRnxEcuoe96iO7ysQ+HHyiQ6eK9DNoxyte6QTygvv32xq4iu5cvNaTNP17HfCjMdgpoao2uNiVyW5G+KGvhLP5OWYwQWkavSWrFUknU0FZ6lZg65JSWVls85wnYMiivnv4LSIitbZJaKfj2F8EOGU8vk74O8oHTeKyA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789209445; c=relaxed/simple;
-	bh=WyyhCORsQjhbG/RO8WUKMrIhr5a9mQ+xX3s0t4F5FL8=;
+	s=arc-20240116; t=1789209449; c=relaxed/simple;
+	bh=YmoyKR2pbSumJdyk+3f2xIqwzHElv+puW5keDRhveFI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SdVljBMlyRKCDqSwLjtx9sDT7rSPy8i9CaKTdk+3tXoEEdM/Tc+jEDwHVYtHq1BO6oSvH0G1LAk8MzTWBwubM5HixB3wNToofjEmYHd6EaGmLjXUFNRyjzsGM5RbM5qyrJ0ZXwrBkZmv7L7j44x5XxTX5TFeRc3z/IRucX0TIKU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fMwi+8eP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=INQocrNmWEEhK1Y3zdDVQN77D6sLTu3MoRnVKUvE80NzLI6LMJKRN5aKw7BGlFBDkFeVDqzc3C8Kmp0YbbFGR9EJxYHRe3tAkuCdsvrn/IJU/YYoF6YHuWM8MorbaB9wqU7Ieo1pK6zyaHEycg7GCTfltgrpowUKTXHA0jUEFFY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aE+lMLj0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fMwi+8eP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 537831F000FF;
-	Sat, 12 Sep 2026 10:37:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aE+lMLj0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89BB51F0089E;
+	Sat, 12 Sep 2026 10:37:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789209443;
-	bh=V7qa2ayEqSnA3lSlwmurp98tAl8dN80diFo3q7cR7kw=;
+	s=korg; t=1789209448;
+	bh=WH1LBMcbLegbyzZcdeELcld4mxyU5F/Sp9Vep1kGh5Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fMwi+8ePcmtBgg5orBxAOJTlVvOIU+BIhWw35yxvtuU6XE4F32zfYyYqVAPWIJOjF
-	 ocUL3E9oLSWB72+gH3sLsWZi3FwcrSNN8rTihHP0Q0WurDM+6djQMu8NFm/w9BHBDY
-	 bn/xgYp7YkcRQo94GNCcAGIO3uSGS1ixandi+jMI=
+	b=aE+lMLj0iB5EVBWun+pnquQEELYZlfwL4XtnDbYDJ0gatXBFububQ1tWTkyLpzERC
+	 Kk3ylqRkcTr5sWDJTqG/kYMU0I6OjqoIVJz4l3gz9kE0e2fLeonCzCJzrNIKL7QQoI
+	 AZKB/ant6fI4YN9+b3woUzdJGZL0ne6c1GVB6SZU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Hari Chandrakanthan <quic_haric@quicinc.com>,
+	Amith A <amith.a@oss.qualcomm.com>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0820/1518] wifi: cfg80211: add initial UHR support
-Date: Sat, 12 Sep 2026 08:49:49 +0200
-Message-ID: <20260912065641.987472418@linuxfoundation.org>
+Subject: [PATCH 6.18 0821/1518] wifi: cfg80211: add support to handle incumbent signal detected event from mac80211/driver
+Date: Sat, 12 Sep 2026 08:49:50 +0200
+Message-ID: <20260912065642.010450718@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -50,708 +52,203 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Hari Chandrakanthan <quic_haric@quicinc.com>
 
-[ Upstream commit 072e6f7f416f5d17be71000b31fb108651ad360d ]
+[ Upstream commit 6a584e336cefb230e2d981a464f4d85562eb750c ]
 
-Add initial support for making UHR connections (or suppressing
-that), adding UHR capable stations on the AP side, encoding
-and decoding UHR MCSes (except rate calculation for the new
-MCSes 17, 19, 20 and 23) as well as regulatory support.
+When any incumbent signal is detected by an AP/mesh interface operating
+in 6 GHz band, FCC mandates the AP/mesh to vacate the channels affected
+by it [1].
 
-Link: https://patch.msgid.link/20260130164259.54cc12fbb307.I26126bebd83c7ab17e99827489f946ceabb3521f@changeid
+Add a new API cfg80211_incumbent_signal_notify() that can be used
+by mac80211 or drivers to notify the higher layers about the signal
+interference event with the interference bitmap in which each bit
+denotes the affected 20 MHz in the operating channel.
+
+Add support for the new nl80211 event and nl80211 attribute as well to
+notify userspace on the details about the interference event. Userspace is
+expected to process it and take further action - vacate the channel, or
+reduce the bandwidth.
+
+[1] - https://apps.fcc.gov/kdb/GetAttachment.html?id=nXQiRC%2B4mfiA54Zha%2BrW4Q%3D%3D&desc=987594%20D02%20U-NII%206%20GHz%20EMC%20Measurement%20v03&tracking_number=277034
+
+Signed-off-by: Hari Chandrakanthan <quic_haric@quicinc.com>
+Signed-off-by: Amith A <amith.a@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260216032027.2310956-2-amith.a@oss.qualcomm.com
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Stable-dep-of: 6c5fc504d0d6 ("wifi: cfg80211: stop PMSR before P2P and NAN teardown")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/cfg80211.h       |  58 ++++++++++++++++++--
- include/uapi/linux/nl80211.h |  30 +++++++++++
- net/wireless/nl80211.c       | 102 +++++++++++++++++++++++++++++++++--
- net/wireless/reg.c           |   4 +-
- net/wireless/util.c          | 101 ++++++++++++++++++++++++++--------
- 5 files changed, 265 insertions(+), 30 deletions(-)
+ include/net/cfg80211.h       | 23 +++++++++++++++++++++
+ include/uapi/linux/nl80211.h | 19 +++++++++++++++++
+ net/wireless/nl80211.c       | 40 ++++++++++++++++++++++++++++++++++++
+ net/wireless/trace.h         | 19 +++++++++++++++++
+ 4 files changed, 101 insertions(+)
 
 diff --git a/include/net/cfg80211.h b/include/net/cfg80211.h
-index 99d6508a36ba8..3cb8d45579d42 100644
+index 3cb8d45579d42..c44c35dedc589 100644
 --- a/include/net/cfg80211.h
 +++ b/include/net/cfg80211.h
-@@ -7,7 +7,7 @@
-  * Copyright 2006-2010	Johannes Berg <johannes@sipsolutions.net>
-  * Copyright 2013-2014 Intel Mobile Communications GmbH
-  * Copyright 2015-2017	Intel Deutschland GmbH
-- * Copyright (C) 2018-2025 Intel Corporation
-+ * Copyright (C) 2018-2026 Intel Corporation
-  */
- 
- #include <linux/ethtool.h>
-@@ -126,6 +126,7 @@ struct wiphy;
-  * @IEEE80211_CHAN_NO_4MHZ: 4 MHz bandwidth is not permitted on this channel.
-  * @IEEE80211_CHAN_NO_8MHZ: 8 MHz bandwidth is not permitted on this channel.
-  * @IEEE80211_CHAN_NO_16MHZ: 16 MHz bandwidth is not permitted on this channel.
-+ * @IEEE80211_CHAN_NO_UHR: UHR operation is not permitted on this channel.
-  */
- enum ieee80211_channel_flags {
- 	IEEE80211_CHAN_DISABLED			= BIT(0),
-@@ -143,6 +144,7 @@ enum ieee80211_channel_flags {
- 	IEEE80211_CHAN_NO_10MHZ			= BIT(12),
- 	IEEE80211_CHAN_NO_HE			= BIT(13),
- 	/* can use free bits here */
-+	IEEE80211_CHAN_NO_UHR			= BIT(18),
- 	IEEE80211_CHAN_NO_320MHZ		= BIT(19),
- 	IEEE80211_CHAN_NO_EHT			= BIT(20),
- 	IEEE80211_CHAN_DFS_CONCURRENT		= BIT(21),
-@@ -429,6 +431,18 @@ struct ieee80211_sta_eht_cap {
- 	u8 eht_ppe_thres[IEEE80211_EHT_PPE_THRES_MAX_LEN];
- };
- 
-+/**
-+ * struct ieee80211_sta_uhr_cap - STA's UHR capabilities
-+ * @has_uhr: true iff UHR is supported and data is valid
-+ * @mac: fixed MAC capabilities
-+ * @phy: fixed PHY capabilities
-+ */
-+struct ieee80211_sta_uhr_cap {
-+	bool has_uhr;
-+	struct ieee80211_uhr_cap_mac mac;
-+	struct ieee80211_uhr_cap_phy phy;
-+};
-+
- /* sparse defines __CHECKER__; see Documentation/dev-tools/sparse.rst */
- #ifdef __CHECKER__
- /*
-@@ -454,6 +468,7 @@ struct ieee80211_sta_eht_cap {
-  * @he_6ghz_capa: HE 6 GHz capabilities, must be filled in for a
-  *	6 GHz band channel (and 0 may be valid value).
-  * @eht_cap: STA's EHT capabilities
-+ * @uhr_cap: STA's UHR capabilities
-  * @vendor_elems: vendor element(s) to advertise
-  * @vendor_elems.data: vendor element(s) data
-  * @vendor_elems.len: vendor element(s) length
-@@ -463,6 +478,7 @@ struct ieee80211_sband_iftype_data {
- 	struct ieee80211_sta_he_cap he_cap;
- 	struct ieee80211_he_6ghz_capa he_6ghz_capa;
- 	struct ieee80211_sta_eht_cap eht_cap;
-+	struct ieee80211_sta_uhr_cap uhr_cap;
- 	struct {
- 		const u8 *data;
- 		unsigned int len;
-@@ -704,6 +720,26 @@ ieee80211_get_eht_iftype_cap(const struct ieee80211_supported_band *sband,
- 	return NULL;
+@@ -10382,4 +10382,27 @@ cfg80211_s1g_get_primary_sibling(struct wiphy *wiphy,
+ 	return ieee80211_get_channel_khz(wiphy, sibling_1mhz_khz);
  }
  
++
 +/**
-+ * ieee80211_get_uhr_iftype_cap - return UHR capabilities for an sband's iftype
-+ * @sband: the sband to search for the iftype on
-+ * @iftype: enum nl80211_iftype
++ * cfg80211_incumbent_signal_notify - Notify userspace of incumbent signal detection
++ * @wiphy: the wiphy to use
++ * @chandef: channel definition in which the interference was detected
++ * @signal_interference_bitmap: bitmap indicating interference across 20 MHz segments
++ * @gfp: allocation context for message creation and multicast; pass GFP_ATOMIC
++ *	if called from atomic context (e.g. firmware event handler), otherwise
++ *	GFP_KERNEL
 + *
-+ * Return: pointer to the struct ieee80211_sta_uhr_cap, or NULL is none found
++ * Use this function to notify userspace when an incumbent signal is detected on
++ * the operating channel in the 6 GHz band. The notification includes the
++ * current channel definition and a bitmap representing interference across
++ * the operating bandwidth. Each bit in the bitmap corresponds to a 20 MHz
++ * segment, with the lowest bit representing the lowest frequency segment.
++ * Punctured sub-channels are included in the bitmap structure but are always
++ * set to zero since interference detection is not performed on them.
 + */
-+static inline const struct ieee80211_sta_uhr_cap *
-+ieee80211_get_uhr_iftype_cap(const struct ieee80211_supported_band *sband,
-+			     enum nl80211_iftype iftype)
-+{
-+	const struct ieee80211_sband_iftype_data *data =
-+		ieee80211_get_sband_iftype_data(sband, iftype);
++void cfg80211_incumbent_signal_notify(struct wiphy *wiphy,
++				      const struct cfg80211_chan_def *chandef,
++				      u32 signal_interference_bitmap,
++				      gfp_t gfp);
 +
-+	if (data && data->uhr_cap.has_uhr)
-+		return &data->uhr_cap;
-+
-+	return NULL;
-+}
-+
- /**
-  * wiphy_read_of_freq_limits - read frequency limits from device tree
-  *
-@@ -1485,6 +1521,7 @@ struct cfg80211_s1g_short_beacon {
-  * @he_cap: HE capabilities (or %NULL if HE isn't enabled)
-  * @eht_cap: EHT capabilities (or %NULL if EHT isn't enabled)
-  * @eht_oper: EHT operation IE (or %NULL if EHT isn't enabled)
-+ * @uhr_oper: UHR operation (or %NULL if UHR isn't enabled)
-  * @ht_required: stations must support HT
-  * @vht_required: stations must support VHT
-  * @twt_responder: Enable Target Wait Time
-@@ -1524,6 +1561,7 @@ struct cfg80211_ap_settings {
- 	const struct ieee80211_he_operation *he_oper;
- 	const struct ieee80211_eht_cap_elem *eht_cap;
- 	const struct ieee80211_eht_operation *eht_oper;
-+	const struct ieee80211_uhr_operation *uhr_oper;
- 	bool ht_required, vht_required, he_required, sae_h2e_required;
- 	bool twt_responder;
- 	u32 flags;
-@@ -1697,6 +1735,8 @@ struct sta_txpwr {
-  * @eht_capa: EHT capabilities of station
-  * @eht_capa_len: the length of the EHT capabilities
-  * @s1g_capa: S1G capabilities of station
-+ * @uhr_capa: UHR capabilities of the station
-+ * @uhr_capa_len: the length of the UHR capabilities
-  */
- struct link_station_parameters {
- 	const u8 *mld_mac;
-@@ -1716,6 +1756,8 @@ struct link_station_parameters {
- 	const struct ieee80211_eht_cap_elem *eht_capa;
- 	u8 eht_capa_len;
- 	const struct ieee80211_s1g_cap *s1g_capa;
-+	const struct ieee80211_uhr_cap *uhr_capa;
-+	u8 uhr_capa_len;
- };
- 
- /**
-@@ -1897,6 +1939,11 @@ int cfg80211_check_station_change(struct wiphy *wiphy,
-  * @RATE_INFO_FLAGS_EXTENDED_SC_DMG: 60GHz extended SC MCS
-  * @RATE_INFO_FLAGS_EHT_MCS: EHT MCS information
-  * @RATE_INFO_FLAGS_S1G_MCS: MCS field filled with S1G MCS
-+ * @RATE_INFO_FLAGS_UHR_MCS: UHR MCS information
-+ * @RATE_INFO_FLAGS_UHR_ELR_MCS: UHR ELR MCS was used
-+ *	(set together with @RATE_INFO_FLAGS_UHR_MCS)
-+ * @RATE_INFO_FLAGS_UHR_IM: UHR Interference Mitigation
-+ *	was used
-  */
- enum rate_info_flags {
- 	RATE_INFO_FLAGS_MCS			= BIT(0),
-@@ -1908,6 +1955,9 @@ enum rate_info_flags {
- 	RATE_INFO_FLAGS_EXTENDED_SC_DMG		= BIT(6),
- 	RATE_INFO_FLAGS_EHT_MCS			= BIT(7),
- 	RATE_INFO_FLAGS_S1G_MCS			= BIT(8),
-+	RATE_INFO_FLAGS_UHR_MCS			= BIT(9),
-+	RATE_INFO_FLAGS_UHR_ELR_MCS		= BIT(10),
-+	RATE_INFO_FLAGS_UHR_IM			= BIT(11),
- };
- 
- /**
-@@ -1923,7 +1973,7 @@ enum rate_info_flags {
-  * @RATE_INFO_BW_160: 160 MHz bandwidth
-  * @RATE_INFO_BW_HE_RU: bandwidth determined by HE RU allocation
-  * @RATE_INFO_BW_320: 320 MHz bandwidth
-- * @RATE_INFO_BW_EHT_RU: bandwidth determined by EHT RU allocation
-+ * @RATE_INFO_BW_EHT_RU: bandwidth determined by EHT/UHR RU allocation
-  * @RATE_INFO_BW_1: 1 MHz bandwidth
-  * @RATE_INFO_BW_2: 2 MHz bandwidth
-  * @RATE_INFO_BW_4: 4 MHz bandwidth
-@@ -1954,7 +2004,7 @@ enum rate_info_bw {
-  *
-  * @flags: bitflag of flags from &enum rate_info_flags
-  * @legacy: bitrate in 100kbit/s for 802.11abg
-- * @mcs: mcs index if struct describes an HT/VHT/HE/EHT/S1G rate
-+ * @mcs: mcs index if struct describes an HT/VHT/HE/EHT/S1G/UHR rate
-  * @nss: number of streams (VHT & HE only)
-  * @bw: bandwidth (from &enum rate_info_bw)
-  * @he_gi: HE guard interval (from &enum nl80211_he_gi)
-@@ -3264,6 +3314,7 @@ struct cfg80211_ml_reconf_req {
-  *	Drivers shall disable MLO features for the current association if this
-  *	flag is not set.
-  * @ASSOC_REQ_SPP_AMSDU: SPP A-MSDUs will be used on this connection (if any)
-+ * @ASSOC_REQ_DISABLE_UHR: Disable UHR
-  */
- enum cfg80211_assoc_req_flags {
- 	ASSOC_REQ_DISABLE_HT			= BIT(0),
-@@ -3274,6 +3325,7 @@ enum cfg80211_assoc_req_flags {
- 	ASSOC_REQ_DISABLE_EHT			= BIT(5),
- 	CONNECT_REQ_MLO_SUPPORT			= BIT(6),
- 	ASSOC_REQ_SPP_AMSDU			= BIT(7),
-+	ASSOC_REQ_DISABLE_UHR			= BIT(8),
- };
- 
- /**
+ #endif /* __NET_CFG80211_H */
 diff --git a/include/uapi/linux/nl80211.h b/include/uapi/linux/nl80211.h
-index 19e32a1b9a7fd..4bb3d32838989 100644
+index 4bb3d32838989..69152abd64b9a 100644
 --- a/include/uapi/linux/nl80211.h
 +++ b/include/uapi/linux/nl80211.h
-@@ -2976,6 +2976,13 @@ enum nl80211_commands {
-  * @NL80211_ATTR_EPP_PEER: A flag attribute to indicate if the peer is an EPP
-  *	STA. Used with %NL80211_CMD_NEW_STA and %NL80211_CMD_ADD_LINK_STA
+@@ -1361,6 +1361,12 @@
+  *	user space that the NAN new cluster has been joined. The cluster ID is
+  *	indicated by %NL80211_ATTR_MAC.
   *
-+ * @NL80211_ATTR_UHR_CAPABILITY: UHR Capability information element (from
-+ *	association request when used with NL80211_CMD_NEW_STATION). Can be set
-+ *	only if HE/EHT are also available.
-+ * @NL80211_ATTR_DISABLE_UHR: Force UHR capable interfaces to disable
-+ *	this feature during association. This is a flag attribute.
-+ *	Currently only supported in mac80211 drivers.
++ * @NL80211_CMD_INCUMBENT_SIGNAL_DETECT: Once any incumbent signal is detected
++ *	on the operating channel in 6 GHz band, userspace is notified with the
++ *	signal interference bitmap using
++ *	%NL80211_ATTR_INCUMBENT_SIGNAL_INTERFERENCE_BITMAP. The current channel
++ *	definition is also sent.
++ *
+  * @NL80211_CMD_MAX: highest used command number
+  * @__NL80211_CMD_AFTER_LAST: internal use
+  */
+@@ -1624,6 +1630,8 @@ enum nl80211_commands {
+ 	NL80211_CMD_NAN_NEXT_DW_NOTIFICATION,
+ 	NL80211_CMD_NAN_CLUSTER_JOINED,
+ 
++	NL80211_CMD_INCUMBENT_SIGNAL_DETECT,
++
+ 	/* add new commands above here */
+ 
+ 	/* used to define NL80211_CMD_MAX below */
+@@ -2983,6 +2991,15 @@ enum nl80211_commands {
+  *	this feature during association. This is a flag attribute.
+  *	Currently only supported in mac80211 drivers.
+  *
++ * @NL80211_ATTR_INCUMBENT_SIGNAL_INTERFERENCE_BITMAP: u32 attribute specifying
++ *	the signal interference bitmap detected on the operating bandwidth for
++ *	%NL80211_CMD_INCUMBENT_SIGNAL_DETECT. Each bit represents a 20 MHz
++ *	segment, lowest bit corresponds to the lowest 20 MHz segment, in the
++ *	operating bandwidth where the interference is detected. Punctured
++ *	sub-channels are included in the bitmap structure; however, since
++ *	interference detection is not performed on these sub-channels, their
++ *	corresponding bits are consistently set to zero.
 + *
   * @NUM_NL80211_ATTR: total number of nl80211_attrs available
   * @NL80211_ATTR_MAX: highest attribute number currently defined
   * @__NL80211_ATTR_AFTER_LAST: internal use
-@@ -3546,6 +3553,9 @@ enum nl80211_attrs {
+@@ -3556,6 +3573,8 @@ enum nl80211_attrs {
+ 	NL80211_ATTR_UHR_CAPABILITY,
+ 	NL80211_ATTR_DISABLE_UHR,
  
- 	NL80211_ATTR_EPP_PEER,
- 
-+	NL80211_ATTR_UHR_CAPABILITY,
-+	NL80211_ATTR_DISABLE_UHR,
++	NL80211_ATTR_INCUMBENT_SIGNAL_INTERFERENCE_BITMAP,
 +
  	/* add attributes here, update the policy in nl80211.c */
  
  	__NL80211_ATTR_AFTER_LAST,
-@@ -3898,6 +3908,12 @@ enum nl80211_eht_ru_alloc {
-  * @NL80211_RATE_INFO_4_MHZ_WIDTH: 4 MHz S1G rate
-  * @NL80211_RATE_INFO_8_MHZ_WIDTH: 8 MHz S1G rate
-  * @NL80211_RATE_INFO_16_MHZ_WIDTH: 16 MHz S1G rate
-+ * @NL80211_RATE_INFO_UHR_MCS: UHR MCS index (u8, 0-15, 17, 19, 20, 23)
-+ *	Note that the other EHT attributes (such as @NL80211_RATE_INFO_EHT_NSS)
-+ *	are used in conjunction with this where applicable
-+ * @NL80211_RATE_INFO_UHR_ELR: UHR ELR flag, which restricts NSS to 1,
-+ *	MCS to 0 or 1, and GI to %NL80211_RATE_INFO_EHT_GI_1_6.
-+ * @NL80211_RATE_INFO_UHR_IM: UHR Interference Mitigation flag
-  * @__NL80211_RATE_INFO_AFTER_LAST: internal use
-  */
- enum nl80211_rate_info {
-@@ -3931,6 +3947,9 @@ enum nl80211_rate_info {
- 	NL80211_RATE_INFO_4_MHZ_WIDTH,
- 	NL80211_RATE_INFO_8_MHZ_WIDTH,
- 	NL80211_RATE_INFO_16_MHZ_WIDTH,
-+	NL80211_RATE_INFO_UHR_MCS,
-+	NL80211_RATE_INFO_UHR_ELR,
-+	NL80211_RATE_INFO_UHR_IM,
- 
- 	/* keep last */
- 	__NL80211_RATE_INFO_AFTER_LAST,
-@@ -4253,6 +4272,10 @@ enum nl80211_mpath_info {
-  *	capabilities element
-  * @NL80211_BAND_IFTYPE_ATTR_EHT_CAP_PPE: EHT PPE thresholds information as
-  *	defined in EHT capabilities element
-+ * @NL80211_BAND_IFTYPE_ATTR_UHR_CAP_MAC: UHR MAC capabilities as in UHR
-+ *	capabilities element
-+ * @NL80211_BAND_IFTYPE_ATTR_UHR_CAP_PHY: UHR PHY capabilities as in UHR
-+ *	capabilities element
-  * @__NL80211_BAND_IFTYPE_ATTR_AFTER_LAST: internal use
-  * @NL80211_BAND_IFTYPE_ATTR_MAX: highest band attribute currently defined
-  */
-@@ -4270,6 +4293,8 @@ enum nl80211_band_iftype_attr {
- 	NL80211_BAND_IFTYPE_ATTR_EHT_CAP_PHY,
- 	NL80211_BAND_IFTYPE_ATTR_EHT_CAP_MCS_SET,
- 	NL80211_BAND_IFTYPE_ATTR_EHT_CAP_PPE,
-+	NL80211_BAND_IFTYPE_ATTR_UHR_CAP_MAC,
-+	NL80211_BAND_IFTYPE_ATTR_UHR_CAP_PHY,
- 
- 	/* keep last */
- 	__NL80211_BAND_IFTYPE_ATTR_AFTER_LAST,
-@@ -4452,6 +4477,8 @@ enum nl80211_wmm_rule {
-  * @NL80211_FREQUENCY_ATTR_S1G_NO_PRIMARY: Channel is not permitted for use
-  *	as a primary channel. Does not prevent the channel from existing
-  *	as a non-primary subchannel. Only applicable to S1G channels.
-+ * @NL80211_FREQUENCY_ATTR_NO_UHR: UHR operation is not allowed on this channel
-+ *	in current regulatory domain.
-  * @NL80211_FREQUENCY_ATTR_MAX: highest frequency attribute number
-  *	currently defined
-  * @__NL80211_FREQUENCY_ATTR_AFTER_LAST: internal use
-@@ -4501,6 +4528,7 @@ enum nl80211_frequency_attr {
- 	NL80211_FREQUENCY_ATTR_NO_8MHZ,
- 	NL80211_FREQUENCY_ATTR_NO_16MHZ,
- 	NL80211_FREQUENCY_ATTR_S1G_NO_PRIMARY,
-+	NL80211_FREQUENCY_ATTR_NO_UHR,
- 
- 	/* keep last */
- 	__NL80211_FREQUENCY_ATTR_AFTER_LAST,
-@@ -4714,6 +4742,7 @@ enum nl80211_sched_scan_match_attr {
-  *	despite NO_IR configuration.
-  * @NL80211_RRF_ALLOW_20MHZ_ACTIVITY: Allow activity in 20 MHz bandwidth,
-  *	despite NO_IR configuration.
-+ * @NL80211_RRF_NO_UHR: UHR operation not allowed
-  */
- enum nl80211_reg_rule_flags {
- 	NL80211_RRF_NO_OFDM                 = 1 << 0,
-@@ -4740,6 +4769,7 @@ enum nl80211_reg_rule_flags {
- 	NL80211_RRF_NO_6GHZ_AFC_CLIENT      = 1 << 23,
- 	NL80211_RRF_ALLOW_6GHZ_VLP_AP       = 1 << 24,
- 	NL80211_RRF_ALLOW_20MHZ_ACTIVITY    = 1 << 25,
-+	NL80211_RRF_NO_UHR		    = 1 << 26,
- };
- 
- #define NL80211_RRF_PASSIVE_SCAN	NL80211_RRF_NO_IR
 diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
-index fa877abe6de50..1227a2055d6f1 100644
+index 1227a2055d6f1..86848602c85b1 100644
 --- a/net/wireless/nl80211.c
 +++ b/net/wireless/nl80211.c
-@@ -332,6 +332,15 @@ static int validate_nan_cluster_id(const struct nlattr *attr,
- 	return 0;
+@@ -21102,6 +21102,46 @@ void cfg80211_ch_switch_notify(struct net_device *dev,
  }
+ EXPORT_SYMBOL(cfg80211_ch_switch_notify);
  
-+static int validate_uhr_capa(const struct nlattr *attr,
-+			     struct netlink_ext_ack *extack)
++void cfg80211_incumbent_signal_notify(struct wiphy *wiphy,
++				      const struct cfg80211_chan_def *chandef,
++				      u32 signal_interference_bitmap,
++				      gfp_t gfp)
 +{
-+	const u8 *data = nla_data(attr);
-+	unsigned int len = nla_len(attr);
++	struct cfg80211_registered_device *rdev = wiphy_to_rdev(wiphy);
++	struct sk_buff *msg;
++	void *hdr;
 +
-+	return ieee80211_uhr_capa_size_ok(data, len, false);
++	trace_cfg80211_incumbent_signal_notify(wiphy, chandef, signal_interference_bitmap);
++
++	msg = nlmsg_new(NLMSG_DEFAULT_SIZE, gfp);
++	if (!msg)
++		return;
++
++	hdr = nl80211hdr_put(msg, 0, 0, 0, NL80211_CMD_INCUMBENT_SIGNAL_DETECT);
++	if (!hdr)
++		goto nla_put_failure;
++
++	if (nla_put_u32(msg, NL80211_ATTR_WIPHY, rdev->wiphy_idx))
++		goto nla_put_failure;
++
++	if (nl80211_send_chandef(msg, chandef))
++		goto nla_put_failure;
++
++	if (nla_put_u32(msg, NL80211_ATTR_INCUMBENT_SIGNAL_INTERFERENCE_BITMAP,
++			signal_interference_bitmap))
++		goto nla_put_failure;
++
++	genlmsg_end(msg, hdr);
++
++	genlmsg_multicast_netns(&nl80211_fam, wiphy_net(&rdev->wiphy), msg, 0,
++				NL80211_MCGRP_MLME, gfp);
++	return;
++
++nla_put_failure:
++	nlmsg_free(msg);
 +}
++EXPORT_SYMBOL(cfg80211_incumbent_signal_notify);
 +
- /* policy for the attributes */
- static const struct nla_policy nl80211_policy[NUM_NL80211_ATTR];
- 
-@@ -935,6 +944,9 @@ static const struct nla_policy nl80211_policy[NUM_NL80211_ATTR] = {
- 	[NL80211_ATTR_BSS_PARAM] = { .type = NLA_FLAG },
- 	[NL80211_ATTR_S1G_PRIMARY_2MHZ] = { .type = NLA_FLAG },
- 	[NL80211_ATTR_EPP_PEER] = { .type = NLA_FLAG },
-+	[NL80211_ATTR_UHR_CAPABILITY] =
-+		NLA_POLICY_VALIDATE_FN(NLA_BINARY, validate_uhr_capa, 255),
-+	[NL80211_ATTR_DISABLE_UHR] = { .type = NLA_FLAG },
- };
- 
- /* policy for the key attributes */
-@@ -1320,6 +1332,9 @@ static int nl80211_msg_put_channel(struct sk_buff *msg, struct wiphy *wiphy,
- 		if ((chan->flags & IEEE80211_CHAN_S1G_NO_PRIMARY) &&
- 		    nla_put_flag(msg, NL80211_FREQUENCY_ATTR_S1G_NO_PRIMARY))
- 			goto nla_put_failure;
-+		if ((chan->flags & IEEE80211_CHAN_NO_UHR) &&
-+		    nla_put_flag(msg, NL80211_FREQUENCY_ATTR_NO_UHR))
-+			goto nla_put_failure;
- 	}
- 
- 	if (nla_put_u32(msg, NL80211_FREQUENCY_ATTR_MAX_TX_POWER,
-@@ -1953,6 +1968,7 @@ nl80211_send_iftype_data(struct sk_buff *msg,
- {
- 	const struct ieee80211_sta_he_cap *he_cap = &iftdata->he_cap;
- 	const struct ieee80211_sta_eht_cap *eht_cap = &iftdata->eht_cap;
-+	const struct ieee80211_sta_uhr_cap *uhr_cap = &iftdata->uhr_cap;
- 
- 	if (nl80211_put_iftypes(msg, NL80211_BAND_IFTYPE_ATTR_IFTYPES,
- 				iftdata->types_mask))
-@@ -2004,6 +2020,14 @@ nl80211_send_iftype_data(struct sk_buff *msg,
- 			return -ENOBUFS;
- 	}
- 
-+	if (uhr_cap->has_uhr) {
-+		if (nla_put(msg, NL80211_BAND_IFTYPE_ATTR_UHR_CAP_MAC,
-+			    sizeof(uhr_cap->mac), &uhr_cap->mac) ||
-+		    nla_put(msg, NL80211_BAND_IFTYPE_ATTR_UHR_CAP_PHY,
-+			    sizeof(uhr_cap->phy), &uhr_cap->phy))
-+			return -ENOBUFS;
-+	}
+ void cfg80211_ch_switch_started_notify(struct net_device *dev,
+ 				       struct cfg80211_chan_def *chandef,
+ 				       unsigned int link_id, u8 count,
+diff --git a/net/wireless/trace.h b/net/wireless/trace.h
+index 2b71f1d867a08..27779d11b3733 100644
+--- a/net/wireless/trace.h
++++ b/net/wireless/trace.h
+@@ -4222,6 +4222,25 @@ TRACE_EVENT(cfg80211_nan_cluster_joined,
+ 		  WDEV_PR_ARG, __entry->cluster_id,
+ 		  __entry->new_cluster ? " [new]" : "")
+ );
 +
- 	if (sband->band == NL80211_BAND_6GHZ &&
- 	    nla_put(msg, NL80211_BAND_IFTYPE_ATTR_HE_6GHZ_CAPA,
- 		    sizeof(iftdata->he_6ghz_capa),
-@@ -6442,6 +6466,17 @@ static int nl80211_calculate_ap_params(struct cfg80211_ap_settings *params)
- 						cap->datalen - 1))
- 			return -EINVAL;
- 	}
-+
-+	cap = cfg80211_find_ext_elem(WLAN_EID_EXT_UHR_OPER, ies, ies_len);
-+	if (cap) {
-+		if (!cap->datalen)
-+			return -EINVAL;
-+		params->uhr_oper = (void *)(cap->data + 1);
-+		if (!ieee80211_uhr_oper_size_ok((const u8 *)params->uhr_oper,
-+						cap->datalen - 1, true))
-+			return -EINVAL;
-+	}
-+
- 	return 0;
- }
++TRACE_EVENT(cfg80211_incumbent_signal_notify,
++	TP_PROTO(struct wiphy *wiphy,
++		 const struct cfg80211_chan_def *chandef,
++		 u32 signal_interference_bitmap),
++	TP_ARGS(wiphy, chandef, signal_interference_bitmap),
++	TP_STRUCT__entry(
++		WIPHY_ENTRY
++		CHAN_DEF_ENTRY
++		__field(u32, signal_interference_bitmap)
++	),
++	TP_fast_assign(
++		WIPHY_ASSIGN;
++		CHAN_DEF_ASSIGN(chandef);
++		__entry->signal_interference_bitmap = signal_interference_bitmap;
++	),
++	TP_printk(WIPHY_PR_FMT ", " CHAN_DEF_PR_FMT ", signal_interference_bitmap=0x%x",
++		  WIPHY_PR_ARG, CHAN_DEF_PR_ARG, __entry->signal_interference_bitmap)
++);
+ #endif /* !__RDEV_OPS_TRACE || TRACE_HEADER_MULTI_READ */
  
-@@ -6565,6 +6600,9 @@ static int nl80211_validate_ap_phy_operation(struct cfg80211_ap_settings *params
- 	    (channel->flags & IEEE80211_CHAN_NO_EHT))
- 		return -EOPNOTSUPP;
- 
-+	if (params->uhr_oper && (channel->flags & IEEE80211_CHAN_NO_UHR))
-+		return -EOPNOTSUPP;
-+
- 	return 0;
- }
- 
-@@ -7147,7 +7185,8 @@ bool nl80211_put_sta_rate(struct sk_buff *msg, struct rate_info *info, int attr)
- 		break;
- 	case RATE_INFO_BW_EHT_RU:
- 		rate_flg = 0;
--		WARN_ON(!(info->flags & RATE_INFO_FLAGS_EHT_MCS));
-+		WARN_ON(!(info->flags & RATE_INFO_FLAGS_EHT_MCS) &&
-+			!(info->flags & RATE_INFO_FLAGS_UHR_MCS));
- 		break;
- 	}
- 
-@@ -7200,6 +7239,23 @@ bool nl80211_put_sta_rate(struct sk_buff *msg, struct rate_info *info, int attr)
- 		    nla_put_u8(msg, NL80211_RATE_INFO_EHT_RU_ALLOC,
- 			       info->eht_ru_alloc))
- 			return false;
-+	} else if (info->flags & RATE_INFO_FLAGS_UHR_MCS) {
-+		if (nla_put_u8(msg, NL80211_RATE_INFO_UHR_MCS, info->mcs))
-+			return false;
-+		if (nla_put_u8(msg, NL80211_RATE_INFO_EHT_NSS, info->nss))
-+			return false;
-+		if (nla_put_u8(msg, NL80211_RATE_INFO_EHT_GI, info->eht_gi))
-+			return false;
-+		if (info->bw == RATE_INFO_BW_EHT_RU &&
-+		    nla_put_u8(msg, NL80211_RATE_INFO_EHT_RU_ALLOC,
-+			       info->eht_ru_alloc))
-+			return false;
-+		if (info->flags & RATE_INFO_FLAGS_UHR_ELR_MCS &&
-+		    nla_put_flag(msg, NL80211_RATE_INFO_UHR_ELR))
-+			return false;
-+		if (info->flags & RATE_INFO_FLAGS_UHR_IM &&
-+		    nla_put_flag(msg, NL80211_RATE_INFO_UHR_IM))
-+			return false;
- 	}
- 
- 	nla_nest_end(msg, rate);
-@@ -8073,7 +8129,8 @@ int cfg80211_check_station_change(struct wiphy *wiphy,
- 		if (params->ext_capab || params->link_sta_params.ht_capa ||
- 		    params->link_sta_params.vht_capa ||
- 		    params->link_sta_params.he_capa ||
--		    params->link_sta_params.eht_capa)
-+		    params->link_sta_params.eht_capa ||
-+		    params->link_sta_params.uhr_capa)
- 			return -EINVAL;
- 		if (params->sta_flags_mask & BIT(NL80211_STA_FLAG_SPP_AMSDU))
- 			return -EINVAL;
-@@ -8293,6 +8350,16 @@ static int nl80211_set_station_tdls(struct genl_info *info,
- 		}
- 	}
- 
-+	if (info->attrs[NL80211_ATTR_UHR_CAPABILITY]) {
-+		if (!params->link_sta_params.eht_capa)
-+			return -EINVAL;
-+
-+		params->link_sta_params.uhr_capa =
-+			nla_data(info->attrs[NL80211_ATTR_UHR_CAPABILITY]);
-+		params->link_sta_params.uhr_capa_len =
-+			nla_len(info->attrs[NL80211_ATTR_UHR_CAPABILITY]);
-+	}
-+
- 	if (info->attrs[NL80211_ATTR_S1G_CAPABILITY])
- 		params->link_sta_params.s1g_capa =
- 			nla_data(info->attrs[NL80211_ATTR_S1G_CAPABILITY]);
-@@ -8613,6 +8680,16 @@ static int nl80211_new_station(struct sk_buff *skb, struct genl_info *info)
- 		}
- 	}
- 
-+	if (info->attrs[NL80211_ATTR_UHR_CAPABILITY]) {
-+		if (!params.link_sta_params.eht_capa)
-+			return -EINVAL;
-+
-+		params.link_sta_params.uhr_capa =
-+			nla_data(info->attrs[NL80211_ATTR_UHR_CAPABILITY]);
-+		params.link_sta_params.uhr_capa_len =
-+			nla_len(info->attrs[NL80211_ATTR_UHR_CAPABILITY]);
-+	}
-+
- 	if (info->attrs[NL80211_ATTR_EML_CAPABILITY]) {
- 		params.eml_cap_present = true;
- 		params.eml_cap =
-@@ -8672,10 +8749,11 @@ static int nl80211_new_station(struct sk_buff *skb, struct genl_info *info)
- 		params.link_sta_params.ht_capa = NULL;
- 		params.link_sta_params.vht_capa = NULL;
- 
--		/* HE and EHT require WME */
-+		/* HE, EHT and UHR require WME */
- 		if (params.link_sta_params.he_capa_len ||
- 		    params.link_sta_params.he_6ghz_capa ||
--		    params.link_sta_params.eht_capa_len)
-+		    params.link_sta_params.eht_capa_len ||
-+		    params.link_sta_params.uhr_capa_len)
- 			return -EINVAL;
- 	}
- 
-@@ -12349,6 +12427,9 @@ static int nl80211_associate(struct sk_buff *skb, struct genl_info *info)
- 	if (nla_get_flag(info->attrs[NL80211_ATTR_DISABLE_EHT]))
- 		req.flags |= ASSOC_REQ_DISABLE_EHT;
- 
-+	if (nla_get_flag(info->attrs[NL80211_ATTR_DISABLE_UHR]))
-+		req.flags |= ASSOC_REQ_DISABLE_UHR;
-+
- 	if (info->attrs[NL80211_ATTR_VHT_CAPABILITY_MASK])
- 		memcpy(&req.vht_capa_mask,
- 		       nla_data(info->attrs[NL80211_ATTR_VHT_CAPABILITY_MASK]),
-@@ -13228,6 +13309,9 @@ static int nl80211_connect(struct sk_buff *skb, struct genl_info *info)
- 	if (nla_get_flag(info->attrs[NL80211_ATTR_DISABLE_EHT]))
- 		connect.flags |= ASSOC_REQ_DISABLE_EHT;
- 
-+	if (nla_get_flag(info->attrs[NL80211_ATTR_DISABLE_UHR]))
-+		connect.flags |= ASSOC_REQ_DISABLE_UHR;
-+
- 	if (info->attrs[NL80211_ATTR_VHT_CAPABILITY_MASK])
- 		memcpy(&connect.vht_capa_mask,
- 		       nla_data(info->attrs[NL80211_ATTR_VHT_CAPABILITY_MASK]),
-@@ -17653,6 +17737,16 @@ nl80211_add_mod_link_station(struct sk_buff *skb, struct genl_info *info,
- 		}
- 	}
- 
-+	if (info->attrs[NL80211_ATTR_UHR_CAPABILITY]) {
-+		if (!params.eht_capa)
-+			return -EINVAL;
-+
-+		params.uhr_capa =
-+			nla_data(info->attrs[NL80211_ATTR_UHR_CAPABILITY]);
-+		params.uhr_capa_len =
-+			nla_len(info->attrs[NL80211_ATTR_UHR_CAPABILITY]);
-+	}
-+
- 	if (info->attrs[NL80211_ATTR_HE_6GHZ_CAPABILITY])
- 		params.he_6ghz_capa =
- 			nla_data(info->attrs[NL80211_ATTR_HE_6GHZ_CAPABILITY]);
-diff --git a/net/wireless/reg.c b/net/wireless/reg.c
-index 73cab51f63790..15e56dfad00f7 100644
---- a/net/wireless/reg.c
-+++ b/net/wireless/reg.c
-@@ -5,7 +5,7 @@
-  * Copyright 2008-2011	Luis R. Rodriguez <mcgrof@qca.qualcomm.com>
-  * Copyright 2013-2014  Intel Mobile Communications GmbH
-  * Copyright      2017  Intel Deutschland GmbH
-- * Copyright (C) 2018 - 2025 Intel Corporation
-+ * Copyright (C) 2018 - 2026 Intel Corporation
-  *
-  * Permission to use, copy, modify, and/or distribute this software for any
-  * purpose with or without fee is hereby granted, provided that the above
-@@ -1605,6 +1605,8 @@ static u32 map_regdom_flags(u32 rd_flags)
- 		channel_flags |= IEEE80211_CHAN_ALLOW_6GHZ_VLP_AP;
- 	if (rd_flags & NL80211_RRF_ALLOW_20MHZ_ACTIVITY)
- 		channel_flags |= IEEE80211_CHAN_ALLOW_20MHZ_ACTIVITY;
-+	if (rd_flags & NL80211_RRF_NO_UHR)
-+		channel_flags |= IEEE80211_CHAN_NO_UHR;
- 	return channel_flags;
- }
- 
-diff --git a/net/wireless/util.c b/net/wireless/util.c
-index 81d6d27d273cc..918d8f8468bdb 100644
---- a/net/wireless/util.c
-+++ b/net/wireless/util.c
-@@ -5,7 +5,7 @@
-  * Copyright 2007-2009	Johannes Berg <johannes@sipsolutions.net>
-  * Copyright 2013-2014  Intel Mobile Communications GmbH
-  * Copyright 2017	Intel Deutschland GmbH
-- * Copyright (C) 2018-2023, 2025 Intel Corporation
-+ * Copyright (C) 2018-2023, 2025-2026 Intel Corporation
-  */
- #include <linux/export.h>
- #include <linux/bitops.h>
-@@ -1573,26 +1573,30 @@ static u32 cfg80211_calculate_bitrate_he(struct rate_info *rate)
- 	return result / 10000;
- }
- 
--static u32 cfg80211_calculate_bitrate_eht(struct rate_info *rate)
-+static u32 _cfg80211_calculate_bitrate_eht_uhr(struct rate_info *rate)
- {
- #define SCALE 6144
--	static const u32 mcs_divisors[16] = {
--		102399, /* 16.666666... */
--		 51201, /*  8.333333... */
--		 34134, /*  5.555555... */
--		 25599, /*  4.166666... */
--		 17067, /*  2.777777... */
--		 12801, /*  2.083333... */
--		 11377, /*  1.851725... */
--		 10239, /*  1.666666... */
--		  8532, /*  1.388888... */
--		  7680, /*  1.250000... */
--		  6828, /*  1.111111... */
--		  6144, /*  1.000000... */
--		  5690, /*  0.926106... */
--		  5120, /*  0.833333... */
--		409600, /* 66.666666... */
--		204800, /* 33.333333... */
-+	static const u32 mcs_divisors[] = {
-+		[ 0] = 102399, /* 16.666666... */
-+		[ 1] =  51201, /*  8.333333... */
-+		[ 2] =  34134, /*  5.555555... */
-+		[ 3] =  25599, /*  4.166666... */
-+		[ 4] =  17067, /*  2.777777... */
-+		[ 5] =  12801, /*  2.083333... */
-+		[ 6] =  11377, /*  1.851725... */
-+		[ 7] =  10239, /*  1.666666... */
-+		[ 8] =   8532, /*  1.388888... */
-+		[ 9] =   7680, /*  1.250000... */
-+		[10] =   6828, /*  1.111111... */
-+		[11] =   6144, /*  1.000000... */
-+		[12] =   5690, /*  0.926106... */
-+		[13] =   5120, /*  0.833333... */
-+		[14] = 409600, /* 66.666666... */
-+		[15] = 204800, /* 33.333333... */
-+		[17] =  38400, /*  6.250180... */
-+		[19] =  19200, /*  3.125090... */
-+		[20] =  15360, /*  2.500000... */
-+		[23] =   9600, /*  1.562545... */
- 	};
- 	static const u32 rates_996[3] =  { 480388888, 453700000, 408333333 };
- 	static const u32 rates_484[3] =  { 229411111, 216666666, 195000000 };
-@@ -1603,8 +1607,6 @@ static u32 cfg80211_calculate_bitrate_eht(struct rate_info *rate)
- 	u64 tmp;
- 	u32 result;
- 
--	if (WARN_ON_ONCE(rate->mcs > 15))
--		return 0;
- 	if (WARN_ON_ONCE(rate->eht_gi > NL80211_RATE_INFO_EHT_GI_3_2))
- 		return 0;
- 	if (WARN_ON_ONCE(rate->eht_ru_alloc >
-@@ -1685,7 +1687,7 @@ static u32 cfg80211_calculate_bitrate_eht(struct rate_info *rate)
- 		 rate->eht_ru_alloc == NL80211_RATE_INFO_EHT_RU_ALLOC_26)
- 		result = rates_26[rate->eht_gi];
- 	else {
--		WARN(1, "invalid EHT MCS: bw:%d, ru:%d\n",
-+		WARN(1, "invalid EHT or UHR MCS: bw:%d, ru:%d\n",
- 		     rate->bw, rate->eht_ru_alloc);
- 		return 0;
- 	}
-@@ -1699,11 +1701,64 @@ static u32 cfg80211_calculate_bitrate_eht(struct rate_info *rate)
- 	tmp *= rate->nss;
- 	do_div(tmp, 8);
- 
-+	/* and handle interference mitigation - 0.9x */
-+	if (rate->flags & RATE_INFO_FLAGS_UHR_IM) {
-+		if (WARN(rate->nss != 1 || rate->mcs == 15,
-+			 "invalid NSS or MCS for UHR IM\n"))
-+			return 0;
-+		tmp *= 9000;
-+		do_div(tmp, 10000);
-+	}
-+
- 	result = tmp;
- 
- 	return result / 10000;
- }
- 
-+static u32 cfg80211_calculate_bitrate_eht(struct rate_info *rate)
-+{
-+	if (WARN_ONCE(rate->mcs > 15, "bad EHT MCS %d\n", rate->mcs))
-+		return 0;
-+
-+	if (WARN_ONCE(rate->flags & (RATE_INFO_FLAGS_UHR_ELR_MCS |
-+				     RATE_INFO_FLAGS_UHR_IM),
-+		      "bad EHT MCS flags 0x%x\n", rate->flags))
-+		return 0;
-+
-+	return _cfg80211_calculate_bitrate_eht_uhr(rate);
-+}
-+
-+static u32 cfg80211_calculate_bitrate_uhr(struct rate_info *rate)
-+{
-+	if (rate->flags & RATE_INFO_FLAGS_UHR_ELR_MCS) {
-+		WARN_ONCE(rate->eht_gi != NL80211_RATE_INFO_EHT_GI_1_6,
-+			  "bad UHR ELR guard interval %d\n",
-+			  rate->eht_gi);
-+		WARN_ONCE(rate->mcs > 1, "bad UHR ELR MCS %d\n", rate->mcs);
-+		WARN_ONCE(rate->nss != 1, "bad UHR ELR NSS %d\n", rate->nss);
-+		WARN_ONCE(rate->bw != RATE_INFO_BW_20,
-+			  "bad UHR ELR bandwidth %d\n",
-+			  rate->bw);
-+		WARN_ONCE(rate->flags & RATE_INFO_FLAGS_UHR_IM,
-+			  "bad UHR MCS flags 0x%x\n", rate->flags);
-+		if (rate->mcs == 0)
-+			return 17;
-+		return 33;
-+	}
-+
-+	switch (rate->mcs) {
-+	case 0 ... 15:
-+	case 17:
-+	case 19:
-+	case 20:
-+	case 23:
-+		return _cfg80211_calculate_bitrate_eht_uhr(rate);
-+	}
-+
-+	WARN_ONCE(1, "bad UHR MCS %d\n", rate->mcs);
-+	return 0;
-+}
-+
- static u32 cfg80211_calculate_bitrate_s1g(struct rate_info *rate)
- {
- 	/* For 1, 2, 4, 8 and 16 MHz channels */
-@@ -1828,6 +1883,8 @@ u32 cfg80211_calculate_bitrate(struct rate_info *rate)
- 		return cfg80211_calculate_bitrate_he(rate);
- 	if (rate->flags & RATE_INFO_FLAGS_EHT_MCS)
- 		return cfg80211_calculate_bitrate_eht(rate);
-+	if (rate->flags & RATE_INFO_FLAGS_UHR_MCS)
-+		return cfg80211_calculate_bitrate_uhr(rate);
- 	if (rate->flags & RATE_INFO_FLAGS_S1G_MCS)
- 		return cfg80211_calculate_bitrate_s1g(rate);
- 
+ #undef TRACE_INCLUDE_PATH
 -- 
 2.53.0
 
