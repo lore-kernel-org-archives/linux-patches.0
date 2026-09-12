@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E33AE19E7F7;
-	Sat, 12 Sep 2026 08:22:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4232A36921B;
+	Sat, 12 Sep 2026 08:23:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789201382; cv=none; b=I26gsdXXF1vMr8iDkZILqUtpDGBk+K1bnAmOY6deUfeKbH7KLQ8+r+ewnRKOO8+Gv4pXTtd4wnrFtkpjo8RHBgCX981yWzldbkl6tVdBoszdO8Uh4Fg2OJP2+zHQHpLAAavJP0Lxuo+AbV08FZ4TM3gIK8lfOSFpfcrjDa/4UN4=
+	t=1789201384; cv=none; b=XjGLHMkfgj5P8zY8pmw7fRGTgPngUvBrbPBLJnJPEWVp9+IYVqpo7BaFt6+luX0QEDYwjV0GGjppS9ortK/WcWDyONT+sfnlu/4nWk6jUjlSfxd3ZV1sQZnb01gRVn7Gob8+oJU7Ah/+O05xN0ymsN9OXo7KtR0TBnrjkVdV57s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789201382; c=relaxed/simple;
-	bh=6jd0tpKAIYSIJmjOykY7PXjon0y+jEtiI0uUn/kfXEQ=;
+	s=arc-20240116; t=1789201384; c=relaxed/simple;
+	bh=K8n03uwyjqHi+/e1GQ8d7ni5oo7nR6KLbCxonLnqAWA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=r0vLlVDp2LmbJyBDToUwd8ZThrXO9gDn5RaU1dV74wqfCSzH1Dt0I07m3eT9vw+kSP7GY8xAGaS/sTQnMKMMKfOXfWdgQbhcoOk2yh8ao+GxXsz5Ab9fJsMlN/Wh5ijLEsz59ahMY0cu+2g4a6WIUe7myLK+F8VleGVjiZYXMpI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NH0jqncO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=R4QIM+tw8zofAO0MN2vjjs7uV5mEzFkx1CZzHTcoWpxJVrKaJJNmWrWzzch4mqzywkY/lwZ3i7NzcLwjsi7cRQ9eUEC5KhvlcgHFut/Zx2EqrO4nXZznJG5kn0wbkQTHzTDicEq+fJbF/oI8UzOPzbBUwe988M+frSAcgG/c8vM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vNv0Y4MK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NH0jqncO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FBD81F00893;
-	Sat, 12 Sep 2026 08:22:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vNv0Y4MK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D49081F000FF;
+	Sat, 12 Sep 2026 08:23:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789201377;
-	bh=Bef3kNWy4rze5nF1MNoielC9pRgUxCMz7wqHySqBo9Y=;
+	s=korg; t=1789201383;
+	bh=7MLwPDE2hWzearVSYZ5tt8Ytit/2p6pYfr3WRh0QDr8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NH0jqncO0ag0zTO97Sw351NOvgmZYF4wMWRV0YKFJzM9AiU3/LVvqhZ2RSMVhCu7H
-	 er8hztcxdR9foOlEIulq8KGeUs+GHt0YeYAFI0bUHT2QSM9XwRC/eqb6rIJSW/jCTT
-	 aHvL/YDvjeB9r9wouJNs9TW1h6ArVrqK74gsxJu8=
+	b=vNv0Y4MKRoUysgMupAT31IsPdy/2nnBS/fNIQvVKcPwfWq/ADpIug83ewFYXWw6V1
+	 gcGtbq1kvndlvXNC8dpcXJBQElVSTjFk62T8MZ+xdcZLQkSN4v963awXHbzQX+U9Is
+	 myjq+U3jLWsHprVMnaheX/6A10dpYCn709MT4o+k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Gou Hao <gouhao@uniontech.com>,
-	Wentao Guan <guanwentao@uniontech.com>,
 	jiazhenyuan <jiazhenyuan@uniontech.com>,
-	=?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
 	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0984/1815] powerpc/xive: propagate IPI init errors to prevent use-after-free
-Date: Sat, 12 Sep 2026 08:45:34 +0200
-Message-ID: <20260912065712.094907228@linuxfoundation.org>
+Subject: [PATCH 7.2 0985/1815] powerpc/smp: add NULL guard for cause_ipi in smp_muxed_ipi_message_pass
+Date: Sat, 12 Sep 2026 08:45:35 +0200
+Message-ID: <20260912065712.118149013@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -48,7 +46,6 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
@@ -57,101 +54,45 @@ Content-Transfer-Encoding: 8bit
 
 From: Gou Hao <gouhao@uniontech.com>
 
-[ Upstream commit 411a3c016e7a95f5fa105a0587e07d0647a77727 ]
+[ Upstream commit 5aabc192702defb8950e7c81b05c3f4ca8ee43ec ]
 
-When xive_init_ipis() fails (e.g. irq_domain_alloc_irqs() fails),
-the error path frees the global xive_ipis array.  However,
-xive_smp_probe() previously ignored this failure and proceeded to
-call xive_setup_cpu_ipi(), which dereferences the already-freed
-xive_ipis pointer -- a use-after-free.
+smp_muxed_ipi_message_pass() calls smp_ops->cause_ipi() without
+checking whether it has been set.
 
-Now that xive_smp_probe() returns int (previous patch), propagate
-the error from xive_init_ipis() and xive_setup_cpu_ipi() through
-xive_smp_probe().  Check the return value in both pnv_smp_probe()
-and pSeries_smp_probe() so that IPI setup is aborted cleanly on
-failure, avoiding the use-after-free.
+On platforms using muxed IPI (e.g. powernv/pseries), smp_ops->cause_ipi
+is initialized to NULL in the static smp_ops and only assigned during
+the platform smp_probe() handler.  If the IPI subsystem fails to
+initialize -- for example when xive_init_ipis() fails and
+xive_smp_probe() returns an error -- the probe handler returns early
+and cause_ipi is never set.  Any subsequent IPI send (e.g.
+arch_smp_send_reschedule()) would dereference the NULL pointer.
 
-Fixes: 243e25112d06 ("powerpc/xive: Native exploitation of the XIVE interrupt controller")
-Fixes: cbc06f051c52 ("powerpc/xive: Do not skip CPU-less nodes when creating the IPIs")
+Add a NULL check to avoid the crash in that situation.
+
+Fixes: 23d72bfd8f9f ("powerpc: Consolidate ipi message mux and demux")
 Signed-off-by: Gou Hao <gouhao@uniontech.com>
-Reviewed-by: Wentao Guan <guanwentao@uniontech.com>
 Reviewed-by: jiazhenyuan <jiazhenyuan@uniontech.com>
-Reviewed-by: Cédric Le Goater <clg@kaod.org>
 Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20260727104215.184786-4-gouhao@uniontech.com
+Link: https://patch.msgid.link/20260727104215.184786-6-gouhao@uniontech.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/platforms/powernv/smp.c |  8 +++++---
- arch/powerpc/platforms/pseries/smp.c |  8 +++++---
- arch/powerpc/sysdev/xive/common.c    | 10 ++++++----
- 3 files changed, 16 insertions(+), 10 deletions(-)
+ arch/powerpc/kernel/smp.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/powerpc/platforms/powernv/smp.c b/arch/powerpc/platforms/powernv/smp.c
-index 8f41ef364fc6f..b1201dbafcaf6 100644
---- a/arch/powerpc/platforms/powernv/smp.c
-+++ b/arch/powerpc/platforms/powernv/smp.c
-@@ -332,10 +332,12 @@ static void pnv_cause_ipi(int cpu)
+diff --git a/arch/powerpc/kernel/smp.c b/arch/powerpc/kernel/smp.c
+index 3467f86fd78f2..6a5a5469aaae5 100644
+--- a/arch/powerpc/kernel/smp.c
++++ b/arch/powerpc/kernel/smp.c
+@@ -289,6 +289,9 @@ void smp_muxed_ipi_set_message(int cpu, int msg)
  
- static void __init pnv_smp_probe(void)
+ void smp_muxed_ipi_message_pass(int cpu, int msg)
  {
--	if (xive_enabled())
--		xive_smp_probe();
--	else
-+	if (xive_enabled()) {
-+		if (xive_smp_probe() < 0)
-+			return;
-+	} else {
- 		xics_smp_probe();
-+	}
- 
- 	if (cpu_has_feature(CPU_FTR_DBELL)) {
- 		ic_cause_ipi = smp_ops->cause_ipi;
-diff --git a/arch/powerpc/platforms/pseries/smp.c b/arch/powerpc/platforms/pseries/smp.c
-index bf3d7ed3be010..9e1bed383e337 100644
---- a/arch/powerpc/platforms/pseries/smp.c
-+++ b/arch/powerpc/platforms/pseries/smp.c
-@@ -199,10 +199,12 @@ static int pseries_cause_nmi_ipi(int cpu)
- 
- static __init void pSeries_smp_probe(void)
- {
--	if (xive_enabled())
--		xive_smp_probe();
--	else
-+	if (xive_enabled()) {
-+		if (xive_smp_probe() < 0)
-+			return;
-+	} else {
- 		xics_smp_probe();
-+	}
- 
- 	/* No doorbell facility, must use the interrupt controller for IPIs */
- 	if (!cpu_has_feature(CPU_FTR_DBELL))
-diff --git a/arch/powerpc/sysdev/xive/common.c b/arch/powerpc/sysdev/xive/common.c
-index 9f80c16be23ff..bbe7c85274ea9 100644
---- a/arch/powerpc/sysdev/xive/common.c
-+++ b/arch/powerpc/sysdev/xive/common.c
-@@ -1267,15 +1267,17 @@ noinstr static void xive_cleanup_cpu_ipi(unsigned int cpu, struct xive_cpu *xc)
- 
- int __init xive_smp_probe(void)
- {
-+	int ret;
++	if (!smp_ops->cause_ipi)
++		return;
 +
- 	smp_ops->cause_ipi = xive_cause_ipi;
+ 	smp_muxed_ipi_set_message(cpu, msg);
  
- 	/* Register the IPI */
--	xive_init_ipis();
-+	ret = xive_init_ipis();
-+	if (ret < 0)
-+		return ret;
- 
- 	/* Allocate and setup IPI for the boot CPU */
--	xive_setup_cpu_ipi(smp_processor_id());
--
--	return 0;
-+	return xive_setup_cpu_ipi(smp_processor_id());
- }
- 
- #endif /* CONFIG_SMP */
+ 	/*
 -- 
 2.53.0
 
