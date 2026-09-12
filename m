@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6845221FD4;
-	Sat, 12 Sep 2026 15:21:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD6B2221FD4;
+	Sat, 12 Sep 2026 15:21:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789226494; cv=none; b=bXI5XFcA8nfVGwRAHZGmqt/hu/2ctbvNwtdOTM8qvKgBxqlUA1WhlLF92g2YUtMWWXvfrZwlFY0mgrHRwfLUnAtfOvNNeMLL7B98X80kpzSbwX1pAqdZhcqPzY7QgtTztgrzzadHCLhNvyNAfG24BjscU3qx00t5N4btEithkt4=
+	t=1789226497; cv=none; b=dJg8+xJ9YOorHwbqtd6RhSRSkl4m64X6Y7m1ga+c1z8HUHBEJ85TQC7waNovKtgzFIid3YaceFrJAegsMnjk+3dT2pwhK/Dn/SWWZD9TiDbhFGYliokG7uY24M2o92hZyqWV7ydBZFKlHdfsrcnmBM8bTgfs6cMhqMty1OVBOc4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789226494; c=relaxed/simple;
-	bh=fNJjFZsc3o8tzUCbDGkYyv254u0oE1QcQx8h5+vHpWg=;
+	s=arc-20240116; t=1789226497; c=relaxed/simple;
+	bh=wf8Ze8eSVd5Jtx0jv+PEE9ftqXom8EISj4DYNm/DbHk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CbFxkAKzlyRN6sITfMXIAPqv2yJtkoQrRMuS6qEkOsOgb4xI3Rf50ABuNRV67oy+lQKk5KvARZlSNPVawdypshxilFUNQWSPRfNW/XEv+Sv7IJV2ptOdSCDbLfnJNSzu9reowp4cLleeeG0Mv80DFOoomCOX7yb1NYZTPUlq4Ho=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GclVrKvy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TQYwJr3fFA4sM47SA2NbL942H0SYGDfHJNNIT2eTc7bZhyWoqsV9oeKSvrdBWJPUTl/TxAfVbWmXJl8kFziyWEiRJSCXkdlYD3ZYwchPqvfftLLX/nHYwv2jDLUyz2gKe8HniY/nMBpNWnp1VJSeN9wF/2+nLDJfJHME6f+Rw+o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uBA2t8rK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GclVrKvy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B51571F000FF;
-	Sat, 12 Sep 2026 15:21:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uBA2t8rK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F026E1F000FF;
+	Sat, 12 Sep 2026 15:21:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789226492;
-	bh=TZE2ALyHr0QH9DRpbUDvQkINrTSQAarwXV+AuHfGkQQ=;
+	s=korg; t=1789226496;
+	bh=WYRv5UimZaB3G8cu3P5PEI6gBNe/uhkUvaWidt4N9k0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GclVrKvyqLR4pbE8cN8KH1iT+tQJDoHMk7p1CQhgrIQ0xnuqvqvvOHSUEgGlmYHR5
-	 ESsg+NFGan6yiJ+kq2hIBz6oeqDlcF8G2M+Lz/2eMQqK2HlaMlpVKHWufh3c16+eCr
-	 97W0PA+tZ7g5zea6QchLlwkoyd10rmy+bPJ8FKRU=
+	b=uBA2t8rKixeXDt7PFc6yXkNJzjH9wIeTO6vS0j5eq8j5Tm1oQY6xbB5acjLUHHoQR
+	 REQ9MjBQGwwcGmsIbUueFwuxhbILN0gB2yeJM7oCNwkHLnIyVO25y4EZhPXjvKdU54
+	 s56ZJThJg0puP2oPyxTjFfus2wee3P6t5zQGtxDs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Serge Hallyn <serge@hallyn.com>,
-	Thorsten Blum <thorsten.blum@linux.dev>,
+	syzbot+faed97c4ed43bfe7fee5@syzkaller.appspotmail.com,
 	John Johansen <john.johansen@canonical.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1370/1424] apparmor: Replace sprintf/strcpy with scnprintf/strscpy in aa_policy_init
-Date: Sat, 12 Sep 2026 09:03:22 +0200
-Message-ID: <20260912065637.942606124@linuxfoundation.org>
+Subject: [PATCH 6.6 1371/1424] apparmor: policy_int make sure list heads are initialized before fail path
+Date: Sat, 12 Sep 2026 09:03:23 +0200
+Message-ID: <20260912065637.964493287@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -52,58 +51,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@linux.dev>
+From: John Johansen <john.johansen@canonical.com>
 
-[ Upstream commit b31d3f7385fbb49681d44e7104cfa033cba4b1e8 ]
+[ Upstream commit 3daad923a8685adb66087e0d819559b7eb6ba975 ]
 
-strcpy() is deprecated and sprintf() does not perform bounds checking
-either. Although an overflow is unlikely, it's better to proactively
-avoid it by using the safer strscpy() and scnprintf(), respectively.
+If profile create fails before policy_init is complete the list heads
+are not properly initialized causing profile_free() sanity checks to
+trigger the following splat.
 
-Additionally, unify memory allocation for 'hname' to simplify and
-improve aa_policy_init().
+AppArmor WARN aa_policy_destroy: (((!list_empty(&policy->profiles) && (&policy->profiles)->prev != ((void *) 0x122 + (0xdead000000000000UL))))):
+WARNING: security/apparmor/lib.c:509 at aa_policy_destroy+0x164/0x1b0 security/apparmor/lib.c:509, CPU#0: syz.0.17/5541
+Modules linked in:
+CPU: 0 UID: 0 PID: 5541 Comm: syz.0.17 Not tainted syzkaller #0 PREEMPT(full)
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+RIP: 0010:aa_policy_destroy+0x16b/0x1b0 security/apparmor/lib.c:509
+Code: 85 ed 7e 4d e8 96 bc 37 fd 5b 41 5c 41 5e 41 5f 5d e9 19 27 4e 07 cc e8 83 bc 37 fd 48 8d 3d 0c f0 d3 0b 48 c7 c6 a4 eb 38 8e <67> 48 0f b9 3a e9 04 ff ff ff e8 66 bc 37 fd 48 8d 3d ff ef d3 0b
+RSP: 0018:ffffc9000345eaa0 EFLAGS: 00010293
+RAX: ffffffff848f530d RBX: ffff88803f734800 RCX: ffff88801af2a580
+RDX: 0000000000000000 RSI: ffffffff8e38eba4 RDI: ffffffff90634320
+RBP: 0000000000000000 R08: 0000000000000cc0 R09: 00000000ffffffff
+R10: dffffc0000000000 R11: fffffbfff1d95913 R12: dead000000000122
+R13: ffff88803f734800 R14: ffff88803f734828 R15: dffffc0000000000
+FS:  00007f5f6a1836c0(0000) GS:ffff88808c519000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 000055d02407b048 CR3: 0000000012aa9000 CR4: 0000000000352ef0
+Call Trace:
+ <TASK>
+ aa_free_profile+0x9d/0x9f0 security/apparmor/policy.c:334
+ aa_alloc_profile+0x1e4/0x3e0 security/apparmor/policy.c:416
+ unpack_profile security/apparmor/policy_unpack.c:1153 [inline]
+ aa_unpack+0x17db/0x7430 security/apparmor/policy_unpack.c:1748
+ aa_replace_profiles+0x226/0x2a20 security/apparmor/policy.c:1183
+ policy_update+0x234/0x4a0 security/apparmor/apparmorfs.c:505
+ profile_load+0x1cb/0x320 security/apparmor/apparmorfs.c:522
+ vfs_write+0x296/0xba0 fs/read_write.c:685
+ ksys_write+0x150/0x270 fs/read_write.c:739
+ do_syscall_x64 arch/x86/entry/syscall_64.c:61 [inline]
+ do_syscall_64+0x166/0x520 arch/x86/entry/syscall_64.c:84
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7f5f6939e0d9
+Code: ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 44 00 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 e8 ff ff ff f7 d8 64 89 01 48
+RSP: 002b:00007f5f6a183028 EFLAGS: 00000246 ORIG_RAX: 0000000000000001
+RAX: ffffffffffffffda RBX: 00007f5f69625fa0 RCX: 00007f5f6939e0d9
+RDX: 0000000000000041 RSI: 0000200000000400 RDI: 0000000000000003
+RBP: 00007f5f6a183090 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000001
+R13: 00007f5f69626038 R14: 00007f5f69625fa0 R15: 00007ffe23725c18
 
-Closes: https://github.com/KSPP/linux/issues/88
-Reviewed-by: Serge Hallyn <serge@hallyn.com>
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Reported-by: syzbot+faed97c4ed43bfe7fee5@syzkaller.appspotmail.com
+Link: https://syzkaller.appspot.com/bug?extid=faed97c4ed43bfe7fee5
+Fixes: fe6bb31f590c9 ("apparmor: split out shared policy_XXX fns to lib")
 Signed-off-by: John Johansen <john.johansen@canonical.com>
-Stable-dep-of: 3daad923a868 ("apparmor: policy_int make sure list heads are initialized before fail path")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/lib.c | 16 +++++++---------
- 1 file changed, 7 insertions(+), 9 deletions(-)
+ security/apparmor/lib.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/security/apparmor/lib.c b/security/apparmor/lib.c
-index cd569fbbfe36d..ced4c7bed817a 100644
+index ced4c7bed817a..1165d51072ce9 100644
 --- a/security/apparmor/lib.c
 +++ b/security/apparmor/lib.c
-@@ -448,19 +448,17 @@ bool aa_policy_init(struct aa_policy *policy, const char *prefix,
- 		    const char *name, gfp_t gfp)
- {
+@@ -450,6 +450,8 @@ bool aa_policy_init(struct aa_policy *policy, const char *prefix,
  	char *hname;
-+	size_t hname_sz;
+ 	size_t hname_sz;
  
-+	hname_sz = (prefix ? strlen(prefix) + 2 : 0) + strlen(name) + 1;
++	INIT_LIST_HEAD(&policy->list);
++	INIT_LIST_HEAD(&policy->profiles);
+ 	hname_sz = (prefix ? strlen(prefix) + 2 : 0) + strlen(name) + 1;
  	/* freed by policy_free */
--	if (prefix) {
--		hname = aa_str_alloc(strlen(prefix) + strlen(name) + 3, gfp);
--		if (hname)
--			sprintf(hname, "%s//%s", prefix, name);
--	} else {
--		hname = aa_str_alloc(strlen(name) + 1, gfp);
--		if (hname)
--			strcpy(hname, name);
--	}
-+	hname = aa_str_alloc(hname_sz, gfp);
- 	if (!hname)
- 		return false;
-+	if (prefix)
-+		scnprintf(hname, hname_sz, "%s//%s", prefix, name);
-+	else
-+		strscpy(hname, name, hname_sz);
+ 	hname = aa_str_alloc(hname_sz, gfp);
+@@ -462,8 +464,6 @@ bool aa_policy_init(struct aa_policy *policy, const char *prefix,
  	policy->hname = hname;
  	/* base.name is a substring of fqname */
  	policy->name = basename(policy->hname);
+-	INIT_LIST_HEAD(&policy->list);
+-	INIT_LIST_HEAD(&policy->profiles);
+ 
+ 	return true;
+ }
 -- 
 2.53.0
 
