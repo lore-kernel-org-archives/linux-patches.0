@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5826A1F1534;
-	Sat, 12 Sep 2026 08:25:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8062235AC1E;
+	Sat, 12 Sep 2026 08:25:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789201524; cv=none; b=U2oiOr/G4Qmy7uNqiqCRwZ4jevuO8arzh0U9dSnNbmPO80a/b20oO4M9CEu3XKGsT4XAzat37YtkpC/K4/EcIhRpGr7mbOLvN09epaXd2rysOFf36WJt6A5atiXgSwH3fHHoOJhasnWEx56zKCqFD1lM3rTMsVJTgHqdGwwiIqQ=
+	t=1789201529; cv=none; b=dvp+2yo4IqzOMdDCK99d4e5pslVqwOXtuxHPMxcfK+AD/Ml5TSsFVet1AWLXSTTZOa5U7cCdJmAG6uSKaGwWvvWaz/TLPXuUAamjFtGD3x1AJRT1A7h6w5Gak59mvWVTA4W1YmRvG/zoH6YPy+C97kfmOJhaTR2Q9DqVkJr9XY4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789201524; c=relaxed/simple;
-	bh=iCdzkPkgLi0aQyhi53yKTWbhy7bH1Hg/dFZQEAlSlyY=;
+	s=arc-20240116; t=1789201529; c=relaxed/simple;
+	bh=fWq6yzA47JIgn8uUDV2lDQT/KTrVGVbboat1Kxenvyg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E5r0F9WYAHkhbzV/VSRrON2DlJPUfM+nwSDXvcE8qL/hL0NV4J/Ob+61W22p3hS8yEXvGdnEg0qUoozf6jNBMBaMQLpzAqE2s/uioa3lJvhr3SuhkRvn8XzGdyhtHwWcxFYQ+unqsJdWbFDlN+OM3iNMJ2q3gmb5ovm/X2cNkpE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M1h/mzLd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=H96grcDKOc5VkSc93N6Cy3xePcJpJ1lAsk6ibqCABgnbwCAIvzfzc2tJbI+6UBJChrp1VUpSuhra0UF0xArbqvjddBQenUXlByW1+AoiYnHEF/0nB4/DEDJPPDhtOtZU2j2SKBRrDijx6vlPNTU7zAr9u/hpnDtNWUN0o/+CugY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MzuF/Ovk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M1h/mzLd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB14C1F000FF;
-	Sat, 12 Sep 2026 08:25:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MzuF/Ovk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 143B91F000FF;
+	Sat, 12 Sep 2026 08:25:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789201523;
-	bh=djQZOr5MHo59E8fOYWdBztF/0RbL+vjbpMMINlp2BkY=;
+	s=korg; t=1789201528;
+	bh=tvwuJnQUKyilDL7YJgUHVNuZMRwtiWvKUqo4O+SU6NU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M1h/mzLdPawCCDsNIDGfXsDxEMky8SsjDcoim2bdSv9KitYsUBzQsCQTycoOwsT+O
-	 UQi/DfcNG+K79tpQxRwMuwz00qj1/vobNosddPFoYLHB/sV6nkkJKVewohEjfxYKau
-	 qs3iE7swc1Bej0yrekUmUhIsXbTntlWG9Holj7bI=
+	b=MzuF/OvkKgipcqbgkfjd01lC2W+49XprozPL+iVUCJPTXu5QwMbg785HqPai178mj
+	 z0WkN/cKKztbtDGA6qviLfCoIPL1W2UFAgN9yCXSkfneYu9ZUIYsuhIKmUMtw5AzJ4
+	 OAuq1oJl1dTLQ4DzqqxaU7Bfj6Nk24bIRhqz50Ew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+75f3f9bff8c510602d36@syzkaller.appspotmail.com,
-	Vicki Pfau <vi@endrift.com>,
+	kernel test robot <lkp@intel.com>,
+	Rosalie Wanders <rosalie@mailbox.org>,
 	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1014/1815] HID: steam: Reject short reads
-Date: Sat, 12 Sep 2026 08:46:04 +0200
-Message-ID: <20260912065712.814799058@linuxfoundation.org>
+Subject: [PATCH 7.2 1015/1815] HID: sony: add missing __packed to struct with static_assert()
+Date: Sat, 12 Sep 2026 08:46:05 +0200
+Message-ID: <20260912065712.838751049@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,80 +52,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vicki Pfau <vi@endrift.com>
+From: Rosalie Wanders <rosalie@mailbox.org>
 
-[ Upstream commit 33ff7b49c38b39b1f3d27db508ac0720fb25c08a ]
+[ Upstream commit 091c05c184f3a75a275ccc7ae29e17125dfaa661 ]
 
-Steam Controller FEATURE reports encode the size of the message in the
-message itself. Previously we were trusting that the size reported matched
-the size we actually read, leading to a potential issue with short reads.
-Instead, we should actually verify the length of the read.
-
-Fixes: c164d6abf384 ("HID: add driver for Valve Steam Controller")
-Reported-by: syzbot+75f3f9bff8c510602d36@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=75f3f9bff8c510602d36
-
-Signed-off-by: Vicki Pfau <vi@endrift.com>
-Link: https://syzkaller.appspot.com/bug?extid=75f3f9bff8c510602d36
+Fixes: 4b9c410e7d6d ("HID: sony: fix style issues")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202607091026.R9Pxd3PG-lkp@intel.com/
+Signed-off-by: Rosalie Wanders <rosalie@mailbox.org>
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-steam.c | 29 +++++++++++++++++++++++++----
- 1 file changed, 25 insertions(+), 4 deletions(-)
+ drivers/hid/hid-sony.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hid/hid-steam.c b/drivers/hid/hid-steam.c
-index 3383a62646f9e..80d2eabc930ec 100644
---- a/drivers/hid/hid-steam.c
-+++ b/drivers/hid/hid-steam.c
-@@ -356,6 +356,13 @@ static int steam_recv_report(struct steam_device *steam,
- 	u8 *buf;
- 	int ret;
+diff --git a/drivers/hid/hid-sony.c b/drivers/hid/hid-sony.c
+index af1ad2c233707..a8b3a1039f0ca 100644
+--- a/drivers/hid/hid-sony.c
++++ b/drivers/hid/hid-sony.c
+@@ -504,7 +504,7 @@ struct motion_output_report_02 {
+ 	u8 r, g, b;
+ 	u8 zero2;
+ 	u8 rumble;
+-};
++} __packed;
+ static_assert(sizeof(struct motion_output_report_02) == 7);
  
-+	/*
-+	 * All reports start with a two byte header.
-+	 * We must read at least two bytes to get a sensible output.
-+	 */
-+	if (size < 2)
-+		return -EINVAL;
-+
- 	r = steam->hdev->report_enum[HID_FEATURE_REPORT].report_id_hash[0];
- 	if (!r) {
- 		hid_err(steam->hdev, "No HID_FEATURE_REPORT submitted -  nothing to read\n");
-@@ -379,16 +386,30 @@ static int steam_recv_report(struct steam_device *steam,
- 			buf, hid_report_len(r) + 1,
- 			HID_FEATURE_REPORT, HID_REQ_GET_REPORT);
- 	if (ret > 0) {
--		ret = min(size, ret - 1);
--		memcpy(data, buf + 1, ret);
-+		/* Remove the report ID from the return buffer */
-+		ret--;
-+		size = min(size, ret);
-+		memcpy(data, buf + 1, size);
- 	}
- 	kfree(buf);
- 
- 	if (ret < 0)
- 		hid_err(steam->hdev, "%s: error %d\n", __func__, ret);
- 	else
--		hid_dbg(steam->hdev, "Received report %*ph\n", ret, data);
--	return ret;
-+		hid_dbg(steam->hdev, "Received report %*ph\n", size, data);
-+	if (ret < 0)
-+		return ret;
-+
-+	if (ret < 2) {
-+		hid_err(steam->hdev, "%s: reply too short\n", __func__);
-+		return -EPROTO;
-+	}
-+	if (ret < data[1] + 2) {
-+		hid_err(steam->hdev, "%s: expected %u bytes, read %i\n",
-+				__func__, data[1] + 2, ret);
-+		return -EPROTO;
-+	}
-+	return size;
- }
- 
- static int steam_send_report(struct steam_device *steam,
+ #define SIXAXIS_REPORT_0xF2_SIZE 17
 -- 
 2.53.0
 
