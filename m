@@ -1,43 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6C5E37F8D7;
-	Sat, 12 Sep 2026 19:33:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25480344DBD;
+	Sat, 12 Sep 2026 19:33:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789241635; cv=none; b=MOZt9mjH/k5m8q3tiyatELGYiFlL2tUlpaXmbYy7hfGW/zvSd9Yb6Nl8V2vq8CimnZp0b4sRe5CItZJbChhmcqP9r/5ThZyVjCkWlW/wPOmHYfZix6jWdsQ5nI6b0fC+3/AXPXsQTHU8m78G0bmqmcKd8ezvtu297bIqtbUYl/Y=
+	t=1789241641; cv=none; b=CmaeGvJ3x0/wNPKL/wWTiFj268CcVEQtkhl4QjUiCXbWMOPx3O3PF1rFjnvnRCuFZix+7wzhy7XFMi0YAT/bf7bsobtjLYV2QY7DButN3EXReU0r/QOLT5xNO2McHQA5tiDXpI2Mdaze/lsQQQLrNLV6fR5BTOrpDGhtb92d8BU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789241635; c=relaxed/simple;
-	bh=WSTPgp/8VWm4JromrdtcGVvLXoOmomacCsxLRd/57iI=;
+	s=arc-20240116; t=1789241641; c=relaxed/simple;
+	bh=tFbdtXhVYlFs1NoSsz4XGtNB+VU7vNydUGYtu4Xdt/s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MnKZleBQSBZFxD0DK1LgbnRzBMPvbOMrxtBxIxiAbocfZ1/o+sdv/mtFRyMZbaSgrpEK/pOipYYIkhD6cI9Yz29s5I88wtOJYAvavRg7UEpisryORIYjQiyiD0KFvtNKGJJD+4nhYEh64fueIVsS8EgHWvpDdyaQviRZZrQR+oA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JuOLVhJA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kV5e2QmM7WwLc5tC664OEq7/93ZQtZCJqJnpSjhjtseTxT9bF50BjI4W7eySeD57OltJk8Lxlf0KIxcwn9nH5/OWoIZLdEqlIL8lSU+Em7793AcdwVOjzjhUhc27iiN2mwjvB0zhCHUzpGew6GGbhmPAt2tJbFGG96U+wkF0L28=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dZjGQ+CN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JuOLVhJA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEDA81F000FF;
-	Sat, 12 Sep 2026 19:33:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dZjGQ+CN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F00D1F000FF;
+	Sat, 12 Sep 2026 19:33:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789241634;
-	bh=6485rFL7Hgz3KllOUhlbIlkbqHoHf55vUTQ7ToiAbzM=;
+	s=korg; t=1789241639;
+	bh=JrKex99wk+OeiiHIHSSqAK2ngidHxdJBSws4hh9uIl8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JuOLVhJAeB2TIJiZntpTMEE5frysViMCs/2OHXasoSitaD5v4PNluTxx+Ya90n3aj
-	 6Xyd279ocU2JrAMRgypC4N9H8IUOWIZIuC8BFH5uYBnLyV5NmKslu/9bCQnoixAuds
-	 aYB2mfy1odoChbLFEfgb+zLAPRY/Fz70fi2T7zu8=
+	b=dZjGQ+CNycAm2Q4/rDcGbkhxdfmil2Lnbbv2aDHMAfNDzuBGwIK5luScBUZdc5ji5
+	 BWD3FXtK7WNTsZaERt2brHdpkZxDeFsp2dBFEW7LtV+uEOrpCBFPJa/UHK4GGlGeFL
+	 0WZTB30Ep+TPIGKYJciPV5a9Fs0YyRK3cbXg30AM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Long Li <longli@microsoft.com>,
-	Thomas Gleixner <tglx@kernel.org>,
-	Aditya Garg <gargaditya@linux.microsoft.com>,
-	Shradha Gupta <shradhagupta@linux.microsoft.com>,
-	Naman Jain <namjain@linux.microsoft.com>,
-	Michael Kelley <mhklinux@outlook.com>,
-	Wei Liu <wei.liu@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 176/798] PCI: hv: Set irq_retrigger callback for the Hyper-V PCI MSI irqchip
-Date: Sat, 12 Sep 2026 08:56:44 +0200
-Message-ID: <20260912065521.053595436@linuxfoundation.org>
+	Kuan-Wei Chiu <visitorckw@gmail.com>,
+	Georgi Djakov <djakov@kernel.org>
+Subject: [PATCH 5.10 150/798] interconnect: Fix use after free in icc_get() and of_icc_get_by_index()
+Date: Sat, 12 Sep 2026 08:56:18 +0200
+Message-ID: <20260912065520.440244355@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -56,47 +50,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Naman Jain <namjain@linux.microsoft.com>
+From: Kuan-Wei Chiu <visitorckw@gmail.com>
 
-[ Upstream commit 86bdd16e8f390d51bae9e77a4bc4164ca2f580fe ]
+commit 25c7e242aca084fdc1098248194032317dca625d upstream.
 
-The Hyper-V vPCI MSI irqchip never installs an irq_retrigger() callback.
+In of_icc_get_by_index() and icc_get(), if the dynamic allocation for
+path->name fails via kasprintf(), the error handling path directly
+calls kfree(path) to free the path object and returns an error.
 
-On CPU hot-unplug fixup_irqs() migrates the interrupts which are affine to
-the outgoing CPU to a new target. If an interrupt still has its pending bit
-set in the outgoing CPU's IRR at that point, fixup_irqs() resends it on the
-new target through the irqchip's irq_retrigger() callback. As the Hyper-V
-PCI/MSI chip does not provide that callback, the pending interrupt is
-silently dropped, which can result in lost interrupts, stalls and "No irq
-handler for vector" messages during CPU hotplug.
+However, prior to this point, path_find() calls path_init(), which
+already links the path's requests into the req_list of the respective
+interconnect nodes via hlist_add_head(). Directly invoking kfree(path)
+leaves dangling pointers in the hlist. A subsequent call to icc_get()
+or icc_set_bw() will traverse or modify these corrupted lists, triggering
+a slab use afterfree.
 
-Install irq_chip_retrigger_hierarchy() as the irq_retrigger() callback for
-the Hyper-V PCI/MSI irqchip, so that a pending interrupt is resent on its
-new target CPU via the parent x86 vector domain.
+KASAN report showing the vulnerability when reproducing via debugfs:
 
-Fixes: 4daace0d8ce85 ("PCI: hv: Add paravirtual PCI front-end for Microsoft Hyper-V VMs")
+  BUG: KASAN: slab-use-after-free in path_find+0x6f8/0xcfc
+  Write of size 8 at addr fff000000d43f748 by task sh/1
+  ...
+  Call trace:
+   kasan_report+0xac/0xfc
+   path_find+0x6f8/0xcfc
+   icc_get+0x148/0x380
+   icc_get_set+0xf8/0x2d0
+  ...
+  Freed by task 1:
+   kfree+0x1a0/0x4a4
+   icc_get+0x2cc/0x380
+   icc_get_set+0xf8/0x2d0
+
+Fix this by replacing kfree(path) with the proper teardown function,
+icc_put(path), which safely removes the requests from the req_list using
+hlist_del() and drops the provider usage references before freeing the
+memory.
+
+Additionally, in icc_get(), ensure that the icc_lock mutex is released
+prior to calling icc_put(path) to avoid a deadlock, as icc_put()
+internally acquires the same lock.
+
+Fixes: 3791163602f7 ("interconnect: Handle memory allocation errors")
 Cc: stable@vger.kernel.org
-Suggested-by: Long Li <longli@microsoft.com>
-Suggested-by: Thomas Gleixner <tglx@kernel.org>
-Reviewed-by: Aditya Garg <gargaditya@linux.microsoft.com>
-Reviewed-by: Shradha Gupta <shradhagupta@linux.microsoft.com>
-Signed-off-by: Naman Jain <namjain@linux.microsoft.com>
-Reviewed-by: Michael Kelley <mhklinux@outlook.com>
-Signed-off-by: Wei Liu <wei.liu@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
+Link: https://patch.msgid.link/20260416190840.1753468-1-visitorckw@gmail.com
+Signed-off-by: Georgi Djakov <djakov@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/pci-hyperv.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/interconnect/core.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/drivers/pci/controller/pci-hyperv.c
-+++ b/drivers/pci/controller/pci-hyperv.c
-@@ -1595,6 +1595,7 @@ static struct irq_chip hv_msi_irq_chip =
- 	.irq_compose_msi_msg	= hv_compose_msi_msg,
- 	.irq_set_affinity	= hv_set_affinity,
- 	.irq_ack		= irq_chip_ack_parent,
-+	.irq_retrigger		= irq_chip_retrigger_hierarchy,
- 	.irq_mask		= hv_irq_mask,
- 	.irq_unmask		= hv_irq_unmask,
- };
+--- a/drivers/interconnect/core.c
++++ b/drivers/interconnect/core.c
+@@ -507,7 +507,7 @@ struct icc_path *of_icc_get_by_index(str
+ 	path->name = kasprintf(GFP_KERNEL, "%s-%s",
+ 			       src_data->node->name, dst_data->node->name);
+ 	if (!path->name) {
+-		kfree(path);
++		icc_put(path);
+ 		path = ERR_PTR(-ENOMEM);
+ 	}
+ 
+@@ -747,8 +747,9 @@ struct icc_path *icc_get(struct device *
+ 
+ 	path->name = kasprintf(GFP_KERNEL, "%s-%s", src->name, dst->name);
+ 	if (!path->name) {
+-		kfree(path);
+-		path = ERR_PTR(-ENOMEM);
++		mutex_unlock(&icc_lock);
++		icc_put(path);
++		return ERR_PTR(-ENOMEM);
+ 	}
+ out:
+ 	mutex_unlock(&icc_lock);
 
 
