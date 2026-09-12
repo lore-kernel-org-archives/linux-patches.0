@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62CA9455626;
-	Sat, 12 Sep 2026 12:38:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFF462E06E4;
+	Sat, 12 Sep 2026 12:38:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789216733; cv=none; b=tKAQ38N9E7DmjIlBH3OGGiQqM/yU3QIw33H4UlxeSnYMU5SmmIvcSZ60VE5zTQF5MDtRXVh9OW0UbtHQLBEbMxS0oPd0S10MnMVhHg9D+53Afuty095f1TZrSzXKDW0GZdKur3gXUUwr+tBlKMGAN0IeTzabQkltNqx0/q9RRok=
+	t=1789216737; cv=none; b=lk+vWQ/zntQTdGSmn+StCW0PqB355Lh0g+jcLVtAz+MZe4n9D+tAKwBDOhmLelop8DVQrLaRj2Is18Y75g7/9Gs0XFBKdHVd92UDVub1/9XpKXZKYPKiCNWoL7H6m6G5QpZyUFLQLkL0gm4ctDriG06RptbTaL4202zrifEApaA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789216733; c=relaxed/simple;
-	bh=yeu/sMj75u7rHtX8kEFoHrSWoCEwXPjjboC6BjVVOsw=;
+	s=arc-20240116; t=1789216737; c=relaxed/simple;
+	bh=nrY97mu37RbcBn4zFjoi7Lru2Onu4gxRkuUioyPfrkA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J+SusmO39VT4DDNgWhPD77B/75h6iO2Sq7btf+ZB+iUXTajRDcgtwYlXxEbTkaOJOV66N5SSvb6fW9xVCR8Hrnas+6RgKusPsep7PDoDRHiH4P5WsNiXPYoShTQPXuC4YWkP4eKifURp81tcIbWNYQ7sH4R+hNxIeONMHiWj/JY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hqoEurvM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=b8fF/yUt4YLriHI9y0S6JUunluXLOTDgUSTMAJlaJixVJOv6lQ8qnyzLnpeSVkrMPpIAPKtnk+wCZF7ol1alki9S5LQbz+HeY2re4L6LlNkW1dhgC0tVOQMEiN2wt2qW5XMR4IDeu07peVkf7jjTouN+UIjxOeqLo2q58Um7O6s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UKBJhbjh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hqoEurvM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15FCC1F000FF;
-	Sat, 12 Sep 2026 12:38:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UKBJhbjh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A97C61F000FF;
+	Sat, 12 Sep 2026 12:38:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789216731;
-	bh=MsgHKwb9P2TIvHqBzUR1+9Mw6i20YxqypfyDZi3vpj4=;
+	s=korg; t=1789216735;
+	bh=3tA7OQa6d2EDzS8+pJwhCOja1+wjTdM/sA0eahxQozM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hqoEurvMg3z9utUaWHT5xSqkY5lQfuK2SquaS3Q/twvDPBLwCjVC+9URK9QQOk8mS
-	 oeI7gQPh8Vg8L0op2LOcSeTupb2oC+zYTB8wOGh0sCfoqsxfzX62831R1BbVj5n+st
-	 Lwfj82Vnnpxpy4TYz1X8Fvse4C3RfeZqvrt8Wxms=
+	b=UKBJhbjh+EyHQqBDHN1qibDvlsdIRpIKLsm2ml4wI2NLUpgLHjWnNQcIPkaSwNLU+
+	 X5kG0qWyWCk06Tk7wVLq68/BRv0YTZhFmE5/pG8UdI2fRC26KUmmzIK1swnn6E4eY7
+	 e++eb9Siz1MHFBTGp5QjMWH6aIIfahll7WFOymSI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Usama Anjum <usama.anjum@arm.com>,
+	Yichong Chen <chenyichong@uniontech.com>,
+	Jan Kara <jack@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0797/1376] misc: sgi-gru: remove interrupt-context page-table walks
-Date: Sat, 12 Sep 2026 08:53:43 +0200
-Message-ID: <20260912065625.297854987@linuxfoundation.org>
+Subject: [PATCH 6.12 0798/1376] fanotify: report full event length for FIONREAD
+Date: Sat, 12 Sep 2026 08:53:44 +0200
+Message-ID: <20260912065625.319311964@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -50,193 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Muhammad Usama Anjum <usama.anjum@arm.com>
+From: Yichong Chen <chenyichong@uniontech.com>
 
-[ Upstream commit 928a8e9f523df845fc496bcb9811013b67aabec5 ]
+[ Upstream commit 68615158c12de36220446dfea5cfdf9ba6c19690 ]
 
-The GRU TLB miss handler walks a process's page tables without holding
-page-table locks or a reference to the mapped page. It also uses a kernel
-page-table accessor on user page tables and supports only PMD-level large
-mappings on x86-64.
+fanotify_ioctl(FIONREAD) reports the number of bytes available to read
+from the event queue.  It currently accounts only FAN_EVENT_METADATA_LEN
+for each queued event.
 
-Remove the direct walker. Send interrupt faults directly to user polling
-mode so the existing call-OS fallback retries them in process context.
+That underestimates events that carry additional information records, such
+as FAN_REPORT_DFID_NAME events.  A userspace program that uses FIONREAD to
+size its read buffer can receive a length that is smaller than the next
+event.  Reading with that buffer then fails with -EINVAL, while a larger
+buffer succeeds and reports a larger metadata.event_len.
 
-Remove the mmap-lock failure statistic that can no longer be incremented.
+Use fanotify_event_len() when summing queued events so FIONREAD includes
+all info records.
 
-Fixes: 142586409c8b ("GRU Driver: page faults & exceptions")
-Signed-off-by: Muhammad Usama Anjum <usama.anjum@arm.com>
-Link: https://patch.msgid.link/20260730111316.3672672-2-usama.anjum@arm.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 5e469c830fdb ("fanotify: copy event fid info to user")
+Signed-off-by: Yichong Chen <chenyichong@uniontech.com>
+Link: https://patch.msgid.link/20260731021827.602479-1-chenyichong@uniontech.com
+Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/sgi-gru/grufault.c  | 101 ++++---------------------------
- drivers/misc/sgi-gru/gruprocfs.c |   1 -
- drivers/misc/sgi-gru/grutables.h |   1 -
- 3 files changed, 12 insertions(+), 91 deletions(-)
+ fs/notify/fanotify/fanotify_user.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/misc/sgi-gru/grufault.c b/drivers/misc/sgi-gru/grufault.c
-index 3557d78ee47a2..5a87c12f444a3 100644
---- a/drivers/misc/sgi-gru/grufault.c
-+++ b/drivers/misc/sgi-gru/grufault.c
-@@ -166,13 +166,8 @@ static void get_clear_fault_map(struct gru_state *gru,
- }
- 
- /*
-- * Atomic (interrupt context) & non-atomic (user context) functions to
-- * convert a vaddr into a physical address. The size of the page
-- * is returned in pageshift.
-- * 	returns:
-- * 		  0 - successful
-- * 		< 0 - error code
-- * 		  1 - (atomic only) try again in non-atomic context
-+ * Convert a user virtual address to a physical address in process context.
-+ * The size of the page is returned in pageshift.
-  */
- static int non_atomic_pte_lookup(struct vm_area_struct *vma,
- 				 unsigned long vaddr, int write,
-@@ -192,87 +187,25 @@ static int non_atomic_pte_lookup(struct vm_area_struct *vma,
- 	return 0;
- }
- 
--/*
-- * atomic_pte_lookup
-- *
-- * Convert a user virtual address to a physical address
-- * Only supports Intel large pages (2MB only) on x86_64.
-- *	ZZZ - hugepage support is incomplete
-- *
-- * NOTE: mmap_lock is already held on entry to this function. This
-- * guarantees existence of the page tables.
-- */
--static int atomic_pte_lookup(struct vm_area_struct *vma, unsigned long vaddr,
--	int write, unsigned long *paddr, int *pageshift)
--{
--	pgd_t *pgdp;
--	p4d_t *p4dp;
--	pud_t *pudp;
--	pmd_t *pmdp;
--	pte_t pte;
--
--	pgdp = pgd_offset(vma->vm_mm, vaddr);
--	if (unlikely(pgd_none(*pgdp)))
--		goto err;
--
--	p4dp = p4d_offset(pgdp, vaddr);
--	if (unlikely(p4d_none(*p4dp)))
--		goto err;
--
--	pudp = pud_offset(p4dp, vaddr);
--	if (unlikely(pud_none(*pudp)))
--		goto err;
--
--	pmdp = pmd_offset(pudp, vaddr);
--	if (unlikely(pmd_none(*pmdp)))
--		goto err;
--#ifdef CONFIG_X86_64
--	if (unlikely(pmd_leaf(*pmdp)))
--		pte = ptep_get((pte_t *)pmdp);
--	else
--#endif
--		pte = *pte_offset_kernel(pmdp, vaddr);
--
--	if (unlikely(!pte_present(pte) ||
--		     (write && (!pte_write(pte) || !pte_dirty(pte)))))
--		return 1;
--
--	*paddr = pte_pfn(pte) << PAGE_SHIFT;
--#ifdef CONFIG_HUGETLB_PAGE
--	*pageshift = is_vm_hugetlb_page(vma) ? HPAGE_SHIFT : PAGE_SHIFT;
--#else
--	*pageshift = PAGE_SHIFT;
--#endif
--	return 0;
--
--err:
--	return 1;
--}
--
- static int gru_vtop(struct gru_thread_state *gts, unsigned long vaddr,
- 		    int write, int atomic, unsigned long *gpa, int *pageshift)
+diff --git a/fs/notify/fanotify/fanotify_user.c b/fs/notify/fanotify/fanotify_user.c
+index 93472a48ceb3c..c62eb37cfb24d 100644
+--- a/fs/notify/fanotify/fanotify_user.c
++++ b/fs/notify/fanotify/fanotify_user.c
+@@ -970,11 +970,13 @@ static long fanotify_ioctl(struct file *file, unsigned int cmd, unsigned long ar
  {
- 	struct mm_struct *mm = gts->ts_mm;
- 	struct vm_area_struct *vma;
- 	unsigned long paddr;
--	int ret, ps;
-+	int ps;
+ 	struct fsnotify_group *group;
+ 	struct fsnotify_event *fsn_event;
++	unsigned int info_mode;
+ 	void __user *p;
+ 	int ret = -ENOTTY;
+ 	size_t send_len = 0;
  
- 	vma = find_vma(mm, vaddr);
- 	if (!vma)
- 		goto inval;
+ 	group = file->private_data;
++	info_mode = FAN_GROUP_FLAG(group, FANOTIFY_INFO_MODES);
  
--	/*
--	 * Atomic lookup is faster & usually works even if called in non-atomic
--	 * context.
--	 */
--	rmb();	/* Must/check ms_range_active before loading PTEs */
--	ret = atomic_pte_lookup(vma, vaddr, write, &paddr, &ps);
--	if (ret) {
--		if (atomic)
--			goto upm;
--		if (non_atomic_pte_lookup(vma, vaddr, write, &paddr, &ps))
--			goto inval;
--	}
-+	if (atomic)
-+		goto upm;
-+
-+	/* Order the caller's ms_range_active check before loading PTEs. */
-+	rmb();
-+	if (non_atomic_pte_lookup(vma, vaddr, write, &paddr, &ps))
-+		goto inval;
- 	if (is_gru_paddr(paddr))
- 		goto inval;
- 	paddr = paddr & ~((1UL << ps) - 1);
-@@ -569,19 +502,9 @@ static irqreturn_t gru_intr(int chiplet, int blade)
- 			continue;
- 		}
+ 	p = (void __user *) arg;
  
--		/*
--		 * This is running in interrupt context. Trylock the mmap_lock.
--		 * If it fails, retry the fault in user context.
--		 */
-+		/* Address translation may sleep, so retry the fault in user context. */
- 		gts->ustats.fmm_tlbmiss++;
--		if (!gts->ts_force_cch_reload &&
--					mmap_read_trylock(gts->ts_mm)) {
--			gru_try_dropin(gru, gts, tfh, NULL);
--			mmap_read_unlock(gts->ts_mm);
--		} else {
--			tfh_user_polling_mode(tfh);
--			STAT(intr_mm_lock_failed);
--		}
-+		tfh_user_polling_mode(tfh);
- 	}
- 	return IRQ_HANDLED;
- }
-diff --git a/drivers/misc/sgi-gru/gruprocfs.c b/drivers/misc/sgi-gru/gruprocfs.c
-index 97b8b38ab47df..b8139c27bc7f8 100644
---- a/drivers/misc/sgi-gru/gruprocfs.c
-+++ b/drivers/misc/sgi-gru/gruprocfs.c
-@@ -54,7 +54,6 @@ static int statistics_show(struct seq_file *s, void *p)
- 	printstat(s, intr_cbr);
- 	printstat(s, intr_tfh);
- 	printstat(s, intr_spurious);
--	printstat(s, intr_mm_lock_failed);
- 	printstat(s, call_os);
- 	printstat(s, call_os_wait_queue);
- 	printstat(s, user_flush_tlb);
-diff --git a/drivers/misc/sgi-gru/grutables.h b/drivers/misc/sgi-gru/grutables.h
-index 640daf1994df7..3348552925c61 100644
---- a/drivers/misc/sgi-gru/grutables.h
-+++ b/drivers/misc/sgi-gru/grutables.h
-@@ -182,7 +182,6 @@ struct gru_stats_s {
- 	atomic_long_t intr_cbr;
- 	atomic_long_t intr_tfh;
- 	atomic_long_t intr_spurious;
--	atomic_long_t intr_mm_lock_failed;
- 	atomic_long_t call_os;
- 	atomic_long_t call_os_wait_queue;
- 	atomic_long_t user_flush_tlb;
+@@ -982,7 +984,8 @@ static long fanotify_ioctl(struct file *file, unsigned int cmd, unsigned long ar
+ 	case FIONREAD:
+ 		spin_lock(&group->notification_lock);
+ 		list_for_each_entry(fsn_event, &group->notification_list, list)
+-			send_len += FAN_EVENT_METADATA_LEN;
++			send_len += fanotify_event_len(info_mode,
++						       FANOTIFY_E(fsn_event));
+ 		spin_unlock(&group->notification_lock);
+ 		ret = put_user(send_len, (int __user *) p);
+ 		break;
 -- 
 2.53.0
 
