@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D78912D739C;
-	Sat, 12 Sep 2026 14:51:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BADB2EED8;
+	Sat, 12 Sep 2026 14:51:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789224674; cv=none; b=gF8nX9D4Wftb5i8jtulANXSyK5is3XZXczgft5ycVLEOhZubVH2rZzldpYS89qE9bYctTBnmXrDyVz3N1Fcc2JLieejzjXe6mINoSbHCLVc76+wt2ISty2ay2y22O/tZ88WwLt9QiyymX5z+o3rbk5Vs1Qe0SfSgrIE5PlIr1EA=
+	t=1789224678; cv=none; b=XlgCldcttbC3G5ngrvMlJKbJPAEbOfQvG79me8qO+7lFq+J1d+Rqp9P/jO1qllPB/AVqGJ8Mh43sXLXF+Sc6ahWZEe2+LdSTPt0wG5ZLeDNg178zs21XfE3ILCcp5AVGPXSrV8yhbrodNNUmA3TfG2TUPv9e+X8WzbMn3kqKVy4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789224674; c=relaxed/simple;
-	bh=3UsLQVMAGYx7alxSHlEKYEoFnlWaEUllapS9ARvP/HU=;
+	s=arc-20240116; t=1789224678; c=relaxed/simple;
+	bh=EL3Ikay6R2f3QWQ1L56Tlh6cHhltUCbdRZMsGafcZjU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HptU9gfamJ0ZQB1sWxXzdV8lk6R4iu7rdWUovjkU5PyOYYHZJI1E3d9mXIJoHACO6nig3zRV5OaYj79Ih7a8FYQW/2IYjG2zOGIVL0jWcUaFIBUd0F3gkxq+DMEYwk6Cz7WU7GEjJx8DqMgAGVM5p1dcEBvRbMUlTZaG4yja118=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a4rBzFtN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=WurbsrUW5Mu6ZdFhJPZ0D5FbO1g63g+bQS1eamGN/NnBqsn8ZZTSX9g/iL8TEaEL1vZVeUQaB8sxp/CIL91djNMtQFGV9tIVaBp9CZ6TIIw8DVqReM4X43onKPUmlywAJI/KDkocXlqxcHV/HBTTihTdSAVlZnLprTlc8nbZSyk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VcY8YNcV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a4rBzFtN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D39E91F000FF;
-	Sat, 12 Sep 2026 14:51:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VcY8YNcV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C07081F000FF;
+	Sat, 12 Sep 2026 14:51:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789224672;
-	bh=tHvIRRjW/HBlAAMBSfz/VUR0LDgylGWwWY1LXiogJd4=;
+	s=korg; t=1789224677;
+	bh=iAzqNxaksgXKb4ane0IGWx7tKvh8WfYakPp1Xh2KPG8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=a4rBzFtN5tM/swQrzM/N1DromInOHaVlm7FDr5j9gixkm4lqFbCfGDidgyEfFbOwN
-	 8vjjJuYDuFRwGWdfK19f3/zCXuzqyOLSyIhRcNISk+4TqahMDybtBoWJPycuUN0cjP
-	 xudpp2bEXjKWU3e1Bv6iemWgKdZVhCuAwNNIN9J4=
+	b=VcY8YNcVEDD7zpDFPzAuyQrVulthE16jDd3MbCvUNni9P+2pMn0JiXXlXSPUJvYkb
+	 jv/2AB4ivzfuOaTimDbp0sdj2CTCDKkf9XEjAoKPBqAS6GTT86fJeZe88AhHy4ajff
+	 5RNIxqE4rt6uQWswzlsibesVJ6evLviXVo/ky6WU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Calvin Owens <calvin@wbinvd.org>,
-	Sashiko <sashiko-bot@kernel.org>,
+	Bastien Curutchet <bastien.curutchet@bootlin.com>,
 	Rodolfo Giometti <giometti@enneenne.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1039/1424] pps: dont try to wait for negative timeouts in PPS_FETCH
-Date: Sat, 12 Sep 2026 08:57:51 +0200
-Message-ID: <20260912065630.577644008@linuxfoundation.org>
+Subject: [PATCH 6.6 1040/1424] pps: clients: gpio: Bypass edges direction check when not needed
+Date: Sat, 12 Sep 2026 08:57:52 +0200
+Message-ID: <20260912065630.598774194@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -53,107 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Calvin Owens <calvin@wbinvd.org>
+From: Bastien Curutchet <bastien.curutchet@bootlin.com>
 
-[ Upstream commit 45217e98987a87ff2372386dbf82fd5325db28ea ]
+[ Upstream commit a01f6287c244f35eeec11ca932d09061181eed8c ]
 
-If userspace passes a negative timeout to PPS_FETCH, it triggers a kernel
-splat from schedule_timeout():
+In the IRQ handler, the GPIO's state is read to verify the direction of
+the edge that triggered the interruption before generating the PPS event.
+If a pulse is too short, the GPIO line can reach back its original state
+before this verification and the PPS event is lost.
 
-    schedule_timeout: wrong timeout value fffffffffff0bfb4
-    CPU: 17 UID: 0 PID: 4720 Comm: a.out Not tainted 7.1.0-rc5-x86-kvm-00150-g331d97e36b37 #1 PREEMPT_RT
-    Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-20240910_120124-localhost 04/01/2014
-    Call Trace:
-     <TASK>
-     dump_stack_lvl+0x4b/0x70
-     schedule_timeout+0xb7/0xe0
-     pps_cdev_pps_fetch.isra.0+0x93/0x150
-     pps_cdev_ioctl+0x70/0x310
-     __x64_sys_ioctl+0x7b/0xc0
-     do_syscall_64+0xb6/0xfc0
-     entry_SYSCALL_64_after_hwframe+0x4b/0x53
+This check is needed when info->capture_clear is set because it needs
+interruptions on both rising and falling edges. When info->capture_clear
+is not set, interruption is triggered by one edge only so this check can
+be omitted.
 
-Here is a trivial reproducer that works with the PPS_CLIENT_KTIMER test
-device enabled in the kernel:
+Add a warning if irq_handler is left without triggering any PPS event.
+Bypass the edge's direction verification when info->capture_clear is not
+set.
 
-    #include <stdlib.h>
-    #include <fcntl.h>
-    #include <unistd.h>
-    #include <sys/ioctl.h>
-    #include <linux/pps.h>
-    #include <err.h>
-
-    int main() {
-        struct pps_fdata fdata;
-        int fd;
-
-        fd = open("/dev/pps0", O_RDWR);
-        if (fd == -1)
-            err(1, "Failed to open /dev/pps0");
-
-        fdata.timeout.sec = -1;
-        fdata.timeout.nsec = 0;
-
-        if (ioctl(fd, PPS_FETCH, &fdata))
-            err(2, "PPS_FETCH failed");
-
-        close(fd);
-        return 0;
-    }
-
-Sashiko imagines this to be some sort of security problem, which is
-obviously really silly.  But I think it is still worth fixing, so buggy
-userspace code can't trigger the splat.
-
-Silence the splat by using timespec64_to_jiffies(), which hard limits the
-timeout to LONG_MAX jiffies.  To be safe, explicitly preserve the
--ETIMEDOUT return value userspace sees today if it passes a negative
-timeout.
-
-If you really squint, this is still a slight behavior change in that there
-are "denormalized" combinations of tv_sec and tv_nsec which used to work
-but will now return -ETIMEDOUT.  I can't imagine anybody will care about
-that...
-
-Link: https://lore.kernel.org/c5c97c3b3c9d66010382094fd538e59a38f4aacf.1781289959.git.calvin@wbinvd.org
-Fixes: eae9d2ba0cfc ("LinuxPPS: core support")
-Signed-off-by: Calvin Owens <calvin@wbinvd.org>
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/cover.1779733602.git.calvin%40wbinvd.org?part=3
+Signed-off-by: Bastien Curutchet <bastien.curutchet@bootlin.com>
 Acked-by: Rodolfo Giometti <giometti@enneenne.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Link: https://lore.kernel.org/r/20250108153012.514925-1-bastien.curutchet@bootlin.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: b899e0279f90 ("pps-gpio: remove dead capture_clear code")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pps/pps.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/pps/clients/pps-gpio.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pps/pps.c b/drivers/pps/pps.c
-index 9539695b337a8..f66a749b38b56 100644
---- a/drivers/pps/pps.c
-+++ b/drivers/pps/pps.c
-@@ -63,13 +63,19 @@ static int pps_cdev_pps_fetch(struct pps_device *pps, struct pps_fdata *fdata)
- 		err = wait_event_interruptible(pps->queue,
- 				ev != pps->last_ev);
- 	else {
-+		struct timespec64 ts;
- 		unsigned long ticks;
+diff --git a/drivers/pps/clients/pps-gpio.c b/drivers/pps/clients/pps-gpio.c
+index 41e1fdbcda165..dbe598d092099 100644
+--- a/drivers/pps/clients/pps-gpio.c
++++ b/drivers/pps/clients/pps-gpio.c
+@@ -52,7 +52,9 @@ static irqreturn_t pps_gpio_irq_handler(int irq, void *data)
  
- 		dev_dbg(&pps->dev, "timeout %lld.%09d\n",
- 				(long long) fdata->timeout.sec,
- 				fdata->timeout.nsec);
--		ticks = fdata->timeout.sec * HZ;
--		ticks += fdata->timeout.nsec / (NSEC_PER_SEC / HZ);
-+
-+		if (fdata->timeout.sec < 0)
-+			return -ETIMEDOUT;
-+
-+		ts.tv_sec = fdata->timeout.sec;
-+		ts.tv_nsec = fdata->timeout.nsec;
-+		ticks = timespec64_to_jiffies(&ts);
+ 	info = data;
  
- 		if (ticks != 0) {
- 			err = wait_event_interruptible_timeout(
+-	rising_edge = gpiod_get_value(info->gpio_pin);
++	/* Small trick to bypass the check on edge's direction when capture_clear is unset */
++	rising_edge = info->capture_clear ?
++		      gpiod_get_value(info->gpio_pin) : !info->assert_falling_edge;
+ 	if ((rising_edge && !info->assert_falling_edge) ||
+ 			(!rising_edge && info->assert_falling_edge))
+ 		pps_event(info->pps, &ts, PPS_CAPTUREASSERT, data);
+@@ -60,6 +62,8 @@ static irqreturn_t pps_gpio_irq_handler(int irq, void *data)
+ 			((rising_edge && info->assert_falling_edge) ||
+ 			(!rising_edge && !info->assert_falling_edge)))
+ 		pps_event(info->pps, &ts, PPS_CAPTURECLEAR, data);
++	else
++		dev_warn_ratelimited(&info->pps->dev, "IRQ did not trigger any PPS event\n");
+ 
+ 	return IRQ_HANDLED;
+ }
 -- 
 2.53.0
 
