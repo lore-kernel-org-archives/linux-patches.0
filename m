@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62AC92F7F19;
-	Sat, 12 Sep 2026 09:19:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75FF536A37E;
+	Sat, 12 Sep 2026 09:19:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789204751; cv=none; b=RLWuRpud6odji6L+uuTAMVtRXeeH69sInABvPkjoXu4m5TmOCgH5jRh7BWV3ouMmgC0VX+I47tJQ5MoE6lEKGYr2RT6PvSPVFSpnkWEV1ZcmHeTpwMLMD88OcBS7TmskjlsOg4swUg3fstOhIZ0lE43//1f0Fcq2b7XPulNR5tQ=
+	t=1789204756; cv=none; b=eH8bfgFcTzRk4z3d6rD73SnxlnvpoadkjmrHG1Q1+2ZYkO8kiZu1jeh6h8u9DfUhPn+VpYLyKaxFLQ7uvoXszaOT/P9a6WJ9ykJvVm4nw8R0Tlw00b+IUof+Tmz569ANcdMZdQ8lciqwmOwPY6Cs7ACPJe4IWUhojxeSlHH9GpI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789204751; c=relaxed/simple;
-	bh=Rc/o7F/0UKZQ60d+I8jVJsf8IzDtaP0sHjean+ZDsYw=;
+	s=arc-20240116; t=1789204756; c=relaxed/simple;
+	bh=jNQErq5dfLq10V3ltgbPEH3bV5L838ErV4hKeU2qQvs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oXI/VK5sAr+1vZsxNcz+T5eQ75uvVBdUIqJJFgnWvCem3lnegSXPvA6hWh+awJCe5AZzyIYHZcsoMZSemDAzlG2P1gUeNFOWIlN+36KssLQ6jbU8mWguc2WAtcBi9x+kJ+riuYBE2jog+W4D3FEd3Br6a1eA31v6HYvzLlj+OuU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eynWuSeu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NMLMTT/zexMVRVgveusfIZVYxs4TF6MWGsGY+VrNPLMfCQGYI173XYRGFg9ExrlcXgX5DDW0TVwcBLKW2V0S+FI2nG//AAM48bgMxPBuQwrps3BnampVA2iTXMkIjA9RqNndlXyq3hV8Lbq/TRf4pwSTGIT4rO8Xms2Q0Vx5Rx0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JB1zmPug; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eynWuSeu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 384251F000FF;
-	Sat, 12 Sep 2026 09:19:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JB1zmPug"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52AA11F000FF;
+	Sat, 12 Sep 2026 09:19:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789204750;
-	bh=fpluV+lMi+myIT/utUHLrn7wr7E1BmokAjEmkD2D6rA=;
+	s=korg; t=1789204755;
+	bh=SJAPpQhDi6N3XWKxf4/f+lUWSQkw5KPjdgKecLxLp1g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eynWuSeuku++nERKDoZNWUIISqdRz6M5inByiOyG0txT9pXCrApzA3hwDUueYa4gz
-	 j0Vz0y/oa4OrbR0Vm7GJN60zJYtHZoJdZHyAdI1GqrlRVTLA9TJ9SXnpBWDVny3Trz
-	 RcXtE0ovRVUUUxSIS7r05yh1iM1NmHAXc0P6F1rs=
+	b=JB1zmPugV6OeSQV9Ieov7V1tqiiD75a1qrWMZMtFz91D6Gr6sZtXe4LodfDb7bKVB
+	 fJxWUmG9QfjFusGq6jqQwu0LgdnL1BUiPeplhyvgQ1F3aYFSFUggbky7FiV0b2zehX
+	 j2ZXn77Df3lcJKDDE19HNohBd8I0rA2U8h9aUIUw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+483a6efbc4882c1201ee@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	AutonomousCodeSecurity@microsoft.com,
+	"Xiang Mei (Microsoft)" <xmei5@asu.edu>,
+	"Cen Zhang (Microsoft)" <blbllhy@gmail.com>,
+	Ido Schimmel <idosch@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1676/1815] netdevsim: update queue NAPI association on queue reset
-Date: Sat, 12 Sep 2026 08:57:06 +0200
-Message-ID: <20260912065728.332629861@linuxfoundation.org>
+Subject: [PATCH 7.2 1677/1815] ipv6: avoid divide by zero in rt6_multipath_rebalance
+Date: Sat, 12 Sep 2026 08:57:07 +0200
+Message-ID: <20260912065728.355805297@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -53,58 +54,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Cen Zhang (Microsoft) <blbllhy@gmail.com>
 
-[ Upstream commit 07e98a4d5e9c292eae97c9cc5ab0937384e48492 ]
+[ Upstream commit d2c26c2911dd1a363c488add4fb63eb5f0f28f87 ]
 
-In netdevsim, receive queues (struct nsim_rq) embed their own struct
-napi_struct. When queue reset is performed (e.g. via queue_reset
-debugfs), nsim_queue_start() swaps in a newly allocated struct nsim_rq,
-and nsim_queue_mem_free() later deletes and frees the old one.
+rt6_multipath_rebalance() calculates the total eligible nexthop weight
+in one pass and programs upper bounds in a second pass. Since
+RTM_NEWROUTE is RTNL-free, a concurrent
+ignore_routes_with_linkdown update can make the first pass return zero
+while the second sees an eligible nexthop, causing
+rt6_upper_bound_set() to divide by zero.
 
-However, nsim_queue_start() failed to update the queue-to-NAPI mapping
-via netif_queue_set_napi(). As a result, dev->_rx[idx].napi continued to
-point to the old NAPI struct. After the old queue was freed, a subsequent
-queue dump via Netlink (NETDEV_CMD_QUEUE_GET) triggered a KASAN
-slab-use-after-free read in nla_put_napi_id() when accessing
-rxq->napi->napi_id.
+UBSAN: division-overflow in net/ipv6/route.c:4845:17
+Oops: divide error: 0000 [#1] SMP KASAN NOPTI
+  rt6_upper_bound_set() net/ipv6/route.c:4845
+  rt6_multipath_rebalance()
+  fib6_add_rt2node()
+  ip6_route_multipath_add()
+  inet6_rtm_newroute()
 
-Fix this by calling netif_queue_set_napi() in nsim_queue_start() to
-associate the new NAPI with the RX queue, and clear the association
-with netif_queue_set_napi(..., NULL) in nsim_del_napi() during teardown.
+Skip upper-bound calculation when the first pass reports a zero total.
+This respects the lock-free performance considerations here and solves
+insecure scenarios.
 
-Fixes: 5bc8e8dbef27 ("netdevsim: add queue management API support")
-Reported-by: syzbot+483a6efbc4882c1201ee@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/6a82c3d4.f7a79266.2f965f.0024.GAE@google.com/T/#u
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Link: https://patch.msgid.link/20260817082511.2300402-1-edumazet@google.com
+Fixes: bd11ff421d36 ("ipv6: Get rid of RTNL for SIOCDELRT and RTM_DELROUTE.")
+Reported-by: AutonomousCodeSecurity@microsoft.com
+Reported-by: Xiang Mei (Microsoft) <xmei5@asu.edu>
+Reported-by: Cen Zhang (Microsoft) <blbllhy@gmail.com>
+Signed-off-by: Cen Zhang (Microsoft) <blbllhy@gmail.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260817013237.2797-1-blbllhy@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/netdevsim/netdev.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/ipv6/route.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/netdevsim/netdev.c b/drivers/net/netdevsim/netdev.c
-index 4e9d7e10b527e..b4a99f3ceac60 100644
---- a/drivers/net/netdevsim/netdev.c
-+++ b/drivers/net/netdevsim/netdev.c
-@@ -529,6 +529,7 @@ static void nsim_del_napi(struct netdevsim *ns)
- 	for (i = 0; i < dev->num_rx_queues; i++) {
- 		struct nsim_rq *rq = ns->rq[i];
+diff --git a/net/ipv6/route.c b/net/ipv6/route.c
+index a698f322db1ca..dc9060af5bb1e 100644
+--- a/net/ipv6/route.c
++++ b/net/ipv6/route.c
+@@ -4840,7 +4840,7 @@ static void rt6_upper_bound_set(struct fib6_info *rt, int *weight, int total)
+ {
+ 	int upper_bound = -1;
  
-+		netif_queue_set_napi(dev, i, NETDEV_QUEUE_TYPE_RX, NULL);
- 		napi_disable_locked(&rq->napi);
- 		__netif_napi_del_locked(&rq->napi);
- 	}
-@@ -826,6 +827,7 @@ nsim_queue_start(struct net_device *dev, struct netdev_queue_config *qcfg,
- 	}
- 
- 	ns->rq[idx] = qmem->rq;
-+	netif_queue_set_napi(dev, idx, NETDEV_QUEUE_TYPE_RX, &ns->rq[idx]->napi);
- 	napi_enable_locked(&ns->rq[idx]->napi);
- 
- 	return 0;
+-	if (!rt6_is_dead(rt)) {
++	if (total && !rt6_is_dead(rt)) {
+ 		*weight += rt->fib6_nh->fib_nh_weight;
+ 		upper_bound = DIV_ROUND_CLOSEST_ULL((u64) (*weight) << 31,
+ 						    total) - 1;
 -- 
 2.53.0
 
