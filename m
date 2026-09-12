@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B2402EC09B;
-	Sat, 12 Sep 2026 11:24:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 757D04399E2;
+	Sat, 12 Sep 2026 11:24:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789212259; cv=none; b=nhuUDSaAmQN45V/JVzq8SQla3EVaCDrjSDZdwIeuLc5Pli1TEPy2RfyR1xpHUigwjl86x8HcT8eu+nxJdnnrRm34Uh89IdzHwyOjcZiQiHlVPvBcb0QjlvcwRS5Sn8+eNbOK/B4JCOYe5Zpxk+ljURBEoR1hRtPX9W+bKAr2r2o=
+	t=1789212265; cv=none; b=u8ADhDHK1zthRQFkGkMTPwxuopQR/jSszHsH7SzYVPk+x9K1DmzzKO2Wgxj8jFAch4K2Lqf/JSTPOj1DplydQMcqReO36yCbPrcdaWWTcMdKr06Dvj3uEtipIP2VXsbaqntzUZUCfDlUcyE0GdAvE4q6ujSNvO3eqMjG9oQdI7o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789212259; c=relaxed/simple;
-	bh=MyOMznGIVARY2w3zxQRY+fN7as1knzWP5QdLc39CGK8=;
+	s=arc-20240116; t=1789212265; c=relaxed/simple;
+	bh=a2Ah0UrvBgCM8hBPbP3AwXqVmaQxF68aHAUniv8wJvg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q4zc6F43hyYXN8mFWgIYvwx4nq4xCrDvLk0XqcLjTe84LK2Xi5AtjAYi+MwiUmsA45gN0Zu9oZVsdnvmFwKDZPX3XgMSc9tg6giETO9Y90kjGiT5R4dmOvJyJXpEW+wEJvNTnyKnL6j/JYKPZv3SjGSLSs0ZSZst/M95gQ2hffM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y/Lk3Ds5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nCVUugy4annt5XBfaieM0Wc44IIlC/yCsAHEjFkva73yOLHfwqVpfWE9nWnxbDdpGs6KuAFI6KtuhpjzoW0EKtEMIu8+LBG9rBtQMFBpeGaMW24m3yUDw4AbC8zUbnAAw9YnKkYqCrEsFa+aJFZ51rTIgDFJSvWYqcvhbxb8gKQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IaOHKMmh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y/Lk3Ds5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E18811F000FF;
-	Sat, 12 Sep 2026 11:24:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IaOHKMmh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCFBF1F000FF;
+	Sat, 12 Sep 2026 11:24:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789212258;
-	bh=3gNrnbA+34Md2R00PfghKmVO/CyXjrRw+WD2Zsp78/E=;
+	s=korg; t=1789212263;
+	bh=1t8B6XJlyeEt6qq/gFN6xYXXa1vM44ugFw4ELIylzI8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y/Lk3Ds5lx+Y09dbX1Of/dw8a/Ui7Qm2jjxmI27hmuLeR8NEZV6RrJSYBeUrKxQXG
-	 DT33p4hNx36fd7rpeZbcNK3urMmXDN7+CbvWIamElCSkXvi+ph63/GniSYtkcLL/Hu
-	 Wpa2ZmWGcmt+hAMCSwrxL0eptN3vw/5w0ntxi2ME=
+	b=IaOHKMmhNAsXAv3/hdmOvKdyNsOK184StXFOkS/w9q6AFx3Z1i0XWz6ZudOlLDY1o
+	 LKBgk0TJkL2855bQ4nOBFmw0zpvRYyTf5gvMYcjjP9OxvbyDhb/e5zpSlTq/oS+VS4
+	 hjYySLdSIUgPGwexeqzaBujaVt24g/cOFkbZRE58=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AutonomousCodeSecurity@microsoft.com,
-	"Xiang Mei (Microsoft)" <xmei5@asu.edu>,
-	"Cen Zhang (Microsoft)" <blbllhy@gmail.com>,
+	Anshumali Gaur <agaur@marvell.com>,
+	Ratheesh Kannoth <rkannoth@marvell.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1400/1518] gtp: add synchronize_net() in gtp_newlink() error path to prevent use-after-free
-Date: Sat, 12 Sep 2026 08:59:29 +0200
-Message-ID: <20260912065655.218355934@linuxfoundation.org>
+Subject: [PATCH 6.18 1401/1518] octeontx2-af: fix NULL deref in NIX TM tree debugfs read path
+Date: Sat, 12 Sep 2026 08:59:30 +0200
+Message-ID: <20260912065655.240148184@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -53,52 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang (Microsoft) <blbllhy@gmail.com>
+From: Anshumali Gaur <agaur@marvell.com>
 
-[ Upstream commit d989e22ae9802c52c56ad4284d0caf26696cf6ae ]
+[ Upstream commit ec65631bd5ec251cdf67a4919fac7a3149a6e235 ]
 
-gtp_newlink()'s error path frees tid_hash and addr_hash without
-waiting for an RCU grace period after clearing sk_user_data. A
-concurrent gtp_encap_recv() in softirq may still hold the gtp_dev
-pointer obtained via rcu_dereference_sk_user_data() and access the
-freed memory.
+rvu_dbg_nix_tm_tree_display() dereferences pfvf->sq_ctx without
+checking whether the SQ context has been allocated. Reading
+/sys/kernel/debug/octeontx2/nix/tm_tree for a NIX LF whose transmit
+queues are not set up triggers a kernel oops.
 
-  BUG: KASAN: slab-use-after-free in gtp0_pdp_find+0x1f6/0x200 (gtp.c:152)
-  Call Trace:
-   <IRQ>
-   gtp0_pdp_find+0x1f6/0x200
-   gtp_encap_recv+0x527/0x24b0
-   udp_queue_rcv_one_skb+0x75f/0xc10
+Guard the read path the same way rvu_dbg_nix_tm_tree_write() already
+does and return -EINVAL with a seq_file message when sq_ctx is NULL.
 
-Add synchronize_net() before the kfree calls in out_hashtable, which
-covers all error paths from both gtp_encap_enable() and
-gtp_create_sockets().
-
-Fixes: 459aa660eb1d8ce6 ("gtp: add initial driver for datapath of GPRS Tunneling Protocol (GTP-U)")
-Reported-by: AutonomousCodeSecurity@microsoft.com
-Reported-by: Xiang Mei (Microsoft) <xmei5@asu.edu>
-Reported-by: Cen Zhang (Microsoft) <blbllhy@gmail.com>
-Signed-off-by: Cen Zhang (Microsoft) <blbllhy@gmail.com>
-Link: https://patch.msgid.link/20260820020735.59474-1-blbllhy@gmail.com
+Fixes: b907194a5d5b ("octeontx2-af: Add debugfs support to dump NIX TM topology")
+Signed-off-by: Anshumali Gaur <agaur@marvell.com>
+Signed-off-by: Ratheesh Kannoth <rkannoth@marvell.com>
+Link: https://patch.msgid.link/20260820050333.2606095-1-rkannoth@marvell.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/gtp.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/marvell/octeontx2/af/rvu_debugfs.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/net/gtp.c b/drivers/net/gtp.c
-index af45118083ca2..070f37cbddbf6 100644
---- a/drivers/net/gtp.c
-+++ b/drivers/net/gtp.c
-@@ -1549,6 +1549,8 @@ static int gtp_newlink(struct net_device *dev,
- out_encap:
- 	gtp_encap_disable(gtp);
- out_hashtable:
-+	/* Wait for RCU readers that may still reference this gtp_dev. */
-+	synchronize_net();
- 	kfree(gtp->addr_hash);
- 	kfree(gtp->tid_hash);
- 	return err;
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_debugfs.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_debugfs.c
+index beb514ebda029..91a9ad0d37c0a 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_debugfs.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_debugfs.c
+@@ -1689,6 +1689,12 @@ static int rvu_dbg_nix_tm_tree_display(struct seq_file *m, void *unused)
+ 		return -EINVAL;
+ 
+ 	pfvf = rvu_get_pfvf(rvu, pcifunc);
++
++	if (!pfvf->sq_ctx) {
++		seq_printf(m, "SQ context is not initialized for pcifunc 0x%x\n", pcifunc);
++		return -EINVAL;
++	}
++
+ 	max_id = pfvf->sq_ctx->qsize;
+ 
+ 	memset(&aq_req, 0, sizeof(struct nix_aq_enq_req));
 -- 
 2.53.0
 
