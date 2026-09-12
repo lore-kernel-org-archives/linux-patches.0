@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 134FF343889;
-	Sat, 12 Sep 2026 10:35:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6BEB343889;
+	Sat, 12 Sep 2026 10:35:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789209327; cv=none; b=adnILDFR8QHkaAA3DAE9zCSmsW3VypcrN69p69mor9LvL4rbX10SiLtZKUEei7Zwb/V3L7CqTnrLOrV3kDvXxneJE06iW/MFolH0CrIXt44oTWEbZUBhXWimcR1AS/aR3XJCV0ijHUiVIF+75pIjQzGuP/sFJotwL5QSjbS6gK0=
+	t=1789209331; cv=none; b=kMSZ1tgacvBo6nOk1PnbKckY9spI97QPJigaMxgiTvfIkfAbmQ8XJZrsR7HXef3jJmUD7ja5n6ake2gi6P5VdTdJQFZWkAU7JEikTfpo6rkpDAsh+DRtX1lEaum7LxV842IkdnHEddv8PQsUcOjgzxZwS7DK320PmpNcfaA/eh4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789209327; c=relaxed/simple;
-	bh=NANWjG/D1vMbJ9It7cf4ANFXzW34qnnmpERw5ts2LLY=;
+	s=arc-20240116; t=1789209331; c=relaxed/simple;
+	bh=jDxoLEInKzJEuzYmaJZszJfU/r6JdZ6BRa8OaQ3R0aU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=anNANyGDIEx1WinBhLfH+qf+fR0OntULrQUCoDjd03l+1PcwKy9Cmlis5xarz9f/97Gq4lwt0j5UN4HA/5jSfaU3JNeva6cbjtYGYhkuOmWjRao/QfFCLojDJxyHPbpgUAhfgY63Xuu1b72Xzw2f355xe57QO7qFJiGshowz5E0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1tDlguFf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hUKWqCtU1yfONMl7ga+lbG5SlVYOio7T2QN8kH3qO0KbWUx9L4Sfo2lo90UvilzVC/3CReUME3OPQ35MuRrcoWpamDRH4Q1yMATxT71cyw5YhUwqtwjYI8EBrgLZg6GQLq4GweklYC2XNRhYL016znlufhGVATlMUjp1SrOc43c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rRoEWMwR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1tDlguFf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A74771F000FF;
-	Sat, 12 Sep 2026 10:35:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rRoEWMwR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92BEA1F0089A;
+	Sat, 12 Sep 2026 10:35:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789209326;
-	bh=Xo99jDBvi6OCkn5xnAXJO+dzsmNjtTcr4IQ3EwwJN2w=;
+	s=korg; t=1789209330;
+	bh=FvpZUzBdhhe153XCrd37kUMRACAyKnEOmng83suNaSE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1tDlguFf2Xhc2ADBU+EPg1haoJqgvSqntdzIbrFY/5JLydP2jaALEJxYA4OQhy6BO
-	 Sa9yRC9S0KAQR02m5WbIyV5XaGEa3ZbMs9Xrt5uokf4o5pyhYtZ/D4YSeQ2vHRmfHJ
-	 F5eLZNB/G+JhrYkS+5iO91rNJyrKF+92KfiCIxAY=
+	b=rRoEWMwRc9aT1iiv2Flp9VWdJSIzzVQzyoDSrUELAk5WtUFHQgrBJv5zRThAM6XTs
+	 1SGeSiVg6dm7hBHBo3rbGkPb9I5w3HFGRU531cZlSRKLigYjFKIUih2oTzj1W1/tbF
+	 czNmXoYjtWRHwlBQ1JSyvx0bFzpr4f+6dKh2FPGo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Fietkau <nbd@nbd.name>,
+	sashiko-bot <sashiko-bot@kernel.org>,
+	"Zhang, Yanmin" <yanmin_zhang@linux.intel.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0799/1518] wifi: mt76: mt7915: report RX chain signal for all RX paths
-Date: Sat, 12 Sep 2026 08:49:28 +0200
-Message-ID: <20260912065641.507563994@linuxfoundation.org>
+Subject: [PATCH 6.18 0782/1518] perf machine: Check snprintf truncation in machines__findnew()
+Date: Sat, 12 Sep 2026 08:49:11 +0200
+Message-ID: <20260912065641.127599640@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -50,39 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit b53c44fe65792608f58028c7b0953e610ad652ee ]
+[ Upstream commit cc6abe0012bf8c04af8275266f8ed7c55ba4a5fb ]
 
-status->chains was set from the antenna mask, which is derived from the
-number of spatial streams, while the chain_signal array is filled from
-all RCPI fields. On boards where the number of RX paths exceeds the
-stream count, e.g. the 3T3R mt7916/mt7981 variant with 2 streams on the
-5 GHz band, the RSSI of the extra chains was never reported.
+The guestmount path is built with snprintf() into a PATH_MAX buffer
+without checking the return value.  If symbol_conf.guestmount is long
+enough to cause truncation, the truncated path could match a different
+directory, causing the wrong guest to be associated with the pid.
 
-Use the band local RX path chainmask instead.
+Check for truncation and bail out early.
 
-Fixes: e57b7901469f ("mt76: add mac80211 driver for MT7915 PCIe-based chipsets")
-Link: https://patch.msgid.link/20260727150434.1778520-9-nbd@nbd.name
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Fixes: a1645ce12adb ("perf: 'perf kvm' tool for monitoring guest performance from host")
+Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Cc: Zhang, Yanmin <yanmin_zhang@linux.intel.com>
+Assisted-by: Claude:claude-opus-4.6
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7915/mac.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/perf/util/machine.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/mac.c b/drivers/net/wireless/mediatek/mt76/mt7915/mac.c
-index d79af9321ec79..dda4e7d179536 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7915/mac.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7915/mac.c
-@@ -437,7 +437,7 @@ mt7915_mac_fill_rx(struct mt7915_dev *dev, struct sk_buff *skb,
- 		if (v0 & MT_PRXV_HT_AD_CODE)
- 			status->enc_flags |= RX_ENC_FLAG_LDPC;
+diff --git a/tools/perf/util/machine.c b/tools/perf/util/machine.c
+index 25591f9969e15..8455cd94756e1 100644
+--- a/tools/perf/util/machine.c
++++ b/tools/perf/util/machine.c
+@@ -327,7 +327,12 @@ struct machine *machines__findnew(struct machines *machines, pid_t pid)
+ 	if ((pid != HOST_KERNEL_ID) &&
+ 	    (pid != DEFAULT_GUEST_KERNEL_ID) &&
+ 	    (symbol_conf.guestmount)) {
+-		snprintf(path, sizeof(path), "%s/%d", symbol_conf.guestmount, pid);
++		if (snprintf(path, sizeof(path), "%s/%d",
++			     symbol_conf.guestmount, pid) >= (int)sizeof(path)) {
++			pr_err("Guest path too long for pid %d\n", pid);
++			machine = NULL;
++			goto out;
++		}
+ 		if (access(path, R_OK)) {
+ 			static struct strlist *seen;
  
--		status->chains = mphy->antenna_mask;
-+		status->chains = mt7915_band_chainmask(phy);
- 		status->chain_signal[0] = to_rssi(MT_PRXV_RCPI0, v1);
- 		status->chain_signal[1] = to_rssi(MT_PRXV_RCPI1, v1);
- 		status->chain_signal[2] = to_rssi(MT_PRXV_RCPI2, v1);
 -- 
 2.53.0
 
