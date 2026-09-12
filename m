@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A922238AC8A;
-	Sat, 12 Sep 2026 19:49:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61B001FBEA6;
+	Sat, 12 Sep 2026 19:49:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789242573; cv=none; b=OPlJgZmrOCE/+NJqylmSK/lXoKCCkFYAfzZ2so+MJBSccQMBNnisaLEB4xnKG18cSONhZuYazPn7k328hTvTkqpieNXeYtgzgA2o6H00IsTvAiYOqYDjuLvbEXHWxpUeq2JH7lXXkAqRRCMIZbMTWMESj78z6AajcVWPP49LaVM=
+	t=1789242576; cv=none; b=cMNFF0jv/eMqWnBx1BpS2tIJiR5T4EkB7fie7QUbhvk4e+kWl1iqSm09cugsctzbQzDVqQf+388v4IG2SbvGhEFhHU/z1E0O9XCs+UNZc9Nyi3NL0z/Al9hkmTbAtED+DUJb/y+7Xji7XSgsiU3pUilmZTpxeqvhCwoFUlmukBI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789242573; c=relaxed/simple;
-	bh=zhsOsVO+EF6ZAXneqa4JTZmsrmGoivfWSpjcOHEDAgM=;
+	s=arc-20240116; t=1789242576; c=relaxed/simple;
+	bh=4Oeizye88iTGOEeqOIxHuXCoRTcPaCWKRPX9YysqtEI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BqlB/0qzWNO+HQOmPMFdXMJ5mJH2KIJembQsc+U3+CTjeERrGjukEKdHjJk8yHq883ZWIWjg/AK7250rgHLY54eJ8bQT76GHam8nbj5YKwMAutIFc3zkbS/7MB952hc68mpnhOUzxdQZO0bTWMHL8V5wXJpNSOqIspsoQ5++cXo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BER5Q62+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=N8dx49sG7Ac8N4Ar64pUpf7MMXV3LmB4XZCixgRu1JOjdbpx4dBBqk5Y+ILjhC5qNbiP0+wwV9n3kDYzNUbTTGd9dci3mw1xzbS1CRygCK3D0TdtJ5ILcLkH9loKuOe8Yf14s+aauJ1nG4SQWVvJi+g4aJ3t9kturNUH32/tAg4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ghYZwUuu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BER5Q62+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB2041F000FF;
-	Sat, 12 Sep 2026 19:49:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ghYZwUuu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE5491F000FF;
+	Sat, 12 Sep 2026 19:49:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789242572;
-	bh=IX6KkOYRMggYYoNv65U/LFK94zhRxPgwABuMekErGbg=;
+	s=korg; t=1789242575;
+	bh=jYbCGDhJynNBF/KC53UNohVhGQBkoENh+h+eFM5IQs0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BER5Q62+IzqJedAzxk83SbsqI2jNbdVI0Va9QIqINEIaZPIWRKBEc4uxl/9fLjI3k
-	 vD4ze05W29+11k4vCsAS+hbTR8FS6rnQ2PN/f7VLkXdrR/Er2Vhwws8eb9RO7kOlcp
-	 vfo+C0TntAjPCbkqifWN6PGCTdEAI+gHGHqv14gQ=
+	b=ghYZwUuu4+EEcTdE9+DQJh9W9BQv1ysMDnVs7aDZfLSwFisVW1ZLYeolr1lb1bEmc
+	 yb1BwZTfhZaVqdR+/Xj5O56jtg+juA37ASjkJY3d98vPiDwPkOs7Twc6WklRot/IS8
+	 qy4RIEfJQL6FC4JvEUbjBm4TX4jvuZQLHmfgbg7w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikko Perttunen <mperttunen@nvidia.com>,
-	Thierry Reding <treding@nvidia.com>,
+	Yuho Choi <dbgh9129@gmail.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 451/798] gpu: host1x: Fix offset calculation in trace_write_gather
-Date: Sat, 12 Sep 2026 09:01:19 +0200
-Message-ID: <20260912065527.478216128@linuxfoundation.org>
+Subject: [PATCH 5.10 425/798] hwrng: ks-sa - Fix runtime PM cleanup on registration failure
+Date: Sat, 12 Sep 2026 09:00:53 +0200
+Message-ID: <20260912065526.887255886@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -51,46 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikko Perttunen <mperttunen@nvidia.com>
+From: Yuho Choi <dbgh9129@gmail.com>
 
-[ Upstream commit eb896850964d3dfce291b4fdff9c2d42d85e564b ]
+[ Upstream commit 1c17b601fafb09c9ec074fd097737d20eafe7d63 ]
 
-When a gather longer than 2*TRACE_MAX_LENGTH (256) words is traced
-through host1x_cdma_push_gather, the reported BO offset drifts from
-the third iteration onward.
+ks_sa_rng_probe() enables runtime PM and resumes the device before
+registering the hwrng. If devm_hwrng_register() fails, probe returns
+without dropping the runtime PM usage count or disabling runtime PM.
 
-Fix the calculation by properly calculating the value on each loop
-rather than accumulating.
+Unwind the runtime PM state on the registration failure path, matching
+the cleanup done by remove().
 
-In reality, gathers tend to be pretty short so this is unlikely to
-ever have been observed.
-
-Fixes: b40d02bf96e0 ("gpu: host1x: Use struct host1x_bo pointers in traces")
-Signed-off-by: Mikko Perttunen <mperttunen@nvidia.com>
-Signed-off-by: Thierry Reding <treding@nvidia.com>
-Link: https://patch.msgid.link/20260609-b4-host1x-small-fixes-a-v1-3-7c1131c0b3ad@nvidia.com
+Fixes: eb428ee0e3ca ("hwrng: ks-sa - add hw_random driver")
+Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/host1x/hw/channel_hw.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/char/hw_random/ks-sa-rng.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/host1x/hw/channel_hw.c b/drivers/gpu/host1x/hw/channel_hw.c
-index 5eaa29d171c9d..8b438734047b1 100644
---- a/drivers/gpu/host1x/hw/channel_hw.c
-+++ b/drivers/gpu/host1x/hw/channel_hw.c
-@@ -36,10 +36,9 @@ static void trace_write_gather(struct host1x_cdma *cdma, struct host1x_bo *bo,
- 		for (i = 0; i < words; i += TRACE_MAX_LENGTH) {
- 			u32 num_words = min(words - i, TRACE_MAX_LENGTH);
+diff --git a/drivers/char/hw_random/ks-sa-rng.c b/drivers/char/hw_random/ks-sa-rng.c
+index 09dcaa35c8009..e46f860e8c587 100644
+--- a/drivers/char/hw_random/ks-sa-rng.c
++++ b/drivers/char/hw_random/ks-sa-rng.c
+@@ -248,7 +248,14 @@ static int ks_sa_rng_probe(struct platform_device *pdev)
+ 		return ret;
+ 	}
  
--			offset += i * sizeof(u32);
--
- 			trace_host1x_cdma_push_gather(dev_name(dev), bo,
--						      num_words, offset,
-+						      num_words,
-+						      offset + i * sizeof(u32),
- 						      mem);
- 		}
+-	return devm_hwrng_register(&pdev->dev, &ks_sa_rng->rng);
++	ret = devm_hwrng_register(dev, &ks_sa_rng->rng);
++	if (ret) {
++		pm_runtime_put_sync(dev);
++		pm_runtime_disable(dev);
++		return ret;
++	}
++
++	return 0;
+ }
  
+ static int ks_sa_rng_remove(struct platform_device *pdev)
 -- 
 2.53.0
 
