@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E73AF3BE643;
-	Sat, 12 Sep 2026 13:07:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4E053385A5;
+	Sat, 12 Sep 2026 13:07:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789218450; cv=none; b=RXYgA4/68rgCZ07576jJu9kJse0Phv0yx7+VYZU+vc+vzGacZaBkaS4N/kVSbTjXK9H3t/5yg/cT3ESs1FmMDvi4pnuLd790Vhm8gPwpwH0bUgkewqgafzIZKEx70nuWdFafcner3LZMZ8MlmbROWL9PexiayuUPTUg0cPBumeo=
+	t=1789218455; cv=none; b=ESG8gVkCCfmlQnxX6WU4b0wxPXaRFp3kmjKLCkSgyu3+FqU35kyoHRepi+P7NJqF6Z/6pZwILzgA94rn0gWaru2ZDLEtmqQJKUjJ06OMUs0WWWXxJ3rWrQa/dQnGamjgoRWr1TV/YEISGO9c5RF5Twnq1k5Qs2sAyOHoxtz5YKE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789218450; c=relaxed/simple;
-	bh=AUNbKySCqbvNdppe7nwuK44sAsQmj4nK7Gedif9XHek=;
+	s=arc-20240116; t=1789218455; c=relaxed/simple;
+	bh=4pfWtxxO7b9sNbEicRiEoEoTA0wjVvqum6+Tkp00wZA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IZXf9RLLMjkJ09gBba+uxJ6jfmHjrYJq+1Au2thbFzxurry6Xw5RParTL9mYVEcy5bxvAycOOk0eAZ3Z9/Lr6JKjabej20nPC6+m8HRfIaWMvV8vNLxXy3dezaEr2i2AZU0l0PHzHJOkBHRsQ9nnKPMx1TRS0Sr8qTWcdfXLMNA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RPQ5nuQK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RiS7tehyAOUIzWxfhVEyo4eQBwqLBf05FFN17438isx+9knvyfxb3Zsy3bMz3mRC5tWnnKAjXIeIJf8PYmX7JETCjdt1hNldtFd7Ykjze84w7n4xjwdUrq/J50W3J5FHWCMflVahpw6rQtp7N7aCis6oq2B6DbEqlGxyia1/Gm8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kst5AuUE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RPQ5nuQK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC32E1F000FF;
-	Sat, 12 Sep 2026 13:07:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kst5AuUE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D79141F000FF;
+	Sat, 12 Sep 2026 13:07:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789218448;
-	bh=Vyuafvu7n9dXQNUh7VEo9Xnx+c0quhLO9mq1aPLOWEk=;
+	s=korg; t=1789218453;
+	bh=0pCcAZUVR03CNL9mz0yz11fNdSOWdLE3AVO2Y79ts98=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RPQ5nuQKCrMMpifKMTjy/+bS5HYRva1SZZHsq0sdVrNQoQ4rtrKvp1LLPapqvo64t
-	 KzQrzM1WvOh/6KPRZFrNGCWlV5clKNB1sPCaFEChUfCrBkohnhOuWY2DWSkpLAVsP3
-	 XU7zppnk/Sg3mWOTmNgW0b0MnBJUw19kOmWm7iRg=
+	b=Kst5AuUEEoieD08oxX+KQO8TzQflRn63HXS8u+A/snX+oiDleoQw9LxJFZUPxNFrp
+	 tQzhrLcsUuWGxwR/NwrzFjOe+263MbOqIWezynkD/6n0DRpH+E5b8jhZ84ivSb6F5t
+	 X3Mv/P/a1pNI6ws+gzZI74jqUVEifkSsvaIm6Uco=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Huisong Li <lihuisong@huawei.com>,
 	Adam Young <admiyo@os.amperecomputing.com>,
-	Sudeep Holla <sudeep.holla@arm.com>,
 	Jassi Brar <jassisinghbrar@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1146/1376] mailbox: pcc: Always map the shared memory communication address
-Date: Sat, 12 Sep 2026 08:59:32 +0200
-Message-ID: <20260912065633.098033806@linuxfoundation.org>
+Subject: [PATCH 6.12 1147/1376] mailbox/pcc: support mailbox management of the shared buffer
+Date: Sat, 12 Sep 2026 08:59:33 +0200
+Message-ID: <20260912065633.119633096@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -53,122 +51,249 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sudeep Holla <sudeep.holla@arm.com>
+From: Adam Young <admiyo@os.amperecomputing.com>
 
-[ Upstream commit fa362ffafa51b08cf8e2fcca38e056332f6b9b05 ]
+[ Upstream commit 5378bdf6a611a32500fccf13d14156f219bb0c85 ]
 
-Currently the shared memory communication address was mapped by the
-mailbox client drivers leading to all sorts of inconsistencies.
+Define a new, optional, callback that allows the driver to
+specify how the return data buffer is allocated.  If that callback
+is set,  mailbox/pcc.c is now responsible for reading from and
+writing to the PCC shared buffer.
 
-It also has resulted in the inconsistent attributes used while mapping
-the shared memory regions.
+This also allows for proper checks of the Commnand complete flag
+between the PCC sender and receiver.
 
-In order to remove/eliminate any issues, let us ensures the shared
-memory address is always mapped and unmapped when the PCC channels are
-requested and release.
+For Type 4 channels, initialize the command complete flag prior
+to accepting messages.
 
-We need to map them as the ACPI PCCT associates these shared memory
-with each channel subspace and may need use the status or the flags in
-the headers of those shared memory communication address regions to
-manage the transport/channel.
+Since the mailbox does not know what memory allocation scheme
+to use for response messages, the client now has an optional
+callback that allows it to allocate the buffer for a response
+message.
 
-Note, until all the drivers using PCC start using this mapped shmem,
-there might be double mapping of the shared memory address. This
-shouldn't have any impact on existing mbox client drivers.
+When an outbound message is written to the buffer, the mailbox
+checks for the flag indicating the client wants an tx complete
+notification via IRQ.  Upon receipt of the interrupt It will
+pair it with the outgoing message. The expected use is to
+free the kernel memory buffer for the previous outgoing message.
 
-Since there are no users of pcc_chan_ioremap() and also it is mapped
-by default, we can stop exporting it and merge the functionality into
-pcc_mbox_request_channel().
-
-Acked-by: Huisong Li <lihuisong@huawei.com>
-Tested-by: Huisong Li <lihuisong@huawei.com>
-Tested-by: Adam Young <admiyo@os.amperecomputing.com>
-Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
+Signed-off-by: Adam Young <admiyo@os.amperecomputing.com>
 Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
 Stable-dep-of: 3360b088175d ("mailbox: pcc: Fix command timeout due to missed interrupt")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mailbox/pcc.c | 29 +++++++++--------------------
- include/acpi/pcc.h    |  5 -----
- 2 files changed, 9 insertions(+), 25 deletions(-)
+ drivers/mailbox/pcc.c | 102 ++++++++++++++++++++++++++++++++++++++++--
+ include/acpi/pcc.h    |  29 ++++++++++++
+ 2 files changed, 127 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/mailbox/pcc.c b/drivers/mailbox/pcc.c
-index 1d4191cb91380..890a187fb63c7 100644
+index 890a187fb63c7..e52197f40716f 100644
 --- a/drivers/mailbox/pcc.c
 +++ b/drivers/mailbox/pcc.c
-@@ -372,6 +372,7 @@ static irqreturn_t pcc_mbox_irq(int irq, void *p)
- struct pcc_mbox_chan *
- pcc_mbox_request_channel(struct mbox_client *cl, int subspace_id)
- {
-+	struct pcc_mbox_chan *pcc_mchan;
- 	struct pcc_chan_info *pchan;
- 	struct mbox_chan *chan;
- 	int rc;
-@@ -390,7 +391,14 @@ pcc_mbox_request_channel(struct mbox_client *cl, int subspace_id)
- 	if (rc)
- 		return ERR_PTR(rc);
- 
--	return &pchan->chan;
-+	pcc_mchan = &pchan->chan;
-+	pcc_mchan->shmem = acpi_os_ioremap(pcc_mchan->shmem_base_addr,
-+					   pcc_mchan->shmem_size);
-+	if (pcc_mchan->shmem)
-+		return pcc_mchan;
-+
-+	mbox_free_channel(chan);
-+	return ERR_PTR(-ENXIO);
+@@ -316,6 +316,22 @@ static void check_and_ack(struct pcc_chan_info *pchan, struct mbox_chan *chan)
+ 		pcc_chan_reg_read_modify_write(&pchan->cmd_update);
  }
- EXPORT_SYMBOL_GPL(pcc_mbox_request_channel);
  
-@@ -419,25 +427,6 @@ void pcc_mbox_free_channel(struct pcc_mbox_chan *pchan)
++static void *write_response(struct pcc_chan_info *pchan)
++{
++	struct pcc_header pcc_header;
++	void *buffer;
++	int data_len;
++
++	memcpy_fromio(&pcc_header, pchan->chan.shmem,
++		      sizeof(pcc_header));
++	data_len = pcc_header.length - sizeof(u32) + sizeof(struct pcc_header);
++
++	buffer = pchan->chan.rx_alloc(pchan->chan.mchan->cl, data_len);
++	if (buffer != NULL)
++		memcpy_fromio(buffer, pchan->chan.shmem, data_len);
++	return buffer;
++}
++
+ /**
+  * pcc_mbox_irq - PCC mailbox interrupt handler
+  * @irq:	interrupt number
+@@ -327,6 +343,8 @@ static irqreturn_t pcc_mbox_irq(int irq, void *p)
+ {
+ 	struct pcc_chan_info *pchan;
+ 	struct mbox_chan *chan = p;
++	struct pcc_header *pcc_header = chan->active_req;
++	void *handle = NULL;
+ 
+ 	pchan = chan->con_priv;
+ 
+@@ -350,7 +368,17 @@ static irqreturn_t pcc_mbox_irq(int irq, void *p)
+ 	 * required to avoid any possible race in updatation of this flag.
+ 	 */
+ 	pchan->chan_in_use = false;
+-	mbox_chan_received_data(chan, NULL);
++
++	if (pchan->chan.rx_alloc)
++		handle = write_response(pchan);
++
++	if (chan->active_req) {
++		pcc_header = chan->active_req;
++		if (pcc_header->flags & PCC_CMD_COMPLETION_NOTIFY)
++			mbox_chan_txdone(chan, 0);
++	}
++
++	mbox_chan_received_data(chan, handle);
+ 
+ 	check_and_ack(pchan, chan);
+ 
+@@ -394,9 +422,24 @@ pcc_mbox_request_channel(struct mbox_client *cl, int subspace_id)
+ 	pcc_mchan = &pchan->chan;
+ 	pcc_mchan->shmem = acpi_os_ioremap(pcc_mchan->shmem_base_addr,
+ 					   pcc_mchan->shmem_size);
+-	if (pcc_mchan->shmem)
+-		return pcc_mchan;
++	if (!pcc_mchan->shmem)
++		goto err;
++
++	pcc_mchan->manage_writes = false;
+ 
++	/* This indicates that the channel is ready to accept messages.
++	 * This needs to happen after the channel has registered
++	 * its callback. There is no access point to do that in
++	 * the mailbox API. That implies that the mailbox client must
++	 * have set the allocate callback function prior to
++	 * sending any messages.
++	 */
++	if (pchan->type == ACPI_PCCT_TYPE_EXT_PCC_SLAVE_SUBSPACE)
++		pcc_chan_reg_read_modify_write(&pchan->cmd_update);
++
++	return pcc_mchan;
++
++err:
+ 	mbox_free_channel(chan);
+ 	return ERR_PTR(-ENXIO);
+ }
+@@ -427,8 +470,38 @@ void pcc_mbox_free_channel(struct pcc_mbox_chan *pchan)
  }
  EXPORT_SYMBOL_GPL(pcc_mbox_free_channel);
  
--int pcc_mbox_ioremap(struct mbox_chan *chan)
--{
--	struct pcc_chan_info *pchan_info;
--	struct pcc_mbox_chan *pcc_mbox_chan;
--
--	if (!chan || !chan->cl)
--		return -1;
--	pchan_info = chan->con_priv;
--	pcc_mbox_chan = &pchan_info->chan;
--
--	pcc_mbox_chan->shmem = acpi_os_ioremap(pcc_mbox_chan->shmem_base_addr,
--					       pcc_mbox_chan->shmem_size);
--	if (!pcc_mbox_chan->shmem)
--		return -ENXIO;
--
--	return 0;
--}
--EXPORT_SYMBOL_GPL(pcc_mbox_ioremap);
--
++static int pcc_write_to_buffer(struct mbox_chan *chan, void *data)
++{
++	struct pcc_chan_info *pchan = chan->con_priv;
++	struct pcc_mbox_chan *pcc_mbox_chan = &pchan->chan;
++	struct pcc_header *pcc_header = data;
++
++	if (!pchan->chan.manage_writes)
++		return 0;
++
++	/* The PCC header length includes the command field
++	 * but not the other values from the header.
++	 */
++	int len = pcc_header->length - sizeof(u32) + sizeof(struct pcc_header);
++	u64 val;
++
++	pcc_chan_reg_read(&pchan->cmd_complete, &val);
++	if (!val) {
++		pr_info("%s pchan->cmd_complete not set", __func__);
++		return -1;
++	}
++	memcpy_toio(pcc_mbox_chan->shmem,  data, len);
++	return 0;
++}
++
++
  /**
-  * pcc_send_data - Called from Mailbox Controller code. Used
+- * pcc_send_data - Called from Mailbox Controller code. Used
++ * pcc_send_data - Called from Mailbox Controller code. If
++ *		pchan->chan.rx_alloc is set, then the command complete
++ *		flag is checked and the data is written to the shared
++ *		buffer io memory.
++ *
++ *		If pchan->chan.rx_alloc is not set, then it is used
   *		here only to ring the channel doorbell. The PCC client
+  *		specific read/write is done in the client driver in
+  *		order to maintain atomicity over PCC channel once
+@@ -444,17 +517,37 @@ static int pcc_send_data(struct mbox_chan *chan, void *data)
+ 	int ret;
+ 	struct pcc_chan_info *pchan = chan->con_priv;
+ 
++	ret = pcc_write_to_buffer(chan, data);
++	if (ret)
++		return ret;
++
+ 	ret = pcc_chan_reg_read_modify_write(&pchan->cmd_update);
+ 	if (ret)
+ 		return ret;
+ 
+ 	ret = pcc_chan_reg_read_modify_write(&pchan->db);
++
+ 	if (!ret && pchan->plat_irq > 0)
+ 		pchan->chan_in_use = true;
+ 
+ 	return ret;
+ }
+ 
++
++static bool pcc_last_tx_done(struct mbox_chan *chan)
++{
++	struct pcc_chan_info *pchan = chan->con_priv;
++	u64 val;
++
++	pcc_chan_reg_read(&pchan->cmd_complete, &val);
++	if (!val)
++		return false;
++	else
++		return true;
++}
++
++
++
+ /**
+  * pcc_startup - Called from Mailbox Controller code. Used here
+  *		to request the interrupt.
+@@ -500,6 +593,7 @@ static const struct mbox_chan_ops pcc_chan_ops = {
+ 	.send_data = pcc_send_data,
+ 	.startup = pcc_startup,
+ 	.shutdown = pcc_shutdown,
++	.last_tx_done = pcc_last_tx_done,
+ };
+ 
+ /**
 diff --git a/include/acpi/pcc.h b/include/acpi/pcc.h
-index 699c1a37b8e78..0462bb9da6513 100644
+index 0462bb9da6513..cb34b6937a74f 100644
 --- a/include/acpi/pcc.h
 +++ b/include/acpi/pcc.h
-@@ -38,7 +38,6 @@ struct pcc_mbox_chan {
- extern struct pcc_mbox_chan *
- pcc_mbox_request_channel(struct mbox_client *cl, int subspace_id);
- extern void pcc_mbox_free_channel(struct pcc_mbox_chan *chan);
--extern int pcc_mbox_ioremap(struct mbox_chan *chan);
- #else
- static inline struct pcc_mbox_chan *
- pcc_mbox_request_channel(struct mbox_client *cl, int subspace_id)
-@@ -46,10 +45,6 @@ pcc_mbox_request_channel(struct mbox_client *cl, int subspace_id)
- 	return ERR_PTR(-ENODEV);
- }
- static inline void pcc_mbox_free_channel(struct pcc_mbox_chan *chan) { }
--static inline int pcc_mbox_ioremap(struct mbox_chan *chan)
--{
--	return 0;
--};
- #endif
+@@ -17,6 +17,35 @@ struct pcc_mbox_chan {
+ 	u32 latency;
+ 	u32 max_access_rate;
+ 	u16 min_turnaround_time;
++
++	/* Set to true to indicate that the mailbox should manage
++	 * writing the dat to the shared buffer. This differs from
++	 * the case where the drivesr are writing to the buffer and
++	 * using send_data only to  ring the doorbell.  If this flag
++	 * is set, then the void * data parameter of send_data must
++	 * point to a kernel-memory buffer formatted in accordance with
++	 * the PCC specification.
++	 *
++	 * The active buffer management will include reading the
++	 * notify_on_completion flag, and will then
++	 * call mbox_chan_txdone when the acknowledgment interrupt is
++	 * received.
++	 */
++	bool manage_writes;
++
++	/* Optional callback that allows the driver
++	 * to allocate the memory used for receiving
++	 * messages.  The return value is the location
++	 * inside the buffer where the mailbox should write the data.
++	 */
++	void *(*rx_alloc)(struct mbox_client *cl,  int size);
++};
++
++struct pcc_header {
++	u32 signature;
++	u32 flags;
++	u32 length;
++	u32 command;
+ };
  
- #endif /* _PCC_H */
+ /* Generic Communications Channel Shared Memory Region */
 -- 
 2.53.0
 
