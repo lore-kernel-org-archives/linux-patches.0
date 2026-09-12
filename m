@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53260309F08;
-	Sat, 12 Sep 2026 14:15:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CDA73451CF;
+	Sat, 12 Sep 2026 14:15:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789222533; cv=none; b=P2eTEGy0AEo1RvhN/vgNEUf7TqKUxlIFt6LsYhoaY/UoiRxOBSiJ3pJ7CzGhShjTUvvVksNUbDj5HYdumbRZK5g4bKdOufzbPBAuSkwx9UqQfFX1uQRSzDnEr7uEhaMhrduU2tlcJZknW/VAvQe6PP1oraKsj3nO+XM76pkqwVA=
+	t=1789222536; cv=none; b=rYaHIFZdOTLpyW1Py8c13juP74quq1OgcJ3N8+10PkusvNZdRg2fDke5XXWmhk8lNms1ZG2WPBs1cYTiRnyxNgrIluYfVA0vylhXpnvims0rcCQhcusKXekMChceeYzLdkfGMAvUT2VJYnZ+x125kIEu3z/u06e36FfbRybbzd4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789222533; c=relaxed/simple;
-	bh=RoWu+3SnBgRaB/aYAkxxaxEQ8QbhhgGs+P5CNjukZHE=;
+	s=arc-20240116; t=1789222536; c=relaxed/simple;
+	bh=zelPC7OXnKQvojhVdCqYnqdEn5YKcWIqiQAn4Ifw/gg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NC1PdnoUiTDgdCj+CcPutkRKsOjMf65AOmaX2MqhOXSjljFEeKzIDnAG9R4KG5phZAHVPAhXFn4bDQqVQJKgRz+Vdli1rMFJd3v4GOJWyB+lBxP6E28Ohdy9RzdAlxTTGLTb5hEGe/mMQPCUzqOUrEtA4zkTUBENfHAVrpWU4os=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UlPworOF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=t6oY0b+LbxDlcx7a5/m4Cv1baLAoLqHjq9ZofTdudf4CMHG8PEI0szZFy+8pS1wtfa7/qMrZyqjj/jwit0VpnF+JQNOG7O2bfBG5teQyQbFSNEqxUF7B2b/GOJWcq6/YxoWsdn3SAgini6rKrsoXYRkPkG3WmDhEaYEkVWLKXlY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0wh0QHw9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UlPworOF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDDF41F000FF;
-	Sat, 12 Sep 2026 14:15:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0wh0QHw9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07FAD1F00893;
+	Sat, 12 Sep 2026 14:15:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789222529;
-	bh=q0VcTu2whJWKLyDLzq3KGgiyrKf6Eq1N4AvSrqVuuxU=;
+	s=korg; t=1789222534;
+	bh=tVUvnqMBfpYfFFkdYwjyh1zYaV+1NJ5x4eRxxzLCGFQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UlPworOFyByoX6v1vTIK7vX5xlD4i+MW+a53LGLr/+CibsRNLxvT+cM5nxVtUZm9a
-	 mInqG/kvzm2lZa3F4ZXjITIgJGQ2FyaPvZSjMRtbtdvZNQmLvqV4T1+MH0R9Hn8GwA
-	 7/93yQd5l7BdV2rJVFqbJG+6I5cbJpN6AdGHBFzI=
+	b=0wh0QHw9Qnjp5XKspxV5+YHYHNxjXhXKiV6PM/Lh5rcXDbnJzv8IBLjKF5NcVvY4O
+	 QOisbje1cJik3lSNzJpYfc9cjdac9CTFMQOwu0rz8EV2cMjalqLcZImMKN1lKiM7oq
+	 MfVsb+C98tKGGqJyMXmlHn8jEHSTQ7dhweCWIH4E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Veronika Molnarova <vmolnaro@redhat.com>,
+	Tengda Wu <wutengda@huaweicloud.com>,
+	song@kernel.org,
+	bpf@vger.kernel.org,
 	Namhyung Kim <namhyung@kernel.org>,
-	mpetlan@redhat.com,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0605/1424] perf test stat_bpf_counter.sh: Stabilize the test results
-Date: Sat, 12 Sep 2026 08:50:37 +0200
-Message-ID: <20260912065620.842201348@linuxfoundation.org>
+Subject: [PATCH 6.6 0606/1424] perf test: Use sqrtloop workload to test bperf event
+Date: Sat, 12 Sep 2026 08:50:38 +0200
+Message-ID: <20260912065620.863993388@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -52,157 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Veronika Molnarova <vmolnaro@redhat.com>
+From: Tengda Wu <wutengda@huaweicloud.com>
 
-[ Upstream commit e8b86f0311a4b721663df8105a680e5968f21d4c ]
+[ Upstream commit d36e5b36a2928b30e09ff59ce5ce2d5df935176e ]
 
-The test has been failing for some time when two separate runs of
-perf benchmarks are recorded for cycles events and their counts are
-compared, while once the recording was done with option --bpf-counters
-and once without it. It is expected that the count of the samples
-should be within a certain range, firstly the difference was set to be
-within 10%, which was then later raised to 20%. However, the test case
-keeps failing on certain architectures as recording the provided
-benchmark can produce completely different counts based on the
-current load of the system.
+Replace `brstack` workload with `sqrtloop` workload, because `sqrtloop`
+workload contains fork(), which is suitable for testing the bperf event
+inheritance feature.
 
-Sampling two separate runs on intel-eaglestream-spr-13 of "perf stat
---no-big-num -e cycles -- perf bench sched messaging -g 1 -l 100 -t":
-
- Performance counter stats for 'perf bench sched messaging -g 1 -l 100 -t':
-
-         396782898      cycles
-
-       0.010051983 seconds time elapsed
-
-       0.008664000 seconds user
-       0.097058000 seconds sys
-
- Performance counter stats for 'perf bench sched messaging -g 1 -l 100 -t':
-
-        1431133032      cycles
-
-       0.021803714 seconds time elapsed
-
-       0.023377000 seconds user
-       0.349918000 seconds sys
-
-, which is ranging from 400mil to 1400mil samples.
-
-Instead of recording the cycles use instructions event, which provides
-more stable values. At the same time change the tested workload to one
-of the provided testing workloads by perf that is not based on a
-scheduler, which can provide another dependency on the current load.
-
-Sampling instructions event with the new workload provide much more
-stable results on intel-eaglestream-spr-13 of "perf stat --no-big-num
--e instructions -- perf test -w brstack":
-
- Performance counter stats for 'perf test -w brstack':
-
-          64584494      instructions
-
-       0.009173945 seconds time elapsed
-
-       0.007262000 seconds user
-       0.002071000 seconds sys
-
- Performance counter stats for 'perf test -w brstack':
-
-          64672669      instructions
-
-       0.008888135 seconds time elapsed
-
-       0.005018000 seconds user
-       0.004018000 seconds sys
-
-Signed-off-by: Veronika Molnarova <vmolnaro@redhat.com>
-Acked-by: Namhyung Kim <namhyung@kernel.org>
-Cc: mpetlan@redhat.com
+Signed-off-by: Tengda Wu <wutengda@huaweicloud.com>
+Cc: song@kernel.org
+Cc: bpf@vger.kernel.org
+Link: https://lore.kernel.org/r/20241021110201.325617-3-wutengda@huaweicloud.com
 Signed-off-by: Namhyung Kim <namhyung@kernel.org>
-Link: https://lore.kernel.org/r/20240625092001.10909-1-vmolnaro@redhat.com
 Stable-dep-of: b02027776ac5 ("perf tests: Fix flakiness in BPF counters test on hybrid systems")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/tests/shell/stat_bpf_counters.sh | 36 ++++++++++-----------
- 1 file changed, 18 insertions(+), 18 deletions(-)
+ tools/perf/tests/shell/stat_bpf_counters.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/tools/perf/tests/shell/stat_bpf_counters.sh b/tools/perf/tests/shell/stat_bpf_counters.sh
-index 61f8149d854e1..f250b7d6f773f 100755
+index f250b7d6f773f..831f02add75e5 100755
 --- a/tools/perf/tests/shell/stat_bpf_counters.sh
 +++ b/tools/perf/tests/shell/stat_bpf_counters.sh
 @@ -4,7 +4,7 @@
  
  set -e
  
--workload="perf bench sched messaging -g 1 -l 100 -t"
-+workload="perf test -w brstack"
+-workload="perf test -w brstack"
++workload="perf test -w sqrtloop"
  
  # check whether $2 is within +/- 20% of $1
  compare_number()
-@@ -25,15 +25,15 @@ compare_number()
- 
- check_counts()
- {
--	base_cycles=$1
--	bpf_cycles=$2
-+	base_instructions=$1
-+	bpf_instructions=$2
- 
--	if [ "$base_cycles" = "<not" ]; then
--		echo "Skipping: cycles event not counted"
-+	if [ "$base_instructions" = "<not" ]; then
-+		echo "Skipping: instructions event not counted"
- 		exit 2
- 	fi
--	if [ "$bpf_cycles" = "<not" ]; then
--		echo "Failed: cycles not counted with --bpf-counters"
-+	if [ "$bpf_instructions" = "<not" ]; then
-+		echo "Failed: instructions not counted with --bpf-counters"
- 		exit 1
- 	fi
- }
-@@ -41,29 +41,29 @@ check_counts()
- test_bpf_counters()
- {
- 	printf "Testing --bpf-counters "
--	base_cycles=$(perf stat --no-big-num -e cycles -- $workload 2>&1 | awk '/cycles/ {print $1}')
--	bpf_cycles=$(perf stat --no-big-num --bpf-counters -e cycles -- $workload  2>&1 | awk '/cycles/ {print $1}')
--	check_counts $base_cycles $bpf_cycles
--	compare_number $base_cycles $bpf_cycles
-+	base_instructions=$(perf stat --no-big-num -e instructions -- $workload 2>&1 | awk '/instructions/ {print $1}')
-+	bpf_instructions=$(perf stat --no-big-num --bpf-counters -e instructions -- $workload  2>&1 | awk '/instructions/ {print $1}')
-+	check_counts $base_instructions $bpf_instructions
-+	compare_number $base_instructions $bpf_instructions
- 	echo "[Success]"
- }
- 
- test_bpf_modifier()
- {
- 	printf "Testing bpf event modifier "
--	stat_output=$(perf stat --no-big-num -e cycles/name=base_cycles/,cycles/name=bpf_cycles/b -- $workload 2>&1)
--	base_cycles=$(echo "$stat_output"| awk '/base_cycles/ {print $1}')
--	bpf_cycles=$(echo "$stat_output"| awk '/bpf_cycles/ {print $1}')
--	check_counts $base_cycles $bpf_cycles
--	compare_number $base_cycles $bpf_cycles
-+	stat_output=$(perf stat --no-big-num -e instructions/name=base_instructions/,instructions/name=bpf_instructions/b -- $workload 2>&1)
-+	base_instructions=$(echo "$stat_output"| awk '/base_instructions/ {print $1}')
-+	bpf_instructions=$(echo "$stat_output"| awk '/bpf_instructions/ {print $1}')
-+	check_counts $base_instructions $bpf_instructions
-+	compare_number $base_instructions $bpf_instructions
- 	echo "[Success]"
- }
- 
- # skip if --bpf-counters is not supported
--if ! perf stat -e cycles --bpf-counters true > /dev/null 2>&1; then
-+if ! perf stat -e instructions --bpf-counters true > /dev/null 2>&1; then
- 	if [ "$1" = "-v" ]; then
- 		echo "Skipping: --bpf-counters not supported"
--		perf --no-pager stat -e cycles --bpf-counters true || true
-+		perf --no-pager stat -e instructions --bpf-counters true || true
- 	fi
- 	exit 2
- fi
 -- 
 2.53.0
 
