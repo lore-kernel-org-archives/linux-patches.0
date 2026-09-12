@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00FA936A36A;
-	Sat, 12 Sep 2026 09:56:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B775F3911BD;
+	Sat, 12 Sep 2026 09:56:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789206974; cv=none; b=n9lPaU4G2tyIU94LD8E/IER0r+3yKIA8kxxOqNUrtfw34/itWUbb8GhVAK+h1DFDRKseTTiXQ8u69ttjvtXaAVc5U6aI4zhvT6AXbpMt/0LTDskIEU+NQsjyOyRodDo7t9v9eZsS7kLe2Lsy39uUKw7ezD1iqGzXdUmW72lmB2g=
+	t=1789206979; cv=none; b=FlEFngZWIke1GVX6hz90Id2dD1Eaqd/x0o+fasOvKkaAHm7ZCm86XsNKUDHuOhbH1RuS0+KvCkTvDOk27Bul/fbp4DMC7IyCHDUHZRpWwj/atohQMn5xSFvHt1yaugWaFfaesAAdvC9DtDKRRQQFTpqoEeveHC3S4SYwIobFktk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789206974; c=relaxed/simple;
-	bh=cmL+xWBnj83TFTIHmOUVtzyy8VpQ9c9dySpb1tDhnW4=;
+	s=arc-20240116; t=1789206979; c=relaxed/simple;
+	bh=IGFnfdvRmL8ucCzZSb/CO0NOV76qbJ/am7DE/mGKLDY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Y2kwYGM4qEX3bslvJd81qKu4XiIF4yqb57kDaDTtD27DD4oPycCrWosDhQutIr5xt5Cx/cHwYBem930jUrgwF3dVMQ9w3hrXuqFK9CBEMDFPJOcBu+bX2XTHRf9wVhdBvYe6/j/aDZpVTjZPkIvnxgAjDAPvHX5bWDNx/Y5jw04=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qiuS41bb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YTdbkOFKs11ZclVjD5ITgW3He/zu93pyk/YcAHxUCOz3r8o9S84VYKM/e53h81PvbcrVEYwnuIfqXR/rSWO5/Z1nTvn4ZeQvg4oTaZvARjtXKPcRnvUVJ5QAzb/AQoH8wCwHAuYJI7pQk50urS4/npVKBIrEr0+KbtPUrdlfyAM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lJcfOWvj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qiuS41bb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 016F51F000FF;
-	Sat, 12 Sep 2026 09:56:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lJcfOWvj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B49B81F000FF;
+	Sat, 12 Sep 2026 09:56:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789206972;
-	bh=JySP6er3Zv3v/0ZuBMBQPCM22Wk7/bTcinUCxpby7vE=;
+	s=korg; t=1789206977;
+	bh=LrWefRq1M6tABf6VnnRgNTLx6/kbElSJATUIGEyegn4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qiuS41bbvsIhNtFCKB0/8UeOcr9OVjwI7GIL29xEfk1tDn7GONmpvbrgzaHBuLP0m
-	 UqOYLz/y3zS9rsKHXQK5+qoweW75yqYsPGhjCWTswDm8aGsei2gRubaDew6JxIlZFZ
-	 l8T3TY5SNS8mmyilRCGY3hfZP9hfGn7TGdR+1Hcw=
+	b=lJcfOWvji0Sfv/NPput8qyRYaieG2/lItGG8bixk8bzR6TefRzmEplCRmgAJ2NS/6
+	 MyhZk/0GSS1c7eXJntTsk1FWW/N4bLuQa3sYnQ36qafrP/IUhWwp6L4vh/XgWQRzBC
+	 IS6cn6B9TRipRzBzdierLuveZM+cFpPLq7USnLVE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	Paul Cercueil <paul@crapouillou.net>,
+	Michael Bommarito <michael.bommarito@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0315/1518] usb: gadget: f_fs: Fix fence cleanup in ffs_dmabuf_transfer() error paths
-Date: Sat, 12 Sep 2026 08:41:24 +0200
-Message-ID: <20260912065630.606006126@linuxfoundation.org>
+Subject: [PATCH 6.18 0316/1518] usb: gadget: configfs: fix out-of-bounds read of qw_sign
+Date: Sat, 12 Sep 2026 08:41:25 +0200
+Message-ID: <20260912065630.628559138@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -45,70 +44,61 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nuno Sá <nuno.sa@analog.com>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-[ Upstream commit 621707dc67c9846fd876d7579ec951d92aa033f1 ]
+[ Upstream commit f63edb54d8f738f9c21e2068c777ae1c097df6b7 ]
 
-The error paths for endpoint-disabled (ESHUTDOWN) and request-allocation
-failure (ENOMEM) in ffs_dmabuf_transfer() jump to err_fence_put which
-calls dma_fence_put() on the fence. However, at that point the fence has
-only been kmalloc'd — dma_fence_init() has not been called yet, so the
-refcount and the fence ops are uninitialized. Calling dma_fence_put() on
-such an object leads to undefined behavior.
+os_desc_qw_sign_show() passes OS_STRING_QW_SIGN_LEN as the input
+length to utf16s_to_utf8s(), but that argument counts UTF-16 code
+units while OS_STRING_QW_SIGN_LEN (14) is the byte size of qw_sign[].
+The array holds only OS_STRING_QW_SIGN_LEN / 2 (7) code units, so the
+conversion reads up to 7 units (14 bytes) past the end of qw_sign[]
+into the following members of struct gadget_info when the stored
+signature fills the array without a NUL terminator, exposing those
+bytes through the configfs attribute.
 
-Use kfree() instead, since the fence is just a plain allocation at this
-stage, and rename the label to err_fence_free to reflect the actual
-cleanup action.
+The store path halves the count for its input bound but passes the
+full byte count as the utf8s_to_utf16s() output limit; use the
+destination code-unit count in both directions.
 
-Fixes: 7b07a2a7ca02 ("usb: gadget: functionfs: Add DMABUF import interface")
-Signed-off-by: Nuno Sá <nuno.sa@analog.com>
-Reviewed-by: Paul Cercueil <paul@crapouillou.net>
-Link: https://patch.msgid.link/20260612-fix-f_fs-fence-cleanup-v1-1-79f489b0efe9@analog.com
+Fixes: 76180d716f91 ("usb: gadget: configfs: make qw_sign attribute symmetric")
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Link: https://patch.msgid.link/20260618005043.1581707-1-michael.bommarito@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/function/f_fs.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/usb/gadget/configfs.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/usb/gadget/function/f_fs.c b/drivers/usb/gadget/function/f_fs.c
-index 09d6872ad38b7..d73b082d5d835 100644
---- a/drivers/usb/gadget/function/f_fs.c
-+++ b/drivers/usb/gadget/function/f_fs.c
-@@ -1683,13 +1683,13 @@ static int ffs_dmabuf_transfer(struct file *file,
- 	/* In the meantime, endpoint got disabled or changed. */
- 	if (epfile->ep != ep) {
- 		ret = -ESHUTDOWN;
--		goto err_fence_put;
-+		goto err_fence_free;
- 	}
+diff --git a/drivers/usb/gadget/configfs.c b/drivers/usb/gadget/configfs.c
+index 6bcac85c55501..aa0a25efb6aa0 100644
+--- a/drivers/usb/gadget/configfs.c
++++ b/drivers/usb/gadget/configfs.c
+@@ -1177,7 +1177,7 @@ static ssize_t os_desc_qw_sign_show(struct config_item *item, char *page)
+ 	struct gadget_info *gi = os_desc_item_to_gadget_info(item);
+ 	int res;
  
- 	usb_req = usb_ep_alloc_request(ep->ep, GFP_ATOMIC);
- 	if (!usb_req) {
- 		ret = -ENOMEM;
--		goto err_fence_put;
-+		goto err_fence_free;
- 	}
+-	res = utf16s_to_utf8s((wchar_t *) gi->qw_sign, OS_STRING_QW_SIGN_LEN,
++	res = utf16s_to_utf8s((wchar_t *) gi->qw_sign, OS_STRING_QW_SIGN_LEN / 2,
+ 			      UTF16_LITTLE_ENDIAN, page, PAGE_SIZE - 1);
+ 	page[res++] = '\n';
  
- 	/*
-@@ -1738,9 +1738,9 @@ static int ffs_dmabuf_transfer(struct file *file,
- 
- 	return ret;
- 
--err_fence_put:
-+err_fence_free:
- 	spin_unlock_irq(&epfile->ffs->eps_lock);
--	dma_fence_put(&fence->base);
-+	kfree(fence);
- err_resv_unlock:
- 	dma_resv_unlock(dmabuf->resv);
- err_attachment_put:
+@@ -1199,7 +1199,7 @@ static ssize_t os_desc_qw_sign_store(struct config_item *item, const char *page,
+ 	mutex_lock(&gi->lock);
+ 	res = utf8s_to_utf16s(page, l,
+ 			      UTF16_LITTLE_ENDIAN, (wchar_t *) gi->qw_sign,
+-			      OS_STRING_QW_SIGN_LEN);
++			      OS_STRING_QW_SIGN_LEN / 2);
+ 	if (res > 0)
+ 		res = len;
+ 	mutex_unlock(&gi->lock);
 -- 
 2.53.0
 
