@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FCBE3B3BFA;
-	Sat, 12 Sep 2026 20:05:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD4623B5820;
+	Sat, 12 Sep 2026 20:05:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789243550; cv=none; b=MHzcWomwlqdwZjYf/jqU7nxdYEXARUx40YUrkvTIyMxd7OF7TV8R9974MQw1OnfWp6CdHp25rUFDSWq3eCTRruuz7Rmlc01XuqD05EDXJO+sen4jP8OT24IqZsSvjxsa8hoatC7JFK/b2RDu8BcWuYLm8zn5UQXYqvoSnJUDDQE=
+	t=1789243550; cv=none; b=d/88sUoPIItiKixoCGvw49i3cHVvazIE1vlQGUfNkbEl+K8TXYzu9FtivNdmGDu1/MUz0eoZp6w1k6zUhyHuIYKT8zwbg12pwjRUYA2gXf7Or7p4vX3XnPbzbIJpzq6qJOg63S0hwjAgsQ5snbyU5K0PQAik77fHkwZ2FqTAjOw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1789243550; c=relaxed/simple;
-	bh=r38FZoF8j6jFXWwglqH/O3JAgylMWtIf1omsl09zYJc=;
+	bh=pvGDQ/hoaZsaqwImfnxeGEihrBp6fR78n/n5A8SY9j0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f50DP3a3vOzEtPU29VEBwT9gloVpoDNbADHQFfWni51M3S15rnoXLUtuSKC4ZhQGHmIOmeL38Qb30uuUFcYv4UNoiIkklwC8WorrVjAX6RynM6vbPoBbe7sm2w2IrsB0Pvf/dSEPbN+R1ENWh3f2BKJ5YzTp1Y7KptG4k8Yk4rM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ur1ZJlfZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=a8Hw+EvvYXq329r9CI/kLUGvH9s/CJ0cFlfj0Ah/heX9jsuIdYrp8y62itA71P5/+tUPeI6von/iITdoXo6NP5lpiGI0dCsg54p+rIffAH0EPbD/a2F5/yuhULWldUzjg7zxkgTY4uk0j8RvdExwBEGofrAry8iabZhXkbTs/aA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lJYiXM98; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ur1ZJlfZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FD1A1F000FF;
-	Sat, 12 Sep 2026 20:05:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lJYiXM98"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3032C1F00893;
+	Sat, 12 Sep 2026 20:05:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789243544;
-	bh=Xz0cM4m0vW+3pWZWPo0hUT1KjwMAwIn3MbKQvMlJ6rc=;
+	s=korg; t=1789243546;
+	bh=33cpANOH4syarJ/uW5Yxfelk2n5+s7CszEv202tqj1U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ur1ZJlfZXw97yK3XHQTKWVOZpA9gczLoobyVk/0gkBE3SuZLQmeF2AEwc6dJZCJzh
-	 88VrDU0bUPRrpk4k1Rul+GWOBfW3VHulkWZbPYz3wLgVkSb92Oyi4v1pUTlmZ9Xy0v
-	 IdAzKqVCRrx29qlbsphuqBQnnM34ipsv+551YlNo=
+	b=lJYiXM98iX7nXBrfj8CIop3rljAPz46+nSyVPysfOCteNU2DuTlN39tNbm/KqPRBs
+	 kJ1zlNsJO7xwW0f0U8ju1s+lNXjeAksFlGkNq3dBgx4mj3DAVglOtvfmcRg6p81Jlm
+	 LyUq5yIJlBTu7AEX7I7Rg9AT2RE6IqQUentQ7DOk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Edward Adam Davis <eadavis@qq.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	syzbot+b7f6f8c9303466e16c8a@syzkaller.appspotmail.com
-Subject: [PATCH 5.10 749/798] bluetooth/l2cap: sync sock recv cb and release
-Date: Sat, 12 Sep 2026 09:06:17 +0200
-Message-ID: <20260912065534.238252948@linuxfoundation.org>
+	Ruoyu Wang <ruoyuw560@gmail.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	"David S. Miller" <davem@davemloft.net>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 740/798] net: bridge: Reject descending VLAN tunnel ranges
+Date: Sat, 12 Sep 2026 09:06:08 +0200
+Message-ID: <20260912065534.035503753@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -52,92 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edward Adam Davis <eadavis@qq.com>
+From: Ruoyu Wang <ruoyuw560@gmail.com>
 
-[ Upstream commit 89e856e124f9ae548572c56b1b70c2255705f8fe ]
+[ Upstream commit b74a072d8fb71d3c9ffba4a17d5943e63266fb38 ]
 
-The problem occurs between the system call to close the sock and hci_rx_work,
-where the former releases the sock and the latter accesses it without lock protection.
+A pair of descending VLAN and tunnel IDs can pass the tunnel range span
+check. The VLAN subtraction produces a negative int, which is converted
+to unsigned when compared with the u32 tunnel ID subtraction. It can
+therefore equal the wrapped tunnel ID delta.
 
-           CPU0                       CPU1
-           ----                       ----
-           sock_close                 hci_rx_work
-	   l2cap_sock_release         hci_acldata_packet
-	   l2cap_sock_kill            l2cap_recv_frame
-	   sk_free                    l2cap_conless_channel
-	                              l2cap_sock_recv_cb
+The range loop then performs no iterations. Since the batched
+notification handling added a post-loop error check, this leaves err
+uninitialized and makes the request's return value unpredictable.
 
-If hci_rx_work processes the data that needs to be received before the sock is
-closed, then everything is normal; Otherwise, the work thread may access the
-released sock when receiving data.
+Reject descending VLAN ranges before comparing the spans. Valid
+ascending and single-entry ranges remain unchanged, while malformed
+descending ranges consistently return -EINVAL.
 
-Add a chan mutex in the rx callback of the sock to achieve synchronization between
-the sock release and recv cb.
+This issue was found by a static analysis checker and confirmed by
+manual source review.
 
-Sock is dead, so set chan data to NULL, avoid others use invalid sock pointer.
-
-Reported-and-tested-by: syzbot+b7f6f8c9303466e16c8a@syzkaller.appspotmail.com
-Signed-off-by: Edward Adam Davis <eadavis@qq.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Stable-dep-of: d4bfa78fd679 ("Bluetooth: L2CAP: reject accept queue add unless BT_LISTEN")
+Fixes: 94339443686b ("net: bridge: notify on vlan tunnel changes done via the old api")
+Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
+Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
+Link: https://patch.msgid.link/20260814134053.1387275-1-ruoyuw560@gmail.com
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_sock.c | 25 ++++++++++++++++++++++---
- 1 file changed, 22 insertions(+), 3 deletions(-)
+ net/bridge/br_netlink_tunnel.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/l2cap_sock.c b/net/bluetooth/l2cap_sock.c
-index ec95962077e2d..9d834f2254626 100644
---- a/net/bluetooth/l2cap_sock.c
-+++ b/net/bluetooth/l2cap_sock.c
-@@ -1258,6 +1258,10 @@ static void l2cap_sock_kill(struct sock *sk)
+diff --git a/net/bridge/br_netlink_tunnel.c b/net/bridge/br_netlink_tunnel.c
+index e4aab07752701..e7fe6b22cbf6f 100644
+--- a/net/bridge/br_netlink_tunnel.c
++++ b/net/bridge/br_netlink_tunnel.c
+@@ -299,7 +299,8 @@ int br_process_vlan_tunnel_info(const struct net_bridge *br,
  
- 	BT_DBG("sk %p state %s", sk, state_to_string(sk->sk_state));
- 
-+	/* Sock is dead, so set chan data to NULL, avoid other task use invalid
-+	 * sock pointer.
-+	 */
-+	l2cap_pi(sk)->chan->data = NULL;
- 	/* Kill poor orphan */
- 
- 	l2cap_chan_put(l2cap_pi(sk)->chan);
-@@ -1540,12 +1544,25 @@ static struct l2cap_chan *l2cap_sock_new_connection_cb(struct l2cap_chan *chan)
- 
- static int l2cap_sock_recv_cb(struct l2cap_chan *chan, struct sk_buff *skb)
- {
--	struct sock *sk = chan->data;
--	struct l2cap_pinfo *pi = l2cap_pi(sk);
-+	struct sock *sk;
-+	struct l2cap_pinfo *pi;
- 	int err;
- 
--	lock_sock(sk);
-+	/* To avoid race with sock_release, a chan lock needs to be added here
-+	 * to synchronize the sock.
-+	 */
-+	l2cap_chan_hold(chan);
-+	l2cap_chan_lock(chan);
-+	sk = chan->data;
- 
-+	if (!sk) {
-+		l2cap_chan_unlock(chan);
-+		l2cap_chan_put(chan);
-+		return -ENXIO;
-+	}
-+
-+	pi = l2cap_pi(sk);
-+	lock_sock(sk);
- 	if (chan->mode == L2CAP_MODE_ERTM && !list_empty(&pi->rx_busy)) {
- 		err = -ENOMEM;
- 		goto done;
-@@ -1594,6 +1611,8 @@ static int l2cap_sock_recv_cb(struct l2cap_chan *chan, struct sk_buff *skb)
- 
- done:
- 	release_sock(sk);
-+	l2cap_chan_unlock(chan);
-+	l2cap_chan_put(chan);
- 
- 	return err;
- }
+ 		if (!(tinfo_last->flags & BRIDGE_VLAN_INFO_RANGE_BEGIN))
+ 			return -EINVAL;
+-		if ((tinfo_curr->vid - tinfo_last->vid) !=
++		if (tinfo_curr->vid < tinfo_last->vid ||
++		    (tinfo_curr->vid - tinfo_last->vid) !=
+ 		    (tinfo_curr->tunid - tinfo_last->tunid))
+ 			return -EINVAL;
+ 		t = tinfo_last->tunid;
 -- 
 2.53.0
 
