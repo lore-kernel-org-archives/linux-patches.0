@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A20C246BCD;
-	Sat, 12 Sep 2026 10:08:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D09F836728D;
+	Sat, 12 Sep 2026 10:08:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789207709; cv=none; b=Bwu/IzK7hQRk4qQ6B2cChSTObm/H9GzfnzpO33ucPJGMAH9SnV00eKL9uIwyahm/kA330QUoXQgFKvUXwUevSxgG/zIhY3HvQjHverVSasgbAlJqZ17p7vkWTWOxAanRxq6wIsfp519VZY8PXbuhwWukbN+MvyEurpGeSzdExd8=
+	t=1789207713; cv=none; b=k2BizDuFcs4cZnDPRKs0MuOXCjFIJbPyIANVc8OFJrGHth0FW2kdAMsK8UjvuQ2zv7jVquQkFirg3H7J60ri+ERSElsi6KMOWEp8x4BpK9M9Eg2sZF44pdOLZ+u85RE2cSD6o8GX+gZ8SCYwvRMjvl1/OVCXdwSIhwFw5z1M9BY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789207709; c=relaxed/simple;
-	bh=3eU6HR1jdmKT9vb3At6ndMMrvcs/aAZhkfWkMi1tIUs=;
+	s=arc-20240116; t=1789207713; c=relaxed/simple;
+	bh=80S69A2GoOAgydmKuaIma/fgvQK4Fs0hKzSduhY8tPM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TCVbWjR6vpyJiYDCRcwSYG53+3C293lTHDdKDHEB7L5dHavbpLf+2uvLolrr+R3zxo/eG2FipTMioLzCjMqHF7Vqn8HBGAoBkCKUbmPhX2X02Oigycv7Q7SGYjB3bZMNPfjk9xDh6y8bTlYzDmxnl/Y5HDUYXFo20XFPftgGTJ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Joc5MO1q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nSSfXO/Q3s4huCPCsTgE8bgBHz53pO/vwD4t5QwOmj5mZ/44/IxhkznbdHXFrrXTpomwcCNIJvlFt3szvZt0LylvuFm9BFRFLM1eiJUB6TKW2bmdHQKZFz7XmdjTv8MJZPS4IETP0PG4NgI5XaL3nQGoS/qw0/GIgemJ2G57NRo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oc3e7gfJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Joc5MO1q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA6591F000FF;
-	Sat, 12 Sep 2026 10:08:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oc3e7gfJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A2251F000FF;
+	Sat, 12 Sep 2026 10:08:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789207707;
-	bh=klIEuH8yKdnu6xaGh9ahsQImZ+kyAK4Hl0DvB1A6p4Y=;
+	s=korg; t=1789207712;
+	bh=1HJyHvPp6RIIDycDE2vPAhegZfUI57O3q4wHwXH5b/o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Joc5MO1q1a+Eww1BqML2WCpXEEcNZSBQgpMwK1fqM94L4VduUYlhfKNiQK7OY3zsp
-	 E70+gCHBl2CxwIOdcnxVx1lG5/7/FajnhopBtAY+55D85SKut1zbOXloZ8j4vp3YsW
-	 xbQ1El9NF2ko7nJLRYjVyBOucmV2rGbYxhBb64Pw=
+	b=oc3e7gfJLxOjuy5zjGwNsQNmS7dOknEUrOSXXlkMcgiefyNyZfHJ70QnFR0Q10pk3
+	 MjvEoUnK1cnRolA35c8rJ5BOjG283tIRtJY2lK5PnUghS9WIcm/Uec0NMzwm9zKRVU
+	 AmdOVPK8BNB2SN4CErHmORPXAcA2dEYSwBp0l+cQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuho Choi <dbgh9129@gmail.com>,
+	Puranam V G Tejaswi <puranam.tejaswi@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Akhil P Oommen <akhilpo@oss.qualcomm.com>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0469/1518] driver core: soc: Unregister bus on early device registration failure
-Date: Sat, 12 Sep 2026 08:43:58 +0200
-Message-ID: <20260912065634.058253268@linuxfoundation.org>
+Subject: [PATCH 6.18 0470/1518] drm/msm/a6xx: Fix RBBM_CLOCK_CNTL3_TP0 value in a730_hwcg
+Date: Sat, 12 Sep 2026 08:43:59 +0200
+Message-ID: <20260912065634.081555154@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -50,62 +53,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuho Choi <dbgh9129@gmail.com>
+From: Puranam V G Tejaswi <puranam.tejaswi@oss.qualcomm.com>
 
-[ Upstream commit 45dfa004893dfeae182ec27eddbd153c6d4ddbf9 ]
+[ Upstream commit 01bcc0398f43099acb407a6067481e635c3e1b84 ]
 
-soc_bus_register() registers the SoC bus before registering a deferred
-early SoC device. If soc_device_register() fails in that path, the
-function returns the error directly and leaves the bus registered.
+The RBBM_CLOCK_CNTL3_TP0 entry in a730_hwcg has bits[19:16] set to 2
+(clock gating enabled for that TP0 stage). As per the latest
+recommendation, clear this nibble to disable clock gating for this
+particular stage.
 
-Store the returned SoC device pointer explicitly so the success and
-error cases are handled separately. On failure, clear soc_bus_registered
-and unregister the bus before returning the error.
-
-Fixes: 6e12db376b60 ("base: soc: Allow early registration of a single SoC device")
-Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
-Link: https://patch.msgid.link/20260615180746.713540-1-dbgh9129@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 9588d2f860a4 ("drm/msm/a6xx: Add A730 support")
+Signed-off-by: Puranam V G Tejaswi <puranam.tejaswi@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/740955/
+Message-ID: <20260718-eliza-gpu-v2-1-64379dbebd7a@oss.qualcomm.com>
+Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/soc.c | 15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/msm/adreno/a6xx_catalog.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/base/soc.c b/drivers/base/soc.c
-index 282c38aece0de..c43940940aa34 100644
---- a/drivers/base/soc.c
-+++ b/drivers/base/soc.c
-@@ -194,6 +194,7 @@ EXPORT_SYMBOL_GPL(soc_device_unregister);
- 
- static int __init soc_bus_register(void)
- {
-+	struct soc_device *soc_dev;
- 	int ret;
- 
- 	ret = bus_register(&soc_bus_type);
-@@ -201,10 +202,20 @@ static int __init soc_bus_register(void)
- 		return ret;
- 	soc_bus_registered = true;
- 
--	if (early_soc_dev_attr)
--		return PTR_ERR(soc_device_register(early_soc_dev_attr));
-+	if (early_soc_dev_attr) {
-+		soc_dev = soc_device_register(early_soc_dev_attr);
-+		if (IS_ERR(soc_dev)) {
-+			ret = PTR_ERR(soc_dev);
-+			goto err_unregister_bus;
-+		}
-+	}
- 
- 	return 0;
-+
-+err_unregister_bus:
-+	soc_bus_registered = false;
-+	bus_unregister(&soc_bus_type);
-+	return ret;
- }
- core_initcall(soc_bus_register);
- 
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_catalog.c b/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
+index 31974a4d7e14b..b43850966a5f6 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
+@@ -1167,7 +1167,7 @@ static const struct adreno_reglist a730_hwcg[] = {
+ 	{ REG_A6XX_RBBM_CLOCK_DELAY_SP0, 0x00000080 },
+ 	{ REG_A6XX_RBBM_CLOCK_CNTL_TP0, 0x22222220 },
+ 	{ REG_A6XX_RBBM_CLOCK_CNTL2_TP0, 0x22222222 },
+-	{ REG_A6XX_RBBM_CLOCK_CNTL3_TP0, 0x22222222 },
++	{ REG_A6XX_RBBM_CLOCK_CNTL3_TP0, 0x22220222 },
+ 	{ REG_A6XX_RBBM_CLOCK_CNTL4_TP0, 0x00222222 },
+ 	{ REG_A6XX_RBBM_CLOCK_HYST_TP0, 0x77777777 },
+ 	{ REG_A6XX_RBBM_CLOCK_HYST2_TP0, 0x77777777 },
 -- 
 2.53.0
 
