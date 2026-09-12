@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A4592D0C94;
-	Sat, 12 Sep 2026 11:32:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8232D2D0C94;
+	Sat, 12 Sep 2026 11:33:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789212779; cv=none; b=c7lldDEDZv/SFB7E47b5i6RL7nR2bhiZWklMOwQedHmmkFNo6Wl611hCsl9DmrzT46eVvebwEDvXaDQPqciNyx51dSM53e0h/LFoHV/fXv7HeaSgWlyiYCJBDJSP666KcRcmU5xXKxp0b81XkaIHWUkVsV2lKeqt/ZmYZ2LSDzc=
+	t=1789212784; cv=none; b=SBoJF7pAPNnnXqWlk7U17jpuagAt8KuEadObjR/QFErtDIYJ+7y9Gi+d2nY3b4eaifyiKe/ZXopLqp9VkGkh+e54KRvPKmElv4qrhpUsH93/kxXT93yc158mKO2TZFMp9ID2ZqRxRaKZo3BdwJX1hIgJb/PmaCRLe+sfa8qHG6I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789212779; c=relaxed/simple;
-	bh=7A6JgKsTpsAXCQNBeQ0IkIwbdThhDSu0mcx+I4Jv72o=;
+	s=arc-20240116; t=1789212784; c=relaxed/simple;
+	bh=SqOitSHjkXz9byDfynuF+jeuPgCjykxiFn9SdVvqOGo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jfGrsUo+uS3tFfwZZM/DbGY1IM8NreJjXvGZqJ9GXlR9SclvwXlNR2c9XBJpcfUHa/KJ9Jq06L+OzRbXpcB1aYfbLXnteZCV6nvspI/EateqWfaYYx6WVpL+DBwl5/IxPfxRtJVykfUxpQ3Ouu6z3fdU3HPcOUuzsRP8mSzd1gQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aGoaXuRT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PR8e7mTV+Lw4was3qhp2PPfU9gOArkzKR5kw1eTvdcPGL4lVeZ+rPaysQVyZLWr7g8kGhMcwtQXFdRMLxInOs47D2bS2qPEr8ljptmhG5V0IKe4pduRCu5mixCP+svoXGfS3Mk4g4TRYUrBoscmpyQOVTtAwPmDewluugUJfN0A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dAQVKrH1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aGoaXuRT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37C1E1F000FF;
-	Sat, 12 Sep 2026 11:32:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dAQVKrH1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C0BD1F000FF;
+	Sat, 12 Sep 2026 11:33:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789212778;
-	bh=yyCV5d8JPdgWSA2P3wm02b6fJTaQYwFheMsaMFcDAVw=;
+	s=korg; t=1789212783;
+	bh=8U/V+8i15avCT2V1PS6Y4iA9ck9Ol+ECeoxfrumgBdw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aGoaXuRTTg/9dyoekPJDT/VW7YfGfMc98hD3wP8q77qqDxk//lN8+q/FnvDL8YGv8
-	 45WuM7jQ0hTCODixFdOXDW4+pc0efyylPAHGDNB/flqJ1r40jv9H0X7lODC8BLt0T5
-	 jgZcGjtQPLVrmOmcpMKeeTxfaqnlLXduIYQL8Dh8=
+	b=dAQVKrH1GZU7n/wWKoSjSXasr0tso9eRn23QzfmUiLetvSm1rjsKU/lHWRwTbq3+B
+	 DSgvn5EuWiJtDDOcXKD3evx6kFsbqGpw3CUB95HRH1gtg++2xgvRdlFzC0ydgpzGqo
+	 oq/Lpy6LgcuahSnZvAKppYqZLoOAQgh/qnCwDkr8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+eb441775f4f948a0902f@syzkaller.appspotmail.com,
-	Jens Axboe <axboe@kernel.dk>,
+	"Gautham R. Shenoy" <gautham.shenoy@amd.com>,
+	"Mario Limonciello (AMD)" <superm1@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1505/1518] io_uring/waitid: fix KCSAN warning on io_waitid->head
-Date: Sat, 12 Sep 2026 09:01:14 +0200
-Message-ID: <20260912065657.610807104@linuxfoundation.org>
+Subject: [PATCH 6.18 1506/1518] cpufreq/amd-pstate: Fix some whitespace issues
+Date: Sat, 12 Sep 2026 09:01:15 +0200
+Message-ID: <20260912065657.635619737@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,50 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Mario Limonciello (AMD) <superm1@kernel.org>
 
-[ Upstream commit b994ace83a2bc7699420f6a4c6b860c8da133159 ]
+[ Upstream commit e9d62ca86a5525a742742fe69e9aa316cfd4f471 ]
 
-Storing of the iw->head entry inside the wait_queue callback, or when
-removing a waitid item, really should use proper load/store
-acquire/release semantics, and KCSAN correctly warns of that. Ensure
-that they do so.
+Add whitespace around the equals and remove leading space.
 
-Reported-by: syzbot+eb441775f4f948a0902f@syzkaller.appspotmail.com
-Fixes: a48c0cbf28c0 ("io_uring/waitid: have io_waitid_complete() remove wait queue entry")
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Reviewed-by: Gautham R. Shenoy <gautham.shenoy@amd.com>
+Signed-off-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Stable-dep-of: caa822d312be ("cpufreq/amd-pstate: Use "epp_default_dc" as default when dynamic_epp is disabled")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/waitid.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/cpufreq/amd-pstate.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/io_uring/waitid.c b/io_uring/waitid.c
-index 1137e3a166d12..2b756017423f0 100644
---- a/io_uring/waitid.c
-+++ b/io_uring/waitid.c
-@@ -114,11 +114,11 @@ static void io_waitid_remove_wq(struct io_kiocb *req)
- 	struct io_waitid *iw = io_kiocb_to_cmd(req, struct io_waitid);
- 	struct wait_queue_head *head;
+diff --git a/drivers/cpufreq/amd-pstate.c b/drivers/cpufreq/amd-pstate.c
+index 108d5e01459f6..0d58291a133d6 100644
+--- a/drivers/cpufreq/amd-pstate.c
++++ b/drivers/cpufreq/amd-pstate.c
+@@ -132,7 +132,7 @@ static unsigned int epp_values[] = {
+ 	[EPP_INDEX_BALANCE_PERFORMANCE] = AMD_CPPC_EPP_BALANCE_PERFORMANCE,
+ 	[EPP_INDEX_BALANCE_POWERSAVE] = AMD_CPPC_EPP_BALANCE_POWERSAVE,
+ 	[EPP_INDEX_POWERSAVE] = AMD_CPPC_EPP_POWERSAVE,
+- };
++};
  
--	head = READ_ONCE(iw->head);
-+	head = smp_load_acquire(&iw->head);
- 	if (head) {
- 		struct io_waitid_async *iwa = req->async_data;
+ typedef int (*cppc_mode_transition_fn)(int);
  
--		iw->head = NULL;
-+		smp_store_release(&iw->head, NULL);
- 		spin_lock_irq(&head->lock);
- 		list_del_init(&iwa->wo.child_wait.entry);
- 		spin_unlock_irq(&head->lock);
-@@ -265,7 +265,7 @@ static int io_waitid_wait(struct wait_queue_entry *wait, unsigned mode,
- 		return 0;
+@@ -188,7 +188,7 @@ static inline int get_mode_idx_from_str(const char *str, size_t size)
+ {
+ 	int i;
  
- 	list_del_init(&wait->entry);
--	iw->head = NULL;
-+	smp_store_release(&iw->head, NULL);
- 
- 	/* cancel is in progress */
- 	if (atomic_fetch_inc(&iw->refs) & IO_WAITID_REF_MASK)
+-	for (i=0; i < AMD_PSTATE_MAX; i++) {
++	for (i = 0; i < AMD_PSTATE_MAX; i++) {
+ 		if (!strncmp(str, amd_pstate_mode_string[i], size))
+ 			return i;
+ 	}
 -- 
 2.53.0
 
