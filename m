@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38751429000;
-	Sat, 12 Sep 2026 11:11:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09CA5CA6F;
+	Sat, 12 Sep 2026 11:11:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789211479; cv=none; b=TdfS2xDUoBWGhXVdVd+ro0MpxsT/b9xsaVKFtHLHDIzuqUBDH8VmUSDBfUA2q/RZC2Ll0eDdAADu1lUEZc6RGJXG5Y+3KpCSNwMibPIxjE5QSSIWhbxGoJRDTZW+G1QJuOeEZiLmidxVLnXOY67IEI8vpoo3Zw2mZ9frjGjuipA=
+	t=1789211484; cv=none; b=t0Wkx1IbszbRy1LVQKJYS5qbKpziPm3qNYPtayaiEGSr7ZI5/Jxpij2O6NuLBgt019055gQBexLdEFY1Dde9F90/Zlz+zHtzVPevo7eMo+16RG10Yu5QpyycRAgBcLfGPksLvdh8pO8oIAwSFRGS5WGvXpp63WSvYsd7/M0v33w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789211479; c=relaxed/simple;
-	bh=eMUL+WQIVBlie/FHn+GAmd3NMjjco2/gSBvpxKjM7Fo=;
+	s=arc-20240116; t=1789211484; c=relaxed/simple;
+	bh=fBtu++rRGKj7gSrFBvxhuitBJy99qibhKcv3rX4/Ys8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bOB9xAO66m+N71sxinf4UgZCaoxvmxw6mWaxQlz+zeBKl4otomJHvKnUGs0d1PWVlO3BznZ+kXfEmqujZjDJnt1juX2qMRxwnqCEiq0t8h0/nUG7Mmf+n2rdcPK+4fByfI+JJBRFL+F3sjgIkMnSllK/MMePdAgE68MVNitVoY4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cnxa4il+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZxGuteW/eTwhgY0L7GoC3yQCSg7g4nB0iOYdMWVAvWM/aV3eYva8Is90cmXREzHJ09LdgCeVohlUDJdzoCmQA8kXlmSihggXekdr/r/qwPqt+AF4TPqx/CkiMIXv6jkFeOXHS+QyCB/NGLlMMrKJS6jt7W7fxqYX6Cz/LJjK5Wg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VRSVq7Je; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cnxa4il+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CD7F1F000FF;
-	Sat, 12 Sep 2026 11:11:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VRSVq7Je"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D220F1F000FF;
+	Sat, 12 Sep 2026 11:11:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789211478;
-	bh=ZtGOd0KxQdnE+IqNrw9EDNn1pQI0nYiEXA7F+eQsyPU=;
+	s=korg; t=1789211482;
+	bh=mSv3bT0c7BMegI2wCR3ZNmjRFooqLMu7PRHm8AHMkQg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cnxa4il+ab7X7sQLtN/U66Un8KZ2n6t4diQJBnUkJ1Bw77Zg/YzU/1iQ6hj6bNSmv
-	 4Y/2y27fr3N9sMTLIxFwvOBjVTNaINWazptgV5fxX7KFQgsA6/DAkf0II0aUbwq1El
-	 +QpDVochOdIgOkFT8iBiHKi9F3AIzFVMjIUv2fdE=
+	b=VRSVq7JeUjQvmnLIs4dl8fNEVkY4A0fQdcVLNuFJnN2Vi4v57b3X9H23SD/vUW63w
+	 N7Nw8/jb1AEcAyFBl5UG0YV4j/i8N06UGn7c2Uixv1mF0uWlHxJZX6du3iyCQBfSJi
+	 ZfYgDl8gghp9xDs521Y4yitFojazluQOTe0FsfZk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Yu <chao@kernel.org>,
-	Gao Xiang <xiang@kernel.org>,
+	Hongyan Xu <getshell@seu.edu.cn>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1237/1518] erofs: guard on-disk algorithm IDs against Z_EROFS_COMPRESSION_MAX
-Date: Sat, 12 Sep 2026 08:56:46 +0200
-Message-ID: <20260912065651.488903943@linuxfoundation.org>
+Subject: [PATCH 6.18 1197/1518] ACPI: scan: fix bus ID cleanup on device_add() failures
+Date: Sat, 12 Sep 2026 08:56:06 +0200
+Message-ID: <20260912065650.559247442@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,118 +51,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gao Xiang <xiang@kernel.org>
+From: Hongyan Xu <getshell@seu.edu.cn>
 
-[ Upstream commit 6847d4d1a24a686ca6c8a0f68501a984f9a0d059 ]
+[ Upstream commit a414485ebc2aa50907d0ce97cde2b1a353696897 ]
 
-All on-disk algorithm IDs should be validated against
-supported Z_EROFS_COMPRESSION_MAX.
+When device_add() fails after acpi_device_set_name() has allocated an
+instance ID and a new acpi_device_bus_id has been linked into
+acpi_bus_id_list, the rollback path only removes wakeup_list and
+detaches the ACPI handle data.
 
-This includes a partial revert of a previous commit and also adds
-validation for encoded extents.
+That leaves the bus-ID bookkeeping behind and keeps the allocated
+instance number consumed.
 
-Fixes: 131897c65e2b ("erofs: fix invalid algorithm for encoded extents")
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Gao Xiang <xiang@kernel.org>
+Move the bus-ID cleanup and wakeup-list removal into a single helper.
+
+Use it from both the normal device teardown path and the device_add()
+rollback path. The wakeup list node is initialized before registration,
+so it can be deleted without checking whether the device is wakeup-
+capable like in the original teardown path.
+
+Fixes: d783156ea384 ("ACPI / scan: Define non-empty device removal handler")
+Signed-off-by: Hongyan Xu <getshell@seu.edu.cn>
+[ rjw: Rename acpi_device_del_list() to acpi_device_cleanup() ]
+[ rjw: Subject and changelog edits ]
+Link: https://patch.msgid.link/20260808085943.526-1-getshell@seu.edu.cn
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/erofs/internal.h |  2 +-
- fs/erofs/zmap.c     | 35 +++++++++++++++++++++--------------
- 2 files changed, 22 insertions(+), 15 deletions(-)
+ drivers/acpi/scan.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/fs/erofs/internal.h b/fs/erofs/internal.h
-index a2ffdd11bd052..e1f0174d468df 100644
---- a/fs/erofs/internal.h
-+++ b/fs/erofs/internal.h
-@@ -286,7 +286,7 @@ struct erofs_inode {
- #ifdef CONFIG_EROFS_FS_ZIP
- 		struct {
- 			unsigned short z_advise;
--			unsigned char  z_algorithmtype[2];
-+			unsigned char  z_algofmt[2];
- 			unsigned char  z_lclusterbits;
- 			union {
- 				u64    z_tailextent_headlcn;
-diff --git a/fs/erofs/zmap.c b/fs/erofs/zmap.c
-index 5530fe1cf282c..97a664f81169e 100644
---- a/fs/erofs/zmap.c
-+++ b/fs/erofs/zmap.c
-@@ -477,10 +477,9 @@ static int z_erofs_map_blocks_fo(struct inode *inode,
- 			map->m_algorithmformat = Z_EROFS_COMPRESSION_INTERLACED;
- 		else
- 			map->m_algorithmformat = Z_EROFS_COMPRESSION_SHIFTED;
--	} else if (m.headtype == Z_EROFS_LCLUSTER_TYPE_HEAD2) {
--		map->m_algorithmformat = vi->z_algorithmtype[1];
- 	} else {
--		map->m_algorithmformat = vi->z_algorithmtype[0];
-+		map->m_algorithmformat =
-+			vi->z_algofmt[m.headtype == Z_EROFS_LCLUSTER_TYPE_HEAD2];
- 	}
+diff --git a/drivers/acpi/scan.c b/drivers/acpi/scan.c
+index 16704c2a730c0..92928389ea0f9 100644
+--- a/drivers/acpi/scan.c
++++ b/drivers/acpi/scan.c
+@@ -522,12 +522,10 @@ static void acpi_device_release(struct device *dev)
+ 	kfree(acpi_dev);
+ }
  
- 	if ((flags & EROFS_GET_BLOCKS_FIEMAP) ||
-@@ -594,9 +593,14 @@ static int z_erofs_map_blocks_ext(struct inode *inode,
- 			if (map->m_plen & Z_EROFS_EXTENT_PLEN_PARTIAL)
- 				map->m_flags |= EROFS_MAP_PARTIAL_REF;
- 			map->m_plen &= Z_EROFS_EXTENT_PLEN_MASK;
--			if (fmt)
--				map->m_algorithmformat = fmt - 1;
--			else if (interlaced && !((map->m_pa | map->m_plen) & bmask))
-+			if (fmt) {
-+				map->m_algorithmformat = --fmt;
-+				if (fmt >= Z_EROFS_COMPRESSION_MAX) {
-+					erofs_err(sb, "unknown algorithm %d @ pos %llu for nid %llu, please upgrade kernel",
-+						  fmt, map->m_la, vi->nid);
-+					return -EOPNOTSUPP;
-+				}
-+			} else if (interlaced && !((map->m_pa | map->m_plen) & bmask))
- 				map->m_algorithmformat =
- 					Z_EROFS_COMPRESSION_INTERLACED;
- 			else
-@@ -614,7 +618,7 @@ static int z_erofs_fill_inode(struct inode *inode, struct erofs_map_blocks *map)
- 	struct super_block *const sb = inode->i_sb;
- 	struct z_erofs_map_header *h;
- 	erofs_off_t pos;
--	int err = 0;
-+	int err = 0, nr;
+-static void acpi_device_del(struct acpi_device *device)
++static void acpi_device_cleanup(struct acpi_device *device)
+ {
+ 	struct acpi_device_bus_id *acpi_device_bus_id;
  
- 	if (test_bit(EROFS_I_Z_INITED_BIT, &vi->flags)) {
- 		/*
-@@ -657,12 +661,19 @@ static int z_erofs_fill_inode(struct inode *inode, struct erofs_map_blocks *map)
- 		goto done;
- 	}
+-	mutex_lock(&acpi_device_lock);
+-
+ 	list_for_each_entry(acpi_device_bus_id, &acpi_bus_id_list, node)
+ 		if (!strcmp(acpi_device_bus_id->bus_id,
+ 			    acpi_device_hid(device))) {
+@@ -542,6 +540,13 @@ static void acpi_device_del(struct acpi_device *device)
+ 		}
  
--	vi->z_algorithmtype[0] = h->h_algorithmtype & 15;
--	vi->z_algorithmtype[1] = h->h_algorithmtype >> 4;
- 	if (vi->z_advise & Z_EROFS_ADVISE_FRAGMENT_PCLUSTER)
- 		vi->z_fragmentoff = le32_to_cpu(h->h_fragmentoff);
- 	else if (vi->z_advise & Z_EROFS_ADVISE_INLINE_PCLUSTER)
- 		vi->z_idata_size = le16_to_cpu(h->h_idata_size);
-+	for (nr = 0; nr < 2; ++nr) {
-+		vi->z_algofmt[nr] = (h->h_algorithmtype >> (4 * nr)) & 15;
-+		if (vi->z_algofmt[nr] >= Z_EROFS_COMPRESSION_MAX) {
-+			erofs_err(sb, "unknown HEAD%u format %u for nid %llu, please upgrade kernel",
-+				  nr + 1, vi->z_algofmt[nr], vi->nid);
-+			err = -EOPNOTSUPP;
-+			goto out_unlock;
-+		}
-+	}
+ 	list_del(&device->wakeup_list);
++}
++
++static void acpi_device_del(struct acpi_device *device)
++{
++	mutex_lock(&acpi_device_lock);
++
++	acpi_device_cleanup(device);
  
- 	if (!erofs_sb_has_big_pcluster(EROFS_SB(sb)) &&
- 	    vi->z_advise & (Z_EROFS_ADVISE_BIG_PCLUSTER_1 |
-@@ -710,12 +721,8 @@ static int z_erofs_map_sanity_check(struct inode *inode,
+ 	mutex_unlock(&acpi_device_lock);
  
- 	if (!(map->m_flags & EROFS_MAP_MAPPED))
- 		return 0;
--	if (unlikely(map->m_algorithmformat >= Z_EROFS_COMPRESSION_RUNTIME_MAX)) {
--		erofs_err(inode->i_sb, "unknown algorithm %d @ pos %llu for nid %llu, please upgrade kernel",
--			  map->m_algorithmformat, map->m_la, EROFS_I(inode)->nid);
--		return -EOPNOTSUPP;
--	}
+@@ -802,7 +807,7 @@ int acpi_device_add(struct acpi_device *device)
+ err:
+ 	mutex_lock(&acpi_device_lock);
  
-+	DBG_BUGON(map->m_algorithmformat >= Z_EROFS_COMPRESSION_RUNTIME_MAX);
- 	if (map->m_algorithmformat < Z_EROFS_COMPRESSION_MAX) {
- 		if (sbi->available_compr_algs ^ BIT(map->m_algorithmformat)) {
- 			erofs_err(inode->i_sb, "inconsistent algorithmtype %u for nid %llu",
+-	list_del(&device->wakeup_list);
++	acpi_device_cleanup(device);
+ 
+ err_unlock:
+ 	mutex_unlock(&acpi_device_lock);
 -- 
 2.53.0
 
