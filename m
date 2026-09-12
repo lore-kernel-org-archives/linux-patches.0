@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBEA23AEF35;
-	Sat, 12 Sep 2026 20:04:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A99F13AFAEB;
+	Sat, 12 Sep 2026 20:04:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789243499; cv=none; b=K7/W2j68RsY2a17f3F+LBDkUJApMMhfg0ybzHfIsvqTU0ZiwTocvgjMN8WYHo/Y79X5Hgc5lTY66G/mDor+092sOs5BXdHKMvX1pYdvnQznw0Qrv7OmMvwjXpcr+F6uQ8C7jaXFgvctVUz1/svTexiolrhxJe6tihlRxM3vh/ek=
+	t=1789243500; cv=none; b=jziXVE+p4utdPEpLqqLFGVe0ZWw0BZXc6RyfgEpm2V2L2KuyotUhAS4maffmFfH6vGZv6RX81tJUEvWY6SLBCZgHJMXkykJz0BSPZvx+iml975LLDVHK4GXwF2n6wKAUnhopmh5B7Tl86iipTRrt4fuTBMoM8HVDCqKC76VEPzM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789243499; c=relaxed/simple;
-	bh=qBdp26eLdwkLOTgW8drZWNUxwvLP9yii5Y3uFQlT1e0=;
+	s=arc-20240116; t=1789243500; c=relaxed/simple;
+	bh=71cK9X0zuuh4ioDMC1R4B1IQ8S2rgWVWRYGbYZo/5FY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Jp/N5oeYfpu1pC625Sg2RG1AEK8idrks2pGdl0cj1iUI4W5+ZqPHQSrgitu3Ac1Clx0AUZ0FBW707SFYCS/uboYDaW7NfGpzYESAdVCD3UHs4tlPijJdpx3stbblMIA5Ww9tSaaN8JxyYOn0WU0jB2FKX3F39FbjQVhEOlnfnuw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PAz0s5zb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=anHRihu+nGoiJ678B5gjqtm6FgNy0y/fVbVKXbTxuQ08aOm2MYVLbSa17krlO97TeaRoowaPhRi6TpGd1gENsIFusnM+NC4zPcRmdZL2htqYvOtFnVS4cbCPaZuYBvdvhOoOpMCFkoDdBaxrCXqYwZIYWe8Mi4BkUBvC7ZFlSK8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C8aAX6Vs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PAz0s5zb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7358A1F0089B;
-	Sat, 12 Sep 2026 20:04:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C8aAX6Vs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5A141F00898;
+	Sat, 12 Sep 2026 20:04:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789243496;
-	bh=MWiOUYZZUagKMdUB2d6LtO3uN+zvg9hwgjv+Qw13uMw=;
+	s=korg; t=1789243490;
+	bh=DSjnXtVj6y5bpxWDpowVPFCCs9urJ8GmCnLgaBxdFbA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PAz0s5zbzcqolKPRX2ghekeveAcsc/hvuGOAzOsy7KDZy31K+6vlo54k/3l4BXclh
-	 B4uY2KTdnLUXwqrZ2H0rcCvmbO/AS4W5lwx2wfk5CpFBunPLmZwyQVoVOg4kAuNt6p
-	 eQ+r8RFp0fBwlmHt8t7/ckybIKVMvkP80jQ5iOTc=
+	b=C8aAX6VsYv7kYgVICnQok153fCJvY/YqI/X+RAbvzuXN934+C7QOR8+wZIODuP7qK
+	 j+LsGwWynroinCkbp+oySnKVPfF0bGZRR6Zc3Fq29//nrwFZRmi0byN5L9gnLSZ1Y6
+	 ZxvcnvD1HBl/1HVa1jqjPVwVbodKxet7HvS8KzCY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Engelhardt <ej@inai.de>,
-	Florian Westphal <fw@strlen.de>,
-	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	bui duc phuc <phucduc.bui@gmail.com>,
+	Andre Przywara <andre.przywara@arm.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 774/798] netfilter: xt_cgroup: Make it independent from net_cls
-Date: Sat, 12 Sep 2026 09:06:42 +0200
-Message-ID: <20260912065534.807652858@linuxfoundation.org>
+Subject: [PATCH 5.10 772/798] net: ethernet: sun4i-emac: Fix IRQ error handling
+Date: Sat, 12 Sep 2026 09:06:40 +0200
+Message-ID: <20260912065534.763978903@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -47,99 +46,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michal Koutný <mkoutny@suse.com>
+From: bui duc phuc <phucduc.bui@gmail.com>
 
-[ Upstream commit 3ba0032afea888d0edebf5ece3c6b36417189b63 ]
+[ Upstream commit 991c2be78257cba5bf53cf935fe70f8836964288 ]
 
-The xt_group matching supports the default hierarchy since commit
-c38c4597e4bf3 ("netfilter: implement xt_cgroup cgroup2 path match").
-The cgroup v1 matching (based on clsid) and cgroup v2 matching (based on
-path) are rather independent. Downgrade the Kconfig dependency to
-mere CONFIG_SOCK_GROUP_DATA so that xt_group can be built even without
-CONFIG_NET_CLS_CGROUP for path matching.
-Also add a message for users when they attempt to specify any clsid.
+irq_of_parse_and_map() returns 0 when parsing or mapping an IRQ fails.
+The current code checks for -ENXIO and therefore does not detect the
+failure.
 
-Link: https://lists.opensuse.org/archives/list/kernel@lists.opensuse.org/thread/S23NOILB7MUIRHSKPBOQKJHVSK26GP6X/
-Cc: Jan Engelhardt <ej@inai.de>
-Cc: Florian Westphal <fw@strlen.de>
-Signed-off-by: Michal Koutný <mkoutny@suse.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Stable-dep-of: 793d9eda4821 ("netfilter: x_tables: replace pr_{info,err}() by pr_info_ratelimited()")
+Check for a zero return value and convert it to -ENXIO.
+
+Fixes: 492205050d77 ("net: Add EMAC ethernet driver found on Allwinner A10 SoC's")
+Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
+Reviewed-by: Andre Przywara <andre.przywara@arm.com>
+Link: https://patch.msgid.link/20260824100901.31675-1-phucduc.bui@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/Kconfig     |  2 +-
- net/netfilter/xt_cgroup.c | 17 +++++++++++++++++
- 2 files changed, 18 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/allwinner/sun4i-emac.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/netfilter/Kconfig b/net/netfilter/Kconfig
-index 8bf70ce03f951..09ab1328e838c 100644
---- a/net/netfilter/Kconfig
-+++ b/net/netfilter/Kconfig
-@@ -1131,7 +1131,7 @@ config NETFILTER_XT_MATCH_CGROUP
- 	tristate '"control group" match support'
- 	depends on NETFILTER_ADVANCED
- 	depends on CGROUPS
--	select CGROUP_NET_CLASSID
-+	select SOCK_CGROUP_DATA
- 	help
- 	Socket/process control group matching allows you to match locally
- 	generated packets based on which net_cls control group processes
-diff --git a/net/netfilter/xt_cgroup.c b/net/netfilter/xt_cgroup.c
-index bfc98719684e2..b182b9e0882b6 100644
---- a/net/netfilter/xt_cgroup.c
-+++ b/net/netfilter/xt_cgroup.c
-@@ -23,6 +23,8 @@ MODULE_DESCRIPTION("Xtables: process control group matching");
- MODULE_ALIAS("ipt_cgroup");
- MODULE_ALIAS("ip6t_cgroup");
- 
-+#define NET_CLS_CLASSID_INVALID_MSG "xt_cgroup: classid invalid without net_cls cgroups\n"
-+
- static int cgroup_mt_check_v0(const struct xt_mtchk_param *par)
- {
- 	struct xt_cgroup_info_v0 *info = par->matchinfo;
-@@ -30,6 +32,11 @@ static int cgroup_mt_check_v0(const struct xt_mtchk_param *par)
- 	if (info->invert & ~1)
- 		return -EINVAL;
- 
-+	if (!IS_ENABLED(CONFIG_CGROUP_NET_CLASSID)) {
-+		pr_info(NET_CLS_CLASSID_INVALID_MSG);
-+		return -EINVAL;
-+	}
-+
- 	return 0;
- }
- 
-@@ -51,6 +58,11 @@ static int cgroup_mt_check_v1(const struct xt_mtchk_param *par)
- 		return -EINVAL;
+diff --git a/drivers/net/ethernet/allwinner/sun4i-emac.c b/drivers/net/ethernet/allwinner/sun4i-emac.c
+index 5ed80d9a6b9fe..8ce1fb0a8d554 100644
+--- a/drivers/net/ethernet/allwinner/sun4i-emac.c
++++ b/drivers/net/ethernet/allwinner/sun4i-emac.c
+@@ -819,9 +819,9 @@ static int emac_probe(struct platform_device *pdev)
+ 	/* fill in parameters for net-dev structure */
+ 	ndev->base_addr = (unsigned long)db->membase;
+ 	ndev->irq = irq_of_parse_and_map(np, 0);
+-	if (ndev->irq == -ENXIO) {
++	if (!ndev->irq) {
+ 		netdev_err(ndev, "No irq resource\n");
+-		ret = ndev->irq;
++		ret = -ENXIO;
+ 		goto out_iounmap;
  	}
  
-+	if (info->has_classid && !IS_ENABLED(CONFIG_CGROUP_NET_CLASSID)) {
-+		pr_info(NET_CLS_CLASSID_INVALID_MSG);
-+		return -EINVAL;
-+	}
-+
- 	info->priv = NULL;
- 	if (info->has_path) {
- 		if (strnlen(info->path, sizeof(info->path)) >= sizeof(info->path))
-@@ -86,6 +98,11 @@ static int cgroup_mt_check_v2(const struct xt_mtchk_param *par)
- 		return -EINVAL;
- 	}
- 
-+	if (info->has_classid && !IS_ENABLED(CONFIG_CGROUP_NET_CLASSID)) {
-+		pr_info(NET_CLS_CLASSID_INVALID_MSG);
-+		return -EINVAL;
-+	}
-+
- 	info->priv = NULL;
- 	if (info->has_path) {
- 		if (strnlen(info->path, sizeof(info->path)) >= sizeof(info->path))
 -- 
 2.53.0
 
