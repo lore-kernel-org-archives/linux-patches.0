@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FB3547CA76;
-	Sat, 12 Sep 2026 13:14:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E13EB373BF2;
+	Sat, 12 Sep 2026 13:14:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789218844; cv=none; b=dQx+TFs7Ul09JwLS/rjnwOlhhZM7PKtdfLlJFmndXsCEKOoopp3HhZVfpUVGB5+gjFnISR3FV/a1mBl1eZw6N8lPzzauH0JfA9LgN2j67a17frxcmbrgEpuIjI9V65qQk37Vm3Zgsc4C68V4nYKOpAYgdVXg9baEYLh50Beav6I=
+	t=1789218849; cv=none; b=qWkOGnan7hSI5PhrF5VPm8fC0wlIJmLj1cWH1U4mm8zGaYefzMfSIkzYMLG9vdsBc1eI+UIsSKW44SX9r+/xYqj91kB7gawj/mI8ROm8xpPJyZjgxEbCFCNTNn7Wn1GOfg2giWQ+CSENThlPECFv9N/b5UYC45nRi/dkGW261LI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789218844; c=relaxed/simple;
-	bh=n37giOJJ5sPaC2ZRJ8jOiOtFZ+iBM1BqZRz4HTYtMB8=;
+	s=arc-20240116; t=1789218849; c=relaxed/simple;
+	bh=KftMS3EJhYv8OsyBcCw2F2jq6CzsjNxPlZyQyxyou6o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tvTLyw87JUQfVpWDz+AuLh+8huIaEweBCSdJi1a6dJbPyNc2fqmjK3HKSlV4Wrrg05THx+hujN5F2GsLg5pxBeIfsQbsFgWVLtu4O2G0GlMaSAv13OATHnib/OUJAcOxBmyY4JnHhLr1siKRJDLmhC90oZl4LR0t2316b4xTJPM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EJSUT/vx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=a2LO/r9U1rs24TUYoir1BMRV0obpHvBcxfuHRKDqnt+4zy1ALRrmlHRZ5iPXZ4h3R3nn79VAGKI26y8k9FeUJuWAQNsHPCfjesyHZlxb93uYB1ThaE3jLzrO+VW88L9Hz6KM9xjQtQfkLTNpv11Sc7H44ZIoIYPM4NgTYeseqB8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JNn/95vj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EJSUT/vx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6410F1F000FF;
-	Sat, 12 Sep 2026 13:14:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JNn/95vj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35DD81F000FF;
+	Sat, 12 Sep 2026 13:14:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789218843;
-	bh=i58NGsGeWOmWcJnmx0glemSmL0Ro8onoMZgv9k/b2tw=;
+	s=korg; t=1789218848;
+	bh=Wa+XtD3V7NkqatRa+gO6J7pfKs+AUuEzY58jUWsStNw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EJSUT/vxHi3BrX4H3WopI72gGsWKBekmRateCwdc/ObRI/foFMuIFFq1AZzfjJL/o
-	 FQguK1vgAsRjdqwVXIPAeiDVTMGooe9p1XgOL8yLVhQ40jsdd3QDbJBR9dKI+JW9UW
-	 4OgPHXOvjsMoqB9hxvghFoX9NlHO7PSPmx/Ygq3Q=
+	b=JNn/95vj1ZbaL97ilREjO6dvOeJZkasWKG0+Y1yVT2SBVq8R+HPttKXwzclSJWYbU
+	 fy/jcrgQ5xSczI8O7RY6wA6R/lk/DZ0HQ9JWlRPhzMz6Vk8wgLaN7MjKnuwTMg+ln+
+	 9MZPIG4e9UI0Y09D8zCAHBejKXfpM+/49vimxyYk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>,
-	=?UTF-8?q?Linfeng=20Sun=C2=A0?= <linfeng.sun.dev@gamil.com>,
+	Li RongQing <lirongqing@baidu.com>,
 	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1229/1376] vdpa_sim: fix cleanup after worker creation failure
-Date: Sat, 12 Sep 2026 09:00:55 +0200
-Message-ID: <20260912065634.936564644@linuxfoundation.org>
+Subject: [PATCH 6.12 1230/1376] virtio_pci: fix wrong queue index for admin vq in intx path
+Date: Sat, 12 Sep 2026 09:00:56 +0200
+Message-ID: <20260912065634.959105638@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -46,93 +45,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Linfeng Sun  <linfeng.sun.dev@gamil.com>
+From: Li RongQing <lirongqing@baidu.com>
 
-[ Upstream commit bd670e5dfd2b01fd9692f61fa1456434c54026a4 ]
+[ Upstream commit dc3f1eef9ab678c396baf5df12aba61db061aa8c ]
 
-vdpasim_create() leaves vdpasim->worker as an ERR_PTR when
-kthread_run_worker() fails. The error path then drops the device
-reference, which releases the partially initialized simulator.
+In vp_find_vqs_intx(), the admin vq was set up using the local
+queue_idx counter instead of avq->vq_index (the actual queue index
+obtained from the device). This differs from vp_find_vqs_msix() which
+correctly uses avq->vq_index. Using the wrong index causes the admin
+virtqueue to be mapped to an incorrect hardware queue.
 
-vdpasim_free() unconditionally passes the worker pointer to
-kthread_destroy_worker(), so the ERR_PTR is dereferenced and can trigger
-a general protection fault.
+Fix it by using avq->vq_index consistent with the msix path.
 
-Store the worker error, clear the pointer, and only clean up the worker
-when it was successfully initialized. Also make the release path tolerate
-partially initialized objects by guarding virtqueue and IOTLB cleanup,
-since the same release path can be reached from other initialization
-failures.
-
-I found this bug myself, though the patch was written with AI assistance.
-
-Fixes: 76acfa7bc54f ("vdpa_sim: use kthread worker")
-Assisted-by: OpenAI-Codex:GPT-5
-Reviewed-by: Eugenio Pérez <eperezma@redhat.com>
-Signed-off-by: Linfeng Sun <linfeng.sun.dev@gamil.com>
-Message-ID: <20260620100959.2070316-1-slf@hdu.edu.cn>
+Fixes: af22bbe1f4a5 ("virtio: create admin queues alongside other virtqueues")
+Signed-off-by: Li RongQing <lirongqing@baidu.com>
+Message-ID: <20260629033538.2476-1-lirongqing@baidu.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vdpa/vdpa_sim/vdpa_sim.c | 25 +++++++++++++++++--------
- 1 file changed, 17 insertions(+), 8 deletions(-)
+ drivers/virtio/virtio_pci_common.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/vdpa/vdpa_sim/vdpa_sim.c b/drivers/vdpa/vdpa_sim/vdpa_sim.c
-index 481c52be50231..825690c6fed19 100644
---- a/drivers/vdpa/vdpa_sim/vdpa_sim.c
-+++ b/drivers/vdpa/vdpa_sim/vdpa_sim.c
-@@ -231,8 +231,11 @@ struct vdpasim *vdpasim_create(struct vdpasim_dev_attr *dev_attr,
- 	kthread_init_work(&vdpasim->work, vdpasim_work_fn);
- 	vdpasim->worker = kthread_create_worker(0, "vDPA sim worker: %s",
- 						dev_attr->name);
--	if (IS_ERR(vdpasim->worker))
-+	if (IS_ERR(vdpasim->worker)) {
-+		ret = PTR_ERR(vdpasim->worker);
-+		vdpasim->worker = NULL;
- 		goto err_iommu;
-+	}
- 
- 	mutex_init(&vdpasim->mutex);
- 	spin_lock_init(&vdpasim->iommu_lock);
-@@ -744,18 +747,24 @@ static void vdpasim_free(struct vdpa_device *vdpa)
- 	struct vdpasim *vdpasim = vdpa_to_sim(vdpa);
- 	int i;
- 
--	kthread_cancel_work_sync(&vdpasim->work);
--	kthread_destroy_worker(vdpasim->worker);
-+	if (vdpasim->worker) {
-+		kthread_cancel_work_sync(&vdpasim->work);
-+		kthread_destroy_worker(vdpasim->worker);
-+	}
- 
--	for (i = 0; i < vdpasim->dev_attr.nvqs; i++) {
--		vringh_kiov_cleanup(&vdpasim->vqs[i].out_iov);
--		vringh_kiov_cleanup(&vdpasim->vqs[i].in_iov);
-+	if (vdpasim->vqs) {
-+		for (i = 0; i < vdpasim->dev_attr.nvqs; i++) {
-+			vringh_kiov_cleanup(&vdpasim->vqs[i].out_iov);
-+			vringh_kiov_cleanup(&vdpasim->vqs[i].in_iov);
-+		}
- 	}
- 
- 	vdpasim->dev_attr.free(vdpasim);
- 
--	for (i = 0; i < vdpasim->dev_attr.nas; i++)
--		vhost_iotlb_reset(&vdpasim->iommu[i]);
-+	if (vdpasim->iommu) {
-+		for (i = 0; i < vdpasim->dev_attr.nas; i++)
-+			vhost_iotlb_reset(&vdpasim->iommu[i]);
-+	}
- 	kfree(vdpasim->iommu);
- 	kfree(vdpasim->iommu_pt);
- 	kfree(vdpasim->vqs);
+diff --git a/drivers/virtio/virtio_pci_common.c b/drivers/virtio/virtio_pci_common.c
+index 189261d230d2e..af31711f3861a 100644
+--- a/drivers/virtio/virtio_pci_common.c
++++ b/drivers/virtio/virtio_pci_common.c
+@@ -502,7 +502,7 @@ static int vp_find_vqs_intx(struct virtio_device *vdev, unsigned int nvqs,
+ 	if (!avq_num)
+ 		return 0;
+ 	sprintf(avq->name, "avq.%u", avq->vq_index);
+-	vq = vp_setup_vq(vdev, queue_idx++, vp_modern_avq_done, avq->name,
++	vq = vp_setup_vq(vdev, avq->vq_index, vp_modern_avq_done, avq->name,
+ 			 false, VIRTIO_MSI_NO_VECTOR,
+ 			 &vp_dev->admin_vq.info);
+ 	if (IS_ERR(vq)) {
 -- 
 2.53.0
 
