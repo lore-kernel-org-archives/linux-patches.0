@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0765B332EAE;
-	Sat, 12 Sep 2026 14:58:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F014030568E;
+	Sat, 12 Sep 2026 14:58:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789225088; cv=none; b=UlLHysj+sotxTSvL+gHW9g808Tm+bKqRLq6TlJUGS7AbyA6aaOg7OJwQOG8Y2jUwkL2pHyY9aQzS7ERtDU3HO1PrhOhrcivVMz5uQPHxcFTUy+EjJamip0GI/N7Rzye8QN7cybgJMVJlV/3+V0kXKt/UdDz5306A12RuEEuCYKw=
+	t=1789225092; cv=none; b=sgLn2pE0TdTHW6KSgYGP+sqyWX3IS+0frkoKxUFksTfTqWp7rkA0tWkcbpZHRkpoJw/TbsgPf06FYMWCb3xgAJ7NKem3crewGfbcfVuxrztZ3f9hx54m+oB3uoG3p1EDbS/0BLRmdlpVLUWihJtk36JfHqdWl3xh/jljBBIgCtg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789225088; c=relaxed/simple;
-	bh=yGEAwZYaVRVcZU6JjSfVPKULQ4V+22k2FFgYCtgR/dM=;
+	s=arc-20240116; t=1789225092; c=relaxed/simple;
+	bh=9WGC0We68T3u0mt/gGVzsryd3CnGkUIfqGZzIVTpZto=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VJ5ONTbKvB35V6edRljsE68QoNrCamy4i2N1kWKfGMXeHf79tInOAho6t4hG/8/qeYYZvE+JHJricBicN/ieQkUqtulUxyjWSwrhPXZ9AmI+AllXGdfilmREqYMoKhuF5XmQ+rHu3ePKPvOLFjEgUBVIU5osj0r/jzmecOdNHkg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kycFXHzA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=g9/gtK0AgVjTkMBtXEBDDV74irccWbWfq60EVyNDcGiLSqIn19Ceh4bxg5LvkJFDCb1ma5PaeztDDsk8htxQeyepYevxj8wPNMHAnVbkMJB87VQ0rRbw6kYitZhdk52ycPD+P4FQjBI9BNiYJEAjm3qEZKw7HZxKq9iIHNErK6g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hMYcrdMb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kycFXHzA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00D1A1F000FF;
-	Sat, 12 Sep 2026 14:58:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hMYcrdMb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56CC11F000FF;
+	Sat, 12 Sep 2026 14:58:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789225085;
-	bh=fBTivmb56p0S/uDmYCf4EGIZUTB1Ak9/IVoQKvRzL5A=;
+	s=korg; t=1789225090;
+	bh=kGE7Mg67+V/yr28Z1wwtqpq8Z4/yMeddlI6K0gm5qzk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kycFXHzAUzT7HNsVLmAm44SZWN9cTTW8YTrLgcf94EVOYVc9TqdQCzHRjr7l/5U+K
-	 Tf6NAapO+G317qma+SNipomWo7GLiWeMcliTC1R34llmwiZ5k67bDHbWPzrnSeFhD/
-	 gJI62NEZ9qcSfpFOqh+ohGRSyBZd7p/hJGyedkLg=
+	b=hMYcrdMbNhoA9CbvUuEjQaIpsZ148mXe1KYFK21cqi8iIDSXsQrHSo9gZJ42EfJ3T
+	 ElLbBT59cZcxkoaTJGXZOkGn4DTVMVPQoPVPx2Z3kHZc8+ZsEhs64jvlv5GGOkBCG/
+	 4l2fuC1F2w3YXTO+OgBfivbpHe1Ti0Wf75D678k0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boris Burkov <boris@bur.io>,
-	Yichong Chen <chenyichong@uniontech.com>,
-	David Sterba <dsterba@suse.com>,
+	HyeongJun An <sammiee5311@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1125/1424] btrfs: retry verity reads for not-uptodate Merkle folios
-Date: Sat, 12 Sep 2026 08:59:17 +0200
-Message-ID: <20260912065632.494253256@linuxfoundation.org>
+Subject: [PATCH 6.6 1126/1424] Bluetooth: virtio_bt: avoid OOB read of build info string
+Date: Sat, 12 Sep 2026 08:59:18 +0200
+Message-ID: <20260912065632.516418286@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -52,76 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yichong Chen <chenyichong@uniontech.com>
+From: HyeongJun An <sammiee5311@gmail.com>
 
-[ Upstream commit 8cc569696dac51fc62bb39b3b8f530582b916d29 ]
+[ Upstream commit 502adc06ba76dee19c292ae4a07d74d202fe734d ]
 
-btrfs_read_merkle_tree_page() can find a folio in the mapping that is not
-uptodate.  After taking the folio lock, the current code treats that state
-as a read error and returns -EIO.
+The virtbt_setup_zephyr() sends the Zephyr vendor command 0xfc08 (Read
+Build Information) and hands the response to bt_dev_info() and
+hci_set_fw_info() as a "%s" string starting at skb->data + 1, without
+checking the length. A backend that answers with status only leaves that
+pointer past the end of the received data, so the walk reads adjacent
+slab memory until it meets a NUL. Those bytes reach the kernel log and
+the firmware-info debugfs file.
 
-That can make a previous transient read failure sticky.  If the failed read
-left a not-uptodate folio in the mapping, later callers find that folio and
-fail instead of retrying the read.
+To fix this, print the string with a bounded "%.*s" limited to
+skb->len - 1. A short or unterminated response then prints as much as
+arrived instead of failing setup.
 
-Keep the existing page-cache insertion and locking order, but retry the
-Merkle item read when a not-uptodate folio is found in the mapping.  Also
-unlock the folio when read_key_bytes() fails so that a later caller can
-lock it and retry the read.
+This mirrors commit dd068ef04412 ("Bluetooth: bpa10x: avoid OOB read of
+revision string in bpa10x_setup()"), which fixed the identical pattern.
 
-Fixes: 06ed09351b67 ("btrfs: convert btrfs_read_merkle_tree_page() to use a folio")
-Reviewed-by: Boris Burkov <boris@bur.io>
-Signed-off-by: Yichong Chen <chenyichong@uniontech.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: afd2daa26c7a ("Bluetooth: Add support for virtio transport driver")
+Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/verity.c | 16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ drivers/bluetooth/virtio_bt.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/fs/btrfs/verity.c b/fs/btrfs/verity.c
-index 744f4f4d4c681..ddb651e0bb05c 100644
---- a/fs/btrfs/verity.c
-+++ b/fs/btrfs/verity.c
-@@ -732,14 +732,18 @@ static struct page *btrfs_read_merkle_tree_page(struct inode *inode,
- 			goto out;
+diff --git a/drivers/bluetooth/virtio_bt.c b/drivers/bluetooth/virtio_bt.c
+index ca62b73699398..2db5c7a519b21 100644
+--- a/drivers/bluetooth/virtio_bt.c
++++ b/drivers/bluetooth/virtio_bt.c
+@@ -120,9 +120,13 @@ static int virtbt_setup_zephyr(struct hci_dev *hdev)
+ 	if (IS_ERR(skb))
+ 		return PTR_ERR(skb);
  
- 		folio_lock(folio);
--		/* If it's not uptodate after we have the lock, we got a read error. */
--		if (!folio_test_uptodate(folio)) {
-+		/* Folio was truncated from mapping. */
-+		if (!folio->mapping) {
- 			folio_unlock(folio);
- 			folio_put(folio);
--			return ERR_PTR(-EIO);
-+			goto again;
- 		}
--		folio_unlock(folio);
--		goto out;
-+		/* Another reader may have filled the folio while we waited. */
-+		if (folio_test_uptodate(folio)) {
-+			folio_unlock(folio);
-+			goto out;
-+		}
-+		goto read_folio;
- 	}
+-	bt_dev_info(hdev, "%s", (char *)(skb->data + 1));
++	/* Bounded print: the backend controls skb->len. */
++	if (skb->len > 1) {
++		int len = skb->len - 1;
  
- 	folio = filemap_alloc_folio(mapping_gfp_constraint(inode->i_mapping, ~__GFP_FS),
-@@ -756,6 +760,7 @@ static struct page *btrfs_read_merkle_tree_page(struct inode *inode,
- 		return ERR_PTR(ret);
- 	}
+-	hci_set_fw_info(hdev, "%s", skb->data + 1);
++		bt_dev_info(hdev, "%.*s", len, (char *)(skb->data + 1));
++		hci_set_fw_info(hdev, "%.*s", len, skb->data + 1);
++	}
  
-+read_folio:
- 	/*
- 	 * Merkle item keys are indexed from byte 0 in the merkle tree.
- 	 * They have the form:
-@@ -765,6 +770,7 @@ static struct page *btrfs_read_merkle_tree_page(struct inode *inode,
- 	ret = read_key_bytes(BTRFS_I(inode), BTRFS_VERITY_MERKLE_ITEM_KEY, off,
- 			     folio_address(folio), PAGE_SIZE, &folio->page);
- 	if (ret < 0) {
-+		folio_unlock(folio);
- 		folio_put(folio);
- 		return ERR_PTR(ret);
- 	}
+ 	kfree_skb(skb);
+ 	return 0;
 -- 
 2.53.0
 
