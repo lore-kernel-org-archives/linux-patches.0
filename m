@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E47132ED24;
-	Sat, 12 Sep 2026 19:09:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 284CE3A9636;
+	Sat, 12 Sep 2026 19:09:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789240191; cv=none; b=TR3sgAkTUNkUrUmBuuQOO/kZ9qXpnbOyujJ561uv/nx+IfKuZfoPHikcc0KlLTmEvk8Cxb6wfvbvJQGzziNuP4n5Fs0KlYuiPMJReAErurV42Re9VfRliKTs0Oif4cX0sW4a8qvl8EjxO1ukrChOw4zebRFbxQuGnnAOtTxFEqQ=
+	t=1789240196; cv=none; b=TR1pTKJP4nUjwsJjZQ9+Ozg/tLZkVQA2l310DbBpbq+QfEpLjj3iZcetc4m3e3AXvBXBZwQsgo3Q2L3pnjwfWbbCdI96I+LmFt1Eerc+5iaYmWn12w8fvpkfcE5O0q6L8Mh0NMe+z70nrwldHOz+PkANoczNZlo/PPvUSaOWd20=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789240191; c=relaxed/simple;
-	bh=lCqOz8AwZtbow41nioJHftduG1wbDrDlilai2UNmJX0=;
+	s=arc-20240116; t=1789240196; c=relaxed/simple;
+	bh=D98YIqwkvz08OEVuFjYu6lPWyQRWq5FzS4iK5BEpqU4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dIWq0PbrA11we7oGO91FSldDayBUN4IHfYUrinuWHXBLRx3xLiSvBcG6vGuozJKDA8dJoP9MjGz8rRF9c5r6BGwHO+apyxSGDqKCoCBOZoE/MDl2+m8+wc3E96URTKvrhi8DYmLi1RS/95alEji2Qc8kKsgrFMtxBoARp6TLYtc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jlUtrZEU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=uAG3HmH8XADSXrGFFWCQzKw6rWj/4F/NtjKGONVkRkN6Hpzr5fIcdQhruxe34HffuYnZlTL9AttkTPmOiqLcEvnjzmiypdAlITU4JrziRHOD6rbIf+ywANi9bMqB8L9jFQCuz6mX80YFMbq96/WqBBSjGLh9Wt22LV28JHawJyo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q1q6cK3a; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jlUtrZEU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 229BB1F000FF;
-	Sat, 12 Sep 2026 19:09:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q1q6cK3a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A2921F000FF;
+	Sat, 12 Sep 2026 19:09:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789240190;
-	bh=nXnkbDru6E2ayS/Ye0cz5lOdA67XPzFWsRG3GeY4LEE=;
+	s=korg; t=1789240195;
+	bh=xe12QLbH0DQ1jO8+hcUS2/HqVeuy99mYK/zL2X/hFYs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jlUtrZEUKu0D/4Ghrdv9J7MYb83drd+5eTbJteIXtnJIct0CfQcGiN8guHBzmoQNm
-	 jf0pXWkmljxgDTVixQtSEjCh4byjSDp/eCK0s0sv6x0JbURiFwFQOy9TQ+iEBx+RwZ
-	 QC3HlF8edGijkKTee0aUv0MelJHwpbYukLxP2e+w=
+	b=Q1q6cK3aP6mO2OkY8y9YHa1dtk4+cHrZNZ/sJBu9C7mkRV8GFKfjcDfuPPmkJJ1Ol
+	 PIhx6sHtSTdFgEx3jOHiFCs/uouDPQB+3c3yIJo3HSQYcHdoKndhbgJsswfZq6XnlF
+	 0EWkEy1ZBp+sMBi3nd3Wk7h2cwgregPHBGyb17AA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Henrik Grimler <henrik.grimler@axis.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 764/935] perf synthetic-events: Fix uninitialized pthread_join
-Date: Sat, 12 Sep 2026 09:03:14 +0200
-Message-ID: <20260912065544.357044550@linuxfoundation.org>
+Subject: [PATCH 5.15 812/935] power: supply: bq27xxx: bq27520g4: fix REG_TTES address
+Date: Sat, 12 Sep 2026 09:04:02 +0200
+Message-ID: <20260912065545.462505313@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -51,38 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Henrik Grimler <henrik.grimler@axis.com>
 
-[ Upstream commit 54ba44db4dddc4ca06b49bae0f9d6c5861430b18 ]
+[ Upstream commit c774a623c821a173c950e1297f8e8c85a89455be ]
 
-In perf_event__synthesize_threads(), fix an uninitialized pthread_join()
-call when thread creation fails by only joining the successfully
-created threads.
+According to the technical reference manual the StandbyTimeToEmpty
+(TTES) register is at 0x1a, not 0x1c. At 0x1c StateOfHealth instead
+resides.
 
-Assisted-by: Antigravity:gemini-3.1-pro
-Fixes: 340b47f510bb ("perf top: Implement multithreading for perf_event__synthesize_threads")
-Signed-off-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Fixes: 8835cae5f2ab ("power: supply: bq27xxx: adds specific support for bq27520-g4 revision.")
+Signed-off-by: Henrik Grimler <henrik.grimler@axis.com>
+Link: https://patch.msgid.link/20260811-bq27z746-v1-3-3a4fa38205cc@axis.com
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/synthetic-events.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/power/supply/bq27xxx_battery.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/perf/util/synthetic-events.c b/tools/perf/util/synthetic-events.c
-index c69ad7a1a6a78..66ba0fa1e3835 100644
---- a/tools/perf/util/synthetic-events.c
-+++ b/tools/perf/util/synthetic-events.c
-@@ -1047,8 +1047,8 @@ int perf_event__synthesize_threads(struct perf_tool *tool,
- 	}
- 	err = 0;
- out_join:
--	for (i = 0; i < thread_nr; i++)
--		pthread_join(synthesize_threads[i], NULL);
-+	for (j = 0; j < i; j++)
-+		pthread_join(synthesize_threads[j], NULL);
- 	free(args);
- free_threads:
- 	free(synthesize_threads);
+diff --git a/drivers/power/supply/bq27xxx_battery.c b/drivers/power/supply/bq27xxx_battery.c
+index 844d8fef014f1..b365045c2ad8a 100644
+--- a/drivers/power/supply/bq27xxx_battery.c
++++ b/drivers/power/supply/bq27xxx_battery.c
+@@ -324,7 +324,7 @@ static u8
+ 		[BQ27XXX_REG_FLAGS] = 0x0a,
+ 		[BQ27XXX_REG_TTE] = 0x16,
+ 		[BQ27XXX_REG_TTF] = INVALID_REG_ADDR,
+-		[BQ27XXX_REG_TTES] = 0x1c,
++		[BQ27XXX_REG_TTES] = 0x1a,
+ 		[BQ27XXX_REG_TTECP] = INVALID_REG_ADDR,
+ 		[BQ27XXX_REG_NAC] = 0x0c,
+ 		[BQ27XXX_REG_RC] = 0x10,
 -- 
 2.53.0
 
