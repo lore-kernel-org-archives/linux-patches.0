@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBFBF2931F5;
-	Sat, 12 Sep 2026 14:23:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A71662DC321;
+	Sat, 12 Sep 2026 14:23:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789222989; cv=none; b=DPVK3vOJGIO4iY7RWe3O1gsG+gMBuwsbjh3b7egtKns4+oOM4s7Xdlu2Mp25ZI4AVoCnEHTJS1V6fuhNO/hPsO77f0Pgl37CKW2z0TrCmQQ8WWI8dUJwghDsWq3Z1AYudBJCIQBCQJAn8cVnOvq53PCRP3PzhtadtTLNCrisAG8=
+	t=1789222994; cv=none; b=bDXX987RLycu/Gs0zwnr7bqgHl6kbF2gqJmmjCazI1HKfufK6zbouZdTh9x+ufa6RsjYr9PZXEay8tOymnX12idFEhAFOgTPvdw6F5Qd9oGQGM5HCUS5t/l0xcnmmWSXTcAObPPm95cnoVKVdU+ZTxp1/Od5r3xMFEl7poZU4ZI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789222989; c=relaxed/simple;
-	bh=5XYs7A+yPRbc4sNEpjazS1PQzxuCFoVt5PsZ6CHXXhQ=;
+	s=arc-20240116; t=1789222994; c=relaxed/simple;
+	bh=P4zJ6c2A++2KAIxGiuYejZg+pku8uETdUaiH6Ss9Kb8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=eGA+/ZJiMCiOCXYUZHiu3er3oSVLV2A3w2xqLX5ZxXBtofyIQ1smzIfoy0ap0tN0FBvqKnWFq48G6XjHc3jknRB6x6RhomlB3mNi2XttbGs4hdPu469CJ/LDmCh/zXcRX+PVZfqvgyxXwNbeB1HFDqtVsI4WguSmwZscozUxl7s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dHGIc8TH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bSk+1WfFmU8Rf6bZ1rXa/AA7Myp3nkjIslVY654/yYusdhhemRo5HHvmLyY25OhWjeti3Wt+Op1XCciBDxPbXuo8vOYlQSZyNNSu3jbuIBIc6k1xSfnHwV7TeNARwMgZpemJh74ew6LQ1rym+KBmIJKnMmnqSWMTuzu8YJS+n1o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nXG/tMvs; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dHGIc8TH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 758D31F000FF;
-	Sat, 12 Sep 2026 14:23:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nXG/tMvs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACB331F000FF;
+	Sat, 12 Sep 2026 14:23:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789222988;
-	bh=rjfQOPTGejXOdLu8l5t1NESWLlO+j7UM5HwPQ3TCMQE=;
+	s=korg; t=1789222993;
+	bh=IDcbqNng802eJbzN4SSU8NgTYlmuDtlmdNrvQ14sxCU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dHGIc8TH48G2tnVg+cNGbeGN6d1eDcnj0JDwACPXZrRDhMvYRCQ8+7bYy2GXtw+Uk
-	 PHWX6xMM3q6DTcl/QqrrJ/6oMDiPxpmUcpxLHvztFxABoCYHPCSaiLXR6TbZ8cOxzN
-	 sFaSKIXSRxMDd3Lts7/qsISfO1U06K/uGushvhfo=
+	b=nXG/tMvsZHcf6TNF9fZf6/2UQ559W3fIA+PwuO9IvdMHl6FYhg0L/0UZ8EAItXJYU
+	 ot6rLi0vR0ggQj2ShDW9udqfLTXFuf73FURRCABlzJ8GtatLz0FLEs5ushUiVWqf2v
+	 /kdN7f3ZvDJywbaEKUe5sgvLaTyFsSQ3dVXHaLXA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Armin Wolf <W_Armin@gmx.de>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Felix Gu <gu_0233@qq.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0698/1424] platform/x86: dell-wmi-base: Fix resource leak on module load failure
-Date: Sat, 12 Sep 2026 08:52:10 +0200
-Message-ID: <20260912065622.929336338@linuxfoundation.org>
+Subject: [PATCH 6.6 0699/1424] remoteproc: qcom_q6v5_adsp: Fix reference leak for device node
+Date: Sat, 12 Sep 2026 08:52:11 +0200
+Message-ID: <20260912065622.951762339@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -45,59 +45,41 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Armin Wolf <W_Armin@gmx.de>
+From: Felix Gu <gu_0233@qq.com>
 
-[ Upstream commit 072841e02cf9c00a7e8a9c567a14239e02ca47ad ]
+[ Upstream commit 8c952807c2cebd5e9e9b37146c9383229794c129 ]
 
-We need to properly clean up the SMBIOS request and the privacy driver
-when the module load fails.
+When calling of_parse_phandle_with_args(), the caller is responsible
+to call of_node_put() to release the reference of device node.
+In adsp_map_carveout, it does not release the reference.
 
-Fixes: 8af9fa37b8a3 ("platform/x86: dell-privacy: Add support for Dell hardware privacy")
-Signed-off-by: Armin Wolf <W_Armin@gmx.de>
-Link: https://patch.msgid.link/20260612173451.467629-3-W_Armin@gmx.de
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Fixes: f22eedff28af ("remoteproc: qcom: Add support for memory sandbox")
+Signed-off-by: Felix Gu <gu_0233@qq.com>
+Link: https://lore.kernel.org/r/tencent_EDC2253D3B1C22217E1259E07765D269100A@qq.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/dell/dell-wmi-base.c | 17 +++++++++++++++--
- 1 file changed, 15 insertions(+), 2 deletions(-)
+ drivers/remoteproc/qcom_q6v5_adsp.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/platform/x86/dell/dell-wmi-base.c b/drivers/platform/x86/dell/dell-wmi-base.c
-index 01f3ff21c8884..713ec2c12a04e 100644
---- a/drivers/platform/x86/dell/dell-wmi-base.c
-+++ b/drivers/platform/x86/dell/dell-wmi-base.c
-@@ -839,9 +839,22 @@ static int __init dell_wmi_init(void)
+diff --git a/drivers/remoteproc/qcom_q6v5_adsp.c b/drivers/remoteproc/qcom_q6v5_adsp.c
+index 6c67514cc4931..00a98de6d112e 100644
+--- a/drivers/remoteproc/qcom_q6v5_adsp.c
++++ b/drivers/remoteproc/qcom_q6v5_adsp.c
+@@ -362,6 +362,7 @@ static int adsp_map_carveout(struct rproc *rproc)
+ 		return ret;
  
- 	err = dell_privacy_register_driver();
- 	if (err)
--		return err;
-+		goto out_smbios;
+ 	sid = args.args[0] & SID_MASK_DEFAULT;
++	of_node_put(args.np);
  
--	return wmi_driver_register(&dell_wmi_driver);
-+	err = wmi_driver_register(&dell_wmi_driver);
-+	if (err)
-+		goto out_privacy;
-+
-+	return 0;
-+
-+out_privacy:
-+	dell_privacy_unregister_driver();
-+
-+out_smbios:
-+	if (wmi_requires_smbios_request)
-+		dell_wmi_events_set_enabled(false);
-+
-+	return err;
- }
- late_initcall(dell_wmi_init);
- 
+ 	/* Add SID configuration for ADSP Firmware to SMMU */
+ 	iova =  adsp->mem_phys | (sid << 32);
 -- 
 2.53.0
 
