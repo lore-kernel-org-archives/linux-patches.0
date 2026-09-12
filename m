@@ -1,40 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 205DD1FBEA6;
-	Sat, 12 Sep 2026 19:51:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFA301FBEA6;
+	Sat, 12 Sep 2026 19:51:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789242684; cv=none; b=oKHGzb4jx0xgm3RO7YCy2AJI8qSl1e5nah37cCdbtNTpJkRcXeDLQdCW6XfiDziKJWbwn5l3qKN+OwVW7GbTN7nS418uv6qR2oy577cKRTuNHXFXYVViIilPkODKM4fHaZjTWfN1y7VlXvjWlonjUQ5oYBB7I+rkv4bkzk3r5k8=
+	t=1789242687; cv=none; b=l2FeTtq6o/2IcWsjrZFtwDNOfCRRC1uow+lOLVBnfcVBpf50iitQ5TFU+x1PQLQWkVFERmPJwcZ3QMER11FBHFplEbzP58LuLdLPoo3vvg8sYxfjCbsjP2fr88FZsO8n58V0Pd1KtryzBf6S7jCMpBQpN49T35EJK70s4hGyqNo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789242684; c=relaxed/simple;
-	bh=CLKZTDuTw7aVFeUrxfdeFfAd5NRKslEO1eqbqGLN4cY=;
+	s=arc-20240116; t=1789242687; c=relaxed/simple;
+	bh=wBbVrNTqpO1sT5KYxpfFB81Uz2ok02E73K9oV9prjUQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y2cnPyCTiIN6HldGgzAPCSFqQ+mOZFSJx+e2NtThSGTYZpdG4DsKffLxXmVkvZdk43MXWBEEUsT00EkzsZCZvONSE2e15ZR+xNZRD6uS38h0YDaS6cWd7LD+/XW9U6j0yrspHAS1UTQt2r2y/akWkoURb/YGwnWMTnIEpe4iruA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gkhK9WXy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LrRyXjlWxg4+82am1qpzn1Msc0K9PLB2LtsZEIlnR894HzE6MLdNzUL26kjyxpLN1EtygtlYOCeYdLGDx8K5oGX2M0xp9hlHojaOjkCIoQJ81ZukNcO8CQGQdeY1PCWi0a4mNwO9Ws8m554JNAIk7vQSN7SQ2hdKfrYW/v/8uHc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X8dFke0E; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gkhK9WXy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79D251F000FF;
-	Sat, 12 Sep 2026 19:51:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X8dFke0E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 267561F000FF;
+	Sat, 12 Sep 2026 19:51:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789242683;
-	bh=sAawET8o3fZIeT3A2t2EYr2+Csw0+pNo4NNdUfxmSmU=;
+	s=korg; t=1789242685;
+	bh=lpwXmMy8Tutnh02+N00EdXtnNJpVV0idFxC6nHuZonA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gkhK9WXya0CxUcl1+2tAvysQW48yyMV4Q+3zcHUFSQrP8s/ZhlVQAL+X3TzkxWtQ/
-	 hGabOSWg+lI71RKHvvQu1KYJq7ez/ht0t0iPUilxZxTZJ1zopeFPa01Zf9tMCJFE46
-	 2aMrSzX/a4C8xwtX7bHE4ShPP22afxSusoEt1ErU=
+	b=X8dFke0EkDyNN4FLKttin7HjOOubzURUnmPl/U8TelPs5YTXFOV38nh3B40EwkYwk
+	 ntoyAB8ItzsSXIp3mShQidm5wXSHHort5E4E/fixnsh18CU23D6AUSJlugAOhbKbV6
+	 qmkiQ1doSu0J6/zqMTBHkM+DXx+GW/g4MHUbPwmo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Bart Van Assche <bvanassche@acm.org>,
+	Juergen Gross <jgross@suse.com>,
+	Hannes Reinecke <hare@suse.de>,
+	Nilesh Javali <njavali@marvell.com>,
+	Michael Cyr <mikecyr@linux.ibm.com>,
+	Chris Boot <bootc@bootc.net>,
+	Felipe Balbi <balbi@kernel.org>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Stefan Hajnoczi <stefanha@redhat.com>,
+	Laurence Oberman <loberman@redhat.com>,
 	Christoph Hellwig <hch@lst.de>,
 	Himanshu Madhani <himanshu.madhani@oracle.com>,
 	Mike Christie <michael.christie@oracle.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 490/798] scsi: target: core: Rename transport_init_se_cmd()
-Date: Sat, 12 Sep 2026 09:01:58 +0200
-Message-ID: <20260912065528.370869044@linuxfoundation.org>
+Subject: [PATCH 5.10 491/798] scsi: target: core: Break up target_submit_cmd_map_sgls()
+Date: Sat, 12 Sep 2026 09:01:59 +0200
+Message-ID: <20260912065528.393508346@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -55,13 +65,45 @@ Content-Transfer-Encoding: 8bit
 
 From: Mike Christie <michael.christie@oracle.com>
 
-[ Upstream commit a78b713618c02752310b2be7da465a34fb660ed9 ]
+[ Upstream commit 750a1d93f90583a270eb62f36e6d32ebbb6af779 ]
 
-Rename transport_init_se_cmd() to __target_init_cmd() to reflect that it is
-more of an internal function that drivers should normally not use and
-because we are going to add a new init function in the next patches.
+This breaks up target_submit_cmd_map_sgls() into 3 helpers:
 
-Link: https://lore.kernel.org/r/20210227170006.5077-4-michael.christie@oracle.com
+ - target_init_cmd(): Do the basic general setup and get a refcount to the
+   session to make sure the caller can execute the cmd.
+
+ - target_submit_prep(): Do the mapping, cdb processing and get a ref to
+   the LUN.
+
+ - target_submit(): Pass the cmd to LIO core for execution.
+
+The above functions must be used by drivers that either:
+
+ 1. Rely on LIO for session shutdown synchronization by calling
+    target_stop_session().
+
+ 2. Need to map sgls.
+
+When the next patches are applied then simple drivers that do not need the
+extra functionality above can use target_submit_cmd() and not worry about
+failures being returned and how to handle them, since many drivers were
+getting this wrong and would have hit refcount bugs.
+
+Also, by breaking target_submit_cmd_map_sgls() up into these 3 helper
+functions, we can allow the later patches to do the init/prep from
+interrupt context and then do the submission from a workqueue.
+
+Link: https://lore.kernel.org/r/20210227170006.5077-5-michael.christie@oracle.com
+Cc: Bart Van Assche <bvanassche@acm.org>
+Cc: Juergen Gross <jgross@suse.com>
+Cc: Hannes Reinecke <hare@suse.de>
+Cc: Nilesh Javali <njavali@marvell.com>
+Cc: Michael Cyr <mikecyr@linux.ibm.com>
+Cc: Chris Boot <bootc@bootc.net>
+Cc: Felipe Balbi <balbi@kernel.org>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Stefan Hajnoczi <stefanha@redhat.com>
+Tested-by: Laurence Oberman <loberman@redhat.com>
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
 Signed-off-by: Mike Christie <michael.christie@oracle.com>
@@ -69,179 +111,311 @@ Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Stable-dep-of: ef63cc441703 ("RDMA/srpt: Pass the mapped task attribute to target_init_cmd()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/target/iscsi/iscsi_target.c    | 16 ++++++++--------
- drivers/target/target_core_transport.c | 16 ++++++++--------
- drivers/target/target_core_xcopy.c     |  8 ++++----
- drivers/usb/gadget/function/f_tcm.c    | 20 ++++++++++----------
- include/target/target_core_fabric.h    |  2 +-
- 5 files changed, 31 insertions(+), 31 deletions(-)
+ drivers/target/target_core_transport.c | 201 +++++++++++++++++--------
+ include/target/target_core_fabric.h    |   8 +
+ 2 files changed, 148 insertions(+), 61 deletions(-)
 
-diff --git a/drivers/target/iscsi/iscsi_target.c b/drivers/target/iscsi/iscsi_target.c
-index c7941130db84d..17835c878caeb 100644
---- a/drivers/target/iscsi/iscsi_target.c
-+++ b/drivers/target/iscsi/iscsi_target.c
-@@ -1154,10 +1154,10 @@ int iscsit_setup_scsi_cmd(struct iscsi_conn *conn, struct iscsi_cmd *cmd,
- 	/*
- 	 * Initialize struct se_cmd descriptor from target_core_mod infrastructure
- 	 */
--	transport_init_se_cmd(&cmd->se_cmd, &iscsi_ops,
--			conn->sess->se_sess, be32_to_cpu(hdr->data_length),
--			cmd->data_direction, sam_task_attr,
--			cmd->sense_buffer + 2, scsilun_to_int(&hdr->lun));
-+	__target_init_cmd(&cmd->se_cmd, &iscsi_ops,
-+			 conn->sess->se_sess, be32_to_cpu(hdr->data_length),
-+			 cmd->data_direction, sam_task_attr,
-+			 cmd->sense_buffer + 2, scsilun_to_int(&hdr->lun));
- 
- 	pr_debug("Got SCSI Command, ITT: 0x%08x, CmdSN: 0x%08x,"
- 		" ExpXferLen: %u, Length: %u, CID: %hu\n", hdr->itt,
-@@ -2012,10 +2012,10 @@ iscsit_handle_task_mgt_cmd(struct iscsi_conn *conn, struct iscsi_cmd *cmd,
- 					     buf);
- 	}
- 
--	transport_init_se_cmd(&cmd->se_cmd, &iscsi_ops,
--			      conn->sess->se_sess, 0, DMA_NONE,
--			      TCM_SIMPLE_TAG, cmd->sense_buffer + 2,
--			      scsilun_to_int(&hdr->lun));
-+	__target_init_cmd(&cmd->se_cmd, &iscsi_ops,
-+			  conn->sess->se_sess, 0, DMA_NONE,
-+			  TCM_SIMPLE_TAG, cmd->sense_buffer + 2,
-+			  scsilun_to_int(&hdr->lun));
- 
- 	target_get_sess_cmd(&cmd->se_cmd, true);
- 
 diff --git a/drivers/target/target_core_transport.c b/drivers/target/target_core_transport.c
-index 57b6a94981cdc..b382ad9cebed3 100644
+index b382ad9cebed3..425c5575ff40e 100644
 --- a/drivers/target/target_core_transport.c
 +++ b/drivers/target/target_core_transport.c
-@@ -1295,7 +1295,7 @@ target_check_max_data_sg_nents(struct se_cmd *cmd, struct se_device *dev,
-  * Compare the data buffer size from the CDB with the data buffer limit from the transport
-  * header. Set @cmd->residual_count and SCF_OVERFLOW_BIT or SCF_UNDERFLOW_BIT if necessary.
-  *
-- * Note: target drivers set @cmd->data_length by calling transport_init_se_cmd().
-+ * Note: target drivers set @cmd->data_length by calling __target_init_cmd().
-  *
-  * Return: TCM_NO_SENSE
-  */
-@@ -1367,7 +1367,7 @@ target_cmd_size_check(struct se_cmd *cmd, unsigned int size)
-  *
-  * Preserves the value of @cmd->tag.
-  */
--void transport_init_se_cmd(
-+void __target_init_cmd(
- 	struct se_cmd *cmd,
- 	const struct target_core_fabric_ops *tfo,
- 	struct se_session *se_sess,
-@@ -1400,7 +1400,7 @@ void transport_init_se_cmd(
- 
- 	cmd->state_active = false;
+@@ -1573,46 +1573,31 @@ transport_generic_map_mem_to_cmd(struct se_cmd *cmd, struct scatterlist *sgl,
  }
--EXPORT_SYMBOL(transport_init_se_cmd);
-+EXPORT_SYMBOL(__target_init_cmd);
  
- static sense_reason_t
- transport_check_alloc_task_attr(struct se_cmd *cmd)
-@@ -1625,9 +1625,9 @@ int target_submit_cmd_map_sgls(struct se_cmd *se_cmd, struct se_session *se_sess
+ /**
+- * target_submit_cmd_map_sgls - lookup unpacked lun and submit uninitialized
+- * 			 se_cmd + use pre-allocated SGL memory.
+- *
+- * @se_cmd: command descriptor to submit
++ * target_init_cmd - initialize se_cmd
++ * @se_cmd: command descriptor to init
+  * @se_sess: associated se_sess for endpoint
+- * @cdb: pointer to SCSI CDB
+  * @sense: pointer to SCSI sense buffer
+  * @unpacked_lun: unpacked LUN to reference for struct se_lun
+  * @data_length: fabric expected data transfer length
+  * @task_attr: SAM task attribute
+  * @data_dir: DMA data direction
+  * @flags: flags for command submission from target_sc_flags_tables
+- * @sgl: struct scatterlist memory for unidirectional mapping
+- * @sgl_count: scatterlist count for unidirectional mapping
+- * @sgl_bidi: struct scatterlist memory for bidirectional READ mapping
+- * @sgl_bidi_count: scatterlist count for bidirectional READ mapping
+- * @sgl_prot: struct scatterlist memory protection information
+- * @sgl_prot_count: scatterlist count for protection information
+  *
+  * Task tags are supported if the caller has set @se_cmd->tag.
+  *
+- * Returns non zero to signal active I/O shutdown failure.  All other
+- * setup exceptions will be returned as a SCSI CHECK_CONDITION response,
+- * but still return zero here.
++ * Returns:
++ *	- less than zero to signal active I/O shutdown failure.
++ *	- zero on success.
+  *
+- * This may only be called from process context, and also currently
+- * assumes internal allocation of fabric payload buffer by target-core.
++ * If the fabric driver calls target_stop_session, then it must check the
++ * return code and handle failures. This will never fail for other drivers,
++ * and the return code can be ignored.
+  */
+-int target_submit_cmd_map_sgls(struct se_cmd *se_cmd, struct se_session *se_sess,
+-		unsigned char *cdb, unsigned char *sense, u64 unpacked_lun,
+-		u32 data_length, int task_attr, int data_dir, int flags,
+-		struct scatterlist *sgl, u32 sgl_count,
+-		struct scatterlist *sgl_bidi, u32 sgl_bidi_count,
+-		struct scatterlist *sgl_prot, u32 sgl_prot_count)
++int target_init_cmd(struct se_cmd *se_cmd, struct se_session *se_sess,
++		    unsigned char *sense, u64 unpacked_lun,
++		    u32 data_length, int task_attr, int data_dir, int flags)
+ {
+ 	struct se_portal_group *se_tpg;
+-	sense_reason_t rc;
+-	int ret;
+-
+-	might_sleep();
+ 
+ 	se_tpg = se_sess->se_tpg;
+ 	BUG_ON(!se_tpg);
+@@ -1620,54 +1605,70 @@ int target_submit_cmd_map_sgls(struct se_cmd *se_cmd, struct se_session *se_sess
+ 
+ 	if (flags & TARGET_SCF_USE_CPUID)
+ 		se_cmd->se_cmd_flags |= SCF_USE_CPUID;
++	/*
++	 * Signal bidirectional data payloads to target-core
++	 */
++	if (flags & TARGET_SCF_BIDI_OP)
++		se_cmd->se_cmd_flags |= SCF_BIDI;
++
++	if (flags & TARGET_SCF_UNKNOWN_SIZE)
++		se_cmd->unknown_data_length = 1;
+ 	/*
+ 	 * Initialize se_cmd for target operation.  From this point
  	 * exceptions are handled by sending exception status via
  	 * target_core_fabric_ops->queue_status() callback
  	 */
--	transport_init_se_cmd(se_cmd, se_tpg->se_tpg_tfo, se_sess,
--				data_length, data_dir, task_attr, sense,
--				unpacked_lun);
-+	__target_init_cmd(se_cmd, se_tpg->se_tpg_tfo, se_sess,
-+			  data_length, data_dir, task_attr, sense,
-+			  unpacked_lun);
+-	__target_init_cmd(se_cmd, se_tpg->se_tpg_tfo, se_sess,
+-			  data_length, data_dir, task_attr, sense,
+-			  unpacked_lun);
++	__target_init_cmd(se_cmd, se_tpg->se_tpg_tfo, se_sess, data_length,
++			  data_dir, task_attr, sense, unpacked_lun);
  
- 	if (flags & TARGET_SCF_UNKNOWN_SIZE)
- 		se_cmd->unknown_data_length = 1;
-@@ -1800,8 +1800,8 @@ int target_submit_tmr(struct se_cmd *se_cmd, struct se_session *se_sess,
- 	se_tpg = se_sess->se_tpg;
- 	BUG_ON(!se_tpg);
- 
--	transport_init_se_cmd(se_cmd, se_tpg->se_tpg_tfo, se_sess,
--			      0, DMA_NONE, TCM_SIMPLE_TAG, sense, unpacked_lun);
-+	__target_init_cmd(se_cmd, se_tpg->se_tpg_tfo, se_sess,
-+			  0, DMA_NONE, TCM_SIMPLE_TAG, sense, unpacked_lun);
+-	if (flags & TARGET_SCF_UNKNOWN_SIZE)
+-		se_cmd->unknown_data_length = 1;
  	/*
- 	 * FIXME: Currently expect caller to handle se_cmd->se_tmr_req
- 	 * allocation failure.
-diff --git a/drivers/target/target_core_xcopy.c b/drivers/target/target_core_xcopy.c
-index 66d6f1d06f219..e86cc61355870 100644
---- a/drivers/target/target_core_xcopy.c
-+++ b/drivers/target/target_core_xcopy.c
-@@ -615,8 +615,8 @@ static int target_xcopy_read_source(
- 	pr_debug("XCOPY: Built READ_16: LBA: %llu Sectors: %u Length: %u\n",
- 		(unsigned long long)src_lba, src_sectors, length);
+ 	 * Obtain struct se_cmd->cmd_kref reference and add new cmd to
+ 	 * se_sess->sess_cmd_list.  A second kref_get here is necessary
+ 	 * for fabrics using TARGET_SCF_ACK_KREF that expect a second
+ 	 * kref_put() to happen during fabric packet acknowledgement.
+ 	 */
+-	ret = target_get_sess_cmd(se_cmd, flags & TARGET_SCF_ACK_KREF);
+-	if (ret)
+-		return ret;
+-	/*
+-	 * Signal bidirectional data payloads to target-core
+-	 */
+-	if (flags & TARGET_SCF_BIDI_OP)
+-		se_cmd->se_cmd_flags |= SCF_BIDI;
++	return target_get_sess_cmd(se_cmd, flags & TARGET_SCF_ACK_KREF);
++}
++EXPORT_SYMBOL_GPL(target_init_cmd);
++
++/**
++ * target_submit_prep - prepare cmd for submission
++ * @se_cmd: command descriptor to prep
++ * @cdb: pointer to SCSI CDB
++ * @sgl: struct scatterlist memory for unidirectional mapping
++ * @sgl_count: scatterlist count for unidirectional mapping
++ * @sgl_bidi: struct scatterlist memory for bidirectional READ mapping
++ * @sgl_bidi_count: scatterlist count for bidirectional READ mapping
++ * @sgl_prot: struct scatterlist memory protection information
++ * @sgl_prot_count: scatterlist count for protection information
++ *
++ * Returns:
++ *	- less than zero to signal failure.
++ *	- zero on success.
++ * If failure is returned, lio will the callers queue_status to complete
++ * the cmd.
++ */
++int target_submit_prep(struct se_cmd *se_cmd, unsigned char *cdb,
++		       struct scatterlist *sgl, u32 sgl_count,
++		       struct scatterlist *sgl_bidi, u32 sgl_bidi_count,
++		       struct scatterlist *sgl_prot, u32 sgl_prot_count)
++{
++	sense_reason_t rc;
  
--	transport_init_se_cmd(se_cmd, &xcopy_pt_tfo, &xcopy_pt_sess, length,
--			      DMA_FROM_DEVICE, 0, &xpt_cmd.sense_buffer[0], 0);
-+	__target_init_cmd(se_cmd, &xcopy_pt_tfo, &xcopy_pt_sess, length,
-+			  DMA_FROM_DEVICE, 0, &xpt_cmd.sense_buffer[0], 0);
+ 	rc = target_cmd_init_cdb(se_cmd, cdb);
+-	if (rc) {
+-		transport_send_check_condition_and_sense(se_cmd, rc, 0);
+-		target_put_sess_cmd(se_cmd);
+-		return 0;
+-	}
++	if (rc)
++		goto send_cc_direct;
  
- 	rc = target_xcopy_setup_pt_cmd(&xpt_cmd, xop, src_dev, &cdb[0],
- 				remote_port);
-@@ -660,8 +660,8 @@ static int target_xcopy_write_destination(
- 	pr_debug("XCOPY: Built WRITE_16: LBA: %llu Sectors: %u Length: %u\n",
- 		(unsigned long long)dst_lba, dst_sectors, length);
+ 	/*
+ 	 * Locate se_lun pointer and attach it to struct se_cmd
+ 	 */
+ 	rc = transport_lookup_cmd_lun(se_cmd);
+-	if (rc) {
+-		transport_send_check_condition_and_sense(se_cmd, rc, 0);
+-		target_put_sess_cmd(se_cmd);
+-		return 0;
+-	}
++	if (rc)
++		goto send_cc_direct;
  
--	transport_init_se_cmd(se_cmd, &xcopy_pt_tfo, &xcopy_pt_sess, length,
--			      DMA_TO_DEVICE, 0, &xpt_cmd.sense_buffer[0], 0);
-+	__target_init_cmd(se_cmd, &xcopy_pt_tfo, &xcopy_pt_sess, length,
-+			  DMA_TO_DEVICE, 0, &xpt_cmd.sense_buffer[0], 0);
+ 	rc = target_cmd_parse_cdb(se_cmd);
+-	if (rc != 0) {
+-		transport_generic_request_failure(se_cmd, rc);
+-		return 0;
+-	}
++	if (rc != 0)
++		goto generic_fail;
  
- 	rc = target_xcopy_setup_pt_cmd(&xpt_cmd, xop, dst_dev, &cdb[0],
- 				remote_port);
-diff --git a/drivers/usb/gadget/function/f_tcm.c b/drivers/usb/gadget/function/f_tcm.c
-index 6c805bf8888e7..b8f6c15218807 100644
---- a/drivers/usb/gadget/function/f_tcm.c
-+++ b/drivers/usb/gadget/function/f_tcm.c
-@@ -1041,11 +1041,11 @@ static void usbg_cmd_work(struct work_struct *work)
+ 	/*
+ 	 * Save pointers for SGLs containing protection information,
+@@ -1687,6 +1688,41 @@ int target_submit_cmd_map_sgls(struct se_cmd *se_cmd, struct se_session *se_sess
+ 	if (sgl_count != 0) {
+ 		BUG_ON(!sgl);
  
- 	dir = get_cmd_dir(cmd->cmd_buf);
- 	if (dir < 0) {
--		transport_init_se_cmd(se_cmd,
--				tv_nexus->tvn_se_sess->se_tpg->se_tpg_tfo,
--				tv_nexus->tvn_se_sess, cmd->data_len, DMA_NONE,
--				cmd->prio_attr, cmd->sense_iu.sense,
--				cmd->unpacked_lun);
-+		__target_init_cmd(se_cmd,
-+				  tv_nexus->tvn_se_sess->se_tpg->se_tpg_tfo,
-+				  tv_nexus->tvn_se_sess, cmd->data_len, DMA_NONE,
-+				  cmd->prio_attr, cmd->sense_iu.sense,
-+				  cmd->unpacked_lun);
- 		goto out;
++		rc = transport_generic_map_mem_to_cmd(se_cmd, sgl, sgl_count,
++				sgl_bidi, sgl_bidi_count);
++		if (rc != 0)
++			goto generic_fail;
++	}
++
++	return 0;
++
++send_cc_direct:
++	transport_send_check_condition_and_sense(se_cmd, rc, 0);
++	target_put_sess_cmd(se_cmd);
++	return -EIO;
++
++generic_fail:
++	transport_generic_request_failure(se_cmd, rc);
++	return -EIO;
++}
++EXPORT_SYMBOL_GPL(target_submit_prep);
++
++/**
++ * target_submit - perform final initialization and submit cmd to LIO core
++ * @se_cmd: command descriptor to submit
++ *
++ * target_submit_prep must have been called on the cmd, and this must be
++ * called from process context.
++ */
++void target_submit(struct se_cmd *se_cmd)
++{
++	struct scatterlist *sgl = se_cmd->t_data_sg;
++	unsigned char *buf = NULL;
++
++	might_sleep();
++
++	if (se_cmd->t_data_nents != 0) {
++		BUG_ON(!sgl);
+ 		/*
+ 		 * A work-around for tcm_loop as some userspace code via
+ 		 * scsi-generic do not memset their associated read buffers,
+@@ -1697,8 +1733,6 @@ int target_submit_cmd_map_sgls(struct se_cmd *se_cmd, struct se_session *se_sess
+ 		 */
+ 		if (!(se_cmd->se_cmd_flags & SCF_SCSI_DATA_CDB) &&
+ 		     se_cmd->data_direction == DMA_FROM_DEVICE) {
+-			unsigned char *buf = NULL;
+-
+ 			if (sgl)
+ 				buf = kmap(sg_page(sgl)) + sgl->offset;
+ 
+@@ -1708,12 +1742,6 @@ int target_submit_cmd_map_sgls(struct se_cmd *se_cmd, struct se_session *se_sess
+ 			}
+ 		}
+ 
+-		rc = transport_generic_map_mem_to_cmd(se_cmd, sgl, sgl_count,
+-				sgl_bidi, sgl_bidi_count);
+-		if (rc != 0) {
+-			transport_generic_request_failure(se_cmd, rc);
+-			return 0;
+-		}
  	}
  
-@@ -1178,11 +1178,11 @@ static void bot_cmd_work(struct work_struct *work)
+ 	/*
+@@ -1723,6 +1751,57 @@ int target_submit_cmd_map_sgls(struct se_cmd *se_cmd, struct se_session *se_sess
+ 	core_alua_check_nonop_delay(se_cmd);
  
- 	dir = get_cmd_dir(cmd->cmd_buf);
- 	if (dir < 0) {
--		transport_init_se_cmd(se_cmd,
--				tv_nexus->tvn_se_sess->se_tpg->se_tpg_tfo,
--				tv_nexus->tvn_se_sess, cmd->data_len, DMA_NONE,
--				cmd->prio_attr, cmd->sense_iu.sense,
--				cmd->unpacked_lun);
-+		__target_init_cmd(se_cmd,
-+				  tv_nexus->tvn_se_sess->se_tpg->se_tpg_tfo,
-+				  tv_nexus->tvn_se_sess, cmd->data_len, DMA_NONE,
-+				  cmd->prio_attr, cmd->sense_iu.sense,
-+				  cmd->unpacked_lun);
- 		goto out;
- 	}
- 
+ 	transport_handle_cdb_direct(se_cmd);
++}
++EXPORT_SYMBOL_GPL(target_submit);
++
++/**
++ * target_submit_cmd_map_sgls - lookup unpacked lun and submit uninitialized
++ *					se_cmd + use pre-allocated SGL memory.
++ *
++ * @se_cmd: command descriptor to submit
++ * @se_sess: associated se_sess for endpoint
++ * @cdb: pointer to SCSI CDB
++ * @sense: pointer to SCSI sense buffer
++ * @unpacked_lun: unpacked LUN to reference for struct se_lun
++ * @data_length: fabric expected data transfer length
++ * @task_attr: SAM task attribute
++ * @data_dir: DMA data direction
++ * @flags: flags for command submission from target_sc_flags_tables
++ * @sgl: struct scatterlist memory for unidirectional mapping
++ * @sgl_count: scatterlist count for unidirectional mapping
++ * @sgl_bidi: struct scatterlist memory for bidirectional READ mapping
++ * @sgl_bidi_count: scatterlist count for bidirectional READ mapping
++ * @sgl_prot: struct scatterlist memory protection information
++ * @sgl_prot_count: scatterlist count for protection information
++ *
++ * Task tags are supported if the caller has set @se_cmd->tag.
++ *
++ * Returns non zero to signal active I/O shutdown failure.  All other
++ * setup exceptions will be returned as a SCSI CHECK_CONDITION response,
++ * but still return zero here.
++ *
++ * This may only be called from process context, and also currently
++ * assumes internal allocation of fabric payload buffer by target-core.
++ */
++int target_submit_cmd_map_sgls(struct se_cmd *se_cmd, struct se_session *se_sess,
++		unsigned char *cdb, unsigned char *sense, u64 unpacked_lun,
++		u32 data_length, int task_attr, int data_dir, int flags,
++		struct scatterlist *sgl, u32 sgl_count,
++		struct scatterlist *sgl_bidi, u32 sgl_bidi_count,
++		struct scatterlist *sgl_prot, u32 sgl_prot_count)
++{
++	int rc;
++
++	rc = target_init_cmd(se_cmd, se_sess, sense, unpacked_lun,
++			     data_length, task_attr, data_dir, flags);
++	if (rc < 0)
++		return rc;
++
++	if (target_submit_prep(se_cmd, cdb, sgl, sgl_count, sgl_bidi,
++			       sgl_bidi_count, sgl_prot, sgl_prot_count))
++		return 0;
++
++	target_submit(se_cmd);
+ 	return 0;
+ }
+ EXPORT_SYMBOL(target_submit_cmd_map_sgls);
 diff --git a/include/target/target_core_fabric.h b/include/target/target_core_fabric.h
-index 8a490a0b2b66e..f9a3f4c8c480f 100644
+index f9a3f4c8c480f..0e3bae5b9bc4c 100644
 --- a/include/target/target_core_fabric.h
 +++ b/include/target/target_core_fabric.h
-@@ -150,7 +150,7 @@ void	transport_deregister_session_configfs(struct se_session *);
- void	transport_deregister_session(struct se_session *);
- 
- 
--void	transport_init_se_cmd(struct se_cmd *,
-+void	__target_init_cmd(struct se_cmd *,
+@@ -153,6 +153,14 @@ void	transport_deregister_session(struct se_session *);
+ void	__target_init_cmd(struct se_cmd *,
  		const struct target_core_fabric_ops *,
  		struct se_session *, u32, int, int, unsigned char *, u64);
++int	target_init_cmd(struct se_cmd *se_cmd, struct se_session *se_sess,
++		unsigned char *sense, u64 unpacked_lun, u32 data_length,
++		int task_attr, int data_dir, int flags);
++int	target_submit_prep(struct se_cmd *se_cmd, unsigned char *cdb,
++		struct scatterlist *sgl, u32 sgl_count,
++		struct scatterlist *sgl_bidi, u32 sgl_bidi_count,
++		struct scatterlist *sgl_prot, u32 sgl_prot_count);
++void	target_submit(struct se_cmd *se_cmd);
  sense_reason_t transport_lookup_cmd_lun(struct se_cmd *);
+ sense_reason_t target_cmd_init_cdb(struct se_cmd *, unsigned char *);
+ sense_reason_t target_cmd_parse_cdb(struct se_cmd *);
 -- 
 2.53.0
 
