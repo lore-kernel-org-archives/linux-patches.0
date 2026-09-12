@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 073DA42AF9A;
-	Sat, 12 Sep 2026 10:38:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B6B1425CF5;
+	Sat, 12 Sep 2026 10:38:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789209501; cv=none; b=esxW6b6FGSTVKFWNQusqeAU+aUujVKViKE2HgKWJvfBVjU804TE5txjAJyzzeIFOem/pHUUDVAMv30aM4ZZvuIMLuSZcVaNZD8mwHfR+Dtl+Y6RdGTT73ILeLiwn5SPaLOaIUfgv3wLTZ6kzF7lV7x3EY67QpRjrX2zVb72bfmM=
+	t=1789209506; cv=none; b=OGEu2wencbkcaU6p8WowkfQM+nrlWP/jSB87dFb7x/fomtfknlaMN28c09LzIUaqws7kIttq46SGQC3xmWljoafF2qe+7FSjzvoELJ6t9g7ooFFz4rO4DkwoGOQBYH75n5m/3VYnYYUaCNLU9/JbNs91PYOTTCqczKUtVnbVaBU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789209501; c=relaxed/simple;
-	bh=h4y3QdXagiKTEG2cm2+mbIcYnXN3Z1CV310qOXfnaHI=;
+	s=arc-20240116; t=1789209506; c=relaxed/simple;
+	bh=82N3kRlnKbkam+C+bJtp280hhL2rXxozvhyJFLw2RLU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LKhwCLoI8Y8wT+egsOcGlTQqRNC1t2dkhYmizMVkIkYKziSxpJZy22EuI43eeUSxm6M+Fac3ObdQvwlcs2HTfQhtao77Asq248ZsVbAyS+DTO/VCKnQpDr1vq4NfNpFWZ87hHG3IsVQ3SL5TQiXxEEqE3YNhSRDXU2QfK+PveWE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ef16dVgf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=M4Rig6+Zb1qMsUQasA3o0UYGYn28C6a8/rXtePFxlOgNcHDNPPLm7f9+8tGWKvAzQLtx47a1NzHGEFKa5OIJEYEdmpTmDL4tm42thCR1cYZHpZIx3WOpRiafih8nJ/jWUQbZ/1ttYElUgKxJ+3kXxdrGzHyWrxzFNiF6DN0Na5Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i1vhqUMv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ef16dVgf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BAE61F000FF;
-	Sat, 12 Sep 2026 10:38:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i1vhqUMv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1DF91F000FF;
+	Sat, 12 Sep 2026 10:38:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789209498;
-	bh=bGs6ErsAKXEaa0/rmZC5ZeRptTPfyDOLYFff0gEXeBw=;
+	s=korg; t=1789209503;
+	bh=TACheS7F6OTvtxhlZm1q+24OHVNc9X/qhdfQSZoxJPg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ef16dVgf3H8TELEjVwoJ7t7rQGKnhyvXBUgpun2cm/bma0nodykSM8XRM8OC2GpE9
-	 AEIeF49coLfLpmc8Hd+8qOMCnFas9dOpWdh1i465gPxGsNDNRzT7ewDQaPRhqVe3Re
-	 8oOtscaG1+PI9tp1aNa9aypRnxec2WFYSgauu8Mw=
+	b=i1vhqUMvCDxtg9iiFJvws837PeArQVskI2YiBhy2R+TwhnBWVP9lkFtVkf8+geDhP
+	 rJb7HiDt2rfbAgHOljLBbNPJG84lweG0i1k/IxJRUr1okFegSEDBnRCz7XaExoDtKO
+	 ILcAacTTSgkUVxzWgpJ2lt2fHdeDYd2l8oaHaBWs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Laxman Acharya Padhya <acharyalaxman8848@gmail.com>,
+	Tzung-Bi Shih <tzungbi@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0780/1518] perf machine: Fix NULL parent dereference in fork event processing
-Date: Sat, 12 Sep 2026 08:49:09 +0200
-Message-ID: <20260912065641.082027297@linuxfoundation.org>
+Subject: [PATCH 6.18 0827/1518] firmware: coreboot: Validate table bounds
+Date: Sat, 12 Sep 2026 08:49:56 +0200
+Message-ID: <20260912065642.147604614@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -53,43 +51,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Laxman Acharya Padhya <acharyalaxman8848@gmail.com>
 
-[ Upstream commit 73ac546bd6ba8ed4dc8d7a90fcb9bb8236de1568 ]
+[ Upstream commit a58a57a1076f8c5dae0327e3710899478c3be901 ]
 
-machine__process_fork_event() calls machine__findnew_thread() for the
-parent thread, which can return NULL on allocation failure.  The code
-then dereferences parent via thread__pid(parent) without a NULL check
-when validating whether the parent PID matches.  The later NULL check
-at thread__fork() does not prevent this earlier dereference.
+The existing coreboot_table_populate() bounds checks limit individual
+entries to the mapped length.  However, coreboot_table_probe() replaces
+the platform resource length with header and table sizes supplied by
+firmware before mapping the full table.
 
-Add a NULL guard before accessing the parent thread.
+A malformed table can overflow the 32-bit size addition or advertise an
+extent beyond the resource, causing the driver to map and parse memory
+outside the resource.  A resource shorter than the fixed header is also
+mapped as though it contained a complete header.
 
-Fixes: 5cb73340d92a ("perf tools: Make fork event processing more resilient")
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Assisted-by: Claude:claude-opus-4.6
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Reject resources shorter than the fixed header.  After validating the
+signature, require a complete header, calculate the advertised extent
+with overflow checking, and reject extents beyond the resource before
+remapping the table.
+
+Fixes: d384d6f43d1e ("firmware: google memconsole: Add coreboot support")
+Signed-off-by: Laxman Acharya Padhya <acharyalaxman8848@gmail.com>
+Link: https://lore.kernel.org/r/20260801165651.42172-1-acharyalaxman8848@gmail.com
+Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/machine.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/firmware/google/coreboot_table.c | 17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)
 
-diff --git a/tools/perf/util/machine.c b/tools/perf/util/machine.c
-index a2f5ca35141bb..8b6869582b076 100644
---- a/tools/perf/util/machine.c
-+++ b/tools/perf/util/machine.c
-@@ -1880,7 +1880,8 @@ int machine__process_fork_event(struct machine *machine, union perf_event *event
- 	 * (fork) event that would have removed the thread was lost. Assume the
- 	 * latter case and continue on as best we can.
- 	 */
--	if (thread__pid(parent) != (pid_t)event->fork.ppid) {
-+	if (parent != NULL &&
-+	    thread__pid(parent) != (pid_t)event->fork.ppid) {
- 		dump_printf("removing erroneous parent thread %d/%d\n",
- 			    thread__pid(parent), thread__tid(parent));
- 		machine__remove_thread(machine, parent);
+diff --git a/drivers/firmware/google/coreboot_table.c b/drivers/firmware/google/coreboot_table.c
+index f212b84ee2f93..2f1122635098b 100644
+--- a/drivers/firmware/google/coreboot_table.c
++++ b/drivers/firmware/google/coreboot_table.c
+@@ -159,6 +159,7 @@ static int coreboot_table_populate(struct device *dev, void *ptr, resource_size_
+ static int coreboot_table_probe(struct platform_device *pdev)
+ {
+ 	resource_size_t len;
++	resource_size_t table_span;
+ 	struct coreboot_table_header *header;
+ 	struct resource *res;
+ 	struct device *dev = &pdev->dev;
+@@ -170,7 +171,7 @@ static int coreboot_table_probe(struct platform_device *pdev)
+ 		return -EINVAL;
+ 
+ 	len = resource_size(res);
+-	if (!res->start || !len)
++	if (!res->start || len < sizeof(*header))
+ 		return -EINVAL;
+ 
+ 	/* Check just the header first to make sure things are sane */
+@@ -178,19 +179,27 @@ static int coreboot_table_probe(struct platform_device *pdev)
+ 	if (!header)
+ 		return -ENOMEM;
+ 
+-	len = header->header_bytes + header->table_bytes;
+ 	ret = strncmp(header->signature, "LBIO", sizeof(header->signature));
++
++	if (!ret &&
++	    (header->header_bytes < sizeof(*header) ||
++	     check_add_overflow((resource_size_t)header->header_bytes,
++				(resource_size_t)header->table_bytes,
++				&table_span) ||
++	     table_span > len))
++		ret = -EINVAL;
++
+ 	memunmap(header);
+ 	if (ret) {
+ 		dev_warn(dev, "coreboot table missing or corrupt!\n");
+ 		return -ENODEV;
+ 	}
+ 
+-	ptr = memremap(res->start, len, MEMREMAP_WB);
++	ptr = memremap(res->start, table_span, MEMREMAP_WB);
+ 	if (!ptr)
+ 		return -ENOMEM;
+ 
+-	ret = coreboot_table_populate(dev, ptr, len);
++	ret = coreboot_table_populate(dev, ptr, table_span);
+ 
+ 	memunmap(ptr);
+ 
 -- 
 2.53.0
 
