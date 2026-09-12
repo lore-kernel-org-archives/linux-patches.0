@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F76A309EEB;
-	Sat, 12 Sep 2026 15:08:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4B9E340400;
+	Sat, 12 Sep 2026 15:08:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789225700; cv=none; b=eqpq8XtJBaiP6xr+WxWcGyK/tHERzTVz+Q6TOd1XoINwU2RJbTLBEGBnAXjiZZ4AedPVQc9H4akkAid59n0F6WFWMOXZqqGXNliRVNPykcXQecSEtWs1OnfdKK+nfsCmwSJG1oX9c0564+dFCXAQKGVQy2NpmfsJDRkw/aevqn0=
+	t=1789225705; cv=none; b=IZl03L6VWhGEEN7NLLiRLSsMpWuEqVKXrgyP+ZF1HhBbbl8XXkwgllGaCwjQmsiVjQI7scPJfbZRgVWqrTCSpF8Ew/+JKBJc6wDrm3wwhRmKfTB1kEB2SsiVjyy+SbJkAR7t7RBYVdNYLQr3GS/4m1CqkqCBPgaF7J+4zj54DMQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789225700; c=relaxed/simple;
-	bh=JJlRbEuaTnHryxPVRvQyeHHVEf8ZEgKVPxSX9at7zDY=;
+	s=arc-20240116; t=1789225705; c=relaxed/simple;
+	bh=CaHdWylbO3RS8tKtREGg62uQsCS6TF7XaveUV7Pk6CU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M16i5PN7s4za/q1OZiSgmKlqyn21wvWAOAKnk8nuo0Y68Tz5m++bNTC0z3TRuUZxTfDEaIAx+FVVqKx7WoAD2zhTTMugMIP8hGhFO/7byjWMUl8eBp+NzL+HEKerzcFig3XY7QGoNYdG3AUfil2oaY5sWBIIsXBcX/BQt/U/S0s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JttbN3ae; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VtsQvFCHq+mo65oRMTcUKekmG5ksEFfxZB68Ib2s63bEiBgOO8lmJ+5WFlZmo7z++PUZMFvUAwSvOL7Sh9XHYV1Vtta0u/lpe6+Sgg7l5+QGiT1BdmlTd9SPIXpCAa8deb3LemcssbMo4h3WvOK8Z+jnFZy5WEJM7iWF4i0v5yU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BbteXy1g; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JttbN3ae"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 956511F000FF;
-	Sat, 12 Sep 2026 15:08:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BbteXy1g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E8611F000FF;
+	Sat, 12 Sep 2026 15:08:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789225698;
-	bh=ll9bhYgWRwem6c0bAWgVWwfN1PtdGEvF3fnRBQQGhoo=;
+	s=korg; t=1789225704;
+	bh=k/TelgA8+e6uPmSXiGuqVR0bK0jdUzsScOGfN9asdMo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JttbN3aebC+00yTT6HvO0cClH6H4nQONCZ/CJsPJS4+EkvJaMrPDq1CNezlZ6ASsU
-	 nPEvLl1MDoEFAgLic7qDJ+gUUyg3bXKH1YghxGsYLdKazFGIUjilvhKfy3B71IuFdv
-	 ++0V5N+WY/T+JsZIt7oW+y8M8BbTWdWntFWkm4+4=
+	b=BbteXy1gaAy47IwwLXYqiBLdvyVEwEjsFO5i3zfzn/gnBSpr5sZUI+Rog+BRArU80
+	 ka4fBZTw3WacCrjiS0zVJqBjEp9ycstq3jKxQyuM++HxhDLk20r4GCuFr52i/+yomQ
+	 fkcBc93cPN0xBa/kSf3c/RWoUzbzojGAtoudLU/o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	ChenXiaoSong <chenxiaosong@kylinos.cn>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1251/1424] smb/server: fix invalid pointer dereference in ksmbd_stop_durable_scavenger()
-Date: Sat, 12 Sep 2026 09:01:23 +0200
-Message-ID: <20260912065635.299660506@linuxfoundation.org>
+Subject: [PATCH 6.6 1252/1424] smb/server: preserve error status in smb2_handle_negotiate()
+Date: Sat, 12 Sep 2026 09:01:24 +0200
+Message-ID: <20260912065635.320693196@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -54,45 +54,42 @@ Content-Transfer-Encoding: 8bit
 
 From: ZhangGuoDong <zhangguodong@kylinos.cn>
 
-[ Upstream commit bef46b604732d83f8da29f782868de4d25bf972c ]
+[ Upstream commit 73541bd2bab77e7e8e89b1edb5d342f4190dd4d0 ]
 
-See the procedure below:
+smb2_handle_negotiate() records specific failures such as
+STATUS_INVALID_PARAMETER or STATUS_NOT_SUPPORTED.
 
-  ksmbd_launch_ksmbd_durable_scavenger
-    durable_scavenger_running = true
-    server_conf.dh_task = kthread_run() // fail, dh_task is an ERR_PTR()
-
-  server_ctrl_handle_reset
-    ksmbd_stop_durable_scavenger
-    kthread_stop(server_conf.dh_task) // invalid pointer
-
-Fixes: d484d621d40f ("ksmbd: add durable scavenger timer")
+Fixes: e2b76ab8b5c9 ("ksmbd: add support for read compound")
 Signed-off-by: ZhangGuoDong <zhangguodong@kylinos.cn>
 Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/vfs_cache.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ fs/smb/server/smb2pdu.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/smb/server/vfs_cache.c b/fs/smb/server/vfs_cache.c
-index 2864ea08d75a6..c3d46baf2c167 100644
---- a/fs/smb/server/vfs_cache.c
-+++ b/fs/smb/server/vfs_cache.c
-@@ -1103,9 +1103,12 @@ void ksmbd_launch_ksmbd_durable_scavenger(void)
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index dd9aadea61af7..807bfcebb5c24 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -1163,7 +1163,7 @@ int smb2_handle_negotiate(struct ksmbd_work *work)
+ 				GFP_KERNEL);
+ 		if (!conn->preauth_info) {
+ 			rc = -ENOMEM;
+-			rsp->hdr.Status = STATUS_INVALID_PARAMETER;
++			rsp->hdr.Status = STATUS_INSUFFICIENT_RESOURCES;
+ 			goto err_out;
+ 		}
  
- 	server_conf.dh_task = kthread_run(ksmbd_durable_scavenger,
- 				     (void *)NULL, "ksmbd-durable-scavenger");
--	if (IS_ERR(server_conf.dh_task))
-+	if (IS_ERR(server_conf.dh_task)) {
- 		pr_err("cannot start conn thread, err : %ld\n",
- 		       PTR_ERR(server_conf.dh_task));
-+		server_conf.dh_task = NULL;
-+		durable_scavenger_running = false;
-+	}
- 	mutex_unlock(&durable_scavenger_lock);
- }
+@@ -1260,7 +1260,7 @@ int smb2_handle_negotiate(struct ksmbd_work *work)
+ 	ksmbd_conn_set_need_setup(conn);
  
+ err_out:
+-	if (rc)
++	if (rc && rsp->hdr.Status == STATUS_SUCCESS)
+ 		rsp->hdr.Status = STATUS_INSUFFICIENT_RESOURCES;
+ 
+ 	if (!rc)
 -- 
 2.53.0
 
