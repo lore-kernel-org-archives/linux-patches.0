@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1AAF34CFDA;
-	Sat, 12 Sep 2026 12:16:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D3A934CFDA;
+	Sat, 12 Sep 2026 12:16:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789215381; cv=none; b=eVtpUr79+eXRN1+NuU9X/fuojHG+eZhWS284/7FDEn6WQMRKfoxDOGIgmSREbEsp6WV9LJhni6/fg+KYSFmFdJYCB8NQUg+11ett7wp0WKD1Ks8SI/Uym+QaPypd7n50/etqjmhrlHS9pI3vvutpAzVV5jIieXN+ImUT5ecU5Io=
+	t=1789215386; cv=none; b=N2UYd3aWgteopFGRuYxOPD83mxl3DV2VK6E0W7PR7I7lO5JanJqnQa66oBYjRqQlyD7zbW/WZ36XDkYhTHIrLQG4XeCbI9/CSRcI4ZDgGVxlTVXyDKtZjHrYA7DILW9P4pRG2xqMahQDdhP41Q4oVpmMyK8Dwf1//FYLev/kGeM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789215381; c=relaxed/simple;
-	bh=FHgk40OGBu2f6hFKaE7LCyZ33Q7y+RuyLApmvmqn3GI=;
+	s=arc-20240116; t=1789215386; c=relaxed/simple;
+	bh=Jg4Q74kjZyKi+ActzxDpgDCRMrRu9oaXWpGIqulkCqc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Np/jERdoAFgNSmVKdP0Dg0NZMYfdkSVO+EbSMz0WyS0rTWoqb0BXDMbXzqaVYmvuPD+8EbqPA8CM1V/jLXR51MGB17sWqhh7deYaidF79HSYG2Vm4dFANhvbymiKwKdQYx5EYV/VXNYtYxV0cmJ1nOr9dRx+PQmy0aP0xVrCels=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QwESYH5R; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=fZNTsndHdFvuZfOdziqElvH2pllW1rmHtyiYV1bk1f94pfIjxdOHmoo/3n9RrGHA9UJLp/nQ6QYDHBjyg7FXQK/9koyceIHQBnehn8zP6HJfew5ME2td8icaCvyuF3b7Y6vuJ0g/+veZHyY06iCqDRr+RXLZdFEuRA8LCx3Pmoo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v6TI7/au; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QwESYH5R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C8A61F000FF;
-	Sat, 12 Sep 2026 12:16:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v6TI7/au"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86BCD1F000FF;
+	Sat, 12 Sep 2026 12:16:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789215380;
-	bh=LRvYsagbDgMmSmk504OBJJgutQVNFkC95mztZoG0mFY=;
+	s=korg; t=1789215385;
+	bh=ASLs4TLoDOGHqKRhI+eSgR5lDl5EkG3J6roHzi4+z4E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QwESYH5RyAF4H/fjN8/aMqgsJSfcd7dTtE42E4B4ot+rCwJGPf4cy6fUSNTBZDNjQ
-	 6qzy5iyGmhPgqPoPN3y6MkQxX//T8z3Cg7h22HjsYgNKQ5XGp2GHtnKXvEWf+3gIBL
-	 Fjeol7l/KDAuH/ZCHCKFewyCF41lauY0SetY6eRI=
+	b=v6TI7/aubNGc8+52en3E3nRDTeO9tr+iDF8WdjXkAWBBQux34p9mdNmWTk5oto+Si
+	 CR0kxbO22u5Xc97spvA5r/AcxS1/8eJzoJq78J4uVTYpllfRZX/Ckgg9CyHip0MROs
+	 fm1K5CzQ8OviIokBj0pf+JQpmuB354UjiCVqCF1E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leon Romanovsky <leonro@nvidia.com>,
+	Deepak Kumar Singh <deepak.singh@oss.qualcomm.com>,
+	Vishnu Santhosh <vishnu.santhosh@oss.qualcomm.com>,
+	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0513/1376] RDMA/hfi1: Remove redundant PCI device ID validation
-Date: Sat, 12 Sep 2026 08:48:59 +0200
-Message-ID: <20260912065618.971856291@linuxfoundation.org>
+Subject: [PATCH 6.12 0522/1376] rpmsg: glink: fix deadlock in endpoint destroy during driver detach
+Date: Sat, 12 Sep 2026 08:49:08 +0200
+Message-ID: <20260912065619.170237391@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -44,52 +48,86 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Leon Romanovsky <leonro@nvidia.com>
+From: Vishnu Santhosh <vishnu.santhosh@oss.qualcomm.com>
 
-[ Upstream commit af9117d02f50514c998714b23820de71d0aa5d24 ]
+[ Upstream commit 5a5a48e788e02fd8a8eb7188ce440572d6c12418 ]
 
-The PCI core calls init_one() only after pci_match_device() has selected
-an ID. For normal probing, hfi1_pci_tbl already restricts matches to the
-two supported Intel device IDs. Dynamic IDs and driver_override are
-explicit requests to attempt binding, so the probe should not second-guess
-the PCI core's decision.
+During driver detach, the device core holds the device mutex throughout
+the driver's remove callback chain.  When the rpmsg endpoint is
+destroyed as part of that teardown, the GLINK endpoint destroy
+implementation attempts to unregister the underlying rpmsg device.
+That unregistration calls device_del(), which tries to re-acquire the
+same device mutex already held higher up the stack, causing rmmod to
+hang indefinitely.
 
-Remove the redundant check.
+The deadlock manifests with the following call chain:
 
-Link: https://patch.msgid.link/20260708-clean-init-one-hfi1-v1-3-b9e9641268a5@nvidia.com
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
-Stable-dep-of: 9f674ba674a0 ("RDMA/hfi1: Allocate device data after PCI initialization")
+[<0>] device_del+0x44/0x414  <- tries to acquire same mutex
+[<0>] device_unregister+0x18/0x34
+[<0>] rpmsg_unregister_device+0x28/0x4c
+[<0>] qcom_glink_remove_rpmsg_device+0x70/0xc0
+[<0>] qcom_glink_destroy_ept+0x58/0xbc
+[<0>] rpmsg_dev_remove+0x50/0x60
+[<0>] device_remove+0x4c/0x80
+[<0>] device_release_driver_internal+0x1cc/0x228  <- acquires device mutex
+[<0>] driver_detach+0x4c/0x98
+[<0>] bus_remove_driver+0x6c/0xbc
+[<0>] driver_unregister+0x30/0x60
+[<0>] unregister_rpmsg_driver+0x10/0x1c
+[<0>] fastrpc_exit+0x28/0x38 [fastrpc]
+[<0>] __arm64_sys_delete_module+0x1b8/0x294
+[<0>] invoke_syscall+0x48/0x10c
+[<0>] el0_svc_common.constprop.0+0xc0/0xe0
+[<0>] do_el0_svc+0x1c/0x28
+[<0>] el0_svc+0x34/0x108
+[<0>] el0t_64_sync_handler+0xa0/0xe4
+[<0>] el0t_64_sync+0x198/0x19c
+
+The rpmsg device unregistration inside endpoint destroy is redundant.
+In both contexts where endpoint destruction is triggered:
+
+- Driver detach path: the driver core already tears down the rpmsg
+  device.
+
+- Channel close path: the rpmsg device is already unregistered before
+  endpoint destruction is reached.
+
+Remove the redundant unregistration to fix the deadlock.
+
+Co-developed-by: Deepak Kumar Singh <deepak.singh@oss.qualcomm.com>
+Signed-off-by: Deepak Kumar Singh <deepak.singh@oss.qualcomm.com>
+Signed-off-by: Vishnu Santhosh <vishnu.santhosh@oss.qualcomm.com>
+Tested-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+Fixes: a53e356df548 ("rpmsg: glink: fix rpmsg device leak")
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260604-rpmsg-glink-fix-deadlock-destroy-ept-v1-1-b8a54ad1e4fd@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hfi1/init.c | 9 ---------
- 1 file changed, 9 deletions(-)
+ drivers/rpmsg/qcom_glink_native.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/drivers/infiniband/hw/hfi1/init.c b/drivers/infiniband/hw/hfi1/init.c
-index d6331f90222d8..fc6c01d64050e 100644
---- a/drivers/infiniband/hw/hfi1/init.c
-+++ b/drivers/infiniband/hw/hfi1/init.c
-@@ -1563,15 +1563,6 @@ static int init_one(struct pci_dev *pdev, const struct pci_device_id *ent)
- 	/* First, lock the non-writable module parameters */
- 	HFI1_CAP_LOCK();
+diff --git a/drivers/rpmsg/qcom_glink_native.c b/drivers/rpmsg/qcom_glink_native.c
+index 9d4fee6409423..c21a5e4da0f68 100644
+--- a/drivers/rpmsg/qcom_glink_native.c
++++ b/drivers/rpmsg/qcom_glink_native.c
+@@ -1418,9 +1418,6 @@ static void qcom_glink_destroy_ept(struct rpmsg_endpoint *ept)
+ 	channel->ept.cb = NULL;
+ 	spin_unlock_irqrestore(&channel->recv_lock, flags);
  
--	/* Validate dev ids */
--	if (!(ent->device == PCI_DEVICE_ID_INTEL0 ||
--	      ent->device == PCI_DEVICE_ID_INTEL1)) {
--		dev_err(&pdev->dev, "Failing on unknown Intel deviceid 0x%x\n",
--			ent->device);
--		ret = -ENODEV;
--		goto bail;
--	}
+-	/* Decouple the potential rpdev from the channel */
+-	qcom_glink_remove_rpmsg_device(glink, channel);
 -
- 	/* Allocate the dd so we can get to work */
- 	dd = hfi1_alloc_devdata(pdev, NUM_IB_PORTS *
- 				sizeof(struct hfi1_pportdata));
+ 	qcom_glink_send_close_req(glink, channel);
+ }
+ 
 -- 
 2.53.0
 
