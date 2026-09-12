@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FDF3415B9D;
-	Sat, 12 Sep 2026 09:40:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14F793B47D5;
+	Sat, 12 Sep 2026 09:40:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789206030; cv=none; b=h6cmZvUlhuchIfvxB8S3fSpwNtC7DvcjqjXT7OxWFPsy8ByXdan+auaCXoQkPntmJ2jf+u7rPbCanYpyQRqeO7GU/IpOyHqTf6g7M60xSj+NgPm79mAUDUPam10epTV+5g5M6gpc75ZPgkbRjsJBQQ9XgJNegjI9B+96zFCO8sg=
+	t=1789206034; cv=none; b=QvY86qza3O+iatFmRZP2JB4EjO7f3Of+lld92gfwk6UxwbbkKfuGZBY8g2eH9UfsF87AYfixPTEvOZ5d9b1jmmm5uNSzXu7angG2zUnloOTZsBu30FrZRT8jjW+3UEONEwl8wJ792QFSMWPmt9C5OXsCinlmRMaxjy0/9XJjSKI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789206030; c=relaxed/simple;
-	bh=IWGb/fyXM8vjiKGacjsLShst8tcsU9luPy8qzfbnUeU=;
+	s=arc-20240116; t=1789206034; c=relaxed/simple;
+	bh=md5qXXp8OpGCroySZXuBng/SXWxXjr7MlXN9BSHkspk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UIoDvRNbLeT6Kgxt3dfThXBhGf5LbILcXAHGi07vBuITKMFpvmoG+koQhvMVPXXCnbI6HYHm75sZKLQaKl1sRiuTB1xVHHy9MMrC+E9lzVjURwt6bpAhw/OhS5n+g7AMjxl+VdykqFQ/aTtTNloZ8UNUTzzcIzywBm2d5GGqAEw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hHwYS7SZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kTYal+P7OCqylOaj80w+xBVz1ied1QoZLUE01UleaBOGBwZL6A/UrrSu42XsGKyr/nhlGIKCnbHY5ZwUe5+q7X0wqBD4oPF0OYX0o2+l2614w/Q9QuxD+nlhM44XTfNtQViAC5sWW2wCtOWRdGwmcqKg7vrpm+2GdUDODp9/XSY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nU84ZMLO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hHwYS7SZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CD0B1F000FF;
-	Sat, 12 Sep 2026 09:40:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nU84ZMLO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A74EE1F000FF;
+	Sat, 12 Sep 2026 09:40:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789206028;
-	bh=5IYSSYEc7CmXOuZkgN2aGZsvIAUzAhPQ4uwa3IKm30s=;
+	s=korg; t=1789206033;
+	bh=XAUj3LiSob3ZVLhpuvgDCTT4x2rXNbJQV/Ijo2ySb48=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hHwYS7SZhxc9HOPkz5POcJwtN1nD8GUJSM9L8WI+sd4Lkg+CjwzUlcqT0cfR3z0ne
-	 syaOCdsvGXoirE3ik9/50M3iWZ/TgxNl8Ts6tnY5yrHwn6TzZYtKsISY1rW7GYj6mN
-	 YJVIXLLjAt9+ic5LMhFWAphIoLmydoUDK4xYRsho=
+	b=nU84ZMLO86BUY84Ux22vn6GnZRBsiEhY7myDpgzPz/Q1h8UPFpnKqD5BO5zivE6q2
+	 a2Rsl9q8r5uoVSQruk1tmvxPHcfLEgupIgyX72bSa6AKgg3o0ELDDmWJgT11i/g0aN
+	 si0AjjCCEdMUCU5UchhbA5+KVh4AA6y1j4iMCco8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Jiri Kosina <jkosina@suse.com>,
+	Weigang He <geoffreyhe2@gmail.com>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0121/1518] HID: roccat: bound device-supplied profile index
-Date: Sat, 12 Sep 2026 08:38:10 +0200
-Message-ID: <20260912065626.225859459@linuxfoundation.org>
+Subject: [PATCH 6.18 0122/1518] soc: samsung: exynos-pmu: fix of_node refcount leak in exynos_get_pmu_regmap()
+Date: Sat, 12 Sep 2026 08:38:11 +0200
+Message-ID: <20260912065626.250091801@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,58 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Weigang He <geoffreyhe2@gmail.com>
 
-[ Upstream commit 43fae42628a8c10fa8981773d7ec9f1a367821a7 ]
+[ Upstream commit fa476d53edd24e8105faace04e881b9c4179738f ]
 
-kone_keep_values_up_to_date() and kone_profile_activated() use an
-8-bit, device-supplied profile value as an index into the 5-element
-kone->profiles[] array without a range check. A malicious USB device
-claiming the Roccat Kone id can send a switch-profile event (or a
-startup_profile read at probe) with an out-of-range value and make the
-driver read out of bounds; the result is exposed via the actual_dpi
-sysfs attribute.
+exynos_get_pmu_regmap() obtains a device_node via of_find_matching_node()
+and passes it to exynos_get_pmu_regmap_by_phandle(np, NULL). With
+propname == NULL the callee uses np directly and does not drop a
+reference, so the reference taken by of_find_matching_node() is leaked on
+every call -- including on each -EPROBE_DEFER retry of the only in-tree
+caller, exynos_retention_init() in the Exynos pinctrl driver.
 
-Reject out-of-range indices in both paths.
+Annotate np with the __free(device_node) cleanup attribute so the
+reference is released when the function returns.
 
-This was found with static analysis and confirmed with the KUnit test
-added in the following patch (KASAN: slab-out-of-bounds).
+Found by static analysis tool CodeQL.
 
-Fixes: 14bf62cde7942 ("HID: add driver for Roccat Kone gaming mouse")
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Fixes: 76640b84bd7a ("soc: samsung: pmu: Provide global function to get PMU regmap")
+Signed-off-by: Weigang He <geoffreyhe2@gmail.com>
+Link: https://patch.msgid.link/20260609143852.1783558-1-geoffreyhe2@gmail.com
+Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-roccat-kone.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/soc/samsung/exynos-pmu.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hid/hid-roccat-kone.c b/drivers/hid/hid-roccat-kone.c
-index fabc08efcfd8c..2510001fead94 100644
---- a/drivers/hid/hid-roccat-kone.c
-+++ b/drivers/hid/hid-roccat-kone.c
-@@ -36,6 +36,8 @@ static uint profile_numbers[5] = {0, 1, 2, 3, 4};
- 
- static void kone_profile_activated(struct kone_device *kone, uint new_profile)
+diff --git a/drivers/soc/samsung/exynos-pmu.c b/drivers/soc/samsung/exynos-pmu.c
+index f8fe1a5965ab4..d910499731131 100644
+--- a/drivers/soc/samsung/exynos-pmu.c
++++ b/drivers/soc/samsung/exynos-pmu.c
+@@ -300,8 +300,8 @@ static const struct mfd_cell exynos_pmu_devs[] = {
+  */
+ struct regmap *exynos_get_pmu_regmap(void)
  {
-+	if (new_profile < 1 || new_profile > ARRAY_SIZE(kone->profiles))
-+		new_profile = 1;
- 	kone->actual_profile = new_profile;
- 	kone->actual_dpi = kone->profiles[new_profile - 1].startup_dpi;
- }
-@@ -793,8 +795,10 @@ static void kone_keep_values_up_to_date(struct kone_device *kone,
- {
- 	switch (event->event) {
- 	case kone_mouse_event_switch_profile:
--		kone->actual_dpi = kone->profiles[event->value - 1].
--				startup_dpi;
-+		if (event->value >= 1 &&
-+		    event->value <= ARRAY_SIZE(kone->profiles))
-+			kone->actual_dpi =
-+				kone->profiles[event->value - 1].startup_dpi;
- 		fallthrough;
- 	case kone_mouse_event_osd_profile:
- 		kone->actual_profile = event->value;
+-	struct device_node *np = of_find_matching_node(NULL,
+-						      exynos_pmu_of_device_ids);
++	struct device_node *np __free(device_node) =
++		of_find_matching_node(NULL, exynos_pmu_of_device_ids);
+ 	if (np)
+ 		return exynos_get_pmu_regmap_by_phandle(np, NULL);
+ 	return ERR_PTR(-ENODEV);
 -- 
 2.53.0
 
