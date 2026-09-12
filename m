@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39ED7384233;
-	Sat, 12 Sep 2026 08:47:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF4E242902A;
+	Sat, 12 Sep 2026 08:47:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789202849; cv=none; b=XhlWGbVOhb89oUHgAmziGPBMYi2G7J3bfY1UrEOcaioDRHZPDMDsAvDd4lY8POS5FATp3VKN8xRAxJpIKGljDFkbdlk2WtQjiYm126zHWzxx17t0kmgoF5HmYJoHw5XmGDBcrtzU6rYrGs+a0n1QSL0seCLPuEt9zbZEx6WgEuo=
+	t=1789202853; cv=none; b=eDX0s8dz04XoJKODOvKqGzjt+lNI3lWRA04u/OlZjVp9dfpwZ4tBJSeBBnASO6uuDZDKt5L1J+1fH8amegdzLDugRt7ROrsfR9YoBNG6hZlFCNLaB1H6XCmEpXSnEETM6hCtciYsJXoj5vUcxodudp+95PKAxyWnYgmjsoVw4EU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789202849; c=relaxed/simple;
-	bh=xUzUUe2/FrbjumhVImUzyinvcuMS4w7rOvmp/V80uOY=;
+	s=arc-20240116; t=1789202853; c=relaxed/simple;
+	bh=in4muNSwwWWg8zKZP8SQyf8Dp9vB5fpqULs1vivI8Dk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GkgCrFP8gyxLgv4Hp4wD+1nHjtozBJqIRul4gjS73wuWW/bu3R/rlEcjRSe+xTDhEBBsSILxROZt7GyowUvVzFl7tRQrFzzWNh9loIBdA7MEMwwF07toLvxrnIyY8h/BMmp2gnNh+B+0MvCUnsH2bROgkus6kJjPT4DcrRJLdag=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RgKRkySl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ooB3kJlPQxCoK7h5c3y8C5yFYqHekm5S+dk+QOUWfglFrlga5eV/irSOlCVYtlxoAvbXanZ6mZjjSQpvSWobHrbltZ4QJkq4WNCOGR713N7KwpnbnPPIf7Zuz5PH8Ghl6fCRcibFLZ0hACmrR47/nDilfHJrLbNnN0NsPKg3jnU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T9Kv61Nf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RgKRkySl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DE361F00893;
-	Sat, 12 Sep 2026 08:47:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T9Kv61Nf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AB351F000FF;
+	Sat, 12 Sep 2026 08:47:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789202844;
-	bh=cUhVe6B7qYHuihV7lmWbOgFlgVsdLkDi0k9EVBgzkX4=;
+	s=korg; t=1789202849;
+	bh=KJrgIFEiR7J9UlpUFL46XGLT3gxFToWFO0Y5gTP3V6s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RgKRkySlm7TAaDlO4FmuXklj3Mnowiwi2O+JLXg0eLsTREfmbR9e4BoOz4ufFFT7G
-	 wpIuRrFPXLDszYjyzBPUyAk/He0xMEAKfd9K0MTAJt7slIdu5AXawG2CLEVtLAIh1J
-	 FUeWQ0sY5kvIrNwwH1NjYBKMzxV6QZFnqswFi6uA=
+	b=T9Kv61NfCcV996YvapxWG+FuyHvJNHy4Qrht4pDjuXhJghyS6fXyefa1q8WpUXyus
+	 NURqxpTCLyHT76in1U7+3TgWnOkroaDU2m06pKiwiNUMT25PnVN+poHJ/Yl1RLYUWk
+	 JwT6ryh//U5EmAl59BmZov3edK64euwPtL1Ov7ME=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Helge Deller <deller@gmx.de>,
+	Andrew Jones <andrew.jones@oss.qualcomm.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Nutty Liu <nutty.liu@hotmail.com>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Joerg Roedel <joerg.roedel@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1288/1815] fbdev: clps711x-fb: Remove unreachable unregister_framebuffer() call
-Date: Sat, 12 Sep 2026 08:50:38 +0200
-Message-ID: <20260912065719.251068600@linuxfoundation.org>
+Subject: [PATCH 7.2 1289/1815] iommu/dma: Restore locking around msi_page_list
+Date: Sat, 12 Sep 2026 08:50:39 +0200
+Message-ID: <20260912065719.276087872@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,41 +54,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Andrew Jones <andrew.jones@oss.qualcomm.com>
 
-[ Upstream commit 39dd7598fbe90c5b4bb77fb34d8f3dad8385d11c ]
+[ Upstream commit 5a9e89ea34e0e34ac5d7e949042d665533549e40 ]
 
-The unregister_framebuffer() call in clps711x_fb_probe() is unreachable.
-register_framebuffer() failure jumps to the unwind label, while success
-returns immediately.
+Unlike a group's default domain, which is always freshly allocated
+and privately owned (iommu_group_alloc_default_domain()), VFIO type1's
+legacy container merges any newly attached group into an existing
+domain whenever their iommu_ops and cache-coherency enforcement match.
 
-Remove it.
+iommu_dma_get_msi_page() only asserts the caller's own group mutex is
+held (iommu_group_mutex_assert()). On an IOMMU that publishes
+IOMMU_RESV_SW_MSI, e.g. ARM SMMU, a VM with two such devices assigned
+through the legacy container can have their guest drivers probe and
+allocate MSIs in parallel; each host-side VFIO_DEVICE_SET_IRQS lands
+on a different device fd and group mutex, but both devices' domains
+are the same merged domain, so both can enter
+iommu_dma_get_msi_page() concurrently and corrupt msi_page_list.
 
-Found with Clang's -Wunreachable-code.
+commit 288683c92b1a ("iommu: Make iommu_dma_prepare_msi() into a
+generic operation") dropped the prior msi_prepare_lock on the
+reasoning that "each iommu_domain is unique to a group," which holds
+for default domains but not this VFIO type1 case. Restore the static
+lock, since it's only guarding a corner case and will likely never
+be contended.
 
-Fixes: 36462ac193088 ("fbdev: clps711x-fb: Replace check_fb in favor of struct fb_info.lcd_dev")
-Assisted-by: Claude:claude-fable-5
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Acked-by: Thomas Zimmermann <tzimmermann@suse.de>
-Signed-off-by: Helge Deller <deller@gmx.de>
+iommufd avoids the equivalent problem by having its own callers
+(iommufd_sw_map_msi()) take a ctx-wide sw_msi_lock before ever
+reaching the shared list. VFIO type1 can't mirror that since it
+dispatches to iommu_dma_sw_msi() which is outside VFIO's jurisdiction.
+
+Fixes: 288683c92b1a ("iommu: Make iommu_dma_prepare_msi() into a generic operation")
+Signed-off-by: Andrew Jones <andrew.jones@oss.qualcomm.com>
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
+Reviewed-by: Robin Murphy <robin.murphy@arm.com>
+Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/clps711x-fb.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/iommu/dma-iommu.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/drivers/video/fbdev/clps711x-fb.c b/drivers/video/fbdev/clps711x-fb.c
-index 7a7db7100499e..6789773b22fbe 100644
---- a/drivers/video/fbdev/clps711x-fb.c
-+++ b/drivers/video/fbdev/clps711x-fb.c
-@@ -329,8 +329,6 @@ static int clps711x_fb_probe(struct platform_device *pdev)
+diff --git a/drivers/iommu/dma-iommu.c b/drivers/iommu/dma-iommu.c
+index 68c686c1e81a2..ae814d8c99c04 100644
+--- a/drivers/iommu/dma-iommu.c
++++ b/drivers/iommu/dma-iommu.c
+@@ -2207,6 +2207,19 @@ static struct iommu_dma_msi_page *iommu_dma_get_msi_page(struct device *dev,
+ 	dma_addr_t iova;
+ 	int prot = IOMMU_WRITE | IOMMU_NOEXEC | IOMMU_MMIO;
+ 	size_t size = cookie_msi_granule(domain);
++	static DEFINE_MUTEX(msi_prepare_lock);
++
++	/*
++	 * Normally a device's default domain is only ever attached to that
++	 * device's own group, and the group mutex held by
++	 * iommu_group_mutex_assert()'s callers is enough on its own. A VFIO
++	 * type1 container is the one case that breaks that assumption: it
++	 * can merge devices from different groups onto one domain, so two
++	 * devices' group mutexes don't serialize each other here. A static
++	 * lock is sufficient due to the expectation that this is a corner
++	 * case that will never be contended in practice.
++	 */
++	guard(mutex)(&msi_prepare_lock);
  
- 	return 0;
- 
--	unregister_framebuffer(info);
--
- out_fb_dealloc_cmap:
- 	regmap_update_bits(cfb->syscon, SYSCON_OFFSET, SYSCON1_LCDEN, 0);
- 	fb_dealloc_cmap(&info->cmap);
+ 	msi_addr &= ~(phys_addr_t)(size - 1);
+ 	list_for_each_entry(msi_page, msi_page_list, list)
 -- 
 2.53.0
 
