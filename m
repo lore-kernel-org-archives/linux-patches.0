@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A818C3A6EF7;
-	Sat, 12 Sep 2026 20:02:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4DBE3A7580;
+	Sat, 12 Sep 2026 20:03:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789243381; cv=none; b=IRzapKws/VymvXC7yNQHU29tIUzKuN/9uF3X9Pa+5gxVKij1f4R/DtfZzcRIYuOQXCOhQruVkEz97SebooGU0R0WunBqPrrfkjukcCZvC4HbCKsiGPJqWdITxywWLC49wwgDwbUdDQOQe0N9YPo3kK+6rugaodSitOvGTD+7qBw=
+	t=1789243382; cv=none; b=rKzRoUGPyiq9p6ujiWXYIRY6+yURpPhIP6r+ux1K+2amfbu5yHDCkntJtjYNBJu3R3N638iVy1hxP26+YU3S4bnPRz5aQX9RLSnf0PLMY28YHn/+UpOFI8YoNDeipHwaUp+S9coJj1qqIj1giRIu4F9ZMVFFmzi0atyBW35Mz48=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789243381; c=relaxed/simple;
-	bh=36lFWTPaomfQElszEFMwo6M3RGNdR31oAQ04856jtLU=;
+	s=arc-20240116; t=1789243382; c=relaxed/simple;
+	bh=6S8xvBi4Q7iydWnuQ6md0uX+JtQ0Aj5XlNhgm6Zo+qM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V425xWzGVzdgfV7C8GgOdeofI34VEZVOe/DHCOt/04OjPVgETSCXEAx//B0X74OXowVS7VEhUDvV4wIDuA2OrFC95g5mi8rDj5bpLYbb4NgJ1dXCqtaw2QpPCR1qLZxhjaZI525jDRxqMz7ACBo53CTbRYWhGMAid6JsldQf/lc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IvBLxfTL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mB1osXjDToKQERw1xd95nu/dqDePSi42eml+ItahNF5E78v0ZviGw9y7tin2+4Y2Wd+8AoNBU2zU5BdYZDCPplFYZD1OAK2amOGt8uBmT+oum5BP8ii8J6ZCgd3CfNaZJyhEJi9BCpA2NcgBRpZADAORl9KhgXagK1Xup1Waf+U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D6laQ/Ir; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IvBLxfTL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6F291F000FF;
-	Sat, 12 Sep 2026 20:02:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D6laQ/Ir"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8ED021F00893;
+	Sat, 12 Sep 2026 20:02:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789243376;
-	bh=dL6Km1uF7RfGUVIpcekxGImcIqFO0A5GOUxrD4vKIsk=;
+	s=korg; t=1789243379;
+	bh=MWn2LYZDZAT8DJhsiq5rItqwXk56syqFPxjGy+XmztA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IvBLxfTLltVXx/NaI8nR49VqewF/T8dVgYuq++z05DYcccaKGVCPUwfIo17vEbQOs
-	 g0vt2n9JJ1HQQICrsYR8dTFdfHVf1JqV/MbOBSaJ+WwWJARcCZ/ftwLOo/4boRJwy3
-	 ducedRpIvoXNdjBsbYF9Mgd9Wp862zL0en3ApYqo=
+	b=D6laQ/IrGBwSBcK3oPjFVwP4a1NpBO651EfKuDslbknFnho8ormuPBLyVpivBCmjK
+	 SAdrUKgr6LYj+zhriBVidFTe1hbi7YQYkofk08BfsU56XSrJ8dD5fCH2aChZWqqrUG
+	 Ue6sFPp8wx4QrsJ6oh4C4xOhIW75Dzj0Dr/N5BV8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wupeng Ma <mawupeng1@huawei.com>,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	Nguyen Dinh Phi <phind.uet@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Henrik Grimler <henrik.grimler@axis.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 733/798] vsock: use sock_error() to consume sk_err after a failed connect
-Date: Sat, 12 Sep 2026 09:06:01 +0200
-Message-ID: <20260912065533.877416456@linuxfoundation.org>
+Subject: [PATCH 5.10 698/798] power: supply: bq27xxx: bq27520g4: fix REG_TTES address
+Date: Sat, 12 Sep 2026 09:05:26 +0200
+Message-ID: <20260912065533.093407375@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -53,54 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nguyen Dinh Phi <phind.uet@gmail.com>
+From: Henrik Grimler <henrik.grimler@axis.com>
 
-[ Upstream commit 96cbf89993091a163bfedec52a3bd683dc94b3b4 ]
+[ Upstream commit c774a623c821a173c950e1297f8e8c85a89455be ]
 
-vsock_connect() returns sk_err to userspace but does not clear it:
-  if (sk->sk_err) {
-            err = -sk->sk_err;
+According to the technical reference manual the StandbyTimeToEmpty
+(TTES) register is at 0x1a, not 0x1c. At 0x1c StateOfHealth instead
+resides.
 
-For a blocking connect() the error has already been delivered as
-connect()'s return value, so leaving it set causes subsequent operations
-like poll()/epoll() to keep reporting POLLERR even though the connect
-failure was already delivered.
-
-The error should be consumed once it has been returned to userspace.
-Switch to sock_error(), which reads and clears sk_err atomically,
-matching the behavior of other protocol implementations such as
-__inet_stream_connect().
-
-Fixes: d021c344051a ("VSOCK: Introduce VM Sockets")
-Tested-by: Wupeng Ma <mawupeng1@huawei.com>
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-Signed-off-by: Nguyen Dinh Phi <phind.uet@gmail.com>
-Link: https://patch.msgid.link/20260813173024.2362935-4-phind.uet@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 8835cae5f2ab ("power: supply: bq27xxx: adds specific support for bq27520-g4 revision.")
+Signed-off-by: Henrik Grimler <henrik.grimler@axis.com>
+Link: https://patch.msgid.link/20260811-bq27z746-v1-3-3a4fa38205cc@axis.com
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/vmw_vsock/af_vsock.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/power/supply/bq27xxx_battery.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/vmw_vsock/af_vsock.c b/net/vmw_vsock/af_vsock.c
-index 27f2fbf56616c..15dd900beaf22 100644
---- a/net/vmw_vsock/af_vsock.c
-+++ b/net/vmw_vsock/af_vsock.c
-@@ -1504,12 +1504,10 @@ static int vsock_stream_connect(struct socket *sock, struct sockaddr *addr,
- 		prepare_to_wait(sk_sleep(sk), &wait, TASK_INTERRUPTIBLE);
- 	}
- 
--	if (sk->sk_err) {
--		err = -sk->sk_err;
-+	err = sock_error(sk);
-+	if (err) {
- 		sk->sk_state = TCP_CLOSE;
- 		sock->state = SS_UNCONNECTED;
--	} else {
--		err = 0;
- 	}
- 
- out_wait:
+diff --git a/drivers/power/supply/bq27xxx_battery.c b/drivers/power/supply/bq27xxx_battery.c
+index 44198b181c962..fac8cbf92eb7b 100644
+--- a/drivers/power/supply/bq27xxx_battery.c
++++ b/drivers/power/supply/bq27xxx_battery.c
+@@ -323,7 +323,7 @@ static u8
+ 		[BQ27XXX_REG_FLAGS] = 0x0a,
+ 		[BQ27XXX_REG_TTE] = 0x16,
+ 		[BQ27XXX_REG_TTF] = INVALID_REG_ADDR,
+-		[BQ27XXX_REG_TTES] = 0x1c,
++		[BQ27XXX_REG_TTES] = 0x1a,
+ 		[BQ27XXX_REG_TTECP] = INVALID_REG_ADDR,
+ 		[BQ27XXX_REG_NAC] = 0x0c,
+ 		[BQ27XXX_REG_RC] = 0x10,
 -- 
 2.53.0
 
