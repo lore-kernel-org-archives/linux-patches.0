@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFEE5305680;
-	Sat, 12 Sep 2026 15:18:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8E4734AB19;
+	Sat, 12 Sep 2026 15:18:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789226304; cv=none; b=XZ8sjL9pIUhA2FQFJ2A9kvwB99+HyeqSaehccTInfsbL3hpShB4jO9GBM78pi9mt6+i54kc1khzd4IcNc8Ko5mD6GcowBBkHEXJx4D1QPqxSR7j0NMFTAYZCwf78Qn0pQhtKONTfCARP0f/q85aJaSKMQm72RqVedokC/FUNBPo=
+	t=1789226309; cv=none; b=pGFrwLcLsFo/11WPKa6OPPxvJQgRYyERP2wiNpoMl6fLIzDCOz4zSvo8q/O/WlbdyDls3r6zuZ3PP180x4RPUNY6a9aTGfUHbeVm7gyqin0RJAI1Ho2gcqr+pqp60KqOGrAmHq5OzIFeXORBMji49tqv1eorjFBrBENcA+15wDM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789226304; c=relaxed/simple;
-	bh=nWXIg0q5JHHi90Tyynj40c1vU6liI/5/XG3hgcjQ7XU=;
+	s=arc-20240116; t=1789226309; c=relaxed/simple;
+	bh=kmX5t26Or1rulLyt2KBRuITXZCyLbHJHsG9CYEQ8RwE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ji6J27OK+HBApHjCTFtWocCak/rVBesSz8wYWr05p+/irDmahJGZ4GxV8wqDQr7Z629xsm/RTDR0Pu1UItnrxBsf4b6ulKXekWPIqmcduEadFxJtRd8oSeBG/rQD7Zccjdu7rC3nJ1Zxpezlwauuo0hsIjU56U8SAVyucn2i8Vk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oJV73CD2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ONB3pw8mLKCkTFv75cfuQLARh3pVEQ0paRbMzqs/hkQzypyxom3b++th/jSzAkNWJVcovrodcWwejpZ/Q4Mwj1kSF5iRFdDvOQ2zBmKwpD+mdYNm3ZjSETalbdMqvwUnxaJ/jgi36w27gA5Yej5Zv8xvtU/UQy+enGQD25IBa+8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uf7MJBX0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oJV73CD2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B29D1F000FF;
-	Sat, 12 Sep 2026 15:18:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uf7MJBX0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE6A91F000FF;
+	Sat, 12 Sep 2026 15:18:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789226303;
-	bh=TNo5qzdf8Q47K9OgFDLti5267Cjcx1pYWfMrqH0wKKI=;
+	s=korg; t=1789226308;
+	bh=dOTT7m7qJedRcfS4NLHp3bzP/Dm1wXwheTdw8GDZkDE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oJV73CD2BTtVG2hb8tVbrdGfvvb8yaDr3GQ/w5iKMagoSJ6susHT5DCzvcEW+DI92
-	 9pgnPwWa0kS/J/yfw2InOSqT5xnJ/zopVDzJOExwAEW/lwvTxzLx1PZt2VTc7ew3TN
-	 JvhLAPI10zgYxgC+fvgZ6kJf14xjTUSnK/7p+T44=
+	b=Uf7MJBX0dpdLl2RJzOQ00c8OWl5NaR9GZcFk9oRQ0MzK8MQpE2IsWVb0jjT/Wa1QE
+	 y1h8UXPSszWB4OqWPDlA135K5Ti+AwSE2IXx+le5zRrs2I4ELaG5N4CfQHsPd+zGBz
+	 Sg5EuLk60Ly97O2vdU172tLYWL3Ci+siVxq7sJb8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Haotian Zhang <vulab@iscas.ac.cn>,
+	bui duc phuc <phucduc.bui@gmail.com>,
+	Andre Przywara <andre.przywara@arm.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1376/1424] samples/ftrace: Fix kthread_stop() on ERR_PTR in ftrace-direct-multi-modify
-Date: Sat, 12 Sep 2026 09:03:28 +0200
-Message-ID: <20260912065638.074158465@linuxfoundation.org>
+Subject: [PATCH 6.6 1377/1424] net: ethernet: sun4i-emac: Fix IRQ error handling
+Date: Sat, 12 Sep 2026 09:03:29 +0200
+Message-ID: <20260912065638.096724296@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -51,53 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haotian Zhang <vulab@iscas.ac.cn>
+From: bui duc phuc <phucduc.bui@gmail.com>
 
-[ Upstream commit 6727b7618f49401acf373fa3ec5712e2ec52e5cf ]
+[ Upstream commit 991c2be78257cba5bf53cf935fe70f8836964288 ]
 
-ftrace_direct_multi_init() assigns kthread_run()'s return value to
-simple_tsk without an IS_ERR() check. When kthread_run() fails it
-returns ERR_PTR(-ENOMEM), but init still returns 0, so the module loads
-with simple_tsk holding an error pointer. On unload,
-ftrace_direct_multi_exit() then passes that ERR_PTR to kthread_stop(),
-leading to a null-pointer-dereference.
+irq_of_parse_and_map() returns 0 when parsing or mapping an IRQ fails.
+The current code checks for -ENXIO and therefore does not detect the
+failure.
 
-Check the return value of kthread_run() with IS_ERR(); on failure,
-unregister the ftrace direct call and propagate the error code.
+Check for a zero return value and convert it to -ENXIO.
 
-Link: https://patch.msgid.link/20260826015050.10772-1-vulab@iscas.ac.cn
-Fixes: e1067a07cfbc ("ftrace/samples: Add module to test multi direct modify interface")
-Suggested-by: Steven Rostedt <rostedt@goodmis.org>
-Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Fixes: 492205050d77 ("net: Add EMAC ethernet driver found on Allwinner A10 SoC's")
+Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
+Reviewed-by: Andre Przywara <andre.przywara@arm.com>
+Link: https://patch.msgid.link/20260824100901.31675-1-phucduc.bui@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- samples/ftrace/ftrace-direct-multi-modify.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/allwinner/sun4i-emac.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/samples/ftrace/ftrace-direct-multi-modify.c b/samples/ftrace/ftrace-direct-multi-modify.c
-index 35a4966035588..e16eeca8c135a 100644
---- a/samples/ftrace/ftrace-direct-multi-modify.c
-+++ b/samples/ftrace/ftrace-direct-multi-modify.c
-@@ -224,9 +224,15 @@ static int __init ftrace_direct_multi_init(void)
+diff --git a/drivers/net/ethernet/allwinner/sun4i-emac.c b/drivers/net/ethernet/allwinner/sun4i-emac.c
+index a94c62956eedb..9a6948cde2403 100644
+--- a/drivers/net/ethernet/allwinner/sun4i-emac.c
++++ b/drivers/net/ethernet/allwinner/sun4i-emac.c
+@@ -996,9 +996,9 @@ static int emac_probe(struct platform_device *pdev)
+ 	/* fill in parameters for net-dev structure */
+ 	ndev->base_addr = (unsigned long)db->membase;
+ 	ndev->irq = irq_of_parse_and_map(np, 0);
+-	if (ndev->irq == -ENXIO) {
++	if (!ndev->irq) {
+ 		netdev_err(ndev, "No irq resource\n");
+-		ret = ndev->irq;
++		ret = -ENXIO;
+ 		goto out_iounmap;
+ 	}
  
- 	ret = register_ftrace_direct(&direct, my_tramp);
- 
--	if (!ret)
--		simple_tsk = kthread_run(simple_thread, NULL, "event-sample-fn");
--	return ret;
-+	if (ret)
-+		return ret;
-+	simple_tsk = kthread_run(simple_thread, NULL, "event-sample-fn");
-+	if (IS_ERR(simple_tsk)) {
-+		unregister_ftrace_direct(&direct, my_tramp, true);
-+		return PTR_ERR(simple_tsk);
-+	}
-+
-+	return 0;
- }
- 
- static void __exit ftrace_direct_multi_exit(void)
 -- 
 2.53.0
 
