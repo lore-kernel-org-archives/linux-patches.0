@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 627D934E75A;
-	Sat, 12 Sep 2026 12:36:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E60E6429000;
+	Sat, 12 Sep 2026 12:36:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789216601; cv=none; b=mALgu7NBkevJaclo1JUBGesuzt34PwOg+GsBrDK/V5V9qYgSXYSRXrzDWpA9Mg4/mJkAvGyfRhr048JXL7aCyfPOhWnhrh3sN0jkt9f5Y7wG1X2Ne5QgnWWyLDQpnHA5/zZsl+CR9UXRBPPgNyZ+Vyf+mNDju0ZEc6HcmLioMe8=
+	t=1789216607; cv=none; b=ZYpCFEcr5uUESuC9UvsPnemc+PLbndqoFFdnAt/c8fc3sPuO+JvIBvKaJhBKIzvRMov9Z/KYJebyKJYqOVx6zn1vpmbTYinyj4jbR3/oPXsSkTaNzCkhg1OCnDHppXwzE35kYRcJVft/n/mTqyN7yniF9Kl0no3sUlvWF7ASBYA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789216601; c=relaxed/simple;
-	bh=nFyy9YfcghnlQbvME0waOEVY6pRtNMALxTz073O4lsc=;
+	s=arc-20240116; t=1789216607; c=relaxed/simple;
+	bh=UVmmXY+499rqlexJWXOzAahwT/AaiF/xvyHpLnRhRHY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gSv2b//h1fu+nbCU1WipmK4iG0Qj2N2byqbo9S9L/6GNIQi+45Gq/MQ4Pb331dOJ0u7Adry989auz8yhp/qtFHkqPEE+ZBbvmTW8yofVycK15ej4rv7fZvrOeLsGgvqhPNYbXbOW0yzB8Bfee8mkhKvR8Hq9WGvoVioi/LR9mbg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MNTOCO/q; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=n1KDNPe7cwS2quK9D5dJKZwdhyDuc+YqghXylA88kS5pCq/ELk4Pitobo+4fxVLsQbua2wSFesWbc/2vxfFuOC5PfB48e9oIoFUc0ZhQ2pMc5ZYVDzZNW77iTIb/JJbKQr6DXos/WNjHNE3ZV3XTN1KI3u4SckIKZkv4mXWs/Tg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MlHDWkoy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MNTOCO/q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 498D21F000FF;
-	Sat, 12 Sep 2026 12:36:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MlHDWkoy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 347011F00893;
+	Sat, 12 Sep 2026 12:36:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789216599;
-	bh=fpo1+ppVUDRN/vg9o8SK3yYsgkGWNQN9o/oy8xC+vsw=;
+	s=korg; t=1789216604;
+	bh=WdC8arxnrazWetaftpYZ9/Q54kb6iTx6UYZBSRlaHoM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MNTOCO/qslT0Sv+Rf12qLlbFXV7eLYjZHNXfWaspYCJBNJA11ubJKvk4HDDKJFmy+
-	 g5LV5MpbMs3m0xEJHLZ1pGSjtG4OXOh+0ARzjz+Vbvha8REwlPPPY0TcXi4RxtAuDt
-	 uJT/Z96mhTnOuHgjXm43vmF6BOJwqcWgxT+sbgyM=
+	b=MlHDWkoyKOL8wBFfeDAHSsvPF/HB3ir0zXcdOCwq6PL2BF8eFyBw3YgkAC7MrRyIa
+	 OR6HK+TH82E1Fo5qb+azazvGwMB1jO0+qfhfl4li2CKcd1I5Un0NnBbfciubWiC4Be
+	 4AqAPPTcLngdbhYHlRYjdRLEN7owUmIbxkkolW6I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0769/1376] arm64: dts: qcom: sm8250: Fix the PCIe iommu-map entries
-Date: Sat, 12 Sep 2026 08:53:15 +0200
-Message-ID: <20260912065624.678494639@linuxfoundation.org>
+Subject: [PATCH 6.12 0770/1376] arm64: dts: qcom: sm8350: Fix the PCIe iommu-map entries
+Date: Sat, 12 Sep 2026 08:53:16 +0200
+Message-ID: <20260912065624.700471886@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -55,7 +55,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 
-[ Upstream commit c41749e9554d4e03e7074f5d1e46140bc4ac77bd ]
+[ Upstream commit 80337ea3a154230621c0b4e3c831f5d81712ba18 ]
 
 The IOMMU provider apps_smmu uses '#iommu-cells = <2>', but the PCIe
 iommu-map entries specify only one cell for the SID, omitting the SID
@@ -66,24 +66,24 @@ ccb2fd725d41 ("of: Respect #{iommu,msi}-cells in maps"):
 
 So fix the entries to match the provider's '#iommu-cells' property.
 
-Fixes: e53bdfc00977 ("arm64: dts: qcom: sm8250: Add PCIe support")
+Fixes: 6daee40678a0 ("arm64: dts: qcom: sm8350: add PCIe devices")
 Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260730-iommu-map-fix-v1-7-83405d37ba41@oss.qualcomm.com
+Link: https://lore.kernel.org/r/20260730-iommu-map-fix-v1-8-83405d37ba41@oss.qualcomm.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8250.dtsi | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ arch/arm64/boot/dts/qcom/sm8350.dtsi | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-index d6607c38eb35c..f1851cbcd48b9 100644
---- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-@@ -2187,8 +2187,8 @@ pcie0: pcie@1c00000 {
- 				      "tbu",
- 				      "ddrss_sf_tbu";
+diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+index 1870ec4176daa..6f175791de90d 100644
+--- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
+@@ -1571,8 +1571,8 @@ pcie0: pcie@1c00000 {
+ 				      "aggre1",
+ 				      "aggre0";
  
 -			iommu-map = <0x0   &apps_smmu 0x1c00 0x1>,
 -				    <0x100 &apps_smmu 0x1c01 0x1>;
@@ -92,9 +92,9 @@ index d6607c38eb35c..f1851cbcd48b9 100644
  
  			resets = <&gcc GCC_PCIE_0_BCR>;
  			reset-names = "pci";
-@@ -2312,8 +2312,8 @@ pcie1: pcie@1c08000 {
- 			assigned-clocks = <&gcc GCC_PCIE_1_AUX_CLK>;
- 			assigned-clock-rates = <19200000>;
+@@ -1678,8 +1678,8 @@ pcie1: pcie@1c08000 {
+ 				      "ddrss_sf_tbu",
+ 				      "aggre1";
  
 -			iommu-map = <0x0   &apps_smmu 0x1c80 0x1>,
 -				    <0x100 &apps_smmu 0x1c81 0x1>;
@@ -102,17 +102,6 @@ index d6607c38eb35c..f1851cbcd48b9 100644
 +				    <0x100 &apps_smmu 0x1c81 0x0 0x1>;
  
  			resets = <&gcc GCC_PCIE_1_BCR>;
- 			reset-names = "pci";
-@@ -2437,8 +2437,8 @@ pcie2: pcie@1c10000 {
- 			assigned-clocks = <&gcc GCC_PCIE_2_AUX_CLK>;
- 			assigned-clock-rates = <19200000>;
- 
--			iommu-map = <0x0   &apps_smmu 0x1d00 0x1>,
--				    <0x100 &apps_smmu 0x1d01 0x1>;
-+			iommu-map = <0x0   &apps_smmu 0x1d00 0x0 0x1>,
-+				    <0x100 &apps_smmu 0x1d01 0x0 0x1>;
- 
- 			resets = <&gcc GCC_PCIE_2_BCR>;
  			reset-names = "pci";
 -- 
 2.53.0
