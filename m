@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C4E7415B9D;
-	Sat, 12 Sep 2026 09:35:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4B2F371887;
+	Sat, 12 Sep 2026 09:35:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789205708; cv=none; b=TIKekX/9WgcJv3+7ei+ocjm9bVOh8zekLAv/IiYvBZLipP7Rq6EeQYubiRZoUl8xWrVaGq+82F35EEF2sv4sH13x4RtaVvbhEDeLCY40Dd8MUVOYKQ+TLrEYwLywZmmIFr0nUr83+Uxmd0KLFXHijd/S1IANcJ2H97q5GzvDpgQ=
+	t=1789205712; cv=none; b=MOxIiD0CRsCSi6Ew1pH7b1zRUI8VZlZ/a9sKlChSNyOy7/c7ZOZcqBSLF1R5hgE69PSH0nkiuqVTUKBy6D7AEvp5iZYiz8fGl9opqxYR7A8KuOnOiJrW9rxKE30Rc0fQD1AptOU6G74AccgPAXjql61GIyRni483HOUPKe4sSag=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789205708; c=relaxed/simple;
-	bh=lxkRsEiGlBE00pwXD7+h6zGoiiXkxnkQujDrtf3FAUE=;
+	s=arc-20240116; t=1789205712; c=relaxed/simple;
+	bh=3dOQ3q6DamBAlKoNNURRPxTnYm0oPn+ktnXcJEisceY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IQa/j9c7ONXpH3GOuDeBSh8SVi+6dmAGjJTK1zrfkkVzl/Ut+D+8/SHzJ49WrHJlrCYLy8jU4kZnZLe5zoHEZftZibS/LeR3wLHYUSelShvrCscAucWS5p5cciocHHSE502Bk7zPo9TiU+71eHW94w0euboBf7GhmSN3PvTkldI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G5st0XEW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gyuIgmnyUmiMprd8UNqD1UDGGrGQA/c8uF2EKAtfSTlWAy8BP9vEECF7PiwYz63P14yeIQrtcGVdP/HeDbnoWtnqUMnaCjmV7o+pTzLrnc0/pq7LGTKhLlwD//bx9Hky1i7fIWBEwZhdtYqhW6TEC8JsHCpaD9N/S+Bu0Tomnpc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ks7urZjH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G5st0XEW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99C6A1F000FF;
-	Sat, 12 Sep 2026 09:35:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ks7urZjH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CE5E1F00893;
+	Sat, 12 Sep 2026 09:35:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789205705;
-	bh=48Su3DloKNanvqFHUAOW8WTB2eVuTvXerpe1fGUhdfs=;
+	s=korg; t=1789205710;
+	bh=tmgy8afmsAx7UrsLK0bqRa/qQgaTMKJ2BAIjzokMvzU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=G5st0XEWrAGZLHMtjbNzzE19vVQ+pMUfil1Lzzltw7hI54YIam9cvUFZjAGLmf7/h
-	 R2o8aeJot4rv2U2qL/Rv1H81Vdr+LQMOTlL+xScBjPvUWPqthITdsyYv49+j6f+ZG2
-	 DbWvj5w5bvqbhLNIUm1PLsPLwXWH/xUDUiYDfKDw=
+	b=ks7urZjHoNRwrbmXfmZVURrIsFP7g76QL5lW6zXXbpOeHDwVQs/ObeHZBPRgEmPcs
+	 0sVNSRkkixvKas0cYQEtnqMVWq7SuTaaZZXUUMJml+I+hSnlxk8HnCja5ERppppcLW
+	 quVOW+asP6gdWhFKtaIJr1eO/1/Tdwcjw7w5GEJE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Chen <me@linux.beauty>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	Hui Su <sh_def@163.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0057/1518] nvdimm: virtio_pmem: always wake -ENOSPC waiters
-Date: Sat, 12 Sep 2026 08:37:06 +0200
-Message-ID: <20260912065624.736746578@linuxfoundation.org>
+Subject: [PATCH 6.18 0058/1518] io_uring/waitid: honor task_work cancellation
+Date: Sat, 12 Sep 2026 08:37:07 +0200
+Message-ID: <20260912065624.759434733@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,71 +51,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Chen <me@linux.beauty>
+From: Hui Su <sh_def@163.com>
 
-[ Upstream commit 811808761e19fdea1c25b7c76734b8945f758f27 ]
+[ Upstream commit 14572de82e5022899e5856008bc9cac97004a88c ]
 
-virtio_pmem_host_ack() reclaims virtqueue descriptors with
-virtqueue_get_buf(). The -ENOSPC waiter wakeup is tied to completing the
-returned token. If token completion is skipped for any reason, reclaimed
-descriptors may not wake a waiter and the submitter may sleep forever
-waiting for a free slot. Always wake one -ENOSPC waiter for each virtqueue
-completion before touching the returned token.
+io_waitid_cb() may run through the fallback task_work path when
+task_work_add() can no longer queue work to the originating task. The
+fallback runs from a kworker and io_uring marks such task work as
+canceled through tw.cancel.
 
-Signed-off-by: Li Chen <me@linux.beauty>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260630092338.2094628-7-me@linux.beauty>
-Stable-dep-of: e57140944b5a ("nvdimm: virtio_pmem: refcount requests for token lifetime")
+io_waitid_cb() currently ignores tw.cancel and calls __do_wait().
+waitid is task-context dependent: __do_wait() performs child lookup
+relative to current, and the retry path also uses
+current->signal->wait_chldexit. If the callback runs from the fallback
+kworker, current is therefore not the task that submitted the request.
+
+Honor tw.cancel before entering __do_wait(). Complete the request with
+-ECANCELED and skip the siginfo copy, since canceled task work may run
+without the submitting task's userspace execution context.
+
+Keep the existing siginfo handling for normal waitid completion and
+explicit cancellation.
+
+Fixes: f31ecf671ddc ("io_uring: add IORING_OP_WAITID support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Hui Su <sh_def@163.com>
+Link: https://patch.msgid.link/20260818103336.1922818-2-sh_def@163.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvdimm/nd_virtio.c |   25 ++++++++++++++++---------
- 1 file changed, 16 insertions(+), 9 deletions(-)
+ io_uring/waitid.c |   16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
---- a/drivers/nvdimm/nd_virtio.c
-+++ b/drivers/nvdimm/nd_virtio.c
-@@ -15,26 +15,33 @@ struct virtio_pmem_flush_work {
- 	struct bio *bio;
- };
- 
-+static void virtio_pmem_wake_one_waiter(struct virtio_pmem *vpmem)
-+{
-+	struct virtio_pmem_request *req_buf;
-+
-+	if (list_empty(&vpmem->req_list))
-+		return;
-+
-+	req_buf = list_first_entry(&vpmem->req_list,
-+				   struct virtio_pmem_request, list);
-+	req_buf->wq_buf_avail = true;
-+	wake_up(&req_buf->wq_buf);
-+	list_del(&req_buf->list);
-+}
-+
-  /* The interrupt handler */
- void virtio_pmem_host_ack(struct virtqueue *vq)
- {
- 	struct virtio_pmem *vpmem = vq->vdev->priv;
--	struct virtio_pmem_request *req_data, *req_buf;
-+	struct virtio_pmem_request *req_data;
- 	unsigned long flags;
- 	unsigned int len;
- 
- 	spin_lock_irqsave(&vpmem->pmem_lock, flags);
- 	while ((req_data = virtqueue_get_buf(vq, &len)) != NULL) {
-+		virtio_pmem_wake_one_waiter(vpmem);
- 		req_data->done = true;
- 		wake_up(&req_data->host_acked);
--
--		if (!list_empty(&vpmem->req_list)) {
--			req_buf = list_first_entry(&vpmem->req_list,
--					struct virtio_pmem_request, list);
--			req_buf->wq_buf_avail = true;
--			wake_up(&req_buf->wq_buf);
--			list_del(&req_buf->list);
--		}
+--- a/io_uring/waitid.c
++++ b/io_uring/waitid.c
+@@ -125,7 +125,7 @@ static void io_waitid_remove_wq(struct i
  	}
- 	spin_unlock_irqrestore(&vpmem->pmem_lock, flags);
  }
+ 
+-static void io_waitid_complete(struct io_kiocb *req, int ret)
++static void io_waitid_complete(struct io_kiocb *req, int ret, bool copy_si)
+ {
+ 	struct io_waitid *iw = io_kiocb_to_cmd(req, struct io_waitid);
+ 
+@@ -137,7 +137,10 @@ static void io_waitid_complete(struct io
+ 	hlist_del_init(&req->hash_node);
+ 	io_waitid_remove_wq(req);
+ 
+-	ret = io_waitid_finish(req, ret);
++	if (copy_si)
++		ret = io_waitid_finish(req, ret);
++	else
++		io_waitid_free(req);
+ 	if (ret < 0)
+ 		req_set_fail(req);
+ 	io_req_set_res(req, ret, 0);
+@@ -159,7 +162,7 @@ static bool __io_waitid_cancel(struct io
+ 	if (atomic_fetch_inc(&iw->refs) & IO_WAITID_REF_MASK)
+ 		return false;
+ 
+-	io_waitid_complete(req, -ECANCELED);
++	io_waitid_complete(req, -ECANCELED, true);
+ 	io_req_queue_tw_complete(req, -ECANCELED);
+ 	return true;
+ }
+@@ -202,6 +205,11 @@ static void io_waitid_cb(struct io_tw_re
+ 	int ret;
+ 
+ 	io_tw_lock(ctx, tw);
++	if (unlikely(tw.cancel)) {
++		io_waitid_complete(req, -ECANCELED, false);
++		io_req_task_complete(tw_req, tw);
++		return;
++	}
+ 
+ 	ret = __do_wait(&iwa->wo);
+ 
+@@ -229,7 +237,7 @@ static void io_waitid_cb(struct io_tw_re
+ 		}
+ 	}
+ 
+-	io_waitid_complete(req, ret);
++	io_waitid_complete(req, ret, true);
+ 	io_req_task_complete(tw_req, tw);
+ }
+ 
 
 
