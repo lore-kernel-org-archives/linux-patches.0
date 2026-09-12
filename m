@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AFE4214A84;
-	Sat, 12 Sep 2026 12:31:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDCD2214A84;
+	Sat, 12 Sep 2026 12:31:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789216268; cv=none; b=RzHNk2MXNTBeGg/dJwAAo3/iMGTyIvEPx5WbzeAgIOadVQx7OmKMkn7AYNrHhWhv3uGTottiiJ9ED4uM3XXEQZLzZdj3abnjmwt2o65yNYQHFSwohwxPgZu/D+56yBEBLBMIVck3obzwCSozN3JW2AKtlbnCw/C4m9pqllua5Y0=
+	t=1789216275; cv=none; b=IGGRpC0caumZkYr093LRYPukkYljESUCuv6oyhvyG//VML/bUUZcBt66F1We/Nye9c9wRg/bHtasFMti4Y4fFopc9oVefJHe5AeKwhdEvPz5QcstdN53cRQxUSzBOuSwkRljRYYmdCy1fg8PeH1NjYSLvkbQTjLImBbC/Z7HunE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789216268; c=relaxed/simple;
-	bh=OT6FVcqF/cZdjNtj22KzuzK5bK0dpB/R6oMStTYoXaU=;
+	s=arc-20240116; t=1789216275; c=relaxed/simple;
+	bh=xJNbpTgTrcSklOgADOOjXL3ieGiWA+st/id+iG4L2gI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m7vA+nthIT/ZYnGMSlTAoRA8AlNcAor5cGEGMWhFLL+AzzmHWsEJO42uCP963CmpIqUwRiiG1Cf4+CoeGzUNknZeaevr8ptIcm3o6xKnJY4VKOnkHpVIx6ggQfchwNJMs1oUgO4uW1ZjJnkRE58MdFXGfogoIyL/a+Hguo9jFh4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ioxthh+w; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KuTvgHNcjkVHxb2bSwRAyxUEODiSZsHk8ik3zLSkq1muGJ24IYXBAjCWzW4v7MKVfmKDeoYxJrn7oV0lLxhki2YV+gRmj7hIOiXcInvh74b+J8IunPv26n+Fr33IY8C6kcEaGqF6sqq6KG3/zouW8uYlQkdek/TJK2tEsWbDUWw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hla2sLqA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ioxthh+w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F4C31F000FF;
-	Sat, 12 Sep 2026 12:31:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hla2sLqA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C3151F000FF;
+	Sat, 12 Sep 2026 12:31:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789216267;
-	bh=UUFToQCjiUgYXDiYYTkzr6E1e2d1Wv35IpmaI61XNNU=;
+	s=korg; t=1789216272;
+	bh=D/HXGlSp00Rr0lO5h/K+4b7mkZfPy9m+8Y5MGx7lpMY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ioxthh+wjdiq+J9yg8H5H6FhFHNxNXYV172FdDH9MJ7x6VaCHhQxEG9ibn6eet5Iu
-	 vWScqoKLy+4LEHdwp1Sgd//JSn3fULKARVoco7b03qwl2f+3rc8VbceqwcJ5W6BT59
-	 WLVIMJkPpoOUiPYZCBnMZuuLh2gmr8MC9JnQWFDA=
+	b=hla2sLqAiD3SIl9yv0DPdXs+Jo5z3l/n6ip4B3s9Tm7BTYP5KSZlvS37g75yWcmB3
+	 u89peKceblGZbdZuawc62yBsrc/iEzZPPGK4DXi0NsRTc5Nv5iQjLEZh1HH5gg8QDO
+	 Q/NE3LgzcbNg16AMA81VnMa8w8f5DMQM48jUYM98=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guanghui Yang <3497809730@qq.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
+	Can Peng <pengcan@kylinos.cn>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0650/1376] ext4: fix buffer_head leak in ext4_init_orphan_info
-Date: Sat, 12 Sep 2026 08:51:16 +0200
-Message-ID: <20260912065622.030166103@linuxfoundation.org>
+Subject: [PATCH 6.12 0696/1376] crypto: keembay - publish OF module alias for OCS AES/SM4
+Date: Sat, 12 Sep 2026 08:52:02 +0200
+Message-ID: <20260912065623.057056227@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -52,67 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guanghui Yang <3497809730@qq.com>
+From: Can Peng <pengcan@kylinos.cn>
 
-[ Upstream commit 05704335803b69c1bfa8637b7ada942bf2ee8a41 ]
+[ Upstream commit 0a94091e29f914e4f233a208599ca4055882c01b ]
 
-ext4_init_orphan_info() reads orphan file blocks with ext4_bread()
-and stores the returned buffer_head in oi->of_binfo[i].ob_bh.
+The Keem Bay OCS AES/SM4 driver has an OF match table wired to
+.of_match_table, but does not export the table with MODULE_DEVICE_TABLE().
 
-If ext4_bread() succeeds but the orphan block magic or checksum
-validation fails, the function jumps to out_free. However, the old
-out_free loop starts releasing buffers from i - 1, so the current
-buffer_head at index i is skipped.
+Although the match table lives in keembay-ocs-aes-core.o, that object is
+part of the composite keembay-ocs-aes module.  Add the missing
+MODULE_DEVICE_TABLE(of, ...) entry so modpost can generate OF module alias
+information for OF based module autoloading.
 
-This leaks the buffer_head reference obtained by ext4_bread() on the
-bad magic and bad checksum error paths.
+This is a source-level fix.  It does not claim dynamic hardware
+reproduction; the evidence is the driver-owned match table, its use by the
+platform driver, and the missing module alias publication.
 
-Fix this by tracking the number of successfully read buffer_heads and
-releasing exactly those buffer_heads on the error path.
-
-Fixes: 02f310fcf47f ("ext4: Speedup ext4 orphan inode handling")
-Signed-off-by: Guanghui Yang <3497809730@qq.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/tencent_B38798612A159E21450ECF959016371B0807@qq.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Fixes: 885743324513 ("crypto: keembay - Add support for Keem Bay OCS AES/SM4")
+Signed-off-by: Can Peng <pengcan@kylinos.cn>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/orphan.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/crypto/intel/keembay/keembay-ocs-aes-core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/ext4/orphan.c b/fs/ext4/orphan.c
-index d06e6aef4683d..7a5893dc18114 100644
---- a/fs/ext4/orphan.c
-+++ b/fs/ext4/orphan.c
-@@ -573,6 +573,7 @@ int ext4_init_orphan_info(struct super_block *sb)
- 	int i, j;
- 	int ret;
- 	int free;
-+	int loaded = 0;
- 	__le32 *bdata;
- 	int inodes_per_ob = ext4_inodes_per_orphan_block(sb);
- 	struct ext4_orphan_block_tail *ot;
-@@ -616,6 +617,7 @@ int ext4_init_orphan_info(struct super_block *sb)
- 			ret = -EIO;
- 			goto out_free;
- 		}
-+		loaded++;
- 		ot = ext4_orphan_block_tail(sb, oi->of_binfo[i].ob_bh);
- 		if (le32_to_cpu(ot->ob_magic) != EXT4_ORPHAN_BLOCK_MAGIC) {
- 			ext4_error(sb, "orphan file block %d: bad magic", i);
-@@ -638,8 +640,10 @@ int ext4_init_orphan_info(struct super_block *sb)
- 	iput(inode);
- 	return 0;
- out_free:
--	for (i--; i >= 0; i--)
--		brelse(oi->of_binfo[i].ob_bh);
-+	while (loaded > 0) {
-+		loaded--;
-+		brelse(oi->of_binfo[loaded].ob_bh);
-+	}
- 	kvfree(oi->of_binfo);
- out_put:
- 	iput(inode);
+diff --git a/drivers/crypto/intel/keembay/keembay-ocs-aes-core.c b/drivers/crypto/intel/keembay/keembay-ocs-aes-core.c
+index 9dc69a2706663..9ef6a6d58c68e 100644
+--- a/drivers/crypto/intel/keembay/keembay-ocs-aes-core.c
++++ b/drivers/crypto/intel/keembay/keembay-ocs-aes-core.c
+@@ -1561,6 +1561,7 @@ static const struct of_device_id kmb_ocs_aes_of_match[] = {
+ 	},
+ 	{}
+ };
++MODULE_DEVICE_TABLE(of, kmb_ocs_aes_of_match);
+ 
+ static void kmb_ocs_aes_remove(struct platform_device *pdev)
+ {
 -- 
 2.53.0
 
