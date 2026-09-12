@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A43F74248DB;
-	Sat, 12 Sep 2026 15:17:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AE56384230;
+	Sat, 12 Sep 2026 15:17:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789226247; cv=none; b=XluSKizbV7Rq/+LJNFhQukeCs8Z4MUJE4NhixOLXz7TwsestwNNQBy6sHaorFm/wvwYiTpo2jLBx15c35ruKWJcheCes0XxPHBgq4XW2UP6PZ4EAncqDU9h0PQDJJttNo+dY/nE9b1Qr10dcQsZ/RFPaUpliUDKHThqWvXGRgZs=
+	t=1789226251; cv=none; b=qlqebCGpDQoGelZuQ9tk8d5f0Mr9dLM7M/dkq96Sy2ovhrMuoVeSkO6+sNpEdR7Ihviv/HpsNnO83BXQCeoaQkQIvIxgYhK9DG6BPDrAk7vhTWgIRVKdUBv2ZDGO9FNXsu77GkxU7bbRMbiveqlnduLRZXcOV3G2ksJDdQOIKRk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789226247; c=relaxed/simple;
-	bh=aqRfybxiU2GJ23jw1hDrWKEGA944aTtK/h+WqyM3d5s=;
+	s=arc-20240116; t=1789226251; c=relaxed/simple;
+	bh=guWM9JwZAuhiXUYQoHs7RdvmwfaWp+4HxEEw5zdv6AM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M/OFyhOj0cd0z04wVbx9dBl01rHl4HdiPm6wwZv+1+FatrIoP7dB/IRiW60BwXGys7gkVeUlTnzHsP0vZgX3Isrkxo0EFmnSZzTfXd7Ofq6Yctr/FcaP4lSADviRLsTZXgz6Fbwh+Qb+aIM+yz9x1wdKCGszNVyFIYRahweoUc4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MZ9+kRSR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=k1SqL+NxbzH5wnz+x7CJpAIhjtgWJ7NfxT+BStfHIDDOanrkpe8ePCdyeOWDJTucawwqWvvUiIhkoSlld+Mj4WoaU7Q6LWmEp+dDMvgHN+gk2A8RrRNM7FJ5NY/Qe1fin9ZWcCC61juYd4rGqnqlv8sD/OIaNsWC3kOYKOrweso=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r+cMskUL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MZ9+kRSR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB92C1F008A7;
-	Sat, 12 Sep 2026 15:17:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r+cMskUL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C80101F000FF;
+	Sat, 12 Sep 2026 15:17:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789226243;
-	bh=Sq8EExROCwlzTucr2W+G5881dqp8sDyjjEKwxorpVms=;
+	s=korg; t=1789226249;
+	bh=Awfe07GGQF5qfecbnAKsXcj4UVWjDlO8Gtg6A6DbvtA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MZ9+kRSRDmG0KxOPg0JKLa8Drws8wGdOLmdyhin3AsjD5Mmdeky+6QrF2F17pl8lF
-	 ilYiQP810jIr17A3VWCEU1otBrUQEQjTcBi/ltO0+u1CekIbB0hEeNuC6+P7I0fVG3
-	 WAUTlyXFNBa4WAQDuFjokzXShqUAEhaqu+NyCMME=
+	b=r+cMskULqdjyoiy4xvg7n0e++PL1LLDeodQNIO0Vcjq1EEqG8mZVKaQbm7Pq35hCZ
+	 UWi2L6qZUQRgekYcl9aanmKse6yo+PcolIZQjLZsS5+/5AW9sp3RUEg29BHwB5fCS+
+	 8geIOGcH5X/WUvqRxRQnZgTqtwozuYCFyGtfSQ6M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+1d56f14f95c0480cfdc9@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
+	vega@nebusec.ai,
+	Victor Nogueira <victor@mojatatu.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1361/1424] net/sched: act_skbmod: fix length calculations and avoid invalid header warnings
-Date: Sat, 12 Sep 2026 09:03:13 +0200
-Message-ID: <20260912065637.743962010@linuxfoundation.org>
+Subject: [PATCH 6.6 1362/1424] net/sched: fq_codel: clamp default quantum and mtu
+Date: Sat, 12 Sep 2026 09:03:14 +0200
+Message-ID: <20260912065637.765574160@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -52,82 +53,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-[ Upstream commit 81d0d1e64f30d9989c829c0953cd6e6c68d9c5fb ]
+[ Upstream commit d9ebd8f9aa8b2773235889cb903fafd61f2d8585 ]
 
-syzbot reported a warning in skb_network_header_len() triggered
-by tcf_skbmod_act():
+fq_codel_init() sets q->quantum = psched_mtu(qdisc_dev(sch)) without
+clamping. A device with a huge MTU (e.g. dummy with max_mtu == 0
+accepting MTU 2147483634) makes psched_mtu() return 0x80000000, which
+overflows the signed flow->deficit to INT_MIN in fq_codel_dequeue(),
+causing an infinite loop and soft lockup. Emulate fq_codel_change()
+and constrain to [256, FQ_CODEL_QUANTUM_MAX].
 
-  !skb_transport_header_was_set(skb)
-  WARNING: CPU: 0 PID: 14949 at include/linux/skbuff.h:3243 skb_network_header_len include/linux/skbuff.h:3243 [inline]
-  WARNING: CPU: 0 PID: 14949 at net/sched/act_skbmod.c:55 tcf_skbmod_act+0xfe8/0x1810 net/sched/act_skbmod.c:55
+The same unclamped psched_mtu() is assigned to q->cparams.mtu a bit
+below, and fq_codel_change() never updates it. codel_should_drop()
+tests "*backlog <= params->mtu"; with mtu == 0x80000000 (~2 GiB) and
+the default 32 MiB memory_limit, the test is always true, so CoDel is
+silently and completely disabled (no drops, no ECN). Declare a single
+clamped mtu and assign both q->quantum and q->cparams.mtu from it,
+which also removes the double psched_mtu() call.
 
-There are a few issues in tcf_skbmod_act():
+Conditions to recreate the bug: a device whose MTU (plus
+hard_header_len) wraps psched_mtu() into the sign bit (e.g. a dummy
+device with max_mtu == 0 accepting MTU 2147483634). Requires
+CAP_NET_ADMIN in a user namespace.
 
-1. Calling skb_network_header_len() assumes skb->transport_header is set,
-   which is not guaranteed when tcf_skbmod_act() runs at TC ingress.
-2. Unconditionally calling skb_mac_header_len() at the beginning of
-   tcf_skbmod_act() triggers a warning on L3 devices (e.g. TUN) where the
-   MAC header is unset, evaluating to an underflowed garbage length.
-3. On TC ingress, skb->data points to the network header. Adding the MAC
-   header length to the IP header length causes skb_ensure_writable() to
-   request more bytes than the actual IP packet length, dropping valid
-   short packets (e.g. 28-byte UDP/IPv4 packets).
-
-Fix these by:
-- Using skb_network_offset(skb) + sizeof(struct iphdr/ipv6hdr) for
-  SKBMOD_F_ECN so that the required length is correctly calculated on
-  both ingress (offset == 0) and egress (offset == mac_len).
-- Setting max_edit_len to ETH_HLEN for Ethernet header modifications
-  after validating ARPHRD_ETHER.
-
-Fixes: 56af5e749f20 ("net/sched: act_skbmod: Add SKBMOD_F_ECN option support")
-Reported-by: syzbot+1d56f14f95c0480cfdc9@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/6a8b39c0.dbb3a75c.13dd47.0051.GAE@google.com/T/#u
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260823182241.1958695-1-edumazet@google.com
+Fixes: 4b549a2ef4be ("fq_codel: Fair Queue Codel AQM")
+Reported-by: vega@nebusec.ai
+Tested-by: Victor Nogueira <victor@mojatatu.com>
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://patch.msgid.link/20260822195509.112717-3-jhs@mojatatu.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/act_skbmod.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ net/sched/sch_fq_codel.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/net/sched/act_skbmod.c b/net/sched/act_skbmod.c
-index 3daeaac17dabe..9d5660929e345 100644
---- a/net/sched/act_skbmod.c
-+++ b/net/sched/act_skbmod.c
-@@ -38,7 +38,6 @@ TC_INDIRECT_SCOPE int tcf_skbmod_act(struct sk_buff *skb,
- 	if (unlikely(p->action == TC_ACT_SHOT))
- 		goto drop;
+diff --git a/net/sched/sch_fq_codel.c b/net/sched/sch_fq_codel.c
+index e059d6c145741..ac2f643dd8427 100644
+--- a/net/sched/sch_fq_codel.c
++++ b/net/sched/sch_fq_codel.c
+@@ -495,6 +495,7 @@ static int fq_codel_init(struct Qdisc *sch, struct nlattr *opt,
+ 			 struct netlink_ext_ack *extack)
+ {
+ 	struct fq_codel_sched_data *q = qdisc_priv(sch);
++	u32 mtu;
+ 	int i;
+ 	int err;
  
--	max_edit_len = skb_mac_header_len(skb);
- 	flags = p->flags;
+@@ -502,13 +503,14 @@ static int fq_codel_init(struct Qdisc *sch, struct nlattr *opt,
+ 	q->flows_cnt = 1024;
+ 	q->memory_limit = 32 << 20; /* 32 MBytes */
+ 	q->drop_batch_size = 64;
+-	q->quantum = psched_mtu(qdisc_dev(sch));
++	mtu = clamp_t(u32, psched_mtu(qdisc_dev(sch)), 256, FQ_CODEL_QUANTUM_MAX);
++	q->quantum = mtu;
+ 	INIT_LIST_HEAD(&q->new_flows);
+ 	INIT_LIST_HEAD(&q->old_flows);
+ 	codel_params_init(&q->cparams);
+ 	codel_stats_init(&q->cstats);
+ 	q->cparams.ecn = true;
+-	q->cparams.mtu = psched_mtu(qdisc_dev(sch));
++	q->cparams.mtu = mtu;
  
- 	/* tcf_skbmod_init() guarantees "flags" to be one of the following:
-@@ -51,14 +50,19 @@ TC_INDIRECT_SCOPE int tcf_skbmod_act(struct sk_buff *skb,
- 	if (flags == SKBMOD_F_ECN) {
- 		switch (skb_protocol(skb, true)) {
- 		case cpu_to_be16(ETH_P_IP):
-+			max_edit_len = sizeof(struct iphdr);
-+			break;
- 		case cpu_to_be16(ETH_P_IPV6):
--			max_edit_len += skb_network_header_len(skb);
-+			max_edit_len = sizeof(struct ipv6hdr);
- 			break;
- 		default:
- 			goto out;
- 		}
--	} else if (!skb->dev || skb->dev->type != ARPHRD_ETHER) {
--		goto out;
-+		max_edit_len += skb_network_offset(skb);
-+	} else {
-+		if (!skb->dev || skb->dev->type != ARPHRD_ETHER)
-+			goto out;
-+		max_edit_len = ETH_HLEN;
- 	}
- 
- 	err = skb_ensure_writable(skb, max_edit_len);
+ 	if (opt) {
+ 		err = fq_codel_change(sch, opt, extack);
 -- 
 2.53.0
 
