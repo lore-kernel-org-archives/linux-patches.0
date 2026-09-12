@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEEB238AC92;
-	Sat, 12 Sep 2026 15:39:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 161DF282F1F;
+	Sat, 12 Sep 2026 15:39:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789227566; cv=none; b=hwLrf2lFB6MuQ8PBYcry9/7ccce0vEUAbhL2rw0nu8PLmSEhe2ftZC53j1pLfb4hdgD7JjDxR47qGyMzCZHqIBADEWjK7l85wVL9Yj0DyxBRRyr+IN2+N71XQaEQK3WiqsnuNXXGTEyVmmafkeGc/cuDxq9QeyMsgOuhaGraGD0=
+	t=1789227571; cv=none; b=gugT1/N2HVTiN02OE5LNLgfMfK1YZwGa241YFFRK1FfrePgmja73RTUKWs1Cvyaw/EJs/kfIRfcSnQixkf5hK7DjSc+1TuUDeWoWyg2LG2jveyAMA77r808BYHHFYyDUI5KQpXJgSGc7tzJBCsa1D24sOr0vYqFLnXeRfauovYs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789227566; c=relaxed/simple;
-	bh=wkh9QMkqhkwztJQOCw96z4V7C5OVOKP8QsDb8TeQR0k=;
+	s=arc-20240116; t=1789227571; c=relaxed/simple;
+	bh=sDfTMODw/HqQ7HpGnbhh+zvN0xz0AGxWHiAxcZ1gmLM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FfT/Z/PoBl+Jypx60qMPIlDVNClzvExTEe7+awT+mon7tdj8M051AsGH9gi6qnvP/dJy/6LB/MJoOhnXNdYVp4G3Yz3maUGmgkWHyNLMMEGI0+aNb6do++RPtQYiDq2BnvTzLsoWSgYcV3Jj7qvo/j/VvCVVZRt5wUmvrViNzAA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tfHqAfzM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PqZy5Qd97qpeszYiqy74IlKrD0kElRUHfOcgzVaaUZ8ymgB+w+EaczX/Wn6/GjshsIYDNNr0wpNoFE/mE/BeUoxt/4r65UWwBecJfMZN3PHTrQBCpSipchUIPNl8uQfV2ZyE7OTnVBfKZzT3bzs0rDdLuywjCf8jG9nWTJy2QfY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LGslkDp3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tfHqAfzM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3E921F000FF;
-	Sat, 12 Sep 2026 15:39:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LGslkDp3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEBF01F00893;
+	Sat, 12 Sep 2026 15:39:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789227564;
-	bh=4NrSmYfrZnV2MgxutfTtkfs04BocAuRmRts6u4UWKck=;
+	s=korg; t=1789227569;
+	bh=anK6QHvt7aUn73LFzz7aiRpvajWBu4xWWcyRVLI5CWM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tfHqAfzMvajctPha7MrB4BEiQGFDWzc3by4uFnXlbmiHT8S348l8vmk7g1qT8j7EF
-	 0p0XarFOnUW6RN9JwTHomBlOm2PdmqUFhKaXrIxHgdQivPOip7ewiD7fo7YiwxbquZ
-	 +PheRyvu34+iiwdvlYtfdoT3UBuJjNja8lLnXqYc=
+	b=LGslkDp37KCGhHaDsNsUXFktGjtlSZ/lFaXDr1a6o6esgfaKSp36CTto+yH9j/b23
+	 /9bAkUyZ15sBGQi4Eib/VZa8kOXM0AxumgRND5Ikd0rjaHMoE6/Mf2rTWS0ZfP1URN
+	 86XVQxRP5Fda57h6lN9X95HmvGEi7vAEfWdM8N6g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	Xuanqiang Luo <luoxuanqiang@kylinos.cn>,
+	Koichiro Den <den@valinux.co.jp>,
+	Dave Jiang <dave.jiang@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 0208/1191] net: ravb: avoid dereferencing an invalid PTP clock
-Date: Sat, 12 Sep 2026 08:48:56 +0200
-Message-ID: <20260912065552.881502742@linuxfoundation.org>
+Subject: [PATCH 6.1 0209/1191] NTB: ntb_transport: Recycle TX entries before client callbacks
+Date: Sat, 12 Sep 2026 08:48:57 +0200
+Message-ID: <20260912065552.905063336@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -51,95 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
+From: Koichiro Den <den@valinux.co.jp>
 
-commit 1f77af0aaf277413ff32f6ff8c2c4282bd64c897 upstream.
+commit 256496397287334a19ed80ec7be92bffcae76b9d upstream.
 
-The PTP clock is unavailable before the first open, so querying its
-index can dereference a NULL pointer. Registration failures can also
-leave an error pointer in priv->ptp.clock.
+ntb_tx_copy_callback() invokes the client callback before returning the
+entry to tx_free_q. The callback may wake a stopped client queue, only
+for the next enqueue to find no local entry and return -EBUSY. The window
+is narrow, but the retry is unnecessary.
 
-Cache the PHC index separately and report -1 while no clock is
-registered. Normalize registration errors to NULL and preserve the
-static timestamping capabilities.
+Save the callback data and length, then return the entry to tx_free_q
+before invoking the client. A completion callback then means both the
+client buffer and transport entry are ready for reuse.
 
-Fixes: a0d2f20650e8 ("Renesas Ethernet AVB PTP clock driver")
+Fixes: fce8a7bb5b4b ("PCI-Express Non-Transparent Bridge Support")
 Cc: stable@vger.kernel.org
-Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Signed-off-by: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
-Link: https://patch.msgid.link/20260811103733.62599-2-xuanqiang.luo@linux.dev
+Signed-off-by: Koichiro Den <den@valinux.co.jp>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Link: https://patch.msgid.link/20260817053519.4135287-2-den@valinux.co.jp
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/renesas/ravb.h      |    1 +
- drivers/net/ethernet/renesas/ravb_main.c |    3 ++-
- drivers/net/ethernet/renesas/ravb_ptp.c  |   15 +++++++++++++--
- 3 files changed, 16 insertions(+), 3 deletions(-)
+ drivers/ntb/ntb_transport.c |   23 ++++++++++++++---------
+ 1 file changed, 14 insertions(+), 9 deletions(-)
 
---- a/drivers/net/ethernet/renesas/ravb.h
-+++ b/drivers/net/ethernet/renesas/ravb.h
-@@ -1005,6 +1005,7 @@ struct ravb_ptp_perout {
- struct ravb_ptp {
- 	struct ptp_clock *clock;
- 	struct ptp_clock_info info;
-+	int phc_index;
- 	u32 default_addend;
- 	u32 current_addend;
- 	int extts[N_EXT_TS];
---- a/drivers/net/ethernet/renesas/ravb_main.c
-+++ b/drivers/net/ethernet/renesas/ravb_main.c
-@@ -1700,7 +1700,7 @@ static int ravb_get_ts_info(struct net_d
- 			(1 << HWTSTAMP_FILTER_NONE) |
- 			(1 << HWTSTAMP_FILTER_PTP_V2_L2_EVENT) |
- 			(1 << HWTSTAMP_FILTER_ALL);
--		info->phc_index = ptp_clock_index(priv->ptp.clock);
-+		info->phc_index = READ_ONCE(priv->ptp.phc_index);
- 	}
- 
- 	return 0;
-@@ -2729,6 +2729,7 @@ static int ravb_probe(struct platform_de
- 	priv->rstc = rstc;
- 	priv->ndev = ndev;
- 	priv->pdev = pdev;
-+	priv->ptp.phc_index = -1;
- 	priv->num_tx_ring[RAVB_BE] = BE_TX_RING_SIZE;
- 	priv->num_rx_ring[RAVB_BE] = BE_RX_RING_SIZE;
- 	if (info->nc_queues) {
---- a/drivers/net/ethernet/renesas/ravb_ptp.c
-+++ b/drivers/net/ethernet/renesas/ravb_ptp.c
-@@ -332,6 +332,7 @@ void ravb_ptp_interrupt(struct net_devic
- void ravb_ptp_init(struct net_device *ndev, struct platform_device *pdev)
+--- a/drivers/ntb/ntb_transport.c
++++ b/drivers/ntb/ntb_transport.c
+@@ -1745,9 +1745,16 @@ static void ntb_transport_rxc_db(unsigne
+ static void ntb_tx_copy_callback(void *data,
+ 				 const struct dmaengine_result *res)
  {
- 	struct ravb_private *priv = netdev_priv(ndev);
-+	struct ptp_clock *clock;
- 	unsigned long flags;
- 
- 	priv->ptp.info = ravb_ptp_info;
-@@ -344,7 +345,15 @@ void ravb_ptp_init(struct net_device *nd
- 	ravb_modify(ndev, GCCR, GCCR_TCSS, GCCR_TCSS_ADJGPTP);
- 	spin_unlock_irqrestore(&priv->lock, flags);
- 
--	priv->ptp.clock = ptp_clock_register(&priv->ptp.info, &pdev->dev);
-+	clock = ptp_clock_register(&priv->ptp.info, &pdev->dev);
-+	if (IS_ERR(clock)) {
-+		netdev_err(ndev, "failed to register PTP clock: %pe\n", clock);
-+		clock = NULL;
-+	}
++	struct ntb_payload_header __iomem *hdr;
+ 	struct ntb_queue_entry *entry = data;
+-	struct ntb_transport_qp *qp = entry->qp;
+-	struct ntb_payload_header __iomem *hdr = entry->tx_hdr;
++	struct ntb_transport_qp *qp;
++	unsigned int len;
++	void *cb_data;
 +
-+	priv->ptp.clock = clock;
-+	if (clock)
-+		WRITE_ONCE(priv->ptp.phc_index, ptp_clock_index(clock));
++	qp = entry->qp;
++	hdr = entry->tx_hdr;
++	cb_data = entry->cb_data;
++	len = entry->len;
+ 
+ 	/* we need to check DMA results if we are using DMA */
+ 	if (res) {
+@@ -1787,15 +1794,13 @@ static void ntb_tx_copy_callback(void *d
+ 	 * "link down" or similar.  Since no payload is being sent in these
+ 	 * cases, there is nothing to add to the completion queue.
+ 	 */
+-	if (entry->len > 0) {
+-		qp->tx_bytes += entry->len;
+-
+-		if (qp->tx_handler)
+-			qp->tx_handler(qp, qp->cb_data, entry->cb_data,
+-				       entry->len);
+-	}
++	if (len > 0)
++		qp->tx_bytes += len;
+ 
+ 	ntb_list_add(&qp->ntb_tx_free_q_lock, &entry->entry, &qp->tx_free_q);
++
++	if (len > 0 && qp->tx_handler)
++		qp->tx_handler(qp, qp->cb_data, cb_data, len);
  }
  
- void ravb_ptp_stop(struct net_device *ndev)
-@@ -354,5 +363,7 @@ void ravb_ptp_stop(struct net_device *nd
- 	ravb_write(ndev, 0, GIC);
- 	ravb_write(ndev, 0, GIS);
- 
--	ptp_clock_unregister(priv->ptp.clock);
-+	WRITE_ONCE(priv->ptp.phc_index, -1);
-+	if (priv->ptp.clock)
-+		ptp_clock_unregister(priv->ptp.clock);
- }
+ static void ntb_memcpy_tx(struct ntb_queue_entry *entry, void __iomem *offset)
 
 
