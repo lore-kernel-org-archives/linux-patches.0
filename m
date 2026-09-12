@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99B2C35C6B2;
-	Sat, 12 Sep 2026 09:43:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C981735C6B2;
+	Sat, 12 Sep 2026 09:43:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789206184; cv=none; b=k1TEJ6ldWW3CKqg6HkAlPZW1/z8HsIOr8yoqg7vfYCQpvngX9VE/ilS7ZJPb7MsxB5YtSHaPK5rokey20z9WfzC2VIhO0G4DaXy701H17/12JRQ2fXXANvRX+SA3UC7Tx0+zUdBCgjSoqbj84Jsycc+Q98hX/YNEzl2QvFGMhJg=
+	t=1789206190; cv=none; b=UHZH9/xpHzlOlSERlmU92Wesr3JRMkU7cYDH2IrMQRh2edyU1Mgh9iccpbkEak754p4oW9WN5camekO8tCE4xGEwU4kOyQxyPzoMTxpO3BxgBwN1gg9uqP9br6qc716cSQAS4kQ9dKs08tM8QA5w/JQtpFCl5QOA4X1yyuVCAUI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789206184; c=relaxed/simple;
-	bh=wtOb25hAGrJ3wmpjUqXc5fe5BYBJsbVS0TtrU/R7xs0=;
+	s=arc-20240116; t=1789206190; c=relaxed/simple;
+	bh=fjBtUncIh9FqRgofWbNyviKua/gHtGtfatYvxjKIkTE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VUSiLh2SL231fHmfG3EVf5v47OXc4xV86VxKSDZJUqCCDReHM4FHgHlVF6JeI5OhJcDGqAvPHM3TCq2jx1vuG7rUH7c7/+pgLX6swq/IRMqvwNH0eepuMfnATZ22StnVEpW0nBbT1FOiE7jLADMbGtz5zdQ6v4cvuapD9S1AnTg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WWCUg4FS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Mkf7Yh/Q6JhGzOAtYpLhuzk1SpUoIXUWh5fP9xA/2+XkeFj4aWtBNTAiOKr6Zinw++FcQTZoSTAuZC1DDWKo8UAhCfsE2T03P6YYoQV9cqJfxrVRNEQiR6GC340zbz97umYAhbSrD1R84EJsbls1wjO44rhyA7eIzAJ1MQylhUs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JZw9wSx7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WWCUg4FS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97C701F000FF;
-	Sat, 12 Sep 2026 09:43:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JZw9wSx7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 834481F000FF;
+	Sat, 12 Sep 2026 09:43:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789206183;
-	bh=ioVhp6v8osXAj0tSnLc1L6JlNkEA++tuM+PLNPIh6uc=;
+	s=korg; t=1789206188;
+	bh=vE21Uvy5Y58koH9TjoAyOkTyXbmwmGp+RJy9Ziq0c1A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WWCUg4FSyysYzUlp3sB8+goDRBSFOHJWNCGkSaHwZZD7Ng3rwala07MV6KlQfKPMF
-	 DFGWMEi65VsFNy+aT3qSTuZ+k7N4coBeAwsq/uuIcmlWfzbFFBfAX3zHDbtT6bKSFv
-	 68TFT5wW75p5XllO3snoKhD/gs2p+UVssLjDkXac=
+	b=JZw9wSx7sCRo4SKRa4pOpGyFFqVxPtc2xEVakqTOkfVMbf4OlCmc/pOqAGBrJvTYi
+	 Bj5ahxtbv3nFIZkdv8nxd8qew274VYC13AWJj26Epywf60Vlk9paBi3nJyZTj1qmXc
+	 umoePq3yFmQ3FqpRcAWduo72d5uRDeiqTb0zEoZs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peng Fan <peng.fan@nxp.com>,
-	Brian Masney <bmasney@redhat.com>,
+	Ian Rogers <irogers@google.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0138/1518] clk: imx: scu: drop redundant init.ops variable assignment
-Date: Sat, 12 Sep 2026 08:38:27 +0200
-Message-ID: <20260912065626.616283528@linuxfoundation.org>
+Subject: [PATCH 6.18 0156/1518] perf test metrics: Update all metrics for possibly failing default metrics
+Date: Sat, 12 Sep 2026 08:38:45 +0200
+Message-ID: <20260912065627.021138531@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,34 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Brian Masney <bmasney@redhat.com>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit 5f2db1ce201216e81333ecc2ab51494410b2fe0d ]
+[ Upstream commit 91c1949d768520d9befa7761eb97c3826997da25 ]
 
-The init.ops is assigned a default value, however right below it is an
-if, else if, and else where all of them also assign a value to init.ops.
-Drop the redundant init.ops assignment at the top.
+Default metrics may use unsupported events and be ignored. These
+metrics shouldn't cause metric testing to fail.
 
-Fixes: 3b9ea606cda53 ("clk: imx: scu: add cpu frequency scaling support")
-Reviewed-by: Peng Fan <peng.fan@nxp.com>
-Signed-off-by: Brian Masney <bmasney@redhat.com>
+Signed-off-by: Ian Rogers <irogers@google.com>
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Stable-dep-of: 8953bfd8820b ("perf tests: Skip metrics validation if system-wide recording lacks permission")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/imx/clk-scu.c | 1 -
- 1 file changed, 1 deletion(-)
+ tools/perf/tests/shell/stat_all_metrics.sh | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/clk/imx/clk-scu.c b/drivers/clk/imx/clk-scu.c
-index c03f7821824d1..b2b0e5f05b238 100644
---- a/drivers/clk/imx/clk-scu.c
-+++ b/drivers/clk/imx/clk-scu.c
-@@ -465,7 +465,6 @@ struct clk_hw *__imx_clk_scu(struct device *dev, const char *name,
- 	clk->clk_type = clk_type;
- 
- 	init.name = name;
--	init.ops = &clk_scu_ops;
- 	if (rsrc_id == IMX_SC_R_A35 || rsrc_id == IMX_SC_R_A53 || rsrc_id == IMX_SC_R_A72)
- 		init.ops = &clk_scu_cpu_ops;
- 	else if (rsrc_id == IMX_SC_R_PI_0_PLL)
+diff --git a/tools/perf/tests/shell/stat_all_metrics.sh b/tools/perf/tests/shell/stat_all_metrics.sh
+index 6fa585a1e34c9..a7edf01b39433 100755
+--- a/tools/perf/tests/shell/stat_all_metrics.sh
++++ b/tools/perf/tests/shell/stat_all_metrics.sh
+@@ -25,8 +25,13 @@ for m in $(perf list --raw-dump metrics); do
+     # No error result and metric shown.
+     continue
+   fi
+-  if [[ "$result" =~ "Cannot resolve IDs for" ]]
++  if [[ "$result" =~ "Cannot resolve IDs for" || "$result" =~ "No supported events found" ]]
+   then
++    if [[ "$m" == @(l1_prefetch_miss_rate|stalled_cycles_per_instruction) ]]
++    then
++      # Default metrics that may use unsupported events.
++      continue
++    fi
+     echo "Metric contains missing events"
+     echo $result
+     err=1 # Fail
 -- 
 2.53.0
 
