@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E811F343893;
-	Sat, 12 Sep 2026 07:34:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FC682E718B;
+	Sat, 12 Sep 2026 07:34:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789198496; cv=none; b=S+5kIVSuHmlVJJ+eCE1Y5mFTsqQCRHqyBs+W+nXnjqHbzbKx49bm/iJYvSvJDyGGJUgqPW6O7LaPpsbVrg9fE8GTLkgb+amxeFAH5+keFfklqU+S2TBi0hsBb27BVkcEnPvC07sC+GdgzsjPYNMtjitNaEMI+Tmp8kfXptW/j3s=
+	t=1789198501; cv=none; b=fSq7sxOS2kbzELmkwwmXxIId7CBCCzB2fk5xb1+UFIEjwt5vyBKYqErhaNRoeQ6tne4rQAbhPPX/wTxBWKt1dJEQs/rDFcEWWJJtFzycoWTI1nUA57TThWiZ7UK1SmWIkMGwIeDqwQ50qaHVVrM1uiM6X3tT2T6ds5ZzcRxVwnU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789198496; c=relaxed/simple;
-	bh=HcZ+e04qVybra1LQIx2tOB0vdf9EMSFJRVl3HSmvUT4=;
+	s=arc-20240116; t=1789198501; c=relaxed/simple;
+	bh=4uKdTyqQfm6XKyTBulWyKLvOL/E3gWXxsuaZ1q6LTXg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ea6varGkb9tUxY8FYg+646vbe1TnlF4L6rmtuCspdp9ks8EJuU7X4ugpyrHpbryViJXXgpxa9reoHqb0Xuo6itjqPy+GAzs7boWAOhdXK9K/ZMdKdoIz+1HQnnlv4DPFiLaJ5gpBRku7Yid+WZY+Pkr+h4qlapa59WjCuCyjOBM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rQNBuWnC; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=B2/fQBjvrm/ytx/Sr6m3bQnsobL5srjw18gNQecIQvoRmaV2T74RXurUt0MhixBxm54LoVv3w4FU/IuH8Urng9Lcoz0FHnwmRwz+DFIwY++OKuvhRncT/nUeqGz64leDhvFoJ1gsIpe3Gw2BzHmVvQwClH9fXDhOLwsHdl06OFs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ybVHMEIr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rQNBuWnC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A38171F000FF;
-	Sat, 12 Sep 2026 07:34:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ybVHMEIr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF4841F000FF;
+	Sat, 12 Sep 2026 07:34:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789198494;
-	bh=SXqFy96TCAelz5MqzbzCslzicFFh9+PLcNFR/80zLsg=;
+	s=korg; t=1789198499;
+	bh=UeQCLdls4p4ko50BG9rs352YrN5NvqMHtFpPl08jbmM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rQNBuWnColawCpIn18i/Sh7n21nxuQkz8vQ5eMyzga1mZ6xWNXnx4Wrrejnn6jd21
-	 2/XXRsF9juq4OP5iPRD1FeYyvaRwA5Fma/pf7PBdNwlQ32iWZXzvjKwPyR2UFuI2kE
-	 E517uyrlvXGmwJGNfcl0U/C7Pr9830GzrYp9ghP4=
+	b=ybVHMEIrIYwFBbyS1y+dePoKFdzkg+7JOzg0NvvrTcWu9jpClxRvncwxX0NkI0QhD
+	 YbVfXON3Vbluzle/e1o/GDc6xt11NVGgVyiQp64X9cdiieUhprVqPKv1IKVSfKPeWX
+	 HL4R2ufgk00R9XAODng0gxawV60hBQJz78a96940=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Calligeros <jcalligeros99@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	David Stevens <stevensd@google.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	"H. Peter Anvin (Intel)" <hpa@zytor.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0365/1815] ASoC: apple: mca: increase SERDES reset delay
-Date: Sat, 12 Sep 2026 08:35:15 +0200
-Message-ID: <20260912065657.470738605@linuxfoundation.org>
+Subject: [PATCH 7.2 0392/1815] x86/entry/fred: Encode frame pointer on entry
+Date: Sat, 12 Sep 2026 08:35:42 +0200
+Message-ID: <20260912065658.097285016@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,46 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: James Calligeros <jcalligeros99@gmail.com>
+From: David Stevens <stevensd@google.com>
 
-[ Upstream commit cccd721e5aab03e92234faee72b363c9ba60611c ]
+[ Upstream commit dab01c597f6bd40e0efe7da967b8374ca1971b79 ]
 
-The SERDES clusters in this peripheral take a long time to warm up.
-We tried polling the reset bit until cleared, however this is not
-a reliable signal of readiness to be configured. Only waiting
-~25 us to give the cluster a chance to settle makes it work
-reliably.
+Add missing ENCODE_FRAME_POINTER macro invocation into FRED_ENTER macro,
+to prevent the unwinder from encountering a NULL stack frame pointer
+when CONFIG_UNWINDER_FRAME_POINTER is enabled
 
-Increase the 2 us delay to 25 us and hope we never have to do this
-again.
-
-Fixes: d8b3e396088d ("ASoC: apple: mca: Fix SERDES reset sequence")
-Signed-off-by: James Calligeros <jcalligeros99@gmail.com>
-Link: https://patch.msgid.link/20260711-apple-audio-redux-v4-1-2994d87c2f24@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 14619d912b65 ("x86/fred: FRED entry/exit and dispatch code")
+Signed-off-by: David Stevens <stevensd@google.com>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Acked-by: H. Peter Anvin (Intel) <hpa@zytor.com>
+Link: https://patch.msgid.link/20260424191456.2679717-12-stevensd@google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/apple/mca.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ arch/x86/entry/entry_64_fred.S | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/sound/soc/apple/mca.c b/sound/soc/apple/mca.c
-index 492165c0e1ea9..ebe116f32661c 100644
---- a/sound/soc/apple/mca.c
-+++ b/sound/soc/apple/mca.c
-@@ -210,10 +210,10 @@ static void mca_fe_early_trigger(struct snd_pcm_substream *substream, int cmd,
- 			   SERDES_STATUS_EN | SERDES_STATUS_RST,
- 			   SERDES_STATUS_RST);
- 		/*
--		 * Experiments suggest that it takes at most ~1 us
--		 * for the bit to clear, so wait 2 us for good measure.
-+		 * The SERDES cluster needs a bit of time to reset itself
-+		 * and settle before we start poking it. This is... slow...
- 		 */
--		udelay(2);
-+		udelay(25);
- 		WARN_ON(readl_relaxed(cl->base + serdes_unit + REG_SERDES_STATUS) &
- 			SERDES_STATUS_RST);
- 		mca_modify(cl, serdes_conf, SERDES_CONF_SYNC_SEL,
+diff --git a/arch/x86/entry/entry_64_fred.S b/arch/x86/entry/entry_64_fred.S
+index 0d2768ab836c4..b98f8945dfff4 100644
+--- a/arch/x86/entry/entry_64_fred.S
++++ b/arch/x86/entry/entry_64_fred.S
+@@ -7,6 +7,7 @@
+ #include <linux/kvm_types.h>
+ 
+ #include <asm/asm.h>
++#include <asm/frame.h>
+ #include <asm/fred.h>
+ #include <asm/segment.h>
+ 
+@@ -19,6 +20,7 @@
+ 	UNWIND_HINT_END_OF_STACK
+ 	ANNOTATE_NOENDBR
+ 	PUSH_AND_CLEAR_REGS
++	ENCODE_FRAME_POINTER
+ 	movq	%rsp, %rdi	/* %rdi -> pt_regs */
+ .endm
+ 
 -- 
 2.53.0
 
