@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F063B34E75A;
-	Sat, 12 Sep 2026 08:21:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC9BE30BF70;
+	Sat, 12 Sep 2026 08:22:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789201321; cv=none; b=R6o9PiGSLBioPk+ZPeKIMOpZCsuFdspSGRE++KE4lv9o+UR9z7nvd/91o2QGHRh2gMOZ5yNchmiA+6EZ4THanf34+yrrro8L/Fv/CJN6F9jvUguYNCXpt3JlZqfPa4x8pHt1Kg74FXQvr3n+JMIPVOsp6Ikf7BylwTIbKuMzy0s=
+	t=1789201325; cv=none; b=GFw0aQs8vk+pzIr82XONLVV6noL5pqt1VHsW5dbaRFe6ihs4hSaFoe2kGOSodgmO92eYgTMoloAsMkenL16hedK0f2JAKZly3QPwIvFxQMcXT6fX+9z/RPJ/axX27T2SdIOdI5tuSNmlc8WRiTRlzQMdpZXA8oxtDt0ypxg0UnI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789201321; c=relaxed/simple;
-	bh=AWn6sQyr8nLxj+2ayHL58FqFv5TBLn7kjjnEHzMcsP8=;
+	s=arc-20240116; t=1789201325; c=relaxed/simple;
+	bh=6lecuOle7Ixj6SHv7EC1GJI2hq1bWCtIp14b6x8pP1U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MNCdYIuzTHPHzJvs21wOkkQ1eDLmZj7IEBL3HUtTKNJx9xZsZrpxZE0anxURZVKQynuFBaLuWH6UNMzPG4gcSQxuOELf/2WUQeqgtQN5ke7L7TU9I7PX2y5GQusfkagIcqInW8Je8B0MJuw5NxqRaNHNYOGMYEMOW3E/dgkeY90=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NtnMiRim; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VekqK8QaHSvmWiDlhiKwVILK8Nh/Gpd1k2yVTG76z1rgfNGpCiDJQw9+vrQz2eRhxrkzmPDLf4a/MuTuDG6h32r6g9whMapSmClsZOdBW5qJNb3uqKlFIa+jcyyPM7Ld+PlfUS1AgC8KqyHg2cL/xR8yDVkfizbiIHqHPNheGfE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RnnYbq5L; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NtnMiRim"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABACD1F000FF;
-	Sat, 12 Sep 2026 08:21:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RnnYbq5L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8C481F000FF;
+	Sat, 12 Sep 2026 08:22:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789201319;
-	bh=uuxdYeKBEgw+lZhRpwxudcTcEx5TNc1Yq4mtGmfB0bc=;
+	s=korg; t=1789201324;
+	bh=hRsur+re+sL9KsTfj0dmg614O5ALZSRF3aOeaM7jvZ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NtnMiRimEghleqx2nWxj+r322foPK6IXilbttoZ/Z60S49VoDke+MuA9k1b7VV0ts
-	 dO/Szn/seTiHWhJgk2F5kkRAHULoBMsJJR9klWNT8uBia8sti81JPZvQxbRpW6Jk6M
-	 7Lz6CABzynmiiPvIkwScJNoa0QQx2KeattALPKC0=
+	b=RnnYbq5LfwfV3Mx5db3/dYOqJqyfowR+HM/MMRtZhz4+nwI+QRaZMuMV6NxGrdPIA
+	 Q1hsS1EIGAMSxNB23z0EbYE0RZyO7JKKH1A/FvD9R+ulzHwJ2Ie8jGJeMsnVmTDXRm
+	 zLCvENMh0mIo6KVt0F1mDlNh6YKyCL6r4iMgo5yc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laxman Acharya Padhya <acharyalaxman8848@gmail.com>,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Ingo Molnar <mingo@kernel.org>,
+	live-patching@vger.kernel.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0973/1815] firmware: coreboot: Validate table bounds
-Date: Sat, 12 Sep 2026 08:45:23 +0200
-Message-ID: <20260912065711.817387637@linuxfoundation.org>
+Subject: [PATCH 7.2 0974/1815] objtool/klp: Fix module name normalization for paths with dots
+Date: Sat, 12 Sep 2026 08:45:24 +0200
+Message-ID: <20260912065711.841062563@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,86 +53,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Laxman Acharya Padhya <acharyalaxman8848@gmail.com>
+From: Josh Poimboeuf <jpoimboe@kernel.org>
 
-[ Upstream commit a58a57a1076f8c5dae0327e3710899478c3be901 ]
+[ Upstream commit 165affd6f095323d953b0ed5823ec4d0db3b7d0d ]
 
-The existing coreboot_table_populate() bounds checks limit individual
-entries to the mapped length.  However, coreboot_table_probe() replaces
-the platform resource length with header and table sizes supplied by
-firmware before mapping the full table.
+When .modinfo has no "name=" tag, __find_modname() falls back to
+converting the object's build-tree path to a runtime module name by
+stripping directory components, converting '-' to '_' and truncating the
+file extension.
 
-A malformed table can overflow the 32-bit size addition or advertise an
-extent beyond the resource, causing the driver to map and parse memory
-outside the resource.  A resource shorter than the fixed header is also
-mapped as though it contained a complete header.
+It does all that in a single pass over the entire path, so the first dot
+anywhere in the path ends the name.  For an object built in a directory
+whose name contains a dot, e.g. "drivers/foo-1.0/bar.o", the result is a
+bogus module name.
 
-Reject resources shorter than the fixed header.  After validating the
-signature, require a complete header, calculate the advertised extent
-with overflow checking, and reject extents beyond the resource before
-remapping the table.
+Strip the directory components up front so only the basename is scanned
+for the extension separator.
 
-Fixes: d384d6f43d1e ("firmware: google memconsole: Add coreboot support")
-Signed-off-by: Laxman Acharya Padhya <acharyalaxman8848@gmail.com>
-Link: https://lore.kernel.org/r/20260801165651.42172-1-acharyalaxman8848@gmail.com
-Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
+Fixes: dd590d4d57eb ("objtool/klp: Introduce klp diff subcommand for diffing object files")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: live-patching@vger.kernel.org
+Link: https://patch.msgid.link/9017b4609553bed16674e8f924d34691cbc2b2c1.1785727106.git.jpoimboe@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/google/coreboot_table.c | 17 +++++++++++++----
- 1 file changed, 13 insertions(+), 4 deletions(-)
+ tools/objtool/klp-diff.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/firmware/google/coreboot_table.c b/drivers/firmware/google/coreboot_table.c
-index e63933ff67470..96e68ae3f6acc 100644
---- a/drivers/firmware/google/coreboot_table.c
-+++ b/drivers/firmware/google/coreboot_table.c
-@@ -170,6 +170,7 @@ static int coreboot_table_populate(struct device *dev, void *ptr, resource_size_
- static int coreboot_table_probe(struct platform_device *pdev)
+diff --git a/tools/objtool/klp-diff.c b/tools/objtool/klp-diff.c
+index f8787d7d14547..aeb99d572300c 100644
+--- a/tools/objtool/klp-diff.c
++++ b/tools/objtool/klp-diff.c
+@@ -1140,7 +1140,7 @@ static struct export *find_export(struct symbol *sym)
+ static const char *__find_modname(struct elfs *e)
  {
- 	resource_size_t len;
-+	resource_size_t table_span;
- 	struct coreboot_table_header *header;
- 	struct resource *res;
- 	struct device *dev = &pdev->dev;
-@@ -181,7 +182,7 @@ static int coreboot_table_probe(struct platform_device *pdev)
- 		return -EINVAL;
+ 	struct section *sec;
+-	char *name;
++	char *name, *slash;
  
- 	len = resource_size(res);
--	if (!res->start || !len)
-+	if (!res->start || len < sizeof(*header))
- 		return -EINVAL;
- 
- 	/* Check just the header first to make sure things are sane */
-@@ -189,19 +190,27 @@ static int coreboot_table_probe(struct platform_device *pdev)
- 	if (!header)
- 		return -ENOMEM;
- 
--	len = header->header_bytes + header->table_bytes;
- 	ret = strncmp(header->signature, "LBIO", sizeof(header->signature));
-+
-+	if (!ret &&
-+	    (header->header_bytes < sizeof(*header) ||
-+	     check_add_overflow((resource_size_t)header->header_bytes,
-+				(resource_size_t)header->table_bytes,
-+				&table_span) ||
-+	     table_span > len))
-+		ret = -EINVAL;
-+
- 	memunmap(header);
- 	if (ret) {
- 		dev_warn(dev, "coreboot table missing or corrupt!\n");
- 		return -ENODEV;
+ 	sec = find_section_by_name(e->orig, ".modinfo");
+ 	if (!sec) {
+@@ -1158,10 +1158,12 @@ static const char *__find_modname(struct elfs *e)
+ 		return NULL;
  	}
  
--	ptr = memremap(res->start, len, MEMREMAP_WB);
-+	ptr = memremap(res->start, table_span, MEMREMAP_WB);
- 	if (!ptr)
- 		return -ENOMEM;
- 
--	ret = coreboot_table_populate(dev, ptr, len);
-+	ret = coreboot_table_populate(dev, ptr, table_span);
- 
- 	memunmap(ptr);
- 
++	slash = strrchr(name, '/');
++	if (slash)
++		name = slash + 1;
++
+ 	for (char *c = name; *c; c++) {
+-		if (*c == '/')
+-			name = c + 1;
+-		else if (*c == '-')
++		if (*c == '-')
+ 			*c = '_';
+ 		else if (*c == '.') {
+ 			*c = '\0';
 -- 
 2.53.0
 
