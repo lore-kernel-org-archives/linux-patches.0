@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8612C4BEE5E;
-	Sat, 12 Sep 2026 16:44:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 597DB3783B0;
+	Sat, 12 Sep 2026 16:44:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789231494; cv=none; b=O6h3SVLJ04tC5zKKUGphBkzvfUlZ6EkQIoLtgRKa02k5XO4s6s8gzRb/kmRy9PsKPMP+m4TicOy4X8Ro35Lfo4hUhBVQsw3HQdxHBNVlh/G2IYOTaom4iU19Zh0TjxGU9jYTO37l04Wb8jpWoaS97wZr0UHtWYhMUQRdF+IkvYY=
+	t=1789231499; cv=none; b=sqpnwDbGtI4mf3tx5cy6O844yqxHkahl7HsAx04gHozNznRIsk2KLpS9Q/zWezTTbCjUp6IcpY16Rw1sBxc7ZjYiGQ2wIS8MimXGdN/vkaxgCF/H2eKGXMHDkoB/EE/n4HVU/kd5GrF/v4q86ekDooEytqcyMKEU2gg0J9y6tBI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789231494; c=relaxed/simple;
-	bh=wfLkD+Kw2SFow+LQD7OdRxalJv1IQfSOLp6HcC8C69I=;
+	s=arc-20240116; t=1789231499; c=relaxed/simple;
+	bh=AhGXG0Hsn2BtcYEuJKntJSN3r6HjR8eeAgYJ26JH7qA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MVeTh3rQ3bVmQ/M9kSdhjXbjdZ5xQDLJEc1n82v5n9nFYWh14JHpK9VgvBoQDpSOeutPgGUai/4L80+bIUE+mLs0WzyQeFgZZROZKjKU/OH5ZCekSyXUjAVH1kOMS7Sjm5P0+1jO7OnAY3aOJxnYjUsQDcFqLCsZZX1uIfb0xc8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nmUem7/M; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=vGli2rZ/XHiWmzdnlhKvPSdbmK38oYBoFhWwurJnI40mLvEvw1IlCjD4GJhOJzwboKKlMEk7ZhNFmMdaKQlJWvG81efqpphuYeYekKAQzd4Te2Iyne0iefwOASJfErjWQMPQd04kptHIxHCMjdMBnqipbboImLrUO0KNpdFL/ig=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=opeBuj6f; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nmUem7/M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A34141F000FF;
-	Sat, 12 Sep 2026 16:44:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="opeBuj6f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43B031F000FF;
+	Sat, 12 Sep 2026 16:44:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789231493;
-	bh=N2/19d1lplUdMa7v0X9/VIQzLpK5DNPPNvVz8kk+ZnE=;
+	s=korg; t=1789231498;
+	bh=kPZeMTCc6WxOerFq9hfnkcq7am9rlkSyfuX37QT9H80=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nmUem7/Mk2HA2DT7dsaZGrvDNpBHdlQ6k2cfbJ1PNpR1kyUD8AtMCofEoVRlxftme
-	 sto3xDz2MJQxeDmkKkcaDG2gUowi6FaWl6GfaK9i3CyiJ8XOEKKcLlFfbum3FuJ1kc
-	 aG7GrusKgoN3TJKcCi4tp846js4TdfqFz8HneGto=
+	b=opeBuj6fo7UkO+O5Dv0eOWKc5gVtbZ7cDbfJ7e4Ze9jGwny5+5CLTU5fWOO8hs4yL
+	 ghbudT0Gtkh0jOxNemYDj2Yv7udnR/q4HDZcE9PyiD3rZMBRgJizz3YRFkQI4/Lhrd
+	 Shy4jMTlaYv2Sr8x3qlzgRDqwt0aXcgVFObVYVnA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+7061d72c26b7daebe2b4@syzkaller.appspotmail.com,
-	Aleksandr Nogikh <nogikh@google.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1008/1191] ALSA: core: Fix use-after-free in snd_card_do_free()
-Date: Sat, 12 Sep 2026 09:02:16 +0200
-Message-ID: <20260912065610.835801956@linuxfoundation.org>
+Subject: [PATCH 6.1 1009/1191] tracing: Remove "__attribute__()" from the type field of event format
+Date: Sat, 12 Sep 2026 09:02:17 +0200
+Message-ID: <20260912065610.857841687@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -52,104 +52,326 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksandr Nogikh <nogikh@google.com>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-[ Upstream commit 5ae1a690c522fea2900ff56c8c2ace7b059f5e04 ]
+[ Upstream commit 1a967e92bf47cf5170336b88d748117c700edc47 ]
 
-A use-after-free was detected in snd_card_do_free() when a sound card
-managed by devres is unbound while a user-space application still holds an
-open file descriptor.
+With CONFIG_DEBUG_INFO_BTF=y and PAHOLE_HAS_BTF_TAG=y, `__user` is
+converted to `__attribute__((btf_type_tag("user")))`. In this case,
+some syscall events have it for __user data, like below;
 
-For managed cards, the memory is allocated using devres_alloc(), and its
-release function is set to __snd_card_release(), which calls
-snd_card_free(). When the device is unbound, the unbind thread calls
-snd_card_free(), which drops a reference to the card's device. If the user
-thread still has an open file descriptor, the reference count does not
-reach zero, and the unbind thread blocks on wait_for_completion(&released).
+/sys/kernel/tracing # cat events/syscalls/sys_enter_openat/format
+name: sys_enter_openat
+ID: 720
+format:
+        field:unsigned short common_type;       offset:0;       size:2; signed:0;
+        field:unsigned char common_flags;       offset:2;       size:1; signed:0;
+        field:unsigned char common_preempt_count;       offset:3;       size:1; signed:0;
+        field:int common_pid;   offset:4;       size:4; signed:1;
 
-When the user thread closes the file descriptor, it drops the final
-reference, invoking the device release callback release_card_device(),
-which calls snd_card_do_free(). snd_card_do_free() performs cleanup and
-calls complete(card->release_completion). This wakes up the unbind thread,
-which returns from snd_card_free() and __snd_card_release(). The devres
-core then immediately frees the memory block containing the snd_card
-structure.
+        field:int __syscall_nr; offset:8;       size:4; signed:1;
+        field:int dfd;  offset:16;      size:8; signed:0;
+        field:const char __attribute__((btf_type_tag("user"))) * filename;      offset:24;      size:8; signed:0;
+        field:int flags;        offset:32;      size:8; signed:0;
+        field:umode_t mode;     offset:40;      size:8; signed:0;
 
-Meanwhile, the user thread continues execution in snd_card_do_free() and
-evaluates `if (!card->managed)`. It reads the `managed` boolean from the
-snd_card structure that was just freed by the unbind thread, triggering a
-KASAN use-after-free.
+Then the trace event filter fails to set the string acceptable flag
+(FILTER_PTR_STRING) to the field and rejects setting string filter;
 
-Fix this by caching the value of card->managed in a local variable before
-calling complete(). This ensures that the card pointer is not dereferenced
-after the unbind thread has been woken up and potentially freed the card.
+ # echo 'filename.ustring ~ "*ftracetest-dir.wbx24v*"' \
+    >> events/syscalls/sys_enter_openat/filter
+ sh: write error: Invalid argument
+ # cat error_log
+ [  723.743637] event filter parse error: error: Expecting numeric field
+   Command: filename.ustring ~ "*ftracetest-dir.wbx24v*"
 
-BUG: KASAN: use-after-free in snd_card_do_free sound/core/init.c:604
-[inline]
-BUG: KASAN: use-after-free in release_card_device+0x1ab/0x1b0
-sound/core/init.c:153
-Read of size 1 at addr ffff8881912ec909 by task syz-executor130/5857
+Since this __attribute__ makes format parsing complicated and not
+needed, remove the __attribute__(.*) from the type string.
 
-Call Trace:
- <TASK>
- dump_stack_lvl+0xe8/0x150 lib/dump_stack.c:120
- print_address_description+0x55/0x1e0 mm/kasan/report.c:378
- print_report+0x58/0x70 mm/kasan/report.c:482
- kasan_report+0x117/0x150 mm/kasan/report.c:595
- snd_card_do_free sound/core/init.c:604 [inline]
- release_card_device+0x1ab/0x1b0 sound/core/init.c:153
- device_release+0xc4/0x1f0 drivers/base/core.c:-1
- kobject_cleanup lib/kobject.c:689 [inline]
- kobject_release lib/kobject.c:720 [inline]
- kref_put include/linux/kref.h:65 [inline]
- kobject_put+0x222/0x550 lib/kobject.c:737
- snd_card_file_remove+0x331/0x390 sound/core/init.c:1125
- snd_pcm_release+0x12c/0x160 sound/core/pcm_native.c:2986
- __fput+0x418/0xa50 fs/file_table.c:512
- fput_close_sync+0x11f/0x240 fs/file_table.c:617
- __do_sys_close fs/open.c:1511 [inline]
- __se_sys_close fs/open.c:1496 [inline]
- __x64_sys_close+0x7e/0x110 fs/open.c:1496
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0x174/0x580 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
- </TASK>
-
-Fixes: e8ad415b7a55 ("ALSA: core: Add managed card creation")
-Assisted-by: Gemini:gemini-3.6-flash Gemini:gemini-3.1-pro-preview syzbot
-Reported-by: syzbot+7061d72c26b7daebe2b4@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=7061d72c26b7daebe2b4
-Link: https://syzkaller.appspot.com/ai_job?id=24752a23-f0b6-49c1-bf20-4fa89c2e7eb2
-Signed-off-by: Aleksandr Nogikh <nogikh@google.com>
-Link: https://patch.msgid.link/02042186-27b7-42a9-b64e-f93ce8fbe05a@mail.kernel.org
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Link: https://lore.kernel.org/175376583493.1688759.12333973498014733551.stgit@mhiramat.tok.corp.google.com
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Stable-dep-of: ae70b04ab9c7 ("tracing: Have trace_event_update_all() only handle module that is loading")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/init.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ kernel/trace/trace.c        |  28 +++++---
+ kernel/trace/trace.h        |   4 +-
+ kernel/trace/trace_events.c | 128 ++++++++++++++++++++++++++++++------
+ 3 files changed, 127 insertions(+), 33 deletions(-)
 
-diff --git a/sound/core/init.c b/sound/core/init.c
-index 4b95d885a7dcf..2cb554b393fce 100644
---- a/sound/core/init.c
-+++ b/sound/core/init.c
-@@ -595,6 +595,8 @@ EXPORT_SYMBOL_GPL(snd_card_disconnect_sync);
+diff --git a/kernel/trace/trace.c b/kernel/trace/trace.c
+index 5ef1c79dc5c9e..a5f9f666a49f5 100644
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -6192,17 +6192,27 @@ static inline void trace_insert_eval_map_file(struct module *mod,
+ 			      struct trace_eval_map **start, int len) { }
+ #endif /* !CONFIG_TRACE_EVAL_MAP_FILE */
  
- static int snd_card_do_free(struct snd_card *card)
+-static void trace_insert_eval_map(struct module *mod,
+-				  struct trace_eval_map **start, int len)
++static void
++trace_event_update_with_eval_map(struct module *mod,
++				 struct trace_eval_map **start,
++				 int len)
  {
-+	bool managed = card->managed;
+ 	struct trace_eval_map **map;
+ 
+-	if (len <= 0)
+-		return;
++	/* Always run sanitizer only if btf_type_tag attr exists. */
++	if (len <= 0) {
++		if (!(IS_ENABLED(CONFIG_DEBUG_INFO_BTF) &&
++		      IS_ENABLED(CONFIG_PAHOLE_HAS_BTF_TAG) &&
++		      __has_attribute(btf_type_tag)))
++			return;
++	}
+ 
+ 	map = start;
+ 
+-	trace_event_eval_update(map, len);
++	trace_event_update_all(map, len);
 +
- 	card->releasing = true;
- #if IS_ENABLED(CONFIG_SND_MIXER_OSS)
- 	if (snd_mixer_oss_notify_callback)
-@@ -609,7 +611,7 @@ static int snd_card_do_free(struct snd_card *card)
- 	}
- 	if (card->release_completion)
- 		complete(card->release_completion);
--	if (!card->managed)
-+	if (!managed)
- 		kfree(card);
- 	return 0;
++	if (len <= 0)
++		return;
+ 
+ 	trace_insert_eval_map_file(mod, start, len);
  }
+@@ -9835,7 +9845,7 @@ static void __init eval_map_work_func(struct work_struct *work)
+ 	int len;
+ 
+ 	len = __stop_ftrace_eval_maps - __start_ftrace_eval_maps;
+-	trace_insert_eval_map(NULL, __start_ftrace_eval_maps, len);
++	trace_event_update_with_eval_map(NULL, __start_ftrace_eval_maps, len);
+ }
+ 
+ static int __init trace_eval_init(void)
+@@ -9870,9 +9880,6 @@ late_initcall_sync(trace_eval_sync);
+ #ifdef CONFIG_MODULES
+ static void trace_module_add_evals(struct module *mod)
+ {
+-	if (!mod->num_trace_evals)
+-		return;
+-
+ 	/*
+ 	 * Modules with bad taint do not have events created, do
+ 	 * not bother with enums either.
+@@ -9880,7 +9887,8 @@ static void trace_module_add_evals(struct module *mod)
+ 	if (trace_module_has_bad_taint(mod))
+ 		return;
+ 
+-	trace_insert_eval_map(mod, mod->trace_evals, mod->num_trace_evals);
++	/* Even if no trace_evals, this need to sanitize field types. */
++	trace_event_update_with_eval_map(mod, mod->trace_evals, mod->num_trace_evals);
+ }
+ 
+ #ifdef CONFIG_TRACE_EVAL_MAP_FILE
+diff --git a/kernel/trace/trace.h b/kernel/trace/trace.h
+index 494207311934e..7058234433359 100644
+--- a/kernel/trace/trace.h
++++ b/kernel/trace/trace.h
+@@ -1930,13 +1930,13 @@ static inline const char *get_syscall_name(int syscall)
+ 
+ #ifdef CONFIG_EVENT_TRACING
+ void trace_event_init(void);
+-void trace_event_eval_update(struct trace_eval_map **map, int len);
++void trace_event_update_all(struct trace_eval_map **map, int len);
+ /* Used from boot time tracer */
+ extern int ftrace_set_clr_event(struct trace_array *tr, char *buf, int set);
+ extern int trigger_process_regex(struct trace_event_file *file, char *buff);
+ #else
+ static inline void __init trace_event_init(void) { }
+-static inline void trace_event_eval_update(struct trace_eval_map **map, int len) { }
++static inline void trace_event_update_all(struct trace_eval_map **map, int len) { }
+ #endif
+ 
+ #ifdef CONFIG_TRACER_SNAPSHOT
+diff --git a/kernel/trace/trace_events.c b/kernel/trace/trace_events.c
+index 5b8f6de6e7ef6..367b34814ab8e 100644
+--- a/kernel/trace/trace_events.c
++++ b/kernel/trace/trace_events.c
+@@ -2847,43 +2847,120 @@ static void add_str_to_module(struct module *module, char *str)
+ 	list_add(&modstr->next, &module_strings);
+ }
+ 
++#define ATTRIBUTE_STR "__attribute__("
++#define ATTRIBUTE_STR_LEN (sizeof(ATTRIBUTE_STR) - 1)
++
++/* Remove all __attribute__() from @type. Return allocated string or @type. */
++static char *sanitize_field_type(const char *type)
++{
++	char *attr, *tmp, *next, *ret = (char *)type;
++	int depth;
++
++	next = (char *)type;
++	while ((attr = strstr(next, ATTRIBUTE_STR))) {
++		/* Retry if "__attribute__(" is a part of another word. */
++		if (attr != next && !isspace(attr[-1])) {
++			next = attr + ATTRIBUTE_STR_LEN;
++			continue;
++		}
++
++		if (ret == type) {
++			ret = kstrdup(type, GFP_KERNEL);
++			if (WARN_ON_ONCE(!ret))
++				return NULL;
++			attr = ret + (attr - type);
++		}
++
++		/* the ATTRIBUTE_STR already has the first '(' */
++		depth = 1;
++		next = attr + ATTRIBUTE_STR_LEN;
++		do {
++			tmp = strpbrk(next, "()");
++			/* There is unbalanced parentheses */
++			if (WARN_ON_ONCE(!tmp)) {
++				kfree(ret);
++				return (char *)type;
++			}
++
++			if (*tmp == '(')
++				depth++;
++			else
++				depth--;
++			next = tmp + 1;
++		} while (depth > 0);
++		next = skip_spaces(next);
++		strcpy(attr, next);
++		next = attr;
++	}
++	return ret;
++}
++
++static char *find_replacable_eval(const char *type, const char *eval_string,
++				  int len)
++{
++	char *ptr;
++
++	if (!eval_string)
++		return NULL;
++
++	ptr = strchr(type, '[');
++	if (!ptr)
++		return NULL;
++	ptr++;
++
++	if (!isalpha(*ptr) && *ptr != '_')
++		return NULL;
++
++	if (strncmp(eval_string, ptr, len) != 0)
++		return NULL;
++
++	return ptr;
++}
++
+ static void update_event_fields(struct trace_event_call *call,
+ 				struct trace_eval_map *map)
+ {
+ 	struct ftrace_event_field *field;
++	const char *eval_string = NULL;
+ 	struct list_head *head;
++	int len = 0;
+ 	char *ptr;
+ 	char *str;
+-	int len = strlen(map->eval_string);
+ 
+ 	/* Dynamic events should never have field maps */
+-	if (WARN_ON_ONCE(call->flags & TRACE_EVENT_FL_DYNAMIC))
++	if (call->flags & TRACE_EVENT_FL_DYNAMIC)
+ 		return;
+ 
++	if (map) {
++		eval_string = map->eval_string;
++		len = strlen(map->eval_string);
++	}
++
+ 	head = trace_get_fields(call);
+ 	list_for_each_entry(field, head, link) {
+-		ptr = strchr(field->type, '[');
+-		if (!ptr)
+-			continue;
+-		ptr++;
+-
+-		if (!isalpha(*ptr) && *ptr != '_')
+-			continue;
++		str = sanitize_field_type(field->type);
++		if (!str)
++			return;
+ 
+-		if (strncmp(map->eval_string, ptr, len) != 0)
+-			continue;
++		ptr = find_replacable_eval(str, eval_string, len);
++		if (ptr) {
++			if (str == field->type) {
++				str = kstrdup(field->type, GFP_KERNEL);
++				if (WARN_ON_ONCE(!str))
++					return;
++				ptr = str + (ptr - field->type);
++			}
+ 
+-		str = kstrdup(field->type, GFP_KERNEL);
+-		if (WARN_ON_ONCE(!str))
+-			return;
+-		ptr = str + (ptr - field->type);
+-		ptr = eval_replace(ptr, map, len);
+-		/* enum/sizeof string smaller than value */
+-		if (WARN_ON_ONCE(!ptr)) {
+-			kfree(str);
+-			continue;
++			ptr = eval_replace(ptr, map, len);
++			/* enum/sizeof string smaller than value */
++			if (WARN_ON_ONCE(!ptr)) {
++				kfree(str);
++				continue;
++			}
+ 		}
+ 
++		if (str == field->type)
++			continue;
+ 		/*
+ 		 * If the event is part of a module, then we need to free the string
+ 		 * when the module is removed. Otherwise, it will stay allocated
+@@ -2893,14 +2970,18 @@ static void update_event_fields(struct trace_event_call *call,
+ 			add_str_to_module(call->module, str);
+ 
+ 		field->type = str;
++		if (field->filter_type == FILTER_OTHER)
++			field->filter_type = filter_assign_type(field->type);
+ 	}
+ }
+ 
+-void trace_event_eval_update(struct trace_eval_map **map, int len)
++/* Update all events for replacing eval and sanitizing */
++void trace_event_update_all(struct trace_eval_map **map, int len)
+ {
+ 	struct trace_event_call *call, *p;
+ 	const char *last_system = NULL;
+ 	bool first = false;
++	bool updated;
+ 	int last_i;
+ 	int i;
+ 
+@@ -2914,6 +2995,7 @@ void trace_event_eval_update(struct trace_eval_map **map, int len)
+ 			last_system = call->class->system;
+ 		}
+ 
++		updated = false;
+ 		/*
+ 		 * Since calls are grouped by systems, the likelihood that the
+ 		 * next call in the iteration belongs to the same system as the
+@@ -2933,8 +3015,12 @@ void trace_event_eval_update(struct trace_eval_map **map, int len)
+ 				}
+ 				update_event_printk(call, map[i]);
+ 				update_event_fields(call, map[i]);
++				updated = true;
+ 			}
+ 		}
++		/* If not updated yet, update field for sanitizing. */
++		if (!updated)
++			update_event_fields(call, NULL);
+ 		cond_resched();
+ 	}
+ 	up_write(&trace_event_sem);
 -- 
 2.53.0
 
