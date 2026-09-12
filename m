@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D1D5366052;
-	Sat, 12 Sep 2026 12:26:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EAC43C583B;
+	Sat, 12 Sep 2026 12:26:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789215976; cv=none; b=PcRYldpsfWIVlOaynByYmMSIy9nupjVQO3ccvKJSNKs8PcA3heRLZ9ijHVHkHb3AGVNTbDQLpnw02CcrrHcFGxGvTAwrbgZLhCt6QuTvdjFdS185fqMMmtxn40pKzYRqQ6oqjPAs+CI7XT6LWmiWRUkJx8EsQh6nZe3+LYf1tQg=
+	t=1789215981; cv=none; b=jiL+mdt6UUfJg1kpDodQ4heF6iHIkIB5DGn4vK0d8VSPuARuQhRX/zQdvG+pslmG4wqXuOgi5vwrccaHvxAFmMP+3zgLL+HSuf4TYfPdoJe6bdgTx7FvqeQ1Q9gYl6tOkpa4gxhw5uZUMHSXX9bjAk2oKvnXsoiu/mniC7S+1yI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789215976; c=relaxed/simple;
-	bh=HABgZFNzVqBZXzrAOhWIvk0RTK/LvmhWkzbh1MvJ5CA=;
+	s=arc-20240116; t=1789215981; c=relaxed/simple;
+	bh=EVhVSDfLAoXnZiJs4B9S+WpslihPRNRS3FJRWxwU3KU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ngGxOTdeHjhQDFKqMzyhEK8WL2xAsBILqPTezZEDcqm2FHircLXrjHsP0BPsZau6Tesfsx2QfWvUe2Jq+gHzhCwZ1MeUzN9iQSwBATuoocu54EBrnOA1PuKdpcqVPfPILSWKNpNeeYj/sMPGXMFRxnlPxa0hdmiZ/THTgHEjt2I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zs05Ug5K; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=T0OGxHPMIwcVSTL9otFtBpubkRAjb58JfPwkuZa1iDeuf+OiGRRE2ABnCIy4dJgGvk+nylrqNQRb0cXX5tD7jG9anmCG8VAuSM6QtDeCLe7CZr368qeOBvfA7hWjxjfC+K4W7bTJ32Xym9betOdoGcgeNjY1dxQEyiOA9ZGEYdc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fAe7xb24; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zs05Ug5K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B5DC1F000FF;
-	Sat, 12 Sep 2026 12:26:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fAe7xb24"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E21A1F000FF;
+	Sat, 12 Sep 2026 12:26:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789215975;
-	bh=RAa7dDPv0UFl6eCb03puJFVIxi5W1mqNPr4TOJ5WObA=;
+	s=korg; t=1789215980;
+	bh=p8tHSSnY+ayjcGUXJ+4QdQqCR/gQ20/oNBz//8iwv8w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zs05Ug5KZrCQkrOCWOTi4PcNf5ysK7gZMQk9cVHNqkE6984zRfvFBQIxt9GjLqjYF
-	 K948ezLXea8P1hdgqzd/wRZDgEH+US5sUPHGaUxyrZfe4+hfIrE86/wvo0IVE/O8Nu
-	 niy6KFqFGWQ5IhiKuAbNfXmVlGPcjot6GxKLW+4o=
+	b=fAe7xb24mRn/v90I7WFpXkn4c7mZDgpXNiQ/f2/Qh+XK/I0OhqF70fotoP/xsLDB7
+	 8ThPJd72r8M3R2O8SIxKtXbihdHfQ4eAIo5p2SlmBxT4Yd7NnS62g2s91sRQtNlMJ5
+	 iGEA2azyAD4eSj6PSAqSFG26rPMxE0aqpXIaubQU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Gerald Yang <gerald.yang@canonical.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0641/1376] thermal: intel: int3400: clean up ODVP on probe failures
-Date: Sat, 12 Sep 2026 08:51:07 +0200
-Message-ID: <20260912065621.827777660@linuxfoundation.org>
+Subject: [PATCH 6.12 0642/1376] ext4: clear stale xarray tags on folios skipped during writeback
+Date: Sat, 12 Sep 2026 08:51:08 +0200
+Message-ID: <20260912065621.849356430@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,62 +52,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Gerald Yang <gerald.yang@canonical.com>
 
-[ Upstream commit d83dc9ce57a746a6dca28439bcc0575d26fa6986 ]
+[ Upstream commit ec524aae479b4b2078c47492b90ec21200bce434 ]
 
-evaluate_odvp() creates per-ODVP sysfs files before the thermal zone
-and later probe resources are registered. The current unwind path only
-calls cleanup_odvp() from the late sysfs failure path, so failures after
-evaluate_odvp() but before that label, including
-thermal_tripless_zone_device_register() failures, leave the ODVP files
-and storage behind.
+In data=journal mode, the writeback thread can hit the
+WARN_ON_ONCE(sb_rdonly(sb)) in ext4_journal_check_start() while the
+superblock is being remounted read-only during reboot:
 
-Move the ODVP cleanup to the common ART/TRT unwind path so every failure
-after evaluate_odvp() releases the ODVP state. Also clear the cached
-ODVP pointers in cleanup_odvp(), because evaluate_odvp() can already call
-it for partial setup failures while probe continues.
+Workqueue: writeback wb_workfn (flush-253:0)
+RIP: 0010:ext4_journal_check_start+0x8b/0xd0
+Call Trace:
+  __ext4_journal_start_sb+0x3c/0x1e0
+  mpage_prepare_extent_to_map+0x4af/0x580
+  ext4_do_writepages+0x3c0/0x1080
+  ext4_writepages+0xc8/0x1a0
+  do_writepages+0xc4/0x180
+  __writeback_single_inode+0x45/0x2f0
+  writeback_sb_inodes+0x26b/0x5d0
+  __writeback_inodes_wb+0x54/0x100
+  wb_writeback+0x1ac/0x320
+  wb_workfn+0x394/0x470
 
-Fixes: 006f006f1e5c ("thermal/int340x_thermal: Export OEM vendor variables")
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260623015140.19300-1-pengpeng@iscas.ac.cn
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+And followed by the warning:
+EXT4-fs warning (device vda1): ext4_evict_inode:195: inode #6263:
+comm (sd-umount): data will be lost
+
+This issue is not reproduced every time, but frequently.
+The reproduction step is to create a VM with 8 CPUs, 16G memory and
+setup data=journal:
+sudo tune2fs -o journal_data /dev/vda1
+Run fio:
+rm -f fiotest
+fio --name=fiotest --rw=randwrite --bs=4k --runtime=6 --ioengine=libaio
+--iodepth=256 --numjobs=8 --filename=fiotest --filesize=30G
+--group_reporting
+Reboot the VM, and check the console output from:
+virsh console testvm
+
+But there is no dirty inode, folio_clear_dirty_for_io clears PG_dirty
+but leaves tags PAGECACHE_TAG_DIRTY and PAGECACHE_TAG_TOWRITE set which
+are only cleared by __folio_start_writeback.
+In data=journal mode, jbd2 checkpoints the journalled data to its final
+location and clears its own dirty flag without touching folio PG_dirty
+or xarray dirty flags.
+The commit f4a2b42e7891 ("ext4: fix stale xarray tags after writeback")
+fixes when PG_dirty is still set but there is no dirty page.
+Another case is PG_dirty is cleared, but PAGECACHE_TAG_DIRTY and
+PAGECACHE_TAG_TOWRITE is still set. In this case, writeback thread
+checks clean folio and skips it in mpage_prepare_extent_to_map:
+if (!folio_test_dirty(folio) ||
+    ...
+        folio_unlcok(folio);
+	continue
+
+And never reaches ext4_bio_write_folio where the commit f4a2b42e7891
+clears the stale xarray tags. Print debug logs after the filesystem
+is remounted read-only:
+writepages RDONLY nrpages=2048 dirtytag=1 wbtag=0 towrite=1 sync=0
+And all folios are actually clean:
+folio idx=3 dirty=0 wb=0 checked=0 dirtybuf=0 jbddirty=0 mapped=1
+...
+
+We need to clear the xarray stale tags for such clean folios by
+cycling them through writeback in the skip path, the same way
+f4a2b42e7891 does in ext4_bio_write_folio.
+
+Fixes: dff4ac75eeee ("ext4: move keep_towrite handling to ext4_bio_write_page()")
+Signed-off-by: Gerald Yang <gerald.yang@canonical.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://patch.msgid.link/20260625160127.162272-1-gerald.yang@canonical.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/intel/int340x_thermal/int3400_thermal.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/ext4/inode.c | 18 +++++++++++++++---
+ 1 file changed, 15 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/thermal/intel/int340x_thermal/int3400_thermal.c b/drivers/thermal/intel/int340x_thermal/int3400_thermal.c
-index f547d386ae805..0e18f4f6ccb88 100644
---- a/drivers/thermal/intel/int340x_thermal/int3400_thermal.c
-+++ b/drivers/thermal/intel/int340x_thermal/int3400_thermal.c
-@@ -363,8 +363,10 @@ static void cleanup_odvp(struct int3400_thermal_priv *priv)
- 			kfree(priv->odvp_attrs[i].attr.attr.name);
- 		}
- 		kfree(priv->odvp_attrs);
-+		priv->odvp_attrs = NULL;
- 	}
- 	kfree(priv->odvp);
-+	priv->odvp = NULL;
- 	priv->odvp_count = 0;
- }
+diff --git a/fs/ext4/inode.c b/fs/ext4/inode.c
+index b299c0a5f2ec2..fa303effb18a0 100644
+--- a/fs/ext4/inode.c
++++ b/fs/ext4/inode.c
+@@ -2489,13 +2489,25 @@ static int mpage_prepare_extent_to_map(struct mpage_da_data *mpd)
+ 			 * page is already under writeback and we are not doing
+ 			 * a data integrity writeback, skip the page
+ 			 */
+-			if (!folio_test_dirty(folio) ||
+-			    (folio_test_writeback(folio) &&
+-			     (mpd->wbc->sync_mode == WB_SYNC_NONE)) ||
++			if ((folio_test_writeback(folio) &&
++			    mpd->wbc->sync_mode == WB_SYNC_NONE) ||
+ 			    unlikely(folio->mapping != mapping)) {
+ 				folio_unlock(folio);
+ 				continue;
+ 			}
++			/*
++			 * If the folio is clean, skip writing it back.
++			 * Cycle the folio through the writeback state
++			 * though, to clear stale xarray tags.
++			 */
++			if (!folio_test_dirty(folio)) {
++				if (!folio_test_writeback(folio)) {
++					__folio_start_writeback(folio, false);
++					folio_end_writeback(folio);
++				}
++				folio_unlock(folio);
++				continue;
++			}
  
-@@ -646,7 +648,6 @@ static int int3400_thermal_probe(struct platform_device *pdev)
- 	acpi_remove_notify_handler(priv->adev->handle, ACPI_DEVICE_NOTIFY,
- 				   int3400_notify);
- free_sysfs:
--	cleanup_odvp(priv);
- 	if (!ZERO_OR_NULL_PTR(priv->data_vault)) {
- 		sysfs_remove_group(&pdev->dev.kobj, &data_attribute_group);
- 		kfree(priv->data_vault);
-@@ -660,6 +661,7 @@ static int int3400_thermal_probe(struct platform_device *pdev)
- 		acpi_thermal_rel_misc_device_remove(priv->adev->handle);
- 	thermal_zone_device_unregister(priv->thermal);
- free_art_trt:
-+	cleanup_odvp(priv);
- 	kfree(priv->trts);
- 	kfree(priv->arts);
- free_priv:
+ 			folio_wait_writeback(folio);
+ 			BUG_ON(folio_test_writeback(folio));
 -- 
 2.53.0
 
