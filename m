@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A997400DF6;
-	Sat, 12 Sep 2026 09:06:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 350E73DB62E;
+	Sat, 12 Sep 2026 09:06:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789203967; cv=none; b=CNY95Ey7NrQzvqjZKVD2dV6N2rDcnA934VvRMtSBOBJgekjzbHaYTXjNB/Q+yaC6VS776icQB4h7iMsAKk5r2CheXRAM0f8qUp07nTMs5/MOos9R4tE8IETEAY+OIStEvdhIVgFIU0j7+pzMsKLM77TiObl2fjlnSUmQqRPZbNk=
+	t=1789203971; cv=none; b=O7h1Rqj/SX/pHHeR4ud+mZSU+J02/9PBDLGcDe3bJNpVWSbW/32sJSzf7Zb3fWI8DADQOVcramYXUg9rxvwoCaFLtzag53uLohe4q8uG0hnpiU6FHtdsjftnNf4H+jsPjw7AiYp0zgUcjVO+I64IgI1j//ALfAfsWVPyGAUkaV4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789203967; c=relaxed/simple;
-	bh=47sI8W3MnbiWg2uK50ms0yQHCRkJ26jThySd3tyhNao=;
+	s=arc-20240116; t=1789203971; c=relaxed/simple;
+	bh=pUAZ7EGgeApC4CTsp/o7CiRTyU7sds1csOwvM6MmQd0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JLoGYEvxI7WHxhvR7l7BmdRDL/azXxlTApquRjmsahgyuMAW6Z09DeA7pVOr14uq9qF5xiTI047shDBOH/o9TYDL/rYkEKNUszF7b3rCIj/MSpIHl6Z3GvV2+gpIzqkpTC/Uo2miOUZcsu5Wrgy5MVRt6HFG2s9gqpGSS5bN4AQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UPyZyrzI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nl5dZzCLZMPYNhxV8qvknZHALZ9Cv0jtCSzL2Ct8De0bGQhtdJIe6sSuGYXNWRZaXgJDbpJsrcavH01zx+ZrOBsjOK6YUkvA7bz59+DpnKmGOF6CvIPNvm469X8mN2edzviNiUYoxasbjMWjq0jdnP2TKkLm7cRItRX3xcjd5cE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g6AGhHTy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UPyZyrzI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E243C1F000FF;
-	Sat, 12 Sep 2026 09:06:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g6AGhHTy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E0341F000FF;
+	Sat, 12 Sep 2026 09:06:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789203965;
-	bh=CsuTIM7fejqDjioMAVV/zvxSYtaR+OBavHI61tyCfrE=;
+	s=korg; t=1789203970;
+	bh=9aulei0TkD5r186YJaAq9S0mXicDLdYmCYCPkkZ+tbA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UPyZyrzIGmQ++X3ZuZuFqe/puVlKc18ZQkJWOMWikRVut6qcKw7dssblHMjygzGb8
-	 4aEl8bZdh5F7aXmUgeQE+8DxJ81ed1WXYheUQXUI70VxDouS6ulg+CT71aZQYbST6m
-	 90wd6BWK1sKGN7uwi1wCAOjp97bQrSyjsiqellHQ=
+	b=g6AGhHTyKb1nZAnw81emFWe+wjtDFl0xm3t/B0WZJIQu+KAE8WfUKDSv718TCDoxa
+	 qHp64NJyb6FOnr5tZmuBxPigbiiE0Y5wDbF2PnW0RmIG9tjNf55RuABt+VyVHOQ5HY
+	 sRCCzDUQwmk6JP9JHXXHz4y+8f+Ko2mrE+feeQDA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	ChenXiaoSong <chenxiaosong@kylinos.cn>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1517/1815] smb/server: abort initialization when proc setup fails
-Date: Sat, 12 Sep 2026 08:54:27 +0200
-Message-ID: <20260912065724.615485529@linuxfoundation.org>
+Subject: [PATCH 7.2 1518/1815] smb/server: call ksmbd_proc_cleanup() on module init failure
+Date: Sat, 12 Sep 2026 08:54:28 +0200
+Message-ID: <20260912065724.638864240@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -54,20 +54,12 @@ Content-Transfer-Encoding: 8bit
 
 From: ZhangGuoDong <zhangguodong@kylinos.cn>
 
-[ Upstream commit db97f3763727d652112ae70038d4e17b3ce277bb ]
+[ Upstream commit f43cbe3b58ce989ce420c3bc875d48e7754c8aba ]
 
-ksmbd_server_init() calls ksmbd_proc_init() before creating the
-remaining proc entries and server subsystems. ksmbd_proc_init() tears
-down partial state on a procfs or percpu_counter allocation failure,
-but returns void, so ksmbd_server_init() continues as if the counters
-were usable.
-
-Once userspace starts the server, server_ctrl_handle_init() calls
-ksmbd_proc_reset(), which reaches percpu_counter_set() with a NULL
-per-CPU counters pointer on SMP systems. The later ksmbd_proc_create()
-calls also receive a NULL parent and may create entries in the /proc
-root; ksmbd_proc_cleanup() cannot remove those entries because
-ksmbd_proc_fs is NULL.
+When a later initializer fails, the unwind chain releases resources
+created after procfs and then jumps directly to class_unregister().
+Returning an error from module_init() leaves the proc tree and its
+per-CPU counters allocated.
 
 Fixes: b38f99c1217a ("ksmbd: add procfs interface for runtime monitoring and statistics")
 Signed-off-by: ZhangGuoDong <zhangguodong@kylinos.cn>
@@ -75,87 +67,36 @@ Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/misc.h   |  4 ++--
- fs/smb/server/proc.c   | 13 ++++++++-----
- fs/smb/server/server.c |  4 +++-
- 3 files changed, 13 insertions(+), 8 deletions(-)
+ fs/smb/server/server.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/fs/smb/server/misc.h b/fs/smb/server/misc.h
-index 3909104e18ad4..c7b063f571a7a 100644
---- a/fs/smb/server/misc.h
-+++ b/fs/smb/server/misc.h
-@@ -43,7 +43,7 @@ struct ksmbd_const_name {
- 	const char *name;
- };
- 
--void ksmbd_proc_init(void);
-+int ksmbd_proc_init(void);
- void ksmbd_proc_cleanup(void);
- void ksmbd_proc_reset(void);
- struct proc_dir_entry *ksmbd_proc_create(const char *name,
-@@ -59,7 +59,7 @@ void ksmbd_proc_show_const_name(struct seq_file *m,
- 				int count,
- 				unsigned int const_value);
- #else
--static inline void ksmbd_proc_init(void) {}
-+static inline int ksmbd_proc_init(void) { return 0; }
- static inline void ksmbd_proc_cleanup(void) {}
- static inline void ksmbd_proc_reset(void) {}
- #endif
-diff --git a/fs/smb/server/proc.c b/fs/smb/server/proc.c
-index 101a2cc45a447..5c9f3f314dbe1 100644
---- a/fs/smb/server/proc.c
-+++ b/fs/smb/server/proc.c
-@@ -106,14 +106,14 @@ void ksmbd_proc_reset(void)
- 		percpu_counter_set(&ksmbd_counters.counters[i], 0);
- }
- 
--void ksmbd_proc_init(void)
-+int ksmbd_proc_init(void)
- {
- 	int i;
--	int retval;
-+	int retval = -ENOMEM;
- 
- 	ksmbd_proc_fs = proc_mkdir("fs/ksmbd", NULL);
- 	if (!ksmbd_proc_fs)
--		return;
-+		return retval;
- 
- 	if (!proc_mkdir_mode("sessions", 0400, ksmbd_proc_fs))
- 		goto err_out;
-@@ -124,11 +124,14 @@ void ksmbd_proc_init(void)
- 			goto err_out;
- 	}
- 
--	if (!ksmbd_proc_create("server", proc_show_ksmbd_stats, NULL))
-+	if (!ksmbd_proc_create("server", proc_show_ksmbd_stats, NULL)) {
-+		retval = -ENOMEM;
- 		goto err_out;
-+	}
- 
- 	ksmbd_proc_reset();
--	return;
-+	return 0;
- err_out:
- 	ksmbd_proc_cleanup();
-+	return retval;
- }
 diff --git a/fs/smb/server/server.c b/fs/smb/server/server.c
-index 95be17b797147..a67ecd765e5d2 100644
+index a67ecd765e5d2..c629a33bfa4a8 100644
 --- a/fs/smb/server/server.c
 +++ b/fs/smb/server/server.c
-@@ -610,7 +610,9 @@ static int __init ksmbd_server_init(void)
- 		return ret;
- 	}
+@@ -619,11 +619,11 @@ static int __init ksmbd_server_init(void)
  
--	ksmbd_proc_init();
-+	ret = ksmbd_proc_init();
-+	if (ret)
-+		goto err_unregister;
- 	create_proc_sessions();
+ 	ret = server_conf_init();
+ 	if (ret)
+-		goto err_unregister;
++		goto err_proc_cleanup;
  
- 	ksmbd_server_tcp_callbacks_init();
+ 	ret = ksmbd_work_pool_init();
+ 	if (ret)
+-		goto err_unregister;
++		goto err_proc_cleanup;
+ 
+ 	ret = ksmbd_init_file_cache();
+ 	if (ret)
+@@ -669,6 +669,8 @@ static int __init ksmbd_server_init(void)
+ 	ksmbd_exit_file_cache();
+ err_destroy_work_pools:
+ 	ksmbd_work_pool_destroy();
++err_proc_cleanup:
++	ksmbd_proc_cleanup();
+ err_unregister:
+ 	class_unregister(&ksmbd_control_class);
+ 
 -- 
 2.53.0
 
