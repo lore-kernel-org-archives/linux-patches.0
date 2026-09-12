@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAE7C38398F;
-	Sat, 12 Sep 2026 19:15:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15BD036D9F5;
+	Sat, 12 Sep 2026 19:15:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789240510; cv=none; b=cjioi51HmLq2XQ/dYAZwzcXlZ0NaDjfSHmHldJ7iuEZVmdZLxx3aHwZeY6T26zgWxf5zfyP5NtquhbXIurAHeuoimJ3PquhXFkUuwNQeb7zqhZA+mryvj8uDlUCcG/rDLmGRW9eMrVUtylRENZkhTDHl2531WCxzs5SWYWr53K4=
+	t=1789240514; cv=none; b=UWiqwUIc73a96fgz7sh9f9Kiya3rmFWlCeFViKHtRvqTim+8Bs0LraunWC58ysCyymkLxK/12GCOv9rePkt/Aeee9zZqWNi+vwF5TtMhUpf+Be5bIlaE14IbwOfZP8l0XzVRjVtwKJm+AknN5E73WpTOM9hWfX5bMj0tBWE7jBw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789240510; c=relaxed/simple;
-	bh=sW/o05gemMDzfC9MU/m7KvCm/3eOvYyQiF05KjmYIpk=;
+	s=arc-20240116; t=1789240514; c=relaxed/simple;
+	bh=pF15xKXJdbooRoG0NtUc1LlCpNEH+mD6vEjeTJ5CK5A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QFNOFHv/IBQQ0GM/2RgZBlVwqlxyIVYQMc3DYQbXjAUz4ZMXv0aZpSk1Qi+TwN7O64hYqxTI3+iqsMNZhl5M25sPjavqnh/zeIrj2NgmYMDGotiKbNenA23skoyDVy8Xw7wtY8TaIYF8qyBi0EL1QoHXFpCLXFNHhxqcZDm72FM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FKiuQ74K; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ExvSMLnI8irU4S/RxAczxXmjkb494nFgUOrMxEnrU+mK6mIlkeycdl/7Z7rH4AHPwe6oM6Aa8NY4rSU6KLeyjv1Bf9ePwIHS6BLzhtwNpFYPOfjk3nOCS4IUNUjBnfFvbGMBM+1pokKppBQZESEl1lXLQVhMh4cyszmJWn/GEK4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CIKlBUXm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FKiuQ74K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA1851F000FF;
-	Sat, 12 Sep 2026 19:15:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CIKlBUXm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BC8C1F000FF;
+	Sat, 12 Sep 2026 19:15:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789240508;
-	bh=gfHykh+ZcbSt1Umtm8rmONbG2rG4KWsqohUifLHECJY=;
+	s=korg; t=1789240513;
+	bh=bLiNR6uI1rIg15UnvLp6IJuPhpQ45f70raRDymj4ykg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FKiuQ74KT5k/FjTYUis58ECAw5TNKgz5Rqs30avXR/ReBCYyNGWSdcKweia7yOaYX
-	 Dkbf5/AmgxosXmMZWlVC8rbu+xe3HrdHdFlhBK3URi0SMzsMJq98HrL70ejhMB67g/
-	 D3mcda+zikuFWLxBj6wKsge72BeibmvtWZitfUcE=
+	b=CIKlBUXmkVfsxrN3JS8WxLbyVXyl0kfLxH3NEa1AOUKns0D37SCQZA4WFKjFGR2Uq
+	 7IkrTu3Nxz8SRejLimrCRSQqVpl3V8xLdo4GXMYJI8PD4XxDkjEVM+YxkIoFt/ioM/
+	 8T6sThPdNJBeOL3ZbteYMtEYlH/VbuJeYekiwx4U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AutonomousCodeSecurity@microsoft.com,
-	"Xiang Mei (Microsoft)" <xmei5@asu.edu>,
-	"Cen Zhang (Microsoft)" <blbllhy@gmail.com>,
+	co+4638111fe2a12980@bugs.sh,
+	Xiang Mei <xmei5@asu.edu>,
+	Subash Abhinov Kasiviswanathan <subash.a.kasiviswanathan@oss.qualcomm.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 883/935] gtp: add synchronize_net() in gtp_newlink() error path to prevent use-after-free
-Date: Sat, 12 Sep 2026 09:05:13 +0200
-Message-ID: <20260912065547.066563665@linuxfoundation.org>
+Subject: [PATCH 5.15 884/935] net: qualcomm: rmnet: restore skb->dev on deaggregated frames
+Date: Sat, 12 Sep 2026 09:05:14 +0200
+Message-ID: <20260912065547.089519972@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -53,52 +53,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang (Microsoft) <blbllhy@gmail.com>
+From: Xiang Mei <xmei5@asu.edu>
 
-[ Upstream commit d989e22ae9802c52c56ad4284d0caf26696cf6ae ]
+[ Upstream commit a66734a1c5e36525ea07e9f4547fddc51e916de3 ]
 
-gtp_newlink()'s error path frees tid_hash and addr_hash without
-waiting for an RCU grace period after clearing sk_user_data. A
-concurrent gtp_encap_recv() in softirq may still hold the gtp_dev
-pointer obtained via rcu_dereference_sk_user_data() and access the
-freed memory.
+rmnet_map_deaggregate() allocates each sub-frame with alloc_skb() and
+leaves skb->dev NULL. __rmnet_map_ingress_handler() assigns
+skb->dev = ep->egress_dev only on the data path, but a MAP command frame
+is dispatched to rmnet_map_command() before that, so rmnet_map_send_ack()
+runs netif_tx_lock(skb->dev) on a NULL device. An unprivileged user
+reaches this by unsharing a user+net namespace, creating an rmnet link
+over a tap device with INGRESS_DEAGGREGATION and INGRESS_MAP_COMMANDS,
+and writing an aggregated frame carrying a flow-control command to the
+tap fd.
 
-  BUG: KASAN: slab-use-after-free in gtp0_pdp_find+0x1f6/0x200 (gtp.c:152)
+Restore the assignment dropped by 378e25357ac7, so every skb leaving
+rmnet_map_deaggregate() has a valid device.
+
+  BUG: KASAN: null-ptr-deref in _raw_spin_lock (kernel/locking/spinlock.c:158)
+  Write of size 4 at addr 00000000000004b4 by task exploit/144
   Call Trace:
-   <IRQ>
-   gtp0_pdp_find+0x1f6/0x200
-   gtp_encap_recv+0x527/0x24b0
-   udp_queue_rcv_one_skb+0x75f/0xc10
+   _raw_spin_lock (kernel/locking/spinlock.c:158)
+   netif_tx_lock (net/sched/sch_generic.c:497)
+   rmnet_map_command (drivers/net/ethernet/qualcomm/rmnet/rmnet_map_command.c:67)
+   rmnet_rx_handler (drivers/net/ethernet/qualcomm/rmnet/rmnet_handlers.c:125)
+   __netif_receive_skb_core.constprop.0 (net/core/dev.c:6103)
+   ...
+   __netif_receive_skb_one_core (net/core/dev.c:6214)
+   netif_receive_skb (net/core/dev.c:6474)
+   tun_get_user (drivers/net/tun.c:1966)
+   tun_chr_write_iter (drivers/net/tun.c:2012)
+   vfs_write (fs/read_write.c:687)
+   ksys_write (fs/read_write.c:739)
+   do_syscall_64 (arch/x86/entry/syscall_64.c:94)
+   entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
+  Kernel panic - not syncing: Fatal exception in interrupt
 
-Add synchronize_net() before the kfree calls in out_hashtable, which
-covers all error paths from both gtp_encap_enable() and
-gtp_create_sockets().
-
-Fixes: 459aa660eb1d8ce6 ("gtp: add initial driver for datapath of GPRS Tunneling Protocol (GTP-U)")
-Reported-by: AutonomousCodeSecurity@microsoft.com
-Reported-by: Xiang Mei (Microsoft) <xmei5@asu.edu>
-Reported-by: Cen Zhang (Microsoft) <blbllhy@gmail.com>
-Signed-off-by: Cen Zhang (Microsoft) <blbllhy@gmail.com>
-Link: https://patch.msgid.link/20260820020735.59474-1-blbllhy@gmail.com
+Fixes: 378e25357ac7 ("net: qualcomm: rmnet: Remove unnecessary device assignment")
+Reported-by: co+4638111fe2a12980@bugs.sh
+Closes: https://lore.kernel.org/netdev/ijg79FFMfIvKJbivdJEKvTO90Q9dTvyBkJck@bugs.sh/T/#u
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Reviewed-by: Subash Abhinov Kasiviswanathan <subash.a.kasiviswanathan@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260820195240.1631458-1-xmei5@asu.edu
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/gtp.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/qualcomm/rmnet/rmnet_map_data.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/gtp.c b/drivers/net/gtp.c
-index 8f76fd927ff4a..99927adcb37a8 100644
---- a/drivers/net/gtp.c
-+++ b/drivers/net/gtp.c
-@@ -708,6 +708,8 @@ static int gtp_newlink(struct net *src_net, struct net_device *dev,
- out_encap:
- 	gtp_encap_disable(gtp);
- out_hashtable:
-+	/* Wait for RCU readers that may still reference this gtp_dev. */
-+	synchronize_net();
- 	kfree(gtp->addr_hash);
- 	kfree(gtp->tid_hash);
- 	return err;
+diff --git a/drivers/net/ethernet/qualcomm/rmnet/rmnet_map_data.c b/drivers/net/ethernet/qualcomm/rmnet/rmnet_map_data.c
+index 312acd8d97af1..cee7946bf0319 100644
+--- a/drivers/net/ethernet/qualcomm/rmnet/rmnet_map_data.c
++++ b/drivers/net/ethernet/qualcomm/rmnet/rmnet_map_data.c
+@@ -396,6 +396,7 @@ struct sk_buff *rmnet_map_deaggregate(struct sk_buff *skb,
+ 	if (!skbn)
+ 		return NULL;
+ 
++	skbn->dev = skb->dev;
+ 	skb_reserve(skbn, RMNET_MAP_DEAGGR_HEADROOM);
+ 	skb_put(skbn, packet_len);
+ 	memcpy(skbn->data, skb->data, packet_len);
 -- 
 2.53.0
 
