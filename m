@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 345763A641C;
-	Sat, 12 Sep 2026 18:34:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28CEB3A641C;
+	Sat, 12 Sep 2026 18:34:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789238085; cv=none; b=F4+uwzd5WiAa3kTzPljS2yMHt7EefqbLR9UUk3qlNFmIQ+TR+CXo5vKUwrIWBvddJafvdI91Z6abCm8tXhrCv9LG35pB5UghUavhTku/NbRlVVP0LgHPNWRcKIwm8epNsYb/hpNs4yr636hFVW87BBdtIWZEWs7PbR1akbmY+/A=
+	t=1789238090; cv=none; b=gPxrjdfFXj5tdamObWTfBGdrQLoFkfQHZ4/RLPS84uIMSyYaNW+N/4T8r3Z6oyWxUIEUiHhRZVG3V0ZMgn7yu21T91fAhn745PAz6K5silt84Wl57mHQRO0BSPMcX7ESx7VBr20e5/gWU6on3LFpNGVl0wMt4MlzjSpSwd2bLQk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789238085; c=relaxed/simple;
-	bh=pve5KI+8sx+nA0vkpRkrTbr37fAGUco9bqH0oz7W5Mg=;
+	s=arc-20240116; t=1789238090; c=relaxed/simple;
+	bh=PwTX8mgdMACqfzLfs4N9G6WGaZl2iqaZdn61uoUNM+0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=J9wHPW/m+QC/d+LIov6K3oG48F7F2W3+s54QKniDvPxPOyloQ8VoOw750UuFdnscPLeeaJ2kI1uaMejmNvU/ShaFdq1Z01cra3E9ZHqu4fiBOVXRUb1Qsg+FnQDTsddNnO8LHWwsjT4cpM4UhK/IIoR9rAhHtf2Qo4jOrqXuIrs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MuZRUKpS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IEeSIjI5tOtYRDJiE6jBbHbE7aF2DNnlrz7UepYqHvf5coseORw9C2gqpBwUiYl5HPajHeQnyJQJiX4cCpO8t4dRvqWUCwAorkWuv+Ypv+YEqXsoAFYp2A8G66ZQWdDh6Di7u3H9LxBYrkjbCaHVIGN3pJ2XS1DdaLUyPEAY3AY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WPn6gFDq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MuZRUKpS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 130291F000FF;
-	Sat, 12 Sep 2026 18:34:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WPn6gFDq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 013741F000FF;
+	Sat, 12 Sep 2026 18:34:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789238083;
-	bh=kY06pVaOsv5OFtBx8GnBoSmvcaXdVT642i9rZYv+iZ0=;
+	s=korg; t=1789238089;
+	bh=HtgKQ4DrMRUN07tC0r06l0hv8Cy744Rrxdua8sLrjy0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MuZRUKpSJAF1wYt4/Tfz9DUbTR9XWx0RNijsx7R/v/IIxRHY6Ns2XOaAak8CzIiv4
-	 wqXmLruCdy9s5hcO9bhyDMDGQr4Qlldz236dCgRfBHp6ehGeeX6pMTz0GCIS00ZsGK
-	 tOeiZvsqTepG3B6s6DJJawvwF0nC3kGBxppPQJYE=
+	b=WPn6gFDqKjXCOc9djI0bSOptRhZuxGUnoDOMZm83oPCGo8ZiKGCZULsn+B+U36EVq
+	 ZUlsqa5/DUt9DR1BsPhErO0DLeQ8vdp3/IPAa8oRCk7jF58vOOzFi/f7240hV8UTAI
+	 aM2nO5cqdmSSmIicyQOAnhHYFHrC1KAUnWMFI2tI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	Ingo Molnar <mingo@elte.hu>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Bjoern Doebel <doebel@amazon.de>,
+	Mahesh Rao <mahesh.rao@altera.com>,
+	Dinh Nguyen <dinguyen@kernel.org>,
+	Tze Yee Ng <tze.yee.ng@altera.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 389/935] perf sched: Fix register_pid() overflow, strcpy, and BUG_ON
-Date: Sat, 12 Sep 2026 08:56:59 +0200
-Message-ID: <20260912065535.742044845@linuxfoundation.org>
+Subject: [PATCH 5.15 390/935] firmware: stratix10-svc: Add mutex in stratix10 memory management
+Date: Sat, 12 Sep 2026 08:57:00 +0200
+Message-ID: <20260912065535.765679650@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -47,146 +46,126 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Mahesh Rao <mahesh.rao@altera.com>
 
-commit 5949d339f5ec98752d56dcd4e36f619a59d513a5 upstream.
+[ Upstream commit 85f96cbbbc67b59652b2c1ec394b8ddc0ddf1b0b ]
 
-register_pid() has several issues when processing untrusted perf.data:
+Add mutex lock to stratix10_svc_allocate_memory and
+stratix10_svc_free_memory for thread safety. This prevents race
+conditions and ensures proper synchronization during memory operations.
+This is required for parallel communication with the Stratix10 service
+channel.
 
-1. Integer overflow: (pid + 1) * sizeof(struct task_desc *) can wrap
-   to a small value on 32-bit systems when pid is large (e.g.
-   0x40000000), causing realloc to return a tiny buffer followed by
-   out-of-bounds writes in the initialization loop.
+[ 5.15.y lacks <linux/cleanup.h>, so the upstream guard(mutex) is
+  open-coded as explicit mutex_lock()/mutex_unlock(). ]
 
-2. Heap buffer overflow: strcpy(task->comm, comm) copies the
-   untrusted comm string into a fixed 20-byte COMM_LEN buffer with
-   no length check.
-
-3. BUG_ON on allocation failure: perf.data is untrusted input, so
-   allocation failures should be handled gracefully rather than
-   killing the process.
-
-4. Realloc of sched->tasks assigned directly back, leaking the old
-   pointer on failure; nr_tasks incremented before the realloc,
-   leaving corrupted state on failure.
-
-Cap pid at PID_MAX_LIMIT (4194304, matching the kernel's maximum
-on 64-bit), replace strcpy with strlcpy, guard against NULL comm,
-replace BUG_ON with NULL returns using safe realloc patterns, and
-add NULL checks in callers that dereference the result.
-
-Fixes: ec156764d424 ("perf sched: Import schedbench.c")
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Cc: Ingo Molnar <mingo@elte.hu>
-Assisted-by: Claude:claude-opus-4.6
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-[doebel: context adjustment for 5.15]
-Signed-off-by: Bjoern Doebel <doebel@amazon.de>
+Fixes: 7ca5ce896524f ("firmware: add Intel Stratix10 service layer driver")
+Cc: <stable@vger.kernel.org> # v5.15.y
+Signed-off-by: Mahesh Rao <mahesh.rao@altera.com>
+Signed-off-by: Dinh Nguyen <dinguyen@kernel.org>
+Signed-off-by: Tze Yee Ng <tze.yee.ng@altera.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-sched.c | 40 ++++++++++++++++++++++++++++----------
- 1 file changed, 30 insertions(+), 10 deletions(-)
+ drivers/firmware/stratix10-svc.c | 21 ++++++++++++++++++++-
+ 1 file changed, 20 insertions(+), 1 deletion(-)
 
-diff --git a/tools/perf/builtin-sched.c b/tools/perf/builtin-sched.c
-index 95a549fdabe0c..ecf2e01ab4e7d 100644
---- a/tools/perf/builtin-sched.c
-+++ b/tools/perf/builtin-sched.c
-@@ -50,6 +50,7 @@
- #define COMM_LEN		20
- #define SYM_LEN			129
- #define MAX_PID			1024000
-+#define PID_MAX_LIMIT		4194304 /* kernel limit on 64-bit */
+diff --git a/drivers/firmware/stratix10-svc.c b/drivers/firmware/stratix10-svc.c
+index c5ddd20fe4b75..c0027a6bf4718 100644
+--- a/drivers/firmware/stratix10-svc.c
++++ b/drivers/firmware/stratix10-svc.c
+@@ -1,6 +1,7 @@
+ // SPDX-License-Identifier: GPL-2.0
+ /*
+  * Copyright (C) 2017-2018, Intel Corporation
++ * Copyright (C) 2025, Altera Corporation
+  */
  
- static const char *cpu_list;
- static DECLARE_BITMAP(cpu_bitmap, MAX_NR_CPUS);
-@@ -446,17 +447,28 @@ static void add_sched_event_sleep(struct perf_sched *sched, struct task_desc *ta
- static struct task_desc *register_pid(struct perf_sched *sched,
- 				      unsigned long pid, const char *comm)
+ #include <linux/completion.h>
+@@ -167,6 +168,12 @@ struct stratix10_svc_chan {
+ static LIST_HEAD(svc_ctrl);
+ static LIST_HEAD(svc_data_mem);
+ 
++/**
++ * svc_mem_lock protects access to the svc_data_mem list for
++ * concurrent multi-client operations
++ */
++static DEFINE_MUTEX(svc_mem_lock);
++
+ /**
+  * svc_pa_to_va() - translate physical address to virtual address
+  * @addr: to be translated physical address
+@@ -179,9 +186,13 @@ static void *svc_pa_to_va(unsigned long addr)
+ 	struct stratix10_svc_data_mem *pmem;
+ 
+ 	pr_debug("claim back P-addr=0x%016x\n", (unsigned int)addr);
++	mutex_lock(&svc_mem_lock);
+ 	list_for_each_entry(pmem, &svc_data_mem, node)
+-		if (pmem->paddr == addr)
++		if (pmem->paddr == addr) {
++			mutex_unlock(&svc_mem_lock);
+ 			return pmem->vaddr;
++		}
++	mutex_unlock(&svc_mem_lock);
+ 
+ 	/* physical address is not found */
+ 	return NULL;
+@@ -844,11 +855,13 @@ int stratix10_svc_send(struct stratix10_svc_chan *chan, void *msg)
+ 			p_data->flag = ct->flags;
+ 		}
+ 	} else {
++		mutex_lock(&svc_mem_lock);
+ 		list_for_each_entry(p_mem, &svc_data_mem, node)
+ 			if (p_mem->vaddr == p_msg->payload) {
+ 				p_data->paddr = p_mem->paddr;
+ 				break;
+ 			}
++		mutex_unlock(&svc_mem_lock);
+ 	}
+ 
+ 	p_data->command = p_msg->command;
+@@ -915,8 +928,10 @@ void *stratix10_svc_allocate_memory(struct stratix10_svc_chan *chan,
+ 	if (!pmem)
+ 		return ERR_PTR(-ENOMEM);
+ 
++	mutex_lock(&svc_mem_lock);
+ 	va = gen_pool_alloc(genpool, s);
+ 	if (!va) {
++		mutex_unlock(&svc_mem_lock);
+ 		kfree(pmem);
+ 		return ERR_PTR(-ENOMEM);
+ 	}
+@@ -930,6 +945,7 @@ void *stratix10_svc_allocate_memory(struct stratix10_svc_chan *chan,
+ 	list_add_tail(&pmem->node, &svc_data_mem);
+ 	pr_debug("%s: va=%p, pa=0x%016x\n", __func__,
+ 		 pmem->vaddr, (unsigned int)pmem->paddr);
++	mutex_unlock(&svc_mem_lock);
+ 
+ 	return (void *)va;
+ }
+@@ -946,6 +962,7 @@ void stratix10_svc_free_memory(struct stratix10_svc_chan *chan, void *kaddr)
  {
--	struct task_desc *task;
-+	struct task_desc *task, **tasks_p;
- 	static int pid_max;
+ 	struct stratix10_svc_data_mem *pmem;
  
-+	/* perf.data is untrusted — cap pid to prevent overflow in size calculations */
-+	if (pid >= PID_MAX_LIMIT) {
-+		pr_err("pid %lu exceeds limit %d, skipping\n", pid, PID_MAX_LIMIT);
-+		return NULL;
-+	}
-+
- 	if (sched->pid_to_task == NULL) {
- 		if (sysctl__read_int("kernel/pid_max", &pid_max) < 0)
- 			pid_max = MAX_PID;
--		BUG_ON((sched->pid_to_task = calloc(pid_max, sizeof(struct task_desc *))) == NULL);
-+		sched->pid_to_task = calloc(pid_max, sizeof(struct task_desc *));
-+		if (sched->pid_to_task == NULL)
-+			return NULL;
- 	}
- 	if (pid >= (unsigned long)pid_max) {
--		BUG_ON((sched->pid_to_task = realloc(sched->pid_to_task, (pid + 1) *
--			sizeof(struct task_desc *))) == NULL);
-+		void *p = realloc(sched->pid_to_task, (pid + 1) * sizeof(struct task_desc *));
-+
-+		if (p == NULL)
-+			return NULL;
-+		sched->pid_to_task = p;
- 		while (pid >= (unsigned long)pid_max)
- 			sched->pid_to_task[pid_max++] = NULL;
- 	}
-@@ -467,9 +479,11 @@ static struct task_desc *register_pid(struct perf_sched *sched,
- 		return task;
- 
- 	task = zalloc(sizeof(*task));
-+	if (task == NULL)
-+		return NULL;
- 	task->pid = pid;
--	task->nr = sched->nr_tasks;
--	strcpy(task->comm, comm);
-+	if (comm)
-+		strlcpy(task->comm, comm, sizeof(task->comm));
- 	/*
- 	 * every task starts in sleeping state - this gets ignored
- 	 * if there's no wakeup pointing to this sleep state:
-@@ -477,10 +491,12 @@ static struct task_desc *register_pid(struct perf_sched *sched,
- 	add_sched_event_sleep(sched, task, 0, 0);
- 
- 	sched->pid_to_task[pid] = task;
--	sched->nr_tasks++;
--	sched->tasks = realloc(sched->tasks, sched->nr_tasks * sizeof(struct task_desc *));
--	BUG_ON(!sched->tasks);
--	sched->tasks[task->nr] = task;
-+	tasks_p = realloc(sched->tasks, (sched->nr_tasks + 1) * sizeof(struct task_desc *));
-+	if (!tasks_p)
-+		return NULL;
-+	sched->tasks = tasks_p;
-+	sched->tasks[sched->nr_tasks] = task;
-+	task->nr = sched->nr_tasks++;
- 
- 	if (verbose > 0)
- 		printf("registered task #%ld, PID %ld (%s)\n", sched->nr_tasks, pid, comm);
-@@ -824,6 +840,8 @@ replay_wakeup_event(struct perf_sched *sched,
- 
- 	waker = register_pid(sched, sample->tid, "<unknown>");
- 	wakee = register_pid(sched, pid, comm);
-+	if (waker == NULL || wakee == NULL)
-+		return -1;
- 
- 	add_sched_event_wakeup(sched, waker, sample->time, wakee);
- 	return 0;
-@@ -866,6 +884,8 @@ static int replay_switch_event(struct perf_sched *sched,
- 
- 	prev = register_pid(sched, prev_pid, prev_comm);
- 	next = register_pid(sched, next_pid, next_comm);
-+	if (prev == NULL || next == NULL)
-+		return -1;
- 
- 	sched->cpu_last_switched[cpu] = timestamp;
++	mutex_lock(&svc_mem_lock);
+ 	list_for_each_entry(pmem, &svc_data_mem, node)
+ 		if (pmem->vaddr == kaddr) {
+ 			gen_pool_free(chan->ctrl->genpool,
+@@ -953,8 +970,10 @@ void stratix10_svc_free_memory(struct stratix10_svc_chan *chan, void *kaddr)
+ 			pmem->vaddr = NULL;
+ 			list_del(&pmem->node);
+ 			kfree(pmem);
++			mutex_unlock(&svc_mem_lock);
+ 			return;
+ 		}
++	mutex_unlock(&svc_mem_lock);
+ }
+ EXPORT_SYMBOL_GPL(stratix10_svc_free_memory);
  
 -- 
 2.53.0
