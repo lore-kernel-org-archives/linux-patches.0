@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AD5E37FF46;
-	Sat, 12 Sep 2026 09:09:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8E5F41D4E9;
+	Sat, 12 Sep 2026 09:09:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789204194; cv=none; b=kLq51vbbB49QtD/Vr4Xbcw/zuxeX/54oHjTI5iHvoYmiOUDmzun+LVg/OEM2MweCcLBe2L/Zda61hWGMFNrH17onwyiopUM1ee/Ajc3A2mj/C1rhayS+qMpfhcenayltYmiwOnWLOS4zsiLtAwl1S06kX73Q/jg53k00/spvRxo=
+	t=1789204199; cv=none; b=CC3JAmeLPEF9UInumnTcfkfWOdH/XJO3OY5+axZH11eX0RTx0+PR8LHnyQDW6te2iohLBOJwJ1N3Uv8hT4bvlT1XUBMGGZVLuENQeCuqIZxB/Md4JnEpuGbJ7Lr2KAJ5DCvRKL9w6WwYb12O7g5ChKVcOuq4DwGm0dx4/3whCBs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789204194; c=relaxed/simple;
-	bh=wV+OIosVPezhnZs4SMqaIq7YPoL1B0uGukHFyQlR8Cg=;
+	s=arc-20240116; t=1789204199; c=relaxed/simple;
+	bh=Bwvm17gThHb0I581STH7xE2t4eSp5W0IWwrV+XB97m4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LKzPUMRlcRAnn+PjtcVC4V8NeafZBC/xZST6H/+VIp1tGJw3lAizjDi9+xD+1O5Az1kJYAV5xmxGJ27izhJnBwDQWErCMgdLZBstGSAaRE0mM5WDWz45gfpdG2+laFKd2izoi7a7g5STK/8cnetTBKJ3Wp8VXtsG+Y66h4j4rcg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hBmwblzN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eGaqeWa3I18Ngu+hFyOZuiJ+db6ovRCsrHLLR8qWKFeRyUqx+79S2jngRRZzjY5Qs9mD6Nm6Zr7KsdVQYdTRbNtfMFPyNQlsV7T6CmP+VzOjnHptiqYVo4tWXrvrs0uH3kJho+oReyxAP85mQ1y/2tvh/4ifWEvDZn6kOIZQ1So=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TPU4bzoE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hBmwblzN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FAE31F000FF;
-	Sat, 12 Sep 2026 09:09:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TPU4bzoE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8ACF71F000FF;
+	Sat, 12 Sep 2026 09:09:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789204192;
-	bh=u5HfijQqVUC9SjHSFmVtdp9jUZ7Gvp47ib9YCyCcQmg=;
+	s=korg; t=1789204197;
+	bh=iDSwphTSftRucSSzUCBm0wrrWg1cQ5xTX14hPvoV6CU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hBmwblzNxqaVrvWNwOtkVgsAuvk8eMibKOyG1Wo84IZ/4tQrEPbjRLXSq7muHksor
-	 n9jDfuFYeq+wJVuvy/9n0NT4i4twUtshV7cNlZHEmrFrJEd/8KUgmzGtVE/B7eahUS
-	 CVIbe04sQnm/8bPvPJN5/+J1WD/1qwxWuBLKievU=
+	b=TPU4bzoEfM2wKIbApAdXPjIXnSjHTfQKg9JdBJT08+sX/E5cLYTy2w2Jc/6jtCNPN
+	 awRWH50FEixbGcGZ/VtXRiqT9jlp06/zq3syP0LlHkvOZi59kdOGOWAgjcQTZDXrHt
+	 oT7EWb4OCq4OElgYgA5ORGZK3GGIQzFrhKViUmVQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Prabu Thayalan <prabu.ponrajthayalan@amd.com>,
 	Eric Joyner <eric.joyner@amd.com>,
 	Brett Creeley <brett.creeley@amd.com>,
 	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1563/1815] ionic: add missing dma_rmb() after the completion publish check
-Date: Sat, 12 Sep 2026 08:55:13 +0200
-Message-ID: <20260912065725.686397000@linuxfoundation.org>
+Subject: [PATCH 7.2 1564/1815] ionic: fix completion descriptor access with 2x desc size
+Date: Sat, 12 Sep 2026 08:55:14 +0200
+Message-ID: <20260912065725.709990012@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -53,74 +54,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Joyner <eric.joyner@amd.com>
+From: Prabu Thayalan <prabu.ponrajthayalan@amd.com>
 
-[ Upstream commit 621f44af8c5b373de2b2e19a4a8db9e45c3c659a ]
+[ Upstream commit 5da6ec6f06f235166bd084466b3386c638e26675 ]
 
-Each completion service routine tests a device-written publish flag and
-then reads the rest of the descriptor with nothing ordering those loads.
-A control dependency does not order loads, so a weakly ordered CPU may
-satisfy the payload reads from a cache line state observed before the
-flag became valid. Add the barrier to all four completion paths.
+The old ionic_rx_service() and ionic_tx_service() used array
+indexing to access completion descriptors:
 
-Fixes: 1d062b7b6f64 ("ionic: Add basic adminq support")
-Fixes: 0f3154e6bcb3 ("ionic: Add Tx and Rx handling")
-Fixes: 77ceb68e29cc ("ionic: Add notifyq support")
+    comp = &((struct ionic_rxq_comp *)cq->base)[cq->tail_idx];
+
+This assumes the stride is sizeof(struct ionic_rxq_comp) = 16 bytes.
+However, when the IONIC_Q_F_2X_CQ_DESC flag is set, the actual
+completion descriptor size is 32 bytes (2 * sizeof(comp)), and the
+completion itself is located at the end of that 32-byte slot. Array
+indexing with a 16-byte stride would access the wrong offset.
+
+Use pointer arithmetic that accounts for the actual descriptor size
+from cq->desc_size:
+
+    comp = cq->base +
+           cq->desc_size * cq->tail_idx +
+           cq->desc_size - sizeof(*comp);
+
+This correctly calculates the completion location regardless of
+descriptor size. For the common case where desc_size equals
+sizeof(*comp), use array indexing in a likely() fast path to avoid
+performance regression.
+
+Fixes: 65e548f6b0ff ("ionic: remove the cq_info to save more memory")
+Signed-off-by: Prabu Thayalan <prabu.ponrajthayalan@amd.com>
 Signed-off-by: Eric Joyner <eric.joyner@amd.com>
 Reviewed-by: Brett Creeley <brett.creeley@amd.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260811195039.1315045-2-eric.joyner@amd.com
+Link: https://patch.msgid.link/20260811195039.1315045-3-eric.joyner@amd.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/pensando/ionic/ionic_main.c | 4 ++++
- drivers/net/ethernet/pensando/ionic/ionic_txrx.c | 4 ++++
- 2 files changed, 8 insertions(+)
+ .../net/ethernet/pensando/ionic/ionic_txrx.c  | 27 ++++++++++---------
+ 1 file changed, 14 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/net/ethernet/pensando/ionic/ionic_main.c b/drivers/net/ethernet/pensando/ionic/ionic_main.c
-index 6e6f3ed07271b..10501be9ef956 100644
---- a/drivers/net/ethernet/pensando/ionic/ionic_main.c
-+++ b/drivers/net/ethernet/pensando/ionic/ionic_main.c
-@@ -269,6 +269,8 @@ bool ionic_notifyq_service(struct ionic_cq *cq)
- 	if ((s64)(eid - lif->last_eid) <= 0)
- 		return false;
- 
-+	dma_rmb();
-+
- 	lif->last_eid = eid;
- 
- 	dev_dbg(lif->ionic->dev, "notifyq event:\n");
-@@ -314,6 +316,8 @@ bool ionic_adminq_service(struct ionic_cq *cq)
- 	if (!color_match(comp->color, cq->done_color))
- 		return false;
- 
-+	dma_rmb();
-+
- 	/* check for empty queue */
- 	if (q->tail_idx == q->head_idx)
- 		return false;
 diff --git a/drivers/net/ethernet/pensando/ionic/ionic_txrx.c b/drivers/net/ethernet/pensando/ionic/ionic_txrx.c
-index 73998d61593a9..c3bcfdd1a1405 100644
+index c3bcfdd1a1405..e436e3231e864 100644
 --- a/drivers/net/ethernet/pensando/ionic/ionic_txrx.c
 +++ b/drivers/net/ethernet/pensando/ionic/ionic_txrx.c
-@@ -739,6 +739,8 @@ static bool __ionic_rx_service(struct ionic_cq *cq, struct bpf_prog *xdp_prog)
+@@ -706,11 +706,7 @@ static void ionic_rx_clean(struct ionic_queue *q,
+ 		__le64 *cq_desc_hwstamp;
+ 		u64 hwstamp;
+ 
+-		cq_desc_hwstamp =
+-			(void *)comp +
+-			qcq->cq.desc_size -
+-			sizeof(struct ionic_rxq_comp) -
+-			IONIC_HWSTAMP_CQ_NEGOFFSET;
++		cq_desc_hwstamp = (void *)comp - IONIC_HWSTAMP_CQ_NEGOFFSET;
+ 
+ 		hwstamp = le64_to_cpu(*cq_desc_hwstamp);
+ 
+@@ -734,7 +730,12 @@ static bool __ionic_rx_service(struct ionic_cq *cq, struct bpf_prog *xdp_prog)
+ 	struct ionic_queue *q = cq->bound_q;
+ 	struct ionic_rxq_comp *comp;
+ 
+-	comp = &((struct ionic_rxq_comp *)cq->base)[cq->tail_idx];
++	if (likely(cq->desc_size == sizeof(*comp)))
++		comp = &((struct ionic_rxq_comp *)cq->base)[cq->tail_idx];
++	else
++		comp = cq->base +
++		       cq->desc_size * cq->tail_idx +
++		       cq->desc_size - sizeof(*comp);
+ 
  	if (!color_match(comp->pkt_type_color, cq->done_color))
  		return false;
+@@ -1187,7 +1188,6 @@ static void ionic_tx_clean(struct ionic_queue *q,
+ 			   bool in_napi)
+ {
+ 	struct ionic_tx_stats *stats = q_to_tx_stats(q);
+-	struct ionic_qcq *qcq = q_to_qcq(q);
+ 	struct sk_buff *skb;
  
-+	dma_rmb();
-+
- 	/* check for empty queue */
- 	if (q->tail_idx == q->head_idx)
- 		return false;
-@@ -1254,6 +1256,8 @@ static bool ionic_tx_service(struct ionic_cq *cq,
+ 	if (desc_info->xdpf) {
+@@ -1212,11 +1212,7 @@ static void ionic_tx_clean(struct ionic_queue *q,
+ 			__le64 *cq_desc_hwstamp;
+ 			u64 hwstamp;
+ 
+-			cq_desc_hwstamp =
+-				(void *)comp +
+-				qcq->cq.desc_size -
+-				sizeof(struct ionic_txq_comp) -
+-				IONIC_HWSTAMP_CQ_NEGOFFSET;
++			cq_desc_hwstamp = (void *)comp - IONIC_HWSTAMP_CQ_NEGOFFSET;
+ 
+ 			hwstamp = le64_to_cpu(*cq_desc_hwstamp);
+ 
+@@ -1251,7 +1247,12 @@ static bool ionic_tx_service(struct ionic_cq *cq,
+ 	unsigned int pkts = 0;
+ 	u16 index;
+ 
+-	comp = &((struct ionic_txq_comp *)cq->base)[cq->tail_idx];
++	if (likely(cq->desc_size == sizeof(*comp)))
++		comp = &((struct ionic_txq_comp *)cq->base)[cq->tail_idx];
++	else
++		comp = cq->base +
++		       cq->desc_size * cq->tail_idx +
++		       cq->desc_size - sizeof(*comp);
+ 
  	if (!color_match(comp->color, cq->done_color))
  		return false;
- 
-+	dma_rmb();
-+
- 	/* clean the related q entries, there could be
- 	 * several q entries completed for each cq completion
- 	 */
 -- 
 2.53.0
 
