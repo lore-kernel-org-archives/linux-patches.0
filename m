@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C6A13385A5;
-	Sat, 12 Sep 2026 13:09:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07E2647A0A9;
+	Sat, 12 Sep 2026 13:09:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789218552; cv=none; b=dqlPyA+aAPJUD6cMRtd2mJ4OQDf0F6saeLiJOTqLu3E/05DxJSwW7MLlkSQIWydOapl6wYikxDK7WE+Gqss1TBziD1Rx7BAPuqPNtkjsCNouFv2SDKiu63bDJixu69ZUZUaoqIty3alC4LpG90q1kDW7yiGYkCnEaJYmu0JYjdE=
+	t=1789218557; cv=none; b=IMgYlRI4u5J6LIZ8hrf2KH+IbhRlIVemTJBGWaV7KmbFbjTxIoo9+dYVTl8CmyjjhLkA2nbanRwNUS5kXm+6F6nmKdJKmJ1oe99+W+iVr096Djcgnwc+DZ8YMSTXCBK7EXbyxvoSoYJgJOuB+wa8tsqO1ynZ3/iF81eo7PnJX+E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789218552; c=relaxed/simple;
-	bh=CCFyIbt94wnYXdYZa/GADKe0sJIBqfJ7STbjn1F2na8=;
+	s=arc-20240116; t=1789218557; c=relaxed/simple;
+	bh=MnxqnD1kGSLOOlsE6fj6QV3x2cNSC9ugmYDIIGUSp5U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eNgvHcrEylI+Q6YXWDWAEuMqYVV6QmspuulCzLonbuyAP8mivirNZI9IGZVqcFAMXhI6bnbgG4j08939PnKLqjUvSlH5Pb82rgDPV2nOWqhoaImHccQPJaDE8BTDRfogvM1AGPJAkh6jd2OdhNYvWECFifrtSYPIbegtcTZ13E0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iKp8ak6z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cUfxiSVkwexFyFUtE6Q8hIq/Tb16qPMF9GSxnfrcJ3x5HCfxgN2epfeZQxNI2+sbcBYVJpee79fE8lHXgSUve72aIjsCmHPYOWP/O2+BDzEIjtRCRIBvk0DeOs1uymccYIbgJaNc950XDFk5+zpf+UTy7G0/8GEj9hgUM87NRCE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pBP+h6+m; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iKp8ak6z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE7781F000FF;
-	Sat, 12 Sep 2026 13:09:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pBP+h6+m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D41E41F000FF;
+	Sat, 12 Sep 2026 13:09:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789218551;
-	bh=mcU8Mev2mfojK3w+wtfEY1piEvTw1p63w1AWmaBx6mo=;
+	s=korg; t=1789218555;
+	bh=0NZk8Wtncu8uTbMW/CEhwO3eBqleHInZ8Lt1NK18IbE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iKp8ak6zbcNnZNIyAfAr7q78Zt2UwLT+F0Qr6NuksEYDu9y516PNKT06m8MDOKIha
-	 QUC+n/h6/kyon2GhmSVZjepaIuaGFE/wAaqoJzxXlwu/O+ptqEY45JLu3W39bO2CdP
-	 iDYXYk5eXko0j5yblL2NrUoEAfowcO5mHAiBs+Ic=
+	b=pBP+h6+mfdWUeYI7dXQw/n25okT/14Qsn9J8Rti9v+4oEVla55a5huVspS3ZBI3mk
+	 oY970fGaNnE16xUU0Eo5ouHoyPwi1JKwCEkKMJpgZJ3mQSCPCbk8MfMEZiuYyB1Kln
+	 OAGM2r4iqF5JrDeR3z2Xg5XAKcRfhscKVkY8rPB0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ZhangGuoDong <zhangguodong@kylinos.cn>,
-	ChenXiaoSong <chenxiaosong@kylinos.cn>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	Sechang Lim <rhkrqnwk98@gmail.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Junseo Lim <zirajs7@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1169/1376] smb/server: preserve error status in smb2_handle_negotiate()
-Date: Sat, 12 Sep 2026 08:59:55 +0200
-Message-ID: <20260912065633.605894413@linuxfoundation.org>
+Subject: [PATCH 6.12 1170/1376] lwt_bpf: Restore reserved headroom after xmit program
+Date: Sat, 12 Sep 2026 08:59:56 +0200
+Message-ID: <20260912065633.627943719@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -52,44 +52,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: ZhangGuoDong <zhangguodong@kylinos.cn>
+From: Junseo Lim <zirajs7@gmail.com>
 
-[ Upstream commit 73541bd2bab77e7e8e89b1edb5d342f4190dd4d0 ]
+[ Upstream commit 5fe7007aed9ad069b2bd77e5d0c875c64f5c0269 ]
 
-smb2_handle_negotiate() records specific failures such as
-STATUS_INVALID_PARAMETER or STATUS_NOT_SUPPORTED.
+ip_finish_output2() expands an skb to LL_RESERVED_SPACE(dev) before LWT
+xmit. An LWT_XMIT BPF program can then modify the skb head and still
+return BPF_OK, so bpf_xmit() rechecks the remaining headroom before the
+skb continues to neighbour output.
 
-Fixes: e2b76ab8b5c9 ("ksmbd: add support for read compound")
-Signed-off-by: ZhangGuoDong <zhangguodong@kylinos.cn>
-Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+That recheck uses dst->dev->hard_header_len. This is not enough for the
+neighbour cached-header path: neigh_hh_output() copies the cached hardware
+header using the aligned hh_cache size, HH_DATA_MOD for short headers or
+HH_DATA_ALIGN(hh_len) otherwise.
+
+On Ethernet, hard_header_len is 14 but the cached copy needs 16 bytes. If
+an LWT_XMIT BPF program calls bpf_skb_change_head(skb, 1, 0), the skb can
+still have 15 bytes of headroom after the program. The existing check
+accepts that, after which neigh_hh_output() hits its headroom warning and
+drops the skb.
+
+Use LL_RESERVED_SPACE(dst->dev) in the post-BPF headroom check to match
+the reservation made before LWT xmit.
+
+Fixes: 3a0af8fd61f9 ("bpf: BPF for lightweight tunnel infrastructure")
+Reported-by: Sechang Lim <rhkrqnwk98@gmail.com>
+Suggested-by: Daniel Borkmann <daniel@iogearbox.net>
+Signed-off-by: Junseo Lim <zirajs7@gmail.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/bpf/20260811044149.118235-1-zirajs7@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/core/lwt_bpf.c | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index 52df4cafe8a84..ebb35e95aef54 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -1169,7 +1169,7 @@ int smb2_handle_negotiate(struct ksmbd_work *work)
- 				KSMBD_DEFAULT_GFP);
- 		if (!conn->preauth_info) {
- 			rc = -ENOMEM;
--			rsp->hdr.Status = STATUS_INVALID_PARAMETER;
-+			rsp->hdr.Status = STATUS_INSUFFICIENT_RESOURCES;
- 			goto err_out;
- 		}
+diff --git a/net/core/lwt_bpf.c b/net/core/lwt_bpf.c
+index f1641ec8284be..d80899233441d 100644
+--- a/net/core/lwt_bpf.c
++++ b/net/core/lwt_bpf.c
+@@ -160,10 +160,10 @@ static int bpf_output(struct net *net, struct sock *sk, struct sk_buff *skb)
+ 	return dst->lwtstate->orig_output(net, sk, skb);
+ }
  
-@@ -1266,7 +1266,7 @@ int smb2_handle_negotiate(struct ksmbd_work *work)
- 	ksmbd_conn_set_need_setup(conn);
+-static int xmit_check_hhlen(struct sk_buff *skb, int hh_len)
++static int xmit_check_headroom(struct sk_buff *skb, int hroom)
+ {
+-	if (skb_headroom(skb) < hh_len) {
+-		int nhead = HH_DATA_ALIGN(hh_len - skb_headroom(skb));
++	if (skb_headroom(skb) < hroom) {
++		int nhead = hroom - skb_headroom(skb);
  
- err_out:
--	if (rc)
-+	if (rc && rsp->hdr.Status == STATUS_SUCCESS)
- 		rsp->hdr.Status = STATUS_INSUFFICIENT_RESOURCES;
+ 		if (pskb_expand_head(skb, nhead, 0, GFP_ATOMIC))
+ 			return -ENOMEM;
+@@ -275,7 +275,7 @@ static int bpf_xmit(struct sk_buff *skb)
  
- 	if (!rc)
+ 	bpf = bpf_lwt_lwtunnel(dst->lwtstate);
+ 	if (bpf->xmit.prog) {
+-		int hh_len = dst->dev->hard_header_len;
++		int hroom = LL_RESERVED_SPACE(dst->dev);
+ 		__be16 proto = skb->protocol;
+ 		int ret;
+ 
+@@ -291,9 +291,12 @@ static int bpf_xmit(struct sk_buff *skb)
+ 				return -EINVAL;
+ 			}
+ 			/* If the header was expanded, headroom might be too
+-			 * small for L2 header to come, expand as needed.
++			 * small for the L2 header to come, expand as needed.
++			 * neigh_hh_output() copies the cached header in
++			 * HH_DATA_MOD aligned chunks, so match the reservation
++			 * made before LWT xmit.
+ 			 */
+-			ret = xmit_check_hhlen(skb, hh_len);
++			ret = xmit_check_headroom(skb, hroom);
+ 			if (unlikely(ret))
+ 				return ret;
+ 
 -- 
 2.53.0
 
