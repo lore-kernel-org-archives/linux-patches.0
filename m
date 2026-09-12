@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7171B3F4831;
-	Sat, 12 Sep 2026 16:46:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41BCC377ABA;
+	Sat, 12 Sep 2026 16:46:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789231567; cv=none; b=FjP3HTVVbiH0bkKbaz2vHW3vXREkrU71VEBkDKs3MKQVcLpTB1in/NytnHget1KA15jwZZ1QFqnzJpIB2ZrGLOVS9vkZSGQ3CLLaZzRX9ZTzYQtzoceEnqYI+6muBrxVDcjqHhKhNl9rK7Taobu2eUhd18JmxQQ0Z1u1uhZbDmc=
+	t=1789231572; cv=none; b=PMhTUiA052In9QoBQGeHC9Nd09tSxKP488kpMNJpN/JQbB8afAFyseLJTxzMR5+3ZJET9LUSmg4WAzx42YeUPyRFndm5POZSJwcAO69UGML57k1YVqfgw3FgRqsp1EqtNT6Iq8WCLe2VWnTI4R0ODVaqvnR7GnqXWWj2VTCex2I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789231567; c=relaxed/simple;
-	bh=ZveswCmoM8EOdQC5/bD/80Mh/zu57WiKx6TgrUfK6rM=;
+	s=arc-20240116; t=1789231572; c=relaxed/simple;
+	bh=O5EXEDhEYXgYgxEf4iu+jH19KgkyiTSmFK/8GhtufO8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jy+m3ySaFmrLqtfRNT9jVjwTdgsT/6+8yPd9+k4Yfv0MChjLpyYsk5aojiIvBNTnrZsZfwf900ZqQ4YBTntKwUaBmTf53x3fL0DRfsAbC8RLA2oq2jXja67kqs3lGEDTjocb26MB9bx0aN+KHtfwPvjFH3GVDRUPELuu6ZKeCXg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zOB+4G/E; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OdAIOkzw0SFZ3RajqfaKlFS2YSIKkO+6MOqYX/N8AkRLtS/uvdE/TbEQh3RTRufAe+qhGEFOFM+zukBDcOEyfPquGdJrlDS+5EFX7JQLPYfulqZrNm7jzDa35yvBU9ktknUC1CO0WS9YivIn9RTXpePmngtUguWS7xf4bZQzwmw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QpYKPTd4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zOB+4G/E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1040D1F000FF;
-	Sat, 12 Sep 2026 16:46:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QpYKPTd4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F6B51F000FF;
+	Sat, 12 Sep 2026 16:46:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789231566;
-	bh=TMVtsA5tCzgqwqEHDy61SsQTtsNqt1GGeqvW6SzjjVQ=;
+	s=korg; t=1789231571;
+	bh=1JSEPIOv9znnl+1kNpF+1rhemA+V4xzvkdDQDiHYXcM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zOB+4G/EIN5M9HlHu/OOD184xCV9T9anjCFWGKJys3vySugQLfIHcBKUtVfnw4njv
-	 QW7nWEXmSBIuIEVEVcx2r9eSQQZirYciRasrEMsbVxB1LgU3FiWUQ9ZoTna9Z9ZbUq
-	 +W01uQ8R/P50IDIZhX7WYbbil5tb7XP1kUzbaFuU=
+	b=QpYKPTd4Hknl6RAGLsA3ZGkh1fAkooMhQEOY8mU5+y5ltAv6VQjePaA34ibggznYp
+	 JufkccC7Q2QnK+uakGks99WEA8eaMqs2F3ybuhjYkQzXLkLxdfhKvBrwl9DhGrUQtB
+	 gulMNSbtaHBweCzocqzTOy9FKJkcBXIHlLTWd6yY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
-	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1026/1191] null_blk: support read-only and offline zone conditions
-Date: Sat, 12 Sep 2026 09:02:34 +0200
-Message-ID: <20260912065611.231051485@linuxfoundation.org>
+Subject: [PATCH 6.1 1027/1191] null_blk: add configfs variable shared_tags
+Date: Sat, 12 Sep 2026 09:02:35 +0200
+Message-ID: <20260912065611.253643426@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -54,255 +54,152 @@ Content-Transfer-Encoding: 8bit
 
 From: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
 
-[ Upstream commit d3a5738849e03990618cbb12e10db4eb82dbfda0 ]
+[ Upstream commit 14509b748ff58df3f0980b1cd70ade0e4a805e99 ]
 
-In zoned mode, zones with write pointers can have conditions "read-only"
-or "offline". In read-only condition, zones can not be written. In
-offline condition, the zones can be neither written nor read. These
-conditions are intended for zones with media failures, then it is
-difficult to set those conditions to zones on real devices.
+Allow setting shared_tags through configfs, which could only be set as a
+module parameter. For that purpose, delay tag_set initialization from
+null_init() to null_add_dev(). Refer tag_set.ops as the flag to check if
+tag_set is initialized or not.
 
-To test handling of zones in the conditions, add a feature to null_blk
-to set up zones in read-only or offline condition. Add new configuration
-attributes "zone_readonly" and "zone_offline". Write a sector to the
-attribute files to specify the target zone to set the zone conditions.
-For example, following command lines do it:
+The following parameters can not be set through configfs yet:
 
-   echo 0 > nullb1/zone_readonly
-   echo 524288 > nullb1/zone_offline
-
-When the specified zones are already in read-only or offline condition,
-normal empty condition is restored to the zones. These condition changes
-can be done only after the null_blk device get powered, since status
-area of each zone is not yet allocated before power-on.
-
-Also improve zone condition checks to inhibit all commands for zones in
-offline conditions. In same manner, inhibit write and zone management
-commands for zones in read-only condition.
+    timeout
+    requeue
+    init_hctx
 
 Signed-off-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
-Reviewed-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
-Link: https://lore.kernel.org/r/20221201061036.2342206-1-shinichiro.kawasaki@wdc.com
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Link: https://lore.kernel.org/r/20240130042134.2463659-1-shinichiro.kawasaki@wdc.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Stable-dep-of: c9d293d6bb05 ("null_blk: register configfs subsystem after creating default devices")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/null_blk/main.c     | 22 ++++++-
- drivers/block/null_blk/null_blk.h |  8 +++
- drivers/block/null_blk/zoned.c    | 95 ++++++++++++++++++++++++++++++-
- 3 files changed, 121 insertions(+), 4 deletions(-)
+ drivers/block/null_blk/main.c     | 38 ++++++++++++++++---------------
+ drivers/block/null_blk/null_blk.h |  1 +
+ 2 files changed, 21 insertions(+), 18 deletions(-)
 
 diff --git a/drivers/block/null_blk/main.c b/drivers/block/null_blk/main.c
-index 0790e559c4d19..59cef8db63e86 100644
+index 59cef8db63e86..11bda1242283b 100644
 --- a/drivers/block/null_blk/main.c
 +++ b/drivers/block/null_blk/main.c
-@@ -539,6 +539,24 @@ static ssize_t nullb_device_badblocks_store(struct config_item *item,
- }
- CONFIGFS_ATTR(nullb_device_, badblocks);
+@@ -165,8 +165,8 @@ static bool g_blocking;
+ module_param_named(blocking, g_blocking, bool, 0444);
+ MODULE_PARM_DESC(blocking, "Register as a blocking blk-mq driver device");
  
-+static ssize_t nullb_device_zone_readonly_store(struct config_item *item,
-+						const char *page, size_t count)
-+{
-+	struct nullb_device *dev = to_nullb_device(item);
-+
-+	return zone_cond_store(dev, page, count, BLK_ZONE_COND_READONLY);
-+}
-+CONFIGFS_ATTR_WO(nullb_device_, zone_readonly);
-+
-+static ssize_t nullb_device_zone_offline_store(struct config_item *item,
-+					       const char *page, size_t count)
-+{
-+	struct nullb_device *dev = to_nullb_device(item);
-+
-+	return zone_cond_store(dev, page, count, BLK_ZONE_COND_OFFLINE);
-+}
-+CONFIGFS_ATTR_WO(nullb_device_, zone_offline);
-+
- static struct configfs_attribute *nullb_device_attrs[] = {
- 	&nullb_device_attr_size,
- 	&nullb_device_attr_completion_nsec,
-@@ -565,6 +583,8 @@ static struct configfs_attribute *nullb_device_attrs[] = {
- 	&nullb_device_attr_zone_nr_conv,
- 	&nullb_device_attr_zone_max_open,
- 	&nullb_device_attr_zone_max_active,
-+	&nullb_device_attr_zone_readonly,
-+	&nullb_device_attr_zone_offline,
+-static bool shared_tags;
+-module_param(shared_tags, bool, 0444);
++static bool g_shared_tags;
++module_param_named(shared_tags, g_shared_tags, bool, 0444);
+ MODULE_PARM_DESC(shared_tags, "Share tag set between devices for blk-mq");
+ 
+ static bool g_shared_tag_bitmap;
+@@ -438,6 +438,7 @@ NULLB_DEVICE_ATTR(zone_max_open, uint, NULL);
+ NULLB_DEVICE_ATTR(zone_max_active, uint, NULL);
+ NULLB_DEVICE_ATTR(virt_boundary, bool, NULL);
+ NULLB_DEVICE_ATTR(no_sched, bool, NULL);
++NULLB_DEVICE_ATTR(shared_tags, bool, NULL);
+ NULLB_DEVICE_ATTR(shared_tag_bitmap, bool, NULL);
+ 
+ static ssize_t nullb_device_power_show(struct config_item *item, char *page)
+@@ -587,6 +588,7 @@ static struct configfs_attribute *nullb_device_attrs[] = {
+ 	&nullb_device_attr_zone_offline,
  	&nullb_device_attr_virt_boundary,
  	&nullb_device_attr_no_sched,
++	&nullb_device_attr_shared_tags,
  	&nullb_device_attr_shared_tag_bitmap,
-@@ -630,7 +650,7 @@ static ssize_t memb_group_features_show(struct config_item *item, char *page)
- 			"poll_queues,power,queue_mode,shared_tag_bitmap,size,"
- 			"submit_queues,use_per_node_hctx,virt_boundary,zoned,"
- 			"zone_capacity,zone_max_active,zone_max_open,"
--			"zone_nr_conv,zone_size\n");
-+			"zone_nr_conv,zone_offline,zone_readonly,zone_size\n");
+ 	NULL,
+ };
+@@ -647,10 +649,11 @@ static ssize_t memb_group_features_show(struct config_item *item, char *page)
+ 			"badblocks,blocking,blocksize,cache_size,"
+ 			"completion_nsec,discard,home_node,hw_queue_depth,"
+ 			"irqmode,max_sectors,mbps,memory_backed,no_sched,"
+-			"poll_queues,power,queue_mode,shared_tag_bitmap,size,"
+-			"submit_queues,use_per_node_hctx,virt_boundary,zoned,"
+-			"zone_capacity,zone_max_active,zone_max_open,"
+-			"zone_nr_conv,zone_offline,zone_readonly,zone_size\n");
++			"poll_queues,power,queue_mode,shared_tag_bitmap,"
++			"shared_tags,size,submit_queues,use_per_node_hctx,"
++			"virt_boundary,zoned,zone_capacity,zone_max_active,"
++			"zone_max_open,zone_nr_conv,zone_offline,zone_readonly,"
++			"zone_size\n");
  }
  
  CONFIGFS_ATTR_RO(memb_group_, features);
+@@ -725,6 +728,7 @@ static struct nullb_device *null_alloc_dev(void)
+ 	dev->zone_max_active = g_zone_max_active;
+ 	dev->virt_boundary = g_virt_boundary;
+ 	dev->no_sched = g_no_sched;
++	dev->shared_tags = g_shared_tags;
+ 	dev->shared_tag_bitmap = g_shared_tag_bitmap;
+ 	return dev;
+ }
+@@ -2085,7 +2089,14 @@ static int null_add_dev(struct nullb_device *dev)
+ 		goto out_free_nullb;
+ 
+ 	if (dev->queue_mode == NULL_Q_MQ) {
+-		if (shared_tags) {
++		if (dev->shared_tags) {
++			if (!tag_set.ops) {
++				rv = null_init_tag_set(NULL, &tag_set);
++				if (rv) {
++					tag_set.ops = NULL;
++					goto out_cleanup_queues;
++				}
++			}
+ 			nullb->tag_set = &tag_set;
+ 			rv = 0;
+ 		} else {
+@@ -2270,18 +2281,12 @@ static int __init null_init(void)
+ 		g_submit_queues = 1;
+ 	}
+ 
+-	if (g_queue_mode == NULL_Q_MQ && shared_tags) {
+-		ret = null_init_tag_set(NULL, &tag_set);
+-		if (ret)
+-			return ret;
+-	}
+-
+ 	config_group_init(&nullb_subsys.su_group);
+ 	mutex_init(&nullb_subsys.su_mutex);
+ 
+ 	ret = configfs_register_subsystem(&nullb_subsys);
+ 	if (ret)
+-		goto err_tagset;
++		return ret;
+ 
+ 	null_major = register_blkdev(0, "nullb");
+ 	if (null_major < 0) {
+@@ -2306,9 +2311,6 @@ static int __init null_init(void)
+ 	unregister_blkdev(null_major, "nullb");
+ err_conf:
+ 	configfs_unregister_subsystem(&nullb_subsys);
+-err_tagset:
+-	if (g_queue_mode == NULL_Q_MQ && shared_tags)
+-		blk_mq_free_tag_set(&tag_set);
+ 	return ret;
+ }
+ 
+@@ -2327,7 +2329,7 @@ static void __exit null_exit(void)
+ 	}
+ 	mutex_unlock(&lock);
+ 
+-	if (g_queue_mode == NULL_Q_MQ && shared_tags)
++	if (tag_set.ops)
+ 		blk_mq_free_tag_set(&tag_set);
+ 
+ 	mutex_destroy(&lock);
 diff --git a/drivers/block/null_blk/null_blk.h b/drivers/block/null_blk/null_blk.h
-index 94ff68052b1e4..eb5972c50be86 100644
+index eb5972c50be86..f211deb9bbcaa 100644
 --- a/drivers/block/null_blk/null_blk.h
 +++ b/drivers/block/null_blk/null_blk.h
-@@ -151,6 +151,8 @@ blk_status_t null_process_zoned_cmd(struct nullb_cmd *cmd, enum req_op op,
- 				    sector_t sector, sector_t nr_sectors);
- size_t null_zone_valid_read_len(struct nullb *nullb,
- 				sector_t sector, unsigned int len);
-+ssize_t zone_cond_store(struct nullb_device *dev, const char *page,
-+			size_t count, enum blk_zone_cond cond);
- #else
- static inline int null_init_zoned_dev(struct nullb_device *dev,
- 				      struct request_queue *q)
-@@ -174,6 +176,12 @@ static inline size_t null_zone_valid_read_len(struct nullb *nullb,
- {
- 	return len;
- }
-+static inline ssize_t zone_cond_store(struct nullb_device *dev,
-+				      const char *page, size_t count,
-+				      enum blk_zone_cond cond)
-+{
-+	return -EOPNOTSUPP;
-+}
- #define null_report_zones	NULL
- #endif /* CONFIG_BLK_DEV_ZONED */
- #endif /* __NULL_BLK_H */
-diff --git a/drivers/block/null_blk/zoned.c b/drivers/block/null_blk/zoned.c
-index 9255fbb319ab6..78efccc77caa4 100644
---- a/drivers/block/null_blk/zoned.c
-+++ b/drivers/block/null_blk/zoned.c
-@@ -401,8 +401,10 @@ static blk_status_t null_zone_write(struct nullb_cmd *cmd, sector_t sector,
+@@ -114,6 +114,7 @@ struct nullb_device {
+ 	bool zoned; /* if device is zoned */
+ 	bool virt_boundary; /* virtual boundary on/off for the device */
+ 	bool no_sched; /* no IO scheduler for the device */
++	bool shared_tags; /* share tag set between devices for blk-mq */
+ 	bool shared_tag_bitmap; /* use hostwide shared tags */
+ };
  
- 	null_lock_zone(dev, zone);
- 
--	if (zone->cond == BLK_ZONE_COND_FULL) {
--		/* Cannot write to a full zone */
-+	if (zone->cond == BLK_ZONE_COND_FULL ||
-+	    zone->cond == BLK_ZONE_COND_READONLY ||
-+	    zone->cond == BLK_ZONE_COND_OFFLINE) {
-+		/* Cannot write to the zone */
- 		ret = BLK_STS_IOERR;
- 		goto unlock;
- 	}
-@@ -630,7 +632,9 @@ static blk_status_t null_zone_mgmt(struct nullb_cmd *cmd, enum req_op op,
- 		for (i = dev->zone_nr_conv; i < dev->nr_zones; i++) {
- 			zone = &dev->zones[i];
- 			null_lock_zone(dev, zone);
--			if (zone->cond != BLK_ZONE_COND_EMPTY) {
-+			if (zone->cond != BLK_ZONE_COND_EMPTY &&
-+			    zone->cond != BLK_ZONE_COND_READONLY &&
-+			    zone->cond != BLK_ZONE_COND_OFFLINE) {
- 				null_reset_zone(dev, zone);
- 				trace_nullb_zone_op(cmd, i, zone->cond);
- 			}
-@@ -644,6 +648,12 @@ static blk_status_t null_zone_mgmt(struct nullb_cmd *cmd, enum req_op op,
- 
- 	null_lock_zone(dev, zone);
- 
-+	if (zone->cond == BLK_ZONE_COND_READONLY ||
-+	    zone->cond == BLK_ZONE_COND_OFFLINE) {
-+		ret = BLK_STS_IOERR;
-+		goto unlock;
-+	}
-+
- 	switch (op) {
- 	case REQ_OP_ZONE_RESET:
- 		ret = null_reset_zone(dev, zone);
-@@ -665,6 +675,7 @@ static blk_status_t null_zone_mgmt(struct nullb_cmd *cmd, enum req_op op,
- 	if (ret == BLK_STS_OK)
- 		trace_nullb_zone_op(cmd, zone_no, zone->cond);
- 
-+unlock:
- 	null_unlock_zone(dev, zone);
- 
- 	return ret;
-@@ -691,6 +702,8 @@ blk_status_t null_process_zoned_cmd(struct nullb_cmd *cmd, enum req_op op,
- 	default:
- 		dev = cmd->nq->dev;
- 		zone = &dev->zones[null_zone_no(dev, sector)];
-+		if (zone->cond == BLK_ZONE_COND_OFFLINE)
-+			return BLK_STS_IOERR;
- 
- 		null_lock_zone(dev, zone);
- 		sts = null_process_cmd(cmd, op, sector, nr_sectors);
-@@ -698,3 +711,79 @@ blk_status_t null_process_zoned_cmd(struct nullb_cmd *cmd, enum req_op op,
- 		return sts;
- 	}
- }
-+
-+/*
-+ * Set a zone in the read-only or offline condition.
-+ */
-+static void null_set_zone_cond(struct nullb_device *dev,
-+			       struct nullb_zone *zone, enum blk_zone_cond cond)
-+{
-+	if (WARN_ON_ONCE(cond != BLK_ZONE_COND_READONLY &&
-+			 cond != BLK_ZONE_COND_OFFLINE))
-+		return;
-+
-+	null_lock_zone(dev, zone);
-+
-+	/*
-+	 * If the read-only condition is requested again to zones already in
-+	 * read-only condition, restore back normal empty condition. Do the same
-+	 * if the offline condition is requested for offline zones. Otherwise,
-+	 * set the specified zone condition to the zones. Finish the zones
-+	 * beforehand to free up zone resources.
-+	 */
-+	if (zone->cond == cond) {
-+		zone->cond = BLK_ZONE_COND_EMPTY;
-+		zone->wp = zone->start;
-+		if (dev->memory_backed)
-+			null_handle_discard(dev, zone->start, zone->len);
-+	} else {
-+		if (zone->cond != BLK_ZONE_COND_READONLY &&
-+		    zone->cond != BLK_ZONE_COND_OFFLINE)
-+			null_finish_zone(dev, zone);
-+		zone->cond = cond;
-+		zone->wp = (sector_t)-1;
-+	}
-+
-+	null_unlock_zone(dev, zone);
-+}
-+
-+/*
-+ * Identify a zone from the sector written to configfs file. Then set zone
-+ * condition to the zone.
-+ */
-+ssize_t zone_cond_store(struct nullb_device *dev, const char *page,
-+			size_t count, enum blk_zone_cond cond)
-+{
-+	unsigned long long sector;
-+	unsigned int zone_no;
-+	int ret;
-+
-+	if (!dev->zoned) {
-+		pr_err("null_blk device is not zoned\n");
-+		return -EINVAL;
-+	}
-+
-+	if (!dev->zones) {
-+		pr_err("null_blk device is not yet powered\n");
-+		return -EINVAL;
-+	}
-+
-+	ret = kstrtoull(page, 0, &sector);
-+	if (ret < 0)
-+		return ret;
-+
-+	zone_no = null_zone_no(dev, sector);
-+	if (zone_no >= dev->nr_zones) {
-+		pr_err("Sector out of range\n");
-+		return -EINVAL;
-+	}
-+
-+	if (dev->zones[zone_no].type == BLK_ZONE_TYPE_CONVENTIONAL) {
-+		pr_err("Can not change condition of conventional zones\n");
-+		return -EINVAL;
-+	}
-+
-+	null_set_zone_cond(dev, &dev->zones[zone_no], cond);
-+
-+	return count;
-+}
 -- 
 2.53.0
 
