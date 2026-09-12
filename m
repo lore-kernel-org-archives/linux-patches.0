@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBC1F478E27;
-	Sat, 12 Sep 2026 11:38:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 562414749C0;
+	Sat, 12 Sep 2026 11:39:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789213141; cv=none; b=ZaP7Tp9EDCfuj911q0AFQgpv9byg7sQR0GmaSfYPNbkeIyCVdWxip4OT5NBGZAwr9zqBpF8fh0MW+GVhtmtdAAe/z0NVtxABrirXdxd5stZjbveTpbTjnZ7Xymkvdw+5mORu5Dtumi9XG6FT7kay1TsmgBufVANoXHstu7ubkiI=
+	t=1789213144; cv=none; b=prMSwdfyzVN6AeEFv9MvcKxORTAdoxwBrYyQGmCvuWAfpSwYm2UL1alvR9DA+2LYXmqb5U5wXuwTktLcPxZ0XdJbLCz+E+k7MSzn5uLJVZdI8KRw6YTSnnWr14YGKeNBbARh7Bf4elIBGPf8+B/BO2/LMQNgqxSB7TviFA5RipM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789213141; c=relaxed/simple;
-	bh=ql3AoE5mdqW5gItiIrE37itUR6fGdut9usbJzgf8yzc=;
+	s=arc-20240116; t=1789213144; c=relaxed/simple;
+	bh=UuxvlxlOCxxdAzGySS0H+ab9cc1IL6sH48SmZVCLV9M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RBXCzEyYRqBwSW6RnHwkhlJlBNMkkkhFB4aJR9BYQx/IGkFLkNXY1ds/rQGyHTjV+lqL6uMZygbXXmEtpScTY+RDaOcjrjNCMof4iYeb12lkoHCW23dAKKILoCzG1MEloPdBNtO5AgWfSrmPONzcCLtol6wZqMQLzmAQB8slzrI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p+EC9Yxw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NrE/J/WfFAFZUOZBiKyi4ws4X5Rw6/XgNNKVGJEgFosKcWZ9byFuF/F7tXkYb9siTH4tVuhoW9RsIdq9mEg2mIi2Sro6o2sM9LLejPdkM96xmrubzEMCBod37qCFXYVvj2MRz/cXTMEWDH1gjl07v3w2vf565lhCWQsudZ85zQk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yQlIAOVu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p+EC9Yxw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21BBA1F000FF;
-	Sat, 12 Sep 2026 11:38:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yQlIAOVu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C2511F00893;
+	Sat, 12 Sep 2026 11:39:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789213137;
-	bh=gYhmtWH9m6W2TshORPYoZPiEzZiwm61awBKZeKNtht8=;
+	s=korg; t=1789213141;
+	bh=cqD10M5hQD3Lss9M9D4NPP/zJsD4L1u/ewJixQSrEVo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=p+EC9YxwIemqUL5A0nWQFczvlColHviX5ZdL921IKcYiMcR/1By1CkfzfMpogiMdt
-	 HQcunj0If3N6nppHkRplfb0EfN1HucyqPUvkEuI5/C7jqV2XDgKW5fivBEy/HrX8Nh
-	 9JjCy0RnxPx5dql/gvepl/+ivmMylPJ7klB5tbjA=
+	b=yQlIAOVu63F3hsk8nBSDLqNTFXEIco32M3z06FJdbUrX5bk47AZYEsjQJdULNsHux
+	 nCeIEJpQLbukiZ4VeFCz30hxiMvt4pkCey2/ip/qQnRZHDw2J7gM0N0IIoPrwbU0bC
+	 moqPxTxKv9F6QNbHT5du4hXTsmlBo8QZxs5aLySU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Li <Frank.Li@nxp.com>,
-	Koichiro Den <den@valinux.co.jp>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 6.12 0061/1376] dmaengine: dw-edma: Initialize IRQ data before requesting IRQs
-Date: Sat, 12 Sep 2026 08:41:27 +0200
-Message-ID: <20260912065608.919663083@linuxfoundation.org>
+	Linkai Gong <gonglinkai@kylinos.cn>,
+	Ulf Hansson <ulfh@kernel.org>
+Subject: [PATCH 6.12 0062/1376] cpuidle: dt_idle_genpd: kfree() the original name allocation
+Date: Sat, 12 Sep 2026 08:41:28 +0200
+Message-ID: <20260912065608.942779260@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 References: <20260912065607.535295758@linuxfoundation.org>
@@ -51,53 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Koichiro Den <den@valinux.co.jp>
+From: Linkai Gong <gonglinkai@kylinos.cn>
 
-commit 647217abea849d3d45f8cb0b8ee5b78d50f26985 upstream.
+commit 2b0ac85512b7f67479127b2713254490662eb13d upstream.
 
-dw_edma_irq_request() passes struct dw_edma_irq to request_irq() before
-dw_edma_channel_setup() fills the back pointer. A shared interrupt can
-therefore enter the handler with dw_irq->dw still NULL, leading to a
-NULL pointer dereference.
+dt_idle_pd_alloc() kasprintf()s the full node path, then points
+pd->name at kbasename() of that string. dt_idle_pd_free() kfree()s
+pd->name, which is no longer the start of the allocation.
 
-Set the back pointer before installing each handler.
+Copy the basename instead.
 
-Fixes: e63d79d1ffcd ("dmaengine: Add Synopsys eDMA IP core driver")
+Fixes: 9d976d6721df ("cpuidle: Factor-out power domain related code from PSCI domain driver")
+Signed-off-by: Linkai Gong <gonglinkai@kylinos.cn>
 Cc: stable@vger.kernel.org
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Koichiro Den <den@valinux.co.jp>
-Link: https://patch.msgid.link/20260721062815.4117887-5-den@valinux.co.jp
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Ulf Hansson <ulfh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/dw-edma/dw-edma-core.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/cpuidle/dt_idle_genpd.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/dma/dw-edma/dw-edma-core.c
-+++ b/drivers/dma/dw-edma/dw-edma-core.c
-@@ -793,7 +793,6 @@ static int dw_edma_channel_setup(struct
- 		else
- 			irq->rd_mask |= BIT(chan->id);
+--- a/drivers/cpuidle/dt_idle_genpd.c
++++ b/drivers/cpuidle/dt_idle_genpd.c
+@@ -99,7 +99,7 @@ struct generic_pm_domain *dt_idle_pd_all
+ 	if (!pd)
+ 		goto out;
  
--		irq->dw = dw;
- 		memcpy(&chan->msi, &irq->msi, sizeof(chan->msi));
+-	pd->name = kasprintf(GFP_KERNEL, "%pOF", np);
++	pd->name = kstrdup(kbasename(of_node_full_name(np)), GFP_KERNEL);
+ 	if (!pd->name)
+ 		goto free_pd;
  
- 		dev_vdbg(dev, "MSI:\t\tChannel %s[%u] addr=0x%.8x%.8x, data=0x%.8x\n",
-@@ -880,6 +879,7 @@ static int dw_edma_irq_request(struct dw
- 	if (chip->nr_irqs == 1) {
- 		/* Common IRQ shared among all channels */
- 		irq = chip->ops->irq_vector(dev, 0);
-+		dw->irq[0].dw = dw;
- 		err = request_irq(irq, dw_edma_interrupt_common,
- 				  IRQF_SHARED, dw->name, &dw->irq[0]);
- 		if (err) {
-@@ -905,6 +905,7 @@ static int dw_edma_irq_request(struct dw
+@@ -112,7 +112,6 @@ struct generic_pm_domain *dt_idle_pd_all
+ 		goto free_name;
  
- 		for (i = 0; i < (*wr_alloc + *rd_alloc); i++) {
- 			irq = chip->ops->irq_vector(dev, i);
-+			dw->irq[i].dw = dw;
- 			err = request_irq(irq,
- 					  i < *wr_alloc ?
- 						dw_edma_interrupt_write :
+ 	pd->free_states = pd_free_states;
+-	pd->name = kbasename(pd->name);
+ 	pd->states = states;
+ 	pd->state_count = state_count;
+ 
 
 
