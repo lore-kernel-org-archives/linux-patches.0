@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A28CE212FAD;
-	Sat, 12 Sep 2026 09:09:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32EB435F602;
+	Sat, 12 Sep 2026 09:09:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789204168; cv=none; b=f3jru4xOeht3jn6P/hlNgY6ckncJtmUECnFEf6ZgUYgnEwZuRGrtfgvIF6CK3GNVUJ01GYX0o+tI+4Lpw4MvntXq776jqQQgWYSy/SNvKx0BH2vXW4eTFxjJ/pYFeqombjPLe8do8if4WFTPH4PnoME/n9YNHqp/Kvxt+DnWZ5s=
+	t=1789204174; cv=none; b=civHDkT/TJzQV2Puuc9e48045eqk2IZNJkmlSBlvnJUu1g7hTMlJ/bdtjQS/TsG+8qIqIMVSvbnlq0VQp+56qtF+YLugJG0tFm276chaHFqKkbmUZfg2sQQ4afPrOWExZVrZLFJnQMJJM45KM5aM2R2BI9yee7YJcxc1deo0dSw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789204168; c=relaxed/simple;
-	bh=aukqnuiEThWUAU6FERD20aWc+Fxy8z3hDqsWuHHWg8o=;
+	s=arc-20240116; t=1789204174; c=relaxed/simple;
+	bh=5DsOHqpVU345OoSd1tLkAEXru3YXTUOvf/yLwZh8AbM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MnMB/ShNowe/r8HrU97HbQoc+3NOogO1TFUzRnkm8qFuF9VLH6B5KPYXQvRy8p0jcF86/ppjV+ux6/UjVhKOpZS/jJ7RoWPw0e6RjLfTZ+aqWA36AYBwK4SK16XT9RFiksK5uwqkQbzap62MbbzkyWLZAwhh6hGqRmogyxzw3DQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FRK4KYVY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ovNx7U1ol5xCE6rgj4TnOyVB+Hqk+sZGNySOi1+wSDQzQGug/pFAI2tQ1twb+Kc7WMxMPI10TumpJ6yqIYFRPXMurqGEmnxkRQOvEOl4HRJaXXJGl3q3Hij7w6xz7Qjb/q40g2oc29v8mC1sryURNvkZGPc9yme43t2xm7X+2YY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ar+pwVsA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FRK4KYVY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAA801F000FF;
-	Sat, 12 Sep 2026 09:09:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ar+pwVsA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6BDA1F000FF;
+	Sat, 12 Sep 2026 09:09:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789204167;
-	bh=QxZa4tHuzHAHVlCg5sf+FHqQ67+awGJTdeEmn6MJ2C0=;
+	s=korg; t=1789204172;
+	bh=tkHJuT7cU4p1z71qYeJkVvW/BRdu9bHHctpaI1fbXAM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FRK4KYVY0UdQYP7JnbIYdyWwqwKbQfJH2pI7hjldHNFQ5KYhm9Yar9BJ6jPwNsH1n
-	 EKdNkpyOXELXMe9a3+Dp1ORdiFm4leJDI6irvrBrzZabIImw9ZTwLkCKVvAK39UKRF
-	 pcA0VK99oZD3gnzagNnRZlFoO8goEFOPvX6j1ueA=
+	b=Ar+pwVsAC2Jg86lB6RjXoOh228C2b9+47cR9d1pWpOcvnyGEBspBvfRumxri/rYuJ
+	 sWtUbqsZp2GxZ2zf35Y3YLMJ4JnznDCED923c2C13BiwBrnDT/8R3uqpHqMwcodAv+
+	 ZZYwSO9+8TjV4sf5KZsURf4YpTl07kS4cHLl0E4I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yunseong Kim <yunseong.kim@est.tech>,
+	ZhangGuoDong <zhangguodong@kylinos.cn>,
+	ChenXiaoSong <chenxiaosong@kylinos.cn>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1514/1815] ksmbd: serialize oplock close with pending break ownership
-Date: Sat, 12 Sep 2026 08:54:24 +0200
-Message-ID: <20260912065724.543856476@linuxfoundation.org>
+Subject: [PATCH 7.2 1515/1815] smb/server: fix null-ptr-deref in ksmbd_ipc_tree_connect_request()
+Date: Sat, 12 Sep 2026 08:54:25 +0200
+Message-ID: <20260912065724.566655908@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,235 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: ZhangGuoDong <zhangguodong@kylinos.cn>
 
-[ Upstream commit b0148dc5625dbfd50596ac63c7487c12e8a8ab03 ]
+[ Upstream commit d2ccf905f47d2344270749f4dfa905afcd3edeb0 ]
 
-close may abort an in-flight oplock break while another breaker already
-holds an opinfo reference. Releasing pending_break wakes that waiter, but
-without serializing the close transition with bit acquisition it can become
-a new break owner through the test_and_set_bit() fast path. It can then
-overwrite OPLOCK_CLOSING with OPLOCK_ACK_WAIT and continue a break for
-a dying opinfo.
+See the procedure below:
 
-Make OPLOCK_CLOSING terminal once the opinfo is removed from the inode
-list. Serialize that transition, pending_break acquisition, and
-OPLOCK_ACK_WAIT setup with an opinfo state lock. A breaker which loses
-the race releases its ownership and returns -ENOENT. Explicitly wake
-pending_break waiters during close so they can observe the terminal state.
-
-Also prevent ACK and timeout paths from replacing OPLOCK_CLOSING with
-OPLOCK_STATE_NONE.
+  ksmbd_tree_conn_connect
+    ksmbd_share_config_get
+      share->name = kstrdup() // fail
+      if (!test_share_config_flag(share, KSMBD_SHARE_FLAG_PIPE)) // false
+      // do not check `share->name`
+    ksmbd_ipc_tree_connect_request
+      strlen(share->name) // null-ptr-deref
 
 Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
-Co-developed-by: Yunseong Kim <yunseong.kim@est.tech>
-Signed-off-by: Yunseong Kim <yunseong.kim@est.tech>
+Signed-off-by: ZhangGuoDong <zhangguodong@kylinos.cn>
+Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/oplock.c  | 86 ++++++++++++++++++++++++++++++++++-------
- fs/smb/server/oplock.h  |  1 +
- fs/smb/server/smb2pdu.c | 12 ++++--
- 3 files changed, 81 insertions(+), 18 deletions(-)
+ fs/smb/server/mgmt/share_config.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/fs/smb/server/oplock.c b/fs/smb/server/oplock.c
-index 7d77ee0cb953d..04dc572ed1bbf 100644
---- a/fs/smb/server/oplock.c
-+++ b/fs/smb/server/oplock.c
-@@ -90,6 +90,7 @@ static struct oplock_info *alloc_opinfo(struct ksmbd_work *work,
- 	opinfo->conn = ksmbd_conn_get(work->conn);
- 	opinfo->level = SMB2_OPLOCK_LEVEL_NONE;
- 	opinfo->op_state = OPLOCK_STATE_NONE;
-+	spin_lock_init(&opinfo->state_lock);
- 	opinfo->pending_break = 0;
- 	opinfo->fid = id;
- 	opinfo->Tid = Tid;
-@@ -546,14 +547,23 @@ void close_id_del_oplock(struct ksmbd_file *fp)
- 	opinfo_del(opinfo);
- 
- 	rcu_assign_pointer(fp->f_opinfo, NULL);
--	if (opinfo->op_state == OPLOCK_ACK_WAIT) {
--		opinfo->op_state = OPLOCK_CLOSING;
--		wake_up_interruptible_all(&opinfo->oplock_q);
--		if (opinfo->is_lease) {
--			atomic_set(&opinfo->breaking_cnt, 0);
--			wake_up_interruptible_all(&opinfo->oplock_brk);
--		}
--	}
-+	spin_lock(&opinfo->state_lock);
-+	if (opinfo->op_state == OPLOCK_ACK_WAIT && opinfo->is_lease)
-+		atomic_set(&opinfo->breaking_cnt, 0);
-+	/*
-+	 * An opinfo that has been removed from the inode list is terminal. Keep
-+	 * this transition and releasing pending_break under state_lock. a breaker
-+	 * takes the same lock before it acquires pending_break or sets ACK_WAIT.
-+	 */
-+	opinfo->op_state = OPLOCK_CLOSING;
-+	clear_bit_unlock(0, &opinfo->pending_break);
-+	spin_unlock(&opinfo->state_lock);
-+	wake_up_interruptible_all(&opinfo->oplock_q);
-+	if (opinfo->is_lease)
-+		wake_up_interruptible_all(&opinfo->oplock_brk);
-+	/* memory barrier is needed for wake_up_bit() */
-+	smp_mb__after_atomic();
-+	wake_up_bit(&opinfo->pending_break, 0);
- 
- 	opinfo_count_dec(fp);
- 	atomic_dec(&opinfo->refcount);
-@@ -735,12 +745,18 @@ static bool wait_for_break_ack(struct oplock_info *opinfo)
- 
- 	/* is this a timeout ? */
- 	if (!rc) {
-+		spin_lock(&opinfo->state_lock);
-+		if (opinfo->op_state == OPLOCK_CLOSING) {
-+			spin_unlock(&opinfo->state_lock);
-+			return false;
-+		}
- 		if (opinfo->is_lease) {
- 			opinfo->o_lease->state = SMB2_LEASE_NONE_LE;
- 			lease_update_oplock_levels(opinfo->o_lease);
- 		}
- 		opinfo->level = SMB2_OPLOCK_LEVEL_NONE;
- 		opinfo->op_state = OPLOCK_STATE_NONE;
-+		spin_unlock(&opinfo->state_lock);
- 		return true;
- 	}
- 
-@@ -755,9 +771,35 @@ static void wake_up_oplock_break(struct oplock_info *opinfo)
- 	wake_up_bit(&opinfo->pending_break, 0);
- }
- 
-+static bool oplock_break_set_ack_wait(struct oplock_info *opinfo)
-+{
-+	bool ret = false;
-+
-+	spin_lock(&opinfo->state_lock);
-+	if (opinfo->op_state != OPLOCK_CLOSING) {
-+		opinfo->op_state = OPLOCK_ACK_WAIT;
-+		ret = true;
+diff --git a/fs/smb/server/mgmt/share_config.c b/fs/smb/server/mgmt/share_config.c
+index 6f97f8d39657c..b4f56e7338659 100644
+--- a/fs/smb/server/mgmt/share_config.c
++++ b/fs/smb/server/mgmt/share_config.c
+@@ -158,6 +158,11 @@ static struct ksmbd_share_config *share_config_request(struct ksmbd_work *work,
+ 	atomic_set(&share->refcount, 1);
+ 	INIT_LIST_HEAD(&share->veto_list);
+ 	share->name = kstrdup(name, KSMBD_DEFAULT_GFP);
++	if (!share->name) {
++		kill_share(share);
++		share = NULL;
++		goto out;
 +	}
-+	spin_unlock(&opinfo->state_lock);
-+
-+	return ret;
-+}
-+
- static int oplock_break_pending(struct oplock_info *opinfo, int req_op_level)
- {
--	while (test_and_set_bit(0, &opinfo->pending_break)) {
-+	for (;;) {
-+		bool closing;
-+
-+		spin_lock(&opinfo->state_lock);
-+		closing = opinfo->op_state == OPLOCK_CLOSING;
-+		if (!closing && !test_and_set_bit(0, &opinfo->pending_break)) {
-+			spin_unlock(&opinfo->state_lock);
-+			break;
-+		}
-+		spin_unlock(&opinfo->state_lock);
-+		if (closing)
-+			return -ENOENT;
-+
- 		if (opinfo->is_lease)
- 			opinfo->o_lease->reuse_epoch = true;
  
-@@ -766,9 +808,12 @@ static int oplock_break_pending(struct oplock_info *opinfo, int req_op_level)
- 		/* Not immediately break to none. */
- 		opinfo->open_trunc = 0;
- 
--		if (opinfo->op_state == OPLOCK_CLOSING)
-+		spin_lock(&opinfo->state_lock);
-+		closing = opinfo->op_state == OPLOCK_CLOSING;
-+		spin_unlock(&opinfo->state_lock);
-+		if (closing)
- 			return -ENOENT;
--		else if (opinfo->level <= req_op_level) {
-+		if (opinfo->level <= req_op_level) {
- 			if (opinfo->is_lease == false)
- 				return 1;
- 
-@@ -1185,7 +1230,11 @@ static int oplock_break(struct oplock_info *brk_opinfo, struct ksmbd_inode *ci,
- 
- 		if (lease->state & (SMB2_LEASE_WRITE_CACHING_LE |
- 				SMB2_LEASE_HANDLE_CACHING_LE)) {
--			brk_opinfo->op_state = OPLOCK_ACK_WAIT;
-+			if (!oplock_break_set_ack_wait(brk_opinfo)) {
-+				atomic_dec_if_positive(&brk_opinfo->breaking_cnt);
-+				wake_up_oplock_break(brk_opinfo);
-+				return -ENOENT;
-+			}
- 		} else
- 			atomic_dec(&brk_opinfo->breaking_cnt);
- 
-@@ -1232,8 +1281,12 @@ static int oplock_break(struct oplock_info *brk_opinfo, struct ksmbd_inode *ci,
- 			return err < 0 ? err : 0;
- 
- 		if (brk_opinfo->level == SMB2_OPLOCK_LEVEL_BATCH ||
--		    brk_opinfo->level == SMB2_OPLOCK_LEVEL_EXCLUSIVE)
--			brk_opinfo->op_state = OPLOCK_ACK_WAIT;
-+		    brk_opinfo->level == SMB2_OPLOCK_LEVEL_EXCLUSIVE) {
-+			if (!oplock_break_set_ack_wait(brk_opinfo)) {
-+				wake_up_oplock_break(brk_opinfo);
-+				return -ENOENT;
-+			}
-+		}
- 
- 		/*
- 		 * Keep a conflicting CREATE asynchronous while waiting for an
-@@ -1800,7 +1853,10 @@ static void __smb_break_all_levII_oplock(struct ksmbd_work *work,
- 
- 		if (!brk_op->is_lease && !send_oplock_break) {
- 			brk_op->level = SMB2_OPLOCK_LEVEL_NONE;
--			brk_op->op_state = OPLOCK_STATE_NONE;
-+			spin_lock(&brk_op->state_lock);
-+			if (brk_op->op_state != OPLOCK_CLOSING)
-+				brk_op->op_state = OPLOCK_STATE_NONE;
-+			spin_unlock(&brk_op->state_lock);
- 		} else {
- 			oplock_break(brk_op, ci,
- 				     brk_op->is_lease && !is_trunc ?
-diff --git a/fs/smb/server/oplock.h b/fs/smb/server/oplock.h
-index 0ba93d54caca5..54785df84525e 100644
---- a/fs/smb/server/oplock.h
-+++ b/fs/smb/server/oplock.h
-@@ -66,6 +66,7 @@ struct oplock_info {
- 	struct ksmbd_file	*o_fp;
- 	int                     level;
- 	int                     op_state;
-+	spinlock_t		state_lock;
- 	unsigned long		pending_break;
- 	u64			fid;
- 	atomic_t		breaking_cnt;
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index 194c948d3e251..dabf0a72a237a 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -9975,7 +9975,10 @@ static void smb20_oplock_break_ack(struct ksmbd_work *work)
- 	smb2_set_err_rsp(work);
- 
- out:
--	opinfo->op_state = OPLOCK_STATE_NONE;
-+	spin_lock(&opinfo->state_lock);
-+	if (opinfo->op_state != OPLOCK_CLOSING)
-+		opinfo->op_state = OPLOCK_STATE_NONE;
-+	spin_unlock(&opinfo->state_lock);
- 	wake_up_interruptible_all(&opinfo->oplock_q);
- out_no_state_change:
- 	opinfo_put(opinfo);
-@@ -10066,9 +10069,12 @@ static void smb21_lease_break_ack(struct ksmbd_work *work)
- 	if (ret)
- 		goto err_out;
- 
--	opinfo->op_state = OPLOCK_STATE_NONE;
-+	spin_lock(&opinfo->state_lock);
-+	if (opinfo->op_state != OPLOCK_CLOSING)
-+		opinfo->op_state = OPLOCK_STATE_NONE;
-+	spin_unlock(&opinfo->state_lock);
- 	wake_up_interruptible_all(&opinfo->oplock_q);
--	atomic_dec(&opinfo->breaking_cnt);
-+	atomic_dec_if_positive(&opinfo->breaking_cnt);
- 	wake_up_interruptible_all(&opinfo->oplock_brk);
- 	opinfo_put(opinfo);
- 	return;
+ 	if (!test_share_config_flag(share, KSMBD_SHARE_FLAG_PIPE)) {
+ 		int path_len = PATH_MAX;
+@@ -203,7 +208,7 @@ static struct ksmbd_share_config *share_config_request(struct ksmbd_work *work,
+ 				share->path = NULL;
+ 			}
+ 		}
+-		if (ret || !share->name) {
++		if (ret) {
+ 			kill_share(share);
+ 			share = NULL;
+ 			goto out;
 -- 
 2.53.0
 
