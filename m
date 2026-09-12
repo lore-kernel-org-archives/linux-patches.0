@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C58F130D3EF;
-	Sat, 12 Sep 2026 18:48:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A80B34BEE43;
+	Sat, 12 Sep 2026 18:48:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789238883; cv=none; b=o45NHXTasgeO22zUn0+ucq1AA4MAFSpmL28kmfh3gw9EEC/547bGjourYawsPle3xff3RE7H7KgS762lEvlGIsDANo8FtZLOIfcfDZhT28iUVGAKn/nLwmIng7rHdHECbHTb6XUReK/dqzZjvXLYV7rfpTUiMNgJXsj7oD+X1/g=
+	t=1789238888; cv=none; b=SGs8sOkKp2yBov8nhyI2O3MHrETg8N+ZkGr9q3K+kYOf88D2a5hwJphmk0X8q0zsegCDZM3NrlZGbOa6k777rzIn+OqOPLoV47I/JRDKETxzT+QY5URH75CUKYK/nLF9Xs8NLnAM7D3SLu01a37/8lpcD4WyC527HiphsThtb4U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789238883; c=relaxed/simple;
-	bh=2qrGXBvHzYJp1iWQZ9Qc2p+H9/MFEl0r+y9E1cXiCmQ=;
+	s=arc-20240116; t=1789238888; c=relaxed/simple;
+	bh=rJWpFJAnape2LlBJ7H8nTlQSV7pyJ/XGLtnlXM/0sZ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QZoL97t/qzfnWg6tUW7Bg07FfTNCqxVQRZ3pHucksdp7pQKguFefGlIAm+vtN0+gXKFWKlfVoNvfTef6MbJn9JS0G0ArAa6G4s+1jn0NQz1mc4WcTs/WBf/0EThVsJ8dzCevtw44AlBEy3XQiXUfv3IliyIkAedHSRwHn2Nmumo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AvhEnfDG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FIaptPXvWho+DY1Mi/9KCTBEUKbmEpw7/fxPQrst2dS7GUxZIsOrDO790YKkcoE7CIq0jx/vcp4rOG6NM3pvXMnRn+dchtgf3bp/WiZVIo7b9Yl8TwZLpL9WKNhEEJkrHqqrD+WDxzKqM/EIcNQNiWdssbsaDVFSPQsVLSsudZA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o+ECfKlT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AvhEnfDG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C10051F000FF;
-	Sat, 12 Sep 2026 18:48:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o+ECfKlT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49CBD1F000FF;
+	Sat, 12 Sep 2026 18:48:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789238882;
-	bh=ihVhpyB7Eyo1uVT2J9D3GL1a2dBYZp0sOmaH3JF6u1I=;
+	s=korg; t=1789238887;
+	bh=iUV+OSzF+DbT71wNkjUGI6MlsLpbwywHBLXgOkrm4Pg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AvhEnfDGvbtEhiS8mceLZOpln6D5icrlE3RfSOHC+HCFBGEWTQRf1EEu7uXWjQZcc
-	 sVz31TRxkSlgUcHMcjgxgGHMiWEwdHwJ0jCqOWGCxL3HfljYXtGREuMM8Y6q9+5k/U
-	 CG6KKaF6d6wJcwOuTnbOrWbET07RFIes4autFAMM=
+	b=o+ECfKlTpjxiHS3t2AklG8NiewNEQrcvovBTLw09+lrK0ruZpdg7eOOIneaQPNa/s
+	 aHpFIj4DaK+4rSN5lXnetsOrfkmCiA/ohpXrSZZzuhCgAfzQoFqbI8Xjzl8YeqkrkU
+	 mzr8wkMctTfASS12EFk/oubohs+69ijTwrnKvSUY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Nishanth Menon <nm@ti.com>,
+	Ruoyu Wang <ruoyuw560@gmail.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 553/935] soc: ti: knav_qmss: Remove debugfs file on teardown
-Date: Sat, 12 Sep 2026 08:59:43 +0200
-Message-ID: <20260912065539.509267091@linuxfoundation.org>
+Subject: [PATCH 5.15 554/935] mtd: mtdswap: Avoid freeing registered blktrans device twice
+Date: Sat, 12 Sep 2026 08:59:44 +0200
+Message-ID: <20260912065539.536973717@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065526.833703348@linuxfoundation.org>
 References: <20260912065526.833703348@linuxfoundation.org>
@@ -51,66 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Ruoyu Wang <ruoyuw560@gmail.com>
 
-[ Upstream commit 3c817862759913097f11467ed4ed2bbf974dabaf ]
+[ Upstream commit 779aa4c66a96bf43d2d62982ea1a9096a9128d87 ]
 
-knav_queue_probe() creates the global qmss debugfs file whose show
-callback reads the global knav_qdev state. knav_queue_remove() tears
-down the queue manager resources but leaves the debugfs file published.
+In mtdswap_add_mtd(), debugfs setup failure after successful blktrans
+registration can free mbd_dev twice.
 
-Save the debugfs dentry in struct knav_device and remove it during
-teardown before the resources used by the show callback are released.
-While touching the debugfs_create_file() call, spell the unchanged read-
-only file mode as 0444.
+add_mtd_blktrans_dev() initializes the blktrans device reference and
+publishes the disk. Once that succeeds, del_mtd_blktrans_dev() tears the
+disk down and drops the blktrans reference; when that reference reaches
+zero, blktrans_dev_release() frees the mtd_blktrans_dev.
 
-Fixes: 41f93af900a2 ("soc: ti: add Keystone Navigator QMSS driver")
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260706144706.96313-1-pengpeng@iscas.ac.cn
-Signed-off-by: Nishanth Menon <nm@ti.com>
+The debugfs failure path called del_mtd_blktrans_dev(mbd_dev), then fell
+through the common cleanup label and called kfree(mbd_dev) again. Clear
+the local pointer after deregistration so the common cleanup can still
+release the mtdswap state without freeing the blktrans object twice.
+
+This issue was found by a static analysis checker and confirmed by
+manual source review.
+
+Fixes: e8e3edb95ce6 ("mtd: create per-device and module-scope debugfs entries")
+Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/ti/knav_qmss.h       | 1 +
- drivers/soc/ti/knav_qmss_queue.c | 7 +++++--
- 2 files changed, 6 insertions(+), 2 deletions(-)
+ drivers/mtd/mtdswap.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/soc/ti/knav_qmss.h b/drivers/soc/ti/knav_qmss.h
-index a01eda720bf6c..44d6976bbafc3 100644
---- a/drivers/soc/ti/knav_qmss.h
-+++ b/drivers/soc/ti/knav_qmss.h
-@@ -304,6 +304,7 @@ struct knav_device {
- 	struct list_head			pools;
- 	struct list_head			pdsps;
- 	struct list_head			qmgrs;
-+	struct dentry				*debugfs_file;
- 	enum qmss_version			version;
- };
+diff --git a/drivers/mtd/mtdswap.c b/drivers/mtd/mtdswap.c
+index e890b5ec6a72f..7e6ce5ca2cc4c 100644
+--- a/drivers/mtd/mtdswap.c
++++ b/drivers/mtd/mtdswap.c
+@@ -1453,6 +1453,7 @@ static void mtdswap_add_mtd(struct mtd_blktrans_ops *tr, struct mtd_info *mtd)
  
-diff --git a/drivers/soc/ti/knav_qmss_queue.c b/drivers/soc/ti/knav_qmss_queue.c
-index c8191b6200947..c1410b97a254c 100644
---- a/drivers/soc/ti/knav_qmss_queue.c
-+++ b/drivers/soc/ti/knav_qmss_queue.c
-@@ -1872,8 +1872,9 @@ static int knav_queue_probe(struct platform_device *pdev)
- 		goto err;
- 	}
+ debugfs_failed:
+ 	del_mtd_blktrans_dev(mbd_dev);
++	mbd_dev = NULL;
  
--	debugfs_create_file("qmss", S_IFREG | S_IRUGO, NULL, NULL,
--			    &knav_queue_debug_fops);
-+	knav_qdev->debugfs_file =
-+		debugfs_create_file("qmss", 0444, NULL, NULL,
-+				    &knav_queue_debug_fops);
- 	device_ready = true;
- 	return 0;
- 
-@@ -1891,6 +1892,8 @@ static int knav_queue_remove(struct platform_device *pdev)
- 	struct knav_device *kdev = platform_get_drvdata(pdev);
- 
- 	device_ready = false;
-+	debugfs_remove(kdev->debugfs_file);
-+	kdev->debugfs_file = NULL;
- 	knav_queue_stop_pdsps(kdev);
- 	knav_queue_free_regions(kdev);
- 	knav_free_queue_ranges(kdev);
+ cleanup:
+ 	mtdswap_cleanup(d);
 -- 
 2.53.0
 
