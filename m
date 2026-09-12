@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44E1534A79D;
-	Sat, 12 Sep 2026 07:41:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AFDB1DA62E;
+	Sat, 12 Sep 2026 07:41:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789198882; cv=none; b=HEHnKIWJUU091qEo5cldo82dY2OcxMhrwFSUo9lzigfxmiilgO2l8MbsGnTzinUAJ44zDDPmGDOxHd/ZCr6R4ezFmEmICumWC0XtIYYlyVKbWqvwVhDfJKPg1TI4nlobW7YSPeGpuos16T8O31ZUEN9x3Qv80D8UKqG/YuMhD7w=
+	t=1789198885; cv=none; b=KIrOEoE3VlKk8eOJkYYYdL24U2py+ncUtSL1/qfp4orb45FExoIqkUStJN30CdSmm00V6QPT+IvgDSjb2+4jAibsa0VNrCNZUot4RVAnsR+3YWH9RtG3b/g+nJah8NipB1b/+FMhzq5d6xPrbl9r/FDc7+7d0z6MCGi5y+jTsMk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789198882; c=relaxed/simple;
-	bh=kkZa8Uz+nxdraQhr4SrV1btgIcfCTElfDRt2j+2ysXM=;
+	s=arc-20240116; t=1789198885; c=relaxed/simple;
+	bh=yhP//FVm/+fjVbh79mYUIT01IznwXwyOCLN9OF5w0DA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WFvONXazKWptG1Xa43kEkFH4dfmYCEligCwast4RS98haG2i92h0qKVUdS+xs7ONY4enaauN2QxUEGiDIr0ADytekKdjm2eUxzR635h4+t/gpnjqBue1LwAscLf7RT67nzMKD6iqaRU+a+wTU7/fNVis7Q6uuPzQqptJWfwMhUQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xYu75rJV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lru23gF91QkyYbaTAvbmxPeFX29I2F4e0wcz+7IF7pYgkjbadLxtKI518pX5r9SBWkutIzcCc2TG6z6JUOpdVaGSP9FDtJNg39SzWqmwbm0cWH56ExjwxdpgND+0XcrApOrIe2o+g1oGqlSdnTmLfoOABLJi4Sfapfq4VkloY5U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jGAX95U7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xYu75rJV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46DDE1F00893;
-	Sat, 12 Sep 2026 07:41:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jGAX95U7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA4BB1F000FF;
+	Sat, 12 Sep 2026 07:41:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789198879;
-	bh=AqjuDO8dShIeIZdO83lmbZdL/7EEz2Diq4WdYimKXac=;
+	s=korg; t=1789198883;
+	bh=hI5byBZYEYNSDvirllJAohyg47Kmqf+f+FCXIqmSdfo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xYu75rJVcIk7n7NuYDqnHOX0LJLGKx8eYeoFn+andoMXM6zTxYWBx67gu9qz6sucs
-	 Gbq1Gzxh4nLnh5U3H3S/AVEt5JrSfYfxDFfWXjYhYaiTCM3JjBAcSfxdzYE5iS8W63
-	 Uqe2sWsQvoQf68W0QneYgyc0eIahSoURqlI45NTs=
+	b=jGAX95U7QZ8XREnvPgFvnlCM/zXvBsz/ADFxdwwib++nw8k9AH54Nj55ZC8H2IQJR
+	 Sst7WzBkSYERI1sa72RnM19fdy+bo1Gxvqi/1Ut0UNv02HrhLK1VfbXy4VxO/D7qUx
+	 swHyiYX+3pUWJiVo6AH8Yib/4f1vc2ToyYFodYwQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Shivam Rawat <shivrawa@qti.qualcomm.com>,
+	Akhil P Oommen <akhilpo@oss.qualcomm.com>,
 	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Rob Clark <robin.clark@oss.qualcomm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0472/1815] drm/msm/adreno: fix use after free on error path in a6xx_gpu_init()
-Date: Sat, 12 Sep 2026 08:37:02 +0200
-Message-ID: <20260912065659.967683423@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>
+Subject: [PATCH 7.2 0473/1815] drm/msm/a6xx: Fix stale rpmh votes after suspend
+Date: Sat, 12 Sep 2026 08:37:03 +0200
+Message-ID: <20260912065659.989975153@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -53,41 +55,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <error27@gmail.com>
+From: Shivam Rawat <shivrawa@qti.qualcomm.com>
 
-[ Upstream commit b8a9c9c5787bed1243e5364c89ca66c26b4e4d83 ]
+[ Upstream commit d9108bfdb746edacdb05bd27959a4ae63c6c7f3f ]
 
-The a6xx_destroy() function frees "a6xx_gpu" and so "adreno_gpu" points
-to freed memory.  Preserve the error code before freeing the memory to
-avoid a use after free.
+There are stale RPMH votes (BCM votes) observed after GMU suspend. This
+is because the rpmh stop sequences are skipped during gmu suspend. Fix
+this and also move GMU to reset state to avoid any further activity.
 
-Fixes: d158886cba08 ("drm/msm/adreno: Trust the SSoT UBWC config")
-Signed-off-by: Dan Carpenter <error27@gmail.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Fixes: f248d5d5159a ("drm/msm/a6xx: Fix PDC sleep sequence")
+Signed-off-by: Shivam Rawat <shivrawa@qti.qualcomm.com>
+Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-HDK
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/732275/
-Message-ID: <aiqNktNfXiaPhje3@stanley.mountain>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/730652/
+Message-ID: <20260605-assorted-fixes-june-v1-1-2caa04f7287c@oss.qualcomm.com>
 Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-index 8b3bb2fd433ba..a44380316aaa9 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-@@ -2770,8 +2770,9 @@ static struct msm_gpu *a6xx_gpu_init(struct drm_device *dev)
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+index 2e5d7b53a0c38..a2f6918c4f7f2 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+@@ -642,7 +642,7 @@ static void a6xx_rpmh_stop(struct a6xx_gmu *gmu)
+ 	int ret;
+ 	u32 val;
  
- 	adreno_gpu->ubwc_config = qcom_ubwc_config_get_data();
- 	if (IS_ERR(adreno_gpu->ubwc_config)) {
-+		ret = PTR_ERR(adreno_gpu->ubwc_config);
- 		a6xx_destroy(&(a6xx_gpu->base.base));
--		return ERR_CAST(adreno_gpu->ubwc_config);
-+		return ERR_PTR(ret);
- 	}
+-	if (test_and_clear_bit(GMU_STATUS_FW_START, &gmu->status))
++	if (!test_and_clear_bit(GMU_STATUS_FW_START, &gmu->status))
+ 		return;
  
- 	/* Set up the preemption specific bits and pieces for each ringbuffer */
+ 	if (adreno_is_a840(adreno_gpu))
+@@ -1465,6 +1465,9 @@ static void a6xx_gmu_shutdown(struct a6xx_gmu *gmu)
+ 	/* Stop the interrupts and mask the hardware */
+ 	a6xx_gmu_irq_disable(gmu);
+ 
++	/* Halt the gmu cm3 core */
++	gmu_write(gmu, REG_A6XX_GMU_CM3_SYSRESET, 1);
++
+ 	/* Tell RPMh to power off the GPU */
+ 	a6xx_rpmh_stop(gmu);
+ 
 -- 
 2.53.0
 
