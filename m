@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7D9739061C;
-	Sat, 12 Sep 2026 19:55:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBF5139022B;
+	Sat, 12 Sep 2026 19:55:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789242926; cv=none; b=hS5md+IA3qB/l5Z49wufX0eYShCa8xRJ27eafkyiYPcZj31Frh8WMC2f2uMRT4X8xZuD4YoJ9du7Je3S+MNcJKbZ2TmXFkgpZpNH3hFIR7XFFnW8pcgC/etdIowXjXI/08S0vBPi9DnKZWcAEhyf8+Keorj4eECJ6Q239U5AM6c=
+	t=1789242929; cv=none; b=truKkzpoBWZ+yTYybz0thJDwjzmze8pO1wjKT5bcwOk4TXSl7eQH6Bnt5Sl569jDGbRT/FK0cNbuZriniAM7CKSZz3Z7zCVVPqXjG+88H5ZMKjH42H3uKWrDBgaJSKWAebPnzmG86ffUOpBRlSM1WcBO4SFXOtizqwh1KUJ1j8g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789242926; c=relaxed/simple;
-	bh=fPYHJaE1lBVaSG0x84UXVBpcbTFslccFnn4YxdF0vSY=;
+	s=arc-20240116; t=1789242929; c=relaxed/simple;
+	bh=vPGEHrQi4YbokJU0UTXlSsqTz1pwMo39CLJqitf3zgU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S/e2ZnTBuRDEWrYOlgpr3gOUdBhyJNXZeqxB0sQw9HeAekKHwW/cdPNne9TYlylb8YyEN0a0siT6XaASj9ZlmNvd7pXn6Mt2RRLJOdDUZ6QxE5CXm91RYO7ui6UmZXgBIsHcAQgjW8A0//EITK3HWe3Rof1fViAilT+2dZSxEUU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sNZv08jU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mznQsPlKzm73G/6+dJgkqiy6H8ikD/Lv4K5vXeUVsH5WfmGQ3Mpm95kYBXRcwxztrDlVadSqlKLmtxV+i/DZsxFfZ5aTppIIx+vw23vlfrzdBQU6DUGHPk9cNcgw9gbFu534DHsFTT9mSShuKvTDTP+rPOmU+LfHwvNgnU1HYkg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qHuO42ex; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sNZv08jU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20D761F000FF;
-	Sat, 12 Sep 2026 19:55:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qHuO42ex"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 015551F000FF;
+	Sat, 12 Sep 2026 19:55:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789242924;
-	bh=zB3nSUs1zDOai4RfubelGbGxHX62zpNH2zCJNRQ77vs=;
+	s=korg; t=1789242927;
+	bh=8SW/ZPY8Lc+uPOifgs49QwmsldulEeymXdvIWBuSy/U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sNZv08jU2vQifRNAJOVjCv7dFuG8Z0Pubx6p4JgOejJoESxwjCHdTWef2LUkEQK4H
-	 8VQKwYLm3UBULDSp1lS5ACW9VgKHJB/xHPT5/zyVHLG0MRC0V3sTgW1XzY/Mxd45iR
-	 QeTzC4+Obt2cUZY04aD6xi0v6wPcTt9JMfuox+EA=
+	b=qHuO42exspHpxGlv2g7PDPR66zsCYn1OBdhR4nKnIZoT7IyGzu716TwvMLfeetUy8
+	 Vt4Z46chYI2LCypunUAPGtPECeMNesLW/kQ58kEr97ji2xcpHZzs7QrKpMMV0H3YaU
+	 mPIn6X1zy2eejwV++1d8dxrLdmd9JIQ1sYRzpLZI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leo Yan <leo.yan@arm.com>,
-	Will Deacon <will@kernel.org>,
+	Gou Hao <gouhao@uniontech.com>,
+	jiazhenyuan <jiazhenyuan@uniontech.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 558/798] perf: arm_spe: Make wakeup range check overflow safe
-Date: Sat, 12 Sep 2026 09:03:06 +0200
-Message-ID: <20260912065529.918897160@linuxfoundation.org>
+Subject: [PATCH 5.10 576/798] powerpc/smp: add NULL guard for cause_ipi in smp_muxed_ipi_message_pass
+Date: Sat, 12 Sep 2026 09:03:24 +0200
+Message-ID: <20260912065530.333293260@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -51,45 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leo Yan <leo.yan@arm.com>
+From: Gou Hao <gouhao@uniontech.com>
 
-[ Upstream commit fcc5eaea2d234162dfb8258372dd897bc2a1b862 ]
+[ Upstream commit 5aabc192702defb8950e7c81b05c3f4ca8ee43ec ]
 
-The current code checks whether the wakeup point is in the current
-writable range by comparing it with handle->head + handle->size.
+smp_muxed_ipi_message_pass() calls smp_ops->cause_ipi() without
+checking whether it has been set.
 
-The perf AUX head is a monotonically increasing index, so that addition
-can overflow when head is close to ULONG_MAX. In that case, a wakeup
-point which is still inside the free space range can be missed.
+On platforms using muxed IPI (e.g. powernv/pseries), smp_ops->cause_ipi
+is initialized to NULL in the static smp_ops and only assigned during
+the platform smp_probe() handler.  If the IPI subsystem fails to
+initialize -- for example when xive_init_ipis() fails and
+xive_smp_probe() returns an error -- the probe handler returns early
+and cause_ipi is never set.  Any subsequent IPI send (e.g.
+arch_smp_send_reschedule()) would dereference the NULL pointer.
 
-Use unsigned subtraction to compare the distance from head to wakeup
-against the handle->size. This can dismiss the issue when addition
-overflow.
+Add a NULL check to avoid the crash in that situation.
 
-This is unlikely to happen in practice, but the change makes the
-watermark check logically correct.
-
-Fixes: d5d9696b0380 ("drivers/perf: Add support for ARMv8.2 Statistical Profiling Extension")
-Signed-off-by: Leo Yan <leo.yan@arm.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+Fixes: 23d72bfd8f9f ("powerpc: Consolidate ipi message mux and demux")
+Signed-off-by: Gou Hao <gouhao@uniontech.com>
+Reviewed-by: jiazhenyuan <jiazhenyuan@uniontech.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20260727104215.184786-6-gouhao@uniontech.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/perf/arm_spe_pmu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/powerpc/kernel/smp.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/perf/arm_spe_pmu.c b/drivers/perf/arm_spe_pmu.c
-index 3280c4b488d44..0f2741752fe91 100644
---- a/drivers/perf/arm_spe_pmu.c
-+++ b/drivers/perf/arm_spe_pmu.c
-@@ -459,7 +459,7 @@ static u64 __arm_spe_pmu_next_off(struct perf_output_handle *handle)
- 	 * the page boundary following it. Keep the tail boundary if
- 	 * that's lower.
- 	 */
--	if (handle->wakeup < (handle->head + handle->size) && head <= wakeup)
-+	if ((handle->wakeup - handle->head) < handle->size && head <= wakeup)
- 		limit = min(limit, round_up(wakeup, PAGE_SIZE));
+diff --git a/arch/powerpc/kernel/smp.c b/arch/powerpc/kernel/smp.c
+index cf99f57aed822..35747e9e8f18c 100644
+--- a/arch/powerpc/kernel/smp.c
++++ b/arch/powerpc/kernel/smp.c
+@@ -270,6 +270,9 @@ void smp_muxed_ipi_set_message(int cpu, int msg)
  
- 	if (limit > head)
+ void smp_muxed_ipi_message_pass(int cpu, int msg)
+ {
++	if (!smp_ops->cause_ipi)
++		return;
++
+ 	smp_muxed_ipi_set_message(cpu, msg);
+ 
+ 	/*
 -- 
 2.53.0
 
