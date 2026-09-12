@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CAB5242D65;
-	Sat, 12 Sep 2026 15:30:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2530C32B13B;
+	Sat, 12 Sep 2026 15:30:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789227019; cv=none; b=eyNbK6so5C9/W0MKfjN2OvxEk4zJzdCwP9Y3KeOSx9yk2u7y/fi5OY7VCuR5ox9e1gTK3SjQz2/BTmnP0boHo3xPa/J4jT4rRCutNWKEpr5Jlt+eC+1Wdu3kYj/VCbaoX9L8UXaFmBo696VDB9zxbYoJehT922poe54GJLBOWns=
+	t=1789227024; cv=none; b=jSmXA69yKO+uNDLcVvdzGleKKsU1anmoH4XISrOJJA4Avxx8qwOlp44cfptPumUvH4g7MtLRITh+GrPnFSXxcM+gqvCHoOWN9nEP43Gbu13ZIwV6qOksEZV+J5rbaVvWg0O9stvBiLTKArRIgYsWdgKQGy3hU6j4MMvmeTpDFqw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789227019; c=relaxed/simple;
-	bh=HR+rJCEDRObBmKGVhYLaysQT6AMMoXo7gV3HICZDb8E=;
+	s=arc-20240116; t=1789227024; c=relaxed/simple;
+	bh=OwQWNG+Ii0PpxwJkH9/RAO6f6rA/8iwsZuWTy9BhTs8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=L3MqAWLx+yr7E7siafEp1Aq6Rho0cdmYyMubbY6mNTBlK+md4BtWRHYuabSeRK+H/75o8v2hhRGLrartKqyRjg4EqWoG0LjL830hg8mOEOm55vnxndGmxa+XwSxhCx2wNJQ0ANfgvH/HwIbSQ40zoxsWNYaQT58rXajiu0L/XkE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fgRte3Ns; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=S07SYySIAebsMlYQ9RomCEBKjcchy8vbnhmI97YaEoN6X68lfhMOmpNq7XZ4KP85G1LtkPw58con+kYK1Ee974mVtWrf0hpR/dJqWmzUTaoDraeGgnNHjcqGnKaem6xhPCRTw3o4rx6JBe+cuPSoGJ6zsdSjQe1oaW6xry8/7M8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IpYGEw0j; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fgRte3Ns"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DB511F000FF;
-	Sat, 12 Sep 2026 15:30:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IpYGEw0j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB2A61F000FF;
+	Sat, 12 Sep 2026 15:30:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789227018;
-	bh=DacsHehfYtCiM1WHkTotHplM/QdNGC/i6DhdvKHgsfs=;
+	s=korg; t=1789227023;
+	bh=I8yPdoKas/8RL4r1mX4wPGvOfDKm4oyItODRn74bOBU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fgRte3Nsof5iDVWpIR0WxTzk6OGni6EX1w173Vu/9rU0cgUBflMRh7agu5W8yccYf
-	 YLpereBsITjwqC3m4GAXTcH9+DF6MXo4SaRfHe4Qw81H7+gCFYqa1+x6ioRKDxmXzY
-	 NYFgD04FadCBIzDqSp3+pZBdkPZ52YEOqAKA90l0=
+	b=IpYGEw0jgMoefa4/mrgfk6RJzyUOW7+de0wS1vrrigDcC8glTdA1SkmC1zUyQZKzX
+	 oFX11r2zY7SFDg++sfBrUDeFut1Y84iFBqiXskJf5pTesFyLciukytBl1QvKICzbQi
+	 RLurNjuisTIgQbsCNba9KXm/6mCVh1VM5v8iZ1KA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Magnus Lindholm <linmag7@gmail.com>
-Subject: [PATCH 6.1 0094/1191] alpha/PCI: Fix I/O port accessor argument order in pci_legacy_write()
-Date: Sat, 12 Sep 2026 08:47:02 +0200
-Message-ID: <20260912065550.290606206@linuxfoundation.org>
+	Wolfgang Walter <linux@stwm.de>,
+	NeilBrown <neil@brown.name>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <cel@kernel.org>
+Subject: [PATCH 6.1 0059/1191] NFSD: Prevent lock owner use-after-free during client teardown
+Date: Sat, 12 Sep 2026 08:46:27 +0200
+Message-ID: <20260912065549.477961506@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -45,70 +46,79 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Krzysztof Wilczyński <kwilczynski@kernel.org>
+From: Chuck Lever <cel@kernel.org>
 
-commit 651fb94aaf245430590216d497fb8b02dd73d5f9 upstream.
+commit 5e2fa29d223a9a1e6a948e40b109d09081d1decd upstream.
 
-pci_legacy_write() in arch/alpha/kernel/pci-sysfs.c passes its arguments to
-outb(), outw() and outl() in the wrong order:
+__destroy_client() releases a client's open owners, but a lock owner
+whose only reference is a blocked lock (nbl) stays on
+cl_ownerstr_hashtbl.  client_has_state() does not count a bare owner,
+so DESTROY_CLIENTID can reach __destroy_client() with such owners
+present.
 
-  outb(port, val);
+__destroy_client() then walks the table, calling remove_blocked_locks()
+on each owner without a reference.  Freeing a blocked lock drops the
+owner reference held via flc_owner.  The per-net laundromat reaps
+blocked locks from nn->blocked_locks_lru independently of client state.
+The two paths share blocked_locks_lock only for the list splice, not
+the owner's lifetime.  The laundromat therefore frees the owner as
+__destroy_client() dereferences it, a NULL dereference in
+remove_blocked_locks().
 
-The Alpha I/O accessors in arch/alpha/include/asm/io.h take the value first
-and the port second:
+nfsd4_release_lockowner() holds a reference across the same call;
+__destroy_client() does not.  Hold cl_lock across the walk, taking a
+reference and unhashing each owner, then drop it before
+remove_blocked_locks() and nfs4_put_stateowner(), which take
+blocked_locks_lock and cl_lock.
 
-  extern void outb(u8 b, unsigned long port);
-
-So the port number is written as data to the I/O address taken from the
-user-supplied value, and the intended write to the requested port never
-happens.
-
-The arguments have been reversed since the file was added, and the function
-returns the access size regardless, so the caller sees success while the
-requested port is left untouched.
-
-Fixes: 10a0ef39fbd1 ("PCI/alpha: pci sysfs resources")
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Tested-by: Magnus Lindholm <linmag7@gmail.com>
-Reviewed-by: Magnus Lindholm <linmag7@gmail.com>
-Acked-by: Magnus Lindholm <linmag7@gmail.com>
+Reported-by: Wolfgang Walter <linux@stwm.de>
+Closes: https://lore.kernel.org/linux-nfs/6eccafaaaa60651ef091257c3439c46b@stwm.de/
+Fixes: 68ef3bc31664 ("nfsd: remove blocked locks on client teardown")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260706175423.98305-1-kwilczynski@kernel.org
+Reviewed-by: NeilBrown <neil@brown.name>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Link: https://patch.msgid.link/20260709-cel-v4-1-1d519d9be0cb@kernel.org
+Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/alpha/kernel/pci-sysfs.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/nfsd/nfs4state.c |   16 +++++++++++++---
+ 1 file changed, 13 insertions(+), 3 deletions(-)
 
---- a/arch/alpha/kernel/pci-sysfs.c
-+++ b/arch/alpha/kernel/pci-sysfs.c
-@@ -364,17 +364,17 @@ int pci_legacy_write(struct pci_bus *bus
- 
- 	switch(size) {
- 	case 1:
--		outb(port, val);
-+		outb(val, port);
- 		return 1;
- 	case 2:
- 		if (port & 1)
- 			return -EINVAL;
--		outw(port, val);
-+		outw(val, port);
- 		return 2;
- 	case 4:
- 		if (port & 3)
- 			return -EINVAL;
--		outl(port, val);
-+		outl(val, port);
- 		return 4;
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -2338,14 +2338,24 @@ __destroy_client(struct nfs4_client *clp
+ 		release_openowner(oo);
  	}
- 	return -EINVAL;
+ 	for (i = 0; i < OWNER_HASH_SIZE; i++) {
+-		struct nfs4_stateowner *so, *tmp;
++		struct nfs4_stateowner *so;
+ 
+-		list_for_each_entry_safe(so, tmp, &clp->cl_ownerstr_hashtbl[i],
+-					 so_strhash) {
++		spin_lock(&clp->cl_lock);
++		while (!list_empty(&clp->cl_ownerstr_hashtbl[i])) {
++			so = list_first_entry(&clp->cl_ownerstr_hashtbl[i],
++					      struct nfs4_stateowner, so_strhash);
+ 			/* Should be no openowners at this point */
+ 			WARN_ON_ONCE(so->so_is_open_owner);
++			nfs4_get_stateowner(so);
++			unhash_lockowner_locked(lockowner(so));
++			spin_unlock(&clp->cl_lock);
++
+ 			remove_blocked_locks(lockowner(so));
++			nfs4_put_stateowner(so);
++
++			spin_lock(&clp->cl_lock);
+ 		}
++		spin_unlock(&clp->cl_lock);
+ 	}
+ 	nfsd4_return_all_client_layouts(clp);
+ 	nfsd4_shutdown_copy(clp);
 
 
