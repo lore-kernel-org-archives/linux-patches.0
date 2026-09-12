@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73E593921ED;
-	Sat, 12 Sep 2026 07:04:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFB613921DE;
+	Sat, 12 Sep 2026 07:04:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789196648; cv=none; b=E11IjsF6TpAa8KlcNbhx39Bkr9AniAJCB7O3o5SN34EHok6iNVn12pJzDTme3X5ltyW08FYYmFIfJ1p+JWI7BnjOsm5vHZNiCMLbkE+fq7zctM++WM/MeDsny8HccS86qmzCSNme4CfvxdJyeMP+yduij0UBYBbUw2ag2Mn0dD4=
+	t=1789196655; cv=none; b=cPfY7sqMdp8NdgHCmtqlWb6ydHpfGyTFaKXvopJOKqi1hnTL0YE/5bsrAucBi5kPPywcsLvwcip/37velhh/pJGR4+g4iX+lEVaDWS+VfdUGUc3VYxOWM3Efwv0ZwmQeiqmoA6u7SftNnoCXDxoijLNWvImRZA+o8cfmX+i1VoU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789196648; c=relaxed/simple;
-	bh=ZcYwDcqXG693MVEwpT3WsOnEJeqiF2LVfJb5Ga7vjhI=;
+	s=arc-20240116; t=1789196655; c=relaxed/simple;
+	bh=AWTwM5Tz8KKVCWaeLwy2Bwxcx9Ew0inMogY1KHxdR6o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JMGTVy9YzkDGBElAy/X/88Qe0dQxxMGOT6YRW0vFLKNKr+nS2XsPTNmkV1hZLs8Jw2ChKTe4AxANQDyU3OpBDY4c81UB+UMSs9ml926g8/Huv+5TNdDZsGLqxB7Lg/ReSwXD7NJ75Y5IjNY6HUSB5nAq3PNKTg5o7uL1xfBDnAs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i7RWa2sl; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cnnk8MG7vn2OOKuIh7QGcFBODJvvKE61H3UkXOJBdkHdDSIRErfYwB7B3bDnzjN47vTSiCaNxOY4JJ+K2RWRY+JZNFbgvXnMQUEdaEgeOLQ+HC/Uft1LklX3wEiBTyNdzWrbWDJi7CDclFoFiyVBW3Q3FwIVVqj0tHYhxvcbgkA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U1h8vgez; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i7RWa2sl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92BF11F000FF;
-	Sat, 12 Sep 2026 07:04:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U1h8vgez"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E2371F00893;
+	Sat, 12 Sep 2026 07:04:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789196644;
-	bh=LFNACF2oaICFMPQ4NeLnJKrz2I2xiAreE26Y8i7zbJo=;
+	s=korg; t=1789196649;
+	bh=uvxWG4WQd6WKGwkkpQVyGI8vMIk7fLx2pnFDujYIxhw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=i7RWa2sluqZ6uvk3yx3EKA+aSeEUOfEiCyofJ0k6jd+lPFncAyEWmAbA4pbStRY+O
-	 D+ohtsj7gq235Bi8w+2vN6BAZ0rbUX0Nz+S5zUb7l6clSiIjXQA7fOlmgUal4EiJnr
-	 OtD7fsvX3bKkD2EHqVZCR3MxejlV/XwXfXPm14LE=
+	b=U1h8vgezJw8cROm3WKD8n7dk7Q6E+HoJPJKTOw4uQmOD5iRy5gZ1ZmkNt/+o3L7aB
+	 ci7BH1JB1N/k6rXUPZTmj5JF5u7uzhSV6NBDvnSQK0uHNvem1f6ZJXNI2ITSOaztZ2
+	 PFiSeH4JTxKUsb8JYDK1yCqGprh3XxyVsh+sBiz4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Akhmed Zhitaev <zhitaevakh@gmail.com>,
-	"Mario Limonciello (AMD)" <superm1@kernel.org>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	Mikulas Patocka <mpatocka@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0001/1815] drm/amd/display: Scale custom brightness curve from full range
-Date: Sat, 12 Sep 2026 08:29:11 +0200
-Message-ID: <20260912065649.043637711@linuxfoundation.org>
+Subject: [PATCH 7.2 0010/1815] dm-pcache: validate the persisted dirty_tail chain at load
+Date: Sat, 12 Sep 2026 08:29:20 +0200
+Message-ID: <20260912065649.250189031@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -53,62 +51,145 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Akhmed Zhitaev <zhitaevakh@gmail.com>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-[ Upstream commit 6fd83a1c2cdea48c396f600795217fbdfb8124f6 ]
+[ Upstream commit 58d620ee9e01d4bdbceaf2ae1450d307a2a9d58b ]
 
-Custom brightness curves use an 8-bit input signal.  After exporting the
-full PWM range to userspace, the curve normalizer still divides requests
-by the physical PWM span.  On panels with a nonzero minimum PWM level,
-this can produce a curve input greater than 255 and send an invalid
-backlight level to DC.
+The writeback worker follows the persisted dirty_tail chain, which is
+decoded from the cache device independently of the key_tail chain that
+cache_replay() walks and bounds. A crafted image, whose on-media fields are
+authenticated only by a crc32c with a fixed seed, can aim dirty_tail at a
+chain of last ksets that never terminates, so cache_writeback_fn() re-arms
+itself with no delay forever.
 
-Scale the userspace [0..max] range to the curve's [0..255] range
-instead.  This retains the full advertised range and keeps the reverse
-readback conversion unchanged.
+Walk the dirty_tail chain once at load with the same hop cap cache_replay()
+uses and fail the table load with -EIO if it does not reach an end within
+n_segs hops.
 
-Fixes: 8dbd72cb7900 ("drm/amd/display: Export full brightness range to userspace")
+Fixes: 1d57628ff95b ("dm-pcache: add persistent cache target in device-mapper")
 Cc: stable@vger.kernel.org
-Signed-off-by: Akhmed Zhitaev <zhitaevakh@gmail.com>
-Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
-(Move to amdgpu_dm_backlight.c)
-Link: https://patch.msgid.link/20260813170959.22073-1-zhitaevakh@gmail.com
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+[ replaced the unavailable cache_seg_id_valid() helper with an equivalent bounds check against cache->cache_info.n_segs ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/md/dm-pcache/cache.c     |    7 +++
+ drivers/md/dm-pcache/cache.h     |    2 +
+ drivers/md/dm-pcache/cache_key.c |   69 +++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 78 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-index f059bed728f0a..69d12377f6817 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -5271,10 +5271,10 @@ static int get_brightness_range(const struct amdgpu_dm_backlight_caps *caps,
- 	return 1;
+--- a/drivers/md/dm-pcache/cache.c
++++ b/drivers/md/dm-pcache/cache.c
+@@ -202,6 +202,7 @@ static int cache_tail_init(struct pcache
+ {
+ 	struct dm_pcache *pcache = CACHE_TO_PCACHE(cache);
+ 	bool new_cache = !(cache->cache_info.flags & PCACHE_CACHE_FLAGS_INIT_DONE);
++	int ret;
+ 
+ 	if (new_cache) {
+ 		__set_bit(0, cache->seg_map);
+@@ -218,6 +219,12 @@ static int cache_tail_init(struct pcache
+ 			pcache_dev_err(pcache, "Corrupted key tail or dirty tail.\n");
+ 			return -EIO;
+ 		}
++
++		ret = cache_verify_dirty_tail(cache);
++		if (ret) {
++			pcache_dev_err(pcache, "dirty tail chain does not terminate (crafted cache image?)\n");
++			return ret;
++		}
+ 	}
+ 
+ 	return 0;
+--- a/drivers/md/dm-pcache/cache.h
++++ b/drivers/md/dm-pcache/cache.h
+@@ -666,6 +666,8 @@ static inline int cache_decode_dirty_tai
+ 				&cache->dirty_tail_index);
  }
  
--/* Rescale from [min..max] to [0..AMDGPU_MAX_BL_LEVEL] */
--static inline u32 scale_input_to_fw(int min, int max, u64 input)
-+/* Rescale userspace [0..max] to the firmware curve's [0..255]. */
-+static inline u32 scale_input_to_fw(int max, u64 input)
- {
--	return DIV_ROUND_CLOSEST_ULL(input * AMDGPU_MAX_BL_LEVEL, max - min);
-+	return DIV_ROUND_CLOSEST_ULL(input * AMDGPU_MAX_BL_LEVEL, max);
++int cache_verify_dirty_tail(struct pcache_cache *cache);
++
+ int pcache_cache_init(void);
+ void pcache_cache_exit(void);
+ #endif /* _PCACHE_CACHE_H */
+--- a/drivers/md/dm-pcache/cache_key.c
++++ b/drivers/md/dm-pcache/cache_key.c
+@@ -843,6 +843,75 @@ out:
+ 	return ret;
  }
  
- /* Rescale from [0..AMDGPU_MAX_BL_LEVEL] to [min..max] */
-@@ -5287,7 +5287,7 @@ static void convert_custom_brightness(const struct amdgpu_dm_backlight_caps *cap
- 				      unsigned int min, unsigned int max,
- 				      uint32_t *user_brightness)
++/*
++ * cache_verify_dirty_tail - reject a persisted dirty_tail whose last-kset
++ * chain does not terminate.
++ *
++ * dirty_tail is decoded independently of the key_tail chain cache_replay()
++ * walks, so replay's hop cap does not cover it. A crafted chain that loops
++ * back on itself makes the writeback worker re-arm forever; walk it once here
++ * with the same cap and fail the load if it does not end within n_segs hops.
++ */
++int cache_verify_dirty_tail(struct pcache_cache *cache)
++{
++	struct pcache_cache_pos pos;
++	struct pcache_cache_kset_onmedia *kset_onmedia;
++	u32 to_copy, last_hops = 0, count = 0;
++	int ret = 0;
++
++	kset_onmedia = kzalloc(PCACHE_KSET_ONMEDIA_SIZE_MAX, GFP_KERNEL);
++	if (!kset_onmedia)
++		return -ENOMEM;
++
++	cache_pos_copy(&pos, &cache->dirty_tail);
++
++	while (true) {
++		to_copy = min(PCACHE_KSET_ONMEDIA_SIZE_MAX, cache_seg_remain(&pos));
++		ret = copy_mc_to_kernel(kset_onmedia, cache_pos_addr(&pos), to_copy);
++		if (ret) {
++			ret = -EIO;
++			goto out;
++		}
++
++		/* A missing, short or corrupt kset is the normal end of the chain. */
++		if (!kset_onmedia_valid(kset_onmedia) ||
++		    kset_onmedia->crc != cache_kset_crc(kset_onmedia)) {
++			ret = 0;
++			goto out;
++		}
++
++		if (kset_onmedia->flags & PCACHE_KSET_FLAGS_LAST) {
++			if (kset_onmedia->next_cache_seg_id >= cache->cache_info.n_segs) {
++				ret = -EIO;
++				goto out;
++			}
++
++			if (++last_hops > cache->n_segs) {
++				ret = -EIO;
++				goto out;
++			}
++
++			pos.cache_seg = &cache->segments[kset_onmedia->next_cache_seg_id];
++			pos.seg_off = 0;
++			continue;
++		}
++
++		if (get_kset_onmedia_size(kset_onmedia) > cache_seg_remain(&pos)) {
++			ret = -EIO;
++			goto out;
++		}
++
++		cache_pos_advance(&pos, get_kset_onmedia_size(kset_onmedia));
++		if (++count > 512) {
++			cond_resched();
++			count = 0;
++		}
++	}
++out:
++	kfree(kset_onmedia);
++	return ret;
++}
++
+ int cache_tree_init(struct pcache_cache *cache, struct pcache_cache_tree *cache_tree, u32 n_subtrees)
  {
--	u32 brightness = scale_input_to_fw(min, max, *user_brightness);
-+	u32 brightness = scale_input_to_fw(max, *user_brightness);
- 	u8 lower_signal, upper_signal, upper_lum, lower_lum, lum;
- 	int left, right;
- 
--- 
-2.53.0
-
+ 	int ret;
 
 
