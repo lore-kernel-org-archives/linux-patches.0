@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C23D131E84B;
-	Sat, 12 Sep 2026 15:44:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07E8025A640;
+	Sat, 12 Sep 2026 15:44:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789227887; cv=none; b=Gnyah8rW+N9Ctb2tpbXdfUTHv0jEKi+t0Zp5ovXt+2JMBY5qfFmOIuuSJQ9dKiuu2gBOSw1KrHcnN95VO8xGlAoRtgOC4EqII1HO740U0KmhYilFMxyCGzcDb+GmV3+gKEzzpKVecm1AkExUP+zX8eIoDw0tofvUuN5YnlNB0e4=
+	t=1789227893; cv=none; b=UYrcMsbkc4/PT5MAk1KFxn+yPNAskAD0moYJZKPffG4cRltJFokmxDqil0Ho/kI3NZFyH5/0APboBL2mWDMPWIqexMipTdLSWAKoc0Cr2HyYMATRhczs6iKiC82RlVIIvstO6wej/3kL5pWsrEMsn+H6DXpZJoYNyGeRE/uhu3c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789227887; c=relaxed/simple;
-	bh=Xp0gASJD6GtOwxnWypWbVHZitfTQbZTo3PTAr5aJFq8=;
+	s=arc-20240116; t=1789227893; c=relaxed/simple;
+	bh=E44C+jhiC2g9lA8Pd91go1yVi11n/JLdgEgUevz77p8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C92gmX5tlv/LneWgxisbITh5ZaR1xiFU6+NcjtKIFEp2BQ1f8W0onhjO/yqgimVw7r29HeZyKuidlZCQ88UEyAy7E6MiW6lCQ/cVFnVK+7MV2EIvrs9hq5GW56Gg2hLa81a5yj2gab1O0Vf4FW4xh9HBLCGHrWP/Y0SBZcVcwB8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bJ3DnUou; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cQjA59hw7cbVXj3ZmwwFZh4gxcGHYKdM96agMZ37BjojglJRFufUvSv5usoSxqGBpyohDmRCpTtpsLCTFZ8O45nOvdhyDZ59GnCvCSa5SaVZVGyHkiiI7A68d7VR2oECVgRMZWYWl5KaRUsS6MboTvzBvD3wZj2KgoTMJPoSIWQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0oTpRurd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bJ3DnUou"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 630BB1F000FF;
-	Sat, 12 Sep 2026 15:44:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0oTpRurd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 691F01F000FF;
+	Sat, 12 Sep 2026 15:44:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789227886;
-	bh=Dgk2JvvQP8B6kKD+OKUNKwCcR3cH4N4/tCYgZgZGoqQ=;
+	s=korg; t=1789227891;
+	bh=C7cBR3N+tWCijo7V2rZrjA9fdPI/m6jcjOlVKIS62iU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bJ3DnUous5BAz2OG64ribI8Yfzkl3wAHLRU6+7kmfb5rC+JlIX/rl7liU/v5npwa/
-	 XFdhUYGIWm2Hq0BJQ6PtCUXQIWdEE11A1tJk3oDW35xlkFiHUQ0HvfGK7K4QNYUaVl
-	 OYtgQHwcD2PfwcShPWSNozbXRpXL5SjWLHuLdiwY=
+	b=0oTpRurdEKacttneQDDew81lj5S8t45z0iY+WqiUlBuiskswwQcwqVGPr9DRS1I2+
+	 TRd06DWYJQ7aF0raFZE9ns/09kG1o2yjq9K4YMxNTITDYU++b37UfJZYdaWiQLS/rE
+	 wzTpEAIlSmvFRm/mLH9tDcMW2TzyFD7/MKmV9iY8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuangpeng Bai <shuangpeng.kernel@gmail.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.1 0272/1191] media: usbtv: keep device alive while ALSA card exists
-Date: Sat, 12 Sep 2026 08:50:00 +0200
-Message-ID: <20260912065554.334242003@linuxfoundation.org>
+	syzbot+22ea20ef3afb6785b122@syzkaller.appspotmail.com,
+	stable <stable@kernel.org>,
+	Liu Qi <liuqi@longcheer.com>,
+	Alan Stern <stern@rowland.harvard.edu>
+Subject: [PATCH 6.1 0273/1191] usb-storage: ene_ub6250: fix race between scan work and probe
+Date: Sat, 12 Sep 2026 08:50:01 +0200
+Message-ID: <20260912065554.358016498@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
 References: <20260912065548.086904252@linuxfoundation.org>
@@ -50,56 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+From: Liu Qi <liuqi@longcheer.com>
 
-commit fc530fe168bb2b745a93f553ad21fc25fd9cba3d upstream.
+commit 445fc368c6bc73eff0aeb3818cf5f355facfbb16 upstream.
 
-The ALSA PCM callbacks store the driver state in pcm->private_data. An
-open PCM file can outlive USB disconnect because usbtv_audio_free() uses
-snd_card_free_when_closed(). The disconnect path can then drop the V4L2
-device reference and free struct usbtv before ALSA releases the substream,
-so a later close dereferences freed memory in snd_usbtv_pcm_close().
+ene_ub6250_probe() calls usb_stor_probe2(), which starts the usb-storage
+infrastructure and schedules the delayed scan work.  The driver then
+calls ene_get_card_type(), which sends an ENE command through
+ene_send_scsi_cmd() and the usb-storage bulk transfer helpers.
 
-Take a V4L2 device reference for the ALSA card and drop it from the card
-private_free callback. This keeps struct usbtv valid until ALSA has closed
-the remaining files and freed the card.
+Both the delayed scan work, through usb_stor_Bulk_max_lun(), and
+ene_get_card_type() use us->current_urb.  The scan work serializes this
+access with us->dev_mutex, but the ENE card-type probe does not.  If the
+scan work runs while ene_get_card_type() is still using us->current_urb,
+usb_submit_urb() warns that the URB is already active.
 
-Closes: https://lore.kernel.org/r/178144969601.60470.4852887710381872458@gmail.com
-Fixes: 63ddf68de52e ("[media] usbtv: add audio support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Serialize ene_get_card_type() with us->dev_mutex, matching the locking
+used by the scan path.
+
+Reported-by: syzbot+22ea20ef3afb6785b122@syzkaller.appspotmail.com
+Cc: stable <stable@kernel.org>
+Closes: https://syzkaller.appspot.com/bug?extid=22ea20ef3afb6785b122
+Assisted-by: Qwen:Qwen3.6
+Signed-off-by: Liu Qi <liuqi@longcheer.com>
+Acked-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://patch.msgid.link/20260821090416.1247127-1-liuqi@longcheer.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/usbtv/usbtv-audio.c |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/usb/storage/ene_ub6250.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/media/usb/usbtv/usbtv-audio.c
-+++ b/drivers/media/usb/usbtv/usbtv-audio.c
-@@ -317,6 +317,13 @@ static const struct snd_pcm_ops snd_usbt
- 	.pointer = snd_usbtv_pointer,
- };
+--- a/drivers/usb/storage/ene_ub6250.c
++++ b/drivers/usb/storage/ene_ub6250.c
+@@ -2358,7 +2358,9 @@ static int ene_ub6250_probe(struct usb_i
+ 		return result;
  
-+static void usbtv_audio_card_free(struct snd_card *card)
-+{
-+	struct usbtv *usbtv = card->private_data;
-+
-+	v4l2_device_put(&usbtv->v4l2_dev);
-+}
-+
- int usbtv_audio_init(struct usbtv *usbtv)
- {
- 	int rv;
-@@ -331,6 +338,10 @@ int usbtv_audio_init(struct usbtv *usbtv
- 	if (rv < 0)
- 		return rv;
- 
-+	v4l2_device_get(&usbtv->v4l2_dev);
-+	card->private_data = usbtv;
-+	card->private_free = usbtv_audio_card_free;
-+
- 	strscpy(card->driver, usbtv->dev->driver->name, sizeof(card->driver));
- 	strscpy(card->shortname, "usbtv", sizeof(card->shortname));
- 	snprintf(card->longname, sizeof(card->longname),
+ 	/* probe card type */
++	mutex_lock(&us->dev_mutex);
+ 	result = ene_get_card_type(us, REG_CARD_STATUS, info->bbuf);
++	mutex_unlock(&us->dev_mutex);
+ 	if (result != USB_STOR_XFER_GOOD) {
+ 		usb_stor_disconnect(intf);
+ 		return USB_STOR_TRANSPORT_ERROR;
 
 
