@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FB064BEE32;
-	Sat, 12 Sep 2026 11:20:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB6CC37A498;
+	Sat, 12 Sep 2026 11:21:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789212056; cv=none; b=hoVctrgRBuHRRjpPcUSncZv3R34opYGgNV56HA1jtdIwp4rn8+TghchP+FjC8XMiof/+nu5lowNqxX19Zte6ocT1eKRvOZjZdzZAz5q+0o53JUVj4YzUK50UW7+Ns/ZgYYBEJ+bld0RCNoxp8GsGIu63WHp9E6oHuTfcQllOOsE=
+	t=1789212062; cv=none; b=D65Z07/PyK++IGIo0XMW5nGMUd60BZFtH7jInGo+5+eXK+BudMDoLa/viPAJqGZEAZd2xylOzXhFpJTxNlAD0/z9CcBI+4HDbfjLjxo7BHbHYEHLGD399MAuyNbvxN4e4kt8soToV0PlMWYofWSNiAXyZWT4GL+cP6C7rMJ2NE0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789212056; c=relaxed/simple;
-	bh=tU4K+hLn6TFr7AAiFeomXU5LFCZZBLWYJzthuGOeo+4=;
+	s=arc-20240116; t=1789212062; c=relaxed/simple;
+	bh=bR5wmS7wBfUDIGMmPwTj4vSG9MJ+/mwAjyON0lfOihM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y+N7qXh3NPc3ToeBHLawGcb8ynpZRnVYSGPkhonLvCis7F2Yp9qHDgFlLfq+5f0Znwdan+hxoFJXycDJWpmqc71B68HK/T+lRAiK3uo4mDAZyQcmjPREzTcbGedFRxCbQUDNbdPiCTzTRv324deGImoMR0UNyZu1r8ShJrs/tzc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iTINouz0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZGx9rmDKSXop1PxnJQxtRxm/plpPYu1T8bvdpEmhWkw19nTLxkOv8Ebk/xN3ffvWMb42SGg6F29LNpNQ/Gc83F6STTtb75kOn9E9j1ZWec6NfP4K1aV4pX4a1pxpg1tTcXWaB9cgJejZ65MUOz34BpAqmgWWajC5XL2KVohN7IM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N2C+rzMI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iTINouz0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 765DE1F00893;
-	Sat, 12 Sep 2026 11:20:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N2C+rzMI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60A831F000FF;
+	Sat, 12 Sep 2026 11:20:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789212055;
-	bh=9FpQk+w/A2Jtyp7AgdpSqfC0Niw64weR+n6j+CAFs8E=;
+	s=korg; t=1789212060;
+	bh=I5W8JaYLVJxUSznoL2j3GBVK0quUkX5u3TMZDFxPYYQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iTINouz0KlG3CcWa67HfcnVn0rPCfhAG5ktedz70B3BlmZv1qJl7nGisD9G+mnixk
-	 Nt3XvWFLD+wkSGzmZPJEkxTYUK9X2JrXNxRAikABAZCks5IOfs3sAryb+z0JDUEVq7
-	 4y3LVkAX7yCwgj5T4VPa46B1HoCAoXqaf6jOVkEQ=
+	b=N2C+rzMIC0T+9tl35CC8u8CEEFiKykpu5HV58L6wPXjiEMHi5bKt5i6X4x6KcJZlH
+	 0K4a9JQ3RJ3abpFInwDXSb/np/7MQWbK2NV1ijsBJYFSgB22mQ1GUsGyiUV3gekVyd
+	 NW09gHlJLdUpH6Sw9ATvM2kIZaJHD59NhwB2k3KM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1358/1518] net: change sock_queue_rcv_skb_reason() to return a drop_reason
-Date: Sat, 12 Sep 2026 08:58:47 +0200
-Message-ID: <20260912065654.253055357@linuxfoundation.org>
+Subject: [PATCH 6.18 1359/1518] ipmr: Free mr_table after RCU grace period.
+Date: Sat, 12 Sep 2026 08:58:48 +0200
+Message-ID: <20260912065654.275824353@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,228 +51,336 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit 900f27fb797c7eaf0b84b7a6516613e19746bc4e ]
+[ Upstream commit b3b6babf47517fde6b6de2493dea28e8831b9347 ]
 
-Change sock_queue_rcv_skb_reason() to return the drop_reason directly
-instead of using a reference.
+With CONFIG_IP_MROUTE_MULTIPLE_TABLES=n, ipmr_fib_lookup()
+does not check if net->ipv4.mrt is NULL.
 
-This is part of an effort to remove stack canaries and reduce bloat.
+Since default_device_exit_batch() is called after ->exit_rtnl(),
+a device could receive IGMP packets and access net->ipv4.mrt
+during/after ipmr_rules_exit_rtnl().
 
-$ scripts/bloat-o-meter -t vmlinux.old vmlinux.new
-add/remove: 0/0 grow/shrink: 3/7 up/down: 79/-301 (-222)
-Function                                     old     new   delta
-vsock_queue_rcv_skb                           50      79     +29
-ipmr_cache_report                           1290    1315     +25
-ip6mr_cache_report                          1322    1347     +25
-packet_rcv_spkt                              329     327      -2
-sock_queue_rcv_skb_reason                    166     128     -38
-raw_rcv_skb                                  122      80     -42
-ping_queue_rcv_skb                           109      61     -48
-ping_rcv                                     215     162     -53
-rawv6_rcv_skb                                278     224     -54
-raw_rcv                                      591     527     -64
-Total: Before=29722890, After=29722668, chg -0.00%
+If ipmr_rules_exit_rtnl() had already cleared it and freed the
+memory, the access would trigger null-ptr-deref or use-after-free.
 
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260409145625.2306224-2-edumazet@google.com
+Let's fix it by using RCU helper and free mrt after RCU grace
+period.
+
+In addition, check_net(net) is added to mroute_clean_tables()
+and ipmr_cache_unresolved() to synchronise via mfc_unres_lock.
+This prevents ipmr_cache_unresolved() from putting skb into
+c->_c.mfc_un.unres.unresolved after mroute_clean_tables()
+purges it.
+
+For the same reason, timer_shutdown_sync() is moved after
+mroute_clean_tables().
+
+Since rhltable_destroy() holds mutex internally, rcu_work is
+used, and it is placed as the first member because rcu_head
+must be placed within <4K offset.  mr_table is alraedy 3864
+bytes without rcu_work.
+
+Note that IP6MR is not yet converted to ->exit_rtnl(), so this
+change is not needed for now but will be.
+
+Fixes: b22b01867406 ("ipmr: Convert ipmr_net_exit_batch() to ->exit_rtnl().")
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20260423053456.4097409-1-kuniyu@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Stable-dep-of: 235b42b58601 ("ip6mr: do not clone dst in ip6mr_cache_report()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/sock.h     | 17 ++++++++++++++---
- net/can/bcm.c          |  5 ++---
- net/can/isotp.c        |  3 ++-
- net/can/j1939/socket.c |  3 ++-
- net/can/raw.c          |  3 ++-
- net/core/sock.c        | 20 ++++++--------------
- net/ipv4/ping.c        |  3 ++-
- net/ipv4/raw.c         |  3 ++-
- net/ipv6/raw.c         |  3 ++-
- 9 files changed, 34 insertions(+), 26 deletions(-)
+ include/linux/mroute_base.h |   3 +
+ net/ipv4/ipmr.c             | 108 +++++++++++++++++++-----------------
+ net/ipv4/ipmr_base.c        |  16 ++++++
+ 3 files changed, 77 insertions(+), 50 deletions(-)
 
-diff --git a/include/net/sock.h b/include/net/sock.h
-index 9637ee4f55ee1..50b9178cc827f 100644
---- a/include/net/sock.h
-+++ b/include/net/sock.h
-@@ -2468,12 +2468,23 @@ int __sk_queue_drop_skb(struct sock *sk, struct sk_buff_head *sk_queue,
- 					   struct sk_buff *skb));
- int __sock_queue_rcv_skb(struct sock *sk, struct sk_buff *skb);
+diff --git a/include/linux/mroute_base.h b/include/linux/mroute_base.h
+index 0075f6e5c3da9..f887ffba95ca2 100644
+--- a/include/linux/mroute_base.h
++++ b/include/linux/mroute_base.h
+@@ -227,6 +227,7 @@ struct mr_table_ops {
  
--int sock_queue_rcv_skb_reason(struct sock *sk, struct sk_buff *skb,
--			      enum skb_drop_reason *reason);
-+enum skb_drop_reason
-+sock_queue_rcv_skb_reason(struct sock *sk, struct sk_buff *skb);
+ /**
+  * struct mr_table - a multicast routing table
++ * @work: used for table destruction
+  * @list: entry within a list of multicast routing tables
+  * @net: net where this table belongs
+  * @ops: protocol specific operations
+@@ -244,6 +245,7 @@ struct mr_table_ops {
+  * @mroute_reg_vif_num: PIM-device vif index
+  */
+ struct mr_table {
++	struct rcu_work		work;
+ 	struct list_head	list;
+ 	possible_net_t		net;
+ 	struct mr_table_ops	ops;
+@@ -275,6 +277,7 @@ void vif_device_init(struct vif_device *v,
+ 		     unsigned short flags,
+ 		     unsigned short get_iflink_mask);
  
- static inline int sock_queue_rcv_skb(struct sock *sk, struct sk_buff *skb)
++void mr_table_free(struct mr_table *mrt);
+ struct mr_table *
+ mr_table_alloc(struct net *net, u32 id,
+ 	       struct mr_table_ops *ops,
+diff --git a/net/ipv4/ipmr.c b/net/ipv4/ipmr.c
+index 18e3ad5ae8be2..c6d5d30a98301 100644
+--- a/net/ipv4/ipmr.c
++++ b/net/ipv4/ipmr.c
+@@ -151,16 +151,6 @@ static struct mr_table *__ipmr_get_table(struct net *net, u32 id)
+ 	return NULL;
+ }
+ 
+-static struct mr_table *ipmr_get_table(struct net *net, u32 id)
+-{
+-	struct mr_table *mrt;
+-
+-	rcu_read_lock();
+-	mrt = __ipmr_get_table(net, id);
+-	rcu_read_unlock();
+-	return mrt;
+-}
+-
+ static int ipmr_fib_lookup(struct net *net, struct flowi4 *flp4,
+ 			   struct mr_table **mrt)
  {
--	return sock_queue_rcv_skb_reason(sk, skb, NULL);
-+	enum skb_drop_reason drop_reason = sock_queue_rcv_skb_reason(sk, skb);
+@@ -288,7 +278,7 @@ static void __net_exit ipmr_rules_exit_rtnl(struct net *net,
+ 	struct mr_table *mrt, *next;
+ 
+ 	list_for_each_entry_safe(mrt, next, &net->ipv4.mr_tables, list) {
+-		list_del(&mrt->list);
++		list_del_rcu(&mrt->list);
+ 		ipmr_free_table(mrt, dev_kill_list);
+ 	}
+ 
+@@ -312,28 +302,30 @@ bool ipmr_rule_default(const struct fib_rule *rule)
+ }
+ EXPORT_SYMBOL(ipmr_rule_default);
+ #else
+-#define ipmr_for_each_table(mrt, net) \
+-	for (mrt = net->ipv4.mrt; mrt; mrt = NULL)
+-
+ static struct mr_table *ipmr_mr_table_iter(struct net *net,
+ 					   struct mr_table *mrt)
+ {
+ 	if (!mrt)
+-		return net->ipv4.mrt;
++		return rcu_dereference(net->ipv4.mrt);
+ 	return NULL;
+ }
+ 
+-static struct mr_table *ipmr_get_table(struct net *net, u32 id)
++static struct mr_table *__ipmr_get_table(struct net *net, u32 id)
+ {
+-	return net->ipv4.mrt;
++	return rcu_dereference_check(net->ipv4.mrt,
++				     lockdep_rtnl_is_held() ||
++				     !rcu_access_pointer(net->ipv4.mrt));
+ }
+ 
+-#define __ipmr_get_table ipmr_get_table
++#define ipmr_for_each_table(mrt, net)				\
++	for (mrt = __ipmr_get_table(net, 0); mrt; mrt = NULL)
+ 
+ static int ipmr_fib_lookup(struct net *net, struct flowi4 *flp4,
+ 			   struct mr_table **mrt)
+ {
+-	*mrt = net->ipv4.mrt;
++	*mrt = rcu_dereference(net->ipv4.mrt);
++	if (!*mrt)
++		return -EAGAIN;
+ 	return 0;
+ }
+ 
+@@ -344,16 +336,18 @@ static int __net_init ipmr_rules_init(struct net *net)
+ 	mrt = ipmr_new_table(net, RT_TABLE_DEFAULT);
+ 	if (IS_ERR(mrt))
+ 		return PTR_ERR(mrt);
+-	net->ipv4.mrt = mrt;
 +
-+	switch (drop_reason) {
-+	case SKB_DROP_REASON_SOCKET_RCVBUFF:
-+		return -ENOMEM;
-+	case SKB_DROP_REASON_PROTO_MEM:
-+		return -ENOBUFS;
-+	case 0:
-+		return 0;
-+	default:
-+		return -EPERM;
-+	}
++	rcu_assign_pointer(net->ipv4.mrt, mrt);
+ 	return 0;
  }
  
- int sock_queue_err_skb(struct sock *sk, struct sk_buff *skb);
-diff --git a/net/can/bcm.c b/net/can/bcm.c
-index a819872fddeff..67d5e3ecc04fb 100644
---- a/net/can/bcm.c
-+++ b/net/can/bcm.c
-@@ -396,7 +396,6 @@ static void bcm_send_to_user(struct bcm_op *op, struct bcm_msg_head *head,
- 	struct sockaddr_can *addr;
- 	struct sock *sk = op->sk;
- 	unsigned int datalen = head->nframes * op->cfsiz;
--	int err;
- 	unsigned int *pflags;
- 	enum skb_drop_reason reason;
- 
-@@ -453,8 +452,8 @@ static void bcm_send_to_user(struct bcm_op *op, struct bcm_msg_head *head,
- 	addr->can_family  = AF_CAN;
- 	addr->can_ifindex = op->rx_ifindex;
- 
--	err = sock_queue_rcv_skb_reason(sk, skb, &reason);
--	if (err < 0) {
-+	reason = sock_queue_rcv_skb_reason(sk, skb);
-+	if (reason) {
- 		struct bcm_sock *bo = bcm_sk(sk);
- 
- 		sk_skb_reason_drop(sk, skb, reason);
-diff --git a/net/can/isotp.c b/net/can/isotp.c
-index 720b911fe1ede..a77ac3954e410 100644
---- a/net/can/isotp.c
-+++ b/net/can/isotp.c
-@@ -357,7 +357,8 @@ static void isotp_rcv_skb(struct sk_buff *skb, struct sock *sk)
- 	addr->can_family = AF_CAN;
- 	addr->can_ifindex = skb->dev->ifindex;
- 
--	if (sock_queue_rcv_skb_reason(sk, skb, &reason) < 0)
-+	reason = sock_queue_rcv_skb_reason(sk, skb);
-+	if (reason)
- 		sk_skb_reason_drop(sk, skb, reason);
- }
- 
-diff --git a/net/can/j1939/socket.c b/net/can/j1939/socket.c
-index e56d8134938e8..70a57afdef1a2 100644
---- a/net/can/j1939/socket.c
-+++ b/net/can/j1939/socket.c
-@@ -332,7 +332,8 @@ static void j1939_sk_recv_one(struct j1939_sock *jsk, struct sk_buff *oskb)
- 	if (skb->sk)
- 		skcb->msg_flags |= MSG_DONTROUTE;
- 
--	if (sock_queue_rcv_skb_reason(&jsk->sk, skb, &reason) < 0)
-+	reason = sock_queue_rcv_skb_reason(&jsk->sk, skb);
-+	if (reason)
- 		sk_skb_reason_drop(&jsk->sk, skb, reason);
- }
- 
-diff --git a/net/can/raw.c b/net/can/raw.c
-index c397071bfa8b9..dc02defa560d6 100644
---- a/net/can/raw.c
-+++ b/net/can/raw.c
-@@ -206,7 +206,8 @@ static void raw_rcv(struct sk_buff *oskb, void *data)
- 	if (oskb->sk == sk)
- 		*pflags |= MSG_CONFIRM;
- 
--	if (sock_queue_rcv_skb_reason(sk, skb, &reason) < 0)
-+	reason = sock_queue_rcv_skb_reason(sk, skb);
-+	if (reason)
- 		sk_skb_reason_drop(sk, skb, reason);
- }
- 
-diff --git a/net/core/sock.c b/net/core/sock.c
-index b69c574c20ad3..1b64ac35073db 100644
---- a/net/core/sock.c
-+++ b/net/core/sock.c
-@@ -520,32 +520,24 @@ int __sock_queue_rcv_skb(struct sock *sk, struct sk_buff *skb)
- }
- EXPORT_SYMBOL(__sock_queue_rcv_skb);
- 
--int sock_queue_rcv_skb_reason(struct sock *sk, struct sk_buff *skb,
--			      enum skb_drop_reason *reason)
-+enum skb_drop_reason
-+sock_queue_rcv_skb_reason(struct sock *sk, struct sk_buff *skb)
+ static void __net_exit ipmr_rules_exit_rtnl(struct net *net,
+ 					    struct list_head *dev_kill_list)
  {
- 	enum skb_drop_reason drop_reason;
+-	ipmr_free_table(net->ipv4.mrt, dev_kill_list);
++	struct mr_table *mrt = rcu_dereference_protected(net->ipv4.mrt, 1);
+ 
+-	net->ipv4.mrt = NULL;
++	RCU_INIT_POINTER(net->ipv4.mrt, NULL);
++	ipmr_free_table(mrt, dev_kill_list);
+ }
+ 
+ static int ipmr_rules_dump(struct net *net, struct notifier_block *nb,
+@@ -374,6 +368,17 @@ bool ipmr_rule_default(const struct fib_rule *rule)
+ EXPORT_SYMBOL(ipmr_rule_default);
+ #endif
+ 
++static struct mr_table *ipmr_get_table(struct net *net, u32 id)
++{
++	struct mr_table *mrt;
++
++	rcu_read_lock();
++	mrt = __ipmr_get_table(net, id);
++	rcu_read_unlock();
++
++	return mrt;
++}
++
+ static inline int ipmr_hash_cmp(struct rhashtable_compare_arg *arg,
+ 				const void *ptr)
+ {
+@@ -434,12 +439,11 @@ static void ipmr_free_table(struct mr_table *mrt, struct list_head *dev_kill_lis
+ 
+ 	WARN_ON_ONCE(!mr_can_free_table(net));
+ 
+-	timer_shutdown_sync(&mrt->ipmr_expire_timer);
+ 	mroute_clean_tables(mrt, MRT_FLUSH_VIFS | MRT_FLUSH_VIFS_STATIC |
+ 			    MRT_FLUSH_MFC | MRT_FLUSH_MFC_STATIC,
+ 			    &ipmr_dev_kill_list);
+-	rhltable_destroy(&mrt->mfc_hash);
+-	kfree(mrt);
++	timer_shutdown_sync(&mrt->ipmr_expire_timer);
++	mr_table_free(mrt);
+ 
+ 	WARN_ON_ONCE(!net_initialized(net) && !list_empty(&ipmr_dev_kill_list));
+ 	list_splice(&ipmr_dev_kill_list, dev_kill_list);
+@@ -1128,12 +1132,19 @@ static int ipmr_cache_report(const struct mr_table *mrt,
+ static int ipmr_cache_unresolved(struct mr_table *mrt, vifi_t vifi,
+ 				 struct sk_buff *skb, struct net_device *dev)
+ {
++	struct net *net = read_pnet(&mrt->net);
+ 	const struct iphdr *iph = ip_hdr(skb);
+-	struct mfc_cache *c;
++	struct mfc_cache *c = NULL;
+ 	bool found = false;
  	int err;
  
- 	err = sk_filter_reason(sk, skb, &drop_reason);
- 	if (err)
--		goto out;
-+		return drop_reason;
+ 	spin_lock_bh(&mfc_unres_lock);
++
++	if (!check_net(net)) {
++		err = -EINVAL;
++		goto err;
++	}
++
+ 	list_for_each_entry(c, &mrt->mfc_unres_queue, _c.list) {
+ 		if (c->mfc_mcastgrp == iph->daddr &&
+ 		    c->mfc_origin == iph->saddr) {
+@@ -1146,10 +1157,8 @@ static int ipmr_cache_unresolved(struct mr_table *mrt, vifi_t vifi,
+ 		/* Create a new entry if allowable */
+ 		c = ipmr_cache_alloc_unres();
+ 		if (!c) {
+-			spin_unlock_bh(&mfc_unres_lock);
+-
+-			kfree_skb(skb);
+-			return -ENOBUFS;
++			err = -ENOBUFS;
++			goto err;
+ 		}
  
- 	err = __sock_queue_rcv_skb(sk, skb);
- 	switch (err) {
- 	case -ENOMEM:
--		drop_reason = SKB_DROP_REASON_SOCKET_RCVBUFF;
--		break;
-+		return SKB_DROP_REASON_SOCKET_RCVBUFF;
- 	case -ENOBUFS:
--		drop_reason = SKB_DROP_REASON_PROTO_MEM;
--		break;
--	default:
--		drop_reason = SKB_NOT_DROPPED_YET;
--		break;
-+		return SKB_DROP_REASON_PROTO_MEM;
+ 		/* Fill in the new cache entry */
+@@ -1159,17 +1168,8 @@ static int ipmr_cache_unresolved(struct mr_table *mrt, vifi_t vifi,
+ 
+ 		/* Reflect first query at mrouted. */
+ 		err = ipmr_cache_report(mrt, skb, vifi, IGMPMSG_NOCACHE);
+-
+-		if (err < 0) {
+-			/* If the report failed throw the cache entry
+-			   out - Brad Parker
+-			 */
+-			spin_unlock_bh(&mfc_unres_lock);
+-
+-			ipmr_cache_free(c);
+-			kfree_skb(skb);
+-			return err;
+-		}
++		if (err < 0)
++			goto err;
+ 
+ 		atomic_inc(&mrt->cache_resolve_queue_len);
+ 		list_add(&c->_c.list, &mrt->mfc_unres_queue);
+@@ -1182,18 +1182,26 @@ static int ipmr_cache_unresolved(struct mr_table *mrt, vifi_t vifi,
+ 
+ 	/* See if we can append the packet */
+ 	if (c->_c.mfc_un.unres.unresolved.qlen > 3) {
+-		kfree_skb(skb);
++		c = NULL;
+ 		err = -ENOBUFS;
+-	} else {
+-		if (dev) {
+-			skb->dev = dev;
+-			skb->skb_iif = dev->ifindex;
+-		}
+-		skb_queue_tail(&c->_c.mfc_un.unres.unresolved, skb);
+-		err = 0;
++		goto err;
++	}
++
++	if (dev) {
++		skb->dev = dev;
++		skb->skb_iif = dev->ifindex;
  	}
--out:
--	if (reason)
--		*reason = drop_reason;
--	return err;
-+	return SKB_NOT_DROPPED_YET;
+ 
++	skb_queue_tail(&c->_c.mfc_un.unres.unresolved, skb);
++
+ 	spin_unlock_bh(&mfc_unres_lock);
++	return 0;
++
++err:
++	spin_unlock_bh(&mfc_unres_lock);
++	if (c)
++		ipmr_cache_free(c);
++	kfree_skb(skb);
+ 	return err;
  }
- EXPORT_SYMBOL(sock_queue_rcv_skb_reason);
  
-diff --git a/net/ipv4/ping.c b/net/ipv4/ping.c
-index 7f32753a16f41..21ced929cc9c1 100644
---- a/net/ipv4/ping.c
-+++ b/net/ipv4/ping.c
-@@ -944,7 +944,8 @@ static enum skb_drop_reason __ping_queue_rcv_skb(struct sock *sk,
- 
- 	pr_debug("ping_queue_rcv_skb(sk=%p,sk->num=%d,skb=%p)\n",
- 		 inet_sk(sk), inet_sk(sk)->inet_num, skb);
--	if (sock_queue_rcv_skb_reason(sk, skb, &reason) < 0) {
-+	reason = sock_queue_rcv_skb_reason(sk, skb);
-+	if (reason) {
- 		sk_skb_reason_drop(sk, skb, reason);
- 		pr_debug("ping_queue_rcv_skb -> failed\n");
- 		return reason;
-diff --git a/net/ipv4/raw.c b/net/ipv4/raw.c
-index c10cf41a365dc..5735ae7cba01a 100644
---- a/net/ipv4/raw.c
-+++ b/net/ipv4/raw.c
-@@ -308,7 +308,8 @@ static int raw_rcv_skb(struct sock *sk, struct sk_buff *skb)
- 	/* Charge it to the socket. */
- 
- 	ipv4_pktinfo_prepare(sk, skb, true);
--	if (sock_queue_rcv_skb_reason(sk, skb, &reason) < 0) {
-+	reason = sock_queue_rcv_skb_reason(sk, skb);
-+	if (reason) {
- 		sk_skb_reason_drop(sk, skb, reason);
- 		return NET_RX_DROP;
+@@ -1337,7 +1345,7 @@ static void mroute_clean_tables(struct mr_table *mrt, int flags,
  	}
-diff --git a/net/ipv6/raw.c b/net/ipv6/raw.c
-index 6cb8e32a3061f..b796d84db5ce2 100644
---- a/net/ipv6/raw.c
-+++ b/net/ipv6/raw.c
-@@ -368,7 +368,8 @@ static inline int rawv6_rcv_skb(struct sock *sk, struct sk_buff *skb)
  
- 	/* Charge it to the socket. */
- 	skb_dst_drop(skb);
--	if (sock_queue_rcv_skb_reason(sk, skb, &reason) < 0) {
-+	reason = sock_queue_rcv_skb_reason(sk, skb);
-+	if (reason) {
- 		sk_skb_reason_drop(sk, skb, reason);
- 		return NET_RX_DROP;
+ 	if (flags & MRT_FLUSH_MFC) {
+-		if (atomic_read(&mrt->cache_resolve_queue_len) != 0) {
++		if (atomic_read(&mrt->cache_resolve_queue_len) != 0 || !check_net(net)) {
+ 			spin_lock_bh(&mfc_unres_lock);
+ 			list_for_each_entry_safe(c, tmp, &mrt->mfc_unres_queue, list) {
+ 				list_del(&c->list);
+diff --git a/net/ipv4/ipmr_base.c b/net/ipv4/ipmr_base.c
+index 28d77d454d442..e6bb023e8dbd4 100644
+--- a/net/ipv4/ipmr_base.c
++++ b/net/ipv4/ipmr_base.c
+@@ -28,6 +28,20 @@ void vif_device_init(struct vif_device *v,
+ }
+ EXPORT_SYMBOL(vif_device_init);
+ 
++static void __mr_free_table(struct work_struct *work)
++{
++	struct mr_table *mrt = container_of(to_rcu_work(work),
++					    struct mr_table, work);
++
++	rhltable_destroy(&mrt->mfc_hash);
++	kfree(mrt);
++}
++
++void mr_table_free(struct mr_table *mrt)
++{
++	queue_rcu_work(system_unbound_wq, &mrt->work);
++}
++
+ struct mr_table *
+ mr_table_alloc(struct net *net, u32 id,
+ 	       struct mr_table_ops *ops,
+@@ -50,6 +64,8 @@ mr_table_alloc(struct net *net, u32 id,
+ 		kfree(mrt);
+ 		return ERR_PTR(err);
  	}
++
++	INIT_RCU_WORK(&mrt->work, __mr_free_table);
+ 	INIT_LIST_HEAD(&mrt->mfc_cache_list);
+ 	INIT_LIST_HEAD(&mrt->mfc_unres_queue);
+ 
 -- 
 2.53.0
 
