@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26C8F3F1AC6;
-	Sat, 12 Sep 2026 09:59:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2D1A41DEC8;
+	Sat, 12 Sep 2026 09:59:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789207187; cv=none; b=Dh//LELcoEi/9IsNywd17UtiE4lOhn5Ny6XuBCRdQOP2QW45v82CDDdPRETvEU8I1KMxVufVLdXFDF/+XBwmuBJk1KA9oy4GQ712VbORp5oKc7MCEbTl9FF16RnImr9oMTebqaO7HQLa15PZsm4WOHPzEA7zJPTzgB+eWexwlwo=
+	t=1789207192; cv=none; b=pS1CYrn0dAKZZLg2QcRkr6VDvb4mGM4nhrkKzu4eEaBGC45vXZ9TKeFFEWI/q7cHLbu9FynW6fHcyTMZBSeEiojRHm/Xcs//qVNUuJaxG0Lezr90OMHGkFFku3sFMQtXRT4np0IR4B9+2olpkS+QyTaG+Zmtyjj6SYCRcV68QHY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789207187; c=relaxed/simple;
-	bh=8brO9qc90F72pqM19erZV6Ko0Ynk5K4AbeAEhRifUhU=;
+	s=arc-20240116; t=1789207192; c=relaxed/simple;
+	bh=6HCWL7MjhhvYtPXogX/XowjG21lLSm63n2VZNn8ZML8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rfCPnaJcrxTe5Kfb17tDwhz8e8H12ESQ7qVQKLzwqb84UvzjfN0vUSrykW2zAvvUCMzWgWwr06Ddc8O+1M91V6rsM7s11XhujVcuvh3uvagbupBeeppRck3r0qTPBpQ1sOZO5x759WZGUTQ3mWJuYokL7a7pDOQFLppHjNyCAKs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=isNTyTT8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HJ5Sa8gIDhlKOfi9gIu7iCFwbeF92z16vg16C9++PofE/+yzK6XOtIDLTYaeKhJdoVg8x9Yc5RuwQCPfLDV0bEMCWH0gcCjkKF+AZxrGf/ol+IBBiif/hrYkElVwlwqRNRNsaPN1EoopVwnuPSjx6PAPC/lxcNuNY6ToK8Kd1LU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fsnmORgy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="isNTyTT8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE7731F000FF;
-	Sat, 12 Sep 2026 09:59:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fsnmORgy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B73B1F000FF;
+	Sat, 12 Sep 2026 09:59:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789207185;
-	bh=/Mn05e/AtnNrhp1ih6WvHTckrVaOnnbM9a1B0cP3JNo=;
+	s=korg; t=1789207190;
+	bh=XZYtPkXypCHFyJUg8msD7sQbl17If/2pCWcpIuaTNxY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=isNTyTT800aKUVdQD9/vaQEhGC+ViLumHFUhqTM7vhW56XTDzhGMxV7rbVpvexwj9
-	 N77qX1bhRI/SGTHoEXixuHQPp2+HQ+vcN8NmKj+ChbDNDPmVsA7PviHurUb1QSfkUB
-	 B08S/1pmlVhih+qvVLZ2PQpUGH9ZTh1LsPPlpQg0=
+	b=fsnmORgyyhsdZkZoNhjJ60D4olVAZMD+oeO9O5fqx9+qlTvXzoRLlFzxVtNgxGi5E
+	 ct6Pz+2tj7xDqCCbkIlii3culmceI0Ni6FvyR93m6tyGBTLEsjtB9lpyBM38nbWzUR
+	 HJnAirZqDbssNdUbfXz/8T7vjTdwnCLW7nMHmUVE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengyu Luo <mitltlatltl@gmail.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Jan Kara <jack@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0324/1518] usb: ucsi: huawei_gaokun: support mode switching
-Date: Sat, 12 Sep 2026 08:41:33 +0200
-Message-ID: <20260912065630.804335208@linuxfoundation.org>
+Subject: [PATCH 6.18 0360/1518] isofs: fix out-of-bounds page array access on empty zisofs block
+Date: Sat, 12 Sep 2026 08:42:09 +0200
+Message-ID: <20260912065631.615290062@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,176 +52,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengyu Luo <mitltlatltl@gmail.com>
+From: Xiang Mei <xmei5@asu.edu>
 
-[ Upstream commit 1c2b66a7d7257d2652aa41f9a860ecb96dde27dd ]
+[ Upstream commit 68d4d3e78150c7ed7d1195af63ad1e6ace30c661 ]
 
-The USB PHY (QMP Combo PHY) is always initialized in USB3+DP mode. In
-the past, there was no MUX, and it was unnecessary to set it, since
-MSM only supported 2-lane DP. But now, MST and 4-lane DP support has
-been added to MSM, and a MUX has been added to the PHY. To support
-4-lane DP and mode switching for gaokun, get the MUX and set it.
+zisofs_uncompress_block()'s empty-block fast path returns
+pcount << PAGE_SHIFT, ignoring the incoming poffset, unlike the
+decompression path which returns bytes produced relative to poffset.
+zisofs_fill_pages() uses that return to advance its page cursor, so when
+the zisofs block size is below PAGE_SIZE and a sub-page block leaves
+poffset partway into a page, a following empty block over-counts and
+advances pages[] one element past its end, after which
+"if (poffset && *pages)" reads pages[1] out of bounds.  rock.c only
+rejects a block-size shift > 17, so a crafted "ZF" Rock Ridge record can
+set it below PAGE_SHIFT; the bug is reached by an ordinary read() of a
+compressed file on such a mounted ISO9660 image.
 
-Signed-off-by: Pengyu Luo <mitltlatltl@gmail.com>
-Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://patch.msgid.link/20260607101844.820064-1-mitltlatltl@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: 2c5659a7064e ("usb: typec: ucsi: gaokun: unwind notifier on UCSI register failure")
+Return the byte count relative to poffset and zero only
+[poffset, PAGE_SIZE) of the first page, matching the decompression path.
+The page-aligned case (poffset == 0) is unaffected.
+
+  BUG: KASAN: slab-out-of-bounds in zisofs_read_folio (fs/isofs/compress.c:290)
+  Read of size 8 at addr ffff88800f5eac48 by task exploit/142
+   zisofs_read_folio (fs/isofs/compress.c:290)
+   read_pages (mm/readahead.c:184)
+   ...
+   filemap_read (mm/filemap.c:2814)
+   vfs_read (fs/read_write.c:574)
+   __x64_sys_pread64 (fs/read_write.c:769)
+   do_syscall_64 (arch/x86/entry/syscall_64.c:94)
+   entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
+  The buggy address is located 0 bytes to the right of the
+  allocated 8-byte region in the kmalloc-8 cache
+
+Fixes: 59bc055211b8 ("zisofs: Implement reading of compressed files when PAGE_CACHE_SIZE > compress block size")
+Reported-by: Weiming Shi <bestswngs@gmail.com>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Link: https://patch.msgid.link/20260712234150.3213467-1-xmei5@asu.edu
+Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/ucsi/ucsi_huawei_gaokun.c | 55 +++++++++++++++------
- 1 file changed, 41 insertions(+), 14 deletions(-)
+ fs/isofs/compress.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/usb/typec/ucsi/ucsi_huawei_gaokun.c b/drivers/usb/typec/ucsi/ucsi_huawei_gaokun.c
-index c5965656babad..95b7b77b726d7 100644
---- a/drivers/usb/typec/ucsi/ucsi_huawei_gaokun.c
-+++ b/drivers/usb/typec/ucsi/ucsi_huawei_gaokun.c
-@@ -18,6 +18,7 @@
- #include <linux/usb/pd_vdo.h>
- #include <linux/usb/typec_altmode.h>
- #include <linux/usb/typec_dp.h>
-+#include <linux/usb/typec_mux.h>
- #include <linux/workqueue_types.h>
- 
- #include "ucsi.h"
-@@ -82,6 +83,8 @@ struct gaokun_ucsi_port {
- 	struct gaokun_ucsi *ucsi;
- 	struct auxiliary_device *bridge;
- 
-+	struct typec_mux *typec_mux;
+diff --git a/fs/isofs/compress.c b/fs/isofs/compress.c
+index 5f3b6da0e0225..172faf79a259d 100644
+--- a/fs/isofs/compress.c
++++ b/fs/isofs/compress.c
+@@ -65,12 +65,14 @@ static loff_t zisofs_uncompress_block(struct inode *inode, loff_t block_start,
+ 	/* Empty block? */
+ 	if (block_size == 0) {
+ 		for ( i = 0 ; i < pcount ; i++ ) {
++			unsigned int off = i ? 0 : poffset;
 +
- 	int idx;
- 	enum gaokun_ucsi_ccx ccx;
- 	enum gaokun_ucsi_mux mux;
-@@ -226,19 +229,18 @@ static void gaokun_ucsi_port_update(struct gaokun_ucsi_port *port,
- 	port->hpd_state = FIELD_GET(GAOKUN_HPD_STATE_MASK, ddi);
- 	port->hpd_irq = FIELD_GET(GAOKUN_HPD_IRQ_MASK, ddi);
- 
--	/* Mode and SVID are unused; keeping them to make things clearer */
- 	switch (port->mode) {
- 	case USBC_DPAM_PAN_C:
- 	case USBC_DPAM_PAN_C_REVERSE:
--		port->mode = DP_PIN_ASSIGN_C; /* correct it for usb later */
-+		port->mode = TYPEC_DP_STATE_C; /* correct it for usb later */
- 		break;
- 	case USBC_DPAM_PAN_D:
- 	case USBC_DPAM_PAN_D_REVERSE:
--		port->mode = DP_PIN_ASSIGN_D;
-+		port->mode = TYPEC_DP_STATE_D;
- 		break;
- 	case USBC_DPAM_PAN_E:
- 	case USBC_DPAM_PAN_E_REVERSE:
--		port->mode = DP_PIN_ASSIGN_E;
-+		port->mode = TYPEC_DP_STATE_E;
- 		break;
- 	case USBC_DPAM_PAN_NONE:
- 		port->mode = TYPEC_STATE_SAFE;
-@@ -287,18 +289,32 @@ static int gaokun_ucsi_refresh(struct gaokun_ucsi *uec)
- 	return idx;
- }
- 
--static void gaokun_ucsi_handle_altmode(struct gaokun_ucsi_port *port)
-+static void gaokun_ucsi_handle_usb_mode(struct gaokun_ucsi_port *port)
- {
- 	struct gaokun_ucsi *uec = port->ucsi;
--	int idx = port->idx;
--
--	if (idx >= uec->ucsi->cap.num_connectors) {
-+	struct typec_mux_state state = {};
-+	struct typec_altmode dp_alt = {};
-+	int idx = port->idx, ret;
-+
-+	/*
-+	 * For every typec port on this platform, the only mode-switch is
-+	 * controlled by its qmp combo phy which consumes svid and mode only.
-+	 */
-+	dp_alt.svid = port->svid;
-+	state.mode = port->mode;
-+	state.alt = &dp_alt;
-+
-+	if (idx >= uec->num_ports) {
- 		dev_warn(uec->dev, "altmode port out of range: %d\n", idx);
- 		return;
- 	}
- 
-+	ret = typec_mux_set(port->typec_mux, &state);
-+	if (ret)
-+		dev_err(uec->dev, "failed to set mux %d\n", ret);
-+
- 	/* UCSI callback .connector_status() have set orientation */
--	if (port->bridge)
-+	if (port->bridge && port->svid == USB_TYPEC_DP_SID)
- 		drm_aux_hpd_bridge_notify(&port->bridge->dev,
- 					  port->hpd_state ?
- 					  connector_status_connected :
-@@ -307,7 +323,7 @@ static void gaokun_ucsi_handle_altmode(struct gaokun_ucsi_port *port)
- 	gaokun_ec_ucsi_pan_ack(uec->ec, port->idx);
- }
- 
--static void gaokun_ucsi_altmode_notify_ind(struct gaokun_ucsi *uec)
-+static void gaokun_ucsi_usb_notify_ind(struct gaokun_ucsi *uec)
- {
- 	int idx;
- 
-@@ -320,7 +336,7 @@ static void gaokun_ucsi_altmode_notify_ind(struct gaokun_ucsi *uec)
- 	if (idx == GAOKUN_UCSI_NO_PORT_UPDATE)
- 		gaokun_ec_ucsi_pan_ack(uec->ec, idx); /* ack directly if no update */
- 	else
--		gaokun_ucsi_handle_altmode(&uec->ports[idx]);
-+		gaokun_ucsi_handle_usb_mode(&uec->ports[idx]);
- }
- 
- /*
-@@ -352,7 +368,7 @@ static void gaokun_ucsi_handle_no_usb_event(struct gaokun_ucsi *uec, int idx)
- 	port = &uec->ports[idx];
- 	if (!wait_for_completion_timeout(&port->usb_ack, 2 * HZ)) {
- 		dev_warn(uec->dev, "No USB EVENT, triggered by UCSI EVENT");
--		gaokun_ucsi_altmode_notify_ind(uec);
-+		gaokun_ucsi_usb_notify_ind(uec);
- 	}
- }
- 
-@@ -366,7 +382,7 @@ static int gaokun_ucsi_notify(struct notifier_block *nb,
- 	switch (action) {
- 	case EC_EVENT_USB:
- 		gaokun_ucsi_complete_usb_ack(uec);
--		gaokun_ucsi_altmode_notify_ind(uec);
-+		gaokun_ucsi_usb_notify_ind(uec);
- 		return NOTIFY_OK;
- 
- 	case EC_EVENT_UCSI:
-@@ -429,8 +445,15 @@ static int gaokun_ucsi_ports_init(struct gaokun_ucsi *uec)
- 			fwnode_handle_put(fwnode);
- 			return PTR_ERR(ucsi_port->bridge);
+ 			if (!pages[i])
+ 				continue;
+-			memzero_page(pages[i], 0, PAGE_SIZE);
++			memzero_page(pages[i], off, PAGE_SIZE - off);
+ 			SetPageUptodate(pages[i]);
  		}
--	}
+-		return ((loff_t)pcount) << PAGE_SHIFT;
++		return (((loff_t)pcount) << PAGE_SHIFT) - poffset;
+ 	}
  
-+		ucsi_port->typec_mux = fwnode_typec_mux_get(fwnode);
-+		if (IS_ERR(ucsi_port->typec_mux)) {
-+			fwnode_handle_put(fwnode);
-+			return dev_err_probe(dev, PTR_ERR(ucsi_port->typec_mux),
-+					     "failed to acquire mode-switch for port: %d\n",
-+					     port);
-+		}
-+	}
- 	for (i = 0; i < num_ports; i++) {
- 		if (!uec->ports[i].bridge)
- 			continue;
-@@ -502,10 +525,14 @@ static int gaokun_ucsi_probe(struct auxiliary_device *adev,
- static void gaokun_ucsi_remove(struct auxiliary_device *adev)
- {
- 	struct gaokun_ucsi *uec = auxiliary_get_drvdata(adev);
-+	int i;
- 
- 	disable_delayed_work_sync(&uec->work);
- 	gaokun_ec_unregister_notify(uec->ec, &uec->nb);
- 	ucsi_unregister(uec->ucsi);
-+	for (i = 0; i < uec->num_ports; ++i)
-+		typec_mux_put(uec->ports[i].typec_mux);
-+
- 	ucsi_destroy(uec->ucsi);
- }
- 
+ 	/* Because zlib is not thread-safe, do all the I/O at the top. */
 -- 
 2.53.0
 
