@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EEFC246BCD;
-	Sat, 12 Sep 2026 10:02:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82678246BCD;
+	Sat, 12 Sep 2026 10:02:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789207356; cv=none; b=juVgU0kI7UD8ef2rybnS4fybgZsU5kTPuEF/gKRa8yWM5MQZpJrqzRrq6JRg3M9IzkBMZyf4vRNxAx/cY90qD0FkUtxKFqirSgLQPsWofYiSRfhG/Sf2RakStuamXgWDkPYneDUEcoo9prMOdCzHMeT0f8Jejf+sFFSnybetz9M=
+	t=1789207361; cv=none; b=bxrhpQlIGJVpZz8TYxNjLwCTnj1Tdc6Di06hYa8mHQ4kQEl5648EtjQ/IIgRz5mLS71EQY86f3wey7XfiAbzph3rzaJYlEmsTKtygnHY37W/1bGsF5XQxj8LXPo80iXNJO7gja1RhOqMosEIIqemgmeuRboVNgyjXElFJ8hNkjM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789207356; c=relaxed/simple;
-	bh=qLifwwBmaLu1wyNzqgGKoj0ywieHk4sEQsOn6qzNH0I=;
+	s=arc-20240116; t=1789207361; c=relaxed/simple;
+	bh=L0KD2VO79GCp+3w2DtCXHv+0CSJexf0N/RCFIs9ABoA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GMxQPwwfRB6Nh50HC7UDj3yrr/qNh03R6X7UDdmoHsfd0oQwUAqd9+dbUVzc7vNbcg/QGY+/rvz6RdiaGkcyuh+sYU92Km0GoaSoOwSzgoXSvZqg3Nh2IBl/EnyF9YojmHk5UbhYG2WP6I6Lm/0UxkNDGxUYKGKEj+yaBzI09zA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lUmVfrrh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EO2vPYznQcMIneoKUHrcG4Q1J0EL2gV+MesFYludGF00UA66j26mv5mCW77K9Rw2eS/LlcbIbBLCgrWCbqWuhzSI/kZxHsl9PieJm8tGuiJ9vrtghnomXJiNVTI90ht5vWxWubahfg21tCNKWzgdP0MP9yN33otVrxL/ZMz1l+E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A5vRucKr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lUmVfrrh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92B631F000FF;
-	Sat, 12 Sep 2026 10:02:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A5vRucKr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3240F1F000FF;
+	Sat, 12 Sep 2026 10:02:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789207355;
-	bh=O7wu/l8JDnFOfObCG6DFD2fglhrifyj540XxN6vZKn0=;
+	s=korg; t=1789207360;
+	bh=fK7i0SPuxpFo+9NL8jvEjsCxVuoJ5mvK2xcI+Xq6sLY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lUmVfrrhY2WYyZ30jcxHxy/DOQU8ykqj5JdjyVwSAMSKYdt6QVk7/TYUOZdWjk8iL
-	 F2hr3ky0a3i5Cjv+2ocVDwJlZmAI1CHo3LZX5nOCZQv1AbfGb6x2wZlS+Af1jXv+wZ
-	 JlsNClb4DgXVqnNqia1i9nHaRrQdmNQMGtsiz82s=
+	b=A5vRucKrsilXq0tatJcltP86/XwqBco07jeDPoUILAJzhGNpgJssDR9xGzIxBKznW
+	 xj97wOnOFcL1fvtoKmanxxsKTE1x3PIfr/TNRSPvU/G55D0x8HcjEENGZIiz0o09Pm
+	 LGznYra90pV9GzRVBbPx+lRE5trizG7mjLA8p7jI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peiyang He <peiyang_he@smail.nju.edu.cn>,
-	Nicolin Chen <nicolinc@nvidia.com>,
-	Kevin Tian <kevin.tian@intel.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Richard Cheng <icheng@nvidia.com>,
+	John Groves <john@groves.net>,
+	Alison Schofield <alison.schofield@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0369/1518] iommufd: Simplify iommufd_device_remove_vdev()
-Date: Sat, 12 Sep 2026 08:42:18 +0200
-Message-ID: <20260912065631.817013127@linuxfoundation.org>
+Subject: [PATCH 6.18 0396/1518] dax: read holder_ops once in dax_holder_notify_failure()
+Date: Sat, 12 Sep 2026 08:42:45 +0200
+Message-ID: <20260912065632.416383599@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -53,128 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Gunthorpe <jgg@nvidia.com>
+From: John Groves <John@Groves.net>
 
-[ Upstream commit 8062148046e1a6417d44e2ed86c04e66c2f4f2a1 ]
+[ Upstream commit 7ae9d15bdcde0f2955ae13b6a95587f9e23b2359 ]
 
-Peiyang reports that this function indirectly includes a fault injection
-point through iommufd_get_object() that was intended to cover the uAPI use
-of object IDs, not in places like this that cannot fail.
+dax_holder_notify_failure() reads dax_dev->holder_ops twice without
+READ_ONCE() -- once for the NULL check and once for the indirect
+notify_failure() call. A concurrent fs_put_dax() can clear holder_ops
+between the two reads, so the check can observe a non-NULL pointer while
+the call dereferences NULL. (kill_dax() also clears holder_ops, but only
+after synchronize_srcu(), so it cannot race a reader that is inside
+dax_read_lock(); fs_put_dax() does no such synchronization.)
 
-On deeper inspection this can be written using a dedicated helper to
-obtain a users refcount relying entirely on the xa locking instead of
-going through the whole get/put scheme. The new helper doesn't need the
-fault injection point.
+Fetch holder_ops once into a local with READ_ONCE() so the NULL check and
+the indirect call observe the same value.
 
-Fixes: 850f14f5b919 ("iommufd: Destroy vdevice on idevice destroy")
-Link: https://patch.msgid.link/r/0-v1-719003d53a5b+38b-iommufd_fault_inj_vdev_jgg@nvidia.com
-Reported-by: Peiyang He <peiyang_he@smail.nju.edu.cn>
-Closes: https://lore.kernel.org/r/870BB9ADBBEDDD1A+37c5bfab-ad32-4fc5-a302-57c81a8432b5@smail.nju.edu.cn
-Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Fixes: 8012b86608552 ("dax: introduce holder for dax_device")
+Suggested-by: Richard Cheng <icheng@nvidia.com>
+Reviewed-by: Richard Cheng <icheng@nvidia.com>
+Signed-off-by: John Groves <john@groves.net>
+Link: https://patch.msgid.link/0100019ecc09bb56-5ecc9c6b-35ba-44f8-b112-921b01b34478-000000@email.amazonses.com
+Signed-off-by: Alison Schofield <alison.schofield@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/iommufd/device.c          | 13 +++----------
- drivers/iommu/iommufd/iommufd_private.h |  9 +--------
- drivers/iommu/iommufd/main.c            | 20 ++++++++++++++++++++
- 3 files changed, 24 insertions(+), 18 deletions(-)
+ drivers/dax/super.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/iommu/iommufd/device.c b/drivers/iommu/iommufd/device.c
-index c40515bf5017b..3216deab98e39 100644
---- a/drivers/iommu/iommufd/device.c
-+++ b/drivers/iommu/iommufd/device.c
-@@ -148,29 +148,22 @@ static void iommufd_device_remove_vdev(struct iommufd_device *idev)
- 	if (!idev->vdev)
- 		goto out_unlock;
- 
--	vdev = iommufd_get_vdevice(idev->ictx, idev->vdev->obj.id);
-+	vdev = idev->vdev;
-+
- 	/*
- 	 * An ongoing vdev destroy ioctl has removed the vdev from the object
- 	 * xarray, but has not finished iommufd_vdevice_destroy() yet as it
- 	 * needs the same mutex. We exit the locking then wait on wait_cnt
- 	 * reference for the vdev destruction.
- 	 */
--	if (IS_ERR(vdev))
--		goto out_unlock;
--
--	/* Should never happen */
--	if (WARN_ON(vdev != idev->vdev)) {
--		iommufd_put_object(idev->ictx, &vdev->obj);
-+	if (iommufd_try_inc_users(idev->ictx, &vdev->obj))
- 		goto out_unlock;
--	}
- 
- 	/*
- 	 * vdev is still alive. Hold a users refcount to prevent racing with
- 	 * userspace destruction, then use iommufd_object_tombstone_user() to
- 	 * destroy it and leave a tombstone.
- 	 */
--	refcount_inc(&vdev->obj.users);
--	iommufd_put_object(idev->ictx, &vdev->obj);
- 	mutex_unlock(&idev->igroup->lock);
- 	iommufd_object_tombstone_user(idev->ictx, &vdev->obj);
- 	return;
-diff --git a/drivers/iommu/iommufd/iommufd_private.h b/drivers/iommu/iommufd/iommufd_private.h
-index 53d37e77c4b98..c208563eb367f 100644
---- a/drivers/iommu/iommufd/iommufd_private.h
-+++ b/drivers/iommu/iommufd/iommufd_private.h
-@@ -181,6 +181,7 @@ static inline bool iommufd_lock_obj(struct iommufd_object *obj)
- 	return true;
- }
- 
-+int iommufd_try_inc_users(struct iommufd_ctx *ictx, struct iommufd_object *obj);
- struct iommufd_object *iommufd_get_object(struct iommufd_ctx *ictx, u32 id,
- 					  enum iommufd_object_type type);
- static inline void iommufd_put_object(struct iommufd_ctx *ictx,
-@@ -695,14 +696,6 @@ void iommufd_vdevice_abort(struct iommufd_object *obj);
- int iommufd_hw_queue_alloc_ioctl(struct iommufd_ucmd *ucmd);
- void iommufd_hw_queue_destroy(struct iommufd_object *obj);
- 
--static inline struct iommufd_vdevice *
--iommufd_get_vdevice(struct iommufd_ctx *ictx, u32 id)
--{
--	return container_of(iommufd_get_object(ictx, id,
--					       IOMMUFD_OBJ_VDEVICE),
--			    struct iommufd_vdevice, obj);
--}
--
- #ifdef CONFIG_IOMMUFD_TEST
- int iommufd_test(struct iommufd_ucmd *ucmd);
- void iommufd_selftest_destroy(struct iommufd_object *obj);
-diff --git a/drivers/iommu/iommufd/main.c b/drivers/iommu/iommufd/main.c
-index ce775fbbae94e..02d06a02d5e67 100644
---- a/drivers/iommu/iommufd/main.c
-+++ b/drivers/iommu/iommufd/main.c
-@@ -180,6 +180,26 @@ struct iommufd_object *iommufd_get_object(struct iommufd_ctx *ictx, u32 id,
- 	return obj;
- }
- 
-+/*
-+ * Increment the users count of an object outside the context of an ioctl that
-+ * has already locked it. The users refcount cannot be increased on an already
-+ * created object unless the object is installed in the xarray, otherwise things
-+ * are racing with a parallel destruction.
-+ */
-+int iommufd_try_inc_users(struct iommufd_ctx *ictx, struct iommufd_object *obj)
-+{
-+	struct iommufd_object *cur;
-+
-+	xa_lock(&ictx->objects);
-+	cur = xa_load(&ictx->objects, obj->id);
-+	if (cur == obj)
-+		refcount_inc(&obj->users);
-+	xa_unlock(&ictx->objects);
-+	if (cur != obj)
-+		return -EBUSY;
-+	return 0;
-+}
-+
- static int iommufd_object_dec_wait(struct iommufd_ctx *ictx,
- 				   struct iommufd_object *to_destroy)
+diff --git a/drivers/dax/super.c b/drivers/dax/super.c
+index d7714d8afb0fa..efa5f61860190 100644
+--- a/drivers/dax/super.c
++++ b/drivers/dax/super.c
+@@ -232,6 +232,7 @@ EXPORT_SYMBOL_GPL(dax_recovery_write);
+ int dax_holder_notify_failure(struct dax_device *dax_dev, u64 off,
+ 			      u64 len, int mf_flags)
  {
++	const struct dax_holder_operations *ops;
+ 	int rc, id;
+ 
+ 	id = dax_read_lock();
+@@ -240,12 +241,19 @@ int dax_holder_notify_failure(struct dax_device *dax_dev, u64 off,
+ 		goto out;
+ 	}
+ 
+-	if (!dax_dev->holder_ops) {
++	/*
++	 * Read holder_ops once: a concurrent fs_put_dax() can clear it without
++	 * synchronizing against readers. Without the single fetch the compiler
++	 * could reload between the NULL check and the call and dereference a
++	 * NULL ops.
++	 */
++	ops = READ_ONCE(dax_dev->holder_ops);
++	if (!ops) {
+ 		rc = -EOPNOTSUPP;
+ 		goto out;
+ 	}
+ 
+-	rc = dax_dev->holder_ops->notify_failure(dax_dev, off, len, mf_flags);
++	rc = ops->notify_failure(dax_dev, off, len, mf_flags);
+ out:
+ 	dax_read_unlock(id);
+ 	return rc;
 -- 
 2.53.0
 
