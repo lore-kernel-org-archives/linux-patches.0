@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9F9C37C118;
-	Sat, 12 Sep 2026 09:21:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FF77374A12;
+	Sat, 12 Sep 2026 09:22:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789204917; cv=none; b=d0RnDsAxMdAZDHwYt4Shf1WpSb31pfuCrxSHbQO2rFedZxeIyET/rUwNB8Q4fs2lFI2ZZbVzaDNg/K69r9H+QPOMWOY7DjcLUpvRwG1l3MGggqZo91y+YWPAjAvXecuOYt49kf/eomawCVZQC5pcMjY2Q7CSpr/0C/uaXXEOoyY=
+	t=1789204921; cv=none; b=R8trXUD90fF/9TbHpBnFMPMi66gpafWOM7RT64DBptwXs8Y6LXDqKoXB31Um+I6kyf43+OTVhfaqkAqAdp9XXs7+zcJsCuYphrT+zm+WSmsum7bWdLlSbBZVtmo1SC7uFHDqmwSMD15KaE/6OrpjxXDi6/S0attWXXb2WHF2gcA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789204917; c=relaxed/simple;
-	bh=ryQTHC9jMMnVvJnr9w1/sNtGHfgLH2RUcW/jEvimQj4=;
+	s=arc-20240116; t=1789204921; c=relaxed/simple;
+	bh=aJg1rNzy4AralSPRSxutL1VeX9rZA+LyYqo9ZCMrxGQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ni8bbbILlYWGotyHeXC2F4EUtm8br1JS/AnWoWKgxZgWdOd3AV/x9Pt8Lvg5+hOINEfff6/TR26Rgienb9WuzWK4rim34oIhatR3vO/B7cbH1aa0gTIQfWB4ydUeon+8IzxSeqeOlHxtVVTHoK6zINSqL9cKuMFDQ9GZNjhbaIg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HBahVVrG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PZIrmXYIb8kKNlaUSYBxUroGi4ly5XfE70Nm1ec+ZlN83Y5yUrcrpYEtynW24u5JQTIFlbD0kzEbyEdIHSFswL8cu+jkyihwWuzUScoSyecEFnxs16sGGdiuVRcm71CQ3+KSQLX/GHc71koJEQQGX0OrwYnyjJEmbHezbqt+hhM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vzStB7sz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HBahVVrG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6CF51F000FF;
-	Sat, 12 Sep 2026 09:21:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vzStB7sz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 016141F00898;
+	Sat, 12 Sep 2026 09:21:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789204915;
-	bh=LE+12iqqxNTBTW92Q393LxkdJrRzxezU4o8LhtboYeM=;
+	s=korg; t=1789204920;
+	bh=iMj2tURFZnqMdBn0/hOl+mP7GfPX1HRHkBashTIt9QU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HBahVVrGobwmCxM59CGUusx8w9mhyEd2l0RqUWlrOJ1o75C6CVdTUgdAOVsnwjm1i
-	 YLWZqkzJX3y4NvLIOGDKr+MYUCInYJhBmarM5FaT/NML54WaVwh92WLXXQIvB9eGfe
-	 gIUXJ4kgVawKcppfrJqJ29h7KPqoFGUjGBHev8bQ=
+	b=vzStB7szz0BMlgCvs8QmErq9l2gIrJ+7UTa3qpgD4xvq9Q8rBI3VSTUyMwqfpaIwe
+	 7Nz/PqMWV2sJoZ1nUwr0aaEHY3u8sxO9bdEEZFcHhTdm1M7OajGtSKCmZoA4YI8vPf
+	 332zrDtH43az90GCcElf+RKwqmugkmBHcs5jTZ/I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bernd Schubert <bernd@bsbernd.com>,
-	Miklos Szeredi <mszeredi@redhat.com>,
+	Wei-Lin Chang <weilin.chang@arm.com>,
+	Marc Zyngier <maz@kernel.org>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 1711/1815] fuse: Fix the condition to enable over-io-uring
-Date: Sat, 12 Sep 2026 08:57:41 +0200
-Message-ID: <20260912065729.143663604@linuxfoundation.org>
+Subject: [PATCH 7.2 1712/1815] arm64: ptdump: Make note_page_flush() range aware
+Date: Sat, 12 Sep 2026 08:57:42 +0200
+Message-ID: <20260912065729.165805218@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -51,108 +52,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bernd Schubert <bernd@bsbernd.com>
+From: Wei-Lin Chang <weilin.chang@arm.com>
 
-[ Upstream commit 1f59015e958174e89be58cc8db16d70a60d17255 ]
+[ Upstream commit 902caade3cfd60f99bf71b355e7c86344bd831e5 ]
 
-The existing condition in fuse_uring_cmd() is there only to avoid
-disabling io-uring for connections that already run with it, missing
-was a condition to refuse any IORING_OP_URING_CMD if the
-connection/channel didn't get enabled because of missing FUSE_INIT
-reply flag FUSE_OVER_IO_URING. Without the reply flag the barrier in
-fuse_uring_ready() doesn't work and IO could already be going on and
-cause deadlock states (at a minimum one between fch->bg_lock and
-queue->lock).
+note_page_flush() calls note_page() with addr == 0 and level == -1 to
+dump the last row of a ptdump. addr == 0 (1 << 64 wrapped around)
+renders a huge region with enormous size for address spaces with
+IA bits < 64. For example the stage-2 page tables and the EFI runtime
+page table.
 
-The change itself is trivial, but brings behavior change,
-FUSE_OVER_IO_URING has to be set in the FUSE_INIT_REPLY by fuse servers
-to accept any IORING_OP_URING_CMD. Libfuse does that and the only
-non-libfuse implementation I found (fractal-fuse) also does it.
-Qemu patches for fuse-io-uring are not merged yet, as far as I know.
+More importantly, the last region of the address space and everything
+after the address space up to 1 << 64 are merged into one row of
+output. If the last region within the address space is valid, it will
+appear to remain valid up to 1 << 64 with the same attributes.
 
-Moved up is the smp_load_acquire(&fch->initialized) check, as a
-fuse-server implementation might try to setup io-uring before FUSE_INIT
-is processed and might have gotten -EOPNOTSUPP instead of -EAGAIN.
+Currently only the EFI runtime ptdump is affected by this, but KVM will
+soon fix its stage-2 ptdump by using note_page_flush(). Here is an
+example of an EFI runtime ptdump (last row):
 
-Also fixed is a stale comment that explains the handling of the
-FUSE_OVER_IO_URING flag in early RFC versions.
+0x0000008000000000-0x0000000000000000   17179868672G PGD
 
-If there should be a report from any library or application we
-probably need to revert this commit.
+With this patch:
 
-Fixes: 3393ff964e0f ("fuse: block request allocation until io-uring init is complete")
-Signed-off-by: Bernd Schubert <bernd@bsbernd.com>
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
+0x0000008000000000-0x0001000000000000      261632G PGD
+
+To fix this, cache the end address of a ptdump in ptdump_pg_state so
+note_page_flush() can call the final note_page() with the correct end
+address.
+
+Fixes: 9d80448ac92b ("efi/arm64: Add debugfs node to dump UEFI runtime page tables")
+Signed-off-by: Wei-Lin Chang <weilin.chang@arm.com>
+Reviewed-by: Marc Zyngier <maz@kernel.org>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fuse/dev_uring.c | 31 ++++++++++++++++++-------------
- fs/fuse/inode.c     |  4 ----
- 2 files changed, 18 insertions(+), 17 deletions(-)
+ arch/arm64/include/asm/ptdump.h |  2 ++
+ arch/arm64/mm/ptdump.c          | 14 +++++++++++++-
+ 2 files changed, 15 insertions(+), 1 deletion(-)
 
-diff --git a/fs/fuse/dev_uring.c b/fs/fuse/dev_uring.c
-index bda2b2cda190e..8448fdbd90c9a 100644
---- a/fs/fuse/dev_uring.c
-+++ b/fs/fuse/dev_uring.c
-@@ -1237,26 +1237,31 @@ int fuse_uring_cmd(struct io_uring_cmd *cmd, unsigned int issue_flags)
- 	}
- 	fch = fud->chan;
+diff --git a/arch/arm64/include/asm/ptdump.h b/arch/arm64/include/asm/ptdump.h
+index 50a195eda8ed2..3aa8fa2fcec76 100644
+--- a/arch/arm64/include/asm/ptdump.h
++++ b/arch/arm64/include/asm/ptdump.h
+@@ -50,6 +50,8 @@ struct ptdump_pg_state {
+ 	const struct addr_marker *marker;
+ 	const struct mm_struct *mm;
+ 	unsigned long start_address;
++	/* exclusive end, ULONG_MAX represents an end at 1 << 64 */
++	unsigned long end_address;
+ 	int level;
+ 	ptval_t current_prot;
+ 	bool check_wx;
+diff --git a/arch/arm64/mm/ptdump.c b/arch/arm64/mm/ptdump.c
+index 5a76c59b5ada5..9d9bcb6738f4c 100644
+--- a/arch/arm64/mm/ptdump.c
++++ b/arch/arm64/mm/ptdump.c
+@@ -278,9 +278,19 @@ void note_page_pgd(struct ptdump_state *pt_st, unsigned long addr, pgd_t pgd)
  
--	/* Once a connection has io-uring enabled on it, it can't be disabled */
--	if (!enable_uring && !fch->io_uring) {
--		pr_info_ratelimited("fuse-io-uring is disabled\n");
--		return -EOPNOTSUPP;
--	}
--
--	if (fch->abort_with_err)
--		return -ECONNABORTED;
--	if (!fch->connected)
--		return -ENOTCONN;
--
- 	/*
--	 * fuse_uring_register() needs the ring to be initialized,
--	 * we need to know the max payload size
-+	 * The ring is sized from values negotiated by FUSE_INIT
- 	 *
- 	 * Pairs with smp_store_release() in fuse_chan_set_initialized()
- 	 */
- 	if (!smp_load_acquire(&fch->initialized))
- 		return -EAGAIN;
+ void note_page_flush(struct ptdump_state *pt_st)
+ {
++	struct ptdump_pg_state *st = container_of(pt_st, struct ptdump_pg_state, ptdump);
++	unsigned long end = st->end_address;
+ 	pte_t pte_zero = {0};
  
-+	if (fch->abort_with_err)
-+		return -ECONNABORTED;
-+	if (!fch->connected)
-+		return -ENOTCONN;
+-	note_page(pt_st, 0, -1, pte_val(pte_zero));
++	/*
++	 * Address spaces that end at 1 << 64 have end_address == ULONG_MAX,
++	 * but note_page() expects the exclusive end. In this case adjust end
++	 * to the wraparound value 0.
++	 */
++	if (end == ULONG_MAX)
++		end = 0;
 +
-+	/* Once a connection has io-uring enabled on it, it can't be disabled */
-+	if (!enable_uring && !fch->io_uring) {
-+		pr_info_ratelimited("fuse-io-uring is disabled by module parameter\n");
-+		return -EOPNOTSUPP;
-+	}
-+
-+	if (!fch->io_uring) {
-+		pr_info_ratelimited(
-+			"fuse-io-uring not enabled on this connection\n");
-+		return -EOPNOTSUPP;
-+	}
-+
- 	switch (cmd_op) {
- 	case FUSE_IO_URING_CMD_REGISTER:
- 		err = fuse_uring_register(cmd, issue_flags, fch);
-diff --git a/fs/fuse/inode.c b/fs/fuse/inode.c
-index c219622720fef..e89e2b0a57a6a 100644
---- a/fs/fuse/inode.c
-+++ b/fs/fuse/inode.c
-@@ -1479,10 +1479,6 @@ static struct fuse_init_args *fuse_new_init(struct fuse_mount *fm)
- 	if (IS_ENABLED(CONFIG_FUSE_PASSTHROUGH))
- 		flags |= FUSE_PASSTHROUGH;
++	note_page(pt_st, end, -1, pte_val(pte_zero));
+ }
  
--	/*
--	 * This is just an information flag for fuse server. No need to check
--	 * the reply - server is either sending IORING_OP_URING_CMD or not.
--	 */
- 	if (fuse_uring_enabled())
- 		flags |= FUSE_OVER_IO_URING;
- 
+ void ptdump_walk(struct seq_file *s, struct ptdump_info *info)
+@@ -296,6 +306,7 @@ void ptdump_walk(struct seq_file *s, struct ptdump_info *info)
+ 		.marker = info->markers,
+ 		.mm = info->mm,
+ 		.pg_level = &kernel_pg_levels[0],
++		.end_address = end,
+ 		.level = -1,
+ 		.ptdump = {
+ 			.note_page_pte = note_page_pte,
+@@ -337,6 +348,7 @@ bool ptdump_check_wx(void)
+ 			{ -1, NULL},
+ 		},
+ 		.pg_level = &kernel_pg_levels[0],
++		.end_address = ~0UL,
+ 		.level = -1,
+ 		.check_wx = true,
+ 		.ptdump = {
 -- 
 2.53.0
 
