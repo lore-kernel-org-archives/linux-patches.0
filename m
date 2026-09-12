@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FBE05475F;
-	Sat, 12 Sep 2026 15:02:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C08981C5799;
+	Sat, 12 Sep 2026 15:02:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789225347; cv=none; b=tlUK2LF1IwlUaxOzi84UzSr94tVD40x/AewitR5FzeiNGerBN5Mq6guOWXuqWj6IMAAbPcbwd+T4gw1wjI2jPUVRP19I/BIk/c9hV3dgyq/vgVMKpqY36JBUBzTvC8MvFPxw/G+xrfdU07WEJ02XiXh0rZtaIwqreCf69M7H974=
+	t=1789225352; cv=none; b=QQMigmiHpsAs9rKzbthm72gXbY2dhu/K9eisfvZ4iHIhS2Rimgmj7q90iOSfi6USU0O4t+KOhUSgZkbDZrV1olXRDw6auitmB9ExeMy3hKYfsSV2lQu0zt2FQl+6wFULMxOTgozsX6VvyZQomBS55ZzxNIVjdu7QRMfgAyCT1BI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789225347; c=relaxed/simple;
-	bh=UQ+/ESVQ5lz9qfoEIUjugOArKpM5cQG8Ar1VwI4un1Y=;
+	s=arc-20240116; t=1789225352; c=relaxed/simple;
+	bh=sSOhL2b+xalJDhlPKLK/Pt65FQvEHBX2irOUSsBVQFY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tBWYoh69F/chOvPgVH8RDBNuhD+TXx2M+LZGOVAcE9yTLFBTX0cgB4cC8X84C2dxPN0j1+121IZcIArowGqHFpCYxUfH6UfzEsMZR4qH2EtLmNITAGS0Er6xDNcqWcDCgQ6JVm8YyhsCL8Ip0YlTbA9DrVUvbDhQ108D+v0IrkU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1WJB3kS7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LG72VkSNPP964D9sw+FUBBLrULMSUgUg9EDmgd339MDh6GPm5u6zKCiQy4N/jUO09FjvXBHqA3wtpoq6TbKouz55bfsIb34IKs6C4Sa0kTkva4qShEpWYhiEuetALZ/pkfAtOFeWQV4tjxRspV8HSfRf6bAVE55CTS3HryV0P/4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dxxnn0T5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1WJB3kS7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E83F61F000FF;
-	Sat, 12 Sep 2026 15:02:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dxxnn0T5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10A761F000FF;
+	Sat, 12 Sep 2026 15:02:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789225346;
-	bh=TAlPAgluwbDDs/ey0VN5c0yVwpmj9Dyd0r/geOjPJfM=;
+	s=korg; t=1789225351;
+	bh=GA7+z+Fx/6pvgsqJauoUY5qw6/7tNGKWfXWRQOKhqbU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1WJB3kS7dFyShKEnP5nAmsfl/ZL/q6wTN3nwt13vvv7q8V0gDVvLN/tp8LR41VMFv
-	 NYFhbGt+8fpLbsYoGnhnhAVAKj2gy1ECkrxbJhmhaHnDA0+peZXNrCuCK03mqj+ayb
-	 d/MfH7SMWOo7MmVoCrK8YkDsUteJU+t5a1VfHgVo=
+	b=dxxnn0T5/vHIsO2ESu+PTH5cAH9H61LElQcT0bFfsn/5vbM8z4aYRHTc0Yx8T1aiD
+	 oLqUpBwfngeP9XkcB+ufbu1y/NVEX9H+LTu8gVknBc5hUbRKFxYW6j40cD6OrZQ/W4
+	 PxsarwszGjZnp+V5zp2pAbgkC65AwLN+mn1+4R8c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	bui duc phuc <phucduc.bui@gmail.com>,
+	LiangCheng Wang <zaq14760@gmail.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1177/1424] ASoC: pxa: Use devm_clk_get_optional() for extclk clock
-Date: Sat, 12 Sep 2026 09:00:09 +0200
-Message-ID: <20260912065633.650577973@linuxfoundation.org>
+Subject: [PATCH 6.6 1178/1424] ASoC: fsl-asoc-card: defer probe when the CPU DAI device is not ready
+Date: Sat, 12 Sep 2026 09:00:10 +0200
+Message-ID: <20260912065633.672895381@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -51,51 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: bui duc phuc <phucduc.bui@gmail.com>
+From: LiangCheng Wang <zaq14760@gmail.com>
 
-[ Upstream commit 6ec64d757af9b75a3c64f9f7dad76bdc1efc06ca ]
+[ Upstream commit 0286324da660875dc504fd65b3be87e9c8b9a547 ]
 
-The Device Tree binding defines the extclk clock as an optional
-property, but the driver currently uses devm_clk_get() and manually
-handles the absence of the clock.
+fsl_asoc_card_probe() hard-fails with -EINVAL when the CPU DAI (SAI)
+platform device is not found. Like the codec, the CPU DAI may just be
+probed later than the machine driver; the order is not guaranteed and
+varies across kernel versions, so a permanent -EINVAL leaves the card
+unregistered with no analog playback or capture.
 
-Use devm_clk_get_optional() to match the binding and simplify the
-optional clock handling. This also propagates errors other than the
-absence of the optional clock, including -EPROBE_DEFER.
+Defer probe instead, mirroring commit e396dec46c56 ("ASoC:
+fsl-asoc-card: Defer probe when fail to find codec device").
 
-This changes the existing behavior for errors other than
--EPROBE_DEFER. RFC to discuss whether these errors should cause probe
-to fail rather than being treated as an unavailable optional clock.
+Tested on i.MX8MP with an ALC5672 on SAI3: the card that failed to
+register on v6.18 now comes up during boot.
 
-Fixes: 90eb6b59d311 ("ASoC: pxa-ssp: add support for an external clock in devicetree")
-Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
-Link: https://patch.msgid.link/20260811100949.61142-1-phucduc.bui@gmail.com
+Fixes: 708b4351f08c ("ASoC: fsl: Add Freescale Generic ASoC Sound Card with ASRC support")
+Signed-off-by: LiangCheng Wang <zaq14760@gmail.com>
+Link: https://patch.msgid.link/20260805-fsl-asoc-defer-cpu-dai-v1-1-43f7f538e384@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/pxa/pxa-ssp.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ sound/soc/fsl/fsl-asoc-card.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/pxa/pxa-ssp.c b/sound/soc/pxa/pxa-ssp.c
-index b8a3cb8b75978..ba8cae8e85ef5 100644
---- a/sound/soc/pxa/pxa-ssp.c
-+++ b/sound/soc/pxa/pxa-ssp.c
-@@ -769,13 +769,10 @@ static int pxa_ssp_probe(struct snd_soc_dai *dai)
- 			goto err_priv;
- 		}
+diff --git a/sound/soc/fsl/fsl-asoc-card.c b/sound/soc/fsl/fsl-asoc-card.c
+index f76252b3f5913..f447d0cc2baf4 100644
+--- a/sound/soc/fsl/fsl-asoc-card.c
++++ b/sound/soc/fsl/fsl-asoc-card.c
+@@ -573,8 +573,8 @@ static int fsl_asoc_card_probe(struct platform_device *pdev)
  
--		priv->extclk = devm_clk_get(dev, "extclk");
-+		priv->extclk = devm_clk_get_optional(dev, "extclk");
- 		if (IS_ERR(priv->extclk)) {
- 			ret = PTR_ERR(priv->extclk);
--			if (ret == -EPROBE_DEFER)
--				goto err_priv;
--
--			priv->extclk = NULL;
-+			goto err_priv;
- 		}
- 	} else {
- 		priv->ssp = pxa_ssp_request(dai->id + 1, "SoC audio");
+ 	cpu_pdev = of_find_device_by_node(cpu_np);
+ 	if (!cpu_pdev) {
+-		dev_err(&pdev->dev, "failed to find CPU DAI device\n");
+-		ret = -EINVAL;
++		ret = dev_err_probe(&pdev->dev, -EPROBE_DEFER,
++				    "failed to find CPU DAI device\n");
+ 		goto fail;
+ 	}
+ 
 -- 
 2.53.0
 
