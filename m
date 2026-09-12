@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D986C25B09D;
-	Sat, 12 Sep 2026 19:45:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF3DB388397;
+	Sat, 12 Sep 2026 19:45:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789242315; cv=none; b=ml184EjceYoA1IlX+5Hx3AuvBtjc//CRs4RWnPIIy9ytJgiwG9CpJF8IN3Ye61ZGUXNhgmOV6W0Z2/9T9Ycv6NHn+Uf4ECb03JtiFoe/X4Z+CsoKCLCR43RoHiyAhNJcC6sdibhSI6oCjT5G+8CQy8U1Bm9HZBsFga4V+rmVgqs=
+	t=1789242318; cv=none; b=jvCCdh8LIIzbjVaIqxW7h8V7VJ1P6VV8Oi+PyuxZum/uvBaPzezjRrNA5YADUYx5KhFyBmzKwFJ4xtSd3I83kwtCQqCHeSl/IKdysT44pzhWzrbdV0XdLKLI5bcpqeijk8se31p9R6hZdv0YmIY1wRBTQH/XhpYR0TJtPOujFhY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789242315; c=relaxed/simple;
-	bh=HOd15c+KOvgbIjVW7eVCWeqrUgL/5vOMIupoXOZinHw=;
+	s=arc-20240116; t=1789242318; c=relaxed/simple;
+	bh=QNIuHQvyR/6SbwnZgSQkFpVPF3bthH+XPNQ/kJH5JYQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g1WXEo76ntLguPHodIJvGkXG2VOlykDM6Rtw1aYWufEe2hXxKQJiA/vk94sxoWiKPLmvfZvxHfBgCjcffGTkWihuRkzWhRw2kO09U+gbwO2E9y2nFQamyOrAckJEHIyRD8PR4VyyHcOqSErxNzc0GFgRMT49wROELYRzd+sHYCQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dkOp/O/r; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=H0CK9Wyx26oy7+F1dpZVJcA2oJKoSz3tLv3UJBUcoyK5O1mlHklvN0YOOjTpxmc3QdThim+KwCpxa4hueEp0h87mVsHtDFn8FZqBW71XOU20KipdsPY5qs1N0MyNYu+/feFswddc2K990U59jxb0wKD+e6c9H/lVLTeorgwFfNk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i4+pHHBO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dkOp/O/r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41A171F000FF;
-	Sat, 12 Sep 2026 19:45:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i4+pHHBO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16F0E1F000FF;
+	Sat, 12 Sep 2026 19:45:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789242313;
-	bh=QM3p6ywNODvMeChL3/EmXXg3V5nwwcPWL/uyQGFMrxI=;
+	s=korg; t=1789242316;
+	bh=VhemMLsmYgj09vOQN3je85JUk7pNyd9CGcQl7eaubNQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dkOp/O/riY0nUNVEl/asw6vPjUSGAsyUXjETNcMfPpNXpF6Xv6VnD61c1vc8THIMy
-	 VmBizKnTk8b/1/MHOUPJt/ogJgqTeqVk+aVxNnzIIX+2lnCNFZNriJA8F+O4RXqu9x
-	 tF9+1u38atxjJbtGAZPqMn86sw0fb3Fxio5QT40g=
+	b=i4+pHHBOiSDRrEwwk/LrVjG5slfFFstvrmqFHjvQbLlirB6cQvFu9mcmg3CKDv3MW
+	 HvV9qfDTUDjFrclqf2oIPUwIycn03ktemcvfCSCNCrHjC/qkvZImmv1VtjYsPkMUxB
+	 /VOOsfvKtcE1tBifKNlSXhSLfoAWiKI4GerCsFN0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Luca Ceresoli <luca.ceresoli@bootlin.com>,
-	Maxime Ripard <mripard@kernel.org>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 334/798] drm/bridge: cdns-mhdp8546: Return an error pointer on allocation failure
-Date: Sat, 12 Sep 2026 08:59:22 +0200
-Message-ID: <20260912065524.817211261@linuxfoundation.org>
+Subject: [PATCH 5.10 361/798] soundwire: add static port mapping support
+Date: Sat, 12 Sep 2026 08:59:49 +0200
+Message-ID: <20260912065525.434115253@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
 References: <20260912065516.948645775@linuxfoundation.org>
@@ -52,42 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maxime Ripard <mripard@kernel.org>
+From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 
-[ Upstream commit 30ac1d403438a6c6039f0af5bb2df3d021f96036 ]
+[ Upstream commit f4022062e5417ab7228e95aec1a8687059a19db7 ]
 
-The drm_bridge_funcs.atomic_reset documentation states that the hook
-must return either a valid drm_bridge_state object or an ERR_PTR().
+Some of the SoundWire device ports are statically mapped to Controller
+ports during design, however there is no way to expose this information
+to the controller. Controllers like Qualcomm ones use this info to setup
+static bandwidth parameters for those ports.
 
-The cdns_mhdp_bridge_atomic_reset() callback returns NULL when the
-allocation of its state fails, violating this contract.
+A generic port allocation is not possible in this cases!
+So this patch adds a new member m_port_map to struct sdw_slave to expose
+this static map.
 
-Return ERR_PTR(-ENOMEM) instead.
-
-Fixes: fb43aa0acdfd ("drm: bridge: Add support for Cadence MHDP8546 DPI/DP bridge")
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Reviewed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Tested-by: Luca Ceresoli <luca.ceresoli@bootlin.com> # imx8mp + sn65dsi84 + bridge hotplug
-Link: https://patch.msgid.link/20260619-drm-no-more-bridge-reset-v3-2-ff399263111b@kernel.org
-Signed-off-by: Maxime Ripard <mripard@kernel.org>
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Link: https://lore.kernel.org/r/20210315165650.13392-2-srinivas.kandagatla@linaro.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Stable-dep-of: 6ccec91c3535 ("soundwire: qcom: Fix port exhaustion check in stream_alloc_ports")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/soundwire/sdw.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.c b/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.c
-index 5876589d42b7d..f290432c15e3b 100644
---- a/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.c
-+++ b/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.c
-@@ -2076,7 +2076,7 @@ cdns_mhdp_bridge_atomic_reset(struct drm_bridge *bridge)
- 
- 	cdns_mhdp_state = kzalloc(sizeof(*cdns_mhdp_state), GFP_KERNEL);
- 	if (!cdns_mhdp_state)
--		return NULL;
-+		return ERR_PTR(-ENOMEM);
- 
- 	 __drm_atomic_helper_bridge_reset(bridge, &cdns_mhdp_state->base);
- 
+diff --git a/include/linux/soundwire/sdw.h b/include/linux/soundwire/sdw.h
+index 57cda3a3a9d95..6136ac212503d 100644
+--- a/include/linux/soundwire/sdw.h
++++ b/include/linux/soundwire/sdw.h
+@@ -610,6 +610,7 @@ struct sdw_slave_ops {
+  * @debugfs: Slave debugfs
+  * @node: node for bus list
+  * @port_ready: Port ready completion flag for each Slave port
++ * @m_port_map: static Master port map for each Slave port
+  * @dev_num: Current Device Number, values can be 0 or dev_num_sticky
+  * @dev_num_sticky: one-time static Device Number assigned by Bus
+  * @probed: boolean tracking driver state
+@@ -641,6 +642,7 @@ struct sdw_slave {
+ #endif
+ 	struct list_head node;
+ 	struct completion port_ready[SDW_MAX_PORTS];
++	unsigned int m_port_map[SDW_MAX_PORTS];
+ 	enum sdw_clk_stop_mode curr_clk_stop_mode;
+ 	u16 dev_num;
+ 	u16 dev_num_sticky;
 -- 
 2.53.0
 
