@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DF8232E757;
-	Sat, 12 Sep 2026 15:00:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1901C356742;
+	Sat, 12 Sep 2026 15:00:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789225221; cv=none; b=bBo+s1XwnAK/o5TUBfefhMeMe38Sw7DG11cjIYrq0stdMp+W7tAVk2ACqPCoemSTK7YHbFejBXTzGtTo0Q5w+jhIKUTrrjv9o6g2GzLVyzVqDX2Au+6iIH9ET+5NXAf+NEWXG61dnW+rJl2f1TXA3zsCSoCnUfM3XY0nDKn54Fg=
+	t=1789225225; cv=none; b=Et6bvIANP0HURoT+ohAzSaLHcv48yn1juVmiN4cE2Ii2X+SJeRzjiR6NHZWrZtVe7n9i62jaxs+07Y77rhqaPCz0bE80bHUP/hDx3f7ASe/PYMNHA41JR2UYHcJ7r+GuBWYaHZbxFsru3YGvCeJt4ROFeMUCLe/M3A3t7FeCmDE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789225221; c=relaxed/simple;
-	bh=wzSepe/K4Gnm+UW0ShyaakbBBq1efyGtcHSZAqyaXBo=;
+	s=arc-20240116; t=1789225225; c=relaxed/simple;
+	bh=jISxAEsVEjTXs4pL5OCSVs7Zop2Es2SDLPKOLKVldEo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=RbO0Eorm3thjjeyDQx8jK6f5utoErr/quoO9almStpvwagzCu2rbFY8YjBbu2eUvzxl4fjB/ybx/rCeoVWvClRnCis9adJaTonFFzmHl9qLFHaxw/fmshLM9PT+9KrLjoligLAU4m0TCEs+ZQ1JdoE0BSXAYsX537jzxZfS2H78=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sv9O7Lu/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ye16uBvh/jYZ7nyMdk+jMmcN+lm1PUCaG1HpbTvfRNHCptEOjP+8FAHZ9FRoLG1MDyQq3ojer4fGEgqCLdpCxAHSqDoogwdSatS7EeQy0fIPD0IDZ9mv4BSNrhtNPrswa8nNk7CiTJB9mDBfbncsHmPqHjSTX/A+553GMFnnRI8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i4Z7HCyW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sv9O7Lu/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A871C1F000FF;
-	Sat, 12 Sep 2026 15:00:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i4Z7HCyW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47F301F000FF;
+	Sat, 12 Sep 2026 15:00:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789225219;
-	bh=rL2XDEM+HYKeFlaB388H2xSv+0S3qXWWBtUGFS4USvg=;
+	s=korg; t=1789225224;
+	bh=LseqDoj20Fh6Ly6YsOhpnoQoAeiIZqQm+lJ5ngrKUZA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Sv9O7Lu/Gd9pazfRyXVNu0/aVYw8kdTD3c7umVA7sFGzIUAEq4ulhdW/oALuBh9Ih
-	 o6eRC8mxjJ5O6Zu3pWspG5V8DKTQ+n7428Y2yyyzytDflVHHJw4txr+cM1HgSC47ne
-	 hKn50WDET5e84Ib3o2b5GIlV2PTKEubxoA2LEGbQ=
+	b=i4Z7HCyWQIYn07NlgY7F4TCMC+sA2wFGSVe4jBXbI/QMgLL9Og801RVd1r7AaEXbP
+	 loNRvYUN4CDKFjUlg0zSDGk2DbTinZ6Fzti028ER32uXybVlQOHFxacrtH4NNTzkX4
+	 fYQPXqi+SFTDj/UYT4JHcq1A51a3Ek48iU9zOXwo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Tom=C3=A1=C5=A1=20Macholda?= <tomas.macholda@nic.cz>,
-	Gregory CLEMENT <gregory.clement@bootlin.com>,
+	Guixin Liu <kanie@linux.alibaba.com>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1136/1424] arm64: dts: turris-mox: fix usb3 phys
-Date: Sat, 12 Sep 2026 08:59:28 +0200
-Message-ID: <20260912065632.739875884@linuxfoundation.org>
+Subject: [PATCH 6.6 1154/1424] nvme: add reservation commands defines
+Date: Sat, 12 Sep 2026 08:59:46 +0200
+Message-ID: <20260912065633.141915562@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -45,50 +47,109 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tomáš Macholda <tomas.macholda@nic.cz>
+From: Guixin Liu <kanie@linux.alibaba.com>
 
-[ Upstream commit 0c2a8eed95160e41b367a1fa605a2c1b24a9639a ]
+[ Upstream commit 1900e1a4495b7376cb9b4e58f1d846660f4c9c4b ]
 
-After commit 00e6d608fe80b0f6 ("arm64: dts: marvell: armada-37xx: swap
-PHYs' order in USB3 controller node") swapped USB3 PHY order, USB
-initialization breaks on Turris MOX.
+This is a preparation patch for NVMeOF target reservation
+commands implantation.
+Add the defines of reservation command, such as reservation log
+and sub operations.
 
-This regression was exposed by commit 91ddf6f722084383 ("phy: marvell:
-mvebu-a3700-utmi: fix incorrect USB2_PHY_CTRL register access") which
-made USB2 devices not work at all.
-
-Fix the issue by explicitly adding all USB3 PHYs and PHY names to
-Turris MOX device-tree.
-
-Fixes: 7109d817db2e ("arm64: dts: marvell: add DTS for Turris Mox")
-Signed-off-by: Tomáš Macholda <tomas.macholda@nic.cz>
-Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
+Signed-off-by: Guixin Liu <kanie@linux.alibaba.com>
+Tested-by: Chaitanya Kulkarni <kch@nvidia.com>
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+Stable-dep-of: 5bb96cc21883 ("nvmet: fix heap out-of-bounds read in nvmet_auth_negotiate()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/marvell/armada-3720-turris-mox.dts | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ include/linux/nvme.h | 68 ++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 68 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/marvell/armada-3720-turris-mox.dts b/arch/arm64/boot/dts/marvell/armada-3720-turris-mox.dts
-index 805ef2d79b401..1cbaae0310d6d 100644
---- a/arch/arm64/boot/dts/marvell/armada-3720-turris-mox.dts
-+++ b/arch/arm64/boot/dts/marvell/armada-3720-turris-mox.dts
-@@ -292,7 +292,8 @@ connector {
+diff --git a/include/linux/nvme.h b/include/linux/nvme.h
+index 8e4906c265935..b1e818a6d2bac 100644
+--- a/include/linux/nvme.h
++++ b/include/linux/nvme.h
+@@ -2024,4 +2024,72 @@ struct nvme_completion {
+ #define NVME_MINOR(ver)		(((ver) >> 8) & 0xff)
+ #define NVME_TERTIARY(ver)	((ver) & 0xff)
  
- &usb3 {
- 	status = "okay";
--	phys = <&comphy2 0>;
-+	phys = <&usb2_utmi_otg_phy>, <&comphy2 0>;
-+	phy-names = "usb2-phy", "usb3-phy";
- };
- 
- &mdio {
++enum {
++	NVME_AEN_RESV_LOG_PAGE_AVALIABLE	= 0x00,
++};
++
++enum {
++	NVME_PR_LOG_EMPTY_LOG_PAGE			= 0x00,
++	NVME_PR_LOG_REGISTRATION_PREEMPTED		= 0x01,
++	NVME_PR_LOG_RESERVATION_RELEASED		= 0x02,
++	NVME_PR_LOG_RESERVATOPM_PREEMPTED		= 0x03,
++};
++
++enum {
++	NVME_PR_NOTIFY_BIT_REG_PREEMPTED		= 1,
++	NVME_PR_NOTIFY_BIT_RESV_RELEASED		= 2,
++	NVME_PR_NOTIFY_BIT_RESV_PREEMPTED		= 3,
++};
++
++struct nvme_pr_log {
++	__le64			count;
++	__u8			type;
++	__u8			nr_pages;
++	__u8			rsvd1[2];
++	__le32			nsid;
++	__u8			rsvd2[48];
++};
++
++struct nvmet_pr_register_data {
++	__le64	crkey;
++	__le64	nrkey;
++};
++
++struct nvmet_pr_acquire_data {
++	__le64	crkey;
++	__le64	prkey;
++};
++
++struct nvmet_pr_release_data {
++	__le64	crkey;
++};
++
++enum nvme_pr_capabilities {
++	NVME_PR_SUPPORT_PTPL				= 1,
++	NVME_PR_SUPPORT_WRITE_EXCLUSIVE			= 1 << 1,
++	NVME_PR_SUPPORT_EXCLUSIVE_ACCESS		= 1 << 2,
++	NVME_PR_SUPPORT_WRITE_EXCLUSIVE_REG_ONLY	= 1 << 3,
++	NVME_PR_SUPPORT_EXCLUSIVE_ACCESS_REG_ONLY	= 1 << 4,
++	NVME_PR_SUPPORT_WRITE_EXCLUSIVE_ALL_REGS	= 1 << 5,
++	NVME_PR_SUPPORT_EXCLUSIVE_ACCESS_ALL_REGS	= 1 << 6,
++	NVME_PR_SUPPORT_IEKEY_VER_1_3_DEF		= 1 << 7,
++};
++
++enum nvme_pr_register_action {
++	NVME_PR_REGISTER_ACT_REG		= 0,
++	NVME_PR_REGISTER_ACT_UNREG		= 1,
++	NVME_PR_REGISTER_ACT_REPLACE		= 1 << 1,
++};
++
++enum nvme_pr_acquire_action {
++	NVME_PR_ACQUIRE_ACT_ACQUIRE		= 0,
++	NVME_PR_ACQUIRE_ACT_PREEMPT		= 1,
++	NVME_PR_ACQUIRE_ACT_PREEMPT_AND_ABORT	= 1 << 1,
++};
++
++enum nvme_pr_release_action {
++	NVME_PR_RELEASE_ACT_RELEASE		= 0,
++	NVME_PR_RELEASE_ACT_CLEAR		= 1,
++};
++
+ #endif /* _LINUX_NVME_H */
 -- 
 2.53.0
 
