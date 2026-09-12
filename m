@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E02903546E1;
-	Sat, 12 Sep 2026 10:34:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C69F6429CD3;
+	Sat, 12 Sep 2026 10:34:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789209277; cv=none; b=ujBCKD63dPrNftoMopMSadjo4N0JjQpgonjz+k0u8zdPGn9IrgzuYOoY5qI9KG4VoGC3U43z0bkAYjSXNnPwUIlCsjH6UfJIFmG81tpRObi+sqHxqX4kz1m+sthnvBj1qCdgC4DQiJmyZrlpgIGcgsc2DlhXrfoJvb3QJxZCJdY=
+	t=1789209282; cv=none; b=b//UW3UuXul1GgZjOgLmlT4laApHGaf1Rj6uMKzzPQkcOSiooxXOGsl893rjdcXed8YjAWzJnBhgHubd6OscEFVIsR9pIaFKxMKVO42qaYH5bsYl8XNWksSfK+cRXAM2izIEMyPvZy18YelgekNL6aD6Di3H3RHEXAwoE+7MXqs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789209277; c=relaxed/simple;
-	bh=hU6nd46aqwvE+f5bz0RTKoXj2FI2frhB/s3QX5mo6ek=;
+	s=arc-20240116; t=1789209282; c=relaxed/simple;
+	bh=VRhpSjrt2DEXsMumq5ASmwj42ftDSqAwrZ25kKl9HDM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MkAMBjRYXZHkzvtv+KLnDqAjdoDqCFXd32JqutSHAPmrTND4NHax/v+42X88IzHb7srImlGSgpZNI1Ru0J92cwH0fyDJfMyov2R0/b+ensYckF5XTQCR9W6YHMLjF1TGWxDTLpBsaLtAhjhYXc/9F7PDBtXu+O19wvTs7G39zwk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ki9Ha1jz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AwobAaA1S2MQA3HuXc/AyqrnOI0ANDfEKMtJk8tV0IHjlQNo1ozyg2Sgysj6OXwos0GLSAyIcBrZTYeq43O/PFQrZ56wDnKWeEnK6gvIh/yTmyQwMcvHCCQvlbrKbFFOVFm/1XN9ugMs2b3w7xkJInFM0+qdIKP/Npc9Uqn4HCQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nD7BeO9l; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ki9Ha1jz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94DF31F000FF;
-	Sat, 12 Sep 2026 10:34:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nD7BeO9l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA9291F000FF;
+	Sat, 12 Sep 2026 10:34:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789209275;
-	bh=pBsrqmDWqBzrpKdOUH185xwGhrQ2HTyufonuGj2r68I=;
+	s=korg; t=1789209280;
+	bh=ztGzFYQ5wjjr/M+u4wp/N5dnR0B/QbkDvZ+uz6Cr7bE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ki9Ha1jzr6kJv4Wyn57+FvBQCg8hL7UxnpEwlJl3nl+F6DqaxH+Xeq3NjYlJfJgrs
-	 cWlpFgqsJwdNDZVLtbpe97ksbSddvi9LBpjDFrF+noL0/Yqsa9+/SaBAKVZ2D228T9
-	 clt0ZMu4r9a3IzNwyLDVhGh7E7CSmEKooFER7dW8=
+	b=nD7BeO9lXG32CQCk8khKo+CPSV7NNt+54XOn5GK2pNiqU2xazyo2sCKSqtPyoP2Rg
+	 6jaY+Yk8ANNKV3i3+1eFlwdOkHYSZNQx5VmL9uOu1phTSiRQJ+t7jM10rX/H6NnZC3
+	 1zsBR4r7ajXkBAMMDVSJJ2L1kPd3ivIywRl7N5xg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	David Ahern <dsahern@gmail.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0781/1518] perf machine: Guard against NULL strlist in machines__findnew()
-Date: Sat, 12 Sep 2026 08:49:10 +0200
-Message-ID: <20260912065641.104469713@linuxfoundation.org>
+Subject: [PATCH 6.18 0790/1518] wifi: mt76: mt7996: wake MCU waiters before aborting scan in L1 SER
+Date: Sat, 12 Sep 2026 08:49:19 +0200
+Message-ID: <20260912065641.305192877@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -53,46 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit e27b96d0a34e1dc87affecf221a99fee8f6c5afc ]
+[ Upstream commit 6f8d8c458010b597bf4114e6fb3162bff7050041 ]
 
-The static 'seen' strlist caches guestmount paths that have already
-been reported as inaccessible, to avoid repeating the error message.
-If strlist__new() fails (OOM), 'seen' stays NULL and the next call
-dereferences it via strlist__has_entry() and strlist__add().
+The L1 reset path calls mt76_abort_scan() between setting MT76_MCU_RESET
+and waking mcu.wait. A scan work blocked on an in-flight MCU command
+does not re-evaluate its wait condition until woken, so the
+cancel_delayed_work_sync() inside the abort sleeps out the full MCU
+timeout before recovery can proceed, adding several seconds of SER
+latency. mt7996_mac_full_reset() and the mt7915 counterpart already
+order the wake-up first.
 
-Guard both calls so that on allocation failure the error message is
-still printed (just not deduplicated) instead of crashing.
+Wake mcu.wait immediately after setting MT76_MCU_RESET so in-flight
+commands bail out before the abort synchronises against them.
 
-Fixes: c80c3c269011 ("perf kvm: Limit repetitive guestmount message to once per directory")
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Cc: David Ahern <dsahern@gmail.com>
-Assisted-by: Claude:claude-opus-4.6
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Fixes: b36d55610215 ("wifi: mt76: abort scan/roc on hw restart")
+Link: https://patch.msgid.link/20260724124813.3961474-19-nbd@nbd.name
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/machine.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7996/mac.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/perf/util/machine.c b/tools/perf/util/machine.c
-index 8b6869582b076..25591f9969e15 100644
---- a/tools/perf/util/machine.c
-+++ b/tools/perf/util/machine.c
-@@ -334,9 +334,10 @@ struct machine *machines__findnew(struct machines *machines, pid_t pid)
- 			if (!seen)
- 				seen = strlist__new(NULL, NULL);
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mac.c b/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
+index cafdbd27f1e48..35a34fc346eb7 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
+@@ -2620,8 +2620,8 @@ void mt7996_mac_reset_work(struct work_struct *work)
  
--			if (!strlist__has_entry(seen, path)) {
-+			if (!seen || !strlist__has_entry(seen, path)) {
- 				pr_err("Can't access file %s\n", path);
--				strlist__add(seen, path);
-+				if (seen)
-+					strlist__add(seen, path);
- 			}
- 			machine = NULL;
- 			goto out;
+ 	set_bit(MT76_RESET, &dev->mphy.state);
+ 	set_bit(MT76_MCU_RESET, &dev->mphy.state);
+-	mt76_abort_scan(&dev->mt76);
+ 	wake_up(&dev->mt76.mcu.wait);
++	mt76_abort_scan(&dev->mt76);
+ 
+ 	cancel_work_sync(&dev->wed_rro.work);
+ 	mt7996_for_each_phy(dev, phy) {
 -- 
 2.53.0
 
