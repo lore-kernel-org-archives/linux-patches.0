@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F2DC343889;
-	Sat, 12 Sep 2026 10:26:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3580B1DA62E;
+	Sat, 12 Sep 2026 10:26:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789208816; cv=none; b=K7/TlKQd17KzEyZk6cbRcPvP+wiLv6v2hfvrK7Sw9/3a01FRYPdcVTDmmwULWdlM4hETE9qAGarpCj5BG8uVvnKlJtvtgtOdtMzDCtiwk0O8hmveD6060CyqFeLeImMII2XKJG6DH5v1gJkEkPG2FJkw9UlgsNRBiQyDcgs7FXg=
+	t=1789208821; cv=none; b=mNElQm8wJmupKajXFhJ/giPRNzbQyoLFE5wT1BO6H/btBxlSyn2PO9L9E/H4toULgCuDdIXMd2MVh1+f7nkbxSVq+RtrnmclwnvVLgYicrBgL/kMqF/pL9XReYvxSBqciawCWwZaYK1heK53YzKNESnAsmgQWwbWhJePH1pBxXQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789208816; c=relaxed/simple;
-	bh=TjaQu2SpS5uCLWK0SSi/DefltOjesIWjPRd7l5nbVkg=;
+	s=arc-20240116; t=1789208821; c=relaxed/simple;
+	bh=JIvQav49qm4cxStF8Cu+Ie6iRbAqBaFqyuzfq/ilo44=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hgN/zEU+cUEirZ3e/HTG664njd4CV2zzmSqMOTverRRir6Ir9jrtMILdJ84t0+BFjxHlAv8Qb0ECCSLdSBOgcscVnzgu1CYobvdi88s9ZteucfQLpGGweVCUnS4fN9r0yqywGiid9jPpqjePmRRJm6HGElKxZZYv0ilRp8uJMfY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fc8K8KNi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rMUVfFTuchCFRWELHv4GOYmD+XYakp62FgAzzCZMS+FRoTWzWqUV7lGHQNlOZB7DFj9T3rWinjanTNV05YYz2z7/RVFspRwrylL5DIChY4ei5F/8zs6pXdZVCske/GhpAHoOx2TnHGWD/2v4nkkealJk/XogwORsk8EdeolNJLY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lLlmJPok; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fc8K8KNi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1B671F000FF;
-	Sat, 12 Sep 2026 10:26:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lLlmJPok"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEDFC1F000FF;
+	Sat, 12 Sep 2026 10:26:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789208812;
-	bh=o6ytIMjGZou1SDXiydecHInvfVxxug2Iu74sA1K1gSk=;
+	s=korg; t=1789208818;
+	bh=LwUCIzSuXdYKjhmvNvNoEHc/3o6wbeAue7oXMQrhhho=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Fc8K8KNivwiITkGFc+yJbycVChKInIaYCLcT0XKZCYzo31vnvos7DMUb6BN1QQV10
-	 eXLhF0l5HbyqB1k+E5N+ZWufWhZHB354juDW7wFjmIR8bPcdUAFpnNfmc1CQm6OH8d
-	 PecfRFh2WrlyGnvdt14uCWhWRjETvOYlw9IqFUcI=
+	b=lLlmJPokMtbd2iGLx0O2kDLgb+E4GjNXsfRHVpc7rhsW7c3NnKsU571Ax8T9xfZ6R
+	 srTAKwwZxSZloYzhEk7laJNWc7J1Uj3JgKAlL2p9D9n6wrJ6FmR4TJyqBHpOfdNJKF
+	 xyRGBRj8RnPIDdg3i3vf828NWUzqjfZYlIzeGVb0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Cheng <chencheng@fnnas.com>,
-	Yu Kuai <yukuai@fygo.io>,
+	Jens Remus <jremus@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0652/1518] md/raid5: protect lockless recovery_offset accesses during reshape
-Date: Sat, 12 Sep 2026 08:47:01 +0200
-Message-ID: <20260912065638.179721917@linuxfoundation.org>
+Subject: [PATCH 6.18 0643/1518] s390/vdso: Rename vdso64 to vdso
+Date: Sat, 12 Sep 2026 08:46:52 +0200
+Message-ID: <20260912065637.975392101@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -51,208 +51,468 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Cheng <chencheng@fnnas.com>
+From: Heiko Carstens <hca@linux.ibm.com>
 
-[ Upstream commit a47431dfb3538a1485f65b68a0605a05307b5b2d ]
+[ Upstream commit c0087d807ae86cc82cc356e366d2dccf0e3bb225 ]
 
-During reshape:
-- reshape_request() advances rdev->recovery_offset for non-In_sync
-  devices locklessly.
-- analyse_stripe() reads rdev->recovery_offset locklessly to decide:
-    a. use a replacement device to read ?
-    b. a device can already be treated as in-sync for the current
-       stripe ?
+Since compat is gone there is only a 64 bit vdso left.
+Remove the superfluous "64" suffix everywhere.
 
-one possible scenario is:
-
-CPU1                            CPU2
-reshape_request()
--> mddev->curr_resync_completed = sector_nr
--> if (!mddev->reshape_backwards)
--> rdev->recovery_offset = sector_nr
-                                analyse_stripe(sh)
-                                -> rdev = conf->disks[i].replacement
-                                -> if (rdev->recovery_offset >=
-                                      sh->sector + stripe_sectors)
-                                   set_bit(R5_ReadRepl)
-                                -> or
-                                -> if (sh->sector + stripe_sectors <=
-                                      rdev->recovery_offset)
-                                   set_bit(R5_Insync)
-
-And it could be:
-
-- reading from a replacement before it is recovered far enough; or
-- treating a not-yet-recovered device as in-sync for the current stripe.
-
-Fixes: db0505d32066 ("md: be cautious about using ->curr_resync_completed for ->recovery_offset")
-
-The race report:
-==================================================================
-BUG: KCSAN: data-race in ops_run_io / reshape_request
-
-write to 0xffff8bdee168b270 of 8 bytes by task 1704 on cpu 10:
- reshape_request+0x1292/0x17b0
- raid5_sync_request+0x815/0xa00
- md_do_sync.cold+0xf8d/0x1516
- [......]
-
-read to 0xffff8bdee168b270 of 8 bytes by task 1696 on cpu 9:
- ops_run_io+0xc25/0x1960
- handle_stripe+0x2273/0x4570
- handle_active_stripes.isra.0+0x6e0/0xa50
- raid5d+0x7d5/0xb90
- [......]
-
-value changed: 0x0000000000091a00 -> 0x0000000000091b00
-==================================================================
-
-Signed-off-by: Chen Cheng <chencheng@fnnas.com>
-Reviewed-by: Yu Kuai <yukuai@fygo.io>
-Link: https://patch.msgid.link/20260627102519.136940-1-chencheng@fnnas.com
-Signed-off-by: Yu Kuai <yukuai@fygo.io>
+Reviewed-by: Jens Remus <jremus@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Stable-dep-of: dc161efb6df8 ("s390/vdso: Pass --eh-frame-hdr to the linker")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid5.c | 50 +++++++++++++++++++++++-----------------------
- 1 file changed, 25 insertions(+), 25 deletions(-)
+ arch/s390/Makefile                            |  4 +-
+ arch/s390/include/asm/vdso-symbols.h          |  4 +-
+ arch/s390/kernel/Makefile                     |  2 +-
+ arch/s390/kernel/signal.c                     |  6 +-
+ arch/s390/kernel/vdso.c                       | 16 ++--
+ arch/s390/kernel/{vdso64 => vdso}/.gitignore  |  2 +-
+ arch/s390/kernel/vdso/Makefile                | 80 +++++++++++++++++++
+ .../{vdso64 => vdso}/gen_vdso_offsets.sh      |  2 +-
+ arch/s390/kernel/{vdso64 => vdso}/getcpu.c    |  0
+ arch/s390/kernel/{vdso64 => vdso}/note.S      |  0
+ arch/s390/kernel/{vdso64 => vdso}/vdso.h      |  6 +-
+ .../{vdso64/vdso64.lds.S => vdso/vdso.lds.S}  |  0
+ .../vdso64_generic.c => vdso/vdso_generic.c}  |  0
+ .../{vdso64 => vdso}/vdso_user_wrapper.S      |  0
+ .../vdso64_wrapper.S => vdso/vdso_wrapper.S}  |  8 +-
+ .../{vdso64 => vdso}/vgetrandom-chacha.S      |  0
+ .../s390/kernel/{vdso64 => vdso}/vgetrandom.c |  0
+ arch/s390/kernel/vdso64/Makefile              | 80 -------------------
+ 18 files changed, 104 insertions(+), 106 deletions(-)
+ rename arch/s390/kernel/{vdso64 => vdso}/.gitignore (78%)
+ create mode 100644 arch/s390/kernel/vdso/Makefile
+ rename arch/s390/kernel/{vdso64 => vdso}/gen_vdso_offsets.sh (82%)
+ rename arch/s390/kernel/{vdso64 => vdso}/getcpu.c (100%)
+ rename arch/s390/kernel/{vdso64 => vdso}/note.S (100%)
+ rename arch/s390/kernel/{vdso64 => vdso}/vdso.h (80%)
+ rename arch/s390/kernel/{vdso64/vdso64.lds.S => vdso/vdso.lds.S} (100%)
+ rename arch/s390/kernel/{vdso64/vdso64_generic.c => vdso/vdso_generic.c} (100%)
+ rename arch/s390/kernel/{vdso64 => vdso}/vdso_user_wrapper.S (100%)
+ rename arch/s390/kernel/{vdso64/vdso64_wrapper.S => vdso/vdso_wrapper.S} (64%)
+ rename arch/s390/kernel/{vdso64 => vdso}/vgetrandom-chacha.S (100%)
+ rename arch/s390/kernel/{vdso64 => vdso}/vgetrandom.c (100%)
+ delete mode 100644 arch/s390/kernel/vdso64/Makefile
 
-diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
-index 98763a349fba0..3fbf66c9b45ed 100644
---- a/drivers/md/raid5.c
-+++ b/drivers/md/raid5.c
-@@ -3740,11 +3740,10 @@ static int want_replace(struct stripe_head *sh, int disk_idx)
- 	int rv = 0;
+diff --git a/arch/s390/Makefile b/arch/s390/Makefile
+index a205c929e6630..8ccc127870904 100644
+--- a/arch/s390/Makefile
++++ b/arch/s390/Makefile
+@@ -152,9 +152,9 @@ ifeq ($(KBUILD_EXTMOD),)
+ # this hack.
+ prepare: vdso_prepare
+ vdso_prepare: prepare0
+-	$(Q)$(MAKE) $(build)=arch/s390/kernel/vdso64 include/generated/vdso64-offsets.h
++	$(Q)$(MAKE) $(build)=arch/s390/kernel/vdso include/generated/vdso-offsets.h
  
- 	rdev = sh->raid_conf->disks[disk_idx].replacement;
--	if (rdev
--	    && !test_bit(Faulty, &rdev->flags)
--	    && !test_bit(In_sync, &rdev->flags)
--	    && (rdev->recovery_offset <= sh->sector
--		|| rdev->mddev->resync_offset <= sh->sector))
-+	if (rdev && !test_bit(Faulty, &rdev->flags) &&
-+	    !test_bit(In_sync, &rdev->flags) &&
-+	    (READ_ONCE(rdev->recovery_offset) <= sh->sector ||
-+	     rdev->mddev->resync_offset <= sh->sector))
- 		rv = 1;
- 	return rv;
+-vdso-install-y			+= arch/s390/kernel/vdso64/vdso64.so.dbg
++vdso-install-y			+= arch/s390/kernel/vdso/vdso.so.dbg
+ 
+ endif
+ 
+diff --git a/arch/s390/include/asm/vdso-symbols.h b/arch/s390/include/asm/vdso-symbols.h
+index 205da2c565c26..e3561e67c4e31 100644
+--- a/arch/s390/include/asm/vdso-symbols.h
++++ b/arch/s390/include/asm/vdso-symbols.h
+@@ -2,8 +2,8 @@
+ #ifndef __S390_VDSO_SYMBOLS_H__
+ #define __S390_VDSO_SYMBOLS_H__
+ 
+-#include <generated/vdso64-offsets.h>
++#include <generated/vdso-offsets.h>
+ 
+-#define VDSO64_SYMBOL(tsk, name) ((tsk)->mm->context.vdso_base + (vdso64_offset_##name))
++#define VDSO_SYMBOL(tsk, name) ((tsk)->mm->context.vdso_base + (vdso_offset_##name))
+ 
+ #endif /* __S390_VDSO_SYMBOLS_H__ */
+diff --git a/arch/s390/kernel/Makefile b/arch/s390/kernel/Makefile
+index 6e37afb7187a2..8d5ca89cd482b 100644
+--- a/arch/s390/kernel/Makefile
++++ b/arch/s390/kernel/Makefile
+@@ -81,4 +81,4 @@ obj-$(CONFIG_PERF_EVENTS)	+= perf_pai_crypto.o perf_pai_ext.o
+ obj-$(CONFIG_TRACEPOINTS)	+= trace.o
+ 
+ # vdso
+-obj-y				+= vdso64/
++obj-y				+= vdso/
+diff --git a/arch/s390/kernel/signal.c b/arch/s390/kernel/signal.c
+index e7775d121fa14..4874de5edea0a 100644
+--- a/arch/s390/kernel/signal.c
++++ b/arch/s390/kernel/signal.c
+@@ -326,7 +326,7 @@ static int setup_frame(int sig, struct k_sigaction *ka,
+ 	if (ka->sa.sa_flags & SA_RESTORER)
+ 		restorer = (unsigned long) ka->sa.sa_restorer;
+ 	else
+-		restorer = VDSO64_SYMBOL(current, sigreturn);
++		restorer = VDSO_SYMBOL(current, sigreturn);
+ 
+ 	/* Set up registers for signal handler */
+ 	regs->gprs[14] = restorer;
+@@ -378,7 +378,7 @@ static int setup_rt_frame(struct ksignal *ksig, sigset_t *set,
+ 	if (ksig->ka.sa.sa_flags & SA_RESTORER)
+ 		restorer = (unsigned long) ksig->ka.sa.sa_restorer;
+ 	else
+-		restorer = VDSO64_SYMBOL(current, rt_sigreturn);
++		restorer = VDSO_SYMBOL(current, rt_sigreturn);
+ 
+ 	/* Create siginfo on the signal stack */
+ 	if (copy_siginfo_to_user(&frame->info, &ksig->info))
+@@ -490,7 +490,7 @@ void arch_do_signal_or_restart(struct pt_regs *regs)
+ 			/* Restart with sys_restart_syscall */
+ 			regs->gprs[2] = regs->orig_gpr2;
+ 			current->restart_block.arch_data = regs->psw.addr;
+-			regs->psw.addr = VDSO64_SYMBOL(current, restart_syscall);
++			regs->psw.addr = VDSO_SYMBOL(current, restart_syscall);
+ 			if (test_thread_flag(TIF_SINGLE_STEP))
+ 				clear_thread_flag(TIF_PER_TRAP);
+ 			break;
+diff --git a/arch/s390/kernel/vdso.c b/arch/s390/kernel/vdso.c
+index 83cc67cf21c83..a27a90a199be7 100644
+--- a/arch/s390/kernel/vdso.c
++++ b/arch/s390/kernel/vdso.c
+@@ -22,7 +22,7 @@
+ #include <asm/alternative.h>
+ #include <asm/vdso.h>
+ 
+-extern char vdso64_start[], vdso64_end[];
++extern char vdso_start[], vdso_end[];
+ 
+ static int vdso_mremap(const struct vm_special_mapping *sm,
+ 		       struct vm_area_struct *vma)
+@@ -31,7 +31,7 @@ static int vdso_mremap(const struct vm_special_mapping *sm,
+ 	return 0;
  }
-@@ -4673,7 +4672,8 @@ static void analyse_stripe(struct stripe_head *sh, struct stripe_head_state *s)
- 		 */
- 		rdev = conf->disks[i].replacement;
- 		if (rdev && !test_bit(Faulty, &rdev->flags) &&
--		    rdev->recovery_offset >= sh->sector + RAID5_STRIPE_SECTORS(conf) &&
-+		    READ_ONCE(rdev->recovery_offset) >=
-+		    sh->sector + RAID5_STRIPE_SECTORS(conf) &&
- 		    !rdev_has_badblock(rdev, sh->sector,
- 				       RAID5_STRIPE_SECTORS(conf)))
- 			set_bit(R5_ReadRepl, &dev->flags);
-@@ -4715,7 +4715,7 @@ static void analyse_stripe(struct stripe_head *sh, struct stripe_head_state *s)
- 		} else if (test_bit(In_sync, &rdev->flags))
- 			set_bit(R5_Insync, &dev->flags);
- 		else if (sh->sector + RAID5_STRIPE_SECTORS(conf) <=
--			 rdev->recovery_offset) {
-+			 READ_ONCE(rdev->recovery_offset)) {
- 			/*
- 			 * in sync if:
- 			 *  - normal IO, or
-@@ -5448,13 +5448,13 @@ static int raid5_read_one_chunk(struct mddev *mddev, struct bio *raid_bio)
  
- 	rdev = conf->disks[dd_idx].replacement;
- 	if (!rdev || test_bit(Faulty, &rdev->flags) ||
--	    rdev->recovery_offset < end_sector) {
-+	    READ_ONCE(rdev->recovery_offset) < end_sector) {
- 		rdev = conf->disks[dd_idx].rdev;
- 		if (!rdev)
- 			return 0;
- 		if (test_bit(Faulty, &rdev->flags) ||
- 		    !(test_bit(In_sync, &rdev->flags) ||
--		      rdev->recovery_offset >= end_sector))
-+		      READ_ONCE(rdev->recovery_offset) >= end_sector))
- 			return 0;
- 	}
+-static struct vm_special_mapping vdso64_mapping = {
++static struct vm_special_mapping vdso_mapping = {
+ 	.name = "[vdso]",
+ 	.mremap = vdso_mremap,
+ };
+@@ -46,7 +46,6 @@ early_initcall(vdso_getcpu_init); /* Must be called before SMP init */
+ static int map_vdso(unsigned long addr, unsigned long vdso_mapping_len)
+ {
+ 	unsigned long vvar_start, vdso_text_start, vdso_text_len;
+-	struct vm_special_mapping *vdso_mapping;
+ 	struct mm_struct *mm = current->mm;
+ 	struct vm_area_struct *vma;
+ 	int rc;
+@@ -55,8 +54,7 @@ static int map_vdso(unsigned long addr, unsigned long vdso_mapping_len)
+ 	if (mmap_write_lock_killable(mm))
+ 		return -EINTR;
  
-@@ -6380,8 +6380,8 @@ static sector_t reshape_request(struct mddev *mddev, sector_t sector_nr, int *sk
- 				if (rdev->raid_disk >= 0 &&
- 				    !test_bit(Journal, &rdev->flags) &&
- 				    !test_bit(In_sync, &rdev->flags) &&
--				    rdev->recovery_offset < sector_nr)
--					rdev->recovery_offset = sector_nr;
-+				    READ_ONCE(rdev->recovery_offset) < sector_nr)
-+					WRITE_ONCE(rdev->recovery_offset, sector_nr);
+-	vdso_text_len = vdso64_end - vdso64_start;
+-	vdso_mapping = &vdso64_mapping;
++	vdso_text_len = vdso_end - vdso_start;
+ 	vvar_start = get_unmapped_area(NULL, addr, vdso_mapping_len, 0, 0);
+ 	rc = vvar_start;
+ 	if (IS_ERR_VALUE(vvar_start))
+@@ -70,7 +68,7 @@ static int map_vdso(unsigned long addr, unsigned long vdso_mapping_len)
+ 	vma = _install_special_mapping(mm, vdso_text_start, vdso_text_len,
+ 				       VM_READ|VM_EXEC|VM_SEALED_SYSMAP|
+ 				       VM_MAYREAD|VM_MAYWRITE|VM_MAYEXEC,
+-				       vdso_mapping);
++				       &vdso_mapping);
+ 	if (IS_ERR(vma)) {
+ 		do_munmap(mm, vvar_start, PAGE_SIZE, NULL);
+ 		rc = PTR_ERR(vma);
+@@ -110,7 +108,7 @@ static unsigned long vdso_addr(unsigned long start, unsigned long len)
  
- 		conf->reshape_checkpoint = jiffies;
- 		set_bit(MD_SB_CHANGE_DEVS, &mddev->sb_flags);
-@@ -6489,8 +6489,8 @@ static sector_t reshape_request(struct mddev *mddev, sector_t sector_nr, int *sk
- 				if (rdev->raid_disk >= 0 &&
- 				    !test_bit(Journal, &rdev->flags) &&
- 				    !test_bit(In_sync, &rdev->flags) &&
--				    rdev->recovery_offset < sector_nr)
--					rdev->recovery_offset = sector_nr;
-+				    READ_ONCE(rdev->recovery_offset) < sector_nr)
-+					WRITE_ONCE(rdev->recovery_offset, sector_nr);
- 		conf->reshape_checkpoint = jiffies;
- 		set_bit(MD_SB_CHANGE_DEVS, &mddev->sb_flags);
- 		md_wakeup_thread(mddev->thread);
-@@ -8001,9 +8001,9 @@ static int raid5_run(struct mddev *mddev)
- 		/* Hack because v0.91 doesn't store recovery_offset properly. */
- 		if (mddev->major_version == 0 &&
- 		    mddev->minor_version > 90)
--			rdev->recovery_offset = reshape_offset;
-+			WRITE_ONCE(rdev->recovery_offset, reshape_offset);
+ unsigned long vdso_text_size(void)
+ {
+-	return PAGE_ALIGN(vdso64_end - vdso64_start);
++	return PAGE_ALIGN(vdso_end - vdso_start);
+ }
  
--		if (rdev->recovery_offset < reshape_offset) {
-+		if (READ_ONCE(rdev->recovery_offset) < reshape_offset) {
- 			/* We need to check old and new layout */
- 			if (!only_parity(rdev->raid_disk,
- 					 conf->algorithm,
-@@ -8154,10 +8154,10 @@ static int raid5_spare_active(struct mddev *mddev)
- 	for (i = 0; i < conf->raid_disks; i++) {
- 		rdev = conf->disks[i].rdev;
- 		replacement = conf->disks[i].replacement;
--		if (replacement
--		    && replacement->recovery_offset == MaxSector
--		    && !test_bit(Faulty, &replacement->flags)
--		    && !test_and_set_bit(In_sync, &replacement->flags)) {
-+		if (replacement &&
-+		    READ_ONCE(replacement->recovery_offset) == MaxSector &&
-+		    !test_bit(Faulty, &replacement->flags) &&
-+		    !test_and_set_bit(In_sync, &replacement->flags)) {
- 			/* Replacement has just become active. */
- 			if (!rdev
- 			    || !test_and_clear_bit(In_sync, &rdev->flags))
-@@ -8172,10 +8172,10 @@ static int raid5_spare_active(struct mddev *mddev)
- 					rdev->sysfs_state);
- 			}
- 			sysfs_notify_dirent_safe(replacement->sysfs_state);
--		} else if (rdev
--		    && rdev->recovery_offset == MaxSector
--		    && !test_bit(Faulty, &rdev->flags)
--		    && !test_and_set_bit(In_sync, &rdev->flags)) {
-+		} else if (rdev &&
-+			   READ_ONCE(rdev->recovery_offset) == MaxSector &&
-+			   !test_bit(Faulty, &rdev->flags) &&
-+			   !test_and_set_bit(In_sync, &rdev->flags)) {
- 			count++;
- 			sysfs_notify_dirent_safe(rdev->sysfs_state);
- 		}
-@@ -8547,7 +8547,7 @@ static int raid5_start_reshape(struct mddev *mddev)
- 					    >= conf->previous_raid_disks)
- 						set_bit(In_sync, &rdev->flags);
- 					else
--						rdev->recovery_offset = 0;
-+						WRITE_ONCE(rdev->recovery_offset, 0);
+ unsigned long vdso_size(void)
+@@ -148,7 +146,7 @@ static void vdso_apply_alternatives(void)
+ 	struct alt_instr *start, *end;
+ 	const struct elf64_hdr *hdr;
  
- 					/* Failure here is OK */
- 					sysfs_link_rdev(mddev, rdev);
-@@ -8599,7 +8599,7 @@ static void end_reshape(struct r5conf *conf)
- 			if (rdev->raid_disk >= 0 &&
- 			    !test_bit(Journal, &rdev->flags) &&
- 			    !test_bit(In_sync, &rdev->flags))
--				rdev->recovery_offset = MaxSector;
-+				WRITE_ONCE(rdev->recovery_offset, MaxSector);
- 		spin_unlock_irq(&conf->device_lock);
- 		wake_up(&conf->wait_for_reshape);
+-	hdr = (struct elf64_hdr *)vdso64_start;
++	hdr = (struct elf64_hdr *)vdso_start;
+ 	shdr = (void *)hdr + hdr->e_shoff;
+ 	alt = find_section(hdr, shdr, ".altinstructions");
+ 	if (!alt)
+@@ -161,7 +159,7 @@ static void vdso_apply_alternatives(void)
+ static int __init vdso_init(void)
+ {
+ 	vdso_apply_alternatives();
+-	vdso64_mapping.pages = vdso_setup_pages(vdso64_start, vdso64_end);
++	vdso_mapping.pages = vdso_setup_pages(vdso_start, vdso_end);
+ 	return 0;
+ }
+ arch_initcall(vdso_init);
+diff --git a/arch/s390/kernel/vdso64/.gitignore b/arch/s390/kernel/vdso/.gitignore
+similarity index 78%
+rename from arch/s390/kernel/vdso64/.gitignore
+rename to arch/s390/kernel/vdso/.gitignore
+index 4ec80685feccc..652e31d825820 100644
+--- a/arch/s390/kernel/vdso64/.gitignore
++++ b/arch/s390/kernel/vdso/.gitignore
+@@ -1,2 +1,2 @@
+ # SPDX-License-Identifier: GPL-2.0-only
+-vdso64.lds
++vdso.lds
+diff --git a/arch/s390/kernel/vdso/Makefile b/arch/s390/kernel/vdso/Makefile
+new file mode 100644
+index 0000000000000..924be0a6a2df3
+--- /dev/null
++++ b/arch/s390/kernel/vdso/Makefile
+@@ -0,0 +1,80 @@
++# SPDX-License-Identifier: GPL-2.0
++# List of files in the vdso
++
++# Include the generic Makefile to check the built vdso.
++include $(srctree)/lib/vdso/Makefile.include
++obj-vdso = vdso_user_wrapper.o note.o vgetrandom-chacha.o
++obj-cvdso = vdso_generic.o getcpu.o vgetrandom.o
++VDSO_CFLAGS_REMOVE := -pg $(CC_FLAGS_FTRACE) $(CC_FLAGS_EXPOLINE)
++CFLAGS_REMOVE_getcpu.o = $(VDSO_CFLAGS_REMOVE)
++CFLAGS_REMOVE_vgetrandom.o = $(VDSO_CFLAGS_REMOVE)
++CFLAGS_REMOVE_vdso_generic.o = $(VDSO_CFLAGS_REMOVE)
++
++ifneq ($(c-getrandom-y),)
++	CFLAGS_vgetrandom.o += -include $(c-getrandom-y)
++endif
++
++# Build rules
++
++targets := $(obj-vdso) $(obj-cvdso) vdso.so vdso.so.dbg
++obj-vdso := $(addprefix $(obj)/, $(obj-vdso))
++obj-cvdso := $(addprefix $(obj)/, $(obj-cvdso))
++
++KBUILD_AFLAGS += -DBUILD_VDSO
++KBUILD_CFLAGS += -DBUILD_VDSO -DDISABLE_BRANCH_PROFILING
++
++KBUILD_AFLAGS_VDSO := $(filter-out -m64,$(KBUILD_AFLAGS))
++KBUILD_AFLAGS_VDSO += -m64
++
++KBUILD_CFLAGS_VDSO := $(filter-out -m64,$(KBUILD_CFLAGS))
++KBUILD_CFLAGS_VDSO := $(filter-out -mpacked-stack,$(KBUILD_CFLAGS_VDSO))
++KBUILD_CFLAGS_VDSO := $(filter-out -mno-pic-data-is-text-relative,$(KBUILD_CFLAGS_VDSO))
++KBUILD_CFLAGS_VDSO := $(filter-out -munaligned-symbols,$(KBUILD_CFLAGS_VDSO))
++KBUILD_CFLAGS_VDSO := $(filter-out -fno-asynchronous-unwind-tables,$(KBUILD_CFLAGS_VDSO))
++KBUILD_CFLAGS_VDSO += -m64 -fPIC -fno-common -fno-builtin -fasynchronous-unwind-tables
++KBUILD_CFLAGS_VDSO += -fno-stack-protector
++ldflags-y := -shared -soname=linux-vdso.so.1 \
++	     --hash-style=both --build-id=sha1 -T
++
++$(targets:%=$(obj)/%.dbg): KBUILD_CFLAGS = $(KBUILD_CFLAGS_VDSO)
++$(targets:%=$(obj)/%.dbg): KBUILD_AFLAGS = $(KBUILD_AFLAGS_VDSO)
++
++obj-y += vdso_wrapper.o
++targets += vdso.lds
++CPPFLAGS_vdso.lds += -P -C -U$(ARCH)
++
++# Force dependency (incbin is bad)
++$(obj)/vdso_wrapper.o : $(obj)/vdso.so
++
++quiet_cmd_vdso_and_check = VDSO    $@
++      cmd_vdso_and_check = $(cmd_ld); $(cmd_vdso_check)
++
++# link rule for the .so file, .lds has to be first
++$(obj)/vdso.so.dbg: $(obj)/vdso.lds $(obj-vdso) $(obj-cvdso) FORCE
++	$(call if_changed,vdso_and_check)
++
++# strip rule for the .so file
++$(obj)/%.so: OBJCOPYFLAGS := -S
++$(obj)/%.so: $(obj)/%.so.dbg FORCE
++	$(call if_changed,objcopy)
++
++# assembly rules for the .S files
++$(obj-vdso): %.o: %.S FORCE
++	$(call if_changed_dep,vdsoas)
++
++$(obj-cvdso): %.o: %.c FORCE
++	$(call if_changed_dep,vdsocc)
++
++# actual build commands
++quiet_cmd_vdsoas = VDSOA $@
++      cmd_vdsoas = $(CC) $(a_flags) -c -o $@ $<
++quiet_cmd_vdsocc = VDSOC $@
++      cmd_vdsocc = $(CC) $(c_flags) -c -o $@ $<
++
++# Generate VDSO offsets using helper script
++gen-vdsosym := $(src)/gen_vdso_offsets.sh
++quiet_cmd_vdsosym = VDSOSYM $@
++	cmd_vdsosym = $(NM) $< | $(gen-vdsosym) | LC_ALL=C sort > $@
++
++include/generated/vdso-offsets.h: $(obj)/vdso.so.dbg FORCE
++	$(call if_changed,vdsosym)
+diff --git a/arch/s390/kernel/vdso64/gen_vdso_offsets.sh b/arch/s390/kernel/vdso/gen_vdso_offsets.sh
+similarity index 82%
+rename from arch/s390/kernel/vdso64/gen_vdso_offsets.sh
+rename to arch/s390/kernel/vdso/gen_vdso_offsets.sh
+index 37f05cb38dad4..359982fb002d4 100755
+--- a/arch/s390/kernel/vdso64/gen_vdso_offsets.sh
++++ b/arch/s390/kernel/vdso/gen_vdso_offsets.sh
+@@ -12,4 +12,4 @@
+ #
  
+ LC_ALL=C
+-sed -n 's/\([0-9a-f]*\) . __kernel_\(.*\)/\#define vdso64_offset_\2\t0x\1/p'
++sed -n 's/\([0-9a-f]*\) . __kernel_\(.*\)/\#define vdso_offset_\2\t0x\1/p'
+diff --git a/arch/s390/kernel/vdso64/getcpu.c b/arch/s390/kernel/vdso/getcpu.c
+similarity index 100%
+rename from arch/s390/kernel/vdso64/getcpu.c
+rename to arch/s390/kernel/vdso/getcpu.c
+diff --git a/arch/s390/kernel/vdso64/note.S b/arch/s390/kernel/vdso/note.S
+similarity index 100%
+rename from arch/s390/kernel/vdso64/note.S
+rename to arch/s390/kernel/vdso/note.S
+diff --git a/arch/s390/kernel/vdso64/vdso.h b/arch/s390/kernel/vdso/vdso.h
+similarity index 80%
+rename from arch/s390/kernel/vdso64/vdso.h
+rename to arch/s390/kernel/vdso/vdso.h
+index 9e5397e7b590a..8cff033dd854c 100644
+--- a/arch/s390/kernel/vdso64/vdso.h
++++ b/arch/s390/kernel/vdso/vdso.h
+@@ -1,6 +1,6 @@
+ /* SPDX-License-Identifier: GPL-2.0 */
+-#ifndef __ARCH_S390_KERNEL_VDSO64_VDSO_H
+-#define __ARCH_S390_KERNEL_VDSO64_VDSO_H
++#ifndef __ARCH_S390_KERNEL_VDSO_VDSO_H
++#define __ARCH_S390_KERNEL_VDSO_VDSO_H
+ 
+ #include <vdso/datapage.h>
+ 
+@@ -12,4 +12,4 @@ int __s390_vdso_clock_gettime(clockid_t clock, struct __kernel_timespec *ts);
+ int __s390_vdso_clock_getres(clockid_t clock, struct __kernel_timespec *ts);
+ ssize_t __kernel_getrandom(void *buffer, size_t len, unsigned int flags, void *opaque_state, size_t opaque_len);
+ 
+-#endif /* __ARCH_S390_KERNEL_VDSO64_VDSO_H */
++#endif /* __ARCH_S390_KERNEL_VDSO_VDSO_H */
+diff --git a/arch/s390/kernel/vdso64/vdso64.lds.S b/arch/s390/kernel/vdso/vdso.lds.S
+similarity index 100%
+rename from arch/s390/kernel/vdso64/vdso64.lds.S
+rename to arch/s390/kernel/vdso/vdso.lds.S
+diff --git a/arch/s390/kernel/vdso64/vdso64_generic.c b/arch/s390/kernel/vdso/vdso_generic.c
+similarity index 100%
+rename from arch/s390/kernel/vdso64/vdso64_generic.c
+rename to arch/s390/kernel/vdso/vdso_generic.c
+diff --git a/arch/s390/kernel/vdso64/vdso_user_wrapper.S b/arch/s390/kernel/vdso/vdso_user_wrapper.S
+similarity index 100%
+rename from arch/s390/kernel/vdso64/vdso_user_wrapper.S
+rename to arch/s390/kernel/vdso/vdso_user_wrapper.S
+diff --git a/arch/s390/kernel/vdso64/vdso64_wrapper.S b/arch/s390/kernel/vdso/vdso_wrapper.S
+similarity index 64%
+rename from arch/s390/kernel/vdso64/vdso64_wrapper.S
+rename to arch/s390/kernel/vdso/vdso_wrapper.S
+index 672184998623b..f69e62a149784 100644
+--- a/arch/s390/kernel/vdso64/vdso64_wrapper.S
++++ b/arch/s390/kernel/vdso/vdso_wrapper.S
+@@ -5,11 +5,11 @@
+ 
+ 	__PAGE_ALIGNED_DATA
+ 
+-	.globl vdso64_start, vdso64_end
++	.globl vdso_start, vdso_end
+ 	.balign PAGE_SIZE
+-vdso64_start:
+-	.incbin "arch/s390/kernel/vdso64/vdso64.so"
++vdso_start:
++	.incbin "arch/s390/kernel/vdso/vdso.so"
+ 	.balign PAGE_SIZE
+-vdso64_end:
++vdso_end:
+ 
+ 	.previous
+diff --git a/arch/s390/kernel/vdso64/vgetrandom-chacha.S b/arch/s390/kernel/vdso/vgetrandom-chacha.S
+similarity index 100%
+rename from arch/s390/kernel/vdso64/vgetrandom-chacha.S
+rename to arch/s390/kernel/vdso/vgetrandom-chacha.S
+diff --git a/arch/s390/kernel/vdso64/vgetrandom.c b/arch/s390/kernel/vdso/vgetrandom.c
+similarity index 100%
+rename from arch/s390/kernel/vdso64/vgetrandom.c
+rename to arch/s390/kernel/vdso/vgetrandom.c
+diff --git a/arch/s390/kernel/vdso64/Makefile b/arch/s390/kernel/vdso64/Makefile
+deleted file mode 100644
+index 49ad8dfc7c790..0000000000000
+--- a/arch/s390/kernel/vdso64/Makefile
++++ /dev/null
+@@ -1,80 +0,0 @@
+-# SPDX-License-Identifier: GPL-2.0
+-# List of files in the vdso
+-
+-# Include the generic Makefile to check the built vdso.
+-include $(srctree)/lib/vdso/Makefile.include
+-obj-vdso64 = vdso_user_wrapper.o note.o vgetrandom-chacha.o
+-obj-cvdso64 = vdso64_generic.o getcpu.o vgetrandom.o
+-VDSO_CFLAGS_REMOVE := -pg $(CC_FLAGS_FTRACE) $(CC_FLAGS_EXPOLINE)
+-CFLAGS_REMOVE_getcpu.o = $(VDSO_CFLAGS_REMOVE)
+-CFLAGS_REMOVE_vgetrandom.o = $(VDSO_CFLAGS_REMOVE)
+-CFLAGS_REMOVE_vdso64_generic.o = $(VDSO_CFLAGS_REMOVE)
+-
+-ifneq ($(c-getrandom-y),)
+-	CFLAGS_vgetrandom.o += -include $(c-getrandom-y)
+-endif
+-
+-# Build rules
+-
+-targets := $(obj-vdso64) $(obj-cvdso64) vdso64.so vdso64.so.dbg
+-obj-vdso64 := $(addprefix $(obj)/, $(obj-vdso64))
+-obj-cvdso64 := $(addprefix $(obj)/, $(obj-cvdso64))
+-
+-KBUILD_AFLAGS += -DBUILD_VDSO
+-KBUILD_CFLAGS += -DBUILD_VDSO -DDISABLE_BRANCH_PROFILING
+-
+-KBUILD_AFLAGS_64 := $(filter-out -m64,$(KBUILD_AFLAGS))
+-KBUILD_AFLAGS_64 += -m64
+-
+-KBUILD_CFLAGS_64 := $(filter-out -m64,$(KBUILD_CFLAGS))
+-KBUILD_CFLAGS_64 := $(filter-out -mpacked-stack,$(KBUILD_CFLAGS_64))
+-KBUILD_CFLAGS_64 := $(filter-out -mno-pic-data-is-text-relative,$(KBUILD_CFLAGS_64))
+-KBUILD_CFLAGS_64 := $(filter-out -munaligned-symbols,$(KBUILD_CFLAGS_64))
+-KBUILD_CFLAGS_64 := $(filter-out -fno-asynchronous-unwind-tables,$(KBUILD_CFLAGS_64))
+-KBUILD_CFLAGS_64 += -m64 -fPIC -fno-common -fno-builtin -fasynchronous-unwind-tables
+-KBUILD_CFLAGS_64 += -fno-stack-protector
+-ldflags-y := -shared -soname=linux-vdso64.so.1 \
+-	     --hash-style=both --build-id=sha1 -T
+-
+-$(targets:%=$(obj)/%.dbg): KBUILD_CFLAGS = $(KBUILD_CFLAGS_64)
+-$(targets:%=$(obj)/%.dbg): KBUILD_AFLAGS = $(KBUILD_AFLAGS_64)
+-
+-obj-y += vdso64_wrapper.o
+-targets += vdso64.lds
+-CPPFLAGS_vdso64.lds += -P -C -U$(ARCH)
+-
+-# Force dependency (incbin is bad)
+-$(obj)/vdso64_wrapper.o : $(obj)/vdso64.so
+-
+-quiet_cmd_vdso_and_check = VDSO    $@
+-      cmd_vdso_and_check = $(cmd_ld); $(cmd_vdso_check)
+-
+-# link rule for the .so file, .lds has to be first
+-$(obj)/vdso64.so.dbg: $(obj)/vdso64.lds $(obj-vdso64) $(obj-cvdso64) FORCE
+-	$(call if_changed,vdso_and_check)
+-
+-# strip rule for the .so file
+-$(obj)/%.so: OBJCOPYFLAGS := -S
+-$(obj)/%.so: $(obj)/%.so.dbg FORCE
+-	$(call if_changed,objcopy)
+-
+-# assembly rules for the .S files
+-$(obj-vdso64): %.o: %.S FORCE
+-	$(call if_changed_dep,vdso64as)
+-
+-$(obj-cvdso64): %.o: %.c FORCE
+-	$(call if_changed_dep,vdso64cc)
+-
+-# actual build commands
+-quiet_cmd_vdso64as = VDSO64A $@
+-      cmd_vdso64as = $(CC) $(a_flags) -c -o $@ $<
+-quiet_cmd_vdso64cc = VDSO64C $@
+-      cmd_vdso64cc = $(CC) $(c_flags) -c -o $@ $<
+-
+-# Generate VDSO offsets using helper script
+-gen-vdsosym := $(src)/gen_vdso_offsets.sh
+-quiet_cmd_vdsosym = VDSOSYM $@
+-	cmd_vdsosym = $(NM) $< | $(gen-vdsosym) | LC_ALL=C sort > $@
+-
+-include/generated/vdso64-offsets.h: $(obj)/vdso64.so.dbg FORCE
+-	$(call if_changed,vdsosym)
 -- 
 2.53.0
 
