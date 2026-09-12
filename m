@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B8E42737FC;
-	Sat, 12 Sep 2026 07:38:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 206322737FC;
+	Sat, 12 Sep 2026 07:38:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789198720; cv=none; b=j76fNzmm6O0MQOtc7EdSEBot4f2iCuXtO2RncEPl7/E5k4eufCcVN1xmojklFC89nloz9G2d8Ng8jdghEZP/iknNKKlISFtSEcoNq0YclYk0uX7qUvBMLGayzMCs/T4XoTpS/6mNDGi/VyUriKiJnbg2l2ynxdKKlSNDQ42FTBk=
+	t=1789198725; cv=none; b=iTd5ErI6OD9t9QHIWhYFWp5CNDlQ6J0XKki9NAhryqw5jy8ux/O54Kdjw6sZmsRQEl1770PvlAkKWdQ1UEqQHJ8uD91PijDulZzfunel/clUEoC1nG4vfDWouCWUX+719lu5g1LO0SHEWqyKi8jcYTDAtNs/RVB14nyGeMFtzLQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789198720; c=relaxed/simple;
-	bh=5rFvRDpDsQH9hgfQPH18EblkfEhKIcyMcZXPP2XXlb8=;
+	s=arc-20240116; t=1789198725; c=relaxed/simple;
+	bh=t26ETqn/CvacdiuFMWWut+1kBroI2yyxxIGl45dK8Zk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kyDhzMLXhKi5JlPNYxnHX2ASaudfzMRrmQhJs5vCCNTv9dZS1yvu2FQG5XPLlI4ZTS0zVMPKFNSX7mLlw1rF8iA+eTM+JRuFL2sNiVLqFJBzdtlQBAyafKQdyn4aqfZzhHwKxxev1uwrhSCI6QESi/Jvc10cMzNV1hQTdVv3T24=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fo286ORj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=niWzqUua1GOhl0NJsM/F367hZT48Q6t6kuGii+l/2/Qi3GkJTKzqKYEAP1Zk4wDwKkdYqMo4QIa5SvY3CkhfF1D/a/9yR6gDNJi5PzNQlNX7DIpnE+ntUX7YleOJprNoPuNmsf52ZbsrLfkgj3V94bPbRpElOXw6aoFHCEN0UGg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WNfc8G4F; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fo286ORj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E19501F000FF;
-	Sat, 12 Sep 2026 07:38:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WNfc8G4F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E65E41F000FF;
+	Sat, 12 Sep 2026 07:38:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789198719;
-	bh=O9bkMRqGr3wY7/VUO38XXPfYJjStLl1GYoO+d/PLt+8=;
+	s=korg; t=1789198724;
+	bh=LRFePdkNbUt2zeuZnMjyr4uTTOjF7GqXKoWfONNLAhc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Fo286ORjJMnmvlK4OAzrFEJEcEoxKjpZPXiRbiJ1xEMgSmRIW0HBxjG8o+hQ6zzHG
-	 VgFL+Fu2f32BtT3DGT8khWamZor2eSWkRZx/qLM4k08C9LDXksBF0YktxbFJoakjvi
-	 SRJHqj+kHBwrnF+CwusQqxcbQTJLp884rMWYc1EQ=
+	b=WNfc8G4FXCTF4PgrJtBfpM+Sc66qk3Z7cmUwr101XgJKoDfMkgu3lVpS6fXQaUnZv
+	 GUnhmsmjr/tE4wrra7vvQWOFk9+WhlPDs7bK6jaN4ISuIUeT5otjnt9H3XmIshJUH9
+	 MeH8jHVlQ8GMI+kIw+n+gUNY6vCUO3cCm8qE0qcM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Cheng <icheng@nvidia.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Alison Schofield <alison.schofield@intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 0411/1815] cxl/features: Clamp Get Feature output size to the remaining buffer
-Date: Sat, 12 Sep 2026 08:36:01 +0200
-Message-ID: <20260912065658.540210847@linuxfoundation.org>
+Subject: [PATCH 7.2 0438/1815] cpufreq: intel_pstate: Fix setting minimum P-state at init time
+Date: Sat, 12 Sep 2026 08:36:28 +0200
+Message-ID: <20260912065659.174885544@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
 References: <20260912065648.999753832@linuxfoundation.org>
@@ -52,59 +50,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Richard Cheng <icheng@nvidia.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 2aeb21fe557ef154f0cdf4f9745ebd8d5b31ca83 ]
+[ Upstream commit db53c573d31d07d5d782c5312d37cb33be788eba ]
 
-cxl_get_feature() reads a feature in a loop but passes a fixed size_out
-as the output capacity every iteration. On the last partial iteration
-the buffer has less room left, so a device that returns more than asked
-can overflow feat_out.
+If HWP is enabled, writes to MSR_IA32_PERF_CTL have no effect,
+so intel_pstate_get_cpu_pstates() should not attempt to call
+intel_pstate_set_min_pstate() to set the minimum P-state for the
+given CPU in that case.
 
-Use the per-iter size data_to_rd_size, which already tracks the
-remaining room, as the output capacity.
+Accordingly, remove the intel_pstate_set_min_pstate()
+call from intel_pstate_get_cpu_pstates() and make both
+intel_pstate_cpu_init() and intel_cpufreq_cpu_init() call
+that function in their non-HWP code paths.
 
-Fixes: 5e5ac21f629d ("cxl/mbox: Add GET_FEATURE mailbox command")
-Signed-off-by: Richard Cheng <icheng@nvidia.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Reviewed-by: Alison Schofield <alison.schofield@intel.com>
-Link: https://patch.msgid.link/20260626104102.53892-4-icheng@nvidia.com
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+The HWP code path in intel_pstate_cpu_init() does not need to update
+the current P-state of the CPU directly at all because it is taken
+care of the processor automatically, but the HWP code path of
+intel_cpufreq_cpu_init() should update it in principle to
+initialize the DESIRED_PERF field in MSR_HWP_REQUEST.  For this
+purpose, make it call intel_cpufreq_hwp_update() and pass
+the minimum P-state limit to it as the current target value along
+with the current minimum and maximum limits.
+
+Fixes: f6ebbcf08f37 ("cpufreq: intel_pstate: Implement passive mode with HWP enabled")
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://patch.msgid.link/5090465.GXAFRqVoOG@rafael.j.wysocki
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/core/features.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/cpufreq/intel_pstate.c | 19 +++++++++++--------
+ 1 file changed, 11 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/cxl/core/features.c b/drivers/cxl/core/features.c
-index 2eedabb5f7023..ba6d2a5acb74a 100644
---- a/drivers/cxl/core/features.c
-+++ b/drivers/cxl/core/features.c
-@@ -225,7 +225,7 @@ size_t cxl_get_feature(struct cxl_mailbox *cxl_mbox, const uuid_t *feat_uuid,
- 		       void *feat_out, size_t feat_out_size, u16 offset,
- 		       u16 *return_code)
+diff --git a/drivers/cpufreq/intel_pstate.c b/drivers/cpufreq/intel_pstate.c
+index 6e984c114d96f..311087197d7fa 100644
+--- a/drivers/cpufreq/intel_pstate.c
++++ b/drivers/cpufreq/intel_pstate.c
+@@ -2356,8 +2356,6 @@ static void intel_pstate_get_cpu_pstates(struct cpudata *cpu)
+ 
+ 	if (pstate_funcs.get_vid)
+ 		pstate_funcs.get_vid(cpu);
+-
+-	intel_pstate_set_min_pstate(cpu);
+ }
+ 
+ /*
+@@ -3063,6 +3061,7 @@ static int __intel_pstate_cpu_init(struct cpufreq_policy *policy)
+ static int intel_pstate_cpu_init(struct cpufreq_policy *policy)
  {
--	size_t data_to_rd_size, size_out;
-+	size_t data_to_rd_size;
- 	struct cxl_mbox_get_feat_in pi;
- 	struct cxl_mbox_cmd mbox_cmd;
- 	size_t data_rcvd_size = 0;
-@@ -237,7 +237,6 @@ size_t cxl_get_feature(struct cxl_mailbox *cxl_mbox, const uuid_t *feat_uuid,
- 	if (!feat_out || !feat_out_size)
- 		return 0;
+ 	int ret = __intel_pstate_cpu_init(policy);
++	struct cpudata *cpu;
  
--	size_out = min(feat_out_size, cxl_mbox->payload_size);
- 	uuid_copy(&pi.uuid, feat_uuid);
- 	pi.selection = selection;
+ 	if (ret)
+ 		return ret;
+@@ -3073,11 +3072,11 @@ static int intel_pstate_cpu_init(struct cpufreq_policy *policy)
+ 	 */
+ 	policy->policy = CPUFREQ_POLICY_POWERSAVE;
  
-@@ -252,7 +251,7 @@ size_t cxl_get_feature(struct cxl_mailbox *cxl_mbox, const uuid_t *feat_uuid,
- 			.opcode = CXL_MBOX_OP_GET_FEATURE,
- 			.size_in = sizeof(pi),
- 			.payload_in = &pi,
--			.size_out = size_out,
-+			.size_out = data_to_rd_size,
- 			.payload_out = feat_out + data_rcvd_size,
- 			.min_out = data_to_rd_size,
- 		};
+-	if (hwp_active) {
+-		struct cpudata *cpu = all_cpu_data[policy->cpu];
+-
++	cpu = all_cpu_data[policy->cpu];
++	if (hwp_active)
+ 		cpu->epp_cached = intel_pstate_get_epp(cpu, 0);
+-	}
++	else
++		intel_pstate_set_min_pstate(cpu);
+ 
+ 	return 0;
+ }
+@@ -3301,8 +3300,6 @@ static int intel_cpufreq_cpu_init(struct cpufreq_policy *policy)
+ 		return ret;
+ 
+ 	policy->cpuinfo.transition_latency = INTEL_CPUFREQ_TRANSITION_LATENCY;
+-	/* This reflects the intel_pstate_get_cpu_pstates() setting. */
+-	policy->cur = policy->cpuinfo.min_freq;
+ 
+ 	req = kzalloc_objs(*req, 2);
+ 	if (!req) {
+@@ -3323,9 +3320,15 @@ static int intel_cpufreq_cpu_init(struct cpufreq_policy *policy)
+ 		WRITE_ONCE(cpu->hwp_req_cached, value);
+ 
+ 		cpu->epp_cached = intel_pstate_get_epp(cpu, value);
++
++		intel_cpufreq_hwp_update(cpu, cpu->pstate.min_pstate,
++					 cpu->pstate.max_pstate,
++					 cpu->pstate.min_pstate, false);
+ 	} else {
+ 		policy->transition_delay_us = INTEL_CPUFREQ_TRANSITION_DELAY;
++		intel_pstate_set_min_pstate(cpu);
+ 	}
++	policy->cur = policy->cpuinfo.min_freq;
+ 
+ 	freq = DIV_ROUND_UP(cpu->pstate.turbo_freq * global.min_perf_pct, 100);
+ 
 -- 
 2.53.0
 
