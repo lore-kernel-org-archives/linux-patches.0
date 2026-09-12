@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 104FD2F531B;
-	Sat, 12 Sep 2026 15:11:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36E972F531B;
+	Sat, 12 Sep 2026 15:11:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789225885; cv=none; b=V5X+9n8SjhReBBwl6eGxlARaEP0W+TvCZN4nbfBORm8153SAze1/PrHD05R2a/JDCzLkqCcRmEFaJkSoqcUPpgU2LsvdWPsI9id7tENL3OYHoJv57KQXBC1cP2sPAdon6g4lLDldn9IWpXvEmjzfGhKx35EyzrMYildiqMUemhI=
+	t=1789225890; cv=none; b=KFIklEZLiUGC9Nmq1tzyPGrzY2gR5aqzn8ozSNBzbOqaH5ECjJVaXlCiXRiysQXYq1GlKDgBKe692tonglBmdnaV6VF8oOqV966t5wDxH0O+7SFUZjgSZonXXgg9Hf29c8R/y8vxq0l3vgNLLi//Z4GYIh4xG4ezXAiXzQ52AEs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789225885; c=relaxed/simple;
-	bh=OcXRTZYOuCXlBSPptvHkcQqYfOT9T9se6WBMkMyIfYc=;
+	s=arc-20240116; t=1789225890; c=relaxed/simple;
+	bh=X9Cia2OmsjEEBeAaqCWg2CB8j0DEdLCAPve1dS9XD88=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DsVLNfbludlNr7d0U2dPBJyd5RQQ1ZV270TwKtQKi6/ggJxR+DwilS5peeEkvhvz1BdofWuaC6V4TJE27799Bre26BYDtX7WJgq4F5wGCT3PUHct63HyHoSdaj+80dN5QO76DDB4DNpstdvqklEEf5IYHA3gEwGWMvNv67sutX0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zSTQ/qgp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=D2wF6j2MyM9wclV7s2zOpAy3BG+/gW85szcjtEL0npejrxE7evSlcOP4EWSzsAvvocTudZ6itHbU268CZGzkDvCJxgTq+qLeR0hJWCJphL5JA/iC05Xl4WEUFTBcQBmUIyELqZ2SCp3GqV0dEN+Jd3EIxNgA74dwMqLYDI2zrKI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l3kFN7f2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zSTQ/qgp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D15261F000FF;
-	Sat, 12 Sep 2026 15:11:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l3kFN7f2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13BA61F000FF;
+	Sat, 12 Sep 2026 15:11:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789225884;
-	bh=r3O1Jztr4Dj8g5Hl4TaCNS1PIAXkPYPokqc9Xv3s1oQ=;
+	s=korg; t=1789225889;
+	bh=08CoOlwTO+JImXi+kdBHvLswfZOMeZhBBn8pDAuq7BI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zSTQ/qgpYfFl3M523c/BhdvlCoOemd94ypxRrGI9BL6tpR3lBKcS7PfJ+hHovStfy
-	 Snpud+SYsieeUlIqMFdID4HtJgIcBKHOgulxRsNeA7XuqIUkIFZdLCmgaBaw8SitUR
-	 If5BXpT/pVvq8ynSu2zM0n0AIYgEicinliaGPVrY=
+	b=l3kFN7f28za5eRH9NizqIuWIKewJl3nqh2bVW24JWZAaEhuSLY2qjpUT12mi+j0ps
+	 Tlj0xO/WYQYGWOaJE3n0wQn8BazQfMbY21/sAZtO+xKncCOtxA8vzczqt1miDcke9C
+	 HLUdQ/xCjBO4pnO7bBBpJFHTagDYsQ6jCQbrWzUI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Nikolay Aleksandrov <razor@blackwall.org>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1290/1424] bridge: add MDB state mask uAPI attribute
-Date: Sat, 12 Sep 2026 09:02:02 +0200
-Message-ID: <20260912065636.159556398@linuxfoundation.org>
+Subject: [PATCH 6.6 1291/1424] net: Add MDB bulk deletion device operation
+Date: Sat, 12 Sep 2026 09:02:03 +0200
+Message-ID: <20260912065636.182016741@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 References: <20260912065607.279695368@linuxfoundation.org>
@@ -55,15 +55,12 @@ Content-Transfer-Encoding: 8bit
 
 From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit e37a11fca41864c9f652ff81296b82e6f65a4242 ]
+[ Upstream commit 1a36e0f50f963465e9b2b980d250ab38b8fcd7a3 ]
 
-Currently, the 'state' field in 'struct br_port_msg' can be set to 1 if
-the MDB entry is permanent or 0 if it is temporary. Additional states
-might be added in the future.
-
-In a similar fashion to 'NDA_NDM_STATE_MASK', add an MDB state mask uAPI
-attribute that will allow the upcoming bulk deletion API to bulk delete
-MDB entries with a certain state or any state.
+Add MDB net device operation that will be invoked by rtnetlink code in
+response to received 'RTM_DELMDB' messages with the 'NLM_F_BULK' flag
+set. Subsequent patches will implement the operation in the bridge and
+VXLAN drivers.
 
 Signed-off-by: Ido Schimmel <idosch@nvidia.com>
 Reviewed-by: Petr Machata <petrm@nvidia.com>
@@ -72,21 +69,33 @@ Signed-off-by: David S. Miller <davem@davemloft.net>
 Stable-dep-of: bc2dc66a6693 ("vxlan: mdb: Fix use-after-free in vxlan_mdb_flush()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/uapi/linux/if_bridge.h | 1 +
- 1 file changed, 1 insertion(+)
+ include/linux/netdevice.h | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/include/uapi/linux/if_bridge.h b/include/uapi/linux/if_bridge.h
-index 2e23f99dc0f15..a5b743a2f7750 100644
---- a/include/uapi/linux/if_bridge.h
-+++ b/include/uapi/linux/if_bridge.h
-@@ -757,6 +757,7 @@ enum {
- 	MDBE_ATTR_VNI,
- 	MDBE_ATTR_IFINDEX,
- 	MDBE_ATTR_SRC_VNI,
-+	MDBE_ATTR_STATE_MASK,
- 	__MDBE_ATTR_MAX,
- };
- #define MDBE_ATTR_MAX (__MDBE_ATTR_MAX - 1)
+diff --git a/include/linux/netdevice.h b/include/linux/netdevice.h
+index 2b4094ac2e3bc..b6e63bcfff30a 100644
+--- a/include/linux/netdevice.h
++++ b/include/linux/netdevice.h
+@@ -1307,6 +1307,9 @@ struct netdev_net_notifier {
+  * int (*ndo_mdb_del)(struct net_device *dev, struct nlattr *tb[],
+  *		      struct netlink_ext_ack *extack);
+  *	Deletes the MDB entry from dev.
++ * int (*ndo_mdb_del_bulk)(struct net_device *dev, struct nlattr *tb[],
++ *			   struct netlink_ext_ack *extack);
++ *	Bulk deletes MDB entries from dev.
+  * int (*ndo_mdb_dump)(struct net_device *dev, struct sk_buff *skb,
+  *		       struct netlink_callback *cb);
+  *	Dumps MDB entries from dev. The first argument (marker) in the netlink
+@@ -1591,6 +1594,9 @@ struct net_device_ops {
+ 	int			(*ndo_mdb_del)(struct net_device *dev,
+ 					       struct nlattr *tb[],
+ 					       struct netlink_ext_ack *extack);
++	int			(*ndo_mdb_del_bulk)(struct net_device *dev,
++						    struct nlattr *tb[],
++						    struct netlink_ext_ack *extack);
+ 	int			(*ndo_mdb_dump)(struct net_device *dev,
+ 						struct sk_buff *skb,
+ 						struct netlink_callback *cb);
 -- 
 2.53.0
 
