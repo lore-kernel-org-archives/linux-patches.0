@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E480135FF6E;
-	Sat, 12 Sep 2026 10:20:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D53DCA6F;
+	Sat, 12 Sep 2026 10:20:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789208434; cv=none; b=nkBmR0ew3gFhkgX//N9ueTMRXObML7kkjo299JqFA/mee0ASfHrFfCZp3KWRPR7Pt+F6+BSod6iYFHGEmZxZkmFzrdqOqryy0Ce0QqDKVXlkUOHI64SnTpkYkWumQ235AJMSqIRr6dQV3FgYTBmFQYNP/l3tzRShgS9Iv+xGc4Y=
+	t=1789208439; cv=none; b=SmRRED+RCSBeXEwSjdp2Py/xlQk1ioNbKS5ztC306W9PtvnvewW3pVwXfHilfDaPK/HMVI1oHL9T5pT3WM7ms6l7/XyGCknioGQkKI1UxDy9zdlBOthFmeTwULSQq2aFkEAbnzFfDFxo+DR5peFttbOwBU5XC5wuHlo/4iJWs58=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789208434; c=relaxed/simple;
-	bh=YZCvYKxtRrP0UX/biJ4pdDV3BIV6MqccdBxtQsRYbJQ=;
+	s=arc-20240116; t=1789208439; c=relaxed/simple;
+	bh=KlIaVSlTMfJ2onv76KwUe3190wr6m70HplZUjAKT/mg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p/qcSJHzAbgpf3+LdKY1SBhDPR2AFFY5M5fIp4lQdJ4XPVaSoz+4IHfxCGEQtL6asFA8FTbcGTgJTjKPKlJr07c8lRDMxG7OSGqtNDHykFte3t6YXo/vXLEXb4YRr9AqQBXiBQRYvX52zPI2+TBVQuSMBQHxrgU0pCAHusmWCs4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z1y6HLoE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BgTd2y+g2U2+QrQLcegwSosMpP7YuL+Rl09qjkjNP543+oUHoFFUwT6WwcJHZQ5zTzPGCS3OWPq8e3QAaQBNHY51Vl107k8URpVQoK0OpHY+j/P9Mc2y63FXVoB7sTJY2GpobSvCZnGvoFI5Xi0tIGZZo8mzkMui/LB9DlK2Oao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bFx66Vao; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z1y6HLoE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D91EE1F000FF;
-	Sat, 12 Sep 2026 10:20:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bFx66Vao"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D41AB1F000FF;
+	Sat, 12 Sep 2026 10:20:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789208432;
-	bh=y+ocvVlCP+yp8q565p8sM6rXzGZm13MQV4Sr5IGc3E4=;
+	s=korg; t=1789208437;
+	bh=KvVC/w3iEySuzICZHKIDv2p1T9wkdHFnDlBniw342zU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=z1y6HLoETmZ2+xTgfOjfOIJFMqv3JZe/a1JDeIDTrfmH2YHeITIvF9aQc2CE/njTL
-	 P8sQcda7U8gtCnAlfuG3mk1fScD7Kbtfq/mfYebaq+xSfBpgQ9vUYYbWBx36zHQmJC
-	 K+4fSXGAwZvaiZ/NV/HGhryb+zC3x+PG/d2AV6Ss=
+	b=bFx66VaoFjJf/kqiQaBidPNdz8XYVOuZMHCwzGTlQ4s9FXSRcCfAStA4KnLOEqW/d
+	 oHIVjviHPDL34rNbJ8doyHlLbH+qpDbXhHaAJTu/fSQfSiHClC8+xs6ipeIsllg9Fy
+	 6sYFaTObyELIzmGHENu7Ax3aEvmt66beEpBr/gOA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ivy Lopez <skunkolee@gmail.com>,
+	longlong yan <yanlonglong@kylinos.cn>,
+	Brian Masney <bmasney@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0599/1518] staging: rtl8723bs: use kfree_sensitive() for key material
-Date: Sat, 12 Sep 2026 08:46:08 +0200
-Message-ID: <20260912065636.973702291@linuxfoundation.org>
+Subject: [PATCH 6.18 0617/1518] clk/x86: pmc_atom: add kasprintf return value check
+Date: Sat, 12 Sep 2026 08:46:26 +0200
+Message-ID: <20260912065637.385852380@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260912065623.398859879@linuxfoundation.org>
 References: <20260912065623.398859879@linuxfoundation.org>
@@ -50,64 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ivy Lopez <skunkolee@gmail.com>
+From: longlong yan <yanlonglong@kylinos.cn>
 
-[ Upstream commit d205dfa8cb825f1954ca1cfa474fc50bf06ee4aa ]
+[ Upstream commit 18e9d14cbac33db1c1fb933c26a736eef53dd538 ]
 
-The set_stakey_parm struct contains a 16-byte encryption key.
-Use kfree_sensitive() instead of kfree() to ensure the key
-material is zeroed before the memory is freed, preventing
-potential information leaks.
+The kasprintf() function returns NULL on memory allocation failure, but
+the code in plt_clk_register() was not checking this return value. If
+kasprintf fails, init.name would be NULL and could cause NULL pointer
+dereference when clkdev_hw_create() uses it.
 
-Fixes: 554c0a3abf21 ("staging: Add rtl8723bs sdio wifi driver")
-Signed-off-by: Ivy Lopez <skunkolee@gmail.com>
-Link: https://patch.msgid.link/20260717220135.17836-1-skunkolee@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Add proper error checking for the kasprintf() return value and return
+ERR_PTR(-ENOMEM) on failure.
+
+Fixes: 1141d9d08184 ("clk: x86: Add Atom PMC platform clocks")
+Signed-off-by: longlong yan <yanlonglong@kylinos.cn>
+Reviewed-by: Brian Masney <bmasney@redhat.com>
+Signed-off-by: Brian Masney <bmasney@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/rtl8723bs/core/rtw_cmd.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/clk/x86/clk-pmc-atom.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/staging/rtl8723bs/core/rtw_cmd.c b/drivers/staging/rtl8723bs/core/rtw_cmd.c
-index 0091045f63f24..2701a80ad07de 100644
---- a/drivers/staging/rtl8723bs/core/rtw_cmd.c
-+++ b/drivers/staging/rtl8723bs/core/rtw_cmd.c
-@@ -889,7 +889,7 @@ u8 rtw_setstakey_cmd(struct adapter *padapter, struct sta_info *sta, u8 unicast_
- 	if (enqueue) {
- 		ph2c = kzalloc(sizeof(*ph2c), GFP_KERNEL);
- 		if (!ph2c) {
--			kfree(psetstakey_para);
-+			kfree_sensitive(psetstakey_para);
- 			res = _FAIL;
- 			goto exit;
- 		}
-@@ -897,7 +897,7 @@ u8 rtw_setstakey_cmd(struct adapter *padapter, struct sta_info *sta, u8 unicast_
- 		psetstakey_rsp = kzalloc(sizeof(*psetstakey_rsp), GFP_KERNEL);
- 		if (!psetstakey_rsp) {
- 			kfree(ph2c);
--			kfree(psetstakey_para);
-+			kfree_sensitive(psetstakey_para);
- 			res = _FAIL;
- 			goto exit;
- 		}
-@@ -908,7 +908,7 @@ u8 rtw_setstakey_cmd(struct adapter *padapter, struct sta_info *sta, u8 unicast_
- 		res = rtw_enqueue_cmd(pcmdpriv, ph2c);
- 	} else {
- 		set_stakey_hdl(padapter, (u8 *)psetstakey_para);
--		kfree(psetstakey_para);
-+		kfree_sensitive(psetstakey_para);
- 	}
- exit:
- 	return res;
-@@ -948,7 +948,7 @@ u8 rtw_clearstakey_cmd(struct adapter *padapter, struct sta_info *sta, u8 enqueu
- 		psetstakey_rsp = kzalloc(sizeof(*psetstakey_rsp), GFP_KERNEL);
- 		if (!psetstakey_rsp) {
- 			kfree(ph2c);
--			kfree(psetstakey_para);
-+			kfree_sensitive(psetstakey_para);
- 			res = _FAIL;
- 			goto exit;
- 		}
+diff --git a/drivers/clk/x86/clk-pmc-atom.c b/drivers/clk/x86/clk-pmc-atom.c
+index 99291ba65da73..08c83e0abc41d 100644
+--- a/drivers/clk/x86/clk-pmc-atom.c
++++ b/drivers/clk/x86/clk-pmc-atom.c
+@@ -160,6 +160,9 @@ static struct clk_plt *plt_clk_register(struct platform_device *pdev, int id,
+ 		return ERR_PTR(-ENOMEM);
+ 
+ 	init.name =  kasprintf(GFP_KERNEL, "%s_%d", PLT_CLK_NAME_BASE, id);
++	if (!init.name)
++		return ERR_PTR(-ENOMEM);
++
+ 	init.ops = &plt_clk_ops;
+ 	init.flags = 0;
+ 	init.parent_names = parent_names;
 -- 
 2.53.0
 
