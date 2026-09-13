@@ -1,60 +1,53 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 175E137BE81;
-	Sun, 13 Sep 2026 11:26:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4589D3EA979;
+	Sun, 13 Sep 2026 11:26:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789298798; cv=none; b=JcEks+zja7rzZnkXLaMDnrzf5vxexWTa981Id+SGgHMV24kdbbfgu8nnth39fmSXPyiJKYxj1fPio2qR5LLnb7l5aTuFMdJTA3RWp8Dkdz8ruhlpXNfZHz1r3NtJO2TkINPmsEzHgZKW/XOOYn1A9BsNKMsziOXbEvjmbAoiN9k=
+	t=1789298801; cv=none; b=tRNWkxVDsdAgnNy/nRLjCKW6LnvLMrJ3syi3cec6ZjBCQMh+uSQccNKscZYwji+gi//H8S0GXCDh70m4MPkwnbsUD6lDURmcIVuXCSIYWOtXieRPMxbxzbMvqMN9ez1htUo1pNoctrmSHq6WVFwQnwJd8UDmstd0+gOnE+LBOIc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789298798; c=relaxed/simple;
-	bh=5ZMyGXwHrcceVarb9W4jkMj7Y5tOE6xS1Jh9zy2At0Y=;
+	s=arc-20240116; t=1789298801; c=relaxed/simple;
+	bh=YLQRIEOC7B/w+IPX7gc1u0wKRq2rjuB+Tdse+xH9MnA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GlYW4fOTSeGrGev6T3mTm9x8/LKN0FMfbuidqHf/hd2d+h4YF9BxX5KXUf6wn8g+oQ0tTprXsQKSNKB70dN56z8YMdIQjlboiyFPmNzYRu6JxTqpV4bxksJqflwXqfKoHAvuvsRY0/TuuZemBM6LMjfbafALY6v6tN4mj5Q1UQ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=G5CjN3Ze; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ilOEIAdLU2Fuv0E5OPyrNQWJR/5qQRo7wrzl9Tb766puQzjaNBAFSsp53wcglQ0mShHHd3CtJcTcDGEAOD3WslV7VTOUd8Hth9QZorkYM+iYdG6ANsDQI7JYiArLF3/G9CgkZ5npkERAbKNvsxiMwBjTF8TRQY7qF1wdk72zCkA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QQmamKuB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="G5CjN3Ze"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A2E01F000FF;
-	Sun, 13 Sep 2026 11:26:33 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QQmamKuB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A23431F00893;
+	Sun, 13 Sep 2026 11:26:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789298795;
-	bh=DVTw5rBsKOnhERN1NIUzuwYqbYBD0wEzcKamtRBiKqY=;
+	s=k20260515; t=1789298797;
+	bh=bMI4u498aDi+UwaiZ6lRKi6pXB+VEcqGq2YCSXeOy7M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=G5CjN3ZepwbiDURwbCHyK3t3SwzhTFqpnjFW4pUbdvxmpWeAzzvYg9UKvk6moxkll
-	 qIneeWfth0G15NzCDy+/ICtHd1jQ8/ml9XpUYtcXsU7OuRcCxUlavxOiCEtXbZ8Kpk
-	 a6gwpgoRQVyheyIfsv1pNvx7eSDZVbChjuILvMeieG6X3w7PtO22OmmnpBm16bM2EL
-	 msIS1mGrAUjXYw9X/mcy3hBqznRz7ns8N7wBkTltTCt1NZsAiaCHD6GLJGDyqeY2iu
-	 XIh8MJTqib8FH34nm+WxNxwKFjqDetPJR7MOw4LoRdveLF230ZtH9pJEkvabnmDH5D
-	 r3vZtZLk1tTqw==
+	b=QQmamKuB5LxNbZJDkbZfSDwjbL7UjFI2wQIJRbczhi/k9GqWpKvPxJsrJax+sFHen
+	 J2WVZkYBTh1D0IAUNBpjgS3UcdU3zsEB0HjaYCd/hOuWgKJTCKG3GqDekz+lo4Om2i
+	 F+yzJw/wIr0AVpKbbkW9A+ROG7sj+M/cYS6dubVsdDAyH07tU+52sCvZWSWqxQWPAE
+	 UJ5kf+jJpxdkt5UJoUcz6F788FV5ILNhE2jMTLurZmhzZRd3Pu5lRgVyzogFX+AXxk
+	 w8DQ56QmcmIqE0teT0TXcKxfPlLnsouEtORo1oZ3OKc+ZYe6QUuLcDstSYYewr7xP5
+	 7XgD3jiKqT27Q==
 From: Sasha Levin <sashal@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	stable@vger.kernel.org
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: Sasha Levin <sashal@kernel.org>,
+	stable@vger.kernel.org,
 	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@nabladev.com,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	hargar@microsoft.com,
-	broonie@kernel.org,
-	achill@achill.org,
-	sr@sladewatkins.com,
-	Ron Economos <re@w6rz.net>
-Subject: Re: [PATCH 6.6 0000/1424] 6.6.157-rc1 review
-Date: Sun, 13 Sep 2026 07:26:20 -0400
-Message-ID: <rc-reply-report-011-fsl-audmix-6.6-20260913@kernel.org>
+	Ian Rogers <irogers@google.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Honglei Wang <jameshongleiwang@126.com>,
+	Jan Polensky <japo@linux.ibm.com>,
+	Sumanth Korikkar <sumanthk@linux.ibm.com>,
+	Thomas Richter <tmricht@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Wang Yugui <wangyugui@e16-tech.com>
+Subject: Re: [PATCH 6.18 0908/1518] perf c2c: Use perf_env e_machine rather than arch
+Date: Sun, 13 Sep 2026 07:26:21 -0400
+Message-ID: <rc-reply-report-013-perf-c2c-20260913@kernel.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <aa7f30f5-5fdb-4d68-8adf-b70f1286067c@w6rz.net>
-References: <20260912065607.279695368@linuxfoundation.org> <aa7f30f5-5fdb-4d68-8adf-b70f1286067c@w6rz.net>
+In-Reply-To: <20260913085648.B79E.409509F4@e16-tech.com>
+References: <20260912065623.398859879@linuxfoundation.org> <20260912065643.993908175@linuxfoundation.org> <20260913085648.B79E.409509F4@e16-tech.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -63,11 +56,15 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-> ERROR: modpost: "fsl_audmix_runtime_suspend" [sound/soc/fsl/snd-soc-fsl-audmix.ko] undefined!
-> ERROR: modpost: "fsl_audmix_runtime_resume" [sound/soc/fsl/snd-soc-fsl-audmix.ko] undefined!
+> Please drop this patch for 6.18.y because of build failure.
+>
+> builtin-c2c.c:3277:21: warning: implicit declaration of function 'perf_env__e_machine'; did you mean 'thread__e_machine'? [-Wimplicit-function-declaration]
 
-Dropped from the 6.6 queue. Same CONFIG_PM=n build break also hit the
-5.15 and 6.1 queues, both dropped as well.
+Dropped from the 6.18 queue along with the following two dependent patches:
+  - "perf c2c: Fix error masking, OOM, and unchecked caller errors in
+    hpp_list__parse()"
+  - "perf c2c: Clean up registered formats on c2c_hists__init() and
+    c2c_hists__reinit() failure"
 
 Thanks for the report.
 
