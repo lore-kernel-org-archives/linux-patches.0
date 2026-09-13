@@ -1,110 +1,70 @@
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from todd.t-8ch.de (todd.t-8ch.de [159.69.126.157])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79BB43E171F
-	for <patches@lists.linux.dev>; Sun, 13 Sep 2026 10:14:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8A703B3BEF
+	for <patches@lists.linux.dev>; Sun, 13 Sep 2026 11:11:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.69.126.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789294472; cv=none; b=av8w+OmmH4yCaBNzVm6EXRu5HDUvWY3KKw4QAESHix6/9qecAdLsD6+fUKF67Uc565hfSqX19XVUC+LG5VkLSTHe6wQWtXHuvzNOQknq3gV2mbzFNpaTGiYthe7j13QG2ilTH24oLjZ3B2ZE1qC76cGoGKM14hXKenCI0Yd/a44=
+	t=1789297877; cv=none; b=moJLKS+lATlxwlJqSA4Gy0E4sgHporqOhHy0oR3E1k7/QWsczAGWkC38P5BD5ZCdMAG8GhJeG7GFSj/LlAIBTWF5lQiQdnIzcouLJTpiuXbAt5SWdgRbojIhTCbWghs4+GJPZxO4L45fWSe3ylYwUmi62kCkfLMbwgVIUBw7gqo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789294472; c=relaxed/simple;
-	bh=1kt6d8FnC0B98nCUGE+SmlFlqx1hfYRjftBJJGy4rKE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=l9+hvhAwHDOkD7OaKPBD36neoLy+NNLvuXLcbqZXF/jz3Jq0lx9zuC0c6YgLzS2JHSe56Q6kwa1RiHOzJjUfUX96Dqe6k20okHLx0sTvQBWUkwx5hey15CiOWP2eFLsx+wfXCR3XIWzR2ropRZcwx5QZTa4Q8IcLHjyR+m7/KlU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com; spf=pass smtp.mailfrom=googlemail.com; dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b=m3N5hGIN; arc=none smtp.client-ip=209.85.128.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
+	s=arc-20240116; t=1789297877; c=relaxed/simple;
+	bh=o/crwe87fYD7qW90Fm+rwOvNErVmvLHTv/kmQxU6Cxc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=lNOrpfcbooH8GOU4465YdcI+Ga/0DA6G3hYyCCfsE2ATi+tTCQ0kT5sI9Bjrpw2YiEDHDhq/z15EbvNTuRScGSkjpn7VHM5uzHgzcfzMFIZGEIjXBS8LgNZ6S0WHAeGoY7GeDhnf630DzhoD7+bIkGoUNN710NsFuRyOZxamTvM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=weissschuh.net; spf=pass smtp.mailfrom=weissschuh.net; dkim=pass (1024-bit key) header.d=weissschuh.net header.i=@weissschuh.net header.b=FUrP9qBP; arc=none smtp.client-ip=159.69.126.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=weissschuh.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=weissschuh.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="m3N5hGIN"
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-49e63568bfbso18430205e9.2
-        for <patches@lists.linux.dev>; Sun, 13 Sep 2026 03:14:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20251104; t=1789294465; x=1789899265; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=wBMZeq61/F4p0+3rD8e6cPnmdSCExohBg4rHJSwrdv4=;
-        b=m3N5hGIN5/iOzAsmXMZfTdJc1YUKrMIJD9qi/edKbsqtSUL3CLYg5r0KqzR1l/1Kla
-         n1XzkeW3yUS5RSjiYxkiHJKPUlDw/v7CyoEUI3zzoA0wWKNWNFVFIffwVujpRXFYQS3e
-         4UPrnFmWYaJwoTVyKIBAN8Viyk3311WWfPc/8ngzLYAvxTK2LFSvqFnHu1hJfYPbfQtM
-         tp0Eyys/h6HKWZvy4kkfzVVfg1OKXD9PEewlm+6PzT/U8eTmcmzMP4okosfWnBaxK/1c
-         fbrtL4h8ygmcJpA2UgYEQhlrkNDH4WDrNQBgZEF5qJ17mqnxXXtkVHUyK8yCeD3fKZqI
-         SkWg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1789294465; x=1789899265;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=wBMZeq61/F4p0+3rD8e6cPnmdSCExohBg4rHJSwrdv4=;
-        b=bEKf98bh3WTBdizjxWtHtJrGtLqtWXxhoXO/BR3pcJsJSknJMAW3ySNsRIIfMbMq4Z
-         0cZ9cbghTOZchA9/YHGZIk6h5Pkf0qAT5Dnh89gmcfk0wb7L/g4kLbIo6X70rA71X2JJ
-         Njcih5blrmt2P5ohEpQ77UoCQv0BW8yD8DKC4jL+MjkpV6ONaMTkqSNruu9mQXmSkt4H
-         XcNSJoxqFpnZNABXyg/SVX2LFX2/0p5TrkcjETc/Q6HCpEvlLd/uYU4WYHDE2x++iXQx
-         XzXmly/rHV/a82s7LRHIFl2E1GzjR/E8mEn+6M9plaJ7blf3N1iswudn+0z+TdhpfUo9
-         JPUQ==
-X-Gm-Message-State: AFuF++mOpLStTKJrszeXyoIVjExumpzTYA/NaG4wyypEaUdSq3X/6ZyO
-	jmdo4+vw1JGVH2avTpOqeht8Rvu7BUcttkwbpXL+rvgnG64IcJHZUk8=
-X-Gm-Gg: AYBFou2XZtYAiiG0nW5fwL6qOoFSsGpAxwQY3fm7uMi1lxsKBRnOws6hcPPEecL9dYj
-	CXBIe0FfgAEIlNVZM4TFpdd5COnKRB+qIL3iltyhpFd08P2SIKIN+r3etMl18QKaxtrDhzBMltr
-	D/tfgrpSaslc6djY2zXThi3c0s6GA7vWTzsIXnEDIWKMBrW1DCHRqovZqoCvkjXbgAcZzMkkC8b
-	Qny+WP13cXtLozCJtxpPRGkxG6NvyJiF/krg2h8p40Dg3VPCqpAn0jvZRXlGUSrftnVuSV7H4RW
-	0VUBf2Pq5Mijs7PO2XO5g8WRDpnYI9g8Ui7Gz+4s3h2oFYEesrSQktE9XjgUjr5+9RV2SiPCESw
-	p8VkQ7sznF+hQe0FzpANyGIFSJyfhuH1UZPm78LagNmeytK5PKTlqjdmIlYPhS5PTr85Co8V5b3
-	GIIz6vj0zctS/9tJwOlNq5cfTMRmqrcVuOr2GkzlLKWGiebGapxKqXeYrmYPhH5/DdXCe3WtdRZ
-	Ary66HlLvlV1F0kF/7uDIGFeGMXhadUs6c2UxsH4xpFaB5P
-X-Received: by 2002:a05:6000:420f:b0:485:8c16:5eed with SMTP id ffacd0b85a97d-486eb2f99fbmr13029738f8f.39.1789294464781;
-        Sun, 13 Sep 2026 03:14:24 -0700 (PDT)
-Received: from [192.168.1.3] (p5b2b4716.dip0.t-ipconnect.de. [91.43.71.22])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-486eb33e020sm19329616f8f.18.2026.09.13.03.14.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 13 Sep 2026 03:14:24 -0700 (PDT)
-Message-ID: <b8982310-19ea-4ae4-a849-537af8950117@googlemail.com>
-Date: Sun, 13 Sep 2026 12:14:23 +0200
+	dkim=pass (1024-bit key) header.d=weissschuh.net header.i=@weissschuh.net header.b="FUrP9qBP"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=weissschuh.net;
+	s=mail; t=1789297868;
+	bh=o/crwe87fYD7qW90Fm+rwOvNErVmvLHTv/kmQxU6Cxc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=FUrP9qBP68NCSH2N0GSVG7tv1tgMOsq07FGl6q8Lfu1wCg4yiqh+0E8lrQbremPE4
+	 Dn5b5uusF8oe7PINveHJyOnQQqnic9bBzZSr/MBMDpInnNnxuQZDDaC8ugi1BhKgxU
+	 HCUCMNGOMqdEY2s3lGwKZWNMAlPyltulRRUDK1kk=
+Date: Sun, 13 Sep 2026 13:11:07 +0200
+From: Thomas =?utf-8?Q?Wei=C3=9Fschuh?= <linux@weissschuh.net>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	Thomas =?utf-8?Q?Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>, Thomas Gleixner <tglx@kernel.org>, 
+	Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 6.18 0248/1518] timens: Remove dependency on the vDSO
+Message-ID: <836d73d0-163b-458b-8481-60185f88d577@t-8ch.de>
+References: <20260912065623.398859879@linuxfoundation.org>
+ <20260912065629.093403177@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Betterbird (Windows)
-Subject: Re: [PATCH 6.1 0000/1191] 6.1.188-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
- conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
- achill@achill.org, sr@sladewatkins.com
-References: <20260912065548.086904252@linuxfoundation.org>
-Content-Language: de-DE
-From: Peter Schneider <pschneider1968@googlemail.com>
-In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260912065629.093403177@linuxfoundation.org>
 
-Am 12.09.2026 um 08:45 schrieb Greg Kroah-Hartman:
-> This is the start of the stable review cycle for the 6.1.188 release.
-> There are 1191 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+Hi Greg,
 
-Builds, boots and works on my 2-socket Ivy Bridge Xeon E5-2697v2 server. No dmesg oddities or regressions found.
+On 2026-09-12 08:40:17+0200, Greg Kroah-Hartman wrote:
+> 6.18-stable review patch.  If anyone has any objections, please let me know.
 
-Tested-by: Peter Schneider <pschneider1968@googlemail.com>
+I object.
 
+This now lets SPARC enable time namespaces. But the SPARC vDSO can not
+handle those (yet, in v6.18). Userspace will read incorrect data
+from the vDSO inside a time namespace.
 
-Beste Grüße,
-Peter Schneider
+(...)
 
--- 
-Climb the mountain not to plant your flag, but to embrace the challenge,
-enjoy the air and behold the view. Climb it so you can see the world,
-not so the world can see you.                    -- David McCullough Jr.
+> Stable-dep-of: 06aba58e5849 ("time/namespace: Validate nanosecond field in proc_timens_set_offset()")
 
-OpenPGP:  0xA3828BD796CCE11A8CADE8866E3A92C92C3FF244
-Download: https://www.peters-netzplatz.de/download/pschneider1968_pub.asc
-https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@googlemail.com
-https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@gmail.com
+This does not look reasonable to me. The mentioned commit should be
+backportable as-is, without pulling in four additional patches.
+
+If you want to keep this patch, at least drop the deletion of
+
+	"depends on GENERIC_GETTIMEOFDAY"
+
+Thomas
+
+(...)
