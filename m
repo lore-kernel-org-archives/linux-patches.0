@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E1AA39DBF5;
-	Sun, 13 Sep 2026 11:26:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 789E23E8C77;
+	Sun, 13 Sep 2026 11:26:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789298795; cv=none; b=ulkoQrHH/VzP2iD1oM86U0rR6PrUkcx3J0VC52AKITsT7/WWTeQBD12pMfybkzcLa2N3ZpJeZmpd332iYzsGD2xaKF6iz1P2Wo+C5x5HDCCmxyC1Z05ndNsBci30KThQpDBOBWR9CShuN5dz4ALEJ9Q6Tq29N/X309zVXjDLE94=
+	t=1789298795; cv=none; b=ngfLNGqQ6yWGO67IFzMtgaxRYI0xNL/TbaaYe48MSy0h1b4F1zj3D9f5aIXbQpMuvMT9EVefH+luO/fhrhvDa3yg75RponmVr37v7c48AabfMPpAWwgXQkrqty6S0EeOn1h51wo2Lu1AhllNfTYc1oLobvARcKmdTWM+Bv0x8Ms=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1789298795; c=relaxed/simple;
-	bh=llP5GpqHUgIlFDG7wrlefEFtaZ24NfDk5sz7agjAXl0=;
+	bh=P+jjx0r0Ld0tJh3Y6MyZ4kXGg9pXtKIb82q7ssgSngU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fJv+TXAfvHXGLmsJfVuc6V+MXAHuAMWdD8i+QPaAcdj4hjIQwEBtKVNqZj/Utf4ExwTQWploeB9+mN1yA6xqebDjRm2VPitCpKphbRnciRvgPHwZ2cTi53HDDh/Hv6JdSwOEZMzHApRnS2cfOUABZ55GXBw2Tmk6/saB8a7+AHM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hkay1oxG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tYC0oaugwVY0N1q78QQqTv2PEGBlRTyqPnfqGGwnup4+Ue+L/iELUrcraO/v5bvA331b5iRGeIHo3f43QoBRfHS7n2bo7dL0QziCS5RD1z3thMmVflhBHM563hdEl3YFDyNRSfJAr1GA6XGxaJxzVYoFjWVmvpmQd01ElGkHhd0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=m4NzikWX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hkay1oxG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51A911F00893;
-	Sun, 13 Sep 2026 11:26:28 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="m4NzikWX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB4341F00899;
+	Sun, 13 Sep 2026 11:26:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789298790;
-	bh=aZEqXNAYaVqRmNDZqsWHyhP1aPd4iri4oSCMJeVeYfg=;
+	s=k20260515; t=1789298793;
+	bh=4DVmDumo+5wQ9nA7/PlGhBETVs2n53KVh4b1D6YK0y8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hkay1oxG91B+/M+fZblxROg4rcxr3QEYUeAu0MrD9d8Mo5wj+yPIcTbaRw0JZrFh4
-	 yAvEzCx5B9lXBQyZHJPccxnnEeoieTO/rKqkQP6LsLyZWOsH61dN79zx4I8B61p+Pp
-	 hGDZ2X9aYp8/CZuoOuYOvd2HGmpVkX7R9FMlqNcPUk9qaH4s0S/Ouaexk/p4l7qDrF
-	 dlh3OEp2AXT19Tktax0WcXALG0dtO7wg9m24ZuDliyR78ycyjRYWeFnuu+iv0CDjrt
-	 ivAtYF5PWY8WIGYA+0Xu13fhQNJf/vrJe+sTA+xLuO7tBAQPI6TbQmqCTY2C5c7m8H
-	 c3WpyAh1ULM8Q==
+	b=m4NzikWXmga4/uA9UOthC4fsZNFxmD93LOWd+AsWeutKX16FQyzRZ5N9rKRk+Gigp
+	 VwjSj7i7hY/4+JTW74YdJM35fn2M++C03CfwRb6aKt6fFEOz2hkpepzs8lF623YuQ5
+	 akpxV2WojTncKPo9xzMVvUVFAlOO/mhqRPG0dG+yb4/OlDmAPCgDw17NB/XklUNJYp
+	 W/QbV0JVyu3gKu7pKLReRq0oQUTiUj9KrhING0kW1Ja/9rtW1Ws56ZQUi1WPuG5Fyv
+	 Q0YPjXnMdgGt72cpo90A6Xix1JWzTfHxNlqBSzanLNh/yKSGrRKysRVKQdi+t4Dfmg
+	 eUC3BFv1iOyzA==
 From: Sasha Levin <sashal@kernel.org>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	stable@vger.kernel.org
@@ -49,12 +49,12 @@ Cc: Sasha Levin <sashal@kernel.org>,
 	achill@achill.org,
 	sr@sladewatkins.com,
 	Ron Economos <re@w6rz.net>
-Subject: Re: [PATCH 6.1 0000/1191] 6.1.188-rc1 review
-Date: Sun, 13 Sep 2026 07:26:18 -0400
-Message-ID: <rc-reply-report-009-fsl-audmix-6.1-20260913@kernel.org>
+Subject: Re: [PATCH 5.15 000/935] 5.15.221-rc1 review
+Date: Sun, 13 Sep 2026 07:26:19 -0400
+Message-ID: <rc-reply-report-010-fsl-audmix-5.15-20260913@kernel.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <1a29a80d-1615-4110-8aa2-eaf931b579b6@w6rz.net>
-References: <20260912065548.086904252@linuxfoundation.org> <1a29a80d-1615-4110-8aa2-eaf931b579b6@w6rz.net>
+In-Reply-To: <82fb64b5-4273-4cb3-be34-ed9fd2d0dd94@w6rz.net>
+References: <20260912065526.833703348@linuxfoundation.org> <82fb64b5-4273-4cb3-be34-ed9fd2d0dd94@w6rz.net>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -66,8 +66,8 @@ Content-Transfer-Encoding: 8bit
 > ERROR: modpost: "fsl_audmix_runtime_suspend" [sound/soc/fsl/snd-soc-fsl-audmix.ko] undefined!
 > ERROR: modpost: "fsl_audmix_runtime_resume" [sound/soc/fsl/snd-soc-fsl-audmix.ko] undefined!
 
-Dropped from the 6.1 queue. Same CONFIG_PM=n build break also hit the
-5.15 and 6.6 queues, both dropped as well.
+Dropped from the 5.15 queue. Same CONFIG_PM=n build break also hit the
+6.1 and 6.6 queues, both dropped as well.
 
 Thanks for the report.
 
