@@ -1,66 +1,66 @@
-Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
+Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57A9C36998A
-	for <patches@lists.linux.dev>; Sun, 13 Sep 2026 19:21:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B12613630AC
+	for <patches@lists.linux.dev>; Sun, 13 Sep 2026 19:22:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789327301; cv=none; b=R5VUjw8tScv+SySti0K0QbUJB06Rw8AFwIZ5bFF7qMtqAIH702qKXwz46AUUdiAKSpiCkwzJKlNLgq0cj9LaCcnrz9faY/cJkbbspkE4qrOyrZOt/4qkQy3H1dveMUPbms6g1QlmHzvcNVtesHDEHZTrDNcRRxVob6YvxsXsenU=
+	t=1789327354; cv=none; b=jLxaGU1DBtivOb04mnWH1BoWEUXwfb0Dsfj/fxFuR5SsslAA6b7PuBdYPBW74oj+J7ggMaAnmD43NADw7doqccywJuD4DBRukQ+BX1/MTHsqa1Gm2Jhlgm5NJok+gmsqyTtQIEf1KasdKgbmCMFrN1+nDzUo7c1oUmM1JlDL420=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789327301; c=relaxed/simple;
-	bh=jAspQQ6QLSyolmznrEa6PcbeUeNNtkpmVdRb8KClrg8=;
+	s=arc-20240116; t=1789327354; c=relaxed/simple;
+	bh=qQilx/XJAAeSEVVpMCFNrvnuxibowI9VFpjoi7rJZoQ=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=qQORBgWqLp9eSprblYRwQmm/dLrst3mXWD6ro6xC/ZBr0R6izqzmG9wu0TABncVwTaREpw/Zudg9V+ZauS+Bpt/+WHW62nOPqKNUNXv1DLmr+cxmSCI7FQC2rRdTmP0kTbntJWJqmxPCnOJCIPd9NuQgk8F/Dfj+rEhOw42EB1o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NBvTSnlf; arc=none smtp.client-ip=209.85.221.51
+	 MIME-Version; b=bvf+O4+o7tI4jO8DlvL19DcE0Mcl9MzM4KLYEGt3gBMgsAbOsp1ww9oaq6Aws/odHoc9R4cstZPAYUm6C04hrZxD2iLANxwgjMwy1Lfe9NSf0GpdPN4UXsRymrJ1Q1qoxM3lp/0l9tV7t1UPmgBjJ05MUm2b2RWszvXVcK8RJEQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XU5J9ctP; arc=none smtp.client-ip=209.85.221.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NBvTSnlf"
-Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-485888b3c3dso2419983f8f.2
-        for <patches@lists.linux.dev>; Sun, 13 Sep 2026 12:21:39 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XU5J9ctP"
+Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-485850cbac3so1292548f8f.3
+        for <patches@lists.linux.dev>; Sun, 13 Sep 2026 12:22:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789327298; x=1789932098; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1789327351; x=1789932151; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=jAspQQ6QLSyolmznrEa6PcbeUeNNtkpmVdRb8KClrg8=;
-        b=NBvTSnlfrOJ6StSWorVSO53WxXKvasfOcFzgh1JvSf+zCpPc4cPYWNLLhqe37rJKfe
-         yKusrgSqsfKxBbgP7klSAtpCoExbFnkCt59kTQU5zNtOx9WfaCfwrDScDGAkXBHbKdZE
-         4r0ubTupUQ0SajSCUPEEfF9lQ/HcP9t3I8rQSV2XGIT6gmGYzzXq3lTv8Vi9p1rf85BC
-         EkdchZyTW9Gne8KTGj1S70fEo8nwVQJ3p+pENku2SL1oKxX5C43XiHE+Dege+0mSPWyl
-         O/bCDl1a/mDu2TcfUwTAnkCrGJsfuNZgyduVbE9npp+dl3sqEi/w3E2K6iy2Yw8hKt9G
-         815A==
+        bh=qQilx/XJAAeSEVVpMCFNrvnuxibowI9VFpjoi7rJZoQ=;
+        b=XU5J9ctPt1LUahJY/J/kHhw8H2lPRw93VU9G3hMU1w32leiKoPG5wqUaO+kPhw+wzV
+         2J2P19OvJvLsr5l9QuIDXz02GwfgypAB1fLBraHh+zll4STSxehEg/aXz35ntPTj7JlX
+         zGnvFjMEEeiWo2s/5HxRvew2f6S87+Vh2TrPvrB89RoM1wV5woIwaijj0JL+kdU6DFeI
+         ezr2WuLUwyBks0kxxVg25o4p2r/bajimGKNpO9ysTS7RuPv50VKLBDUZnmxCUQGs2NuU
+         Vljm7EcJ3tjmJSxnoftAwT/iVpAMRVuYYyq2LSlrZJP3S1FHFWKx4VeEPzqtnq1C1Jjo
+         pB7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1789327298; x=1789932098;
+        d=1e100.net; s=20251104; t=1789327351; x=1789932151;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=jAspQQ6QLSyolmznrEa6PcbeUeNNtkpmVdRb8KClrg8=;
-        b=ZpysHOYAia+xIJetiro6BrIQqG2A3R9Ccd4Xht0Mmnh9SCxq8PXPmjzhEmsQm3RCzK
-         WdAMJOFxXYPxdlpPGzUgCsQACr1YtPYuZHdITsgsdrT57b0FccJ5Na6J0NCwov0eRzm2
-         gKDOsBLNVMzOO+ErVVcP8bfJqLaA6EWFisPjavv4AnPRBeCXQpqgl7Jv51JW3wg/qVMX
-         JloLGqjRD9EDbaTL9X6JEOpBqBzzt7mLgTWRyHBUcCfjTPCjHSC7a4dgs/sR0GioXCxq
-         vE+b6jfpiUR1u79ryaF+RASyj7+jB9/szwfh896XH1lHyiotrdTmCFgk/VhaQzky67B8
-         pxBA==
-X-Forwarded-Encrypted: i=1; AKwUvBxLx7HakSg2qppEfqZ7JVQ/kJHFhOc1KIy18UvJMtopRxDgydYtc7P3hbNjTj6KG8CJGG7nTV91@lists.linux.dev
-X-Gm-Message-State: AFuF++l4fXEQqY1owmlNXYpibhLt4yTbpmSMy+4dywf2zOwxqnK8/Bn1
-	opgSnN/AXX0AwFUKl6F9ttTNg8sQHUw1In5Tq1N5Vmicq28uCtfNG6BH
-X-Gm-Gg: AYBFou2i+KRuxjsb8rWYs0sznTrDspZRcAiHS5uSVW4T6RJ+Xw1PBcAq5izoM9hRZ41
-	dl0rmd8iOA/x4ddlkxxVKNGsmkhmKlBdebCT68HpxJptywbLylkF1YDdFjdrwApcp+weaRrJey+
-	iyZqGPpRtRlNeXYVeefvoa0t/xcJvMMolAxKHbFGzxEe+6mIOycdcL0cMvZzOrhXOazaP95sKy3
-	QdXtFDps9c6VvvnBVo1Vf6mlD8DX42svne+apkthokNPigzzwJfI8dUFDn/2qaJGn9cih/Oo7Cc
-	mJR3TopBkIG7FnyoS1Eni3pExkDRs6VJSL5LxQeMdeSbbKUBFLzD1oOfrUxy4EwHJzz+CLvlbE2
-	6cb5VUi9uEsxi9WZwB8+W9jL1THLCAJY5/l2Bj8f1ouZqGA7I+wr6hVOzRdfkDaevGun/vYzlQo
-	6lcjpUAgZ4SOBRH0zf3LDbs7LbJbZXzoO6/ZTV6CGhcnpLnOkEGXQ/7YmdHsu7GvS3BvVCAggZs
-	yF0HrTS8B6o5vXTmea3nl9r197OjPq/A27xBpKCE46TUcKK20AU2otvLeVWpVzH78yw/FB56b3Z
-	3iKIlBKqcJJuwnw97uSAiqiMcoxdjHW3VmZXJ+fBwnOJEcNbMITSrOoHOKRYSgfGchfRL6Qcn0p
-	ftg==
-X-Received: by 2002:a05:6000:40dc:b0:486:f614:dd0f with SMTP id ffacd0b85a97d-486f614df05mr8750281f8f.52.1789327297885;
-        Sun, 13 Sep 2026 12:21:37 -0700 (PDT)
+        bh=qQilx/XJAAeSEVVpMCFNrvnuxibowI9VFpjoi7rJZoQ=;
+        b=szIiOXIR3gFKH580D6tUxaqsTEnnLo2LhQ/A45YTsU3fgUZ9v3oj5Cd40u18jbFSHW
+         SRVtOinnG13pGyURWkV3VY1uyBjofsY38TKgGglxrQ/Upxl+OMnLJUii/Tta84hEVhSw
+         5X4n5c+owspoV6SHEFwc5zx/8XLeGWMgv5T+xRJqhsLff83gxXzM33zO9vSKkEtoL2Yv
+         IwTqgvB4eNAs2yFc2Dw8vTgmj2nFTtQSnjhGzvjFP7MQvs+eM95gipHefDUZyjqA6dc4
+         HvBjfhhtSz2lAJilumYWjkHb7NdRwdzXClHlyw7JvNFfnlD1GjEv0TgaqKwTl4tJcyf6
+         LtpQ==
+X-Forwarded-Encrypted: i=1; AKwUvBx2ugOV+dKIxafsy1jTQc7///1MMG8IP29R0NuwnyCYzpBhKnYNkNE/e70FcgUOSLeM4WqQQOQJ@lists.linux.dev
+X-Gm-Message-State: AFuF++l+yXIfxXcMGPgEsyDaGdCxu2YrLl4JQ5/GS7o4gupHhkQfV2U2
+	X8x9iXCWDSajb51JMQ2XyL7zXEDkWPXDVDV+cOgAqcs6+718z/h2liqEkGBCijy/
+X-Gm-Gg: AYBFou1T28+nTt9Ek5piWUTXa+WxqIR9xic6OD6aii16nQypES2CxufpnaCMeieoFrB
+	tVXWAUqiIvtWncN2BDqZuIlbro2gGHc4au+2aP0vlEqTZ8uGpKBXq2/jH8s/neChSyuT80IQ8dy
+	aQm3heigCnPngYg87Q8eoQypu8V6bf9QHGPn7rdKoopEnBYlkbVmSYYv3u2dzFev+iPU5V0Lu89
+	tAjo5DFg4gb1kGn+HzumJF1VfvY4nkKRdHTL76pqhozG4DcM+/2cE31fHVJqyk/SmjMwIE1mnq9
+	CQgaMRk6sVh223q1DUQzf6k8RauNWMPmAv3w5xkEMh4t7aCDPLfiuIVRv2v0sjBYZxXAax5/ctv
+	ghk7vflARGUZvXGKlan9JcmUk8+w60FxL4BCUTXiOVlHv/RYb99rzM+APYZRb3LIMwoRMRDkMw3
+	zYLH0US7kRjjWJjhjMPPHQIt2kiNaf2ODzbrI/kmF0HvgnYlcA/dDDd1hqgmDS+utQ6Hsm1Foqx
+	TFgDY+Ezu3SYNOsIQcK7dxkVYN0863zOmF+Lffco/OlIjmS0flgG6dVwvAociuL1qE/sy65ArQ9
+	pZ2+RcA5RH2uCJNJRCkadpNoh9VXnDB6qxBVTUasxd59XgD5F+fhwlhf4Wvwjhj9otQnRrEejeD
+	kMQ==
+X-Received: by 2002:a05:6000:25fc:b0:486:fc00:b0db with SMTP id ffacd0b85a97d-486fc00b1f8mr4127609f8f.30.1789327350656;
+        Sun, 13 Sep 2026 12:22:30 -0700 (PDT)
 Received: from localhost.localdomain (dynamic-2a02-3100-a0e6-2301-7846-2cfb-35f5-6359.310.pool.telefonica.de. [2a02:3100:a0e6:2301:7846:2cfb:35f5:6359])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-486eb35f3d9sm20244963f8f.35.2026.09.13.12.21.36
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-486eb359f38sm19681970f8f.30.2026.09.13.12.22.29
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Sun, 13 Sep 2026 12:21:36 -0700 (PDT)
+        Sun, 13 Sep 2026 12:22:30 -0700 (PDT)
 From: Karl Mehltretter <kmehltretter@gmail.com>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: Karl Mehltretter <kmehltretter@gmail.com>,
@@ -70,12 +70,12 @@ Cc: Karl Mehltretter <kmehltretter@gmail.com>,
 	Pu Lehui <pulehui@huawei.com>,
 	Eduard Zingerman <eddyz87@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 6.1 0632/1191] bpf: Sync tail_call_reachable with callee state on entry
-Date: Sun, 13 Sep 2026 21:21:27 +0200
-Message-Id: <20260913192127.2336-1-kmehltretter@gmail.com>
+Subject: Re: [PATCH 6.6 0787/1424] bpf: Sync tail_call_reachable with callee state on entry
+Date: Sun, 13 Sep 2026 21:22:24 +0200
+Message-Id: <20260913192224.2361-1-kmehltretter@gmail.com>
 X-Mailer: git-send-email 2.39.5 (Apple Git-154)
-In-Reply-To: <20260912065602.449560744@linuxfoundation.org>
-References: <20260912065548.086904252@linuxfoundation.org> <20260912065602.449560744@linuxfoundation.org>
+In-Reply-To: <20260912065624.923073650@linuxfoundation.org>
+References: <20260912065607.279695368@linuxfoundation.org> <20260912065624.923073650@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -84,22 +84,20 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Please hold this patch unless 6.1 backports of upstream commits
-01793ed86b5d ("bpf, verifier: Correct tail_call_reachable for bpf prog")
-and 54c27ea6dadb ("bpf: Fix tail_call_reachable leak") can also be
-included.
+Please hold this patch unless a 6.6 backport of upstream commit
+54c27ea6dadb ("bpf: Fix tail_call_reachable leak") can also be included.
 
-This patch resets tail_call_reachable on callee entry, but 6.1 lacks both
-the direct-tail-call initialization and the parent-state restoration it
-relies on. This can leave the root program falsely unmarked and make the x86
-JIT omit required tail-call counter handling.
+This patch resets tail_call_reachable on callee entry, but 6.6 lacks the
+parent-state restoration it relies on. Returning from a clean callee can
+leave the root program falsely unmarked and make the x86 JIT omit required
+tail-call counter handling.
 
-I reproduced this on 6.1.188-rc1 in QEMU: Linux permits 33 successful tail
+I reproduced this on 6.6.157-rc1 in QEMU: Linux permits 33 successful tail
 calls, so the test must stop after 34 program entries including the initial
 invocation. The unmodified rc1 reached 35, bypassing the limit.
 
-With tested 6.1 adaptations of both commits applied, the same test stopped
-at the expected 34 entries.
+With the applicable 54c27ea6dadb hunk applied, the same test stopped at the
+expected 34 entries.
 
 Thanks,
 Karl
