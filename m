@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C6DA3EB105;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B0053A71A8;
 	Sun, 13 Sep 2026 11:26:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789298801; cv=none; b=LtXWcw7PsHfy8vN4UmJBLskfTtYVvOZFWZwRHOiShK+sZwNO1ANy8B6j8zjHgm6Bg7XDiJYshhwY8RHmfb8wZJPU+OTbIMZgTMYGB1tNyMCboJM2xPph1mBwtkaOcagSC30eCpRZGmydIW8O+Ndd/Kf09buzrgrAnlQl/+Ng5lQ=
+	t=1789298802; cv=none; b=W2zQHATl6+5OqCTGct2Cm3G6Obc5DIcBTfNus2Rk4XXhjKioSyRabJiauomARaxsM0ih575NO7K3tiFyywaHgagIVXymxoTQp9v1mVIk4WMd+rbBhYk5qxQi+ruyY+tQzgD6pmtuulDHEvkvCmH7rUo6XQIcRn9jkKXuDCgLSbs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789298801; c=relaxed/simple;
-	bh=cvVHYZPrICfZHq5DI2sq7sTG0Qihjl7ic9Aw/C2Ut48=;
+	s=arc-20240116; t=1789298802; c=relaxed/simple;
+	bh=ijj0b1tUOu01EZHSgJ9UEYtO7eDF+s4CN1rvJZMrmjo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d1a3JcnCOuOP/hb8gNXVWaMKLNNLgZlPukLjeBwA23aPOl9stRTAC6FT4mQHNc5shp1fm8r3sV8MN2HVqp3OpVKRdSMn9h5mmVfc1LnqPn2buEKFbIrKbmbblSOMoCs/QIW1d+uwt7/IvV4xEadMc47r9MNLrbuIO/ZAF4bCPNM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=L6/dLv9X; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MU+sW4B0OHSnSp3NZYNiDgTHWguixZ3MXXxO1RGa1RY4FT1+VPg5veeoBU1fje7kz5Wi5TGjI2AKBVUBNTRBhg1uizwWI6HeanEfc0k62W0f4HKyv25NT3hxG5ApFpbyZ6K/BpIMhgyH7vr3LlMX2PKyKTIAy4fD8xBPqv0hUwo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=noKeahuO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="L6/dLv9X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EA7F1F0089A;
-	Sun, 13 Sep 2026 11:26:38 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="noKeahuO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72BA81F00898;
+	Sun, 13 Sep 2026 11:26:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789298799;
-	bh=+/MKqkLmpVM9wR80B6Re3EtQG78nQQ8BxYwTwIiGKOo=;
+	s=k20260515; t=1789298798;
+	bh=+UeFP0MN0uSHMyHHESdpH2d12ZiLI8blNfBqNiJcXLk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L6/dLv9XgQGhtOfy0Yz8uOivpOeiYQvdWu4w+J7phlTJbrApVHqD0dqAHEFOsHFSM
-	 pm/JcgcumySAEe2fgqRYokaav7UaJSzHSs3oOvXEhClPlHuou8iwniEvtWcyCs22gi
-	 sJtqOHSUu8AOC0eonZ0ZXiOGv6EpslCSijq4xnsdARpbJXzi6k2V8jjtZgc9u9evl5
-	 qk5pV90l/LtfFd7G5/X+hQgWQpG9Dim4AfYb6d7uOBMrdnO3FehTp+Umxfg+Z1/8lc
-	 C8lYoCcaUuMLIH5VwiZWmIkIi9Vf7aFOHoSRhpMxgpGuuRwZsXoopqL334MaQTZpp8
-	 1F6Qem875JOGA==
+	b=noKeahuOYAJV8hSsV1C2GVQHt8k058fBlGQV+B890jz2Xb2pVgvav/cPGExZJ8ib1
+	 sp/oJ44EEMbD3YOLe+BJPrYF6GSKymc1ua0Nv6NOh5AxTjxbq85FVpdsmKyeAsTc11
+	 b4JKOFGh9owSxeEiPBYxU2XXyxmEfmzdVtRFvny5T5XEwN8naES7hqLijfvdd2WzUq
+	 hbUgHA7m1yl/eVFVBWUFr9knM/SPtmearOcTClxTCM1/P9mIjFt4YE0spI1eBphMfV
+	 A9a75ZufAE4JW4Dnj4Lq3SkO9ceMiynPw9MhTz2LrlSfVYzL2MLsfsmvG1K2KlAt71
+	 EkLZnB/72qODw==
 From: Sasha Levin <sashal@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	stable@vger.kernel.org
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: Sasha Levin <sashal@kernel.org>,
+	stable@vger.kernel.org,
 	patches@lists.linux.dev,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Arnd Bergmann <arnd@arndb.de>
-Subject: Re: [PATCH 6.18 0641/1518] s390: Remove compat support
-Date: Sun, 13 Sep 2026 07:26:23 -0400
-Message-ID: <rc-reply-report-015-s390-compat-20260913@kernel.org>
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Yee Li <seven.yi.lee@gmail.com>
+Subject: Re: [PATCH 7.2 0368/1815] iommufd/selftest: Fix dmabuf leak in iommufd_test_dmabuf_get()
+Date: Sun, 13 Sep 2026 07:26:22 -0400
+Message-ID: <rc-reply-report-026-iommufd-20260913@kernel.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <eeda754b-8da6-4071-86fc-257db902bbd3@app.fastmail.com>
-References: <30fec0a7-619b-44d9-9ca6-e5de551a8c0b@app.fastmail.com> <daily-reply-0009-re-s390-compat-removal-6-18@kernel.org> <eeda754b-8da6-4071-86fc-257db902bbd3@app.fastmail.com>
+In-Reply-To: <CALX8JfSjnAd6bY8zBCHuG=_+f4JiVCrhT+sW4DPEpUM6+5LF-w@mail.gmail.com>
+References: <20260912065648.999753832@linuxfoundation.org> <20260912065657.541103882@linuxfoundation.org> <CALX8JfSjnAd6bY8zBCHuG=_+f4JiVCrhT+sW4DPEpUM6+5LF-w@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -47,10 +47,13 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-> but an old distro release should certainly not break existing userspace
-> when installing a bugfix kernel.
+> Success path return rc was changed to return 0.
 
-Fair enough. I've dropped the whole block from 6.18.
+Dropped from the 7.2 queue. Will requeue together with the upstream fix
+("iommufd/selftest: Return dmabuf fd from IOMMU_TEST_OP_DMABUF_GET
+again") once that lands in Linus's mainline tree.
+
+Thanks for the report.
 
 -- 
 Thanks,
