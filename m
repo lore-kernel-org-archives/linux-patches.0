@@ -1,105 +1,123 @@
-Received: from mail-wm2-f13.google.com (mail-wm2-f13.google.com [74.125.225.141])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDF7631E858
-	for <patches@lists.linux.dev>; Sun, 13 Sep 2026 17:28:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.141
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A686532D42B
+	for <patches@lists.linux.dev>; Sun, 13 Sep 2026 18:19:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789320522; cv=none; b=MkCgXdUORNQ1Jy5mj/UOIlHZGq2szZf4SZmLvIEHh7jOBxZERgsgrrVAvYg3SZzjt0C42duu3esLQLjp6AJtHyZU2kO8GyQVMaanGtkJxl1338adaS1GDZ/j2Z9WhohGDoNpTDCn7w8wU48ngE1gwvkZaZTVi2pbU2cx+mIBm2M=
+	t=1789323581; cv=none; b=BqHv61UGgu/26ojlts7VcnsaDd5QhnNYLFmUmiVbTbumAKhhAcaVREl2KE0isFcT/TwdoqrDuHv61OP2dfaRooTmF7xMzlqD5CUcw/WNgiaeZI/s3fEgPCC7PCprPadszSXRnUukyJg6BRCFMHOUVQ05mP84/dRKOV2nNCHMcd4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789320522; c=relaxed/simple;
-	bh=On+rz/ZmuKojokNXfYqOBOt08u5f6BSrCmw1MqxDuAg=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=oCW2bBZ5lLW7kl2pC7+RasoPxyRoAP95dvwdAyunNr6gHRuJcHVRql5M4iHbj+utSWLqCyOJWRmnrZIdxFZEnH4YT1jgJmbrh/AcNOV6Xf5ZWMySUSkciqFhVTuGOISb95Gm72wpyYs4JklOiP+i0Qz4MUOIDe4XsKjC71MHb9c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JQRG48v8; arc=none smtp.client-ip=74.125.225.141
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1789323581; c=relaxed/simple;
+	bh=p1h05sLqiUMH12fkllX1CsrbInUrqKMFt4kPBqvdxPY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=WJvIzdDAPcAeai1IWs8YEoMiGtviMHevVA55EJzqXzjNp8U2Bj7TK3+reOhnZU1KeVzV8JHWSHdRR3V96ik2kOMSpPMyDrsyzscl19AlMmdKAxLRhSkGa7unJju1jZDaDtyqeopRGiCz3i1lml2YGUpSLhw9IbiGwsF0xC+5S0k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=s5BeSu2B; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ur14Yuqo; arc=none smtp.client-ip=202.12.124.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JQRG48v8"
-Received: by mail-wm2-f13.google.com with SMTP id 5b1f17b1804b1-49e7355e411so7475155e9.1
-        for <patches@lists.linux.dev>; Sun, 13 Sep 2026 10:28:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789320519; x=1789925319; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=On+rz/ZmuKojokNXfYqOBOt08u5f6BSrCmw1MqxDuAg=;
-        b=JQRG48v8JmGC738nAI/Yn4DGgGpFkTJgGP+FJde7fH3IySY+1aXRMRPcebRR5Y0uUV
-         Mi7WHzaGTS8zSnbeqF4UOrJ5hNYXQZBVhp7bl2F5NBOsTlP12bq9aQkRJ9MLGGHpAf84
-         M74QY2oaq/NqvBGPwgxzvSuO/K1/Ojylfq64o6Ph4Uf7aaLQlUctXxqhHdhXGMzAV5aT
-         394DaFLxnpwzr7T1OQzdf4wnl9VJLrV16Sn5gYCyuQoZoFIEVCdzytPiSovqpghcgRKI
-         i4kfw23wMZ9ZBWQz4DTeMODH2dpslZUP6RwVRVQw5uvzWWuWhLy6zChEYri7VtkfhDOY
-         6bPg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1789320519; x=1789925319;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=On+rz/ZmuKojokNXfYqOBOt08u5f6BSrCmw1MqxDuAg=;
-        b=Y6EC8cKGpz7Gq3KGHvfas85rdbaHMO1tGUtRvlraueL6l/Sy9pUrWgMHFUbI14fthn
-         d2bsbc+vT3iHyuL/mh3m6ppfvKj2+1WIltWREwJ+nDwm1FkZWfTCtMDgrj9sNDuV8Th/
-         naoNJ2mptpqhSq1BRSpU8mpTgXCOevCi5GjPlIlzdl1CDep3KXZGKWf4V8h07IMCjpEW
-         3tMxSZtOCQbrueYgkAEFgT4UAX/6cUSOd2etB1iLwSwDxghXVtKPSoVXZPxI90ns9w5d
-         irBzVA04UMglnaCtRExah9f+dF/58AS5mCcGgUqA5txx9rehM0CPoghNiYFAWDK6d33S
-         cfTQ==
-X-Forwarded-Encrypted: i=1; AKwUvBzsFyXHIedOIZBWOLc1/2nsJHxYQBchRaEedBT8Wv0ve/kpOiqOjHPnWMI+hyG69CIczVXb52uU@lists.linux.dev
-X-Gm-Message-State: AFuF++mEwWBNGTz/nLGq7xu9RD8voTfLvUYvtWToNueHF/dTPA9/11z9
-	nfJby16jFgwcsaEXB7+/mkC0K2bmihO70+sr20hiyhEi8A6yVh8LnLMR
-X-Gm-Gg: AYBFou2wSrN2N7E9D8u0QIpQ1i9kvSLjMZ8hPAJKSZNbytBSju8ulBjZpOkCdnOZz7u
-	o85N4arsV2l5N11UhOhGBmOnVYAfomWvcZi+yEUDeHOTcP3Ka0bD1FMLsu/8TG/lxcrnxsiYyUh
-	52JFmssK9cAF4fEByReWb2z77/q4MEV+6gT7MjMQz4PyZ3FIrOMbwcP+hgAsq86TsU7K4b8JbmU
-	St9UiVPdr6krxyBDtW3RLDFVQwsEkeXvxOQFJUBFcQLYC0c4QU/RhqZuzjHU9fjyPweVdAdlZYU
-	NlDdjTP9mm0ruzl9/HS3rNP8M/01Cf7UEc2wjbmJIDjIO9ekfJWR0DdA8ILD2KlNYN4otSLrVzE
-	7UTDmFwOMLmJ9lBvTu6skdt642tSA6QJ/iHtn9cnGZceCBaIITEEOed+sEkkNBI4Kru2d4liJWV
-	gmky9PTO9T3EcfsObNoi/6SFDV8zVjOQWTSsBeOE9Eqq4FnSHjJYVfxfkEGu/F6lhmUY8LfWbS2
-	wT/W1GwNBd40OyMMcTF4SuSsUfJ+6INgkF+rPOAVx3qop80nLQMhTnj/9Co4xcXyU1InRXnVQyJ
-	j5InhDuFZmDPJFSym8DMooFUfbY5b3HMFsDw/d/aIRWIRBrHOaun/6qKn+GLX9bSbeeAF70lDJO
-	6SoOfTtz0YKb9HqEuDAQ=
-X-Received: by 2002:a05:600c:4693:b0:498:943:ccc0 with SMTP id 5b1f17b1804b1-49e619bec89mr306254245e9.6.1789320518714;
-        Sun, 13 Sep 2026 10:28:38 -0700 (PDT)
-Received: from localhost.localdomain (dynamic-2a02-3100-a0e6-2301-7846-2cfb-35f5-6359.310.pool.telefonica.de. [2a02:3100:a0e6:2301:7846:2cfb:35f5:6359])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-49d26d4e3f3sm366987695e9.15.2026.09.13.10.28.37
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Sun, 13 Sep 2026 10:28:38 -0700 (PDT)
-From: Karl Mehltretter <kmehltretter@gmail.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Karl Mehltretter <kmehltretter@gmail.com>,
-	stable@vger.kernel.org,
-	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 5.15 888/935] net_sched: act_skbmod: use RCU in tcf_skbmod_dump()
-Date: Sun, 13 Sep 2026 19:28:36 +0200
-Message-Id: <20260913172836.1738-1-kmehltretter@gmail.com>
-X-Mailer: git-send-email 2.39.5 (Apple Git-154)
-In-Reply-To: <20260912065547.180810648@linuxfoundation.org>
-References: <20260912065526.833703348@linuxfoundation.org> <20260912065547.180810648@linuxfoundation.org>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="s5BeSu2B";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ur14Yuqo"
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 1B92F7A0096;
+	Sun, 13 Sep 2026 14:19:36 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Sun, 13 Sep 2026 14:19:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1789323575;
+	 x=1789409975; bh=PhpdmKFF4GKf25MNWIgC2ATD0QnH7wyB1H44aYeETLU=; b=
+	s5BeSu2BWQTE8yrpV7b6cmbzU27xv/tmm8NwcHZFjsIf5b+m8bE2P30qMa0MDQ3o
+	lcbBnU9pWfZAlCInmMSIJ9kmUta48QjhglNWXI7+A94rvmL+M5cRUU5uE+Bt7YZu
+	8U5qyZS+TK2C8xxRPNUyQx9eKNwX5CXDLXjL9N3oR0+GUBrvZ8pY01IHus9Qrqho
+	GUSzV3WEWtcqZ1f0RNTauRI55OQSzm4i/GDTWsnouvmXVQsBhrLax+6Izjk+RTbD
+	z0mAxTuxzNqA3XnsdJk2DosrVH5Ytl29xEktVc2nIzAOK8LCgo18HJWS45H6sRg4
+	a76pqzIkKs0yYZAf62iTAw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1789323575; x=
+	1789409975; bh=PhpdmKFF4GKf25MNWIgC2ATD0QnH7wyB1H44aYeETLU=; b=U
+	r14YuqoMHmHzQE0/AUVofjjJZHIUxdk4HR4ZsZxa3BbSsvRKmVyYx4gbp//QQ0SC
+	zbWq8pSyHLtpAo/LKthOV7aQuDmuk3kjeOhDsWbgVd2Mvpdepk3d6FATT1hT5gu1
+	oCL5GVK9MkGcdvw2pQw8bfzyklFMKRqAxC9G4pE/0ohE2et6vpq/i7E0MAUo+G9o
+	fqxpDsQvJWSWkY27Fa1F1XBgY7p1XFKWnySdl83mHCl+VWq+MPlSG0XytXR7IrvS
+	/x/Nl2Ivcu8PKrnZYm8/P5l/J3SFhgZQTzVXF/bWS+LgICpDrmuvoC9JX8edRrt/
+	PqZ8AIGgBZhr6C3WmieIw==
+X-ME-Sender: <xms:N-mmakn2hRixtB958whhZY5pcAhaxIqgHgwxzGllZrQTuQq4Ez4nVw>
+    <xme:N-mmavvBngF5pfYiSPmhDgXotMtiKR3lBqsZEhVOCASmt4CK7wbygOh9Qj8i1cV7z
+    m9Nn5JEcfAaXk5uNu9ijLSzg8O7YSLoGGxlhAB2zofwwz5aXmD1Ojc>
+X-ME-Received: <xmr:N-mmauIAWNnTsrFQP1qT5f_tcqlr6EtFwV8-IjXB6TkEJFgHS9bWaGzVVK6ItHY-uxyY-bf4x2Ed4WliACCBEFloe44iflA_>
+X-ME-Proxy-Cause: dmFkZTGVIe2lg9RCSkygrajC88+qgMM5GByuT+fLtPL9eQIqzjvQbPcRbCtHdceXg15BId
+    21NxmSYn3EvxUtTwF7Jh3G3nXAa0q/qrRrtqZlMRUcB51rC5wKrcez9J0Gu88Y4K+pAMKi
+    B5ULlMOYfnvYs8/4csWQwOBiZMXwIikDyips2EYA6cxXzHJCHKlMEgyarEl99QoGC9tThz
+    SseXnd0DNgFqwpiXgjUWsBTM3EtW6+j4HoWasrrsDyVwNUWZ7gkWfjykkQyKW+qVISrosl
+    1aD3xp8PtvhN0Llky9kS+ItxcwuDmrAYJ4QpnZ69MfkpWpVoB3JBKlMmad6UNYorPLx9k2
+    46z45FEngR/amAlYBSLC0btDp7O1YjTjvmVIs3NLMQOB84pepXb2+QpQ2aK4/4+tTFKESu
+    k5RUCc27vCKZCKclBRVB1BVh9z6azTFr26UVWd+tXhpBQX4Raw4fOLboGhGDpcrrsQuUWM
+    lek4Ws24saxPnzjYa80+Bu3EV7cai5kHGkGx+vDcEVGANRVZtuz+q6v9+CcWozHWYkyAqx
+    TRyY+l0xCvyBYhV/VPcshG8awP39EAuVYXVYiXUDwUcKq+YPonF4/sqcrvRtOr2hEyXixC
+    bRN5F8Yh5a8yYq+09pXsbO/JxPOP5egcYkKoU3Nd7HzEoTK5UFrQ3YfXuS2Q
+X-ME-Proxy: <xmx:N-mmakhWDrtDrAfxzlyQqKM6jTeabOsx1XZpWfE0-Y7i1TE_AdFjFg>
+    <xmx:N-mmaqsla_zjyPV1IgH7zI_eGVSjBSKFFp99ibAlqyB41lojCvlK0A>
+    <xmx:N-mmamhCdoGV_N21jjoLOVQW3I7NQks3_YZqKDouN7_JlH-AzzSVwg>
+    <xmx:N-mmatfXrdAoIHn6FSLDQ3Gil5-P8NbovF4QGX3ouZdZ-j5mfyV6aw>
+    <xmx:N-mmaqJ5kD55Fhxt1pSPXImW09ghDJQM-F1ibnMqDQsePfVjRzj39yYF>
+Feedback-ID: i6289494f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 13 Sep 2026 14:19:32 -0400 (EDT)
+Message-ID: <75359a50-409f-452b-a455-780de8344a01@pobox.com>
+Date: Sun, 13 Sep 2026 11:19:30 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 7.2 0000/1815] 7.2.6-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
+ conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
+ achill@achill.org, sr@sladewatkins.com
+References: <20260912065648.999753832@linuxfoundation.org>
+Content-Language: en-US
+From: "Barry K. Nathan" <barryn@pobox.com>
+In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Please hold this patch unless a 5.15 backport of upstream commit
-3016024d7514 ("net_sched: add back BH safety to tcf_lock") can also be
-included.
+On 9/11/26 11:29 PM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 7.2.6 release.
+> There are 1815 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Mon, 14 Sep 2026 06:54:17 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v7.x/stable-review/patch-7.2.6-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-7.2.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-This patch replaces spin_lock_bh() with spin_lock() in
-tcf_skbmod_init(). A rate estimator can take the same lock from timer
-softirq context, so the timer can interrupt action replacement while it
-holds the lock and deadlock on it.
+I tested 7.2.5 + stable-queue as of commit
+5bd01cb1b5d8bdc0b5480752350d2b0f2d487986
+("drop 3 orphaned perf prerequisite patches from 6.18")
+on my Lenovo ThinkPad T14 Gen 1. Working well, no regressions observed.
 
-I reproduced this on 5.15.221-rc1 in QEMU with lockdep: after the estimator
-timer ran, replacing an indexed skbmod action reported inconsistent softirq
-locking on tcfa_lock between est_timer() and tcf_skbmod_init().
+Tested-by: Barry K. Nathan <barryn@pobox.com>
 
-With only the skbmod hunk from 3016024d7514 applied, restoring
-spin_lock_bh()/spin_unlock_bh(), the same test produced no lockdep
-warning.
-
-Thanks,
-Karl
+-- 
+-Barry K. Nathan  <barryn@pobox.com>
