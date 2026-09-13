@@ -1,123 +1,309 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.5])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A686532D42B
-	for <patches@lists.linux.dev>; Sun, 13 Sep 2026 18:19:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E5BE33938B
+	for <patches@lists.linux.dev>; Sun, 13 Sep 2026 18:39:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.5
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789323581; cv=none; b=BqHv61UGgu/26ojlts7VcnsaDd5QhnNYLFmUmiVbTbumAKhhAcaVREl2KE0isFcT/TwdoqrDuHv61OP2dfaRooTmF7xMzlqD5CUcw/WNgiaeZI/s3fEgPCC7PCprPadszSXRnUukyJg6BRCFMHOUVQ05mP84/dRKOV2nNCHMcd4=
+	t=1789324768; cv=none; b=O81pBaBJiByEf18n0vzaL8lndF08FmHRreTYSKNXaV2//7PdyvpYHnNyMd8ri8j95WKv5EEcH4kHnUKMYh/fwrwcQ4kvqvPkyy+A7rC+Ihip0gpKqv+rN0m0TuLS6+AgnH6XSOESWubd9uYuIvsZEb4A9bVzRFnBFCmFZO4/C74=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789323581; c=relaxed/simple;
-	bh=p1h05sLqiUMH12fkllX1CsrbInUrqKMFt4kPBqvdxPY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=WJvIzdDAPcAeai1IWs8YEoMiGtviMHevVA55EJzqXzjNp8U2Bj7TK3+reOhnZU1KeVzV8JHWSHdRR3V96ik2kOMSpPMyDrsyzscl19AlMmdKAxLRhSkGa7unJju1jZDaDtyqeopRGiCz3i1lml2YGUpSLhw9IbiGwsF0xC+5S0k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=s5BeSu2B; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ur14Yuqo; arc=none smtp.client-ip=202.12.124.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1789324768; c=relaxed/simple;
+	bh=S/dTRtwG+DbDGzbQHvsbKx3/xNFn74bHGIAb8QCFSps=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=RAZe4uc8Qm0FCaXZgo6gPBaj8llMWug1YcUIvzaiPf44zcOBByJGc71/czRJqd/o+FZcGIRMQTxnawreU7y9+YlYwMf2uNA+0xMmcAlLBaTiqV7nGI2rJ1eHpa9g5wPtQZQnID3aucYZz8R1sEK1rQMiAxdJlIPKXA96DRxzifo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=UnvfAmbm; arc=none smtp.client-ip=192.198.163.5
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="s5BeSu2B";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ur14Yuqo"
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 1B92F7A0096;
-	Sun, 13 Sep 2026 14:19:36 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Sun, 13 Sep 2026 14:19:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1789323575;
-	 x=1789409975; bh=PhpdmKFF4GKf25MNWIgC2ATD0QnH7wyB1H44aYeETLU=; b=
-	s5BeSu2BWQTE8yrpV7b6cmbzU27xv/tmm8NwcHZFjsIf5b+m8bE2P30qMa0MDQ3o
-	lcbBnU9pWfZAlCInmMSIJ9kmUta48QjhglNWXI7+A94rvmL+M5cRUU5uE+Bt7YZu
-	8U5qyZS+TK2C8xxRPNUyQx9eKNwX5CXDLXjL9N3oR0+GUBrvZ8pY01IHus9Qrqho
-	GUSzV3WEWtcqZ1f0RNTauRI55OQSzm4i/GDTWsnouvmXVQsBhrLax+6Izjk+RTbD
-	z0mAxTuxzNqA3XnsdJk2DosrVH5Ytl29xEktVc2nIzAOK8LCgo18HJWS45H6sRg4
-	a76pqzIkKs0yYZAf62iTAw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1789323575; x=
-	1789409975; bh=PhpdmKFF4GKf25MNWIgC2ATD0QnH7wyB1H44aYeETLU=; b=U
-	r14YuqoMHmHzQE0/AUVofjjJZHIUxdk4HR4ZsZxa3BbSsvRKmVyYx4gbp//QQ0SC
-	zbWq8pSyHLtpAo/LKthOV7aQuDmuk3kjeOhDsWbgVd2Mvpdepk3d6FATT1hT5gu1
-	oCL5GVK9MkGcdvw2pQw8bfzyklFMKRqAxC9G4pE/0ohE2et6vpq/i7E0MAUo+G9o
-	fqxpDsQvJWSWkY27Fa1F1XBgY7p1XFKWnySdl83mHCl+VWq+MPlSG0XytXR7IrvS
-	/x/Nl2Ivcu8PKrnZYm8/P5l/J3SFhgZQTzVXF/bWS+LgICpDrmuvoC9JX8edRrt/
-	PqZ8AIGgBZhr6C3WmieIw==
-X-ME-Sender: <xms:N-mmakn2hRixtB958whhZY5pcAhaxIqgHgwxzGllZrQTuQq4Ez4nVw>
-    <xme:N-mmavvBngF5pfYiSPmhDgXotMtiKR3lBqsZEhVOCASmt4CK7wbygOh9Qj8i1cV7z
-    m9Nn5JEcfAaXk5uNu9ijLSzg8O7YSLoGGxlhAB2zofwwz5aXmD1Ojc>
-X-ME-Received: <xmr:N-mmauIAWNnTsrFQP1qT5f_tcqlr6EtFwV8-IjXB6TkEJFgHS9bWaGzVVK6ItHY-uxyY-bf4x2Ed4WliACCBEFloe44iflA_>
-X-ME-Proxy-Cause: dmFkZTGVIe2lg9RCSkygrajC88+qgMM5GByuT+fLtPL9eQIqzjvQbPcRbCtHdceXg15BId
-    21NxmSYn3EvxUtTwF7Jh3G3nXAa0q/qrRrtqZlMRUcB51rC5wKrcez9J0Gu88Y4K+pAMKi
-    B5ULlMOYfnvYs8/4csWQwOBiZMXwIikDyips2EYA6cxXzHJCHKlMEgyarEl99QoGC9tThz
-    SseXnd0DNgFqwpiXgjUWsBTM3EtW6+j4HoWasrrsDyVwNUWZ7gkWfjykkQyKW+qVISrosl
-    1aD3xp8PtvhN0Llky9kS+ItxcwuDmrAYJ4QpnZ69MfkpWpVoB3JBKlMmad6UNYorPLx9k2
-    46z45FEngR/amAlYBSLC0btDp7O1YjTjvmVIs3NLMQOB84pepXb2+QpQ2aK4/4+tTFKESu
-    k5RUCc27vCKZCKclBRVB1BVh9z6azTFr26UVWd+tXhpBQX4Raw4fOLboGhGDpcrrsQuUWM
-    lek4Ws24saxPnzjYa80+Bu3EV7cai5kHGkGx+vDcEVGANRVZtuz+q6v9+CcWozHWYkyAqx
-    TRyY+l0xCvyBYhV/VPcshG8awP39EAuVYXVYiXUDwUcKq+YPonF4/sqcrvRtOr2hEyXixC
-    bRN5F8Yh5a8yYq+09pXsbO/JxPOP5egcYkKoU3Nd7HzEoTK5UFrQ3YfXuS2Q
-X-ME-Proxy: <xmx:N-mmakhWDrtDrAfxzlyQqKM6jTeabOsx1XZpWfE0-Y7i1TE_AdFjFg>
-    <xmx:N-mmaqsla_zjyPV1IgH7zI_eGVSjBSKFFp99ibAlqyB41lojCvlK0A>
-    <xmx:N-mmamhCdoGV_N21jjoLOVQW3I7NQks3_YZqKDouN7_JlH-AzzSVwg>
-    <xmx:N-mmatfXrdAoIHn6FSLDQ3Gil5-P8NbovF4QGX3ouZdZ-j5mfyV6aw>
-    <xmx:N-mmaqJ5kD55Fhxt1pSPXImW09ghDJQM-F1ibnMqDQsePfVjRzj39yYF>
-Feedback-ID: i6289494f:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 13 Sep 2026 14:19:32 -0400 (EDT)
-Message-ID: <75359a50-409f-452b-a455-780de8344a01@pobox.com>
-Date: Sun, 13 Sep 2026 11:19:30 -0700
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="UnvfAmbm"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1789324766; x=1820860766;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=S/dTRtwG+DbDGzbQHvsbKx3/xNFn74bHGIAb8QCFSps=;
+  b=UnvfAmbmAgjnf11oFeWKS9mc02Hw/upQGmPC4PbgC6kvhAJw/xVceJrV
+   VVJqmJ4Dk5xddbAOaUrNKwbM2ObLRoKdrY/es+OVMdl/hiMAYzuUCZMpB
+   rI2ltxsf8qmQX0vK72uzN6YG+hsTEBOSyvjDZIvsFszDj1Lj6zTQoxg0u
+   GZvaIrt/gJ/8KMzfmEhSfZa7aW1tu5i4ee0BIbnlMptldsM/7HbNbAjQh
+   RLaxhUrdPNlIjDHxJPnQfaacn0nsbfe0RoNGlH2z3wbQc68n4wbPqdhS8
+   3cDLi8OqwnCT2JNyXeVVgRPaxl0pnSi5lPAKJZO8bBaTtZoD1FDhOtxDh
+   w==;
+X-CSE-ConnectionGUID: ZD2bfTSvSS6zCsmFVfSbaw==
+X-CSE-MsgGUID: xMZ7gG5qSlaZzueLiZbiXQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11904"; a="202776"
+X-IronPort-AV: E=Sophos;i="6.27,100,1787036400"; 
+   d="scan'208";a="202776"
+Received: from fmviesa001.fm.intel.com ([10.60.135.141])
+  by fmvoesa115.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Sep 2026 11:39:25 -0700
+X-CSE-ConnectionGUID: 3fgEI9voSUaVKSeMfqMVaQ==
+X-CSE-MsgGUID: vOP+KrZSQJ2pN5TWGrb7YQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,100,1787036400"; 
+   d="scan'208";a="297457864"
+Received: from tassilo.jf.intel.com (HELO tassilo) ([10.54.38.190])
+  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Sep 2026 11:39:25 -0700
+Date: Sun, 13 Sep 2026 11:39:23 -0700
+From: Andi Kleen <ak@linux.intel.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	James Clark <james.clark@linaro.org>,
+	Ian Rogers <irogers@google.com>,
+	Colin Ian King <colin.i.king@gmail.com>,
+	Howard Chu <howardchu95@gmail.com>,
+	Weilin Wang <weilin.wang@intel.com>,
+	Ilya Leoshkevich <iii@linux.ibm.com>,
+	Thomas Richter <tmricht@linux.ibm.com>,
+	Dapeng Mi <dapeng1.mi@linux.intel.com>,
+	Athira Jajeev <atrajeev@linux.vnet.ibm.com>,
+	Michael Petlan <mpetlan@redhat.com>,
+	Veronika Molnarova <vmolnaro@redhat.com>,
+	Namhyung Kim <namhyung@kernel.org>, Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 6.12 1009/1376] perf test: Display number of active
+ running tests
+Message-ID: <aqbt2-Kh76GZxmPK@tassilo>
+References: <20260912065607.535295758@linuxfoundation.org>
+ <20260912065630.052286725@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 7.2 0000/1815] 7.2.6-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
- conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
- achill@achill.org, sr@sladewatkins.com
-References: <20260912065648.999753832@linuxfoundation.org>
-Content-Language: en-US
-From: "Barry K. Nathan" <barryn@pobox.com>
-In-Reply-To: <20260912065648.999753832@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260912065630.052286725@linuxfoundation.org>
 
-On 9/11/26 11:29 PM, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 7.2.6 release.
-> There are 1815 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Mon, 14 Sep 2026 06:54:17 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v7.x/stable-review/patch-7.2.6-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-7.2.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+On Sat, Sep 12, 2026 at 08:57:15AM +0200, Greg Kroah-Hartman wrote:
+> 6.12-stable review patch.  If anyone has any objections, please let me know.
 
-I tested 7.2.5 + stable-queue as of commit
-5bd01cb1b5d8bdc0b5480752350d2b0f2d487986
-("drop 3 orphaned perf prerequisite patches from 6.18")
-on my Lenovo ThinkPad T14 Gen 1. Working well, no regressions observed.
+It's hard to see how these 6 perf test patches are stable material.
 
-Tested-by: Barry K. Nathan <barryn@pobox.com>
+They seem at best be nice to have.
 
--- 
--Barry K. Nathan  <barryn@pobox.com>
+
+-Andi
+
+
+> 
+> ------------------
+> 
+> From: Ian Rogers <irogers@google.com>
+> 
+> [ Upstream commit 0e036dcad4e62b89f8df3e41402babb9345521af ]
+> 
+> Before polling or sleeping to wait for a test to complete, print out
+> ": Running (<num> active)" where the number of active tests is
+> determined by iterating over the tests and seeing which return false
+> for check_if_command_finished. The line erasing and printing out only
+> occur if the number of runnings tests changes to avoid the line
+> flickering excessively. Knowing tests are running allows a user to
+> know a test is running and in parallel mode how many of the tests are
+> waiting to complete. If color mode is disabled then avoid displaying
+> the "Running" message as deleting the line isn't reliable.
+> 
+> Tested-by: James Clark <james.clark@linaro.org>
+> Signed-off-by: Ian Rogers <irogers@google.com>
+> Cc: Colin Ian King <colin.i.king@gmail.com>
+> Cc: Howard Chu <howardchu95@gmail.com>
+> Cc: Weilin Wang <weilin.wang@intel.com>
+> Cc: Ilya Leoshkevich <iii@linux.ibm.com>
+> Cc: Thomas Richter <tmricht@linux.ibm.com>
+> Cc: Andi Kleen <ak@linux.intel.com>
+> Cc: Dapeng Mi <dapeng1.mi@linux.intel.com>
+> Cc: Athira Jajeev <atrajeev@linux.vnet.ibm.com>
+> Cc: Michael Petlan <mpetlan@redhat.com>
+> Cc: Veronika Molnarova <vmolnaro@redhat.com>
+> Link: https://lore.kernel.org/r/20241025192109.132482-3-irogers@google.com
+> Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+> Stable-dep-of: 44e82c4d2ff3 ("perf test: Fix skiplist leak in cmd_test")
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
+> ---
+>  tools/perf/tests/builtin-test.c | 93 ++++++++++++++++++++++-----------
+>  tools/perf/util/color.h         |  1 +
+>  2 files changed, 63 insertions(+), 31 deletions(-)
+> 
+> diff --git a/tools/perf/tests/builtin-test.c b/tools/perf/tests/builtin-test.c
+> index 4f2f941bd1feb..3b6743a3232c1 100644
+> --- a/tools/perf/tests/builtin-test.c
+> +++ b/tools/perf/tests/builtin-test.c
+> @@ -246,7 +246,10 @@ static int run_test_child(struct child_process *process)
+>  	return -err;
+>  }
+>  
+> -static int print_test_result(struct test_suite *t, int i, int subtest, int result, int width)
+> +#define TEST_RUNNING -3
+> +
+> +static int print_test_result(struct test_suite *t, int i, int subtest, int result, int width,
+> +			     int running)
+>  {
+>  	if (has_subtests(t)) {
+>  		int subw = width > 2 ? width - 2 : width;
+> @@ -256,6 +259,9 @@ static int print_test_result(struct test_suite *t, int i, int subtest, int resul
+>  		pr_info("%3d: %-*s:", i + 1, width, test_description(t, subtest));
+>  
+>  	switch (result) {
+> +	case TEST_RUNNING:
+> +		color_fprintf(stderr, PERF_COLOR_YELLOW, " Running (%d active)\n", running);
+> +		break;
+>  	case TEST_OK:
+>  		pr_info(" Ok\n");
+>  		break;
+> @@ -277,14 +283,17 @@ static int print_test_result(struct test_suite *t, int i, int subtest, int resul
+>  	return 0;
+>  }
+>  
+> -static int finish_test(struct child_test *child_test, int width)
+> +static int finish_test(struct child_test **child_tests, int running_test, int child_test_num,
+> +		       int width)
+>  {
+> +	struct child_test *child_test = child_tests[running_test];
+>  	struct test_suite *t = child_test->test;
+>  	int i = child_test->test_num;
+>  	int subi = child_test->subtest;
+>  	int err = child_test->process.err;
+> -	bool err_done = err <= 0;
+> +	bool err_done = false;
+>  	struct strbuf err_output = STRBUF_INIT;
+> +	int last_running = -1;
+>  	int ret;
+>  
+>  	/*
+> @@ -298,7 +307,7 @@ static int finish_test(struct child_test *child_test, int width)
+>  	 * Busy loop reading from the child's stdout/stderr that are set to be
+>  	 * non-blocking until EOF.
+>  	 */
+> -	if (!err_done)
+> +	if (err > 0)
+>  		fcntl(err, F_SETFL, O_NONBLOCK);
+>  	if (verbose > 1) {
+>  		if (has_subtests(t))
+> @@ -312,38 +321,60 @@ static int finish_test(struct child_test *child_test, int width)
+>  			  .events = POLLIN | POLLERR | POLLHUP | POLLNVAL,
+>  			},
+>  		};
+> -		char buf[512];
+> -		ssize_t len;
+> -
+> -		/* Poll to avoid excessive spinning, timeout set for 100ms. */
+> -		poll(pfds, ARRAY_SIZE(pfds), /*timeout=*/100);
+> -		if (!err_done && pfds[0].revents) {
+> -			errno = 0;
+> -			len = read(err, buf, sizeof(buf) - 1);
+> -
+> -			if (len <= 0) {
+> -				err_done = errno != EAGAIN;
+> -			} else {
+> -				buf[len] = '\0';
+> -				if (verbose > 1)
+> -					fprintf(stdout, "%s", buf);
+> -				else
+> +		if (perf_use_color_default) {
+> +			int running = 0;
+> +
+> +			for (int y = running_test; y < child_test_num; y++) {
+> +				if (check_if_command_finished(&child_tests[y]->process) == 0)
+> +					running++;
+> +			}
+> +			if (running != last_running) {
+> +				if (last_running != -1) {
+> +					/*
+> +					 * Erase "Running (.. active)" line
+> +					 * printed before poll/sleep.
+> +					 */
+> +					fprintf(debug_file(), PERF_COLOR_DELETE_LINE);
+> +				}
+> +				print_test_result(t, i, subi, TEST_RUNNING, width, running);
+> +				last_running = running;
+> +			}
+> +		}
+> +
+> +		err_done = true;
+> +		if (err <= 0) {
+> +			/* No child stderr to poll, sleep for 10ms for child to complete. */
+> +			usleep(10 * 1000);
+> +		} else {
+> +			/* Poll to avoid excessive spinning, timeout set for 100ms. */
+> +			poll(pfds, ARRAY_SIZE(pfds), /*timeout=*/100);
+> +			if (pfds[0].revents) {
+> +				char buf[512];
+> +				ssize_t len;
+> +
+> +				len = read(err, buf, sizeof(buf) - 1);
+> +
+> +				if (len > 0) {
+> +					err_done = false;
+> +					buf[len] = '\0';
+>  					strbuf_addstr(&err_output, buf);
+> +				}
+>  			}
+>  		}
+> +		if (err_done)
+> +			err_done = check_if_command_finished(&child_test->process);
+> +	}
+> +	if (perf_use_color_default && last_running != -1) {
+> +		/* Erase "Running (.. active)" line printed before poll/sleep. */
+> +		fprintf(debug_file(), PERF_COLOR_DELETE_LINE);
+>  	}
+>  	/* Clean up child process. */
+>  	ret = finish_command(&child_test->process);
+> -	if (verbose == 1 && ret == TEST_FAIL) {
+> -		/* Add header for test that was skipped above. */
+> -		if (has_subtests(t))
+> -			pr_info("%3d.%1d: %s:\n", i + 1, subi + 1, test_description(t, subi));
+> -		else
+> -			pr_info("%3d: %s:\n", i + 1, test_description(t, -1));
+> +	if (verbose > 1 || (verbose == 1 && ret == TEST_FAIL))
+>  		fprintf(stderr, "%s", err_output.buf);
+> -	}
+> +
+>  	strbuf_release(&err_output);
+> -	print_test_result(t, i, subi, ret, width);
+> +	print_test_result(t, i, subi, ret, width, /*running=*/0);
+>  	if (err > 0)
+>  		close(err);
+>  	return 0;
+> @@ -359,7 +390,7 @@ static int start_test(struct test_suite *test, int i, int subi, struct child_tes
+>  		pr_debug("--- start ---\n");
+>  		err = test_function(test, subi)(test, subi);
+>  		pr_debug("---- end ----\n");
+> -		print_test_result(test, i, subi, err, width);
+> +		print_test_result(test, i, subi, err, width, /*running=*/0);
+>  		return 0;
+>  	}
+>  
+> @@ -384,7 +415,7 @@ static int start_test(struct test_suite *test, int i, int subi, struct child_tes
+>  	err = start_command(&(*child)->process);
+>  	if (err || !sequential)
+>  		return  err;
+> -	return finish_test(*child, width);
+> +	return finish_test(child, /*running_test=*/0, /*child_test_num=*/1, width);
+>  }
+>  
+>  #define for_each_test(j, k, t)					\
+> @@ -469,7 +500,7 @@ static int __cmd_test(int argc, const char *argv[], struct intlist *skiplist)
+>  	}
+>  	for (i = 0; i < child_test_num; i++) {
+>  		if (!sequential) {
+> -			int ret  = finish_test(child_tests[i], width);
+> +			int ret  = finish_test(child_tests, i, child_test_num, width);
+>  
+>  			if (ret)
+>  				return ret;
+> diff --git a/tools/perf/util/color.h b/tools/perf/util/color.h
+> index 01f7bed21c9b2..4b9f8d5d44395 100644
+> --- a/tools/perf/util/color.h
+> +++ b/tools/perf/util/color.h
+> @@ -22,6 +22,7 @@
+>  #define MIN_GREEN	0.5
+>  #define MIN_RED		5.0
+>  
+> +#define PERF_COLOR_DELETE_LINE	"\033[A\33[2K\r"
+>  /*
+>   * This variable stores the value of color.ui
+>   */
+> -- 
+> 2.53.0
+> 
+> 
+> 
