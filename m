@@ -1,146 +1,105 @@
-Received: from mail-pj2-f13.google.com (mail-pj2-f13.google.com [74.125.227.141])
+Received: from mail-wr2-f12.google.com (mail-wr2-f12.google.com [74.125.225.76])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD5C43624BC
-	for <patches@lists.linux.dev>; Sun, 13 Sep 2026 15:10:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.227.141
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789312215; cv=pass; b=DLaN7U+ccQCXS0jPh87gw3KtrgCk7eB73FBAhvqFjgVpfvR69ite3rm4wIlpjCbSJdQuS4CSjqtZbN4ltIskS5B4GOr6xd31OAm5PmmLj8tuBMuUJ6RjZOBcCxyCZOHDeGLdNp8UfjiVUFYRB/PyzYD/2b+umFV81hPYjypsU9k=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789312215; c=relaxed/simple;
-	bh=Kbb/7E30ax39ZQEaiWexhkP/BDx0t8X14fDULjB1uBo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=lHt+k61hzQmQPQBkOjy08C4TnUdWDGw5mQas1AZSM0a3/hyIjXsgb9f6NlfniQQ4+hxTk7lVaOyrYWm6eGX95MS7WQNd4zmjQJigr0D0WAfnVNDsoWf2Joigbi86JXtv+BiMhBaENFxy7nS1qEWz9MyU+/9jvV0x+RPhGAjOaCc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HzvrG8kp; arc=pass smtp.client-ip=74.125.227.141
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91B2737105A
+	for <patches@lists.linux.dev>; Sun, 13 Sep 2026 17:13:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.76
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1789319637; cv=none; b=BB10gMt+r2wtrvCm4sZpy853Y1/qFY5RalqYsoacCDWDx3ZBpxMFJGXoZYbKF4S9sZLfsiWJ5OyR9qcwJx4KIWcViU1HMmStLoohTjP7iYteuVWe6AgEnR8MhzQVxzsmnsfHIkWOFuzHqx70ETlSGbUXbKDQME3uY5HjUMGvw0U=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1789319637; c=relaxed/simple;
+	bh=c/rgNWkG8eebV4a+R990wA+dAtE6CX6lxhPqQ7MPdmg=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=IySXxEuL0D1aazTP8+lhGOk3RlY/WJLGGSRcw5H9nReotr5UXAu1nDNGAKGnEkIidfL8/rVfIAs4Sc6SQpn8mcNTQkQUt4cBIulRmYWesvWW1SnpR+1cqDSG2+3gqhXg6nAimlTlg+5Dk9tEPFV6zvMhdtwSaauszdiZXwJH+2M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MBCCkUMs; arc=none smtp.client-ip=74.125.225.76
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HzvrG8kp"
-Received: by mail-pj2-f13.google.com with SMTP id 98e67ed59e1d1-39666e7c9efso260449a91.3
-        for <patches@lists.linux.dev>; Sun, 13 Sep 2026 08:10:12 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1789312211; cv=none;
-        d=google.com; s=arc-20260327;
-        b=kTe1GPZLBDbg/vA1OmfGzIiqYUnb/rqFqlF5We1jt5xk1b02PaJmXYGRPXQOlDLv2C
-         ES/7LllgQj1z0R/Jg83SqdE0OAUgluRtI10UWCACnxmbdXG3eZnzZ7k/XtkuI4LP7k52
-         YkmqmioqcfdAuCliptX/gN7qgvgvuGnlltV9SlfvDR0TvP/r4axvwd2FV3fW6wQItlId
-         cz8IDz9nnsr5n6ecWXIXCybPG1ssdo7c2lEHUM9NE5UMbhfB34SYS7sUqbp8HThxkn2U
-         EUyTiFybcJDfCvCHzpBRJ4vjkoKlOGJLe2kU3J/kglRw02P91ocqHgWXrNWAUExXyQS4
-         DWaw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=0CgHJ2BPkLttawZZGtVilE3FDoUcF7iE9BEhPTntfQc=;
-        fh=lUBjqQy6vAgW8R+btCCMxnkTYIsMHRCG9P/xdByEIPs=;
-        b=Lak9kFrSDaPyOiaNJ+SKeKsMhcvYqyteDD/Vn1HMLZjGt4GQv7Z9lmHvbihMNlVqPo
-         F9fiKqa6Z9IACfacQyyEg/AulJP5gTpmfHPjMR9MnBQF4Fl0MT8wUgPhTTOPhQkuhSti
-         1OreENrLw0H/YUIYqsc6RAGDQCnkk+LFVLf1wJh8rCVbnjgQg716wSmydjzXIhyZ25iJ
-         nX00BaqqGR5O74qu2lZz088aMFFC+QvH/HTecl1Rn2OKBgjGY+7LCI15WNiXTXcsUEu1
-         TPWiM+8rhtom3mqdk7p0IdSu35ugXzA1OGhR4uVf+BAzQLWxen5aOSjvvYUS0vInGqju
-         VHyw==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MBCCkUMs"
+Received: by mail-wr2-f12.google.com with SMTP id ffacd0b85a97d-485b1d2874aso1059390f8f.1
+        for <patches@lists.linux.dev>; Sun, 13 Sep 2026 10:13:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789312211; x=1789917011; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=0CgHJ2BPkLttawZZGtVilE3FDoUcF7iE9BEhPTntfQc=;
-        b=HzvrG8kpv7VppTWj2PNKQnWRoeOJaAby1QynEH6IV5xdr8e9YZJwXvAcjpY2vFs3+p
-         OZf1Ln7TCqZWhcN3EdzJHcDrVOwMAfkLytRrp1Y2xyfBBzL50XFAu3T8aE5d2Kvw//lX
-         oTXkn8OFzzf2EQoN4SulMbQFOlCFfON84kYfYdSiAJTW/oEkc1xjLmGdLxPC/nPQDFeI
-         T38q0Kf+ud7khAfpmP94dh8ha3Ir/H320IQXhP3IfnUsFFo2WN6Mq2m1KQPnL9cok3JX
-         2VB0f9Pq2pHCRGWX2prO6OzV1UGkkIpLKCc3SmliIspuRV32+/YHpp7EocrRWRqGNKf6
-         z0Dg==
+        d=gmail.com; s=20251104; t=1789319634; x=1789924434; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=c/rgNWkG8eebV4a+R990wA+dAtE6CX6lxhPqQ7MPdmg=;
+        b=MBCCkUMsk2jMcL1V8rv9jlg8QY2zEqv866prqvfLWSWKYFAU5SY+8HqOrfgyF9f9gx
+         YSWO/nYkEP/58tZajqNOA1vQuAzc+/soVOnu9b1EVvUQ8exyb4LrHm/UYRmYefzXfMAb
+         uxZEtMPZyVX7xk8gP3PlarJ64DlewNbdGk+1BNSUHAyu8b4WOo0lFH2qtt9oLq7AKEBZ
+         5GW6s9Qo9UaaSPfa2dQ7IawKSMV2ngjkmidWIp5GcdiYWS3t713y4S/PRhRWXvjhn2+t
+         6Wu1NnrhyEpFJYUhobokN20eg69+zWjosN8zEl5xWwJ1mr4Qm5bo8fUIxEeKbEtcde6B
+         FGlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1789312211; x=1789917011;
-        h=content-transfer-encoding:content-type:cc:to:subject:message-id
-         :date:from:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=0CgHJ2BPkLttawZZGtVilE3FDoUcF7iE9BEhPTntfQc=;
-        b=MYvGOyji4v/OkQrQ5W80yavpp0iBIJ+DfEkDGiN7Ef2mMwuDk8nHqpqOYlKaIxxw0G
-         ugifqLsFQl/N6KH2Ihwd7u9k/fmKA7r5bS4gDj1Th521h56nmPzE2kepP1mtznijsxFr
-         SxzoIesQlH+lfDuJjrwktPDx+SP6BxQbAUx/77N0kzUISDKvF5woEsn5P3YlqPGDOhY1
-         Og6lzewvkY26yZTIk6DbgbnDSdyr5nGrK8ogtKIbBcnhItur+0KRGZfQrKYVOclF3Nj1
-         WLbGqf68QAqw9/4jxV4j0kmPiHwiOBMtqTDmuVfByi7c9KPITmkwzp3Zd0Z70Ul1XhNU
-         8Jdw==
-X-Forwarded-Encrypted: i=1; AKwUvBwU98iwfZ7ITRASjfhY/18siPParHvowg4KANSxBUiMQCOnFAq94dKbBGyoRVznvuPt79M3Lv7N@lists.linux.dev
-X-Gm-Message-State: AFuF++mZz45eWwX3AuFKDq0nJc7wPYPG8KJoJ9uDxyPegcMaIad0ajvG
-	ULf64ZD/KvGLvq65ryFHW1AKw84ljgJjaW2/rqpZpgurbXNo2hs19nfOanoTKRiD42v9mOA3oeI
-	p2qtpCRM3Ck9VtnzHPLvy8ePS91Q0AD0=
-X-Gm-Gg: AYBFou0xj+CfClInsQ3TJIieDNmLGRRRcSDdsu9BjN7J/xqYxopZNLDsNpRL+V7eVmD
-	6DFOA9l7feLITd8Qo5hnP3s5lZFqPiOfSaRGoEokcHMO4dfvQ+FobGKjEDdnaKDa9yaUMX1SakL
-	TEkp1KomidqAAeJuaV23XbdC6jAxW1dfU+nRRnt9egt17Uie3LGm9Fb/WQK3uIxKRzfgkoS8MYB
-	u36qRgheBBiiWC9Gs7MgxJCLQIdSZ3wLjxtuJAswsJp2pITRIsMlYnFq1Jlj1DUuphb/g2pR9IC
-	LsLJVH7ACIbyIIC1Iiq7hTRNjuKkcXXIBGfSBdTixMEkkOqWM/Z4LHE6GgrWtyALALzbHi6keyA
-	64Smg+6XHn5DNr4RpWRLKZcnWmS9M+xHY4hecIQ9VU+2rWNRirJEUJkZz6w7HSFLYz/K9qwzDFZ
-	S/jti+a1XPjLhUGvM6kNnN9npOaJdcVruaDlDryi6qp5TczFHci/U=
-X-Received: by 2002:a17:90b:3d92:b0:398:bac0:238e with SMTP id
- 98e67ed59e1d1-39d9c3bc1demr16298781a91.6.1789312211153; Sun, 13 Sep 2026
- 08:10:11 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1789319634; x=1789924434;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=c/rgNWkG8eebV4a+R990wA+dAtE6CX6lxhPqQ7MPdmg=;
+        b=CGhJJv30cF1FiaYFg6CKkqsO+A+nHb7KY2ykBCfPaynTIQizEPewzwUs1v3vYijztF
+         3Sa8KuPKGNoF3ZA55PndGVW3ZSOmookipenDyqG+Z/So9h2HXpOrkOyOAqWJNdELKZB2
+         kPwA5B5n1nvcaXpll7l4ZxE3avfee8CTc7DElYdoq2iuOqax5pFLhWndHsn4/L+u2nXY
+         syV8ofB1F8BVnjLFxZ6BKHonIoVfzP6gxmoal8NS9K+F36hUCcEoLnoWIFLnMluSoWst
+         mNF4xiL567DsoAZmaWQVX20slHvFnbzIPVQmYglkPPNSRUwgO2tFAdMvnD71ScQyzPQJ
+         HcoQ==
+X-Forwarded-Encrypted: i=1; AKwUvBxPxOExWZEZTzRkfpr1XkcTX8pZZ9exJPBmKoc+mH/NysHLN6pSzzpl8I4mQ1SVWpoYROv+YIkI@lists.linux.dev
+X-Gm-Message-State: AFuF++mW98JORMrk00Y+sOV6zQI8oBG/FyWwHMzB9ts2OnXZBqTrvIeW
+	VohgVzLVecNFtatbT+BWvpajgh40k57DLD/eD9rdc0HYq0Whre2RoiGc
+X-Gm-Gg: AYBFou2g/urgnBRnnmKkqTtzqi4IMrezpZkSXkuLQCpBs7YfPUWJ+9ThQtoBELs40Et
+	RFYLtv0QyE2kqZZxurhEUSCeFs3n2H7ZaxG9pD9eOG+YL4eXhxGVeUG94AzMW8402qeVzqjTV6s
+	5JPjAeCl+VGee/hLyRklADhfWDicajzPwC16Mc0RzsKoh0N8lV8IFC65dyH+X1eDGJazrvJFjmU
+	uofSvEFcDJ48kip2QX4PLSdQPiBDHPPRehsN4Qn32WkNZTjwP3SkVntsy72BaBwzYArr4PSBWrc
+	uyRh8kCIQSB8uespVMcz1RZLzUyg5xcS9z1B9kItMyiMiVouA3p2hxJXE2cEJpdG8Mr7+WUnMY8
+	xMK0fczw4JvEDxyd/82PdolY48n9T+LVStBogxbwmVNRp/GStrcqT9Dvl1nJ0TXI9NEMYxsBkEz
+	Z811cPATelNKVtayn2Vv6egj8yAezxiAUppDvTTEq3qzYHbaaqoj1XyI47LwhkwjtXhfPzjsT4q
+	rgNKKORZZ8X+dqpkwtwhtzT+uM4Ddpx2t3PctPScfYlnFh5IefHDeaHicwZUxjpDB/jjMv1ISZo
+	WAF6tFzh2IMfyP0d2gjAtBbN9lO8HGN6OR7yj6Z4gROSFboz1eXqtB84v0enCYf9ERA0lSZLata
+	ICa14pwPy
+X-Received: by 2002:adf:ec86:0:b0:47f:7129:6e2d with SMTP id ffacd0b85a97d-486eb325de3mr23501505f8f.17.1789319633545;
+        Sun, 13 Sep 2026 10:13:53 -0700 (PDT)
+Received: from localhost.localdomain (dynamic-2a02-3100-a0e6-2301-7846-2cfb-35f5-6359.310.pool.telefonica.de. [2a02:3100:a0e6:2301:7846:2cfb:35f5:6359])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-486eb34f1f7sm20618159f8f.24.2026.09.13.10.13.52
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Sun, 13 Sep 2026 10:13:53 -0700 (PDT)
+From: Karl Mehltretter <kmehltretter@gmail.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Karl Mehltretter <kmehltretter@gmail.com>,
+	stable@vger.kernel.org,
+	patches@lists.linux.dev,
+	Sashiko <sashiko-bot@kernel.org>,
+	Pu Lehui <pulehui@huawei.com>,
+	Eduard Zingerman <eddyz87@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 5.15 535/935] bpf: Sync tail_call_reachable with callee state on entry
+Date: Sun, 13 Sep 2026 19:13:47 +0200
+Message-Id: <20260913171347.1594-1-kmehltretter@gmail.com>
+X-Mailer: git-send-email 2.39.5 (Apple Git-154)
+In-Reply-To: <20260912065539.091095476@linuxfoundation.org>
+References: <20260912065526.833703348@linuxfoundation.org> <20260912065539.091095476@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260912065526.833703348@linuxfoundation.org> <20260912065542.937384676@linuxfoundation.org>
-In-Reply-To: <20260912065542.937384676@linuxfoundation.org>
-From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Sun, 13 Sep 2026 17:09:58 +0200
-X-Gm-Features: AcwNN1VstPN0DZ_vucv4j1EBW6eU3LbZ-rliJHRbeKxVGTZhoyRntdTd7caee2k
-Message-ID: <CANiq72mEfbYd=Xz+f2MXku3RHt_oH7KJBi0iSHCOD47oPDo9=w@mail.gmail.com>
-Subject: Re: [PATCH 5.15 702/935] scripts/tags.sh: Prevent binary files
- appearing in cscope.files
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	Sergei Litvin <litvindev@gmail.com>, Miguel Ojeda <ojeda@kernel.org>, 
-	Nicolas Schier <n.schier@fritz.com>, Nicolas Schier <nsc@kernel.org>, Sasha Levin <sashal@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Sat, Sep 12, 2026 at 9:00=E2=80=AFPM Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> 5.15-stable review patch.  If anyone has any objections, please let me kn=
-ow.
->
-> ------------------
->
-> From: Sergei Litvin <litvindev@gmail.com>
->
-> [ Upstream commit a9b93c34625a27bed5dc0f80ee2a359ceb955172 ]
->
-> When executing the command `make COMPILED_SOURCE=3D1 cscope`, the resulti=
-ng
-> `cscope.files` file contains filenames with the extensions *.rlib, *.rmet=
-a,
-> and *.so.
->
-> To fix this, modify the regular expression in the `all_compiled_sources()=
-`
-> function so that only files with the extensions *.h, *.c, *.S, and *.rs a=
-re
-> accepted.
->
-> The issue has been introduced by commit 4f491bb6ea2a ("scripts/tags.sh:
-> collect compiled source precisely") which implemented the parsing of
-> compiled sources from *.cmd files instead of using the "find" command.
->
-> Fixes: 4f491bb6ea2a ("scripts/tags.sh: collect compiled source precisely"=
-)
-> Signed-off-by: Sergei Litvin <litvindev@gmail.com>
-> Acked-by: Miguel Ojeda <ojeda@kernel.org>
-> Tested-by: Nicolas Schier <n.schier@fritz.com>
-> Reviewed-by: Nicolas Schier <n.schier@fritz.com>
-> Link: https://patch.msgid.link/20260714083331.69482-1-litvindev@gmail.com
-> [nsc: cleaned-up commit message line breaks and removed cc trailers]
-> Signed-off-by: Nicolas Schier <nsc@kernel.org>
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
+Please hold this patch unless 5.15 backports of upstream commits
+01793ed86b5d ("bpf, verifier: Correct tail_call_reachable for bpf prog")
+and 54c27ea6dadb ("bpf: Fix tail_call_reachable leak") can also be
+included.
 
-(Same comment as for 5.10.y) Before 6.1 there was no Rust, so in
-principle this may not be needed (at least for the `*.rlib`, `*.rmeta`
-and the Rust `*.so`s from proc macros), but it shouldn't hurt.
+This patch resets tail_call_reachable on callee entry, but 5.15 lacks both
+the direct-tail-call initialization and the parent-state restoration it
+relies on. This can leave the root program falsely unmarked and make the x86
+JIT omit required tail-call counter handling.
 
-Cheers,
-Miguel
+I reproduced this on 5.15.221-rc1 in QEMU: Linux permits 33 successful tail
+calls, so the test must stop after 34 program entries including the initial
+invocation. The unmodified rc1 reached 35, bypassing the limit.
+
+With tested 5.15 adaptations of both commits applied, the same test stopped
+at the expected 34 entries.
+
+Thanks,
+Karl
