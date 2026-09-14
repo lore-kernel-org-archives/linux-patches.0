@@ -1,98 +1,142 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.9])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 885D64028F2
-	for <patches@lists.linux.dev>; Mon, 14 Sep 2026 15:51:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.9
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 842614718C6
+	for <patches@lists.linux.dev>; Mon, 14 Sep 2026 16:11:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789401079; cv=none; b=ZkUB7BGBpPALiogmOTnqncpnTIDLkPd/6XyG4GHfJP1KN1fl4j59zkEd2g4LCS2dqMCFU2W9heuARGvhUG01D8t4y5MOYM1Gsn7+y0qd6YEmukQMwx1XVJlpPbug/oRqXHtR5lWI7NKLOknVHouzXxWsZoDhVUfIKcyWDW64iAk=
+	t=1789402269; cv=none; b=T4JReCUPQ+AT1rQlO8bVAByRl/ugchc8kKLY6NIDCZYrQccnCrTlFgcHW63CiRbVDI+sfTFWF/63lrUspCDWidm+lTLMd/3+jjyMkFfRh5jvuV1PNdDlsbN6Dh+oL/92zmtxA/PVKdTx3SNZyYLEpmir2gsFGMJpWovi9L82nxE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789401079; c=relaxed/simple;
-	bh=rVfAhaMRwZYiEpg6dw/fmsfziMwKNFHeaO2+oHPAsqk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VH9HFv2+sfhr2cyMdZ4xe2hHYb/qa7UQYamkSi0Om4joH7LX7YqXmPEuSc9PQtjva0y7BxUr/82sK7sshOwDCyoLOclY8DL4HBkScjyq3uMlfLSbQKM6u3amzeA4baw32BfgycVipQpVBuS+Yroc1U2D6R9SQB3vgQ3f611vfZA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=HksHhqxO; arc=none smtp.client-ip=192.198.163.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
+	s=arc-20240116; t=1789402269; c=relaxed/simple;
+	bh=5bDDncVTuIQ3/y7kgAm8DlF4dJ4tTwsaEm4bIaA/vq0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=JtJyT6YncABtrKPuJ/TjkGoVfA8Po+LvbdJ5V35UhpY6jO4w7ojhppzTFDnqy9G4tStau9KS5kLuJzzajUT61G73eBwvlsyVxQU5o81R+vY1HNfuGgGClxWH1mRv2lY0Z5fMri3M4MuOuzdmQK8nSIwnT+2hIF246Xl3ne7zhfw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b=iSBAPkX/; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="HksHhqxO"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1789401078; x=1820937078;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=rVfAhaMRwZYiEpg6dw/fmsfziMwKNFHeaO2+oHPAsqk=;
-  b=HksHhqxOMEUuuKrubDZRIfD8pitjEWAIKiQ10H8EhfYGSPlbl4xmWLaK
-   GJoEPKJkIOPY1y0UmUlURPs5A+9Qw63CU6DGmKWz79wel9dLjnYJ5IzGx
-   hic7QV7bucbn0+lV0rsfNkyv0qQGavrIHkybIoCqwFiM1eUw0v893URMv
-   3v8zES6267SeJ1/ZhUcmbrX/mMsKLkM0qw12+30/aov8m82C2mJudtE/B
-   heM9eWfyEyG3EPK23DjNUtW/kSSLz02VPlYTVutYipqdiF2gk6qDDju4H
-   kd5JAHUAxYD5QSLB6DiPT4auB4vvOYfZ3dEM0bSCwrTfqSKuPPb5N9PBi
-   g==;
-X-CSE-ConnectionGUID: +RcI1wpxSy2h7oJ7XV/qyg==
-X-CSE-MsgGUID: zOf759S/TA6UB0zyjIkZEg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11905"; a="100418147"
-X-IronPort-AV: E=Sophos;i="6.27,103,1787036400"; 
-   d="scan'208";a="100418147"
-Received: from fmviesa013.fm.intel.com ([10.60.135.153])
-  by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Sep 2026 08:51:07 -0700
-X-CSE-ConnectionGUID: EEFOzE9iQEq7bHmWCZ1/0Q==
-X-CSE-MsgGUID: M4Bub+T8SaqqaHzsGTJAeg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.27,103,1787036400"; 
-   d="scan'208";a="1072035"
-Received: from tassilo.jf.intel.com (HELO tassilo) ([10.54.38.190])
-  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Sep 2026 08:51:07 -0700
-Date: Mon, 14 Sep 2026 08:51:05 -0700
-From: Andi Kleen <ak@linux.intel.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	James Clark <james.clark@linaro.org>,
-	Ian Rogers <irogers@google.com>,
-	Colin Ian King <colin.i.king@gmail.com>,
-	Howard Chu <howardchu95@gmail.com>,
-	Weilin Wang <weilin.wang@intel.com>,
-	Ilya Leoshkevich <iii@linux.ibm.com>,
-	Thomas Richter <tmricht@linux.ibm.com>,
-	Dapeng Mi <dapeng1.mi@linux.intel.com>,
-	Athira Jajeev <atrajeev@linux.vnet.ibm.com>,
-	Michael Petlan <mpetlan@redhat.com>,
-	Veronika Molnarova <vmolnaro@redhat.com>,
-	Namhyung Kim <namhyung@kernel.org>, Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 6.12 1009/1376] perf test: Display number of active
- running tests
-Message-ID: <aqgX6Xsr5GmddTTj@tassilo>
-References: <20260912065607.535295758@linuxfoundation.org>
- <20260912065630.052286725@linuxfoundation.org>
- <aqbt2-Kh76GZxmPK@tassilo>
- <2026091402-eccentric-curry-66f6@gregkh>
+	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.b="iSBAPkX/"
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id EC266152B;
+	Mon, 14 Sep 2026 09:11:02 -0700 (PDT)
+Received: from [10.2.212.8] (e134344.arm.com [10.2.212.8])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 61E713F86F;
+	Mon, 14 Sep 2026 09:11:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
+	t=1789402266; bh=5bDDncVTuIQ3/y7kgAm8DlF4dJ4tTwsaEm4bIaA/vq0=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=iSBAPkX/xPbvyOphzRefa8zokZzrVGhnxREfSd2JuYZrtkfDKP2KLWWCTlgBXFJy0
+	 Q07GbFiCHpfS8dR7CghzldruRZnseiUzK/eGfNqUDoXfdGIk3K7y9Zg7izgzITQ0X9
+	 KZAPYBfj4Azz8kWx77a4v6TD7ShqqCXWRO4n26ro=
+Message-ID: <3571430b-15b5-4451-97e4-455f9fd46f01@arm.com>
+Date: Mon, 14 Sep 2026 17:11:04 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <2026091402-eccentric-curry-66f6@gregkh>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH] arm_mpam: resctrl: Separate MPAM domains
+To: Reinette Chatre <reinette.chatre@intel.com>, james.morse@arm.com,
+ Dave.Martin@arm.com, fenghuay@nvidia.com
+Cc: tony.luck@intel.com, babu.moger@amd.com, yu.c.chen@intel.com,
+ linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+ patches@lists.linux.dev
+References: <85ca29e89eacf12cfa7071249419e7cadb8f0691.1788220029.git.reinette.chatre@intel.com>
+ <0b0eef2d-ce3b-48c8-af08-5889e7396e4f@arm.com>
+ <a492ffb3-c12e-4986-8f36-c907382c67e5@intel.com>
+ <96eda554-64a1-4f1e-9608-98cd106b00da@arm.com>
+ <a3cf9362-007d-4c6c-8f6f-1c9b8b41b1b9@intel.com>
+ <ad1f8ed5-266a-4d79-91ef-ad8ab3febfb8@arm.com>
+ <26e294a0-76a6-4ec0-9df8-021a76bf8ed9@intel.com>
+ <86603611-b20d-4a0a-a247-8cebb11b3432@arm.com>
+ <071d3dc6-6c18-4287-af26-719b89304058@intel.com>
+ <d403b92c-aae8-499f-8c73-933a2d757fba@arm.com>
+ <3595fe1b-0621-4599-b94d-a027336a2ce4@intel.com>
+Content-Language: en-US
+From: Ben Horgan <ben.horgan@arm.com>
+In-Reply-To: <3595fe1b-0621-4599-b94d-a027336a2ce4@intel.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Mon, Sep 14, 2026 at 11:51:19AM +0200, Greg Kroah-Hartman wrote:
-> On Sun, Sep 13, 2026 at 11:39:23AM -0700, Andi Kleen wrote:
-> > On Sat, Sep 12, 2026 at 08:57:15AM +0200, Greg Kroah-Hartman wrote:
-> > > 6.12-stable review patch.  If anyone has any objections, please let me know.
-> > 
-> > It's hard to see how these 6 perf test patches are stable material.
-> > 
-> > They seem at best be nice to have.
+Hi Reinette,
+
+On 14/09/2026 16:16, Reinette Chatre wrote:
+> Hi Ben,
 > 
-> They were needed because of:
+> On 9/11/26 1:56 AM, Ben Horgan wrote:
+>> On 10/09/2026 19:10, Reinette Chatre wrote:
 > 
-> > > Stable-dep-of: 44e82c4d2ff3 ("perf test: Fix skiplist leak in cmd_test")
+>>>
+>>> Do (admittedly crude) guardrails like below capture the existing driver requirements?
+>>>
+>>> diff --git a/drivers/resctrl/mpam_resctrl.c b/drivers/resctrl/mpam_resctrl.c
+>>> index 9d223057953a..dbd06371890c 100644
+>>> --- a/drivers/resctrl/mpam_resctrl.c
+>>> +++ b/drivers/resctrl/mpam_resctrl.c
+>>> @@ -1681,11 +1681,18 @@ mpam_resctrl_alloc_domain(unsigned int cpu, struct mpam_resctrl_res *res)
+>>>  				continue;       // dummy resource
+>>>  
+>>>  			mon_comp = find_component(mon->class, cpu);
+>>> +			if (!mon_comp) {
+>>> +				WARN_ON_ONCE(0);
+>>> +				err = -EFAULT;
+>>> +				goto offline_ctrl_domain;
+>>> +			}
+>>>  			dom->mon_comp[eventid] = mon_comp;
+>>> -			if (mon_comp)
+>>> -				any_mon_comp = mon_comp;
+>>> +			any_mon_comp = mon_comp;
+>>
+>> This first part which ensures that if there is a class for the monitor then a component can always
+>> be found for the given CPU.
+>>
+>>>  		}
+>>> -		if (!any_mon_comp) {
+>>
+>> The any_mon_comp check could still be useful to confirm that if r->mon_capable then there is a
+>> component for at least one of the events.
 > 
-> thanks,
+> resctrl fs does not handle such scenario. r->mon_capable guides whether the resource
+> supports monitoring and if it is then all domains belonging to the resource is expected to
+> support all monitoring events associated with the resource. resctrl fs will expose all the
+> monitoring event files based on r->mon_capable and which monitoring events are enabled, there
+> is no finer grained support to expose/hide events per domain.
 
-It's same there, I don't think anything perf test is stable material.
+Yes. I wasn't intending to suggest anything different. If r->mon_capable then the MPAM driver does
+support all enabled events. Maybe I would would have been more to correct to just say if
+r->mon_capable is true we confirm that we can do some monitoring.
 
-It's just a test suite after all.
+> 
+> If any_mon_comp is true while one of the mon_comp is NULL then resctrl will still expose the
+> event to user space and pass attempts to read the data to MPAM driver.
+> 
+> Is this a scenario that the MPAM driver needs to support? That is, users will see event files
+> but reading the data will succeed in some domains but fail in others? 
 
--Andi
+No, we don't expect the MPAM driver to support any features inconsistently across resctrl domains.
+If the hardware did happen to be mismatched then we sanitize it, in __class_props_mismatch() we
+ensure the class only exposes the features that are common to all the child components.
+
+Thanks,
+
+Ben
+
+>>> +
+>>> +		/* hack */
+>>> +		if (!cpumask_equal(&dom->mon_comp[QOS_L3_OCCUP_EVENT_ID]->affinity,
+>>> +				   &dom->mon_comp[QOS_L3_MBM_TOTAL_EVENT_ID]->affinity)) {
+>>
+>> There doesn't necessary need to be a monitoring class associated with any particular event. If there
+>> are classes and so components for each of the two supported events then this check looks correct.
+>> You could ensure that by checking existence:
+>>
+>> if (dom->mon_comp[QOS_L3_OCCUP_EVENT_ID] && dom->mon_comp[QOS_L3_MBM_TOTAL_EVENT_ID] &&
+>>     !cpumask_equal(&dom->mon_comp[QOS_L3_OCCUP_EVENT_ID]->affinity,
+>> 	           &dom->mon_comp[QOS_L3_MBM_TOTAL_EVENT_ID]->affinity))
+> 
+> Right thanks, this needs to be more robust. Essentially this is the finer grained check that
+> ensures that if the domain supports both events then the backing components have the same "shape".
+> 
+> Reinette
+> 
+
