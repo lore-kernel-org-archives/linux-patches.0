@@ -1,91 +1,70 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8EBB43BDD8;
-	Mon, 14 Sep 2026 10:38:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC10743CE46;
+	Mon, 14 Sep 2026 10:39:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789382301; cv=none; b=V1l+cplGMX+vgB0guOlN8Qs5n8/ni7d838903dyajc80ATnFadQzyMKhUprKrzMC618Cfrd86XL2N+gf8D6UQbcEMc4WIAuxdw0mBfIKrV12gIQGNwc2UTPfPQcQQ44555IALTYwiMdifKtv03r0eCFOkkOKJI8EOrq7W7huVbg=
+	t=1789382369; cv=none; b=FXe1UBPDRlf6r+C0cMwqAnF94D0bDiQ/wgBtbk0nxhaha2Vp364SRblPTILr1MCcldawneTk9febpuk3JN5KduiO05uPY7ZXpHsT8GCD5kAsFp6HCysoNNe/FCyNjaotZstDs22PGQhLaoMlCYKXsB0I8G1S0XuQUay++4S47KQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789382301; c=relaxed/simple;
-	bh=whUB1yhzHxRr3nRoZ/adT8M0yAcswBs5gdIVCaZFZD0=;
+	s=arc-20240116; t=1789382369; c=relaxed/simple;
+	bh=udttGQHcPlZyKy7kvpZ/13VdtswYWMOizFWTXd5rPGk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WygpjvOc3QCOLchnaOTM8JYVbPBHdHCsYA7vsfd6CLwtV2CjErVKGH0mIhl/L+x1niaQZDPLVZeofQj8fmjpfJ2UWPi/1nu3rH7o6CJsfrGf7BKDqrE/c+TGBbKBoNjTuduxj/5JdV4PB5Iqd3masVWSgU9zIHhvu0plUPWRenE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I4xtUqa7; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=Jbt15YEoA8Vy1MrfL3gPBrStQMR/Ik8f6uxC9yBqb3MEH4/em0VLzVh4DILAMJvzngf0TqDCeBbS0ZYiKDaQ/qz1NOiN8JA8a2XwJQNNmIme2kckJemrIQAmnkE7a4bBKAMu+H8wMoVh7qoEaw58OdHDlyLNHHRD8AOOZ08q52E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aQOR5Rnj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I4xtUqa7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15CE71F000FF;
-	Mon, 14 Sep 2026 10:38:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aQOR5Rnj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DE851F00893;
+	Mon, 14 Sep 2026 10:39:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789382299;
-	bh=EbFzNn+2M8jjWoot68ZL9RXuYAZW2hXryadFLldTWok=;
+	s=korg; t=1789382367;
+	bh=shhrBcw7UkV0vuZnZ6b5DO1mFKNhU4EQFdVDU8kenvQ=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=I4xtUqa7QP/ZRJ5/Av5Rj5iTNLkWhHau27ZBHXWHVsBvbwtSuwLS/9YD7+NmE+L/2
-	 LhvLH0pjd5ltqDon0FfQjZh9ClIUsBqfXp8P3QqChkl4Py1UhMHEjKUGofQ51M4M/S
-	 wJjmomO6/NsxSh0t9OxVgdEtFfv8h5bh7bPHBiAQ=
-Date: Mon, 14 Sep 2026 12:38:10 +0200
+	b=aQOR5Rnju8Ey72bmnJYOZlherotc9bDnNMG2OcSVfJS+Qt+d2Icnfbep6DqZUkcDW
+	 5xeZ2mSrAd7fDuKQlPvHIIgHcWCRMn0A7PyfvhZNicyi1OzNTnnnsi1kZQC8pa6WtL
+	 w4aUblhuZMoJcmItgnwmjuemb6pPCO0V5idw1vQ8=
+Date: Mon, 14 Sep 2026 12:39:18 +0200
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+To: Karl Mehltretter <kmehltretter@gmail.com>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Sergei Litvin <litvindev@gmail.com>,
-	Miguel Ojeda <ojeda@kernel.org>,
-	Nicolas Schier <n.schier@fritz.com>,
-	Nicolas Schier <nsc@kernel.org>, Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 5.15 702/935] scripts/tags.sh: Prevent binary files
- appearing in cscope.files
-Message-ID: <2026091400-prevent-collie-7e61@gregkh>
+	tianshuo han <hantianshuo233@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 5.15 836/935] ksmbd: limit repeated connections from
+ clients with the same IP
+Message-ID: <2026091407-outright-avert-3296@gregkh>
 References: <20260912065526.833703348@linuxfoundation.org>
- <20260912065542.937384676@linuxfoundation.org>
- <CANiq72mEfbYd=Xz+f2MXku3RHt_oH7KJBi0iSHCOD47oPDo9=w@mail.gmail.com>
+ <20260912065545.998510042@linuxfoundation.org>
+ <20260912201946.77500-1-kmehltretter@gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CANiq72mEfbYd=Xz+f2MXku3RHt_oH7KJBi0iSHCOD47oPDo9=w@mail.gmail.com>
+In-Reply-To: <20260912201946.77500-1-kmehltretter@gmail.com>
 
-On Sun, Sep 13, 2026 at 05:09:58PM +0200, Miguel Ojeda wrote:
-> On Sat, Sep 12, 2026 at 9:00 PM Greg Kroah-Hartman
-> <gregkh@linuxfoundation.org> wrote:
-> >
-> > 5.15-stable review patch.  If anyone has any objections, please let me know.
-> >
-> > ------------------
-> >
-> > From: Sergei Litvin <litvindev@gmail.com>
-> >
-> > [ Upstream commit a9b93c34625a27bed5dc0f80ee2a359ceb955172 ]
-> >
-> > When executing the command `make COMPILED_SOURCE=1 cscope`, the resulting
-> > `cscope.files` file contains filenames with the extensions *.rlib, *.rmeta,
-> > and *.so.
-> >
-> > To fix this, modify the regular expression in the `all_compiled_sources()`
-> > function so that only files with the extensions *.h, *.c, *.S, and *.rs are
-> > accepted.
-> >
-> > The issue has been introduced by commit 4f491bb6ea2a ("scripts/tags.sh:
-> > collect compiled source precisely") which implemented the parsing of
-> > compiled sources from *.cmd files instead of using the "find" command.
-> >
-> > Fixes: 4f491bb6ea2a ("scripts/tags.sh: collect compiled source precisely")
-> > Signed-off-by: Sergei Litvin <litvindev@gmail.com>
-> > Acked-by: Miguel Ojeda <ojeda@kernel.org>
-> > Tested-by: Nicolas Schier <n.schier@fritz.com>
-> > Reviewed-by: Nicolas Schier <n.schier@fritz.com>
-> > Link: https://patch.msgid.link/20260714083331.69482-1-litvindev@gmail.com
-> > [nsc: cleaned-up commit message line breaks and removed cc trailers]
-> > Signed-off-by: Nicolas Schier <nsc@kernel.org>
-> > Signed-off-by: Sasha Levin <sashal@kernel.org>
+On Sat, Sep 12, 2026 at 10:19:46PM +0200, Karl Mehltretter wrote:
+> Please hold this patch unless a 5.15 backport of upstream commit
+> 98a5fd31cbf7 ("ksmbd: close accepted socket when per-IP limit rejects
+> connection") can also be included.
 > 
-> (Same comment as for 5.10.y) Before 6.1 there was no Rust, so in
-> principle this may not be needed (at least for the `*.rlib`, `*.rmeta`
-> and the Rust `*.so`s from proc macros), but it shouldn't hurt.
+> The new -EAGAIN path continues after kernel_accept() without releasing
+> client_sk.
+> 
+> I reproduced this on 5.15.221-rc1 in QEMU: with one connection
+> held open, five rejected connections from the same address left five
+> server-side port-445 sockets in CLOSE_WAIT and raised "sockets: used" from
+> 4 to 9.
+> 
+> With only the applicable 98a5fd31cbf7 hunk applied, the same test
+> left no sockets in CLOSE_WAIT and the used count stayed at 4.
 
-Thanks for the review, I'll just leave it as is :)
+Now dropped as it really wan't needed here.
+
+thanks,
 
 greg k-h
