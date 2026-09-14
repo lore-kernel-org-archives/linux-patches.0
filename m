@@ -1,77 +1,91 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B06443B3F7;
-	Mon, 14 Sep 2026 10:37:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8EBB43BDD8;
+	Mon, 14 Sep 2026 10:38:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789382251; cv=none; b=dlOApodXHPIB/S5145rR0LT1gMAMgLyanc5MorQ6nrm3YtzF2m5XufLEla8eMFJRPGubzZNb1T54acu03LI3b4feKZsjkFoDLU7/00DfhaphuSPCYgnO8JHoR16vuoL6YOq8dkzntJqkO1n9ZzCV9aPKgSg0WLVX7mJNyadcTnw=
+	t=1789382301; cv=none; b=V1l+cplGMX+vgB0guOlN8Qs5n8/ni7d838903dyajc80ATnFadQzyMKhUprKrzMC618Cfrd86XL2N+gf8D6UQbcEMc4WIAuxdw0mBfIKrV12gIQGNwc2UTPfPQcQQ44555IALTYwiMdifKtv03r0eCFOkkOKJI8EOrq7W7huVbg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789382251; c=relaxed/simple;
-	bh=Q/IrkwYMTMmFRicPO1PKgg6aGMq/BUCup1NpUfqpkUE=;
+	s=arc-20240116; t=1789382301; c=relaxed/simple;
+	bh=whUB1yhzHxRr3nRoZ/adT8M0yAcswBs5gdIVCaZFZD0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ix/u3ATIj8RfmtZ+eftqpscO+K20xOe+4Cr0uOlkviZZzG3131hI8u34khfC6ns1z0XpJ6mG80VxZAeJirm3ZQI7RDViUG73W+oJFI3Z+7FvJlV7ji1JGbmMV3jUqx8wbscgLe8pM2FGPbmefNxTAnrZUsc23RHjGWX9yrRxtFY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hKT4N3hk; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=WygpjvOc3QCOLchnaOTM8JYVbPBHdHCsYA7vsfd6CLwtV2CjErVKGH0mIhl/L+x1niaQZDPLVZeofQj8fmjpfJ2UWPi/1nu3rH7o6CJsfrGf7BKDqrE/c+TGBbKBoNjTuduxj/5JdV4PB5Iqd3masVWSgU9zIHhvu0plUPWRenE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I4xtUqa7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hKT4N3hk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94AD01F000FF;
-	Mon, 14 Sep 2026 10:37:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I4xtUqa7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15CE71F000FF;
+	Mon, 14 Sep 2026 10:38:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789382250;
-	bh=TLvJYvB7FF6yU2legDlKHmoK1osKfx+N6H5kFfyHnEs=;
+	s=korg; t=1789382299;
+	bh=EbFzNn+2M8jjWoot68ZL9RXuYAZW2hXryadFLldTWok=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=hKT4N3hk5Gg+FfjdmRtLcNNCy6CkVQsuCez9/bDFVYe5IDnvZub7vsiH6IPnK/1pv
-	 hQ2sGtTaoe64vLvuqMeHJ18XXMFM3H/bvynzU41zVOOznR0E1qaLj8ZTE58e8rQTxn
-	 zh+hXiDGyxZLhVrY6eys2Cfs+rYbRMc1ujaT5j/A=
-Date: Mon, 14 Sep 2026 12:37:19 +0200
+	b=I4xtUqa7QP/ZRJ5/Av5Rj5iTNLkWhHau27ZBHXWHVsBvbwtSuwLS/9YD7+NmE+L/2
+	 LhvLH0pjd5ltqDon0FfQjZh9ClIUsBqfXp8P3QqChkl4Py1UhMHEjKUGofQ51M4M/S
+	 wJjmomO6/NsxSh0t9OxVgdEtFfv8h5bh7bPHBiAQ=
+Date: Mon, 14 Sep 2026 12:38:10 +0200
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Karl Mehltretter <kmehltretter@gmail.com>
+To: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Edward Adam Davis <eadavis@qq.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	syzbot+b7f6f8c9303466e16c8a@syzkaller.appspotmail.com
-Subject: Re: [PATCH 5.15 879/935] bluetooth/l2cap: sync sock recv cb and
- release
-Message-ID: <2026091453-unwary-delete-b272@gregkh>
+	Sergei Litvin <litvindev@gmail.com>,
+	Miguel Ojeda <ojeda@kernel.org>,
+	Nicolas Schier <n.schier@fritz.com>,
+	Nicolas Schier <nsc@kernel.org>, Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 5.15 702/935] scripts/tags.sh: Prevent binary files
+ appearing in cscope.files
+Message-ID: <2026091400-prevent-collie-7e61@gregkh>
 References: <20260912065526.833703348@linuxfoundation.org>
- <20260912065546.976652519@linuxfoundation.org>
- <20260913202907.3100-1-kmehltretter@gmail.com>
+ <20260912065542.937384676@linuxfoundation.org>
+ <CANiq72mEfbYd=Xz+f2MXku3RHt_oH7KJBi0iSHCOD47oPDo9=w@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260913202907.3100-1-kmehltretter@gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CANiq72mEfbYd=Xz+f2MXku3RHt_oH7KJBi0iSHCOD47oPDo9=w@mail.gmail.com>
 
-On Sun, Sep 13, 2026 at 10:29:07PM +0200, Karl Mehltretter wrote:
-> Please hold this patch unless the applicable L2CAP hunks from upstream
-> commit f1a8f402f13f ("Bluetooth: L2CAP: Fix deadlock") can also be
-> included.
+On Sun, Sep 13, 2026 at 05:09:58PM +0200, Miguel Ojeda wrote:
+> On Sat, Sep 12, 2026 at 9:00 PM Greg Kroah-Hartman
+> <gregkh@linuxfoundation.org> wrote:
+> >
+> > 5.15-stable review patch.  If anyone has any objections, please let me know.
+> >
+> > ------------------
+> >
+> > From: Sergei Litvin <litvindev@gmail.com>
+> >
+> > [ Upstream commit a9b93c34625a27bed5dc0f80ee2a359ceb955172 ]
+> >
+> > When executing the command `make COMPILED_SOURCE=1 cscope`, the resulting
+> > `cscope.files` file contains filenames with the extensions *.rlib, *.rmeta,
+> > and *.so.
+> >
+> > To fix this, modify the regular expression in the `all_compiled_sources()`
+> > function so that only files with the extensions *.h, *.c, *.S, and *.rs are
+> > accepted.
+> >
+> > The issue has been introduced by commit 4f491bb6ea2a ("scripts/tags.sh:
+> > collect compiled source precisely") which implemented the parsing of
+> > compiled sources from *.cmd files instead of using the "find" command.
+> >
+> > Fixes: 4f491bb6ea2a ("scripts/tags.sh: collect compiled source precisely")
+> > Signed-off-by: Sergei Litvin <litvindev@gmail.com>
+> > Acked-by: Miguel Ojeda <ojeda@kernel.org>
+> > Tested-by: Nicolas Schier <n.schier@fritz.com>
+> > Reviewed-by: Nicolas Schier <n.schier@fritz.com>
+> > Link: https://patch.msgid.link/20260714083331.69482-1-litvindev@gmail.com
+> > [nsc: cleaned-up commit message line breaks and removed cc trailers]
+> > Signed-off-by: Nicolas Schier <nsc@kernel.org>
+> > Signed-off-by: Sasha Levin <sashal@kernel.org>
 > 
-> The connected receive path already holds chan->lock when it calls
-> l2cap_sock_recv_cb(), so the lock added here recursively acquires the same
-> mutex and blocks hci_rx_work.
-> 
-> I reproduced this on the exact 5.15.221-rc1 tip
-> 0dce236725a538e8ddc0601eb0fb0bc43fc2c87b in QEMU with two linked virtual
-> BR/EDR controllers. One normal 64-byte basic-mode L2CAP SDU triggered
-> lockdep's recursive-lock deadlock report, left the hci0 receive worker
-> blocked in __mutex_lock(), and was not delivered to the receiver.
-> 
-> With the two applicable f1a8f402f13f hunks applied, the same test received
-> all 64 bytes, both endpoints completed, lockdep stayed silent and no worker
-> was blocked.
-> 
-> The tested adaptation removes the callback's channel hold and lock, and
-> adds channel locking within l2cap_conless_channel().
+> (Same comment as for 5.10.y) Before 6.1 there was no Rust, so in
+> principle this may not be needed (at least for the `*.rlib`, `*.rmeta`
+> and the Rust `*.so`s from proc macros), but it shouldn't hurt.
 
-Now dropped from 5.10.y and 5.15.y as for some reason this is marked as
-adep of something that is not actually in the queue.
-
-thanks,
+Thanks for the review, I'll just leave it as is :)
 
 greg k-h
