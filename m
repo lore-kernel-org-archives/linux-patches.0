@@ -1,67 +1,67 @@
-Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
+Received: from mail-pg1-f171.google.com (mail-pg1-f171.google.com [209.85.215.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D12A448D86E
-	for <patches@lists.linux.dev>; Mon, 14 Sep 2026 17:43:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E3A749BD6F
+	for <patches@lists.linux.dev>; Mon, 14 Sep 2026 18:02:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789407838; cv=none; b=EDBIrdHJAQY3UM8LpaWXrcyQT0120lvhwz4wP4pylTz1r9yf53Iz5f7GWzn2MHq1XcHhDOgJBZye1xNeZsdSP6WAwoEV2oz4+0nHwIRfs/3RwHUGSYFyRc8Xlu3OhTLAOwYYVACQ+myeWtK0IaNkbTN3KEsZXv/e6lUEUA8aO28=
+	t=1789408964; cv=none; b=ZRBJcYXH/3xd9h02Ybds1uAf1MWF76p/3tWVG5nM7jUbUPMKScGjD1ERKSWqRSN2S0aYurmx5fkC3U+CljjOTHOjynw6u7CYZ+1RlCFABnfBObuFzljuCnuGYd7MhRooZQXpw60UrJm5LAkvVDopWWXQW7sz+9g26Fe7phT9n6Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789407838; c=relaxed/simple;
-	bh=8gcIc5zX6si5qsb6q2DxuxxIhhXy9/rwBO1dH9VLJV8=;
+	s=arc-20240116; t=1789408964; c=relaxed/simple;
+	bh=9ZswKmHYV3hQPdJPCFwuJCVbZNz9gP0vODDqdoni8oE=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Dlc/q5FivYfwZI+xvBpuaHRUGwCXWSrie+Y8TQzohqjSqcCyEKBrVehUcLLfTXur2P/AEuMbZ/PQ5m5QeoUb3U4l+cUMZn8NFV4xEQQar2WrcYbO23FJlQclIA8m1uKbS6X6uX3JdaWx5CyQEyqYfBKVqFeKW+QSK6aO0cL4AoU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jFh9TWjb; arc=none smtp.client-ip=209.85.214.177
+	 In-Reply-To:Content-Type; b=OIqNubP7Fkvoibyelwb2Z7iUFMLqYq7LmbB2H/C80qMW+pP/465hGMJh1s9qdHpLbum7gX0Yv2L0LfY3a1sLtboJNdBb9rl3Y7GBYtf9yR6zs0HgMhlGQ8O04C1+nAC0J+8Wn/Ejo4eXHn5VtDYrNLYrVHu4jCHHbifWS1E14lk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mC9PxH0w; arc=none smtp.client-ip=209.85.215.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jFh9TWjb"
-Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-2dd76b1361dso562495ad.1
-        for <patches@lists.linux.dev>; Mon, 14 Sep 2026 10:43:52 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mC9PxH0w"
+Received: by mail-pg1-f171.google.com with SMTP id 41be03b00d2f7-cc149372c14so2322202a12.1
+        for <patches@lists.linux.dev>; Mon, 14 Sep 2026 11:02:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789407829; x=1790012629; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1789408962; x=1790013762; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:in-reply-to:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=FBKrvUeumU+i5r59LsbnvjiB+I7jzK030rNSwtlDdoI=;
-        b=jFh9TWjb3ty3OyVjG0mRrX8SeDKj738ow5O6NThf9eLBOEAFDu3QF/Oju0JeKPeFp3
-         00aFQDOM071mef1qQMwe/RBNpK++FlNTgP9dnT5Sgn+6aIK7p5j/XXp0/Mcmsg5/HYWU
-         Cnty3OqJTrj2q7Tb09rkvtxVUuZDVINZxbLsXY+jlbn+O3S+YC3hgtU/ykiPj2vXc1kV
-         QxzLVojHEc1JX6rvR47yL/POAYlO/lnvue8ndURPMz/5B7GWbqWn2BLxepbZKznUnQLr
-         zZghkZxuz/5u20Be5pLL+LtjcflyqV8b9emmEJ2PAE1+Ct8/np/kFipZly7yBoiwo3dk
-         ET2g==
+        bh=KMesPQp0VJUensHvMGRs3/WPWJMCG93L+QYn2rj5VFk=;
+        b=mC9PxH0wDrQXQ+GWuTYn6i2AFeldl5nyLWA5KkOAjsUnZV6o8eYQiEx0L36cNvrTyM
+         ooHCsRTBTrWU9y5LiCDy+yeUbeXTaXjbHGbSudIvINr/ZC4QG0OifUUsVKukLcMh+iBS
+         1Qjvg090FwCrCpiFgPXcHQ3/TWDYF/hrhISiorthye07iRhFweLh0bAua568YIqX9PzS
+         Xy61QV2rV+7VFaKV25ChHcQZzV7VhdulBg7RCNBEOdERs1E2NuB/2F404QZknSiSC0KW
+         EbJk6Db66UGrSoWtugoTCYWhqrgste6QVyCm1ddQhGGiVUO4/rmO7AFg2R07Axz+As/c
+         ry4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1789407829; x=1790012629;
+        d=1e100.net; s=20251104; t=1789408962; x=1790013762;
         h=content-transfer-encoding:content-type:in-reply-to:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=FBKrvUeumU+i5r59LsbnvjiB+I7jzK030rNSwtlDdoI=;
-        b=Q62lufFpgpq+T3kZzoLuoi8U5Q8CnmFONwzZicqZ0yEpyC+tHycUkwSBdhhRHUNETO
-         uT3hjGaHmcHiOOw1n7GiRbVwqOUQtxlUxmztEF/6S40sPg6OiVbEvBj2ZE9EgdNEKtoW
-         C9lz6oAwFRts4Yvw9T3buI88v8cyKhI9EAzSCEjL59YxRGGPhxSJtIbZr+H9G1KP6xfm
-         Z7aiwjPzflg7L4kZmEzKxXnBBcGsLGsiaJNReDpxAV9HPTd05IKmNZMnCPg04LEStOzh
-         F54CO8EL5DR1MjiKJJ51Zv3aoh2yDoRujfvClFdeQ2GfbD+Dt+bK3iygpNg2RlU6fMqv
-         6a0Q==
-X-Gm-Message-State: AFuF++kDsdV4soCUkca9q0JFAZRq3zNFgjbiy2tlf1ct4XntKLlJHjSw
-	9FszXDWWvkaS+Oe5e8W2FBLvhGhzDBkv1S+2gGx8IZv/bJMgx7t7qFtz
-X-Gm-Gg: AYBFou0PXY8bIzzkq1N9pbBg8wFc9XfdzdTMoil0D3duOKsuGuFzlxK5bC53tbbcVKH
-	Ae0jLeBup6uhdqvfFOojaSWUZsQM51Pk+rL8kjnuePxfDWJ4we/FytkFnfnUG6H0bdyBqGOqPkf
-	2OnUgZUas9RYgqm2fDOrtRW9A/8whUPIQJ3tP2slHEzZhhfBnnCZ4dXuA3u6X0b05QOc1UXflDf
-	hqgSDY7EMihZ2Bt5ttvxXOJXRkoGs8WFx+sFLhhKfO/iRbcybaU44DwYrydWWk8RgMCPdPjzYEM
-	cwxGnZKKjlkhndtVgQH8G7YnOrYjhGSgm+uJoGcXoaV9G0rsE+1YyIqESUpWVJRwZR2qVnlClHe
-	B8S08quTmpVgREd9IIXgx/fhFF2VNSayDlsH5m5d3ZC4JhQI+VHqFvD/14xaS5FJjW+iYoiVh5m
-	y/rrLzm5u5cBwM4m5fRBiPsfHxM2fFB5IU3n6HrkYW2IPbVkUnninqIL9LP4u46/TZj0qFdhm5J
-	jGcMkpZzmLxBbuW6mKsQ/bPr1/wxO0CS2v5
-X-Received: by 2002:a17:902:e801:b0:2db:331b:e187 with SMTP id d9443c01a7336-2dd6c5f3c7fmr68629005ad.8.1789407829308;
-        Mon, 14 Sep 2026 10:43:49 -0700 (PDT)
+        bh=KMesPQp0VJUensHvMGRs3/WPWJMCG93L+QYn2rj5VFk=;
+        b=ZOBQobvNgHHg7GiD7xtNUGA4PlJvqK9JJo9Y6f2Vy88tbk50wcaGEjxOYE9z5w/uOd
+         zX7Y46cjVcUQMJlSTOftv5vMJAUF/8PfzodUej+qs6ovxr5vs9BuLdJbYQJlworTZ8RW
+         iP16C9T3dpEu7ZsN9/ItmCSkuUYbji3VgujQ6exxxDEsIH4XtEviixQS4Dkg/5nZ4CEz
+         uFEL4JWlY9XKfchKmzQ3F71qhhGN7EyI8dCzmpW3FMdkMi1glY9mQxNPK4d5biWrzn9U
+         BPClhKiwMLsFlKAQPB1LHOFDLT+ryrQ1vB5C3s3HG/ppkdqAuV0PI4FEMcfKrTC1tahm
+         zkZg==
+X-Gm-Message-State: AFuF++nk8U/1SGdWJHrGuJjuhORUi6C8kpPP72BbMXcR5Dhsdbft4cWh
+	dqo6ekzw2b1pSQOpquVnevomqgEqU0bJZ6S8iTNj4gBc9ZhIYUJwQbPRi58KLw==
+X-Gm-Gg: AYBFou22+WM86uY4S8h9oOsVaQrjHg6gFJCJPx8BaFqXjGZAj0li0mBR5kawTWKhRLU
+	CtrHziMI6JyTNa1xQNam9ZbhJ2yl/Cqo81zs8Sa9uu35VZrVhz2AGvNMVJTSapVw9Cy2CI77hk/
+	4E6Fujow3ws2B6gCn1ziEIhtNGgv+e25d8dzVxqi8IZhppkVSFSxQ5q8qENbF+KG5eXyAZAPdxa
+	S9yPpvLubnmL0uS7hLH9VFZxXpdl9ZaW0067MmqZQrXeEZmj3wXyV6Xo62XyMKsmX60w4Gxdici
+	vh34HqXh3N94vZBijxOP4FAo2rO7MIPPZj/XQ1UCVdm9s+CzYtxsUZCXFG7b0u3ygglQSxcTIO3
+	iiJv9a+hX2tSh5ZSWlUJQgdkeSv0fp9ypm4nkJJFU5x+vp8TdHB9Ka9sUOdyNM3hLbtFuypYuUU
+	91/2ohfl9lAk1h3yd5PQb4rCGaf9KkwFUQg1nqp+4og81qZxuPEvSUPs+VlTGjEVLx64fQ5QZV7
+	+yopysRH0HofjCFdFuH6UWaplSfpwGEhUdx
+X-Received: by 2002:a05:6214:4993:b0:912:122d:174 with SMTP id 6a1803df08f44-9122e691c88mr56601806d6.34.1789408874114;
+        Mon, 14 Sep 2026 11:01:14 -0700 (PDT)
 Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2dd3e2dab98sm46940725ad.28.2026.09.14.10.43.47
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-9120f47a6ebsm100587596d6.22.2026.09.14.11.01.11
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 14 Sep 2026 10:43:48 -0700 (PDT)
-Message-ID: <80a9813f-13fd-4048-a479-5615105335e0@gmail.com>
-Date: Mon, 14 Sep 2026 10:43:46 -0700
+        Mon, 14 Sep 2026 11:01:13 -0700 (PDT)
+Message-ID: <c293d5c7-ee3b-4fe4-af58-f232c8b9efbc@gmail.com>
+Date: Mon, 14 Sep 2026 11:01:10 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -69,7 +69,7 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.6 0000/1424] 6.6.157-rc1 review
+Subject: Re: [PATCH 6.12 0000/1376] 6.12.110-rc1 review
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
 Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
  torvalds@linux-foundation.org, akpm@linux-foundation.org,
@@ -78,16 +78,16 @@ Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
  sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
  hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
  sr@sladewatkins.com
-References: <20260912065607.279695368@linuxfoundation.org>
+References: <20260912065607.535295758@linuxfoundation.org>
 Content-Language: en-US, fr-FR
 From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
+In-Reply-To: <20260912065607.535295758@linuxfoundation.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 On 9/11/26 23:40, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.6.157 release.
-> There are 1424 patches in this series, all will be posted as a response
+> This is the start of the stable review cycle for the 6.12.110 release.
+> There are 1376 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 > 
@@ -95,30 +95,40 @@ On 9/11/26 23:40, Greg Kroah-Hartman wrote:
 > Anything received after that time might be too late.
 > 
 > The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.157-rc1.gz
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.12.110-rc1.gz
 > or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.12.y
 > and the diffstat can be found below.
 > 
 > thanks,
 > 
 > greg k-h
 
-Same perf build issue on arm/arm64/mips with:
+perf fails to build on arm/arm64/mips:
 
-util/hisi-ptt-decoder/hisi-ptt-pkt-decoder.c:14:10: fatal error: 
-linux/unaligned.h: No such file or directory
-  #include <linux/unaligned.h>
-           ^~~~~~~~~~~~~~~~~~~
-compilation terminated.
-make[7]: *** 
-[/local/users/fainelli/buildroot/output/stbgcc-8.3-2.0/bmips/build/linux-custom/tools/build/Makefile.build:98: 
-/local/users/fainelli/buildroot/output/stbgcc-8.3-2.0/bmips/build/linux-custom/tools/perf/util/hisi-ptt-decoder/hisi-ptt-pkt-decoder.o] 
-Error 1
-make[6]: *** 
-[/local/users/fainelli/buildroot/output/stbgcc-8.3-2.0/bmips/build/linux-custom/tools/build/Makefile.build:154: 
-hisi-ptt-decoder] Error 2
-make[6]: *** Waiting for unfinished jobs....
+   CC 
+/local/users/fainelli/buildroot/output/arm/build/linux-custom/tools/perf/util/symbol.o
+In file included from ../include/linux/build_bug.h:5,
+                  from ../include/linux/bits.h:22,
+                  from ../include/linux/bitops.h:14,
+                  from util/hisi-ptt-decoder/hisi-ptt-pkt-decoder.c:12:
+util/hisi-ptt-decoder/hisi-ptt-pkt-decoder.c: In function 
+'hisi_ptt_4dw_print_dw0':
+util/hisi-ptt-decoder/hisi-ptt-pkt-decoder.h:28:41: warning: implicit 
+declaration of function 'GENMASK_U32'; did you mean 'GENMASK_ULL'? 
+[-Wimplicit-function-declaration]
+    28 | #define HISI_PTT_HEAD0_4DW_FORMAT       GENMASK_U32(31, 30)
+       |                                         ^~~~~~~~~~~
+../include/linux/compiler.h:17:23: note: in definition of macro 
+'__compiletime_assert'
+    17 |                 if (!(condition)) 
+         \
+       |                       ^~~~~~~~~
+../include/linux/compiler.h:37:9: note: in expansion of macro 
+'_compiletime_assert'
+    37 |         _compiletime_assert(condition, msg, 
+__compiletime_assert_, __COUNTER__)
+       |         ^~~~~~~~~~~~~~~~~~~
 
 -- 
 Florian
