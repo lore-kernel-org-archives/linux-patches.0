@@ -1,44 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 652823659FD;
-	Mon, 14 Sep 2026 09:47:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AABB03B42F9;
+	Mon, 14 Sep 2026 09:51:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789379253; cv=none; b=ROzeaEosrm8pWStgFQkS/6ZdnMDjP9wTDi3dBD41E8pOafCI4ZJ4+Q1ujYLccr6Oi675t/oHsRQE7NZzqnszEk1+ezdiX2YiDHnYmSl9qfabdEcTqTVhU4MNXiw5D8ZLOuldDp3YQavkoiwdu/3yLpx0r45plaxLdm/cnjIlMII=
+	t=1789379490; cv=none; b=dmtXSyk/DCkq7ZI0sONacVYHq26FlH04ob2+iKSKJg3N3ic/eKRtSOCZY8su4E/dvhCyyoYOxZQCp3KoBsFb4wqNOLlzE/Ea0g1Uvh2zwl3QxdzpoepxppLM6Z1Sj4jdxueqb6fXbPOsxGVUSNSQvYtxa9AeIDV57T4I3Myq2Rs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789379253; c=relaxed/simple;
-	bh=irNNsT8iKCdzudLKleyMornqIv1Z90Ab8V9lrVpvlP8=;
+	s=arc-20240116; t=1789379490; c=relaxed/simple;
+	bh=bVpIQ9SibIWnyuudns2xd0hmeaXIveZG4MhOdKxZJik=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZLU3mG6G8XL2w6ypl2m3xdMHQrMXIJtdQwrbkOG93i5U1vVW7/NyVRXyVN6XE7847U6jcMHRoqoIw5qNH/3o5aYS+hmLJMr10EEB5Coe6aGBwVaYHJCBbG1tZrtug2cyn77a6v6ISVIuItwnV/cC3ZlfWzMHb4EVx29eSHCd2/s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1lfV1fiT; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=I2gagAbus2TCvsh544JhFTALobCY8GtzJvt/raLBs6OpP362Qvz0fF/sFFVxvcmktbbhxlrEthhYIoGuM44jpGtejj6hOaiBCUv3tH2Eg4wDAacZwit03He6yqgIyL9uzYH4YW1ohck16QdWph8cu3j+p3DCbo3sL3y4i+tymi8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AkAFGxrq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1lfV1fiT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73B8D1F00893;
-	Mon, 14 Sep 2026 09:47:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AkAFGxrq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD3F21F00893;
+	Mon, 14 Sep 2026 09:51:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789379252;
-	bh=7dtvjOSlcTcT7bJyUrCOWXgHk0cz7zz4GmfHdeVHrGE=;
+	s=korg; t=1789379489;
+	bh=hWJSHRoWdKxFmIuvPbKTnL5wasI0/dGQzsJWDrfTptQ=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=1lfV1fiTowEAx28pjC0cUZdFBI77m5iTURGxOPRAZ5ujGu0xQH4+IcuEaRRR4aoAb
-	 5Y8hN6B/BycYyKvwA2hgJ2zEOOMTJ2u2pzW9gV+IUREG3ByKOGdgRLlbKe39uvUIMe
-	 vOoPy2QEgsBBdKjXLyou0T8L48RM4gMr4H63bDVI=
-Date: Mon, 14 Sep 2026 11:47:22 +0200
+	b=AkAFGxrq+t+wRNbKgUxSm0lJLBtD6ks193J5rRLE9AXncRE4CnWcchfPjdDBJZg44
+	 935IIO7MEdwEv8gOUSI5lwuKzJKsXpXGBCgFFb0IByFDXg8l8bMUW0YQ1BbYDZxgbD
+	 qyq8spOfMCB7iFz9KQl19KL33YCi9arJVNYvObH8=
+Date: Mon, 14 Sep 2026 11:51:19 +0200
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Jon Hunter <jonathanh@nvidia.com>
-Cc: Pavel Machek <pavel@nabladev.com>, stable@vger.kernel.org,
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
-	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
-	sr@sladewatkins.com
-Subject: Re: [PATCH 6.12 0000/1376] 6.12.110-rc1 review
-Message-ID: <2026091413-drizzly-guy-9d8e@gregkh>
+To: Andi Kleen <ak@linux.intel.com>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	James Clark <james.clark@linaro.org>,
+	Ian Rogers <irogers@google.com>,
+	Colin Ian King <colin.i.king@gmail.com>,
+	Howard Chu <howardchu95@gmail.com>,
+	Weilin Wang <weilin.wang@intel.com>,
+	Ilya Leoshkevich <iii@linux.ibm.com>,
+	Thomas Richter <tmricht@linux.ibm.com>,
+	Dapeng Mi <dapeng1.mi@linux.intel.com>,
+	Athira Jajeev <atrajeev@linux.vnet.ibm.com>,
+	Michael Petlan <mpetlan@redhat.com>,
+	Veronika Molnarova <vmolnaro@redhat.com>,
+	Namhyung Kim <namhyung@kernel.org>, Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 6.12 1009/1376] perf test: Display number of active
+ running tests
+Message-ID: <2026091402-eccentric-curry-66f6@gregkh>
 References: <20260912065607.535295758@linuxfoundation.org>
- <aqWnzsSIMkyM46NV@duo.ucw.cz>
- <f8e1fe51-03f1-4158-80cd-2b462624da3a@nvidia.com>
+ <20260912065630.052286725@linuxfoundation.org>
+ <aqbt2-Kh76GZxmPK@tassilo>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -47,29 +53,20 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <f8e1fe51-03f1-4158-80cd-2b462624da3a@nvidia.com>
+In-Reply-To: <aqbt2-Kh76GZxmPK@tassilo>
 
-On Sun, Sep 13, 2026 at 12:59:10PM +0100, Jon Hunter wrote:
+On Sun, Sep 13, 2026 at 11:39:23AM -0700, Andi Kleen wrote:
+> On Sat, Sep 12, 2026 at 08:57:15AM +0200, Greg Kroah-Hartman wrote:
+> > 6.12-stable review patch.  If anyone has any objections, please let me know.
 > 
-> On 12/09/2026 20:28, Pavel Machek wrote:
-> > Hi!
-> > 
-> > > This is the start of the stable review cycle for the 6.12.110 release.
-> > > There are 1376 patches in this series, all will be posted as a response
-> > > to this one.  If anyone has any issues with these being applied, please
-> > > let me know.
-> > 
-> > We get build errors in -cip testing:
-> > 
-> > https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/pipelines/2842911949
-> > https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/jobs/16461797877
-> > 
-> > drivers/soc/ti/knav_qmss_queue.c: In function 'knav_queue_probe':
-> > drivers/soc/ti/knav_qmss_queue.c:1874:9: error: 'knav_qdev' undeclared (first use in this function); did you mean 'knav_queue'?
-> I am seeing the same for 6.12 and 6.18. Appears to be this commit ...
+> It's hard to see how these 6 perf test patches are stable material.
 > 
-> # first bad commit: [4e91398b6ae1dde1824bcf3d19b4237773f31e68] soc: ti: knav_qmss: Remove debugfs file on teardown
+> They seem at best be nice to have.
 
-Sasha fixed this up, thanks.
+They were needed because of:
+
+> > Stable-dep-of: 44e82c4d2ff3 ("perf test: Fix skiplist leak in cmd_test")
+
+thanks,
 
 greg k-h
