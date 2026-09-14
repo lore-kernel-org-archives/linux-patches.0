@@ -1,101 +1,79 @@
-Received: from mail-qk2-f12.google.com (mail-qk2-f12.google.com [74.125.230.204])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from canpmsgout09.his.huawei.com (canpmsgout09.his.huawei.com [113.46.200.224])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63F3C29D288
-	for <patches@lists.linux.dev>; Mon, 14 Sep 2026 02:04:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.230.204
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D5492D8376
+	for <patches@lists.linux.dev>; Mon, 14 Sep 2026 02:48:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=113.46.200.224
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789351461; cv=none; b=lCKGIqokVrjpjQuOXs4VR9j4HgyotUdved9yFR/cFyLad7Ort25LKJjuoQTGxnYU1B/QL1DDRPLQnIwCrNEKISWki9xSo3WzH/Gjpn/MHLLeelSl09TdqnpN2Ej7h5d7p1I5Bin5+/3aLvQC28JXYKD2XEBcePVNhBHGHTzCJzM=
+	t=1789354117; cv=none; b=KRz+a68zC6haJl4DyzMZ8zCEdLZl3UbwdM8J7X720yQhAyGJl/RMojmDPwgnXLawOb0/XRLrO/eQa4tUdL39Czdiiw71h0AA9UhLGIgtp/omNIu1Wo99XlEdVwZeh+5lQL/W6DVLUxIiPrkVasiMPytNEdyPpbI7iAVrMzWlCMk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789351461; c=relaxed/simple;
-	bh=OyHBm0aM6KH70QZ5Y8bPQRTTYqCndlWggB4rMvP7OlM=;
-	h=Subject:To:Cc:References:From:Message-ID:Date:MIME-Version:
-	 In-Reply-To:Content-Type; b=H/DQlxFcMoWGO5IUM1XCRzvBVxWCyUPJ8STO3hFZ8PplkYbxdppa9eY7UsxUvi1PRA1grokpeCSranT3NEs09n/u7nvR4obAnGwNqK6wXUjIc5MNI7IfjCbuwvLLcr8g4BIuEkI89ZZxtbWG9vFcwFgcl9c3pf3asv+eVfU1gdM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OpHlxgAJ; arc=none smtp.client-ip=74.125.230.204
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1789354117; c=relaxed/simple;
+	bh=OAEaxTZU8ednJEy7IsDAHycULjM7kfFxY+kkI8dWNwk=;
+	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=gew2iCJDlYJ1w/qrghQqlNf3admlh4yI7hZBqZ148utJ1H7BORl7eSTzDOxjqrlki/CGq86WMrH5I3DxqRSnfTZ7nd+LviKgDuYxYTmUcBe1pN52CxJ2nhwG8Vjf0zRQbSnna75mJRxYiN2ob22NSAwNPtR527DGcZLqfb2+MUI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b=NpnJFNYy; arc=none smtp.client-ip=113.46.200.224
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OpHlxgAJ"
-Received: by mail-qk2-f12.google.com with SMTP id af79cd13be357-93910cadeb4so237274085a.1
-        for <patches@lists.linux.dev>; Sun, 13 Sep 2026 19:04:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789351458; x=1789956258; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:mime-version
-         :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=u6VPj5Ei/NNEX3MNDuO9HYgV6AmHjtH/GQMIJlXajTU=;
-        b=OpHlxgAJ81lp0/SVcDifkmLoYi5bhTBE+vNJDsZ/3F2p10a7Uh0Jge+xa+mjNfexC9
-         5eOsAHfSJmIbG8KiXiWl3TF3aagWqxH5cURFiKMcn9Tty166xdM8pFEEvW90BJrfDGDM
-         d+UgCKVl9kZ3/8QjNMXwu8RiFX0ez3nVbNVqT8awl1oZsq0o0vx8+6fvD/M2km1IZFN/
-         2FyqdHGl9SvBn3Zce1nLhCFTXtlCRFQmNe3154rVvzoOsAVqW8IrzJPMkbuOFKGv4f2d
-         pjOIH94XdmKQ9NsPfm+Jap8Vjt2yMcgmFLs05bTHQWtn3i1E3aARjxqPM0Y+VsH8CniP
-         1N5w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1789351458; x=1789956258;
-        h=content-transfer-encoding:content-type:in-reply-to:mime-version
-         :user-agent:date:message-id:from:references:cc:to:subject:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=u6VPj5Ei/NNEX3MNDuO9HYgV6AmHjtH/GQMIJlXajTU=;
-        b=EC/19CFTN42vJxjnFBuQq34sF7QiGcMggGC2mHlUvKNJcEPTMisrLFaDVQFlKf6Drw
-         xn2dV0rK9jxPDkB58Vz4vugJLQqaw9nJ0Y+M1ZsSRqBn3vKavlgzkB2LcdX1JDvt4JRx
-         Ix4erwzhfDW8jt/GmkaZ8yiKbxBcM9RuQ+DZS4XC8c2IA3OTt5r+JIOaJ1aoNshmmz14
-         +ExInX3vvaJU+Kcej+0PI+FFqf0DNhZsRxjf65c+5vvhGC+LzeNHnWjQpLQCiFfPpDRZ
-         naMp3dZXneblhD19ZsJy54U2yME595391wIo99c3Ct6SA0OJnOV6YkJcM1p+C8X5OVlm
-         XQKA==
-X-Gm-Message-State: AFuF++lx/NCyx5e6bPWAESMy3kmPBCjS2Udlz3BTZ/Pz2y6KAHKhdO3V
-	cpAu0NSGib8I1dMLf4ge3t/k+279CTf4K6nxBFsZuzEGBp/bHeBTCKs=
-X-Gm-Gg: AYBFou1f4aykmgIuVBjBjXzZkFLIW2QXjNHSJ+HGQu53LyGvhUr2OJGAkH7rqjvgYIQ
-	jcPKhLE3e+Jgw5RWwrYvIWZUchJLtfMgpCFHzow1APnfCHUOy4fjZrufNgJO0um/SFzEHDLjcu5
-	3rpMPOE10cAxsWTZJj/+s3hkrpqiINQZKLZNNe1lu8qYF0wTKHgBhDvqJ+qWiTeKHDLqtzxVD2v
-	HTyXHPeXXZIkqUCRy3cYfgctDpm2RtH+0EwRMORpY4LxV9dp6alKASrpwiBmSrhHme8cUtw2CXo
-	AQygUfrM8qnTtaJzVNT4uFkkRo1zGVDJN9AgbbDWtFoNbCf01k+FpsqBoCyJClImBqJoaovav/O
-	AxXmPwe0+sVxjGWEskHTTbEURD4fO/YETttbcYozELJFek82qZfiPPRe6yS4dT/SYr+fnyMpkvl
-	YKzw+2GHsh8/VivPe0XR5HJgdmVwvoypobsDWRlBeY/lPzHu5AJil3MFY+Qw7Q/56e0b4wDW0Q9
-	NF4kwYGtgKAcv6UL7lZLltil1R4+9qmMRXD
-X-Received: by 2002:a05:620a:4885:b0:939:5f4d:67b0 with SMTP id af79cd13be357-93a29766649mr99212785a.8.1789351458163;
-        Sun, 13 Sep 2026 19:04:18 -0700 (PDT)
-Received: from [120.7.1.23] (135-23-94-154.cpe.pppoe.ca. [135.23.94.154])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-9120f45cd5dsm82051236d6.14.2026.09.13.19.04.15
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 13 Sep 2026 19:04:17 -0700 (PDT)
-Subject: Re: [PATCH 5.10 000/798] 5.10.270-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
- conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
- achill@achill.org, sr@sladewatkins.com
-References: <20260912065516.948645775@linuxfoundation.org>
-From: Woody Suwalski <terraluna977@gmail.com>
-Message-ID: <c9cc917a-41f8-0f2a-6ee8-9f328a2d9ec4@gmail.com>
-Date: Sun, 13 Sep 2026 22:04:37 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:140.0) Gecko/20100101
- Firefox/140.0 SeaMonkey/2.53.24
+	dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b="NpnJFNYy"
+dkim-signature: v=1; a=rsa-sha256; d=huawei.com; s=dkim;
+	c=relaxed/relaxed; q=dns/txt;
+	h=From;
+	bh=UI95So5q402GlNviaC2uYnbM8crUmdD4eDX5/vU60f4=;
+	b=NpnJFNYyQzbyJwA8wfUEJmHAGygN/sH+lAktyPJEi6TKQ0+9bZPTgXA1C7v60utkLzeFdbYpx
+	+t3KUVsppUO5SXyVKL2ltFleoadqr6pFUaB/O7BjNFBxvjYOCiholFURWlxVc/WJH6WtJr2P9el
+	PHlQMbV0/ghaJmGkzw6lf7c=
+Received: from mail.maildlp.com (unknown [172.19.163.214])
+	by canpmsgout09.his.huawei.com (SkyGuard) with ESMTPS id 4hjq7G0z7bz1cyPY;
+	Mon, 14 Sep 2026 10:37:30 +0800 (CST)
+Received: from kwepemk300012.china.huawei.com (unknown [7.202.194.175])
+	by mail.maildlp.com (Postfix) with ESMTPS id B75FE4056C;
+	Mon, 14 Sep 2026 10:48:26 +0800 (CST)
+Received: from DESKTOP-A37P9LK.huawei.com (10.67.109.17) by
+ kwepemk300012.china.huawei.com (7.202.194.175) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.45; Mon, 14 Sep 2026 10:48:26 +0800
+From: Xie Yuanbin <xieyuanbin1@huawei.com>
+To: <gregkh@linuxfoundation.org>
+CC: <linusw@kernel.org>, <ljs@kernel.org>, <patches@lists.linux.dev>,
+	<rmk+kernel@armlinux.org.uk>, <sashal@kernel.org>, <stable@vger.kernel.org>,
+	<xieyuanbin1@huawei.com>, <xiqi2@huawei.com>, <bigeasy@linutronix.de>,
+	<wangbing6@huawei.com>, <lisongze2@huawei.com>
+Subject: Re: [PATCH 5.10 613/798] ARM: 9485/1: mm: acquire mmap write lock around show_pte() for user faults
+Date: Mon, 14 Sep 2026 10:48:20 +0800
+Message-ID: <20260914024820.11063-1-xieyuanbin1@huawei.com>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260912065531.173869863@linuxfoundation.org>
+References: <20260912065531.173869863@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <20260912065516.948645775@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: kwepems200002.china.huawei.com (7.221.188.68) To
+ kwepemk300012.china.huawei.com (7.202.194.175)
 
-Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.10.270 release.
-> There are 798 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On Sat, 12 Sep 2026 09:04:01 +0200, Greg Kroah-Hartman wrote:
+> 5.10-stable review patch.  If anyone has any objections, please let me know.
 >
-Built OK for i386 architecture, installed and booted on a 32-bit EeePC.
-No new issues noticed....
+> ------------------
+>
+> From: Xie Yuanbin <xieyuanbin1@huawei.com>
+>
+> [ Upstream commit 1039bffd6ae9c75b42b7d148d6c1106134107b66 ]
 
-Wow, that was a biggy :-)
+This commit depends on commit e79ca91165d4fd18549c ("ARM: 9484/1: enable
+interrupts when unhandled user faults are triggered"), otherwise,
+mmap_write_lock() may trigger a might_sleep() WARNING.
 
-Tested-by: Woody Suwalski <terraluna977@gmail.com>
+commit e79ca91165d4fd18549c ("ARM: 9484/1: enable interrupts when
+unhandled user faults are triggered") can be safely backported to the
+previous version.
 
-BTW: Welcome to Griffin K.H. :-)
+See also:
+Links: https://lore.kernel.org/20260725020926.11440-1-xieyuanbin1@huawei.com
 
+Thanks!
