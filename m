@@ -1,67 +1,67 @@
-Received: from mail-pz2-f43.google.com (mail-pz2-f43.google.com [74.125.228.43])
+Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 711F147DD54
-	for <patches@lists.linux.dev>; Mon, 14 Sep 2026 17:38:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.228.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D12A448D86E
+	for <patches@lists.linux.dev>; Mon, 14 Sep 2026 17:43:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789407530; cv=none; b=cYwl9DZCTImW2LpgOeKGuUpiDb945p94Thm8hfa8p2CJH5Xg2Kq7jp0rLAKMZoCZ/aA6fjIqi4vOfUW8+JpSZaQ4uOVXHe3bZuATtNTSY4D9qCytPojsOCtcq79q/7DA+OIAtXAMzUhlAfnXYvYGG8ajs0T4ypBHrs9zkh6C2Tg=
+	t=1789407838; cv=none; b=EDBIrdHJAQY3UM8LpaWXrcyQT0120lvhwz4wP4pylTz1r9yf53Iz5f7GWzn2MHq1XcHhDOgJBZye1xNeZsdSP6WAwoEV2oz4+0nHwIRfs/3RwHUGSYFyRc8Xlu3OhTLAOwYYVACQ+myeWtK0IaNkbTN3KEsZXv/e6lUEUA8aO28=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789407530; c=relaxed/simple;
-	bh=SbuWO6K3oJD2LhlEEwqlQxpEpDLEqVohKRUVF6OSZS0=;
+	s=arc-20240116; t=1789407838; c=relaxed/simple;
+	bh=8gcIc5zX6si5qsb6q2DxuxxIhhXy9/rwBO1dH9VLJV8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=uXAouJg+De5fQ6KPDD6LB1iNa+Hec2mx+b7w/qaFF3gKtoMOwtwDwJx7CYR0R06RGAvntnNuNonmI7UVhdyvcLQN8dKJjtwQZxyPpzGkmV4ovHyZTTZCoFNkWsOJI0a0meejjk9lrJngmgZY/Sl80ZVd1RycQTCU6nSmGGLrWz0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eJ9kAm9b; arc=none smtp.client-ip=74.125.228.43
+	 In-Reply-To:Content-Type; b=Dlc/q5FivYfwZI+xvBpuaHRUGwCXWSrie+Y8TQzohqjSqcCyEKBrVehUcLLfTXur2P/AEuMbZ/PQ5m5QeoUb3U4l+cUMZn8NFV4xEQQar2WrcYbO23FJlQclIA8m1uKbS6X6uX3JdaWx5CyQEyqYfBKVqFeKW+QSK6aO0cL4AoU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jFh9TWjb; arc=none smtp.client-ip=209.85.214.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eJ9kAm9b"
-Received: by mail-pz2-f43.google.com with SMTP id d2e1a72fcca58-85469d249c4so2392925b3a.2
-        for <patches@lists.linux.dev>; Mon, 14 Sep 2026 10:38:49 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jFh9TWjb"
+Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-2dd76b1361dso562495ad.1
+        for <patches@lists.linux.dev>; Mon, 14 Sep 2026 10:43:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789407529; x=1790012329; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1789407829; x=1790012629; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:in-reply-to:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=rnT0qav7UwFgOqf+kbm0vIaYG2Z1UVdPy7kC+ivpDo0=;
-        b=eJ9kAm9bMDZm9NFLcRLSuJmfsDtol0wZF8w5kjvtQ3ny9XuOQSDepkNkl1ajbFz7HZ
-         vWJW7JElz9kvmQ1D436s4WxMzk6eSVD+AcaZcSOB7m8nbVaSY5C7DMpOPan6V6vtZFZS
-         kLitpjK36xa0AmEHioWHX81ZxxtCobI6R5HxDKjE9HYu3Cny4CuNOcHiOL2mK+or/3+Y
-         5j4di2blG+PmFPF6YzWyCQQx4OkvryXr+d8Azf/7fwDKEKCX4PGk5n+G+N6Tn8BNhrNJ
-         m2ePDohZotFLGkRSMu40JP3huuEU1acgGzpfXQyJVhDl/XWkY+GyuiM6nKc2tWNJzgYN
-         gkMA==
+        bh=FBKrvUeumU+i5r59LsbnvjiB+I7jzK030rNSwtlDdoI=;
+        b=jFh9TWjb3ty3OyVjG0mRrX8SeDKj738ow5O6NThf9eLBOEAFDu3QF/Oju0JeKPeFp3
+         00aFQDOM071mef1qQMwe/RBNpK++FlNTgP9dnT5Sgn+6aIK7p5j/XXp0/Mcmsg5/HYWU
+         Cnty3OqJTrj2q7Tb09rkvtxVUuZDVINZxbLsXY+jlbn+O3S+YC3hgtU/ykiPj2vXc1kV
+         QxzLVojHEc1JX6rvR47yL/POAYlO/lnvue8ndURPMz/5B7GWbqWn2BLxepbZKznUnQLr
+         zZghkZxuz/5u20Be5pLL+LtjcflyqV8b9emmEJ2PAE1+Ct8/np/kFipZly7yBoiwo3dk
+         ET2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1789407529; x=1790012329;
+        d=1e100.net; s=20251104; t=1789407829; x=1790012629;
         h=content-transfer-encoding:content-type:in-reply-to:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=rnT0qav7UwFgOqf+kbm0vIaYG2Z1UVdPy7kC+ivpDo0=;
-        b=eGe5+jhqWuA44tWDt3hSSvjuRvhtFsREFpUzooijLzabbvlk081Thyr3uiVtHUg7Vd
-         w0LGP9h31wPEMHkVCdR3phZNZgkKnoTI4F5WDxv1iEjz1ugJj+zzLHW31MQ7cDWCEcrn
-         /EvsIuWfuVkHk0pXbjQCIheSDQp5P3qSbaz4b/8OhzVVZ0kMlZJpxIPvp7j870mqrT00
-         gL7CvXkdfUV7d0TMwQa+Y52yyeoGXQrJIV7GpDD6Y1egI14+8NrdWDUnyoX/r5PC/fbW
-         lpzBHMBnjokwR9pw4yAPcvRNG5xr7TcZBX9TRNz7M8su7v+Ft90r3tIp/9WBn6Ro3TNG
-         Wf2g==
-X-Gm-Message-State: AFuF++kB8yNoX8AXQDIEMj4mpa8i2/1tuVhjPm1LHh74bOeN7Z/AtzNL
-	xpvM+1rv2P2ouoPvWnDTKd+pyVnhu3xuriLUtst+VksxEDrkAvGkx8Km
-X-Gm-Gg: AYBFou1TYaFBoyhPBUeG/JfGNOc5dqLFE6eYEHH3hgjsp6Gbj5pCLIPvtJBpGmkfScn
-	T45Zb9d5jWsNF5jEARSZXv+WHM6a0vTcXz7uil86FT/wjEYjCm+9wpT+3jdrfkq1pnp9ph+80rc
-	gxhXlqnN0544ZcncheigwONDsa7EZ8spBVVOOZYNsM65Qga3FAYRWFM8Pt0iDkbHlyBqI8EG3UM
-	5FqTAFIieqQYsyfiVPCxe9kdViwIdTxyql1v/47OGZjlbWTSA5x5EwWqFTgZrQ9/njhAziJacQW
-	kTuDtWbU1wq9fDPB0MR5em00M44+JoSihOrnPOKVfvJs98qVxxitGRPEAIGS5p+TYqaC1IYP4Rg
-	Zkl5+cj6iZe5ynZIWVllRJUY/DeUZHXCsC7LRjWJuWA/vGdCYDuwKGGAOKxynYXStEKBt96/lp6
-	DJi1t/GXfz9FDqUjsoAOULtwuF/hI2kR34QVnJSB92LOGCR9yrJ9k7DC+oKsiz+SPja2WZg6vRV
-	Psw2M+OWPiT7byWXtgUuG/n4w==
-X-Received: by 2002:a05:6a00:1791:b0:86b:43f6:67b7 with SMTP id d2e1a72fcca58-86f82e5c9admr6736506b3a.4.1789407528681;
-        Mon, 14 Sep 2026 10:38:48 -0700 (PDT)
+        bh=FBKrvUeumU+i5r59LsbnvjiB+I7jzK030rNSwtlDdoI=;
+        b=Q62lufFpgpq+T3kZzoLuoi8U5Q8CnmFONwzZicqZ0yEpyC+tHycUkwSBdhhRHUNETO
+         uT3hjGaHmcHiOOw1n7GiRbVwqOUQtxlUxmztEF/6S40sPg6OiVbEvBj2ZE9EgdNEKtoW
+         C9lz6oAwFRts4Yvw9T3buI88v8cyKhI9EAzSCEjL59YxRGGPhxSJtIbZr+H9G1KP6xfm
+         Z7aiwjPzflg7L4kZmEzKxXnBBcGsLGsiaJNReDpxAV9HPTd05IKmNZMnCPg04LEStOzh
+         F54CO8EL5DR1MjiKJJ51Zv3aoh2yDoRujfvClFdeQ2GfbD+Dt+bK3iygpNg2RlU6fMqv
+         6a0Q==
+X-Gm-Message-State: AFuF++kDsdV4soCUkca9q0JFAZRq3zNFgjbiy2tlf1ct4XntKLlJHjSw
+	9FszXDWWvkaS+Oe5e8W2FBLvhGhzDBkv1S+2gGx8IZv/bJMgx7t7qFtz
+X-Gm-Gg: AYBFou0PXY8bIzzkq1N9pbBg8wFc9XfdzdTMoil0D3duOKsuGuFzlxK5bC53tbbcVKH
+	Ae0jLeBup6uhdqvfFOojaSWUZsQM51Pk+rL8kjnuePxfDWJ4we/FytkFnfnUG6H0bdyBqGOqPkf
+	2OnUgZUas9RYgqm2fDOrtRW9A/8whUPIQJ3tP2slHEzZhhfBnnCZ4dXuA3u6X0b05QOc1UXflDf
+	hqgSDY7EMihZ2Bt5ttvxXOJXRkoGs8WFx+sFLhhKfO/iRbcybaU44DwYrydWWk8RgMCPdPjzYEM
+	cwxGnZKKjlkhndtVgQH8G7YnOrYjhGSgm+uJoGcXoaV9G0rsE+1YyIqESUpWVJRwZR2qVnlClHe
+	B8S08quTmpVgREd9IIXgx/fhFF2VNSayDlsH5m5d3ZC4JhQI+VHqFvD/14xaS5FJjW+iYoiVh5m
+	y/rrLzm5u5cBwM4m5fRBiPsfHxM2fFB5IU3n6HrkYW2IPbVkUnninqIL9LP4u46/TZj0qFdhm5J
+	jGcMkpZzmLxBbuW6mKsQ/bPr1/wxO0CS2v5
+X-Received: by 2002:a17:902:e801:b0:2db:331b:e187 with SMTP id d9443c01a7336-2dd6c5f3c7fmr68629005ad.8.1789407829308;
+        Mon, 14 Sep 2026 10:43:49 -0700 (PDT)
 Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-86b2a1b827esm5006038b3a.51.2026.09.14.10.38.47
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2dd3e2dab98sm46940725ad.28.2026.09.14.10.43.47
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 14 Sep 2026 10:38:48 -0700 (PDT)
-Message-ID: <64dd0faa-fdfa-45a4-812f-638574beca26@gmail.com>
-Date: Mon, 14 Sep 2026 10:38:45 -0700
+        Mon, 14 Sep 2026 10:43:48 -0700 (PDT)
+Message-ID: <80a9813f-13fd-4048-a479-5615105335e0@gmail.com>
+Date: Mon, 14 Sep 2026 10:43:46 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -69,7 +69,7 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.1 0000/1191] 6.1.188-rc1 review
+Subject: Re: [PATCH 6.6 0000/1424] 6.6.157-rc1 review
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
 Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
  torvalds@linux-foundation.org, akpm@linux-foundation.org,
@@ -78,16 +78,16 @@ Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
  sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
  hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
  sr@sladewatkins.com
-References: <20260912065548.086904252@linuxfoundation.org>
+References: <20260912065607.279695368@linuxfoundation.org>
 Content-Language: en-US, fr-FR
 From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <20260912065548.086904252@linuxfoundation.org>
+In-Reply-To: <20260912065607.279695368@linuxfoundation.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 9/11/26 23:45, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.1.188 release.
-> There are 1191 patches in this series, all will be posted as a response
+On 9/11/26 23:40, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.6.157 release.
+> There are 1424 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 > 
@@ -95,46 +95,30 @@ On 9/11/26 23:45, Greg Kroah-Hartman wrote:
 > Anything received after that time might be too late.
 > 
 > The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.188-rc1.gz
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.157-rc1.gz
 > or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
 > and the diffstat can be found below.
 > 
 > thanks,
 > 
 > greg k-h
 
-perf fails to build on arm/arm64/bmips with:
+Same perf build issue on arm/arm64/mips with:
 
-   CC 
-/local/users/fainelli/buildroot/output/arm/build/linux-custom/tools/perf/util/zlib.o
 util/hisi-ptt-decoder/hisi-ptt-pkt-decoder.c:14:10: fatal error: 
 linux/unaligned.h: No such file or directory
-    14 | #include <linux/unaligned.h>
-       |          ^~~~~~~~~~~~~~~~~~~
+  #include <linux/unaligned.h>
+           ^~~~~~~~~~~~~~~~~~~
 compilation terminated.
-   CC 
-/local/users/fainelli/buildroot/output/arm/build/linux-custom/tools/perf/util/lzma.o
 make[7]: *** 
-[/local/users/fainelli/buildroot/output/arm/build/linux-custom/tools/build/Makefile.build:97: 
-/local/users/fainelli/buildroot/output/arm/build/linux-custom/tools/perf/util/hisi-ptt-decoder/hisi-ptt-pkt-decoder.o] 
+[/local/users/fainelli/buildroot/output/stbgcc-8.3-2.0/bmips/build/linux-custom/tools/build/Makefile.build:98: 
+/local/users/fainelli/buildroot/output/stbgcc-8.3-2.0/bmips/build/linux-custom/tools/perf/util/hisi-ptt-decoder/hisi-ptt-pkt-decoder.o] 
 Error 1
-   CC 
-/local/users/fainelli/buildroot/output/arm/build/linux-custom/tools/perf/util/cap.o
-   CC 
-/local/users/fainelli/buildroot/output/arm/build/linux-custom/tools/perf/util/demangle-ocaml.o
 make[6]: *** 
-[/local/users/fainelli/buildroot/output/arm/build/linux-custom/tools/build/Makefile.build:143: 
+[/local/users/fainelli/buildroot/output/stbgcc-8.3-2.0/bmips/build/linux-custom/tools/build/Makefile.build:154: 
 hisi-ptt-decoder] Error 2
 make[6]: *** Waiting for unfinished jobs....
-In file included from util/hisi-ptt.c:24:
-util/hisi-ptt-decoder/hisi-ptt-pkt-decoder.h:13:10: fatal error: 
-linux/bitfield.h: No such file or directory
-    13 | #include <linux/bitfield.h>
-       |          ^~~~~~~~~~~~~~~~~~
-compilation terminated.
 
-this is due to 6c4b82b50c46842683a3a39e1bc8291581e8b1cb ("perf hisi-ptt: 
-Fix PTT trace TLP header parsing")
 -- 
 Florian
