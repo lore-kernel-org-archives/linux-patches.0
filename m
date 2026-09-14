@@ -1,120 +1,68 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33CE441DDEA;
-	Mon, 14 Sep 2026 09:19:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0159841F5CD;
+	Mon, 14 Sep 2026 09:30:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789377550; cv=none; b=M+kyhbu4I9KCDIH0GhHtDlgfULd670iwIIcZhXK0re7vB+FzWUAmWMPyQPY9otR3Vl3Vq+6sQI+lm4E5RPXLxS7K20LxIfWtaAeZlDgNfUK/MztJcu7RrtOgOwSuVuepaRx0inOaMCmVVlbBL3yZpne/TSefHG6hq7OfoOjoX3g=
+	t=1789378228; cv=none; b=tKmq9HdY2BrZM1sS0BqI8DPc5laPH+ZPFwf1aIsVhD9NhniokSiN2Z4tbiuIAL/ZtuHILGhS/Ktwq4glDFx2nZUbTiFCac/5Srj8fkXn8DqqT8SDWfp49ypxkeJn2WX4nWsGO0Tcqq45UvHVSgyceEHkdlnwjIjz7W7ixboogOA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789377550; c=relaxed/simple;
-	bh=zgHNssUAU7P6eNdP3GzHYgOH+o0aGipgW2wMtrhfn4k=;
+	s=arc-20240116; t=1789378228; c=relaxed/simple;
+	bh=hlpD7ZMUo2ZTcmINoZ1pZ6sWb446/jQvJyHDQ1B2U5M=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Ebaoc+5XXJMnBhRtw6dCp/grRQHvOEIuZFJ5EedyoSN2oJgFdZL8tBeUC+WvUuu9fjxCB3EMrCKf07gc+v8AqI+yPSYEmKqQmAMbXVyt6/3CUkDgmFASYPF6QnoJps0kfbHn/7X4m+hPvQTuDBAIQY8rZk0IXXrzO2h3KsHWSHM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vbY2Uou8; arc=none smtp.client-ip=100.103.45.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=NOzjqlE0chaTm/XSK3c3Qx5U6EvblNSF8YZRWMW3ARdti0tbTQilZZrAHevUR1dwoftZGa7rRSFCgcsHFockbzUsVaMU4dYCz2W4U4lfrh6Prp4trKm5EzMqNKJ9obah0uvxkdx4NDz1wButgMzpIEAZmw8BwVnFFcW9wWaqeCs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LUx+R0zb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vbY2Uou8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01A771F000FF;
-	Mon, 14 Sep 2026 09:19:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LUx+R0zb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D90A61F000FF;
+	Mon, 14 Sep 2026 09:30:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789377546;
-	bh=yX8V2mP8O1NdNarEn3J4AGxExpZl1EtOkA4r2T5UKqs=;
+	s=korg; t=1789378226;
+	bh=OeXab7oxhtUUQqqAN5n/nK5pwJhP39WO5Uy0/UY+9HM=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=vbY2Uou8n6fuwvRotBVqzMQvokDZhXQIutK6quBbvDFUWmUCgu/WmAuyzBOdBLVga
-	 aArnxdmJWym2uICWFr63OqbVL/Bn4AVtOL6UJhUY4U4cpZLPaYVeWvbLzaNimMtzM+
-	 3lY1Hq9a1YmPLs0R6dX8hh7htlcq02F9seLh5ODA=
-Date: Mon, 14 Sep 2026 11:18:57 +0200
+	b=LUx+R0zbRcZ/dBkIVe2jDEuLODFXgOF/Wy2oobNdfS+ihH+6Q1hulQesGmrrRX5la
+	 Gj0UQD1CzfMlbJ+ZLugZNPu6SBen4eLUczdo9yw1jz6pxyf6ljAIdRzp3b22catp47
+	 GiJx07SF52jIitSddKIDdSe1uxK5RSgXw50LAduw=
+Date: Mon, 14 Sep 2026 11:30:16 +0200
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Benjamin Boortz <bennib@mailbox.org>
-Cc: Thorsten Leemhuis <linux@leemhuis.info>, stable@vger.kernel.org,
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@nabladev.com,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
-	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
-	sr@sladewatkins.com,
-	Linux kernel regressions list <regressions@lists.linux.dev>
-Subject: Re: [PATCH 7.2 0000/1815] 7.2.6-rc1 review
-Message-ID: <2026091443-silenced-maximum-c398@gregkh>
-References: <20260912065648.999753832@linuxfoundation.org>
- <5babfab4-ebf7-42b8-88f2-ac2f5b6b2d7f@leemhuis.info>
- <aqabqJHW_tHhQn3v@bb-82jq>
+To: Karl Mehltretter <kmehltretter@gmail.com>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	Sashiko <sashiko-bot@kernel.org>, Pu Lehui <pulehui@huawei.com>,
+	Eduard Zingerman <eddyz87@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 6.18 0435/1518] bpf: Sync tail_call_reachable with callee
+ state on entry
+Message-ID: <2026091406-phonebook-silent-bd45@gregkh>
+References: <20260912065623.398859879@linuxfoundation.org>
+ <20260912065633.289865658@linuxfoundation.org>
+ <20260913192411.2427-1-kmehltretter@gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <aqabqJHW_tHhQn3v@bb-82jq>
+In-Reply-To: <20260913192411.2427-1-kmehltretter@gmail.com>
 
-On Sun, Sep 13, 2026 at 02:54:39PM +0200, Benjamin Boortz wrote:
-> On Sat, Sep 12, 2026 at 12:18:56PM +0200, Thorsten Leemhuis wrote:
+On Sun, Sep 13, 2026 at 09:24:11PM +0200, Karl Mehltretter wrote:
+> Please hold this patch unless a 6.18 backport of upstream commit
+> 54c27ea6dadb ("bpf: Fix tail_call_reachable leak") can also be included.
 > 
-> > On 9/12/26 08:29, Greg Kroah-Hartman wrote:
-> > > This is the start of the stable review cycle for the 7.2.6 release.
-> > > There are 1815 patches in this series, all will be posted as a response
-> > > to this one.  If anyone has any issues with these being applied, please
-> > > let me know.
-> > > [...]
-> > 
-> > My builds failed while compiling perf:
-> > 
-> > > > ui/browsers/hists.c: In function ‘evsel__hists_browse’:
-> > > > ui/browsers/hists.c:3191:41: error: ‘hotkey_act’ undeclared (first use in this function)
-> > > >  3191 |                                 memset(&hotkey_act, 0, sizeof(hotkey_act));
-> > > >       |                                         ^~~~~~~~~~
-> > > > ui/browsers/hists.c:3191:41: note: each undeclared identifier is reported only once for each function it appears in
-> > Reverting "perf ui hists: In report UI ensure thread is set with
-> > reference counting" fixes this. Haven't tried, but maybe including
-> > bd86119c3ee6ed ("perf ui hists: Fix dso_filter reference leak and exit
-> > zoom cleanup") will fix this, too.
-> > 
-> > That got me a little further, but then I ran into this:
-> > 
-> > > > tools/perf/util/python.c: In function ‘pyrf_evsel__open’:
-> > > > tools/perf/util/python.c:1104:9: error: implicit declaration of function ‘CHECK_INITIALIZED’ [-Wimplicit-function-declaration]
-> > > >  1104 |         CHECK_INITIALIZED(evsel, "evsel");
-> > > >       |         ^~~~~~~~~~~~~~~~~
-> > > > tools/perf/util/python.c: In function ‘pyrf_evsel__set_tracking’:
-> > > > tools/perf/util/python.c:1295:9: error: implicit declaration of function ‘CHECK_INITIALIZED_INT’ [-Wimplicit-function-declaration]
-> > > >  1295 |         CHECK_INITIALIZED_INT(pevsel->evsel, "evsel");
-> > > >       |         ^~~~~~~~~~~~~~~~~~~~~
-> > 
-> > Only looked briefly, but didn't spot a simple way to work around that
-> > through a simple revert or two (but it's quite likely I missed something).
-> > 
-> > Ciao, Thorsten
-> > 
+> This patch resets tail_call_reachable on callee entry, but 6.18 lacks the
+> parent-state restoration it relies on. Returning from a clean callee can
+> leave the root state incorrect and make the x86 JIT omit required tail-call
+> counter handling.
 > 
+> I reproduced this on 6.18.52-rc1 in QEMU: the unmodified kernel hit a NULL
+> dereference in generated JIT code at ffffffffa0000118 with CR2=0.
 > 
-> build-tested and reproduced the 2 issues on x86_64 with:
-> 
->   make -j$(nproc) -C ./tools/perf O=/tmp/perf-build
-> 
-> observed errors:
-> 
-> 1) tools/perf/ui/browsers/hists.c:3191:41: error: 'hotkey_act' undeclared
-> 
-> 2ec3b9858725 — "perf hists browser: Increase MAX_OPTIONS to prevent stack buffer overflow"
->   prerequisite: bd86119c3ee6 expects MAX_OPTIONS=32; stable-rc still has 16
->   https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=2ec3b985872594031cc1000b830344de5c26633d
-> bd86119c3ee6 — declares hotkey_act, fixes dso_filter reference leak
->   https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=bd86119c3ee6ed7b8fc9be8298fe49f1a5355a46
-> 
-> 
-> 2) tools/perf/util/python.c:1104:9: error: implicit declaration of function 'CHECK_INITIALIZED'
-> 
-> 01fa2d416ace — defines CHECK_INITIALIZED
->   https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=01fa2d416aceab51f97ec2769e8da9971a605eeb
-> 
-> 
-> With the 3 patches applied, perf build successful.
+> With the applicable 54c27ea6dadb hunk applied, the same bounded test
+> completed normally and stopped at 34 program entries: the initial invocation
+> plus the 33 permitted tail calls.
 
-Thanks for that, it fixes it for me too, I'll go queue these up now.
+Ok, I've dropped this from all stable queues, except for 7.2.y now,
+thanks for the review!
 
 greg k-h
