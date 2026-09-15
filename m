@@ -1,108 +1,119 @@
-Received: from szxga04-in.huawei.com (szxga04-in.huawei.com [45.249.212.190])
+Received: from smtpout-04.galae.net (smtpout-04.galae.net [185.171.202.116])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7337E3E9C36
-	for <patches@lists.linux.dev>; Tue, 15 Sep 2026 03:36:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.190
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EF5F399348
+	for <patches@lists.linux.dev>; Tue, 15 Sep 2026 06:49:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.171.202.116
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789443369; cv=none; b=e00p1bn4X9jVs6efkryvn2VqMoSeW07znCimQThy+3zWq+Sde0/AnvZEwyB2jBo16WpcBaI1okVwBZJ99EH8DUjF2Zjogneq2ExhBPslhpPz2giuLuEFZxBeyKotUizcsD/8WrWTrvB+wY8jauFAvuJM+nfwuX403/gFYH3qvCU=
+	t=1789454953; cv=none; b=kjWM0RuEAVKZmeuX+x+4ReoH2qB55ESn/QGbDUdo7CS49X5vJfPK0J49NxsDj+9X9BsJt9T/yk72O2PWvjJKERobahEpUOzmXq+b2L5pF8vqa0u/Gd27UzoJ+TgTaxTi7Tq4Vyrc00pqpC+VRuOERxls1oIo79+d3Qt1AflM3+k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789443369; c=relaxed/simple;
-	bh=o5Peldxcu+TpkfyFny8QiSsqRNWT4bQlIsYkv/SpECM=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=c1I1GyaPdhHKyhLzNg+8RXeywGZmSGpIuZy+590fDeX03ZF3TFoV/13p5zV0JdntCZOmc6ii2YSCo7XjX4d+2GN0CCXtxqiRTJ4QdZOyYyxv0IJIt2RmgkMA8uJMDkiC7NLqz1Juyxb6mtaX14sfA6NQxt+X3vYogKLqyp5BgZQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b=xTiHF7vm; dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b=xTiHF7vm; arc=none smtp.client-ip=45.249.212.190
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
+	s=arc-20240116; t=1789454953; c=relaxed/simple;
+	bh=Ub1Z+fC8ATvBz9aNkiPwbnYMyJIDvxEuYy7hYJjpVvE=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=sdIfolNjzLekmXuwq29kvW1bGegza+pWcIgUyK4XAcv3NUae8YwzHo1kOJM5EJZTJylEbnq8jxVXpVXHVYVZj3xIfUM2+k9BXDcLgxIn9pImHgEGBj6cxTwdkvnN0oyOWn1Wq1V1c/I6pMQj4vA6VXrJPCYDARcBMI8gNig4Lf8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=zKqn5pJd; arc=none smtp.client-ip=185.171.202.116
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b="xTiHF7vm";
-	dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b="xTiHF7vm"
-dkim-signature: v=1; a=rsa-sha256; d=huawei.com; s=dkim;
-	c=relaxed/relaxed; q=dns/txt;
-	h=From;
-	bh=7NTM2zmOCGtafXQP+f8KiANnjbAkowGc6QwTs++MkL4=;
-	b=xTiHF7vmWimFekKKNOP8ZtFrf3rDf700+FBfewZOqJ9uVvrY4s5TE6c+XceL1BEmL55tB/PnC
-	QV0mNV7sB4Z9F03tAClbi8Jw43BRuWjF5tC3koagbR36Fc562RKAn7oxEKo7f2FnqXxnRkbF+br
-	d2QF/9Om+OmoZIkzwu77xLA=
-Received: from canpmsgout07.his.huawei.com (unknown [172.19.92.160])
-	by szxga04-in.huawei.com (SkyGuard) with ESMTPS id 4hkSMn4fzLz126Lxy
-	for <patches@lists.linux.dev>; Tue, 15 Sep 2026 11:35:33 +0800 (CST)
-dkim-signature: v=1; a=rsa-sha256; d=huawei.com; s=dkim;
-	c=relaxed/relaxed; q=dns/txt;
-	h=From;
-	bh=7NTM2zmOCGtafXQP+f8KiANnjbAkowGc6QwTs++MkL4=;
-	b=xTiHF7vmWimFekKKNOP8ZtFrf3rDf700+FBfewZOqJ9uVvrY4s5TE6c+XceL1BEmL55tB/PnC
-	QV0mNV7sB4Z9F03tAClbi8Jw43BRuWjF5tC3koagbR36Fc562RKAn7oxEKo7f2FnqXxnRkbF+br
-	d2QF/9Om+OmoZIkzwu77xLA=
-Received: from mail.maildlp.com (unknown [172.19.163.163])
-	by canpmsgout07.his.huawei.com (SkyGuard) with ESMTPS id 4hkS7K1Vh2zLlSh;
-	Tue, 15 Sep 2026 11:24:45 +0800 (CST)
-Received: from kwepemk300012.china.huawei.com (unknown [7.202.194.175])
-	by mail.maildlp.com (Postfix) with ESMTPS id 1A6FB4048B;
-	Tue, 15 Sep 2026 11:35:43 +0800 (CST)
-Received: from DESKTOP-A37P9LK.huawei.com (10.67.109.17) by
- kwepemk300012.china.huawei.com (7.202.194.175) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.45; Tue, 15 Sep 2026 11:35:42 +0800
-From: Xie Yuanbin <xieyuanbin1@huawei.com>
-To: <sashal@kernel.org>, <gregkh@linuxfoundation.org>, <linusw@kernel.org>,
-	<rmk+kernel@armlinux.org.uk>
-CC: <bigeasy@linutronix.de>, <lisongze2@huawei.com>, <ljs@kernel.org>,
-	<patches@lists.linux.dev>, <stable@vger.kernel.org>, <wangbing6@huawei.com>,
-	<xieyuanbin1@huawei.com>, <xiqi2@huawei.com>
-Subject: Re: [PATCH 5.10 613/798] ARM: 9485/1: mm: acquire mmap write lock around show_pte() for user faults
-Date: Tue, 15 Sep 2026 11:35:19 +0800
-Message-ID: <20260915033519.16922-1-xieyuanbin1@huawei.com>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <daily-reply-0010-re-arm-user-fault-irq-enable@kernel.org>
-References: <daily-reply-0010-re-arm-user-fault-irq-enable@kernel.org>
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="zKqn5pJd"
+Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
+	by smtpout-04.galae.net (Postfix) with ESMTPS id 33899C62215;
+	Tue, 15 Sep 2026 06:49:52 +0000 (UTC)
+Received: from mail.galae.net (mail.galae.net [212.83.136.155])
+	by smtpout-01.galae.net (Postfix) with ESMTPS id A486560498;
+	Tue, 15 Sep 2026 06:49:08 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id C090511C7AFC3;
+	Tue, 15 Sep 2026 08:49:00 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
+	t=1789454947; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 content-transfer-encoding:in-reply-to:references;
+	bh=VLW0tQXbJ6VXlwE1uH7g9161GhszLpuSt0iZmAj4OOE=;
+	b=zKqn5pJdXQotx+YOBLGMEThjQ4r44d0cafD+N3WJ3uLuvz2GndWl+Vc5ZcTlylyRGNehE7
+	CKr4h2bxljbKT48WLgANKVLrLOuI2HPirCggeLpsvORoEJYpBogJp4ewMQwlYXRxz3d1EC
+	IvoRd5XmuB39YTsD0YE/CHCg2lXBMgy+K8+e8PcjHVnQgFPQ2eCXXFGF8mTHW0DsbQmjBN
+	FMWsv6xirCGv3oKwO4B2YMaSmkXqxGoGnDkM+A71TB64PL/GQ0Us7B3MCqCzRn+ekET2OI
+	4AGH3ocn+yEAdZu4Rybow5FeckxlzpqLPmw6lnHj9XCJ9GRLTWCLoIJLT6ZNyw==
+Date: Tue, 15 Sep 2026 08:48:59 +0200
+From: Herve Codina <herve.codina@bootlin.com>
+To: Matti Vaittinen <mazziesaccount@gmail.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
+ patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
+ conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
+ achill@achill.org, sr@sladewatkins.com, Geert Uytterhoeven
+ <geert+renesas@glider.be>, Kalle Niemi <kaleposti@gmail.com>
+Subject: Re: [PATCH 6.12 0000/1202] 6.12.97-rc2 review
+Message-ID: <20260915084859.44acb12f@bootlin.com>
+In-Reply-To: <d601964b-e437-4990-bbdd-0337bba49102@gmail.com>
+References: <20260722142834.868902312@linuxfoundation.org>
+	<d601964b-e437-4990-bbdd-0337bba49102@gmail.com>
+Organization: Bootlin
+X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-redhat-linux-gnu)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: kwepems200001.china.huawei.com (7.221.188.67) To
- kwepemk300012.china.huawei.com (7.202.194.175)
+X-Last-TLS-Session-Version: TLSv1.3
 
-On Mon, 14 Sep 2026 22:03:26 -0400, Sasha Levin wrote:
->> This commit depends on commit e79ca91165d4fd18549c ("ARM: 9484/1: enable
->> interrupts when unhandled user faults are triggered"), otherwise,
->> mmap_write_lock() may trigger a might_sleep() WARNING.
->
-> Queued for 6.18, 6.12, 6.6, 6.1, 5.15 and 5.10, thanks for flagging it.
->
-> Could you send a 5.15 and 5.10 version that places the enable after the
-> hardening call? The other option is to take fd2dee1c6e22 ("ARM: fix branch
-> predictor hardening") on those two first, after which it applies unmodified.
+Hi Matti,
 
-I suggest that merging all these patches into the linux-5.10.y:
-1. commit 7733bc7d299d682f2723 ("ARM: fix hash_name() fault")
-2. commit fd2dee1c6e2256f726ba ("ARM: fix branch predictor hardening")
-3. commit 59e4f3b45b96a24fc9b7 ("ARM: ensure interrupts are enabled in
-   __do_user_fault()")
-4. commit e79ca91165d4fd18549c ("ARM: 9484/1: enable interrupts when
-   unhandled user faults are triggered")
-5. commit 1039bffd6ae9c75b42b7 ("ARM: 9485/1: mm: acquire mmap write lock
-   around show_pte() for user faults"): this patch is already merged.
-I tried, and the patches can be applied with very simple adaptation.
+On Mon, 14 Sep 2026 11:13:54 +0300
+Matti Vaittinen <mazziesaccount@gmail.com> wrote:
 
-In the upstream version, the following patches are a patch set:
-a. commit dea20281ac8822661576 ("ARM: group is_permission_fault() with
-   is_translation_fault()")
-b. commit 40b466db1dffb41f0529 ("ARM: allow __do_kernel_fault() to report
-   execution of memory faults")
-c. commit 7733bc7d299d682f2723 ("ARM: fix hash_name() fault"):
-   which is 1.
-d. commit fd2dee1c6e2256f726ba ("ARM: fix branch predictor hardening"):
-   which is 2.
-The fixed issues by this patch set also exist in linux-5.10,
-but a. and b. do not need to be backported.
+> On 22/07/2026 17:31, Greg Kroah-Hartman wrote:
+> > This is the start of the stable review cycle for the 6.12.97 release.
+> > There are 1202 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
+> > 
+> > Responses should be made by Fri, 24 Jul 2026 14:26:57 +0000.
+> > Anything received after that time might be too late.  
+> 
+> Oh, time flies. :) Well, statement understood...
+> 
+> ... Still, even though I know I am late - I am seeing our tests failing 
+> for stable 6.12.x. Other stables as well as mainline releases and 
+> linux-next are passing.
+> 
+> The actual failure seems identical to one discussed here:
+> https://lore.kernel.org/all/072dde7c-a53c-4525-83ac-57ea38edc0b5@gmail.com/
+> 
+> I believe above was fixed by Herve.
+> 
+> Bisecting stable points the:
+> 
+> > Saravana Kannan <saravanak@google.com>
+> >      Revert "treewide: Fix probing of devices in DT overlays"  
+> which matches the issue in discussion.
+> 
+> Maybe the 6.12 stable is missing Herve's latest fix(es)?
+> 
+> As explained in original report, the issue is seen with our out-of-tree 
+> device-tree overlay stuff. I have no idea if there is any in-tree stuff 
+> impacted but I guess the overlay stuff Geert has in Renesas tree might 
+> also be impacted - if it was based on 6.12.
+> 
+> I believe there is an "existing easy fix", in a form of a patch which is 
+> already applied to other stables. Unfortunately I lost track of the 
+> relevant fixes during the discussion so I can't point the relevant one.
+> 
+> Herve, do you happen to know what might be missing?
 
-After the preceding patch set is merged, 3., 4. and 5. can be safely
-patched.
+I haven't check 6.12 stable but needed commits available mainline are:
+  - 81e7c6befa36c ("of: dynamic: Fix overlayed devices not probing because of
+    fw_devlink")
 
-Cc to Russell King:
-Cc: Russell King <rmk+kernel@armlinux.org.uk>
+  - aaf08c52df9a1 ("Revert "treewide: Fix probing of devices in DT overlays")
+
+The related series:
+  https://lore.kernel.org/all/20260511155755.34428-1-herve.codina@bootlin.com/
+
+Best regards,
+Hervé
