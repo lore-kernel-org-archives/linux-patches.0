@@ -1,44 +1,61 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from szxga04-in.huawei.com (szxga04-in.huawei.com [45.249.212.190])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A30663D0C1D;
-	Tue, 15 Sep 2026 02:04:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7337E3E9C36
+	for <patches@lists.linux.dev>; Tue, 15 Sep 2026 03:36:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.190
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789437846; cv=none; b=TmPqdLiOaPrt+0/Uy0ZpzwubLDv1dlc6N0tDtzFsvFkqFraPBupFgF0cTFMv1dzgtvi9sVLSuvFFwhFAQc0M/35kkBzF3quXyxga8AQwYVLh1zbgP5cHiDAGHQX3Me/SH+sOT+wFhMqb7xOTGY+4szN9LE8MhywZTXdGCtKAEPo=
+	t=1789443369; cv=none; b=e00p1bn4X9jVs6efkryvn2VqMoSeW07znCimQThy+3zWq+Sde0/AnvZEwyB2jBo16WpcBaI1okVwBZJ99EH8DUjF2Zjogneq2ExhBPslhpPz2giuLuEFZxBeyKotUizcsD/8WrWTrvB+wY8jauFAvuJM+nfwuX403/gFYH3qvCU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789437846; c=relaxed/simple;
-	bh=EoQr2qYfamCC/2irzz5uRRl/kQJpvHipyiWEJsXnY1w=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kkjzJ0Vx1AbFuQqkiknH1co0D1IcnNXbE9QVVSx4Z0xZdIOdAuL8XxyGhL+0+8ZhE70LuEE93sxX9A3o89IErh0nwzqOyuVsHsi8WdjT+pOTI1uxBjMiAdmdDFkuJyPqSPuZP/ks1VFHmgqDR4QwjmsjAbcIkxtDK96OGbNYdZI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UIoTNmkt; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1789443369; c=relaxed/simple;
+	bh=o5Peldxcu+TpkfyFny8QiSsqRNWT4bQlIsYkv/SpECM=;
+	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=c1I1GyaPdhHKyhLzNg+8RXeywGZmSGpIuZy+590fDeX03ZF3TFoV/13p5zV0JdntCZOmc6ii2YSCo7XjX4d+2GN0CCXtxqiRTJ4QdZOyYyxv0IJIt2RmgkMA8uJMDkiC7NLqz1Juyxb6mtaX14sfA6NQxt+X3vYogKLqyp5BgZQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b=xTiHF7vm; dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b=xTiHF7vm; arc=none smtp.client-ip=45.249.212.190
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UIoTNmkt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7A591F00898;
-	Tue, 15 Sep 2026 02:04:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789437845;
-	bh=Z3b7D1X8v3uRsLY20dIkfU7a2HrwYbTrpLsHn1BzQdc=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UIoTNmkthik2Iz9IKbaU4aDDIemE4djin7b5bWs/Po4j8KVqbPrZWnXLQjIb6fZKa
-	 iZ5MOsMCcuSQOBxh99hiZaYzgYtrRs+p9eBLuiAjof8CfwyqtafW9ACaNlOKLGDMXp
-	 jTfviLUCokbDuYygyHgR7nRA6xBCbYQ6bNT+2+fRRHkiZHhucNNZTfSQOiik63vmvk
-	 DVXheHP44UP4SU4zDbuaYgIt7ChC9SQSQ3IpJC+kE+WTCMyLK3fFUF+LwGTy82IdJX
-	 244JgfZTaR1FE6tIjJ1b3r+BlZxvTCpKyeOk6SSIkU92+jEQm9cG0Ds8Eqycc8nngv
-	 sz+YIFA4JKWww==
-From: Sasha Levin <sashal@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	stable@vger.kernel.org
-Cc: Sasha Levin <sashal@kernel.org>,
-	patches@lists.linux.dev,
-	Lee Jones <lee@kernel.org>,
-	Manuel Fombuena <fombuena@outlook.com>
-Subject: Re: [PATCH 6.18 0286/1518] leds: st1202: Stop pattern sequence before reprogramming
-Date: Mon, 14 Sep 2026 22:03:36 -0400
-Message-ID: <daily-reply-0020-re-leds-st1202-validate-pattern@kernel.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <GV1PR08MB8497A49470CF9120A7C93A11C5BB2@GV1PR08MB8497.eurprd08.prod.outlook.com>
-References: <GV1PR08MB8497A49470CF9120A7C93A11C5BB2@GV1PR08MB8497.eurprd08.prod.outlook.com>
+	dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b="xTiHF7vm";
+	dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b="xTiHF7vm"
+dkim-signature: v=1; a=rsa-sha256; d=huawei.com; s=dkim;
+	c=relaxed/relaxed; q=dns/txt;
+	h=From;
+	bh=7NTM2zmOCGtafXQP+f8KiANnjbAkowGc6QwTs++MkL4=;
+	b=xTiHF7vmWimFekKKNOP8ZtFrf3rDf700+FBfewZOqJ9uVvrY4s5TE6c+XceL1BEmL55tB/PnC
+	QV0mNV7sB4Z9F03tAClbi8Jw43BRuWjF5tC3koagbR36Fc562RKAn7oxEKo7f2FnqXxnRkbF+br
+	d2QF/9Om+OmoZIkzwu77xLA=
+Received: from canpmsgout07.his.huawei.com (unknown [172.19.92.160])
+	by szxga04-in.huawei.com (SkyGuard) with ESMTPS id 4hkSMn4fzLz126Lxy
+	for <patches@lists.linux.dev>; Tue, 15 Sep 2026 11:35:33 +0800 (CST)
+dkim-signature: v=1; a=rsa-sha256; d=huawei.com; s=dkim;
+	c=relaxed/relaxed; q=dns/txt;
+	h=From;
+	bh=7NTM2zmOCGtafXQP+f8KiANnjbAkowGc6QwTs++MkL4=;
+	b=xTiHF7vmWimFekKKNOP8ZtFrf3rDf700+FBfewZOqJ9uVvrY4s5TE6c+XceL1BEmL55tB/PnC
+	QV0mNV7sB4Z9F03tAClbi8Jw43BRuWjF5tC3koagbR36Fc562RKAn7oxEKo7f2FnqXxnRkbF+br
+	d2QF/9Om+OmoZIkzwu77xLA=
+Received: from mail.maildlp.com (unknown [172.19.163.163])
+	by canpmsgout07.his.huawei.com (SkyGuard) with ESMTPS id 4hkS7K1Vh2zLlSh;
+	Tue, 15 Sep 2026 11:24:45 +0800 (CST)
+Received: from kwepemk300012.china.huawei.com (unknown [7.202.194.175])
+	by mail.maildlp.com (Postfix) with ESMTPS id 1A6FB4048B;
+	Tue, 15 Sep 2026 11:35:43 +0800 (CST)
+Received: from DESKTOP-A37P9LK.huawei.com (10.67.109.17) by
+ kwepemk300012.china.huawei.com (7.202.194.175) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.45; Tue, 15 Sep 2026 11:35:42 +0800
+From: Xie Yuanbin <xieyuanbin1@huawei.com>
+To: <sashal@kernel.org>, <gregkh@linuxfoundation.org>, <linusw@kernel.org>,
+	<rmk+kernel@armlinux.org.uk>
+CC: <bigeasy@linutronix.de>, <lisongze2@huawei.com>, <ljs@kernel.org>,
+	<patches@lists.linux.dev>, <stable@vger.kernel.org>, <wangbing6@huawei.com>,
+	<xieyuanbin1@huawei.com>, <xiqi2@huawei.com>
+Subject: Re: [PATCH 5.10 613/798] ARM: 9485/1: mm: acquire mmap write lock around show_pte() for user faults
+Date: Tue, 15 Sep 2026 11:35:19 +0800
+Message-ID: <20260915033519.16922-1-xieyuanbin1@huawei.com>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <daily-reply-0010-re-arm-user-fault-irq-enable@kernel.org>
+References: <daily-reply-0010-re-arm-user-fault-irq-enable@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -46,14 +63,46 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: kwepems200001.china.huawei.com (7.221.188.67) To
+ kwepemk300012.china.huawei.com (7.202.194.175)
 
-> The testing I carried out on real hardware included the complete series,
-> including upstream commit fd2529ba8fb44cd4b56f1069363b949644b42cec,
-> "leds: st1202: Validate pattern input before stopping the sequence".
+On Mon, 14 Sep 2026 22:03:26 -0400, Sasha Levin wrote:
+>> This commit depends on commit e79ca91165d4fd18549c ("ARM: 9484/1: enable
+>> interrupts when unhandled user faults are triggered"), otherwise,
+>> mmap_write_lock() may trigger a might_sleep() WARNING.
+>
+> Queued for 6.18, 6.12, 6.6, 6.1, 5.15 and 5.10, thanks for flagging it.
+>
+> Could you send a 5.15 and 5.10 version that places the enable after the
+> hardening call? The other option is to take fd2dee1c6e22 ("ARM: fix branch
+> predictor hardening") on those two first, after which it applies unmodified.
 
-Thanks for pointing it out, that is worth having. Queued for 7.2 and 6.18,
-so the series matches what you tested.
+I suggest that merging all these patches into the linux-5.10.y:
+1. commit 7733bc7d299d682f2723 ("ARM: fix hash_name() fault")
+2. commit fd2dee1c6e2256f726ba ("ARM: fix branch predictor hardening")
+3. commit 59e4f3b45b96a24fc9b7 ("ARM: ensure interrupts are enabled in
+   __do_user_fault()")
+4. commit e79ca91165d4fd18549c ("ARM: 9484/1: enable interrupts when
+   unhandled user faults are triggered")
+5. commit 1039bffd6ae9c75b42b7 ("ARM: 9485/1: mm: acquire mmap write lock
+   around show_pte() for user faults"): this patch is already merged.
+I tried, and the patches can be applied with very simple adaptation.
 
--- 
-Thanks,
-Sasha
+In the upstream version, the following patches are a patch set:
+a. commit dea20281ac8822661576 ("ARM: group is_permission_fault() with
+   is_translation_fault()")
+b. commit 40b466db1dffb41f0529 ("ARM: allow __do_kernel_fault() to report
+   execution of memory faults")
+c. commit 7733bc7d299d682f2723 ("ARM: fix hash_name() fault"):
+   which is 1.
+d. commit fd2dee1c6e2256f726ba ("ARM: fix branch predictor hardening"):
+   which is 2.
+The fixed issues by this patch set also exist in linux-5.10,
+but a. and b. do not need to be backported.
+
+After the preceding patch set is merged, 3., 4. and 5. can be safely
+patched.
+
+Cc to Russell King:
+Cc: Russell King <rmk+kernel@armlinux.org.uk>
