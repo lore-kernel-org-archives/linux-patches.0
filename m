@@ -1,204 +1,165 @@
-Received: from mail-pj2-f12.google.com (mail-pj2-f12.google.com [74.125.227.140])
+Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B82E48CD7F
-	for <patches@lists.linux.dev>; Wed, 16 Sep 2026 09:07:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.140
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8158F4ACC86
+	for <patches@lists.linux.dev>; Wed, 16 Sep 2026 09:57:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789549661; cv=none; b=NFvzPV7yZpfe35mw2d+TzBXqwXtTSWnfGEY5gMIIhgdbdzCGPHQxVGYNT7rM9sBXEFuiHFjZZCsSK1k+e/ZoVKbwR0fcjmlfWiI/4k8u7o3qZMQ88f/AAM516pyXuYj61LGzQ/pglDx+Gg0xTOaRzjI5y1FnxIyki0H4znHyVEo=
+	t=1789552655; cv=none; b=pRR2VrSsdpswilyCI0kvbkfwJgTJehQTzBhLIvA4+pxfI6rNRA58a68TJQVv8HkPNr8SU68Y95wZgR/CB/Lg8rzL/dnFIDgCbWqfzVI13zrEkYSCicKtzdClt5Uy9W2kXMpalpCNU8WE7eGzGwZZNAUHH9RBevYIVM98LeIwz0w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789549661; c=relaxed/simple;
-	bh=/oSHeo+dHrTJ4BeaXgDyE3G967AhC/96LwQQ8JcP8WA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=c9f4WNdn+iUlCXhIOUL0qGGRF3gvnwkV3aB1m7zloqlg/B+bZkrVswVObEY+z96bK3PpULH8a44POwRBS1rEvYwXxIbkn88sKPTR761cIQjWJao2m8zjXKF7Xfr/VkWrWPs2FBst1clw/E+vNraasOa8NMN0vMBjGxFNpjjM22Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mPaAh1oG; arc=none smtp.client-ip=74.125.227.140
+	s=arc-20240116; t=1789552655; c=relaxed/simple;
+	bh=r4MxKVUpVOphBodMJ8sw/Wpc7j8tML5z/BSxDV9WLps=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=DIOAm+MS7oM4tJU6m0qi4W8vjrW8j8fgpQ8uKPnfevEGI11OoC35vmwcSm3EyfGx8xHyRbCdhXthgBNbcrcamB/YPvTo4Vrq1evD2Up/n9wx4Ih+FiW7MBXRcURXVryAqkWp5OjSwpZJYlCShXoj7eYu6KPZHow5bzc6RncC9so=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aXVFMsUS; arc=none smtp.client-ip=209.85.214.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mPaAh1oG"
-Received: by mail-pj2-f12.google.com with SMTP id d9443c01a7336-2d9004a1ac0so5235335ad.3
-        for <patches@lists.linux.dev>; Wed, 16 Sep 2026 02:07:25 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aXVFMsUS"
+Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-2dd1dcdcf95so16483825ad.1
+        for <patches@lists.linux.dev>; Wed, 16 Sep 2026 02:57:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789549642; x=1790154442; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=/oSHeo+dHrTJ4BeaXgDyE3G967AhC/96LwQQ8JcP8WA=;
-        b=mPaAh1oGbnLc49Yxso9rY0Nr044LMzFU0igllVtQzbS5nBxAfhM6UWuKs9F+vFE5Oj
-         w8x+dN+kSHY2x3tbfsAOFvNdf+mH6P62SMke0QOohfFvmzx0mWE8nm2hm2aPw0hxdFE8
-         LoTgo3TTpn6ahzdcO+iydjXTrZODBqPRubV0bs2jVlwf1CfSIV1+FXTRnSPGGHMW/LrW
-         Cm6htTU9/U29KF0szLnTAJSl370aJNZE01w1kqyyCUjBCbYvVBpoL72L+7ubEo9RXvff
-         PzcUbon8IQaBirT+a/7oJH/CVQs0Pnd0BgAi4sVCF3/63cwbU1D8x8bdAqT5AdlzLpAe
-         5cSg==
+        d=gmail.com; s=20251104; t=1789552634; x=1790157434; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=y4XoxT2FpvN2jeEt9ImVCB0YUQFanB/NfCBuFC1HNkg=;
+        b=aXVFMsUS4/d1TKhQ18UBYKOFuHIBy7FS2N48ptxHXrcvtvDu+RCbBmnY/jqTX7zwYY
+         fgJD23cd/+Zz5lb6hs2Q80oUqLoPYDVlHyHFHwvXa4aPHGX7rUIUNI3Lw5BT238Bbwol
+         M9kWcsfORck89EFtZAgbh4tPk6zl+Itd23+qa/ElgliAjknFjyao6FmSQnS34ehxYZSB
+         Ldk6+xCIoP+9+k/6yhEbUSMT08sfDr5SKGz/g150eyd7m1+Hu7OV4HgkEnsFJvgeCVYj
+         29Fqv1Kfjf3vD8fA6memX7fYwDfEoiQY9BfrW3LatEbRR9Ov1QSBYd0KokBQ5pHiPwRQ
+         6udA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789549642; x=1790154442;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=/oSHeo+dHrTJ4BeaXgDyE3G967AhC/96LwQQ8JcP8WA=;
-        b=SzcjZD2BfTpk/10u3m7km0fZhhaboEs1PSjGASFqVBkbI8R+PyAm1xNiIEWuZEzOyk
-         XEAvtFPVN80GhjWawO9iIZNnQzOncNM2tcZeAWjpFF/srq/uNnVZcWfxBnGh48FamudU
-         sLhttsUq487PRBDBIJyMPws0Z59CB2YJJYn322BL7FNiVshX9eg2gdspaord9487AV/A
-         xVs5v5o9V02V6kqMCUWTJgwS8z6Gx+EvMog9FW8gyRM3Cwmc+AxFeUZIS+vo3BC8y77T
-         fmZPXqtpvUlsUK5vWw/Htk2B2ErO9vuBpyS1huJooiBttHHt+Ev8PjslBOdu2mnOcXdV
-         IAEQ==
-X-Gm-Message-State: AFuF++laNBnFx5V3b5db6mSJG0VwqySBRC8LnC86mztS25nqoUEBXZ84
-	9JtNeMAhz067d4RR7Tb6KFrBOeofzVUibm5n0XKMsrRHzihCcYiMq8al
-X-Gm-Gg: AYBFou2hm81SD24zxCFqF8U+8gQBL0/UfAWb/PGzi4ApsNLcFu+GcDfyrb2h2TngD44
-	wi3qewSEFvv3y4ywzXFPn1jmZ1bCCNLEy9mvL7v7kcdqGF2Z8s62K+S5l1HrAX7IWVDgvD4ClCl
-	VVmIyFpgJDcVcE/pzpKvls9koA6w40AWSrfxCu+hw8cM54174sP8iaOk17Q24mxhUIhbgQFYWKr
-	EYMP2rhlgrw3Y9RY/xmLevEA0eoJLXJdh6lydcWRs/FloArOH65NrawvEOG6jC39Ops1N4urCDt
-	SI/jMmlAOdeeONH2zwn0jl1CKOyagqaPxJDuXevhDa3GDQrTEQhuRcnxroNgJIHar1oEz9BXAbD
-	BEXEKELmrAqbdhbbyyzrSe0i72ojeGn86uX9KVOcCxBaY98ws7uZ/2oMXBMtHNviflv3kJhATYg
-	b3vzS0Z8pV9vO3Qj6/7zEc3SxbhCAKG45xzwLpjhORvBoMHIVassOkb+/aDKgERpRyxdUgNIqI7
-	pjk6rEf6lNPu6exonbTDfZyEijZyvXH2qWJzg==
-X-Received: by 2002:a17:902:d547:b0:2d0:cc92:f7a9 with SMTP id d9443c01a7336-2dd8dd0b15amr37176235ad.4.1789549641965;
-        Wed, 16 Sep 2026 02:07:21 -0700 (PDT)
-Received: from [10.89.160.219] (wf124-219.ust.hk. [175.159.124.219])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2dd89eb7d15sm8234195ad.39.2026.09.16.02.07.19
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 16 Sep 2026 02:07:21 -0700 (PDT)
-Message-ID: <dc927d3e-e7f1-461c-9a75-259f71899224@gmail.com>
-Date: Wed, 16 Sep 2026 17:07:17 +0800
+        d=1e100.net; s=20260707; t=1789552634; x=1790157434;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=y4XoxT2FpvN2jeEt9ImVCB0YUQFanB/NfCBuFC1HNkg=;
+        b=gxj5UzalIg/1z8EFiv0tRMz7O/8Kck1kl4qn4nEiwbBEkBYU8U8PkTnEynizdjm/yf
+         PbfkyRMz+2r/aMk9uYTAtq17Wit5JdDCy/HLpYW86HmoEdd3ZaWNQL2A27matrILr3+R
+         e3LC25cdzhe+FureWhQmf4HrGA9t3/ri/Y11JbR530igzqNOX1S34OFwL7ifNLMdIPN4
+         GfFr6E0+zJNb+DHbgo3gDX04yiThw4NG5OV8Pi/Nb5ezWI5HaCs1hXBNjUaS1NbJsxNk
+         rBwvmPi+marhMS/HRhMVLGKAyauNfVsiWTYAc/RMTGXsSBKt19GvR7mCYUgd6+vLEx3f
+         6w2A==
+X-Gm-Message-State: AFuF++mC42ZZ7CVBGJgjvAZQ9Rv8IMSYyyWyGrcI7FM1C4n1HrFnWHoP
+	7exXM+rLXmDA0QxtSYQ2o5yWbyPHbRZNb2oXD9sw9zS5M+SL6hWoPOAe
+X-Gm-Gg: AYBFou3VJ/axl7hjXBYEZc56Vg532FYtwrJwABPG96T0KAG6hoS5ab+lvP/xFvxW5J1
+	e/sqVmbCcXS5blP2dV1K4Q7kRExW4TNbQL2TvEKT8klRxnVWK2ByOhhB4DUou/Ol4iLLZiPRuqs
+	moxnN0x9ldRWquIApHOWU/PpItxq8MPN9ny3vdq13D3eEIt9zc0kaQooGmNI7xKJJ+XHYE/6aiu
+	ThvUHpyI90aI93CwasTEHPj0tFjTEHnlWnAgl99tZis2fRFZwYs5C1CO19eDcJwzFvBlsPOjqad
+	H0EmSubqC5Jry7b+e+q5Rqs5LBOJfG5MVYojb0cbfBI9c9dXBzJiRjXcEi+M/y2q1ZzTkEEe620
+	OmEvnUaIFCiDo+yNZwZ3klFwxwpO/3sGe3Ouha6L2K9OgQOWp+fCMDp+l1zZuiswRfprDzVWaw0
+	e1+0FBWY74Z6BAfNT2C7fyweBSLOMQ0SVphXT1UuA3bSedIDhmV8+6s/lmAO671LMgcinfag==
+X-Received: by 2002:a17:903:324b:b0:2da:e553:c6ff with SMTP id d9443c01a7336-2dd764c1b47mr95237755ad.9.1789552634365;
+        Wed, 16 Sep 2026 02:57:14 -0700 (PDT)
+Received: from localhost ([2001:19f0:8000:3e6e:5400:6ff:fe38:3d01])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2dd89f34921sm8679235ad.84.2026.09.16.02.57.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 16 Sep 2026 02:57:13 -0700 (PDT)
+Date: Wed, 16 Sep 2026 17:56:31 +0800
+From: Inochi Amaoto <inochiama@gmail.com>
+To: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, "Anton D. Stavinskii" <stavinsky@gmail.com>, 
+	Inochi Amaoto <inochiama@gmail.com>, Chen Wang <chen.wang@linux.dev>, Sasha Levin <sashal@kernel.org>, 
+	Vegard Nossum <vegard.nossum@oracle.com>
+Subject: Re: [PATCH 6.12 0889/1376] riscv: dts: sophgo: cv180x: Allow the DMA
+ multiplexer to set channel number for DMA controller
+Message-ID: <aqpnHyo8p2ygP1-8@inochi.infowork>
+References: <20260912065607.535295758@linuxfoundation.org>
+ <20260912065627.376202771@linuxfoundation.org>
+ <812a006e-a7ad-4a66-ab8b-45865cbe47f4@oracle.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.12 1061/1376] nvme-apple: Drop the PRP null check
- chicken bit
-To: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, Joshua Peisach <jpeisach@ubuntu.com>,
- Janne Grunau <j@jannau.net>, Sven Peter <sven@kernel.org>,
- Sasha Levin <sashal@kernel.org>
-References: <20260912065607.535295758@linuxfoundation.org>
- <20260912065631.206877541@linuxfoundation.org>
- <9be379ae-7589-40fb-a0b0-4d4659f46e71@oracle.com>
-Content-Language: en-US
-From: Nick Chan <towinchenmi@gmail.com>
-In-Reply-To: <9be379ae-7589-40fb-a0b0-4d4659f46e71@oracle.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <812a006e-a7ad-4a66-ab8b-45865cbe47f4@oracle.com>
 
-
-Harshit Mogalapalli 於 2026/9/16 下午4:32 寫道:
->
->
-> On 12/09/26 12:28 pm, Greg Kroah-Hartman wrote:
->> 6.12-stable review patch.  If anyone has any objections, please let me know.
->>
->> ------------------
->>
->> From: Sven Peter <sven@kernel.org>
->>
->> [ Upstream commit 8ce883fd068b7ba9ab493cd3ecca3a7ea868c375 ]
->>
->> Now that we program the DMA direction correctly the NULL check that used
->> to make commands fail passes. Another side effect of this bit was that
->> non-align buffers on the admin queue were silently allowed and that's
->> been fixed now as well and we this don't need this chicken bit anymore.
->> More importantly, starting with the firmware installed with macOS 15,
->> which is required for M4 but can also be installed on the previous SoCs,
->> the controller no longer exposes this control register and any access
->> SErrors instead. Just drop the write entirely.
->>
->> Fixes: 5bd2927aceba ("nvme-apple: Add initial Apple SoC NVMe driver")
->> Tested-by: Joshua Peisach <jpeisach@ubuntu.com>
->> Tested-by: Janne Grunau <j@jannau.net>
->> Tested-by: Nick Chan <towinchenmi@gmail.com>
->> Signed-off-by: Sven Peter <sven@kernel.org>
->> Signed-off-by: Sasha Levin <sashal@kernel.org>
->> ---
->>   drivers/nvme/host/apple.c | 14 --------------
->>   1 file changed, 14 deletions(-)
->>
->> diff --git a/drivers/nvme/host/apple.c b/drivers/nvme/host/apple.c
->> index 8fc466588c4f2..5f745bf615fe7 100644
->> --- a/drivers/nvme/host/apple.c
->> +++ b/drivers/nvme/host/apple.c
->> @@ -47,9 +47,6 @@
->>   #define APPLE_ANS_BOOT_STATUS     0x1300
->>   #define APPLE_ANS_BOOT_STATUS_OK 0xde71ce55
->>   -#define APPLE_ANS_UNKNOWN_CTRL     0x24008
->> -#define APPLE_ANS_PRP_NULL_CHECK BIT(11)
->> -
->>   #define APPLE_ANS_LINEAR_SQ_CTRL 0x24908
->>   #define APPLE_ANS_LINEAR_SQ_EN     BIT(0)
->>   @@ -1130,17 +1127,6 @@ static void apple_nvme_reset_work(struct work_struct *work)
->>           /* Setup the NVMMU for the maximum admin and IO queue depth */
->>           writel(anv->hw->max_queue_depth - 1,
->>               anv->mmio_nvme + APPLE_NVMMU_NUM_TCBS);
->> -
->> -        /*
->> -         * This is probably a chicken bit: without it all commands
->> -         * where any PRP is set to zero (including those that don't use
->> -         * that field) fail and the co-processor complains about
->> -         * "completed with err BAD_CMD-" or a "NULL_PRP_PTR_ERR" in the
->> -         * syslog
->> -         */
->> -        writel(readl(anv->mmio_nvme + APPLE_ANS_UNKNOWN_CTRL) &
->> -            ~APPLE_ANS_PRP_NULL_CHECK,
->> -            anv->mmio_nvme + APPLE_ANS_UNKNOWN_CTRL);
->>       }
->
+On Wed, Sep 16, 2026 at 01:30:56PM +0530, Harshit Mogalapalli wrote:
 > Hi Greg/Sasha,
->
+> 
+> On 12/09/26 12:25 pm, Greg Kroah-Hartman wrote:
+> > 6.12-stable review patch.  If anyone has any objections, please let me know.
+> > 
+> > ------------------
+> > 
+> > From: Inochi Amaoto <inochiama@gmail.com>
+> > 
+> > [ Upstream commit 5011466bade64483bb52bc4a926719d6794e6dab ]
+> > 
+> > Change the DMA controller compatible to the sophgo,cv1800b-axi-dma,
+> > which supports setting DMA channel number in DMA phandle args.
+> > 
+> > This dts change does not break backward compatibility as a fallback
+> > compatiable string is added.
+> > 
+> > Fixes: 514951a81a5e ("riscv: dts: sophgo: cv18xx: add DMA controller")
+> > Reported-by: Anton D. Stavinskii <stavinsky@gmail.com>
+> > Closes: https://github.com/sophgo/linux/issues/9
+> > Tested-by: Anton D. Stavinskii <stavinsky@gmail.com>
+> > Link: https://patch.msgid.link/20260511063818.463877-3-inochiama@gmail.com
+> > Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
+> > Signed-off-by: Chen Wang <chen.wang@linux.dev>
+> > Signed-off-by: Sasha Levin <sashal@kernel.org>
+> > ---
+> >   arch/riscv/boot/dts/sophgo/cv18xx.dtsi | 2 +-
+> >   1 file changed, 1 insertion(+), 1 deletion(-)
+> > 
+> > diff --git a/arch/riscv/boot/dts/sophgo/cv18xx.dtsi b/arch/riscv/boot/dts/sophgo/cv18xx.dtsi
+> > index b8063ba6d6d7f..e519a72c093d1 100644
+> > --- a/arch/riscv/boot/dts/sophgo/cv18xx.dtsi
+> > +++ b/arch/riscv/boot/dts/sophgo/cv18xx.dtsi
+> > @@ -298,7 +298,7 @@ sdhci0: mmc@4310000 {
+> >   		};
+> >   		dmac: dma-controller@4330000 {
+> > -			compatible = "snps,axi-dma-1.01a";
+> > +			compatible = "sophgo,cv1800b-axi-dma", "snps,axi-dma-1.01a";
+> 
+> 
 > I ran an AI-assisted backport review, and I have verified the report. It
 > looks valid to me.
->
-> Upstream removes the Apple PRP workaround only after
-> 69d22a6b2f698 adds a page-alignment quirk and ea2160c7b7818 enables it for nvme-apple.
->
-> Upstream code with both alignment prerequisites:
->
->     if (is_admin &&
->         (ctrl->quirks & NVME_QUIRK_ADMIN_PAGE_ALIGN))
->             lim->dma_alignment = NVME_CTRL_PAGE_SIZE - 1;
->
+> 
+> The patch adds the Sophgo CV1800B DMA compatible, but 6.12 lacks the
+> matching driver support from b49c70273801. The generic fallback
+> therefore matches and still calls dma_get_any_slave_channel(), so the
+> phandle channel number is not honored. The branch also lacks the CV1800B
+> mux driver db7d07b5add4 and its syscon/mux DTS integration from
+> 126a1b3c61cb.
+> 
+> Upstream driver code after b49c70273801:
+> 
+>     if (dw->hdata->use_handshake_as_channel_number)
+>             dchan = dma_get_slave_channel(&chan->vc.chan);
+>     else
+>             dchan = dma_get_any_slave_channel(&dw->dma);
+> 
 > Downstream 6.12.y code:
->
->     lim->dma_alignment = 3;
->     NVME_QUIRK_SKIP_CID_GEN | NVME_QUIRK_IDENTIFY_CNS
->
->
-> Neither is present in 6.12, whose admin queue still permits four-byte
-> buffer alignment.
->
-> I suggest porting those two prerequisites to the older queue-limit API
-> and applying them before this deletion. Thoughts?
-
-This appears to be correct. In addition, the way this deletion is currently
-structured depends on commit 
-
-04d8ecf37b5e06d1 ("nvme: apple: Add Apple A11 support")
-
-solely because adding A11 support wrapped the existing
-code in an if statement. The correct patch would be to
-remove the corresponding code directly in 6.1, 6.6 and
-6.12.
-
-I suggest this patch and all of its dependencies to be
-dropped from 6.1, 6.6 and 6.12 so this patch can be
-backported properly alongside the page size quirk later.
-
-Patches that should be dropped:
-
-04d8ecf37b5e06d1 ("nvme: apple: Add Apple A11 support")
-6fe0687245e8406b ("nvme-apple: Prevent shared tags across queues on Apple A11")
-a6ab75639e23169a ("nvme-apple: Reset q->sq_tail during queue init")
-8ce883fd068b7ba9 ("nvme-apple: Drop the PRP null check chicken bit")
-
-Best Regards,
-Nick Chan
-
-
->
+> 
+>     compatible = "sophgo,cv1800b-axi-dma",
+>                  "snps,axi-dma-1.01a";
+>     dchan = dma_get_any_slave_channel(&dw->dma);
+> 
+> Downstream falls back to the generic match and ignores the channel ID.
+> 
+> Maybe we should be dropping this or reverting this.
+> 
 > thanks,
 > Harshit
->>         /* Setup the admin queue */
->
+> 
+> >   			reg = <0x04330000 0x1000>;
+> >   			interrupts = <29 IRQ_TYPE_LEVEL_HIGH>;
+> >   			clocks = <&clk CLK_SDMA_AXI>, <&clk CLK_SDMA_AXI>;
+> 
+
+I think this fix does not change something as we already have the
+fallback compatiable, even if we does not backport the driver fix.
+As this does not change the behavior, I think this could be kept.
+
+Regards,
+Inochi
