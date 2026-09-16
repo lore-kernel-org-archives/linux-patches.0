@@ -1,307 +1,204 @@
-Received: from mx0b-00069f02.pphosted.com (mx0b-00069f02.pphosted.com [205.220.177.32])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj2-f12.google.com (mail-pj2-f12.google.com [74.125.227.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27B5D3B6BE4
-	for <patches@lists.linux.dev>; Wed, 16 Sep 2026 09:01:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=205.220.177.32
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789549293; cv=fail; b=eMllcGbmClc4UdYz94gsSOOsJ1EBptTdX1phyoDiT9xq6+sUwUVVZmYvusqXZ4W6tZa3F31SCR+l5k8yod7yEU/uR+6Lg6MuM+I6i8lr/qZwLUCEagQaGjTkqRZY8tHTDOpSOjnx16M/w4Cm3nrsyf9LX1Sc7jD6eg1aE6XWK1g=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789549293; c=relaxed/simple;
-	bh=8Dh6v/IV8r9rxSYDkoGKF4BGUkJyZN1iXTZWW1nIZUg=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=aTmL5HG99wBxgr0Jq7vkryV+2hva3B2vPvqmaWCGgcjnlp+ykLuhJ2ikvFXbLPI3B3LSQKdQKy4HprC3B/W5MTYTgOm+zf84PB2hid/3+f0Esa5IFDonKNoTF5bVAyShC5JwOUtGJJSd/UzKYAUbXibmp5Yt6i9H6+fpSPjXOxc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oracle.com; spf=pass smtp.mailfrom=oracle.com; dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b=TlAERePa; dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b=fuVAMBW5; arc=fail smtp.client-ip=205.220.177.32
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oracle.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oracle.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B82E48CD7F
+	for <patches@lists.linux.dev>; Wed, 16 Sep 2026 09:07:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.140
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1789549661; cv=none; b=NFvzPV7yZpfe35mw2d+TzBXqwXtTSWnfGEY5gMIIhgdbdzCGPHQxVGYNT7rM9sBXEFuiHFjZZCsSK1k+e/ZoVKbwR0fcjmlfWiI/4k8u7o3qZMQ88f/AAM516pyXuYj61LGzQ/pglDx+Gg0xTOaRzjI5y1FnxIyki0H4znHyVEo=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1789549661; c=relaxed/simple;
+	bh=/oSHeo+dHrTJ4BeaXgDyE3G967AhC/96LwQQ8JcP8WA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=c9f4WNdn+iUlCXhIOUL0qGGRF3gvnwkV3aB1m7zloqlg/B+bZkrVswVObEY+z96bK3PpULH8a44POwRBS1rEvYwXxIbkn88sKPTR761cIQjWJao2m8zjXKF7Xfr/VkWrWPs2FBst1clw/E+vNraasOa8NMN0vMBjGxFNpjjM22Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mPaAh1oG; arc=none smtp.client-ip=74.125.227.140
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b="TlAERePa";
-	dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b="fuVAMBW5"
-Received: from pps.filterd (m0246631.ppops.net [127.0.0.1])
-	by mx0b-00069f02.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 68FLWd45622953;
-	Wed, 16 Sep 2026 09:00:59 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=
-	corp-2025-04-25; bh=XsM5Uxrs2Pzj3vE7A+kgGorgW6FpmoQO6Q08F1bVlNg=; b=
-	TlAERePaZAdIC/wwTM2RlvSrkfemtPjZJhVOepTOKvKs0eNaOFnhRDSAvL+WUzs4
-	oSETTGQSkwcAQujmlrBDdVkv5zLgIISn8gx+aH9bmoIrAwt0Xu6c3DIv9X+jG0G7
-	XAcEk+bUtw9A0vWxet0SuwtShEboELHLBJAzeHuva9dY43JXnehrMlgJDmNjbBCA
-	NUMZvgB/8rND3/YkqxPMBlOzk6JeNEbQPG4OZubAQGnYe0pY0YRVNrZnJtd7l0R+
-	9I0hCec19jUiZiIXG+IgeO+Q2lJi0nUm2TiFObcEPI0wzPy/onOvCAXe68ng43ja
-	pcIJLU1I6V1r8U5py0xwzg==
-Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
-	by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4gmwh1n7wf-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Wed, 16 Sep 2026 09:00:58 +0000 (GMT)
-Received: from pps.filterd (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
-	by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.7/8.18.1.7) with ESMTP id 68G908fB013869;
-	Wed, 16 Sep 2026 09:00:57 GMT
-Received: from ch5pr02cu005.outbound.protection.outlook.com (mail-northcentralusazon11012035.outbound.protection.outlook.com [40.107.200.35])
-	by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id 4gmw6b498n-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=FAIL);
-	Wed, 16 Sep 2026 09:00:56 +0000 (GMT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=SpT8Kth5dHgPC60uoufNMsGn2xpC1W6Vr7+dR5szh9NjFtmD3rX2AVJEv2BB388doOpD5Bom4XI9vEFMi6ZLCyDva+l+iqxiQOltR0le+69E/d/8j0rW9vtjn40X3YQsDugeVCnQab1e2Oswekn2irG+kubclIUvVlzanLCVEVTtr/4kXIxZKPinek0U0ce8ebWVJIDC5LAXYqbImBQiH8OeyxNzfESV3WxQRg3TlDlUa2fczgjiISfjDnsSw6OGJ2EODA+y8Qf8c/Nqpl/pcaBaTk/Ckm+wLbSTzhLh9c1gyFFJqtdssLUpxOTCCRcIGvJDjkq+yId3lQVzuStTpA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=XsM5Uxrs2Pzj3vE7A+kgGorgW6FpmoQO6Q08F1bVlNg=;
- b=LSpXf/Xr59CUHeLErXHdhyfuHe6mqLbAlRY0u8H/7uY6fmUdCrn5+x1qkMAt7fzzWThX9xyHbMb/Yzdc3tADrx4hhDO87+G+UFfD2HFb99dBhhshy58m6OcSA+h/FO6AiLacWVZGyMSlfhA4aJQKu1lVuIdl8K/+VufBS947rpKlYM733AbjuCymxbBP5CXZbDWZpZGBer3P8jy6dxUiyjj29l8CIrU9wQBh9GTB8DlxaadB44hKwk2xUSc0XgOQA6kdJmD2CPzy8rt9T2ddLHwqwvZF7clAnCDQUNYdXzfpVu03agbXPurbQmRevdCS7ZRyNXBOYpfNLG2UTZjAdQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mPaAh1oG"
+Received: by mail-pj2-f12.google.com with SMTP id d9443c01a7336-2d9004a1ac0so5235335ad.3
+        for <patches@lists.linux.dev>; Wed, 16 Sep 2026 02:07:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=XsM5Uxrs2Pzj3vE7A+kgGorgW6FpmoQO6Q08F1bVlNg=;
- b=fuVAMBW5D/YwMX2oCeLmfMMbUSgqW8g2FCM7YpcCvImFpOTojpscaC9V+pFlKdUW4db/bnjuCLify+CzMHfV+00s1l35qnWgUciDXgOkM0HuFPXVXcA0DqiKu+q+fGEe4PRN7xshWLJBaaaZ/UzCWElfHZAndN96ut0dTnsGqqg=
-Received: from SJ0PR10MB5834.namprd10.prod.outlook.com (2603:10b6:a03:3ee::16)
- by SA3PR10MB6998.namprd10.prod.outlook.com (2603:10b6:806:31c::6) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.428.7; Wed, 16 Sep
- 2026 09:00:45 +0000
-Received: from SJ0PR10MB5834.namprd10.prod.outlook.com
- ([fe80::2444:1d33:3ce:d83a]) by SJ0PR10MB5834.namprd10.prod.outlook.com
- ([fe80::2444:1d33:3ce:d83a%7]) with mapi id 15.21.0406.005; Wed, 16 Sep 2026
- 09:00:45 +0000
-Message-ID: <34a69126-8408-4761-9b38-6ac9041b5b46@oracle.com>
-Date: Wed, 16 Sep 2026 14:30:37 +0530
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.12 1374/1376] slab: reset slab->obj_ext when freeing and
- it is OBJEXTS_ALLOC_FAIL
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, Hao Ge <gehao@kylinos.cn>,
-        Suren Baghdasaryan <surenb@google.com>,
-        Harry Yoo <harry.yoo@oracle.com>, Vlastimil Babka <vbabka@suse.cz>,
-        Vegard Nossum <vegard.nossum@oracle.com>
-References: <20260912065607.535295758@linuxfoundation.org>
- <20260912065638.156668605@linuxfoundation.org>
-From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Content-Language: en-US
-In-Reply-To: <20260912065638.156668605@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: FR0P281CA0195.DEUP281.PROD.OUTLOOK.COM
- (2603:10a6:d10:ab::6) To SJ0PR10MB5834.namprd10.prod.outlook.com
- (2603:10b6:a03:3ee::16)
+        d=gmail.com; s=20251104; t=1789549642; x=1790154442; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=/oSHeo+dHrTJ4BeaXgDyE3G967AhC/96LwQQ8JcP8WA=;
+        b=mPaAh1oGbnLc49Yxso9rY0Nr044LMzFU0igllVtQzbS5nBxAfhM6UWuKs9F+vFE5Oj
+         w8x+dN+kSHY2x3tbfsAOFvNdf+mH6P62SMke0QOohfFvmzx0mWE8nm2hm2aPw0hxdFE8
+         LoTgo3TTpn6ahzdcO+iydjXTrZODBqPRubV0bs2jVlwf1CfSIV1+FXTRnSPGGHMW/LrW
+         Cm6htTU9/U29KF0szLnTAJSl370aJNZE01w1kqyyCUjBCbYvVBpoL72L+7ubEo9RXvff
+         PzcUbon8IQaBirT+a/7oJH/CVQs0Pnd0BgAi4sVCF3/63cwbU1D8x8bdAqT5AdlzLpAe
+         5cSg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1789549642; x=1790154442;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=/oSHeo+dHrTJ4BeaXgDyE3G967AhC/96LwQQ8JcP8WA=;
+        b=SzcjZD2BfTpk/10u3m7km0fZhhaboEs1PSjGASFqVBkbI8R+PyAm1xNiIEWuZEzOyk
+         XEAvtFPVN80GhjWawO9iIZNnQzOncNM2tcZeAWjpFF/srq/uNnVZcWfxBnGh48FamudU
+         sLhttsUq487PRBDBIJyMPws0Z59CB2YJJYn322BL7FNiVshX9eg2gdspaord9487AV/A
+         xVs5v5o9V02V6kqMCUWTJgwS8z6Gx+EvMog9FW8gyRM3Cwmc+AxFeUZIS+vo3BC8y77T
+         fmZPXqtpvUlsUK5vWw/Htk2B2ErO9vuBpyS1huJooiBttHHt+Ev8PjslBOdu2mnOcXdV
+         IAEQ==
+X-Gm-Message-State: AFuF++laNBnFx5V3b5db6mSJG0VwqySBRC8LnC86mztS25nqoUEBXZ84
+	9JtNeMAhz067d4RR7Tb6KFrBOeofzVUibm5n0XKMsrRHzihCcYiMq8al
+X-Gm-Gg: AYBFou2hm81SD24zxCFqF8U+8gQBL0/UfAWb/PGzi4ApsNLcFu+GcDfyrb2h2TngD44
+	wi3qewSEFvv3y4ywzXFPn1jmZ1bCCNLEy9mvL7v7kcdqGF2Z8s62K+S5l1HrAX7IWVDgvD4ClCl
+	VVmIyFpgJDcVcE/pzpKvls9koA6w40AWSrfxCu+hw8cM54174sP8iaOk17Q24mxhUIhbgQFYWKr
+	EYMP2rhlgrw3Y9RY/xmLevEA0eoJLXJdh6lydcWRs/FloArOH65NrawvEOG6jC39Ops1N4urCDt
+	SI/jMmlAOdeeONH2zwn0jl1CKOyagqaPxJDuXevhDa3GDQrTEQhuRcnxroNgJIHar1oEz9BXAbD
+	BEXEKELmrAqbdhbbyyzrSe0i72ojeGn86uX9KVOcCxBaY98ws7uZ/2oMXBMtHNviflv3kJhATYg
+	b3vzS0Z8pV9vO3Qj6/7zEc3SxbhCAKG45xzwLpjhORvBoMHIVassOkb+/aDKgERpRyxdUgNIqI7
+	pjk6rEf6lNPu6exonbTDfZyEijZyvXH2qWJzg==
+X-Received: by 2002:a17:902:d547:b0:2d0:cc92:f7a9 with SMTP id d9443c01a7336-2dd8dd0b15amr37176235ad.4.1789549641965;
+        Wed, 16 Sep 2026 02:07:21 -0700 (PDT)
+Received: from [10.89.160.219] (wf124-219.ust.hk. [175.159.124.219])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2dd89eb7d15sm8234195ad.39.2026.09.16.02.07.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 16 Sep 2026 02:07:21 -0700 (PDT)
+Message-ID: <dc927d3e-e7f1-461c-9a75-259f71899224@gmail.com>
+Date: Wed, 16 Sep 2026 17:07:17 +0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ0PR10MB5834:EE_|SA3PR10MB6998:EE_
-X-MS-Office365-Filtering-Correlation-Id: 64292cfc-0d9d-498f-7ce9-08df13d0fe2d
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|366016|23010399003|1800799024|56012099006|5023799004|4143699003|10067099003|18002099003|22082099003|6133799003;
-X-Microsoft-Antispam-Message-Info:
-	EAYLjERqCeCOBohlJ2RPD8gZXTS3rfummtWiYC3UIGcnW+8pIv7Isu+L/NnBaKaYzmVz+5VWe68KgasgKhMDsPF0IqZ6a8/4PwhRIaWXA+xAqesnXWtF824ZGPTCdKKwZ1w/cX/gYX3trMlvl790WUUTlB0jCzRsytBYCLZRcbMtecWYMK+RzRzxpcX6WVyPux6W6VSogvX62ICxDY2A5O2LQidev0SXfCL5YDawAiAcDMy/6qtI7bwxaIrculYcMUb3yylXx5NROam/GJ7yg/WcwvsLUD8L+F5LTydkN2Vb64w2nsj3OUt4FZrneUqkZinbXQhUV12KmK3VI9R2zaEKrYTW9uYco/HlmnXDaVE3BJ40WE1mT1ggSDhg35MwS86LEbXxU0pd5QIqo1y9EHWLO8BuUbzO3oQ048P2COLNkHDpsBgjYJnwCLHQl0JqaMb0qoOagD1fdsZxJ/JMXKgIhSSem2AxSepBeMXeqVrSnwwb+w9GwykWZGM4QpBcEOqxysQCtLB+Kp+DLDmH9PovALr++Grx/IxvorwuzMMfa06TascsLn91Ug4VxuZYS7zHxq1BM0uLED7wIUFrpstR8ll7EyucxH2puePjZPKd5pduA5/AYj6lXoy7R3TwHIgfL+19DKzsyjv5OT+ldEhx2auImfiavpUni5NEQ6k=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ0PR10MB5834.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(23010399003)(1800799024)(56012099006)(5023799004)(4143699003)(10067099003)(18002099003)(22082099003)(6133799003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?REptMy8vQTA2NUVMZ1NXWDY0bmRTV3JXdE9aeUx4Y2JnNjVBV1VjdEZud255?=
- =?utf-8?B?RGlWZW5RdzdrNERJN21Ub2lEUWpiZzBIZVlTRXVzT0RCYnhCNHFRREJha1I1?=
- =?utf-8?B?UmpZNXY1ZDR0TE85WlJFWHhSKzZnQ2EySG56UHBnTS9RWC9UREFadUNlbnBP?=
- =?utf-8?B?Q2FGdS96ZlpNS1pJcHYwZTFHVldzZ3UydUIrcGd4eVA5Y29nV0w1dnoycHgr?=
- =?utf-8?B?MmVmUklmQXdDLzFxTGJ0dk43SXVDR0dYdmFLYkxLVGhGS0JMcW9oRGY2dEp5?=
- =?utf-8?B?cHYwOU9HbFVkK1FsRFdPZzdGTEM1OFA5Tm0xQmxrWG9MUEZ6Sks4ZEZGL2Zs?=
- =?utf-8?B?dCtmWW1yK2pzNWFSRU5PTnREQ3VJTjFPcWFwMkx6L20ycnJPOWFyREF6YWtR?=
- =?utf-8?B?OXRnNGYzbStCamxyYjVmd1Y5Y1hkd01VVVlXUytmQW1zZ1hnbldJd1pVVkFX?=
- =?utf-8?B?OFhvalEySjdSRitWN3lpK1oxSXlydnRlR0hDRkdQYW1WUlRqNlQrYnJOMjVX?=
- =?utf-8?B?c3RLek1sYW1lZE9qYUVTSVBmL2MrdE1sY0UvOVRQRUtQVGtaRklLUzFoUFRN?=
- =?utf-8?B?VllGb28vblpWMmxlcEFkQUVtYWpkcFJ4eXFGd1I4UjVKNWJtbzVFTW91Q0ZD?=
- =?utf-8?B?eUUzUWhGZ2VLQXRmMnVpQW9GL2FLS1FwRW1NQ3EwcE5jRzIxU3Zqd2RBQS8v?=
- =?utf-8?B?dU1BYzdldGhTVEhheVhKYTNsR0hleGdzU0oxcENKSVpoMHJZOEtzRnBIMmxz?=
- =?utf-8?B?aWxNNUFyOFQwYlJ4dWlDVU12UWRBOUFBOVcvcTBkbXUxamJTa3JYUzMrcE1S?=
- =?utf-8?B?bmdDUGY4R2lGbDVEcFQ3NUswblI2Z2JvWlV6dkVSQnlMRnBMUmpMbjkrL28r?=
- =?utf-8?B?UHFsZHc5bkFxWUtEN1MrcGR3MlpuelVORkloYmxHckY3S04rS1JCVU9QUFBl?=
- =?utf-8?B?azJlR1dWR0YyK2ZBYWF3ZnJIcGFBWi9KbS9QMHFROUVKMU9wanhsaFp0U2VC?=
- =?utf-8?B?RGhQSTNwT2M5MFhRVlBya1Bjd2dzc0tVWVUrSWxlbkkrNGMwTURzdjk3MHZm?=
- =?utf-8?B?SmlaSGxkV3VhSExmTHMyWG9KT0V6RmhDUGc1d1RnWkROZTl3RTlwZkpjSVNO?=
- =?utf-8?B?Wm9zeHJrVmpqM2NHb2swMDVWRkZINHdIQThhNVZiUlRzNHZGTm1uOG9GZXEy?=
- =?utf-8?B?bzRvdHovMXdLQVZIWDZsTjFRaG9pSDFmMndtaUdBc2VYeE9Ram1ORDJYalow?=
- =?utf-8?B?QUcydksyV2lkK2M2MERaS2U4YnZkTUhVMC95WU1FVURuWlVjSDYzRFBtdGsw?=
- =?utf-8?B?MU5kRmVRQ1dsMkhEdnB3TDhUZk9uRHdtdlBkSDZ4T0FDVmFCcjU1S280TGNS?=
- =?utf-8?B?VzBXY3dLeTJRZU53c0pCM2hsRXB4ZDNIeFRNTFhIbm83bFpPVnRvbDhHUnJ6?=
- =?utf-8?B?RnBpYkVSaXl0bWpSUWozYm1Ic09SSkNmWXV1UFNsV0E2cUJMWGpoSm9wcTdv?=
- =?utf-8?B?cHhHY0FRakdUWVppZVJIV0gwOTFhTHlqc1F1WTk5Vm4yMThOM3FlZmo3cERo?=
- =?utf-8?B?RldEM0dNN3A4SXNoNG5LUXp0OEEzZitxdXpjN09ldGtSYWNQcUI0WmxpOElw?=
- =?utf-8?B?Rjhhbld5M1Bxelk1N0EwUjhySzJpMEhTQno3MXJDR2ljQ2hWVzMwTlZKbk90?=
- =?utf-8?B?MUVITGJPbDU4eGxjaEZ2VDhkaUpCK0o0TTB6WUMxeWp2Sk9aeXBCb21wMEp0?=
- =?utf-8?B?S1FuQ0M0MmI2RXFjdCtXclN6VkxLeTdqWEF3WEZMYS90d1BRQ0w5aThCVERB?=
- =?utf-8?B?ZitwOHdRVEpLMWFDWGE4NVZlSWtFYTNCTEZqQ3ExRFZUa0NodGRmcjlIZkEy?=
- =?utf-8?B?bmtUbmRBSDhPZTBBOURpNk43ckhmTWlqR2hhQ3o5ZU5KNkNScTVPL1RWa0Z5?=
- =?utf-8?B?b1lFSDl1UmN4T2VXZ2E3SHpXWmN0NThRYTVkQllET1JhWjQzMWMySE5Md1Y5?=
- =?utf-8?B?M2ozb1hPRnhmbGtkcks1RWQwbWpzb2VVWER5eHl5YXA1VGtQSktkRkJmV1Iv?=
- =?utf-8?B?R0ZqanVpSS93RGZ1WUFKS24wcFN6RHBLK05Hc3hmTlFLblFJNTBCNDNFU1g4?=
- =?utf-8?B?blJOWS93NnBxTi9lK3luOTd4aWpXbGpxWUFXSlNHS0lCNVpOL1RzUEdoUk9l?=
- =?utf-8?B?b1B5Y0Z4YXA5VzNSMkI5WkM5U2lqY1l3K2xtYjBMMlkrZG5jS2lOWW0vekFz?=
- =?utf-8?B?Z1NZL0p0Z1lETEJUTmRHaWo3aHgzOHZraTcwREpPY2I3Q0dJVkN5Q28vYkFa?=
- =?utf-8?B?eHlNT3VNNlZSMVk1M2hXNEhEYUp4NlA3MjdldW11R2RxWmhvNnc3TEZKSVor?=
- =?utf-8?Q?Y74rwJa4a3DTl9Sp1Z/CxXN0T7wXoj77hwMjS?=
-X-Exchange-RoutingPolicyChecked:
-	OUTqWVLBFXM13KLjWhhw5hAAEAUhxXkyDlE68OZ9nmYVsygHtlNxLhLOyghEVPSimDRy81wLeow/yAqQ0mM7yGpGCPWNBAdSEImPyVOUEooX6MOLfBl1W0yCbuHu7CfLwPZmEqppek/WKun3dgvm2BTCW4BQKILjCzZCa3FkyU0FVVWmtgQhlvcOW5WJfuA+88Iiu4+mlBlfIy6NbWZw64xNLEKUNQdifVrcaJUzSAgfjNX92cTkLLL4mMWCzngVZfDQjSVJewFux11NSDDVjNXzvSMNZf6TAZt+v4aPcVrrceBPVf60R2BRGDTwFNgv9NVLWAMg0bIm0gIYeh2GZw==
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0:
-	Sfg9ZUl//z+oMUHtrKS+ascTDSST/6iTKGoWoOi2qJFYrfRWexOkJ0LGhtFEeVHPs+QDMEZrWDMgSnQ4tVhbyhzq2SaPdhRPmF1Ir0WhwL+15cWq1ksfqD68VckmN0Cudiiwsqpemj/43Uqqs7psOn101J9pSdZpdIwCeD7dAv3jvlWNoJvcjActAILOKfFYcoQWy9ywxpq5XHrL+88NWGNq+GjVS1pkqPNn5VM9DTvjGwQqOk1CXKgZBkX60UOafX7IsmVo3whzc2bkhFuXgG+NcD+MA4LTh1LZQcel5QkA429fSdt3fnb+WDu5Q8Q6ACHV9NrgLDRvdZMF5v7+BIpTVNxFwK62jLfuzfnSdq/1rOVK9SCy6fIkV5hiw8eTw5AZUwm34S+BSOKkQWHqQmuuDnSVQZ8mszzN6QWOTJkzlr6Tpjmwou7wD8lk78u7dDGUf+UPrD2dsWXvgJkTjzLUGMStM/FsELwzSUEzgs1vzrUHEC8N4U9WOmSCF6AXnYTUzeqeDT0PnASX5LNEbVEVOetwoj2VDuKyNnWk1Ch0BBdZ56iiZgEuhDNkd7PdjMWk7PDeK0JnV51yuFJjnE4WJPXxdQEoNHqDdwtGBfM=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 64292cfc-0d9d-498f-7ce9-08df13d0fe2d
-X-MS-Exchange-CrossTenant-AuthSource: SJ0PR10MB5834.namprd10.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Sep 2026 09:00:45.2961
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: Uch9p1UMR2dr3p76y0eSHbGOgeRdrTq/OSG8oO2S+18syskW/1DvKMR5eKcSBQrEY71KHMx9MiPCLZCh03IryjcksRzOiTY3XArk3vEDzB7/YT5NQJmh4H5E9YYv/jz1
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA3PR10MB6998
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
- definitions=2026-09-15_05,2026-09-15_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
- mlxlogscore=999 malwarescore=0 mlxscore=0 lowpriorityscore=0 bulkscore=0
- suspectscore=0 spamscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2609040000 definitions=main-2609160116
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTE2MDExNSBTYWx0ZWRfX01cVCevbFxSR
- daJpTTkwQ/0YZPzOI2HugkWepC+SkE+3gNzbAaUb/GTtnqymkYeeNtcm5rIkOnlNcGVlsgh4Ai+
- GRc3u1fyP5WrZoPBdgQTWJ350y0owUgkYjtR3tBNjLzEXHAGAsx6lpCjPegGb8dBFxqkSiKtCPc
- o7/i+q3ert8dcZv2WBzBsNNV0NsuaA0ZCYk7d/xfZhFFC4fbv9v8zQBHrNe3Qwo1LfI2HL8PEtP
- 7OVjVcMT7NzHUuLMjy7ss7W9igkdDZo7KUsk370c6NCQOWfSvddQQASVKM+xD7qODCbz7ocjoB+
- 54tdCKAoUYb000MFQNjj7hNOheFhpJ1969EqVba8I0fg+XbrMLsO7H3AL1GVxygfjMIdHzOJp0J
- jJVAMSGvCH7UMd2YnUr4xQh1THx3Z/MSo/FvTgsxTicK4HYj3L+RbA9CnLnROqRGV7WA9OEOWdX
- LQsQ3rVt50gNc3EGuXA==
-X-Proofpoint-ORIG-GUID: unErC33v_NCAlEexPsYoca8vDCwFFUGf
-X-Proofpoint-GUID: unErC33v_NCAlEexPsYoca8vDCwFFUGf
-X-Authority-Analysis: v=2.4 cv=HPhWhYtv c=1 sm=1 tr=0 ts=6aaa5aca cx=c_pps
- a=OOZaFjgC48PWsiFpTAqLcw==:117 a=OOZaFjgC48PWsiFpTAqLcw==:17
- a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
- a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=VdqzKS8jKosA:10 a=GoEa3M9JfhUA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=jiCTI4zE5U7BLdzWsZGv:22 a=o5oIOnhZENCTenyL_yNV:22 a=VwQbUJbxAAAA:8
- a=1XWaLZrsAAAA:8 a=yPCof4ZbAAAA:8 a=ag1SF4gXAAAA:8 a=d7NRWt85ZsWhMf6-aKsA:9
- a=QEXdDO2ut3YA:10 a=Yupwre4RP9_Eg_Bd0iYG:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTE2MDExNSBTYWx0ZWRfX9ksz+IW53zEW
- MPBo84l/Vt6QZJ+5c1Vy5fxK37bBsQ01OJ7m7O+A0T/pESRxVbSG7EA75ZPKpKe7odRiMAgImQV
- xKi6C/2AK+DRrNfG/IGso1YKMVRQUrgRbMR64vdqQS3SqLtVUa5/
-
-Hi Greg/Sasha,
-
-On 12/09/26 12:33 pm, Greg Kroah-Hartman wrote:
-> 6.12-stable review patch.  If anyone has any objections, please let me know.
-> 
-> ------------------
-> 
-> From: Hao Ge <gehao@kylinos.cn>
-> 
-> commit 86f54f9b6c17d6567c69e3a6fed52fdf5d7dbe93 upstream.
-> 
-> If obj_exts allocation failed, slab->obj_exts is set to OBJEXTS_ALLOC_FAIL,
-> But we do not clear it when freeing the slab. Since OBJEXTS_ALLOC_FAIL and
-> MEMCG_DATA_OBJEXTS currently share the same bit position, during the
-> release of the associated folio, a VM_BUG_ON_FOLIO() check in
-> folio_memcg_kmem() is triggered because the OBJEXTS_ALLOC_FAIL flag was
-> not cleared, causing it to be interpreted as a kmem folio (non-slab)
-> with MEMCG_OBJEXTS_DATA flag set, which is invalid because
-> MEMCG_OBJEXTS_DATA is supposed to be set only on slabs.
-> 
-> Another problem that predates sharing the OBJEXTS_ALLOC_FAIL and
-> MEMCG_DATA_OBJEXTS bits is that on configurations with
-> is_check_pages_enabled(), the non-cleared bit in page->memcg_data will
-> trigger a free_page_is_bad() failure "page still charged to cgroup"
-> 
-> When freeing a slab, we clear slab->obj_exts if the obj_ext array has
-> been successfully allocated. So let's clear it also when the allocation
-> has failed.
-> 
-> Fixes: 09c46563ff6d ("codetag: debug: introduce OBJEXTS_ALLOC_FAIL to mark failed slab_ext allocations")
-> Fixes: 7612833192d5 ("slab: Reuse first bit for OBJEXTS_ALLOC_FAIL")
-> Link: https://lore.kernel.org/all/20251015141642.700170-1-hao.ge@linux.dev/
-> Cc: <stable@vger.kernel.org>
-> Signed-off-by: Hao Ge <gehao@kylinos.cn>
-> Reviewed-by: Suren Baghdasaryan <surenb@google.com>
-> Reviewed-by: Harry Yoo <harry.yoo@oracle.com>
-> Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
-> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> ---
->   mm/slub.c |    9 ++++++++-
->   1 file changed, 8 insertions(+), 1 deletion(-)
-> 
-> --- a/mm/slub.c
-> +++ b/mm/slub.c
-> @@ -2161,8 +2161,15 @@ alloc_tagging_slab_free_hook(struct kmem
->   		return;
->   
->   	obj_exts = slab_obj_exts(slab);
-> -	if (!obj_exts)
-> +	if (!obj_exts) {
-> +		/*
-> +		 * If obj_exts allocation failed, slab->obj_exts is set to
-> +		 * OBJEXTS_ALLOC_FAIL. In this case, we end up here and should
-> +		 * clear the flag.
-> +		 */
-> +		slab->obj_exts = 0;
->   		return;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.12 1061/1376] nvme-apple: Drop the PRP null check
+ chicken bit
+To: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, Joshua Peisach <jpeisach@ubuntu.com>,
+ Janne Grunau <j@jannau.net>, Sven Peter <sven@kernel.org>,
+ Sasha Levin <sashal@kernel.org>
+References: <20260912065607.535295758@linuxfoundation.org>
+ <20260912065631.206877541@linuxfoundation.org>
+ <9be379ae-7589-40fb-a0b0-4d4659f46e71@oracle.com>
+Content-Language: en-US
+From: Nick Chan <towinchenmi@gmail.com>
+In-Reply-To: <9be379ae-7589-40fb-a0b0-4d4659f46e71@oracle.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
 
-Hi Greg/Sasha,
+Harshit Mogalapalli 於 2026/9/16 下午4:32 寫道:
+>
+>
+> On 12/09/26 12:28 pm, Greg Kroah-Hartman wrote:
+>> 6.12-stable review patch.  If anyone has any objections, please let me know.
+>>
+>> ------------------
+>>
+>> From: Sven Peter <sven@kernel.org>
+>>
+>> [ Upstream commit 8ce883fd068b7ba9ab493cd3ecca3a7ea868c375 ]
+>>
+>> Now that we program the DMA direction correctly the NULL check that used
+>> to make commands fail passes. Another side effect of this bit was that
+>> non-align buffers on the admin queue were silently allowed and that's
+>> been fixed now as well and we this don't need this chicken bit anymore.
+>> More importantly, starting with the firmware installed with macOS 15,
+>> which is required for M4 but can also be installed on the previous SoCs,
+>> the controller no longer exposes this control register and any access
+>> SErrors instead. Just drop the write entirely.
+>>
+>> Fixes: 5bd2927aceba ("nvme-apple: Add initial Apple SoC NVMe driver")
+>> Tested-by: Joshua Peisach <jpeisach@ubuntu.com>
+>> Tested-by: Janne Grunau <j@jannau.net>
+>> Tested-by: Nick Chan <towinchenmi@gmail.com>
+>> Signed-off-by: Sven Peter <sven@kernel.org>
+>> Signed-off-by: Sasha Levin <sashal@kernel.org>
+>> ---
+>>   drivers/nvme/host/apple.c | 14 --------------
+>>   1 file changed, 14 deletions(-)
+>>
+>> diff --git a/drivers/nvme/host/apple.c b/drivers/nvme/host/apple.c
+>> index 8fc466588c4f2..5f745bf615fe7 100644
+>> --- a/drivers/nvme/host/apple.c
+>> +++ b/drivers/nvme/host/apple.c
+>> @@ -47,9 +47,6 @@
+>>   #define APPLE_ANS_BOOT_STATUS     0x1300
+>>   #define APPLE_ANS_BOOT_STATUS_OK 0xde71ce55
+>>   -#define APPLE_ANS_UNKNOWN_CTRL     0x24008
+>> -#define APPLE_ANS_PRP_NULL_CHECK BIT(11)
+>> -
+>>   #define APPLE_ANS_LINEAR_SQ_CTRL 0x24908
+>>   #define APPLE_ANS_LINEAR_SQ_EN     BIT(0)
+>>   @@ -1130,17 +1127,6 @@ static void apple_nvme_reset_work(struct work_struct *work)
+>>           /* Setup the NVMMU for the maximum admin and IO queue depth */
+>>           writel(anv->hw->max_queue_depth - 1,
+>>               anv->mmio_nvme + APPLE_NVMMU_NUM_TCBS);
+>> -
+>> -        /*
+>> -         * This is probably a chicken bit: without it all commands
+>> -         * where any PRP is set to zero (including those that don't use
+>> -         * that field) fail and the co-processor complains about
+>> -         * "completed with err BAD_CMD-" or a "NULL_PRP_PTR_ERR" in the
+>> -         * syslog
+>> -         */
+>> -        writel(readl(anv->mmio_nvme + APPLE_ANS_UNKNOWN_CTRL) &
+>> -            ~APPLE_ANS_PRP_NULL_CHECK,
+>> -            anv->mmio_nvme + APPLE_ANS_UNKNOWN_CTRL);
+>>       }
+>
+> Hi Greg/Sasha,
+>
+> I ran an AI-assisted backport review, and I have verified the report. It
+> looks valid to me.
+>
+> Upstream removes the Apple PRP workaround only after
+> 69d22a6b2f698 adds a page-alignment quirk and ea2160c7b7818 enables it for nvme-apple.
+>
+> Upstream code with both alignment prerequisites:
+>
+>     if (is_admin &&
+>         (ctrl->quirks & NVME_QUIRK_ADMIN_PAGE_ALIGN))
+>             lim->dma_alignment = NVME_CTRL_PAGE_SIZE - 1;
+>
+> Downstream 6.12.y code:
+>
+>     lim->dma_alignment = 3;
+>     NVME_QUIRK_SKIP_CID_GEN | NVME_QUIRK_IDENTIFY_CNS
+>
+>
+> Neither is present in 6.12, whose admin queue still permits four-byte
+> buffer alignment.
+>
+> I suggest porting those two prerequisites to the older queue-limit API
+> and applying them before this deletion. Thoughts?
 
-I ran an AI-assisted backport review, and I have verified the report. It
-looks valid to me.
+This appears to be correct. In addition, the way this deletion is currently
+structured depends on commit 
 
-Upstream canonical teardown code:
+04d8ecf37b5e06d1 ("nvme: apple: Add Apple A11 support")
 
-     obj_exts = slab_obj_exts(slab);
-     if (!obj_exts) {
-             slab->obj_exts = 0;
-             return;
-     }
+solely because adding A11 support wrapped the existing
+code in an if statement. The correct patch would be to
+remove the corresponding code directly in 6.1, 6.6 and
+6.12.
 
-Downstream reviewed ordinary-free hook:
+I suggest this patch and all of its dependencies to be
+dropped from 6.1, 6.6 and 6.12 so this patch can be
+backported properly alongside the page size quirk later.
 
-     obj_exts = slab_obj_exts(slab);
-     if (!obj_exts) {
-             slab->obj_exts = 0;
-             return;
-     }
+Patches that should be dropped:
 
-The text is similar, but downstream placed it in the wrong lifecycle
-function: alloc_tagging_slab_free_hook(), not free_slab_obj_exts().
+04d8ecf37b5e06d1 ("nvme: apple: Add Apple A11 support")
+6fe0687245e8406b ("nvme-apple: Prevent shared tags across queues on Apple A11")
+a6ab75639e23169a ("nvme-apple: Reset q->sq_tail during queue init")
+8ce883fd068b7ba9 ("nvme-apple: Drop the PRP null check chicken bit")
 
-The canonical change clears OBJEXTS_ALLOC_FAIL in free_slab_obj_exts()
-when the slab is retired. That exact fix is already present in 6.12 as
-4772e7f18ac2. The reviewed patch instead clears the marker from the
-ordinary object-free hook while other objects in the slab can remain
-live.
-
-That premature transition prevents a later successful extension
-allocation from marking old slots CODETAG_EMPTY and can produce false
-allocation-tag warnings. I suggest reverting this.
-
-The backport is already present in 5.15.y as:
-
-   mainline        : v6.18-rc2         - 86f54f9b6c17 slab: reset 
-slab->obj_ext when freeing and it is OBJEXTS_ALLOC_FAIL
-   stable-6.12     : v6.12.55          - 4772e7f18ac2 slab: reset 
-slab->obj_ext when freeing and it is OBJEXTS_ALLOC_FAIL
-   stable-6.17     : v6.17.5           - 8f4c0c2fa3e3 slab: reset 
-slab->obj_ext when freeing and it is OBJEXTS_ALLOC_FAIL
-
-thanks,
-Harshit
+Best Regards,
+Nick Chan
 
 
-
-
-> +	}
->   
->   	for (i = 0; i < objects; i++) {
->   		unsigned int off = obj_to_index(s, slab, p[i]);
-> 
-> 
-> 
-
+>
+> thanks,
+> Harshit
+>>         /* Setup the admin queue */
+>
