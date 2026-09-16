@@ -1,47 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0627940A937;
-	Wed, 16 Sep 2026 19:29:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AED04279F9;
+	Wed, 16 Sep 2026 19:29:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789586958; cv=none; b=hmLEKTevjOkxo0JBAiynM1MMOJR3UPoIwE7J0n1PPYFgZqTKUbD2sTYi5GrCX/O30GgL987VCT8JlTo+gZOTdsPeDNoUVroMbXreGq6fcxozgGBdPfUYKKpAqIlyO4aFnCR0m7pQhSYJ9voOAC8F7Eyy/WtehZSkWVdD2j5xl7Q=
+	t=1789586960; cv=none; b=BmOQFEHYWkIBU2/iUexI1T6SFJlONgw3EPQQDqJ7cexgdoNcRLNNuXEYLEzwop0eKH9UqtCt8I4muFc0NalhM+jnxubIT2j0LWPLfdfNdAxWBO5CYHtbCYgzuyUIEeaWltJox62mAKyfPOh82ypV+C/o+MNvxH4oT2ZZBguXE88=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789586958; c=relaxed/simple;
-	bh=VuZRzl7I15iDzvq2bDXSDp33zay/rAx3HdbFL0b6gOs=;
+	s=arc-20240116; t=1789586960; c=relaxed/simple;
+	bh=su2s6FraLVODJMga0xyL4LC6k1gvAAoBM9koNN6gwOA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nMAMbr5CZBFL9N+v49GBTuNFFgKrf39Fa4BAwVPZIbNM3zg28rPgO8ve0h3FeBJznzMHRNfKZUQ210OTNLRuWEFCLbRibDdJq6h25KhlzogalIrNy1hiagystNNX0QIMVVkwyaJV9EVMeqzcPUzTZk0xAoaxUy3Ub+YTbUMGrzU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EU7hvZdZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QxVxy4WjSrJnMrM/e5CEkydy8BzuqTnEJxsM4YdnvFuCnxZA9/Vpr6AQBK+W8pOsg3lt9kwHt6CPL+F2601FgKTLOHHAD8eleDSalcWpbZLa3onpU4XNUkP04nCkHGN3QZQbjOah3sApvniYpRHuuv6ZtjnXcmR5/XJY3aBbNWc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=E1BKNVTj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EU7hvZdZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A5731F000FF;
-	Wed, 16 Sep 2026 19:28:47 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="E1BKNVTj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4D071F008AB;
+	Wed, 16 Sep 2026 19:28:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789586928;
-	bh=A0w6PSIVohnwiEYwTvqnu+7Pf2KcW4YBhQCEoSF/cX0=;
+	s=k20260515; t=1789586934;
+	bh=wC7t0oAWJa8NAFtLiTSXnCmDKBIqZ1KapPYK19zOGiE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EU7hvZdZHyYuKWA3TvKm4uKXr//YF1ddrgtLW1zTj9l8spxwmzcR6YLqEJDAGiCV6
-	 +eITQ0Zf0ZcJ7j1Ra525zLevP/qEho/QZ2DzhlPhiSdo75B/iviOQECW46vXB20a6i
-	 BPfwRQGKHCsX+uLvnzVastp4wiv3LIoem39Vlr/evRhG7y6NgvkkyFxbxK7L4aiyn8
-	 7LUKlEbQNaW2F0koisyUfRdf6wK7vD97HryAg4F3z7uPfG64kvn/VN7DXXcEEqj59g
-	 zpDIywxGaGYZUZo7mBHIqVSd18Auqqd769Ep2tPz1gnyT1Hc9q4kvqcYxPEu/scWWE
-	 RtOA6RTy1/ikA==
+	b=E1BKNVTj8DoHTb/nxb/9QI1Xy+DpWdX9VZv99yXzWgknzKp8ClFkjwbTLzqPm+EbQ
+	 BEg0mWCbYUNKgPbXGAXeYG879S2eq2kaPUf+BvS65FXnqQXH7jwIN4sS1SyJjkHRtU
+	 Dn0CQWllp/3nH0Dh4poD9vYMwvCWrpCRjfjRY9bwS/pKWN7fZz9ZmPUBdDc/4wYeSy
+	 u/4WBE66k9vSjsNQCd6I9CWmgrkmHroMeUNawtm6J4uOzsEg1SCv5rLd98Bad4Lqaf
+	 bKEmwio+rDC/7Y5NjDl1uu9S5wx294IoN4RWFRvgUSrQMbpIW4YVL3Dq9V3+Lis3zy
+	 sRcF2MaV+6Y4A==
 From: Sasha Levin <sashal@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	stable@vger.kernel.org
+To: Karl Mehltretter <kmehltretter@gmail.com>
 Cc: Sasha Levin <sashal@kernel.org>,
+	stable@vger.kernel.org,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	Ian Rogers <irogers@google.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Subject: Re: [PATCH 6.12 1141/1376] perf dso: Use stored fd error instead of stale errno in file_read() and file_size()
-Date: Wed, 16 Sep 2026 15:28:08 -0400
-Message-ID: <daily-reply-20260916-0018-re-perf-dso-errno@kernel.org>
+	Edward Adam Davis <eadavis@qq.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	syzbot+b7f6f8c9303466e16c8a@syzkaller.appspotmail.com,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Subject: Re: [PATCH 5.15 879/935] bluetooth/l2cap: sync sock recv cb and release
+Date: Wed, 16 Sep 2026 15:28:14 -0400
+Message-ID: <daily-reply-20260916-0024-re-l2cap-5-10-revert-hold@kernel.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <c0d91f0b-f392-42d1-b96e-86b5bacced74@oracle.com>
-References: <c0d91f0b-f392-42d1-b96e-86b5bacced74@oracle.com>
+In-Reply-To: <aqoaFdvSsDiiLb5I@gmail.com>
+References: <aqoaFdvSsDiiLb5I@gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -50,18 +49,20 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-> Upstream prerequisite 1a5f9334a45a6b0c1cd7341cc72a3b87adad1d27
-> normalizes this failure to a standard negative errno. Maybe we should be 
->   adding the 6.12-equivalent fd = -EIO adaptation before retaining this 
-> patch.
+> So the revert on its own trades the deadlock for this. I will send the
+> l2cap_core.c hunk, which also fixes the unbalanced unlock you found, plus
+> 89e856e124f9 without the recv_cb locking. I will repeat the runs and test
+> on some real hardware before sending.
 
-1a5f9334a45a ("perf dso: Set standard errno on decompression failure")
-patches dso__get_filename(), which does not exist below v7.0. It arrives with
-069e603d8248 ("perf tools: Get debug info of DSO properly"), so there is
-nothing to backport on 6.12, 6.6, 6.1, 5.15 or 5.10.
+Thank you for running that down. I am holding the queued 5.10 revert of
+89e856e124f9 ("bluetooth/l2cap: sync sock recv cb and release") out of the
+next release until your series arrives, since shipping it alone reopens the
+NULL deref you reproduced.
 
-What is left is a hand written fd = -EIO per tree, which is not a backport of
-anything, so I am leaving the queued patch alone.
+I also withdraw my objection that f1a8f402f13f ("Bluetooth: L2CAP: Fix
+deadlock") is unlandable on these trees. You are right that the fix is the
+l2cap_core.c and l2cap_sock.c hunks and that the hci_sync and hci_core hunks
+are an unrelated hci_dev_cmd() refactor.
 
 -- 
 Thanks,
