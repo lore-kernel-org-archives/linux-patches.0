@@ -1,48 +1,48 @@
 Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.14])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F74154CF6C
-	for <patches@lists.linux.dev>; Wed, 16 Sep 2026 23:13:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4212653D0CB
+	for <patches@lists.linux.dev>; Wed, 16 Sep 2026 23:13:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789600435; cv=none; b=HP2MVkvfVLb4flPqSvsbQpJ13hXzHcD4s2lbm0XE390Q2yIP9yEprJfD9cyH8IuOJBx+OUm9GylxQrVIO0eNxrej6iqOR4ntj0lpXUwTEEocu+hAOBPLQm/e/tHzaiHisEbxwMWG/hygQ28EL1r8PX6n7Qx0HP+WPEXoYA3xnRM=
+	t=1789600437; cv=none; b=dnGJGvIkgs/Z3l3FbR4u5+SW/ZDVDCvWWmXoU70aTNNGDBhOW6bgNqCuKOoJ7yvd1YaAxzMbC/ySt8gsXVpc29mLmgosEKTUUQd+Nwa3V51vGYbEuRsKWy5kDFJ9xQgiJZGE0deEia40UOnbPkx28dYhpfHe7fVq23XzdjRFbjU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789600435; c=relaxed/simple;
-	bh=ctBegGBZtB/D5EoHsAL2gv9lKuYA19IzLJVZ+J8QjRI=;
+	s=arc-20240116; t=1789600437; c=relaxed/simple;
+	bh=eVmXOFlkRN5iaG26DigKaIsj/0UtV30S+C6g+/Kkx1s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rHQWF0t2Rb6fOS62TZGyOg7+cH6nC0bJU/CtrALiMTwX99YJaFLAP/AniNupET7CMHRYVAELWtO7ILY8poej1ViEz+Ua09vAMjnLyhwxvCH/PR23ms9CRQARw5BXsSVWDo/zvgE5bMDsy3wNt5d1GbJOycgE/+lGSEqcwCsPH20=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=kZ8nFMj2; arc=none smtp.client-ip=198.175.65.14
+	 MIME-Version; b=clWxde0KsbTxg5vVxXSFdMSKV4gYGRGZqfXyLd/UQBV634+AlQH1vcGPCr/Ad7uazKbC7uw8S5MZmvs7umPHzluSzyOPD7l/J6lrgQYsouRi3DZcnZ3A1bxMUzF6ArWcfLKNuoLzcGYPrSppTemXASprLwPYoZL0lmiuG6wCB6I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=YRWykCJ0; arc=none smtp.client-ip=198.175.65.14
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="kZ8nFMj2"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="YRWykCJ0"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1789600433; x=1821136433;
+  t=1789600435; x=1821136435;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=ctBegGBZtB/D5EoHsAL2gv9lKuYA19IzLJVZ+J8QjRI=;
-  b=kZ8nFMj2thlFUKC8YNzYYenwfMC74jPZXG4BymdZIIuKHot2egFh0W1e
-   9G69hcQaybHqorFkYNfvyu4JSgDDaRXu33beeSyCa0/1bQFaoEK0EjedL
-   x0kDg2nxx7s5OpJ0UGUBSJviHpzeVvSto0j+J9SszzJh2st3xzDM7pjCg
-   hVbcwirs5kA/7vqqjcIoBMkSVQXyL+kXjU0srJ/vu9DAmVBVITLnFKLBC
-   7xONMsesmpY5nJBo5A+af00ku4AwKWgHk49qXr7J3/LKDjM7UXEndeIEb
-   HbsgF+49YPunrMUvlaQ6ovstGo4vlWM6kX0b0ls9nZD4N2699C+eRMYcI
+  bh=eVmXOFlkRN5iaG26DigKaIsj/0UtV30S+C6g+/Kkx1s=;
+  b=YRWykCJ0a/s++c8C56QwnAUjC1qZqNMKcCpaEoPqkv5t+EcJ+SOpvaL7
+   xarwtrGbSqXMsoLECh9AYoHyfZqtVXJL4qvY7XYfF9iiAL4sIw2myiyn0
+   /MVRB6lpWUgmVzwyMkVZ5K3K2QaF/HNK9j43EkY5YV0AyclQG821oUgP1
+   rTu7yH19AyLWDUFyZ8nHhrt4kPftzj+5pg437v5thb7nsH+ISmy5MNKsr
+   GCz8Fa0Wu5I0y+tC0bPKABfUR+pDynXpxUwZT0QMa0P0myI23kvNXpfyk
+   y84NQ0+8zriVYSmt4Ls5s9VOiwyTnI7w7eEOmW0NmVzWKF0+hgTGVz6xi
    Q==;
-X-CSE-ConnectionGUID: oGrCdJRESxqFIhm/OUjr9g==
-X-CSE-MsgGUID: N+U6Gx1NQ4uTv4yQYeQnfA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11905"; a="93861499"
+X-CSE-ConnectionGUID: FUk1gA3RRLyo3qxA5G+8ow==
+X-CSE-MsgGUID: lZAhxQzARjuVjc5svG0fww==
+X-IronPort-AV: E=McAfee;i="6800,10657,11905"; a="93861519"
 X-IronPort-AV: E=Sophos;i="6.27,103,1787036400"; 
-   d="scan'208";a="93861499"
+   d="scan'208";a="93861519"
 Received: from orviesa004.jf.intel.com ([10.64.159.144])
-  by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Sep 2026 16:13:39 -0700
-X-CSE-ConnectionGUID: 0TXb/eG/RUqKAr9Y8uri9g==
-X-CSE-MsgGUID: UJyFVRoVReqdVwXh3uGsUQ==
+  by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Sep 2026 16:13:40 -0700
+X-CSE-ConnectionGUID: gYXTOZHxTEm1wFn0kBsWQg==
+X-CSE-MsgGUID: YJz8K/Q5QYKeu1GlIvDOGQ==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.27,103,1787036400"; 
-   d="scan'208";a="277231492"
+   d="scan'208";a="277231501"
 Received: from khuang2-desk.gar.corp.intel.com (HELO agluck-desk3.home.arpa) ([10.124.223.219])
-  by orviesa004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Sep 2026 16:13:39 -0700
+  by orviesa004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Sep 2026 16:13:40 -0700
 From: Tony Luck <tony.luck@intel.com>
 To: Fenghua Yu <fenghuay@nvidia.com>,
 	Reinette Chatre <reinette.chatre@intel.com>,
@@ -59,9 +59,9 @@ Cc: Christoph Hellwig <hch@infradead.org>,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
 	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH v12 20/25] x86/resctrl: Enforce system RMID limit on AET
-Date: Wed, 16 Sep 2026 16:13:15 -0700
-Message-ID: <20260916231320.14502-21-tony.luck@intel.com>
+Subject: [PATCH v12 22/25] platform/x86/intel/pmt: Inform resctrl when MMIO maps are being removed
+Date: Wed, 16 Sep 2026 16:13:17 -0700
+Message-ID: <20260916231320.14502-23-tony.luck@intel.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260916231320.14502-1-tony.luck@intel.com>
 References: <20260916231320.14502-1-tony.luck@intel.com>
@@ -73,39 +73,71 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-AET (Application Energy Telemetry) event groups each support a specific
-number of RMIDs. But that number may be lower than the number supported
-by the system. This is especially true on systems with SNC (Sub-NUMA Cluster)
-enabled as that reduces the number of supported RMIDs.
+Before destroying devices, tell resctrl that the virtual addresses
+supplied by an earlier call to intel_pmt_get_regions_by_feature()
+are about to be invalidated and should not be used again.
 
-Reduce r->mon.num_rmid if needed to ensure that info/PERF_PKG_MON/num_rmids
-does not display an unachievable value to users.
+Avoid A-B deadlock between ep_lock and aet_register_lock.
 
 Signed-off-by: Tony Luck <tony.luck@intel.com>
 ---
 v12:
-	Replacement for v11 patch 14 "Enforce system RMID limit ..."
+	Ilpo: Downgrade "can't happen" dev_warn() to dev_debug()
+	Ilpo's suggestion to use guard(mutex) moot due to refactor.
+	Reinette: Refactor and eliminate "u32 ret" and s/packages/package/
+	Reinette: Explain ep_lock release/acquire.
 ---
- arch/x86/kernel/cpu/resctrl/core.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/platform/x86/intel/pmt/telemetry.c | 31 ++++++++++++++++++++++
+ 1 file changed, 31 insertions(+)
 
-diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
-index 3bf4d1a07593..a20439a5099a 100644
---- a/arch/x86/kernel/cpu/resctrl/core.c
-+++ b/arch/x86/kernel/cpu/resctrl/core.c
-@@ -798,6 +798,12 @@ void resctrl_arch_pre_mount(void)
- 	if (!intel_aet_pre_mount())
- 		return;
+diff --git a/drivers/platform/x86/intel/pmt/telemetry.c b/drivers/platform/x86/intel/pmt/telemetry.c
+index bf0c9295feb3..527563043777 100644
+--- a/drivers/platform/x86/intel/pmt/telemetry.c
++++ b/drivers/platform/x86/intel/pmt/telemetry.c
+@@ -366,12 +366,43 @@ pmt_telem_find_and_register_endpoint(struct device *dev, u32 guid, u16 pos)
+ }
+ EXPORT_SYMBOL_NS_GPL(pmt_telem_find_and_register_endpoint, "INTEL_PMT_TELEMETRY");
  
-+	/*
-+	 * AET may claim to support more RMIDs than are permitted to be
-+	 * assigned to IA32_PQR_ASSOC.RMID. Enforce this limit.
-+	 */
-+	r->mon.num_rmid = min(r->mon.num_rmid, pqr_assoc_num_rmid);
++static int pmt_telem_get_package_id(struct pmt_telem_priv *priv)
++{
++	int i;
 +
- 	/*
- 	 * Late discovery of telemetry events means the domains for the
- 	 * resource were not built. Do that now.
++	for (i = 0; i < priv->num_entries; i++) {
++		struct intel_pmt_entry *entry = &priv->entry[i];
++		struct pci_dev *pdev = to_pci_dev(entry->ep->dev);
++		struct oobmsm_plat_info *plat_info;
++
++		plat_info = intel_vsec_get_mapping(pdev);
++		if (!IS_ERR(plat_info))
++			return plat_info->package_id;
++	}
++
++	return -ENODEV;
++}
++
+ static void pmt_telem_remove(struct auxiliary_device *auxdev)
+ {
+ 	struct pmt_telem_priv *priv = auxiliary_get_drvdata(auxdev);
++	int package_id;
+ 	int i;
+ 
+ 	mutex_lock(&ep_lock);
++	package_id = pmt_telem_get_package_id(priv);
++	/*
++	 * Tell resctrl/AET that virtual mappings for MMIO space in a CPU
++	 * package are about to be torn down.
++	 */
++	if (package_id < 0) {
++		dev_dbg(&auxdev->dev, "Unable to determine package ID for removed device\n");
++	} else {
++		mutex_unlock(&ep_lock);
++		intel_aet_invalidate(package_id);
++		mutex_lock(&ep_lock);
++	}
++
+ 	for (i = 0; i < priv->num_entries; i++) {
+ 		struct intel_pmt_entry *entry = &priv->entry[i];
+ 
 -- 
 2.55.0
 
