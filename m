@@ -1,50 +1,59 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ABA13AEF54;
-	Wed, 16 Sep 2026 01:52:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBCFC3A7F4C;
+	Wed, 16 Sep 2026 01:52:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789523569; cv=none; b=CnK2pIuswUNefiGGLULHJmv0mx40m3iGS5HqFl/kBe/ltw68Qmcw//ymoIzfUXHaVoT8457f3fvsp2pCyjKyBuD2sSMwtGIiTVwRCCOMONh5RJJBUasyo6beayDBbCSj2LRVBzigMIn/RHyPK5tiZPp2fH8dAUZzrRrgRmwc72A=
+	t=1789523573; cv=none; b=RDvde9jUzLh4JquE1qsvevJXU2WmlsJDp30n3ZOyi8X3mM4+AamJVHzPCSEiohFpYxJqDqZvo0mmkaHfQvtFUDok5Vr3vO5Ap+f34EQfGKdl/QHZhyqVRBqh7fn9Z7Xhd3FrTYdKZAReRTukhGj6mI9A9+fQrI6icusr9lsnmg4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789523569; c=relaxed/simple;
-	bh=XFX2xIv/sy3XoBm1x2XRF/nO4jflpAmdNmV9poizng8=;
+	s=arc-20240116; t=1789523573; c=relaxed/simple;
+	bh=oJbTaiU8XKJIhqjt5t5yxkxQgvAZjJ5M/o/vdJHPG9g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b4jljrAJestU1Ux0bhzGIMYPGALFvl6hH13L7ffB66JXLOyYfZe558L6+1uR8JfBfWRtm3j0qPdxna7VfCnQ1z2BVpl3DKJhZa1/QMAlFUk8A45KXU1lE69H57lPPetl9R4cRcfsZd96UBJQa3UcFrkgWJ8VHYYNv3g91Rsco1s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kEDzbxwT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jRIKcSCKJchyuvyyhQibcTBSlyXyXc8ZaWb1enY7jebvJYGGFPX+ivXp6kPNsNEwyoUT5bJy0/jEep143rRYKmCkU+Ade6n1sC6P9NZvaEJFznede8YmcswAGl9/yO+3/e5rAq46gT8ulR2rgT5QY+bNl1jBwIt+6HXrBHIIWM8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iJX8VXdA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kEDzbxwT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D08E1F0089E;
-	Wed, 16 Sep 2026 01:52:30 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iJX8VXdA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4BA51F000FF;
+	Wed, 16 Sep 2026 01:52:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789523551;
-	bh=LVXuVv26svLlY4qbCrxJiy9+/zg1bsfvPN1rCoBQlH4=;
+	s=k20260515; t=1789523556;
+	bh=L43MDoYi68BaORedkuKft148Vwi/yvyUFCDZEFVPuAg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kEDzbxwTEhZBEFnakuxM9EiZoE0RCl3lsRgh6fjHhU27w3YyyTVVDP3e8O0urCXAq
-	 W4mX7l0i95nha4dcUYlLmXfqjlCArKEiQqSO6lJ83ibA4MVQL5CkgSW/kX3Hn/vdvd
-	 RdnXklF+expMKrsC81/rokD+vT2XlDgp1avSZTNTE9INW3ju2hup77pgk2vAX4eLpB
-	 0dz4WsDNLA2OIt+xR9evDH1XgErn67UIA76DMExkwSCU7YdjLtERefT/1v+ThGAJZ/
-	 df3f1dbSlPo9Wu0QnDlono8Y2Tyq8hY/kddstVl0cr6GL3IRp30LzlypCApX14cjTc
-	 4rMFdHwRGYStQ==
+	b=iJX8VXdAIel30zcudXjh9HuH54K0age5Kmo2Bu88nsxV40j4Gacr532qOWtyLudEI
+	 E/LzKu16jEDRBlZD4b3VQZ7cQWRkWsQJ8VLbCb+VJOoLsFqbfaLgtah059Z3Sd/jsB
+	 5CeOC7FzH6iEaRwjcOEC7IlPhKmHnYULh/QQa+VQrwmR7TXlzeWkQJk2KTye3jI0KF
+	 xbzqkNftlvcECyCi1dwA0xe3ighrIaevO/si2+73wKxyC0Hxn+mVpe3ETxmZwPvMu5
+	 Wuu0S5KNCk23xDMqEJ7T9XcOvzB4hsYOZxfY97m64Ps0X3olJVErTzHvXfUlhTKoT1
+	 gtlFEb3W+feAw==
 From: Sasha Levin <sashal@kernel.org>
-To: gregkh@linuxfoundation.org,
-	linusw@kernel.org,
-	rmk+kernel@armlinux.org.uk
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	stable@vger.kernel.org
 Cc: Sasha Levin <sashal@kernel.org>,
-	bigeasy@linutronix.de,
-	lisongze2@huawei.com,
-	ljs@kernel.org,
 	patches@lists.linux.dev,
-	stable@vger.kernel.org,
-	wangbing6@huawei.com,
-	xieyuanbin1@huawei.com,
-	xiqi2@huawei.com
-Subject: Re: [PATCH 5.10 613/798] ARM: 9485/1: mm: acquire mmap write lock around show_pte() for user faults
-Date: Tue, 15 Sep 2026 21:52:12 -0400
-Message-ID: <daily-reply-20260915-0007-re-arm-user-fault-irq-chain@kernel.org>
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@nabladev.com,
+	jonathanh@nvidia.com,
+	sudipm.mukherjee@gmail.com,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	hargar@microsoft.com,
+	broonie@kernel.org,
+	achill@achill.org,
+	sr@sladewatkins.com,
+	Florian Fainelli <f.fainelli@gmail.com>
+Subject: Re: [PATCH 6.1 0000/1191] 6.1.188-rc1 review
+Date: Tue, 15 Sep 2026 21:52:15 -0400
+Message-ID: <daily-reply-20260915-0010-re-perf-hisi-ptt-build-break@kernel.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260915033519.16922-1-xieyuanbin1@huawei.com>
-References: <20260915033519.16922-1-xieyuanbin1@huawei.com>
+In-Reply-To: <64dd0faa-fdfa-45a4-812f-638574beca26@gmail.com>
+References: <64dd0faa-fdfa-45a4-812f-638574beca26@gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -53,19 +62,17 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-> I suggest that merging all these patches into the linux-5.10.y:
-> 1. commit 7733bc7d299d682f2723 ("ARM: fix hash_name() fault")
-> 2. commit fd2dee1c6e2256f726ba ("ARM: fix branch predictor hardening")
-> 3. commit 59e4f3b45b96a24fc9b7 ("ARM: ensure interrupts are enabled in
->    __do_user_fault()")
-> I tried, and the patches can be applied with very simple adaptation.
+> perf fails to build on arm/arm64/bmips with:
+> 
+> util/hisi-ptt-decoder/hisi-ptt-pkt-decoder.c:14:10: fatal error: 
+> linux/unaligned.h: No such file or directory
+>     14 | #include <linux/unaligned.h>
 
-Your chain is right, and 5.15 needs exactly the same three commits: both trees
-have identical arch/arm/mm/fault.c and arch/arm/mm/alignment.c, and all three
-commits are absent from both.
-
-Since you have the adapted patches already, could you mail them for 5.15
-and 5.10 with Russell on Cc so he can ack the resolution?
+Thanks for the report, and sorry for the late answer. 2b8a2e5d424f ("perf
+hisi-ptt: Fix PTT trace TLP header parsing") was dropped from the 6.1,
+6.6 and 6.12 queues before those releases went out, so 6.1.188, 6.6.157
+and 6.12.110 do not carry it. That covers the identical reports you sent
+on the 6.6 and 6.12 threads too.
 
 -- 
 Thanks,
