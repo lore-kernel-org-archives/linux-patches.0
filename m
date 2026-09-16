@@ -1,59 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBCFC3A7F4C;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 578DC367B99;
 	Wed, 16 Sep 2026 01:52:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789523573; cv=none; b=RDvde9jUzLh4JquE1qsvevJXU2WmlsJDp30n3ZOyi8X3mM4+AamJVHzPCSEiohFpYxJqDqZvo0mmkaHfQvtFUDok5Vr3vO5Ap+f34EQfGKdl/QHZhyqVRBqh7fn9Z7Xhd3FrTYdKZAReRTukhGj6mI9A9+fQrI6icusr9lsnmg4=
+	t=1789523573; cv=none; b=sy6kjwyOkRr/RX/CkbiB/l436fM+r/YAdVyc52OkcQ5EFSW5j3DZyO1CV1UAnmNmX53g4rl920F8xmmze9TH1++qU87tEvWdpWrUrwdN5P+C2F3bf1R1SauJ+8TQ85z3SiryaHtc/p5FSqd/+5onbeKRcmAK6rgSvv4lFn2+WTU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1789523573; c=relaxed/simple;
-	bh=oJbTaiU8XKJIhqjt5t5yxkxQgvAZjJ5M/o/vdJHPG9g=;
+	bh=FR8I3QcybVNh23QeHn636r2tRiWGu+RwgXT4dQMY4ys=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jRIKcSCKJchyuvyyhQibcTBSlyXyXc8ZaWb1enY7jebvJYGGFPX+ivXp6kPNsNEwyoUT5bJy0/jEep143rRYKmCkU+Ade6n1sC6P9NZvaEJFznede8YmcswAGl9/yO+3/e5rAq46gT8ulR2rgT5QY+bNl1jBwIt+6HXrBHIIWM8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iJX8VXdA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bwIU4RrFHqxY5tNFsCYAyFxgSKmuIFK1cf8xbfdJCHPgexrzOE5cnSibKKLQgXdcsyGaZcOBElbIDhfgSq+RwYggLGkW0Tb4zk+KhLlkBH6romHTPT6cl25HREAl52mRgJo5fp6A5ajtCwOWlrjcpdRhp0OuJ1mHLqVDfgt2GwY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gn7V7tVT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iJX8VXdA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4BA51F000FF;
-	Wed, 16 Sep 2026 01:52:34 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gn7V7tVT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEC6A1F008A0;
+	Wed, 16 Sep 2026 01:52:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789523556;
-	bh=L43MDoYi68BaORedkuKft148Vwi/yvyUFCDZEFVPuAg=;
+	s=k20260515; t=1789523558;
+	bh=MBwSgvxC4e+2C4tf7uicIHIowDdMKsen7ohoo1IJv7w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iJX8VXdAIel30zcudXjh9HuH54K0age5Kmo2Bu88nsxV40j4Gacr532qOWtyLudEI
-	 E/LzKu16jEDRBlZD4b3VQZ7cQWRkWsQJ8VLbCb+VJOoLsFqbfaLgtah059Z3Sd/jsB
-	 5CeOC7FzH6iEaRwjcOEC7IlPhKmHnYULh/QQa+VQrwmR7TXlzeWkQJk2KTye3jI0KF
-	 xbzqkNftlvcECyCi1dwA0xe3ighrIaevO/si2+73wKxyC0Hxn+mVpe3ETxmZwPvMu5
-	 Wuu0S5KNCk23xDMqEJ7T9XcOvzB4hsYOZxfY97m64Ps0X3olJVErTzHvXfUlhTKoT1
-	 gtlFEb3W+feAw==
+	b=gn7V7tVTjYTM+QF18Tx6a8BE3KhmlVy5cSsoSbQj83+9yXO8E4wAP+NlhfZ5UW7vX
+	 z/XZqgA+4H/abPLXypDzCKgrUJC87xunNCgf1/4XzYeIOYzktEjoAi5z7OpBgceOBF
+	 vl7H1OMWCUaH/Mdc9KUnjExky+i786SvhLoBUolRNHGW/YYdAiY5iX0OuyfK7mPE9f
+	 n+zk7RF+XHlViLfi4rVJTk67X4YomPKJsb3mizZUGIT5JQGmB2qzRFmB4YeFPZSng+
+	 4RwzrJ3x0xDZizzEvcKuX3uVafVYaYLHorIFt5GIn2t9v9rKsGkN+nxgf1Bmzy12J1
+	 nNcFZni1ZKIPQ==
 From: Sasha Levin <sashal@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	stable@vger.kernel.org
+To: Karl Mehltretter <kmehltretter@gmail.com>
 Cc: Sasha Levin <sashal@kernel.org>,
+	stable@vger.kernel.org,
 	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@nabladev.com,
-	jonathanh@nvidia.com,
-	sudipm.mukherjee@gmail.com,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	hargar@microsoft.com,
-	broonie@kernel.org,
-	achill@achill.org,
-	sr@sladewatkins.com,
-	Florian Fainelli <f.fainelli@gmail.com>
-Subject: Re: [PATCH 6.1 0000/1191] 6.1.188-rc1 review
-Date: Tue, 15 Sep 2026 21:52:15 -0400
-Message-ID: <daily-reply-20260915-0010-re-perf-hisi-ptt-build-break@kernel.org>
+	Edward Adam Davis <eadavis@qq.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	syzbot+b7f6f8c9303466e16c8a@syzkaller.appspotmail.com,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Subject: Re: [PATCH 5.15 879/935] bluetooth/l2cap: sync sock recv cb and release
+Date: Tue, 15 Sep 2026 21:52:17 -0400
+Message-ID: <daily-reply-20260915-0012-re-l2cap-recv-cb-5-10-revert@kernel.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <64dd0faa-fdfa-45a4-812f-638574beca26@gmail.com>
-References: <64dd0faa-fdfa-45a4-812f-638574beca26@gmail.com>
+In-Reply-To: <2026091453-unwary-delete-b272@gregkh>
+References: <2026091453-unwary-delete-b272@gregkh>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -62,17 +49,16 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-> perf fails to build on arm/arm64/bmips with:
-> 
-> util/hisi-ptt-decoder/hisi-ptt-pkt-decoder.c:14:10: fatal error: 
-> linux/unaligned.h: No such file or directory
->     14 | #include <linux/unaligned.h>
+> Now dropped from 5.10.y and 5.15.y as for some reason this is marked as
+> adep of something that is not actually in the queue.
 
-Thanks for the report, and sorry for the late answer. 2b8a2e5d424f ("perf
-hisi-ptt: Fix PTT trace TLP header parsing") was dropped from the 6.1,
-6.6 and 6.12 queues before those releases went out, so 6.1.188, 6.6.157
-and 6.12.110 do not carry it. That covers the identical reports you sent
-on the 6.6 and 6.12 threads too.
+5.15 dropped it, but 5.10 did not: the backport of 89e856e124f9
+("bluetooth/l2cap: sync sock recv cb and release") is in v5.10.270. So
+the recursive chan->lock deadlock Karl reproduced is live in a released
+5.10 kernel. I have queued a revert for 5.10.
+
+f1a8f402f13f ("Bluetooth: L2CAP: Fix deadlock") cannot fill the gap on
+either tree, since hci_sync.c and hci_sync.h do not exist there.
 
 -- 
 Thanks,
