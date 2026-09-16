@@ -1,46 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 578DC367B99;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBE753AA1BD;
 	Wed, 16 Sep 2026 01:52:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789523573; cv=none; b=sy6kjwyOkRr/RX/CkbiB/l436fM+r/YAdVyc52OkcQ5EFSW5j3DZyO1CV1UAnmNmX53g4rl920F8xmmze9TH1++qU87tEvWdpWrUrwdN5P+C2F3bf1R1SauJ+8TQ85z3SiryaHtc/p5FSqd/+5onbeKRcmAK6rgSvv4lFn2+WTU=
+	t=1789523573; cv=none; b=itl0EHWLHsjUE0fG9EchjkjDv37PxaiYe+P6nHyjVJqZqpzt8OMmPw32BmI160yw5m21zwDvf8BUo/O7dCu7l+rbVGNBiQ+TnLazeBl1yhlmVwYbzMBJeoYA46DT5G8Io+COY/HHuHbnCpFX15PqVN0Hu8s8TBPSiJj4q78qe84=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1789523573; c=relaxed/simple;
-	bh=FR8I3QcybVNh23QeHn636r2tRiWGu+RwgXT4dQMY4ys=;
+	bh=mTUdh7xTuC/WWeP0LrdMzxlIzrc7axeDPP8j3IZJ2NI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bwIU4RrFHqxY5tNFsCYAyFxgSKmuIFK1cf8xbfdJCHPgexrzOE5cnSibKKLQgXdcsyGaZcOBElbIDhfgSq+RwYggLGkW0Tb4zk+KhLlkBH6romHTPT6cl25HREAl52mRgJo5fp6A5ajtCwOWlrjcpdRhp0OuJ1mHLqVDfgt2GwY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gn7V7tVT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FnaSNvQe+cIMw5y4KyWLSGG7CRkK1BUF9pNPHN9pZYhl/jxo83rLkcZVRwLnkun30WwKLk2wIrqZ89bK67MbWo+GrJn9jRBIm7DjOQrGmguCSdZHQycw6NsaZON4J3UFhN1jF0VRsiIVzWR2/oXzchH7RqOuMWj4NQsnhxsrP6o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=P2q5YDsS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gn7V7tVT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEC6A1F008A0;
-	Wed, 16 Sep 2026 01:52:37 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="P2q5YDsS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C67431F0089D;
+	Wed, 16 Sep 2026 01:52:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789523558;
-	bh=MBwSgvxC4e+2C4tf7uicIHIowDdMKsen7ohoo1IJv7w=;
+	s=k20260515; t=1789523554;
+	bh=NlJuFRS2Hd5Q9+kDuRUqYVabD2v/L6sawEeE1aCEpmw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gn7V7tVTjYTM+QF18Tx6a8BE3KhmlVy5cSsoSbQj83+9yXO8E4wAP+NlhfZ5UW7vX
-	 z/XZqgA+4H/abPLXypDzCKgrUJC87xunNCgf1/4XzYeIOYzktEjoAi5z7OpBgceOBF
-	 vl7H1OMWCUaH/Mdc9KUnjExky+i786SvhLoBUolRNHGW/YYdAiY5iX0OuyfK7mPE9f
-	 n+zk7RF+XHlViLfi4rVJTk67X4YomPKJsb3mizZUGIT5JQGmB2qzRFmB4YeFPZSng+
-	 4RwzrJ3x0xDZizzEvcKuX3uVafVYaYLHorIFt5GIn2t9v9rKsGkN+nxgf1Bmzy12J1
-	 nNcFZni1ZKIPQ==
+	b=P2q5YDsSi7Le2VAW9xsp1k+tN2LEeXiQt2dXegBanI9xKgp3mHmHsKySsWyweAjSN
+	 JuYAVSFOR2q4bw367YbJXGj63tCC6ziHgbKcWiL7ETeflOsw/L7tAuWSBc8OgoMRJu
+	 l+P2/q8A54taPQphrIQfuu9QIHqwN91DmmxvGt3HsmiDDZKMe0pAqEW0lg9bkg4cRJ
+	 b/nkAL1zQPn6OTGKpB2ypGDdUeqEjwLEDPNy3g1cE3n9XH8aWgvRuH9PCT+hlIkL6g
+	 ivrTdSHS37U8ivB/H5kNCYPGidTKcZyb+cRwYxSd5HIGxGT6lXi//Ss229z0qNe1iL
+	 RkwkL9kYvuLrA==
 From: Sasha Levin <sashal@kernel.org>
-To: Karl Mehltretter <kmehltretter@gmail.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: Sasha Levin <sashal@kernel.org>,
 	stable@vger.kernel.org,
 	patches@lists.linux.dev,
-	Edward Adam Davis <eadavis@qq.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	syzbot+b7f6f8c9303466e16c8a@syzkaller.appspotmail.com,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Subject: Re: [PATCH 5.15 879/935] bluetooth/l2cap: sync sock recv cb and release
-Date: Tue, 15 Sep 2026 21:52:17 -0400
-Message-ID: <daily-reply-20260915-0012-re-l2cap-recv-cb-5-10-revert@kernel.org>
+	"Gautham R. Shenoy" <gautham.shenoy@amd.com>,
+	Mario Limonciello <superm1@kernel.org>,
+	Christoph Biedl <linux-kernel.bfrz@manchmal.in-ulm.de>
+Subject: Re: [PATCH 6.18 0547/1518] cpufreq/amd-pstate: Add dynamic energy performance preference
+Date: Tue, 15 Sep 2026 21:52:14 -0400
+Message-ID: <daily-reply-20260915-0009-re-amd-pstate-dynamic-epp@kernel.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <2026091453-unwary-delete-b272@gregkh>
-References: <2026091453-unwary-delete-b272@gregkh>
+In-Reply-To: <1789495960@msgid.manchmal.in-ulm.de>
+References: <1789495960@msgid.manchmal.in-ulm.de>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -49,16 +48,24 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-> Now dropped from 5.10.y and 5.15.y as for some reason this is marked as
-> adep of something that is not actually in the queue.
+> This introduces X86_AMD_PSTATE_DYNAMIC_EPP for 6.18, while it was
+> already removed again upstream, in v7.1-rc2-7-ge4e9b7b38d5d
+> ("cpufreq/amd-pstate: Drop Kconfig option for dynamic EPP").
+> 
+> This is a bit confusing. Mind to shed some light on this? Perhaps the
+> latter commit just didn't make it to 6.18 yet?
 
-5.15 dropped it, but 5.10 did not: the backport of 89e856e124f9
-("bluetooth/l2cap: sync sock recv cb and release") is in v5.10.270. So
-the recursive chan->lock deadlock Karl reproduced is live in a released
-5.10 kernel. I have queued a revert for 5.10.
+Your reading is right. e30ca6dd5345 ("cpufreq/amd-pstate: Add dynamic
+energy performance preference") went into 6.18 as a dependency of another
+fix, and the removal never followed it.
 
-f1a8f402f13f ("Bluetooth: L2CAP: Fix deadlock") cannot fill the gap on
-either tree, since hci_sync.c and hci_sync.h do not exist there.
+I am going to leave 6.18 as it is. e4e9b7b38d5d ("cpufreq/amd-pstate:
+Drop Kconfig option for dynamic EPP") does not apply there without
+da8afb1c666a ("cpufreq/amd-pstate: add kernel command line to override
+dynamic epp") in front of it, and that one is a pure feature addition I
+do not want to pull into a stable tree just to make a removal apply. The
+Kconfig symbol is default n and is set in no defconfig, so on 6.18 it
+changes nothing unless someone enables it deliberately.
 
 -- 
 Thanks,
