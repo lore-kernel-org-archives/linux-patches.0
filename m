@@ -1,131 +1,156 @@
-Received: from mail-pj2-f39.google.com (mail-pj2-f39.google.com [74.125.227.167])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.14])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 458884AA400
-	for <patches@lists.linux.dev>; Wed, 16 Sep 2026 22:45:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.167
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2365D2772D
+	for <patches@lists.linux.dev>; Wed, 16 Sep 2026 23:13:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789598721; cv=none; b=smtZ5FB6FJ5nn8v7UiEVbg5i+vsaJP9IzgQnLDeGc1i62M8LqwBL2Kwel0J+3sOD6g8GnD5Y0cIeG1yNf22yVQ4QdHBxX6m6RkSF6/vbTtYJo4QtSPNimRykNpJkiNGJRmYJmpu1wMfychwb73Ck2LhFdp+TUuBIetIzM3cJAjM=
+	t=1789600412; cv=none; b=qf/dUsVutAsfqD4TMZr9l9BmO1CosmpPQ15xJpuoveO8qc9jI0FphFWlSdfVtfnToWwyAUgJy8NLgLPTyQ0s5b1s1Sq5vWw5MbrM5lpxvj2ivzpvcqoni0T2SXpxh4IR1rKIkS5X6hLAEtvK93obYAlDrMZmHnnqGJ2tf+47lSs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789598721; c=relaxed/simple;
-	bh=DCE6FnvywonaznENZKMO/6ORfAMl58VppAg00A7jaiw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HymHwKjGhKnWhzqGhh4nq9SH3jRJubFWj+J2Fn/KBG0d1A5+PVcD7ByxpgjetoeK+pZoW9aHZu/QiXBevvZwi7fw3wPSqQ6yyRmymxOP4/P2lsg6T947P7nJpp8QzjstRpneNXANd31sYzagVDnmbE+nlF+AkwoTLjTrzggdFdE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bzQ8/G1y; arc=none smtp.client-ip=74.125.227.167
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1789600412; c=relaxed/simple;
+	bh=cqkJFNFPmKzPtSBoOm5R1dM0JXaMxgSw2Kc8SB3L7dM=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=IRkA0OJehe5wV92+gCcadUp7XCjKxVWX4dhZcSShVqIDYIUO2OtyHiqSSeC3te8p4rFX+kBM+tG7nJ27wCOPgpZX4ve/TUPiCuTu1J3ViwNhxYo5z2nPGz8LE1OY9uRAsv80FhouUIzJwvVrsMMFonVgfHPM2gnn3bEJ6nCVdZU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Rju2ml2N; arc=none smtp.client-ip=198.175.65.14
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bzQ8/G1y"
-Received: by mail-pj2-f39.google.com with SMTP id d9443c01a7336-2d8fe517774so2828145ad.0
-        for <patches@lists.linux.dev>; Wed, 16 Sep 2026 15:45:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1789598713; x=1790203513; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=HodbLW2WeOC+F5Igytr4/ZR9Af1xRSrYgRD/3purchM=;
-        b=bzQ8/G1ydfUGUJ5r0OBkJDJ4OkGNIKR967IkbkvuQNlPwy/VQjfaTs+VNnUgnMh4Zq
-         O+vBVeFP36CvBh/rtiCXSAsWeZACf8JRjXjBimcrpeY2Oj3pU7StBSXLuBnKqZLFd5u8
-         wwmPPJZ+SVUG29XoPSf3tR3hjLclUKRD1fS2arbT9ebCj5O2RhOmpMeMwzRLyqAQoM+E
-         E3BzbmVVqEH2W2NqOy1mhiAdlHzYNMmakIfq98QUE7WKXHfl5KYhOOLMUORIYMqaIMtw
-         chX7L6HsX7mb3DbSBTOePtj9DimfChCyIY00cOCddJ8OXw6wixXWxDXgTItQbe3IegiN
-         hnCg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789598713; x=1790203513;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=HodbLW2WeOC+F5Igytr4/ZR9Af1xRSrYgRD/3purchM=;
-        b=oo8dquG4I3GhU80TKSmX1cbuhXD1vggOVUV4PChotGyERtMKRwUDbek5qkdZQMZNa1
-         HfhK9QLAVkMbQf7PoapnIkyjy+JLIqNBm2z9zB1MuiJZE4H/B9qpov2ELBRH/yJVj8SM
-         MWKa3NQWLU0MzPxsaagFqKNny1dqzu4GtFEbop6fxZatvqxVycwIFUTFMK43uCIsu9gh
-         KZskG22iIIdsVtH6WpZRDgS7ncE0ZnQt2NEqemSfbHxXfqM9V4aTunNV9JxtzkYpNd1d
-         GCWIQQSdciMsfzxzZ1pUZh1DGkWbYvZMH3Isu2Sya8uuVbuiGQVYHBxBnOFFqNRp0TYV
-         sx3Q==
-X-Forwarded-Encrypted: i=1; AKwUvBzoo30vubK8Qnqh92KNxuFiNs1WkfJsiA852IbUHm0BCw/HQc9Ros63CHBUC3phcONKijgld+UH@lists.linux.dev
-X-Gm-Message-State: AFuF++nFnwnKU1oAwyRsRyf9pcHkSyCAy4zZUyu0/r7pMneyd47qoAMw
-	1dcfKwxGx+IMV1K2BFOl6yiUbK2go63E9s++nqUu01Pb7XIWj4dy84yo
-X-Gm-Gg: AYBFou0JybWHTYn0W+2eCVSYCOoSIKypJzvp3xiDo9FF6d7+MGeWdFWeVQv3bNXWIKH
-	1qQ5qa0etYdUHKDoUe0qtYJCmb+nygKcKQ1vK/MH/KQ/Eon03Pr59a77PbgZILP6+rKsoUjyP9U
-	6dy8x8TFQ9ck6K7sksdFJYnDJmrB9jF/20PlW00vjJO+cuVwNiMaP2TAnXMrdgF6r148rgTbJRR
-	OipESFfbHN+klqbFtVhpIzxuzQrXRlt04zm2rXJYG2GFua2QsBFCiKxujhguRzu3B87ijekkZ/V
-	qGIfeObdSRqd75AGFASvC9mJBrntDY8C76B48vLQa3qx2B372X04s+cUh6qKIq1aqUEC2FqDiU7
-	fjb17qIBWx5kIrfvpTA5U0/+ZMHr4di5mFqSrJDADMmiANw8c/JJrQOHGFmaYJczkYbcLnzwj5i
-	gBrKqtlcdOaBY3nUOMZCWh31dUZAGVJb94TBHpKgyOEQ8NT895ovPdptz9UfycmxSrYoyqiwb2R
-	0mVkiQB1SrL/7diL/7qJ1+NMLkjQqodMSGa4PAz3p/CLExs4qsGO0iIfJgXBakNsITbjI6pxc7B
-	NIeFyYi8Td1EbdzexBkiTPGHJ5wiv6+prW59Xgdm/LqW2jbRYp1xX+YQ
-X-Received: by 2002:a17:902:ce81:b0:2dd:64:12ac with SMTP id d9443c01a7336-2dd8e632d3bmr86301035ad.11.1789598712717;
-        Wed, 16 Sep 2026 15:45:12 -0700 (PDT)
-Received: from Cyndaquil.localdomain (c-24-56-233-47.customer.broadstripe.net. [24.56.233.47])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2dd89d8e6a3sm17609805ad.7.2026.09.16.15.45.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Sep 2026 15:45:12 -0700 (PDT)
-Date: Wed, 16 Sep 2026 15:45:09 -0700
-From: Mitchell Levy <levymitchell0@gmail.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Tianyou Li <tianyou.li@intel.com>,
-	Namhyung Kim <namhyung@kernel.org>, Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 6.18 1481/1518] perf annotate: Fix build with NO_SLANG=1
-Message-ID: <aqsb9cc0sIUtI265@Cyndaquil.localdomain>
-References: <20260912065623.398859879@linuxfoundation.org>
- <20260912065657.062881527@linuxfoundation.org>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Rju2ml2N"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1789600410; x=1821136410;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=cqkJFNFPmKzPtSBoOm5R1dM0JXaMxgSw2Kc8SB3L7dM=;
+  b=Rju2ml2NcuV6BMmiUkB6vXa4+Ft5OfGFBt0PgR/3NddSPm3uOM+96Leq
+   Gxf0m60w4+a33LjyHAV6ytCc/dIgosa/Xbi1GviEmtcUuqUbYavCMFcGJ
+   HD75SKM5vi+rO+LmauN8ntaIRh6qNgJ9rVqDvTacNXiSOP2jVLLGt9k3Q
+   DllDAkDz1om2gz//gMYYDdLrtUMGCqXznnaURFTbzQTYYfLtPzTpmZ9KL
+   iWTyyBgCHpVC6E7sCvJWOtvfgCeSutatn4vHIAFRTWdFEdT6bOAu1mPU5
+   Y6+/ilMm/i9K5ymCfdzXx2Rfv/YoqQwcM00etCnXhOzLarbbLRyfgh0tC
+   w==;
+X-CSE-ConnectionGUID: k9RAEjwGSgamRa9XeX3h3g==
+X-CSE-MsgGUID: ZLPy+0IQTPiF0K6BgJpihg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11905"; a="93861311"
+X-IronPort-AV: E=Sophos;i="6.27,103,1787036400"; 
+   d="scan'208";a="93861311"
+Received: from orviesa004.jf.intel.com ([10.64.159.144])
+  by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Sep 2026 16:13:30 -0700
+X-CSE-ConnectionGUID: I9G8xBqzTtaRX3D2cafWyg==
+X-CSE-MsgGUID: guv2WdsvSdisAJiJMRk7Kg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,103,1787036400"; 
+   d="scan'208";a="277231416"
+Received: from khuang2-desk.gar.corp.intel.com (HELO agluck-desk3.home.arpa) ([10.124.223.219])
+  by orviesa004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Sep 2026 16:13:30 -0700
+From: Tony Luck <tony.luck@intel.com>
+To: Fenghua Yu <fenghuay@nvidia.com>,
+	Reinette Chatre <reinette.chatre@intel.com>,
+	Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>,
+	Peter Newman <peternewman@google.com>,
+	James Morse <james.morse@arm.com>,
+	Babu Moger <babu.moger@amd.com>,
+	Drew Fustini <dfustini@baylibre.com>,
+	Dave Martin <Dave.Martin@arm.com>,
+	Chen Yu <yu.c.chen@intel.com>,
+	David E Box <david.e.box@intel.com>,
+	x86@kernel.org
+Cc: Christoph Hellwig <hch@infradead.org>,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	Tony Luck <tony.luck@intel.com>
+Subject: [PATCH v12 00/25] Allow AET to use PMT as loadable module
+Date: Wed, 16 Sep 2026 16:12:55 -0700
+Message-ID: <20260916231320.14502-1-tony.luck@intel.com>
+X-Mailer: git-send-email 2.55.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260912065657.062881527@linuxfoundation.org>
+Content-Transfer-Encoding: 8bit
 
-On Sat, Sep 12, 2026 at 09:00:50AM +0200, Greg Kroah-Hartman wrote:
-> 6.18-stable review patch.  If anyone has any objections, please let me know.
-> 
-> ------------------
-> 
-> From: Namhyung Kim <namhyung@kernel.org>
-> 
-> [ Upstream commit 0e6c07a3c30cdc4509fc5e7dc490d4cc6e5c241a ]
-> 
-> The recent change for perf c2c annotate broke build without slang
-> support like below.
-> 
->   builtin-annotate.c: In function 'hists__find_annotations':
->   builtin-annotate.c:522:73: error: 'NO_ADDR' undeclared (first use in this function); did you mean 'NR_ADDR'?
->     522 |                         key = hist_entry__tui_annotate(he, evsel, NULL, NO_ADDR);
->         |                                                                         ^~~~~~~
->         |                                                                         NR_ADDR
->   builtin-annotate.c:522:73: note: each undeclared identifier is reported only once for each function it appears in
-> 
->   builtin-annotate.c:522:31: error: too many arguments to function 'hist_entry__tui_annotate'
->     522 |                         key = hist_entry__tui_annotate(he, evsel, NULL, NO_ADDR);
->         |                               ^~~~~~~~~~~~~~~~~~~~~~~~
->   In file included from util/sort.h:6,
->                    from builtin-annotate.c:28:
->   util/hist.h:756:19: note: declared here
->     756 | static inline int hist_entry__tui_annotate(struct hist_entry *he __maybe_unused,
->         |                   ^~~~~~~~~~~~~~~~~~~~~~~~
-> 
-> And I noticed that it missed to update the other side of #ifdef
-> HAVE_SLANG_SUPPORT.  Let's fix it.
-> 
-> Cc: Tianyou Li <tianyou.li@intel.com>
-> Fixes: cd3466cd2639783d ("perf c2c: Add annotation support to perf c2c report")
-> Signed-off-by: Namhyung Kim <namhyung@kernel.org>
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
+Requiring INTEL_PMT_TELEMETRY=y to enable AET is a functional workaround
+to enable enumeration of Application Energy Telemetry (AET) events, but
+unacceptable to many users. It results in increased configuration complexity,
+increased kernel memory footprint and inability to patch problems by unloading
+a module and loading an updated version.
 
-This appears to be the same patch from [1] that was previously dropped.
-With this patch applied, I'm seeing the same build error as Jiri Slaby
-did on the linked thread when !HAVE_SLANG_SUPPORT.
+Add a registration function to the AET code that can be used by
+INTEL_PMT_TELEMETRY to provide the enumeration functions.
 
-For now I've reverted this commit, but I wanted to surface this upstream
-as well.
+INTEL_PMT_TELEMETRY can be loaded/unloaded independently of
+resctrl file system mount/unmount. Perform enumeration on
+every mount and cleanup on every unmount.
 
-Thanks,
-Mitchell
+Patch series based on v7.3-rc3
 
-[1]: https://lore.kernel.org/all/2025121754-breeching-aftermost-d10a@gregkh/
+Signed-off-by: Tony Luck <tony.luck@intel.com>
+
+Changes since v11:
+Link: https://lore.kernel.org/all/20260831174421.13921-1-tony.luck@intel.com/
+
+Patch 12 "Handle change in number of RMIDs on each mount"
+	split into three parts (12, 13, 14 in this series)
+Patch 14 "Enforce system RMID limit on AET event groups"
+	massively simplified, and moved later (now patch 20).
+
+See individual patches for changes to each part.
+
+Tony Luck (25):
+  x86/cpufeatures: Add missing CQM feature dependency
+  x86/resctrl: Check if monitoring features are supported
+  x86/resctrl: Enumerate monitor features in rdt_get_l3_mon_config()
+  x86/resctrl: Apply Intel MBM quirk from rdt_get_l3_mon_config()
+  x86/resctrl: Delete resctrl_cpu_detect()
+  arm,x86,fs/resctrl: Replace architecture
+    resctrl_arch_{alloc,mon}_capable()
+  x86/resctrl: Update special case for Intel Haswell enumeration
+  x86/resctrl: Delete rdt_alloc_capable and rdt_mon_capable
+  fs/resctrl: Remove redundant calls to resctrl_{alloc,mon}_capable()
+  x86/resctrl: Honor rdt=perf option to force enable AET perf events
+  fs/resctrl: Add interface to disable a monitor event
+  arm,x86,fs/resctrl: Allocate maximum needed rmid_ptrs[]
+  arm,x86,fs/resctrl: Allocate right size for L3 monitor arrays
+  fs/resctrl: Rebuild free RMID list on each mount
+  x86,fs/resctrl: Handle systems where AET is the only resource
+  x86/resctrl: Add PMT registration API for AET enumeration callbacks
+  platform/x86/intel/pmt: Register enumeration functions with resctrl
+  x86/resctrl: Use registered function pointers for AET enumeration
+  arm,x86,fs/resctrl: Enumerate AET on every resctrl mount
+  x86/resctrl: Enforce system RMID limit on AET
+  x86/resctrl: Export interface to report telemetry unbind/remove
+  platform/x86/intel/pmt: Inform resctrl when MMIO maps are being
+    removed
+  x86/resctrl: Require 64-bit x86 for resctrl support
+  x86/resctrl: Simplify Kconfig options for resctrl
+  x86,fs/resctrl: Document telemetry mount timing caveat
+
+ Documentation/filesystems/resctrl.rst      |  18 ++-
+ include/linux/arm_mpam.h                   |   3 -
+ include/linux/intel_vsec.h                 |  14 ++
+ include/linux/resctrl.h                    |  82 ++++++++++-
+ arch/x86/include/asm/processor.h           |   4 -
+ arch/x86/include/asm/resctrl.h             |  24 +---
+ arch/x86/kernel/cpu/resctrl/internal.h     |  23 +---
+ arch/x86/kernel/cpu/amd.c                  |   3 -
+ arch/x86/kernel/cpu/cpuid-deps.c           |   1 +
+ arch/x86/kernel/cpu/hygon.c                |   3 -
+ arch/x86/kernel/cpu/intel.c                |   7 -
+ arch/x86/kernel/cpu/resctrl/core.c         | 150 ++++++++++++---------
+ arch/x86/kernel/cpu/resctrl/intel_aet.c    | 114 ++++++++++++++--
+ arch/x86/kernel/cpu/resctrl/monitor.c      |  71 ++++++----
+ drivers/platform/x86/intel/pmt/telemetry.c |  47 ++++++-
+ drivers/resctrl/mpam_resctrl.c             |  44 +++---
+ fs/resctrl/monitor.c                       | 119 +++++++++++-----
+ fs/resctrl/pseudo_lock.c                   |   6 +-
+ fs/resctrl/rdtgroup.c                      |  79 +++++++----
+ arch/x86/Kconfig                           |  15 +--
+ arch/x86/kernel/cpu/resctrl/Makefile       |   3 +-
+ 21 files changed, 562 insertions(+), 268 deletions(-)
+
+
+base-commit: fd73f4a6659897191fa0d40695fe370925dd3780
+-- 
+2.55.0
 
