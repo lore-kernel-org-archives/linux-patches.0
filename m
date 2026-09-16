@@ -1,46 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AED04279F9;
-	Wed, 16 Sep 2026 19:29:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C64A41D647;
+	Wed, 16 Sep 2026 19:29:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789586960; cv=none; b=BmOQFEHYWkIBU2/iUexI1T6SFJlONgw3EPQQDqJ7cexgdoNcRLNNuXEYLEzwop0eKH9UqtCt8I4muFc0NalhM+jnxubIT2j0LWPLfdfNdAxWBO5CYHtbCYgzuyUIEeaWltJox62mAKyfPOh82ypV+C/o+MNvxH4oT2ZZBguXE88=
+	t=1789586960; cv=none; b=ADTvhEJ9rwpK511/0PqQ1zNpRdAxZ5bc3yQu0ILtNM6u7YwCcRVYDVIsUc1wxEmr0rQvwOXzpHqFHrIPGsN/nq2Nc6si+1id1qxzv/DiY+QZ3u0Q4qlk6fuB+DS5j3ofZvxocLjL9bHx6BTKgNiM+LVtFDKEK7T3pE/5wqPIKds=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1789586960; c=relaxed/simple;
-	bh=su2s6FraLVODJMga0xyL4LC6k1gvAAoBM9koNN6gwOA=;
+	bh=rHUqm2UjLAeB7U8JQscQw++E1G3DyMz0xDIKonFQOBI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QxVxy4WjSrJnMrM/e5CEkydy8BzuqTnEJxsM4YdnvFuCnxZA9/Vpr6AQBK+W8pOsg3lt9kwHt6CPL+F2601FgKTLOHHAD8eleDSalcWpbZLa3onpU4XNUkP04nCkHGN3QZQbjOah3sApvniYpRHuuv6ZtjnXcmR5/XJY3aBbNWc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=E1BKNVTj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Au7Dt4r0NB0StVjcCmAVTLY4bjfBFqZxgp/8NtDCD9zSfu63ab4Fd5IS44p6XVMxRzj6BiUZISa1iAi1giKjooqUErQKtPPIbLgSoyitt7D4ZyiUHVGc5xNqhN/Z9eQ3nN51ZYbvE/vG4UPtShEYbPIWYjtMVpTJaHRwztmte4w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KNwrYgbw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="E1BKNVTj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4D071F008AB;
-	Wed, 16 Sep 2026 19:28:53 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KNwrYgbw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF9011F008A7;
+	Wed, 16 Sep 2026 19:28:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789586934;
-	bh=wC7t0oAWJa8NAFtLiTSXnCmDKBIqZ1KapPYK19zOGiE=;
+	s=k20260515; t=1789586931;
+	bh=+K90hUcY6+CNytfsBDoQHthfqgg8vJ0wOdTslSe6LSU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=E1BKNVTj8DoHTb/nxb/9QI1Xy+DpWdX9VZv99yXzWgknzKp8ClFkjwbTLzqPm+EbQ
-	 BEg0mWCbYUNKgPbXGAXeYG879S2eq2kaPUf+BvS65FXnqQXH7jwIN4sS1SyJjkHRtU
-	 Dn0CQWllp/3nH0Dh4poD9vYMwvCWrpCRjfjRY9bwS/pKWN7fZz9ZmPUBdDc/4wYeSy
-	 u/4WBE66k9vSjsNQCd6I9CWmgrkmHroMeUNawtm6J4uOzsEg1SCv5rLd98Bad4Lqaf
-	 bKEmwio+rDC/7Y5NjDl1uu9S5wx294IoN4RWFRvgUSrQMbpIW4YVL3Dq9V3+Lis3zy
-	 sRcF2MaV+6Y4A==
+	b=KNwrYgbw19h4zpVCAfofuie66fylf9fROKATaFJOvCQn5WF6roJfxlWfPtQrrPF/o
+	 PLM3WL1IdW6T9uzEES6h+/bJIYpxppIkzmw3mIUdSlDXGHEDd5RrlU545Ps9TqDgPX
+	 a+Rt+JMxgVELilXc8phXyCFHIac4bX0EJUNIjiMwphEi0t8sgo/Hs3co1tfLJPBSev
+	 SMnx2rTHxCo/xfN4GT7PFbtpxF+RaQqap+Yu2yf+rh8hnBgiSks5VV7ndhUNVMrorG
+	 mXo1kI6xynX+OG4NLX9i1PDDV8cCh4SGrp6z8vJcDWVk45kfVW0yORwi3fjuPttYd4
+	 R6aFb9qr3oUPw==
 From: Sasha Levin <sashal@kernel.org>
-To: Karl Mehltretter <kmehltretter@gmail.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	stable@vger.kernel.org
 Cc: Sasha Levin <sashal@kernel.org>,
-	stable@vger.kernel.org,
 	patches@lists.linux.dev,
-	Edward Adam Davis <eadavis@qq.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	syzbot+b7f6f8c9303466e16c8a@syzkaller.appspotmail.com,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Subject: Re: [PATCH 5.15 879/935] bluetooth/l2cap: sync sock recv cb and release
-Date: Wed, 16 Sep 2026 15:28:14 -0400
-Message-ID: <daily-reply-20260916-0024-re-l2cap-5-10-revert-hold@kernel.org>
+	Heiko Carstens <hca@linux.ibm.com>,
+	Vegard Nossum <vegard.nossum@oracle.com>,
+	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Subject: Re: [PATCH 6.12 1268/1376] s390: Add ARCH_HAS_PREEMPT_LAZY support
+Date: Wed, 16 Sep 2026 15:28:11 -0400
+Message-ID: <daily-reply-20260916-0021-re-s390-preempt-lazy@kernel.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <aqoaFdvSsDiiLb5I@gmail.com>
-References: <aqoaFdvSsDiiLb5I@gmail.com>
+In-Reply-To: <1910ceb0-7b9e-44c8-8ee2-a6a86c7f6095@oracle.com>
+References: <1910ceb0-7b9e-44c8-8ee2-a6a86c7f6095@oracle.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -49,20 +48,15 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-> So the revert on its own trades the deadlock for this. I will send the
-> l2cap_core.c hunk, which also fixes the unbalanced unlock you found, plus
-> 89e856e124f9 without the recv_cb locking. I will repeat the runs and test
-> on some real hardware before sending.
+> I don't see this defined in 6.12.y.
 
-Thank you for running that down. I am holding the queued 5.10 revert of
-89e856e124f9 ("bluetooth/l2cap: sync sock recv cb and release") out of the
-next release until your series arrives, since shipping it alone reopens the
-NULL deref you reproduced.
+Correct, ARCH_HAS_PREEMPT_LAZY does not exist on 6.12, so the select is
+silently ignored and 9de3e4bf6cfb ("s390: Add ARCH_HAS_PREEMPT_LAZY support")
+is inert there.
 
-I also withdraw my objection that f1a8f402f13f ("Bluetooth: L2CAP: Fix
-deadlock") is unlandable on these trees. You are right that the fix is the
-l2cap_core.c and l2cap_sock.c hunks and that the hci_sync and hci_core hunks
-are an unrelated hci_dev_cmd() refactor.
+Same answer as on the powerpc sibling: it came in off a Kconfig context line
+rather than as a real dependency, it is already released, and reverting a
+no-op buys nothing.
 
 -- 
 Thanks,
