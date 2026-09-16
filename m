@@ -1,48 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5870B409103;
-	Wed, 16 Sep 2026 19:28:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5330C3E1CFB;
+	Wed, 16 Sep 2026 19:29:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789586949; cv=none; b=sp0G53kdpmRaAcYZqFPiXUopZoWt0oQYQepgdTnCcRI17qx4fKihXUHxqw5P7Z25EZ7Oqr7jeCVHlmkCSqD4PqFxE0kSpJoS0PjTa6GswTd1BoCmXvhsC1vU55WJ3Ts+yHggOc+hrUuhL0yY53ZwLMInOtIi3PBJXeQYgM9sOlI=
+	t=1789586949; cv=none; b=se8WOv4Ph3mRshiZk61lyjh4UsiRk7zilym3yUv0RpsBPnDlO5Qpv3ZoskI4WV30fXeko6B0D/xp4M3zF4mvUhtj3XBidzt5qAb6Fi/Z6XinKIWrXouRUVruIRRMRH9aBWZ8Za6verzqZfFOLkBojOqM4As29wDCtpDHT6A/Ww8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1789586949; c=relaxed/simple;
-	bh=f3+Nwc0ClZxs4XZjo7K6q0R3UI/3OTeGqRK5r6WXvKs=;
+	bh=wHfLu9KpSSr0Oe8zXo0IpESM1mgtoPBv9G4qrkcMYJk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O1QUWowzCsUtzcSMdHry4MeLYbMhn88x2t08/aELgIr1zVNbV0mEJNB3wdMhBARr/ZhJDuXtUywkXDV/oAOjZGjw4pAMcViBwbXPhMKzbktqe5J5cHzPEZNfi02+BjXNV18y6DuhELbJo4+LRx+xtGRytoj1/PLtgPeTPxuN7PM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=l9rerQIo; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cJ9TdVoq4Njr/CuS70ZaJUu2gyu2tY733JstnJ8gMnxIKZCvVgqyJNkZue1i1EmE4EbCWCsKOCDiPci4BfFrduzt6dYBBLmupX32VwgysgMjCQBPrNi2Y0ttcuUjjoauH9PhZ00fSvD/JR9z3U20BPHHCZswC21O4XNTPnJlWW4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=i9jjxlfp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="l9rerQIo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 761861F0089F;
-	Wed, 16 Sep 2026 19:28:39 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="i9jjxlfp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF80F1F00898;
+	Wed, 16 Sep 2026 19:28:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1789586920;
-	bh=hvF1VrWKE+GcjeWvB9qffuANz5aN89iJg7z3UO9vj4s=;
+	s=k20260515; t=1789586933;
+	bh=8Pa9kRL2OAnCyhlfcaF0kA/9WC02W89KHssK6RNERus=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=l9rerQIoURruo9DgEXWeL+f/6SmswgWmu8LFOrAUHB02Gg642Fqj583euIjy0I7xg
-	 jFtOWPxSMOzhAZmrSQxLbCaqPgMjZHtFCBlis0Ic1WcAXfUnb+J2BkXgJKpdC7onup
-	 mkXKbaPJ+cFnxqk9D5tn5meQAhVZK+fmjk+jA+E3UW5jzmN+Qh9GrnkCteWCaaO1mt
-	 yQkIeiG3GRGE2A+3kp5pnEJX9qvZHcUAVnhyfPGYa5AVD1GuUOyvPjfJSnf3wIARmT
-	 b9gtBNwq8vJeDCEsxVKQwan08yIbqd3TcDqxrCPkTPFnWlfDTn2/NrlMn4ZtKgok9x
-	 9qiPb+a5lFk7A==
+	b=i9jjxlfpeCI3uNuFMSpjxOQcEu30b6JEugE7MD1JYETKOZvFDPoVnUkYm9l1ZLUi/
+	 4aUw3Y5QEauQCwIbqmDJmJROTCcJKJIGPQHfR1Sr3i8Y+SgGoYEdimq5BTav18+IFU
+	 RE7GjEdUlKiSlW6MjgEVKSIlBK37YQTWbKfQTy5XmTLpZhPzpiLa2sae8MiVdjt7tD
+	 oiVUfg4XcWeZHEdhXfL7w5NvXenRC/slrKVdVyB/QbzWXfCBNusmtFv+/hu8iUb44U
+	 /cs73lRu54VSAFzdfOPWoPkjg4CN56WxD1MMoCdOi8tXL4ov2/VxzMPsDyAG4Yyw/b
+	 +UfmqrSAaJ8DQ==
 From: Sasha Levin <sashal@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+To: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	stable@vger.kernel.org
 Cc: Sasha Levin <sashal@kernel.org>,
 	patches@lists.linux.dev,
-	Hao Ge <gehao@kylinos.cn>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Harry Yoo <harry.yoo@oracle.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
 	Vegard Nossum <vegard.nossum@oracle.com>,
-	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Subject: Re: [PATCH 6.12 1374/1376] slab: reset slab->obj_ext when freeing and it is OBJEXTS_ALLOC_FAIL
-Date: Wed, 16 Sep 2026 15:28:02 -0400
-Message-ID: <daily-reply-20260916-0012-re-slab-obj-ext-dup@kernel.org>
+	Guenter Roeck <linux@roeck-us.net>
+Subject: Re: [PATCH 6.12 1160/1376] hwmon: (emc1403) Rely on subsystem locking
+Date: Wed, 16 Sep 2026 15:28:13 -0400
+Message-ID: <daily-reply-20260916-0023-re-hwmon-watchdog-autosel@kernel.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <34a69126-8408-4761-9b38-6ac9041b5b46@oracle.com>
-References: <34a69126-8408-4761-9b38-6ac9041b5b46@oracle.com>
+In-Reply-To: <68500ad8-35da-479c-9b37-a5214add1c2c@roeck-us.net>
+References: <68500ad8-35da-479c-9b37-a5214add1c2c@roeck-us.net>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -51,15 +48,11 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-> The text is similar, but downstream placed it in the wrong lifecycle
-> function: alloc_tagging_slab_free_hook(), not free_slab_obj_exts().
+> I think we are at a point where the automatic backports are way too aggressive.
+> Greg, please stop autoselecting hwmon and watchdog patches for backports, and
+> only pick patches with explicit Cc: stable going forward.
 
-Confirmed. The hunk anchored there because both functions open with the same
-two lines, so the apply found matching context in the wrong place.
-
-The duplicate is reverted on 6.12. The correct copy of 86f54f9b6c17 ("slab:
-reset slab->obj_ext when freeing and it is OBJEXTS_ALLOC_FAIL") is already in
-free_slab_obj_exts() on that tree, so there is nothing to reapply.
+Ack. I'll add it to my lists.
 
 -- 
 Thanks,
