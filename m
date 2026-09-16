@@ -1,48 +1,48 @@
 Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.14])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B997551FCCC
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9B1E51FCCD
 	for <patches@lists.linux.dev>; Wed, 16 Sep 2026 23:13:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789600429; cv=none; b=hl0f8l+WFS9WoKMqDveDnyJWwiA2WVZ1bN2IxLO0rTBjVIuX8WUu1IEWs1Qq+ci9+TAsNPtmkCmu3ZPXQnb+KtjtuAsnO89DIho46B1hyIlfnJXrfYus6ACGP7b9UMH7g6+YsZavQTRnakD1Vvsxax+4A6o9kyTnuXV6bR/lORU=
+	t=1789600429; cv=none; b=fYNUCMRaAXnR10SzkVEAgmSnlafbSx6NfhmT5A/rkug409Fc0IXMnenXVDJubCdQZGbJwmNVynwZRvFVGgS/9Qje9UbN475GvVMNMClK0ddpUw1/fVOaSXlyZQJzZ9kLjNu8sor3JFN+YsMsD/jJoNfPdXlIdO1Jeh6l+5RDUY0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1789600429; c=relaxed/simple;
-	bh=rDLLR0LDnRx/9atFQ+G3cGMZ7kZWOpg49SUEMq2vW0I=;
+	bh=bjl53x6ixGVQwtoXJbvhU84Wge/Z4FIAwJfWtvF1zdo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jX3IadwQp4AMWVLFLk/XYCN84EMIOs2CIskR5beRXZjIQllqS27qvL/CG71pthWPsMHRzscrx1rmxBouBZ96VR7CD1jy21KN85sTkx1OFNzTiv9rAokJdGvTbqeGBti2Zhxnz9HX71Hsgb48f0ZCKBivz9uWD4GPZj72uq/KQww=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=byIUXC90; arc=none smtp.client-ip=198.175.65.14
+	 MIME-Version; b=VbO0U7Y2OB41Q6zhu2+lcufo02P2GaNYDpPpSNHf8qmIGg4bt8dafSbSKoKZcJwJtrL5SHkGugItDMwNpBQ42HhWibcZSy+Vo9BxETwYFFPiipLvfddV7gkZMykouxYXy/ad4zZzWWs4rCLHN9WiZNexBIhmoRXHt2Z9wvhCiEQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=KFyYFO9C; arc=none smtp.client-ip=198.175.65.14
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="byIUXC90"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="KFyYFO9C"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
   t=1789600427; x=1821136427;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=rDLLR0LDnRx/9atFQ+G3cGMZ7kZWOpg49SUEMq2vW0I=;
-  b=byIUXC907lvpl0RrpuD/wsh61bXQ2o9JgREiYEnxKgGe78ABUCrwZcyq
-   kP+yAwihat+rNVGATIbGClszU1Ojp8wUzJ/6TcKYT311alRpreEzC6u5w
-   UTPSNbZKbHVU5WBF5iTwPDAkwLbeKlFHD6WaW4wG+u5uER1+oAno00V17
-   s+lfNSp9PEz5hPWGDw9WcurCCddHU2e9yQa3+6KnsXwfJfZBrt9AblUdo
-   Y8gjBABwkKKQVbJttxk7vDD6vS887hl9ty8LAiWTiAcPv9g40+rmTuDYp
-   PpmTzLgq5NC0q8i0WaJnsWAbm3SnE2E9qSTIEwKeWsbSJG3tcfEmV6mQx
+  bh=bjl53x6ixGVQwtoXJbvhU84Wge/Z4FIAwJfWtvF1zdo=;
+  b=KFyYFO9CD0DKVGZ/38FL5ch94QHLNLYbS1pqbLXBilU09+dNvBnc0JwW
+   IqSJ/uOcNrTVyfyuno7+1rn7Kzy5aWUMFoQKo4WsIVuhzJCqUeEWVxf4w
+   zlwoNtd1xdcJAcfe4jBFA6RaiospF3ktZMiD68aNI2DHVWIV5JOm0bw6k
+   sbq13MM39zhkwkiNeleEGwfy9aDf4CFc83f+HGLI08V50nhr1gATJyhtB
+   XWYK9LLsF77Q6GbmEicmLXSCbbtw8HTIoCveJVWEbjEg01A/RspNG4gaG
+   M3+vc4fbPSLhzzcxzlpOiaF4QfZ0iQApvKi8NwCfClAd3jPjURTY18zIi
    w==;
-X-CSE-ConnectionGUID: vipE5QrIQl6ZggV6kfZbdw==
-X-CSE-MsgGUID: ns2mdnTSSNaKnfCEpA/bIQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11905"; a="93861453"
+X-CSE-ConnectionGUID: xlkCJ2PDTUGV5lLsK3KMrg==
+X-CSE-MsgGUID: PV7w3WJcSj6eaXlMojHuvA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11905"; a="93861444"
 X-IronPort-AV: E=Sophos;i="6.27,103,1787036400"; 
-   d="scan'208";a="93861453"
+   d="scan'208";a="93861444"
 Received: from orviesa004.jf.intel.com ([10.64.159.144])
-  by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Sep 2026 16:13:37 -0700
-X-CSE-ConnectionGUID: ilIvPQJaS5mmoc0aIfMOmA==
-X-CSE-MsgGUID: 1WnhJTtjTpCBX2LF8q692Q==
+  by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Sep 2026 16:13:36 -0700
+X-CSE-ConnectionGUID: RT5IhKlMSmaXgZQnznc2Iw==
+X-CSE-MsgGUID: 2n05r5EDT42UKKmYE1PkeQ==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.27,103,1787036400"; 
-   d="scan'208";a="277231476"
+   d="scan'208";a="277231472"
 Received: from khuang2-desk.gar.corp.intel.com (HELO agluck-desk3.home.arpa) ([10.124.223.219])
-  by orviesa004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Sep 2026 16:13:37 -0700
+  by orviesa004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Sep 2026 16:13:36 -0700
 From: Tony Luck <tony.luck@intel.com>
 To: Fenghua Yu <fenghuay@nvidia.com>,
 	Reinette Chatre <reinette.chatre@intel.com>,
@@ -59,9 +59,9 @@ Cc: Christoph Hellwig <hch@infradead.org>,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
 	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH v12 15/25] x86,fs/resctrl: Handle systems where AET is the only resource
-Date: Wed, 16 Sep 2026 16:13:10 -0700
-Message-ID: <20260916231320.14502-16-tony.luck@intel.com>
+Subject: [PATCH v12 14/25] fs/resctrl: Rebuild free RMID list on each mount
+Date: Wed, 16 Sep 2026 16:13:09 -0700
+Message-ID: <20260916231320.14502-15-tony.luck@intel.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260916231320.14502-1-tony.luck@intel.com>
 References: <20260916231320.14502-1-tony.luck@intel.com>
@@ -73,142 +73,125 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On a system with no L3 monitor resources it should still be possible to
-run with just AET.
+Application Energy Telemetry (AET) event enumeration takes place
+asynchronously. Linux builds the pmt_telemetry module into the kernel to
+kick off enumeration early enough that it completes before first mount of
+the resctrl file system.
 
-Update get_rdt_mon_resources() to return true based on whether the
-system supports monitoring rather than on the presence of any of the
-L3 monitor features.
+Allowing pmt_telemetry to be a loadable module means that it is possible
+for different numbers of RMIDs to be supported on each mount, depending
+on whether pmt_telemetry module is loaded.
 
-Refuse to mount the resctrl file system if there are no monitoring or
-control features.  Add invalfc() to rdt_get_tree() so the console log will
-let the user know why the mount failed.
+Initialize rmid_free_lru based on the number of RMIDs available for the
+current mount cycle.
 
 Signed-off-by: Tony Luck <tony.luck@intel.com>
 ---
 v12:
-	Cleanups in get_rdt_mon_resources()
-	Add invalfc() to rdt_get_tree()
-	Change commit message with updated changes
+	New patch. Split from patch 12.
 ---
- arch/x86/kernel/cpu/resctrl/internal.h |  2 +-
- arch/x86/kernel/cpu/resctrl/core.c     | 20 +++++++++++---------
- arch/x86/kernel/cpu/resctrl/monitor.c  |  4 +---
- fs/resctrl/rdtgroup.c                  |  8 ++++++--
- 4 files changed, 19 insertions(+), 15 deletions(-)
+ fs/resctrl/monitor.c | 64 +++++++++++++++++++++++++++++---------------
+ 1 file changed, 42 insertions(+), 22 deletions(-)
 
-diff --git a/arch/x86/kernel/cpu/resctrl/internal.h b/arch/x86/kernel/cpu/resctrl/internal.h
-index e46eb9a4c725..d70c8cb1cb81 100644
---- a/arch/x86/kernel/cpu/resctrl/internal.h
-+++ b/arch/x86/kernel/cpu/resctrl/internal.h
-@@ -226,7 +226,7 @@ union l3_qos_abmc_cfg {
+diff --git a/fs/resctrl/monitor.c b/fs/resctrl/monitor.c
+index b8bd59c52c62..8dde2b81b72f 100644
+--- a/fs/resctrl/monitor.c
++++ b/fs/resctrl/monitor.c
+@@ -75,6 +75,11 @@ static unsigned int rmid_limbo_count;
+  */
+ static struct rmid_entry	*rmid_ptrs;
  
- void rdt_ctrl_update(void *arg);
- 
--int rdt_get_l3_mon_config(struct rdt_resource *r);
-+void rdt_get_l3_mon_config(struct rdt_resource *r);
- 
- bool rdt_cpu_has(int flag);
- 
-diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
-index e633da548959..addcb2a19c98 100644
---- a/arch/x86/kernel/cpu/resctrl/core.c
-+++ b/arch/x86/kernel/cpu/resctrl/core.c
-@@ -991,7 +991,7 @@ static __init bool get_rdt_alloc_resources(void)
- static __init bool get_rdt_mon_resources(void)
- {
- 	struct rdt_resource *r = &rdt_resources_all[RDT_RESOURCE_L3].r_resctrl;
--	bool ret = false;
-+	bool l3_mon_found = false;
- 
- 	/* Any monitoring at all? */
- 	if (!cpu_feature_enabled(X86_FEATURE_CQM))
-@@ -1001,27 +1001,29 @@ static __init bool get_rdt_mon_resources(void)
- 
- 	/* Any of the L3 monitoring features? */
- 	if (!cpu_feature_enabled(X86_FEATURE_CQM_LLC))
--		return false;
-+		goto skip_l3_feature_checks;
- 
- 	if (rdt_cpu_has(X86_FEATURE_CQM_OCCUP_LLC)) {
- 		resctrl_enable_mon_event(QOS_L3_OCCUP_EVENT_ID, false, 0, NULL);
--		ret = true;
-+		l3_mon_found = true;
- 	}
- 	if (rdt_cpu_has(X86_FEATURE_CQM_MBM_TOTAL)) {
- 		resctrl_enable_mon_event(QOS_L3_MBM_TOTAL_EVENT_ID, false, 0, NULL);
--		ret = true;
-+		l3_mon_found = true;
- 	}
- 	if (rdt_cpu_has(X86_FEATURE_CQM_MBM_LOCAL)) {
- 		resctrl_enable_mon_event(QOS_L3_MBM_LOCAL_EVENT_ID, false, 0, NULL);
--		ret = true;
-+		l3_mon_found = true;
- 	}
- 	if (rdt_cpu_has(X86_FEATURE_ABMC))
--		ret = true;
-+		l3_mon_found = true;
- 
--	if (!ret)
--		return false;
-+	if (l3_mon_found)
-+		rdt_get_l3_mon_config(r);
- 
--	return !rdt_get_l3_mon_config(r);
-+skip_l3_feature_checks:
-+	/* Even if there are no L3 monitor events, AET might be supported */
-+	return true;
- }
- 
- static __init void __check_quirks_intel(void)
-diff --git a/arch/x86/kernel/cpu/resctrl/monitor.c b/arch/x86/kernel/cpu/resctrl/monitor.c
-index 2f3e5b89a7fc..e684353631de 100644
---- a/arch/x86/kernel/cpu/resctrl/monitor.c
-+++ b/arch/x86/kernel/cpu/resctrl/monitor.c
-@@ -431,7 +431,7 @@ static void __init intel_rdt_mbm_apply_quirk(u32 num_rmid)
- 	mbm_cf = mbm_cf_table[cf_index].cf;
- }
- 
--int __init rdt_get_l3_mon_config(struct rdt_resource *r)
-+void __init rdt_get_l3_mon_config(struct rdt_resource *r)
- {
- 	struct rdt_hw_resource *hw_res = resctrl_to_arch_res(r);
- 	unsigned int mbm_offset;
-@@ -514,8 +514,6 @@ int __init rdt_get_l3_mon_config(struct rdt_resource *r)
- 		intel_rdt_mbm_apply_quirk(r->mon.num_rmid);
- 
- 	r->mon_capable = true;
--
--	return 0;
- }
- 
- static void resctrl_abmc_set_one_amd(void *arg)
-diff --git a/fs/resctrl/rdtgroup.c b/fs/resctrl/rdtgroup.c
-index 0c9c29037667..2e9f71901f68 100644
---- a/fs/resctrl/rdtgroup.c
-+++ b/fs/resctrl/rdtgroup.c
-@@ -3195,6 +3195,11 @@ static int rdt_get_tree(struct fs_context *fc)
- 		goto out;
- 	}
- 
-+	if (!resctrl_alloc_capable() && !resctrl_mon_capable()) {
-+		ret = invalfc(fc, "No allocation or monitoring features are available or enabled");
-+		goto out;
-+	}
++/*
++ * @num_rmid_ptrs - The number of elements in rmid_ptrs[].
++ */
++static u32 num_rmid_ptrs;
 +
- 	ret = setup_rmid_lru_list();
- 	if (ret)
- 		goto out;
-@@ -3253,8 +3258,7 @@ static int rdt_get_tree(struct fs_context *fc)
- 	if (resctrl_mon_capable())
- 		resctrl_arch_enable_mon();
+ /*
+  * This is the threshold cache occupancy in bytes at which we will consider an
+  * RMID available for re-allocation.
+@@ -975,45 +980,60 @@ void mbm_setup_overflow_handler(struct rdt_l3_mon_domain *dom, unsigned long del
  
--	if (resctrl_alloc_capable() || resctrl_mon_capable())
--		resctrl_mounted = true;
-+	resctrl_mounted = true;
+ int setup_rmid_lru_list(void)
+ {
+-	struct rmid_entry *entry = NULL;
+-	u32 idx_limit;
+-	u32 idx;
++	struct rmid_entry *entry;
++	u32 cur_idx_limit;
++	u32 rsvd_idx;
+ 	int i;
  
- 	if (resctrl_is_mbm_enabled()) {
- 		r = resctrl_arch_get_resource(RDT_RESOURCE_L3);
+ 	if (!resctrl_mon_capable())
+ 		return 0;
+ 
+ 	/*
+-	 * Called on every mount, but the number of RMIDs cannot change
+-	 * after the first mount, so keep using the same set of rmid_ptrs[]
+-	 * until resctrl_exit(). Note that the limbo handler continues to
+-	 * access rmid_ptrs[] after resctrl is unmounted.
++	 * Allocate the largest number of RMIDs that this system will ever
++	 * need. These cannot be freed until resctrl_exit() because the limbo
++	 * handler continues to access rmid_ptrs[] after resctrl is unmounted.
+ 	 */
+-	if (rmid_ptrs)
+-		return 0;
++	if (!rmid_ptrs) {
++		num_rmid_ptrs = resctrl_arch_system_max_rmid_idx();
++		rmid_ptrs = kzalloc_objs(struct rmid_entry, num_rmid_ptrs);
++		if (!rmid_ptrs) {
++			num_rmid_ptrs = 0;
++			return -ENOMEM;
++		}
+ 
+-	idx_limit = resctrl_arch_system_max_rmid_idx();
+-	rmid_ptrs = kzalloc_objs(struct rmid_entry, idx_limit);
+-	if (!rmid_ptrs)
+-		return -ENOMEM;
++		for (i = 0; i < num_rmid_ptrs; i++) {
++			entry = &rmid_ptrs[i];
++			INIT_LIST_HEAD(&entry->list);
+ 
+-	for (i = 0; i < idx_limit; i++) {
+-		entry = &rmid_ptrs[i];
+-		INIT_LIST_HEAD(&entry->list);
++			resctrl_arch_rmid_idx_decode(i, &entry->closid, &entry->rmid);
++		}
++	}
+ 
+-		resctrl_arch_rmid_idx_decode(i, &entry->closid, &entry->rmid);
+-		list_add_tail(&entry->list, &rmid_free_lru);
++	/* Find how many RMIDs are available for this mount */
++	cur_idx_limit = resctrl_arch_system_num_rmid_idx();
++	if (cur_idx_limit > num_rmid_ptrs) {
++		pr_warn_once("RMID count %u exceeds allocated %u; capping\n",
++			     cur_idx_limit, num_rmid_ptrs);
++		cur_idx_limit = num_rmid_ptrs;
+ 	}
+ 
++	INIT_LIST_HEAD(&rmid_free_lru);
++
+ 	/*
+ 	 * RESCTRL_RESERVED_CLOSID and RESCTRL_RESERVED_RMID are special and
+ 	 * are always allocated. These are used for the rdtgroup_default
+ 	 * control group, which was setup earlier in rdtgroup_setup_default().
+ 	 */
+-	idx = resctrl_arch_rmid_idx_encode(RESCTRL_RESERVED_CLOSID,
+-					   RESCTRL_RESERVED_RMID);
+-	entry = __rmid_entry(idx);
+-	list_del(&entry->list);
++	rsvd_idx = resctrl_arch_rmid_idx_encode(RESCTRL_RESERVED_CLOSID,
++						RESCTRL_RESERVED_RMID);
++
++	for (i = 0; i < cur_idx_limit; i++) {
++		entry = &rmid_ptrs[i];
++		/* Don't add reserved or busy entries to free list */
++		if (i == rsvd_idx || entry->busy)
++			continue;
++		list_add_tail(&entry->list, &rmid_free_lru);
++	}
+ 
+ 	return 0;
+ }
 -- 
 2.55.0
 
