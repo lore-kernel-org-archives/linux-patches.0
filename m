@@ -1,46 +1,46 @@
 Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.14])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BED834D7D29
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8511E4D2ED3
 	for <patches@lists.linux.dev>; Wed, 16 Sep 2026 23:13:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789600414; cv=none; b=Qt/+8YDws0ncpvxiJpYd/L1BGu4s5vWzsHk/avNYog/aDYtyc0G/7nz5DoP82L20m6cyFunKwcgXInsRze88KUjUgf7uEsQDxEsTIzicXrRsz/gqfA9eC+LNoK6izL+STE6JxhKQ75t9gxPl5h9PrIWN3CK1nMoTW/axLL2ArlE=
+	t=1789600414; cv=none; b=nwn6pi+HoI8mbkAjsepQTHiPunobdRUXE63gEAAYwoUpaTTQsXNUcH+L93u3UT+QL6n5TbkLkPUBdOsL2Q9CpeNBaXXlQbZCKOHOwS3ovyGmWMQ+VjGFHtxRuAeP3a3Omag503KuN8ByYbntXcOikNnUNJqd+DvSTBmTG7M8Crc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1789600414; c=relaxed/simple;
-	bh=vMkHeDQIC1JCCg3KkGmer0kIWP3pCj5wuRSLO20edJ4=;
+	bh=SJWp1RNmkTVmRTX4ajftJQ6TmgZ+7cQho1eSP7VnGvs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W6y7VoLctYPUQi0ufQvEB1/nXVnqovq9KmPHqTh3yKe4atLDv7xpdn5D0MYqQLln/h0JwCtrf9iEh6+ehWGXGcMTTPbgAlfBc74WtiGOKo3IzO6qLzY2qxZRxlaz1NtP0rG7CZMcp1tLhifybN2NcKgaeFYYVCA6PyyiTsC5y0Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=FYVQwxh2; arc=none smtp.client-ip=198.175.65.14
+	 MIME-Version; b=BUbDIY7hLIeCKK0Uhkbg3Iz5LVi1ghDJmvAzEJ+1NKTlmoSFxCDz4z4SazdKJ7oUJFh8ZAk8cPVEhYWVBfTYraf6oz+rKHi0SHtlB4tq5YLGiJmGmuiVFmbNRK6pO3qS/K3PaIRfgjsZ2/pZqz6w3YZ7Ej9OHqFF8dMhBnS8iRo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=U5kLOWwl; arc=none smtp.client-ip=198.175.65.14
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="FYVQwxh2"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="U5kLOWwl"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
   t=1789600413; x=1821136413;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=vMkHeDQIC1JCCg3KkGmer0kIWP3pCj5wuRSLO20edJ4=;
-  b=FYVQwxh27Cp2AShBurZeLEyrnC0pdMT3gCmQmRKNCXLQ9r+sX3xmVeA5
-   vCTP60xAOHQKSsub6DOOFOYcQgq9wQxUeXu76galEeao7yzoxBoJbQ+bv
-   Y6XIVVK/wMvTyUWkugvtbH2JJhf9LBvmxVJCezfmu+Ozf959wRLqfx5yt
-   cDAktG4HciJRMRcFEI0Ogg1U1EUI4D5nFL2oCvwrvQdmOLPvDKnoDBXIB
-   B9f6enEda1t4YDdoJ79n8Hwmxs5X74LQ/kV/7P8SPwAwUKC2x3H9pgL8M
-   iaDL17rairUEIeCwSiD7Yo97p0qLlOtu7baMdX5xyi9dP5WDRJdEV/TaZ
-   Q==;
-X-CSE-ConnectionGUID: 7Cb1//eQTYirOmuwFDsBCA==
-X-CSE-MsgGUID: BddKxZlRRXC78zocOCN0vw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11905"; a="93861335"
+  bh=SJWp1RNmkTVmRTX4ajftJQ6TmgZ+7cQho1eSP7VnGvs=;
+  b=U5kLOWwlQbYXROA+vKaQbPJPi7BYs6WFif2aBlFQendRK3CTcXGMx87W
+   vhAwqrlyKwAqTf/v7jLnW4S9Xon6sLm7Thk17lfherCfKig8xahYH+7tH
+   zjflM+KhpVrheIzkmZwclHH6uLVzoLNuYbQuG0T9XhmHvglERtJSzJWIA
+   aTqEupmFl2lzjlSFK2T2bAJGyiaUC6qlTE+O2HWhiAYg/VhO/xly4Ay2I
+   fgrY/BA+PBR5zEVouRU9mr50UO57dQIVetPqHFD5K5bEv7DYz6xgZywlH
+   wKSjvkIRT6AhA6D8795eh5hnoT3z5VFftUs+q9T129EFG189cr9iGggs4
+   w==;
+X-CSE-ConnectionGUID: XZmMl6dAQVqYZkcI1rQG7g==
+X-CSE-MsgGUID: StmAkTqMRYCmOHU9tQD49g==
+X-IronPort-AV: E=McAfee;i="6800,10657,11905"; a="93861326"
 X-IronPort-AV: E=Sophos;i="6.27,103,1787036400"; 
-   d="scan'208";a="93861335"
+   d="scan'208";a="93861326"
 Received: from orviesa004.jf.intel.com ([10.64.159.144])
   by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Sep 2026 16:13:31 -0700
-X-CSE-ConnectionGUID: 7w1MFBkXRbWH3HsfnE/dnQ==
-X-CSE-MsgGUID: xrsazRYZRVW38TrbM/KBKg==
+X-CSE-ConnectionGUID: 594Vl3cFQtyRZbDeFnEcHw==
+X-CSE-MsgGUID: lusfiszMQZCUjSAD4fsGZw==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.27,103,1787036400"; 
-   d="scan'208";a="277231430"
+   d="scan'208";a="277231425"
 Received: from khuang2-desk.gar.corp.intel.com (HELO agluck-desk3.home.arpa) ([10.124.223.219])
   by orviesa004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Sep 2026 16:13:31 -0700
 From: Tony Luck <tony.luck@intel.com>
@@ -59,9 +59,9 @@ Cc: Christoph Hellwig <hch@infradead.org>,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
 	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH v12 03/25] x86/resctrl: Enumerate monitor features in rdt_get_l3_mon_config()
-Date: Wed, 16 Sep 2026 16:12:58 -0700
-Message-ID: <20260916231320.14502-4-tony.luck@intel.com>
+Subject: [PATCH v12 02/25] x86/resctrl: Check if monitoring features are supported
+Date: Wed, 16 Sep 2026 16:12:57 -0700
+Message-ID: <20260916231320.14502-3-tony.luck@intel.com>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260916231320.14502-1-tony.luck@intel.com>
 References: <20260916231320.14502-1-tony.luck@intel.com>
@@ -73,112 +73,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The original implementation of Intel Cache QoS Monitoring (CQM) planned
-to integrate with the "perf" and "cgroup" subsystems. With that plan it
-made sense for parameters from CPUID to be stored in fields of the
-cpuinfo_x86 structure. But that plan was abandoned and the resctrl file
-system user interface replaced it.
+Both Intel and AMD manuals say that software must first check
+CPUID(0x7,0x0).EBX[12] (Linux: X86_FEATURE_CQM) to see if any monitoring
+features are supported before checking for specific features supported
+in subleaves.
 
-Change rdt_get_l3_mon_config() to make an explicit cpuid_count() call to
-enumerate L3 monitoring features in preparation for the removal of
-resctrl fields from cpuinfo_x86.
+Each of the L3-based monitoring features is further gated by
+CPUID(0xF,0x0).EDX[1] (Linux: X86_FEATURE_CQM_LLC).
 
+Add checks for these feature bits.
+
+Fixes: cbc82b172638 ("x86: Add support for Intel Cache QoS Monitoring (CQM) detection")
 Signed-off-by: Tony Luck <tony.luck@intel.com>
 ---
 v12:
-	Better comment for the cpuid_count() call.
-	s/0xff/GENMASK(7, 0)/
-	Update commit comment to say that this is in preparation
-	to remove the resctrl elements from boot_cpu_data.
+	Revert X86_FEATURE name changes.
+	Invert the test for X86_FEATURE_CQM_LLC to avoid adding extra
+	indentation churn and keep call to rdt_get_l3_mon_config in
+	the X86_FEATURE_CQM_LLC code path.
 ---
- arch/x86/include/asm/resctrl.h        |  9 ++++----
- arch/x86/kernel/cpu/resctrl/monitor.c | 32 ++++++++++++++++++++++++---
- 2 files changed, 33 insertions(+), 8 deletions(-)
+ arch/x86/kernel/cpu/resctrl/core.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/arch/x86/include/asm/resctrl.h b/arch/x86/include/asm/resctrl.h
-index 8f6edcdcfd87..9bfa9b14002b 100644
---- a/arch/x86/include/asm/resctrl.h
-+++ b/arch/x86/include/asm/resctrl.h
-@@ -44,6 +44,7 @@ DECLARE_PER_CPU(struct resctrl_pqr_state, pqr_state);
+diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
+index 55214d6fdc49..34ca3c7cc046 100644
+--- a/arch/x86/kernel/cpu/resctrl/core.c
++++ b/arch/x86/kernel/cpu/resctrl/core.c
+@@ -968,6 +968,14 @@ static __init bool get_rdt_mon_resources(void)
+ 	struct rdt_resource *r = &rdt_resources_all[RDT_RESOURCE_L3].r_resctrl;
+ 	bool ret = false;
  
- extern bool rdt_alloc_capable;
- extern bool rdt_mon_capable;
-+extern unsigned int __ro_after_init rdt_l3_mon_scale;
- 
- DECLARE_STATIC_KEY_FALSE(rdt_enable_key);
- DECLARE_STATIC_KEY_FALSE(rdt_alloc_enable_key);
-@@ -132,11 +133,9 @@ static inline void __resctrl_sched_in(struct task_struct *tsk)
- 
- static inline unsigned int resctrl_arch_round_mon_val(unsigned int val)
- {
--	unsigned int scale = boot_cpu_data.x86_cache_occ_scale;
--
--	/* h/w works in units of "boot_cpu_data.x86_cache_occ_scale" */
--	val /= scale;
--	return val * scale;
-+	/* Round down to nearest h/w monitoring unit */
-+	val /= rdt_l3_mon_scale;
-+	return val * rdt_l3_mon_scale;
- }
- 
- static inline void resctrl_arch_set_cpu_default_closid_rmid(int cpu, u32 closid,
-diff --git a/arch/x86/kernel/cpu/resctrl/monitor.c b/arch/x86/kernel/cpu/resctrl/monitor.c
-index 3838e0a13d36..89b83cc7e800 100644
---- a/arch/x86/kernel/cpu/resctrl/monitor.c
-+++ b/arch/x86/kernel/cpu/resctrl/monitor.c
-@@ -32,6 +32,11 @@
-  */
- bool rdt_mon_capable;
- 
-+/*
-+ * Scale factor to convert L3 monitor events to bytes.
-+ */
-+unsigned int __ro_after_init rdt_l3_mon_scale;
++	/* Any monitoring at all? */
++	if (!cpu_feature_enabled(X86_FEATURE_CQM))
++		return false;
 +
- #define CF(cf)	((unsigned long)(1048576 * (cf) + 0.5))
- 
- static int snc_nodes_per_l3_cache = 1;
-@@ -418,16 +423,37 @@ static __init int snc_get_config(void)
- 
- int __init rdt_get_l3_mon_config(struct rdt_resource *r)
- {
--	unsigned int mbm_offset = boot_cpu_data.x86_cache_mbm_width_offset;
- 	struct rdt_hw_resource *hw_res = resctrl_to_arch_res(r);
-+	unsigned int mbm_offset;
- 	unsigned int threshold;
- 	u32 eax, ebx, ecx, edx;
-+	u32 num_rmid;
++	/* Any of the L3 monitoring features? */
++	if (!cpu_feature_enabled(X86_FEATURE_CQM_LLC))
++		return false;
 +
-+	/* Resource monitoring leaf is 0xf. L3 monitoring details in subleaf 1 */
-+	cpuid_count(0xf, 1, &eax, &ebx, &ecx, &edx);
-+	mbm_offset = eax & GENMASK(7, 0);
-+	rdt_l3_mon_scale = ebx;
-+	num_rmid = ecx + 1;
-+
-+	if (!mbm_offset) {
-+		switch (boot_cpu_data.x86_vendor) {
-+		case X86_VENDOR_AMD:
-+			mbm_offset = MBM_CNTR_WIDTH_OFFSET_AMD;
-+			break;
-+		case X86_VENDOR_HYGON:
-+			mbm_offset = MBM_CNTR_WIDTH_OFFSET_HYGON;
-+			break;
-+		default:
-+			/* Leave mbm_offset as 0 */
-+			break;
-+		}
-+	}
- 
- 	snc_nodes_per_l3_cache = snc_get_config();
- 
- 	resctrl_rmid_realloc_limit = boot_cpu_data.x86_cache_size * 1024;
--	hw_res->mon_scale = boot_cpu_data.x86_cache_occ_scale / snc_nodes_per_l3_cache;
--	r->mon.num_rmid = (boot_cpu_data.x86_cache_max_rmid + 1) / snc_nodes_per_l3_cache;
-+	hw_res->mon_scale = rdt_l3_mon_scale / snc_nodes_per_l3_cache;
-+	r->mon.num_rmid = num_rmid / snc_nodes_per_l3_cache;
- 	hw_res->mbm_width = MBM_CNTR_WIDTH_BASE;
- 
- 	if (mbm_offset > 0 && mbm_offset <= MBM_CNTR_WIDTH_OFFSET_MAX)
+ 	if (rdt_cpu_has(X86_FEATURE_CQM_OCCUP_LLC)) {
+ 		resctrl_enable_mon_event(QOS_L3_OCCUP_EVENT_ID, false, 0, NULL);
+ 		ret = true;
 -- 
 2.55.0
 
