@@ -1,67 +1,89 @@
-Received: from CWXP265CU009.outbound.protection.outlook.com (mail-ukwestazon11021092.outbound.protection.outlook.com [52.101.100.92])
+Received: from mx0a-00069f02.pphosted.com (mx0a-00069f02.pphosted.com [205.220.165.32])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD47E448BAD
-	for <patches@lists.linux.dev>; Wed, 16 Sep 2026 07:38:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.100.92
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 598F5463B63
+	for <patches@lists.linux.dev>; Wed, 16 Sep 2026 07:41:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=205.220.165.32
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789544296; cv=fail; b=WzMc6TrYTMGGXsIlViB6+RordZ2qRXqK2z8QxCSMZ9t7hDpINmbGpRYu1DmLx+N/XL7zoZLhrCLaHed35c67QKmg1zHAYSLaT6XqTO908H1pF13tfLmkHB1lnaFmffKziZ38r9EOnb0m2MOmNOTJERvSHJFZAepOCU3WbNEFKgA=
+	t=1789544478; cv=fail; b=TizTqLg+2fRkRARq6eC+fh3uxK4135AFqdSfNaSLig8AuKnEdHF6tTw5+HDwRVwq4IeSdonwltGpSfeWEzRYA6ZDnLAXNpktrWZozd3q9ycN/9bwu3fhtHkxWbbLLmVpQ/ifEouYXWqs5nlh3K5vg3BdVCoOL+RtP4ifxp7PoAc=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789544296; c=relaxed/simple;
-	bh=HkYuYKgPvt7MRyTpstOnkEz+R7Y5H+FqLBHJtmndCgM=;
-	h=Content-Type:Date:Message-Id:Cc:Subject:From:To:References:
-	 In-Reply-To:MIME-Version; b=CLDHW1H9mLZFigjpcTJm8qLCjxf8RCmjhgPtPuY7WZ9J0ayK1RFm+M5LrdE8DjKaf58ioJQCArfuxf6jQKHpc9dumRjMs4kIE472TfAVdfyn3c7uI6kY/qcOGMqS/l22iUE60ryvlTfBHblEKMTMVEFMqejI8Q2CXv9NhZMU8eQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=garyguo.net; spf=pass smtp.mailfrom=garyguo.net; dkim=pass (1024-bit key) header.d=garyguo.net header.i=@garyguo.net header.b=My2TuaZF; arc=fail smtp.client-ip=52.101.100.92
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=garyguo.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=garyguo.net
+	s=arc-20240116; t=1789544478; c=relaxed/simple;
+	bh=sDfgCp/Jml+I5n3WUOVzXDMxtLUatY1axIYDKZkgB8o=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=iF4/4X8Y9JuHcL9ojVenyj46soLo9cUj+HflI3gcOIRxS6yj/zIZqeQDaYqxGFl0mbHvrRbOs+tY56BrpWRqxDKKF2CZ0qAYFWO19mzD8HL3fzNPcTr1luYTLqEqqyoFmCIagww3n8fjJy4a2vs4g0FPhHBTeGON79uDgrATyv0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oracle.com; spf=pass smtp.mailfrom=oracle.com; dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b=b2br4vlh; dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b=I/92lynO; arc=fail smtp.client-ip=205.220.165.32
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oracle.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oracle.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=garyguo.net header.i=@garyguo.net header.b="My2TuaZF"
+	dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b="b2br4vlh";
+	dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b="I/92lynO"
+Received: from pps.filterd (m0246629.ppops.net [127.0.0.1])
+	by mx0b-00069f02.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 68FLX0m7698974;
+	Wed, 16 Sep 2026 07:41:07 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=
+	corp-2025-04-25; bh=+cAHQHAETxnL+9f0gS67wLlcS4SjNbBcEqxlbpnr2XM=; b=
+	b2br4vlhWC/Ydyyo7P8IbDgI2yb0usPiDbsE+QIWWbdJDFznyOClLtR0S7k8Bmon
+	cObXj9IrLCGOa2JjIhgTNrCaSs973BM4xw5tgh+q+6jhy0xkVcMZ5yJWRa37whL0
+	ZBWOHoWvo9C0BJAJX8u6Z/TAz1bXsG2WZDq3BeWDQhFY0BZBUcKp3ody+beAp2E0
+	s8k0J/8etHMUwUH8nX+JR/IUgdQWQbZ81HXpXNYgWPtDRgckVgTLbzrMIlaSd79K
+	hfQKk/tbTpyO7tVXF2ogHhm6SjiSxoLFHywqNDcBZ6N8PrptF8FC0Kd7aLMB6tlV
+	xV6w1jxK/7aHUmJ8n66uBg==
+Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (iadpaimrmta03.appoci.oracle.com [130.35.103.27])
+	by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4gmxm7d35g-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Wed, 16 Sep 2026 07:41:07 +0000 (GMT)
+Received: from pps.filterd (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+	by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.7/8.18.1.7) with ESMTP id 68G7eMAV030895;
+	Wed, 16 Sep 2026 07:41:06 GMT
+Received: from cy3pr05cu001.outbound.protection.outlook.com (mail-westcentralusazon11013047.outbound.protection.outlook.com [40.93.201.47])
+	by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id 4gmw6q1vgc-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=FAIL);
+	Wed, 16 Sep 2026 07:41:05 +0000 (GMT)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=kGmhcLPLCB4Rt81Q6nAZF5ov/dnpABqIKXOpGzueTbO0IcBw0cFahk7CygufNY29IuIUt+HItWZ6OTfX7QOK3znYhHzPYsnfpAkaYWX6eswr43ZPu/GtMhJx1S3180tUyLaAHcOCOMt+U5ZbNc3Kg+4Edyg2EHOtSwn1WlBPCeCy0EHI5ZKxbliBF5tt6eDri8uuOGmo9N0G2cojQD+zH1iLsAp/weNptchCyMjtkMuylubh7raYmmRMdCowLmhfMnR7I/+IkuD+FEiVcZ7pF7xpvTIw2kAfl6eSd33niqMfgsG2SBx1i6ATeQaN1rkFTweNSDsOKH6KfrKXTKmgYw==
+ b=atg47IenvZ6C6Bf4+wAUfKHsTyXYd6gYkfeMQh8+Sbwb1ud87K++3/uNhQ+qacV+YgpED9lDUFnBriBx15bAGHyFDANmT8R1oCsQ4XNmoXyElbTxT+l7lcwo5RAyAxscvBGXD78f9FBBs4UCik7kVPxCwJLEMPEYOVE/VGR26EZ8HW6nbjP9mu+5Ienfl3j1bXUoZYd1WDnTJSJ4kP1CyBxTQdthYid2ipGPwe0ax9vY73y1ErS8nakjmtvHfvcUveGun+YERZtzYYBQ+obAZ+rwsnvgXJKq2TT9VtP/5m9+0LbdkDu7YuiwhCzl+FrpCP/mWcae5/6XxV5CSHppiA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=xtkJ0e9Gnnehj5tcfKAB5vr9FT9C94hB05w750Y5IqQ=;
- b=Fsefh2wdpK3B+0chMhoEAMMevfWHXagIdFn0aew6sDOsXC05eNUFYx2nbbHhEdoTSASKXhjNgXmQ0fUT9G2DIHG5Aa3g4Rgr5e3XS4V2NshpmWiKUB6Omb7KMhQs3HJGY4dilRw8isBSDJMy6juLIhyRC3WNy7K6yyQrE4HXRvwBRNC9D22l2QU0xlcwSOjLuBG0LKsK9/gCjhfjk6dL5Fz2oXQUZhHmP6lfPc1OEdAMesAsly++Kx1YH1NT7ak1vlU+Z6HVxiGamG1EPAJ/sMm/9ZMxtYwQQ8Dbx0Ij4Fv2+hlum/XfqmtTAaff1KqW9OX2D/KXMpqcej2225f5OA==
+ bh=+cAHQHAETxnL+9f0gS67wLlcS4SjNbBcEqxlbpnr2XM=;
+ b=y6wxqZ6X1pWS2kcLR4Pq46t593mFhRD4taRm91VJ/ACsQ9zjb/rm8KnfDdqynI41qAlLRPqeMcDUEdqrykVsGObPAb6kMMujE5v68nmR1jzi91meoaaCCfKmO65Bq3DqESAy66nKiTX4QZkO46Be4R32oj3jtAxQvxgJ/fBNtYvtGZgMcX64/c+lEOJx4J0mnLD1C9jq9rYqDVs1OT3iZzrslDtZJXnwswDuIxTuifvoK9wtZ05LKNqiI5a9YZ3EFY7FQb9bRYiNCSgc0JmNtzhiS0Vjz9I/++n2cZWvr+GLNgl4kwHFhnQbGG32jpdtPm19xLM117pmmKEPBr+RPA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=garyguo.net; dmarc=pass action=none header.from=garyguo.net;
- dkim=pass header.d=garyguo.net; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=garyguo.net;
- s=selector1;
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=xtkJ0e9Gnnehj5tcfKAB5vr9FT9C94hB05w750Y5IqQ=;
- b=My2TuaZFTmG0sTHIhGrdZ3rE3phV0F1n9Je+7exmr3G+w1e7PdO1LEg+aB1NIPA5j32SgQ/IaQOm+7siJmnsGRbNgV9XqldB7tjG5UtT4OP3hR0Gf++NDv85UvBBdaH2FkRihYEIBHonsxWaU1ecUxtDfdfwbioEmifJlmGpEtU=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=garyguo.net;
-Received: from LOAP265MB8560.GBRP265.PROD.OUTLOOK.COM (2603:10a6:600:4ab::19)
- by LO7P265MB8684.GBRP265.PROD.OUTLOOK.COM (2603:10a6:600:4aa::11) with
+ bh=+cAHQHAETxnL+9f0gS67wLlcS4SjNbBcEqxlbpnr2XM=;
+ b=I/92lynO3K2+lcmldKDouabgoD8Q9j7NsrEKRpm5s/2aIMvKMbjV4Hkw5AT7YXU+nVg5OJf8Syo2mI5b4y9ENEDGPoQKxRf9dZeH1kS6ZgEsz6ZsHpScqqGA103M9CmMtd/5i7tY8Ol/onvsZag8uXDqBCXmA+UyTzzQ0xP9ScY=
+Received: from SJ0PR10MB5834.namprd10.prod.outlook.com (2603:10b6:a03:3ee::16)
+ by IA1PR10MB6148.namprd10.prod.outlook.com (2603:10b6:208:3a8::8) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.428.11; Wed, 16 Sep
- 2026 07:36:34 +0000
-Received: from LOAP265MB8560.GBRP265.PROD.OUTLOOK.COM
- ([fe80::f60b:1537:68d7:4fc1]) by LOAP265MB8560.GBRP265.PROD.OUTLOOK.COM
- ([fe80::f60b:1537:68d7:4fc1%4]) with mapi id 15.21.0406.012; Wed, 16 Sep 2026
- 07:36:34 +0000
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Wed, 16 Sep 2026 08:36:31 +0100
-Message-Id: <DLGKH0BATEY5.OS1S70FJCB7A@garyguo.net>
-Cc: <patches@lists.linux.dev>, "Gary Guo" <gary@garyguo.net>, "Danilo
- Krummrich" <dakr@kernel.org>, "Sasha Levin" <sashal@kernel.org>, "Vegard
- Nossum" <vegard.nossum@oracle.com>
-Subject: Re: [PATCH 6.12 0490/1376] usb: fix UAF when probe runs concurrent
- to dyn ID removal
-From: "Gary Guo" <gary@garyguo.net>
-To: "Harshit Mogalapalli" <harshit.m.mogalapalli@oracle.com>, "Greg
- Kroah-Hartman" <gregkh@linuxfoundation.org>, <stable@vger.kernel.org>
-X-Mailer: aerc 0.22.0
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.428.7; Wed, 16 Sep
+ 2026 07:41:01 +0000
+Received: from SJ0PR10MB5834.namprd10.prod.outlook.com
+ ([fe80::2444:1d33:3ce:d83a]) by SJ0PR10MB5834.namprd10.prod.outlook.com
+ ([fe80::2444:1d33:3ce:d83a%7]) with mapi id 15.21.0406.005; Wed, 16 Sep 2026
+ 07:41:01 +0000
+Message-ID: <03fc4a7e-1cfd-47cd-8a79-7b6386d8eae6@oracle.com>
+Date: Wed, 16 Sep 2026 13:10:55 +0530
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.12 0709/1376] iommu/tegra241-cmdqv: Dont run the error
+ ISR before probe sets up vintfs
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, Nicolin Chen <nicolinc@nvidia.com>,
+        Will Deacon <will@kernel.org>, Sasha Levin <sashal@kernel.org>,
+        Vegard Nossum <vegard.nossum@oracle.com>
 References: <20260912065607.535295758@linuxfoundation.org>
- <20260912065618.458576452@linuxfoundation.org>
- <fbdd8514-3a55-4cd9-a999-0b0537c6aa46@oracle.com>
-In-Reply-To: <fbdd8514-3a55-4cd9-a999-0b0537c6aa46@oracle.com>
-X-ClientProxiedBy: LO4P123CA0353.GBRP123.PROD.OUTLOOK.COM
- (2603:10a6:600:18d::16) To LOAP265MB8560.GBRP265.PROD.OUTLOOK.COM
- (2603:10a6:600:4ab::19)
+ <20260912065623.346623736@linuxfoundation.org>
+From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Content-Language: en-US
+In-Reply-To: <20260912065623.346623736@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: FR3P281CA0131.DEUP281.PROD.OUTLOOK.COM
+ (2603:10a6:d10:94::14) To SJ0PR10MB5834.namprd10.prod.outlook.com
+ (2603:10b6:a03:3ee::16)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -69,225 +91,229 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LOAP265MB8560:EE_|LO7P265MB8684:EE_
-X-MS-Office365-Filtering-Correlation-Id: 5e39b8fa-e924-431f-af6d-08df13c53bce
+X-MS-TrafficTypeDiagnostic: SJ0PR10MB5834:EE_|IA1PR10MB6148:EE_
+X-MS-Office365-Filtering-Correlation-Id: 43741939-44e4-4b4a-f73f-08df13c5db31
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|23010399003|366016|376014|10067099003|4143699003|22082099003|18002099003|56012099006|5023799004;
+	BCL:0;ARA:13230040|366016|376014|1800799024|23010399003|10067099003|4143699003|6133799003|3023799007|18002099003|22082099003|56012099006|5023799004;
 X-Microsoft-Antispam-Message-Info:
-	hoqD8ixCm3N86r9EcSK/k89/AkdRmfLDrjVNQiV0s5+r87nT+zLhvi3AkfqveWXg1OFwwBzvCo7Kw5WSyauu+dWoejq2pjLNaK0Sh5BWh1Xs3medzaXblODq/qDK4OTBcD+It1CSXREdPabmWN2syZWhxiVipU4HJYaML1AKbirGpxTymSY/kLVxGxKrI3A+19x5VcEahBgvZ0+JJHG8GlKoiULU/ch4r/TarhUVflWxSe1+l6ERw0YtEpEvbMBnO+DOh9mlT5c5Bn5zsDAVHVt5nEndPI7wlrDH3VVdqJPjzP+mI0JxhlDp0UbbkNru/KvHKsir03M/xR1wEIRSvc+k8mjQiZci7+yxYHRCIHRcKWJxeuRADenTtj3BWx1OZVmL+LVvTUG3gWwsrmCONczGPHWDLZxObaB7aVq7EU/Dr6y5zhz5TTD2cTQ1Hk1Z2klhxO06nj2xEuXl6Ab2JScGWzNdZclAYKRBVyA41B9JZSVbrLZPmIY2+3Zgm/QobIbswF7LFHMzJd6XPwprPiT2+xLi8VTE9hOgYCK5ogK1Z3zSHI0UzbVWLzdWNDV0EXH+pVYkJJzvU67215gFPrr0DZ2Gj3sMBv2Ym/Jj91h4yTi+gP9cBvmu3YPXj4cn
+	zJsRvqpL7hWATbY7efst6hTdP3cUw9DX/rbjFaFeTdsvEpncMSRXC/OMGuDxj/kyPFFAAd7zZKZZ/TNEv+sW2xaqct7qEhIX2qBzRSc5nQT4r0QKKTXowyl56ZBVY/bvvXwnDm+QBcTCmr3N6B3+9ZANgoNpRDMSxihtdff7si+Q2yMHQUf9it6muPmgxfhz8u+OE5+D5ZI14pA8AbP/qs03SJvqGhGGivFzllzefHBmeTaTikMFTKrF0486oiH+DoBl0xoznrpp4VZR6K0pEoqWedYr+WS9ic/6Kcueo/4KR7q6yTqr8gp1tMxcu9GN0LpUxWLXOyim11wYEfHPAZ7Qh8r2nivQgIDklWMGrObKLgQbfqXlsg0wJoJRV/FYZODk/1AmcBFwFDA1h87qhnc6JnLYHZhEsuHz4D6N1WOW9s8yS55ZGUXJhFh1L4wLSvtNfo4ChGFfTI0Kh/P6QJc+bMVzc4gh8JoZ1zHGydWLSRQan87nPGepw1IbkpDa9GXlr1tQsIwUYKMHTXaIeGB7dks6VwhWZjVd18Da+IigB9X2W3TshsvtSO2viQP5sFzlqABUjMrszQev9r9F/svoE8EHuKgwX7+sLIfApRkOX8/sCHdwN6KI1pmIfL+9cu9hDWVJ933eVAnxgOUlA+7mMsdKreiV1P6y0czbCzA=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LOAP265MB8560.GBRP265.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(23010399003)(366016)(376014)(10067099003)(4143699003)(22082099003)(18002099003)(56012099006)(5023799004);DIR:OUT;SFP:1102;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ0PR10MB5834.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(1800799024)(23010399003)(10067099003)(4143699003)(6133799003)(3023799007)(18002099003)(22082099003)(56012099006)(5023799004);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?Y1Z5cHh4MXIrbWFWWXdRd2p0R0RJTGRBRU9xSVVIbGs1U2RvVmtuc0hVa2pt?=
- =?utf-8?B?Y0s3SHBMdHBGZXVVZmM5emkxd0RZekxyMUI3Ky9UWGxzeWtnUWt0eE1DcitY?=
- =?utf-8?B?bE9keUxJR0NmR05kSmZ0cnFCTldOOGd6eVRwTVRUOFJJZTlwcWc1Z2wxNUI3?=
- =?utf-8?B?Rml6UmVNT09UcGRFOGJPanJQQWNIT3FjcVRFejY0MVlSUThKNzUxUWk0ZzUx?=
- =?utf-8?B?aG95aU1tbDVuanZ5UVF1d1lLZTY5NzFLUDB2M2pVNlZEKzRINUFtZnRYRFFh?=
- =?utf-8?B?d2Mwd3FtYXBRQy84bXdPOGZ6Q2NhV1lvU2QvV0pVaE1kcHJySUR5NkVFbVVo?=
- =?utf-8?B?VXljMmtmRnY1d1VQc0JudFFKa1U4RUkzM0VrTHRyMGdDL2cwWDJYY2lKSTlS?=
- =?utf-8?B?eUg2ekZJY1d3K0JTM0dHbktOVFhJeXkyNHcwYXcwS3d2dlNDKzNuK05tVFVx?=
- =?utf-8?B?bHdodzFxVnMxN2laK2M5V0I0WnlFTE9IeGlkTVlKZUdQOXkzRVV2dGZYRk92?=
- =?utf-8?B?RTZWQ1JpWmVzTWpUVmV5S1QvY29qaFg4aFJnazFGZTVNTDJ4YkJ5K1BmVjBU?=
- =?utf-8?B?M2swZm1zb1J0ZWhBQzFBeEs5ak12Tlg3SFFQdmtUSmEvRWMzZjI5QSs2ZndU?=
- =?utf-8?B?Z2hBU2dGK3U1ZGxvS1VlemFWT1Jid2pvQjFPTGlqWi9ZcmJRTHMxTisxNzlv?=
- =?utf-8?B?eFdLb3VxQmVBdElPOFNwcE9vUWZjZ0RCc1RzN0grb0Z2em9tc0ZxOGQ5MzRH?=
- =?utf-8?B?VFlhaGR1a0t1RzhpbmF2YTFZai8rOWQ0WjRpaHlSelRnNWZpaG4yL2dSUjg3?=
- =?utf-8?B?QUdYZmp5dDRxMzAxOS9KUnhqQmRvdEYyYVlxOUdkM0tES1Z2TXJsMXNsajJI?=
- =?utf-8?B?cFhzdXZoVVk1ZmNkdlhvZWdXVzFmYjJsTHVka1lETXpWdW8wekF5bjczK0hW?=
- =?utf-8?B?bVhhWnFUNmhicUt1eDN2aVZldG5YbHFTVWhJL244VzdmTHRya25tZ0pqc3NK?=
- =?utf-8?B?Zlp2THd2aEd6NFZsMHBBN0NOZFkxaSs5MTdXaVRQMUNNTng3RWRadXR3bkxv?=
- =?utf-8?B?RUVnWG5mUlJPN0wwZm1aM2llSVFQejZhS29PcFNkWk52TUl2T29mNHNFZnhE?=
- =?utf-8?B?bkVZQ2tVNFRsQ1d6YlloZmR5Z3A1Q1dycXB2MUwvb3lPQUdXMlRKU2hUQkpW?=
- =?utf-8?B?Y3hhaEVIOFFsMElRQzdvUDVzYjVHWE9jVGx2OE1RcUVsUDZrVVhlNkRhRFps?=
- =?utf-8?B?YTY0T3dhNWM4QkZ1VkljbGVCL1hxS0J3V0pTQnYvaVhwdEhKREJqTTNoamQ4?=
- =?utf-8?B?TjVkMjZINm1ZWWVtVHEvZXlIT3pkZXp5ZlluWHBFNVl4Szg3RVRqV1BTYWFw?=
- =?utf-8?B?Q1JDTnhZZmlkMk41bE8rTlJXcnVWbXpyM3JVQk9LSXdJb2ZrYk1LakdUdkZp?=
- =?utf-8?B?QThhOGhLdFFiZm9IeWthSUo5TXU5T2lUQlp4RWdhdnh0REJOMWhNZTdtYlZM?=
- =?utf-8?B?VlJUd3NadjR6emZrby94OGVxamp6NUNZRm41UU9PcFVpOEh5WUEyNklvcDRy?=
- =?utf-8?B?aDBCNDJ1anJhQzdCcUxEQ1JXSWtqOUdVSXdtU1U4ZW40YkZvOXkxV0tIQUNX?=
- =?utf-8?B?MUR5N1luenVGWSt4NytzSDJoRnMvRy83UGtjWVdSU3hCUHN0aXN2b3UrYkx3?=
- =?utf-8?B?eFVGZmo3Wno4cHUwcENaWCt6Sk91YkpxMU42RXhESkUxMWlBZUZhNkNtYnlR?=
- =?utf-8?B?bmpJM3Y3WFlZNXZTdWVyTkxPeTBsTTFySE9sSFF4cGdRdFRDOXNjUCs4NkxK?=
- =?utf-8?B?L0NZTkVqTmlDcGdlZkxWcHdsOC8vWXNLcXJQenVwNnpzWTdPMlNvaXFzTmI3?=
- =?utf-8?B?NmdraDJyTk41ZmdBSHlwTCtGUEQ4UE0xbDRWWXplaUltUkJLSkZadjFUMVph?=
- =?utf-8?B?SDAwck01NzZ6bHpBWmE3ZHBETFVCUi9sY0FFZWFrQWFYU1VYSjcvRWpoQUZz?=
- =?utf-8?B?dUJFYmhCcTNZenNmZ1N6ejBZOUFCZnJWTkZNK2lJazloL0lSRnhCVmxHTmg0?=
- =?utf-8?B?dEdZajJDcFFrY1FvNlllajBDSGRCSFd0K0FzRTJUOVZRY2xhb3VBaVY4TDdG?=
- =?utf-8?B?VU1qZWZUWHhBcmNtVmpkWkttdWFBMlQ3cHNFRVVFdmxkcS9tWlFxZ1JZV2wx?=
- =?utf-8?B?QmMxaGk0clI4cU5LRDB4bHJYbDljM1JoVHBnZGl0Y2UvNVVhRkJnZURyKytP?=
- =?utf-8?B?dE1hdEUvM0w3U1lJM25FSFk5Vi82aG1neVlpYithV2huQ0FhYi9Vb3Q0Y0w2?=
- =?utf-8?Q?/OXkeM4QBAisiykFKa?=
-X-OriginatorOrg: garyguo.net
-X-MS-Exchange-CrossTenant-Network-Message-Id: 5e39b8fa-e924-431f-af6d-08df13c53bce
-X-MS-Exchange-CrossTenant-AuthSource: LOAP265MB8560.GBRP265.PROD.OUTLOOK.COM
+	=?utf-8?B?Z1c2OUIyNjE5SW04UGFYUGMxT1BSQjdQaWNzYW11QzdLY1RTcjRQVXYrTTM4?=
+ =?utf-8?B?Y0JEckJGaUZldWJWWUN0ekI4TEJVZnc4Qkl3WGRXNm9NS1NSKzI4RUV4dk9l?=
+ =?utf-8?B?dkc3dWQxQ0srZ21SRVBJaEtqK1lTZUVVY0VQSVFTQjQzdlZlRDN6ckd2V1RJ?=
+ =?utf-8?B?ZkcwYjhpYjdPTkRWSkFQYnYreXcwV21FdTYrcGIrRG5pS09sWEN0MVdrR0Q3?=
+ =?utf-8?B?MjlhUUhOWFhOZkQ3aE5UOC9kUmxSb0w1Qmh4bzNzT3p6dFhNbnFEVndBUWpl?=
+ =?utf-8?B?ZHFEWTAvK2FKZVdCZFJ6Vnlvd3U0b0VtTmdxU2N1VG5HQlVDTzR0ckw5c2lZ?=
+ =?utf-8?B?cWUybnBaMFBON0V0Vmk2MURLRWFEcFpiNGVMbFI4Z3AzKzVPRlZCRG9oMHdv?=
+ =?utf-8?B?cnQyQzdjMUtRdVJBZjNseUNJMStkZXN6UFJSUkJMejlaWjZZdUZXbGFuTW4z?=
+ =?utf-8?B?aEdxcVRDTEhQaHJVRVNtRVBTaXdTTWZHVmF5bjBNMUJBTlozZEh1cnB3TEFX?=
+ =?utf-8?B?Y2JnaUdvaVZwUUtDMFpHQzI3Q2tWRUFQZm53bWtCbGRrdklFdHBoZnBhb3BP?=
+ =?utf-8?B?cHM5Uk1nQmZZVGxFVnlteEtFNlBJRkgwQ2xJeTZDN3lSQkNSQThXdFJxS0h2?=
+ =?utf-8?B?M2lBWTNvNk5Bd2pNV0lxeG1ZNlZkNU9YODU1QkpkYkVpU3MvWlI1a2RBM2pC?=
+ =?utf-8?B?SUZieFFXUWkraWRidm4wMElPZHpSUXZWVmt0eUFRWXp1aWVEMitrOUh1ODRh?=
+ =?utf-8?B?aGdmOWFnSWxYNTB5ZUR2RlR3bHRmT3E2VjUra05OQmJaamcycU1mdHVURlF4?=
+ =?utf-8?B?Y3VVUks1ajFxQlE5QTNrZ0xISHlIQWs0ZUw1eUt3K0NzTC9kS1JPbHJMbXJY?=
+ =?utf-8?B?M2I4cmoycmxkeGlMNFBpak5NTmd5RFFucTNydU9ZRzVDQVJrZG9PTFQxME55?=
+ =?utf-8?B?bjFueWlvc2MrZjdGcUk3QXVXUzBzNlEwVldYU2tZdUVnQXdIUUhTeFI5MVBh?=
+ =?utf-8?B?UVJGVERSY1BRUnNka0Z2aGswbUZnS2d6NU9ObjhGTlY1cy9SNUZ2NXQ3TGlZ?=
+ =?utf-8?B?NVkxdnVQTE55enM0UWVYOHdRSGVIczFwZEh3Nnpvd0kxM0k4MFB0ak84dzhK?=
+ =?utf-8?B?UlVkanlEQVVMUUU3bTFHczAzWHFaSjdjd0JjVi9JdWZ4WERtc3BmRjlUbzg5?=
+ =?utf-8?B?SVorT3BwMENNK0Nsanhsei9KcHVmZXVpTkxnRTJmaW0xZWRqSkJCT2hocUxT?=
+ =?utf-8?B?eXFwTzM2N3A0amNEL0tQTWxzMG9HK3ZiRGZxV3ROeXpkeUlVcHY0TTFiRFd1?=
+ =?utf-8?B?UzBTMWY0TzRHVkVGRW9nbm01THRuYTNSUS9ua1BOcjdDSHpaRHJ6aHBXOWZG?=
+ =?utf-8?B?L1lBVThUbytXc2VuSE5jM0tXMGM3anFlUHhjeGdJdlpvWWhOWkpWSVRSb3k0?=
+ =?utf-8?B?bEFNZldiSHdRbk9PcHZ6NG9LMGg5RHNEUFVvOGVzOGwvcTQ4aFNvWCtxUlBP?=
+ =?utf-8?B?MVdia08wUk1kVEdKVFN0bURlRlJka0NEckFKZnZmWk1DMStlSWxxVjJPckhj?=
+ =?utf-8?B?MjNWVUY3TXpEb1c5WkV2LzFUSWZSb1Z5TDZKdk5ISm50K3VrVXNUdzVuZzRS?=
+ =?utf-8?B?cnJaL2xHMUlPbndSVTVpZExkOWRUajdOdVYrb1UzamI2dS9uL2U3UmJuTisr?=
+ =?utf-8?B?TDdKUk5PNzlnZGxJRWZ4bFM4alpjSDF4Q2Z1NWZvUDFYaXg4Y1VpYVY2UlpD?=
+ =?utf-8?B?NU1DUmRmME9NU3I1ZnVSTXBmZFpiZzNwM29PZGFUOFByVmRKNWFPbWM2Wm56?=
+ =?utf-8?B?NWhMSm9DSzhwNDU5TUVZdVUyelY5U2NsbVo4MkVtL0I1QytjbkdxUHEveHZ3?=
+ =?utf-8?B?UTVRNVJldlk5ellNSGRwT2R0bmRrSGUyMlBobXExczdXRFB4Q3FBQ3ZJNlBY?=
+ =?utf-8?B?WmtnbWZQTmZJM2NZZ0ZzWllMbWdUY01EMHg0WXNkTExmcGdDejIvY1QxZENr?=
+ =?utf-8?B?T04zdVBKcnVBMGhEdHVMdlo0NlVER2x3cVJDRFBveDhQMEdKYUVWZ0c3R3lL?=
+ =?utf-8?B?b0h0RlhHd3IraE8rVXFSdG1lZnRBVEpYY1gxY1dweU84NExLaElYa002NU9z?=
+ =?utf-8?B?WWx5OEoyUXByY3dQTi8xRThkTWhWeDJUN2JTNVd3d3JQOTcwVHJnSWVzUWVh?=
+ =?utf-8?B?N2ltdFRmc1pDdDhJSHBlRk5hSk5OS3hWMmhDcFpNTzlOUGhTYUp2S2RSMHBi?=
+ =?utf-8?B?R0NEdHEySFFwMU13eTR2cFRHdTR2UEtwU0FNM3dSenhJYlpnQjNrVmlEOUEr?=
+ =?utf-8?B?R1NFTE9KenRqQXZFa21wRi81UWdFRFlvMWlSd3hHTUQ2WmlUb2k5bUFNTUov?=
+ =?utf-8?Q?iu4Pih23JV5NBvp69j5NuAHFY96RHrhlOxS+e?=
+X-Exchange-RoutingPolicyChecked:
+	aEaccEJGnzIYKZtXi+rW2K2BCSPlU5frNrOhDip3lLPXoCLU6iVMEZbUughMAZ0P8o0G9WHaoFtnEjmCiZsqBtCxCnLUuY8qIeuFuG1hewpdaoEN5TYG+vjD/Byb08RGD21gDToi83JtlKWzq+sMp8FJ5o80LuwChg5PWht8CZGmFjAzOTzf6SdOgzrgT54zrkdC4A8OHC+AzU/jqFhGDPbHc6WCX4keiP2AN3OU63+TBahbvmn6rdoPmZpYplBa2iEPmSTlqTgLFEzLYx83zTr/UUQihnXu+BNO4/aVTRmu3R4gRG8OvBkArkbO9bFBPTDNbLwChCTuUdf0u7yW/g==
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0:
+	cbpncPHhg59O22hUL2HdQkzUNtgXjaTyr1oRZvzlqyC0Bi2MtTr09PnR2KdfAd+3VO7ZRBbKVnIvSSyukJPEbIftguKfML6xyvni0WS/fBIG4OAmmw+hBWKwT2xd7RwPfJ0nFNbjepkx6urLjouBDTatteUqYA5UIxmycz0Ls0lUXcSPfsGQ+z1mGJ2qgP2F92WSfT+CPNlnQ92YXvY0RkN0g7xyEiceEasuyqYoZbL9r45lYvuyRB5yPKTc/G+fQ5TSzhqaHQt3evYq/zoZzYjDvhrD92KRZI+TRKqJTTXGFBtTooR0mbQtJoWCX5g8mUN6T6zgZqOJVoK9u0NlqvAt5/TfpD4tnW8Xk3Sb/DVGpkPG9j96jXWsA6XXZ0Jug+2i8ei2x7V2b4WX3VZktmwXt5NVhaI0iFkn2GyLGFHoFXSZAXwFH5cYp6Qe5H/aZt1aaWz8W7zIAzG6PhlUe1is0DyQP5ttdHXTuUsoZSfcWp7y5n+ACbbmBaD0uXUlm5IEpuxPgEox6Ky79mCJmCIVhiEtplhmlA3cPRRwwd5+zg6TqU4TEQztuYI324ZnmmCm5RIm36yqnU6stT0tHPOhC6sL9KKGRFlYOU/Jz+M=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 43741939-44e4-4b4a-f73f-08df13c5db31
+X-MS-Exchange-CrossTenant-AuthSource: SJ0PR10MB5834.namprd10.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Sep 2026 07:36:34.4126
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Sep 2026 07:41:01.8012
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: bbc898ad-b10f-4e10-8552-d9377b823d45
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: th1NwfKgDu9zdRjjxAAPe0061+S2w8TTEEOh49gHgg8n7o25UFt5UvbepRQY+b+RFxmVgADPNEILOp6h9ktR4g==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LO7P265MB8684
+X-MS-Exchange-CrossTenant-UserPrincipalName: l1CVb5u2T0xgkrfeq4czFkCHQswG2GeedNh2BFwXx/h96vy00qSe6chdiAEt/jiLoD0Fp9MI9FXUw/EhVuT7aObrcTE4uCzi84XW1FfoghIMklCaa/bOrul533CwX4ua
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR10MB6148
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-15_05,2026-09-15_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0
+ lowpriorityscore=0 phishscore=0 adultscore=0 suspectscore=0 bulkscore=0
+ malwarescore=0 spamscore=0 mlxscore=0 mlxlogscore=999 classifier=spam
+ adjust=0 reason=mlx scancount=1 engine=8.19.0-2609040000
+ definitions=main-2609160099
+X-Proofpoint-GUID: 7kdY72H4lpTLIDGY16-SRG5Kz5FQgDRU
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTE2MDA5OCBTYWx0ZWRfXwpHo/lluqI49
+ ngd1zzmcRwy7zQsxNhQyXBLIhtROJmQ1hDLZiDQyxlVgT5jNsVx2L/pVIuKnDOV0oVCx8nHQ8ig
+ yWY7tPl9QxG3LhEv366LKjfU4yvq9Laz+RE/eF0eoQ/n3OxA06rFSJ1Pg3NmW3l4LWjiuzWRQFP
+ FPupQ3X9f+hdPqn/NXFFfLhOJtbVeHbaEphTe/PzO97NmKtVmIcXGbQ1GNowqU76lymvz5KA+xn
+ +TfwgaP9e9w3E/UQSxDxRCYwS9SX6kJyPynRXPfis1bnObb9nclInKqdpoQCMSTL60Vg+QFHrw1
+ l0hwcH8s+dqB5QeHSSDOq3Xu1HK+iSLTKQK5g0j+QXkDIfpOzvZex419W+azEamOrjcJ/FW1mgd
+ qGuOuFeMRWt3bPLRP8TBujdGFXwgwYwasLe+YivLbkk0yqdQC3o0goJhvdeTDff8os3fxJ4qGJm
+ L33+l8r80ZRaKBubJm6cCnL4Jy3H/Xc0KRCez5DE=
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTE2MDA5OCBTYWx0ZWRfX8znYZ9rxEu4E
+ vN5h6kvHPUoIQPEUkvrW1scev/a7C+GWJLzJ9UNDflESKtXh84Pq9IFR+6Nu9qbKKCy3bjlln7I
+ RN+Ux2Fy2huWmm6U4Rqbu0HEK2ONLZnZQ2LlLW6zJAcG8Ix2mSO/
+X-Proofpoint-ORIG-GUID: 7kdY72H4lpTLIDGY16-SRG5Kz5FQgDRU
+X-Authority-Analysis: v=2.4 cv=A/n5rKWG c=1 sm=1 tr=0 ts=6aaa4813 b=1 cx=c_pps
+ a=qoll8+KPOyaMroiJ2sR5sw==:117 a=qoll8+KPOyaMroiJ2sR5sw==:17
+ a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
+ a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=FxWwBE0Suvd28DGm:21 a=xqWC_Br6kY4A:10
+ a=IkcTkHD0fZMA:10 a=VdqzKS8jKosA:10 a=GoEa3M9JfhUA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=jiCTI4zE5U7BLdzWsZGv:22 a=EIcjfB9IiI4px24ztqRk:22
+ a=Ikd4Dj_1AAAA:8 a=VwQbUJbxAAAA:8 a=Djuq_3Q1hmsfaIX_9t0A:9 a=QEXdDO2ut3YA:10
+ a=5yU3S35YU4bGjq-dph-N:22 a=Bho9c0fBagfJEIQBS7DQ:22 cc=ntf awl=host:12107
 
-On Wed Sep 16, 2026 at 8:20 AM BST, Harshit Mogalapalli wrote:
-> Hi Greg/Sasha,
->
-> On 12/09/26 12:18 pm, Greg Kroah-Hartman wrote:
->> 6.12-stable review patch.  If anyone has any objections, please let me k=
-now.
->>=20
->> ------------------
->>=20
->> From: Gary Guo <gary@garyguo.net>
->>=20
->> [ Upstream commit ef8154d8b52d60338c1fd8d793cd8e891c604c14 ]
->>=20
->> Dynamic IDs are only guaranteed to be valid when usb_dynids_lock is held=
-,
->> as remove_id_store can free the node. Thus, make a copy in
->> usb_probe_interface. Clarify the documentation that the id parameter is
->> only valid during the probe.
->>=20
->> USB serial has the same pattern, but it does not need fixing as the IDs
->> cannot be removed via sysfs.
->>=20
->> Fixes: 0c7a2b72746a ("USB: add remove_id sysfs attr for usb drivers")
->> Signed-off-by: Gary Guo <gary@garyguo.net>
->> Reviewed-by: Danilo Krummrich <dakr@kernel.org>
->> Link: https://patch.msgid.link/20260707-usb_dyn_id_uaf-v2-7-632dcf3adfba=
-@garyguo.net
->> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
->> Signed-off-by: Sasha Levin <sashal@kernel.org>
->> ---
->>   drivers/usb/core/driver.c | 12 ++++++++----
->>   include/linux/usb.h       |  3 ++-
->>   2 files changed, 10 insertions(+), 5 deletions(-)
->>=20
->> diff --git a/drivers/usb/core/driver.c b/drivers/usb/core/driver.c
->> index f0f13554709e0..528274e3cd7ad 100644
->> --- a/drivers/usb/core/driver.c
->> +++ b/drivers/usb/core/driver.c
->> @@ -227,14 +227,16 @@ static void usb_free_dynids(struct usb_driver *usb=
-_drv)
->>   }
->>  =20
->>   static const struct usb_device_id *usb_match_dynamic_id(struct usb_int=
-erface *intf,
->> -							const struct usb_driver *drv)
->> +							const struct usb_driver *drv,
->> +							struct usb_device_id *id_copy)
->>   {
->>   	struct usb_dynid *dynid;
->>  =20
->>   	guard(mutex)(&usb_dynids_lock);
->>   	list_for_each_entry(dynid, &drv->dynids.list, node) {
->>   		if (usb_match_one_id(intf, &dynid->id)) {
->> -			return &dynid->id;
->> +			*id_copy =3D dynid->id;
->> +			return id_copy;
->>   		}
->
->
-> I ran an AI-assisted backport review, and I have verified the report. It
-> looks valid to me.
->
-> The core UAF fix is present, but it deliberately passes a local copy of
-> a dynamic USB ID to probe. The 6.12 xusbatm driver still computes id -
-> xusbatm_usb_ids and uses that as an array index. A copied dynamic ID is
-> not an element of that static array, so this driver violates the new
-> contract.
 
-I fixed all the drivers first before the core fix, but they're no real
-dependency between them.
 
-Those code that do arithmetic or otherwise use the ID pointer assuming they=
-'re
-static are already broken when the ID pointer is actually from dynamic ID.
-The stack copy doesn't change it. Correct code stays correct, broken code s=
-tays
-broken.
+On 12/09/26 12:22 pm, Greg Kroah-Hartman wrote:
+> 6.12-stable review patch.  If anyone has any objections, please let me know.
+> 
+> ------------------
+> 
+> From: Nicolin Chen <nicolinc@nvidia.com>
+> 
+> [ Upstream commit 5acd67ceb38debe2fbf70ea35e2dec9f7ab01bbd ]
+> 
+> __tegra241_cmdqv_probe() requests the error IRQ before it has allocated the
+> cmdqv->vintfs array and set cmdqv->num_vintfs. A CMDQV left enabled with a
+> latched error across a kexec fires the IRQ as soon as it is requested, and
+> tegra241_cmdqv_isr() then walks the uninitialized cmdqv->vintfs array.
+> 
+> Request the IRQ only after cmdqv->vintfs is allocated and zeroed, so that
+> a latched interrupt firing early runs the ISR against a valid array of NULL
+> slots that it safely skips.
+> 
+> Fixes: 918eb5c856f6 ("iommu/arm-smmu-v3: Add in-kernel support for NVIDIA Tegra241 (Grace) CMDQV")
+> Assisted-by: Claude:claude-opus-4-8
+> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+> Signed-off-by: Will Deacon <will@kernel.org>
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
+> ---
+>   .../iommu/arm/arm-smmu-v3/tegra241-cmdqv.c    | 34 +++++++++++--------
+>   1 file changed, 19 insertions(+), 15 deletions(-)
+> 
+> diff --git a/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c b/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
+> index 85f851ce8ff1b..51aca5269de9b 100644
+> --- a/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
+> +++ b/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
+> @@ -824,17 +824,6 @@ __tegra241_cmdqv_probe(struct arm_smmu_device *smmu, struct resource *res,
+>   	cmdqv->base = base;
+>   	cmdqv->dev = smmu->impl_dev;
+>   
+> -	if (cmdqv->irq > 0) {
+> -		ret = request_threaded_irq(irq, NULL, tegra241_cmdqv_isr,
+> -					   IRQF_ONESHOT, "tegra241-cmdqv",
+> -					   cmdqv);
+> -		if (ret) {
+> -			dev_err(cmdqv->dev, "failed to request irq (%d): %d\n",
+> -				cmdqv->irq, ret);
+> -			goto iounmap;
+> -		}
+> -	}
+> -
+>   	regval = readl_relaxed(REG_CMDQV(cmdqv, PARAM));
+>   	cmdqv->num_vintfs = 1 << FIELD_GET(CMDQV_NUM_VINTF_LOG2, regval);
+>   	cmdqv->num_vcmdqs = 1 << FIELD_GET(CMDQV_NUM_VCMDQ_LOG2, regval);
+> @@ -843,10 +832,25 @@ __tegra241_cmdqv_probe(struct arm_smmu_device *smmu, struct resource *res,
+>   	cmdqv->vintfs =
+>   		kcalloc(cmdqv->num_vintfs, sizeof(*cmdqv->vintfs), GFP_KERNEL);
+>   	if (!cmdqv->vintfs)
+> -		goto free_irq;
+> +		goto iounmap;
+>   
+>   	ida_init(&cmdqv->vintf_ids);
+>   
+> +	/*
+> +	 * Request the IRQ only after cmdqv->vintfs is allocated and zeroed, so
+> +	 * the ISR would not walk an uninitialized array.
+> +	 */
+> +	if (cmdqv->irq > 0) {
+> +		ret = request_threaded_irq(irq, NULL, tegra241_cmdqv_isr,
+> +					   IRQF_ONESHOT, "tegra241-cmdqv",
+> +					   cmdqv);
+> +		if (ret) {
+> +			dev_err(cmdqv->dev, "failed to request irq (%d): %d\n",
+> +				cmdqv->irq, ret);
+> +			goto free_vintfs;
+> +		}
+> +	}
+> +
 
-I think it'd be good if the other patches in that series are backported too=
- --
-but that shouldn't be dependency of the core fix.
+Hi Greg/Sasha,
 
-Best,
-Gary
+I ran an AI-assisted backport review, and I have verified the report. It
+looks valid to me.
 
->
-> Upstream prerequisite code:
->
->      int drv_ix =3D id->driver_info;
->      .no_dynamic_id =3D 1,
->
-> Downstream 6.12.y code:
->
->      int drv_ix =3D id - xusbatm_usb_ids;
->      xusbatm_drivers + (id - xusbatm_usb_ids)
->
-> Upstream first applied eb6cd6d3d8ab, "usb: xusbatm: don't rely on id=20
-> table pointer arithmetic".
->
-> Maybe we should queue that prerequisite as well. Thoughts?
->
-> thanks,
-> Harshit>   	}
->>   	return NULL;
->> @@ -320,6 +322,7 @@ static int usb_probe_interface(struct device *dev)
->>   	struct usb_interface *intf =3D to_usb_interface(dev);
->>   	struct usb_device *udev =3D interface_to_usbdev(intf);
->>   	const struct usb_device_id *id;
->> +	struct usb_device_id id_copy;
->>   	int error =3D -ENODEV;
->>   	int lpm_disable_error =3D -ENODEV;
->>  =20
->> @@ -339,7 +342,7 @@ static int usb_probe_interface(struct device *dev)
->>   		return error;
->>   	}
->>  =20
->> -	id =3D usb_match_dynamic_id(intf, driver);
->> +	id =3D usb_match_dynamic_id(intf, driver, &id_copy);
->>   	if (!id)
->>   		id =3D usb_match_id(intf, driver->id_table);
->>   	if (!id)
->> @@ -891,6 +894,7 @@ static int usb_device_match(struct device *dev, cons=
-t struct device_driver *drv)
->>   		struct usb_interface *intf;
->>   		const struct usb_driver *usb_drv;
->>   		const struct usb_device_id *id;
->> +		struct usb_device_id id_copy;
->>  =20
->>   		/* device drivers never match interfaces */
->>   		if (is_usb_device_driver(drv))
->> @@ -903,7 +907,7 @@ static int usb_device_match(struct device *dev, cons=
-t struct device_driver *drv)
->>   		if (id)
->>   			return 1;
->>  =20
->> -		id =3D usb_match_dynamic_id(intf, usb_drv);
->> +		id =3D usb_match_dynamic_id(intf, usb_drv, &id_copy);
->>   		if (id)
->>   			return 1;
->>   	}
->> diff --git a/include/linux/usb.h b/include/linux/usb.h
->> index 2004a2db81ced..0012259ac910c 100644
->> --- a/include/linux/usb.h
->> +++ b/include/linux/usb.h
->> @@ -1159,7 +1159,8 @@ extern ssize_t usb_show_dynids(struct usb_dynids *=
-dynids, char *buf);
->>    *	interface.  It may also use usb_set_interface() to specify the
->>    *	appropriate altsetting.  If unwilling to manage the interface,
->>    *	return -ENODEV, if genuine IO errors occurred, an appropriate
->> - *	negative errno value.
->> + *	negative errno value.  The usb_device_id parameter is only valid dur=
-ing
->> + *	probe.
->>    * @disconnect: Called when the interface is no longer accessible, usu=
-ally
->>    *	because its device has been (or is being) disconnected or the
->>    *	driver module is being unloaded.
+The patch allocates a zeroed vintfs array before registering the IRQ,
+but VINTF0 is created only later. A pending bit-zero error therefore
+calls the destination handler with vintfs[0] still NULL, and the handler
+dereferences it immediately.
 
+Upstream safely skips that state only after the acquired NULL-safe ISR 
+load and publication changes in cbc41aacd49e and a491be376abd.
+
+Upstream code after a491be376abd:
+
+     vintf0 = smp_load_acquire(&cmdqv->vintfs[0]);
+     if (vintf0)
+             tegra241_vintf0_handle_error(vintf0);
+
+Downstream 6.12.y code:
+
+     if (vintf_map & BIT_ULL(0))
+             tegra241_vintf0_handle_error(cmdqv->vintfs[0]);
+
+The downstream ISR has neither an acquired load nor a NULL check.
+
+
+This is a multi-commit initialization and lifetime model, not a safe
+reorder alone. Maybe we should be reverting or queueing more commits. 
+Thoughts?
+
+thanks,
+Harshit
+
+
+>   #ifdef CONFIG_IOMMU_DEBUGFS
+>   	if (!cmdqv_debugfs_dir) {
+>   		cmdqv_debugfs_dir =
+> @@ -861,9 +865,9 @@ __tegra241_cmdqv_probe(struct arm_smmu_device *smmu, struct resource *res,
+>   
+>   	return new_smmu;
+>   
+> -free_irq:
+> -	if (cmdqv->irq > 0)
+> -		free_irq(cmdqv->irq, cmdqv);
+> +free_vintfs:
+> +	ida_destroy(&cmdqv->vintf_ids);
+> +	kfree(cmdqv->vintfs);
+>   iounmap:
+>   	iounmap(base);
+>   	return NULL;
 
