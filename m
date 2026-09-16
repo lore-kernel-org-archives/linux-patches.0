@@ -1,92 +1,92 @@
 Received: from mx0a-00069f02.pphosted.com (mx0a-00069f02.pphosted.com [205.220.165.32])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A9593EEAD7
-	for <patches@lists.linux.dev>; Wed, 16 Sep 2026 07:45:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BE604499B0
+	for <patches@lists.linux.dev>; Wed, 16 Sep 2026 07:46:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=205.220.165.32
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789544746; cv=fail; b=etEKOESgL1qYyU4LVF94Fw5Enh88BUwnAZ2zUWDZmlJMB8u2CxxI0kQVLsUa6ZSh21AqGqiXRnCjc8p4kE2Nf9bs5lzi/vprz5hN5zTvU0BbYIbF82oEksXUw3DjGvpW/HD73X6YmHaaQwqLTt8xvatqHamlzDvsTIJp5G09LUQ=
+	t=1789544779; cv=fail; b=nx7vuy169/BqGK2KABN1aTiw6iONFiMiF5knfc8d3b/d2udThOKDSW0J1svC6oGnGBK3BccZfr37CSFnsibpRv21GNk37jRdorKQncGn7QRQc+0vOzT6eR1Tv6qJUawQMsn3IXeVYA95P3bk86+s15OK9zWjLdPxkhsqRtVSAZo=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789544746; c=relaxed/simple;
-	bh=e/hVLng+IVVuvW5sMgxJanBSrXJz14oRu8WJYvjxwck=;
+	s=arc-20240116; t=1789544779; c=relaxed/simple;
+	bh=oSXR0sfadPqZXEZzHh7PproPSSFrqH9SvqCAlthsW8A=;
 	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=gKpO9FDwXT/U9tYgbdFjXaLhf4aQmMlRVTv7jVgWF0HBFGcuCv4FdFvdZEcUhA+i2zupb3xgTsYl7DQ01nf/0sBQ3hFnATUXfIRsEgMZfSGO10MTy7Ta4Dj9MT/V654WDzRe7WPL6iPC1oLZzS3vP2af8JenuWj7xPmG6U2u9qQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oracle.com; spf=pass smtp.mailfrom=oracle.com; dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b=aixvcjfj; dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b=nKHzWJvb; arc=fail smtp.client-ip=205.220.165.32
+	 Content-Type:MIME-Version; b=h2yMmtpdK6CejswbPH1ItlT8riSU0w8zewrABhIHHtagexZKhJVKJUakCAGBzE68sBhxbFKzCag7o3iqJu9x4YraAbeYM9LKbVZR9PgoFRRHgEA6Cu1aybZxi2CzE8i27UMZW+CLyvpBRNP3hnUMwrjyWyg6BUgP7oa+RC+HYdY=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oracle.com; spf=pass smtp.mailfrom=oracle.com; dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b=YrLELI6E; dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b=s6FCF1Fx; arc=fail smtp.client-ip=205.220.165.32
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oracle.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oracle.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b="aixvcjfj";
-	dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b="nKHzWJvb"
+	dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b="YrLELI6E";
+	dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b="s6FCF1Fx"
 Received: from pps.filterd (m0333521.ppops.net [127.0.0.1])
-	by mx0b-00069f02.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 68FLXxi91308185;
-	Wed, 16 Sep 2026 07:45:29 GMT
+	by mx0b-00069f02.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 68FLXsxg1308091;
+	Wed, 16 Sep 2026 07:46:07 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
 	:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=
-	corp-2025-04-25; bh=IRR8fGZlHWNLo1h6nI6PQl8tq5Iw3w1nuPIirBfUuRo=; b=
-	aixvcjfjpKlTKvgCplaiuGz4ORu0ye+66EPqdC5Im1tTOcz/BepjD42co/x5VP/X
-	9mHfjfDiv1qSx/xVCPWx4AICDZ9THM6gN7NLyPMSPke+7k9CNDY4kmdAW7YsygFM
-	XAME0NoelAcb+J8crERaudcdDodIopidT9ygXqIX2kLzfPUVb/r4KBIEHRVD4mpk
-	YkCYEe4LlFp514Da4G9fc9VL9Z+Zx3Ltp2xSviFOj1ejuSo01cPJHZuIkKjtmzfG
-	tGoZTZz/RcQxev0XTkc9kjm2Qagvr1VCNs6BLdjk+bAqoQuDe0DYHOXYB8+gUflM
-	cnULb4jNdnpAAQwPRKvjYg==
-Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (iadpaimrmta01.appoci.oracle.com [130.35.100.223])
-	by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4gmwn9554n-1
+	corp-2025-04-25; bh=7idh8V3NBxnChO0YoSlx4cxp0J62S918njnMpeFFeL4=; b=
+	YrLELI6EXVTgATzpWPkGonk55gTAOeoDoFDLU0TkGs9Svb6tyw/6DJLoEYsVgRQj
+	ru47RoGECZ+9gkxldQGFq0YrJOSvYmoZ/JH0MnaXJqOkLsDhliG0KWCMNLjiqK9T
+	Nfc+sPnQkBhjONX67RPHnsuxNKb5c2BB8kyaPpltf2qjU1goT++aAK3HzBwx7JyG
+	gdclBFfHAEX/srfj1xKa5Tdp1EG3Y3NiddP4/K1i27PGEl5Ffyfc914l0LD5czK+
+	2Ba8Lp4iXPLv9fxyO8H3TBKk6nYpyEH5FFqFpcCtCEcino4IK7TvfOUnvo3wF66g
+	3ud2rg5xc0PTvG5866fKRg==
+Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
+	by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4gmwn95568-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Wed, 16 Sep 2026 07:45:28 +0000 (GMT)
-Received: from pps.filterd (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
-	by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.7/8.18.1.7) with ESMTP id 68G7jOdd040847;
-	Wed, 16 Sep 2026 07:45:27 GMT
-Received: from mw6pr02cu001.outbound.protection.outlook.com (mail-westus2azon11012053.outbound.protection.outlook.com [52.101.48.53])
-	by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id 4gmw6q8r2t-1
+	Wed, 16 Sep 2026 07:46:07 +0000 (GMT)
+Received: from pps.filterd (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+	by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.7/8.18.1.7) with ESMTP id 68G7ip0L011683;
+	Wed, 16 Sep 2026 07:46:07 GMT
+Received: from ph7pr06cu001.outbound.protection.outlook.com (mail-westus3azon11010062.outbound.protection.outlook.com [52.101.201.62])
+	by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id 4gmw6d1vr3-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=FAIL);
-	Wed, 16 Sep 2026 07:45:25 +0000 (GMT)
+	Wed, 16 Sep 2026 07:46:06 +0000 (GMT)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=EJQ7vksKZ7gxVF+oWhDn/j5Q6vBJDD3R+Dp8nInc7MsRlQqElXt6aH4WInAAbQDrLHw2FrC8f2j8vx/t9LJex0yA/y9fJNCblg+hwQrie5Y/7xHIKk6rZvq/Ln1tTPAN7wFl60nRF1Db9KXwg3NgPB4NqZSM2hSbyMzpDzujoq3CJ0+coeNb5g6+KhTpzCuCVArc1na8B6y5ho0n2FUfU6DR/fzVGeRKn3mJMcaMVUZJxuiW8/hrIl2OER7ozlPSxOg1nSYBJkD8fYXpvIo/18A/rHZNFu6NP8X7Zli/zIasYiaz3IVFhdsPg/ie+YLuZJuUHggmDZg+GzLqX3XUQA==
+ b=D9OvxW0FJVqKAoxdQAqEKL0lMREK7oNKITyLndADJth5lkg3uh77gE0hMAVH7Ot8hu/WEG4Zgq49WKpmsvEUSnqoDYDo4aKcEVjMWZjtUBIopZxuqz6+Zr4s9J9m+SPCj7mwThBzX4YeneNplZAywv8VFBV5yFJUBd4VOv+orilxiCKfn7Or9x/QAviuV86n1ct2fPC8kYT/6BLeLLQVnG5wQ1rdF0rz7pXSQpSBNpXvMdtCmoW1hYBJFC+shmxV3GAnJRnXPxMN7UzAxWsrYVBEjd/5wJiEIAssxFdl1LUx26RKx9mN2mVf4hl9Em5TjEIC3Fed6su44uBJ5Tz9Fg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=IRR8fGZlHWNLo1h6nI6PQl8tq5Iw3w1nuPIirBfUuRo=;
- b=zWBJrvHpKYSvUmYt6utBVzdL9f88OGX5SFtugpWbY25D24V1N65kdWgqGcL2HlKDjq1D7I9zTRUjot+l2yhWlZlZxa3WmmUJV9haxlsxQs3G3WEmCry5ZxHRN0WsYjQ7eap96LYWgeJpyJLY+wA5vtRZNEMRprmDp0ggvSTLVn+TWeECeKrlR1cvjrSjbqzyOaEjefme3fGc08pXpdsduHMq0WZwAAcSpgl34o9AHgdO3VXrhBeD+q/X22saQvgRI4G00L4CKJUkUmP5EqmbVVlEfAHSXvfMcLOQEL9DYuoPQOcPqgYdysfeP3ttEVvUyKVlCymkRPLo353Gfm6wyA==
+ bh=7idh8V3NBxnChO0YoSlx4cxp0J62S918njnMpeFFeL4=;
+ b=rh6xn3l4iTJJP7YGgHzsrEcYemEM9Cr43arr/kq7kkCVxzGetCfHKV43xIQs9lHd4MT+RF0LZ8UebRV/AVCuy+0t4E04Jkx9OZyyqmk/d2NdHod7z1JV0TlSYdFP5A/vonCTE5/BXD91puKYiYyspUf4Aeqf5zwlnEILDAul+sFQCF9MGmV1lCWFTZRPu5nx9D+eOuBIWJZt8OdbOhzVJ/FHryGL/yfmWDGfcGHS+MOTM0aidDaPK7R9GeoUfWht4nMSce26+vzPy97TebFBl8PD0mynV2zLM5u+ymen0u4eOIkMJUlOMepi5WsQH29KfQagiA0ETtlTb7cTpmLb4g==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
  dkim=pass header.d=oracle.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=IRR8fGZlHWNLo1h6nI6PQl8tq5Iw3w1nuPIirBfUuRo=;
- b=nKHzWJvbswLBxe+Kg+JunU2MzKRP4YrV3ZXBYUXnTeqNy9d+VggPpWZDuKCLB06hIeTzJgaxAKMRnXZOTicyBhZuRjSsVH3EA1eS0lqF0D2lzaNw/g2uWZqu8V6/vqUaTzd4vb93aY6ZoqYDycfyoPpDKEErOxYCrTjoysJg+hQ=
+ bh=7idh8V3NBxnChO0YoSlx4cxp0J62S918njnMpeFFeL4=;
+ b=s6FCF1FxtEJ8dBqzBpbGlN09OJW7f2anQUryIZxNraDztLXwz8NTqYEBiQMUUMWkZ8eUJCkL9WXRUiN+4tO0GdZwv/uifvrCedPD66Y8vfTVOJGXSFIV7c80Bwq4CHzJ/D0B4yYdBzPFFNV4y7lyyLLbYpLZ+SRhvceSFJVvmJM=
 Received: from SJ0PR10MB5834.namprd10.prod.outlook.com (2603:10b6:a03:3ee::16)
  by IA1PR10MB6148.namprd10.prod.outlook.com (2603:10b6:208:3a8::8) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.428.7; Wed, 16 Sep
- 2026 07:44:22 +0000
+ 2026 07:46:04 +0000
 Received: from SJ0PR10MB5834.namprd10.prod.outlook.com
  ([fe80::2444:1d33:3ce:d83a]) by SJ0PR10MB5834.namprd10.prod.outlook.com
  ([fe80::2444:1d33:3ce:d83a%7]) with mapi id 15.21.0406.005; Wed, 16 Sep 2026
- 07:44:22 +0000
-Message-ID: <aa1e8d13-214c-4b89-82f0-ffdf60267343@oracle.com>
-Date: Wed, 16 Sep 2026 13:14:13 +0530
+ 07:46:04 +0000
+Message-ID: <cc43fb43-b6cd-4d60-b077-5fdf7918cf8a@oracle.com>
+Date: Wed, 16 Sep 2026 13:15:56 +0530
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.12 0760/1376] firmware: qcom_scm: Support multiple waitq
- contexts
+Subject: Re: [PATCH 6.12 0766/1376] arm64: dts: qcom: sc8180x: Fix the PCIe
+ iommu-map entries
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, Bartosz Golaszewski <brgl@kernel.org>,
-        Unnathi Chalicheemala <unnathi.chalicheemala@oss.qualcomm.com>,
-        Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>,
-        Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
+Cc: patches@lists.linux.dev,
+        Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
         Bjorn Andersson <andersson@kernel.org>,
         Sasha Levin <sashal@kernel.org>,
         Vegard Nossum <vegard.nossum@oracle.com>
 References: <20260912065607.535295758@linuxfoundation.org>
- <20260912065624.478173368@linuxfoundation.org>
+ <20260912065624.612877788@linuxfoundation.org>
 From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 Content-Language: en-US
-In-Reply-To: <20260912065624.478173368@linuxfoundation.org>
+In-Reply-To: <20260912065624.612877788@linuxfoundation.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: FR4P281CA0315.DEUP281.PROD.OUTLOOK.COM
- (2603:10a6:d10:f6::11) To SJ0PR10MB5834.namprd10.prod.outlook.com
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: FR4P281CA0223.DEUP281.PROD.OUTLOOK.COM
+ (2603:10a6:d10:e4::6) To SJ0PR10MB5834.namprd10.prod.outlook.com
  (2603:10b6:a03:3ee::16)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -96,101 +96,100 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: SJ0PR10MB5834:EE_|IA1PR10MB6148:EE_
-X-MS-Office365-Filtering-Correlation-Id: c12d5348-0948-40ed-9ac2-08df13c652a5
+X-MS-Office365-Filtering-Correlation-Id: d230243f-b665-4be1-8490-08df13c68f62
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|366016|376014|1800799024|23010399003|10067099003|4143699003|6133799003|18002099003|22082099003|56012099006|5023799004;
+	BCL:0;ARA:13230040|366016|376014|1800799024|23010399003|10067099003|4143699003|6133799003|3023799007|18002099003|22082099003|56012099006|5023799004;
 X-Microsoft-Antispam-Message-Info:
-	0yKN3qIqX13LlDZyJKYiQ8zhckmBFvYU1txqgo9sH6I5irSgaB3VHJofC/fgq8t7Pqvzwo/DsKEt+7xIk1SQgM4uA6X4hlj1QNJfPv6xREt4Qfj53Wr/qRbcgnAIRq0hwiLlkvVC+C8/qR9kkhxwcWFFOVHdk00psMzw2sEttlBszZXAsS5BRW9h62RiikbeTKvZaOzvalJuEMaTdXswaFFXG11fXdbjTvm3greT1P9V2ofaEvVKx5d9MHKBjQ8E2LDotXPQrsdoLBCW3RvsnRhaTpxZvMexydRihQ7UXT81PCE+XI00gcS9JbuMLs6n2xXUqeFM+vYhdxODpVvjESys58OV9FqvXhhPpoEKz5JU9s/WZUKZypI0Y/6ba87vNctpk5T9GXoAhUuJcqHqSf/oTcSVQAP7EArK4tGheRKHBYm4ZArbDOi9u09f3nnLGXW4sHVyOL4wCA6M++ntY0LWIx0ur2pkBCxRd/1Dec4m4BOZ7bA0OhQzG0CxdllC2+7zYywiSL+HzIPDk5z+7lHb7y7d5QyX950qw/bNyXdRQmCMjyLVSdOsQqdL4coxjYv3O4CcyAKWASQJ4Kcj0vsQBDBNsqkioOpnmrBZwJh9sYvFGy5WWenl37k4WiSg9tvunNLnhciXs1wPJUfOTEF4oRzaJps47wWMsUJYO14=
+	NrFO0B9Wc6AlzUeljQ8dPQuAlZMDIBGefR7awWOtdA++8xgBvvkKi80PVmwcX4P3wEXrZWSoEt8N6yE7xiQDb5BlfS2PLGnPpybcpK3nL8ScNS8io4L/QonQeUv/U9h3LicA3DHJ5McxzTPciRe250bauW5qrl4SqoDuPpPydCldD8QrK5Qarmcse4MQSTZefvuosKvWrIzxy72DJ3KgwSDyuBkUJRfDBRcCxZJ6cREwwGspa2UNHG2ITCGJsXzHotI7oGginv9zOtmpLV52lNf96RfVPOhVQs/jNW29t69xWvVpAaLbp0z5O/aHjxczZstgJgMpFyEbMdozjXrg+VHeDL7MU65TtKD0ebWNEytyC8Z1lu5o7PNLQ8ZSNE1lrP7aipe99pb3dvl/0G2jAfg7p235HXh6tt3YSVVtTsQXIs72oPTt5lAomsndDFfAvyZUSzw96sh9X0MBUT61yBpfystQV1Jv8ZelaGL2Oyz0diSV/nSpwJug8L2cVjVGN2Izg3RZ1drr4NUcKhL9ZnlQSN5CH7Cc3n3xHWI7PZsVJmVndmja0qCMyxOinjfezRZY0iDrCvxBQSV/u8cbJfrZFEx45ubs9nGFP6z/qpdjJv7Dw3ArtDF2S533nVS2Nd36gGBEERBmeuKwAIIK6MCT2ImQ6iEjm2fmn1qTv0U=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ0PR10MB5834.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(1800799024)(23010399003)(10067099003)(4143699003)(6133799003)(18002099003)(22082099003)(56012099006)(5023799004);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ0PR10MB5834.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(1800799024)(23010399003)(10067099003)(4143699003)(6133799003)(3023799007)(18002099003)(22082099003)(56012099006)(5023799004);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?NVo4N0NiaWR0K0ZqQUJ6RTBCZ3hmVDZNQzNva0o0MXlEMmxlQWxzOE1WVzQw?=
- =?utf-8?B?NFNla1M2VE1zaWN3c2U4cDk5NjNaS0h0VnB1ODR2aWNPZWlzVjI5Q1dpYXpY?=
- =?utf-8?B?R2wvajgrcGszZ1kxcXc0VThFcjZmK0RuK1J4b2RXZjhsdE5GeE41S3kxZE5L?=
- =?utf-8?B?YmNmY0hEUHRFdFNPMk5DMHIvV0RTNCszRTlXUTNnbWphQkgxaUJyM01kZHVz?=
- =?utf-8?B?cnNpa3lOL1JBeFBwd2RsbVd3MWJwSHVKck1iRVowRDVJNTBOSHQvL0hFU2Za?=
- =?utf-8?B?R05iRXFJUFRKVytrWEpqSTkwNDdYUzJSV0k0NjFKQ2VwNms0S1JSWDBQdE5H?=
- =?utf-8?B?cTZLMVJRaVJ0dTE1bGxZelZTcUc4Qzh1Qzd5MmVFT0ZndGxnZHhjd29Mb2x2?=
- =?utf-8?B?T2lvS05IWE5BUXp6K1ZYeURlQVFjcFZWV2RmUnVyRjNhaU9hVGVxbmwyMndQ?=
- =?utf-8?B?amV3WGs2aXRqRU9EdzNiZEVLWmZTaE0zYzRZUlFuQkpQem5OMFZtc1FHWXhw?=
- =?utf-8?B?SkxKUHdNZmwrSUNQNWE5ZXk5YlJWTkVQNStMRjlaQitSa0FuVUc4aXpHZUx4?=
- =?utf-8?B?Y2krS1o3cVhUYm42MXlLME12MGZnS1FvWkdYS05Fczl4b0tCb2FHNUdqZW9O?=
- =?utf-8?B?ZGhXMUIwRlBtVmNHdVloUGlBRXVyREkydmlDMGdUa3greWpvTXQxZzRYZDVD?=
- =?utf-8?B?c0NEMkkvTlFXMnRuTDdVVTRVYXJReFdjZElHV1l0VFNBNERLdjRVMkp5bnQz?=
- =?utf-8?B?NXc1RDhzQzlObU1OUGxJQ3k0WDZFb3ZuQlRZanJiK0tESnozVlhPSkJhMzBC?=
- =?utf-8?B?K2R5VTNLM09LMlFrY2Ixa3VUYlc2YndSdFpGdnJKcXNFcEhDNVE5VkJvNXJ1?=
- =?utf-8?B?elRuc05sU21yMWQyQ2J5TG5seEZzUWhxaHVUYnJheTVzR2pWRGJXSGpxWmtW?=
- =?utf-8?B?WTlObStIUzF4VXJWU0M2OU02Rm9XVUJOQUJNYncwckxMd1JGVVVDR0EyZ3pU?=
- =?utf-8?B?ZWh5V2U3WVN3NnNBcVVxcmxDR2JCa0VFOS9pVVgweHl1MFFQMkhmUlg3ZGQx?=
- =?utf-8?B?WmRiQ3JReXZ4Sm51STJtcWdmdmRqWVNUUEd3b1FLZWFyM2ViRUlsZzhLVy84?=
- =?utf-8?B?S29DMS9lR1FOYW1MNTVsK291QWYyQWVTUGpRcUhBako2QXN2QzIrazJoeTM1?=
- =?utf-8?B?R1dqNkgycVloTU4wL1hxUXpNeDI4aEk2ZDI3UDQxdFp3aVp1ZGpsZ3Q4RnU3?=
- =?utf-8?B?VklWOWNENHp0K3RHQm0vTzFZckV6OVhxQlhLU1BUdTREaG1jUXhRYlJpenF2?=
- =?utf-8?B?YmpXK2JpSmt3elRTUVE3NVRKdTF2Q3lseC9WT3EydTNSSitHdU5NelcyOENK?=
- =?utf-8?B?T011eUJ6SFR5NTZqSy9RYk5ObTVEZWlKV0lJZ2lxYlVTbmErQnoyUWVYZlha?=
- =?utf-8?B?Q2NvZGpnSGdRU0dENlFVaHRjSk1ZZU5rc3dMNWhrL09BR3IzeEltOWJlOGFJ?=
- =?utf-8?B?UXcvamFHZUxCMjUxejNBMGh4YWIyRW51S0MrZmVlR2JEclliZktIdXFiaENt?=
- =?utf-8?B?Ry9ENTNLM0VjZDZaa3E2K0pKTlRrWG9FL3hBdS9VYUJTdnBSbjZObmlydEE5?=
- =?utf-8?B?YVNhT0xKUnQrejhodlBtN1NlQXRZT3RBcUtSV0FtSERqQ1N1NlNkdncrU3U3?=
- =?utf-8?B?L3A0bVdyOGVCMzVEbktaQVVWdDRmaEVaZlROSG9yeDNYaDI2WWxSOTl5RVlm?=
- =?utf-8?B?Q1JQdDB2bUhMTW1UMXBENzV5R1Rlc3o2NjJ1alVLRk0xT2wxTDNDYUFlWlpw?=
- =?utf-8?B?Q2VJenJ0NlAycUFMYzh0Y2VIREEzdG5jTjUyczR6N1c3WFZFbnN0M1paSldh?=
- =?utf-8?B?M0NSY3hoL3FsdVNQOC8zSGxZRTR6S3hLSWx4UEY0a01hQzMvS1RhNnBLTFhY?=
- =?utf-8?B?dDBpbGlHdGc0WXpmQ1F4SDBnUk9oKzUxSWJPSTVya2VJUFFNdWRRRUdqM3Fv?=
- =?utf-8?B?OXFIekNnOU9wOUlWcVpqQnJOUWZ1dkZkQjFQZkhOUEZGdEVlaDVNck95TzhX?=
- =?utf-8?B?eFRpbzMrbXlHdkNjYVNVazJJdmNCTkJNK1RNS2lORU1XTkllUzdNNHBMVE5I?=
- =?utf-8?B?L0RrZ0ZpRE1ZUGdPNjJJQmJMMkhFQTVXQmFuRmZiK3VhMm92QVE2Nm1SU0xI?=
- =?utf-8?B?QzE3MGlrdDMwS1p0Y3pKZitod0g0YmJuT2E5Q3gzREhpaFZZZUVjMitSUG16?=
- =?utf-8?B?STUvZ2NVOUhlQ2IrTFVWTDBPMXRnY0xRVXM3SHJ1RktheDUxTzJjUW1uVFZu?=
- =?utf-8?B?dy9WNTBBU0dDR0FVMk5OMjBNYlBTc1V6dDhlUVhLa0RpQTBndUY4aENKU1lQ?=
- =?utf-8?Q?O0639YoQl5xxn5FZQO9bu4rWdoFx4WYVcgB7T?=
+	=?utf-8?B?UFpmdVhrSVQzbXR3SDlSd3ZOaEMxd3A0MFNIdkdJUnZhR0ZzMThyQzM1ZFR6?=
+ =?utf-8?B?K3BEbGJ2TFp3QlltdUJheTMxNi9zdEFKdTBzKzRxYXZYTlV3YXpEVFMzTUMv?=
+ =?utf-8?B?YzRwY1ZIdjUzRVFLOUhDU3lOcGtHY05RSHVaMlNxSUtVQlZVYTQ0bWNGV3VV?=
+ =?utf-8?B?cTUxa3ozTkdCYmhFOVNSYkxoelR6clh5WlJ1cHBuNFJHTlNRWjhrK1pZSk5s?=
+ =?utf-8?B?cllrb2xtTWxUTWZwUWloN3AwUGFCMlAxU2RBYjdsZUxFdHZYRXNMSjhCbkJJ?=
+ =?utf-8?B?QnZQWWo0YW90ekhNdU1kVWZ2SDNHaXRlMlZjQUtteG1NSXgwc1VKQVJ6bjN4?=
+ =?utf-8?B?ekh2cnhvRjVJVkM4T1VnTVdhY01Yc1VlbjNNZzJhM0N0OU8ySFJkNDRZMWtM?=
+ =?utf-8?B?ZmNQaTN2UkRvSnp5VFNqd280c3pHbTg3VlhUemxyMk1aZW9RY1k0OVQ3SXZH?=
+ =?utf-8?B?WEwwRjZFY05scnFHNm54eHIvZVNYZ0VVa0pjdWpXY3JldFl6b2hLK1Q3UEQ2?=
+ =?utf-8?B?ZzJPR0g3SGNvRnN1dDd0eWRjd0JDS28rYVNMNXhxTTdjZE5oczQxSzNTUC9j?=
+ =?utf-8?B?VkJaSkVSNzZXeXFsZ1duMkJyYldLYk1VUUtjdlk4aG5MUHN3a2taa200ZG9v?=
+ =?utf-8?B?bHVJZmNKcFRwVUpUTjBzaHZkSWdqNjhRNHFsbUhzR0grY3oxZTA5OEpWaVVY?=
+ =?utf-8?B?ek5jYkhlamdOblBvRU1jVmVOSEhOWGVGdlVqUnloajV5V0dLbHFvUVFUVktv?=
+ =?utf-8?B?RGs4eDBScndMSSs2S1NxNmdpUmJJbkRuZCtqSE1yMmNVQ0pPNWtVNEE5UVo5?=
+ =?utf-8?B?MFZpUUhuMUd6RVBpQ1I3OW1MSnVsTjZ1NjZQRWxmeDRWR3hHNjlyM2ZRdm9F?=
+ =?utf-8?B?NEF6ZEl4OEF3UnZCa2xCbnUveFVVWjRoRFh5UjA4TTVDS080YWgrNWdFVGZ2?=
+ =?utf-8?B?NWtLeHljUzZvUkUyTmhsalhGWS9aWXhxbzREenBsNDBBMXpuWldwcmg2eDJZ?=
+ =?utf-8?B?blIwOUgxamRENGZZNThRMmtWcHdDZVRTdXd3OUwyTXVST1JSc1FIdVByRWwz?=
+ =?utf-8?B?T3kvUXU1bFB2ZmtKYy9GbVpnc3BoSHlwb3RqUU5pQXdWcktPTmYvcHVLakxC?=
+ =?utf-8?B?Q1l5cFpHRmFVL2I0OFBTRGdISlpZay9tLzAvYmhEa2ZUNDVrelZlRnRTQzNY?=
+ =?utf-8?B?OGxoMERUdEhscXIzcHl1ZjN0NjZ1OWNjZzFzdkd4c2hGUnRiNzVTbXdTNDZT?=
+ =?utf-8?B?RmVNQzRDYkw5RDMyMTZQVEhFZGdjNnFJTzlJVHNJSTBVa2lUNGNZZW94Wmlu?=
+ =?utf-8?B?NHVPdUpubGRmR1dRZVpUaGRTa3p0ZXpCa3NjTWFLMGhlMlVpcURLQ0IyazRO?=
+ =?utf-8?B?eXF6ZkwyYnpOaUNNbzFKRDl4amNyS2hWUXorb0c5YS8vZERpVWFWV1R6dkZm?=
+ =?utf-8?B?cnVUTEFQK1RjMGx4Qk1teXRlREc0NjhWZzZ1SS9YRHc2cExMQWZhZXJzZG1j?=
+ =?utf-8?B?NjZPRDEzMjMrSHNTV1dBR3pjR2NPK01KWmlJa203NGYvaS9XMHoxMjU2cUx2?=
+ =?utf-8?B?N1pQOTduaGRJUUtydEZvYUZPRnBYNlR5ckd6Z2xaK1c0UHJBVVBvTlBBcits?=
+ =?utf-8?B?Vkg3cWJmcDdvQWp5THVEUEkvZzhRdzVUNSt2U29hMFp3V2NMUTNRdlo2SExo?=
+ =?utf-8?B?ZDVCbGVldUFzUmEwa1ZSbzB4dHhpY3o0TUdRVnBLcllaNXNiOFRkNmJuWER5?=
+ =?utf-8?B?Q09mWFAwZUM4MnNSVkRlTGtobDhPT1BERllkbTZBdXEzU254OGRGLzJITnJk?=
+ =?utf-8?B?WFZIZWlNWFJZMDZGZEJtSnNYemlwSWRQVkd6anFjTi94d3RWUUg1RkFJVWla?=
+ =?utf-8?B?UzdEd3hDeGkySVlZRDlKRTJmWFVRVzk3a1BHZkZzZFE5aDV1RzRyVzIvWFNl?=
+ =?utf-8?B?V1pxZVNNZlRZMkRhTGhNOFJyOVpGYitBNm8vN2VTSm9kUHUySUlVaVBMZ2h4?=
+ =?utf-8?B?c2IweDBsVCttQXZlSkpiM0ViZW0zRG9TV2pTdzJuWk9FVTdpSTh2dS9xK1J3?=
+ =?utf-8?B?UlBKVDBqUWtmNzJxVTg1WUhabmk1VnVVQXdNK2U2elBkRVN3R0ZZQ2NoS1c3?=
+ =?utf-8?B?bUk0blRRSzJ6WDM5Uk01WG5DTlFKSDgwem1yTjVTU3Zpbzg5RTVZMVJQM01o?=
+ =?utf-8?B?MVNSdVFlNVlXUTFMUXhDTUxsL3NjOHZzSHFpRW8vbHlib3o4Vm1vVXdjT3V6?=
+ =?utf-8?B?Ui8rL2MxMUhWRkdDUkF0azlVYTlBVlgzdGU1akpBQ29mVTQzZmxSU3FBc3A2?=
+ =?utf-8?B?Y1h4T2g2YnVwTWpqa0o2YTFnRld1djJGcTZZd2NBY3F5djVYYXQ2KzN0UTJU?=
+ =?utf-8?Q?YmPtJQfeKJWJ9hb9zwwZvIfjqB+efdFCHHx7I?=
 X-Exchange-RoutingPolicyChecked:
-	lW3f0TwXBjzN+hr5JM4MOsVo+GQbJ7Y9RZOVAJFWlD71Jq2MIBiPtn+e6/DtuJr0vzIf0mkiavvS6nmkHoCxvIkadabzQKyRzGOthNJ+HfULZ2x0F7ZBEihP8rxrZfh66Gcrd+Je2IR9SVjVrUXx/UUCO185jTo0vR2TN6xhrlBRiB+Qu/ACH3grrMFLJazzYMw1yuy665HIbsC4V3sLq8fp0OVoVaDOThjFdA0mgIzL+a0zNV15sLN+So66ydJtkU00ojU0qmJ7X25rgM+6vZV9X691w9AC6/t7x4Zd+vnq/VaK+IQJfq1FvuVnhzXNWZIdqiGwTNOEbR/16nPQhw==
+	NLetLH7a0b2X2FIBSHfdajLAUfFy7l3iCCZWMBrDUkkZxN210mcgPCJoDNlyn1r/MWxMZ3HR+8OQQJqFRe+kQyQGImilnXnNvRfbw6r1pPqnBvrlOUQyL+eQGjB3ZYzsWhGdamcd5qWkEyH6P+3oZ4UP3fij8ZNKBQvLW29rOiatnWmVWFUBlGWL2Nt67n31+GW0IR+5rgkg6l2LTZVYVEz+6UNFogBmr7oAkDMUuMbbiifT00L6uZ/UDoF67KmYddYOxPELkzaNwAwOK6w8CEJPHd2c0+ukZfy01UVFGac670gDBlX1NLyFu2LY6QTNr0rDglJGUJ1fVgMxsReF1Q==
 X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0:
-	DnsiSXCh1pkGyaw+8BixtjTJwMHAhdUC7WaABkFkv2cK8VJio6AXjDO+EJcaenUiFoeKHnyjpBaSZBfLPLcFQviAjc8R3il1p/NvWm34y5ZJUPCgKGWrWifp7zrFM38gJPqaggIPpSDqob5HYXTsbwE263DNDIFPtnqjLsXSToisLQwf5ScDrzUTB/HRcUyFxu7C30CL4TYBu8oKFGEvPxRbrsVrIj3TyJfxmX/PgoTJCjx9YfOr2g7GLEaswfCrHA8ClDiwPFvkWPM7e9BCYB3OfHRVlO4I90qtvevtaLbQvcxrcDmcZ6p/Lu9ZCUSsTohC0lGA4QobKQIi+BmYZ7yXXhjmXWW+w5NZtz1ColIDYD7zsuzK1po3gn14vGRg2EcXwwyOjc9VkukK4JYQFsMPzJJ7KdV/v26ZX1rkbpIEi82yasyy94OmRR66BmEpSqLlV62fTZ2d5sojSjbeKM3Yd5OGLrfHIgS8+Uk0kXMYbNotUG2Apdggs2sLA4FNHSwikJ5kHAalLgKMW4FI/oPFYbHxJFVFvsjMd5qH6TCFKiJjA7sLjZM00UOHm5CwUECMG263ew7SyDF47UnbOWmnLKVasTDAmplDiGBoQaM=
+	KXD4Rx4/3hOcjzISim1VjYalZNlV5rYyLBXZbI7OkqJUMgXA33w35vuoHZKKW1Bh1IRSv02DUGQinwecbwyK45Fi1t1YHQ45rZGjF3XVOeawn6Ta44epBh/Xl7Pbx6KtXeinN4JFBLy2v901OHAp12fMbzBndfYl0VQEcEsx2yVViD8NcXDPd+WwWXfVLzLv0X1qLFhd4ClsXV1PLksCRTehUPtaL0mFdohpXR9hP9P15CVEK0szx9vJ6z4EvVkG3lAh7JRoC9ANB03AewsDWwu/fzC6faxcq8dcU0Atq4ncrKdRC5aa9HQbm1PZeyaM3XoGJaGb68E15/D0FGALteZyXj4IVny9sqh2aOZwK6+t9vWyZ3l5m+gJLbucmMUcW9L4VacapPbAQZEB244n/84c9tF1X4WHpkwO7Wm92PeFeYczNSBTXMkF+m8aG8R3DY/ZsIT4OowdUwY81eCspqcc/rfNWZE3LQysKMbnBMnJBq0MQBz7kr21/4RPhQ+5XgTSMayM1LLz4p56KiJjlBkUCwC9yPrJGyt9a/Y4EkmQBZInv1RCQ2uOgZWi/gkJ07WnrWWq6+uwdkDUuFm8FtUTe6J2X52gzPN5XE0v4MU=
 X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: c12d5348-0948-40ed-9ac2-08df13c652a5
+X-MS-Exchange-CrossTenant-Network-Message-Id: d230243f-b665-4be1-8490-08df13c68f62
 X-MS-Exchange-CrossTenant-AuthSource: SJ0PR10MB5834.namprd10.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Sep 2026 07:44:22.1883
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Sep 2026 07:46:04.1290
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: p8pgTMf0IDX3Lmsg8mQYNGKeP4PUYykMCA/6fWcrIz6PPH9lTMgtT0If3ZPun12uz76EyoMl28vLj4KV9AqQIzpgIjthfUatFLxoCC55AySqasiooTaeLCcxDfn1wi5p
+X-MS-Exchange-CrossTenant-UserPrincipalName: gOMcgq9jIQlMSSAWabdLjqSnAKvo4hecrKXPknT8L4WGpFzCSAYEu+LkYhK2pjdVaxScAr3VEtjxEudT9XMoJuHTAEZJZ2EX5CfJ16n33Muz9MnkOWp4VRqJbrxdKEV+
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR10MB6148
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-15_05,2026-09-15_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
- malwarescore=0 mlxlogscore=999 suspectscore=0 mlxscore=0 phishscore=0
- lowpriorityscore=0 spamscore=0 bulkscore=0 classifier=spam adjust=0
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0
+ mlxlogscore=999 spamscore=0 bulkscore=0 phishscore=0 malwarescore=0
+ mlxscore=0 lowpriorityscore=0 adultscore=0 classifier=spam adjust=0
  reason=mlx scancount=1 engine=8.19.0-2609040000 definitions=main-2609160100
-X-Proofpoint-GUID: 5PHswvZudKhyqCTNqPH_Im9AlekX2hp2
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTE2MDA5OSBTYWx0ZWRfX6iOS4h0JuqhC
- lMPZpGQMrxF0+cv8PrwbHZW0P8x5nleUiS7K3ZL1JqG0cXp5B85ZhtFy3x9TDOW0O+lZHNgEFET
- uayPcCdcZOcTgP27lPAF7cnASKVJZzoySnyHOoj3vuoBIy/2462l
-X-Proofpoint-ORIG-GUID: 5PHswvZudKhyqCTNqPH_Im9AlekX2hp2
-X-Authority-Analysis: v=2.4 cv=c9k+0h9l c=1 sm=1 tr=0 ts=6aaa4918 b=1 cx=c_pps
- a=zPCbziy225d3KhSqZt3L1A==:117 a=zPCbziy225d3KhSqZt3L1A==:17
+X-Proofpoint-GUID: EVPR2lLkC_laBujPMdm4rP5yF1B1ar8H
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTE2MDA5OSBTYWx0ZWRfX9HzCwGIwxODH
+ OCmH01GEKJWu8/aevTsrNQVG2jRglYRigHyK0IAXai1afGnxndA8VS2eIAKZdoqCNYCKMLW4DS5
+ ISUQ068f4oPGWAdYS1Yta1tYN7MarIBzj4UtZqAcsz0Pk2KdOhAM
+X-Proofpoint-ORIG-GUID: EVPR2lLkC_laBujPMdm4rP5yF1B1ar8H
+X-Authority-Analysis: v=2.4 cv=c9k+0h9l c=1 sm=1 tr=0 ts=6aaa493f cx=c_pps
+ a=XiAAW1AwiKB2Y8Wsi+sD2Q==:117 a=XiAAW1AwiKB2Y8Wsi+sD2Q==:17
  a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
  a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
  a=VdqzKS8jKosA:10 a=GoEa3M9JfhUA:10 a=VkNPw1HP01LnGYTKEx00:22
  a=jiCTI4zE5U7BLdzWsZGv:22 a=x0eKOSpe3m1H3M0S9YoZ:22 a=VwQbUJbxAAAA:8
- a=EUspDBNiAAAA:8 a=29KIwY99vDLyvZJVNToA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=5yU3S35YU4bGjq-dph-N:22 a=Bho9c0fBagfJEIQBS7DQ:22 cc=ntf awl=host:12106
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTE2MDA5OSBTYWx0ZWRfXwVX6/rT/znaf
- mtruBXFQcOst6y8hC9yQ8myw2kMuds5TbxVeateuQO2ts/sPjudcFUW1u1A15MdbsDc9Yq0sqeq
- KDAP9YksgQ3e78MwLjbcK5w/a1Lo1G9GhyHzlpM5H1wDT4zWIZJEyr3DrRET4+FYL7h8TsoDUP8
- 3k8/bMlpeXBG+2yOxnLfOGAElMCpqIehVGZHyEPzLaULOLeCjh/F9MshdXfte/sRUm40QcZSMKn
- AEt5aZaK+H3SoMBEjCBkZpSTD1Xbo4xShf03YZEc6jAhNo72PLkeKPeH7M9l2XGReg2SLMqopV1
- 09K1yCzxqw/sN4JTlqJse+LQqezKHfmCZcGu57wTT2DSVgPxlBs5liUAj3Grz1utuTUwBYYsdwQ
- bozB1JFICXwPTQ3bZ1Pv3u2RKgb4ml9mGBEj9qzaOjDpezGg76ItjiPwp0NMo7rqhk2vXQOxUbz
- 6TYcQ6x/D91lb41hm6fEF9KgR7kftbSfRSWiNl9c=
+ a=EUspDBNiAAAA:8 a=qAMQX31tJun4B5yFMF0A:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTE2MDA5OSBTYWx0ZWRfX5SsWI6+wLki1
+ OeUGJz6yh/58H6cbMcMn5/HPwPBp6IsWpFlIX212sOeUWr8bFSnfjDSw+6BuwC6HIsJ+91nuAl1
+ MEphSYnbhd9ol2errGD8MHQdKDOZ5o4SA03bXxK1E/Ut18y3Cm1DfGtcu3Hy/ouBkKJNe/Hz4eA
+ sdS7OtIzVqHGmK/4eJ3X8waEiyZnLm6+5R1HaUDlKMiNbpgsM/prgDh3j+FP7gPmB7GdTBfl+dM
+ GEDxQzWpzOeY3VMpAOXJD/rGqTzf9Vf+0rbhCWiagIYtI4hGU/blLP3o/Q51XPdRfUgZ+3eVssi
+ 9dZR5wDKQijy/d5PCrEhqsQgjUORprwfljFwYLzqY4yby0NYKVlLQTmMZ6UcApn9vjJ9cDGmDtO
+ QpQKIObbhbSinJOANWDgq8pkkh93uj6rtB6umgq/vvAIM2luXfGvexEacV9zDlJ4xrg8BZ5kzD6
+ Dt/la1Gp0Ib7xVpSxvA==
 
 
 
@@ -199,237 +198,97 @@ On 12/09/26 12:23 pm, Greg Kroah-Hartman wrote:
 > 
 > ------------------
 > 
-> From: Unnathi Chalicheemala <unnathi.chalicheemala@oss.qualcomm.com>
+> From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 > 
-> [ Upstream commit ccd207ec848e768da41465352a0f52081eec6bb1 ]
+> [ Upstream commit a4548204821a56c23cd711cfad2a637ca055ff47 ]
 > 
-> Currently, only a single waitqueue context exists in the driver.
-> Multi-waitqueue mechanism is added in firmware to support the case,
-> when multiple VMs make SMC calls or single VM making multiple calls on
-> same CPU. Enhance the driver to support multiple waitqueue when
-> support is present in the firmware.
+> The IOMMU provider apps_smmu uses '#iommu-cells = <2>', but the PCIe
+> iommu-map entries specify only one cell for the SID, omitting the SID
+> mask. This went unnoticed until the OF core started warning with commit
+> ccb2fd725d41 ("of: Respect #{iommu,msi}-cells in maps"):
 > 
-> When VMs make a SMC call, firmware allocates a waitqueue context,
-> assuming the SMC call to be a blocking call. The SMC calls that cannot
-> acquire resources, while execution in firmware, are returned to sleep
-> in the calling VM. When the resource becomes available in the
-> firmware, the VM gets notified to wake the sleeping thread and resume
-> SMC call. The current qcom_scm driver supports single waitqueue as the
-> old firmwares support only single waitqueue with waitqueue id zero.
-> Multi-waitqueue mechanism is added in firmware starting SM8650 to
-> support the case when multiple VMs make SMC calls or single VM making
-> multiple calls on same CPU. To enable this support in qcom_scm driver,
-> add support for handling multiple waitqueues. For instance, SM8650
-> firmware can allocate two such waitq contexts, so the driver needs to
-> implement two waitqueue contexts. For a generalized approach, the
-> number of supported waitqueues can be queried from the firmware using
-> a SMC call.
+>    iommu-map has 1-cell entries targeting 2-cell #iommu-cells, treating as 1-cell output
 > 
-> Introduce qcom_scm_query_waitq_count to get the number of waitqueue
-> contexts supported by the firmware and allocate “N” unique waitqueue
-> contexts with a dynamic sized array where each unique wq_ctx is
-> associated with a struct completion variable for easy lookup. Older
-> targets which support only a single waitqueue, may return an error for
-> qcom_scm_query_waitq_count, set the wq_cnt to one for such failures.
+> So fix the entries to match the provider's '#iommu-cells' property.
 > 
-> Reviewed-by: Bartosz Golaszewski <brgl@kernel.org>
-> Signed-off-by: Unnathi Chalicheemala <unnathi.chalicheemala@oss.qualcomm.com>
-> Signed-off-by: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
-> Reviewed-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-> Link: https://lore.kernel.org/r/20251217-multi_waitq_scm-v11-2-f21e50e792b8@oss.qualcomm.com
+> Fixes: d20b6c84f56a ("arm64: dts: qcom: sc8180x: Add PCIe instances")
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+> Link: https://lore.kernel.org/r/20260730-iommu-map-fix-v1-4-83405d37ba41@oss.qualcomm.com
 > Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-> Stable-dep-of: 966d23c7e68e ("firmware: qcom: scm: Fix NULL dereference in IRQ handler before __scm is published")
 > Signed-off-by: Sasha Levin <sashal@kernel.org>
+
 
 Hi Greg/Sasha,
 
 I ran an AI-assisted backport review, and I have verified the report. It
 looks valid to me.
 
-The 6.12 adaptation publishes __scm before the new completion array is
-allocated and initialized, and before the waitqueue IRQ is ready. A
-consumer can therefore observe SCM availability with no usable
-completion state. If the allocation fails, probe returns while the
-published global can refer to released devres storage.
+The corrected SC8180x properties contain two five-cell iommu-map
+entries, but 6.12's of_map_id() accepts only fixed four-cell entries.
+Each 40-byte property fails the 16-byte divisibility check and returns
+EINVAL before any requester-ID mapping. The PCI setup path can continue
+without the intended IOMMU configuration.
 
-Upstream code after both ordering prerequisites:
+Upstream has the variable-cell parser and its API preparation series,
+including ccb2fd725d411265df8f7ce12a66c226b16014e6. That broad series is
+absent here.
 
-     ret = devm_request_threaded_irq(scm->dev, irq, NULL,
-                     qcom_scm_irq_handler, IRQF_ONESHOT,
-                     "qcom-scm", scm);
-     if (ret < 0)
-             return dev_err_probe(scm->dev, ret,
-                                  "Failed to request qcom-scm irq\n");
-     smp_store_release(&__scm, scm);
+Maybe we should this isolated DTS patch. Thoughts?
 
-Downstream 6.12.y code:
-
-     smp_store_release(&__scm, scm);
-     scm->waitq_comps =
-             devm_kcalloc(&pdev->dev, scm->wq_cnt,
-                          sizeof(*scm->waitq_comps), GFP_KERNEL);
-     ret = devm_request_threaded_irq(__scm->dev, irq, NULL,
-                     qcom_scm_irq_handler, IRQF_ONESHOT,
-                     "qcom-scm", __scm);
-
-
-Upstream publishes __scm only after both the TZMem allocator and 
-waitqueue IRQ are ready, as established by bcd14791ba62d2 and 4e06c33aaa5ddc
-
-
-Maybe we should be applying those backports ? Thoughts?
 
 thanks,
 Harshit> ---
->   drivers/firmware/qcom/qcom_scm.c | 72 ++++++++++++++++++++++----------
->   1 file changed, 50 insertions(+), 22 deletions(-)
+>   arch/arm64/boot/dts/qcom/sc8180x.dtsi | 16 ++++++++--------
+>   1 file changed, 8 insertions(+), 8 deletions(-)
 > 
-> diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
-> index 5b2ef39a2e9e9..7f56ab78ac159 100644
-> --- a/drivers/firmware/qcom/qcom_scm.c
-> +++ b/drivers/firmware/qcom/qcom_scm.c
-> @@ -48,7 +48,7 @@ struct qcom_scm {
->   	struct clk *iface_clk;
->   	struct clk *bus_clk;
->   	struct icc_path *path;
-> -	struct completion waitq_comp;
-> +	struct completion *waitq_comps;
->   	struct reset_controller_dev reset;
+> diff --git a/arch/arm64/boot/dts/qcom/sc8180x.dtsi b/arch/arm64/boot/dts/qcom/sc8180x.dtsi
+> index 4715e26fc2647..d3aed296e32cc 100644
+> --- a/arch/arm64/boot/dts/qcom/sc8180x.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc8180x.dtsi
+> @@ -1761,8 +1761,8 @@ pcie0: pcie@1c00000 {
+>   			assigned-clocks = <&gcc GCC_PCIE_0_AUX_CLK>;
+>   			assigned-clock-rates = <19200000>;
 >   
->   	/* control access to the interconnect path */
-> @@ -58,6 +58,7 @@ struct qcom_scm {
->   	u64 dload_mode_addr;
+> -			iommu-map = <0x0   &apps_smmu 0x1d80 0x1>,
+> -				    <0x100 &apps_smmu 0x1d81 0x1>;
+> +			iommu-map = <0x0   &apps_smmu 0x1d80 0x0 0x1>,
+> +				    <0x100 &apps_smmu 0x1d81 0x0 0x1>;
 >   
->   	struct qcom_tzmem_pool *mempool;
-> +	unsigned int wq_cnt;
->   };
+>   			resets = <&gcc GCC_PCIE_0_BCR>;
+>   			reset-names = "pci";
+> @@ -1882,8 +1882,8 @@ pcie3: pcie@1c08000 {
+>   			assigned-clocks = <&gcc GCC_PCIE_3_AUX_CLK>;
+>   			assigned-clock-rates = <19200000>;
 >   
->   struct qcom_scm_current_perm_info {
-> @@ -137,6 +138,8 @@ static const u8 qcom_scm_cpu_warm_bits[QCOM_SCM_BOOT_MAX_CPUS] = {
->   #define QCOM_DLOAD_MINIDUMP	2
->   #define QCOM_DLOAD_BOTHDUMP	3
+> -			iommu-map = <0x0   &apps_smmu 0x1e00 0x1>,
+> -				    <0x100 &apps_smmu 0x1e01 0x1>;
+> +			iommu-map = <0x0   &apps_smmu 0x1e00 0x0 0x1>,
+> +				    <0x100 &apps_smmu 0x1e01 0x0 0x1>;
 >   
-> +#define QCOM_SCM_DEFAULT_WAITQ_COUNT 1
-> +
->   static const char * const qcom_scm_convention_names[] = {
->   	[SMC_CONVENTION_UNKNOWN] = "unknown",
->   	[SMC_CONVENTION_ARM_32] = "smc arm 32",
-> @@ -1873,6 +1876,23 @@ static int qcom_scm_fill_irq_fwspec_params(struct irq_fwspec *fwspec, u32 hwirq)
->   	return 0;
->   }
+>   			resets = <&gcc GCC_PCIE_3_BCR>;
+>   			reset-names = "pci";
+> @@ -2004,8 +2004,8 @@ pcie1: pcie@1c10000 {
+>   			assigned-clocks = <&gcc GCC_PCIE_1_AUX_CLK>;
+>   			assigned-clock-rates = <19200000>;
 >   
-> +static int qcom_scm_query_waitq_count(struct qcom_scm *scm)
-> +{
-> +	struct qcom_scm_desc desc = {
-> +		.svc = QCOM_SCM_SVC_WAITQ,
-> +		.cmd = QCOM_SCM_WAITQ_GET_INFO,
-> +		.owner = ARM_SMCCC_OWNER_SIP
-> +	};
-> +	struct qcom_scm_res res;
-> +	int ret;
-> +
-> +	ret = qcom_scm_call_atomic(scm->dev, &desc, &res);
-> +	if (ret)
-> +		return ret;
-> +
-> +	return res.result[0] & GENMASK(7, 0);
-> +}
-> +
->   static int qcom_scm_get_waitq_irq(struct qcom_scm *scm)
->   {
->   	struct qcom_scm_desc desc = {
-> @@ -1904,42 +1924,40 @@ static int qcom_scm_get_waitq_irq(struct qcom_scm *scm)
->   	return irq_create_fwspec_mapping(&fwspec);
->   }
+> -			iommu-map = <0x0   &apps_smmu 0x1c80 0x1>,
+> -				    <0x100 &apps_smmu 0x1c81 0x1>;
+> +			iommu-map = <0x0   &apps_smmu 0x1c80 0x0 0x1>,
+> +				    <0x100 &apps_smmu 0x1c81 0x0 0x1>;
 >   
-> -static int qcom_scm_assert_valid_wq_ctx(u32 wq_ctx)
-> +static struct completion *qcom_scm_get_completion(u32 wq_ctx)
->   {
-> -	/* FW currently only supports a single wq_ctx (zero).
-> -	 * TODO: Update this logic to include dynamic allocation and lookup of
-> -	 * completion structs when FW supports more wq_ctx values.
-> -	 */
-> -	if (wq_ctx != 0) {
-> -		dev_err(__scm->dev, "Firmware unexpectedly passed non-zero wq_ctx\n");
-> -		return -EINVAL;
-> -	}
-> +	struct completion *wq;
+>   			resets = <&gcc GCC_PCIE_1_BCR>;
+>   			reset-names = "pci";
+> @@ -2126,8 +2126,8 @@ pcie2: pcie@1c18000 {
+>   			assigned-clocks = <&gcc GCC_PCIE_2_AUX_CLK>;
+>   			assigned-clock-rates = <19200000>;
 >   
-> -	return 0;
-> +	if (WARN_ON_ONCE(wq_ctx >= __scm->wq_cnt))
-> +		return ERR_PTR(-EINVAL);
-> +
-> +	wq = &__scm->waitq_comps[wq_ctx];
-> +
-> +	return wq;
->   }
+> -			iommu-map = <0x0   &apps_smmu 0x1d00 0x1>,
+> -				    <0x100 &apps_smmu 0x1d01 0x1>;
+> +			iommu-map = <0x0   &apps_smmu 0x1d00 0x0 0x1>,
+> +				    <0x100 &apps_smmu 0x1d01 0x0 0x1>;
 >   
->   int qcom_scm_wait_for_wq_completion(u32 wq_ctx)
->   {
-> -	int ret;
-> +	struct completion *wq;
->   
-> -	ret = qcom_scm_assert_valid_wq_ctx(wq_ctx);
-> -	if (ret)
-> -		return ret;
-> +	wq = qcom_scm_get_completion(wq_ctx);
-> +	if (IS_ERR(wq))
-> +		return PTR_ERR(wq);
->   
-> -	wait_for_completion(&__scm->waitq_comp);
-> +	wait_for_completion(wq);
->   
->   	return 0;
->   }
->   
->   static int qcom_scm_waitq_wakeup(unsigned int wq_ctx)
->   {
-> -	int ret;
-> +	struct completion *wq;
->   
-> -	ret = qcom_scm_assert_valid_wq_ctx(wq_ctx);
-> -	if (ret)
-> -		return ret;
-> +	wq = qcom_scm_get_completion(wq_ctx);
-> +	if (IS_ERR(wq))
-> +		return PTR_ERR(wq);
->   
-> -	complete(&__scm->waitq_comp);
-> +	complete(wq);
->   
->   	return 0;
->   }
-> @@ -2015,6 +2033,7 @@ static int qcom_scm_probe(struct platform_device *pdev)
->   	struct qcom_tzmem_pool_config pool_config;
->   	struct qcom_scm *scm;
->   	int irq, ret;
-> +	int i;
->   
->   	scm = devm_kzalloc(&pdev->dev, sizeof(*scm), GFP_KERNEL);
->   	if (!scm)
-> @@ -2025,7 +2044,6 @@ static int qcom_scm_probe(struct platform_device *pdev)
->   	if (ret < 0)
->   		return ret;
->   
-> -	init_completion(&scm->waitq_comp);
->   	mutex_init(&scm->scm_bw_lock);
->   
->   	scm->path = devm_of_icc_get(&pdev->dev, NULL);
-> @@ -2060,6 +2078,16 @@ static int qcom_scm_probe(struct platform_device *pdev)
->   	/* Paired with smp_load_acquire() in qcom_scm_is_available(). */
->   	smp_store_release(&__scm, scm);
->   
-> +	ret = qcom_scm_query_waitq_count(scm);
-> +	scm->wq_cnt = ret < 0 ? QCOM_SCM_DEFAULT_WAITQ_COUNT : ret;
-> +	scm->waitq_comps = devm_kcalloc(&pdev->dev, scm->wq_cnt, sizeof(*scm->waitq_comps),
-> +					GFP_KERNEL);
-> +	if (!scm->waitq_comps)
-> +		return -ENOMEM;
-> +
-> +	for (i = 0; i < scm->wq_cnt; i++)
-> +		init_completion(&scm->waitq_comps[i]);
-> +
->   	irq = qcom_scm_get_waitq_irq(scm);
->   	if (irq < 0)
->   		irq = platform_get_irq_optional(pdev, 0);
+>   			resets = <&gcc GCC_PCIE_2_BCR>;
+>   			reset-names = "pci";
 
