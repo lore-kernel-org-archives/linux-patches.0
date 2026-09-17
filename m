@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A165854704F;
-	Thu, 17 Sep 2026 17:49:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5E93547057;
+	Thu, 17 Sep 2026 17:50:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789667401; cv=none; b=Pj7CtMUe4IPLPVlJ+Wu7XekajotCplqXhBmCaFilaOV8rd/PgO/KaTve65sZZ7ae0jblAmPOWma+pOdCWIX/NISmckoi8ZgJQdNOnx63gZIlseeg0d0SNLTCO/J67993fmDDQGVmJ9hAZrWGuduX55a5NrN7ZMkpAgfpAWxWzKg=
+	t=1789667404; cv=none; b=B2Oefg0lqszQsLROb91FSLbN7ox8TgdTgFwAR80B1FuWgrXigGMkXl8PqJ5PO9BXKhBihfxC6asIpfJ2FMhUzWK+g0bLZPWIxInmWwwHZoMANxdAVLYLyIbLD+XcotxeIIn/FKUn7XGe2IF+SpwtAn2fThVRDESb5hFmYL9HBrs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789667401; c=relaxed/simple;
-	bh=/T2eXMS+fe31F4pMv5s+bjD9wdKPjFmno7AxsKJsY+k=;
+	s=arc-20240116; t=1789667404; c=relaxed/simple;
+	bh=9g2vyp7zb/JsxwkACrS6+IcSY3BHbk6iD+6l6c/0oxs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U5M6+7pkRYE6M+ea1Bt/IuZ05+pvWI2YNQVEPllD4MwE0PkeiZLzUjZyfXmgeXqCo+8vZPFqD9BwBnHhhgQ3BB0wgKbF8EMXlLhaCKK6/uHSWgriNgLJkr2o/QcZLMwXQbwMizkhHkJ3HC0R8dAAJOk3UHsIONN6crWvDa2nZ0Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R9IrUbd5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tZBxqcW2DRvDn8X3tnzAJuLxHGgyPg1YdQQWsqnpqhZCrpG8+niS3Y+u4MAVXv5mpCQ9/R6hkS+S0ZOp5mUA1mAIZorwVtzzoWpWy1qgbrAIkBANwhFNvLiWIVbtMpr5+zc5HMpXt6hHXtkEARlw4JWBD31rTlFTISIf7bBtNoU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZGImmmFT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R9IrUbd5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D90601F000FF;
-	Thu, 17 Sep 2026 17:49:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZGImmmFT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC5511F000FF;
+	Thu, 17 Sep 2026 17:50:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789667399;
-	bh=ny9UKR25vcx7Tbskukf3uvxmO4wDNoCuKwfJO39Hm80=;
+	s=korg; t=1789667402;
+	bh=VrGq8BT6JWpY30di43N6DL3aboPLbXmGtQQNdInEofk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=R9IrUbd5AClL5FgH498nT7gGhh6x+l3Mewi36fCjAa0zK5J922y4Xd6hMKar2Woo7
-	 uJXri2smwDxMWOUnLHaTUVp2pVr8xgtgfGhcf7CuA1D45HcJQyOvcqQt5U2qqpd9Ia
-	 0lIhwRKlAnBfwRVoJVHvlUDjzTR3Uk74snuJnGOI=
+	b=ZGImmmFT5iFpxh016t9ZcI6Na/xz3aNdZIaX/RORpXQM5UZNmD8TyG82oOlTD0Uxu
+	 UoQCBUL3s2uKTK4A5KashF5jipqKk6HPDGI/jQfsERvbl1hqivcLyMl6+xkEYAew4w
+	 ZU8LGVakpUp0l26xuNi8Kcw/QxXyoI4NgigbRpeI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Berger <stefanb@linux.ibm.com>,
-	Kamlesh Kumar <kam@juniper.net>,
-	Mimi Zohar <zohar@linux.ibm.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	"Rob Herring (Arm)" <robh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0079/1102] integrity: Check for NULL returned by asymmetric_key_public_key
-Date: Thu, 17 Sep 2026 16:00:22 +0100
-Message-ID: <20260917151541.456711701@linuxfoundation.org>
+Subject: [PATCH 6.12 0080/1102] drivers/of: validate status properties in reconfig state changes
+Date: Thu, 17 Sep 2026 16:00:23 +0100
+Message-ID: <20260917151541.481833821@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -52,36 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Berger <stefanb@linux.ibm.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit c93a5f038ccc11ed8558ce642f62d5ede701a348 ]
+[ Upstream commit 0b6b12c5dcce16e604d4cde953bef46531b98571 ]
 
-Check for a NULL pointer returned by asymmetric_key_public_key and return
--ENOKEY in this case.
+Live-tree reconfiguration properties also carry raw values plus explicit
+lengths. `of_reconfig_get_state_change()` currently treats `status`
+property values as NUL-terminated strings and feeds them straight into
+`strcmp()`.
 
-Signed-off-by: Stefan Berger <stefanb@linux.ibm.com>
-Tested-by: Kamlesh Kumar <kam@juniper.net>
-Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
+Factor the `"okay"` / `"ok"` check out into a helper that first verifies
+that the property contains a bounded C string within `prop->length`.
+Malformed `status` updates should be treated as not enabling the node.
+
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260507081812.91838-2-pengpeng@iscas.ac.cn
+Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/integrity/digsig_asymmetric.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/of/dynamic.c | 20 ++++++++++++++++----
+ 1 file changed, 16 insertions(+), 4 deletions(-)
 
-diff --git a/security/integrity/digsig_asymmetric.c b/security/integrity/digsig_asymmetric.c
-index 457c0a396caf3..17219424a34dd 100644
---- a/security/integrity/digsig_asymmetric.c
-+++ b/security/integrity/digsig_asymmetric.c
-@@ -108,6 +108,10 @@ int asymmetric_verify(struct key *keyring, const char *sig,
- 	pks.hash_algo = hash_algo_name[hdr->hash_algo];
+diff --git a/drivers/of/dynamic.c b/drivers/of/dynamic.c
+index 77818436fd60a..e206fd916c1c9 100644
+--- a/drivers/of/dynamic.c
++++ b/drivers/of/dynamic.c
+@@ -74,6 +74,20 @@ static const char *action_names[] = {
+ 	[OF_RECONFIG_UPDATE_PROPERTY] = "UPDATE_PROPERTY",
+ };
  
- 	pk = asymmetric_key_public_key(key);
-+	if (!pk) {
-+		ret = -ENOKEY;
-+		goto out;
-+	}
- 	pks.pkey_algo = pk->pkey_algo;
- 	if (!strcmp(pk->pkey_algo, "rsa")) {
- 		pks.encoding = "pkcs1";
++static bool of_property_status_ok(const struct property *prop)
++{
++	const char *status;
++
++	if (!prop || !prop->value || prop->length <= 0)
++		return false;
++
++	status = prop->value;
++	if (strnlen(status, prop->length) >= prop->length)
++		return false;
++
++	return !strcmp(status, "okay") || !strcmp(status, "ok");
++}
++
+ #define _do_print(func, prefix, action, node, prop, ...) ({	\
+ 	func("changeset: " prefix "%-15s %pOF%s%s\n",		\
+ 	     ##__VA_ARGS__, action_names[action], node,		\
+@@ -135,11 +149,9 @@ int of_reconfig_get_state_change(unsigned long action, struct of_reconfig_data *
+ 
+ 	if (prop && !strcmp(prop->name, "status")) {
+ 		is_status = 1;
+-		status_state = !strcmp(prop->value, "okay") ||
+-			       !strcmp(prop->value, "ok");
++		status_state = of_property_status_ok(prop);
+ 		if (old_prop)
+-			old_status_state = !strcmp(old_prop->value, "okay") ||
+-					   !strcmp(old_prop->value, "ok");
++			old_status_state = of_property_status_ok(old_prop);
+ 	}
+ 
+ 	switch (action) {
 -- 
 2.53.0
 
