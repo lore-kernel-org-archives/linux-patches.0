@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B82A4B7A38;
-	Thu, 17 Sep 2026 18:42:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3005D4ABBC4;
+	Thu, 17 Sep 2026 18:42:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789670547; cv=none; b=H7Quwi0HKN+xXkbLVK3ahPJK5+bq7SMxhelA9j9WK0Zf8kziNI5YdTWKGcJLnApTwc7MUQ6YzTetsTKaTR4SjvDnI6r8Y07tm5L0JdfjZo813qUdXnjXR13xCXovrgPu8s9DqxYpsoxJFJzbpvVXB2KDmoxVwjtn7nmp00Ru9pM=
+	t=1789670550; cv=none; b=AZ5isqCMQ19RQdZq4/OkYHC5wH6W3lnyF9VOgRHZIlRq1IOx5qgypEzJLfBq06KwGxvHQv+lQR3bnr+o+WOBJV027LXxmc1NZ5yeccDj+gbfqWSMcu4dt3JVXEhUkXZS+7q8hkFxopznK1vlc0zW92t+VMiVm0aQddf4JR8Ipew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789670547; c=relaxed/simple;
-	bh=oTgWDVzm+XAEqSpVDfM5CWIAy560QOz0QDnq2x1RjM8=;
+	s=arc-20240116; t=1789670550; c=relaxed/simple;
+	bh=kAyuY03ZKTyvEjbF2o5d3J1VhGeJjmrYuXSZv8LgeFg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XRsUNIyrlHmACDt0Vt8uN1qf+kGDdhgpXJGGeASP8ltey4oSMMsrJZ9YIncxpn2MPneYhBgFpgNf7rhYKMfx8xs07C30aifJ02XpW1mWgU8DdRbYx5VLUuHho2PD51FNbXu2ET8ivTy632/cNiw4T+Nn6KsAtrQPelFTW8lX/gE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=isE5F+JO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=SXAt7ousfuSGisQtUzgbqwGkypR1w5SfI0hJfyHhPZTEE9ywgkl9NFsVJjF25UpfYiNzsNd1G5OpnLzyIcK69uU2Z1ZPfDqSWDdpBwjJDzaSUOzXfqst3DbCDGrM216yau7zxGiqNI6InDFdqP5Upvu5CxOkgdHl2rAPw1amRgg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zDnMvXrX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="isE5F+JO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 846A11F000FF;
-	Thu, 17 Sep 2026 18:42:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zDnMvXrX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E0681F00893;
+	Thu, 17 Sep 2026 18:42:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789670546;
-	bh=VMu8b9mDSc/ChNQ2U61z8UCDV+7/2+0of6CapaLg5uQ=;
+	s=korg; t=1789670549;
+	bh=+P9xfuLfck4OG6Czam06FBImH7iVNWel8ajCBxPZr2A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=isE5F+JOTp7w/Qp5Krqk328ib1wiL1181J87qmbh7rCwg4sT2gPVPsnsO83lZ39m2
-	 6fGbvXqJBQjYRhDYFxxZIavg4oYBHL0z1mselD3uq+01Bd5RrWyO20wk9SeeUKAmJw
-	 AaC/dtRhU8QZ3Y/HhGAS/MmGBaKDW1xH2EV1PMd4=
+	b=zDnMvXrXfca5Jv3qxQ9OyFZ7vZ05Lyzd+f9j1+cG5O6RYMFqAuUyf20r3S3lAmYpK
+	 1GoTODUl7+jMvrnSxKNE5dvCDStfIz5H9ldGKUDh/HrAABQ41CwDYzG40+ckcAKFks
+	 4bA5qdwdpHDHjz/czoe6tLovHmYJu+sRs1tFD3gU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -33,9 +33,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jamal Hadi Salim <jhs@mojatatu.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0696/1102] net/sched: drr: clamp quantum in change class
-Date: Thu, 17 Sep 2026 16:10:39 +0100
-Message-ID: <20260917151557.764666017@linuxfoundation.org>
+Subject: [PATCH 6.12 0697/1102] net/sched: ets: clamp quantum in parse and fallback paths
+Date: Thu, 17 Sep 2026 16:10:40 +0100
+Message-ID: <20260917151557.792337274@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -57,50 +57,67 @@ Content-Transfer-Encoding: 8bit
 
 From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-[ Upstream commit 8382abec0f1568d0a5590d75a3df92f23fcf5196 ]
+[ Upstream commit 1c38487f46b243bfeefec0c0c86023a3904f2214 ]
 
-drr_change_class() rejects explicit quantum==0 but falls back to
-psched_mtu() with no floor. With a crafted size table qdisc_pkt_len
-reaches ~2 GiB, so quantum=1 (or a zero psched_mtu on a headerless
-device) makes the deficit-refill loop spin under the qdisc lock.
+ets_qdisc_change() falls back to psched_mtu() with no floor for bands
+without an explicit quantum. With a crafted size table qdisc_pkt_len
+reaches ~2 GiB, so a zero psched_mtu on a headerless device makes the
+deficit-refill loop spin under the qdisc lock.
 
-Add clamp_t(u32, quantum, 256, 1<<20) after the zero reject and on the
-fallback path. The explicit-zero reject is preserved.
+Move the floor into ets_quantum_parse() so explicitly configured quanta
+are also clamped to [256, 1<<20], not just the fallback path.
 
 Conditions to recreate the bug:
-  CONFIG_NET_SCH_DRR=y. Requires CAP_NET_ADMIN (namespace-local via
+  CONFIG_NET_SCH_ETS=y. Requires CAP_NET_ADMIN (namespace-local via
   unshare -Urn suffices).
 
-  tc qdisc add dev dummy0 root drr
-  tc class add dev dummy0 parent 1: classid 1:1 drr quantum 1
+  tc qdisc add dev dummy0 root ets bands 3 strict 2 quanta 1 1
 
-Fixes: 13d2a1d2b032 ("pkt_sched: add DRR scheduler")
+Fixes: dcc68b4d8084 ("net: sch_ets: Add a new Qdisc")
 Reported-by: Vega <vega@nebusec.ai>
 Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
 Tested-by: Victor Nogueira <victor@mojatatu.com>
 Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/QDISC-0CFC.v3.20260901204856@mojatatu.com.8
+Link: https://patch.msgid.link/QDISC-0CFC.v3.20260901204856@mojatatu.com.9
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_drr.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/sched/sch_ets.c | 12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
-diff --git a/net/sched/sch_drr.c b/net/sched/sch_drr.c
-index faafb29056259..ba802db279932 100644
---- a/net/sched/sch_drr.c
-+++ b/net/sched/sch_drr.c
-@@ -82,8 +82,9 @@ static int drr_change_class(struct Qdisc *sch, u32 classid, u32 parentid,
- 			NL_SET_ERR_MSG(extack, "Specified DRR quantum cannot be zero");
- 			return -EINVAL;
- 		}
-+		quantum = clamp_t(u32, quantum, 256, 1 << 20);
- 	} else
--		quantum = psched_mtu(qdisc_dev(sch));
-+		quantum = clamp_t(u32, (u32)psched_mtu(qdisc_dev(sch)), 256, 1 << 20);
+diff --git a/net/sched/sch_ets.c b/net/sched/sch_ets.c
+index a4b07b661b775..27e549646dee1 100644
+--- a/net/sched/sch_ets.c
++++ b/net/sched/sch_ets.c
+@@ -83,11 +83,7 @@ static int ets_quantum_parse(struct Qdisc *sch, const struct nlattr *attr,
+ 			     unsigned int *quantum,
+ 			     struct netlink_ext_ack *extack)
+ {
+-	*quantum = nla_get_u32(attr);
+-	if (!*quantum) {
+-		NL_SET_ERR_MSG(extack, "ETS quantum cannot be zero");
+-		return -EINVAL;
+-	}
++	*quantum = clamp_t(u32, nla_get_u32(attr), 256, 1 << 20);
+ 	return 0;
+ }
  
- 	if (cl != NULL) {
- 		if (tca[TCA_RATE]) {
+@@ -634,11 +630,13 @@ static int ets_qdisc_change(struct Qdisc *sch, struct nlattr *opt,
+ 			return err;
+ 	}
+ 	/* If there are more bands than strict + quanta provided, the remaining
+-	 * ones are ETS with quantum of MTU. Initialize the missing values here.
++	 * ones are ETS with quantum of max(MTU, 256). Initialize the missing
++	 * values here.
+ 	 */
+ 	for (i = nstrict; i < nbands; i++) {
+ 		if (!quanta[i])
+-			quanta[i] = psched_mtu(qdisc_dev(sch));
++			quanta[i] = clamp_t(u32, (u32)psched_mtu(qdisc_dev(sch)),
++					    256, 1 << 20);
+ 	}
+ 
+ 	/* Before commit, make sure we can allocate all new qdiscs */
 -- 
 2.53.0
 
