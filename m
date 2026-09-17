@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17CF139CD06;
-	Thu, 17 Sep 2026 15:35:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEDEA53B5F8;
+	Thu, 17 Sep 2026 15:35:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659321; cv=none; b=X1rq9XPDh4D7GtjgRBVWl1EgyoXjhDU3bC2RY0u9GLbM9MLTzDsAPoczyOQuWgrU4D91TtuIUnEbWenSoXHiD8FilPDZ546hul59t1IlX8d75NyGxTkqX6t1c5vXEea6Gv++bNEI1AgBoyZOCKuzfqI/jK0lVnPITtvDBd+D0Hg=
+	t=1789659327; cv=none; b=uWA/6oKZmPOBajJItGVi8gUqPdyRFaWv3JW5AfLFWCKyuPl4kq6FbfVEjM9AWKKzYFnT/Hxs6iFsJotazzuN05SA7ul4X/1fFJf9i2d+zO2JRfxTHzpyoMSCewGFJiq821UsML1u6dAJ2iLTPNaYSI5Xjq1V5I8y6nc2KO5secQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659321; c=relaxed/simple;
-	bh=YlwJkAtiP5svyXKRXD3L4WAX645xUbDFRe0umgKwHRY=;
+	s=arc-20240116; t=1789659327; c=relaxed/simple;
+	bh=zQvS5BuO9AKvLIveh4EeDEzYW+3ZoSXCOp6GMszTi5g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qNsKMUjqTuwQeyjYKzDiUFpHL+ilsYN54YEwC48BoLLcuIq/Vns4i6XeB2Vi8/qW8Ztfbcd2S7JeKBS4yEUQmYgvvRJ/WSooPm0up2M+Sqbjx4lLFdCOVaXpbNvCifprZYc2mCAfvZSd1KdPx0Ax0ocFiLQFtjC31eO3Y/59RnY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yonG2wVy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sd8vXjYy+kV/itcrBQC1WNl//yorQNWRrE8UIBeoI136mXK8QycR98u4+pMbb6FTWiP7rf59Ew3tPy+i3j3Lgw1n/Fir2GC1KBxIMnif9+CpZpoe4R1RXXhQqpLdHhpE/Wi6lvfXQpo5B+r27b+iWvT9WOCMcuu6me/7sVwN5HU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B+qF8gb8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yonG2wVy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B7091F000FF;
-	Thu, 17 Sep 2026 15:35:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B+qF8gb8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62F9F1F00898;
+	Thu, 17 Sep 2026 15:35:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659318;
-	bh=nASVvjUO2Ot8tcr5ZuYdjsl96JTI4Z824ZkYya6WBvU=;
+	s=korg; t=1789659321;
+	bh=1o5Yw8uRUOtptzBacl/943pwIXKEY/UjfTbHPWbltUs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yonG2wVydcX3O/yjfhaIgdJXZ9JV4xR7GxjPnMIlt2vabXyuY7GUtidvNzZNigTH8
-	 wpj9zBK5QYpmttiRT4luOmlPuiL/Ah2FQf59EQ4ixDXyDdEACHTaHcBUyK4HlTpEKE
-	 EXjExo/zm3CAt0wMExmibC6HBSFnM6H70VDO4XcU=
+	b=B+qF8gb8rqmXW1FOCOjdS/ZFwAElop1jLxh4BWNS4nqLfgZpWHGt5/Xcp32I3626M
+	 sVPh9P4DmXxEs8N7j9PF8DWaW7ikgKzrzc7ZCUu91xBPoKDQQsnv6plLZqLjJpxrnb
+	 o4EWxDHjlwKL5MOqSFIrQFHLTHc81wTOps9xvJ5s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Simon Horman <horms@kernel.org>,
+	Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 217/733] net: airoha: enable RX_DONE interrupt for RX queue 31
-Date: Thu, 17 Sep 2026 16:08:45 +0100
-Message-ID: <20260917151356.608924765@linuxfoundation.org>
+Subject: [PATCH 7.2 218/733] net: stmmac: reconfigure RX packet parser table in stmmac_hw_setup() after reset
+Date: Thu, 17 Sep 2026 16:08:46 +0100
+Message-ID: <20260917151356.633383183@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -52,42 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Bianconi <lorenzo@kernel.org>
+From: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
 
-[ Upstream commit 7db28abbea0f7dc1ec4fdfdc149db5fbd9e4c994 ]
+[ Upstream commit 6b8fed2675fb75d23e6cf2b7e49c94926e884b34 ]
 
-RX queue 31 has always been allocated and filled by airoha_qdma_init_rx()
-since RX_DONE_INT_MASK spans queues 0-31, but none of the RX_IRQ*
-_BANK_PIN_MASK values covered BIT(31). As a consequence the RX_DONE
-interrupt for queue 31 was never enabled, airoha_qdma_rx_process() never
-ran on that queue and its buffers were never reaped.
+The core software reset issued in stmmac_init_dma_engine() during
+ndo_open() callback clears the MTL RX packet parser registers, but
+stmmac_rxp_config() is only invoked from the cls_u32 add/delete paths.
+After an ifdown/ifup cycle the hardware therefore runs with the default
+all-pass table while priv->tc_entries still reports the filters as
+installed. Re-apply the RX packet parser table from priv->tc_entries in
+stmmac_hw_setup(), right after the software reset, so the filters are
+restored when the interface is brought up again.
 
-Route RX queue 31's RX_DONE interrupt to IRQ bank 1 so that the queue
-is drained and its buffers returned to the page pool.
-
-Fixes: f252493e1835 ("net: airoha: Enable multiple IRQ lines support in airoha_eth driver.")
-Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260830-airoha-rxdone-rxq31-v1-1-830a91503f2f@kernel.org
+Fixes: 4dbbe8dde848 ("net: stmmac: Add support for U32 TC filter using Flexible RX Parser")
+Signed-off-by: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260831-stmmac_tc_cls32_reconfigure-v1-1-21cb459e64ae@oss.qualcomm.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/airoha/airoha_eth.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/net/ethernet/airoha/airoha_eth.h b/drivers/net/ethernet/airoha/airoha_eth.h
-index b894828b13752..70f16189b2582 100644
---- a/drivers/net/ethernet/airoha/airoha_eth.h
-+++ b/drivers/net/ethernet/airoha/airoha_eth.h
-@@ -538,7 +538,7 @@ struct airoha_wdma_info {
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+index 1946361081fc2..1e88575fdddbb 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -3676,6 +3676,14 @@ static int stmmac_hw_setup(struct net_device *dev)
+ 	/* Initialize MTL*/
+ 	stmmac_mtl_configuration(priv);
  
- /* RX queue to IRQ mapping: BIT(q) in IRQ(n) */
- #define RX_IRQ0_BANK_PIN_MASK			0x839f
--#define RX_IRQ1_BANK_PIN_MASK			0x7fe00000
-+#define RX_IRQ1_BANK_PIN_MASK			0xffe00000
- #define RX_IRQ2_BANK_PIN_MASK			0x20
- #define RX_IRQ3_BANK_PIN_MASK			0x40
- #define RX_IRQ_BANK_PIN_MASK(_n)		\
++	/* Apply the RX packet parser table */
++	if (priv->tc_entries) {
++		ret = stmmac_rxp_config(priv, priv->hw->pcsr, priv->tc_entries,
++					priv->tc_entries_max);
++		if (ret)
++			return ret;
++	}
++
+ 	/* Initialize Safety Features */
+ 	stmmac_safety_feat_configuration(priv);
+ 
 -- 
 2.53.0
 
