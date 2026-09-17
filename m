@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AD5E37EFFB;
-	Thu, 17 Sep 2026 18:58:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AB743CE4B2;
+	Thu, 17 Sep 2026 18:58:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789671514; cv=none; b=Qu9SLw7TRg8o3JzUpC3IwrKcCAzmb3j09VfX9NSgJeFB8SD7Wie8yi6Y3ynSf5vG/9T3JpiV0lfPxIywrMmwufVxrvvloYkJ1L1NAXG7FJDXEBvxWxv1r6BlW9SpKEV8LmdJDtlbB2IwuZZoVPcfUOdRag9k6hFsgCGucAW20lQ=
+	t=1789671517; cv=none; b=mJZCy/Dvw/rJ/VS0nPFv7e/T+tvqjmWKTNl7gD71DyuY3hrNYJQ9pXDTfsIuoEVSTaEBr38gCyojGHVI1XgFYz7osagmHRKC2mcY+jLm93ADo/bMXLdh10FuqgAEH9UBGJE1/SVs8KPgg4m1c8OX17CKEnH0NrEs7cvr3EEDYtY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789671514; c=relaxed/simple;
-	bh=38wb4U2W1I7oiSfv6pvAIyI8TBFH989qv03MZ8+OfOY=;
+	s=arc-20240116; t=1789671517; c=relaxed/simple;
+	bh=Cy1TtjjZ/rkbUK1/LZwCfMDiIHPCf1JhwU6q0RvP3gA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D/KFM0o3xuduuCV+ahragWi58c9eisZePnQ6dksvL7tCyhHBBksnVVU0wuJFyOD2D0OVpOEPijIj45BcsIiQ6PfyMb4XCXa8F96FPMqOwMdEJ7r83VBbsVSGcn7aDZynv8Ao0UYNICvimNcQ8uxWWQC4+/6c7g10nvLpkAhxYcI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ys8CE3Wr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YrgcWE7lUgDLdCriy/cqAIpqRYGLqTVo2mRew93eZWisk0rI0F3GPRd+RP4aCYM0LldTfuzSjQSuVjWPLUuGjeNLlygf9hrjcfkK+NpuLk53h5qtc1hyj8Xt/EeNL2V9eA4YlF+qjoHr2k35eFUz3AOumGzdBJC7QqM6OViQ1Yo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DefO6L5q; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ys8CE3Wr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6425E1F000FF;
-	Thu, 17 Sep 2026 18:58:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DefO6L5q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5467D1F000FF;
+	Thu, 17 Sep 2026 18:58:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789671512;
-	bh=N3WeCKKQEqwT1EipTCYjlHefsULM6Kb1yGYhKyQIf3g=;
+	s=korg; t=1789671515;
+	bh=Iq0bu50Tfu7b/DqEYfHNxBw81XJT1pkQKTkhp3GwdJQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ys8CE3Wr0ehN3s62dtG08lAjkiBfl2aGnljMarFVa2UxODBcBC06zdSUFlgJwdQYL
-	 LIccyu3rTTNDi4zvQo3a7ZIbELRD51GUir1S7xtDQKWVObHlMh8yjsOc/6GYakj85T
-	 VbYDc40FdJJWDQ/m7eEnbv2IsrPdNcZlZttYea4w=
+	b=DefO6L5qCGH/1Ut7VPCUPRVYizPbJY2sY3cFe12paGEj6ldZzHnMG8jtVD3qzslSs
+	 p50z2hm3xC1pyQWdFi6cWiFFNz/h4bLt31VehVxO5V2pum36fV036otpmr5nRS2yW/
+	 7p2qxize3PhsE+8Tyjsi+NFgIlk7eJXZ7zz2zaDM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Li Xiasong <lixiasong1@huawei.com>,
-	"Harry Yoo (Oracle)" <harry@kernel.org>,
+	Uros Bizjak <ubizjak@gmail.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1000/1102] mm/slub: fix missing debugfs entries for caches created before sysfs init
-Date: Thu, 17 Sep 2026 16:15:43 +0100
-Message-ID: <20260917151605.847483425@linuxfoundation.org>
+Subject: [PATCH 6.12 1001/1102] x86/locking: Remove semicolon from "lock" prefix
+Date: Thu, 17 Sep 2026 16:15:44 +0100
+Message-ID: <20260917151605.872279037@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -52,192 +52,184 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Xiasong <lixiasong1@huawei.com>
+From: Uros Bizjak <ubizjak@gmail.com>
 
-[ Upstream commit 7e98f856395618011c517f767fb80ac3fe90de2b ]
+[ Upstream commit 023f3290b02552ea006c1a2013e373750d2cbff6 ]
 
-slab_debugfs_init() creates the slab debugfs root at device initcall
-time, while slab_sysfs_init() moves slab_state to FULL at late initcall
-time. SLAB_STORE_USER caches created in this window miss their debugfs
-entries because do_kmem_cache_create() skips debugfs_slab_add() when
-slab_state <= UP. This was observed with MPTCP's request_sock_subflow_v6
-cache, whose slab debugfs directory was missing.
+Minimum version of binutils required to compile the kernel is 2.25.
+This version correctly handles the "lock" prefix, so it is possible
+to remove the semicolon, which was used to support ancient versions
+of GNU as.
 
-The affected window is:
+Due to the semicolon, the compiler considers "lock; insn" as two
+separate instructions. Removing the semicolon makes asm length
+calculations more accurate, consequently making scheduling and
+inlining decisions of the compiler more accurate.
 
-  slab_debugfs_init()
-    slab_debugfs_root = debugfs_create_dir(...)
-    list_for_each_entry(s, &slab_caches, list)
-      debugfs_slab_add(s)
+Removing the semicolon also enables assembler checks involving lock
+prefix. Trying to assemble e.g. "lock andl %eax, %ebx" results in:
 
-  kmem_cache_create(..., SLAB_STORE_USER, ...)
-    do_kmem_cache_create()
-      if (slab_state <= UP)
-        return without debugfs entries
+  Error: expecting lockable instruction after `lock'
 
-  slab_sysfs_init()
-    slab_state = FULL
-
-Initialize the debugfs root and add debugfs entries while holding
-slab_mutex, walking slab_caches exactly once and handling both sysfs
-and debugfs entries in the same pass. This gives the sysfs and debugfs
-initialization an explicit order and prevents caches from being
-created between the debugfs scan and slab_state reaching FULL.
-
-Gate the new slab_late_init() on either sysfs or debugfs being enabled,
-with the slab_kset creation and alias_list processing factored into
-helpers that have empty no-sysfs variants, as suggested by Vlastimil
-Babka. On slab_kset_init() failure, slab_state stays below FULL so
-kmem_cache_create() keeps taking the early-boot path, matching prior
-behavior.
-
-Guard debugfs_slab_release() against an uninitialized debugfs root,
-since the root is now created later and a cache may be released before
-it exists.
-
-Fixes: 1a5ad30b89b4 ("mm: slub: make slab_sysfs_init() a late_initcall")
-Cc: stable@vger.kernel.org
-Suggested-by: Vlastimil Babka <vbabka@kernel.org>
-Signed-off-by: Li Xiasong <lixiasong1@huawei.com>
-Link: https://patch.msgid.link/20260729101849.3734287-1-lixiasong1@huawei.com
-Reviewed-by: Harry Yoo (Oracle) <harry@kernel.org>
-Signed-off-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
+Signed-off-by: Uros Bizjak <ubizjak@gmail.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lore.kernel.org/r/20250228085149.2478245-1-ubizjak@gmail.com
+Stable-dep-of: d824ed130768 ("x86/locking: Use sfence for wmb() if SSE is available")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/slub.c |   76 +++++++++++++++++++++++++++++++++++++++-----------------------
- 1 file changed, 48 insertions(+), 28 deletions(-)
+ arch/x86/include/asm/alternative.h |    2 +-
+ arch/x86/include/asm/barrier.h     |    8 ++++----
+ arch/x86/include/asm/cmpxchg.h     |    4 ++--
+ arch/x86/include/asm/cmpxchg_32.h  |    4 ++--
+ arch/x86/include/asm/edac.h        |    2 +-
+ arch/x86/include/asm/sync_bitops.h |   12 ++++++------
+ 6 files changed, 16 insertions(+), 16 deletions(-)
 
---- a/mm/slub.c
-+++ b/mm/slub.c
-@@ -333,14 +333,20 @@ enum track_item { TRACK_ALLOC, TRACK_FRE
+--- a/arch/x86/include/asm/alternative.h
++++ b/arch/x86/include/asm/alternative.h
+@@ -48,7 +48,7 @@
+ 		".popsection\n"				\
+ 		"671:"
  
- #ifdef SLAB_SUPPORTS_SYSFS
- static int sysfs_slab_add(struct kmem_cache *);
-+static int __init slab_kset_init(void);
-+static void __init slab_sysfs_process_aliases(void);
+-#define LOCK_PREFIX LOCK_PREFIX_HERE "\n\tlock; "
++#define LOCK_PREFIX LOCK_PREFIX_HERE "\n\tlock "
+ 
+ #else /* ! CONFIG_SMP */
+ #define LOCK_PREFIX_HERE ""
+--- a/arch/x86/include/asm/barrier.h
++++ b/arch/x86/include/asm/barrier.h
+@@ -12,11 +12,11 @@
+  */
+ 
+ #ifdef CONFIG_X86_32
+-#define mb() asm volatile(ALTERNATIVE("lock; addl $0,-4(%%esp)", "mfence", \
++#define mb() asm volatile(ALTERNATIVE("lock addl $0,-4(%%esp)", "mfence", \
+ 				      X86_FEATURE_XMM2) ::: "memory", "cc")
+-#define rmb() asm volatile(ALTERNATIVE("lock; addl $0,-4(%%esp)", "lfence", \
++#define rmb() asm volatile(ALTERNATIVE("lock addl $0,-4(%%esp)", "lfence", \
+ 				       X86_FEATURE_XMM2) ::: "memory", "cc")
+-#define wmb() asm volatile(ALTERNATIVE("lock; addl $0,-4(%%esp)", "sfence", \
++#define wmb() asm volatile(ALTERNATIVE("lock addl $0,-4(%%esp)", "sfence", \
+ 				       X86_FEATURE_XMM2) ::: "memory", "cc")
  #else
- static inline int sysfs_slab_add(struct kmem_cache *s) { return 0; }
-+static inline int slab_kset_init(void) { return 0; }
-+static inline void slab_sysfs_process_aliases(void) { }
- #endif
+ #define __mb()	asm volatile("mfence":::"memory")
+@@ -50,7 +50,7 @@
+ #define __dma_rmb()	barrier()
+ #define __dma_wmb()	barrier()
  
- #if defined(CONFIG_DEBUG_FS) && defined(CONFIG_SLUB_DEBUG)
- static void debugfs_slab_add(struct kmem_cache *);
-+static void __init slab_debugfs_root_init(void);
- #else
- static inline void debugfs_slab_add(struct kmem_cache *s) { }
-+static inline void slab_debugfs_root_init(void) { }
- #endif
+-#define __smp_mb()	asm volatile("lock; addl $0,-4(%%" _ASM_SP ")" ::: "memory", "cc")
++#define __smp_mb()	asm volatile("lock addl $0,-4(%%" _ASM_SP ")" ::: "memory", "cc")
  
- enum stat_item {
-@@ -7247,28 +7253,20 @@ int sysfs_slab_alias(struct kmem_cache *
- 	return 0;
- }
+ #define __smp_rmb()	dma_rmb()
+ #define __smp_wmb()	barrier()
+--- a/arch/x86/include/asm/cmpxchg.h
++++ b/arch/x86/include/asm/cmpxchg.h
+@@ -134,7 +134,7 @@ extern void __add_wrong_size(void)
+ 	__raw_cmpxchg((ptr), (old), (new), (size), LOCK_PREFIX)
  
--static int __init slab_sysfs_init(void)
-+static int __init slab_kset_init(void)
+ #define __sync_cmpxchg(ptr, old, new, size)				\
+-	__raw_cmpxchg((ptr), (old), (new), (size), "lock; ")
++	__raw_cmpxchg((ptr), (old), (new), (size), "lock ")
+ 
+ #define __cmpxchg_local(ptr, old, new, size)				\
+ 	__raw_cmpxchg((ptr), (old), (new), (size), "")
+@@ -222,7 +222,7 @@ extern void __add_wrong_size(void)
+ 	__raw_try_cmpxchg((ptr), (pold), (new), (size), LOCK_PREFIX)
+ 
+ #define __sync_try_cmpxchg(ptr, pold, new, size)			\
+-	__raw_try_cmpxchg((ptr), (pold), (new), (size), "lock; ")
++	__raw_try_cmpxchg((ptr), (pold), (new), (size), "lock ")
+ 
+ #define __try_cmpxchg_local(ptr, pold, new, size)			\
+ 	__raw_try_cmpxchg((ptr), (pold), (new), (size), "")
+--- a/arch/x86/include/asm/cmpxchg_32.h
++++ b/arch/x86/include/asm/cmpxchg_32.h
+@@ -103,7 +103,7 @@ static __always_inline bool __try_cmpxch
+ 
+ static __always_inline u64 arch_cmpxchg64(volatile u64 *ptr, u64 old, u64 new)
  {
--	struct kmem_cache *s;
--	int err;
--
--	mutex_lock(&slab_mutex);
--
- 	slab_kset = kset_create_and_add("slab", NULL, kernel_kobj);
- 	if (!slab_kset) {
--		mutex_unlock(&slab_mutex);
- 		pr_err("Cannot register slab subsystem.\n");
- 		return -ENOMEM;
- 	}
- 
--	slab_state = FULL;
-+	return 0;
-+}
- 
--	list_for_each_entry(s, &slab_caches, list) {
--		err = sysfs_slab_add(s);
--		if (err)
--			pr_err("SLUB: Unable to add boot slab %s to sysfs\n",
--			       s->name);
--	}
-+static void __init slab_sysfs_process_aliases(void)
-+{
-+	int err;
- 
- 	while (alias_list) {
- 		struct saved_alias *al = alias_list;
-@@ -7280,12 +7278,41 @@ static int __init slab_sysfs_init(void)
- 			       al->name);
- 		kfree(al);
- 	}
-+}
-+#endif /* SLAB_SUPPORTS_SYSFS */
-+
-+#if defined(SLAB_SUPPORTS_SYSFS) || \
-+	(defined(CONFIG_SLUB_DEBUG) && defined(CONFIG_DEBUG_FS))
-+static int __init slab_late_init(void)
-+{
-+	struct kmem_cache *s;
-+	int err;
- 
-+	mutex_lock(&slab_mutex);
-+
-+	err = slab_kset_init();
-+	if (err)
-+		goto out;
-+
-+	slab_debugfs_root_init();
-+	slab_state = FULL;
-+
-+	list_for_each_entry(s, &slab_caches, list) {
-+		if (sysfs_slab_add(s))
-+			pr_err("SLUB: Unable to add boot slab %s to sysfs\n",
-+			       s->name);
-+
-+		if (s->flags & SLAB_STORE_USER)
-+			debugfs_slab_add(s);
-+	}
-+
-+	slab_sysfs_process_aliases();
-+out:
- 	mutex_unlock(&slab_mutex);
--	return 0;
-+	return err;
+-	return __arch_cmpxchg64_emu(ptr, old, new, LOCK_PREFIX_HERE, "lock; ");
++	return __arch_cmpxchg64_emu(ptr, old, new, LOCK_PREFIX_HERE, "lock ");
  }
--late_initcall(slab_sysfs_init);
--#endif /* SLAB_SUPPORTS_SYSFS */
-+late_initcall(slab_late_init);
-+#endif
+ #define arch_cmpxchg64 arch_cmpxchg64
  
- #if defined(CONFIG_SLUB_DEBUG) && defined(CONFIG_DEBUG_FS)
- static int slab_debugfs_show(struct seq_file *seq, void *v)
-@@ -7483,23 +7510,16 @@ static void debugfs_slab_add(struct kmem
+@@ -136,7 +136,7 @@ static __always_inline u64 arch_cmpxchg6
  
- void debugfs_slab_release(struct kmem_cache *s)
+ static __always_inline bool arch_try_cmpxchg64(volatile u64 *ptr, u64 *oldp, u64 new)
  {
-+	if (unlikely(!slab_debugfs_root))
-+		return;
-+
- 	debugfs_lookup_and_remove(s->name, slab_debugfs_root);
+-	return __arch_try_cmpxchg64_emu(ptr, oldp, new, LOCK_PREFIX_HERE, "lock; ");
++	return __arch_try_cmpxchg64_emu(ptr, oldp, new, LOCK_PREFIX_HERE, "lock ");
+ }
+ #define arch_try_cmpxchg64 arch_try_cmpxchg64
+ 
+--- a/arch/x86/include/asm/edac.h
++++ b/arch/x86/include/asm/edac.h
+@@ -13,7 +13,7 @@ static inline void edac_atomic_scrub(voi
+ 	 * are interrupt, DMA and SMP safe.
+ 	 */
+ 	for (i = 0; i < size / 4; i++, virt_addr++)
+-		asm volatile("lock; addl $0, %0"::"m" (*virt_addr));
++		asm volatile("lock addl $0, %0"::"m" (*virt_addr));
  }
  
--static int __init slab_debugfs_init(void)
-+static void __init slab_debugfs_root_init(void)
+ #endif /* _ASM_X86_EDAC_H */
+--- a/arch/x86/include/asm/sync_bitops.h
++++ b/arch/x86/include/asm/sync_bitops.h
+@@ -31,7 +31,7 @@
+  */
+ static inline void sync_set_bit(long nr, volatile unsigned long *addr)
  {
--	struct kmem_cache *s;
--
- 	slab_debugfs_root = debugfs_create_dir("slab", NULL);
--
--	list_for_each_entry(s, &slab_caches, list)
--		if (s->flags & SLAB_STORE_USER)
--			debugfs_slab_add(s);
--
--	return 0;
--
+-	asm volatile("lock; " __ASM_SIZE(bts) " %1,%0"
++	asm volatile("lock " __ASM_SIZE(bts) " %1,%0"
+ 		     : "+m" (ADDR)
+ 		     : "Ir" (nr)
+ 		     : "memory");
+@@ -49,7 +49,7 @@ static inline void sync_set_bit(long nr,
+  */
+ static inline void sync_clear_bit(long nr, volatile unsigned long *addr)
+ {
+-	asm volatile("lock; " __ASM_SIZE(btr) " %1,%0"
++	asm volatile("lock " __ASM_SIZE(btr) " %1,%0"
+ 		     : "+m" (ADDR)
+ 		     : "Ir" (nr)
+ 		     : "memory");
+@@ -66,7 +66,7 @@ static inline void sync_clear_bit(long n
+  */
+ static inline void sync_change_bit(long nr, volatile unsigned long *addr)
+ {
+-	asm volatile("lock; " __ASM_SIZE(btc) " %1,%0"
++	asm volatile("lock " __ASM_SIZE(btc) " %1,%0"
+ 		     : "+m" (ADDR)
+ 		     : "Ir" (nr)
+ 		     : "memory");
+@@ -82,7 +82,7 @@ static inline void sync_change_bit(long
+  */
+ static inline bool sync_test_and_set_bit(long nr, volatile unsigned long *addr)
+ {
+-	return GEN_BINARY_RMWcc("lock; " __ASM_SIZE(bts), *addr, c, "Ir", nr);
++	return GEN_BINARY_RMWcc("lock " __ASM_SIZE(bts), *addr, c, "Ir", nr);
  }
--__initcall(slab_debugfs_init);
- #endif
- /*
-  * The /proc/slabinfo ABI
+ 
+ /**
+@@ -95,7 +95,7 @@ static inline bool sync_test_and_set_bit
+  */
+ static inline int sync_test_and_clear_bit(long nr, volatile unsigned long *addr)
+ {
+-	return GEN_BINARY_RMWcc("lock; " __ASM_SIZE(btr), *addr, c, "Ir", nr);
++	return GEN_BINARY_RMWcc("lock " __ASM_SIZE(btr), *addr, c, "Ir", nr);
+ }
+ 
+ /**
+@@ -108,7 +108,7 @@ static inline int sync_test_and_clear_bi
+  */
+ static inline int sync_test_and_change_bit(long nr, volatile unsigned long *addr)
+ {
+-	return GEN_BINARY_RMWcc("lock; " __ASM_SIZE(btc), *addr, c, "Ir", nr);
++	return GEN_BINARY_RMWcc("lock " __ASM_SIZE(btc), *addr, c, "Ir", nr);
+ }
+ 
+ #define sync_test_bit(nr, addr) test_bit(nr, addr)
 
 
