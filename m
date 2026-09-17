@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BD505A986D;
-	Thu, 17 Sep 2026 15:40:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58F173A0E99;
+	Thu, 17 Sep 2026 15:40:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659626; cv=none; b=Nh2DcP5OLsZHCNs4dMWsm9vorFoWuxGU/YC0kCQRPB2CA4O9XUcRrL0/Qx5CzKifyGI1tVk4h1CquaV0ZYxD337SiQworTxtPyPGOT3cbN+vcshjV+5eQNqxu++nhcXbyo3Qq0PGl3vwCjUn3CX7tlOz/8OFRtMRTwyvYbL8j9Q=
+	t=1789659633; cv=none; b=fsgZvC0I6sVW30A4j/nhPsBxwye0EP4JBCtldD1f1FgYAeMmN7yK9q2zJz3TAjHqeA8OLN2PxHB2y2qTvWp7ZG4KiGC7bsMOwUMkTkVd19DV1+Wm1h4jrLctyztYooTR+1qF3rfLD1un6yvT9oHHRPrNUNdGgJ3EP59jrdzegXw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659626; c=relaxed/simple;
-	bh=tDp+RRa4KpP8sBxtXaXbpizeM+KT0l1A3GiUUdeqWiQ=;
+	s=arc-20240116; t=1789659633; c=relaxed/simple;
+	bh=HpWuefTsHtW16VZOkqNk5hwrNdju5weZNaB4/XO8WoA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HzyUVHwYFV4Fb2C68xC1M5aWcbM+Cd0ixFNhSS12yp1/xtq7NK4GrUm/zo0uPzhslsymEjPhxo9pGKZKMFciPMdWY56N+NnUrShBArKodxWeHS9Tmr8i3TcB24DDKiExLOl8phD5k2NJEpxtkl2u35mMsrUvUfa2MMneHTyZYTo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bkmsReoU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=h/mc+FyUFjTMR4I92z6y/r6ogoqO21rSZBFsh+bo6HSl/zMgsi69/FOG3E080h30vF7+zzbNH7C0PT8c6XrbgcYNKy5Eg0ANU6tsE2BkPfHiHSei8YhQwA/S69gZy2cOPGPh4scjQcpiM9Mwzvx7h5thmedtE4+oCpDOjbt6Leg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AlKD2OFc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bkmsReoU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEDC71F00893;
-	Thu, 17 Sep 2026 15:40:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AlKD2OFc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFCD01F0089A;
+	Thu, 17 Sep 2026 15:40:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659619;
-	bh=bvVhChEX/1x5c7xNJT/FjOMTL+nhpBa11/XDkeG1U+I=;
+	s=korg; t=1789659622;
+	bh=ZbNgVcjvLk51cOc1jU5zLOkprtE2kouYlCFN3j3Miuw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bkmsReoUmQyxew01gFC7FEMHuARdasnPLKBtNBegfJX9UKXV/CiDRDor/yZUdeBNZ
-	 4Slx1sa38ArJ/W22KMlaKNF9etXNnJ7l791em5LS9BNverS6PU2F+WRLhz7Bs4UCwC
-	 1UGmOWZThh+Z1/kTkDS2uRcchmi1WJM/IXEGX53Q=
+	b=AlKD2OFcJPEShbbCtaYLOilKVasq11VaQJthwfSloVVAnuffgeCMdFA4GJcmT4dCW
+	 WM+JHGCwm4p23uMD/Xum59AJImNck/VZ6DPLN6l5qPcTeogeZV/5GMtiQnXzFshilq
+	 Kfo//tg6Y54Yi7eRz5SF58EQooZPW3TH18UvdkFQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Fangyu Yu <fangyu.yu@linux.alibaba.com>,
-	Nutty Liu <nutty.liu@hotmail.com>,
 	Joerg Roedel <joerg.roedel@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 316/733] iommu/riscv: Add command queue lock
-Date: Thu, 17 Sep 2026 16:10:24 +0100
-Message-ID: <20260917151359.358760983@linuxfoundation.org>
+Subject: [PATCH 7.2 317/733] iommu/riscv: Serialize command queue publishing
+Date: Thu, 17 Sep 2026 16:10:25 +0100
+Message-ID: <20260917151359.386403744@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -54,53 +53,161 @@ Content-Transfer-Encoding: 8bit
 
 From: Fangyu Yu <fangyu.yu@linux.alibaba.com>
 
-[ Upstream commit d5bcf9ccaa357396089bbfa47fc82b093f109b1e ]
+[ Upstream commit ca58afa40946acd252a50fa4d4a86f15847a3d7d ]
 
-Add a raw spinlock to the RISC-V IOMMU queue state so command queue
-publishing can be serialized by a later change.
+Serialize command queue publishing so software producer state advances only
+after a command is written and the hardware tail is updated. Wait for
+hardware consumption outside the queue lock when the command queue is full
+so other CPUs are not blocked behind a long poll.
 
 Fixes: 856c0cfe5c5f ("iommu/riscv: Command and fault queue support")
 Signed-off-by: Fangyu Yu <fangyu.yu@linux.alibaba.com>
-Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
 Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/riscv/iommu.c | 1 +
- drivers/iommu/riscv/iommu.h | 2 ++
- 2 files changed, 3 insertions(+)
+ drivers/iommu/riscv/iommu.c | 100 +++++++++++++++++++++---------------
+ 1 file changed, 58 insertions(+), 42 deletions(-)
 
 diff --git a/drivers/iommu/riscv/iommu.c b/drivers/iommu/riscv/iommu.c
-index cec3ddd7ab103..2c0dcc90cf85b 100644
+index 2c0dcc90cf85b..e335beb70e422 100644
 --- a/drivers/iommu/riscv/iommu.c
 +++ b/drivers/iommu/riscv/iommu.c
-@@ -1560,6 +1560,7 @@ int riscv_iommu_init(struct riscv_iommu_device *iommu)
- 	int rc;
+@@ -382,77 +382,93 @@ static int riscv_iommu_queue_wait(struct riscv_iommu_queue *queue,
+ 				 (int)(cons - index) > 0, 0, timeout_us);
+ }
  
- 	RISCV_IOMMU_QUEUE_INIT(&iommu->cmdq, CQ);
-+	raw_spin_lock_init(&iommu->cmdq.lock);
- 	RISCV_IOMMU_QUEUE_INIT(&iommu->fltq, FQ);
+-/* Enqueue an entry and wait to be processed if timeout_us > 0
+- *
+- * Error handling for IOMMU hardware not responding in reasonable time
+- * will be added as separate patch series along with other RAS features.
+- * For now, only report hardware failure and continue.
+- */
++static int riscv_iommu_queue_wait_for_space(struct riscv_iommu_queue *queue,
++						   unsigned int last)
++{
++	unsigned int head;
++	unsigned int tail;
++	unsigned int hw_head;
++	unsigned long flags;
++	int ret;
++
++	ret = riscv_iommu_readl_timeout(queue->iommu, Q_HEAD(queue), hw_head,
++					      !(hw_head & ~queue->mask) && hw_head != last,
++					      0, RISCV_IOMMU_QUEUE_TIMEOUT);
++	if (ret)
++		return ret;
++
++	raw_spin_lock_irqsave(&queue->lock, flags);
++	head = atomic_read(&queue->head);
++	tail = atomic_read(&queue->tail);
++	if ((tail - head) >= queue->mask) {
++		last = Q_ITEM(queue, head);
++		/*
++		 * Re-read hw_head under the lock so that it is consistent with
++		 * the freshly computed 'last'.  Using the pre-lock snapshot
++		 * could produce a stale value that wraps around relative to the
++		 * new 'last', advancing the shadow head past entries that have
++		 * not yet been consumed by the hardware.
++		 */
++		hw_head = riscv_iommu_readl(queue->iommu, Q_HEAD(queue));
++		if (!(hw_head & ~queue->mask) && hw_head != last)
++			atomic_add((hw_head - last) & queue->mask, &queue->head);
++	}
++	raw_spin_unlock_irqrestore(&queue->lock, flags);
++
++	return 0;
++}
++
++/* Enqueue an entry and publish it to the hardware queue. */
+ static unsigned int riscv_iommu_queue_send(struct riscv_iommu_queue *queue,
+ 					   void *entry, size_t entry_size)
+ {
+ 	unsigned int prod;
+ 	unsigned int head;
+-	unsigned int tail;
+ 	unsigned long flags;
++	int ret;
  
- 	rc = riscv_iommu_init_check(iommu);
-diff --git a/drivers/iommu/riscv/iommu.h b/drivers/iommu/riscv/iommu.h
-index 46df79dd54957..5676001548cc7 100644
---- a/drivers/iommu/riscv/iommu.h
-+++ b/drivers/iommu/riscv/iommu.h
-@@ -12,6 +12,7 @@
- #define _RISCV_IOMMU_H_
+-	/* Do not preempt submission flow. */
+-	local_irq_save(flags);
++	/* 1. Wait for space availability and reserve the next slot. */
++	for (;;) {
++		raw_spin_lock_irqsave(&queue->lock, flags);
  
- #include <linux/iommu.h>
-+#include <linux/spinlock.h>
- #include <linux/types.h>
- #include <linux/iopoll.h>
+-	/* 1. Allocate some space in the queue */
+-	prod = atomic_inc_return(&queue->prod) - 1;
+-	head = atomic_read(&queue->head);
++		prod = atomic_read(&queue->tail);
++		head = atomic_read(&queue->head);
  
-@@ -23,6 +24,7 @@ struct riscv_iommu_queue {
- 	atomic_t prod;				/* unbounded producer allocation index */
- 	atomic_t head;				/* unbounded shadow ring buffer consumer index */
- 	atomic_t tail;				/* unbounded shadow ring buffer producer index */
-+	raw_spinlock_t lock;			/* serialize queue publishing */
- 	unsigned int mask;			/* index mask, queue length - 1 */
- 	unsigned int irq;			/* allocated interrupt number */
- 	struct riscv_iommu_device *iommu;	/* iommu device handling the queue when active */
+-	/* 2. Wait for space availability. */
+-	if ((prod - head) > queue->mask) {
+-		if (readx_poll_timeout(atomic_read, &queue->head,
+-				       head, (prod - head) < queue->mask,
+-				       0, RISCV_IOMMU_QUEUE_TIMEOUT))
+-			goto err_busy;
+-	} else if ((prod - head) == queue->mask) {
+-		const unsigned int last = Q_ITEM(queue, head);
++		if ((prod - head) < queue->mask)
++			break;
++
++		head = Q_ITEM(queue, head);
++		raw_spin_unlock_irqrestore(&queue->lock, flags);
+ 
+-		if (riscv_iommu_readl_timeout(queue->iommu, Q_HEAD(queue), head,
+-					      !(head & ~queue->mask) && head != last,
+-					      0, RISCV_IOMMU_QUEUE_TIMEOUT))
++		ret = riscv_iommu_queue_wait_for_space(queue, head);
++		if (ret)
+ 			goto err_busy;
+-		atomic_add((head - last) & queue->mask, &queue->head);
+ 	}
+ 
+-	/* 3. Store entry in the ring buffer */
++	/* 2. Store entry in the ring buffer. */
+ 	memcpy(queue->base + Q_ITEM(queue, prod) * entry_size, entry, entry_size);
+ 
+-	/* 4. Wait for all previous entries to be ready */
+-	if (readx_poll_timeout(atomic_read, &queue->tail, tail, prod == tail,
+-			       0, RISCV_IOMMU_QUEUE_TIMEOUT))
+-		goto err_busy;
+-
+-	/*
+-	 * 5. Make sure the ring buffer update (whether in normal or I/O memory) is
+-	 *    completed and visible before signaling the tail doorbell to fetch
+-	 *    the next command. 'fence ow, ow'
+-	 */
++	/* 3. Make sure the entry is visible before updating the queue tail. */
+ 	dma_wmb();
+ 	riscv_iommu_writel(queue->iommu, Q_TAIL(queue), Q_ITEM(queue, prod + 1));
+ 
+ 	/*
+-	 * 6. Make sure the doorbell write to the device has finished before updating
+-	 *    the shadow tail index in normal memory. 'fence o, w'
++	 * 4. Make sure the doorbell write to the device has finished before
++	 *    updating the shadow tail index in normal memory. 'fence o, w'
+ 	 */
+ #ifdef CONFIG_MMIOWB
+ 	mmiowb();
+ #endif
+-	atomic_inc(&queue->tail);
++	atomic_set(&queue->tail, prod + 1);
++	atomic_set(&queue->prod, prod + 1);
+ 
+-	/* 7. Complete submission and restore local interrupts */
+-	local_irq_restore(flags);
++	raw_spin_unlock_irqrestore(&queue->lock, flags);
+ 
+ 	return prod;
+ 
+ err_busy:
+-	local_irq_restore(flags);
++	/* Report the failure and continue; full RAS recovery is not implemented. */
+ 	dev_err_once(queue->iommu->dev, "Hardware error: command enqueue failed\n");
+-
+ 	return prod;
+ }
+ 
 -- 
 2.53.0
 
