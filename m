@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA11A547046;
-	Thu, 17 Sep 2026 18:06:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2DFA4E0B93;
+	Thu, 17 Sep 2026 18:06:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789668372; cv=none; b=KADlvybcVHziZ86MXzL/AQIm0qTZKPru7wNrqNEtokbA05mcAMmqI+kog8fEb75xn502khZGyttoQ7D7oMTEOadXcQ1epxzw508O/TYS265AO36I276Mn8asqHqOb29FVKmgE4FvHmcUIu18IN506BfbJSUHFOCBEU/JfFCofnc=
+	t=1789668376; cv=none; b=g5u7WAis7gA/aZq56FekuFoEeixHARC6/kyXp+E2l2LcQHF3IW8xXqvOgZqexsbhYFL5OpV9w5kG43QCe5c9XBfgeb0m/OioqHkNsY5S5qOvDzxfpanHJ6g594v5ehmNH+AysCztuT1yBXwNhtwG6Pmyvrfkj4AKsD2X4h92pB4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789668372; c=relaxed/simple;
-	bh=Ws0DfyEz21t+JnKNSIA/gIBkRHsXw5QpwTS/UOOmJeY=;
+	s=arc-20240116; t=1789668376; c=relaxed/simple;
+	bh=IQ2itAORLKsmu99ZNZaLg/ohPpu2XeVcVrHcbTbRh2Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y4qIvUJnZhVqeqEoc6KxbHPhbT/sBB9wRh9YZYZ73oYOJnIYRzaT23kGvQUuLAXmssDNLCkQUHr/sN6HJf2GoqZIgHW5nU2KzSZ8Mw61NZlrGgpchfi/egwk0YAN3r7WEpQZNUBDB9z41ADRGUth3wEYAGWpGfn9TnAFa81t6jU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BxKNYFBb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=MhQD/4P/W2DsRbYlaEcAD7fEfniRDIXIiHwLYnGzHFvlqBL9FLiMHXfnlYbxxxxyp6COXuSs9i8+9UyuqNHJ4IA2juD4QnGE7t9q0YhPPpr41ymiA10iplN4G7RfE03fEkZtEMuPcwr+XN2WvScPL7BJVptGptPXVN2ax5jHqE8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QR/rHQXu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BxKNYFBb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EDDC1F000FF;
-	Thu, 17 Sep 2026 18:06:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QR/rHQXu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EF401F000FF;
+	Thu, 17 Sep 2026 18:06:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789668371;
-	bh=8ZBgfjwFm2M2uYq67vt9LmLne0Ihoh5vmtTTvv4U/Yw=;
+	s=korg; t=1789668374;
+	bh=V00hhl68NtJlsnBgkfdhTlvCvdQSHLH3gaIOuo3sEOs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BxKNYFBbfq9VP0XYlyLezRDtpyr5EAlB12pY1XFam1Z1la8/zG70WH2ozkqIESaWq
-	 f0VOk8NYPyCRZnhTkn6pGApOqFVy+6w2MSuBYCoNluVeak+k0qiRC/cOhLh6rQauEi
-	 C/o3X7efVHpvewLiMEnszhRZn4OBAhTtFUOYLseM=
+	b=QR/rHQXujX0g8YPonSgpBvXBftTgEmnf45jwDHabotgf57OjIQvvpmZ+fggENnsAm
+	 aj/Op96A2RBiRgsDGxEZytWRLbkKlMMQgjKD1jJn6C1GlUxjQwyo/w+g7Fy8fys/j+
+	 XGdh5yqoP3ORBjGUHcxg8GIcPXoxYpcw6m/7n/NU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tianze Shao <shaotianze@outlook.com>,
-	Mark Brown <broonie@kernel.org>,
+	Huiwen He <hehuiwen@kylinos.cn>,
+	ChenXiaoSong <chenxiaosong@kylinos.cn>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0402/1102] ASoC: rt712-sdca: reset codec at io_init to fix silent headphone
-Date: Thu, 17 Sep 2026 16:05:45 +0100
-Message-ID: <20260917151549.752889628@linuxfoundation.org>
+Subject: [PATCH 6.12 0403/1102] smb/client: reduce fallocate zero buffer allocation
+Date: Thu, 17 Sep 2026 16:05:46 +0100
+Message-ID: <20260917151549.778500916@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -51,68 +52,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tianze Shao <shaotianze@outlook.com>
+From: Huiwen He <hehuiwen@kylinos.cn>
 
-[ Upstream commit 4c9854ad3cdc7ce408453207f153bb910cc6f3c1 ]
+[ Upstream commit 9e4ec3be67af41ab859302d7109b34976efd9258 ]
 
-On ThinkPad X1 Carbon Gen 13 (Lunar Lake, RT712-SDCA version VA) the
-3.5mm headphone jack is silent after rebooting from Windows.
-rt712_sdca_va_io_init() gates rt712_sdca_calibration() on the persisted
-vendor SW_CONFIG1 flag, and io_init writes SW_CONFIG1=1 at the end
-regardless of whether the calibration succeeded. Across a warm reboot
-the codec keeps power, so SW_CONFIG1 stays unchanged, the calibration
-may be skipped, and the retained state can be invalid, leaving the
-headphone amp disabled.
+The fallocate emulation allocates a 1 MiB zero-filled buffer even
+though each SMB2_write request is limited to SMB2_MAX_BUFFER_SIZE,
+which is 64 KiB. A high-order 1 MiB allocation is more likely to
+fail on a fragmented system.
 
-This patch mimics the reset sequence in rt711-sdca.c, it adds an
-rt712_sdca_reset() helper, and calls it from io_init so the codec is
-reset before initialization. RT712_PARA_VERB_CTL,
-RT712_HIDDEN_REG_SW_RESET and RT712_HDA_LEGACY_RESET_CTL are already
-defined but were unused. The reset clears SW_CONFIG1 and the analog
-state so rt712_sdca_calibration() runs from a clean state and
-completes.
+Allocate only the smaller of the requested range and SMB2_MAX_BUFFER_SIZE,
+and reuse that zero-filled buffer for every write request. Also reject
+a successful write that makes no progress to avoid looping indefinitely.
 
-Problem reproducible: boot Windows (headphone is good) -> reboot
-to Linux (silent).
-The reproducibility may depend on Windows' behaviour.
+This reduces the contiguous allocation required by fallocate emulation
+without changing the written data or range semantics.
 
-Signed-off-by: Tianze Shao <shaotianze@outlook.com>
-Link: https://patch.msgid.link/TYCPR01MB872223CB999D2099A5E0F58DC4F62@TYCPR01MB8722.jpnprd01.prod.outlook.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Huiwen He <hehuiwen@kylinos.cn>
+Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/rt712-sdca.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ fs/smb/client/smb2ops.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/sound/soc/codecs/rt712-sdca.c b/sound/soc/codecs/rt712-sdca.c
-index e210c574bb74a..7a214d4a9105f 100644
---- a/sound/soc/codecs/rt712-sdca.c
-+++ b/sound/soc/codecs/rt712-sdca.c
-@@ -1796,6 +1796,15 @@ static void rt712_sdca_vb_io_init(struct rt712_sdca_priv *rt712)
- 	}
- }
- 
-+static void rt712_sdca_reset(struct rt712_sdca_priv *rt712)
-+{
-+	rt712_sdca_index_update_bits(rt712, RT712_VENDOR_REG,
-+		RT712_PARA_VERB_CTL, RT712_HIDDEN_REG_SW_RESET,
-+		RT712_HIDDEN_REG_SW_RESET);
-+	rt712_sdca_index_update_bits(rt712, RT712_VENDOR_HDA_CTL,
-+		RT712_HDA_LEGACY_RESET_CTL, 0x1, 0x1);
-+}
-+
- int rt712_sdca_io_init(struct device *dev, struct sdw_slave *slave)
+diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
+index e99b8e1f66d4f..3119d664e8684 100644
+--- a/fs/smb/client/smb2ops.c
++++ b/fs/smb/client/smb2ops.c
+@@ -3442,7 +3442,7 @@ static int smb3_simple_fallocate_write_range(unsigned int xid,
+ 					     char *buf)
  {
- 	struct rt712_sdca_priv *rt712 = dev_get_drvdata(dev);
-@@ -1824,6 +1833,8 @@ int rt712_sdca_io_init(struct device *dev, struct sdw_slave *slave)
+ 	struct cifs_io_parms io_parms = {0};
+-	int nbytes;
++	unsigned int nbytes;
+ 	int rc = 0;
+ 	struct kvec iov[2];
  
- 	pm_runtime_get_noresume(&slave->dev);
+@@ -3463,9 +3463,10 @@ static int smb3_simple_fallocate_write_range(unsigned int xid,
+ 		rc = SMB2_write(xid, &io_parms, &nbytes, iov, 1);
+ 		if (rc)
+ 			break;
++		if (!nbytes)
++			return -EIO;
+ 		if (nbytes > len)
+ 			return -EINVAL;
+-		buf += nbytes;
+ 		off += nbytes;
+ 		len -= nbytes;
+ 	}
+@@ -3495,7 +3496,7 @@ static int smb3_simple_fallocate_range(unsigned int xid,
+ 	if (rc)
+ 		goto out;
  
-+	rt712_sdca_reset(rt712);
-+
- 	rt712_sdca_index_read(rt712, RT712_VENDOR_REG, RT712_JD_PRODUCT_NUM, &val);
- 	rt712->hw_id = (val & 0xf000) >> 12;
- 	rt712->version_id = (val & 0x0f00) >> 8;
+-	buf = kvzalloc(1024 * 1024, GFP_KERNEL);
++	buf = kvzalloc(min_t(loff_t, len, SMB2_MAX_BUFFER_SIZE), GFP_KERNEL);
+ 	if (buf == NULL) {
+ 		rc = -ENOMEM;
+ 		goto out;
 -- 
 2.53.0
 
