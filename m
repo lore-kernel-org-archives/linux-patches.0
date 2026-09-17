@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 361DD58F08A;
-	Thu, 17 Sep 2026 15:26:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 664A65476C2;
+	Thu, 17 Sep 2026 15:26:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789658808; cv=none; b=GPqfJXH8BHEyL1FlJpEdpUcDnLI1m0yHFyZYXZT+AqXaEgMN43xbROytr3Wm2xI8xg8Bw6dH8Pa63t4/9QnR3Wb7SDsYBWTInLqYkIORBno6VITeUgTDtbM0lpX+FwOITK+PEvitkj+iWbO6+487l5Hq6o+pJJGPusRStiNsD8o=
+	t=1789658812; cv=none; b=Ion4r3zD4/zreAnj2uDvbH3Nu0tFV7Y9Z9Q6iiZ67qac+Vgkbe6BbFRjYcZCAGLTxBGNgfJszxJ/rmmRUNtQeO92T/4zmNyaI7SqYXOdQBJY2rOJnMGPnKqc83Yiw4GYhKH/bQ5mAmOwuex5bwgjAOO7VAqmlPb5jlcckvkV6r0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789658808; c=relaxed/simple;
-	bh=2Lfg9PsqkAZQrNQ3JZRTUDdL5Uy2mSBR6ls3xCLQLbc=;
+	s=arc-20240116; t=1789658812; c=relaxed/simple;
+	bh=CgVjA6eIIvq/OdBk5BD+MKZ2eZb1jy0ZCCzTujwGQLE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YfA1FDm6d3/2vP2Eu8ZE9NAcC+VpDErEvEpDOCNd5sky9Dd9dGZ1Z3tikGT3j6ab7xHdy5DWGPltvQRrN4j8Dme+8UtbQdRwdhvz1d5/cJ4E7PkvHW5nlnN83Ij9ZYQR+rpZoWCu7RoUN+hl6eahhbl9+p+kSZIxNuuVrSgH180=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o6vQsjHz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IQVS3VP881ignD3rI23i5pvUa8tufE4SSN8B5ACZPwUnAr7mb14vY5c1CZZV8xaq7yWiD95Mj8KGiCzojkiznix1G8vpLDqbefG4hqiVvaxuBbmmv6v5x/gXvKdvONqeOYidVDC+fE4Qu7lWKMZXdOG5apDKOBJ6bEADTXdgbfw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ynoJLo6o; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o6vQsjHz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4153A1F00899;
-	Thu, 17 Sep 2026 15:26:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ynoJLo6o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 381581F000FF;
+	Thu, 17 Sep 2026 15:26:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789658799;
-	bh=s3osRpR+5i5hVOT/FWruRw3/EpNBz5U5WpdpIkwjpg0=;
+	s=korg; t=1789658802;
+	bh=5gQ/wBOeElCDKw2P0VQT3hHv1pIFOCfNsmSfegIP1Ww=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=o6vQsjHz7H/TXKf92D0cizwsEKc+NLK+Lu9YiOG1VD5YhqNhwZc0gCUpfeN5IPgAl
-	 N5IXzJmLKVU//90btUNYhrzr0UvpKHDtBSXvbkEnY8q6X3bv7rvbqREW0912ASboqi
-	 r1qCuA5vHf7hZKHvM25AKi/L/lnstdGDTUOguP6c=
+	b=ynoJLo6oXUju8YGvg1P1II+vpLN43FzIAp+MhhgUXYdG1rkXdN/xalRxlOBknqyL9
+	 PQNZ/Qg21H9PDiZFBeNw++zpo7ega8kdSNGbxPvQqWEWV1U090dBj8X2lTVXDcPZdO
+	 boQOZyGpiNOHybO1ifjx5+PCwZahUIQIK+X4RPoY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>,
-	Laxman Acharya Padhya <acharyalaxman8848@gmail.com>,
-	Junjie Cao <junjie.cao@intel.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	Baolin Liu <liubaolin@kylinos.cn>,
+	Hyunchul Lee <hyc.lee@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 003/733] wifi: mt76: mt7921: skip unknown CLC firmware records
-Date: Thu, 17 Sep 2026 16:05:11 +0100
-Message-ID: <20260917151350.702024415@linuxfoundation.org>
+Subject: [PATCH 7.2 037/733] ntfs: return DT_UNKNOWN on inode lookup failure in readdir
+Date: Thu, 17 Sep 2026 16:05:45 +0100
+Message-ID: <20260917151351.669865397@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -53,58 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Laxman Acharya Padhya <acharyalaxman8848@gmail.com>
+From: Baolin Liu <liubaolin@kylinos.cn>
 
-[ Upstream commit 1a296bfd3e775e515233f746218824fc7dd5ff16 ]
+[ Upstream commit 3d3de2aee17d1431694aa085039479b5679e5ad4 ]
 
-Treat an out-of-range CLC index as newer firmware rather than a
-malformed image. linux-firmware 20260810 ships MT7922 records with
-idx 3, and rejecting them made mt7921e fail to probe.
+ntfs_reparse_tag_dt_types() returns PTR_ERR(vi) when ntfs_iget()
+fails, but its return type is unsigned int and the caller passes
+the value straight to dir_emit() as d_type. A stale or corrupt MFT
+reference in a directory index thus makes readdir report a garbage
+d_type value to userspace.
 
-Keep the record-length checks, and report those as errors so a
-truncated table is visible instead of a silent retry loop.
+Return DT_UNKNOWN on lookup failure instead.
 
-Fixes: 9417c5818a01 ("wifi: mt76: mt7921: validate CLC firmware records")
-Reported-by: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
-Signed-off-by: Laxman Acharya Padhya <acharyalaxman8848@gmail.com>
-Reviewed-by: Junjie Cao <junjie.cao@intel.com>
-Tested-by: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Fixes: fc053f05ca28 ("ntfs: add reparse and ea operations")
+Signed-off-by: Baolin Liu <liubaolin@kylinos.cn>
+Reviewed-by: Hyunchul Lee <hyc.lee@gmail.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7921/mcu.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ fs/ntfs/reparse.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c
-index 564dd836e0b38..45439652c847b 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c
-@@ -475,18 +475,23 @@ static int mt7921_load_clc(struct mt792x_dev *dev, const char *fw_name)
+diff --git a/fs/ntfs/reparse.c b/fs/ntfs/reparse.c
+index fa523dc3691ea..f2377e3a56ca9 100644
+--- a/fs/ntfs/reparse.c
++++ b/fs/ntfs/reparse.c
+@@ -332,7 +332,7 @@ unsigned int ntfs_reparse_tag_dt_types(struct ntfs_volume *vol, unsigned long mr
  
- 	for (offset = 0; offset < len; offset += clc_len) {
- 		if (len - offset < sizeof(*clc)) {
-+			dev_err(mdev->dev, "Invalid CLC record\n");
- 			ret = -EINVAL;
- 			goto out;
- 		}
+ 	vi = ntfs_iget(vol->sb, mref);
+ 	if (IS_ERR(vi))
+-		return PTR_ERR(vi);
++		return DT_UNKNOWN;
  
- 		clc = (const struct mt7921_clc *)(clc_base + offset);
- 		clc_len = le32_to_cpu(clc->len);
--		if (clc_len < sizeof(*clc) || clc_len > len - offset ||
--		    clc->idx >= ARRAY_SIZE(phy->clc)) {
-+		if (clc_len < sizeof(*clc) || clc_len > len - offset) {
-+			dev_err(mdev->dev, "Invalid CLC record\n");
- 			ret = -EINVAL;
- 			goto out;
- 		}
- 
-+		/* Newer firmware may add records this driver does not use yet */
-+		if (clc->idx >= ARRAY_SIZE(phy->clc))
-+			continue;
-+
- 		/* do not init buf again if chip reset triggered */
- 		if (phy->clc[clc->idx])
- 			continue;
+ 	reparse_attr = (struct reparse_point *)ntfs_attr_readall(NTFS_I(vi),
+ 			AT_REPARSE_POINT, NULL, 0, &attr_size);
 -- 
 2.53.0
 
