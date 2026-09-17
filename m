@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 385C44ABBBA;
-	Thu, 17 Sep 2026 15:51:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFC4B221F24;
+	Thu, 17 Sep 2026 15:51:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789660272; cv=none; b=NwwI7N8TSvcUCEllwes1GokE+Drjtv9YiNYEILyFtMjA39EkttCXzJcih4S7jkOl4KH5sFRtVflbTeNEKytepFSWlpg0cPUgcI8ikAExBrYejUDMwbuepKXdDo4chBIMwS1ga6mGWb1seaJn8RdAlREUXrDeHNInh9lLqVFlLVw=
+	t=1789660273; cv=none; b=Sjssfg/zFNVHFCtyREWVFqCYiB5FZO5BN8MR9RzDLMMRYRK5AlnLiiS1SAPooS5Uq8VJrCzIYGIFtstLreuINdvgEl9bjUeuTuj2Z8YDl3zledr7Q29TGLNkRZ7jpS1lwE7Iq2+xd4dF2/4mTIL7PQV1e2OHjIkOb9qZocsy2xk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789660272; c=relaxed/simple;
-	bh=iP5m6V/wq85RFHglJpKdbgVvWA+p6ixYmLcK7AOKONI=;
+	s=arc-20240116; t=1789660273; c=relaxed/simple;
+	bh=+wUD7XJbaEOjTrGsaFPRq1ncJFe+cNoE/juOSi12Mkc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gRMDiv64+b4kBTax5qhMUg56yQWmhgFktaITQOMDb8+4BkDLouEUySuVU+r6Z5sY2Pk2PdqGgDpWg2hb1Bd0Az5FrMIpkq9AX0tGSRCTs0hx0oB8oohD+WcjM5D+8/bTPrGkf/DVNI4qLZkBByyxA5MUGe+WGQOM0NYA/briXxo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LakYrgKv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=idkrkH9BFgURmtDwn+Zj/VO+afg3VVBqumJvVisukNExOWRsXBU12neYIuCthNymvaUKiKThtxA6JRPSLvzBikkjvSKDsdXakvbzz7WI5x77KpzikIbcjvSdR9iE0kdj+YYLb4kGy1FZE05eRukjVtIdnZoNqaLkaNjDYUpVJjo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kyoiVOVD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LakYrgKv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEC031F00893;
-	Thu, 17 Sep 2026 15:51:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kyoiVOVD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C622F1F000FF;
+	Thu, 17 Sep 2026 15:51:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789660268;
-	bh=6/e3zMRJk5p+uMGYBAP/Iv50tjaijEYbOHOIFbGcjU8=;
+	s=korg; t=1789660271;
+	bh=UaLL9A527DxROUT7l6qXRVzGmC+t3jMxbLaDRRHKA/Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LakYrgKvz+1p4BzQV8SrwIA4+IeQ/JPUhCj7bA7Keu5kKrJwW5P9wyV3CIbM/6wDC
-	 Oum9ehlPKssLkbU+xF7e0MubDTwWZ6G6YH4dcuRFFK/5eb6m5aQv1iiTL5/VMaKnVk
-	 qx2Ohj+/HWO9KdQ9Zfs7d9L5f0/qE8nw0aIJDRak=
+	b=kyoiVOVDl6F7gRZ3DhGeXbTzCjuEv3cfOTlq2BpgGPlY1pVAlVkpZoyaHbE4K+CPx
+	 BclKPcLOU6aiB5lXqXAggI5CIdLEt9IdFXC5OPB8jPxoCBQ136gvET7n/wdlhLtEkI
+	 U3P46M7D+lgGNFdu/scCy5gohlrQTvVd7ovloABE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shixiong Ou <oushixiong@kylinos.cn>,
-	Maxime Ripard <mripard@kernel.org>,
-	Philipp Stanner <phasta@kernel.org>
-Subject: [PATCH 7.2 533/733] drm/sched: Create a fake device for KUnit tests
-Date: Thu, 17 Sep 2026 16:14:01 +0100
-Message-ID: <20260917151405.482898391@linuxfoundation.org>
+	Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
+	Steven Rostedt <rostedt@goodmis.org>
+Subject: [PATCH 7.2 497/733] tracing: Free histogram the var ref when its initialization fails
+Date: Thu, 17 Sep 2026 16:13:25 +0100
+Message-ID: <20260917151404.465399697@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -51,68 +50,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shixiong Ou <oushixiong@kylinos.cn>
+From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
 
-commit 28cc4d5a75bb07d0eb2fa178db355b04483f5aca upstream.
+commit 516001d53e6b2ea95a251ee2ef54a1a689a3fd58 upstream.
 
-The DRM scheduler KUnit tests pass NULL for the dev field in
-drm_sched_init_args, which NULL-pointer dereferences in the drm_sched_job
-trace event via dev_name() on sched->dev.
+create_var_ref() allocates a VAR_REF hist_field and then calls
+init_var_ref() to fill it in. When that fails the field is leaked.
 
-Give the mock scheduler a device with kunit_device_register(), which is
-also cleaned up at test exit. A per-function counter keeps the device
-names unique, since some tests create several mock schedulers.
+commit 656fe2ba85e8 ("tracing: Use hist trigger's var_ref array to destroy
+var_refs") made destroy_hist_field() return early for
+HIST_FIELD_FL_VAR_REF, since var refs are freed by walking the trigger's
+var_refs[] array instead. create_var_ref() adds the field to that array
+only after init_var_ref() has succeeded, so on this path the field is in
+neither place and nothing frees it. The call was correct when it was
+written, before var refs were taken out of destroy_hist_field().
 
-Fixes: 5a99350794fe ("drm/sched: Add scheduler unit testing infrastructure and some basic tests")
+init_var_ref() cannot free it either. The caller owns the field, so
+init_var_ref() undoes only its own string allocations and leaves the
+field alone. Freeing it there would leave create_var_ref() passing freed
+memory to destroy_hist_field(), which reads its flags.
+
+Call __destroy_hist_field(), which frees the field without consulting
+the flag.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Shixiong Ou <oushixiong@kylinos.cn>
-Acked-by: Maxime Ripard <mripard@kernel.org>
-[phasta: removed static variable init to 0 again]
-Signed-off-by: Philipp Stanner <phasta@kernel.org>
-Link: https://patch.msgid.link/20260908055941.351486-1-oushixiong1025@163.com
+Link: https://patch.msgid.link/20260906133352.3815019-1-donggeunyoo.kernel@gmail.com
+Fixes: 656fe2ba85e8 ("tracing: Use hist trigger's var_ref array to destroy var_refs")
+Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/scheduler/tests/mock_scheduler.c |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ kernel/trace/trace_events_hist.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/scheduler/tests/mock_scheduler.c
-+++ b/drivers/gpu/drm/scheduler/tests/mock_scheduler.c
-@@ -1,6 +1,8 @@
- // SPDX-License-Identifier: GPL-2.0
- /* Copyright (c) 2025 Valve Corporation */
- 
-+#include <kunit/device.h>
-+
- #include "sched_tests.h"
- 
- /*
-@@ -288,6 +290,7 @@ static const struct drm_sched_backend_op
-  */
- struct drm_mock_scheduler *drm_mock_sched_new(struct kunit *test, long timeout)
- {
-+	static unsigned int instance;
- 	struct drm_sched_init_args args = {
- 		.ops		= &drm_mock_scheduler_ops,
- 		.num_rqs	= DRM_SCHED_PRIORITY_COUNT,
-@@ -297,11 +300,19 @@ struct drm_mock_scheduler *drm_mock_sche
- 		.name		= "drm-mock-scheduler",
- 	};
- 	struct drm_mock_scheduler *sched;
-+	struct device *dev;
-+	char name[64];
- 	int ret;
- 
- 	sched = kunit_kzalloc(test, sizeof(*sched), GFP_KERNEL);
- 	KUNIT_ASSERT_NOT_NULL(test, sched);
- 
-+	snprintf(name, sizeof(name), "%s-%u", args.name, instance++);
-+	dev = kunit_device_register(test, name);
-+	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, dev);
-+
-+	args.dev = dev;
-+
- 	ret = drm_sched_init(&sched->base, &args);
- 	KUNIT_ASSERT_EQ(test, ret, 0);
+--- a/kernel/trace/trace_events_hist.c
++++ b/kernel/trace/trace_events_hist.c
+@@ -2229,7 +2229,7 @@ static struct hist_field *create_var_ref
+ 	ref_field = create_hist_field(var_field->hist_data, NULL, flags, NULL);
+ 	if (ref_field) {
+ 		if (init_var_ref(ref_field, var_field, system, event_name)) {
+-			destroy_hist_field(ref_field, 0);
++			__destroy_hist_field(ref_field);
+ 			return NULL;
+ 		}
  
 
 
