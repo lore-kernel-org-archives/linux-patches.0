@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAD8A4ABBDB;
-	Thu, 17 Sep 2026 18:06:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C17404E0B63;
+	Thu, 17 Sep 2026 18:06:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789668397; cv=none; b=GPeAgxPWVaP6Gm6g0lU32oXK3RHzXWV/Jz3PYKWLyzAhdIQHuBYOFS9mA6mtyBz87ezAoaB2oWiEhi8Y9mYy2IHz/0kf0Qkd2BgjzDdLPXVcdWBsTYt1/B6ouqrywB50JVO+9dqtQthU2oDzFfWSwsfou5jfCJRByrYpW6WX/mU=
+	t=1789668400; cv=none; b=DrCDh1gqAYW6fyESSWp9SFwy4XK5PUAR/ZnMj/00JOGJFfa/Getnp887RLQgedj+4IJIZcP5BtmWQj5kEvIHJ3gyhrBDOCs2sgn3l0AVodljrE1S33CAEl2XQoK2AUndcvBz03iHC0Mizz0XSMNkmVa45ERpBrOzVoK3TiBmIBc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789668397; c=relaxed/simple;
-	bh=wZy8b3YuTrAbqZqdwUyutmKFwclbJqHM57XS01bmWzE=;
+	s=arc-20240116; t=1789668400; c=relaxed/simple;
+	bh=uysjfyrbvMf51k2xSqYoGe6XwMOikLOcRVISA9rL5l0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sJ4A8AF+r62YIwCT2x9t1fSJZUKe39ntaNEads+IOC3PjjNkQ1pMlI5f3AQ3TCS+k8w55GRau/jjY2Z+4bFQ9U9KRdnPKpzBsu31a6atACQq2LB6GzHaANWem+hkf9olZf+pOPG4n5GGJqrZ0FpBk7wKv47sWg5FDLzlphadZb0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vJdfFkD7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=iT9E7/FWwGplZXVTVhYHOrvGOw8f/KcmV06KNH1QI2fVGSVG90mbQ1rYnmdqJkvfs5EHpS9GPwpMeoGXIj1y7qa8G1CVvranlkJ+P9n1iCexbuGvnm2yqdwGsTQwexq04Hu45gktXA2IPZuJhtIFUTAXqW48Wjb4zfj6jG5OU/M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yQB+Z4Gy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vJdfFkD7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B3211F000FF;
-	Thu, 17 Sep 2026 18:06:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yQB+Z4Gy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20F0D1F00893;
+	Thu, 17 Sep 2026 18:06:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789668395;
-	bh=g4IIlRMANm+Mifh9nRMHLPF8cgnoFrESmw3Y6yEa9mY=;
+	s=korg; t=1789668398;
+	bh=p+G6Vo1zxP3aA3yxH1mFac4RgPBhE8Gvl6hawe10cyk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vJdfFkD7hkXCegX5Xk5+RS5J0cwetTPbU3dmSKbVS7SmDuRXCxD5p+RpXKInQhgBv
-	 diY5D3ChNJB910IFNfueqx6SY0VjXgN3UeZTP8PZpQIEQpUs0o5GVZIgkR1OcPsk9W
-	 NlYu8IeERAagFx1o5oidzQGrOJYynQ4VOlXyYPRo=
+	b=yQB+Z4Gyeg9bA8AqD9Folqz5RbcGskcGA6WLjH88mfo485EF+3m9Dj7eYlQ1WpAne
+	 97FVmc5kL1tyOetXwdRXBGnVJIs9uBA+iQb65ByQyPIlpq7V+ztXzspAnG6WSlXao6
+	 eQCG6mnKlSkYOm91+GTsdpUygpU8kwoXGeHWzEhM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Shi <bestswngs@gmail.com>,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	=?UTF-8?q?Gustavo=20Kenji=20Mendon=C3=A7a=20Kaneko?= <kaneko.dev@pm.me>,
+	Liviu Dudau <liviu.dudau@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0371/1102] btrfs: tree-checker: validate INODE_REFs namelen
-Date: Thu, 17 Sep 2026 16:05:14 +0100
-Message-ID: <20260917151548.966748573@linuxfoundation.org>
+Subject: [PATCH 6.12 0372/1102] drm/arm/malidp: use clk_bulk API in runtime PM resume and suspend
+Date: Thu, 17 Sep 2026 16:05:15 +0100
+Message-ID: <20260917151548.992320681@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -47,110 +45,87 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Gustavo Kenji Mendonça Kaneko <kaneko.dev@pm.me>
 
-[ Upstream commit 3dc22abc21f5892406c09202fa2627196cc96967 ]
+[ Upstream commit 46f715a16989f4e7bbbc2eb41447051874b027f3 ]
 
-[BUG]
-A crafted btrfs image can trigger the following crash:
+malidp_runtime_pm_resume() calls clk_prepare_enable() three times
+without checking the return value. If any clock fails to enable, the
+driver silently proceeds with unclocked hardware, leading to undefined
+behavior.
 
-  BUG: unable to handle page fault for address: ffffd1dc42884000
-  #PF: supervisor write access in kernel mode
-  #PF: error_code(0x0002) - not-present page
-  CPU: 9 UID: 0 PID: 1034 Comm: poc Not tainted 7.1.0-rc4-custom+ #383 PREE=
-MPT(full)  46af0a92938a63be7132e0dfd71e62327c51d5c2
-  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS unknown 02/02/20=
-22
-  RIP: 0010:memcpy+0xc/0x10
-  Call Trace:
-   <TASK>
-   read_extent_buffer+0xe4/0x100 [btrfs 3cf0785dd58fec8c5ff84633b772f17ce1f=
-92a8f]
-   btrfs_get_name+0x15e/0x1e0 [btrfs 3cf0785dd58fec8c5ff84633b772f17ce1f92a=
-8f]
-   reconnect_path+0x165/0x390
-   exportfs_decode_fh_raw+0x337/0x400
-   ? drop_caches_sysctl_handler+0xb0/0xb0
-   </TASK>
-  ---[ end trace 0000000000000000 ]---
-  RIP: 0010:memcpy+0xc/0x10
-  Kernel panic - not syncing: Fatal exception
+Convert both the resume and suspend paths to use the clk_bulk API:
+clk_bulk_prepare_enable() in resume checks the return value and rolls
+back any successfully enabled clocks on failure;
+clk_bulk_disable_unprepare() in suspend keeps the two paths symmetric.
 
-[CAUSE]
-TThe crafted image has the following corrupted INODE_REF item:
+This issue was found by code review without access to Mali DP hardware.
 
-         item 9 key (258 INODE_REF 257) itemoff 11544 itemsize 4106
-         	index 2 namelen 4096 name: d\000\000\000\000\000\000\000\000\000\=
-000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000=
-\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\00=
-0\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\0=
-00\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\=
-000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000=
-\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\00=
-0\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\0=
-00\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\=
-000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000=
-\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\00=
-0\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\0=
-00\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\=
-000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000=
-\000
-
-The itemsize matches the namelen, but the namelen is 4096, way larger
-than normal name length limit (BTRFS_NAME_LEN, 255).
-
-Meanwhile the memory of the @name is only 255 byte sized, this will cause
-out-of-boundary access, and cause the above crash.
-
-[FIX]
-Add extra namelen verification for INODE_REF, just like what we have
-done in ROOT_REF checks.
-
-Now the crafted image can be rejected gracefully:
-
- BTRFS critical (device dm-2): corrupt leaf: root=3D5 block=3D30572544 slot=
-=3D14 ino=3D259, invalid inode ref name length, has 4096 expect [1, 255]
- BTRFS error (device dm-2): read time tree block corruption detected on log=
-ical 30572544 mirror 2
-
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Link: https://lore.kernel.org/linux-btrfs/aik0hEV6ehKx6Ldv@Air.local/
-Acked-by: Weiming Shi <bestswngs@gmail.com>
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-[ Rebase, add a Link: tag, add an simple cause analyze ]
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Gustavo Kenji Mendonça Kaneko <kaneko.dev@pm.me>
+Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
+Link: https://patch.msgid.link/20260609130812.1065699-1-kaneko.dev@pm.me
+Signed-off-by: Liviu Dudau <liviu.dudau@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/tree-checker.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/gpu/drm/arm/malidp_drv.c | 22 ++++++++++++++++------
+ 1 file changed, 16 insertions(+), 6 deletions(-)
 
-diff --git a/fs/btrfs/tree-checker.c b/fs/btrfs/tree-checker.c
-index b9ff9254c8f68..92a2df6dd3a4e 100644
---- a/fs/btrfs/tree-checker.c
-+++ b/fs/btrfs/tree-checker.c
-@@ -1802,6 +1802,12 @@ static int check_inode_ref(struct extent_buffer *lea=
-f,
-=20
- 		iref =3D (struct btrfs_inode_ref *)ptr;
- 		namelen =3D btrfs_inode_ref_name_len(leaf, iref);
-+		if (unlikely(namelen =3D=3D 0 || namelen > BTRFS_NAME_LEN)) {
-+			inode_ref_err(leaf, slot,
-+				"invalid inode ref name length, has %u expect [1, %u]",
-+				namelen, BTRFS_NAME_LEN);
-+			return -EUCLEAN;
-+		}
- 		if (unlikely(ptr + sizeof(*iref) + namelen > end)) {
- 			inode_ref_err(leaf, slot,
- 				"inode ref overflow, ptr %lu end %lu namelen %u",
---=20
+diff --git a/drivers/gpu/drm/arm/malidp_drv.c b/drivers/gpu/drm/arm/malidp_drv.c
+index 6682131d29104..754afec5bc76c 100644
+--- a/drivers/gpu/drm/arm/malidp_drv.c
++++ b/drivers/gpu/drm/arm/malidp_drv.c
+@@ -668,6 +668,11 @@ static int malidp_runtime_pm_suspend(struct device *dev)
+ 	struct drm_device *drm = dev_get_drvdata(dev);
+ 	struct malidp_drm *malidp = drm_to_malidp(drm);
+ 	struct malidp_hw_device *hwdev = malidp->dev;
++	struct clk_bulk_data clks[] = {
++		{ .clk = hwdev->pclk },
++		{ .clk = hwdev->aclk },
++		{ .clk = hwdev->mclk },
++	};
+ 
+ 	/* we can only suspend if the hardware is in config mode */
+ 	WARN_ON(!hwdev->hw->in_config_mode(hwdev));
+@@ -675,9 +680,7 @@ static int malidp_runtime_pm_suspend(struct device *dev)
+ 	malidp_se_irq_fini(hwdev);
+ 	malidp_de_irq_fini(hwdev);
+ 	hwdev->pm_suspended = true;
+-	clk_disable_unprepare(hwdev->mclk);
+-	clk_disable_unprepare(hwdev->aclk);
+-	clk_disable_unprepare(hwdev->pclk);
++	clk_bulk_disable_unprepare(ARRAY_SIZE(clks), clks);
+ 
+ 	return 0;
+ }
+@@ -687,10 +690,17 @@ static int malidp_runtime_pm_resume(struct device *dev)
+ 	struct drm_device *drm = dev_get_drvdata(dev);
+ 	struct malidp_drm *malidp = drm_to_malidp(drm);
+ 	struct malidp_hw_device *hwdev = malidp->dev;
++	struct clk_bulk_data clks[] = {
++		{ .clk = hwdev->pclk },
++		{ .clk = hwdev->aclk },
++		{ .clk = hwdev->mclk },
++	};
++	int err;
++
++	err = clk_bulk_prepare_enable(ARRAY_SIZE(clks), clks);
++	if (err)
++		return err;
+ 
+-	clk_prepare_enable(hwdev->pclk);
+-	clk_prepare_enable(hwdev->aclk);
+-	clk_prepare_enable(hwdev->mclk);
+ 	hwdev->pm_suspended = false;
+ 	malidp_de_irq_hw_init(hwdev);
+ 	malidp_se_irq_hw_init(hwdev);
+-- 
 2.53.0
 
 
