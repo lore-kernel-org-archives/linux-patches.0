@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E12B7519E08;
-	Thu, 17 Sep 2026 17:44:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FA464D17B4;
+	Thu, 17 Sep 2026 17:44:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789667091; cv=none; b=YTJShKdQA8LMCveqyURAwITg3XVEzbk2rwdMMsYOlx9gJA97p5N+xQ/Zyn3pasSUnvHIHhHOVCTVxHgkDzu3gMEKBLBvnX+lG6ssEHfHEpH2euKT9BxNAfr328XZJ+gLc1kzDvmXtLA9T9tsbsjzw4H+y5ADsqb4sNpoMaE+Z9A=
+	t=1789667094; cv=none; b=ZoEGqUBfHbWNoaeioTj20p8rXTyDD3aVJGDKfxlqOKTqriIfeG60hsFiw6Gj3S1V41QD2biuTaUzcEdIxyWusoCxdFqiUD9gscMCkL8Zw9CP/5+ZicXgR6iGvzjxzFyQ/lh9pBDeiTyIHskLmq5w9p1K6TtCwOuq0TIdkoB1B/o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789667091; c=relaxed/simple;
-	bh=OdWGNtX9xBZENi0g5H5zAdnmjHKvQYzSLLQl0vsZviE=;
+	s=arc-20240116; t=1789667094; c=relaxed/simple;
+	bh=qdjEKrkuNF9Fo039UXZqhILbModzbHLcQg7FmwVIPGY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RuFDloLGqYP8un0447S56qaRteqTC5lqcsDQX1rzr+U1oUDPDkOgD5iEgG5GIdHllChb879L9tyI7DXe4I+U4EodN6fuXd4wcWqBk4hjO451icEFo7QM9MQrdONWOdSyJIwM/TWtg6ho+KUon/ombQOKdKnJhsNJICrxsXHE0is=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QTYH3zI9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DlREoV0/qdEqGXfcQJGM+ILEwtXwwlPiXRHKP8YWcFS+Gppeyes5fzgE4v/FiPgLXZsdNWfN2gkrc2QEKrBTuW8yPcxzhgAz9pCvLf+HcE8GwH5v0N2rW/9Ugsc9HpFuejtDT8mEMCTxsronH6BAueTNVwGpLKzqT+DKMwlwq1E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uOrOwMcM; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QTYH3zI9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3682C1F000FF;
-	Thu, 17 Sep 2026 17:44:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uOrOwMcM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33E591F000FF;
+	Thu, 17 Sep 2026 17:44:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789667089;
-	bh=ICX586C9AF7r1Lb8SJvkE1fkblOtAWh+VJUsVwnijmQ=;
+	s=korg; t=1789667092;
+	bh=aEDAV6/gGGcFEqYJUo4sH++90K2B/X8HQgSDJcXx07Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QTYH3zI9hwpJ769gTVOejoeh5Lmho4rhFGtAFFpdQ81UKTB5dV4myj/3R+0V0A4mm
-	 vnWymhMw/vR8/g7HIaFLrPGGFkp62d0ugeh/q/MVRaSHkHzKn+o0v1kMtIiiLzRlEm
-	 ObVc6Td5DgMZ9t/JEg+xYRRD4rFy7iDgkDyGD8XA=
+	b=uOrOwMcMHAQoygJUsNKuvxgCbmlzyOQZRairqlgVogp+wVoZWU7AfkOUjs9XMVVPO
+	 BK3qA518fgThM86uk80auSKo32Y8TlurMAaGMhpy7gzA8Zspw5ioaP9G6rLTOhSh/S
+	 mAG5wm+tHr4PpwdXPfrJdjb0WElM6EEctxoqQPdQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Krishneil Singh <krishneil.k.singh@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1224/1250] idpf: Fix kernel-doc descriptions to avoid warnings
-Date: Thu, 17 Sep 2026 16:16:59 +0100
-Message-ID: <20260917151625.460170167@linuxfoundation.org>
+Subject: [PATCH 6.18 1189/1250] drm/pagemap: dma-unmap pages before handling migration errors
+Date: Thu, 17 Sep 2026 16:16:24 +0100
+Message-ID: <20260917151624.511666771@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -55,422 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Matthew Brost <matthew.brost@intel.com>
 
-[ Upstream commit 7fe9c81aa24a2374b1a9a2160d44f4afbf8ab80d ]
+[ Upstream commit 9e6372ec2a3990662ae0a67f56ac0aee19848d5b ]
 
-In many functions the Return section is missing. Fix kernel-doc
-descriptions to address that and other warnings.
+drm_pagemap_migrate_unmap_pages() relies on the pages array to determine
+which pages require DMA unmapping. However,
+drm_pagemap_migration_unlock_put_pages() clears the array as part of its
+cleanup, leaving drm_pagemap_migrate_unmap_pages() with no valid page
+information if it is called afterward.
 
-Before the change:
+Call drm_pagemap_migrate_unmap_pages() before
+drm_pagemap_migration_unlock_put_pages() so the pages array remains
+valid during DMA unmapping.
 
-$ scripts/kernel-doc -none -Wreturn drivers/net/ethernet/intel/idpf/idpf_txrx.c 2>&1 | wc -l
-85
-
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Tested-by: Krishneil Singh <krishneil.k.singh@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Stable-dep-of: 7dd4c829bac2 ("idpf: disable DIM work before freeing q_vectors")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Fixes: f86ad0ed620c ("drm/gpusvm, drm/pagemap: Move migration functionality to drm_pagemap")
+Cc: stable@vger.kernel.org
+Signed-off-by: Matthew Brost <matthew.brost@intel.com>
+Reviewed-by: Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>
+Link: https://patch.msgid.link/20260902063504.3024362-1-matthew.brost@intel.com
+[ Adapted DMA-unmap calls to the older helper signature without destination-page or IOVA-state arguments. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/idpf/idpf_txrx.c |   94 +++++++++++++++++-----------
- 1 file changed, 58 insertions(+), 36 deletions(-)
+ drivers/gpu/drm/drm_pagemap.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/drivers/net/ethernet/intel/idpf/idpf_txrx.c
-+++ b/drivers/net/ethernet/intel/idpf/idpf_txrx.c
-@@ -19,6 +19,8 @@ LIBETH_SQE_CHECK_PRIV(u32);
-  * Make sure we don't exceed maximum scatter gather buffers for a single
-  * packet.
-  * TSO case has been handled earlier from idpf_features_check().
-+ *
-+ * Return: %true if skb exceeds max descriptors per packet, %false otherwise.
-  */
- static bool idpf_chk_linearize(const struct sk_buff *skb,
- 			       unsigned int max_bufs,
-@@ -172,7 +174,7 @@ static void idpf_tx_desc_rel_all(struct
-  * idpf_tx_buf_alloc_all - Allocate memory for all buffer resources
-  * @tx_q: queue for which the buffers are allocated
-  *
-- * Returns 0 on success, negative on failure
-+ * Return: 0 on success, negative on failure
-  */
- static int idpf_tx_buf_alloc_all(struct idpf_tx_queue *tx_q)
- {
-@@ -196,7 +198,7 @@ static int idpf_tx_buf_alloc_all(struct
-  * @vport: vport to allocate resources for
-  * @tx_q: the tx ring to set up
-  *
-- * Returns 0 on success, negative on failure
-+ * Return: 0 on success, negative on failure
-  */
- static int idpf_tx_desc_alloc(const struct idpf_vport *vport,
- 			      struct idpf_tx_queue *tx_q)
-@@ -297,7 +299,7 @@ static int idpf_compl_desc_alloc(const s
-  * idpf_tx_desc_alloc_all - allocate all queues Tx resources
-  * @vport: virtual port private structure
-  *
-- * Returns 0 on success, negative on failure
-+ * Return: 0 on success, negative on failure
-  */
- static int idpf_tx_desc_alloc_all(struct idpf_vport *vport)
- {
-@@ -548,7 +550,7 @@ static void idpf_rx_buf_hw_update(struct
-  * idpf_rx_hdr_buf_alloc_all - Allocate memory for header buffers
-  * @bufq: ring to use
-  *
-- * Returns 0 on success, negative on failure.
-+ * Return: 0 on success, negative on failure.
-  */
- static int idpf_rx_hdr_buf_alloc_all(struct idpf_buf_queue *bufq)
- {
-@@ -600,7 +602,7 @@ static void idpf_post_buf_refill(struct
-  * @bufq: buffer queue to post to
-  * @buf_id: buffer id to post
-  *
-- * Returns false if buffer could not be allocated, true otherwise.
-+ * Return: %false if buffer could not be allocated, %true otherwise.
-  */
- static bool idpf_rx_post_buf_desc(struct idpf_buf_queue *bufq, u16 buf_id)
- {
-@@ -649,7 +651,7 @@ static bool idpf_rx_post_buf_desc(struct
-  * @bufq: buffer queue to post working set to
-  * @working_set: number of buffers to put in working set
-  *
-- * Returns true if @working_set bufs were posted successfully, false otherwise.
-+ * Return: %true if @working_set bufs were posted successfully, %false otherwise.
-  */
- static bool idpf_rx_post_init_bufs(struct idpf_buf_queue *bufq,
- 				   u16 working_set)
-@@ -718,7 +720,7 @@ static int idpf_rx_bufs_init_singleq(str
-  * idpf_rx_buf_alloc_all - Allocate memory for all buffer resources
-  * @rxbufq: queue for which the buffers are allocated
-  *
-- * Returns 0 on success, negative on failure
-+ * Return: 0 on success, negative on failure
-  */
- static int idpf_rx_buf_alloc_all(struct idpf_buf_queue *rxbufq)
- {
-@@ -746,7 +748,7 @@ rx_buf_alloc_all_out:
-  * @bufq: buffer queue to create page pool for
-  * @type: type of Rx buffers to allocate
-  *
-- * Returns 0 on success, negative on failure
-+ * Return: 0 on success, negative on failure
-  */
- static int idpf_rx_bufs_init(struct idpf_buf_queue *bufq,
- 			     enum libeth_fqe_type type)
-@@ -781,7 +783,7 @@ static int idpf_rx_bufs_init(struct idpf
-  * idpf_rx_bufs_init_all - Initialize all RX bufs
-  * @vport: virtual port struct
-  *
-- * Returns 0 on success, negative on failure
-+ * Return: 0 on success, negative on failure
-  */
- int idpf_rx_bufs_init_all(struct idpf_vport *vport)
- {
-@@ -836,7 +838,7 @@ int idpf_rx_bufs_init_all(struct idpf_vp
-  * @vport: vport to allocate resources for
-  * @rxq: Rx queue for which the resources are setup
-  *
-- * Returns 0 on success, negative on failure
-+ * Return: 0 on success, negative on failure
-  */
- static int idpf_rx_desc_alloc(const struct idpf_vport *vport,
- 			      struct idpf_rx_queue *rxq)
-@@ -898,7 +900,7 @@ static int idpf_bufq_desc_alloc(const st
-  * idpf_rx_desc_alloc_all - allocate all RX queues resources
-  * @vport: virtual port structure
-  *
-- * Returns 0 on success, negative on failure
-+ * Return: 0 on success, negative on failure
-  */
- static int idpf_rx_desc_alloc_all(struct idpf_vport *vport)
- {
-@@ -1426,7 +1428,7 @@ void idpf_vport_queues_rel(struct idpf_v
-  * dereference the queue from queue groups.  This allows us to quickly pull a
-  * txq based on a queue index.
-  *
-- * Returns 0 on success, negative on failure
-+ * Return: 0 on success, negative on failure
-  */
- static int idpf_vport_init_fast_path_txqs(struct idpf_vport *vport)
- {
-@@ -1559,7 +1561,7 @@ void idpf_vport_calc_num_q_desc(struct i
-  * @vport_msg: message to fill with data
-  * @max_q: vport max queue info
-  *
-- * Return 0 on success, error value on failure.
-+ * Return: 0 on success, error value on failure.
-  */
- int idpf_vport_calc_total_qs(struct idpf_adapter *adapter, u16 vport_idx,
- 			     struct virtchnl2_create_vport *vport_msg,
-@@ -1694,7 +1696,7 @@ static void idpf_rxq_set_descids(const s
-  * @vport: vport to allocate txq groups for
-  * @num_txq: number of txqs to allocate for each group
-  *
-- * Returns 0 on success, negative on failure
-+ * Return: 0 on success, negative on failure
-  */
- static int idpf_txq_group_alloc(struct idpf_vport *vport, u16 num_txq)
- {
-@@ -1786,7 +1788,7 @@ err_alloc:
-  * @vport: vport to allocate rxq groups for
-  * @num_rxq: number of rxqs to allocate for each group
-  *
-- * Returns 0 on success, negative on failure
-+ * Return: 0 on success, negative on failure
-  */
- static int idpf_rxq_group_alloc(struct idpf_vport *vport, u16 num_rxq)
- {
-@@ -1915,7 +1917,7 @@ err_alloc:
-  * idpf_vport_queue_grp_alloc_all - Allocate all queue groups/resources
-  * @vport: vport with qgrps to allocate
-  *
-- * Returns 0 on success, negative on failure
-+ * Return: 0 on success, negative on failure
-  */
- static int idpf_vport_queue_grp_alloc_all(struct idpf_vport *vport)
- {
-@@ -1944,8 +1946,9 @@ err_out:
-  * idpf_vport_queues_alloc - Allocate memory for all queues
-  * @vport: virtual port
-  *
-- * Allocate memory for queues associated with a vport.  Returns 0 on success,
-- * negative on failure.
-+ * Allocate memory for queues associated with a vport.
-+ *
-+ * Return: 0 on success, negative on failure.
-  */
- int idpf_vport_queues_alloc(struct idpf_vport *vport)
- {
-@@ -2172,7 +2175,7 @@ static void idpf_tx_handle_rs_completion
-  * @budget: Used to determine if we are in netpoll
-  * @cleaned: returns number of packets cleaned
-  *
-- * Returns true if there's any budget left (e.g. the clean is finished)
-+ * Return: %true if there's any budget left (e.g. the clean is finished)
-  */
- static bool idpf_tx_clean_complq(struct idpf_compl_queue *complq, int budget,
- 				 int *cleaned)
-@@ -2398,7 +2401,7 @@ void idpf_tx_splitq_build_flow_desc(unio
- }
+--- a/drivers/gpu/drm/drm_pagemap.c
++++ b/drivers/gpu/drm/drm_pagemap.c
+@@ -606,12 +606,12 @@ retry:
+ 		goto err_finalize;
  
- /**
-- * idpf_tx_splitq_has_room - check if enough Tx splitq resources are available
-+ * idpf_txq_has_room - check if enough Tx splitq resources are available
-  * @tx_q: the queue to be checked
-  * @descs_needed: number of descriptors required for this packet
-  * @bufs_needed: number of Tx buffers required for this packet
-@@ -2529,6 +2532,8 @@ unsigned int idpf_tx_res_count_required(
-  * idpf_tx_splitq_bump_ntu - adjust NTU and generation
-  * @txq: the tx ring to wrap
-  * @ntu: ring index to bump
-+ *
-+ * Return: the next ring index hopping to 0 when wraps around
-  */
- static unsigned int idpf_tx_splitq_bump_ntu(struct idpf_tx_queue *txq, u16 ntu)
- {
-@@ -2797,7 +2802,7 @@ static void idpf_tx_splitq_map(struct id
-  * @skb: pointer to skb
-  * @off: pointer to struct that holds offload parameters
-  *
-- * Returns error (negative) if TSO was requested but cannot be applied to the
-+ * Return: error (negative) if TSO was requested but cannot be applied to the
-  * given skb, 0 if TSO does not apply to the given skb, or 1 otherwise.
-  */
- int idpf_tso(struct sk_buff *skb, struct idpf_tx_offload_params *off)
-@@ -2875,6 +2880,8 @@ int idpf_tso(struct sk_buff *skb, struct
-  *
-  * Since the TX buffer rings mimics the descriptor ring, update the tx buffer
-  * ring entry to reflect that this index is a context descriptor
-+ *
-+ * Return: pointer to the next descriptor
-  */
- static union idpf_flex_tx_ctx_desc *
- idpf_tx_splitq_get_ctx_desc(struct idpf_tx_queue *txq)
-@@ -2893,6 +2900,8 @@ idpf_tx_splitq_get_ctx_desc(struct idpf_
-  * idpf_tx_drop_skb - free the SKB and bump tail if necessary
-  * @tx_q: queue to send buffer on
-  * @skb: pointer to skb
-+ *
-+ * Return: always NETDEV_TX_OK
-  */
- netdev_tx_t idpf_tx_drop_skb(struct idpf_tx_queue *tx_q, struct sk_buff *skb)
- {
-@@ -2994,7 +3003,7 @@ static bool idpf_tx_splitq_need_re(struc
-  * @skb: send buffer
-  * @tx_q: queue to send buffer on
-  *
-- * Returns NETDEV_TX_OK if sent, else an error code
-+ * Return: NETDEV_TX_OK if sent, else an error code
-  */
- static netdev_tx_t idpf_tx_splitq_frame(struct sk_buff *skb,
- 					struct idpf_tx_queue *tx_q)
-@@ -3117,7 +3126,7 @@ static netdev_tx_t idpf_tx_splitq_frame(
-  * @skb: send buffer
-  * @netdev: network interface device structure
-  *
-- * Returns NETDEV_TX_OK if sent, else an error code
-+ * Return: NETDEV_TX_OK if sent, else an error code
-  */
- netdev_tx_t idpf_tx_start(struct sk_buff *skb, struct net_device *netdev)
- {
-@@ -3267,10 +3276,10 @@ idpf_rx_splitq_extract_csum_bits(const s
-  * @rx_desc: Receive descriptor
-  * @decoded: Decoded Rx packet type related fields
-  *
-- * Return 0 on success and error code on failure
-- *
-  * Populate the skb fields with the total number of RSC segments, RSC payload
-  * length and packet type.
-+ *
-+ * Return: 0 on success and error code on failure
-  */
- static int idpf_rx_rsc(struct idpf_rx_queue *rxq, struct sk_buff *skb,
- 		       const struct virtchnl2_rx_flex_desc_adv_nic_3 *rx_desc,
-@@ -3372,6 +3381,8 @@ idpf_rx_hwtstamp(const struct idpf_rx_qu
-  * This function checks the ring, descriptor, and packet information in
-  * order to populate the hash, checksum, protocol, and
-  * other fields within the skb.
-+ *
-+ * Return: 0 on success and error code on failure
-  */
- static int
- __idpf_rx_process_skb_fields(struct idpf_rx_queue *rxq, struct sk_buff *skb,
-@@ -3466,6 +3477,7 @@ static u32 idpf_rx_hsplit_wa(const struc
-  * @stat_err_field: field from descriptor to test bits in
-  * @stat_err_bits: value to mask
-  *
-+ * Return: %true if any of given @stat_err_bits are set, %false otherwise.
-  */
- static bool idpf_rx_splitq_test_staterr(const u8 stat_err_field,
- 					const u8 stat_err_bits)
-@@ -3477,8 +3489,8 @@ static bool idpf_rx_splitq_test_staterr(
-  * idpf_rx_splitq_is_eop - process handling of EOP buffers
-  * @rx_desc: Rx descriptor for current buffer
-  *
-- * If the buffer is an EOP buffer, this function exits returning true,
-- * otherwise return false indicating that this is in fact a non-EOP buffer.
-+ * Return: %true if the buffer is an EOP buffer, %false otherwise, indicating
-+ * that this is in fact a non-EOP buffer.
-  */
- static bool idpf_rx_splitq_is_eop(struct virtchnl2_rx_flex_desc_adv_nic_3 *rx_desc)
- {
-@@ -3497,7 +3509,7 @@ static bool idpf_rx_splitq_is_eop(struct
-  * expensive overhead for IOMMU access this provides a means of avoiding
-  * it by maintaining the mapping of the page to the system.
-  *
-- * Returns amount of work completed
-+ * Return: amount of work completed
-  */
- static int idpf_rx_splitq_clean(struct idpf_rx_queue *rxq, int budget)
- {
-@@ -3627,7 +3639,7 @@ payload:
-  * @buf_id: buffer ID
-  * @buf_desc: Buffer queue descriptor
-  *
-- * Return 0 on success and negative on failure.
-+ * Return: 0 on success and negative on failure.
-  */
- static int idpf_rx_update_bufq_desc(struct idpf_buf_queue *bufq, u32 buf_id,
- 				    struct virtchnl2_splitq_rx_buf_desc *buf_desc)
-@@ -3754,6 +3766,7 @@ static void idpf_rx_clean_refillq_all(st
-  * @irq: interrupt number
-  * @data: pointer to a q_vector
-  *
-+ * Return: always IRQ_HANDLED
-  */
- static irqreturn_t idpf_vport_intr_clean_queues(int __always_unused irq,
- 						void *data)
-@@ -3875,6 +3888,8 @@ static void idpf_vport_intr_dis_irq_all(
- /**
-  * idpf_vport_intr_buildreg_itr - Enable default interrupt generation settings
-  * @q_vector: pointer to q_vector
-+ *
-+ * Return: value to be written back to HW to enable interrupt generation
-  */
- static u32 idpf_vport_intr_buildreg_itr(struct idpf_q_vector *q_vector)
- {
-@@ -4012,6 +4027,8 @@ void idpf_vport_intr_update_itr_ena_irq(
- /**
-  * idpf_vport_intr_req_irq - get MSI-X vectors from the OS for the vport
-  * @vport: main vport structure
-+ *
-+ * Return: 0 on success, negative on failure
-  */
- static int idpf_vport_intr_req_irq(struct idpf_vport *vport)
- {
-@@ -4222,7 +4239,7 @@ static void idpf_vport_intr_napi_ena_all
-  * @budget: Used to determine if we are in netpoll
-  * @cleaned: returns number of packets cleaned
-  *
-- * Returns false if clean is not complete else returns true
-+ * Return: %false if clean is not complete else returns %true
-  */
- static bool idpf_tx_splitq_clean_all(struct idpf_q_vector *q_vec,
- 				     int budget, int *cleaned)
-@@ -4249,7 +4266,7 @@ static bool idpf_tx_splitq_clean_all(str
-  * @budget: Used to determine if we are in netpoll
-  * @cleaned: returns number of packets cleaned
-  *
-- * Returns false if clean is not complete else returns true
-+ * Return: %false if clean is not complete else returns %true
-  */
- static bool idpf_rx_splitq_clean_all(struct idpf_q_vector *q_vec, int budget,
- 				     int *cleaned)
-@@ -4292,6 +4309,8 @@ static bool idpf_rx_splitq_clean_all(str
-  * idpf_vport_splitq_napi_poll - NAPI handler
-  * @napi: struct from which you get q_vector
-  * @budget: budget provided by stack
-+ *
-+ * Return: how many packets were cleaned
-  */
- static int idpf_vport_splitq_napi_poll(struct napi_struct *napi, int budget)
- {
-@@ -4440,7 +4459,9 @@ static void idpf_vport_intr_map_vector_t
-  * idpf_vport_intr_init_vec_idx - Initialize the vector indexes
-  * @vport: virtual port
-  *
-- * Initialize vector indexes with values returened over mailbox
-+ * Initialize vector indexes with values returned over mailbox.
-+ *
-+ * Return: 0 on success, negative on failure
-  */
- static int idpf_vport_intr_init_vec_idx(struct idpf_vport *vport)
- {
-@@ -4506,8 +4527,9 @@ static void idpf_vport_intr_napi_add_all
-  * idpf_vport_intr_alloc - Allocate memory for interrupt vectors
-  * @vport: virtual port
-  *
-- * We allocate one q_vector per queue interrupt. If allocation fails we
-- * return -ENOMEM.
-+ * Allocate one q_vector per queue interrupt.
-+ *
-+ * Return: 0 on success, if allocation fails we return -ENOMEM.
-  */
- int idpf_vport_intr_alloc(struct idpf_vport *vport)
- {
-@@ -4594,7 +4616,7 @@ error:
-  * idpf_vport_intr_init - Setup all vectors for the given vport
-  * @vport: virtual port
-  *
-- * Returns 0 on success or negative on failure
-+ * Return: 0 on success or negative on failure
-  */
- int idpf_vport_intr_init(struct idpf_vport *vport)
- {
-@@ -4633,7 +4655,7 @@ void idpf_vport_intr_ena(struct idpf_vpo
-  * idpf_config_rss - Send virtchnl messages to configure RSS
-  * @vport: virtual port
-  *
-- * Return 0 on success, negative on failure
-+ * Return: 0 on success, negative on failure
-  */
- int idpf_config_rss(struct idpf_vport *vport)
- {
+ err_finalize:
++	drm_pagemap_migrate_unmap_pages(devmem_allocation->dev, pagemap_addr, npages,
++					DMA_FROM_DEVICE);
+ 	if (err)
+ 		drm_pagemap_migration_unlock_put_pages(npages, dst);
+ 	migrate_device_pages(src, dst, npages);
+ 	migrate_device_finalize(src, dst, npages);
+-	drm_pagemap_migrate_unmap_pages(devmem_allocation->dev, pagemap_addr, npages,
+-					DMA_FROM_DEVICE);
+ err_free:
+ 	kvfree(buf);
+ err_out:
+@@ -742,13 +742,13 @@ static int __drm_pagemap_migrate_to_ram(
+ 		goto err_finalize;
+ 
+ err_finalize:
++	if (dev)
++		drm_pagemap_migrate_unmap_pages(dev, pagemap_addr, npages,
++						DMA_FROM_DEVICE);
+ 	if (err)
+ 		drm_pagemap_migration_unlock_put_pages(npages, migrate.dst);
+ 	migrate_vma_pages(&migrate);
+ 	migrate_vma_finalize(&migrate);
+-	if (dev)
+-		drm_pagemap_migrate_unmap_pages(dev, pagemap_addr, npages,
+-						DMA_FROM_DEVICE);
+ err_free:
+ 	kvfree(buf);
+ err_out:
 
 
