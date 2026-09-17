@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D6B53E9F9E;
-	Thu, 17 Sep 2026 17:59:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11D194FC350;
+	Thu, 17 Sep 2026 17:59:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789667953; cv=none; b=LTu/h8E12BEQuEOdd/0rHMVIDiayrqNsFGpKqVQyH33Bjxs3pdheRKdB/FWBKlkcfDqg86TAOgFzj0AJNekZ8AdkKWDcTkN2sbmONPXe066LaZHzE0umRS+bJQllTqsSo/fNcOcpBYCcbvEvSwMt5ZzqUC/7cEwxMUAFYcqQPNg=
+	t=1789667956; cv=none; b=q4WzP1oZ4XLpwRmkTo4e64P3QQcMw3UwrrmOD/IGwfBmzwm2pSjH43ISdSiP9UVx0wnkFMrXnet3wZCRJI1t6hOHrO7XkY5ipH7S9uV+XfLKU9wkjUNoFGLY9ZsJmRt3u65Dt94oq2OLPq1FuUOdbH0z1BdqK4OJDLDyghaqmPg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789667953; c=relaxed/simple;
-	bh=eXTM6AALbfFqWy2JO6n0gbKh2CtyGFDXqDJV74/RBZs=;
+	s=arc-20240116; t=1789667956; c=relaxed/simple;
+	bh=b/f01O59NBgJsVfrJkV5G8mEuKWI9eAq1V+0UHq1UW0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U6zvs/30hcvncYsOLGynUTJt4TVcZlQ0Yjqi+VfCfcXKmesgp1teoLmyMLeFxlPTlj+igoWlnD/poYt3h9v5klG0IXcTAR4iMdRxFljnd3rI6zoosqWK8IilpfN8fisDC3fi1yt+s5oVxl+7igd3mh+kPGmYACs2I5Q6aKsTaXA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nYOnxhQ9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=V3ugsPpZgVtxkJqS36EA35W/47O+7hYPa6cpMhmm5zhjWMnCqGd1vLv3ZQXFp5d83ThKbgz3ZE0diOALZ76B+d0fsyYYBXVmx+PZ6bL9dC29sbyc7rx/4r0jET1MZzqA3n8fVM8v9bPPs6ffFrZ5H2pLtY0fbBKrdnFc7X2RVbQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fq8LreDL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nYOnxhQ9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 659421F000FF;
-	Thu, 17 Sep 2026 17:59:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fq8LreDL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 629EA1F000FF;
+	Thu, 17 Sep 2026 17:59:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789667951;
-	bh=iftC37FqHebA7lntX0AAJJ5whnMC5OsN4y1L0BQ43BY=;
+	s=korg; t=1789667954;
+	bh=DvrtfbN4iy2giHcZEykB78B+Sh4W/gwl/NdW+CmAk6E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nYOnxhQ9MYgDyyTIgLzyVSnasSi5RvLzfiw9+xxnqFQtFOAX6sBoqrxhFKrTr3kqB
-	 jCAdUaKhe3YjsjWGXRfHO9eBYw0IddEZYF8LC7oxhkBBIZSXKpnNGbEYn6ms+yJqsU
-	 Gnk3MeP5SXQI8Byfo1MJk9t7XwfNzzp0McGrvABs=
+	b=Fq8LreDLbUJOdglqIr5Kr1NkvqiXsK+kyDT4CkJIoB844TskKK9bMJAtocp7AHNR0
+	 oGeQxtB014yHqQXdgnwi4duL8er3OLQPdkpKgB4TdoEFGy6tjXK8huQwbAp05dVK98
+	 slWn9Z9Rl0wq6XSZaWGU3M+IKlDCyd6kQwCPagX0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shubham Chakraborty <chakrabortyshubham66@gmail.com>,
+	Kory Maincent <kory.maincent@bootlin.com>,
+	Romain Gantois <romain.gantois@bootlin.com>,
 	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0265/1102] hwmon: (raspberrypi) Fix delayed-work teardown race
-Date: Thu, 17 Sep 2026 16:03:28 +0100
-Message-ID: <20260917151546.255350066@linuxfoundation.org>
+Subject: [PATCH 6.12 0266/1102] hwmon: (adt7462) Add of_match_table to support devicetree
+Date: Thu, 17 Sep 2026 16:03:29 +0100
+Message-ID: <20260917151546.281284300@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -51,66 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shubham Chakraborty <chakrabortyshubham66@gmail.com>
+From: Kory Maincent <kory.maincent@bootlin.com>
 
-[ Upstream commit eb0d491e2787aa359f0d930151ff6e5e5df70fb9 ]
+[ Upstream commit cd1b42617aafe01810ab7d3b9948d2f5fa9fb8af ]
 
-The delayed polling work rearms itself from the work function, so use
-explicit delayed-work setup and cleanup instead of
-devm_delayed_work_autocancel().
+Add of_match_table to add support of devicetree probing.
 
-Initialize the delayed work with INIT_DELAYED_WORK() and register a
-devres cleanup action that calls disable_delayed_work_sync() during
-teardown.
-
-This addresses the concern raised during review about the polling work
-being able to requeue itself while the driver is being removed.
-
-Signed-off-by: Shubham Chakraborty <chakrabortyshubham66@gmail.com>
-Link: https://lore.kernel.org/r/20260517080445.103962-4-chakrabortyshubham66@gmail.com
+Signed-off-by: Kory Maincent <kory.maincent@bootlin.com>
+[rgantois: Removed of_match_ptr().]
+Signed-off-by: Romain Gantois <romain.gantois@bootlin.com>
+Link: https://lore.kernel.org/r/20260608-adt7462-bindings-v2-1-272982c40325@bootlin.com
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/raspberrypi-hwmon.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ drivers/hwmon/adt7462.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/hwmon/raspberrypi-hwmon.c b/drivers/hwmon/raspberrypi-hwmon.c
-index 65cc52e47db08..af785d04b1958 100644
---- a/drivers/hwmon/raspberrypi-hwmon.c
-+++ b/drivers/hwmon/raspberrypi-hwmon.c
-@@ -7,7 +7,6 @@
-  * Copyright (C) 2018 Stefan Wahren <stefan.wahren@i2se.com>
-  */
- #include <linux/device.h>
--#include <linux/devm-helpers.h>
- #include <linux/err.h>
+diff --git a/drivers/hwmon/adt7462.c b/drivers/hwmon/adt7462.c
+index 174dfee47f7a7..f935c3477b364 100644
+--- a/drivers/hwmon/adt7462.c
++++ b/drivers/hwmon/adt7462.c
+@@ -12,6 +12,7 @@
  #include <linux/hwmon.h>
- #include <linux/module.h>
-@@ -72,6 +71,13 @@ static void get_values_poll(struct work_struct *work)
- 	schedule_delayed_work(&data->get_values_poll_work, 2 * HZ);
- }
+ #include <linux/hwmon-sysfs.h>
+ #include <linux/err.h>
++#include <linux/mod_devicetable.h>
+ #include <linux/mutex.h>
+ #include <linux/log2.h>
+ #include <linux/slab.h>
+@@ -1814,10 +1815,17 @@ static const struct i2c_device_id adt7462_id[] = {
+ };
+ MODULE_DEVICE_TABLE(i2c, adt7462_id);
  
-+static void rpi_hwmon_cancel_poll_work(void *res)
-+{
-+	struct rpi_hwmon_data *data = res;
++static const struct of_device_id adt7462_of_match[] = {
++	{ .compatible = "onnn,adt7462" },
++	{ },
++};
++MODULE_DEVICE_TABLE(of, adt7462_of_match);
 +
-+	disable_delayed_work_sync(&data->get_values_poll_work);
-+}
-+
- static int rpi_read(struct device *dev, enum hwmon_sensor_types type,
- 		    u32 attr, int channel, long *val)
- {
-@@ -123,8 +129,8 @@ static int rpi_hwmon_probe(struct platform_device *pdev)
- 	if (IS_ERR(data->hwmon_dev))
- 		return PTR_ERR(data->hwmon_dev);
- 
--	ret = devm_delayed_work_autocancel(dev, &data->get_values_poll_work,
--					   get_values_poll);
-+	INIT_DELAYED_WORK(&data->get_values_poll_work, get_values_poll);
-+	ret = devm_add_action_or_reset(dev, rpi_hwmon_cancel_poll_work, data);
- 	if (ret)
- 		return ret;
- 	platform_set_drvdata(pdev, data);
+ static struct i2c_driver adt7462_driver = {
+ 	.class		= I2C_CLASS_HWMON,
+ 	.driver = {
+ 		.name	= "adt7462",
++		.of_match_table = adt7462_of_match,
+ 	},
+ 	.probe		= adt7462_probe,
+ 	.id_table	= adt7462_id,
 -- 
 2.53.0
 
