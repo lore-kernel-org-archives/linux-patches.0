@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A6FA3A6B6F;
-	Thu, 17 Sep 2026 15:41:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 068394C9DE2;
+	Thu, 17 Sep 2026 15:41:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659677; cv=none; b=oteAH2NrKfFe9Qg1cnNv0BWfRJWfFjT51MxtlB7qdCQ63fWncbjvKsN6vf7mbN8D/nO6xwFQJvJcN+oF1EKOvgjWQNk2DEvM+gk3UvN96SDWacpJ0XCdav5L4WRj1u+S/rBZ962YTZ0jMUEvzOzhKoUDkoBQBTzZLwd9x2A0JnU=
+	t=1789659681; cv=none; b=GlW5KpgDwL/fWw2VvEmOOz0WrdbgEGawg2uuStzTkPShb0Hcbwnz2kc/MjWEzCKcHQAyA1dwQt7GvqrHxxxatuHFcyd01bHORAWGGnPWEM4cW41oC89ueMYna1rUd6iagK4xL7dp66ggZDHPxF6xPcHbxawmVWQnQ7kSdqqGaQQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659677; c=relaxed/simple;
-	bh=Vu8Y+tkwT8U6brBqNx53uJUj7CjTHDCbgWE3OPd6xog=;
+	s=arc-20240116; t=1789659681; c=relaxed/simple;
+	bh=oJZag2H16CcUxV6/gl8QOKCGiDgcOxR2hVGLg4S8cmQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Nr+IcHA9s+lUe7S0gNr/EFBk8EzslzSJcFVxaZ8EdBKQ/EA41F0xzsdfpPFRGugeNSCTtGp2aVIj+LZbIryGk5K6UEksm0kLV5AxaLTnnpCwVQUPWJuWzNYahuLNSaqCMT/wZJyPhoz3GTLtfr3f9hn/PaZAyCsWfoLxoBVf8eQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pIwhFBeZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KxfUCIA3QUTV22swyn8CK2JeLpkAD3j3gwt0FFSWMs8gpXsvy6LXk5o40opOdsiZ0yLOFp/JDS5qvZPp3GEp2wFd3gsSfiJeY8v8emniaYkkF4p8g1ItYhPtMlrTNKwwqBFcuX56veVjQ+E3DvBysoaqvmJrulYWKLZhtWMvjW8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mcmYqw4u; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pIwhFBeZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7E281F00898;
-	Thu, 17 Sep 2026 15:41:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mcmYqw4u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD0981F0089B;
+	Thu, 17 Sep 2026 15:41:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659667;
-	bh=vAxF1ffWIG/AzDWXQRyfcU79jM86M4mGtanhFiHTOos=;
+	s=korg; t=1789659670;
+	bh=buQg84XvSdjMtJyhluactRpdTw0PS8XZj01bJyMsIHU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pIwhFBeZjYKg2Y3AW2xCGwOs9st+3VE7h4Zhw+dt9xJ32AyJLte5JwiESeOro/HW2
-	 l12DE+f+ZshBjlCsaODY5QoE3O4DPV9JU5MdBH2EtkqIdlHkamj4t8owyK8+LOsG56
-	 UFTivkLjV23mE0VR76GE+aQQnR447RSRdjbVtREQ=
+	b=mcmYqw4uMRj3xwfBM16U+uj1QUbejy4pnGAQ+6SVYUnI+lJNN6KGkyp86kXMEL2Wx
+	 +F4cO0nH/b8BAMn8RUwQNYLGT9tm6OVUaWK7MH4V1mtug/2uT+PXfNI0ZazXOhYTik
+	 dXTMKlPM3iJHtnqVomx1ab3dOoJe9Knh1Fa0yjLQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Venkat Rao Bagalkote <venkat88@linux.ibm.com>,
-	Shrikanth Hegde <sshegde@linux.ibm.com>,
-	"Mukesh Kumar Chaurasiya (IBM)" <mkchauras@gmail.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Vega <vega@nebusec.ai>,
+	Victor Nogueira <victor@mojatatu.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 294/733] powerpc/entry: Fix irq_soft_mask corruption on replayed interrupt exit
-Date: Thu, 17 Sep 2026 16:10:02 +0100
-Message-ID: <20260917151358.742748411@linuxfoundation.org>
+Subject: [PATCH 7.2 285/733] net: cap tx_queue_len at S16_MAX to prevent oversized ring allocations
+Date: Thu, 17 Sep 2026 16:09:53 +0100
+Message-ID: <20260917151358.489781877@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -53,98 +53,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mukesh Kumar Chaurasiya (IBM) <mkchauras@gmail.com>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-[ Upstream commit 63a7531ca31f9f097d9cc1cc3fe86ae683cdabdd ]
+[ Upstream commit 66ab4c59b74db7ab53a1c9083feaaede393a96a0 ]
 
-When __replay_soft_interrupts() replays a pending interrupt (e.g.
-PACA_IRQ_DEC -> timer_interrupt), it calls the handler directly with a
-synthetic pt_regs. The DEFINE_INTERRUPT_HANDLER_ASYNC wrapper around
-each handler calls arch_interrupt_async_exit_prepare() on the way out,
-which calls arch_interrupt_exit_prepare() -> local_irq_disable() ->
-arch_local_irq_disable(), which does:
+Several subsystems allocate ring buffers sized by dev->tx_queue_len
+with no upper bound. An unprivileged user (via unshare -Urn) can set a
+huge tx_queue_len and exhaust global memory with ring allocations:
 
-    irq_soft_mask_set(IRQS_DISABLED)   /* 0x1 */
+- pfifo_fast: pfifo_fast_init() and pfifo_fast_change_tx_queue_len()
+  allocate 3 skb_array rings of tx_queue_len entries each.
+- tun: tun_queue_resize() and the queue-attach path resize ptr_rings
+  to tx_queue_len on the NETDEV_CHANGE_TX_QUEUE_LEN notifier.
+- tap (macvtap/ipvtap): tap_queue_resize() and tap_init() resize/init
+  ptr_rings to tx_queue_len on the same notifier.
 
-This unconditionally overwrites irq_soft_mask with IRQS_DISABLED (0x1),
-stripping the IRQS_PMI_DISABLED (0x2) bit. The result is that
-irq_soft_mask is 0x1 instead of IRQS_ALL_DISABLED (0x3) when the
-handler returns to __replay_soft_interrupts().
+netif_change_tx_queue_len() is the single entry point for IFLA_TXQLEN,
+sysfs, and the SIOCSIFTXQLEN ioctl. Cap new_len at S16_MAX (32767)
+there so the oversized value is rejected at set time. This takes
+effect whether the device is up or down, before dev->tx_queue_len is
+written, before any notifier fires, and before any ring is allocated.
+The "> S16_MAX" check also subsumes the previous unsigned-long
+truncation test, and a negative ifr_qlen from the ioctl lands far
+above the cap after conversion, so both old failure modes are covered
+by the one comparison.
 
-For a normally-taken interrupt this is harmless: the next interrupt
-always enters through arch_interrupt_enter_prepare() which
-unconditionally sets irq_soft_mask to IRQS_ALL_DISABLED. But during
-replay, next_interrupt() is called directly between replayed handlers
-without going back through arch_interrupt_enter_prepare(), so the
-stripped bit is never restored. next_interrupt() then fires a WARNING:
+tx_queue_len is ambigious: both a per-ring sizing multiplier and a
+default queue-length/limit knob for consumers that allocate
+nothing at set time (pfifo/bfifo/gred/plug/sfb limits, htb
+direct_qlen, qfq max_classes, teql). 32767 is chosen as the largest
+value NLA_POLICY_FULL_RANGE can express for the u32 IFLA_TXQLEN
+policy in patch 2/3 while staying a legitimate queue length on
+high-BDP paths; the ring-memory trade-off of a shared knob is
+disclosed below.
 
-    WARNING: arch/powerpc/kernel/irq_64.c:75
-    WARN_ON(irq_soft_mask_return() != IRQS_ALL_DISABLED)
+Conditions to recreate the bug:
+- CONFIG_NET_SCHED=y, CONFIG_VETH=y, CONFIG_USER_NS=y, CONFIG_NET_NS=y.
+- Unprivileged user in a fresh user+net namespace (unshare -Urn).
+- pfifo_fast: create veth pairs, set tx_queue_len to 500000, attach
+  mq+pfifo_fast. ~28 iterations OOMs a 2GB guest.
+- tun: create 50 tun devices with IFF_MULTI_QUEUE, set tx_queue_len to
+  500000, open 8 queues each. ~1.6GB of ptr_ring allocations OOMs a
+  512MB guest.
+- tap: same as tun with IFF_TAP. ~960MB OOMs a 512MB guest.
+- On the fixed kernel the oversized tx_queue_len is rejected with
+  -ERANGE at set time (all four paths: RTM_SETLINK, RTM_NEWLINK
+  create, sysfs, ioctl - the latter two via this check, the former
+  two via this check and the 2/3 parse policy respectively).
 
-The warning was observed early in boot on a POWER10 pseries guest
-during kmem_cache_init_late(), where a spinlock release triggers
-interrupt replay that processes a pending timer interrupt.
-
-Debugger state confirming the bug:
-  Before timer_interrupt(&regs):
-    irq_soft_mask = 0x3 (IRQS_ALL_DISABLED)   correct
-    irq_happened  = 0x41 (HARD_DIS|REPLAYING)  correct
-  After timer_interrupt(&regs) returns:
-    irq_soft_mask = 0x1 (IRQS_DISABLED)        WRONG - PMI bit stripped
-    irq_happened  = 0x41                        unchanged
-
-The fix is to replace local_irq_disable() with hard_irq_disable().
-
-hard_irq_disable() is the right primitive here for two reasons:
-
-1. On PPC64 (hw_irq.h:301) it calls irq_soft_mask_set_return(IRQS_ALL_DISABLED),
-   setting the soft mask to 0x3 (both IRQS_DISABLED and IRQS_PMI_DISABLED),
-   which preserves the PMI bit and fixes the WARNING. The additional
-   work it does (__hard_irq_disable(), PACA_IRQ_HARD_DIS |=) is
-   redundant but safe since both are already set at this point in the
-   exit path; the trace_hardirqs_off() inside is guarded by
-   if (!arch_irqs_disabled_flags(flags)) so it will not double-fire.
-
-2. On PPC32 (hw_irq.h:467) hard_irq_disable() maps to
-   arch_local_irq_disable() -> __hard_irq_disable(), which clears
-   MSR[EE] in hardware. This is exactly correct: PPC32 has no soft-mask
-   PACA mechanism, so the hardware disable is the right way to satisfy
-   irqentry_exit()'s requirement. This also fixes a build error on PPC32
-   where irq_soft_mask_set() is only defined under CONFIG_PPC64:
-
-       arch/powerpc/include/asm/entry-common.h:273: error: implicit
-       declaration of function 'irq_soft_mask_set'
-
-   Using hard_irq_disable() requires no #ifdef and is consistent with
-   how the rest of the entry code (e.g. entry-common.h:463) handles the
-   same PPC32/PPC64 split.
-
-Fixes: 334f3f6d7a16 ("powerpc/entry: Disable interrupts before irqentry_exit")
-Reported-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
-Closes: https://lore.kernel.org/all/6f9bfb0f-b14c-468e-bb9f-c157d120d0dc@linux.ibm.com/
-Tested-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
-Reviewed-by: Shrikanth Hegde <sshegde@linux.ibm.com>
-Signed-off-by: Mukesh Kumar Chaurasiya (IBM) <mkchauras@gmail.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20260904090858.128563-1-mkchauras@gmail.com
+Fixes: 6a643ddb5624 ("net: introduce helper dev_change_tx_queue_len()")
+Reported-by: Vega <vega@nebusec.ai>
+Closes: https://lore.kernel.org/netdev/20260828121902.66837-1-jhs@mojatatu.com/
+Tested-by: Victor Nogueira <victor@mojatatu.com>
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://patch.msgid.link/QDISC-2899.v2.20260901233641@mojatatu.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/include/asm/entry-common.h | 2 +-
+ net/core/dev.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/powerpc/include/asm/entry-common.h b/arch/powerpc/include/asm/entry-common.h
-index 94083516df574..80b07750b531b 100644
---- a/arch/powerpc/include/asm/entry-common.h
-+++ b/arch/powerpc/include/asm/entry-common.h
-@@ -270,7 +270,7 @@ static inline void arch_interrupt_exit_prepare(struct pt_regs *regs)
- 	}
+diff --git a/net/core/dev.c b/net/core/dev.c
+index 9ac8ac6004145..74dd9e25f4ff7 100644
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -9932,7 +9932,7 @@ int netif_change_tx_queue_len(struct net_device *dev, unsigned long new_len)
+ 	unsigned int orig_len = dev->tx_queue_len;
+ 	int res;
  
- 	/* irqentry_exit expects to be called with interrupts disabled */
--	local_irq_disable();
-+	hard_irq_disable();
- }
+-	if (new_len != (unsigned int)new_len)
++	if (new_len > S16_MAX)
+ 		return -ERANGE;
  
- static inline void arch_interrupt_async_enter_prepare(struct pt_regs *regs)
+ 	if (new_len != orig_len) {
 -- 
 2.53.0
 
