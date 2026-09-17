@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CF554AD4D4;
-	Thu, 17 Sep 2026 18:43:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 320B94078D3;
+	Thu, 17 Sep 2026 18:43:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789670609; cv=none; b=YpVkvMoBtTK/W6uozH6upzhFnDw31QRS0ZlRGxjjuHxhfEoqw5Yr8IkwrMTunayv22OIQ9mzgLWaDaRMveXXqyafUhv+ASUFbAl7XEeL5t3QjsOswAeICjUXlsgF6z+rpsijpEE/Jq2kX6X9TWWbi4edILjC7c7ua2+nURuhQSo=
+	t=1789670612; cv=none; b=sKGRQ7jSHcN0SECb9Era+kPJNegPUVchyldl/ANf2riR+SNkTH4pslcJ+DVnSrxX2LZZ1w3EHXCxs/L9dv7drvV+b57uNuTvXEvVmwJwdHVdyKOOqlXXwtTo/ctl2cXPMlM/8or/+rDAClLR/EkMmuXjXCGLsVBhe9/HO1e3qDI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789670609; c=relaxed/simple;
-	bh=vt6wx9Yvhzh4PMCsRGdpeV/vmH28zZZffVsPVNieCPc=;
+	s=arc-20240116; t=1789670612; c=relaxed/simple;
+	bh=fkST7QRjvMEoK0QVic1KR8dxc18HIlsguVIwoevMgfw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aJRKkXuuy4k1INhHdcV+J0P7hW7LrREIpn2w7Aiwg0qd2vP4dv8/+NbxmcBQ6kuBSB2lkYZjuYCczSPsjuIyCsk81hXARlm2/ybkOqgzQUjZsTrqxdxb+iYK1JBwLte1JsQJcjx9eVEU6hXr2gRKoAwpVp30491bD8lRxdsE2H0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BWdpSrb5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=r+7zSkSlDkQuDW39kg4NMGRp7Wa/P4NukKEBK34DN831CEfPxnJO1oiaF5f6DxXJgy8dln1BjA3TGtWREHbipC9aHjrTrBp6AKepj2uA7zOKkzhxjaeP0AueT7O9meinrUdrcyEAx1VEwYWdjDuwXjhpY5shUb0/DXvXfFJTXCM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d1HValhH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BWdpSrb5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDFBF1F00893;
-	Thu, 17 Sep 2026 18:43:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d1HValhH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5490B1F00899;
+	Thu, 17 Sep 2026 18:43:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789670607;
-	bh=u7wlYJunWM9ItbeIdMy5wCetTmHI5F8MzH8Fg3re+e0=;
+	s=korg; t=1789670611;
+	bh=TqwpWIADVyRjjDIVv5j7bhg0zda8eGhnUsgSudRIxSc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BWdpSrb5QHc+2hA64P5DfV89NAbvFhogNAbBEpouiGGxQ9mQG/DY4f/X2xXUFr3Cm
-	 O56OewWsDC5IPaBiv4w1FXQx90YBlsmvdmY9Ah+33rt4kRKR21a/pguGHbnIykeiYP
-	 bPk0VmssEkCsMtvVG0EbFC+/oSQL91E8IbxskU6s=
+	b=d1HValhHMU6G6YQiE79RIzINVgDVSt+/lrZrEI3ybOtNjjDONTjUUiy0VgMAqCsh7
+	 jWFZeHBCXn8jsmPNhcIf+9qmfwSp5mpEBY9RQeox2uEcesTDxkmhKaCcTIbjdApwhT
+	 sIEWaKwMbt0enyXhtHpjHPBpUtQsh/xXZYGkup1E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Zhang <yuz08559@gmail.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	Vega <vega@nebusec.ai>,
+	Victor Nogueira <victor@mojatatu.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0715/1102] vhost-vdpa: protect config_ctx from being freed under the config callback
-Date: Thu, 17 Sep 2026 16:10:58 +0100
-Message-ID: <20260917151558.287380408@linuxfoundation.org>
+Subject: [PATCH 6.12 0680/1102] net: cap tx_queue_len at S16_MAX to prevent oversized ring allocations
+Date: Thu, 17 Sep 2026 16:10:23 +0100
+Message-ID: <20260917151557.314131267@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -51,162 +53,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yu Zhang <yuz08559@gmail.com>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-[ Upstream commit 62be4e3e5f5f947fbf765b914cebdc478f715d12 ]
+[ Upstream commit 66ab4c59b74db7ab53a1c9083feaaede393a96a0 ]
 
-vhost_vdpa_config_cb() loads v->config_ctx and signals it without taking
-a reference and without holding any lock:
+Several subsystems allocate ring buffers sized by dev->tx_queue_len
+with no upper bound. An unprivileged user (via unshare -Urn) can set a
+huge tx_queue_len and exhaust global memory with ring allocations:
 
-	struct eventfd_ctx *config_ctx = v->config_ctx;
+- pfifo_fast: pfifo_fast_init() and pfifo_fast_change_tx_queue_len()
+  allocate 3 skb_array rings of tx_queue_len entries each.
+- tun: tun_queue_resize() and the queue-attach path resize ptr_rings
+  to tx_queue_len on the NETDEV_CHANGE_TX_QUEUE_LEN notifier.
+- tap (macvtap/ipvtap): tap_queue_resize() and tap_init() resize/init
+  ptr_rings to tx_queue_len on the same notifier.
 
-	if (config_ctx)
-		eventfd_signal(config_ctx);
+netif_change_tx_queue_len() is the single entry point for IFLA_TXQLEN,
+sysfs, and the SIOCSIFTXQLEN ioctl. Cap new_len at S16_MAX (32767)
+there so the oversized value is rejected at set time. This takes
+effect whether the device is up or down, before dev->tx_queue_len is
+written, before any notifier fires, and before any ring is allocated.
+The "> S16_MAX" check also subsumes the previous unsigned-long
+truncation test, and a negative ifr_qlen from the ioctl lands far
+above the cap after conversion, so both old failure modes are covered
+by the one comparison.
 
-VHOST_VDPA_SET_CONFIG_CALL replaces that field and drops what is normally
-the last reference to the old context:
+tx_queue_len is ambigious: both a per-ring sizing multiplier and a
+default queue-length/limit knob for consumers that allocate
+nothing at set time (pfifo/bfifo/gred/plug/sfb limits, htb
+direct_qlen, qfq max_classes, teql). 32767 is chosen as the largest
+value NLA_POLICY_FULL_RANGE can express for the u32 IFLA_TXQLEN
+policy in patch 2/3 while staying a legitimate queue length on
+high-BDP paths; the ring-memory trade-off of a shared knob is
+disclosed below.
 
-	swap(ctx, v->config_ctx);
+Conditions to recreate the bug:
+- CONFIG_NET_SCHED=y, CONFIG_VETH=y, CONFIG_USER_NS=y, CONFIG_NET_NS=y.
+- Unprivileged user in a fresh user+net namespace (unshare -Urn).
+- pfifo_fast: create veth pairs, set tx_queue_len to 500000, attach
+  mq+pfifo_fast. ~28 iterations OOMs a 2GB guest.
+- tun: create 50 tun devices with IFF_MULTI_QUEUE, set tx_queue_len to
+  500000, open 8 queues each. ~1.6GB of ptr_ring allocations OOMs a
+  512MB guest.
+- tap: same as tun with IFF_TAP. ~960MB OOMs a 512MB guest.
+- On the fixed kernel the oversized tx_queue_len is rejected with
+  -ERANGE at set time (all four paths: RTM_SETLINK, RTM_NEWLINK
+  create, sysfs, ioctl - the latter two via this check, the former
+  two via this check and the 2/3 parse policy respectively).
 
-	if (ctx)
-		eventfd_ctx_put(ctx);
-
-eventfd_ctx_put() drops the last kref and frees the context immediately,
-with no RCU grace period, so a callback that has already loaded the
-pointer goes on to dereference freed memory.  The two sides share no
-lock: the ioctl runs under vhost_dev.mutex, while the parent invokes the
-callback from its own interrupt or workqueue context.
-
-This is not the reopen refcount underflow fixed by commit f6bbf0010ba0
-("vhost-vdpa: fix use-after-free of v->config_ctx"), which was about
-vhost_vdpa_config_put() leaving a stale pointer behind.  Here the pointer
-is maintained correctly and it is the read side that is unprotected.
-
-With VDUSE as the parent this is reachable from userspace with access to
-/dev/vduse (root by default).  VDUSE_DEV_INJECT_CONFIG_IRQ queues
-dev->inject, and vduse_dev_irq_inject() runs the callback under VDUSE's
-own dev->irq_lock, which vhost does not hold.  vduse_dev_reset() does
-flush_work(&dev->inject), but VHOST_VDPA_SET_CONFIG_CALL never goes
-through reset, so an inject already in flight is not waited for.  A
-process that injects config interrupts on the VDUSE fd while another
-thread swaps the call fd on the vhost-vdpa fd hits it in seconds:
-
-  BUG: KASAN: slab-use-after-free in native_queued_spin_lock_slowpath
-  Read of size 4 at addr ffff888107d21808 by task kworker/u17:1/2993
-  Workqueue: vduse-irq vduse_dev_irq_inject
-  Call Trace:
-   native_queued_spin_lock_slowpath+0x97/0x5b0
-   _raw_spin_lock_irqsave+0xd4/0xe0
-   eventfd_signal_mask+0x69/0x120
-   vhost_vdpa_config_cb+0x34/0x50
-   vduse_dev_irq_inject+0x46/0x60
-   process_one_work+0x468/0x950
-
-  Allocated by task 2992:
-   do_eventfd+0x50/0x200
-   __x64_sys_eventfd2+0x2e/0x40
-
-  Freed by task 2992:
-   eventfd_ctx_put+0xb9/0xc0
-   vhost_vdpa_unlocked_ioctl+0x116c/0x2190
-
-Add a spinlock covering every access to config_ctx, so the callback
-either signals a context that is still alive or observes NULL, and the
-put happens only once no callback can reach the old value.
-
-Clearing the parent's callback before the put would not be enough: of the
-in-tree set_config_cb() implementations only VDUSE takes a lock, the rest
-store the pointer unlocked, so that would not order against an in-flight
-invocation.
-
-Fixes: 776f395004d8 ("vhost_vdpa: Support config interrupt in vdpa")
-Signed-off-by: Yu Zhang <yuz08559@gmail.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260807100025.19750-3-yuz08559@gmail.com>
+Fixes: 6a643ddb5624 ("net: introduce helper dev_change_tx_queue_len()")
+Reported-by: Vega <vega@nebusec.ai>
+Closes: https://lore.kernel.org/netdev/20260828121902.66837-1-jhs@mojatatu.com/
+Tested-by: Victor Nogueira <victor@mojatatu.com>
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://patch.msgid.link/QDISC-2899.v2.20260901233641@mojatatu.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vhost/vdpa.c | 32 +++++++++++++++++++++++++-------
- 1 file changed, 25 insertions(+), 7 deletions(-)
+ net/core/dev.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/vhost/vdpa.c b/drivers/vhost/vdpa.c
-index d5df9d7286119..789bd8da55052 100644
---- a/drivers/vhost/vdpa.c
-+++ b/drivers/vhost/vdpa.c
-@@ -57,6 +57,8 @@ struct vhost_vdpa {
- 	int virtio_id;
- 	int minor;
- 	struct eventfd_ctx *config_ctx;
-+	/* Serialises vhost_vdpa_config_cb() against config_ctx being replaced. */
-+	spinlock_t config_lock;
- 	int in_batch;
- 	struct vdpa_iova_range range;
- 	u32 batch_asid;
-@@ -188,10 +190,12 @@ static irqreturn_t vhost_vdpa_virtqueue_cb(void *private)
- static irqreturn_t vhost_vdpa_config_cb(void *private)
- {
- 	struct vhost_vdpa *v = private;
--	struct eventfd_ctx *config_ctx = v->config_ctx;
-+	unsigned long flags;
+diff --git a/net/core/dev.c b/net/core/dev.c
+index de1922f93ef25..d4f0db3208483 100644
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -9144,7 +9144,7 @@ int dev_change_tx_queue_len(struct net_device *dev, unsigned long new_len)
+ 	unsigned int orig_len = dev->tx_queue_len;
+ 	int res;
  
--	if (config_ctx)
--		eventfd_signal(config_ctx);
-+	spin_lock_irqsave(&v->config_lock, flags);
-+	if (v->config_ctx)
-+		eventfd_signal(v->config_ctx);
-+	spin_unlock_irqrestore(&v->config_lock, flags);
+-	if (new_len != (unsigned int)new_len)
++	if (new_len > S16_MAX)
+ 		return -ERANGE;
  
- 	return IRQ_HANDLED;
- }
-@@ -521,15 +525,22 @@ static long vhost_vdpa_get_vring_num(struct vhost_vdpa *v, u16 __user *argp)
- 
- static void vhost_vdpa_config_put(struct vhost_vdpa *v)
- {
--	if (v->config_ctx) {
--		eventfd_ctx_put(v->config_ctx);
--		v->config_ctx = NULL;
--	}
-+	struct eventfd_ctx *ctx;
-+	unsigned long flags;
-+
-+	spin_lock_irqsave(&v->config_lock, flags);
-+	ctx = v->config_ctx;
-+	v->config_ctx = NULL;
-+	spin_unlock_irqrestore(&v->config_lock, flags);
-+
-+	if (ctx)
-+		eventfd_ctx_put(ctx);
- }
- 
- static long vhost_vdpa_set_config_call(struct vhost_vdpa *v, u32 __user *argp)
- {
- 	struct vdpa_callback cb;
-+	unsigned long flags;
- 	int fd;
- 	struct eventfd_ctx *ctx;
- 
-@@ -542,8 +553,14 @@ static long vhost_vdpa_set_config_call(struct vhost_vdpa *v, u32 __user *argp)
- 	if (IS_ERR(ctx))
- 		return PTR_ERR(ctx);
- 
-+	spin_lock_irqsave(&v->config_lock, flags);
- 	swap(ctx, v->config_ctx);
-+	spin_unlock_irqrestore(&v->config_lock, flags);
- 
-+	/*
-+	 * The callback can no longer reach the old context, so this is the
-+	 * last reference to it.
-+	 */
- 	if (ctx)
- 		eventfd_ctx_put(ctx);
- 
-@@ -1630,6 +1647,7 @@ static int vhost_vdpa_probe(struct vdpa_device *vdpa)
- 	}
- 
- 	atomic_set(&v->opened, 0);
-+	spin_lock_init(&v->config_lock);
- 	v->minor = minor;
- 	v->vdpa = vdpa;
- 	v->nvqs = vdpa->nvqs;
+ 	if (new_len != orig_len) {
 -- 
 2.53.0
 
