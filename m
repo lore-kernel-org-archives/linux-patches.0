@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 901A8318EC7;
-	Thu, 17 Sep 2026 15:46:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93E5E358D27;
+	Thu, 17 Sep 2026 15:46:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659974; cv=none; b=AozPp919kbk3vsISpog2izxwSkRuVghZmRHk/Gkz+yADFOA2cBrbk44cmnn3XbucAkJGQy66yW6RiNeqIJeDJUs6tvo+rGeSIQbjIJ3Sud9FtN1G/anWJROa0Vc83S7OjVk3W5e1BYvwxepCqVzj3ilf4pD7VlBYuMlRdut7G48=
+	t=1789659977; cv=none; b=ofeq+JtuxvVu/3eIs9Ai5qHv+5POooRnGEubqPX+VZQeYqu+rpBqXCk3pJsKA9jInk8MejD2LjcUuxxH0yJP0ANBgLKkY+GBs2e7iPYDp8ivVSqOH2JPAuGUiRcYZGarbMB/JDE3BsvwiPE37NsIuYCDNnEGbq3L+QTfDTHkFbw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659974; c=relaxed/simple;
-	bh=86Aae8/fkHVam5uFXcrkDrpT2R90PGAe/p+hTocbwGU=;
+	s=arc-20240116; t=1789659977; c=relaxed/simple;
+	bh=HhKDSDN1hciGQulWiDED/J/Ez5ke7vnu85dw61RgKGE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fNwhtY/7VbW6xG7Ulvmi7MWEUmZoPHMN1Rhd7AoQZYKB1DQN+dtJCKeoufC3A7j7Ocusm3wN7sBX7UHTdjPfByGJBBCwQxEM8glqeaCYg7XGDI6f0CxU9gXAYVW8996d2sc0T92aes3UPEzF0WMmTfvEQvWa3sV0l6prYoe6NNQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xPLPKhz8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=r5M7Fb3ficXwWETl0fqDXJ2ZXIFEk9w7wh4f15sZney2aoQWfm4JIWUWMXbjcwG8SHnUAb8fbnjxJ5HPeZ5RiQV//CFZE9YUzx5peB1Cfrb9VdLe1NHUyjevD1D/KuPRPqENZ+GYvgdfPNqU+/Y9fP6Oy4mq+qiqAOPkhG5bhls=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FN+cF0lq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xPLPKhz8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F30941F000FF;
-	Thu, 17 Sep 2026 15:46:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FN+cF0lq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAD351F00898;
+	Thu, 17 Sep 2026 15:46:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659967;
-	bh=4IrV0kXJFkD6buK0YYmX7iEfmqfiZ+w29Msh7idbhKQ=;
+	s=korg; t=1789659970;
+	bh=FEDUqaHh+TqeLSfH7tciKxdc7SVxygbgyRbhgXf5Xag=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xPLPKhz89o8/ZbM8ekbOpUz7Rl9nLLK/8M3zeugReuV2buaRsfxXT6ZCyBP9d539E
-	 SF4W/Meds1t0sOxll4M6kE78x+SejxgPnoejwDpLfxMV57f2yxX/p6OlstP6djy+6d
-	 ImaejlFEmXwS1ttC8+tw6iRbVWsP4WJxoJek544g=
+	b=FN+cF0lqZn0by8r224x7aXwOSaZWxH+8ft+Dkd+QMWdz7D5540o2CSxGKL6tZ2A+4
+	 oKEYGZQsdwKCMy4u/nfdKxrKBZasmFVyxrTe/oH/xO2TjvRm+mfyXZQHSl/DnuBll/
+	 Bd7zf9me0i+cUMpMG3zIEGL8qtIRp0twD0mEwLcE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Greg Marsden <greg.marsden@oracle.com>,
-	Allison Henderson <achender@kernel.org>,
+	Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 434/733] net/rds: fix tcp stream corruption with large pages
-Date: Thu, 17 Sep 2026 16:12:22 +0100
-Message-ID: <20260917151402.664039567@linuxfoundation.org>
+Subject: [PATCH 7.2 435/733] net: stmmac: fix TX descriptor availability check for TSO traffic
+Date: Thu, 17 Sep 2026 16:12:23 +0100
+Message-ID: <20260917151402.688698640@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -52,49 +51,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Marsden <greg.marsden@oracle.com>
+From: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
 
-[ Upstream commit 2ac09b5353fe6858411fdc8c6efa60d832e20f13 ]
+[ Upstream commit 5e38d732ec67a5b1f9a56e6c73add480c4b6030a ]
 
-rds_message_map_pages() assigns PAGE_SIZE bytes to every
-scatterlist entry, even when total_len ends in a partial page. The RDS
-congestion map is defined as 8192 bytes, so on systems with PAGE_SIZE
-greater than 8192 the scatterlist maps bytes beyond the end of the
-congestion map.  RDS-TCP transmits the SG contents according to those
-lengths, so the extra bytes become part of the TCP RDS stream and are
-interpreted as subsequent RDS message headers, corrupting the stream.
+stmmac_tso_xmit() estimates the number of free TX descriptors required by
+a TSO skb as:
 
-Limit the final scatterlist mapping to the number of bytes remaining.
-This has no effect on systems with a 4K page size and allows RDS-TCP to
-be used on systems with 16K and larger page sizes.
+	(skb->len - proto_hdr_len) / TSO_MAX_BUFF_SIZE + 1
 
-The RDS selftest, which previously hung on 16K pages, now passes.
+which assumes the payload is split into TSO_MAX_BUFF_SIZE chunks. This
+underestimates the descriptors actually consumed by stmmac_tso_allocator(),
+since each fragment is mapped individually and so it needs at least one
+descriptor regardless of its size. Moreover, one descriptor is used for
+the L2/L3/L4 headers and, when the MSS changes, one more is consumed for
+the MSS context descriptor.
+For a highly fragmented TSO skb the check can therefore pass even when the
+ring has too few free slots. stmmac_tso_allocator() then writes past the
+available descriptors, overwriting descriptors still owned by the DMA
+engine, corrupting the TX ring.
+Add stmmac_tso_get_num_desc() to compute the exact number of descriptors
+needed for the header, the linear payload and each fragment, plus the MSS
+context descriptor when required, and use it in the availability check.
 
-Fixes: 7875e18e0996 ("RDS: Message parsing")
-Signed-off-by: Greg Marsden <greg.marsden@oracle.com>
-Reviewed-by: Allison Henderson <achender@kernel.org>
-Link: https://patch.msgid.link/apxJjxvStibPI0AS@oracle.com
+Fixes: f748be531d70 ("stmmac: support new GMAC4")
+Signed-off-by: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260907-stmmac-fix-tso-nfrags-check-v1-1-328459906cdb@oss.qualcomm.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rds/message.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ .../net/ethernet/stmicro/stmmac/stmmac_main.c | 31 +++++++++++++++----
+ 1 file changed, 25 insertions(+), 6 deletions(-)
 
-diff --git a/net/rds/message.c b/net/rds/message.c
-index 7feb0eb6537db..9cbf045fe0031 100644
---- a/net/rds/message.c
-+++ b/net/rds/message.c
-@@ -405,7 +405,9 @@ struct rds_message *rds_message_map_pages(unsigned long *page_addrs, unsigned in
- 	for (i = 0; i < rm->data.op_nents; ++i) {
- 		sg_set_page(&rm->data.op_sg[i],
- 				virt_to_page((void *)page_addrs[i]),
--				PAGE_SIZE, 0);
-+				i == rm->data.op_nents - 1
-+					? total_len - (i * PAGE_SIZE)
-+					: PAGE_SIZE, 0);
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+index aa05160c22e35..f801caf65fff1 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -4454,6 +4454,26 @@ static bool stmmac_tso_valid_packet(struct sk_buff *skb)
+ 	       header_len + gso_size < 16383;
+ }
+ 
++static int stmmac_tso_get_num_desc(struct stmmac_tx_queue *tx_q,
++				   struct sk_buff *skb, u32 pay_len)
++{
++	int i, ndesc = 1;
++
++	/* head payload */
++	ndesc += DIV_ROUND_UP(pay_len, TSO_MAX_BUFF_SIZE);
++	/* frag payload */
++	for (i = 0; i < skb_shinfo(skb)->nr_frags; i++) {
++		const skb_frag_t *frag = &skb_shinfo(skb)->frags[i];
++
++		ndesc += DIV_ROUND_UP(skb_frag_size(frag),
++				      TSO_MAX_BUFF_SIZE);
++	}
++	/* MSS update requires a new descriptor */
++	ndesc += !!(skb_shinfo(skb)->gso_size != tx_q->mss);
++
++	return ndesc;
++}
++
+ /**
+  *  stmmac_tso_xmit - Tx entry point of the driver for oversized frames (TSO)
+  *  @skb : the socket buffer
+@@ -4497,10 +4517,10 @@ static netdev_tx_t stmmac_tso_xmit(struct sk_buff *skb, struct net_device *dev)
+ 	struct stmmac_priv *priv = netdev_priv(dev);
+ 	unsigned int first_entry, entry, tx_packets;
+ 	struct stmmac_txq_stats *txq_stats;
++	int i, first_tx, nfrags, ndesc;
+ 	struct stmmac_tx_queue *tx_q;
+ 	bool set_ic, is_last_segment;
+ 	u32 pay_len, mss, queue;
+-	int i, first_tx, nfrags;
+ 	u8 proto_hdr_len, hdr;
+ 	dma_addr_t des;
+ 
+@@ -4513,14 +4533,15 @@ static netdev_tx_t stmmac_tso_xmit(struct sk_buff *skb, struct net_device *dev)
+ 
+ 	/* Compute header lengths */
+ 	proto_hdr_len = stmmac_tso_header_size(skb);
++	pay_len = skb_headlen(skb) - proto_hdr_len; /* no frags */
++
+ 	if (skb_shinfo(skb)->gso_type & SKB_GSO_UDP_L4)
+ 		hdr = sizeof(struct udphdr);
+ 	else
+ 		hdr = tcp_hdrlen(skb);
+ 
+-	/* Desc availability based on threshold should be enough safe */
+-	if (unlikely(stmmac_tx_avail(priv, queue) <
+-		(((skb->len - proto_hdr_len) / TSO_MAX_BUFF_SIZE + 1)))) {
++	ndesc = stmmac_tso_get_num_desc(tx_q, skb, pay_len);
++	if (unlikely(stmmac_tx_avail(priv, queue) < ndesc)) {
+ 		if (!netif_tx_queue_stopped(netdev_get_tx_queue(dev, queue))) {
+ 			netif_tx_stop_queue(netdev_get_tx_queue(priv->dev,
+ 								queue));
+@@ -4532,8 +4553,6 @@ static netdev_tx_t stmmac_tso_xmit(struct sk_buff *skb, struct net_device *dev)
+ 		return NETDEV_TX_BUSY;
  	}
  
- 	return rm;
+-	pay_len = skb_headlen(skb) - proto_hdr_len; /* no frags */
+-
+ 	mss = skb_shinfo(skb)->gso_size;
+ 
+ 	/* set new MSS value if needed */
 -- 
 2.53.0
 
