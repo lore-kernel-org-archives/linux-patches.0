@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2E714F391F;
-	Thu, 17 Sep 2026 15:50:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81CA44E324C;
+	Thu, 17 Sep 2026 15:50:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789660220; cv=none; b=jQL0Fk91eugu5/JRgxH9VT3VGcg4L5AoIVYY9dRA2Et668THEqQnSJffrk9A55UrjO/YvyX6/W9ob0mSbHv+42kK0Qnpip+eRPyc9FrLKNFufUModSMHcsqNeIjk0rniMOU4kp6zXrBSdGf5hhOqfMhplM7EP/X8ofUA42QUVhg=
+	t=1789660222; cv=none; b=rUOSGh3YsfRBszsY0F5j756GghAw6jsvi/FqAorXMC9gAXbEyThubHRIihQ/C2yn+qrEC5QMgeNgNlti8bGfki/7VIwwJUg8Zhxpa9siale6+f9uSUp/E2HSLNJELR6+FRorRyd+sKZ5xH6gxwJayOf80TqPxa2awzG/UE+aGN0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789660220; c=relaxed/simple;
-	bh=JNbbyF+iEy3QXbaNOliOYW/fTJs0aiLCKY8j6rc+2Go=;
+	s=arc-20240116; t=1789660222; c=relaxed/simple;
+	bh=axjZsEZM0oef55Ha5FbD8LAtj0FH3TjdZKa0v7n16GU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ozAQhhXKrAwWDAY2R5jP1elxsR0NrM8PkKPBpcmZjzfisCGt6dxIuVsQbUn5n6z8Ghqpmp9kzB27dYxX+m+2vBCTY06rM3mMNNSCk2TFpPFpgE4dRA2tbArWwop6jeFbwKfSrlRLPLBHo9iWReAfqCQSYtBHKYKiKeyZi+Fh63E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dp/LROIu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gUJkibEbEcyof2sxaLxk851iqkjswfrlZ7FYainlV6onS1nh3HiXi89K0UF4Si4bg2Ie8q5L5xWIzGCMJhq5etIeHeS+sZLMfwcUrcoZtyz0hg4fwhFgvj6y2UdaXfwuIizQECD13u8d240pMY7SNYJNls+EVAcYvH1l5K9yREc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XR+Q00rX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dp/LROIu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93EDE1F000FF;
-	Thu, 17 Sep 2026 15:50:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XR+Q00rX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EA231F00898;
+	Thu, 17 Sep 2026 15:50:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789660215;
-	bh=iJ0XADePvmjS60aE0PTWPYYiJqgNAjYRv6vxdNquL4U=;
+	s=korg; t=1789660218;
+	bh=o7VuY7NMKBTbb+aPNLGZA1utDhJ4o9hQOB4zENc5xqk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dp/LROIuS7Gq/owyT455ShYTSZUGz1fy2DQKr2hhGeLTBGVBC1iriyT3ZmSeMUGDB
-	 F2mIC/zRvnLyuHQCLLbJysC466j39Js/cPUMoSfnJTQgvZhNk+HVPw+CN9Yx1P2rFv
-	 nzo4H2O5mA/IThlPW8XTnsGN3oCjW3sUAW3j6R6g=
+	b=XR+Q00rXAbGJu9AJbWx1ECGpFBWKdxSQ1vOdVP3aQRb9fJBN6CrZOlHMR7skn6dHY
+	 9zOdms5VaqiU2uQyZM1xfVGwesSqM8sjHWFhAO8moFmlyoVwrQmnmgbYEDfZeaa7rx
+	 PGCD9ebhDZ/PP24IEM9DehnRF2YJACgCNp+QN6Y0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rong Zhang <i@rong.moe>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 7.2 517/733] Bluetooth: btrtl: Dont leak return code when parsing firmware format v2
-Date: Thu, 17 Sep 2026 16:13:45 +0100
-Message-ID: <20260917151405.032928797@linuxfoundation.org>
+	Sashiko <sashiko-bot@kernel.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Sang-Heon Jeon <ekffu200098@gmail.com>
+Subject: [PATCH 7.2 518/733] bootconfig: Fix integer overflow in initrd size check
+Date: Thu, 17 Sep 2026 16:13:46 +0100
+Message-ID: <20260917151405.060673667@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -50,47 +51,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rong Zhang <i@rong.moe>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-commit 83e3e515fd261600ed8491fb0a8bcdfb115c904e upstream.
+commit 7812d6dab0698001e50e8c2f901e17da3eb6f429 upstream.
 
-When key_id from chip is zero, rtlbt_parse_firmware_v2() intentionally
-ignores all security headers. However, the implementation simply breaks
-from a switch statement and leaks uninitialized return code `rc' (if the
-first section is a security one) or the previous section's `rc'.
+Sashiko reported that in get_boot_config_from_initrd(), a crafted initrd
+with a huge bootconfig size (such as 0xFFFFFFFF) can cause the pointer
+arithmetic:
 
-Fix it by really skipping a loop with `continue'. For consistency and
-readability, also do the same for the default case.
+    data = ((void *)hdr) - size;
 
-Fixes: 9a24ce5e29b1 ("Bluetooth: btrtl: Firmware format v2 support")
+to wrap around on 32-bit systems (or when pointer subtraction overflows).
+Because data wraps around, the subsequent bounds check:
+
+    if ((unsigned long)data < initrd_start)
+
+evaluates to false, bypassing the check. The kernel then calls
+xbc_calc_checksum(data, size), which attempts to read 4GB of memory,
+hitting unmapped pages and triggering a fatal kernel page fault during
+early boot. Furthermore, on 64-bit systems with an initrd > 4.29 GB, an
+unbounded 32-bit size can similarly bypass the initrd_start check.
+
+Fix this by:
+1. Ensuring the initrd is at least large enough to contain the bootconfig
+   footer and verifying hdr is within the initrd bounds.
+2. Checking that size does not exceed XBC_DATA_MAX and does not exceed
+   the available space between initrd_start and hdr before performing
+   pointer subtraction.
+
+Link: https://lore.kernel.org/all/178905333479.213925.1358412668943562406.stgit@devnote2/
+
+Fixes: de462e5f1071 ("bootconfig: Fix to remove bootconfig data from initrd while boot")
 Cc: stable@vger.kernel.org
-Signed-off-by: Rong Zhang <i@rong.moe>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://lore.kernel.org/all/20260910010137.EE0431F000FF@smtp.kernel.org/
+Assisted-by: Antigravity:gemini-3.8-flash
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Reviewed-by: Sang-Heon Jeon <ekffu200098@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bluetooth/btrtl.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ init/main.c |   25 +++++++++++++++----------
+ 1 file changed, 15 insertions(+), 10 deletions(-)
 
---- a/drivers/bluetooth/btrtl.c
-+++ b/drivers/bluetooth/btrtl.c
-@@ -591,7 +591,7 @@ static int rtlbt_parse_firmware_v2(struc
- 			 * headers.
- 			 */
- 			if (!key_id)
--				break;
-+				continue;
- 			rc = btrtl_parse_section(hdev, btrtl_dev, opcode,
- 						 ptr, section_len);
- 			break;
-@@ -600,8 +600,7 @@ static int rtlbt_parse_firmware_v2(struc
- 						 ptr, section_len);
- 			break;
- 		default:
--			rc = 0;
--			break;
-+			continue;
- 		}
- 		if (rc < 0) {
- 			rtl_dev_err(hdev, "RTL: Parse section (%u) err %d",
+--- a/init/main.c
++++ b/init/main.c
+@@ -276,7 +276,8 @@ static void * __init get_boot_config_fro
+ 	u8 *hdr;
+ 	int i;
+ 
+-	if (!initrd_end)
++	if (!initrd_end || initrd_end < initrd_start ||
++	    initrd_end - initrd_start < BOOTCONFIG_MAGIC_LEN + 8)
+ 		return NULL;
+ 
+ 	data = (char *)initrd_end - BOOTCONFIG_MAGIC_LEN;
+@@ -293,16 +294,26 @@ static void * __init get_boot_config_fro
+ 
+ found:
+ 	hdr = (u8 *)(data - 8);
++	if ((unsigned long)hdr < initrd_start)
++		return NULL;
++
+ 	size = get_unaligned_le32(hdr);
+ 	csum = get_unaligned_le32(hdr + 4);
+ 
+-	data = ((void *)hdr) - size;
+-	if ((unsigned long)data < initrd_start) {
+-		pr_err("bootconfig size %d is greater than initrd size %ld\n",
++	if (size > XBC_DATA_MAX) {
++		pr_err("bootconfig size %u is greater than max size %d\n",
++			size, XBC_DATA_MAX);
++		return NULL;
++	}
++
++	if (size > ((unsigned long)hdr - initrd_start)) {
++		pr_err("bootconfig size %u is greater than initrd size %lu\n",
+ 			size, initrd_end - initrd_start);
+ 		return NULL;
+ 	}
+ 
++	data = ((void *)hdr) - size;
++
+ 	if (xbc_calc_checksum(data, size) != csum) {
+ 		pr_err("bootconfig checksum failed\n");
+ 		return NULL;
+@@ -405,12 +416,6 @@ static void __init setup_boot_config(voi
+ 		return;
+ 	}
+ 
+-	if (size >= XBC_DATA_MAX) {
+-		pr_err("bootconfig size %ld greater than max size %d\n",
+-			(long)size, XBC_DATA_MAX);
+-		return;
+-	}
+-
+ 	ret = xbc_init(data, size, &msg, &pos);
+ 	if (ret < 0) {
+ 		if (pos < 0)
 
 
