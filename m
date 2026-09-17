@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34E323CA48E;
-	Thu, 17 Sep 2026 18:04:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5BFF3D9DA8;
+	Thu, 17 Sep 2026 18:04:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789668254; cv=none; b=jdSzbqAzv2cqZXIaWZTVoMfbwlO55bkzP3oo6RAsTRcV9i/Ix5VsJ3YhCwLmRuRSNyFtycm4wFITd1k5Nj8Ch8CrTB+T4l5jTt1hTrmgE7Sc4wh4MpVBd3J8Bemtz68FNz/XNOFW0Sa/ot1WFvaRPp5kAr4poeGCMRddg3288jU=
+	t=1789668258; cv=none; b=TmZmXVEtenZ9lIA26P2W1xx4Kig6qKEvpNi8/tZqPMnSioT2BD0bFR3CNAv9dxn3ix57vx8iKg5JwEioP6lQ70cRXM+z83uI8aLjY6BFEsvptDb0f20cr6C8hg9Yi8R9Cv7XdeQv7UwiKTpy7URlU+06EznoJmIiG5B5kZScmEw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789668254; c=relaxed/simple;
-	bh=i2LKjE4cFx5t0Sa1bbmH6DU35RfCxNzncjNXDOB378k=;
+	s=arc-20240116; t=1789668258; c=relaxed/simple;
+	bh=4Pg4Y4ws5JlTAsDZ+XrYRORPvxRPhBf7Lv+Ybcta8eU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JrMzFMWH6ULO/pkMK6A5S0wwH688gmtNxr64XgwyMzzAs5/14aTxfHua33KWkxTn77w+1czPsYVnflzcmbmBsTzK1G8rZFAImnZXv6Ogh5EtKRlkgjYwW8QfS0lJQY5PACBivppQ46XwQFdr9+eS55ED0VqkU1eZR+xkeemye3I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H1LnKegD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BwMKYoVDV6ZeDGeIibonZK5/uAIPnFi1hhj/afWPb3p1mEDRrxneBFCxF40Im8Z8J6qpsJUeMkCww2HXjiCRaVOYBWkHRyXXkkSqdstd1D2eTvMkQKTEcBytxJmUScMAPmFXne7uOh8o5mXuYDjfe+p8SUlMmnULi2nPSMFIjdg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pZCTXG83; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H1LnKegD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B00B1F00893;
-	Thu, 17 Sep 2026 18:04:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pZCTXG83"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAAA71F000FF;
+	Thu, 17 Sep 2026 18:04:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789668253;
-	bh=t1Y+MfWWO5xUgvCVMbe+lRChFKe16wEMtaSM+T//L28=;
+	s=korg; t=1789668256;
+	bh=3Xxx3o6eYbMHXJghVqueHk9ScTvaiyRteQaYXx44TFE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H1LnKegDTbwNclrWEndO5CPtZiYsATBpRpLCUS+dGmFHoga5/iA/qXoWKb2Wa73HZ
-	 e1IueiIq6eTPgsvPx2ypm7hsHwXAbU+FEJAJQMEpZ7bVTxjZbOIv+nqlv4A2MTqcz5
-	 4V/RqA8sKAZJzFm3Pk+Jnscr78kewMHj9VkZdgRg=
+	b=pZCTXG83GkqlOmRHPugUD6ROTYcQW+xKyICN4FxidlOBPE38VkIw2WKdyY/Pf3TzG
+	 9s8chl0BUV80KUzMQ9bS61bueOHu3Tl5Fh5lTDynQN4fPJKRKTmEIhGpIACKdykn8V
+	 20/Mh800RBQ4PzMq1aUbnrg2X3+HPJJy4vu+404o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Piotr Kubik <piotr@kubik.pl>,
-	Lee Jones <lee@kernel.org>,
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0327/1102] leds: trigger: gpio: Use GPIOD_FLAGS_BIT_NONEXCLUSIVE
-Date: Thu, 17 Sep 2026 16:04:30 +0100
-Message-ID: <20260917151547.841097365@linuxfoundation.org>
+Subject: [PATCH 6.12 0363/1102] net: au1000: move free_irq out of the close-time spinlocked section
+Date: Thu, 17 Sep 2026 16:05:06 +0100
+Message-ID: <20260917151548.762464978@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -51,47 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Piotr Kubik <piotr@kubik.pl>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-[ Upstream commit 26e15f2558f66b6747ef981df8054d0d92d01b60 ]
+[ Upstream commit f48763beab4eea41fc480c9702ec6eebe8d75e4f ]
 
-When a GPIO is shared between the LED trigger driver and another driver,
-the LED trigger driver needs to request the GPIO with
-GPIOD_FLAGS_BIT_NONEXCLUSIVE to allow both drivers to monitor the same
-GPIO pin.
+au1000_close() calls free_irq() while aup->lock is still held with
+spin_lock_irqsave(). free_irq() can sleep because it takes the IRQ
+descriptor request mutex, so it does not belong inside the close-time
+spinlocked section.
 
-Without this flag, if another driver has already claimed the GPIO,
-the LED trigger driver's gpiod_get_optional() call fails silently,
-and the LED trigger doesn't work.
+This was found by our static analysis tool and then confirmed by manual
+review of the in-tree au1000_close() .ndo_stop path. The reviewed path
+keeps aup->lock held across the MAC reset, queue stop and
+free_irq(dev->irq, dev).
 
-This is needed for scenarios like:
-- SFP module presence/status LED triggered by SFP Mod_ABS/Rx_LOS
+A directed runtime validation kept that ndo_stop carrier and the same
+free_irq(dev->irq, dev) operation under the driver lock. Lockdep reported
+"BUG: sleeping function called from invalid context" and "Invalid wait
+context" while free_irq() was taking desc->request_mutex, with
+au1000_close() and free_irq() on the stack.
 
-Both GPIOs are also monitored by the SFP driver for module state
-management, so they need to be shared.
+Drop aup->lock before freeing the IRQ. The protected close-time work still
+stops the device and queue before IRQ teardown, but the sleepable IRQ core
+path now runs outside the spinlocked section.
 
-Signed-off-by: Piotr Kubik <piotr@kubik.pl>
-Link: https://patch.msgid.link/20260408115106.379834-1-piotr@kubik.pl
-Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260619151816.1144289-1-runyu.xiao@seu.edu.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/leds/trigger/ledtrig-gpio.c | 3 ++-
+ drivers/net/ethernet/amd/au1000_eth.c | 3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/leds/trigger/ledtrig-gpio.c b/drivers/leds/trigger/ledtrig-gpio.c
-index 7f6a2352b0acd..3199275fd250b 100644
---- a/drivers/leds/trigger/ledtrig-gpio.c
-+++ b/drivers/leds/trigger/ledtrig-gpio.c
-@@ -86,7 +86,8 @@ static int gpio_trig_activate(struct led_classdev *led)
- 	 * The generic property "trigger-sources" is followed,
- 	 * and we hope that this is a GPIO.
- 	 */
--	gpio_data->gpiod = gpiod_get_optional(dev, "trigger-sources", GPIOD_IN);
-+	gpio_data->gpiod = gpiod_get_optional(dev, "trigger-sources",
-+					      GPIOD_IN | GPIOD_FLAGS_BIT_NONEXCLUSIVE);
- 	if (IS_ERR(gpio_data->gpiod)) {
- 		ret = PTR_ERR(gpio_data->gpiod);
- 		kfree(gpio_data);
+diff --git a/drivers/net/ethernet/amd/au1000_eth.c b/drivers/net/ethernet/amd/au1000_eth.c
+index 85c978149bf66..67c932984d414 100644
+--- a/drivers/net/ethernet/amd/au1000_eth.c
++++ b/drivers/net/ethernet/amd/au1000_eth.c
+@@ -943,9 +943,10 @@ static int au1000_close(struct net_device *dev)
+ 	/* stop the device */
+ 	netif_stop_queue(dev);
+ 
++	spin_unlock_irqrestore(&aup->lock, flags);
++
+ 	/* disable the interrupt */
+ 	free_irq(dev->irq, dev);
+-	spin_unlock_irqrestore(&aup->lock, flags);
+ 
+ 	return 0;
+ }
 -- 
 2.53.0
 
