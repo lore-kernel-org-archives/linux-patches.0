@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 354ED3B0586;
-	Thu, 17 Sep 2026 18:04:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2747F3A63F3;
+	Thu, 17 Sep 2026 18:04:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789668289; cv=none; b=H4dHp3wTPVvgOorasvTeZdvlcH5LGWuI7Bv7Vttfh8dzO/8l3N1C8FOVP1oPaiNCkxzBC7tnkapc2ACsVm5ps2T5tS0ajNdDO33xRhkZcZJXhYVEDZLZau9l6TtLmCxPQptbpwB0MnmD97qc8a8AJ5hogYB2iCPC8m12vWdBiEI=
+	t=1789668292; cv=none; b=uw5rf9HL5cCVkZvr6+RUOqn2lTF4n+4ZTnrGQPmuE1hWxn7iRBVVCr14bNPm2rWUVjBVoCuC8G933bLbUZh9A/f97+FUqrt+L4pNdB4sQjOq4QzWh8ypdt5M6cAlWqiquhycieNat9tTLFNZSbSAMvihPOhdnZ1cJ1JUhwMiXrY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789668289; c=relaxed/simple;
-	bh=fxrhyYY7vwGE4cRUwkoFeQ8j+t46VsVVHdo9xXfiGgA=;
+	s=arc-20240116; t=1789668292; c=relaxed/simple;
+	bh=Mtl7vdQeqVgdlWnAzFlXv46glSh8rfmZ23QneUMZCv8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GHxWNRcoFydTPNr9junQ6ousOmwy4EnkeQagL91KRO9d78OmrvJaKJcd3Fn1MDHwnsLIc01w2dNjM+kK3lnlRXMdfAaxB7ruEJ3W8sIGL9AQwCHie8tU0d69/Vt4gWu0bHL73DRUkpNFmyYyB7aEinS5iNaqmgxhfOAd309VTr4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DuNDIrnS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mexb5RhQkIv+4FK0RAvXeLq7fDaroCoPzKPMyb6j71XkwoAxmzz8N9NV7vY679u+BJLVH4SrNsH/U3mzMzIJzibwW8MPCi1Ae6F8UCGfFzXWc3fzvbJmzci4K8JIVqADzNL8bvyzDLyg4rRlwbRTYEmmM9LgndF5AU/bM+/B0+s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X7A5b5qv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DuNDIrnS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76A5B1F000FF;
-	Thu, 17 Sep 2026 18:04:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X7A5b5qv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C5701F000FF;
+	Thu, 17 Sep 2026 18:04:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789668288;
-	bh=kNSL6t1WSGJ4Pi0mIuH+woeQ7mLsiPUcpX9IGvxvDFY=;
+	s=korg; t=1789668291;
+	bh=kgn7upM93JPJ8PCYIIPhtiUyLak2mmUALfCsgxfpaJA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DuNDIrnS1RZDozgopYcUyFj33KFQtPRAmYeEfco2zCoJDOTktWqw6TUu/UEfuSnfm
-	 +Gy26oMvHGL7cDlY8+sVJy8dJ5TpJzCw7kD9sFP0gXVWdfW1ViopJxUrmRW0PDnrwi
-	 +00I4YqNvGmbB1j/De55ooZIIfZvEmEW8qzxtOsg=
+	b=X7A5b5qvtc7EVvqq9vPw7V72YJyNPuGeZLSBtqK7+Mi8IWk1bt91RPSka+TRgplNc
+	 pjzWmQ3M1txsuQCeiehw98penDSmWOT19bk7PLPHRbc377bh2DDl9+V5iRj+VTy5Vq
+	 PseZ7eh+uzUbthmPIri+zaLWNmnD+adzRSfImCno=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Gustavo=20Kenji=20Mendon=C3=A7a=20Kaneko?= <kaneko.dev@pm.me>,
-	Liviu Dudau <liviu.dudau@arm.com>,
+	Qiang Liu <liuqiang@kylinos.cn>,
+	ChenXiaoSong <chenxiaosong@kylinos.cn>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0376/1102] drm/arm/komeda: fix error handling for clk_prepare_enable() and callers
-Date: Thu, 17 Sep 2026 16:05:19 +0100
-Message-ID: <20260917151549.093345821@linuxfoundation.org>
+Subject: [PATCH 6.12 0377/1102] ksmbd: fix n.data memory leak in ksmbd_vfs_set_dos_attrib_xattr
+Date: Thu, 17 Sep 2026 16:05:20 +0100
+Message-ID: <20260917151549.118344462@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -45,102 +47,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gustavo Kenji Mendonça Kaneko <kaneko.dev@pm.me>
+From: Qiang Liu <liuqiang@kylinos.cn>
 
-[ Upstream commit 6502eb8cfcd6f7bc5f1f8b73ee524112bd93319d ]
+[ Upstream commit 7ac657bb9c5c1b0f7bdf1fa6d3ad532f969be5cf ]
 
-komeda_dev_resume() calls clk_prepare_enable() without checking the
-return value. If the clock fails to enable, the function returns 0
-(success) while IRQs are enabled and IOMMU is connected on potentially
-unclocked hardware, causing undefined behavior on resume.
+Free ndr buffer data when ndr_encode_dos_attr() returns error
+to avoid memory leak.
 
-Propagate the error from clk_prepare_enable() and fix all call sites
-in komeda_drv.c that previously ignored the return value of
-komeda_dev_resume():
-
-- komeda_platform_probe(): if resume fails, jump to err_destroy_mdev
-  (skipping the suspend call, since the clock was never enabled)
-- komeda_pm_resume(): propagate the error and skip
-  drm_mode_config_helper_resume() on failure
-
-This issue was found by code review without access to Komeda hardware.
-
-Signed-off-by: Gustavo Kenji Mendonça Kaneko <kaneko.dev@pm.me>
-Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
-Link: https://patch.msgid.link/20260609130828.1066038-1-kaneko.dev@pm.me
-Signed-off-by: Liviu Dudau <liviu.dudau@arm.com>
+Signed-off-by: Qiang Liu <liuqiang@kylinos.cn>
+Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/arm/display/komeda/komeda_dev.c |  6 +++++-
- drivers/gpu/drm/arm/display/komeda/komeda_drv.c | 14 +++++++++-----
- 2 files changed, 14 insertions(+), 6 deletions(-)
+ fs/smb/server/vfs.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/arm/display/komeda/komeda_dev.c b/drivers/gpu/drm/arm/display/komeda/komeda_dev.c
-index 5ba62e637a616..9aad1d1d28ec0 100644
---- a/drivers/gpu/drm/arm/display/komeda/komeda_dev.c
-+++ b/drivers/gpu/drm/arm/display/komeda/komeda_dev.c
-@@ -313,7 +313,11 @@ void komeda_dev_destroy(struct komeda_dev *mdev)
+diff --git a/fs/smb/server/vfs.c b/fs/smb/server/vfs.c
+index 6a897956ed1cd..5904aa3aa63b5 100644
+--- a/fs/smb/server/vfs.c
++++ b/fs/smb/server/vfs.c
+@@ -1659,14 +1659,15 @@ int ksmbd_vfs_set_dos_attrib_xattr(struct mnt_idmap *idmap,
  
- int komeda_dev_resume(struct komeda_dev *mdev)
- {
--	clk_prepare_enable(mdev->aclk);
-+	int err;
-+
-+	err = clk_prepare_enable(mdev->aclk);
-+	if (err)
-+		return err;
+ 	err = ndr_encode_dos_attr(&n, da);
+ 	if (err)
+-		return err;
++		goto out;
  
- 	mdev->funcs->enable_irq(mdev);
+ 	err = ksmbd_vfs_setxattr(idmap, path, XATTR_NAME_DOS_ATTRIBUTE,
+ 				 (void *)n.data, n.offset, 0, get_write);
+ 	if (err)
+ 		ksmbd_debug(SMB, "failed to store dos attribute in xattr\n");
+-	kfree(n.data);
  
-diff --git a/drivers/gpu/drm/arm/display/komeda/komeda_drv.c b/drivers/gpu/drm/arm/display/komeda/komeda_drv.c
-index 55c3773befde2..20a1a11262759 100644
---- a/drivers/gpu/drm/arm/display/komeda/komeda_drv.c
-+++ b/drivers/gpu/drm/arm/display/komeda/komeda_drv.c
-@@ -74,8 +74,11 @@ static int komeda_platform_probe(struct platform_device *pdev)
- 	}
- 
- 	pm_runtime_enable(dev);
--	if (!pm_runtime_enabled(dev))
--		komeda_dev_resume(mdrv->mdev);
-+	if (!pm_runtime_enabled(dev)) {
-+		err = komeda_dev_resume(mdrv->mdev);
-+		if (err)
-+			goto err_destroy_mdev;
-+	}
- 
- 	mdrv->kms = komeda_kms_attach(mdrv->mdev);
- 	if (IS_ERR(mdrv->kms)) {
-@@ -93,7 +96,7 @@ static int komeda_platform_probe(struct platform_device *pdev)
- 		pm_runtime_disable(dev);
- 	else
- 		komeda_dev_suspend(mdrv->mdev);
--
-+err_destroy_mdev:
- 	komeda_dev_destroy(mdrv->mdev);
- 
- free_mdrv:
-@@ -139,11 +142,12 @@ static int __maybe_unused komeda_pm_suspend(struct device *dev)
- static int __maybe_unused komeda_pm_resume(struct device *dev)
- {
- 	struct komeda_drv *mdrv = dev_get_drvdata(dev);
-+	int err = 0;
- 
- 	if (!pm_runtime_status_suspended(dev))
--		komeda_dev_resume(mdrv->mdev);
-+		err = komeda_dev_resume(mdrv->mdev);
- 
--	return drm_mode_config_helper_resume(&mdrv->kms->base);
-+	return err ? err : drm_mode_config_helper_resume(&mdrv->kms->base);
++out:
++	kfree(n.data);
+ 	return err;
  }
  
- static const struct dev_pm_ops komeda_pm_ops = {
 -- 
 2.53.0
 
