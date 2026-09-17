@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7424D3D34B6;
-	Thu, 17 Sep 2026 18:46:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1ACD389E1A;
+	Thu, 17 Sep 2026 18:46:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789670763; cv=none; b=S3g1T/8fDt0c+bg5So2ELAsfc5uiJ3xPyf89WlidWJZTncvY7H99u5lgt+hU6eSwFnqipXRCK+tCzZ5NxaH3jIR1hFZ3TXjotiHj+HwGRvNClV1eE0pHTuvlTmBromUseSytZEroloUlomua4smfp81YAZTxw1g4rFOmA7gq4uE=
+	t=1789670766; cv=none; b=MqhYEK0h3fooqPQ6vxqYiefMbh6kSMW0OxB81DhKeYrLYCEfnaUN50IH1Z/5EjrrggOtXuXkxJojrUH3DU/YHyN90fh/V61MUr1I/sw/fSWRTzhIxiX3suCuiRG1z0g9vceiCrWFXWrZbXNZ1NIn9kDrqX+BwWlS1IcTSYzAkGQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789670763; c=relaxed/simple;
-	bh=rwNHnUVypD+QlQpHT28+5uC8FCNoY/fggz0j1D03A0c=;
+	s=arc-20240116; t=1789670766; c=relaxed/simple;
+	bh=NsqxIp7uC4YoG2GqX/rLPPXKoNGEKIITPzXy/xN1ig8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JdoMGTPHQLtxsfZGKYoeD9OY9+GYyX7E1Mxay1+LDas+F4Y1TeeE7hI+sGFocXnL0PgCHV8Ds2kBsO2eVUC4p1iEF15Ma7wUEipurp2OOnJ3DcKfhcAxQuWq/269beHTVgExtGkI80qdJBiK0tbQFViUyI0+gStVk6AQRy2oLY8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dku+TIR7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CzfTH/KPXFtjHsDk91ZDdrBz0SfCsf7MDrnZ/PULDkxCN8RSArVpjUAbt8ityikvFquXdBcuOmd4U8vnfKBrtz8bkeSjp+BEpZS3Ia8sslHjqu1pbDa6fBg8OHAgIZXqCP/568u72kd6A/zWBTztj8yqqXNXGJzrBSrTv5uG+pQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VnCeRR6w; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dku+TIR7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0C491F000FF;
-	Thu, 17 Sep 2026 18:46:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VnCeRR6w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1B251F000FF;
+	Thu, 17 Sep 2026 18:46:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789670762;
-	bh=5j1dz/uM4qWzRqw8isGJ8LDqCRH99Xoxfen6JQVJf2Q=;
+	s=korg; t=1789670765;
+	bh=WdghF2jvetvFImcRQyolFMF+W5hUzCVSkMsvHa8/r0w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Dku+TIR74e9dBoyZ73JQpvIGfEHYasaPPpuZ6UPmTOaEmo4hTazrmNGfh0ZZToJXd
-	 sIPjdn4G1HhPqBNyiieyDdxCtjDLW01pEWk4rNZFfj46/tmC5R/eU2Spn+nsdijCel
-	 azYMYoqa1KFmzXJII836dGGmGU2+Wu7GZtq1r98I=
+	b=VnCeRR6wtFsbDXQFUkQQaRSq+7+fut+fs8H1CRO5TX3yXLBt0jtPdENsqloZVeSMZ
+	 OTIBvhekWaF5Vi9SKvFwInzLSDfjbnRRVPxlYp8CxKKYxvfE8vwODINuH6mEa+6Kuf
+	 4NUupDdvAztYJmUYIXyw5vioyS5O8rVn+W5vKrqU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+ce13c07d96d04716eaa2@syzkaller.appspotmail.com,
 	Alice Mikityanska <alice@isovalent.com>,
+	Willem de Bruijn <willemdebruijn.kernel@gmail.com>,
 	Willem de Bruijn <willemb@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0723/1102] net: ipv6: Fix UDP length overflow with PMTU discover and big MTU
-Date: Thu, 17 Sep 2026 16:11:06 +0100
-Message-ID: <20260917151558.508156814@linuxfoundation.org>
+Subject: [PATCH 6.12 0724/1102] net: ipv6: Clamp to IP6_MAX_MTU in ip6_dst_mtu_maybe_forward
+Date: Thu, 17 Sep 2026 16:11:07 +0100
+Message-ID: <20260917151558.535125188@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -55,62 +55,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Alice Mikityanska <alice@isovalent.com>
 
-[ Upstream commit 0ae10b6be49b425827659b23bcce498f80eb7182 ]
+[ Upstream commit 199271ebc71c1e0913b2fad988a7bff330a8828a ]
 
-This commit bounds cork->base.fragsize to IP6_MAX_MTU for UDP sockets to
-avoid a possible overflow of UDP length that triggers a WARN in
-udp_set_len_short when setsockopt IPV6_MTU_DISCOVER is set to
-IPV6_PMTUDISC_DO or IPV6_PMTUDISC_PROBE, and a large packet is sent over
-a netdev with an unusually large MTU.
+Commit 427faee167bc ("net: ipv6: introduce ip6_dst_mtu_maybe_forward")
+dropped the IP6_MAX_MTU clamp that used to be present in ip6_mtu(). A
+similar IPv4 commit ac6627a28dbf ("net: ipv4: Consolidate ipv4_mtu and
+ip_dst_mtu_maybe_forward") preserves the IP_MAX_MTU clamp.
 
-Steps to reproduce (included in the new selftest):
-
-1. Set device MTU bigger than IP6_MAX_MTU. cork->base.fragsize will be
-   set to that MTU in ip6_setup_cork.
-2. Set IPV6_MTU_DISCOVER to IPV6_PMTUDISC_PROBE or IPV6_PMTUDISC_DO. It
-   lets maxnonfragsize be set to device MTU (cork->fragsize) in
-   __ip6_append_data, rather than to IP6_MAX_MTU.
-3. Send 65528 bytes of payload (+8 bytes of UDP header, +40 bytes of
-   IPv6 header). Device MTU allows it (it's only one byte bigger than
-   IP6_MAX_MTU, and the device MTU is bigger than that).
-4. The UDP length in the built packet is 65536, which overflows the
-   16-bit length field and triggers the WARN in udp_set_len_short.
-
-To avoid breaking sending UDP jumbograms over raw IPv6 sockets, limit
-the change to UDP sockets only.
-
-The original overflow bug with IPv6 and IPV6_PMTUDISC_DO seems to
-predate git history (verified reproduction on 2.6.21), was fixed later,
-and then reappeared in commit 427faee167bc ("net: ipv6: introduce
-ip6_dst_mtu_maybe_forward"), which is chosen as the Fixes tag here. The
-overflow with IPV6_PMTUDISC_PROBE reproduces since its introduction in
-commit 628a5c561890 ("[INET]: Add IP(V6)_PMTUDISC_RPOBE").
+Restore the upper bound in the IPv6 flow to avoid potential 16-bit
+overflows in forwarding paths.
 
 Fixes: 427faee167bc ("net: ipv6: introduce ip6_dst_mtu_maybe_forward")
-Reported-by: syzbot+ce13c07d96d04716eaa2@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/6a6a966c.86abc875.e5c3d.0054.GAE@google.com/
 Signed-off-by: Alice Mikityanska <alice@isovalent.com>
+Suggested-by: Willem de Bruijn <willemdebruijn.kernel@gmail.com>
 Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20260901195714.673548-3-alice.kernel@fastmail.im
+Link: https://patch.msgid.link/20260901195714.673548-5-alice.kernel@fastmail.im
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/ip6_output.c | 2 ++
+ include/net/ip6_route.h | 2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/net/ipv6/ip6_output.c b/net/ipv6/ip6_output.c
-index fd25d5aadea27..0d60229c6f639 100644
---- a/net/ipv6/ip6_output.c
-+++ b/net/ipv6/ip6_output.c
-@@ -1408,6 +1408,8 @@ static int ip6_setup_cork(struct sock *sk, struct inet_cork_full *cork,
- 	if (frag_size && frag_size < mtu)
- 		mtu = frag_size;
+diff --git a/include/net/ip6_route.h b/include/net/ip6_route.h
+index 59f48ca3abdf5..80f61c76ebc04 100644
+--- a/include/net/ip6_route.h
++++ b/include/net/ip6_route.h
+@@ -343,6 +343,8 @@ static inline unsigned int ip6_dst_mtu_maybe_forward(const struct dst_entry *dst
+ 	rcu_read_unlock();
  
-+	if (sk_is_udp(sk))
-+		mtu = min(mtu, IP6_MAX_MTU);
- 	cork->base.fragsize = mtu;
- 	cork->base.gso_size = ipc6->gso_size;
- 	cork->base.tx_flags = 0;
+ out:
++	mtu = min_t(unsigned int, mtu, IP6_MAX_MTU);
++
+ 	return mtu - lwtunnel_headroom(dst->lwtstate, mtu);
+ }
+ 
 -- 
 2.53.0
 
