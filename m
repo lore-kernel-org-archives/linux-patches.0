@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5BFF3D9DA8;
-	Thu, 17 Sep 2026 18:04:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45287547078;
+	Thu, 17 Sep 2026 18:04:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789668258; cv=none; b=TmZmXVEtenZ9lIA26P2W1xx4Kig6qKEvpNi8/tZqPMnSioT2BD0bFR3CNAv9dxn3ix57vx8iKg5JwEioP6lQ70cRXM+z83uI8aLjY6BFEsvptDb0f20cr6C8hg9Yi8R9Cv7XdeQv7UwiKTpy7URlU+06EznoJmIiG5B5kZScmEw=
+	t=1789668261; cv=none; b=urzHefC+x8XJK3ZSRQpl51U6ovwh5V/2TR4SSvSFVCoFtgF7oQ5N1Up44vUA3olJaXtUlQNAqOAEwqwfvf3O5jBSABX0zcHMtGFipvuSI5jfVWEmEJEnbbMpAsjNQuqCr3bmeRuY8die/bm/rdPGBnsjISDH0NjE2YscQWj5IHM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789668258; c=relaxed/simple;
-	bh=4Pg4Y4ws5JlTAsDZ+XrYRORPvxRPhBf7Lv+Ybcta8eU=;
+	s=arc-20240116; t=1789668261; c=relaxed/simple;
+	bh=iC6iqjD3T37ezGIkZIjMLbc9kKU8VqtCLwa7GbV9QRg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BwMKYoVDV6ZeDGeIibonZK5/uAIPnFi1hhj/afWPb3p1mEDRrxneBFCxF40Im8Z8J6qpsJUeMkCww2HXjiCRaVOYBWkHRyXXkkSqdstd1D2eTvMkQKTEcBytxJmUScMAPmFXne7uOh8o5mXuYDjfe+p8SUlMmnULi2nPSMFIjdg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pZCTXG83; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=roAFQgJv6V0uFMkGykJ5KZpL5CMxv2QZGyGY8mlArnnLnS4Gn68hl5uXUJX1IIG9D/25uq6cH1oC5hzmvJ8OGgcKwXgtVERo9GGm0X+Jak08BP2ph0PcVGk+77E+fAurrmlBdh8x2cKF4QkDVXmIN8LN8aTZt1sVf4RbcmS+QNA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yZW9l/WS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pZCTXG83"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAAA71F000FF;
-	Thu, 17 Sep 2026 18:04:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yZW9l/WS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 421821F000FF;
+	Thu, 17 Sep 2026 18:04:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789668256;
-	bh=3Xxx3o6eYbMHXJghVqueHk9ScTvaiyRteQaYXx44TFE=;
+	s=korg; t=1789668259;
+	bh=KppIBjtOuaoZf3ISy5JtkrYmcsBJ8mPFmfHEwsQk2ZQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pZCTXG83GkqlOmRHPugUD6ROTYcQW+xKyICN4FxidlOBPE38VkIw2WKdyY/Pf3TzG
-	 9s8chl0BUV80KUzMQ9bS61bueOHu3Tl5Fh5lTDynQN4fPJKRKTmEIhGpIACKdykn8V
-	 20/Mh800RBQ4PzMq1aUbnrg2X3+HPJJy4vu+404o=
+	b=yZW9l/WSybGqmbgXJeoSO9GCc69OH7dsKdU7vYh4yj0DotjKmOROzbuGw98gw9wbh
+	 4SX5mVHerIlCTngThO23RLsFkcXW/t3mV0bTo2ikVidBX8njWJzoTW1v8c/IRV1HBH
+	 vi4oe0mQLZI2NpcQsSRwxbU2CqJe6EHy4/nUxf5U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Matthew Bystrin <dev.mbstr@gmail.com>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0363/1102] net: au1000: move free_irq out of the close-time spinlocked section
-Date: Thu, 17 Sep 2026 16:05:06 +0100
-Message-ID: <20260917151548.762464978@linuxfoundation.org>
+Subject: [PATCH 6.12 0328/1102] mfd: rsmu: Add 8a34002 support
+Date: Thu, 17 Sep 2026 16:04:31 +0100
+Message-ID: <20260917151547.866283600@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -52,55 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Matthew Bystrin <dev.mbstr@gmail.com>
 
-[ Upstream commit f48763beab4eea41fc480c9702ec6eebe8d75e4f ]
+[ Upstream commit d18fd55c780c2bae3d353024cab7f8746d3d9e91 ]
 
-au1000_close() calls free_irq() while aup->lock is still held with
-spin_lock_irqsave(). free_irq() can sleep because it takes the IRQ
-descriptor request mutex, so it does not belong inside the close-time
-spinlocked section.
+Add compatible string, i2c_devcie_id and spi_devcie_id to support
+8a34002.
 
-This was found by our static analysis tool and then confirmed by manual
-review of the in-tree au1000_close() .ndo_stop path. The reviewed path
-keeps aup->lock held across the MAC reset, queue stop and
-free_irq(dev->irq, dev).
-
-A directed runtime validation kept that ndo_stop carrier and the same
-free_irq(dev->irq, dev) operation under the driver lock. Lockdep reported
-"BUG: sleeping function called from invalid context" and "Invalid wait
-context" while free_irq() was taking desc->request_mutex, with
-au1000_close() and free_irq() on the stack.
-
-Drop aup->lock before freeing the IRQ. The protected close-time work still
-stops the device and queue before IRQ teardown, but the sleepable IRQ core
-path now runs outside the spinlocked section.
-
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260619151816.1144289-1-runyu.xiao@seu.edu.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Matthew Bystrin <dev.mbstr@gmail.com>
+Link: https://patch.msgid.link/20260429072047.1111427-3-dev.mbstr@gmail.com
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/amd/au1000_eth.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/mfd/rsmu_i2c.c | 2 ++
+ drivers/mfd/rsmu_spi.c | 2 ++
+ 2 files changed, 4 insertions(+)
 
-diff --git a/drivers/net/ethernet/amd/au1000_eth.c b/drivers/net/ethernet/amd/au1000_eth.c
-index 85c978149bf66..67c932984d414 100644
---- a/drivers/net/ethernet/amd/au1000_eth.c
-+++ b/drivers/net/ethernet/amd/au1000_eth.c
-@@ -943,9 +943,10 @@ static int au1000_close(struct net_device *dev)
- 	/* stop the device */
- 	netif_stop_queue(dev);
- 
-+	spin_unlock_irqrestore(&aup->lock, flags);
-+
- 	/* disable the interrupt */
- 	free_irq(dev->irq, dev);
--	spin_unlock_irqrestore(&aup->lock, flags);
- 
- 	return 0;
- }
+diff --git a/drivers/mfd/rsmu_i2c.c b/drivers/mfd/rsmu_i2c.c
+index 9e5fc8259eec2..c57795ed20f4e 100644
+--- a/drivers/mfd/rsmu_i2c.c
++++ b/drivers/mfd/rsmu_i2c.c
+@@ -330,6 +330,7 @@ static void rsmu_i2c_remove(struct i2c_client *client)
+ static const struct i2c_device_id rsmu_i2c_id[] = {
+ 	{ "8a34000",  RSMU_CM },
+ 	{ "8a34001",  RSMU_CM },
++	{ "8a34002",  RSMU_CM },
+ 	{ "82p33810", RSMU_SABRE },
+ 	{ "82p33811", RSMU_SABRE },
+ 	{ "8v19n850", RSMU_SL },
+@@ -341,6 +342,7 @@ MODULE_DEVICE_TABLE(i2c, rsmu_i2c_id);
+ static const struct of_device_id rsmu_i2c_of_match[] = {
+ 	{ .compatible = "idt,8a34000",  .data = (void *)RSMU_CM },
+ 	{ .compatible = "idt,8a34001",  .data = (void *)RSMU_CM },
++	{ .compatible = "idt,8a34002",  .data = (void *)RSMU_CM },
+ 	{ .compatible = "idt,82p33810", .data = (void *)RSMU_SABRE },
+ 	{ .compatible = "idt,82p33811", .data = (void *)RSMU_SABRE },
+ 	{ .compatible = "idt,8v19n850", .data = (void *)RSMU_SL },
+diff --git a/drivers/mfd/rsmu_spi.c b/drivers/mfd/rsmu_spi.c
+index c931d8cea0a1a..e07f21482439e 100644
+--- a/drivers/mfd/rsmu_spi.c
++++ b/drivers/mfd/rsmu_spi.c
+@@ -241,6 +241,7 @@ static void rsmu_spi_remove(struct spi_device *client)
+ static const struct spi_device_id rsmu_spi_id[] = {
+ 	{ "8a34000",  RSMU_CM },
+ 	{ "8a34001",  RSMU_CM },
++	{ "8a34002",  RSMU_CM },
+ 	{ "82p33810", RSMU_SABRE },
+ 	{ "82p33811", RSMU_SABRE },
+ 	{}
+@@ -250,6 +251,7 @@ MODULE_DEVICE_TABLE(spi, rsmu_spi_id);
+ static const struct of_device_id rsmu_spi_of_match[] = {
+ 	{ .compatible = "idt,8a34000",  .data = (void *)RSMU_CM },
+ 	{ .compatible = "idt,8a34001",  .data = (void *)RSMU_CM },
++	{ .compatible = "idt,8a34002",  .data = (void *)RSMU_CM },
+ 	{ .compatible = "idt,82p33810", .data = (void *)RSMU_SABRE },
+ 	{ .compatible = "idt,82p33811", .data = (void *)RSMU_SABRE },
+ 	{}
 -- 
 2.53.0
 
