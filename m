@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 392E9768EA;
-	Thu, 17 Sep 2026 18:50:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E855C3D3321;
+	Thu, 17 Sep 2026 18:50:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789671052; cv=none; b=q4IMlglkzqK1TE9w6vLSbjppBtQwUWTxBqAn/aPXoPe0wE+BGSbW/vICyL8qGCKjC80IzgB5w3h6c3YWSUdXJT1syK8cpQUcz6gxCceE2osv66xX+8vAHUYC2FYHep4nJpbM+UIAW1lgafo/zQkOzrxLOIuOnvJ1at06Ey0jNaE=
+	t=1789671055; cv=none; b=dR/v9g0GpVuAB+y+psWhduEzhK1c/EOaUKxo5kbaO8LEgWDdhP79TId8pW5Asgu2hQsNLvddD2L44S7oEWkfziGvihBsDtsYVesnhPLorSF+rhPFxVrAztOjU38FCdUygWZ3v6aBNIb8Qjnw537W7htG6ja8PYZidLc+8c9Yq4E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789671052; c=relaxed/simple;
-	bh=Yj/2M9tL79VL027ukiw+DqoOh+b9eks9HeaFGxoerqM=;
+	s=arc-20240116; t=1789671055; c=relaxed/simple;
+	bh=L7SkZm/Vm8irgRJTmyIa50AqA87hohsTd1tE60WEvtY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MUKKcHVrCl/pk2AIIaqoBlrMLTNrlkhWC52ZwVcE5Gl2AJDsTgL9+RXzJqlNpWAR3olsG8jUaOyQspEyEzfItuUBp0SX6oCioKuvXpixEeoTh4pbayn0GdEqXY77j9sODw49GkRtFoJYmjO9uQc40/Z3ws6dwCfGsP9BIg8iMrc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GFlAWYP8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=vERR+eeeb+TcPpRXIEcn8xOnEQOaxhCKT3JJDSlFSPxxv6YeVkvQpHVSjnjC4/4DcUHfPid0YLCMr6rYNWWxwDV/a/UwKjPsVkDxzWov2BItqPfKDlXZ5E5Cfh7QF7nW7O51nsGUOqIe/rXk1m0hBFPa4TfCD4mpiwilwEho3Rs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aQsbk9Ep; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GFlAWYP8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDFE71F000FF;
-	Thu, 17 Sep 2026 18:50:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aQsbk9Ep"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B8011F000FF;
+	Thu, 17 Sep 2026 18:50:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789671050;
-	bh=1eStxZcGgrXczPrCKnWxV5E3z0I5GbuCVyO8f1+JCVE=;
+	s=korg; t=1789671053;
+	bh=glwaDW2Kwjg5tqWtXJQMIExiG+b9NsdUzMuNB4Y17vA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GFlAWYP8DicEafcJKl8x4YJBQEzNYW+mLRXF6kOV6lG6wFGFNBb/naZaWDobDYxHj
-	 PJJm3GK47gK8fiJBSc/wJuBFQzYJzv2atBUbT939FkafryzbUucK6KakbBvFIt4ypg
-	 Vm0Oyc/UzmCBMiLgozkjK9RnxSBetWRX+ecd/8Jc=
+	b=aQsbk9EpcSrhNRwd6OItzZqF5L7veFLG/Vofgcl6w7tEb2WgeXPdpaV/3ichh3fYk
+	 uj2625FuBkuxRjfjrdD3+o5yuiO2mf2uzSHFIPH+Xuc6JQXN+mNFE86U4Qpc27bwXQ
+	 QEigMyMfcB0LJ6Ru4cTELUPunBUAF3R5UTXdT8M8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	co+c25629c98ba36ebe@bugs.sh,
-	stable@kernel.org,
-	Weiming Shi <bestswngs@gmail.com>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.12 0853/1102] fbdev: vfb: defer cleanup until the last reference
-Date: Thu, 17 Sep 2026 16:13:16 +0100
-Message-ID: <20260917151601.954547412@linuxfoundation.org>
+	Kimi Security Team <bug-report@moonshot.ai>,
+	Weiming Shi <shiweiming@moonshot.ai>,
+	Eric Dumazet <edumazet@google.com>,
+	Yilin Zhang <yilinzhang@moonshot.ai>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 0854/1102] inet: frags: invalidate queues before flushing them
+Date: Thu, 17 Sep 2026 16:13:17 +0100
+Message-ID: <20260917151601.982196110@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -52,84 +53,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Yilin Zhang <yilinzhang@moonshot.ai>
 
-commit a0a34a40ed299c9c7cff6af163a5b883ee9d6d73 upstream.
+commit b824476c56a153934c67c9e0f873e1fd967743d6 upstream.
 
-FBIOGETCMAP takes a shallow snapshot of info->cmap and performs the
-usercopy after dropping info->lock. vfb_remove() frees the colormap
-immediately after unregistering the framebuffer, even when an open file
-still holds a reference to fb_info. A concurrent driver unbind can
-therefore free the colormap while the ioctl copies it to userspace.
+fqdir_pre_exit() flushes the skbs from incomplete queues without
+changing their completion state. A fragment which found a queue before
+high_thresh was cleared can then acquire the queue lock and reuse stale
+reassembly metadata. A queue concurrently killed after fqdir->dead is
+set can instead become INET_FRAG_COMPLETE|INET_FRAG_HASH_DEAD while
+still holding its old skbs; skipping it because it is complete leaves
+those references behind until asynchronous fqdir teardown.
 
-KASAN reports:
+For IPv6, stale metadata can make ip6_frag_reasm() use the old
+nhoffset with a new skb and access memory out of bounds. The resulting
+heap corruption can be leveraged for local privilege escalation when
+unprivileged network namespaces are available. Unflushed fragments can
+also keep conntrack references alive after the conntrack per-net
+cleanup point.
 
-  BUG: KASAN: slab-use-after-free in _copy_to_user
-  Read of size 512 by task poc/125
+Kill each incomplete queue, then flush every queue still owned by the
+dying rhashtable. HASH_DEAD identifies that ownership, while complete
+queues without it are already owned by another destroy path and must be
+left alone. Releasing a timer reference removed by inet_frag_kill() is
+deferred to inet_frag_putn(), after the queue lock is dropped.
 
-   _copy_to_user (./include/linux/instrumented.h:129 ./include/linux/uaccess.h:201 lib/usercopy.c:24)
-   fb_cmap_to_user (./include/linux/uaccess.h:230 drivers/video/fbdev/core/fbcmap.c:211)
-   do_fb_ioctl (drivers/video/fbdev/core/fb_chrdev.c:114)
+KASAN report:
 
-   Allocated by task 1:
-   fb_alloc_cmap_gfp (./include/linux/slab.h:973 ./include/linux/slab.h:1290 drivers/video/fbdev/core/fbcmap.c:108)
-   vfb_probe (drivers/video/fbdev/vfb.c:459)
+  BUG: KASAN: slab-out-of-bounds in ipv6_frag_rcv (net/ipv6/reassembly.c:289 (discriminator 2) net/ipv6/reassembly.c:229 (discriminator 2) net/ipv6/reassembly.c:391 (discriminator 2))
+  Write of size 1 at addr ff110001039c6e00 by task poc/771
+  Call Trace:
+  ? ipv6_frag_rcv (net/ipv6/reassembly.c:289 (discriminator 2) net/ipv6/reassembly.c:229 (discriminator 2) net/ipv6/reassembly.c:391 (discriminator 2))
+  ipv6_frag_rcv (net/ipv6/reassembly.c:289 (discriminator 2) net/ipv6/reassembly.c:229 (discriminator 2) net/ipv6/reassembly.c:391 (discriminator 2))
+  ip6_protocol_deliver_rcu (net/ipv6/ip6_input.c:479 (discriminator 5))
+  ip6_input_finish (net/ipv6/ip6_input.c:534)
+  ipv6_rcv (include/net/dst.h:480 (discriminator 3) net/ipv6/ip6_input.c:119 (discriminator 3) net/ipv6/ip6_input.c:109 (discriminator 3) include/linux/netfilter.h:325 (discriminator 3) include/linux/netfilter.h:319 (discriminator 3) net/ipv6/ip6_input.c:351 (discriminator 3))
+  packet_sendmsg (net/packet/af_packet.c:3110 net/packet/af_packet.c:3142)
+  __x64_sys_sendmmsg (net/socket.c:2883 net/socket.c:2880 net/socket.c:2880)
+  The buggy address belongs to the object at ff110001039c6b40
+  which belongs to the cache skbuff_small_head of size 704
+  The buggy address is located 0 bytes to the right of
+  allocated 704-byte region [ff110001039c6b40, ff110001039c6e00)
 
-   Freed by task 124:
-   fb_dealloc_cmap (drivers/video/fbdev/core/fbcmap.c:151)
-   vfb_remove (drivers/video/fbdev/vfb.c:489)
+  BUG: KASAN: slab-out-of-bounds in ip6_protocol_deliver_rcu (net/ipv6/ip6_input.c:423 (discriminator 1))
+  Read of size 1 at addr ff110001039c6e08 by task poc/771
+  Call Trace:
+  ? ip6_protocol_deliver_rcu (net/ipv6/ip6_input.c:423 (discriminator 1))
+  ip6_protocol_deliver_rcu (net/ipv6/ip6_input.c:423 (discriminator 1))
+  ip6_input_finish (net/ipv6/ip6_input.c:534)
+  ipv6_rcv (include/net/dst.h:480 (discriminator 3) net/ipv6/ip6_input.c:119 (discriminator 3) net/ipv6/ip6_input.c:109 (discriminator 3) include/linux/netfilter.h:325 (discriminator 3) include/linux/netfilter.h:319 (discriminator 3) net/ipv6/ip6_input.c:351 (discriminator 3))
+  packet_sendmsg (net/packet/af_packet.c:3110 net/packet/af_packet.c:3142)
+  __x64_sys_sendmmsg (net/socket.c:2883 net/socket.c:2880 net/socket.c:2880)
+  packet_sendmsg (net/packet/af_packet.c:2959 net/packet/af_packet.c:3053 net/packet/af_packet.c:3142)
+  __x64_sys_sendmmsg (net/socket.c:2883 net/socket.c:2880 net/socket.c:2880)
+  The buggy address belongs to the object at ff110001039c6b40
+  which belongs to the cache skbuff_small_head of size 704
+  The buggy address is located 8 bytes to the right of
+  allocated 704-byte region [ff110001039c6b40, ff110001039c6e00)
 
-unregister_framebuffer() drops the registration reference, and fbdev calls
-fb_destroy after the last put_fb_info(). Move the registered framebuffer's
-cleanup into an fb_destroy callback so its colormap and screen buffer stay
-alive until all file references have been released.
-
-Fixes: 5e266e2e0e19 ("vfb: fix memory leaks in removal path")
-Reported-by: co+c25629c98ba36ebe@bugs.sh
-Cc: stable@kernel.org
-Closes: https://lore.kernel.org/linux-fbdev/f2Kf9GYn1lKR5S1dbvGVtykMxK1RlgP5z8sW@bugs.sh/
-Assisted-by: Codex:gpt-5
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Link: https://lore.kernel.org/linux-fbdev/f2Kf9GYn1lKR5S1dbvGVtykMxK1RlgP5z8sW@bugs.sh/
-Signed-off-by: Helge Deller <deller@gmx.de>
+Fixes: 006a5035b495 ("inet: frags: flush pending skbs in fqdir_pre_exit()")
+Cc: stable@vger.kernel.org
+Reported-by: Kimi Security Team <bug-report@moonshot.ai>
+Tested-by: Weiming Shi <shiweiming@moonshot.ai>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Yilin Zhang <yilinzhang@moonshot.ai>
+Link: https://patch.msgid.link/20260904162800.1095662-1-yilinzhang@moonshot.ai
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/vfb.c |   11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ net/ipv4/inet_fragment.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/video/fbdev/vfb.c
-+++ b/drivers/video/fbdev/vfb.c
-@@ -78,6 +78,13 @@ static int vfb_pan_display(struct fb_var
- static int vfb_mmap(struct fb_info *info,
- 		    struct vm_area_struct *vma);
+--- a/net/ipv4/inet_fragment.c
++++ b/net/ipv4/inet_fragment.c
+@@ -237,6 +237,8 @@ void fqdir_pre_exit(struct fqdir *fqdir)
+ 	rhashtable_walk_start(&hti);
  
-+static void vfb_destroy(struct fb_info *info)
-+{
-+	vfree(info->screen_buffer);
-+	fb_dealloc_cmap(&info->cmap);
-+	framebuffer_release(info);
-+}
+ 	while ((fq = rhashtable_walk_next(&hti))) {
++		int refs = 0;
 +
- static const struct fb_ops vfb_ops = {
- 	.owner		= THIS_MODULE,
- 	__FB_DEFAULT_SYSMEM_OPS_RDWR,
-@@ -87,6 +94,7 @@ static const struct fb_ops vfb_ops = {
- 	.fb_pan_display	= vfb_pan_display,
- 	__FB_DEFAULT_SYSMEM_OPS_DRAW,
- 	.fb_mmap	= vfb_mmap,
-+	.fb_destroy	= vfb_destroy,
- };
- 
-     /*
-@@ -485,9 +493,6 @@ static void vfb_remove(struct platform_d
- 
- 	if (info) {
- 		unregister_framebuffer(info);
--		vfree(videomemory);
--		fb_dealloc_cmap(&info->cmap);
--		framebuffer_release(info);
+ 		if (IS_ERR(fq)) {
+ 			if (PTR_ERR(fq) != -EAGAIN)
+ 				break;
+@@ -244,8 +246,12 @@ void fqdir_pre_exit(struct fqdir *fqdir)
+ 		}
+ 		spin_lock_bh(&fq->lock);
+ 		if (!(fq->flags & INET_FRAG_COMPLETE))
++			inet_frag_kill(fq, &refs);
++
++		if (fq->flags & INET_FRAG_HASH_DEAD)
+ 			inet_frag_queue_flush(fq, 0);
+ 		spin_unlock_bh(&fq->lock);
++		inet_frag_putn(fq, refs);
  	}
- }
  
+ 	rhashtable_walk_stop(&hti);
 
 
