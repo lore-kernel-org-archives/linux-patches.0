@@ -1,38 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4BFD2BDC28;
-	Thu, 17 Sep 2026 15:32:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C66614848B5;
+	Thu, 17 Sep 2026 15:32:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659163; cv=none; b=boLXmcXMR+87kxbfMnqY3P0YIZCztZ1J0t1qScNlSDgck13fuP1v3EiYYqBVrIWSrJnWySz+R9/6KQX8SwlMC+ii6Qun9p/qQiajGC/ixPSfZhV1uvJhhSTotiMwxTEOMyz5inAn3pvsTMb+PAwpxpY76N/LUFW5hInNQ/HKfh4=
+	t=1789659166; cv=none; b=VuMsV3FEHT8Ue1fJkekKrvuE4HEjCZcpRlPDsyjTKiUPwZmXzkULpq0TCjv3LhTbMYhhlVmSTGiRjy/9/kvHZcmnDjyeqOvKpFlA7JhindDZ/YgV0yuYPciYKd4bFbMfMDavptIGuL8KE5RClzgi5ce018+7ZHdLeYIxOHiC0pA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659163; c=relaxed/simple;
-	bh=Lj5ytjjoj/nXAVvWoV9sgfCkyJzJrSBJJQ8w9CEqCvA=;
+	s=arc-20240116; t=1789659166; c=relaxed/simple;
+	bh=WStNIfiPZeYG1DqQZulSVfN3RxYrt8a4sD8/S7s8E1A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p/X5mXSHWtt+HDquOF/F8Tyy7a6tv9OJWqm4CmgzTVAAIt5w0i5MFZWfEz1+GsJjqc2vIDsKnR41lLeCBn3uQ072orZppLtRu68QQTKR+bBoclrZ4Or5H/uBCnT/LJ5a6tigj1TU+5zMx2YFRYi8/qrj/FYAAKjdD9J4j/zb9kc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zhyydxAv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=dtqPLU0zMneeVTB+MmdsEW382VFOXLLIVXVqy7CxjkceGtl4JChOXelmHUEBPYCaLqJUibXZ4nYZHy7gJTV2j6SNyvq5N5tUFbHNFHSPIn6UBU9pSLHJjRPuCe/zTtZ41lonv7FqUWOdO8Gn2Tm80vIy0f/F8m7f/G6nJbXpOAA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xU4jAaeP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zhyydxAv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D0431F00893;
-	Thu, 17 Sep 2026 15:32:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xU4jAaeP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3122A1F00898;
+	Thu, 17 Sep 2026 15:32:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659155;
-	bh=8uwOupuv1wE4hA9390E1/gRrZKNTSb93Xfz4ZBvbnEI=;
+	s=korg; t=1789659158;
+	bh=PGSvLZXMIaknGPmVo+FJO/nOJ/y5ez5fl/45zXCjO88=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zhyydxAvF8N5Z6hkQZZBy/SXZP9O2Rkpqae4kvPmN6O78BY4cujAew5sVslnZZrYg
-	 17X/BL/57LFGJ04t6hB6n6ew2tmZgnNpUqXtG7CHnwlFDpzslM5beELab7C6P46UoB
-	 NagMrk6HU4bPRM8fxMO2ht4i9DbHmK3tUmtdDq6A=
+	b=xU4jAaePhZFMOXuI0zFD2KSRPIKwxIBGMgJRn14domn/NB1iVXZ31h48+8y3gTEon
+	 gfX/mA6XJa5iwtlB8OX0gNNebBzmw0DlnSLRmEUZmdF9LOB+UM33DgTr2M1e29jyrv
+	 Jmq3tKaYxbjtFNnOl92VEXKbCElf6iecshXjJf1o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Fitzgerald <rf@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	David Airlie <airlied@gmail.com>,
+	Simona Vetter <simona@ffwll.ch>,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>,
+	Arvind Yadav <arvind.yadav@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 160/733] ASoC: cs35l56: Fix probe deadlock waiting for SoundWire enumeration
-Date: Thu, 17 Sep 2026 16:07:48 +0100
-Message-ID: <20260917151355.059580141@linuxfoundation.org>
+Subject: [PATCH 7.2 124/733] drm/pagemap: Prevent double migration of device pages
+Date: Thu, 17 Sep 2026 16:07:12 +0100
+Message-ID: <20260917151354.100786399@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -45,214 +52,382 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Richard Fitzgerald <rf@opensource.cirrus.com>
+From: Arvind Yadav <arvind.yadav@intel.com>
 
-[ Upstream commit 1d80a4792f1de236c157bcee2e5400fad4c66c65 ]
+[ Upstream commit c4126f1db36e6b2e1c79b0e30a8a2de91c568f4c ]
 
-On SoundWire, don't call snd_soc_register_component() from driver probe().
-Instead, queue a work item after first SoundWire attach to call
-snd_soc_register_component(). This prevents a deadlock if
-snd_soc_register_component() directly calls cs35l56_component_probe().
+A device-private folio migrated to system memory by a CPU fault can
+remain reachable through the raw-PFN eviction path until migration
+finalization drops the source reference.
 
-On SoundWire, the registers are not accessible during driver probe().
-Drivers must return from their probe() and wait for the SoundWire core
-to call their update_status() callback to report an ATTACHED status. The
-cs35l56 driver handled this by calling snd_soc_register_component() from
-driver probe() as usual, and cs35l56_component_probe() waited for
-init_completion to be signalled. A SoundWire attach calls cs35l56_init()
-which then signals init_completion.
+If eviction selects the same device-private folio during this window,
+it can attempt to migrate the folio again. The second migration can leave
+an uncharged folio on an LRU list, causing folio_lruvec_lock_irqsave() to
+retry indefinitely and resulting in a soft lockup and RCU stall.
 
-This created a deadlock if this was the last component needed to complete
-a card. In that case, snd_soc_register_component() directly called
-cs35l56_component_probe() which led to this:
+Mark successfully migrated device-private folios using a low bit of
+their zone_device_data before migration finalization. Make both CPU-fault
+and raw-PFN migration paths skip device-private folios carrying this
+flag.
 
-    driver probe()
-        calls snd_soc_register_component()
-            calls cs35l56_component_probe()
-                waits for init_completion
+Mask the flag when retrieving the drm_pagemap_zdd pointer and preserve
+it when a device-private folio is split. Keeping the state on the physical
+folio also avoids depending on a virtual address that may change before a
+fault occurs.
 
-In this case the driver probe() has not returned, so the SoundWire core
-would not call update_status() and init_completion would not be signalled.
+v2:
+- Replace the retired-PFN XArray with an embedded bitmap. (Matthew Brost)
+- Mark every base page covered by a migrated folio so retirement remains
+  valid if the folio is later split.
 
-Fortunately, snd_soc_register_component() never returns -EPROBE_DEFER, so
-it doesn't need to be called from a driver probe(). It can be deferred to
-a work item. This work is queued after the first completed pass through
-cs35l56_init(), so there is no need for it to wait for init_completion.
-snd_soc_register_component() isn't called directly from cs35l56_init()
-because cs35l56_init() runs in the SoundWire bus driver thread, and there
-would be a risk of nested locking or lock inversion.
+v3:
+- Store the migrated state in a low bit of zone_device_data instead of
+  adding virtual-range and bitmap tracking to the ZDD. (Matthew Brost)
+- Mask the flag when retrieving the ZDD and preserve it when splitting
+  a folio.
+- Drop the pre-existing fixes already covered by Matthew Brost's series:
+  https://patchwork.freedesktop.org/series/171651/
 
-The work item is queued on a freezable workqueue to prevent a race between
-the work item and system_suspend of another instance. If the workqueue
-were not frozen it would be possible for the work item of one driver
-instance to call snd_soc_register_component() which then calls
-cs35l56_component_probe() of another instance while that instance is
-already executing its system suspend functions.
+v4:
+- Advance by the folio size only for migration entries marked with
+  MIGRATE_PFN_COMPOUND. (Sashiko)
 
-The non-SoundWire case still calls snd_soc_register_component() from
-cs35l56_common_probe() so that it is the last initialization action.
-There's no need defer the call for I2S/SPI buses so we can also leave it
-able to return errors during probe.
+v5:
+- Simplify ZDD flag updates and folio iteration. (Matthew Brost)
+- Skip retired device-private folios in the CPU-fault path. (Matthew Brost)
+- Preserve flag bits while taking a new ZDD reference for split folios.
 
-Fixes: 440c2d38950f7 ("ASoC: cs35l56: Wait for init_complete in cs35l56_component_probe()")
-Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
-Link: https://patch.msgid.link/20260901122644.634494-1-rf@opensource.cirrus.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+v6:
+- Restore MIGRATE_PFN_COMPOUND-aware stepping so non-compound migration
+  entries are processed one at a time. (Sashiko)
+- Drop the pre-existing fixes already covered by Matthew Brost's series:
+  https://patchwork.freedesktop.org/series/171651/
+
+The lockup was observed as:
+[10109.860465] watchdog: BUG: soft lockup - CPU#9 stuck for 26s! [kworker/u65:5:6557]
+[10109.860524] Tainted: [S]=CPU_OUT_OF_SPEC, [O]=OOT_MODULE
+[10109.860524] Hardware name: ASUS System Product Name/PRIME Z790-P WIFI, BIOS 0812 02/24/2023
+[10109.860525] Workqueue: xe_page_fault_work_queue xe_pagefault_queue_work [xe]
+[10109.860644] RIP: 0010:_raw_spin_unlock_irqrestore+0x57/0x80
+[10109.860655] Call Trace:
+[10109.860655]  <TASK>
+[10109.860657]  folio_lruvec_lock_irqsave+0x216/0x220
+[10109.860661]  ? __pfx_lru_add+0x10/0x10
+[10109.860665]  folio_batch_move_lru+0xc8/0x450
+[10109.860670]  ? lock_acquire+0xc4/0x2d0
+[10109.860674]  ? __folio_batch_add_and_move+0x60/0x2e0
+[10109.860677]  ? folio_migrate_mapping+0xa6/0x110
+[10109.860679]  ? folio_migrate_flags+0x13b/0x1b0
+[10109.860681]  ? __pfx_lru_add+0x10/0x10
+[10109.860683]  __folio_batch_add_and_move+0xe7/0x2e0
+[10109.860685]  ? dma_iova_try_alloc+0xb0/0x140
+[10109.860689]  folio_add_lru+0x64/0x80
+[10109.860691]  __migrate_device_finalize+0x12c/0x270
+[10109.860695]  migrate_device_finalize+0x10/0x20
+[10109.860698]  drm_pagemap_evict_to_ram+0x185/0x370 [drm_gpusvm_helper]
+[10109.860704]  ? drm_pagemap_evict_to_ram+0x96/0x370 [drm_gpusvm_helper]
+[10109.860709]  xe_svm_bo_evict+0x15/0x20 [xe]
+[10109.860819]  ? xe_svm_bo_evict+0x15/0x20 [xe]
+[10109.860921]  xe_bo_move+0x107e/0x1570 [xe]
+[10109.860992]  ? xe_ttm_tt_create+0x168/0x340 [xe]
+[10109.861059]  ? __up_read+0x98/0x2b0
+[10109.861061]  ? lock_is_held_type+0xa3/0x130
+[10109.861067]  ttm_bo_handle_move_mem+0xe8/0x1e0 [ttm]
+[10109.861075]  ttm_bo_evict+0x141/0x1c0 [ttm]
+[10109.861081]  ttm_bo_evict_cb+0x9f/0x100 [ttm]
+[10109.861086]  ttm_lru_walk_for_evict+0x84/0x190 [ttm]
+[10109.861091]  ? xe_ttm_vram_mgr_new+0x258/0x3a0 [xe]
+[10109.861198]  ttm_bo_alloc_resource+0x219/0x750 [ttm]
+[10109.861203]  ? ttm_bo_alloc_resource+0xa9/0x750 [ttm]
+[10109.861208]  ? lock_acquire+0xc4/0x2d0
+[10109.861214]  ttm_bo_validate+0x94/0x1c0 [ttm]
+[10109.861218]  ? ww_mutex_trylock+0x19d/0x3d0
+[10109.861219]  ? _raw_write_unlock+0x22/0x50
+[10109.861223]  ttm_bo_init_reserved+0x17d/0x1f0 [ttm]
+[10109.861228]  xe_bo_init_locked+0x20a/0x620 [xe]
+[10109.861294]  ? __pfx_xe_ttm_bo_destroy+0x10/0x10 [xe]
+[10109.861359]  ? mark_held_locks+0x46/0x90
+[10109.861361]  ? __create_object+0x68/0xc0
+[10109.861366]  __xe_bo_create_locked+0x384/0xa20 [xe]
+[10109.861432]  ? lock_acquire+0xc4/0x2d0
+[10109.861434]  ? xe_drm_pagemap_populate_mm+0xd3/0x340 [xe]
+[10109.861542]  xe_bo_create_locked+0x23/0x40 [xe]
+[10109.861609]  xe_drm_pagemap_populate_mm+0x12e/0x340 [xe]
+[10109.861707]  ? __lock_acquire+0x43e/0x2930
+[10109.861716]  drm_pagemap_populate_mm+0x74/0xe0 [drm_gpusvm_helper]
+[10109.861720]  xe_svm_alloc_vram+0xb5/0x2c0 [xe]
+[10109.861817]  ? seqcount_lockdep_reader_access.constprop.0+0x9f/0xc0
+[10109.861819]  ? ktime_get+0x23/0x130
+[10109.861821]  ? trace_hardirqs_on+0x22/0xe0
+[10109.861823]  ? seqcount_lockdep_reader_access.constprop.0+0x9f/0xc0
+[10109.861826]  __xe_svm_handle_pagefault+0x77d/0xbf0 [xe]
+[10109.861924]  ? rwsem_down_write_slowpath+0x43a/0x9a0
+[10109.861926]  ? _raw_spin_unlock_irq+0x27/0x70
+[10109.861928]  ? rwsem_down_write_slowpath+0x43a/0x9a0
+[10109.861929]  ? trace_hardirqs_on+0x22/0xe0
+[10109.861931]  ? _raw_spin_unlock_irq+0x27/0x70
+[10109.861933]  ? rwsem_down_write_slowpath+0x459/0x9a0
+[10109.861937]  xe_svm_handle_pagefault+0x3d/0xb0 [xe]
+[10109.862030]  xe_pagefault_queue_work+0x1a9/0x520 [xe]
+[10109.862122]  process_one_work+0x239/0x730
+[10109.862127]  worker_thread+0x200/0x3f0
+[10109.862130]  ? __pfx_worker_thread+0x10/0x10
+[10109.862132]  kthread+0x10d/0x150
+[10109.862133]  ? __pfx_kthread+0x10/0x10
+[10109.862135]  ret_from_fork+0x3bd/0x470
+[10109.862138]  ? __pfx_kthread+0x10/0x10
+[10109.862140]  ret_from_fork_asm+0x1a/0x30
+[10109.862146]  </TASK>
+
+Fixes: 99624bdff867 ("drm/gpusvm: Add support for GPU Shared Virtual Memory")
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+Cc: Maxime Ripard <mripard@kernel.org>
+Cc: Matthew Brost <matthew.brost@intel.com>
+Cc: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: David Airlie <airlied@gmail.com>
+Cc: Simona Vetter <simona@ffwll.ch>
+Cc: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Cc: Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>
+Assisted-by: Claude:claude-opus-4-8
+Suggested-by: Matthew Brost <matthew.brost@intel.com>
+Signed-off-by: Arvind Yadav <arvind.yadav@intel.com>
+Reviewed-by: Matthew Brost <matthew.brost@intel.com>
+Signed-off-by: Matthew Brost <matthew.brost@intel.com>
+Link: https://patch.msgid.link/20260810092845.2776097-1-arvind.yadav@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/cs35l56.c | 71 +++++++++++++++++++++++++++++++-------
- sound/soc/codecs/cs35l56.h |  2 ++
- 2 files changed, 60 insertions(+), 13 deletions(-)
+ drivers/gpu/drm/drm_pagemap.c | 127 ++++++++++++++++++++++++++++++++--
+ include/drm/drm_pagemap.h     |   8 ++-
+ 2 files changed, 129 insertions(+), 6 deletions(-)
 
-diff --git a/sound/soc/codecs/cs35l56.c b/sound/soc/codecs/cs35l56.c
-index a6364cdb15926..80eb03eda5eb1 100644
---- a/sound/soc/codecs/cs35l56.c
-+++ b/sound/soc/codecs/cs35l56.c
-@@ -1368,12 +1368,6 @@ static int _cs35l56_component_probe(struct snd_soc_component *component)
- 
- 	BUILD_BUG_ON(ARRAY_SIZE(cs35l56_tx_input_texts) != ARRAY_SIZE(cs35l56_tx_input_values));
- 
--	if (!wait_for_completion_timeout(&cs35l56->init_completion,
--					 msecs_to_jiffies(5000))) {
--		dev_err(cs35l56->base.dev, "%s: init_completion timed out\n", __func__);
--		return -ENODEV;
--	}
--
- 	cs35l56->dsp.part = kasprintf(GFP_KERNEL, "cs35l%02x", cs35l56->base.type);
- 	if (!cs35l56->dsp.part)
- 		return -ENOMEM;
-@@ -1941,6 +1935,40 @@ static int cs35l56_try_get_broken_sdca_spkid_gpio(struct cs35l56_private *cs35l5
- 	return ret;
+diff --git a/drivers/gpu/drm/drm_pagemap.c b/drivers/gpu/drm/drm_pagemap.c
+index 05eb7254028f7..72ca5a48d4a66 100644
+--- a/drivers/gpu/drm/drm_pagemap.c
++++ b/drivers/gpu/drm/drm_pagemap.c
+@@ -1195,12 +1195,117 @@ void drm_pagemap_put(struct drm_pagemap *dpagemap)
  }
+ EXPORT_SYMBOL(drm_pagemap_put);
  
-+static int cs35l56_component_register(struct cs35l56_private *cs35l56)
++/**
++ * drm_pagemap_page_get_flags() - Read flags from a device-private folio
++ * @page: Pointer to a page of the device-private folio
++ *
++ * Return: The DRM_PAGEMAP_ZDD_FLAG_* bits encoded in zone_device_data.
++ */
++static unsigned long drm_pagemap_page_get_flags(struct page *page)
 +{
-+	int ret;
++	struct folio *folio = page_folio(page);
 +
-+	ret = snd_soc_register_component(cs35l56->base.dev,
-+					 &soc_component_dev_cs35l56,
-+					 cs35l56_dai, ARRAY_SIZE(cs35l56_dai));
-+	if (ret < 0) {
-+		dev_err(cs35l56->base.dev, "Register codec failed: %d\n", ret);
-+		return ret;
-+	}
-+
-+	cs35l56->component_registered = true;
-+
-+	return 0;
++	return (unsigned long)folio_zone_device_data(folio) &
++		DRM_PAGEMAP_ZDD_FLAG_MASK;
 +}
 +
-+static void cs35l56_component_register_work(struct work_struct *work)
++/**
++ * drm_pagemap_page_set_flags() - Set flags on a device-private folio
++ * @page: Pointer to a page of the device-private folio
++ * @flags: DRM_PAGEMAP_ZDD_FLAG_* bits to set
++ *
++ * Preserve any flags already encoded alongside the ZDD pointer.
++ */
++static void drm_pagemap_page_set_flags(struct page *page,
++				       unsigned long flags)
 +{
-+	struct cs35l56_private *cs35l56 = container_of(work,
-+						       struct cs35l56_private,
-+						       component_register_work);
-+	int ret;
++	struct folio *folio = page_folio(page);
++	unsigned long old;
 +
-+	PM_RUNTIME_ACQUIRE_AUTOSUSPEND(cs35l56->base.dev, pm_err);
-+	ret = PM_RUNTIME_ACQUIRE_ERR(&pm_err);
-+	if (ret) {
-+		dev_err(cs35l56->base.dev, "register_work failed to get pm_runtime: %d\n", ret);
++	if (WARN_ON_ONCE(flags & ~DRM_PAGEMAP_ZDD_FLAG_MASK))
 +		return;
-+	}
 +
-+	cs35l56_component_register(cs35l56);
++	old = (unsigned long)folio_zone_device_data(folio);
++	folio_set_zone_device_data(folio, (void *)(old | flags));
 +}
 +
- int cs35l56_common_probe(struct cs35l56_private *cs35l56, int irq)
- {
- 	int ret;
-@@ -1949,6 +1977,7 @@ int cs35l56_common_probe(struct cs35l56_private *cs35l56, int irq)
- 	mutex_init(&cs35l56->base.irq_lock);
- 	cs35l56->base.cal_index = -1;
- 	cs35l56->speaker_id = -ENOENT;
-+	INIT_WORK(&cs35l56->component_register_work, cs35l56_component_register_work);
- 
- 	dev_set_drvdata(cs35l56->base.dev, cs35l56);
- 
-@@ -2022,12 +2051,17 @@ int cs35l56_common_probe(struct cs35l56_private *cs35l56, int irq)
- 	if (ret)
- 		goto err_remove_wm_adsp;
- 
--	ret = snd_soc_register_component(cs35l56->base.dev,
--					 &soc_component_dev_cs35l56,
--					 cs35l56_dai, ARRAY_SIZE(cs35l56_dai));
--	if (ret < 0) {
--		dev_err_probe(cs35l56->base.dev, ret, "Register codec failed\n");
--		goto err_free_irq;
-+	/*
-+	 * Defer calling snd_soc_register_component() on SoundWire to prevent
-+	 * a deadlock where it calls our component_probe(), which requires the
-+	 * SoundWire enumeration to complete, but because we are still in probe()
-+	 * the SoundWire core will not call the update_status() callback. At time
-+	 * of writing snd_soc_register_component() never returns EPROBE_DEFER.
-+	 */
-+	if (!cs35l56->sdw_peripheral) {
-+		ret = cs35l56_component_register(cs35l56);
-+		if (ret < 0)
-+			goto err_free_irq;
- 	}
- 
- 	return 0;
-@@ -2057,6 +2091,7 @@ EXPORT_SYMBOL_NS_GPL(cs35l56_common_probe, "SND_SOC_CS35L56_CORE");
- 
- int cs35l56_init(struct cs35l56_private *cs35l56)
- {
-+	bool first_time_init = !cs35l56->base.init_done;
- 	int ret;
- 
- 	/*
-@@ -2133,13 +2168,23 @@ int cs35l56_init(struct cs35l56_private *cs35l56)
- 	cs35l56->base.init_done = true;
- 	complete_all(&cs35l56->init_completion);
- 
-+	if (cs35l56->sdw_peripheral && first_time_init) {
-+		/*
-+		 * Hardware now accessible, queue work to call
-+		 * snd_soc_register_component().
-+		 */
-+		queue_work(system_freezable_wq, &cs35l56->component_register_work);
-+	}
++/**
++ * drm_pagemap_retire_migrated_pages() - Record migrated device-private folios
++ * @src_pfns: source array after migrate_vma_pages() or migrate_device_pages()
++ * @npages: number of entries in @src_pfns
++ *
++ * Flag device-private folios successfully migrated to RAM before finalize
++ * unlocks the sources. The migrated state is stored in the physical folio, so
++ * it survives later folio splits and subsequent migrations can skip it.
++ */
++static void drm_pagemap_retire_migrated_pages(unsigned long *src_pfns,
++					      unsigned long npages)
++{
++	unsigned long i = 0;
 +
- 	return 0;
- }
- EXPORT_SYMBOL_NS_GPL(cs35l56_init, "SND_SOC_CS35L56_CORE");
++	while (i < npages) {
++		struct page *page = migrate_pfn_to_page(src_pfns[i]);
++		unsigned long nr = 1;
++
++		if (!page) {
++			i++;
++			continue;
++		}
++
++		if (src_pfns[i] & MIGRATE_PFN_COMPOUND)
++			nr = folio_nr_pages(page_folio(page));
++
++		if ((src_pfns[i] & MIGRATE_PFN_MIGRATE) &&
++		    is_device_private_page(page))
++			drm_pagemap_page_set_flags(page,
++						   DRM_PAGEMAP_ZDD_FLAG_MIGRATED);
++
++		i += nr;
++	}
++}
++
++/**
++ * drm_pagemap_skip_retired_pages() - Skip retired device-private folios
++ * @src_pfns: MIGRATE_PFN-encoded source array
++ * @npages: number of entries in @src_pfns
++ *
++ * Skip source folios already migrated to RAM, identified by the migrated flag
++ * stored in the physical folio's zone_device_data.
++ */
++static void drm_pagemap_skip_retired_pages(unsigned long *src_pfns,
++					   unsigned long npages)
++{
++	unsigned long i = 0;
++
++	while (i < npages) {
++		struct page *page = migrate_pfn_to_page(src_pfns[i]);
++		unsigned long nr = 1;
++
++		if (!page) {
++			i++;
++			continue;
++		}
++
++		if (src_pfns[i] & MIGRATE_PFN_COMPOUND)
++			nr = folio_nr_pages(page_folio(page));
++
++		if ((src_pfns[i] & MIGRATE_PFN_MIGRATE) &&
++		    is_device_private_page(page) &&
++		    (drm_pagemap_page_get_flags(page) &
++		     DRM_PAGEMAP_ZDD_FLAG_MIGRATED))
++			src_pfns[i] &= ~MIGRATE_PFN_MIGRATE;
++
++		i += nr;
++	}
++}
++
+ /**
+  * drm_pagemap_evict_to_ram() - Evict GPU SVM range to RAM
+  * @devmem_allocation: Pointer to the device memory allocation
+  *
+- * Similar to __drm_pagemap_migrate_to_ram but does not require mmap lock and
+- * migration done via migrate_device_* functions.
++ * Similar to __drm_pagemap_migrate_to_ram(), but uses the
++ * migrate_device_* helpers and does not require the mmap lock.
++ * Device-private PFNs already migrated to RAM by either path are skipped.
+  *
+  * Return: 0 on success, negative error code on failure.
+  */
+@@ -1241,6 +1346,8 @@ int drm_pagemap_evict_to_ram(struct drm_pagemap_devmem *devmem_allocation)
+ 	if (err)
+ 		goto err_free;
  
- void cs35l56_remove(struct cs35l56_private *cs35l56)
++	drm_pagemap_skip_retired_pages(src, npages);
++
+ 	err = drm_pagemap_migrate_populate_ram_pfn(NULL, NULL, npages, &mpages,
+ 						   src, dst, 0);
+ 	if (err || !mpages)
+@@ -1263,6 +1370,7 @@ int drm_pagemap_evict_to_ram(struct drm_pagemap_devmem *devmem_allocation)
+ 	if (err)
+ 		drm_pagemap_migration_unlock_put_pages(npages, dst);
+ 	migrate_device_pages(src, dst, npages);
++	drm_pagemap_retire_migrated_pages(src, npages);
+ 	migrate_device_finalize(src, dst, npages);
+ 	drm_pagemap_migrate_unmap_pages(devmem_allocation->dev, pagemap_addr, dst, npages,
+ 					DMA_FROM_DEVICE, &state);
+@@ -1360,13 +1468,15 @@ static int __drm_pagemap_migrate_to_ram(struct vm_area_struct *vas,
+ 	if (!migrate.cpages)
+ 		goto err_free;
+ 
++	drm_pagemap_skip_retired_pages(migrate.src, npages);
++
+ 	ops = zdd->devmem_allocation->ops;
+ 	dev = zdd->devmem_allocation->dev;
+ 
+ 	err = drm_pagemap_migrate_populate_ram_pfn(vas, page, npages, &mpages,
+ 						   migrate.src, migrate.dst,
+ 						   start);
+-	if (err)
++	if (err || !mpages)
+ 		goto err_finalize;
+ 
+ 	err = drm_pagemap_migrate_map_system_pages(dev, pagemap_addr,
+@@ -1386,6 +1496,7 @@ static int __drm_pagemap_migrate_to_ram(struct vm_area_struct *vas,
+ 	if (err)
+ 		drm_pagemap_migration_unlock_put_pages(npages, migrate.dst);
+ 	migrate_vma_pages(&migrate);
++	drm_pagemap_retire_migrated_pages(migrate.src, npages);
+ 	migrate_vma_finalize(&migrate);
+ 	if (dev)
+ 		drm_pagemap_migrate_unmap_pages(dev, pagemap_addr, migrate.dst,
+@@ -1438,13 +1549,19 @@ static vm_fault_t drm_pagemap_migrate_to_ram(struct vm_fault *vmf)
+ static void drm_pagemap_folio_split(struct folio *orig_folio, struct folio *new_folio)
  {
--	snd_soc_unregister_component(cs35l56->base.dev);
-+	cancel_work_sync(&cs35l56->component_register_work);
-+	if (cs35l56->component_registered)
-+		snd_soc_unregister_component(cs35l56->base.dev);
+ 	struct drm_pagemap_zdd *zdd;
++	unsigned long orig_data, new_data;
  
- 	cs35l56->base.init_done = false;
+ 	if (!new_folio)
+ 		return;
  
-diff --git a/sound/soc/codecs/cs35l56.h b/sound/soc/codecs/cs35l56.h
-index 1ddee9ab6a876..6adba4d2da1f8 100644
---- a/sound/soc/codecs/cs35l56.h
-+++ b/sound/soc/codecs/cs35l56.h
-@@ -32,6 +32,7 @@ struct sdw_slave;
- struct cs35l56_private {
- 	struct wm_adsp dsp; /* must be first member */
- 	struct cs35l56_base base;
-+	struct work_struct component_register_work;
- 	struct work_struct dsp_work;
- 	struct workqueue_struct *dsp_wq;
- 	struct snd_soc_component *component;
-@@ -43,6 +44,7 @@ struct cs35l56_private {
- 	bool sdw_irq_no_unmask;
- 	bool soft_resetting;
- 	bool sdw_attached;
-+	bool component_registered;
- 	struct completion init_completion;
+ 	new_folio->pgmap = orig_folio->pgmap;
+-	zdd = folio_zone_device_data(orig_folio);
+-	folio_set_zone_device_data(new_folio, drm_pagemap_zdd_get(zdd));
++
++	orig_data = (unsigned long)folio_zone_device_data(orig_folio);
++	zdd = (struct drm_pagemap_zdd *)(orig_data & ~DRM_PAGEMAP_ZDD_FLAG_MASK);
++
++	new_data = (unsigned long)drm_pagemap_zdd_get(zdd);
++	new_data |= orig_data & DRM_PAGEMAP_ZDD_FLAG_MASK;
++	folio_set_zone_device_data(new_folio, (void *)new_data);
+ }
  
- 	int speaker_id;
+ static const struct dev_pagemap_ops drm_pagemap_pagemap_ops = {
+diff --git a/include/drm/drm_pagemap.h b/include/drm/drm_pagemap.h
+index 95eb4b66b0577..ebbd3b0ddf367 100644
+--- a/include/drm/drm_pagemap.h
++++ b/include/drm/drm_pagemap.h
+@@ -2,6 +2,7 @@
+ #ifndef _DRM_PAGEMAP_H_
+ #define _DRM_PAGEMAP_H_
+ 
++#include <linux/bits.h>
+ #include <linux/dma-direction.h>
+ #include <linux/hmm.h>
+ #include <linux/memremap.h>
+@@ -339,6 +340,9 @@ struct drm_pagemap_migrate_details {
+ 
+ #if IS_ENABLED(CONFIG_ZONE_DEVICE)
+ 
++#define DRM_PAGEMAP_ZDD_FLAG_MIGRATED	BIT(0)
++#define DRM_PAGEMAP_ZDD_FLAG_MASK	DRM_PAGEMAP_ZDD_FLAG_MIGRATED
++
+ int drm_pagemap_migrate_to_devmem(struct drm_pagemap_devmem *devmem_allocation,
+ 				  struct mm_struct *mm,
+ 				  unsigned long start, unsigned long end,
+@@ -373,7 +377,9 @@ static inline struct drm_pagemap_zdd *drm_pagemap_page_zone_device_data(struct p
+ {
+ 	struct folio *folio = page_folio(page);
+ 
+-	return folio_zone_device_data(folio);
++	return (struct drm_pagemap_zdd *)
++		((unsigned long)folio_zone_device_data(folio) &
++		 ~DRM_PAGEMAP_ZDD_FLAG_MASK);
+ }
+ 
+ #else
 -- 
 2.53.0
 
