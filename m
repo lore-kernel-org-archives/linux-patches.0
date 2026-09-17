@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5087E4EFFCE;
-	Thu, 17 Sep 2026 17:04:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C3B2519E00;
+	Thu, 17 Sep 2026 17:04:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789664661; cv=none; b=WksTA2UqMUABfNhOSBpN5Ny8Tq5JW4q99Z+3hHrPXEmmp1ToWe0aVs/FiD4Q0CrD43Ru8OoWkxmn/WmI2UhqtInwEidtrXA0eCg8g5TqXH789hOUkul7+R4EjKPVNCAfP9Dsc18fawTx5OAtfUxp3rwa6d8LvgJ97BIN2VaWRdw=
+	t=1789664664; cv=none; b=BP2L/kZQnRvOIQIHfHU+m4RV4gtpIjRNjGzd1UmK7p2taeWy23gPWdyRGF2ITu+aFPkWpBbvHExHCZTOH+QLnUIRLkpZQk9qQuAtuAcK9OaAxGr8jGVjZ75kIaZxlWElJbtc5MOVfdgJbYgKcXqsc4UnvDRe16p57Pr233KsO+E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789664661; c=relaxed/simple;
-	bh=6d5P4QzNj7LAFoWfsWNHOWL6EG7C8cOUyqDEgPeqNdQ=;
+	s=arc-20240116; t=1789664664; c=relaxed/simple;
+	bh=mbYs6RMnrhkCUKWTQ1Ul1Gm1x+PXMZJIgjGwwP+5Wo0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MKajv37gpHxrMnK3cJbXx1+1Gu8zlsFKr5zyRD+KTvNNjKIvfci5ZPzIZUcoSZ/9XYkk+QK2JY49MEix7/D0ElMaMKBqcVL8hVkwDrKN2v4oiFneN8lK62R34ndOecNpPwX3MMnwjIWjI767EGtYzY+f7Dtdi/LrWxQw1M/7RcM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X5gURMZk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=amal6bZFu/Ng+5ee26yfV84OQe7gfWyApLK4x9JL8e5+ULq1quF4B/2mtQnQOsLRxqxJU7bd4Nvy5SaAO8Y1huQ66iesEVcjVPlP+SgfZJZrM/nx1gkaNcf7Cx0IZ2qHaW8GmQcIfmuoy6LHyW2S+gnPs+GqxzQEt+GU14TVqmY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mVvcHWio; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X5gURMZk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 744531F000FF;
-	Thu, 17 Sep 2026 17:04:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mVvcHWio"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 756661F000FF;
+	Thu, 17 Sep 2026 17:04:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789664660;
-	bh=DSfyDVdDnmB4usR5eFbiUQKt6Rkm+mhODnxlnRnxaZQ=;
+	s=korg; t=1789664663;
+	bh=m5EVKTFBczL68CJ9JMxqSpOq1ZKNlvutP2ojrhWerLg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=X5gURMZkuh3lfnprqMOFPg4ekQcOvbF4gX3nHyQbBq7V2Nu9tsYwxVJL+HPZxW+Td
-	 LNgLArLgZJn5vJseKIfWjJtq0Ubn9WxqeaZOCJgHJWfzI6s5ty2hnFLJyVRlbvjInl
-	 duHNSmSkH9M92acREbdSyqJocVX3RIOhyC/1n3dY=
+	b=mVvcHWiognk1hk3pV9V8l4PpRxbCkH/AqfaJ8ECPWu26RV6Suf87b27oyR0G9J49g
+	 XNqNL6SgBKZiP9wER5bkSLes1A4fepIShxtfwQ5k813Ork2ObK7aNVF++fhPu9RuPG
+	 kHskY6txPUtgO/BxFV2J3AXH8HbIMEzoP5JI4vHQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
 	Jassi Brar <jassisinghbrar@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0447/1250] mailbox: imx: Add a channel shutdown field
-Date: Thu, 17 Sep 2026 16:04:02 +0100
-Message-ID: <20260917151604.115021235@linuxfoundation.org>
+Subject: [PATCH 6.18 0448/1250] mailbox: imx: use devm_of_platform_populate()
+Date: Thu, 17 Sep 2026 16:04:03 +0100
+Message-ID: <20260917151604.140384377@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -55,31 +55,14 @@ Content-Transfer-Encoding: 8bit
 
 From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-[ Upstream commit 5ccea7eacb7786c358833634f45700365f6c1d99 ]
+[ Upstream commit dd1b321e8024fb01404fe163076c9010c5df8608 ]
 
-sashiko complained about possible teardown problem. The scenario
+The driver uses of_platform_populate() but does not remove the added
+devices on removal. This can lead to "double devices" on module removal
+followed by adding the module again.
 
- CPU 0                              CPU 1
-  imx_mu_isr()                   imx_mu_shutdown()
-                                   imx_mu_xcr_rmw(priv, IMX_MU_RCR, 0, IMX_MU_xCR_RIEn(priv->dcfg->type, cp->idx));
-    imx_mu_specific_rx()
-      imx_mu_xcr_rmw(priv, IMX_MU_RCR, IMX_MU_xCR_RIEn(priv->dcfg->type, 0), 0);
-                                   free_irq()
-
-The RX event remains enabled because in this short window the RX event
-was disabled in ->shutdown() while the interrupt was active and then
-enabled again by the ISR while ->shutdown waited in free_irq().
-
-This race requires timing and if happens can be problematic on shared
-handlers if the "removed" channel triggers an interrupt. In this case
-the irq-core will shutdown the interrupt with the "nobody cared"
-message.
-
-Introduce imx_mu_con_priv::shutdown to signal that the channel is
-shutting down. This flag is set with the lock held (by
-imx_mu_xcr_clr_shut()). The unmask side uses imx_mu_xcr_set_act() which
-only enables the event if the channel has not been shutdown and
-serialises on the same lock.
+Use devm_of_platform_populate() to remove the populated devices once the
+parent device is removed.
 
 Reviewed-by: Peng Fan <peng.fan@nxp.com>
 Reviewed-by: Mathieu Poirier <mathieu.poirier@linaro.org>
@@ -87,92 +70,22 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mailbox/imx-mailbox.c | 40 +++++++++++++++++++++++++++++++----
- 1 file changed, 36 insertions(+), 4 deletions(-)
+ drivers/mailbox/imx-mailbox.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/mailbox/imx-mailbox.c b/drivers/mailbox/imx-mailbox.c
-index a45c3e6d76575..3e52f70434c97 100644
+index 3e52f70434c97..445cd50c1b667 100644
 --- a/drivers/mailbox/imx-mailbox.c
 +++ b/drivers/mailbox/imx-mailbox.c
-@@ -82,6 +82,7 @@ struct imx_mu_con_priv {
- 	enum imx_mu_chan_type	type;
- 	struct mbox_chan	*chan;
- 	struct work_struct 	txdb_work;
-+	bool			shutdown;
- };
+@@ -986,7 +986,7 @@ static int imx_mu_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		goto err_out;
  
- struct imx_mu_priv {
-@@ -221,6 +222,36 @@ static u32 imx_mu_xcr_rmw(struct imx_mu_priv *priv, enum imx_mu_xcr type, u32 se
- 	return val;
- }
- 
-+static void imx_mu_xcr_clr_shut(struct imx_mu_priv *priv, struct imx_mu_con_priv *cp,
-+				enum imx_mu_xcr type, u32 clr)
-+{
-+	unsigned long flags;
-+	u32 val;
-+
-+	spin_lock_irqsave(&priv->xcr_lock, flags);
-+	cp->shutdown = true;
-+
-+	val = imx_mu_read(priv, priv->dcfg->xCR[type]);
-+	val &= ~clr;
-+	imx_mu_write(priv, val, priv->dcfg->xCR[type]);
-+	spin_unlock_irqrestore(&priv->xcr_lock, flags);
-+}
-+
-+static void imx_mu_xcr_set_act(struct imx_mu_priv *priv, struct imx_mu_con_priv *cp,
-+			       enum imx_mu_xcr type, u32 set)
-+{
-+	unsigned long flags;
-+	u32 val;
-+
-+	spin_lock_irqsave(&priv->xcr_lock, flags);
-+	if (!cp->shutdown) {
-+		val = imx_mu_read(priv, priv->dcfg->xCR[type]);
-+		val |= set;
-+		imx_mu_write(priv, val, priv->dcfg->xCR[type]);
-+	}
-+	spin_unlock_irqrestore(&priv->xcr_lock, flags);
-+}
-+
- static int imx_mu_generic_tx(struct imx_mu_priv *priv,
- 			     struct imx_mu_con_priv *cp,
- 			     void *data)
-@@ -379,7 +410,7 @@ static int imx_mu_specific_rx(struct imx_mu_priv *priv, struct imx_mu_con_priv *
- 		*data++ = imx_mu_read(priv, priv->dcfg->xRR + (i % num_rr) * 4);
- 	}
- 
--	imx_mu_xcr_rmw(priv, IMX_MU_RCR, IMX_MU_xCR_RIEn(priv->dcfg->type, 0), 0);
-+	imx_mu_xcr_set_act(priv, cp, IMX_MU_RCR, IMX_MU_xCR_RIEn(priv->dcfg->type, 0));
- 	mbox_chan_received_data(cp->chan, (void *)priv->msg);
+-	of_platform_populate(dev->of_node, NULL, NULL, dev);
++	devm_of_platform_populate(dev);
  
  	return 0;
-@@ -607,6 +638,7 @@ static int imx_mu_startup(struct mbox_chan *chan)
- 		return ret;
- 	}
  
-+	cp->shutdown = false;
- 	switch (cp->type) {
- 	case IMX_MU_TYPE_RX:
- 		imx_mu_xcr_rmw(priv, IMX_MU_RCR, IMX_MU_xCR_RIEn(priv->dcfg->type, cp->idx), 0);
-@@ -641,13 +673,13 @@ static void imx_mu_shutdown(struct mbox_chan *chan)
- 
- 	switch (cp->type) {
- 	case IMX_MU_TYPE_TX:
--		imx_mu_xcr_rmw(priv, IMX_MU_TCR, 0, IMX_MU_xCR_TIEn(priv->dcfg->type, cp->idx));
-+		imx_mu_xcr_clr_shut(priv, cp, IMX_MU_TCR, IMX_MU_xCR_TIEn(priv->dcfg->type, cp->idx));
- 		break;
- 	case IMX_MU_TYPE_RX:
--		imx_mu_xcr_rmw(priv, IMX_MU_RCR, 0, IMX_MU_xCR_RIEn(priv->dcfg->type, cp->idx));
-+		imx_mu_xcr_clr_shut(priv, cp, IMX_MU_RCR, IMX_MU_xCR_RIEn(priv->dcfg->type, cp->idx));
- 		break;
- 	case IMX_MU_TYPE_RXDB:
--		imx_mu_xcr_rmw(priv, IMX_MU_GIER, 0, IMX_MU_xCR_GIEn(priv->dcfg->type, cp->idx));
-+		imx_mu_xcr_clr_shut(priv, cp, IMX_MU_GIER, IMX_MU_xCR_GIEn(priv->dcfg->type, cp->idx));
- 		break;
- 	case IMX_MU_TYPE_RST:
- 		imx_mu_xcr_rmw(priv, IMX_MU_CR, IMX_MU_xCR_RST(priv->dcfg->type), 0);
 -- 
 2.53.0
 
