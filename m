@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C0D53B7771;
-	Thu, 17 Sep 2026 17:52:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A3484E36F7;
+	Thu, 17 Sep 2026 17:52:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789667572; cv=none; b=CQ57tV3eIqW1jzVELflWKaDURy0FPC8Td0d5iZ+eOtlZHrpdxaNjQZNsyDkJoPnL1B3V8K10nuNnIV/E9OxubrbRZPXvk6ab5Twsix11S29Lr6S5e6Ck+XLJ1qt1zKVgA0818mUgPKziIg+dAUeIQagX69Zd4umS7J5pg3JJlFs=
+	t=1789667575; cv=none; b=apTtBspnMdJfBKiEWPDD6eXu3Nn/zSv0mP67L3uy8OUD7EQUYdfeLDSATZ8/Gq0LwRDwDNBfO77cwBN7pz1icj9fCniC6F0svWykjJVqq+ST+rs1eDCQELlrpSB7fcgyk4erh0uZODzsowcMTU9SimIHBnsxImCMtSr81PCvR1o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789667572; c=relaxed/simple;
-	bh=6ne51POljKskD5PiJtVeJ9+LO3eC1tv/oK7+GllJp78=;
+	s=arc-20240116; t=1789667575; c=relaxed/simple;
+	bh=wITgjrHicPrwonSvW4uCdn2um+t+o4mu4RcK5wXEftc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ERSVN6JQl9nyGiOT50lZMC2S9uwE3IGduIArXWrygLB4HjuII2uaW8wH0IB8jm39MKnSgfeNZLs1m8xQa6ArJ7VdTbGhqxyt0Zx0wI20gILIBeT4Ti2JPzsofjme69b7oZlRHJOEwmYlZfKGfGFm5GljCKWWnoXXyn8/ZflyPL0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YoyLFQIk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lnEewkWZjy2C/wbWX75gNnacIjNV375GtwwgLANivSEbQAWDVbZ99gVzHNsBfMxWtDg2OzloeO4jePMhKigolzi5nUSJbNP3k50MTFb145jfkzqoZLQVFcU/bxpSKnR6B6SYfE4jyuNrIcNXDbfXH4QKRLj1qR+BdWstvDbtG70=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P4ge1aoR; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YoyLFQIk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C13401F000FF;
-	Thu, 17 Sep 2026 17:52:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P4ge1aoR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF1A81F000FF;
+	Thu, 17 Sep 2026 17:52:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789667571;
-	bh=NczXCzLNTaZn893+qaUD9+D8z/TRPHHyV62FxdsGnU0=;
+	s=korg; t=1789667574;
+	bh=XP6s6UY6RKFEjnQZoOo0xd3CIVoyz8TsoV2xwgLvvNw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YoyLFQIkKaeVz4SjIlIa6IlkinEM8Txur2tjeghV5EQqsKOB5p5p0uDnaIAqaK9zF
-	 nBwwISv1WTWseWS8zyY8lE830INWYP3kiD12uLy/0/AlxaSH7SMxAvpuuUGR0QvReU
-	 jVVhXr9MlPSfEUO9bqC2vhm3pw+eY/WG6umiwkXY=
+	b=P4ge1aoR6TQG8LaCxN9bV2jtE1W24BPfc0OmhViDmH+qym2s5gSajBMJJSPenQG8q
+	 xW4B/M1IIJDDGLDPx2mKF+efeMGJmzuh88B2+bQcpk+pChk4Z7Q32/WSl7wJCDBOs2
+	 ZwIPIrdPe3bADVxG46IlARLJah/ZJe3fjoyLTWDg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <thorsten.blum@linux.dev>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Tellakula Yeswanth Krishna <yeswanth@linux.ibm.com>,
+	Venkat Rao Bagalkote <venkat88@linux.ibm.com>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0138/1102] crypto: atmel-sha204a - remove sysfs group before hwrng
-Date: Thu, 17 Sep 2026 16:01:21 +0100
-Message-ID: <20260917151542.986687870@linuxfoundation.org>
+Subject: [PATCH 6.12 0139/1102] char/nvram: Remove redundant nvram_mutex
+Date: Thu, 17 Sep 2026 16:01:22 +0100
+Message-ID: <20260917151543.011916848@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -51,38 +53,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@linux.dev>
+From: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
 
-[ Upstream commit d58b4a09d7f06750a706b70d068f5a678dad8233 ]
+[ Upstream commit e8c715f3a7dae43fabae261493a26474fec11863 ]
 
-atmel_sha204a_probe() registers the hwrng before creating the sysfs
-group. Mirror this order in atmel_sha204a_remove() by removing the sysfs
-group before unregistering the hwrng.
+The global nvram_mutex in drivers/char/nvram.c is redundant and unused,
+and this triggers compiler warnings on some configurations.
 
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+All platform-specific nvram operations already provide their own internal
+synchronization, meaning the wrapper-level mutex does not provide any
+additional safety.
+
+Remove the nvram_mutex definition along with all remaining lock/unlock
+users across PPC32, x86, and m68k code paths, and rely entirely on the
+per-architecture nvram implementations for locking.
+
+Reviewed-by: Arnd Bergmann <arnd@arndb.de>
+Suggested-by: Arnd Bergmann <arnd@arndb.de>
+Tested-by: Tellakula Yeswanth Krishna <yeswanth@linux.ibm.com>
+Signed-off-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
+Tested-by: yeswanth <yeswanth@linux.ibm.com>
+Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Link: https://patch.msgid.link/20260428061540.73668-1-venkat88@linux.ibm.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/atmel-sha204a.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/char/nvram.c | 16 +++-------------
+ 1 file changed, 3 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/crypto/atmel-sha204a.c b/drivers/crypto/atmel-sha204a.c
-index d2031abbd8efa..3e52e604ded39 100644
---- a/drivers/crypto/atmel-sha204a.c
-+++ b/drivers/crypto/atmel-sha204a.c
-@@ -209,11 +209,10 @@ static void atmel_sha204a_remove(struct i2c_client *client)
- {
- 	struct atmel_i2c_client_priv *i2c_priv = i2c_get_clientdata(client);
+diff --git a/drivers/char/nvram.c b/drivers/char/nvram.c
+index 9eff426a92865..e89cc1f1c89ea 100644
+--- a/drivers/char/nvram.c
++++ b/drivers/char/nvram.c
+@@ -53,7 +53,6 @@
+ #include <asm/nvram.h>
+ #endif
  
-+	sysfs_remove_group(&client->dev.kobj, &atmel_sha204a_groups);
- 	devm_hwrng_unregister(&client->dev, &i2c_priv->hwrng);
- 	atmel_i2c_flush_queue();
+-static DEFINE_MUTEX(nvram_mutex);
+ static DEFINE_SPINLOCK(nvram_state_lock);
+ static int nvram_open_cnt;	/* #times opened */
+ static int nvram_open_mode;	/* special open modes */
+@@ -310,11 +309,8 @@ static long nvram_misc_ioctl(struct file *file, unsigned int cmd,
+ 		break;
+ #ifdef CONFIG_PPC32
+ 	case IOC_NVRAM_SYNC:
+-		if (ppc_md.nvram_sync != NULL) {
+-			mutex_lock(&nvram_mutex);
++		if (ppc_md.nvram_sync)
+ 			ppc_md.nvram_sync();
+-			mutex_unlock(&nvram_mutex);
+-		}
+ 		ret = 0;
+ 		break;
+ #endif
+@@ -324,11 +320,8 @@ static long nvram_misc_ioctl(struct file *file, unsigned int cmd,
+ 		if (!capable(CAP_SYS_ADMIN))
+ 			return -EACCES;
  
--	sysfs_remove_group(&client->dev.kobj, &atmel_sha204a_groups);
--
- 	kfree((void *)i2c_priv->hwrng.priv);
- }
+-		if (arch_nvram_ops.initialize != NULL) {
+-			mutex_lock(&nvram_mutex);
++		if (arch_nvram_ops.initialize)
+ 			ret = arch_nvram_ops.initialize();
+-			mutex_unlock(&nvram_mutex);
+-		}
+ 		break;
+ 	case NVRAM_SETCKS:
+ 		/* just set checksum, contents unchanged (maybe useful after
+@@ -336,11 +329,8 @@ static long nvram_misc_ioctl(struct file *file, unsigned int cmd,
+ 		if (!capable(CAP_SYS_ADMIN))
+ 			return -EACCES;
  
+-		if (arch_nvram_ops.set_checksum != NULL) {
+-			mutex_lock(&nvram_mutex);
++		if (arch_nvram_ops.set_checksum)
+ 			ret = arch_nvram_ops.set_checksum();
+-			mutex_unlock(&nvram_mutex);
+-		}
+ 		break;
+ #endif /* CONFIG_X86 || CONFIG_M68K */
+ 	}
 -- 
 2.53.0
 
