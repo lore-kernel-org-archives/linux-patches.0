@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65553530E18;
-	Thu, 17 Sep 2026 15:45:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 892494C10DA;
+	Thu, 17 Sep 2026 15:45:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659953; cv=none; b=P4ir93t6XHQLXSTfrsqbbYgOE77wGByTRWy/tcBUuWj2AKAKJkviVFvD8bkxda0AouRsXpHMtTf+kHGWf+5zb9quw0dt8gkGNL9/6w23PM/bOggoSEg5t+kvkdIwPMtowbh5sa9D2oQOnvAkLalEXL2rqH69buMxVQ17iCFg/wY=
+	t=1789659956; cv=none; b=rKif2r+w5uhaUvDXwkFsO33gYFLVWmcPrY8Hy6BmPOz320bkGYyIi0OE+VXYTovOrPNftZzXK5T0l6rD3kyobKnIbKb07zWW5U4VoiEaEMHOjMAqqQlkoLaidV5XVmAxqxKN8Ml/+bUt9hl78zIF2WVImYV3EKtA3Mp7tRt+CZE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659953; c=relaxed/simple;
-	bh=yzd53XPHFewllcIPji2SdB7HcViMEOI4Rg0xClsYoas=;
+	s=arc-20240116; t=1789659956; c=relaxed/simple;
+	bh=JrP+9nnWfsE5b2ReI4ALXubCP8Wy7qguEGqa7mVmCEU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X4zPj3F3vbdztZwWYr36Fb7vPzct7Ph6tzPpIdlMYmjZkNzmeeiv7i4NWWCeCO61d2L26JYFBzySl6mYIRTmGY0RU/csfnk/hLcrszlwFDhc9823FHGnRPVA7kGm6sUVI4YllZZ0Jbw1O9DpoFwMCcfP5uQsjOcKBZ+xgYH4aVo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l7AB3+sG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pDAVnQBJE2c8/R3zq3Iw5tzOfw1zY4tbcYIC5IMsi84o2zc+eK2ultQN2TV7YzK/lVfzLB+icHZGD3jHNc/oTZgVf1MM4Sk6iqgl9Ivcemo9n+i5j/DNB1Fi12LjOy/g3/ch2RVaAQ+UP4atQ9LaJR7mielZUrblbI8JtIBPNb0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=my/0mKxk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l7AB3+sG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F0421F00898;
-	Thu, 17 Sep 2026 15:45:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="my/0mKxk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B6161F000FF;
+	Thu, 17 Sep 2026 15:45:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659949;
-	bh=jgNAbd6Y/U+Z/wfgLZXO4U6Jylno8dgkx2ST9HJkDPU=;
+	s=korg; t=1789659952;
+	bh=XOv3t0fW7W9LQUnVSdnyyrQaQiZzqwg4ahVJ+GJ50rc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=l7AB3+sGKKNGz5sORGm7q8lh6SH318fJ2cwVKorw8McNgaLC9MPiKqhezGkbSSoR3
-	 t/UukcHoAxAwM5eMrrvSPuII/Tt0Qa4X2fcq32/HDDo2635cdf0yOr7p+Dw0A4Z1Zk
-	 PlNZ93uDyNhfwlMY7dvvUTv3MnOidxMui2VtCEDo=
+	b=my/0mKxkr8lWxyRJF3T0D2B7gAZld2DouaynsmFAn5WiZsEnURPmaeWhKGhyGXj7c
+	 ExCDWXxObjpKVpkrEIs9P7409bTct14w1UnU9l1LGT2Xoy9c9UdMZFR5YrLRV2KiVC
+	 9yQW0pen/gIH34scLapIyGFTeKpVYCnvQRTEQ8Z8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Lunn <andrew@lunn.ch>,
-	Vladislav Karmanov <vladislav.karmanov.dev@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Mitul Golani <mitulkumar.ajitkumar.golani@intel.com>,
+	Suraj Kandpal <suraj.kandpal@intel.com>,
+	Jani Nikula <jani.nikula@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 429/733] net: phy: mediatek-ge: disable EEE on the MT7530 PHY
-Date: Thu, 17 Sep 2026 16:12:17 +0100
-Message-ID: <20260917151402.520180138@linuxfoundation.org>
+Subject: [PATCH 7.2 412/733] drm/i915/dp: Gate UHBR SST SDP splitting on sink capability
+Date: Thu, 17 Sep 2026 16:12:00 +0100
+Message-ID: <20260917151402.041126397@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -52,107 +52,147 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vladislav Karmanov <vladislav.karmanov.dev@gmail.com>
+From: Mitul Golani <mitulkumar.ajitkumar.golani@intel.com>
 
-[ Upstream commit ccbe7540e4aad0d1c3acc249697350b93ccb8025 ]
+[ Upstream commit a894f97318366d12102c15937aa6b63c21aa82b5 ]
 
-The MT7530 internal GE PHY advertises EEE by hardware default, but its
-EEE support is defective: with EEE advertised, some link partners fail
-to establish a stable link. On a 2-pair (4-wire) cable where both ends
-advertise gigabit, 1000BASE-T training cannot succeed, and instead of
-falling back to 100 Mbps the port loops, so no link or DHCP lease is
-ever obtained. MediaTek confirms the hardware is the root cause (Landen
-Chao, 2021): "EEE of the 10-year-old MT7530 internal gephy has many IOT
-problems, so it is recommended to disable its EEE."
+SDP splitting for 128b/132b (UHBR) SST audio must only be enabled when
+the sink advertises support for it. Previously sdp_split_enable
+was set for every UHBR SST stream carrying audio, regardless of sink
+capability.
 
-mtk_gephy_config_init() used to clear the EEE advertisement early, but
-commit af3b4b0e59de ("net: phy: mediatek-ge: do not disable EEE
-advertisement") removed that on the rationale that the DSA subdriver
-already performs an early disable. That holds for MT7531, whose
-mt7531_setup() clears MDIO_AN_EEE_ADV on each switch PHY, but not for
-the MT7530 PHY: neither the MT7621 integrated switch nor the dedicated
-MT7530 IC ever had such a loop, so removing it left those boards
-without any working early EEE disable and the link flapping came back.
+In MST mode SDP splitting is inherently supported, so the sink
+capability check (DP_SST_SPLIT_SDP_CAP) is applied only to the SST path.
 
-Since the broken hardware is the PHY, fix it in the PHY driver so it
-covers all users of this PHY, integrated in a switch or standalone:
-
-  - clear MDIO_AN_EEE_ADV in probe(), as early as possible, before
-    anything can negotiate EEE with the link partner;
-  - clear it again in config_init() and call phy_disable_eee() there.
-    config_init() is what phy_init_hw() replays after a PHY reset, when
-    the register is back at its EEE-advertising hardware default, and
-    it runs after of_set_phy_eee_broken() in phy_probe(), so the
-    eee_disabled_modes mask survives and neither phylib nor userspace
-    can re-enable EEE. dp83867 disables broken EEE from config_init()
-    the same way.
-
-Auto-negotiation then falls back to a stable 100 Mbps link instead of
-looping at gigabit. Tested on ASUS RT-AX53U (MT7621): with a 2-pair
-cable on the WAN port, a single clean 100 Mbps link comes up and a
-DHCP lease is obtained, where the unpatched driver loops.
-
-Fixes: af3b4b0e59de ("net: phy: mediatek-ge: do not disable EEE advertisement")
-Suggested-by: Andrew Lunn <andrew@lunn.ch>
-Signed-off-by: Vladislav Karmanov <vladislav.karmanov.dev@gmail.com>
-Link: https://patch.msgid.link/20260908145213.3976508-1-vladislav.karmanov.dev@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 8853750dbad8 ("drm/i915: Enable SDP split for DP2.0")
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Mitul Golani <mitulkumar.ajitkumar.golani@intel.com>
+Reviewed-by: Suraj Kandpal <suraj.kandpal@intel.com>
+Signed-off-by: Suraj Kandpal <suraj.kandpal@intel.com>
+Link: https://patch.msgid.link/20260825073204.872441-1-mitulkumar.ajitkumar.golani@intel.com
+(cherry picked from commit b37921c9f533ca936c5b5a484c1299680c570a7e)
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/mediatek/mtk-ge.c | 29 +++++++++++++++++++++++++++++
- 1 file changed, 29 insertions(+)
+ .../drm/i915/display/intel_display_types.h    |  2 +
+ drivers/gpu/drm/i915/display/intel_dp.c       | 44 ++++++++++++++++---
+ 2 files changed, 40 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/phy/mediatek/mtk-ge.c b/drivers/net/phy/mediatek/mtk-ge.c
-index 73d9b72f9d9e2..96d8ac5154e5e 100644
---- a/drivers/net/phy/mediatek/mtk-ge.c
-+++ b/drivers/net/phy/mediatek/mtk-ge.c
-@@ -62,10 +62,38 @@ static void mtk_gephy_config_init(struct phy_device *phydev)
- 		       FIELD_PREP(MTK_MCC_NEARECHO_OFFSET_MASK, 0x3));
+diff --git a/drivers/gpu/drm/i915/display/intel_display_types.h b/drivers/gpu/drm/i915/display/intel_display_types.h
+index c21e0c0ef0b12..96422641ae441 100644
+--- a/drivers/gpu/drm/i915/display/intel_display_types.h
++++ b/drivers/gpu/drm/i915/display/intel_display_types.h
+@@ -1947,6 +1947,8 @@ struct intel_dp {
+ 
+ 	bool colorimetry_support;
+ 
++	bool sst_split_sdp_support;
++
+ 	struct {
+ 		enum transcoder transcoder;
+ 		struct mutex lock;
+diff --git a/drivers/gpu/drm/i915/display/intel_dp.c b/drivers/gpu/drm/i915/display/intel_dp.c
+index 5733d2e7ac7f1..ba0b19d1163cf 100644
+--- a/drivers/gpu/drm/i915/display/intel_dp.c
++++ b/drivers/gpu/drm/i915/display/intel_dp.c
+@@ -3518,12 +3518,22 @@ intel_dp_audio_compute_config(struct intel_encoder *encoder,
+ 			      struct intel_crtc_state *pipe_config,
+ 			      struct drm_connector_state *conn_state)
+ {
++	struct intel_dp *intel_dp = enc_to_intel_dp(encoder);
++
+ 	pipe_config->has_audio =
+ 		intel_dp_has_audio(encoder, conn_state) &&
+ 		intel_audio_compute_config(encoder, pipe_config, conn_state);
+ 
+ 	pipe_config->sdp_split_enable = pipe_config->has_audio &&
+ 					intel_dp_is_uhbr(pipe_config);
++
++	/*
++	 * SDP splitting for UHBR audio requires explicit sink capability in
++	 * SST mode, whereas in MST mode it is inherently supported.
++	 */
++	if (pipe_config->sdp_split_enable &&
++	    !intel_crtc_has_type(pipe_config, INTEL_OUTPUT_DP_MST))
++		pipe_config->sdp_split_enable = intel_dp->sst_split_sdp_support;
  }
  
-+static int mt7530_phy_probe(struct phy_device *phydev)
-+{
-+	/* The MT7530 internal GE PHY has broken EEE: with EEE advertised,
-+	 * some link partners fail to establish a stable link (on a 2-pair
-+	 * cable, 1000BASE-T training fails and the port loops instead of
-+	 * falling back). MediaTek recommends disabling EEE on this PHY.
-+	 * Clear the advertisement as early as possible, before anything
-+	 * can negotiate EEE with the link partner.
-+	 */
-+	return phy_write_mmd(phydev, MDIO_MMD_AN, MDIO_AN_EEE_ADV, 0);
+ void
+@@ -4566,16 +4576,25 @@ void intel_dp_configure_protocol_converter(struct intel_dp *intel_dp,
+ 			    str_enable_disable(tmp));
+ }
+ 
+-static bool intel_dp_get_colorimetry_status(struct intel_dp *intel_dp)
++static u8 intel_dp_read_dprx_feature_enum(struct intel_dp *intel_dp)
+ {
+ 	u8 dprx = 0;
+ 
+-	if (drm_dp_dpcd_readb(&intel_dp->aux, DP_DPRX_FEATURE_ENUMERATION_LIST,
+-			      &dprx) != 1)
+-		return false;
++	drm_dp_dpcd_read_data(&intel_dp->aux, DP_DPRX_FEATURE_ENUMERATION_LIST,
++			      &dprx, sizeof(dprx));
++	return dprx;
 +}
 +
- static int mt7530_phy_config_init(struct phy_device *phydev)
- {
-+	int ret;
-+
- 	mtk_gephy_config_init(phydev);
++static bool intel_dp_get_colorimetry_status(u8 dprx)
++{
+ 	return dprx & DP_VSC_SDP_EXT_FOR_COLORIMETRY_SUPPORTED;
+ }
  
-+	/* The probe() clear alone is not durable: phy_init_hw() replays only
-+	 * ->config_init after a PHY reset, with the register back at its
-+	 * EEE-advertising hardware default, and phy_probe() zeroes
-+	 * eee_disabled_modes (of_set_phy_eee_broken()) after ->probe already
-+	 * ran. Clear the advertisement again and mark EEE disabled, so that
-+	 * neither phylib nor userspace can re-enable it; dp83867 disables
-+	 * broken EEE from config_init() the same way.
-+	 */
-+	ret = phy_write_mmd(phydev, MDIO_MMD_AN, MDIO_AN_EEE_ADV, 0);
-+	if (ret)
-+		return ret;
++static bool intel_dp_get_sst_split_sdp_status(u8 dprx)
++{
++	return dprx & DP_SST_SPLIT_SDP_CAP;
++}
 +
-+	phy_disable_eee(phydev);
+ static int intel_dp_read_dsc_dpcd(struct drm_dp_aux *aux,
+ 				  u8 dsc_dpcd[DP_DSC_RECEIVER_CAP_SIZE])
+ {
+@@ -4875,6 +4894,7 @@ intel_edp_init_dpcd(struct intel_dp *intel_dp, struct intel_connector *connector
+ {
+ 	struct intel_display *display = to_intel_display(intel_dp);
+ 	int ret;
++	u8 dprx;
+ 
+ 	/* this function is meant to be called only once */
+ 	drm_WARN_ON(display->drm, intel_dp->dpcd[DP_DPCD_REV] != 0);
+@@ -4886,8 +4906,13 @@ intel_edp_init_dpcd(struct intel_dp *intel_dp, struct intel_connector *connector
+ 			 drm_dp_is_branch(intel_dp->dpcd));
+ 	intel_init_dpcd_quirks(intel_dp, &intel_dp->desc.ident);
+ 
++	dprx = intel_dp_read_dprx_feature_enum(intel_dp);
 +
- 	/* Increase post_update_timer */
- 	phy_write_paged(phydev, MTK_PHY_PAGE_EXTENDED_3,
- 			MTK_PHY_RG_LPI_PCS_DSP_CTRL_REG11, 0x4b);
-@@ -100,6 +128,7 @@ static struct phy_driver mtk_gephy_driver[] = {
- 	{
- 		PHY_ID_MATCH_EXACT(MTK_GPHY_ID_MT7530),
- 		.name		= "MediaTek MT7530 PHY",
-+		.probe		= mt7530_phy_probe,
- 		.config_init	= mt7530_phy_config_init,
- 		/* Interrupts are handled by the switch, not the PHY
- 		 * itself.
+ 	intel_dp->colorimetry_support =
+-		intel_dp_get_colorimetry_status(intel_dp);
++		intel_dp_get_colorimetry_status(dprx);
++
++	intel_dp->sst_split_sdp_support =
++		intel_dp_get_sst_split_sdp_status(dprx);
+ 
+ 	/*
+ 	 * Read the eDP display control registers.
+@@ -4978,13 +5003,20 @@ intel_dp_get_dpcd(struct intel_dp *intel_dp)
+ 	 * the OUI/ID since we know it won't change.
+ 	 */
+ 	if (!intel_dp_is_edp(intel_dp)) {
++		u8 dprx;
++
+ 		drm_dp_read_desc(&intel_dp->aux, &intel_dp->desc,
+ 				 drm_dp_is_branch(intel_dp->dpcd));
+ 
+ 		intel_init_dpcd_quirks(intel_dp, &intel_dp->desc.ident);
+ 
++		dprx = intel_dp_read_dprx_feature_enum(intel_dp);
++
+ 		intel_dp->colorimetry_support =
+-			intel_dp_get_colorimetry_status(intel_dp);
++			intel_dp_get_colorimetry_status(dprx);
++
++		intel_dp->sst_split_sdp_support =
++			intel_dp_get_sst_split_sdp_status(dprx);
+ 
+ 		intel_dp_update_sink_caps(intel_dp);
+ 	}
 -- 
 2.53.0
 
