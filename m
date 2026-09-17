@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B14E751814D;
-	Thu, 17 Sep 2026 16:59:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A933F5187C1;
+	Thu, 17 Sep 2026 16:59:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789664396; cv=none; b=qgehXFRlQQbyBftfgf5Ht4txawOq7p0e4v62VJnPR+/iNiklrqytfDnRhlDJLlkuFmGuOxtbSKDXiPGUuIYt5t/ES1f6qEk0ln5RsBgRuWY/ulPQqKi99DbBSmn+BONEv7YPY6Ef6fQ9aDe9RTETtNPisW3bNWiCJYZcG0VNt9g=
+	t=1789664399; cv=none; b=TmkbDk2J0sdOkmEP3nOlpq/vQbjOqk/5mHyIs4oiOfaxalOKZ4l68UlKEqYZLkp+eNBaGaCQMD59auXJ8seWXKZ/lkIGS1gPdXx9K7HfhkblQuSJK+0dgYCMhS30TZrw18MoGqMi7tETM5iXpZxsJZ4QAChZbB9+PRhWuktvnsk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789664396; c=relaxed/simple;
-	bh=GoDuk76zp3xQfXW5fwOEbEVWFUFVNDOwD0fAtbZlswI=;
+	s=arc-20240116; t=1789664399; c=relaxed/simple;
+	bh=DjteYOCDFI3iXOr47xjBZ0+jvuTfjBe04N4IvzUZK9Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YOoUpl8MjLrvsTHFNjC5AJlms9xraawNsurxAAlAdND/45A0p+0mm3dRPR6L43ZJ8thXTMsd5SmVPFXmkRLmGwYzGYhbj/QFkb5qlGapG2PyfBPoUcKRH85HlsXYd9x1PjiuwsnDcv9Qb0LchT3NZ+BcRJmSeT2AZXExQT+HYdM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dn27+cKk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=E7Dlf8xkHailERvVCegSa4/AIMrAVmX4A0aiXmbS0ic3uVMFv9a4kF9Vy7Faeuueu5HyqqdduWWHef6B7TEyGCsXA2RP3EjQMcXBF0gBEO4Z4eP4bJqtbYFKeQAoW0FGRLM3bQxfEXeU7mfyhztf5Utykg2S5T+/R79bg8P+Z+Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KQad4umN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dn27+cKk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0142D1F00898;
-	Thu, 17 Sep 2026 16:59:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KQad4umN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC66E1F0089D;
+	Thu, 17 Sep 2026 16:59:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789664395;
-	bh=yjuycFMOs66a6jMJycgc6kewkb1a/AFXO+f7p+mOwRI=;
+	s=korg; t=1789664398;
+	bh=X7WUZhLOA6B6xABZhJSPV2cSPjTjWKSU3jd+kHo4nHM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Dn27+cKk44K/GYiCNlrL31sdQZUIzpaW/hTA9F4zFqQE8OJV5xWlYDM2AY9mEKOrw
-	 r/SmjQtAszm3qtGXvN3JrZ/+V461xdt7DLomUR47dITs0ZCKn98pK/RfLDigDSJUcK
-	 Qa0hzZJP8WpVxeKdqUJc4f8pqrglrk4q63b6iCgI=
+	b=KQad4umNrVKnWcAN/p1JbnzsTsDy3EVoKRDHGAdrrNEitnTMFj6hlZnKQkYJWPA5J
+	 g9yVoyu6kE/qr023h0I6/Ue8XdaTpFy/XGn6tx7Lo0G+Tmjr/OEyXY1xtXYXHJUOdV
+	 dKibhCqGzLby2YPT/9aa9ketN4mL89cFyUBAGtpo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zilin Guan <zilin@seu.edu.cn>,
-	Dawei Feng <dawei.feng@seu.edu.cn>,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0342/1250] bpf: NUL-terminate replaced sysctl value
-Date: Thu, 17 Sep 2026 16:02:17 +0100
-Message-ID: <20260917151601.348923731@linuxfoundation.org>
+Subject: [PATCH 6.18 0343/1250] net: cpsw_new: unregister devlink on port registration failure
+Date: Thu, 17 Sep 2026 16:02:18 +0100
+Message-ID: <20260917151601.374607445@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -53,81 +53,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dawei Feng <dawei.feng@seu.edu.cn>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-[ Upstream commit a66e3b5bacf38d6ab29fa05a9754f7a114485605 ]
+[ Upstream commit b64f763b607426ac97e44b114f0b8844ac3b86dd ]
 
-When writing to sysctls, proc_sys_call_handler() guarantees that the
-buffer passed to proc handlers is NUL-terminated. If
-bpf_sysctl_set_new_value() replaces the pending sysctl value, it can
-hand a replacement buffer directly to proc handlers. However, the
-helper currently copies only buf_len bytes into that buffer without
-appending a NUL terminator, leaving downstream parsers vulnerable to
-out-of-bounds access.
+cpsw_probe() registers devlink before registering the CPSW ports.
 
-Fix this by appending a '\0' after the replaced value to restore the
-expected sysctl semantics. Since the helper already rejects buf_len
-greater than PAGE_SIZE - 1, there is always room for the extra byte.
+If cpsw_register_ports() fails, the error path only unregisters the
+notifiers and then releases the lower level resources. It does not undo
+the successful cpsw_register_devlink() call, leaving the devlink instance
+and its parameters registered after probe has failed.
 
-Reproduced in a QEMU x86_64 guest booted with KASAN while exercising
-the sysctl replacement path with a cgroup/sysctl BPF program. The
-reproducer targets `/proc/sys/net/core/flow_limit_cpu_bitmap`, fills
-the original user write buffer with non-zero bytes, and overrides the
-sysctl value so the replacement buffer lacks a terminating NUL. Under
-that setup, the pre-fix kernel reported:
+Add a devlink cleanup label for the path where devlink registration has
+already succeeded, and use it when port registration fails.
 
-  BUG: KASAN: slab-out-of-bounds in strnchrnul+0x72/0x90
-  Read of size 1 at addr ffff88800de57000 by task repro_patch3/66
-  CPU: 0 UID: 0 PID: 66 Comm: repro_patch3 Not tainted 7.1.0-rc3-00269-g8370ca1f87cc #6 PREEMPT(lazy)
-  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
-  Call Trace:
-   <TASK>
-   dump_stack_lvl+0x68/0xa0
-   print_report+0xcb/0x5e0
-   ? __virt_addr_valid+0x21d/0x3f0
-   ? strnchrnul+0x72/0x90
-   ? strnchrnul+0x72/0x90
-   kasan_report+0xca/0x100
-   ? strnchrnul+0x72/0x90
-   strnchrnul+0x72/0x90
-   bitmap_parse+0x37/0x2e0
-   flow_limit_cpu_sysctl+0xc6/0x840
-   ? __pfx_flow_limit_cpu_sysctl+0x10/0x10
-   ? __kvmalloc_node_noprof+0x5ba/0x870
-   proc_sys_call_handler+0x31d/0x480
-   ? __pfx_proc_sys_call_handler+0x10/0x10
-   ? selinux_file_permission+0x39f/0x500
-   ? lock_is_held_type+0x9e/0x120
-   vfs_write+0x98e/0x1000
-   ...
-   </TASK>
-  The buggy address is located 0 bytes to the right of
-  allocated 4096-byte region [ffff88800de56000, ffff88800de57000)
-With this fix applied, rerunning the same sysctl-targeted path yields
-no corresponding KASAN reports.
-
-Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
-Signed-off-by: Dawei Feng <dawei.feng@seu.edu.cn>
-Acked-by: Yonghong Song <yonghong.song@linux.dev>
-Link: https://lore.kernel.org/r/20260603105317.944304-2-dawei.feng@seu.edu.cn
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Reviewed-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Link: https://patch.msgid.link/20260604043115.1409134-1-lgs201920130244@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/cgroup.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/ti/cpsw_new.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/cgroup.c b/kernel/bpf/cgroup.c
-index 8980373c7dab0..c652ba01bc8bd 100644
---- a/kernel/bpf/cgroup.c
-+++ b/kernel/bpf/cgroup.c
-@@ -2409,6 +2409,7 @@ BPF_CALL_3(bpf_sysctl_set_new_value, struct bpf_sysctl_kern *, ctx,
- 		return -E2BIG;
+diff --git a/drivers/net/ethernet/ti/cpsw_new.c b/drivers/net/ethernet/ti/cpsw_new.c
+index c6cf7a0375e08..34c0e651e2da3 100644
+--- a/drivers/net/ethernet/ti/cpsw_new.c
++++ b/drivers/net/ethernet/ti/cpsw_new.c
+@@ -2048,7 +2048,7 @@ static int cpsw_probe(struct platform_device *pdev)
  
- 	memcpy(ctx->new_val, buf, buf_len);
-+	((char *)ctx->new_val)[buf_len] = '\0';
- 	ctx->new_len = buf_len;
- 	ctx->new_updated = 1;
+ 	ret = cpsw_register_ports(cpsw);
+ 	if (ret)
+-		goto clean_unregister_notifiers;
++		goto clean_unregister_devlink;
  
+ 	dev_notice(dev, "initialized (regs %pa, pool size %d) hw_ver:%08X %d.%d (%d)\n",
+ 		   &ss_res->start, descs_pool_size,
+@@ -2060,6 +2060,8 @@ static int cpsw_probe(struct platform_device *pdev)
+ 
+ 	return 0;
+ 
++clean_unregister_devlink:
++	cpsw_unregister_devlink(cpsw);
+ clean_unregister_notifiers:
+ 	cpsw_unregister_notifiers(cpsw);
+ clean_cpts:
 -- 
 2.53.0
 
