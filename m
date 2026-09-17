@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF4FA4E0214;
-	Thu, 17 Sep 2026 15:49:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C81214E77E4;
+	Thu, 17 Sep 2026 15:49:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789660155; cv=none; b=CfPasegmlngfhdzpvqtQsfrOwXWeOZkhW4tYroZOu41PrhIcclo7hHz927LNtXrLDhVl9I4g57LfZYFhOjiP9m2YfCha7BpqrVCq0r3ZEIOf6lKwg7oUhe6clg4ZjgIEN/kyMAi78dwWbjnL/z0UAdG/3w8T6CV16irMhJLiw6M=
+	t=1789660156; cv=none; b=vEY6YbL6+sTPzzk3jCwu+U5rc+WwAUC0ziEGAs7N5BqF5ptnXNu2lCx5cxNjrgzGLX7GV8y0Ltg7dZbgRGIEHJUwCH/vdEEmGQfanm8pzzBHl/8I514jxNYnXAv8IMxcASZYpCaIDYxpIq5cUYW/1vnxIUYLUX0jY3nmwJUfj+w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789660155; c=relaxed/simple;
-	bh=06nNhiGLjalvomWFDiNCb3dZP8jO+jnOStq+hEHts9Y=;
+	s=arc-20240116; t=1789660156; c=relaxed/simple;
+	bh=wIejUoP0YP/j1wMuCzkUXvhLUlFlweH6XedOBc7DL4Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GauywdoqnQfOOpbHkuIhEikGam1I0OhBCUIVWSAwq6MXrF4WMgQ6HkEPCOM5Sq/F5a3NkoagAfjOndsMoTWEFsbecsIipIaCWfZ2d0BuuxBKxjmO1h89JKGwH6ULxbS3VT+KLIVYBxdTLnohHhipWYEoeB8sn+IMTUkOzIy3vBU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qvcf5JgW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pSWWKUW896rqVppvfW6mR9LAmbfz5ODXjGcw224qLZqt8UvDFFkUeBUvEdDHfrDr4s/OZXwnI4hjF+M+NJY7+qSws0AzUA/jZ1kJjqDhDS0zRlBuB0d1yl/nN9GdhJB6NM9Qcb9FsBx7it9DRsKOHD7u7L5SGK708DYmpYkNusU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lm8H8ZQv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qvcf5JgW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A3F21F00898;
-	Thu, 17 Sep 2026 15:49:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lm8H8ZQv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 833AF1F00899;
+	Thu, 17 Sep 2026 15:49:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789660142;
-	bh=sIY3QJ947oGrn+1aNmNdCTRap+h7vXgA8QlZ/u/C8po=;
+	s=korg; t=1789660148;
+	bh=aVj8ANXuaQgZgnE0uZ+H25mIwwgtKjmH3+9Ld4gpK9w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Qvcf5JgWqQtCA1DbU7wDJNHVppRI2y1fKup1Lv7ERCKdKVKTaPKMnSxhz9srtpfzT
-	 FE/ohFqoeQDeuE8iQCmETPywI3IKGX4VI77HKujJK90etVyU9Ss8OPFdvUQN9Nwqj9
-	 OeYzLRyWomgDRQGCLWCSXNFOn7OHbbwXzdvy5mUE=
+	b=lm8H8ZQvn+VilsBpSJP9C8bVPNOtZAx3JCCfxn1qnKKJ8nlGv3vKERv3Ue16r+037
+	 cLk+/fBml+n+wcQlolsEf7uuiFRvAfMvD0axugjU/D0xX2sBKTvvDkIXSkiAKhdgQU
+	 qzuj2ghf/lEvouKfOGUJJ0aSoNtJXrwwZMg+VyhY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ali Ahmet Memis <ali@iusegentoo.com>,
-	Jan Kara <jack@suse.cz>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 7.2 491/733] ufs: create the root dentry after loading cylinder metadata
-Date: Thu, 17 Sep 2026 16:13:19 +0100
-Message-ID: <20260917151404.294391423@linuxfoundation.org>
+	Taehee Yoo <ap420073@gmail.com>,
+	Eric Biggers <ebiggers@kernel.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 7.2 457/733] crypto: x86/aria - add missing vzeroupper in AVX-512 code
+Date: Thu, 17 Sep 2026 16:12:45 +0100
+Message-ID: <20260917151403.315091791@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -51,77 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ali Ahmet Memis <ali@iusegentoo.com>
+From: Eric Biggers <ebiggers@kernel.org>
 
-commit 55a4c98abb9694b067c6a031d11501f06b6b523c upstream.
+commit 60892a384aa1e65d0e703e1c513417bdf0c80777 upstream.
 
-ufs_fill_super() installed sb->s_root before it loaded the cylinder
-group structures for a writable mount:
+Since the AVX-512 optimized ARIA code uses ZMM registers, execute
+vzeroupper before returning from it.  This is needed to avoid degrading
+the performance of any later SSE code that may happen to be executed.
 
-	sb->s_root = d_make_root(inode);
-	...
-	if (!sb_rdonly(sb))
-		if (!ufs_read_cylinder_structures(sb))
-			goto failed;
-
-When ufs_read_cylinder_structures() failed, the error path freed the
-in-core superblock information and set sb->s_fs_info to NULL while
-sb->s_root stayed installed. get_tree_bdev() then reached
-deactivate_locked_super(), and because s_root was present,
-generic_shutdown_super() called sync_filesystem() and the put_super
-operation. Both dereference UFS_SB(sb), which is now NULL, so a mount
-that fails only while reading the cylinder groups oopses during
-teardown. A crafted image whose first cylinder group cannot be read
-reaches this path.
-
-Load the cylinder group metadata first and create the root dentry last,
-so the superblock is published to the VFS only once it is fully set up.
-ufs_setup_cstotal() and ufs_read_cylinder_structures() take only the
-super_block and do not use the root inode, so the reordering is safe.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: c970d42001f2 ("crypto: x86/aria - implement aria-avx512")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ali Ahmet Memis <ali@iusegentoo.com>
-Link: https://patch.msgid.link/20260801071306.59484-2-ali@iusegentoo.com
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Cc: Taehee Yoo <ap420073@gmail.com>
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ufs/super.c |   17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ arch/x86/crypto/aria-gfni-avx512-asm_64.S |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/fs/ufs/super.c
-+++ b/fs/ufs/super.c
-@@ -1199,6 +1199,15 @@ magic_found:
- 	sb->s_maxbytes = ufs_max_bytes(sb);
- 	sb->s_max_links = UFS_LINK_MAX;
+--- a/arch/x86/crypto/aria-gfni-avx512-asm_64.S
++++ b/arch/x86/crypto/aria-gfni-avx512-asm_64.S
+@@ -800,6 +800,7 @@ SYM_TYPED_FUNC_START(aria_gfni_avx512_en
+ 		     %zmm9, %zmm8, %zmm11, %zmm10, %zmm12, %zmm13, %zmm14,
+ 		     %zmm15, %rax);
  
-+	ufs_setup_cstotal(sb);
-+	/*
-+	 * Read cylinder group structures
-+	 */
-+	if (!sb_rdonly(sb))
-+		if (!ufs_read_cylinder_structures(sb))
-+			goto failed;
-+
-+	/* create the root dentry last, once UFS_SB(sb) is fully set up */
- 	inode = ufs_iget(sb, UFS_ROOTINO);
- 	if (IS_ERR(inode)) {
- 		ret = PTR_ERR(inode);
-@@ -1210,14 +1219,6 @@ magic_found:
- 		goto failed;
- 	}
++	vzeroupper;
+ 	FRAME_END
+ 	RET;
+ SYM_FUNC_END(aria_gfni_avx512_encrypt_64way)
+@@ -825,6 +826,7 @@ SYM_TYPED_FUNC_START(aria_gfni_avx512_de
+ 		     %zmm9, %zmm8, %zmm11, %zmm10, %zmm12, %zmm13, %zmm14,
+ 		     %zmm15, %rax);
  
--	ufs_setup_cstotal(sb);
--	/*
--	 * Read cylinder group structures
--	 */
--	if (!sb_rdonly(sb))
--		if (!ufs_read_cylinder_structures(sb))
--			goto failed;
--
- 	UFSD("EXIT\n");
- 	return 0;
++	vzeroupper;
+ 	FRAME_END
+ 	RET;
+ SYM_FUNC_END(aria_gfni_avx512_decrypt_64way)
+@@ -966,6 +968,7 @@ SYM_TYPED_FUNC_START(aria_gfni_avx512_ct
+ 		     %zmm9, %zmm8, %zmm11, %zmm10, %zmm12, %zmm13, %zmm14,
+ 		     %zmm15, %r10);
  
++	vzeroupper;
+ 	FRAME_END
+ 	RET;
+ SYM_FUNC_END(aria_gfni_avx512_ctr_crypt_64way)
 
 
