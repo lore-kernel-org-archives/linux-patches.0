@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A25364F391B;
-	Thu, 17 Sep 2026 17:42:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C1ED518142;
+	Thu, 17 Sep 2026 17:42:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666975; cv=none; b=pcdlxEE6GVEZUDtSReJjrrOMse3DyFJgOPlkQG/wDJmlklB53TeMtmRxmX4uAC0ZKPOzAC8Nqw5XCeNaU6cKVB/GhsvjYmlhkd/YCsuMrryWQ+ppfS4EU6QeHuQcdU4UbUFkTyClK79QRrWKvjqQZx2ZRqEU8JjeAfLqbJRsVYs=
+	t=1789666978; cv=none; b=LryNwBkdj2n/AXBcKeOQ4qo3ZIsaA+ipkY8riGbA3c0jvteZ7OcPYxksknGm81lfX/kg44IqgIrnXMgJOd1El32t/J8/ydQl2n3dwxwYkoN7LBtxoot7iEA3Ft5Ev3m2dgktm81Betds0/BKB96r/Y89prQA2LScx4wqgWKHSQo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666975; c=relaxed/simple;
-	bh=3dWt/A7nOJk7UiAsLmsJHXifmFbFBwn4Fw1RIsH9e40=;
+	s=arc-20240116; t=1789666978; c=relaxed/simple;
+	bh=Wna0/cOo7Er2H+/+pF+IPFbN6px5UBap2gOkzwmsV5Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mlBJcefjDjYw8BuLP+rIhL6Pnxhvgk+tefFC0SsGFRLYNW4QPAUnJW63v0pTc7e5frqTe1xSexMkYnDIy9qAkG3VDLZC0niryCvUMtQtUH0IqoZGK7ZtS24wjUCs7kJ7yE7bLdnt1kfowQMf1x21sJJRGbOuIQIXv89yK3NsExQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jf/9M1c+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rgDHJkNegWsIoHY5adERFCmgxmJxnXOlJ4RyW9m3owsxZgv+/mjj0xqjJY+wUMoDEJmAKZ6fkXYS1pv0KE/OZoKZXGe4J3S7jcVDPjBBJG5/VjiXFZRxUZoHfA/zWH1MNZqxvMEsPBY2SZXQPNorWRU4xY73Gk7mLygVa9KdsGY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kYnfNigY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jf/9M1c+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 924821F000FF;
-	Thu, 17 Sep 2026 17:42:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kYnfNigY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EA271F000FF;
+	Thu, 17 Sep 2026 17:42:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666973;
-	bh=upsS7T8yw+o41zfwYP2tPC42xyMMT45scJdWdxOUbdc=;
+	s=korg; t=1789666976;
+	bh=/oSNkaSNsPmkvW/CeZ80Bw7YhO3qfNRE5a3KQu45jX4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Jf/9M1c+JUaSfmASuGKe/2g825vYHyQd5zx4CDbm0hWVY8OiLIDpNW2ZtaD4vJRg+
-	 LJC2wxu6LL7TdIgi76tD8O1pB+vhSTSMGHYpDfJaTXU+pe7jn93fyQkJhV/JGIOKJL
-	 5jAICiymj41rNfMZTLMQG1N0JFNvajdUkI9ZvBLk=
+	b=kYnfNigY9cWPEYzku+lIPv842Hr1TWQxfagL+84driDXAsHLMIURDlYjvdUGt7hgJ
+	 1v+73vFvjYnPhoXgimr0nyFNFcmIeNPjMsJHBBKWYtykaQ7XUb+WS++rZF5gOVEcQ+
+	 zb2iPsBw1GARO6hzElARieGG3wK1e7rQ/3jUo1Ks=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
+	Manuel Ebner <manuelebner@mailbox.org>,
+	Danilo Krummrich <dakr@kernel.org>,
+	Gary Guo <gary@garyguo.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1184/1250] drm/amdgpu: Make amdgpu_vm_flush() non-failing in submission path
-Date: Thu, 17 Sep 2026 16:16:19 +0100
-Message-ID: <20260917151624.375245787@linuxfoundation.org>
+Subject: [PATCH 6.18 1149/1250] usb: usbtmc: dont store usb_device_id
+Date: Thu, 17 Sep 2026 16:15:44 +0100
+Message-ID: <20260917151623.408081568@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -46,99 +46,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+From: Gary Guo <gary@garyguo.net>
 
-[ Upstream commit 37872d06f85f0349e7b1f0680aea77326f7c135e ]
+[ Upstream commit fc045acec1a501c97f84ae184aadce9dae4ba9b2 ]
 
-amdgpu_vm_flush() is used during job submission and is not expected to
-fail. Convert it to return void and simplify the caller.
+usb_device_id is not guaranteed to live longer than probe due to presence
+of dynamic ID. This stored ID is unused so remove it.
 
-Initialize the COND_EXEC patch location to 0 so it is safe to call
-amdgpu_ring_patch_cond_exec() when init_cond_exec is not supported.
-
-Suggested-by: Christian König <christian.koenig@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Stable-dep-of: 6760f5cb12d2 ("drm/amdgpu: avoid force-completing uninitialized UVD rings")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reviewed-by: Manuel Ebner <manuelebner@mailbox.org>
+Reviewed-by: Danilo Krummrich <dakr@kernel.org>
+Signed-off-by: Gary Guo <gary@garyguo.net>
+Link: https://patch.msgid.link/20260707-usb_dyn_id_uaf-v2-2-632dcf3adfba@garyguo.net
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_ib.c |    9 ++-------
- drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c |   10 +++-------
- drivers/gpu/drm/amd/amdgpu/amdgpu_vm.h |    2 +-
- 3 files changed, 6 insertions(+), 15 deletions(-)
+ drivers/usb/class/usbtmc.c | 2 --
+ 1 file changed, 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ib.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ib.c
-@@ -208,13 +208,8 @@ int amdgpu_ib_schedule(struct amdgpu_rin
- 		dma_fence_put(tmp);
- 	}
- 
--	if (job) {
--		r = amdgpu_vm_flush(ring, job, need_pipe_sync);
--		if (r) {
--			amdgpu_ring_undo(ring);
--			goto free_fence;
--		}
--	}
-+	if (job)
-+		amdgpu_vm_flush(ring, job, need_pipe_sync);
- 
- 	amdgpu_ring_ib_begin(ring);
- 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
-@@ -760,12 +760,9 @@ bool amdgpu_vm_need_pipeline_sync(struct
-  * @need_pipe_sync: is pipe sync needed
-  *
-  * Emit a VM flush when it is necessary.
-- *
-- * Returns:
-- * 0 on success, errno otherwise.
+diff --git a/drivers/usb/class/usbtmc.c b/drivers/usb/class/usbtmc.c
+index fe88d555142ad..5bfbf801f9c4f 100644
+--- a/drivers/usb/class/usbtmc.c
++++ b/drivers/usb/class/usbtmc.c
+@@ -71,7 +71,6 @@ struct usbtmc_dev_capabilities {
+  * allocated for each USBTMC device in the driver's probe function.
   */
--int amdgpu_vm_flush(struct amdgpu_ring *ring, struct amdgpu_job *job,
--		    bool need_pipe_sync)
-+void amdgpu_vm_flush(struct amdgpu_ring *ring, struct amdgpu_job *job,
-+		     bool need_pipe_sync)
- {
- 	struct amdgpu_device *adev = ring->adev;
- 	struct amdgpu_isolation *isolation =
-@@ -811,7 +808,7 @@ int amdgpu_vm_flush(struct amdgpu_ring *
+ struct usbtmc_device_data {
+-	const struct usb_device_id *id;
+ 	struct usb_device *usb_dev;
+ 	struct usb_interface *intf;
+ 	struct list_head file_list;
+@@ -2398,7 +2397,6 @@ static int usbtmc_probe(struct usb_interface *intf,
+ 		return -ENOMEM;
  
- 	if (!vm_flush_needed && !gds_switch_needed && !need_pipe_sync &&
- 	    !cleaner_shader_needed)
--		return 0;
-+		return;
- 
- 	amdgpu_ring_ib_begin(ring);
- 
-@@ -902,7 +899,6 @@ int amdgpu_vm_flush(struct amdgpu_ring *
- 	}
- 
- 	amdgpu_ring_ib_end(ring);
--	return 0;
- }
- 
- /**
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.h
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.h
-@@ -516,7 +516,7 @@ int amdgpu_vm_validate(struct amdgpu_dev
- 		       struct ww_acquire_ctx *ticket,
- 		       int (*callback)(void *p, struct amdgpu_bo *bo),
- 		       void *param);
--int amdgpu_vm_flush(struct amdgpu_ring *ring, struct amdgpu_job *job, bool need_pipe_sync);
-+void amdgpu_vm_flush(struct amdgpu_ring *ring, struct amdgpu_job *job, bool need_pipe_sync);
- int amdgpu_vm_update_pdes(struct amdgpu_device *adev,
- 			  struct amdgpu_vm *vm, bool immediate);
- int amdgpu_vm_clear_freed(struct amdgpu_device *adev,
+ 	data->intf = intf;
+-	data->id = id;
+ 	data->usb_dev = usb_get_dev(interface_to_usbdev(intf));
+ 	usb_set_intfdata(intf, data);
+ 	kref_init(&data->kref);
+-- 
+2.53.0
+
 
 
