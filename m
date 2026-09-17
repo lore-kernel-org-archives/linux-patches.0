@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 209FE4EF15B;
-	Thu, 17 Sep 2026 17:17:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26E134F68CB;
+	Thu, 17 Sep 2026 17:17:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789665450; cv=none; b=j3h1bXaDK3K8b1zPVInzwkPdvm5sbuOhqBYgQCA2p1z5eVnBB0CrlNw3chym9E7Oh49jC6GXqfQY+XyTuvUOMQkSgeg9pwU/mNnSrxD1v18lENcyBHnNsGkGAU58RlzFBKfPHkURVUNOqLu3awb5SeV9sKaraGRhBIc875QSDNQ=
+	t=1789665453; cv=none; b=tfZdWGY61ujJBi/tYiOXSiXW6UMTWR+QZ9RwAfQgkRbBZJNGhsfMGHCo42EGJ4hpEXLCGqE8sg3hxolFcDSKzkUN3URcid2VL4szWTdTkOtD1msDssfP1XmDgP4K8+s1jUOmLB3lX+I+MybIJ1vl6XNf0Y2CTZHqgwIkm7c6pRc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789665450; c=relaxed/simple;
-	bh=ftZvoQLpqjAm4soCz46QTIXSP2QztcVix8Wn0r9vuwI=;
+	s=arc-20240116; t=1789665453; c=relaxed/simple;
+	bh=lajtoSSAYTI3j5z1LYSmEcIonUlWbB5HUszg8JnkJr0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eCz36ETiLKZzdO5o27+DFpJi3vqp83Esf556ZScNDtQZRqRgXrvOK+QNICCeGLHu70KA9KrGrOStx0JEJO+fpq9mgJihvfvuZuYMYH6sOC09wM8jExI3Gi1ZsCbxKXVf2GJUY7Xm7aKc2GVvXNuNWewMPx+nejVdHv/nefHMMog=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UCdm5j8d; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rUlyvZ9kod+PWVTec5hy1H9jobhxRTF6stLPrItErM3fzgFeAWsz8XVGORYVBQdxp/f/OJWQUn6gBPNoZCyK92oHAeT11Z6Bwu80Z5dqyAkv9UosQdqEw+RJSiPdh+JwG43RqU2LNijsJ49DzJah7VgO1kmtz5t6W6PePNcOvNU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hdRnywyB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UCdm5j8d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 724081F000FF;
-	Thu, 17 Sep 2026 17:17:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hdRnywyB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A2D21F000FF;
+	Thu, 17 Sep 2026 17:17:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789665449;
-	bh=YrmsIOFU+T0MwY0l408ZdjJqduH5XDvwsprtqPJzR00=;
+	s=korg; t=1789665452;
+	bh=Zy7ZmoFxN+EAQnEQYvvTdiKveGsJdncdSXjNlwG/qDU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UCdm5j8d1KyHEuUz4tqkL/8OrnRHRz/abL+THYaAcaWB71tqH1X16c05ic4qxUCtn
-	 d96zl4QFl0bShohRekdcRe5Kwsdy2yJvA0lSkfm1UakC8WVkX4EBMo1CglpjSFkko3
-	 rtoJonKKqOByHoDUjZqWYwZsbxwk/E5afDxqIHPU=
+	b=hdRnywyBhLGXmdcg1RctA6YCKOeUtxV9yPtWtyg0A6Xgpn6GOJp89FgSJKp6To952
+	 W4ikqe8AA3bUlB8Dw3WszIVWYmEurYKYj2H8Sle0PaFMlneKaaCQuqFPvfIizU8kEe
+	 kzo/pOXdZWoJYf6bBeUN14vh9laTVbvfqdUhhwKg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hui Su <sh_def@163.com>,
-	Nam Cao <namcao@linutronix.de>,
+	syzbot+2d770620059281e225a4@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0691/1250] staging: fbtft: make dirty_lock IRQ-safe
-Date: Thu, 17 Sep 2026 16:08:06 +0100
-Message-ID: <20260917151610.619929911@linuxfoundation.org>
+Subject: [PATCH 6.18 0709/1250] locking/lockdep: Invalidate stale class_cache entries for zapped classes
+Date: Thu, 17 Sep 2026 16:08:24 +0100
+Message-ID: <20260917151611.114100379@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,98 +52,166 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hui Su <sh_def@163.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit f576944a59f31bcffff121117ebf452c5dd162b7 ]
+[ Upstream commit 02c6be7d675b21d81f0ba3a524346850a8c0e3bf ]
 
-fbtft_mkdirty() can be reached from the fbcon rendering path while
-processing printk() in hardirq context. Meanwhile, dirty_lock is also
-taken by fbtft_deferred_io() in workqueue context with local interrupts
-enabled.
+syzbot reported a lockdep splat hitting DEBUG_LOCKS_WARN_ON(1) in
+hlock_class() due to an invalid class_idx:
 
-Lockdep reports a possible IRQ lock inversion involving dirty_lock and
-console_owner. A hardirq can interrupt a CPU holding dirty_lock and
-enter the console rendering path, which can attempt to acquire
-dirty_lock again.
+  WARNING: kernel/locking/lockdep.c:238 at __lock_acquire+0x382/0x2cf0 kernel/locking/lockdep.c:5203
+  Workqueue: wg-crypt-wg0 wg_packet_tx_worker
+  RIP: 0010:hlock_class kernel/locking/lockdep.c:238 [inline]
+  RIP: 0010:check_wait_context kernel/locking/lockdep.c:4870 [inline]
+  RIP: 0010:__lock_acquire+0x389/0x2cf0 kernel/locking/lockdep.c:5203
+  Call Trace:
+   <IRQ>
+   lock_acquire+0x106/0x350 kernel/locking/lockdep.c:5886
+   _raw_spin_lock+0x2e/0x40 kernel/locking/spinlock.c:173
+   tcp_tsq_handler+0x29/0x200 net/ipv4/tcp_output.c:1291
+   tcp_tsq_workfn+0x384/0x410 net/ipv4/tcp_output.c:1325
+   ...
 
-The following lockdep report was observed on an RK3566 system with
-CONFIG_PROVE_LOCKING enabled:
+When a lock class is zapped (e.g. during module unload or key
+unregistration), zap_class() clears the class's bit in
+lock_classes_in_use and removes it from the class hash table.
+However, existing lockdep_map instances embedded in data structures
+may still retain a pointer to the zapped class in their class_cache[]
+array.
 
-  WARNING: possible irq lock inversion dependency detected
-  swapper/2/0 just changed the state of lock:
-  (console_owner){-...}-{0:0}
-  but this lock took another, HARDIRQ-unsafe lock in the past:
-  (&par->dirty_lock){+.+.}-{2:2}
+When __lock_acquire() subsequently runs on such a lock, it finds
+lock->class_cache[subclass] != NULL, skipping register_lock_class()
+and assigning hlock->class_idx to the index of the zapped class. When
+check_wait_context() or hlock_class() inspects the held_lock, it finds
+!test_bit(class_idx, lock_classes_in_use) and warns. Furthermore, if
+the zapped slot is subsequently re-allocated to an unrelated lock key,
+the stale class_cache entry would erroneously match the unrelated
+class (ABA issue).
 
-  CPU0                    CPU1
-  ----                    ----
-  lock(&par->dirty_lock);
-                         local_irq_disable();
-                         lock(console_owner);
-                         lock(&par->dirty_lock);
-  <Interrupt>
-    lock(console_owner);
+Add lock_class_cache_is_valid() to validate that the cached class is
+within lock_classes bounds, still allocated in lock_classes_in_use
+(using uninstrumented arch_test_bit() in __always_inline context so it
+is safe in noinstr contexts like match_held_lock()), and that
+class->key matches the expected subkey (taking lockdep_set_subclass()
+overrides into account). Also use READ_ONCE()/WRITE_ONCE() when
+accessing class_cache[].  If the entry is invalid or stale, fall back
+to register_lock_class() / look_up_lock_class().
 
-  *** DEADLOCK ***
-
-Use spin_lock_irqsave() for fbtft_mkdirty() and spin_lock_irq() for
-fbtft_deferred_io(). They only access the dirty line range, so the
-IRQ-off regions remain short.
-
-Fixes: c296d5f9957c ("staging: fbtft: core support")
-Signed-off-by: Hui Su <sh_def@163.com>
-Link: https://lore.kernel.org/lkml/20260804173712.176017-1-sh_def@163.com/
-Reviewed-by: Nam Cao <namcao@linutronix.de>
-Link: https://patch.msgid.link/20260807150953.2811933-3-sh_def@163.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: a0b0fd53e1e6 ("locking/lockdep: Free lock classes that are no longer in use")
+Closes: https://lore.kernel.org/netdev/6a8c66dc.4d75e56a.c9a88.0050.GAE@google.com/T/#u
+Reported-by: syzbot+2d770620059281e225a4@syzkaller.appspotmail.com
+Assisted-by: Gemini:gemini-3.1-pro
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://patch.msgid.link/20260824155129.676096-1-edumazet@google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/fbtft/fbtft-core.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ kernel/locking/lockdep.c | 50 +++++++++++++++++++++++++++++++++-------
+ 1 file changed, 42 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/staging/fbtft/fbtft-core.c b/drivers/staging/fbtft/fbtft-core.c
-index 8a5ccc8ae0a18..ff751d24de225 100644
---- a/drivers/staging/fbtft/fbtft-core.c
-+++ b/drivers/staging/fbtft/fbtft-core.c
-@@ -299,6 +299,7 @@ static void fbtft_mkdirty(struct fb_info *info, int y, int height)
+diff --git a/kernel/locking/lockdep.c b/kernel/locking/lockdep.c
+index e0de811148242..06f025abe8875 100644
+--- a/kernel/locking/lockdep.c
++++ b/kernel/locking/lockdep.c
+@@ -947,6 +947,34 @@ look_up_lock_class(const struct lockdep_map *lock, unsigned int subclass)
+ 	return NULL;
+ }
+ 
++static __always_inline bool lock_class_cache_is_valid(const struct lockdep_map *lock,
++						      const struct lock_class *class,
++						      unsigned int subclass)
++{
++	unsigned int class_subclass;
++
++	if (!class)
++		return false;
++
++	if (unlikely(class < lock_classes || class >= lock_classes + MAX_LOCKDEP_KEYS))
++		return false;
++
++	if (unlikely(!arch_test_bit(class - lock_classes, lock_classes_in_use)))
++		return false;
++
++	if (unlikely(!lock->key))
++		return false;
++
++	class_subclass = subclass ? subclass : class->subclass;
++	if (unlikely(class_subclass >= MAX_LOCKDEP_SUBCLASSES))
++		return false;
++
++	if (unlikely(READ_ONCE(class->key) != lock->key->subkeys + class_subclass))
++		return false;
++
++	return true;
++}
++
+ /*
+  * Static locks do not have their class-keys yet - for them the key is
+  * the lock object itself. If the lock is in the per cpu area, the
+@@ -1379,9 +1407,9 @@ register_lock_class(struct lockdep_map *lock, unsigned int subclass, int force)
+ 
+ out_set_class_cache:
+ 	if (!subclass || force)
+-		lock->class_cache[0] = class;
++		WRITE_ONCE(lock->class_cache[0], class);
+ 	else if (subclass < NR_LOCKDEP_CACHING_CLASSES)
+-		lock->class_cache[subclass] = class;
++		WRITE_ONCE(lock->class_cache[subclass], class);
+ 
+ 	/*
+ 	 * Hash collision, did we smoke some? We found a class with a matching
+@@ -4941,7 +4969,7 @@ void lockdep_init_map_type(struct lockdep_map *lock, const char *name,
+ 	int i;
+ 
+ 	for (i = 0; i < NR_LOCKDEP_CACHING_CLASSES; i++)
+-		lock->class_cache[i] = NULL;
++		WRITE_ONCE(lock->class_cache[i], NULL);
+ 
+ #ifdef CONFIG_LOCK_STAT
+ 	lock->cpu = raw_smp_processor_id();
+@@ -5006,12 +5034,15 @@ EXPORT_SYMBOL_GPL(__lockdep_no_track__);
+ void lockdep_set_lock_cmp_fn(struct lockdep_map *lock, lock_cmp_fn cmp_fn,
+ 			     lock_print_fn print_fn)
  {
- 	struct fbtft_par *par = info->par;
- 	struct fb_deferred_io *fbdefio = info->fbdefio;
-+	unsigned long flags;
+-	struct lock_class *class = lock->class_cache[0];
++	struct lock_class *class = READ_ONCE(lock->class_cache[0]);
+ 	unsigned long flags;
  
- 	/* special case, needed ? */
- 	if (y == -1) {
-@@ -307,12 +308,12 @@ static void fbtft_mkdirty(struct fb_info *info, int y, int height)
- 	}
+ 	raw_local_irq_save(flags);
+ 	lockdep_recursion_inc();
  
- 	/* Mark display lines/area as dirty */
--	spin_lock(&par->dirty_lock);
-+	spin_lock_irqsave(&par->dirty_lock, flags);
- 	if (y < par->dirty_lines_start)
- 		par->dirty_lines_start = y;
- 	if (y + height - 1 > par->dirty_lines_end)
- 		par->dirty_lines_end = y + height - 1;
--	spin_unlock(&par->dirty_lock);
-+	spin_unlock_irqrestore(&par->dirty_lock, flags);
++	if (!lock_class_cache_is_valid(lock, class, 0))
++		class = NULL;
++
+ 	if (!class)
+ 		class = register_lock_class(lock, 0, 0);
  
- 	/* Schedule deferred_io to update display (no-op if already on queue)*/
- 	schedule_delayed_work(&info->deferred_work, fbdefio->delay);
-@@ -325,13 +326,13 @@ static void fbtft_deferred_io(struct fb_info *info, struct list_head *pagereflis
- 	struct fb_deferred_io_pageref *pageref;
- 	unsigned int y_low = 0, y_high = 0;
+@@ -5103,8 +5134,11 @@ static int __lock_acquire(struct lockdep_map *lock, unsigned int subclass,
+ 	if (DEBUG_LOCKS_WARN_ON(subclass >= MAX_LOCKDEP_SUBCLASSES))
+ 		return 0;
  
--	spin_lock(&par->dirty_lock);
-+	spin_lock_irq(&par->dirty_lock);
- 	dirty_lines_start = par->dirty_lines_start;
- 	dirty_lines_end = par->dirty_lines_end;
- 	/* set display line markers as clean */
- 	par->dirty_lines_start = par->info->var.yres - 1;
- 	par->dirty_lines_end = 0;
--	spin_unlock(&par->dirty_lock);
-+	spin_unlock_irq(&par->dirty_lock);
+-	if (subclass < NR_LOCKDEP_CACHING_CLASSES)
+-		class = lock->class_cache[subclass];
++	if (subclass < NR_LOCKDEP_CACHING_CLASSES) {
++		class = READ_ONCE(lock->class_cache[subclass]);
++		if (!lock_class_cache_is_valid(lock, class, subclass))
++			class = NULL;
++	}
+ 	/*
+ 	 * Not cached?
+ 	 */
+@@ -5307,9 +5341,9 @@ static noinstr int match_held_lock(const struct held_lock *hlock,
+ 		return 1;
  
- 	/* Mark display lines as dirty */
- 	list_for_each_entry(pageref, pagereflist, list) {
+ 	if (hlock->references) {
+-		const struct lock_class *class = lock->class_cache[0];
++		const struct lock_class *class = READ_ONCE(lock->class_cache[0]);
+ 
+-		if (!class)
++		if (!lock_class_cache_is_valid(lock, class, 0))
+ 			class = look_up_lock_class(lock, 0);
+ 
+ 		/*
 -- 
 2.53.0
 
