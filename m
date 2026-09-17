@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D3933B3BE7;
-	Thu, 17 Sep 2026 17:16:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1820F3B3BE7;
+	Thu, 17 Sep 2026 17:16:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789665413; cv=none; b=kQFNGR2pbWvXrFUMK1Pkzyid/83svk6mYxgtOMwWTsPbApmXy34LZxDwfaEH3fmVT/QfljJuXHSHfyMFwNS3xtelXkRPDV/12QrA15Hrs64Dg7eA3wTOowVh4ctq7gphj+JjSd0DauaqcluziLJmDlMNUFFW0Khqk4C2tABBc8s=
+	t=1789665416; cv=none; b=LRcqm43WZGiFAHMJS6dKixIvkkEtlimisT6Y8AgeW9TFmH8Q+ZwtuCBbZssq6qmuUdVakktGRjqrm2xlbd+9nlav/2MRDil+aReARFvTtu4vWDxHu4is5qi3sE0GPrqTwNiThB7DB+Mi3olWLPGpdQVjFd1X3d8UblI4JCIQVYs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789665413; c=relaxed/simple;
-	bh=d53NTdgP8Vgvy+Zh2AB0b1ZPjdNQZr+y9KeYsbIeUDo=;
+	s=arc-20240116; t=1789665416; c=relaxed/simple;
+	bh=w8z1iDckyk6RNhPfR/3L8H9Dq5FbVeN1JXcgCawGwWQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G7Y/e3Vf/EpjcA7iX2G5NA3NUy5XwxTOl6TXWsA0AICSRfhS4Ty2vLVDaDoX9tOcDKPYbQeMaxO+kygU38BZ1e0QWNsoAgckTB5D/yb36ugfDV06Sy7O5yqehuwwTNPniFtnrB34J90L7/RSJOX63UFweMrFhUXvPaE8AwN8Y5g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nDoHA4x0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=A1caTZeE/5mdVyXAA69PgYIYey76iI0M2KQmY0QJqAtbfD/75Ur6IhLzmwGDUYkGYFhJbDCa/E5ybzJ43X7ZUyJtCDrSH/oTkkWofQK/+ll5W7iQuwh+rryt3CMX+LS+BCPgPyTaoel+zMWziHwLctnU48OM6UaJo0TXMfK/QJE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QxLOn8SE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nDoHA4x0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C2511F000FF;
-	Thu, 17 Sep 2026 17:16:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QxLOn8SE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 744E81F000FF;
+	Thu, 17 Sep 2026 17:16:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789665412;
-	bh=L0CR9Q+/DXgaCThwjePr5TFMkt8V2V3DahhYa4E8uH8=;
+	s=korg; t=1789665415;
+	bh=opssT6o6z74rR49RX0CvQJr1xhQHlGrVu967UD4LJ5Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nDoHA4x0tDvQV84HaWHexJm4PpTOrFPGMFraM8mEHkE1yRetwfNKZJFlRKknqPfBE
-	 PA02NXT86TJaERnE98pfdtOYWj8PiMRR4QAoPO/brPqB0Aia08miGcNjxgDdVktwV+
-	 keg21xcC3OgB5J+ABur0evqgpnBov57gC5Vr93wk=
+	b=QxLOn8SEkKWBLSRv071D33VFmKvBLZZU1zMUl+d+lLfjJrnm9kpwHoXCW/xXh0XDl
+	 wCfbjTTRjSf2Y1rEBsB6HSWAgvXVfcVQiR/uUW0x8ifbcz4xEVllM82ZdxmajGKFpO
+	 4YYNm3NfI/wWX72AEq9yxk+euZUT6UkvNiKMkhDQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Paulo Alcantara <pc@manguebit.org>,
-	netfs@lists.linux.dev,
-	linux-fsdevel@vger.kernel.org,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	syzbot+73df3f89e1e13089e466@syzkaller.appspotmail.com,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0647/1250] cachefiles: Fix potential UAF/KASAN warning
-Date: Thu, 17 Sep 2026 16:07:22 +0100
-Message-ID: <20260917151609.432398905@linuxfoundation.org>
+Subject: [PATCH 6.18 0690/1250] af_packet: Dont cast tpacket_hdr.tp_len to int in tpacket_parse_header().
+Date: Thu, 17 Sep 2026 16:08:05 +0100
+Message-ID: <20260917151610.592980533@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -54,151 +54,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit a67632c8c2688d6e0091529bcefe54bc5ee80e9b ]
+[ Upstream commit 73e594c19b4f815d8343461cec7074c4713bbde7 ]
 
-Currently, trace_cachefiles_coherency() is being passed a pointer to a
-__be64 lain over the coherency data in struct cachefiles_xattr so that it
-can display the first 8 bytes.  However, the data is of variable length and
-could even be 0 bytes.  This could lead to a UAF or KASAN warning.
+syzbot reported BUG() in sock_sendmsg_nosec(). [0]
 
-Fix this by making sure the buffer has room for at least 8 bytes and that
-those 8 bytes are pre-cleared.
+The problem is that tpacket_parse_header() casts user-provided
+tpacket_hdr.tp_len, which is u32, to int.
 
-Further, those bytes are not 8-byte aligned, so fix the tracepoint to
-extract the data as four 2-byte words (they are 2-byte aligned) and
-reassemble the __be64.  The compiler will convert this into a single 8-byte
-load where the CPU supports it.
+If the length is larger than INT_MAX, the following condition
+in tpacket_parse_header() passes,
 
-Fixes: 229105e5cfd9 ("cachefiles: Add auxiliary data trace")
-Link: https://sashiko.dev/#/patchset/20260810144746.574036-1-dhowells%40redhat.com
-Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://patch.msgid.link/20260827134304.2075713-11-dhowells@redhat.com
-Acked-by: Paulo Alcantara <pc@manguebit.org>
-cc: Paulo Alcantara <pc@manguebit.org>
-cc: netfs@lists.linux.dev
-cc: linux-fsdevel@vger.kernel.org
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+  if (unlikely(tp_len > size_max))
+
+and any negative value can be returned to the caller, up to
+sock_sendmsg_nosec().
+
+The repro set tpacket_hdr.tp_len to 0xfffffdef, which is cast
+to -EIOCBQUEUED (-529), triggering BUG() in sock_sendmsg_nosec().
+
+  *(uint64_t*)0x200000000008 = 0xfffffdef;
+  ...
+  syscall(__NR_write, /*fd=*/r[0], /*buf=*/0x200000000000ul, /*count=*/1ul);
+
+Let's define the local tp_len as u32 in tpacket_parse_header().
+
+[0]:
+kernel BUG at net/socket.c:803!
+Oops: invalid opcode: 0000 [#1] SMP KASAN PTI
+CPU: 0 UID: 0 PID: 5628 Comm: syz-executor176 Not tainted syzkaller #0 PREEMPT(full)
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 07/24/2026
+RIP: 0010:sock_sendmsg_nosec+0x145/0x180 net/socket.c:803
+Code: 06 67 48 0f b9 3a eb 95 e8 e8 3a 22 f8 48 89 df 4c 89 f6 4c 89 e2 4d 89 fb 2e e8 32 a5 5c 16 e9 51 ff ff ff e8 cc 3a 22 f8 90 <0f> 0b e8 c4 3a 22 f8 48 83 c3 18 48 89 d8 48 c1 e8 03 42 80 3c 28
+RSP: 0018:ffffc90003aefb48 EFLAGS: 00010293
+RAX: ffffffff89a578d4 RBX: ffff8880764c67c0 RCX: ffff88807fb23e80
+RDX: 0000000000000000 RSI: 00000000fffffdef RDI: 00000000fffffdef
+RBP: 00000000fffffdef R08: ffffc90003aef747 R09: 1ffff9200075dee8
+R10: dffffc0000000000 R11: fffff5200075dee9 R12: 0000000000000001
+R13: dffffc0000000000 R14: ffffc90003aefbc0 R15: ffffffff8aac4310
+FS:  000055559101b400(0000) GS:ffff888124ce0000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000200000000210 CR3: 0000000073dca000 CR4: 00000000003526f0
+Call Trace:
+ <TASK>
+ __sock_sendmsg net/socket.c:815 [inline]
+ sock_write_iter+0x2de/0x3e0 net/socket.c:1266
+ new_sync_write fs/read_write.c:595 [inline]
+ vfs_write+0x612/0xba0 fs/read_write.c:687
+ ksys_write+0x150/0x270 fs/read_write.c:739
+ do_syscall_x64 arch/x86/entry/syscall_64.c:61 [inline]
+ do_syscall_64+0x166/0x520 arch/x86/entry/syscall_64.c:84
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7f173130ecb9
+Code: c0 79 93 eb d5 48 8d 7c 1d 00 eb 99 0f 1f 44 00 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 d8 ff ff ff f7 d8 64 89 01 48
+RSP: 002b:00007ffd67e44248 EFLAGS: 00000246 ORIG_RAX: 0000000000000001
+RAX: ffffffffffffffda RBX: 0000200000000000 RCX: 00007f173130ecb9
+RDX: 0000000000000001 RSI: 0000200000000000 RDI: 0000000000000003
+RBP: 0000000000000001 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 00007ffd67e44388
+R13: 0000000000000002 R14: 00002000000000c0 R15: 0000000000000002
+ </TASK>
+
+Fixes: 69e3c75f4d54 ("net: TX_RING and packet mmap")
+Reported-by: syzbot+73df3f89e1e13089e466@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/6a946ffa.1d9ded08.62e62.0123.GAE@google.com/
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20260830180915.260225-1-kuniyu@google.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/cachefiles/xattr.c             | 16 ++++++++--------
- include/trace/events/cachefiles.h | 19 +++++++++++++++++--
- 2 files changed, 25 insertions(+), 10 deletions(-)
+ net/packet/af_packet.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/fs/cachefiles/xattr.c b/fs/cachefiles/xattr.c
-index 52383b1d0ba63..6214331821583 100644
---- a/fs/cachefiles/xattr.c
-+++ b/fs/cachefiles/xattr.c
-@@ -13,6 +13,7 @@
- #include <linux/quotaops.h>
- #include <linux/xattr.h>
- #include <linux/slab.h>
-+#include <linux/unaligned.h>
- #include "internal.h"
+diff --git a/net/packet/af_packet.c b/net/packet/af_packet.c
+index cb3376f04dfa8..772ecfa13cd78 100644
+--- a/net/packet/af_packet.c
++++ b/net/packet/af_packet.c
+@@ -2674,7 +2674,8 @@ static int tpacket_parse_header(struct packet_sock *po, void *frame,
+ 				int size_max, void **data)
+ {
+ 	union tpacket_uhdr ph;
+-	int tp_len, off;
++	u32 tp_len;
++	int off;
  
- #define CACHEFILES_COOKIE_TYPE_DATA 1
-@@ -50,7 +51,7 @@ int cachefiles_set_object_xattr(struct cachefiles_object *object)
+ 	ph.raw = frame;
  
- 	_enter("%x,#%d", object->debug_id, len);
- 
--	buf = kmalloc(sizeof(struct cachefiles_xattr) + len, GFP_KERNEL);
-+	buf = kmalloc(sizeof(struct cachefiles_xattr) + max(len, sizeof(__be64)), GFP_KERNEL);
- 	if (!buf)
- 		return -ENOMEM;
- 
-@@ -60,6 +61,7 @@ int cachefiles_set_object_xattr(struct cachefiles_object *object)
- 	buf->content		= object->content_info;
- 	if (test_bit(FSCACHE_COOKIE_LOCAL_WRITE, &object->cookie->flags))
- 		buf->content	= CACHEFILES_CONTENT_DIRTY;
-+	put_unaligned_be64(0, (__be64 *)buf->data);
- 	if (len > 0)
- 		memcpy(buf->data, fscache_get_aux(object->cookie), len);
- 
-@@ -77,8 +79,7 @@ int cachefiles_set_object_xattr(struct cachefiles_object *object)
- 		trace_cachefiles_vfs_error(object, file_inode(file), ret,
- 					   cachefiles_trace_setxattr_error);
- 		trace_cachefiles_coherency(object, file_inode(file)->i_ino,
--					   be64_to_cpup((__be64 *)buf->data),
--					   buf->content,
-+					   buf->data, buf->content,
- 					   cachefiles_coherency_set_fail);
- 		if (ret != -ENOMEM)
- 			cachefiles_io_error_obj(
-@@ -86,8 +87,7 @@ int cachefiles_set_object_xattr(struct cachefiles_object *object)
- 				"Failed to set xattr with error %d", ret);
- 	} else {
- 		trace_cachefiles_coherency(object, file_inode(file)->i_ino,
--					   be64_to_cpup((__be64 *)buf->data),
--					   buf->content,
-+					   buf->data, buf->content,
- 					   cachefiles_coherency_set_ok);
+@@ -2694,7 +2695,7 @@ static int tpacket_parse_header(struct packet_sock *po, void *frame,
+ 		break;
+ 	}
+ 	if (unlikely(tp_len > size_max)) {
+-		pr_err("packet size is too long (%d > %d)\n", tp_len, size_max);
++		pr_err("packet size is too long (%u > %d)\n", tp_len, size_max);
+ 		return -EMSGSIZE;
  	}
  
-@@ -110,9 +110,10 @@ int cachefiles_check_auxdata(struct cachefiles_object *object, struct file *file
- 	int ret = -ESTALE;
- 
- 	tlen = sizeof(struct cachefiles_xattr) + len;
--	buf = kmalloc(tlen, GFP_KERNEL);
-+	buf = kmalloc(sizeof(struct cachefiles_xattr) + max(len, sizeof(__be64)), GFP_KERNEL);
- 	if (!buf)
- 		return -ENOMEM;
-+	put_unaligned_be64(0, (__be64 *)buf->data);
- 
- 	xlen = cachefiles_inject_read_error();
- 	if (xlen == 0)
-@@ -148,8 +149,7 @@ int cachefiles_check_auxdata(struct cachefiles_object *object, struct file *file
- 
- out:
- 	trace_cachefiles_coherency(object, file_inode(file)->i_ino,
--				   be64_to_cpup((__be64 *)buf->data),
--				   buf->content, why);
-+				   buf->data, buf->content, why);
- 	kfree(buf);
- 	return ret;
- }
-diff --git a/include/trace/events/cachefiles.h b/include/trace/events/cachefiles.h
-index a743b2a35ea70..3ca9be3a21c56 100644
---- a/include/trace/events/cachefiles.h
-+++ b/include/trace/events/cachefiles.h
-@@ -380,7 +380,7 @@ TRACE_EVENT(cachefiles_rename,
- TRACE_EVENT(cachefiles_coherency,
- 	    TP_PROTO(struct cachefiles_object *obj,
- 		     ino_t ino,
--		     u64 disk_aux,
-+		     const void *disk_aux,
- 		     enum cachefiles_content content,
- 		     enum cachefiles_coherency_trace why),
- 
-@@ -397,12 +397,27 @@ TRACE_EVENT(cachefiles_coherency,
- 			     ),
- 
- 	    TP_fast_assign(
-+		    union {
-+			    __be16 s[4];
-+			    __be64 ll;
-+		    } x;
-+
- 		    __entry->obj	= obj->debug_id;
- 		    __entry->why	= why;
- 		    __entry->content	= content;
- 		    __entry->ino	= ino;
- 		    __entry->aux	= be64_to_cpup((__be64 *)obj->cookie->inline_aux);
--		    __entry->disk_aux	= disk_aux;
-+
-+		    /* cachefiles_xattr::data is 2-byte aligned but not 8-byte aligned. */
-+		    if (disk_aux) {
-+			    x.s[0] = ((__be16 *)disk_aux)[0];
-+			    x.s[1] = ((__be16 *)disk_aux)[1];
-+			    x.s[2] = ((__be16 *)disk_aux)[2];
-+			    x.s[3] = ((__be16 *)disk_aux)[3];
-+			    __entry->disk_aux = be64_to_cpu(x.ll);
-+		    } else {
-+			    __entry->disk_aux = 0;
-+		    }
- 			   ),
- 
- 	    TP_printk("o=%08x %s B=%llx c=%u aux=%llx dsk=%llx",
 -- 
 2.53.0
 
