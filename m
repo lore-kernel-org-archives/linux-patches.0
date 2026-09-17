@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4723C4E77FA;
-	Thu, 17 Sep 2026 18:07:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A47334E9C32;
+	Thu, 17 Sep 2026 18:07:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789668425; cv=none; b=gnZdvhJYre5KUjnLgAys+Cl0LzuSYsXKUV/hdUlJOlzv9CoNoWCEZ0P58qczWQ498hGZFLRbWwNlGylR7QzeYYO8iHrqNBmimRIh0sfFZitakWO3ezbgulo2nafR1Hhx7SQv7rOB4bTeDCbysZlsdBONDJVmr7sjH3Mv5ffiGjM=
+	t=1789668426; cv=none; b=Pw7aj/m+MteAMU4MI5gN0h+nenfxcrC/cQitCVCIyG89TbQjaUNE7derTqIfxXbMIIry271kGOh7Di+lN3AiubHrMIXl35EvcjpLp4Me1dQBiIDOPcHPiP4OmmUm2QBzTzlHz+Pn1bftwl095XDtqXgCg35sldgojAsTxFs/zdM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789668425; c=relaxed/simple;
-	bh=x0jPxA3/dnhKz7DJ9ABtm6F9hW4sd3tG2hqxk37fRLI=;
+	s=arc-20240116; t=1789668426; c=relaxed/simple;
+	bh=DjIl+3X1cKibeEBGfMQL2VBl6OVdaBgU+A7jnJgisds=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nRuL9/CkI8Jc/ijNMmXs+i+lL0xBzdo23kOKsKEjSwQj53EgPkgtoSVn66jpZnZJPWU8fnkPap/INOdf78YuKT32h8eTzGktM2vqTZty9yd61+RF8IrTdWjNzk+LKXAniSreKnYjGb2UNPC9EYqEEdpjkCa+R2PyrjGcOFzJC2s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BSKZ7Ulf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DgxrQhf7Oz01JxUyFDlW3anWsbO0gzlPAP/ApRmoWNJ7aypnRHgxMpUboXyFrmqdbZMcCimz2VrHWejOfexv2TqgfW3ESsJL0zMgpSbCQItl3+ugno6pknMPJhN+l8lVQq3HVrlvJpMIltI9ebIaInTEto77p7ySuuKcjsXYdlo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nlVrhJZJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BSKZ7Ulf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 238181F000FF;
-	Thu, 17 Sep 2026 18:07:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nlVrhJZJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05FD91F00893;
+	Thu, 17 Sep 2026 18:07:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789668422;
-	bh=fq0MZWaufRTUmOrwLToLVOKj6wAbsRofuDtFoWbVzTs=;
+	s=korg; t=1789668425;
+	bh=QEhw5Vf2M+qKW90OzzgQZZ7b9iIf86QvhnHGw5CRF1w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BSKZ7UlfGPGf42Fpu2vTzxjSqfZA5i5+4BQzaS3lcF6bXJq++u2KdP7YcFXbbPEAR
-	 w7zbGFtEV+KmMPMHbB2MJF+JTFCom0by9a6+PvwmIRyP0nZNoNTQl3b/9OaR4UycoO
-	 FEvFyWYGo6OiV+mvNxjrEU9eyC1nmxV3XYVMrPFA=
+	b=nlVrhJZJLKRQDiLZJSmASjPi+lRvKGi8mX7esd3OTBJSM5tKswMXLPFrNWLYfIIat
+	 jnciehFHsYa3KnMxe4GdpA6cmZyv2/3jZdfPVh2K+kdnVRu0BXnTYRMQ0EVAhujJNm
+	 6YQqRDbJKx/wNXQ3w+WkbROw2kTZHVYXpznQphEA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tejun Heo <tj@kernel.org>,
-	Tao Cui <cuitao@kylinos.cn>,
-	Jens Axboe <axboe@kernel.dk>,
+	Huiwen He <hehuiwen@kylinos.cn>,
+	ChenXiaoSong <chenxiaosong@kylinos.cn>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0421/1102] blk-cgroup: fix leaks and online flag on radix_tree_insert failure
-Date: Thu, 17 Sep 2026 16:06:04 +0100
-Message-ID: <20260917151550.237513001@linuxfoundation.org>
+Subject: [PATCH 6.12 0422/1102] smb/client: flush dirty data before punching a hole
+Date: Thu, 17 Sep 2026 16:06:05 +0100
+Message-ID: <20260917151550.263180093@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -46,65 +46,70 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tao Cui <cuitao@kylinos.cn>
+From: Huiwen He <hehuiwen@kylinos.cn>
 
-[ Upstream commit dbbca20764382b4d411ec2918f4e278ffe547acc ]
+[ Upstream commit d7d2adcd022baade5cab65ca492ce63421ce3a6e ]
 
-When radix_tree_insert() fails in blkg_create(), the error path has two
-issues:
+Punching a hole after a large buffered write may leave the range
+reported as data. Reproduce it with:
 
-1. blkg->online is set to true unconditionally, even when the blkg was
-   never fully inserted.  Move the assignment inside the success block.
+  xfs_io -f \
+    -c "pwrite -b 3m -S 0x61 0 3m" \
+    -c "fpunch 1m 1m" \
+    -c "seek -h 0" \
+    -c "seek -d 1m" \
+    /mnt/test/repro
 
-2. The error path calls blkg_put() without first calling
-   percpu_ref_kill().  Because the refcount is still in percpu mode,
-   percpu_ref_put() only does this_cpu_sub() without checking for zero,
-   so blkg_release() is never triggered.  This permanently leaks the
-   blkg memory, its percpu iostat, policy data, the parent blkg
-   reference, and the cgroup css reference — the latter preventing the
-   cgroup from ever being destroyed.
+Punching 1 MiB at offset 1 MiB should produce:
 
-Fix by replacing blkg_put() with percpu_ref_kill(), matching the pattern
-used in blkg_destroy().
+  0          1 MiB       2 MiB       3 MiB
+  |  DATA    |   HOLE    |   DATA    | EOF
 
-Acked-by: Tejun Heo <tj@kernel.org>
-Signed-off-by: Tao Cui <cuitao@kylinos.cn>
-Link: https://patch.msgid.link/20260715132407.1469777-1-cui.tao@linux.dev
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Instead, the entire file is reported as data. SEEK_HOLE(0) returns EOF,
+and SEEK_DATA(1M) returns 1M.
+
+This happens because a dirty folio spanning the punched range can be
+written back after the punch and refill the hole.
+
+Fix this by flushing and waiting for dirty data in the punched range
+before invalidating the page cache and issuing FSCTL_SET_ZERO_DATA.
+
+The xfstests generic/539 pass against Samba/ksmbd with this change.
+
+Signed-off-by: Huiwen He <hehuiwen@kylinos.cn>
+Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-cgroup.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/smb/client/smb2ops.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/block/blk-cgroup.c b/block/blk-cgroup.c
-index 7f00e9e9cc061..d89da7e067f42 100644
---- a/block/blk-cgroup.c
-+++ b/block/blk-cgroup.c
-@@ -432,15 +432,15 @@ static struct blkcg_gq *blkg_create(struct blkcg *blkcg, struct gendisk *disk,
- 				blkg->pd[i]->online = true;
- 			}
- 		}
-+		blkg->online = true;
- 	}
--	blkg->online = true;
- 	spin_unlock(&blkcg->lock);
+diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
+index 70f2ea70fb3c7..54d7c00c9f6b0 100644
+--- a/fs/smb/client/smb2ops.c
++++ b/fs/smb/client/smb2ops.c
+@@ -3391,6 +3391,15 @@ static long smb3_punch_hole(struct file *file, struct cifs_tcon *tcon,
+ 		goto out;
  
- 	if (!ret)
- 		return blkg;
- 
- 	/* @blkg failed fully initialized, use the usual release path */
--	blkg_put(blkg);
-+	percpu_ref_kill(&blkg->refcnt);
- 	return ERR_PTR(ret);
- 
- err_put_css:
+ 	filemap_invalidate_lock(inode->i_mapping);
++	/*
++	 * Flush dirty data first, otherwise a dirty folio spanning the punched
++	 * range may be written back after the ioctl and refill the hole.
++	 */
++	rc = filemap_write_and_wait_range(inode->i_mapping, offset,
++					  offset + len - 1);
++	if (rc < 0)
++		goto unlock;
++
+ 	/*
+ 	 * We implement the punch hole through ioctl, so we need remove the page
+ 	 * caches first, otherwise the data may be inconsistent with the server.
 -- 
 2.53.0
 
