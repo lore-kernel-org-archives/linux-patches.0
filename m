@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABC4D49D590;
-	Thu, 17 Sep 2026 17:58:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B9A9470EB6;
+	Thu, 17 Sep 2026 17:58:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789667923; cv=none; b=YsCMgP13EvTghEM21P87VybEKRd5ohMrYIoipxXbvyZ5QXmP2emuUW0vp67kMKgxrlPl40B3GNQI45SxKI5j7Y42OKO4yvZj+9BcfL+gKq4qwozNn5C3UB/IpD+g3aF/rLePDc9VP/X+ZJLCfLmIc6m/2YAiZeP4fuNT7gk692g=
+	t=1789667926; cv=none; b=Ouu7R69Jai0UpRjUQ4uQ94hrtC7flD/lrCUNpMIRKxSav6QhnElC/IQseGCegK00o2rs9MnKRamUQvSnDL8OwC5vQ56ssFTWMGmUKMAoLFgTxge69H2h6l15eldxRKqHNuKJP3VfdgBn7/F3Tv1kKSxU4BOQUURTzaQnv+lGQ2E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789667923; c=relaxed/simple;
-	bh=yBO5BJNesVOBgnKMJeOeysRwJjNQI6K8Dz5E/0D8hRw=;
+	s=arc-20240116; t=1789667926; c=relaxed/simple;
+	bh=/yOjHaBec6YGizbc2rXsSn5mJQ8s3q9B8C1hYXuo5jg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EnHxBlC4d0mbEaFJ5UKCgHj5DiBnrBbOlVM0CE8aFl1ompgSSLrAkHyLhxdU2fJ/irqAjLhaxtp+1VnUgOcGjR1Pd8QTmkXULO0bHNRL/o0b6AqMFn+XAL80qggTn2WkhzsJVO1RbaoTYGtJumqLto20ADtmmsHJrowN2F7wOMA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oArKFDA2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AvQutsaNITX1IQxDl3FviChtwnYDHetD7DlV8j9a45Ph/Ic8PMwvR2BKQ7RC/sxCq5gnqMRPnI7IBi1Kt2lrMHaypmsZ0/PmdmRbRRSwrJb/ZNeRtpTT8Es6x8Y8aw/M4RVxW/vPkg4o+wxmPC3LvoyI7sdZ0kmdQ1b5cLBHjuU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SkUZDAvw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oArKFDA2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10B741F000FF;
-	Thu, 17 Sep 2026 17:58:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SkUZDAvw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F358E1F000FF;
+	Thu, 17 Sep 2026 17:58:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789667922;
-	bh=sRxucduFF5HlyWd7bdkD94tTGhV26ZIAvG40wvzzF0U=;
+	s=korg; t=1789667925;
+	bh=z9gSJoNSIdaRXzW34eb1Gu/g97pXQiYW1awWrTDVjwA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oArKFDA2EDgzOyUFhRG83aWXEVGQfg8Uea+YMVEuAfBAcXKvzZ7pYFQqoltsGCus5
-	 tH34EnYho7WDzrqbuS+js0zVxnEt1ekOynUNDcsM39H9HW+56Rhh2dgNtdYrCmHcEo
-	 LRsM/k4DCmkMkaTH0uHuH/kzJ4N/J8m+0oTHpSJ8=
+	b=SkUZDAvwCY5/D6rGp1B1P6M5KkGqULv1Rs8gV7TqTCPHJCVLlJjT8BSWDUeAe7s2V
+	 p11GCt0BRw+ia9t60awMWH92uKNwCoPk82QrIfNdb5278YapPP8fh4vb/pMDHc8rIP
+	 FoED+doXpaf3JgfPXLxdZ31yecZviZq59/XT0iCQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Yao Sang <sangyao@kylinos.cn>,
-	Keith Busch <kbusch@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Anna Schumaker <anna.schumaker@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0208/1102] nvme: refresh multipath head zoned limits from path limits
-Date: Thu, 17 Sep 2026 16:02:31 +0100
-Message-ID: <20260917151544.799222885@linuxfoundation.org>
+Subject: [PATCH 6.12 0248/1102] xprtrdma: Add request-pool slack for delayed recycling
+Date: Thu, 17 Sep 2026 16:03:11 +0100
+Message-ID: <20260917151545.820873574@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -52,60 +51,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yao Sang <sangyao@kylinos.cn>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 59c0517123f2757c41d7795f841bc4c836577d17 ]
+[ Upstream commit 64bf6892057b746c55bcc045b9492741b72d8d27 ]
 
-queue_limits_stack_bdev() updates the multipath head limits from the
-path queue, but it does not propagate max_open_zones or
-max_active_zones. As a result, a zoned multipath namespace head can
-keep stale 0/0 values even after a ready path reports finite zoned
-resource limits.
+After the previous patch gates req recycling on Send completion,
+a completed RPC's rpcrdma_req can remain pinned by the sendctx
+ring until the next signaled Send completion releases it. The
+transmitted-RPC ceiling is unchanged: xprt_request_get_cong()
+gates Sends against xprt->cwnd, the RPC/RDMA credit window fed
+by server-granted credits and capped at re_max_requests. The
+req pool, however, must exceed max_reqs by enough that this
+recycle delay does not stall a slot allocation that the credit
+window would admit.
 
-When refreshing the head limits in nvme_update_ns_info(), stack the
-zoned resource limits directly after stacking the path queue limits.
-Use min_not_zero() so the block layer's 0 value keeps its "no limit"
-meaning while finite limits are combined conservatively.
+The headroom is bounded. frwr_open() sets re_send_batch to
+re_max_requests >> 3 -- one in every eight Sends is signaled --
+so at most re_send_batch unsignaled Sends can be outstanding
+before the next signaled completion releases them. That equals
+max_reqs / 8 reqs in the worst case, with a one-slot floor for
+small max_reqs values where the right-shift rounds to zero.
 
-This avoids advertising "no limit" on the multipath head while keeping
-the zoned-limit handling local to the NVMe multipath update path.
+The sendctx ring and the hardware Send Queue are not enlarged
+to match. Both are sized in rpcrdma_sendctxs_create() and
+frwr_query_device() for re_max_requests in-flight Sends, which
+is the ceiling the credit window enforces. The pool slack does
+not raise that ceiling -- it only lets allocation keep pace
+with the credit window during the brief interval in which
+earlier reqs are pinned waiting for the next signaled
+completion. At any moment, at most re_send_batch sendctxes are
+held by unswept unsignaled Sends, leaving the rest of the ring
+available for newly admitted Sends.
 
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Yao Sang <sangyao@kylinos.cn>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Allocate max_reqs + DIV_ROUND_UP(max_reqs, 8) request objects
+and name the slack calculation at the allocation site so the
+1/8 bound stays tied to the Send-signaling batch size.
+
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/core.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ net/sunrpc/xprtrdma/verbs.c | 21 ++++++++++++++++++++-
+ 1 file changed, 20 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
-index cd1b1ae4930e9..7ab6799c193ac 100644
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -2247,6 +2247,14 @@ static int nvme_update_ns_info_block(struct nvme_ns *ns,
- 	return ret;
+diff --git a/net/sunrpc/xprtrdma/verbs.c b/net/sunrpc/xprtrdma/verbs.c
+index e2d3cee825cd7..8449107b2a095 100644
+--- a/net/sunrpc/xprtrdma/verbs.c
++++ b/net/sunrpc/xprtrdma/verbs.c
+@@ -1123,6 +1123,22 @@ static void rpcrdma_reps_destroy(struct rpcrdma_buffer *buf)
+ 	spin_unlock(&buf->rb_lock);
  }
  
-+static void nvme_stack_zone_resources(struct queue_limits *t,
-+				      const struct queue_limits *b)
++static unsigned int rpcrdma_req_pool_slack(unsigned int max_reqs)
 +{
-+	t->max_open_zones = min_not_zero(t->max_open_zones, b->max_open_zones);
-+	t->max_active_zones =
-+		min_not_zero(t->max_active_zones, b->max_active_zones);
++	/* The sendctx ring can hold up to one Send-signaling batch
++	 * (re_send_batch, set by frwr_open() to re_max_requests >> 3)
++	 * of unfinished Sends. Each pins its req until a signaled Send
++	 * completion releases the sendctx. Size the pool above max_reqs
++	 * by that batch so the recycle delay does not stall a slot
++	 * allocation that the RPC/RDMA credit window would admit.
++	 *
++	 * Round up: re_max_requests >> 3 is zero when max_reqs < 8, but
++	 * a single unsignaled Send is still enough to pin one req. One
++	 * slack slot covers that case.
++	 */
++	return DIV_ROUND_UP(max_reqs, 8);
 +}
 +
- static int nvme_update_ns_info(struct nvme_ns *ns, struct nvme_ns_info *info)
+ /**
+  * rpcrdma_buffer_create - Create initial set of req/rep objects
+  * @r_xprt: transport instance to (re)initialize
+@@ -1132,6 +1148,7 @@ static void rpcrdma_reps_destroy(struct rpcrdma_buffer *buf)
+ int rpcrdma_buffer_create(struct rpcrdma_xprt *r_xprt)
  {
- 	bool unsupported = false;
-@@ -2312,6 +2320,8 @@ static int nvme_update_ns_info(struct nvme_ns *ns, struct nvme_ns_info *info)
- 		lim.io_opt = ns_lim->io_opt;
- 		queue_limits_stack_bdev(&lim, ns->disk->part0, 0,
- 					ns->head->disk->disk_name);
-+		if (lim.features & BLK_FEAT_ZONED)
-+			nvme_stack_zone_resources(&lim, ns_lim);
- 		if (unsupported)
- 			ns->head->disk->flags |= GENHD_FL_HIDDEN;
- 		else
+ 	struct rpcrdma_buffer *buf = &r_xprt->rx_buf;
++	unsigned int max_reqs;
+ 	int i, rc;
+ 
+ 	buf->rb_bc_srv_max_requests = 0;
+@@ -1145,7 +1162,9 @@ int rpcrdma_buffer_create(struct rpcrdma_xprt *r_xprt)
+ 	INIT_LIST_HEAD(&buf->rb_all_reps);
+ 
+ 	rc = -ENOMEM;
+-	for (i = 0; i < r_xprt->rx_xprt.max_reqs; i++) {
++	max_reqs = r_xprt->rx_xprt.max_reqs;
++	max_reqs += rpcrdma_req_pool_slack(max_reqs);
++	for (i = 0; i < max_reqs; i++) {
+ 		struct rpcrdma_req *req;
+ 
+ 		req = rpcrdma_req_create(r_xprt,
 -- 
 2.53.0
 
