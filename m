@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41A555A0ADE;
-	Thu, 17 Sep 2026 15:40:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BD505A986D;
+	Thu, 17 Sep 2026 15:40:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659622; cv=none; b=dRmRedITPAf3ilAQCPfwJBHmxzg3UpBxdxDMhb+Jzlp+wkxW9mahD3TCv43GLgOxv3R/OasB91l+d/IObQYDTGNVDN92uD8ckepc2pVk77yt6TvUv89yTXDbdJz1b50OTVE26iiTmz8xjT0614iEbNOQBIJBAlA9h/DjoiCiz6k=
+	t=1789659626; cv=none; b=Nh2DcP5OLsZHCNs4dMWsm9vorFoWuxGU/YC0kCQRPB2CA4O9XUcRrL0/Qx5CzKifyGI1tVk4h1CquaV0ZYxD337SiQworTxtPyPGOT3cbN+vcshjV+5eQNqxu++nhcXbyo3Qq0PGl3vwCjUn3CX7tlOz/8OFRtMRTwyvYbL8j9Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659622; c=relaxed/simple;
-	bh=rvP5F8stLwcPoG1956jE2e0dj1seX4KjkkDPBEZv2fY=;
+	s=arc-20240116; t=1789659626; c=relaxed/simple;
+	bh=tDp+RRa4KpP8sBxtXaXbpizeM+KT0l1A3GiUUdeqWiQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Rk8qrtqPQGf52DNVjeRNZxaBDXG/IqTHyAi3ioT4ORBfwN98iiqBz+NrkTU/vnwIUMC/iUpyaWSyI1BYXAOgTaoGXtDq/cJR8F0c6o5QknNpuQ6abDSXg84LC1v974/ooPs/UgoLjBOE4QKc6/1chpI72r631kUNGw0gLZQeyHE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=StoyKHfb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HzyUVHwYFV4Fb2C68xC1M5aWcbM+Cd0ixFNhSS12yp1/xtq7NK4GrUm/zo0uPzhslsymEjPhxo9pGKZKMFciPMdWY56N+NnUrShBArKodxWeHS9Tmr8i3TcB24DDKiExLOl8phD5k2NJEpxtkl2u35mMsrUvUfa2MMneHTyZYTo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bkmsReoU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="StoyKHfb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D526A1F00898;
-	Thu, 17 Sep 2026 15:40:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bkmsReoU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEDC71F00893;
+	Thu, 17 Sep 2026 15:40:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659613;
-	bh=kF11iRRsVdiPkrNJfwccEraSEJeuF/0aeg52v5dnjJk=;
+	s=korg; t=1789659619;
+	bh=bvVhChEX/1x5c7xNJT/FjOMTL+nhpBa11/XDkeG1U+I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=StoyKHfbiPveS6WBsDWV6D3zon7F0uYkfWhviZ6GjAuSISZVREjKd77U3DHAAmFFA
-	 9vFrmhK+lsGvmgPK0n/M96nBNSnWIbZB+Hs8/CeibKEcuQafucOkpG2FPmM824Pr68
-	 48Us6jt8mDpke8dpvYj4+tNpEsQzgT/TEIpXSUkg=
+	b=bkmsReoUmQyxew01gFC7FEMHuARdasnPLKBtNBegfJX9UKXV/CiDRDor/yZUdeBNZ
+	 4Slx1sa38ArJ/W22KMlaKNF9etXNnJ7l791em5LS9BNverS6PU2F+WRLhz7Bs4UCwC
+	 1UGmOWZThh+Z1/kTkDS2uRcchmi1WJM/IXEGX53Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	"Nikhil P. Rao" <nikhil.rao@amd.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Fangyu Yu <fangyu.yu@linux.alibaba.com>,
+	Nutty Liu <nutty.liu@hotmail.com>,
+	Joerg Roedel <joerg.roedel@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 288/733] pds_core: dont release PCI regions for VFs on reset
-Date: Thu, 17 Sep 2026 16:09:56 +0100
-Message-ID: <20260917151358.576923897@linuxfoundation.org>
+Subject: [PATCH 7.2 316/733] iommu/riscv: Add command queue lock
+Date: Thu, 17 Sep 2026 16:10:24 +0100
+Message-ID: <20260917151359.358760983@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -52,39 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikhil P. Rao <nikhil.rao@amd.com>
+From: Fangyu Yu <fangyu.yu@linux.alibaba.com>
 
-[ Upstream commit 73608de7e59246b4b533c1ffaee158a7048e186e ]
+[ Upstream commit d5bcf9ccaa357396089bbfa47fc82b093f109b1e ]
 
-pdsc_reset_prepare() called pci_release_regions() unconditionally, but
-only PFs call pci_request_regions() (pdsc_init_pf). On a VF FLR this
-makes the kernel warn "Trying to free nonexistent resource".
+Add a raw spinlock to the RISC-V IOMMU queue state so command queue
+publishing can be serialized by a later change.
 
-Fixes: ffa55858330f ("pds_core: implement pci reset handlers")
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Closes: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260804235946.177762-1-nikhil.rao%40amd.com
-Signed-off-by: Nikhil P. Rao <nikhil.rao@amd.com>
-Link: https://patch.msgid.link/20260901044219.1361466-3-nikhil.rao@amd.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 856c0cfe5c5f ("iommu/riscv: Command and fault queue support")
+Signed-off-by: Fangyu Yu <fangyu.yu@linux.alibaba.com>
+Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
+Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/amd/pds_core/main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iommu/riscv/iommu.c | 1 +
+ drivers/iommu/riscv/iommu.h | 2 ++
+ 2 files changed, 3 insertions(+)
 
-diff --git a/drivers/net/ethernet/amd/pds_core/main.c b/drivers/net/ethernet/amd/pds_core/main.c
-index 1b960139de4e4..a19269f6b66c7 100644
---- a/drivers/net/ethernet/amd/pds_core/main.c
-+++ b/drivers/net/ethernet/amd/pds_core/main.c
-@@ -511,8 +511,8 @@ static void pdsc_reset_prepare(struct pci_dev *pdev)
- 		mutex_lock(&pdsc->devcmd_lock);
- 		pdsc_unmap_bars(pdsc);
- 		mutex_unlock(&pdsc->devcmd_lock);
-+		pci_release_regions(pdev);
- 	}
--	pci_release_regions(pdev);
- 	if (pci_is_enabled(pdev))
- 		pci_disable_device(pdev);
- }
+diff --git a/drivers/iommu/riscv/iommu.c b/drivers/iommu/riscv/iommu.c
+index cec3ddd7ab103..2c0dcc90cf85b 100644
+--- a/drivers/iommu/riscv/iommu.c
++++ b/drivers/iommu/riscv/iommu.c
+@@ -1560,6 +1560,7 @@ int riscv_iommu_init(struct riscv_iommu_device *iommu)
+ 	int rc;
+ 
+ 	RISCV_IOMMU_QUEUE_INIT(&iommu->cmdq, CQ);
++	raw_spin_lock_init(&iommu->cmdq.lock);
+ 	RISCV_IOMMU_QUEUE_INIT(&iommu->fltq, FQ);
+ 
+ 	rc = riscv_iommu_init_check(iommu);
+diff --git a/drivers/iommu/riscv/iommu.h b/drivers/iommu/riscv/iommu.h
+index 46df79dd54957..5676001548cc7 100644
+--- a/drivers/iommu/riscv/iommu.h
++++ b/drivers/iommu/riscv/iommu.h
+@@ -12,6 +12,7 @@
+ #define _RISCV_IOMMU_H_
+ 
+ #include <linux/iommu.h>
++#include <linux/spinlock.h>
+ #include <linux/types.h>
+ #include <linux/iopoll.h>
+ 
+@@ -23,6 +24,7 @@ struct riscv_iommu_queue {
+ 	atomic_t prod;				/* unbounded producer allocation index */
+ 	atomic_t head;				/* unbounded shadow ring buffer consumer index */
+ 	atomic_t tail;				/* unbounded shadow ring buffer producer index */
++	raw_spinlock_t lock;			/* serialize queue publishing */
+ 	unsigned int mask;			/* index mask, queue length - 1 */
+ 	unsigned int irq;			/* allocated interrupt number */
+ 	struct riscv_iommu_device *iommu;	/* iommu device handling the queue when active */
 -- 
 2.53.0
 
