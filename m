@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA768511E90;
-	Thu, 17 Sep 2026 15:35:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40238582BA6;
+	Thu, 17 Sep 2026 15:35:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659336; cv=none; b=FrdVyPdyBgngsKoOqRr8B3h4NtrOh85WKZT1O54xwH4lXN9abL0kthm8hT5ZCOZrMfF4V7cL2nd/QNKWDSmC/AQCPSxG3UZeGG0yL+2w3WZskVKD1r+w41nxgysO0W14+XAl1mp0Iuw7PdAQ8RXHglueRGQC2IB7+yfWhETmGqo=
+	t=1789659341; cv=none; b=cFa0g0+0199oct0BF43VthqtAno538M2DCzqM0U/Y0O9IZ2YbeJskBgSnsyn0X71J/LHq8EOqwhA/ufO42AmSiM4o2iz9GIzIHfL4WYAL2gX3IaO8f1ZdwcHEEFvqJI3/mEAlIxc8FCQltjyq4aY2rjtD9yJRUAjly/B061uJmM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659336; c=relaxed/simple;
-	bh=qWkRAC+kZ7WVf/ugzeI57+jBOFbddlISw+SOCLwUBPM=;
+	s=arc-20240116; t=1789659341; c=relaxed/simple;
+	bh=pJAAndtHRaLgjw+aTyi+SWt3nLMjzM0NaJr08lBRamI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FFHhfJoKFCpy5SyTBHijQo19MaJ1BE7B0tq4zc3j8pyRkfAyAkyQnLpLBo0broaV/0Jhj7ZozN1j78rPzkYQEpqr5D4O7MHAXywnFyZvDubGzLKAhorjr4tEBNfY1xAupSW52pLxCc3iNOZfL4h11g2eleiN4DZKpMAUeYvbXfg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YfcMA9qK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Nqvh3YiHCBGqia+vZ25+d/Y9L2/uKFtUvMaq7wlNtUizCD1upDQqnD/f8f9PNMp7ZimvOGF0AEkXwGAzs4+ZwPHJB87cPhQ8ZbYY45LJDDRmILnKPGZ/Kmt3XEpEKLrzjSaCszUInfrkI1V7arZJBHg9W4jZzsVYeqZ3uyd4nsc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ladpCiub; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YfcMA9qK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53BB91F00893;
-	Thu, 17 Sep 2026 15:35:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ladpCiub"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AB691F00898;
+	Thu, 17 Sep 2026 15:35:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659326;
-	bh=s43cNHyQ+EY2JzB0SgaQTxueJGIL/bZiWO8yTVSHOis=;
+	s=korg; t=1789659329;
+	bh=bT1NpmXyZHeNhVY376lepH1Nivj9I2DB/BYQu3TDSoo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YfcMA9qK2PDSww32F8llcNOOxUrJEejozzGFMEIxLe2qPOsz/U/Gv/VKmM98w23xa
-	 1cXX4W2KxestVwdFavHGLO1CHKjZoapfoWCoy512kleYaM7k+i3kCL11jDH1qZpApF
-	 TdUX53ZJP8NfEKei1/+PTTP4hQrZhx45xv2dz/yk=
+	b=ladpCiub1Vhb1sLrdn8dP44+OAzMT7Hp0n2Moz3DAg6rZwaLFsiVT4kIZO2KxmXI7
+	 4YJ+kyKJuMnCuWB624qr9PTKX3J+2Jq2USrIWD3eh/uputP+PWM5lJeO/kyUeKEhOK
+	 /fbnhXrHJmEOLRrxTUJnvI0zw2wotUmisI3H0jSY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	Yury Smirnov <yurymonzon@gmail.com>,
-	Will Deacon <will@kernel.org>,
+	"Walther, Jens-Uwe" <waltju@amazon.de>,
+	Yann Collet <yann.collet.73@gmail.com>,
+	Gao Xiang <xiang@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 220/733] arm64: trans_pgd: clone only the linear map that exists at runtime
-Date: Thu, 17 Sep 2026 16:08:48 +0100
-Message-ID: <20260917151356.686911500@linuxfoundation.org>
+Subject: [PATCH 7.2 221/733] erofs: disable LZ4 rolling decompression for now
+Date: Thu, 17 Sep 2026 16:08:49 +0100
+Message-ID: <20260917151356.714142268@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -46,53 +46,241 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Gao Xiang <xiang@kernel.org>
 
-[ Upstream commit 1537e55728ec2bc506c74ea69b93cd859da58fb8 ]
+[ Upstream commit 82e664cf1219c459c33aae931b222cf951af9cb7 ]
 
-kexec_file_load() fails on arm64 if we have CONFIG_ARM64_VA_BITS_52 but
-it runs on a !FEAT_LPA2 host (such as my loving Grace machine).
+LZ4 rolling decompression [1] was introduced to reduce the memory
+footprint of temporary pages:
 
-That is because trans_pgd_create_copy() uses the compile time
-PAGE_OFFSET (VA 52) instead of the actual VA size (48 -- due to the lack
-of LPA2). With the fifth level folded, pgd_none() is always false, so
-the walk cannot skip the 15 extra PGDIR_SIZE slots, and they all alias
-back to the same table: the whole kernel page table gets cloned 16
-times, KASAN shadow included. Without KASAN it does not blow up, it just
-wastes ~RAM/32 in page tables.
+ For many cases, it is needed for users to read small data within
+ a compressed extent (pcluster), either due to random small read, or
+ since uptodate folios (typically order-0) cannot be reused for
+ decompression again since decompression algorithm refills
+ already-uptodate folios.
 
-Fix it by copying the linear map that is the actual one, not the
-compiled one.
+Rolling decompression works because LZ4 is LZ77-based and only refers
+to the most recent 64 KiB of decompressed data, so in theory only a
+bounded rolling window of temporary pages is needed when decompressing.
 
-Fixes: a6bbf5d4d9d1 ("arm64: mm: Add definitions to support 5 levels of paging")
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Tested-by: Yury Smirnov <yurymonzon@gmail.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+It can save a lot of temporary memory, e.g.
+ 601,960-byte data can be compressed into a 256k LZ4 compressed extent,
+ which means it needs 146 extra pages per request in the worst case if
+ rolling decompression is disabled.
+
+However, the upstream LZ4 implementation is not under EROFS' control:
+For example, the literal copy memmove() may still **copy long literals
+backward** on x86 based on the address comparison even when the source
+and destination ranges do not overlap (IOWs, inline decompression
+doesn't need to be considered here). That breaks the rolling assumption
+and makes the optimization broken.
+
+Disable it for now to make sure the data correctness first since EROFS
+is used everywhere now: The rolling window approach can be revived once
+we either ensure that the official LZ4 code always copies forward for
+non-overlapping ranges or maintain our own LZ4 implementation in EROFS.
+
+The main impact is a higher runtime memory footprint; However, recent
+commit 0f6273ab4637 ("erofs: add a reserved buffer pool for lz4
+decompression") helps mitigate this when enabled but it's still not
+perfect.
+
+[1] https://www.usenix.org/conference/atc19/presentation/gao
+    § 3.3 Decompression
+
+Reported-by: "Walther, Jens-Uwe" <waltju@amazon.de>
+Closes: https://lore.kernel.org/r/BEZP281MB2102E57CD31862B8D958B33DD2AC2@BEZP281MB2102.DEUP281.PROD.OUTLOOK.COM
+Fixes: 8e6c8fa9f2e9 ("erofs: enable big pcluster feature")
+Cc: Yann Collet <yann.collet.73@gmail.com>
+Signed-off-by: Gao Xiang <xiang@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kernel/machine_kexec.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/erofs/decompressor.c | 55 +++++++++--------------------------------
+ fs/erofs/internal.h     |  6 +----
+ fs/erofs/zdata.c        | 18 +++-----------
+ 3 files changed, 16 insertions(+), 63 deletions(-)
 
-diff --git a/arch/arm64/kernel/machine_kexec.c b/arch/arm64/kernel/machine_kexec.c
-index c5693a32e49b0..8f9bc2327dc85 100644
---- a/arch/arm64/kernel/machine_kexec.c
-+++ b/arch/arm64/kernel/machine_kexec.c
-@@ -129,7 +129,8 @@ int machine_kexec_post_load(struct kimage *kimage)
- 	}
+diff --git a/fs/erofs/decompressor.c b/fs/erofs/decompressor.c
+index 27caf4bebddc3..d387b27c4ee21 100644
+--- a/fs/erofs/decompressor.c
++++ b/fs/erofs/decompressor.c
+@@ -7,8 +7,6 @@
+ #include "compress.h"
+ #include <linux/lz4.h>
  
- 	/* Create a copy of the linear map */
--	rc = trans_pgd_create_copy(&info, &trans_pgd, PAGE_OFFSET, PAGE_END);
-+	rc = trans_pgd_create_copy(&info, &trans_pgd,
-+				   _PAGE_OFFSET(vabits_actual), PAGE_END);
- 	if (rc)
- 		return rc;
- 	kimage->arch.ttbr1 = __pa(trans_pgd);
+-#define LZ4_MAX_DISTANCE_PAGES	(DIV_ROUND_UP(LZ4_DISTANCE_MAX, PAGE_SIZE) + 1)
+-
+ static int z_erofs_load_lz4_config(struct super_block *sb,
+ 			    struct erofs_super_block *dsb, void *data, int size)
+ {
+@@ -21,8 +19,6 @@ static int z_erofs_load_lz4_config(struct super_block *sb,
+ 			erofs_err(sb, "invalid lz4 cfgs, size=%u", size);
+ 			return -EINVAL;
+ 		}
+-		distance = le16_to_cpu(lz4->max_distance);
+-
+ 		sbi->lz4.max_pclusterblks = le16_to_cpu(lz4->max_pclusterblks);
+ 		if (!sbi->lz4.max_pclusterblks) {
+ 			sbi->lz4.max_pclusterblks = 1;	/* reserved case */
+@@ -39,45 +35,25 @@ static int z_erofs_load_lz4_config(struct super_block *sb,
+ 		sbi->lz4.max_pclusterblks = 1;
+ 		sbi->available_compr_algs = 1 << Z_EROFS_COMPRESSION_LZ4;
+ 	}
+-
+-	sbi->lz4.max_distance_pages = distance ?
+-					DIV_ROUND_UP(distance, PAGE_SIZE) + 1 :
+-					LZ4_MAX_DISTANCE_PAGES;
+ 	return z_erofs_gbuf_growsize(sbi->lz4.max_pclusterblks);
+ }
+ 
+ /*
+- * Fill all gaps with bounce pages if it's a sparse page list. Also check if
+- * all physical pages are consecutive, which can be seen for moderate CR.
++ * Fill all gaps with bounce pages if it's a sparse page list (for example some
++ * folios are already uptodate and thus can be mapped into userspace). Also
++ * check if pages are physically consecutive, which can be seen for moderate CR.
+  */
+-static int z_erofs_lz4_prepare_dstpages(struct z_erofs_decompress_req *rq,
+-					struct page **pagepool)
++static int z_erofs_oneshot_prepare_dstpages(struct z_erofs_decompress_req *rq,
++					    struct page **pagepool)
+ {
+-	struct page *availables[LZ4_MAX_DISTANCE_PAGES] = { NULL };
+-	unsigned long bounced[DIV_ROUND_UP(LZ4_MAX_DISTANCE_PAGES,
+-					   BITS_PER_LONG)] = { 0 };
+-	unsigned int lz4_max_distance_pages =
+-				EROFS_SB(rq->sb)->lz4.max_distance_pages;
+ 	void *kaddr = NULL;
+-	unsigned int i, j, top;
++	unsigned int i;
+ 
+-	top = 0;
+-	for (i = j = 0; i < rq->outpages; ++i, ++j) {
+-		struct page *const page = rq->out[i];
+-		struct page *victim;
+-
+-		if (j >= lz4_max_distance_pages)
+-			j = 0;
+-
+-		/* 'valid' bounced can only be tested after a complete round */
+-		if (!rq->fillgaps && test_bit(j, bounced)) {
+-			DBG_BUGON(i < lz4_max_distance_pages);
+-			DBG_BUGON(top >= lz4_max_distance_pages);
+-			availables[top++] = rq->out[i - lz4_max_distance_pages];
+-		}
++	for (i = 0; i < rq->outpages; ++i) {
++		struct page *page, *victim;
+ 
++		page = rq->out[i];
+ 		if (page) {
+-			__clear_bit(j, bounced);
+ 			if (!PageHighMem(page)) {
+ 				if (!i) {
+ 					kaddr = page_address(page);
+@@ -89,21 +65,14 @@ static int z_erofs_lz4_prepare_dstpages(struct z_erofs_decompress_req *rq,
+ 					continue;
+ 				}
+ 			}
+-			kaddr = NULL;
+-			continue;
+-		}
+-		kaddr = NULL;
+-		__set_bit(j, bounced);
+-
+-		if (top) {
+-			victim = availables[--top];
+ 		} else {
+ 			victim = __erofs_allocpage(pagepool, rq->gfp, true);
+ 			if (!victim)
+ 				return -ENOMEM;
+ 			set_page_private(victim, Z_EROFS_SHORTLIVED_PAGE);
++			rq->out[i] = victim;
+ 		}
+-		rq->out[i] = victim;
++		kaddr = NULL;
+ 	}
+ 	return kaddr ? 1 : 0;
+ }
+@@ -266,7 +235,7 @@ static const char *z_erofs_lz4_decompress(struct z_erofs_decompress_req *rq,
+ 		dst_maptype = 0;
+ 	} else {
+ 		/* general decoding path which can be used for all cases */
+-		ret = z_erofs_lz4_prepare_dstpages(rq, pagepool);
++		ret = z_erofs_oneshot_prepare_dstpages(rq, pagepool);
+ 		if (ret < 0)
+ 			return ERR_PTR(ret);
+ 		if (ret > 0) {
+diff --git a/fs/erofs/internal.h b/fs/erofs/internal.h
+index bee2f50c8488f..be98c9222bf79 100644
+--- a/fs/erofs/internal.h
++++ b/fs/erofs/internal.h
+@@ -71,12 +71,8 @@ struct erofs_dev_context {
+ 	bool flatdev;
+ };
+ 
+-/* all filesystem-wide lz4 configurations */
+ struct erofs_sb_lz4_info {
+-	/* # of pages needed for EROFS lz4 rolling decompression */
+-	u16 max_distance_pages;
+-	/* maximum possible blocks for pclusters in the filesystem */
+-	u16 max_pclusterblks;
++	u16 max_pclusterblks;	/* maximum physical blocks for LZ4 pclusters */
+ };
+ 
+ struct erofs_xattr_prefix_item {
+diff --git a/fs/erofs/zdata.c b/fs/erofs/zdata.c
+index 0e9cac8ee12d3..f0759211b7234 100644
+--- a/fs/erofs/zdata.c
++++ b/fs/erofs/zdata.c
+@@ -1264,7 +1264,7 @@ static int z_erofs_decompress_pcluster(struct z_erofs_backend *be, bool eio)
+ 	const struct z_erofs_decompressor *alg =
+ 				z_erofs_decomp[pcl->algorithmformat];
+ 	bool try_free = true;
+-	int i, j, jtop, err2, err = eio ? -EIO : 0;
++	int i, err2, err = eio ? -EIO : 0;
+ 	struct page *page;
+ 	bool overlapped;
+ 	const char *reason;
+@@ -1353,7 +1353,6 @@ static int z_erofs_decompress_pcluster(struct z_erofs_backend *be, bool eio)
+ 	    be->compressed_pages >= be->onstack_pages + Z_EROFS_ONSTACK_PAGES)
+ 		kvfree(be->compressed_pages);
+ 
+-	jtop = 0;
+ 	z_erofs_fill_other_copies(be, err);
+ 	for (i = 0; i < be->nr_pages; ++i) {
+ 		page = be->decompressed_pages[i];
+@@ -1361,22 +1360,11 @@ static int z_erofs_decompress_pcluster(struct z_erofs_backend *be, bool eio)
+ 			continue;
+ 
+ 		DBG_BUGON(z_erofs_page_is_invalidated(page));
+-		if (!z_erofs_is_shortlived_page(page)) {
++		if (!z_erofs_is_shortlived_page(page))
+ 			erofs_onlinefolio_end(page_folio(page), err, true);
+-			continue;
+-		}
+-		if (pcl->algorithmformat != Z_EROFS_COMPRESSION_LZ4) {
++		else
+ 			erofs_pagepool_add(be->pagepool, page);
+-			continue;
+-		}
+-		for (j = 0; j < jtop && be->decompressed_pages[j] != page; ++j)
+-			;
+-		if (j >= jtop)	/* this bounce page is newly detected */
+-			be->decompressed_pages[jtop++] = page;
+ 	}
+-	while (jtop)
+-		erofs_pagepool_add(be->pagepool,
+-				   be->decompressed_pages[--jtop]);
+ 	if (be->decompressed_pages != be->onstack_pages)
+ 		kvfree(be->decompressed_pages);
+ 
 -- 
 2.53.0
 
