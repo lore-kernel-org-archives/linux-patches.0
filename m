@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 201145505C4;
-	Thu, 17 Sep 2026 15:43:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AB174F392C;
+	Thu, 17 Sep 2026 15:43:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659835; cv=none; b=QH6d+0kig0oTjVuumUTPvpV3XqxxQxc0UNZiDaPO82nNkEYVcgoIqCqo3NgacG5KYDk78OzDy4VSgfaeEUMv4kQijZTzFclAxTUZ/jWOGIkv6esaYq5leSuXshUgPRbRZLiZU+ugT0B54B/KHZS10DBE/KLU2qIUnNthrFzggV4=
+	t=1789659835; cv=none; b=PDQjBKo99tTnB2rUMw/PR6JPsyQRV2Dr0s/KcnIJHCxZHhpRSh1t1x/Q5HKmaX947x/bYZWsCN/Fd79xyHgNgRk6g5neYU7gx8n8b/82kfTOe0Kt2ykpgTJHqsHnEi8Pij2LVJHP2QZB6P4Sd6KmGwKZKCL/V4geKgWXJSsW1b0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1789659835; c=relaxed/simple;
-	bh=P/HIlpAbNpX3jR7+595SFJoFHuMsMpR0yC8jflbnot4=;
+	bh=+sFbZIJ949LFm6e8U45aCe4hIsfVwHe1857WQdQItyg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=cUZ9NCdbaNZwFCvSNrI2bf00AOLwwS8hALu/v2ZnJ5WYjn5rMMWGQcA1eviow6mQf8IbbQ6wLsOaB5RYaXuwA9tsoPsGnB0H65SSFeFpAJTBZhFlPPeSz6Uh7d58Nk4jzDh2Gr9PkgpgKYzN7MOlYTMHeviT5H6fL/t2Y8iGLN0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cqxeaFvS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GhAjdnOE670xHLtl8QrLG4m3c/EE2pATkCncxrWHs82C6WLsn0RpE7+ufLWUzVAHqTj6H1LTvtVcyzyZQQGS2y1+hONohJAKB74pxbPzFohcxB16UxLU2+Va3AhF7Y0Qb68fG9T164v/8G5jFHRrauoCIy4qtnKKR9Aqo1Isc64=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zp6snzb0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cqxeaFvS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F7221F00893;
-	Thu, 17 Sep 2026 15:43:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zp6snzb0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4428D1F000FF;
+	Thu, 17 Sep 2026 15:43:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659829;
-	bh=piInThYONUQkH+/ASj8jLurL2WJeba93/Zh+Ac/ZCmY=;
+	s=korg; t=1789659826;
+	bh=kC5la5FM3wYA5BOg0h2xFyBKalH5+4uvvm8VpEoJnTo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cqxeaFvSf0HWtzfzUpiXDduXmEDT0UCp0+qw7MFBOVKF5iivOlvw6Kn8e5gjyHtYO
-	 xMkD/U3kq3FkBGO5qImAqPLmY34fYx2F/651Rdauf6acNMUBWrJQaTr+R0m8wtHsm4
-	 Pkql4vGUpVkPG7+X407Y8VDTaEQh5lU6vQTxkxS0=
+	b=zp6snzb0G+B6rcAuqIe2KWSIKFDIkkT2dtNk9IEONRLnwjMycuao7EU/M7pWKnKdc
+	 huJAzIlhsWyotMzLtS/r94478Ak2IsNOHSAlrSBGwaW4mLL7hdHIJf5tWoWj0ACoEQ
+	 G9/U7nDhy2ySUfSpsCESE9whI+/X72NiRKonitg8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Varun Gupta <varun.gupta@intel.com>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Tejas Upadhyay <tejas.upadhyay@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	HyeongJun An <sammiee5311@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 388/733] drm/xe: Guard page-fault worker with runtime PM check
-Date: Thu, 17 Sep 2026 16:11:36 +0100
-Message-ID: <20260917151401.367521375@linuxfoundation.org>
+Subject: [PATCH 7.2 370/733] ALSA: hda: Report a change when only the channel status bytes move
+Date: Thu, 17 Sep 2026 16:11:18 +0100
+Message-ID: <20260917151400.858685355@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -47,119 +45,71 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Varun Gupta <varun.gupta@intel.com>
+From: HyeongJun An <sammiee5311@gmail.com>
 
-[ Upstream commit 20fce5b34b21a995839743b4917a1edd2fd503ba ]
+[ Upstream commit 7284788743121ec8bed556b00f830dc52ad9955d ]
 
-During VM teardown, the VM's runtime PM reference is dropped
-asynchronously, allowing the device to autosuspend while stale page
-faults belonging to the now-dead VM are still queued. When the
-page-fault worker later tries to ack one of these, it calls into
-guc_ct_send_locked() on an already-suspended device, tripping:
+The put() callback of "IEC958 Playback Default" returns whether the
+converted register value moved. The convert_from_spdif_status() helper
+reads part of the first two channel status bytes and none of the last
+two, while the get() callback returns all four. So a write that lands
+only in the bits it does not read changes what userspace reads back and
+reports no change. Of the 31 bits above the mode bit, 20 are such bits
+in consumer mode and 29 in professional mode. The core notifies only on
+a positive return.
 
-  Assertion `!xe_pm_runtime_suspended(xe)` failed!
-  WARNING at xe_device.c:1267 xe_device_assert_mem_access+0x11c/0x140 [xe]
+Toggling status[2] bit 0 on an HDA HDMI codec moves the read-back from
+04 00 00 00 to 04 00 01 00 with no event. Toggling the non-audio bit
+in status[0] gives one.
 
-A live VM/exec queue always holds a PM reference while it has
-outstanding work, so if the device is suspended at ack time, the
-owning context is already gone and the fault is stale.
+Compare the stored status as well, the way the ac97 code does. The
+write to the codec stays gated on the converted value.
 
-Take a runtime PM reference across the entire pagefault
-queue worker to safely deliver acks for torn-down VMs.
-
-v3:
- - Move PM ref to the generic xe_pagefault_queue_work using
-   guard(xe_pm_runtime)(xe) instead of tracking it in the GuC
-   backend(Matt Brost).
-
-v2:
- - Hold PM ref across the entire batch (begin/end) instead of per-ack.
-   This prevents the device from autosuspending mid-batch, which would
-   leave write_only acks written but the end flush skipped, and skip
-   counter++, desyncing the cadence check.(Himal)
- - Add a comment explaining stale faults.(Himal)
-
-Fixes: f289f7807119 ("drm/xe: Add xe_guc_pagefault layer")
-Signed-off-by: Varun Gupta <varun.gupta@intel.com>
-Reviewed-by: Matthew Brost <matthew.brost@intel.com>
-Reviewed-by: Tejas Upadhyay <tejas.upadhyay@intel.com>
-Link: https://patch.msgid.link/20260907050011.497181-2-varun.gupta@intel.com
-Signed-off-by: Tejas Upadhyay <tejas.upadhyay@intel.com>
-(cherry picked from commit fcc2431d2213dc4d04250c4f1ae87d9c3ae0d455)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-[Rodrigo: Added xe_device struct for compatibility while cherry-picking]
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
+Assisted-by: Claude:claude-opus-5
+Link: https://patch.msgid.link/20260908134153.1614273-1-sammiee5311@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_pagefault.c       | 10 ++++++++++
- drivers/gpu/drm/xe/xe_pagefault_types.h |  3 +++
- 2 files changed, 13 insertions(+)
+ sound/hda/common/codec.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_pagefault.c b/drivers/gpu/drm/xe/xe_pagefault.c
-index dbf8f71d3328a..a4986df8328d6 100644
---- a/drivers/gpu/drm/xe/xe_pagefault.c
-+++ b/drivers/gpu/drm/xe/xe_pagefault.c
-@@ -16,6 +16,7 @@
- #include "xe_hw_engine.h"
- #include "xe_pagefault.h"
- #include "xe_pagefault_types.h"
-+#include "xe_pm.h"
- #include "xe_svm.h"
- #include "xe_trace_bo.h"
- #include "xe_vm.h"
-@@ -292,9 +293,17 @@ static void xe_pagefault_queue_work(struct work_struct *w)
- {
- 	struct xe_pagefault_queue *pf_queue =
- 		container_of(w, typeof(*pf_queue), worker);
-+	struct xe_device *xe = pf_queue->xe;
- 	struct xe_pagefault pf;
- 	unsigned long threshold;
+diff --git a/sound/hda/common/codec.c b/sound/hda/common/codec.c
+index ef533770179b4..33dbe21fa165c 100644
+--- a/sound/hda/common/codec.c
++++ b/sound/hda/common/codec.c
+@@ -2271,6 +2271,7 @@ static int snd_hda_spdif_default_put(struct snd_kcontrol *kcontrol,
+ 	int idx = kcontrol->private_value;
+ 	struct hda_spdif_out *spdif;
+ 	hda_nid_t nid;
++	unsigned int old_status;
+ 	unsigned short val;
+ 	int change;
  
-+	/*
-+	 * A live VM holds a PM reference, but a torn-down VM does not.
-+	 * Guard the entire worker loop to safely drain stale faults and
-+	 * prevent autosuspends from desyncing batched CT flushes.
-+	 */
-+	guard(xe_pm_runtime)(xe);
-+
- #define USM_QUEUE_MAX_RUNTIME_MS      20
- 	threshold = jiffies + msecs_to_jiffies(USM_QUEUE_MAX_RUNTIME_MS);
+@@ -2279,6 +2280,7 @@ static int snd_hda_spdif_default_put(struct snd_kcontrol *kcontrol,
+ 	guard(mutex)(&codec->spdif_mutex);
+ 	spdif = snd_array_elem(&codec->spdif_out, idx);
+ 	nid = spdif->nid;
++	old_status = spdif->status;
+ 	spdif->status = ucontrol->value.iec958.status[0] |
+ 		((unsigned int)ucontrol->value.iec958.status[1] << 8) |
+ 		((unsigned int)ucontrol->value.iec958.status[2] << 16) |
+@@ -2289,7 +2291,7 @@ static int snd_hda_spdif_default_put(struct snd_kcontrol *kcontrol,
+ 	spdif->ctls = val;
+ 	if (change && nid != (u16)-1)
+ 		set_dig_out_convert(codec, nid, val & 0xff, (val >> 8) & 0xff);
+-	return change;
++	return change || spdif->status != old_status;
+ }
  
-@@ -365,6 +374,7 @@ static int xe_pagefault_queue_init(struct xe_device *xe,
- 	drm_dbg(&xe->drm, "xe_pagefault_entry_size=%d, total_num_eus=%d, pf_queue->size=%u",
- 		xe_pagefault_entry_size(), total_num_eus, pf_queue->size);
- 
-+	pf_queue->xe = xe;
- 	spin_lock_init(&pf_queue->lock);
- 	INIT_WORK(&pf_queue->worker, xe_pagefault_queue_work);
- 
-diff --git a/drivers/gpu/drm/xe/xe_pagefault_types.h b/drivers/gpu/drm/xe/xe_pagefault_types.h
-index c4ee625b93ddd..f63a12aa0d4f7 100644
---- a/drivers/gpu/drm/xe/xe_pagefault_types.h
-+++ b/drivers/gpu/drm/xe/xe_pagefault_types.h
-@@ -8,6 +8,7 @@
- 
- #include <linux/workqueue.h>
- 
-+struct xe_device;
- struct xe_gt;
- struct xe_pagefault;
- 
-@@ -118,6 +119,8 @@ struct xe_pagefault {
-  * queue to absorb the device’s worst-case number of outstanding faults.
-  */
- struct xe_pagefault_queue {
-+	/** @xe: Back-pointer to the Xe device */
-+	struct xe_device *xe;
- 	/**
- 	 * @data: Data in queue containing struct xe_pagefault, protected by
- 	 * @lock
+ #define snd_hda_spdif_out_switch_info	snd_ctl_boolean_mono_info
 -- 
 2.53.0
 
