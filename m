@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7684F4EDCC6;
-	Thu, 17 Sep 2026 16:55:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C21B4EDCAC;
+	Thu, 17 Sep 2026 16:55:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789664148; cv=none; b=vC1R/X5iVrsn4FEnnxtQBWyA2fmXG5Txie+PIUmAGuKAZZVi3fnLu0FpbE24FwU9lgZ0/1GZEIc+vfdMKfwcHkmBRaNZwPVZHxJzW1oeVMCXtbjmeP/cyBJBkXV9MGpUMmBgyKnHdGjzRA21kLRBbKy/lH+qZEJ/pu0PVi7zmTo=
+	t=1789664151; cv=none; b=Ka1ZdRHNxrxUk+XPUVIwJwHsXDabWKURTtNob4jWhTCdbWjfMbIAsdaMQyOjtRiYeXCacFwBMrdx466H6o/+ObKakMaZ8UKg6nbo39cCDJlZr92bwm8bkXlULW4hqcn3rd+NcNx7SnSwqjV8vFZaruvov6S0R0U8XoiPk4xTa1Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789664148; c=relaxed/simple;
-	bh=rCuEMUIiOnSJ26hHdLuOYk6j+GuqHIH+KPwbY/ww2p0=;
+	s=arc-20240116; t=1789664151; c=relaxed/simple;
+	bh=ibxS1jIK7TXYiwWUj2nG92zsaxoE2PpDqi4xxwe+9/w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RWg/o3c+73nrPdR/QJLDBu3klIJ2ffG+jicQF7vurwSnt9g6k66TaV9zRcNv5WXyPt5n/I4HfKjCxb2hStXQZI3MxHQQwQcCiO3W4q/vysvlM7V5lxE3N3vcxl0lwcPzr8jhJjz8SaWoTq+fS4VvXZTbQlmOS0dOzpGm1H9ud7o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FfQ2AzjA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TnCrpc/cilxXDxV0DC+izNQlMX/nXnbok+6ZVPDWyEwv7RY9pX9vv5fnZEAROScFASmzaQxODuKDMORBsRYHssIV9Shu+eh5J7NW79sn7ZIRjntaSzz6787hW5DfLakgsNwtiMeYkvMx8zzvpjXEBpBkSsN1jhiJVa+9LtCKyAg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xCfl5d53; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FfQ2AzjA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 965591F000FF;
-	Thu, 17 Sep 2026 16:55:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xCfl5d53"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F20D1F000FF;
+	Thu, 17 Sep 2026 16:55:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789664147;
-	bh=m3crK8fUNHhKeCaGEYCUoEULaqFC52eUl6wxAKrX1JA=;
+	s=korg; t=1789664150;
+	bh=S5gkYmU8UI4U/TvOoF1vPR+1BLFmwUAfh0/A6yVDzAg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FfQ2AzjAn5q8hPW+m5CIkR1aMTbQ3Z//hXN9KQRnWKNful8X9hidaKBIPvz2yJQRR
-	 Zm69hVxG+kBjRARTRj17q4g72+d2Lxy43Kx5J+qTrziMu0hgotRBvsbxgne17DrDoD
-	 k3CNnnJ263KibNQZ/ckMZ+Y+nhWmtKh+LKmsSjUQ=
+	b=xCfl5d53i0kaDnjlLq7BziCkrtFYoFsjFgQEITdzhbqzJxGDlyC5ylCjtIWO8KKDS
+	 DjRLa9d0lkXlUGO2XLehGV9nYlTvQslpUiXlBSgUeVrL7YDNwOwNpffT3G/p0pG1kK
+	 JoaATDZB68D5g0MLr9t453yPcC6s9OozEGSULVv0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thierry Reding <treding@nvidia.com>,
-	Aaron Kling <webgeek1234@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Rosen Penev <rosenp@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0275/1250] spi: tegra210-quad: Allocate DMA memory for DMA engine
-Date: Thu, 17 Sep 2026 16:01:10 +0100
-Message-ID: <20260917151559.592115917@linuxfoundation.org>
+Subject: [PATCH 6.18 0276/1250] net: ibm: emac: Reserve VLAN header in MJS limit
+Date: Thu, 17 Sep 2026 16:01:11 +0100
+Message-ID: <20260917151559.616992266@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -52,131 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aaron Kling <webgeek1234@gmail.com>
+From: Rosen Penev <rosenp@gmail.com>
 
-[ Upstream commit f469138a77ac5ab685dfe15dfed7dccb9d5c33e5 ]
+[ Upstream commit 0906c117f81c2ae6e6dbfa82719f79c75e1c9325 ]
 
-When the SPI controllers are running in DMA mode, it is the DMA engine
-that performs the memory accesses rather than the SPI controller. Pass
-the DMA engine's struct device pointer to the DMA API to make sure the
-correct DMA operations are used.
+The IBM EMAC programs its Maximum Jumbo Size (MJS) drop
+threshold from ndev->mtu directly. The hardware sizes the threshold
+against the L2 frame minus the ethernet header, but does not
+discount the 802.1Q tag, so a frame carrying a VLAN tag and a full
+1500-byte payload exceeds MJS by exactly 4 bytes and is dropped.
 
-Suggested-by: Thierry Reding <treding@nvidia.com>
-Signed-off-by: Aaron Kling <webgeek1234@gmail.com>
-Link: https://patch.msgid.link/20260525-tegra194-qspi-iommu-v2-1-a11c53f804b2@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+This is normally hidden because JPSM (and therefore the MJS check)
+only engages when the MTU is raised above ETH_DATA_LEN.  With the
+qca8k DSA tagger the conduit MTU is bumped by QCA_HDR_LEN to 1502
+during dsa_conduit_setup(), which is enough to enable JPSM and
+expose the off-by-VLAN-tag in the limit.
+
+Pad MJS by VLAN_HLEN so a VLAN-tagged full-MTU frame passes.
+
+Reported on Meraki MX60 (qca8k switch): tagged VLAN
+traffic drops at 1500-byte payload, while 1496 bytes works
+and untagged 1500 bytes works.
+
+Assisted-by: Claude:Opus-4.7
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
+Link: https://patch.msgid.link/20260526202247.13823-1-rosenp@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-tegra210-quad.c | 29 ++++++++++++++++++-----------
- 1 file changed, 18 insertions(+), 11 deletions(-)
+ drivers/net/ethernet/ibm/emac/core.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-tegra210-quad.c b/drivers/spi/spi-tegra210-quad.c
-index 83def82fe48c1..543f13503df3d 100644
---- a/drivers/spi/spi-tegra210-quad.c
-+++ b/drivers/spi/spi-tegra210-quad.c
-@@ -226,11 +226,13 @@ struct tegra_qspi {
- 	struct completion			xfer_completion;
- 	struct spi_transfer			*curr_xfer;
+diff --git a/drivers/net/ethernet/ibm/emac/core.c b/drivers/net/ethernet/ibm/emac/core.c
+index e1047915e101e..f48568140480e 100644
+--- a/drivers/net/ethernet/ibm/emac/core.c
++++ b/drivers/net/ethernet/ibm/emac/core.c
+@@ -30,6 +30,7 @@
+ #include <linux/skbuff.h>
+ #include <linux/crc32.h>
+ #include <linux/ethtool.h>
++#include <linux/if_vlan.h>
+ #include <linux/mii.h>
+ #include <linux/bitops.h>
+ #include <linux/of.h>
+@@ -457,7 +458,7 @@ static inline u32 emac_iff2rmr(struct net_device *ndev)
  
-+	struct device				*rx_dma_dev;
- 	struct dma_chan				*rx_dma_chan;
- 	u32					*rx_dma_buf;
- 	dma_addr_t				rx_dma_phys;
- 	struct dma_async_tx_descriptor		*rx_dma_desc;
- 
-+	struct device				*tx_dma_dev;
- 	struct dma_chan				*tx_dma_chan;
- 	u32					*tx_dma_buf;
- 	dma_addr_t				tx_dma_phys;
-@@ -574,15 +576,15 @@ static int tegra_qspi_dma_map_xfer(struct tegra_qspi *tqspi, struct spi_transfer
- 	len = DIV_ROUND_UP(tqspi->curr_dma_words * tqspi->bytes_per_word, 4) * 4;
- 
- 	if (t->tx_buf) {
--		t->tx_dma = dma_map_single(tqspi->dev, (void *)tx_buf, len, DMA_TO_DEVICE);
--		if (dma_mapping_error(tqspi->dev, t->tx_dma))
-+		t->tx_dma = dma_map_single(tqspi->tx_dma_dev, (void *)tx_buf, len, DMA_TO_DEVICE);
-+		if (dma_mapping_error(tqspi->tx_dma_dev, t->tx_dma))
- 			return -ENOMEM;
+ 	if (emac_has_feature(dev, EMAC_APM821XX_REQ_JUMBO_FRAME_SIZE)) {
+ 		r &= ~EMAC4_RMR_MJS_MASK;
+-		r |= EMAC4_RMR_MJS(ndev->mtu);
++		r |= EMAC4_RMR_MJS(ndev->mtu + VLAN_HLEN);
  	}
  
- 	if (t->rx_buf) {
--		t->rx_dma = dma_map_single(tqspi->dev, (void *)rx_buf, len, DMA_FROM_DEVICE);
--		if (dma_mapping_error(tqspi->dev, t->rx_dma)) {
--			dma_unmap_single(tqspi->dev, t->tx_dma, len, DMA_TO_DEVICE);
-+		t->rx_dma = dma_map_single(tqspi->rx_dma_dev, (void *)rx_buf, len, DMA_FROM_DEVICE);
-+		if (dma_mapping_error(tqspi->rx_dma_dev, t->rx_dma)) {
-+			dma_unmap_single(tqspi->tx_dma_dev, t->tx_dma, len, DMA_TO_DEVICE);
- 			return -ENOMEM;
- 		}
- 	}
-@@ -597,9 +599,9 @@ static void tegra_qspi_dma_unmap_xfer(struct tegra_qspi *tqspi, struct spi_trans
- 	len = DIV_ROUND_UP(tqspi->curr_dma_words * tqspi->bytes_per_word, 4) * 4;
- 
- 	if (t->tx_buf)
--		dma_unmap_single(tqspi->dev, t->tx_dma, len, DMA_TO_DEVICE);
-+		dma_unmap_single(tqspi->tx_dma_dev, t->tx_dma, len, DMA_TO_DEVICE);
- 	if (t->rx_buf)
--		dma_unmap_single(tqspi->dev, t->rx_dma, len, DMA_FROM_DEVICE);
-+		dma_unmap_single(tqspi->rx_dma_dev, t->rx_dma, len, DMA_FROM_DEVICE);
- }
- 
- static int tegra_qspi_start_dma_based_transfer(struct tegra_qspi *tqspi, struct spi_transfer *t)
-@@ -745,7 +747,7 @@ static int tegra_qspi_start_cpu_based_transfer(struct tegra_qspi *qspi, struct s
- static void tegra_qspi_deinit_dma(struct tegra_qspi *tqspi)
- {
- 	if (tqspi->tx_dma_buf) {
--		dma_free_coherent(tqspi->dev, tqspi->dma_buf_size,
-+		dma_free_coherent(tqspi->tx_dma_dev, tqspi->dma_buf_size,
- 				  tqspi->tx_dma_buf, tqspi->tx_dma_phys);
- 		tqspi->tx_dma_buf = NULL;
- 	}
-@@ -756,7 +758,7 @@ static void tegra_qspi_deinit_dma(struct tegra_qspi *tqspi)
- 	}
- 
- 	if (tqspi->rx_dma_buf) {
--		dma_free_coherent(tqspi->dev, tqspi->dma_buf_size,
-+		dma_free_coherent(tqspi->rx_dma_dev, tqspi->dma_buf_size,
- 				  tqspi->rx_dma_buf, tqspi->rx_dma_phys);
- 		tqspi->rx_dma_buf = NULL;
- 	}
-@@ -782,6 +784,7 @@ static int tegra_qspi_init_dma(struct tegra_qspi *tqspi)
- 		}
- 
- 		tqspi->rx_dma_chan = dma_chan;
-+		tqspi->rx_dma_dev = dmaengine_get_dma_device(tqspi->rx_dma_chan);
- 
- 		dma_chan = dma_request_chan(tqspi->dev, "tx");
- 		if (IS_ERR(dma_chan)) {
-@@ -790,15 +793,19 @@ static int tegra_qspi_init_dma(struct tegra_qspi *tqspi)
- 		}
- 
- 		tqspi->tx_dma_chan = dma_chan;
-+		tqspi->tx_dma_dev = dmaengine_get_dma_device(tqspi->tx_dma_chan);
- 	} else {
- 		if (!device_iommu_mapped(tqspi->dev)) {
- 			dev_warn(tqspi->dev,
- 				 "IOMMU not enabled in device-tree, falling back to PIO mode\n");
- 			return 0;
- 		}
-+
-+		tqspi->rx_dma_dev = tqspi->dev;
-+		tqspi->tx_dma_dev = tqspi->dev;
- 	}
- 
--	dma_buf = dma_alloc_coherent(tqspi->dev, tqspi->dma_buf_size, &dma_phys, GFP_KERNEL);
-+	dma_buf = dma_alloc_coherent(tqspi->rx_dma_dev, tqspi->dma_buf_size, &dma_phys, GFP_KERNEL);
- 	if (!dma_buf) {
- 		err = -ENOMEM;
- 		goto err_out;
-@@ -807,7 +814,7 @@ static int tegra_qspi_init_dma(struct tegra_qspi *tqspi)
- 	tqspi->rx_dma_buf = dma_buf;
- 	tqspi->rx_dma_phys = dma_phys;
- 
--	dma_buf = dma_alloc_coherent(tqspi->dev, tqspi->dma_buf_size, &dma_phys, GFP_KERNEL);
-+	dma_buf = dma_alloc_coherent(tqspi->tx_dma_dev, tqspi->dma_buf_size, &dma_phys, GFP_KERNEL);
- 	if (!dma_buf) {
- 		err = -ENOMEM;
- 		goto err_out;
+ 	return r;
 -- 
 2.53.0
 
