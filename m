@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F6C6207E00;
-	Thu, 17 Sep 2026 15:54:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61E502C1788;
+	Thu, 17 Sep 2026 15:54:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789660496; cv=none; b=UC5U6/BWgwj3REV3669rns1y0oqz5luua2Of/0imKB4BVPGLWkaVXQ0M86UQG/2v5YhvolF9PTM+4sE9tlpFqrgR1GFjqsbRYWl8ILJcXmXqTjCemDeQJfBF5tBOiEwQdoi+UyJN3oz0Rg5xL2BDqH+DYaFQ7nizntKBQje+QmQ=
+	t=1789660503; cv=none; b=Z5koM2Onnn0s7I7h/iCWPXE8ecaL5PXUIPE/chWqQLlTXyP7r/U5m5ykgguabFcTVi+vweVrchCS594EQrauqPqDO98QoWnaxJqwCxrTayYw02hVLFF8KoDl9Ioc6ey+LVEmwlpvf+iihEYod4Gybm2q9cFAvlXSVZu35NdDbjs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789660496; c=relaxed/simple;
-	bh=arXQPKh1xYgCrYf6k5F+7EStUsnhFIDpwP0sfFSCK+0=;
+	s=arc-20240116; t=1789660503; c=relaxed/simple;
+	bh=V6IIwcgIUadBm3p83nFguFzXRWG8Q2x6BrWHBbxyJLA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sJnwPV+KrRag2AFZkoDSNCcc02PGJElCJSiBmD9b3GCALfCVmBnQqVRynAeE4E5AYKFPvxCTxn3LY43dQ2RFDOOnNFjwLTrHvpRyAK9viCyhcD6BeoGEW1/UFHvO7oh8qm7M583RGAkxWPvclQ6QiORoPpM/01yJfo2tJ9obMGw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eVdRrWm1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RCAJ8XjK3xRNTbgwieOvo9rEysAqwDNbf7q148ALmEt8wz23AfEeG8dhzllK8OwX/qRG3zY1dDXyP362MhXKYVXQssDAeHG3d/U3dPnSZqlyPfBgy6u/6jc7dPS1pumHsoxFe33oPgto2OwovZ0n6LtQs6u1+0UE3J7xIpvadHM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=am5RwabY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eVdRrWm1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A69751F000FF;
-	Thu, 17 Sep 2026 15:54:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="am5RwabY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA1211F000FF;
+	Thu, 17 Sep 2026 15:54:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789660495;
-	bh=Dp8Nyi98mnVAYwmIbqvz6JbsiQ9HEyfWppUuAGU3FBc=;
+	s=korg; t=1789660498;
+	bh=P2gIJOvvnCcBsmkDf3t6UWd4lEdgCwCB9v4NbCIZXX0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eVdRrWm1s50MosRbDLkNszbwRPeuU5Y0QztaDRCITeqcNr4vi8l1ix0TMjrddJXyH
-	 GLPMMBxM+K8nqzmyuRFwYc50aNvzLhG8i6Y4EreS4wArG0f4wyXQqt9qzUiGq2aspe
-	 mXwQAAMouRyK7vo7SeSNh/J2t+pz9Fo6tyK5qs1w=
+	b=am5RwabYasbyUWQP+FNfDWx+W1johGdijlQXP3+mKRTg1w+Xd0Mok6hKigxZEm9Ft
+	 naO7wkOxck++ppEQlv/yugI1djr77RsZVqCYzHS2NbuJgD7OZJrcjg2yPnE27j24LY
+	 cT/LvDG3Ce6Hf85AHsbnbDcHnXDUpFaXsDg2i62Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Raphael Cardoso Fernandes <raphaelcf@meta.com>,
-	Michael Chan <michael.chan@broadcom.com>,
 	Joe Damato <joe@dama.to>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 7.2 610/733] bnxt_en: Bound SW TPA IDs to prevent crashes
-Date: Thu, 17 Sep 2026 16:15:18 +0100
-Message-ID: <20260917151407.696506347@linuxfoundation.org>
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 7.2 611/733] bnxt_en: Prevent queue stop with deferred completions
+Date: Thu, 17 Sep 2026 16:15:19 +0100
+Message-ID: <20260917151407.722568810@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -54,191 +52,241 @@ Content-Transfer-Encoding: 8bit
 
 From: Joe Damato <joe@dama.to>
 
-commit c0aceaf65b70b3c000e70dd867f3a673015f24ca upstream.
+commit 39b23c1c40e1f73d2b94a09282cc476af647e438 upstream.
 
-FW supports up to 1024 concurrent TPAs, so the FW TPA ID is in the range
-0..1023 (see commit ec4d8e7cf024 ("bnxt_en: Add TPA ID mapping logic for
-57500 chips.")). bnxt_alloc_agg_idx is intended to wrap the FW ID down to a
-software ID which is used to index rxr->rx_tpa, and to generate a mapping
-between FW IDs and the wrapped software ID.
+When the driver receives a burst of packets, it can mark a BD with the
+NO_CMPL bit to defer completions. The expectation is that the last
+packet in the ring will have this bit unset and the completion generated
+by that packet will cleanup that packet and the ones preceding it. This
+helps to reduce the number of completions fired.
 
-On a 57608 with firmware version 233, the firmware advertises 32
-concurrent TPAs. As of the commit under fixes, bp->max_tpa on this NIC
-is set to 32.
+The suppressed completions are controlled by the driver and the number
+of packets with suppressed completions scales with the size of the ring.
+SW USO packets, on the other hand, have an upper bound on the maximum
+number of BDs which can be consumed which does not scale with the ring
+size.
 
-If the software ID from bnxt_alloc_agg_idx is above 31, this results in
-an invalid address being loaded on this line:
+So, for small rings it is possible that: a burst of packets is handed to
+the driver, the driver defers completions for all of the packets because
+the number of free descriptors stays above the threshold in the driver.
+Then, a USO packet arrives, but the number of BDs available is not
+enough and the USO code exits early.
 
-  tpa_info = &rxr->rx_tpa[agg_id];
+In this case, you end up in a state where the ring is full of packets
+with their completions suppressed, which can cause the queue to stop and
+never be restarted.
 
-because rx_tpa is allocated with only bp->max_tpa (32) entries. Writes
-to tpa_info later in the code are out of bounds.
+Assuming default CONFIG_MAX_SKB_FRAGS, this is only possible for small
+rings (<= 457 descriptors, below the driver default value) when
+a burst of packets fills the ring, followed by a large USO packet that
+can't fit. For larger rings, the delta between the completion
+suppression threshold and the BDs required for SW USO is large enough
+that completions will fire and this case is unreachable.
 
-This bug results in a crash at boot:
+This issue was pointed out by Sashiko and while it seems fairly unlikely
+given that the queue size must be small to trigger this, it is indeed
+possible.
 
-Oops: general protection fault, kernel NULL pointer dereference 0x8: 0000 [#1] SMP NOPTI
-RIP: 0010:bnxt_rx_pkt+0xc0/0x1560
-RSP: 0018:ffffc900009b8c78 EFLAGS: 00010246
-RAX: 0000000000000000 RBX: 0000000000000048 RCX: 0000000206682516
-RDX: ffffc900009b8db4 RSI: 0000000000000000 RDI: 01ffffff038fe1c0
-RBP: ffffc9006e687480 R08: ffffc9006e687000 R09: 0000000000003048
-R10: 0000000000000480 R11: ffff8881c6083900 R12: 0000000006682516
-R13: ffff8881c6095400 R14: 0000000000000016 R15: ffff8881c6b66680
-FS:  0000000000000000(0000) GS:ffff88fef3c77000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007fc8bda40584 CR3: 000000807c812001 CR4: 0000000008772ef0
-PKRU: 55555554
-Call Trace:
- <IRQ>
- ? __netif_receive_skb_list_core+0x1ca/0x250
- __bnxt_poll_work+0x152/0x280
- bnxt_poll_p5+0x1cd/0x480
- __napi_poll+0x30/0x180
- net_rx_action+0x20b/0x3b0
- ? note_gp_changes+0x53/0xe0
- ? tick_setup_sched_timer+0x180/0x180
- ? __napi_schedule+0x9a/0xb0
- ? bnxt_msix+0x24/0x30
- handle_softirqs+0xdd/0x2c0
- __irq_exit_rcu.llvm.3171231171502365008+0x47/0xf0
- common_interrupt+0x85/0x90
- </IRQ>
- <TASK>
- asm_common_interrupt+0x22/0x40
+Fix this by tracking the last BD which deferred completions and
+centralizing the logic for deciding when to ring the doorbell. The NO_CMPL
+bit is now cleared in bnxt_txr_db_kick(), so every doorbell site is
+covered, including the SW USO early exit. This guarantees the ring always
+ends in a BD which generates a completion to clean it and wake the queue.
 
-This stack trace is from a crash triggered when an out of bounds rx_tpa
-is dereferenced. The invalid write mentioned above is silent in this
-particular crash.
-
-Fix this by allocating rx_tpa with bp->max_tpa rounded up to the next
-power of 2 (bp->max_tpa_roundup_size) entries and masking the FW TPA ID
-with that size, so the wrapped ID can never index past the end of the
-array.
-
-Fixes: 54c28fab2fa5 ("bnxt_en: Set bp->max_tpa according to what the FW supports")
-Reported-by: Raphael Cardoso Fernandes <raphaelcf@meta.com>
-Suggested-by: Michael Chan <michael.chan@broadcom.com>
-Cc: stable@vger.kernel.org
+Fixes: cc5d90667db8 ("net: bnxt: Implement software USO")
+Cc: <stable@vger.kernel.org> # v7.1+: 4e15e89faac9: net: bnxt: ring the doorbell when SW USO exits early
 Signed-off-by: Joe Damato <joe@dama.to>
-Link: https://patch.msgid.link/20260902015652.2421609-7-joe@dama.to
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Link: https://patch.msgid.link/20260902213956.4160615-1-joe@dama.to
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c |   27 +++++++++++++++++----------
- drivers/net/ethernet/broadcom/bnxt/bnxt.h |    2 +-
- 2 files changed, 18 insertions(+), 11 deletions(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c     |   42 ++++++++++++++++++++------
+ drivers/net/ethernet/broadcom/bnxt/bnxt.h     |    1 
+ drivers/net/ethernet/broadcom/bnxt/bnxt_gso.c |   21 +++++++------
+ drivers/net/ethernet/broadcom/bnxt/bnxt_gso.h |    6 +--
+ 4 files changed, 48 insertions(+), 22 deletions(-)
 
 --- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
 +++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -1514,14 +1514,16 @@ static int bnxt_discard_rx(struct bnxt *
- 	return 0;
- }
- 
--static u16 bnxt_alloc_agg_idx(struct bnxt_rx_ring_info *rxr, u16 agg_id)
-+static u16 bnxt_alloc_agg_idx(struct bnxt *bp, struct bnxt_rx_ring_info *rxr,
-+			      u16 agg_id)
+@@ -462,6 +462,16 @@ u16 bnxt_xmit_get_cfa_action(struct sk_b
+ static void bnxt_txr_db_kick(struct bnxt *bp, struct bnxt_tx_ring_info *txr,
+ 			     u16 prod)
  {
- 	struct bnxt_tpa_idx_map *map = rxr->rx_tpa_idx_map;
--	u16 idx = agg_id & MAX_TPA_P5_MASK;
-+	u16 idx = agg_id & (bp->max_tpa_roundup_size - 1);
++	/* If the most recent BD has its completion suppressed, unset the bit
++	 * so that a completion is generated, otherwise nothing is left to
++	 * clean the ring and wake the queue.
++	 */
++	if (txr->kick_txbd0) {
++		txr->kick_txbd0->tx_bd_len_flags_type &=
++			cpu_to_le32(~TX_BD_FLAGS_NO_CMPL);
++		txr->kick_txbd0 = NULL;
++	}
++
+ 	/* Sync BD data before updating doorbell */
+ 	wmb();
+ 	bnxt_db_write(bp, &txr->tx_db, prod);
+@@ -485,7 +495,6 @@ static netdev_tx_t bnxt_start_xmit(struc
+ 	struct bnxt_sw_tx_bd *tx_buf;
+ 	__le32 lflags = 0;
+ 	skb_frag_t *frag;
+-	netdev_tx_t ret;
  
- 	if (test_bit(idx, map->agg_idx_bmap)) {
--		idx = find_first_zero_bit(map->agg_idx_bmap, MAX_TPA_P5);
--		if (idx >= MAX_TPA_P5)
-+		idx = find_first_zero_bit(map->agg_idx_bmap,
-+					  bp->max_tpa_roundup_size);
-+		if (idx >= bp->max_tpa_roundup_size)
- 			return INVALID_HW_RING_ID;
- 	}
- 	__set_bit(idx, map->agg_idx_bmap);
-@@ -1586,7 +1588,7 @@ static void bnxt_tpa_start(struct bnxt *
- 
- 	if (bp->flags & BNXT_FLAG_CHIP_P5_PLUS) {
- 		agg_id = TPA_START_AGG_ID_P5(tpa_start);
--		agg_id = bnxt_alloc_agg_idx(rxr, agg_id);
-+		agg_id = bnxt_alloc_agg_idx(bp, rxr, agg_id);
- 		if (unlikely(agg_id == INVALID_HW_RING_ID)) {
- 			netdev_warn(bp->dev, "Unable to allocate agg ID for ring %d, agg 0x%x\n",
- 				    rxr->bnapi->index,
-@@ -3584,7 +3586,7 @@ static void bnxt_free_one_tpa_info_data(
- {
- 	int i;
- 
--	for (i = 0; i < bp->max_tpa; i++) {
-+	for (i = 0; i < bp->max_tpa_roundup_size; i++) {
- 		struct bnxt_tpa_info *tpa_info = &rxr->rx_tpa[i];
- 		u8 *data = tpa_info->data;
- 
-@@ -3781,7 +3783,7 @@ static void bnxt_free_one_tpa_info(struc
- 	kfree(rxr->rx_tpa_idx_map);
- 	rxr->rx_tpa_idx_map = NULL;
- 	if (rxr->rx_tpa) {
--		for (i = 0; i < bp->max_tpa; i++) {
-+		for (i = 0; i < bp->max_tpa_roundup_size; i++) {
- 			kfree(rxr->rx_tpa[i].agg_arr);
- 			rxr->rx_tpa[i].agg_arr = NULL;
- 		}
-@@ -3807,13 +3809,14 @@ static int bnxt_alloc_one_tpa_info(struc
- 	struct rx_agg_cmp *agg;
- 	int i;
- 
--	rxr->rx_tpa = kzalloc_objs(struct bnxt_tpa_info, bp->max_tpa);
-+	rxr->rx_tpa = kzalloc_objs(struct bnxt_tpa_info,
-+				   bp->max_tpa_roundup_size);
- 	if (!rxr->rx_tpa)
- 		return -ENOMEM;
- 
- 	if (!(bp->flags & BNXT_FLAG_CHIP_P5_PLUS))
- 		return 0;
--	for (i = 0; i < bp->max_tpa; i++) {
-+	for (i = 0; i < bp->max_tpa_roundup_size; i++) {
- 		agg = kzalloc_objs(*agg, MAX_SKB_FRAGS);
- 		if (!agg)
- 			return -ENOMEM;
-@@ -3832,6 +3835,9 @@ static int bnxt_alloc_tpa_info(struct bn
- 
- 	bp->max_tpa = MAX_TPA;
- 	if (bp->flags & BNXT_FLAG_CHIP_P5_PLUS) {
-+		/* TPA is not supported at all, so there is nothing to
-+		 * allocate.
+ 	i = skb_get_queue_mapping(skb);
+ 	if (unlikely(i >= bp->tx_nr_rings)) {
+@@ -509,11 +518,22 @@ static netdev_tx_t bnxt_start_xmit(struc
+ 	if (skb_is_gso(skb) &&
+ 	    (skb_shinfo(skb)->gso_type & SKB_GSO_UDP_L4) &&
+ 	    !(bp->flags & BNXT_FLAG_UDP_GSO_CAP)) {
+-		ret = bnxt_sw_udp_gso_xmit(bp, txr, txq, skb);
+-		if (txr->kick_pending)
++		int rc = bnxt_sw_udp_gso_xmit(bp, txr, txq, skb);
++
++		/* if SW USO queued a packet, the doorbell will be written
++		 * below and there is no reason to track the last BD with
++		 * suppressed completions
 +		 */
- 		if (!bp->max_tpa_v2)
- 			return 0;
- 		bp->max_tpa = min_t(u16, bp->max_tpa_v2, MAX_TPA_P5);
-@@ -3839,6 +3845,7 @@ static int bnxt_alloc_tpa_info(struct bn
- 		if (bp->max_tpa <= 32 && BNXT_CHIP_P5(bp) && !BNXT_NPAR(bp))
- 			bp->max_tpa = MAX_TPA_P5;
++		if (rc > 0)
++			txr->kick_txbd0 = NULL;
++
++		/* if a packet was queued by SW USO or a doorbell was pending
++		 * from a previous xmit that was deferred, write the doorbell.
++		 */
++		if (rc > 0 || txr->kick_pending)
+ 			bnxt_txr_db_kick(bp, txr, txr->tx_prod);
+ 
+-		return ret;
++		return rc < 0 ? NETDEV_TX_BUSY : NETDEV_TX_OK;
  	}
-+	bp->max_tpa_roundup_size = roundup_pow_of_two(bp->max_tpa);
  
- 	for (i = 0; i < bp->rx_nr_rings; i++) {
- 		struct bnxt_rx_ring_info *rxr = &bp->rx_ring[i];
-@@ -4551,7 +4558,7 @@ static int bnxt_alloc_one_tpa_info_data(
- 	u8 *data;
- 	int i;
+ 	free_size = bnxt_tx_avail(bp, txr);
+@@ -751,23 +771,23 @@ normal_tx:
+ 	prod = NEXT_TX(prod);
+ 	WRITE_ONCE(txr->tx_prod, prod);
  
--	for (i = 0; i < bp->max_tpa; i++) {
-+	for (i = 0; i < bp->max_tpa_roundup_size; i++) {
- 		data = __bnxt_alloc_rx_frag(bp, &mapping, rxr,
- 					    GFP_KERNEL);
- 		if (!data)
++	txr->kick_txbd0 = NULL;
+ 	if (!netdev_xmit_more() || netif_xmit_stopped(txq)) {
+ 		bnxt_txr_db_kick(bp, txr, prod);
+ 	} else {
+-		if (free_size >= bp->tx_wake_thresh)
++		if (free_size >= bp->tx_wake_thresh) {
+ 			txbd0->tx_bd_len_flags_type |=
+ 				cpu_to_le32(TX_BD_FLAGS_NO_CMPL);
++			txr->kick_txbd0 = txbd0;
++		}
+ 		txr->kick_pending = 1;
+ 	}
+ 
+ tx_done:
+ 
+ 	if (unlikely(bnxt_tx_avail(bp, txr) <= MAX_SKB_FRAGS + 1)) {
+-		if (netdev_xmit_more() && !tx_buf->is_push) {
+-			txbd0->tx_bd_len_flags_type &=
+-				cpu_to_le32(~TX_BD_FLAGS_NO_CMPL);
++		if (txr->kick_pending)
+ 			bnxt_txr_db_kick(bp, txr, prod);
+-		}
+ 
+ 		netif_txq_try_stop(txq, bnxt_tx_avail(bp, txr),
+ 				   bp->tx_wake_thresh);
+@@ -5435,6 +5455,8 @@ static void bnxt_clear_ring_indices(stru
+ 			txr->tx_prod = 0;
+ 			txr->tx_cons = 0;
+ 			txr->tx_hw_cons = 0;
++			txr->kick_pending = 0;
++			txr->kick_txbd0 = NULL;
+ 		}
+ 
+ 		rxr = bnapi->rx_ring;
+@@ -11785,6 +11807,8 @@ static int bnxt_tx_queue_start(struct bn
+ 		txr->tx_prod = 0;
+ 		txr->tx_cons = 0;
+ 		txr->tx_hw_cons = 0;
++		txr->kick_pending = 0;
++		txr->kick_txbd0 = NULL;
+ start_tx:
+ 		WRITE_ONCE(txr->dev_state, 0);
+ 		synchronize_net();
 --- a/drivers/net/ethernet/broadcom/bnxt/bnxt.h
 +++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.h
-@@ -789,7 +789,6 @@ struct nqe_cn {
+@@ -992,6 +992,7 @@ struct bnxt_tx_ring_info {
+ 	u16			txq_index;
+ 	u8			tx_napi_idx;
+ 	u8			kick_pending;
++	struct tx_bd		*kick_txbd0;
+ 	struct bnxt_db_info	tx_db;
  
- #define MAX_TPA		64
- #define MAX_TPA_P5	256
--#define MAX_TPA_P5_MASK	(MAX_TPA_P5 - 1)
- #define MAX_TPA_SEGS_P5	0x3f
+ 	struct tx_bd		*tx_desc_ring[MAX_TX_PAGES];
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt_gso.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_gso.c
+@@ -31,10 +31,14 @@ static u32 bnxt_sw_gso_lhint(unsigned in
+ 		return TX_BD_FLAGS_LHINT_2048_AND_LARGER;
+ }
  
- #if (BNXT_PAGE_SHIFT == 16)
-@@ -2382,6 +2381,7 @@ struct bnxt {
+-netdev_tx_t bnxt_sw_udp_gso_xmit(struct bnxt *bp,
+-				 struct bnxt_tx_ring_info *txr,
+-				 struct netdev_queue *txq,
+-				 struct sk_buff *skb)
++/* Transmit an skb requiring software UDP segmentation.
++ *
++ * Returns 1 if the skb was queued and new BDs were produced, 0 if the skb
++ * was dropped, or -1 if the ring is full and the skb should be retried.
++ * The caller owns the doorbell for all three cases.
++ */
++int bnxt_sw_udp_gso_xmit(struct bnxt *bp, struct bnxt_tx_ring_info *txr,
++			 struct netdev_queue *txq, struct sk_buff *skb)
+ {
+ 	unsigned int last_unmap_len __maybe_unused = 0;
+ 	dma_addr_t last_unmap_addr __maybe_unused = 0;
+@@ -69,7 +73,7 @@ netdev_tx_t bnxt_sw_udp_gso_xmit(struct
+ 	if (unlikely(bnxt_tx_avail(bp, txr) < bds_needed)) {
+ 		netif_txq_try_stop(txq, bnxt_tx_avail(bp, txr),
+ 				   bp->tx_wake_thresh);
+-		return NETDEV_TX_BUSY;
++		return -1;
+ 	}
  
- 	u16			max_tpa_v2;
- 	u16			max_tpa;
-+	u16			max_tpa_roundup_size;
- 	u32			rx_buf_size;
- 	u32			rx_buf_use_size;	/* useable size */
- 	u16			rx_offset;
+ 	/* BD backpressure alone cannot prevent overwriting in-flight
+@@ -77,7 +81,7 @@ netdev_tx_t bnxt_sw_udp_gso_xmit(struct
+ 	 */
+ 	if (!netif_txq_maybe_stop(txq, bnxt_inline_avail(txr),
+ 				  num_segs, num_segs))
+-		return NETDEV_TX_BUSY;
++		return -1;
+ 
+ 	if (unlikely(tso_dma_map_init(&map, &pdev->dev, skb, hdr_len)))
+ 		goto drop;
+@@ -223,16 +227,15 @@ netdev_tx_t bnxt_sw_udp_gso_xmit(struct
+ 	netdev_tx_sent_queue(txq, skb->len);
+ 
+ 	WRITE_ONCE(txr->tx_prod, prod);
+-	txr->kick_pending = 1;
+ 
+ 	if (unlikely(bnxt_tx_avail(bp, txr) <= bp->tx_wake_thresh))
+ 		netif_txq_try_stop(txq, bnxt_tx_avail(bp, txr),
+ 				   bp->tx_wake_thresh);
+ 
+-	return NETDEV_TX_OK;
++	return 1;
+ 
+ drop:
+ 	dev_kfree_skb_any(skb);
+ 	dev_core_stats_tx_dropped_inc(bp->dev);
+-	return NETDEV_TX_OK;
++	return 0;
+ }
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt_gso.h
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_gso.h
+@@ -38,9 +38,7 @@ static inline int bnxt_min_tx_desc_cnt(s
+ 	return BNXT_MIN_TX_DESC_CNT;
+ }
+ 
+-netdev_tx_t bnxt_sw_udp_gso_xmit(struct bnxt *bp,
+-				 struct bnxt_tx_ring_info *txr,
+-				 struct netdev_queue *txq,
+-				 struct sk_buff *skb);
++int bnxt_sw_udp_gso_xmit(struct bnxt *bp, struct bnxt_tx_ring_info *txr,
++			 struct netdev_queue *txq, struct sk_buff *skb);
+ 
+ #endif
 
 
