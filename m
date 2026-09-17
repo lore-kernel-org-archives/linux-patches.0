@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A07C74E7819;
-	Thu, 17 Sep 2026 15:59:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F4E14E3226;
+	Thu, 17 Sep 2026 15:59:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789660775; cv=none; b=eNpGNEl9P56jT6Zrhx7Oa4QxNt8grEXsgLZEHD6O4AF/bXoaMMHu07TCJMxQ+Ciz1iOb0oKCl0ppQQPL3SX7WKC5PKR1Xa7+K7NTYHAfKJVZc0RKjZcd4jeflKAMS1CEQ5SFmDKyCNoOsZA7+4TJGZziM+kGAXivnlDZIH/7VZI=
+	t=1789660778; cv=none; b=J9EcPfDrBU8Q5fwbu8gEA9+Bcj3jQsP8EGkMfthcKh0zAZPg/9ai0mzNXnN1BVJ14hHPmrtLw4lVst4/hI50iIrHjJCpNoqeOjM7dOW32TaUAMX2sQOWzwK2ou2TsPF9XtXmrqYmHmKV7U5yISpBgNm/bVvXy8K1/6sMCkapxWA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789660775; c=relaxed/simple;
-	bh=qR8Sbh7uuRg8P1XEnbe1/opvAiUjP3fW2COFTdScOhc=;
+	s=arc-20240116; t=1789660778; c=relaxed/simple;
+	bh=OndRcE25wDhOBxhseXC6tXUPKp7AXNV4DM3l4uLwvSs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ravvprL4lvTAmemDbYkpDjyVFOx345zOa7scmJFUihpQltM+2jN7lxwt5dRhsMwVykBf3kfPoIt96MjAxEAmBJUV2dE1fxJSBuDdp6mI6c3sIQTrl6YyurtFqrGbQ3s0HE/tPiaNQDWVwPRd6uocRCDWuS10BZ9rZFOo6B1isvw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lLMLuUd5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QFrl0a8ui0uUuxbQDu6s6ESZEvobU+nnA/Azebdk14IE9hn2f3KdrKB/K4sHGYPEqhdGQQ8bV9g8i3V2QvqseUTVwfrO1eO3+EuKLCi9TDf4/mqT0vcnHdXDQnJIovuCWM2NLZZJQsZhxdCKxx+JVWlnmDaBRAfHMs9gA7HGyZQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lk97C+0+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lLMLuUd5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE9191F00898;
-	Thu, 17 Sep 2026 15:59:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lk97C+0+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02B961F000FF;
+	Thu, 17 Sep 2026 15:59:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789660774;
-	bh=zDESvTnV8FdiwIYXbiRjSlUcpF4n/dhxIbNxt8V4NBM=;
+	s=korg; t=1789660777;
+	bh=avJVGXImmaweMn8GEaWSS9jmG/WK23Xi4alRE80mV+A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lLMLuUd5EyhVRfa3DeezQc2xF6mQudqxEXB9F5PaYM4GZcpN4i7L3I9nQOmgkmCti
-	 FVfdn/rE1hDzBdv8gNF3TiC0bDQmljjno98ydXfFA7R06WbZA8SjPTSniFqO/cCiHY
-	 zYrB7hnv/E5Y9JCeEcCO4BnkoC+gNBw3XPMRA4Uo=
+	b=Lk97C+0+VBj3HJtRQ0GBbOs4+UUMEMElxm70btlge1sWDRfhk0ZMG1oKYEXmdGxhw
+	 ELO3qHVleiDcOsWqPmQpeEwF4lqiwzv1n1+W02YePxEUGaVwWGk0A1GMJGfbAqH9x3
+	 NJkZptYENKrpF92fL0iq5SUzyrWO7T9kbM+LNLgk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 7.2 666/733] xfs: fix parent rec lookup initialization in xrep_metapath_unlink
-Date: Thu, 17 Sep 2026 16:16:14 +0100
-Message-ID: <20260917151409.292505998@linuxfoundation.org>
+Subject: [PATCH 7.2 657/733] xfs: fix xfs_rtrmapbt_mem_cursor for non-rmap filesystems
+Date: Thu, 17 Sep 2026 16:16:05 +0100
+Message-ID: <20260917151409.030671507@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -53,33 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Darrick J. Wong <djwong@kernel.org>
 
-commit cdc4a083adf7bf15a0722c5bd292a35e00112006 upstream.
+commit 022d5f5fce7f0b6125d404eb74044e6238aef369 upstream.
 
-LOLLM notices that xrep_metapath_unlink looks for a parent pointer in
-the child metafile that it's removing, but initializes the parent handle
-using the child.  This is obviously incorrect, so fix that.
+It's possible to construct an in-memory rtrmap btree for filesystems
+that don't have the rmap feature enabled.  The kernel doesn't do this,
+but xfs_repair will, if asked to reindex a filesystem that has rtreflink
+enabled but not rtrmap.  Therefore, we must create the cursor with
+enough levels to handle a maximally sized btree possible.
 
-Cc: stable@vger.kernel.org # v6.13
-Fixes: 0d2c636e489c11 ("xfs: repair metadata directory file path connectivity")
+Note that the rtrmapbt btree cursor slab creates objects large enough to
+handle xfs_rtrmap_maxlevels_ondisk() levels, so setting bc_nlevels to
+the same value isn't costing us any extra memory.
+
+Cc: stable@vger.kernel.org # v6.14
+Fixes: 4a61f12eb11958 ("xfs: create a shadow rmap btree during realtime rmap repair")
 Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Assisted-by: LOLLM # finding obvious bugs
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/metapath.c |    2 +-
+ fs/xfs/libxfs/xfs_rtrmap_btree.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/xfs/scrub/metapath.c
-+++ b/fs/xfs/scrub/metapath.c
-@@ -397,7 +397,7 @@ xrep_metapath_unlink(
+--- a/fs/xfs/libxfs/xfs_rtrmap_btree.c
++++ b/fs/xfs/libxfs/xfs_rtrmap_btree.c
+@@ -618,7 +618,7 @@ xfs_rtrmapbt_mem_cursor(
+ 	struct xfs_btree_cur	*cur;
  
- 	/* Figure out if we're removing a parent pointer too. */
- 	if (xfs_has_parent(mp)) {
--		xfs_inode_to_parent_rec(&rec, ip);
-+		xfs_inode_to_parent_rec(&rec, mpath->dp);
- 		error = xfs_parent_lookup(sc->tp, ip, &mpath->xname, &rec,
- 				&mpath->pptr_args);
- 		switch (error) {
+ 	cur = xfs_btree_alloc_cursor(mp, tp, &xfs_rtrmapbt_mem_ops,
+-			mp->m_rtrmap_maxlevels, xfs_rtrmapbt_cur_cache);
++			xfs_rtrmapbt_maxlevels_ondisk(), xfs_rtrmapbt_cur_cache);
+ 	cur->bc_mem.xfbtree = xfbt;
+ 	cur->bc_nlevels = xfbt->nlevels;
+ 	cur->bc_group = xfs_group_hold(rtg_group(rtg));
 
 
