@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82F724B44B3;
-	Thu, 17 Sep 2026 15:57:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 868D44B44C5;
+	Thu, 17 Sep 2026 15:57:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789660648; cv=none; b=F1DoeUoInn3hlzMM1cGU3Al15NjTK+mA+R832nE0U8jXyT5YdyYKA5hbB40wk35oE49nEI0E1hBKkCsRxWj+UcGzEn4Ushi+3p1SYC0B65I3rzKX24w+HpEY523qn9yztnifm9PnH+N0uGwGTS3YxcmA7XZD726phsfisn2i740=
+	t=1789660651; cv=none; b=i1T7b2aG+62mZ6OEuv2lkI8DSiqfeI1Jme9W2Tf7L9yCeSnZZnuxWDfjbtCYQ/jzD38EJu6ePKQ2HdzOAIEDO69Kt3YPfpcpBbKM35ZjH1a1+8nj2sLwFW+C1zgnjMJCIPdSTvQo8dE8lTFRlK56yy7HBnHWSrzxegowdF95DGM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789660648; c=relaxed/simple;
-	bh=FFyTtGwxcIs30RSBH2i8P1Mpss6k4/KBwXkDdzJ/C8E=;
+	s=arc-20240116; t=1789660651; c=relaxed/simple;
+	bh=mdf899rhnxGiaBAs+eHA93Rf1S9BYJRLPVDxHN58suA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c6/82QoaW/ImPPQVxHdeVUj1hevuyyATdKBTcxI+jvmORL6uyAaJlwNlYV2D1RRF62a3gaNWcdI4vxa1kQ5q/kALP70VJA8TUGkWIoUEH55uyVa7k7bevIlrAb0Z/7XqBcMM8kEo4xNjEPhcJer21brAN2+7wFfHwvSs7LXsa7s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zuxeu9Lk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LsGZF2+SeDlB+Erz3wXTKwpqEtKF3y6pOYphvGEhyh9yFJEFymnLrT+uamecgPhvjSLKoHmMkbJVWz5/ASPpecDtvtCeY/IXaBzaW3RE2zlZ3yLCkStGqPfnb4nCq+J2pgENukrsAEgYikEGmZzA93QHgPLtxuWtHy/hK8+JgOc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0d91/seZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zuxeu9Lk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA7C71F000FF;
-	Thu, 17 Sep 2026 15:57:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0d91/seZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D869A1F000FF;
+	Thu, 17 Sep 2026 15:57:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789660647;
-	bh=4HICKdqvQ6LO8zn6iSt0fn7b6wd0QHngHSzTs5HSRRc=;
+	s=korg; t=1789660650;
+	bh=h08YwrtwhfmCA3PuqaX+EDascCDkM4Dolj3lVeZpu5o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Zuxeu9LkJXXQNDLjFCcTkaaTDBG2F/v1jFH5tOHhCipoH3tre9GewcTpC4JlC9uaE
-	 aV5Z6uVWwU78ejEj+nCyQvAgGIi1W3z3txQ7FEyo4IQlNUuNeK3s1suYLx/ubvj8nn
-	 dDo/zGn4nEHV/pnR5JJFiQjZp5rJkgXmOXl9OpOM=
+	b=0d91/seZ4NuErETYZlD0oF1FgiZ1gGa/610U51acKILD/ronoNZqNHtlN0jB27uZV
+	 jvvqHkiPwsHieBKZohk2XqNBQ44Fh5VcecOQZZPeoL7GH5+NbI2UcIvNte6AZ93yZ8
+	 oYQARNniOo0aP/XsOIIsT6a8ac125Rv4hHlG1hRg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	TencentOS Corvus AI <corvus@tencent.com>,
-	Aohan Mei <henrymei@tencent.com>,
+	Diego Oliva <diego@bynar.io>,
 	David Howells <dhowells@redhat.com>,
 	Paulo Alcantara <pc@manguebit.org>
-Subject: [PATCH 7.2 625/733] smb: client: reject userspace cifs.idmap descriptions
-Date: Thu, 17 Sep 2026 16:15:33 +0100
-Message-ID: <20260917151408.124236590@linuxfoundation.org>
+Subject: [PATCH 7.2 626/733] smb: client: reject out-of-bounds DataOffset in CIFSSMBRead()
+Date: Thu, 17 Sep 2026 16:15:34 +0100
+Message-ID: <20260917151408.149916742@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -52,66 +51,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aohan Mei <henrymei@tencent.com>
+From: Diego Oliva <diego@bynar.io>
 
-commit d9d7eeb0cea5b55b82888f443622fd8d4ee064f3 upstream.
+commit 5be5bdda5863eacc964b609ba927764f253431b3 upstream.
 
-cifs.idmap key descriptions carry authority-bearing fields (owner and
-group SIDs and uid/gid values in "os:"/"gs:"/"oi:"/"gi:" form) that the
-cifs.idmap upcall helper treats as kernel-originating inputs.  Unlike
-its sibling cifs.spnego, the cifs.idmap key type has no vet_description
-hook, so userspace can create keys of this type through
-request_key(2)/add_key(2) and supply those fields without CIFS origin.
-A request_key(2) call with a non-NULL callout then drives a root
-usermodehelper upcall (/sbin/request-key -> cifs.idmap) that consumes
-the unvetted description in root context.
+The SMB1 synchronous read helper CIFSSMBRead() validates the server's
+DataLength against CIFSMaxBufSize and the caller's count, but never
+validates DataOffset. The copy source is formed as
 
-Only accept cifs.idmap descriptions while CIFS is using its private
-root_cred to request the key.  id_to_sid()/sid_to_id() already run
-under override_creds(root_cred), so the kernel-originated path is
-unaffected.
+	&pSMBr->hdr.Protocol + le16_to_cpu(pSMBr->DataOffset)
 
-This mirrors commit 3da1fdf4efbc ("smb: client: reject userspace
-cifs.spnego descriptions"), which applied the same restriction to
-cifs.spnego.
+and memcpy()'d for DataLength bytes with no check that the
+[DataOffset, DataOffset + DataLength) range lies within the response
+actually received from the server.
 
-Fixes: 4d79dba0e007 ("cifs: Add idmap key and related data structures and functions (try #17 repost)")
-Reported-by: TencentOS Corvus AI <corvus@tencent.com>
-Cc: stable@vger.kernel.org
-Assisted-by: CodeBuddy:Kimi-K3
-Signed-off-by: Aohan Mei <henrymei@tencent.com>
-Acked-by: David Howells <dhowells@redhat.com>
+A malicious or compromised SMB1 server can return a response carrying
+an in-range DataLength and a large DataOffset, driving the source
+pointer past the end of the response buffer. The memcpy() then copies
+adjacent kernel heap into the caller's read buffer (information
+disclosure), or reads unmapped memory and oopses (denial of service).
+SMB1 is not negotiated by default; reaching this code requires an
+explicit vers=1.0 mount.
+
+Both DataOffset and the received response length recorded in
+rsp_iov.iov_len are relative to the start of the SMB header, so reject
+the response unless DataOffset + DataLength fits within that length,
+using overflow-safe arithmetic, before forming the source pointer.
+The response length has been validated by the previous patch, so the
+DataOffset and DataLength fields can be read safely here.
+
+While here, make data_length unsigned. It holds a length derived from
+unsigned on-the-wire fields and is only ever compared against unsigned
+quantities; print it with %u accordingly, and add __func__ to the
+cifs_dbg() calls in this function.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org # 6.19.x
+Assisted-by: Bynario AI
+Signed-off-by: Diego Oliva <diego@bynar.io>
+Reviewed-by: David Howells <dhowells@redhat.com>
 Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/cifsacl.c |   15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ fs/smb/client/cifssmb.c | 18 +++++++++++++-----
+ fs/smb/client/trace.h   |  1 +
+ 2 files changed, 14 insertions(+), 5 deletions(-)
 
---- a/fs/smb/client/cifsacl.c
-+++ b/fs/smb/client/cifsacl.c
-@@ -100,8 +100,23 @@ cifs_idmap_key_destroy(struct key *key)
- 		kfree(key->payload.data[0]);
- }
- 
-+static int
-+cifs_idmap_key_vet_description(const char *description)
-+{
-+	/*
-+	 * cifs.idmap descriptions are authority-bearing inputs to the
-+	 * cifs.idmap upcall helper.  Only allow the kernel to create this
-+	 * type of key using the private root_cred installed in
-+	 * init_cifs_idmap; reject userspace request_key(2)/add_key(2).
-+	 */
-+	if (current_cred() != root_cred)
-+		return -EPERM;
-+	return 0;
-+}
-+
- static struct key_type cifs_idmap_key_type = {
- 	.name        = "cifs.idmap",
-+	.vet_description = cifs_idmap_key_vet_description,
- 	.instantiate = cifs_idmap_key_instantiate,
- 	.destroy     = cifs_idmap_key_destroy,
- 	.describe    = user_describe,
+diff --git a/fs/smb/client/cifssmb.c b/fs/smb/client/cifssmb.c
+index be13ab37039d..f9aff0712794 100644
+--- a/fs/smb/client/cifssmb.c
++++ b/fs/smb/client/cifssmb.c
+@@ -1728,7 +1728,8 @@ CIFSSMBRead(const unsigned int xid, struct cifs_io_parms *io_parms,
+ 			      rsp_iov.iov_len, tcon->ses->server->vals->read_rsp_size);
+ 		*nbytes = 0;
+ 	} else {
+-		int data_length = le16_to_cpu(pSMBr->DataLengthHigh);
++		unsigned int data_length = le16_to_cpu(pSMBr->DataLengthHigh);
++		__u16 data_offset = le16_to_cpu(pSMBr->DataOffset);
+ 		data_length = data_length << 16;
+ 		data_length += le16_to_cpu(pSMBr->DataLength);
+ 		*nbytes = data_length;
+@@ -1736,14 +1737,21 @@ CIFSSMBRead(const unsigned int xid, struct cifs_io_parms *io_parms,
+ 		/*check that DataLength would not go beyond end of SMB */
+ 		if ((data_length > CIFSMaxBufSize)
+ 				|| (data_length > count)) {
+-			cifs_dbg(FYI, "bad length %d for count %d\n",
+-				 data_length, count);
++			cifs_dbg(FYI, "%s: bad length %u for count %u\n",
++				 __func__, data_length, count);
+ 			rc = smb_EIO2(smb_eio_trace_read_overlarge,
+ 				      data_length, count);
+ 			*nbytes = 0;
++		} else if (data_offset < sizeof(*pSMBr) ||
++			   (size_t)data_offset + data_length > rsp_iov.iov_len) {
++			/* check that the data lies within the received response */
++			cifs_dbg(FYI, "%s: bad data offset %u length %u for response of %zu\n",
++				 __func__, data_offset, data_length, rsp_iov.iov_len);
++			rc = smb_EIO2(smb_eio_trace_read_bad_offset,
++				      data_offset, data_length);
++			*nbytes = 0;
+ 		} else {
+-			pReadData = (char *) (&pSMBr->hdr.Protocol) +
+-					le16_to_cpu(pSMBr->DataOffset);
++			pReadData = (char *) (&pSMBr->hdr.Protocol) + data_offset;
+ /*			if (rc = copy_to_user(buf, pReadData, data_length)) {
+ 				cifs_dbg(VFS, "Faulting on read rc = %d\n",rc);
+ 				rc = -EFAULT;
+diff --git a/fs/smb/client/trace.h b/fs/smb/client/trace.h
+index 12241abb8e2e..b442cccd1530 100644
+--- a/fs/smb/client/trace.h
++++ b/fs/smb/client/trace.h
+@@ -79,6 +79,7 @@
+ 	EM(smb_eio_trace_qreparse_setup_count,		"qreparse_setup_count") \
+ 	EM(smb_eio_trace_qreparse_sizes_wrong,		"qreparse_sizes_wrong") \
+ 	EM(smb_eio_trace_qsym_bcc_too_small,		"qsym_bcc_too_small") \
++	EM(smb_eio_trace_read_bad_offset,		"read_bad_offset") \
+ 	EM(smb_eio_trace_read_mid_state_unknown,	"read_mid_state_unknown") \
+ 	EM(smb_eio_trace_read_overlarge,		"read_overlarge") \
+ 	EM(smb_eio_trace_read_rsp_malformed,		"read_rsp_malformed") \
+-- 
+2.55.0
+
 
 
