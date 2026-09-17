@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B6D3497382;
-	Thu, 17 Sep 2026 15:29:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1CF35A9877;
+	Thu, 17 Sep 2026 15:29:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789658946; cv=none; b=FhXy4UAeEoTB9/t/CirP99c8pUccUMSEWu+mKsi7SUxpSHEbyr9uroqtAO6E1kr5835jx9zX/8SiDDlVXvTktCNvT0Wt1V53DAXJcQFd8Aw5Kk1+nzDOhNDw2OtHj0tzcK5Fh4XA24A/aWVg5qINMKo8rtU8vXm9+jgsq8GhkVk=
+	t=1789658950; cv=none; b=ep5O66cE9gZFIxOXvQmpIAibcj4SDLRziM1/f0hwd01GhLN3RneW1ED4CHIjJLuIaiA5WC20J3n0idNJ2bDJWMw0JIQZUZLl5kGS0Yy3uvP17BgS7bzDuN+mMKGvPJ/VosZ7Aiqvlcuf3iBMyw+BI8qVzAvopSjL3RvG2MzDFfE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789658946; c=relaxed/simple;
-	bh=kcM7noRP8DtvfOz36zx5L51XkZv0TB2/qnHKCNvTogs=;
+	s=arc-20240116; t=1789658950; c=relaxed/simple;
+	bh=Ke0r8TEU0/Znwnjv5zN/HlUN1PMpAqmLqjWXI7Lkg1Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nkotoDybvGOG1Mak8shi19ZMATG4CLwg0iH75p+CupJjRaN2kW7dx702vrZHwCGjqpkyF23WDzC0YbZxprOBFmdJSx8L92VA2LHNJlmGK2wQW7ZNxS9BnlzIiDy/y5MD4Gvhn9i09aNMmJPBJuq+D5+NkrZ7BtV2BCpiVvnljx8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x1X95eSR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=btgfFBw9eHrRlDlsncW6IBr4NUUHp+DsAkOFD5wh5oaCOV0BlhSOFjrlH8styMTljosPl9jkWlNj9dKO0ipM9e21hIeWcYhZSr0BUmndAAg5Z9bbtVULO8277X0UcJZNAjmMSiDag7opM0RoyV4VKc2mrqt1ZyEVltbiQVkjObQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wy6+/Cmj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x1X95eSR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEE671F00899;
-	Thu, 17 Sep 2026 15:28:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wy6+/Cmj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C60731F0089A;
+	Thu, 17 Sep 2026 15:29:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789658937;
-	bh=DZ6rE6HI+t2ADjemU6ZvCLdq10FPoHbQdlUh44lsXZM=;
+	s=korg; t=1789658943;
+	bh=Uy2DI1FMOJnfOtFB0/Po6WOVBrtNdqVserSNsKQSGJU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=x1X95eSRp5mL2mulTh7nJ+J9T+SYBTt+z+3rXfOrkZeCrja8+hB3u68G0kZQAiMYw
-	 Duh8Or0kF4huM/ly2xKiVOihG16FWUHKr5BA9trmUCj0s/PCg80f0lhDR8mwFAye/B
-	 YV7Lgz7yGS5UBe55MQ77LFJ5LTfLo5lI44RJTS88=
+	b=wy6+/CmjZ7gURVmoyuVBM5kClP7AIzKcTdOc7nWn/frWLx5nTUb31CqgOjscKwFt9
+	 LQVI+T36OXnlTzJBFvWjXaWNO77UHILDfxwWuvb/RrXHQfStqst71KiJNVbNLWOWMU
+	 drE8JXgGmeUt2wCjCIYkWrXyMSgIb2CgqIGO85yg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Nemesa Garg <nemesa.garg@intel.com>,
+	Jani Nikula <jani.nikula@linux.intel.com>,
+	Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>,
+	Jani Nikula <jani.nikula@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 090/733] dma-buf: fix some kernel-doc warnings
-Date: Thu, 17 Sep 2026 16:06:38 +0100
-Message-ID: <20260917151353.159426998@linuxfoundation.org>
+Subject: [PATCH 7.2 092/733] drm/i915/dp_mst: Remove duplicate intel_pfit_compute_config() call
+Date: Thu, 17 Sep 2026 16:06:40 +0100
+Message-ID: <20260917151353.219698002@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -52,78 +56,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>
 
-[ Upstream commit c8329cb590df4a8b3a4e878d289d4b17824db8d1 ]
+[ Upstream commit 6463655ab2946d13d2ec5efe04a5c2bf9d675f01 ]
 
-- drop Excess description of @lock from kernel-doc
-- add missing function/macro short descriptions
+mst_stream_compute_config() called intel_pfit_compute_config() twice
+in a row.
 
-WARNING: include/linux/dma-fence-array.h:47 Excess struct member 'lock' description in 'dma_fence_array'
-WARNING: include/linux/dma-fence-chain.h:48 Excess struct member 'lock' description in 'dma_fence_chain'
-Warning: include/linux/dma-fence-chain.h:82 missing initial short description on line:
- * dma_fence_chain_alloc
-Warning: include/linux/dma-fence-chain.h:94 missing initial short description on line:
- * dma_fence_chain_free
+commit 5ce9ac1531b8 ("drm/i915/mst: Call intel_pfit_compute_config()
+for sharpness filter")
+was erroneously cherry-picked to the fixes tree while
+commit ca97f5546f19 ("drm/i915/mst: Call intel_pfit_compute_config()
+for sharpness filter")
+was already in there.
 
-Fixes: 5943243914b9 ("dma-buf: use inline lock for the dma-fence-array")
-Fixes: a408c0ca0c41 ("dma-buf: use inline lock for the dma-fence-chain")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Christian König <christian.koenig@amd.com>
-Link: https://lore.kernel.org/r/20260831031956.3410813-1-rdunlap@infradead.org
+Drop the redundant duplicate call.
+
+Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Cc: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Cc: Nemesa Garg <nemesa.garg@intel.com>
+Cc: Jani Nikula <jani.nikula@linux.intel.com>
+Fixes: 5ce9ac1531b8 ("drm/i915/mst: Call intel_pfit_compute_config() for sharpness filter")
+Signed-off-by: Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>
+Reviewed-by: Nemesa Garg <nemesa.garg@intel.com>
+Link: https://patch.msgid.link/20260806074819.2631970-1-chaitanya.kumar.borah@intel.com
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+[Rodrigo: adjusted commit message]
+(cherry picked from commit ea9f3470d33602fb776ea55443467baacf66f23a)
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/dma-fence-array.h | 1 -
- include/linux/dma-fence-chain.h | 9 ++++-----
- 2 files changed, 4 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/i915/display/intel_dp_mst.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/include/linux/dma-fence-array.h b/include/linux/dma-fence-array.h
-index 1b1d87579c382..0c49d7ccefb64 100644
---- a/include/linux/dma-fence-array.h
-+++ b/include/linux/dma-fence-array.h
-@@ -28,7 +28,6 @@ struct dma_fence_array_cb {
- /**
-  * struct dma_fence_array - fence to represent an array of fences
-  * @base: fence base class
-- * @lock: spinlock for fence handling
-  * @num_fences: number of fences in the array
-  * @num_pending: fences in the array still pending
-  * @fences: array of the fences
-diff --git a/include/linux/dma-fence-chain.h b/include/linux/dma-fence-chain.h
-index df3beadf15157..705c4394ac0d0 100644
---- a/include/linux/dma-fence-chain.h
-+++ b/include/linux/dma-fence-chain.h
-@@ -20,7 +20,6 @@
-  * @prev: previous fence of the chain
-  * @prev_seqno: original previous seqno before garbage collection
-  * @fence: encapsulated fence
-- * @lock: spinlock for fence handling
-  */
- struct dma_fence_chain {
- 	struct dma_fence base;
-@@ -81,9 +80,8 @@ dma_fence_chain_contained(struct dma_fence *fence)
- }
+diff --git a/drivers/gpu/drm/i915/display/intel_dp_mst.c b/drivers/gpu/drm/i915/display/intel_dp_mst.c
+index 0aa3e6b4c781d..bcdc504913471 100644
+--- a/drivers/gpu/drm/i915/display/intel_dp_mst.c
++++ b/drivers/gpu/drm/i915/display/intel_dp_mst.c
+@@ -722,10 +722,6 @@ static int mst_stream_compute_config(struct intel_encoder *encoder,
+ 	pipe_config->sink_format = INTEL_OUTPUT_FORMAT_RGB;
+ 	pipe_config->output_format = INTEL_OUTPUT_FORMAT_RGB;
  
- /**
-- * dma_fence_chain_alloc
-- *
-- * Returns a new struct dma_fence_chain object or NULL on failure.
-+ * dma_fence_chain_alloc - Returns a new &struct dma_fence_chain object or
-+ * %NULL on failure.
-  *
-  * This specialized allocator has to be a macro for its allocations to be
-  * accounted separately (to have a separate alloc_tag). The typecast is
-@@ -93,7 +91,8 @@ dma_fence_chain_contained(struct dma_fence *fence)
- 		kmalloc_obj(struct dma_fence_chain)
- 
- /**
-- * dma_fence_chain_free
-+ * dma_fence_chain_free - Frees an allocated but not used
-+ * &struct dma_fence_chain object.
-  * @chain: chain node to free
-  *
-  * Frees up an allocated but not used struct dma_fence_chain object. This
+-	ret = intel_pfit_compute_config(pipe_config, conn_state);
+-	if (ret)
+-		return ret;
+-
+ 	ret = intel_pfit_compute_config(pipe_config, conn_state);
+ 	if (ret)
+ 		return ret;
 -- 
 2.53.0
 
