@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3ADE3B7752;
-	Thu, 17 Sep 2026 19:02:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C84B3CFF6F;
+	Thu, 17 Sep 2026 19:02:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789671753; cv=none; b=aajut0jEdHE2Gssx0pG9Ea7mIrCHBv4mfaPgiCLPUPrVUUUzJZeiOH7DX/h736QN9OebpOulPEbQP5dQRjqFWNVotgT7hI1ffb1UWVMeqw70WhIUJFfIiGHgGopGjaTwiNFmLyOaYIYCIgQwSX851RBDwD2PIYuwk94DT9J3OSE=
+	t=1789671756; cv=none; b=aHnMEA88Q2B9k+FyReWsCJ4OzLrakE5m1DJAdz0PGtAqy7tfZdBlPZx3S20yeRcJyyvN58HqAPsbk8m0XulKNisp/CjhbFfLhns9bnlL2UQOptx/1CrL3tYMfrhU58a2ZtP8tQPTwLOOkZRUitQPDXEdoL7zFzpMf+RuluhiJLs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789671753; c=relaxed/simple;
-	bh=cBnXDWM9xX8EOau4RJzcWywo9q7UG72WWk3OLuQK3z8=;
+	s=arc-20240116; t=1789671756; c=relaxed/simple;
+	bh=7paX1TPWBnQPrRfXZDjEBFW57xNyadWxqDnETf1Ib7M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JPCL9kcS/9mn+nYJDZMxnwuBzATHR38CCbRBb6VijeBSrdfJXOcwZCIaSbnrdBuh3jOP1WO/gRLe2cUZ7nhbzJAxl6BQm3pFn46Cj/DKHIASf1poVOBqsrzibUOBwWAGQ7nTsJD4hn6AWQCcsVlZ4LyNjawFsykYj9sWYqU1O44=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0dZUOotR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NLhdSSBawXbeAEE/T16w7mb5R8ZgAt1zJR5xURK09aJuetxE7Oz0tNDN0vPU5GUFdLnQh04zPVimCfLDkh4il2r8hM2x7rPEEDjDriLBTlPirCJbOv31Fyz9g2kGCDNwT62DIugRSanNhAcc1XXpQht01cwCKesXG4CsLtwTqJg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bftUGOSe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0dZUOotR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF4CE1F000FF;
-	Thu, 17 Sep 2026 19:02:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bftUGOSe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E00501F000FF;
+	Thu, 17 Sep 2026 19:02:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789671751;
-	bh=ti8Ar/BPB7y185Pj5onmfdyq6bNdDceKZS2oZaSRkV4=;
+	s=korg; t=1789671754;
+	bh=4zjtLNfIACmLjLl6YhppPj1UAzACr6/axrnb6i+p9e4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0dZUOotRgs6TUZh+c0skgbtDg4fM2LhmBAcXVjZgfLizlTJDaVy/8Rw+uZFz1lsyp
-	 4jlU9Lryv5LVE90wZJuEbd/Krq2EXTXIak7E0riJ0lQBhiYaD+vgLlXMOzdRKf2K8h
-	 vZrGY7Ew+ebxKJ3cRso/F3hhtWPf0a42gU/KKrp4=
+	b=bftUGOSey/AzKLHeb+oMN/zKxAg8VqjcBItq8FikJRIN/CiCeG8K1d2mXbP4v2sq4
+	 c9Weg0sOEDr3PGT/F3grLqsUtwCQxa4TV60WREPGYmcQvLCE9MRdP44VkJYTGUkZmY
+	 grxrYNFYE5qzG2MumDgwP/18NPC6vTy+yVlwFyZE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrea Mayer <andrea.mayer@uniroma2.it>,
-	Xiang Mei <xmei5@asu.edu>,
-	Simon Horman <horms@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1077/1102] ipv6: rpl: fix NULL dereference of idev in ipv6_rpl_srh_rcv()
-Date: Thu, 17 Sep 2026 16:17:00 +0100
-Message-ID: <20260917151607.877999937@linuxfoundation.org>
+Subject: [PATCH 6.12 1078/1102] ipv6: adopt skb_dst_dev() and skb_dst_dev_net[_rcu]() helpers
+Date: Thu, 17 Sep 2026 16:17:01 +0100
+Message-ID: <20260917151607.905842165@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -53,139 +52,384 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrea Mayer <andrea.mayer@uniroma2.it>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit f826df95332c07380206dbd54178b6eefb311aba ]
+[ Upstream commit 93d1cff35adc522a5d21e722eee1071f3f7dc716 ]
 
-ipv6_rpl_srh_rcv() dereferences idev from __in6_dev_get() without a NULL
-check when reading idev->cnf.rpl_seg_enabled.
+Use the new helpers as a step to deal with potential dst->dev races.
 
-When the device's MTU drops below IPV6_MIN_MTU, addrconf_ifdown() clears
-dev->ip6_ptr through RCU_INIT_POINTER(). A packet that passed the idev
-check in ip6_rcv_core() can then reach ipv6_rpl_srh_rcv() with
-dev->ip6_ptr already NULL.
+v2: fix typo in ipv6_rthdr_rcv() (kernel test robot <lkp@intel.com>)
 
-Reproduced by flooding the receiving interface with ping6 traffic while
-flapping its MTU between 1500 and 1200:
-
- BUG: KASAN: null-ptr-deref in ipv6_rpl_srh_rcv+0xb3/0x1070
- Read of size 4 at addr 00000000000006b4 by task ping6/394
-
- CPU: 2 UID: 0 PID: 394 Comm: ping6 Not tainted 7.2.0-rc7-micro-vm-dev-00095-g24ef02f934ee #240 PREEMPT(full)
- Call Trace:
-  <IRQ>
-  kasan_report+0xc6/0x100
-  ipv6_rpl_srh_rcv+0xb3/0x1070
-  ip6_protocol_deliver_rcu+0x759/0x9a0
-  ip6_input_finish+0xa8/0x1b0
-  ip6_input+0xe1/0x490
-  ipv6_rcv+0x33d/0x460
-  __netif_receive_skb_one_core+0xd6/0x130
-  process_backlog+0x2cc/0xa00
-  __napi_poll.constprop.0+0x56/0x270
-  net_rx_action+0x327/0x730
-  handle_softirqs+0x11e/0x630
-  do_softirq+0xb3/0xf0
-  </IRQ>
-
-Both ipv6_rpl_srh_rcv() and ipv6_srh_rcv() are called only from
-ipv6_rthdr_rcv(), which already has an idev lookup.
-
-Fix the NULL dereference on the RPL path by checking idev in
-ipv6_rthdr_rcv(), before it calls either function. The callees take idev as
-an argument and no longer call __in6_dev_get(), so the packet is now
-dropped in one place, with SKB_DROP_REASON_IPV6DISABLED on both paths.
-
-Fixes: 8610c7c6e3bd ("net: ipv6: add support for rpl sr exthdr")
-Cc: stable@vger.kernel.org
-Signed-off-by: Andrea Mayer <andrea.mayer@uniroma2.it>
-Tested-by: Xiang Mei <xmei5@asu.edu>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260817132644.2223-1-andrea.mayer@uniroma2.it
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20250630121934.3399505-10-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: e36ce6e78fe3 ("ip: orphan prefetched skbs before multicast forwarding")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/exthdrs.c |   26 ++++++++++++--------------
- 1 file changed, 12 insertions(+), 14 deletions(-)
+ include/net/inet6_hashtables.h      |    2 +-
+ include/net/ip6_tunnel.h            |    2 +-
+ net/ipv6/exthdrs.c                  |    8 ++++----
+ net/ipv6/ioam6.c                    |   17 +++++++++--------
+ net/ipv6/ip6_input.c                |    6 ++++--
+ net/ipv6/ip6_output.c               |    5 +++--
+ net/ipv6/ip6_tunnel.c               |    2 +-
+ net/ipv6/ip6_vti.c                  |    2 +-
+ net/ipv6/netfilter.c                |    4 ++--
+ net/ipv6/netfilter/nf_reject_ipv6.c |    2 +-
+ net/ipv6/output_core.c              |    2 +-
+ net/ipv6/reassembly.c               |   10 +++++-----
+ net/ipv6/route.c                    |    4 ++--
+ net/ipv6/seg6_iptunnel.c            |    6 +++---
+ net/ipv6/tcp_ipv6.c                 |    4 ++--
+ net/ipv6/xfrm6_output.c             |    2 +-
+ 16 files changed, 41 insertions(+), 37 deletions(-)
 
+--- a/include/net/inet6_hashtables.h
++++ b/include/net/inet6_hashtables.h
+@@ -150,7 +150,7 @@ static inline struct sock *__inet6_looku
+ 					      int iif, int sdif,
+ 					      bool *refcounted)
+ {
+-	struct net *net = dev_net_rcu(skb_dst(skb)->dev);
++	struct net *net = skb_dst_dev_net_rcu(skb);
+ 	const struct ipv6hdr *ip6h = ipv6_hdr(skb);
+ 	struct sock *sk;
+ 
+--- a/include/net/ip6_tunnel.h
++++ b/include/net/ip6_tunnel.h
+@@ -170,7 +170,7 @@ static inline void ip6tunnel_xmit(struct
+ 
+ 	memset(skb->cb, 0, sizeof(struct inet6_skb_parm));
+ 	pkt_len = skb->len - skb_inner_network_offset(skb);
+-	err = ip6_local_out(dev_net(skb_dst(skb)->dev), sk, skb);
++	err = ip6_local_out(skb_dst_dev_net(skb), sk, skb);
+ 
+ 	if (dev) {
+ 		if (unlikely(net_xmit_eval(err)))
 --- a/net/ipv6/exthdrs.c
 +++ b/net/ipv6/exthdrs.c
-@@ -371,23 +371,16 @@ static void seg6_update_csum(struct sk_b
- 			   (__be32 *)addr);
- }
- 
--static int ipv6_srh_rcv(struct sk_buff *skb)
-+static int ipv6_srh_rcv(struct sk_buff *skb, struct inet6_dev *idev)
- {
- 	struct inet6_skb_parm *opt = IP6CB(skb);
- 	struct net *net = dev_net(skb->dev);
- 	struct ipv6_sr_hdr *hdr;
--	struct inet6_dev *idev;
- 	struct in6_addr *addr;
- 	int accept_seg6;
- 
- 	hdr = (struct ipv6_sr_hdr *)skb_transport_header(skb);
- 
--	idev = __in6_dev_get(skb->dev);
--	if (!idev) {
--		kfree_skb(skb);
--		return -1;
--	}
--
- 	accept_seg6 = min(READ_ONCE(net->ipv6.devconf_all->seg6_enabled),
- 			  READ_ONCE(idev->cnf.seg6_enabled));
- 
-@@ -488,12 +481,11 @@ looped_back:
- 	return -1;
- }
- 
--static int ipv6_rpl_srh_rcv(struct sk_buff *skb)
-+static int ipv6_rpl_srh_rcv(struct sk_buff *skb, struct inet6_dev *idev)
- {
- 	struct ipv6_rpl_sr_hdr *hdr, *ohdr, *chdr;
- 	struct inet6_skb_parm *opt = IP6CB(skb);
- 	struct net *net = dev_net(skb->dev);
--	struct inet6_dev *idev;
- 	struct ipv6hdr *oldhdr;
- 	unsigned int chdr_len;
- 	unsigned char *buf;
-@@ -502,8 +494,6 @@ static int ipv6_rpl_srh_rcv(struct sk_bu
- 	u64 n = 0;
- 	u32 r;
- 
--	idev = __in6_dev_get(skb->dev);
--
- 	accept_rpl_seg = min(READ_ONCE(net->ipv6.devconf_all->rpl_seg_enabled),
- 			     READ_ONCE(idev->cnf.rpl_seg_enabled));
- 	if (!accept_rpl_seg) {
-@@ -692,10 +682,14 @@ static int ipv6_rthdr_rcv(struct sk_buff
- 	switch (hdr->type) {
- 	case IPV6_SRCRT_TYPE_4:
- 		/* segment routing */
--		return ipv6_srh_rcv(skb);
-+		if (!idev)
-+			goto disabled;
-+		return ipv6_srh_rcv(skb, idev);
- 	case IPV6_SRCRT_TYPE_3:
- 		/* rpl segment routing */
--		return ipv6_rpl_srh_rcv(skb);
-+		if (!idev)
-+			goto disabled;
-+		return ipv6_rpl_srh_rcv(skb, idev);
- 	default:
- 		break;
+@@ -462,7 +462,7 @@ looped_back:
+ 		return -1;
  	}
-@@ -840,6 +834,10 @@ unknown_rh:
- 	icmpv6_param_prob(skb, ICMPV6_HDR_FIELD,
- 			  (&hdr->type) - skb_network_header(skb));
- 	return -1;
-+
-+disabled:
-+	kfree_skb_reason(skb, SKB_DROP_REASON_IPV6DISABLED);
-+	return -1;
+ 
+-	if (skb_dst(skb)->dev->flags & IFF_LOOPBACK) {
++	if (skb_dst_dev(skb)->flags & IFF_LOOPBACK) {
+ 		if (ipv6_hdr(skb)->hop_limit <= 1) {
+ 			__IP6_INC_STATS(net, idev, IPSTATS_MIB_INHDRERRORS);
+ 			icmpv6_send(skb, ICMPV6_TIME_EXCEED,
+@@ -621,7 +621,7 @@ looped_back:
+ 		return -1;
+ 	}
+ 
+-	if (skb_dst(skb)->dev->flags & IFF_LOOPBACK) {
++	if (skb_dst_dev(skb)->flags & IFF_LOOPBACK) {
+ 		if (ipv6_hdr(skb)->hop_limit <= 1) {
+ 			__IP6_INC_STATS(net, idev, IPSTATS_MIB_INHDRERRORS);
+ 			icmpv6_send(skb, ICMPV6_TIME_EXCEED,
+@@ -787,7 +787,7 @@ looped_back:
+ 			kfree_skb(skb);
+ 			return -1;
+ 		}
+-		if (!ipv6_chk_home_addr(dev_net(skb_dst(skb)->dev), addr)) {
++		if (!ipv6_chk_home_addr(skb_dst_dev_net(skb), addr)) {
+ 			__IP6_INC_STATS(net, idev, IPSTATS_MIB_INADDRERRORS);
+ 			kfree_skb(skb);
+ 			return -1;
+@@ -813,7 +813,7 @@ looped_back:
+ 		return -1;
+ 	}
+ 
+-	if (skb_dst(skb)->dev->flags&IFF_LOOPBACK) {
++	if (skb_dst_dev(skb)->flags & IFF_LOOPBACK) {
+ 		if (ipv6_hdr(skb)->hop_limit <= 1) {
+ 			__IP6_INC_STATS(net, idev, IPSTATS_MIB_INHDRERRORS);
+ 			icmpv6_send(skb, ICMPV6_TIME_EXCEED, ICMPV6_EXC_HOPLIMIT,
+--- a/net/ipv6/ioam6.c
++++ b/net/ipv6/ioam6.c
+@@ -714,6 +714,7 @@ static void __ioam6_fill_trace_data(stru
+ 				    struct ioam6_schema *sc,
+ 				    unsigned int sclen, bool is_input)
+ {
++	struct net_device *dev = skb_dst_dev(skb);
+ 	struct timespec64 ts;
+ 	ktime_t tstamp;
+ 	u64 raw64;
+@@ -730,7 +731,7 @@ static void __ioam6_fill_trace_data(stru
+ 		if (is_input)
+ 			byte--;
+ 
+-		raw32 = dev_net(skb_dst(skb)->dev)->ipv6.sysctl.ioam6_id;
++		raw32 = dev_net(dev)->ipv6.sysctl.ioam6_id;
+ 
+ 		*(__be32 *)data = cpu_to_be32((byte << 24) | raw32);
+ 		data += sizeof(__be32);
+@@ -746,10 +747,10 @@ static void __ioam6_fill_trace_data(stru
+ 		*(__be16 *)data = cpu_to_be16(raw16);
+ 		data += sizeof(__be16);
+ 
+-		if (skb_dst(skb)->dev->flags & IFF_LOOPBACK)
++		if (dev->flags & IFF_LOOPBACK)
+ 			raw16 = IOAM6_U16_UNAVAILABLE;
+ 		else
+-			raw16 = (__force u16)READ_ONCE(__in6_dev_get(skb_dst(skb)->dev)->cnf.ioam6_id);
++			raw16 = (__force u16)READ_ONCE(__in6_dev_get(dev)->cnf.ioam6_id);
+ 
+ 		*(__be16 *)data = cpu_to_be16(raw16);
+ 		data += sizeof(__be16);
+@@ -801,10 +802,10 @@ static void __ioam6_fill_trace_data(stru
+ 		struct Qdisc *qdisc;
+ 		__u32 qlen, backlog;
+ 
+-		if (skb_dst(skb)->dev->flags & IFF_LOOPBACK) {
++		if (dev->flags & IFF_LOOPBACK) {
+ 			*(__be32 *)data = cpu_to_be32(IOAM6_U32_UNAVAILABLE);
+ 		} else {
+-			queue = skb_get_tx_queue(skb_dst(skb)->dev, skb);
++			queue = skb_get_tx_queue(dev, skb);
+ 			qdisc = rcu_dereference(queue->qdisc);
+ 			qdisc_qstats_qlen_backlog(qdisc, &qlen, &backlog);
+ 
+@@ -825,7 +826,7 @@ static void __ioam6_fill_trace_data(stru
+ 		if (is_input)
+ 			byte--;
+ 
+-		raw64 = dev_net(skb_dst(skb)->dev)->ipv6.sysctl.ioam6_id_wide;
++		raw64 = dev_net(dev)->ipv6.sysctl.ioam6_id_wide;
+ 
+ 		*(__be64 *)data = cpu_to_be64(((u64)byte << 56) | raw64);
+ 		data += sizeof(__be64);
+@@ -841,10 +842,10 @@ static void __ioam6_fill_trace_data(stru
+ 		*(__be32 *)data = cpu_to_be32(raw32);
+ 		data += sizeof(__be32);
+ 
+-		if (skb_dst(skb)->dev->flags & IFF_LOOPBACK)
++		if (dev->flags & IFF_LOOPBACK)
+ 			raw32 = IOAM6_U32_UNAVAILABLE;
+ 		else
+-			raw32 = READ_ONCE(__in6_dev_get(skb_dst(skb)->dev)->cnf.ioam6_id_wide);
++			raw32 = READ_ONCE(__in6_dev_get(dev)->cnf.ioam6_id_wide);
+ 
+ 		*(__be32 *)data = cpu_to_be32(raw32);
+ 		data += sizeof(__be32);
+--- a/net/ipv6/ip6_input.c
++++ b/net/ipv6/ip6_input.c
+@@ -187,7 +187,9 @@ static struct sk_buff *ip6_rcv_core(stru
+ 	 * arrived via the sending interface (ethX), because of the
+ 	 * nature of scoping architecture. --yoshfuji
+ 	 */
+-	IP6CB(skb)->iif = skb_valid_dst(skb) ? ip6_dst_idev(skb_dst(skb))->dev->ifindex : dev->ifindex;
++	IP6CB(skb)->iif = skb_valid_dst(skb) ?
++				ip6_dst_idev(skb_dst(skb))->dev->ifindex :
++				dev->ifindex;
+ 
+ 	if (unlikely(!pskb_may_pull(skb, sizeof(*hdr))))
+ 		goto err;
+@@ -500,7 +502,7 @@ int ip6_mc_input(struct sk_buff *skb)
+ 	struct net_device *dev;
+ 	bool deliver;
+ 
+-	__IP6_UPD_PO_STATS(dev_net(skb_dst(skb)->dev),
++	__IP6_UPD_PO_STATS(skb_dst_dev_net(skb),
+ 			 __in6_dev_get_safely(skb->dev), IPSTATS_MIB_INMCAST,
+ 			 skb->len);
+ 
+--- a/net/ipv6/ip6_output.c
++++ b/net/ipv6/ip6_output.c
+@@ -234,8 +234,9 @@ static int ip6_finish_output(struct net
+ 
+ int ip6_output(struct net *net, struct sock *sk, struct sk_buff *skb)
+ {
+-	struct net_device *dev = skb_dst(skb)->dev, *indev = skb->dev;
+-	struct inet6_dev *idev = ip6_dst_idev(skb_dst(skb));
++	struct dst_entry *dst = skb_dst(skb);
++	struct net_device *dev = dst_dev(dst), *indev = skb->dev;
++	struct inet6_dev *idev = ip6_dst_idev(dst);
+ 
+ 	skb->protocol = htons(ETH_P_IPV6);
+ 	skb->dev = dev;
+--- a/net/ipv6/ip6_tunnel.c
++++ b/net/ipv6/ip6_tunnel.c
+@@ -637,7 +637,7 @@ ip4ip6_err(struct sk_buff *skb, struct i
+ 	} else {
+ 		if (ip_route_input(skb2, eiph->daddr, eiph->saddr,
+ 				   ip4h_dscp(eiph), skb2->dev) ||
+-		    skb_dst(skb2)->dev->type != ARPHRD_TUNNEL6)
++		    skb_dst_dev(skb2)->type != ARPHRD_TUNNEL6)
+ 			goto out;
+ 	}
+ 
+--- a/net/ipv6/ip6_vti.c
++++ b/net/ipv6/ip6_vti.c
+@@ -531,7 +531,7 @@ vti6_xmit(struct sk_buff *skb, struct ne
+ xmit:
+ 	skb_scrub_packet(skb, !net_eq(t->net, dev_net(dev)));
+ 	skb_dst_set(skb, dst);
+-	skb->dev = skb_dst(skb)->dev;
++	skb->dev = dst_dev(dst);
+ 
+ 	err = dst_output(t->net, skb->sk, skb);
+ 	if (net_xmit_eval(err) == 0)
+--- a/net/ipv6/netfilter.c
++++ b/net/ipv6/netfilter.c
+@@ -24,7 +24,7 @@ int ip6_route_me_harder(struct net *net,
+ {
+ 	const struct ipv6hdr *iph = ipv6_hdr(skb);
+ 	struct sock *sk = sk_to_full_sk(sk_partial);
+-	struct net_device *dev = skb_dst(skb)->dev;
++	struct net_device *dev = skb_dst_dev(skb);
+ 	struct flow_keys flkeys;
+ 	unsigned int hh_len;
+ 	struct dst_entry *dst;
+@@ -72,7 +72,7 @@ int ip6_route_me_harder(struct net *net,
+ #endif
+ 
+ 	/* Change in oif may mean change in hh_len. */
+-	hh_len = skb_dst(skb)->dev->hard_header_len;
++	hh_len = skb_dst_dev(skb)->hard_header_len;
+ 	if (skb_headroom(skb) < hh_len &&
+ 	    pskb_expand_head(skb, HH_DATA_ALIGN(hh_len - skb_headroom(skb)),
+ 			     0, GFP_ATOMIC))
+--- a/net/ipv6/netfilter/nf_reject_ipv6.c
++++ b/net/ipv6/netfilter/nf_reject_ipv6.c
+@@ -330,7 +330,7 @@ void nf_send_reset6(struct net *net, str
+ 		skb_dst_set(oldskb, dst);
+ 	}
+ 
+-	fl6.flowi6_oif = l3mdev_master_ifindex(skb_dst(oldskb)->dev);
++	fl6.flowi6_oif = l3mdev_master_ifindex(skb_dst_dev(oldskb));
+ 	fl6.flowi6_mark = IP6_REPLY_MARK(net, oldskb->mark);
+ 	security_skb_classify_flow(oldskb, flowi6_to_flowi_common(&fl6));
+ 	dst = ip6_route_output(net, NULL, &fl6);
+--- a/net/ipv6/output_core.c
++++ b/net/ipv6/output_core.c
+@@ -141,7 +141,7 @@ int __ip6_local_out(struct net *net, str
+ 	skb->protocol = htons(ETH_P_IPV6);
+ 
+ 	return nf_hook(NFPROTO_IPV6, NF_INET_LOCAL_OUT,
+-		       net, sk, skb, NULL, skb_dst(skb)->dev,
++		       net, sk, skb, NULL, skb_dst_dev(skb),
+ 		       dst_output);
+ }
+ EXPORT_SYMBOL_GPL(__ip6_local_out);
+--- a/net/ipv6/reassembly.c
++++ b/net/ipv6/reassembly.c
+@@ -104,11 +104,11 @@ fq_find(struct net *net, __be32 id, cons
+ 	return container_of(q, struct frag_queue, q);
  }
  
- static const struct inet6_protocol rthdr_protocol = {
+-static int ip6_frag_queue(struct frag_queue *fq, struct sk_buff *skb,
++static int ip6_frag_queue(struct net *net,
++			  struct frag_queue *fq, struct sk_buff *skb,
+ 			  struct frag_hdr *fhdr, int nhoff,
+ 			  u32 *prob_offset, int *refs)
+ {
+-	struct net *net = dev_net(skb_dst(skb)->dev);
+ 	int offset, end, fragsize;
+ 	struct sk_buff *prev_tail;
+ 	struct net_device *dev;
+@@ -324,10 +324,10 @@ out_fail:
+ 
+ static int ipv6_frag_rcv(struct sk_buff *skb)
+ {
++	const struct ipv6hdr *hdr = ipv6_hdr(skb);
++	struct net *net = skb_dst_dev_net(skb);
+ 	struct frag_hdr *fhdr;
+ 	struct frag_queue *fq;
+-	const struct ipv6hdr *hdr = ipv6_hdr(skb);
+-	struct net *net = dev_net(skb_dst(skb)->dev);
+ 	u8 nexthdr;
+ 	int iif;
+ 
+@@ -384,7 +384,7 @@ static int ipv6_frag_rcv(struct sk_buff
+ 		spin_lock(&fq->q.lock);
+ 
+ 		fq->iif = iif;
+-		ret = ip6_frag_queue(fq, skb, fhdr, IP6CB(skb)->nhoff,
++		ret = ip6_frag_queue(net, fq, skb, fhdr, IP6CB(skb)->nhoff,
+ 				     &prob_offset, &refs);
+ 
+ 		spin_unlock(&fq->q.lock);
+--- a/net/ipv6/route.c
++++ b/net/ipv6/route.c
+@@ -4602,7 +4602,7 @@ static int ip6_pkt_discard(struct sk_buf
+ 
+ static int ip6_pkt_discard_out(struct net *net, struct sock *sk, struct sk_buff *skb)
+ {
+-	skb->dev = skb_dst(skb)->dev;
++	skb->dev = skb_dst_dev(skb);
+ 	return ip6_pkt_drop(skb, ICMPV6_NOROUTE, IPSTATS_MIB_OUTNOROUTES);
+ }
+ 
+@@ -4613,7 +4613,7 @@ static int ip6_pkt_prohibit(struct sk_bu
+ 
+ static int ip6_pkt_prohibit_out(struct net *net, struct sock *sk, struct sk_buff *skb)
+ {
+-	skb->dev = skb_dst(skb)->dev;
++	skb->dev = skb_dst_dev(skb);
+ 	return ip6_pkt_drop(skb, ICMPV6_ADM_PROHIBITED, IPSTATS_MIB_OUTNOROUTES);
+ }
+ 
+--- a/net/ipv6/seg6_iptunnel.c
++++ b/net/ipv6/seg6_iptunnel.c
+@@ -365,7 +365,7 @@ static int __seg6_do_srh_inline(struct s
+ 
+ #ifdef CONFIG_IPV6_SEG6_HMAC
+ 	if (sr_has_hmac(isrh)) {
+-		struct net *net = dev_net(skb_dst(skb)->dev);
++		struct net *net = skb_dst_dev_net(skb);
+ 
+ 		err = seg6_push_hmac(net, &hdr->saddr, isrh);
+ 		if (unlikely(err))
+@@ -540,7 +540,7 @@ drop:
+ 
+ static int seg6_input_nf(struct sk_buff *skb)
+ {
+-	struct net_device *dev = skb_dst(skb)->dev;
++	struct net_device *dev = skb_dst_dev(skb);
+ 	struct net *net = dev_net(skb->dev);
+ 
+ 	switch (skb->protocol) {
+@@ -626,7 +626,7 @@ drop:
+ 
+ static int seg6_output_nf(struct net *net, struct sock *sk, struct sk_buff *skb)
+ {
+-	struct net_device *dev = skb_dst(skb)->dev;
++	struct net_device *dev = skb_dst_dev(skb);
+ 
+ 	switch (skb->protocol) {
+ 	case htons(ETH_P_IP):
+--- a/net/ipv6/tcp_ipv6.c
++++ b/net/ipv6/tcp_ipv6.c
+@@ -863,7 +863,7 @@ static void tcp_v6_send_response(const s
+ 				 int oif, int rst, u8 tclass, __be32 label,
+ 				 u32 priority, u32 txhash, struct tcp_key *key)
+ {
+-	struct net *net = sk ? sock_net(sk) : dev_net_rcu(skb_dst(skb)->dev);
++	struct net *net = sk ? sock_net(sk) : skb_dst_dev_net_rcu(skb);
+ 	unsigned int tot_len = sizeof(struct tcphdr);
+ 	struct sock *ctl_sk = net->ipv6.tcp_sk;
+ 	const struct tcphdr *th = tcp_hdr(skb);
+@@ -1037,7 +1037,7 @@ static void tcp_v6_send_reset(const stru
+ 	if (!sk && !ipv6_unicast_destination(skb))
+ 		return;
+ 
+-	net = sk ? sock_net(sk) : dev_net_rcu(skb_dst(skb)->dev);
++	net = sk ? sock_net(sk) : skb_dst_dev_net_rcu(skb);
+ 	/* Invalid TCP option size or twice included auth */
+ 	if (tcp_parse_auth_options(th, &md5_hash_location, &aoh))
+ 		return;
+--- a/net/ipv6/xfrm6_output.c
++++ b/net/ipv6/xfrm6_output.c
+@@ -106,7 +106,7 @@ skip_frag:
+ int xfrm6_output(struct net *net, struct sock *sk, struct sk_buff *skb)
+ {
+ 	return NF_HOOK_COND(NFPROTO_IPV6, NF_INET_POST_ROUTING,
+-			    net, sk, skb,  skb->dev, skb_dst(skb)->dev,
++			    net, sk, skb,  skb->dev, skb_dst_dev(skb),
+ 			    __xfrm6_output,
+ 			    !(IP6CB(skb)->flags & IP6SKB_REROUTED));
+ }
 
 
