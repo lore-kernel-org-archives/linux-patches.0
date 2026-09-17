@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECA094E5337;
-	Thu, 17 Sep 2026 17:38:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05C844E5350;
+	Thu, 17 Sep 2026 17:38:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666715; cv=none; b=fNmd71ONrI2vbck1DVcUv3MNlNtqr9M5U0T+Gj+y1eHm0SZn7kuLub7yvZgYj/1q+ZhM0t2W9qXWGGcadujAnBhQV/pgoAvxWYcN3eNkkpLgqXzNUu6Mqx8Y0KuVj3JD9Zz1ydhJ6Fj44l0RVl/G4ev3IQlajqrc+FbAeYUm5Yo=
+	t=1789666718; cv=none; b=rXQClmTmRud8CyZawHgd3P7eTxhPRwbKaHMP6Dv38MMHM7S3zUUGLaVmTzIK/K2ffYeDCrtavvxwK7BeleAjLhZcerkmAd330rhbTiMH9mUGQt0ClN5ZqA/iPSXI1P1LXv4l9yC7AkIlJkFV34b5dTnTeCbtazEH66bxYKJGIJU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666715; c=relaxed/simple;
-	bh=9CJzjikQRvxgEj4XIg9RxVF2suXULReL2uU/kd5JD1k=;
+	s=arc-20240116; t=1789666718; c=relaxed/simple;
+	bh=mxm3OPskTFv5WsvPUP0kedj56FNTxfmfosI0FSmzEJk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O3Ri8WZgh9C92a+PstNajTsZ+0a8kqOgAu/S/G4VL1yLk+Ex0JAVEIj0hM2K+byi2JCur+6/JjPO0ib/k0DahSkDnpCPym/1B9ilYLfuLsU/aV0Ja9LnLvO+5uwjrbLVQjwvCbl/i20E7/1txAlGyI+rhl3yzqfFICngmn0p9yI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YATxguxj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BvSOhhjgdSqEC8tREmp72WU9ILsdpVFDGnt9aEG0mT8g81EP56mrqKQKIQra3+f/Il8LC0vq5nezWjYI87CSh6KTVMBkdu09a8FEiVfnnZugUi4+Aamzxsmvt1eENQIY9nMa94e9YbVWruOb81nsmFRn9r+cL/t+gU+3Cf0OJlY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RW9H9FRH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YATxguxj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 467E41F000FF;
-	Thu, 17 Sep 2026 17:38:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RW9H9FRH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 483071F000FF;
+	Thu, 17 Sep 2026 17:38:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666713;
-	bh=IMZAqBlTiU6QCph91D57z60gt/JgsJNGdawhR5ySYgc=;
+	s=korg; t=1789666716;
+	bh=bs+nOvgXFtzKw1GRf4faaQ5De21TE/nD7RP/fssPXME=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YATxguxjM+ILKZu56i4ZQyWRjcxKPAzSopJP8Vq6CghFw1nYlm77GLj/dAsw7PS25
-	 z/mFVNkQqqQcyEEfKwXSWt5mTnrMXPivdRPO5ifOYdNacBIhXojne9qSPzKcbbIdN4
-	 a7OoKGwLh9N0Tn9AOukcqGMzlSFN4B8Ebq5VaQkM=
+	b=RW9H9FRHGhYB5Kc9Kmdb5zdL67dc8U7uj2DNhKhPU9ylcttH+EFrGXU9sCWOCUOy/
+	 j1KDOKmxKhBhLAog3HpWVTVfOIqY8wxh8pSHT8wLjbEJj/HDnXZGCw+N0L4Q5SyhUY
+	 JmBhi+HgB2pYNf5b4Uc3Ik0l/Fmnc13f6RdLR09o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alessandro Zini <alessandro.zini@siemens.com>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.18 1129/1250] hwmon: (sht4x) Add missing locks
-Date: Thu, 17 Sep 2026 16:15:24 +0100
-Message-ID: <20260917151622.852976394@linuxfoundation.org>
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
+	Abdifatah Suruur <suruurism@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 1130/1250] ksmbd: dont hold ci->m_lock while waiting for a lease break ack
+Date: Thu, 17 Sep 2026 16:15:25 +0100
+Message-ID: <20260917151622.880774693@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -50,58 +52,182 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-commit 06b7cf395b1fb652a50db39674a759658fbfba0d upstream.
+commit 27a9bc968d4ae809a3f5ca2f2b136856ee613cb4 upstream.
 
-Sashiko reports:
+When a cifs.ko client caches a read-handle (RH) lease via deferred close
+and a conflicting open arrives, ksmbd breaks the lease and waits for the
+acknowledgment in wait_for_break_ack() for up to OPLOCK_WAIT_TIME (35s).
+__smb_break_all_levII_oplock() runs that wait while holding ci->m_lock
+for read.
 
-Heater sysfs callbacks (heater_enable_store, heater_power_store, and
-heater_time_store) are exposed to data races without the hwmon lock.
+cifs.ko reacts to a handle-lease break by closing the deferred handle
+rather than sending a lease break acknowledgment. That close path
+(close_id_del_oplock() -> opinfo_del()) takes ci->m_lock for write and
+is exactly what would wake the waiter, but it blocks on the read lock
+held by the waiting thread. The break is then resolved only by the 35s
+timeout, so xfstests generic/001 takes ~78s with leases enabled versus
+~4s with oplocks only.
 
-If a user-space process reads hwmon data while another process enables
-the heater, heater_enable_store() executes without holding
-hwmon_lock(dev). This can interleave I2C commands and mutate shared
-state (data->heating_complete and data->data_pending) concurrently
-with sht4x_read_values(), leading to corrupted I2C sequences.
+Collect the target opinfos (each pinned with a reference) while holding
+ci->m_lock, then break them after releasing it, matching how
+smb_grant_oplock() already breaks a conflicting lease using only a
+reference.  The reference keeps the opinfo (and its conn and lease)
+alive across the unlocked window, and a close racing the break is
+handled by the existing OPLOCK_CLOSING state check. Apply the same fix
+to the parent lease break paths.
 
-Fixes: 53dfa12299c1 ("hwmon: (sht4x) Rely on subsystem locking")
-Cc: Alessandro Zini <alessandro.zini@siemens.com>
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://patch.msgid.link/20260821144916.2889031-1-linux@roeck-us.net
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+
+[ This tree predates the deferred break machinery.  The 6.18.y
+backport of the oplock break UAF fix (applied here as c8279ae8df68)
+calls oplock_break() directly while holding ci->m_lock, and its
+smb2_oplock_break_conn_get() takes down_read(ci->m_lock) internally,
+so the three walks self-nest the read lock and deadlock for up to
+OPLOCK_WAIT_TIME (35s) once a writer queues on the inode.  Port the
+machinery above so the walks collect the breaks and drain them after
+releasing ci->m_lock, matching the 7.2.y shape of the fix. ]
+
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Abdifatah Suruur <suruurism@gmail.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/sht4x.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/smb/server/oplock.c | 63 ++++++++++++++++++++++++++++++++++++++----
+ 1 file changed, 58 insertions(+), 5 deletions(-)
 
---- a/drivers/hwmon/sht4x.c
-+++ b/drivers/hwmon/sht4x.c
-@@ -277,6 +277,8 @@ static ssize_t heater_enable_store(struc
- 		heating_time_bound = 1100;
+diff --git a/fs/smb/server/oplock.c b/fs/smb/server/oplock.c
+index 6fafcbd9aceb7..6183bd52ca9d1 100644
+--- a/fs/smb/server/oplock.c
++++ b/fs/smb/server/oplock.c
+@@ -1033,6 +1033,43 @@ static int oplock_break(struct oplock_info *brk_opinfo, struct ksmbd_inode *ci,
+ 	return err;
+ }
+ 
++struct oplock_break_entry {
++	struct list_head	list;
++	struct oplock_info	*opinfo;
++};
++
++/*
++ * Collect an oplock for a deferred break.  oplock_break() may block for
++ * the client's break acknowledgment, and the close that wakes that wait
++ * needs ci->m_lock for write, so the walks that hold ci->m_lock defer the
++ * break until the lock is released.
++ */
++static int oplock_break_add(struct list_head *head, struct oplock_info *opinfo)
++{
++	struct oplock_break_entry *ent;
++
++	ent = kmalloc_obj(struct oplock_break_entry, KSMBD_DEFAULT_GFP);
++	if (!ent)
++		return -ENOMEM;
++
++	ent->opinfo = opinfo;
++	list_add_tail(&ent->list, head);
++	return 0;
++}
++
++static void oplock_break_drain_none(struct list_head *head,
++				    struct ksmbd_inode *ci)
++{
++	struct oplock_break_entry *ent, *tmp;
++
++	list_for_each_entry_safe(ent, tmp, head, list) {
++		oplock_break(ent->opinfo, ci, SMB2_OPLOCK_LEVEL_NONE, NULL);
++		list_del(&ent->list);
++		opinfo_put(ent->opinfo);
++		kfree(ent);
++	}
++}
++
+ void destroy_lease_table(struct ksmbd_conn *conn)
+ {
+ 	struct lease_table *lb, *lbtmp;
+@@ -1179,6 +1216,7 @@ void smb_send_parent_lease_break_noti(struct ksmbd_file *fp,
+ {
+ 	struct oplock_info *opinfo;
+ 	struct ksmbd_inode *p_ci = NULL;
++	LIST_HEAD(brk_list);
+ 
+ 	if (lctx->version != 2)
+ 		return;
+@@ -1204,12 +1242,14 @@ void smb_send_parent_lease_break_noti(struct ksmbd_file *fp,
+ 				continue;
+ 			}
+ 
+-			oplock_break(opinfo, p_ci, SMB2_OPLOCK_LEVEL_NONE, NULL);
+-			opinfo_put(opinfo);
++			if (oplock_break_add(&brk_list, opinfo))
++				opinfo_put(opinfo);
+ 		}
  	}
+ 	up_read(&p_ci->m_lock);
  
-+	guard(hwmon_lock)(dev);
++	oplock_break_drain_none(&brk_list, p_ci);
 +
- 	if (time_before(jiffies, data->heating_complete))
- 		return -EBUSY;
+ 	ksmbd_inode_put(p_ci);
+ }
  
-@@ -314,6 +316,8 @@ static ssize_t heater_power_store(struct
- 	if (power != 20 && power != 110 && power != 200)
- 		return -EINVAL;
+@@ -1217,6 +1257,7 @@ void smb_lazy_parent_lease_break_close(struct ksmbd_file *fp)
+ {
+ 	struct oplock_info *opinfo;
+ 	struct ksmbd_inode *p_ci = NULL;
++	LIST_HEAD(brk_list);
  
-+	guard(hwmon_lock)(dev);
+ 	rcu_read_lock();
+ 	opinfo = rcu_dereference(fp->f_opinfo);
+@@ -1245,12 +1286,14 @@ void smb_lazy_parent_lease_break_close(struct ksmbd_file *fp)
+ 				continue;
+ 			}
+ 
+-			oplock_break(opinfo, p_ci, SMB2_OPLOCK_LEVEL_NONE, NULL);
+-			opinfo_put(opinfo);
++			if (oplock_break_add(&brk_list, opinfo))
++				opinfo_put(opinfo);
+ 		}
+ 	}
+ 	up_read(&p_ci->m_lock);
+ 
++	oplock_break_drain_none(&brk_list, p_ci);
 +
- 	data->heater_power = power;
+ 	ksmbd_inode_put(p_ci);
+ }
  
- 	return count;
-@@ -344,6 +348,8 @@ static ssize_t heater_time_store(struct
- 	if (time != 100 && time != 1000)
- 		return -EINVAL;
+@@ -1461,6 +1504,7 @@ void smb_break_all_levII_oplock(struct ksmbd_work *work, struct ksmbd_file *fp,
+ 	struct oplock_info *op, *brk_op;
+ 	struct ksmbd_inode *ci;
+ 	struct ksmbd_conn *conn = work->conn;
++	LIST_HEAD(brk_list);
  
-+	guard(hwmon_lock)(dev);
+ 	if (!test_share_config_flag(work->tcon->share_conf,
+ 				    KSMBD_SHARE_FLAG_OPLOCKS))
+@@ -1502,12 +1546,21 @@ void smb_break_all_levII_oplock(struct ksmbd_work *work, struct ksmbd_file *fp,
+ 			    SMB2_LEASE_KEY_SIZE))
+ 			goto next;
+ 		brk_op->open_trunc = is_trunc;
+-		oplock_break(brk_op, ci, SMB2_OPLOCK_LEVEL_NONE, NULL);
 +
- 	data->heater_time = time;
++		/*
++		 * Defer the break until ci->m_lock is released: oplock_break()
++		 * may block waiting for the break acknowledgment, and the
++		 * close that wakes that wait needs ci->m_lock for write.
++		 */
++		if (!oplock_break_add(&brk_list, brk_op))
++			continue;
+ next:
+ 		opinfo_put(brk_op);
+ 	}
+ 	up_read(&ci->m_lock);
  
- 	return count;
++	oplock_break_drain_none(&brk_list, ci);
++
+ 	if (op)
+ 		opinfo_put(op);
+ }
+-- 
+2.53.0
+
 
 
