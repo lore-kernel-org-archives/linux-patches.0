@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F15884F55D3;
-	Thu, 17 Sep 2026 15:28:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05F864E73DF;
+	Thu, 17 Sep 2026 15:28:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789658911; cv=none; b=V9RTINXa4wP1Cg4puSzbP8/fQrXRs9yatRlRxdnd1reO4whD7J2Ys6MylmDYk/ouo5SHC8+lNANxRgkIN/4LSSQ2LM/hvDJrxT9ySWrKmCqXgaCYKXgwpZ2pT4KTW1YR6L6S1buPMrA5vm/tWh0pJj+bSAy0L324ton1jyjZsgo=
+	t=1789658916; cv=none; b=t1uOP+/mLr6uFBZU4yTXaCsNroaov4HEzR5n9kds9nRt1EjhJuFmHD5TU4Ih4cctt9hKVWkW+OSd8+pWtc6iYvKvxgYr8PvFzXWfF5gruE2+CelxtUkTE1M3+jRFubV+tvu755HYy1EB2Td0l1/MmYoxfA90b4L4G8VxLy2gOdY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789658911; c=relaxed/simple;
-	bh=gC4dqWCCBkce8E/O1FMpcCAdgyTD0Zt74+D0q0obDKU=;
+	s=arc-20240116; t=1789658916; c=relaxed/simple;
+	bh=7ZgRRe3+eJzk1rxbpL+iAsAg0zRuUCGbLP9ttGzqthI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E7LsM0mji2H805advdcxkt9vkX+LX57LOzGjybWVSWbjbtEAwZrPj+zroBGMDXwCjzkHV3WAK8Wr/fPbxEMiICPQ3mkOhk9GhojddyU71ma0WyJRCvmlKpg0GyPIvtGzAapm4zPKT1IXiLUwtdV38wIFVe6kbVQU4X/+Dew+pN8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xLRTg3Ha; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=snrzBlAaF7bXrQl5QlbHyncvvM1S3R5ZdxCi4y+G16TqmdsDNnuaFD7fekEpsyM8N8fIdpm+LsyeNyWegdXCupBkKmQcnC26d17/wSqFLVhxHmRLZiNfkG8je2YgZkxaF+5i2yY39h3JibMS0v56z2uhbP9asTT3LXAc4yqzdGQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aECVHx3x; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xLRTg3Ha"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C44A11F00898;
-	Thu, 17 Sep 2026 15:28:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aECVHx3x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C652F1F000FF;
+	Thu, 17 Sep 2026 15:28:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789658901;
-	bh=IkGiVBU5BW0EpBF6QR1yg6onytlTZ7yZjAU5CeEMR6M=;
+	s=korg; t=1789658910;
+	bh=9jSI0dyosUTMaVzZEVhaUbEquEOpbvlDMzw6AY3U7eM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xLRTg3HaKKkyRT6wbSeX5P071CSeN1WliWP0UGOk5iHR1X6As0jRYjk8uBYnWlRUO
-	 jgrFkd9NjUgaLjwzIC74pvmHMoSf47NRRWyZ3ldjcMkEWeMQrcirMY3vP/DflOBEBv
-	 HXCdfemwxeBcrTWDne0ZNG/3wjYGTHzpLj4f1m+E=
+	b=aECVHx3xGw+XrVLU+csRJFED/uY0hzEol3xTYyddRMTLU2e0QtqFbZ3BlQxknJMbP
+	 EzyJqbe4ilkXpMStjrizZMB8flPo9+abWiva7NRP9WLpemXPCuELo9o5YvIsWPzBz2
+	 iduqaoS1KMbTmB5Nb+OU/4105Axgi3Z2CJBw3IMc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Hyunchul Lee <hyc.lee@gmail.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 040/733] ntfs: preserve error code in ntfs_resident_attr_record_add()
-Date: Thu, 17 Sep 2026 16:05:48 +0100
-Message-ID: <20260917151351.753424140@linuxfoundation.org>
+Subject: [PATCH 7.2 042/733] ntfs: fix kmap_local leak in write_mft_record_nolock() error paths
+Date: Thu, 17 Sep 2026 16:05:50 +0100
+Message-ID: <20260917151351.808841454@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -54,39 +54,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Baolin Liu <liubaolin@kylinos.cn>
 
-[ Upstream commit 8efe00b098b5b3618c885d2a35a5edccfbfbec7d ]
+[ Upstream commit cf06dcd572845723821b54a608fc2da995c3c8e2 ]
 
-ntfs_resident_attr_record_add() collapses every failure to -EIO at
-its put_err_out label. This defeats the resident-to-non-resident
-fallback in ntfs_attr_add(), which relies on seeing -ENOSPC to
-convert the attribute when the MFT record has no room, and also
-hides -EEXIST and -ENOMEM from callers.
+write_mft_record_nolock() maps the MFT record folio with
+kmap_local_folio(), but the pre_write_mst_fixup() and
+bio_add_folio() failure paths jump to the error label without
+unmapping it. kmap_local mappings are stack-ordered per task, so
+leaking one corrupts the nesting for any outer mapping.
 
-Return the actual error code. Every path reaching the label has
-err set to a negative errno.
+Unmap the folio on those error paths too.
 
-Fixes: 495e90fa3348 ("ntfs: update attrib operations")
+Fixes: 115380f9a2f9 ("ntfs: update mft operations")
 Signed-off-by: Baolin Liu <liubaolin@kylinos.cn>
 Reviewed-by: Hyunchul Lee <hyc.lee@gmail.com>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs/attrib.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ntfs/mft.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/fs/ntfs/attrib.c b/fs/ntfs/attrib.c
-index b4c6137c037b6..fbb1c5f4da18a 100644
---- a/fs/ntfs/attrib.c
-+++ b/fs/ntfs/attrib.c
-@@ -2495,7 +2495,7 @@ int ntfs_resident_attr_record_add(struct ntfs_inode *ni, __le32 type,
- 	return offset;
- put_err_out:
- 	ntfs_attr_put_search_ctx(ctx);
--	return -EIO;
-+	return err;
- }
+diff --git a/fs/ntfs/mft.c b/fs/ntfs/mft.c
+index 271a265491280..3ad739179c7a1 100644
+--- a/fs/ntfs/mft.c
++++ b/fs/ntfs/mft.c
+@@ -580,7 +580,7 @@ int write_mft_record_nolock(struct ntfs_inode *ni, struct mft_record *m, int syn
+ 	err = pre_write_mst_fixup((struct ntfs_record *)fixup_m, vol->mft_record_size);
+ 	if (err) {
+ 		ntfs_error(vol->sb, "Failed to apply mst fixups!");
+-		goto err_out;
++		goto unmap_err_out;
+ 	}
  
- /*
+ 	folio_size = vol->mft_record_size / ni->mft_lcn_count;
+@@ -645,6 +645,8 @@ int write_mft_record_nolock(struct ntfs_inode *ni, struct mft_record *m, int syn
+ 	return 0;
+ put_bio_out:
+ 	bio_put(bio);
++unmap_err_out:
++	kunmap_local(kaddr);
+ err_out:
+ 	/*
+ 	 * The caller should mark the base inode as bad so no more I/O
 -- 
 2.53.0
 
