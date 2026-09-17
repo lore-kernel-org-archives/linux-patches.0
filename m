@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B78E63AEF2D;
-	Thu, 17 Sep 2026 18:59:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DB6D547043;
+	Thu, 17 Sep 2026 18:59:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789671594; cv=none; b=kOzT0dCPSPxHLwiKcYG+g5BrTAtXXgx4Jv2BXWTDtzeTJY3SQTJxCPxYoBogQqBM26MzwKAzTUhNXCfHS4QDJmy8nUt9At9tu0lzB9j10W7iG9pzqoYa1NA7/rzHRt/WSv789Vzq5bLCpbblo7Y3GPlhBuDjppu31dZ+WG6Qh/k=
+	t=1789671597; cv=none; b=K2qnjANbN2q3Gvkpdfe4VdLcA/qkZ3zE/PCozpuFG2ui/HAp4XYWo3C16L7GfwVx+MZdoQWDReqdeg1lEEoeRLhJSYw3m0WXjW0eUSInC2HDzj9UhfPLc2nN7t5bKkZNJ91sITjTWYhlVQrqZB4yPbMb+asYPB7m/IZFdoAKF+M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789671594; c=relaxed/simple;
-	bh=gxcmB8CBC8gze2Z925c3gIpdTtqezX+kOxhCOa8zRMM=;
+	s=arc-20240116; t=1789671597; c=relaxed/simple;
+	bh=v/XN1mTG7Y+QNYx+2wRByNmYOSI4Fn6Cv/5FqgGR22M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=inj65nL0rwmKZ6S+iKE5+DiouslBUdqwB1tAT6IdJYyVU3nIOt8JCzkyudMs9ox0kjaodrwAhk70p6z4dKByJpE6Gzf0ggIIAn+dYJ7tTJlJA5k32DT2L+hv602iox9L12fodCJOVyZfUr9i4cYTE7wry1rEnoJzgsftMxM/LHo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LI1oWWXe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=XRbJlubg2M24G6Bfhk3yhIPFvWF3FEWywwv5C7pJBzX20bj13I6vU0//KBrC7gqpgFbNZ7GR5Fxapym9Eey2x264g4HG8m1/PGZjTeMi4+m5KhJNII+/KGGDO6zllU5RL3UZUH51ClIASdKrbX/t3lCG04urdKWneFMpI1JiHPM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CQUFIy4J; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LI1oWWXe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 199091F000FF;
-	Thu, 17 Sep 2026 18:59:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CQUFIy4J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37B881F000FF;
+	Thu, 17 Sep 2026 18:59:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789671592;
-	bh=GkSTqFcifmT1nBp6EmJOOobw+et3DOr/2qR8LI9Da/A=;
+	s=korg; t=1789671595;
+	bh=lAQCPw8brh+y6EXktO4TISN9voywLjbCXHxTjcjolXc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LI1oWWXeYkAPs56g1HxCHfpk9/IxReKL7oqG/dvuZeZKIRoh9EuQYSkw8h2BoTuEc
-	 9CPdwKovgTa37CU+Z4Hkuz434VTvXLWoMCWCNJs60LB2OmyS8qLsBlpZNlnOVnQkvb
-	 A7S7G3dt8QP0XInyDPBoie07ihCtpRnenMMWSiDg=
+	b=CQUFIy4JPPeOMvicpGBgeOEKSvMG/W4fXop1BMVmLyPinpaHYrYlhAmbrNyCh132G
+	 M1G+pGXbesGRI39y5TGstXxxK9Mj/zOoagqVcjeqMPph2LyuHwdJVCeNeXnnh/C16i
+	 rfouvR1TZS6HizW6FK+bJ3JXfdRcd5heqU0E5ZKA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <cel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1027/1102] nfsd: fix clock domain mismatch in clients_still_reclaiming()
-Date: Thu, 17 Sep 2026 16:16:10 +0100
-Message-ID: <20260917151606.552361979@linuxfoundation.org>
+Subject: [PATCH 6.12 1028/1102] nfsd: fix netlink dumpit error handling for rpc_status_get
+Date: Thu, 17 Sep 2026 16:16:11 +0100
+Message-ID: <20260917151606.580049858@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -54,64 +54,137 @@ Content-Transfer-Encoding: 8bit
 
 From: Jeff Layton <jlayton@kernel.org>
 
-[ Upstream commit 09ea3eb9a518565f5bca386e81b993ed8825f5e8 ]
+[ Upstream commit e13d505af73a1e013aa81806652d4378b21cfca2 ]
 
-clients_still_reclaiming() computes a deadline from nn->boot_time
-(CLOCK_REALTIME, ~1.7 billion) but compares it against
-ktime_get_boottime_seconds() (CLOCK_BOOTTIME, seconds since boot).
-The comparison is always false — it would take ~54 years of uptime
-for BOOTTIME to exceed the REALTIME-derived deadline.
+nfsd_genl_rpc_status_compose_msg() returns -ENOBUFS on nla_put failure
+without calling genlmsg_cancel(), leaving a partial message in the skb.
+The caller then propagates -ENOBUFS directly, which the netlink dump
+infrastructure treats as a fatal error, aborting the entire dump.
 
-This means any client can hold the server in grace indefinitely by
-sending CLAIM_PREVIOUS OPEN requests, blocking all non-reclaim
-operations for all other clients.
+The correct netlink dump convention is:
+ - Cancel any partial message with genlmsg_cancel()
+ - If prior messages were added to the skb (skb->len > 0), save the
+   current iterator position and return skb->len to paginate
+ - Only return a negative errno when no messages fit at all
 
-Add boot_time_bt (CLOCK_BOOTTIME) alongside the existing boot_time
-and use it for the deadline computation. boot_time (CLOCK_REALTIME)
-is preserved for its cl_boot clientid-nonce role.
+Fix compose_msg to cancel the partial message on all nla_put failure
+paths, and fix the caller to paginate when possible rather than
+returning a fatal error.
 
-Fixes: 20b7d86f29d3 ("nfsd: use boottime for lease expiry calculation")
+A second defect surfaces once pagination actually works: cb->args[1]
+records the resume index within the pool named by cb->args[0], but the
+inner loop applied it to every pool from cb->args[0] onward. After a
+mid-pool pause, a later dump call drains the resume pool and continues
+into subsequent pools within the same call, where the stale cb->args[1]
+caused the first N threads of each following pool to be skipped. On
+per-CPU or per-node pool configurations this silently dropped active
+requests from the dump. Apply the saved thread index only to the pool
+matching cb->args[0], and start every subsequent pool from thread 0.
+
+Fixes: bd9d6a3efa97 ("NFSD: add rpc_status netlink support")
 Cc: stable@vger.kernel.org
 Assisted-by: Claude:claude-opus-4-8
 Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260611-nfsd-testing-v2-12-5b90e276f2d9@kernel.org
+[ cel: fold in 20/21 to avoid bisect hazard ]
+Link: https://patch.msgid.link/20260611-nfsd-testing-v2-3-5b90e276f2d9@kernel.org
 Signed-off-by: Chuck Lever <cel@kernel.org>
-[ preserved the branch’s boolean fields instead of the upstream flags bitmap ]
+[ preserved the 6.12-specific rq_saddr.sa_family access instead of upstream’s ss_family ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/netns.h     |    1 +
- fs/nfsd/nfs4state.c |    3 ++-
- 2 files changed, 3 insertions(+), 1 deletion(-)
+ fs/nfsd/nfsctl.c |   32 ++++++++++++++++++++++++++------
+ 1 file changed, 26 insertions(+), 6 deletions(-)
 
---- a/fs/nfsd/netns.h
-+++ b/fs/nfsd/netns.h
-@@ -69,6 +69,7 @@ struct nfsd_net {
- 	bool grace_end_forced;
- 	bool client_tracking_active;
- 	time64_t boot_time;
-+	time64_t boot_time_bt;	/* same instant in CLOCK_BOOTTIME */
+--- a/fs/nfsd/nfsctl.c
++++ b/fs/nfsd/nfsctl.c
+@@ -1527,7 +1527,7 @@ static int nfsd_genl_rpc_status_compose_
+ 	    nla_put_s64(skb, NFSD_A_RPC_STATUS_SERVICE_TIME,
+ 			ktime_to_us(genl_rqstp->rq_stime),
+ 			NFSD_A_RPC_STATUS_PAD))
+-		return -ENOBUFS;
++		goto out_cancel;
  
- 	struct dentry *nfsd_client_dir;
+ 	switch (genl_rqstp->rq_saddr.ss_family) {
+ 	case AF_INET: {
+@@ -1543,7 +1543,7 @@ static int nfsd_genl_rpc_status_compose_
+ 				 s_in->sin_port) ||
+ 		    nla_put_be16(skb, NFSD_A_RPC_STATUS_DPORT,
+ 				 d_in->sin_port))
+-			return -ENOBUFS;
++			goto out_cancel;
+ 		break;
+ 	}
+ 	case AF_INET6: {
+@@ -1559,7 +1559,7 @@ static int nfsd_genl_rpc_status_compose_
+ 				 s_in->sin6_port) ||
+ 		    nla_put_be16(skb, NFSD_A_RPC_STATUS_DPORT,
+ 				 d_in->sin6_port))
+-			return -ENOBUFS;
++			goto out_cancel;
+ 		break;
+ 	}
+ 	}
+@@ -1567,10 +1567,14 @@ static int nfsd_genl_rpc_status_compose_
+ 	for (i = 0; i < genl_rqstp->rq_opcnt; i++)
+ 		if (nla_put_u32(skb, NFSD_A_RPC_STATUS_COMPOUND_OPS,
+ 				genl_rqstp->rq_opnum[i]))
+-			return -ENOBUFS;
++			goto out_cancel;
  
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -6469,7 +6469,7 @@ bool nfsd4_force_end_grace(struct nfsd_n
-  */
- static bool clients_still_reclaiming(struct nfsd_net *nn)
- {
--	time64_t double_grace_period_end = nn->boot_time +
-+	time64_t double_grace_period_end = nn->boot_time_bt +
- 					   2 * nn->nfsd4_lease;
+ 	genlmsg_end(skb, hdr);
+ 	return 0;
++
++out_cancel:
++	genlmsg_cancel(skb, hdr);
++	return -ENOBUFS;
+ }
  
- 	if (READ_ONCE(nn->grace_end_forced))
-@@ -8877,6 +8877,7 @@ static int nfs4_state_create_net(struct
- 	nn->conf_name_tree = RB_ROOT;
- 	nn->unconf_name_tree = RB_ROOT;
- 	nn->boot_time = ktime_get_real_seconds();
-+	nn->boot_time_bt = ktime_get_boottime_seconds();
- 	nn->grace_ended = false;
- 	nn->grace_end_forced = false;
- 	nn->client_tracking_active = false;
+ /**
+@@ -1598,10 +1602,20 @@ int nfsd_nl_rpc_status_get_dumpit(struct
+ 
+ 	for (i = 0; i < nn->nfsd_serv->sv_nrpools; i++) {
+ 		struct svc_rqst *rqstp;
++		long thread_skip = 0;
+ 
+ 		if (i < cb->args[0]) /* already consumed */
+ 			continue;
+ 
++		/*
++		 * The saved thread index only applies to the pool the dump
++		 * was resumed in. Subsequent pools must start from thread 0,
++		 * otherwise their first cb->args[1] threads are silently
++		 * skipped.
++		 */
++		if (i == cb->args[0])
++			thread_skip = cb->args[1];
++
+ 		rqstp_index = 0;
+ 		list_for_each_entry_rcu(rqstp,
+ 				&nn->nfsd_serv->sv_pools[i].sp_all_threads,
+@@ -1609,7 +1623,7 @@ int nfsd_nl_rpc_status_get_dumpit(struct
+ 			struct nfsd_genl_rqstp genl_rqstp = {};
+ 			unsigned int status_counter;
+ 
+-			if (rqstp_index++ < cb->args[1]) /* already consumed */
++			if (rqstp_index++ < thread_skip) /* already consumed */
+ 				continue;
+ 			/*
+ 			 * Acquire rq_status_counter before parsing the rqst
+@@ -1663,8 +1677,14 @@ int nfsd_nl_rpc_status_get_dumpit(struct
+ 
+ 			ret = nfsd_genl_rpc_status_compose_msg(skb, cb,
+ 							       &genl_rqstp);
+-			if (ret)
++			if (ret) {
++				if (skb->len) {
++					cb->args[0] = i;
++					cb->args[1] = rqstp_index - 1;
++					ret = skb->len;
++				}
+ 				goto out;
++			}
+ 		}
+ 	}
+ 
 
 
