@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAA343CF688;
-	Thu, 17 Sep 2026 18:45:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7424D3D34B6;
+	Thu, 17 Sep 2026 18:46:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789670761; cv=none; b=N4NcCG5AjyuVNJMpoyGyohsWDxmw3x2GGlfDL10AKRAP8TDXo1fxvIJYPoSkzZAQDybs8VgRE6nKJpnjC7iI5IfXGdUQWCxFEtgNrrtMhFj50D/Dg96pNVygG3FmzTyn9cfGCqe9ovzSRPJnAKJhu89i6rF2Cpup5F2gykuf9K8=
+	t=1789670763; cv=none; b=S3g1T/8fDt0c+bg5So2ELAsfc5uiJ3xPyf89WlidWJZTncvY7H99u5lgt+hU6eSwFnqipXRCK+tCzZ5NxaH3jIR1hFZ3TXjotiHj+HwGRvNClV1eE0pHTuvlTmBromUseSytZEroloUlomua4smfp81YAZTxw1g4rFOmA7gq4uE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789670761; c=relaxed/simple;
-	bh=0/ByBuZLm+hxUCFlveKwKFJCYs9zVkYzol0cUjjlGLs=;
+	s=arc-20240116; t=1789670763; c=relaxed/simple;
+	bh=rwNHnUVypD+QlQpHT28+5uC8FCNoY/fggz0j1D03A0c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HkEWqODC+MPE2IRe+vRz45tbvGyQdREJMVgtZdVff5g3/9QLm1B2OMmN1JZEkT0D6KEml+Nb7zhJRXDvGeX/hAuTuqActozIeVvrfKKicTu2jEgq+CvMPQZHIcNdgp1nFJAY9yFfv5EKnx5ptFXcFj8M3j7raSwDR+JRyI4uIC8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2p8JiVxd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JdoMGTPHQLtxsfZGKYoeD9OY9+GYyX7E1Mxay1+LDas+F4Y1TeeE7hI+sGFocXnL0PgCHV8Ds2kBsO2eVUC4p1iEF15Ma7wUEipurp2OOnJ3DcKfhcAxQuWq/269beHTVgExtGkI80qdJBiK0tbQFViUyI0+gStVk6AQRy2oLY8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dku+TIR7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2p8JiVxd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD2D11F000FF;
-	Thu, 17 Sep 2026 18:45:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dku+TIR7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0C491F000FF;
+	Thu, 17 Sep 2026 18:46:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789670759;
-	bh=gnQmex9B0grDJuy4xn6sG8FISZgw6U9zj8IcoFuS294=;
+	s=korg; t=1789670762;
+	bh=5j1dz/uM4qWzRqw8isGJ8LDqCRH99Xoxfen6JQVJf2Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2p8JiVxdCtuo21ID6Oe7TcVj4VScxXI5tmVwvDgaM5Q2+WZUBZn0q5b2IUFyy22Si
-	 L+tlRnsR7bV3vKrzTJ2ZsQcIgV0XzjFiKV2GUaqbbqjBujioxYkc5zzNYDxADEsMBI
-	 ACYLUd+O7p+O1v1vcvTJGOLRupPWBTx+YycSDmak=
+	b=Dku+TIR74e9dBoyZ73JQpvIGfEHYasaPPpuZ6UPmTOaEmo4hTazrmNGfh0ZZToJXd
+	 sIPjdn4G1HhPqBNyiieyDdxCtjDLW01pEWk4rNZFfj46/tmC5R/eU2Spn+nsdijCel
+	 azYMYoqa1KFmzXJII836dGGmGU2+Wu7GZtq1r98I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fahad Alharbi <fahad@codepure.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
+	syzbot+ce13c07d96d04716eaa2@syzkaller.appspotmail.com,
+	Alice Mikityanska <alice@isovalent.com>,
+	Willem de Bruijn <willemb@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0722/1102] af_unix: Return immediately when manage_oob() returns NULL for 0-length buffer.
-Date: Thu, 17 Sep 2026 16:11:05 +0100
-Message-ID: <20260917151558.479690065@linuxfoundation.org>
+Subject: [PATCH 6.12 0723/1102] net: ipv6: Fix UDP length overflow with PMTU discover and big MTU
+Date: Thu, 17 Sep 2026 16:11:06 +0100
+Message-ID: <20260917151558.508156814@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -52,42 +53,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Alice Mikityanska <alice@isovalent.com>
 
-[ Upstream commit 6e5ee08eb5858d175da6768d75d163817b6a9d4a ]
+[ Upstream commit 0ae10b6be49b425827659b23bcce498f80eb7182 ]
 
-Fahad Alharbi reported that recv(0, MSG_PEEK) triggers busy-wait
-in unix_stream_read_generic() if recv() is blocking and the last
-skb in the queue is MSG_OOB skb.
+This commit bounds cork->base.fragsize to IP6_MAX_MTU for UDP sockets to
+avoid a possible overflow of UDP length that triggers a WARN in
+udp_set_len_short when setsockopt IPV6_MTU_DISCOVER is set to
+IPV6_PMTUDISC_DO or IPV6_PMTUDISC_PROBE, and a large packet is sent over
+a netdev with an unusually large MTU.
 
-In such a situation, TCP returns 0 immediately regardless of
-blocking or non-blocking.
+Steps to reproduce (included in the new selftest):
 
-Let's follow the behaviour.
+1. Set device MTU bigger than IP6_MAX_MTU. cork->base.fragsize will be
+   set to that MTU in ip6_setup_cork.
+2. Set IPV6_MTU_DISCOVER to IPV6_PMTUDISC_PROBE or IPV6_PMTUDISC_DO. It
+   lets maxnonfragsize be set to device MTU (cork->fragsize) in
+   __ip6_append_data, rather than to IP6_MAX_MTU.
+3. Send 65528 bytes of payload (+8 bytes of UDP header, +40 bytes of
+   IPv6 header). Device MTU allows it (it's only one byte bigger than
+   IP6_MAX_MTU, and the device MTU is bigger than that).
+4. The UDP length in the built packet is 65536, which overflows the
+   16-bit length field and triggers the WARN in udp_set_len_short.
 
-Fixes: 314001f0bf92 ("af_unix: Add OOB support")
-Reported-by: Fahad Alharbi <fahad@codepure.com>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20260902202202.892676-3-kuniyu@google.com
+To avoid breaking sending UDP jumbograms over raw IPv6 sockets, limit
+the change to UDP sockets only.
+
+The original overflow bug with IPv6 and IPV6_PMTUDISC_DO seems to
+predate git history (verified reproduction on 2.6.21), was fixed later,
+and then reappeared in commit 427faee167bc ("net: ipv6: introduce
+ip6_dst_mtu_maybe_forward"), which is chosen as the Fixes tag here. The
+overflow with IPV6_PMTUDISC_PROBE reproduces since its introduction in
+commit 628a5c561890 ("[INET]: Add IP(V6)_PMTUDISC_RPOBE").
+
+Fixes: 427faee167bc ("net: ipv6: introduce ip6_dst_mtu_maybe_forward")
+Reported-by: syzbot+ce13c07d96d04716eaa2@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/6a6a966c.86abc875.e5c3d.0054.GAE@google.com/
+Signed-off-by: Alice Mikityanska <alice@isovalent.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20260901195714.673548-3-alice.kernel@fastmail.im
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/unix/af_unix.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv6/ip6_output.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
-index 4f470e142bb7f..6084aa8b65001 100644
---- a/net/unix/af_unix.c
-+++ b/net/unix/af_unix.c
-@@ -2843,7 +2843,7 @@ static int unix_stream_read_generic(struct unix_stream_read_state *state,
- #if IS_ENABLED(CONFIG_AF_UNIX_OOB)
- 		if (skb) {
- 			skb = manage_oob(skb, &last, sk, flags, copied);
--			if (!skb && copied) {
-+			if (!skb && (copied || !state->size)) {
- 				unix_state_unlock(sk);
- 				break;
- 			}
+diff --git a/net/ipv6/ip6_output.c b/net/ipv6/ip6_output.c
+index fd25d5aadea27..0d60229c6f639 100644
+--- a/net/ipv6/ip6_output.c
++++ b/net/ipv6/ip6_output.c
+@@ -1408,6 +1408,8 @@ static int ip6_setup_cork(struct sock *sk, struct inet_cork_full *cork,
+ 	if (frag_size && frag_size < mtu)
+ 		mtu = frag_size;
+ 
++	if (sk_is_udp(sk))
++		mtu = min(mtu, IP6_MAX_MTU);
+ 	cork->base.fragsize = mtu;
+ 	cork->base.gso_size = ipc6->gso_size;
+ 	cork->base.tx_flags = 0;
 -- 
 2.53.0
 
