@@ -1,36 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7609E50B8BF;
-	Thu, 17 Sep 2026 17:40:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 567F14F93DC;
+	Thu, 17 Sep 2026 17:40:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666811; cv=none; b=U6LBVszN7x2GgYGLjay/hGF/Sb6nKIbZlh/EXL5PttgexbusUhivIfdx5AKigqoxxmbD41EbuhWAs8ooTNl2UGoZ6GRnzDgilFojMShwf/IvtauPjDqs++JpLazQcFyKYUqtU2Zxb09MVfINlciiMK0dNhIsT0YcChQwyntzu20=
+	t=1789666814; cv=none; b=SY7tB0eK9OuUUnR5QK3WLjWebyktocNuw5CB2qUKjugYikzkYIlBG5PZI3D3t0EzogcEcoq5KLwPA5edC3+GYA4z4KLSLAFkOXinNDFBt0AJLA0s9L7dKmLlzHdwXv1/aByj73e91YYnUssgSziqdSWZhHANwzJnJkxZSvHEYYM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666811; c=relaxed/simple;
-	bh=5XeKzuBe1NqjZs9n3pJzJhgZqVzv8IAUvwJ7E6kyxNQ=;
+	s=arc-20240116; t=1789666814; c=relaxed/simple;
+	bh=6sdQYFqZH6X/LgdVVzEnOF34QoxFkG9dUQg7nT+xyu0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KW3TURA48nfhBB3hOu0iq5NbZgfhuzC3thDmJZEfAeKbArmtCBge76qPwuEoXnLfedz/exa8Yx/XZJNL1pSbEBBq5p0ZH0nu0VBeJPDjl4FYbF7M82vY3KxRw9KKLN9hDG8USTA340r2XDuLorPlehp3a0whLCZcObUBDgmTaZ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bvSN+0tB; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oovLzPFG26XphrN0p3/58hwqzGem3043C6aWmX9SZ78UCt7kAJhspYJz/nKJDhE2SCVx/NaFKr0oV9/hU8O7ealQKnsRoKcS90nu4uC3IlbZtPlpy3wqnjaza5qIJkPvYSvN06vkcOFGAV3eRWBzFKQlu52FPr6xrUzSn0keaMM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jlVhGiDE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bvSN+0tB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A71E31F000FF;
-	Thu, 17 Sep 2026 17:40:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jlVhGiDE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AEE41F000FF;
+	Thu, 17 Sep 2026 17:40:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666810;
-	bh=b8XhVUwuiEffK1mvs1JQTlHg7umgiBkvVnGijSkcO3E=;
+	s=korg; t=1789666813;
+	bh=oKvnGLKrQIMl7zxyQMAEHL9wLRDBfamVw0bHFqfXAlg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bvSN+0tBa5AE1BO4H5FzBnsrOtcYLVXrGgRxmK/yQ+0LYuReA1g9dJbNVTUTGDcfy
-	 BOi3s5n6kmfbV0L1C59n3wHw5Dc8H38P1vPLI045eN2k4Erc0G8tLzdUXfpNObfc6K
-	 Kr1yrmCbFgWboGrSw1Hf9JQ+t6FAzDXIoe0WASJQ=
+	b=jlVhGiDELEQhjENNA1uC8+N+XX4ptlFRMAMKnU6009glmQStD49BXE3IYssWegVVh
+	 bfnliFXMPfW0gVNvUWWO8gOERxpd4OANF8BVHEOGvQFNhZTzxiSUef1rQ0ZUgqrVsS
+	 HrLD3SFbLt7zisNQCs88t1q225T5YgR0BaXiQ6/k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1132/1250] Revert "arm64: dts: qcom: qcs6490-rb3gen2: Fix the PCIe iommu-map entries"
-Date: Thu, 17 Sep 2026 16:15:27 +0100
-Message-ID: <20260917151622.933539574@linuxfoundation.org>
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Carlos Maiolino <cmaiolino@redhat.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Carlos Maiolino <cem@kernel.org>
+Subject: [PATCH 6.18 1106/1250] xfs: fix rtrmap cross-referencing elision logic
+Date: Thu, 17 Sep 2026 16:15:01 +0100
+Message-ID: <20260917151622.165333902@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -49,44 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-This reverts commit 1a35eda51a50125d8e58b4f99f82034c58000630.
+From: Darrick J. Wong <djwong@kernel.org>
 
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+commit 3bdbf472a608aeb7e8e4dc70ee86738ad5256356 upstream.
+
+LOLLM points out that xchk_bmap_xref_rmap_cow skips the cross-reference
+if the data-section rmapbt cursor is not present.  However, this is
+broken for realtime file data fork scanning, because they will have an
+rtrmapbt cursor and not an rmapbt cursor.  Fix the behavior by removing
+the cursor checks because xchk_bmap_get_rmap already accounts for that.
+
+Cc: stable@vger.kernel.org # v6.14
+Fixes: 037a44d8277adf ("xfs: cross-reference the realtime rmapbt")
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Assisted-by: LOLLM # finding obvious bugs
+Reviewed-by: Carlos Maiolino <cmaiolino@redhat.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ fs/xfs/scrub/bmap.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-index 6be927c18482f..18cea88120014 100644
---- a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-+++ b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-@@ -823,15 +823,15 @@ &pcie1 {
- 	pinctrl-0 = <&pcie1_reset_n>, <&pcie1_wake_n>, <&pcie1_clkreq_n>;
- 	pinctrl-names = "default";
+--- a/fs/xfs/scrub/bmap.c
++++ b/fs/xfs/scrub/bmap.c
+@@ -274,7 +274,7 @@ xchk_bmap_xref_rmap_cow(
+ 	unsigned long long	rmap_end;
+ 	uint64_t		owner = XFS_RMAP_OWN_COW;
  
--	iommu-map = <0x0 &apps_smmu 0x1c80 0x0 0x1>,
--		    <0x100 &apps_smmu 0x1c81 0x0 0x1>,
--		    <0x208 &apps_smmu 0x1c84 0x0 0x1>,
--		    <0x210 &apps_smmu 0x1c85 0x0 0x1>,
--		    <0x218 &apps_smmu 0x1c86 0x0 0x1>,
--		    <0x300 &apps_smmu 0x1c87 0x0 0x1>,
--		    <0x400 &apps_smmu 0x1c88 0x0 0x1>,
--		    <0x500 &apps_smmu 0x1c89 0x0 0x1>,
--		    <0x501 &apps_smmu 0x1c90 0x0 0x1>;
-+	iommu-map = <0x0 &apps_smmu 0x1c80 0x1>,
-+		    <0x100 &apps_smmu 0x1c81 0x1>,
-+		    <0x208 &apps_smmu 0x1c84 0x1>,
-+		    <0x210 &apps_smmu 0x1c85 0x1>,
-+		    <0x218 &apps_smmu 0x1c86 0x1>,
-+		    <0x300 &apps_smmu 0x1c87 0x1>,
-+		    <0x400 &apps_smmu 0x1c88 0x1>,
-+		    <0x500 &apps_smmu 0x1c89 0x1>,
-+		    <0x501 &apps_smmu 0x1c90 0x1>;
+-	if (!info->sc->sa.rmap_cur || xchk_skip_xref(info->sc->sm))
++	if (xchk_skip_xref(info->sc->sm))
+ 		return;
  
- 	status = "okay";
- };
--- 
-2.53.0
-
+ 	/* Find the rmap record for this irec. */
 
 
