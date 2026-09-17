@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF7E352D2B1;
-	Thu, 17 Sep 2026 15:33:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D38153D0A0;
+	Thu, 17 Sep 2026 15:33:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659209; cv=none; b=AH4RX07mhhO4dvjPoahElj/VntJKQ3RMBSRbGj1iSb/ya0zGGaVpeyEJ5LawSa3tyZzxtCleijKGruhgMdyk5IakD1oCLSRDoclauIB9LalnNnotmp9bIlr8mdssV+U3tH4d0qRlb13wmMDaMUGfR+hTTnrTnzpAl5mCWmm2nIs=
+	t=1789659214; cv=none; b=uo9HPR120k4OgTM9o7lPFp2m1r6zmyGZf4XhEgM2ez3Rm0Vlpu05cKN9XPwBdMordrm36kstxRGT1GjcQZ+b3WNUgFgLZ2aqN433epxUNr2vbbHRbqNkbdqzbRNQ9F9q5TiA3TIsUl0M0mFK9wSXauyASwF1OZl5spjjTLI8oG0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659209; c=relaxed/simple;
-	bh=xuW1Gd1G1tEWgmYZ6dpvlDWuZbK3xiStyzJjijC1Evs=;
+	s=arc-20240116; t=1789659214; c=relaxed/simple;
+	bh=ofqvKcuZB5X3UmTGuTKdPdPkyaxlenjzEStMt1vxOzA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GUFRpslpF+JjVZ48c0OAGnjVZUOvspFqyhAkBqjpC/PBMHIb9gPX5q1uOmu+W32dtZVuXzWlfYdJn6qRz8fuUI+pOdHNW8F85fktyTS6ePvNPpD+JhJC3i5t3H6zUfpyPMZgSDkxcHwzbSig4AdeqEiN7q+OOMD+ZoaQAcU0K8Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L7sF29iO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=ScRmQVqVEaPpF1Qmr+zjHnko5pcY07/ZNcALDo0t2gwhYccS1og8ZrtL1o7J58HxQEvLIuI0czsoJzaUWz3mbNaF33rl99LS6aT6imfAwY9DfSZRTliaI2qUxAzbNmYozZUSbGAB3hsX245LopcCHCQGejzPwTk8VDzaqcZzeKQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JoxUu+8t; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L7sF29iO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D36471F00893;
-	Thu, 17 Sep 2026 15:33:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JoxUu+8t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBA1C1F0089C;
+	Thu, 17 Sep 2026 15:33:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659194;
-	bh=GpVhOrok2EJ40BQU/VRIEP28mWhLev0mybAqbFMsTD8=;
+	s=korg; t=1789659200;
+	bh=ORlCHbHf/KjKOzqr62z+8kv0Zt+8+mG1k5gccjsxoSo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L7sF29iOm5mVRLG7mjQsPZiEfZN0f0lthcSLqR2Llf8v0YL4ZZOPVC0ffHbvTKlHF
-	 NwyfNXwCoqK1qjgMi8n0cyHH+Dp3eEuTn5nX5OhyG0IO9QrDz4FJmMV/zLdsjoywsZ
-	 Ok3tlrkoQBPlnS+z3oeQRNbraJUACa2e00vu6R3A=
+	b=JoxUu+8teKM0vRYw5cyqcc2uqqUPlX3lqOxycLe63cco2PFtgYdmZiG3YgvCgHDxh
+	 w7zykc5kyUCRmAfFpjIrgn896DL+ZqJ5R0nLm+P7fK7MwSpB2GErCrlYLltfifqSol
+	 5xt391VcvT3/txdsX4ScJtIwUyRdjs3B8+7N3ZhU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qingyu Zhang <usupergate@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Hans de Goede <johannes.goede@oss.qualcomm.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Linus Walleij <linusw@kernel.org>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 176/733] ALSA: ump: do not touch legacy_rmidi before it exists
-Date: Thu, 17 Sep 2026 16:08:04 +0100
-Message-ID: <20260917151355.498785656@linuxfoundation.org>
+Subject: [PATCH 7.2 178/733] platform/x86: x86-android-tablets: hold device reference for secondary fwnode teardown
+Date: Thu, 17 Sep 2026 16:08:06 +0100
+Message-ID: <20260917151355.550855966@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -45,58 +48,65 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Qingyu Zhang <usupergate@gmail.com>
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-[ Upstream commit adeee7187694719890aaffdc14b7e89cfd736f1d ]
+[ Upstream commit 144113b0a70fa18033a747ee5db6803308f7688c ]
 
-snd_ump_parse_endpoint() sets ump->parsed on every exit, including
-error, before the caller attaches the legacy rawmidi device.
-ump_handle_ep_name_msg() then treats parsed as "legacy_rmidi is live"
-and calls ump_legacy_set_rawmidi_name(), which snprintf()s into
-ump->legacy_rmidi->name. If a UMP packet arrives in that window
-(IRQ path from snd_ump_receive), legacy_rmidi is still NULL
-(KASAN null-ptr-deref in snprintf).
+In gpio_secondary_fwnode_init(), acpi_bus_find_device_by_name() returns a
+device reference, but the local dev variable is declared with
+__free(put_device), dropping the reference at the end of each iteration.
+Meanwhile, devm_add_action_or_reset() saves the dev pointer for
+gpio_secondary_unset() without incrementing its reference count, which
+could lead to a use-after-free during driver teardown if the device is
+released in the interim.
 
-Guard the legacy helpers. parsed only means endpoint info was
-parsed, not that legacy_rmidi exists.
+Acquire an explicit device reference with get_device() when registering
+the devres action, and drop it with put_device() inside
+gpio_secondary_unset().
 
-Fixes: 37e0e14128e0 ("ALSA: ump: Support UMP Endpoint and Function Block parsing")
-Signed-off-by: Qingyu Zhang <usupergate@gmail.com>
-Link: https://patch.msgid.link/20260902073918.880245-1-usupergate@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 1448c2d2ca5c ("platform/x86: x86-android-tablets: enable fwnode matching of GPIO chips")
+Assisted-by: LLM
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Tested-by: Hans de Goede <johannes.goede@oss.qualcomm.com> # Yoga tab 2 1380, yt3
+Reviewed-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Reviewed-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20260830-x86-android-lenovo-swnode-v1-2-066a91acb4ba@gmail.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/ump.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/platform/x86/x86-android-tablets/core.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/sound/core/ump.c b/sound/core/ump.c
-index 632c13baf21e1..a85d1006e7a51 100644
---- a/sound/core/ump.c
-+++ b/sound/core/ump.c
-@@ -1333,6 +1333,8 @@ static void update_legacy_names(struct snd_ump_endpoint *ump)
- {
- 	struct snd_rawmidi *rmidi = ump->legacy_rmidi;
+diff --git a/drivers/platform/x86/x86-android-tablets/core.c b/drivers/platform/x86/x86-android-tablets/core.c
+index 5db794d65eb5f..722c0ae4ecd12 100644
+--- a/drivers/platform/x86/x86-android-tablets/core.c
++++ b/drivers/platform/x86/x86-android-tablets/core.c
+@@ -367,6 +367,7 @@ static void gpio_secondary_unset(void *data)
+ 	struct device *dev = data;
  
-+	if (!rmidi)
-+		return;
- 	update_legacy_substreams(ump, rmidi, SNDRV_RAWMIDI_STREAM_INPUT);
- 	update_legacy_substreams(ump, rmidi, SNDRV_RAWMIDI_STREAM_OUTPUT);
+ 	set_secondary_fwnode(dev, NULL);
++	put_device(dev);
  }
-@@ -1341,6 +1343,8 @@ static void ump_legacy_set_rawmidi_name(struct snd_ump_endpoint *ump)
- {
- 	struct snd_rawmidi *rmidi = ump->legacy_rmidi;
  
-+	if (!rmidi)
-+		return;
- 	snprintf(rmidi->name, sizeof(rmidi->name), "%.68s (MIDI 1.0)",
- 		 ump->core.name);
- }
+ static void gpio_secondary_unregister_node_group(void *data)
+@@ -409,7 +410,7 @@ static int gpio_secondary_fwnode_init(struct device *parent)
+ 
+ 		set_secondary_fwnode(dev, fwnode);
+ 
+-		ret = devm_add_action_or_reset(parent, gpio_secondary_unset, dev);
++		ret = devm_add_action_or_reset(parent, gpio_secondary_unset, get_device(dev));
+ 		if (ret)
+ 			return ret;
+ 	}
 -- 
 2.53.0
 
