@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA5804848BD;
-	Thu, 17 Sep 2026 17:36:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F7FC4E0B9F;
+	Thu, 17 Sep 2026 17:36:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666570; cv=none; b=qxD2ChGEo6oKrO319K6hX6BjM3O4g1/QaAbXI2aCv/3Ok6hq7R0xawqx6zrsBQKrddEl5IjxHag1//P8wi7SToe0MfUq+oZYcSPGQsarM4VzV7cJrRSOeYeuUuK/Hfn11vqVQfMPdNbEc/lQlosT7xtfGfjNA2h2DZJqV9Eptdw=
+	t=1789666573; cv=none; b=pmJSBulY8YWpO+Zd2MQVIVdEzNC2YH0PdaX1U3SnJfJtf+ZM96PqaX6RDCPBH4qoRe4z9BHFRnfPKsGPhNqs7EGl/yqYg4snDXDHvmdsnR1FCCnOE2x4PQvihSoFFbqMF3oqPS9/0bjHOcwhohFPbMxTR3SuH61XsJ0uRIiUtnM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666570; c=relaxed/simple;
-	bh=3RWUNIrorSrI0DO9Ikl7GQcYpZxPZgGz5f918t5gO68=;
+	s=arc-20240116; t=1789666573; c=relaxed/simple;
+	bh=8VINQEOAx0Hcw10lCPElWmKFl682ludSf97/WhGbGqY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fts6UZna5Bc8d7bmeo7znOhwk0JELHyPqW2/w9KAsR8ASAXuW5N7jJ0Wv1Y0ZVGlHo5y7Q+CXhT5GFAU+4DxELNFl1L1FrlqMv6WCtGrjPO2SYgHls4k+VnQ4dLkGAsEk7IKj3J4M/T0r5njx0J74B7aD7OGNnNTeXPEf1vvrBY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bBvbY4Go; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CjbXhyiDMQtDbEZ6sdIC4euMs62MojAV1hF1oWkazCxKwCEtOHjaFAEtJ80F3pH392pbUy6rsOjztEj3h1TOXqW5N++eyWqfR26fvr+O5npYV/iRW6tsG4tqKBj515fUATOO8rIqHSmx9M7Q2rPDwUDquhuEr+bix3r2TY1UvNg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tkAr3FDj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bBvbY4Go"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F2DC1F000FF;
-	Thu, 17 Sep 2026 17:36:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tkAr3FDj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16BEF1F00893;
+	Thu, 17 Sep 2026 17:36:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666568;
-	bh=ueKRnUqofLxA9zEa3Ooybx63A2I/UfVOIjJTgqrpIPg=;
+	s=korg; t=1789666571;
+	bh=IW0olqYmJ/QEx42ASGfbKp+sFRB0EhT05Cb7qCK2kUk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bBvbY4Gooq0janQ84qYf4MTesVbd/4aSvIveyFOzeY3/J9k3PtuDzYwIpjgh5//KC
-	 xqXiD0rFe5Yy2kbCrjlCf/gdlJPwT639SzvWDx4JNn3fcvz0wSw69/+Ld3iXH++YgM
-	 JdsrUqNi9Sqcvk4339/yhzakBNMx7vmx6Nsv5fYA=
+	b=tkAr3FDj5kic2FFqfFOwd7MEjcLFv4iT2xLBwpHkow1RkTtXFUFfqc4qVHJw9JjAs
+	 Em9JmO1uWYyaVorXT3v5IkCis2d5D7Qmh++gArS/zTUuYIh83ADD40oagIoa8GrT4P
+	 6yzNnCTD2xj/2sUHy7nfdieIJqxwZ9TiOj+W+3vg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Benjamin Gaignard <benjamin.gaignard@collabora.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.18 1064/1250] media: verisilicon: rockchip: guard VPU981 AV1 divisor and tile buffer
-Date: Thu, 17 Sep 2026 16:14:19 +0100
-Message-ID: <20260917151620.965079769@linuxfoundation.org>
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Paulo Alcantara <pc@manguebit.org>,
+	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
+	Shyam Prasad N <sprasad@microsoft.com>,
+	Tom Talpey <tom@talpey.com>,
+	Bharath SM <bharathsm@microsoft.com>
+Subject: [PATCH 6.18 1082/1250] smb: client: fix file type corruption in cifs_reparse_point_to_fattr()
+Date: Thu, 17 Sep 2026 16:14:37 +0100
+Message-ID: <20260917151621.478473841@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,89 +54,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Paulo Alcantara <pc@manguebit.org>
 
-commit b84f6533a8ed2fd7b282fc7ab4b8efadc745a89c upstream.
+commit 6bd360447941357e959414a525aa62576a448116 upstream.
 
-rockchip_vpu981_av1_dec_set_tile_info() divides context_update_tile_id by
-tile_info->tile_cols and writes one descriptor per tile into the tile_info
-DMA buffer, which holds AV1_MAX_TILES entries; tile_cols and tile_rows
-come from the bitstream. Guard the division against a zero tile_cols by
-initialising the context-update values to zero and computing them only
-when tile_cols is non-zero, and stop the descriptor writes once the
-tile_info buffer is full. The tile geometry written to the hardware
-registers is left unmodified; the per-dimension and total tile bounds are
-enforced by the control validation.
+Setting the file type in cf_mode without clearing the existing S_IFMT
+bits first is wrong as it corrupts the file type when cf_mode already
+has type bits set (e.g. S_IFREG | S_IFLNK == S_IFDIR | S_IFREG).
 
-Fixes: 727a400686a2 ("media: verisilicon: Add Rockchip AV1 decoder")
-Assisted-by: Claude:claude-opus-4-8
+Clear S_IFMT before setting S_IFLNK for native and SMB1 symlinks.
+
+Closes: https://sashiko.dev/#/patchset/20260906181540.647469-1-pc%40manguebit.org
+Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+Cc: Ronnie Sahlberg <ronniesahlberg@gmail.com>
+Cc: Shyam Prasad N <sprasad@microsoft.com>
+Cc: Tom Talpey <tom@talpey.com>
+Cc: Bharath SM <bharathsm@microsoft.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Reviewed-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/verisilicon/rockchip_vpu981_hw_av1_dec.c |   32 ++++++++--
- 1 file changed, 26 insertions(+), 6 deletions(-)
+ fs/smb/client/reparse.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/media/platform/verisilicon/rockchip_vpu981_hw_av1_dec.c
-+++ b/drivers/media/platform/verisilicon/rockchip_vpu981_hw_av1_dec.c
-@@ -578,16 +578,30 @@ static void rockchip_vpu981_av1_dec_set_
- 	const struct v4l2_av1_tile_info *tile_info = &ctrls->frame->tile_info;
- 	const struct v4l2_ctrl_av1_tile_group_entry *group_entry =
- 	    ctrls->tile_group_entry;
--	int context_update_y =
--	    tile_info->context_update_tile_id / tile_info->tile_cols;
--	int context_update_x =
--	    tile_info->context_update_tile_id % tile_info->tile_cols;
--	int context_update_tile_id =
--	    context_update_x * tile_info->tile_rows + context_update_y;
-+	int context_update_y = 0;
-+	int context_update_x = 0;
-+	int context_update_tile_id = 0;
- 	u8 *dst = av1_dec->tile_info.cpu;
-+	u8 *dst_end = dst + av1_dec->tile_info.size;
- 	struct hantro_dev *vpu = ctx->dev;
- 	int tile0, tile1;
- 
-+	/*
-+	 * tile_cols and tile_rows are bounded by the V4L2 control validation
-+	 * (V4L2_AV1_MAX_TILE_{COLS,ROWS} and V4L2_AV1_MAX_TILE_COUNT). Guard
-+	 * the divisor here, and keep the descriptor writes within the
-+	 * AV1_MAX_TILES tile_info buffer below; the register values use the
-+	 * unmodified tile geometry.
-+	 */
-+	if (tile_info->tile_cols) {
-+		context_update_y =
-+		    tile_info->context_update_tile_id / tile_info->tile_cols;
-+		context_update_x =
-+		    tile_info->context_update_tile_id % tile_info->tile_cols;
-+		context_update_tile_id =
-+		    context_update_x * tile_info->tile_rows + context_update_y;
-+	}
-+
- 	memset(dst, 0, av1_dec->tile_info.size);
- 
- 	for (tile0 = 0; tile0 < tile_info->tile_cols; tile0++) {
-@@ -598,6 +612,10 @@ static void rockchip_vpu981_av1_dec_set_
- 			    tile_info->height_in_sbs_minus_1[tile1] + 1;
- 			u32 x0 = tile_info->width_in_sbs_minus_1[tile0] + 1;
- 
-+			/* Stop once the tile_info descriptor buffer is full. */
-+			if (dst + 16 > dst_end)
-+				break;
-+
- 			/* tile size in SB units (width,height) */
- 			*dst++ = x0;
- 			*dst++ = 0;
-@@ -622,6 +640,8 @@ static void rockchip_vpu981_av1_dec_set_
- 			*dst++ = (end >> 16) & 255;
- 			*dst++ = (end >> 24) & 255;
- 		}
-+		if (dst + 16 > dst_end)
-+			break;
- 	}
- 
- 	hantro_reg_write(vpu, &av1_multicore_expect_context_update, !!(context_update_x == 0));
+--- a/fs/smb/client/reparse.c
++++ b/fs/smb/client/reparse.c
+@@ -1243,6 +1243,7 @@ bool cifs_reparse_point_to_fattr(struct
+ 		break;
+ 	case 0: /* SMB1 symlink */
+ 	case IO_REPARSE_TAG_SYMLINK:
++		fattr->cf_mode &= ~S_IFMT;
+ 		fattr->cf_mode |= S_IFLNK;
+ 		break;
+ 	default:
 
 
