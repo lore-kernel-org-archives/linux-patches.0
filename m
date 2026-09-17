@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA2204D795F;
-	Thu, 17 Sep 2026 18:00:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8805E4FD261;
+	Thu, 17 Sep 2026 18:00:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789668029; cv=none; b=HdoOdf11VmcfXyPThp6F8mSarsNNk/8y2WV73TlnLAb4cB/ZV9kEmyRYQTMDqTKUwhHfmT4p8o9Y2Ip31QElO7eNtg2a1WbKK88L0bL9r9vriEhMypIMg47rHJXGFByJg+k9U3qT/Di52Ua4bzgv4IISrfCNqXZ/djn8XzBT3Cg=
+	t=1789668032; cv=none; b=lkHN6VOBrdNIHCHL4hxBYeOUZjn2QBq/OZDBcy/l8XOP+LCFIFlmadPVf+C3MapdCkjV974r102aeZfJvF+3FHTVR+4tGqqbge6NZg01Kc5kZmjdpqS0hrpc+PwXmuqofkKCWNeCMQcPvnaxxSWoy7Xk8i9nNhR4C/K6+g+4tIQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789668029; c=relaxed/simple;
-	bh=WU6GDsXpqjWWUlnhzxoXytwCXzkyyCifBFIb3P0VDTU=;
+	s=arc-20240116; t=1789668032; c=relaxed/simple;
+	bh=SUdNPiyo+pCPlRlMzCqMPvXTugJp/B1CE8JP/oJRMvs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OSl0I/XRXYlPdXNjo3eckXon8q38CqajqPH23DOB03JPhD8IJ4hndEBDUAHiU/SLau6PcpelQqVfZaPOqZsmEMe9P0cXmOT+k6GIAQqJsJpGz/tOORWA8g59tyb3CBxgKlSWr9MODAKDUD2KrjtdjA6SRP83KfGe12j3tkec5qY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OrYivRAE; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Q/9EdgeZf+we7zeNLh6jh693630VF8jiObed1Z82Mr5Qu9h6RPtx2x3VSgrXfBsOUrDSp+TLArzPyyJapC8mSpbrLafoMuuQCMb9v0pJTf4iz7rjIcTYaL1qaWFzeSbmthjQekyWLywCDiMBLNxevnKUgwd8jVMef9kVVwPzlLo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RUNaElZG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OrYivRAE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D10251F000FF;
-	Thu, 17 Sep 2026 18:00:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RUNaElZG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC6ED1F000FF;
+	Thu, 17 Sep 2026 18:00:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789668027;
-	bh=x9lplwDCvvkOZFtkw3sdpq+pMHOmJMRReWfcEiaERfg=;
+	s=korg; t=1789668030;
+	bh=XCegzEccFonHFem1lWGV5H6PlpfVUWOD/LZC1yBErG0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OrYivRAEzGnuiJ1RC0wHZMe3IisfS6Pj5IvAK8gLqE7TnTndWHed5O3Qy04+OU8YU
-	 FYNXOCx5CqV0KGhKRCqHo5Hp7vSa4YHmnvGhVsBrxXDQLs+9qV5lOvCHjGIU7bi9x/
-	 im6PLScXLrPVBwMx8cDLCCv6GDEpfVM/Cbj6xqBE=
+	b=RUNaElZG0Q1KJ7frFw11gEckf/VYH5v0iqP2D8C6xHDX228XmOfxBDjM7x2hPfw+9
+	 2Gz5Q3ugFC94N6EX3ReYMnhkhuqBh+JAWHifdLBHAO0XAkq2j4swjQPOMJhrgLLYfs
+	 IUCsygj3FiSPz6C51yljbcF4IkEw377c6pm9I5HM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aurelien DESBRIERES <aurelien@hackers.camp>,
-	Md Haris Iqbal <haris.iqbal@ionos.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Tze Yee Ng <tze.yee.ng@altera.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0247/1102] RDMA/rtrs-srv: Fix integer underflow in process_read and process_write
-Date: Thu, 17 Sep 2026 16:03:10 +0100
-Message-ID: <20260917151545.795643409@linuxfoundation.org>
+Subject: [PATCH 6.12 0283/1102] dmaengine: dw-axi-dmac: fix PM for system sleep and channel alloc
+Date: Thu, 17 Sep 2026 16:03:46 +0100
+Message-ID: <20260917151546.718257688@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -52,77 +51,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aurelien DESBRIERES <aurelien@hackers.camp>
+From: Tze Yee Ng <tze.yee.ng@altera.com>
 
-[ Upstream commit 54bf38b27afc08a0eb6b732f9c14eb8a4bcb66b5 ]
+[ Upstream commit df0c2dc68770cf43f15df40b184df030b850ea05 ]
 
-usr_len is read from a network-supplied message field (le16_to_cpu)
-and used to compute data_len = off - usr_len without validating that
-usr_len <= off. A malicious RDMA client can send usr_len > off causing
-an integer underflow, resulting in data_len wrapping to a huge size_t
-value which is then passed to the rdma_ev callback as a memory length,
-leading to out-of-bounds memory access.
+The driver only had runtime PM callbacks. If a channel stayed allocated
+across system suspend/resume, the runtime usage count could remain
+non-zero while hardware state (DMAC_CFG, clocks) was lost, and
+axi_dma_runtime_resume() would not run to restore it.
 
-Fix by reading and validating usr_len <= off before rtrs_srv_get_ops_ids()
-in both process_read() and process_write(), ensuring the early return
-path acquires no reference and has no resource leak.
+Add system-sleep PM ops that use pm_runtime_force_suspend() and
+pm_runtime_force_resume() so suspend/resume reuses the existing
+axi_dma_suspend() and axi_dma_resume() paths.
 
-Link: https://patch.msgid.link/r/20260608134802.5019-1-aurelien@hackers.camp
-Reported-by: Aurelien DESBRIERES <aurelien@hackers.camp>
-Reviewed-by: Md Haris Iqbal <haris.iqbal@ionos.com>
-Signed-off-by: Aurelien DESBRIERES <aurelien@hackers.camp>
-Assisted-by: Claude <claude-sonnet-4-6>
-Acked-by: Md Haris Iqbal <haris.iqbal@ionos.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Replace pm_runtime_get() with pm_runtime_resume_and_get() in
+dma_chan_alloc_chan_resources() so clocks are enabled before a client
+can immediately submit a transfer and touch MMIO.
+
+Signed-off-by: Tze Yee Ng <tze.yee.ng@altera.com>
+Link: https://patch.msgid.link/18bf778a3a1cc2f377ef8eb0d1508d8ac6371896.1779688569.git.tze.yee.ng@altera.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/ulp/rtrs/rtrs-srv.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/ulp/rtrs/rtrs-srv.c b/drivers/infiniband/ulp/rtrs/rtrs-srv.c
-index 1fc67fdff9fc2..12a9a888fe0ee 100644
---- a/drivers/infiniband/ulp/rtrs/rtrs-srv.c
-+++ b/drivers/infiniband/ulp/rtrs/rtrs-srv.c
-@@ -1049,6 +1049,11 @@ static void process_read(struct rtrs_srv_con *con,
- 			    "Processing read request failed, invalid message\n");
- 		return;
- 	}
-+	usr_len = le16_to_cpu(msg->usr_len);
-+	if (usr_len > off) {
-+		pr_debug("rtrs-srv: Invalid usr_len %zu > off %u\n", usr_len, off);
-+		return;
-+	}
- 	rtrs_srv_get_ops_ids(srv_path);
- 	rtrs_srv_update_rdma_stats(srv_path->stats, off, READ);
- 	id = srv_path->ops_ids[buf_id];
-@@ -1056,7 +1061,6 @@ static void process_read(struct rtrs_srv_con *con,
- 	id->dir		= READ;
- 	id->msg_id	= buf_id;
- 	id->rd_msg	= msg;
--	usr_len = le16_to_cpu(msg->usr_len);
- 	data_len = off - usr_len;
- 	data = page_address(srv->chunks[buf_id]);
- 	ret = ctx->ops.rdma_ev(srv->priv, id, data, data_len,
-@@ -1102,6 +1106,11 @@ static void process_write(struct rtrs_srv_con *con,
- 			     rtrs_srv_state_str(srv_path->state));
- 		return;
- 	}
-+	usr_len = le16_to_cpu(req->usr_len);
-+	if (usr_len > off) {
-+		pr_debug("rtrs-srv: Invalid usr_len %zu > off %u\n", usr_len, off);
-+		return;
-+	}
- 	rtrs_srv_get_ops_ids(srv_path);
- 	rtrs_srv_update_rdma_stats(srv_path->stats, off, WRITE);
- 	id = srv_path->ops_ids[buf_id];
-@@ -1109,7 +1118,6 @@ static void process_write(struct rtrs_srv_con *con,
- 	id->dir    = WRITE;
- 	id->msg_id = buf_id;
+diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
+index adef111aca31e..eee37f3de0da3 100644
+--- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
++++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
+@@ -516,11 +516,17 @@ static void dw_axi_dma_synchronize(struct dma_chan *dchan)
+ static int dma_chan_alloc_chan_resources(struct dma_chan *dchan)
+ {
+ 	struct axi_dma_chan *chan = dchan_to_axi_dma_chan(dchan);
++	int ret;
++
++	ret = pm_runtime_resume_and_get(chan->chip->dev);
++	if (ret < 0)
++		return ret;
  
--	usr_len = le16_to_cpu(req->usr_len);
- 	data_len = off - usr_len;
- 	data = page_address(srv->chunks[buf_id]);
- 	ret = ctx->ops.rdma_ev(srv->priv, id, data, data_len,
+ 	/* ASSERT: channel is idle */
+ 	if (axi_chan_is_hw_enable(chan)) {
+ 		dev_err(chan2dev(chan), "%s is non-idle!\n",
+ 			axi_chan_name(chan));
++		pm_runtime_put(chan->chip->dev);
+ 		return -EBUSY;
+ 	}
+ 
+@@ -531,12 +537,11 @@ static int dma_chan_alloc_chan_resources(struct dma_chan *dchan)
+ 					  64, 0);
+ 	if (!chan->desc_pool) {
+ 		dev_err(chan2dev(chan), "No memory for descriptors\n");
++		pm_runtime_put(chan->chip->dev);
+ 		return -ENOMEM;
+ 	}
+ 	dev_vdbg(dchan2dev(dchan), "%s: allocating\n", axi_chan_name(chan));
+ 
+-	pm_runtime_get(chan->chip->dev);
+-
+ 	return 0;
+ }
+ 
+@@ -1652,6 +1657,8 @@ static void dw_remove(struct platform_device *pdev)
+ }
+ 
+ static const struct dev_pm_ops dw_axi_dma_pm_ops = {
++	SET_SYSTEM_SLEEP_PM_OPS(pm_runtime_force_suspend,
++				pm_runtime_force_resume)
+ 	SET_RUNTIME_PM_OPS(axi_dma_runtime_suspend, axi_dma_runtime_resume, NULL)
+ };
+ 
 -- 
 2.53.0
 
