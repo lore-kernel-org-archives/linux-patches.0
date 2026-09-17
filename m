@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB74D4EFFD9;
-	Thu, 17 Sep 2026 15:48:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C949390230;
+	Thu, 17 Sep 2026 15:48:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789660138; cv=none; b=LYy295q0RKg23+/mBmwIyEsGs8Lib9ccdT6bYZJNSzws8oeOVWHep9MVHlX3h6jV6vzxlS+PFFGQqjeyyrOdhEhzTb9y2sClPj8WXbruCrHkcqeSUr9k6LkKkIX6JQHkpbxqktXaZkzGMFN6AqyCWEnAcWsNFrq/xZ8aDgjDoEk=
+	t=1789660138; cv=none; b=BoG9KeknO8mqPPoaeIcLk/daUnUhOHJ+40YiAQ6y+m+BkM1/O1qzxue4dGDE+hiPcsN5MX7CeZOAdO7sCQXC5qbApRu26/P/d2fAH3TYcF9q+N5dXIns2Qio7oNiBy32iKC83HhbFZYZugZqiBqnxClB7E9/9Mvx0egOXi2h4Cg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1789660138; c=relaxed/simple;
-	bh=NRvZAdJrbgzhVcRrMbvUf3WVSOTa1z0Cjqon9REA4Lc=;
+	bh=H+opfygnnY7nfwvESR1l1xR1LkFBbKfobEIZqQvSf1o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ikEaJDyhAipak3onRYOnjTTFUdOyBqmV8gQj5ylASWYQkocv75jt0GB1C8WO3/gC6JuX/JwUBMMksWIqBjVvCAGHIbnsi2Q8T0QkRfAawyDKJGFSo+r0pitaH8YHItAMu5jHqbJBCfnUlQt3eS2Vokcd3TCJ92TNkYcLehvoht8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g8zzLKkd; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hJpmM2hpXtzReLvIQkfo/v/ZxGQe1OPDptMSRCaZyCLO8LZikfOC+I0DQCjJrVyuJ6L+w2qRYLrG325Yoid5pNuwKpWg5IPAI2lu1YufdVnVAOQzNxu1VwdownHiNQ7dSSQSOmbtWDHBKuQR/rcDaKTmhH4p6YtyacUJcoGMDbw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lp06UYr+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g8zzLKkd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C03741F000FF;
-	Thu, 17 Sep 2026 15:48:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lp06UYr+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD2961F00898;
+	Thu, 17 Sep 2026 15:48:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789660130;
-	bh=r6cEDgW1wzqmoapvTe7MUz1MKTaPe/yTf3Uh+fnPtT8=;
+	s=korg; t=1789660127;
+	bh=N24C9lmSwDuIwGC5yjMXJv/c9y8SgWXvEy4F2rNYVEE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=g8zzLKkdQzSLMpUaNj8OmtEWiots1WaVthIe84IZoUwSK6XCqAj/cOC/f4kd68S/P
-	 GcvgcbSVjLI/nGyfsC5Q4zffI5DODSqSqkoMz393wUSFPU+bryXyW7MOyIv2IBZ9am
-	 hLRXG91m1UfKFSu03WpV88pV4P3VsGd9N/uhi698=
+	b=lp06UYr+ZB5/lcYSEyna6W8M0N7RVr9TPFd1S/mtpE1ApzA/YAHaqCaWyXLcN/j0G
+	 dQpqDw05mnUgJmSE+JsDl8WtH9+8eXSXCUIajf4prlb7qmyZouCo3b21CJfrNNChof
+	 wy39JwVejCFh3PkSlemFoO8r9D1m1efTd8tmtrm8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>,
-	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
+	Prike Liang <Prike.Liang@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 7.2 488/733] drm/amdgpu: skip the VMID 0 flush for VRAM
-Date: Thu, 17 Sep 2026 16:13:16 +0100
-Message-ID: <20260917151404.205291542@linuxfoundation.org>
+Subject: [PATCH 7.2 487/733] drm/amdgpu: skip gfx switch_power_profile during GPU reset
+Date: Thu, 17 Sep 2026 16:13:15 +0100
+Message-ID: <20260917151404.178896635@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -46,130 +44,72 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>
+From: Prike Liang <Prike.Liang@amd.com>
 
-commit 87ceb8cba73d0b3c4025ff42495bccd8164acaed upstream.
+commit 1f1d43418d61c8511779e0f63a954a78b9433b43 upstream.
 
-Clear-on-release only runs on VRAM, which amdgpu_ttm_map_buffer() reaches
-via its direct MC address without programming a GART window, yet the wipe
-still forces a VMID 0 flush. On GFX11 (e.g. Navi33) that spurious SDMA
-flush can wedge the engine; only flush when a GART window is actually used.
+During resume from GPU reset, the gfx idle work may invoke switch_power_profile
+before the reset completes. This causes the following assert error because the
+register access occurs without first releasing the GPU reset semaphore:
 
-v2: Let amdgpu_ttm_map_buffer() return whether the VMID 0 flush is needed,
-    and drive the clear and copy paths from that. (Christian)
-v3: Make the vm_needs_flush output parameter mandatory instead of
-    allowing NULL. (Christian)
+[ 1576.768935] CR2: 0000559ea133ead0 CR3: 00000002e6c42000 CR4: 0000000000350ef0
+[ 1576.768940] Call Trace:
+[ 1576.768944]  <TASK>
+[ 1576.768953]  amdgpu_device_rreg+0x21/0x50 [amdgpu]
+[ 1576.769158]  smu_msg_v1_send_msg+0x1a4/0x6e0 [amdgpu]
+[ 1576.769437]  smu_cmn_send_smc_msg_with_params_ext+0xba/0x120 [amdgpu]
+[ 1576.769721]  smu_cmn_send_smc_msg_with_param+0x33/0x40 [amdgpu]
+[ 1576.769993]  smu_v13_0_0_set_power_profile_mode+0x192/0x2b0 [amdgpu]
+[ 1576.770267]  smu_bump_power_profile_mode+0x5d/0x80 [amdgpu]
+[ 1576.770538]  smu_switch_power_profile+0xa4/0xf0 [amdgpu]
+[ 1576.770839]  amdgpu_dpm_switch_power_profile+0x6f/0x90 [amdgpu]
+[ 1576.771210]  amdgpu_gfx_profile_idle_work_handler+0xe9/0x130 [amdgpu]
+[ 1576.771460]  process_one_work+0x23e/0x6f0
+[ 1576.771491]  worker_thread+0x1c4/0x380
+[ 1576.771506]  kthread+0x10c/0x150
+[ 1576.771512]  ? __pfx_worker_thread+0x10/0x10
+[ 1576.771518]  ? __pfx_kthread+0x10/0x10
+[ 1576.771530]  ret_from_fork+0x314/0x390
+[ 1576.771537]  ? __pfx_kthread+0x10/0x10
+[ 1576.771546]  ret_from_fork_asm+0x1a/0x30
 
-Fixes: a68c7eaa7a8f ("drm/amdgpu: Enable clear page functionality")
-Closes: https://gitlab.freedesktop.org/drm/amd/-/work_items/5413
-Cc: Christian König <christian.koenig@amd.com>
-Signed-off-by: Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Reviewed-by: Timur Kristóf <timur.kristof@gmail.com>
+Signed-off-by: Prike Liang <Prike.Liang@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit a306e406e570b74318ff7d80e5b07b540ca1d3a9)
+(cherry picked from commit d93b1ff538ce9750c01e0dd0aa62575579c0fc08)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c |   20 ++++++++++++++------
- 1 file changed, 14 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/amd/pm/amdgpu_dpm.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
-@@ -190,6 +190,8 @@ amdgpu_ttm_job_submit(struct amdgpu_devi
-  * @tmz: if we should setup a TMZ enabled mapping
-  * @size: in number of bytes to map, out number of bytes mapped
-  * @addr: resulting address inside the MC address space
-+ * @vm_needs_flush: out, set true if a GART window was programmed (VMID 0 flush
-+ *		    needed) or false for a direct address
-  *
-  * Setup one of the GART windows to access a specific piece of memory or return
-  * the physical address for local memory.
-@@ -199,7 +201,8 @@ static int amdgpu_ttm_map_buffer(struct
- 				 struct ttm_resource *mem,
- 				 struct amdgpu_res_cursor *mm_cur,
- 				 unsigned int window,
--				 bool tmz, uint64_t *size, uint64_t *addr)
-+				 bool tmz, uint64_t *size, uint64_t *addr,
-+				 bool *vm_needs_flush)
- {
- 	struct amdgpu_device *adev = amdgpu_ttm_adev(bo->bdev);
- 	unsigned int offset, num_pages, num_dw, num_bytes;
-@@ -220,9 +223,12 @@ static int amdgpu_ttm_map_buffer(struct
- 	if (!tmz && mem->start != AMDGPU_BO_INVALID_OFFSET) {
- 		*addr = amdgpu_ttm_domain_start(adev, mem->mem_type) +
- 			mm_cur->start;
-+		*vm_needs_flush = false;
+--- a/drivers/gpu/drm/amd/pm/amdgpu_dpm.c
++++ b/drivers/gpu/drm/amd/pm/amdgpu_dpm.c
+@@ -348,7 +348,8 @@ int amdgpu_dpm_switch_power_profile(stru
+ 	const struct amd_pm_funcs *pp_funcs = adev->powerplay.pp_funcs;
+ 	int ret = 0;
+ 
+-	if (amdgpu_sriov_vf(adev))
++	if (amdgpu_sriov_vf(adev) ||
++		amdgpu_in_reset(adev))
  		return 0;
- 	}
  
-+	/* A GART window is programmed below, so its VMID 0 TLB needs a flush */
-+	*vm_needs_flush = true;
+ 	if (pp_funcs && pp_funcs->switch_power_profile) {
+@@ -367,7 +368,8 @@ int amdgpu_dpm_pause_power_profile(struc
+ 	const struct amd_pm_funcs *pp_funcs = adev->powerplay.pp_funcs;
+ 	int ret = 0;
  
- 	/*
- 	 * If start begins at an offset inside the page, then adjust the size
-@@ -322,6 +328,7 @@ static int amdgpu_ttm_copy_mem_to_mem(st
- 	while (src_mm.remaining) {
- 		uint64_t from, to, cur_size, tiling_flags;
- 		uint32_t num_type, data_format, max_com, write_compress_disable;
-+		bool src_vm_flush, dst_vm_flush;
- 		struct dma_fence *next;
+-	if (amdgpu_sriov_vf(adev))
++	if (amdgpu_sriov_vf(adev) ||
++		amdgpu_in_reset(adev))
+ 		return 0;
  
- 		/* Never copy more than 256MiB at once to avoid a timeout */
-@@ -329,12 +336,12 @@ static int amdgpu_ttm_copy_mem_to_mem(st
- 
- 		/* Map src to window 0 and dst to window 1. */
- 		r = amdgpu_ttm_map_buffer(entity, src->bo, src->mem, &src_mm,
--					  0, tmz, &cur_size, &from);
-+					  0, tmz, &cur_size, &from, &src_vm_flush);
- 		if (r)
- 			goto error;
- 
- 		r = amdgpu_ttm_map_buffer(entity, dst->bo, dst->mem, &dst_mm,
--					  1, tmz, &cur_size, &to);
-+					  1, tmz, &cur_size, &to, &dst_vm_flush);
- 		if (r)
- 			goto error;
- 
-@@ -362,7 +369,7 @@ static int amdgpu_ttm_copy_mem_to_mem(st
- 		}
- 
- 		r = amdgpu_copy_buffer(adev, entity, from, to, cur_size, resv,
--				       &next, true, copy_flags);
-+				       &next, src_vm_flush || dst_vm_flush, copy_flags);
- 		if (r)
- 			goto error;
- 
-@@ -2580,6 +2587,7 @@ int amdgpu_ttm_clear_buffer(struct amdgp
- 	struct amdgpu_device *adev = amdgpu_ttm_adev(bo->tbo.bdev);
- 	struct dma_fence *fence = NULL;
- 	struct amdgpu_res_cursor dst;
-+	bool vm_needs_flush = false;
- 	int r;
- 
- 	if (!entity)
-@@ -2601,13 +2609,13 @@ int amdgpu_ttm_clear_buffer(struct amdgp
- 		cur_size = min(dst.size, 256ULL << 20);
- 
- 		r = amdgpu_ttm_map_buffer(entity, &bo->tbo, bo->tbo.resource, &dst,
--					  0, false, &cur_size, &to);
-+					  0, false, &cur_size, &to, &vm_needs_flush);
- 		if (r)
- 			goto error;
- 
- 		r = amdgpu_ttm_fill_mem(adev, entity,
- 					0, to, cur_size, resv,
--					&next, true, k_job_id);
-+					&next, vm_needs_flush, k_job_id);
- 		if (r)
- 			goto error;
- 
+ 	if (pp_funcs && pp_funcs->pause_power_profile) {
 
 
