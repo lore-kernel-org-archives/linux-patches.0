@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB2C34EFFB2;
-	Thu, 17 Sep 2026 18:08:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA20D3D3D1B;
+	Thu, 17 Sep 2026 18:08:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789668509; cv=none; b=PG9YppJcaGJuivKHSCHhx11Nte3ofRknkFQUry+9oNaxA/pkFMK1gQI9W8iiIx5gRSxSyk3TEtEBjeKVh90CVb5ips44qld2T60HQ1X+Qi1xoOQJSMhvd5SX2H4NX7ZmDMfpMZCtIKyXvINe9pPBa6xF5cjMatV1J1xPdpJYlcM=
+	t=1789668511; cv=none; b=Kfa5+qJdXQaHEizBQRf/qHCQ/Wlidha9cWvNqCnMJRz/BkwllJgstNZtcYSOoGfLj0SEDksms89SO5BKbi7YINUGEkCi1UDNinSbwOk1eSpSOtUuHzkVZJkPoNpSfWNDSxvGgVGFjvDcXsggQ/UOHhiL0o2psC8IAsIKpv8uz3M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789668509; c=relaxed/simple;
-	bh=ocpJbrpc+BasMb+QadgE3t2d8PoE9aPOQy1wmIPofPY=;
+	s=arc-20240116; t=1789668511; c=relaxed/simple;
+	bh=Uam1/eaM1sUiJIrRmHqObug8XbAcMmB7h+t5Kxxo0Mw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iFYuJ7E6vG4wb3wOHnzA39olfyPuFlC9xzwAoidrSthwChlvdQKBysmESpl18lb4CeVWvadCHyPzkRmjUfKdn97sF5TDyU1ZQoTcV1KjYLbqQ+oDkgnsYdjFTU16RogN4gq1448KH0MVWR5CrOM2/ClRpD2zBjXZA0kQBPEBM6M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eO4/4Uln; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ZDf3Zw3/UVUWj2Cb8FwB++RJqvlVxIpa7pbFxZimLT04geHZ6F9u/c4Pu0nuHqPZpe9VUphMtvjQeVDiFqKZagrL49/XB4LaUeMnOr3cWbu56FpTmECIRwA7f8lswt1WxxyosOr3hVjAAcZLaDyEUdf8fAW+ryy67gMxOl6OECo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I7fenB4i; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eO4/4Uln"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B1E81F000FF;
-	Thu, 17 Sep 2026 18:08:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I7fenB4i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1497E1F000FF;
+	Thu, 17 Sep 2026 18:08:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789668507;
-	bh=ZE3VHE6ETHgOzkKkfAHyNLAUCOwXRgfRMrJDI9Yi3aQ=;
+	s=korg; t=1789668510;
+	bh=U83tFPygOCmHKh7dv9vtpZGd5HtHJ5qVXe1JjCYHMqw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eO4/4UlnU2cZbImGYIi84HGVB3y2cjrFPNgaguhRIWqCFctZXVhAhc/kzG23SbGs0
-	 P3g/k+mNJ3DLRnSy1WuUCqqOVKcv+osYoovjq9Kfye0FQTFtujLzYNQKPF95IqsAH+
-	 IiROiWVZHGcWoaGp+EeAu78UlPMwP70nh/tvg0+g=
+	b=I7fenB4iFg+mPEp/5hAFOsQ75aFtwZ+bZXH1Q2ijS1w1dKl+Aa7yy4hPo+FXgl5sN
+	 MQDzLg/KFUSCGHMwos0UwAhRAl/D3Fc/fi02lxL8kKVNOA08nQ45ZyLDrx390VI3bK
+	 Kg/i3eXIjiGRzxDYMDGi/jcf1Qq6+gyrfqF7iMH8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+b3d472d13f9d7bf20669@syzkaller.appspotmail.com,
-	Qu Wenruo <wqu@suse.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Li Qiang <liqiang01@kylinos.cn>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0411/1102] btrfs: fix use-after-free on reloc root after error in insert_dirty_subvol()
-Date: Thu, 17 Sep 2026 16:05:54 +0100
-Message-ID: <20260917151549.982410512@linuxfoundation.org>
+Subject: [PATCH 6.12 0447/1102] cifs: validate idmap key payload length
+Date: Thu, 17 Sep 2026 16:06:30 +0100
+Message-ID: <20260917151550.903870733@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -53,300 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Li Qiang <liqiang01@kylinos.cn>
 
-[ Upstream commit 83201804efa4a5168be754e1dfc9b2faee760cac ]
+[ Upstream commit 455488cd5054bcc59db40fa1cc2c004031a5b2a5 ]
 
-If during relocation we fail in insert_dirty_subvol() because
-btrfs_update_reloc_root() returned an error, we will leave a root's
-reloc_root field pointing to a reloc root that was freed instead of NULL,
-resulting later in a use-after-free, or double free attempt during
-unmount.
+The cifs.idmap key type stores its payload length in key->datalen, which
+is limited to U16_MAX.  Accepting a larger key payload truncates the
+recorded length and can make later users interpret the payload using
+inconsistent bounds.
 
-The sequence of steps is this:
+Reject oversized preparsed payloads before allocating or copying them.
+This keeps key->datalen consistent with the stored data for both inline
+and separately allocated idmap payloads.
 
-1) During relocation the call to btrfs_update_reloc_root() in
-   insert_dirty_subvol() fails, so insert_dirty_subvol() returns the
-   error to merge_reloc_root() without adding the root to the list
-   rc->dirty_subvol_roots;
-
-2) Then merge_reloc_root() aborts the current transaction because
-   insert_dirty_subvol() returned an error;
-
-3) Up the call chain, merge_reloc_roots() gets the error, adds the
-   reloc root for root X to the local reloc_roots list and jumps to the
-   'out' label, where it calls free_reloc_roots() to free all the reloc
-   roots in the local reloc_roots list. This frees the reloc root for
-   root X;
-
-4) We go up the call chain to relocate_block_group() which calls
-   clean_dirty_subvols() to go over dirty roots and set their
-   ->reloc_root field to NULL, but root X is not in the dirty_subvol_roots
-   list, so its ->reloc_root still points to a reloc root;
-
-5) Relocation finishes, with an error and a transaction abort, but the
-   ->reloc_root field for root X still points to the reloc root that was
-   freed in step 3;
-
-6) When unmounting the fs we end up calling:
-
-     btrfs_free_fs_roots()
-        btrfs_drop_and_free_fs_root()
-           --> calls btrfs_put_root() against root X's ->reloc_root
-               which is not NULL and points to the already freed
-               reloc root in step 4 above
-
-  Resulting in a use-after-free to a double free attempt.
-
-Syzbot reported this with the following dmesg/syslog:
-
-   [  106.004389][ T5339] BTRFS error (device loop0 state A): Transaction aborted (error -5)
-   [  106.014266][ T5339] BTRFS: error (device loop0 state A) in merge_reloc_root:1655: errno=-5 IO failure
-   [  106.021891][ T1061] BTRFS error (device loop0 state A): error while writing out transaction: -5
-   [  106.026964][ T1061] BTRFS warning (device loop0 state A): Skipping commit of aborted transaction.
-   [  106.033807][ T5340] BTRFS error (device loop0 state A): bdev /dev/loop0 errs: wr 3, rd 0, flush 0, corrupt 0, gen 0
-   [  106.039265][ T1061] BTRFS: error (device loop0 state A) in cleanup_transaction:2067: errno=-5 IO failure
-   [  106.044382][ T5339] BTRFS info (device loop0 state EA): forced readonly
-   [  106.074329][ T5339] BTRFS: error (device loop0 state EA) in merge_reloc_roots:1887: errno=-5 IO failure
-   [  106.081004][ T5356] BTRFS info (device loop0 state EA): scrub: started on devid 1
-   [  106.085611][ T5339] BTRFS info (device loop0 state EA): balance: ended with status: -30
-   [  106.089517][ T5356] BTRFS info (device loop0 state EA): scrub: not finished on devid 1 with status: -30
-   [  106.662365][ T5338] BTRFS info (device loop0 state EA): last unmount of filesystem 3a375e4e-b156-4d76-a2ad-16e198ce1409
-   [  106.682946][ T5338] ==================================================================
-   [  106.686574][ T5338] BUG: KASAN: slab-use-after-free in btrfs_put_root+0x2f/0x250
-   [  106.690090][ T5338] Write of size 4 at addr ffff88803f978630 by task syz.0.0/5338
-   [  106.693173][ T5338]
-   [  106.694279][ T5338] CPU: 0 UID: 0 PID: 5338 Comm: syz.0.0 Not tainted syzkaller #0 PREEMPT(full)
-   [  106.694293][ T5338] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-   [  106.694300][ T5338] Call Trace:
-   [  106.694308][ T5338]  <TASK>
-   [  106.694314][ T5338]  dump_stack_lvl+0xe8/0x150
-   [  106.694331][ T5338]  print_address_description+0x55/0x1e0
-   [  106.694343][ T5338]  ? btrfs_put_root+0x2f/0x250
-   [  106.694358][ T5338]  print_report+0x58/0x70
-   [  106.694368][ T5338]  kasan_report+0x117/0x150
-   [  106.694384][ T5338]  ? btrfs_put_root+0x2f/0x250
-   [  106.694399][ T5338]  kasan_check_range+0x264/0x2c0
-   [  106.694416][ T5338]  btrfs_put_root+0x2f/0x250
-   [  106.694430][ T5338]  btrfs_drop_and_free_fs_root+0x160/0x210
-   [  106.694447][ T5338]  btrfs_free_fs_roots+0x2f9/0x3c0
-   [  106.694464][ T5338]  ? __pfx_btrfs_free_fs_roots+0x10/0x10
-   [  106.694479][ T5338]  ? free_root_pointers+0x5bf/0x5f0
-   [  106.694494][ T5338]  close_ctree+0x798/0x12d0
-   [  106.694511][ T5338]  ? __pfx_close_ctree+0x10/0x10
-   [  106.694526][ T5338]  ? _raw_spin_unlock_irqrestore+0x74/0x80
-   [  106.694599][ T5338]  ? rcu_preempt_deferred_qs_irqrestore+0x906/0xbc0
-   [  106.694620][ T5338]  ? __rcu_read_unlock+0x83/0xe0
-   [  106.694636][ T5338]  ? btrfs_put_super+0x48/0x1c0
-   [  106.694652][ T5338]  ? __pfx_btrfs_put_super+0x10/0x10
-   [  106.694667][ T5338]  generic_shutdown_super+0x13d/0x2d0
-   [  106.694682][ T5338]  kill_anon_super+0x3b/0x70
-   [  106.694695][ T5338]  btrfs_kill_super+0x41/0x50
-   [  106.694710][ T5338]  deactivate_locked_super+0xbc/0x130
-   [  106.694722][ T5338]  cleanup_mnt+0x437/0x4d0
-   [  106.694736][ T5338]  ? _raw_spin_unlock_irq+0x23/0x50
-   [  106.694752][ T5338]  task_work_run+0x1d9/0x270
-   [  106.694769][ T5338]  ? __pfx_task_work_run+0x10/0x10
-   [  106.694784][ T5338]  ? do_raw_spin_unlock+0x4d/0x210
-   [  106.694802][ T5338]  do_exit+0x70f/0x22c0
-   [  106.694817][ T5338]  ? trace_irq_disable+0x3b/0x140
-   [  106.694835][ T5338]  ? __pfx_do_exit+0x10/0x10
-   [  106.694848][ T5338]  ? preempt_schedule_thunk+0x16/0x30
-   [  106.694863][ T5338]  ? preempt_schedule_common+0x82/0xd0
-   [  106.694878][ T5338]  ? preempt_schedule_thunk+0x16/0x30
-   [  106.694892][ T5338]  do_group_exit+0x21b/0x2d0
-   [  106.694906][ T5338]  ? entry_SYSCALL_64_after_hwframe+0x77/0x7f
-   [  106.694918][ T5338]  __x64_sys_exit_group+0x3f/0x40
-   [  106.694932][ T5338]  x64_sys_call+0x221a/0x2240
-   [  106.694944][ T5338]  do_syscall_64+0x174/0x580
-   [  106.694954][ T5338]  ? clear_bhb_loop+0x40/0x90
-   [  106.694967][ T5338]  entry_SYSCALL_64_after_hwframe+0x77/0x7f
-   [  106.694978][ T5338] RIP: 0033:0x7f958ef9ce59
-   [  106.694988][ T5338] Code: Unable to access opcode bytes at 0x7f958ef9ce2f.
-   [  106.694994][ T5338] RSP: 002b:00007fffd4058318 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
-   [  106.695008][ T5338] RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007f958ef9ce59
-   [  106.695015][ T5338] RDX: 00007f958c3f8000 RSI: 0000000000000000 RDI: 0000000000000000
-   [  106.695022][ T5338] RBP: 0000000000000003 R08: 0000000000000000 R09: 00007f958f1e73e0
-   [  106.695028][ T5338] R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
-   [  106.695034][ T5338] R13: 00007f958f1e73e0 R14: 0000000000000003 R15: 00007fffd40583d0
-   [  106.695046][ T5338]  </TASK>
-   [  106.695050][ T5338]
-   [  106.821635][ T5338] Allocated by task 1061:
-   [  106.823446][ T5338]  kasan_save_track+0x3e/0x80
-   [  106.825498][ T5338]  __kasan_kmalloc+0x93/0xb0
-   [  106.827381][ T5338]  __kmalloc_cache_noprof+0x31c/0x660
-   [  106.829525][ T5338]  btrfs_alloc_root+0x75/0x930
-   [  106.831458][ T5338]  read_tree_root_path+0x127/0xb00
-   [  106.833556][ T5338]  btrfs_read_tree_root+0x34/0x60
-   [  106.835553][ T5338]  create_reloc_root+0x6b3/0xcb0
-   [  106.837556][ T5338]  btrfs_init_reloc_root+0x2ec/0x4b0
-   [  106.839557][ T5338]  record_root_in_trans+0x2ab/0x350
-   [  106.841685][ T5338]  btrfs_record_root_in_trans+0x15c/0x180
-   [  106.844237][ T5338]  start_transaction+0x39c/0x1820
-   [  106.846638][ T5338]  btrfs_finish_one_ordered+0x88e/0x2680
-   [  106.849436][ T5338]  btrfs_work_helper+0x37b/0xc20
-   [  106.851549][ T5338]  process_scheduled_works+0xb5d/0x1860
-   [  106.853807][ T5338]  worker_thread+0xa53/0xfc0
-   [  106.855773][ T5338]  kthread+0x389/0x470
-   [  106.857548][ T5338]  ret_from_fork+0x514/0xb70
-   [  106.859493][ T5338]  ret_from_fork_asm+0x1a/0x30
-   [  106.861504][ T5338]
-   [  106.862527][ T5338] Freed by task 5339:
-   [  106.864224][ T5338]  kasan_save_track+0x3e/0x80
-   [  106.866180][ T5338]  kasan_save_free_info+0x46/0x50
-   [  106.868371][ T5338]  __kasan_slab_free+0x5c/0x80
-   [  106.870462][ T5338]  kfree+0x1c5/0x640
-   [  106.872180][ T5338]  __del_reloc_root+0x341/0x3b0
-   [  106.874290][ T5338]  free_reloc_roots+0x5f/0x90
-   [  106.876282][ T5338]  merge_reloc_roots+0x73f/0x8a0
-   [  106.878489][ T5338]  relocate_block_group+0xbcc/0xe70
-   [  106.880742][ T5338]  do_nonremap_reloc+0xa8/0x5b0
-   [  106.882885][ T5338]  btrfs_relocate_block_group+0x7e6/0xc40
-   [  106.885336][ T5338]  btrfs_relocate_chunk+0x115/0x820
-   [  106.887502][ T5338]  __btrfs_balance+0x1db0/0x2ae0
-   [  106.889543][ T5338]  btrfs_balance+0xaf3/0x11b0
-   [  106.891456][ T5338]  btrfs_ioctl_balance+0x3d3/0x610
-   [  106.893672][ T5338]  __se_sys_ioctl+0xfc/0x170
-   [  106.895530][ T5338]  do_syscall_64+0x174/0x580
-   [  106.897518][ T5338]  entry_SYSCALL_64_after_hwframe+0x77/0x7f
-   [  106.900101][ T5338]
-   [  106.901123][ T5338] The buggy address belongs to the object at ffff88803f978000
-   [  106.901123][ T5338]  which belongs to the cache kmalloc-4k of size 4096
-   [  106.906907][ T5338] The buggy address is located 1584 bytes inside of
-   [  106.906907][ T5338]  freed 4096-byte region [ffff88803f978000, ffff88803f979000)
-   [  106.912980][ T5338]
-   [  106.914022][ T5338] The buggy address belongs to the physical page:
-   [  106.916716][ T5338] page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x3f978
-   [  106.920390][ T5338] head: order:3 mapcount:0 entire_mapcount:0 nr_pages_mapped:0 pincount:0
-   [  106.923834][ T5338] flags: 0x4fff00000000040(head|node=1|zone=1|lastcpupid=0x7ff)
-   [  106.927104][ T5338] page_type: f5(slab)
-   [  106.928898][ T5338] raw: 04fff00000000040 ffff88801ac42140 dead000000000122 0000000000000000
-   [  106.932507][ T5338] raw: 0000000000000000 0000000800040004 00000000f5000000 0000000000000000
-   [  106.936193][ T5338] head: 04fff00000000040 ffff88801ac42140 dead000000000122 0000000000000000
-   [  106.939856][ T5338] head: 0000000000000000 0000000800040004 00000000f5000000 0000000000000000
-   [  106.943601][ T5338] head: 04fff00000000003 fffffffffffffe01 00000000ffffffff 00000000ffffffff
-   [  106.947268][ T5338] head: ffffffffffffffff 0000000000000000 00000000ffffffff 0000000000000008
-   [  106.950988][ T5338] page dumped because: kasan: bad access detected
-   [  106.953710][ T5338] page_owner tracks the page as allocated
-   [  106.956198][ T5338] page last allocated via order 3, migratetype Unmovable, gfp_mask 0xd2820(GFP_ATOMIC|__GFP_NOWARN|__GFP_NORETRY|__GFP_COMP|__GFP_NOMEMALLOC), pid 24, tgid 24 (kworker/u4:2), ts 105728970387, free_ts 29540875453
-   [  106.964984][ T5338]  post_alloc_hook+0x22d/0x280
-   [  106.966956][ T5338]  get_page_from_freelist+0x2593/0x2610
-   [  106.969307][ T5338]  __alloc_frozen_pages_noprof+0x18d/0x380
-   [  106.971839][ T5338]  allocate_slab+0x77/0x660
-   [  106.973709][ T5338]  refill_objects+0x339/0x3d0
-   [  106.975696][ T5338]  __pcs_replace_empty_main+0x321/0x720
-   [  106.978136][ T5338]  __kmalloc_node_track_caller_noprof+0x572/0x7b0
-   [  106.981009][ T5338]  __alloc_skb+0x2c1/0x7d0
-   [  106.982983][ T5338]  nsim_dev_trap_report_work+0x29a/0xb90
-   [  106.985356][ T5338]  process_scheduled_works+0xb5d/0x1860
-   [  106.987710][ T5338]  worker_thread+0xa53/0xfc0
-   [  106.989847][ T5338]  kthread+0x389/0x470
-   [  106.991727][ T5338]  ret_from_fork+0x514/0xb70
-   [  106.993722][ T5338]  ret_from_fork_asm+0x1a/0x30
-   [  106.995900][ T5338] page last free pid 77 tgid 77 stack trace:
-   [  106.998479][ T5338]  __free_frozen_pages+0xc1c/0xd30
-   [  107.000819][ T5338]  vfree+0x1d1/0x2f0
-   [  107.002631][ T5338]  delayed_vfree_work+0x55/0x80
-   [  107.004848][ T5338]  process_scheduled_works+0xb5d/0x1860
-   [  107.007366][ T5338]  worker_thread+0xa53/0xfc0
-   [  107.009388][ T5338]  kthread+0x389/0x470
-   [  107.011177][ T5338]  ret_from_fork+0x514/0xb70
-   [  107.013313][ T5338]  ret_from_fork_asm+0x1a/0x30
-   [  107.015454][ T5338]
-   [  107.016460][ T5338] Memory state around the buggy address:
-   [  107.019052][ T5338]  ffff88803f978500: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-   [  107.022691][ T5338]  ffff88803f978580: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-   [  107.026264][ T5338] >ffff88803f978600: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-   [  107.029721][ T5338]                                      ^
-   [  107.032062][ T5338]  ffff88803f978680: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-   [  107.035547][ T5338]  ffff88803f978700: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-   [  107.038865][ T5338] ==================================================================
-
-Fix this by resetting a root's ->reloc_root if we get an error while
-trying to merge a reloc root.
-
-Reported-by: syzbot+b3d472d13f9d7bf20669@syzkaller.appspotmail.com
-Link: https://lore.kernel.org/linux-btrfs/6a1ebde9.c1435f33.112120.0176.GAE@google.com/
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Li Qiang <liqiang01@kylinos.cn>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/relocation.c | 42 +++++++++++++++++++++++++++++++++---------
- 1 file changed, 33 insertions(+), 9 deletions(-)
+ fs/smb/client/cifsacl.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/fs/btrfs/relocation.c b/fs/btrfs/relocation.c
-index d3584b0b0c87d..0d0d92f7935af 100644
---- a/fs/btrfs/relocation.c
-+++ b/fs/btrfs/relocation.c
-@@ -1555,6 +1555,17 @@ static int insert_dirty_subvol(struct btrfs_trans_handle *trans,
- 	return 0;
- }
- 
-+static void clear_reloc_root(struct btrfs_root *root)
-+{
-+	root->reloc_root = NULL;
-+	/*
-+	 * Need barrier to ensure clear_bit() only happens after
-+	 * root->reloc_root = NULL. Pairs with have_reloc_root().
-+	 */
-+	smp_wmb();
-+	clear_bit(BTRFS_ROOT_DEAD_RELOC_TREE, &root->state);
-+}
-+
- static int clean_dirty_subvols(struct reloc_control *rc)
+diff --git a/fs/smb/client/cifsacl.c b/fs/smb/client/cifsacl.c
+index 230b98b3a272c..1f596d2493bd9 100644
+--- a/fs/smb/client/cifsacl.c
++++ b/fs/smb/client/cifsacl.c
+@@ -69,6 +69,9 @@ cifs_idmap_key_instantiate(struct key *key, struct key_preparsed_payload *prep)
  {
- 	struct btrfs_root *root;
-@@ -1569,13 +1580,7 @@ static int clean_dirty_subvols(struct reloc_control *rc)
- 			struct btrfs_root *reloc_root = root->reloc_root;
+ 	char *payload;
  
- 			list_del_init(&root->reloc_dirty_list);
--			root->reloc_root = NULL;
--			/*
--			 * Need barrier to ensure clear_bit() only happens after
--			 * root->reloc_root = NULL. Pairs with have_reloc_root.
--			 */
--			smp_wmb();
--			clear_bit(BTRFS_ROOT_DEAD_RELOC_TREE, &root->state);
-+			clear_reloc_root(root);
- 			if (reloc_root) {
- 				/*
- 				 * btrfs_drop_snapshot drops our ref we hold for
-@@ -1961,13 +1966,32 @@ void merge_reloc_roots(struct reloc_control *rc)
- 				goto out;
- 			}
- 			ret = merge_reloc_root(rc, root);
--			btrfs_put_root(root);
- 			if (ret) {
--				if (list_empty(&reloc_root->root_list))
-+				/*
-+				 * Clear the reloc root since below we will call
-+				 * free_reloc_roots(), otherwise we leave
-+				 * root->reloc_root pointing to a freed reloc
-+				 * root and trigger a use-after-free during
-+				 * unmount or elsewhere.
-+				 */
-+				clear_reloc_root(root);
-+				btrfs_put_root(root);
-+				/*
-+				 * We are adding the reloc_root to the local
-+				 * reloc_roots list, so we add a ref for this
-+				 * list which will be dropped below by the call
-+				 * to free_reloc_roots().
-+				 */
-+				if (list_empty(&reloc_root->root_list)) {
- 					list_add_tail(&reloc_root->root_list,
- 						      &reloc_roots);
-+					btrfs_grab_root(reloc_root);
-+				}
-+				/* Now drop the ref for root->reloc_root. */
-+				btrfs_put_root(reloc_root);
- 				goto out;
- 			}
-+			btrfs_put_root(root);
- 		} else {
- 			if (!IS_ERR(root)) {
- 				if (root->reloc_root == reloc_root) {
++	if (prep->datalen > U16_MAX)
++		return -EINVAL;
++
+ 	/*
+ 	 * If the payload is less than or equal to the size of a pointer, then
+ 	 * an allocation here is wasteful. Just copy the data directly to the
 -- 
 2.53.0
 
