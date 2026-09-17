@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F7904EB87A;
-	Thu, 17 Sep 2026 15:46:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA43E2F0673;
+	Thu, 17 Sep 2026 15:46:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659980; cv=none; b=CIM4GNuUW2hIBx7lx1ktTXSpJ98ldV6qGrygmo+TnJdDkRppnbdz7u397Av2Yu0pq1gbpS6yhVOpJEseS+c3rXuLVyowgGH2HUAGVjcCprPlA3Gk8qaaYGWHJuV4R6t9/BnpuVG7gS0XTvB2tOukE9VPgphoo5J2nTk8s/zjcHk=
+	t=1789659983; cv=none; b=MCcNylNYngSvWlJgjkOrTaFsYve1tX/6eu8ztXlb57VpDeLd7XFvlTY11xmRdJVXbtLNumRgPrv89UA+u/L9cIsprTMk0ot1lSGq1snUosp2/raFS5DWWpQsMh3zjNt+Np4uhEyWcWbtncz1m1r3KhwY4jvu49c6hTBX8zxhQSg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659980; c=relaxed/simple;
-	bh=ADPxETAZEFf2rwncJ0kvKUUT81eJexoMLQYwaqoj3Rk=;
+	s=arc-20240116; t=1789659983; c=relaxed/simple;
+	bh=Zs1uANj5Lao9Prz5f06b50KQNPb36EhW5bkuiowQKw0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kLQlP9LJlvZKJMDNKS928Xwv0vkoRgma8EmslpYtIZQq3CrhlaKwEnKrpy222CzhN3RpjaA2LdCsahkiFy+OQK2YV6PGwWFoUvbUcePMZPpxi/ub7SiaLu1TaABVxc7ktePpcjaPv7qw+n6+skvCY0ck0My+MnvxZki7cqD9T44=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DbgWnewI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tGOztM9rfpNyYZly0eSL5Tj5CurKc1JA7vAByC3xa/k8Q1udCcxu0O28y+4urs2pckc6oI/shycg3cYHt61rg/AN2F1siaLzeBZFAkiZrTLZcz/ged6wiKByopLfXt2HsusVn2arH23Mea3/Afee9ZMPycrdf85sRnQ93fuM14g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bVXpDkTK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DbgWnewI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E65AA1F00899;
-	Thu, 17 Sep 2026 15:46:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bVXpDkTK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD3FB1F000FF;
+	Thu, 17 Sep 2026 15:46:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659973;
-	bh=n6l9WI1LrmzKYCSwJ+nBjkCO0estwXWNpJ+1tDNs1x0=;
+	s=korg; t=1789659976;
+	bh=6BlJDqFaop55UiIl9EmQJYpI7u8laSM5u+acn5Glcxc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DbgWnewIIjqY+imhUInamqnFu9HaPNQZEB4UU/c+vGa9W8rfn/HdlzgcFN2hMb1rR
-	 UiYJid8nh/ooroRJ67BiqNg/ruqjGR/QVhHkuuOAmxyDcWC32wfmuugDweSutt32HC
-	 4QXJCLVVBwFb3/BCY9w4Kc7TCodblvkSRyJcGDBs=
+	b=bVXpDkTK5AAhisnITyWHeQPIWqWcQwF5iq74WyzVpLFyLTDR6zS5jGN229UEtcT51
+	 uWv7nzo0JKSgzBBV3g+ywY/swrCndtz2lkGPbJsYsvtWtV1fn0AdDuP4iTc3yCmz1g
+	 Xsou9JxfX65Z3Ue6rustYrlqdRLLnHpBGUJGnJ6s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	MD Danish Anwar <danishanwar@ti.com>,
-	Simon Horman <horms@kernel.org>,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Aaron Conole <aconole@redhat.com>,
+	Ilya Maximets <i.maximets@ovn.org>,
+	Eelco Chaudron <echaudro@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 436/733] net: hsr: enable promiscuous mode on interlink port with fwd offload
-Date: Thu, 17 Sep 2026 16:12:24 +0100
-Message-ID: <20260917151402.715847484@linuxfoundation.org>
+Subject: [PATCH 7.2 437/733] openvswitch: fix wrong flag value in get_ipv6_ext_hdrs()
+Date: Thu, 17 Sep 2026 16:12:25 +0100
+Message-ID: <20260917151402.744303547@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -53,66 +54,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: MD Danish Anwar <danishanwar@ti.com>
+From: Eelco Chaudron <echaudro@redhat.com>
 
-[ Upstream commit a2dc179481d18f6df7274522571b64dd50f31e81 ]
+[ Upstream commit e184a4a6f423550a25adce867036cdb1ff471745 ]
 
-hsr_portdev_setup() skips promiscuous mode on non-master ports when
-hsr->fwd_offloaded is set. fwd_offloaded is derived only from the ring
-slaves' NETIF_F_HW_HSR_FWD bit, so this also skips it for the interlink
-port, which never gets forwarding offload. Without promiscuous mode,
-the interlink NIC drops unicast frames addressed to hsr_dev's MAC
-(e.g. SAN traffic to the RedBox), breaking RedBox whenever the ring is
-HW-offloaded.
+The ESP and AH cases in get_ipv6_ext_hdrs() used IPPROTO_FRAGMENT instead
+of OFPIEH12_FRAG when checking for out-of-order extension headers, causing
+the fragment header to not be recognised as a valid predecessor.
 
-Fixes: 5055cccfc2d1 ("net: hsr: Provide RedBox support (HSR-SAN)")
-Signed-off-by: MD Danish Anwar <danishanwar@ti.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Link: https://patch.msgid.link/20260908090856.2876114-1-danishanwar@ti.com
+The original code used IPPROTO_FRAGMENT (44) as a bitmask constant where
+OFPIEH12_FRAG (1 << 4 = 16) was intended.  IPPROTO_FRAGMENT encodes bits
+2, 3 and 5 (OFPIEH12_AUTH | OFPIEH12_DEST | OFPIEH12_ROUTER), but not
+bit 4 (OFPIEH12_FRAG).  This caused incorrect OFPIEH12_UNSEQ verdicts in
+both the ESP and AH arms: the ESP arm failed to whitelist OFPIEH12_FRAG,
+while the AH arm accidentally whitelisted OFPIEH12_AUTH.
+
+With the fix, a packet with two AH headers now also gets OFPIEH12_UNSEQ
+in addition to OFPIEH12_UNREP, matching the ESP arm which already sets
+UNSEQ on a repeat, which is the intended behavior.
+
+Fixes: 28a3f0601727 ("net: openvswitch: IPv6: Add IPv6 extension header support")
+Reported-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Aaron Conole <aconole@redhat.com>
+Reviewed-by: Ilya Maximets <i.maximets@ovn.org>
+Signed-off-by: Eelco Chaudron <echaudro@redhat.com>
+Link: https://patch.msgid.link/1b1582eb07550d71f3cbe210e5cb31eeb8d0ad86.1788876917.git.echaudro@redhat.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/hsr/hsr_slave.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ net/openvswitch/flow.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/hsr/hsr_slave.c b/net/hsr/hsr_slave.c
-index 01c73b4b50ddd..a546f70f9cc8b 100644
---- a/net/hsr/hsr_slave.c
-+++ b/net/hsr/hsr_slave.c
-@@ -149,9 +149,12 @@ static int hsr_portdev_setup(struct hsr_priv *hsr, struct net_device *dev,
- 	int res;
- 
- 	/* Don't use promiscuous mode for offload since L2 frame forward
--	 * happens at the offloaded hardware.
-+	 * happens at the offloaded hardware. The interlink port never
-+	 * gets forwarding offload (RedBox forwarding to/from it is done
-+	 * by this driver), so it still needs promiscuous mode to receive
-+	 * frames addressed to hsr_dev's MAC rather than its own.
- 	 */
--	if (!port->hsr->fwd_offloaded) {
-+	if (!port->hsr->fwd_offloaded || port->type == HSR_PT_INTERLINK) {
- 		res = dev_set_promiscuity(dev, 1);
- 		if (res)
- 			return res;
-@@ -176,7 +179,7 @@ static int hsr_portdev_setup(struct hsr_priv *hsr, struct net_device *dev,
- fail_rx_handler:
- 	netdev_upper_dev_unlink(dev, hsr_dev);
- fail_upper_dev_link:
--	if (!port->hsr->fwd_offloaded)
-+	if (!port->hsr->fwd_offloaded || port->type == HSR_PT_INTERLINK)
- 		dev_set_promiscuity(dev, -1);
- 
- 	return res;
-@@ -240,7 +243,7 @@ void hsr_del_port(struct hsr_port *port)
- 		netdev_update_features(master->dev);
- 		dev_set_mtu(master->dev, hsr_get_max_mtu(hsr));
- 		netdev_rx_handler_unregister(port->dev);
--		if (!port->hsr->fwd_offloaded)
-+		if (!port->hsr->fwd_offloaded || port->type == HSR_PT_INTERLINK)
- 			dev_set_promiscuity(port->dev, -1);
- 		if (port->type == HSR_PT_SLAVE_A || port->type == HSR_PT_SLAVE_B)
- 			vlan_vids_del_by_dev(port->dev, master->dev);
+diff --git a/net/openvswitch/flow.c b/net/openvswitch/flow.c
+index 46c1d66aad8c3..868d9fdf3afdf 100644
+--- a/net/openvswitch/flow.c
++++ b/net/openvswitch/flow.c
+@@ -288,7 +288,7 @@ static void get_ipv6_ext_hdrs(struct sk_buff *skb, struct ipv6hdr *nh,
+ 			if (*ext_hdrs & OFPIEH12_ESP)
+ 				*ext_hdrs |= OFPIEH12_UNREP;
+ 			if ((*ext_hdrs & ~(OFPIEH12_HOP | OFPIEH12_DEST |
+-					   OFPIEH12_ROUTER | IPPROTO_FRAGMENT |
++					   OFPIEH12_ROUTER | OFPIEH12_FRAG |
+ 					   OFPIEH12_AUTH | OFPIEH12_UNREP)) ||
+ 			    dest_options_header_count >= 2) {
+ 				*ext_hdrs |= OFPIEH12_UNSEQ;
+@@ -301,7 +301,7 @@ static void get_ipv6_ext_hdrs(struct sk_buff *skb, struct ipv6hdr *nh,
+ 				*ext_hdrs |= OFPIEH12_UNREP;
+ 			if ((*ext_hdrs &
+ 			     ~(OFPIEH12_HOP | OFPIEH12_DEST | OFPIEH12_ROUTER |
+-			       IPPROTO_FRAGMENT | OFPIEH12_UNREP)) ||
++			       OFPIEH12_FRAG | OFPIEH12_UNREP)) ||
+ 			    dest_options_header_count >= 2) {
+ 				*ext_hdrs |= OFPIEH12_UNSEQ;
+ 			}
 -- 
 2.53.0
 
