@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A385370D6D;
-	Thu, 17 Sep 2026 17:11:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C7D851CF76;
+	Thu, 17 Sep 2026 17:11:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789665073; cv=none; b=Fvw1DPHquzhCU+0rDpsVnhFHVCzDGopzwS718jnydW6z8O4M2d0Wd7w0bDjdIv0TG/mqN+aSjK3cuboQwKP3YIH7SJumJMuPn49NrvBaNcIIUMsYtRmbzlpMEu7y3UQIfJ0bdCKMOBnhUwDLqWgUCp3/R4LHEjWQxTDvocIJh8w=
+	t=1789665075; cv=none; b=g+w1cdvZki4vg9i0Mf+aGH7H9adK1Voip/A11oyP9334B4M0AsEjmuGW2W3wkUs/Q7E8k1fjXZHbU776rBdZYHWB2v4bE7B0lITKZf/9ODWoLUt/xq5w8Kv66KNGAT26hAvmU0nbpujJ4Rl6zcSHixnPs/jGm0JuxHXAK17fRCE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789665073; c=relaxed/simple;
-	bh=uegayGGWDAWBv0ADLnF7Xo/YlnP9vWRWW4+JBRyDhQc=;
+	s=arc-20240116; t=1789665075; c=relaxed/simple;
+	bh=rxIokByjw+9nJPp/eGBrW0df+wOHmVwFMrn2aYVTM1A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MYosC7+CWdFUP5uYbF3lpOpARbzFCFNkUInAvX8O+mfOCrKFzMbBZBsThr1kYVPxaSt4GJsRkMqQANQwfS2jKZByDHhSLm9t8dUz4LFSeMYiZ7QjwTVsHpj5SMoS/R5NbmFnEn5JZb8z2ye02yeneQnYnrYydo52x+oXWmUXYH4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xo8NOH/7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=C6suFoJM96K5fyIxSTHMeARBilaZOlA1Fe48V42wWLqOfqYOZoPaDH3efAQBn0sDSXidcWzWwkQYY4iIvtdFUeSyLmNW01AMwmdwz9+GoZcZs5nJkxAtD3ZLNF29UplraixlXSRQ7q4FD/kuTe3IVIxMENWcrItsA9tcjpxTqDU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uEMg5Y3z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xo8NOH/7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0D4D1F00893;
-	Thu, 17 Sep 2026 17:11:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uEMg5Y3z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B11D1F00893;
+	Thu, 17 Sep 2026 17:11:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789665071;
-	bh=kSbnl+7WgizQmccsJ2lF302g/ULlILBDrPDcfVfcWxg=;
+	s=korg; t=1789665074;
+	bh=W7PyNm/kfJxJZNEfU3oK0VUQju4HkK7H6hzD8MyMlW4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xo8NOH/7BInH6ko0SvSOtm7nwL/T6nPPufiigYV2iGJyoNpkxLHtIaTEFXd1P1VAn
-	 xJdCbJF3pB2tnlF7MSZdphBWB72yhhwDdsDlWY1xwqcwLagbwsrkGBoutn484jewWj
-	 XB1uJ0YioEgZedILNmYCYVoiyENj3uk+/U3uED5Y=
+	b=uEMg5Y3zB9Df2uprlX4mPmFhEyp8Rj8loD4CiYRW/UKoipnCRkaVGVJLEQRq/mV5r
+	 VqCxDDl665qs7ZBKeQ+eHNfFYAn/pLRpAoe5YJdXLBq1S+dnjnTg4S5voale0ZGuIj
+	 YJzq7WglYNZd/RYqPzMIr04nX2ernTTsR6Bh+2wY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nuoqi Gui <gnq25@mails.tsinghua.edu.cn>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Eduard Zingerman <eddyz87@gmail.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Xin Long <lucien.xin@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0583/1250] bpf: Mask pseudo pointer values in verifier logs
-Date: Thu, 17 Sep 2026 16:06:18 +0100
-Message-ID: <20260917151607.690317196@linuxfoundation.org>
+Subject: [PATCH 6.18 0584/1250] sctp: fix err_chunk memory leaks in INIT handling
+Date: Thu, 17 Sep 2026 16:06:19 +0100
+Message-ID: <20260917151607.715307525@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -52,46 +53,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nuoqi Gui <gnq25@mails.tsinghua.edu.cn>
+From: Xin Long <lucien.xin@gmail.com>
 
-[ Upstream commit 72a85e9464a5332fb2cd7efd26d9295275ceda2d ]
+[ Upstream commit 9f58a0a4d6c2ed5d341bba64f058f15d1b0c36f2 ]
 
-print_bpf_insn() masks ldimm64 immediates for pointer-bearing pseudo
-sources when pointer leaks are not allowed, but the mask only covers
-BPF_PSEUDO_MAP_FD and BPF_PSEUDO_MAP_VALUE.
+When sctp_verify_init() encounters unrecognized parameters, it allocates an
+err_chunk to report them. However, this chunk is leaked in several code
+paths:
 
-BPF_PSEUDO_MAP_IDX, BPF_PSEUDO_MAP_IDX_VALUE, and BPF_PSEUDO_BTF_ID can
-also be resolved to kernel pointer values before the verifier log prints
-the instruction. Include them in the existing pointer classification so
-the log prints 0x0 instead of the rewritten address.
+1. In sctp_sf_do_5_1B_init(), if security_sctp_assoc_request() fails after
+   sctp_verify_init() has populated err_chunk, the function returns
+   immediately without freeing it.
 
-Fixes: 4976b718c355 ("bpf: Introduce pseudo_btf_id")
-Fixes: 387544bfa291 ("bpf: Introduce fd_idx")
-Signed-off-by: Nuoqi Gui <gnq25@mails.tsinghua.edu.cn>
-Link: https://lore.kernel.org/r/20260623-f01-13-pseudo-btf-id-cap-bpf-v2-1-a190ebb8f3e2@mails.tsinghua.edu.cn
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Acked-by: Eduard Zingerman <eddyz87@gmail.com>
+2. In sctp_sf_do_unexpected_init(), the same leak occurs on the
+   security_sctp_assoc_request() failure path.
+
+3. In sctp_sf_do_unexpected_init(), on the success path after copying
+   unrecognized parameters to the INIT-ACK, the function returns without
+   freeing err_chunk, unlike sctp_sf_do_5_1B_init() which properly frees
+   it.
+
+Fix all three leaks by adding sctp_chunk_free(err_chunk) calls before
+returning in the error paths and on the success path in
+sctp_sf_do_unexpected_init().
+
+Fixes: c081d53f97a1 ("security: pass asoc to sctp_assoc_request and sctp_sk_clone")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Signed-off-by: Xin Long <lucien.xin@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/0656704f1b0158287c98aec09ba36c83e4a537ab.1781970534.git.lucien.xin@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/disasm.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/sctp/sm_statefuns.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/kernel/bpf/disasm.c b/kernel/bpf/disasm.c
-index 20883c6b1546c..f52c174f2dbb1 100644
---- a/kernel/bpf/disasm.c
-+++ b/kernel/bpf/disasm.c
-@@ -323,7 +323,10 @@ void print_bpf_insn(const struct bpf_insn_cbs *cbs,
- 			 */
- 			u64 imm = ((u64)(insn + 1)->imm << 32) | (u32)insn->imm;
- 			bool is_ptr = insn->src_reg == BPF_PSEUDO_MAP_FD ||
--				      insn->src_reg == BPF_PSEUDO_MAP_VALUE;
-+				      insn->src_reg == BPF_PSEUDO_MAP_VALUE ||
-+				      insn->src_reg == BPF_PSEUDO_MAP_IDX ||
-+				      insn->src_reg == BPF_PSEUDO_MAP_IDX_VALUE ||
-+				      insn->src_reg == BPF_PSEUDO_BTF_ID;
- 			char tmp[64];
+diff --git a/net/sctp/sm_statefuns.c b/net/sctp/sm_statefuns.c
+index 1377493b0844c..3a8e16b29660c 100644
+--- a/net/sctp/sm_statefuns.c
++++ b/net/sctp/sm_statefuns.c
+@@ -416,6 +416,8 @@ enum sctp_disposition sctp_sf_do_5_1B_init(struct net *net,
+ 	/* Update socket peer label if first association. */
+ 	if (security_sctp_assoc_request(new_asoc, chunk->skb)) {
+ 		sctp_association_free(new_asoc);
++		if (err_chunk)
++			sctp_chunk_free(err_chunk);
+ 		return sctp_sf_pdiscard(net, ep, asoc, type, arg, commands);
+ 	}
  
- 			if (is_ptr && !allow_ptr_leaks)
+@@ -1620,6 +1622,8 @@ static enum sctp_disposition sctp_sf_do_unexpected_init(
+ 	/* Update socket peer label if first association. */
+ 	if (security_sctp_assoc_request(new_asoc, chunk->skb)) {
+ 		sctp_association_free(new_asoc);
++		if (err_chunk)
++			sctp_chunk_free(err_chunk);
+ 		return sctp_sf_pdiscard(net, ep, asoc, type, arg, commands);
+ 	}
+ 
+@@ -1685,6 +1689,7 @@ static enum sctp_disposition sctp_sf_do_unexpected_init(
+ 		 * parameter type.
+ 		 */
+ 		sctp_addto_chunk(repl, len, unk_param);
++		sctp_chunk_free(err_chunk);
+ 	}
+ 
+ 	sctp_add_cmd_sf(commands, SCTP_CMD_NEW_ASOC, SCTP_ASOC(new_asoc));
 -- 
 2.53.0
 
