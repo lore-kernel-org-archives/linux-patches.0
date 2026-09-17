@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 762C6502D70;
-	Thu, 17 Sep 2026 18:12:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 529E154705D;
+	Thu, 17 Sep 2026 18:12:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789668725; cv=none; b=V5P5cr6Pm7dHlNynHWTr5/8crngYpNjZvd8zg9GZXfTLpanpyVEf1Y+yCXSTJigtRPz7v1XfWXWlke7xQtFWEOKxpXm0o3OU5OyvAnf54sxHj+lrSMkQNJtzrUxf4xad4rN0MRRWXKNKxRknpfTxe9UYpzFMlivL3lE9NJ+eDY4=
+	t=1789668727; cv=none; b=RmgzadwkRo/RDRbPnTCrELp0YU7RxOOZ4AU05z9w1Ho7ryHQgxIdg/XlfgcwbD31jBC4EPlvLeeSSUyR5QxONhobp01nErXt2K4WtsvNbsIiKX3eyyz7Ha7cC+0FyapzZ8vZktXbN3cie3YS3YCq32r5wX9z1lQlD1D+LW4a6TA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789668725; c=relaxed/simple;
-	bh=b4N9WlKwNS4e8TQYikh/LUYE+/EyaO12phoU3aKt3mY=;
+	s=arc-20240116; t=1789668727; c=relaxed/simple;
+	bh=rNeP6iind0f3eUY7q1KLxY/H9mhaLNQnJTAEqS+Fd9U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cYCWrugnFRFQLxF3aPYl27VeftRxTQjKREXD3JIOCgrmbhnXOHi7K+HD5Ta4A/uIpDtzROJWrO5tVRycUDoy/LAbuk9cjp+d8Cx2DWS0Z98ppk4esBEFVED/QnTHnR30G1ToQ/qd6vLd+7QIpJibaE0ryiJfnhGLkHF3CG7q3UI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n2AKzmvJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GtQXrJItccHNwWwtUzFMOyaJzDpU5Yd0YgBwgbj0jYaGOPdakuxMcL+a0geJHVO/nBJGOHRrJ3lyH3QZQkLlMTM42xpKwYbDDxlJ2YXrdH17eLOeLUpRI/prs0iNTgaVmjaqSOwfk6vxQvLuMc2p+SjKzmO4jVH9pVLcnl1KsG0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EXdfH9m9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n2AKzmvJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5B2A1F000FF;
-	Thu, 17 Sep 2026 18:12:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EXdfH9m9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB3F61F000FF;
+	Thu, 17 Sep 2026 18:12:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789668723;
-	bh=6NrZkwBaBd4mQ7ccJ7not3gLM5/tIoA0hV8dtHGgOMc=;
+	s=korg; t=1789668726;
+	bh=tKQW0/Yb8jj0gOdUknkrsCWCB3HrYljpGX5HYBChoW4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=n2AKzmvJW0ZmjynbAaRxQPzxIBVQc+0lk08Kt0Iill7aft5I/+Gc3lwOr7RPp8Pvb
-	 OFR31BbH4n3CFtRAXLCD2cI3NDybwl16PvXnWJbOhdSl2fYqMJuBSGfwnSMjA12HaT
-	 3W2pgCYqCyT1uUMyiaX/NKuTEHLyl5ylKWh8VM4Q=
+	b=EXdfH9m9iWppfvwSD48/ZFRvXASRgK8vwiJKYjrBb3u7M2wopR1WoCuSQ4/hB0EHj
+	 qXMbnyPlF1Igl/+rfGc499gz+/Lqgla9V8OPPEWKQj4R4OdJYr4wIdE+w0bf1Axh64
+	 YVPylf60IoRYHwBrL2F05nzVsjEwgXLCZZeEKZ/c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Dave Airlie <airlied@redhat.com>,
-	Gerd Hoffmann <kraxel@redhat.com>,
-	Javier Martinez Canillas <javierm@redhat.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	"Milan P. Gandhi" <mgandhi@redhat.com>,
+	Laurence Oberman <loberman@redhat.com>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0513/1102] drm/cirrus: Use video aperture helpers
-Date: Thu, 17 Sep 2026 16:07:36 +0100
-Message-ID: <20260917151552.629432325@linuxfoundation.org>
+Subject: [PATCH 6.12 0522/1102] scsi: mpi3mr: Fix NULL pointer dereference in mpi3mr_sas_port_add()
+Date: Thu, 17 Sep 2026 16:07:45 +0100
+Message-ID: <20260917151552.886016567@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -54,54 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Zimmermann <tzimmermann@suse.de>
+From: Milan P. Gandhi <mgandhi@redhat.com>
 
-[ Upstream commit c77ec6b18b0397cf1f0c270ea77310f70fe48081 ]
+[ Upstream commit dba9e2181ca5e875f98b8b9b4535cdaab87dcb0d ]
 
-DRM's aperture functions have long been implemented as helpers
-under drivers/video/ for use with fbdev. Avoid the DRM wrappers by
-calling the video functions directly.
+sas_port_alloc_num() can return NULL on memory allocation failure. The
+return value is passed directly to sas_port_add() without a NULL check,
+which causes a NULL pointer dereference.
 
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: Dave Airlie <airlied@redhat.com>
-Cc: Gerd Hoffmann <kraxel@redhat.com>
-Acked-by: Javier Martinez Canillas <javierm@redhat.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240930130921.689876-23-tzimmermann@suse.de
-Stable-dep-of: 92312d333bf7 ("drm/cirrus-qemu: Validate BAR0 size during probe")
+Additionally, if sas_port_add() fails, the allocated port is not freed
+before jumping to out_fail, leaking the sas_port structure. Call
+sas_port_free() to properly release it.
+
+Fixes: e22bae30667a ("scsi: mpi3mr: Add expander devices to STL")
+Signed-off-by: Milan P. Gandhi <mgandhi@redhat.com>
+Reviewed-by: Laurence Oberman <loberman@redhat.com>
+Link: https://patch.msgid.link/20260812103344.174247-2-mgandhi@redhat.com
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/tiny/cirrus.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/scsi/mpi3mr/mpi3mr_transport.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/gpu/drm/tiny/cirrus.c b/drivers/gpu/drm/tiny/cirrus.c
-index c7e81f2610f8c..bf0e6e297e33a 100644
---- a/drivers/gpu/drm/tiny/cirrus.c
-+++ b/drivers/gpu/drm/tiny/cirrus.c
-@@ -16,6 +16,7 @@
-  * Copyright 1999-2001 Jeff Garzik <jgarzik@pobox.com>
-  */
+diff --git a/drivers/scsi/mpi3mr/mpi3mr_transport.c b/drivers/scsi/mpi3mr/mpi3mr_transport.c
+index 0ba9e6a6a13c6..7331237f7506c 100644
+--- a/drivers/scsi/mpi3mr/mpi3mr_transport.c
++++ b/drivers/scsi/mpi3mr/mpi3mr_transport.c
+@@ -1428,9 +1428,15 @@ static struct mpi3mr_sas_port *mpi3mr_sas_port_add(struct mpi3mr_ioc *mrioc,
+ 	}
  
-+#include <linux/aperture.h>
- #include <linux/iosys-map.h>
- #include <linux/module.h>
- #include <linux/pci.h>
-@@ -23,7 +24,6 @@
- #include <video/cirrus.h>
- #include <video/vga.h>
- 
--#include <drm/drm_aperture.h>
- #include <drm/drm_atomic.h>
- #include <drm/drm_atomic_helper.h>
- #include <drm/drm_atomic_state_helper.h>
-@@ -670,7 +670,7 @@ static int cirrus_pci_probe(struct pci_dev *pdev,
- 	struct cirrus_device *cirrus;
- 	int ret;
- 
--	ret = drm_aperture_remove_conflicting_pci_framebuffers(pdev, &cirrus_driver);
-+	ret = aperture_remove_conflicting_pci_devices(pdev, cirrus_driver.name);
- 	if (ret)
- 		return ret;
+ 	port = sas_port_alloc_num(mr_sas_node->parent_dev);
++	if (!port) {
++		ioc_err(mrioc, "failure at %s:%d/%s()!\n",
++		    __FILE__, __LINE__, __func__);
++		goto out_fail;
++	}
+ 	if ((sas_port_add(port))) {
+ 		ioc_err(mrioc, "failure at %s:%d/%s()!\n",
+ 		    __FILE__, __LINE__, __func__);
++		sas_port_free(port);
+ 		goto out_fail;
+ 	}
  
 -- 
 2.53.0
