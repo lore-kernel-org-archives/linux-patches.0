@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEC0F4DDB32;
-	Thu, 17 Sep 2026 15:58:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2DAD4B44CE;
+	Thu, 17 Sep 2026 15:58:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789660708; cv=none; b=SxN6M+eB41jzGU5mWiMw1MabzF+pZ8NsMGwcXfKV3RB4fLJ56LKbg2UNjVw2dBgUZ7oLBpjUsmngN8SwUPlcWUcoPbboZBplgB2np0cfrlpi3zd0vH2WxCe+k3TQzvbcjjJlLXpmsG+h8RYftj/x+Tv0rxurI7woTDs5tu55QA4=
+	t=1789660711; cv=none; b=Df/gaBDahbGFE8/a8UHlUGw1hny99dxh8EtD9jOd/B1gCsyPJtVE3khxNlzV95ItVV7XrIBnGm6/QRT7LhrYn+d5vDGBaxdg95gOs8jIM7WwgwMZqyPFH6DyisEwxG/PcDgh5yFdAV7lVJNHi8qI6eItUqmnDkffL0k3hapn9GY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789660708; c=relaxed/simple;
-	bh=RUoDWrptU7th9KMGHd1TobMeLHxOFBopqSL/ZLcp0c8=;
+	s=arc-20240116; t=1789660711; c=relaxed/simple;
+	bh=cwOti5c9k+PwP70IICdHqpVAiLDVFZ9sIA7x8Ky1Z+0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JxQlPRXdq4YDCaddZkoIhVZIcwzhhamvUV280kQIcYcBLJ4REDqRxZVwp72ovGyqROuT9pQaXDacGl5u+aZrGurZWlRkVVP9BJNrxLonKpTbypRACkSwwZnrlb9KN2CaHpmwieoRz0o+X71Ge5UzM7SFG3J4EThaxJK1xanfRg4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A6x+wsDf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Nz4JUDiyw9ZgxzbzHC82LKVEOA9g4d9eGn4MSFUH4B0KbT+72SCkfSLD3mcjBB6+dvZgTxMOVYyIX5gS0BoE5ikH0sNNef56AV3p/dZ4lyUANDqJo0b2oxa/tDZWagJlmyoPE7UbXNV5nPtnzR2YAbZVBtfuFe1SGv21Xw53+t4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xaXjOXAw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A6x+wsDf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 163731F000FF;
-	Thu, 17 Sep 2026 15:58:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xaXjOXAw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F76C1F000FF;
+	Thu, 17 Sep 2026 15:58:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789660706;
-	bh=30phOTL2AxNVY5mBkmstvCyHv3greXwfsPLrDSwrt1Y=;
+	s=korg; t=1789660709;
+	bh=aVyE8xRhymdhp7dwxi5kW0xw94lBwr5iH0rHhEWmwlw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=A6x+wsDfcFE2ayd+mcMK2CgRPLcE7N1d+PaPnxJ+YqNmQi0ijd8p1D3M/EDPd0tal
-	 Xz8pZNON+xRzNP5JT5fKYWx0OJ8lo5yNvcnsul4fEa1SoHaiOPI1rH/1d8eqJa9GXg
-	 KvXDqcfdtMLXW6QSEqL1tGGzCIAL2DPtLYO30FAg=
+	b=xaXjOXAwveN+rb92uC9jRITrcW2j4IMTIrdG17bv7BOCiJTyRxMhnrv6aetU4NzCc
+	 QKD2a9MQgcHU81rBsf4En8cLoCTo4aiYbsHG1RyRNfGOgA6z1NbtG2XePizei0MJZA
+	 4zB7r5s64q1F/kQBGRwRmX0ANMsYM83ZodWlrU+o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 7.2 682/733] xfs: check healthmon outbuffer space correctly
-Date: Thu, 17 Sep 2026 16:16:30 +0100
-Message-ID: <20260917151409.767196404@linuxfoundation.org>
+Subject: [PATCH 7.2 683/733] xfs: bump lost_prev_errors if we lose even the healthmon lost event
+Date: Thu, 17 Sep 2026 16:16:31 +0100
+Message-ID: <20260917151409.796558379@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -53,13 +53,12 @@ Content-Transfer-Encoding: 8bit
 
 From: Darrick J. Wong <djwong@kernel.org>
 
-commit 74eeb68a628dbc4a8f976351ad2f1ef5463513ee upstream.
+commit 295f2cfd3e2c814c2ecd2c1d522bc31c5288e414 upstream.
 
-LOLLM notices that the outbuf space check in xfs_healthmon_format_pop
-isn't quite correct -- it checks that there's enough space to write a
-xfs_healthmon_event object, but the outbuffer is supposed to contain
-xfs_health_monitor_event objects.  Fix this by adding a helper, and
-refactoring all three outbuf size checks to use it.
+LOLLM observes that we don't bump xfs_healthmon::lost_prev_event even if
+we can't allocate or queue a LOST event, which means that events can
+disappear silently when things are going very wrong.  Bump the counter
+to avoid this problem.
 
 Cc: stable@vger.kernel.org # v7.0
 Fixes: b3a289a2a9397b ("xfs: create event queuing, formatting, and discovery infrastructure")
@@ -69,50 +68,22 @@ Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_healthmon.c |   17 ++++++++++++++---
- 1 file changed, 14 insertions(+), 3 deletions(-)
+ fs/xfs/xfs_healthmon.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
 --- a/fs/xfs/xfs_healthmon.c
 +++ b/fs/xfs/xfs_healthmon.c
-@@ -744,6 +744,13 @@ static const unsigned int type_map[] = {
- 	[XFS_HEALTHMON_DATALOST]	= XFS_HEALTH_MONITOR_TYPE_DATALOST,
- };
+@@ -334,8 +334,10 @@ xfs_healthmon_clear_lost_prev(
+ 	if (hm->events < XFS_HEALTHMON_MAX_EVENTS)
+ 		event = kmemdup(&lost_event, sizeof(struct xfs_healthmon_event),
+ 				GFP_NOFS);
+-	if (!event)
++	if (!event) {
++		xfs_healthmon_bump_lost(hm);
+ 		return -ENOMEM;
++	}
  
-+static inline bool
-+xfs_healthmon_check_outbuffer_space(const struct xfs_healthmon *hm)
-+{
-+	return hm->bufhead + sizeof(struct xfs_health_monitor_event) <=
-+		hm->bufsize;
-+}
-+
- /* Render event as a V0 structure */
- STATIC int
- xfs_healthmon_format_v0(
-@@ -810,10 +817,10 @@ xfs_healthmon_format_v0(
- 		break;
- 	}
- 
--	ASSERT(hm->bufhead + sizeof(hme) <= hm->bufsize);
-+	ASSERT(xfs_healthmon_check_outbuffer_space(hm));
- 
- 	/* copy formatted object to the outbuf */
--	if (hm->bufhead + sizeof(hme) <= hm->bufsize) {
-+	if (xfs_healthmon_check_outbuffer_space(hm)) {
- 		memcpy(hm->buffer + hm->bufhead, &hme, sizeof(hme));
- 		hm->bufhead += sizeof(hme);
- 	}
-@@ -896,7 +903,11 @@ xfs_healthmon_format_pop(
- {
- 	struct xfs_healthmon_event *event;
- 
--	if (hm->bufhead + sizeof(*event) > hm->bufsize)
-+	/*
-+	 * Don't bother if there's not enough space to format even one event in
-+	 * the outbuffer.
-+	 */
-+	if (!xfs_healthmon_check_outbuffer_space(hm))
- 		return NULL;
- 
- 	mutex_lock(&hm->lock);
+ 	__xfs_healthmon_push(hm, event);
+ cleared:
 
 
