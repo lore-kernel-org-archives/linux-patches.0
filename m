@@ -1,145 +1,112 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj2-f15.google.com (mail-pj2-f15.google.com [74.125.227.143])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D6094E77EA;
-	Thu, 17 Sep 2026 16:09:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E931649D5BF
+	for <patches@lists.linux.dev>; Thu, 17 Sep 2026 16:19:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.227.143
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789661363; cv=none; b=fbyS3ZygE3YTnnThwzJ1C0uZqp+CuAYiy8T5S0rt86HcYmRqzB2iaR+hxPzBjY9J0dGD8vKqjInRH86ctAvazd6z7XYAuB/PLvhzt1OPwrPAnExvM97PgCvCxOzWPBK/r8NRdVxl/tudDSp1VGcW1tYc95rool/82Oc2mD1oYw4=
+	t=1789661981; cv=none; b=VrWy7LrnqY5zJTo8MoYNUwkO4iCK39Lf00Vq3koCg5yPGjgafyEOR/YUQcpR0ztGDLxRNddWGU2u0QhkRxY5dhM7xvFblIyXn47aVi0Jv5FlUhNsYN5Ex4qvLOF4hA6DHE1H23cWX03Fn0IqijNQoA2GTbYS1C0a8wJHYBwcedk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789661363; c=relaxed/simple;
-	bh=Q+WDzO4wjv8Gd5zCZBa8DgX5nhGx4wSgTgfN4yu6sIE=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fxtHZTXHM9qNGTsnWDNof2PKEWhl+SfocB8EiwJ8WRe6lPOS6ZcxMxofjKvRjX3NnhQ5Fep/tYTe4R6ZKx56QuuHl/7AVytPnp5UJZB46NYp+vgYtoSo1vNqfC8xiez8Syj0OedbQUfQkLDLQBw+eTN4bxB9ywdw0FlePTI1UWI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=15+6eF2D; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1789661981; c=relaxed/simple;
+	bh=sBK9rAYvIWibzdWVpiEd2/Z/LGtFEqTtl0liEEnA1+U=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=qlZSJ4LUEc+DEwpn72nrkVjGrmI+ug6TVyRteHMKzP/1l9/AFqLVWTTvEDIocsERzFJ06Hgnv8n7MFVA3F4JybqzPrB5MGIh92V4MEgZqAXpyfh9FwHTg8uRgFVmG0KBV62yz77fYqS6sQpGAuRBMaQsHy/vmmo2vTwXwTLE8Tk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=A/W4fNMf; arc=none smtp.client-ip=74.125.227.143
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="15+6eF2D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C24941F000FF;
-	Thu, 17 Sep 2026 16:09:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789661362;
-	bh=m9K3GhASpI5t+2iOsIBK74nhhEBKrFBuVyOt0QdKTOQ=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=15+6eF2DvpjpgMPRD8cfKCARY39q+YaV9sPXLzEEXeFBHd+BIZ4nz+Ahv+vuEiIr0
-	 5tNZR3KP8bWFbnXVv6X61PEtBzNflFUvqFqYVZ8+oA1cMLgnargsTCBLslWhkW7nW8
-	 qDfrbHi0yD3dSaLWpTVO03A3KFu8NQWHWsmeq/ZE=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Jan Volckaert <janvolck@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0168/1250] net: usb: qmi_wwan: add MeiG SRM813Q
-Date: Thu, 17 Sep 2026 15:59:23 +0100
-Message-ID: <20260917151556.645356188@linuxfoundation.org>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
-References: <20260917151551.901433442@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A/W4fNMf"
+Received: by mail-pj2-f15.google.com with SMTP id d9443c01a7336-2d747f01363so8475815ad.2
+        for <patches@lists.linux.dev>; Thu, 17 Sep 2026 09:19:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1789661978; x=1790266778; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=n3Q3dw1h6lNTZbcjfSRox23JL1XpMzI4Vd4A66LaGv8=;
+        b=A/W4fNMfjs52eIBMo4lXnduSb4Siz2foitvY/OwictfzYg/gvXmV/+BTrPWkkaBZQW
+         bZ8iAkVRtweUWYTgHULzyI15nIGwkLpMF6Nq3brJBib0RzmyDte3SiK4/MO4Tg0O0RPY
+         Qa+jc3TEdVuzp3/xrV7CDEGJ8gimwoPevhb35Tt5jjv00jE51niqCAqOr6d+EGXyNqng
+         33Om+/Q9Vgf+AJ/n6JTNhxZnofn2akSBvnPfI/fuhlCj8wQgHVnzcuhts2G5Dgtnpb1w
+         AigJz6MHABIBhvO0ApTKS1Et2/72GnXjvXBQYDqGyx/C9DBYeavxWBARHcdDqpM5QcnB
+         7UUw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1789661978; x=1790266778;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=n3Q3dw1h6lNTZbcjfSRox23JL1XpMzI4Vd4A66LaGv8=;
+        b=YqAmhTp6sH05AW00aFFyL9P/zhksaCEtCzAGHXl0Osb7PYcIrbqqo+eGyp4nH7OHIv
+         Tn7iM7ONo93rHdMWULhFnPETzryvZD66o6cBsq/aHiR5HBQ9hejxYkctT9gUmZR78vJw
+         FaQcvtFVpsto9cexUMNFc/8BTg4NPOwrNQs6cUGg5SqbTAq4HNZMyDG9UounY6JcxAph
+         vTuAQrgW7Sb/9kUnD2FwrivFI99V7p22tMZjTOQSTV6phQrmLPaS2F9Mw4Tcb6nQLsov
+         SYXZaspKr0kZHozi5yYcCKi91YVbJnazGKV1WY3YYCr0jIL/LtmAeVks4NYgdkx6Na5V
+         9Idg==
+X-Gm-Message-State: AFuF++kqahlP3Z17OeQdFFwCOtBtxwX5NMX0m5KW8GmlA2ufKm7yn7G9
+	vYmYkqoVcIYi1zUt+t0PXE7mpyySzYDNpfCgGxVIzOPFKsBQX37gSLcT
+X-Gm-Gg: AYBFou2MzTxki16jDQ4yGcwJCfSh0lNUPHVXqh/VWw677WwyHJv62lDB9+P9Qir4UR9
+	MDk2fWlKk3xnLcIJjYUeIj4YcHIUfGgBHCizTCu4AY9vJpysTzWHp7SU1gml9wBeSJ4r02h6xrv
+	4kaFQp0tVRSgu+lSUzOHyz1QjpYh+tg/Gr29rSRoRNdRAqFjSqPApRuctUdffp1BH+SmXTXxFai
+	E/7toum49JusgbDE6EHNrUBj76EpEx4JjrADp6O7I4eVzUS0SfabV2B7L/MO0zqaBiVf7rG0P6Y
+	M+kzDe4dUPCjum9cClv4n58TWNKn+AHM4dsHpX/gk37XQytcHfMoETPEg8MJXFbieF2+ifHvzTa
+	Xn/CYjXM1QV6GPgbhoXn6LcVdiDZhPb2/x4OjK5ChbqPuSAvfoM1zan4xSAO/xl1UMKdXV5tVhL
+	iZ7NivSbNBtqHlkIq7dIMJHSyccJRoytD0aekddII4HYBy/Lr+p18afrKgM9WMMAfPI/BBxWQMu
+	B7Z+JMJ/rjz+3L/+GFqgdDb8g==
+X-Received: by 2002:a17:903:32cb:b0:2dd:ad74:ac80 with SMTP id d9443c01a7336-2ddad74adcbmr14361355ad.27.1789661977897;
+        Thu, 17 Sep 2026 09:19:37 -0700 (PDT)
+Received: from [10.67.48.245] ([192.19.223.252])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2dd89c3316dsm29772185ad.0.2026.09.17.09.19.35
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 17 Sep 2026 09:19:36 -0700 (PDT)
+Message-ID: <6edcfdb5-f73b-474c-96c2-96913ca5ed25@gmail.com>
+Date: Thu, 17 Sep 2026 09:19:34 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 7.2 000/733] 7.2.7-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
+ sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
+ hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
+ sr@sladewatkins.com
+References: <20260917151350.597953846@linuxfoundation.org>
+Content-Language: en-US, fr-FR
+From: Florian Fainelli <f.fainelli@gmail.com>
+In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+On 9/17/26 08:05, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 7.2.7 release.
+> There are 733 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Sat, 19 Sep 2026 15:12:28 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v7.x/stable-review/patch-7.2.7-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-7.2.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-------------------
+On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
+BMIPS_GENERIC:
 
-From: Jan Volckaert <janvolck@gmail.com>
-
-[ Upstream commit 9758c11fc6c138a79a28a5659feeaa3abde7aa6a ]
-
-Add support for the Qualcomm Technology Snapdragon X35-based MeiG SRM813Q
-module.
-
-The module can be put in different modes via AT commands
-to enable/disable GPS functionality:
-
-MODEM - PPP mode(2dee:4d63): AT+SER=1,1
-
-If#= 0: RMNET
-If#= 1: DIAG/ADB
-If#= 2: MODEM
-If#= 3: AT
-
-P:  Vendor=2dee ProdID=4d63 Rev=05.15
-S:  Manufacturer=MEIG
-S:  Product=LTE-A Module
-S:  SerialNumber=1bd51f0e
-C:  #Ifs= 4 Cfg#= 1 Atr=80 MxPwr=500mA
-I:  If#= 0 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=qmi_wwan
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=82(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
-I:  If#= 1 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=85(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=87(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-
-NMEA mode(2dee:4d64): AT+SER=51,1
-
-If#= 0: RMNET
-If#= 1: DIAG/ADB
-If#= 2: NMEA
-If#= 3: AT
-
-P:  Vendor=2dee ProdID=4d64 Rev=05.15
-S:  Manufacturer=MEIG
-S:  Product=LTE-A Module
-S:  SerialNumber=1bd51f0e
-C:  #Ifs= 4 Cfg#= 1 Atr=80 MxPwr=500mA
-I:  If#= 0 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=qmi_wwan
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=82(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
-I:  If#= 1 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=60 Driver=option
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=85(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=87(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-
-Signed-off-by: Jan Volckaert <janvolck@gmail.com>
-Link: https://patch.msgid.link/20260517153237.55995-2-janvolck@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/net/usb/qmi_wwan.c | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/drivers/net/usb/qmi_wwan.c b/drivers/net/usb/qmi_wwan.c
-index c6d9ea259c0b8..8178a8758cd3f 100644
---- a/drivers/net/usb/qmi_wwan.c
-+++ b/drivers/net/usb/qmi_wwan.c
-@@ -1453,6 +1453,8 @@ static const struct usb_device_id products[] = {
- 	{QMI_QUIRK_SET_DTR(0x1546, 0x1342, 4)},	/* u-blox LARA-L6 */
- 	{QMI_QUIRK_SET_DTR(0x33f8, 0x0104, 4)}, /* Rolling RW101 RMNET */
- 	{QMI_FIXED_INTF(0x2dee, 0x4d22, 5)},    /* MeiG Smart SRM825L */
-+	{QMI_QUIRK_SET_DTR(0x2dee, 0x4d63, 0)}, /* MeiG SRM813Q w/ Modem(PPP) */
-+	{QMI_QUIRK_SET_DTR(0x2dee, 0x4d64, 0)}, /* MeiG SRM813Q w/ NMEA */
- 
- 	/* 4. Gobi 1000 devices */
- 	{QMI_GOBI1K_DEVICE(0x05c6, 0x9212)},	/* Acer Gobi Modem Device */
+Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
 -- 
-2.53.0
-
-
-
+Florian
