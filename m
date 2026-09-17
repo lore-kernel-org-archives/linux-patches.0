@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F65F372EE4;
-	Thu, 17 Sep 2026 17:35:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87C444B44D2;
+	Thu, 17 Sep 2026 17:35:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666513; cv=none; b=NftQuOMcEns+XVVjWnM0fjqgBCM5MxQUWZmShBGjpjfmu1GfR5x0IRjW6GYaXueLbz/ebuQJ6GIuAlRl0hqpZa89OZzQDtvh93YRyRcBSYjo/G+twv30TMvQ9brSw7dup57er8alLwHriA4vdTivAw5CB5oqn/VvYoszMb+dRYU=
+	t=1789666516; cv=none; b=X0Wil+XAS/h9g1vh3aKW9DQMtM6tE23HXqZimTmfbqNp1Hb17SpcU4EMXEGA/PrwqRJARwGjmkcO8YUOR9saj/THkoEMtSRRDNoMpMdFtUTHRIweH+/thq+VAjWMlOt91cJTUWCXfxa+4pkbyl7j6AvnSJNVOQ2bQhkJ9pDhthc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666513; c=relaxed/simple;
-	bh=GSGvAWzdpq4ZD3+SFawNuVNki/itWeCBNWaW5bfkft0=;
+	s=arc-20240116; t=1789666516; c=relaxed/simple;
+	bh=q8Dp5XAgd/2Z5rcFpjz5TOJn/dnqn7spjuYIxe21PF0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SVMTZ912J85fvGi2DaECR4j3tbHdRcKSN6bPZCqZ0vZgzLwPIdFqjAnAQgrALjUGf+kVK/VFwXsDFWBtAije7mXCjt5P43xi3RVjw6ZI732qLCN5cGpO4nalmToUhoK75/+hSJMPbBmPJu2xJIbijFDVp6v9GsWg0P5YZA1fKbM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1l157N54; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qcudBAu7xPRhIIQFyaxmRuff+erKxjZxakcaLAGVp+3ljOpRodpnctnRnvVdGBLDGYD1FAFognSpbr7gB80qG7pVy6Uew66RRRBdSe2NS3GjdScSto98z3RKaGuNgncIAhz3tQWRb4633XXWEuHnRLAca/6OkRFO96/3FFOTyZw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rKHgJ61Z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1l157N54"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E649B1F000FF;
-	Thu, 17 Sep 2026 17:35:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rKHgJ61Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF5E21F000FF;
+	Thu, 17 Sep 2026 17:35:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666512;
-	bh=d9E9fBNwWua3Sb9GPhUK7VN28xY1vmFT/n4hpl7qiL4=;
+	s=korg; t=1789666515;
+	bh=VOkarU040Fh0XVfowLAkjvFRHEqJL/Ot1a5QNZQ4wPY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1l157N54+lA14Hq3eXki4NarslBFAl4IQYtUw/RqxtcXJ3c1ddiBsVdJnDpEn7/UP
-	 kO3h+EJP38lVXxkg5gX7L/2+QQhockqniws7wzHEdzus64ufNO3UDXPNdrRnlMzVIP
-	 tMWPUnB3IvPjyxfxBiku/FDLYVurhJy7tjY/W+YU=
+	b=rKHgJ61Z2NSo8/RgqcRKSp/gOe9eobkHWqirqNaaDcOmAQXLFuj9chOY50E5k6FBu
+	 of663FHWqSC70xjNkv9xqk1mARKNQVnsPOlOD2WSBjzY8zZj7fBPDEf7wuCahFdTEN
+	 wQTNzyokRDchGrJqpL8CjMLsjni+CtVL6bvAvLU4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Michael Bommarito <michael.bommarito@gmail.com>,
 	Benjamin Gaignard <benjamin.gaignard@collabora.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.18 1060/1250] media: hevc: add bounded tile-count helpers
-Date: Thu, 17 Sep 2026 16:14:15 +0100
-Message-ID: <20260917151620.852788321@linuxfoundation.org>
+Subject: [PATCH 6.18 1061/1250] media: verisilicon: hantro: bound G2 HEVC tile loop to the buffer capacity
+Date: Thu, 17 Sep 2026 16:14:16 +0100
+Message-ID: <20260917151620.879709204@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -53,69 +53,45 @@ Content-Transfer-Encoding: 8bit
 
 From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit 592dd4f8442a13bed6e946d73d3164ba38b33bbd upstream.
+commit 06236b094c899c22c12ac5097935eb6719293de8 upstream.
 
-The stateless HEVC decoders compute the number of tile columns and rows
-from num_tile_columns_minus1 / num_tile_rows_minus1 and clamp it to the
-column_width_minus1[] / row_height_minus1[] capacity before using it as a
-loop bound. Add shared helpers in a new <media/v4l2-hevc.h> so the rkvdec
-and hantro drivers do not each open-code the min_t() clamp.
+prepare_tile_info_buffer() writes one entry per tile into the tile_sizes
+DMA buffer, sized for a grid equal to the PPS uAPI array capacity. Use the
+bounded v4l2_hevc_pps_num_tile_columns() / v4l2_hevc_pps_num_tile_rows()
+helpers so the loops stay inside the buffer.
 
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Fixes: cb5dd5a0fa51 ("media: hantro: Introduce G2/HEVC decoder")
 Assisted-by: Claude:claude-opus-4-8
-Fixes: 256fa3920874 ("media: v4l: Add definitions for HEVC stateless decoding")
 Cc: stable@vger.kernel.org
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
 Reviewed-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/media/v4l2-hevc.h |   41 +++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 41 insertions(+)
- create mode 100644 include/media/v4l2-hevc.h
+ drivers/media/platform/verisilicon/hantro_g2_hevc_dec.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- /dev/null
-+++ b/include/media/v4l2-hevc.h
-@@ -0,0 +1,41 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+/*
-+ * Helper functions for HEVC stateless codecs.
-+ */
+--- a/drivers/media/platform/verisilicon/hantro_g2_hevc_dec.c
++++ b/drivers/media/platform/verisilicon/hantro_g2_hevc_dec.c
+@@ -5,6 +5,8 @@
+  * Copyright (C) 2020 Safran Passenger Innovations LLC
+  */
+ 
++#include <media/v4l2-hevc.h>
 +
-+#ifndef _MEDIA_V4L2_HEVC_H
-+#define _MEDIA_V4L2_HEVC_H
-+
-+#include <linux/minmax.h>
-+#include <media/v4l2-ctrls.h>
-+
-+/**
-+ * v4l2_hevc_pps_num_tile_columns - number of HEVC tile columns, bounded
-+ * @pps: the V4L2 HEVC PPS control
-+ *
-+ * Return the number of tile columns (num_tile_columns_minus1 + 1) clamped to
-+ * the capacity of column_width_minus1[]. The control validation already
-+ * rejects out-of-range counts; this keeps the consuming drivers bounded too.
-+ */
-+static inline unsigned int
-+v4l2_hevc_pps_num_tile_columns(const struct v4l2_ctrl_hevc_pps *pps)
-+{
-+	return min_t(unsigned int, pps->num_tile_columns_minus1 + 1,
-+		     ARRAY_SIZE(pps->column_width_minus1));
-+}
-+
-+/**
-+ * v4l2_hevc_pps_num_tile_rows - number of HEVC tile rows, bounded
-+ * @pps: the V4L2 HEVC PPS control
-+ *
-+ * Return the number of tile rows (num_tile_rows_minus1 + 1) clamped to the
-+ * capacity of row_height_minus1[].
-+ */
-+static inline unsigned int
-+v4l2_hevc_pps_num_tile_rows(const struct v4l2_ctrl_hevc_pps *pps)
-+{
-+	return min_t(unsigned int, pps->num_tile_rows_minus1 + 1,
-+		     ARRAY_SIZE(pps->row_height_minus1));
-+}
-+
-+#endif /* _MEDIA_V4L2_HEVC_H */
+ #include "hantro_hw.h"
+ #include "hantro_g2_regs.h"
+ 
+@@ -15,8 +17,8 @@ static void prepare_tile_info_buffer(str
+ 	const struct v4l2_ctrl_hevc_pps *pps = ctrls->pps;
+ 	const struct v4l2_ctrl_hevc_sps *sps = ctrls->sps;
+ 	u16 *p = (u16 *)((u8 *)ctx->hevc_dec.tile_sizes.cpu);
+-	unsigned int num_tile_rows = pps->num_tile_rows_minus1 + 1;
+-	unsigned int num_tile_cols = pps->num_tile_columns_minus1 + 1;
++	unsigned int num_tile_rows = v4l2_hevc_pps_num_tile_rows(pps);
++	unsigned int num_tile_cols = v4l2_hevc_pps_num_tile_columns(pps);
+ 	unsigned int pic_width_in_ctbs, pic_height_in_ctbs;
+ 	unsigned int max_log2_ctb_size, ctb_size;
+ 	bool tiles_enabled, uniform_spacing;
 
 
