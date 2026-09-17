@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B71474F85DD;
-	Thu, 17 Sep 2026 16:59:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1A364FC332;
+	Thu, 17 Sep 2026 16:59:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789664378; cv=none; b=Fc9l7c7MEWVbWoeakp1BnX/hgIgSWqgLTfvnZgxMhwYIjS8ImvPIUM0F/+e0FgErz39FOuzn7U2eFB+r+VVIMBcSLEVWBvpRMJN4gpAvH+HAwJaMW5WU3f7UV/UJyWdmpwaGg0g3SBYWnutKtIYWlmxsvm2RuZKjQBX14ZlovjE=
+	t=1789664381; cv=none; b=oU8twHuCb/mOCuuqhOVLwOnT4r3mdmbSRuqCduPCjYCOHnOxsjL8v/GIPdmul/PkiZhOeYIINBoccy5FpBnIEm9tdxmpGTJYNUKICNJbJJ34YJCOax1H1a3PMb1M7Pi5y9wOIMJ1lEtAtwjkkB0rcQ5brtSonYiqbwIzYsGVs8E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789664378; c=relaxed/simple;
-	bh=TaolKg3UH9oJwD27/0yfUoj4fKlK5qWOyuOuskPjGkQ=;
+	s=arc-20240116; t=1789664381; c=relaxed/simple;
+	bh=P8ZtOlBmcsf+KjSj2hCQ98JNKYeD1kO3JSBS5m3N4xk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YKmEPbKUxgkemJG5HtXnEuXokrJYWcF7osNi+1JpUxg/mGRsjlIQhdkOG152X/y5PwTj7PNP3xV0cGfNseV7teNZYaXJnMryDbdKGTYzDe0Ma0muQvFwnt9FYQm9ouj91iitzPhtwu9TzFNVeG1+5x1nM5/Sn/RrRAEixD+eDDs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uqiwVYSr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hlrH/mPpWvtpEmqG5bCvgZX4vFc+9Kv6r1Kp+Z0/LFk0j/43F6Qop/SmKOimoyaPiIE4DhwLixT6+tASYosU/TxATpqpZiqmfC6anv18Jn0jQQ/sy48HQydTV84Cv5S/UNaGb5Cq6ySzPrRDeJ5VOKRrkbQuc+B4m2ewtpqLNkw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p1bLO0iP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uqiwVYSr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A2DA1F00893;
-	Thu, 17 Sep 2026 16:59:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p1bLO0iP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B28C1F000FF;
+	Thu, 17 Sep 2026 16:59:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789664377;
-	bh=uMZTb/TjrZMSrS6gVYtNLx8fkAdoso2XzQ9y1/1dBXE=;
+	s=korg; t=1789664380;
+	bh=RhNwk4RZvAUZHHVhlEHRBvr1eyptgj5ZIUqlZrK9H3I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uqiwVYSr2zy1eturm9+bBhUjhHcdO+x8LEqanbKr/DL53xrfGUNcel19VRj7Fc9H5
-	 c49vb0M2e1NDoc3WTFGKaugBTwoBsMWD7NA6xdpkZZMn6Q2hyMFXnrlUYmSaaLiVVC
-	 AEpO6Ro/LwzV0z3gLdCfgV09FENiFar8s8lFZAqk=
+	b=p1bLO0iPjiVhoQxRbv+48IyX856Nb9WKMVifLIRp2J/CJTbvmlNLdDg45zVakJZ3x
+	 gQkTZZkhyLlX6q0LThaY4o27h+PGGrTo8CIOc+i/qQFuTVvYfGkUw7UHyCSIdE6i5u
+	 fLDYFIDmNPpGLt3vaHOxZgSjYTy+NdqN/IpxX2cI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Thiyagarajan Pandiyan <thiyagarajan@aerlync.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0336/1250] ipv6: use READ_ONCE() for bindv6only default in inet6_create()
-Date: Thu, 17 Sep 2026 16:02:11 +0100
-Message-ID: <20260917151601.193515417@linuxfoundation.org>
+Subject: [PATCH 6.18 0337/1250] wifi: nl80211: Increase ie_len size to prevent truncated IEs in new peer notifications
+Date: Thu, 17 Sep 2026 16:02:12 +0100
+Message-ID: <20260917151601.218707588@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -52,36 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Thiyagarajan Pandiyan <thiyagarajan@aerlync.com>
 
-[ Upstream commit 7a20eb54224ab7481c1f5a1619a6a5677be93eed ]
+[ Upstream commit dfb67ae569bf0726187725b1ef8d89377778861e ]
 
-inet6_create() reads net->ipv6.sysctl.bindv6only locklessly.
+Currently, ie_len in cfg80211_notify_new_peer_candidate is defined as
+1-byte field, capping the maximum IE list size at 255 bytes. When a
+large beacon is received, the IE list is truncated, passing incomplete
+data to wpa_supplicant. This causes supplicant to fail parsing the IEs.
 
-Use READ_ONCE() for this sysctl access.
+Increasing the size of ie_len to allow the full length of the IE list to
+be forwarded properly.
 
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260602002414.1504106-1-runyu.xiao@seu.edu.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Thiyagarajan Pandiyan <thiyagarajan@aerlync.com>
+Link: https://patch.msgid.link/20260605054307.427874-1-thiyagarajan@aerlync.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/af_inet6.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/net/cfg80211.h | 2 +-
+ net/wireless/nl80211.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv6/af_inet6.c b/net/ipv6/af_inet6.c
-index f8e1dc4f3227f..1c45e1d15506c 100644
---- a/net/ipv6/af_inet6.c
-+++ b/net/ipv6/af_inet6.c
-@@ -226,7 +226,7 @@ static int inet6_create(struct net *net, struct socket *sock, int protocol,
- 	np->pmtudisc	= IPV6_PMTUDISC_WANT;
- 	inet6_assign_bit(REPFLOW, sk, READ_ONCE(net->ipv6.sysctl.flowlabel_reflect) &
- 				      FLOWLABEL_REFLECT_ESTABLISHED);
--	sk->sk_ipv6only	= net->ipv6.sysctl.bindv6only;
-+	sk->sk_ipv6only	= READ_ONCE(net->ipv6.sysctl.bindv6only);
- 	sk->sk_txrehash = READ_ONCE(net->core.sysctl_txrehash);
+diff --git a/include/net/cfg80211.h b/include/net/cfg80211.h
+index 634743ba5fa66..0b9bc2247d323 100644
+--- a/include/net/cfg80211.h
++++ b/include/net/cfg80211.h
+@@ -8255,7 +8255,7 @@ void cfg80211_ibss_joined(struct net_device *dev, const u8 *bssid,
+  * cfg80211 then sends a notification to userspace.
+  */
+ void cfg80211_notify_new_peer_candidate(struct net_device *dev,
+-		const u8 *macaddr, const u8 *ie, u8 ie_len,
++		const u8 *macaddr, const u8 *ie, size_t ie_len,
+ 		int sig_dbm, gfp_t gfp);
  
- 	/* Init the ipv4 part of the socket since we can have sockets
+ /**
+diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
+index 906a974cce5dc..28b9cd017ae38 100644
+--- a/net/wireless/nl80211.c
++++ b/net/wireless/nl80211.c
+@@ -20379,7 +20379,7 @@ void nl80211_send_ibss_bssid(struct cfg80211_registered_device *rdev,
+ }
+ 
+ void cfg80211_notify_new_peer_candidate(struct net_device *dev, const u8 *addr,
+-					const u8 *ie, u8 ie_len,
++					const u8 *ie, size_t ie_len,
+ 					int sig_dbm, gfp_t gfp)
+ {
+ 	struct wireless_dev *wdev = dev->ieee80211_ptr;
 -- 
 2.53.0
 
