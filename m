@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35DA233B6F9;
-	Thu, 17 Sep 2026 15:31:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10F3E38B124;
+	Thu, 17 Sep 2026 15:31:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659079; cv=none; b=RNY7GQ/+7lWnxjZnmYDjxWGrTgVpPchMQUS6G5zFqV0GMHxIzPiGZEq9+DUSvdsGb8yd1fkjK1HXjyeEIL4ekgAe+nyzCOH/mfT01tYPvAjwYO48+eoYT0wu+a4HUyo6zb5TRv8LNHMuU8Ziy1juqmf8kN5bbYp8bVSPw6xCTww=
+	t=1789659079; cv=none; b=Nk+6PGVzBr/gc6gNlm7aMSvv4uhUiIOLEaVdH0cY7RVLmOhEBNuPeryoZf1WAn9OzDANXEE7We9ANUQVHHyGEnngy6AzL7PlsxaWGeJm4QfWaDiRhBW7Yo0q2d1ZhVz83C8TuhZRkedzrTe3krnD7eNvUWWiPKXtBi0GIe9Cahc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1789659079; c=relaxed/simple;
-	bh=x7maBbbsDgCPW3mo2dbeMfe0u8CUgj+e9kD14FRuxHA=;
+	bh=Qma5y8K1FX87FlKZGL3ZcbG19XQvszsP8G9dl9xjPLU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u20DqziXA7GbbeRWYZNHtNZAZ+IAJ0hTcby/7fuUSAa4Jai0NLedvK0RUfy8/JYsznsIlu2b7tKZmE4o+LiWDvk7JQiDYnBkA8au/Uz9GttT0Hj/HoLtxMrMkGiJPeqlGO2szbgcCli/fGmkoILLFD43YhTUaDNyUwKjyq1URvM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nFTlfZrD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hmzJ3kRfWeAr6BWohRA1AIHHIdjmejkTDr7R1fncw024EH3rIkCcO3Ifeg4cpW1dBT2aLweF4OXJzacld51XMnKki0VKlVYxwtdzhHP9y11jCsn/s4tR90EZ5pGW+JMX8RucbKZpXKup4zNRF21j5xkz/mYXBhqFW6cNPLwr7Kg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pGvHuhcZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nFTlfZrD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A3061F0089B;
-	Thu, 17 Sep 2026 15:31:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pGvHuhcZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E9651F000FF;
+	Thu, 17 Sep 2026 15:31:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659069;
-	bh=drRYaDALliuqRXUycj4YkZGCMsWEvzh+xQXAJkASQVk=;
+	s=korg; t=1789659072;
+	bh=1FlHRBROhhDdzMVnijV8Bv7UligGMxCiBrWjfKNAWTo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nFTlfZrDuTtRdvNPPttuTru+YwgXN/gOO+ADPw+g0whLPYFn8H0bYyarI3D8yDJVn
-	 oQa6/eljFuvdWYramz3Cfhbfe9XiyrQY8F8ZwJ6qIMzdFteYeGMrEj8Dgk4H7le8Q9
-	 aqH0sG8iwUH6m3Asd5R1crsA0lVezg7k5d5SBf+k=
+	b=pGvHuhcZpmyhrnTQBNPr+lcNqwKdiG6bxHOyG3DqGDzqLeONB1W/bd3weTcjNzqYW
+	 5a5dXbueFbUdSzUr+uwPS6t0uX+enuxVHP8WsvBxEyexKn72SFvzJB7R0iI8VrY73w
+	 BCGWnyGAc52X/9dtXgjtJ54cfLzic/Ikm+BlFdJ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miguel Ojeda <ojeda@kernel.org>,
-	Mehmet Koseoglu <mehmet.mkoseoglu@gmail.com>,
+	syzbot+3d99fb01bcd740f2fc1e@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 134/733] rust: samples: add missing newlines in rust_print_main
-Date: Thu, 17 Sep 2026 16:07:22 +0100
-Message-ID: <20260917151354.367273926@linuxfoundation.org>
+Subject: [PATCH 7.2 135/733] igmp: convert struct ip_sf_list to RCU
+Date: Thu, 17 Sep 2026 16:07:23 +0100
+Message-ID: <20260917151354.394399025@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -51,63 +53,584 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mehmet Koseoglu <mehmet.mkoseoglu@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit e510334fbaeaa016ac76d80b4c5f47611c5f7860 ]
+[ Upstream commit 2987ee196c88dbde0463dc87d5fb209c684e34a2 ]
 
-Calls to `pr_info!` in `arc_print` are missing trailing newlines, which
-are expected as the `pr_*!` documentation shows.
+Commit 23d2b94043ca ("igmp: Add ip_mc_list lock in ip_check_mc_rcu")
+added spin_lock_bh(&im->lock) to ip_check_mc_rcu() to prevent a
+use-after-free while iterating im->sources during concurrent deletions.
 
-Add the missing `\n` to all four formatting strings.
+However, ip_check_mc_rcu() is called from RCU read-side critical
+sections in packet receive and route lookup fast paths (e.g.
+__mkroute_output(), ip_route_input_rcu(), and __udp4_lib_rcv()).
 
-Fixes: f431c5c581fa ("samples: rust: print: Add sample code for Arc printing")
-Fixes: 47cb6bf7860c ("rust: use derive(CoercePointee) on rustc >= 1.84.0")
-Suggested-by: Miguel Ojeda <ojeda@kernel.org>
-Link: https://github.com/Rust-for-Linux/linux/issues/1139
-Signed-off-by: Mehmet Koseoglu <mehmet.mkoseoglu@gmail.com>
-Link: https://patch.msgid.link/20260828015148.221737-2-mehmet.mkoseoglu@gmail.com
-[ Reworded to fix the description of the missing-newline behavior. - Miguel ]
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+When igmpv3_send_cr() or igmpv3_send_report() holds &pmc->lock and
+calls add_grec() -> igmpv3_newpack() -> ip_route_output_ports(),
+an XFRM policy matching a multicast destination triggers
+xfrm_tmpl_resolve_one() -> xfrm4_get_saddr() -> __mkroute_output() ->
+ip_check_mc_rcu(). This attempts to acquire &im->lock while &pmc->lock
+is already held on the same CPU, triggering a lockdep recursive locking
+warning / deadlock.
+
+Fix this by converting IPv4 struct ip_sf_list to RCU, mirroring the
+IPv6 implementation in net/ipv6/mcast.c:
+
+1. Add struct rcu_head to struct ip_sf_list and annotate sf_next,
+   sources, and tomb as __rcu pointers.
+2. Use rcu_assign_pointer() and kfree_rcu() for list updates and
+   deletions.
+3. Remove spin_lock_bh(&im->lock) from ip_check_mc_rcu() and traverse
+   im->sources locklessly with for_each_psf_rcu(), reading and writing
+   counter fields with READ_ONCE() and WRITE_ONCE().
+
+Note: RCU conversion of /proc/net/mcfilter will be done in a
+separate patch.
+
+Fixes: 23d2b94043ca ("igmp: Add ip_mc_list lock in ip_check_mc_rcu")
+Reported-by: syzbot+3d99fb01bcd740f2fc1e@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=3d99fb01bcd740f2fc1e
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260827160656.903003-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- samples/rust/rust_print_main.rs | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ include/linux/igmp.h |   7 +-
+ net/ipv4/igmp.c      | 210 +++++++++++++++++++++++++++----------------
+ 2 files changed, 135 insertions(+), 82 deletions(-)
 
-diff --git a/samples/rust/rust_print_main.rs b/samples/rust/rust_print_main.rs
-index 682207c81fc2b..01729e87d6b5a 100644
---- a/samples/rust/rust_print_main.rs
-+++ b/samples/rust/rust_print_main.rs
-@@ -23,10 +23,10 @@ fn arc_print() -> Result {
-     let b = UniqueArc::new("hello, world", GFP_KERNEL)?;
+diff --git a/include/linux/igmp.h b/include/linux/igmp.h
+index 3a2d35a9f3078..a0cf0398519fd 100644
+--- a/include/linux/igmp.h
++++ b/include/linux/igmp.h
+@@ -57,20 +57,21 @@ struct ip_mc_socklist {
+ };
  
-     // Prints the value of data in `a`.
--    pr_info!("{}", a);
-+    pr_info!("{}\n", a);
+ struct ip_sf_list {
+-	struct ip_sf_list	*sf_next;
++	struct ip_sf_list __rcu	*sf_next;
+ 	unsigned long		sf_count[2];	/* include/exclude counts */
+ 	__be32			sf_inaddr;
+ 	unsigned char		sf_gsresp;	/* include in g & s response? */
+ 	unsigned char		sf_oldin;	/* change state */
+ 	unsigned char		sf_crcount;	/* retrans. left to send */
++	struct rcu_head		rcu;
+ };
  
-     // Uses ":?" to print debug fmt of `b`.
--    pr_info!("{:?}", b);
-+    pr_info!("{:?}\n", b);
- 
-     let a: Arc<&str> = b.into();
-     let c = a.clone();
-@@ -42,7 +42,7 @@ fn arc_print() -> Result {
- 
-         use kernel::fmt::Display;
-         fn arc_dyn_print(arc: &Arc<dyn Display>) {
--            pr_info!("Arc<dyn Display> says {arc}");
-+            pr_info!("Arc<dyn Display> says {arc}\n");
-         }
- 
-         let a_i32_display: Arc<dyn Display> = Arc::new(42i32, GFP_KERNEL)?;
-@@ -53,7 +53,7 @@ fn arc_dyn_print(arc: &Arc<dyn Display>) {
-     }
- 
-     // Pretty-prints the debug formatting with lower-case hexadecimal integers.
--    pr_info!("{:#x?}", a);
-+    pr_info!("{:#x?}\n", a);
- 
-     Ok(())
+ struct ip_mc_list {
+ 	struct in_device	*interface;
+ 	__be32			multiaddr;
+ 	unsigned int		sfmode;
+-	struct ip_sf_list	*sources;
+-	struct ip_sf_list	*tomb;
++	struct ip_sf_list __rcu	*sources;
++	struct ip_sf_list __rcu	*tomb;
+ 	unsigned long		sfcount[2];
+ 	union {
+ 		struct ip_mc_list *next;
+diff --git a/net/ipv4/igmp.c b/net/ipv4/igmp.c
+index bb2d4441a4929..0a5b7ded23be2 100644
+--- a/net/ipv4/igmp.c
++++ b/net/ipv4/igmp.c
+@@ -188,6 +188,10 @@ static void ip_ma_put(struct ip_mc_list *im)
+ 	}
  }
+ 
++#define pmc_dereference(e, pmc) \
++	rcu_dereference_protected(e, lockdep_is_held(&(pmc)->lock) || \
++				     lockdep_is_held(&(pmc)->interface->mc_tomb_lock))
++
+ #define for_each_pmc_rcu(in_dev, pmc)				\
+ 	for (pmc = rcu_dereference(in_dev->mc_list);		\
+ 	     pmc != NULL;					\
+@@ -198,13 +202,28 @@ static void ip_ma_put(struct ip_mc_list *im)
+ 	     pmc != NULL;					\
+ 	     pmc = rtnl_dereference(pmc->next_rcu))
+ 
++#define for_each_psf_mclock(pmc, psf)				\
++	for (psf = pmc_dereference((pmc)->sources, pmc);	\
++	     psf;						\
++	     psf = pmc_dereference(psf->sf_next, pmc))
++
++#define for_each_psf_rcu(im, psf)				\
++	for (psf = rcu_dereference((im)->sources);		\
++	     psf;						\
++	     psf = rcu_dereference(psf->sf_next))
++
++#define for_each_psf_tomb(pmc, psf)				\
++	for (psf = pmc_dereference((pmc)->tomb, pmc);		\
++	     psf;						\
++	     psf = pmc_dereference(psf->sf_next, pmc))
++
+ static void ip_sf_list_clear_all(struct ip_sf_list *psf)
+ {
+ 	struct ip_sf_list *next;
+ 
+ 	while (psf) {
+-		next = psf->sf_next;
+-		kfree(psf);
++		next = rcu_dereference_protected(psf->sf_next, 1);
++		kfree_rcu(psf, rcu);
+ 		psf = next;
+ 	}
+ }
+@@ -349,7 +368,7 @@ igmp_scount(struct ip_mc_list *pmc, int type, int gdeleted, int sdeleted)
+ 	struct ip_sf_list *psf;
+ 	int scount = 0;
+ 
+-	for (psf = pmc->sources; psf; psf = psf->sf_next) {
++	for_each_psf_mclock(pmc, psf) {
+ 		if (!is_in(pmc, psf, type, gdeleted, sdeleted))
+ 			continue;
+ 		scount++;
+@@ -494,7 +513,8 @@ static struct sk_buff *add_grec(struct sk_buff *skb, struct ip_mc_list *pmc,
+ 	struct net *net = dev_net(dev);
+ 	struct igmpv3_report *pih;
+ 	struct igmpv3_grec *pgr = NULL;
+-	struct ip_sf_list *psf, *psf_next, *psf_prev, **psf_list;
++	struct ip_sf_list *psf, *psf_next, *psf_prev;
++	struct ip_sf_list __rcu **psf_list;
+ 	int scount, stotal, first, isquery, truncate;
+ 	unsigned int mtu;
+ 
+@@ -517,7 +537,7 @@ static struct sk_buff *add_grec(struct sk_buff *skb, struct ip_mc_list *pmc,
+ 
+ 	psf_list = sdeleted ? &pmc->tomb : &pmc->sources;
+ 
+-	if (!*psf_list)
++	if (!rcu_access_pointer(*psf_list))
+ 		goto empty_source;
+ 
+ 	pih = skb ? igmpv3_report_hdr(skb) : NULL;
+@@ -533,10 +553,12 @@ static struct sk_buff *add_grec(struct sk_buff *skb, struct ip_mc_list *pmc,
+ 	}
+ 	first = 1;
+ 	psf_prev = NULL;
+-	for (psf = *psf_list; psf; psf = psf_next) {
++	for (psf = pmc_dereference(*psf_list, pmc);
++	     psf;
++	     psf = psf_next) {
+ 		__be32 *psrc;
+ 
+-		psf_next = psf->sf_next;
++		psf_next = pmc_dereference(psf->sf_next, pmc);
+ 
+ 		if (!is_in(pmc, psf, type, gdeleted, sdeleted)) {
+ 			psf_prev = psf;
+@@ -583,10 +605,12 @@ static struct sk_buff *add_grec(struct sk_buff *skb, struct ip_mc_list *pmc,
+ 			psf->sf_crcount--;
+ 			if ((sdeleted || gdeleted) && psf->sf_crcount == 0) {
+ 				if (psf_prev)
+-					psf_prev->sf_next = psf->sf_next;
++					rcu_assign_pointer(psf_prev->sf_next,
++							   psf_next);
+ 				else
+-					*psf_list = psf->sf_next;
+-				kfree(psf);
++					rcu_assign_pointer(*psf_list,
++							   psf_next);
++				kfree_rcu(psf, rcu);
+ 				continue;
+ 			}
+ 		}
+@@ -655,28 +679,29 @@ static int igmpv3_send_report(struct in_device *in_dev, struct ip_mc_list *pmc)
+ /*
+  * remove zero-count source records from a source filter list
+  */
+-static void igmpv3_clear_zeros(struct ip_sf_list **ppsf)
++static void igmpv3_clear_zeros(struct ip_sf_list __rcu **ppsf)
+ {
+ 	struct ip_sf_list *psf_prev, *psf_next, *psf;
+ 
+ 	psf_prev = NULL;
+-	for (psf = *ppsf; psf; psf = psf_next) {
+-		psf_next = psf->sf_next;
++	for (psf = rcu_dereference_protected(*ppsf, 1); psf; psf = psf_next) {
++		psf_next = rcu_dereference_protected(psf->sf_next, 1);
+ 		if (psf->sf_crcount == 0) {
+ 			if (psf_prev)
+-				psf_prev->sf_next = psf->sf_next;
++				rcu_assign_pointer(psf_prev->sf_next, psf_next);
+ 			else
+-				*ppsf = psf->sf_next;
+-			kfree(psf);
+-		} else
++				rcu_assign_pointer(*ppsf, psf_next);
++			kfree_rcu(psf, rcu);
++		} else {
+ 			psf_prev = psf;
++		}
+ 	}
+ }
+ 
+ static void kfree_pmc(struct ip_mc_list *pmc)
+ {
+-	ip_sf_list_clear_all(pmc->sources);
+-	ip_sf_list_clear_all(pmc->tomb);
++	ip_sf_list_clear_all(rcu_dereference_protected(pmc->sources, 1));
++	ip_sf_list_clear_all(rcu_dereference_protected(pmc->tomb, 1));
+ 	kfree(pmc);
+ }
+ 
+@@ -710,7 +735,8 @@ static void igmpv3_send_cr(struct in_device *in_dev)
+ 				igmpv3_clear_zeros(&pmc->sources);
+ 			}
+ 		}
+-		if (pmc->crcount == 0 && !pmc->tomb && !pmc->sources) {
++		if (pmc->crcount == 0 && !rcu_access_pointer(pmc->tomb) &&
++		    !rcu_access_pointer(pmc->sources)) {
+ 			if (pmc_prev)
+ 				pmc_prev->next = pmc_next;
+ 			else
+@@ -896,7 +922,7 @@ static int igmp_xmarksources(struct ip_mc_list *pmc, int nsrcs, __be32 *srcs)
+ 	int i, scount;
+ 
+ 	scount = 0;
+-	for (psf = pmc->sources; psf; psf = psf->sf_next) {
++	for_each_psf_mclock(pmc, psf) {
+ 		if (scount == nsrcs)
+ 			break;
+ 		for (i = 0; i < nsrcs; i++) {
+@@ -927,7 +953,7 @@ static int igmp_marksources(struct ip_mc_list *pmc, int nsrcs, __be32 *srcs)
+ 
+ 	/* mark INCLUDE-mode sources */
+ 	scount = 0;
+-	for (psf = pmc->sources; psf; psf = psf->sf_next) {
++	for_each_psf_mclock(pmc, psf) {
+ 		if (scount == nsrcs)
+ 			break;
+ 		for (i = 0; i < nsrcs; i++)
+@@ -1228,11 +1254,12 @@ static void igmpv3_add_delrec(struct in_device *in_dev, struct ip_mc_list *im,
+ 	if (pmc->sfmode == MCAST_INCLUDE) {
+ 		struct ip_sf_list *psf;
+ 
++		for_each_psf_mclock(im, psf)
++			psf->sf_crcount = pmc->crcount;
+ 		pmc->tomb = im->tomb;
+ 		pmc->sources = im->sources;
+-		im->tomb = im->sources = NULL;
+-		for (psf = pmc->sources; psf; psf = psf->sf_next)
+-			psf->sf_crcount = pmc->crcount;
++		RCU_INIT_POINTER(im->tomb, NULL);
++		RCU_INIT_POINTER(im->sources, NULL);
+ 	}
+ 	spin_unlock_bh(&im->lock);
+ 
+@@ -1271,9 +1298,18 @@ static void igmpv3_del_delrec(struct in_device *in_dev, struct ip_mc_list *im)
+ 	if (pmc) {
+ 		im->interface = pmc->interface;
+ 		if (im->sfmode == MCAST_INCLUDE) {
+-			swap(im->tomb, pmc->tomb);
+-			swap(im->sources, pmc->sources);
+-			for (psf = im->sources; psf; psf = psf->sf_next)
++			struct ip_sf_list *sources, *tomb;
++
++			tomb = rcu_replace_pointer(im->tomb,
++						   rcu_dereference_protected(pmc->tomb, 1),
++						   lockdep_is_held(&im->lock));
++			rcu_assign_pointer(pmc->tomb, tomb);
++
++			sources = rcu_replace_pointer(im->sources,
++						      rcu_dereference_protected(pmc->sources, 1),
++						      lockdep_is_held(&im->lock));
++			rcu_assign_pointer(pmc->sources, sources);
++			for_each_psf_mclock(im, psf)
+ 				psf->sf_crcount = in_dev->mr_qrv ?:
+ 					READ_ONCE(net->ipv4.sysctl_igmp_qrv);
+ 		} else {
+@@ -1310,8 +1346,8 @@ static void igmpv3_clear_delrec(struct in_device *in_dev)
+ 		struct ip_sf_list *psf;
+ 
+ 		spin_lock_bh(&pmc->lock);
+-		psf = pmc->tomb;
+-		pmc->tomb = NULL;
++		psf = pmc_dereference(pmc->tomb, pmc);
++		RCU_INIT_POINTER(pmc->tomb, NULL);
+ 		spin_unlock_bh(&pmc->lock);
+ 		ip_sf_list_clear_all(psf);
+ 	}
+@@ -1988,7 +2024,7 @@ static int ip_mc_del1_src(struct ip_mc_list *pmc, int sfmode,
+ 	int rv = 0;
+ 
+ 	psf_prev = NULL;
+-	for (psf = pmc->sources; psf; psf = psf->sf_next) {
++	for_each_psf_mclock(pmc, psf) {
+ 		if (psf->sf_inaddr == *psfsrc)
+ 			break;
+ 		psf_prev = psf;
+@@ -1997,7 +2033,7 @@ static int ip_mc_del1_src(struct ip_mc_list *pmc, int sfmode,
+ 		/* source filter not found, or count wrong =>  bug */
+ 		return -ESRCH;
+ 	}
+-	psf->sf_count[sfmode]--;
++	WRITE_ONCE(psf->sf_count[sfmode], psf->sf_count[sfmode] - 1);
+ 	if (psf->sf_count[sfmode] == 0) {
+ 		ip_rt_multicast_event(pmc->interface);
+ 	}
+@@ -2009,19 +2045,28 @@ static int ip_mc_del1_src(struct ip_mc_list *pmc, int sfmode,
+ 
+ 		/* no more filters for this source */
+ 		if (psf_prev)
+-			psf_prev->sf_next = psf->sf_next;
++			rcu_assign_pointer(psf_prev->sf_next,
++					   pmc_dereference(psf->sf_next, pmc));
+ 		else
+-			pmc->sources = psf->sf_next;
++			rcu_assign_pointer(pmc->sources,
++					   pmc_dereference(psf->sf_next, pmc));
+ #ifdef CONFIG_IP_MULTICAST
+ 		if (psf->sf_oldin &&
+ 		    !IGMP_V1_SEEN(in_dev) && !IGMP_V2_SEEN(in_dev)) {
+-			psf->sf_crcount = in_dev->mr_qrv ?: READ_ONCE(net->ipv4.sysctl_igmp_qrv);
+-			psf->sf_next = pmc->tomb;
+-			pmc->tomb = psf;
+-			rv = 1;
+-		} else
++			struct ip_sf_list *dpsf = kmalloc_obj(*dpsf, GFP_ATOMIC);
++
++			if (dpsf) {
++				*dpsf = *psf;
++				dpsf->sf_crcount = in_dev->mr_qrv ?:
++					READ_ONCE(net->ipv4.sysctl_igmp_qrv);
++				rcu_assign_pointer(dpsf->sf_next,
++						   pmc_dereference(pmc->tomb, pmc));
++				rcu_assign_pointer(pmc->tomb, dpsf);
++				rv = 1;
++			}
++		}
+ #endif
+-			kfree(psf);
++		kfree_rcu(psf, rcu);
+ 	}
+ 	return rv;
+ }
+@@ -2058,7 +2103,7 @@ static int ip_mc_del_src(struct in_device *in_dev, __be32 *pmca, int sfmode,
+ 		err = -EINVAL;
+ 		if (!pmc->sfcount[sfmode])
+ 			goto out_unlock;
+-		pmc->sfcount[sfmode]--;
++		WRITE_ONCE(pmc->sfcount[sfmode], pmc->sfcount[sfmode] - 1);
+ 	}
+ 	err = 0;
+ 	for (i = 0; i < sfcount; i++) {
+@@ -2081,7 +2126,7 @@ static int ip_mc_del_src(struct in_device *in_dev, __be32 *pmca, int sfmode,
+ #ifdef CONFIG_IP_MULTICAST
+ 		pmc->crcount = in_dev->mr_qrv ?: READ_ONCE(net->ipv4.sysctl_igmp_qrv);
+ 		WRITE_ONCE(in_dev->mr_ifc_count, pmc->crcount);
+-		for (psf = pmc->sources; psf; psf = psf->sf_next)
++		for_each_psf_mclock(pmc, psf)
+ 			psf->sf_crcount = 0;
+ 		igmp_ifc_event(pmc->interface);
+ 	} else if (sf_setstate(pmc) || changerec) {
+@@ -2102,7 +2147,7 @@ static int ip_mc_add1_src(struct ip_mc_list *pmc, int sfmode,
+ 	struct ip_sf_list *psf, *psf_prev;
+ 
+ 	psf_prev = NULL;
+-	for (psf = pmc->sources; psf; psf = psf->sf_next) {
++	for_each_psf_mclock(pmc, psf) {
+ 		if (psf->sf_inaddr == *psfsrc)
+ 			break;
+ 		psf_prev = psf;
+@@ -2112,12 +2157,12 @@ static int ip_mc_add1_src(struct ip_mc_list *pmc, int sfmode,
+ 		if (!psf)
+ 			return -ENOBUFS;
+ 		psf->sf_inaddr = *psfsrc;
+-		if (psf_prev) {
+-			psf_prev->sf_next = psf;
+-		} else
+-			pmc->sources = psf;
++		if (psf_prev)
++			rcu_assign_pointer(psf_prev->sf_next, psf);
++		else
++			rcu_assign_pointer(pmc->sources, psf);
+ 	}
+-	psf->sf_count[sfmode]++;
++	WRITE_ONCE(psf->sf_count[sfmode], psf->sf_count[sfmode] + 1);
+ 	if (psf->sf_count[sfmode] == 1) {
+ 		ip_rt_multicast_event(pmc->interface);
+ 	}
+@@ -2130,13 +2175,15 @@ static void sf_markstate(struct ip_mc_list *pmc)
+ 	struct ip_sf_list *psf;
+ 	int mca_xcount = pmc->sfcount[MCAST_EXCLUDE];
+ 
+-	for (psf = pmc->sources; psf; psf = psf->sf_next)
++	for_each_psf_mclock(pmc, psf) {
+ 		if (pmc->sfcount[MCAST_EXCLUDE]) {
+ 			psf->sf_oldin = mca_xcount ==
+ 				psf->sf_count[MCAST_EXCLUDE] &&
+ 				!psf->sf_count[MCAST_INCLUDE];
+-		} else
++		} else {
+ 			psf->sf_oldin = psf->sf_count[MCAST_INCLUDE] != 0;
++		}
++	}
+ }
+ 
+ static int sf_setstate(struct ip_mc_list *pmc)
+@@ -2147,27 +2194,31 @@ static int sf_setstate(struct ip_mc_list *pmc)
+ 	int new_in, rv;
+ 
+ 	rv = 0;
+-	for (psf = pmc->sources; psf; psf = psf->sf_next) {
++	for_each_psf_mclock(pmc, psf) {
+ 		if (pmc->sfcount[MCAST_EXCLUDE]) {
+ 			new_in = mca_xcount == psf->sf_count[MCAST_EXCLUDE] &&
+ 				!psf->sf_count[MCAST_INCLUDE];
+-		} else
++		} else {
+ 			new_in = psf->sf_count[MCAST_INCLUDE] != 0;
++		}
+ 		if (new_in) {
+ 			if (!psf->sf_oldin) {
+ 				struct ip_sf_list *prev = NULL;
+ 
+-				for (dpsf = pmc->tomb; dpsf; dpsf = dpsf->sf_next) {
++				for_each_psf_tomb(pmc, dpsf) {
+ 					if (dpsf->sf_inaddr == psf->sf_inaddr)
+ 						break;
+ 					prev = dpsf;
+ 				}
+ 				if (dpsf) {
++					struct ip_sf_list *dpsf_next;
++
++					dpsf_next = pmc_dereference(dpsf->sf_next, pmc);
+ 					if (prev)
+-						prev->sf_next = dpsf->sf_next;
++						rcu_assign_pointer(prev->sf_next, dpsf_next);
+ 					else
+-						pmc->tomb = dpsf->sf_next;
+-					kfree(dpsf);
++						rcu_assign_pointer(pmc->tomb, dpsf_next);
++					kfree_rcu(dpsf, rcu);
+ 				}
+ 				psf->sf_crcount = qrv;
+ 				rv++;
+@@ -2179,17 +2230,19 @@ static int sf_setstate(struct ip_mc_list *pmc)
+ 			 * add or update "delete" records if an active filter
+ 			 * is now inactive
+ 			 */
+-			for (dpsf = pmc->tomb; dpsf; dpsf = dpsf->sf_next)
++			for_each_psf_tomb(pmc, dpsf) {
+ 				if (dpsf->sf_inaddr == psf->sf_inaddr)
+ 					break;
++			}
+ 			if (!dpsf) {
+ 				dpsf = kmalloc_obj(*dpsf, GFP_ATOMIC);
+ 				if (!dpsf)
+ 					continue;
+ 				*dpsf = *psf;
+ 				/* pmc->lock held by callers */
+-				dpsf->sf_next = pmc->tomb;
+-				pmc->tomb = dpsf;
++				rcu_assign_pointer(dpsf->sf_next,
++						   pmc_dereference(pmc->tomb, pmc));
++				rcu_assign_pointer(pmc->tomb, dpsf);
+ 			}
+ 			dpsf->sf_crcount = qrv;
+ 			rv++;
+@@ -2229,7 +2282,7 @@ static int ip_mc_add_src(struct in_device *in_dev, __be32 *pmca, int sfmode,
+ #endif
+ 	isexclude = pmc->sfmode == MCAST_EXCLUDE;
+ 	if (!delta)
+-		pmc->sfcount[sfmode]++;
++		WRITE_ONCE(pmc->sfcount[sfmode], pmc->sfcount[sfmode] + 1);
+ 	err = 0;
+ 	for (i = 0; i < sfcount; i++) {
+ 		err = ip_mc_add1_src(pmc, sfmode, &psfsrc[i]);
+@@ -2240,7 +2293,7 @@ static int ip_mc_add_src(struct in_device *in_dev, __be32 *pmca, int sfmode,
+ 		int j;
+ 
+ 		if (!delta)
+-			pmc->sfcount[sfmode]--;
++			WRITE_ONCE(pmc->sfcount[sfmode], pmc->sfcount[sfmode] - 1);
+ 		for (j = 0; j < i; j++)
+ 			(void) ip_mc_del1_src(pmc, sfmode, &psfsrc[j]);
+ 	} else if (isexclude != (pmc->sfcount[MCAST_EXCLUDE] != 0)) {
+@@ -2260,7 +2313,7 @@ static int ip_mc_add_src(struct in_device *in_dev, __be32 *pmca, int sfmode,
+ 
+ 		pmc->crcount = in_dev->mr_qrv ?: READ_ONCE(net->ipv4.sysctl_igmp_qrv);
+ 		WRITE_ONCE(in_dev->mr_ifc_count, pmc->crcount);
+-		for (psf = pmc->sources; psf; psf = psf->sf_next)
++		for_each_psf_mclock(pmc, psf)
+ 			psf->sf_crcount = 0;
+ 		igmp_ifc_event(in_dev);
+ 	} else if (sf_setstate(pmc)) {
+@@ -2276,13 +2329,13 @@ static void ip_mc_clear_src(struct ip_mc_list *pmc)
+ 	struct ip_sf_list *tomb, *sources;
+ 
+ 	spin_lock_bh(&pmc->lock);
+-	tomb = pmc->tomb;
+-	pmc->tomb = NULL;
+-	sources = pmc->sources;
+-	pmc->sources = NULL;
++	tomb = pmc_dereference(pmc->tomb, pmc);
++	RCU_INIT_POINTER(pmc->tomb, NULL);
++	sources = pmc_dereference(pmc->sources, pmc);
++	RCU_INIT_POINTER(pmc->sources, NULL);
+ 	pmc->sfmode = MCAST_EXCLUDE;
+-	pmc->sfcount[MCAST_INCLUDE] = 0;
+-	pmc->sfcount[MCAST_EXCLUDE] = 1;
++	WRITE_ONCE(pmc->sfcount[MCAST_INCLUDE], 0);
++	WRITE_ONCE(pmc->sfcount[MCAST_EXCLUDE], 1);
+ 	spin_unlock_bh(&pmc->lock);
+ 
+ 	ip_sf_list_clear_all(tomb);
+@@ -2864,20 +2917,19 @@ int ip_check_mc_rcu(struct in_device *in_dev, __be32 mc_addr, __be32 src_addr, u
+ 		rv = 1;
+ 	} else if (im) {
+ 		if (src_addr) {
+-			spin_lock_bh(&im->lock);
+-			for (psf = im->sources; psf; psf = psf->sf_next) {
++			for_each_psf_rcu(im, psf) {
+ 				if (psf->sf_inaddr == src_addr)
+ 					break;
+ 			}
+ 			if (psf)
+-				rv = psf->sf_count[MCAST_INCLUDE] ||
+-					psf->sf_count[MCAST_EXCLUDE] !=
+-					im->sfcount[MCAST_EXCLUDE];
++				rv = READ_ONCE(psf->sf_count[MCAST_INCLUDE]) ||
++					READ_ONCE(psf->sf_count[MCAST_EXCLUDE]) !=
++					READ_ONCE(im->sfcount[MCAST_EXCLUDE]);
+ 			else
+-				rv = im->sfcount[MCAST_EXCLUDE] != 0;
+-			spin_unlock_bh(&im->lock);
+-		} else
++				rv = READ_ONCE(im->sfcount[MCAST_EXCLUDE]) != 0;
++		} else {
+ 			rv = 1; /* unspecified source; tentatively allow */
++		}
+ 	}
+ 	return rv;
+ }
+@@ -3041,7 +3093,7 @@ static inline struct ip_sf_list *igmp_mcf_get_first(struct seq_file *seq)
+ 		im = rcu_dereference(idev->mc_list);
+ 		if (likely(im)) {
+ 			spin_lock_bh(&im->lock);
+-			psf = im->sources;
++			psf = pmc_dereference(im->sources, im);
+ 			if (likely(psf)) {
+ 				state->im = im;
+ 				state->idev = idev;
+@@ -3057,7 +3109,7 @@ static struct ip_sf_list *igmp_mcf_get_next(struct seq_file *seq, struct ip_sf_l
+ {
+ 	struct igmp_mcf_iter_state *state = igmp_mcf_seq_private(seq);
+ 
+-	psf = psf->sf_next;
++	psf = pmc_dereference(psf->sf_next, state->im);
+ 	while (!psf) {
+ 		spin_unlock_bh(&state->im->lock);
+ 		state->im = state->im->next;
+@@ -3073,7 +3125,7 @@ static struct ip_sf_list *igmp_mcf_get_next(struct seq_file *seq, struct ip_sf_l
+ 			state->im = rcu_dereference(state->idev->mc_list);
+ 		}
+ 		spin_lock_bh(&state->im->lock);
+-		psf = state->im->sources;
++		psf = pmc_dereference(state->im->sources, state->im);
+ 	}
+ out:
+ 	return psf;
 -- 
 2.53.0
 
