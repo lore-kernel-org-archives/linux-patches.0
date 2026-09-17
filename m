@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7760A4A207F;
-	Thu, 17 Sep 2026 17:29:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D043C4A207F;
+	Thu, 17 Sep 2026 17:29:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666188; cv=none; b=TbMEP04HhX9JfR6Ps1r0qiHLv9ilINjs62IkPztGAqL1V5t2AgBpB56HVPM7NBUyW1DfL7OLQYTm1bLdj73COSXCIHI3m/onc/BNr/6wVVBmVQnaZu8YxUgk0hyqW2k41o6AoKXwAxUyFaabWUazjjGMqdH9xzz+nRTdb7izEc8=
+	t=1789666190; cv=none; b=eqkyrVMo5vsWJIC01xoLy7j0EwNE0SUM0+gHVXauydH79pQLVK7AeaexwuERATxKRMsNjdMtgWffUcHqH+4joAynkJo4Ydr81iiNysGJwcfWI4jwIYOmiEwBPVQD/SRkLlf62kLdDXho6YFX4imJEg1bAwOxnD79JGIzkgCxquw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666188; c=relaxed/simple;
-	bh=qD5Qu0X+Xe0jtKEeMiZyjvg3BNBJqH5jeQTV2fkK13I=;
+	s=arc-20240116; t=1789666190; c=relaxed/simple;
+	bh=HojRRvr+x3KvboA/aUzOU7HhNDAHz7U8Y6O6fhAGqY8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=exrC+H+2FFcCLmyu1hx/A4n8e6xpoxWN56XiF21kpUFAOe90PcauqtZYytxm0rOF3iO/ScGiHxgoI7OC2nzfQhEqwU+2hSzV01jPgkul9dpsygo6vtNIVTL/9cWfNovzdaI1WLdRHOiZpbwnWI9nMVultUTwctbEkIZ+WNt9/uo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RCQTHm9f; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SvcKAr4FvTBIsuLTGZTMz882BzE57u1C+QmI7hg4I+LEsnKw7ZrmLPuFh6wInjbDU5yPIpDqyWOY8RHOupx/Z3fBqV3OLuNSM9zSdl5GayJ5tT22PBJCDSwzN4vtH2M5khQCAOCQVVTXgOy0oy+dPoQmoI2yzateZuP+ZPVQ/+4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tu2PBzuF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RCQTHm9f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D4731F000FF;
-	Thu, 17 Sep 2026 17:29:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tu2PBzuF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 330F01F000FF;
+	Thu, 17 Sep 2026 17:29:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666185;
-	bh=/5mdXbdWS/L97+BE7nfq3zY7AKM6nih2nykjxACpleI=;
+	s=korg; t=1789666188;
+	bh=BYk0eA+h55/HKKIlL9YwaKpASvyTcz1ZFLngiugiGgI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RCQTHm9fSqAp/NtGdX3wSSTS0FyYaFO1r5zmezPWPRRPgdMeBUuPrWYkVQIYN6xu8
-	 xUGVZRuc8HiZfBbY6VJRHxWlv9383ss5WX5Fw7XBAGjDHkfO/VN9gpmEm4OwztwSvN
-	 jIS1flKY7uPvTRxfJsTBj+Jk7Ita41PSrohmK4CI=
+	b=tu2PBzuFZ/x00qcO+X/3HWLXHA5tG/Kpnrhh8vSaxkMFKoo6YFuoPfZo5hM+au6A/
+	 91tFhWdnqjw9tTF5P4oLHKnad3r05jbia4ou1MX62Lg5cYBSF55IvBzrm2WaDMOP0u
+	 TNZ/cAaj33y+2lvZ/qCsvcVwM3Wh0bF2tprfmS24=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	stable@kernel.org,
 	Shivaprasad G Bhat <sbhat@linux.ibm.com>,
-	Amit Machhiwal <amachhiw@linux.ibm.com>,
+	Gautam Menghani <gautam@linux.ibm.com>,
 	Madhavan Srinivasan <maddy@linux.ibm.com>
-Subject: [PATCH 6.18 0954/1250] powerpc/eeh: Fix recursive locking on devices without EEH sensitive driver
-Date: Thu, 17 Sep 2026 16:12:29 +0100
-Message-ID: <20260917151617.877191405@linuxfoundation.org>
+Subject: [PATCH 6.18 0955/1250] powerpc: pci-ioda: Fix the stale irq chip reference
+Date: Thu, 17 Sep 2026 16:12:30 +0100
+Message-ID: <20260917151617.904132472@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -55,55 +54,62 @@ Content-Transfer-Encoding: 8bit
 
 From: Shivaprasad G Bhat <sbhat@linux.ibm.com>
 
-commit c5e68706527968282e49de205cc2b935823cb88a upstream.
+commit d96171d911e3b89ca2957c04264019cf2f96287b upstream.
 
-The commit 1010b4c012b0 ("powerpc/eeh: Make EEH driver device hotplug
-safe") refactored the EEH code such that the pci_rescan_remove_lock is
-held at the beginning of eeh_handle_normal_event() and the
-eeh_reset_device() is called with that lock being held. Looks like the
-commit missed to remove the existing lock/unlock inside eeh_rmv_device()
-which is no longer necessary. This is causing the eehd to hang on the
-lock which it actually holds when that code path is taken.
+The commit f0ac60e6e311 ("powerpc/powernv/pci: Switch to use
+msi_create_parent_irq_domain()") removed the legacy MSI irq chip
+pnv_pci_msi_irq_chip but left behind the static definition of it and
+its reference in is_pnv_opal_msi().
 
-[<0>] 0xc00000011c78f870
-[<0>] __switch_to+0xfc/0x1a0
-[<0>] pci_lock_rescan_remove+0x30/0x44
-[<0>] eeh_rmv_device+0x290/0x2e0
-[<0>] eeh_pe_dev_traverse+0x80/0x130
-[<0>] eeh_reset_device+0xcc/0x23c
-[<0>] eeh_handle_normal_event+0x830/0xa80
-[<0>] eeh_event_handler+0xf8/0x190
-[<0>] kthread+0x194/0x1b0
-[<0>] start_kernel_thread+0x14/0x18
+The KVM IRQ bypass for vfio devices is broken because the
+comparision in is_pnv_opal_msi() fails on the comparision with
+stale unused variable showing the below errors in dmesg.
 
-The issue is seen for cases where the errors are detected on the PHB
-directly AND|OR for devices where the driver error_detected() returns
-PCI_ERS_RESULT_NEED_RESET, and driver being not EEH sensitive(i.e no
-error handlers like slot_reset(), resume() etc defined).
+ kvmppc_set_passthru_irq_hv: Could not assign IRQ map for (X,Y)
+ kvmppc_set_passthru_irq (irq X, gsi Y) fails: -2
+ vfio-pci A:B:C.D irq bypass producer (eventfd Z) registration fails: -2
 
-Fixes: 1010b4c012b0 ("powerpc/eeh: Make EEH driver device hotplug safe")
-Cc: stable <stable@kernel.org>
-Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+The patch removes the stale variable definition and fixes the
+is_pnv_opal_msi() by comparing against the chip name prefix.
+
+Fixes: f0ac60e6e311 ("powerpc/powernv/pci: Switch to use msi_create_parent_irq_domain()")
+Cc: stable@kernel.org
 Signed-off-by: Shivaprasad G Bhat <sbhat@linux.ibm.com>
-Reviewed-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+Tested-by: Gautam Menghani <gautam@linux.ibm.com>
 Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/178404937381.913.2759874335293830160.stgit@linux.ibm.com
+Link: https://patch.msgid.link/178716225364.1437.6201568081502251835.stgit@linux.ibm.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/kernel/eeh_driver.c |    2 --
- 1 file changed, 2 deletions(-)
+ arch/powerpc/platforms/powernv/pci-ioda.c |    6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
---- a/arch/powerpc/kernel/eeh_driver.c
-+++ b/arch/powerpc/kernel/eeh_driver.c
-@@ -533,9 +533,7 @@ static void eeh_rmv_device(struct eeh_de
- 		if (rmv_data)
- 			list_add(&edev->rmv_entry, &rmv_data->removed_vf_list);
- 	} else {
--		pci_lock_rescan_remove();
- 		pci_stop_and_remove_bus_device(dev);
--		pci_unlock_rescan_remove();
- 	}
+--- a/arch/powerpc/platforms/powernv/pci-ioda.c
++++ b/arch/powerpc/platforms/powernv/pci-ioda.c
+@@ -1634,15 +1634,13 @@ int64_t pnv_opal_pci_msi_eoi(struct irq_
+ 	return opal_pci_msi_eoi(phb->opal_id, d->parent_data->hwirq);
  }
+ 
+-static struct irq_chip pnv_pci_msi_irq_chip;
+-
+ /*
+  * Returns true iff chip is something that we could call
+  * pnv_opal_pci_msi_eoi for.
+  */
+ bool is_pnv_opal_msi(struct irq_chip *chip)
+ {
+-	return chip == &pnv_pci_msi_irq_chip;
++	return chip && chip->name && str_has_prefix(chip->name, "PNV-");
+ }
+ EXPORT_SYMBOL_GPL(is_pnv_opal_msi);
+ 
+@@ -1739,7 +1737,7 @@ static const struct msi_parent_ops pnv_m
+ 	.chip_flags		= MSI_CHIP_FLAG_SET_EOI,
+ 	.bus_select_token	= DOMAIN_BUS_NEXUS,
+ 	.bus_select_mask	= MATCH_PCI_MSI,
+-	.prefix			= "PNV-",
++	.prefix			= "PNV-", /* Note: is_pnv_opal_msi() uses this */
+ 	.init_dev_msi_info	= pnv_init_dev_msi_info,
+ };
  
 
 
