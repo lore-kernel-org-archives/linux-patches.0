@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 886834FD26C;
-	Thu, 17 Sep 2026 17:05:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C7C14FD27C;
+	Thu, 17 Sep 2026 17:05:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789664718; cv=none; b=GDpWTBvYhdelUc16xTKEfVgqitkawew9ygrael8p9nw3JZ2q9tOwX65UwLPaOhJI+fKdAf2h0PZO3shOwC00mu8ZGHlMYgQU6qW8NCCOGJq2MDWRTSdWo0yoVZWEbNrKe6GE7cZt2PQO7NZqSoK7u1XOPKvlQ4GZL9hgA+yJ04Y=
+	t=1789664721; cv=none; b=ekMkHNEKNFmdnYG13+jONyOYa5djxMGswvbMW+nzTO+YmD1gh4Es5QQBcGuJa2gguALu3w7FuENeeKIyb1lJjohxswddlOsLkNJty/eHoUHJcdZ5FZXbDxsrNxj7mdymnuM5aU8wL/zYsjiV2zh1nqBIs3Q/pArOONB/nS9VK60=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789664718; c=relaxed/simple;
-	bh=UwWiIaNokhejH/ECNBgPZsWvGY0GYgs1NVhAvvicvEw=;
+	s=arc-20240116; t=1789664721; c=relaxed/simple;
+	bh=nV9mPramQgl7uWfYvSM5D60VTwIyzXJsNdxqQYnHmAI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XFcWlfsZAS4jtVMMMgYHYcyiBPPLuXMiFSoMC1+VTTvMK764fGgfwackyeLuvJOhhC6jHsGHTDpjwM9vaeliYC+G62Z+plqzbJfBfChrEeRiQ9unqeWzj+f7fv9EURKaizD+bPIvKU4FjJfYa5L/NUeoph8YbNQr5AewRROgOD0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nl7LMACi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=RuPMuabOO47YFNIYjdidtgvf3rb6NiPdAgKqOM7Z4uzKSPfddkaFx/5NOejAKisFv5psq/Cxs923MMUDcN1ORoiN0F/+MzkN4lhlwlgUA4ZfEFA/T8tzEJi3Kth1WSYZ2g3zqGQI2ZEdufmncUH4pgKIUhYqU25gTJrVfMV7fyo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lUnqw369; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nl7LMACi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80BC81F000FF;
-	Thu, 17 Sep 2026 17:05:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lUnqw369"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75DE41F000FF;
+	Thu, 17 Sep 2026 17:05:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789664717;
-	bh=hBqQzE8nBwHWKxckOfxjQpoOF8EN720K81RB1wpC0XA=;
+	s=korg; t=1789664720;
+	bh=1tKdSl+JAK60dehmUY8TBidznXE8cTYLOmdKgZuz8H4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nl7LMACiVs/hLpf5Q1Fpd/G2UqTl1uocEdTDoo2mabQG9Y3JlP3SnSxbIw2eix74X
-	 KUEZDCZ0Vtdj1wh3Sn/F0BBp3e+9HoXZptjY+kuWk7TfuaFBxU+K3jNPQu7Lm6ihtT
-	 Jnkmix4J06Hej9br9HE1IQVR8m21cRhXba3oM/iE=
+	b=lUnqw369rBOGcrsiZ9CJJ3lwNYaxyxuvOujhucrE06WmZeL1moO2OzrKZ1+Aii3CJ
+	 5S4WvYiQTq+qyMgTIB/MLnjvtqdxkTX6BvA8jbQXQ9PokeudAn09hLSy8jkvLzv6Et
+	 jnLwXYl0mnAhq7hNiCXCsEwlCyw814YtDU29vMJ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuan He <heshuan@bytedance.com>,
 	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
 	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0464/1250] PCI/proc: Fix race between pci_proc_init() and pci_bus_add_device()
-Date: Thu, 17 Sep 2026 16:04:19 +0100
-Message-ID: <20260917151604.556135932@linuxfoundation.org>
+Subject: [PATCH 6.18 0465/1250] PCI/sysfs: Use kstrtobool() to parse the ROM attribute input
+Date: Thu, 17 Sep 2026 16:04:20 +0100
+Message-ID: <20260917151604.582692313@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -55,185 +54,68 @@ Content-Transfer-Encoding: 8bit
 
 From: Krzysztof Wilczyński <kwilczynski@kernel.org>
 
-[ Upstream commit 8857f6578b001bcf5f53c8c6a3936647f05291a8 ]
+[ Upstream commit 92742802ecbf215a2b60dcfd326d2213595010f1 ]
 
-pci_proc_attach_device() creates procfs entries for PCI devices and is
-called from pci_bus_add_device().  It lazily creates the per-bus procfs
-directory (bus->procdir) via proc_mkdir() on first use, and returns early
-if proc_initialized is not yet set.
+pci_write_rom() controls access to the ROM content through the
+corresponding sysfs attribute, and treats the input as a request to
+disable only when it matches the string "0\n" exactly:
 
-On x86 with ACPI, PCI enumeration occurs at subsys_initcall, before
-pci_proc_init() sets proc_initialized at device_initcall.  The
-for_each_pci_dev() loop in pci_proc_init() then creates procfs entries for
-these already-enumerated devices, but runs without holding
-pci_rescan_remove_lock.
+  if ((off ==  0) && (*buf == '0') && (count == 2))
 
-On ARM64 with devicetree, PCI host bridges probe at device_initcall.  With
-async probing enabled, pci_bus_add_device() can run concurrently with
-pci_proc_init(), and both may call pci_proc_attach_device() for the same
-device or for different devices on the same bus.  As pci_host_probe() holds
-pci_rescan_remove_lock while pci_proc_init() does not, there is no
-serialisation between the two paths.
+The count == 2 condition encodes the trailing newline that echo(1) appends.
+This was found when userspace wrote "0" without a trailing newline aiming
+to disable access, which failed to match the condition above and enabled
+access instead.  For example:
 
-When two threads concurrently call pci_proc_attach_device() for devices on
-the same bus, both observe bus->procdir as NULL and both call proc_mkdir().
-The proc filesystem serialises directory creation internally, so only one
-caller succeeds.  The other results in a warning like:
+  $ echo 0 > rom       # "0\n", count 2, access disabled
+  $ echo -n 0 > rom    # "0", count 1, access enabled
+  $ echo > rom         # "", count 1, access enabled (likely not desirable)
 
-  proc_dir_entry '000c:00/00.0' already registered
+Parse the input with kstrtobool(), which handles common boolean inputs such
+as "0", "1", "n", "y" or "off", "on", with or without a trailing newline,
+so both of the above disable access, and update the now stale comment.
 
-The caller receives NULL (duplicate entry) and unconditionally stores it to
-bus->procdir, corrupting the valid pointer set by the first caller.
+As a side effect, input that does not parse as a boolean is rejected with
+-EINVAL rather than enabling access.  The documented "0" and "1" continue
+to work as before, and rejecting malformed input brings the attribute in
+line with how sysfs attributes typically handle it.
 
-Serialise access to proc_initialized, proc_bus_pci_dir, bus->procdir and
-dev->procent with a new mutex local to drivers/pci/proc.c, and store the
-created entries to bus->procdir and dev->procent only on success, so a
-failed creation can never overwrite a valid pointer.
-
-Additionally, wrap the for_each_pci_dev() loop in pci_proc_init() with
-pci_lock_rescan_remove() to serialise against concurrent PCI bus
-operations, add an early return in pci_proc_attach_device() when
-dev->procent is already set to make the function idempotent, and clear
-bus->procdir in pci_proc_detach_bus() to prevent use of a dangling pointer
-after proc_remove().
-
-Reported-by: Shuan He <heshuan@bytedance.com>
-Closes: https://lore.kernel.org/linux-pci/20250702155112.40124-2-heshuan@bytedance.com/
 Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
 Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Link: https://lore.kernel.org/r/20260611150543.511422-1-kwilczynski@kernel.org
+Link: https://patch.msgid.link/20260612182448.552406-1-kwilczynski@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/proc.c | 79 ++++++++++++++++++++++++++++++++--------------
- 1 file changed, 56 insertions(+), 23 deletions(-)
+ drivers/pci/pci-sysfs.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/pci/proc.c b/drivers/pci/proc.c
-index 005e5b4551644..ef19c7f049af6 100644
---- a/drivers/pci/proc.c
-+++ b/drivers/pci/proc.c
-@@ -20,6 +20,7 @@
- #include "pci.h"
- 
- static int proc_initialized;	/* = 0 */
-+static DEFINE_MUTEX(pci_proc_lock);
- 
- static loff_t proc_bus_pci_lseek(struct file *file, loff_t off, int whence)
+diff --git a/drivers/pci/pci-sysfs.c b/drivers/pci/pci-sysfs.c
+index f456e9a2ddc9f..76966343e0186 100644
+--- a/drivers/pci/pci-sysfs.c
++++ b/drivers/pci/pci-sysfs.c
+@@ -1338,18 +1338,19 @@ void __weak pci_remove_resource_files(struct pci_dev *dev) { return; }
+  * @off: file offset
+  * @count: number of byte in input
+  *
+- * writing anything except 0 enables it
++ * Writing a boolean value enables or disables the ROM display.
+  */
+ static ssize_t pci_write_rom(struct file *filp, struct kobject *kobj,
+ 			     const struct bin_attribute *bin_attr, char *buf,
+ 			     loff_t off, size_t count)
  {
-@@ -430,40 +431,64 @@ static const struct seq_operations proc_bus_pci_devices_op = {
+ 	struct pci_dev *pdev = to_pci_dev(kobj_to_dev(kobj));
++	bool enable;
  
- static struct proc_dir_entry *proc_bus_pci_dir;
+-	if ((off ==  0) && (*buf == '0') && (count == 2))
+-		pdev->rom_attr_enabled = 0;
+-	else
+-		pdev->rom_attr_enabled = 1;
++	if (kstrtobool(buf, &enable))
++		return -EINVAL;
++
++	pdev->rom_attr_enabled = enable;
  
--int pci_proc_attach_device(struct pci_dev *dev)
-+static int __pci_proc_attach_bus(struct pci_bus *bus)
- {
--	struct pci_bus *bus = dev->bus;
--	struct proc_dir_entry *e;
-+	struct proc_dir_entry *dir;
- 	char name[16];
- 
-+	lockdep_assert_held(&pci_proc_lock);
-+
- 	if (!proc_initialized)
- 		return -EACCES;
- 
--	if (!bus->procdir) {
--		if (pci_proc_domain(bus)) {
--			sprintf(name, "%04x:%02x", pci_domain_nr(bus),
--					bus->number);
--		} else {
--			sprintf(name, "%02x", bus->number);
--		}
--		bus->procdir = proc_mkdir(name, proc_bus_pci_dir);
--		if (!bus->procdir)
--			return -ENOMEM;
--	}
-+	if (bus->procdir)
-+		return 0;
-+
-+	if (pci_proc_domain(bus))
-+		sprintf(name, "%04x:%02x", pci_domain_nr(bus), bus->number);
-+	else
-+		sprintf(name, "%02x", bus->number);
-+
-+	dir = proc_mkdir(name, proc_bus_pci_dir);
-+	if (!dir)
-+		return -ENOMEM;
-+
-+	bus->procdir = dir;
-+
-+	return 0;
-+}
-+
-+int pci_proc_attach_device(struct pci_dev *dev)
-+{
-+	struct pci_bus *bus = dev->bus;
-+	struct proc_dir_entry *entry;
-+	char name[16];
-+	int ret;
-+
-+	guard(mutex)(&pci_proc_lock);
-+
-+	if (dev->procent)
-+		return 0;
-+
-+	ret = __pci_proc_attach_bus(bus);
-+	if (ret)
-+		return ret;
- 
- 	sprintf(name, "%02x.%x", PCI_SLOT(dev->devfn), PCI_FUNC(dev->devfn));
--	e = proc_create_data(name, S_IFREG | S_IRUGO | S_IWUSR, bus->procdir,
--			     &proc_bus_pci_ops, dev);
--	if (!e)
-+	entry = proc_create_data(name, S_IFREG | S_IRUGO | S_IWUSR,
-+				 bus->procdir, &proc_bus_pci_ops, dev);
-+	if (!entry)
- 		return -ENOMEM;
--	proc_set_size(e, dev->cfg_size);
--	dev->procent = e;
-+
-+	proc_set_size(entry, dev->cfg_size);
-+	dev->procent = entry;
- 
- 	return 0;
- }
- 
- int pci_proc_detach_device(struct pci_dev *dev)
- {
-+	guard(mutex)(&pci_proc_lock);
- 	proc_remove(dev->procent);
- 	dev->procent = NULL;
- 	return 0;
-@@ -471,19 +496,27 @@ int pci_proc_detach_device(struct pci_dev *dev)
- 
- int pci_proc_detach_bus(struct pci_bus *bus)
- {
-+	guard(mutex)(&pci_proc_lock);
- 	proc_remove(bus->procdir);
-+	bus->procdir = NULL;
- 	return 0;
- }
- 
- static int __init pci_proc_init(void)
- {
- 	struct pci_dev *dev = NULL;
--	proc_bus_pci_dir = proc_mkdir("bus/pci", NULL);
--	proc_create_seq("devices", 0, proc_bus_pci_dir,
--		    &proc_bus_pci_devices_op);
--	proc_initialized = 1;
-+
-+	scoped_guard(mutex, &pci_proc_lock) {
-+		proc_bus_pci_dir = proc_mkdir("bus/pci", NULL);
-+		proc_create_seq("devices", 0, proc_bus_pci_dir,
-+				&proc_bus_pci_devices_op);
-+		proc_initialized = 1;
-+	}
-+
-+	pci_lock_rescan_remove();
- 	for_each_pci_dev(dev)
- 		pci_proc_attach_device(dev);
-+	pci_unlock_rescan_remove();
- 
- 	return 0;
+ 	return count;
  }
 -- 
 2.53.0
