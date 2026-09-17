@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26C004C10EB;
-	Thu, 17 Sep 2026 15:58:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB8BC4DDB56;
+	Thu, 17 Sep 2026 15:58:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789660699; cv=none; b=fkrwPRPukurz64aqQHbYLuVaaFOvZ8w2n9XMliyMNGUsNo8jlkXw/Qx+rltyBIT0RlTeRfHhsZ57uGfNJxlLLlyrjOQ+8vsJoqDWT6Ju85JoxJEX3TeUhi3AhBf4vciwA65QMkYpz34JBLmRzbJ1EUJXZGUU7GJNYV7jWZD0Csw=
+	t=1789660702; cv=none; b=ZFsW2lDRE0JQ3wo9By23/KjBOQDNxOvixynlwuvumUQ+jscmvn2Rgip+/Jqn47+RHvP10uWLEZvZgHiGDxfgX+g/AOKUKlKtU2Y9sepqRv2TEgnz1uxqa/JMtFGDem3BHSfPPqf2Up8kMwe3Fuqf48WMATUuk7O55mKoZnvsdE8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789660699; c=relaxed/simple;
-	bh=ACa+FY/xwt2lwi0BbhHRZw2GxWKa1sdrYKHSoHrKwto=;
+	s=arc-20240116; t=1789660702; c=relaxed/simple;
+	bh=i7g8/jEkJ8PtttJqeY4m91PZ3XMh6gX4RJqTo5WpKt0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HVDCI0rd+aWA496zgOuL9V/ZEyiUUG8wWgiNpKhWf+oCoT7hG1e25upiBbNkGDV4eN/awhO0hMGT/Nsbmbmcx43DK8j5OHas1+jDaLG92F2vsLUngpjzOlW4XkFWjSNdYcB1c6eMLZENqtnktsn5UEMPbv/gEJHpVrRIq1GVQHY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=htHKd6Bn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=I1OxkYK1D8FEaFu/wFyv8vdhGD44bey4djafaSBwvLM7htiWV4sUr1gEUCdxn9B99xU+xf6jrZzUu7Fbo8XxXTucHM8TDIG5vBQLjPsSh+wwsYfaAfzLO4ttrpJS7J6ETfCmjub80McdJTkRrQO32G8tiS1Q9MpXU0f/QUYKXw4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mbb19BIo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="htHKd6Bn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 372221F000FF;
-	Thu, 17 Sep 2026 15:58:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mbb19BIo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CFE81F000FF;
+	Thu, 17 Sep 2026 15:58:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789660697;
-	bh=Dnh+KdETDH847v9WXKrNWYiwdjOGmHoMyX9QW7D5WFw=;
+	s=korg; t=1789660700;
+	bh=TtE6JRQmpFCjs9qanaTgWrCkDqFJToxAeSWLx3A6js0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=htHKd6BnTV7wL5cmky6UKygyxKJidRZ1iRsmRLOe+q3LKeiDnGlmla8N6mJ/dHkNw
-	 QySgAME/lLI1Sg7FaLxgw1TzOjjZmThVUJ9DH3qRJFxhcwHT0no8IIGCB6Jrn8EJ5Z
-	 ix1wqInChwkUCMNtte+CwJRSTYYoZZsxm3MOUccA=
+	b=mbb19BIoF+wPAWts5k7FmbYU2H7ck1w1tSXTocug6Y/TfS/fYLUqD2T/gyB6Abof6
+	 R1hvk4yCcmdv9zS9xQXAgjlL8Hc/nPgxeGBFG8I1Ib9IBL2DgbfFzqBRiF85cvsNNR
+	 UwXUOENQX7LIY9LUGTN5lcXmIuH/s2iY5arofK6g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 7.2 679/733] xfs: cross-reference the rtgroup superblock extent, not block
-Date: Thu, 17 Sep 2026 16:16:27 +0100
-Message-ID: <20260917151409.682842169@linuxfoundation.org>
+Subject: [PATCH 7.2 680/733] xfs: count escaped corruption errors in scrub stats
+Date: Thu, 17 Sep 2026 16:16:28 +0100
+Message-ID: <20260917151409.711643738@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -53,40 +53,120 @@ Content-Transfer-Encoding: 8bit
 
 From: Darrick J. Wong <djwong@kernel.org>
 
-commit 79ab1af2034b2ad10c5f18910937b938d2ad2219 upstream.
+commit 4d0624679ae29b469016f1ce4714be58582ed06a upstream.
 
-LOLLM noticed that when libxfs creates a realtime superblock, it will
-create an rtrmapbt record covering the entire rtextent in which the
-superblock lives.  However, the cross-referencing checks only look for
-the first block, which means that we can miss a corrupt rtrmap record.
-That will get picked up by the rtrmap scrubber, but we should make the
-rgsuper scrubber more robust anyway.
+The main scrub code will quietly turn bubbled-up EFSCORRUPTED and
+EFSBADCRC errors into corruption errors.  These aren't recorded in the
+scrub stats code (says LOLLM) so do that now.
 
-Cc: stable@vger.kernel.org # v6.13
-Fixes: 3f1bdf50ab1b9c ("xfs: scrub the realtime group superblock")
+Cc: stable@vger.kernel.org # v6.6
+Fixes: d7a74cad8f4513 ("xfs: track usage statistics of online fsck")
 Signed-off-by: Darrick J. Wong <djwong@kernel.org>
 Assisted-by: LOLLM # finding obvious bugs
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/rgsuper.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ fs/xfs/scrub/scrub.c |    3 +--
+ fs/xfs/scrub/stats.c |   28 +++++++++++++++++++---------
+ fs/xfs/scrub/stats.h |    4 ++--
+ 3 files changed, 22 insertions(+), 13 deletions(-)
 
---- a/fs/xfs/scrub/rgsuper.c
-+++ b/fs/xfs/scrub/rgsuper.c
-@@ -36,8 +36,10 @@ xchk_rgsuperblock_xref(
- 	if (sc->sm->sm_flags & XFS_SCRUB_OFLAG_CORRUPT)
- 		return;
+--- a/fs/xfs/scrub/scrub.c
++++ b/fs/xfs/scrub/scrub.c
+@@ -765,8 +765,7 @@ out_nofix:
+ out_teardown:
+ 	error = xchk_teardown(sc, error);
+ out_sc:
+-	if (error != -ENOENT)
+-		xchk_stats_merge(mp, sm, &run);
++	xchk_stats_merge(mp, sm, error, &run);
+ 	kfree(sc);
+ out:
+ 	trace_xchk_done(XFS_I(file_inode(file)), sm, error);
+--- a/fs/xfs/scrub/stats.c
++++ b/fs/xfs/scrub/stats.c
+@@ -195,31 +195,37 @@ STATIC void
+ xchk_stats_merge_one(
+ 	struct xchk_stats		*cs,
+ 	const struct xfs_scrub_metadata	*sm,
++	int				error,
+ 	const struct xchk_stats_run	*run)
+ {
+ 	struct xchk_scrub_stats		*css;
++	unsigned int			sm_flags = sm->sm_flags;
  
--	xchk_xref_is_used_rt_space(sc, xfs_rgbno_to_rtb(sc->sr.rtg, 0), 1);
--	xchk_xref_is_only_rt_owned_by(sc, 0, 1, &XFS_RMAP_OINFO_FS);
-+	xchk_xref_is_used_rt_space(sc, xfs_rgbno_to_rtb(sc->sr.rtg, 0),
-+			sc->mp->m_sb.sb_rextsize);
-+	xchk_xref_is_only_rt_owned_by(sc, 0, sc->mp->m_sb.sb_rextsize,
-+			&XFS_RMAP_OINFO_FS);
+ 	if (sm->sm_type >= XFS_SCRUB_TYPE_NR) {
+ 		ASSERT(sm->sm_type < XFS_SCRUB_TYPE_NR);
+ 		return;
+ 	}
+ 
++	/* caller applies this same transformation after we return */
++	if (error == -EFSCORRUPTED || error == -EFSBADCRC)
++		sm_flags |= XFS_SCRUB_OFLAG_CORRUPT;
++
+ 	css = &cs->cs_stats[sm->sm_type];
+ 	spin_lock(&css->css_lock);
+ 	css->invocations++;
+-	if (!(sm->sm_flags & XFS_SCRUB_OFLAG_UNCLEAN))
++	if (!(sm_flags & XFS_SCRUB_OFLAG_UNCLEAN))
+ 		css->clean++;
+-	if (sm->sm_flags & XFS_SCRUB_OFLAG_CORRUPT)
++	if (sm_flags & XFS_SCRUB_OFLAG_CORRUPT)
+ 		css->corrupt++;
+-	if (sm->sm_flags & XFS_SCRUB_OFLAG_PREEN)
++	if (sm_flags & XFS_SCRUB_OFLAG_PREEN)
+ 		css->preen++;
+-	if (sm->sm_flags & XFS_SCRUB_OFLAG_XFAIL)
++	if (sm_flags & XFS_SCRUB_OFLAG_XFAIL)
+ 		css->xfail++;
+-	if (sm->sm_flags & XFS_SCRUB_OFLAG_XCORRUPT)
++	if (sm_flags & XFS_SCRUB_OFLAG_XCORRUPT)
+ 		css->xcorrupt++;
+-	if (sm->sm_flags & XFS_SCRUB_OFLAG_INCOMPLETE)
++	if (sm_flags & XFS_SCRUB_OFLAG_INCOMPLETE)
+ 		css->incomplete++;
+-	if (sm->sm_flags & XFS_SCRUB_OFLAG_WARNING)
++	if (sm_flags & XFS_SCRUB_OFLAG_WARNING)
+ 		css->warning++;
+ 	css->retries += run->retries;
+ 	css->checktime_us += howmany_64(run->scrub_ns, NSEC_PER_USEC);
+@@ -237,10 +243,14 @@ void
+ xchk_stats_merge(
+ 	struct xfs_mount		*mp,
+ 	const struct xfs_scrub_metadata	*sm,
++	int				error,
+ 	const struct xchk_stats_run	*run)
+ {
+-	xchk_stats_merge_one(&global_stats, sm, run);
+-	xchk_stats_merge_one(mp->m_scrub_stats, sm, run);
++	if (error == -ENOENT)
++		return;
++
++	xchk_stats_merge_one(&global_stats, sm, error, run);
++	xchk_stats_merge_one(mp->m_scrub_stats, sm, error, run);
  }
  
- int
+ /* debugfs boilerplate */
+--- a/fs/xfs/scrub/stats.h
++++ b/fs/xfs/scrub/stats.h
+@@ -27,7 +27,7 @@ void xchk_stats_register(struct xchk_sta
+ void xchk_stats_unregister(struct xchk_stats *cs);
+ 
+ void xchk_stats_merge(struct xfs_mount *mp, const struct xfs_scrub_metadata *sm,
+-		const struct xchk_stats_run *run);
++		int error, const struct xchk_stats_run *run);
+ 
+ static inline u64 xchk_stats_now(void) { return ktime_get_ns(); }
+ static inline u64 xchk_stats_elapsed_ns(u64 since)
+@@ -53,7 +53,7 @@ static inline u64 xchk_stats_elapsed_ns(
+ # define xchk_stats_unregister(cs)		((void)0)
+ # define xchk_stats_now()			(0)
+ # define xchk_stats_elapsed_ns(x)		(0 * (x))
+-# define xchk_stats_merge(mp, sm, run)		((void)0)
++# define xchk_stats_merge(mp, sm, error, run)	((void)0)
+ #endif /* CONFIG_XFS_ONLINE_SCRUB_STATS */
+ 
+ #endif /* __XFS_SCRUB_STATS_H__ */
 
 
