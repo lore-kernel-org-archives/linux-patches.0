@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 585934F5DE6;
-	Thu, 17 Sep 2026 16:59:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 257A44F5E09;
+	Thu, 17 Sep 2026 16:59:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789664349; cv=none; b=PJ3muom6dLCuYthv0wHWc2c+jz5hvgx2mmrrhJ1anWF0eMv4ck5FE9XLUjJhfLVUHm3Apveh9nkxBeSEQWZLhHijVUzb9AnCzPf9eZQZRFWNLDdgir9028R3Op9xQkIBq3dDUzo/UZ9hoxf3nUCcW1DZwXIDnHvMVh4kSYrFek0=
+	t=1789664352; cv=none; b=OUIcUyL4QDNARCzfQvlv9OH1jl6RyTzbWsnkYAHU1BqI2UF+PBflTJnb7OATxOEgNt6qIybvNDJRsWEqCwSo83EnpC4718f7ODQoC4gzzSImLTymu6kqsNhs+3Tz83lL/PMsVPwgHa68ywtsyRsOXC0Su589vUcpYIqpZVuzv4U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789664349; c=relaxed/simple;
-	bh=SK4QGYGUHM9M647ujHRPBB4zTC8819xSHJIr5IWi22s=;
+	s=arc-20240116; t=1789664352; c=relaxed/simple;
+	bh=jCdDTRVh+aPLqjVP+zUVUbE4/DXBy9Rjp7heTG9rvtc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZT7/f6oIHTIJ13rDfMmuNKYYOdVNh6iEyEQQk0EKBAxbBncqGmTwHhW485WAke0Mkwz6bcFcmmgZpaqJwYJCI/DzHTjPS6WDd0eJdmqiAaM5HBFw6d26a+QhdAFTXhOIruNrvmJZ+WbKb5z/DFDpx5ew6CFhPQpNrF0xZtNhw0A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w5VThaR1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Wk5rg9SXzLmgMN19AQhTVekBTg1rlBfdQL9hzfvUSIat7k6IhxODCchsj7nfPIfeGuGwg97y0CCwFASU1U1n5QYPLGTJ8zp5EsS2YlircgoaJBpxrEo4aHFTRmunDLocX8HhPVQ+OK73G7GvXSKDskkDRa07/WuM6YXtUbvwgtQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GyaBf7YP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w5VThaR1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A0CC1F000FF;
-	Thu, 17 Sep 2026 16:59:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GyaBf7YP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F1631F000FF;
+	Thu, 17 Sep 2026 16:59:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789664348;
-	bh=usNWY83dutTTdpyCebpsBd0U/oSrcLzWo9ViF6b7euk=;
+	s=korg; t=1789664350;
+	bh=zox64ex9ErauhdDF3l+5vols3uCgtBWL+im+a7l4V7U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=w5VThaR1KVwJVchIH7BxXDi49Huhb15jjng0oowSPWbTAWXsMNx6dKZTFH3MzMKIO
-	 oZRjPuUbskjvDHjzb32ZlPrnn1xOIr+YSEYISUEaRf52qdhXNzAltTryJcZJBhfD7W
-	 SqwHe5mI2A3uydMEKwutmBEx8ierzdkxMpfGYQw0=
+	b=GyaBf7YP4+OWzp4JMZwt3sKqm36h+d+3QvJ0R+kHiGTrL05qo6T8mg/2+LhZ8XNuv
+	 TQwKdjopprICmQ9bi3RMDDNM3aWKjP+RqWI4Jd2Jb/k6eVelcLqJChjfcGEkWyztQ3
+	 ICG+1NouILEVakBcKZwiZh81jnWJQ/Hz0KWbj8C8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yongqiang Sun <Yongqiang.Sun@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Maoyi Xie <maoyixie.tju@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0335/1250] drm/amdkfd: Unwind debug trap enable on copy_to_user failure
-Date: Thu, 17 Sep 2026 16:02:10 +0100
-Message-ID: <20260917151601.166966160@linuxfoundation.org>
+Subject: [PATCH 6.18 0344/1250] hsr: broadcast netlink notifications in the devices net namespace
+Date: Thu, 17 Sep 2026 16:02:19 +0100
+Message-ID: <20260917151601.400565426@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,43 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yongqiang Sun <Yongqiang.Sun@amd.com>
+From: Maoyi Xie <maoyixie.tju@gmail.com>
 
-[ Upstream commit 01112e241e37f9ac98b6f418d93ce2e0b87b7ee0 ]
+[ Upstream commit a762fabd7ef9a6cc07258684138f9c3f078d0326 ]
 
-If kfd_dbg_trap_enable() fails while copying runtime_info to userspace,
-it had already activated the trap, set debug_trap_enabled, taken an extra
-process reference, and opened the debug event file. Return -EFAULT without
-unwinding that state, leaving inconsistent trap state and a refcount
-imbalance that could break later DISABLE/ENABLE.
+The HSR generic netlink family sets .netnsok = true. HSR devices can
+live in network namespaces other than init_net.
 
-On copy_to_user failure, deactivate the trap and undo the rest of the
-enable setup before returning.
+Two async notifiers broadcast events with genlmsg_multicast(). They
+are hsr_nl_ringerror() and hsr_nl_nodedown(). That helper delivers
+only on the default genl socket in init_net. So the events always land
+in init_net. The network namespace of the device does not matter.
 
-Signed-off-by: Yongqiang Sun <Yongqiang.Sun@amd.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+This has two effects. A listener in the device's own namespace never
+sees its own ring error and node down events. A privileged listener in
+init_net receives events from HSR devices in other namespaces. The
+payload carries the peer node MAC (HSR_A_NODE_ADDR) and the slave port
+ifindex (HSR_A_IFINDEX).
+
+Switch both callers to genlmsg_multicast_netns(). Other families with
+.netnsok = true already do this. Examples are gtp, ovpn, team,
+batman-adv, netdev-genl, ethtool and handshake.
+
+hsr_nl_ringerror() already has the slave port. It uses
+dev_net(port->dev). hsr_nl_nodedown() takes the namespace from the
+master port via hsr_port_get_hsr().
+
+Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
+Link: https://patch.msgid.link/20260604054949.2999304-1-maoyixie.tju@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_debug.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ net/hsr/hsr_netlink.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_debug.c b/drivers/gpu/drm/amd/amdkfd/kfd_debug.c
-index 986cb297de8f8..78e1dfdb27147 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_debug.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_debug.c
-@@ -816,6 +816,12 @@ int kfd_dbg_trap_enable(struct kfd_process *target, uint32_t fd,
+diff --git a/net/hsr/hsr_netlink.c b/net/hsr/hsr_netlink.c
+index c96b63adf96ff..50a8104e864e2 100644
+--- a/net/hsr/hsr_netlink.c
++++ b/net/hsr/hsr_netlink.c
+@@ -239,7 +239,8 @@ void hsr_nl_ringerror(struct hsr_priv *hsr, unsigned char addr[ETH_ALEN],
+ 		goto nla_put_failure;
  
- 	if (copy_to_user(runtime_info, (void *)&target->runtime_info, copy_size)) {
- 		kfd_dbg_trap_deactivate(target, false, 0);
-+		fput(target->dbg_ev_file);
-+		target->dbg_ev_file = NULL;
-+		if (target->debugger_process)
-+			atomic_dec(&target->debugger_process->debugged_process_count);
-+		target->debug_trap_enabled = false;
-+		kfd_unref_process(target);
- 		r = -EFAULT;
- 	}
+ 	genlmsg_end(skb, msg_head);
+-	genlmsg_multicast(&hsr_genl_family, skb, 0, 0, GFP_ATOMIC);
++	genlmsg_multicast_netns(&hsr_genl_family, dev_net(port->dev),
++				skb, 0, 0, GFP_ATOMIC);
+ 
+ 	return;
+ 
+@@ -275,8 +276,12 @@ void hsr_nl_nodedown(struct hsr_priv *hsr, unsigned char addr[ETH_ALEN])
+ 	if (res < 0)
+ 		goto nla_put_failure;
+ 
++	rcu_read_lock();
++	master = hsr_port_get_hsr(hsr, HSR_PT_MASTER);
+ 	genlmsg_end(skb, msg_head);
+-	genlmsg_multicast(&hsr_genl_family, skb, 0, 0, GFP_ATOMIC);
++	genlmsg_multicast_netns(&hsr_genl_family, dev_net(master->dev),
++				skb, 0, 0, GFP_ATOMIC);
++	rcu_read_unlock();
+ 
+ 	return;
  
 -- 
 2.53.0
