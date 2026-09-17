@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B8775038E4;
-	Thu, 17 Sep 2026 17:32:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACC77502D43;
+	Thu, 17 Sep 2026 17:32:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666337; cv=none; b=PZNJaOqQlx3uzIxz1xXfbIuaSHlF7yGqE4uPD2uOg5b2Nxc+uKwgPDrFexHp2RgmkWYsC9N4bYLyUT8HZR75+/BX3RaS/JOcOTTeI92Uve2POdOjHHziVF/BXpwWpdE40PWe9uyfImHzHnslqRNg+2PVkmQcQ9SfJtwvMfw258o=
+	t=1789666341; cv=none; b=mmiza/OWbv6TA2xri8J+4TjdlYB96Jj8syrLDhpu2tulqC8+lfPw/E2stMu28OuGw4egR3ogWba+NVoKVBDwQbD1aeQIylBmMcKCRKTswub6o1PsWYXtjUx53vicgMGndb4ltKqKK16AUQz8V0Hw6JEWVqlzbYqLCFr/QkkK8lc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666337; c=relaxed/simple;
-	bh=8d2DQOHS+QaqN+gvRnLKcmq5V9fTtl6ceHeBvAPo+/U=;
+	s=arc-20240116; t=1789666341; c=relaxed/simple;
+	bh=fYHSH1Cq7BuzdcUkCJfUgfU4/9wyKzA2XV8xvoFkBL0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VDtEg438t1azY2a14OdGoX8Uk2ABFQeNYl962BROldR4D7g2GYb97GUiWSr3caELm7ueQQa9sp8+6mX9nv7WpNB1JXilYkbsjOO8tY3pUf0jljF9mJKDTMw8GnppLidl1WoyTrmb9Go4hr41+YCvEStHFP7rO5EkBrP2GEMpTjo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wrbDtKSs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rjE/9aEWJodT0eeGKjj9LbSl+G4qVSfKGMppM2f7tTbBeOq74Dvd1lCrghvAvMzy/cbYzpzjTvsl5Ho+kXAt1oKEq7Wz7DfMCFhXnDAuAXbzTcxqspACZCHG6xiEUcPykYne1cICtxJHX3uxDw5viYXWXEpKqJ0H8V8L+dZP2kU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rJ4K5+iv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wrbDtKSs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC4E51F000FF;
-	Thu, 17 Sep 2026 17:32:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rJ4K5+iv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCDB41F000FF;
+	Thu, 17 Sep 2026 17:32:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666336;
-	bh=7opT5lxseD8PjqZCb1y56XID8s7ePa+mPonGoAvSO+E=;
+	s=korg; t=1789666339;
+	bh=vFkJoEVXv1Tap8bgXCHM0ZJimm1rbfdN7J2c8WncmZU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wrbDtKSs62UuMhCSxmtPwfVfA/RonrRjvZR+s+duZcxFp41hpalY5ngYarIOnfIpG
-	 QOT/VQLrmktAjMTMXWYHYuoIKEahzQQUa2gIzOzKM3qlZjqGj6fyz7nRUgKQkqmIwR
-	 DJHJdlfaJQXdU/xcFNBg8K5Bk8Mj65sfwbKg5G78=
+	b=rJ4K5+ivlZ5KyTQYIJwgqqrHBgjMEGsFUxxUhQ9+nXXnimKRQL9MBZ7d6bLubckqC
+	 2aySfh+HUmDDU5JqCoZMXKXM/hEsvSgV8VP4rbAzUQ66p/PBu+Ic6zDdq/xO84QtjO
+	 020WcmNQWIBgGgcVqX3IZCKVrgPZZAmX4KfUkWo0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Moritz Tanner <moritz.tanner@linbit.com>,
-	Lars Ellenberg <lars.ellenberg@linbit.com>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>
-Subject: [PATCH 6.18 1003/1250] fs: dont return -EINVAL for successful nested thaw
-Date: Thu, 17 Sep 2026 16:13:18 +0100
-Message-ID: <20260917151619.226910219@linuxfoundation.org>
+	Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
+	Steven Rostedt <rostedt@goodmis.org>
+Subject: [PATCH 6.18 1004/1250] function_graph: Use the saved entrys size when reprinting it
+Date: Thu, 17 Sep 2026 16:13:19 +0100
+Message-ID: <20260917151619.254490054@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,89 +50,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Moritz Tanner <moritz.tanner@linbit.com>
+From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
 
-commit fe967191e5851ea79818c5fe4e781c3882139218 upstream.
+commit 0701995aaf8fc2281154db829ca85e231951e51d upstream.
 
-Commit 7366f8b6fc6a ("fs: handle freezing from multiple devices")
-replaced the freeze_holders bitmask with per-holder counters to allow
-nested freezes. In the bitmask version, a thaw that released a shared
-hold while another holder remained returned 0. Since the rework,
-thaw_super_locked() drops the freeze reference via freeze_dec() but
-then returns -EINVAL when other freezers remain, misinforming the
-caller: the thaw did succeed, the superblock just stays frozen for the
-remaining holders.
+When a graph entry does not fit in the trace_seq, print_graph_entry()
+saves it in the iterator's fgraph_data and reprints it on the next read.
+The entry has already been consumed from the ring buffer by then, so the
+copy is all that is left of it.
 
-This breaks bdev-initiated freezing. When a filesystem is frozen with
-FIFREEZE and additionally frozen via bdev_freeze() -- which nests by
-design, see fs_bdev_freeze() -- the subsequent bdev_thaw() receives
--EINVAL from the holder op although its freeze reference was dropped,
-and therefore keeps bd_fsfreeze_count elevated. Then device-mapper's
-unlock_fs() ignores bdev_thaw()'s return value, so nothing rebalances
-the count. After the user's FITHAW and umount, the block device can
-never be mounted again:
+The copy is sized with iter->ent_size, which no longer describes the
+saved entry but whatever entry the iterator has moved on to. The
+argument count is derived from the same field, so a 72 byte entry saved
+and then reprinted ahead of a 48 byte return entry loses its arguments.
 
-    dm-1: Can't mount, blockdev is frozen
+Record the size next to the failure flag, so that the two are always set
+together, and restore it before reprinting.
 
-There is no way for userspace to drop the leaked count; only
-destroying the block device (or a reboot) recovers the device.
-
-Reproducer (any kernel since v6.8):
-
-    dmsetup create dut --table "0 $(blockdev --getsz "$DEV") linear $DEV 0"
-    mkfs.ext4 /dev/mapper/dut
-    mount /dev/mapper/dut /mnt
-    fsfreeze --freeze /mnt      # freeze_ucount == 1
-    dmsetup suspend dut         # bd_fsfreeze_count == 1, ucount == 2
-    dmsetup resume dut          # ucount 2 -> 1, but thaw_super()
-                                # returns -EINVAL, so bdev_thaw()
-                                # keeps bd_fsfreeze_count at 1
-    fsfreeze --unfreeze /mnt    # filesystem thaws fine
-    umount /mnt
-    mount /dev/mapper/dut /mnt  # EBUSY, forever
-
-The same happens with fsfreeze held across an LVM snapshot of the
-origin volume.
-
-fs_bdev_thaw()'s documentation already describes the intended
-semantics: "If this function returns zero it doesn't mean that the
-filesystem is unfrozen as it may have been frozen multiple times".
-Restore them by returning 0 when a nested thaw drops its hold while
-other freezers remain. Thawing without holding a freeze still fails
-with -EINVAL as may_unfreeze() rejects that case before the reference
-count is touched.
-
-Fixes: 7366f8b6fc6a ("fs: handle freezing from multiple devices")
-Cc: stable@vger.kernel.org # needs adjustments for < 6.17 (no may_unfreeze())
-Signed-off-by: Moritz Tanner <moritz.tanner@linbit.com>
-Link: https://patch.msgid.link/20260821085451.65206-1-moritz.tanner@linbit.com
-Tested-by: Lars Ellenberg <lars.ellenberg@linbit.com>
-Reviewed-by: Lars Ellenberg <lars.ellenberg@linbit.com>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: ff5c9c576e75 ("ftrace: Add support for function argument to graph tracer")
+Link: https://patch.msgid.link/20260906034406.1335316-1-donggeunyoo.kernel@gmail.com
+Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/super.c |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ kernel/trace/trace_functions_graph.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/fs/super.c
-+++ b/fs/super.c
-@@ -2187,11 +2187,14 @@ static int thaw_super_locked(struct supe
- 		goto out_unlock;
+--- a/kernel/trace/trace_functions_graph.c
++++ b/kernel/trace/trace_functions_graph.c
+@@ -44,6 +44,7 @@ struct fgraph_data {
+ 	};
+ 	struct ftrace_graph_ret_entry	ret;
+ 	int				failed;
++	int				ent_size;
+ 	int				cpu;
+ };
  
- 	/*
--	 * All freezers share a single active reference.
--	 * So just unlock in case there are any left.
-+	 * All freezers share a single active reference. If other freezers
-+	 * remain, drop our hold and report success; the superblock stays
-+	 * frozen until the last holder thaws it.
- 	 */
--	if (freeze_dec(sb, who))
-+	if (freeze_dec(sb, who)) {
-+		error = 0;
- 		goto out_unlock;
-+	}
- 
- 	if (sb_rdonly(sb)) {
- 		sb->s_writers.frozen = SB_UNFROZEN;
+@@ -1239,6 +1240,7 @@ print_graph_entry(struct ftrace_graph_en
+ 		if (s->full) {
+ 			data->failed = 1;
+ 			data->cpu = cpu;
++			data->ent_size = iter->ent_size;
+ 		} else
+ 			data->failed = 0;
+ 	}
+@@ -1422,6 +1424,7 @@ print_graph_function_flags(struct trace_
+ 	if (data && data->failed) {
+ 		field = &data->ent.ent;
+ 		iter->cpu = data->cpu;
++		iter->ent_size = data->ent_size;
+ 		ret = print_graph_entry(field, s, iter, flags);
+ 		if (ret == TRACE_TYPE_HANDLED && iter->cpu != cpu) {
+ 			per_cpu_ptr(data->cpu_data, iter->cpu)->ignore = 1;
 
 
