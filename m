@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6179C3A7F4B;
-	Thu, 17 Sep 2026 16:06:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 680DF39C63D;
+	Thu, 17 Sep 2026 16:06:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789661180; cv=none; b=oiGv2CGo4ClpRdeLCjLMGVzuVHMj0bW6kfSInUncfbdTd99PFbMjqsTgvsj5Vo9XXvM9D9x//o7oVb0cvAQckk+HRZPg4X4bvlLoIUwhWvWrzKhJs0bmeUbZ3CX3y0SbLXu2wDV8YG0twmS0NdamK6QR+l3p022I82J0Y7mZHuw=
+	t=1789661183; cv=none; b=cj5Fi4G3ZByM6sFW6nYyKNdA3EfBtXl+4rnPgLkez6A3C+XDlU/ExZr1zbJCzHS2tQvaGXxK9U7yTkajT2GczLXC0eF1tJlX61KlPOtMSp6Uqwolz+oDEtlOhd4AXa8UNNBIxwIeOpZQltdF9NV0GEyxN0mBA/vIAeMMrRCGpeg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789661180; c=relaxed/simple;
-	bh=igD12QvkHrxWqFmgw7gcxgnrV8Vksch2E+c3bRSqSy0=;
+	s=arc-20240116; t=1789661183; c=relaxed/simple;
+	bh=orV0yqeCVb4SXIdNMv6FthDKMtSM0Zgslbk2On3MFdc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DlpmxkZ5Ofak9rOOs7UFQ3TBbQuku140CnpQYbaWVQkPWu3IbyLguoEL/Sh0aCGonzR3HdM2jKEr/hJCRqaO1WVfLqAxBqjQzPJJNmv8LhBLF9Fs2xaP0M38OMnOX01ECu4JV27yvGy68P+GXaZepqlByZrXuT0Xp/PV6oMuk0Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pwj9Qv0v; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HclXXV/Xl2HpLGYYHZVWHOnzd1I1CUdmDhrUE+dKiXgPvfl5DGYoRyYZnfZWPD9kI8g7HCeLqcK05UG81TaEikimZKNtLA5z7g4CiJP6gnNqf/S26HV6TJhyL6+ndLaDg493RM9ADujRA7o7UuA5d9NC3I80C4yediyQPRNs6/o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xIFl7rDC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pwj9Qv0v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B49F31F000FF;
-	Thu, 17 Sep 2026 16:06:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xIFl7rDC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBE1D1F000FF;
+	Thu, 17 Sep 2026 16:06:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789661179;
-	bh=JjO+k8/FllnRyBuIqMoU+L17L0y0PRWYI55lqEE9Irw=;
+	s=korg; t=1789661182;
+	bh=Z+5iDZUklPPQGq0mcv/3JxRGzZJR9VJR3eBsakhkbxA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Pwj9Qv0vC2mCu9FZiazyApZ14kAGA7tqByMsY4xquw4ZGNqxCOyomHOS3GgmLbWzL
-	 w4NT3affvWmLRkJiavUsZWCVJFtNi9jNOeqmb/kmB1sgyfgcZdr/oSk8c8pl6RUPrR
-	 PwgkG/PJAbNav+djdC78T0feQI3KIVDxE4lPbwG4=
+	b=xIFl7rDCF5yxjI/neQ4JckQuhex+T1J9ohmtX4js+uwIoX+RSVbMKmI5MVrmO1A+4
+	 zpGMYe9eKFeyur0OkoWYkk0MJ0He9b/imhg7UOy/Grgo6rImuEWiGTxfYcWGMsXnLo
+	 24XHoPWkxxXRjAZ/KHvvnBHub7pPqoPEBsfCdwao=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Javier Achirica <jachirica@gmail.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	Chen-Yu Tsai <wenst@chromium.org>,
+	Douglas Anderson <dianders@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0108/1250] bus: mhi: host: pci_generic: Round up nr_irqs to power of two
-Date: Thu, 17 Sep 2026 15:58:23 +0100
-Message-ID: <20260917151554.929665824@linuxfoundation.org>
+Subject: [PATCH 6.18 0109/1250] drm/panel-edp: Add AUO B133HAN06.6 and BOE NV133FHM-N4F V8.0
+Date: Thu, 17 Sep 2026 15:58:24 +0100
+Message-ID: <20260917151554.960883552@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,38 +51,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Javier Achirica <jachirica@gmail.com>
+From: Chen-Yu Tsai <wenst@chromium.org>
 
-[ Upstream commit 86f6dc05ea051fa03ebc03174bc00f734593465d ]
+[ Upstream commit 5dd1ff95c623b8118ccaae3242119b8552f7b98f ]
 
-When an MHI device uses standard MSI, the PCI core requires the allocated
-number of vectors to be a strict power of two. But devices will only ask
-for the irqs they need, so they might not be properly aligned.
+These two panels are found in MT8195 Dojo, a.k.a. the HP Chromebook
+x360 13b-ca0xxx laptop.
 
-Make sure a power-of-2 number of vectors is requested.
+Only the BOE entry was tested on an actual device. The AUO entry is
+solely based on the provided datasheet.
 
-Signed-off-by: Javier Achirica <jachirica@gmail.com>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Link: https://patch.msgid.link/CACixm21q7b_diEx5COZxVZm9EhZ0hnakM_WBjEWcCsznfWeniw@mail.gmail.com
+raw EDIDs:
+
+AUO B133HAN06.6 (from the datasheet)
+
+00 ff ff ff ff ff ff 00 06 af 8f cb 00 00 00 00
+2f 1d 01 04 95 1d 11 78 03 93 05 92 58 59 90 29
+1d 50 54 00 00 00 01 01 01 01 01 01 01 01 01 01
+01 01 01 01 01 01 14 37 80 b8 70 38 24 40 10 10
+3e 00 25 a5 10 00 00 18 b8 24 80 b8 70 38 24 40
+10 10 3e 00 25 a5 10 00 00 18 00 00 00 00 00 00
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 02
+00 10 48 ff 0f 3c 7d 14 0e 1d 7d 20 20 20 00 77
+
+BOE NV133FHM-N4F V8.0 (from an actual panel)
+
+00 ff ff ff ff ff ff 00 09 e5 25 0a 00 00 00 00
+2c 1f 01 04 95 1d 11 78 03 28 65 97 59 54 8e 27
+1e 50 54 00 00 00 01 01 01 01 01 01 01 01 01 01
+01 01 01 01 01 01 a4 39 80 c8 70 38 50 40 30 20
+36 00 26 a5 10 00 00 1a 6d 26 80 c8 70 38 50 40
+30 20 36 00 26 a5 10 00 00 1a 00 00 00 00 00 00
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 02
+00 0d 40 ff 0a 3c 7d 0f 0f 1f 7d 00 00 00 00 d2
+
+Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://patch.msgid.link/20260512045454.1505733-1-wenst@chromium.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bus/mhi/host/pci_generic.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/panel/panel-edp.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
-index 646f3bcdc636a..a5b47728f9aba 100644
---- a/drivers/bus/mhi/host/pci_generic.c
-+++ b/drivers/bus/mhi/host/pci_generic.c
-@@ -1139,7 +1139,8 @@ static int mhi_pci_get_irqs(struct mhi_controller *mhi_cntrl,
- 	 */
- 	mhi_cntrl->nr_irqs = 1 + mhi_cntrl_config->num_events;
- 
--	nr_vectors = pci_alloc_irq_vectors(pdev, 1, mhi_cntrl->nr_irqs, PCI_IRQ_MSIX | PCI_IRQ_MSI);
-+	nr_vectors = pci_alloc_irq_vectors(pdev, 1, roundup_pow_of_two(mhi_cntrl->nr_irqs),
-+					   PCI_IRQ_MSIX | PCI_IRQ_MSI);
- 	if (nr_vectors < 0) {
- 		dev_err(&pdev->dev, "Error allocating MSI vectors %d\n",
- 			nr_vectors);
+diff --git a/drivers/gpu/drm/panel/panel-edp.c b/drivers/gpu/drm/panel/panel-edp.c
+index cd738fa199288..a8f327553e62e 100644
+--- a/drivers/gpu/drm/panel/panel-edp.c
++++ b/drivers/gpu/drm/panel/panel-edp.c
+@@ -1931,6 +1931,7 @@ static const struct edp_panel_entry edp_panels[] = {
+ 	EDP_PANEL_ENTRY('A', 'U', 'O', 0xc4b4, &delay_200_500_e50, "B116XAT04.1"),
+ 	EDP_PANEL_ENTRY('A', 'U', 'O', 0xc7ad, &delay_200_500_e50, "B140HAN07.7"),
+ 	EDP_PANEL_ENTRY('A', 'U', 'O', 0xc9a8, &delay_200_500_e50, "B140QAN08.H"),
++	EDP_PANEL_ENTRY('A', 'U', 'O', 0xcb8f, &delay_200_500_e50, "B133HAN06.6"),
+ 	EDP_PANEL_ENTRY('A', 'U', 'O', 0xcdba, &delay_200_500_e50, "B140UAX01.2"),
+ 	EDP_PANEL_ENTRY('A', 'U', 'O', 0xd497, &delay_200_500_e50, "B120XAN01.0"),
+ 	EDP_PANEL_ENTRY('A', 'U', 'O', 0xf390, &delay_200_500_e50, "B140XTN07.7"),
+@@ -1980,6 +1981,7 @@ static const struct edp_panel_entry edp_panels[] = {
+ 	EDP_PANEL_ENTRY('B', 'O', 'E', 0x09ae, &delay_200_500_e200, "NT140FHM-N45"),
+ 	EDP_PANEL_ENTRY('B', 'O', 'E', 0x09dd, &delay_200_500_e50, "NT116WHM-N21"),
+ 	EDP_PANEL_ENTRY('B', 'O', 'E', 0x0a1b, &delay_200_500_e50, "NV133WUM-N63"),
++	EDP_PANEL_ENTRY('B', 'O', 'E', 0x0a25, &delay_200_500_e50_po2e200, "NV133FHM-N4F V8.0"),
+ 	EDP_PANEL_ENTRY('B', 'O', 'E', 0x0a36, &delay_200_500_e200, "Unknown"),
+ 	EDP_PANEL_ENTRY('B', 'O', 'E', 0x0a3e, &delay_200_500_e80_d50, "NV116WHM-N49"),
+ 	EDP_PANEL_ENTRY('B', 'O', 'E', 0x0a5d, &delay_200_500_e50, "NV116WHM-N45"),
 -- 
 2.53.0
 
