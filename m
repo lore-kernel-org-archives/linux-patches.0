@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C9D24F7CD2;
-	Thu, 17 Sep 2026 17:37:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33C074F7CD7;
+	Thu, 17 Sep 2026 17:37:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666658; cv=none; b=q+eGAWfHCZq6q3+F2OXDDCTuzyC9qFk5mZez5iyprAofxAM5hyYnfNYz1Xwo69+qHIHQw+mORn5nAB3xiXyMyGo3+a2ywxze4na2atcSKTEhpPm19KrBtO7hfBQErCAXbGVk2FNDczk6NUJMvs5e5doCOJRqb29PW4wPgoGVmTU=
+	t=1789666661; cv=none; b=S68Pr81ROaacaBaGlo/Ey+nLSLjGiykg1lYn+fGMU5cnk4vetbVZxgzHw3MXwnzahNqvThaUhH9nScQcHiDuJOGfsBnhBJTNZj7gr6nOe5Oxh34b7Xv5EAfYJKmbFbtW7gfI6917yoPp8T1pOSqUZDJTbuFXiVCjr2zpXBbu64c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666658; c=relaxed/simple;
-	bh=nIrg8e3nvFxuCi0AtN2txRNmqpbyC/X8wm6ckL2YvXw=;
+	s=arc-20240116; t=1789666661; c=relaxed/simple;
+	bh=h8i69gfz9VpI1zdH13EWg0FUXyDalbTjwiIq/y6Uz0I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=brip/YjsLb5oz8Kexwf+p8RggN0nbo6IQLZawEBrnqZQxHl5tA2MrbOnmabP2EgEFiuDL3FUBKTfmEOQ4dFBBUNcfVlNQiH5Fq+RCGplfVFKeE8W+0J0dOZOW1/ez/+pv18N7Lhqm9Hc8UfOG+ux5Cez/UTGObpKTGH0oUMAAqA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tp3U6apU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iALch0MQfGNa0wtOCdZvtSIehXpnp9rh1THH+VzcHNhQ+z5BsRBPjqQTnOze+2fcybJxeuULzJ8EQvKuoIZxdn6WSZrpVBXpEynsk8dcH7V0ndr0RNNdQqzFvw7t7a1T1b7ba/B8+7XKG+oPTS6QGHQKLULtPwMZzTUz68/J1dA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uGgFQvhO; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tp3U6apU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B0C21F000FF;
-	Thu, 17 Sep 2026 17:37:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uGgFQvhO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80E8E1F000FF;
+	Thu, 17 Sep 2026 17:37:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666657;
-	bh=tquOoi3E/JiPLAiwrggeRxF3irrdoBt8pBAI8Dxhew8=;
+	s=korg; t=1789666660;
+	bh=NM5XC9E+2bzLuBCh7y16OPptgGJ55J+dqAbDDknYlqk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Tp3U6apU718l6+i+ZgwpkC6LO2YCQP4ZOmw3oQH5hVLJVWgUJO1YfyYYnCx1nxZOi
-	 kSQwH4WpN2cYqKKqziDYhTvZdTpz+JUrD2gk0qAqa/mbCQACzeMhkTQxk7cmVUfprA
-	 Fpm57KS09YXgQDbiIHzHfkRyG0DxsDfUwik1W7m8=
+	b=uGgFQvhOJYSTfHebROAxL3lT+OQVsw/Xqtnj/vZPrWsKiobsN9d75+DpyC81SRiRL
+	 HQgM7OFv+b2anjfFCxoswGVW0HY0pcvTMuKc+oFfOOy0QTtpk47//vkVFUgShcAYHJ
+	 j2ImwZC1Z8ws6VrkWmjaukPakiJ87UvSFU+WxJ8g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.18 1062/1250] media: mediatek: vcodec: bound AV1 tile-start copy to the array capacity
-Date: Thu, 17 Sep 2026 16:14:17 +0100
-Message-ID: <20260917151620.908770791@linuxfoundation.org>
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Carlos Maiolino <cem@kernel.org>
+Subject: [PATCH 6.18 1104/1250] xfs: fix the rtrmap and rtrefcount _maxlevels_ondisk functions
+Date: Thu, 17 Sep 2026 16:14:59 +0100
+Message-ID: <20260917151622.108495387@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -50,40 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Darrick J. Wong <djwong@kernel.org>
 
-commit 37bef2170d4c88fc3d708eecf3ef0f4032bc1372 upstream.
+commit aa301322f72f82f26e4ba0826018d41388ab9896 upstream.
 
-vdec_av1_slice_setup_tile() copies tile_cols + 1 / tile_rows + 1 entries
-into mi_col_starts[] / mi_row_starts[] from the bitstream tile_info. Bound
-the copy to the array capacity.
+The _maxlevels_ondisk functions are used to compute the size of
+in-memory btree cursors for each btree type.  Unfortunately, LOLLM
+noticed that the rtrmap and rtrefcount versions of these functions
+forget to account for the inode root, which means that we could access
+beyond the end of the cursor given a sufficiently large btree.  Fix
+this.
 
-Fixes: 0934d3759615 ("media: mediatek: vcodec: separate decoder and encoder")
-Assisted-by: Claude:claude-opus-4-8
-Cc: stable@vger.kernel.org
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Cc: stable@vger.kernel.org # v6.14
+Fixes: 9abe03a0e4f978 ("xfs: introduce realtime refcount btree ondisk definitions")
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Assisted-by: LOLLM # finding obvious bugs
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/mediatek/vcodec/decoder/vdec/vdec_av1_req_lat_if.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ fs/xfs/libxfs/xfs_rtrefcount_btree.c |    7 +++++--
+ fs/xfs/libxfs/xfs_rtrmap_btree.c     |    4 +++-
+ 2 files changed, 8 insertions(+), 3 deletions(-)
 
---- a/drivers/media/platform/mediatek/vcodec/decoder/vdec/vdec_av1_req_lat_if.c
-+++ b/drivers/media/platform/mediatek/vcodec/decoder/vdec/vdec_av1_req_lat_if.c
-@@ -1299,11 +1299,12 @@ static void vdec_av1_slice_setup_tile(st
- 	tile->uniform_tile_spacing_flag =
- 		BIT_FLAG(ctrl_tile, V4L2_AV1_TILE_INFO_FLAG_UNIFORM_TILE_SPACING);
+--- a/fs/xfs/libxfs/xfs_rtrefcount_btree.c
++++ b/fs/xfs/libxfs/xfs_rtrefcount_btree.c
+@@ -489,8 +489,11 @@ xfs_rtrefcountbt_maxlevels_ondisk(void)
+ 	minrecs[0] = xfs_rtrefcountbt_block_maxrecs(blocklen, true) / 2;
+ 	minrecs[1] = xfs_rtrefcountbt_block_maxrecs(blocklen, false) / 2;
  
--	for (i = 0; i < tile->tile_cols + 1; i++)
-+	/* Bound the copy to the mi_col_starts[]/mi_row_starts[] capacity. */
-+	for (i = 0; i < tile->tile_cols + 1 && i < V4L2_AV1_MAX_TILE_COLS + 1; i++)
- 		tile->mi_col_starts[i] =
- 			ALIGN(ctrl_tile->mi_col_starts[i], BIT(mib_size_log2)) >> mib_size_log2;
- 
--	for (i = 0; i < tile->tile_rows + 1; i++)
-+	for (i = 0; i < tile->tile_rows + 1 && i < V4L2_AV1_MAX_TILE_ROWS + 1; i++)
- 		tile->mi_row_starts[i] =
- 			ALIGN(ctrl_tile->mi_row_starts[i], BIT(mib_size_log2)) >> mib_size_log2;
+-	/* We need at most one record for every block in an rt group. */
+-	return xfs_btree_compute_maxlevels(minrecs, XFS_MAX_RGBLOCKS);
++	/*
++	 * We need at most one record for every block in an rt group, and
++	 * one extra level for the inode root.
++	 */
++	return xfs_btree_compute_maxlevels(minrecs, XFS_MAX_RGBLOCKS) + 1;
  }
+ 
+ int __init
+--- a/fs/xfs/libxfs/xfs_rtrmap_btree.c
++++ b/fs/xfs/libxfs/xfs_rtrmap_btree.c
+@@ -716,10 +716,12 @@ xfs_rtrmapbt_maxlevels_ondisk(void)
+ 	 * happens, which means that we must compute the max height based on
+ 	 * what the btree will look like if it consumes almost all the blocks
+ 	 * in the data device due to maximal sharing factor.
++	 *
++	 * Add one extra level for the inode root.
+ 	 */
+ 	max_dblocks = -1U; /* max ag count */
+ 	max_dblocks *= XFS_MAX_CRC_AG_BLOCKS;
+-	return xfs_btree_space_to_height(minrecs, max_dblocks);
++	return xfs_btree_space_to_height(minrecs, max_dblocks) + 1;
+ }
+ 
+ int __init
 
 
