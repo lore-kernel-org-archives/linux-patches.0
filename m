@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29CDF4F96BF;
-	Thu, 17 Sep 2026 17:46:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 171D64FD786;
+	Thu, 17 Sep 2026 17:46:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789667188; cv=none; b=BcxYCLkiRoB5Ewady+WGioEaXyDLH+TfSvAd9BeT7MA39YFQ26DZqdFqm7iF41ZNAG13Ie+Cnp3mhEYvPI9UPRGyL00VsJT85toHfU6VqQQnhal43gQFsX8JTuHIUobPWWz+ehbpVErh8woLWyqSFKbUiUXM9CqPTqcA3/OF2Js=
+	t=1789667192; cv=none; b=RO1rBR3aac0YtopnetIvjQNhv9UC+LhYpP6pzdT4bGtN6ZIxim9qWRwQfRbXVePNd3Th8h/eTtaooVeDe1Fu4AizthoJ7Sh0UhUGlxBCVToQ2MlsbodiEnTBBmE/LnNrvnnvTKiOrxMj783biURhgjuRUPo6HzIz39J/wjsuo+s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789667188; c=relaxed/simple;
-	bh=WsOGNskEmwAtLsd6PYQhCJGUAiQfLENkoGNoncrtNk8=;
+	s=arc-20240116; t=1789667192; c=relaxed/simple;
+	bh=LtT9Jf0rZisF9VXg3K83R6h4qhygxsy1aoS+96puBKk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EUfbLXZB34aPkHNuxoeUl/00GZmNKRLONRiDf1oo1rgzyIe/4DPKt3qCXS8io5rij6mNZjzm5ejyuPU3uJEuLw6QTea+p5AYwi1cFWZTnV82/+zNO26I+6C2orQPqUGi0r9uq1tIc0iTNDVcBuF/gxFfHUMdnOPXGlm8xZrQe0M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XZ9Mwin5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=q/CaL3EFxHx3OijedLoyIxAdQkfP54s+ocOSlfpjHkmaJV4fZeVdyhCqFEL4nrUrU0ENasnTi5XhvBKJFoB2t5HqR2zNZeX7BnCPUMfI1VMPKht/doyBgWuk+mbPIVtuuoyTrT/GwkZ95nUcdkP8sO/mKoOaOsOyPUrMpquzlt8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SNFv22LG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XZ9Mwin5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24F481F000FF;
-	Thu, 17 Sep 2026 17:46:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SNFv22LG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20B2F1F000FF;
+	Thu, 17 Sep 2026 17:46:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789667186;
-	bh=dspblTNvub5rle9BmwfEbsUa9e/NklHbI3e8a3hXj8w=;
+	s=korg; t=1789667189;
+	bh=NMPHX0bmth+ACLSH8V0uAZ7F8vV9oo+8nPYNuwrHKu8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XZ9Mwin5jhwkvMTYuzg1O35xZgKN0Iw23+rBj8uYjPEWKX+n+MVgTZqv0SvoFtMcx
-	 y5lFaS/JRde/aJaHZ4itB15DHBKYcygU83F/mBNbi9aoz+CWs1lGSqGG0sceSUdryh
-	 Nbp9tce9L9Rhkk5y/QSXTjWiZhonprT43u4oAHuw=
+	b=SNFv22LGYmOvp0lmQ6/CXbv/hDCgzAzfiyjHMl23YBuPWzgY/5iklYtN23bR9pYTB
+	 oIKgD0Ks7Lo69Un8kHxQMpE6rgBTru0hk4TDPGAKWGYcb6Tiw1cEWd6D8hXzETO29Y
+	 gC0fpkKZZp2SJ+mppftYWHd+jPW082jRDddRrdyE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Gospodarek <gospo@broadcom.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	linux-rdma@vger.kernel.org,
-	Pavan Chebbi <pavan.chebbi@broadcom.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Milena Olech <milena.olech@intel.com>,
+	Anton Nadezhdin <anton.nadezhdin@intel.com>,
+	Pavan Kumar Linga <pavan.kumar.linga@intel.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Joshua Hay <joshua.a.hay@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1234/1250] fwctl/bnxt_en: Move common definitions to include/linux/bnxt/
-Date: Thu, 17 Sep 2026 16:17:09 +0100
-Message-ID: <20260917151625.739227659@linuxfoundation.org>
+Subject: [PATCH 6.18 1225/1250] idpf: introduce local idpf structure to store virtchnl queue chunks
+Date: Thu, 17 Sep 2026 16:17:00 +0100
+Message-ID: <20260917151625.486597131@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -54,436 +55,605 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pavan Chebbi <pavan.chebbi@broadcom.com>
+From: Pavan Kumar Linga <pavan.kumar.linga@intel.com>
 
-[ Upstream commit 7be18a1fa00eab5283b35c13e26c6b76fcaab9ce ]
+[ Upstream commit d83d80347dea37e568ca9abf969ee909859a5a7d ]
 
-We have common definitions that are now going to be used
-by more than one component outside of bnxt (bnxt_re and
-fwctl)
+Queue ID and register info received from device Control Plane is stored
+locally in the same little endian format. As the queue chunks are
+retrieved in 3 functions, lexx_to_cpu conversions are done each time.
+Instead introduce a new idpf structure to store the received queue info.
+It also avoids conditional check to retrieve queue chunks.
 
-Move bnxt_ulp.h to include/linux/bnxt/ as ulp.h.
+With this change, there is no need to store the queue chunks in
+'req_qs_chunks' field. So remove that.
 
-Link: https://patch.msgid.link/r/20260314151605.932749-2-pavan.chebbi@broadcom.com
-Reviewed-by: Andy Gospodarek <gospo@broadcom.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Cc: linux-rdma@vger.kernel.org
-Signed-off-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-Stable-dep-of: 961e2a17c5e3 ("bnxt_en: Handle buffer allocation failure in bnxt_rx_ring_reset()")
+Suggested-by: Milena Olech <milena.olech@intel.com>
+Reviewed-by: Anton Nadezhdin <anton.nadezhdin@intel.com>
+Signed-off-by: Pavan Kumar Linga <pavan.kumar.linga@intel.com>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Signed-off-by: Joshua Hay <joshua.a.hay@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Stable-dep-of: 7dd4c829bac2 ("idpf: disable DIM work before freeing q_vectors")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/hw/bnxt_re/debugfs.c                         | 2 +-
- drivers/infiniband/hw/bnxt_re/main.c                            | 2 +-
- drivers/infiniband/hw/bnxt_re/qplib_fp.c                        | 2 +-
- drivers/infiniband/hw/bnxt_re/qplib_res.h                       | 2 +-
- drivers/net/ethernet/broadcom/bnxt/bnxt.c                       | 2 +-
- drivers/net/ethernet/broadcom/bnxt/bnxt_devlink.c               | 2 +-
- drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c               | 2 +-
- drivers/net/ethernet/broadcom/bnxt/bnxt_sriov.c                 | 2 +-
- drivers/net/ethernet/broadcom/bnxt/bnxt_ulp.c                   | 2 +-
- .../broadcom/bnxt/bnxt_ulp.h => include/linux/bnxt/ulp.h        | 0
- drivers/infiniband/hw/bnxt_re/debugfs.c           |    2 
- drivers/infiniband/hw/bnxt_re/main.c              |    2 
- drivers/infiniband/hw/bnxt_re/qplib_fp.c          |    2 
- drivers/infiniband/hw/bnxt_re/qplib_res.h         |    2 
- drivers/net/ethernet/broadcom/bnxt/bnxt.c         |    2 
- drivers/net/ethernet/broadcom/bnxt/bnxt_devlink.c |    2 
- drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c |    2 
- drivers/net/ethernet/broadcom/bnxt/bnxt_sriov.c   |    2 
- drivers/net/ethernet/broadcom/bnxt/bnxt_ulp.c     |    2 
- drivers/net/ethernet/broadcom/bnxt/bnxt_ulp.h     |  129 ----------------------
- include/linux/bnxt/ulp.h                          |  129 ++++++++++++++++++++++
- 11 files changed, 138 insertions(+), 138 deletions(-)
- rename drivers/net/ethernet/broadcom/bnxt/bnxt_ulp.h => include/linux/bnxt/ulp.h (100%)
+ drivers/net/ethernet/intel/idpf/idpf.h          |   31 ++++
+ drivers/net/ethernet/intel/idpf/idpf_lib.c      |   43 ++++--
+ drivers/net/ethernet/intel/idpf/idpf_virtchnl.c |  170 ++++++++++++------------
+ drivers/net/ethernet/intel/idpf/idpf_virtchnl.h |   18 +-
+ 4 files changed, 161 insertions(+), 101 deletions(-)
 
---- a/drivers/infiniband/hw/bnxt_re/debugfs.c
-+++ b/drivers/infiniband/hw/bnxt_re/debugfs.c
-@@ -10,8 +10,8 @@
- #include <linux/pci.h>
- #include <linux/seq_file.h>
- #include <rdma/ib_addr.h>
-+#include <linux/bnxt/ulp.h>
+--- a/drivers/net/ethernet/intel/idpf/idpf.h
++++ b/drivers/net/ethernet/intel/idpf/idpf.h
+@@ -550,10 +550,37 @@ struct idpf_vector_lifo {
+ };
  
--#include "bnxt_ulp.h"
- #include "roce_hsi.h"
- #include "qplib_res.h"
- #include "qplib_sp.h"
---- a/drivers/infiniband/hw/bnxt_re/main.c
-+++ b/drivers/infiniband/hw/bnxt_re/main.c
-@@ -55,8 +55,8 @@
- #include <rdma/ib_umem.h>
- #include <rdma/ib_addr.h>
- #include <linux/hashtable.h>
-+#include <linux/bnxt/ulp.h>
- 
--#include "bnxt_ulp.h"
- #include "roce_hsi.h"
- #include "qplib_res.h"
- #include "qplib_sp.h"
---- a/drivers/infiniband/hw/bnxt_re/qplib_fp.c
-+++ b/drivers/infiniband/hw/bnxt_re/qplib_fp.c
-@@ -46,6 +46,7 @@
- #include <linux/delay.h>
- #include <linux/prefetch.h>
- #include <linux/if_ether.h>
-+#include <linux/bnxt/ulp.h>
- #include <rdma/ib_mad.h>
- 
- #include "roce_hsi.h"
-@@ -55,7 +56,6 @@
- #include "qplib_sp.h"
- #include "qplib_fp.h"
- #include <rdma/ib_addr.h>
--#include "bnxt_ulp.h"
- #include "bnxt_re.h"
- #include "ib_verbs.h"
- 
---- a/drivers/infiniband/hw/bnxt_re/qplib_res.h
-+++ b/drivers/infiniband/hw/bnxt_re/qplib_res.h
-@@ -39,7 +39,7 @@
- #ifndef __BNXT_QPLIB_RES_H__
- #define __BNXT_QPLIB_RES_H__
- 
--#include "bnxt_ulp.h"
-+#include <linux/bnxt/ulp.h>
- 
- extern const struct bnxt_qplib_gid bnxt_qplib_gid_zero;
- 
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -59,10 +59,10 @@
- #include <net/netdev_rx_queue.h>
- #include <linux/pci-tph.h>
- #include <linux/bnxt/hsi.h>
-+#include <linux/bnxt/ulp.h>
- 
- #include "bnxt.h"
- #include "bnxt_hwrm.h"
--#include "bnxt_ulp.h"
- #include "bnxt_sriov.h"
- #include "bnxt_ethtool.h"
- #include "bnxt_dcb.h"
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt_devlink.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_devlink.c
-@@ -13,12 +13,12 @@
- #include <net/devlink.h>
- #include <net/netdev_lock.h>
- #include <linux/bnxt/hsi.h>
-+#include <linux/bnxt/ulp.h>
- #include "bnxt.h"
- #include "bnxt_hwrm.h"
- #include "bnxt_vfr.h"
- #include "bnxt_devlink.h"
- #include "bnxt_ethtool.h"
--#include "bnxt_ulp.h"
- #include "bnxt_ptp.h"
- #include "bnxt_coredump.h"
- #include "bnxt_nvm_defs.h"
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
-@@ -27,9 +27,9 @@
- #include <net/netdev_queues.h>
- #include <net/netlink.h>
- #include <linux/bnxt/hsi.h>
-+#include <linux/bnxt/ulp.h>
- #include "bnxt.h"
- #include "bnxt_hwrm.h"
--#include "bnxt_ulp.h"
- #include "bnxt_xdp.h"
- #include "bnxt_ptp.h"
- #include "bnxt_ethtool.h"
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt_sriov.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_sriov.c
-@@ -17,9 +17,9 @@
- #include <linux/etherdevice.h>
- #include <net/dcbnl.h>
- #include <linux/bnxt/hsi.h>
-+#include <linux/bnxt/ulp.h>
- #include "bnxt.h"
- #include "bnxt_hwrm.h"
--#include "bnxt_ulp.h"
- #include "bnxt_sriov.h"
- #include "bnxt_vfr.h"
- #include "bnxt_ethtool.h"
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt_ulp.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_ulp.c
-@@ -22,10 +22,10 @@
- #include <linux/auxiliary_bus.h>
- #include <net/netdev_lock.h>
- #include <linux/bnxt/hsi.h>
-+#include <linux/bnxt/ulp.h>
- 
- #include "bnxt.h"
- #include "bnxt_hwrm.h"
--#include "bnxt_ulp.h"
- 
- static DEFINE_IDA(bnxt_aux_dev_ids);
- 
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt_ulp.h
-+++ /dev/null
-@@ -1,129 +0,0 @@
--/* Broadcom NetXtreme-C/E network driver.
-- *
-- * Copyright (c) 2016-2018 Broadcom Limited
-- *
-- * This program is free software; you can redistribute it and/or modify
-- * it under the terms of the GNU General Public License as published by
-- * the Free Software Foundation.
-- */
--
--#ifndef BNXT_ULP_H
--#define BNXT_ULP_H
--
--#define BNXT_MIN_ROCE_CP_RINGS	2
--#define BNXT_MIN_ROCE_STAT_CTXS	1
--
--#define BNXT_MAX_ROCE_MSIX_VF		2
--#define BNXT_MAX_ROCE_MSIX_NPAR_PF	5
--#define BNXT_MAX_ROCE_MSIX		64
--
--struct hwrm_async_event_cmpl;
--struct bnxt;
--
--struct bnxt_msix_entry {
--	u32	vector;
--	u32	ring_idx;
--	u32	db_offset;
--};
--
--struct bnxt_ulp_ops {
--	/* async_notifier() cannot sleep (in BH context) */
--	void (*ulp_async_notifier)(void *, struct hwrm_async_event_cmpl *);
--	void (*ulp_irq_stop)(void *, bool);
--	void (*ulp_irq_restart)(void *, struct bnxt_msix_entry *);
--};
--
--struct bnxt_fw_msg {
--	void	*msg;
--	int	msg_len;
--	void	*resp;
--	int	resp_max_len;
--	int	timeout;
--};
--
--struct bnxt_ulp {
--	void		*handle;
--	struct bnxt_ulp_ops __rcu *ulp_ops;
--	unsigned long	*async_events_bmap;
--	u16		max_async_event_id;
--	u16		msix_requested;
--};
--
--struct bnxt_en_dev {
--	struct net_device *net;
--	struct pci_dev *pdev;
--	struct bnxt_msix_entry			msix_entries[BNXT_MAX_ROCE_MSIX];
--	u32 flags;
--	#define BNXT_EN_FLAG_ROCEV1_CAP		0x1
--	#define BNXT_EN_FLAG_ROCEV2_CAP		0x2
--	#define BNXT_EN_FLAG_ROCE_CAP		(BNXT_EN_FLAG_ROCEV1_CAP | \
--						 BNXT_EN_FLAG_ROCEV2_CAP)
--	#define BNXT_EN_FLAG_MSIX_REQUESTED	0x4
--	#define BNXT_EN_FLAG_ULP_STOPPED	0x8
--	#define BNXT_EN_FLAG_VF			0x10
--#define BNXT_EN_VF(edev)	((edev)->flags & BNXT_EN_FLAG_VF)
--	#define BNXT_EN_FLAG_ROCE_VF_RES_MGMT	0x20
--	#define BNXT_EN_FLAG_SW_RES_LMT		0x40
--#define BNXT_EN_SW_RES_LMT(edev) ((edev)->flags & BNXT_EN_FLAG_SW_RES_LMT)
--
--	struct bnxt_ulp			*ulp_tbl;
--	int				l2_db_size;	/* Doorbell BAR size in
--							 * bytes mapped by L2
--							 * driver.
--							 */
--	int				l2_db_size_nc;	/* Doorbell BAR size in
--							 * bytes mapped as non-
--							 * cacheable.
--							 */
--	int				l2_db_offset;	/* Doorbell offset in
--							 * bytes within
--							 * l2_db_size_nc.
--							 */
--	u16				chip_num;
--	u16				hw_ring_stats_size;
--	u16				pf_port_id;
--	unsigned long			en_state;	/* Could be checked in
--							 * RoCE driver suspend
--							 * mode only. Will be
--							 * updated in resume.
--							 */
--	void __iomem                    *bar0;
--
--	u16				ulp_num_msix_vec;
--	u16				ulp_num_ctxs;
--
--					/* serialize ulp operations */
--	struct mutex			en_dev_lock;
--};
--
--static inline bool bnxt_ulp_registered(struct bnxt_en_dev *edev)
--{
--	if (edev && rcu_access_pointer(edev->ulp_tbl->ulp_ops))
--		return true;
--	return false;
--}
--
--int bnxt_get_ulp_msix_num(struct bnxt *bp);
--int bnxt_get_ulp_msix_num_in_use(struct bnxt *bp);
--void bnxt_set_ulp_msix_num(struct bnxt *bp, int num);
--int bnxt_get_ulp_stat_ctxs(struct bnxt *bp);
--void bnxt_set_ulp_stat_ctxs(struct bnxt *bp, int num_ctxs);
--int bnxt_get_ulp_stat_ctxs_in_use(struct bnxt *bp);
--void bnxt_set_dflt_ulp_stat_ctxs(struct bnxt *bp);
--void bnxt_ulp_stop(struct bnxt *bp);
--void bnxt_ulp_start(struct bnxt *bp, int err);
--void bnxt_ulp_sriov_cfg(struct bnxt *bp, int num_vfs);
--void bnxt_ulp_irq_stop(struct bnxt *bp);
--void bnxt_ulp_irq_restart(struct bnxt *bp, int err);
--void bnxt_ulp_async_events(struct bnxt *bp, struct hwrm_async_event_cmpl *cmpl);
--void bnxt_rdma_aux_device_uninit(struct bnxt *bp);
--void bnxt_rdma_aux_device_del(struct bnxt *bp);
--void bnxt_rdma_aux_device_add(struct bnxt *bp);
--void bnxt_rdma_aux_device_init(struct bnxt *bp);
--int bnxt_register_dev(struct bnxt_en_dev *edev, struct bnxt_ulp_ops *ulp_ops,
--		      void *handle);
--void bnxt_unregister_dev(struct bnxt_en_dev *edev);
--int bnxt_send_msg(struct bnxt_en_dev *edev, struct bnxt_fw_msg *fw_msg);
--void bnxt_register_async_events(struct bnxt_en_dev *edev,
--				unsigned long *events_bmap, u16 max_id);
--#endif
---- /dev/null
-+++ b/include/linux/bnxt/ulp.h
-@@ -0,0 +1,129 @@
-+/* Broadcom NetXtreme-C/E network driver.
-+ *
-+ * Copyright (c) 2016-2018 Broadcom Limited
-+ *
-+ * This program is free software; you can redistribute it and/or modify
-+ * it under the terms of the GNU General Public License as published by
-+ * the Free Software Foundation.
+ /**
++ * struct idpf_queue_id_reg_chunk - individual queue ID and register chunk
++ * @qtail_reg_start: queue tail register offset
++ * @qtail_reg_spacing: queue tail register spacing
++ * @type: queue type of the queues in the chunk
++ * @start_queue_id: starting queue ID in the chunk
++ * @num_queues: number of queues in the chunk
 + */
-+
-+#ifndef BNXT_ULP_H
-+#define BNXT_ULP_H
-+
-+#define BNXT_MIN_ROCE_CP_RINGS	2
-+#define BNXT_MIN_ROCE_STAT_CTXS	1
-+
-+#define BNXT_MAX_ROCE_MSIX_VF		2
-+#define BNXT_MAX_ROCE_MSIX_NPAR_PF	5
-+#define BNXT_MAX_ROCE_MSIX		64
-+
-+struct hwrm_async_event_cmpl;
-+struct bnxt;
-+
-+struct bnxt_msix_entry {
-+	u32	vector;
-+	u32	ring_idx;
-+	u32	db_offset;
++struct idpf_queue_id_reg_chunk {
++	u64 qtail_reg_start;
++	u32 qtail_reg_spacing;
++	u32 type;
++	u32 start_queue_id;
++	u32 num_queues;
 +};
 +
-+struct bnxt_ulp_ops {
-+	/* async_notifier() cannot sleep (in BH context) */
-+	void (*ulp_async_notifier)(void *, struct hwrm_async_event_cmpl *);
-+	void (*ulp_irq_stop)(void *, bool);
-+	void (*ulp_irq_restart)(void *, struct bnxt_msix_entry *);
++/**
++ * struct idpf_queue_id_reg_info - queue ID and register chunk info received
++ *				   over the mailbox
++ * @num_chunks: number of chunks
++ * @queue_chunks: array of chunks
++ */
++struct idpf_queue_id_reg_info {
++	u16 num_chunks;
++	struct idpf_queue_id_reg_chunk *queue_chunks;
 +};
 +
-+struct bnxt_fw_msg {
-+	void	*msg;
-+	int	msg_len;
-+	void	*resp;
-+	int	resp_max_len;
-+	int	timeout;
-+};
++/**
+  * struct idpf_vport_config - Vport configuration data
+  * @user_config: see struct idpf_vport_user_config_data
+  * @max_q: Maximum possible queues
+- * @req_qs_chunks: Queue chunk data for requested queues
++ * @qid_reg_info: Struct to store the queue ID and register info
+  * @mac_filter_list_lock: Lock to protect mac filters
+  * @flow_steer_list_lock: Lock to protect fsteer filters
+  * @flags: See enum idpf_vport_config_flags
+@@ -561,7 +588,7 @@ struct idpf_vector_lifo {
+ struct idpf_vport_config {
+ 	struct idpf_vport_user_config_data user_config;
+ 	struct idpf_vport_max_q max_q;
+-	struct virtchnl2_add_queues *req_qs_chunks;
++	struct idpf_queue_id_reg_info qid_reg_info;
+ 	spinlock_t mac_filter_list_lock;
+ 	spinlock_t flow_steer_list_lock;
+ 	DECLARE_BITMAP(flags, IDPF_VPORT_CONFIG_FLAGS_NBITS);
+--- a/drivers/net/ethernet/intel/idpf/idpf_lib.c
++++ b/drivers/net/ethernet/intel/idpf/idpf_lib.c
+@@ -975,6 +975,7 @@ static void idpf_remove_features(struct
+ static void idpf_vport_stop(struct idpf_vport *vport, bool rtnl)
+ {
+ 	struct idpf_netdev_priv *np = netdev_priv(vport->netdev);
++	struct idpf_queue_id_reg_info *chunks;
+ 
+ 	if (!test_bit(IDPF_VPORT_UP, np->state))
+ 		return;
+@@ -985,6 +986,8 @@ static void idpf_vport_stop(struct idpf_
+ 	netif_carrier_off(vport->netdev);
+ 	netif_tx_disable(vport->netdev);
+ 
++	chunks = &vport->adapter->vport_config[vport->idx]->qid_reg_info;
 +
-+struct bnxt_ulp {
-+	void		*handle;
-+	struct bnxt_ulp_ops __rcu *ulp_ops;
-+	unsigned long	*async_events_bmap;
-+	u16		max_async_event_id;
-+	u16		msix_requested;
-+};
+ 	idpf_send_disable_vport_msg(vport);
+ 	idpf_send_disable_queues_msg(vport);
+ 	idpf_send_map_unmap_queue_vector_msg(vport, false);
+@@ -994,7 +997,7 @@ static void idpf_vport_stop(struct idpf_
+ 	 * instead of deleting and reallocating the vport.
+ 	 */
+ 	if (test_and_clear_bit(IDPF_VPORT_DEL_QUEUES, vport->flags))
+-		idpf_send_delete_queues_msg(vport);
++		idpf_send_delete_queues_msg(vport, chunks);
+ 
+ 	idpf_remove_features(vport);
+ 
+@@ -1097,16 +1100,15 @@ static void idpf_vport_rel(struct idpf_v
+ 	kfree(vport->q_vector_idxs);
+ 	vport->q_vector_idxs = NULL;
+ 
++	idpf_vport_deinit_queue_reg_chunks(vport_config);
 +
-+struct bnxt_en_dev {
-+	struct net_device *net;
-+	struct pci_dev *pdev;
-+	struct bnxt_msix_entry			msix_entries[BNXT_MAX_ROCE_MSIX];
-+	u32 flags;
-+	#define BNXT_EN_FLAG_ROCEV1_CAP		0x1
-+	#define BNXT_EN_FLAG_ROCEV2_CAP		0x2
-+	#define BNXT_EN_FLAG_ROCE_CAP		(BNXT_EN_FLAG_ROCEV1_CAP | \
-+						 BNXT_EN_FLAG_ROCEV2_CAP)
-+	#define BNXT_EN_FLAG_MSIX_REQUESTED	0x4
-+	#define BNXT_EN_FLAG_ULP_STOPPED	0x8
-+	#define BNXT_EN_FLAG_VF			0x10
-+#define BNXT_EN_VF(edev)	((edev)->flags & BNXT_EN_FLAG_VF)
-+	#define BNXT_EN_FLAG_ROCE_VF_RES_MGMT	0x20
-+	#define BNXT_EN_FLAG_SW_RES_LMT		0x40
-+#define BNXT_EN_SW_RES_LMT(edev) ((edev)->flags & BNXT_EN_FLAG_SW_RES_LMT)
+ 	kfree(adapter->vport_params_recvd[idx]);
+ 	adapter->vport_params_recvd[idx] = NULL;
+ 	kfree(adapter->vport_params_reqd[idx]);
+ 	adapter->vport_params_reqd[idx] = NULL;
+-	if (adapter->vport_config[idx]) {
+-		kfree(adapter->vport_config[idx]->req_qs_chunks);
+-		adapter->vport_config[idx]->req_qs_chunks = NULL;
+-	}
+ 	kfree(vport->rx_ptype_lkup);
+ 	vport->rx_ptype_lkup = NULL;
 +
-+	struct bnxt_ulp			*ulp_tbl;
-+	int				l2_db_size;	/* Doorbell BAR size in
-+							 * bytes mapped by L2
-+							 * driver.
-+							 */
-+	int				l2_db_size_nc;	/* Doorbell BAR size in
-+							 * bytes mapped as non-
-+							 * cacheable.
-+							 */
-+	int				l2_db_offset;	/* Doorbell offset in
-+							 * bytes within
-+							 * l2_db_size_nc.
-+							 */
-+	u16				chip_num;
-+	u16				hw_ring_stats_size;
-+	u16				pf_port_id;
-+	unsigned long			en_state;	/* Could be checked in
-+							 * RoCE driver suspend
-+							 * mode only. Will be
-+							 * updated in resume.
-+							 */
-+	void __iomem                    *bar0;
+ 	kfree(vport);
+ 	adapter->num_alloc_vports--;
+ }
+@@ -1275,7 +1277,9 @@ static struct idpf_vport *idpf_vport_all
+ 	if (!vport->q_vector_idxs)
+ 		goto free_vport;
+ 
+-	idpf_vport_init(vport, max_q);
++	err = idpf_vport_init(vport, max_q);
++	if (err)
++		goto free_vector_idxs;
+ 
+ 	/* LUT and key are both initialized here. Key is not strictly dependent
+ 	 * on how many queues we have. If we change number of queues and soft
+@@ -1286,7 +1290,7 @@ static struct idpf_vport *idpf_vport_all
+ 	rss_data = &adapter->vport_config[idx]->user_config.rss_data;
+ 	rss_data->rss_key = kzalloc(rss_data->rss_key_size, GFP_KERNEL);
+ 	if (!rss_data->rss_key)
+-		goto free_vector_idxs;
++		goto free_qreg_chunks;
+ 
+ 	/* Initialize default rss key */
+ 	netdev_rss_key_fill((void *)rss_data->rss_key, rss_data->rss_key_size);
+@@ -1308,6 +1312,8 @@ static struct idpf_vport *idpf_vport_all
+ 
+ free_rss_key:
+ 	kfree(rss_data->rss_key);
++free_qreg_chunks:
++	idpf_vport_deinit_queue_reg_chunks(adapter->vport_config[idx]);
+ free_vector_idxs:
+ 	kfree(vport->q_vector_idxs);
+ free_vport:
+@@ -1484,6 +1490,8 @@ static int idpf_vport_open(struct idpf_v
+ {
+ 	struct idpf_netdev_priv *np = netdev_priv(vport->netdev);
+ 	struct idpf_adapter *adapter = vport->adapter;
++	struct idpf_vport_config *vport_config;
++	struct idpf_queue_id_reg_info *chunks;
+ 	int err;
+ 
+ 	if (test_bit(IDPF_VPORT_UP, np->state))
+@@ -1506,7 +1514,10 @@ static int idpf_vport_open(struct idpf_v
+ 	if (err)
+ 		goto intr_rel;
+ 
+-	err = idpf_vport_queue_ids_init(vport);
++	vport_config = adapter->vport_config[vport->idx];
++	chunks = &vport_config->qid_reg_info;
 +
-+	u16				ulp_num_msix_vec;
-+	u16				ulp_num_ctxs;
++	err = idpf_vport_queue_ids_init(vport, chunks);
+ 	if (err) {
+ 		dev_err(&adapter->pdev->dev, "Failed to initialize queue ids for vport %u: %d\n",
+ 			vport->vport_id, err);
+@@ -1520,7 +1531,7 @@ static int idpf_vport_open(struct idpf_v
+ 		goto queues_rel;
+ 	}
+ 
+-	err = idpf_queue_reg_init(vport);
++	err = idpf_queue_reg_init(vport, chunks);
+ 	if (err) {
+ 		dev_err(&adapter->pdev->dev, "Failed to initialize queue registers for vport %u: %d\n",
+ 			vport->vport_id, err);
+@@ -1997,8 +2008,9 @@ int idpf_initiate_soft_reset(struct idpf
+ 	struct idpf_netdev_priv *np = netdev_priv(vport->netdev);
+ 	bool vport_is_up = test_bit(IDPF_VPORT_UP, np->state);
+ 	struct idpf_adapter *adapter = vport->adapter;
++	struct idpf_vport_config *vport_config;
+ 	struct idpf_vport *new_vport;
+-	int err;
++	int err, tmp_err = 0;
+ 
+ 	/* If the system is low on memory, we can end up in bad state if we
+ 	 * free all the memory for queue resources and try to allocate them
+@@ -2046,8 +2058,10 @@ int idpf_initiate_soft_reset(struct idpf
+ 		goto free_vport;
+ 	}
+ 
++	vport_config = adapter->vport_config[vport->idx];
 +
-+					/* serialize ulp operations */
-+	struct mutex			en_dev_lock;
-+};
-+
-+static inline bool bnxt_ulp_registered(struct bnxt_en_dev *edev)
+ 	if (!vport_is_up) {
+-		idpf_send_delete_queues_msg(vport);
++		idpf_send_delete_queues_msg(vport, &vport_config->qid_reg_info);
+ 	} else {
+ 		set_bit(IDPF_VPORT_DEL_QUEUES, vport->flags);
+ 		idpf_vport_stop(vport, false);
+@@ -2088,11 +2102,12 @@ int idpf_initiate_soft_reset(struct idpf
+ 	goto free_vport;
+ 
+ err_reset:
+-	idpf_send_add_queues_msg(vport, vport->num_txq, vport->num_complq,
+-				 vport->num_rxq, vport->num_bufq);
++	tmp_err = idpf_send_add_queues_msg(vport, vport->num_txq,
++					   vport->num_complq, vport->num_rxq,
++					   vport->num_bufq);
+ 
+ err_open:
+-	if (vport_is_up)
++	if (!tmp_err && vport_is_up)
+ 		idpf_vport_open(vport, false);
+ 
+ free_vport:
+--- a/drivers/net/ethernet/intel/idpf/idpf_virtchnl.c
++++ b/drivers/net/ethernet/intel/idpf/idpf_virtchnl.c
+@@ -1265,6 +1265,45 @@ static void idpf_init_avail_queues(struc
+ }
+ 
+ /**
++ * idpf_vport_init_queue_reg_chunks - initialize queue register chunks
++ * @vport_config: persistent vport structure to store the queue register info
++ * @schunks: source chunks to copy data from
++ *
++ * Return: 0 on success, negative on failure.
++ */
++static int
++idpf_vport_init_queue_reg_chunks(struct idpf_vport_config *vport_config,
++				 struct virtchnl2_queue_reg_chunks *schunks)
 +{
-+	if (edev && rcu_access_pointer(edev->ulp_tbl->ulp_ops))
-+		return true;
-+	return false;
++	struct idpf_queue_id_reg_info *q_info = &vport_config->qid_reg_info;
++	u16 num_chunks = le16_to_cpu(schunks->num_chunks);
++
++	kfree(q_info->queue_chunks);
++
++	q_info->queue_chunks = kcalloc(num_chunks, sizeof(*q_info->queue_chunks),
++				       GFP_KERNEL);
++	if (!q_info->queue_chunks) {
++		q_info->num_chunks = 0;
++		return -ENOMEM;
++	}
++
++	q_info->num_chunks = num_chunks;
++
++	for (u16 i = 0; i < num_chunks; i++) {
++		struct idpf_queue_id_reg_chunk *dchunk = &q_info->queue_chunks[i];
++		struct virtchnl2_queue_reg_chunk *schunk = &schunks->chunks[i];
++
++		dchunk->qtail_reg_start = le64_to_cpu(schunk->qtail_reg_start);
++		dchunk->qtail_reg_spacing = le32_to_cpu(schunk->qtail_reg_spacing);
++		dchunk->type = le32_to_cpu(schunk->type);
++		dchunk->start_queue_id = le32_to_cpu(schunk->start_queue_id);
++		dchunk->num_queues = le32_to_cpu(schunk->num_queues);
++	}
++
++	return 0;
 +}
 +
-+int bnxt_get_ulp_msix_num(struct bnxt *bp);
-+int bnxt_get_ulp_msix_num_in_use(struct bnxt *bp);
-+void bnxt_set_ulp_msix_num(struct bnxt *bp, int num);
-+int bnxt_get_ulp_stat_ctxs(struct bnxt *bp);
-+void bnxt_set_ulp_stat_ctxs(struct bnxt *bp, int num_ctxs);
-+int bnxt_get_ulp_stat_ctxs_in_use(struct bnxt *bp);
-+void bnxt_set_dflt_ulp_stat_ctxs(struct bnxt *bp);
-+void bnxt_ulp_stop(struct bnxt *bp);
-+void bnxt_ulp_start(struct bnxt *bp, int err);
-+void bnxt_ulp_sriov_cfg(struct bnxt *bp, int num_vfs);
-+void bnxt_ulp_irq_stop(struct bnxt *bp);
-+void bnxt_ulp_irq_restart(struct bnxt *bp, int err);
-+void bnxt_ulp_async_events(struct bnxt *bp, struct hwrm_async_event_cmpl *cmpl);
-+void bnxt_rdma_aux_device_uninit(struct bnxt *bp);
-+void bnxt_rdma_aux_device_del(struct bnxt *bp);
-+void bnxt_rdma_aux_device_add(struct bnxt *bp);
-+void bnxt_rdma_aux_device_init(struct bnxt *bp);
-+int bnxt_register_dev(struct bnxt_en_dev *edev, struct bnxt_ulp_ops *ulp_ops,
-+		      void *handle);
-+void bnxt_unregister_dev(struct bnxt_en_dev *edev);
-+int bnxt_send_msg(struct bnxt_en_dev *edev, struct bnxt_fw_msg *fw_msg);
-+void bnxt_register_async_events(struct bnxt_en_dev *edev,
-+				unsigned long *events_bmap, u16 max_id);
-+#endif
++/**
+  * idpf_get_reg_intr_vecs - Get vector queue register offset
+  * @vport: virtual port structure
+  * @reg_vals: Register offsets to store in
+@@ -1324,25 +1363,25 @@ int idpf_get_reg_intr_vecs(struct idpf_v
+  * are filled.
+  */
+ static int idpf_vport_get_q_reg(u32 *reg_vals, int num_regs, u32 q_type,
+-				struct virtchnl2_queue_reg_chunks *chunks)
++				struct idpf_queue_id_reg_info *chunks)
+ {
+-	u16 num_chunks = le16_to_cpu(chunks->num_chunks);
++	u16 num_chunks = chunks->num_chunks;
+ 	int reg_filled = 0, i;
+ 	u32 reg_val;
+ 
+ 	while (num_chunks--) {
+-		struct virtchnl2_queue_reg_chunk *chunk;
++		struct idpf_queue_id_reg_chunk *chunk;
+ 		u16 num_q;
+ 
+-		chunk = &chunks->chunks[num_chunks];
+-		if (le32_to_cpu(chunk->type) != q_type)
++		chunk = &chunks->queue_chunks[num_chunks];
++		if (chunk->type != q_type)
+ 			continue;
+ 
+-		num_q = le32_to_cpu(chunk->num_queues);
+-		reg_val = le64_to_cpu(chunk->qtail_reg_start);
++		num_q = chunk->num_queues;
++		reg_val = chunk->qtail_reg_start;
+ 		for (i = 0; i < num_q && reg_filled < num_regs ; i++) {
+ 			reg_vals[reg_filled++] = reg_val;
+-			reg_val += le32_to_cpu(chunk->qtail_reg_spacing);
++			reg_val += chunk->qtail_reg_spacing;
+ 		}
+ 	}
+ 
+@@ -1412,15 +1451,13 @@ static int __idpf_queue_reg_init(struct
+ /**
+  * idpf_queue_reg_init - initialize queue registers
+  * @vport: virtual port structure
++ * @chunks: queue registers received over mailbox
+  *
+- * Return 0 on success, negative on failure
++ * Return: 0 on success, negative on failure
+  */
+-int idpf_queue_reg_init(struct idpf_vport *vport)
++int idpf_queue_reg_init(struct idpf_vport *vport,
++			struct idpf_queue_id_reg_info *chunks)
+ {
+-	struct virtchnl2_create_vport *vport_params;
+-	struct virtchnl2_queue_reg_chunks *chunks;
+-	struct idpf_vport_config *vport_config;
+-	u16 vport_idx = vport->idx;
+ 	int num_regs, ret = 0;
+ 	u32 *reg_vals;
+ 
+@@ -1429,16 +1466,6 @@ int idpf_queue_reg_init(struct idpf_vpor
+ 	if (!reg_vals)
+ 		return -ENOMEM;
+ 
+-	vport_config = vport->adapter->vport_config[vport_idx];
+-	if (vport_config->req_qs_chunks) {
+-		struct virtchnl2_add_queues *vc_aq =
+-		  (struct virtchnl2_add_queues *)vport_config->req_qs_chunks;
+-		chunks = &vc_aq->chunks;
+-	} else {
+-		vport_params = vport->adapter->vport_params_recvd[vport_idx];
+-		chunks = &vport_params->chunks;
+-	}
+-
+ 	/* Initialize Tx queue tail register address */
+ 	num_regs = idpf_vport_get_q_reg(reg_vals, IDPF_LARGE_MAX_Q,
+ 					VIRTCHNL2_QUEUE_TYPE_TX,
+@@ -2484,46 +2511,35 @@ int idpf_send_disable_queues_msg(struct
+  * @num_chunks: number of chunks to copy
+  */
+ static void idpf_convert_reg_to_queue_chunks(struct virtchnl2_queue_chunk *dchunks,
+-					     struct virtchnl2_queue_reg_chunk *schunks,
++					     struct idpf_queue_id_reg_chunk *schunks,
+ 					     u16 num_chunks)
+ {
+ 	u16 i;
+ 
+ 	for (i = 0; i < num_chunks; i++) {
+-		dchunks[i].type = schunks[i].type;
+-		dchunks[i].start_queue_id = schunks[i].start_queue_id;
+-		dchunks[i].num_queues = schunks[i].num_queues;
++		dchunks[i].type = cpu_to_le32(schunks[i].type);
++		dchunks[i].start_queue_id = cpu_to_le32(schunks[i].start_queue_id);
++		dchunks[i].num_queues = cpu_to_le32(schunks[i].num_queues);
+ 	}
+ }
+ 
+ /**
+  * idpf_send_delete_queues_msg - send delete queues virtchnl message
+- * @vport: Virtual port private data structure
++ * @vport: virtual port private data structure
++ * @chunks: queue ids received over mailbox
+  *
+- * Will send delete queues virtchnl message. Return 0 on success, negative on
+- * failure.
++ * Return: 0 on success, negative on failure.
+  */
+-int idpf_send_delete_queues_msg(struct idpf_vport *vport)
++int idpf_send_delete_queues_msg(struct idpf_vport *vport,
++				struct idpf_queue_id_reg_info *chunks)
+ {
+ 	struct virtchnl2_del_ena_dis_queues *eq __free(kfree) = NULL;
+-	struct virtchnl2_create_vport *vport_params;
+-	struct virtchnl2_queue_reg_chunks *chunks;
+ 	struct idpf_vc_xn_params xn_params = {};
+-	struct idpf_vport_config *vport_config;
+-	u16 vport_idx = vport->idx;
+ 	ssize_t reply_sz;
+ 	u16 num_chunks;
+ 	int buf_size;
+ 
+-	vport_config = vport->adapter->vport_config[vport_idx];
+-	if (vport_config->req_qs_chunks) {
+-		chunks = &vport_config->req_qs_chunks->chunks;
+-	} else {
+-		vport_params = vport->adapter->vport_params_recvd[vport_idx];
+-		chunks = &vport_params->chunks;
+-	}
+-
+-	num_chunks = le16_to_cpu(chunks->num_chunks);
++	num_chunks = chunks->num_chunks;
+ 	buf_size = struct_size(eq, chunks.chunks, num_chunks);
+ 
+ 	eq = kzalloc(buf_size, GFP_KERNEL);
+@@ -2533,7 +2549,7 @@ int idpf_send_delete_queues_msg(struct i
+ 	eq->vport_id = cpu_to_le32(vport->vport_id);
+ 	eq->chunks.num_chunks = cpu_to_le16(num_chunks);
+ 
+-	idpf_convert_reg_to_queue_chunks(eq->chunks.chunks, chunks->chunks,
++	idpf_convert_reg_to_queue_chunks(eq->chunks.chunks, chunks->queue_chunks,
+ 					 num_chunks);
+ 
+ 	xn_params.vc_op = VIRTCHNL2_OP_DEL_QUEUES;
+@@ -2571,8 +2587,7 @@ int idpf_send_config_queues_msg(struct i
+  * @num_rx_q: number of receive queues
+  * @num_rx_bufq: number of receive buffer queues
+  *
+- * Returns 0 on success, negative on failure. vport _MUST_ be const here as
+- * we should not change any fields within vport itself in this function.
++ * Return: 0 on success, negative on failure.
+  */
+ int idpf_send_add_queues_msg(const struct idpf_vport *vport, u16 num_tx_q,
+ 			     u16 num_complq, u16 num_rx_q, u16 num_rx_bufq)
+@@ -2590,8 +2605,6 @@ int idpf_send_add_queues_msg(const struc
+ 		return -ENOMEM;
+ 
+ 	vport_config = vport->adapter->vport_config[vport_idx];
+-	kfree(vport_config->req_qs_chunks);
+-	vport_config->req_qs_chunks = NULL;
+ 
+ 	aq.vport_id = cpu_to_le32(vport->vport_id);
+ 	aq.num_tx_q = cpu_to_le16(num_tx_q);
+@@ -2621,11 +2634,7 @@ int idpf_send_add_queues_msg(const struc
+ 	if (reply_sz < size)
+ 		return -EIO;
+ 
+-	vport_config->req_qs_chunks = kmemdup(vc_msg, size, GFP_KERNEL);
+-	if (!vport_config->req_qs_chunks)
+-		return -ENOMEM;
+-
+-	return 0;
++	return idpf_vport_init_queue_reg_chunks(vport_config, &vc_msg->chunks);
+ }
+ 
+ /**
+@@ -3660,8 +3669,10 @@ int idpf_vport_alloc_vec_indexes(struct
+  * @max_q: vport max queue info
+  *
+  * Will initialize vport with the info received through MB earlier
++ *
++ * Return: 0 on success, negative on failure.
+  */
+-void idpf_vport_init(struct idpf_vport *vport, struct idpf_vport_max_q *max_q)
++int idpf_vport_init(struct idpf_vport *vport, struct idpf_vport_max_q *max_q)
+ {
+ 	struct idpf_adapter *adapter = vport->adapter;
+ 	struct virtchnl2_create_vport *vport_msg;
+@@ -3676,6 +3687,11 @@ void idpf_vport_init(struct idpf_vport *
+ 	rss_data = &vport_config->user_config.rss_data;
+ 	vport_msg = adapter->vport_params_recvd[idx];
+ 
++	err = idpf_vport_init_queue_reg_chunks(vport_config,
++					       &vport_msg->chunks);
++	if (err)
++		return err;
++
+ 	vport_config->max_q.max_txq = max_q->max_txq;
+ 	vport_config->max_q.max_rxq = max_q->max_rxq;
+ 	vport_config->max_q.max_complq = max_q->max_complq;
+@@ -3708,15 +3724,18 @@ void idpf_vport_init(struct idpf_vport *
+ 
+ 	if (!(vport_msg->vport_flags &
+ 	      cpu_to_le16(VIRTCHNL2_VPORT_UPLINK_PORT)))
+-		return;
++		return 0;
+ 
+ 	err = idpf_ptp_get_vport_tstamps_caps(vport);
+ 	if (err) {
++		/* Do not error on timestamp failure */
+ 		pci_dbg(vport->adapter->pdev, "Tx timestamping not supported\n");
+-		return;
++		return 0;
+ 	}
+ 
+ 	INIT_WORK(&vport->tstamp_task, idpf_tstamp_task);
++
++	return 0;
+ }
+ 
+ /**
+@@ -3775,21 +3794,21 @@ int idpf_get_vec_ids(struct idpf_adapter
+  * Returns number of ids filled
+  */
+ static int idpf_vport_get_queue_ids(u32 *qids, int num_qids, u16 q_type,
+-				    struct virtchnl2_queue_reg_chunks *chunks)
++				    struct idpf_queue_id_reg_info *chunks)
+ {
+-	u16 num_chunks = le16_to_cpu(chunks->num_chunks);
++	u16 num_chunks = chunks->num_chunks;
+ 	u32 num_q_id_filled = 0, i;
+ 	u32 start_q_id, num_q;
+ 
+ 	while (num_chunks--) {
+-		struct virtchnl2_queue_reg_chunk *chunk;
++		struct idpf_queue_id_reg_chunk *chunk;
+ 
+-		chunk = &chunks->chunks[num_chunks];
+-		if (le32_to_cpu(chunk->type) != q_type)
++		chunk = &chunks->queue_chunks[num_chunks];
++		if (chunk->type != q_type)
+ 			continue;
+ 
+-		num_q = le32_to_cpu(chunk->num_queues);
+-		start_q_id = le32_to_cpu(chunk->start_queue_id);
++		num_q = chunk->num_queues;
++		start_q_id = chunk->start_queue_id;
+ 
+ 		for (i = 0; i < num_q; i++) {
+ 			if ((num_q_id_filled + i) < num_qids) {
+@@ -3882,30 +3901,19 @@ static int __idpf_vport_queue_ids_init(s
+ /**
+  * idpf_vport_queue_ids_init - Initialize queue ids from Mailbox parameters
+  * @vport: virtual port for which the queues ids are initialized
++ * @chunks: queue ids received over mailbox
+  *
+  * Will initialize all queue ids with ids received as mailbox parameters.
+- * Returns 0 on success, negative if all the queues are not initialized.
++ *
++ * Return: 0 on success, negative if all the queues are not initialized.
+  */
+-int idpf_vport_queue_ids_init(struct idpf_vport *vport)
++int idpf_vport_queue_ids_init(struct idpf_vport *vport,
++			      struct idpf_queue_id_reg_info *chunks)
+ {
+-	struct virtchnl2_create_vport *vport_params;
+-	struct virtchnl2_queue_reg_chunks *chunks;
+-	struct idpf_vport_config *vport_config;
+-	u16 vport_idx = vport->idx;
+ 	int num_ids, err = 0;
+ 	u16 q_type;
+ 	u32 *qids;
+ 
+-	vport_config = vport->adapter->vport_config[vport_idx];
+-	if (vport_config->req_qs_chunks) {
+-		struct virtchnl2_add_queues *vc_aq =
+-			(struct virtchnl2_add_queues *)vport_config->req_qs_chunks;
+-		chunks = &vc_aq->chunks;
+-	} else {
+-		vport_params = vport->adapter->vport_params_recvd[vport_idx];
+-		chunks = &vport_params->chunks;
+-	}
+-
+ 	qids = kcalloc(IDPF_MAX_QIDS, sizeof(u32), GFP_KERNEL);
+ 	if (!qids)
+ 		return -ENOMEM;
+--- a/drivers/net/ethernet/intel/idpf/idpf_virtchnl.h
++++ b/drivers/net/ethernet/intel/idpf/idpf_virtchnl.h
+@@ -93,6 +93,7 @@ struct idpf_netdev_priv;
+ struct idpf_vec_regs;
+ struct idpf_vport;
+ struct idpf_vport_max_q;
++struct idpf_vport_config;
+ struct idpf_vport_user_config_data;
+ 
+ ssize_t idpf_vc_xn_exec(struct idpf_adapter *adapter,
+@@ -104,8 +105,16 @@ void idpf_vc_core_deinit(struct idpf_ada
+ 
+ int idpf_get_reg_intr_vecs(struct idpf_vport *vport,
+ 			   struct idpf_vec_regs *reg_vals);
+-int idpf_queue_reg_init(struct idpf_vport *vport);
+-int idpf_vport_queue_ids_init(struct idpf_vport *vport);
++int idpf_queue_reg_init(struct idpf_vport *vport,
++			struct idpf_queue_id_reg_info *chunks);
++int idpf_vport_queue_ids_init(struct idpf_vport *vport,
++			      struct idpf_queue_id_reg_info *chunks);
++static inline void
++idpf_vport_deinit_queue_reg_chunks(struct idpf_vport_config *vport_cfg)
++{
++	kfree(vport_cfg->qid_reg_info.queue_chunks);
++	vport_cfg->qid_reg_info.queue_chunks = NULL;
++}
+ 
+ bool idpf_vport_is_cap_ena(struct idpf_vport *vport, u16 flag);
+ bool idpf_sideband_flow_type_ena(struct idpf_vport *vport, u32 flow_type);
+@@ -144,7 +153,7 @@ int idpf_send_disable_queues_msg(struct
+ int idpf_send_config_queues_msg(struct idpf_vport *vport);
+ int idpf_send_enable_queues_msg(struct idpf_vport *vport);
+ 
+-void idpf_vport_init(struct idpf_vport *vport, struct idpf_vport_max_q *max_q);
++int idpf_vport_init(struct idpf_vport *vport, struct idpf_vport_max_q *max_q);
+ u32 idpf_get_vport_id(struct idpf_vport *vport);
+ int idpf_send_create_vport_msg(struct idpf_adapter *adapter,
+ 			       struct idpf_vport_max_q *max_q);
+@@ -159,7 +168,8 @@ void idpf_vport_dealloc_max_qs(struct id
+ 			       struct idpf_vport_max_q *max_q);
+ int idpf_send_add_queues_msg(const struct idpf_vport *vport, u16 num_tx_q,
+ 			     u16 num_complq, u16 num_rx_q, u16 num_rx_bufq);
+-int idpf_send_delete_queues_msg(struct idpf_vport *vport);
++int idpf_send_delete_queues_msg(struct idpf_vport *vport,
++				struct idpf_queue_id_reg_info *chunks);
+ 
+ int idpf_vport_alloc_vec_indexes(struct idpf_vport *vport);
+ int idpf_get_vec_ids(struct idpf_adapter *adapter,
 
 
