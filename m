@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86FA63B634E;
-	Thu, 17 Sep 2026 19:02:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3CFC4ABBB0;
+	Thu, 17 Sep 2026 19:02:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789671743; cv=none; b=cOHaVpJAK4c7umOqQEYm7NZWxhCp5+F8PsceT3oTwlRiyU7OF+65eK/+chWCAeUVAlWif4xjmBZBtTW4u4eIXOe9jKgzdHjhP9aOukBv+2fp9WtkcVw2Ux6H1SbdbR1Mtr2IudAzjjbHnWtPI2itOhRWpXYHXrACgkNWbvGkN2o=
+	t=1789671746; cv=none; b=KIzdVyfzakpWpxwkAup346bjCtWLy8vvbBltH+txpXsndBz4YEX0KUej3eAYPykeOhl2CRURd6a1hWIm1GhoccicmWMNBwbipZ8wTFaRqGo/FZ2OSe7tJ5RLYXJJ4OEe603MBoRTFQXgjR4O+ypbz7JWcWooZzQT4tcx1h72GdE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789671743; c=relaxed/simple;
-	bh=2Oo33LYpKnabheWZo4eR+97x3v6a2Py07Od6Oo8Uhd4=;
+	s=arc-20240116; t=1789671746; c=relaxed/simple;
+	bh=dQwLC9E3Sa2AB4CJVJnjso8SAoxUcIxoQNuPMe3QcCM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WnZJNFp5s+L3J0wI7A33i+9+8E42TtL+CQ5gBeKADEaR0k1Td+khIXUh2VKRslzBhH6DiC7cs95+BydlSLkhPEozsK8z+xmc5f4xrdYjBb8qLnBuMt1//mZIDixN6aS/nbWLlBrgWsreMccIPDbjCEilQNo7Pu6byA8IA23z6B4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tHR97Yxn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ebQGxK2Lvb03GpPrQJOpgL5DBmYieR7GM9xa1Ckk11mmRGtgPDsHiMK5JH43D2lujGWklfrtWmKgMhf92lV43WG2ECoBq4QUKuPHj5yQZicJ83f8eysrnttTI27H6y9z0g4gBH/d9aPRWMrnckSEIKlqOSrEajNpEiV1u3tzuck=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O8EEr2fw; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tHR97Yxn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C50E1F000FF;
-	Thu, 17 Sep 2026 19:02:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O8EEr2fw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D16761F00893;
+	Thu, 17 Sep 2026 19:02:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789671742;
-	bh=ln8z1Qdj6fav/UmLuQVPsTDBMMDuIF9+QB9hdDaBWGw=;
+	s=korg; t=1789671745;
+	bh=1z6sT3XgjWcm9ODHKyksHwme1t733YJM4EFIkxZcJ+I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tHR97YxnvE8PzVc0+BC1S8Uqa/GXdD3R27IUjIO55cXSZZkQLP5rp2jS8ihJ3MMYH
-	 Y4GzrSaQV5bwnH+eoKixgU7u5vyBG6AjjsT3UqMdsBbVjY50mkdEW/bHS7njxe0z/0
-	 oGhd6B0V8VjORUNRZKEbKGM8ji36kSkD95rOeHqA=
+	b=O8EEr2fwy5QhX2LerD/Yg8O21JEG58ryOgyzVl5kNUX5g3AV2yDcj9pGlvUREXRer
+	 FVHJ793mkwhiqBVV+gHQu9MzdgvNmyG1Q+UThv1rYZlykzyEKJ7j329kxmTMfdr4sk
+	 XcMR8RUuGgNUeSA35YatYQdmRNJXdUaxK6645Am4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Terry Bowman <terry.bowman@amd.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Richard Cheng <icheng@nvidia.com>,
+	Alison Schofield <alison.schofield@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1074/1102] ACPI: TAD: Add locking around AML evaluations
-Date: Thu, 17 Sep 2026 16:16:57 +0100
-Message-ID: <20260917151607.797997163@linuxfoundation.org>
+Subject: [PATCH 6.12 1075/1102] cxl/ras: Fix cxl_rch_get_aer_severity() wrong severity register
+Date: Thu, 17 Sep 2026 16:16:58 +0100
+Message-ID: <20260917151607.826064979@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -50,145 +54,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+From: Terry Bowman <terry.bowman@amd.com>
 
-[ Upstream commit a3df8bbe0a704fa5c1609b9666b594f350558fe0 ]
+[ Upstream commit 9d399526128bae184b153deab42b49f5f3eea2ed ]
 
-In the ACPI TAD driver, there are hidden assumptions that the ACPI
-control methods used by it will not be evaluated concurrently due
-to ACPICA namespace and interpreter locking.
+cxl_rch_get_aer_severity() classifies RCH Downstream Port uncorrectable
+errors as fatal or non-fatal by ANDing uncorrectable status with
+PCI_ERR_ROOT_FATAL_RCV. This is wrong because PCI_ERR_ROOT_FATAL_RCV is a
+Root Error Status register bit (bit 6), not a severity bit. ANDing it
+against uncorrectable status tests a reserved bit and produces incorrect
+severity classification.
 
-However, that may not be the case since ACPICA may drop and re-acquire
-the namespace and interpreter locks during the evaluation of a given
-object in a few cases, including the one in which the AML in question
-sleeps causing acpi_ex_system_do_sleep() to be called.  In that case,
-the evaluation of one control method may be started while the
-evaluation of another one is still in progress.
+Fix by ANDing the unmasked uncor_status against uncor_severity. Per
+PCIe Base Spec r6.0 Section 7.8.4.4, each bit in the Uncorrectable
+Error Severity register indicates whether the corresponding error is
+fatal (1) or non-fatal (0).
 
-For this reason, add a global lock to the ACPI TAD driver and
-acquire it every time before evaluating an ACPI control method,
-except for the initial evaluation of _GCP in acpi_tad_probe().
-
-Fixes: 95c513ec84f7 ("ACPI: Add Time and Alarm Device (TAD) driver")
-Cc: All applicable <stable@vger.kernel.org>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://patch.msgid.link/12951141.O9o76ZdvQC@rafael.j.wysocki
+Fixes: 6ac07883dbb5 ("cxl/pci: Add RCH downstream port error logging")
+Cc: stable@vger.kernel.org
+Signed-off-by: Terry Bowman <terry.bowman@amd.com>
+Reviewed-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Reviewed-by: Richard Cheng <icheng@nvidia.com>
+Reviewed-by: Alison Schofield <alison.schofield@intel.com>
+Link: https://patch.msgid.link/20260803221810.3685703-3-terry.bowman@amd.com
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/acpi_tad.c |   48 +++++++++++++++++++++++++++++-------------------
- 1 file changed, 29 insertions(+), 19 deletions(-)
+ drivers/cxl/core/ras_rch.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/drivers/acpi/acpi_tad.c
-+++ b/drivers/acpi/acpi_tad.c
-@@ -23,6 +23,7 @@
- #include <linux/acpi.h>
- #include <linux/kernel.h>
- #include <linux/module.h>
-+#include <linux/mutex.h>
- #include <linux/platform_device.h>
- #include <linux/pm_runtime.h>
- #include <linux/suspend.h>
-@@ -80,6 +81,8 @@ static bool acpi_tad_rt_is_invalid(struc
- 	    rt->daylight > 3;
- }
- 
-+static DEFINE_MUTEX(acpi_tad_aml_lock);
-+
- static int acpi_tad_set_real_time(struct device *dev, struct acpi_tad_rt *rt)
+--- a/drivers/cxl/core/ras_rch.c
++++ b/drivers/cxl/core/ras_rch.c
+@@ -94,11 +94,11 @@ static bool cxl_rch_get_aer_info(void __
+ static bool cxl_rch_get_aer_severity(struct aer_capability_regs *aer_regs,
+ 				     int *severity)
  {
- 	acpi_handle handle = ACPI_HANDLE(dev);
-@@ -101,6 +104,8 @@ static int acpi_tad_set_real_time(struct
- 
- 	pm_runtime_get_sync(dev);
- 
-+	guard(mutex)(&acpi_tad_aml_lock);
+-	if (aer_regs->uncor_status & ~aer_regs->uncor_mask) {
+-		if (aer_regs->uncor_status & PCI_ERR_ROOT_FATAL_RCV)
+-			*severity = AER_FATAL;
+-		else
+-			*severity = AER_NONFATAL;
++	u32 uncor_status = aer_regs->uncor_status & ~aer_regs->uncor_mask;
 +
- 	status = acpi_evaluate_integer(handle, "_SRT", &arg_list, &retval);
++	if (uncor_status) {
++		*severity = (uncor_status & aer_regs->uncor_severity) ?
++			     AER_FATAL : AER_NONFATAL;
+ 		return true;
+ 	}
  
- 	pm_runtime_put_sync(dev);
-@@ -115,30 +120,27 @@ static int acpi_tad_evaluate_grt(struct
- {
- 	acpi_handle handle = ACPI_HANDLE(dev);
- 	struct acpi_buffer output = { ACPI_ALLOCATE_BUFFER };
--	union acpi_object *out_obj;
--	struct acpi_tad_rt *data;
- 	acpi_status status;
- 	int ret = -EIO;
- 
--	status = acpi_evaluate_object(handle, "_GRT", NULL, &output);
--	if (ACPI_FAILURE(status))
--		goto out_free;
--
--	out_obj = output.pointer;
--	if (out_obj->type != ACPI_TYPE_BUFFER)
--		goto out_free;
--
--	if (out_obj->buffer.length != sizeof(*rt))
--		goto out_free;
--
--	data = (struct acpi_tad_rt *)(out_obj->buffer.pointer);
--	if (!data->valid)
--		goto out_free;
-+	guard(mutex)(&acpi_tad_aml_lock);
- 
--	memcpy(rt, data, sizeof(*rt));
--	ret = 0;
-+	status = acpi_evaluate_object(handle, "_GRT", NULL, &output);
-+	if (ACPI_SUCCESS(status)) {
-+		union acpi_object *out_obj;
- 
--out_free:
-+		out_obj = output.pointer;
-+		if (out_obj->type == ACPI_TYPE_BUFFER &&
-+		    out_obj->buffer.length == sizeof(*rt)) {
-+			struct acpi_tad_rt *data;
-+
-+			data = (struct acpi_tad_rt *)(out_obj->buffer.pointer);
-+			if (data->valid) {
-+				memcpy(rt, data, sizeof(*rt));
-+				ret = 0;
-+			}
-+		}
-+	}
- 	ACPI_FREE(output.pointer);
- 	return ret;
- }
-@@ -188,6 +190,8 @@ static int __acpi_tad_wake_set(struct de
- 	args[0].integer.value = timer_id;
- 	args[1].integer.value = value;
- 
-+	guard(mutex)(&acpi_tad_aml_lock);
-+
- 	status = acpi_evaluate_integer(handle, method, &arg_list, &retval);
- 	if (ACPI_FAILURE(status) || retval)
- 		return -EIO;
-@@ -210,6 +214,8 @@ static int __acpi_tad_wake_read(struct d
- 
- 	args[0].integer.value = timer_id;
- 
-+	guard(mutex)(&acpi_tad_aml_lock);
-+
- 	status = acpi_evaluate_integer(handle, method, &arg_list, retval);
- 	if (ACPI_FAILURE(status))
- 		return -EIO;
-@@ -426,6 +432,8 @@ static int acpi_tad_clear_status(struct
- 
- 	pm_runtime_get_sync(dev);
- 
-+	guard(mutex)(&acpi_tad_aml_lock);
-+
- 	status = acpi_evaluate_integer(handle, "_CWS", &arg_list, &retval);
- 
- 	pm_runtime_put_sync(dev);
-@@ -467,6 +475,8 @@ static ssize_t acpi_tad_status_read(stru
- 
- 	pm_runtime_get_sync(dev);
- 
-+	guard(mutex)(&acpi_tad_aml_lock);
-+
- 	status = acpi_evaluate_integer(handle, "_GWS", &arg_list, &retval);
- 
- 	pm_runtime_put_sync(dev);
 
 
