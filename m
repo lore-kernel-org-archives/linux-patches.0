@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C0BC5172CC;
-	Thu, 17 Sep 2026 16:58:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB2C951813D;
+	Thu, 17 Sep 2026 16:58:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789664313; cv=none; b=iN9dJ46EfKFKOF0lfTudktZi2dPj1o9oH7j4t/Ep8RCWENsQF23NAHu5SH/F/59VPmITt/qeXAEa4a1NvjpokJBNFrzwTiRS0FobmoqGj2wg1RYKk37kwJo7h8j9PtHJu09Liw8gMWzU1aP0nijp1P0o/1kEAvGBNF+54Lx9C6k=
+	t=1789664317; cv=none; b=i7L/r+4NWF/X+3DTbOqiD8qwe/h3/sNaP4psfUxXKUDwBJJ/NZJFp4nhman2McZ7oAM+hMWoqa4ZIrBGKbVoscu5BB3p6GLfSvjX/p2y4/DOH5ie/gB/RZs+OuBxOO2njYpGwi45RG/D6eKuhNNy5C00sPaPadN/O+XwNBq4NPI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789664313; c=relaxed/simple;
-	bh=HgJJ/tKDn7dzEGza14BcxQbgNkuUbW9Q5fWblHEOLwo=;
+	s=arc-20240116; t=1789664317; c=relaxed/simple;
+	bh=4Xf9X9QhRhx9aqYI7GpmM7vcxT61pksEO3IxEPTZlxc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cIAOfTNUcJ3fhWjqxKXjjMdIiPQwbi64GL7IY5IUGPl/kJbZAal4JXxTVXOrSN1ND8X/mro3TNf4gMxlAaeSQEykHo1kfNV/l677MkvNMBE1SgFx6KniciX+/lcZcoBLAMapU6l/QNk1Eic5vPYXItGOLJS/3Vjl5yNn20pSer4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LUFoRKDk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=d4+VsYj97VhCRtd2Q8vItiKWNkivbEJ5AMVOrDTEamp6UL3cECA8xbH3jYP24RUrxGsZHe8ZwQy1GVhtwa2xJCdLmngqYKIoo54ZnBgChWg8gIUT1iNT6vu0WB+MPAXGwrnmZuSt01f6tGerCEZ3xDV4vgJXzPmqsAOqSzhaEd8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HzH5reA0; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LUFoRKDk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5EF11F00893;
-	Thu, 17 Sep 2026 16:58:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HzH5reA0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF5141F00893;
+	Thu, 17 Sep 2026 16:58:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789664312;
-	bh=RvJHPzosKZCE3/+XMgfMr7VVjTmieLKE+yWZpTTGKWI=;
+	s=korg; t=1789664315;
+	bh=Amzeckqg+K5CvKNVsdFAeAsrg1I+KvPRMGfienaSc60=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LUFoRKDkacckPPTCeqZwT9s6niSOzchaX6bUIe0ssUacznqrNKTukyJdJqftx7FqS
-	 239Uif1KYF/9oBrFzyUJC+rcwRgaRCoKB27VOCf7Q/7NbVpbKaLF7CUizgt468O3wj
-	 5rLVpHvtbsnCj3gijH7DBsaJ5gUoxChM+GSyM8+4=
+	b=HzH5reA0Ib9SbDjoSC54t9luRXPFD4hGb+6y3ZJqkH8h7UG/wWmeLwZzNFk3hjf0M
+	 2BJFQb1aw0shuKlQa3Q2Gqt8q+GMqvSea3RhePZGx2Ycfa9RzmbABHVmVqJLrZ2gYU
+	 BSTYGYKnupCcUDSonf6U4dB0+S6QhFvgSGH8Cy3c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zide Chen <zide.chen@intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Dapeng Mi <dapeng1.mi@linux.intel.com>,
+	Rosen Penev <rosenp@gmail.com>,
+	Corey Minyard <corey@minyard.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0329/1250] perf/x86/intel/uncore: Guard against invalid box control address
-Date: Thu, 17 Sep 2026 16:02:04 +0100
-Message-ID: <20260917151601.010102213@linuxfoundation.org>
+Subject: [PATCH 6.18 0330/1250] ipmi: si: Use platform_get_irq_optional() to retrieve interrupt
+Date: Thu, 17 Sep 2026 16:02:05 +0100
+Message-ID: <20260917151601.036758327@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -52,107 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zide Chen <zide.chen@intel.com>
+From: Rosen Penev <rosenp@gmail.com>
 
-[ Upstream commit 3c19ea24f02658c4b8ad364458fae4d77fdb3fae ]
+[ Upstream commit 39851b7e580a65bee732e5364f0efb974b242370 ]
 
-Theoretically, intel_uncore_find_discovery_unit() could return NULL,
-e.g., when a CPU die is offline during uncore enumeration and its PMU
-units are not added to the discovery RB-tree.
+Use platform_get_irq_optional() to retrieve the interrupt resource
+instead of directly parsing and mapping the OF node via
+irq_of_parse_and_map().  This is the standard pattern for platform
+devices.  irq_of_parse_and_map() requires ire_dispose_mapping(), which
+is missing.
 
-Guard against a NULL return value and the resulting invalid box control
-address (0) before accessing hardware.
-
-Signed-off-by: Zide Chen <zide.chen@intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
-Link: https://patch.msgid.link/20260602144908.263680-3-zide.chen@intel.com
+Assisted-by: Antigravity:Gemini-3.5-Flash
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
+Message-ID: <20260603192511.6869-1-rosenp@gmail.com>
+[Handle a negative return from platform_get_irq_optional() to mean
+ no interrupt is assigned.]
+Signed-off-by: Corey Minyard <corey@minyard.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/intel/uncore_discovery.c | 33 +++++++++++++++++-------
- 1 file changed, 24 insertions(+), 9 deletions(-)
+ drivers/char/ipmi/ipmi_si_platform.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/arch/x86/events/intel/uncore_discovery.c b/arch/x86/events/intel/uncore_discovery.c
-index 7dd3910d8de3a..8595e14199ed4 100644
---- a/arch/x86/events/intel/uncore_discovery.c
-+++ b/arch/x86/events/intel/uncore_discovery.c
-@@ -489,17 +489,28 @@ static u64 intel_generic_uncore_box_ctl(struct intel_uncore_box *box)
+diff --git a/drivers/char/ipmi/ipmi_si_platform.c b/drivers/char/ipmi/ipmi_si_platform.c
+index fb6e359ae4946..704b06c919f03 100644
+--- a/drivers/char/ipmi/ipmi_si_platform.c
++++ b/drivers/char/ipmi/ipmi_si_platform.c
+@@ -276,7 +276,10 @@ static int of_ipmi_probe(struct platform_device *pdev)
+ 	io.regspacing	= regspacing ? be32_to_cpup(regspacing) : DEFAULT_REGSPACING;
+ 	io.regshift	= regshift ? be32_to_cpup(regshift) : 0;
  
- void intel_generic_uncore_msr_init_box(struct intel_uncore_box *box)
- {
--	wrmsrq(intel_generic_uncore_box_ctl(box), GENERIC_PMON_BOX_CTL_INT);
-+	u64 box_ctl = intel_generic_uncore_box_ctl(box);
+-	io.irq		= irq_of_parse_and_map(pdev->dev.of_node, 0);
++	io.irq = platform_get_irq_optional(pdev, 0);
++	if (io.irq < 0)
++		io.irq = 0;
 +
-+	if (!box_ctl)
-+		return;
-+
-+	wrmsrq(box_ctl, GENERIC_PMON_BOX_CTL_INT);
- }
+ 	io.dev		= &pdev->dev;
  
- void intel_generic_uncore_msr_disable_box(struct intel_uncore_box *box)
- {
--	wrmsrq(intel_generic_uncore_box_ctl(box), GENERIC_PMON_BOX_CTL_FRZ);
-+	u64 box_ctl = intel_generic_uncore_box_ctl(box);
-+
-+	if (box_ctl)
-+		wrmsrq(box_ctl, GENERIC_PMON_BOX_CTL_FRZ);
- }
- 
- void intel_generic_uncore_msr_enable_box(struct intel_uncore_box *box)
- {
--	wrmsrq(intel_generic_uncore_box_ctl(box), 0);
-+	u64 box_ctl = intel_generic_uncore_box_ctl(box);
-+
-+	if (box_ctl)
-+		wrmsrq(box_ctl, 0);
- }
- 
- static void intel_generic_uncore_msr_enable_event(struct intel_uncore_box *box,
-@@ -548,6 +559,7 @@ bool intel_generic_uncore_assign_hw_event(struct perf_event *event,
- 
- 	if (box->pci_dev) {
- 		box_ctl = UNCORE_DISCOVERY_PCI_BOX_CTRL(box_ctl);
-+
- 		hwc->config_base = box_ctl + uncore_pci_event_ctl(box, hwc->idx);
- 		hwc->event_base  = box_ctl + uncore_pci_perf_ctr(box, hwc->idx);
- 		return true;
-@@ -566,27 +578,30 @@ static inline int intel_pci_uncore_box_ctl(struct intel_uncore_box *box)
- 
- void intel_generic_uncore_pci_init_box(struct intel_uncore_box *box)
- {
--	struct pci_dev *pdev = box->pci_dev;
- 	int box_ctl = intel_pci_uncore_box_ctl(box);
- 
-+	if (!box_ctl)
-+		return;
-+
- 	__set_bit(UNCORE_BOX_FLAG_CTL_OFFS8, &box->flags);
--	pci_write_config_dword(pdev, box_ctl, GENERIC_PMON_BOX_CTL_INT);
-+	pci_write_config_dword(box->pci_dev, box_ctl, GENERIC_PMON_BOX_CTL_INT);
- }
- 
- void intel_generic_uncore_pci_disable_box(struct intel_uncore_box *box)
- {
--	struct pci_dev *pdev = box->pci_dev;
- 	int box_ctl = intel_pci_uncore_box_ctl(box);
- 
--	pci_write_config_dword(pdev, box_ctl, GENERIC_PMON_BOX_CTL_FRZ);
-+	if (box_ctl)
-+		pci_write_config_dword(box->pci_dev, box_ctl,
-+				       GENERIC_PMON_BOX_CTL_FRZ);
- }
- 
- void intel_generic_uncore_pci_enable_box(struct intel_uncore_box *box)
- {
--	struct pci_dev *pdev = box->pci_dev;
- 	int box_ctl = intel_pci_uncore_box_ctl(box);
- 
--	pci_write_config_dword(pdev, box_ctl, 0);
-+	if (box_ctl)
-+		pci_write_config_dword(box->pci_dev, box_ctl, 0);
- }
- 
- static void intel_generic_uncore_pci_enable_event(struct intel_uncore_box *box,
+ 	dev_dbg(&pdev->dev, "addr 0x%lx regsize %d spacing %d irq %d\n",
 -- 
 2.53.0
 
