@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C64CE8003D;
-	Thu, 17 Sep 2026 15:51:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4C4C4DDB4F;
+	Thu, 17 Sep 2026 15:51:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789660267; cv=none; b=hwSZPx9jbc2Ht2luyTyq/OosUFN4EdfpWNbDcq0VNVi24oXMMqP57fXECMcdQdV0SFrjTh/YGOUVXQjowT0luaNsJfJ0DOD4Sji6YhNyYz0FYXqQQmFqMD6iyCrMxOFq0XaGFO7xBse/cCg7BZRRsS/PSLco5UkV/nhodUPRhQ4=
+	t=1789660270; cv=none; b=UvGAlTrAwDbkKMP36Yhq3GT0uHjYWE6LDqBbYq74L/+Md6j+4uDuBM7mefal9PCGJKenvmtvDbMXkIuwdFRcOzXRNMz7IluEaggFv/u7mFezp1hX2kWEvEqPF6acw6JSDsG5uVK+GH6GRZStprEu+XYdPEhqUEWOKEHIxZynP/4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789660267; c=relaxed/simple;
-	bh=RFdFpv19o0LYowLZlSanM/yoT/mIHSg32TuyVgkvMTs=;
+	s=arc-20240116; t=1789660270; c=relaxed/simple;
+	bh=+7HjVSdvnPve2hb59xddnG0wv9fl6/d4NzwfEVi5wbc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YXKSygfF2LQd8RoRVRzuBAZnCnyn/tG7+KJE798+xtzK0zAIz2Edlr5KsEjNU1yVe+54FRw1M/A9VD+aEzI1sb4Xqd8w1+bCT2KJLAf8cGk9YaihoLqpcnC/uB9PfFgy1ees0jt9A3WCXcJFiFe73EtVYGxviiQMzMqjkS1NEhs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TxX+VaZy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Ht+Dv6LAdzAkzVx9mDb7+KL/HEeHf9yhmmBF8t/bVTKUAdcq5+Sv9KQDAz8uNFW7fvzRf33JyFCigfFdMGtKab+50zhQdzqhWDq2KKCDyrsvTAs/ieYxVeFsE7y1FgeyacdXaJz495xU1dzTk7Wayii4mL3aLjJaF+TAdDvOn50=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XDfmBcEG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TxX+VaZy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 107BE1F00893;
-	Thu, 17 Sep 2026 15:50:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XDfmBcEG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB2341F000FF;
+	Thu, 17 Sep 2026 15:51:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789660259;
-	bh=fO4+hnF3gl8wUtUUfutrJBkPm87hxvHzebu/K0P4I+0=;
+	s=korg; t=1789660265;
+	bh=/0bXQPNexeV3YhxcgVFX2WNOK6NHNMN/oyLXeS3RqfM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TxX+VaZy4UYaE3v7xKjDpeVO3A476JTx8mKsjBXELTfUjgn+/98dJjX9M/Iy+gtgZ
-	 EXPmgTLVxITcD+iRq+M5kxk9iq7UyN4WY5q/GiBQUyA6rtiuOSyqGVd4DaKGlDFbn1
-	 KdJdQjdwe50GeIYXlDcTYs+KMNxWLlvJ65g7wdfI=
+	b=XDfmBcEGJ2DEMKphy8mSQtR3MF0yttoRrof7cZPU6rZAR/dwkHdv3wn3QblHZoRwY
+	 21tdp2ScErJ13UIfy2aMTq6dBXgFgz9yGZCaF+csLVx/M5gpgc2X+Yn+qf5TIjFzWj
+	 zoZ0jeaOh+OHC/DWpUVoMQ9Ul+OQFH+s66kRG7y0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <thorsten.blum@linux.dev>,
-	Andi Shyti <andi.shyti@linux.intel.com>,
-	Jani Nikula <jani.nikula@intel.com>
-Subject: [PATCH 7.2 531/733] drm/i915: Fix memory leak in query_perf_config_list()
-Date: Thu, 17 Sep 2026 16:13:59 +0100
-Message-ID: <20260917151405.428606639@linuxfoundation.org>
+	Yudi Yang <2000jedi@gmail.com>,
+	Heiko Stuebner <heiko@sntech.de>
+Subject: [PATCH 7.2 532/733] drm/rockchip: analogix_dp: fix unchecked bound endpoint name length
+Date: Thu, 17 Sep 2026 16:14:00 +0100
+Message-ID: <20260917151405.455863528@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -51,39 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@linux.dev>
+From: Yudi Yang <2000jedi@gmail.com>
 
-commit cbd3dafc2003db679ccd2f6c6a2551db79657049 upstream.
+commit bc69439d983cc491cc86e01fafc1deb94e1bb85e upstream.
 
-When krealloc() fails, free the original oa_config_ids before returning
-to avoid a memory leak.
+rockchip_dp_drm_encoder_enable() uses sprintf() to format a device tree
+path into a 32-byte stack buffer. Device tree paths are not limited to
+this size, so a sufficiently long path can overflow the buffer.
 
-Fixes: 4f6ccc74a85c ("drm/i915: add support for perf configuration queries")
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
-Cc: <stable@vger.kernel.org> # v5.5+
-Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
-Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
-Link: https://patch.msgid.link/20260823205028.178597-2-thorsten.blum@linux.dev
-(cherry picked from commit 9977e9d84f46d4f12ad35fbbc0ec4638554bce87)
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Use snprintf() with the destination size to truncate the generated name
+and keep the writes within bounds.
+
+Fixes: 729f8eefdcad ("drm/rockchip: analogix_dp: Add support for RK3588")
+Cc: stable@vger.kernel.org
+Signed-off-by: Yudi Yang <2000jedi@gmail.com>
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://patch.msgid.link/20260901195511.2761251-1-2000jedi@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/i915_query.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/rockchip/analogix_dp-rockchip.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/i915/i915_query.c
-+++ b/drivers/gpu/drm/i915/i915_query.c
-@@ -403,8 +403,10 @@ static int query_perf_config_list(struct
- 		ids = krealloc(oa_config_ids,
- 			       n_configs * sizeof(*oa_config_ids),
- 			       GFP_KERNEL);
--		if (!ids)
-+		if (!ids) {
-+			kfree(oa_config_ids);
- 			return -ENOMEM;
-+		}
+--- a/drivers/gpu/drm/rockchip/analogix_dp-rockchip.c
++++ b/drivers/gpu/drm/rockchip/analogix_dp-rockchip.c
+@@ -241,10 +241,11 @@ static void rockchip_dp_drm_encoder_enab
+ 				of_graph_get_remote_port(endpoint.local_node);
  
- 		alloc = fetch_and_zero(&n_configs);
+ 			of_property_read_u32(remote_port, "reg", &port_id);
+-			sprintf(name, "%s vp%d", remote_port_parent->full_name, port_id);
++			snprintf(name, sizeof(name), "%s vp%d",
++				 remote_port_parent->full_name, port_id);
+ 		} else {
+-			sprintf(name, "%s %s",
+-				remote_port_parent->full_name, endpoint.id ? "vopl" : "vopb");
++			snprintf(name, sizeof(name), "%s %s",
++				 remote_port_parent->full_name, endpoint.id ? "vopl" : "vopb");
+ 		}
  
+ 		DRM_DEV_DEBUG(dp->dev, "vop %s output to dp\n", (ret) ? "LIT" : "BIG");
 
 
