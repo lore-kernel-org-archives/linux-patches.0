@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CE9F3DD502;
-	Thu, 17 Sep 2026 17:27:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B17E44D17AE;
+	Thu, 17 Sep 2026 17:27:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666059; cv=none; b=Wo1Z0TxbK2Z1SxDF+WTRMsS0xzsmoklH/mPfCgqdrIzUycKhe8k0m94fhKpEt3lGuX+hEa8DMQ8cykM4TKS5s/pNM5cIvJ3qJSMwcTr7reCWem5lV8Ts6qZVY+7sNvELsj4f09mXP8z4dDSIVqbCXP7efgMb8XI4s5ibMDFQnrI=
+	t=1789666062; cv=none; b=ZDSA+BdOeMnyIqVfccM9cvzr0d0b+gSe1sWU1H26i+YSxRgOuRY0GK0wNsNXgi/pCeuwaCMTU/Ua9/v+MOnzSYUpONO4BBV4JjOTnaXiDTQ9bJ5H5HvN8XYfD/cWUCtZbCwYFIxMChUBkW1jigmyPkOzDxNwoWTyYwOAFJyBmhk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666059; c=relaxed/simple;
-	bh=LKHFfsc6MWXZx73/nJ0oN3KlkGTOL7M1frcoAR3Xp70=;
+	s=arc-20240116; t=1789666062; c=relaxed/simple;
+	bh=i5E9PvfUr0ZmQBlrwb89iGf3ZLBVrar+8P9qkl222Zw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GyqK52CoAr6Gq0k4+V4STU84/9mfcfFoDrKFvazwEJibg1HReB9pBjE6NV/rQJJUFQvffnpsY9KdpAixcRu+YbLVaAXuHMDcPeasuHNNmYVCpiLEyLfyAaU6gEaAy1H6cH3N3P4oJE3taRWAA3d5gG7FJhHXBfwcJ9Wxr73YPCo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cxwuiVW3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FwCd0iV1QfX4D24mufOQnqCKh48mKg7xQlq9DSIw8fqhiesm5arneeOW0xFtJXQ1uYOAqHDrqjCQ1Xxbuxcop3NMm1jJAATHp9xYFsL8h+Xyg6MVUuXmgY+aaGLm+wz6aw9cv1XkgKAgMoaSQlrTDCndEIOw5Vk3hf048T5SK1o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WTBByelL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cxwuiVW3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E00E1F000FF;
-	Thu, 17 Sep 2026 17:27:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WTBByelL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19DE11F000FF;
+	Thu, 17 Sep 2026 17:27:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666057;
-	bh=bPfTzbythTfK9tQwklJ3cdcXaJ6r7HHAkWjk4hvIfWY=;
+	s=korg; t=1789666060;
+	bh=hglie5WwrHzeYMi7qMdVcKdj+INyX2d6fAacQc+I/Ws=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cxwuiVW31NK518w+85fhf07iACvJhOBUW1MX1FzXo1d1yXU0isjPqlsd2PDx+2yfZ
-	 0pbFKrohRME0ZSRCgbNP/Glr1E6OL0OyixT0KN9hqc28LCeXiIF+KSGQ9HEXJS8NeJ
-	 yrzMc2D9MztESrIWk0Zn8pb/5KhSOsO4LOYIIZNE=
+	b=WTBByelL6759g2OJ9ORc5HP2GorVXwRFbm940uOz/GuTywoP70yXExNjCOfI690QA
+	 60SNAE7PNFYbHxVktHQl0coW0F8zyU7F4UtK+8rv/PASXsiF2tp1ihHxDNm9DqBW4W
+	 Zkn4443ZTIS8w5uHdzYVkUxgrCnHmF/Lka4J+QW0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -34,9 +34,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Tariq Toukan <tariqt@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0911/1250] devlink: Add port-level resource registration infrastructure
-Date: Thu, 17 Sep 2026 16:11:46 +0100
-Message-ID: <20260917151616.689348139@linuxfoundation.org>
+Subject: [PATCH 6.18 0912/1250] net/mlx5: Register SF resource on PF port representor
+Date: Thu, 17 Sep 2026 16:11:47 +0100
+Message-ID: <20260917151616.717467009@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -57,127 +57,133 @@ Content-Transfer-Encoding: 8bit
 
 From: Or Har-Toov <ohartoov@nvidia.com>
 
-[ Upstream commit 6f38acfed5edb398201d9ff127919745cbb331a1 ]
+[ Upstream commit 4be8326d817e6d47f8446938408bb2001b799340 ]
 
-The current devlink resource infrastructure supports only device-level
-resources. Some hardware resources are associated with specific ports
-rather than the entire device, and today we have no way to show resource
-per-port.
+The device-level "resource show" displays max_local_SFs and
+max_external_SFs without indicating which port each resource belongs
+to. Users cannot determine the controller number and pfnum associated
+with each SF pool.
 
-Add support for registering resources at the port level.
+Register max_SFs resource on the host PF representor port to expose
+per-port SF limits. Users can correlate the port resource with the
+controller number and pfnum shown in 'devlink port show'.
+
+Future patches will introduce an ECPF that manages multiple PFs,
+where each PF has its own SF pool.
+
+Example usage:
+
+  $ devlink resource show pci/0000:03:00.0/196608
+  pci/0000:03:00.0/196608:
+    name max_SFs size 20 unit entry
+
+  $ devlink port show pci/0000:03:00.0/196608
+  pci/0000:03:00.0/196608: type eth netdev pf0hpf flavour pcipf
+    controller 1 pfnum 0 external true splittable false
+    function:
+      hw_addr b8:3f:d2:e1:8f:dc roce enable max_io_eqs 120
+
+We can create up to 20 SFs over devlink port pci/0000:03:00.0/196608,
+with pfnum 0 and controller 1.
 
 Signed-off-by: Or Har-Toov <ohartoov@nvidia.com>
 Reviewed-by: Shay Drori <shayd@nvidia.com>
 Reviewed-by: Moshe Shemesh <moshe@nvidia.com>
 Reviewed-by: Jiri Pirko <jiri@nvidia.com>
 Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20260407194107.148063-3-tariqt@nvidia.com
+Link: https://patch.msgid.link/20260407194107.148063-4-tariqt@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Stable-dep-of: 7f26a5e8040b ("net/mlx5e: Move representor vnic reporter to eswitch devlink port")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/devlink.h  |  8 ++++++++
- net/devlink/port.c     |  2 ++
- net/devlink/resource.c | 43 ++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 53 insertions(+)
+ .../net/ethernet/mellanox/mlx5/core/devlink.h |  4 ++
+ .../mellanox/mlx5/core/esw/devlink_port.c     | 37 +++++++++++++++++++
+ 2 files changed, 41 insertions(+)
 
-diff --git a/include/net/devlink.h b/include/net/devlink.h
-index bfc1ba754d0d7..f24e1332bcb24 100644
---- a/include/net/devlink.h
-+++ b/include/net/devlink.h
-@@ -129,6 +129,7 @@ struct devlink_rate {
- struct devlink_port {
- 	struct list_head list;
- 	struct list_head region_list;
-+	struct list_head resource_list;
- 	struct devlink *devlink;
- 	const struct devlink_port_ops *ops;
- 	unsigned int index;
-@@ -1834,6 +1835,13 @@ void devlink_resources_unregister(struct devlink *devlink);
- int devl_resource_size_get(struct devlink *devlink,
- 			   u64 resource_id,
- 			   u64 *p_resource_size);
-+int
-+devl_port_resource_register(struct devlink_port *devlink_port,
-+			    const char *resource_name,
-+			    u64 resource_size, u64 resource_id,
-+			    u64 parent_resource_id,
-+			    const struct devlink_resource_size_params *params);
-+void devl_port_resources_unregister(struct devlink_port *devlink_port);
- int devl_dpipe_table_resource_set(struct devlink *devlink,
- 				  const char *table_name, u64 resource_id,
- 				  u64 resource_units);
-diff --git a/net/devlink/port.c b/net/devlink/port.c
-index 93d8a25bb920c..21c72f1af9259 100644
---- a/net/devlink/port.c
-+++ b/net/devlink/port.c
-@@ -1024,6 +1024,7 @@ void devlink_port_init(struct devlink *devlink,
- 		return;
- 	devlink_port->devlink = devlink;
- 	INIT_LIST_HEAD(&devlink_port->region_list);
-+	INIT_LIST_HEAD(&devlink_port->resource_list);
- 	devlink_port->initialized = true;
- }
- EXPORT_SYMBOL_GPL(devlink_port_init);
-@@ -1041,6 +1042,7 @@ EXPORT_SYMBOL_GPL(devlink_port_init);
- void devlink_port_fini(struct devlink_port *devlink_port)
- {
- 	WARN_ON(!list_empty(&devlink_port->region_list));
-+	WARN_ON(!list_empty(&devlink_port->resource_list));
- }
- EXPORT_SYMBOL_GPL(devlink_port_fini);
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/devlink.h b/drivers/net/ethernet/mellanox/mlx5/core/devlink.h
+index c9555119a6617..e49c7df79f124 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/devlink.h
++++ b/drivers/net/ethernet/mellanox/mlx5/core/devlink.h
+@@ -14,6 +14,10 @@ enum mlx5_devlink_resource_id {
+ 	MLX5_ID_RES_MAX = __MLX5_ID_RES_MAX - 1,
+ };
  
-diff --git a/net/devlink/resource.c b/net/devlink/resource.c
-index 499678e8d686e..dc9a55e443c21 100644
---- a/net/devlink/resource.c
-+++ b/net/devlink/resource.c
-@@ -532,3 +532,46 @@ void devl_resource_occ_get_unregister(struct devlink *devlink,
- 	resource->occ_get_priv = NULL;
- }
- EXPORT_SYMBOL_GPL(devl_resource_occ_get_unregister);
++enum mlx5_devlink_port_resource_id {
++	MLX5_DL_PORT_RES_MAX_SFS = 1,
++};
 +
-+/**
-+ * devl_port_resource_register - devlink port resource register
-+ *
-+ * @devlink_port: devlink port
-+ * @resource_name: resource's name
-+ * @resource_size: resource's size
-+ * @resource_id: resource's id
-+ * @parent_resource_id: resource's parent id
-+ * @params: size parameters
-+ *
-+ * Generic resources should reuse the same names across drivers.
-+ * Please see the generic resources list at:
-+ * Documentation/networking/devlink/devlink-resource.rst
-+ *
-+ * Return: 0 on success, negative error code otherwise.
-+ */
-+int
-+devl_port_resource_register(struct devlink_port *devlink_port,
-+			    const char *resource_name,
-+			    u64 resource_size, u64 resource_id,
-+			    u64 parent_resource_id,
-+			    const struct devlink_resource_size_params *params)
+ enum mlx5_devlink_param_id {
+ 	MLX5_DEVLINK_PARAM_ID_BASE = DEVLINK_PARAM_GENERIC_ID_MAX,
+ 	MLX5_DEVLINK_PARAM_ID_FLOW_STEERING_MODE,
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/esw/devlink_port.c b/drivers/net/ethernet/mellanox/mlx5/core/esw/devlink_port.c
+index cf88a106d80d7..37e52f29a8149 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/esw/devlink_port.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/esw/devlink_port.c
+@@ -3,6 +3,7 @@
+ 
+ #include <linux/mlx5/driver.h>
+ #include "eswitch.h"
++#include "devlink.h"
+ 
+ static void
+ mlx5_esw_get_port_parent_id(struct mlx5_core_dev *dev, struct netdev_phys_item_id *ppid)
+@@ -160,6 +161,32 @@ static const struct devlink_port_ops mlx5_esw_dl_sf_port_ops = {
+ 	.port_fn_max_io_eqs_set = mlx5_devlink_port_fn_max_io_eqs_set,
+ };
+ 
++static int mlx5_esw_devlink_port_res_register(struct mlx5_eswitch *esw,
++					      struct devlink_port *dl_port)
 +{
-+	return __devl_resource_register(devlink_port->devlink,
-+					&devlink_port->resource_list,
-+					resource_name, resource_size,
-+					resource_id, parent_resource_id,
-+					params);
-+}
-+EXPORT_SYMBOL_GPL(devl_port_resource_register);
++	struct devlink_resource_size_params size_params;
++	struct mlx5_core_dev *dev = esw->dev;
++	u16 max_sfs, sf_base_id;
++	int err;
 +
-+/**
-+ * devl_port_resources_unregister - unregister all devlink port resources
-+ *
-+ * @devlink_port: devlink port
-+ */
-+void devl_port_resources_unregister(struct devlink_port *devlink_port)
-+{
-+	__devl_resources_unregister(devlink_port->devlink,
-+				    &devlink_port->resource_list);
++	err = mlx5_esw_sf_max_hpf_functions(dev, &max_sfs, &sf_base_id);
++	if (err)
++		return err;
++
++	devlink_resource_size_params_init(&size_params, max_sfs, max_sfs, 1,
++					  DEVLINK_RESOURCE_UNIT_ENTRY);
++
++	return devl_port_resource_register(dl_port, "max_SFs", max_sfs,
++					   MLX5_DL_PORT_RES_MAX_SFS,
++					   DEVLINK_RESOURCE_ID_PARENT_TOP,
++					   &size_params);
 +}
-+EXPORT_SYMBOL_GPL(devl_port_resources_unregister);
++
++static void mlx5_esw_devlink_port_res_unregister(struct devlink_port *dl_port)
++{
++	devl_port_resources_unregister(dl_port);
++}
++
+ int mlx5_esw_offloads_devlink_port_register(struct mlx5_eswitch *esw, struct mlx5_vport *vport)
+ {
+ 	struct mlx5_core_dev *dev = esw->dev;
+@@ -191,6 +218,15 @@ int mlx5_esw_offloads_devlink_port_register(struct mlx5_eswitch *esw, struct mlx
+ 	if (err)
+ 		goto rate_err;
+ 
++	if (vport_num == MLX5_VPORT_PF) {
++		err = mlx5_esw_devlink_port_res_register(esw,
++							 &dl_port->dl_port);
++		if (err)
++			mlx5_core_dbg(dev,
++				      "Failed to register port resources: %d\n",
++				       err);
++	}
++
+ 	return 0;
+ 
+ rate_err:
+@@ -205,6 +241,7 @@ void mlx5_esw_offloads_devlink_port_unregister(struct mlx5_vport *vport)
+ 	if (!vport->dl_port)
+ 		return;
+ 	dl_port = vport->dl_port;
++	mlx5_esw_devlink_port_res_unregister(&dl_port->dl_port);
+ 
+ 	mlx5_esw_qos_vport_update_parent(vport, NULL, NULL);
+ 	devl_rate_leaf_destroy(&dl_port->dl_port);
 -- 
 2.53.0
 
