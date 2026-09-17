@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A13A5383EF;
-	Thu, 17 Sep 2026 17:02:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 573ED539797;
+	Thu, 17 Sep 2026 17:03:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789664580; cv=none; b=GkMEdyFKnPSZa+1x80xAURPyqGEak74xW3qsATwfmnrE5HDNSE7yH8f1Y5tQ9F7fyK11yxyrtGWgmYC8iCw0lWevyCCLVl+M9ZDKeU9eYgTHGPgFmlOKsoDSzxWlS3KsZBvlzywySW+j9FEvIhpV6fjjfBAOB+E6LEOcveKn1vU=
+	t=1789664583; cv=none; b=vFAYh82F31SICFUqHxcnHAazJk4rqHCvDD/LzJ0UzQKxCTKpJ+Zm122zTCKe8zdQwlIxwfe43UwGoDlxJevVNUEWlIjusVJ6avEItt4A/9PwgtlRXOFx6nWHoYigZQ8Qa1ZgrZz3EuS9oEgtDLiSw51TsPI3subA169RM1L0b8E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789664580; c=relaxed/simple;
-	bh=KPtbPAHeo/P1rywWlw/2Tw2pFuOd+p3qI2U1VO/TLEA=;
+	s=arc-20240116; t=1789664583; c=relaxed/simple;
+	bh=ZEiS01/60rP8TDqx3O3hHcRrbtIkNM4nT1ZYS4J2jiw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hSuGXWUCWDMbW6eLKept8mLqaBtDO2Sn0Gd3dDkC39MRmrCBDGFRGcaE9pNcO2zUwxE98IeWtrUDG8sgX+e3CUGMlpCNa1wZ8mVr534psEsrB6JX8XjnWYZ+SJWV3eqaKnv0lKrWp+p6y3x2FXjKpHsP9pk5ZwROsUknfdQP7Fg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tFGYyEIm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=apF3rfwO3ktaj94L73jxsTFWfMRJnpXHGad6OqBqcg/gauq41tW/W74+FewugPRhEtyO7tOdZ5S7kv4IdkcVJUJQ6O8pHuq1fNGgeon03mcEYLcoFpQXpxEs/LvCtKIXJQD+QOmlCMc9hUDbJWDmJnZKjvIHcYDrzVbkW8kLS0E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=klntWBLh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tFGYyEIm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C31241F000FF;
-	Thu, 17 Sep 2026 17:02:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="klntWBLh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF7F81F000FF;
+	Thu, 17 Sep 2026 17:03:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789664579;
-	bh=yv9JU8FfNewdoJ+BIWubniS9BVVXErWGrrr3m2vrS5k=;
+	s=korg; t=1789664582;
+	bh=C3fRbienXHuJ8Ao8pDnONqC5eQkYqBgifVDERkUalys=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tFGYyEIm0kFh6faiaXhe+DJUPJMQ3S8q8BzDxcwOg/XzabCzPbg5aFSiPTjnXedLa
-	 jve/JdkiEAW+1vYgXA62ISGEDtJEFKrdNtghn+3KPL7N09cLh/YVrfmrJ9HLUCgSYP
-	 AYXTzdJcxwCc8OOAQZOeP8S9qc6oCimz+BRryH/4=
+	b=klntWBLh1VM7ppDxon2f7X+hiqIzkpH99gCEfs23RFTIUTF5KKZLUhoxw4/CUU5fE
+	 hdvViJXBWZx3rFGZfXdz/TzVyZX/1NKoTOdNoLw11lQVcZQ4wa23GDeoYeNDO1hAPv
+	 kY3ycPqnfgYil6trQdNUrza14QrZjIRCVaKTh8wo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Timber <dxdt@dev.snart.me>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	Viktor Menshin <ripeeerr@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0418/1250] exfat: fix handling of damaged volume in exfat_create_upcase_table()
-Date: Thu, 17 Sep 2026 16:03:33 +0100
-Message-ID: <20260917151603.351126656@linuxfoundation.org>
+Subject: [PATCH 6.18 0419/1250] ALSA: hda/realtek: Add quirk for Lenovo Xiaoxin 14 GT
+Date: Thu, 17 Sep 2026 16:03:34 +0100
+Message-ID: <20260917151603.377290039@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,64 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Timber <dxdt@dev.snart.me>
+From: Viktor Menshin <ripeeerr@gmail.com>
 
-[ Upstream commit 20dd3185d13865214ff25b0bf7b931e8d73be1ac ]
+[ Upstream commit 3a3e810e91080a5121170ee11554a55ed89a1c8b ]
 
-When the size of the upcase table is set to zero in the dentry for any
-reason(e.g. corrupted media or misbehaving device), an integer overflow
-causes the module to loop indefinitely.
+The Lenovo Xiaoxin 14 GT (Chinese market model, AMD Ryzen AI 9 365)
+produces constant electrical hissing and crackling noise from both
+internal speakers and 3.5mm headphone jack during audio playback.
+Audio works correctly on Windows.
 
-If the size of the upcase table is read zero, do not attempt to load the
-table. Instead, fallback to loading the default upcase table. If the
-size of the upcase table is zero or no upcase table is found, raise
-exfat_fs_error() to mark the volume read-only.
+The PCI SSID 17aa:3912 is not present in the quirk list. The device
+shares the same AMD platform and ALC287 codec as neighboring Lenovo
+14" AMD models (17aa:3911, 17aa:390d), so apply the same fixup.
 
-Signed-off-by: David Timber <dxdt@dev.snart.me>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Note: the fixup selection is based on similarity with neighboring
+models and has not been verified by testing a compiled kernel.
+Guidance from maintainers on the correct fixup is welcome.
+
+Signed-off-by: Viktor Menshin <ripeeerr@gmail.com>
+Link: https://patch.msgid.link/20260615092515.1082-1-ripeeerr@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/exfat/nls.c | 19 +++++++++++++------
- 1 file changed, 13 insertions(+), 6 deletions(-)
+ sound/hda/codecs/realtek/alc269.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/exfat/nls.c b/fs/exfat/nls.c
-index 57db08a5271cf..055447edcf9a6 100644
---- a/fs/exfat/nls.c
-+++ b/fs/exfat/nls.c
-@@ -769,13 +769,18 @@ int exfat_create_upcase_table(struct super_block *sb)
- 
- 			tbl_clu  = le32_to_cpu(ep->dentry.upcase.start_clu);
- 			tbl_size = le64_to_cpu(ep->dentry.upcase.size);
--
--			sector = exfat_cluster_to_sector(sbi, tbl_clu);
--			num_sectors = ((tbl_size - 1) >> blksize_bits) + 1;
--			ret = exfat_load_upcase_table(sb, sector, num_sectors,
--				le32_to_cpu(ep->dentry.upcase.checksum));
--
-+			if (tbl_size) {
-+				sector = exfat_cluster_to_sector(sbi, tbl_clu);
-+				num_sectors = ((tbl_size - 1) >> blksize_bits) + 1;
-+				ret = exfat_load_upcase_table(sb, sector, num_sectors,
-+					le32_to_cpu(ep->dentry.upcase.checksum));
-+			} else {
-+				exfat_fs_error(sb,
-+					       "bad upcase table size (0 bytes). Please run fsck");
-+				ret = -EINVAL;
-+			}
- 			brelse(bh);
-+
- 			if (ret && ret != -EIO) {
- 				/* free memory from exfat_load_upcase_table call */
- 				exfat_free_upcase_table(sbi);
-@@ -790,6 +795,8 @@ int exfat_create_upcase_table(struct super_block *sb)
- 			return -EIO;
- 	}
- 
-+	exfat_fs_error(sb, "no upcase table entry. Please run fsck");
-+
- load_default:
- 	/* load default upcase table */
- 	return exfat_load_default_upcase_table(sb);
+diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
+index a634f1c1ca4b8..2843171e9c718 100644
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -7508,6 +7508,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x17aa, 0x3902, "Lenovo E50-80", ALC269_FIXUP_DMIC_THINKPAD_ACPI),
+ 	SND_PCI_QUIRK(0x17aa, 0x390d, "Lenovo Yoga Pro 7 14ASP10", ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN),
+ 	SND_PCI_QUIRK(0x17aa, 0x3911, "Lenovo Yoga Pro 7 14IAH10", ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN),
++	SND_PCI_QUIRK(0x17aa, 0x3912, "Lenovo Xiaoxin 14 GT", ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN),
+ 	SND_PCI_QUIRK(0x17aa, 0x3913, "Lenovo 145", ALC236_FIXUP_LENOVO_INV_DMIC),
+ 	SND_PCI_QUIRK(0x17aa, 0x391f, "Yoga S990-16 pro Quad YC Quad", ALC287_FIXUP_TXNW2781_I2C),
+ 	SND_PCI_QUIRK(0x17aa, 0x3920, "Yoga S990-16 pro Quad VECO Quad", ALC287_FIXUP_TXNW2781_I2C),
 -- 
 2.53.0
 
