@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2620C4F403E;
-	Thu, 17 Sep 2026 18:00:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEB01393DF3;
+	Thu, 17 Sep 2026 18:00:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789668011; cv=none; b=lGwmawaHHeLQt2KUCID9KZ6KJdzV+kPb4w8l3ZYXad4xz3GIodhWE2Zd+SkEDeLtXDYkPI7Ziqkl5+kIUOPXuFa7bIm48+DkFw8YCyjYOyPQx7I5/PoWCjifmgwdgjP5A1TDk6egXJZC5Qv13LF3NxJkpDURBGrxdJ8oAvJ4gCM=
+	t=1789668014; cv=none; b=A4uQH+r6L9eii0SZHvttGdq1B5tpM8rjGVdkohtkBspqJeHzbPNcmoxrD+NFnqfgeocXScgXrxXPJwn/1jfklZhUAy5nwHwCsEPSuI2jzVMt+myFz941QXZ8/6Vl09GGUGXopBoKoVvhco8rrALNTtb7JmnPVurbBUunl+s5+vs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789668011; c=relaxed/simple;
-	bh=/IDXnEytmIS/nK77+WL4KEEecLIc7x6tP79uxM80j7E=;
+	s=arc-20240116; t=1789668014; c=relaxed/simple;
+	bh=duU6IgLMOzausTHL7XnacqZk3z7lZX/rDoqrP7stFNM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mxtvwg7/hnxyaLkPbVvKxj8zuekF8+Ooq8cbU8TlARaQNZi9qavMs72GUKWDrRV6dsVqKthYMiMKBieUPOeDKv2+7EUH9hE3Yf1RBOLwXkU+oRvgTvVEVIGqrzrDrRLKGPWk9qp5XlOUNL2IedRNAzwbaLEi6cDRBMErTl/0ZwU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c/6lWBTe; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bgDDmL7NJmCjnugwPVCsKQyRnjBjqYUs1M06TJdSEGr9b5ZcM4jOs7pYfM83/Ap2UToQOD9WODgmixhAvLFbwa7AQVEAYGEtewBd6sNsDorkvP0hxgUdoQpqsE1yKF8ZAlOVCnso4E7W8RWXZFcnAY4kLwrOZwaAztqgOYM1dFI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P/LQvsVY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c/6lWBTe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38A8A1F00893;
-	Thu, 17 Sep 2026 18:00:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P/LQvsVY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32ADA1F000FF;
+	Thu, 17 Sep 2026 18:00:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789668009;
-	bh=qD/2+tRnZDOIPR2grBRrSk/8ahvsKODy0NTmW+WD+bY=;
+	s=korg; t=1789668012;
+	bh=/iJCOYa9riN8gLSBvelDKAfxMqfeJ6xgSSeXQZbncLs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=c/6lWBTeKgvVo6Q/ks6HOUd3UtkZiux8w81fqEaA0yZF8PFPqeTCD6QSagcER/kyn
-	 TrnukRAYj2Hk4ZLZ67lNVP18ZQG/lQ4st/cgSBN+L8aA8cLENRHCHJjge3CJulWsMV
-	 Oj91V269aIrYEWuC1Y7bcSrVhOFzfh0NzqxEpp9g=
+	b=P/LQvsVYcLyy/ra9/YAW2uqnmRTQV+cQxIwmRuajPdB2upxF5avFKTyweb/7ELfCL
+	 YndlO9hlkxxN3ft2cv0rWX7uDF/h7UzyKNbbNL3z8h1VEiT3zO7aAStBSsaKF+sCKY
+	 dHSr2wP7Lp9eCKfjVss/JOUa8Bzv2ExMZDTPMj/A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Nikhil P. Rao" <nikhil.rao@amd.com>,
+	Rosen Penev <rosenp@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0251/1102] pds_core: quiesce DMA before freeing resources
-Date: Thu, 17 Sep 2026 16:03:14 +0100
-Message-ID: <20260917151545.896673299@linuxfoundation.org>
+Subject: [PATCH 6.12 0252/1102] net: ibm: emac: mal: fix potential system hang in mal_remove()
+Date: Thu, 17 Sep 2026 16:03:15 +0100
+Message-ID: <20260917151545.921543711@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -51,51 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikhil P. Rao <nikhil.rao@amd.com>
+From: Rosen Penev <rosenp@gmail.com>
 
-[ Upstream commit 6443f4f20bdae726fe01cf5946fba9742a0ffda6 ]
+[ Upstream commit 7c5d41f87f079990bf241359e3c1332d8d10fe87 ]
 
-pdsc_teardown() frees DMA buffers but does not disable bus mastering,
-leaving the device able to perform DMA after the buffers are freed.
-This can lead to use-after-free if the device writes to freed memory.
+napi_disable() is not idempotent and calling it on an already-disabled
+or unenabled NAPI context will cause the kernel to spin indefinitely
+waiting for the NAPI_STATE_SCHED bit to clear.
 
-Add pci_clear_master() to pdsc_teardown() to disable bus mastering
-before freeing resources, ensuring all DMA is quiesced.
+In mal_remove(), napi_disable() is called unconditionally. If no MACs were
+registered, NAPI was never enabled. Also, if they were registered but
+subsequently unregistered, NAPI was already disabled in
+mal_unregister_commac(). In either case, calling napi_disable() causes
+the kernel to hang upon module removal.
 
-Add pci_set_master() to pdsc_setup() to re-enable bus mastering,
-which is needed for the firmware recovery path since pdsc_teardown()
-now disables it.
+Fix this by only calling napi_disable() in mal_remove() if the commac list
+is not empty (which implies NAPI is enabled).
 
-Signed-off-by: Nikhil P. Rao <nikhil.rao@amd.com>
-Link: https://patch.msgid.link/20260604213637.3844317-1-nikhil.rao@amd.com
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
+Link: https://patch.msgid.link/20260603230821.5619-1-rosenp@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/amd/pds_core/core.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/ethernet/ibm/emac/mal.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/amd/pds_core/core.c b/drivers/net/ethernet/amd/pds_core/core.c
-index 276e61f043c5e..08d2fd793111f 100644
---- a/drivers/net/ethernet/amd/pds_core/core.c
-+++ b/drivers/net/ethernet/amd/pds_core/core.c
-@@ -449,6 +449,8 @@ int pdsc_setup(struct pdsc *pdsc, bool init)
- {
- 	int err;
+diff --git a/drivers/net/ethernet/ibm/emac/mal.c b/drivers/net/ethernet/ibm/emac/mal.c
+index 99d5f83f7c60b..4d1f2292798c0 100644
+--- a/drivers/net/ethernet/ibm/emac/mal.c
++++ b/drivers/net/ethernet/ibm/emac/mal.c
+@@ -724,13 +724,13 @@ static void mal_remove(struct platform_device *ofdev)
+ 	MAL_DBG(mal, "remove" NL);
  
-+	pci_set_master(pdsc->pdev);
-+
- 	err = pdsc_dev_init(pdsc);
- 	if (err)
- 		return err;
-@@ -481,6 +483,8 @@ void pdsc_teardown(struct pdsc *pdsc, bool removing)
- 	if (!pdsc->pdev->is_virtfn)
- 		pdsc_devcmd_reset(pdsc);
+ 	/* Synchronize with scheduled polling */
+-	napi_disable(&mal->napi);
+-
+-	if (!list_empty(&mal->list))
++	if (!list_empty(&mal->list)) {
++		napi_disable(&mal->napi);
+ 		/* This is *very* bad */
+ 		WARN(1, KERN_EMERG
+ 		       "mal%d: commac list is not empty on remove!\n",
+ 		       mal->index);
++	}
  
-+	pci_clear_master(pdsc->pdev);
-+
- 	pdsc_core_uninit(pdsc);
- 
- 	if (removing) {
+ 	free_irq(mal->serr_irq, mal);
+ 	free_irq(mal->txde_irq, mal);
 -- 
 2.53.0
 
