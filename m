@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B2A5582B96;
-	Thu, 17 Sep 2026 15:36:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 123C5582BBB;
+	Thu, 17 Sep 2026 15:36:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659393; cv=none; b=a6UIkt6anOy/3NQgl12Eh+ljNkTaGt+SqySwCPfzbn2YMqXFzJGOwPv3MbDGQc0HVL5Uv+dMCOZ1Azj/t/MMcL3/gdGon2NIM9pkGqNxT62+KmCJLWt5hSly1AfVYxXUn5ixIw6tmbN0FKR+DbiXgD5osPJfi5geRGMnFAblD0Q=
+	t=1789659403; cv=none; b=eK/oCaBM1BJbqmChjdET/rAgyXhNf+xs3I2SKkForufsoD12oVC9MYfdnlh9PkNx6tEzHfpGE3hRa+HI9KOegZjYOl3+/bL1MTTHp0fvIty0RIZ7m2f3ysWWxINmhfLBDJZYSR+76ouM/9bMhDokkuUlLXnjpwa0c7sfYHncwsM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659393; c=relaxed/simple;
-	bh=Zm5MNfTmPuXrO2e86890M8pPtAfi0qeI8+L50aBgFpE=;
+	s=arc-20240116; t=1789659403; c=relaxed/simple;
+	bh=SDYmh8g2MJnOxPVXV4S6RI47tIM645pcquSZ8WidQzA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t/Lu9YiBPuxZ/OSSOinaC8mFWdvbvG+Bm5zaBTxNyknqs3tmhAR9tnPQwpBmpnXS4yokt7bs+brlfe6i2YJGZMu14FN6Y7yiCt8RKS/smlIRvtxKaQLY0g12+DbaC+9eSGlvbQlcFsRA8pxeGUK1sbgAhdCRkO7A6y09nJdygu4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tsynb3ZD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HtoEIu43OB8UVB4BwrZPXCOHp/tqy9869z7gjcqpDmb9dxYbfolDJvf+U4JXtmLwNRyhxYEYfzCriu97TL8OAnw7i+uvb0P7jmFWpvg0euq7So2yhnoPxedRRmHKtsEtfqNu4SU+WPLeOkFpw72vi3bHjHrUwZGrRYiy506vTJ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FrzCphr3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tsynb3ZD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 920CE1F00899;
-	Thu, 17 Sep 2026 15:36:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FrzCphr3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A3ED1F00899;
+	Thu, 17 Sep 2026 15:36:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659383;
-	bh=fmd3cb6wex4A/ZjQHWHvUb96oxzcpj6WAwhdLpYwQ7c=;
+	s=korg; t=1789659395;
+	bh=NIJALGeuDyQnoEqBuQIOEyzxpCtCfAuUfbXTJuzwZKk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Tsynb3ZDRG6p0k9Vfo2A/pBwyeBZKs56dJLzuW23X9JblYxDD2CMK8i1oyU4ph3wd
-	 q9QDNNd0mhmman770uojpS4VKYDtDh/BS1aUhbs3dYCoHLfycJl4eCkjxPYHXVXfV9
-	 wne668sZ68yGzup1mFmPLQ/T7TSM8lZMMHcwt5GQ=
+	b=FrzCphr3D/RI18Sv1+3KWRwRJKxvjhNYc+5ryg+gmu51Lw8ibsYEk8SVVaw1plcRT
+	 qq+0q4XIx4aymw9XAJzaYc+IpV07+8UHHKhEE6lYWTIpWop7sE945tqCgv0lfA7rUk
+	 fHdZCZx1Yyujb/KfA6I04656ra/mCLvK8xaErzOU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mohamed Khalfella <mkhalfella@purestorage.com>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Keith Busch <kbusch@kernel.org>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 237/733] nvmet: print namespace IDs as unsigned 32bit value
-Date: Thu, 17 Sep 2026 16:09:05 +0100
-Message-ID: <20260917151357.151125155@linuxfoundation.org>
+Subject: [PATCH 7.2 241/733] ASoC: Intel: avs: Do not ignore -ENOENT when loading a topology
+Date: Thu, 17 Sep 2026 16:09:09 +0100
+Message-ID: <20260917151357.268410394@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -52,84 +51,135 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mohamed Khalfella <mkhalfella@purestorage.com>
+From: Cezary Rojewski <cezary.rojewski@intel.com>
 
-[ Upstream commit 59fe1cbc57235495a5f08dd53db176e3e3250356 ]
+[ Upstream commit c6dceca9f78fbd478c41735457c4de9c25a6b1c8 ]
 
-struct nvmet_ns.nsid is a u32, but a few messages print it with %d.
-An NSID larger than 0x7fffffff is rendered as a negative number, which
-is misleading in general and particularly so for the configfs messages
-that echo back the NSID the user just asked for.
+avs_load_topology() combines request_firmware() and
+snd_soc_tplg_component_load().  The fallback mechanism introduced for
+the HDAudio based boards honors -ENOENT and checks for a generic
+topology if no specific is found before giving up and failing the
+component probing.
 
-For example:
-[  T200] nvmet: adding nsid -16 to subsystem mysubsystem
+However, if -ENOENT is returned by the latter function -
+snd_soc_tplg_component_load() - is shall not be ignored.  That means
+there is an actual problem with the topology file and no fallback shall
+be attempted.
 
-Print them with %u. The invalid-NSID error in nvmet_ns_make() keeps its
-%#x because the two values it rejects, 0 and NVME_NSID_ALL, are more
-readable in hex format. No functional change other than how the NSID is
-formatted.
-
-Fixes: a07b4970f464 ("nvmet: add a generic NVMe target")
-Fixes: c6925093d0b2 ("nvmet: Optionally use PCI P2P memory")
-Fixes: 5a47c2080a73 ("nvmet: support reservation feature")
-Signed-off-by: Mohamed Khalfella <mkhalfella@purestorage.com>
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Fixes: 739c031110da ("ASoC: Intel: avs: Provide support for fallback topology")
+Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Link: https://patch.msgid.link/20260902081814.1590883-7-cezary.rojewski@intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/configfs.c | 4 ++--
- drivers/nvme/target/core.c     | 2 +-
- drivers/nvme/target/pr.c       | 2 +-
- 3 files changed, 4 insertions(+), 4 deletions(-)
+ sound/soc/intel/avs/pcm.c      | 34 ++++++++++++++++++++--------------
+ sound/soc/intel/avs/topology.c |  2 +-
+ sound/soc/intel/avs/topology.h |  1 +
+ 3 files changed, 22 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/nvme/target/configfs.c b/drivers/nvme/target/configfs.c
-index 413ee2d16d29c..6286e38436ddf 100644
---- a/drivers/nvme/target/configfs.c
-+++ b/drivers/nvme/target/configfs.c
-@@ -814,7 +814,7 @@ static ssize_t nvmet_ns_resv_enable_store(struct config_item *item,
+diff --git a/sound/soc/intel/avs/pcm.c b/sound/soc/intel/avs/pcm.c
+index 797b9c9163b49..094ea1366ea8f 100644
+--- a/sound/soc/intel/avs/pcm.c
++++ b/sound/soc/intel/avs/pcm.c
+@@ -6,6 +6,7 @@
+ //          Amadeusz Slawinski <amadeuszx.slawinski@linux.intel.com>
+ //
  
- 	mutex_lock(&ns->subsys->lock);
- 	if (ns->enabled) {
--		pr_err("the ns:%d is already enabled.\n", ns->nsid);
-+		pr_err("the ns:%u is already enabled.\n", ns->nsid);
- 		mutex_unlock(&ns->subsys->lock);
- 		return -EINVAL;
- 	}
-@@ -880,7 +880,7 @@ static struct config_group *nvmet_ns_make(struct config_group *group,
- 		goto out;
- 	config_group_init_type_name(&ns->group, name, &nvmet_ns_type);
- 
--	pr_info("adding nsid %d to subsystem %s\n", nsid, subsys->subsysnqn);
-+	pr_info("adding nsid %u to subsystem %s\n", nsid, subsys->subsysnqn);
- 
- 	return &ns->group;
- out:
-diff --git a/drivers/nvme/target/core.c b/drivers/nvme/target/core.c
-index 23fa90ec3c00e..269daefb88854 100644
---- a/drivers/nvme/target/core.c
-+++ b/drivers/nvme/target/core.c
-@@ -558,7 +558,7 @@ static void nvmet_p2pmem_ns_add_p2p(struct nvmet_ctrl *ctrl,
- 	if (ret < 0)
- 		pci_dev_put(p2p_dev);
- 
--	pr_info("using p2pmem on %s for nsid %d\n", pci_name(p2p_dev),
-+	pr_info("using p2pmem on %s for nsid %u\n", pci_name(p2p_dev),
- 		ns->nsid);
++#include <linux/cleanup.h>
+ #include <linux/debugfs.h>
+ #include <linux/device.h>
+ #include <sound/hda_register.h>
+@@ -987,13 +988,25 @@ static int avs_component_load_libraries(struct avs_soc_component *acomp)
+ 	return ret;
  }
  
-diff --git a/drivers/nvme/target/pr.c b/drivers/nvme/target/pr.c
-index 7d937093b2262..ad07f55e7f173 100644
---- a/drivers/nvme/target/pr.c
-+++ b/drivers/nvme/target/pr.c
-@@ -145,7 +145,7 @@ static void nvmet_pr_add_resv_log(struct nvmet_ctrl *ctrl, u8 log_type,
- 	log.nsid = cpu_to_le32(nsid);
++static int avs_request_topology(struct snd_soc_component *component, const char *name,
++				const struct firmware **fw)
++{
++	char *fullname __free(kfree) = NULL;
++
++	fullname = kasprintf(GFP_KERNEL, "%s/%s", component->driver->topology_name_prefix, name);
++	if (!fullname)
++		return -ENOMEM;
++
++	return request_firmware(fw, fullname, component->dev);
++}
++
+ static int avs_component_probe(struct snd_soc_component *component)
+ {
+ 	struct snd_soc_card *card = component->card;
+ 	struct snd_soc_acpi_mach *mach;
+ 	struct avs_soc_component *acomp;
++	const struct firmware *fw;
+ 	struct avs_dev *adev;
+-	char *filename;
+ 	int ret;
  
- 	if (!kfifo_put(&log_mgr->log_queue, log)) {
--		pr_info("a reservation log lost, cntlid:%d, log_type:%d, nsid:%d\n",
-+		pr_info("a reservation log lost, cntlid:%d, log_type:%d, nsid:%u\n",
- 			ctrl->cntlid, log_type, nsid);
- 		log_mgr->lost_count++;
+ 	dev_dbg(card->dev, "probing %s card %s\n", component->name, card->name);
+@@ -1009,13 +1022,7 @@ static int avs_component_probe(struct snd_soc_component *component)
+ 		goto finalize;
+ 
+ 	/* Load specified topology and create debugfs for it. */
+-	filename = kasprintf(GFP_KERNEL, "%s/%s", component->driver->topology_name_prefix,
+-			     mach->tplg_filename);
+-	if (!filename)
+-		return -ENOMEM;
+-
+-	ret = avs_load_topology(component, filename);
+-	kfree(filename);
++	ret = avs_request_topology(component, mach->tplg_filename, &fw);
+ 	if (ret == -ENOENT && !strncmp(mach->tplg_filename, "hda-", 4)) {
+ 		unsigned int vendor_id;
+ 
+@@ -1030,18 +1037,17 @@ static int avs_component_probe(struct snd_soc_component *component)
+ 							     "hda-generic-tplg.bin");
+ 		if (!mach->tplg_filename)
+ 			return -ENOMEM;
+-		filename = kasprintf(GFP_KERNEL, "%s/%s", component->driver->topology_name_prefix,
+-				     mach->tplg_filename);
+-		if (!filename)
+-			return -ENOMEM;
+ 
+ 		dev_info(card->dev, "trying to load fallback topology %s\n", mach->tplg_filename);
+-		ret = avs_load_topology(component, filename);
+-		kfree(filename);
++		ret = avs_request_topology(component, mach->tplg_filename, &fw);
  	}
+ 	if (ret < 0)
+ 		return ret;
+ 
++	ret = snd_soc_tplg_component_load(component, &avs_tplg_ops, fw);
++	if (ret)
++		return ret;
++
+ 	ret = avs_component_load_libraries(acomp);
+ 	if (ret < 0) {
+ 		dev_err(card->dev, "libraries loading failed: %d\n", ret);
+diff --git a/sound/soc/intel/avs/topology.c b/sound/soc/intel/avs/topology.c
+index 9033f683393c4..0a267937044de 100644
+--- a/sound/soc/intel/avs/topology.c
++++ b/sound/soc/intel/avs/topology.c
+@@ -2194,7 +2194,7 @@ avs_control_load(struct snd_soc_component *comp, int index, struct snd_kcontrol_
+ 	return 0;
+ }
+ 
+-static const struct snd_soc_tplg_ops avs_tplg_ops = {
++const struct snd_soc_tplg_ops avs_tplg_ops = {
+ 	.io_ops			= avs_control_ops,
+ 	.io_ops_count		= ARRAY_SIZE(avs_control_ops),
+ 	.control_load		= avs_control_load,
+diff --git a/sound/soc/intel/avs/topology.h b/sound/soc/intel/avs/topology.h
+index 1cf7455b6c010..b5799c994b887 100644
+--- a/sound/soc/intel/avs/topology.h
++++ b/sound/soc/intel/avs/topology.h
+@@ -230,6 +230,7 @@ struct avs_tplg_module {
+ 	struct list_head node;
+ };
+ 
++extern const struct snd_soc_tplg_ops avs_tplg_ops;
+ struct avs_tplg *avs_tplg_new(struct snd_soc_component *comp);
+ 
+ int avs_load_topology(struct snd_soc_component *comp, const char *filename);
 -- 
 2.53.0
 
