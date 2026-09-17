@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30B824E5334;
-	Thu, 17 Sep 2026 17:18:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AD694E322C;
+	Thu, 17 Sep 2026 17:18:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789665510; cv=none; b=STHATqfaL0Mi380nzbc22ZSbDnR+u1VZvYudU0S/kLNmQhxR9pF0I2Negj5M+pAyjdJarOge/EjwAFa1dxnSPl60aMwGhLZBdT1EbdPmtItPPOCKaZTutEGIWhHXx9rymK6/3yeCjEiW3gxT4+OS4WE8OYd8OC3f+KmM7l74E54=
+	t=1789665513; cv=none; b=oxDnhOtsUueWE9oJNc71wgXxD/E+dL6zF47efWFQMC1SUX5CuTg0N/FWbM8kQBZGQIi9vyxEghSkjwOi+GBBITwr3QUbIUdb4PB89REr3lrF4XeXd0mu7s7aSrzRoaPRUfLZL4ph0J3L1CSdVArsKJ43M+juAOGmxjRVFxTHk2g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789665510; c=relaxed/simple;
-	bh=o6ffu6XnuAH9ZGMwo6DUAFSRKh0TuBBxHRgrsweH19c=;
+	s=arc-20240116; t=1789665513; c=relaxed/simple;
+	bh=I6dqvBE4qEYN6LvQydFAuuc3Z9bh9lBkKHI2CUIo4vE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pbQaU0nfxww9PQmdw9OmZq2bOA9CTNzz+Zh+uQZrzHTsNWAxDA8PYNb3AqTTfrgRGbeB8/Y3t/CGIkzKfpdGhszjIDp6WaGT6V9jKkM5dBv1lGc0dh5bVmIJbJNVS3uga5qcGdDw/vg03kx9qD9e6aF9N31JroumfmcIyHGjSIg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=15yXkLf9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=puQGOLiyP426yaaEREdFRWeDQgTN3klUjuYK5uNp37fRS/hl7JK58Y7D+fDSDCj+RAJyDazRWjpNPbywdvJJ06cqdRTBMEO7I5mVxsQUXDPUZY4oN8z8vHQkfkObhUvvgL0PlkNmEFgZGrMFg6ndzh2CmqexTs64lLUolY1vezM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KugvnkgB; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="15yXkLf9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 832CD1F000FF;
-	Thu, 17 Sep 2026 17:18:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KugvnkgB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F8AF1F000FF;
+	Thu, 17 Sep 2026 17:18:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789665509;
-	bh=OIa2YNoWuZICVGVNcrSGSxzgFH0ww4pxyP8K0tsXc58=;
+	s=korg; t=1789665512;
+	bh=2MP3se37ehtTDqza9LhznkUKwXCr5zvTyIMWT/LVIr4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=15yXkLf9aNp7sAlEAKGdX1CMshKDGAmhLg2YKdFNbEG72PJU6qhT+4hUOAITWqPSs
-	 tnIuFxCpc9q0bWokkVCwu07cVHaqoSEaE3GYgDvp5xePNyRdeYTcQ73ppepfH2meBW
-	 f2mLuiYqfzYL7PF1uu/1kIDW2cwjveOzfdxAdKI8=
+	b=KugvnkgB4L9UxKVljjWIE+eArFugI17WNjKQMBfJxhLodqU0nM5u5aui5O3Ib01pb
+	 syL3Tidk3AUTRANb7LbMtMKQQExB7nyG5ihRM/nO/0nn1sjGhN4NrUgkO6b2SnsCZy
+	 TR+cT6+wLDx5i9GYxVc+mFVExwLQBWzaxxLyriOs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Avi Weiss <thnkslprpt@gmail.com>,
+	Filipe Manana <fdmanana@suse.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0727/1250] btrfs: zoned: finish active block group cleanup if call_zone_finish() fails
-Date: Thu, 17 Sep 2026 16:08:42 +0100
-Message-ID: <20260917151611.594995624@linuxfoundation.org>
+Subject: [PATCH 6.18 0728/1250] btrfs: send: fix lost error return value in will_overwrite_ref()
+Date: Thu, 17 Sep 2026 16:08:43 +0100
+Message-ID: <20260917151611.621003471@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -52,63 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+From: Avi Weiss <thnkslprpt@gmail.com>
 
-[ Upstream commit a18a6b93a2843b9d103d3456bbd4b3f90282a379 ]
+[ Upstream commit d0285dfbc3b46f41395b26ee2f4a16d99fb3e736 ]
 
-do_zone_finish() clears BLOCK_GROUP_FLAG_ZONE_IS_ACTIVE before finishing
-the zones. If call_zone_finish() then fails it returned early, leaving the
-now inactive block group on fs_info->zone_active_bgs, leaking its
-reference, the BTRFS_FS_NEED_ZONE_FINISH waiters are never woken, and as
-its alloc_offset equals the zone capacity btrfs_zone_finish_one_bg() keeps
-selecting it, spinning btrfs_zoned_activate_one_bg().
+The direct-return refactoring in commit b3047a42f55d ("btrfs: send:
+directly return from will_overwrite_ref() and simplify it") changed
+will_overwrite_ref() to return directly instead of going through the
+common out label.
 
-Fall through to the cleanup on failure too and return the error, but keep
-the block group read-only as its zones are left inconsistent.
+That resulted in a negative return value from is_inode_existent() to
+start being converted to 0, making lookup errors unable to be
+distinguished from the inode not existing.
 
-Fixes: d70cbdda75da ("btrfs: zoned: consolidate zone finish functions")
-Link: https://sashiko.dev/#/patchset/20260818100037.1366563-1-johannes.thumshirn%40wdc.com
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+process_recorded_refs() expects negative errors from
+will_overwrite_ref() and aborts processing when it receives one.
+
+Return the value from is_inode_existent() to restore the previous error
+propagation behavior as it was before the refactor.
+
+Fixes: b3047a42f55d ("btrfs: send: directly return from will_overwrite_ref() and simplify it")
+Signed-off-by: Avi Weiss <thnkslprpt@gmail.com>
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/zoned.c | 11 ++++-------
- 1 file changed, 4 insertions(+), 7 deletions(-)
+ fs/btrfs/send.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/zoned.c b/fs/btrfs/zoned.c
-index 0174c3f9cfb8e..862475ae49770 100644
---- a/fs/btrfs/zoned.c
-+++ b/fs/btrfs/zoned.c
-@@ -2592,16 +2592,13 @@ static int do_zone_finish(struct btrfs_block_group *block_group, bool fully_writ
- 	down_read(&dev_replace->rwsem);
- 	map = block_group->physical_map;
- 	for (i = 0; i < map->num_stripes; i++) {
--
- 		ret = call_zone_finish(block_group, &map->stripes[i]);
--		if (ret) {
--			up_read(&dev_replace->rwsem);
--			return ret;
--		}
-+		if (ret)
-+			break;
- 	}
- 	up_read(&dev_replace->rwsem);
+diff --git a/fs/btrfs/send.c b/fs/btrfs/send.c
+index 34a57f11e4bb9..22190902be81c 100644
+--- a/fs/btrfs/send.c
++++ b/fs/btrfs/send.c
+@@ -2074,7 +2074,7 @@ static int will_overwrite_ref(struct send_ctx *sctx, u64 dir, u64 dir_gen,
  
--	if (!fully_written)
-+	if (!ret && !fully_written)
- 		btrfs_dec_block_group_ro(block_group);
+ 	ret = is_inode_existent(sctx, dir, dir_gen, NULL, &parent_root_dir_gen);
+ 	if (ret <= 0)
+-		return 0;
++		return ret;
  
- 	spin_lock(&fs_info->zone_active_bgs_lock);
-@@ -2614,7 +2611,7 @@ static int do_zone_finish(struct btrfs_block_group *block_group, bool fully_writ
- 
- 	clear_and_wake_up_bit(BTRFS_FS_NEED_ZONE_FINISH, &fs_info->flags);
- 
--	return 0;
-+	return ret;
- }
- 
- int btrfs_zone_finish(struct btrfs_block_group *block_group)
+ 	/*
+ 	 * If we have a parent root we need to verify that the parent dir was
 -- 
 2.53.0
 
