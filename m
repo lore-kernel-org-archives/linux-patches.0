@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D238B5158BA;
-	Thu, 17 Sep 2026 16:54:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97DE3515965;
+	Thu, 17 Sep 2026 16:55:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789664101; cv=none; b=GB+1C70KQLiobttc7qoJZf9H2ruBp33ejHZC4LZ46koc1WUZM0n74vgQVWJkhDDI27fsNtlOx88JrjfFgCm9p9LoIonkcm830rH0cWd4cb7Cjj5f5xxa90dY2V+Pv3fOYRk3TF/2Tz64oquKakol7pTb5iFigu8X2ki73WWV5is=
+	t=1789664103; cv=none; b=Ftm7M6jKzJZBlXcMqJhO3j5zy0YmGOA3RolDEDdysQkG5xYb6HycC1Uf18xeCN59aFp3fq6/GO3pUyTG4nSJtELUZIFvD3l/5ftJJ4+5EVezvRVCv71+Buz5h5KGHuANa5MOiNMeyHsdgN2G5zPYJ1MKvCZTtIlAIv+AIiacoks=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789664101; c=relaxed/simple;
-	bh=RPGz+AhpEV9rWBSkR762coi9X8KPn21kbBZ8pphg1sw=;
+	s=arc-20240116; t=1789664103; c=relaxed/simple;
+	bh=qXD+FltMyVj6cw77eBFpSfj4kCyDG7myEBeHqL7k7xg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u8PJdCecDig8ZY5IGgiOF7TzOSqUIr7LRHsOIydiTdrImRq1b+F6jWH3DE9vzOTwJv8s3bUqvFznJeCiYbhri7SKk8rS/0FjbN7RtpN0tSlTgrYxDyQitU0nNn+aXL9BOUgoeUWMA+qNFFDxtYw62rUBHvqQnvj+t6E1ZxAHPCA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QU0J/T4m; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=K+Qq6cB/ayxktLTzW2GeiNc5kiDWlCdc2qyHcg2FxTqcA40rniVd2sCr1uoRn3hiPPYxEbbDqNZEDmPSjoCLNEsSU1SpN2+25HgL2UqYuWEvB1dd9vOiijDAF0N6Z2CO2PFFMGPPyBxm8fQeox4FsIBoL3/6CPECbmn2VZrrUhg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SQHU81Up; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QU0J/T4m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED8E61F000FF;
-	Thu, 17 Sep 2026 16:54:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SQHU81Up"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E1971F000FF;
+	Thu, 17 Sep 2026 16:55:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789664099;
-	bh=ba1DdJRFZKhSPuwm0QWgnZPHqli2TM3klj209l9s9dc=;
+	s=korg; t=1789664102;
+	bh=XOlv4oFnknXTr/toX2rNGMuzUlLWI7ctQ7Om1eygS6o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QU0J/T4m7DJVmJxYkyP2dv3kNYNSsfcob8Afg1tdIVJRQp1n/bp6rNQDc1OI8P3u2
-	 ssjkHf27gvg/jwo69zJVKng542cw/j07nhbrH88DAb4HMj22orG5DvgylpXb7vdy6P
-	 O9b5HUtZGdQNKTgCiXST5wWt9bP9drSX6tzSjwLQ=
+	b=SQHU81UpaTTBddar4y+XFGK7bdkX4VRjkVzsSNvAhp/TM5vFqGKB5DZlpnwNEqr/K
+	 JXKFDumvUsY/RAPUZSSyYRMHqdOpv0gGwKS0sApLutHwYWpreei3slUpGBuyPgJwJI
+	 04SHmuWadPeYKW7eTJM3n/kOGjqJUFdDNen0nt30=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	shayderrr <darknessshayder@gmail.com>,
-	Thierry Reding <treding@nvidia.com>,
+	Andreas Gruenbacher <agruenba@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0252/1250] host1x: bus: Fix missing ops null check in error teardown
-Date: Thu, 17 Sep 2026 16:00:47 +0100
-Message-ID: <20260917151558.983248528@linuxfoundation.org>
+Subject: [PATCH 6.18 0261/1250] gfs2: page poisoning fix
+Date: Thu, 17 Sep 2026 16:00:56 +0100
+Message-ID: <20260917151559.225764431@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,48 +50,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: shayderrr <darknessshayder@gmail.com>
+From: Andreas Gruenbacher <agruenba@redhat.com>
 
-[ Upstream commit 71d25f668bc5c0f36ea843462e12307dea45aaa3 ]
+[ Upstream commit 4982e58669b11c43644efb5fb7435975848b716e ]
 
-In host1x_device_init(), the error teardown paths do not check
-client->ops before dereferencing it, unlike the forward init paths
-which correctly guard with 'client->ops &&'. This can result in a
-NULL pointer dereference if client->ops is NULL.
+Processes can write to the last page of a file using mmap, and when the file
+size is not a multiple of the page size, this can be used to write beyond the
+end of the file.  This is sometimes referred to as page poisoning, and it is
+not a problem in itself because the data beyond eof will be ignored.  However,
+we currently fail to clear out any space beyond the end of the file that we
+skip over when the file size is increased, so that "poison" can end up getting
+exposed.  Fix that.
 
-Fix by adding the missing client->ops check in both the teardown
-and teardown_late labels.
+Fixes xfstest generic/363.
 
-Signed-off-by: shayderrr <darknessshayder@gmail.com>
-Signed-off-by: Thierry Reding <treding@nvidia.com>
-Link: https://patch.msgid.link/20260517170456.84927-1-darknessshayder@gmail.com
+Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/host1x/bus.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/gfs2/bmap.c | 19 +++++++++++++++++++
+ fs/gfs2/bmap.h |  1 +
+ fs/gfs2/file.c | 10 ++++++++++
+ 3 files changed, 30 insertions(+)
 
-diff --git a/drivers/gpu/host1x/bus.c b/drivers/gpu/host1x/bus.c
-index 3313ead8bfcc2..06aa7fcd367e1 100644
---- a/drivers/gpu/host1x/bus.c
-+++ b/drivers/gpu/host1x/bus.c
-@@ -221,7 +221,7 @@ int host1x_device_init(struct host1x_device *device)
+diff --git a/fs/gfs2/bmap.c b/fs/gfs2/bmap.c
+index fdcac8e3f2ba2..836e260099c39 100644
+--- a/fs/gfs2/bmap.c
++++ b/fs/gfs2/bmap.c
+@@ -1321,6 +1321,19 @@ static int gfs2_block_zero_range(struct inode *inode, loff_t from, loff_t length
+ 			&gfs2_iomap_write_ops, NULL);
+ }
  
- teardown:
- 	list_for_each_entry_continue_reverse(client, &device->clients, list)
--		if (client->ops->exit)
-+		if (client->ops && client->ops->exit)
- 			client->ops->exit(client);
++int gfs2_clear_beyond_eof(struct inode *inode, loff_t end)
++{
++	loff_t isize = i_size_read(inode);
++	unsigned int len = isize & ~PAGE_MASK;
++
++	if (!len || isize >= end)
++		return 0;
++	len = PAGE_SIZE - len;
++	if (end - isize < len)
++		len = end - isize;
++	return gfs2_block_zero_range(inode, isize, len);
++}
++
+ #define GFS2_JTRUNC_REVOKES 8192
  
- 	/* reset client to end of list for late teardown */
-@@ -229,7 +229,7 @@ int host1x_device_init(struct host1x_device *device)
+ /**
+@@ -2096,6 +2109,12 @@ static int do_grow(struct inode *inode, u64 size)
+ 		unstuff = 1;
+ 	}
  
- teardown_late:
- 	list_for_each_entry_continue_reverse(client, &device->clients, list)
--		if (client->ops->late_exit)
-+		if (client->ops && client->ops->late_exit)
- 			client->ops->late_exit(client);
++	if (!unstuff) {
++		error = gfs2_clear_beyond_eof(inode, size);
++		if (error)
++			goto do_grow_qunlock;
++	}
++
+ 	error = gfs2_trans_begin(sdp, RES_DINODE + RES_STATFS + RES_RG_BIT +
+ 				 (unstuff &&
+ 				  gfs2_is_jdata(ip) ? RES_JDATA : 0) +
+diff --git a/fs/gfs2/bmap.h b/fs/gfs2/bmap.h
+index 6cdc72dd55a3f..e3d6efdfd8903 100644
+--- a/fs/gfs2/bmap.h
++++ b/fs/gfs2/bmap.h
+@@ -58,6 +58,7 @@ int gfs2_get_extent(struct inode *inode, u64 lblock, u64 *dblock,
+ 		    unsigned int *extlen);
+ int gfs2_alloc_extent(struct inode *inode, u64 lblock, u64 *dblock,
+ 		      unsigned *extlen, bool *new);
++int gfs2_clear_beyond_eof(struct inode *inode, loff_t end);
+ int gfs2_setattr_size(struct inode *inode, u64 size);
+ int gfs2_truncatei_resume(struct gfs2_inode *ip);
+ int gfs2_file_dealloc(struct gfs2_inode *ip);
+diff --git a/fs/gfs2/file.c b/fs/gfs2/file.c
+index bc67fa058c845..ef57d6aa42ebb 100644
+--- a/fs/gfs2/file.c
++++ b/fs/gfs2/file.c
+@@ -1057,6 +1057,10 @@ static ssize_t gfs2_file_buffered_write(struct kiocb *iocb,
+ 			goto out_unlock;
+ 	}
  
- 	mutex_unlock(&device->clients_lock);
++	ret = gfs2_clear_beyond_eof(inode, iocb->ki_pos);
++	if (ret)
++		goto out_unlock;
++
+ 	pagefault_disable();
+ 	ret = iomap_file_buffered_write(iocb, from, &gfs2_iomap_ops,
+ 			&gfs2_iomap_write_ops, NULL);
+@@ -1266,6 +1270,12 @@ static long __gfs2_fallocate(struct file *file, int mode, loff_t offset, loff_t
+ 
+ 	next = (next + 1) << sdp->sd_sb.sb_bsize_shift;
+ 
++	if (!(mode & FALLOC_FL_KEEP_SIZE)) {
++		error = gfs2_clear_beyond_eof(inode, offset + len);
++		if (error)
++			return error;
++	}
++
+ 	offset &= bsize_mask;
+ 
+ 	len = next - offset;
 -- 
 2.53.0
 
