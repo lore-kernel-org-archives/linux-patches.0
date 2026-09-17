@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F7AE4ED185;
-	Thu, 17 Sep 2026 17:58:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 228894F85D1;
+	Thu, 17 Sep 2026 17:58:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789667906; cv=none; b=rE5075hPB+QKi8FuzSh9+ptUxqM5KoR3OhvcMOEfzDmEVeF8Q6HSI/Ia0GGv1mJxMs0b+3BEr54YIQLCk08ypexWgce9VIJKOKZXNqXyNdlYz6GGFPOcnjNa5EK2SF9rK08sfTFiHmb2qdL/bZn/rTEvdxlkrqYe4sPBmUx2Q80=
+	t=1789667909; cv=none; b=h2uO2wau+2sVuTPKVqlLvUKZlxvKXsME9HUAkVkIT2YcGh3NdV0XIDPXpOYAYBqNaS0Iu+SHnS2yH75msA0fQwabeGxeiPVOllEAxRQgqqJmUkq3s24/xujFn/xeUZUZ8qFJhAkoU6FbqKf02OD9c/zbc07h+b+qZX4BxaK9tAQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789667906; c=relaxed/simple;
-	bh=veV2rt6cdYfNE18TFwTc9PmkuK8pYAtgUCOc4y+jcAs=;
+	s=arc-20240116; t=1789667909; c=relaxed/simple;
+	bh=8k5+ikNNfhMAjawOhZoToe61Zz58lu5b5Gcmo1UAEFE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=UgoIhC1nXB1cJCSbSz9Co3cihyb36rGduoBNLBOv76Hapj230UVgZOzv1C4kmYfbDC5xPvBQhmak29v0iEMaEMhqSI7ALSYEFZ/+KC0IZOrZtrI0f9iDZF145O0dDHV14Uyf6WdASaGM+wKMDPzkeMVHXNgKcXRnPYvVTwkUwDc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Gy3uG+o; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=JpxD5H6MIc5OqBEm2qGdJo+l+Rj4y6emHf7E6rQVHk9yWMhchpxVcvR1nhdONdlhmyJ2ASFlwtqVxoBHHXVq51bsbatJLfAAf2sOy36GtD8mzKMci1+cWtk7j6evSfhbc2iVlIGxo67DteuWMihxyH8NE9NrLrST3cQFWUdeBIQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Do1kSF8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Gy3uG+o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 719551F00898;
-	Thu, 17 Sep 2026 17:58:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Do1kSF8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F62C1F000FF;
+	Thu, 17 Sep 2026 17:58:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789667905;
-	bh=XcyIJmIwVr6AOZSzyhhoFCSCMA8rxa+781zPRCp8bBk=;
+	s=korg; t=1789667907;
+	bh=pe4bNSbZVwgZ7MYpVPrCq2ulst4ATsaFlQexmRCUQX8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0Gy3uG+oL0g7eyMTFcvjM1a4BIPrlxH6KZq05qN0vhbS4jZMQ6oefLYsj4931M8H1
-	 dcAjbGbtaKCVExeoP1zRmf5ak0WLRSe5SlFYPYxgi/jp3/ZzSCnj/katFBaMhoT3CV
-	 8t/t5CIEBU+KD/n15U86ut5NFpgY4vMbXOMu3PUM=
+	b=1Do1kSF8rWdQptUHSYSNO453MvFlD6e/LQuT6+5565wJVnDZGDYP38KDgA/mY2xVb
+	 ezY9jH1pX+pyt8wibtwBP1j3jrvqvbktLgBZJyEJUiwSYp6jxglwJN/h8h2g0aZwJJ
+	 NFwZLZTrJ8w+X4s5WgsvF85Wo+UxunSm5kUnOnjE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Ioana Ciornei <ioana.ciornei@nxp.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0212/1102] ALSA: seq: oss: Reject reads that cannot fit the next event
-Date: Thu, 17 Sep 2026 16:02:35 +0100
-Message-ID: <20260917151544.899148584@linuxfoundation.org>
+Subject: [PATCH 6.12 0213/1102] dpaa2-switch: rework FDB management on the bridge leave path
+Date: Thu, 17 Sep 2026 16:02:36 +0100
+Message-ID: <20260917151544.924028494@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -45,53 +45,98 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+From: Ioana Ciornei <ioana.ciornei@nxp.com>
 
-[ Upstream commit 611f538253d970f4d152003841544e875828d015 ]
+[ Upstream commit efc1d92eacf03afa6f4d53bf7120e059b6f961f2 ]
 
-snd_seq_oss_read() checks whether the next queued OSS sequencer event
-fits in the remaining userspace buffer before removing it from the read
-queue.
+On bridge leave, the dpaa2_switch_port_set_fdb() function always
+allocates a new FDB for the port which is becoming standalone. In case
+no FDB is found, then the port leaving a bridge will continue to use the
+current one.
 
-The check is inverted. It currently stops when the event is smaller than
-the remaining buffer, so a normal 4-byte event is not copied for an
-8-byte read buffer. Conversely, an 8-byte event can be copied for a
-smaller read count.
+The above logic does not cover the case in which there are multiple
+bridges which have ports from the same DPSW instance. In this case, when
+the last port leaves bridge #1, it finds an unused FDB to switch to, but
+the old FDB is not marked as unused. Since the number of FDBs is equal
+to the number of DPSW interfaces, this will eventually lead to multiple
+ports sharing the same FDB.
 
-Break only when the remaining userspace buffer is smaller than the next
-event, and report -EINVAL if no complete event has been copied. This
-prevents an undersized read from looking like end-of-file while leaving
-the event queued for a later read with a large enough buffer.
+Fix this by changing how we are managing the FDBs on the leave path.
+Instead of directly allocating a new FDB, first verify if the current
+port is the last one to leave a bridge. If this is the case, then
+continue to use the current FDB and only allocate another FDB if there
+are other ports remaining in the bridge.
 
-Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
-Link: https://patch.msgid.link/20260602-alsa-seq-oss-read-size-check-v1-1-10e59b1742e0@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Ioana Ciornei <ioana.ciornei@nxp.com>
+Link: https://patch.msgid.link/20260528173452.1953102-2-ioana.ciornei@nxp.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/seq/oss/seq_oss_rw.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ .../ethernet/freescale/dpaa2/dpaa2-switch.c   | 31 ++++++++++++++-----
+ 1 file changed, 24 insertions(+), 7 deletions(-)
 
-diff --git a/sound/core/seq/oss/seq_oss_rw.c b/sound/core/seq/oss/seq_oss_rw.c
-index 307ef98c44c7b..45bb458597708 100644
---- a/sound/core/seq/oss/seq_oss_rw.c
-+++ b/sound/core/seq/oss/seq_oss_rw.c
-@@ -57,7 +57,8 @@ snd_seq_oss_read(struct seq_oss_devinfo *dp, char __user *buf, int count)
- 			break;
+diff --git a/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c b/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c
+index 8469ca2708699..d2e1dffe6e0c6 100644
+--- a/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c
++++ b/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c
+@@ -54,27 +54,44 @@ dpaa2_switch_filter_block_get_unused(struct ethsw_core *ethsw)
+ static u16 dpaa2_switch_port_set_fdb(struct ethsw_port_priv *port_priv,
+ 				     struct net_device *bridge_dev)
+ {
++	struct ethsw_core *ethsw = port_priv->ethsw_data;
+ 	struct ethsw_port_priv *other_port_priv = NULL;
+ 	struct dpaa2_switch_fdb *fdb;
+ 	struct net_device *other_dev;
++	bool last_fdb_user = true;
+ 	struct list_head *iter;
++	int i;
+ 
+ 	/* If we leave a bridge (bridge_dev is NULL), find an unused
+ 	 * FDB and use that.
+ 	 */
+ 	if (!bridge_dev) {
+-		fdb = dpaa2_switch_fdb_get_unused(port_priv->ethsw_data);
+-
+-		/* If there is no unused FDB, we must be the last port that
+-		 * leaves the last bridge, all the others are standalone. We
+-		 * can just keep the FDB that we already have.
+-		 */
++		/* First verify if this is the last port to leave this bridge */
++		for (i = 0; i < ethsw->sw_attr.num_ifs; i++) {
++			if (!ethsw->ports[i] || ethsw->ports[i] == port_priv)
++				continue;
++			if (ethsw->ports[i]->fdb == port_priv->fdb) {
++				last_fdb_user = false;
++				break;
++			}
++		}
+ 
+-		if (!fdb) {
++		/* If this is the last user of the FDB, just keep using it. */
++		if (last_fdb_user) {
+ 			port_priv->fdb->bridge_dev = NULL;
+ 			return 0;
  		}
- 		ev_len = ev_length(&rec);
--		if (ev_len < count) {
-+		if (count < ev_len) {
-+			err = -EINVAL;
- 			snd_seq_oss_readq_unlock(readq, flags);
- 			break;
- 		}
+ 
++		/* Since we are not the last port which leaves a bridge,
++		 * acquire a new FDB and use it. The number of FDBs is sized to
++		 * accommodate all switch ports as standalone, each with its
++		 * private FDB, which means that dpaa2_switch_fdb_get_unused()
++		 * must succeed here. WARN if not.
++		 */
++		fdb = dpaa2_switch_fdb_get_unused(port_priv->ethsw_data);
++		if (WARN_ON(!fdb))
++			return 0;
++
+ 		port_priv->fdb = fdb;
+ 		port_priv->fdb->in_use = true;
+ 		port_priv->fdb->bridge_dev = NULL;
 -- 
 2.53.0
 
