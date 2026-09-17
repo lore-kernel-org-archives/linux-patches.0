@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF33E4FD7B1;
-	Thu, 17 Sep 2026 18:11:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58D1B502786;
+	Thu, 17 Sep 2026 18:11:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789668686; cv=none; b=V7VVPSnhUMTJYV0PWJmMalL+yFBOoh92y5cGBVLhPpZjDAbj4fIPMG/pmUxp40BFVKR7a8CE7sSOW1zWiebE2mrQTx0Hf6scQ+du2QDY6hAlx0nYCQNtCtNkfpS0PPjD+ZUdag21iPF6H1JDAsDRY5KAKK6gokr/jV7+0Hu1kYQ=
+	t=1789668688; cv=none; b=Z9AzxP0GvJQus1z/+jrLqo/vFJKSAIovS9Bxrx8EZRw74qyDEZm/9Q+vjsX15C9rjPzqoMSDx8+C5AKLyQ5z31Kodne4iLoD3IprMmHwYg3CWpo1SxdQHiHLSmis8IQngtw+GBB9MXHUwmREKU8mvz/sfBW6aDPQvf8ctNCtfjs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789668686; c=relaxed/simple;
-	bh=9k+z8Z8UZ3xyyT+OuEdRvprzk4ugpkTA6obmitz8fzM=;
+	s=arc-20240116; t=1789668688; c=relaxed/simple;
+	bh=do0so5fTEiIgKR4gdbcr3gWN6PiD61+VZ7lu60jgnsw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pSwm44TkZ9Q+3H284poblefTpmXW8RGdh4XTFYZaYoXnoXYyEgPtxBEnJnkNKwdUUTc8MQqHPG03NuhfL8rzLzWiX4xyuYOeTL89H9spcnXWREDqD3eLtb3Y1Ws1gVFUyho+//0HMf/xhWT/ARTOV8agX8nAbrphHN3kUiFaU5s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z9YknXN1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TfXRVi0YsXLi9877Z12U5WhTqX+vB2wx6e9oZuczfJoSMf3C5+Bop9tbfPcqJcTii1ltqEE7xv1NnmB2rfHdI2ycOq+hz9++z51jjPZDbFuL4rG89V9Ot8yEIhAQ7FJix93SStHpHtMZfhzwMerUQqAv5peh0ETP3xhLSp9oro8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MtiGo8k+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z9YknXN1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A88D11F000FF;
-	Thu, 17 Sep 2026 18:11:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MtiGo8k+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4A3E1F00893;
+	Thu, 17 Sep 2026 18:11:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789668684;
-	bh=OSIqgDeHeYK/eLRzzNr3VoIaJ2YvlLXqn/Qqp7PE7nE=;
+	s=korg; t=1789668687;
+	bh=f/JtoOf8ySoukRLqAIQNzjj/GfoqbIpBNdTzo2pKciU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=z9YknXN1akuzNS+X/ClIP0fXNmYtE4pEgqjimGss1KplYQ8Fp5qO1QIfJ9LcjrhLt
-	 eW10qVGsrZlX22OiTCHkBeBcH7+ZiZcrNxSPFMStGhNovmsd2u8OZnrZQWaK5EQCfD
-	 +pCIg8T3X93mGIGgBx3l0nyqvxuUmWHvPJMYbfcc=
+	b=MtiGo8k+A7SLehKrT9OMEEhbRGiFrPhq3X4nbmkIRGg3hHevHWZMegshZxRzhBtD9
+	 DVFr7Q6TORS5ZnzRadzQkcjzsEo49TPB3/XDIupPkKF4AczddmsvP2l9TjnAcWWv69
+	 hRH9SJzaLuHV6yWbAAuk45HR5H15oycPuZojgW6k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+	Ruikai Peng <ruikai@pwno.io>,
+	Jeff Hugo <jeff.hugo@oss.qualcomm.com>,
+	Lizhi Hou <lizhi.hou@amd.com>,
+	Youssef Samir <youssef.abdulrahman@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0505/1102] drm/virtio: Fix a NULL vs ERR_PTR() bug in virtio_gpu_user_framebuffer_create()
-Date: Thu, 17 Sep 2026 16:07:28 +0100
-Message-ID: <20260917151552.415850968@linuxfoundation.org>
+Subject: [PATCH 6.12 0506/1102] accel/qaic: Address potential out-of-bounds read in resp_worker()
+Date: Thu, 17 Sep 2026 16:07:29 +0100
+Message-ID: <20260917151552.442188885@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -51,35 +53,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <error27@gmail.com>
+From: Youssef Samir <youssef.abdulrahman@oss.qualcomm.com>
 
-[ Upstream commit 94579f24e2b526a04eb41050af0ba018c6f528e7 ]
+[ Upstream commit ab243f74ab4084ca5c8dec608cb5b0deb27db067 ]
 
-Smatch complains that returning a NULL here will lead to a NULL pointer
-dereference in drm_mode_addfb2().  Return an error pointer instead.
+Although 'commit 2feec5ae5df7 ("accel/qaic: Handle DBC deactivation if the
+owner went away")' fixes the scenario it was intended for by walking the
+message and only decoding QAIC_TRANS_DEACTIVATE_FROM_DEV, if present, it
+skipped over the bounds checking code that is included in decode_message().
+This could lead to issues such as reading past the slab allocation's end,
+infinite loops or kernel panics. For those issues to happen, a malformed
+wire message is needed to be sent from the device.
 
-Fixes: dc5698e80cf7 ("Add virtio gpu driver.")
-Signed-off-by: Dan Carpenter <error27@gmail.com>
-Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Link: https://patch.msgid.link/an1tWfHIHwtXd9SO@stanley.mountain
+Instead of duplicating the bounds checking code already present in
+decode_message(), use the function inside resp_worker().
+
+Reported-by: Ruikai Peng <ruikai@pwno.io>
+Fixes: 2feec5ae5df7 ("accel/qaic: Handle DBC deactivation if the owner went away")
+Reviewed-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
+Reviewed-by: Lizhi Hou <lizhi.hou@amd.com>
+Signed-off-by: Youssef Samir <youssef.abdulrahman@oss.qualcomm.com>
+Signed-off-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260731152344.1905882-1-youssef.abdulrahman@oss.qualcomm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/virtio/virtgpu_display.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/accel/qaic/qaic_control.c | 46 ++++++++++++++++---------------
+ 1 file changed, 24 insertions(+), 22 deletions(-)
 
-diff --git a/drivers/gpu/drm/virtio/virtgpu_display.c b/drivers/gpu/drm/virtio/virtgpu_display.c
-index 64baf2f22d9f0..9d4fcf2b6e878 100644
---- a/drivers/gpu/drm/virtio/virtgpu_display.c
-+++ b/drivers/gpu/drm/virtio/virtgpu_display.c
-@@ -318,7 +318,7 @@ virtio_gpu_user_framebuffer_create(struct drm_device *dev,
- 	if (ret) {
- 		kfree(virtio_gpu_fb);
- 		drm_gem_object_put(obj);
--		return NULL;
-+		return ERR_PTR(ret);
+diff --git a/drivers/accel/qaic/qaic_control.c b/drivers/accel/qaic/qaic_control.c
+index 8759b53ba38eb..b10ace7853b72 100644
+--- a/drivers/accel/qaic/qaic_control.c
++++ b/drivers/accel/qaic/qaic_control.c
+@@ -958,11 +958,13 @@ static int decode_status(struct qaic_device *qdev, void *trans, struct manage_ms
+ 
+ static int decode_message(struct qaic_device *qdev, struct manage_msg *user_msg,
+ 			  struct wire_msg *msg, struct ioctl_resources *resources,
+-			  struct qaic_user *usr)
++			  struct qaic_user *usr, bool orphaned_deactivate)
+ {
++	u32 msg_hdr_count = le32_to_cpu(msg->hdr.count);
+ 	u32 msg_hdr_len = le32_to_cpu(msg->hdr.len);
+ 	struct wire_trans_hdr *trans_hdr;
+ 	u32 msg_len = 0;
++	int trans_type;
+ 	int ret;
+ 	int i;
+ 
+@@ -970,10 +972,12 @@ static int decode_message(struct qaic_device *qdev, struct manage_msg *user_msg,
+ 	    msg_hdr_len > QAIC_MANAGE_MAX_MSG_LENGTH)
+ 		return -EINVAL;
+ 
+-	user_msg->len = 0;
+-	user_msg->count = le32_to_cpu(msg->hdr.count);
++	if (user_msg) {
++		user_msg->len = 0;
++		user_msg->count = msg_hdr_count;
++	}
+ 
+-	for (i = 0; i < user_msg->count; ++i) {
++	for (i = 0; i < msg_hdr_count; ++i) {
+ 		u32 hdr_len;
+ 
+ 		if (msg_len > msg_hdr_len - sizeof(*trans_hdr))
+@@ -985,7 +989,20 @@ static int decode_message(struct qaic_device *qdev, struct manage_msg *user_msg,
+ 		    size_add(msg_len, hdr_len) > msg_hdr_len)
+ 			return -EINVAL;
+ 
+-		switch (le32_to_cpu(trans_hdr->type)) {
++		trans_type = le32_to_cpu(trans_hdr->type);
++		/*
++		 * orphaned_deactivate is the case where a deactivate response
++		 * is received from the device after the user owning the DBC,
++		 * and the message requesting deactivation, has gone away.
++		 * In this case, only process QAIC_TRANS_DEACTIVATE_FROM_DEV
++		 * transaction and skip the others.
++		 */
++		if (orphaned_deactivate && trans_type != QAIC_TRANS_DEACTIVATE_FROM_DEV) {
++			msg_len += hdr_len;
++			continue;
++		}
++
++		switch (trans_type) {
+ 		case QAIC_TRANS_PASSTHROUGH_FROM_DEV:
+ 			ret = decode_passthrough(qdev, trans_hdr, user_msg, &msg_len);
+ 			break;
+@@ -1277,7 +1294,7 @@ static int qaic_manage(struct qaic_device *qdev, struct qaic_user *usr, struct m
+ 		goto dma_cont_failed;
  	}
  
- 	return &virtio_gpu_fb->base;
+-	ret = decode_message(qdev, user_msg, rsp, &resources, usr);
++	ret = decode_message(qdev, user_msg, rsp, &resources, usr, false);
+ 
+ dma_cont_failed:
+ 	free_dbc_buf(qdev, &resources);
+@@ -1442,22 +1459,7 @@ static void resp_worker(struct work_struct *work)
+ 		 * response to the QAIC_TRANS_TERMINATE_TO_DEV transaction,
+ 		 * otherwise, the user can issue an soc_reset to the device.
+ 		 */
+-		u32 msg_count = le32_to_cpu(msg->hdr.count);
+-		u32 msg_len = le32_to_cpu(msg->hdr.len);
+-		u32 len = 0;
+-		int j;
+-
+-		for (j = 0; j < msg_count && len < msg_len; ++j) {
+-			struct wire_trans_hdr *trans_hdr;
+-
+-			trans_hdr = (struct wire_trans_hdr *)(msg->data + len);
+-			if (le32_to_cpu(trans_hdr->type) == QAIC_TRANS_DEACTIVATE_FROM_DEV) {
+-				if (decode_deactivate(qdev, trans_hdr, &len, NULL))
+-					len += le32_to_cpu(trans_hdr->len);
+-			} else {
+-				len += le32_to_cpu(trans_hdr->len);
+-			}
+-		}
++		decode_message(qdev, NULL, msg, NULL, NULL, true);
+ 		/* request must have timed out, drop packet */
+ 		kfree(msg);
+ 	}
 -- 
 2.53.0
 
