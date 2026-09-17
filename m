@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ED9F4ABBAA;
-	Thu, 17 Sep 2026 15:55:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF15C3845AC;
+	Thu, 17 Sep 2026 15:55:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789660524; cv=none; b=Mo5xQNVWzKoYBwewlnNM0makgBMiHbCezOa62QUtaXFtdnxldJMdegvkjYGkcKto41BhgvYsR5RceqqfT9A3kLMN/hJBxPDn/BWVF9KfuRrKj4HwFTbzUZtK4899n74iVKbYHAS3KeqBxRUT6W+yqXSJK4o6V4JlhImaz9d4sSA=
+	t=1789660527; cv=none; b=qRL8Vc0NbwlS3Q+Uh6RF3aG10fxijcyRY5HZ+oi8Qq2ZS6fy2RZukphLx1kjGG+DEs5/22VwC/T9parVEA++jZs6PjEsVzDQu4n79yqTgdiapnPBoOmFcp9hYNUVDk5EXbJMzBTpFnTZLiG7VXNKPEpqwGPni9R++ExUcaJOu4g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789660524; c=relaxed/simple;
-	bh=4D5H1SFxafWXNqD7srnrqW4jG94ludvG/3qERsWRxgE=;
+	s=arc-20240116; t=1789660527; c=relaxed/simple;
+	bh=OTfK4bGfToizMhjRkzGUvsLk+d9hS+Ewl+GrM75LMJw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k0HJhCZWMrk+D2gp2aeLZceCqsjiQcJoN2ijoumRZvYwO3AIwybDfFtuWfwd+jMdtcMu/UlZM2V8c/yHdWFd9pRo8NJRuiGrXWGbrjRNUgg1SRyw8WDR0km1//wHdKeLREQxvGJEEJqHZSxqr2TLFfF86CJq3qOCAg/9vSzkLxM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kIjn2+un; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FDnwQTXQeJELmIUX/oH4J6PgBP0Q8g7heWbMTvAwSgBXtYqPqaPvNfdF5cltXiSC9GVpW4hjdX/FwDR4KdCtw17RCxs9mjw0/+gampkh2ZlCGZuqmxVoV2d0P7FtxNzGkltL8qAWiE74Z9uZ7KacrKRv70UW51XoIpJMMvIYOaU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XKLyiqNG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kIjn2+un"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4238C1F00893;
-	Thu, 17 Sep 2026 15:55:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XKLyiqNG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3321A1F0089A;
+	Thu, 17 Sep 2026 15:55:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789660522;
-	bh=RRF/gmNmH48dHG+/nTd7p0YIJY7sG1q2ewYoBf3sua4=;
+	s=korg; t=1789660525;
+	bh=ahyR9ySvXkNiYZwYZ3dtR/Rr4wPaHRbEA4lNme4c7VU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kIjn2+unJWKOvIuwiAaJyAxfUbY286brt96uiv8nEYFLid6w567hveD82eMxJ6lT7
-	 GlumInHfAtnfsF4iK/4ccYFu1aRQxXxdoM6CDYWNrZVUuLGU4c3VA5nQPWjXk+AH6u
-	 8eF8/ZmcshdqLOnME8qJmI69YK/T2jDSujN4IwIo=
+	b=XKLyiqNG0AX+g7/k/aWH5I1qYTyxyF5ST8YNUbGcDV5Yo84tLSRxmrszyWE0RMemV
+	 UllosPuXzDw15XxkZScxVAPqnFaUmIhf1jqEltzd7HzfulBuHDUu7fHCayaPnVW4iX
+	 GUaMA2K0h4S9mfsTtGsaKA/5RbiMp4BDgMi1Lv8c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Holger Dengler <dengler@linux.ibm.com>,
 	Heiko Carstens <hca@linux.ibm.com>,
 	Vasily Gorbik <gor@linux.ibm.com>
-Subject: [PATCH 7.2 581/733] s390/crypto: Fix wrong return code to engine in asynch callbacks
-Date: Thu, 17 Sep 2026 16:14:49 +0100
-Message-ID: <20260917151406.876450015@linuxfoundation.org>
+Subject: [PATCH 7.2 582/733] s390/crypto: Map EBUSY to EIO when key conversion fails repeatedly
+Date: Thu, 17 Sep 2026 16:14:50 +0100
+Message-ID: <20260917151406.902056554@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -54,20 +54,16 @@ Content-Transfer-Encoding: 8bit
 
 From: Harald Freudenberger <freude@linux.ibm.com>
 
-commit ac1481320110b803ab9b79ab4d2ca11a74fc05f2 upstream.
+commit 7a08507ea5b4d06ad8d269287913573f34467565 upstream.
 
-When crypto_finalize_hash_request() or
-crypto_finalize_skcipher_request() explicitly completes a request, the
-do_one_request callback must return 0 to indicate successful
-handling. Returning a negative error code causes the crypto engine to
-assume the driver failed to take ownership and triggers a second
-completion via crypto_request_complete(), resulting in a double
-completion. This pattern occurs in paes_s390.c 4 times and once in
-phmac_s390.c.
+When hardware persistently returns -EBUSY after exhausting retries,
+the error propagates to crypto_finalize_*_request(). The crypto API's
+completion wrapper treats -EBUSY as a queueing status and swallows it,
+preventing the completion callback from firing. This causes callers
+using crypto_wait_req() to block indefinitely.
 
-Fixed in phmac_do_one_request() and all four paes do_one_request
-callbacks (ecb, cbc, ctr, xts) by returning 0 after explicit
-finalization instead of propagating the error code.
+Translate persistent -EBUSY to -EIO after retry exhaustion to ensure
+proper error propagation and callback invocation.
 
 Fixes: 6cd87cb5ef6c ("s390/crypto: Rework protected key AES for true asynch support")
 Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
@@ -77,58 +73,35 @@ Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/crypto/paes_s390.c  |    8 ++++----
- arch/s390/crypto/phmac_s390.c |    2 +-
- 2 files changed, 5 insertions(+), 5 deletions(-)
+ arch/s390/crypto/paes_s390.c  |    4 ++++
+ arch/s390/crypto/phmac_s390.c |    4 ++++
+ 2 files changed, 8 insertions(+)
 
 --- a/arch/s390/crypto/paes_s390.c
 +++ b/arch/s390/crypto/paes_s390.c
-@@ -568,7 +568,7 @@ static int ecb_paes_do_one_request(struc
- 	atomic_dec(&ctx->via_engine_ctr);
- 	crypto_finalize_skcipher_request(engine, req, rc);
- 	local_bh_enable();
--	return rc;
-+	return 0;
- }
+@@ -220,6 +220,10 @@ static inline int convert_key(const u8 *
+ 				      xflags);
+ 	}
  
- static struct skcipher_engine_alg ecb_paes_alg = {
-@@ -835,7 +835,7 @@ static int cbc_paes_do_one_request(struc
- 	atomic_dec(&ctx->via_engine_ctr);
- 	crypto_finalize_skcipher_request(engine, req, rc);
- 	local_bh_enable();
--	return rc;
-+	return 0;
- }
- 
- static struct skcipher_engine_alg cbc_paes_alg = {
-@@ -1145,7 +1145,7 @@ static int ctr_paes_do_one_request(struc
- 	atomic_dec(&ctx->via_engine_ctr);
- 	crypto_finalize_skcipher_request(engine, req, rc);
- 	local_bh_enable();
--	return rc;
-+	return 0;
- }
- 
- static struct skcipher_engine_alg ctr_paes_alg = {
-@@ -1589,7 +1589,7 @@ static int xts_paes_do_one_request(struc
- 	atomic_dec(&ctx->via_engine_ctr);
- 	crypto_finalize_skcipher_request(engine, req, rc);
- 	local_bh_enable();
--	return rc;
-+	return 0;
- }
- 
- static struct skcipher_engine_alg xts_paes_alg = {
++	/* But finally map -EBUSY to -EIO to indicate an IO failure */
++	if (rc == -EBUSY)
++		rc = -EIO;
++
+ out:
+ 	pr_debug("rc=%d\n", rc);
+ 	return rc;
 --- a/arch/s390/crypto/phmac_s390.c
 +++ b/arch/s390/crypto/phmac_s390.c
-@@ -945,7 +945,7 @@ out:
- 	atomic_dec(&tfm_ctx->via_engine_ctr);
- 	crypto_finalize_hash_request(engine, req, rc);
- 	local_bh_enable();
--	return rc;
-+	return 0;
- }
+@@ -341,6 +341,10 @@ static inline int convert_key(const u8 *
+ 				      xflags);
+ 	}
  
- #define S390_ASYNC_PHMAC_ALG(x)						\
++	/* But finally map -EBUSY to -EIO to indicate an IO failure */
++	if (rc == -EBUSY)
++		rc = -EIO;
++
+ out:
+ 	pr_debug("rc=%d\n", rc);
+ 	return rc;
 
 
