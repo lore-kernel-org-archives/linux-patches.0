@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25CBD4B44AD;
-	Thu, 17 Sep 2026 15:28:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9808B4848A3;
+	Thu, 17 Sep 2026 15:28:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789658931; cv=none; b=N3+/++YMnuxFNRqOEfudBqdEZIM36y07xnrIZTEfsAY26+HK6H/An25oxYgOrE4wGmyG6xN7qzWa+UITP3SZ3nfUXGvtdIzQt2dDEuNa/s0qBcj+NYSUMwHLZ19re9gf4NBN1RMNHF9EPDvKrrx2U9wzpm+3IFo8oi8lYnamx3g=
+	t=1789658933; cv=none; b=FamsGV75kX8P7eG47+/+UfMxecLqUGRJWrVkXGbSeicWwwIYgnCE8j63k6+3z/AcfrzL6rxfOwY5E3ED3aOOj8mqvrBKU4tz6kE4MupFMUk1yCkJJTJCX7sy1Fx/eJGN0DfewdnGvvi5xphMQDpbz5eeKb0Vr91Iawc3Q1Xwkis=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789658931; c=relaxed/simple;
-	bh=JSLf55rCK7wEkPbuyljMIahRJeX40srF/ak01CZX7Ag=;
+	s=arc-20240116; t=1789658933; c=relaxed/simple;
+	bh=reQSbWJWfM5p32z3jVqjPwb58zG0gDWYDOd2h3hD88s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k/z3hJoVFL3ruVBa7dgT0DWL+U0JFf+FwHxczICHXASeTa2AfZ2oAEwJzfBeGc2QT3sa52jeJciGYwyZKWKAJG2MXZUQCQzVDq5TM6uNymAFlcUiNBG+CY9HwL6uT8TiETx0Z+ilIdx7SltDK5b4oboPBwXqmsE/CP7piZ87HL4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E42vKzQg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=o2Xd4TNBxJy3te+YxXK6nh6F8KhFoaZp3W2KCTCFB7ElmL5MMuuAh49yU3k7JRmLI2VLDlHOnu5AVeWRWOkMlzBqrDLgKQSluXx0fkIljBCf+iu9nv540tCa7hwWcuyDEED3wIjec0U0kfsPiLMjAi3pycA26gQCJOXimp2uL5s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xSw7kjCW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E42vKzQg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8C7F1F00899;
-	Thu, 17 Sep 2026 15:28:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xSw7kjCW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACF8F1F00893;
+	Thu, 17 Sep 2026 15:28:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789658922;
-	bh=qh57qnLi0/K/rjuHMk5z+a/Wp/X7y73/x87r7XM9OIs=;
+	s=korg; t=1789658925;
+	bh=K7hosKO4M6batmdgQ8AYG6EWXYdbyUmZNc7DAFZ+4ho=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=E42vKzQg4xNq6ZUxD1hibzNYi8y7/+hndkFJGzzlR2XH9/RGXvwd5oQ/v3u0vJ3im
-	 05mMXjDcXaJF7V1eIQX3iHwmfHF3O18+6l/E+DO5D3mg1fu3UrG3ZTsTQ9ox0O7KU3
-	 /B+qlXkjiJzLpL/uK9XgDzAwZLTYXgJQiUbLAlj0=
+	b=xSw7kjCWcfYnx4K8mjDTcTl83KWOk5EuiCUlf2ghOH2esSI2wWiEyE4t/yN13kSTK
+	 xXV/yIP89onPK4bA6LlcGJ4MpKQsrZTQ688+SSLi2SoapdUQz6YmmULYJ63nHcVK1e
+	 DMB+0v2HVoc8AkwUSz0TUWRxRKoQ7EtZ1zqxMaKY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+2442951a6abb004df963@syzkaller.appspotmail.com,
-	Slawomir Stepien <sst@poczta.fm>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
+	Colin Ian King <colin.i.king@gmail.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 036/733] drm/cirrus-qemu: Validate BAR0 size during probe
-Date: Thu, 17 Sep 2026 16:05:44 +0100
-Message-ID: <20260917151351.641905625@linuxfoundation.org>
+Subject: [PATCH 7.2 078/733] OPP: of: Fix potential multiplication overflow when calculating freq
+Date: Thu, 17 Sep 2026 16:06:26 +0100
+Message-ID: <20260917151352.828132974@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -52,72 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Slawomir Stepien <sst@poczta.fm>
+From: Colin Ian King <colin.i.king@gmail.com>
 
-[ Upstream commit 92312d333bf700798f92f30406c721bce87506f3 ]
+[ Upstream commit e11811a552252740bd396ec38378e9570ee16578 ]
 
-The `cirrus-qemu` driver relies on `CIRRUS_VRAM_SIZE` (4 MB) to validate
-framebuffer sizes. However, during PCI probe, the driver mapped BAR0
-without verifying that its size matches `CIRRUS_VRAM_SIZE`.
+The multiplication be32_to_cpup(val++) * 1000 is performed using 32 bit
+unsigned integers and hence uses a 32 bit multiplication; this will
+overflow if be32_to_cpup(val++) is greater than 4294967 (which is
+very unlikely at present). The result is assigned to an unsigned long
+(which is a 64 bit value on 64 bit systems), so fix this potential
+overflow by casting the first operand of the multiplication to
+an unsigned int.
 
-If a PCI device with a BAR0 smaller than 4 MB is bound to the driver, the
-mapped VRAM will be smaller than expected. Because validation checks assume
-4 MB VRAM, framebuffers larger than the mapped memory can be created.
+Fixes: b496dfbc94ab ("PM / OPP: Initialize OPP table from device tree")
 
-When the display plane is updated (e.g. during release),
-`cirrus_primary_plane_helper_atomic_update()` copies the framebuffer to
-VRAM using `drm_fb_memcpy()`. Writing past the end of the mapped I/O memory
-causes a supervisor write page fault:
-
-BUG: unable to handle page fault for address: ffffc9000389c000
-...
-RIP: 0010:memcpy_toio+0x7c/0xe0 arch/x86/lib/iomem.c:110
-...
-Call Trace:
- <TASK>
- iosys_map_memcpy_to include/linux/iosys-map.h:285 [inline]
- drm_fb_memcpy+0x325/0x5d0 drivers/gpu/drm/drm_format_helper.c:442
- cirrus_primary_plane_helper_atomic_update+0x98a/0xb00
- drivers/gpu/drm/tiny/cirrus-qemu.c:358
- drm_atomic_helper_commit_planes+0x626/0xea0
- drivers/gpu/drm/drm_atomic_helper.c:3038
- drm_atomic_helper_commit_tail+0x60/0x510
- drivers/gpu/drm/drm_atomic_helper.c:1989
- commit_tail+0x2b1/0x3c0 drivers/gpu/drm/drm_atomic_helper.c:2074
- drm_atomic_helper_commit+0xa77/0xb10
- drivers/gpu/drm/drm_atomic_helper.c:2312
-
-Fix this by validating in `cirrus_pci_probe()` that the PCI BAR0 resource
-is not less than `CIRRUS_VRAM_SIZE`, returning `-ENODEV` if it is less.
-
-Fixes: ab3e023b1b4c ("drm/cirrus: rewrite and modernize driver.")
-Assisted-by: Gemini:gemini-3.6-flash Gemini:gemini-3.1-pro-preview syzbot
-Reported-by: syzbot+2442951a6abb004df963@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=2442951a6abb004df963
-Link: https://syzkaller.appspot.com/ai_job?id=ba262a3a-bccf-4ad8-a1b0-583c55d34fd6
-Signed-off-by: Slawomir Stepien <sst@poczta.fm>
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://patch.msgid.link/20260825120729.493611-1-sst@poczta.fm
+Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/tiny/cirrus-qemu.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/opp/of.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/tiny/cirrus-qemu.c b/drivers/gpu/drm/tiny/cirrus-qemu.c
-index 075221b431d37..3bf23fcf65749 100644
---- a/drivers/gpu/drm/tiny/cirrus-qemu.c
-+++ b/drivers/gpu/drm/tiny/cirrus-qemu.c
-@@ -582,6 +582,9 @@ static int cirrus_pci_probe(struct pci_dev *pdev,
- 	struct cirrus_device *cirrus;
- 	int ret;
+diff --git a/drivers/opp/of.c b/drivers/opp/of.c
+index c02e20632fa64..9c4fd1f0e944a 100644
+--- a/drivers/opp/of.c
++++ b/drivers/opp/of.c
+@@ -1039,7 +1039,7 @@ static int _of_add_opp_table_v1(struct device *dev, struct opp_table *opp_table)
  
-+	if (pci_resource_len(pdev, 0) < CIRRUS_VRAM_SIZE)
-+		return -ENODEV;
-+
- 	ret = aperture_remove_conflicting_pci_devices(pdev, cirrus_driver.name);
- 	if (ret)
- 		return ret;
+ 	val = prop->value;
+ 	while (nr) {
+-		unsigned long freq = be32_to_cpup(val++) * 1000;
++		unsigned long freq = (unsigned long)be32_to_cpup(val++) * 1000;
+ 		unsigned long volt = be32_to_cpup(val++);
+ 		struct dev_pm_opp_data data = {
+ 			.freq = freq,
 -- 
 2.53.0
 
