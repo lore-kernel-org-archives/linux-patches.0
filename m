@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FB0A4E4C4F;
-	Thu, 17 Sep 2026 15:35:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38F4F4CDDFF;
+	Thu, 17 Sep 2026 15:35:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659317; cv=none; b=SW6ompb9SlTKN0zmDZBnNX6oQfekWWEunxjYt4xnVug7hVe8uF0el3WT64NuMTcC2zWsJK3mWYofedBHXiAH6uI7h5viIxUmCmaS7S3+176Teau53bPVaAQICLxS14dM3qm1hc8t6qCivsVLjNyOAZRw9SA8K2hWhyhbaI+TjyE=
+	t=1789659319; cv=none; b=P/ky9fb82d1OuiZdbEG6VqzI4zSjOSMGyt6AJ+zaMVMplqqnhPMtpD4x4U40tylMiOHA1lHYQukt3AAkK0hd0lhwHIO5RgyjSTSVjPQsd3XWFtZ3la2P8As8fK90sthgA0r/tHHgyjVnWoLZhDLgPgqZCny7oG1x9sqn89TWkj8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659317; c=relaxed/simple;
-	bh=xsAlgo6iviRktR49IKSLA/HbWePARbhuV2grGFbFY24=;
+	s=arc-20240116; t=1789659319; c=relaxed/simple;
+	bh=dxJUvVDPQh7U4ZtxhxKVBuDxeGA407G6P/jlu9PC9pU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oBQ/D4FPEGjzSjSE8Wv1Pr0jKpv483b9slE4LZ8grNXe1v67zSz/2OKgugNW3irAN8yc3O74FoWA5mcc+f+vXCCPA4eUkPCxuP/weWCK6sNy35gY2Hq/JMzxH89/+Zbr+XUgjAKKxuUj8A6Nk2ibjeq+AFnxjCbS8opbdo2IaPw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HGk/lAK9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tYjHSzLyqsRij55WFkWvuOx47+KdPVBpBiE4nTMAdQgDJpaV8dmgSspkmCspv+fQRC5pwCBGog6AxDEnNDBA/fSqDh9rwLiDLje4eofqUergLAGbLRY3oqAltrydaSPHpkKqHjDYHhK7VCUYLPjlBnsoE+8Q1cwjCh1ZoGtE3Dw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ll+VuT7z; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HGk/lAK9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA6931F00899;
-	Thu, 17 Sep 2026 15:35:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ll+VuT7z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 952861F0089A;
+	Thu, 17 Sep 2026 15:35:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659309;
-	bh=ZEaWhcK+hxHORQDmByCJnkvKGw8VLzcz6ZdTjf93drw=;
+	s=korg; t=1789659312;
+	bh=y72zT/eL0J+DjrxEL852ti1IEfmEo0X/827QePar1xg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HGk/lAK985XYR6rchwswwSe2DhVvctCHR49anTcmfQply9YnpNAVfl+HDh+a/d2mk
-	 swcTFlsztOnNBvzWtiJEtspSp5iY/bhWxieoyvljGWgUrn788nEzSIWUCGdRgIio6+
-	 TnoAGdKpNY1UeHTW3PY1OOz9g9fiVOxBtOK/fiYs=
+	b=ll+VuT7zrwV6Y4yaUh0U7ylPrq9AIikqLoKJlnmv5Qk1EIi3LxMULamhGGhsRNACq
+	 Of/vgYM5y2/cYm0oO82kv/MAk9OlOaCTPUBEVjSv6mCbiob69QRVFDpkA8zMBoOQEV
+	 vY7iDuQKJRNmiB1fx06hI8GQZCav6YUqrrt4MUG4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Allison Henderson <achender@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Venkat Rao Bagalkote <venkat88@linux.ibm.com>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Amit Machhiwal <amachhiw@linux.ibm.com>,
+	Shrikanth Hegde <sshegde@linux.ibm.com>,
+	"Mukesh Kumar Chaurasiya (IBM)" <mkchauras@gmail.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 214/733] net/rds: dont let rds_conn_shutdown() consume a concurrent drop
-Date: Thu, 17 Sep 2026 16:08:42 +0100
-Message-ID: <20260917151356.528280848@linuxfoundation.org>
+Subject: [PATCH 7.2 215/733] powerpc: Dont drop _TIF_RESTOREALL on syscall restart
+Date: Thu, 17 Sep 2026 16:08:43 +0100
+Message-ID: <20260917151356.555010575@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -51,158 +55,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Allison Henderson <achender@kernel.org>
+From: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
 
-[ Upstream commit 260c6308fe2e19ad519389d44d582e292aecc3af ]
+[ Upstream commit c7585b8e99ad97a0f5dd21e45c90a33aeab0d92b ]
 
-rds_conn_shutdown() finishes by moving the path from
-RDS_CONN_DISCONNECTING to RDS_CONN_DOWN, and also accepts
-RDS_CONN_ERROR as the starting state of that final transition, so that
-a FIN processed in softirq context during the teardown does not derail
-the shutdown into a noisy error path.
+So the syscall return sequence is as follows:
+A syscall return to userspace is prepared and then a short asm sequence
+that actually does the RFI. Note that this asm range is restartable i.e.
+EE is still on, so an interrupt (e.g. decrementer or external interrupt)
+can hit while SRR/GPRs are being loaded. This is defined via:
 
-But consuming that RDS_CONN_ERROR also consumes the shutdown pass that
-came with it: rds_conn_path_drop() sets RDS_CONN_ERROR and then queues
-cp_down_w, and a pass that starts on a path already in RDS_CONN_DOWN
-is a no-op.  For the FIN case that is harmless - the socket the FIN
-arrived on is the very socket the teardown just released.  It is not
-harmless for a dropper that attached something to the path first.
+RESTART_TABLE(.Lsyscall_rst_start, .Lsyscall_rst_end, syscall_restart)
 
-rds_tcp_accept_one() is such a dropper.  Its path claim in
-rds_tcp_accept_one_path() transitions RDS_CONN_DOWN ->
-RDS_CONN_CONNECTING, and a concurrent drop - a FIN on a previous
-socket in softirq context, an administrative reset - can put the path
-into RDS_CONN_ERROR between that claim and the state check that
-follows, which accepts RDS_CONN_ERROR.  The accept then installs the
-freshly accepted socket with rds_tcp_set_callbacks() while the queued
-teardown - which sampled tc->t_sock before this socket existed - is
-still running.  rds_connect_path_complete() fails its transition to
-RDS_CONN_UP and drops the path again, queueing the pass that should
-reap the socket it just installed.  If the in-flight shutdown's final
-transition consumes that drop's RDS_CONN_ERROR, the queued pass finds
-the path in RDS_CONN_DOWN and does nothing.  The installed socket is
-never torn down: it sits established with its callbacks armed and its
-rds_tcp_connection on rds_tcp_tc_list, the peer sees a connection that
-nothing ever reads, and the path is wedged in RDS_CONN_DOWN until some
-later event drops it again.  Reproduced with widened race windows as
-an ever-growing receive queue on a socket owned by a path stuck in
-RDS_CONN_DOWN, with the peer's send path wedged behind it.
+This restart table then sends us to syscall_restart rather than resuming
+in the middle of the RFI. The same stub is also used if irq_happened
+already has a pending bit (soft-masked irq that has not been replayed
+yet (PowerPC special case of local_irq_disable())).
 
-Make the final transition only DISCONNECTING -> DOWN.  If it fails
-because the path is in RDS_CONN_ERROR, a drop raced the teardown:
-cancel the reconnect timer and clear RDS_RECONNECT_PENDING - the one
-piece of the skipped tail that must not be left behind - and return,
-letting the pass the drop queued finish the job: it tears down
-whatever attached to the path in the meantime, completes the
-transition to RDS_CONN_DOWN, and re-arms the reconnect from its own
-tail.
+Here is a bit of a flow of sequence of code to visualize:
+  syscall_exit_prepare
+      decide full-GPR restore (_TIF_RESTOREALL) for signal,
+      rt_sigreturn or syscall trace
+      save that in regs->exit_result and return it in r3
+           |
+           v
+  .Lsyscall_rst_start .. _end     EE still on
+      irq_happened set or interrupt in this range?
+           | no                         | yes
+           v                            v
+      cmpdi r3,0                  syscall_exit_restart
+      restore all / zero            replay irq, try exit again
+      volatiles; RFI                must return flags in r3
+                                    again for the same cmpdi
 
-The timer quiesce in that branch matters because the racing drop does
-not always queue that pass: rds_conn_path_drop() returns without
-queueing when a destroy is pending - exactly the situation during a
-netns teardown or module unload, when a FIN on the dying socket is
-processed while rds_conn_path_destroy() flushes cp_down_w.  If the
-flushed pass is the one that takes this return, no later pass exists,
-and rds_conn_path_destroy() would find cp_conn_w still armed
-(WARN_ON) and then free a path whose reconnect timer can still fire.
-With the cancel in the branch, every exit of a shutdown pass leaves
-the timer quiesced no matter which pass completes the transition.
+Now r3 after prepare is the flags word, not the actual syscall return. A nested
+interrupt clobbers it, so the restart stub reloads RESULT into r3 and the
+C handler (syscall_exit_restart()) should put the flags back (because later asm
+checks whether r3 returned from C has _TIF_RESTOREALL set or not):
+	cmpdi r3, 0
+	bne	.Lsyscall_restore_regs
 
-The FIN case keeps making progress, one pass later and still without
-noisy logging.  Any other state keeps today's rds_conn_path_error()
-handling; no current cp_state writer can leave a DISCONNECTING path
-in anything but RDS_CONN_ERROR (every other writer is a cmpxchg from
-a non-DISCONNECTING state), so that branch is defensive.
+Note that syscall_exit_restart() already ORs any new _TIF_RESTOREALL into
+exit_result, but then it only returns the new sample and not the full
+regs->exit_result.
 
-On kernels without the preceding patches the same hazard exists with
-the sample-based quiesce; the fix applies there equally.
+That sample could be often 0 even when restore-all is still required:
 
-Fixes: e97656d03ca0 ("rds: tcp: allow progress of rds_conn_shutdown if the rds_connection is marked ERROR by an intervening FIN")
-Signed-off-by: Allison Henderson <achender@kernel.org>
-Link: https://patch.msgid.link/20260828223921.202913-8-achender@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+  - rt_sigreturn / syscall trace set the bit in prepare's local
+    ret and in exit_result. They never set exit_flags, which is
+    what restart samples.
+
+  - a signal does set exit_flags but restart clears it. A
+    second pass through the stub then returns 0 while
+    exit_result still has the bit.
+
+The asm as mentioned earlier then treats r3==0 as the fast path and
+zeros r0/r4-r12. That means the userspace that needed the full register
+set could SIGSEGVs, (which could happen often in ld64.so.2 like while
+doing a parallel kernel build as reported by Venkat).
+
+So we should instead return the accumulated exit_result, like how we do
+in interrupt_exit_user_restart(). Note that prior to this commit
+263e5159e00a ("powerpc: Fix exit_flags field placement in pt_regs for ptrace")
+we were returning regs->exit_result from syscall_exit_restart(), but
+this commit changed that behaviour.
+
+Fixes: 263e5159e00a ("powerpc: Fix exit_flags field placement in pt_regs for ptrace")
+Reported-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
+Closes: https://lore.kernel.org/all/75419f88-eab9-444b-bf97-28a9765819ad@linux.ibm.com/
+Signed-off-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Tested-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+Tested-by: Shrikanth Hegde <sshegde@linux.ibm.com>
+Tested-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
+Reviewed-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+Reviewed-by: Shrikanth Hegde <sshegde@linux.ibm.com>
+Reviewed-by: Mukesh Kumar Chaurasiya (IBM) <mkchauras@gmail.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/10c86c909f870d90b3094f76b692b44ebe9caeac.1787976185.git.ritesh.list@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rds/connection.c | 43 ++++++++++++++++++++++++++++++++-----------
- net/rds/tcp.c        |  9 ++++++---
- 2 files changed, 38 insertions(+), 14 deletions(-)
+ arch/powerpc/kernel/interrupt.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/rds/connection.c b/net/rds/connection.c
-index fbbac55a0e818..b6c4beb50eaf0 100644
---- a/net/rds/connection.c
-+++ b/net/rds/connection.c
-@@ -447,19 +447,40 @@ void rds_conn_shutdown(struct rds_conn_path *cp)
- 		wake_up_all(&cp->cp_waitq);
+diff --git a/arch/powerpc/kernel/interrupt.c b/arch/powerpc/kernel/interrupt.c
+index 5b88bf72786c7..55f9c0c9922ac 100644
+--- a/arch/powerpc/kernel/interrupt.c
++++ b/arch/powerpc/kernel/interrupt.c
+@@ -175,7 +175,7 @@ notrace unsigned long syscall_exit_restart(unsigned long r3, struct pt_regs *reg
+ 	current_thread_info()->exit_flags &= ~_TIF_RESTOREALL;
+ 	regs->exit_result |= ret;
  
- 		if (!rds_conn_path_transition(cp, RDS_CONN_DISCONNECTING,
--					      RDS_CONN_DOWN) &&
--		    !rds_conn_path_transition(cp, RDS_CONN_ERROR,
- 					      RDS_CONN_DOWN)) {
--			/* This can happen - eg when we're in the middle of tearing
--			 * down the connection, and someone unloads the rds module.
--			 * Quite reproducible with loopback connections.
--			 * Mostly harmless.
-+			/* The path was dropped again while we tore it
-+			 * down: by a socket state-change callback in
-+			 * irq context on receipt of a FIN, or by an
-+			 * accept that claimed the path just before a
-+			 * drop put it back to RDS_CONN_ERROR and then
-+			 * installed a fresh socket on it.  Unless a
-+			 * pending destroy suppressed it, the drop also
-+			 * queued another shutdown pass, and that pass
-+			 * must run, because it is what tears down
-+			 * whatever attached to the path after the
-+			 * transport shutdown above sampled its state.
-+			 * Consuming the RDS_CONN_ERROR here would turn
-+			 * that pass into a no-op: leave the state
-+			 * alone, and let the pass finish the job.
- 			 *
--			 * Note that this also happens with rds-tcp because
--			 * we could have triggered rds_conn_path_drop in irq
--			 * mode from rds_tcp_state change on the receipt of
--			 * a FIN, thus we need to recheck for RDS_CONN_ERROR
--			 * here.
-+			 * Quiesce the reconnect timer before bailing
-+			 * out, though.  When a pending destroy did
-+			 * suppress the queue, no later pass runs, and
-+			 * rds_conn_path_destroy() is about to flush
-+			 * cp_down_w and free the path: it must not
-+			 * find cp_conn_w still armed.  A successor
-+			 * pass, when there is one, re-arms the
-+			 * reconnect from its own tail.
-+			 */
-+			cancel_delayed_work_sync(&cp->cp_conn_w);
-+			clear_bit(RDS_RECONNECT_PENDING, &cp->cp_flags);
-+
-+			if (rds_conn_path_state(cp) == RDS_CONN_ERROR)
-+				return;
-+			/* No current cp_state writer leaves a
-+			 * DISCONNECTING path in any state but
-+			 * RDS_CONN_ERROR; report loudly if one ever
-+			 * does.
- 			 */
- 			rds_conn_path_error(cp, "%s: failed to transition "
- 					    "to state DOWN, current state "
-diff --git a/net/rds/tcp.c b/net/rds/tcp.c
-index 69c6d3145b5ab..774a71f88d375 100644
---- a/net/rds/tcp.c
-+++ b/net/rds/tcp.c
-@@ -165,9 +165,12 @@ void rds_tcp_reset_callbacks(struct socket *sock,
- 	 * other state - typically RDS_CONN_DISCONNECTING or
- 	 * RDS_CONN_ERROR with a shutdown in flight - is dropped
- 	 * instead.  That still replaces its state, with RDS_CONN_ERROR,
--	 * and queues one more shutdown pass, but rds_conn_shutdown()
--	 * accepts RDS_CONN_ERROR in its final transition to
--	 * RDS_CONN_DOWN, so the shutdown in flight completes normally.
-+	 * and, unless a pending destroy is about to reap the whole
-+	 * connection anyway, queues one more shutdown pass.  A shutdown
-+	 * already in flight leaves that RDS_CONN_ERROR alone when it
-+	 * finishes; the queued pass then completes the transition to
-+	 * RDS_CONN_DOWN and tears down anything that attached to the
-+	 * path in the meantime.
- 	 */
- 	if (!rds_conn_path_transition(cp, RDS_CONN_CONNECTING,
- 				      RDS_CONN_RESETTING) &&
+-	return ret;
++	return regs->exit_result;
+ }
+ #endif
+ 
 -- 
 2.53.0
 
