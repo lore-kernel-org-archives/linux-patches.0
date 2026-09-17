@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B1464E77F4;
-	Thu, 17 Sep 2026 16:57:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2440337B3FD;
+	Thu, 17 Sep 2026 16:57:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789664221; cv=none; b=Z9CHcTeeCSdTRVKNcrASMRlyFjsYr0/JAF6HQoRBkJLTNwasFOiDTzen8JjxEhxcU8dAMP3juPFPHFIolZ1bm2+rkboWiIhIbCvcp7UkZdlEXz1lmhMA1QMbJ5retSpFqCHwYSf3C+xXQiSoZj6vC0yLGwgCJadRsJQjBz89p7k=
+	t=1789664224; cv=none; b=uVeCOCHDbPH9HDufbFHMUHzNMjSQpFmeJhiykJA8cLgHAD6GEBtDiBc+yaQZT4lp8P6kRsXeJZfRS/ZO+e8ShpZfuB83lF2fCLKwZ1SCBjWydCJ0YM4dzJcCrFslxWD4SZo3ga3l+DkdqvlNNz+4BWy1kW0L4fr7dkIAzo51BGk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789664221; c=relaxed/simple;
-	bh=neR+vfEH700yNzwNJuvGB45U21Pa1VlaBCEpS1MA1w8=;
+	s=arc-20240116; t=1789664224; c=relaxed/simple;
+	bh=OEbbIL8V7CgD3UryX1n+qJwwKby/oue6UJ2PVnID5d8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YBKdD4TdiPfG4hPk3FhsUazwZuvjO8LjlwTVeeHuCiADZ5UKzXJcLewTTq/9hIFauMF/effW/AYp6AqvMF9qAPDUp5HRAwwMATPbpa5SXKQxPQ+KDqGiUxw1IgFZGYNBsCkDWn18shOWAcvVhr7RfvE+Wo5XiVDH0cMr0cO4QO0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TDZ9si1w; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Q9D+csJ5FMOKHtEv9bMjNbcsVgegtXhz4k86DpcKIFVZzOI5s6KVayMemWnMurNte8FOEUR+QxW3JmymO/3kqhoMeCGxHdz7c/nxIICC8H3pu+9yo8bzVtMGPeT75cYETACTqBAZ6VGmi4oPiU0YhKKXufXmqp2DbQZyfSQmC/Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LcXUg8TX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TDZ9si1w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F25B1F000FF;
-	Thu, 17 Sep 2026 16:56:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LcXUg8TX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9781A1F000FF;
+	Thu, 17 Sep 2026 16:57:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789664220;
-	bh=gT4eZXiRpmW6XRKADkyvQS/0NxcojUAlsIm/qxAlr6A=;
+	s=korg; t=1789664223;
+	bh=sY1PzGTzMZVmtf7i7bGYyKqlyz6rtyP7dCHEg8n6O7U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TDZ9si1wgES2k1KGBGMTYRo/dHwpsi5gZQZkJ4XQehnMK+sEc0gQhuZ612GFedmxP
-	 HFMhnlH0MoMsuRWngr3dUDsZFFm9D5k/JwD5CQpmyo0UOCimJPW/KNIGfFR6aPl1jk
-	 ysgrsXOkcWcalLH08udfSlSnzymAc9ewCzq4Wl58=
+	b=LcXUg8TXkP2gkpNEwzbhM7rSmReMFo0HU+c/qv7ohwYE/RnZaNg/+05Oa+73jlJEU
+	 3+jVqr9CcUgqLSyD6XFVQSYubyOC3Il5Av7ffs1q353tLlsL9bbGb1HTvihqpOkYq0
+	 7CYvXxWgF2n6LSiJzkl3A0vPKaaBqKpUw2RZRIk8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	ZhengYuan Huang <gality369@gmail.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0251/1250] pinctrl: renesas: rzv2m: Use -ENOTSUPP instead of -EOPNOTSUPP
-Date: Thu, 17 Sep 2026 16:00:46 +0100
-Message-ID: <20260917151558.954473080@linuxfoundation.org>
+Subject: [PATCH 6.18 0293/1250] fs/ntfs3: validate index entry key bounds
+Date: Thu, 17 Sep 2026 16:01:28 +0100
+Message-ID: <20260917151600.067479523@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -52,70 +51,207 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+From: ZhengYuan Huang <gality369@gmail.com>
 
-[ Upstream commit 01f94d53947df35ba77cdb3992a4e3ef9d9dc1ad ]
+[ Upstream commit 98d6e5d9dc1d34dcffc61549617581a5fe1ef807 ]
 
-The pinctrl and GPIO core code make exceptions for the -ENOTSUPP error
-code. One such example is gpio_set_config_with_argument_optional(), which
-returns success when gpio_set_config_with_argument() returns -ENOTSUPP, but
-reports failure for all other error codes.
+[BUG]
+A malformed NTFS directory index entry can advertise a key_size larger
+than the bytes actually present in its NTFS_DE payload. Directory lookup
+then passes that malformed key to cmp_fnames(), which can read past the
+end of the kmalloc'ed index buffer.
 
-Returning -EOPNOTSUPP from the pinctrl driver on the unsupported pinctrl
-operation may lead to boot failures when pinctrl drivers implements
-struct gpio_chip::set_config, the system uses GPIO hogs, and the
-struct gpio_chip::set_config implementation returns -EOPNOTSUPP for the
-unsupported operations.
+BUG: KASAN: slab-out-of-bounds in fname_full_size fs/ntfs3/ntfs.h:590 [inline]
+BUG: KASAN: slab-out-of-bounds in cmp_fnames+0x1ea/0x230 fs/ntfs3/index.c:46
+Read of size 1 at addr ffff88801c313018 by task syz.6.3365/9279
 
-Currently, the driver does not implement struct gpio_chip::set_config().
-To avoid future failures, return -ENOTSUPP from
-rzv2m_pinctrl_pinconf_set().
+Call Trace:
+ __dump_stack lib/dump_stack.c:94 [inline]
+ dump_stack_lvl+0xbe/0x130 lib/dump_stack.c:120
+ print_address_description mm/kasan/report.c:378 [inline]
+ print_report+0xd1/0x650 mm/kasan/report.c:482
+ kasan_report+0xfb/0x140 mm/kasan/report.c:595
+ __asan_report_load1_noabort+0x14/0x30 mm/kasan/report_generic.c:378
+ fname_full_size fs/ntfs3/ntfs.h:590 [inline]
+ cmp_fnames+0x1ea/0x230 fs/ntfs3/index.c:46
+ hdr_find_e.isra.0+0x3ed/0x670 fs/ntfs3/index.c:762
+ indx_find+0x4b5/0x900 fs/ntfs3/index.c:1186
+ dir_search_u+0x2c0/0x460 fs/ntfs3/dir.c:254
+ ntfs_lookup+0x1cc/0x2a0 fs/ntfs3/namei.c:85
+ __lookup_slow+0x241/0x450 fs/namei.c:1816
+ lookup_slow fs/namei.c:1833 [inline]
+ walk_component+0x31c/0x570 fs/namei.c:2151
+ link_path_walk+0x592/0xd60 fs/namei.c:2519
+ path_lookupat+0x138/0x660 fs/namei.c:2675
+ filename_lookup+0x1f3/0x560 fs/namei.c:2705
+ filename_setxattr+0xad/0x1c0 fs/xattr.c:660
+ path_setxattrat+0x1d8/0x280 fs/xattr.c:713
+ __do_sys_lsetxattr fs/xattr.c:754 [inline]
+ __se_sys_lsetxattr fs/xattr.c:750 [inline]
+ __x64_sys_lsetxattr+0xd0/0x150 fs/xattr.c:750
+ ...
 
-rzv2m_pinctrl_pinconf_group_get() is used when dumping pinctrl
-configuration. pinconf_generic_dump_one(), which calls it, makes
-exceptions for the -EINVAL and -ENOTSUPP error codes. The documentation
-for struct pinconf_ops::pin_config_group_get states that it "should
-return -ENOTSUPP and -EINVAL using the same rules as pin_config_get()".
-The documentation for struct pinconf_ops::pin_config_get states:
+Allocated by task 9279:
+ kasan_save_stack+0x39/0x70 mm/kasan/common.c:56
+ kasan_save_track+0x14/0x40 mm/kasan/common.c:77
+ kasan_save_alloc_info+0x37/0x60 mm/kasan/generic.c:573
+ poison_kmalloc_redzone mm/kasan/common.c:400 [inline]
+ __kasan_kmalloc+0xc3/0xd0 mm/kasan/common.c:417
+ kasan_kmalloc include/linux/kasan.h:262 [inline]
+ __do_kmalloc_node mm/slub.c:5650 [inline]
+ __kmalloc_noprof+0x2bd/0x900 mm/slub.c:5662
+ kmalloc_noprof include/linux/slab.h:961 [inline]
+ indx_read+0x41d/0xad0 fs/ntfs3/index.c:1059
+ indx_find+0x447/0x900 fs/ntfs3/index.c:1179
+ dir_search_u+0x2c0/0x460 fs/ntfs3/dir.c:254
+ ntfs_lookup+0x1cc/0x2a0 fs/ntfs3/namei.c:85
+ __lookup_slow+0x241/0x450 fs/namei.c:1816
+ lookup_slow fs/namei.c:1833 [inline]
+ walk_component+0x31c/0x570 fs/namei.c:2151
+ link_path_walk+0x592/0xd60 fs/namei.c:2519
+ path_lookupat+0x138/0x660 fs/namei.c:2675
+ filename_lookup+0x1f3/0x560 fs/namei.c:2705
+ filename_setxattr+0xad/0x1c0 fs/xattr.c:660
+ path_setxattrat+0x1d8/0x280 fs/xattr.c:713
+ __do_sys_lsetxattr fs/xattr.c:754 [inline]
+ __se_sys_lsetxattr fs/xattr.c:750 [inline]
+ __x64_sys_lsetxattr+0xd0/0x150 fs/xattr.c:750
+ ...
 
-"get the config of a certain pin, if the requested config is not available
-on this controller this should return -ENOTSUPP and if it is available but
-disabled it should return -EINVAL".
+[CAUSE]
+The index-header validators only validated INDEX_HDR-level geometry.
+They did not walk each NTFS_DE to verify entry alignment, subnode
+layout, or that key_size fit inside the entry payload. They also
+allowed a last sentinel entry to carry a non-zero key_size.
 
-Return -ENOTSUPP for the unsupported pinctrl operation.
+[FIX]
+Walk every NTFS_DE in ntfs3's index-header validators and reject
+entries with invalid layout, mismatched subnode state, oversized
+key_size, or non-zero sentinel keys before lookup or log replay can
+consume them.
 
-Suggested-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://patch.msgid.link/20260522105717.1727837-1-claudiu.beznea@kernel.org
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Signed-off-by: ZhengYuan Huang <gality369@gmail.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/renesas/pinctrl-rzv2m.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/ntfs3/fslog.c | 26 ++++++++++++++++++++------
+ fs/ntfs3/index.c | 37 ++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 56 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/pinctrl/renesas/pinctrl-rzv2m.c b/drivers/pinctrl/renesas/pinctrl-rzv2m.c
-index dce68f93d2d57..e08f24d5a89f5 100644
---- a/drivers/pinctrl/renesas/pinctrl-rzv2m.c
-+++ b/drivers/pinctrl/renesas/pinctrl-rzv2m.c
-@@ -661,7 +661,7 @@ static int rzv2m_pinctrl_pinconf_set(struct pinctrl_dev *pctldev,
- 		}
+diff --git a/fs/ntfs3/fslog.c b/fs/ntfs3/fslog.c
+index 79d5ae5863b93..ae15c2fc48646 100644
+--- a/fs/ntfs3/fslog.c
++++ b/fs/ntfs3/fslog.c
+@@ -2641,11 +2641,12 @@ static int read_next_log_rec(struct ntfs_log *log, struct lcb *lcb, u64 *lsn)
  
- 		default:
--			return -EOPNOTSUPP;
-+			return -ENOTSUPP;
- 		}
+ bool check_index_header(const struct INDEX_HDR *hdr, size_t bytes)
+ {
++	const bool has_subnode = hdr_has_subnode(hdr);
+ 	__le16 mask;
+ 	u32 min_de, de_off, used, total;
+ 	const struct NTFS_DE *e;
+ 
+-	if (hdr_has_subnode(hdr)) {
++	if (has_subnode) {
+ 		min_de = sizeof(struct NTFS_DE) + sizeof(u64);
+ 		mask = NTFS_IE_HAS_SUBNODES;
+ 	} else {
+@@ -2662,20 +2663,33 @@ bool check_index_header(const struct INDEX_HDR *hdr, size_t bytes)
+ 		return false;
  	}
  
-@@ -710,7 +710,7 @@ static int rzv2m_pinctrl_pinconf_group_get(struct pinctrl_dev *pctldev,
+-	e = Add2Ptr(hdr, de_off);
++	e = (const struct NTFS_DE *)((const u8 *)hdr + de_off);
+ 	for (;;) {
+ 		u16 esize = le16_to_cpu(e->size);
+-		struct NTFS_DE *next = Add2Ptr(e, esize);
++		u16 key_size = le16_to_cpu(e->key_size);
++		u16 data_size;
  
- 		/* Check config matches previous pins */
- 		if (i && prev_config != *config)
--			return -EOPNOTSUPP;
-+			return -ENOTSUPP;
+-		if (esize < min_de || PtrOffset(hdr, next) > used ||
++		if (!IS_ALIGNED(esize, 8) || esize < min_de ||
+ 		    (e->flags & NTFS_IE_HAS_SUBNODES) != mask) {
+ 			return false;
+ 		}
  
- 		prev_config = *config;
+-		if (de_is_last(e))
++		if (size_add(de_off, esize) > used)
++			return false;
++
++		if (de_is_last(e)) {
++			if (key_size)
++				return false;
++
+ 			break;
++		}
++
++		data_size = esize - min_de;
++		if (key_size > data_size)
++			return false;
+ 
+-		e = next;
++		de_off += esize;
++		e = (const struct NTFS_DE *)((const u8 *)hdr + de_off);
  	}
+ 
+ 	return true;
+diff --git a/fs/ntfs3/index.c b/fs/ntfs3/index.c
+index a9c5dcc23a5ce..dd54c966babca 100644
+--- a/fs/ntfs3/index.c
++++ b/fs/ntfs3/index.c
+@@ -613,16 +613,51 @@ static const struct NTFS_DE *hdr_insert_head(struct INDEX_HDR *hdr,
+  */
+ static bool index_hdr_check(const struct INDEX_HDR *hdr, u32 bytes)
+ {
++	const bool has_subnode = hdr_has_subnode(hdr);
++	const u16 min_size = sizeof(struct NTFS_DE) +
++			     (has_subnode ? sizeof(u64) : 0);
+ 	u32 end = le32_to_cpu(hdr->used);
+ 	u32 tot = le32_to_cpu(hdr->total);
+ 	u32 off = le32_to_cpu(hdr->de_off);
++	const struct NTFS_DE *e;
+ 
+ 	if (!IS_ALIGNED(off, 8) || tot > bytes || end > tot ||
+-	    size_add(off, sizeof(struct NTFS_DE)) > end) {
++	    size_add(off, min_size) > end) {
+ 		/* incorrect index buffer. */
+ 		return false;
+ 	}
+ 
++	/* Ensure every key stays inside its entry before lookup walks it. */
++	e = (const struct NTFS_DE *)((const u8 *)hdr + off);
++	for (;;) {
++		u16 e_size = le16_to_cpu(e->size);
++		u16 key_size = le16_to_cpu(e->key_size);
++		u16 data_size;
++
++		if (!IS_ALIGNED(e_size, 8) || e_size < min_size ||
++		    de_has_vcn(e) != has_subnode) {
++			/* incorrect index entry. */
++			return false;
++		}
++
++		if (size_add(off, e_size) > end)
++			return false;
++
++		if (de_is_last(e)) {
++			if (key_size)
++				return false;
++
++			break;
++		}
++
++		data_size = e_size - min_size;
++		if (key_size > data_size)
++			return false;
++
++		off += e_size;
++		e = (const struct NTFS_DE *)((const u8 *)hdr + off);
++	}
++
+ 	return true;
+ }
+ 
 -- 
 2.53.0
 
