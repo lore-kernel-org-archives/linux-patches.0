@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11AB14078D3;
-	Thu, 17 Sep 2026 18:44:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BADF3AEF2D;
+	Thu, 17 Sep 2026 18:44:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789670661; cv=none; b=NhxX/9cKYYcz5KsXfx3fAAbvopYfdGsDlHh5L/LlRMqMihmkt6nI/dyB5uaclJsKLtINEfylo37YsODbMIJVF837eddwzb8269G0Z68F/N4GUTjWP9yluxTMFzOYYuPVDNwEp2cFHdb2LLzOjYC/M6E+m/8FdZj02Yu682ualb8=
+	t=1789670664; cv=none; b=CVt03vPpQcxUfM3iQT9vrKEyPMViJbYbXwYFvl6xR31nvEzpMDc1TfpGigumgg7FElAHsg5cz1HhjyknnzGM1matPmkuEGd0744fhFllZtZeKPLWiSsq5c2+3WS67XMF4lbH8FxbHR7jxdyBCHtZSk/46QTyzEFOLg59u3+dKcs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789670661; c=relaxed/simple;
-	bh=iLX65W4HRWk+rhIGtHUPKd3yxMyoKec8tgPpuKH9GYY=;
+	s=arc-20240116; t=1789670664; c=relaxed/simple;
+	bh=O3bwic78BNB2bccEZ7SCm0maxqLpx4DwxRNJssnTZQg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S20v0P+9xXT1ggkDP0HIRQefN+QZFmbouzQRhrXM/SD//wsIZX3iz01D18KUEXrkC9PgTbv/xX5Dm27kXH3OwJ0sXj/2ojvPkxs3gv5ytXCcIqtr2R/Y4ntq6Nzk54UHqRECUj3A+c0eccyBv8fawu7d5nl99OETc4dwXzh95RQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2U9br6c+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=opDlUNcoTCM3SfsTj/blHufX5GO2nH3PMzG4MZQhS2xN5D1Zqoi39F11IXieWLUZ3qrAZUNVmUYFByGh6+FoBwf0Ibl96yi52Pr4vDB1JUSzN58JGw2Ejxlqsm55xUmsQJvUx9vHQu12cXDkYhDwEeRNIERBep9Ti1ehGB8zgmE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OXDRxjVy; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2U9br6c+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 648981F000FF;
-	Thu, 17 Sep 2026 18:44:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OXDRxjVy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AE721F000FF;
+	Thu, 17 Sep 2026 18:44:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789670660;
-	bh=0EmtNnvMGmnT6Am77fFx3E4IzoiGN8Fvh2w9pzZaD+k=;
+	s=korg; t=1789670663;
+	bh=FrhX+NfepKj4l+Dt5eNYKvi3+aeDLZNhjawobN+eBPM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2U9br6c+xGuzouGlWScw5TvYYHHFGSZ4jJaiZ0zVMVtnWV1r3MFs0TuBX5ETZYEEv
-	 cA3DW6kLbxxWNLKVgPVEjgT2GCkTy9A11rf3N02JQfgSHVGqg9H8BF8cltFqneSq++
-	 SFmKjrHpLCL4jxk3oRkDGFiOzfuUKurp+I20R5vc=
+	b=OXDRxjVy6pT6dHwoS4M95aaEims+VWZ04p8wS3IO/iAu+8GBXA4jcmooKxRpkv0uO
+	 OwTwN8LXeJ0rcqyzNpkphjSWq4RFWvafJ7KOW9vvMbntPL6+0NEg/SO/UeOacs0F+/
+	 Awm43ZpjldZ3/Gu0VZzMlHPLsfvFFQFJq8urUDeI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0732/1102] ALSA: hda: Introduce auto cleanup macros for PM
-Date: Thu, 17 Sep 2026 16:11:15 +0100
-Message-ID: <20260917151558.755025365@linuxfoundation.org>
+Subject: [PATCH 6.12 0733/1102] ALSA: hda/common: Use cleanup macros for PM controls
+Date: Thu, 17 Sep 2026 16:11:16 +0100
+Message-ID: <20260917151558.782015111@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -52,75 +52,144 @@ Content-Transfer-Encoding: 8bit
 
 From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 5d8c9c987fbdd65677315198c2b1f35a440d7cdf ]
+[ Upstream commit 8dad6b3dac2794c52d63b2336138392eddc17936 ]
 
-The temporary power up/down of the codec via snd_hda_power_up() and
-_down() (or snd_hda_power_up_pm() and _down_pm()) is seen in various
-places.  This patch introduces simple auto-cleanup macros for those
-call patterns, so that the drivers don't have to call the
-corresponding power-down calls explicitly.
+The new macro CLASS(snd_hda_power_pm) can replace the manual
+snd_hda_power_up_pm() and _down() calls gracefully.
 
-Namely,
-	err = snd_hda_power_up(codec);
-	if (err < 0)
-		return err;
-	....
-	snd_power_down(codec);
+A part of the code in codec_exec_verb() is factored out to a function,
+so that the auto-cleanup can be well scoped.
 
-can drop the *_down() call by replacing with
-	CLASS(snd_hda_power, pm)(codec);
-	if (pm.err < 0)
-		return pm.err;
+Merely cleanups and no functional changes.
 
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20250827072916.31933-2-tiwai@suse.de
+Link: https://patch.msgid.link/20250827072916.31933-6-tiwai@suse.de
 Stable-dep-of: 728478874312 ("ALSA: hda: Report a change when only the channel status bytes move")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/sound/hda_codec.h | 30 ++++++++++++++++++++++++++++++
- 1 file changed, 30 insertions(+)
+ sound/pci/hda/hda_codec.c | 30 +++++++++++++++++++-----------
+ sound/pci/hda/hda_proc.c  |  4 +---
+ sound/pci/hda/hda_sysfs.c | 11 ++++-------
+ 3 files changed, 24 insertions(+), 21 deletions(-)
 
-diff --git a/include/sound/hda_codec.h b/include/sound/hda_codec.h
-index c1fe6290d04dc..908258fb23eaf 100644
---- a/include/sound/hda_codec.h
-+++ b/include/sound/hda_codec.h
-@@ -499,6 +499,36 @@ static inline bool hda_codec_need_resume(struct hda_codec *codec)
- 	return !codec->relaxed_resume && codec->jacktbl.used;
+diff --git a/sound/pci/hda/hda_codec.c b/sound/pci/hda/hda_codec.c
+index db2487cfd5da9..642e335ae14c1 100644
+--- a/sound/pci/hda/hda_codec.c
++++ b/sound/pci/hda/hda_codec.c
+@@ -31,6 +31,23 @@
+ #define codec_has_clkstop(codec) \
+ 	((codec)->core.power_caps & AC_PWRST_CLKSTOP)
+ 
++static int call_exec_verb(struct hda_bus *bus, struct hda_codec *codec,
++			  unsigned int cmd, unsigned int flags,
++			  unsigned int *res)
++{
++	int err;
++
++	CLASS(snd_hda_power_pm, pm)(codec);
++	mutex_lock(&bus->core.cmd_mutex);
++	if (flags & HDA_RW_NO_RESPONSE_FALLBACK)
++		bus->no_response_fallback = 1;
++	err = snd_hdac_bus_exec_verb_unlocked(&bus->core, codec->core.addr,
++					      cmd, res);
++	bus->no_response_fallback = 0;
++	mutex_unlock(&bus->core.cmd_mutex);
++	return err;
++}
++
+ /*
+  * Send and receive a verb - passed to exec_verb override for hdac_device
+  */
+@@ -45,15 +62,7 @@ static int codec_exec_verb(struct hdac_device *dev, unsigned int cmd,
+ 		return -1;
+ 
+  again:
+-	snd_hda_power_up_pm(codec);
+-	mutex_lock(&bus->core.cmd_mutex);
+-	if (flags & HDA_RW_NO_RESPONSE_FALLBACK)
+-		bus->no_response_fallback = 1;
+-	err = snd_hdac_bus_exec_verb_unlocked(&bus->core, codec->core.addr,
+-					      cmd, res);
+-	bus->no_response_fallback = 0;
+-	mutex_unlock(&bus->core.cmd_mutex);
+-	snd_hda_power_down_pm(codec);
++	err = call_exec_verb(bus, codec, cmd, flags, res);
+ 	if (!codec_in_pm(codec) && res && err == -EAGAIN) {
+ 		if (bus->response_reset) {
+ 			codec_dbg(codec,
+@@ -643,12 +652,11 @@ static void hda_jackpoll_work(struct work_struct *work)
+ 		return;
+ 
+ 	/* the power-up/down sequence triggers the runtime resume */
+-	snd_hda_power_up(codec);
++	CLASS(snd_hda_power, pm)(codec);
+ 	/* update jacks manually if polling is required, too */
+ 	snd_hda_jack_set_dirty_all(codec);
+ 	snd_hda_jack_poll_all(codec);
+ 	schedule_delayed_work(&codec->jackpoll_work, codec->jackpoll_interval);
+-	snd_hda_power_down(codec);
  }
  
-+/*
-+ * PM with auto-cleanup: call like CLASS(snd_hda_power, pm)(codec)
-+ * If the error handling is needed, refer pm.err.
-+ */
-+struct __hda_power_obj {
-+	struct hda_codec *codec;
-+	int err;
-+};
-+
-+static inline struct __hda_power_obj __snd_hda_power_up(struct hda_codec *codec)
-+{
-+	struct __hda_power_obj T = { .codec = codec };
-+	T.err = snd_hda_power_up(codec);
-+	return T;
-+}
-+
-+static inline struct __hda_power_obj __snd_hda_power_up_pm(struct hda_codec *codec)
-+{
-+	struct __hda_power_obj T = { .codec = codec };
-+	T.err = snd_hda_power_up_pm(codec);
-+	return T;
-+}
-+
-+DEFINE_CLASS(snd_hda_power, struct __hda_power_obj,
-+	     snd_hda_power_down((_T).codec), __snd_hda_power_up(codec),
-+	     struct hda_codec *codec)
-+DEFINE_CLASS(snd_hda_power_pm, struct __hda_power_obj,
-+	     snd_hda_power_down_pm((_T).codec), __snd_hda_power_up_pm(codec),
-+	     struct hda_codec *codec)
-+
- #ifdef CONFIG_SND_HDA_PATCH_LOADER
+ /* release all pincfg lists */
+diff --git a/sound/pci/hda/hda_proc.c b/sound/pci/hda/hda_proc.c
+index e8a4cf3c84d82..f7ad5a18c8797 100644
+--- a/sound/pci/hda/hda_proc.c
++++ b/sound/pci/hda/hda_proc.c
+@@ -782,7 +782,7 @@ static void print_codec_info(struct snd_info_entry *entry,
+ 	fg = codec->core.afg;
+ 	if (!fg)
+ 		return;
+-	snd_hda_power_up(codec);
++	CLASS(snd_hda_power, pm)(codec);
+ 	snd_iprintf(buffer, "Default PCM:\n");
+ 	print_pcm_caps(buffer, codec, fg);
+ 	snd_iprintf(buffer, "Default Amp-In caps: ");
+@@ -795,7 +795,6 @@ static void print_codec_info(struct snd_info_entry *entry,
+ 	nodes = snd_hda_get_sub_nodes(codec, fg, &nid);
+ 	if (! nid || nodes < 0) {
+ 		snd_iprintf(buffer, "Invalid AFG subtree\n");
+-		snd_hda_power_down(codec);
+ 		return;
+ 	}
+ 
+@@ -932,7 +931,6 @@ static void print_codec_info(struct snd_info_entry *entry,
+ 
+ 		kfree(conn);
+ 	}
+-	snd_hda_power_down(codec);
+ }
+ 
  /*
-  * patch firmware
+diff --git a/sound/pci/hda/hda_sysfs.c b/sound/pci/hda/hda_sysfs.c
+index 265fd47378931..250339b0df8b7 100644
+--- a/sound/pci/hda/hda_sysfs.c
++++ b/sound/pci/hda/hda_sysfs.c
+@@ -129,21 +129,18 @@ static int reconfig_codec(struct hda_codec *codec)
+ {
+ 	int err;
+ 
+-	snd_hda_power_up(codec);
++	CLASS(snd_hda_power, pm)(codec);
+ 	codec_info(codec, "hda-codec: reconfiguring\n");
+ 	err = snd_hda_codec_reset(codec);
+ 	if (err < 0) {
+ 		codec_err(codec,
+ 			   "The codec is being used, can't reconfigure.\n");
+-		goto error;
++		return err;
+ 	}
+ 	err = device_reprobe(hda_codec_dev(codec));
+ 	if (err < 0)
+-		goto error;
+-	err = snd_card_register(codec->card);
+- error:
+-	snd_hda_power_down(codec);
+-	return err;
++		return err;
++	return snd_card_register(codec->card);
+ }
+ 
+ /*
 -- 
 2.53.0
 
