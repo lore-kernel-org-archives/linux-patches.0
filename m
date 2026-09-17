@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E69E3438A8;
-	Thu, 17 Sep 2026 16:02:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FB484C10D7;
+	Thu, 17 Sep 2026 16:02:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789660972; cv=none; b=IUmWB2caAmY5XdLa7yC9uOtrTyYycUBF0xa56hXP35mF4ku65JGGLSeqQvhsozKlc8JhP5bcYAXE23VIAbRErzeo5VXitXEJ0UqlJW5ikAMWBpfogpy1pR4g9UmpzMdQDFdH25iU0Ra6VtQmPQ3NTakR2PztmlcpUohZ/28NK5Y=
+	t=1789660975; cv=none; b=OoyWDkS3qZGbqN7ZaV4efbXH0ixb5mO3itJ3JcS00b/+TrrS6Sxv5pxQKJJ2Dzm5awFBhqqKJ0QvlVUC5ma8+7hkLUKFZ+D3jP1reIIJERIVYnzjbKPPuwdZwF53AEhgXqX/c71s9qKAd/oB3bGSustcvXifV/6nD8r2x9T7LMc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789660972; c=relaxed/simple;
-	bh=pKxBBe47Hba+q748Ds8/cg1F9EOVR2KDRqVjNOfLRkY=;
+	s=arc-20240116; t=1789660975; c=relaxed/simple;
+	bh=H6aTNAx2K9i2jJ6+tCZLIMuq0s6xI1NPDH0O47VjyXk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JGnoWMfnH0tkXiDgOYs5VOu8aYa2cuyWCZi2xNZA2IIpf81JtizYADhZXx47eI1IWXS47R/GeqDBbPiy+i3ia72FC/d2AgfW0aqyASDsZTj97UvXk1wEdnEgbryGaNQKIRyIHR5lLmYBuwKx2BpngaAZLRZDrqxqORRGsq2LctA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e9sOd9LF; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oS4ih6+9mAEZlNMSsr9hMySsiR9qbAFBcS+kHlCmrATt5lE/CD6AGU3ODZfrS14neUxLQghDSu2msgZ3ucsXLA1U1o9xVOTMa2UGcviJ8GU8q2MJzGwCuJRgHgxVuIz/QJIB3VG4g7m56PYuzhNa82bLcV2kBWNDpWBLoN6sUpI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bx87pWT4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e9sOd9LF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C41BF1F00898;
-	Thu, 17 Sep 2026 16:02:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bx87pWT4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C04ED1F000FF;
+	Thu, 17 Sep 2026 16:02:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789660971;
-	bh=yB1gHQTvCo5KU8WC1LLNw4kndHKwPsDB8DZVied12CY=;
+	s=korg; t=1789660974;
+	bh=3sQHIysXmxrj9tXF5BcxS0yeOv+KGv6seL6Z9KGMIsE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e9sOd9LFnvmBDkytZ4jraGS6Rmwy1ATpUZqLe4futTbLFYPJTKEtjecUvTVpjqnDu
-	 s6z+us5MzMtnmxsFviGxlR0sDeAtCC2jAnAIQKjRNeVn3Y9OCpgxXLgeotgwY8tGaf
-	 bgoq0mS5AqYVvJJefcDjsHhIGYLgsUrI0gQO7EnM=
+	b=bx87pWT4YR/bZgp5Ib/PR8yXABv6mQhSejOwBKW8W7Vmf22AOxsDE7QlIAmkZfxgu
+	 igUWT8Lu591rrOex05Y15P3W/oLiHCgtFebUnTRuBC68sHOHrIMb7BSG9CIeH3EbkH
+	 UvbIrvDMHikKjcdeg3f71e/P5e5tMjXE8QtmtIDI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miriam Rachel Korenblit <miriam.rachel.korenblit@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Marco Elver <elver@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0032/1250] wifi: mac80211: use chandef in ieee80211_get_sta_bw()
-Date: Thu, 17 Sep 2026 15:57:07 +0100
-Message-ID: <20260917151552.802776021@linuxfoundation.org>
+Subject: [PATCH 6.18 0041/1250] kcsan: Silence -Wmaybe-uninitialized when calling __kcsan_check_access()
+Date: Thu, 17 Sep 2026 15:57:16 +0100
+Message-ID: <20260917151553.048072585@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,68 +51,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Marco Elver <elver@google.com>
 
-[ Upstream commit e36b3322a41b7de0168ad6a37bdd1219cfe35077 ]
+[ Upstream commit 07a1a6562ce29e2e0c134a57882d6e52e8758492 ]
 
-When getting the bandwidth the station uses in order to
-calculate the channel context's min_def, pass the channel
-for the link to _ieee80211_sta_cap_rx_bw() instead of using
-ieee80211_sta_cap_rx_bw(), which looks it up.
+Some subsystems enable -Wmaybe-uninitialized [1], which can trigger
+false positives when KCSAN is enabled. Specifically, passing an
+uninitialized variable to functions that instrument accesses (e.g.,
+copy_from_user()) results in calls to __kcsan_check_access().
 
-Reviewed-by: Miriam Rachel Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20260415144514.d2bdf106a39f.I6ae07289a272dd9e27118f9fa324a4865f994003@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Because __kcsan_check_access() takes a `const volatile void *ptr`, GCC
+infers that the function may only read the memory location, and thus
+warns if the passed variable is uninitialized.
+
+However, KCSAN is a dynamic analysis tool for data race detection; while
+it does read the memory location to detect concurrent modifications, the
+"initialized'ness" of the memory location is irrelevant for its analysis.
+
+Use absolute_pointer() in __kcsan_check_write(), kcsan_check_write(),
+and kcsan_check_atomic_write() to hide the pointer from the compiler,
+preventing it from concluding that the pointer passed points to
+uninitialized memory.
+
+This fixes warnings like:
+
+|   CC      fs/ntfs3/file.o
+| In file included from include/asm-generic/rwonce.h:27,
+|                  from arch/arm64/include/asm/rwonce.h:81,
+|                  from include/linux/compiler.h:369,
+|                  from include/linux/array_size.h:5,
+|                  from include/linux/kernel.h:16,
+|                  from include/linux/backing-dev.h:12,
+|                  from fs/ntfs3/file.c:10:
+| In function 'instrument_copy_from_user_before',
+|     inlined from '_inline_copy_from_user' at include/linux/uaccess.h:184:2,
+|     inlined from 'copy_from_user' at include/linux/uaccess.h:221:9,
+|     inlined from 'ntfs_ioctl_fitrim' at fs/ntfs3/file.c:77:6,
+|     inlined from 'ntfs_ioctl' at fs/ntfs3/file.c:164:10:
+| include/linux/kcsan-checks.h:220:28: error: 'range' may be used uninitialized [-Werror=maybe-uninitialized]
+|   220 | #define kcsan_check_access __kcsan_check_access
+|       |                            ^
+| include/linux/kcsan-checks.h:311:9: note: in expansion of macro 'kcsan_check_access'
+|   311 |         kcsan_check_access(ptr, size, KCSAN_ACCESS_WRITE)
+|       |         ^~~~~~~~~~~~~~~~~~
+| include/linux/instrumented.h:147:9: note: in expansion of macro 'kcsan_check_write'
+|   147 |         kcsan_check_write(to, n);
+|       |         ^~~~~~~~~~~~~~~~~
+| include/linux/kcsan-checks.h: In function 'ntfs_ioctl':
+| include/linux/kcsan-checks.h:37:6: note: by argument 1 of type 'const volatile void *' to '__kcsan_check_access' declared here
+|    37 | void __kcsan_check_access(const volatile void *ptr, size_t size, int type);
+|       |      ^~~~~~~~~~~~~~~~~~~~
+| fs/ntfs3/file.c:65:29: note: 'range' declared here
+|    65 |         struct fstrim_range range;
+|       |                             ^~~~~
+
+Link: https://lore.kernel.org/all/5da10cca-875b-418d-b54e-6be3ea32c266@app.fastmail.com/ [1]
+Reported-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Arnd Bergmann <arnd@arndb.de>
+Tested-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Marco Elver <elver@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/chan.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ include/linux/kcsan-checks.h | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/net/mac80211/chan.c b/net/mac80211/chan.c
-index a6895b40d4322..8403b5248a953 100644
---- a/net/mac80211/chan.c
-+++ b/net/mac80211/chan.c
-@@ -235,11 +235,12 @@ ieee80211_find_reservation_chanctx(struct ieee80211_local *local,
- 	return NULL;
- }
+diff --git a/include/linux/kcsan-checks.h b/include/linux/kcsan-checks.h
+index 92f3843d9ebb8..e135dacaa90f3 100644
+--- a/include/linux/kcsan-checks.h
++++ b/include/linux/kcsan-checks.h
+@@ -282,7 +282,7 @@ static inline void __kcsan_disable_current(void) { }
+  * @size: size of access
+  */
+ #define __kcsan_check_write(ptr, size)                                         \
+-	__kcsan_check_access(ptr, size, KCSAN_ACCESS_WRITE)
++	__kcsan_check_access(absolute_pointer(ptr), size, KCSAN_ACCESS_WRITE)
  
--static enum nl80211_chan_width ieee80211_get_sta_bw(struct sta_info *sta,
--						    unsigned int link_id)
-+static enum nl80211_chan_width
-+ieee80211_get_sta_bw(struct sta_info *sta, struct ieee80211_link_data *link)
- {
- 	enum ieee80211_sta_rx_bandwidth width;
- 	struct link_sta_info *link_sta;
-+	int link_id = link->link_id;
+ /**
+  * __kcsan_check_read_write - check regular read-write access for races
+@@ -308,7 +308,7 @@ static inline void __kcsan_disable_current(void) { }
+  * @size: size of access
+  */
+ #define kcsan_check_write(ptr, size)                                           \
+-	kcsan_check_access(ptr, size, KCSAN_ACCESS_WRITE)
++	kcsan_check_access(absolute_pointer(ptr), size, KCSAN_ACCESS_WRITE)
  
- 	link_sta = wiphy_dereference(sta->local->hw.wiphy, sta->link[link_id]);
- 
-@@ -254,7 +255,7 @@ static enum nl80211_chan_width ieee80211_get_sta_bw(struct sta_info *sta,
- 	 * capabilities here. Calling it RX bandwidth capability is a bit
- 	 * wrong though, since capabilities are in fact symmetric.
- 	 */
--	width = ieee80211_sta_cap_rx_bw(link_sta);
-+	width = _ieee80211_sta_cap_rx_bw(link_sta, &link->conf->chanreq.oper);
- 
- 	switch (width) {
- 	case IEEE80211_STA_RX_BW_20:
-@@ -289,7 +290,6 @@ static enum nl80211_chan_width
- ieee80211_get_max_required_bw(struct ieee80211_link_data *link)
- {
- 	struct ieee80211_sub_if_data *sdata = link->sdata;
--	unsigned int link_id = link->link_id;
- 	enum nl80211_chan_width max_bw = NL80211_CHAN_WIDTH_20_NOHT;
- 	struct sta_info *sta;
- 
-@@ -300,7 +300,7 @@ ieee80211_get_max_required_bw(struct ieee80211_link_data *link)
- 		    !(sta->sdata->bss && sta->sdata->bss == sdata->bss))
- 			continue;
- 
--		max_bw = max(max_bw, ieee80211_get_sta_bw(sta, link_id));
-+		max_bw = max(max_bw, ieee80211_get_sta_bw(sta, link));
- 	}
- 
- 	return max_bw;
+ /**
+  * kcsan_check_read_write - check regular read-write access for races
+@@ -331,7 +331,7 @@ static inline void __kcsan_disable_current(void) { }
+ #define kcsan_check_atomic_read(ptr, size)                                     \
+ 	kcsan_check_access(ptr, size, KCSAN_ACCESS_ATOMIC)
+ #define kcsan_check_atomic_write(ptr, size)                                    \
+-	kcsan_check_access(ptr, size, KCSAN_ACCESS_ATOMIC | KCSAN_ACCESS_WRITE)
++	kcsan_check_access(absolute_pointer(ptr), size, KCSAN_ACCESS_ATOMIC | KCSAN_ACCESS_WRITE)
+ #define kcsan_check_atomic_read_write(ptr, size)                               \
+ 	kcsan_check_access(ptr, size, KCSAN_ACCESS_ATOMIC | KCSAN_ACCESS_WRITE | KCSAN_ACCESS_COMPOUND)
+ #endif
 -- 
 2.53.0
 
