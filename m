@@ -1,44 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E7715A5158;
-	Thu, 17 Sep 2026 15:27:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 981EB568FA0;
+	Thu, 17 Sep 2026 15:27:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789658836; cv=none; b=qigru9yK/KmX/qcYghrWAn2YZBAoYCptu5QdPNFuBw0K1BgN3LhPvm4ik+Jy3Zbrtb9y0xz8BmQ//p82uEd5Qjnw58BBmZdBpeoZtazK3z9iF1zR3nzvqTXo+2TmlDiv0albLKVe+bPWUUBy8viYMiCfH8tHPBCF5qUFF0hLN7E=
+	t=1789658844; cv=none; b=d+hgaLQAf4pvLVtTVBI+G98uQ63irHRNrexXeQTzyuIcnbCBu0DlgT22sVaZa6WaE85uDwGnEcVKqr/NN1szBJJjtGG3ro6qLu1FMQitw+YM+tL2H5y9I/S76ozKfBIo02TxRtsMCV2oXKTG2KxLR35hw1TkG+dKfgwfc3UcouI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789658836; c=relaxed/simple;
-	bh=KyZ/zcimaVD8odwXzeNw2fDPnHmF2dezLHnmaVcLh2A=;
+	s=arc-20240116; t=1789658844; c=relaxed/simple;
+	bh=fghPRFoWIlD2vKU/X8jYcvHP58au2xsLanPrJjYvDxQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=npN82ibYI/IfgFbtrBMyOjtthpp/Jm0VbcMDhxmtAH4LroEpfnax76uMrQSlSNBApYR86RNgMZ60e9S7w+ZEZYTmVeIBbLBSmJnY3GUkMJ9uoux/W48k+vxpQrRkt9fsQM3K+gJO8pRy8h2iZhAE/Qd/J2wTr+8QoydBm7RLA9E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0uWvNj+B; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iCxHEdNvgZJoZFpVbkxSaw9tZ4kYRe5ryvTkBsTLKpm8FO2vXZFHfjzynKnPKch7urlG42s5o3oXeQerLsqvhgXjODQaaceofjRlvj55x0Gl0hdd3aWINeHq/PmAFdGlmrWXTlS1AXjtA3unxuP9sYCFcNgsEyt+5jCsJ4z+wXQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fIyGd9zi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0uWvNj+B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D2061F000FF;
-	Thu, 17 Sep 2026 15:27:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fIyGd9zi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44EDB1F00893;
+	Thu, 17 Sep 2026 15:27:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789658823;
-	bh=FqmJc4uLwGUKCIxctcjDU0+EvNhsPXCcZnpKdsfRBC0=;
+	s=korg; t=1789658826;
+	bh=jNG07rnTnPNcYdk2vG73Wj20GZVsttT9Yxayyn8cmvg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0uWvNj+BJ3KwyLJDSCPJ0jeZNu0ZTv92YewjQaurju9ctMCHXUgLYbT4KX5er/sfV
-	 q5ahi3j52bnuYi5ktn3aaYZH2MK35c/CRDYy19CGnEXEa4362JEGrlruXECSKjpc8a
-	 1HQuLaR7R50RIKZIDdL+dJg6UEodfdYZxzpT7H3g=
+	b=fIyGd9zi3UuxZNpjQMXYahVx1ajapAp8/AIW1P+lMsK5MPLw1jIwa9mVV/Ns5HcSX
+	 VMZkbsb0XEf2UaNeYjUgj7Z5XxTLYY/Zx5A2I4CMdwC1Y3E3Y8QqJU555pFQ9+a+D8
+	 osn1ZivvGpNe3rhqRaBBDQKDbqsJZ1lGdjojTC/g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+6d2762674103618994b0@syzkaller.appspotmail.com,
 	Eric Dumazet <edumazet@google.com>,
-	Peilin He <he.peilin@zte.com.cn>,
-	xu xin <xu.xin16@zte.com.cn>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	David Ahern <dsahern@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 052/733] net: icmp: avoid invalid transport header access in icmp_send tracepoint
-Date: Thu, 17 Sep 2026 16:06:00 +0100
-Message-ID: <20260917151352.083783757@linuxfoundation.org>
+Subject: [PATCH 7.2 053/733] tcp: use GFP_ATOMIC in tcp_send_active_reset()
+Date: Thu, 17 Sep 2026 16:06:01 +0100
+Message-ID: <20260917151352.111437205@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -59,87 +54,193 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 7fcc2fe39fed1cb98a7374a113ff3800e8f9af80 ]
+[ Upstream commit 18666c73afe95eeca8707c699b63f96ce3acda42 ]
 
-syzbot reported a WARNING triggered by DEBUG_NET_WARN_ON_ONCE():
+tcp_send_active_reset() can be called from contexts where gfp_any()
+(in tcp_disconnect()) or sk->sk_allocation (in __tcp_close() and
+mptcp_do_fastclose()) evaluates to GFP_KERNEL, which includes
+__GFP_FS and __GFP_DIRECT_RECLAIM.
 
- WARNING: at skb_transport_header include/linux/skbuff.h:3087 [inline]
- WARNING: at udp_hdr include/linux/udp.h:23 [inline]
- WARNING: at do_trace_event_raw_event_icmp_send include/trace/events/icmp.h:30 [inline]
- WARNING: at trace_event_raw_event_icmp_send+0x48c/0x6ec include/trace/events/icmp.h:11
- Call trace:
-  skb_transport_header include/linux/skbuff.h:3087 [inline]
-  udp_hdr include/linux/udp.h:23 [inline]
-  do_trace_event_raw_event_icmp_send include/trace/events/icmp.h:30 [inline]
-  trace_event_raw_event_icmp_send+0x48c/0x6ec include/trace/events/icmp.h:11
-  __traceiter_icmp_send include/trace/events/icmp.h:11 [inline]
-  __do_trace_icmp_send include/trace/events/icmp.h:11 [inline]
-  trace_icmp_send+0x320/0x49c include/trace/events/icmp.h:11
-  __icmp_send+0xcfc/0x11d8 net/ipv4/icmp.c:1013
-  ipv4_send_dest_unreach net/ipv4/route.c:1280 [inline]
-  ipv4_link_failure+0x57c/0x8dc net/ipv4/route.c:1287
-  dst_link_failure include/net/dst.h:438 [inline]
-  vti_tunnel_xmit+0xe40/0x17a4 net/ipv4/ip_vti.c:307
+Allocating with GFP_KERNEL while holding the socket lock (sk_lock) creates
+a lockdep dependency:
+  sk_lock -> fs_reclaim
 
-TP_fast_assign() unconditionally calls udp_hdr(skb) before checking
-whether the packet is UDP. Furthermore, __icmp_send() can be invoked
-from paths (e.g., link failures, ARP errors, forwarding, AF_PACKET)
-where skb->transport_header was never initialized (~0U).
+This causes false-positive lockdep circular locking warnings with storage
+subsystems (such as nvme-tcp) that acquire socket locks in block I/O paths
+and invoke tcp_disconnect() or close sockets upon teardown:
+  set->srcu -> sk_lock -> fs_reclaim -> elevator_lock -> set->srcu
 
-Under CONFIG_DEBUG_NET=y, calling skb_transport_header(skb) triggers
-DEBUG_NET_WARN_ON_ONCE(!skb_transport_header_was_set(skb)).
+Active resets are small RST packet headers that should never
+enter direct reclaim or block while holding socket locks.
 
-Fix this by:
-1. Only parsing transport info when iph->protocol == IPPROTO_UDP.
-2. Using skb_header_pointer() at skb_network_offset(skb) + (iph->ihl << 2)
-   to safely fetch the UDP header without assuming transport_header is set.
+Use sk_gfp_mask(sk, GFP_ATOMIC | __GFP_NOWARN) inside tcp_send_active_reset()
+and remove its priority argument. This preserves __GFP_MEMALLOC access
+for SOCK_MEMALLOC sockets, suppresses allocation failure warnings,
+and aligns with other control packet allocations (e.g. tcp_send_fin(),
+__tcp_send_ack(), tcp_xmit_probe_skb()).
 
-Fixes: db3efdcf70c7 ("net/ipv4: add tracepoint for icmp_send")
-Reported-by: syzbot+6d2762674103618994b0@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/6a8d5538.91706f20.ef82.0009.GAE@google.com/T/#u
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Peilin He <he.peilin@zte.com.cn>
-Cc: xu xin <xu.xin16@zte.com.cn>
-Cc: Steven Rostedt <rostedt@goodmis.org>
-Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://patch.msgid.link/20260825084551.1562967-1-edumazet@google.com
+Acked-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20260827095936.551524-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/trace/events/icmp.h | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ include/net/tcp.h     |  3 +--
+ net/ipv4/tcp.c        | 14 ++++++--------
+ net/ipv4/tcp_output.c |  4 ++--
+ net/ipv4/tcp_timer.c  |  6 +++---
+ net/mptcp/protocol.c  |  3 +--
+ net/mptcp/protocol.h  |  2 +-
+ 6 files changed, 14 insertions(+), 18 deletions(-)
 
-diff --git a/include/trace/events/icmp.h b/include/trace/events/icmp.h
-index 31559796949a7..acfcf2b132d60 100644
---- a/include/trace/events/icmp.h
-+++ b/include/trace/events/icmp.h
-@@ -27,17 +27,20 @@ TRACE_EVENT(icmp_send,
+diff --git a/include/net/tcp.h b/include/net/tcp.h
+index 670c20876f265..436495ff2271d 100644
+--- a/include/net/tcp.h
++++ b/include/net/tcp.h
+@@ -765,8 +765,7 @@ int tcp_fragment(struct sock *sk, enum tcp_queue tcp_queue,
+ void tcp_send_probe0(struct sock *);
+ int tcp_write_wakeup(struct sock *, int mib);
+ void tcp_send_fin(struct sock *sk);
+-void tcp_send_active_reset(struct sock *sk, gfp_t priority,
+-			   enum sk_rst_reason reason);
++void tcp_send_active_reset(struct sock *sk, enum sk_rst_reason reason);
+ int tcp_send_synack(struct sock *);
+ void tcp_push_one(struct sock *, unsigned int mss_now);
+ void __tcp_send_ack(struct sock *sk, u32 rcv_nxt, u16 flags);
+diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
+index 10f58281be17b..47a34a993972a 100644
+--- a/net/ipv4/tcp.c
++++ b/net/ipv4/tcp.c
+@@ -3181,8 +3181,7 @@ void __tcp_close(struct sock *sk, long timeout)
+ 		/* Unread data was tossed, zap the connection. */
+ 		NET_INC_STATS(sock_net(sk), LINUX_MIB_TCPABORTONCLOSE);
+ 		tcp_set_state(sk, TCP_CLOSE);
+-		tcp_send_active_reset(sk, sk->sk_allocation,
+-				      SK_RST_REASON_TCP_ABORT_ON_CLOSE);
++		tcp_send_active_reset(sk, SK_RST_REASON_TCP_ABORT_ON_CLOSE);
+ 	} else if (sock_flag(sk, SOCK_LINGER) && !sk->sk_lingertime) {
+ 		/* Check zero linger _after_ checking for unread data. */
+ 		sk->sk_prot->disconnect(sk, 0);
+@@ -3256,7 +3255,7 @@ void __tcp_close(struct sock *sk, long timeout)
+ 		struct tcp_sock *tp = tcp_sk(sk);
+ 		if (READ_ONCE(tp->linger2) < 0) {
+ 			tcp_set_state(sk, TCP_CLOSE);
+-			tcp_send_active_reset(sk, GFP_ATOMIC,
++			tcp_send_active_reset(sk,
+ 					      SK_RST_REASON_TCP_ABORT_ON_LINGER);
+ 			__NET_INC_STATS(sock_net(sk),
+ 					LINUX_MIB_TCPABORTONLINGER);
+@@ -3275,7 +3274,7 @@ void __tcp_close(struct sock *sk, long timeout)
+ 	if (sk->sk_state != TCP_CLOSE) {
+ 		if (tcp_check_oom(sk, 0)) {
+ 			tcp_set_state(sk, TCP_CLOSE);
+-			tcp_send_active_reset(sk, GFP_ATOMIC,
++			tcp_send_active_reset(sk,
+ 					      SK_RST_REASON_TCP_ABORT_ON_MEMORY);
+ 			__NET_INC_STATS(sock_net(sk),
+ 					LINUX_MIB_TCPABORTONMEMORY);
+@@ -3376,14 +3375,14 @@ int tcp_disconnect(struct sock *sk, int flags)
+ 	} else if (unlikely(tp->repair)) {
+ 		WRITE_ONCE(sk->sk_err, ECONNABORTED);
+ 	} else if (tcp_need_reset(old_state)) {
+-		tcp_send_active_reset(sk, gfp_any(), SK_RST_REASON_TCP_STATE);
++		tcp_send_active_reset(sk, SK_RST_REASON_TCP_STATE);
+ 		WRITE_ONCE(sk->sk_err, ECONNRESET);
+ 	} else if (tp->snd_nxt != tp->write_seq &&
+ 		   (1 << old_state) & (TCPF_CLOSING | TCPF_LAST_ACK)) {
+ 		/* The last check adjusts for discrepancy of Linux wrt. RFC
+ 		 * states
+ 		 */
+-		tcp_send_active_reset(sk, gfp_any(),
++		tcp_send_active_reset(sk,
+ 				      SK_RST_REASON_TCP_DISCONNECT_WITH_DATA);
+ 		WRITE_ONCE(sk->sk_err, ECONNRESET);
+ 	} else if (old_state == TCP_SYN_SENT)
+@@ -5146,8 +5145,7 @@ int tcp_abort(struct sock *sk, int err)
+ 	bh_lock_sock(sk);
  
- 		TP_fast_assign(
- 			struct iphdr *iph = ip_hdr(skb);
--			struct udphdr *uh = udp_hdr(skb);
--			int proto_4 = iph->protocol;
-+			struct udphdr _uh, *uh = NULL;
- 			__be32 *p32;
+ 	if (tcp_need_reset(sk->sk_state))
+-		tcp_send_active_reset(sk, GFP_ATOMIC,
+-				      SK_RST_REASON_TCP_STATE);
++		tcp_send_active_reset(sk, SK_RST_REASON_TCP_STATE);
+ 	tcp_done_with_error(sk, err);
  
- 			__entry->skbaddr = skb;
- 			__entry->type = type;
- 			__entry->code = code;
+ 	bh_unlock_sock(sk);
+diff --git a/net/ipv4/tcp_output.c b/net/ipv4/tcp_output.c
+index 8d243e91761a9..f72a6b1fe749b 100644
+--- a/net/ipv4/tcp_output.c
++++ b/net/ipv4/tcp_output.c
+@@ -3849,9 +3849,9 @@ void tcp_send_fin(struct sock *sk)
+  * was unread data in the receive queue.  This behavior is recommended
+  * by RFC 2525, section 2.17.  -DaveM
+  */
+-void tcp_send_active_reset(struct sock *sk, gfp_t priority,
+-			   enum sk_rst_reason reason)
++void tcp_send_active_reset(struct sock *sk, enum sk_rst_reason reason)
+ {
++	gfp_t priority = sk_gfp_mask(sk, GFP_ATOMIC | __GFP_NOWARN);
+ 	struct sk_buff *skb;
  
--			if (proto_4 != IPPROTO_UDP || (u8 *)uh < skb->head ||
--				(u8 *)uh + sizeof(struct udphdr)
--				> skb_tail_pointer(skb)) {
-+			if (iph->protocol == IPPROTO_UDP)
-+				uh = skb_header_pointer(skb,
-+							skb_network_offset(skb) +
-+							(iph->ihl << 2),
-+							sizeof(_uh), &_uh);
-+
-+			if (!uh) {
- 				__entry->sport = 0;
- 				__entry->dport = 0;
- 				__entry->ulen = 0;
+ 	TCP_INC_STATS(sock_net(sk), TCP_MIB_OUTRSTS);
+diff --git a/net/ipv4/tcp_timer.c b/net/ipv4/tcp_timer.c
+index 4df1c9745c5d5..95296b1cf0ca2 100644
+--- a/net/ipv4/tcp_timer.c
++++ b/net/ipv4/tcp_timer.c
+@@ -126,7 +126,7 @@ static int tcp_out_of_resources(struct sock *sk, bool do_reset)
+ 		    (!tp->snd_wnd && !tp->packets_out))
+ 			do_reset = true;
+ 		if (do_reset)
+-			tcp_send_active_reset(sk, GFP_ATOMIC,
++			tcp_send_active_reset(sk,
+ 					      SK_RST_REASON_TCP_ABORT_ON_MEMORY);
+ 		tcp_done(sk);
+ 		__NET_INC_STATS(sock_net(sk), LINUX_MIB_TCPABORTONMEMORY);
+@@ -809,7 +809,7 @@ static void tcp_keepalive_timer(struct timer_list *t)
+ 				goto out;
+ 			}
+ 		}
+-		tcp_send_active_reset(sk, GFP_ATOMIC, SK_RST_REASON_TCP_STATE);
++		tcp_send_active_reset(sk, SK_RST_REASON_TCP_STATE);
+ 		goto death;
+ 	}
+ 
+@@ -836,7 +836,7 @@ static void tcp_keepalive_timer(struct timer_list *t)
+ 		    icsk->icsk_probes_out > 0) ||
+ 		    (user_timeout == 0 &&
+ 		    icsk->icsk_probes_out >= keepalive_probes(tp))) {
+-			tcp_send_active_reset(sk, GFP_ATOMIC,
++			tcp_send_active_reset(sk,
+ 					      SK_RST_REASON_TCP_KEEPALIVE_TIMEOUT);
+ 			tcp_write_err(sk);
+ 			goto out;
+diff --git a/net/mptcp/protocol.c b/net/mptcp/protocol.c
+index 7c8180d8d5eff..8adf699894e32 100644
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -2985,8 +2985,7 @@ static void mptcp_do_fastclose(struct sock *sk)
+ 		 */
+ 		inet_csk(ssk)->icsk_ack.rcv_mss = TCP_MIN_MSS;
+ 
+-		tcp_send_active_reset(ssk, ssk->sk_allocation,
+-				      SK_RST_REASON_TCP_ABORT_ON_CLOSE);
++		tcp_send_active_reset(ssk, SK_RST_REASON_TCP_ABORT_ON_CLOSE);
+ unlock:
+ 		release_sock(ssk);
+ 	}
+diff --git a/net/mptcp/protocol.h b/net/mptcp/protocol.h
+index 1b80f2d6ec5a2..32b771e658500 100644
+--- a/net/mptcp/protocol.h
++++ b/net/mptcp/protocol.h
+@@ -687,7 +687,7 @@ mptcp_send_active_reset_reason(struct sock *sk)
+ 	enum sk_rst_reason reason;
+ 
+ 	reason = sk_rst_convert_mptcp_reason(subflow->reset_reason);
+-	tcp_send_active_reset(sk, GFP_ATOMIC, reason);
++	tcp_send_active_reset(sk, reason);
+ }
+ 
+ /* Made the fwd mem carried by the given skb available to the msk,
 -- 
 2.53.0
 
