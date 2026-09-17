@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A93A511E99;
-	Thu, 17 Sep 2026 16:06:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CD98524B0C;
+	Thu, 17 Sep 2026 16:06:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789661171; cv=none; b=Y22v7SLyACXqEhL/N2OoOIWD3tPhkXBkOZ9sF9NNAX0VXVsSmeSeAKo6pT+mzGGFZ1Kxo6yifttZAluKQLio15dBLdtDf3wAsZ7SrhjOf/qPNPJcqdaQRbjiB/fBQMA9dGEg0AYYIMaxG+/JgR77F+tNPrhy4ITRpw+ZHaJ7ZnY=
+	t=1789661174; cv=none; b=HLbbLu05s9RGKGtbwQamyp9N2f/TPXdDNF/d3X0vB9nCxGsN76eW8NmG1ZRSdKJcsWGMuBQYhbCo5QMqyk5zZFwEBsQ+hNqtoZQBB6lQANhMIcYF4J9Ur6G5n3MlNPdXhM4t+fOnretPbBL6FrHzRfFHX+op/uREwPdkbKQcmB0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789661171; c=relaxed/simple;
-	bh=xNhNaiifQGx9f8+sOC86KjUrX/RrNSKZnTWNIZo/j0s=;
+	s=arc-20240116; t=1789661174; c=relaxed/simple;
+	bh=ifpLdTSQGfhpoMKTopa5kFrpValhbY2wJJNbiLWP4fg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LjrgdJrw9sREWfWmCxkOSfRdzX8BeNSaRcBn2Mt/hhXCQ0YHHvEMt9f7j78bf678+CNTz5xMoh+msdptgDHS5pu1khxSUMjkHavOOwWdjnfa5NTSem1keKdhUlyWsHNsECLj8Djh4/wI5LMRjhzomsxYaB2MdedhN+TsP60BZR8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nDsmqqSh; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fjv0TwPovE94lQ1r9XXVls6K3BPJd6c/YixTMHPv7xjKQ43XL8jyIIE1vfv9mqOrh5BQgfg5bAiALt1vGijvnTZvhP/iPQbx9WPamNw89ws59f5yU1CRsPJQst6Fhr3N0O+64beqDd262hFLSRY+f01wMyidrlVveY4PumVgZJw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gOisyl+W; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nDsmqqSh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E54261F000FF;
-	Thu, 17 Sep 2026 16:06:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gOisyl+W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7B061F00893;
+	Thu, 17 Sep 2026 16:06:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789661170;
-	bh=MsKMcDlKPtDQsY9UBg0Hdts98Sl/9XYyGWOLMZtmHZc=;
+	s=korg; t=1789661173;
+	bh=a9qbjHSWPHyThNhSuCTJ1pnaTNjt0PVuVHpQ7Dqidao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nDsmqqSh2wHailsdo5MTcsGlNN84wMkjnuBT1iudvlnhH5xZiIcMPe2Xl2cubPnY1
-	 uzvVOAqj5m0e6+MffRJp9b9LnaIkdXE2cPA8WyH0fVFAF0ngXQGX7/3FEpWkWwlySA
-	 MkDXoq5imWm5omyQjg5DmU/CY3uO5f5RMxKRC9tA=
+	b=gOisyl+Wjg36S9KLdSY5fHmmUslurCdMX32IlOevpbwsxY4l1xvaOyyZMQnS7BZ6b
+	 HOeuma/Ttc8nRDkHWzNUl1PWfZyvlydfbB6FhQaEjI1bFRxF0EynvPAF7EzjOC6sBo
+	 5Exc3f7hEQspdirol+X3p23EARixjDs0zMAe9o3Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sophie D <patches@scd31.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0105/1250] drm/gud: Add RCade Display Adapter VID/PID pair
-Date: Thu, 17 Sep 2026 15:58:20 +0100
-Message-ID: <20260917151554.846434777@linuxfoundation.org>
+Subject: [PATCH 6.18 0106/1250] media: chips-media: wave5: Add range checks for dec_output_info
+Date: Thu, 17 Sep 2026 15:58:21 +0100
+Message-ID: <20260917151554.873177564@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,41 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sophie D <patches@scd31.com>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-[ Upstream commit ac5ac0acf11df04295eb1811066097b7022d6c7f ]
+[ Upstream commit 79aef69bb0903616f4867f0168aea717a11c439c ]
 
-The RCade Display Adapter is a hardware device that allows driving an
-Arcade CRT display via the GUD protocol. Currently it spoofs an
-existing GUD VID/PID pair. However, now that it has its own pair
-assigned, it makes sense to add this to the list of pairs that GUD
-supports natively.
+If the driver's dec_output_info contains invalid data the driver can
+write in invalid memory. Add a range check for that.
 
-More information can be found in the project repositories:
-https://gitlab.scd31.com/stephen/stm32-usb-vga-adapter-hardware
-https://gitlab.scd31.com/stephen/stm32-usb-vga-rcade-adapter
+This fixes this smatch error:
+drivers/media/platform/chips-media/wave5/wave5-vpuapi.c:588 wave5_vpu_dec_get_output_info() error: buffer overflow 'inst->frame_buf' 64 <= 127
 
-Link: https://pid.codes/1209/4FB3/
-Signed-off-by: Sophie D <patches@scd31.com>
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://patch.msgid.link/20260509025405.4143956-1-patches@scd31.com
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/gud/gud_drv.c | 1 +
- 1 file changed, 1 insertion(+)
+ .../media/platform/chips-media/wave5/wave5-vpuapi.c   | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/gud/gud_drv.c b/drivers/gpu/drm/gud/gud_drv.c
-index a2000991ecbe4..4f0906f677b2a 100644
---- a/drivers/gpu/drm/gud/gud_drv.c
-+++ b/drivers/gpu/drm/gud/gud_drv.c
-@@ -684,6 +684,7 @@ static int gud_resume(struct usb_interface *intf)
- static const struct usb_device_id gud_id_table[] = {
- 	{ USB_DEVICE_INTERFACE_CLASS(0x1d50, 0x614d, USB_CLASS_VENDOR_SPEC) },
- 	{ USB_DEVICE_INTERFACE_CLASS(0x16d0, 0x10a9, USB_CLASS_VENDOR_SPEC) },
-+	{ USB_DEVICE_INTERFACE_CLASS(0x1209, 0x4fb3, USB_CLASS_VENDOR_SPEC) },
- 	{ }
- };
+diff --git a/drivers/media/platform/chips-media/wave5/wave5-vpuapi.c b/drivers/media/platform/chips-media/wave5/wave5-vpuapi.c
+index e94d6ebc9f816..e7ea2f6a99d5b 100644
+--- a/drivers/media/platform/chips-media/wave5/wave5-vpuapi.c
++++ b/drivers/media/platform/chips-media/wave5/wave5-vpuapi.c
+@@ -559,8 +559,15 @@ int wave5_vpu_dec_get_output_info(struct vpu_instance *inst, struct dec_output_i
+ 		p_dec_info->num_of_decoding_fbs : p_dec_info->num_of_display_fbs;
  
+ 	if (info->index_frame_display >= 0 &&
+-	    info->index_frame_display < (int)max_dec_index)
+-		info->disp_frame = inst->frame_buf[val + info->index_frame_display];
++	    info->index_frame_display < (int)max_dec_index) {
++		u32 idx = val + info->index_frame_display;
++
++		if (WARN_ON(idx >= MAX_REG_FRAME)) {
++			ret = -EINVAL;
++			goto err_out;
++		}
++		info->disp_frame = inst->frame_buf[idx];
++	}
+ 
+ 	info->rd_ptr = p_dec_info->stream_rd_ptr;
+ 	info->wr_ptr = p_dec_info->stream_wr_ptr;
 -- 
 2.53.0
 
