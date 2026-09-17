@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2B494EC647;
-	Thu, 17 Sep 2026 17:07:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 141F852F26B;
+	Thu, 17 Sep 2026 17:07:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789664863; cv=none; b=B+uJpViuNWoXjw0LzKVTRif7Ih+sbxjYRkFjZnv1CbGJPFrFcvCdJC/t1eB6XuVXYh9Q3cKgZB4S6wM0+AVLMRwoNZZZZmzcKjH0JmAgpqMadkL4qSg8rLMPZWu4jdraAZOM6T1qQRra7cwVDLDTdi6tS8Y2lyw/S4Krw65XxpY=
+	t=1789664866; cv=none; b=a4b6x4e5TjACl8PQIgJmi8pYTi5JhoFDjQpdzGU9AvVsl22cOpveHTyStKxCTdhJBM46VIpRo7u//UNVFiTfghBXyQyWez6bimJs6VzYIS/FwkdKM7BzfBTcFzz+PlTzkhbRukA78G9fgO8xCm89EAs7i+/SQF8azfUvBUjm/qA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789664863; c=relaxed/simple;
-	bh=GVi6u5tS06ZvntEUK8cTL1ZuEK59mxcKiBW0LMJYWFg=;
+	s=arc-20240116; t=1789664866; c=relaxed/simple;
+	bh=tvF06ec5nWEg86nkFFE3M7salZH3OVW3krCh1eVIv88=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=FJy9cUnXUWKgHjuGUS+LaSlagg3EjkMHWaRTdjBOEcvUIRW8wT1CFWewayQJcPIECW8nSIwpVEKVBNyCw92x69wkGiy+fk/xq45cgO8O/GjVrAUkg0IgoHSqmWdNlHcJ1xf1S9kUvGt0iA8aZPLtrd3Y9bPRGZkzw2rvbqa4gX4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uvgryDr1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=ReRDqnDTdeoNn9mDsDAWjCkVs7+RBECg4FjxvzbS3V29FNUR1rmsNIyMYV1xSDgwoXbqPVW1sHP2i6P0Cd4h3hwdeanQ9cCSTOyd/k1Ohcvyb7tElbNlnh/7kMjfKU1UQMk2RiEeisyo/fPiYktetVsOWXkJvqH4Uz708Dho11o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MZJia2yp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uvgryDr1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 336831F000FF;
-	Thu, 17 Sep 2026 17:07:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MZJia2yp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25D731F0089E;
+	Thu, 17 Sep 2026 17:07:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789664861;
-	bh=fv57F43j0rEs3OcHcAhTwGZ0GByD+0+yeYgwVlbUEcM=;
+	s=korg; t=1789664864;
+	bh=dnIjm+ZUk/NNCoJ3kqQ0STK9Y9ah19NYi6/2xn+6EgM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uvgryDr1v4i8L+3ns3tr2cot6aZ7VTqL90CYbLcnwsRm+xcaAveq80gz9eUPTd7Fm
-	 11wJTrLJK8yAIvYQY+y17M+Eez4ktYY22yCbtRcFbwMM2cvZzejW3IVqX3r4PixP8x
-	 aSTfLakBqcT3Vj2Jf3NYKyf7Ag55NRKQBSB+sFcM=
+	b=MZJia2ypNoUw2SPs+DL14ViLnWBrjpauq3JdCoCCOgg5bdtEi0B3oo1nCU/0SOiM6
+	 P18a8RNkpAS8QcfheyVLOl8qqXLsHCFK8NTGopbgNXL18NgYdwg/MtOCq2k53yEiDk
+	 FpzvLOy7UsQME5/FfaVyf+7sxS0sYEm2ftJJCsI4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Fitzgerald <rf@opensource.cirrus.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	=?UTF-8?q?Gustavo=20Kenji=20Mendon=C3=A7a=20Kaneko?= <kaneko.dev@pm.me>,
+	Liviu Dudau <liviu.dudau@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0511/1250] ALSA: hda: cs35l56: Fail if wmfw file is missing
-Date: Thu, 17 Sep 2026 16:05:06 +0100
-Message-ID: <20260917151605.806748286@linuxfoundation.org>
+Subject: [PATCH 6.18 0476/1250] drm/arm/malidp: use clk_bulk API in runtime PM resume and suspend
+Date: Thu, 17 Sep 2026 16:04:31 +0100
+Message-ID: <20260917151604.871336080@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -52,76 +52,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Richard Fitzgerald <rf@opensource.cirrus.com>
+From: Gustavo Kenji Mendonça Kaneko <kaneko.dev@pm.me>
 
-[ Upstream commit 07ae060d35900977a93d4a05ec995b06c85c2552 ]
+[ Upstream commit 46f715a16989f4e7bbbc2eb41447051874b027f3 ]
 
-Fail cs35l56_hda_fw_load() and log an error if it didn't find a wmfw file
-and the BIOS didn't patch the firmware already. Also remove a section of
-code from cs35l56_hda_request_firmware_files() that attempted to find a
-.bin if a .wmfw was not found.
+malidp_runtime_pm_resume() calls clk_prepare_enable() three times
+without checking the return value. If any clock fails to enable, the
+driver silently proceeds with unclocked hardware, leading to undefined
+behavior.
 
-The CS35L56 ROM can only provide default audio in SoundWire mode. A wmfw
-is needed to enable I2S audio. Also none of the customer-specific .bin
-files are compatible with the ROM firmware. So a .wmfw file is always
-required.
+Convert both the resume and suspend paths to use the clk_bulk API:
+clk_bulk_prepare_enable() in resume checks the return value and rolls
+back any successfully enabled clocks on failure;
+clk_bulk_disable_unprepare() in suspend keeps the two paths symmetric.
 
-Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
-Link: https://patch.msgid.link/20260709161211.686498-1-rf@opensource.cirrus.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+This issue was found by code review without access to Mali DP hardware.
+
+Signed-off-by: Gustavo Kenji Mendonça Kaneko <kaneko.dev@pm.me>
+Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
+Link: https://patch.msgid.link/20260609130812.1065699-1-kaneko.dev@pm.me
+Signed-off-by: Liviu Dudau <liviu.dudau@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/hda/codecs/side-codecs/cs35l56_hda.c | 30 +++++++---------------
- 1 file changed, 9 insertions(+), 21 deletions(-)
+ drivers/gpu/drm/arm/malidp_drv.c | 22 ++++++++++++++++------
+ 1 file changed, 16 insertions(+), 6 deletions(-)
 
-diff --git a/sound/hda/codecs/side-codecs/cs35l56_hda.c b/sound/hda/codecs/side-codecs/cs35l56_hda.c
-index 1d25fe01066ee..baf286bf7ec83 100644
---- a/sound/hda/codecs/side-codecs/cs35l56_hda.c
-+++ b/sound/hda/codecs/side-codecs/cs35l56_hda.c
-@@ -516,20 +516,6 @@ static void cs35l56_hda_request_firmware_files(struct cs35l56_hda *cs35l56,
- 								  NULL, "bin");
- 			return;
- 		}
--
--		/*
--		 * Check for system-specific bin files without wmfw before
--		 * falling back to generic firmware
--		 */
--		if (amp_name)
--			cs35l56_hda_request_firmware_file(cs35l56, coeff_firmware, coeff_filename,
--							  base_name, system_name, amp_name, "bin");
--		if (!*coeff_firmware)
--			cs35l56_hda_request_firmware_file(cs35l56, coeff_firmware, coeff_filename,
--							  base_name, system_name, NULL, "bin");
--
--		if (*coeff_firmware)
--			return;
- 	}
+diff --git a/drivers/gpu/drm/arm/malidp_drv.c b/drivers/gpu/drm/arm/malidp_drv.c
+index bc5f5e9798c32..2bf4a647e4b28 100644
+--- a/drivers/gpu/drm/arm/malidp_drv.c
++++ b/drivers/gpu/drm/arm/malidp_drv.c
+@@ -669,6 +669,11 @@ static int malidp_runtime_pm_suspend(struct device *dev)
+ 	struct drm_device *drm = dev_get_drvdata(dev);
+ 	struct malidp_drm *malidp = drm_to_malidp(drm);
+ 	struct malidp_hw_device *hwdev = malidp->dev;
++	struct clk_bulk_data clks[] = {
++		{ .clk = hwdev->pclk },
++		{ .clk = hwdev->aclk },
++		{ .clk = hwdev->mclk },
++	};
  
- 	ret = cs35l56_hda_request_firmware_file(cs35l56, wmfw_firmware, wmfw_filename,
-@@ -615,13 +601,15 @@ static void cs35l56_hda_fw_load(struct cs35l56_hda *cs35l56)
- 					   &wmfw_firmware, &wmfw_filename,
- 					   &coeff_firmware, &coeff_filename);
+ 	/* we can only suspend if the hardware is in config mode */
+ 	WARN_ON(!hwdev->hw->in_config_mode(hwdev));
+@@ -676,9 +681,7 @@ static int malidp_runtime_pm_suspend(struct device *dev)
+ 	malidp_se_irq_fini(hwdev);
+ 	malidp_de_irq_fini(hwdev);
+ 	hwdev->pm_suspended = true;
+-	clk_disable_unprepare(hwdev->mclk);
+-	clk_disable_unprepare(hwdev->aclk);
+-	clk_disable_unprepare(hwdev->pclk);
++	clk_bulk_disable_unprepare(ARRAY_SIZE(clks), clks);
  
--	/*
--	 * If the BIOS didn't patch the firmware a bin file is mandatory to
--	 * enable the ASP·
--	 */
--	if (!coeff_firmware && firmware_missing) {
--		dev_err(cs35l56->base.dev, ".bin file required but not found\n");
--		goto err_fw_release;
-+	/* If the BIOS didn't patch the firmware a wmfw and bin file are mandatory */
-+	if (firmware_missing) {
-+		if (!wmfw_firmware) {
-+			dev_err(cs35l56->base.dev, ".%s file required but not found\n", "wmfw");
-+			goto err_fw_release;
-+		} else if (!coeff_firmware) {
-+			dev_err(cs35l56->base.dev, ".%s file required but not found\n", "bin");
-+			goto err_fw_release;
-+		}
- 	}
+ 	return 0;
+ }
+@@ -688,10 +691,17 @@ static int malidp_runtime_pm_resume(struct device *dev)
+ 	struct drm_device *drm = dev_get_drvdata(dev);
+ 	struct malidp_drm *malidp = drm_to_malidp(drm);
+ 	struct malidp_hw_device *hwdev = malidp->dev;
++	struct clk_bulk_data clks[] = {
++		{ .clk = hwdev->pclk },
++		{ .clk = hwdev->aclk },
++		{ .clk = hwdev->mclk },
++	};
++	int err;
++
++	err = clk_bulk_prepare_enable(ARRAY_SIZE(clks), clks);
++	if (err)
++		return err;
  
- 	mutex_lock(&cs35l56->base.irq_lock);
+-	clk_prepare_enable(hwdev->pclk);
+-	clk_prepare_enable(hwdev->aclk);
+-	clk_prepare_enable(hwdev->mclk);
+ 	hwdev->pm_suspended = false;
+ 	malidp_de_irq_hw_init(hwdev);
+ 	malidp_se_irq_hw_init(hwdev);
 -- 
 2.53.0
 
