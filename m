@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5215B49D58C;
-	Thu, 17 Sep 2026 18:59:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC28C4ABBDB;
+	Thu, 17 Sep 2026 18:59:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789671559; cv=none; b=edCW5Q7N1aXCWTJjbCGI8mdnRW3qk6slNU0CoCfq5kvMJ2RMWlUYIiewLV4aj4VwxoLvRsW17BJJiESNXGAss4FGuEB2+oyOrL3PfqNHRnSdBRmEbsZ0PYhKbxd3yytg1H73YUxwKFYsRuEYx0r5vu90Ma8w2BwW+xawiY3hW5w=
+	t=1789671563; cv=none; b=q4xi6JSWOd+T496gbUiqhZhxDdLi5b740RhhJKyaVdc6/eqgmGOabk2PCZzuCTAdcmzkztH2jGeASye2Uj5/DFXEaEm7M9Wo7KR4KG6qhxrMq9wc9uu6I4dz4DuuEVOudDcdnd2UbOZ8nkBLfOjZ6AaJ7zK2fVXetCDDkCQ8YWE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789671559; c=relaxed/simple;
-	bh=DF3cP09fTdvW9VLQGZ6kq92TR1oC79oHmWkWa9yPTWU=;
+	s=arc-20240116; t=1789671563; c=relaxed/simple;
+	bh=GoWqbwTK3mw0Lm7JsmgAwO76LxdlI1hfs5qbjkR3/w8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=vEnaF+0r4DXsiwqAXA5w/n/20jev8cUWFdynEddIpcmHWGfAQVpy2OZP/jXIEdo7BWizerrBtzqYNQAOPSWFVgypWr3cCmt3nzlLX43PQ0KKtQbtWMn00xfo13pwYBaudlOTOl7t0K7qDh2Ojx5wEmNIKu2S2Y/RlPI51FKavmY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LSeb8v0w; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EMEDuOxZoFizdkGD/ElsOGnOAvmd9ZckJRHwDSV6E08JnhX7njzkOKaXXH5/7i7zF5YKz8o7dTgb9hY8DilyP4z02JEtWbde/mpQxPSDaYIlJt+BgquIZgLe4P64f+lKDYjY/ix8q/vcUg3da85VjjAezM5XPzgs59VVOy1HNjc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XBNZotox; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LSeb8v0w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 939241F000FF;
-	Thu, 17 Sep 2026 18:59:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XBNZotox"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FD411F0089C;
+	Thu, 17 Sep 2026 18:59:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789671558;
-	bh=qOsHFDw6JbuhOFYMcP0L9qLS2aqzv3rLlTw6wqsEo6o=;
+	s=korg; t=1789671561;
+	bh=TV/pvBh5hF83RUlzV8xiYu3D9GtWvwfHb/Vb7ph0YU0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LSeb8v0wEmoQ+Dkc2mR7xGhdgDD9oODioFUe3Dflon5ETsygqIrWGLqeKCbseVIeq
-	 ZAqZtyg5dE6xy79Ev03v5qt9HvhUg2boLKAt/HtqQXVcx1b1KIriG1eEPIdmWHPWQJ
-	 jgeosza0ExajFznmABfkEJsSS0YiQ9Rj1FmbHzXw=
+	b=XBNZotoxXjl9Vm/ODf5K+6T/4pBni/sQM82vfHWWiEOKHoeiGAMYFt7Z19c6WY9i5
+	 3OUQe0LqrIpOEnNZlVe6K8/7dxLzcsKVOFyPDz5IV1CPKY4SXiaaUsqfnE8auy7umj
+	 02aQpcFSEtSnUuhMS4qO8l62WP/0Mbng/CYAw3F4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Minchan Kim <minchan@kernel.org>,
-	Haoqin Huang <haoqinhuang7@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Carolina Jubran <cjubran@nvidia.com>,
+	Mark Bloch <mbloch@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1017/1102] zram: set default primary compressor in zram_destroy_comps()
-Date: Thu, 17 Sep 2026 16:16:00 +0100
-Message-ID: <20260917151606.286195023@linuxfoundation.org>
+Subject: [PATCH 6.12 1018/1102] netlink: introduce type-checking attribute iteration for nlmsg
+Date: Thu, 17 Sep 2026 16:16:01 +0100
+Message-ID: <20260917151606.311948788@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -53,56 +52,166 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sergey Senozhatsky <senozhatsky@chromium.org>
+From: Carolina Jubran <cjubran@nvidia.com>
 
-[ Upstream commit dde75313eed0b014c437f48dd75c0308b592cbf9 ]
+[ Upstream commit 42401c42389622424f2973ec57414f033ae6be8f ]
 
-Patch series "zram: fix zram issues reported by sashiko".
+Add the nlmsg_for_each_attr_type() macro to simplify iteration over
+attributes of a specific type in a Netlink message.
 
-Sashiko drove by and reported [1] a couple of zram issues:
-a possible BUG_ON() in zlib code due to missing winbits range
-validation and one possible NULL-ptr dereference in zcomp.
-Both are low risk yet still worth fixing.
+Convert existing users in vxlan and nfsd to use the new macro.
 
-This patch (of 2):
-
-zram_destroy_comps() resets all compressors and leaves them set to NULL,
-including the primary one, which is invalid device state, as now
-comp_algorithm_show()->strcmp() can be called on a NULL compressor.  Set
-default primary compressor in zram_destroy_comps().
-
-Link: https://lore.kernel.org/20260729045745.775973-2-senozhatsky@chromium.org
-Fixes: 486fd58af7ac ("zram: don't free statically defined names")
-Link: https://sashiko.dev/#/patchset/20260728092935.31139-1-haoqinhuang7@gmail.com [1]
-Signed-off-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-Cc: Minchan Kim <minchan@kernel.org>
-Cc: Haoqin Huang <haoqinhuang7@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Suggested-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Carolina Jubran <cjubran@nvidia.com>
+Signed-off-by: Mark Bloch <mbloch@nvidia.com>
+Link: https://patch.msgid.link/20250629142138.361537-2-mbloch@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: bdcc85c2b05a ("nfsd: validate sockaddr length per family in listener_set")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/zram/zram_drv.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/net/vxlan/vxlan_vnifilter.c |   13 ++++---------
+ fs/nfsd/nfsctl.c                    |   36 ++++++++++++++----------------------
+ include/net/netlink.h               |   14 ++++++++++++++
+ 3 files changed, 32 insertions(+), 31 deletions(-)
 
---- a/drivers/block/zram/zram_drv.c
-+++ b/drivers/block/zram/zram_drv.c
-@@ -2163,6 +2163,7 @@ static void zram_destroy_comps(struct zr
+--- a/drivers/net/vxlan/vxlan_vnifilter.c
++++ b/drivers/net/vxlan/vxlan_vnifilter.c
+@@ -978,15 +978,10 @@ static int vxlan_vnifilter_process(struc
+ 	if (!(vxlan->cfg.flags & VXLAN_F_VNIFILTER))
+ 		return -EOPNOTSUPP;
+ 
+-	nlmsg_for_each_attr(attr, nlh, sizeof(*tmsg), rem) {
+-		switch (nla_type(attr)) {
+-		case VXLAN_VNIFILTER_ENTRY:
+-			err = vxlan_process_vni_filter(vxlan, attr,
+-						       nlh->nlmsg_type, extack);
+-			break;
+-		default:
+-			continue;
+-		}
++	nlmsg_for_each_attr_type(attr, VXLAN_VNIFILTER_ENTRY, nlh,
++				 sizeof(*tmsg), rem) {
++		err = vxlan_process_vni_filter(vxlan, attr, nlh->nlmsg_type,
++					       extack);
+ 		vnis++;
+ 		if (err)
+ 			break;
+--- a/fs/nfsd/nfsctl.c
++++ b/fs/nfsd/nfsctl.c
+@@ -1682,10 +1682,9 @@ int nfsd_nl_threads_set_doit(struct sk_b
+ 		return -EINVAL;
+ 
+ 	/* count number of SERVER_THREADS values */
+-	nlmsg_for_each_attr(attr, info->nlhdr, GENL_HDRLEN, rem) {
+-		if (nla_type(attr) == NFSD_A_SERVER_THREADS)
+-			nrpools++;
+-	}
++	nlmsg_for_each_attr_type(attr, NFSD_A_SERVER_THREADS, info->nlhdr,
++				 GENL_HDRLEN, rem)
++		nrpools++;
+ 
+ 	mutex_lock(&nfsd_mutex);
+ 
+@@ -1696,12 +1695,11 @@ int nfsd_nl_threads_set_doit(struct sk_b
  	}
  
- 	zram_comp_params_reset(zram);
-+	comp_algorithm_set(zram, ZRAM_PRIMARY_COMP, default_compressor);
- }
+ 	i = 0;
+-	nlmsg_for_each_attr(attr, info->nlhdr, GENL_HDRLEN, rem) {
+-		if (nla_type(attr) == NFSD_A_SERVER_THREADS) {
+-			nthreads[i++] = nla_get_u32(attr);
+-			if (i >= nrpools)
+-				break;
+-		}
++	nlmsg_for_each_attr_type(attr, NFSD_A_SERVER_THREADS, info->nlhdr,
++				 GENL_HDRLEN, rem) {
++		nthreads[i++] = nla_get_u32(attr);
++		if (i >= nrpools)
++			break;
+ 	}
  
- static void zram_reset_device(struct zram *zram)
-@@ -2181,8 +2182,6 @@ static void zram_reset_device(struct zra
- 	memset(&zram->stats, 0, sizeof(zram->stats));
- 	atomic_set(&zram->pp_in_progress, 0);
- 	reset_bdev(zram);
+ 	if (info->attrs[NFSD_A_SERVER_GRACETIME] ||
+@@ -1842,14 +1840,12 @@ int nfsd_nl_version_set_doit(struct sk_b
+ 	for (i = 0; i <= NFSD_SUPPORTED_MINOR_VERSION; i++)
+ 		nfsd_minorversion(nn, i, NFSD_CLEAR);
+ 
+-	nlmsg_for_each_attr(attr, info->nlhdr, GENL_HDRLEN, rem) {
++	nlmsg_for_each_attr_type(attr, NFSD_A_SERVER_PROTO_VERSION, info->nlhdr,
++				 GENL_HDRLEN, rem) {
+ 		struct nlattr *tb[NFSD_A_VERSION_MAX + 1];
+ 		u32 major, minor = 0;
+ 		bool enabled;
+ 
+-		if (nla_type(attr) != NFSD_A_SERVER_PROTO_VERSION)
+-			continue;
 -
--	comp_algorithm_set(zram, ZRAM_PRIMARY_COMP, default_compressor);
- }
+ 		if (nla_parse_nested(tb, NFSD_A_VERSION_MAX, attr,
+ 				     nfsd_version_nl_policy, info->extack) < 0)
+ 			continue;
+@@ -2000,14 +1996,12 @@ int nfsd_nl_listener_set_doit(struct sk_
+ 	 * Walk the list of server_socks from userland and move any that match
+ 	 * back to sv_permsocks
+ 	 */
+-	nlmsg_for_each_attr(attr, info->nlhdr, GENL_HDRLEN, rem) {
++	nlmsg_for_each_attr_type(attr, NFSD_A_SERVER_SOCK_ADDR, info->nlhdr,
++				 GENL_HDRLEN, rem) {
+ 		struct nlattr *tb[NFSD_A_SOCK_MAX + 1];
+ 		const char *xcl_name;
+ 		struct sockaddr *sa;
  
- static ssize_t disksize_store(struct device *dev,
+-		if (nla_type(attr) != NFSD_A_SERVER_SOCK_ADDR)
+-			continue;
+-
+ 		if (nla_parse_nested(tb, NFSD_A_SOCK_MAX, attr,
+ 				     nfsd_sock_nl_policy, info->extack) < 0)
+ 			continue;
+@@ -2062,15 +2056,13 @@ int nfsd_nl_listener_set_doit(struct sk_
+ 		svc_xprt_destroy_all(serv, net);
+ 
+ 	/* walk list of addrs again, open any that still don't exist */
+-	nlmsg_for_each_attr(attr, info->nlhdr, GENL_HDRLEN, rem) {
++	nlmsg_for_each_attr_type(attr, NFSD_A_SERVER_SOCK_ADDR, info->nlhdr,
++				 GENL_HDRLEN, rem) {
+ 		struct nlattr *tb[NFSD_A_SOCK_MAX + 1];
+ 		const char *xcl_name;
+ 		struct sockaddr *sa;
+ 		int ret;
+ 
+-		if (nla_type(attr) != NFSD_A_SERVER_SOCK_ADDR)
+-			continue;
+-
+ 		if (nla_parse_nested(tb, NFSD_A_SOCK_MAX, attr,
+ 				     nfsd_sock_nl_policy, info->extack) < 0)
+ 			continue;
+--- a/include/net/netlink.h
++++ b/include/net/netlink.h
+@@ -68,6 +68,8 @@
+  *   nlmsg_for_each_msg()		loop over all messages
+  *   nlmsg_validate()			validate netlink message incl. attrs
+  *   nlmsg_for_each_attr()		loop over all attributes
++ *   nlmsg_for_each_attr_type()		loop over all attributes with the
++ *					given type
+  *
+  * Misc:
+  *   nlmsg_report()			report back to application?
+@@ -941,6 +943,18 @@ static inline u32 nlmsg_seq(const struct
+ 			  nlmsg_attrlen(nlh, hdrlen), rem)
+ 
+ /**
++ * nlmsg_for_each_attr_type - iterate over a stream of attributes
++ * @pos: loop counter, set to the current attribute
++ * @type: required attribute type for @pos
++ * @nlh: netlink message header
++ * @hdrlen: length of the family specific header
++ * @rem: initialized to len, holds bytes currently remaining in stream
++ */
++#define nlmsg_for_each_attr_type(pos, type, nlh, hdrlen, rem) \
++	nlmsg_for_each_attr(pos, nlh, hdrlen, rem) \
++		if (nla_type(pos) == type)
++
++/**
+  * nlmsg_put - Add a new netlink message to an skb
+  * @skb: socket buffer to store message in
+  * @portid: netlink PORTID of requesting application
 
 
