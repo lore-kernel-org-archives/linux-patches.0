@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2893D4FD79C;
-	Thu, 17 Sep 2026 17:29:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E37794FD78B;
+	Thu, 17 Sep 2026 17:29:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666169; cv=none; b=U1+d1gGAoCnmliAYvfQQNmLUsoaA38cdbRf2WZ6kNLxSTQXbWaXRiBkDsVwZeViU0EHo5S6T1vBLjzl1pTgeH1oCQn1NaruVdQnQa8qlm7Nwjm89eOatpPwoSGv7mfMMTWe3sGLAsFcBM71tY3hgEBHIOdyGvEzK0FN5HnNYiTY=
+	t=1789666172; cv=none; b=JYdYTO1LrjLdM9cuBzuvboJcO80SLzH3fZmJXr4RZUzhn3afklZ+vOuSPsyNvP0QqZAtL696nrNI5TJob+dxJaf3shZRcq78hNUMFpEGVe9osO61D2dhLulKDfcE8INZ1+PurLgGY++ez3WzMFkXclchPkvYkVWS/CpV30jlLX0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666169; c=relaxed/simple;
-	bh=8Eune91Yko6Cd2Bu6CsLLUSqOV17AEz6cmw/HgL9C2I=;
+	s=arc-20240116; t=1789666172; c=relaxed/simple;
+	bh=boVEaVxqX9uqUv/p5Ulb4HKOAhuHcLG1Fy9R2Yxe9aA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nkijg4BgbapWpxBCGV2yS3yctdzXDKdcvHtj6D9dpND5RrJDGaUHyGwFuIR50cgxjQ0duTiOeIJtW9RA1NDUUdFwB+VAKyG7DblgtT9TamOfmWA+xzj4JCZsTIfb6A0nMkO7UMHVKGbFQczgc7p0gl+D6scnQPeTbFfEvSizKJQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jAY9b1+Z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DLuHmRDE+8Uc1gdIVEDRfPoif/vkXtcqpbjF+o5R4M7Vs6ZM3FL1K/szahsgz20A6RbWuQ+KVYKLJbvZ7blsaZsdYKlRmHjWcyiaCPQJINcAimgpL54UPo3817qTo5xEFUopCG02L2nJrg87Wx8+d1JUfyXOHySmeF6vHI789vA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x0v7SwWS; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jAY9b1+Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45EDC1F00893;
-	Thu, 17 Sep 2026 17:29:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x0v7SwWS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40DBF1F000FF;
+	Thu, 17 Sep 2026 17:29:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666167;
-	bh=cvz9dxOsG6cNUWVp44e/OU7FCLIzeSYen5lVrREHFbM=;
+	s=korg; t=1789666170;
+	bh=ZzCztV/xr6kcYv3pR8bSEOl1akE+LZZfCDBOPmaAKx8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jAY9b1+ZFS675G29w4ScD2EmPbJp5804xUhjGExhgSYS+De6uq4eVkgrOrdTGLrQ+
-	 2sfHmQErKouBLVLp6ThtHIM7V5eBsbv7GyQU7qUyH5lZ4jwxaDQ4kNuz64MXvzjeLl
-	 cfgftzrekEkUPdz7XNn/BS1XgHX6IYpyHffc+Qig=
+	b=x0v7SwWSKyVqrBmg/dijb2Hrus8yDva/twPToev2TBlEeAMY+iMsHToRBySf92vBQ
+	 l1U7bi2Lbzz09AuE/hIcpMjPDjjb+6HdOvVyR48xQaepOykyZ+56fLFCZsQo+nySnO
+	 lt0FAo+/KPQ1E3gK7++v3OChGg4wT0OTF5ehB6cU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	Nicolas Schier <nsc@kernel.org>,
 	Nathan Chancellor <nathan@kernel.org>,
+	Nicolas Schier <nsc@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0948/1250] scripts/mksysmap: drop the MODULE_INFO() symbols from kallsyms
-Date: Thu, 17 Sep 2026 16:12:23 +0100
-Message-ID: <20260917151617.718256804@linuxfoundation.org>
+Subject: [PATCH 6.18 0949/1250] scripts/mksysmap: fix escape of $ in the __pi_ pattern
+Date: Thu, 17 Sep 2026 16:12:24 +0100
+Message-ID: <20260917151617.746636880@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -54,32 +54,30 @@ Content-Transfer-Encoding: 8bit
 
 From: Lorenzo Stoakes (ARM) <ljs@kernel.org>
 
-[ Upstream commit 281b61d408d4c39544583e393c6707af0ef5ee50 ]
+[ Upstream commit 59351365ac271b5e0eb180f211c531476a36221f ]
 
-Commit 3e86e4d74c04 ("kbuild: keep .modinfo section in vmlinux.unstripped")
-keeps .modinfo symbols out of System.map and kallsyms, which assumes unique
-IDs have a format like '__UNIQUE_ID_modinfo123'.
+Commit b18b047002b7 ("kbuild: change scripts/mksysmap into sed script")
+converted scripts/mksysmap from a shell script to a sed script.
 
-However, commit afb026b6d35c ("compiler: Tweak __UNIQUE_ID() naming"), sent
-in the same cycle, changes this to '__UNIQUE_ID_modinfo_123'.
+However an error was made - escaping of '$' required \\ escaping in shell
+but only \ in a sed script.
 
-As a result this regexp has never matched and every kernel since v6.18 has
-carried one kallsyms entries for every MODULE_INFO() declaration in the
-kernel whether the modules are compiled or not.
+This was mostly corrected in commit 7a6c355b55c0 ("scripts/mksysmap: Fix
+escape chars '$'"), but this fix missed arm64 PIE namespace local symbols
+like __pi_$x and __pi_$d which appear in System.map and /proc/kallsyms:
 
-That's 5,810 entries for an x86 defconfig build and 15,200 for arm64.
+$ grep __pi_\\$ /proc/kallsyms | sort -u
+0000000000000000 d __pi_$d
+0000000000000000 t __pi_$x
 
-On x86 defconfig that is 113 KiB of kallsyms tables and 32 KiB of bzImage,
-and every lookup walks past them.
+Fix the escaping properly.
 
-Fix the pattern.
-
-Fixes: 3e86e4d74c04 ("kbuild: keep .modinfo section in vmlinux.unstripped")
+Fixes: b18b047002b7 ("kbuild: change scripts/mksysmap into sed script")
 Assisted-by: LLM
 Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Reviewed-by: Nicolas Schier <nsc@kernel.org>
 Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-Link: https://patch.msgid.link/20260908-build-speedup-v1-1-5dc1ac01672d@kernel.org
+Reviewed-by: Nicolas Schier <nsc@kernel.org>
+Link: https://patch.msgid.link/20260908-build-speedup-v1-2-5dc1ac01672d@kernel.org
 Signed-off-by: Nicolas Schier <nsc@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
@@ -87,18 +85,18 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/scripts/mksysmap b/scripts/mksysmap
-index c4531eacde202..56a8b8bbdb373 100755
+index 56a8b8bbdb373..856b26ba2ac02 100755
 --- a/scripts/mksysmap
 +++ b/scripts/mksysmap
-@@ -83,7 +83,7 @@
- / _SDA2_BASE_$/d
+@@ -35,7 +35,7 @@
+ / __efistub_/d
  
- # MODULE_INFO()
--/ __UNIQUE_ID_modinfo[0-9]*$/d
-+/ __UNIQUE_ID_modinfo_[0-9]*$/d
+ # arm64 local symbols in PIE namespace
+-/ __pi_\\$/d
++/ __pi_\$/d
+ / __pi_\.L/d
  
- # ---------------------------------------------------------------------------
- # Ignored patterns
+ # arm64 local symbols in non-VHE KVM namespace
 -- 
 2.53.0
 
