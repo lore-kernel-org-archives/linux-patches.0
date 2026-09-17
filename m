@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B0DC4FC35A;
-	Thu, 17 Sep 2026 17:24:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EA0152188E;
+	Thu, 17 Sep 2026 17:24:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789665879; cv=none; b=d+KEURNVTcYpNPJnktdyXYIuL7rCglO6R5fL7JCQUUU1aJubuvbQus2QLiCZZ0U9CZc0d/s5d/LQHMlJazdEDqcO4P2pJpxTSjPUCyp1q3x84CjSMOmaUHRw6QNY/GDHTx8oqsdyCUnNtL8ybLo3ycZW7BbcoVKEHk0oaG16Ipo=
+	t=1789665882; cv=none; b=fKfGTEQuD8vIAg+7iMXymRbetw5kadq1+zSdbmRL3NCLGr8EIYDTilbBpLWoqq7H9f17h3PWH463qgUl+KKq97fzyVRRbeoRXs9oe7tnhdF4uUlCxKQSR5cuYFTdgFhS2qpCo73WEuddfQFzyoQuluoeTEBhuuSKj4b46Qz51Xs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789665879; c=relaxed/simple;
-	bh=lYX3ppBaIb9YZ06XtwWvP1rQTlfEfMdHSpbcxHs2Ry4=;
+	s=arc-20240116; t=1789665882; c=relaxed/simple;
+	bh=RdTCs5a/TojWFRxnlAu50oBcjRu2d9htTyW9JIpUWgo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Er8u0IIwJ5jLhTmD35QoUtj5XPzRLLq9U1SoPeRXF/zrEU0Z9WxiW9/pc7rxT+rAma7kdSM02t1Zjl4cpGj0CltEMVYKp0ZVmlTOX6UPYIDYlzOzyovZv74IzlPCPhOoEUyhhF6w8T4c9TVrAT5oBDNoWyUJ+kLr14XGcV4GO7g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qn6EoX8z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XsHRSUGtKAIL8RCF1yyvhRfZ4UijL5E7aoreC2OucKWAjxBWONK8yqnn3LbgOaTAWtbATC/acO0cchcP2xhIIpL1iqGXpubRyR+FAMWgl8pCigzl5gcEARHsRdyj1vh5Sn0tG/Ac/1WUmx/+JnjFxS9iFrLQceMYQuR+f53E4T4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CVhmrNnv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qn6EoX8z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72EAF1F000FF;
-	Thu, 17 Sep 2026 17:24:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CVhmrNnv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B82911F000FF;
+	Thu, 17 Sep 2026 17:24:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789665878;
-	bh=E7AWviYvZVfRiTRiAa5qNLo5cpcBKpo+lKNlJBfMcjY=;
+	s=korg; t=1789665881;
+	bh=LPCXtJQbsRbNyHdX2MY0CLbQFU3wHadXVFqJSBJcaLs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qn6EoX8zmXMlx6SzRIYbQRzbBOMYuFOM5UCjUJJBmlzaLhr9XW/u3NfaZGKeR7cTu
-	 BgLlrAIispmdb2/nTdVdE8P5gL2D19lHQ5BQeYf1aMY1jhNT/3L4Crk7d7oXdjT3O1
-	 E3egaArArGJYJbxE4/yosmzw1ahF8h/3y2UUy+c0=
+	b=CVhmrNnvQ2DoethwOUz/EI3e599X7PzUgnKg4dxgphKUmHhxn2f+GoRT7soiHvQXA
+	 MkJ/Y5B4TykdKUs2jMR7T42fbQCzNjUVUAWr4KgYAgBmIgTjB8CcN2CBJXZpY9WLsl
+	 Wl1fRUtYq7+WhfyMeR7AgSlTIH22Elb/MCSrMOnc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhiling Zou <zhilinz@nebusec.ai>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	"hpp.iscas" <hppiscas@163.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0849/1250] netfilter: ip6_tables: set F_PROTO when proto value is nonzero
-Date: Thu, 17 Sep 2026 16:10:44 +0100
-Message-ID: <20260917151614.973593661@linuxfoundation.org>
+Subject: [PATCH 6.18 0850/1250] ASoC: mt6351: Publish the OF module alias
+Date: Thu, 17 Sep 2026 16:10:45 +0100
+Message-ID: <20260917151615.000716384@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -52,50 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: hpp.iscas <hppiscas@163.com>
 
-[ Upstream commit da4afc5a956d407443988e97a4d4ca14c2e999c7 ]
+[ Upstream commit 9c3882ec10399c14c59b7e4599d33c4395367c37 ]
 
-The ip6tables traverser doesn't search the extension header chain unless
-userspace did set the IP6T_F_PROTO flag.
+The MT6351 codec platform driver uses mt6351_of_match to bind devices
+with compatible mediatek,mt6351-sound. The codec can be a separate
+module, but the OF table is not exported to module alias metadata.
 
-This also means that userspace that sets the e->ipv6.proto flag can bypass
-the protocol check for the rule by not setting this flag.
+Publish the existing table without changing codec matching, register
+access or the machine-driver configuration.
 
-That in turn means that all ip6_tables modules and targets that want to
-reject rules without '-p' flag MUST also check for that flag.
-
-Not all do, likely because they got copied from iptables which lacks
-this flag (no extension headers).
-
-Instead of fixing up all the relevant targets, emulate ip6tables behaviour
-in the kernel (like nft_compat.c) and set the flag if the protocol is set.
-
-Reported-by: Zhiling Zou <zhilinz@nebusec.ai>
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: a74d51ba0e17 ("ASoC: add mt6351 codec driver")
+Signed-off-by: hpp.iscas <hppiscas@163.com>
+Link: https://patch.msgid.link/20260905133210.63803-1-hppiscas@163.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/netfilter/ip6_tables.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ sound/soc/codecs/mt6351.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/ipv6/netfilter/ip6_tables.c b/net/ipv6/netfilter/ip6_tables.c
-index 3586e636c66bd..7efc2a19662f9 100644
---- a/net/ipv6/netfilter/ip6_tables.c
-+++ b/net/ipv6/netfilter/ip6_tables.c
-@@ -647,6 +647,11 @@ check_entry_size_and_hooks(struct ip6t_entry *e,
- 	/* Clear counters and comefrom */
- 	e->counters = ((struct xt_counters) { 0, 0 });
- 	e->comefrom = 0;
-+
-+	/* set F_PROTO, else ip6_packet_match won't do the right thing. */
-+	if (e->ipv6.proto)
-+		e->ipv6.flags |= IP6T_F_PROTO;
-+
- 	return 0;
- }
+diff --git a/sound/soc/codecs/mt6351.c b/sound/soc/codecs/mt6351.c
+index 2a5e963fb2b57..401cb0b48c972 100644
+--- a/sound/soc/codecs/mt6351.c
++++ b/sound/soc/codecs/mt6351.c
+@@ -1479,6 +1479,7 @@ static const struct of_device_id mt6351_of_match[] = {
+ 	{.compatible = "mediatek,mt6351-sound",},
+ 	{}
+ };
++MODULE_DEVICE_TABLE(of, mt6351_of_match);
  
+ static struct platform_driver mt6351_codec_driver = {
+ 	.driver = {
 -- 
 2.53.0
 
