@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B65A351DB1F;
-	Thu, 17 Sep 2026 17:14:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E908051DDF4;
+	Thu, 17 Sep 2026 17:14:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789665252; cv=none; b=fGSNJUKQV5dYP00SylIEathGdJOb5FHMtxDCMkVb1ilKo6OkOs6LECWlstkqGohV3dBB+++am2H5HW6FJpd/z1X605MjZ7C8YVM4TdrYEYLlYmh4/5wDIZv+Bbf+Ef8gVKkLsV5GXJ4gxCBV5UZNBRWDX9F7MAzwFCZNzzfbyjI=
+	t=1789665256; cv=none; b=R/VC8gjiMVIVdGLgey7orZH1YB8KVKxAFLT3nQCL/hbEWy0cj13Xc1EsqA0JjpkMfeaJ+qErBB3YbeWv6F2NNDb8IeoJeAgdcKIvydZf8l7V+3Gp1RynaCYUOywv+21nNAJvR6jpNybCgT9J3yoTEyN9uvXyNh/VTkEZE41avTw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789665252; c=relaxed/simple;
-	bh=9L5Erbyqy996AxZ0DDw+VjruL8jh8xlC7fk64LVH/dk=;
+	s=arc-20240116; t=1789665256; c=relaxed/simple;
+	bh=1dDFeS8fndERi9K+H6Lt/lc7mch7YmQ5c6262tKjF9M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N3kvZrhWrssistj41FMKVYtCb/C+nFGeWwM5WQ1AqAh7FO0JR49g8864xYgYNl1rW7QusCSBn/zKI8yCS2VuUZzYzcJ70MY0dMmwwT+CcSQiK9911yCgB9weOZrJnZLjybV0efY/k5QwmpYCoSfUTHUUTC7lJMKxavtES9DeRb4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rYdkQ9DZ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dWSczyHT1oAnqWqJaftW/YJqdDGTM1PNHR7GELpO2J27olNWdo8/bC/4IEUpKIOtHC2D9k6UfdVk2ZM9UCWmOZNtfZRGVXONEJbH0kwHA1ZiiwGvISpe8u+OkiAfWZz8BTVp7dx6nWLU+z7xA8tsICOAkR9AHEYhldqaKnW1iU8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F0ejkuEu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rYdkQ9DZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 188AC1F000FF;
-	Thu, 17 Sep 2026 17:14:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F0ejkuEu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CC251F000FF;
+	Thu, 17 Sep 2026 17:14:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789665251;
-	bh=KZmERMGpocpF6j/oSW9zFQ44AE4nQRkGQFTy8GfYxFI=;
+	s=korg; t=1789665254;
+	bh=+gbhY0rKx87qe0RWi7tNHlHtKwtHl+iH99LOiLIi2LE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rYdkQ9DZ7dBR3MvGPMXetii7AJIBPTUIz7qBKPu7u8RNhy0ROsdFP3W/1KzwkS9tK
-	 EKowk/xMgmQcHDOnrzYeeP4cEk93HQWsuRN+Aa5Of282/7zkNvq/VWzJt+2TdmbH2+
-	 IOz8PAedyCSlXuNvwpk3IpOq04qDoy7lgIvewip8=
+	b=F0ejkuEu7abN2sdHeOw3tn91IePT+EYXuwjrWDYuuiucdS8MEUS3uo/1Ru4BloO63
+	 jLpqapBOoyCiPfAn8KsRMzkTXYkZH4lrdm0/d5sROoHmTXXxf5K+anvGediRhcxkgX
+	 2LVUBdaNcxbEbvFawDgTZwAOuE60rGZq1wqMzYGs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Yan <wangyan01@kylinos.cn>,
-	Athira Rajeev <atrajeev@linux.ibm.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	David Howells <dhowells@redhat.com>,
+	Paulo Alcantara <pc@manguebit.org>,
+	netfs@lists.linux.dev,
+	linux-fsdevel@vger.kernel.org,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0641/1250] perf powerpc-vpadtl: Fix raw_size of DTL samples
-Date: Thu, 17 Sep 2026 16:07:16 +0100
-Message-ID: <20260917151609.264522734@linuxfoundation.org>
+Subject: [PATCH 6.18 0642/1250] netfs: Fix unbuffered/DIO write partial transfer error return
+Date: Thu, 17 Sep 2026 16:07:17 +0100
+Message-ID: <20260917151609.292521686@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -53,46 +54,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wang Yan <wangyan01@kylinos.cn>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit aadea57f532882d8bab444646863c7ef8a778ff1 ]
+[ Upstream commit c753a33664e4e86246f7491a93d9a77c1a673b5d ]
 
-In powerpc_vpadtl_sample(), raw_data of the synthetic sample points to a
-struct powerpc_vpadtl_entry (48 bytes), but raw_size is set to
-sizeof(record).  record is a struct powerpc_vpadtl_entry pointer, so
-sizeof(record) is the size of the pointer (8 bytes on 64-bit) rather
-than the size of the record itself.
+Fix unbuffered/DIO write to return the amount of data transferred in
+preference to an error if a partial transfer has been achieved, and to
+prefer an error stashed in the request over the one returned by
+netfs_unbuffered_write() (likely -EINTR or -ERESTARTSYS).
 
-As a result, consumers that bound their access to raw_data by raw_size
-only see or copy the first 8 bytes of each DTL entry instead of the full
-record.
-
-Use sizeof(*record) so that raw_size reflects the actual length of the
-raw data.
-
-Fixes: 8644834a482a ("perf powerpc: Process the DTL entries in queue and deliver samples")
-Signed-off-by: Wang Yan <wangyan01@kylinos.cn>
-Reviewed-by: Athira Rajeev <atrajeev@linux.ibm.com>
-Reviewed-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Fixes: a0b4c7a49137e ("netfs: Fix unbuffered/DIO writes to dispatch subrequests in strict sequence")
+Link: https://sashiko.dev/#/patchset/20260824120224.504575-1-dhowells%40redhat.com
+Signed-off-by: David Howells <dhowells@redhat.com>
+Link: https://patch.msgid.link/20260827134304.2075713-3-dhowells@redhat.com
+Acked-by: Paulo Alcantara <pc@manguebit.org>
+cc: Paulo Alcantara <pc@manguebit.org>
+cc: netfs@lists.linux.dev
+cc: linux-fsdevel@vger.kernel.org
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/powerpc-vpadtl.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/netfs/direct_write.c | 12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
-diff --git a/tools/perf/util/powerpc-vpadtl.c b/tools/perf/util/powerpc-vpadtl.c
-index 39a3fb3f13301..55b9b6e070746 100644
---- a/tools/perf/util/powerpc-vpadtl.c
-+++ b/tools/perf/util/powerpc-vpadtl.c
-@@ -192,7 +192,7 @@ static int powerpc_vpadtl_sample(struct powerpc_vpadtl_entry *record,
- 	sample.cpumode = PERF_RECORD_MISC_KERNEL;
- 	sample.time = save;
- 	sample.raw_data = record;
--	sample.raw_size = sizeof(record);
-+	sample.raw_size = sizeof(*record);
- 	event.sample.header.type = PERF_RECORD_SAMPLE;
- 	event.sample.header.misc = sample.cpumode;
- 	event.sample.header.size = sizeof(struct perf_event_header);
+diff --git a/fs/netfs/direct_write.c b/fs/netfs/direct_write.c
+index f9ab69de3e298..cc5151ea75a11 100644
+--- a/fs/netfs/direct_write.c
++++ b/fs/netfs/direct_write.c
+@@ -139,13 +139,11 @@ static int netfs_unbuffered_write(struct netfs_io_request *wreq)
+ 		if (test_bit(NETFS_SREQ_NEED_RETRY, &subreq->flags)) {
+ 			retry = true;
+ 		} else if (test_bit(NETFS_SREQ_FAILED, &subreq->flags)) {
+-			ret = subreq->error;
+-			wreq->error = ret;
++			wreq->error = subreq->error;
+ 			netfs_see_subrequest(subreq, netfs_sreq_trace_see_failed);
+ 			subreq = NULL;
+ 			break;
+ 		}
+-		ret = 0;
+ 
+ 		if (!retry) {
+ 			netfs_unbuffered_write_collect(wreq, stream, subreq);
+@@ -292,11 +290,11 @@ ssize_t netfs_unbuffered_write_iter_locked(struct kiocb *iocb, struct iov_iter *
+ 		ret = -EIOCBQUEUED;
+ 	} else {
+ 		ret = netfs_unbuffered_write(wreq);
+-		if (ret < 0) {
+-			_debug("begin = %zd", ret);
+-		} else {
++		if (wreq->transferred) {
+ 			iocb->ki_pos += wreq->transferred;
+-			ret = wreq->transferred ?: wreq->error;
++			ret = wreq->transferred;
++		} else if (wreq->error) {
++			ret = wreq->error;
+ 		}
+ 
+ 		netfs_put_request(wreq, netfs_rreq_trace_put_complete);
 -- 
 2.53.0
 
