@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48D2F3B2FC2;
-	Thu, 17 Sep 2026 17:16:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 334884EF123;
+	Thu, 17 Sep 2026 17:16:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789665407; cv=none; b=KP5vjY1weN0NKqgFKgaBaYL8tvkx9YJa2eS7829G/x1ilIyjVG7Iu9TcJNW78Mu2d6/b0adxMXKoyBWm5KA6AKUrCAK5fIWLCulNHZwrBnJ52s+0/bQ9BtZjyqgKDJTVaDr5dcLAgyMEcS6E7y0VAiXKo94qSEY2z16EjX6hQ6w=
+	t=1789665410; cv=none; b=By6YimlfllPjPyJTt1eOBybzUO+k1sAAVEX/1V1zvSejGiVoimNpi7ETx8vkV3X/MSE7804RlbWRIEZSVcVcPoWGRjPHVvABVbL4r7W2qT+YpOHfi0LHKYqSKw3bvQ0wDwPkd6SCAL2UNk5W+xGg0zbsl4TKIUBDP2Hyth22z1M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789665407; c=relaxed/simple;
-	bh=PuZNyxLuxoHB7kwqZcg/9v8kifsiEBoYGfEAYgpykdo=;
+	s=arc-20240116; t=1789665410; c=relaxed/simple;
+	bh=c4DSUiU5XN90dMWwMR6SRhHWeZWsqW+UfGN/ljQ5/zY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a/oWEgNhRLa1l4u1e0gMvNn0ZRitBciuYcTI9g44UK6G78tc1iD3BqsJoR6CTcHg17my0lDDdg0r4IL/Oyao3zP+trrmfb20sX+eFh2gwMPmpSbC4ZQGlWmIoiA08adT0GbiRp5TRkJVrJqxaf8FytdVw88P9egRutGZnL2pl74=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MEUtpsim; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FLTCPL/yBzCTHyfEENYFWRG78NTarbKUtvgpkfha2ARyykVUc46F3lrRMb7XCk2EW5f4ZzGJBr1ybJ5GgBPi5KUUyeVBN77vUTmoBoryb+TfwDr7sMCqp6xm5DHDqDYTEARuCAYES7ehhsBXC2rwvUffig4Tu5jgP9pBpXvIus0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uysz2lOE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MEUtpsim"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F23D1F000FF;
-	Thu, 17 Sep 2026 17:16:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uysz2lOE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D6791F000FF;
+	Thu, 17 Sep 2026 17:16:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789665406;
-	bh=YRN6OBJo+e9OM996zwK5Za1iK0KpuZa24ZpcWQEjS+s=;
+	s=korg; t=1789665409;
+	bh=+KsabF6FgfttSWLsASKr1Qbli7ZJjhzztn6wH1bdKHI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MEUtpsimisySCdE8MmViyLvW4L8IQCbYsvGwtoNk02yAjQqpKQgbxI8Qv9jW35Xo+
-	 0lE+niKEJ98IBnE1dzG6SKJoQJW50wt0OHOoq8qhLHmnqRbolWL1kuvvh+cMpH2llM
-	 dVw/2+DzlNp+AEubDlIKUgNR5L/u5Z6BAzb6gd5E=
+	b=Uysz2lOEMLEt1CuZ2wZ5yMtOrjrqrKIu+tG2FKk/TPNNQYdJI2oubVgSEvP/FsoTC
+	 I5Jq19tjot6PpczWMTQ6+i/tlcr9K5D/e/p2glvXrruE3XfFEbzYVH5InX1SiC1fzt
+	 FirAsh45bcziHtwXq+MT61jtOg21lbw1Uwia4Gcw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sumanth Korikkar <sumanthk@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>,
+	Wanwu Li <liwanwu@kylinos.cn>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0655/1250] s390/diag324: Preserve -EBUSY return code
-Date: Thu, 17 Sep 2026 16:07:30 +0100
-Message-ID: <20260917151609.647930998@linuxfoundation.org>
+Subject: [PATCH 6.18 0656/1250] sched_ext: Fix timer pinning and return value in scx_central
+Date: Thu, 17 Sep 2026 16:07:31 +0100
+Message-ID: <20260917151609.675526268@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -52,41 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sumanth Korikkar <sumanthk@linux.ibm.com>
+From: Wanwu Li <liwanwu@kylinos.cn>
 
-[ Upstream commit 439077c39d8f7108aea4dd8d4d819b9b864fe84c ]
+[ Upstream commit 23761359861ca4bb087540937dfea8b0716914c2 ]
 
-When diag324 reports -EBUSY, the error code is
-overwritten by the result of copy_to_user() and put_user(). As a result,
-the ioctl may incorrectly return success instead of -EBUSY.
+central_timerfn() re-arms the timer with a hardcoded
+BPF_F_TIMER_CPU_PIN flag and ignores the return value, defeating
+start_central_timer()'s -EINVAL fallback for kernels without the flag
+(<6.7): on such kernels the first tick kills the timer permanently
+with no diagnostic.  Honor timer_pinned and check the return like
+the initial arm does.
 
-Preserve the original diag324 return code and only return -EFAULT when
-copying data to userspace fails.
-
-Fixes: 90e6f191e1ee ("s390/diag324: Retrieve power readings via diag 0x324")
-Signed-off-by: Sumanth Korikkar <sumanthk@linux.ibm.com>
-Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Fixes: 22a920209ab6 ("sched_ext: Implement tickless support")
+Signed-off-by: Wanwu Li <liwanwu@kylinos.cn>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/kernel/diag/diag324.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ tools/sched_ext/scx_central.bpf.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/arch/s390/kernel/diag/diag324.c b/arch/s390/kernel/diag/diag324.c
-index fe325c2a2d0dc..3eec0cc8fb9e0 100644
---- a/arch/s390/kernel/diag/diag324.c
-+++ b/arch/s390/kernel/diag/diag324.c
-@@ -182,8 +182,7 @@ long diag324_pibbuf(unsigned long arg)
- 		goto out;
- 	rc = copy_to_user((void __user *)address, data->pib, data->pib->len);
- 	rc |= put_user(data->sequence, &udata->sequence);
--	if (rc)
--		rc = -EFAULT;
-+	rc = rc ? -EFAULT : data->rc;
- out:
- 	mutex_unlock(&pibmutex);
- 	return rc;
+diff --git a/tools/sched_ext/scx_central.bpf.c b/tools/sched_ext/scx_central.bpf.c
+index 55df8b7988657..4f0eee5d8f26b 100644
+--- a/tools/sched_ext/scx_central.bpf.c
++++ b/tools/sched_ext/scx_central.bpf.c
+@@ -256,6 +256,7 @@ static int central_timerfn(void *map, int *key, struct bpf_timer *timer)
+ 	u64 now = scx_bpf_now();
+ 	u64 nr_to_kick = nr_queued;
+ 	s32 i, curr_cpu;
++	int ret;
+ 
+ 	curr_cpu = bpf_get_smp_processor_id();
+ 	if (timer_pinned && (curr_cpu != central_cpu)) {
+@@ -289,7 +290,10 @@ static int central_timerfn(void *map, int *key, struct bpf_timer *timer)
+ 		scx_bpf_kick_cpu(cpu, SCX_KICK_PREEMPT);
+ 	}
+ 
+-	bpf_timer_start(timer, TIMER_INTERVAL_NS, BPF_F_TIMER_CPU_PIN);
++	ret = bpf_timer_start(timer, TIMER_INTERVAL_NS,
++			      timer_pinned ? BPF_F_TIMER_CPU_PIN : 0);
++	if (ret)
++		scx_bpf_error("bpf_timer_start failed (%d)", ret);
+ 	__sync_fetch_and_add(&nr_timers, 1);
+ 	return 0;
+ }
 -- 
 2.53.0
 
