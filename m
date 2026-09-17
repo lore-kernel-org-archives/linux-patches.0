@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D8AF4FE2EA;
-	Thu, 17 Sep 2026 17:08:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB300470EB6;
+	Thu, 17 Sep 2026 17:08:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789664884; cv=none; b=Kno/5sDYq1zW+sNCubxbhdihUxyCNncALhqJsKiNWCYMhYYaCSV7Qu3mW9eFqdie6Q3rYlQO6M2dkObFlwZBJO1S0pmXN47LlFueL0kcyPYuZzgM+eub5X3sr8W8AUT7295BE3TIaSRzwckcbP2tp3Srr0LQWyxA5/EV+SIZJx0=
+	t=1789664887; cv=none; b=grAnV0KRax0DBEUTclH06rcD8lUnMNYVjC78RFhashDD8A9axD5Gwkw/PWoHfCoewnLUHsm99+1n3WJeF3hj9QJFMgc2nu0QoAfTTMti+s1cvgCiCA0Iog8QBkWS8Xam+f1wW2L52YCQdyo0U57bSS+CwEWHEP6uWzJirmUuZ74=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789664884; c=relaxed/simple;
-	bh=5gZ1zzTeDG2ONF1kO3mAZCK5goQtnaIoBnkt5xURzIo=;
+	s=arc-20240116; t=1789664887; c=relaxed/simple;
+	bh=aE2K5WVtL9ZIf1t8PzyeH/EM80/SS5LP5loWT2cYTvY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h8tel/LykYf5VsPhU7kCZRNUe+NRAbhUXjvraKevDfWvvVbGjUD4p+j5JxuTczWMGYVSgQOfFkA1/ncaECzM9lG2J7U+OZfyO1zxFe2iHkwoWRYFD+S9eBLR8cjwiyg/AzkYDOVYQYlcMh5c4eooNEhDWP+ozkjdl7G5Pke5oMw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BujSbHl6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TnEOKJ+IRtxwfR7d0NGYulw5NnW2FUH4eEN0I8NDeLw4bi+j7ErV952yzOCD+ipoTUdKnuouYK/4n9yhGD6br8gX9ZwFArN3/D17lni8MfByNWB+Bn09iy02kURqmSikfePls5WggM+2AOs8TGyCo5O0UIcBYObNE8yTql7x3BI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gglG1+DN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BujSbHl6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 085C61F000FF;
-	Thu, 17 Sep 2026 17:08:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gglG1+DN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0ED1B1F000FF;
+	Thu, 17 Sep 2026 17:08:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789664882;
-	bh=RbSub+9A/Zt9Jf0jm96gthvQk5sdKrHp47R/E9ku1ig=;
+	s=korg; t=1789664885;
+	bh=5NBQoStF9slexYNtsaPo5NcH4rMtSUyFSK+kkVsKrI4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BujSbHl6NaUt9eoMCGSIjKMsl+XVDmh7xjD+T4PlrOvk3simZ4Rf8UWj75mdW/qY4
-	 5azXYEPuXMHZpBEW2lqjHJEZWOE47P1D/RVrUMfgD/xuxx+Y2NohjtwFqaLxdChAY7
-	 goTBQzovH82j5yQM4zB9rcznCLrYsJzPAumqkgNM=
+	b=gglG1+DNP/czx3c5XvJ2JVm3SJx0/9NlWUvmWCm3fpcdtMqYnfpV4BLCeDlylqHnK
+	 ibDIux+fbbLhnTrNB2fYqMN2TBuHdedJVdPVEpxEd+ZWCTCtjqYQoBSfpP275UPN+9
+	 vyZYBdvD9OFQBXHyPEmzOIBKV4oZlyBDybuFxBCQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
-	Dave Chen <davechen@synology.com>,
-	David Sterba <dsterba@suse.com>,
+	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0513/1250] btrfs: only account delalloc bytes for regular file inodes in btrfs_getattr()
-Date: Thu, 17 Sep 2026 16:05:08 +0100
-Message-ID: <20260917151605.862033809@linuxfoundation.org>
+Subject: [PATCH 6.18 0522/1250] wifi: iwlwifi: pcie: null RX pointers after free
+Date: Thu, 17 Sep 2026 16:05:17 +0100
+Message-ID: <20260917151606.094961062@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -52,72 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Chen <davechen@synology.com>
+From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
 
-[ Upstream commit 9411aafdf352b8d72668732af5a37dcb27383e25 ]
+[ Upstream commit 2c79d7a7b583050c9f58041465cb46fe3483ab5d ]
 
-btrfs_getattr() unconditionally reads BTRFS_I(inode)->new_delalloc_bytes
-and adds it (sector-aligned) to stat->blocks for every inode type.
-However, new_delalloc_bytes lives in a union with last_dir_index_offset:
+When iwl_pcie_tx_init() fails after RX init, nic init unwinds via
+iwl_pcie_rx_free().
 
-    union {
-        u64 new_delalloc_bytes;     /* files only */
-        u64 last_dir_index_offset;  /* directories only */
-    };
+The freed RX members stayed non-NULL on the live transport object,
+so later teardown or retry could touch stale RX state.
+Set rx_pool, global_table, rxq, and alloc_page to NULL after free
+to make repeated cleanup and retry paths safe.
 
-For a directory inode this memory holds last_dir_index_offset, which is
-set during directory logging (e.g. flush_dir_items_batch()) to the
-offset of the last logged BTRFS_DIR_INDEX_KEY.  That offset grows with
-the number of entries ever created in the directory (dir indexes are
-monotonic and never reused), so it can be arbitrarily large.
-
-As a result, after a directory has been logged (e.g. via an fsync that
-triggers directory logging), btrfs_getattr() reports inflated st_blocks
-for that directory.  The inflation is purely in-core and disappears
-after the inode is evicted and reloaded (btrfs_alloc_inode() zeroes the
-union), e.g. after a remount.
-
-Reproducer (on a btrfs filesystem):
-
-    D=/mnt/btrfs/d
-    mkdir -p $D
-    for i in $(seq 1 20000); do touch $D/f$i; done
-    sync                      # commit, push dir index high
-    touch $D/trigger          # dirty the dir in a new transaction
-    xfs_io -c fsync $D        # log the directory -> sets last_dir_index_offset
-    stat -c '%b' $D           # st_blocks is now inflated (e.g. 40)
-    # umount + mount -> st_blocks drops back to the correct value
-
-The evict path already knows this union is type-dependent and guards the
-corresponding WARN_ON with !S_ISDIR() in btrfs_destroy_inode(); only
-btrfs_getattr() was missing the equivalent check.
-
-Only read new_delalloc_bytes for regular files, which are the only
-inodes that ever set it.
-
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Dave Chen <davechen@synology.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Assisted-by: GitHubCopilot:gpt-5.3-codex
+Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+Link: https://patch.msgid.link/20260714141909.33e8978d8b36.Ibaedd4b0ce01405b940de7b90223b6d2c5136ffd@changeid
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/inode.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/wireless/intel/iwlwifi/pcie/gen1_2/rx.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
-index cca9840bee896..6795f87314c45 100644
---- a/fs/btrfs/inode.c
-+++ b/fs/btrfs/inode.c
-@@ -8166,7 +8166,8 @@ static int btrfs_getattr(struct mnt_idmap *idmap,
- 	stat->result_mask |= STATX_SUBVOL;
+diff --git a/drivers/net/wireless/intel/iwlwifi/pcie/gen1_2/rx.c b/drivers/net/wireless/intel/iwlwifi/pcie/gen1_2/rx.c
+index 619a9505e6d9d..c723839288f2e 100644
+--- a/drivers/net/wireless/intel/iwlwifi/pcie/gen1_2/rx.c
++++ b/drivers/net/wireless/intel/iwlwifi/pcie/gen1_2/rx.c
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause
+ /*
+- * Copyright (C) 2003-2014, 2018-2024 Intel Corporation
++ * Copyright (C) 2003-2014, 2018-2024, 2026 Intel Corporation
+  * Copyright (C) 2013-2015 Intel Mobile Communications GmbH
+  * Copyright (C) 2016-2017 Intel Deutschland GmbH
+  */
+@@ -1241,11 +1241,16 @@ void iwl_pcie_rx_free(struct iwl_trans *trans)
+ 		}
+ 	}
+ 	kfree(trans_pcie->rx_pool);
++	trans_pcie->rx_pool = NULL;
+ 	kfree(trans_pcie->global_table);
++	trans_pcie->global_table = NULL;
+ 	kfree(trans_pcie->rxq);
++	trans_pcie->rxq = NULL;
  
- 	spin_lock(&BTRFS_I(inode)->lock);
--	delalloc_bytes = BTRFS_I(inode)->new_delalloc_bytes;
-+	delalloc_bytes = S_ISREG(inode->i_mode) ?
-+			 BTRFS_I(inode)->new_delalloc_bytes : 0;
- 	inode_bytes = inode_get_bytes(inode);
- 	spin_unlock(&BTRFS_I(inode)->lock);
- 	stat->blocks = (ALIGN(inode_bytes, blocksize) +
+-	if (trans_pcie->alloc_page)
++	if (trans_pcie->alloc_page) {
+ 		__free_pages(trans_pcie->alloc_page, trans_pcie->rx_page_order);
++		trans_pcie->alloc_page = NULL;
++	}
+ }
+ 
+ static void iwl_pcie_rx_move_to_allocator(struct iwl_rxq *rxq,
 -- 
 2.53.0
 
