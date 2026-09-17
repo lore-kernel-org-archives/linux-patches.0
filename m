@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2445A4F5DF8;
-	Thu, 17 Sep 2026 17:28:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A8DC4D179A;
+	Thu, 17 Sep 2026 17:28:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666088; cv=none; b=kmNjwNG+TAY26b+rV7+LtuJbvJlmCkOM387IPiQGMJbRqiJeUneaJ9m3JWa1vXeV1Qj2cU5qPA4b0vB/mSI/AMPOM5o8eSSwLFfcbL+/HR0AypAZkftEdjOy2WqmmVKgB9vwXDYhBCNe22C5oXawcoqvmBH6fcT0cyQXYO1zWKg=
+	t=1789666091; cv=none; b=XIi+D0yvMLJfFNF+44H5Uho8MIAGMXGX/HmALaTGdZWj7VoGy624y3ewGVLRhGrLkh+nviOsmE+k3WEx1NU+s36PbsUldYbwGKbbcEGXHYyGV2KSJmy3XwjDjCkQxhDw0uyYot5PMVvTgtXuCR3J/gsNlxav5L0iOEQ8soo4vNU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666088; c=relaxed/simple;
-	bh=cte1r8nWCK6/cibF0UajU/NbWi1ce35kaPjU176E+Y8=;
+	s=arc-20240116; t=1789666091; c=relaxed/simple;
+	bh=zjjEo0dC65XPDCyLjt0VLHXfpEauikZYyxO5cnArIF4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p4kC1+LTAP45n6UnNkUd1oQAvn+z8s1em5TEB9hYIhkvkaerR6YJXUNZjifEjrZlfSc7upFB4IBv1+1b6U0u8zNkS1/7gVPGdu6ZaCIAmowsmQpLZMQirenjrov7LZlK62RomTPlmIwzbp6rh2aesJmD60O63YmxDgdJA4ZynI8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W2/PdF7o; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QEdrdSu4BRfZANmXERoRycH4AJ/VHWtzxqcsMEGyIV2TPOcZ6G9CEZ9crjnrq6VrCqUfZ8MngjOIp3f5m9J5se+PHFl34sdXMLCUF2sJl+WpTTJ9lDGoP6+OvqT3aLszA+L8NPPtnTxmjwefYmpi+yLyIkY9A7rVaPKy+2JaIcM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=imB66G4t; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W2/PdF7o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A38D1F000FF;
-	Thu, 17 Sep 2026 17:28:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="imB66G4t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 726001F000FF;
+	Thu, 17 Sep 2026 17:28:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666087;
-	bh=10UTKTgKx3vehfgq225Mzs/9DwqmkjF+TQeqPPyj4ew=;
+	s=korg; t=1789666090;
+	bh=1nAchl0QlQ3pwXPYp/1S5GNP209OXikkTbY61SMthN0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W2/PdF7ossO49kkr7YD+0hjUIbQI0vJv46aY2yqcT7HC/Zror4l+1b48VgGF/DA1q
-	 pfwn13hcmr+Qi9TgrOZutSVO3IH8FnmTTLQpkJGJ9en2PD8Y9a5To4WSvu4aKbsd3S
-	 HXsPQpp/TFYdVWyU+dtx2ZRVSfynugpYg+ru+P6o=
+	b=imB66G4tUFeCtU7axKzX1MGXrBZXBq7qZ/37RMcjnQBVIfdlv+JB3g+HpOh6OuyXz
+	 RRNGCVDmKlUEOK+xV7hftocWzmFPgftU+4rdUMvVgXsFMES59iuf+fldtgpFYDjB1u
+	 Qxo7MQychm+FUhE8gO8DwUdWHZze8k5EVu8fRGuk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vincent Guittot <vincent.guittot@linaro.org>,
+	Tejun Heo <tj@kernel.org>,
+	Hui Su <sh_def@163.com>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	K Prateek Nayak <kprateek.nayak@amd.com>,
+	John Stultz <jstultz@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0920/1250] sched/eevdf: Fix rb augmented with multi fields
-Date: Thu, 17 Sep 2026 16:11:55 +0100
-Message-ID: <20260917151616.942010723@linuxfoundation.org>
+Subject: [PATCH 6.18 0921/1250] sched: Account cgroup CPU time to the execution context
+Date: Thu, 17 Sep 2026 16:11:56 +0100
+Message-ID: <20260917151616.969385155@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -52,132 +53,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vincent Guittot <vincent.guittot@linaro.org>
+From: Hui Su <sh_def@163.com>
 
-[ Upstream commit 51b0e68cfa0ac69e3c3ea9d6753af7e15dfaab22 ]
+[ Upstream commit c23810313bdf6b02f39a1f2a1464c4b18bd39e31 ]
 
-The eevdf rb tree maintains 3 augmented fields but only one is currently
-copied when balancing the tree.
+Proxy execution separates the scheduling context from the execution
+context. Commit aa4f74dfd42b ("sched: Fix runtime accounting w/ split
+exec & sched contexts") made per-task and thread-group runtime
+accounting follow the task that actually executes, while cgroup CPU
+usage is charged to the donor.
 
-Add a more generic define that can be used when there are several augmented
-fields. In this case, we provide a function that takes care of copying all
-fields.
+When the donor and execution task belong to different cgroups, this
+makes a task's execution time count against a different cgroup from the
+one the task belongs to.
 
-Fixes: aef6987d8954 ("sched/eevdf: Propagate min_slice up the cgroup hierarchy")
-Signed-off-by: Vincent Guittot <vincent.guittot@linaro.org>
+Cgroup CPU usage should follow the execution context, matching the
+per-task, thread-group, and cgroup user/system accounting. Keep
+scheduling state associated with the donor, but charge cgroup CPU
+usage to rq->curr.
+
+A reproducer with the donor and execution task in separate cgroups
+showed the execution task accumulating runtime while cgroup CPU usage
+was charged to the donor's cgroup. With this change, the execution
+task's cgroup accumulates the CPU usage instead. The same behavior was
+verified with an RT donor and with legacy cpuacct accounting.
+
+Fixes: aa4f74dfd42b ("sched: Fix runtime accounting w/ split exec & sched contexts")
+Suggested-by: Tejun Heo <tj@kernel.org>
+Signed-off-by: Hui Su <sh_def@163.com>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: K Prateek Nayak <kprateek.nayak@amd.com>
-Tested-by: K Prateek Nayak <kprateek.nayak@amd.com>
-Link: https://patch.msgid.link/20260909150522.858312-1-vincent.guittot@linaro.org
+Acked-by: Tejun Heo <tj@kernel.org>
+Acked-by: John Stultz <jstultz@google.com>
+Link: https://patch.msgid.link/20260904034707.268416-1-sh_def@163.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/rbtree_augmented.h | 35 +++++++++++++++++++++++++-------
- kernel/sched/fair.c              | 12 +++++++++--
- 2 files changed, 38 insertions(+), 9 deletions(-)
+ kernel/sched/fair.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/include/linux/rbtree_augmented.h b/include/linux/rbtree_augmented.h
-index 6dbc5a1bf6a8c..d2fa1c41bfd2b 100644
---- a/include/linux/rbtree_augmented.h
-+++ b/include/linux/rbtree_augmented.h
-@@ -87,18 +87,18 @@ rb_add_augmented_cached(struct rb_node *node, struct rb_root_cached *tree,
- }
- 
- /*
-- * Template for declaring augmented rbtree callbacks (generic case)
-+ * Template for declaring augmented rbtree callbacks (generic multi fields)
-  *
-  * RBSTATIC:    'static' or empty
-  * RBNAME:      name of the rb_augment_callbacks structure
-  * RBSTRUCT:    struct type of the tree nodes
-  * RBFIELD:     name of struct rb_node field within RBSTRUCT
-- * RBAUGMENTED: name of field within RBSTRUCT holding data for subtree
-- * RBCOMPUTE:   name of function that recomputes the RBAUGMENTED data
-+ * RBCOPY:	name of function that copies the RBAUGMENTED datas
-+ * RBCOMPUTE:   name of function that recomputes the RBAUGMENTED datas
-  */
- 
--#define RB_DECLARE_CALLBACKS(RBSTATIC, RBNAME,				\
--			     RBSTRUCT, RBFIELD, RBAUGMENTED, RBCOMPUTE)	\
-+#define RB_DECLARE_CALLBACKS_MULTI(RBSTATIC, RBNAME,			\
-+			     RBSTRUCT, RBFIELD, RBCOPY, RBCOMPUTE)	\
- static inline void							\
- RBNAME ## _propagate(struct rb_node *rb, struct rb_node *stop)		\
- {									\
-@@ -114,14 +114,14 @@ RBNAME ## _copy(struct rb_node *rb_old, struct rb_node *rb_new)		\
- {									\
- 	RBSTRUCT *old = rb_entry(rb_old, RBSTRUCT, RBFIELD);		\
- 	RBSTRUCT *new = rb_entry(rb_new, RBSTRUCT, RBFIELD);		\
--	new->RBAUGMENTED = old->RBAUGMENTED;				\
-+	RBCOPY(new, old);						\
- }									\
- static void								\
- RBNAME ## _rotate(struct rb_node *rb_old, struct rb_node *rb_new)	\
- {									\
- 	RBSTRUCT *old = rb_entry(rb_old, RBSTRUCT, RBFIELD);		\
- 	RBSTRUCT *new = rb_entry(rb_new, RBSTRUCT, RBFIELD);		\
--	new->RBAUGMENTED = old->RBAUGMENTED;				\
-+	RBCOPY(new, old);						\
- 	RBCOMPUTE(old, false);						\
- }									\
- RBSTATIC const struct rb_augment_callbacks RBNAME = {			\
-@@ -130,6 +130,27 @@ RBSTATIC const struct rb_augment_callbacks RBNAME = {			\
- 	.rotate = RBNAME ## _rotate					\
- };
- 
-+/*
-+ * Template for declaring augmented rbtree callbacks (generic single field)
-+ *
-+ * RBSTATIC:    'static' or empty
-+ * RBNAME:      name of the rb_augment_callbacks structure
-+ * RBSTRUCT:    struct type of the tree nodes
-+ * RBFIELD:     name of struct rb_node field within RBSTRUCT
-+ * RBAUGMENTED: name of field within RBSTRUCT holding data for subtree
-+ * RBCOMPUTE:   name of function that recomputes the RBAUGMENTED data
-+ */
-+
-+#define RB_DECLARE_CALLBACKS(RBSTATIC, RBNAME,				\
-+			     RBSTRUCT, RBFIELD, RBAUGMENTED, RBCOMPUTE)	\
-+static inline void							\
-+RBNAME ## _copy_single(RBSTRUCT *new, RBSTRUCT *old)			\
-+{									\
-+	new->RBAUGMENTED = old->RBAUGMENTED;				\
-+}									\
-+RB_DECLARE_CALLBACKS_MULTI(RBSTATIC, RBNAME,				\
-+		     RBSTRUCT, RBFIELD, RBNAME ## _copy_single, RBCOMPUTE)
-+
- /*
-  * Template for declaring augmented rbtree callbacks,
-  * computing RBAUGMENTED scalar as max(RBCOMPUTE(node)) for all subtree nodes.
 diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index 92ef592d97b69..325aedbdb32a7 100644
+index 325aedbdb32a7..67e8c2065d827 100644
 --- a/kernel/sched/fair.c
 +++ b/kernel/sched/fair.c
-@@ -883,6 +883,13 @@ static inline void __max_slice_update(struct sched_entity *se, struct rb_node *n
- 	}
- }
+@@ -1250,7 +1250,6 @@ static s64 update_se(struct rq *rq, struct sched_entity *se)
  
-+static inline void min_vruntime_copy(struct sched_entity *new, struct sched_entity *old)
-+{
-+	new->min_vruntime = old->min_vruntime;
-+	new->min_slice = old->min_slice;
-+	new->max_slice = old->max_slice;
-+}
-+
- /*
-  * se->min_vruntime = min(se->vruntime, {left,right}->min_vruntime)
-  */
-@@ -910,8 +917,9 @@ static inline bool min_vruntime_update(struct sched_entity *se, bool exit)
- 	       se->max_slice == old_max_slice;
- }
+ 	se->exec_start = now;
+ 	if (entity_is_task(se)) {
+-		struct task_struct *donor = task_of(se);
+ 		struct task_struct *running = rq->curr;
+ 		/*
+ 		 * If se is a task, we account the time against the running
+@@ -1262,8 +1261,7 @@ static s64 update_se(struct rq *rq, struct sched_entity *se)
+ 		trace_sched_stat_runtime(running, delta_exec);
+ 		account_group_exec_runtime(running, delta_exec);
  
--RB_DECLARE_CALLBACKS(static, min_vruntime_cb, struct sched_entity,
--		     run_node, min_vruntime, min_vruntime_update);
-+
-+RB_DECLARE_CALLBACKS_MULTI(static, min_vruntime_cb, struct sched_entity,
-+		     run_node, min_vruntime_copy, min_vruntime_update);
- 
- /*
-  * Enqueue an entity into the rb-tree:
+-		/* cgroup time is always accounted against the donor */
+-		cgroup_account_cputime(donor, delta_exec);
++		cgroup_account_cputime(running, delta_exec);
+ 	} else {
+ 		/* If not task, account the time against donor se  */
+ 		se->sum_exec_runtime += delta_exec;
 -- 
 2.53.0
 
