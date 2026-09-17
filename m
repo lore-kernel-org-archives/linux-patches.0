@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB6994B44C0;
-	Thu, 17 Sep 2026 19:00:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4051349D59C;
+	Thu, 17 Sep 2026 19:00:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789671607; cv=none; b=J8kREjRkiRqc4XCiCAkvL76UkhY2hXZ54RldE3jUnW2ox6gY0AABbynjgcRtMrXRBsWEIz0N1ZYx/yy9Fz0hnA9EPH9W6ZlIlEDkQqu8wYD9Mj/kKl9cG27hkZEwn4uOclGZoThbWhOXXKSbbAZmQaktAsR+gZPdrks+9ORHjWk=
+	t=1789671610; cv=none; b=ZhEHjnDqVeJ/Lp1qUcPkiDVU7QJHA+peNxrZ1NIsNiPBcvSOEXQuWS61l+7yblzVQ+4yMnU731JP1FNygkutepzreu1H3O9LR1nxIPvC66cSpwq98UYXe76hO4qgdtyfxJBDUVnOllESZ/a1KDDn7f5ewgpk5ax+oVN1PL8jOIU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789671607; c=relaxed/simple;
-	bh=RCmHLxlDH7mEsRnEI38djnNjJwNJYVDsZp5erdkjR44=;
+	s=arc-20240116; t=1789671610; c=relaxed/simple;
+	bh=Hku+FF+AXwpUEtBDCt/LaZ+w5VyMRN/uuDpaaQEAeDo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qs6yCxVVFUI8Z2LjQ1jAAsfH+rbSDyka2w5MJGGX/49/UO7V/VoPrl42x3AgojwoTgO/cw6NpiSbjykEmZGt6w0yr8HvEfiKDnc0HLDLknGA6syp1PLLh3wRRLUon10lk2eUGp+QhPuXhGEl2BRKkv6s7YMBxVljS//PzfDiJ0Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K452pd4Y; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=gp6mdy1yamnEQynsKOjpcq7TDBJ9F8wsdB1F+ovFVDSAeUY2Fh/uf6lrPHyTOHltLUlr6dOyVqOkKKmxqv0vnTsfBvzgv034a0LBNbMz1AbGtX3uZ4MeSv6gLdFQrX7WX5Op9xxrEIv2fC1BbTqOJMMPZ5tTsaEnwPfvcOa3xtE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SpoQF+Xf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K452pd4Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C4421F000FF;
-	Thu, 17 Sep 2026 19:00:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SpoQF+Xf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01D301F000FF;
+	Thu, 17 Sep 2026 19:00:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789671605;
-	bh=/p3BrbjBHZIqysfbFOCZV7ND9qoCPmQGvcC4KJjSgzI=;
+	s=korg; t=1789671608;
+	bh=zNNnD4/P5mYcC/rwyKoCpgUx+r1tG+iCKwvtokqQR40=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=K452pd4Y7O2mqZAcio45jfwemaItce5VwrmQ49ahWPXfZeBpDxLgOhsqT4f9L1jNv
-	 I5GoAo0aU9lzBSrFtCspFtl9jaJm0fnTzeBfMSylNCsZ3sKJvUcNcgpppiWWmnINx6
-	 ulsQFGxYRMbt3FANJaKpFGD+9ugI601ij2MiIc0o=
+	b=SpoQF+XfyT3LETv4RZYHkEbW4+xTPr2gFNkPJravF5PTwTvGZh84PJ0tjuHPMcqRM
+	 AJ+3vg3YiktI6U3GpXkh4fDiBDVASHrDV55oq32UrB4kDG1NaHlSxsffhLmjY1ArTi
+	 N2vfYuHnCnxrWVzDt1yODgOH+aiMMIpoMHCbWCZQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	NeilBrown <neil@brown.name>,
 	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Chuck Lever <cel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1031/1102] nfsd: close shrinker/GC/fsnotify vs per-net shutdown race in filecache
-Date: Thu, 17 Sep 2026 16:16:14 +0100
-Message-ID: <20260917151606.656627266@linuxfoundation.org>
+Subject: [PATCH 6.12 1032/1102] NFSD: Prevent client use-after-free during admin state revocation
+Date: Thu, 17 Sep 2026 16:16:15 +0100
+Message-ID: <20260917151606.683010300@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -45,149 +46,98 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Chuck Lever <cel@kernel.org>
 
-[ Upstream commit 40162cfea79b9510380decfdd1795b754dc9f972 ]
+[ Upstream commit e270e5a0778e5bff852c8862ce9576ce70359393 ]
 
-The shrinker, GC worker, and fsnotify/lease callbacks can unhash an
-nfsd_file from the rhashtable and then call
-nfsd_file_dispose_list_delayed() to move it to the per-net dispose list.
-If nfsd_file_cache_shutdown_net() runs concurrently, its rhashtable walk
-misses the already-unhashed file, and its drain of the per-net dispose
-list can run before the file has been queued.  The file then sits on
-the per-net list with no thread to drain it, leaking both the file and
-its associated state.
+A stateid holds only a bare pointer to its nfs4_client; a stateid
+reference does not pin it.  The client survives only because
+__destroy_client() drains its stateids before free_client() runs.
 
-The GC worker and shrinker already hold nfsd_gc_lock while walking the
-LRU, but in the original code they release it before calling
-nfsd_file_dispose_list_delayed().  The fsnotify/lease path
-(nfsd_file_close_inode) has no synchronization at all.
+nfsd4_revoke_states() drops nn->client_lock across revoke_one_stid(),
+which dereferences the client to revoke a stateid and read
+clp->cl_minorversion.  A teardown racing the dropped lock can free
+the client first.
 
-Fix this by:
+Pinning cl_rpc_users under client_lock blocks the DESTROY_CLIENTID and
+EXCHANGE_ID teardown, which refuses while cl_rpc_users is non-zero.
+force_expire_client() ignores it: once its wait for cl_rpc_users to
+reach zero has passed, a later pin goes unnoticed.
 
-  1. Widening nfsd_gc_lock in both nfsd_file_gc() and nfsd_file_lru_scan()
-     to cover the nfsd_file_dispose_list_delayed() call.
+Under client_lock, skip a client whose cl_time is already zero --
+force_expire_client() clears it there before waiting -- otherwise pin
+cl_rpc_users before dropping the lock.  The walk then either sees the
+expiry and skips, or pins in time for that wait to cover the revoke.
 
-  2. Wrapping nfsd_file_close_inode() in nfsd_gc_lock so that all three
-     callers of nfsd_file_dispose_list_delayed() hold the lock.
-
-  3. Adding a spin_lock/unlock(nfsd_gc_lock) barrier in
-     nfsd_file_cache_shutdown_net() after the purge, so that any
-     in-progress disposal has fully completed before the per-net list
-     is drained.
-
-All operations inside the lock are non-sleeping (rhashtable lookups,
-atomic bit/refcount ops, list moves, svc_wake_up), so the spinlock is
-appropriate.
-
-Fixes: ffb402596147 ("nfsd: Don't leave work of closing files to a work queue")
-Cc: stable@vger.kernel.org # v6.15+
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Assisted-by: Claude:claude-opus-4-8
-Link: https://patch.msgid.link/20260604-nfsd-testing-v4-1-3aeb1479c5bb@kernel.org
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-[ adapted inline disposal fields to the older allocated fcache_disposal queue while retaining the existing LRU implementation ]
+Fixes: 1c13bf9f2e3c ("nfsd: allow lock state ids to be revoked and then freed")
+Cc: stable@vger.kernel.org
+Reviewed-by: NeilBrown <neil@brown.name>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Link: https://patch.msgid.link/20260709-cel-v4-3-1d519d9be0cb@kernel.org
+Signed-off-by: Chuck Lever <cel@kernel.org>
+[ adapted revoke_one_stid() calls to the branch’s inline revocation logic ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/filecache.c |   34 +++++++++++++++++++++++++++++++---
- 1 file changed, 31 insertions(+), 3 deletions(-)
+ fs/nfsd/nfs4state.c |   22 ++++++++++++++++++++--
+ 1 file changed, 20 insertions(+), 2 deletions(-)
 
---- a/fs/nfsd/filecache.c
-+++ b/fs/nfsd/filecache.c
-@@ -54,6 +54,12 @@
- /* We only care about NFSD_MAY_READ/WRITE for this cache */
- #define NFSD_FILE_MAY_MASK	(NFSD_MAY_READ|NFSD_MAY_WRITE|NFSD_MAY_LOCALIO)
- 
-+/*
-+ * Serialize callers of nfsd_file_dispose_list_delayed() against per-net
-+ * shutdown.
-+ */
-+static DEFINE_SPINLOCK(nfsd_gc_lock);
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -1840,13 +1840,23 @@ void nfsd4_revoke_states(struct nfsd_net
+ 		struct nfs4_client *clp;
+ 	retry:
+ 		list_for_each_entry(clp, head, cl_idhash) {
+-			struct nfs4_stid *stid = find_one_sb_stid(clp, sb,
+-								  sc_types);
++			struct nfs4_stid *stid;
 +
- static DEFINE_PER_CPU(unsigned long, nfsd_file_cache_hits);
- static DEFINE_PER_CPU(unsigned long, nfsd_file_acquisitions);
- static DEFINE_PER_CPU(unsigned long, nfsd_file_allocations);
-@@ -436,11 +442,17 @@ nfsd_file_dispose_list(struct list_head
-  *
-  * Transfers each file to the "freeme" list for its nfsd_net, to eventually
-  * be disposed of by the per-net garbage collector.
-+ *
-+ * All callers must hold nfsd_gc_lock, so that nfsd_file_cache_shutdown_net()
-+ * can synchronize against them before draining the per-net dispose list.
-+ * This guarantees nf_net is still live when we call net_generic().
-  */
- static void
- nfsd_file_dispose_list_delayed(struct list_head *dispose)
- {
--	while(!list_empty(dispose)) {
-+	lockdep_assert_held(&nfsd_gc_lock);
-+
-+	while (!list_empty(dispose)) {
- 		struct nfsd_file *nf = list_first_entry(dispose,
- 						struct nfsd_file, nf_gc);
- 		struct nfsd_net *nn = net_generic(nf->nf_net, nfsd_net_id);
-@@ -565,10 +577,12 @@ nfsd_file_gc(void)
- 	LIST_HEAD(dispose);
- 	unsigned long ret;
++			/*
++			 * force_expire_client() ignores cl_rpc_users once
++			 * its wait_event() has passed, so pinning cannot
++			 * keep an already-expiring client alive; the
++			 * expiry path revokes its states instead.
++			 */
++			if (is_client_expired(clp))
++				continue;
++			stid = find_one_sb_stid(clp, sb, sc_types);
+ 			if (stid) {
+ 				struct nfs4_ol_stateid *stp;
+ 				struct nfs4_delegation *dp;
+ 				struct nfs4_layout_stateid *ls;
  
-+	spin_lock(&nfsd_gc_lock);
- 	ret = list_lru_walk(&nfsd_file_lru, nfsd_file_lru_cb,
- 			    &dispose, list_lru_count(&nfsd_file_lru));
--	trace_nfsd_file_gc_removed(ret, list_lru_count(&nfsd_file_lru));
- 	nfsd_file_dispose_list_delayed(&dispose);
-+	spin_unlock(&nfsd_gc_lock);
-+	trace_nfsd_file_gc_removed(ret, list_lru_count(&nfsd_file_lru));
- }
++				atomic_inc(&clp->cl_rpc_users);
+ 				spin_unlock(&nn->client_lock);
+ 				switch (stid->sc_type) {
+ 				case SC_TYPE_OPEN:
+@@ -1930,6 +1940,9 @@ void nfsd4_revoke_states(struct nfsd_net
+ 					 */
+ 					nn->nfs40_last_revoke =
+ 						ktime_get_boottime_seconds();
++				if (atomic_dec_and_test(&clp->cl_rpc_users) &&
++				    is_client_expired(clp))
++					wake_up_all(&expiry_wq);
+ 				goto retry;
+ 			}
+ 		}
+@@ -3129,6 +3142,11 @@ static void force_expire_client(struct n
  
- static void
-@@ -591,10 +605,14 @@ nfsd_file_lru_scan(struct shrinker *s, s
- 	LIST_HEAD(dispose);
- 	unsigned long ret;
+ 	trace_nfsd_clid_admin_expired(&clp->cl_clientid);
  
-+	if (!spin_trylock(&nfsd_gc_lock))
-+		return SHRINK_STOP;
-+
- 	ret = list_lru_shrink_walk(&nfsd_file_lru, sc,
- 				   nfsd_file_lru_cb, &dispose);
--	trace_nfsd_file_shrinker_removed(ret, list_lru_count(&nfsd_file_lru));
- 	nfsd_file_dispose_list_delayed(&dispose);
-+	spin_unlock(&nfsd_gc_lock);
-+	trace_nfsd_file_shrinker_removed(ret, list_lru_count(&nfsd_file_lru));
- 	return ret;
- }
- 
-@@ -680,8 +698,10 @@ nfsd_file_close_inode(struct inode *inod
- {
- 	LIST_HEAD(dispose);
- 
-+	spin_lock(&nfsd_gc_lock);
- 	nfsd_file_queue_for_close(inode, &dispose);
- 	nfsd_file_dispose_list_delayed(&dispose);
-+	spin_unlock(&nfsd_gc_lock);
- }
- 
- /**
-@@ -927,6 +947,14 @@ void
- nfsd_file_cache_shutdown_net(struct net *net)
- {
- 	nfsd_file_cache_purge(net);
 +	/*
-+	 * Ensure any in-progress shrinker, GC, or fsnotify/lease callback
-+	 * (all of which hold nfsd_gc_lock while calling
-+	 * nfsd_file_dispose_list_delayed()) has fully completed before
-+	 * draining the per-net dispose list.
++	 * cl_time is cleared under client_lock before the wait so a
++	 * revocation walk pinning cl_rpc_users under it either skips
++	 * this client or is seen by this wait_event().
 +	 */
-+	spin_lock(&nfsd_gc_lock);
-+	spin_unlock(&nfsd_gc_lock);
- 	nfsd_free_fcache_disposal_net(net);
- }
- 
+ 	spin_lock(&nn->client_lock);
+ 	clp->cl_time = 0;
+ 	spin_unlock(&nn->client_lock);
 
 
