@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50D82519E0C;
-	Thu, 17 Sep 2026 17:04:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33B1E519E0C;
+	Thu, 17 Sep 2026 17:04:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789664649; cv=none; b=lnjnH7oJSjnXYHSJnjXB3pqQaWd93afDPJDVsc7rXljIYl2EIQKiAccMXYlCrtxjjuRel2EPlEBKkYskYggEGQQF76tt4cKMbKm6xexjBKj0GCki0FJMFaVwaMbO17LFDNeWmOW+meQukH4Bzd6VEt9pImu0rYhAhZpXrfdUMoU=
+	t=1789664652; cv=none; b=QCDYXlmK1Yj072NV4+rwsMEjx31ykkcpk6Ju1WlNw05SHYFHKTItQynzOTteWtXPheez5JaegWyfMqG0D01y5Oz9GD271MRC/+EVn2X2aNwlFPCVLPuYY1y9zo5tcnfIPM+Xo0YQNCnvWXF1At+F0LcgU4kjdsTSIcMdRZcBmko=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789664649; c=relaxed/simple;
-	bh=2wIGdMuN93UD39mpKzPFHWFMdVZE01R43jT2QxyFpd0=;
+	s=arc-20240116; t=1789664652; c=relaxed/simple;
+	bh=SiXVV2F3ZkiGK5UKKSLGXCWXAHjMyHYF6CT+Xe2VYjM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rZgAvTvMxaQeVXRLJ4XSjOIWneSVbVUytSBy8nPV9oPdvObx0rYyZ185kCMCx1vLOmGUeIozdfoKh4gLQ8wau9Pp9DZqatwjxUzRXPrrABEafsxz8LwwDUz5ZYAd4XvMGZmR8npWwWNmPJ1E/uz6Q925en+7JmYqE853vikEckc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IjZQv8yU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=lpJjUG8OqTKvXCeEdiRoQK5eOY59hwIkHpm+4mpI9cblHOddo3gEvE1dFq/C7i/M8cj4RaY2iOrXsV92ilRcazsZalW2JY57TxJCGt9QOHodKRnetDHWUXMGx43rMDXOn4AidebMQ8Qnb+EIL64+b6VQLfG98TX6/vzS9TVOPrU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pEB1k/SZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IjZQv8yU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83AD41F000FF;
-	Thu, 17 Sep 2026 17:04:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pEB1k/SZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80DA81F000FF;
+	Thu, 17 Sep 2026 17:04:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789664648;
-	bh=ySUXtFUr6DzQa5BsPpv5rYgTotxWBwgv9B/ieE7O7BU=;
+	s=korg; t=1789664651;
+	bh=1bLUefknMK0hVa4ldh3cFKQHyhbCnMT1S5u7rA67vDQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IjZQv8yUcMDFkBuEtUIxqh+sVQ4EqHExvPIhxo2g3TQM6+FxB0/bs0mf+/sjJvs1e
-	 UxkwZrfpDUiJ8Ww0BKitjMBdNRBiu+sBYa6iRqtfcs6hdMWASrdr6Oc72hjHkuUNzo
-	 w3tCF2KOiRojOhKkaLKhE5NYAcATQiY3pTcU++IU=
+	b=pEB1k/SZYk/ZEIroQVinmwaSDbuiUIvfKryFBB1IOmIbvzPZ44Ld9FxJmX6Opf8Tn
+	 41aybrKGMeHWoiDySCj2UhY3rOSKtyyFzdO600b44bmQ19QjdzAYEYDCu1zMtnH+nh
+	 vCKyyCeORQkVmNoqVkwYf1O71bnoB342ewRO/AXI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans Zhang <18255117159@163.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	Lee Jia Jie <jiajie.lee@starlabs.sg>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0443/1250] PCI: plda: Protect root bus removal with rescan lock
-Date: Thu, 17 Sep 2026 16:03:58 +0100
-Message-ID: <20260917151604.011666609@linuxfoundation.org>
+Subject: [PATCH 6.18 0444/1250] perf: Fix addr_filter_ranges lifetime
+Date: Thu, 17 Sep 2026 16:03:59 +0100
+Message-ID: <20260917151604.037070119@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -52,38 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans Zhang <18255117159@163.com>
+From: Peter Zijlstra <peterz@infradead.org>
 
-[ Upstream commit 4e4f9745f016c1631d00a4035b06f6e75d449e01 ]
+[ Upstream commit e62d4192e593630f355094adc467058a05bdc935 ]
 
-Hold the pci_rescan_remove_lock lock while stopping and removing a root bus
-to avoid racing with concurrent rescan or hotplug operations triggered via
-sysfs.  Such races may lead to use-after-free issues or system crashes.
+Lee Jia Jie reported that since event::addr_filter_ranges is used
+under RCU, it should be RCU freed.
 
-Signed-off-by: Hans Zhang <18255117159@163.com>
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-[bhelgaas: commit log]
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Link: https://patch.msgid.link/20260521161822.132996-10-18255117159@163.com
+Reported-by: Lee Jia Jie <jiajie.lee@starlabs.sg>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/plda/pcie-plda-host.c | 2 ++
- 1 file changed, 2 insertions(+)
+ kernel/events/core.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/pci/controller/plda/pcie-plda-host.c b/drivers/pci/controller/plda/pcie-plda-host.c
-index dea3d443434cb..fd1a11b4c8eb8 100644
---- a/drivers/pci/controller/plda/pcie-plda-host.c
-+++ b/drivers/pci/controller/plda/pcie-plda-host.c
-@@ -672,8 +672,10 @@ EXPORT_SYMBOL_GPL(plda_pcie_host_init);
+diff --git a/kernel/events/core.c b/kernel/events/core.c
+index 76d048a488270..b3bdb23106f37 100644
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -5168,6 +5168,7 @@ static void free_event_rcu(struct rcu_head *head)
+ 	if (event->ns)
+ 		put_pid_ns(event->ns);
+ 	perf_event_free_filter(event);
++	kfree(event->addr_filter_ranges);
+ 	kmem_cache_free(perf_event_cache, event);
+ }
  
- void plda_pcie_host_deinit(struct plda_pcie_rp *port)
- {
-+	pci_lock_rescan_remove();
- 	pci_stop_root_bus(port->bridge->bus);
- 	pci_remove_root_bus(port->bridge->bus);
-+	pci_unlock_rescan_remove();
+@@ -5614,8 +5615,6 @@ static void __free_event(struct perf_event *event)
+ 	if (event->attach_state & PERF_ATTACH_CALLCHAIN)
+ 		put_callchain_buffers();
  
- 	plda_pcie_irq_domain_deinit(port);
+-	kfree(event->addr_filter_ranges);
+-
+ 	if (event->attach_state & PERF_ATTACH_EXCLUSIVE)
+ 		exclusive_event_destroy(event);
  
 -- 
 2.53.0
