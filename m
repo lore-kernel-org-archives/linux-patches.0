@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B002B4F93BD;
-	Thu, 17 Sep 2026 18:02:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC7C44E532B;
+	Thu, 17 Sep 2026 18:02:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789668141; cv=none; b=EUjg8R810TARqz37avLfwuLzCp5da3Izn+rOdhZcEum2HOfPDfw2Ulv4xXWfugs+xQmundB9HsKDZLXhuML8AGRmE+uSrdLmK6k7rbfUHFfyCjg1feeJOAkI9SrcKV7y/ldjYVa3nazgkGOrD76NVcn5fbqnLqxczxZrA3ucoMY=
+	t=1789668145; cv=none; b=rSLNhlqolRmr1Tdl5pGB+GQv6a9w3sT0mzcbM5y5gA2caGViQrfPyB3cRdzgaASJYp8jJ/GSj4mBRk7ggYoqAO7ZVIxfwGbUuGC4RAb/LaMkBSUAabQDeFDLpT4pBd0moCEOWP0J3aiyksX+nJLZbM5wGBax4I7ytcjAK19Ds6o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789668141; c=relaxed/simple;
-	bh=+yL+mG2t7H+UYUJBqQWthlMCUJGebiHq8xGwvyt2JHQ=;
+	s=arc-20240116; t=1789668145; c=relaxed/simple;
+	bh=Xp2U7uVVqCToiaHQe9cz+CZ+z+qxdGJiKeQhxQBvmhU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dnJx/6u5HwtMCUYzMs+p3NLkzR1h9bDFy1VIPWnPMXnsGhbO3MnWJ7dLRktixaXh/kh/2o3StptF4NbO9MtDS3Z5vutJuWVYuNxZIGidHzr0t2I3dK/pwCyc8szmBeaF0k88xAqFySTLw22akvEaGWQiXaO/NDMZQp4BsLe3Y4Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=duzSIDM3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AqODiwhDRGPZYFf3zOJqvPP3QAd+rGq6O/pCz81BtWfUVO9mJx4x6PG67BPjwPi/m0YJEnG/3/3+rTIp93iu3fYjlwUpb+Dl5heMH2BMOUcIYLfZjQ6JGO0QtEaCyxwCrePeLiGGJtFaxpu7teLDRBPrcN2pT5Hudf1H9habCHk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rWz1kbVg; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="duzSIDM3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 116471F000FF;
-	Thu, 17 Sep 2026 18:02:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rWz1kbVg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B00F1F000FF;
+	Thu, 17 Sep 2026 18:02:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789668140;
-	bh=eb5VpsC6JVDtjTiby2gpUbAWA5+CPc+EQdBpPMf5z6M=;
+	s=korg; t=1789668143;
+	bh=dKRFSqG8IvgdHuPC3d6WOoem1+cVaTG8uZXFmPTzhds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=duzSIDM3a4AC7VEeihxdIVdM6U01m9l46H/qLd82bLH2Xdk5D01jPHf8x8J0PenHw
-	 5LRcbZdQmuh1hW4/KG8bLHyq9pmBxOFX/CDDQS2Qg0f4gdgFP9x6awwngX8mnkI5qO
-	 FNPYAzLwyR7fELYj91DbUKuk5x1N7lKujBL38aNw=
+	b=rWz1kbVgsb2cm6ssIFRZB+wZGGjAIy1JflHaMwR6lR9rheJilg5xl+mrXYQaQqgoO
+	 xjT6Wwo2A2NOTZvVtmJdrBWUbapR5msk1/nfVF2+TmGTDA9x+/4Yh+T0n5CmA5MVna
+	 C+4dCZRcGyaYeO6pzUMEQvD5KZhjcklxuwG2Moj4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hrvoje Nuic <hrvoje.nuic@gmail.com>,
+	Rong Zhang <i@rong.moe>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0289/1102] Bluetooth: btusb: Add Mercusys MA530 for Realtek RTL8761BUV
-Date: Thu, 17 Sep 2026 16:03:52 +0100
-Message-ID: <20260917151546.870663317@linuxfoundation.org>
+Subject: [PATCH 6.12 0290/1102] Bluetooth: btmtk: Disable remote wakeup for MT7922/MT7925
+Date: Thu, 17 Sep 2026 16:03:53 +0100
+Message-ID: <20260917151546.896142814@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -51,37 +51,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hrvoje Nuic <hrvoje.nuic@gmail.com>
+From: Rong Zhang <i@rong.moe>
 
-[ Upstream commit ce21a5cf3d1fd92b84ea9ad2b7c7240aff2162d2 ]
+[ Upstream commit e31d761628ad7e96490fc78105ed0a064ec1c1d9 ]
 
-Add the USB ID for the Mercusys MA530 Bluetooth adapter. The device uses
-a Realtek RTL8761BUV controller and works with the existing Realtek setup
-path.
+These NICs are often reported to lose their Bluetooth interfaces, i.e,
+their USB interfaces suddenly become completely unresponsive, causing
+the USB core to reset them, only to find that they are no longer
+accessible. A power cycle is required to make the Bluetooth interfaces
+recover.
 
-The device reports vendor ID 0x2c4e and product ID 0x0115, and loads the
-rtl_bt/rtl8761bu_fw.bin firmware successfully with this quirk.
+After some investigations, I found that their USB autosuspend remote
+wakeup capabilities are so broken that they are precisely the culprit
+behind the issue:
 
-Signed-off-by: Hrvoje Nuic <hrvoje.nuic@gmail.com>
+  [27452.608056] hub 3-0:1.0: state 7 ports 5 chg 0000 evt 0020
+  [27452.702018] usb 3-5: usb wakeup-resume
+  [27452.716038] usb 3-5: Waited 0ms for CONNECT
+  [27452.716642] usb 3-5: finish resume
+  /* usbmon showed that the device was completely unresponsive to any
+     URBs after the remote wakeup */
+  [27457.836030] usb 3-5: retry with reset-resume
+  [27457.956046] usb 3-5: reset high-speed USB device number 4 using xhci_hcd
+  [27463.332047] usb 3-5: device descriptor read/64, error -110
+  [27478.948117] usb 3-5: device descriptor read/64, error -110
+  [27479.172430] usb 3-5: reset high-speed USB device number 4 using xhci_hcd
+  [27484.332035] usb 3-5: device descriptor read/64, error -110
+  [27499.940039] usb 3-5: device descriptor read/64, error -110
+  [27500.164060] usb 3-5: reset high-speed USB device number 4 using xhci_hcd
+  [27505.196142] xhci_hcd 0000:67:00.0: Timeout while waiting for setup device command
+  [27510.576045] xhci_hcd 0000:67:00.0: Timeout while waiting for setup device command
+  [27510.784038] usb 3-5: device not accepting address 4, error -62
+  [27510.912215] usb 3-5: reset high-speed USB device number 4 using xhci_hcd
+  [27515.948307] xhci_hcd 0000:67:00.0: Timeout while waiting for setup device command
+  [27521.324380] xhci_hcd 0000:67:00.0: Timeout while waiting for setup device command
+  [27521.525107] usb 3-5: device not accepting address 4, error -62
+  [27521.525928] usb usb3-port5: logical disconnect
+  [27521.525996] usb 3-5: gone after usb resume? status -19
+  [27521.526230] usb 3-5: can't resume, status -19
+  [27521.526434] usb usb3-port5: logical disconnect
+  [27521.526469] usb usb3-port5: resume, status -19
+  [27521.526493] usb usb3-port5: status 0503, change 0004, 480 Mb/s
+  [27521.526528] usb 3-5: USB disconnect, device number 4
+  [27521.526736] usb 3-5: unregistering device
+  [27521.804029] usb 3-5: new high-speed USB device number 5 using xhci_hcd
+  [27527.076067] usb 3-5: device descriptor read/64, error -110
+  [27542.692027] usb 3-5: device descriptor read/64, error -110
+  [27542.916047] usb 3-5: new high-speed USB device number 6 using xhci_hcd
+  [27548.068043] usb 3-5: device descriptor read/64, error -110
+  [27563.684073] usb 3-5: device descriptor read/64, error -110
+  [27563.792133] usb usb3-port5: attempt power cycle
+  [27563.924381] hub 3-0:1.0: port_wait_reset: err = -11
+  [27563.925213] usb usb3-port5: not enabled, trying reset again...
+  [27564.184398] usb 3-5: new high-speed USB device number 7 using xhci_hcd
+  [27569.196322] xhci_hcd 0000:67:00.0: Timeout while waiting for setup device command
+  [27574.572040] xhci_hcd 0000:67:00.0: Timeout while waiting for setup device command
+  [27574.776053] usb 3-5: device not accepting address 7, error -62
+  [27574.900165] usb 3-5: new high-speed USB device number 8 using xhci_hcd
+  [27579.948039] xhci_hcd 0000:67:00.0: Timeout while waiting for setup device command
+  [27585.324331] xhci_hcd 0000:67:00.0: Timeout while waiting for setup device command
+  [27585.528040] usb 3-5: device not accepting address 8, error -62
+  [27585.528389] usb usb3-port5: unable to enumerate USB device
+  [27585.528424] hub 3-0:1.0: state 7 ports 5 chg 0000 evt 0020
+
+To reproduce the issue, these conditions must be met:
+- a noisy radio environment (cafe or office) to cause frequent remote
+  wakeup events
+- no Bluetooth device is connected, so autosuspend is not prohibited
+- the Bluetooth interface is opened, so remote wakeup is enabled when
+  the device runs into autosuspend
+
+Then I can reproduce the issue within sereval hours each time.
+
+Increasing TRSMRCY or setting USB_QUIRK_RESET doesn't help at all.
+
+Since the remote wakeup capability is super broken, just disable it to
+get rid of the troubles. The device can still be autosuspended when
+the bluetooth interface is closed, which won't break the device as
+remote wakeup is unneeded in this case.
+
+Link: https://bbs.archlinux.org/viewtopic.php?id=308169
+Link: https://bbs.bee-link.com/d/7694-gtr9-pro-ai-max-395-usb-issues
+Signed-off-by: Rong Zhang <i@rong.moe>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btusb.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/bluetooth/btmtk.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index 14b0ec6bfb83b..90d098d5c4106 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -771,6 +771,8 @@ static const struct usb_device_id quirks_table[] = {
- 	{ USB_DEVICE(0x2ff8, 0xb011), .driver_info = BTUSB_REALTEK },
- 
- 	/* Additional Realtek 8761BUV Bluetooth devices */
-+	{ USB_DEVICE(0x2c4e, 0x0115), .driver_info = BTUSB_REALTEK |
-+						     BTUSB_WIDEBAND_SPEECH },
- 	{ USB_DEVICE(0x2357, 0x0604), .driver_info = BTUSB_REALTEK |
- 						     BTUSB_WIDEBAND_SPEECH },
- 	{ USB_DEVICE(0x0b05, 0x190e), .driver_info = BTUSB_REALTEK |
+diff --git a/drivers/bluetooth/btmtk.c b/drivers/bluetooth/btmtk.c
+index e7d01f1e26b8a..5d19b4496e767 100644
+--- a/drivers/bluetooth/btmtk.c
++++ b/drivers/bluetooth/btmtk.c
+@@ -1380,6 +1380,16 @@ int btmtk_usb_setup(struct hci_dev *hdev)
+ 		break;
+ 	case 0x7922:
+ 	case 0x7925:
++		/*
++		 * A remote wakeup could cause the device completely unresponsive, and
++		 * recovering from such a state needs a power cycle.
++		 *
++		 * Since the remote wakeup capability is super broken, just disable it
++		 * to get rid of the troubles. The device can still be autosuspended
++		 * when the bluetooth interface is closed.
++		 */
++		device_set_wakeup_capable(&btmtk_data->udev->dev, false);
++		fallthrough;
+ 	case 0x7961:
+ 	case 0x7902:
+ 	case 0x6639:
 -- 
 2.53.0
 
