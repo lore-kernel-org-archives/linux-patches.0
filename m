@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 928653CF688;
-	Thu, 17 Sep 2026 18:46:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AFEF3AEF2D;
+	Thu, 17 Sep 2026 18:46:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789670807; cv=none; b=gvaQAR3yiqewUjzU8TbXbge8HOIdqwwzFcf2aODzZtZQzq2644ppBGTyV3aLl2D0zHa+ooalQwE+10xhx7UhZ8w0c71+gG7wF7ONP5o4UE9SytydjUE10udziFBV+R207EnsyG+hlEAN443SyAYy5byr4Rpz0ogRIxVf3vkNPBU=
+	t=1789670811; cv=none; b=p2zLOCzi1Myz70TYQz7M9Y4TvXSvDAb8kYi1yTmjwdnrhzRBHA80vKF0odHg58uh0M/IKYygKubirZPyWz9hAFyTeZ8mvpF7c/pq/4juX1v8OLZs1rj+ZcI+47olZzM1wGfmJj7t1A2Elo+CL/nEhRCF0ctkFrrHTHmH4uDkqx0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789670807; c=relaxed/simple;
-	bh=x4PJ1a1LOzqP3SAgICauCBnjextkJ+BFvAaesEepNcM=;
+	s=arc-20240116; t=1789670811; c=relaxed/simple;
+	bh=olrvd7rnRTwknznb/TuEDGvqA4Qx+D5Hcj/plovm6e8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IrcNdQ+tgrH3QlEQoj/Wn/gPFwWaiqQbUER8h1FnzJJ2HkMxcx6PTw+SaEz+ntFlNGKxsVHoMH3I5psaiC9yKEc2s6X7QK07NspMvZ+RYmT1aeFPSYBYnZHptxESYRdqWcDsdVVOaxCL5aT+kkNHkv0AvsJXr57TuPPpyEZmdhk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cn9gcyEX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=axIjRe/cVUvdMRwzynCQiM+7saYSxUvF+PXs1PiYxjqTEYw5zQc41T1BemdUqra3nUz1pRf1qoEDfKv7eOhjV0QODdagdouchU4HpBL7CSvPQjBRXf2cLASE9CR2RQfghdruv8z/FIjXURTYFhqiktkACFDHBXfnkskbgPyIr34=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IzOC1QdP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cn9gcyEX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9E1B1F000FF;
-	Thu, 17 Sep 2026 18:46:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IzOC1QdP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E36771F000FF;
+	Thu, 17 Sep 2026 18:46:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789670806;
-	bh=k/3aKBgwP56rT4ei/R7qgGkaIiJ9AnKI0cEEPeW0nyY=;
+	s=korg; t=1789670809;
+	bh=CGizss1vXEoEP0xVzqjfCismbU42eCKjPjmRyCjAbrI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Cn9gcyEX/XrN8gFM3qjPH9D0t9Peny1z6h7mQm+W8ybT3EnLvx9J0y/e48dFSQllv
-	 nqMIVWClLHn3FTJx+5EioTSr50dwmksSrjgBPWVDT+0b4DbWt2NK/9iOHf6Kpnoxtb
-	 bMw3Gz1lP+vewdotFuA2fnnw0igXrjxDXJ3xrnO8=
+	b=IzOC1QdP2cOQQ0lgbBjcGBfHbjPPQ6Qbi3rzK4Nh0Rh/lgT4WDX4R73IlQZIuE0fv
+	 qZq5Tj2CWAOx9w5/IdTjkcV1aXJAVC+j1Erf2cQtAVeRWOv8HZJUEySDqraOQ3lQn9
+	 zTPZeXbCZYS0fiApZq60zSwgWpokwcmUifBX9RXE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Vincent Guittot <vincent.guittot@linaro.org>,
-	K Prateek Nayak <kprateek.nayak@amd.com>,
-	Shubhang Kaushik <shubhang@os.amperecomputing.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Linmao Li <lilinmao@kylinos.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0777/1102] sched/fair: Fix lag clamp
-Date: Thu, 17 Sep 2026 16:12:00 +0100
-Message-ID: <20260917151559.959521727@linuxfoundation.org>
+Subject: [PATCH 6.12 0760/1102] hwmon: (corsair-cpro) Create debugfs entries after hwmon registration
+Date: Thu, 17 Sep 2026 16:11:43 +0100
+Message-ID: <20260917151559.510780991@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -53,134 +52,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Linmao Li <lilinmao@kylinos.cn>
 
-[ Upstream commit 6e3c0a4e1ad1e0455b7880fad02b3ee179f56c09 ]
+[ Upstream commit 508baf1713f32f287bfb4f85d759403ec8ba35a3 ]
 
-Vincent reported that he was seeing undue lag clamping in a mixed
-slice workload. Implement the max_slice tracking as per the todo
-comment.
+ccp_debugfs_init() registers debugfs files whose private data is the devm
+allocated ccp.  It runs before hwmon_device_register_with_info(), so when
+that registration fails, ccp_probe() returns with the files still in
+place.  The HID core then frees ccp, and ccp_remove() is not called for a
+failed probe, so nothing removes them later either.  Reading one of the
+files dereferences the freed pointer.
 
-Fixes: 147f3efaa241 ("sched/fair: Implement an EEVDF-like scheduling policy")
-Reported-off-by: Vincent Guittot <vincent.guittot@linaro.org>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Tested-by: Vincent Guittot <vincent.guittot@linaro.org>
-Tested-by: K Prateek Nayak <kprateek.nayak@amd.com>
-Tested-by: Shubhang Kaushik <shubhang@os.amperecomputing.com>
-Link: https://patch.msgid.link/20250422101628.GA33555@noisy.programming.kicks-ass.net
-Stable-dep-of: 51b0e68cfa0a ("sched/eevdf: Fix rb augmented with multi fields")
+Create the debugfs entries only after the hwmon device has been
+registered, so no failing path can leave them behind.
+
+The two version queries stay where they are.  They send USB commands
+without holding ccp->mutex, which is only safe as long as nothing else
+can call send_usb_cmd(); once the hwmon device is registered its
+callbacks can do so concurrently.  Only the debugfs creation moves, and
+it is told which queries succeeded.
+
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://lore.kernel.org/linux-hwmon/20260708031612.BD7E61F000E9@smtp.kernel.org/
+Suggested-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: 5997eb60f896 ("hwmon: (corsair-cpro) Add firmware and bootloader information")
+Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
+Link: https://patch.msgid.link/20260831014509.3352442-1-lilinmao@kylinos.cn
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/sched.h |  1 +
- kernel/sched/fair.c   | 39 +++++++++++++++++++++++++++++++++++----
- 2 files changed, 36 insertions(+), 4 deletions(-)
+ drivers/hwmon/corsair-cpro.c | 20 +++++++++++++-------
+ 1 file changed, 13 insertions(+), 7 deletions(-)
 
-diff --git a/include/linux/sched.h b/include/linux/sched.h
-index 7b97f1ec1bc0a..8630b6ea34c06 100644
---- a/include/linux/sched.h
-+++ b/include/linux/sched.h
-@@ -545,6 +545,7 @@ struct sched_entity {
- 	u64				deadline;
- 	u64				min_vruntime;
- 	u64				min_slice;
-+	u64				max_slice;
- 
- 	struct list_head		group_node;
- 	unsigned char			on_rq;
-diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index c20cd8ccc5787..3219a9fe3201a 100644
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -710,6 +710,8 @@ u64 avg_vruntime(struct cfs_rq *cfs_rq)
-        return cfs_rq->zero_vruntime;
+diff --git a/drivers/hwmon/corsair-cpro.c b/drivers/hwmon/corsair-cpro.c
+index 71e48b3bba60f..1eac947078826 100644
+--- a/drivers/hwmon/corsair-cpro.c
++++ b/drivers/hwmon/corsair-cpro.c
+@@ -566,21 +566,18 @@ static int bootloader_show(struct seq_file *seqf, void *unused)
  }
+ DEFINE_SHOW_ATTRIBUTE(bootloader);
  
-+static inline u64 cfs_rq_max_slice(struct cfs_rq *cfs_rq);
-+
- /*
-  * lag_i = S - s_i = w_i * (V - v_i)
-  *
-@@ -723,17 +725,16 @@ u64 avg_vruntime(struct cfs_rq *cfs_rq)
-  * EEVDF gives the following limit for a steady state system:
-  *
-  *   -r_max < lag < max(r_max, q)
-- *
-- * XXX could add max_slice to the augmented data to track this.
-  */
- static void update_entity_lag(struct cfs_rq *cfs_rq, struct sched_entity *se)
+-static void ccp_debugfs_init(struct ccp_device *ccp)
++static void ccp_debugfs_init(struct ccp_device *ccp, bool fw_valid, bool bl_valid)
  {
-+	u64 max_slice = cfs_rq_max_slice(cfs_rq) + TICK_NSEC;
- 	s64 vlag, limit;
+ 	char name[32];
+-	int ret;
  
- 	SCHED_WARN_ON(!se->on_rq);
+ 	scnprintf(name, sizeof(name), "corsaircpro-%s", dev_name(&ccp->hdev->dev));
+ 	ccp->debugfs = debugfs_create_dir(name, NULL);
  
- 	vlag = avg_vruntime(cfs_rq) - se->vruntime;
--	limit = calc_delta_fair(max_t(u64, 2*se->slice, TICK_NSEC), se);
-+	limit = calc_delta_fair(max_slice, se);
+-	ret = get_fw_version(ccp);
+-	if (!ret)
++	if (fw_valid)
+ 		debugfs_create_file("firmware_version", 0444,
+ 				    ccp->debugfs, ccp, &firmware_fops);
  
- 	se->vlag = clamp(vlag, -limit, limit);
+-	ret = get_bl_version(ccp);
+-	if (!ret)
++	if (bl_valid)
+ 		debugfs_create_file("bootloader_version", 0444,
+ 				    ccp->debugfs, ccp, &bootloader_fops);
  }
-@@ -791,6 +792,21 @@ static inline u64 cfs_rq_min_slice(struct cfs_rq *cfs_rq)
- 	return min_slice;
- }
- 
-+static inline u64 cfs_rq_max_slice(struct cfs_rq *cfs_rq)
-+{
-+	struct sched_entity *root = __pick_root_entity(cfs_rq);
-+	struct sched_entity *curr = cfs_rq->curr;
-+	u64 max_slice = 0ULL;
-+
-+	if (curr && curr->on_rq)
-+		max_slice = curr->slice;
-+
-+	if (root)
-+		max_slice = max(max_slice, root->max_slice);
-+
-+	return max_slice;
-+}
-+
- static inline bool __entity_less(struct rb_node *a, const struct rb_node *b)
+@@ -588,6 +585,7 @@ static void ccp_debugfs_init(struct ccp_device *ccp)
+ static int ccp_probe(struct hid_device *hdev, const struct hid_device_id *id)
  {
- 	return entity_before(__node_2_se(a), __node_2_se(b));
-@@ -816,6 +832,15 @@ static inline void __min_slice_update(struct sched_entity *se, struct rb_node *n
+ 	struct ccp_device *ccp;
++	bool fw_valid, bl_valid;
+ 	int ret;
+ 
+ 	ccp = devm_kzalloc(&hdev->dev, sizeof(*ccp), GFP_KERNEL);
+@@ -632,7 +630,13 @@ static int ccp_probe(struct hid_device *hdev, const struct hid_device_id *id)
+ 	if (ret)
+ 		goto out_hw_close;
+ 
+-	ccp_debugfs_init(ccp);
++	/*
++	 * Query the versions before registering the hwmon device: they send
++	 * USB commands without holding ccp->mutex, which is only safe while
++	 * nothing else can call send_usb_cmd().
++	 */
++	fw_valid = !get_fw_version(ccp);
++	bl_valid = !get_bl_version(ccp);
+ 
+ 	ccp->hwmon_dev = hwmon_device_register_with_info(&hdev->dev, "corsaircpro",
+ 							 ccp, &ccp_chip_info, NULL);
+@@ -641,6 +645,8 @@ static int ccp_probe(struct hid_device *hdev, const struct hid_device_id *id)
+ 		goto out_hw_close;
  	}
- }
  
-+static inline void __max_slice_update(struct sched_entity *se, struct rb_node *node)
-+{
-+	if (node) {
-+		struct sched_entity *rse = __node_2_se(node);
-+		if (rse->max_slice > se->max_slice)
-+			se->max_slice = rse->max_slice;
-+	}
-+}
++	ccp_debugfs_init(ccp, fw_valid, bl_valid);
 +
- /*
-  * se->min_vruntime = min(se->vruntime, {left,right}->min_vruntime)
-  */
-@@ -823,6 +848,7 @@ static inline bool min_vruntime_update(struct sched_entity *se, bool exit)
- {
- 	u64 old_min_vruntime = se->min_vruntime;
- 	u64 old_min_slice = se->min_slice;
-+	u64 old_max_slice = se->max_slice;
- 	struct rb_node *node = &se->run_node;
+ 	return 0;
  
- 	se->min_vruntime = se->vruntime;
-@@ -833,8 +859,13 @@ static inline bool min_vruntime_update(struct sched_entity *se, bool exit)
- 	__min_slice_update(se, node->rb_right);
- 	__min_slice_update(se, node->rb_left);
- 
-+	se->max_slice = se->slice;
-+	__max_slice_update(se, node->rb_right);
-+	__max_slice_update(se, node->rb_left);
-+
- 	return se->min_vruntime == old_min_vruntime &&
--	       se->min_slice == old_min_slice;
-+	       se->min_slice == old_min_slice &&
-+	       se->max_slice == old_max_slice;
- }
- 
- RB_DECLARE_CALLBACKS(static, min_vruntime_cb, struct sched_entity,
+ out_hw_close:
 -- 
 2.53.0
 
