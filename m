@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0504547040;
-	Thu, 17 Sep 2026 17:11:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D848D547077;
+	Thu, 17 Sep 2026 17:11:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789665101; cv=none; b=axpZrgpVIqDLWy9PdujIEWECkfID11YOJay8QRJJ8pWQmmYV3n2aq2foVXdP2XF+EXudcp9TDGvGsCHBdIU9Lp0vVN0up/qKeYJwcHp3ZMzwv+/FSLcG/QqqaCtOlKymJBT8+7ABNvyDlejPEqkiISjE238CB/RyUEF2AKvDJhA=
+	t=1789665104; cv=none; b=Eg7i4Sg9VqUYQOBFbTV4tC7anXGJFmhZu6G6WLbGdzAlk86pgbU1usNlBSw+PTjdksvtSZd43qknf5TpHeNjCcOKpye7quQR0B8vLtUUOw0+XzNkmRClBfWtU1tnb1hxx7V3/fce3Cl4nTznGJcMAFni1EHTL/dP761pir60f1M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789665101; c=relaxed/simple;
-	bh=9ObK2F3lSVm4/cK+2lPOHcdunyebMu8Q/newV5Ygq2c=;
+	s=arc-20240116; t=1789665104; c=relaxed/simple;
+	bh=jBQBT5WszA3vpouQBJs2eWDuWYjnc7ayyoKSBX0ghIw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R8TisjDsbgaVdS+Xerk1sXSHpvx1Va/fMl+MoUaCknPznSFb4l9XP7LBavJUdzhoAoCFO2AJ241X6WJdxVZggmWgop5RrC9iZadIJ4tWPB/LCnD9H8FJWQx+LKrZTXfqTVxkBxU1nSKw3IjYOfYa/GXwfipVm/AUNmwL2Pl6RSE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IF7Xv1NM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=GOh5mgR7OSsLkNhOVl1yDL7SXRPN1qa8qXStwSgdjCoVUcb3YkeSXUA/nqF241yMkQVjqbpd5KPg2R4+96PoUq9lmJWMp5wNeCQKtob738XKL9sCVCnl4sLmvY14sJtXu2/vnzJuUTib37t4p/16eEYnC0/CUtIP+OxFVdvIVCw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JvYKna6r; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IF7Xv1NM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 193C71F000FF;
-	Thu, 17 Sep 2026 17:11:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JvYKna6r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 214441F000FF;
+	Thu, 17 Sep 2026 17:11:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789665099;
-	bh=v7iaI4Gut1gGFgsu4lt3w2vPaz4tbq4wmHDDfOpflhk=;
+	s=korg; t=1789665102;
+	bh=f8nY82PeDW5gqMY5LHkEFtW+UZTVkxdffXO0SXtzm3A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IF7Xv1NM6WvyKMpDmRsZtpinNp3mZ+NVl3qFDzITU0+s4K+lZ7hLzYrw8ZnvzFXZO
-	 pBFozWhLMb0v2CQBmfVTpNeDgNqtwUri3W0/cXm1vhT7mGLTVAK1Eu/ckpQNZ6Y/9G
-	 5ekNXXwXNM29INTeiYJzbgAFaAI2JBOn5RPBj69I=
+	b=JvYKna6rbmZszwZVfdQsLCZIULTfoDmT0Wn24HAT9hoIKrJ6McdFsvJSIdkcrQ4Dn
+	 f0ZadEIM7gaEkqWUIx4AEYHnaCaPGIVkzgxbuT/MsbgYoAOeA48v5G+90m/IYkGFu2
+	 dzEX+6l7SkhXPQJA5SHFgsFBAPwZdfBgfrbbQV4Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+cb2aa2390ac024e25f5c@syzkaller.appspotmail.com,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	David Ahern <dsahern@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0591/1250] ipv4: fib: Dont dump dying fib_info in fib_leaf_notify().
-Date: Thu, 17 Sep 2026 16:06:26 +0100
-Message-ID: <20260917151607.901281739@linuxfoundation.org>
+Subject: [PATCH 6.18 0592/1250] ASoC: topology: Check PCM and DAI name strings before use
+Date: Thu, 17 Sep 2026 16:06:27 +0100
+Message-ID: <20260917151607.927898672@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -48,133 +45,120 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
 
-[ Upstream commit 06b693d2eb6651a63ad85bad8673de3b7d4edd6d ]
+[ Upstream commit b7e44d1986d6671342c19b82192189ca5db5dab7 ]
 
-syzbot reported use-after-free in nsim_fib4_prepare_event(). [0]
+Topology objects store several PCM and DAI names in fixed-size UAPI
+arrays. Other topology parser paths validate these fields with bounded
+strnlen() checks before using them as C strings, but the PCM and DAI
+paths still pass some fixed-size arrays directly to strlen(),
+devm_kstrdup(), DAI lookup, and diagnostic prints.
 
-The problem is that the following functions call fib_info_hold() /
-refcount_inc() while dumping fib_info under RCU, which is unsafe.
+A malformed topology blob with a non-NUL-terminated PCM, DAI, or stream
+capability name can therefore make the parser read past the end of the
+fixed-size field.
 
-  * mlxsw_sp_router_fib4_event()
-  * rocker_router_fib_event()
-  * nsim_fib4_prepare_event()
+Reject unterminated PCM and DAI name fields before consuming them as C
+strings.
 
-refcount_inc_not_zero() must be used, but it would be too late
-there.
-
-Let's guarantee the lifetime of fib_info in fib_leaf_notify().
-
-Note that IPv6 does not need the corresponding change since
-fib6_table_dump() holds fib6_table.tb6_lock.
-
-[0]:
-refcount_t: addition on 0; use-after-free.
-WARNING: lib/refcount.c:25 at refcount_warn_saturate+0x9f/0x110 lib/refcount.c:25, CPU#0: kworker/u8:15/3420
-Modules linked in:
-CPU: 0 UID: 0 PID: 3420 Comm: kworker/u8:15 Not tainted syzkaller #0 PREEMPT_{RT,(full)}
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 04/18/2026
-Workqueue: netns cleanup_net
-RIP: 0010:refcount_warn_saturate+0x9f/0x110 lib/refcount.c:25
-Code: eb 66 85 db 74 3e 83 fb 01 75 4c e8 1b f1 22 fd 48 8d 3d 84 cb f1 0a 67 48 0f b9 3a eb 4a e8 08 f1 22 fd 48 8d 3d 81 cb f1 0a <67> 48 0f b9 3a eb 37 e8 f5 f0 22 fd 48 8d 3d 7e cb f1 0a 67 48 0f
-RSP: 0018:ffffc9000f2c7270 EFLAGS: 00010293
-RAX: ffffffff84a18858 RBX: 0000000000000002 RCX: ffff888032ff9ec0
-RDX: 0000000000000000 RSI: 0000000000000000 RDI: ffffffff8f9353e0
-RBP: 0000000000000000 R08: ffff888032ff9ec0 R09: 0000000000000005
-R10: 0000000000000100 R11: 0000000000000004 R12: ffff8880570cc000
-R13: dffffc0000000000 R14: ffff88802b40563c R15: ffff8880570cc000
-FS:  0000000000000000(0000) GS:ffff888126173000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007fb1f4d5d000 CR3: 000000006072a000 CR4: 00000000003526f0
-Call Trace:
- <TASK>
- __refcount_add include/linux/refcount.h:-1 [inline]
- __refcount_inc include/linux/refcount.h:366 [inline]
- refcount_inc include/linux/refcount.h:383 [inline]
- fib_info_hold include/net/ip_fib.h:629 [inline]
- nsim_fib4_prepare_event drivers/net/netdevsim/fib.c:930 [inline]
- nsim_fib_event_schedule_work drivers/net/netdevsim/fib.c:1000 [inline]
- nsim_fib_event_nb+0x1055/0x1240 drivers/net/netdevsim/fib.c:1043
- call_fib_notifier+0x45/0x80 net/core/fib_notifier.c:25
- call_fib_entry_notifier net/ipv4/fib_trie.c:90 [inline]
- fib_leaf_notify net/ipv4/fib_trie.c:2176 [inline]
- fib_table_notify net/ipv4/fib_trie.c:2194 [inline]
- fib_notify+0x36b/0x5e0 net/ipv4/fib_trie.c:2217
- fib_net_dump net/core/fib_notifier.c:70 [inline]
- register_fib_notifier+0x184/0x360 net/core/fib_notifier.c:108
- nsim_fib_create+0x85d/0x9f0 drivers/net/netdevsim/fib.c:1596
- nsim_dev_reload_create drivers/net/netdevsim/dev.c:1604 [inline]
- nsim_dev_reload_up+0x374/0x7c0 drivers/net/netdevsim/dev.c:1058
- devlink_reload+0x501/0x8d0 net/devlink/dev.c:475
- devlink_pernet_pre_exit+0x1ff/0x420 net/devlink/core.c:558
- ops_pre_exit_list net/core/net_namespace.c:161 [inline]
- ops_undo_list+0x187/0x940 net/core/net_namespace.c:234
- cleanup_net+0x56e/0x800 net/core/net_namespace.c:702
- process_one_work kernel/workqueue.c:3314 [inline]
- process_scheduled_works+0xb5d/0x1860 kernel/workqueue.c:3397
- worker_thread+0xa53/0xfc0 kernel/workqueue.c:3478
- kthread+0x388/0x470 kernel/kthread.c:436
- ret_from_fork+0x514/0xb70 arch/x86/kernel/process.c:158
- ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:245
- </TASK>
-
-Fixes: 0ae3eb7b4611 ("netdevsim: fib: Perform the route programming in a non-atomic context")
-Fixes: c3852ef7f2f8 ("ipv4: fib: Replay events when registering FIB notifier")
-Reported-by: syzbot+cb2aa2390ac024e25f5c@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/6a290011.39669fcc.33b062.00b1.GAE@google.com/
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://patch.msgid.link/20260610061744.2030996-2-kuniyu@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 64527e8a3529 ("ASoC: topology: Add FE DAIs dynamically")
+Fixes: acfc7d46cddc ("ASoC: topology: Add FE DAI links dynamically")
+Fixes: 0038be9a84dc ("ASoC: topology: Add support for configuring existing BE DAIs")
+Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+Link: https://patch.msgid.link/20260604-asoc-topology-check-pcm-dai-names-v1-1-e1b0f6f7c2ce@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/ip_fib.h | 5 +++++
- net/ipv4/fib_trie.c  | 4 ++++
- 2 files changed, 9 insertions(+)
+ sound/soc/soc-topology.c | 37 ++++++++++++++++++++++++++++++++++---
+ 1 file changed, 34 insertions(+), 3 deletions(-)
 
-diff --git a/include/net/ip_fib.h b/include/net/ip_fib.h
-index 24023c19c7b1f..040eed88fc672 100644
---- a/include/net/ip_fib.h
-+++ b/include/net/ip_fib.h
-@@ -628,6 +628,11 @@ static inline void fib_info_hold(struct fib_info *fi)
- 	refcount_inc(&fi->fib_clntref);
+diff --git a/sound/soc/soc-topology.c b/sound/soc/soc-topology.c
+index 44b60324eaa2e..3e4f96e79021a 100644
+--- a/sound/soc/soc-topology.c
++++ b/sound/soc/soc-topology.c
+@@ -1320,9 +1320,24 @@ static int soc_tplg_dapm_complete(struct soc_tplg *tplg)
+ 	return ret;
  }
  
-+static inline bool fib_info_hold_safe(struct fib_info *fi)
++static int soc_tplg_check_name(const char *name)
 +{
-+	return refcount_inc_not_zero(&fi->fib_clntref);
++	if (strnlen(name, SNDRV_CTL_ELEM_ID_NAME_MAXLEN) ==
++	    SNDRV_CTL_ELEM_ID_NAME_MAXLEN)
++		return -EINVAL;
++
++	return 0;
 +}
 +
- static inline void fib_info_put(struct fib_info *fi)
+ static int set_stream_info(struct soc_tplg *tplg, struct snd_soc_pcm_stream *stream,
+ 			   struct snd_soc_tplg_stream_caps *caps)
  {
- 	if (refcount_dec_and_test(&fi->fib_clntref))
-diff --git a/net/ipv4/fib_trie.c b/net/ipv4/fib_trie.c
-index 2dc87e2156d37..9bf5550e2fb73 100644
---- a/net/ipv4/fib_trie.c
-+++ b/net/ipv4/fib_trie.c
-@@ -2172,10 +2172,14 @@ static int fib_leaf_notify(struct key_vector *l, struct fib_table *tb,
- 		if (fa->fa_slen == last_slen)
- 			continue;
- 
-+		if (!fib_info_hold_safe(fa->fa_info))
-+			continue;
++	int ret;
 +
- 		last_slen = fa->fa_slen;
- 		err = call_fib_entry_notifier(nb, FIB_EVENT_ENTRY_REPLACE,
- 					      l->key, KEYLENGTH - fa->fa_slen,
- 					      fa, extack);
-+		fib_info_put(fa->fa_info);
- 		if (err)
- 			return err;
++	ret = soc_tplg_check_name(caps->name);
++	if (ret)
++		return ret;
++
+ 	stream->stream_name = devm_kstrdup(tplg->dev, caps->name, GFP_KERNEL);
+ 	if (!stream->stream_name)
+ 		return -ENOMEM;
+@@ -1375,7 +1390,11 @@ static int soc_tplg_dai_create(struct soc_tplg *tplg,
+ 	if (dai_drv == NULL)
+ 		return -ENOMEM;
+ 
+-	if (strlen(pcm->dai_name)) {
++	ret = soc_tplg_check_name(pcm->dai_name);
++	if (ret)
++		goto err;
++
++	if (pcm->dai_name[0]) {
+ 		dai_drv->name = devm_kstrdup(tplg->dev, pcm->dai_name, GFP_KERNEL);
+ 		if (!dai_drv->name) {
+ 			ret = -ENOMEM;
+@@ -1481,7 +1500,11 @@ static int soc_tplg_fe_link_create(struct soc_tplg *tplg,
+ 	if (tplg->ops)
+ 		link->dobj.unload = tplg->ops->link_unload;
+ 
+-	if (strlen(pcm->pcm_name)) {
++	ret = soc_tplg_check_name(pcm->pcm_name);
++	if (ret)
++		goto err;
++
++	if (pcm->pcm_name[0]) {
+ 		link->name = devm_kstrdup(tplg->dev, pcm->pcm_name, GFP_KERNEL);
+ 		link->stream_name = devm_kstrdup(tplg->dev, pcm->pcm_name, GFP_KERNEL);
+ 		if (!link->name || !link->stream_name) {
+@@ -1491,7 +1514,11 @@ static int soc_tplg_fe_link_create(struct soc_tplg *tplg,
  	}
+ 	link->id = le32_to_cpu(pcm->pcm_id);
+ 
+-	if (strlen(pcm->dai_name)) {
++	ret = soc_tplg_check_name(pcm->dai_name);
++	if (ret)
++		goto err;
++
++	if (pcm->dai_name[0]) {
+ 		link->cpus->dai_name = devm_kstrdup(tplg->dev, pcm->dai_name, GFP_KERNEL);
+ 		if (!link->cpus->dai_name) {
+ 			ret = -ENOMEM;
+@@ -1843,6 +1870,10 @@ static int soc_tplg_dai_config(struct soc_tplg *tplg,
+ 
+ 	memset(&dai_component, 0, sizeof(dai_component));
+ 
++	ret = soc_tplg_check_name(d->dai_name);
++	if (ret)
++		return ret;
++
+ 	dai_component.dai_name = d->dai_name;
+ 	dai = snd_soc_find_dai(&dai_component);
+ 	if (!dai) {
 -- 
 2.53.0
 
