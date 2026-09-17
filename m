@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87CCA4F85B0;
-	Thu, 17 Sep 2026 17:57:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E7FA4F85C6;
+	Thu, 17 Sep 2026 17:57:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789667874; cv=none; b=FgpSfzYRP6ySqRSibcMsOeRfo5rs95J2JIoslIhis/55kP/4sl+gt3dHFNeJbI98dfGRdN1VNLQhB6PzyUwaEMNkn63KCW3Yy91XJy+NPc7dpGcl5A+SfwOjZRExSL9QYDUpUp+m+nIzrzJkxjZsjeMAddJb1VtOZ6ugJrbBNLo=
+	t=1789667876; cv=none; b=KlS83/QciGVyY6pP4e8B0hI+pdAHFYXTy5LY4YpbYF8ImNbdFY98iIDIbWCLXGnNq6SOQ1Mjbzs0tv834ksxZPGnfaa/BMlSBJl/Phtt0r918qDs4kWjguPUVt8HBgiBKxi3fkGf7vkBFk0WClLbxLtsNas1RWDjNeEIZaS4etM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789667874; c=relaxed/simple;
-	bh=iSOlzT8J952HGaVnAl5KCJvtZ9PRqGO8Xzy67tL+5ts=;
+	s=arc-20240116; t=1789667876; c=relaxed/simple;
+	bh=IpKOtC7Cu/7uCM7iiePF1Uq+Z4M71+SDnfgKAiXmAmk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mwqlX0X/XTre1m5DwfyaoJ0enGlcZO4TSTrhpf/o7QyagowVNmX0i57bpLyPdnml1xTBC1SceHTO+VLeFeJvUu1jKKGyCUTXaxfntOHEHzgLo8DBVga5VdWKOzfZ/Oq5dq9Atg7PB3ENlxV0kzQxzfqtlUDVdhZm4SIOzfh4HLQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JL7Xp590; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=bwOMuFTaMs2JmXe7tKUjVO8mHjodKi7XcmX2fLnOiv4qam05qKcHJnFSMQ7WqMyOR1f/Lx7pSN3GbrB88QI9PIAwsCLE40UUh7bSJTH6frLEo8yA1M9FSNvxlRiFydkJQ5/3hmVyMMvD+qnxYTJJy7WWl+pqzz/SvTSPfAylVIk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MHSPtVyn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JL7Xp590"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4A5F1F000FF;
-	Thu, 17 Sep 2026 17:57:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MHSPtVyn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C329C1F000FF;
+	Thu, 17 Sep 2026 17:57:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789667872;
-	bh=HmqvlHpZhwboM6CNiOKSeiiHrUjXjZkrkU0JAjVKeN4=;
+	s=korg; t=1789667875;
+	bh=46yaeV7HgGzLloI4ZaiUo6fwXA3OPjP5Lez64K2RQnc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JL7Xp590bKRkPPkbH4N+6jh0otLYLTArD+b3b/1tTueeEI7nXr4guUM0fBSLnjR3M
-	 B3Kw/fI+aSAyD/NYEih7wN6Esg9lAFoxvD5/LGCT9rudsS9pV3rmX6ZJXSGuGQdbkX
-	 Bj7dv+IIR3fHl/6tT15jTcCmBr5eCHdYYclQ4j5c=
+	b=MHSPtVynv8HoJCvjaJzBlxQY0ay35pWEJwG0bgncF2li3i4Vf8hwUNqJha0ax+91l
+	 yGmWzE08COK3N6aFXBZM+r5Gvufkhfwap7+HordMs5kbNxYcaXXZ/T4RwdHehaWE8l
+	 cK9NGlZryB9fdoJjTzl9SdKeSBKJHYxmTF4mpGo8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0237/1102] net: cpsw_new: unregister devlink on port registration failure
-Date: Thu, 17 Sep 2026 16:03:00 +0100
-Message-ID: <20260917151545.537199852@linuxfoundation.org>
+Subject: [PATCH 6.12 0211/1102] ASoC: codecs: rk3328: Use managed GPIO and clock helpers
+Date: Thu, 17 Sep 2026 16:02:34 +0100
+Message-ID: <20260917151544.875034483@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -47,58 +45,134 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
 
-[ Upstream commit b64f763b607426ac97e44b114f0b8844ac3b86dd ]
+[ Upstream commit 0cf3489bba9ad13aae052232e223e19a620fe7a7 ]
 
-cpsw_probe() registers devlink before registering the CPSW ports.
+rk3328_platform_probe() acquires the mute GPIO with gpiod_get_optional()
+but never releases it. It also enables mclk and pclk manually while
+relying on probe error labels for unwind, and the driver has no platform
+remove callback to disable those clocks after a successful unbind.
 
-If cpsw_register_ports() fails, the error path only unregisters the
-notifiers and then releases the lower level resources. It does not undo
-the successful cpsw_register_devlink() call, leaving the devlink instance
-and its parameters registered after probe has failed.
+This path has already needed fixes for missing clock unwinds on probe
+errors. Use devm_gpiod_get_optional() and devm_clk_get_enabled() so the
+GPIO and enabled clock lifetimes are tied to the device. This removes the
+manual error labels and makes both probe failure and driver unbind follow
+the normal devres cleanup path.
 
-Add a devlink cleanup label for the path where devlink registration has
-already succeeded, and use it when port registration fails.
-
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Reviewed-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Link: https://patch.msgid.link/20260604043115.1409134-1-lgs201920130244@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+Link: https://patch.msgid.link/20260525-asoc-rk3328-devm-resources-v1-1-2abde0006f89@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ti/cpsw_new.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ sound/soc/codecs/rk3328_codec.c | 54 ++++++++-------------------------
+ 1 file changed, 13 insertions(+), 41 deletions(-)
 
-diff --git a/drivers/net/ethernet/ti/cpsw_new.c b/drivers/net/ethernet/ti/cpsw_new.c
-index fa161a1096045..468eaa6f785e6 100644
---- a/drivers/net/ethernet/ti/cpsw_new.c
-+++ b/drivers/net/ethernet/ti/cpsw_new.c
-@@ -2018,7 +2018,7 @@ static int cpsw_probe(struct platform_device *pdev)
+diff --git a/sound/soc/codecs/rk3328_codec.c b/sound/soc/codecs/rk3328_codec.c
+index 9697aefc6e030..5871b5a819757 100644
+--- a/sound/soc/codecs/rk3328_codec.c
++++ b/sound/soc/codecs/rk3328_codec.c
+@@ -425,7 +425,6 @@ static int rk3328_platform_probe(struct platform_device *pdev)
+ 	struct rk3328_codec_priv *rk3328;
+ 	struct regmap *grf;
+ 	void __iomem *base;
+-	int ret = 0;
  
- 	ret = cpsw_register_ports(cpsw);
- 	if (ret)
--		goto clean_unregister_notifiers;
-+		goto clean_unregister_devlink;
+ 	rk3328 = devm_kzalloc(&pdev->dev, sizeof(*rk3328), GFP_KERNEL);
+ 	if (!rk3328)
+@@ -441,14 +440,13 @@ static int rk3328_platform_probe(struct platform_device *pdev)
+ 	regmap_write(grf, RK3328_GRF_SOC_CON2,
+ 		     (BIT(14) << 16 | BIT(14)));
  
- 	dev_notice(dev, "initialized (regs %pa, pool size %d) hw_ver:%08X %d.%d (%d)\n",
- 		   &ss_res->start, descs_pool_size,
-@@ -2030,6 +2030,8 @@ static int cpsw_probe(struct platform_device *pdev)
+-	ret = of_property_read_u32(rk3328_np, "spk-depop-time-ms",
+-				   &rk3328->spk_depop_time);
+-	if (ret < 0) {
++	if (of_property_read_u32(rk3328_np, "spk-depop-time-ms",
++				 &rk3328->spk_depop_time)) {
+ 		dev_info(&pdev->dev, "spk_depop_time use default value.\n");
+ 		rk3328->spk_depop_time = 200;
+ 	}
  
- 	return 0;
+-	rk3328->mute = gpiod_get_optional(&pdev->dev, "mute", GPIOD_OUT_HIGH);
++	rk3328->mute = devm_gpiod_get_optional(&pdev->dev, "mute", GPIOD_OUT_HIGH);
+ 	if (IS_ERR(rk3328->mute))
+ 		return PTR_ERR(rk3328->mute);
+ 	/*
+@@ -461,57 +459,31 @@ static int rk3328_platform_probe(struct platform_device *pdev)
+ 		regmap_write(grf, RK3328_GRF_SOC_CON10, BIT(17) | BIT(1));
+ 	}
  
-+clean_unregister_devlink:
-+	cpsw_unregister_devlink(cpsw);
- clean_unregister_notifiers:
- 	cpsw_unregister_notifiers(cpsw);
- clean_cpts:
+-	rk3328->mclk = devm_clk_get(&pdev->dev, "mclk");
++	rk3328->mclk = devm_clk_get_enabled(&pdev->dev, "mclk");
+ 	if (IS_ERR(rk3328->mclk))
+ 		return PTR_ERR(rk3328->mclk);
+ 
+-	ret = clk_prepare_enable(rk3328->mclk);
+-	if (ret)
+-		return ret;
+ 	clk_set_rate(rk3328->mclk, INITIAL_FREQ);
+ 
+-	rk3328->pclk = devm_clk_get(&pdev->dev, "pclk");
+-	if (IS_ERR(rk3328->pclk)) {
+-		dev_err(&pdev->dev, "can't get acodec pclk\n");
+-		ret = PTR_ERR(rk3328->pclk);
+-		goto err_unprepare_mclk;
+-	}
+-
+-	ret = clk_prepare_enable(rk3328->pclk);
+-	if (ret < 0) {
+-		dev_err(&pdev->dev, "failed to enable acodec pclk\n");
+-		goto err_unprepare_mclk;
+-	}
++	rk3328->pclk = devm_clk_get_enabled(&pdev->dev, "pclk");
++	if (IS_ERR(rk3328->pclk))
++		return dev_err_probe(&pdev->dev, PTR_ERR(rk3328->pclk),
++				     "failed to get or enable acodec pclk\n");
+ 
+ 	base = devm_platform_ioremap_resource(pdev, 0);
+-	if (IS_ERR(base)) {
+-		ret = PTR_ERR(base);
+-		goto err_unprepare_pclk;
+-	}
++	if (IS_ERR(base))
++		return PTR_ERR(base);
+ 
+ 	rk3328->regmap = devm_regmap_init_mmio(&pdev->dev, base,
+ 					       &rk3328_codec_regmap_config);
+-	if (IS_ERR(rk3328->regmap)) {
+-		ret = PTR_ERR(rk3328->regmap);
+-		goto err_unprepare_pclk;
+-	}
++	if (IS_ERR(rk3328->regmap))
++		return PTR_ERR(rk3328->regmap);
+ 
+ 	platform_set_drvdata(pdev, rk3328);
+ 
+-	ret = devm_snd_soc_register_component(&pdev->dev, &soc_codec_rk3328,
++	return devm_snd_soc_register_component(&pdev->dev, &soc_codec_rk3328,
+ 					       rk3328_dai,
+ 					       ARRAY_SIZE(rk3328_dai));
+-	if (ret)
+-		goto err_unprepare_pclk;
+-
+-	return 0;
+-
+-err_unprepare_pclk:
+-	clk_disable_unprepare(rk3328->pclk);
+-
+-err_unprepare_mclk:
+-	clk_disable_unprepare(rk3328->mclk);
+-	return ret;
+ }
+ 
+ static const struct of_device_id rk3328_codec_of_match[] __maybe_unused = {
 -- 
 2.53.0
 
