@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9F6049D5A5;
-	Thu, 17 Sep 2026 18:52:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C3304D1798;
+	Thu, 17 Sep 2026 18:52:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789671176; cv=none; b=ITZnlu/BbcjQbVspsuCE8sUpz48haeL+b0KymnoQZTBZddmFyFSQ0pz7raRHwOKT4z66wh5V7GAEgNDgciln8U66dQ56Y13FApnoJxQHR0UqMgNMRE/72eo4xkDGfyPoXfDJaHFzAZ7whY7V6obWNGHv3ujvVRXBUJRB4PMAujw=
+	t=1789671178; cv=none; b=eJCwK999nr7PgVNrgkLjtMbFtVxQ4IZcQogWe0mf6MLWDf1g2gq/699aAOFy0dtnaAptqJbjNLLV2kCmt0rCWCZv8pf7r08yl+xRVttzCJWm662QM+YBUQ/p148nXxRwIW/tnCZuLQWp0PuVonfQOSrIHsbdbJ/Q1+p908StfKE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789671176; c=relaxed/simple;
-	bh=aOSy31cjObKho5lWQwqNtAStUq6al4+X+YUSuyZNvwE=;
+	s=arc-20240116; t=1789671178; c=relaxed/simple;
+	bh=Y631aeT12PFKVBcnexxP6wM0NlYgSukcHbf8eIqCxdI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nrvjj9C/AEjcyjHux04+3J741gOei//V62MTMmJ3Mw6Xm7fg2CqrPO7acIVLT3yyf+5y7tZ0cTIXaGHYt0+DN70WmZ4gJtd/1V472wzsyu18iMPtD9okOkOiW+KJYefysqMriPWGal1kpeIDXDWbMp8/Tlu2xmqfbxhPK/e0wBY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ny9fovPv; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dc66RITgGvNK+/G/DuVjGoqWO8NXviWJ0Ep0+6vijUdKe6qmd3KCEAXvtSMvyl1sOLg+KaJ7yRHJ8d4Q4jF/Sgtd0KqiYT4wWCK6+XUeLZ5/nBrDk5H7M/5iyl0duVy61hrejnqSduT5Rc1Hu9NsBN+BEmLcivKVvWTgd43TLn4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wssz5SRb; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ny9fovPv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 238A01F000FF;
-	Thu, 17 Sep 2026 18:52:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wssz5SRb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0943C1F000FF;
+	Thu, 17 Sep 2026 18:52:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789671174;
-	bh=iuLGUkC4k5wqdDtmaRUOIfRY9QxOFOJiTcW/3jLbPjo=;
+	s=korg; t=1789671177;
+	bh=y5U24j/2FLyT8snMXQo2UcZ250biiC5MDEfn2ety7cA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ny9fovPvHb4dQHck+uSG3aFMmZP4azBoshNCx5ZIfCqvIYG8rwayoBpInfkVCb1r9
-	 +Jj/Jcek2suc2of+rJ5nsFSxKJ0ITvrfbiZu8jhGivWfFhDOPrgfCtOZ67K/0oU38d
-	 eOO5vM8uzU0zMngh64SJSyWU2nP8qQTBKbOuNCLU=
+	b=Wssz5SRbvoJRMsH294O8q815ASzLawJU9h66hLxWthEm5T6HnpUjvTm6ZBXE4/FCR
+	 uDMXVmnGjWlWMqwR/DnR2ComgIts0UwIV6s1HYh07FJnP16wx6aBVjyddhIXsP30CT
+	 nUTt8yaeQofCqqXOLzHqZLxo3ijjHwQkNHEIhSJ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuanfu Xie <yuanfuxie@stu.pku.edu.cn>,
-	Pali Rohar <pali@kernel.org>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Paulo Alcantara <pc@manguebit.org>,
 	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
 	Shyam Prasad N <sprasad@microsoft.com>,
 	Tom Talpey <tom@talpey.com>,
 	Bharath SM <bharathsm@microsoft.com>
-Subject: [PATCH 6.12 0891/1102] smb: client: fix one-byte OOB read in smb2_parse_native_symlink()
-Date: Thu, 17 Sep 2026 16:13:54 +0100
-Message-ID: <20260917151602.950736412@linuxfoundation.org>
+Subject: [PATCH 6.12 0892/1102] smb: client: fix file type corruption in cifs_reparse_point_to_fattr()
+Date: Thu, 17 Sep 2026 16:13:55 +0100
+Message-ID: <20260917151602.977082641@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -58,49 +56,15 @@ Content-Transfer-Encoding: 8bit
 
 From: Paulo Alcantara <pc@manguebit.org>
 
-commit cb26524ef4ac28fcfa554c0656e8dc412c38a8ff upstream.
+commit 6bd360447941357e959414a525aa62576a448116 upstream.
 
-When parsing a share-root relative native symlink, memcpy copies
-smb_target+1 (skipping the leading separator) but uses
-strlen(smb_target)+1 as the length, reading one byte past the
-allocated buffer.
+Setting the file type in cf_mode without clearing the existing S_IFMT
+bits first is wrong as it corrupts the file type when cf_mode already
+has type bits set (e.g. S_IFREG | S_IFLNK == S_IFDIR | S_IFREG).
 
-This fixes the following KASAN splat when accessing an SMB symlink
-with a target of '\a\b':
+Clear S_IFMT before setting S_IFLNK for native and SMB1 symlinks.
 
-  BUG: KASAN: slab-out-of-bounds in smb2_parse_native_symlink+0x4f5/0xca0
-  Read of size 5 at addr ffff88800878fe21 by task netfsfuzz-execu/1
-  CPU: 1 UID: 0 PID: 1 Comm: netfsfuzz-execu Tainted: G N
-  7.2.0-11943-g2709dd5ae32f-dirty #1 PREEMPT(lazy)
-  Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix,
-  1996)
-  Call Trace:
-   <TASK>
-   dump_stack_lvl+0x7b/0xa0
-   print_report+0xd0/0x630
-   kasan_report+0xe5/0x120
-   kasan_check_range+0x105/0x1b0
-   __asan_memcpy+0x23/0x60
-   smb2_parse_native_symlink+0x4f5/0xca0
-   parse_reparse_point+0x68a/0x1530
-   reparse_info_to_fattr+0x752/0xa20
-   cifs_get_fattr+0x873/0x15b0
-   cifs_get_inode_info+0xc0/0x310
-   cifs_lookup+0x308/0xa70
-   __lookup_slow+0x122/0x2b0
-   lookup_slow+0x50/0x70
-   path_lookupat+0x525/0xaf0
-   filename_lookup+0x1f2/0x550
-   vfs_statx+0xd1/0x1a0
-   vfs_fstatat+0x65/0xc0
-   __do_sys_newfstatat+0x9a/0x120
-   do_syscall_64+0xdd/0x4a0
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Reported-by: Yuanfu Xie <yuanfuxie@stu.pku.edu.cn>
-Fixes: 723f4ef90452 ("cifs: Fix parsing native symlinks relative to the export")
-Suggested-by: Pali Rohar <pali@kernel.org>
-Reviewed-by: Pali Rohar <pali@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20260906181540.647469-1-pc%40manguebit.org
 Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Cc: Ronnie Sahlberg <ronniesahlberg@gmail.com>
@@ -110,20 +74,18 @@ Cc: Bharath SM <bharathsm@microsoft.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/reparse.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/smb/client/reparse.c |    1 +
+ 1 file changed, 1 insertion(+)
 
 --- a/fs/smb/client/reparse.c
 +++ b/fs/smb/client/reparse.c
-@@ -580,7 +580,8 @@ int smb2_parse_native_symlink(char **tar
- 			linux_target[i*3 + 1] = '.';
- 			linux_target[i*3 + 2] = sep;
- 		}
--		memcpy(linux_target + levels*3, smb_target+1, smb_target_len); /* +1 to skip leading sep */
-+		/* +1 to skip leading sep */
-+		memcpy(linux_target + levels*3, smb_target+1, smb_target_len-1);
- 	} else {
- 		linux_target = smb_target;
- 		smb_target = NULL;
+@@ -824,6 +824,7 @@ bool cifs_reparse_point_to_fattr(struct
+ 		break;
+ 	case 0: /* SMB1 symlink */
+ 	case IO_REPARSE_TAG_SYMLINK:
++		fattr->cf_mode &= ~S_IFMT;
+ 		fattr->cf_mode |= S_IFLNK;
+ 		break;
+ 	default:
 
 
