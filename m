@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 086B74D17B6;
-	Thu, 17 Sep 2026 18:41:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECCE34D4892;
+	Thu, 17 Sep 2026 18:42:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789670519; cv=none; b=DOWvYOXhKCO/y18DZQbxj3QTIZZG44SaPi0oGNlX6T8tLcu90sokdVSWH+j6x8rU4UypocPVBXb11YtdQJNro8hxtgtMs7j1PgaRgEGewvSUmcG9WugedPUksuaUSHxypPs81JH5cXntr0/wwK3bjpXaot10QQfoEcO/1yQlSRk=
+	t=1789670522; cv=none; b=tSzztfLerev7PNivnIzlTAMukUqijoeEK9sSUCYIfUGzYg5Myx5TBYSbuteXwmWiA5leB+jOYFF5RAxb13VLBcekl4NnNKGiUcWOW0PoIOcQ2WZ0olL4IC7YzNcr+SshcMnqTi2yJIvfoEL+gYGajlIBC9JxRgWDhaAmKqVgyNs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789670519; c=relaxed/simple;
-	bh=kYquDGbZufFTdtvomYcWCahY6haIGTgQtJ+b4QEqZCw=;
+	s=arc-20240116; t=1789670522; c=relaxed/simple;
+	bh=vNozFJE4/1XvPIxg6xbiH9oUIzVqid2fA+QdPgyfgYc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d98Yn5O0W2jagrL4P0JGXfpKVD1xkb0Y5aDscpbvrw706s6mHpKODtKkrdjkjiIg6ZfDXQZSigzvoSmH6YvDz3XZwAxSPWp7ambO3X+yzDgGpXm7xiMdx2iHATkAyakaSnSi4OmCutNbBG6/O2oqlpFZJfjrnRst91H7mvdlSho=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A7PnV32m; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=W4nXjkXys33IYYR0K6ZkYiacF7vwdCGIIheJwZLKTaO+P+kQxvXyhf1ZlLnvUMjyt6ew+S+LwI2UYSN5RXf51fDXk3UgXnEDmwWdXKs6uNOe38bBI9oA4AD23MeXrOoCw1UIaOBW1phDtPmCg/ukh6iF+zKpsbzAAZV1/vZFn4M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XSurb4Ca; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A7PnV32m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 618D81F000FF;
-	Thu, 17 Sep 2026 18:41:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XSurb4Ca"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C99E1F000FF;
+	Thu, 17 Sep 2026 18:42:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789670517;
-	bh=CqkfN+wVN34ajex9/wRhT2cMUJ/uUyfiPRwHp4FHwhM=;
+	s=korg; t=1789670520;
+	bh=DH9SZXeIIgktPSrMg+4ear3PZZz+FRnqg+6Le3Jm+e4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=A7PnV32mW7zpdsunBu5AT27TqKo3JKBsPQF3ycu21PcDoQgMmNTzJ8QdMXmBGMITo
-	 6+RF+VkpzmoZvV6j2mU5UeOIeeIbRLdUahgXhmX/M5D8TNgoL7pEveaeQNCWYZrLON
-	 WysDZDc4X6J3e3NkFNvWVquYvAr6bByraKK3Zwzg=
+	b=XSurb4CaMQqarceivWbJZlY8GCg5utlJEhU6AwB6OubuHLwzbSq7bFq/CNOedy7rM
+	 su4r7ft5gxRbT5gTyuFp1kSFXh0F68XPAG9sBZImP/OLn4OUIiCqRHYOBgXTrbYS7y
+	 FIJ4C8i6YSdYKnwEeisI6hr+CECyCZOGTaQ7wyh4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Carolina Jubran <cjubran@nvidia.com>,
-	Alex Lazar <alazar@nvidia.com>,
+	Shahar Shitrit <shshitrit@nvidia.com>,
 	Tariq Toukan <tariqt@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0688/1102] net/mlx5e: Fix ETS zero BW reporting when one TC holds 100%
-Date: Thu, 17 Sep 2026 16:10:31 +0100
-Message-ID: <20260917151557.541187312@linuxfoundation.org>
+Subject: [PATCH 6.12 0689/1102] net/mlx5e: Fix use-after-free race in sample_restore_put()
+Date: Thu, 17 Sep 2026 16:10:32 +0100
+Message-ID: <20260917151557.568470321@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -55,46 +55,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Carolina Jubran <cjubran@nvidia.com>
 
-[ Upstream commit e7ee89740800a1cf253713e9249c3ee9203ebe91 ]
+[ Upstream commit af3aef0245abbab5e9f6302e7a7d6407187afb71 ]
 
-When ETS TCs with zero bandwidth are configured, the driver programs the
-firmware using an alternate representation. On get, it needs
-to recognize that representation so those TCs can be translated back and
-reported as 0% bandwidth.
+Concurrent teardown of TC sample rules sharing the same restore
+context may re-read restore->count after dropping restore_lock.
+At that point another thread may already have completed cleanup and
+freed the restore object.
 
-The existing detection relied on the programmed bandwidth because it was
-enough to identify this representation. However, when a single ETS TC
-owns 100% of the bandwidth, its firmware representation becomes the
-same as a strict-priority TC, causing zero-bandwidth ETS TCs to be
-reported with non-zero bandwidth values.
+Use the result of the refcount decrement while holding restore_lock to
+determine whether cleanup is needed.
 
-Use the cached TSA instead to distinguish the ETS and strict-priority
-cases.
-
-Fixes: be0f161ef141 ("net/mlx5e: DCBNL, Implement tc with ets type and zero bandwidth")
+Fixes: 36a3196256bf ("net/mlx5e: TC, Add sampler restore handle API")
 Signed-off-by: Carolina Jubran <cjubran@nvidia.com>
-Reviewed-by: Alex Lazar <alazar@nvidia.com>
+Reviewed-by: Shahar Shitrit <shshitrit@nvidia.com>
 Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20260902193224.3668743-1-tariqt@nvidia.com
+Link: https://patch.msgid.link/20260902193341.3668809-1-tariqt@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en/tc/sample.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c b/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c
-index 98ca8f486d52c..9fe8ea3e71cf8 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c
-@@ -133,7 +133,7 @@ static int mlx5e_dcbnl_ieee_getets(struct net_device *netdev,
- 		if (err)
- 			return err;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/tc/sample.c b/drivers/net/ethernet/mellanox/mlx5/core/en/tc/sample.c
+index 5db239cae8145..5ae13af900308 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en/tc/sample.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en/tc/sample.c
+@@ -311,12 +311,15 @@ sample_restore_get(struct mlx5e_tc_psample *tc_psample, u32 obj_id,
+ static void
+ sample_restore_put(struct mlx5e_tc_psample *tc_psample, struct mlx5e_sample_restore *restore)
+ {
++	bool last;
++
+ 	mutex_lock(&tc_psample->restore_lock);
+-	if (--restore->count == 0)
++	last = --restore->count == 0;
++	if (last)
+ 		hash_del(&restore->hlist);
+ 	mutex_unlock(&tc_psample->restore_lock);
  
--		if (ets->tc_tx_bw[i] < MLX5E_MAX_BW_ALLOC &&
-+		if (priv->dcbx.tc_tsa[i] == IEEE_8021QAZ_TSA_ETS &&
- 		    tc_group[i] == (MLX5E_LOWEST_PRIO_GROUP + 1))
- 			is_zero_bw_ets_tc = true;
- 
+-	if (!restore->count) {
++	if (last) {
+ 		mlx5_del_flow_rules(restore->rule);
+ 		mlx5_modify_header_dealloc(tc_psample->esw->dev, restore->modify_hdr);
+ 		kfree(restore);
 -- 
 2.53.0
 
