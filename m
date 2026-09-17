@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34F98547076;
-	Thu, 17 Sep 2026 18:05:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E6764C10F2;
+	Thu, 17 Sep 2026 18:05:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789668304; cv=none; b=VbbQyNfLQPlgdLNGbQyDQ6FfXHRBVoAL4t1uGIX2x3GcA2t5DAIZZRa9BC6Yn1BR6sFph009Z8kNp9r9uOcIm5EicC8SjenUgZSppu/NWHCdm/PukXCXVec9oxHzHOlMdBM0DQW6F1urTN1tutSxrjqCdzoO+JNWzrcBc8eUZYk=
+	t=1789668307; cv=none; b=FsELwyOKe7Rr0Btf1umFf1L7a75BYRxHLRa96RTVa7S6MP19OyGfSFNDfkAv/Rvv9gTGC6r8TLQVLUMlNpQLMsSLDG38erfYbvpOYa45RVxS/HZvLPkQjn2pLlrVSVQpMFBnbvIAo93p4fLqVw5BctMr8PpIeEtfBDjhSnqzLKw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789668304; c=relaxed/simple;
-	bh=Z95oUdleDT4gOCZVtiOi5KhuNSuvcrbpG8CrKGJowIg=;
+	s=arc-20240116; t=1789668307; c=relaxed/simple;
+	bh=7jwWhg/qf40bAXVLcg7g45JywG/6I6Wnv8hKZjUe96k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BUyPzejfYAl74igPiqDCipUeXYYIKIeTHJVhVn3/Ytguqr8YSWUbnIcIayZQfqE9wXdGVDbOLnW19bqd6zOz4T5d+N2fL//T96tn7dfgr4fciLBCPLVAi6g6Bntw5fiYUEGrxQjjAGrW1+841HGtFrnrq4r9bMe8OO5qq9i7gAo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lg9J4DuM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mi1vGfIWX9We7IwvdqjfXfOdtY/tNM34F8pzupVANBqrpXwneNNZ7Yj/uCCT7ogoxLljlYpAiK1E3b8Y6eFrIACxO3dzkaQx6b258je4ehDlbqKUkGPKq6h+gyXd5SlmfTinrm32h6AYrTVxIjSqIG+aWj3Z0X+zhKswCMJc548=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2gq52qGN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lg9J4DuM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B8701F000FF;
-	Thu, 17 Sep 2026 18:05:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2gq52qGN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A9711F000FF;
+	Thu, 17 Sep 2026 18:05:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789668303;
-	bh=+3aVoTEukm6K+ZDQPF55eGN9PPfKGKa9MBso2kUDDUM=;
+	s=korg; t=1789668306;
+	bh=eodzxkq34Yw4ckx9b5K+6k9jpNscDwD7xNPFVw+rAKo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Lg9J4DuM4YVLZLML+Zog+Jo/ZA755ebnyinohMJQvZlqXqE0Uk2eRLoAyjPmXMQWQ
-	 d/9dC1EmdraY2OOL6agIbCV3a07oCa2ZaY2Xb6SQV+xYpZFE/CSNOEaqoIpNVyJsLe
-	 Bf6kgyS3DeoBpwHeTDDXE1vJ87cC3l60j/nxeSOU=
+	b=2gq52qGN3U6O4bC+HYYhsVMYRq8FmqL2Nbz5mz0QVtmGTHGumLI1AzQ9n5nPfLRN7
+	 t2w3tqdG6efLYLCsI5M1GoTNZhXkEMnlGD1zPkGKDTZa02mD5m3Nr4rXRZtJWLNT3U
+	 KupNIQeMrNwQTioieqAXUfA0jUdx3VQXT1gpuHWk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yousef Alhouseen <alhouseenyousef@gmail.com>,
-	Juergen Gross <jgross@suse.com>,
+	David Howells <dhowells@redhat.com>,
+	Paulo Alcantara <pc@manguebit.org>,
+	netfs@lists.linux.dev,
+	linux-fsdevel@vger.kernel.org,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0381/1102] xen/gntalloc: validate grant count before allocation
-Date: Thu, 17 Sep 2026 16:05:24 +0100
-Message-ID: <20260917151549.220634078@linuxfoundation.org>
+Subject: [PATCH 6.12 0382/1102] cachefiles: Fix double fput
+Date: Thu, 17 Sep 2026 16:05:25 +0100
+Message-ID: <20260917151549.245080624@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -51,73 +54,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yousef Alhouseen <alhouseenyousef@gmail.com>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit 2299822f3f466b5dcad2377bf63986199f881a6b ]
+[ Upstream commit af6830cc12dfe86c832dccc9c9878a93aaa22f83 ]
 
-gntalloc_ioctl_alloc() allocates the grant-id array before checking
-whether the requested count fits within the global grant limit. Counts
-above that limit cannot succeed, so reject them before the
-user-controlled allocation reaches kcalloc().
+Fix a double fput() in error handling in cachefiles_create_tmpfile().
 
-Use a subtraction-based check while holding gref_mutex so adding the
-requested count cannot wrap. Also cast the count before advancing the
-per-file index so the page-size multiplication is performed in 64-bit
-arithmetic.
-
-Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
-Reviewed-by: Juergen Gross <jgross@suse.com>
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Message-ID: <20260626223805.43781-3-alhouseenyousef@gmail.com>
+Link: https://sashiko.dev/#/patchset/20260608145432.681865-1-dhowells%40redhat.com
+Signed-off-by: David Howells <dhowells@redhat.com>
+Link: https://patch.msgid.link/20260625140640.3116900-4-dhowells@redhat.com
+cc: Paulo Alcantara <pc@manguebit.org>
+cc: netfs@lists.linux.dev
+cc: linux-fsdevel@vger.kernel.org
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/xen/gntalloc.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ fs/cachefiles/namei.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/xen/gntalloc.c b/drivers/xen/gntalloc.c
-index f93f73ecefeee..462f67dc32751 100644
---- a/drivers/xen/gntalloc.c
-+++ b/drivers/xen/gntalloc.c
-@@ -272,6 +272,7 @@ static long gntalloc_ioctl_alloc(struct gntalloc_file_private_data *priv,
- 	int rc = 0;
- 	struct ioctl_gntalloc_alloc_gref op;
- 	uint32_t *gref_ids;
-+	unsigned int limit_snapshot;
- 
- 	pr_debug("%s: priv %p\n", __func__, priv);
- 
-@@ -280,6 +281,12 @@ static long gntalloc_ioctl_alloc(struct gntalloc_file_private_data *priv,
- 		goto out;
+diff --git a/fs/cachefiles/namei.c b/fs/cachefiles/namei.c
+index 2b3f9935dbb44..2249ed7f0a407 100644
+--- a/fs/cachefiles/namei.c
++++ b/fs/cachefiles/namei.c
+@@ -497,7 +497,6 @@ struct file *cachefiles_create_tmpfile(struct cachefiles_object *object)
+ 	ret = -EINVAL;
+ 	if (unlikely(!file->f_op->read_iter) ||
+ 	    unlikely(!file->f_op->write_iter)) {
+-		fput(file);
+ 		pr_notice("Cache does not support read_iter and write_iter\n");
+ 		goto err_unuse;
  	}
- 
-+	limit_snapshot = READ_ONCE(limit);
-+	if (op.count > limit_snapshot) {
-+		rc = -ENOSPC;
-+		goto out;
-+	}
-+
- 	gref_ids = kcalloc(op.count, sizeof(gref_ids[0]), GFP_KERNEL);
- 	if (!gref_ids) {
- 		rc = -ENOMEM;
-@@ -292,14 +299,16 @@ static long gntalloc_ioctl_alloc(struct gntalloc_file_private_data *priv,
- 	 * are about to enforce, removing them here is a good idea.
- 	 */
- 	do_cleanup();
--	if (gref_size + op.count > limit) {
-+	limit_snapshot = READ_ONCE(limit);
-+	if (gref_size > limit_snapshot ||
-+	    op.count > limit_snapshot - gref_size) {
- 		mutex_unlock(&gref_mutex);
- 		rc = -ENOSPC;
- 		goto out_free;
- 	}
- 	gref_size += op.count;
- 	op.index = priv->index;
--	priv->index += op.count * PAGE_SIZE;
-+	priv->index += (uint64_t)op.count * PAGE_SIZE;
- 	mutex_unlock(&gref_mutex);
- 
- 	rc = add_grefs(&op, gref_ids, priv);
 -- 
 2.53.0
 
