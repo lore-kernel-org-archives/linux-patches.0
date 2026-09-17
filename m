@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEC444F403E;
-	Thu, 17 Sep 2026 18:00:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6E284D1786;
+	Thu, 17 Sep 2026 18:00:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789668016; cv=none; b=mYXzN8o90iZnQvVXdjrJAsL5EfT4+RtjYYFjgw9flnqC9leGST3MT5EgVIVP3THhrNJ66MkXVedVyKHJ0yq3dppI4mkzyK8QnQZUmyQdp+3CJHxKsVAl6APWbDfQJ7jkhHGbSM4Fw8dWtwwVxLTbIxoHKeZep84RqLTDDuzPuuY=
+	t=1789668019; cv=none; b=L4Jxe8SkEuByaiWMvE7JBzagb4L/CNRtAlcUweaDM56XIjoZLovG3qB4pEKq7+LF51B1day3l/fTv0eGS6KiSv+4nz9nKORdTpJvA1ohF7RdrKqGqUd7hA2wcq0ToHnDH+UBM3TVvquHv4OADGBnidERAmLQ6gxi1AKzsaFQ/pk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789668016; c=relaxed/simple;
-	bh=izEva+70KJifXP4W0NnnCWHZOl/k/lpUp81UXjMLNvE=;
+	s=arc-20240116; t=1789668019; c=relaxed/simple;
+	bh=yFqPAySdDoq31rVBTv0D7RUXvjRRKTUUh7Lhfen2hKA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TAaSnagOdvfUaTaydoMnW0ipJkqO2PAagg/w9cISGSSDqTTxT9MT4rfW0eFzvJfQCRU79dKxEL5GKb8+ntAYiEnsJLeH9h0t6vWtp2uCO9PwraquiuYtsgSmkN+6k4mchovdhHR0/2wGBIwk6ySIzQuUbU1KpjqdWM9hEZTry2o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wnn96R6X; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=JWIYOCm6eMEvy7dCUsp0t8CFSbtYW4J5WjUWfTUGT3cXHKaOH2qGuiKRzfeGbCr+T55dYldZcpdvLmEIFbpZWNzMBTP4S49JaAmZhFi6qynl4JjCSDaZVZayInLS2hsHtjwmZCB3gZ+iw6ClXzgWTW/ELir7vCNqM/93orTIpXw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x+6ZjJaD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wnn96R6X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24AA91F000FF;
-	Thu, 17 Sep 2026 18:00:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x+6ZjJaD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B6D11F000FF;
+	Thu, 17 Sep 2026 18:00:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789668015;
-	bh=zJsDGFcBDlyLPR1FhL8mqnXWvsK2g/jlzpuSaaimC/g=;
+	s=korg; t=1789668018;
+	bh=KHYlIhlyGxDOLgF/zdJqbHsw7IeaEzjsIrnSb+0nMcA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Wnn96R6XMcC1XNJi3GUIkrdSNNNtM/gsvPUIRuZM81mQU27gHJO+DvKwDC3khjmHE
-	 CJF0drAyPYmwQaTyBbnelGNSziL2iJn93PdkiCzTqx3b1mTIWqvvywFY+j0cXJsAHQ
-	 8X0+ly58k5y/cxMnttVwCBgNEQ7bqd0PuWNfmklU=
+	b=x+6ZjJaDAE8xaBFhxqZYsOYfxHX8ZAUBt+lqZ7Js1TxweKVNg1XF8WQ495rK21JU9
+	 SDIFQGNH46w8GWlwPoVZCSeS+Ke/1lSBGjr6BETE/BtnrmzUtBk0Y66XxotPy3Kd5Q
+	 klpTmNGIAn9RMDaCFJRG6J5QTjE/Wrc96zxF8o6o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Hannes Reinecke <hare@suse.de>,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Gleb Sonichev <sonichev555@gmail.com>,
+	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0253/1102] tls: Flush backlog before waiting for a new record
-Date: Thu, 17 Sep 2026 16:03:16 +0100
-Message-ID: <20260917151545.946653958@linuxfoundation.org>
+Subject: [PATCH 6.12 0254/1102] platform/x86: dell-laptop: add Inspiron N5110 to touchpad LED quirk table
+Date: Thu, 17 Sep 2026 16:03:17 +0100
+Message-ID: <20260917151545.971987418@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -47,87 +46,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Gleb Sonichev <sonichev555@gmail.com>
 
-[ Upstream commit edcf32b8a48f5882b5b7a91b21c89d233d4aecf2 ]
+[ Upstream commit bfe91a80b13f8068f6fa07aa8c468d284150d4ad ]
 
-While lock_sock is held, incoming TCP segments land on
-sk->sk_backlog rather than sk->sk_receive_queue.
-tls_rx_rec_wait() inspects only sk_receive_queue, so backlog
-data remains invisible. For non-blocking callers (read_sock,
-and recvmsg or splice_read with MSG_DONTWAIT) this causes a
-spurious -EAGAIN. For blocking callers it forces an
-unnecessary sleep/wakeup cycle.
+The Inspiron N5110 needs the touchpad LED quirk (Vostro V130 quirk)
+to properly control the touchpad LED. Add its DMI identifier
+to the existing quirk table, next to the similar Inspiron M5110 entry.
 
-Flush the backlog inside tls_rx_rec_wait() before checking
-sk_receive_queue so the strparser can parse newly-arrived
-segments immediately. On the next loop iteration
-tls_read_flush_backlog() may redundantly flush, but this
-path is cold and the cost is negligible.
+Tested on Dell Inspiron N5110.
+The touchpad LED works correctly with this quirk enabled.
 
-Backlog processing can run tcp_reset(), which calls
-tcp_done_with_error() to set sk->sk_err = ECONNRESET and then
-tcp_done() to set sk->sk_shutdown = SHUTDOWN_MASK. The pre-existing
-top-of-loop sk_err check already ran before the flush, so the
-freshly-set error would be masked by the next-line sk_shutdown test
-returning 0 (EOF). Re-check sk_err immediately before the sk_shutdown
-test so a connection abort surfaces as -ECONNRESET rather than a clean
-EOF.
-
-Commit f508262ae9f2 ("tls: Preserve sk_err across recvmsg() when
-data has been copied") gave the top-of-loop sk_err check a
-has_copied split. The recheck applies the same handling: when the
-caller has already copied bytes, sk_err is reported but preserved
-so the error surfaces on the next call; otherwise sock_error()
-consumes it so the error is reported exactly once.
-
-Suggested-by: Sabrina Dubroca <sd@queasysnail.net>
-Link: https://lore.kernel.org/netdev/ahgHgQ84RCc8uYrG@krikkit/
-Reviewed-by: Hannes Reinecke <hare@suse.de>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
-Link: https://patch.msgid.link/20260604-tls-read-sock-v12-6-b114efa6e3e2@oracle.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Gleb Sonichev <sonichev555@gmail.com>
+Acked-by: Pali Rohár <pali@kernel.org>
+Link: https://patch.msgid.link/20260525100047.20046-1-sonichev555@gmail.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tls/tls_sw.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/platform/x86/dell/dell-laptop.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
-index dd8b70914ce1e..a41fd85279bcd 100644
---- a/net/tls/tls_sw.c
-+++ b/net/tls/tls_sw.c
-@@ -1414,12 +1414,24 @@ tls_rx_rec_wait(struct sock *sk, struct sk_psock *psock, bool nonblock,
- 		if (ret < 0)
- 			return ret;
- 
-+		if (sk_flush_backlog(sk))
-+			released = true;
- 		if (!skb_queue_empty(&sk->sk_receive_queue)) {
- 			tls_strp_check_rcv(&ctx->strp);
- 			if (tls_strp_msg_ready(ctx))
- 				break;
- 		}
- 
-+		/* sk_flush_backlog() can run tcp_reset(), which sets
-+		 * sk_err and then sk_shutdown via tcp_done(). Recheck
-+		 * sk_err here so a connection abort surfaces as the
-+		 * actual error rather than a clean EOF.
-+		 */
-+		if (sk->sk_err) {
-+			if (has_copied)
-+				return -READ_ONCE(sk->sk_err);
-+			return sock_error(sk);
-+		}
- 		if (sk->sk_shutdown & RCV_SHUTDOWN)
- 			return 0;
- 
+diff --git a/drivers/platform/x86/dell/dell-laptop.c b/drivers/platform/x86/dell/dell-laptop.c
+index 5a65e8b3ca1d4..6bf6caaa62b64 100644
+--- a/drivers/platform/x86/dell/dell-laptop.c
++++ b/drivers/platform/x86/dell/dell-laptop.c
+@@ -222,6 +222,15 @@ static const struct dmi_system_id dell_quirks[] __initconst = {
+ 		},
+ 		.driver_data = &quirk_dell_vostro_v130,
+ 	},
++	{
++		.callback = dmi_matched,
++		.ident = "Dell Inspiron N5110",
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc."),
++			DMI_MATCH(DMI_PRODUCT_NAME, "Inspiron N5110"),
++		},
++		.driver_data = &quirk_dell_vostro_v130,
++	},
+ 	{
+ 		.callback = dmi_matched,
+ 		.ident = "Dell Vostro 3360",
 -- 
 2.53.0
 
