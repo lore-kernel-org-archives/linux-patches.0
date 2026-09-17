@@ -1,154 +1,112 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pz2-f43.google.com (mail-pz2-f43.google.com [74.125.228.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB2715012A7;
-	Thu, 17 Sep 2026 17:48:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FFC6502576
+	for <patches@lists.linux.dev>; Thu, 17 Sep 2026 17:48:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.228.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789667315; cv=none; b=GrDOsPJtUfL12L0A1bgseK1VChyJrCzhmTRpzjh12lK0+En5mAfFWx4+lT01wmK0IcmhH6ps6yoZvP5USju50sBdXGTyzX8vOPyTEpENPYoNhjEzjBYXo822l+3QTIfQkTbfc78un7xErB9V1wOfUVEQJI4oAAZfUS+K6gt5w3A=
+	t=1789667317; cv=none; b=OHGuFfPfLkRAwUWUV2/Qs4aJlCbpghKriFSL6Xazt+VxmDuRmE//GTtZu/b/UqNsB252/Ml4HcffgJLjEYMnMxC02bDjEnDddrkdXqpS27vKjlZ1+FxDtJL5yRodItp5SRtmbmkCh/WvRaUx8HcO/wjAJAmW8by0QRd/sNIKkHU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789667315; c=relaxed/simple;
-	bh=UtkDYCLcuJITM3XaLUfXerLHpC0oeIcXNZYoK85sQqU=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NCdGhAu8OMEGZ3h9RCIFeYPbNmb6nym3w12h9yWalzt9Vhho7q9sXbSUQMaifR8PSd+DTvcRPkHpodFnzTVWEGV8ixTMuur1lrVkkbZKrBgVapB3VIF4DW/2NTdEJbqQYBbJpNXK+P1NYy5SyyXQVGf0KqzA2G2tm42Lt5vjzlg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O1605do9; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1789667317; c=relaxed/simple;
+	bh=tG+fI11akea3wSt6NDDMVs1aLWaYurwM1JJh6xLITCY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=RPItC2jsDEb9qvIIw8qv6RT46BAIAyzbfjPkXmOsV2m42+JN12iDQhfyD8hbXepWwbJHuww9e+/E+3YgxpXobCT1ecqbJRPJunBEZ09n/2oNbIYRR6WV9/7W+gsNoJAX6mW8W5GAMOcGXwYKLFnrfTjeS/0WISQWJwCz+l6i6kc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DFZzTOZr; arc=none smtp.client-ip=74.125.228.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O1605do9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED9561F000FF;
-	Thu, 17 Sep 2026 17:48:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789667313;
-	bh=jW9ATMGB5++2oAvr1B7eqnxRZdDtjsoAyJ4azzO4QAI=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O1605do9Ku91PthKGMUNyjdJYCPI5Un2tCdO43j5XNBWqKjjPM88+HEpT9ZXKPqr/
-	 R7ao12FBiQ8huT+2q19WkHl+3SrCmRuToCRw0t+rndbWduzgpSLrF81VmC3I7Xxw8R
-	 GQ80AbqF+YwpJWGBfsGXi6eOOoErYWTjnioq8qNY=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Ioana Ciornei <ioana.ciornei@nxp.com>,
-	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0003/1102] bus: fsl-mc: wait for the MC firmware to complete its boot
-Date: Thu, 17 Sep 2026 15:59:06 +0100
-Message-ID: <20260917151539.503653575@linuxfoundation.org>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
-References: <20260917151539.408551884@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DFZzTOZr"
+Received: by mail-pz2-f43.google.com with SMTP id 41be03b00d2f7-cc433d52421so709715a12.3
+        for <patches@lists.linux.dev>; Thu, 17 Sep 2026 10:48:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1789667315; x=1790272115; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=+WJglaSlo/017XuHFl5nKEZgkW9Nb7XN1yne3AQp+sI=;
+        b=DFZzTOZruP9mhCrnb++1AMvxCtzM+BJWoT2RG+3bm7HH4TV4dOCHC7pG6t9na7S1sA
+         BKo2X55Y/j67duSVAGTdhPicuruJkQraQe2soLmtta+Qay0fU8Azp2RWHwSgDXWgojVB
+         nQRr7954D5fNw+KqVmr4eZD02pDITBkmn3vCobf6yHn2xU7VWZemMioXXdwNIAltXFKn
+         dvPgd5DXu3FqJsVFiBQMI9Vl6O/9M9ORv2FcxyWFedR3q8NDj0Wq0cRw4WG/FTWSXGl9
+         CMyCq/M3DMYsiHZA1wFhyWJT8oINqaFVmUn41q/7JFZtmOXFQlSnKedHaHAkBgonJuN5
+         82MQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1789667315; x=1790272115;
+        h=content-transfer-encoding:content-type:in-reply-to:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=+WJglaSlo/017XuHFl5nKEZgkW9Nb7XN1yne3AQp+sI=;
+        b=DLB/AMAgDhsIPkH0uDzyahlXsplGRrTTRoCCBIRnRjj95w/Y0DUgM+j458sXnyjF79
+         Q7zYc/TK2P9mRK1BHv1ox2QgnBinhZMaXuHRbmV0To/vvr0RHA7eWfnYy6ZG2mQUYRtT
+         yWmUV9mkmgUe48WwR7NaQ5SXnuyRCdAUc7kukFTtdt4WWhFwIyTk20Zq2jZLyNKemvXY
+         LUQGLnrEsqWFi4juJP6fR4z6zUuNfZFX1FGe8t8+FBqr4ySgyoezlwqKoOW2ogzTvs3i
+         h6L8OPexU1/oianWxfmlxWO7RO/av4wP/lgBRJYNLfO+ugucTulFhHnv2cick4RhhY41
+         EjSQ==
+X-Gm-Message-State: AFuF++mDeZi44bCO/9u9el18BTwXmAQQaMOuwBjKOd4Dt5cKRnatzHas
+	yydQzzcYk+z0J6aUv2X2qOocWqURHvLPusD0YsaWKoMbypd0n7eFlqwG
+X-Gm-Gg: AYBFou1h9SqNPuxrwhkiNmGYdBtPEyHDEYWtZmmiCiH3PfkrYZbHtSFc85tcYGj9kmd
+	A6e0zBRHUHEkwX4/YF/bb0+Dz0BaVOTA969/euY3ha2x8MsRFhucsoQR/XTCTMGv63QHJACkL9E
+	X9Q5aLN6G1N6EWttXHrcFB4EthEpxtDRx6COLRKZIk8x/YzA1nKrnjUIM24lkI3lrREY12Y8lWa
+	/Y2ZqFWn5f8YywGF3hm6+2fW06BWo32BGB/jbQorpc5X7alx8vBjHxwkph0eTNsyWFEMsLKWAgA
+	eaNzc+QrgCEpDc/1AfX1ehJCrKnbOli8z0aetgNb/7XDSGvQ3ou+sN8MHR3TUon7ZOWMCv/HVUy
+	pMMlFaqBjP08zJrSk63Mhdzy9Pqrk5uS9LjKNEPn7yheiOQv7MDyzrLGajpylQdBXtM7krixgtS
+	cPLf/CZsKRVdfWNGhZiEjalsiQEOqzVqo9MPa2Vtd3kpLhn59pW7z3LKqJGfQh33pdOVasMLeMS
+	9IABIsAFZKptIzkFFlnYX83lw==
+X-Received: by 2002:a17:90b:5383:b0:39e:4c80:f682 with SMTP id 98e67ed59e1d1-39e4c80f749mr2185907a91.33.1789667315218;
+        Thu, 17 Sep 2026 10:48:35 -0700 (PDT)
+Received: from [10.67.48.245] ([192.19.223.252])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-39e52d5bac3sm129238a91.2.2026.09.17.10.48.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 17 Sep 2026 10:48:33 -0700 (PDT)
+Message-ID: <6145337f-5350-489f-a5da-84cd1079ac78@gmail.com>
+Date: Thu, 17 Sep 2026 10:48:29 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.18 0000/1250] 6.18.53-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
+ sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
+ hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
+ sr@sladewatkins.com
+References: <20260917151551.901433442@linuxfoundation.org>
+Content-Language: en-US, fr-FR
+From: Florian Fainelli <f.fainelli@gmail.com>
+In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+On 9/17/26 07:56, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.18.53 release.
+> There are 1250 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Sat, 19 Sep 2026 15:13:46 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.18.53-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.18.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-------------------
+On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
+BMIPS_GENERIC:
 
-From: Ioana Ciornei <ioana.ciornei@nxp.com>
-
-[ Upstream commit 208858b1b48eba83d073542372329cf8ed606526 ]
-
-There are use cases in which the Management Complex firmware boot
-process is started by the bootloader which does not wait for the boot to
-complete. This is mainly done in order to reduce the overall boot time
-of a DPAA2 based SoC.
-
-In this kind of circumstance, the fsl-mc bus driver needs to make sure
-that the MC firmware boot process is finished before proceeding to the
-usual operations such as interrogating the firmware to gather all
-existent DPAA2 objects, creating the fsl-mc devices on the bus etc.
-
-Add this kind of check early in the boot process of the fsl-mc bus and
-defer the probe in case the firmware is still in its boot process.
-
-Signed-off-by: Ioana Ciornei <ioana.ciornei@nxp.com>
-Link: https://lore.kernel.org/r/20260401144508.3062019-1-ioana.ciornei@nxp.com
-Signed-off-by: Christophe Leroy (CS GROUP) <chleroy@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/bus/fsl-mc/fsl-mc-bus.c | 46 +++++++++++++++++++++++++++++++++
- 1 file changed, 46 insertions(+)
-
-diff --git a/drivers/bus/fsl-mc/fsl-mc-bus.c b/drivers/bus/fsl-mc/fsl-mc-bus.c
-index 2810f3b6e2f6c..2742647bff594 100644
---- a/drivers/bus/fsl-mc/fsl-mc-bus.c
-+++ b/drivers/bus/fsl-mc/fsl-mc-bus.c
-@@ -66,6 +66,13 @@ struct fsl_mc_addr_translation_range {
- #define GCR1_P1_STOP	BIT(31)
- #define GCR1_P2_STOP	BIT(30)
- 
-+#define FSL_MC_GSR		0x8
-+#define FSL_MC_GSR_BOOT_DONE	BIT(0)
-+#define FSL_MC_GSR_MCS_MASK	GENMASK(7, 0)
-+#define FSL_MC_GSR_MCS_ERR_MASK	GENMASK(7, 1)
-+#define FSL_MC_GSR_BC_MASK	GENMASK(15, 8)
-+#define FSL_MC_GSR_BC_SHIFT	8
-+
- #define FSL_MC_FAPR	0x28
- #define MC_FAPR_PL	BIT(18)
- #define MC_FAPR_BMT	BIT(17)
-@@ -1006,6 +1013,41 @@ static int get_mc_addr_translation_ranges(struct device *dev,
- 	return 0;
- }
- 
-+static u32 fsl_mc_read_gsr(struct fsl_mc *mc)
-+{
-+	return readl(mc->fsl_mc_regs + FSL_MC_GSR);
-+}
-+
-+static int fsl_mc_firmware_check(struct platform_device *pdev)
-+{
-+	struct fsl_mc *mc = platform_get_drvdata(pdev);
-+	u32 gsr, boot_done, boot_code, mcs;
-+
-+	gsr = fsl_mc_read_gsr(mc);
-+	boot_code = (gsr & FSL_MC_GSR_BC_MASK) >> FSL_MC_GSR_BC_SHIFT;
-+	if (boot_code == 0xDD) {
-+		dev_err(&pdev->dev,
-+			"fsl-mc: DPL processing was not started, DPAA2 will not work!\n");
-+		return -EOPNOTSUPP;
-+	}
-+
-+	boot_done = gsr & FSL_MC_GSR_BOOT_DONE;
-+	if (!boot_done) {
-+		dev_dbg(&pdev->dev,
-+			"fsl-mc: DPL processing in progress, defer probe\n");
-+		return -EPROBE_DEFER;
-+	}
-+
-+	mcs = gsr & FSL_MC_GSR_MCS_MASK;
-+	if (mcs & FSL_MC_GSR_MCS_ERR_MASK) {
-+		dev_err(&pdev->dev,
-+			"fsl-mc: MC boot completed with error 0x%x\n", mcs);
-+		return -EINVAL;
-+	}
-+
-+	return 0;
-+}
-+
- /*
-  * fsl_mc_bus_probe - callback invoked when the root MC bus is being
-  * added
-@@ -1070,6 +1112,10 @@ static int fsl_mc_bus_probe(struct platform_device *pdev)
- 		       mc->fsl_mc_regs + FSL_MC_GCR1);
- 	}
- 
-+	error = fsl_mc_firmware_check(pdev);
-+	if (error)
-+		return error;
-+
- 	/*
- 	 * Get physical address of MC portal for the root DPRC:
- 	 */
+Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
 -- 
-2.53.0
-
-
-
+Florian
