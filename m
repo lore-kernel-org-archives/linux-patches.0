@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C2EA547052;
-	Thu, 17 Sep 2026 18:04:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D581547078;
+	Thu, 17 Sep 2026 18:04:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789668280; cv=none; b=L6AWqo8fsFqulXbBjcvIU+KJMF5h2aO8OQIt/JGaelD7nfcEZ22KpXfqQkS9Kd6/A9tgq9K49TCtTAqbVV4BNzejuSdasG68WLXvfIxMi3Go1xoazd6I6hY6hxZSAXEpzUKawZnnKW8cy0AyRXDFh2Mm3kjn2TUHx2Vy8i807uw=
+	t=1789668283; cv=none; b=T+fqPvkQo6fhQTaO39RZIu+fXEPGYfqRuHxmr+sOnW/T9SolPheO3DJO2LaLQl+uXehO2OBw7/v+zrLvdsiW7/NbWtOI+bc0fSz17FVwrVEG134pTo2KW4hxdDYqv94VjkghQGIlU1atDhmNLaIuR0XQzysTrYVMKVMERqHw6mM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789668280; c=relaxed/simple;
-	bh=/1WQ4+x2JBHEEUFIqnn42jy8FKrdw4Ic8IVQEIw1LWU=;
+	s=arc-20240116; t=1789668283; c=relaxed/simple;
+	bh=jzvWhhojLyM3FoO5kIJ4VjMpNiwr58nLXPLEM6mgQ00=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nnZBNNHfmIlKLay3KTHTYU6xnTIjx/CyNV+yuZhn2DwQwQANVonW7Oj8SM+DyMzl1zc6thnRi7m54hkN0oVo58yjVXaUL8iOG0KaeTjjld1c6TL2LYlhyVB1GOQNpvBhBtAxBLCeC102vVg6Ii/R+i0bX6g0Q5Vb5h1KdsP6gqg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XBh0hCu7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rGpQ6Jpi/9TFACD6lMAt5+M40e4+8U3wDK2V+LhDZZpY0wzajLmRGtuG5ViyS/NZBV96hmHkU1msUENIQ8sOFV0e26WuFtUqBNqiBAhD6U73mAAjCgbT1KMBEneT1bIbay9/KiVmiX6G+/GP2RsMXvJ1U4RqH8pI76XoX3kWtnc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sqp4ZeVC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XBh0hCu7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77CB41F000FF;
-	Thu, 17 Sep 2026 18:04:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sqp4ZeVC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7193C1F000FF;
+	Thu, 17 Sep 2026 18:04:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789668279;
-	bh=xazOlqDxxFOEuFcRc34n1vNiMFTyNAVl1pgeqPe/qMw=;
+	s=korg; t=1789668282;
+	bh=YNeBGHAVBPWO7cxV68ZxtgmLFgzuvySX1ha7HFgS0Sw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XBh0hCu7ZrZslVgXVb2gdsb8XE4XEpokbNDJmdS0QgPkr3oUc2y5EDF5Gnh8w16qy
-	 tVOxVyuWhnlyWr+upw5LhL2Odbg5f4qshPhNkpuSTmU0PjLAom/kQ/FcxNRXz736dz
-	 rmZzp4MJ/zordRr3YrAk6l5mG/ATa0SNEwDrgHDk=
+	b=sqp4ZeVCrF+6h19eFKbP3kS2YReMxVZCd+S6wZ8+LwGLtFlgeFRSe3lGvD94fWgQD
+	 V3sft61iYi5pdVmG8QTCeT302/ooSBWQkwGO1i5RqguFf0ogJPd9JyO9rQ8nfRefRq
+	 IhvjEdyhglPU3HV+Wep8sLiYU+RJ641Mzw8dx3n4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adriana Stancu <adriana@arista.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Qiang Liu <liuqiang@kylinos.cn>,
+	ChenXiaoSong <chenxiaosong@kylinos.cn>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0365/1102] rtc: bq32000: add delay between RTC reads
-Date: Thu, 17 Sep 2026 16:05:08 +0100
-Message-ID: <20260917151548.813365795@linuxfoundation.org>
+Subject: [PATCH 6.12 0374/1102] ksmbd: fix sd_ndr.data memory leak in ksmbd_vfs_set_sd_xattr
+Date: Thu, 17 Sep 2026 16:05:17 +0100
+Message-ID: <20260917151549.041762304@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -51,61 +53,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adriana Stancu <adriana@arista.com>
+From: Qiang Liu <liuqiang@kylinos.cn>
 
-[ Upstream commit d4992b7050a10079bc760bdc5b8688e05a09dfc2 ]
+[ Upstream commit d4d56b00c7df88cd5751e7415bdfabc9fdbc82a7 ]
 
-When the RTC is used on systems without a interrupt line, userspace
-tools like `hwclock` fall back to a frequent polling loop to synchronize
-with the edge of the next second.
+ndr_encode_v4_ntacl() allocates sd_ndr.data via kzalloc() at entry.
+If any subsequent ndr_write_*() call returns error during encoding,
+the allocated sd_ndr.data won't be freed and causes memory leak.
 
-On the BQ32000, this aggressive polling can temporarly lock the register
-refresh cycle, because the continuous transfers prevent the hardware from
-updating the buffer. This results in stale data reads or select() timeouts
-in userspace.
+Move kfree(sd_ndr.data) into out label to ensure the buffer gets
+released on all success and error return paths.
 
-This patch introduces a delay before reading the RTC registers in order to
-provide a sufficient idle time for the hardware to sync with the register
-buffer.
-
-Signed-off-by: Adriana Stancu <adriana@arista.com>
-Link: https://patch.msgid.link/20260416142151.3385827-1-adriana@arista.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Signed-off-by: Qiang Liu <liuqiang@kylinos.cn>
+Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-bq32k.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ fs/smb/server/vfs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/rtc/rtc-bq32k.c b/drivers/rtc/rtc-bq32k.c
-index 7ad34539be4d2..245e5e45d6a16 100644
---- a/drivers/rtc/rtc-bq32k.c
-+++ b/drivers/rtc/rtc-bq32k.c
-@@ -16,6 +16,7 @@
- #include <linux/kstrtox.h>
- #include <linux/errno.h>
- #include <linux/bcd.h>
-+#include <linux/delay.h>
+diff --git a/fs/smb/server/vfs.c b/fs/smb/server/vfs.c
+index 00dd014ded5bc..6a897956ed1cd 100644
+--- a/fs/smb/server/vfs.c
++++ b/fs/smb/server/vfs.c
+@@ -1566,8 +1566,8 @@ int ksmbd_vfs_set_sd_xattr(struct ksmbd_conn *conn,
+ 	if (rc < 0)
+ 		pr_err("Failed to store XATTR ntacl :%d\n", rc);
  
- #define BQ32K_SECONDS		0x00	/* Seconds register address */
- #define BQ32K_SECONDS_MASK	0x7F	/* Mask over seconds value */
-@@ -89,9 +90,17 @@ static int bq32k_write(struct device *dev, void *data, uint8_t off, uint8_t len)
- 
- static int bq32k_rtc_read_time(struct device *dev, struct rtc_time *tm)
- {
-+	struct i2c_client *client = to_i2c_client(dev);
- 	struct bq32k_regs regs;
- 	int error;
- 
-+	/*
-+	 * When the device doesn't have the interrupt connected, prevent
-+	 * userpace from polling the RTC registers too frequently.
-+	 */
-+	if (client->irq <= 0)
-+		usleep_range(2000, 2500);
-+
- 	error = bq32k_read(dev, &regs, 0, sizeof(regs));
- 	if (error)
- 		return error;
+-	kfree(sd_ndr.data);
+ out:
++	kfree(sd_ndr.data);
+ 	kfree(acl_ndr.data);
+ 	kfree(smb_acl);
+ 	kfree(def_smb_acl);
 -- 
 2.53.0
 
