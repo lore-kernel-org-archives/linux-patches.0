@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D68773AEF2D;
-	Thu, 17 Sep 2026 18:49:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 700063BD65D;
+	Thu, 17 Sep 2026 18:49:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789670973; cv=none; b=swrlL8hW0EdIHawWjRZ23hRjbOw4KB6lIxNFVRD/OHaZ1183ZDXiS0KtiHKgpdfCEbCpTHPNxL3IEwftYYhBaXxitbUU+URam34vhrzc4CuEm0y0v/FRmMHYMqfEmoVHlGOxYXX8Bm9hs9GCu/6RGnBQLoRRcwLaCB/VH/3jJBQ=
+	t=1789670976; cv=none; b=oaqi/ClurvsY5CNacR1/35BHDI/PAiaELXy3KudZpCq2Z0ewoRD609LBIyZvkRlNvVIOJRVp/bpLSoPhOEeXiKIDqv0IkVbr8TO7y+Nrt/IcYd5okWF+UCVXCo5bzoaCynOvrEwuwX15MEFOZLZj/HilRKq/NylwnCzsLczGKxQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789670973; c=relaxed/simple;
-	bh=8ngyHlwZbzaDMHGhC7r8kKcagzXb8xpfcpSJhxT1+J8=;
+	s=arc-20240116; t=1789670976; c=relaxed/simple;
+	bh=S+JcA0LymLdV4t6DKg9iOKhcu3YOSNFzbA360CdJCu4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XHpQQJsWGgtxRtT68BbXyReSJAH1FoERsKgbr75G0GJ5IHkWjMed0E0oZiYDzlrJge4sm2SBoyyj3IAlz7hQgEh4+S3nP2qzYxHGEbW1KS0n1zirHP65tTzn6wAflY7N80N8CPDCM50USgttqh4pW8KL15lD3jF/C4PLkWLfXLc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KtxubWMX; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Cnsgou9BCb7V0MqVES2bBOFKaWwXxbYwyGtrb6nhjyXxfe9Knr/tni8gyp75HMaSjrjhcXFaJg7i+qBvVCKsb7z0goHVsAiNTdSevFOg1EC/DhM4apFMXyU1rLTmi+qUnDaqn8tEHTn+tHVRCjH3rZwia87QjgZKsD7eWl9evG4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FgU8bqRu; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KtxubWMX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEFD61F000FF;
-	Thu, 17 Sep 2026 18:49:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FgU8bqRu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF3F21F000FF;
+	Thu, 17 Sep 2026 18:49:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789670971;
-	bh=ZNuYt8EeTBjPoko84SVP82YvGtheqyjV8ldZiyiXbf0=;
+	s=korg; t=1789670975;
+	bh=QoPeG6ftk8g42k61rQBph0WhirFnNnCZFl34r3N02+s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KtxubWMXCFEeYyS/crg5jbEEQUwfh5Rl5KEDIiMivBzzsfsRnLhkKtX7xTnH4p/FB
-	 6ln3wDJ0T2+JzaEKl818rBk1grE4iEt6AxHcKBsNvHmFy5EW5OWidXnjlmrzOPHonH
-	 FmgypfH9oKC8BupVBWg+fUnpn6HJE/7tXi0y3laA=
+	b=FgU8bqRujZZXfzGGciRRcakcdKkLxfTZaapWDP/ADsmu1e2UwGmZ7S8WPdnwkSiCx
+	 dvcVWf2KAbhMo/a+Dvp/fuBLFZ7nP3IOZkhaWvqzCkqU0d4nQYaLl5YHKygkK4hFjp
+	 YtzJs132vvSg96sPhFmOSKuBlCZscZMnPKe0Wy3c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kanishka De Silva <kpskanna1915@gmail.com>,
-	Farhad Alemi <farhad.alemi@berkeley.edu>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0801/1102] ksmbd: prevent out-of-bounds reads in share config responses
-Date: Thu, 17 Sep 2026 16:12:24 +0100
-Message-ID: <20260917151600.586550086@linuxfoundation.org>
+	Tianchu Chen <flynnnchen@tencent.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.12 0828/1102] ASoC: sprd: validate compress buffer sizes against fixed allocations
+Date: Thu, 17 Sep 2026 16:12:51 +0100
+Message-ID: <20260917151601.297033891@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -52,146 +50,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Tianchu Chen <flynnnchen@tencent.com>
 
-[ Upstream commit f25e93768fcc5d8287e50b1ec52a42e4c276df34 ]
+commit 7a4ce92d150b9e7ecf1a710a34d8cdeb590d3751 upstream.
 
-Validate IPC share configuration payload sizes before consuming
-variable-length fields. Bound veto list parsing and account for
-the separator byte when deriving the path length.
+sprd_platform_compr_open() allocates the stage 0 IRAM buffer (32K data
+area) and the stage 1 DDR buffer (2M data area) with fixed sizes, but
+sprd_platform_compr_copy() derives all copy lengths from the user
+controlled runtime->fragment_size and the write() count, never
+comparing them against the physical buffer sizes. The compress core
+only checks fragment_size * fragments for an u32 overflow in
+snd_compress_check_input(), so a local user can configure a logical
+buffer of up to ~4GB via SNDRV_COMPRESS_SET_PARAMS, far exceeding the
+fixed allocations.
 
-Fixes: a677ebd8ca2f ("ksmbd: validate payload size in ipc response")
-Reported-by: Kanishka De Silva <kpskanna1915@gmail.com>
-Reported-by: Farhad Alemi <farhad.alemi@berkeley.edu>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+A fragment_size larger than the 32K IRAM data area makes the stage 0
+copy_from_user() overflow past the IRAM allocation, and a buffer_size
+larger than the 2M DDR buffer makes the wrapping copy at the end of
+sprd_platform_compr_copy() write fully user controlled data past the
+buffer. No SNDRV_PCM_TRIGGER_START is needed, a write() in SETUP
+state reaches the copy callback directly.
+
+Reject parameters that do not fit into the fixed buffers in
+set_params(), and fix the advertised max fragment size: 128K never
+fitted into the 32K IRAM buffer. The caps values may have been carried over
+from the qdsp6 driver, which allocates its buffers according to the
+advertised maxima, unlike this driver. With 32K as max fragment size
+the advertised limits are self-consistent: 32K * 64 = 2M equals the
+DDR buffer size.
+
+Discovered by Atuin - Automated Vulnerability Discovery Engine.
+
+Fixes: cce1396936ef ("ASoC: sprd: Add Spreadtrum audio compress offload support")
+Cc: stable@vger.kernel.org
+Assisted-by: LLM
+Signed-off-by: Tianchu Chen <flynnnchen@tencent.com>
+Link: https://patch.msgid.link/4386bc53631b052c1866a91061715b009d98b04f@linux.dev
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/mgmt/share_config.c | 38 +++++++++++++++++++++++--------
- fs/smb/server/transport_ipc.c     | 21 +++++++++++------
- 2 files changed, 42 insertions(+), 17 deletions(-)
+ sound/soc/sprd/sprd-pcm-compress.c |   15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
-diff --git a/fs/smb/server/mgmt/share_config.c b/fs/smb/server/mgmt/share_config.c
-index 4a5bc3c144284..04e8c11e865e9 100644
---- a/fs/smb/server/mgmt/share_config.c
-+++ b/fs/smb/server/mgmt/share_config.c
-@@ -88,9 +88,9 @@ static struct ksmbd_share_config *__share_lookup(const char *name)
+--- a/sound/soc/sprd/sprd-pcm-compress.c
++++ b/sound/soc/sprd/sprd-pcm-compress.c
+@@ -17,7 +17,7 @@
  
- static int parse_veto_list(struct ksmbd_share_config *share,
- 			   char *veto_list,
--			   int veto_list_sz)
-+			   size_t veto_list_sz)
- {
--	int sz = 0;
-+	size_t sz;
+ /* Default values if userspace does not set */
+ #define SPRD_COMPR_MIN_FRAGMENT_SIZE	SZ_8K
+-#define SPRD_COMPR_MAX_FRAGMENT_SIZE	SZ_128K
++#define SPRD_COMPR_MAX_FRAGMENT_SIZE	SZ_32K
+ #define SPRD_COMPR_MIN_NUM_FRAGMENTS	4
+ #define SPRD_COMPR_MAX_NUM_FRAGMENTS	64
  
- 	if (!veto_list_sz)
- 		return 0;
-@@ -98,7 +98,7 @@ static int parse_veto_list(struct ksmbd_share_config *share,
- 	while (veto_list_sz > 0) {
- 		struct ksmbd_veto_pattern *p;
+@@ -272,6 +272,19 @@ static int sprd_platform_compr_set_param
+ 	int ret;
  
--		sz = strlen(veto_list);
-+		sz = strnlen(veto_list, veto_list_sz);
- 		if (!sz)
- 			break;
- 
-@@ -106,7 +106,7 @@ static int parse_veto_list(struct ksmbd_share_config *share,
- 		if (!p)
- 			return -ENOMEM;
- 
--		p->pattern = kstrdup(veto_list, KSMBD_DEFAULT_GFP);
-+		p->pattern = kstrndup(veto_list, sz, KSMBD_DEFAULT_GFP);
- 		if (!p->pattern) {
- 			kfree(p);
- 			return -ENOMEM;
-@@ -114,6 +114,9 @@ static int parse_veto_list(struct ksmbd_share_config *share,
- 
- 		list_add(&p->list, &share->veto_list);
- 
-+		if (sz == veto_list_sz)
-+			break;
+ 	/*
++	 * The stage 0 IRAM buffer and the stage 1 DDR buffer are allocated
++	 * with fixed sizes at open time, so the requested fragment size and
++	 * fragments must fit into them, otherwise sprd_platform_compr_copy()
++	 * would overflow the buffers. Note the compress core only checks the
++	 * fragment size and fragments against an u32 overflow, not against
++	 * the buffer sizes advertised by get_caps.
++	 */
++	if (params->buffer.fragment_size > SPRD_COMPR_IRAM_BUF_SIZE ||
++	    (u64)params->buffer.fragment_size * params->buffer.fragments >
++	    SPRD_COMPR_AREA_BUF_SIZE)
++		return -EINVAL;
 +
- 		veto_list += sz + 1;
- 		veto_list_sz -= (sz + 1);
- 	}
-@@ -165,13 +168,27 @@ static struct ksmbd_share_config *share_config_request(struct ksmbd_work *work,
- 	}
- 
- 	if (!test_share_config_flag(share, KSMBD_SHARE_FLAG_PIPE)) {
--		int path_len = PATH_MAX;
-+		size_t path_len;
- 
--		if (resp->payload_sz)
-+		if (resp->payload_sz <= resp->veto_list_sz) {
-+			ret = -EINVAL;
-+		} else {
- 			path_len = resp->payload_sz - resp->veto_list_sz;
--
--		share->path = kstrndup(ksmbd_share_config_path(resp), path_len,
--				      KSMBD_DEFAULT_GFP);
-+			if (resp->veto_list_sz)
-+				path_len--;
-+
-+			if (!path_len) {
-+				ret = -EINVAL;
-+			} else {
-+				share->path = kstrndup(
-+					ksmbd_share_config_path(resp),
-+					path_len, KSMBD_DEFAULT_GFP);
-+				if (!share->path)
-+					ret = -ENOMEM;
-+				else
-+					ret = 0;
-+			}
-+		}
- 		if (share->path) {
- 			share->path_sz = strlen(share->path);
- 			while (share->path_sz > 1 &&
-@@ -184,7 +201,8 @@ static struct ksmbd_share_config *share_config_request(struct ksmbd_work *work,
- 		share->force_directory_mode = resp->force_directory_mode;
- 		share->force_uid = resp->force_uid;
- 		share->force_gid = resp->force_gid;
--		ret = parse_veto_list(share,
-+		if (!ret)
-+			ret = parse_veto_list(share,
- 				      KSMBD_SHARE_CONFIG_VETO_LIST(resp),
- 				      resp->veto_list_sz);
- 		if (!ret && share->path) {
-diff --git a/fs/smb/server/transport_ipc.c b/fs/smb/server/transport_ipc.c
-index a0b9b3def3346..10847d1cda4ac 100644
---- a/fs/smb/server/transport_ipc.c
-+++ b/fs/smb/server/transport_ipc.c
-@@ -524,14 +524,21 @@ static int ipc_validate_msg(struct ipc_msg_table_entry *entry)
- 		if (entry->msg_sz < sizeof(struct ksmbd_share_config_response))
- 			return -EINVAL;
- 
--		if (resp->payload_sz) {
--			if (resp->payload_sz < resp->veto_list_sz)
--				return -EINVAL;
-+		if (strnlen(resp->share_name, sizeof(resp->share_name)) ==
-+		    sizeof(resp->share_name))
-+			return -EINVAL;
- 
--			if (check_add_overflow(sizeof(struct ksmbd_share_config_response),
--					       resp->payload_sz, &msg_sz))
--				return -EINVAL;
--		}
-+		if (resp->veto_list_sz > resp->payload_sz)
-+			return -EINVAL;
-+
-+		if (resp->flags != KSMBD_SHARE_FLAG_INVALID &&
-+		    !(resp->flags & KSMBD_SHARE_FLAG_PIPE) &&
-+		    resp->payload_sz <= resp->veto_list_sz)
-+			return -EINVAL;
-+
-+		if (check_add_overflow(sizeof(struct ksmbd_share_config_response),
-+				       resp->payload_sz, &msg_sz))
-+			return -EINVAL;
- 		break;
- 	}
- 	case KSMBD_EVENT_LOGIN_REQUEST_EXT:
--- 
-2.53.0
-
++	/*
+ 	 * Configure the DMA engine 2-stage transfer mode. Channel 1 set as the
+ 	 * destination channel, and channel 0 set as the source channel, that
+ 	 * means once the source channel's transaction is done, it will trigger
 
 
