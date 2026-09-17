@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED5F74F68BA;
-	Thu, 17 Sep 2026 16:52:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEE684F68A8;
+	Thu, 17 Sep 2026 16:52:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789663941; cv=none; b=TCOEAWOLx1qWU49PFkC5vnmal8aPiKSRGGqqinBt+j4lGKRP1nub/JHlhbbCp+gQOQ1JXIByH4IvQIvKxIla6ujE81n2yGDxnkBkFjGFOFzmisJgKIPa/GSlbMZ3MKJMboN8uAeh+U7Ox4gY/KdAqYdOQ9TltKO/q9A3k+e8oJQ=
+	t=1789663944; cv=none; b=ZVYAfC0e04eqv/QtvLYCOW47AVlXo/DpMwac9WfXJrvoqisAAd0AoT/sxvSC6rKupVIPM204H8f0JXhPFOudweBfp4XoIl9wU0pJLusMDxMTadpi4sAmXXGBx/SnDHzUdKdbRFhITPHUyt3Qld28Q876HLihfNskw7d795sEBjg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789663941; c=relaxed/simple;
-	bh=ZYQLsbHVtqvM9Ca6SXwfiOoR4nK4CEnIor9oajFhCuw=;
+	s=arc-20240116; t=1789663944; c=relaxed/simple;
+	bh=daKY+bH0EuBNzeXuo5f4Vm/np8exLEir9++bpox5jxg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=sBKNBc515LG2WBPaQgB6UsjVIhht2IDlPvE8iF9dzfYTah0Eho6+s/AFjMIsizuYX1pxQ/+BhKSbfLpgs0g84/73KKpHm+Gww+YtOwvo0RUG476/9XNa4Q9gWSyp7gSmGlk//J2DHfJ7ETp3DvNEVTykPMp4dfmFwplLB3pOlCY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gVPu3eSU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=EgOkNsocKKfK43K3OZ3IKmPXLNoXFyHrc/gmQvIf3HNfNfmZujPvzJisiWnrRanwMeRHpwiyz5/edjc7xnZvilGk0jDLQQ6ozsXsF6inCFz4vphtr7xXFIFXFClFfsRd0kjb3hkx8DzvKt31+/bNeZpwXkkvwOW5u4ehC06VrT8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y9Po0HvJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gVPu3eSU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 024DF1F000FF;
-	Thu, 17 Sep 2026 16:52:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y9Po0HvJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F08441F000FF;
+	Thu, 17 Sep 2026 16:52:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789663939;
-	bh=xFN1K29Cp+S/pKErGZaFINR7fAmYBOCih5V9+qE3xnw=;
+	s=korg; t=1789663942;
+	bh=CYh6X9DpBFnGq2b48PYmfEV01KvTVU8QwwTmsITsa08=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gVPu3eSUeso2oVbUuK8cfbh/TK5idCgtO2W5wbVx5DbEy7NUsIaQpS8zLx79zQcSy
-	 WRRZwM3PnBgGksmBT0Mv6AkPZqtVqJy1P1VZbkYw4HTy7BsEXdk1s0xzf9Qaj2/dqn
-	 qtLkZZVZDyqAUEyPhIHWSBi8T8ssw6nr7FDGBXkI=
+	b=y9Po0HvJcu7IvNlpNDlJ+FlyTMFIjnVgt8zDISOmpO5J2+q1DO77uGGG5a8SWezrm
+	 tDPLfaPuaNTqzRYjj3WDdsaRQ6zlonI+demvRQ0n314SldGLibCDdVm4zBKFoeYFD5
+	 HqLAi5Mmng4QQtggd+2/hI8mgks7ZnEmVAfOZVIg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tao Cui <cuitao@kylinos.cn>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0204/1250] RDMA/counter: Fix num_counters leak on bind_qp failure in alloc_and_bind()
-Date: Thu, 17 Sep 2026 15:59:59 +0100
-Message-ID: <20260917151557.650337159@linuxfoundation.org>
+Subject: [PATCH 6.18 0205/1250] ALSA: seq: Remove arbitrary prioq insertion limit
+Date: Thu, 17 Sep 2026 16:00:00 +0100
+Message-ID: <20260917151557.678427534@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -52,62 +52,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tao Cui <cuitao@kylinos.cn>
+From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
 
-[ Upstream commit 4fbc8230009f5b1bcd13cc74c5a6a43ddba141fd ]
+[ Upstream commit 3fcc84f1f8d28cc1966b859cef33c858ff531766 ]
 
-When __rdma_counter_bind_qp() fails in alloc_and_bind(), the error path
-jumps to err_mode which frees the counter without decrementing
-port_counter->num_counters. The only place that decrements is
-rdma_counter_free(), which is unreachable since the counter was never
-successfully bound.
+The sequencer priority queue insertion path uses a hardcoded traversal
+limit of 10000 entries.  The value is intended to catch a corrupted list,
+but it also becomes a real limit for valid queues.
 
-This leak accumulates across repeated failures, permanently preventing
-the port from switching to AUTO mode (-EBUSY in __counter_set_mode())
-and blocking the MANUAL→NONE auto-revert in rdma_counter_free(). When
-the mode was NONE before the call, the MANUAL mode set by
-__counter_set_mode() also leaks since the revert logic is never
-reached.
+The event pool limit is per client, while a sequencer queue can be shared
+by multiple clients.  A queue can therefore legitimately contain more than
+10000 events.  In that case, inserting an event that has to be placed past
+the arbitrary limit fails with -EINVAL.
 
-Add an err_bind label between the num_counters increment and the
-existing err_mode label. It decrements num_counters and mirrors the
-MANUAL→NONE revert from rdma_counter_free(), ensuring the port state
-is fully restored on bind failure.
+Use the queue's own cell count as the traversal bound instead.  This keeps
+the protection against inconsistent list accounting or cyclic lists without
+rejecting valid large queues.
 
-Link: https://patch.msgid.link/r/20260520104546.1776253-2-cuitao@kylinos.cn
-Signed-off-by: Tao Cui <cuitao@kylinos.cn>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+Link: https://patch.msgid.link/20260525-alsa-seq-prioq-limit-v1-1-16c348df5ff7@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/counters.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ sound/core/seq/seq_prioq.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/infiniband/core/counters.c b/drivers/infiniband/core/counters.c
-index 5dfd64b0449dc..a2c85840c501a 100644
---- a/drivers/infiniband/core/counters.c
-+++ b/drivers/infiniband/core/counters.c
-@@ -198,12 +198,20 @@ static struct rdma_counter *alloc_and_bind(struct ib_device *dev, u32 port,
+diff --git a/sound/core/seq/seq_prioq.c b/sound/core/seq/seq_prioq.c
+index e649485a87722..8c9a293cb5b51 100644
+--- a/sound/core/seq/seq_prioq.c
++++ b/sound/core/seq/seq_prioq.c
+@@ -132,7 +132,7 @@ int snd_seq_prioq_cell_in(struct snd_seq_prioq * f,
+ 			  struct snd_seq_event_cell * cell)
+ {
+ 	struct snd_seq_event_cell *cur, *prev;
+-	int count;
++	int remaining;
+ 	int prior;
  
- 	ret = __rdma_counter_bind_qp(counter, qp, port);
- 	if (ret)
--		goto err_mode;
-+		goto err_bind;
+ 	if (snd_BUG_ON(!f || !cell))
+@@ -162,10 +162,16 @@ int snd_seq_prioq_cell_in(struct snd_seq_prioq * f,
+ 	prev = NULL;		/* previous cell */
+ 	cur = f->head;		/* cursor */
  
- 	rdma_restrack_parent_name(&counter->res, &qp->res);
- 	rdma_restrack_add(&counter->res);
- 	return counter;
+-	count = 10000; /* FIXME: enough big, isn't it? */
++	remaining = f->cells;
+ 	while (cur != NULL) {
+ 		/* compare timestamps */
+ 		int rel = compare_timestamp_rel(&cell->event, &cur->event);
++
++		if (remaining-- <= 0) {
++			pr_err("ALSA: seq: inconsistent prioq cell count\n");
++			return -EINVAL;
++		}
++
+ 		if (rel < 0)
+ 			/* new cell has earlier schedule time, */
+ 			break;
+@@ -176,10 +182,6 @@ int snd_seq_prioq_cell_in(struct snd_seq_prioq * f,
+ 		/* move cursor to next cell */
+ 		prev = cur;
+ 		cur = cur->next;
+-		if (! --count) {
+-			pr_err("ALSA: seq: cannot find a pointer.. infinite loop?\n");
+-			return -EINVAL;
+-		}
+ 	}
  
-+err_bind:
-+	mutex_lock(&port_counter->lock);
-+	port_counter->num_counters--;
-+	if (!port_counter->num_counters &&
-+	    port_counter->mode.mode == RDMA_COUNTER_MODE_MANUAL)
-+		__counter_set_mode(port_counter, RDMA_COUNTER_MODE_NONE, 0,
-+				   false);
-+	mutex_unlock(&port_counter->lock);
- err_mode:
- 	rdma_free_hw_stats_struct(counter->stats);
- err_stats:
+ 	/* insert it before cursor */
 -- 
 2.53.0
 
