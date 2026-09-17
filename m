@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CEB04F68CC;
-	Thu, 17 Sep 2026 18:10:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59D234E5351;
+	Thu, 17 Sep 2026 18:10:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789668647; cv=none; b=pTJYE2FitTS6xIiFGRCjFc1E/mb6Edij5q43eyU5VMeVKzug6DwGm7Gq8lUfeWddAeKdWeUpQdbLj9+ICs6jZUVR/iEx0GUdmK0LPQsifNefiWvbRhhc0vfjFV0sv2ToFlb9X7eLyXj14uXioRzh6ztpQhoihsrL8z3zADw+nWg=
+	t=1789668649; cv=none; b=t1BFZIjjvDF6Gg5NHB+qbxFF4ddAQOrjUOVW9mW7bMjrBT97bkyPuF/IP35dcJf3g0oPmOaOwJ93+VBZdiFYeI3ho6bwc5LBwbIGOJizKlmS5L57irvYpl2VACgKHTCA5dqSsOT4KSwGqB90aKP/4gsJKMa+kztnA3Q6Cu7k1mw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789668647; c=relaxed/simple;
-	bh=ZNWD8nXq/x7dc/F5qy+yK4R6Ein/6ZpsSkz1HsIXYyw=;
+	s=arc-20240116; t=1789668649; c=relaxed/simple;
+	bh=HkMuPCO6PxgqlEKMI39rbMmFJsZjq77c//b/i9TIM+Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uY5sdSyL+dXmbS9CXv7HtsbuOBlM2UGguA+RExKietwSN8wLGavzOkYNuaxDSxu49nJI6yUy5FDlPtwhLKJi4HDjgA7xOgo4IQPYvsgg3BSuqC7wY3SPwMMrDQ4O6LQeT9BZU741ESGoBEM0Ey/MMzXD/7KhgxGQGnWO2CJySc8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yG9PXy9L; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LpN4xZsE1TXZ66nr0NEMiBpNpHvSkLN909TqukvaGhhOWkajzAaLCjTz5HH5+RkET6BcspD0byz0DnbYuwjs0gSfl0qQx9Qbj0+uvtaL7QuwtiMaGz09CBo86q0gNyGXc/52CP+Yn0HbDVcvHLbohQtz3WKNt7daUBACVKY33TM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CwgNWGlI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yG9PXy9L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C10A51F000FF;
-	Thu, 17 Sep 2026 18:10:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CwgNWGlI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8ACC1F000FF;
+	Thu, 17 Sep 2026 18:10:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789668645;
-	bh=gpOa5+es791hEsiHjM6GA0ceMRk9tNcstmUKMz40fMM=;
+	s=korg; t=1789668648;
+	bh=OzlIwhVJGutQAxwC/mtWy0FYi+Ww1A1+qG38c2jeRQ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yG9PXy9LeLvZI5LvUF+lLs/x8PXMMzxvOOOM1HcGlK9FI4vZEoBrnVE/yTPNV7kM8
-	 drz/T2mL9b79i2TmdsodH73PIPuEV6W76IA0xpI9dC54hU2X+mQl67Z1E2QB3v5h5c
-	 WHOll9su2wcll+gBEDV/6uu3DJM3xqVPc2FKFH0g=
+	b=CwgNWGlIo04zkZYmQLUnxonOWv89TpTR9IF1QeckWRvaziK4k77nwnjPKx5K1v2ry
+	 kM1mhzUu1einRgrsehJqtfm4kWd64XgVN3kZ62f2GQmzx//xM0kUXQTVimZuxGAwGg
+	 e5CPziVrg7YB1YknwAp2npsw/+QrQBi99Yulj/Pc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samu <nomomentomori@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	syzbot+d6fa74e3f19d6ee01e3a@syzkaller.appspotmail.com,
+	James Chapman <jchapman@katalix.com>,
+	Guillaume Nault <gnault@redhat.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0493/1102] ksmbd: use memcmp() to compare ClientGUIDs
-Date: Thu, 17 Sep 2026 16:07:16 +0100
-Message-ID: <20260917151552.095077626@linuxfoundation.org>
+Subject: [PATCH 6.12 0494/1102] l2tp: fix tunnel and session refcount leak on seq_file release
+Date: Thu, 17 Sep 2026 16:07:17 +0100
+Message-ID: <20260917151552.122713264@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -52,51 +54,136 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit e8bb506e6ef749ac0336f3e579d8d02396b7d832 ]
+[ Upstream commit 9006c116dd111d457bf5d074990210f70a4ad2c8 ]
 
-ClientGUID is a fixed-size binary value and can contain embedded NUL
-bytes. strncmp() stops comparing at the first NUL byte, so different
-ClientGUID values can incorrectly be treated as equal.
+In pppol2tp_proc_open() and l2tp_dfs_seq_open(), iteration state
+(pd->tunnel and pd->session) is kept in seq_file private data to allow
+iteration across multiple read() system calls.
 
-Use memcmp() in SMB3 multichannel session binding and
-FSCTL_VALIDATE_NEGOTIATE_INFO to compare all SMB2_CLIENT_GUID_SIZE
-bytes.
+However, if userspace closes /proc/net/pppol2tp or /sys/kernel/debug/l2tp/tunnels
+before reading to end-of-file (EOF), any tunnel or session reference stored in
+pd->tunnel / pd->session is left un-dropped when seq_file private data is freed.
 
-Fixes: f5a544e3bab7 ("ksmbd: add support for SMB3 multichannel")
-Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
-Reported-by: Samu <nomomentomori@gmail.com>
-Suggested-by: Samu <nomomentomori@gmail.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fix this by dropping any remaining pd->tunnel and pd->session references in
+pppol2tp_proc_release() and l2tp_dfs_seq_release() when closing the file.
+
+Fixes: 0e0c3fee3a59 ("l2tp: hold reference on tunnels printed in pppol2tp proc file")
+Fixes: f726214d9b23 ("l2tp: hold reference on tunnels printed in l2tp/tunnels debugfs file")
+Reported-by: syzbot+d6fa74e3f19d6ee01e3a@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/6a760f32.01d0871a.3a0d52.004f.GAE@google.com/T/#u
+Assisted-by: Jetski:Gemini-3.1-Pro
+Cc: James Chapman <jchapman@katalix.com>
+Cc: Guillaume Nault <gnault@redhat.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260811144651.2733424-1-edumazet@google.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/l2tp/l2tp_debugfs.c |  4 +++
+ net/l2tp/l2tp_ppp.c     | 56 ++++++++++++++++++++++++++++++++++++++---
+ 2 files changed, 57 insertions(+), 3 deletions(-)
 
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index 464970f3af7c3..fc5689b2ea152 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -1761,7 +1761,7 @@ int smb2_sess_setup(struct ksmbd_work *work)
- 			goto out_err;
- 		}
+diff --git a/net/l2tp/l2tp_debugfs.c b/net/l2tp/l2tp_debugfs.c
+index 2d0c8275a3a82..90fc0a59d50ac 100644
+--- a/net/l2tp/l2tp_debugfs.c
++++ b/net/l2tp/l2tp_debugfs.c
+@@ -306,6 +306,10 @@ static int l2tp_dfs_seq_release(struct inode *inode, struct file *file)
  
--		if (strncmp(conn->ClientGUID, sess->ClientGUID,
-+		if (memcmp(conn->ClientGUID, sess->ClientGUID,
- 			    SMB2_CLIENT_GUID_SIZE)) {
- 			rc = -ENOENT;
- 			goto out_err;
-@@ -8132,7 +8132,7 @@ static int fsctl_validate_negotiate_info(struct ksmbd_conn *conn,
- 		goto err_out;
- 	}
+ 	seq = file->private_data;
+ 	pd = seq->private;
++	if (pd->session)
++		l2tp_session_put(pd->session);
++	if (pd->tunnel)
++		l2tp_tunnel_put(pd->tunnel);
+ 	if (pd->net)
+ 		put_net_track(pd->net, &pd->ns_tracker);
+ 	kfree(pd);
+diff --git a/net/l2tp/l2tp_ppp.c b/net/l2tp/l2tp_ppp.c
+index f388bf9abf378..c67ba1eab4769 100644
+--- a/net/l2tp/l2tp_ppp.c
++++ b/net/l2tp/l2tp_ppp.c
+@@ -1608,7 +1608,53 @@ static const struct seq_operations pppol2tp_seq_ops = {
+ 	.stop		= pppol2tp_seq_stop,
+ 	.show		= pppol2tp_seq_show,
+ };
+-#endif /* CONFIG_PROC_FS */
++
++static int pppol2tp_proc_open(struct inode *inode, struct file *file)
++{
++	struct net *net = pde_data(inode);
++	struct pppol2tp_seq_data *pd;
++
++	net = maybe_get_net(net);
++	if (!net)
++		return -ENXIO;
++
++	pd = __seq_open_private(file, &pppol2tp_seq_ops, sizeof(*pd));
++	if (!pd) {
++		put_net(net);
++		return -ENOMEM;
++	}
++
++#ifdef CONFIG_NET_NS
++	pd->p.net = net;
++	netns_tracker_alloc(net, &pd->p.ns_tracker, GFP_KERNEL);
++#endif
++	return 0;
++}
++
++static int pppol2tp_proc_release(struct inode *inode, struct file *file)
++{
++	struct seq_file *seq = file->private_data;
++	struct pppol2tp_seq_data *pd = seq->private;
++
++	if (pd->session)
++		l2tp_session_put(pd->session);
++	if (pd->tunnel)
++		l2tp_tunnel_put(pd->tunnel);
++
++#ifdef CONFIG_NET_NS
++	put_net_track(pd->p.net, &pd->p.ns_tracker);
++#else
++	put_net(&init_net);
++#endif
++	return seq_release_private(inode, file);
++}
++
++static const struct proc_ops pppol2tp_proc_ops = {
++	.proc_open	= pppol2tp_proc_open,
++	.proc_read	= seq_read,
++	.proc_lseek	= seq_lseek,
++	.proc_release	= pppol2tp_proc_release,
++};
  
--	if (strncmp(neg_req->Guid, conn->ClientGUID, SMB2_CLIENT_GUID_SIZE)) {
-+	if (memcmp(neg_req->Guid, conn->ClientGUID, SMB2_CLIENT_GUID_SIZE)) {
- 		ret = -EINVAL;
- 		goto err_out;
- 	}
+ /*****************************************************************************
+  * Network namespace
+@@ -1619,8 +1665,8 @@ static __net_init int pppol2tp_init_net(struct net *net)
+ 	struct proc_dir_entry *pde;
+ 	int err = 0;
+ 
+-	pde = proc_create_net("pppol2tp", 0444, net->proc_net,
+-			      &pppol2tp_seq_ops, sizeof(struct pppol2tp_seq_data));
++	pde = proc_create_data("pppol2tp", 0444, net->proc_net,
++			       &pppol2tp_proc_ops, net);
+ 	if (!pde) {
+ 		err = -ENOMEM;
+ 		goto out;
+@@ -1635,9 +1681,13 @@ static __net_exit void pppol2tp_exit_net(struct net *net)
+ 	remove_proc_entry("pppol2tp", net->proc_net);
+ }
+ 
++#endif /* CONFIG_PROC_FS */
++
+ static struct pernet_operations pppol2tp_net_ops = {
++#ifdef CONFIG_PROC_FS
+ 	.init = pppol2tp_init_net,
+ 	.exit = pppol2tp_exit_net,
++#endif
+ };
+ 
+ /*****************************************************************************
 -- 
 2.53.0
 
