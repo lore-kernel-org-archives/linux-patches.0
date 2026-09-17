@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1B334F93BA;
-	Thu, 17 Sep 2026 16:57:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5C3C4F93C2;
+	Thu, 17 Sep 2026 16:57:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789664257; cv=none; b=GtJfGd0M2OVqH3dwbnlD1F5rBrPb1VJFGFE6G25GZEQ6Cr0gRjQmpVLKVc+2eA1/u18ERnvlMrVL1llJXFfvTds3RS2LuuAfeTMkVrsnDQg49FUN7DCoQe2ar1JtywYwA+HVmPM6QmhflmpaY/FCwBueqOCMOEYtqsmty8riClE=
+	t=1789664260; cv=none; b=FxPWWqIPYrdE78q2vk8fQpsar7xm4EL3sPvg6DB12YJt/dEWUubmlAu8Zz3PXiEDA8AW7nnW/bdM1nW20akgK9zmkdGVa5oOaZen/HM8jcFyFmLQaxbvRh00DG85j7Ctw3l/Yy9Uz7lG1Rz+ZsyX+91APN0sY5GyLemUkUYN+Bg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789664257; c=relaxed/simple;
-	bh=UrAoJJZYKwlHZGsrhsxcRgNjfnAo6xJN2ToQt4BETGY=;
+	s=arc-20240116; t=1789664260; c=relaxed/simple;
+	bh=R8POELAVaUsoHalIN6f8Dvpxh72vXGVXAMW3aNtMKKo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k2NIXxvXT/3jYumVMQC+g9VxJDCtAHqswqNXAfIrIC+uJlWSnio9cVJP69j68g2VwONaNMC+0DPJF6eZc6BX3gQE19QNrzt0ATregK6SWzloSaelsNsxJ2lvuoYRL0/htpSQ7Ccn+BrKcke/Cp+svj9w6H5Ue1cLYodZgkSoF2g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y6TTln0T; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DSNjWqK1QpKR0DubYLMRt6lLJ0keBt2cVdHG+lPk9Q3tNhG/Z3LiD2a9VuNwA0qw1CpAHnH4M5MP26U/lI4yfbcFOeBhfASg5N48MKUenHm5rv/5XrBL36MNO7hK7IFkBXDX6SDDASpfT44O04n2SWf5AZ7Ey/hi2ZRiV36WDd8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FLRo4a87; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y6TTln0T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35DB21F000FF;
-	Thu, 17 Sep 2026 16:57:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FLRo4a87"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37A631F000FF;
+	Thu, 17 Sep 2026 16:57:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789664255;
-	bh=nC8YQ7yNzpjnRQM/C5wvYU8IATayh3JUOhYwfYfZ2cM=;
+	s=korg; t=1789664258;
+	bh=2yAJEFyOZoW3YgL5GKDqE1E5Svg0Z7P0k+XyTseoSSI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=y6TTln0ThC/bf9Ur6Jz+xvjSEx+stYiA/KMvb2oaEGFAxXjFVhuzYsuPHRNe0WfOr
-	 L4vvrMEiGe2aaRADjdvbR9nJVZLAaSSXT8nJRICwDBJhaqXlz0T/an6bj4v2pbnZax
-	 cdQkSVaLnRe/Hulvac92D7MPQWLxWZCBO54fMu5Q=
+	b=FLRo4a87ycnuE7o0YzDbzTUZvAWrQGs1F+L5ZQ8895a8TnQmrbzAvrk/3tCW073Fj
+	 /6x7qo3bFpwhKWqjETXLFCn3RlBr29520DFNCZctkvr1enjR3tniSovOB+fPkCnnVF
+	 rIIw0EUoaO/rPLN3tdbaGW4quf12OcqTqiH56eh8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alessandro Schino <7991aleschino@gmail.com>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Alvin Lee <alvin.lee2@amd.com>,
+	Ilya Bakoulin <Ilya.Bakoulin@amd.com>,
+	Ray Wu <ray.wu@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0294/1250] ntfs3: fix out-of-bounds read in ntfs_dir_emit() and hdr_find_e()
-Date: Thu, 17 Sep 2026 16:01:29 +0100
-Message-ID: <20260917151600.094995244@linuxfoundation.org>
+Subject: [PATCH 6.18 0312/1250] drm/amd/display: Avoid DPMS-on for phantom stream
+Date: Thu, 17 Sep 2026 16:01:47 +0100
+Message-ID: <20260917151600.559302695@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,78 +54,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alessandro Schino <7991aleschino@gmail.com>
+From: Ilya Bakoulin <Ilya.Bakoulin@amd.com>
 
-[ Upstream commit aa1bdbb39f49c5bc9779316891c40005517842a5 ]
+[ Upstream commit 10f5f9c0ef32d08b228bfee3684b62f36f395852 ]
 
-The bounds check in ntfs_dir_emit() compares fname->name_len (a
-character count) against e->size (a byte count) without accounting
-for the 2-byte-per-character UTF-16LE encoding or the ATTR_FILE_NAME
-header size:
+[Why & How]
+Calling dc_update_planes_and_stream separately for stream and its
+phantom stream causes a NULL pointer dereference, since the phantom is
+destroyed on the first call.
 
-  if (fname->name_len + sizeof(struct NTFS_DE) > le16_to_cpu(e->size))
+Skip the call for phantom streams.
 
-This computes: name_len + 16 > e_size
-
-The correct check must account for the ATTR_FILE_NAME header (66 bytes
-before the name) and the UTF-16LE character size (2 bytes each):
-
-  sizeof(NTFS_DE) + offsetof(ATTR_FILE_NAME, name) +
-  name_len * sizeof(short) > e_size
-
-Which computes: 16 + 66 + name_len * 2 > e_size
-
-The correct calculation already exists as fname_full_size() in ntfs.h
-and is used in cmp_fnames(), namei.c, and fslog.c, but was not used
-in the readdir path.
-
-A crafted NTFS image with an index entry containing a small e->size
-but large fname->name_len bypasses the current check, causing
-ntfs_utf16_to_nls() to read past the entry boundary.
-
-Additionally, add a key_size validation in hdr_find_e() to ensure the
-declared key_size does not exceed the available entry data, preventing
-comparison functions from reading past entry boundaries on the lookup
-path.
-
-Signed-off-by: Alessandro Schino <7991aleschino@gmail.com>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Reviewed-by: Alvin Lee <alvin.lee2@amd.com>
+Signed-off-by: Ilya Bakoulin <Ilya.Bakoulin@amd.com>
+Signed-off-by: Ray Wu <ray.wu@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/dir.c   | 4 +++-
- fs/ntfs3/index.c | 4 ++++
- 2 files changed, 7 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/dc/link/accessories/link_dp_cts.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/ntfs3/dir.c b/fs/ntfs3/dir.c
-index d41d02372c747..a68eff8cf1d66 100644
---- a/fs/ntfs3/dir.c
-+++ b/fs/ntfs3/dir.c
-@@ -304,7 +304,9 @@ static inline bool ntfs_dir_emit(struct ntfs_sb_info *sbi,
- 	if (sbi->options->nohidden && (fname->dup.fa & FILE_ATTRIBUTE_HIDDEN))
- 		return true;
- 
--	if (fname->name_len + sizeof(struct NTFS_DE) > le16_to_cpu(e->size))
-+	if (sizeof(struct NTFS_DE) +
-+	    offsetof(struct ATTR_FILE_NAME, name) +
-+	    fname->name_len * sizeof(short) > le16_to_cpu(e->size))
- 		return true;
- 
- 	name_len = ntfs_utf16_to_nls(sbi, fname->name, fname->name_len, name,
-diff --git a/fs/ntfs3/index.c b/fs/ntfs3/index.c
-index dd54c966babca..edfcd28573ef9 100644
---- a/fs/ntfs3/index.c
-+++ b/fs/ntfs3/index.c
-@@ -794,6 +794,10 @@ static struct NTFS_DE *hdr_find_e(const struct ntfs_index *indx,
- binary_search:
- 	e_key_len = le16_to_cpu(e->key_size);
- 
-+	/* Validate key_size fits within the entry data area. */
-+	if (e_key_len > le16_to_cpu(e->size) - sizeof(struct NTFS_DE))
-+		return NULL;
-+
- 	diff2 = (*cmp)(key, key_len, e + 1, e_key_len, ctx);
- 	if (diff2 > 0) {
- 		if (found) {
+diff --git a/drivers/gpu/drm/amd/display/dc/link/accessories/link_dp_cts.c b/drivers/gpu/drm/amd/display/dc/link/accessories/link_dp_cts.c
+index 2676ae9f6fe83..5f70793b8372e 100644
+--- a/drivers/gpu/drm/amd/display/dc/link/accessories/link_dp_cts.c
++++ b/drivers/gpu/drm/amd/display/dc/link/accessories/link_dp_cts.c
+@@ -143,6 +143,8 @@ static void dp_retrain_link_dp_test(struct dc_link *link,
+ 	// Set DPMS on with stream update
+ 	// Cache all streams on current link since dc_update_planes_and_stream might kill current_state
+ 	for (i = 0; i < MAX_PIPES; i++) {
++		if (state->streams[i] && state->streams[i]->is_phantom)
++			continue;
+ 		if (state->streams[i] && state->streams[i]->link && state->streams[i]->link == link)
+ 			streams_on_link[num_streams_on_link++] = state->streams[i];
+ 	}
 -- 
 2.53.0
 
