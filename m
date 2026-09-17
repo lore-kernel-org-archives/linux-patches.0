@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32B674E5322;
-	Thu, 17 Sep 2026 16:54:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FD025158B7;
+	Thu, 17 Sep 2026 16:54:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789664080; cv=none; b=eR2hF8Una3ymyWfulHo9BMM8XnEYVJ3U5Az1bRy7ZHMlLjZiSjQoNUvEo8Q5W14QQFo1JBuNq1DOnv0R7xkvPEKjiff1Zqe3JBYy1b86M7DLJYiS/nSOG3ficZIm99Pwr9KIW1K7t2bkkgH5UKPeAMXa+M90ooc2uYrkAbdo1XI=
+	t=1789664084; cv=none; b=Q8NpW6DWJ8E8FG4H7uHYxcD2EG1AcMzurQucEQwczIeXIEf6kQpM8UUt4SBMIjRUvsIrltzul1Ou+isS3k6HAGtf+iLIoYesWqnWE7TxcHzr/dVOWz+AHyS+hXc0BimV56wIWxenv267HAC0m1q6hymy0azsmNjEf8t9tMVXhzo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789664080; c=relaxed/simple;
-	bh=/ZCDvxjHOS3VuCSjGP0cQQMMznjceq2rMHQdA+gTe8M=;
+	s=arc-20240116; t=1789664084; c=relaxed/simple;
+	bh=tqPaTF1svvhVYX3uO/16PEQLaYi5FHoRO5fwFQ9a8RU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eqWiXc7lJ1ac52dFiS5A6de5nB5XWRIEaOptMDGALVSZqt2f/b/fOnclv9ALNc8hMoFeYOhDlraYaAMYXbHn34VQrIPHtrMJWerizLvn4CI2HTqaJblDsWoOOAQkvbWiDnwXwZH84ZrsSp0DFP1r8vk7hrtBbUhQ8dgFVsf8p9I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uWU0SvWc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CbgNGyniju2FHiMp2ylrpEtIF33GP8hSsxEOLZQTxXdZ1GXMY21020xbbAZcUlFblGVy3eciL3omlBpuiwRU42+QAoA/4Tjw5xVV9sLnt5013PXMvjnYwnEVJAgc4m+glBiAphHh5BtFRy9YnQXMGn66a9F1rKk7CCGzc8zLi/c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ekFpkURk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uWU0SvWc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 367441F000FF;
-	Thu, 17 Sep 2026 16:54:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ekFpkURk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FF341F000FF;
+	Thu, 17 Sep 2026 16:54:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789664078;
-	bh=SCAlLhBFdXFffxd1Z5w1zQdkGuFdXfUWch23549wuxU=;
+	s=korg; t=1789664081;
+	bh=nMuWPV/crFXZ1WQgUDAiBjO5P0IUpVHniwJDvJcqLfg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uWU0SvWcpJ5E9JOPXIdk9trXMdzFuqFzdUpoQttS89ZX5i/ED7LMIll4zAudDDrAW
-	 Yv3F0gNX1q7aKYGbXF4GEs5VDspdTzymZFLRAPLg1pGTG+Nxvw/YzKuJEXaCtJI/XB
-	 1717TsuO+TktosxX/VgXZW78oL9/m+0RaM4CYGFY=
+	b=ekFpkURkWnlXTfLyBPYYgnhnWZgVHw1GvAFgkI0JkLel3KuDuKJuIZtCicC1UhIU1
+	 raxP79n+DvEY7Elxsio4bCLssWKDjL2UGJNXEfVdpdKQNppho02P3yRlb8LysPFURx
+	 ocMsVJKn0z8PYNVhKuLDWCgn5G7Adk7I0jetOS0I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Qisen <weixiansen574@163.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Avinash Bhatt <avinash.bhatt@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0250/1250] net: sfp: add quirk for OEM 2.5G optical modules
-Date: Thu, 17 Sep 2026 16:00:45 +0100
-Message-ID: <20260917151558.927280306@linuxfoundation.org>
+Subject: [PATCH 6.18 0215/1250] wifi: iwlwifi: Transition to basic uAPSD with MAC_PM_POWER_TABLE API VER_3
+Date: Thu, 17 Sep 2026 16:00:10 +0100
+Message-ID: <20260917151557.960712112@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,49 +51,530 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wei Qisen <weixiansen574@163.com>
+From: Avinash Bhatt <avinash.bhatt@intel.com>
 
-[ Upstream commit 5af067bf8a64dac896f120a98fe2ca656df92562 ]
+[ Upstream commit fc58bb9ecef04aa46f201fc421a16e670b5dc01f ]
 
-Some OEM-branded SFP modules are incorrectly detected as
-1000Base-X and fail to establish link on 2.5G-capable ports.
+uAPSD is transitioning to a certification-only feature. The new
+firmware API version 3 removes advanced uAPSD fields, keeping only
+basic parameters needed for certification testing.
 
-These modules do not properly advertise 2500Base-X capability
-in their EEPROM and require forcing the correct SerDes mode.
+Support the new VER_3 API in the MLD driver while maintaining
+backward compatibility with VER_1/2. The MVM driver continues
+using VER_2 only. Remove the obsolete PSM_UAPSD_AP_MISBEHAVING_NOTIFICATION
+notification from the MLD driver
 
-Add sfp_quirk_2500basex for:
-
-  - OEM SFP-2.5G-LH03-B
-  - OEM SFP-2.5G-LH20-A
-
-Both modules report:
-
-  Vendor name: OEM
-  Vendor PN: SFP-2.5G-LH03-B / SFP-2.5G-LH20-A
-
-Tested on OpenWrt with successful 2.5G link establishment.
-
-Signed-off-by: Wei Qisen <weixiansen574@163.com>
-Link: https://patch.msgid.link/20260526055206.1750-1-weixiansen574@163.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Avinash Bhatt <avinash.bhatt@intel.com>
+Link: https://patch.msgid.link/20260512222731.96b6f53c8708.I4f01b97b25d91ebb1561845d7925103e274574fa@changeid
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/sfp.c | 2 ++
- 1 file changed, 2 insertions(+)
+ .../net/wireless/intel/iwlwifi/fw/api/power.h |  48 ++++-
+ .../net/wireless/intel/iwlwifi/mld/iface.c    |  18 --
+ .../net/wireless/intel/iwlwifi/mld/iface.h    |   3 -
+ drivers/net/wireless/intel/iwlwifi/mld/mld.c  |   1 -
+ .../net/wireless/intel/iwlwifi/mld/notif.c    |   6 -
+ .../net/wireless/intel/iwlwifi/mld/power.c    | 177 ++++++++++++++++--
+ drivers/net/wireless/intel/iwlwifi/mvm/mvm.h  |   4 +-
+ .../net/wireless/intel/iwlwifi/mvm/power.c    |  14 +-
+ 8 files changed, 214 insertions(+), 57 deletions(-)
 
-diff --git a/drivers/net/phy/sfp.c b/drivers/net/phy/sfp.c
-index 9683f9c2cd882..af43530ffb2c3 100644
---- a/drivers/net/phy/sfp.c
-+++ b/drivers/net/phy/sfp.c
-@@ -583,6 +583,8 @@ static const struct sfp_quirk sfp_quirks[] = {
- 	SFP_QUIRK_S("OEM", "SFP-2.5G-T", sfp_quirk_oem_2_5g),
- 	SFP_QUIRK_S("OEM", "SFP-2.5G-BX10-D", sfp_quirk_2500basex),
- 	SFP_QUIRK_S("OEM", "SFP-2.5G-BX10-U", sfp_quirk_2500basex),
-+	SFP_QUIRK_S("OEM", "SFP-2.5G-LH03-B", sfp_quirk_2500basex),
-+	SFP_QUIRK_S("OEM", "SFP-2.5G-LH20-A", sfp_quirk_2500basex),
- 	SFP_QUIRK_F("OEM", "RTSFP-10", sfp_fixup_rollball_cc),
- 	SFP_QUIRK_F("OEM", "RTSFP-10G", sfp_fixup_rollball_cc),
- 	SFP_QUIRK_F("Turris", "RTSFP-2.5G", sfp_fixup_rollball),
+diff --git a/drivers/net/wireless/intel/iwlwifi/fw/api/power.h b/drivers/net/wireless/intel/iwlwifi/fw/api/power.h
+index 535864e226260..9eeb3600ed1f4 100644
+--- a/drivers/net/wireless/intel/iwlwifi/fw/api/power.h
++++ b/drivers/net/wireless/intel/iwlwifi/fw/api/power.h
+@@ -1,6 +1,6 @@
+ /* SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause */
+ /*
+- * Copyright (C) 2012-2014, 2018-2025 Intel Corporation
++ * Copyright (C) 2012-2014, 2018-2026 Intel Corporation
+  * Copyright (C) 2013-2014 Intel Mobile Communications GmbH
+  * Copyright (C) 2015-2017 Intel Deutschland GmbH
+  */
+@@ -85,12 +85,13 @@ struct iwl_ltr_config_cmd {
+  *		'1' PM could sleep over DTIM till listen Interval.
+  * @POWER_FLAGS_SNOOZE_ENA_MSK: Enable snoozing only if uAPSD is enabled and all
+  *		access categories are both delivery and trigger enabled.
++ *		(Not supported since version 3)
+  * @POWER_FLAGS_BT_SCO_ENA: Enable BT SCO coex only if uAPSD and
+  *		PBW Snoozing enabled
+  * @POWER_FLAGS_ADVANCE_PM_ENA_MSK: Advanced PM (uAPSD) enable mask
+  * @POWER_FLAGS_LPRX_ENA_MSK: Low Power RX enable.
+  * @POWER_FLAGS_UAPSD_MISBEHAVING_ENA_MSK: AP/GO's uAPSD misbehaving
+- *		detection enablement
++ *		detection enablement (Not supported since version 3)
+  * @POWER_FLAGS_ENABLE_SMPS_MSK: SMPS is allowed for this vif
+ */
+ enum iwl_power_flags {
+@@ -175,9 +176,9 @@ struct iwl_device_power_cmd {
+ } __packed;
+ 
+ /**
+- * struct iwl_mac_power_cmd - New power command containing uAPSD support
++ * struct iwl_mac_power_cmd_v2 - power command V2 containing uAPSD support
+  * MAC_PM_POWER_TABLE = 0xA9 (command, has simple generic response)
+- * @id_and_color:	MAC contex identifier, &enum iwl_ctxt_id_and_color
++ * @id_and_color:	MAC context identifier, &enum iwl_ctxt_id_and_color
+  * @flags:		Power table command flags from POWER_FLAGS_*
+  * @keep_alive_seconds:	Keep alive period in seconds. Default - 25 sec.
+  *			Minimum allowed:- 3 * DTIM. Keep alive period must be
+@@ -216,7 +217,7 @@ struct iwl_device_power_cmd {
+  * @limited_ps_threshold: (unused)
+  * @reserved: reserved (padding)
+  */
+-struct iwl_mac_power_cmd {
++struct iwl_mac_power_cmd_v2 {
+ 	/* CONTEXT_DESC_API_T_VER_1 */
+ 	__le32 id_and_color;
+ 
+@@ -242,6 +243,43 @@ struct iwl_mac_power_cmd {
+ 	u8 reserved;
+ } __packed; /* CLIENT_PM_POWER_TABLE_S_VER_1, VER_2 */
+ 
++/**
++ * struct iwl_mac_power_cmd - power command
++ * MAC_PM_POWER_TABLE = 0xA9 (command, has simple generic response)
++ * @id_and_color:	MAC context identifier, &enum iwl_ctxt_id_and_color
++ * @flags:		Power table command flags from POWER_FLAGS_*
++ * @keep_alive_seconds:	Keep alive period in seconds. Default - 25 sec.
++ *			Minimum allowed:- 3 * DTIM. Keep alive period must be
++ *			set regardless of power scheme or current power state.
++ *			FW use this value also when PM is disabled.
++ * @rx_data_timeout:    Minimum time (usec) from last Rx packet for AM to
++ *			PSM transition - legacy PM
++ * @tx_data_timeout:    Minimum time (usec) from last Tx packet for AM to
++ *			PSM transition - legacy PM
++ * @lprx_rssi_threshold: Signal strength up to which LP RX can be enabled.
++ *			Default: 80dbm
++ * @skip_dtim_periods:	Number of DTIM periods to skip if Skip over DTIM flag
++ *			is set. For example, if it is required to skip over
++ *			one DTIM, this value need to be set to 2 (DTIM periods).
++ * @qndp_tid:		TID client shall use for uAPSD QNDP triggers
++ * @uapsd_ac_flags:	Set trigger-enabled and delivery-enabled indication for
++ *			each corresponding AC.
++ *			Use IEEE80211_WMM_IE_STA_QOSINFO_AC* for correct values.
++ */
++struct iwl_mac_power_cmd {
++	/* CONTEXT_DESC_API_T_VER_1 */
++	__le32 id_and_color;
++
++	__le16 flags;
++	__le16 keep_alive_seconds;
++	__le32 rx_data_timeout;
++	__le32 tx_data_timeout;
++	u8 lprx_rssi_threshold;
++	u8 skip_dtim_periods;
++	u8 qndp_tid;
++	u8 uapsd_ac_flags;
++} __packed; /* CLIENT_PM_POWER_TABLE_S_VER_3 */
++
+ /*
+  * struct iwl_uapsd_misbehaving_ap_notif - FW sends this notification when
+  * associated AP is identified as improperly implementing uAPSD protocol.
+diff --git a/drivers/net/wireless/intel/iwlwifi/mld/iface.c b/drivers/net/wireless/intel/iwlwifi/mld/iface.c
+index 80bcd18930c57..b07e9e34a711a 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mld/iface.c
++++ b/drivers/net/wireless/intel/iwlwifi/mld/iface.c
+@@ -588,24 +588,6 @@ void iwl_mld_handle_probe_resp_data_notif(struct iwl_mld *mld,
+ 		kfree_rcu(old_data, rcu_head);
+ }
+ 
+-void iwl_mld_handle_uapsd_misbehaving_ap_notif(struct iwl_mld *mld,
+-					       struct iwl_rx_packet *pkt)
+-{
+-	struct iwl_uapsd_misbehaving_ap_notif *notif = (void *)pkt->data;
+-	struct ieee80211_vif *vif;
+-
+-	if (IWL_FW_CHECK(mld, notif->mac_id >= ARRAY_SIZE(mld->fw_id_to_vif),
+-			 "mac id is invalid: %d\n", notif->mac_id))
+-		return;
+-
+-	vif = wiphy_dereference(mld->wiphy, mld->fw_id_to_vif[notif->mac_id]);
+-
+-	if (WARN_ON(!vif) || ieee80211_vif_is_mld(vif))
+-		return;
+-
+-	IWL_WARN(mld, "uapsd misbehaving AP: %pM\n", vif->bss_conf.bssid);
+-}
+-
+ void iwl_mld_handle_datapath_monitor_notif(struct iwl_mld *mld,
+ 					   struct iwl_rx_packet *pkt)
+ {
+diff --git a/drivers/net/wireless/intel/iwlwifi/mld/iface.h b/drivers/net/wireless/intel/iwlwifi/mld/iface.h
+index a3573d20f214a..b5e4852cb0374 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mld/iface.h
++++ b/drivers/net/wireless/intel/iwlwifi/mld/iface.h
+@@ -234,9 +234,6 @@ void iwl_mld_handle_probe_resp_data_notif(struct iwl_mld *mld,
+ void iwl_mld_handle_datapath_monitor_notif(struct iwl_mld *mld,
+ 					   struct iwl_rx_packet *pkt);
+ 
+-void iwl_mld_handle_uapsd_misbehaving_ap_notif(struct iwl_mld *mld,
+-					       struct iwl_rx_packet *pkt);
+-
+ void iwl_mld_reset_cca_40mhz_workaround(struct iwl_mld *mld,
+ 					struct ieee80211_vif *vif);
+ 
+diff --git a/drivers/net/wireless/intel/iwlwifi/mld/mld.c b/drivers/net/wireless/intel/iwlwifi/mld/mld.c
+index 3cfe1bcb7d4e5..48b8ec6a5a12d 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mld/mld.c
++++ b/drivers/net/wireless/intel/iwlwifi/mld/mld.c
+@@ -162,7 +162,6 @@ static const struct iwl_hcmd_names iwl_mld_legacy_names[] = {
+ 	HCMD_NAME(PHY_CONFIGURATION_CMD),
+ 	HCMD_NAME(SCAN_OFFLOAD_UPDATE_PROFILES_CMD),
+ 	HCMD_NAME(POWER_TABLE_CMD),
+-	HCMD_NAME(PSM_UAPSD_AP_MISBEHAVING_NOTIFICATION),
+ 	HCMD_NAME(BEACON_NOTIFICATION),
+ 	HCMD_NAME(BEACON_TEMPLATE_CMD),
+ 	HCMD_NAME(TX_ANT_CONFIGURATION_CMD),
+diff --git a/drivers/net/wireless/intel/iwlwifi/mld/notif.c b/drivers/net/wireless/intel/iwlwifi/mld/notif.c
+index a3fd0b7387d69..5f2216f8c58f5 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mld/notif.c
++++ b/drivers/net/wireless/intel/iwlwifi/mld/notif.c
+@@ -338,8 +338,6 @@ CMD_VERSIONS(emlsr_mode_notif,
+ 	     CMD_VER_ENTRY(2, iwl_esr_mode_notif))
+ CMD_VERSIONS(emlsr_trans_fail_notif,
+ 	     CMD_VER_ENTRY(1, iwl_esr_trans_fail_notif))
+-CMD_VERSIONS(uapsd_misbehaving_ap_notif,
+-	     CMD_VER_ENTRY(1, iwl_uapsd_misbehaving_ap_notif))
+ CMD_VERSIONS(time_msmt_notif,
+ 	     CMD_VER_ENTRY(1, iwl_time_msmt_notify))
+ CMD_VERSIONS(time_sync_confirm_notif,
+@@ -360,8 +358,6 @@ DEFINE_SIMPLE_CANCELLATION(scan_complete, iwl_umac_scan_complete, uid)
+ DEFINE_SIMPLE_CANCELLATION(scan_start, iwl_umac_scan_start, uid)
+ DEFINE_SIMPLE_CANCELLATION(probe_resp_data, iwl_probe_resp_data_notif,
+ 			   mac_id)
+-DEFINE_SIMPLE_CANCELLATION(uapsd_misbehaving_ap, iwl_uapsd_misbehaving_ap_notif,
+-			   mac_id)
+ DEFINE_SIMPLE_CANCELLATION(ftm_resp, iwl_tof_range_rsp_ntfy, request_id)
+ DEFINE_SIMPLE_CANCELLATION(beacon_filter, iwl_beacon_filter_notif, link_id)
+ 
+@@ -452,8 +448,6 @@ const struct iwl_rx_handler iwl_mld_rx_handlers[] = {
+ 			     emlsr_mode_notif, RX_HANDLER_ASYNC)
+ 	RX_HANDLER_NO_OBJECT(MAC_CONF_GROUP, EMLSR_TRANS_FAIL_NOTIF,
+ 			     emlsr_trans_fail_notif, RX_HANDLER_ASYNC)
+-	RX_HANDLER_OF_VIF(LEGACY_GROUP, PSM_UAPSD_AP_MISBEHAVING_NOTIFICATION,
+-			  uapsd_misbehaving_ap_notif)
+ 	RX_HANDLER_NO_OBJECT(LEGACY_GROUP,
+ 			     WNM_80211V_TIMING_MEASUREMENT_NOTIFICATION,
+ 			     time_msmt_notif, RX_HANDLER_SYNC)
+diff --git a/drivers/net/wireless/intel/iwlwifi/mld/power.c b/drivers/net/wireless/intel/iwlwifi/mld/power.c
+index f664b277adf7d..38c77a33871d1 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mld/power.c
++++ b/drivers/net/wireless/intel/iwlwifi/mld/power.c
+@@ -113,10 +113,10 @@ static bool iwl_mld_power_is_radar(struct iwl_mld *mld,
+ 	return chanctx_conf->def.chan->flags & IEEE80211_CHAN_RADAR;
+ }
+ 
+-static void iwl_mld_power_configure_uapsd(struct iwl_mld *mld,
+-					  struct iwl_mld_link *link,
+-					  struct iwl_mac_power_cmd *cmd,
+-					  bool ps_poll)
++static void iwl_mld_power_configure_uapsd_v2(struct iwl_mld *mld,
++					     struct iwl_mld_link *link,
++					     struct iwl_mac_power_cmd_v2 *cmd,
++					     bool ps_poll)
+ {
+ 	bool tid_found = false;
+ 
+@@ -175,10 +175,54 @@ static void iwl_mld_power_configure_uapsd(struct iwl_mld *mld,
+ 	cmd->uapsd_max_sp = mld->hw->uapsd_max_sp_len;
+ }
+ 
++static void iwl_mld_power_configure_uapsd(struct iwl_mld *mld,
++					  struct iwl_mld_link *link,
++					  struct iwl_mac_power_cmd *cmd,
++					  bool ps_poll)
++{
++	bool tid_found = false;
++
++	/* set advanced pm flag with no uapsd ACs to enable ps-poll */
++	if (ps_poll) {
++		cmd->flags |= cpu_to_le16(POWER_FLAGS_ADVANCE_PM_ENA_MSK);
++		return;
++	}
++
++	for (enum ieee80211_ac_numbers ac = IEEE80211_AC_VO;
++	     ac <= IEEE80211_AC_BK;
++	     ac++) {
++		if (!link->queue_params[ac].uapsd)
++			continue;
++
++		cmd->flags |=
++			cpu_to_le16(POWER_FLAGS_ADVANCE_PM_ENA_MSK);
++		cmd->uapsd_ac_flags |= BIT(ac);
++
++		/* QNDP TID - the highest TID with no admission control */
++		if (!tid_found && !link->queue_params[ac].acm) {
++			tid_found = true;
++			switch (ac) {
++			case IEEE80211_AC_VO:
++				cmd->qndp_tid = 6;
++				break;
++			case IEEE80211_AC_VI:
++				cmd->qndp_tid = 5;
++				break;
++			case IEEE80211_AC_BE:
++				cmd->qndp_tid = 0;
++				break;
++			case IEEE80211_AC_BK:
++				cmd->qndp_tid = 1;
++				break;
++			}
++		}
++	}
++}
++
+ static void
+ iwl_mld_power_config_skip_dtim(struct iwl_mld *mld,
+ 			       const struct ieee80211_bss_conf *link_conf,
+-			       struct iwl_mac_power_cmd *cmd)
++			       u8 *skip_dtim_periods, __le16 *flags)
+ {
+ 	unsigned int dtimper_tu;
+ 	unsigned int dtimper;
+@@ -196,15 +240,15 @@ iwl_mld_power_config_skip_dtim(struct iwl_mld *mld,
+ 	/* configure skip over dtim up to 900 TU DTIM interval */
+ 	skip = max_t(int, 1, 900 / dtimper_tu);
+ 
+-	cmd->skip_dtim_periods = skip;
+-	cmd->flags |= cpu_to_le16(POWER_FLAGS_SKIP_OVER_DTIM_MSK);
++	*skip_dtim_periods = skip;
++	*flags |= cpu_to_le16(POWER_FLAGS_SKIP_OVER_DTIM_MSK);
+ }
+ 
+ #define POWER_KEEP_ALIVE_PERIOD_SEC    25
+-static void iwl_mld_power_build_cmd(struct iwl_mld *mld,
+-				    struct ieee80211_vif *vif,
+-				    struct iwl_mac_power_cmd *cmd,
+-				    bool d3)
++static void iwl_mld_power_build_cmd_v2(struct iwl_mld *mld,
++				       struct ieee80211_vif *vif,
++				       struct iwl_mac_power_cmd_v2 *cmd,
++				       bool d3)
+ {
+ 	int dtimper, bi;
+ 	int keep_alive;
+@@ -265,7 +309,9 @@ static void iwl_mld_power_build_cmd(struct iwl_mld *mld,
+ 	}
+ 
+ 	if (d3) {
+-		iwl_mld_power_config_skip_dtim(mld, link_conf, cmd);
++		iwl_mld_power_config_skip_dtim(mld, link_conf,
++					       &cmd->skip_dtim_periods,
++					       &cmd->flags);
+ 		cmd->rx_data_timeout =
+ 			cpu_to_le32(IWL_MLD_WOWLAN_PS_RX_DATA_TIMEOUT);
+ 		cmd->tx_data_timeout =
+@@ -286,6 +332,95 @@ static void iwl_mld_power_build_cmd(struct iwl_mld *mld,
+ 	 * mac80211 will allow uAPSD. Always call iwl_mld_power_configure_uapsd
+ 	 * which will look at what mac80211 is saying.
+ 	 */
++#ifdef CONFIG_IWLWIFI_DEBUGFS
++	ps_poll = mld_vif->use_ps_poll;
++#endif
++	iwl_mld_power_configure_uapsd_v2(mld, link, cmd, ps_poll);
++}
++
++static void iwl_mld_power_build_cmd(struct iwl_mld *mld,
++				    struct ieee80211_vif *vif,
++				    struct iwl_mac_power_cmd *cmd,
++				    bool d3)
++{
++	int dtimper, bi;
++	int keep_alive;
++	struct iwl_mld_vif *mld_vif = iwl_mld_vif_from_mac80211(vif);
++	struct ieee80211_bss_conf *link_conf = &vif->bss_conf;
++	struct iwl_mld_link *link = &mld_vif->deflink;
++	bool ps_poll = false;
++	__le32 fw_id = cpu_to_le32(mld_vif->fw_id);
++
++	if (ieee80211_vif_is_mld(vif)) {
++		int link_id;
++
++		if (WARN_ON(!vif->active_links))
++			return;
++
++		/* The firmware consumes one single configuration for the vif
++		 * and can't differentiate between links, just pick the lowest
++		 * link_id's configuration and use that.
++		 */
++		link_id = __ffs(vif->active_links);
++		link_conf = link_conf_dereference_check(vif, link_id);
++		link = iwl_mld_link_dereference_check(mld_vif, link_id);
++
++		if (WARN_ON(!link_conf || !link))
++			return;
++	}
++	dtimper = link_conf->dtim_period;
++	bi = link_conf->beacon_int;
++
++	/* Regardless of power management state the driver must set
++	 * keep alive period. FW will use it for sending keep alive NDPs
++	 * immediately after association. Check that keep alive period
++	 * is at least 3 * DTIM
++	 */
++	keep_alive = DIV_ROUND_UP(ieee80211_tu_to_usec(3 * dtimper * bi),
++				  USEC_PER_SEC);
++	keep_alive = max(keep_alive, POWER_KEEP_ALIVE_PERIOD_SEC);
++
++	cmd->id_and_color = fw_id;
++	cmd->keep_alive_seconds = cpu_to_le16(keep_alive);
++
++	if (iwlmld_mod_params.power_scheme != IWL_POWER_SCHEME_CAM)
++		cmd->flags |= cpu_to_le16(POWER_FLAGS_POWER_SAVE_ENA_MSK);
++
++	if (vif->cfg.ps && iwl_mld_tdls_sta_count(mld) == 0) {
++		cmd->flags |= cpu_to_le16(POWER_FLAGS_POWER_MANAGEMENT_ENA_MSK);
++		cmd->flags |= cpu_to_le16(POWER_FLAGS_ENABLE_SMPS_MSK);
++
++		/* firmware supports LPRX for beacons at rate 1 Mbps or
++		 * 6 Mbps only
++		 */
++		if (link_conf->beacon_rate &&
++		    (link_conf->beacon_rate->bitrate == 10 ||
++		     link_conf->beacon_rate->bitrate == 60)) {
++			cmd->flags |= cpu_to_le16(POWER_FLAGS_LPRX_ENA_MSK);
++			cmd->lprx_rssi_threshold = POWER_LPRX_RSSI_THRESHOLD;
++		}
++	}
++
++	if (d3) {
++		iwl_mld_power_config_skip_dtim(mld, link_conf,
++					       &cmd->skip_dtim_periods,
++					       &cmd->flags);
++		cmd->rx_data_timeout =
++			cpu_to_le32(IWL_MLD_WOWLAN_PS_RX_DATA_TIMEOUT);
++		cmd->tx_data_timeout =
++			cpu_to_le32(IWL_MLD_WOWLAN_PS_TX_DATA_TIMEOUT);
++	} else if (iwl_mld_vif_low_latency(mld_vif) && vif->p2p) {
++		cmd->tx_data_timeout =
++			cpu_to_le32(IWL_MLD_SHORT_PS_TX_DATA_TIMEOUT);
++		cmd->rx_data_timeout =
++			cpu_to_le32(IWL_MLD_SHORT_PS_RX_DATA_TIMEOUT);
++	} else {
++		cmd->rx_data_timeout =
++			cpu_to_le32(IWL_MLD_DEFAULT_PS_RX_DATA_TIMEOUT);
++		cmd->tx_data_timeout =
++			cpu_to_le32(IWL_MLD_DEFAULT_PS_TX_DATA_TIMEOUT);
++	}
++
+ #ifdef CONFIG_IWLWIFI_DEBUGFS
+ 	ps_poll = mld_vif->use_ps_poll;
+ #endif
+@@ -295,11 +430,23 @@ static void iwl_mld_power_build_cmd(struct iwl_mld *mld,
+ int iwl_mld_update_mac_power(struct iwl_mld *mld, struct ieee80211_vif *vif,
+ 			     bool d3)
+ {
+-	struct iwl_mac_power_cmd cmd = {};
++	int cmd_ver = iwl_fw_lookup_cmd_ver(mld->fw, MAC_PM_POWER_TABLE, 0);
+ 
+-	iwl_mld_power_build_cmd(mld, vif, &cmd, d3);
++	if (cmd_ver >= 3) {
++		struct iwl_mac_power_cmd cmd = {};
+ 
+-	return iwl_mld_send_cmd_pdu(mld, MAC_PM_POWER_TABLE, &cmd);
++		iwl_mld_power_build_cmd(mld, vif, &cmd, d3);
++		return iwl_mld_send_cmd_with_flags_pdu(mld,
++						       MAC_PM_POWER_TABLE, 0,
++						       &cmd, sizeof(cmd));
++	} else {
++		struct iwl_mac_power_cmd_v2 cmd = {};
++
++		iwl_mld_power_build_cmd_v2(mld, vif, &cmd, d3);
++		return iwl_mld_send_cmd_with_flags_pdu(mld,
++						       MAC_PM_POWER_TABLE, 0,
++						       &cmd, sizeof(cmd));
++	}
+ }
+ 
+ static void
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mvm.h b/drivers/net/wireless/intel/iwlwifi/mvm/mvm.h
+index b515028adc8f5..e05efcecaaf3f 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/mvm.h
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/mvm.h
+@@ -1,6 +1,6 @@
+ /* SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause */
+ /*
+- * Copyright (C) 2012-2014, 2018-2025 Intel Corporation
++ * Copyright (C) 2012-2014, 2018-2026 Intel Corporation
+  * Copyright (C) 2013-2015 Intel Mobile Communications GmbH
+  * Copyright (C) 2016-2017 Intel Deutschland GmbH
+  */
+@@ -477,7 +477,7 @@ struct iwl_mvm_vif {
+ 	struct dentry *dbgfs_slink;
+ 	struct iwl_dbgfs_pm dbgfs_pm;
+ 	struct iwl_dbgfs_bf dbgfs_bf;
+-	struct iwl_mac_power_cmd mac_pwr_cmd;
++	struct iwl_mac_power_cmd_v2 mac_pwr_cmd;
+ 	int dbgfs_quota_min;
+ 	bool ftm_unprotected;
+ #endif
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/power.c b/drivers/net/wireless/intel/iwlwifi/mvm/power.c
+index 610de29b7be0d..46792c5087532 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/power.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/power.c
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause
+ /*
+- * Copyright (C) 2012-2014, 2018-2019, 2021-2025 Intel Corporation
++ * Copyright (C) 2012-2014, 2018-2019, 2021-2026 Intel Corporation
+  * Copyright (C) 2013-2014 Intel Mobile Communications GmbH
+  * Copyright (C) 2015-2017 Intel Deutschland GmbH
+  */
+@@ -83,7 +83,7 @@ void iwl_mvm_beacon_filter_set_cqm_params(struct iwl_mvm *mvm,
+ }
+ 
+ static void iwl_mvm_power_log(struct iwl_mvm *mvm,
+-			      struct iwl_mac_power_cmd *cmd)
++			      struct iwl_mac_power_cmd_v2 *cmd)
+ {
+ 	IWL_DEBUG_POWER(mvm,
+ 			"Sending power table command on mac id 0x%X for power level %d, flags = 0x%X\n",
+@@ -121,7 +121,7 @@ static void iwl_mvm_power_log(struct iwl_mvm *mvm,
+ 
+ static void iwl_mvm_power_configure_uapsd(struct iwl_mvm *mvm,
+ 					  struct ieee80211_vif *vif,
+-					  struct iwl_mac_power_cmd *cmd)
++					  struct iwl_mac_power_cmd_v2 *cmd)
+ {
+ 	struct iwl_mvm_vif *mvmvif = iwl_mvm_vif_from_mac80211(vif);
+ 	enum ieee80211_ac_numbers ac;
+@@ -296,7 +296,7 @@ static bool iwl_mvm_power_is_radar(struct ieee80211_bss_conf *link_conf)
+ 
+ static void iwl_mvm_power_config_skip_dtim(struct iwl_mvm *mvm,
+ 					   struct ieee80211_vif *vif,
+-					   struct iwl_mac_power_cmd *cmd)
++					   struct iwl_mac_power_cmd_v2 *cmd)
+ {
+ 	struct ieee80211_bss_conf *link_conf;
+ 	unsigned int min_link_skip = ~0;
+@@ -344,7 +344,7 @@ static void iwl_mvm_power_config_skip_dtim(struct iwl_mvm *mvm,
+ 
+ static void iwl_mvm_power_build_cmd(struct iwl_mvm *mvm,
+ 				    struct ieee80211_vif *vif,
+-				    struct iwl_mac_power_cmd *cmd)
++				    struct iwl_mac_power_cmd_v2 *cmd)
+ {
+ 	int dtimper, bi;
+ 	int keep_alive;
+@@ -466,7 +466,7 @@ static void iwl_mvm_power_build_cmd(struct iwl_mvm *mvm,
+ static int iwl_mvm_power_send_cmd(struct iwl_mvm *mvm,
+ 					 struct ieee80211_vif *vif)
+ {
+-	struct iwl_mac_power_cmd cmd = {};
++	struct iwl_mac_power_cmd_v2 cmd = {};
+ 
+ 	iwl_mvm_power_build_cmd(mvm, vif, &cmd);
+ 	iwl_mvm_power_log(mvm, &cmd);
+@@ -717,7 +717,7 @@ int iwl_mvm_power_mac_dbgfs_read(struct iwl_mvm *mvm,
+ 				 int bufsz)
+ {
+ 	struct iwl_mvm_vif *mvmvif = iwl_mvm_vif_from_mac80211(vif);
+-	struct iwl_mac_power_cmd cmd = {};
++	struct iwl_mac_power_cmd_v2 cmd = {};
+ 	int pos = 0;
+ 
+ 	mutex_lock(&mvm->mutex);
 -- 
 2.53.0
 
