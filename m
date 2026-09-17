@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2B9A4ABBAD;
-	Thu, 17 Sep 2026 15:39:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85FB94E324A;
+	Thu, 17 Sep 2026 15:39:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659597; cv=none; b=aE7H0cGLk9YqnVHG1aCCw32KmXQS/ZQHCrrJWtOnVi52VpjAnpXpl803Pl45FBx6BDYFlvwcCoyJCqmGPZBohetbepeofjRXHyXXtUNbl3g4PGTp/kb6VIiBy5Gn3XJ0ecdP8dj0JT5V2fBEtA6yk0xiqYYHmicaoAdTnnYG7qg=
+	t=1789659599; cv=none; b=sz+L1k7X7gbCkp7Il/6yjS39A2hnLc+YjtgShjNttkDSDWxbfkVF8BPmzatKkKbZ5OKmKuWsNdcoazE7b2ZhCsgE/J5rKx3mrADrPN6WAecgz2bTL+FqMXiFgfjaVeXu3Nn+Tzq60yqVKZI5FXgig1DHV0hXyb4PRLqHh7w2cKI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659597; c=relaxed/simple;
-	bh=6PJuGdY7PCEEAqeXbS6hIwUyKelT/IRVYb45Mj6LVsE=;
+	s=arc-20240116; t=1789659599; c=relaxed/simple;
+	bh=lpqEowK9yWb/FGLkCUEecKnN5R4DY5qvmGfY3TWhcbk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=WuVoeww8SQAArn1+WqhAFlstkWt5++JKjIhJcQv3/Wm/sVnt6/A4PldgGsqcz4gTiO14yq+r+Lc0CJ9CZIRLCb7NyAZGTk3W/ABs+AKz/9/oNLY+Ss0XXt9ISXOw4uLKNnGMkXCF2Wwh67MaLrTokBqwzFSuiJZHk8+38FjGRzI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zZoH6O7Z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=l/+OdqrAxAdIN4XPwIqXB8m9JmgBp8ATu4CLruzPx8686IJonWC9m+NoukMFgNVpTHrubla7Xb6TvWgi0PznVRCRVXiTVyABrosU721qGjz22rnYFRpxB9qSSDhasqhYjXvf2W6gTqbI91W2TomXr0lgkTHPDJfmmN3G/9FY0Ns=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xwVZzU4Y; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zZoH6O7Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 397811F00899;
-	Thu, 17 Sep 2026 15:39:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xwVZzU4Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 218F31F00893;
+	Thu, 17 Sep 2026 15:39:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659589;
-	bh=YYQ9SBoP/jwmZlPQRWM5GXxtTrVoJ9c3YLl+YFcWP8Y=;
+	s=korg; t=1789659592;
+	bh=7ulzSZ8KKP95jSll/07V6FW/srXZNtbCeawHP2jDCl4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zZoH6O7ZJZiRAoJsxIet1r4p0mm2KpqR6/rR/AhrfDCYeOy+rBG7ghMOF9/Jb7plo
-	 oCZenC7PldmnPnQ1aplT1XW4WiKhToaYxTGlofdSnbMpIJZV3tUv0cXELhxPeZ7TAY
-	 X6yrB1Kv5c9K0q0Yl1wjZGkU1xvURFis49N3zTVs=
+	b=xwVZzU4Y75LWikAYG9vGzjKcn7YEdrufGGtAQou9j1yIqBo5dIkxO7FHHBWEcDYUT
+	 F+ouTk6rA5cBawgoRsfc4Y9rGubNexWi58XX9p9mxGwUZanvZvsqOxuYFKWDeGXnXM
+	 zif632h9Ju4RACSQhBA4LsOzieTSanlYx5WBLyxc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -33,9 +33,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jamal Hadi Salim <jhs@mojatatu.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 307/733] net/sched: hhf: clamp quantum in change and init paths
-Date: Thu, 17 Sep 2026 16:10:15 +0100
-Message-ID: <20260917151359.104814925@linuxfoundation.org>
+Subject: [PATCH 7.2 308/733] net/sched: dualpi2: clamp psched_mtu at all call sites
+Date: Thu, 17 Sep 2026 16:10:16 +0100
+Message-ID: <20260917151359.133270989@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -57,69 +57,73 @@ Content-Transfer-Encoding: 8bit
 
 From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-[ Upstream commit eb56a495f59baf6cad5ed80e3ffb9078098b1346 ]
+[ Upstream commit 3c01f1ca5dfc6d6911b0e5b37f5062b1dc451b94 ]
 
-hhf_change() accepts any quantum from userspace, including 1. With a
-crafted size table qdisc_pkt_len reaches ~2 GiB, so quantum=1 makes
-the deficit-refill loop spin ~2^31 times under the qdisc lock
-(a soft lockup / denial of service).
+dualpi2_calculate_c_protection(), must_drop(), and get_memory_limit()
+call psched_mtu() with no clamp. A huge MTU makes (s32)psched_mtu()
+overflow in the signed multiply for c_protection_init, and 2 *
+psched_mtu() wraps in get_memory_limit(). With a crafted size table
+qdisc_pkt_len reaches ~2 GiB, causing a soft lockup / denial of service.
 
-Add max(256U, ...) in hhf_change() matching fq_codel_change(). Clamp
-hhf_init() to [256, 1<<20] matching the siblings, and remove the old
-fallback that only set quantum=256 on overflow.
+Clamp psched_mtu() to [1, 1<<20] at all three call sites.
 
 Conditions to recreate the bug:
-  CONFIG_NET_SCH_HHF=y. Requires CAP_NET_ADMIN (namespace-local via
+  CONFIG_NET_SCH_DUALPI2=y. Requires CAP_NET_ADMIN (namespace-local via
   unshare -Urn suffices).
 
-  tc qdisc add dev dummy0 root hhf
-  tc qdisc change dev dummy0 root hhf quantum 1 stab data 32768 size_log 15 cell_log 0
+  tc qdisc add dev dummy0 root dualpi2
+  tc qdisc change dev dummy0 root dualpi2 stab data 32768 size_log 15 cell_log 0
 
-Fixes: 10239edf86f1 ("net-qdisc-hhf: Heavy-Hitter Filter (HHF) qdisc")
+Fixes: 320d031ad6e4 ("sched: Struct definition and parsing of dualpi2 qdisc")
 Reported-by: Vega <vega@nebusec.ai>
 Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
 Tested-by: Victor Nogueira <victor@mojatatu.com>
 Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/QDISC-0CFC.v3.20260901204856@mojatatu.com.5
+Link: https://patch.msgid.link/QDISC-0CFC.v3.20260901204856@mojatatu.com.6
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_hhf.c | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+ net/sched/sch_dualpi2.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/net/sched/sch_hhf.c b/net/sched/sch_hhf.c
-index 96acab6a8da03..fc72f825fbd92 100644
---- a/net/sched/sch_hhf.c
-+++ b/net/sched/sch_hhf.c
-@@ -551,7 +551,7 @@ static int hhf_change(struct Qdisc *sch, struct nlattr *opt,
- 		return err;
+diff --git a/net/sched/sch_dualpi2.c b/net/sched/sch_dualpi2.c
+index 4f678d4ff10ec..4947def7c49ef 100644
+--- a/net/sched/sch_dualpi2.c
++++ b/net/sched/sch_dualpi2.c
+@@ -208,9 +208,11 @@ static void dualpi2_reset_c_protection(struct dualpi2_sched_data *q)
+ static void dualpi2_calculate_c_protection(struct Qdisc *sch,
+ 					   struct dualpi2_sched_data *q, u32 wc)
+ {
++	u32 mtu = clamp_t(u32, psched_mtu(qdisc_dev(sch)), 1, 1 << 20);
++
+ 	q->c_protection_wc = wc;
+ 	q->c_protection_wl = MAX_WC - wc;
+-	q->c_protection_init = (s32)psched_mtu(qdisc_dev(sch)) *
++	q->c_protection_init = (s32)mtu *
+ 		((int)q->c_protection_wc - (int)q->c_protection_wl);
+ 	dualpi2_reset_c_protection(q);
+ }
+@@ -285,8 +287,9 @@ static bool must_drop(struct Qdisc *sch, struct dualpi2_sched_data *q,
+ 	u64 local_l_prob;
+ 	bool overload;
+ 	u32 prob;
++	u32 mtu = clamp_t(u32, psched_mtu(qdisc_dev(sch)), 1, 1 << 20);
  
- 	if (tb[TCA_HHF_QUANTUM])
--		new_quantum = nla_get_u32(tb[TCA_HHF_QUANTUM]);
-+		new_quantum = max(256U, nla_get_u32(tb[TCA_HHF_QUANTUM]));
+-	if (sch->qstats.backlog < 2 * psched_mtu(qdisc_dev(sch)))
++	if (sch->qstats.backlog < 2 * mtu)
+ 		return false;
  
- 	if (tb[TCA_HHF_NON_HH_WEIGHT])
- 		new_hhf_non_hh_weight = nla_get_u32(tb[TCA_HHF_NON_HH_WEIGHT]);
-@@ -613,7 +613,7 @@ static int hhf_init(struct Qdisc *sch, struct nlattr *opt,
- 	int i;
+ 	prob = READ_ONCE(q->pi2_prob);
+@@ -712,7 +715,8 @@ static u32 get_memory_limit(struct Qdisc *sch, u32 limit)
+ 	/* Apply rule of thumb, i.e., doubling the packet length,
+ 	 * to further include per packet overhead in memory_limit.
+ 	 */
+-	u64 memlim = mul_u32_u32(limit, 2 * psched_mtu(qdisc_dev(sch)));
++	u64 memlim = mul_u32_u32(limit, 2 * clamp_t(u32, psched_mtu(qdisc_dev(sch)),
++						     1, 1 << 20));
  
- 	sch->limit = 1000;
--	q->quantum = psched_mtu(qdisc_dev(sch));
-+	q->quantum = clamp_t(u32, psched_mtu(qdisc_dev(sch)), 256, 1 << 20);
- 	get_random_bytes(&q->perturbation, sizeof(q->perturbation));
- 	INIT_LIST_HEAD(&q->new_buckets);
- 	INIT_LIST_HEAD(&q->old_buckets);
-@@ -624,10 +624,6 @@ static int hhf_init(struct Qdisc *sch, struct nlattr *opt,
- 	q->hhf_evict_timeout = HZ;      /* 1  sec */
- 	q->hhf_non_hh_weight = 2;
- 
--	if ((int)q->quantum <= 0 ||
--	    (u64)q->quantum * q->hhf_non_hh_weight > INT_MAX)
--		q->quantum = 256;
--
- 	if (opt) {
- 		int err = hhf_change(sch, opt, extack);
- 
+ 	if (upper_32_bits(memlim))
+ 		return U32_MAX;
 -- 
 2.53.0
 
