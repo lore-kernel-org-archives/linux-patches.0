@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA70F4ED1AD;
-	Thu, 17 Sep 2026 17:02:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9940D539786;
+	Thu, 17 Sep 2026 17:02:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789664572; cv=none; b=RZ3yOLKvgUXhK0yNz5xahC70U7Vsvosfz95egA1A1Tm1F6L+wr1runhY20TwGBx/rWBP0el17v6HLFdnJKy79VYe/2RtaEu3DZjluW93QE3yJMcXIp+FuhFH49Z4x8x+YT0LZPSU1EZmb9j3c52UjV9w8BZRSo2uxnqiISAfmp4=
+	t=1789664574; cv=none; b=rNWMpnhQOHfah1bXy7hfJRzuI13MbwCzMTmM74czkIRoQd3fHonbIJBwKAVef9mgALYYWfPZbtm3lT8SmGPmSsYKdnH3J7ml7EQDZlRYXiZD4gTEJn1g40VjXcKxxuTqFqiE6FdnsWS7AcUl3jsigbc6ztMoGFTlynlPfCwuCBw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789664572; c=relaxed/simple;
-	bh=eOpEGS+BfP+oCHZJL0AoYcaqlsqBxUKP3DqrgtYOuNU=;
+	s=arc-20240116; t=1789664574; c=relaxed/simple;
+	bh=paPwn5TIJMejBaEOhJx1P+z4QKt1M8VzLabmEbSlRN4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NBwYacoS0fPxFU2WGqD91d+7wiglfj1BZsHa2sJXvXGeIgKRGiMi+FkBNPUaK1mZi00BD4OHa8YCKsdZ6amda/MCNTKyhVXBd9qLGDyUFiA84C34PFQkRu3UR5NXbjle3yYW+7+1f5VHg+QR/DmeiJI/hjArm8+EVFX0hrG/gcQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2thlRBlg; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=owjTMDEJTguTv7wTXcnPhB3i61Sx/9UoUJnb9m27ezqHP4OxJKg8U2MSMS/SJqENhQPDkFF6Uo5Le+DTE4BNCiK/YZKMLx94Zvm5YcCh+kl7sy5FyPb50ZErmqx7L3PSsFXjgsncMlGGXUBad3wjRanLHmZx+ZGJEi2djwYYxJA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pkTf1mpe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2thlRBlg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E83D31F000FF;
-	Thu, 17 Sep 2026 17:02:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pkTf1mpe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0FBC1F000FF;
+	Thu, 17 Sep 2026 17:02:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789664570;
-	bh=TkGficcXLPy+tC+i7zYLSjp5M2WWUgDq5D8Z7Xk3MNQ=;
+	s=korg; t=1789664573;
+	bh=USaN/Qq3KQ9eEE1WVHEtNxTKdz2fNjF9UFBOLJQ9N7o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2thlRBlgvafFUuc2L/EVHkSyMOkOLsQ3/SuMP0QrY6XK4jSi08jwe949i5xugtqUh
-	 YPW8D6DA9lm+d4T/0p8Kushc2s2ofPpoCdcAFZ/CXRZ4+8+xGKfMlyjI9mzE48rZJD
-	 gOpUAck6wqaVYzSYwEIcox5NaKY1+G1M101b1c2o=
+	b=pkTf1mpeGRT7Wfskm4v7MhVn9o5kieizi/sWGGWJLaCPxFsdSlk1jMJv46jot5GeF
+	 U94FPVZ6+OmOczOn7qmB+hqfDduWalKU3eGLKm4f7TQmaO5JGYffq1OCpIs+VQVbgb
+	 Tw3EjNvTAdzFBpC459hirCjG6aRvIc6TitbzAcZQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leo Yan <leo.yan@arm.com>,
-	Quentin Monnet <qmo@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Potin Lai <potin.lai.pt@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0416/1250] bpftool: Pass host flags to bootstrap libbpf
-Date: Thu, 17 Sep 2026 16:03:31 +0100
-Message-ID: <20260917151603.300781495@linuxfoundation.org>
+Subject: [PATCH 6.18 0390/1250] hwmon: (pmbus/lm25066) Fix PMBus coefficients for LM5064/5066/5066i
+Date: Thu, 17 Sep 2026 16:03:05 +0100
+Message-ID: <20260917151602.608931205@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -52,52 +51,150 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leo Yan <leo.yan@arm.com>
+From: Potin Lai <potin.lai.pt@gmail.com>
 
-[ Upstream commit 9080b97689dbf8d2c338a9af97cd2b4a714f25bf ]
+[ Upstream commit 83dda7ed185501ba1f8165aeca83ff4a8ef7c263 ]
 
-bpftool builds a bootstrap libbpf with HOSTCC, but the libbpf submake can
-still inherit target build flags through CFLAGS. This can break cross
-builds when host objects are compiled with target-only options.
+Swap the high setting and low setting coefficients in the lm25066_coeff
+table for LM5064, LM5066, and LM5066i. The coefficients were previously
+mapped incorrectly, resulting in inverted current and power scaling.
 
-Since HOST_CFLAGS contains warning options that are not suitable for
-building libbpf, use LIBBPF_BOOTSTRAP_CFLAGS with the warning options
-removed to build the bootstrap libbpf. Clear EXTRA_CFLAGS so target
-extra flags are not mixed into the host bootstrap libbpf build.
+Additionally, dynamically assign the exponent (R) registers inside the
+probe's LM25066_DEV_SETUP_CL check. This ensures that the proper
+exponent is applied (e.g., for LM25056, high setting power exponent
+is -4, but low setting power exponent is -3).
 
-Signed-off-by: Leo Yan <leo.yan@arm.com>
-Acked-by: Quentin Monnet <qmo@kernel.org>
-Link: https://lore.kernel.org/r/20260602-tools_build_fix_zero_init_bpf_only-v2-1-c76e5250ea1c@arm.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Potin Lai <potin.lai.pt@gmail.com>
+Link: https://lore.kernel.org/r/20260611-lm25066-driver-fix-v3-1-9d7d4b4e253d@gmail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/bpf/bpftool/Makefile | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/hwmon/pmbus/lm25066.c | 54 ++++++++++++++++++-----------------
+ 1 file changed, 28 insertions(+), 26 deletions(-)
 
-diff --git a/tools/bpf/bpftool/Makefile b/tools/bpf/bpftool/Makefile
-index fd43e5ea63f38..4b6670bad86e7 100644
---- a/tools/bpf/bpftool/Makefile
-+++ b/tools/bpf/bpftool/Makefile
-@@ -47,7 +47,8 @@ $(LIBBPF_INTERNAL_HDRS): $(LIBBPF_HDRS_DIR)/%.h: $(BPF_DIR)/%.h | $(LIBBPF_HDRS_
- $(LIBBPF_BOOTSTRAP): $(wildcard $(BPF_DIR)/*.[ch] $(BPF_DIR)/Makefile) | $(LIBBPF_BOOTSTRAP_OUTPUT)
- 	$(Q)$(MAKE) -C $(BPF_DIR) OUTPUT=$(LIBBPF_BOOTSTRAP_OUTPUT) \
- 		DESTDIR=$(LIBBPF_BOOTSTRAP_DESTDIR:/=) prefix= \
--		ARCH= CROSS_COMPILE= CC="$(HOSTCC)" LD="$(HOSTLD)" AR="$(HOSTAR)" $@ install_headers
-+		ARCH= CROSS_COMPILE= CC="$(HOSTCC)" LD="$(HOSTLD)" AR="$(HOSTAR)" \
-+		CFLAGS="$(LIBBPF_BOOTSTRAP_CFLAGS)" EXTRA_CFLAGS= $@ install_headers
+diff --git a/drivers/hwmon/pmbus/lm25066.c b/drivers/hwmon/pmbus/lm25066.c
+index 7774d678022e2..de88ff5967a32 100644
+--- a/drivers/hwmon/pmbus/lm25066.c
++++ b/drivers/hwmon/pmbus/lm25066.c
+@@ -133,23 +133,23 @@ static const struct __coeff lm25066_coeff[][PSC_NUM_CLASSES + 2] = {
+ 			.R = -2,
+ 		},
+ 		[PSC_CURRENT_IN] = {
+-			.m = 10742,
+-			.b = 1552,
++			.m = 5456,
++			.b = 2118,
+ 			.R = -2,
+ 		},
+ 		[PSC_CURRENT_IN_L] = {
+-			.m = 5456,
+-			.b = 2118,
++			.m = 10742,
++			.b = 1552,
+ 			.R = -2,
+ 		},
+ 		[PSC_POWER] = {
+-			.m = 1204,
+-			.b = 8524,
++			.m = 612,
++			.b = 11202,
+ 			.R = -3,
+ 		},
+ 		[PSC_POWER_L] = {
+-			.m = 612,
+-			.b = 11202,
++			.m = 1204,
++			.b = 8524,
+ 			.R = -3,
+ 		},
+ 		[PSC_TEMPERATURE] = {
+@@ -168,23 +168,23 @@ static const struct __coeff lm25066_coeff[][PSC_NUM_CLASSES + 2] = {
+ 			.R = -2,
+ 		},
+ 		[PSC_CURRENT_IN] = {
+-			.m = 10753,
+-			.b = -1200,
++			.m = 5405,
++			.b = -600,
+ 			.R = -2,
+ 		},
+ 		[PSC_CURRENT_IN_L] = {
+-			.m = 5405,
+-			.b = -600,
++			.m = 10753,
++			.b = -1200,
+ 			.R = -2,
+ 		},
+ 		[PSC_POWER] = {
+-			.m = 1204,
+-			.b = -6000,
++			.m = 605,
++			.b = -8000,
+ 			.R = -3,
+ 		},
+ 		[PSC_POWER_L] = {
+-			.m = 605,
+-			.b = -8000,
++			.m = 1204,
++			.b = -6000,
+ 			.R = -3,
+ 		},
+ 		[PSC_TEMPERATURE] = {
+@@ -203,23 +203,23 @@ static const struct __coeff lm25066_coeff[][PSC_NUM_CLASSES + 2] = {
+ 			.R = -2,
+ 		},
+ 		[PSC_CURRENT_IN] = {
+-			.m = 15076,
+-			.b = -504,
++			.m = 7645,
++			.b = 100,
+ 			.R = -2,
+ 		},
+ 		[PSC_CURRENT_IN_L] = {
+-			.m = 7645,
+-			.b = 100,
++			.m = 15076,
++			.b = -504,
+ 			.R = -2,
+ 		},
+ 		[PSC_POWER] = {
+-			.m = 1701,
+-			.b = -4000,
++			.m = 861,
++			.b = -965,
+ 			.R = -3,
+ 		},
+ 		[PSC_POWER_L] = {
+-			.m = 861,
+-			.b = -965,
++			.m = 1701,
++			.b = -4000,
+ 			.R = -3,
+ 		},
+ 		[PSC_TEMPERATURE] = {
+@@ -520,18 +520,20 @@ static int lm25066_probe(struct i2c_client *client)
+ 	info->m[PSC_VOLTAGE_OUT] = coeff[PSC_VOLTAGE_OUT].m;
+ 	info->b[PSC_VOLTAGE_OUT] = coeff[PSC_VOLTAGE_OUT].b;
+ 	info->R[PSC_VOLTAGE_OUT] = coeff[PSC_VOLTAGE_OUT].R;
+-	info->R[PSC_CURRENT_IN] = coeff[PSC_CURRENT_IN].R;
+-	info->R[PSC_POWER] = coeff[PSC_POWER].R;
+ 	if (config & LM25066_DEV_SETUP_CL) {
+ 		info->m[PSC_CURRENT_IN] = coeff[PSC_CURRENT_IN_L].m;
+ 		info->b[PSC_CURRENT_IN] = coeff[PSC_CURRENT_IN_L].b;
++		info->R[PSC_CURRENT_IN] = coeff[PSC_CURRENT_IN_L].R;
+ 		info->m[PSC_POWER] = coeff[PSC_POWER_L].m;
+ 		info->b[PSC_POWER] = coeff[PSC_POWER_L].b;
++		info->R[PSC_POWER] = coeff[PSC_POWER_L].R;
+ 	} else {
+ 		info->m[PSC_CURRENT_IN] = coeff[PSC_CURRENT_IN].m;
+ 		info->b[PSC_CURRENT_IN] = coeff[PSC_CURRENT_IN].b;
++		info->R[PSC_CURRENT_IN] = coeff[PSC_CURRENT_IN].R;
+ 		info->m[PSC_POWER] = coeff[PSC_POWER].m;
+ 		info->b[PSC_POWER] = coeff[PSC_POWER].b;
++		info->R[PSC_POWER] = coeff[PSC_POWER].R;
+ 	}
  
- $(LIBBPF_BOOTSTRAP_INTERNAL_HDRS): $(LIBBPF_BOOTSTRAP_HDRS_DIR)/%.h: $(BPF_DIR)/%.h | $(LIBBPF_BOOTSTRAP_HDRS_DIR)
- 	$(call QUIET_INSTALL, $@)
-@@ -92,6 +93,9 @@ HOST_CFLAGS := $(subst -I$(LIBBPF_INCLUDE),-I$(LIBBPF_BOOTSTRAP_INCLUDE),\
- 		$(subst $(CLANG_CROSS_FLAGS),,$(CFLAGS)))
- HOST_LDFLAGS := $(LDFLAGS)
- 
-+# Remove warnings for libbpf bootstrap build
-+LIBBPF_BOOTSTRAP_CFLAGS := $(filter-out -W -Wall -Wextra -Wformat -Wformat-signedness,$(HOST_CFLAGS))
-+
- INSTALL ?= install
- RM ?= rm -f
- 
+ 	/*
 -- 
 2.53.0
 
