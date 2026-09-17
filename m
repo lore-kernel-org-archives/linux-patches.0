@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 209AB4FD274;
-	Thu, 17 Sep 2026 17:05:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 171D04D179A;
+	Thu, 17 Sep 2026 17:05:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789664727; cv=none; b=Qrx7qwgQeuohVorNvU9rNbl3EurwwRWa1RGFL8Jqcz2DrZou9I6cXcLzuOJe0WLjuk/v9Ask4mh6HA7NtyFcibst2ig9Z9An2gd+d5pJO4t+ibqKEOJx+sVEuHG0z/PwZCXt4gvx8Y/34NRLRXFxoRkNuvZ9hSDO4i2tUnogLPs=
+	t=1789664730; cv=none; b=J6Za0KyFd5kdaA6oFulxHlphM+rRniRe4cpUZ36VkTM88QfhVOx1kwfJDiWhs0k5h109ByopC65iDyT+G83s/A6C4pQ1pVoN9VeMeANcHujLzutp4iFhXEa0LHqptqO0KnjfeNZ4z+ApEn/V5evEw/WhdmCWoQwfWNKW1UzNPug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789664727; c=relaxed/simple;
-	bh=3WYvx8kHb0ckVnZaHtGNw7v/59fDuLqw0EPJs0ZxWnw=;
+	s=arc-20240116; t=1789664730; c=relaxed/simple;
+	bh=6xXlIiB5RSbeLyfRUyAoMGeOUXgLwr0lSyyKlr8tsW4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DeIgtPJYYsss5K0yb9dNWYbu1OiRVIp50VvY3I/KONP1kR9KVlG0hHmC5L4ktirzDjJLggzkgAIHKNuI/ce/UppyWHQkWnhcLyxFR1sarq3CA2HfNqLhVaZ5d5kZ9A/lZqiw4SJh+OsQQAac/0pJHXcw247zrnUgWSQkqSqBmHU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tq5tbUhs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=C9U/44Z6d2VHcnyc1d42ySKhHnEzqsYl2y7LBuh0C7BlHlpkAZIXPiOm9nFawVFooMCcEbwQmruuPPSKqaPluYAgiT/H1znZbIPcZqlYjh1FjNSW8YGSG0BIZ6Nl2JRxXnR2jSRZSuHT/StonfA56NxyDC2scygIq4pmjOV3lBY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uLSJ6J0V; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tq5tbUhs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 701231F000FF;
-	Thu, 17 Sep 2026 17:05:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uLSJ6J0V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64E391F000FF;
+	Thu, 17 Sep 2026 17:05:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789664726;
-	bh=WGhZmV21x34xgmflydy4CVL08Nl/3erNepNA3SB6t4M=;
+	s=korg; t=1789664728;
+	bh=2zqZzAsC7e/Zenj57hfb3FsqiSRYkG9CIEZ9ae/KO0M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tq5tbUhsvc+sxSd6mnvnBe4VAdxLwaBzQEkhZlNsfEsznSqwIJ4p+EiXjRxKWDAEk
-	 W7QBXeLMOfyLmgQ1BAvghYdKUupTm+t7CrAlq5FzC9X+77jZq61aL7PPMiWzaSgsBY
-	 u62m8PqhjDt9IvsWpUCXHbDbXeBCAsm+eOZ+atvs=
+	b=uLSJ6J0VtJAVljUHxC6gWJ6GNX2EogpAW1blqnYyZaRC+yhj1dlcs8gYQuasibRL7
+	 DoLG8KVW/oAzRNNQQTM4xEn370YndlxphNzpdTW3S6Efw0Z4QvD2ZxebI7+YCBUMj8
+	 +EEZq2Z13WcT+fItwB0Y6K2ep0OciRJ3Oc22rMIY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Yu Kuai <yukuai@fygo.io>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0467/1250] net: au1000: move free_irq out of the close-time spinlocked section
-Date: Thu, 17 Sep 2026 16:04:22 +0100
-Message-ID: <20260917151604.635304033@linuxfoundation.org>
+Subject: [PATCH 6.18 0468/1250] blk-cgroup: protect iterating blkgs with blkcg->lock in blkcg_print_stat()
+Date: Thu, 17 Sep 2026 16:04:23 +0100
+Message-ID: <20260917151604.660885638@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -52,55 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Yu Kuai <yukuai@fygo.io>
 
-[ Upstream commit f48763beab4eea41fc480c9702ec6eebe8d75e4f ]
+[ Upstream commit 25656304dabd26198ec69460c594a19d086ef099 ]
 
-au1000_close() calls free_irq() while aup->lock is still held with
-spin_lock_irqsave(). free_irq() can sleep because it takes the IRQ
-descriptor request mutex, so it does not belong inside the close-time
-spinlocked section.
+blkcg_print_one_stat() will be called for each blkg:
+- access blkg->iostat, which is freed from rcu callback
+  blkg_free_workfn();
+- access policy data from pd_stat_fn(), which is freed from
+  pd_free_fn(), while pd_free_fn() can be called by removing blkcg or
+  deactivating policy;
 
-This was found by our static analysis tool and then confirmed by manual
-review of the in-tree au1000_close() .ndo_stop path. The reviewed path
-keeps aup->lock held across the MAC reset, queue stop and
-free_irq(dev->irq, dev).
+Take blkcg->lock while iterating so the blkgs stay online and both
+blkg->iostat and policy data for activated policies stay valid.  Use
+irq-safe locking because blkcg->lock can be nested under q->queue_lock,
+which is used from IRQ completion paths.
 
-A directed runtime validation kept that ndo_stop carrier and the same
-free_irq(dev->irq, dev) operation under the driver lock. Lockdep reported
-"BUG: sleeping function called from invalid context" and "Invalid wait
-context" while free_irq() was taking desc->request_mutex, with
-au1000_close() and free_irq() on the stack.
+Prepare to convert protecting blkgs from request_queue with mutex.
 
-Drop aup->lock before freeing the IRQ. The protected close-time work still
-stops the device and queue before IRQ teardown, but the sleepable IRQ core
-path now runs outside the spinlocked section.
-
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260619151816.1144289-1-runyu.xiao@seu.edu.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Yu Kuai <yukuai@fygo.io>
+Link: https://patch.msgid.link/05799877e720dcd300e2ddd4625e8e162959d7cc.1780621988.git.yukuai@fygo.io
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/amd/au1000_eth.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ block/blk-cgroup.c | 9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ethernet/amd/au1000_eth.c b/drivers/net/ethernet/amd/au1000_eth.c
-index 9d35ac348ebe3..5a04056e38fa3 100644
---- a/drivers/net/ethernet/amd/au1000_eth.c
-+++ b/drivers/net/ethernet/amd/au1000_eth.c
-@@ -943,9 +943,10 @@ static int au1000_close(struct net_device *dev)
- 	/* stop the device */
- 	netif_stop_queue(dev);
+diff --git a/block/blk-cgroup.c b/block/blk-cgroup.c
+index f605df3991c38..f638d3dd5ebcf 100644
+--- a/block/blk-cgroup.c
++++ b/block/blk-cgroup.c
+@@ -1241,13 +1241,10 @@ static int blkcg_print_stat(struct seq_file *sf, void *v)
+ 	else
+ 		css_rstat_flush(&blkcg->css);
  
-+	spin_unlock_irqrestore(&aup->lock, flags);
+-	rcu_read_lock();
+-	hlist_for_each_entry_rcu(blkg, &blkcg->blkg_list, blkcg_node) {
+-		spin_lock_irq(&blkg->q->queue_lock);
++	guard(spinlock_irq)(&blkcg->lock);
++	hlist_for_each_entry(blkg, &blkcg->blkg_list, blkcg_node)
+ 		blkcg_print_one_stat(blkg, sf);
+-		spin_unlock_irq(&blkg->q->queue_lock);
+-	}
+-	rcu_read_unlock();
 +
- 	/* disable the interrupt */
- 	free_irq(dev->irq, dev);
--	spin_unlock_irqrestore(&aup->lock, flags);
- 
  	return 0;
  }
+ 
 -- 
 2.53.0
 
