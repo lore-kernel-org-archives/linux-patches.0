@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7F9129BD9A;
-	Thu, 17 Sep 2026 18:13:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA5B74C10D0;
+	Thu, 17 Sep 2026 18:13:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789668787; cv=none; b=mW+M3+L1lo3aeMipNCm3O32EYNyWOas67BalF8YETKTpglQ08PdA/eIzm83J+LfE6AjFNIh3J3bsuXtoIQcLoaD6fbSLRxBu2/6S2R0IvFHuH3RiJcI9OKXXyUPFBxbu+Iv4uYPlQ3uAkKUJbXqMNNisU32uagFMYvaXnSwjY9Q=
+	t=1789668789; cv=none; b=emibMz6UqDRHMLBCrCGW/JNmfPtxIbpfs3Cgb+NPQMkR+AD4sylkGs44Zk2BtHqqCMpsCLSuh19NS3wo24RbU8E0gF/aO4W98mLSIDZMtWsJuu1h1r1yijf9W915/mz9O3KOPaqPsOc8vQPbjw5kPhRykvr6K1LWw47HdZU4tmg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789668787; c=relaxed/simple;
-	bh=CatjZtME4W0NdXXAxrQEm3hCopOw1JdhvywfU8qLock=;
+	s=arc-20240116; t=1789668789; c=relaxed/simple;
+	bh=pht04uHH8jyhbprZMjzZjpRKxsJKjB06jCpK8y9+HEQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M8gnFfGfy6589oWkd22w9Legld2gSn2vd+wal8n3g1zZH0gwql5eIZ6Kb//qWXco4pabidJtIyjPneyQTE8oPNIRcy1NNhhlISz4Ur9uZleknC0IYZUxbTR2o0BatW2K+ds5Wu0sl0/v7smjL+4SZbzCV3T7h01DpfXipssxLOM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l1pkZqJL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ld5vCops1RPB6sBQ9biMdiaCkB8I9kgRBPpb10uu/K+YcyvRa+Hhx6m2CJjAz07PN71GX4xO1hWcG5BlEGxsCviU1/NMcb0yhz63EekEge4kwVyCIYbv/xNCcxKgXZc1mkNHa8tuTf6iGIQaxvipdA3ffS0Z6mSn7AyUGzgrNUk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xeaqbtSi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l1pkZqJL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08CBF1F000FF;
-	Thu, 17 Sep 2026 18:13:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xeaqbtSi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B2151F000FF;
+	Thu, 17 Sep 2026 18:13:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789668785;
-	bh=GpWWEUKv8XQnnhWP8zYRAt5WXmpWpNiOd/M+RqCGu7M=;
+	s=korg; t=1789668788;
+	bh=G5nK8FxeJIbBWO0VKzuDhEbDSoV6DZEvyvFhj959Nrg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=l1pkZqJLQC9GdSHMIs0jn+/+JIIsPH9Yu1B3QN9nQ/AWcZ3jTvO8sVicFeb9yO1Bs
-	 IeZvbYq590u8Kgtw4P6Hf4bYmYfbPfr1C0WK81nCAwEwEdxEY/GnCM119Sg/lwHbzm
-	 UIN3rsOlpeg8Lh9HivjOT5IhCoBPc5ZeQQ1N260U=
+	b=xeaqbtSiJbPeSzFUJ3HgPaeJ96p3vKjI7u53fYOUjZJ1+qjKmbSQrC/lEQG9EZwJl
+	 Z/HSrJ86lWMIuWIfQqp1u4w3CcxBHrmg80YuYVWQlXQ/NajVsRvhY8nsT/uhYg/r3Q
+	 YfFxF0daKOsIaOkzkH8Xl7PQvRzaz3Y4zns/aOv0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Cheryl Babcock <cheryl@renat.io>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0540/1102] ksmbd: propagate DACL parsing errors
-Date: Thu, 17 Sep 2026 16:08:03 +0100
-Message-ID: <20260917151553.373501338@linuxfoundation.org>
+Subject: [PATCH 6.12 0541/1102] ksmbd: rate limit unmapped SID errors
+Date: Thu, 17 Sep 2026 16:08:04 +0100
+Message-ID: <20260917151553.400501770@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -53,183 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit c61dc7b1b4a3234b4aa3965502908a292238805c ]
+[ Upstream commit feca5e70fc963b088377b20879e8cd8237c2fd7d ]
 
-parse_dacl() silently accepts truncated ACEs and allocation failures,
-allowing set_info_sec() to continue with an incomplete ACL conversion.
+A client can include many structurally valid but unmapped SIDs in a DACL.
+Logging every mapping failure lets one request generate hundreds of kernel
+error messages.
 
-Return parsing and allocation errors to parse_sec_desc() so malformed
-security descriptors are rejected before inode attributes or ACL xattrs
-are updated.
+Rate limit the message to prevent an authenticated client from flooding
+the kernel log.
 
 Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
 Reported-by: Cheryl Babcock <cheryl@renat.io>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smbacl.c | 63 +++++++++++++++++++++++++-----------------
- 1 file changed, 38 insertions(+), 25 deletions(-)
+ fs/smb/server/smbacl.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/fs/smb/server/smbacl.c b/fs/smb/server/smbacl.c
-index 3586a6025127e..0b35b275eaf65 100644
+index 0b35b275eaf65..2a46646b3a0e4 100644
 --- a/fs/smb/server/smbacl.c
 +++ b/fs/smb/server/smbacl.c
-@@ -380,10 +380,10 @@ void free_acl_state(struct posix_acl_state *state)
- 	kfree(state->groups);
- }
- 
--static void parse_dacl(struct mnt_idmap *idmap,
--		       struct smb_acl *pdacl, char *end_of_acl,
--		       struct smb_sid *pownersid, struct smb_sid *pgrpsid,
--		       struct smb_fattr *fattr)
-+static int parse_dacl(struct mnt_idmap *idmap,
-+		      struct smb_acl *pdacl, char *end_of_acl,
-+		      struct smb_sid *pownersid, struct smb_sid *pgrpsid,
-+		      struct smb_fattr *fattr)
- {
- 	int i, ret;
- 	u16 num_aces = 0;
-@@ -397,13 +397,13 @@ static void parse_dacl(struct mnt_idmap *idmap,
- 	bool owner_found = false, group_found = false, others_found = false;
- 
- 	if (!pdacl)
--		return;
-+		return 0;
- 
- 	/* validate that we do not go past end of acl */
- 	if (end_of_acl < (char *)pdacl + sizeof(struct smb_acl) ||
- 	    end_of_acl < (char *)pdacl + le16_to_cpu(pdacl->size)) {
- 		pr_err("ACL too small to parse DACL\n");
--		return;
-+		return -EINVAL;
- 	}
- 
- 	ksmbd_debug(SMB, "DACL revision %d size %d num aces %d\n",
-@@ -415,31 +415,31 @@ static void parse_dacl(struct mnt_idmap *idmap,
- 
- 	num_aces = le16_to_cpu(pdacl->num_aces);
- 	if (num_aces <= 0)
--		return;
-+		return 0;
- 
- 	dacl_size = le16_to_cpu(pdacl->size);
- 	if (dacl_size < sizeof(struct smb_acl))
--		return;
-+		return -EINVAL;
- 
- 	if (num_aces > (dacl_size - sizeof(struct smb_acl)) /
- 			(offsetof(struct smb_ace, sid) +
- 			 offsetof(struct smb_sid, sub_auth) + sizeof(__le16)))
--		return;
-+		return -EINVAL;
- 
- 	ret = init_acl_state(&acl_state, num_aces);
- 	if (ret)
--		return;
-+		return ret;
- 	ret = init_acl_state(&default_acl_state, num_aces);
- 	if (ret) {
- 		free_acl_state(&acl_state);
--		return;
-+		return ret;
- 	}
- 
- 	ppace = kmalloc_array(num_aces, sizeof(struct smb_ace *), KSMBD_DEFAULT_GFP);
- 	if (!ppace) {
- 		free_acl_state(&default_acl_state);
- 		free_acl_state(&acl_state);
--		return;
-+		return -ENOMEM;
- 	}
- 
- 	/*
-@@ -448,8 +448,10 @@ static void parse_dacl(struct mnt_idmap *idmap,
- 	 * user/group/other have no permissions
- 	 */
- 	for (i = 0; i < num_aces; ++i) {
--		if (end_of_acl - acl_base < acl_size)
--			break;
-+		if (end_of_acl - acl_base < acl_size) {
-+			ret = -EINVAL;
-+			goto out;
-+		}
- 
- 		ppace[i] = (struct smb_ace *)(acl_base + acl_size);
- 		acl_base = (char *)ppace[i];
-@@ -462,8 +464,10 @@ static void parse_dacl(struct mnt_idmap *idmap,
- 		    (end_of_acl - acl_base <
- 		     acl_size + sizeof(__le32) * ppace[i]->sid.num_subauth) ||
- 		    (le16_to_cpu(ppace[i]->size) <
--		     acl_size + sizeof(__le32) * ppace[i]->sid.num_subauth))
--			break;
-+		     acl_size + sizeof(__le32) * ppace[i]->sid.num_subauth)) {
-+			ret = -EINVAL;
-+			goto out;
-+		}
- 
- 		acl_size = le16_to_cpu(ppace[i]->size);
- 		ppace[i]->access_req =
-@@ -538,7 +542,6 @@ static void parse_dacl(struct mnt_idmap *idmap,
- 				((acl_mode & 0700) >> 6) | 0004;
- 		}
- 	}
--	kfree(ppace);
- 
- 	if (owner_found) {
- 		/* The owner must be set to at least read-only. */
-@@ -581,10 +584,12 @@ static void parse_dacl(struct mnt_idmap *idmap,
- 			fattr->cf_acls =
- 				posix_acl_alloc(acl_state.users->n +
- 					acl_state.groups->n + 4, KSMBD_DEFAULT_GFP);
--			if (fattr->cf_acls) {
--				cf_pace = fattr->cf_acls->a_entries;
--				posix_state_to_acl(&acl_state, cf_pace);
-+			if (!fattr->cf_acls) {
-+				ret = -ENOMEM;
-+				goto out;
+@@ -525,8 +525,8 @@ static int parse_dacl(struct mnt_idmap *idmap,
+ 			temp_fattr.cf_uid = INVALID_UID;
+ 			ret = sid_to_id(idmap, &ppace[i]->sid, SIDOWNER, &temp_fattr);
+ 			if (ret || uid_eq(temp_fattr.cf_uid, INVALID_UID)) {
+-				pr_err("%s: Error %d mapping Owner SID to uid\n",
+-				       __func__, ret);
++				pr_err_ratelimited("%s: Error %d mapping Owner SID to uid\n",
++						   __func__, ret);
+ 				continue;
  			}
-+			cf_pace = fattr->cf_acls->a_entries;
-+			posix_state_to_acl(&acl_state, cf_pace);
- 		}
- 	}
  
-@@ -595,14 +600,20 @@ static void parse_dacl(struct mnt_idmap *idmap,
- 			fattr->cf_dacls =
- 				posix_acl_alloc(default_acl_state.users->n +
- 				default_acl_state.groups->n + 4, KSMBD_DEFAULT_GFP);
--			if (fattr->cf_dacls) {
--				cf_pdace = fattr->cf_dacls->a_entries;
--				posix_state_to_acl(&default_acl_state, cf_pdace);
-+			if (!fattr->cf_dacls) {
-+				ret = -ENOMEM;
-+				goto out;
- 			}
-+			cf_pdace = fattr->cf_dacls->a_entries;
-+			posix_state_to_acl(&default_acl_state, cf_pdace);
- 		}
- 	}
-+	ret = 0;
-+out:
-+	kfree(ppace);
- 	free_acl_state(&acl_state);
- 	free_acl_state(&default_acl_state);
-+	return ret;
- }
- 
- static void set_posix_acl_entries_dacl(struct mnt_idmap *idmap,
-@@ -963,8 +974,10 @@ int parse_sec_desc(struct mnt_idmap *idmap, struct smb_ntsd *pntsd,
- 		if (dacloffset < sizeof(struct smb_ntsd))
- 			return -EINVAL;
- 
--		parse_dacl(idmap, dacl_ptr, end_of_acl,
--			   owner_sid_ptr, group_sid_ptr, fattr);
-+		rc = parse_dacl(idmap, dacl_ptr, end_of_acl,
-+				owner_sid_ptr, group_sid_ptr, fattr);
-+		if (rc)
-+			return rc;
- 	}
- 
- 	return 0;
 -- 
 2.53.0
 
