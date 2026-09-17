@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E99A04B44AA;
-	Thu, 17 Sep 2026 16:00:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3A104EFFCE;
+	Thu, 17 Sep 2026 16:00:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789660857; cv=none; b=hckx0lpUWYD5fKDW4VSBcXQhINI/hIv39gWVd6PPJ03Z3um3EEDyABbuFnn5ilsXiXmSF6jDShvE/VyXYkS7bZhJZhmV0JcO6O6SpN3UjRfaVLArT0bJFW2VxK9lsQNrndbasj5245sMsm8utaXXhm1nHRgljY4UeAP6vpHm1r0=
+	t=1789660860; cv=none; b=NNc7rUmvpOsP0B6oonJqeIlHvtSi2eTiBYmTfnD46QDfxKzjeSYuZ2m/jO2ACPxIRgZuEuY5A6wLOv9pofICl++UUtw3sBthngfkTYfVX3pFVVxBgnFRU/JcK5w4i1mpeED4ZkpYySbFMddtbv/8Zb1DBBefBMUr37BMZC7HeX0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789660857; c=relaxed/simple;
-	bh=p6RiKMNCp7mMov8iI5CCDAUXioe6e3tfPj0qeunCAVM=;
+	s=arc-20240116; t=1789660860; c=relaxed/simple;
+	bh=aKa6mwfP6lGJ+GDJiocZShFMX/4Zj/YmbhTDeOACQHw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KvSLGlXoelU8RICxuRhax1nuAfueT3LHdNRz0VvWPWBunHSfSmlSfZHW4m9+zTnQgkYdR4Z1dVhNIpEewIZfX4TP7wM2D3jZu0yEqSEgyQZRV2DkVSSWjNU3qK4V52O/c86rYqKkLGfn/rraqFBd479ei1uMhYSczYhg0lkhGJ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UMvq3on+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=rI4c1k/ewOVnyl7gvVOLAwp2u01taFEcRTZyKV7JpOhCMAwVirGpeaE4f2sBeg5+jJRtt8MBDgA0tjHQe6EJzNT7j0PsCcJyIHPFLE8EWmfAUyqL8Od7FV44HLBexnUTbD9wwwfW69nW3/8Oa47b48VckGvEm7s71u7FXCE7pRs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pvBSJ+Yc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UMvq3on+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36AB51F000FF;
-	Thu, 17 Sep 2026 16:00:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pvBSJ+Yc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A51C1F000FF;
+	Thu, 17 Sep 2026 16:00:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789660855;
-	bh=YxmGHPoptR7fxFVkFCkeCmQ3aSQVhvB6W0Gh98YpwzM=;
+	s=korg; t=1789660858;
+	bh=LWblSnpICEw27zeAEX9O5Hkaww3Q9qIYrblKC1oPcVg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UMvq3on+FYs+uL0bo26CEBlFJzZVU52J5G2ocMz0+QESDWdyCMZdI5JHx2e92VZde
-	 xQKEcJST9Jpd4a/EwIqQ+0CGkRhnrRuOhyC+UZedIFQxOPNeYwnuqsI1LpRcm9JN5+
-	 dlvVqgo6LATfMmFKxiEh9H5tjLQifjWR0j/CGUxs=
+	b=pvBSJ+YcELdCT1DjskVjM+wZPZ4jt/URt5FClwObOFsPuf3EUVH9cYz3lV3p4zzJs
+	 nmpjmpiKcBkgv8Jma6mcfR/fP0jxtiLacyBLWyEPyift4PkI8GRJtAlhckAgfZYAbI
+	 JQh44R40fGObSWC47BWLJmuIfYO+c1lNKPNARCEg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Richter <tmricht@linux.ibm.com>,
-	Jan Polensky <japo@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Vishal Moola <vishal.moola@gmail.com>,
+	Atish Patra <atishp@meta.com>,
+	Nikunj A Dadhania <nikunj@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 730/733] s390/pai: Support CPU hotplug for PMU PAI
-Date: Thu, 17 Sep 2026 16:17:18 +0100
-Message-ID: <20260917151411.182070782@linuxfoundation.org>
+Subject: [PATCH 7.2 731/733] x86/mm/pat: Allocate split page tables as kernel page tables
+Date: Thu, 17 Sep 2026 16:17:19 +0100
+Message-ID: <20260917151411.210402179@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -53,365 +56,140 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Richter <tmricht@linux.ibm.com>
+From: "Lorenzo Stoakes (ARM)" <ljs@kernel.org>
 
-[ Upstream commit 9ecc4d033879f7761f2df07e20cd2fbec00fd90b ]
+[ Upstream commit 9e4a3ec3411bb6bb59e3c1f29b75609f1e87aac4 ]
 
-The command 'perf stat -e pai_crypto/CRYPTO_ALL/ -- <command>'
-crashes the kernel when CPUs are hotplug added during that run.
+A PTE is allocated directly without going through the standard page table
+allocation routines (such as pte_alloc_one_kernel()) when the CPA code
+splits a large page (__split_large_page()).
 
-Root cause is the missing allocation of per-CPU data structures
-for that new CPU. The allocation is dynamic and the first
-event that has task context creates such a structure for
-each online CPU. This is not sufficient. CPUs may be offline
-during event creation and can be set online during the
-perf run time. For example commands
+This means the page table constructor is never called nor is the page table
+marked as a kernel page table.
 
- # echo 0 > /sys/devices/system/cpu/cpu1/online
- # perf stat -e cycles -i -- stress-ng -t10s --matrix X
- # sleep 1
- # echo 1 > /sys/devices/system/cpu/cpu1/online
+The former results in the folio associated with the page table not being
+marked as a page table (__pagetable_ctor() is never called thus neither is
+__folio_set_pgtable()) nor are statistics updated to reflect
+it (lruvec_stat_add_folio() is never called).
 
-Currently without a CPU hotplug handler, that new CPU has no
-per-CPU data infrastructure. The scheduler runs PMU call back
-function pai_add() to install the PMU support for that CPU before
-the task is being scheduled on that new CPU.
-In pai_add() instructions
+The latter issue of failing to mark the page table as a kernel page
+table (ptdesc_set_kernel() is never called) is far more problematic.
 
-    mp = this_cpu_ptr(pai_root[idx].mapptr);
-    cpump = mp->mapptr;
+Since commit:
 
-return a NULL pointer and the result is a kernel panic as variable
-cpump is used inside that function.
+  5ba2f0a15564 ("mm: introduce deferred freeing for kernel page tables")
 
-Add CPU hotplug support for CPU add and delete and create
-the necessary per-CPU data infrastructure during CPU hotplug
-add processing. Same for CPU hotplug remove.
-This is done when the CPU is offline to ensure the data structures
-are available when CPU is made online and tasks are scheduled on it.
+kernel page table freeing has been batched and since the
+subsequent commit:
 
-[hca@linux.ibm.com: fixup error path in pai_init()]
+  e37d5a2d60a3 ("iommu/sva: invalidate stale IOTLB entries for kernel address space")
 
-Cc: stable@vger.kernel.org # v6.19
-Fixes: 582cc1b28e8c ("s390/pai_ext: Enable per-task and system-wide sampling event")
-Fixes: 9f66572f2889 ("s390/pai_crypto: Enable per-task and system-wide sampling event")
-Signed-off-by: Thomas Richter <tmricht@linux.ibm.com>
-Reviewed-by: Jan Polensky <japo@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+IOTLB cache entries for kernel page tables have been invalidated upon
+being freed.
+
+Since split page tables are freed without this invalidation, the IOTLB
+can contain stale entries for them.
+
+Resolve the issue by using the ordinary PTE allocation API at split time.
+
+This results in these kernel page tables invoking a page table constructor,
+and thus requires a page table destructor.
+
+Destructors are not always present, like for early allocated direct map
+page tables). Conditionally call pagetable_dtor_free() if the PG_table
+folio flag for the ptdesc is set, otherwise we free the page table via
+pagetable_free().
+
+Regardless of which path is taken page tables marked as kernel page tables,
+which now includes split page tables, take the correct route through
+pagetable_free_kernel().
+
+There is a user-visible side effect in that split page tables will appear
+in nr_page_table_pages in /proc/vmstat (as do other kernel page tables
+allocated after early boot), however this is a positive change.
+
+This issue started being markedly problematic after commit:
+
+  5ba2f0a15564 ("mm: introduce deferred freeing for kernel page tables")
+
+so choose this as the Fixes target.
+
+[ dhansen: rephrase in imperative mood ]
+
+Fixes: 5ba2f0a15564 ("mm: introduce deferred freeing for kernel page tables")
+Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Acked-by: Vishal Moola <vishal.moola@gmail.com>
+Tested-by: Atish Patra <atishp@meta.com>
+Tested-by: Nikunj A Dadhania <nikunj@amd.com>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260813-cpa-fixes-v2-4-39b4ff90f91d@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/include/asm/pai.h |    1 
- arch/s390/kernel/perf_pai.c |  178 +++++++++++++++++++++++++++++++-------------
- 2 files changed, 128 insertions(+), 51 deletions(-)
+ arch/x86/mm/pat/set_memory.c |   25 ++++++++++++++++---------
+ 1 file changed, 16 insertions(+), 9 deletions(-)
 
---- a/arch/s390/include/asm/pai.h
-+++ b/arch/s390/include/asm/pai.h
-@@ -76,7 +76,6 @@ static __always_inline void pai_kernel_e
- }
+--- a/arch/x86/mm/pat/set_memory.c
++++ b/arch/x86/mm/pat/set_memory.c
+@@ -443,7 +443,15 @@ static void __cpa_collapse_large_pages(s
  
- #define PAI_SAVE_AREA(x)	((x)->hw.event_base)
--#define PAI_CPU_MASK(x)		((x)->hw.addr_filters)
- #define PAI_PMU_IDX(x)		((x)->hw.last_tag)
- #define PAI_SWLIST(x)		(&(x)->hw.tp_list)
+ 	list_for_each_entry_safe(ptdesc, tmp, &pgtables, pt_list) {
+ 		list_del(&ptdesc->pt_list);
+-		pagetable_free(ptdesc);
++		/*
++		 * Only early alloc'd direct map should not be flagged PG_table
++		 * here and those shouldn't be collapsed. However be abundantly
++		 * cautious and handle the !PG_table case too.
++		 */
++		if (PageTable((ptdesc_page(ptdesc))))
++			pagetable_dtor_free(ptdesc);
++		else
++			pagetable_free(ptdesc);
+ 	}
  
---- a/arch/s390/kernel/perf_pai.c
-+++ b/arch/s390/kernel/perf_pai.c
-@@ -67,6 +67,7 @@ struct pai_mapptr {
+ 	spin_unlock(&cpa_lock);
+@@ -1144,11 +1152,10 @@ set:
  
- static struct pai_root {		/* Anchor to per CPU data */
- 	refcount_t refcnt;		/* Overall active events */
-+	atomic_t tskctx;		/* Overall per-task events */
- 	struct pai_mapptr __percpu *mapptr;
- } pai_root[PAI_PMU_MAX];
- 
-@@ -93,14 +94,15 @@ struct pai_pmu {			/* Define PAI PMU cha
- static struct pai_pmu pai_pmu[];	/* Forward declaration */
- 
- /* Free per CPU data when the last event is removed. */
--static void pai_root_free(int idx)
-+static void pai_root_free(int idx, int tasks)
+ static int
+ __split_large_page(struct cpa_data *cpa, pte_t *kpte, unsigned long address,
+-		   struct ptdesc *ptdesc)
++		   pte_t *pbase)
  {
--	if (refcount_dec_and_test(&pai_root[idx].refcnt)) {
-+	if (refcount_sub_and_test(tasks, &pai_root[idx].refcnt)) {
- 		free_percpu(pai_root[idx].mapptr);
- 		pai_root[idx].mapptr = NULL;
- 	}
--	debug_sprintf_event(paidbg, 5, "%s root[%d].refcount %d\n", __func__,
--			    idx, refcount_read(&pai_root[idx].refcnt));
-+	debug_sprintf_event(paidbg, 5, "%s root[%d].refcount %d tskctx %d\n",
-+			    __func__, idx, refcount_read(&pai_root[idx].refcnt),
-+			    atomic_read(&pai_root[idx].tskctx));
- }
- 
- /*
-@@ -137,20 +139,36 @@ static void pai_free(struct pai_mapptr *
- 	mp->mapptr = NULL;
- }
- 
--/* Adjust usage counters and remove allocated memory when all users are
-- * gone. Called under mutex_lock.
-- */
--static void pai_event_destroy_cpu(int idx, int cpu)
-+/* Called under mutex_lock */
-+static void pai_event_destroy_cpu(int idx, int cpu, bool hotplug)
+ 	unsigned long lpaddr, lpinc, ref_pfn, pfn, pfninc = 1;
+-	struct page *base = ptdesc_page(ptdesc);
+-	pte_t *pbase = (pte_t *)page_address(base);
++	struct page *base = virt_to_page(pbase);
+ 	unsigned int i, level;
+ 	pgprot_t ref_prot;
+ 	bool nx, rw;
+@@ -1252,20 +1259,20 @@ __split_large_page(struct cpa_data *cpa,
+ static int split_large_page(struct cpa_data *cpa, pte_t *kpte,
+ 			    unsigned long address)
  {
--	struct pai_mapptr *mp = per_cpu_ptr(pai_root[idx].mapptr, cpu);
--	struct pai_map *cpump = mp->mapptr;
-+	struct pai_mapptr *mp;
-+	struct pai_map *cpump;
-+	int tasks = 1;
+-	struct ptdesc *ptdesc;
++	pte_t *pte;
  
--	debug_sprintf_event(paidbg, 5, "%s users %d refcnt %u\n",
--			    __func__, cpump->active_events,
--			    refcount_read(&cpump->refcnt));
--	if (refcount_dec_and_test(&cpump->refcnt))
-+	/* Check reference count and return when all gone.
-+	 * 1. An event is installed on online CPU X.
-+	 * 2. CPU x is offlined and the per-CPU data is removed.
-+	 * 3. Event is destroyed via close system call.
-+	 */
-+	if (!refcount_read(&pai_root[idx].refcnt))
-+		return;			/* No events at all */
-+	mp = per_cpu_ptr(pai_root[idx].mapptr, cpu);
-+	if (!mp || !mp->mapptr)		/* No events on that CPU */
-+		return;
-+
-+	/* When hotplug is true, invocation is from CPU hotplug callback.
-+	 * Delete per-CPU resource and adjust refcnt when per-task events
-+	 * are currently active. This can be more than one.
-+	 * In this case adjust counters.
-+	 */
-+	if (hotplug)
-+		tasks = atomic_read(&pai_root[idx].tskctx);
-+
-+	cpump = mp->mapptr;
-+	if (refcount_sub_and_test(tasks, &cpump->refcnt))
- 		pai_free(mp);
--	pai_root_free(idx);
-+	pai_root_free(idx, tasks);
- }
+ 	spin_unlock(&cpa_lock);
+ 	if (cpa->init_mm_read_locked)
+ 		mmap_read_unlock(&init_mm);
+-	ptdesc = pagetable_alloc(GFP_KERNEL, 0);
++	pte = pte_alloc_one_kernel(&init_mm);
+ 	if (cpa->init_mm_read_locked)
+ 		mmap_read_lock(&init_mm);
+ 	spin_lock(&cpa_lock);
+-	if (!ptdesc)
++	if (!pte)
+ 		return -ENOMEM;
  
- static void pai_event_destroy(struct perf_event *event)
-@@ -158,17 +176,17 @@ static void pai_event_destroy(struct per
- 	int cpu = 0, idx = PAI_PMU_IDX(event);
+-	if (__split_large_page(cpa, kpte, address, ptdesc))
+-		pagetable_free(ptdesc);
++	if (__split_large_page(cpa, kpte, address, pte))
++		pte_free_kernel(&init_mm, pte);
  
- 	free_page(PAI_SAVE_AREA(event));
-+	cpus_read_lock();
- 	mutex_lock(&pai_reserve_mutex);
- 	if (event->cpu == -1) {
--		struct cpumask *mask = PAI_CPU_MASK(event);
--
--		for_each_cpu(cpu, mask)
--			pai_event_destroy_cpu(idx, cpu);
--		kfree(mask);
-+		atomic_dec(&pai_root[idx].tskctx);
-+		for_each_online_cpu(cpu)
-+			pai_event_destroy_cpu(idx, cpu, false);
- 	} else {
--		pai_event_destroy_cpu(idx, event->cpu);
-+		pai_event_destroy_cpu(idx, event->cpu, false);
- 	}
- 	mutex_unlock(&pai_reserve_mutex);
-+	cpus_read_unlock();
- }
- 
- static void paicrypt_event_destroy(struct perf_event *event)
-@@ -232,17 +250,25 @@ static u64 paicrypt_getall(struct perf_e
- 	return sum;
- }
- 
--/* Allocate all per-CPU data structures. This function is called in
-- * process context and can block. In case of error all partly allocated
-- * memory is released and the reference counters adjusted correctly.
-- * Called under mutex_lock.
-- */
--static int pai_alloc_cpu(int idx, int cpu)
-+/* Called under mutex_lock */
-+static int pai_alloc_cpu(int idx, int cpu, bool hotplug)
- {
- 	struct pai_map *cpump = NULL;
- 	bool need_paiext_cb = false;
- 	struct pai_mapptr *mp;
--	int rc;
-+	int tasks = 1, rc = 0;
-+
-+	/* When hotplug is true, invocation is from CPU hotplug callback.
-+	 * Allocate per-CPU resource when per-task events are currently active.
-+	 * This can be more than one. In this case adjust all reference
-+	 * counters. Otherwise return, this ensures memory is only allocated
-+	 * when needed.
-+	 */
-+	if (hotplug) {
-+		tasks = atomic_read(&pai_root[idx].tskctx);
-+		if (!tasks)
-+			goto out;
-+	}
- 
- 	/* Allocate root node */
- 	rc = pai_root_alloc(idx);
-@@ -291,26 +317,42 @@ static int pai_alloc_cpu(int idx, int cp
- 			goto undo;
- 		}
- 		INIT_LIST_HEAD(&cpump->syswide_list);
--		refcount_set(&cpump->refcnt, 1);
-+		refcount_set(&cpump->refcnt, tasks);
- 		rc = 0;
- 	} else {
--		refcount_inc(&cpump->refcnt);
-+		refcount_add(tasks, &cpump->refcnt);
- 	}
-+	/* If tasks is greater than 1, we are called from CPU hotplug path
-+	 * and need to adjust the pai_root[idx].refcnt by the number of
-+	 * per-process events. Function pai_root_alloc(idx) already
-+	 * incremented by one. Adjust for the rest.
-+	 */
-+	if (tasks > 1)
-+		refcount_add(tasks - 1, &pai_root[idx].refcnt);
- 
- undo:
- 	if (rc) {
- 		/* Error in allocation of event, decrement anchor. Since
- 		 * the event in not created, its destroy() function is never
- 		 * invoked. Adjust the reference counter for the anchor.
-+		 * The failure happened in the case of variable
-+		 * cpump == NULL branch above. The pai_root[XXX].refcnt has
-+		 * been incremented by one. Then the per-CPU allocation
-+		 * failed, so decrement it by one, regardless of tasks.
- 		 */
--		pai_root_free(idx);
-+		pai_root_free(idx, 1);
- 	}
- out:
- 	/* If rc is non-zero, no increment of counter/sampler was done. */
- 	return rc;
- }
- 
--/* Called under mutex_lock */
-+/* Check concurrent access of counting and sampling for PAI events.
-+ * This function is called in process context and it is safe to block.
-+ * When the event initialization functions fails, no other call back will
-+ * be invoked.
-+ * Called under mutex_lock.
-+ */
- static int pai_alloc(struct perf_event *event)
- {
- 	int idx = PAI_PMU_IDX(event);
-@@ -322,24 +364,20 @@ static int pai_alloc(struct perf_event *
- 		goto out;
- 
- 	for_each_online_cpu(cpu) {
--		rc = pai_alloc_cpu(idx, cpu);
-+		rc = pai_alloc_cpu(idx, cpu, false);
- 		if (rc) {
- 			for_each_cpu(cpu, maskptr)
--				pai_event_destroy_cpu(idx, cpu);
--			kfree(maskptr);
--			goto out;
-+				pai_event_destroy_cpu(idx, cpu, false);
-+			goto undo;
- 		}
- 		cpumask_set_cpu(cpu, maskptr);
- 	}
- 
--	/*
--	 * On error all cpumask are freed and all events have been destroyed.
--	 * Save of which CPUs data structures have been allocated for.
--	 * Release them in pai_event_destroy call back function
--	 * for this event.
--	 */
--	PAI_CPU_MASK(event) = maskptr;
- 	rc = 0;
-+	/* Trace per-task events for CPU hotplug. */
-+	atomic_inc(&pai_root[idx].tskctx);
-+undo:
-+	kfree(maskptr);
- out:
- 	return rc;
- }
-@@ -387,12 +425,14 @@ static int pai_event_init(struct perf_ev
- 		}
- 	}
- 
-+	cpus_read_lock();
- 	mutex_lock(&pai_reserve_mutex);
- 	if (event->cpu >= 0)
--		rc = pai_alloc_cpu(idx, event->cpu);
-+		rc = pai_alloc_cpu(idx, event->cpu, false);
- 	else
- 		rc = pai_alloc(event);
- 	mutex_unlock(&pai_reserve_mutex);
-+	cpus_read_unlock();
- 	if (rc) {
- 		free_page(PAI_SAVE_AREA(event));
- 		goto out;
-@@ -1216,8 +1256,35 @@ static int __init paipmu_setup(void)
- 	return install_ok;
- }
- 
-+static int pai_online_cpu(unsigned int cpu)
-+{
-+	int rc;
-+
-+	mutex_lock(&pai_reserve_mutex);
-+	rc = pai_alloc_cpu(PAI_PMU_CRYPTO, cpu, true);
-+	if (rc)
-+		goto out;
-+	rc = pai_alloc_cpu(PAI_PMU_EXT, cpu, true);
-+	if (rc)
-+		pai_event_destroy_cpu(PAI_PMU_CRYPTO, cpu, true);
-+out:
-+	mutex_unlock(&pai_reserve_mutex);
-+	return rc;
-+}
-+
-+static int pai_offline_cpu(unsigned int cpu)
-+{
-+	mutex_lock(&pai_reserve_mutex);
-+	pai_event_destroy_cpu(PAI_PMU_CRYPTO, cpu, true);
-+	pai_event_destroy_cpu(PAI_PMU_EXT, cpu, true);
-+	mutex_unlock(&pai_reserve_mutex);
-+	return 0;
-+}
-+
- static int __init pai_init(void)
- {
-+	int state, rc;
-+
- 	/* Setup s390dbf facility */
- 	paidbg = debug_register("pai", 1, 1, 128);
- 	if (!paidbg) {
-@@ -1226,13 +1293,24 @@ static int __init pai_init(void)
- 	}
- 	debug_register_view(paidbg, &debug_sprintf_view);
- 
--	if (!paipmu_setup()) {
--		/* No PMU registration, no need for debug buffer */
--		debug_unregister_view(paidbg, &debug_sprintf_view);
--		debug_unregister(paidbg);
--		return -ENODEV;
--	}
-+	/* CPUHP_BP_PREPARE_DYN --> before CPU is brought online */
-+	state = cpuhp_setup_state(CPUHP_BP_PREPARE_DYN, "perf/pai:prepare",
-+				  pai_online_cpu, pai_offline_cpu);
-+	rc = state < 0 ? state : 0;
-+	if (rc < 0)
-+		goto out_debug;
-+
-+	rc = -ENODEV;
-+	if (!paipmu_setup())
-+		goto out_cpuhp;
  	return 0;
-+
-+out_cpuhp:
-+	cpuhp_remove_state(state);
-+out_debug:
-+	debug_unregister_view(paidbg, &debug_sprintf_view);
-+	debug_unregister(paidbg);
-+	return rc;
  }
- 
- device_initcall(pai_init);
 
 
