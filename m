@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 570B54B44A9;
-	Thu, 17 Sep 2026 15:46:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59E2D4CDDE1;
+	Thu, 17 Sep 2026 15:46:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789660004; cv=none; b=XI20TqEybh9PmB+okbZ5PkbMqGzNrf2f1Z2fzs+L0r0/Tud+XShOjex98QC6jxo1ApOJSd1lj2esYeKmS8MjAfMfnXYUXoZyp2AfonuhmCz2DzAYHznZmx8s7XpKoDNuQobNt60Agqsk+skmH+E/K/wbVb8nHKTTdBA2xH/C6KA=
+	t=1789660008; cv=none; b=aFr2P3MHbLeLac/rVDg6DJRxrfIkRhR/p0YB3iMopjNCWsbJonoK28xbWls9nd05H2Ihs9GkQe5+MtujvoLZoy6rRGqNcghDKNjoyjkGAA71JYaeP/ajNUQmr6JRvyLS36glOilksgoTKKrP/+AibUMKKO8O2Q0sjokbQy8N3ac=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789660004; c=relaxed/simple;
-	bh=nT4O7IpesbWm5pd6GJS5JdbYE3UkIa/jxhHE7LoAG4I=;
+	s=arc-20240116; t=1789660008; c=relaxed/simple;
+	bh=7E59Jd4cjAzq0VmwBs9IwOu2Hp4Pq4SVq/bVjUIQcLc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RcFAfmamsSC9wCw75nk9DEAf6zw5os3l/wXyhfXNM1qa0RTkNLAImIa7S3LV26Xg4pQ/jinB4R1BJLV1WFqpILWNZPm0BmFEqmP0V2Jdgh/SNA+DL2cmApryNkxRxQuWkPK9el9/Qh5GibG/1UkjG5XJX4NV+gEdYm3cpfsH5QE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MqCeP1c/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=GpFrZ/Yu2//BQwuE+3g1cytv3GW6PSyAmPSHGRpKiMTjNvUsrOdk5oNijK6POuFluXXtwA7bmTXl1nAlST1C33F/3J8IaHWMRrXmg56oJsDm/hO7uzC/zpF9R78cMeq2P6uuuyg+NDHxhLlKqrKf1yOGT94+pr3Jz7HuC9IkhnI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f151Dgw4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MqCeP1c/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94F561F00898;
-	Thu, 17 Sep 2026 15:46:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f151Dgw4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C2111F000FF;
+	Thu, 17 Sep 2026 15:46:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659997;
-	bh=SzIsbJ1OXAnPkX2amAy0uxgdyKr3YdxeeRZVKkKQoyI=;
+	s=korg; t=1789660003;
+	bh=N7dzYvArPn+DYZ3Sq/Qf4+WsDJnGesFL6vYECMFVi+s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MqCeP1c/dyaDytvy/+q0if3wkt4/zU4rjOpktbHpJpmvaevtsiRKb3ULnJLn/wsYm
-	 MdUgO3W6J04Jmr9GDFg9TXjXVNCT1Mic1ZGDJu8cWhSaUIRibXP2p2H7NrmZnPKjks
-	 W1eBd9wf3kITpHhQGOQBqUq3rbxaVdwQjRtrkaJU=
+	b=f151Dgw4+9eJSKwiFYYkCJfetUc16nU6Pbn9LZUJXFyK28Gn+6F8etsZ/O8lyKufb
+	 pcA+mQ8sDf0Z2lNUOKTjCRuJmp6lyZO2zlNRqvXYxBua/+eWpljGlnhPJ9ae84fKt9
+	 pDJwDj4BrF+cjqU1BsdWCqYgts1vUIl2oNnp1Ew4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	Nicolas Schier <nsc@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>,
+	Vincent Donnefort <vdonnefort@google.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 443/733] scripts/mksysmap: drop the MODULE_INFO() symbols from kallsyms
-Date: Thu, 17 Sep 2026 16:12:31 +0100
-Message-ID: <20260917151402.918641016@linuxfoundation.org>
+Subject: [PATCH 7.2 445/733] tracing/remotes: Account for ring buffer page header in size calculation
+Date: Thu, 17 Sep 2026 16:12:33 +0100
+Message-ID: <20260917151402.976096927@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -52,53 +51,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+From: Vincent Donnefort <vdonnefort@google.com>
 
-[ Upstream commit 281b61d408d4c39544583e393c6707af0ef5ee50 ]
+[ Upstream commit 442ffa742daa65a0e8fe003abe9fbe472366e4de ]
 
-Commit 3e86e4d74c04 ("kbuild: keep .modinfo section in vmlinux.unstripped")
-keeps .modinfo symbols out of System.map and kallsyms, which assumes unique
-IDs have a format like '__UNIQUE_ID_modinfo123'.
+trace_buffer_desc_size() and trace_remote_alloc_buffer() undercount the
+required pages because every ring buffer page contains a header
+(BUF_PAGE_HDR_SIZE). Account for that header to ensure allocated remote
+ring buffers aren't smaller than requested by the user.
 
-However, commit afb026b6d35c ("compiler: Tweak __UNIQUE_ID() naming"), sent
-in the same cycle, changes this to '__UNIQUE_ID_modinfo_123'.
+The newly introduced helper __calc_nr_pages_ring_buffer_desc() can
+return a value that overflows the descriptor nr_pages field (32 bits).
 
-As a result this regexp has never matched and every kernel since v6.18 has
-carried one kallsyms entries for every MODULE_INFO() declaration in the
-kernel whether the modules are compiled or not.
-
-That's 5,810 entries for an x86 defconfig build and 15,200 for arm64.
-
-On x86 defconfig that is 113 KiB of kallsyms tables and 32 KiB of bzImage,
-and every lookup walks past them.
-
-Fix the pattern.
-
-Fixes: 3e86e4d74c04 ("kbuild: keep .modinfo section in vmlinux.unstripped")
-Assisted-by: LLM
-Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Reviewed-by: Nicolas Schier <nsc@kernel.org>
-Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-Link: https://patch.msgid.link/20260908-build-speedup-v1-1-5dc1ac01672d@kernel.org
-Signed-off-by: Nicolas Schier <nsc@kernel.org>
+Link: https://patch.msgid.link/20260911193937.602202-2-vdonnefort@google.com
+Fixes: 2e67fabd8b77 ("ring-buffer: Introduce ring-buffer remotes")
+Signed-off-by: Vincent Donnefort <vdonnefort@google.com>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/mksysmap | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/ring_buffer.h | 15 +++++++++++++--
+ kernel/trace/trace_remote.c |  2 +-
+ 2 files changed, 14 insertions(+), 3 deletions(-)
 
-diff --git a/scripts/mksysmap b/scripts/mksysmap
-index c4531eacde202..56a8b8bbdb373 100755
---- a/scripts/mksysmap
-+++ b/scripts/mksysmap
-@@ -83,7 +83,7 @@
- / _SDA2_BASE_$/d
+diff --git a/include/linux/ring_buffer.h b/include/linux/ring_buffer.h
+index afc7daa6ee7dc..11bffb6a142d1 100644
+--- a/include/linux/ring_buffer.h
++++ b/include/linux/ring_buffer.h
+@@ -3,8 +3,9 @@
+ #define _LINUX_RING_BUFFER_H
  
- # MODULE_INFO()
--/ __UNIQUE_ID_modinfo[0-9]*$/d
-+/ __UNIQUE_ID_modinfo_[0-9]*$/d
+ #include <linux/mm.h>
+-#include <linux/seq_file.h>
+ #include <linux/poll.h>
++#include <linux/ring_buffer_types.h>
++#include <linux/seq_file.h>
  
- # ---------------------------------------------------------------------------
- # Ignored patterns
+ #include <uapi/linux/trace_mmap.h>
+ 
+@@ -279,9 +280,19 @@ static inline struct ring_buffer_desc *__first_ring_buffer_desc(struct trace_buf
+ 	return (struct ring_buffer_desc *)(&desc->__data[0]);
+ }
+ 
++/*
++ * Returns the number of pages for a ring_buffer_desc. The caller must ensure it
++ * does not overflow ring_buffer_desc::nr_page_va.
++ */
++static inline unsigned long __calc_nr_pages_ring_buffer_desc(size_t size)
++{
++	/* Takes into account the reader page */
++	return max(DIV_ROUND_UP(size, PAGE_SIZE - BUF_PAGE_HDR_SIZE), 2UL) + 1;
++}
++
+ static inline size_t trace_buffer_desc_size(size_t buffer_size, unsigned int nr_cpus)
+ {
+-	unsigned int nr_pages = max(DIV_ROUND_UP(buffer_size, PAGE_SIZE), 2UL) + 1;
++	unsigned long nr_pages = __calc_nr_pages_ring_buffer_desc(buffer_size);
+ 	struct ring_buffer_desc *rbdesc;
+ 
+ 	return size_add(offsetof(struct trace_buffer_desc, __data),
+diff --git a/kernel/trace/trace_remote.c b/kernel/trace/trace_remote.c
+index e6724f947170d..0e8ca62301040 100644
+--- a/kernel/trace/trace_remote.c
++++ b/kernel/trace/trace_remote.c
+@@ -980,7 +980,7 @@ int trace_remote_alloc_buffer(struct trace_buffer_desc *desc, size_t desc_size,
+ 			      const struct cpumask *cpumask)
+ {
+ 	size_t min_desc_size = trace_buffer_desc_size(buffer_size, cpumask_weight(cpumask));
+-	unsigned int nr_pages = max(DIV_ROUND_UP(buffer_size, PAGE_SIZE), 2UL) + 1;
++	unsigned int nr_pages = __calc_nr_pages_ring_buffer_desc(buffer_size);
+ 	struct ring_buffer_desc *rb_desc;
+ 	int cpu, ret = -ENOMEM;
+ 
 -- 
 2.53.0
 
