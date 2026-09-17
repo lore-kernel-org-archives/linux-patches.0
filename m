@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AE194E4C55;
-	Thu, 17 Sep 2026 16:04:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EEA44E77F2;
+	Thu, 17 Sep 2026 16:04:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789661043; cv=none; b=lFWSPkPdduZYXpMTxLHI/jpxSUY9AmlxEMfPO6TboxEwM5BdfflfjIha13gW14j8B/ByifxO8p9qeQYDlCFkQpEYvSRXF0RvicqchyFKPJ3vwO4YewhHydVACClUB2xj9IxF21X3kCNgZt3mBWbr98a/v+GNk8lFl2L5kBviMNQ=
+	t=1789661046; cv=none; b=Rtp9N7kz4i/5L81bPaUQDgpuInN1Jua9Ax8bcM+x22D/UpsGVdZxEguHC/do+e4uC9VEUAwik6vchiq/NyL/sOaPFarvA3szGPHjLe3Wbs8fxWrxgMAdt4NCPGc0TIy0MaDqq0WzSbE4rvy9l8XLlp3NY1lGWZD6Xx1V/n/VARY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789661043; c=relaxed/simple;
-	bh=66EYd8RPO3UeD2bzMA/a5NZFqzjK0UfzZV+xHuNurds=;
+	s=arc-20240116; t=1789661046; c=relaxed/simple;
+	bh=1+DI2TPoJWzOcjlhnuTGkfswoJoL/Kc23zmcDpmNXHI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hlwlw8iqsHyamWEVVSgJyMneliATJg0hTG9pUZpLLevK/eO+dFEWG/50jKs7zOK/1K/cBp5zrS2gVQRxKIRe6eU4d7q8GThxTdfMBQJc1ldL7M0zk+B193vdgmG3fKpoK7J37HgqR9nERllipRYm/CiOUrmJjp53pfmGvX6lpps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ANnbkhnf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nyF+PuFjBm23fOOvi5/4D2pypbsFq/YHNy7J+STdyp8krcpV51WMfGpo1WsFwHG8z27w8csDYb4POF4YPhCgJuLXRnPn7U40qIj+anFsAjTYzSgld3Q3Elo9Qfmo69fOInUEe1+8BZVzuzoS6LkIvqDxcJsgqM276LpAsglvQOo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GfKG4Kgd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ANnbkhnf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF2B11F00898;
-	Thu, 17 Sep 2026 16:04:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GfKG4Kgd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9742B1F000FF;
+	Thu, 17 Sep 2026 16:04:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789661042;
-	bh=ZRrqifS7GYEmGJuvVXRob85aAWzEmVfmQ3vsGkfEApE=;
+	s=korg; t=1789661045;
+	bh=1F2BJVmbYX0vAVOqxBvo0S1a7iVHJFPhooBd5JtwxtM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ANnbkhnfa61j3hvW7r3lxuVB/72dHMIcITgcdcKx5P0C5qvmUtWTQ6tNr1seo9RdB
-	 cRnIe5/H8CCuexcyCuJiyYzh/YgLlmQ19TAD66GBeDJAX02rvjOr0SkwzTVCKK2WCL
-	 Nl9rmQgZtyw82dFfRUKzgfpVs6LM/3NmxBctCqv0=
+	b=GfKG4Kgd91A96dntq5Vt26MLh6+mC6PJVTOMKCDqgHBmqiLWevqaq6ckKHQMgRRpk
+	 D8Q9F/JyiT0KYF4W6ldNPSzMiawyy9NdNs/W/aIC8ldvcFXHbuXyZuZQYFYgysXI+d
+	 /xMEyByzLjDdPj+FfWw/lm6dp3LZWOSCa7lK8o00=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wenjing Liu <wenjing.liu@amd.com>,
-	Ovidiu Bunea <ovidiu.bunea@amd.com>,
-	James Lin <pinglei.lin@amd.com>,
+	Lijo Lazar <lijo.lazar@amd.com>,
+	Hawking Zhang <Hawking.Zhang@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0062/1250] drm/amd/display: Find link encoder for flexible DIG mapping cases
-Date: Thu, 17 Sep 2026 15:57:37 +0100
-Message-ID: <20260917151553.623539985@linuxfoundation.org>
+Subject: [PATCH 6.18 0063/1250] drm/amdgpu: Prefer ROM BAR for default VGA device
+Date: Thu, 17 Sep 2026 15:57:38 +0100
+Message-ID: <20260917151553.650343325@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -53,59 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ovidiu Bunea <ovidiu.bunea@amd.com>
+From: Lijo Lazar <lijo.lazar@amd.com>
 
-[ Upstream commit 74ef54e656e7006cfc215e960b0cf2720a7a3d48 ]
+[ Upstream commit 9e32d17592950478baffaecdbda8e2e60935fd3d ]
 
-[why & how]
-link->link_enc can only be used to identify the link's link encoder
-when the link is not permitted to use flexible link encoder
-assignments.
+Fetching from platform ROM doesn't work with hybrid ROM images. For
+default VGA devices also prefer ROM BAR.
 
-Use the correct function for identifying link encoder and add
-function pointer guards before calling them.
-
-Reviewed-by: Wenjing Liu <wenjing.liu@amd.com>
-Signed-off-by: Ovidiu Bunea <ovidiu.bunea@amd.com>
-Signed-off-by: James Lin <pinglei.lin@amd.com>
+Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>
+Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../drm/amd/display/dc/hwss/dce110/dce110_hwseq.c    | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_bios.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
-index fe02dc4e97e4a..8eec1feafc4ad 100644
---- a/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
-@@ -1753,20 +1753,22 @@ static void power_down_encoders(struct dc *dc)
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_bios.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_bios.c
+index 4e60753e16e90..dec312b0f3b0a 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_bios.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_bios.c
+@@ -33,6 +33,7 @@
+ #include <linux/pci.h>
+ #include <linux/slab.h>
+ #include <linux/acpi.h>
++#include <linux/vgaarb.h>
+ /*
+  * BIOS.
+  */
+@@ -491,7 +492,8 @@ static bool amdgpu_prefer_rom_resource(struct amdgpu_device *adev)
+ {
+ 	struct resource *res = &adev->pdev->resource[PCI_ROM_RESOURCE];
  
- 	for (i = 0; i < dc->link_count; i++) {
- 		struct dc_link *link = dc->links[i];
--		struct link_encoder *link_enc = link->link_enc;
-+		struct link_encoder *link_enc = link_enc_cfg_get_link_enc(link);
- 		enum signal_type signal = link->connector_signal;
+-	return (res->flags & IORESOURCE_ROM_SHADOW);
++	return (res->flags & IORESOURCE_ROM_SHADOW) ||
++	       adev->pdev == vga_default_device();
+ }
  
- 		dc->link_srv->blank_dp_stream(link, false);
- 		if (signal != SIGNAL_TYPE_EDP)
- 			signal = SIGNAL_TYPE_NONE;
- 
--		if (link->ep_type == DISPLAY_ENDPOINT_PHY)
-+		if (link->ep_type == DISPLAY_ENDPOINT_PHY && link_enc)
- 			link_enc->funcs->disable_output(link_enc, signal);
- 
- 		if (link->fec_state == dc_link_fec_enabled) {
--			link_enc->funcs->fec_set_enable(link_enc, false);
--			link_enc->funcs->fec_set_ready(link_enc, false);
--			link->fec_state = dc_link_fec_not_ready;
-+			if (link_enc && link_enc->funcs->fec_set_enable && link_enc->funcs->fec_set_ready) {
-+				link_enc->funcs->fec_set_enable(link_enc, false);
-+				link_enc->funcs->fec_set_ready(link_enc, false);
-+				link->fec_state = dc_link_fec_not_ready;
-+			}
- 		}
- 
- 		link->link_status.link_active = false;
+ static bool amdgpu_get_bios_dgpu(struct amdgpu_device *adev)
 -- 
 2.53.0
 
