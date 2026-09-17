@@ -1,44 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E97A84F96CB;
-	Thu, 17 Sep 2026 17:30:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D489B4CDDE4;
+	Thu, 17 Sep 2026 17:30:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666220; cv=none; b=A4HfyzpU2ddP72Kd3aKsa0080ndpyApnEx2hUe63wGOGuqvD2WPqLJt8mVdtyMOUpLSbYL8gPPndKM43V5m3vyfHpDqpRO5GnClZRzwiF0E0Z8J90ow4/LvjJ6rnQf8Biy2OlQf+u6L/8UA51G/hMrjuezsP6iLl2f3iNzt5tGw=
+	t=1789666223; cv=none; b=slDMKV8PwLNIXbzHU47uqpwmSamC+eMNq/w6oLaxMmfOFAIxgwb1KadzprzvQ5d+YHRLqmzBpYzPkr6vL87e4GSIGbw6HhhWU8ux37c06PGV+1liE6Rd19r+Gq9x2F8/XtGaoiUVw2ThI7BuU64QZDAusFBZL78WiAB0P9TA0DQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666220; c=relaxed/simple;
-	bh=BS64pgMvombB+WwN7d11jsdj0NyL1cCx+M45yElQnUc=;
+	s=arc-20240116; t=1789666223; c=relaxed/simple;
+	bh=WPNZ7sAZCFLf/WE8dH5bQhUgnZP7jSsjj9juBsbQat0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NIZgxF5fY0/wnhI9XsytvAJujFcu14fax+R0ZRxjinQ0id+KDdv1h4pv2M5pjRXI5bEaIN3CiHo0KCqKyAutNMekjLoWyTJfAdTT8TVbCnDB1txGXZzddtbkdvGN5anKJBCZZsDMJNeJ+7K3vq3vKCLEzsLhLB/ZiXjIQ8KPPqM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z2sSWMP3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Z3pXBRcmNxSc1LX4tkuv2BkQu6qQLvDHzDHwR9Qg6tjdSzXqXUhQctcw+wyfjkUHNTe4KoDT6xToBfjitmu15mIoS3UlR4g6R4gYuRF3rKQrkyfRmgvdZTuOtT2q2LOIEHY8r+e4XSF0sbo3oUsCEXJpjvFlfqU7E/WJ5hoGZU0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JHCzrWMW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z2sSWMP3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E8991F000FF;
-	Thu, 17 Sep 2026 17:30:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JHCzrWMW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 373211F000FF;
+	Thu, 17 Sep 2026 17:30:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666218;
-	bh=V4tVZfw55v+mZ1fMauv8dv4AnndlbCD94hHLXELRTR8=;
+	s=korg; t=1789666221;
+	bh=vaRg5v9h33JrIWLDoPqY+wSawKG9j9jDrNaiZVfHoDY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=z2sSWMP3AbmjkJR/JpBvPqAegEuWjY75+cdXZtFvERLbwbnPzISfs89btEySIo6S7
-	 bBUjtwvImfSQM2B7U/NJz3ysutU/wOVD+PPLMtFSAyE+gF/VkkRZD3vR61uwjnzqBm
-	 xvRhn9I+hQkCPVZMRnqG8nJWlGVpPI+rzHtFNQkc=
+	b=JHCzrWMWbDRUO0AagQze874rjJr+vk582PiV3pluTHVmGQ/IXXiSIP/HCV5M7uMB3
+	 +4aEC8L7PTDTC4EcxQm5qcaCuB26EkPzVK8MVg0nx2dSt+zRduVLOG9VVGgDxpItFf
+	 mLXcSdQmReu/05ZDBLpU4AYNylW3zW6K9pNlhTBw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Slaby <jirislaby@kernel.org>,
-	Steffen Dirkwinkel <lists@steffen.cc>,
-	Pedro Falcato <pfalcato@suse.de>,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Atish Patra <atishp@meta.com>,
-	Nikunj A Dadhania <nikunj@amd.com>
-Subject: [PATCH 6.18 0964/1250] x86/alternatives: Exclude text poking against change_page_attr()
-Date: Thu, 17 Sep 2026 16:12:39 +0100
-Message-ID: <20260917151618.144847237@linuxfoundation.org>
+	Vega <vega@nebusec.ai>,
+	Luxing Yin <root@tr0jan.top>,
+	Zihan Xi <zihanx@nebusec.ai>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 0965/1250] ipv6: fix fib6 walker UAF on seq stop
+Date: Thu, 17 Sep 2026 16:12:40 +0100
+Message-ID: <20260917151618.172113624@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -57,139 +53,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pedro Falcato <pfalcato@suse.de>
+From: Zihan Xi <zihanx@nebusec.ai>
 
-commit 1587d3394e254639cc36516256031334095e6ef3 upstream.
+commit 19b4ed644d68098cc62ab612727f40d30f43476c upstream.
 
->From time to time, the following BUG can be observed
-in the x86 alternatives patching code [0]:
+ipv6_route_iter_active() treats a walker in FWS_U at the table root as
+already unlinked. fib6_del_route() can move a still-linked walker into
+that same state when the current leaf is the last route at the root,
+so ipv6_route_native_seq_stop() skips fib6_walker_unlink(). The seq
+private object can then be freed while it remains on
+net->ipv6.fib6_walkers. A later route deletion walks the dangling list
+and uses the freed walker.
 
-  > kernel BUG at arch/x86/kernel/alternative.c:2576!
-  > Oops: invalid opcode: 0000 [#1] SMP NOPTI
-  > CPU: 0 UID: 0 PID: 355 Comm: (udev-worker) Not tainted 7.1.3-1-default #1 PREEMPT(full) openSUSE Tumbleweed  8c1795b03ec64f997e57a8ad38b1161e3b98da64
-  > Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS unknown 02/02/2022
-  > RIP: 0010:__text_poke+0x2aa/0x450
-  > Call Trace:
-  >  <TASK>
-  >  smp_text_poke_batch_finish+0x2a7/0x320
-  >  __static_call_transform+0xb7/0x220
-  >  arch_static_call_transform+0x5b/0xb0
-  >  __static_call_init+0xe9/0x270
-  >  static_call_module_notify+0x11f/0x150
-  >  notifier_call_chain+0x61/0xe0
-  >  blocking_notifier_call_chain_robust+0x63/0xc0
-  >  load_module+0x1c92/0x20c0
-  >  init_module_from_file+0xd8/0x140
-  >  idempotent_init_module+0x100/0x2f0
-  >  __x64_sys_finit_module+0x71/0xe0
-  >  do_syscall_64+0xe1/0x610
-  >  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+Use the list head as membership state and reinitialize it when
+unlinking. Keep the existing w->node check so a never-started iterator
+with a zeroed private object is not treated as linked.
 
-which matches the following BUG_ON() in alternative.c:
+The same stop helper is used by /proc/net/ipv6_route and by the BPF
+ipv6_route iterator. The BPF show path only widens the race.
 
-	/*
-	 * If something went wrong, crash and burn since recovery paths are not
-	 * implemented.
-	 */
-	BUG_ON(!pages[0] || (cross_page_boundary && !pages[1]));
-
-This can happen if vmalloc_to_page() fails, for any reason. Such can happen
-if text poking races with CPA, which can possibly result in the collapsing
-of page tables (or breaking of PMD hugepages). It is not a problem for most
-users of vmalloc_to_page() (they solely own the vmalloc'd range) but, when
-CONFIG_ARCH_HAS_EXECMEM_ROX=y, various modules own a single execmem vmalloc
-range, and can call set_memory_*() in parallel on it. This can happen to
-race against __text_poke and cause havoc in vmalloc_to_page().
-
-Fix it by excluding against CPA using the init_mm mmap read lock.
-
-[ dhansen: Fix up SoB ordering. The actual code flow here was:
-	   Pedro=>Lorenzo=>Mike=>Me which is reflected in the SoB chain
-	   now. I *believe* Mike simply picked up Lorenzo's update to
-	   Pedro's post from the Link ]
-
-Fixes: 64f6a4e10c05 ("x86: re-enable EXECMEM_ROX support")
-Reported-by: Jiri Slaby <jirislaby@kernel.org>
-Reported-by: Steffen Dirkwinkel <lists@steffen.cc>
-Signed-off-by: Pedro Falcato <pfalcato@suse.de>
-Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Co-developed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Tested-by: Jiri Slaby <jirislaby@kernel.org>
-Tested-by: Atish Patra <atishp@meta.com>
-Tested-by: Nikunj A Dadhania <nikunj@amd.com>
+Fixes: 8d2ca1d7b5c3 ("ipv6: avoid high order memory allocations for /proc/net/ipv6_route")
 Cc: stable@vger.kernel.org
-Link: https://bugzilla.opensuse.org/show_bug.cgi?id=1271202 [0]
-Link: https://lore.kernel.org/linux-mm/555ea1d43a12c30a8f1eaf10c899b3790d728f33.camel@dirkwinkel.cc/
-Link: https://patch.msgid.link/20260813-cpa-fixes-v2-3-39b4ff90f91d@kernel.org
+Reported-by: Vega <vega@nebusec.ai>
+Co-developed-by: Luxing Yin <root@tr0jan.top>
+Signed-off-by: Luxing Yin <root@tr0jan.top>
+Signed-off-by: Zihan Xi <zihanx@nebusec.ai>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/89699735763f6c297584d7c2ff106239cc1e8ce0.1788837093.git.zihanx@nebusec.ai
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/alternative.c |   39 ++++++++++++++++++++++++++++++++++++---
- 1 file changed, 36 insertions(+), 3 deletions(-)
+ net/ipv6/ip6_fib.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/arch/x86/kernel/alternative.c
-+++ b/arch/x86/kernel/alternative.c
-@@ -6,6 +6,9 @@
- #include <linux/vmalloc.h>
- #include <linux/memory.h>
- #include <linux/execmem.h>
-+#include <linux/cleanup.h>
-+#include <linux/kgdb.h>
-+#include <linux/mmap_lock.h>
- 
- #include <asm/text-patching.h>
- #include <asm/insn.h>
-@@ -2502,6 +2505,38 @@ static void text_poke_memset(void *dst,
- 
- typedef void text_poke_f(void *dst, const void *src, size_t len);
- 
-+static void __poke_vmalloc_pages(struct page **pages, void *addr,
-+				 bool cross_page_boundary)
-+{
-+	pages[0] = vmalloc_to_page(addr);
-+	if (cross_page_boundary)
-+		pages[1] = vmalloc_to_page(addr + PAGE_SIZE);
-+}
-+
-+static void poke_vmalloc_pages(struct page **pages, void *addr,
-+			       bool cross_page_boundary)
-+{
-+	if (in_dbg_master()) {
-+		/*
-+		 * If called from kgdb cannot sleep, but all other CPUs stopped
-+		 * anyway so safe to proceed without locks
-+		 */
-+		__poke_vmalloc_pages(pages, addr, cross_page_boundary);
-+	} else {
-+		/*
-+		 * execmem ROX ranges are shared between modules and can be
-+		 * collapsed to huge PMD entries, and this collapse can happen
-+		 * concurrently with a racing set_memory_rox().
-+		 *
-+		 * Prevent vmalloc_to_page() from racing by acquiring an
-+		 * init_mm read lock which pairs with the init_mm write lock in
-+		 * cpa_collapse_large_pages().
-+		 */
-+		guard(mmap_read_lock)(&init_mm);
-+		__poke_vmalloc_pages(pages, addr, cross_page_boundary);
-+	}
-+}
-+
- static void *__text_poke(text_poke_f func, void *addr, const void *src, size_t len)
+--- a/net/ipv6/ip6_fib.c
++++ b/net/ipv6/ip6_fib.c
+@@ -85,7 +85,7 @@ static void fib6_walker_link(struct net
+ static void fib6_walker_unlink(struct net *net, struct fib6_walker *w)
  {
- 	bool cross_page_boundary = offset_in_page(addr) + len > PAGE_SIZE;
-@@ -2519,9 +2554,7 @@ static void *__text_poke(text_poke_f fun
- 	BUG_ON(!after_bootmem);
+ 	write_lock_bh(&net->ipv6.fib6_walker_lock);
+-	list_del(&w->lh);
++	list_del_init(&w->lh);
+ 	write_unlock_bh(&net->ipv6.fib6_walker_lock);
+ }
  
- 	if (!core_kernel_text((unsigned long)addr)) {
--		pages[0] = vmalloc_to_page(addr);
--		if (cross_page_boundary)
--			pages[1] = vmalloc_to_page(addr + PAGE_SIZE);
-+		poke_vmalloc_pages(pages, addr, cross_page_boundary);
- 	} else {
- 		pages[0] = virt_to_page(addr);
- 		WARN_ON(!PageReserved(pages[0]));
+@@ -2757,7 +2757,7 @@ static void *ipv6_route_seq_start(struct
+ static bool ipv6_route_iter_active(struct ipv6_route_iter *iter)
+ {
+ 	struct fib6_walker *w = &iter->w;
+-	return w->node && !(w->state == FWS_U && w->node == w->root);
++	return w->node && !list_empty(&w->lh);
+ }
+ 
+ static void ipv6_route_native_seq_stop(struct seq_file *seq, void *v)
 
 
