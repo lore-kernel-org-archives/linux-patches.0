@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D09B35AEC4D;
-	Thu, 17 Sep 2026 15:40:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2987D4B7A5B;
+	Thu, 17 Sep 2026 15:40:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659649; cv=none; b=gRBFtWIy9FaKaLeT59GxPwxZvGNJDsUd+rSfZuT2Z7He4LRcNBf7RWKOC416oO58CnLfGHENJCtwim0rJf46KTT3jCeKtere73BEQhzVeXlN8gOiYyw97XWbLLDZnf4ziXZu7CePAjTR/lAAyXgm6y11q5F9gDE7an8QB2kiAZ0=
+	t=1789659652; cv=none; b=FMX74cmRhuyBj+0Zq6X35jN5LOFEz+JaqB237vsXA0xN5N/QWK9cVuk8FxdDhu9TUIYOcga7ufom6hutjImiGnLJ87C3vSmeRyg2z1cj0+8QzOt1KL5PFq1by2QjR2LFTNbTfZ+DQOpPM3cNjjUrqKQhirEf8vJItER11Qqyuos=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659649; c=relaxed/simple;
-	bh=9PIzr6p2stk+j1sFQroJ2aIyDTDKbFqOOuUBeinjD7c=;
+	s=arc-20240116; t=1789659652; c=relaxed/simple;
+	bh=NQHXHapKXZEg/1XzM/G/dW/B9hrtEMi5xN4ISx51E6Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iVz1nzCIh9qLkvifwDqnKktkduOl+IyB2cPoYytniKj1SY5KMukFtnMnISSlwpUwChS36UpMHDTwlfq6aqJXv8sHmEXuVHfENIHoDdM81BzAqGSRrM7vobVUILBkv9aUbMhUfcxu+GWfhqoxnNd5t/Ox45ssdv4A/B/lDOc4tIc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hgNm/Hz0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BgXI/+DOyPXYi4EuEQid0KW8Y4b2cKcFPMCyBTnChBjTDaHep9X6RVmcT4f51F+WQaC5VT+voQ+JZqYemHFyM+h92SLOf3+e1+uCV7CXrYU2xnz88YW83f1wW8B898lui30twq+nCireXHkHpURIIymMKjJUpYuXqOA1RMuUtIs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uuwjiZD4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hgNm/Hz0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1DBE1F00898;
-	Thu, 17 Sep 2026 15:40:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uuwjiZD4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0A681F0089B;
+	Thu, 17 Sep 2026 15:40:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659637;
-	bh=o/zxLTqnOpnHEfiGDmYROEgPAaRPjouX/MmCCp8TrIw=;
+	s=korg; t=1789659643;
+	bh=aiPqN35NGAFYny2lHXIP+iTh8NoafpqWzktg0WoFoKA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hgNm/Hz01uddXHtZYBvQovK3jCwzBGeWwFXZzDwNtPIM8Xj0tNT17qo+89DKJoHmg
-	 15W6zIZ0yfMs+CTh2qhBFCKxT3ztuRkWkZcFNK58DWL1LzNILoP9jP7py0V/Tga8tR
-	 Dvpaq0CMdOgWvkYYgbByWzlK/TDKnG/e4P35VULU=
+	b=uuwjiZD4LShZJDQrSdnIO0QRpXjCLJeHNVgWO8E70j6rgVJbnFccjhrGXxUvStgi1
+	 4KW5hi2VyKmIx1LQ4eD8MUtmxTuN8GdNwDuX6Q+GGUBmWUtgwwTN3Oc3amJbNYjJlU
+	 2nRitEYJKXAi74Y4qmLdFMzG3o1VGrkbSa6/2xY8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Brian Masney <bmasney@redhat.com>,
 	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 322/733] hwmon: (ltc4282) Make sure clk_init_data is fully initialized
-Date: Thu, 17 Sep 2026 16:10:30 +0100
-Message-ID: <20260917151359.521417775@linuxfoundation.org>
+Subject: [PATCH 7.2 324/733] hwmon: Fix potential UAF in pec_store
+Date: Thu, 17 Sep 2026 16:10:32 +0100
+Message-ID: <20260917151359.577109356@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -52,48 +50,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit e317326d1755ea054b98e7a4833b929157461c35 ]
+[ Upstream commit 354ccc99b2dc8ba0cf6d4de34e520bcf6ecca5c2 ]
 
-The clk_init_data structure contains several mutually-exclusive members
-for different methods to specify the possible parents of a clock,
-prompting drivers to initialize only the members they need.  However,
-not initializing all members may cause subtle issues, which are only
-exposed when CONFIG_INIT_STACK_ALL_PATTERN or CONFIG_INIT_STACK_NONE is
-enabled.
+Sashiko reports:
 
-ltc428_clk_provider_setup() does not fill in any parent clocks, and
-assumes that init.num_parents is NULL.  However, the latter in
-uninitialized, and thus may cause a crash.
+In pec_store(), a guard(mutex)(&hwdev->lock) is taken. If the chip write
+operation returns an error other than -EOPNOTSUPP, the code jumps to the
+put label, which calls put_device(hdev). If this drops the final reference,
+the device is freed. When the function then returns, the guard cleanup
+function runs and attempts to unlock the freed mutex.
 
-Make sure all members are fully initialized, to fix such bugs, and to
-avoid future breakage when converting drivers to a different method for
-specifying the parents.
+Use scoped_guard() instead of guard() to avoid the problem.
 
-Fixes: cbc29538dbf7d740 ("hwmon: Add driver for LTC4282")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://patch.msgid.link/8ec3c5cbd2df675a938f090470f5da5f22008517.1787165329.git.geert+renesas@glider.be
-Reviewed-by: Brian Masney <bmasney@redhat.com>
+Fixes: 3ad2a7b9b15d5 ("hwmon: Serialize accesses in hwmon core")
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/ltc4282.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hwmon/hwmon.c | 21 ++++++++++-----------
+ 1 file changed, 10 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/hwmon/ltc4282.c b/drivers/hwmon/ltc4282.c
-index b1675dc5b3c7f..54ba4b8542e94 100644
---- a/drivers/hwmon/ltc4282.c
-+++ b/drivers/hwmon/ltc4282.c
-@@ -1106,7 +1106,7 @@ static const struct clk_ops ltc4282_ops = {
- static int ltc428_clk_provider_setup(struct ltc4282_state *st,
- 				     struct device *dev)
- {
--	struct clk_init_data init;
-+	struct clk_init_data init = {};
- 	int ret;
- 
- 	if (!IS_ENABLED(CONFIG_COMMON_CLK))
+diff --git a/drivers/hwmon/hwmon.c b/drivers/hwmon/hwmon.c
+index 29dc90a2c3fe7..8cf717ae8b1dd 100644
+--- a/drivers/hwmon/hwmon.c
++++ b/drivers/hwmon/hwmon.c
+@@ -371,18 +371,17 @@ static ssize_t pec_store(struct device *dev, struct device_attribute *devattr,
+ 	 * handling is not required.
+ 	 */
+ 	hwdev = to_hwmon_device(hdev);
+-	guard(mutex)(&hwdev->lock);
+-	if (hwdev->chip->ops->write) {
+-		err = hwdev->chip->ops->write(hdev, hwmon_chip, hwmon_chip_pec, 0, val);
+-		if (err && err != -EOPNOTSUPP)
+-			goto put;
++	scoped_guard(mutex, &hwdev->lock) {
++		if (hwdev->chip->ops->write) {
++			err = hwdev->chip->ops->write(hdev, hwmon_chip, hwmon_chip_pec, 0, val);
++			if (err && err != -EOPNOTSUPP)
++				goto put;
++		}
++		if (!val)
++			client->flags &= ~I2C_CLIENT_PEC;
++		else
++			client->flags |= I2C_CLIENT_PEC;
+ 	}
+-
+-	if (!val)
+-		client->flags &= ~I2C_CLIENT_PEC;
+-	else
+-		client->flags |= I2C_CLIENT_PEC;
+-
+ 	err = count;
+ put:
+ 	put_device(hdev);
 -- 
 2.53.0
 
