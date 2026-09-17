@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57DD34848BD;
-	Thu, 17 Sep 2026 16:51:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 436263B27DF;
+	Thu, 17 Sep 2026 16:51:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789663887; cv=none; b=kiyvCXJFRG7IZ8vLtjBwMQuPJCCXuupfgsddcmGl9jxS6gydCPHbmzSYnfHr+mq2ispoiNie7oxbuyoLPsEgMzXTGwWCSB1R1D2/FYx98Zac2CkkucJZubU6pA5WXZsRSOgZOLYAPqr206ePs5W9ck52ALA9YQbee83+CdTbSqk=
+	t=1789663890; cv=none; b=Kna9eWkblI+saeGg9mHSWs09TUmJcil88L5mLWgp0vznnkoD5pQaPM2/HxS+CwdhkTNpAHhpuDfmP8ySZbXy2xFZZ9YLVs3+GRrd5RkAGpY/PvK9h2bokI8M712rP4P9WvYHqDYItQwAjwhT3zH5Bt5H80gqlu+qoarW8W6YAls=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789663887; c=relaxed/simple;
-	bh=XpvhRV9PENzaYe3DRQdFiOc1B+ndeClMtHXVxSRMYLk=;
+	s=arc-20240116; t=1789663890; c=relaxed/simple;
+	bh=3jWkmU4Phd6/5A/nzqVsgz6dlH7NPRy0tTCy+9pQa9Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hLuBKcLpPlaywDCwyVqN2SkmBNjmJWlKV/pOskCpr7chzv+W3RWbKRnjDQt2zgzKBTMY8nhuy+UA7+WVLau6CWXt2Ar+4Cvv8RBnbSHk5ARlBuSVTyOsPdKrtIfkCUi+WBfAkTomu/A3sWj3n8CGFbivpxoaaG7RgVE8MW4otnE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hMIhncg1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pFIdxj3SWhKyEUFf7pgaDStIFpLduRUf2cw5MpY3JbcEPyk1MI7wIgQT4oPAp27jH4NEexcRLM17aR4Bh28/TUZzYQeZd9PvP/XfuqTeXVf423hhEpHwv/+hHRrfqxgwYL21FOQz5Xad3I7M74Ffi4vbNCEUlNS5/qzVp3CnjIU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nXK+37WC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hMIhncg1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 776A61F000FF;
-	Thu, 17 Sep 2026 16:51:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nXK+37WC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 641411F000FF;
+	Thu, 17 Sep 2026 16:51:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789663886;
-	bh=E5HeVkCrRAXXB1LIaamWi5PNw1OW4SBpzh1DTlYaqWA=;
+	s=korg; t=1789663888;
+	bh=3eehNoyaNR9TYO+c6urY9nJuzqA4eE45YkcnA0RLup8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hMIhncg1sW7sXwFCfW8zD9tRzg4BXblhekQRxi5SFjvxJnOFnvCiLuqsx80ui6SaR
-	 k25fNZKzYD1MsrFwM1DOTWyCU9cXJ1zhnyfo6aC9JoQij6Lwyfsq7Nl5PB3EUbBbVv
-	 kXKNCoJ3lXal816SDVnh64Prl5rN7ZeZjEJuUfr4=
+	b=nXK+37WCnqXWoz2X3gclZ02IinAU7UnM9J64IgtxSQcAgJla501WgHSyqDtHvolVC
+	 whC+703tpwJrr2Z4Y8EgKcKHGJC6TpkGm5sli6V7lhGBf12yVrvIFxquyjghg1aWxA
+	 gXTGDbiEDwZQBXQprYpCuzsUv8aCswQuZFXEL0rM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stepan Ionichev <sozdayvek@gmail.com>,
+	Allison Henderson <achender@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0188/1250] usb: gadget: goku_udc: avoid NULL deref of dev->driver in INT_USBRESET log
-Date: Thu, 17 Sep 2026 15:59:43 +0100
-Message-ID: <20260917151557.209879040@linuxfoundation.org>
+Subject: [PATCH 6.18 0171/1250] net/rds: Dont sleep inside rds_ib_conn_path_shutdown
+Date: Thu, 17 Sep 2026 15:59:26 +0100
+Message-ID: <20260917151556.730257769@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -50,66 +51,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stepan Ionichev <sozdayvek@gmail.com>
+From: Allison Henderson <achender@kernel.org>
 
-[ Upstream commit 5bf5e3fba9bc7dfd69701521dbe9809f8ccbdb02 ]
+[ Upstream commit 16f48efaeb6991193fb7775c577f06f5b20b0c90 ]
 
-goku_irq() handles a number of bus events under a single ep0 path.
-It already guards the gadget driver suspend/resume callbacks against a
-NULL ->driver:
+New rds rdma self tests exposed a hang when tearing down
+the ib network configs.  This is caused by the shutdown worker
+thread sleeping on the wait_event call, which blocks other work
+items in the queue. Fix this by changing wait_event to
+wait_event timeout, and looping until the wait check succeeds.
 
-	if (dev->gadget.speed != USB_SPEED_UNKNOWN
-			&& dev->driver
-			&& dev->driver->resume) {
-		spin_unlock(&dev->lock);
-		dev->driver->resume(&dev->gadget);
-		...
-	}
-
-but the very next branch unconditionally dereferences dev->driver
-when an INT_USBRESET arrives:
-
-	if (stat & INT_USBRESET) {
-		ACK(INT_USBRESET);
-		INFO(dev, "USB reset done, gadget %s\n",
-			dev->driver->driver.name);
-	}
-
-If the controller raises INT_USBRESET before any gadget driver has
-been bound (or after one has been unbound), dev->driver is NULL and
-the printk dereferences NULL.
-
-smatch flags the inconsistency:
-
-  drivers/usb/gadget/udc/goku_udc.c:1618 goku_irq() error:
-  we previously assumed 'dev->driver' could be null (see line 1607)
-
-Fall back to a placeholder when the gadget driver is not bound.
-
-No functional change while a gadget driver is bound.
-
-Signed-off-by: Stepan Ionichev <sozdayvek@gmail.com>
-Link: https://patch.msgid.link/20260509110636.19762-1-sozdayvek@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Allison Henderson <achender@kernel.org>
+Link: https://patch.msgid.link/20260518012443.2629206-2-achender@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/udc/goku_udc.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/rds/ib_cm.c | 25 ++++++++++++++++++++-----
+ 1 file changed, 20 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/usb/gadget/udc/goku_udc.c b/drivers/usb/gadget/udc/goku_udc.c
-index b860c2e764494..c262749a29cc7 100644
---- a/drivers/usb/gadget/udc/goku_udc.c
-+++ b/drivers/usb/gadget/udc/goku_udc.c
-@@ -1616,7 +1616,8 @@ static irqreturn_t goku_irq(int irq, void *_dev)
- 		if (stat & INT_USBRESET) {		/* hub reset done */
- 			ACK(INT_USBRESET);
- 			INFO(dev, "USB reset done, gadget %s\n",
--				dev->driver->driver.name);
-+				dev->driver ? dev->driver->driver.name :
-+					      "<not bound>");
- 		}
- 		// and INT_ERR on some endpoint's crc/bitstuff/... problem
- 	}
+diff --git a/net/rds/ib_cm.c b/net/rds/ib_cm.c
+index e50e01abb0799..d9b6c9d2f6791 100644
+--- a/net/rds/ib_cm.c
++++ b/net/rds/ib_cm.c
+@@ -1043,6 +1043,19 @@ int rds_ib_conn_path_connect(struct rds_conn_path *cp)
+ 	return ret;
+ }
+ 
++static unsigned long rds_ib_conn_path_shutdown_check_wait(struct rds_conn_path *cp)
++{
++	struct rds_connection *conn = cp->cp_conn;
++	struct rds_ib_connection *ic = conn->c_transport_data;
++
++	return (!ic->i_cm_id ||
++		(rds_ib_ring_empty(&ic->i_recv_ring) &&
++		 (atomic_read(&ic->i_signaled_sends) == 0) &&
++		 (atomic_read(&ic->i_fastreg_inuse_count)) == 0 &&
++		 (atomic_read(&ic->i_fastreg_wrs) == RDS_IB_DEFAULT_FR_WR))) ? 0
++		: msecs_to_jiffies(1000);
++}
++
+ /*
+  * This is so careful about only cleaning up resources that were built up
+  * so that it can be called at any point during startup.  In fact it
+@@ -1083,11 +1096,13 @@ void rds_ib_conn_path_shutdown(struct rds_conn_path *cp)
+ 		 * sends to complete we're ensured that there will be no
+ 		 * more tx processing.
+ 		 */
+-		wait_event(rds_ib_ring_empty_wait,
+-			   rds_ib_ring_empty(&ic->i_recv_ring) &&
+-			   (atomic_read(&ic->i_signaled_sends) == 0) &&
+-			   (atomic_read(&ic->i_fastreg_inuse_count) == 0) &&
+-			   (atomic_read(&ic->i_fastreg_wrs) == RDS_IB_DEFAULT_FR_WR));
++		while (!wait_event_timeout(rds_ib_ring_empty_wait,
++					   rds_ib_conn_path_shutdown_check_wait(cp) == 0,
++					   msecs_to_jiffies(1000))) {
++			tasklet_schedule(&ic->i_send_tasklet);
++			tasklet_schedule(&ic->i_recv_tasklet);
++		}
++
+ 		tasklet_kill(&ic->i_send_tasklet);
+ 		tasklet_kill(&ic->i_recv_tasklet);
+ 
 -- 
 2.53.0
 
