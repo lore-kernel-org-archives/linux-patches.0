@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3332399D0C;
-	Thu, 17 Sep 2026 15:36:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B2A5582B96;
+	Thu, 17 Sep 2026 15:36:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659396; cv=none; b=nV4cpIptg8b7k+/OCzyARcusYEhQc/3vHgE2p6zTisNfIyce1PZyE3iMJCIIdoZc/6h5Nr4aNw3UI+DSVwxEUz0UcCRZJ/X485A3tu3LgDwUImVsvsjsZipAblZ7SWNCimjQI9dzgNbiagCVAOCkEMvY9EAdZ6vePfNYLfH6aBs=
+	t=1789659393; cv=none; b=a6UIkt6anOy/3NQgl12Eh+ljNkTaGt+SqySwCPfzbn2YMqXFzJGOwPv3MbDGQc0HVL5Uv+dMCOZ1Azj/t/MMcL3/gdGon2NIM9pkGqNxT62+KmCJLWt5hSly1AfVYxXUn5ixIw6tmbN0FKR+DbiXgD5osPJfi5geRGMnFAblD0Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659396; c=relaxed/simple;
-	bh=4R1k8Eo1COPLcv4QQF0hiZantxuhYdRTDmOa8wudiTc=;
+	s=arc-20240116; t=1789659393; c=relaxed/simple;
+	bh=Zm5MNfTmPuXrO2e86890M8pPtAfi0qeI8+L50aBgFpE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PYJ9bSoDff4BjsizR5J/LtrYf9lCh2ymNo5nlGOP0Pv8rIm40DEp2H3yc99OEZAzFNy9myWWl77gnUaHJ7fIFm6YsbgGtriSdR86cJQi6+4z6CUNLVrQWO2ye9F+NOHVGaosM7zc8ZHeqMhztDj5phXphfEkOtj1kEI8T+mAMPg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nL5HgcmR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=t/Lu9YiBPuxZ/OSSOinaC8mFWdvbvG+Bm5zaBTxNyknqs3tmhAR9tnPQwpBmpnXS4yokt7bs+brlfe6i2YJGZMu14FN6Y7yiCt8RKS/smlIRvtxKaQLY0g12+DbaC+9eSGlvbQlcFsRA8pxeGUK1sbgAhdCRkO7A6y09nJdygu4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tsynb3ZD; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nL5HgcmR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90DE61F00893;
-	Thu, 17 Sep 2026 15:36:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tsynb3ZD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 920CE1F00899;
+	Thu, 17 Sep 2026 15:36:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659386;
-	bh=rQfR/qSMmWrdq1kwwB5a9+9ELB2BB8vOlW3X9plJedU=;
+	s=korg; t=1789659383;
+	bh=fmd3cb6wex4A/ZjQHWHvUb96oxzcpj6WAwhdLpYwQ7c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nL5HgcmR+yrFNVxzvMnvbM4T9aX7clIMUCs/M3LRlXHKIT6VkQ9gLaw0q6wHE2sx2
-	 Zti1FVEutzknvo6HVXzYxkiGulpVqw+QpkPbHEnBbPeSw3gxdLhxjXAw6NdM9152pY
-	 eTyNBxbfhZYKq5bE/hyI96eyEJMWiV/lxSlcytnE=
+	b=Tsynb3ZDRG6p0k9Vfo2A/pBwyeBZKs56dJLzuW23X9JblYxDD2CMK8i1oyU4ph3wd
+	 q9QDNNd0mhmman770uojpS4VKYDtDh/BS1aUhbs3dYCoHLfycJl4eCkjxPYHXVXfV9
+	 wne668sZ68yGzup1mFmPLQ/T7TSM8lZMMHcwt5GQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hannes Reinecke <hare@kernel.org>,
-	Xixin Liu <liuxixin@kylinos.cn>,
+	Mohamed Khalfella <mkhalfella@purestorage.com>,
+	Sagi Grimberg <sagi@grimberg.me>,
 	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 238/733] nvme-tcp: defer TLS inline send to io_work
-Date: Thu, 17 Sep 2026 16:09:06 +0100
-Message-ID: <20260917151357.182202781@linuxfoundation.org>
+Subject: [PATCH 7.2 237/733] nvmet: print namespace IDs as unsigned 32bit value
+Date: Thu, 17 Sep 2026 16:09:05 +0100
+Message-ID: <20260917151357.151125155@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -52,46 +52,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xixin Liu <liuxixin@kylinos.cn>
+From: Mohamed Khalfella <mkhalfella@purestorage.com>
 
-[ Upstream commit 08acb54b063a33730eb1ae1e0f89bf36542bac9f ]
+[ Upstream commit 59fe1cbc57235495a5f08dd53db176e3e3250356 ]
 
-blk_mq holds set->srcu while queuing and running requests.  The kTLS
-software send path takes ctx->tx_lock.  lockdep knows that tx_lock
-nests under elevator_lock which then waits on srcu, so an inline
-send from that path under TLS triggers circular locking.
+struct nvmet_ns.nsid is a u32, but a few messages print it with %d.
+An NSID larger than 0x7fffffff is rendered as a negative number, which
+is misleading in general and particularly so for the configfs messages
+that echo back the NSID the user just asked for.
 
-Skip the inline send optimization for TLS queues so the send runs
-from the workqueue instead.  The same workqueue already retries TLS
-sends on write-space notifications.  Plain TCP keeps the inline path.
+For example:
+[  T200] nvmet: adding nsid -16 to subsystem mysubsystem
 
-Fixes: be8e82caa685 ("nvme-tcp: enable TLS handshake upcall")
-Reviewed-by: Hannes Reinecke <hare@kernel.org>
-Signed-off-by: Xixin Liu <liuxixin@kylinos.cn>
+Print them with %u. The invalid-NSID error in nvmet_ns_make() keeps its
+%#x because the two values it rejects, 0 and NVME_NSID_ALL, are more
+readable in hex format. No functional change other than how the NSID is
+formatted.
+
+Fixes: a07b4970f464 ("nvmet: add a generic NVMe target")
+Fixes: c6925093d0b2 ("nvmet: Optionally use PCI P2P memory")
+Fixes: 5a47c2080a73 ("nvmet: support reservation feature")
+Signed-off-by: Mohamed Khalfella <mkhalfella@purestorage.com>
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/tcp.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/nvme/target/configfs.c | 4 ++--
+ drivers/nvme/target/core.c     | 2 +-
+ drivers/nvme/target/pr.c       | 2 +-
+ 3 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/nvme/host/tcp.c b/drivers/nvme/host/tcp.c
-index ddbb34a22f688..52efc6e4f7623 100644
---- a/drivers/nvme/host/tcp.c
-+++ b/drivers/nvme/host/tcp.c
-@@ -411,8 +411,13 @@ static inline void nvme_tcp_queue_request(struct nvme_tcp_request *req,
- 	 * if we're the first on the send_list and we can try to send
- 	 * directly, otherwise queue io_work. Also, only do that if we
- 	 * are on the same cpu, so we don't introduce contention.
-+	 *
-+	 * TLS kTLS send takes ctx->tx_lock while blk_mq holds set->srcu.
-+	 * lockdep reports circular locking via elevator_lock.  Defer TLS
-+	 * sends to the io workqueue instead of inline from this path.
- 	 */
- 	if (queue->io_cpu == raw_smp_processor_id() &&
-+	    !nvme_tcp_queue_tls(queue) &&
- 	    empty && mutex_trylock(&queue->send_mutex)) {
- 		nvme_tcp_send_all(queue);
- 		mutex_unlock(&queue->send_mutex);
+diff --git a/drivers/nvme/target/configfs.c b/drivers/nvme/target/configfs.c
+index 413ee2d16d29c..6286e38436ddf 100644
+--- a/drivers/nvme/target/configfs.c
++++ b/drivers/nvme/target/configfs.c
+@@ -814,7 +814,7 @@ static ssize_t nvmet_ns_resv_enable_store(struct config_item *item,
+ 
+ 	mutex_lock(&ns->subsys->lock);
+ 	if (ns->enabled) {
+-		pr_err("the ns:%d is already enabled.\n", ns->nsid);
++		pr_err("the ns:%u is already enabled.\n", ns->nsid);
+ 		mutex_unlock(&ns->subsys->lock);
+ 		return -EINVAL;
+ 	}
+@@ -880,7 +880,7 @@ static struct config_group *nvmet_ns_make(struct config_group *group,
+ 		goto out;
+ 	config_group_init_type_name(&ns->group, name, &nvmet_ns_type);
+ 
+-	pr_info("adding nsid %d to subsystem %s\n", nsid, subsys->subsysnqn);
++	pr_info("adding nsid %u to subsystem %s\n", nsid, subsys->subsysnqn);
+ 
+ 	return &ns->group;
+ out:
+diff --git a/drivers/nvme/target/core.c b/drivers/nvme/target/core.c
+index 23fa90ec3c00e..269daefb88854 100644
+--- a/drivers/nvme/target/core.c
++++ b/drivers/nvme/target/core.c
+@@ -558,7 +558,7 @@ static void nvmet_p2pmem_ns_add_p2p(struct nvmet_ctrl *ctrl,
+ 	if (ret < 0)
+ 		pci_dev_put(p2p_dev);
+ 
+-	pr_info("using p2pmem on %s for nsid %d\n", pci_name(p2p_dev),
++	pr_info("using p2pmem on %s for nsid %u\n", pci_name(p2p_dev),
+ 		ns->nsid);
+ }
+ 
+diff --git a/drivers/nvme/target/pr.c b/drivers/nvme/target/pr.c
+index 7d937093b2262..ad07f55e7f173 100644
+--- a/drivers/nvme/target/pr.c
++++ b/drivers/nvme/target/pr.c
+@@ -145,7 +145,7 @@ static void nvmet_pr_add_resv_log(struct nvmet_ctrl *ctrl, u8 log_type,
+ 	log.nsid = cpu_to_le32(nsid);
+ 
+ 	if (!kfifo_put(&log_mgr->log_queue, log)) {
+-		pr_info("a reservation log lost, cntlid:%d, log_type:%d, nsid:%d\n",
++		pr_info("a reservation log lost, cntlid:%d, log_type:%d, nsid:%u\n",
+ 			ctrl->cntlid, log_type, nsid);
+ 		log_mgr->lost_count++;
+ 	}
 -- 
 2.53.0
 
