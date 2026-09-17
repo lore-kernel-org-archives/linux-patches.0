@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40C5A4B7A59;
-	Thu, 17 Sep 2026 17:42:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A25364F391B;
+	Thu, 17 Sep 2026 17:42:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666971; cv=none; b=Xkqf9ZlpDbxHP9Dj62rOSZZZkTb2MLosSSswmfctPV64oAIoeka+H/XP6iio7Xozbbc3CSwKOlckjmIz5uqPDrTX5dg6oxbWfUzzoczhRewifVSJ2VRdstNDNI4hclA0DZ3pPqOCDi6NNCCg7j0+ExmSanvxuuYFmHTNto8xxYY=
+	t=1789666975; cv=none; b=pcdlxEE6GVEZUDtSReJjrrOMse3DyFJgOPlkQG/wDJmlklB53TeMtmRxmX4uAC0ZKPOzAC8Nqw5XCeNaU6cKVB/GhsvjYmlhkd/YCsuMrryWQ+ppfS4EU6QeHuQcdU4UbUFkTyClK79QRrWKvjqQZx2ZRqEU8JjeAfLqbJRsVYs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666971; c=relaxed/simple;
-	bh=uTQ11a7jSwGREsO9vHxqO/B9xzMueiJs57tpCwxnInY=;
+	s=arc-20240116; t=1789666975; c=relaxed/simple;
+	bh=3dWt/A7nOJk7UiAsLmsJHXifmFbFBwn4Fw1RIsH9e40=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EKMAYExhubphn+Pk7j7Eaj8Qjq3JRbz/HMPtsvgvbltmZBKP3Il8E95q/5SXsYqnd7aNRTR3Zva3KKz2l0/b4CJImo8Lyq3LHCz+UV84KVLPyiX1Ye8PqYiwuq/78uxqE5Y45hrbaz2xlAaoS+LDxvUYFSVEiWUvlP/oa1NecwI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qTnqAECa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=mlBJcefjDjYw8BuLP+rIhL6Pnxhvgk+tefFC0SsGFRLYNW4QPAUnJW63v0pTc7e5frqTe1xSexMkYnDIy9qAkG3VDLZC0niryCvUMtQtUH0IqoZGK7ZtS24wjUCs7kJ7yE7bLdnt1kfowQMf1x21sJJRGbOuIQIXv89yK3NsExQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jf/9M1c+; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qTnqAECa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D45A1F000FF;
-	Thu, 17 Sep 2026 17:42:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jf/9M1c+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 924821F000FF;
+	Thu, 17 Sep 2026 17:42:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666970;
-	bh=F4hyyu7lRa61ylbNLbnZ9hP6BIIs7PA4MiyqQzxix90=;
+	s=korg; t=1789666973;
+	bh=upsS7T8yw+o41zfwYP2tPC42xyMMT45scJdWdxOUbdc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qTnqAECaR75lWsNKD7wNHHDGCaufZ5iLjiZaD9S1R9IOGjtzzOGOPQrzopo+TQH6x
-	 JWHFIVIIW5erNSDO+KXzZv8cbZ5S+UBxjtxyJERTBDtk2TpzNMfpVqu5Mln8j3Oce6
-	 UWi9mv+tP8ATxo1q0l+09D7L8vi01Z8SBRegjJaM=
+	b=Jf/9M1c+JUaSfmASuGKe/2g825vYHyQd5zx4CDbm0hWVY8OiLIDpNW2ZtaD4vJRg+
+	 LJC2wxu6LL7TdIgi76tD8O1pB+vhSTSMGHYpDfJaTXU+pe7jn93fyQkJhV/JGIOKJL
+	 5jAICiymj41rNfMZTLMQG1N0JFNvajdUkI9ZvBLk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gary Guo <gary@garyguo.net>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1148/1250] wifi: ath9k_htc: dont store usb_device_id
-Date: Thu, 17 Sep 2026 16:15:43 +0100
-Message-ID: <20260917151623.383003378@linuxfoundation.org>
+Subject: [PATCH 6.18 1184/1250] drm/amdgpu: Make amdgpu_vm_flush() non-failing in submission path
+Date: Thu, 17 Sep 2026 16:16:19 +0100
+Message-ID: <20260917151624.375245787@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -44,96 +46,99 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gary Guo <gary@garyguo.net>
+From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
 
-[ Upstream commit 14d2ac442d660e112efc0ce87ad10085013ed2b1 ]
+[ Upstream commit 37872d06f85f0349e7b1f0680aea77326f7c135e ]
 
-usb_device_id is not guaranteed to live longer than probe due to presence
-of dynamic ID. All information apart from driver_data can be easily
-retrieved from usb_device, so just store driver_data.
+amdgpu_vm_flush() is used during job submission and is not expected to
+fail. Convert it to return void and simplify the caller.
 
-Signed-off-by: Gary Guo <gary@garyguo.net>
-Link: https://patch.msgid.link/20260707-usb_dyn_id_uaf-v2-1-632dcf3adfba@garyguo.net
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Initialize the COND_EXEC patch location to 0 so it is safe to call
+amdgpu_ring_patch_cond_exec() when init_cond_exec is not supported.
+
+Suggested-by: Christian König <christian.koenig@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Stable-dep-of: 6760f5cb12d2 ("drm/amdgpu: avoid force-completing uninitialized UVD rings")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/ath/ath9k/hif_usb.c | 12 ++++++------
- drivers/net/wireless/ath/ath9k/hif_usb.h |  2 +-
- 2 files changed, 7 insertions(+), 7 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ib.c |    9 ++-------
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c |   10 +++-------
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vm.h |    2 +-
+ 3 files changed, 6 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath9k/hif_usb.c b/drivers/net/wireless/ath/ath9k/hif_usb.c
-index 0a3d2190b9bee..c15219257499f 100644
---- a/drivers/net/wireless/ath/ath9k/hif_usb.c
-+++ b/drivers/net/wireless/ath/ath9k/hif_usb.c
-@@ -1097,7 +1097,7 @@ static int ath9k_hif_usb_download_fw(struct hif_device_usb *hif_dev)
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ib.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ib.c
+@@ -208,13 +208,8 @@ int amdgpu_ib_schedule(struct amdgpu_rin
+ 		dma_fence_put(tmp);
  	}
- 	kfree(buf);
  
--	if (IS_AR7010_DEVICE(hif_dev->usb_device_id->driver_info))
-+	if (IS_AR7010_DEVICE(hif_dev->id_info))
- 		firm_offset = AR7010_FIRMWARE_TEXT;
- 	else
- 		firm_offset = AR9271_FIRMWARE_TEXT;
-@@ -1192,7 +1192,7 @@ static int ath9k_hif_request_firmware(struct hif_device_usb *hif_dev,
- 	if (MAJOR_VERSION_REQ == 1 && hif_dev->fw_minor_index == 3) {
- 		const char *filename;
+-	if (job) {
+-		r = amdgpu_vm_flush(ring, job, need_pipe_sync);
+-		if (r) {
+-			amdgpu_ring_undo(ring);
+-			goto free_fence;
+-		}
+-	}
++	if (job)
++		amdgpu_vm_flush(ring, job, need_pipe_sync);
  
--		if (IS_AR7010_DEVICE(hif_dev->usb_device_id->driver_info))
-+		if (IS_AR7010_DEVICE(hif_dev->id_info))
- 			filename = FIRMWARE_AR7010_1_1;
- 		else
- 			filename = FIRMWARE_AR9271;
-@@ -1208,7 +1208,7 @@ static int ath9k_hif_request_firmware(struct hif_device_usb *hif_dev,
+ 	amdgpu_ring_ib_begin(ring);
  
- 		return -ENOENT;
- 	} else {
--		if (IS_AR7010_DEVICE(hif_dev->usb_device_id->driver_info))
-+		if (IS_AR7010_DEVICE(hif_dev->id_info))
- 			chip = "7010";
- 		else
- 			chip = "9271";
-@@ -1265,9 +1265,9 @@ static void ath9k_hif_usb_firmware_cb(const struct firmware *fw, void *context)
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
+@@ -760,12 +760,9 @@ bool amdgpu_vm_need_pipeline_sync(struct
+  * @need_pipe_sync: is pipe sync needed
+  *
+  * Emit a VM flush when it is necessary.
+- *
+- * Returns:
+- * 0 on success, errno otherwise.
+  */
+-int amdgpu_vm_flush(struct amdgpu_ring *ring, struct amdgpu_job *job,
+-		    bool need_pipe_sync)
++void amdgpu_vm_flush(struct amdgpu_ring *ring, struct amdgpu_job *job,
++		     bool need_pipe_sync)
+ {
+ 	struct amdgpu_device *adev = ring->adev;
+ 	struct amdgpu_isolation *isolation =
+@@ -811,7 +808,7 @@ int amdgpu_vm_flush(struct amdgpu_ring *
  
- 	ret = ath9k_htc_hw_init(hif_dev->htc_handle,
- 				&hif_dev->interface->dev,
--				hif_dev->usb_device_id->idProduct,
-+				le16_to_cpu(hif_dev->udev->descriptor.idProduct),
- 				hif_dev->udev->product,
--				hif_dev->usb_device_id->driver_info);
-+				hif_dev->id_info);
- 	if (ret) {
- 		ret = -EINVAL;
- 		goto err_htc_hw_init;
-@@ -1381,7 +1381,7 @@ static int ath9k_hif_usb_probe(struct usb_interface *interface,
+ 	if (!vm_flush_needed && !gds_switch_needed && !need_pipe_sync &&
+ 	    !cleaner_shader_needed)
+-		return 0;
++		return;
  
- 	hif_dev->udev = udev;
- 	hif_dev->interface = interface;
--	hif_dev->usb_device_id = id;
-+	hif_dev->id_info = id->driver_info;
- #ifdef CONFIG_PM
- 	udev->reset_resume = 1;
- #endif
-diff --git a/drivers/net/wireless/ath/ath9k/hif_usb.h b/drivers/net/wireless/ath/ath9k/hif_usb.h
-index b3e66b0485a56..02655ed4e66ff 100644
---- a/drivers/net/wireless/ath/ath9k/hif_usb.h
-+++ b/drivers/net/wireless/ath/ath9k/hif_usb.h
-@@ -115,7 +115,7 @@ struct cmd_buf {
- struct hif_device_usb {
- 	struct usb_device *udev;
- 	struct usb_interface *interface;
--	const struct usb_device_id *usb_device_id;
-+	int id_info;
- 	const void *fw_data;
- 	size_t fw_size;
- 	struct completion fw_done;
--- 
-2.53.0
-
+ 	amdgpu_ring_ib_begin(ring);
+ 
+@@ -902,7 +899,6 @@ int amdgpu_vm_flush(struct amdgpu_ring *
+ 	}
+ 
+ 	amdgpu_ring_ib_end(ring);
+-	return 0;
+ }
+ 
+ /**
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.h
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.h
+@@ -516,7 +516,7 @@ int amdgpu_vm_validate(struct amdgpu_dev
+ 		       struct ww_acquire_ctx *ticket,
+ 		       int (*callback)(void *p, struct amdgpu_bo *bo),
+ 		       void *param);
+-int amdgpu_vm_flush(struct amdgpu_ring *ring, struct amdgpu_job *job, bool need_pipe_sync);
++void amdgpu_vm_flush(struct amdgpu_ring *ring, struct amdgpu_job *job, bool need_pipe_sync);
+ int amdgpu_vm_update_pdes(struct amdgpu_device *adev,
+ 			  struct amdgpu_vm *vm, bool immediate);
+ int amdgpu_vm_clear_freed(struct amdgpu_device *adev,
 
 
