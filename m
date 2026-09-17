@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E56F74078D3;
-	Thu, 17 Sep 2026 18:48:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2DB5488203;
+	Thu, 17 Sep 2026 18:48:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789670908; cv=none; b=TiICLeyKSQg2dPA99xuS6bCNyjof0gikf9sTIbdXPQCIziF6P+GJU1o/zaiyVgXYlmG7eLHzRwpOeCLpUiMs5IvNs5KGvRIqf3rWAy9nyJMJcha7YGk0nflmFs+Ez8xNAVy0I2U37PhhhtGIV9i91Kj3WTZuCq8S0ImVwalJzBI=
+	t=1789670911; cv=none; b=X7kLc1VGhVysvBECz2t4HgRxJIRl62yj+yB0f3gBrsb5Q5o05ziNy9O9BjNoTcI7MT1jCpJpmCDpl7zFz7ZFU1Ks3FZk3Ouh7wwqSjGha2CtGAaIjtef+hBxfz9ZBQjW57YaNRB5mujJLQJRpu28rsdsvoIInt110Z1Up0ML1n4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789670908; c=relaxed/simple;
-	bh=sh9WwvgikmHhUTVCEQkgomz7TUbAEg2GQj5xJgkaQjY=;
+	s=arc-20240116; t=1789670911; c=relaxed/simple;
+	bh=RTjCEWO3T2qn2PAwjtNAwC8Wbzlxd2DP9zWW/hWmBXE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=atAk+wxp9VvltWXQO2nE7xIjcwC/mJWYU80TnNp9L4LMhnlYZ2N/EEftKwO0js3ajnz1rz2hOwe1W36+joYwEzbOAs0ORE8SCNGvQskNiFh9S7IF7UP3hDTWswNvziv5ucG9cUnRdHrV8mZN73XTJtEceZEpfvDKJEk7YIxT7tk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jvHiUbWu; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PdAI4hlDmEUCfbzvgbEqaT8M6TVUrAM8pzw3LDu6I3xYxS+2RqZQuG9Q+pKCWT4Q9XhkhOG5Smpo+kBhffR5+DUBjmMq9PBZ6LTOon2Sb3uezWh+9+Yw7N7PXHSNkXWeLeXR7vnekvYPKxrKMiN60z8ujQY4tZsyqPnJkngpBrs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r/y5FbGT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jvHiUbWu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C46131F000FF;
-	Thu, 17 Sep 2026 18:48:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r/y5FbGT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEF8F1F000FF;
+	Thu, 17 Sep 2026 18:48:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789670906;
-	bh=RHFMJFrrxZsjeeuoqHiM0/XdiB/1Ii4K5WKpJKW/Pj8=;
+	s=korg; t=1789670909;
+	bh=/W9CFBVLt4c03foICgAQoFB/fNPeA0tfNYxdbaExrqo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jvHiUbWurD8evPFg1Hy4vXLN/u3D3yXatQvI59hDw7z+EkMNOqNp4uYQrZfX6CqeT
-	 3l63swp2vMj1K9L/tld4bjYgSWGID2JVmuyamuIoDyE3ShHTN0xavxprnbTkLkgTS8
-	 WLtgFVxy9UUXfyXYLPOYUcwVNQheQUNbTYb8AHYE=
+	b=r/y5FbGTcBAueJj5VRnxrAkQnpCSKW4XquPhXre10SosmL0ZrqqfIAcV74XWK/mOM
+	 3ldftRTNfc2bZuBF17QRshA0dtoLjqX3JaHEm6hlBRWvaIYYPIbQ4i8/raARizTYSm
+	 NsqqRZBf87oi9x7oS6NYZ2why6we2lTnLf17g+s8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Emilio=20Cobos=20=C3=81lvarez?= <emilio@crisal.io>,
-	Miguel Ojeda <ojeda@kernel.org>
-Subject: [PATCH 6.12 0809/1102] rust: allow `unknown_lints` in generated bindings for Rust < 1.88
-Date: Thu, 17 Sep 2026 16:12:32 +0100
-Message-ID: <20260917151600.801366236@linuxfoundation.org>
+	Roman Prucha <zorgan.roman@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.12 0810/1102] ALSA: ctxfi: Fix CA20K2 S/PDIF passthrough
+Date: Thu, 17 Sep 2026 16:12:33 +0100
+Message-ID: <20260917151600.825701175@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -44,79 +44,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Miguel Ojeda <ojeda@kernel.org>
+From: Roman Prucha <zorgan.roman@gmail.com>
 
-commit f4c3e38111fd84c2c7ae5785755f4a4d476e1cba upstream.
+commit b26a7a80e6bbf8dd17dacb127d12435d79375cf2 upstream.
 
-Starting with bindgen 0.73.2 [1], `#[allow(unnecessary_transmutes)]`
-are used, even when `--rust-target 1.85` is passed.
+dao_rsc_init() encodes the DAIO configuration as
 
-However, the lint was introduced in Rust 1.88.0. Thus building with
-older Rust versions warns like:
+    conf = (desc->msr & 0x7) | (desc->passthru << 3);
 
-    error: unknown lint: `unnecessary_transmutes`
-         --> rust/uapi/uapi_generated.rs:26294:13
-          |
-    26294 |     #[allow(unnecessary_transmutes)]
-          |             ^^^^^^^^^^^^^^^^^^^^^^
-          |
-          = note: `-D unknown-lints` implied by `-D warnings`
-          = help: to override `-D warnings` add `#[allow(unknown_lints)]`
+S/PDIF passthrough uses msr=1 and passthru=1, resulting in
+conf=9.
 
-Thus allow `unknown_lints` in the generated bindings -- only when building
-with older Rust versions.
+daio_mgr_dao_init() masks conf with 0xf, but handles only values
+1, 2, 4 and 8 when programming ATXCTL_NUC. As a result, conf=9
+falls through to the default case and leaves NUC at its previous
+setting.
 
-I have asked upstream if this is intentional [1], i.e. if we are supposed
-to always allow unknown lints in case `bindgen` uses such attributes,
-or whether it is an oversight.
+On a Creative X-Fi Titanium HD SB1270 (CA20K2), this breaks AC3
+IEC61937 passthrough when snd_ctxfi runs with
+reference_rate=48000,multiple=2. The receiver detects a non-audio
+stream but cannot decode the AC3 payload.
 
-[ Emilio said it wasn't intentional -- we will work around it for now
-  on the kernel side. - Miguel ]
+With the unmodified driver, multiple=1 makes the same stream work.
+Handle conf=9 through the same NUC=0 path as conf=1.
 
-Cc: stable@vger.kernel.org # Needed in 6.12.y and later (Rust is pinned in older LTSs).
-Cc: Emilio Cobos Álvarez <emilio@crisal.io>
-Link: https://github.com/rust-lang/rust-bindgen/pull/3455#issuecomment-5588526559 [1]
+The change was runtime tested on the SB1270 with multiple=2 using
+IEC958 stereo PCM, pre-encoded AC3 IEC61937 passthrough and ALSA
+A52 live 5.1 encoding.
+
+Fixes: 26a9630c72eb ("ALSA: ctxfi: cthw20k2: fix mask on conf to allow 4 bits")
+Cc: stable@vger.kernel.org
 Assisted-by: LLM
-Link: https://patch.msgid.link/20260908170539.345207-1-ojeda@kernel.org
-[ Removed the `cfg` for `allow(unnecessary_transmutes)` as suggested by
-  Gary. - Miguel ]
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Signed-off-by: Roman Prucha <zorgan.roman@gmail.com>
+Link: https://patch.msgid.link/20260903-ctxfi-spdif-conf9-fix-v1-1-5e4e3e1f801c@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- rust/bindings/lib.rs |    3 ++-
- rust/uapi/lib.rs     |    3 ++-
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ sound/pci/ctxfi/cthw20k2.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/rust/bindings/lib.rs
-+++ b/rust/bindings/lib.rs
-@@ -26,7 +26,8 @@
- 
- #[allow(dead_code)]
- #[allow(clippy::undocumented_unsafe_blocks)]
--#[cfg_attr(CONFIG_RUSTC_HAS_UNNECESSARY_TRANSMUTES, allow(unnecessary_transmutes))]
-+#[cfg_attr(not(CONFIG_RUSTC_HAS_UNNECESSARY_TRANSMUTES), allow(unknown_lints))]
-+#[allow(unnecessary_transmutes)]
- #[cfg_attr(
-     CONFIG_RUSTC_HAS_SUSPICIOUS_RUNTIME_SYMBOL_DEFINITIONS,
-     allow(suspicious_runtime_symbol_definitions)
---- a/rust/uapi/lib.rs
-+++ b/rust/uapi/lib.rs
-@@ -24,7 +24,8 @@
-     unreachable_pub,
-     unsafe_op_in_unsafe_fn
- )]
--#![cfg_attr(CONFIG_RUSTC_HAS_UNNECESSARY_TRANSMUTES, allow(unnecessary_transmutes))]
-+#![cfg_attr(not(CONFIG_RUSTC_HAS_UNNECESSARY_TRANSMUTES), allow(unknown_lints))]
-+#![allow(unnecessary_transmutes)]
- #![cfg_attr(
-     CONFIG_RUSTC_HAS_SUSPICIOUS_RUNTIME_SYMBOL_DEFINITIONS,
-     allow(suspicious_runtime_symbol_definitions)
+--- a/sound/pci/ctxfi/cthw20k2.c
++++ b/sound/pci/ctxfi/cthw20k2.c
+@@ -993,6 +993,7 @@ static int daio_mgr_dao_init(void *blk,
+ 		/* S/PDIF output */
+ 		switch ((conf & 0xf)) {
+ 		case 1:
++		case 9:
+ 			set_field(&ctl->txctl[idx], ATXCTL_NUC, 0);
+ 			break;
+ 		case 2:
 
 
