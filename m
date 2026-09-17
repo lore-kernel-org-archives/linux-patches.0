@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DFD4470EB6;
-	Thu, 17 Sep 2026 18:49:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D68773AEF2D;
+	Thu, 17 Sep 2026 18:49:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789670969; cv=none; b=HubbnotxZVBo2a2+eblVfhubX5hIZ6xQjBXkzf1jS9wZfnJyAkCbPSp/n1Vm2y0dw46PIoXX9iPGgok/GHmZy8I/HftAqWMA434hvJ4U9Iazgu5RYcqaOr0CHBZjzZd/A9DkTJ2Petnl3q3kkdNd+0nTD7MRNp9sF1MJ3OzRSOQ=
+	t=1789670973; cv=none; b=swrlL8hW0EdIHawWjRZ23hRjbOw4KB6lIxNFVRD/OHaZ1183ZDXiS0KtiHKgpdfCEbCpTHPNxL3IEwftYYhBaXxitbUU+URam34vhrzc4CuEm0y0v/FRmMHYMqfEmoVHlGOxYXX8Bm9hs9GCu/6RGnBQLoRRcwLaCB/VH/3jJBQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789670969; c=relaxed/simple;
-	bh=qhhnnrkw3XDpE3wvxllzmZYfnmMI0zOT9mDJrwFu8pE=;
+	s=arc-20240116; t=1789670973; c=relaxed/simple;
+	bh=8ngyHlwZbzaDMHGhC7r8kKcagzXb8xpfcpSJhxT1+J8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ra+MMamfCxkevLa5BBDVv07faIL7kpqhY5EeyhCVrJt0jI6MJjStS0jHzGTxzH2b1Rqj8UGrDBCsPiPXxm2WG7xwpR/KaKIJm6vW3xrTFkoPWzYwbDVFMvVnnxSFeIzyndisoInC3t8S7tc/3RKsL8BxNzkT8psVn5pUYGwhf64=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=egD7v2Wt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XHpQQJsWGgtxRtT68BbXyReSJAH1FoERsKgbr75G0GJ5IHkWjMed0E0oZiYDzlrJge4sm2SBoyyj3IAlz7hQgEh4+S3nP2qzYxHGEbW1KS0n1zirHP65tTzn6wAflY7N80N8CPDCM50USgttqh4pW8KL15lD3jF/C4PLkWLfXLc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KtxubWMX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="egD7v2Wt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6C391F00893;
-	Thu, 17 Sep 2026 18:49:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KtxubWMX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEFD61F000FF;
+	Thu, 17 Sep 2026 18:49:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789670968;
-	bh=W7oIIa2tr/WG9hf8ccKe+PUkmxg+v6Ql1VcLic51TxQ=;
+	s=korg; t=1789670971;
+	bh=ZNuYt8EeTBjPoko84SVP82YvGtheqyjV8ldZiyiXbf0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=egD7v2WtqHQm1RgiCQ67Gd0fML5LVROAiskH0jcv1GDuA+ii6KppW1P0rhtY4oUfb
-	 kCBnBZ6wnwxM7nrwCpjLxWW6ODqB+d/CyL0uKlFwqVS0g64wvuQXIoY1ciqXRta+O3
-	 gUbBn23iq0yn68z5jlgDRiPk2P+z3Ipk3OThTFYo=
+	b=KtxubWMXCFEeYyS/crg5jbEEQUwfh5Rl5KEDIiMivBzzsfsRnLhkKtX7xTnH4p/FB
+	 6ln3wDJ0T2+JzaEKl818rBk1grE4iEt6AxHcKBsNvHmFy5EW5OWidXnjlmrzOPHonH
+	 FmgypfH9oKC8BupVBWg+fUnpn6HJE/7tXi0y3laA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	Dawid Osuchowski <dawid.osuchowski@linux.intel.com>,
-	Karol Wachowski <karol.wachowski@linux.intel.com>
-Subject: [PATCH 6.12 0827/1102] accel/ivpu: Limit firmware log name prints to field size
-Date: Thu, 17 Sep 2026 16:12:50 +0100
-Message-ID: <20260917151601.271567454@linuxfoundation.org>
+	Kanishka De Silva <kpskanna1915@gmail.com>,
+	Farhad Alemi <farhad.alemi@berkeley.edu>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 0801/1102] ksmbd: prevent out-of-bounds reads in share config responses
+Date: Thu, 17 Sep 2026 16:12:24 +0100
+Message-ID: <20260917151600.586550086@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -51,77 +52,146 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dawid Osuchowski <dawid.osuchowski@linux.intel.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-commit 95bf070f3225dc7175725438c916ad321d42fe45 upstream.
+[ Upstream commit f25e93768fcc5d8287e50b1ec52a42e4c276df34 ]
 
-The name in struct vpu_tracing_buffer_header is a fixed-size array
-populated by the NPU firmware. It is expected to be NUL-terminated,
-but nothing on the host side enforces this, so printing it with an
-unbounded string conversion would read past the field if the
-terminator is ever missing and expose adjacent bytes of the shared
-tracing BO through dmesg and the debugfs FW log output.
+Validate IPC share configuration payload sizes before consuming
+variable-length fields. Bound veto list parsing and account for
+the separator byte when deriving the path length.
 
-Print at most as many characters as the name field holds, so the output
-never runs past it even if the string is not NUL-terminated.
-
-Cc: stable@vger.kernel.org
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260827102339.281799-1-dawid.osuchowski@linux.intel.com?part=2
-Fixes: d4e4257afa6e ("accel/ivpu: Add firmware tracing support")
-Signed-off-by: Dawid Osuchowski <dawid.osuchowski@linux.intel.com>
-Reviewed-by: Karol Wachowski <karol.wachowski@linux.intel.com>
-Signed-off-by: Karol Wachowski <karol.wachowski@linux.intel.com>
-Link: https://patch.msgid.link/20260901125749.404338-4-dawid.osuchowski@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: a677ebd8ca2f ("ksmbd: validate payload size in ipc response")
+Reported-by: Kanishka De Silva <kpskanna1915@gmail.com>
+Reported-by: Farhad Alemi <farhad.alemi@berkeley.edu>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/accel/ivpu/ivpu_fw_log.c |   15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ fs/smb/server/mgmt/share_config.c | 38 +++++++++++++++++++++++--------
+ fs/smb/server/transport_ipc.c     | 21 +++++++++++------
+ 2 files changed, 42 insertions(+), 17 deletions(-)
 
---- a/drivers/accel/ivpu/ivpu_fw_log.c
-+++ b/drivers/accel/ivpu/ivpu_fw_log.c
-@@ -69,9 +69,9 @@ static int fw_log_from_bo(struct ivpu_de
- 	*offset += size;
+diff --git a/fs/smb/server/mgmt/share_config.c b/fs/smb/server/mgmt/share_config.c
+index 4a5bc3c144284..04e8c11e865e9 100644
+--- a/fs/smb/server/mgmt/share_config.c
++++ b/fs/smb/server/mgmt/share_config.c
+@@ -88,9 +88,9 @@ static struct ksmbd_share_config *__share_lookup(const char *name)
  
- 	ivpu_dbg(vdev, FW_BOOT,
--		 "FW log name \"%s\", write offset 0x%x size 0x%x, wrap count %d, hdr version %d size %d format %d, alignment %d",
--		 log->name, log->write_index, size, log->wrap_count, log->header_version,
--		 header_size, log->format, log->alignment);
-+		 "FW log name \"%.*s\", write offset 0x%x size 0x%x, wrap count %d, hdr version %d size %d format %d, alignment %d",
-+		 (int)ARRAY_SIZE(log->name), log->name, log->write_index, size, log->wrap_count,
-+		 log->header_version, header_size, log->format, log->alignment);
+ static int parse_veto_list(struct ksmbd_share_config *share,
+ 			   char *veto_list,
+-			   int veto_list_sz)
++			   size_t veto_list_sz)
+ {
+-	int sz = 0;
++	size_t sz;
  
- 	return 0;
- }
-@@ -123,7 +123,8 @@ static void fw_log_print_buffer(struct i
+ 	if (!veto_list_sz)
+ 		return 0;
+@@ -98,7 +98,7 @@ static int parse_veto_list(struct ksmbd_share_config *share,
+ 	while (veto_list_sz > 0) {
+ 		struct ksmbd_veto_pattern *p;
  
- 	if (log->wrap_count == log->read_wrap_count) {
- 		if (log_end <= log_start) {
--			drm_printf(p, "==== %s \"%s\" log empty ====\n", prefix, log->name);
-+			drm_printf(p, "==== %s \"%.*s\" log empty ====\n", prefix,
-+				   (int)ARRAY_SIZE(log->name), log->name);
- 			return;
- 		}
- 	} else if (log->wrap_count == log->read_wrap_count + 1) {
-@@ -133,7 +134,8 @@ static void fw_log_print_buffer(struct i
- 		log_start = log_end;
+-		sz = strlen(veto_list);
++		sz = strnlen(veto_list, veto_list_sz);
+ 		if (!sz)
+ 			break;
+ 
+@@ -106,7 +106,7 @@ static int parse_veto_list(struct ksmbd_share_config *share,
+ 		if (!p)
+ 			return -ENOMEM;
+ 
+-		p->pattern = kstrdup(veto_list, KSMBD_DEFAULT_GFP);
++		p->pattern = kstrndup(veto_list, sz, KSMBD_DEFAULT_GFP);
+ 		if (!p->pattern) {
+ 			kfree(p);
+ 			return -ENOMEM;
+@@ -114,6 +114,9 @@ static int parse_veto_list(struct ksmbd_share_config *share,
+ 
+ 		list_add(&p->list, &share->veto_list);
+ 
++		if (sz == veto_list_sz)
++			break;
++
+ 		veto_list += sz + 1;
+ 		veto_list_sz -= (sz + 1);
+ 	}
+@@ -165,13 +168,27 @@ static struct ksmbd_share_config *share_config_request(struct ksmbd_work *work,
  	}
  
--	drm_printf(p, "==== %s \"%s\" log start ====\n", prefix, log->name);
-+	drm_printf(p, "==== %s \"%.*s\" log start ====\n", prefix, (int)ARRAY_SIZE(log->name),
-+		   log->name);
- 	if (log_end > log_start) {
- 		fw_log_print_lines(log_data + log_start, log_end - log_start, p);
- 	} else {
-@@ -141,7 +143,8 @@ static void fw_log_print_buffer(struct i
- 		fw_log_print_lines(log_data, log_end, p);
- 	}
- 	drm_printf(p, "\n\x1b[0m"); /* add new line and clear formatting */
--	drm_printf(p, "==== %s \"%s\" log end   ====\n", prefix, log->name);
-+	drm_printf(p, "==== %s \"%.*s\" log end   ====\n", prefix, (int)ARRAY_SIZE(log->name),
-+		   log->name);
- }
+ 	if (!test_share_config_flag(share, KSMBD_SHARE_FLAG_PIPE)) {
+-		int path_len = PATH_MAX;
++		size_t path_len;
  
- static void
+-		if (resp->payload_sz)
++		if (resp->payload_sz <= resp->veto_list_sz) {
++			ret = -EINVAL;
++		} else {
+ 			path_len = resp->payload_sz - resp->veto_list_sz;
+-
+-		share->path = kstrndup(ksmbd_share_config_path(resp), path_len,
+-				      KSMBD_DEFAULT_GFP);
++			if (resp->veto_list_sz)
++				path_len--;
++
++			if (!path_len) {
++				ret = -EINVAL;
++			} else {
++				share->path = kstrndup(
++					ksmbd_share_config_path(resp),
++					path_len, KSMBD_DEFAULT_GFP);
++				if (!share->path)
++					ret = -ENOMEM;
++				else
++					ret = 0;
++			}
++		}
+ 		if (share->path) {
+ 			share->path_sz = strlen(share->path);
+ 			while (share->path_sz > 1 &&
+@@ -184,7 +201,8 @@ static struct ksmbd_share_config *share_config_request(struct ksmbd_work *work,
+ 		share->force_directory_mode = resp->force_directory_mode;
+ 		share->force_uid = resp->force_uid;
+ 		share->force_gid = resp->force_gid;
+-		ret = parse_veto_list(share,
++		if (!ret)
++			ret = parse_veto_list(share,
+ 				      KSMBD_SHARE_CONFIG_VETO_LIST(resp),
+ 				      resp->veto_list_sz);
+ 		if (!ret && share->path) {
+diff --git a/fs/smb/server/transport_ipc.c b/fs/smb/server/transport_ipc.c
+index a0b9b3def3346..10847d1cda4ac 100644
+--- a/fs/smb/server/transport_ipc.c
++++ b/fs/smb/server/transport_ipc.c
+@@ -524,14 +524,21 @@ static int ipc_validate_msg(struct ipc_msg_table_entry *entry)
+ 		if (entry->msg_sz < sizeof(struct ksmbd_share_config_response))
+ 			return -EINVAL;
+ 
+-		if (resp->payload_sz) {
+-			if (resp->payload_sz < resp->veto_list_sz)
+-				return -EINVAL;
++		if (strnlen(resp->share_name, sizeof(resp->share_name)) ==
++		    sizeof(resp->share_name))
++			return -EINVAL;
+ 
+-			if (check_add_overflow(sizeof(struct ksmbd_share_config_response),
+-					       resp->payload_sz, &msg_sz))
+-				return -EINVAL;
+-		}
++		if (resp->veto_list_sz > resp->payload_sz)
++			return -EINVAL;
++
++		if (resp->flags != KSMBD_SHARE_FLAG_INVALID &&
++		    !(resp->flags & KSMBD_SHARE_FLAG_PIPE) &&
++		    resp->payload_sz <= resp->veto_list_sz)
++			return -EINVAL;
++
++		if (check_add_overflow(sizeof(struct ksmbd_share_config_response),
++				       resp->payload_sz, &msg_sz))
++			return -EINVAL;
+ 		break;
+ 	}
+ 	case KSMBD_EVENT_LOGIN_REQUEST_EXT:
+-- 
+2.53.0
+
 
 
