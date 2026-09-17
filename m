@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C31C4D487C;
-	Thu, 17 Sep 2026 19:03:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC2D44DDB22;
+	Thu, 17 Sep 2026 19:03:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789671827; cv=none; b=H//jkhkoIlgF42BZnXCeiJ47NAAWACArDx9WvhJdEjE/EmHb5Ro8AR8JrnibAIGWO5m8tvevhrVZgpE+n+MTR7VT6YYEUzpyEl4GYvGBLpfdJWYT0MeIZoeZ2Xa98WBO6bkP4mWIrt7PEeNur1gwSLPSTxVD6zpKfuxOhucVyGE=
+	t=1789671830; cv=none; b=aLx6KAZnDhn0dyi9/2A0qyy7xmkUSsNcwYZVHC/EndMQNfjn1wL3GwKwP2B2GlvX7/5qsCcHQB7Kth170SBzTog5j5/jil20ST2IjtF7k/CfSQ9w3mmPb+/iIvIMn08KFqpukkYuzr/0CW4LedKqiKEnmW8UojKRL3Dgq95chKA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789671827; c=relaxed/simple;
-	bh=ruE3kpxzf3+/kBB6bgy0NTQ0JRsBktmfrpI+Ll+g514=;
+	s=arc-20240116; t=1789671830; c=relaxed/simple;
+	bh=hYzFXgK8Q0j6lGid68pm3igW6wX87/4E2qmP8RoDDcs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gHVGTPMDP1UAIfiFopntL3ReldYBNgRBXCLV2BQLJDJzC2hHl3M/l6x8ixvJuCBz9QTSFo0u3MoDi9f5oytmWKOh0+FZ4k3ZMw+v8rnseYantMwHqrOxheUcrYXeNI2V7/hnxCR5mSYjS0nfM3NKAjpEmLw2uHTt7BXaQ2LrG5k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ohdxhyfD; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fXqbDQXlBtarNhQGxbtTtedRLSwyGRFYFXnDOqwDtPpil2JLB/l+LOkDLvUeEbipkaaVA6OD7jn15vtusqFip7WHQV5UkS0zndK66zsLqdraY2G25Jja1Z1ZEI8TsW2t8zExIqAMvojGRWpWJZCRvn8nvgMDEoYKgxiWp8sX+CA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J55zQZ0g; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ohdxhyfD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08E171F000FF;
-	Thu, 17 Sep 2026 19:03:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J55zQZ0g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DD481F000FF;
+	Thu, 17 Sep 2026 19:03:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789671825;
-	bh=TI+jbajjWZedNKDFYEKizaL4TC7bDyAPF3JihiDkb3A=;
+	s=korg; t=1789671828;
+	bh=pVUlJXaO2WVDz3a8Zly8VKtZOsmPMFw1h268CahMbuE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ohdxhyfDdTT7m3GehMFndfQbm21AWrdymGSM9HHusMqP0DQndousLLCkyvhWerI3S
-	 AxdUH9LHyefT2NliEU4lBBXkAXhTF6ZcNEtxXFC+JsNkItmebMyyWBR8G7HCuTRJ6q
-	 VktXG8bM/GgFUwKd9q+kQCzwXppJ5CVbiJo1yzhY=
+	b=J55zQZ0gLv9J/oP/aFUbkz6um6/wV/ym9hLzrOVA5XU4NBhQ8wj0/QOwL+hWAnqU2
+	 GEyBiePLXpHZEzGtxuLqNtoGRw+Dp/kPCV1aZ5jhC5euO22ITargV/xEM5E3XCpzFy
+	 A4uXobxum5/gljl+mWRPoa5kTiYUFxl0HvMP4mTo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vincent Guittot <vincent.guittot@linaro.org>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	K Prateek Nayak <kprateek.nayak@amd.com>
-Subject: [PATCH 6.12 1102/1102] sched/eevdf: Fix augmented max_slice
-Date: Thu, 17 Sep 2026 16:17:25 +0100
-Message-ID: <20260917151608.541445217@linuxfoundation.org>
+	Jeff Layton <jlayton@kernel.org>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 1086/1102] rpc_mkpipe_dentry(): saner calling conventions
+Date: Thu, 17 Sep 2026 16:17:09 +0100
+Message-ID: <20260917151608.120381674@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -51,34 +51,336 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vincent Guittot <vincent.guittot@linaro.org>
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-commit 9a8bc9bb4c3fb3218b4f151f98a722fbeb5b5c34 upstream.
+[ Upstream commit 19a6314a997f6adde0c100ecf9224d1ab43c9603 ]
 
-Similarly to se->min_slice, init se->max_slice with se->slice before
-enqueueing the entity so the augmented callback computes it correctly
-at parent level.
+Instead of returning a dentry or ERR_PTR(-E...), return 0 and store
+dentry into pipe->dentry on success and return -E... on failure.
 
-Fixes: 6e3c0a4e1ad1 ("sched/fair: Fix lag clamp")
-Signed-off-by: Vincent Guittot <vincent.guittot@linaro.org>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: K Prateek Nayak <kprateek.nayak@amd.com>
-Link: https://patch.msgid.link/20260907123855.1297976-1-vincent.guittot@linaro.org
+Callers are happier that way...
+
+NOTE: dummy rpc_pipe is getting ->dentry set; we never access that,
+since we
+	1) never call rpc_unlink() for it (dentry is taken out by
+->kill_sb())
+	2) never call rpc_queue_upcall() for it (writing to that
+sucker fails; no downcalls are ever submitted, so no replies are
+going to arrive)
+IOW, having that ->dentry set (and left dangling) is harmless,
+if ugly; cleaner solution will take more massage.
+
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+Stable-dep-of: 932a8cf6abb2 ("sunrpc: fix use-after-free in __rpc_clnt_handle_event and __rpc_clnt_remove_pipedir")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/fair.c |    2 ++
- 1 file changed, 2 insertions(+)
+ fs/nfs/blocklayout/rpc_pipefs.c    |   41 ++++++++++++++-----------------------
+ fs/nfs/nfs4idmap.c                 |    8 -------
+ fs/nfsd/nfs4recover.c              |   37 ++++++++++++---------------------
+ include/linux/sunrpc/rpc_pipe_fs.h |    2 -
+ net/sunrpc/auth_gss/auth_gss.c     |    7 ------
+ net/sunrpc/rpc_pipe.c              |   31 ++++++++++++++-------------
+ 6 files changed, 49 insertions(+), 77 deletions(-)
 
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -887,6 +887,8 @@ static void __enqueue_entity(struct cfs_
- 	avg_vruntime_add(cfs_rq, se);
- 	se->min_vruntime = se->vruntime;
- 	se->min_slice = se->slice;
-+	se->max_slice = se->slice;
-+
- 	rb_add_augmented_cached(&se->run_node, &cfs_rq->tasks_timeline,
- 				__entity_less, &min_vruntime_cb);
+--- a/fs/nfs/blocklayout/rpc_pipefs.c
++++ b/fs/nfs/blocklayout/rpc_pipefs.c
+@@ -141,17 +141,18 @@ static const struct rpc_pipe_ops bl_upca
+ 	.destroy_msg	= bl_pipe_destroy_msg,
+ };
+ 
+-static struct dentry *nfs4blocklayout_register_sb(struct super_block *sb,
++static int nfs4blocklayout_register_sb(struct super_block *sb,
+ 					    struct rpc_pipe *pipe)
+ {
+-	struct dentry *dir, *dentry;
++	struct dentry *dir;
++	int err;
+ 
+ 	dir = rpc_d_lookup_sb(sb, NFS_PIPE_DIRNAME);
+ 	if (dir == NULL)
+-		return ERR_PTR(-ENOENT);
+-	dentry = rpc_mkpipe_dentry(dir, "blocklayout", NULL, pipe);
++		return -ENOENT;
++	err = rpc_mkpipe_dentry(dir, "blocklayout", NULL, pipe);
+ 	dput(dir);
+-	return dentry;
++	return err;
  }
+ 
+ static void nfs4blocklayout_unregister_sb(struct super_block *sb,
+@@ -167,7 +168,6 @@ static int rpc_pipefs_event(struct notif
+ 	struct super_block *sb = ptr;
+ 	struct net *net = sb->s_fs_info;
+ 	struct nfs_net *nn = net_generic(net, nfs_net_id);
+-	struct dentry *dentry;
+ 	int ret = 0;
+ 
+ 	if (!try_module_get(THIS_MODULE))
+@@ -180,12 +180,7 @@ static int rpc_pipefs_event(struct notif
+ 
+ 	switch (event) {
+ 	case RPC_PIPEFS_MOUNT:
+-		dentry = nfs4blocklayout_register_sb(sb, nn->bl_device_pipe);
+-		if (IS_ERR(dentry)) {
+-			ret = PTR_ERR(dentry);
+-			break;
+-		}
+-		nn->bl_device_pipe->dentry = dentry;
++		ret = nfs4blocklayout_register_sb(sb, nn->bl_device_pipe);
+ 		break;
+ 	case RPC_PIPEFS_UMOUNT:
+ 		if (nn->bl_device_pipe->dentry)
+@@ -203,18 +198,17 @@ static struct notifier_block nfs4blockla
+ 	.notifier_call = rpc_pipefs_event,
+ };
+ 
+-static struct dentry *nfs4blocklayout_register_net(struct net *net,
+-						   struct rpc_pipe *pipe)
++static int nfs4blocklayout_register_net(struct net *net, struct rpc_pipe *pipe)
+ {
+ 	struct super_block *pipefs_sb;
+-	struct dentry *dentry;
++	int ret;
+ 
+ 	pipefs_sb = rpc_get_sb_net(net);
+ 	if (!pipefs_sb)
+-		return NULL;
+-	dentry = nfs4blocklayout_register_sb(pipefs_sb, pipe);
++		return 0;
++	ret = nfs4blocklayout_register_sb(pipefs_sb, pipe);
+ 	rpc_put_sb_net(net);
+-	return dentry;
++	return ret;
+ }
+ 
+ static void nfs4blocklayout_unregister_net(struct net *net,
+@@ -232,20 +226,17 @@ static void nfs4blocklayout_unregister_n
+ static int nfs4blocklayout_net_init(struct net *net)
+ {
+ 	struct nfs_net *nn = net_generic(net, nfs_net_id);
+-	struct dentry *dentry;
++	int err;
+ 
+ 	mutex_init(&nn->bl_mutex);
+ 	init_waitqueue_head(&nn->bl_wq);
+ 	nn->bl_device_pipe = rpc_mkpipe_data(&bl_upcall_ops, 0);
+ 	if (IS_ERR(nn->bl_device_pipe))
+ 		return PTR_ERR(nn->bl_device_pipe);
+-	dentry = nfs4blocklayout_register_net(net, nn->bl_device_pipe);
+-	if (IS_ERR(dentry)) {
++	err = nfs4blocklayout_register_net(net, nn->bl_device_pipe);
++	if (unlikely(err))
+ 		rpc_destroy_pipe_data(nn->bl_device_pipe);
+-		return PTR_ERR(dentry);
+-	}
+-	nn->bl_device_pipe->dentry = dentry;
+-	return 0;
++	return err;
+ }
+ 
+ static void nfs4blocklayout_net_exit(struct net *net)
+--- a/fs/nfs/nfs4idmap.c
++++ b/fs/nfs/nfs4idmap.c
+@@ -436,14 +436,8 @@ static int nfs_idmap_pipe_create(struct
+ 		struct rpc_pipe_dir_object *pdo)
+ {
+ 	struct idmap *idmap = pdo->pdo_data;
+-	struct rpc_pipe *pipe = idmap->idmap_pipe;
+-	struct dentry *dentry;
+ 
+-	dentry = rpc_mkpipe_dentry(dir, "idmap", idmap, pipe);
+-	if (IS_ERR(dentry))
+-		return PTR_ERR(dentry);
+-	pipe->dentry = dentry;
+-	return 0;
++	return rpc_mkpipe_dentry(dir, "idmap", idmap, idmap->idmap_pipe);
+ }
+ 
+ static const struct rpc_pipe_dir_object_ops nfs_idmap_pipe_dir_object_ops = {
+--- a/fs/nfsd/nfs4recover.c
++++ b/fs/nfsd/nfs4recover.c
+@@ -932,17 +932,18 @@ static const struct rpc_pipe_ops cld_upc
+ 	.destroy_msg	= cld_pipe_destroy_msg,
+ };
+ 
+-static struct dentry *
++static int
+ nfsd4_cld_register_sb(struct super_block *sb, struct rpc_pipe *pipe)
+ {
+-	struct dentry *dir, *dentry;
++	struct dentry *dir;
++	int err;
+ 
+ 	dir = rpc_d_lookup_sb(sb, NFSD_PIPE_DIR);
+ 	if (dir == NULL)
+-		return ERR_PTR(-ENOENT);
+-	dentry = rpc_mkpipe_dentry(dir, NFSD_CLD_PIPE, NULL, pipe);
++		return -ENOENT;
++	err = rpc_mkpipe_dentry(dir, NFSD_CLD_PIPE, NULL, pipe);
+ 	dput(dir);
+-	return dentry;
++	return err;
+ }
+ 
+ static void
+@@ -952,18 +953,18 @@ nfsd4_cld_unregister_sb(struct rpc_pipe
+ 		rpc_unlink(pipe->dentry);
+ }
+ 
+-static struct dentry *
++static int
+ nfsd4_cld_register_net(struct net *net, struct rpc_pipe *pipe)
+ {
+ 	struct super_block *sb;
+-	struct dentry *dentry;
++	int err;
+ 
+ 	sb = rpc_get_sb_net(net);
+ 	if (!sb)
+-		return NULL;
+-	dentry = nfsd4_cld_register_sb(sb, pipe);
++		return 0;
++	err = nfsd4_cld_register_sb(sb, pipe);
+ 	rpc_put_sb_net(net);
+-	return dentry;
++	return err;
+ }
+ 
+ static void
+@@ -983,7 +984,6 @@ static int
+ __nfsd4_init_cld_pipe(struct net *net)
+ {
+ 	int ret;
+-	struct dentry *dentry;
+ 	struct nfsd_net *nn = net_generic(net, nfsd_net_id);
+ 	struct cld_net *cn;
+ 
+@@ -1004,13 +1004,10 @@ __nfsd4_init_cld_pipe(struct net *net)
+ 	spin_lock_init(&cn->cn_lock);
+ 	INIT_LIST_HEAD(&cn->cn_list);
+ 
+-	dentry = nfsd4_cld_register_net(net, cn->cn_pipe);
+-	if (IS_ERR(dentry)) {
+-		ret = PTR_ERR(dentry);
++	ret = nfsd4_cld_register_net(net, cn->cn_pipe);
++	if (unlikely(ret))
+ 		goto err_destroy_data;
+-	}
+ 
+-	cn->cn_pipe->dentry = dentry;
+ #ifdef CONFIG_NFSD_LEGACY_CLIENT_TRACKING
+ 	cn->cn_has_legacy = false;
+ #endif
+@@ -2157,7 +2154,6 @@ rpc_pipefs_event(struct notifier_block *
+ 	struct net *net = sb->s_fs_info;
+ 	struct nfsd_net *nn = net_generic(net, nfsd_net_id);
+ 	struct cld_net *cn = nn->cld_net;
+-	struct dentry *dentry;
+ 	int ret = 0;
+ 
+ 	if (!try_module_get(THIS_MODULE))
+@@ -2170,12 +2166,7 @@ rpc_pipefs_event(struct notifier_block *
+ 
+ 	switch (event) {
+ 	case RPC_PIPEFS_MOUNT:
+-		dentry = nfsd4_cld_register_sb(sb, cn->cn_pipe);
+-		if (IS_ERR(dentry)) {
+-			ret = PTR_ERR(dentry);
+-			break;
+-		}
+-		cn->cn_pipe->dentry = dentry;
++		ret = nfsd4_cld_register_sb(sb, cn->cn_pipe);
+ 		break;
+ 	case RPC_PIPEFS_UMOUNT:
+ 		if (cn->cn_pipe->dentry)
+--- a/include/linux/sunrpc/rpc_pipe_fs.h
++++ b/include/linux/sunrpc/rpc_pipe_fs.h
+@@ -127,7 +127,7 @@ extern void rpc_remove_cache_dir(struct
+ 
+ struct rpc_pipe *rpc_mkpipe_data(const struct rpc_pipe_ops *ops, int flags);
+ void rpc_destroy_pipe_data(struct rpc_pipe *pipe);
+-extern struct dentry *rpc_mkpipe_dentry(struct dentry *, const char *, void *,
++extern int rpc_mkpipe_dentry(struct dentry *, const char *, void *,
+ 					struct rpc_pipe *);
+ extern int rpc_unlink(struct dentry *);
+ extern int register_rpc_pipefs(void);
+--- a/net/sunrpc/auth_gss/auth_gss.c
++++ b/net/sunrpc/auth_gss/auth_gss.c
+@@ -902,13 +902,8 @@ static int gss_pipe_dentry_create(struct
+ 		struct rpc_pipe_dir_object *pdo)
+ {
+ 	struct gss_pipe *p = pdo->pdo_data;
+-	struct dentry *dentry;
+ 
+-	dentry = rpc_mkpipe_dentry(dir, p->name, p->clnt, p->pipe);
+-	if (IS_ERR(dentry))
+-		return PTR_ERR(dentry);
+-	p->pipe->dentry = dentry;
+-	return 0;
++	return rpc_mkpipe_dentry(dir, p->name, p->clnt, p->pipe);
+ }
+ 
+ static const struct rpc_pipe_dir_object_ops gss_pipe_dir_object_ops = {
+--- a/net/sunrpc/rpc_pipe.c
++++ b/net/sunrpc/rpc_pipe.c
+@@ -799,7 +799,7 @@ static int rpc_rmdir_depopulate(struct d
+  * The @private argument passed here will be available to all these methods
+  * from the file pointer, via RPC_I(file_inode(file))->private.
+  */
+-struct dentry *rpc_mkpipe_dentry(struct dentry *parent, const char *name,
++int rpc_mkpipe_dentry(struct dentry *parent, const char *name,
+ 				 void *private, struct rpc_pipe *pipe)
+ {
+ 	struct dentry *dentry;
+@@ -814,21 +814,19 @@ struct dentry *rpc_mkpipe_dentry(struct
+ 
+ 	inode_lock_nested(dir, I_MUTEX_PARENT);
+ 	dentry = __rpc_lookup_create_exclusive(parent, name);
+-	if (IS_ERR(dentry))
+-		goto out;
++	if (IS_ERR(dentry)) {
++		inode_unlock(dir);
++		return PTR_ERR(dentry);
++	}
+ 	err = __rpc_mkpipe_dentry(dir, dentry, umode, &rpc_pipe_fops,
+ 				  private, pipe);
+-	if (err)
+-		goto out_err;
+-out:
++	if (unlikely(err))
++		pr_warn("%s() failed to create pipe %pd/%s (errno = %d)\n",
++			__func__, parent, name, err);
++	else
++		pipe->dentry = dentry;
+ 	inode_unlock(dir);
+-	return dentry;
+-out_err:
+-	dentry = ERR_PTR(err);
+-	printk(KERN_WARNING "%s: %s() failed to create pipe %pd/%s (errno = %d)\n",
+-			__FILE__, __func__, parent, name,
+-			err);
+-	goto out;
++	return err;
+ }
+ EXPORT_SYMBOL_GPL(rpc_mkpipe_dentry);
+ 
+@@ -1326,10 +1324,13 @@ rpc_gssd_dummy_populate(struct dentry *r
+ 		goto out;
+ 	}
+ 
+-	pipe_dentry = rpc_mkpipe_dentry(clnt_dentry, "gssd", NULL, pipe_data);
+-	if (IS_ERR(pipe_dentry)) {
++	ret = rpc_mkpipe_dentry(clnt_dentry, "gssd", NULL, pipe_data);
++	if (ret) {
+ 		__rpc_depopulate(clnt_dentry, gssd_dummy_info_file, 0, 1);
+ 		__rpc_depopulate(gssd_dentry, gssd_dummy_clnt_dir, 0, 1);
++		pipe_dentry = ERR_PTR(ret);
++	} else {
++		pipe_dentry = pipe_data->dentry;
+ 	}
+ out:
+ 	dput(clnt_dentry);
 
 
