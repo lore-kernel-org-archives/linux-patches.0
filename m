@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCB0D5372D8;
-	Thu, 17 Sep 2026 17:02:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DA285372E0;
+	Thu, 17 Sep 2026 17:02:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789664559; cv=none; b=Y26pEl7OKc8/7MAFvSWRsdWM1n1xBmkQjFs8GPxcNV2CSjXpxrZsFdTSa5uVM5HXc5zE80EsCfpsw8EW5KTslIBgAQhLsAEcpWG4GdzT9z6x/EJOlt3vuRCuoVQU3wkngWBNOVxzx37JP/ZoeTYPm0d0ix3iiNzl/S5ERlmRdk0=
+	t=1789664562; cv=none; b=eInHqsgrUXKEXkX2yW1USATc+nPTcZexjeL6F8U15THaj+q9gPNtTptsxP09LDkt5HSZeycI1uA/NLdUcdxFlHRe9dDJwvAUi6/X7c9wmv3UvTivKsm4sM0tr0pseVzPHsd7KzUiF9ukvOFIvxJ0vl0L8lCS+Yk81rVkIJBBDUs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789664559; c=relaxed/simple;
-	bh=2kficQas1ZwMO/0o/bWpuvpuFHqAs+cYqrM+3l56vk8=;
+	s=arc-20240116; t=1789664562; c=relaxed/simple;
+	bh=8tJr4Khka4t99UB4/zyjpUMzcgw5xC1qY7X0wewV2BQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=J/vhf9nHK+JWicBB/V7u0d0sYQMeDEN5v+rvXnEuKgfhFIckqYV5D1QpEXu0aJDXrT5frW1uCczD8EpFUN81dmKGNeXcA+s4/qjAjZiPyuKqm1QLp01SU1MsqgmGMxKW3TrpWwTaGxUcZuVRZV9qgpIUIG3y3D9MIZkYnV6E1nk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mX28NngH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BsAYoUoGujxQB1LPfvgtzHYL5+P4PE7kgOTr716USHbNZbA44grmN7CEVolDNiyyezsztyMe0+DSrGnh6LmgrVH8SNL5RcK50es+Z9lbFzjEoxXk7Bq/BEgZNWbJM8OQAtjrvxl2WS18kQzUBATxilVHnoVisjq5Plvp963AnwQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ycp3lC1S; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mX28NngH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B4B81F000FF;
-	Thu, 17 Sep 2026 17:02:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ycp3lC1S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01A1F1F00893;
+	Thu, 17 Sep 2026 17:02:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789664558;
-	bh=spFHGWWFHC5Fc9DpGxYz66q8Bw+PEcXKEBxwn+LbVbo=;
+	s=korg; t=1789664561;
+	bh=kdTOCAti7Dm+7UO8slWjhqpGoaYPEMpOJVn+vd3MXuc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mX28NngHW+yy4Dodr5zQxrMxPfIj1uKgzu3sM4jxSjOAtu7izgHsBU09qmdCSk2xm
-	 +YrbTSODmKlBaPIPIZbSBCQjATSveLeEjmMUQHbhF34FJxvnGj4FaDPP+DlLQvXbps
-	 9pVgm+/e0QPzBwVg/kKX3jGqf+P9jrIrs9RAKvTo=
+	b=Ycp3lC1Si3+E7tHPV6twE0Gwgsgra4VCHNDn/K5k/tKect5NaFSBoASwwzeFcByNt
+	 vUh2X/e7Z9MoJxM8FBTLcy2MMJtKpoHfhj8GIqQ2K1iJSYwgCzJpWPLBGu3KeGcw7s
+	 Kvib970Uf4rR96T9Zq1lbuOQfDvy13S2c+Wfn5+w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Georgia Garcia <georgia.garcia@canonical.com>,
-	=?UTF-8?q?Maxime=20B=C3=A9lair?= <maxime.belair@canonical.com>,
-	John Johansen <john.johansen@canonical.com>,
+	Alice Mikityanska <alice@isovalent.com>,
+	Davide Caratti <dcaratti@redhat.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0412/1250] apparmor: propagate -ENOMEM correctly in unpack_table
-Date: Thu, 17 Sep 2026 16:03:27 +0100
-Message-ID: <20260917151603.190408727@linuxfoundation.org>
+Subject: [PATCH 6.18 0413/1250] net/sched: act_csum: dont mangle UDP tunnel GSO packets
+Date: Thu, 17 Sep 2026 16:03:28 +0100
+Message-ID: <20260917151603.218436175@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -46,93 +47,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maxime Bélair <maxime.belair@canonical.com>
+From: Alice Mikityanska <alice@isovalent.com>
 
-[ Upstream commit 1c8a839442823ce5c627d645730d8c61d828aafa ]
+[ Upstream commit 9bcb30b389ec5888590cb6ec58c7a3b80fe49a11 ]
 
-Currently, if the `kvzalloc` in `unpack_table` fails, it returns NULL.
-This is masked by `aa_dfa_unpack` which interprets NULL as a -EPROTO,
-leading to confusing error messages in `apparmor_parser` [1].
+Similar to commit add641e7dee3 ("sched: act_csum: don't mangle TCP and
+UDP GSO packets"), UDP tunnel GSO packets going through act_csum
+shouldn't have their checksum calculated at this point, because it will
+be done after segmentation. Setting the checksum in act_csum modifies
+skb->ip_summed and prevents inner IP csum offload from kicking in,
+resulting in a packet with a bad checksum.
 
-The fixed behavior correctly propagates -ENOMEM on allocation failure.
+Add UDP tunnel GSO packets to the exceptions, and also add UDP GSO
+(SKB_GSO_UDP_L4), as the same logic as in the commit mentioned above
+applies to UDP GSO too.
 
-Link: https://gitlab.com/apparmor/apparmor/-/issues/592
-Reviewed-by: Georgia Garcia <georgia.garcia@canonical.com>
-Signed-off-by: Maxime Bélair <maxime.belair@canonical.com>
-Signed-off-by: John Johansen <john.johansen@canonical.com>
+Signed-off-by: Alice Mikityanska <alice@isovalent.com>
+Reviewed-by: Davide Caratti <dcaratti@redhat.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20260611192955.604661-2-alice.kernel@fastmail.im
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/match.c | 22 +++++++++++++---------
- 1 file changed, 13 insertions(+), 9 deletions(-)
+ net/sched/act_csum.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/security/apparmor/match.c b/security/apparmor/match.c
-index 0de249725efbf..b2a4bee4e3939 100644
---- a/security/apparmor/match.c
-+++ b/security/apparmor/match.c
-@@ -27,13 +27,13 @@
-  * @blob: data to unpack (NOT NULL)
-  * @bsize: size of blob
-  *
-- * Returns: pointer to table else NULL on failure
-+ * Returns: pointer to table else ERR_PTR on failure
-  *
-  * NOTE: must be freed by kvfree (not kfree)
-  */
- static struct table_header *unpack_table(char *blob, size_t bsize)
- {
--	struct table_header *table = NULL;
-+	struct table_header *table = ERR_PTR(-EPROTO);
- 	struct table_header th;
- 	size_t tsize;
+diff --git a/net/sched/act_csum.c b/net/sched/act_csum.c
+index 3a377604ad343..b6873f393aa33 100644
+--- a/net/sched/act_csum.c
++++ b/net/sched/act_csum.c
+@@ -259,7 +259,9 @@ static int tcf_csum_ipv4_udp(struct sk_buff *skb, unsigned int ihl,
+ 	const struct iphdr *iph;
+ 	u16 ul;
  
-@@ -74,20 +74,21 @@ static struct table_header *unpack_table(char *blob, size_t bsize)
- 		else if (th.td_flags == YYTD_DATA32)
- 			UNPACK_ARRAY(table->td_data, blob, th.td_lolen,
- 				     u32, __be32, get_unaligned_be32);
--		else
--			goto fail;
-+		else {
-+			kvfree(table);
-+			table = ERR_PTR(-EPROTO);
-+			goto out;
-+		}
- 		/* if table was vmalloced make sure the page tables are synced
- 		 * before it is used, as it goes live to all cpus.
- 		 */
- 		if (is_vmalloc_addr(table))
- 			vm_unmap_aliases();
--	}
-+	} else
-+		table = ERR_PTR(-ENOMEM);
+-	if (skb_is_gso(skb) && skb_shinfo(skb)->gso_type & SKB_GSO_UDP)
++	if (skb_is_gso(skb) && skb_shinfo(skb)->gso_type &
++	    (SKB_GSO_UDP | SKB_GSO_UDP_L4 |
++	     SKB_GSO_UDP_TUNNEL | SKB_GSO_UDP_TUNNEL_CSUM))
+ 		return 1;
  
- out:
- 	return table;
--fail:
--	kvfree(table);
--	return NULL;
- }
+ 	/*
+@@ -315,7 +317,9 @@ static int tcf_csum_ipv6_udp(struct sk_buff *skb, unsigned int ihl,
+ 	const struct ipv6hdr *ip6h;
+ 	u16 ul;
  
- /**
-@@ -359,8 +360,11 @@ struct aa_dfa *aa_dfa_unpack(void *blob, size_t size, int flags)
+-	if (skb_is_gso(skb) && skb_shinfo(skb)->gso_type & SKB_GSO_UDP)
++	if (skb_is_gso(skb) && skb_shinfo(skb)->gso_type &
++	    (SKB_GSO_UDP | SKB_GSO_UDP_L4 |
++	     SKB_GSO_UDP_TUNNEL | SKB_GSO_UDP_TUNNEL_CSUM))
+ 		return 1;
  
- 	while (size > 0) {
- 		table = unpack_table(data, size);
--		if (!table)
-+		if (IS_ERR(table)) {
-+			error = PTR_ERR(table);
-+			table = NULL;
- 			goto fail;
-+		}
- 
- 		switch (table->td_id) {
- 		case YYTD_ID_ACCEPT:
+ 	/*
 -- 
 2.53.0
 
