@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79F794E77E9;
-	Thu, 17 Sep 2026 15:41:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F33D4E781E;
+	Thu, 17 Sep 2026 15:42:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659723; cv=none; b=JFOKXVXKY7pa9BgQrP6gzqlfSiijUyNm6MoGLqtjDWwy90UX0u/UdzgzkJ+jj21V24aGXUtG5Lo5LX0DS09iM97tozhOUL2psC0lbIw9H9+E65v3upEcKR++XTTfMHKtxbwV5a4Hm/a8KKG7D5kI/afmp2NYe0NPTqi+FyEZdDg=
+	t=1789659725; cv=none; b=tPGfdi3o62XvkNPMVGDHcxZ9AgYmxs7w0SxGPHwF5+T+YqNT7AtnMzYeq/2nngA11d11WqgJnEXfr3Of5lxHagLrfyFj1fP/EW8V8hn3Ulwi7wbN9mmQdqil2LjjWjR+YUAMTXzrKV1Bu8fQBUGoR1lAQuoOYC3zcGrRrVdOtOc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659723; c=relaxed/simple;
-	bh=GnYXLZBj9kM6FKspGz6YghkO2wqtTYyOtWhkVlP9i7g=;
+	s=arc-20240116; t=1789659725; c=relaxed/simple;
+	bh=7Vu548EtAmQl4StqNoEmPtfysqN0Q2w+yTnBTLbEuQ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o0idmK2C6040eg1lDXHY/m7r6rHjI++cuqSH2WoRMCDaucOfcJgZFD1o7MgkklxA04jxicPhXY0lgA7gZ/UBPxUz5xWSS9l26iXjqrzRDjTvVFMaunqD9CLEqAmhBkU39sgZsPDsX2BNTSY+b1pguyIBsdS6RhRFhH3/hwqhUcI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zhxks1FL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cMfJZ1yffOTwefXK+0hPA0lDyGO4unR86z2PBOf49h9hfr1+P3P9xK7RB+XbPf1zWOPdkCuV0QNEOkDeXoCnmvANCSD4/xLSnV+YVNCn/BPGzVuKLCKjgO3SPckT6z/H2UB70j7kO4II33psnnbq6/HbE8D1G9pkgEEbziBly2o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gWFFjhv4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zhxks1FL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D1A91F008A1;
-	Thu, 17 Sep 2026 15:41:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gWFFjhv4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0132D1F00898;
+	Thu, 17 Sep 2026 15:41:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659711;
-	bh=ipERhDzUlboKkYLQTUWnTqwn4HkMd1Q06TgsCqCkmX4=;
+	s=korg; t=1789659717;
+	bh=AVjCtQQcE7Gq/KEddEihoLj5vM3nCqZn1EfE/XvX+vc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Zhxks1FL6IF14bELjRHck53hNrHpov/7xtayOK0JI3k9AvyVYGMp4LGZW3Fyl/bSB
-	 sNz8GVWJmeIB/lCbg+sNBDmEGF/BppgFbfVYlb4a/T8ApoamyqMoo0vsj3XWxo6I8D
-	 12hcpdJ/2YaXyfufITDupNUKsWsWFK2qTQuNgsFo=
+	b=gWFFjhv4o3hIcBX1D+bzPuaFo0r5YdnpWzqj0kV6RaMXa/wwkeEzWuYstcrrpb4HC
+	 Rbn70sk4PF6dQypBkSjd44EaVCKb0jAoTquYjG3UyGUjj641bRgsXGwNMshsES9O6+
+	 Xpuqt5JDtuyeK7ST/Vz4Wq6oSEwtp81rZhQE38Rw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linfeng Sun <linfeng.sun.dev@gmail.com>,
+	Jia Jia <physicalmtea@gmail.com>,
 	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 348/733] vdpa_sim_net: check TX pull result before RX copy
-Date: Thu, 17 Sep 2026 16:10:56 +0100
-Message-ID: <20260917151400.240340922@linuxfoundation.org>
+Subject: [PATCH 7.2 350/733] vduse: validate virtqueue alignment
+Date: Thu, 17 Sep 2026 16:10:58 +0100
+Message-ID: <20260917151400.295899525@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -51,51 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linfeng Sun <linfeng.sun.dev@gmail.com>
+From: Jia Jia <physicalmtea@gmail.com>
 
-[ Upstream commit 0d195797a80b77f2ec56718cd26d3ee65d0093e8 ]
+[ Upstream commit fa2c25b4add57888acfa89e398389e267bff3dcf ]
 
-vringh_iov_pull_iotlb() returns a signed byte count.  A failed TX pull is
-currently added to the unsigned byte counter and then passed as a size_t
-length to receive_filter() and vringh_iov_push_iotlb().  A negative error
-can therefore become a large length in the RX path.
+vduse_validate_config() only checks the upper bound of vq_align. Invalid
+values can therefore reach vring_create_virtqueue_map(). The split-ring
+helpers use align - 1 as a bit mask, so the alignment must be a non-zero
+power of two. A zero value makes vring_size() drop the descriptor and
+available-ring part and vring_init() leave the used ring pointer NULL.
 
-Handle non-positive pull results before every length use.  Count the TX
-error and complete the consumed TX descriptor with zero bytes.
+The VIRTIO spec requires the used ring to start at an address
+aligned to at least 4 bytes. Reject values below VRING_USED_ALIGN_SIZE as
+well as non-power-of-two values before they reach the virtio ring helpers.
 
-I found this bug myself, though the patch was written with AI assistance.
+Opening a virtio-net device created with vq_align=0 triggered:
 
-Fixes: cfe226892913 ("vdpa_sim: filter destination mac address")
-Assisted-by: OpenAI-Codex:GPT-5
-Signed-off-by: Linfeng Sun <linfeng.sun.dev@gmail.com>
+BUG: KASAN: null-ptr-deref in virtqueue_kick_prepare_split+0xe3/0x100
+Read of size 2 at addr 0000000000000000 by task systemd-network/1062
+
+Call Trace (relevant frames):
+ dump_stack_lvl
+ print_report
+ kasan_report
+ __asan_load2
+ virtqueue_kick_prepare_split+0xe3/0x100
+ virtqueue_kick_prepare+0x40/0x60
+ try_fill_recv+0x857/0x1250
+ virtnet_open+0x189/0x460
+ __dev_open+0x225/0x390
+ __dev_change_flags+0x368/0x3b0
+ netif_change_flags+0x56/0xc0
+ do_setlink.isra.0+0x68c/0x1e30
+
+Validate the value before it reaches the virtio ring helpers.
+
+Fixes: c8a6153b6c59 ("vduse: Introduce VDUSE - vDPA Device in Userspace")
+Signed-off-by: Jia Jia <physicalmtea@gmail.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260901094842.25875-1-linfeng.sun.dev@gmail.com>
+Message-ID: <20260830023354.115333-1-physicalmtea@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vdpa/vdpa_sim/vdpa_sim_net.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/vdpa/vdpa_user/vduse_dev.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/vdpa/vdpa_sim/vdpa_sim_net.c b/drivers/vdpa/vdpa_sim/vdpa_sim_net.c
-index 29fd14ce5860b..a6514b5ccd865 100644
---- a/drivers/vdpa/vdpa_sim/vdpa_sim_net.c
-+++ b/drivers/vdpa/vdpa_sim/vdpa_sim_net.c
-@@ -225,10 +225,15 @@ static void vdpasim_net_work(struct vdpasim *vdpasim)
- 			break;
- 		}
+diff --git a/drivers/vdpa/vdpa_user/vduse_dev.c b/drivers/vdpa/vdpa_user/vduse_dev.c
+index 10dcf016bfb06..2ea30f85350d3 100644
+--- a/drivers/vdpa/vdpa_user/vduse_dev.c
++++ b/drivers/vdpa/vdpa_user/vduse_dev.c
+@@ -2094,7 +2094,9 @@ static bool vduse_validate_config(struct vduse_dev_config *config,
+ 			return false;
+ 	}
  
--		++tx_pkts;
- 		read = vringh_iov_pull_iotlb(&txq->vring, &txq->out_iov,
- 					     net->buffer, PAGE_SIZE);
-+		if (read <= 0) {
-+			++tx_errors;
-+			vdpasim_net_complete(txq, 0);
-+			continue;
-+		}
+-	if (config->vq_align > PAGE_SIZE)
++	if (config->vq_align < VRING_USED_ALIGN_SIZE ||
++	    !is_power_of_2(config->vq_align) ||
++	    config->vq_align > PAGE_SIZE)
+ 		return false;
  
-+		++tx_pkts;
- 		tx_bytes += read;
- 
- 		if (!receive_filter(vdpasim, read)) {
+ 	if (config->config_size > PAGE_SIZE)
 -- 
 2.53.0
 
