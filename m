@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F3983B4E87;
-	Thu, 17 Sep 2026 17:43:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5861351588A;
+	Thu, 17 Sep 2026 17:43:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666986; cv=none; b=l7fbtVTF13y+qEiuXxgVr7mikiTRotKvLfOFR3j3GIWQ7GAmZmTarpc3xVbRESARAMB2DLcxjovq2XxcXemtypXOythQdGVGK2sWa+UwxHqn2Q4tjMUlDfE98Mac9yyNYzYN3bFFDhjBXmAyZ7bhQPw2yVyPK5OW1EW42VeQtVg=
+	t=1789666989; cv=none; b=SXUWdWajIV6L0uZ0sXyeEk/Ext5E2DWUn4PYPyWoUkUdMW0N0cVM1S5uuwQH1xOPZnZSerktro35vLjhwbdW3bbNPrijdC2G06h7vOLL6jdGbf3tHvWoKF2O6mNh+9/ary4Zx+Pr+PrvxKcdgFJ/OBYpuo1awzSDR7qG/1NNss4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666986; c=relaxed/simple;
-	bh=c9oHRz6XNhu7wVOJ/EbHJUYI4rsV1hpIQ+2lKlUHrDU=;
+	s=arc-20240116; t=1789666989; c=relaxed/simple;
+	bh=Zpk2HQ2KkCwAonfqx9BJbBFNi/izmJrefZsXSdPsQQQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jF1eoew3kzlmfJoi4w78PrgtXxHcq3kfr9XJvZFJWkbdM08sv5nvtu3qy/1MJhA4PPl253sCyUosvp5542OX3kum8vRL9QY5aJxnPAoNUx1ccu3FKJs3RKkBdv0caoonIoapA1TOcY23jgdKoyNo1e0xJs9Ir5quYYp75d5mx1Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XttEMhT5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aWeYLsMoLnoJuojtVME8tnVHOtUnYLUIXfyNMhfezAIrtJveeuhgmDNaw1lTR2LYNRMxxgFGIUmlU9p//aMvLoLTMHOIsYiQm/X+1bVdZStNtWRPUVUiFmMvTgGLtpikLPmAAnSvd/yV78A+Dcb/Osa1fdzuMLkZvTfJRQGgNhM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fu96Q/O/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XttEMhT5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 880141F000FF;
-	Thu, 17 Sep 2026 17:43:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fu96Q/O/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86D751F000FF;
+	Thu, 17 Sep 2026 17:43:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666985;
-	bh=9Laby8i+37vsrxfMS9joKEFEEruymUGUWCySUviBkgQ=;
+	s=korg; t=1789666988;
+	bh=gItvZDFg9MuICasFZkj79dwEV3hHgWf/ecjD60E3Tfg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XttEMhT5Er2ZnE/5srZ6YGbcTUF3K5bZCJc3VHIzsSivjMGxRsRNbeaSnKtSLENZb
-	 tMhDGwihatRiWa9DZ2hknK3O0IFiTYbWKdRle4QJf/F5vnMXGowhFADvuo6Gkp328j
-	 +h+HdNztZIaJM1X4C1+g+YkxFajkbzkYJiajZDcY=
+	b=fu96Q/O/EyM25qlViajBbno5w184f0PynWFz+/hJ5KVghXfn5dduSHiQRp6EJfovJ
+	 xkdNdAmlgURwrAr7MIv+4d6hBD6nwEniEOXaNWQgmI4lH/IyRv7UFMdB4/+UY7PI3s
+	 SyxpgZmtKQh1xk0iPoQraU7ajRyJDaFSflJGohbU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gary Guo <gary@garyguo.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1152/1250] net: usb: pegasus: dont rely on id table pointer arithmetic
-Date: Thu, 17 Sep 2026 16:15:47 +0100
-Message-ID: <20260917151623.487423014@linuxfoundation.org>
+	Xiang Mei <xmei5@asu.edu>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>
+Subject: [PATCH 6.18 1153/1250] i2c: smbus: reject oversized block transfers in the common path
+Date: Thu, 17 Sep 2026 16:15:48 +0100
+Message-ID: <20260917151623.514841376@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -50,186 +51,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gary Guo <gary@garyguo.net>
+From: Weiming Shi <bestswngs@gmail.com>
 
-[ Upstream commit ce8101c331956bbd3e20681331dfd22eb7c1c1ea ]
+commit 3051cd060fa496df42954291fa2306ed2eab4ecc upstream.
 
-The current code is broken when dynamic ID is involved; in such cases
-usb_device_id parameter of probe lives on the heap and the pointer
-arithmetic will get an index that is wildly out of bound. Instead of
-keeping a side table for additional information, use driver_info field of
-the usb_device_id.
+The SMBus block transfer length data->block[0] is validated in
+i2c_smbus_xfer_emulated() but that check runs too late for tracepoints
+and is skipped entirely when the adapter provides a native smbus_xfer
+implementation. This allows user-controlled oversized block lengths to
+reach tracepoint memcpy calls and driver callbacks unchecked.
 
-The dynamic ID parsing code needs to be updated for this; convert it to
-just write to the reserved entry for dynamic ID and remove the weird loop.
+Add an early validation in __i2c_smbus_xfer() that rejects block
+transfers whose caller-supplied length is zero or exceeds
+I2C_SMBUS_BLOCK_MAX before any tracepoint fires or driver callback
+runs. data->block[0] is filled in by the device on SMBus block reads,
+so the check is scoped to operations where the length is actually
+supplied by the caller. This is consistent with the existing -EINVAL
+convention in the emulated path and protects all downstream consumers
+at once: the smbus_write tracepoint, all native smbus_xfer driver
+implementations, and the emulated path.
 
-Signed-off-by: Gary Guo <gary@garyguo.net>
-Link: https://patch.msgid.link/20260707-usb_dyn_id_uaf-v2-5-632dcf3adfba@garyguo.net
+Two distinct bugs are fixed by this change:
+
+Bug 1: smbus_write tracepoint OOB (include/trace/events/smbus.h)
+  trace_smbus_write() fires before any validation and copies
+  data->block[0]+1 bytes into a 34-byte event buffer. With
+  block[0]=0xfe the tracepoint copies 255 bytes, overflowing by 221.
+
+ BUG: KASAN: stack-out-of-bounds in trace_event_raw_event_smbus_write+0x27c/0x530
+ Read of size 255 at addr ffff88800d98fcf8 by task poc_smbus/91
+ Call Trace:
+  <TASK>
+  __asan_memcpy+0x23/0x80
+  trace_event_raw_event_smbus_write+0x27c/0x530
+  __i2c_smbus_xfer+0x43a/0xa40
+  i2c_smbus_xfer+0x19e/0x340
+  i2cdev_ioctl_smbus+0x38f/0x7f0
+  i2cdev_ioctl+0x35e/0x680
+  __x64_sys_ioctl+0x147/0x1e0
+  do_syscall_64+0xcf/0x15a0
+  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+  </TASK>
+
+Bug 2: i2c-stub I2C_SMBUS_I2C_BLOCK_DATA OOB (drivers/i2c/i2c-stub.c)
+  stub_xfer() implements .smbus_xfer directly and only clamps
+  block[0] against 256-command, not I2C_SMBUS_BLOCK_MAX. With
+  block[0]=0xff and command=0 the loop accesses block[1+i] for
+  i up to 254, far past the 34-byte union.
+
+ UBSAN: array-index-out-of-bounds in drivers/i2c/i2c-stub.c:223:44
+ index 34 is out of range for type '__u8 [34]'
+ Call Trace:
+  <TASK>
+  __ubsan_handle_out_of_bounds+0xd7/0x120
+  stub_xfer+0x1971/0x198f [i2c_stub]
+  __i2c_smbus_xfer+0x306/0xa40
+  i2c_smbus_xfer+0x19e/0x340
+  i2cdev_ioctl_smbus+0x38f/0x7f0
+  i2cdev_ioctl+0x35e/0x680
+  __x64_sys_ioctl+0x147/0x1e0
+  do_syscall_64+0xcf/0x15a0
+  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+  </TASK>
+
+Both traces reproduced on v7.0-rc6+i2c/for-current with KASAN+UBSAN.
+
+Fixes: 8a325997d95d ("i2c: Add message transfer tracepoints for SMBUS [ver #2]")
+Fixes: 4710317891e4 ("i2c-stub: Implement I2C block support")
+Reported-by: Xiang Mei <xmei5@asu.edu>
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/pegasus.c | 54 ++++++++++++++++-----------------------
- drivers/net/usb/pegasus.h |  3 ---
- 2 files changed, 22 insertions(+), 35 deletions(-)
+ drivers/i2c/i2c-core-smbus.c |   12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/drivers/net/usb/pegasus.c b/drivers/net/usb/pegasus.c
-index 475b066081c7f..8ec798f97f99b 100644
---- a/drivers/net/usb/pegasus.c
-+++ b/drivers/net/usb/pegasus.c
-@@ -46,21 +46,12 @@ static bool loopback;
- static bool mii_mode;
- static char *devid;
- 
--static struct usb_eth_dev usb_dev_id[] = {
--#define	PEGASUS_DEV(pn, vid, pid, flags)	\
--	{.name = pn, .vendor = vid, .device = pid, .private = flags},
--#define PEGASUS_DEV_CLASS(pn, vid, pid, dclass, flags) \
--	PEGASUS_DEV(pn, vid, pid, flags)
--#include "pegasus.h"
--#undef	PEGASUS_DEV
--#undef	PEGASUS_DEV_CLASS
--	{NULL, 0, 0, 0},
--	{NULL, 0, 0, 0}
--};
-+static struct usb_eth_dev dynamic_id_info = {};
- 
- static struct usb_device_id pegasus_ids[] = {
- #define	PEGASUS_DEV(pn, vid, pid, flags) \
--	{.match_flags = USB_DEVICE_ID_MATCH_DEVICE, .idVendor = vid, .idProduct = pid},
-+	{.match_flags = USB_DEVICE_ID_MATCH_DEVICE, .idVendor = vid, .idProduct = pid, \
-+	 .driver_info = (kernel_ulong_t)&(const struct usb_eth_dev) {.name = pn, .private = flags}},
- /*
-  * The Belkin F8T012xx1 bluetooth adaptor has the same vendor and product
-  * IDs as the Belkin F5D5050, so we need to teach the pegasus driver to
-@@ -69,7 +60,8 @@ static struct usb_device_id pegasus_ids[] = {
-  */
- #define PEGASUS_DEV_CLASS(pn, vid, pid, dclass, flags) \
- 	{.match_flags = (USB_DEVICE_ID_MATCH_DEVICE | USB_DEVICE_ID_MATCH_DEV_CLASS), \
--	.idVendor = vid, .idProduct = pid, .bDeviceClass = dclass},
-+	.idVendor = vid, .idProduct = pid, .bDeviceClass = dclass, \
-+	.driver_info = (kernel_ulong_t)&(const struct usb_eth_dev) {.name = pn, .private = flags}},
- #include "pegasus.h"
- #undef	PEGASUS_DEV
- #undef	PEGASUS_DEV_CLASS
-@@ -405,12 +397,12 @@ static inline int reset_mac(pegasus_t *pegasus)
- 	if (i == REG_TIMEOUT)
- 		return -ETIMEDOUT;
- 
--	if (usb_dev_id[pegasus->dev_index].vendor == VENDOR_LINKSYS ||
--	    usb_dev_id[pegasus->dev_index].vendor == VENDOR_DLINK) {
-+	if (le16_to_cpu(pegasus->usb->descriptor.idVendor) == VENDOR_LINKSYS ||
-+	    le16_to_cpu(pegasus->usb->descriptor.idVendor) == VENDOR_DLINK) {
- 		set_register(pegasus, Gpio0, 0x24);
- 		set_register(pegasus, Gpio0, 0x26);
- 	}
--	if (usb_dev_id[pegasus->dev_index].vendor == VENDOR_ELCON) {
-+	if (le16_to_cpu(pegasus->usb->descriptor.idVendor) == VENDOR_ELCON) {
- 		__u16 auxmode;
- 		ret = read_mii_word(pegasus, 3, 0x1b, &auxmode);
- 		if (ret < 0)
-@@ -448,9 +440,9 @@ static int enable_net_traffic(struct net_device *dev, struct usb_device *usb)
- 	memcpy(pegasus->eth_regs, data, sizeof(data));
- 	ret = set_registers(pegasus, EthCtrl0, 3, data);
- 
--	if (usb_dev_id[pegasus->dev_index].vendor == VENDOR_LINKSYS ||
--	    usb_dev_id[pegasus->dev_index].vendor == VENDOR_LINKSYS2 ||
--	    usb_dev_id[pegasus->dev_index].vendor == VENDOR_DLINK) {
-+	if (le16_to_cpu(pegasus->usb->descriptor.idVendor) == VENDOR_LINKSYS ||
-+	    le16_to_cpu(pegasus->usb->descriptor.idVendor) == VENDOR_LINKSYS2 ||
-+	    le16_to_cpu(pegasus->usb->descriptor.idVendor) == VENDOR_DLINK) {
- 		u16 auxmode;
- 		ret = read_mii_word(pegasus, 0, 0x1b, &auxmode);
- 		if (ret < 0)
-@@ -1156,7 +1148,7 @@ static int pegasus_probe(struct usb_interface *intf,
- 	struct usb_device *dev = interface_to_usbdev(intf);
- 	struct net_device *net;
- 	pegasus_t *pegasus;
--	int dev_index = id - pegasus_ids;
-+	const struct usb_eth_dev *info = (const struct usb_eth_dev *)id->driver_info;
- 	int res = -ENOMEM;
- 	static const u8 bulk_ep_addr[] = {
- 		PEGASUS_USB_EP_BULK_IN | USB_DIR_IN,
-@@ -1181,7 +1173,6 @@ static int pegasus_probe(struct usb_interface *intf,
- 		goto out;
- 
- 	pegasus = netdev_priv(net);
--	pegasus->dev_index = dev_index;
- 	pegasus->intf = intf;
- 
- 	res = alloc_urbs(pegasus);
-@@ -1209,7 +1200,7 @@ static int pegasus_probe(struct usb_interface *intf,
- 	pegasus->msg_enable = netif_msg_init(msg_level, NETIF_MSG_DRV
- 				| NETIF_MSG_PROBE | NETIF_MSG_LINK);
- 
--	pegasus->features = usb_dev_id[dev_index].private;
-+	pegasus->features = info ? info->private : DEFAULT_GPIO_RESET;
- 	res = get_interrupt_interval(pegasus);
+--- a/drivers/i2c/i2c-core-smbus.c
++++ b/drivers/i2c/i2c-core-smbus.c
+@@ -566,6 +566,18 @@ s32 __i2c_smbus_xfer(struct i2c_adapter
  	if (res)
- 		goto out2;
-@@ -1238,7 +1229,7 @@ static int pegasus_probe(struct usb_interface *intf,
- 	queue_delayed_work(system_long_wq, &pegasus->carrier_check,
- 			   CARRIER_CHECK_DELAY);
- 	dev_info(&intf->dev, "%s, %s, %pM\n", net->name,
--		 usb_dev_id[dev_index].name, net->dev_addr);
-+		 info ? info->name : "(unknown)", net->dev_addr);
- 	return 0;
+ 		return res;
  
- out3:
-@@ -1328,8 +1319,9 @@ static struct usb_driver pegasus_driver = {
- 
- static void __init parse_id(char *id)
- {
--	unsigned int vendor_id = 0, device_id = 0, flags = 0, i = 0;
-+	unsigned int vendor_id = 0, device_id = 0, flags = 0;
- 	char *token, *name = NULL;
-+	int dyn_id_index = ARRAY_SIZE(pegasus_ids) - 2;
- 
- 	if ((token = strsep(&id, ":")) != NULL)
- 		name = token;
-@@ -1347,14 +1339,12 @@ static void __init parse_id(char *id)
- 	if (device_id > 0x10000 || device_id == 0)
- 		return;
- 
--	for (i = 0; usb_dev_id[i].name; i++);
--	usb_dev_id[i].name = name;
--	usb_dev_id[i].vendor = vendor_id;
--	usb_dev_id[i].device = device_id;
--	usb_dev_id[i].private = flags;
--	pegasus_ids[i].match_flags = USB_DEVICE_ID_MATCH_DEVICE;
--	pegasus_ids[i].idVendor = vendor_id;
--	pegasus_ids[i].idProduct = device_id;
-+	dynamic_id_info.name = name;
-+	dynamic_id_info.private = flags;
-+	pegasus_ids[dyn_id_index].match_flags = USB_DEVICE_ID_MATCH_DEVICE;
-+	pegasus_ids[dyn_id_index].idVendor = vendor_id;
-+	pegasus_ids[dyn_id_index].idProduct = device_id;
-+	pegasus_ids[dyn_id_index].driver_info = (kernel_ulong_t)&dynamic_id_info;
- }
- 
- static int __init pegasus_init(void)
-diff --git a/drivers/net/usb/pegasus.h b/drivers/net/usb/pegasus.h
-index a05b143155ba8..ccdedcef52e76 100644
---- a/drivers/net/usb/pegasus.h
-+++ b/drivers/net/usb/pegasus.h
-@@ -85,7 +85,6 @@ typedef struct pegasus {
- 	unsigned		features;
- 	u32			msg_enable;
- 	u32			wolopts;
--	int			dev_index;
- 	int			intr_interval;
- 	struct tasklet_struct	rx_tl;
- 	struct delayed_work	carrier_check;
-@@ -102,8 +101,6 @@ typedef struct pegasus {
- 
- struct usb_eth_dev {
- 	char	*name;
--	__u16	vendor;
--	__u16	device;
- 	__u32	private; /* LSB is gpio reset value */
- };
- 
--- 
-2.53.0
-
++	/* Reject invalid caller-supplied block lengths before any
++	 * tracepoint or native smbus_xfer callback runs.
++	 */
++	if (data &&
++	    (protocol == I2C_SMBUS_I2C_BLOCK_DATA ||
++	     protocol == I2C_SMBUS_BLOCK_PROC_CALL ||
++	     (protocol == I2C_SMBUS_BLOCK_DATA &&
++	      read_write == I2C_SMBUS_WRITE)) &&
++	    (data->block[0] == 0 ||
++	     data->block[0] > I2C_SMBUS_BLOCK_MAX))
++		return -EINVAL;
++
+ 	/* If enabled, the following two tracepoints are conditional on
+ 	 * read_write and protocol.
+ 	 */
 
 
