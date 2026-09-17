@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAEC249E5DD;
-	Thu, 17 Sep 2026 17:18:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51FE53A453A;
+	Thu, 17 Sep 2026 17:18:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789665483; cv=none; b=fSxMEjo/zJ9lQpWUUi0slkYqCduZA67QBkADZrI0UpXh7RpdwwyujnFT1EBacJjK4ZtluswnA2DDtxNYzthRMk89OhiyyFrBaJ/6S+2aTZN0jReJIVKRj9wZCeMiyddEyzHoakl5ohxQ7qJLFX3PB1ekkh0IIg9neNhv5D1JH3o=
+	t=1789665486; cv=none; b=gA1wmeWhXWUkFwsfkyuiU1+XT7topdyNYsUdDgEaBjOVFHqlZTDlCgThlwWw1IThjnOTSnqag8avk11OE5wV4xOSfykmRh9Qy9/Z2jaXtiRqcGvBXJheBaln/TWhb3XNCtirmGN5ENX2cWh9kC+4kykJvnhaU6IrEo+nplzjFx4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789665483; c=relaxed/simple;
-	bh=EWc8BGjJlMiDtk5vlDOgEgYl7CoHaWafchZnE68C1y0=;
+	s=arc-20240116; t=1789665486; c=relaxed/simple;
+	bh=Vm3WYl01pIuR9BgIwiwN3QZDox8140nw8jWw5hMokwQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T4NS2JveeZXAyUE80pPRnzTPtNIVbuyR6Z0fdgxFtrirsHRhJ/26h+XztEwAA2YO6KYvQpfXRrOptqpdW5hC2qzBJfB7yR0CsmVfHJUlLP3Jh/3bZXMgZwSBWpfDYSDEYlSlHT+RrgTYA2MIKOKLmM6iXhxyz3tO5XMF05vcW+Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qijkS6GI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EV/HhXZOrzq2i0FJGirOFQhnsvMXEfFsxU6TcvWMAOlaClsDkgrNUfs2c5mF/k1dpIPACn3K1QEaxpDtw3NV4uulXc4VoncQ3QoaJN2b9GD4NMN5c5fDbZmRqp+G4QMEJT2Skp/O6y6W4TgFyJGsIt+CxNbQV9zBb3SWVYUo250=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0wH1i4Uz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qijkS6GI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D76441F000FF;
-	Thu, 17 Sep 2026 17:18:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0wH1i4Uz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A90A61F000FF;
+	Thu, 17 Sep 2026 17:18:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789665482;
-	bh=cmHcVECRmZSwjC076Wpyp4F4V690ewJcZNT7KPEzbA4=;
+	s=korg; t=1789665485;
+	bh=fZGOIQRzDCaJrfgd9BKm/HtSnzwtPsk2TQGtaQbIs1A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qijkS6GILcbhSvGXHQp+299UkO6ZmwYnqMwUSK7lJH0+RSVV2xQPRpnADrjxsjT4L
-	 fbUuFK+oAgLnu1/ma7yHLsKnNVTwh0RrlXWRcmKTXnBOr1JilPa1aLZyaj90iS0qIg
-	 Kx4S7yN3gu5Acoxx0n/urZcGIC6z0jsSxayW0v2A=
+	b=0wH1i4UzeO61whBHsMaVz09kPkwHgRGNN//NvChSK3B34uABp0P15L1WbQjXo+4Rp
+	 dDgc5qGURsQaeFfKfU2VPqoHAt407Oy/Yl9vgalujeme99a09v96Y087/07pGUus5/
+	 N4jxvUU6YptN54Di4Y1ZyheiAhZFkLkAHWDtZAkw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Rao <raoxu@uniontech.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Linus Walleij <linusw@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0692/1250] ALSA: hda: restore MFG widget enumeration after core split
-Date: Thu, 17 Sep 2026 16:08:07 +0100
-Message-ID: <20260917151610.647152368@linuxfoundation.org>
+Subject: [PATCH 6.18 0719/1250] ASoC: ux500: Request the MSP MMIO resource
+Date: Thu, 17 Sep 2026 16:08:34 +0100
+Message-ID: <20260917151611.381264668@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,58 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Rao <raoxu@uniontech.com>
+From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit 32d7226e6105c257ef7b3d0ec819f11a81f53b6d ]
+[ Upstream commit 4fb67925f33ad789e9e00903a73306ed40f7ae32 ]
 
-Before commit 7639a06c23c7 ("ALSA: hda - Move a part of hda_codec stuff
-into hdac_device"), widget enumeration selected the function group with
+A bare devm_ioremap() neither reserves the register range nor preserves
+the platform resource error. This permits another driver to claim the
+same range and reports every mapping failure as an allocation failure.
 
-	codec->afg ? codec->afg : codec->mfg
+Use the managed platform resource helper, retaining the resolved
+resource only to derive the DMA register address.
 
-and read subordinate nodes from that group.
-
-The core split moved this logic into snd_hdac_refresh_widgets(), but
-hard-coded codec->afg there. For an MFG-only codec, codec->afg is zero,
-so the Root Node is queried and codec->start_nid/num_nodes are populated
-from the function-group range instead of the MFG's subordinate nodes.
-
-Restore the pre-split AFG-or-MFG selection.
-
-Fixes: 7639a06c23c7 ("ALSA: hda - Move a part of hda_codec stuff into hdac_device")
-Signed-off-by: Xu Rao <raoxu@uniontech.com>
-Link: https://patch.msgid.link/44809B8FF80DCCA2+20260901034024.2407783-1-raoxu@uniontech.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 3592b7f69a54 ("ASoC: Ux500: Add MSP I2S-driver")
+Assisted-by: LLM
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20260902-ux500-msp-fixes-v2-6-4b60b002d55a@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/hda/core/device.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ sound/soc/ux500/ux500_msp_i2s.c | 18 ++++--------------
+ 1 file changed, 4 insertions(+), 14 deletions(-)
 
-diff --git a/sound/hda/core/device.c b/sound/hda/core/device.c
-index 160c8d0453b0e..ebaa106d0f018 100644
---- a/sound/hda/core/device.c
-+++ b/sound/hda/core/device.c
-@@ -404,6 +404,7 @@ static void setup_fg_nodes(struct hdac_device *codec)
-  */
- int snd_hdac_refresh_widgets(struct hdac_device *codec)
+diff --git a/sound/soc/ux500/ux500_msp_i2s.c b/sound/soc/ux500/ux500_msp_i2s.c
+index bc77174e00707..43dc9b3aa4ef5 100644
+--- a/sound/soc/ux500/ux500_msp_i2s.c
++++ b/sound/soc/ux500/ux500_msp_i2s.c
+@@ -733,7 +733,7 @@ int ux500_msp_i2s_close(struct ux500_msp *msp, unsigned int dir)
+ int ux500_msp_i2s_init_msp(struct platform_device *pdev,
+ 			struct ux500_msp **msp_p)
  {
-+	hda_nid_t fg = codec->afg ? codec->afg : codec->mfg;
- 	hda_nid_t start_nid;
- 	int nums, err = 0;
+-	struct resource *res = NULL;
++	struct resource *res;
+ 	struct ux500_msp *msp;
  
-@@ -412,10 +413,10 @@ int snd_hdac_refresh_widgets(struct hdac_device *codec)
- 	 * widgets array.
- 	 */
- 	guard(mutex)(&codec->widget_lock);
--	nums = snd_hdac_get_sub_nodes(codec, codec->afg, &start_nid);
-+	nums = snd_hdac_get_sub_nodes(codec, fg, &start_nid);
- 	if (!start_nid || nums <= 0 || nums >= 0xff) {
- 		dev_err(&codec->dev, "cannot read sub nodes for FG 0x%02x\n",
--			codec->afg);
-+			fg);
- 		return -EINVAL;
- 	}
+ 	*msp_p = devm_kzalloc(&pdev->dev, sizeof(struct ux500_msp), GFP_KERNEL);
+@@ -743,20 +743,10 @@ int ux500_msp_i2s_init_msp(struct platform_device *pdev,
  
+ 	msp->dev = &pdev->dev;
+ 
+-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+-	if (res == NULL) {
+-		dev_err(&pdev->dev, "%s: ERROR: Unable to get resource!\n",
+-			__func__);
+-		return -ENOMEM;
+-	}
+-
++	msp->registers = devm_platform_get_and_ioremap_resource(pdev, 0, &res);
++	if (IS_ERR(msp->registers))
++		return PTR_ERR(msp->registers);
+ 	msp->tx_rx_addr = res->start + MSP_DR;
+-	msp->registers = devm_ioremap(&pdev->dev, res->start,
+-				      resource_size(res));
+-	if (msp->registers == NULL) {
+-		dev_err(&pdev->dev, "%s: ERROR: ioremap failed!\n", __func__);
+-		return -ENOMEM;
+-	}
+ 
+ 	msp->msp_state = MSP_STATE_IDLE;
+ 	msp->loopback_enable = 0;
 -- 
 2.53.0
 
