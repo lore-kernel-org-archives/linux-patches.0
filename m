@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57F2649738A;
-	Thu, 17 Sep 2026 16:07:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1E3C4F4CE9;
+	Thu, 17 Sep 2026 16:07:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789661266; cv=none; b=CpRiccO3NLGspNKEHJROjy84uDcxaAO1HZuQGTwua/dSBDtQH/JTzWcFrXFeLoXxxlR7ZiFxg5OuRgFeBnQ6Ep/qI2Ts5aEGuPpO5JTHbc299Ao5GlDApnPxENA03vmWGFbxsyxdhzaNrEqjXuh5sDJS39AeuIQadIQIkb+gY90=
+	t=1789661269; cv=none; b=hQ8/EeWq1d89shk2rG3yBIMn9WKqqnEULyX8/m6AZ1arCBi9MLZ+ho+ZjeBvo5JQeYnd+TxYwKzvB27By4MLhckFEqiVCXXdTimmj/8OFmZUK1rH1/jTOqJYEB09T357TFKR/MqXmSN4SoagPh1Wu+Mp+i98XU0zbZyrI+7VtfU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789661266; c=relaxed/simple;
-	bh=MFf3cAOnnivZtKSUBJOTP+Rli3DbLo+MyISpd2j0Lb4=;
+	s=arc-20240116; t=1789661269; c=relaxed/simple;
+	bh=A0hDUunD3nJbo75Ja8bqVRbOve9YDGVPdnNvBrtggbo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=m+1Sh3rKqQjXqei9Y4gltWNe70m0nrKpcoRFqjECJPAhrf0x7Z6ULMZRypwIfzOXX6AqGPFoV+zCI4eqQTyHIYW+Btkj56KNEnE2oX4KeyKBSPyGb+bcGVQRWjrbXfRsBMJ1S6c6hlHWArKSjsRZNyQnUQGfOBbfZe6awIHx3RM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gdguydfO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=MQ7rR58txrekYy8qIsoeOf6JI3KYFZdOXANhEBvhe7ESSTkUOy37mX5io7ve8viAkbCNW1vQwL09y0S0f+zxuF709b9HS4M+d7chmDaQzkUQNpoUtCpVJr2dvsz743aLFlQkvBhggWKhprri8XJHks2oGBTDWZiZrxhFCb78wqg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V/vrexTi; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gdguydfO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5453C1F000FF;
-	Thu, 17 Sep 2026 16:07:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V/vrexTi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38DF61F000FF;
+	Thu, 17 Sep 2026 16:07:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789661264;
-	bh=OlwfRvqv0l1H6nbcl1l7JCVicywcYUZ0E+Md0b5w4B0=;
+	s=korg; t=1789661267;
+	bh=JEjJtbKgp94ZzdqCmMtCj9sgqiuprRXMs/gz0Qhb0ak=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gdguydfOE9AzI71Ad7CYbihSBGIAfvtIJiV79Jl3N3edfy4yYta/Uf2Mc4OD19LLu
-	 cQ4i5nEeGnrpRO7e+J+uiHEpZ8aa9W3ve0BhDWJg+3wfNIDJp/wJbRbPdjolOnclNY
-	 4TTd/hQRPFir6RU8YVclqUHLfPQcyMDpvK6zKOss=
+	b=V/vrexTi4feAfXm9cgdlj9JsUt7IJainyvX0JY6t2DWPi45QH2vu/bblvsYIsknD+
+	 XFPP6InSiztcrRdqIFWrtAYhidWH1Y34Wc8Pm2f5oc6/Z6E/hPPYT1v63RqfEZNizi
+	 4pVDO4k65npfRXuZz/C1YpVlBqjhkYZGn9hqztSc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0138/1250] ALSA: ice1724: Fix blocking open for independent surround PCMs
-Date: Thu, 17 Sep 2026 15:58:53 +0100
-Message-ID: <20260917151555.790650826@linuxfoundation.org>
+Subject: [PATCH 6.18 0139/1250] ALSA: usx2y: Drain pending US-428 pipe-4 output commands
+Date: Thu, 17 Sep 2026 15:58:54 +0100
+Message-ID: <20260917151555.819732598@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -54,74 +54,93 @@ Content-Transfer-Encoding: 8bit
 
 From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
 
-[ Upstream commit 1ab8e422dc779a91acba2d0aafc47b0db6680b4b ]
+[ Upstream commit 18977c0dd722f52217027ff75de2811c53cce2cc ]
 
-The independent surround playback open path rejects a substream when the
-matching PDMA channel is reserved by the multi-channel PDMA0 stream. It
-currently returns -EBUSY for that case, although the driver has carried a
-FIXME noting that blocking mode is not handled properly.
+The US-428 pipe-4 output path submits at most one pending p4out
+entry from the shared-memory ring per input interrupt. If userspace
+queues more than one command before the interrupt handler runs, later
+commands remain pending until later input interrupts, even when async
+pipe-4 URBs are available.
 
-ALSA PCM open waits and retries only when the low-level open callback
-returns -EAGAIN. Returning -EBUSY therefore makes blocking opens fail
-immediately, the same as nonblocking opens.
+Drain pending entries while idle async URBs are available. Copy each
+command into the existing per-URB async buffer before submission, so the
+submitted transfer does not depend on a userspace-mapped ring slot
+remaining unchanged after p4out_sent is advanced.
 
-Return -EAGAIN for the temporary PDMA0 reservation conflict. The PCM core
-continues to report -EBUSY for O_NONBLOCK callers, while blocking callers
-sleep and retry.
+Also update p4out_sent only after usb_submit_urb() succeeds, so a
+failed submission is not reported as sent.
 
-Also wake the independent surround PCM wait queue when hw_free releases a
-PDMA reservation. The reservation can be released by the pro PCM, while
-waiters are sleeping on the independent surround PCM, so waking the current
-substream PCM is not sufficient for this cross-PCM reservation.
+This keeps the shared-memory ABI unchanged and fixes only the local
+queue-draining behavior.
 
 Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
-Link: https://patch.msgid.link/20260518-ice1724-blocking-open-v1-1-1bfa3e5aa7cf@gmail.com
+Link: https://patch.msgid.link/20260519-alsa-usx2y-p4out-drain-v1-1-8f0a4550bae2@gmail.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/ice1712/ice1724.c | 19 ++++++++++++++-----
- 1 file changed, 14 insertions(+), 5 deletions(-)
+ sound/usb/usx2y/usbusx2y.c | 39 ++++++++++++++++++++++----------------
+ 1 file changed, 23 insertions(+), 16 deletions(-)
 
-diff --git a/sound/pci/ice1712/ice1724.c b/sound/pci/ice1712/ice1724.c
-index 7efb0bbcea550..851e7afb58142 100644
---- a/sound/pci/ice1712/ice1724.c
-+++ b/sound/pci/ice1712/ice1724.c
-@@ -730,13 +730,22 @@ static int snd_vt1724_pcm_hw_params(struct snd_pcm_substream *substream,
- static int snd_vt1724_pcm_hw_free(struct snd_pcm_substream *substream)
- {
- 	struct snd_ice1712 *ice = snd_pcm_substream_chip(substream);
-+	bool released = false;
- 	int i;
+diff --git a/sound/usb/usx2y/usbusx2y.c b/sound/usb/usx2y/usbusx2y.c
+index f34e78910200a..4190227c5a2a5 100644
+--- a/sound/usb/usx2y/usbusx2y.c
++++ b/sound/usb/usx2y/usbusx2y.c
+@@ -180,7 +180,7 @@ static void i_usx2y_in04_int(struct urb *urb)
+ 	struct usx2ydev		*usx2y = urb->context;
+ 	struct us428ctls_sharedmem	*us428ctls = usx2y->us428ctls_sharedmem;
+ 	struct us428_p4out *p4out;
+-	int i, j, n, diff, send;
++	int i, j, n, diff, send, len;
  
--	guard(mutex)(&ice->open_mutex);
--	/* unmark surround channels */
--	for (i = 0; i < 3; i++)
--		if (ice->pcm_reserved[i] == substream)
-+	scoped_guard(mutex, &ice->open_mutex) {
-+		/* unmark surround channels */
-+		for (i = 0; i < 3; i++) {
-+			if (ice->pcm_reserved[i] != substream)
-+				continue;
- 			ice->pcm_reserved[i] = NULL;
-+			released = true;
-+		}
-+	}
-+
-+	if (released && ice->pcm_ds)
-+		wake_up(&ice->pcm_ds->open_wait);
-+
- 	return 0;
- }
+ 	usx2y->in04_int_calls++;
  
-@@ -1364,7 +1373,7 @@ static int snd_vt1724_playback_indep_open(struct snd_pcm_substream *substream)
- 	scoped_guard(mutex, &ice->open_mutex) {
- 		/* already used by PDMA0? */
- 		if (ice->pcm_reserved[substream->number])
--			return -EBUSY; /* FIXME: should handle blocking mode properly */
-+			return -EAGAIN;
+@@ -222,24 +222,31 @@ static void i_usx2y_in04_int(struct urb *urb)
+ 			} while (!err && usx2y->us04->submitted < usx2y->us04->len);
+ 		}
+ 	} else {
+-		if (us428ctls && us428ctls->p4out_last >= 0 && us428ctls->p4out_last < N_US428_P4OUT_BUFS) {
+-			if (us428ctls->p4out_last != us428ctls->p4out_sent) {
+-				send = us428ctls->p4out_sent + 1;
+-				if (send >= N_US428_P4OUT_BUFS)
+-					send = 0;
+-				for (j = 0; j < URBS_ASYNC_SEQ && !err; ++j) {
+-					if (!usx2y->as04.urb[j]->status) {
+-						p4out = us428ctls->p4out + send;	// FIXME if more than 1 p4out is new, 1 gets lost.
+-						usb_fill_bulk_urb(usx2y->as04.urb[j], usx2y->dev,
+-								  usb_sndbulkpipe(usx2y->dev, 0x04), &p4out->val.vol,
+-								  p4out->type == ELT_LIGHT ? sizeof(struct us428_lights) : 5,
+-								  i_usx2y_out04_int, usx2y);
+-						err = usb_submit_urb(usx2y->as04.urb[j], GFP_ATOMIC);
++		while (us428ctls &&
++		       us428ctls->p4out_last >= 0 &&
++		       us428ctls->p4out_last < N_US428_P4OUT_BUFS &&
++		       us428ctls->p4out_last != us428ctls->p4out_sent) {
++			for (j = 0; j < URBS_ASYNC_SEQ && !err; ++j) {
++				if (!usx2y->as04.urb[j]->status) {
++					send = us428ctls->p4out_sent + 1;
++					if (send >= N_US428_P4OUT_BUFS)
++						send = 0;
++
++					p4out = us428ctls->p4out + send;
++					len = p4out->type == ELT_LIGHT ?
++						sizeof(struct us428_lights) : 5;
++					memcpy(usx2y->as04.urb[j]->transfer_buffer,
++					       &p4out->val.vol, len);
++					usx2y->as04.urb[j]->transfer_buffer_length = len;
++					err = usb_submit_urb(usx2y->as04.urb[j], GFP_ATOMIC);
++					if (!err)
+ 						us428ctls->p4out_sent = send;
+-						break;
+-					}
++
++					break;
+ 				}
+ 			}
++			if (j >= URBS_ASYNC_SEQ || err)
++				break;
+ 		}
  	}
- 	runtime->private_data = (void *)&vt1724_playback_dma_regs[substream->number];
- 	ice->playback_con_substream_ds[substream->number] = substream;
+ 
 -- 
 2.53.0
 
