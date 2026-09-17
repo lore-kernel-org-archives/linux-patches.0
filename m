@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 544834C10C0;
-	Thu, 17 Sep 2026 18:01:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20DF254707A;
+	Thu, 17 Sep 2026 18:01:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789668061; cv=none; b=pMA/Zqw+KC570GCz8FeL9W20H9Y3s722yO8XvPTbvt0yEYiv1eW8Y7p9uCl5vo46ELIrekk4/6+d4mnJuPIM/4J0+o9LZU3ZTXLAkab/nsUdU20wRm/xuP38c1jif5TbhSWlhGC/fQDfSKgAdrpaMyctQCwREj7pgfEnTb1+FWs=
+	t=1789668064; cv=none; b=nmqkRng/lOw/lgMPihmWwNK93IEcubmHFnJEqX1MIAmoHU5jDf4sh19Pf7AD8+Ipw9CvM0p+Uh9ruBseRyZU4o4DsmKkW4Y/AcfyWW6Wt42i0rxhL2IunjXNMJJG0NPoDnq5xrPEmEgfeiF+/Z8w9AKg9gwHpJOno1V3LHhr0vE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789668061; c=relaxed/simple;
-	bh=4lspXhnFmRVZVpf9Gg0051UZPB23++9hK3q3u1TRjkw=;
+	s=arc-20240116; t=1789668064; c=relaxed/simple;
+	bh=7hEFU/9yGOnuj+U+ZjsBwKHIyaby7UJxjAd6reBv8Ao=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RQyvU+Mpw0l93+z3CunpFQYDm8CEFnFsZmQQghDJ3H1KZYeOW+cao4/z6yIjE3H4vglFW9XaAf4v4dd1iPjGDPvQ+BKzTIacXcT/P4nKFcWBeZZ1PG42gQA+ryyIYdO75vT35VhV1NRs/uOKjJpeniQQAxIM4LlxraaJegaoXF0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uVJH/8Cs; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RJMI/xfW6obmWzHPKBJzse2R7uBqR+7C4J3PJ+H9Ox+RMtLi0+NvqPf5Dz29fnDj+/mtmDyOh+o806wIGloDpkWXPU8XC6DwAnBJrFvb/siowMxra99sDyPG4Xv57TzdRB+GcRdMfLW95lzt7cJfyRPGnRuBgw9icZmG9Tt27+I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yoi8fAVQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uVJH/8Cs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A4231F00893;
-	Thu, 17 Sep 2026 18:00:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yoi8fAVQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4DA81F00893;
+	Thu, 17 Sep 2026 18:01:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789668060;
-	bh=/bf/1vjZUCHDGltJTq49+hfzEMsNcLQ3uGux0+obqUM=;
+	s=korg; t=1789668063;
+	bh=xU2n/l1m6OTIVaPYFjQ/ZLbSmM136Q9qun2xd/de7gQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uVJH/8CsM39GCWrxAzFznTr/okbeaWMivdG7ruRug6yq+iPGkhEUn5tHsD4ArsCKN
-	 rzQ0+Rin3sw7aCyqbzvFjOQgh2t89QIqVtFuGpwPC/IDZypUnQMo+2Rb7Egfkpcffo
-	 coSz+30DbIgzddVUYGrpT8WGa0GzOo1aZoW5sGMo=
+	b=Yoi8fAVQuUKUW3Sw9OdaWx+CxQ/3caa82hHGg1DvXsROOpElCdpT3jhyXS4o3fJLR
+	 Dbex/9uROG//iUrwj+pd8aE1WKGyGgRuaCdhRDWyqdquua4UQMhCPrvbvJY+jfSuoB
+	 1eDn8RLXdtbM/iPha7nPc7CVgxJQFSKaEau9Xijs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	Nazim Amirul <muhammad.nazim.amirul.nazle.asmade@altera.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Potin Lai <potin.lai.pt@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0301/1102] net: stmmac: xgmac2: disable RBUE in default RX interrupt mask
-Date: Thu, 17 Sep 2026 16:04:04 +0100
-Message-ID: <20260917151547.175486446@linuxfoundation.org>
+Subject: [PATCH 6.12 0284/1102] hwmon: (pmbus/lm25066) Fix PMBus coefficients for LM5064/5066/5066i
+Date: Thu, 17 Sep 2026 16:03:47 +0100
+Message-ID: <20260917151546.744125434@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -53,65 +51,150 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nazim Amirul <muhammad.nazim.amirul.nazle.asmade@altera.com>
+From: Potin Lai <potin.lai.pt@gmail.com>
 
-[ Upstream commit d3265c19b35d036bba327b36b5366bee76b0157c ]
+[ Upstream commit 83dda7ed185501ba1f8165aeca83ff4a8ef7c263 ]
 
-Enabling the RX Buffer Unavailable (RBUE) interrupt is counterproductive
-and can trigger a MAC interrupt storm under heavy RX pressure. When the
-DMA runs out of RX descriptors it fires RBUE continuously until software
-refills the ring.
+Swap the high setting and low setting coefficients in the lm25066_coeff
+table for LM5064, LM5066, and LM5066i. The coefficients were previously
+mapped incorrectly, resulting in inverted current and power scaling.
 
-However, RBUE is redundant: the normal RX completion interrupt (RIE)
-already triggers NAPI, which processes completed descriptors and refills
-the ring, causing the DMA to resume. The RBUE handler itself only sets
-handle_rx - the same outcome as RIE.
+Additionally, dynamically assign the exponent (R) registers inside the
+probe's LM25066_DEV_SETUP_CL check. This ensures that the proper
+exponent is applied (e.g., for LM25056, high setting power exponent
+is -4, but low setting power exponent is -3).
 
-On Agilex5 under heavy RX pressure, the MAC interrupt (which includes
-RBUE) was observed firing 1,821,811,555 times against only 2,618,627
-actual RX completions - a ~695x ratio - confirming the severity of the
-storm.
-
-RBUE does not provide OOM recovery. If page_pool is exhausted,
-stmmac_rx_refill() cannot advance the DMA tail pointer, the DMA stays
-suspended, and RBUE fires again on the next NAPI completion - a storm
-with no forward progress. This patch trades that storm for a clean
-stall with the same RX outcome. Proper OOM recovery is a pre-existing
-gap outside the scope of this fix.
-
-Note: as a consequence of disabling RBUE, the rx_buf_unav_irq ethtool
-counter will always read 0 on XGMAC2 devices. This behaviour is already
-inconsistent across DWMAC core versions.
-
-Remove RBUE from XGMAC_DMA_INT_DEFAULT_EN and XGMAC_DMA_INT_DEFAULT_RX
-to prevent the interrupt storm while keeping normal RX handling intact.
-
-Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Signed-off-by: Nazim Amirul <muhammad.nazim.amirul.nazle.asmade@altera.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260609121703.9736-1-muhammad.nazim.amirul.nazle.asmade@altera.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Potin Lai <potin.lai.pt@gmail.com>
+Link: https://lore.kernel.org/r/20260611-lm25066-driver-fix-v3-1-9d7d4b4e253d@gmail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/dwxgmac2.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/hwmon/pmbus/lm25066.c | 54 ++++++++++++++++++-----------------
+ 1 file changed, 28 insertions(+), 26 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwxgmac2.h b/drivers/net/ethernet/stmicro/stmmac/dwxgmac2.h
-index 6a2c7d22df1eb..d9fbcabd2c5a6 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwxgmac2.h
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwxgmac2.h
-@@ -419,9 +419,9 @@
- #define XGMAC_RIE			BIT(6)
- #define XGMAC_TBUE			BIT(2)
- #define XGMAC_TIE			BIT(0)
--#define XGMAC_DMA_INT_DEFAULT_EN	(XGMAC_NIE | XGMAC_AIE | XGMAC_RBUE | \
-+#define XGMAC_DMA_INT_DEFAULT_EN	(XGMAC_NIE | XGMAC_AIE | \
- 					XGMAC_RIE | XGMAC_TIE)
--#define XGMAC_DMA_INT_DEFAULT_RX	(XGMAC_RBUE | XGMAC_RIE)
-+#define XGMAC_DMA_INT_DEFAULT_RX	(XGMAC_RIE)
- #define XGMAC_DMA_INT_DEFAULT_TX	(XGMAC_TIE)
- #define XGMAC_DMA_CH_Rx_WATCHDOG(x)	(0x0000313c + (0x80 * (x)))
- #define XGMAC_RWT			GENMASK(7, 0)
+diff --git a/drivers/hwmon/pmbus/lm25066.c b/drivers/hwmon/pmbus/lm25066.c
+index f0bf3b1533313..cd013871ddc30 100644
+--- a/drivers/hwmon/pmbus/lm25066.c
++++ b/drivers/hwmon/pmbus/lm25066.c
+@@ -133,23 +133,23 @@ static const struct __coeff lm25066_coeff[][PSC_NUM_CLASSES + 2] = {
+ 			.R = -2,
+ 		},
+ 		[PSC_CURRENT_IN] = {
+-			.m = 10742,
+-			.b = 1552,
++			.m = 5456,
++			.b = 2118,
+ 			.R = -2,
+ 		},
+ 		[PSC_CURRENT_IN_L] = {
+-			.m = 5456,
+-			.b = 2118,
++			.m = 10742,
++			.b = 1552,
+ 			.R = -2,
+ 		},
+ 		[PSC_POWER] = {
+-			.m = 1204,
+-			.b = 8524,
++			.m = 612,
++			.b = 11202,
+ 			.R = -3,
+ 		},
+ 		[PSC_POWER_L] = {
+-			.m = 612,
+-			.b = 11202,
++			.m = 1204,
++			.b = 8524,
+ 			.R = -3,
+ 		},
+ 		[PSC_TEMPERATURE] = {
+@@ -168,23 +168,23 @@ static const struct __coeff lm25066_coeff[][PSC_NUM_CLASSES + 2] = {
+ 			.R = -2,
+ 		},
+ 		[PSC_CURRENT_IN] = {
+-			.m = 10753,
+-			.b = -1200,
++			.m = 5405,
++			.b = -600,
+ 			.R = -2,
+ 		},
+ 		[PSC_CURRENT_IN_L] = {
+-			.m = 5405,
+-			.b = -600,
++			.m = 10753,
++			.b = -1200,
+ 			.R = -2,
+ 		},
+ 		[PSC_POWER] = {
+-			.m = 1204,
+-			.b = -6000,
++			.m = 605,
++			.b = -8000,
+ 			.R = -3,
+ 		},
+ 		[PSC_POWER_L] = {
+-			.m = 605,
+-			.b = -8000,
++			.m = 1204,
++			.b = -6000,
+ 			.R = -3,
+ 		},
+ 		[PSC_TEMPERATURE] = {
+@@ -203,23 +203,23 @@ static const struct __coeff lm25066_coeff[][PSC_NUM_CLASSES + 2] = {
+ 			.R = -2,
+ 		},
+ 		[PSC_CURRENT_IN] = {
+-			.m = 15076,
+-			.b = -504,
++			.m = 7645,
++			.b = 100,
+ 			.R = -2,
+ 		},
+ 		[PSC_CURRENT_IN_L] = {
+-			.m = 7645,
+-			.b = 100,
++			.m = 15076,
++			.b = -504,
+ 			.R = -2,
+ 		},
+ 		[PSC_POWER] = {
+-			.m = 1701,
+-			.b = -4000,
++			.m = 861,
++			.b = -965,
+ 			.R = -3,
+ 		},
+ 		[PSC_POWER_L] = {
+-			.m = 861,
+-			.b = -965,
++			.m = 1701,
++			.b = -4000,
+ 			.R = -3,
+ 		},
+ 		[PSC_TEMPERATURE] = {
+@@ -520,18 +520,20 @@ static int lm25066_probe(struct i2c_client *client)
+ 	info->m[PSC_VOLTAGE_OUT] = coeff[PSC_VOLTAGE_OUT].m;
+ 	info->b[PSC_VOLTAGE_OUT] = coeff[PSC_VOLTAGE_OUT].b;
+ 	info->R[PSC_VOLTAGE_OUT] = coeff[PSC_VOLTAGE_OUT].R;
+-	info->R[PSC_CURRENT_IN] = coeff[PSC_CURRENT_IN].R;
+-	info->R[PSC_POWER] = coeff[PSC_POWER].R;
+ 	if (config & LM25066_DEV_SETUP_CL) {
+ 		info->m[PSC_CURRENT_IN] = coeff[PSC_CURRENT_IN_L].m;
+ 		info->b[PSC_CURRENT_IN] = coeff[PSC_CURRENT_IN_L].b;
++		info->R[PSC_CURRENT_IN] = coeff[PSC_CURRENT_IN_L].R;
+ 		info->m[PSC_POWER] = coeff[PSC_POWER_L].m;
+ 		info->b[PSC_POWER] = coeff[PSC_POWER_L].b;
++		info->R[PSC_POWER] = coeff[PSC_POWER_L].R;
+ 	} else {
+ 		info->m[PSC_CURRENT_IN] = coeff[PSC_CURRENT_IN].m;
+ 		info->b[PSC_CURRENT_IN] = coeff[PSC_CURRENT_IN].b;
++		info->R[PSC_CURRENT_IN] = coeff[PSC_CURRENT_IN].R;
+ 		info->m[PSC_POWER] = coeff[PSC_POWER].m;
+ 		info->b[PSC_POWER] = coeff[PSC_POWER].b;
++		info->R[PSC_POWER] = coeff[PSC_POWER].R;
+ 	}
+ 
+ 	/*
 -- 
 2.53.0
 
