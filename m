@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E40A64EB855;
-	Thu, 17 Sep 2026 17:21:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A594649D588;
+	Thu, 17 Sep 2026 17:21:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789665716; cv=none; b=thM1BRygeSG1R04/TqY8JD43IRER8zWqPsp3j0QAwI997v71HUbgclmHJEpnj30gD0kaBMnUyhBslE3WvhBaoshmguAEB3uuW6OGl/eUYCrMhHgXRzIXvpGUA+tCqYfcV1mWCZlxiPij+Bl0/Z/bVaYu6msoZoOPEtFLfwRLoCU=
+	t=1789665719; cv=none; b=UNWq9KgJhd+DB++nA+5RBuA5Vg8nDyNTVJZU3GZHk4FlrdoIerxLv+xvauDhF2OBIcIZoVmXI9QlcOBT71Q5nnYnjCAprFeeVzSWLYzuYS5BQiQ9Lsx7Pj4NmahgA3vDADXyuMgOw2o2DbhzSS+E0nZprF///l+dYqlw7a+T4eA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789665716; c=relaxed/simple;
-	bh=CEPqBhGL7HKgEsG38N2HFX7CFpebEZhw4zE/GVCz71c=;
+	s=arc-20240116; t=1789665719; c=relaxed/simple;
+	bh=1QTHpG28xfYFYDNGxNOF06UfZSddEB8kmnFSHTrR2o8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Rtka0fY1Ep/CPdBkInwQ1x8aX63cZyUm5rxgKWOFs2kA6sEgfAgtGKTrk9qzCQBM9Szgq1797LSGjPbl2MyWUFrqOJHrZizQS6M8xJp+jr0ORCn4x8TI5LniLevTxnck+T2jM2gk8qS4JZXhNbW5O68XRV0IPJ7MVAhcXlLPaKM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MTfiLqqw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CfOSIbe4Zj3Q0PSDVzS6jqM/UKUhdtJ+k5kSrDc3K4WipaTb9twWk3a21sWpM4/BNc+AIqQ6EVodtbiEnq+MLUiUjJINuDVytfqGo3OsVOyDLogKoysq81s4a76FSmqfAbe8RqYRAbNO2W3OCncMg01yqdYx77MwT/Y2DdCKyJs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QJdKs6b1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MTfiLqqw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E7C71F000FF;
-	Thu, 17 Sep 2026 17:21:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QJdKs6b1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0942B1F000FF;
+	Thu, 17 Sep 2026 17:21:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789665714;
-	bh=bCWeQzZzOhddxQ0sQa9yATcYTed0sktTwGq8ejj6bSo=;
+	s=korg; t=1789665717;
+	bh=B6tmSbqG53QEyIaCVTBCdYIu5+BYLNxg8OrSU80jhO0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MTfiLqqw1iINknEawLJJ2czq2abPMQDO+wC4la5TilOA6f6Po6aucqj1f8bWWH+Fy
-	 VvAO1xWucPXvp9YVvBzdr1nPHG624M71y3OhN3oUS9QAom70xtztZFbEyCvxFqxnRX
-	 gJAxKnaG4ho9WqKo313YlvjVN45TxoRYfgSNic0I=
+	b=QJdKs6b1PLvikZbJfJ6nZNvzBPREy6w7WSMJy3XlEyvPKf+ReiJzWIyY+v/8Wgorc
+	 GjLoDdExE76nNCLm2C3OeXy1rNLXBi5h1bNiFvBfrwxZusJPdGWN/NHCKQtZsbO9Kk
+	 SPpCjOyb2yR8rRlQBNtdxwN88j8TX/9N4/tiAPZU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Nikhil P. Rao" <nikhil.rao@amd.com>,
-	Brett Creeley <brett.creeley@amd.com>,
+	Jason Winter <jjx@live.nl>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0796/1250] ionic: use netif_txq_maybe_stop() in ionic_tx()
-Date: Thu, 17 Sep 2026 16:09:51 +0100
-Message-ID: <20260917151613.475218718@linuxfoundation.org>
+Subject: [PATCH 6.18 0797/1250] net: usb: cx82310_eth: drop URB after 0xffff reboot sentinel to prevent partial_data heap overflow
+Date: Thu, 17 Sep 2026 16:09:52 +0100
+Message-ID: <20260917151613.503920553@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -52,66 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikhil P. Rao <nikhil.rao@amd.com>
+From: Jason Winter <jjx@live.nl>
 
-[ Upstream commit c91b4d6e5cc30ceea3f23ebe29aec012709a065f ]
+[ Upstream commit 5d50e90add8b4a978395e893e81954d19d58a7c5 ]
 
-Commit 061b9bedbef1 ("ionic: Rework Tx start/stop flow") replaced
-ionic_maybe_stop_tx() with netif_txq_maybe_stop() to get the memory
-barriers around the stop/start bits right, but did not cover the stop
-in ionic_tx() added by commit 138506ab249b ("ionic: Check stop no
-restart"). Convert the remaining site.
+The 0xffff length sentinel detects a router reboot and schedules
+re-enabling of ethernet mode, but then falls through to the rest
+of the loop body.  The next check is
 
-netif_txq_maybe_stop() requires the ring indexes to be updated before
-it is invoked, so the post has to come first. But ring_dbell comes
-from __netdev_tx_sent_queue(), which runs after that and reads the
-stop bit, so it is not known in time to pass to ionic_txq_post(). Post
-without the doorbell and ring it separately.
+	} else if (len > CX82310_MTU) {
 
-The stop condition is unchanged. The re-check only clears the stop bit
-when space has become available, so the doorbell starvation fixed by
-commit 138506ab249b ("ionic: Check stop no restart") cannot recur.
+which is the else of the just-matched if -- it never fires for
+len == 0xffff.  The MTU bound that normally caps the
+incomplete-packet save path is silently bypassed.
 
-Fixes: 138506ab249b ("ionic: Check stop no restart")
-Signed-off-by: Nikhil P. Rao <nikhil.rao@amd.com>
-Reviewed-by: Brett Creeley <brett.creeley@amd.com>
-Link: https://patch.msgid.link/20260901055627.1373129-1-nikhil.rao@amd.com
+With 0xffff > skb->len always true (rx_urb_size is 4096), the
+incomplete-packet branch saves dev->partial_len = skb->len bytes
+into dev->partial_data.  partial_data is kmalloc(hard_mtu) =
+kmalloc(CX82310_MTU + 2) = 1516 bytes, but skb->len after the
+2-byte header pull can be up to 4094.  A device that sends a
+4096-byte URB starting with [0xff 0xff] therefore copies 4094
+device-provided bytes into a buffer allocated for 1516 bytes,
+exceeding its requested size by 2578 bytes.
+
+The next URB then reads dev->partial_len (4094) back from the same
+1516-byte buffer and dev->partial_rem (65535 - 4094 = 61441) from
+the new URB's ~4KB skb, both well past their allocations, and
+delivers the spliced result as a 64KB "frame" to the network
+stack.
+
+Bail out of rx_fixup after scheduling the re-enable work; the
+remainder of a reboot-marker URB is not meaningful packet data.
+This restores the invariant that partial_len < CX82310_MTU + 2 on
+the save path, since every other route there has already passed
+the MTU check.
+
+Fixes: ca139d76b0d9 ("cx82310_eth: re-enable ethernet mode after router reboot")
+Signed-off-by: Jason Winter <jjx@live.nl>
+Link: https://patch.msgid.link/BESP194MB283265DDDC63B6B78D8D34FBB8B72@BESP194MB2832.EURP194.PROD.OUTLOOK.COM
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/pensando/ionic/ionic_txrx.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ drivers/net/usb/cx82310_eth.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/pensando/ionic/ionic_txrx.c b/drivers/net/ethernet/pensando/ionic/ionic_txrx.c
-index 61d48c172587d..c8ecb0ee231ef 100644
---- a/drivers/net/ethernet/pensando/ionic/ionic_txrx.c
-+++ b/drivers/net/ethernet/pensando/ionic/ionic_txrx.c
-@@ -1668,15 +1668,22 @@ static int ionic_tx(struct net_device *netdev, struct ionic_queue *q,
- 	stats->pkts++;
- 	stats->bytes += skb->len;
- 
-+	ionic_txq_post(q, false);
-+
- 	if (likely(!ionic_txq_hwstamp_enabled(q))) {
- 		struct netdev_queue *ndq = q_to_ndq(netdev, q);
- 
--		if (unlikely(!ionic_q_has_space(q, MAX_SKB_FRAGS + 1)))
--			netif_tx_stop_queue(ndq);
-+		netif_txq_maybe_stop(ndq, ionic_q_space_avail(q),
-+				     MAX_SKB_FRAGS + 1, MAX_SKB_FRAGS + 1);
- 		ring_dbell = __netdev_tx_sent_queue(ndq, skb->len,
- 						    netdev_xmit_more());
- 	}
--	ionic_txq_post(q, ring_dbell);
-+
-+	if (ring_dbell) {
-+		ionic_dbell_ring(q->lif->kern_dbpage, q->hw_type,
-+				 q->dbval | q->head_idx);
-+		q->dbell_jiffies = jiffies;
-+	}
- 
- 	return 0;
- }
+diff --git a/drivers/net/usb/cx82310_eth.c b/drivers/net/usb/cx82310_eth.c
+index 79a47e2fd4378..840d014ac1aa8 100644
+--- a/drivers/net/usb/cx82310_eth.c
++++ b/drivers/net/usb/cx82310_eth.c
+@@ -282,6 +282,7 @@ static int cx82310_rx_fixup(struct usbnet *dev, struct sk_buff *skb)
+ 		if (len == 0xffff) {
+ 			netdev_info(dev->net, "router was rebooted, re-enabling ethernet mode");
+ 			schedule_work(&priv->reenable_work);
++			return 0;
+ 		} else if (len > CX82310_MTU) {
+ 			netdev_err(dev->net, "RX packet too long: %d B\n", len);
+ 			return 0;
 -- 
 2.53.0
 
