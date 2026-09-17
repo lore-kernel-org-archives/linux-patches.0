@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52B535349D5;
-	Thu, 17 Sep 2026 17:31:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 712275349DD;
+	Thu, 17 Sep 2026 17:31:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666279; cv=none; b=W6oR8jLKSXdacgy+RcICQxqolyS3wM9U+35Sr8C3PkOpY96T/jb1jypU4x51nO4Sb/agBQ+i8Ib9S2/L5Ep4dBETbHRL1nb5mCIjD8Y+MDmw8mCrdw3S3H82ma9uDLpLfO/1La0t7NUH/fGBI8FRxTKFe6XMdpcznKhbNpbvNI8=
+	t=1789666282; cv=none; b=ZBkAi0c2p3rbLIg5sPjoEwCIWqAfQrTdaWyRbTxnfC7Xq6pVTNY4bhnDdzE5y4tIldH04fksZrPYWZkFZPu7axxvDyoMDWIi+5q3hi9pQDQKM+NMmBaEPGI1FdeQhpXRuNz/6bD5Eair3dGwJLNnD2a3+lxB3TpAUrDXlYB/zG4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666279; c=relaxed/simple;
-	bh=if0SajLE3XHzB1QrJne5CzL+38JWn1UT2h98THNOq1c=;
+	s=arc-20240116; t=1789666282; c=relaxed/simple;
+	bh=uWgUW/vrKhqdzjcV6jK5Uye5YrXXZyYO+8mRZHvtCcM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kC6Oy9rtu1EFulf9UAUGE2zEXX8AuFWqoci5KwmS3dm4y5y+03w063iE3DJ3tDGnUlMoq9dd3DIAeEhlOpL6yMskJZqX4KTyfpHHoo/Sj+F9jrxm08GZ6Jtu3F/vFnvsOeK8Bfgdp0F6q9ZPrqUf2wG10i0Xx6b/N13q1q8JcQU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AeRW1hBA; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=P7vBbvR/IpLXiZZW9cOpXp3upnSGGFpK/AH/xP4A1921lLnMcwiy1+O2kGNM3cmjG7jEddxpLTfQO1PltZwJG2zyvDtxYN5IQ4VzU3E6lLZtRXALePgpUGteghntZIWuqb5jZeDxtZi7AyUwIRSUYFTuZt7HHg+xSZ2p0wI2V4Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XLlYdrIL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AeRW1hBA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 912B01F000FF;
-	Thu, 17 Sep 2026 17:31:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XLlYdrIL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8374C1F00893;
+	Thu, 17 Sep 2026 17:31:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666278;
-	bh=BvEQ2O/s0Xe+aygJrLJc9pfXVYm1Yv0ywJYpO2GcB0Q=;
+	s=korg; t=1789666281;
+	bh=h9jzAZh61SWga/mHQ2fVrs5aaIrNDyrNC4gYhjU/3Lk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AeRW1hBAbOjk1A7DsdaDbx+A0Wn/eB5MiQs9Al0mpTGiWtADVsTKKPwAzBoabIF2g
-	 q2KHeaqyqu0WHHyVdbijJVrwZC4Eip4W4tWLTG0M7qXCz0X4l82TZDbV1NgxaPtC4g
-	 vWBnjpQmFOPg5mKHwSNO+bci6fnN0VbrkGXilNyk=
+	b=XLlYdrILwC6PYc5Rw7CJGvKxZmv4R2GQMNtZornGpj9vhAasuObBvmU+LclC2Q/CA
+	 gdsIApBJ9CgQngaixoajbVa9uQdz3d5lyZY4rn55OxGLyKKBIuO/93CC3YSYKxhl4g
+	 6IT+nEURMyP4QDIqFYfxZtfQ+RLmMzmuCyM6p9Dg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
-	Stian Halseth <stian@itx.no>,
-	Jens Axboe <axboe@kernel.dk>,
+	Binglei Wang <l3b2w1@gmail.com>,
+	Gao Xiang <xiang@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0946/1250] sunvdc: unmap LDC cookies when the descriptor send fails
-Date: Thu, 17 Sep 2026 16:12:21 +0100
-Message-ID: <20260917151617.666936868@linuxfoundation.org>
+Subject: [PATCH 6.18 0947/1250] erofs: add missing buf->off in erofs_bread()
+Date: Thu, 17 Sep 2026 16:12:22 +0100
+Message-ID: <20260917151617.693258163@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -52,82 +51,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stian Halseth <stian@itx.no>
+From: Binglei Wang <l3b2w1@gmail.com>
 
-[ Upstream commit 0c6da21fa35e03fc74f09895433ccd6d4a9c3530 ]
+[ Upstream commit 135d84c66f85426299db01a09d93a79a87af18ba ]
 
-__send_request() maps the request's pages into the LDC channel's map
-table (ldc_map_sg()), fills in the descriptor and marks it
-VIO_DESC_READY before ringing the doorbell via __vdc_tx_trigger().
-When the trigger fails, the error path only prints a message: the
-descriptor stays READY and the cookies are never unmapped. The
-mapping is normally released in vdc_end_one() when the peer completes
-the descriptor - but a descriptor whose doorbell was never sent will
-never complete, and since dr->prod is not advanced on failure, the
-reset path (vdc_requeue_inflight(), which walks [cons, prod)) never
-visits it either. The map table entries are leaked permanently.
+erofs_bread() locates the target folio with
 
-Since commit a11f6ca9aef9 ("sunvdc: Do not spin in an infinite loop
-when vio_ldc_send() returns EAGAIN") trigger failures occur in
-practice under load, so every resulting I/O error also leaks one
-request's worth of entries from the fixed-size (8192 entries per
-channel) map table. Because the allocator hands out contiguous
-ranges, fragmentation makes large multi-segment requests fail first
-as the table drains, until ldc_map_sg() fails permanently and the
-disk is dead until reboot.
+ index = (buf->off + offset) >> PAGE_SHIFT;
 
-It also makes any retry-based recovery unusable: requeuing the
-request on -EAGAIN remaps the pages on every attempt, overwriting
-desc->cookies and orphaning the previous mapping, so the table
-drains at the retry rate. This is the memory exhaustion observed
-when the requeue approach was first tested in October 2025.
+but computes the in-folio offset without taking buf->off into account:
 
-Roll back on failure: unmap the cookies, mark the descriptor FREE
-again and clear the request entry. If the trigger failed with
--ENOTCONN, __vdc_tx_trigger() has already reset the port, which
-tears down and reallocates both the dring and the LDC channel
-including its map table - nothing to roll back, and the stale
-descriptor must not be touched.
+ return buf->base + (offset & ~PAGE_MASK);
 
-Fixes: a11f6ca9aef9 ("sunvdc: Do not spin in an infinite loop when vio_ldc_send() returns EAGAIN")
-Reported-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Link: https://github.com/sparclinux/issues/issues/2
-Signed-off-by: Stian Halseth <stian@itx.no>
-Link: https://patch.msgid.link/20260901173947.3292110-2-stian@itx.no
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+If buf->off is not page-aligned, the returned pointer misses the in-page
+component of buf->off, so callers end up fetching data from a wrong
+offset.
+
+buf->off is set to sbi->dif0.fsoff in erofs_init_metabuf(), and fsoff can
+be specified via the "fsoffset=" mount option, which only requires
+block-size alignment. Therefore, on an image with a sub-page block size
+(e.g. 512 bytes), a non-page-aligned fsoff (e.g. 512) triggers the issue,
+since 512 is a multiple of the block size but not of PAGE_SIZE.
+
+It can be reproduced by mounting an image that is placed at a
+non-page-aligned offset:
+
+ mkfs.erofs -b512 -zlz4hc sub.erofs src/
+ # prepend 512 bytes of padding to the image
+ mount -t erofs -o loop,fsoffset=512 padded.erofs /mnt
+
+which fails with
+
+ erofs (device loop0): cannot find valid erofs superblock
+
+because the on-disk superblock (at offset 1024 within the image, i.e.
+1536 within the padded file) is read from a wrong in-folio offset. With
+this fixed, the very same image mounts successfully and its file contents
+match those read from the unpadded image.
+
+Fix it by including buf->off in the in-folio offset calculation, so that
+it is consistent with the folio index calculation.
+
+Fixes: c36ec00d7f67 ("erofs: add 'fsoffset' mount option to specify filesystem offset")
+Signed-off-by: Binglei Wang <l3b2w1@gmail.com>
+Reviewed-by: Gao Xiang <xiang@kernel.org>
+Signed-off-by: Gao Xiang <xiang@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/sunvdc.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ fs/erofs/data.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/block/sunvdc.c b/drivers/block/sunvdc.c
-index db1fe9772a4d7..2eb96136632ac 100644
---- a/drivers/block/sunvdc.c
-+++ b/drivers/block/sunvdc.c
-@@ -525,6 +525,23 @@ static int __send_request(struct request *req)
- 	err = __vdc_tx_trigger(port);
- 	if (err < 0) {
- 		printk(KERN_ERR PFX "vdc_tx_trigger() failure, err=%d\n", err);
-+		/*
-+		 * If the port was reset (-ENOTCONN), the dring and the
-+		 * LDC channel including all of its mappings are already
-+		 * torn down and reallocated - there is nothing to undo
-+		 * and @desc must not be touched.
-+		 *
-+		 * For any other failure the descriptor was never handed
-+		 * to the peer: unmap the cookies and free the descriptor
-+		 * again, so that a later retry of the request does not
-+		 * leak LDC map table entries.
-+		 */
-+		if (err != -ENOTCONN) {
-+			ldc_unmap(port->vio.lp, desc->cookies,
-+				  desc->ncookies);
-+			desc->hdr.state = VIO_DESC_FREE;
-+			rqe->req = NULL;
-+		}
- 	} else {
- 		port->req_id++;
- 		dr->prod = vio_dring_next(dr, dr->prod);
+diff --git a/fs/erofs/data.c b/fs/erofs/data.c
+index 8ca29962a3dde..3e6b512efe21c 100644
+--- a/fs/erofs/data.c
++++ b/fs/erofs/data.c
+@@ -46,7 +46,7 @@ void *erofs_bread(struct erofs_buf *buf, erofs_off_t offset, bool need_kmap)
+ 		return NULL;
+ 	if (!buf->base)
+ 		buf->base = kmap_local_page(buf->page);
+-	return buf->base + (offset & ~PAGE_MASK);
++	return buf->base + ((buf->off + offset) & ~PAGE_MASK);
+ }
+ 
+ int erofs_init_metabuf(struct erofs_buf *buf, struct super_block *sb,
 -- 
 2.53.0
 
