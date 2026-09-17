@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B21A44ABBAC;
-	Thu, 17 Sep 2026 16:04:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DC844ABBAC;
+	Thu, 17 Sep 2026 16:04:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789661078; cv=none; b=uthaI3CWlHoXpF2OeqlrQRZ3AV55+MSSKt0/brGJC6DqnY+GuOPLZ3ZfYlIWXjDBziqH8FN/yKk2Amj87AemniUI3xAFcRHw44MRMbrkCAvUpHC9ICv9PwbJ2tfG9bFGjYgOin/tTt4Pihr6n3qLVZ7hsla09zEdDLUOVKXecC8=
+	t=1789661081; cv=none; b=IZICByuWxtNtFCwNw/xCW2otRjJwl+bCLQeQBgQiJjyLJWMozNVl8jwiQhp6it8W5z5L897NyFn96IGYIPLIiu7TlJ8oQT86AUNc8bdteLKwA5i4VHn0cBH2wdlpu1B0jazUHJJcJmwbKeLjLtnugD2ClCTJ716Oi6hbRNsn8zg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789661078; c=relaxed/simple;
-	bh=huxL8nIfjqeLd/u5DWcE/wPpgznjh1fB1XVu9DVYDjc=;
+	s=arc-20240116; t=1789661081; c=relaxed/simple;
+	bh=1TCBI2VAKrIkWPk7TZW3+fz7M+kgL1d2NUuJOBGJVMA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BP3KpWHsGjGXXR1ViMGQraLHaM0ufcURwOGQf1PWMhFX34VrfoXc1Jb9X+H5Xc1j4us9yZ0YdGdzh3PEdgMwxazTii2Mzw7Ojz/dI+3pYBJhTDjJU2Us8SsvVz4g6BFoewvDBmUnW8t6B7WwxCFE9rAnmz9ziwyCJKmm/RINfgA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jDfhnko3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=sjgZRyJpie17yocMO1ao43cqIDZ2C5EWo9DtVbtJUqpN2k4N1Tg6wcnS8N9Y3oNIKVIueFH8GKd4smVAZnxrycfZWODhjbsJ6DY8RK7YbK20zsRzsHfM6DC26U5zp6wfJnPxLqWpXnF/jpAg85ObXF25fWociMGnPmCBzCctz/Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BFiy8p79; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jDfhnko3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13AEF1F000FF;
-	Thu, 17 Sep 2026 16:04:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BFiy8p79"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02DD41F00893;
+	Thu, 17 Sep 2026 16:04:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789661077;
-	bh=+rfJsoY3oRRdD/NOAztkmWWSe726NIcOqcCYMPcKjUU=;
+	s=korg; t=1789661080;
+	bh=mHGPpl5gIEawj+WxlzRmGiBIy1Ch85Bx2bWc7zSxIiA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jDfhnko3hf8DVX3doIow4hNMmqDeJwawPTadJhufCj068J9nSjNYdyMA5Fmq9TgGz
-	 cUf9LppgG4IfmpCrEuDdXmjhIeaCBYM44URUwaP6lfIPozOVwy3ddsnZCh/hfAGErR
-	 qyL4r5QAR+5ODrUTAf2uksTzX6VULttDsy2qqyr8=
+	b=BFiy8p79S0hdYg0CN7nzDKwoMLCXwOJuMztaJ2AVdbERllKf+7SKh5VYxWo7xlGic
+	 PGGRyaXhnBCkR/jaeRsyj0Q+PEly9lVo5ZiNgzch6u2kcCtbdBZTID4yuhbp5aEz3l
+	 ZF/TyuoN5zfPdsj2OK4ujqO6hAcY4Pz25Kh7LcSQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Justin Lai <justinlai0215@realtek.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Ruoyu Wang <ruoyuw560@gmail.com>,
+	Linus Walleij <linusw@kernel.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0073/1250] rtase: Fix flow control configuration
-Date: Thu, 17 Sep 2026 15:57:48 +0100
-Message-ID: <20260917151553.927699413@linuxfoundation.org>
+Subject: [PATCH 6.18 0074/1250] crypto: ixp4xx - fix buffer chain unwind on allocation failure
+Date: Thu, 17 Sep 2026 15:57:49 +0100
+Message-ID: <20260917151553.957207426@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -52,65 +52,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Justin Lai <justinlai0215@realtek.com>
+From: Ruoyu Wang <ruoyuw560@gmail.com>
 
-[ Upstream commit fea3521e043fa1388ec909205687db7d4b0c57ec ]
+[ Upstream commit 25056329384010a8672552b134f609601dc4f80e ]
 
-The hardware has two sets of registers controlling TX/RX flow control.
-The effective flow control state is determined by the logical OR of
-these two sets of bits.
+chainup_buffers() builds a linked list of buffer descriptors for a
+scatterlist. If dma_pool_alloc() fails while constructing the list, the
+current code sets buf to NULL and later dereferences it unconditionally
+at the end of the function:
 
-RTASE_FORCE_TXFLOW_EN and RTASE_FORCE_RXFLOW_EN in RTASE_CPLUS_CMD are
-the bits used by the driver to control TX/RX flow control according to
-the ethtool pause configuration.
+  buf->next = NULL;
+  buf->phys_next = 0;
 
-RTASE_TXFLOW_EN and RTASE_RXFLOW_EN in RTASE_GPHY_STD_00 are another
-set of TX/RX flow control enable bits. Clear them by default so they do
-not keep flow control enabled independently of the driver setting.
+This can lead to a null-pointer dereference on allocation failure.
 
-With the RTASE_GPHY_STD_00 bits cleared, the effective flow control
-state is controlled through RTASE_CPLUS_CMD, so the ethtool setting can
-take effect correctly.
+If the failure happens after part of the descriptor chain has already
+been allocated and DMA-mapped, the partially constructed chain also
+needs to be released.
 
-Signed-off-by: Justin Lai <justinlai0215@realtek.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20260505064121.31286-1-justinlai0215@realtek.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fix this by terminating the partially constructed chain on allocation
+failure and letting the callers unwind it via their existing cleanup
+paths. Also fix ablk_perform() to preserve the hook pointers before
+checking for failure, so partially built chains can be freed correctly.
+
+Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
+Acked-by: Linus Walleij <linusw@kernel.org>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/realtek/rtase/rtase.h      | 4 ++++
- drivers/net/ethernet/realtek/rtase/rtase_main.c | 3 +++
- 2 files changed, 7 insertions(+)
+ drivers/crypto/intel/ixp4xx/ixp4xx_crypto.c | 25 ++++++++++++---------
+ 1 file changed, 14 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/net/ethernet/realtek/rtase/rtase.h b/drivers/net/ethernet/realtek/rtase/rtase.h
-index 43087b17a0ff2..03b12d83f6e9d 100644
---- a/drivers/net/ethernet/realtek/rtase/rtase.h
-+++ b/drivers/net/ethernet/realtek/rtase/rtase.h
-@@ -153,6 +153,10 @@ enum rtase_registers {
- #define RTASE_FORCE_TXFLOW_EN BIT(10)
- #define RTASE_RX_CHKSUM       BIT(5)
- 
-+	RTASE_GPHY_STD_00 = 0x6024,
-+#define RTASE_RXFLOW_EN BIT(7)
-+#define RTASE_TXFLOW_EN BIT(6)
+diff --git a/drivers/crypto/intel/ixp4xx/ixp4xx_crypto.c b/drivers/crypto/intel/ixp4xx/ixp4xx_crypto.c
+index fcc0cf4df637d..5b90cf0fb0e41 100644
+--- a/drivers/crypto/intel/ixp4xx/ixp4xx_crypto.c
++++ b/drivers/crypto/intel/ixp4xx/ixp4xx_crypto.c
+@@ -884,8 +884,9 @@ static struct buffer_desc *chainup_buffers(struct device *dev,
+ 		ptr = sg_virt(sg);
+ 		next_buf = dma_pool_alloc(buffer_pool, flags, &next_buf_phys);
+ 		if (!next_buf) {
+-			buf = NULL;
+-			break;
++			buf->next = NULL;
++			buf->phys_next = 0;
++			return NULL;
+ 		}
+ 		sg_dma_address(sg) = dma_map_single(dev, ptr, len, dir);
+ 		buf->next = next_buf;
+@@ -983,7 +984,7 @@ static int ablk_perform(struct skcipher_request *req, int encrypt)
+ 	unsigned int nbytes = req->cryptlen;
+ 	enum dma_data_direction src_direction = DMA_BIDIRECTIONAL;
+ 	struct ablk_ctx *req_ctx = skcipher_request_ctx(req);
+-	struct buffer_desc src_hook;
++	struct buffer_desc *buf, src_hook;
+ 	struct device *dev = &pdev->dev;
+ 	unsigned int offset;
+ 	gfp_t flags = req->base.flags & CRYPTO_TFM_REQ_MAY_SLEEP ?
+@@ -1025,22 +1026,24 @@ static int ablk_perform(struct skcipher_request *req, int encrypt)
+ 		/* This was never tested by Intel
+ 		 * for more than one dst buffer, I think. */
+ 		req_ctx->dst = NULL;
+-		if (!chainup_buffers(dev, req->dst, nbytes, &dst_hook,
+-				     flags, DMA_FROM_DEVICE))
+-			goto free_buf_dest;
+-		src_direction = DMA_TO_DEVICE;
++		buf = chainup_buffers(dev, req->dst, nbytes, &dst_hook,
++				      flags, DMA_FROM_DEVICE);
+ 		req_ctx->dst = dst_hook.next;
+ 		crypt->dst_buf = dst_hook.phys_next;
++		if (!buf)
++			goto free_buf_dest;
++		src_direction = DMA_TO_DEVICE;
+ 	} else {
+ 		req_ctx->dst = NULL;
+ 	}
+ 	req_ctx->src = NULL;
+-	if (!chainup_buffers(dev, req->src, nbytes, &src_hook, flags,
+-			     src_direction))
+-		goto free_buf_src;
+-
++	buf = chainup_buffers(dev, req->src, nbytes, &src_hook, flags,
++			      src_direction);
+ 	req_ctx->src = src_hook.next;
+ 	crypt->src_buf = src_hook.phys_next;
++	if (!buf)
++		goto free_buf_src;
 +
- 	RTASE_Q0_RX_DESC_ADDR0 = 0x00E4,
- 	RTASE_Q0_RX_DESC_ADDR4 = 0x00E8,
- 	RTASE_Q1_RX_DESC_ADDR0 = 0x4000,
-diff --git a/drivers/net/ethernet/realtek/rtase/rtase_main.c b/drivers/net/ethernet/realtek/rtase/rtase_main.c
-index bc9b14614f7a7..e3cd4f7c13804 100644
---- a/drivers/net/ethernet/realtek/rtase/rtase_main.c
-+++ b/drivers/net/ethernet/realtek/rtase/rtase_main.c
-@@ -977,6 +977,9 @@ static void rtase_hw_config(struct net_device *dev)
- 	rtase_hw_set_features(dev, dev->features);
- 
- 	/* enable flow control */
-+	reg_data16 = rtase_r16(tp, RTASE_GPHY_STD_00);
-+	reg_data16 &= ~(RTASE_TXFLOW_EN | RTASE_RXFLOW_EN);
-+	rtase_w16(tp, RTASE_GPHY_STD_00, reg_data16);
- 	reg_data16 = rtase_r16(tp, RTASE_CPLUS_CMD);
- 	reg_data16 |= (RTASE_FORCE_TXFLOW_EN | RTASE_FORCE_RXFLOW_EN);
- 	rtase_w16(tp, RTASE_CPLUS_CMD, reg_data16);
+ 	crypt->ctl_flags |= CTL_FLAG_PERFORM_ABLK;
+ 	qmgr_put_entry(send_qid, crypt_virt2phys(crypt));
+ 	BUG_ON(qmgr_stat_overflow(send_qid));
 -- 
 2.53.0
 
