@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87AA04E73C7;
-	Thu, 17 Sep 2026 15:49:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B16424E4C36;
+	Thu, 17 Sep 2026 15:49:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789660164; cv=none; b=kOYriGbaphAIN4+FE/LwSfE/kSCfp2G/H7To8V6G0tYv3V94fryNEYZRruvw0pINjMK0L1/s3dBdZ7oQuX6xBy4mhF8wHBXEvgr8d3CmSYRPMi0YyQMtxhFcSfdtGDOfv7yTqei6pMaid53z54cCu8ZRipv+MFKK2A0pLMXiL7E=
+	t=1789660163; cv=none; b=roW3giRrnpog7EOFIjBaVUZnlCxeiDzKD7sCQMmvzcbl9YQdH1vkT7M7Ca38EnGAno5AHvweLdhrH5c2Z6cdNZkZNEY0mN4r/+7DMJ9vXAHyMeNannGd0yMCUgILlxi1YUt5fCo0X5YHqy/656EBRir9llPga4EuMUYZDHjxaIY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789660164; c=relaxed/simple;
-	bh=g310+1E7S71BEv/qyjbVRYsh3PAImFrKOwrSCkOSdWI=;
+	s=arc-20240116; t=1789660163; c=relaxed/simple;
+	bh=wzsA+89KNS4eSen9q26I8Wl/gQXWw3NeMkp7jZ1cVm4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XJKbrsWNWGCN0ysL2pQfdDt582k8z18NAmoF4BL+csli8lUHz3a5RlfWsdOYSOZ0NqaxZGVBjW8zs6D9oiyZUzTzPDehJImP7irITZ1QgA97Q5daytcWw821+78dCvPqjyfruT0DC4btcFCWT0pZgFB3HzgOlBBQBGp/a8tK9cI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L90yt5q+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=PZ04Pp2EtP06uYYeNhORILqsyiJXGsJydoh3sCJIoPHrMl7mVfsRXJAU2LzUqp8nS5STKCIjJrAGc+ZCKYr8jiQWEoEy8o3K65QVGmcri/B8H/CT0A5jp8X+SOImKZqQiIB9d13LrqwUKbRccDAtKIsA7Ivih6CIrnkIEgm1Ca0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pZOZ/Vd9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L90yt5q+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EBD61F000FF;
-	Thu, 17 Sep 2026 15:49:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pZOZ/Vd9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D1C11F0089A;
+	Thu, 17 Sep 2026 15:49:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789660159;
-	bh=8zLVM6V2vS1oyhBsxl6yEEvKB1ou3bapeOdrjOa4GO0=;
+	s=korg; t=1789660154;
+	bh=wuGQaIQipC6D9NmUu007ize7DGMbqYX77kISZATFKrg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L90yt5q+dG9+QQCy4JAIXh046NYEvUDd12txHePcXKMv+bV8GPm1lExluzirCPnA/
-	 f/5ATzzOnlRr3UqRFUMeCfwWbqG5fQK6e8gQvDQ0XHmsdnk98efh6nqNmlJjtB6Ra8
-	 y331QT0WUmQCbdIFF2M+8xw5S3jDv56UigZvdr+o=
+	b=pZOZ/Vd9x81C5zy9LoBdnb+UBFKs/6SJO673CLtHQCiUTA1xw34Eba71beLFWC/H0
+	 GTPeQiJXUsl7Z+rOK76DYcZ7S0Dyf9Ef4KO+WLNYDK9WxxL/QPzcDKSKpUi6bRIj9z
+	 nZHY+1UYkUYX94pfnxdwMlzbmD6zZHIk+8aBPrQo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Shivaprasad G Bhat <sbhat@linux.ibm.com>,
-	Amit Machhiwal <amachhiw@linux.ibm.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>
-Subject: [PATCH 7.2 451/733] powerpc/eeh: Fix recursive locking on devices without EEH sensitive driver
-Date: Thu, 17 Sep 2026 16:12:39 +0100
-Message-ID: <20260917151403.144191562@linuxfoundation.org>
+	Orson Peters <orsonpeters@gmail.com>,
+	Vernon Yang <yanglincheng@kylinos.cn>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Rick Edgecombe <rick.p.edgecombe@intel.com>
+Subject: [PATCH 7.2 459/733] x86/mm: Fix user-space data loss with MADV_FREE and THP
+Date: Thu, 17 Sep 2026 16:12:47 +0100
+Message-ID: <20260917151403.374047265@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -53,57 +53,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shivaprasad G Bhat <sbhat@linux.ibm.com>
+From: Vernon Yang <yanglincheng@kylinos.cn>
 
-commit c5e68706527968282e49de205cc2b935823cb88a upstream.
+commit f7491d7c81db0e7c304a7bd757a76d2fbeaff80e upstream.
 
-The commit 1010b4c012b0 ("powerpc/eeh: Make EEH driver device hotplug
-safe") refactored the EEH code such that the pci_rescan_remove_lock is
-held at the beginning of eeh_handle_normal_event() and the
-eeh_reset_device() is called with that lock being held. Looks like the
-commit missed to remove the existing lock/unlock inside eeh_rmv_device()
-which is no longer necessary. This is causing the eehd to hang on the
-lock which it actually holds when that code path is taken.
+Some of users of Polars (a data analytics library) have lost production
+data from this bug. They seem to have just the right combination of
+huge pages, MADV_FREE and heavy reclaim pressure.
 
-[<0>] 0xc00000011c78f870
-[<0>] __switch_to+0xfc/0x1a0
-[<0>] pci_lock_rescan_remove+0x30/0x44
-[<0>] eeh_rmv_device+0x290/0x2e0
-[<0>] eeh_pe_dev_traverse+0x80/0x130
-[<0>] eeh_reset_device+0xcc/0x23c
-[<0>] eeh_handle_normal_event+0x830/0xa80
-[<0>] eeh_event_handler+0xf8/0x190
-[<0>] kthread+0x194/0x1b0
-[<0>] start_kernel_thread+0x14/0x18
+pmd_modify() masks the old value with (_HPAGE_CHG_MASK & ~_PAGE_DIRTY),
+silently discarding the hardware dirty bit.  The subsequent
+pmd_mksaveddirty() call is supposed to transfer _PAGE_DIRTY into
+_PAGE_SAVED_DIRTY when write-protecting, but the dirty bit was already
+stripped from the value, so there is nothing left to transfer.
 
-The issue is seen for cases where the errors are detected on the PHB
-directly AND|OR for devices where the driver error_detected() returns
-PCI_ERS_RESULT_NEED_RESET, and driver being not EEH sensitive(i.e no
-error handlers like slot_reset(), resume() etc defined).
+Contrast with pte_modify(), which keeps _PAGE_DIRTY_BITS in its mask,
+and pud_modify(), which keeps _HPAGE_CHG_MASK untouched: pmd_modify()
+is the odd one out.  Any pmd_modify() on a writable, dirty PMD loses
+the dirty state.
 
-Fixes: 1010b4c012b0 ("powerpc/eeh: Make EEH driver device hotplug safe")
-Cc: stable <stable@kernel.org>
-Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Signed-off-by: Shivaprasad G Bhat <sbhat@linux.ibm.com>
-Reviewed-by: Amit Machhiwal <amachhiw@linux.ibm.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/178404937381.913.2759874335293830160.stgit@linux.ibm.com
+One visible consequence is data loss with MADV_FREE on PMD-mapped THP:
+
+    memset(buf, 0x5A, size);          // PMD-mapped THP, PMD dirty
+    madvise(buf, size, MADV_FREE);    // PMD cleaned but left writable,
+                                      // folio marked lazyfree
+    memset(buf, 0x5A, size);          // hardware sets _PAGE_DIRTY again
+    mprotect(buf, size, PROT_READ);   // pmd_modify() drops the dirty bit
+    mprotect(buf, size, PROT_READ|PROT_WRITE);
+    // ... memory pressure ...
+
+Reclaim (e.g. under memcg pressure) then finds the lazyfree folio with
+no dirty bit set anywhere and frees it in
+__discard_anon_folio_pmd_locked(), even though the data was rewritten
+after MADV_FREE; subsequent reads fault in fresh zero pages.  NUMA
+hinting alone can trigger the same loss, as do_huge_pmd_numa_page()
+restores the PMD through pmd_modify() as well.
+
+PMD-mapped file THPs are affected too: mprotect()/NUMA hinting dropping
+the dirty bit means rewritten data is never written back.
+
+Fix it by keeping _PAGE_DIRTY in the preserved mask, exactly like
+pte_modify() and pud_modify() do.  The existing
+pmd_mksaveddirty()/pmd_clear_saveddirty() pair then performs the
+hardware-dirty <-> saved-dirty transition based on the write bit,
+preserving the shadow-stack encoding rules.
+
+Fixes: bb3aadf7d446 ("x86/mm: Start actually marking _PAGE_SAVED_DIRTY")
+Closes: https://lore.kernel.org/r/CAJxLxMUGu1-L+O_nAONOwOXnS=cNbNApCWqdthRjd76LThtSPg@mail.gmail.com/
+Reported-by: Orson Peters <orsonpeters@gmail.com>
+Signed-off-by: Vernon Yang <yanglincheng@kylinos.cn>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Reviewed-by: Rick Edgecombe <rick.p.edgecombe@intel.com>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260903031608.1194238-1-vernon2gm@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/kernel/eeh_driver.c |    2 --
- 1 file changed, 2 deletions(-)
+ arch/x86/include/asm/pgtable.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/powerpc/kernel/eeh_driver.c
-+++ b/arch/powerpc/kernel/eeh_driver.c
-@@ -533,9 +533,7 @@ static void eeh_rmv_device(struct eeh_de
- 		if (rmv_data)
- 			list_add(&edev->rmv_entry, &rmv_data->removed_vf_list);
- 	} else {
--		pci_lock_rescan_remove();
- 		pci_stop_and_remove_bus_device(dev);
--		pci_unlock_rescan_remove();
- 	}
- }
+--- a/arch/x86/include/asm/pgtable.h
++++ b/arch/x86/include/asm/pgtable.h
+@@ -806,7 +806,7 @@ static inline pmd_t pmd_modify(pmd_t pmd
+ 	pmdval_t val = pmd_val(pmd), oldval = val;
+ 	pmd_t pmd_result;
+ 
+-	val &= (_HPAGE_CHG_MASK & ~_PAGE_DIRTY);
++	val &= _HPAGE_CHG_MASK;
+ 	val |= check_pgprot(newprot) & ~_HPAGE_CHG_MASK;
+ 	val = flip_protnone_guard(oldval, val, PHYSICAL_PMD_PAGE_MASK);
  
 
 
