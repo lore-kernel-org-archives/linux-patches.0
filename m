@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B22464D4879;
-	Thu, 17 Sep 2026 15:52:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98B1A4D6C52;
+	Thu, 17 Sep 2026 15:52:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789660346; cv=none; b=ERJJwUGjimsh0XwdtoAJlJqV4X73xSmNQ/6FNayRMDmodIQA1Aa5HZREkxkW7ioUmiNEFCmuPbM8ZW2XDREUg+Nv2icBRdJQw9b+u6TGAoSgXIY17+rdD3ch67trfbQ/tqf/95jfd8CfdMNxKLXTVZSWwjebrYnH9beQRtVb65U=
+	t=1789660350; cv=none; b=vCxQSv5HH7bbVBQ1lzdCxD0IQfoJKZCWiyQMlm1091X9LBoU/pNNJr64+0dfX5O/pTjvRjiCHtcD6CpYNJvgFX8sQU/VdQ9eM6fbMFxS5c1DHRtB+sRSPFFnLydQcSfTRD2wd6+eaWIxy0KnipJKuPZXVTSmW1VoqvyPITgANB0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789660346; c=relaxed/simple;
-	bh=1XtCSFvYRKh947qze6czv/XqwWz7qwwDDhvguPPS/Xo=;
+	s=arc-20240116; t=1789660350; c=relaxed/simple;
+	bh=V5hxVhbSmSh2YGANmBLTcQDfOo8+coK+L/9LqivuX1M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mjdyerdwOfbnrvNNcxUxnQvLA6hdJXDjmXfLALyHzNaTEA75jSXuRdSxHtt5lDFOgB7LQlrgshXIDxPw3DNQRGjTuLq1Ea+U0FoBekPhs+gZ5z2Tj1lEenmBY0iv9TiptYLuL1UZM+bWeOo2MYvxYQQVLMkqsxwaQDcgpsYzy94=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KHrWHzhi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qFlDusnbZQ6Ax+iSUHPpoIDkSREXkSIxyl3jGUUA4ciIWHtJ69s0KDskku+fqtHpPrPoTyXA3t8HBFyIGlKwUPc/wsCWC9/aHSdda63VyhdspuHkuvF0RSXdHG8yJ3RuSF3ZXYE3lxvmxv5SODF6iH8+LRDQ06B7SzzUNuCaql0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H4oXbvqT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KHrWHzhi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BE291F000FF;
-	Thu, 17 Sep 2026 15:52:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H4oXbvqT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB6EE1F000FF;
+	Thu, 17 Sep 2026 15:52:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789660345;
-	bh=pwq06PWFmx6micY8RODE3lR7NYnKcBLbvSFGrZe3TOw=;
+	s=korg; t=1789660348;
+	bh=KukFmNHBGxS85dYjSZi68A/g4Ky2wMhhqz8pF/keXIs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KHrWHzhiSsHKtoJnxZO5gAUx81sToSD10HpHxbnGXM3hYLLVnVoFH/SYTdLSonMiC
-	 wIDkI4pxnhqYenV6c1mXe58kWzK7QZVc5/WnZZnVkz2gh41KQ/T4aGEsQCzh2f2nOh
-	 rWK3ghcUZkl5rXknNKkPbKRqmBlQKGsRnC34f5d8=
+	b=H4oXbvqTAi7S8FaOaHww8Z9k/LTU7xGlq+HLGCJHyWbPNe4FCivJ+9qzjXrf66duJ
+	 nR2FxoCAykAtPu53i7YGsnSBVWNvA5BFZDLRaXizSB9cajPHlB6NuWrk+isKqgApWs
+	 o8vSriPkzbEza3BXTK2r6HUGBQqWa1gaf7DVGxI4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	co+c25629c98ba36ebe@bugs.sh,
-	stable@kernel.org,
-	Weiming Shi <bestswngs@gmail.com>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 7.2 561/733] fbdev: vfb: defer cleanup until the last reference
-Date: Thu, 17 Sep 2026 16:14:29 +0100
-Message-ID: <20260917151406.291614803@linuxfoundation.org>
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
+	Samuel Salin <Samuel.salin@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>
+Subject: [PATCH 7.2 562/733] idpf: disable DIM work before freeing q_vectors
+Date: Thu, 17 Sep 2026 16:14:30 +0100
+Message-ID: <20260917151406.318970238@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -52,84 +52,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-commit a0a34a40ed299c9c7cff6af163a5b883ee9d6d73 upstream.
+commit 7dd4c829bac2916be98a3e34b41daaba7f42b4c4 upstream.
 
-FBIOGETCMAP takes a shallow snapshot of info->cmap and performs the
-usercopy after dropping info->lock. vfb_remove() frees the colormap
-immediately after unregistering the framebuffer, even when an open file
-still holds a reference to fb_info. A concurrent driver unbind can
-therefore free the colormap while the ioctl copies it to userspace.
+idpf never drains the Tx/Rx DIM works before freeing the memory they
+live in.  tx_dim and rx_dim are embedded in struct idpf_q_vector, they
+are queued from the NAPI poll via net_dim(), and idpf_vport_intr_rel()
+ends with kfree(rsrc->q_vectors).  Nothing in the driver cancels them.
 
-KASAN reports:
+idpf_tx_dim_work() and idpf_rx_dim_work() then run on freed memory:
+idpf_vport_intr_write_itr() writes the ITR register through
+q_vector->intr_reg.tx_itr / rx_itr, void __iomem pointers loaded out of
+the freed q_vector.  No configuration is needed to get there --
+IDPF_ITR_IS_DYNAMIC() is defined as (itr_mode) and idpf_vport_alloc()
+initialises both modes to IDPF_ITR_DYNAMIC.
 
-  BUG: KASAN: slab-use-after-free in _copy_to_user
-  Read of size 512 by task poc/125
+Draining after idpf_vport_intr_napi_dis_all() is not enough on its own.
+idpf_net_dim() is called from inside the
+"if (napi_complete_done(napi, work_done))" branch of the poll, and
+napi_complete_done() has already cleared NAPIF_STATE_SCHED by then.
+napi_disable_locked() waits only while (val & (NAPIF_STATE_SCHED |
+NAPIF_STATE_NPSVC)), so napi_disable() can return while the poll tail is
+still queueing the work, and a plain cancel_work_sync() would be
+re-armed behind the drain.
 
-   _copy_to_user (./include/linux/instrumented.h:129 ./include/linux/uaccess.h:201 lib/usercopy.c:24)
-   fb_cmap_to_user (./include/linux/uaccess.h:230 drivers/video/fbdev/core/fbcmap.c:211)
-   do_fb_ioctl (drivers/video/fbdev/core/fb_chrdev.c:114)
+Use disable_work_sync(): schedule_work() on a work with a non-zero
+disable count is dropped by clear_pending_if_disabled() before
+__queue_work() is reached.
 
-   Allocated by task 1:
-   fb_alloc_cmap_gfp (./include/linux/slab.h:973 ./include/linux/slab.h:1290 drivers/video/fbdev/core/fbcmap.c:108)
-   vfb_probe (drivers/video/fbdev/vfb.c:459)
+Move idpf_init_dim() to idpf_vport_intr_alloc() so the works are
+initialised on every path that can reach the drain -- the three
+"goto intr_deinit" sites between idpf_vport_intr_init() and
+idpf_vport_intr_ena() get there without the enable side having run.
+Nothing re-enables them: rsrc->q_vectors is freed on every exit from
+idpf_vport_open() and on every idpf_vport_stop(), so the count dies with
+the object.
 
-   Freed by task 124:
-   fb_dealloc_cmap (drivers/video/fbdev/core/fbcmap.c:151)
-   vfb_remove (drivers/video/fbdev/vfb.c:489)
+It is a race, not a deterministic failure -- net_dim() only schedules
+once DIM_NEVENTS events have accumulated and the profile index changes.
+A KASAN ifup/ifdown loop under load is the way to see it.
 
-unregister_framebuffer() drops the registration reference, and fbdev calls
-fb_destroy after the last put_fb_info(). Move the registered framebuffer's
-cleanup into an fb_destroy callback so its colormap and screen buffer stay
-alive until all file references have been released.
-
-Fixes: 5e266e2e0e19 ("vfb: fix memory leaks in removal path")
-Reported-by: co+c25629c98ba36ebe@bugs.sh
-Cc: stable@kernel.org
-Closes: https://lore.kernel.org/linux-fbdev/f2Kf9GYn1lKR5S1dbvGVtykMxK1RlgP5z8sW@bugs.sh/
-Assisted-by: Codex:gpt-5
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Link: https://lore.kernel.org/linux-fbdev/f2Kf9GYn1lKR5S1dbvGVtykMxK1RlgP5z8sW@bugs.sh/
-Signed-off-by: Helge Deller <deller@gmx.de>
+Fixes: c2d548cad150 ("idpf: add TX splitq napi poll support")
+Fixes: 3a8845af66ed ("idpf: add RX splitq napi poll support")
+Cc: <stable@vger.kernel.org> # see patch description, needs adjustments for <= 6.9
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Tested-by: Samuel Salin <Samuel.salin@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/vfb.c |   11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/intel/idpf/idpf_txrx.c |   24 +++++++++++++++++++++++-
+ 1 file changed, 23 insertions(+), 1 deletion(-)
 
---- a/drivers/video/fbdev/vfb.c
-+++ b/drivers/video/fbdev/vfb.c
-@@ -78,6 +78,13 @@ static int vfb_pan_display(struct fb_var
- static int vfb_mmap(struct fb_info *info,
- 		    struct vm_area_struct *vma);
- 
-+static void vfb_destroy(struct fb_info *info)
-+{
-+	vfree(info->screen_buffer);
-+	fb_dealloc_cmap(&info->cmap);
-+	framebuffer_release(info);
-+}
-+
- static const struct fb_ops vfb_ops = {
- 	.owner		= THIS_MODULE,
- 	__FB_DEFAULT_SYSMEM_OPS_RDWR,
-@@ -87,6 +94,7 @@ static const struct fb_ops vfb_ops = {
- 	.fb_pan_display	= vfb_pan_display,
- 	__FB_DEFAULT_SYSMEM_OPS_DRAW,
- 	.fb_mmap	= vfb_mmap,
-+	.fb_destroy	= vfb_destroy,
- };
- 
-     /*
-@@ -485,9 +493,6 @@ static void vfb_remove(struct platform_d
- 
- 	if (info) {
- 		unregister_framebuffer(info);
--		vfree(videomemory);
--		fb_dealloc_cmap(&info->cmap);
--		framebuffer_release(info);
- 	}
+--- a/drivers/net/ethernet/intel/idpf/idpf_txrx.c
++++ b/drivers/net/ethernet/intel/idpf/idpf_txrx.c
+@@ -4150,6 +4150,26 @@ static void idpf_vport_intr_ena_irq_all(
  }
  
+ /**
++ * idpf_vport_intr_dis_dim_all - Disable DIM work for all q_vectors
++ * @rsrc: pointer to queue and vector resources
++ *
++ * The DIM works are embedded in the q_vector array that
++ * idpf_vport_intr_rel() frees, and the poll arms them after
++ * napi_complete_done() has already cleared NAPI_STATE_SCHED.  Disable
++ * rather than just cancel, so that a poll tail still running past
++ * napi_disable() cannot queue them again behind the drain.
++ */
++static void idpf_vport_intr_dis_dim_all(struct idpf_q_vec_rsrc *rsrc)
++{
++	for (u16 v_idx = 0; v_idx < rsrc->num_q_vectors; v_idx++) {
++		struct idpf_q_vector *q_vector = &rsrc->q_vectors[v_idx];
++
++		disable_work_sync(&q_vector->tx_dim.work);
++		disable_work_sync(&q_vector->rx_dim.work);
++	}
++}
++
++/**
+  * idpf_vport_intr_deinit - Release all vector associations for the vport
+  * @vport: main vport structure
+  * @rsrc: pointer to queue and vector resources
+@@ -4159,6 +4179,7 @@ void idpf_vport_intr_deinit(struct idpf_
+ {
+ 	idpf_vport_intr_dis_irq_all(rsrc);
+ 	idpf_vport_intr_napi_dis_all(rsrc);
++	idpf_vport_intr_dis_dim_all(rsrc);
+ 	idpf_vport_intr_napi_del_all(rsrc);
+ 	idpf_vport_intr_rel_irq(vport, rsrc);
+ }
+@@ -4239,7 +4260,6 @@ static void idpf_vport_intr_napi_ena_all
+ 	for (u16 q_idx = 0; q_idx < rsrc->num_q_vectors; q_idx++) {
+ 		struct idpf_q_vector *q_vector = &rsrc->q_vectors[q_idx];
+ 
+-		idpf_init_dim(q_vector);
+ 		napi_enable(&q_vector->napi);
+ 	}
+ }
+@@ -4582,6 +4602,8 @@ int idpf_vport_intr_alloc(struct idpf_vp
+ 		q_coal = &user_config->q_coalesce[v_idx];
+ 		q_vector->vport = vport;
+ 
++		idpf_init_dim(q_vector);
++
+ 		q_vector->tx_itr_value = q_coal->tx_coalesce_usecs;
+ 		q_vector->tx_intr_mode = q_coal->tx_intr_mode;
+ 		q_vector->tx_itr_idx = VIRTCHNL2_ITR_IDX_1;
 
 
