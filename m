@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0064D4EFFBF;
-	Thu, 17 Sep 2026 15:44:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C9754D4891;
+	Thu, 17 Sep 2026 15:44:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659869; cv=none; b=RbPhuVAMcVm15OCnWCeaOzwZ1VRZXDIbbIn4JANskFsiXmJC53VySN3CHup0bWmYHOzHtExMc3wogXHbLLkS9zewP+ammOc9vV98IKpEl6HdMGCdi9j5EzHyciwUl7IHAsi+Gz6KsBe9E7JQEi4vskIre0vLYD7jdgtFrDQUjQk=
+	t=1789659874; cv=none; b=bZOgmUzdF2SHZoZWyiCzPpCs7txubC9fZe4NmgF8k6a5uODq8yMZY6mcNXwvrlAskc5xlwFK5W3IKgZDpCIMWcWV71wRiivvqW+R5v5cmGJ/jKn3Wr4L2UXMPiWUNariPStG0OR4YVAVrUrcKaxBhAbNRoTOB21rBackizFFlkY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659869; c=relaxed/simple;
-	bh=sQ7b3LFH+ftAWkNNlkJ5uhw2lsVqgq5YeDAX/vCa6iM=;
+	s=arc-20240116; t=1789659874; c=relaxed/simple;
+	bh=J1nmgzorq+j5nkbIs0j1peQLNvtrzf+HfoInWDaUCYY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HuRFvJQif9h/Fx2a2IhSNVD+v3CaOGM0dMf/N6YvYorEpQ0pWObExpC+MMPhvrL3nBnROBi5l9rxkIVMt0OzDlRDnDLyTEiBXxEByW9YYQ9+oeMgVX2C6535MaIgwz23p4bZXFcT3iCzz9tg8pkCTeeV04rIqM8RrTITMaYMSNk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zYYRt+h0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=U2Ci8Qy+cooEhamL2G1itYUHlpDLRcyQ03KLcWBHfakGVduTWsVHrOLN666MCiSkfkhEa2pj5Ul4j/SFifjWtQTeVfJ/V6KDY1LkpK8fdwNNoQ9IxDYo8iFk4nkhPOWPnHna04CmCuSO20GwVDeJFKVWsSPQXtwULb663I4ufEo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cSzGDa1F; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zYYRt+h0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED8D41F00898;
-	Thu, 17 Sep 2026 15:44:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cSzGDa1F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD1401F00893;
+	Thu, 17 Sep 2026 15:44:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659862;
-	bh=q3QqINH51HoMn/YNyErVU5tCvF/71swqsEifN9GBJZc=;
+	s=korg; t=1789659868;
+	bh=WvkBSyaFM0FgMqtkCJ1La3vmAmX+HpVigyXR3rx1+DI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zYYRt+h0zHrcmYkxAg1tXr2iqY7s20/Fo6TyxaXmYPyZPTD9WkEUkKHK8quJ+ZlOc
-	 S8fSCy7296Dyavu4NwOLsKzJ6kMuCx8pPAQ/dBgKfXqgTGUzhaYJVZq4pzgCHWrqwP
-	 6GTHETWghTH+oeaIQKx9m/j2BU18OtT58uoWzotY=
+	b=cSzGDa1F3ex5TqoA/nbG6eTEhP0M/UQjj6eR0dNXOSK//IZS0sffLBoGs1hUdWMzb
+	 TaniXah6gMFOsQzREpwRMqdU3YqgWffMCApgClj9IK73h79nevCy6KSeSuG3eCWbnh
+	 zNoVnUkZIT8ZtbUtswDJRLI6MZD+l6CgFSbLS8Zo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Marek Vasut <marex@nabladev.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Sashiko AI review <sashiko-bot@kernel.org>,
+	Cong Nguyen <congnt264@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 398/733] net: ks8851: Fix receiver error in 100BASE-TX mode following software power-down
-Date: Thu, 17 Sep 2026 16:11:46 +0100
-Message-ID: <20260917151401.645754879@linuxfoundation.org>
+Subject: [PATCH 7.2 400/733] hwmon: (gpio-fan) take fan_data->lock in gpio_fan_shutdown()
+Date: Thu, 17 Sep 2026 16:11:48 +0100
+Message-ID: <20260917151401.701781279@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -52,77 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Vasut <marex@nabladev.com>
+From: Cong Nguyen <congnt264@gmail.com>
 
-[ Upstream commit 66ef5adb75446627f8b6c26cd04f2adc86d4de56 ]
+[ Upstream commit bb2424c3502cc72292eedade46960c331d5f28fb ]
 
-KSZ8851 errata sheet DS80000716D-page 4 Module 3 [1] states that,
-when issuing a software power-down (PMECR[1:0] = 10) followed by a
-power-on (PMECR[1:0] = 00), the receiver circuit can fail to start
-properly preventing communication. The Transmitter will still send
-data, but no data will be received.
+set_fan_speed() writes the control GPIOs one bit at a time. Every
+other caller locks around it; gpio_fan_shutdown() doesn't. If it races
+a locked caller, the GPIO writes can interleave and leave the fan at a
+speed neither caller asked for.
 
-The errata sheet also includes a workaround, which states that,
-it is recommended that the software power-down feature not be used.
-
-Implement that workaround and drop the entry into software power-down
-mode. The ks8851_write_mac_addr() calls entry into normal power-on
-mode at the very beginning of the function, therefore dropping the
-second call to enter software power-down mode is sufficient here.
-The ks8851_net_stop() can only be called after ks8851_net_start()
-was already called, and ks8851_net_start() also makes the MAC enter
-normal power-on mode, therefore it is also fine to drop the call to
-enter software power-down mode from ks8851_net_stop().
-
-This will lead to a slight increase in power consumption, but it also
-fixes a sporadic reliability problem on at least KSZ8851-16MLL, which
-is where the problem was reported and this fix was tested.
-
-[1] https://ww1.microchip.com/downloads/en/DeviceDoc/80000716D.pdf
-
-Fixes: 3ba81f3ece3c ("net: Micrel KS8851 SPI network driver")
-Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Marek Vasut <marex@nabladev.com>
-Link: https://patch.msgid.link/20260905130327.203851-1-marex@nabladev.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: b95579cd8795 ("hwmon: (gpio-fan) Add a shutdown handler to poweroff the fans")
+Reported-by: Sashiko AI review <sashiko-bot@kernel.org>
+Link: https://lore.kernel.org/r/20260830152150.27F5F1F000E9@smtp.kernel.org
+Assisted-by: Claude:claude-opus-4
+Signed-off-by: Cong Nguyen <congnt264@gmail.com>
+Link: https://patch.msgid.link/20260901155404.1532092-1-congnt264@gmail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/micrel/ks8851_common.c | 8 +-------
- 1 file changed, 1 insertion(+), 7 deletions(-)
+ drivers/hwmon/gpio-fan.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/micrel/ks8851_common.c b/drivers/net/ethernet/micrel/ks8851_common.c
-index 4afbb40bc0e4a..d49f281c78676 100644
---- a/drivers/net/ethernet/micrel/ks8851_common.c
-+++ b/drivers/net/ethernet/micrel/ks8851_common.c
-@@ -143,9 +143,6 @@ static int ks8851_write_mac_addr(struct net_device *dev)
- 		ks8851_wrreg16(ks, KS_MAR(i), val);
- 	}
- 
--	if (!netif_running(dev))
--		ks8851_set_powermode(ks, PMECR_PM_SOFTDOWN);
--
- 	ks8851_unlock(ks);
- 
- 	return 0;
-@@ -478,8 +475,7 @@ static int ks8851_net_open(struct net_device *dev)
-  * @dev: The device being closed.
-  *
-  * Called to close down a network device which has been active. Cancel any
-- * work, shutdown the RX and TX process and then place the chip into a low
-- * power state whilst it is not being used.
-+ * work and shutdown the RX and TX process.
-  */
- static int ks8851_net_stop(struct net_device *dev)
+diff --git a/drivers/hwmon/gpio-fan.c b/drivers/hwmon/gpio-fan.c
+index 084828e1e2817..10c91bc33b020 100644
+--- a/drivers/hwmon/gpio-fan.c
++++ b/drivers/hwmon/gpio-fan.c
+@@ -606,8 +606,11 @@ static void gpio_fan_shutdown(struct platform_device *pdev)
  {
-@@ -506,8 +502,6 @@ static int ks8851_net_stop(struct net_device *dev)
- 	/* shutdown TX process */
- 	ks8851_wrreg16(ks, KS_TXCR, 0x0000);
+ 	struct gpio_fan_data *fan_data = platform_get_drvdata(pdev);
  
--	/* set powermode to soft power down to save power */
--	ks8851_set_powermode(ks, PMECR_PM_SOFTDOWN);
- 	ks8851_unlock(ks);
+-	if (fan_data->gpios)
++	if (fan_data->gpios) {
++		mutex_lock(&fan_data->lock);
+ 		set_fan_speed(fan_data, 0);
++		mutex_unlock(&fan_data->lock);
++	}
+ }
  
- 	/* ensure any queued tx buffers are dumped */
+ static int gpio_fan_runtime_suspend(struct device *dev)
 -- 
 2.53.0
 
