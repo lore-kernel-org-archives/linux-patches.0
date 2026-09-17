@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FE9B51C076;
-	Thu, 17 Sep 2026 17:32:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28D0650E5A6;
+	Thu, 17 Sep 2026 17:32:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666376; cv=none; b=oVq2QK1XHApQ93572EK1veO2azK3MB0snXk6T6aX7wFzVjMGh2DvWyhbk1Dq9y8KYOqnSlKM7ujQsEmy5uY3lwa1BdilL1OOYyoCnds0e0Tlef8mXKdj2EE3zPz6WvZ+O6AHb7MK73n0S1grp0yn8tO3HG9AjEb/pjvy4J6sqHc=
+	t=1789666379; cv=none; b=ltFbr0Sg5+YBROVWuFS5rPQ8T/r8nosSQv1nn/5aL0xvahAvX5y3k7nlA5Sfcc5eB8yikBsE/R4ISquu6xuLkjeClTf+lUVVeGvxqi18zGoOX42J67b96ASrzMHFH4kUhZCLsJQ9Z5lLfOH6mW9SUAtljtITU6RroqHUJl7v+GY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666376; c=relaxed/simple;
-	bh=v4yEUVeQ63GJUg/wU+iV4fpNE4lcikkC8uyF+WTIXkg=;
+	s=arc-20240116; t=1789666379; c=relaxed/simple;
+	bh=mkpQigpmmXR246U3N97LmFp9oE3p1cnqYrIjrA3pNQ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZDSdEbf5HcMMQBddx7B8X2Pblr/TG+aFOR1jo7qH9F1zuoiOirv5bjyGim3obIXNgqoi+CxCm84f0dro8+FtTNkYFD4bI47A7Qvaepc2TsNsl8BNdOmPGnbxlf7bPxhElxR40pp1zSbeXpBFHyDafpvuXxEWunun7sILPq1d0Sw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lPLEXfVr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ViULWLdnT+Jy3oxbITTXC6fE1LhLgK58Ryz7AKhYavlooGfVELTNntwifOHWKw8Z+q2FbrygYMHqX0zp1B579cJd9RF5Mb+hCqNqXxTFtAozVCoAGfRfoXR1Yibl1QTqu7yemjyK02j7/0Um4GJTcnt7uogiNrjwS7yV9jRSbtk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WaauWXrt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lPLEXfVr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51B921F000FF;
-	Thu, 17 Sep 2026 17:32:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WaauWXrt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F0911F000FF;
+	Thu, 17 Sep 2026 17:32:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666374;
-	bh=57Ba2Xd1UVqxivNVVOHGdQNl8QrTuNppHCP15HJmom8=;
+	s=korg; t=1789666377;
+	bh=Zs4CBelvYmqK9UzJRqD8/br0s5YYgp7gH4C8EVIO1Ds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lPLEXfVrAEZDGpxoEA1+sTFrxma9wad5Gr9hcbRKsz+H70VkyzIpTjGf2EwnlO/In
-	 KLXrotfyV9We7z5zr8MWqGnSje8iy8xhqIuKkgAkR/EcBEqDmjoXnALTBI/6wkFiwy
-	 8ZC4f+GDW+oW/yGj0vTz6iQpzYXNs577L8CEhFQE=
+	b=WaauWXrtfKGmu7cq2T5wES0ILDIjce8HeYoB+3mtNZHYWa3YGllECYzJQC5+Dczpp
+	 q+MD2oIhlt7sUMP8pGxvMT7Y20P/JVCVdNe8w3vR8B19WGC16QkpMqJ8G7w0JpISAo
+	 zuaWa9BiNpk1HLuAXWlZq2GctXj8surDDrICaEAA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Yilin Zhu <zylzyl2333@gmail.com>,
-	Zhiling Zou <zhilinz@nebusec.ai>,
+	co+28eef7d8af9428e6@bugs.sh,
+	Weiming Shi <bestswngs@gmail.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 1015/1250] net: bridge: use option bits for CFM/MRP frame handlers
-Date: Thu, 17 Sep 2026 16:13:30 +0100
-Message-ID: <20260917151619.559120841@linuxfoundation.org>
+Subject: [PATCH 6.18 1016/1250] net: dsa: tag_brcm: legacy FCS: request needed tailroom
+Date: Thu, 17 Sep 2026 16:13:31 +0100
+Message-ID: <20260917151619.586326675@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -53,278 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiling Zou <zhilinz@nebusec.ai>
+From: Weiming Shi <bestswngs@gmail.com>
 
-commit 7a49e6b16f36b8e085521699adbca3e321b6dd0c upstream.
+commit 5be081b83abd3f17d908953b4bb77279f5a149e3 upstream.
 
-CFM and MRP register a global br_frame_type whose hlist_node is linked
-into the per-bridge frame_type_list when the first MEP/MRP instance is
-created. Enabling the protocol on multiple bridges therefore inserts the
-same node into multiple lists. Unregistering it on one bridge then
-corrupts list state belonging to another.
+The legacy FCS tagger calculates the CRC over skb->len bytes starting at
+skb->data. When a nonlinear skb reaches the tagger, this reads past the
+linear head into unrelated slab memory.
 
-These handlers can only be installed once per bridge, and they are
-uncommon. Track their per-bridge enable state with net_bridge option
-bits, which already live on the Rx hot cache line, and dispatch the
-matching handler directly from the receive path. Check both bits
-together first as an unlikely case.
+The tagger appends an Ethernet FCS but does not declare that tailroom. As a
+result, DSA leaves NETIF_F_SG and NETIF_F_FRAGLIST enabled on the user
+port, and nonlinear skbs can reach the CRC calculation.
 
-Remove the generic frame_type_list and br_frame_type helpers, which
-have had no other users since CFM and MRP were added. That shrinks
-struct net_bridge by 8 bytes and drops the list walk from the fast
-path. When neither protocol is compiled in, BR_CFM_MRP_OPTS is 0 and
-the compiler prunes the branch.
+Declare the required tailroom. DSA will then clear those features and the
+networking core will linearize skbs before the tagger runs.
 
-Fixes: 90c628dd47ff ("net: bridge: extend the process of special frames")
-Fixes: dc32cbb3dbd7 ("bridge: cfm: Kernel space implementation of CFM. CCM frame RX added.")
+A KASAN-enabled dsa_loop test using this tagger reports:
+
+  BUG: KASAN: slab-out-of-bounds in crc32_le
+  Read of size 1 at addr ffff8880397086c0 by task exp/135
+
+  Call Trace:
+   crc32_le (lib/crc/crc32-main.c:38)
+   brcm_leg_fcs_tag_xmit (net/dsa/tag_brcm.c:343)
+   dsa_user_xmit (net/dsa/user.c:942)
+   dev_hard_start_xmit (net/core/dev.c:3937)
+   __dev_queue_xmit (net/core/dev.c:4926)
+   packet_sendmsg (net/packet/af_packet.c:3110)
+   __sys_sendto (net/socket.c:2281)
+
+  The buggy address belongs to the object at ffff888039708400
+   which belongs to the cache skbuff_small_head of size 704
+  The buggy address is located 0 bytes to the right of
+   allocated 704-byte region [ffff888039708400, ffff8880397086c0)
+
+Fixes: ef07df397a62 ("net: dsa: tag_brcm: add support for legacy FCS tags")
 Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Suggested-by: Nikolay Aleksandrov <razor@blackwall.org>
-Co-developed-by: Yilin Zhu <zylzyl2333@gmail.com>
-Signed-off-by: Yilin Zhu <zylzyl2333@gmail.com>
-Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
-Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://patch.msgid.link/0345b9d5aa60ba416f6738ff1b87140f0a749cb8.1788417901.git.zhilinz@nebusec.ai
+Reported-by: co+28eef7d8af9428e6@bugs.sh
+Closes: https://lore.kernel.org/all/jH6u350kaBRuqklDjd3k3BW4nWzp0tYRjq3p%40bugs.sh/
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://patch.msgid.link/20260908165047.2786340-1-bestswngs@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bridge/br_cfm.c     |   11 +++--------
- net/bridge/br_device.c  |    1 -
- net/bridge/br_input.c   |   35 ++++++++++++++---------------------
- net/bridge/br_mrp.c     |   13 +++----------
- net/bridge/br_private.h |   26 +++++++++++++++-----------
- 5 files changed, 35 insertions(+), 51 deletions(-)
+ net/dsa/tag_brcm.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/net/bridge/br_cfm.c
-+++ b/net/bridge/br_cfm.c
-@@ -367,7 +367,7 @@ static u32 ccm_tlv_extract(struct sk_buf
- }
- 
- /* note: already called with rcu_read_lock */
--static int br_cfm_frame_rx(struct net_bridge_port *port, struct sk_buff *skb)
-+int br_cfm_frame_rx(struct net_bridge_port *port, struct sk_buff *skb)
- {
- 	u32 mdlevel, interval, size, index, max;
- 	const struct br_cfm_common_hdr *hdr;
-@@ -489,11 +489,6 @@ static int br_cfm_frame_rx(struct net_br
- 	return 1;
- }
- 
--static struct br_frame_type cfm_frame_type __read_mostly = {
--	.type = cpu_to_be16(ETH_P_CFM),
--	.frame_handler = br_cfm_frame_rx,
--};
--
- int br_cfm_mep_create(struct net_bridge *br,
- 		      const u32 instance,
- 		      struct br_cfm_mep_create *const create,
-@@ -559,7 +554,7 @@ int br_cfm_mep_create(struct net_bridge
- 	INIT_DELAYED_WORK(&mep->ccm_tx_dwork, ccm_tx_work_expired);
- 
- 	if (hlist_empty(&br->mep_list))
--		br_add_frame(br, &cfm_frame_type);
-+		br_opt_toggle(br, BROPT_CFM_ENABLED, true);
- 
- 	hlist_add_tail_rcu(&mep->head, &br->mep_list);
- 
-@@ -588,7 +583,7 @@ static void mep_delete_implementation(st
- 	kfree_rcu(mep, rcu);
- 
- 	if (hlist_empty(&br->mep_list))
--		br_del_frame(br, &cfm_frame_type);
-+		br_opt_toggle(br, BROPT_CFM_ENABLED, false);
- }
- 
- int br_cfm_mep_delete(struct net_bridge *br,
---- a/net/bridge/br_device.c
-+++ b/net/bridge/br_device.c
-@@ -503,7 +503,6 @@ void br_dev_setup(struct net_device *dev
- 	spin_lock_init(&br->lock);
- 	INIT_LIST_HEAD(&br->port_list);
- 	INIT_HLIST_HEAD(&br->fdb_list);
--	INIT_HLIST_HEAD(&br->frame_type_list);
- #if IS_ENABLED(CONFIG_BRIDGE_MRP)
- 	INIT_HLIST_HEAD(&br->mrp_list);
- #endif
---- a/net/bridge/br_input.c
-+++ b/net/bridge/br_input.c
-@@ -317,17 +317,25 @@ frame_finish:
- 	return RX_HANDLER_CONSUMED;
- }
- 
-+#define BR_CFM_MRP_OPTS \
-+	((IS_ENABLED(CONFIG_BRIDGE_CFM) ? BIT(BROPT_CFM_ENABLED) : 0UL) | \
-+	 (IS_ENABLED(CONFIG_BRIDGE_MRP) ? BIT(BROPT_MRP_ENABLED) : 0UL))
-+
- /* Return 0 if the frame was not processed otherwise 1
-  * note: already called with rcu_read_lock
-  */
- static int br_process_frame_type(struct net_bridge_port *p,
- 				 struct sk_buff *skb)
- {
--	struct br_frame_type *tmp;
-+	struct net_bridge *br = p->br;
- 
--	hlist_for_each_entry_rcu(tmp, &p->br->frame_type_list, list)
--		if (unlikely(tmp->type == skb->protocol))
--			return tmp->frame_handler(p, skb);
-+	if (skb->protocol == htons(ETH_P_CFM) &&
-+	    br_opt_get(br, BROPT_CFM_ENABLED))
-+		return br_cfm_frame_rx(p, skb);
-+
-+	if (skb->protocol == htons(ETH_P_MRP) &&
-+	    br_opt_get(br, BROPT_MRP_ENABLED))
-+		return br_mrp_process(p, skb);
- 
- 	return 0;
- }
-@@ -425,7 +433,8 @@ static rx_handler_result_t br_handle_fra
- 		}
- 	}
- 
--	if (unlikely(br_process_frame_type(p, skb)))
-+	if (unlikely((READ_ONCE(p->br->options) & BR_CFM_MRP_OPTS) &&
-+		     br_process_frame_type(p, skb)))
- 		return RX_HANDLER_PASS;
- 
- forward:
-@@ -467,19 +476,3 @@ rx_handler_func_t *br_get_rx_handler(con
- 
- 	return br_handle_frame;
- }
--
--void br_add_frame(struct net_bridge *br, struct br_frame_type *ft)
--{
--	hlist_add_head_rcu(&ft->list, &br->frame_type_list);
--}
--
--void br_del_frame(struct net_bridge *br, struct br_frame_type *ft)
--{
--	struct br_frame_type *tmp;
--
--	hlist_for_each_entry(tmp, &br->frame_type_list, list)
--		if (ft == tmp) {
--			hlist_del_rcu(&ft->list);
--			return;
--		}
--}
---- a/net/bridge/br_mrp.c
-+++ b/net/bridge/br_mrp.c
-@@ -6,13 +6,6 @@
- static const u8 mrp_test_dmac[ETH_ALEN] = { 0x1, 0x15, 0x4e, 0x0, 0x0, 0x1 };
- static const u8 mrp_in_test_dmac[ETH_ALEN] = { 0x1, 0x15, 0x4e, 0x0, 0x0, 0x3 };
- 
--static int br_mrp_process(struct net_bridge_port *p, struct sk_buff *skb);
--
--static struct br_frame_type mrp_frame_type __read_mostly = {
--	.type = cpu_to_be16(ETH_P_MRP),
--	.frame_handler = br_mrp_process,
--};
--
- static bool br_mrp_is_ring_port(struct net_bridge_port *p_port,
- 				struct net_bridge_port *s_port,
- 				struct net_bridge_port *port)
-@@ -486,7 +479,7 @@ static void br_mrp_del_impl(struct net_b
- 	kfree_rcu(mrp, rcu);
- 
- 	if (hlist_empty(&br->mrp_list))
--		br_del_frame(br, &mrp_frame_type);
-+		br_opt_toggle(br, BROPT_MRP_ENABLED, false);
- }
- 
- /* Adds a new MRP instance.
-@@ -536,7 +529,7 @@ int br_mrp_add(struct net_bridge *br, st
- 	rcu_assign_pointer(mrp->s_port, p);
- 
- 	if (hlist_empty(&br->mrp_list))
--		br_add_frame(br, &mrp_frame_type);
-+		br_opt_toggle(br, BROPT_MRP_ENABLED, true);
- 
- 	INIT_DELAYED_WORK(&mrp->test_work, br_mrp_test_work_expired);
- 	INIT_DELAYED_WORK(&mrp->in_test_work, br_mrp_in_test_work_expired);
-@@ -1241,7 +1234,7 @@ no_forward:
-  * normal forwarding.
-  * note: already called with rcu_read_lock
-  */
--static int br_mrp_process(struct net_bridge_port *p, struct sk_buff *skb)
-+int br_mrp_process(struct net_bridge_port *p, struct sk_buff *skb)
- {
- 	/* If there is no MRP instance do normal forwarding */
- 	if (likely(!(p->flags & BR_MRP_AWARE)))
---- a/net/bridge/br_private.h
-+++ b/net/bridge/br_private.h
-@@ -489,12 +489,13 @@ enum net_bridge_opts {
- 	BROPT_MST_ENABLED,
- 	BROPT_MDB_OFFLOAD_FAIL_NOTIFICATION,
- 	BROPT_FDB_LOCAL_VLAN_0,
-+	BROPT_CFM_ENABLED,
-+	BROPT_MRP_ENABLED,
+--- a/net/dsa/tag_brcm.c
++++ b/net/dsa/tag_brcm.c
+@@ -364,6 +364,7 @@ static const struct dsa_device_ops brcm_
+ 	.xmit = brcm_leg_fcs_tag_xmit,
+ 	.rcv = brcm_leg_tag_rcv,
+ 	.needed_headroom = BRCM_LEG_TAG_LEN,
++	.needed_tailroom = ETH_FCS_LEN,
  };
  
- struct net_bridge {
- 	spinlock_t			lock;
- 	spinlock_t			hash_lock;
--	struct hlist_head		frame_type_list;
- 	struct net_device		*dev;
- 	unsigned long			options;
- 	/* These fields are accessed on each packet */
-@@ -924,16 +925,6 @@ int nbp_backup_change(struct net_bridge_
- int br_handle_frame_finish(struct net *net, struct sock *sk, struct sk_buff *skb);
- rx_handler_func_t *br_get_rx_handler(const struct net_device *dev);
- 
--struct br_frame_type {
--	__be16			type;
--	int			(*frame_handler)(struct net_bridge_port *port,
--						 struct sk_buff *skb);
--	struct hlist_node	list;
--};
--
--void br_add_frame(struct net_bridge *br, struct br_frame_type *ft);
--void br_del_frame(struct net_bridge *br, struct br_frame_type *ft);
--
- static inline bool br_rx_handler_check_rcu(const struct net_device *dev)
- {
- 	return rcu_dereference(dev->rx_handler) == br_get_rx_handler(dev);
-@@ -2065,6 +2056,7 @@ int br_mrp_parse(struct net_bridge *br,
- bool br_mrp_enabled(struct net_bridge *br);
- void br_mrp_port_del(struct net_bridge *br, struct net_bridge_port *p);
- int br_mrp_fill_info(struct sk_buff *skb, struct net_bridge *br);
-+int br_mrp_process(struct net_bridge_port *p, struct sk_buff *skb);
- #else
- static inline int br_mrp_parse(struct net_bridge *br, struct net_bridge_port *p,
- 			       struct nlattr *attr, int cmd,
-@@ -2088,6 +2080,11 @@ static inline int br_mrp_fill_info(struc
- 	return 0;
- }
- 
-+static inline int br_mrp_process(struct net_bridge_port *p, struct sk_buff *skb)
-+{
-+	return 0;
-+}
-+
- #endif
- 
- /* br_cfm.c */
-@@ -2096,6 +2093,7 @@ int br_cfm_parse(struct net_bridge *br,
- 		 struct nlattr *attr, int cmd, struct netlink_ext_ack *extack);
- bool br_cfm_created(struct net_bridge *br);
- void br_cfm_port_del(struct net_bridge *br, struct net_bridge_port *p);
-+int br_cfm_frame_rx(struct net_bridge_port *port, struct sk_buff *skb);
- int br_cfm_config_fill_info(struct sk_buff *skb, struct net_bridge *br);
- int br_cfm_status_fill_info(struct sk_buff *skb,
- 			    struct net_bridge *br,
-@@ -2120,6 +2118,12 @@ static inline void br_cfm_port_del(struc
- {
- }
- 
-+static inline int br_cfm_frame_rx(struct net_bridge_port *port,
-+				  struct sk_buff *skb)
-+{
-+	return 0;
-+}
-+
- static inline int br_cfm_config_fill_info(struct sk_buff *skb, struct net_bridge *br)
- {
- 	return -EOPNOTSUPP;
+ DSA_TAG_DRIVER(brcm_legacy_fcs_netdev_ops);
 
 
