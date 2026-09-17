@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D4D053D0C7;
-	Thu, 17 Sep 2026 15:33:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82BE74CDDC0;
+	Thu, 17 Sep 2026 15:33:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659214; cv=none; b=Eqzabbey+Zq9nFM+hCNOwEmP/oo/2OP7QBJD4i8yKlpU1VcKcMq2bj8iIHIv4vQE1Ut7wQvkajwI3uB950s8qR8N1pPIb46+9/2/+gwVylqc34cOUbQSvAv2LGyMF/sX2Tj1EzUvfjEqLXiiGqZrm2k0NjxV7go5nmYkklKabpg=
+	t=1789659216; cv=none; b=SBJreYjJUBQep81IhwmbuhEbjT7akhTGE2xmfS+eS/AGeKmo21xIMByrqTtp1e3bSUw55HHZZsh/L29K5zIyVFSqsqfORGiGZkLtgC6vXftfo4HbPm0pBsKsL7F9IIG/GxBxiY68qR0k/QUGXdvim15lbd3cpPp8XgrMv+4qbTs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659214; c=relaxed/simple;
-	bh=NDqFZH6/fvOCaNT4uDFs7VHsgRoHuZ+z1v3eQcSokD4=;
+	s=arc-20240116; t=1789659216; c=relaxed/simple;
+	bh=fjC7md1ejQcGVKc7/FbPpwJMl6TfkRNiG//ZsGP1Kx0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R5NTwLHmTnBEwxXbX8ajgtfuJPkBo4tCAqIMasDrsD7CxViIjnqdeMD8lb9VQnj/TLU796Z6Drk3QxovUoJNSveHvxvCvooC4JetdzVPHIEZptrJ1IYszPvATb0dkz3YxIfQzGP606jiofcxnWMyZ5Dp4UOTxJheuywEsLcXuWk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pac6OfMm; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=CxsoO5ng7ELsa/VSbJ2YI/CjrBSef5/6DDHyApe0EzyA+ExKLmKlkEjsnImvPVmVmECKUy4dxrj4dihyyI8JKiRst398cg5b//il3aZ7ZBCluOnS6z3e4YnE2+3FdRdiSVLeePCs3Yf2/O7qn9wNAjTzF6JubByc/7SmKt+njfE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zA76j2VW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pac6OfMm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7DFA1F000FF;
-	Thu, 17 Sep 2026 15:33:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zA76j2VW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 975CD1F0089B;
+	Thu, 17 Sep 2026 15:33:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659197;
-	bh=Y3TD1MPN7xGzs2wOFMK0j9YYq/HhZGpKRHmbkF4ZvXY=;
+	s=korg; t=1789659206;
+	bh=U+yAd9wcZ++drDTFURo4tASL75VUrLdcHYySukDalS4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pac6OfMm9REyJQpEQ2wkgLA9hwi8ZlyNtXTXwK8VF+S65zxobf9fsKFYcW6sVAEP3
-	 gyRxE8lKDaTXPLebyheEwyeOdqsSo1zDIa1O+kDHaVHyCFEUv10PHDPbC3eN47d11r
-	 /548kyPBronCNexj1QXY1FQCXrOwNAzU5JPNc7yg=
+	b=zA76j2VW6aT3U2qKRhCAbq30XoTKQUjUeL1mtlUgmkRCEHukebaRFzslUwA+6Ktih
+	 Ot1pl76QpO8UQZinWl/QpqTBDx8SxqiiyfZfeyyLZu2puuljUP5mST+HHn6Q4r7Zmv
+	 pV030iyET79e4Asj6ndUamSdeSLS0pwi8fkRyCyI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Ogness <john.ogness@linutronix.de>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Petr Mladek <pmladek@suse.com>,
-	Jon Hunter <jonathanh@nvidia.com>,
+	Linus Walleij <linusw@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 177/733] printk/nbcon: Change nbcon_irq_work to IRQ_WORK_LAZY
-Date: Thu, 17 Sep 2026 16:08:05 +0100
-Message-ID: <20260917151355.523644195@linuxfoundation.org>
+Subject: [PATCH 7.2 180/733] ASoC: ux500: Propagate MSP setup errors
+Date: Thu, 17 Sep 2026 16:08:08 +0100
+Message-ID: <20260917151355.608316627@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -53,49 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Ogness <john.ogness@linutronix.de>
+From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit 560f4deda32785e260056200f8bb911c475c5b88 ]
+[ Upstream commit 3415421a2b0bc4e32bb5a9df24ed7863512d47a7 ]
 
-Change the nbcon_irq_work to be IRQ_WORK_LAZY, thus not raising
-an IRQ upon irq_work queuing. The irq_work is then handled on the
-next kernel tick. This additional delay is acceptable because
-nbcon_irq_work is only responsible for non-emergency deferred
-printing, which is delayed anyway. This has the benefit of not
-needing to raise an IRQ for each printk() call.
+The prepare callback continues with a partly initialized configuration
+when format setup fails. Probe likewise tests the allocated pointer
+instead of the return value, so an MMIO resource or mapping failure can
+be ignored after allocation succeeds.
 
-On a side note, the Tegra20 and Tegra30 platforms can hang if an
-irq_work IRQ is raised while entering cpuidle states. This problem
-was reproducible by calling printk() while entering cpuidle. So
-this change also provides a workaround for these platforms (as long
-as they are not running tickless).
+Return configuration failures from prepare and test the MSP
+initialization result directly.
 
-Link: https://lore.kernel.org/lkml/f3757a75-0ba1-4558-bf57-f19ab7e59a4c@nvidia.com
-Fixes: 76f258bf3f2a ("printk: nbcon: Introduce printer kthreads")
-Signed-off-by: John Ogness <john.ogness@linutronix.de>
-Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Reviewed-by: Petr Mladek <pmladek@suse.com>
-Tested-by: Jon Hunter <jonathanh@nvidia.com>
-Link: https://patch.msgid.link/20260901093245.344455-3-john.ogness@linutronix.de
-Signed-off-by: Petr Mladek <pmladek@suse.com>
+Fixes: 3592b7f69a54 ("ASoC: Ux500: Add MSP I2S-driver")
+Assisted-by: LLM
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20260902-ux500-msp-fixes-v2-2-4b60b002d55a@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/printk/nbcon.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/ux500/ux500_msp_dai.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/printk/nbcon.c b/kernel/printk/nbcon.c
-index a5921a84a80ed..ad79e30afd647 100644
---- a/kernel/printk/nbcon.c
-+++ b/kernel/printk/nbcon.c
-@@ -1782,7 +1782,7 @@ bool nbcon_alloc(struct console *con)
+diff --git a/sound/soc/ux500/ux500_msp_dai.c b/sound/soc/ux500/ux500_msp_dai.c
+index 7d65408989340..32d751fc1e784 100644
+--- a/sound/soc/ux500/ux500_msp_dai.c
++++ b/sound/soc/ux500/ux500_msp_dai.c
+@@ -468,7 +468,9 @@ static int ux500_msp_dai_prepare(struct snd_pcm_substream *substream,
+ 	dev_dbg(dai->dev, "%s: MSP %d (%s): Enter (rate = %d).\n", __func__,
+ 		dai->id, snd_pcm_stream_str(substream), runtime->rate);
+ 
+-	setup_msp_config(substream, dai, &msp_config);
++	ret = setup_msp_config(substream, dai, &msp_config);
++	if (ret)
++		return ret;
+ 
+ 	ret = ux500_msp_i2s_open(drvdata->msp, &msp_config);
+ 	if (ret < 0) {
+@@ -764,7 +766,7 @@ static int ux500_msp_drv_probe(struct platform_device *pdev)
  	}
  
- 	rcuwait_init(&con->rcuwait);
--	init_irq_work(&con->irq_work, nbcon_irq_work);
-+	con->irq_work = IRQ_WORK_INIT_LAZY(nbcon_irq_work);
- 	atomic_long_set(&ACCESS_PRIVATE(con, nbcon_prev_seq), -1UL);
- 	nbcon_state_set(con, &state);
- 
+ 	ret = ux500_msp_i2s_init_msp(pdev, &drvdata->msp);
+-	if (!drvdata->msp) {
++	if (ret) {
+ 		dev_err(&pdev->dev,
+ 			"%s: ERROR: Failed to init MSP-struct (%d)!",
+ 			__func__, ret);
 -- 
 2.53.0
 
