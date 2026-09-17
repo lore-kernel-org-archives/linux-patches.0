@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12419519E08;
-	Thu, 17 Sep 2026 17:45:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C045934F474;
+	Thu, 17 Sep 2026 17:45:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789667109; cv=none; b=Cl0wELkQEBKj5/zenl5vfLg9xaWX4PDC6I84MtIob0u2A9Ij06I6ntUAAHlfhUXC5rDgQnILayS+CpmF3i7hKlOB0THzRi7lxDq/X2blGjGooU10bYGDiJJoxPtV+ks4Ahh7F2Gb/WkKzJFzaJlLM+m9ZQlDR86tc+SEJJk+Haw=
+	t=1789667112; cv=none; b=mvcJHjq0YIGAd8jyLLSlX9dq72gr9ugIFQRDdNifJ/PvY3fjuZVkVfpD2CUIHoa0LreowNvCmGXru5dnXFlRzVbU/iUrWt/Gpy3mm/3ZsA9busIrKXtVNFSpQEV0E9/7bClkf3A/lMLhB++kQSu51GacQiOpNvnh07sqwBTuvuY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789667109; c=relaxed/simple;
-	bh=pnfCM8Fn+pc8uztB0y1NWavK7VwEu7M4Ul22M4rmt5o=;
+	s=arc-20240116; t=1789667112; c=relaxed/simple;
+	bh=SVzjLY6YyCPW5GT6oQtTptSZ6G3voodlffS47LBnW4U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iL/C5qJginsGSe1VcshR91h1E9yKtuCBYWkFl0ecTYNgqRiYeAIu06npEOTnbE1lUCgQXHisMw/C8cIIBotCQD/eZ3rfp7Okv2NiD2ihVFI8yJ0ypHuoxTSPrtrY2H3kICHCnH5I/715zrhqIZySW5ToyWBG/d26QlWJCUXa3oQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BDdVFhnQ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=GJzgmguglF7JLnjfh+AwAV0gQLs7KZ9JlomR+T35JOUCi1fiSLuA1TNsvHw5bO0eUEOb78QUS991USrvdHBHgxxZAanfkoAEkzSFP6bjKvK0N5VeCfydg3Fa9ZrIHnpdnI3PtFAzBqb2+f6Q2iv0oGbfRjSTT/Tpw0qUoYJRZhI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aeYc9sQ6; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BDdVFhnQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 169B51F000FF;
-	Thu, 17 Sep 2026 17:45:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aeYc9sQ6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1203E1F0089E;
+	Thu, 17 Sep 2026 17:45:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789667107;
-	bh=3t/55I2z+cXKM102+HyevxOTqnScm211FB59Math1Sg=;
+	s=korg; t=1789667110;
+	bh=Z+wir8nnnPslOl7Mq93MVZWf6oX6LgJAa/uMI71ThV8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BDdVFhnQnXsXFoQCHjRCOR3gE6zc42vq7LduuACyBmObDVdecGDfV3zR+OYiER8BJ
-	 K1eun190BgpyxsPNAEFSTKmvE+BicS/vpLyE9M89FDmVTBfnFgEe7eMn55z32rBM/E
-	 BKGYVD1FO74JVQCuMOXvAo038sRHM8PZEO/fkkwc=
+	b=aeYc9sQ6mx9qaQxJqw0qTWNnFzh1YElwGpR3nUcnW5HUBuDsguk2q2n3TJCIhlOCK
+	 2MSg0UVF6fF5B1CNOcdvm+MlTqpWK++G8OC0GygMlne4tnj6NaBjdONIft3O56satW
+	 mBNcUleYdT5pUdtLYj5Rh5qOOtjOStXVlMUbSq6g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Atish Patra <atishp@meta.com>,
-	Nikunj A Dadhania <nikunj@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1194/1250] x86/mm/pat: Acquire init_mm read lock on attribute changes to avoid UAF
-Date: Thu, 17 Sep 2026 16:16:29 +0100
-Message-ID: <20260917151624.648497373@linuxfoundation.org>
+Subject: [PATCH 6.18 1185/1250] drm/amdgpu: plumb timedout fence through to force completion
+Date: Thu, 17 Sep 2026 16:16:20 +0100
+Message-ID: <20260917151624.403111762@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -49,145 +45,304 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: "Lorenzo Stoakes (ARM)" <ljs@kernel.org>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-[ Upstream commit d5d8b8662e6e5a565b47a0388640e88402f23274 ]
+[ Upstream commit c184df870db1e328691ea0fbb7d0e59efd9d3f9f ]
 
-A previous commit protected against races between ptdump and CPA collapse,
-however one still exists between attribute changes and collapse as reported
-by Denis V. Lunev (linked).
+When we do a full adapter reset, if we know the timedout fence
+mark the fence with -ETIME rather than -ECANCELED so it
+gets properly handled by userspace.
 
-When an attribute change arises, a lockless page table walker obtains a PTE
-entry, which is later written to via set_pte_atomic():
+v2: rebase
 
-  ...
-  -> change_page_attr_set_clr()
-  -> __change_page_attr_set_clr()
-  -> __change_page_attr()
-	-> _lookup_address_cpa()
-	-> lookup_address_in_pgd_attr()
-	-> [ lockless page table walker ]
-  -> set_pte_atomic()
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 
-There is nothing preventing a concurrent CPA collapse which can free the
-PTE that was retrieved here, resulting in a use-after-free.
+Stable adaptation: retain the existing fence helper declarations and use
+&job->hw_fence.base because this branch embeds the hardware fence in the
+job. Preserve the existing job-fence clearing during full adapter reset.
+Drop the VCN 4.0.3 and 5.0.1 JPEG reset call-site updates because their
+helpers do not exist on this branch; no new functions are introduced.
+The two-argument UVD completion call provides the context required by
+6760f5cb12d2 ("drm/amdgpu: avoid force-completing uninitialized UVD rings").
 
-With the mmap write lock taken on init_mm over CPA collapse, resolve this
-race by acquiring an mmap read lock on init_mm over
-__change_page_attr_set_clr().
+Also restore the fallible amdgpu_vm_flush() interface and its caller's
+ring rollback. The preceding dependency 014ab3140cf9 converted it to void,
+but this stable branch still allocates a fence in amdgpu_fence_emit() and
+can return -ENOMEM. That left a value-return in a void function and broke
+both x86 and arm64 builds. Keep the error propagation rather than
+silently continuing submission after a failed flush. The job embeds its
+hardware fence here, so the caller can return after ring rollback without
+an additional fence-free path.
 
-This locks across the whole operation over which the walk and the PTE
-entry write occurs, solving the race.
+[ sashal: Reduced backport -- upstream c184df870db1e touches 9 file(s), this
+  backport carries 10. Not backported here:
+  drivers/gpu/drm/amd/amdgpu/vcn_v4_0_3.c
+  drivers/gpu/drm/amd/amdgpu/vcn_v5_0_1.c
+  This note is generated from the file lists only; see the resolution record
+  for the reasoning. ]
 
-It is safe to do this here, as no spinlocks are held upon entry to
-__change_page_attr_set_clr().
-
-However, the lock must not be held over an allocation, as allocation can
-trigger reclaim and shrinkers may call into CPA recursively, making
-deadlocks possible (init_mm -> ... -> fs_reclaim -> init_mm).
-
-A page table is allocated when a huge page needs to be split:
-
-  -> change_page_attr_set_clr()
-  -> __change_page_attr_set_clr()
-  -> __change_page_attr()
-  -> split_large_page()
-  [ pagetable_alloc() ]
-  -> __split_large_page()
-
-Avoid deadlocks by dropping the mmap lock across pagetable_alloc() in
-split_large_page() and track whether this is needed by adding a new
-'init_mm_read_locked' flag to struct cpa_data.
-
-This is safe as __split_large_page() (called with locks re-established)
-revalidates that the page table entry is the same as it was prior to the
-locks being dropped and __change_page_attr() repeats the entire page table
-walk whenever a split occurs, so concurrent split and collapse are
-accounted for.
-
-Concurrent ptdump is also safe as the lock is only dropped over page table
-allocation during which time the page table has not yet been modified.
-
-The CPA_COLLAPSE flag is only set by set_memory_rox(), which exclusively
-operates upon vmalloc ranges, and on x86 only within the module mapping
-space.
-
-This is important, because some callers directly invoke
-__change_page_attr_set_clr(), bypassing this lock. However, none of these
-operate within the module mapping space.
-
-  * cpa_process_alias() - a recursive helper called by
-    __change_page_attr_set_clr().
-  * __set_memory_enc_pgtable() - operates on the direct mapping and (via
-    __vmbus_establish_gpadl()) the vmalloc mapping space.
-  * __set_pages_[n]p() - called by set_direct_map_[invalid, default,
-    valid]_noflush(), __kernel_map_pages() - operates on the direct map.
-  * kernel_[un]map_pages_in_pgd() - operates on EFI ranges.
-
-This work is based upon Denis V. Lunev's excellent analysis of the bug
-with gratitude.
-
-[ dhansen: move to imperative voice in changelog ]
-
-Fixes: 41d88484c71c ("x86/mm/pat: restore large ROX pages after fragmentation")
-Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Tested-by: Atish Patra <atishp@meta.com>
-Tested-by: Nikunj A Dadhania <nikunj@amd.com>
-Link: https://lore.kernel.org/all/20260626163213.2284080-1-den@openvz.org/
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260813-cpa-fixes-v2-2-39b4ff90f91d@kernel.org
-Stable-dep-of: 9e4a3ec3411b ("x86/mm/pat: Allocate split page tables as kernel page tables")
+Stable-dep-of: 6760f5cb12d2 ("drm/amdgpu: avoid force-completing uninitialized UVD rings")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/mm/pat/set_memory.c |   13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c |    2 +-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c  |    6 +++++-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_fence.c   |   26 ++++++++++++++++++++++----
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ib.c      |    9 +++++++--
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ring.h    |    3 ++-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_sdma.c    |    4 ++--
+ drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c     |    2 +-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vcn.c     |   21 +++++++++++++--------
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c      |   10 +++++++---
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vm.h      |    2 +-
+ 10 files changed, 61 insertions(+), 24 deletions(-)
 
---- a/arch/x86/mm/pat/set_memory.c
-+++ b/arch/x86/mm/pat/set_memory.c
-@@ -50,7 +50,8 @@ struct cpa_data {
- 	unsigned int	flags;
- 	unsigned int	force_split		: 1,
- 			force_static_prot	: 1,
--			force_flush_all		: 1;
-+			force_flush_all		: 1,
-+			init_mm_read_locked	: 1;
- 	struct page	**pages;
- };
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c
+@@ -1960,7 +1960,7 @@ static int amdgpu_debugfs_ib_preempt(voi
+ 		/* swap out the old fences */
+ 		amdgpu_ib_preempt_fences_swap(ring, fences);
  
-@@ -1248,7 +1249,11 @@ static int split_large_page(struct cpa_d
- 	struct ptdesc *ptdesc;
+-		amdgpu_fence_driver_force_completion(ring);
++		amdgpu_fence_driver_force_completion(ring, NULL);
  
- 	spin_unlock(&cpa_lock);
-+	if (cpa->init_mm_read_locked)
-+		mmap_read_unlock(&init_mm);
- 	ptdesc = pagetable_alloc(GFP_KERNEL, 0);
-+	if (cpa->init_mm_read_locked)
-+		mmap_read_lock(&init_mm);
- 	spin_lock(&cpa_lock);
- 	if (!ptdesc)
- 		return -ENOMEM;
-@@ -2105,7 +2110,11 @@ static int change_page_attr_set_clr(unsi
- 	cpa.curpage = 0;
- 	cpa.force_split = force_split;
+ 		/* resubmit unfinished jobs */
+ 		amdgpu_ib_preempt_job_recovery(&ring->sched);
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -5890,6 +5890,7 @@ int amdgpu_device_pre_asic_reset(struct
+ {
+ 	int i, r = 0;
+ 	struct amdgpu_job *job = NULL;
++	struct dma_fence *fence = NULL;
+ 	struct amdgpu_device *tmp_adev = reset_context->reset_req_dev;
+ 	bool need_full_reset =
+ 		test_bit(AMDGPU_NEED_FULL_RESET, &reset_context->flags);
+@@ -5902,6 +5903,9 @@ int amdgpu_device_pre_asic_reset(struct
  
--	ret = __change_page_attr_set_clr(&cpa, 1);
-+	/* Avoid race with concurrent CPA collapse. */
-+	cpa.init_mm_read_locked = true;
-+	scoped_guard(mmap_read_lock, &init_mm)
-+		ret = __change_page_attr_set_clr(&cpa, 1);
-+	cpa.init_mm_read_locked = false;
+ 	amdgpu_fence_driver_isr_toggle(adev, true);
  
- 	/*
- 	 * Check whether we really changed something:
++	if (job)
++		fence = &job->hw_fence.base;
++
+ 	/* block all schedulers and reset given job's ring */
+ 	for (i = 0; i < AMDGPU_MAX_RINGS; ++i) {
+ 		struct amdgpu_ring *ring = adev->rings[i];
+@@ -5915,7 +5919,7 @@ int amdgpu_device_pre_asic_reset(struct
+ 		amdgpu_fence_driver_clear_job_fences(ring);
+ 
+ 		/* after all hw jobs are reset, hw fence is meaningless, so force_completion */
+-		amdgpu_fence_driver_force_completion(ring);
++		amdgpu_fence_driver_force_completion(ring, fence);
+ 	}
+ 
+ 	amdgpu_fence_driver_isr_toggle(adev, false);
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_fence.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_fence.c
+@@ -582,7 +582,7 @@ void amdgpu_fence_driver_hw_fini(struct
+ 			r = -ENODEV;
+ 		/* no need to trigger GPU reset as we are unloading */
+ 		if (r)
+-			amdgpu_fence_driver_force_completion(ring);
++			amdgpu_fence_driver_force_completion(ring, NULL);
+ 
+ 		if (!drm_dev_is_unplugged(adev_to_drm(adev)) &&
+ 		    ring->fence_drv.irq_src &&
+@@ -727,16 +727,34 @@ void amdgpu_fence_driver_set_error(struc
+  * amdgpu_fence_driver_force_completion - force signal latest fence of ring
+  *
+  * @ring: fence of the ring to signal
++ * @timedout_fence: fence of the timedout job
+  *
+  */
+-void amdgpu_fence_driver_force_completion(struct amdgpu_ring *ring)
++void amdgpu_fence_driver_force_completion(struct amdgpu_ring *ring,
++					  struct dma_fence *timedout_fence)
+ {
+-	amdgpu_fence_driver_set_error(ring, -ECANCELED);
++	struct amdgpu_fence_driver *drv = &ring->fence_drv;
++	unsigned long flags;
++
++	spin_lock_irqsave(&drv->lock, flags);
++	for (unsigned int i = 0; i <= drv->num_fences_mask; ++i) {
++		struct dma_fence *fence;
++
++		fence = rcu_dereference_protected(drv->fences[i],
++						  lockdep_is_held(&drv->lock));
++		if (fence && !dma_fence_is_signaled_locked(fence)) {
++			if (fence == timedout_fence)
++				dma_fence_set_error(fence, -ETIME);
++			else
++				dma_fence_set_error(fence, -ECANCELED);
++		}
++	}
++	spin_unlock_irqrestore(&drv->lock, flags);
++
+ 	amdgpu_fence_write(ring, ring->fence_drv.sync_seq);
+ 	amdgpu_fence_process(ring);
+ }
+ 
+-
+ /*
+  * Kernel queue reset handling
+  *
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ib.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ib.c
+@@ -208,8 +208,13 @@ int amdgpu_ib_schedule(struct amdgpu_rin
+ 		dma_fence_put(tmp);
+ 	}
+ 
+-	if (job)
+-		amdgpu_vm_flush(ring, job, need_pipe_sync);
++	if (job) {
++		r = amdgpu_vm_flush(ring, job, need_pipe_sync);
++		if (r) {
++			amdgpu_ring_undo(ring);
++			return r;
++		}
++	}
+ 
+ 	amdgpu_ring_ib_begin(ring);
+ 
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ring.h
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ring.h
+@@ -154,7 +154,8 @@ extern const struct drm_sched_backend_op
+ 
+ void amdgpu_fence_driver_clear_job_fences(struct amdgpu_ring *ring);
+ void amdgpu_fence_driver_set_error(struct amdgpu_ring *ring, int error);
+-void amdgpu_fence_driver_force_completion(struct amdgpu_ring *ring);
++void amdgpu_fence_driver_force_completion(struct amdgpu_ring *ring,
++					  struct dma_fence *timedout_fence);
+ void amdgpu_fence_driver_guilty_force_completion(struct amdgpu_fence *af);
+ void amdgpu_fence_save_wptr(struct dma_fence *fence);
+ 
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_sdma.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_sdma.c
+@@ -600,10 +600,10 @@ exit:
+ 		 * to be submitted to the queues after the reset is complete.
+ 		 */
+ 		if (!ret) {
+-			amdgpu_fence_driver_force_completion(gfx_ring);
++			amdgpu_fence_driver_force_completion(gfx_ring, NULL);
+ 			drm_sched_wqueue_start(&gfx_ring->sched);
+ 			if (adev->sdma.has_page_queue) {
+-				amdgpu_fence_driver_force_completion(page_ring);
++				amdgpu_fence_driver_force_completion(page_ring, NULL);
+ 				drm_sched_wqueue_start(&page_ring->sched);
+ 			}
+ 		}
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c
+@@ -516,7 +516,7 @@ int amdgpu_uvd_resume(struct amdgpu_devi
+ 			}
+ 			memset_io(ptr, 0, size);
+ 			/* to restore uvd fence seq */
+-			amdgpu_fence_driver_force_completion(&adev->uvd.inst[i].ring);
++			amdgpu_fence_driver_force_completion(&adev->uvd.inst[i].ring, NULL);
+ 		}
+ 	}
+ 	return 0;
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vcn.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vcn.c
+@@ -1480,15 +1480,16 @@ int vcn_set_powergating_state(struct amd
+ 
+ /**
+  * amdgpu_vcn_reset_engine - Reset a specific VCN engine
+- * @adev: Pointer to the AMDGPU device
+- * @instance_id: VCN engine instance to reset
++ * @ring: Pointer to the VCN ring
++ * @timedout_fence: fence that timed out
+  *
+  * Returns: 0 on success, or a negative error code on failure.
+  */
+-static int amdgpu_vcn_reset_engine(struct amdgpu_device *adev,
+-				   uint32_t instance_id)
++static int amdgpu_vcn_reset_engine(struct amdgpu_ring *ring,
++				   struct amdgpu_fence *timedout_fence)
+ {
+-	struct amdgpu_vcn_inst *vinst = &adev->vcn.inst[instance_id];
++	struct amdgpu_device *adev = ring->adev;
++	struct amdgpu_vcn_inst *vinst = &adev->vcn.inst[ring->me];
+ 	int r, i;
+ 
+ 	mutex_lock(&vinst->engine_reset_mutex);
+@@ -1512,9 +1513,13 @@ static int amdgpu_vcn_reset_engine(struc
+ 		if (r)
+ 			goto unlock;
+ 	}
+-	amdgpu_fence_driver_force_completion(&vinst->ring_dec);
++	amdgpu_fence_driver_force_completion(&vinst->ring_dec,
++					     (&vinst->ring_dec == ring) ?
++					     &timedout_fence->base : NULL);
+ 	for (i = 0; i < vinst->num_enc_rings; i++)
+-		amdgpu_fence_driver_force_completion(&vinst->ring_enc[i]);
++		amdgpu_fence_driver_force_completion(&vinst->ring_enc[i],
++						     (&vinst->ring_enc[i] == ring) ?
++						     &timedout_fence->base : NULL);
+ 
+ 	/* Restart the scheduler's work queue for the dec and enc rings
+ 	 * if they were stopped by this function. This allows new tasks
+@@ -1550,7 +1555,7 @@ int amdgpu_vcn_ring_reset(struct amdgpu_
+ 	if (adev->vcn.inst[ring->me].using_unified_queue)
+ 		return -EINVAL;
+ 
+-	return amdgpu_vcn_reset_engine(adev, ring->me);
++	return amdgpu_vcn_reset_engine(ring, timedout_fence);
+ }
+ 
+ int amdgpu_vcn_reg_dump_init(struct amdgpu_device *adev,
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
+@@ -760,9 +760,12 @@ bool amdgpu_vm_need_pipeline_sync(struct
+  * @need_pipe_sync: is pipe sync needed
+  *
+  * Emit a VM flush when it is necessary.
++ *
++ * Returns:
++ * 0 on success, errno otherwise.
+  */
+-void amdgpu_vm_flush(struct amdgpu_ring *ring, struct amdgpu_job *job,
+-		     bool need_pipe_sync)
++int amdgpu_vm_flush(struct amdgpu_ring *ring, struct amdgpu_job *job,
++		    bool need_pipe_sync)
+ {
+ 	struct amdgpu_device *adev = ring->adev;
+ 	struct amdgpu_isolation *isolation =
+@@ -808,7 +811,7 @@ void amdgpu_vm_flush(struct amdgpu_ring
+ 
+ 	if (!vm_flush_needed && !gds_switch_needed && !need_pipe_sync &&
+ 	    !cleaner_shader_needed)
+-		return;
++		return 0;
+ 
+ 	amdgpu_ring_ib_begin(ring);
+ 
+@@ -899,6 +902,7 @@ void amdgpu_vm_flush(struct amdgpu_ring
+ 	}
+ 
+ 	amdgpu_ring_ib_end(ring);
++	return 0;
+ }
+ 
+ /**
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.h
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.h
+@@ -516,7 +516,7 @@ int amdgpu_vm_validate(struct amdgpu_dev
+ 		       struct ww_acquire_ctx *ticket,
+ 		       int (*callback)(void *p, struct amdgpu_bo *bo),
+ 		       void *param);
+-void amdgpu_vm_flush(struct amdgpu_ring *ring, struct amdgpu_job *job, bool need_pipe_sync);
++int amdgpu_vm_flush(struct amdgpu_ring *ring, struct amdgpu_job *job, bool need_pipe_sync);
+ int amdgpu_vm_update_pdes(struct amdgpu_device *adev,
+ 			  struct amdgpu_vm *vm, bool immediate);
+ int amdgpu_vm_clear_freed(struct amdgpu_device *adev,
 
 
