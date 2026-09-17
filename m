@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 362FB340283;
-	Thu, 17 Sep 2026 18:15:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45D92384CC4;
+	Thu, 17 Sep 2026 18:15:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789668929; cv=none; b=YUw5Qgena4R348mBz9cnnEdOVFT17R56EdNLcUR/ecvv8fC8ZxAUq+q2pWLPV6A/5jVx1wrILQiFsRf9O0YhkwDqyy5y+inh0ZzQK2nOqTioG/uCAVo0GMf8bMWS3U8T3tl7/uUIjrJHxFOaLMdG+Mima42liPx3EvvKkVJK+y8=
+	t=1789668932; cv=none; b=B4HjeRVb/KM2p+9TCvduFN5u/VxL/JSwAQ6sofihAZaw+rH5ZU9zwO+wP2y61j06axSF+s/nGzDhkRrWpnANju+fSe+aCd1uijMA4LXeZQiTd4tkoAw3EvCj5ASP2n6tR5DmgGvk4qUp8iyx9EipjHJtKQABeuquxTeidc9SXcY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789668929; c=relaxed/simple;
-	bh=3AKcIimvZhpYhJXymyIKNPO7pk56HngRFAYGHpyzINM=;
+	s=arc-20240116; t=1789668932; c=relaxed/simple;
+	bh=CgZ2FrKLZbY7U2Sn8WaMM/ZpPVT+OcaNIywIer5Yyvk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Az99gjLc/lV7H+NwQB6PtZnCyUrNR9VwQKqRlvGqX8gqqwCj3kIJNxmTRnIANKLuOxLkQnbvwUpn48OSEkdF3kNffqXTCivr797xPWO8To6s2QHQbDSEp8NYy8uOIsftfBeAi9ich/iCElKp4a9Qztuw56N3J7MigWFi8UMRHJY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IOwctsF4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=UZvpJkpnQyzTzoAYo7dSux7DIMWUZzNDbMxhksF73LTM066J5JSX7vhNFbjBiY0XwQzTKfVTmhr1jWrTCAg2XCFGO1ZExUqUr5KTK/2zZ72dXCyxkqOv0Y17wYf4zRCvIpkDT/6N5AXPT8cxd9IVxTT6th2uZjigS5jGgYUcUfg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E8qdHsRd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IOwctsF4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B9F01F000FF;
-	Thu, 17 Sep 2026 18:15:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E8qdHsRd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 876651F000FF;
+	Thu, 17 Sep 2026 18:15:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789668928;
-	bh=kpd3rp7Q52q7HcvoNqrhF0QyZuUJORNs2KNaKx4xFug=;
+	s=korg; t=1789668931;
+	bh=nvdKeqi2NuFc1T7SI2Ij9LYUnaSAkuKSpzjo0i8n78Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IOwctsF4ZOXfuvzUkvm/to5DvOP6vxk2q2wJ3FB9GAVdn8NapJTRgULMQirMZ00ji
-	 Id2RwlP4mdsA/qQIQjVas8kifML55eSXqE5Y4VR1cEvf7JbZTZWSCsOhgt544d3+Xx
-	 mv0v0Qz1YB5lIhpLZ4K3no/B/tkgU3ItK7X0sDAo=
+	b=E8qdHsRdRMds7w6rpsFS7IC9RL/3BNve95kvSTUyGcUymCEKiqP2DUzk1KZg8QDeC
+	 6M4EGPYUsNdCwDlW9dCiJVJjNrnEQSNkW1CnvwH2/0eE+hRjJGEAYYo+brcG/FpcaI
+	 Gk4XK6asAhOUrktewcapAi/1rSPJvXSd/4qyl8fY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Heiko Carstens <hca@linux.ibm.com>,
 	Vasily Gorbik <gor@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0586/1102] s390/boot: Fix physical memory search range
-Date: Thu, 17 Sep 2026 16:08:49 +0100
-Message-ID: <20260917151554.668518781@linuxfoundation.org>
+Subject: [PATCH 6.12 0587/1102] s390/boot: Avoid IPL parameter append past command line
+Date: Thu, 17 Sep 2026 16:08:50 +0100
+Message-ID: <20260917151554.697044895@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -53,38 +53,91 @@ Content-Transfer-Encoding: 8bit
 
 From: Vasily Gorbik <gor@linux.ibm.com>
 
-[ Upstream commit a0c798ed4103316c23938bdf625af364fbd38016 ]
+[ Upstream commit d76181dfabdaa720703167393704efacba343442 ]
 
-search_mem_end() calculates the number of 1MB blocks with a signed int
-literal. CONFIG_MAX_PHYSMEM_BITS values of 51 and above either overflow
-the signed int or shift beyond its width. This produces an invalid search
-range when the binary-search memory detection fallback is used.
+A command line may occupy all but the terminating byte of
+COMMAND_LINE_SIZE. In that case append_ipl_block_parm() passes a zero size
+to the IPL parameter conversion helpers and points the destination one
+byte past early_command_line. The helpers subtract one from the unsigned
+size and write the converted parameter outside the command line buffer.
 
-Use an unsigned long literal so the full supported physical address range
-is represented.
+Convert the IPL parameter in the command line parsing buffer first. A
+parameter beginning with '=' can then replace the existing command line
+regardless of its length, while other parameters are appended only when
+space remains.
 
-Fixes: 54c57795e848 ("s390/mem_detect: replace tprot loop with binary search")
+Fixes: 5ecb2da660ab ("s390: support command lines longer than 896 bytes")
 Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
 Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/boot/physmem_info.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/s390/boot/ipl_parm.c | 26 ++++++++++++--------------
+ 1 file changed, 12 insertions(+), 14 deletions(-)
 
-diff --git a/arch/s390/boot/physmem_info.c b/arch/s390/boot/physmem_info.c
-index 1d131a81cb8be..f5d00f8cf5d65 100644
---- a/arch/s390/boot/physmem_info.c
-+++ b/arch/s390/boot/physmem_info.c
-@@ -140,7 +140,7 @@ static int tprot(unsigned long addr)
+diff --git a/arch/s390/boot/ipl_parm.c b/arch/s390/boot/ipl_parm.c
+index 557462e62cd73..6c77afb3b8a11 100644
+--- a/arch/s390/boot/ipl_parm.c
++++ b/arch/s390/boot/ipl_parm.c
+@@ -21,6 +21,7 @@ struct parmarea parmarea __section(".parmarea") = {
+ };
  
- static unsigned long search_mem_end(void)
+ char __bootdata(early_command_line)[COMMAND_LINE_SIZE];
++static char command_line_buf[COMMAND_LINE_SIZE];
+ 
+ unsigned int __bootdata_preserved(zlib_dfltcc_support) = ZLIB_DFLTCC_FULL;
+ struct ipl_parameter_block __bootdata_preserved(ipl_block);
+@@ -148,31 +149,29 @@ static size_t ipl_block_get_ascii_scpdata(char *dest, size_t size,
+ 
+ static void append_ipl_block_parm(void)
  {
--	unsigned long range = 1 << (MAX_PHYSMEM_BITS - 20); /* in 1MB blocks */
-+	unsigned long range = 1UL << (MAX_PHYSMEM_BITS - 20); /* in 1MB blocks */
- 	unsigned long offset = 0;
- 	unsigned long pivot;
+-	char *parm, *delim;
+-	size_t len, rc = 0;
++	size_t len, extra = 0;
++	char *delim;
  
+ 	len = strlen(early_command_line);
+-
+-	delim = early_command_line + len;    /* '\0' character position */
+-	parm = early_command_line + len + 1; /* append right after '\0' */
++	delim = early_command_line + len; /* '\0' character position */
+ 
+ 	switch (ipl_block.pb0_hdr.pbt) {
+ 	case IPL_PBT_CCW:
+-		rc = ipl_block_get_ascii_vmparm(
+-			parm, COMMAND_LINE_SIZE - len - 1, &ipl_block);
++		extra = ipl_block_get_ascii_vmparm(command_line_buf, sizeof(command_line_buf), &ipl_block);
+ 		break;
+ 	case IPL_PBT_FCP:
+ 	case IPL_PBT_NVME:
+ 	case IPL_PBT_ECKD:
+-		rc = ipl_block_get_ascii_scpdata(
+-			parm, COMMAND_LINE_SIZE - len - 1, &ipl_block);
++		extra = ipl_block_get_ascii_scpdata(command_line_buf, sizeof(command_line_buf), &ipl_block);
+ 		break;
+ 	}
+-	if (rc) {
+-		if (*parm == '=')
+-			memmove(early_command_line, parm + 1, rc);
+-		else
++	if (extra) {
++		if (command_line_buf[0] == '=') {
++			memmove(early_command_line, command_line_buf + 1, extra);
++		} else if (len < COMMAND_LINE_SIZE - 2) {
+ 			*delim = ' '; /* replace '\0' with space */
++			sized_strscpy(delim + 1, command_line_buf, COMMAND_LINE_SIZE - len - 1);
++		}
+ 	}
+ }
+ 
+@@ -258,7 +257,6 @@ static void modify_fac_list(char *str)
+ 	check_cleared_facilities();
+ }
+ 
+-static char command_line_buf[COMMAND_LINE_SIZE];
+ void parse_boot_command_line(void)
+ {
+ 	char *param, *val;
 -- 
 2.53.0
 
