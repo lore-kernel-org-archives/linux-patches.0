@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E8663D890D;
-	Thu, 17 Sep 2026 17:51:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E74DE4D4892;
+	Thu, 17 Sep 2026 17:52:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789667519; cv=none; b=KhYlJeyUZKBWFC/7h14ijCi/2JP7UqwJynJSiIU6qAmZ26DW95GDk8/kjhafxUtifLgx5CbGbO1gVx0Qz2REgDJ/rAmPZOEOnHoaUswBueFwIBT97KgxDUaGZZHDEbuQ5OWo0eBmzErOqiUIPH8KKSJsNpVsCEUGxOW8LeQJIso=
+	t=1789667523; cv=none; b=tJnBbnYkwNOoTrs+ua3I+Z7DYmIJrrobJcuDeHZjlLBuz5uOajZUDnqRCV93qaA2XKkAbFZVq9gBflN/Semxe+owk0fElnTHH/PSaG/HKYH1o/7FfZ2lQZ5lAo5VxwgzXvJf1mVmUahLuH0BtTh5r9FY/fm0luCuvOdpY3gzsP0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789667519; c=relaxed/simple;
-	bh=6k5DDp+Wv6SkDDUJfK3W0QAg0ICk86mYvAc6b64R6as=;
+	s=arc-20240116; t=1789667523; c=relaxed/simple;
+	bh=Uv7Vo0umeEyD/Vij3hq9n2MiYvLkZKVhiwRQ4tMy9vg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s9fblqaox2iwyu/AYpAEzaw6sg5FoJ6RSnmapG7irJIFHK88nln2oq9GfvJgEWCZ8q04WeOmxrhrCNH6oDkGcNqyxoUzKbYoBqqe3kZ+Wm1JcvENS3znmMBNI4aCc+1Yg7vvp9fVNg+7FWkbb/OrSTE1fLNZO2N6WSA/9dFselo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jZTrohQw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=DYTN7Mnfqy1AeNb0/LJkoWZzrcfwrN1CXZ5Ab6Z3r1bDLHfOYQgW3oQ5mhcOoQO1kWzaXytFd6xCHjRMRaSer4QPdLkBPk2RGGxWOcA6d7lW+SM3ETulfIEjnU99swXP8fbh17jSJoOJLHPHJ/JqAN7fOiXBNF7mcFVlJ/9gQW8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SBzugxQ2; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jZTrohQw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF8D71F000FF;
-	Thu, 17 Sep 2026 17:51:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SBzugxQ2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34EF51F000FF;
+	Thu, 17 Sep 2026 17:52:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789667518;
-	bh=0fT5Ksz0eicA6YIvBKU1qZ19T3KaDTK3qxty+IKfT08=;
+	s=korg; t=1789667521;
+	bh=e9HqomDjXJ191LhWpb0jb1BNOn6LkbwkCui+nKCHkr0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jZTrohQw/tXUgLhd9Bo+c1CtX0bNICGbwU/tHi8M/b+NUdb+9S6+IHn6Pe93rk/bq
-	 LJuidGThfhilHe+BmtdBQta85VYp3T496E3kV38EFTODs1mgBOIM2mWtASsaipWLiC
-	 Gx91TgPjUj0wps3CCAI4AI4FATGPSu3TS9cnfcv0=
+	b=SBzugxQ2R4eT2+rDD+GmUsh5oqb+6xBaM5gCboDI7n6ZfXo3y9PAmoA4KS4wvEpw4
+	 wikYpfIRR6XMx2iY+aIMndWqeKLPv/n2+Ew+bVdzOh1/MPcGFfNjLUANzDMKeXssbG
+	 pyE72wOy8qQ2zW6EgeBRf1ERRhlvjn3LmMtClBPQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Lin <thomas_lin@lecomputing.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0119/1102] spi: dw-mmio: Add ACPI ID LECA0002 for LECARC SoCs
-Date: Thu, 17 Sep 2026 16:01:02 +0100
-Message-ID: <20260917151542.496475867@linuxfoundation.org>
+Subject: [PATCH 6.12 0120/1102] befs: handle set_blocksize failures
+Date: Thu, 17 Sep 2026 16:01:03 +0100
+Message-ID: <20260917151542.522112089@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -52,80 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Lin <thomas_lin@lecomputing.com>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit 019947c495850461242fdcc0780258805595036c ]
+[ Upstream commit 7597d42a25332617a3dfe596758d780ec6c028d7 ]
 
-This ID requires a custom initialization function
-dw_spi_hssi_no_dma_init() that sets dws->dws.ip to DW_HSSI_ID.
+befs uses buffer_heads, which don't handle block size > PAGE_SIZE well.
+Without this, mounting we will hit the
 
-Signed-off-by: Thomas Lin <thomas_lin@lecomputing.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://patch.msgid.link/20260521-lecarc-acpi-ids-v1-2-ae0ae90b2817@lecomputing.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+        BUG_ON(offset >= folio_size(folio));
+
+in folio_set_bh on the first __bread_gfp call.
+
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Link: https://patch.msgid.link/20260511071701.2456211-6-hch@lst.de
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/acpi_apd.c   | 7 +++++++
- drivers/spi/spi-dw-mmio.c | 7 ++++---
- 2 files changed, 11 insertions(+), 3 deletions(-)
+ fs/befs/linuxvfs.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/acpi/acpi_apd.c b/drivers/acpi/acpi_apd.c
-index 800f978684481..e53a23a968ab9 100644
---- a/drivers/acpi/acpi_apd.c
-+++ b/drivers/acpi/acpi_apd.c
-@@ -181,6 +181,12 @@ static const struct apd_device_desc hip08_spi_desc = {
- 	.setup = acpi_apd_setup,
- 	.fixed_clk_rate = 250000000,
- };
-+
-+static const struct apd_device_desc leca_spi_desc = {
-+	.setup = acpi_apd_setup,
-+	.fixed_clk_rate = 400000000,
-+};
-+
- #endif /* CONFIG_ARM64 */
- 
- #endif
-@@ -251,6 +257,7 @@ static const struct acpi_device_id acpi_apd_device_ids[] = {
- 	{ "HISI02A2", APD_ADDR(hip08_i2c_desc) },
- 	{ "HISI02A3", APD_ADDR(hip08_lite_i2c_desc) },
- 	{ "HISI0173", APD_ADDR(hip08_spi_desc) },
-+	{ "LECA0002", APD_ADDR(leca_spi_desc) },
- 	{ "NXP0001", APD_ADDR(nxp_i2c_desc) },
- #endif
- 	{ }
-diff --git a/drivers/spi/spi-dw-mmio.c b/drivers/spi/spi-dw-mmio.c
-index 819907e332c4b..09c5c33bc04a3 100644
---- a/drivers/spi/spi-dw-mmio.c
-+++ b/drivers/spi/spi-dw-mmio.c
-@@ -228,8 +228,8 @@ static int dw_spi_hssi_init(struct platform_device *pdev,
- 	return 0;
- }
- 
--static int dw_spi_intel_init(struct platform_device *pdev,
--			     struct dw_spi_mmio *dwsmmio)
-+static int dw_spi_hssi_no_dma_init(struct platform_device *pdev,
-+				   struct dw_spi_mmio *dwsmmio)
- {
- 	dwsmmio->dws.ip = DW_HSSI_ID;
- 
-@@ -411,7 +411,7 @@ static const struct of_device_id dw_spi_mmio_of_match[] = {
- 	{ .compatible = "amazon,alpine-dw-apb-ssi", .data = dw_spi_alpine_init},
- 	{ .compatible = "renesas,rzn1-spi", .data = dw_spi_pssi_init},
- 	{ .compatible = "snps,dwc-ssi-1.01a", .data = dw_spi_hssi_init},
--	{ .compatible = "intel,keembay-ssi", .data = dw_spi_intel_init},
-+	{ .compatible = "intel,keembay-ssi", .data = dw_spi_hssi_no_dma_init},
- 	{
- 		.compatible = "intel,mountevans-imc-ssi",
- 		.data = dw_spi_mountevans_imc_init,
-@@ -426,6 +426,7 @@ MODULE_DEVICE_TABLE(of, dw_spi_mmio_of_match);
- #ifdef CONFIG_ACPI
- static const struct acpi_device_id dw_spi_mmio_acpi_match[] = {
- 	{"HISI0173", (kernel_ulong_t)dw_spi_pssi_init},
-+	{"LECA0002", (kernel_ulong_t)dw_spi_hssi_no_dma_init},
- 	{},
- };
- MODULE_DEVICE_TABLE(acpi, dw_spi_mmio_acpi_match);
+diff --git a/fs/befs/linuxvfs.c b/fs/befs/linuxvfs.c
+index f92f108840f50..8059a720be06a 100644
+--- a/fs/befs/linuxvfs.c
++++ b/fs/befs/linuxvfs.c
+@@ -885,7 +885,8 @@ befs_fill_super(struct super_block *sb, void *data, int silent)
+ 	 */
+ 	sb->s_magic = BEFS_SUPER_MAGIC;
+ 	/* Set real blocksize of fs */
+-	sb_set_blocksize(sb, (ulong) befs_sb->block_size);
++	if (!sb_set_blocksize(sb, (ulong) befs_sb->block_size))
++		goto unacquire_priv_sbp;
+ 	sb->s_op = &befs_sops;
+ 	sb->s_export_op = &befs_export_operations;
+ 	sb->s_time_min = 0;
 -- 
 2.53.0
 
