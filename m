@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95DCF399D0B;
-	Thu, 17 Sep 2026 18:48:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 998864973B9;
+	Thu, 17 Sep 2026 18:48:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789670892; cv=none; b=A5FaPk2kgnjzs1+Rdb4Y2UF8/KqM6iOXLsb9GXe0MyNTQBj/pIMMLwG9LAT9O1ErlXj5RMJBpkzcSvQpqCgM/0YQdZ26crqjV9PNigL6sXgNhLT37/3VHYPo+DaF7Y/6oiqd/PRHeUQ6PWHrrMNh2HukUHc07aYlox31BdTIc3Y=
+	t=1789670895; cv=none; b=goEjHvYb+i7XEirGDkW9ssb8SSuqZNSVlbWvwc6h4gHMsWGDdb2ts4uqFc/2xEkEVqQrUna1CbPBNB10fs2CihgA4tKwbfm7qAQmRjwW+2QJXgjkjiL4lz29jXsBlv8TH6e//Zaod1ijcSwE5cJNVilxYWW7oy16vLz7hxaaud8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789670892; c=relaxed/simple;
-	bh=KdFMhvyeFmoyWRrtw4EFTCEx6L7f2vlYtjlKdCBr0ac=;
+	s=arc-20240116; t=1789670895; c=relaxed/simple;
+	bh=7xkBvf0KogQmuGJXPYADvXwTSr4N9EaxqjjHbo5OSP0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mOCM0/bpnzmsvYuo+IF5v06rYddGefVmqeCiUBJOgCgB5BwYd44xN3Qr48hs4bOEbZgqdT4DdPW7BWFdItPNfz/AKePpWAC3wPnBTsbaqpUkzWljYuyElZSfXjRn+rjZ6WDPuCcSAqUaCMKxl7iw4JKHU+5nOFSjWGuMFZQMTEI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E3o25xGn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=kI3fXe9KImkJzGGvIa0YMdqQA3rAoS4/sl0LwxTkiSNezJJ3xdO4SXEpFCT/YRcC24wShqUM+GkdsHrHQMmATn3wXZTwGAX6uNghUPQZgrmA7e6tOWMEOpIdjhACf/MzHIejM+xPySZmRd7zVOIIOhXMR8MhiLbs5vMsmXTshaM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xTQzHA0J; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E3o25xGn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAFE41F000FF;
-	Thu, 17 Sep 2026 18:48:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xTQzHA0J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E22571F000FF;
+	Thu, 17 Sep 2026 18:48:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789670891;
-	bh=MU7y+0BRF8ykk8uvK2sfOCj6ys4KWS7aQjD/tNmOPqs=;
+	s=korg; t=1789670894;
+	bh=SGrar8s07HxkGlMebjsbkohoaNru8naa5bQmCp58R5I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=E3o25xGnOuUNblp9Iv65hkOm5L2BgswB3eFoS64rIvc0T78w1kmUTvzQp87T/8leh
-	 zLRUzT5EPTHCNGs6TBixZxy4nzay9GSnkZaKizDpVV2c2Tr5kHO1j7aDfptopePKxT
-	 A7sKNdcxeibMZ7qOQniz6/EheT2qQV7qH3NaPaSE=
+	b=xTQzHA0J1kA27qHxnlYwMeJkqn6e3EsnkOVOS+qxz1cvSFaUBPwj/O32qXHsneHkf
+	 FBH2RY3JKQdKdez5+Um2uhXvDXftW3t4HHx8A5yLNqJnSZ7xdHOw0cwTN+7UrAid0J
+	 uWcPj1djka0VIsLdZn2JpVprBWwfK9qTUjKZBXC8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qingfang Deng <qingfang.deng@linux.dev>,
-	Eric Dumazet <edumazet@google.com>,
+	Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0766/1102] ppp_synctty: ensure a writeable skb header
-Date: Thu, 17 Sep 2026 16:11:49 +0100
-Message-ID: <20260917151559.672937929@linuxfoundation.org>
+Subject: [PATCH 6.12 0767/1102] net: stmmac: initialize ptp_lock at probe time
+Date: Thu, 17 Sep 2026 16:11:50 +0100
+Message-ID: <20260917151559.698450671@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -52,57 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qingfang Deng <qingfang.deng@linux.dev>
+From: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
 
-[ Upstream commit 8aaeb56aff2a557a88f83ae866da2c91ad247e59 ]
+[ Upstream commit 0338c68e22abd2ee509ec2e32508a50896618c32 ]
 
-ppp_sync_txmunge() checks headroom before prepending the address and
-control bytes, but does not ensure that the skb header is writable.
-A received skb can reach this function through PPP channel bridging
-without passing through ppp_start_xmit(), which calls skb_cow_head().
+priv->ptp_lock is only initialized in stmmac_ptp_register(), which runs
+during __stmmac_open(). However, the lock is also used while the
+interface is down and has never been opened: tc_taprio_configure()
+invokes the PTP gettime64() callback to compute the EST base time when
+offloading a TAPRIO schedule, and stmmac_get_time() takes
+priv->ptp_lock. Using an uninitialized rwlock is undefined behaviour.
+Move the rwlock_init() to __stmmac_dvr_probe(), together with the other
+private locks, so that ptp_lock is always valid regardless of the
+interface state.
 
-For example, a PPPoE frame may share its buffer with a clone queued to
-an AF_PACKET socket. If it is bridged to a synchronous tty channel, the
-address/control bytes can overwrite data still visible to that socket.
-
-Use skb_cow_head() to ensure both sufficient headroom and a writable
-header.
-
-Fixes: 4cf476ced45d ("ppp: add PPPIOCBRIDGECHAN and PPPIOCUNBRIDGECHAN ioctls")
-Signed-off-by: Qingfang Deng <qingfang.deng@linux.dev>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260908072135.877364-1-qingfang.deng@linux.dev
+Fixes: b60189e0392f ("net: stmmac: Integrate EST with TAPRIO scheduler API")
+Signed-off-by: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
+Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Link: https://patch.msgid.link/20260904-stmmac-fix-ptp-clock-init-v1-1-df70eb1eb04d@oss.qualcomm.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ppp/ppp_synctty.c | 14 +++-----------
- 1 file changed, 3 insertions(+), 11 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 1 +
+ drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c  | 1 -
+ 2 files changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ppp/ppp_synctty.c b/drivers/net/ppp/ppp_synctty.c
-index 1a1eb029a531b..4514bcadd6eef 100644
---- a/drivers/net/ppp/ppp_synctty.c
-+++ b/drivers/net/ppp/ppp_synctty.c
-@@ -457,17 +457,9 @@ ppp_sync_txmunge(struct syncppp *ap, struct sk_buff *skb)
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+index 4dcd29e814083..f583542edd801 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -7733,6 +7733,7 @@ int stmmac_dvr_probe(struct device *device,
+ 	stmmac_napi_add(ndev);
  
- 	/* prepend address/control fields if necessary */
- 	if ((ap->flags & SC_COMP_AC) == 0 || islcp) {
--		if (skb_headroom(skb) < 2) {
--			struct sk_buff *npkt = dev_alloc_skb(skb->len + 2);
--			if (npkt == NULL) {
--				kfree_skb(skb);
--				return NULL;
--			}
--			skb_reserve(npkt,2);
--			skb_copy_from_linear_data(skb,
--				      skb_put(npkt, skb->len), skb->len);
--			consume_skb(skb);
--			skb = npkt;
-+		if (skb_cow_head(skb, 2)) {
-+			kfree_skb(skb);
-+			return NULL;
- 		}
- 		skb_push(skb,2);
- 		skb->data[0] = PPP_ALLSTATIONS;
+ 	mutex_init(&priv->lock);
++	rwlock_init(&priv->ptp_lock);
+ 
+ 	priv->fpe_cfg.verify_retries = STMMAC_FPE_MM_MAX_VERIFY_RETRIES;
+ 	priv->fpe_cfg.verify_time = STMMAC_FPE_MM_MAX_VERIFY_TIME_MS;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c
+index 5c85040a1b937..4970098585c11 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c
+@@ -309,7 +309,6 @@ void stmmac_ptp_register(struct stmmac_priv *priv)
+ 	stmmac_ptp_clock_ops.n_per_out = priv->dma_cap.pps_out_num;
+ 	stmmac_ptp_clock_ops.n_ext_ts = priv->dma_cap.aux_snapshot_n;
+ 
+-	rwlock_init(&priv->ptp_lock);
+ 	mutex_init(&priv->aux_ts_lock);
+ 	priv->ptp_clock_ops = stmmac_ptp_clock_ops;
+ 
 -- 
 2.53.0
 
