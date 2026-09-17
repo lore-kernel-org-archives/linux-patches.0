@@ -1,36 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C17D74F6481;
-	Thu, 17 Sep 2026 16:01:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C301E514752;
+	Thu, 17 Sep 2026 16:01:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789660866; cv=none; b=ufJMyQ5iOaUilXmKUYOEvTebDjjKuzbZ7t5lSQKps4ifuHyqOw0ppyI9kmsEnU8s65uyYGWVJCCzhw6B0Bec4rlspFBlHTmR5cMjWhkglQwEPvRRoptNxlkBhdQXoP5RyPrRE6rGCFeY/I9QHwXPXFp9M4OJs9tAlTGhw+eEDYY=
+	t=1789660869; cv=none; b=nQai6zSHvYfF7flsdnDDD3cPjnLMNw2EtsfVakzngFmX1j1+MnFJInrGn+vn0FusdtJDWz3bZ6F4nU5hnA9Ta7hczpTPPn/o0R8rnS6yldEfIaPnG6y6ZrLuvZiBohZYAirXdoyNtTqHmGHTRzaAj4HEivr4U5nAo0RfFvNHCEM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789660866; c=relaxed/simple;
-	bh=DRMuXga7/bZeU1Qp1nVyox/SMF2VTTUZbWiS9hBq4g4=;
+	s=arc-20240116; t=1789660869; c=relaxed/simple;
+	bh=V2OYyc3nZHscrtqp5uW7BBmn1qofY9BYYUGgAQ3Tv8I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G41t4GdyifJ5Dsr0TNrbWZrmi+w94rL4SD5NUQTuNCEfETz3rWKUjGjez2jcSI0V3xszXScBet9ehv8AeFeJcJo5BY37UOf6X063hJIGsKfnB3XszfiBxrKjOBmVmBwnqIFpq0Jad3jXGRnGZ4Kk+F3IGhLZs79Lp5tC3cGjOnY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q/fhXC+Y; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eIUImasY6UP3ANGAGWwQVdM0DMxjtgojvcd3pUSrzTCEAMCamiYsOxRQ6fsVCspbQQBwuxGx1rXmII460eDUDgytBlwTBu3UEbkMf+/Mp3O1ZQ0oWLecQp04A2DiLnkMGetKnhipYFSZSod8XFmncL+F4Ovy8E19i1JRVOEZcuw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kX/57UT7; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q/fhXC+Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2103D1F000FF;
-	Thu, 17 Sep 2026 16:01:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kX/57UT7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E47E1F000FF;
+	Thu, 17 Sep 2026 16:01:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789660864;
-	bh=5hm7ZMui/JzylppzUwNbJiamUi0ZZeemAp3oRUfagRg=;
+	s=korg; t=1789660867;
+	bh=kXOjQWhWxuE9zskXMbbXKi7LxGoFe6RkPxUNr9r04Hg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Q/fhXC+YV3803qjE5N0X/lzWdMWQpfUKC3wJJ8E+ThaCIRUE3VTxoXm6caZwZWwAN
-	 N8pJOTKesPnA7EvUTgycWDbykbIUNLSWrPP49PLQfh/vMurKPHIYW7Dp8bLLGPjM84
-	 7VMb+V5Fc2Zv4UsPPdqZaNuCwrNHjIM/zeLfxutI=
+	b=kX/57UT7GiJfO/2JlpJAsq003SxBc2jjLwv7ElEutZZf2Zq5tmRlzzgBy4uZDCsYZ
+	 Hue1B/6xsC9MZ9TKY0GgTFR4+CD/+PHtqWUp17u1hXpkqYnEfNadZVgEC78SD1J0R9
+	 tp1dEp0U4NJx787bcVoZtU5uETsA2Ik9jk3oaiZc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>
-Subject: [PATCH 7.2 733/733] x86/mm: Fix and document DEBUG_PAGEALLOC
-Date: Thu, 17 Sep 2026 16:17:21 +0100
-Message-ID: <20260917151411.267494776@linuxfoundation.org>
+	Nilesh Javali <njavali@marvell.com>,
+	Hannes Reinecke <hare@kernel.org>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.2 703/733] scsi: qla2xxx: Bound VP index against VP_CTRL IOCB bitmap size
+Date: Thu, 17 Sep 2026 16:16:51 +0100
+Message-ID: <20260917151410.378921629@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -49,200 +52,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Nilesh Javali <njavali@marvell.com>
 
-commit 7da514d819a0afb148634aac92b3d190f34947c3 upstream.
+[ Upstream commit 878613ecb5a36db26859c4fd83daf9283a334fa2 ]
 
-It turns out that commit 5fce67641a3e ("x86/mm/pat: Don't gate
-cpa_lock on debug_pagealloc_enabled()") was a little too quick to
-remove the debug_pagealloc exception for cpa_lock.
+The VP control IOCB selects its target virtual port by setting one bit
+in vp_idx_map, a fixed 16-byte (128-bit) array in both
+vp_ctrl_entry_24xx and vp_ctrl_entry_24xx_ext. qla25xx_ctrlvp_iocb()
+computes map = (vp_index - 1) / 8 and writes vce->vp_idx_map[map]
+without checking that map stays within the array.
 
-Notably __kernel_map_pages() is used by the page-allocator from any
-context the page-allocator itself is used, which violates the cpa_lock
-rules.
+max_npiv_vports is taken from firmware and only sanitized to a
+MIN_MULTI_ID_FABRIC-aligned boundary, so it can legitimately be 191 or
+255, and qla24xx_control_vp() only rejects vp_index >= max_npiv_vports.
+A vp_index above 128 therefore yields map >= 16 and an out-of-bounds
+write of up to 16 bytes past vp_idx_map, corrupting the trailing IOCB
+fields (or the adjacent request-ring slot on the 64-byte layout).
 
-Re-instate the exception, except make it specific to the
-__kernel_map_pages() such that any other cpa() usage is still fully
-serialized by cpa_lock. Also note that since cpa() should not be used
-on memory that isn't allocated, the page-allocator locking and cpa are
-infact mutually exclusive and all cpa usage in fully serialized.
+Reject a vp_index that cannot be represented in the IOCB bitmap in
+qla24xx_control_vp(), and add a defensive ARRAY_SIZE() guard in
+qla25xx_ctrlvp_iocb() before the write. Adapters that report the usual
+63 or 127 NPIV vports are unaffected.
 
-Add a comment explaining this and other 'funnies' surrounding
-DEBUG_PAGEALLOC, including how pgd_lock is not affected and the TLB
-trickery.
-
-Fixes: 5fce67641a3e ("x86/mm/pat: Don't gate cpa_lock on debug_pagealloc_enabled()")
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://patch.msgid.link/20260729111119.604452135@infradead.org
+Fixes: 2853192e154b ("scsi: qla2xxx: Use IOCB path to submit Control VP MBX command")
+Cc: stable@vger.kernel.org
+Signed-off-by: Nilesh Javali <njavali@marvell.com>
+Reviewed-by: Hannes Reinecke <hare@kernel.org>
+Link: https://patch.msgid.link/20260723050413.3897522-49-njavali@marvell.com
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+[ Adjusted guard placement in qla25xx_ctrlvp_iocb() to match the older initialization order. ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/mm/pat/set_memory.c |   80 +++++++++++++++++++++++++++++++------------
- 1 file changed, 58 insertions(+), 22 deletions(-)
+ drivers/scsi/qla2xxx/qla_iocb.c |    6 ++++++
+ drivers/scsi/qla2xxx/qla_mid.c  |    8 ++++++++
+ 2 files changed, 14 insertions(+)
 
---- a/arch/x86/mm/pat/set_memory.c
-+++ b/arch/x86/mm/pat/set_memory.c
-@@ -70,11 +70,12 @@ static const int cpa_warn_level = CPA_PR
-  */
- static DEFINE_SPINLOCK(cpa_lock);
+--- a/drivers/scsi/qla2xxx/qla_iocb.c
++++ b/drivers/scsi/qla2xxx/qla_iocb.c
+@@ -3826,6 +3826,12 @@ qla25xx_ctrlvp_iocb(srb_t *sp, struct vp
+ 	 */
+ 	map = (sp->u.iocb_cmd.u.ctrlvp.vp_index - 1) / 8;
+ 	pos = (sp->u.iocb_cmd.u.ctrlvp.vp_index - 1) & 7;
++	if (map >= ARRAY_SIZE(vce->vp_idx_map)) {
++		ql_log(ql_log_warn, sp->vha, 0x307c,
++		       "ctrlvp: vp_index %u exceeds vp_idx_map capacity\n",
++		       sp->u.iocb_cmd.u.ctrlvp.vp_index);
++		return;
++	}
+ 	vce->vp_idx_map[map] |= 1 << pos;
+ }
  
--#define CPA_FLUSHTLB 1
--#define CPA_ARRAY 2
--#define CPA_PAGES_ARRAY 4
--#define CPA_NO_CHECK_ALIAS 8 /* Do not search for aliases */
--#define CPA_COLLAPSE 16 /* try to collapse large pages */
-+#define CPA_FLUSHTLB		0x01
-+#define CPA_ARRAY		0x02
-+#define CPA_PAGES_ARRAY		0x04
-+#define CPA_NO_CHECK_ALIAS	0x08 /* Do not search for aliases */
-+#define CPA_COLLAPSE		0x10 /* try to collapse large pages */
-+#define CPA_DEBUG_PAGEALLOC	0x20
- 
- static inline pgprot_t cachemode2pgprot(enum page_cache_mode pcm)
- {
-@@ -2032,6 +2033,7 @@ static int __change_page_attr_set_clr(st
- {
- 	unsigned long numpages = cpa->numpages;
- 	unsigned long rempages = numpages;
-+	bool lock = true;
- 	int ret = 0;
- 
- 	/*
-@@ -2041,6 +2043,29 @@ static int __change_page_attr_set_clr(st
- 	    !cpa->force_split)
- 		return ret;
+--- a/drivers/scsi/qla2xxx/qla_mid.c
++++ b/drivers/scsi/qla2xxx/qla_mid.c
+@@ -962,6 +962,14 @@ int qla24xx_control_vp(scsi_qla_host_t *
+ 	if (vp_index == 0 || vp_index >= ha->max_npiv_vports)
+ 		return QLA_PARAMETER_ERROR;
  
 +	/*
-+	 * DEBUG_PAGEALLOC is special; it is called from any context the
-+	 * page-allocator is, which violates the normal cpa_lock locking
-+	 * rules.
-+	 *
-+	 * However, since it is part of the page-allocator, things are still
-+	 * properly serialized by the page-allocator locking and the fact that
-+	 * when a page is owned by the page-allocator, it isn't owned by
-+	 * anybody else. That is, you *SHOULD NOT* be calling cpa() on memory
-+	 * that isn't allocated.
-+	 *
-+	 * Additionally, DEBUG_PAGEALLOC ensures (per probe_page_size_mask())
-+	 * that the kernel mapping is 4k pages, therefore there are no large
-+	 * pages to split/collapse.
-+	 *
-+	 * Furthermore, the page-allocator strictly manages pages that
-+	 * *exist*, avoiding pgd_lock.
-+	 *
-+	 * Therefore, it is safe to not take cpa_lock.
++	 * The VP_CTRL IOCB selects the target VP through a fixed 128-bit
++	 * (16-byte) vp_idx_map bitmap, so vp_index must fit within it even
++	 * if firmware advertises more NPIV vports.
 +	 */
-+	if (debug_pagealloc_enabled() && (cpa->flags & CPA_DEBUG_PAGEALLOC))
-+		lock = false;
++	if (vp_index > sizeof_field(struct vp_ctrl_entry_24xx, vp_idx_map) * 8)
++		return QLA_PARAMETER_ERROR;
 +
- 	while (rempages) {
- 		/*
- 		 * Store the remaining nr of pages for the large page
-@@ -2051,9 +2076,12 @@ static int __change_page_attr_set_clr(st
- 		if (cpa->flags & (CPA_ARRAY | CPA_PAGES_ARRAY))
- 			cpa->numpages = 1;
- 
--		spin_lock(&cpa_lock);
--		ret = __change_page_attr(cpa, primary);
--		spin_unlock(&cpa_lock);
-+		if (lock) {
-+			guard(spinlock)(&cpa_lock);
-+			ret = __change_page_attr(cpa, primary);
-+		} else {
-+			ret = __change_page_attr(cpa, primary);
-+		}
- 		if (ret)
- 			goto out;
- 
-@@ -2636,7 +2664,7 @@ int set_pages_rw(struct page *page, int
- 	return set_memory_rw(addr, numpages);
- }
- 
--static int __set_pages_p(struct page *page, int numpages)
-+static int __set_pages_p(struct page *page, int numpages, unsigned int cpa_flags)
- {
- 	unsigned long tempaddr = (unsigned long) page_address(page);
- 	struct cpa_data cpa = { .vaddr = &tempaddr,
-@@ -2644,7 +2672,7 @@ static int __set_pages_p(struct page *pa
- 				.numpages = numpages,
- 				.mask_set = __pgprot(_PAGE_PRESENT | _PAGE_RW),
- 				.mask_clr = __pgprot(0),
--				.flags = CPA_NO_CHECK_ALIAS };
-+				.flags = CPA_NO_CHECK_ALIAS | cpa_flags };
- 
- 	/*
- 	 * No alias checking needed for setting present flag. otherwise,
-@@ -2655,7 +2683,7 @@ static int __set_pages_p(struct page *pa
- 	return __change_page_attr_set_clr(&cpa, 1);
- }
- 
--static int __set_pages_np(struct page *page, int numpages)
-+static int __set_pages_np(struct page *page, int numpages, unsigned int cpa_flags)
- {
- 	unsigned long tempaddr = (unsigned long) page_address(page);
- 	struct cpa_data cpa = { .vaddr = &tempaddr,
-@@ -2663,7 +2691,7 @@ static int __set_pages_np(struct page *p
- 				.numpages = numpages,
- 				.mask_set = __pgprot(0),
- 				.mask_clr = __pgprot(_PAGE_PRESENT | _PAGE_RW | _PAGE_DIRTY),
--				.flags = CPA_NO_CHECK_ALIAS };
-+				.flags = CPA_NO_CHECK_ALIAS | cpa_flags };
- 
- 	/*
- 	 * No alias checking needed for setting not present flag. otherwise,
-@@ -2676,20 +2704,20 @@ static int __set_pages_np(struct page *p
- 
- int set_direct_map_invalid_noflush(struct page *page)
- {
--	return __set_pages_np(page, 1);
-+	return __set_pages_np(page, 1, 0);
- }
- 
- int set_direct_map_default_noflush(struct page *page)
- {
--	return __set_pages_p(page, 1);
-+	return __set_pages_p(page, 1, 0);
- }
- 
- int set_direct_map_valid_noflush(struct page *page, unsigned nr, bool valid)
- {
- 	if (valid)
--		return __set_pages_p(page, nr);
-+		return __set_pages_p(page, nr, 0);
- 
--	return __set_pages_np(page, nr);
-+	return __set_pages_np(page, nr, 0);
- }
- 
- #ifdef CONFIG_DEBUG_PAGEALLOC
-@@ -2708,15 +2736,23 @@ void __kernel_map_pages(struct page *pag
- 	 * and hence no memory allocations during large page split.
- 	 */
- 	if (enable)
--		__set_pages_p(page, numpages);
-+		__set_pages_p(page, numpages, CPA_DEBUG_PAGEALLOC);
- 	else
--		__set_pages_np(page, numpages);
-+		__set_pages_np(page, numpages, CPA_DEBUG_PAGEALLOC);
- 
- 	/*
--	 * We should perform an IPI and flush all tlbs,
--	 * but that can deadlock->flush only current cpu.
--	 * Preemption needs to be disabled around __flush_tlb_all() due to
--	 * CR3 reload in __native_flush_tlb().
-+	 * We should perform an IPI and flush all tlbs, but that can
-+	 * deadlock, settle for a local flush.
-+	 *
-+	 * Not doing a global TLB flush means that remote CPUs will retain
-+	 * stale TLB entries. In case of P->NP (on free) this means the remote
-+	 * CPUs will not take the faults, making the debug scheme less
-+	 * reliable. On the NP->P (on alloc) this means the remote CPUs can
-+	 * take a spurious fault. However spurious_kernel_fault() will observe
-+	 * *_present() and fix it up.
-+	 *
-+	 * Preemption needs to be disabled around __flush_tlb_all() due to CR3
-+	 * reload in __native_flush_tlb().
- 	 */
- 	preempt_disable();
- 	__flush_tlb_all();
+ 	/* ref: INIT */
+ 	sp = qla2x00_get_sp(base_vha, NULL, GFP_KERNEL);
+ 	if (!sp)
 
 
