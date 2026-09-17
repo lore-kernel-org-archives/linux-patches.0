@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EF794398F5;
-	Thu, 17 Sep 2026 18:51:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35D7E3DAAC9;
+	Thu, 17 Sep 2026 18:51:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789671112; cv=none; b=KuDqegk9EihPP1ztP46wuiAukmARy6KaICMLyqsLZWN6jD92mFo+vKybG/mLG47xZ8TqD1QttgbWp2BGWsSIR2scIc8tQ9n5JNUdrNh1zAUsuY2sf5sQGwB8b1c1puP0ZyoE1KKSXZOO2+D6YPwJmk9NFv6nSkW5P9MRKwdRMbA=
+	t=1789671115; cv=none; b=dmuHcORN0kL8Cxr4bHNEimNZXWoeBY9MYknHtZTqFJ+n20/Tn+eWg9m9AGsHKv8fu5dyBJfYBHabJC+oHDRaBqjtL/ZYJqAsfHR7hxSHz5CavnElg5HZcQZ8Q9BRHE+zo2xkVSkaIkdDfcSqkQnKBoZDUWmGf2Ysu5sob8Ky3Ec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789671112; c=relaxed/simple;
-	bh=U+QW97qmos5PXnCmpkQJGfCSMsmzgzvy5r9ln530MIg=;
+	s=arc-20240116; t=1789671115; c=relaxed/simple;
+	bh=AbB3drdicndLL+Qp2JgSLYNDBxg/Mdvc/RmQ9vrd/BQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uMDlYeXQ+Dby5C7DKksl5bkatR4lXcB8kCDbtdX5pRrk1nzRXx2yRT5otQxHN5zBSkZBByER/Cc3pjrfGY54FZE9ljQb+a4HtO/m45EHaP3kvNMXrNvRCQ+SFoOQrwQ7jShFRbYxlxNH52Q6MW9m4cWqUeB0TWnpQWyzdnSeSGY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1AGwKu08; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qOI9Wyz3yKjBdVBJo51i9Z/HZ5fs+eaywx8/VUyiddL7NjIf0YNKxjtApeEXkT65sZ8CZCNfZZtPatliHrnZusO3pa/DpyLx6iR9ldE0wr7NaWaMsrW8fTK4AhW33V8yZaG+iiVCFuu8vLJkf/SlBKFm0x3QMP89zOb6R7+awZ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zDykedrj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1AGwKu08"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 854011F000FF;
-	Thu, 17 Sep 2026 18:51:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zDykedrj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B76C1F000FF;
+	Thu, 17 Sep 2026 18:51:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789671111;
-	bh=EowKXCkjJm9oBDUaWSycoufolWMZjRJnSYrkPY3tce8=;
+	s=korg; t=1789671114;
+	bh=JBz/2P3kxHVoM3bD8NaXz39AqfaX1PnqLtLX5wXLgyA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1AGwKu08jpz63xITgNnNrD2tkSkl/iN+kTdu7TXFe9GlMeEINgbQdENji7LFNNrE9
-	 w9x0/PtV+nNFnNLtI4OYuboakeRaTISGECzNinA6nJFD+XxffffFulEDpJRg+UmMUv
-	 pGqh5DGdGDHA3chtDGcnqK6KUssRVg1MvQ4Tp86M=
+	b=zDykedrjEbswJA2EjAbVwpif91RNMZzn9+2TBpEOkNsVkFp10/DgiPHOhvCMAaKO0
+	 7JRvt00YQT2RLXfxPZOnaMemqH81F5NQ3+Wb4oVrPhgcW2Bgjt+5xwTRgwsmmMHtVr
+	 k1kj/SFF/99Y2ky5qXo4P/ekdnl9SIYAouR8UFHs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cong Nguyen <congnt264@gmail.com>,
+	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
 	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.12 0870/1102] hwmon: (applesmc) fix key backlight workqueue leak on register failure
-Date: Thu, 17 Sep 2026 16:13:33 +0100
-Message-ID: <20260917151602.400725951@linuxfoundation.org>
+Subject: [PATCH 6.12 0871/1102] hwmon: (chipcap2) fix channels in humidity alarm notifications
+Date: Thu, 17 Sep 2026 16:13:34 +0100
+Message-ID: <20260917151602.426388293@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -50,50 +50,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cong Nguyen <congnt264@gmail.com>
+From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
 
-commit 5a0aacaa2d593d7582ecfe289529b937b6dc5d3c upstream.
+commit 286b175bb03893949f24621f356abd9d20368b0a upstream.
 
-applesmc_create_key_backlight() allocates applesmc_led_wq before calling
-led_classdev_register(). When register fails, the error is returned to
-applesmc_init(), which jumps to out_light_sysfs and skips
-applesmc_release_key_backlight(), leaking the workqueue.
+hwmon_notify_event() expects the channel number as its last argument,
+taken into account with the type parameter that it is a humidity sensor
+type. Given that this device only provides one humidity channel, 0 must
+be passed. The custom construct to enumerate the channels makes wrong
+assumptions by listing all types together (temperature and humidity).
 
-Destroy the workqueue on the register failure path. The bug was introduced
-when the inline init block was refactored into a helper that returns errors
-directly, dropping the old out_light_wq unwind label.
+Remove the custom channel enumeration and pass the right channel to
+hwmon_notify_event() for hwmon_humidity_min_alarm and
+hwmon_humidity_max_alarm.
 
-Fixes: 0b0b5dff8967 ("hwmon: (applesmc) Simplify feature sysfs handling")
+Fixes: 3af350929e75 ("hwmon: Add support for Amphenol ChipCap 2")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4
-Signed-off-by: Cong Nguyen <congnt264@gmail.com>
-Link: https://patch.msgid.link/20260828105413.2401385-1-congnt264@gmail.com
+Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+Link: https://patch.msgid.link/20260823-chipcap2_locks-v2-1-6a26c8e9e2fc@gmail.com
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/applesmc.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/hwmon/chipcap2.c |    9 ++-------
+ 1 file changed, 2 insertions(+), 7 deletions(-)
 
---- a/drivers/hwmon/applesmc.c
-+++ b/drivers/hwmon/applesmc.c
-@@ -1249,12 +1249,17 @@ static void applesmc_release_light_senso
+--- a/drivers/hwmon/chipcap2.c
++++ b/drivers/hwmon/chipcap2.c
+@@ -89,11 +89,6 @@ struct cc2_data {
+ 	bool process_irqs;
+ };
  
- static int applesmc_create_key_backlight(void)
+-enum cc2_chan_addr {
+-	CC2_CHAN_TEMP = 0,
+-	CC2_CHAN_HUMIDITY,
+-};
+-
+ /* %RH as a per cent mille from a register value */
+ static long cc2_rh_convert(u16 data)
  {
-+	int ret;
-+
- 	if (!smcreg.has_key_backlight)
- 		return 0;
- 	applesmc_led_wq = create_singlethread_workqueue("applesmc-led");
- 	if (!applesmc_led_wq)
- 		return -ENOMEM;
--	return led_classdev_register(&pdev->dev, &applesmc_backlight);
-+	ret = led_classdev_register(&pdev->dev, &applesmc_backlight);
-+	if (ret)
-+		destroy_workqueue(applesmc_led_wq);
-+	return ret;
- }
+@@ -492,7 +487,7 @@ static irqreturn_t cc2_low_interrupt(int
  
- static void applesmc_release_key_backlight(void)
+ 	if (cc2->process_irqs) {
+ 		hwmon_notify_event(cc2->hwmon, hwmon_humidity,
+-				   hwmon_humidity_min_alarm, CC2_CHAN_HUMIDITY);
++				   hwmon_humidity_min_alarm, 0);
+ 		cc2->rh_alarm.low_alarm = true;
+ 	}
+ 
+@@ -505,7 +500,7 @@ static irqreturn_t cc2_high_interrupt(in
+ 
+ 	if (cc2->process_irqs) {
+ 		hwmon_notify_event(cc2->hwmon, hwmon_humidity,
+-				   hwmon_humidity_max_alarm, CC2_CHAN_HUMIDITY);
++				   hwmon_humidity_max_alarm, 0);
+ 		cc2->rh_alarm.high_alarm = true;
+ 	}
+ 
 
 
