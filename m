@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 998DA4ED188;
-	Thu, 17 Sep 2026 18:10:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A23904D957E;
+	Thu, 17 Sep 2026 18:10:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789668604; cv=none; b=OliHBSTC41rn1fUPhRcciZOM+MQTb3SjSSFuvMkviA3y1Tav4eut0YM+eQZiGB2b2ZpvyzAQr911PrSAkcjea8bemWbpB/Kttdu5FDO1qP6uCPaK62EPUNTfaJdgweYiKDGNzmPmCnwO5AncXv+L8nOlDj7oBDXkNjB3JnEFQPI=
+	t=1789668607; cv=none; b=IXmceOhWnoEAgY5nDMnzpJPWoLIEWy7kPEjRlHq6C2TCmXpvrjqtlpDRhgErPIz2gFq5XRTTl8y9w6OL4V7oQOa6nFynz+66GEidPDnIBX7La95v5jGhqkxxHm1eQ4y/RZsMNzJBfjb48875HkBU2MD/ox9PfswDmazHqz9r/Vc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789668604; c=relaxed/simple;
-	bh=ED5qY6wn9r6OKYYrDi+UeJdKhQB8bUGQz9yzFKGYtQg=;
+	s=arc-20240116; t=1789668607; c=relaxed/simple;
+	bh=tdXhTyxtZYhV235986F+ZjgNDzOfiuuwo464G3cyfLc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jhwh9xYmzStkoMrKuPRSP+vKaNOTIIVyhVFah/spH/Zt0zMHWRSwX/SIq72ZDp/QOSQT5b5ObKav2pKeGie5DicjXGkN6z4Gj5yByJ97Xvuf/az8VcCShlX8MG+e4N+bMXp31FLidV1VzJ+ijalJ6bE8+5L8UaaXHBqQa0qEfUQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O/sc6PY2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=nhjz9fm5w3q0C/ydFg4NYCGbNCGO1gEJ4m1F0JCWlApPYpPH576/G2+MaDkp8lj+8Ua9gfK0XUqA9RzJJbsvU+N3ejcXdfqrL/9WKG6XfYvPV/8dZhH1V3XNBFO0c9xvJtqWPOEpU5YxRvLVIW45z6aWe9PqWHotUnJHXfLVhfQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HBspJYIj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O/sc6PY2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5F2F1F00899;
-	Thu, 17 Sep 2026 18:10:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HBspJYIj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE0F71F000FF;
+	Thu, 17 Sep 2026 18:10:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789668603;
-	bh=YxduDaMLJFWua46XO8bpRljE1kdlDz6EOi6wJ+f1jsA=;
+	s=korg; t=1789668606;
+	bh=K8/fHSe7z7svSdXySLjDNc2YqXePHGMN8AFFM2slpcQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O/sc6PY2XmN+4/oMFyY0dnANe6yvYqT6nvferbuX6F7AS9Ff47KBLuHQN+7zsMo4s
-	 wz+vpYwAED0iEIFoc4TstKrqxyTdXtcHDBPhufF1a0NL8ZVhrrzZey+4TVJjVMg0Rf
-	 tl/2i/IkFCqVXRT7qwRI6zYfp5ivovW82047RIdY=
+	b=HBspJYIjOa8uAP+J0is+RtI6LCDbOmZ7kMRfrXQXPklLokhRcAMCrrshJzKuhnbue
+	 bpCSHh6H+JAaCsvocx4i06zdi38O+hSKui0q33sc4/x0p9prDwAb/pTPkjL41VmztO
+	 z9lqCV0DuoqaGSqRinoJO4166AedoL/K42rgHM10=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AutonomousCodeSecurity@microsoft.com,
-	"Cen Zhang (Microsoft)" <blbllhy@gmail.com>,
-	Tung Nguyen <tung.quang.nguyen@est.tech>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Gregor Herburger <gregor.herburger@linutronix.de>,
+	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0480/1102] tipc: fix integer overflow in tipc_recvmsg() and tipc_recvstream()
-Date: Thu, 17 Sep 2026 16:07:03 +0100
-Message-ID: <20260917151551.748478093@linuxfoundation.org>
+Subject: [PATCH 6.12 0481/1102] drm/vc4: hvs/v3d: Fix null dereference in unbind
+Date: Thu, 17 Sep 2026 16:07:04 +0100
+Message-ID: <20260917151551.773259457@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -47,74 +45,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cen Zhang (Microsoft) <blbllhy@gmail.com>
+From: Gregor Herburger <gregor.herburger@linutronix.de>
 
-[ Upstream commit 47f42ff521b4eeb46e82f9a46a4783a99f7570d7 ]
+[ Upstream commit 7dc3680b7ffe01add3e9299fde8471d2dd53a8ae ]
 
-In tipc_recvmsg(), the copy length is computed as:
+The hvs and v3d drivers use dev_get_drvdata(master) in their unbind
+functions. Since the vc4-drm gets removed before its dependent drivers
+(vc4_hvs/vc4_v3d) the vc4_hvs_unbind/vc4_v3d_unbind functions try to
+get drvdata of its master and fails with a null dereference error.
 
-  copy = min_t(int, dlen - offset, buflen);
+Use the data pointer passed to the unbind functions directly instead of
+dev_get_drvdata(master). This avoids using potentially freed memory.
 
-buflen is size_t but min_t(int, ...) casts it to int. When buflen
-exceeds INT_MAX (e.g. 0xFFFFFFFF via io_uring provided buffers), it
-wraps negative, wins the comparison, and the negative copy length
-propagates to simple_copy_to_iter() where int-to-size_t promotion
-makes it SIZE_MAX, triggering a WARN_ON. tipc_recvstream() has the
-same pattern.
-
-  Kernel panic - not syncing: kernel: panic_on_warn set ...
-  RIP: 0010:simple_copy_to_iter+0x9e/0xd0 (net/core/datagram.c:521)
-  Call Trace:
-   __skb_datagram_iter+0x123/0x8b0 (net/core/datagram.c:402)
-   skb_copy_datagram_iter+0x77/0x1a0 (net/core/datagram.c:534)
-   tipc_recvmsg+0x3d7/0xe80 (net/tipc/socket.c:1934)
-   io_recvmsg+0x47e/0xda0
-
-Fix by changing min_t(int, ...) to min_t(size_t, ...) in both
-functions. The result is always <= (dlen - offset), which is bounded
-by TIPC maximum message size (0x1ffff bytes), so the implicit
-narrowing on assignment to int copy is always safe.
-
-Fixes: e9f8b10101c6 ("tipc: refactor function tipc_sk_recvmsg()")
-Fixes: ec8a09fbbeff ("tipc: refactor function tipc_sk_recv_stream()")
-Reported-by: AutonomousCodeSecurity@microsoft.com
-Signed-off-by: Cen Zhang (Microsoft) <blbllhy@gmail.com>
-Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
-Link: https://patch.msgid.link/20260720214103.47732-1-blbllhy@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: d3f5168a0810 ("drm/vc4: Bind and initialize the V3D engine.")
+Fixes: c8b75bca92cb ("drm/vc4: Add KMS support for Raspberry Pi.")
+Signed-off-by: Gregor Herburger <gregor.herburger@linutronix.de>
+Link: https://patch.msgid.link/20260721-rpi-vc4-fix-v2-1-b813dcd01dc7@linutronix.de
+Reviewed-by: Maíra Canal <mcanal@igalia.com>
+Signed-off-by: Maíra Canal <mcanal@igalia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tipc/socket.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/vc4/vc4_hvs.c | 2 +-
+ drivers/gpu/drm/vc4/vc4_v3d.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/tipc/socket.c b/net/tipc/socket.c
-index 97ac69e77ceef..0ae02e8e11ff5 100644
---- a/net/tipc/socket.c
-+++ b/net/tipc/socket.c
-@@ -1935,7 +1935,7 @@ static int tipc_recvmsg(struct socket *sock, struct msghdr *m,
- 	if (likely(!err)) {
- 		int offset = skb_cb->bytes_read;
+diff --git a/drivers/gpu/drm/vc4/vc4_hvs.c b/drivers/gpu/drm/vc4/vc4_hvs.c
+index c389e82463bfd..a52c4843a9929 100644
+--- a/drivers/gpu/drm/vc4/vc4_hvs.c
++++ b/drivers/gpu/drm/vc4/vc4_hvs.c
+@@ -1052,7 +1052,7 @@ static int vc4_hvs_bind(struct device *dev, struct device *master, void *data)
+ static void vc4_hvs_unbind(struct device *dev, struct device *master,
+ 			   void *data)
+ {
+-	struct drm_device *drm = dev_get_drvdata(master);
++	struct drm_device *drm = data;
+ 	struct vc4_dev *vc4 = to_vc4_dev(drm);
+ 	struct vc4_hvs *hvs = vc4->hvs;
+ 	struct drm_mm_node *node, *next;
+diff --git a/drivers/gpu/drm/vc4/vc4_v3d.c b/drivers/gpu/drm/vc4/vc4_v3d.c
+index 334d2cfe3433b..a9a57a9c6f63d 100644
+--- a/drivers/gpu/drm/vc4/vc4_v3d.c
++++ b/drivers/gpu/drm/vc4/vc4_v3d.c
+@@ -492,7 +492,7 @@ static int vc4_v3d_bind(struct device *dev, struct device *master, void *data)
+ static void vc4_v3d_unbind(struct device *dev, struct device *master,
+ 			   void *data)
+ {
+-	struct drm_device *drm = dev_get_drvdata(master);
++	struct drm_device *drm = data;
+ 	struct vc4_dev *vc4 = to_vc4_dev(drm);
  
--		copy = min_t(int, dlen - offset, buflen);
-+		copy = min_t(size_t, dlen - offset, buflen);
- 		rc = skb_copy_datagram_msg(skb, hlen + offset, m, copy);
- 		if (unlikely(rc))
- 			goto exit;
-@@ -2067,7 +2067,7 @@ static int tipc_recvstream(struct socket *sock, struct msghdr *m,
- 		/* Copy data if msg ok, otherwise return error/partial data */
- 		if (likely(!err)) {
- 			offset = skb_cb->bytes_read;
--			copy = min_t(int, dlen - offset, buflen - copied);
-+			copy = min_t(size_t, dlen - offset, buflen - copied);
- 			rc = skb_copy_datagram_msg(skb, hlen + offset, m, copy);
- 			if (unlikely(rc))
- 				break;
+ 	vc4_irq_uninstall(drm);
 -- 
 2.53.0
 
