@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94A7F4B95C5;
-	Thu, 17 Sep 2026 17:15:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90F2251AEE0;
+	Thu, 17 Sep 2026 17:15:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789665312; cv=none; b=n4BSkoW6usnxYw+quh+gqMgXofTKn6nsOr5kO8/VXsMptrgFclRTb7mG/4mR9G1uJWXn5aCVucxsLw+8tFXLYcdue3bPjdFVkR7m17ILeIaXIvO0ScEixnmCck9VvdGCJvb5j6Ug8I0Uv4jKliBPLikTFIjMn5hV+JSqVIFFqpg=
+	t=1789665315; cv=none; b=Cbu525mTl7lcp7IyOs4cfV/dNhe8vqe2h9XctVmhwJigrri8s16rjxkvnV4C/pi2/9WRhV/7fDGl9bkuXg/Lle7TF5aJJDVFykNO6qwQHruQunM9qbiWHo+6dMsgW/O4l9Fw7WeCi3dUACFE5667xTNjA4QtdfUC7sfo/1JeBi4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789665312; c=relaxed/simple;
-	bh=ncuAj9nA/8H/zv9t7Ou78n1ypOTjNrqW4H3jOtrhZQg=;
+	s=arc-20240116; t=1789665315; c=relaxed/simple;
+	bh=n1BM23drKrRSw+1B6HwEAwxrwz94l9euyMgqqMadK4w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BISBiTMBS0Umh/AmuVH5rfXJgwVTQegQsTSVPBGtiof206/RtvWUqq3aRCGLTTO2h+1qaL6WOsJpbTCV/NX5AcbQB5Mg7aua9isj5v6OdO+ITUdcAdPqwa/XfLO9k7rN9PCmToH/eAgx8CYOHtdTQgRaZmZWP7PhPphrMjjEGEs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pA1wdJD/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=m4fgdd1pXKZ3SgtOtsPrXFtGaPWJzf97bDLs2sKvQeyZqUKvm+Ou+rz3Oi+dR4eqpIFUggqazVYCqZLSDL+riPQ2J2giSlO9h9HVfd8+rGynQfrJyUBFYFHcoMKLBpZRbvF8rZFD52x8ARAe0oTcA7ZBPNDN+LGNCUaDrD5xEN0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sJOVKp+1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pA1wdJD/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE5DE1F000FF;
-	Thu, 17 Sep 2026 17:15:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sJOVKp+1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E635A1F000FF;
+	Thu, 17 Sep 2026 17:15:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789665311;
-	bh=Qi78R7Gr+KOqLaCRFs4yXHPrcDdyJC4bSOSD1eGRv5E=;
+	s=korg; t=1789665314;
+	bh=u6ThPHl+tAIMZWb1VB7XXf8IBq/CLqXF9fXsvaoSh9o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pA1wdJD/9MUiTM67VVINmhe5QzGyY+LHcjUj80DpkQp9vmC3raJM2MTbdMzbVDhO8
-	 jgSqHukuzE/i5V4038lPUqdXi+hnj+31JQ2d+/pn7wUvsHvXkNiiTOO7ie+0cVSzTJ
-	 KZuztakxiJC88Q3ZhRPaJ+GrkELrDpmLS7yjU/L4=
+	b=sJOVKp+13eqHJ8c89elu1U/mMz6iG0z0fnxuM1LHZ2CMh9r87lloiWzWaL92TAl2E
+	 T1T+m2lFhMlrpBrIOYId/O7mekR+iEKMQ3rK5GIWW67qudgevfbpGTmbImKTqeOb60
+	 4P/8T5n3xyADRDOIoiA6CGQU0Q1F2gRgwEUtt20s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Pauli Virtanen <pav@iki.fi>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0664/1250] Bluetooth: L2CAP: fix chan mode for LE_CONN_REQ + EXT_FLOWCTL pchan
-Date: Thu, 17 Sep 2026 16:07:39 +0100
-Message-ID: <20260917151609.888239707@linuxfoundation.org>
+Subject: [PATCH 6.18 0665/1250] Bluetooth: L2CAP: fix out-of-bounds write in l2cap_ecred_connect
+Date: Thu, 17 Sep 2026 16:07:40 +0100
+Message-ID: <20260917151609.915428919@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -53,64 +53,96 @@ Content-Transfer-Encoding: 8bit
 
 From: Pauli Virtanen <pav@iki.fi>
 
-[ Upstream commit 4ef05db5b08b176a551b4a6287372045998806b0 ]
+[ Upstream commit 56c2b5831d39dc84aad2573dc3e197af1a872a05 ]
 
-l2cap_new_connection() sets default value of channel mode to match the
-parent channel.  l2cap_le_connect_req() left this at the default, and
-created L2CAP_MODE_EXT_FLOWCTL channels if listening pchan has that
-mode.  This causes FLAG_DEFER_SETUP channels to reply to
-L2CAP_LE_CONN_REQ with L2CAP_ECRED_CONN_RSP, which is incorrect.
+l2cap_chan_connect() tries to ensure there are no more than
+L2CAP_ECRED_CONN_SCID_MAX pending ECRED channels, so they fit in the
+same L2CAP_ECRED_CONN_REQ that l2cap_ecred_connect() constructs.
 
-It can also result to stack OOB write (of l2cap_alloc_cid determined
-values) in l2cap_ecred_rsp_defer(), as l2cap_le_connect_req() does not
-limit maximum number of deferred channels or check for duplicate ident.
+However, the check only counts deferred channels.  If 6 L2CAP sockets
+are connected at the same time in order DDDDND (D=deferred,
+N=non-deferred), the last can bump the total to max+1.  It results to
+one __le16 written out of bounds of the scid array, and an invalid
+ECRED_CONN_REQ being sent.
 
-Fix by setting chan->mode correctly in l2cap_le_connect_req().
+Fix by leaving room for the non-deferred pending ECRED channels in the
+counting in l2cap_chan_connect(), so the limit can't be exceeded.
 
-Also check channel mode in l2cap_ecred_rsp_defer(), and do WARN_ON_ONCE
-instead of OOB write to make it less brittle.
+Move counting under same critical section where the channel is added.
+Although race conditions involving this appear unreachable, it's easier
+to see.
 
-Fixes: 15f02b910562 ("Bluetooth: L2CAP: Add initial code for Enhanced Credit Based Mode")
+Also add WARN_ON_ONCE check in l2cap_ecred_defer_connect() to make this
+less brittle.
+
+Fixes: da49b602f7f7 ("Bluetooth: L2CAP: Use DEFER_SETUP to group ECRED connections")
 Signed-off-by: Pauli Virtanen <pav@iki.fi>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_core.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ net/bluetooth/l2cap_core.c | 20 ++++++++++++++------
+ 1 file changed, 14 insertions(+), 6 deletions(-)
 
 diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index 1a38a667ef0b0..daf51a57cfa61 100644
+index daf51a57cfa61..fc74e9fad08f7 100644
 --- a/net/bluetooth/l2cap_core.c
 +++ b/net/bluetooth/l2cap_core.c
-@@ -3893,6 +3893,9 @@ static void l2cap_ecred_rsp_defer(struct l2cap_chan *chan, void *data)
- 	struct l2cap_ecred_conn_rsp *rsp_flex =
- 		container_of(&rsp->pdu.rsp, struct l2cap_ecred_conn_rsp, hdr);
+@@ -1340,7 +1340,7 @@ static void l2cap_le_connect(struct l2cap_chan *chan)
+ struct l2cap_ecred_conn_data {
+ 	struct {
+ 		struct l2cap_ecred_conn_req_hdr req;
+-		__le16 scid[5];
++		__le16 scid[L2CAP_ECRED_CONN_SCID_MAX];
+ 	} __packed pdu;
+ 	struct l2cap_chan *chan;
+ 	struct pid *pid;
+@@ -1368,6 +1368,10 @@ static void l2cap_ecred_defer_connect(struct l2cap_chan *chan, void *data)
+ 	if (test_and_set_bit(FLAG_ECRED_CONN_REQ_SENT, &chan->flags))
+ 		return;
  
-+	if (chan->mode != L2CAP_MODE_EXT_FLOWCTL)
++	/* Unreachable, checked in l2cap_connect (+timer drops it if reached) */
++	if (WARN_ON_ONCE(conn->count >= ARRAY_SIZE(conn->pdu.scid)))
 +		return;
 +
- 	/* Check if channel for outgoing connection or if it wasn't deferred
- 	 * since in those cases it must be skipped.
- 	 */
-@@ -3903,6 +3906,10 @@ static void l2cap_ecred_rsp_defer(struct l2cap_chan *chan, void *data)
- 	/* Reset ident so only one response is sent */
- 	chan->ident = 0;
+ 	l2cap_ecred_init(chan, 0);
  
-+	/* Unreachable, check in l2cap_ecred_conn_req. If reached, drop rest */
-+	if (WARN_ON_ONCE(rsp->count >= ARRAY_SIZE(rsp->pdu.scid)))
-+		rsp->pdu.rsp.result = cpu_to_le16(L2CAP_CR_LE_NO_MEM);
+ 	/* Set the same ident so we can match on the rsp */
+@@ -7371,6 +7375,9 @@ int l2cap_chan_connect(struct l2cap_chan *chan, __le16 psm, u16 cid,
+ 		goto done;
+ 	}
+ 
++	mutex_lock(&conn->lock);
++	l2cap_chan_lock(chan);
 +
- 	/* Include all channels pending with the same ident */
- 	if (!rsp->pdu.rsp.result)
- 		rsp_flex->dcid[rsp->count++] = cpu_to_le16(chan->scid);
-@@ -5070,6 +5077,7 @@ static int l2cap_le_connect_req(struct l2cap_conn *conn,
- 	__set_chan_timer(chan, chan->ops->get_sndtimeo(chan));
+ 	if (chan->mode == L2CAP_MODE_EXT_FLOWCTL) {
+ 		struct l2cap_chan_data data;
  
- 	chan->ident = cmd->ident;
-+	chan->mode = L2CAP_MODE_LE_FLOWCTL;
+@@ -7378,19 +7385,20 @@ int l2cap_chan_connect(struct l2cap_chan *chan, __le16 psm, u16 cid,
+ 		data.pid = chan->ops->get_peer_pid(chan);
+ 		data.count = 1;
  
- 	if (test_bit(FLAG_DEFER_SETUP, &chan->flags)) {
- 		l2cap_state_change(chan, BT_CONNECT2);
+-		l2cap_chan_list(conn, l2cap_chan_by_pid, &data);
++		__l2cap_chan_list(conn, l2cap_chan_by_pid, &data);
++
++		/* Leave room for non-deferred channel that ends the group. */
++		if (test_bit(FLAG_DEFER_SETUP, &chan->flags))
++			data.count += 1;
+ 
+ 		/* Check if there isn't too many channels being connected */
+ 		if (data.count > L2CAP_ECRED_CONN_SCID_MAX) {
+ 			hci_conn_drop(hcon);
+ 			err = -EPROTO;
+-			goto done;
++			goto chan_unlock;
+ 		}
+ 	}
+ 
+-	mutex_lock(&conn->lock);
+-	l2cap_chan_lock(chan);
+-
+ 	if (cid && __l2cap_get_chan_by_dcid(conn, cid)) {
+ 		hci_conn_drop(hcon);
+ 		err = -EBUSY;
 -- 
 2.53.0
 
