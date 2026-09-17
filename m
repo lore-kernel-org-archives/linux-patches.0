@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51E7549D590;
-	Thu, 17 Sep 2026 17:41:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61C2F49D587;
+	Thu, 17 Sep 2026 17:41:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666869; cv=none; b=fnRtPxknHaDXbPGHaW9Y/1kLI31QuHwdwYJOfAlECTDa7ejhsTYLYSGykuh6ZG4Z8YZmBzYOO4TDV/EeQ9OQEGj66jg8AzlydCdaJRLgz8m5y+E2WixKvAsydmb/UgLIhAU7WFky0QTQ7uf9zgZqz7t+5EfHPu9w65n41y+TCD0=
+	t=1789666871; cv=none; b=jCjAiM1tNSPVGSKXhf828b/e7MBgjizwEfZ7JjJeG2CCOkBk/FMTEwJp/u9MsRTqBU7ZBhAngAyCAtzOSan+oVEnKBTtzEL/QdWLQ84XzjEy27Z7LBJ5/Y0Y3T5YmsBTr+SSY1U9C0UHTF7lzY/wqHTBuuu5M20Li7HPls6Yoak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666869; c=relaxed/simple;
-	bh=AkImZwsN5+hJxsMWSNyCYxtPb3Jo2R1AYXCyl38dlTk=;
+	s=arc-20240116; t=1789666871; c=relaxed/simple;
+	bh=4D60sPfYqYjZQQ0ddIPmjaO66LSsRKhXc+bL7qYXm98=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=boPfn3ROKTinS3SmO+inbpJ38S0lbPhe8v/GLSRJiru1YX6AkZGPerHyXLe7iyVOD6o7nOmPv3l5Z/LQ3SfU+7gyKkas/QeZ3OlHqa2ipSCmeGV0Vq0cEGFsY/DfH/oQ+AzAotsqRPhw2ag3/7R7vgZwLiRT8fJEVpdQXFgKOBc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vZuBmfJ6; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iErjJN/nUwtRQNv9rNwCJmQ640TIASyub0v5/SrwoP3rLTJtT5E7kSCXWvVELHXBOFimlvgkqtjPUw9gnbrd/aWyUOnkZf/4LDXeR6OYo/a/ZIAOCW90zo4vr9NP/JFnKMGIb2qmLTOjN5ylgwZvAg76fJVmx4BE7IoH3LTKOms=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HygkyJcq; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vZuBmfJ6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A495C1F000FF;
-	Thu, 17 Sep 2026 17:41:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HygkyJcq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4B651F000FF;
+	Thu, 17 Sep 2026 17:41:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666867;
-	bh=nsQ10FrZr6gMJme/BYrZccdlJfDd2f+JvWXAEjddgjs=;
+	s=korg; t=1789666870;
+	bh=XDbwrvpThr6zf+irQzIIqBB4sa6ItVNmRtBDt4oTLJA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vZuBmfJ6KrpJlon4RzgAkhAhVxt00nI89SvNJa2NyKYYCNtM81D6QgRdSXmVq/eH7
-	 2ij/XZ7UZnBeA5976us9fQ87r4qujIfo7syN2tlkyNp2SlGVXuiQAuHtClMOr4hRj0
-	 2EnLhvAuSzOlK3/aZSvHTWCvCf+yM5fkmcy6YYFA=
+	b=HygkyJcqcfAaUpf3I7vdV+TdZ3s0WLggHznQJ5NFWoR2y9Iw6/h1Vtzsaga7FVl0T
+	 Z8YOVz+7hpvwNLycsAHG8QjsN1T/VjNJfJeyvYiSGovDDNM/OoL6+nDCKnXjobX35i
+	 Q237vzMyq7O8GM+9Ibh4OeYeZoELptpd5tYduvGk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.18 1103/1250] xfs: fix unit conversions in per_binval computation
-Date: Thu, 17 Sep 2026 16:14:58 +0100
-Message-ID: <20260917151622.077118561@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 1145/1250] Revert "arm64: dts: qcom: kodiak: Fix the PCIe iommu-map entries"
+Date: Thu, 17 Sep 2026 16:15:40 +0100
+Message-ID: <20260917151623.297245752@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,50 +49,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Darrick J. Wong <djwong@kernel.org>
+This reverts commit d2b404826bf93c6102ceb5d3186ef41675f0f6ad.
 
-commit 05cff7c2b79f76c7cfe90613a60e16aaaa051ef7 upstream.
-
-LOLLM noticed that we're doing the unit conversion in the per_binval
-computation backwards -- xfs_buf_inval_log_space's second parameter is
-supposed to be in bytes, but max_binval is in units of fsblocks.  Hence
-the conversion should be FSB -> B, not the other way around.
-
-Cc: stable@vger.kernel.org # v6.18
-Fixes: b2311ec6778fcd ("xfs: compute per-AG extent reap limits dynamically")
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Assisted-by: LOLLM # finding obvious bugs
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/scrub/reap.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/qcom/sc7280.dtsi | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/fs/xfs/scrub/reap.c b/fs/xfs/scrub/reap.c
-index fcd14c1703ea..496c6eab555e 100644
---- a/fs/xfs/scrub/reap.c
-+++ b/fs/xfs/scrub/reap.c
-@@ -601,7 +601,7 @@ xreap_configure_agextent_limits(
+diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+index 7d53e06e97b07..0f566dd75c964 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+@@ -2273,8 +2273,8 @@ pcie0: pcie@1c00000 {
+ 				      "aggre0",
+ 				      "aggre1";
  
- 	/* Maximum overhead of invalidating one buffer. */
- 	const unsigned int	per_binval =
--		xfs_buf_inval_log_space(1, XFS_B_TO_FSBT(mp, max_binval));
-+		xfs_buf_inval_log_space(1, XFS_FSB_TO_B(mp, max_binval));
+-			iommu-map = <0x0   &apps_smmu 0x1c00 0x0 0x1>,
+-				    <0x100 &apps_smmu 0x1c01 0x0 0x1>;
++			iommu-map = <0x0   &apps_smmu 0x1c00 0x1>,
++				    <0x100 &apps_smmu 0x1c01 0x1>;
  
- 	/*
- 	 * For each transaction in a reap chain, we can delete some number of
-@@ -680,7 +680,7 @@ xreap_configure_agcow_limits(
+ 			resets = <&gcc GCC_PCIE_0_BCR>;
+ 			reset-names = "pci";
+@@ -2419,8 +2419,8 @@ pcie1: pcie@1c08000 {
  
- 	/* Overhead of invalidating one buffer */
- 	const unsigned int	per_binval =
--		xfs_buf_inval_log_space(1, XFS_B_TO_FSBT(mp, max_binval));
-+		xfs_buf_inval_log_space(1, XFS_FSB_TO_B(mp, max_binval));
+ 			dma-coherent;
  
- 	/*
- 	 * For each transaction in a reap chain, we can delete some number of
+-			iommu-map = <0x0 &apps_smmu 0x1c80 0x0 0x1>,
+-				    <0x100 &apps_smmu 0x1c81 0x0 0x1>;
++			iommu-map = <0x0 &apps_smmu 0x1c80 0x1>,
++				    <0x100 &apps_smmu 0x1c81 0x1>;
+ 
+ 			status = "disabled";
+ 
 -- 
-2.55.0
+2.53.0
 
 
 
