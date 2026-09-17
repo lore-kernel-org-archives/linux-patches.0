@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 998864973B9;
-	Thu, 17 Sep 2026 18:48:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1B483DD86A;
+	Thu, 17 Sep 2026 18:48:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789670895; cv=none; b=goEjHvYb+i7XEirGDkW9ssb8SSuqZNSVlbWvwc6h4gHMsWGDdb2ts4uqFc/2xEkEVqQrUna1CbPBNB10fs2CihgA4tKwbfm7qAQmRjwW+2QJXgjkjiL4lz29jXsBlv8TH6e//Zaod1ijcSwE5cJNVilxYWW7oy16vLz7hxaaud8=
+	t=1789670899; cv=none; b=ZmqgrwacvSuFA3P4sRuF+ybwVKGTTZUP6e8uDEoXBemfBIhAiPfHI7rTIzBcuhN2ybci07tvc/KmdJhAsHu3M3HxpdvQ5CZ5Y87p/qOT6u0DnwBtXGXcd+FvvbAy/KG7L0kCsFoI3TMi30yi+tpF6VQoh9nrHl8c+62N6ZtyRI8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789670895; c=relaxed/simple;
-	bh=7xkBvf0KogQmuGJXPYADvXwTSr4N9EaxqjjHbo5OSP0=;
+	s=arc-20240116; t=1789670899; c=relaxed/simple;
+	bh=6hy6xyxqRPlgyabJA+mvd5oBv8PUrjlT+paZnt8TrL4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kI3fXe9KImkJzGGvIa0YMdqQA3rAoS4/sl0LwxTkiSNezJJ3xdO4SXEpFCT/YRcC24wShqUM+GkdsHrHQMmATn3wXZTwGAX6uNghUPQZgrmA7e6tOWMEOpIdjhACf/MzHIejM+xPySZmRd7zVOIIOhXMR8MhiLbs5vMsmXTshaM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xTQzHA0J; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AUBLeRuA8Jee4Eb6JJ9beJqOx+8UNxJwV7kv9RQAllVrSWw5p7nqaRIkRzfHyyfs82pCIzSbsNvqTBkx1CiUPaWOpV0k4cW61gKM03akLUNByGD20cdtv1HqKWSF7doQRkPtCU88Dv2hxXIdd40Dem9+uqr4YOs6MdpbHrDzEu8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u8+QOaPx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xTQzHA0J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E22571F000FF;
-	Thu, 17 Sep 2026 18:48:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u8+QOaPx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D88A61F000FF;
+	Thu, 17 Sep 2026 18:48:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789670894;
-	bh=SGrar8s07HxkGlMebjsbkohoaNru8naa5bQmCp58R5I=;
+	s=korg; t=1789670897;
+	bh=YormLDP/fLYPJ/VewwGz9gax1+IShXBJGJSJ0PFDd7w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xTQzHA0J1kA27qHxnlYwMeJkqn6e3EsnkOVOS+qxz1cvSFaUBPwj/O32qXHsneHkf
-	 FBH2RY3JKQdKdez5+Um2uhXvDXftW3t4HHx8A5yLNqJnSZ7xdHOw0cwTN+7UrAid0J
-	 uWcPj1djka0VIsLdZn2JpVprBWwfK9qTUjKZBXC8=
+	b=u8+QOaPxVayhxPmpjwOXuFT49LpUaXgbrmaeIVrjrSv0X3sKpx9ObvWsEQokUNq0z
+	 XySprFse/xUiqud2h86MD1tqHdKpMjsSEDcpFm3hB75Op9UZLabAOZ8fGkPOENKSu9
+	 q+DHizL15aaYyVSpuViwpoTclJbTHP1obcagY83Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Yicong Hui <yiconghui@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0767/1102] net: stmmac: initialize ptp_lock at probe time
-Date: Thu, 17 Sep 2026 16:11:50 +0100
-Message-ID: <20260917151559.698450671@linuxfoundation.org>
+Subject: [PATCH 6.12 0758/1102] net/micrel: Fix typos in micrel driver code comments
+Date: Thu, 17 Sep 2026 16:11:41 +0100
+Message-ID: <20260917151559.459253277@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -52,55 +51,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
+From: Yicong Hui <yiconghui@gmail.com>
 
-[ Upstream commit 0338c68e22abd2ee509ec2e32508a50896618c32 ]
+[ Upstream commit c2b733da93bf607d6c6f925b4d40598e6bb516be ]
 
-priv->ptp_lock is only initialized in stmmac_ptp_register(), which runs
-during __stmmac_open(). However, the lock is also used while the
-interface is down and has never been opened: tc_taprio_configure()
-invokes the PTP gettime64() callback to compute the EST base time when
-offloading a TAPRIO schedule, and stmmac_get_time() takes
-priv->ptp_lock. Using an uninitialized rwlock is undefined behaviour.
-Move the rwlock_init() to __stmmac_dvr_probe(), together with the other
-private locks, so that ptp_lock is always valid regardless of the
-interface state.
+Fix various typos and misspellings in code comments in the
+drivers/net/ethernet/micrel directory
 
-Fixes: b60189e0392f ("net: stmmac: Integrate EST with TAPRIO scheduler API")
-Signed-off-by: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
-Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Link: https://patch.msgid.link/20260904-stmmac-fix-ptp-clock-init-v1-1-df70eb1eb04d@oss.qualcomm.com
+Signed-off-by: Yicong Hui <yiconghui@gmail.com>
+Link: https://patch.msgid.link/20260118121001.136806-3-yiconghui@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 66ef5adb7544 ("net: ks8851: Fix receiver error in 100BASE-TX mode following software power-down")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 1 +
- drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c  | 1 -
- 2 files changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/micrel/ks8842.c        | 4 ++--
+ drivers/net/ethernet/micrel/ks8851_common.c | 2 +-
+ drivers/net/ethernet/micrel/ks8851_spi.c    | 4 ++--
+ drivers/net/ethernet/micrel/ksz884x.c       | 4 ++--
+ 4 files changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index 4dcd29e814083..f583542edd801 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -7733,6 +7733,7 @@ int stmmac_dvr_probe(struct device *device,
- 	stmmac_napi_add(ndev);
+diff --git a/drivers/net/ethernet/micrel/ks8842.c b/drivers/net/ethernet/micrel/ks8842.c
+index ddd87ef71caf7..a1ceaea369d0b 100644
+--- a/drivers/net/ethernet/micrel/ks8842.c
++++ b/drivers/net/ethernet/micrel/ks8842.c
+@@ -242,7 +242,7 @@ static void ks8842_reset(struct ks8842_adapter *adapter)
+ 		msleep(10);
+ 		iowrite16(0, adapter->hw_addr + REG_GRR);
+ 	} else {
+-		/* The KS8842 goes haywire when doing softare reset
++		/* The KS8842 goes haywire when doing software reset
+ 		* a work around in the timberdale IP is implemented to
+ 		* do a hardware reset instead
+ 		ks8842_write16(adapter, 3, 1, REG_GRR);
+@@ -312,7 +312,7 @@ static void ks8842_reset_hw(struct ks8842_adapter *adapter)
+ 	/* aggressive back off in half duplex */
+ 	ks8842_enable_bits(adapter, 32, 1 << 8, REG_SGCR1);
  
- 	mutex_init(&priv->lock);
-+	rwlock_init(&priv->ptp_lock);
+-	/* enable no excessive collison drop */
++	/* enable no excessive collision drop */
+ 	ks8842_enable_bits(adapter, 32, 1 << 3, REG_SGCR2);
  
- 	priv->fpe_cfg.verify_retries = STMMAC_FPE_MM_MAX_VERIFY_RETRIES;
- 	priv->fpe_cfg.verify_time = STMMAC_FPE_MM_MAX_VERIFY_TIME_MS;
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c
-index 5c85040a1b937..4970098585c11 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c
-@@ -309,7 +309,6 @@ void stmmac_ptp_register(struct stmmac_priv *priv)
- 	stmmac_ptp_clock_ops.n_per_out = priv->dma_cap.pps_out_num;
- 	stmmac_ptp_clock_ops.n_ext_ts = priv->dma_cap.aux_snapshot_n;
+ 	/* Enable port 1 force flow control / back pressure / transmit / recv */
+diff --git a/drivers/net/ethernet/micrel/ks8851_common.c b/drivers/net/ethernet/micrel/ks8851_common.c
+index b1e9d1495c019..7c336e0a4b8ae 100644
+--- a/drivers/net/ethernet/micrel/ks8851_common.c
++++ b/drivers/net/ethernet/micrel/ks8851_common.c
+@@ -493,7 +493,7 @@ static int ks8851_net_open(struct net_device *dev)
+  * ks8851_net_stop - close network device
+  * @dev: The device being closed.
+  *
+- * Called to close down a network device which has been active. Cancell any
++ * Called to close down a network device which has been active. Cancel any
+  * work, shutdown the RX and TX process and then place the chip into a low
+  * power state whilst it is not being used.
+  */
+diff --git a/drivers/net/ethernet/micrel/ks8851_spi.c b/drivers/net/ethernet/micrel/ks8851_spi.c
+index a7a198507374b..1db2ef1a8212b 100644
+--- a/drivers/net/ethernet/micrel/ks8851_spi.c
++++ b/drivers/net/ethernet/micrel/ks8851_spi.c
+@@ -41,7 +41,7 @@ static int msg_enable;
+  *
+  * The @lock ensures that the chip is protected when certain operations are
+  * in progress. When the read or write packet transfer is in progress, most
+- * of the chip registers are not ccessible until the transfer is finished and
++ * of the chip registers are not accessible until the transfer is finished and
+  * the DMA has been de-asserted.
+  */
+ struct ks8851_net_spi {
+@@ -298,7 +298,7 @@ static unsigned int calc_txlen(unsigned int len)
  
--	rwlock_init(&priv->ptp_lock);
- 	mutex_init(&priv->aux_ts_lock);
- 	priv->ptp_clock_ops = stmmac_ptp_clock_ops;
+ /**
+  * ks8851_tx_work - process tx packet(s)
+- * @work: The work strucutre what was scheduled.
++ * @work: The work structure what was scheduled.
+  *
+  * This is called when a number of packets have been scheduled for
+  * transmission and need to be sent to the device.
+diff --git a/drivers/net/ethernet/micrel/ksz884x.c b/drivers/net/ethernet/micrel/ksz884x.c
+index dc1d9f7745658..ce683e18a978b 100644
+--- a/drivers/net/ethernet/micrel/ksz884x.c
++++ b/drivers/net/ethernet/micrel/ksz884x.c
+@@ -1166,7 +1166,7 @@ struct ksz_port_info {
+  * @tx_cfg:		Cached transmit control settings.
+  * @rx_cfg:		Cached receive control settings.
+  * @intr_mask:		Current interrupt mask.
+- * @intr_set:		Current interrup set.
++ * @intr_set:		Current interrupt set.
+  * @intr_blocked:	Interrupt blocked.
+  * @rx_desc_info:	Receive descriptor information.
+  * @tx_desc_info:	Transmit descriptor information.
+@@ -2096,7 +2096,7 @@ static void sw_dis_prio_rate(struct ksz_hw *hw, int port)
+ }
  
+ /**
+- * sw_init_prio_rate - initialize switch prioirty rate
++ * sw_init_prio_rate - initialize switch priority rate
+  * @hw: 	The hardware instance.
+  *
+  * This routine initializes the priority rate function of the switch.
 -- 
 2.53.0
 
