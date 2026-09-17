@@ -1,39 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 495483DEFE2;
-	Thu, 17 Sep 2026 17:12:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CDEC3DAAC4;
+	Thu, 17 Sep 2026 17:12:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789665172; cv=none; b=E9zwDG+kYY5+6fSVGZHt1FuTcBODol1XBOa3+9C8yxvp1EgtExTfmqhAEyK9HHu0VtcmHD0GZWZf3Kv6lfafoJkCyvke0vMW9x/Taj/7Ir757iptjmdrDhbWnVtT2PSaRWEdrIy+ooyuDO0k0p9uV5GOWzoL5b+ta46SW338hV0=
+	t=1789665175; cv=none; b=lyFubyHE6yJsOdxzvGqPUaDtSWmWnl14I4zYPuU/cBZ5SPFk7BuLgX/cZwhcHieVK8iWxd/ijABPSeVVnUTcseKbTte1sCJds3W1PWrBjlx00dNLq+TYGWVgF7K5az8AZsUWcuRLklHhbnNL1EflO6o/LdQ9HKyGSXs3691HnSo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789665172; c=relaxed/simple;
-	bh=no6lY7026nAqQuOXzn8AmbrC9OxqYz+fau+oVjtRKws=;
+	s=arc-20240116; t=1789665175; c=relaxed/simple;
+	bh=qOmKFf1uG8KLEuHsV74V2taIyDHrt6v18XwoxYjxpmM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Tyz8AwUOj08UYlu3duYvlbJm9eeX/bIrlT2bMGw1lFTMykgM5yaB3iHAQQyQ+aOed/E+OWYJwPpl++lODaSCm70Lcber9zawBraElLejLHgD0fknPJGwrJ/w3bdm1XkycXq8hrNLc4gwSlVsEgpmfm2jmyitZKWx4p/8KaHv4xw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=09iQH0Re; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=alv49R2w6Iemef5BN701BDRzGJ85np1VRZfdjRTkMpmPA6EYdI2cdiujwx+DYkXdNUI8XousGw4vA+FiFXyhZmvP0dg0egBoN9BNiD22CvaQ19zkV7maL1WkNPzc37RDEf4ghwTTKpVPmutDa00fLl47hRvuvTFBM93tKxXN5YE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o85i+BOd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="09iQH0Re"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 952F91F000FF;
-	Thu, 17 Sep 2026 17:12:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o85i+BOd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A9A81F000FF;
+	Thu, 17 Sep 2026 17:12:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789665171;
-	bh=uKJdXksY4/7rQUAHhGkDlntzpyBcQ8jTYRfawLY6Ed0=;
+	s=korg; t=1789665174;
+	bh=5ms70RLxT6opyuczJTj61YC/9OOGIUyTCdyTn/+TMw4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=09iQH0Re7JCMf6ZFwROtlKJU2WjQ1fOuShtbr1QePaQhlv553TBs4iv8kWWsT8LHq
-	 nefbrg/f/iGiuVoZSuTL1SH9kXBERt+yYTQehNtbka9DGS3nxTWh31WWABW5RSbNOL
-	 LlKxwr9f85qtD+WgJ4+kRq56zz2xqbpgB0sGdat4=
+	b=o85i+BOd7snStpf/uCJVzVZsrBaC6uzqyE85NzTihZ5kElGec2eiOg9oy7g8+0jvd
+	 oiSjDbhubornpk63qpDIcMWXmMmZdIfP1ryyiKRzbL0F8Exsn8fe/BrFqCLqIL8ei4
+	 ekl7OvKtVCwOT5oQpLhvxePHHF/eUuM4haGz10ww=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+2442951a6abb004df963@syzkaller.appspotmail.com,
-	Slawomir Stepien <sst@poczta.fm>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
+	syzbot+6d2762674103618994b0@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Peilin He <he.peilin@zte.com.cn>,
+	xu xin <xu.xin16@zte.com.cn>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	David Ahern <dsahern@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0617/1250] drm/cirrus-qemu: Validate BAR0 size during probe
-Date: Thu, 17 Sep 2026 16:06:52 +0100
-Message-ID: <20260917151608.594155483@linuxfoundation.org>
+Subject: [PATCH 6.18 0618/1250] net: icmp: avoid invalid transport header access in icmp_send tracepoint
+Date: Thu, 17 Sep 2026 16:06:53 +0100
+Message-ID: <20260917151608.623537642@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -52,72 +57,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Slawomir Stepien <sst@poczta.fm>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 92312d333bf700798f92f30406c721bce87506f3 ]
+[ Upstream commit 7fcc2fe39fed1cb98a7374a113ff3800e8f9af80 ]
 
-The `cirrus-qemu` driver relies on `CIRRUS_VRAM_SIZE` (4 MB) to validate
-framebuffer sizes. However, during PCI probe, the driver mapped BAR0
-without verifying that its size matches `CIRRUS_VRAM_SIZE`.
+syzbot reported a WARNING triggered by DEBUG_NET_WARN_ON_ONCE():
 
-If a PCI device with a BAR0 smaller than 4 MB is bound to the driver, the
-mapped VRAM will be smaller than expected. Because validation checks assume
-4 MB VRAM, framebuffers larger than the mapped memory can be created.
+ WARNING: at skb_transport_header include/linux/skbuff.h:3087 [inline]
+ WARNING: at udp_hdr include/linux/udp.h:23 [inline]
+ WARNING: at do_trace_event_raw_event_icmp_send include/trace/events/icmp.h:30 [inline]
+ WARNING: at trace_event_raw_event_icmp_send+0x48c/0x6ec include/trace/events/icmp.h:11
+ Call trace:
+  skb_transport_header include/linux/skbuff.h:3087 [inline]
+  udp_hdr include/linux/udp.h:23 [inline]
+  do_trace_event_raw_event_icmp_send include/trace/events/icmp.h:30 [inline]
+  trace_event_raw_event_icmp_send+0x48c/0x6ec include/trace/events/icmp.h:11
+  __traceiter_icmp_send include/trace/events/icmp.h:11 [inline]
+  __do_trace_icmp_send include/trace/events/icmp.h:11 [inline]
+  trace_icmp_send+0x320/0x49c include/trace/events/icmp.h:11
+  __icmp_send+0xcfc/0x11d8 net/ipv4/icmp.c:1013
+  ipv4_send_dest_unreach net/ipv4/route.c:1280 [inline]
+  ipv4_link_failure+0x57c/0x8dc net/ipv4/route.c:1287
+  dst_link_failure include/net/dst.h:438 [inline]
+  vti_tunnel_xmit+0xe40/0x17a4 net/ipv4/ip_vti.c:307
 
-When the display plane is updated (e.g. during release),
-`cirrus_primary_plane_helper_atomic_update()` copies the framebuffer to
-VRAM using `drm_fb_memcpy()`. Writing past the end of the mapped I/O memory
-causes a supervisor write page fault:
+TP_fast_assign() unconditionally calls udp_hdr(skb) before checking
+whether the packet is UDP. Furthermore, __icmp_send() can be invoked
+from paths (e.g., link failures, ARP errors, forwarding, AF_PACKET)
+where skb->transport_header was never initialized (~0U).
 
-BUG: unable to handle page fault for address: ffffc9000389c000
-...
-RIP: 0010:memcpy_toio+0x7c/0xe0 arch/x86/lib/iomem.c:110
-...
-Call Trace:
- <TASK>
- iosys_map_memcpy_to include/linux/iosys-map.h:285 [inline]
- drm_fb_memcpy+0x325/0x5d0 drivers/gpu/drm/drm_format_helper.c:442
- cirrus_primary_plane_helper_atomic_update+0x98a/0xb00
- drivers/gpu/drm/tiny/cirrus-qemu.c:358
- drm_atomic_helper_commit_planes+0x626/0xea0
- drivers/gpu/drm/drm_atomic_helper.c:3038
- drm_atomic_helper_commit_tail+0x60/0x510
- drivers/gpu/drm/drm_atomic_helper.c:1989
- commit_tail+0x2b1/0x3c0 drivers/gpu/drm/drm_atomic_helper.c:2074
- drm_atomic_helper_commit+0xa77/0xb10
- drivers/gpu/drm/drm_atomic_helper.c:2312
+Under CONFIG_DEBUG_NET=y, calling skb_transport_header(skb) triggers
+DEBUG_NET_WARN_ON_ONCE(!skb_transport_header_was_set(skb)).
 
-Fix this by validating in `cirrus_pci_probe()` that the PCI BAR0 resource
-is not less than `CIRRUS_VRAM_SIZE`, returning `-ENODEV` if it is less.
+Fix this by:
+1. Only parsing transport info when iph->protocol == IPPROTO_UDP.
+2. Using skb_header_pointer() at skb_network_offset(skb) + (iph->ihl << 2)
+   to safely fetch the UDP header without assuming transport_header is set.
 
-Fixes: ab3e023b1b4c ("drm/cirrus: rewrite and modernize driver.")
-Assisted-by: Gemini:gemini-3.6-flash Gemini:gemini-3.1-pro-preview syzbot
-Reported-by: syzbot+2442951a6abb004df963@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=2442951a6abb004df963
-Link: https://syzkaller.appspot.com/ai_job?id=ba262a3a-bccf-4ad8-a1b0-583c55d34fd6
-Signed-off-by: Slawomir Stepien <sst@poczta.fm>
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://patch.msgid.link/20260825120729.493611-1-sst@poczta.fm
+Fixes: db3efdcf70c7 ("net/ipv4: add tracepoint for icmp_send")
+Reported-by: syzbot+6d2762674103618994b0@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/6a8d5538.91706f20.ef82.0009.GAE@google.com/T/#u
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Peilin He <he.peilin@zte.com.cn>
+Cc: xu xin <xu.xin16@zte.com.cn>
+Cc: Steven Rostedt <rostedt@goodmis.org>
+Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://patch.msgid.link/20260825084551.1562967-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/tiny/cirrus-qemu.c | 3 +++
- 1 file changed, 3 insertions(+)
+ include/trace/events/icmp.h | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/tiny/cirrus-qemu.c b/drivers/gpu/drm/tiny/cirrus-qemu.c
-index 97a93adc5669d..a6ce6aa99477e 100644
---- a/drivers/gpu/drm/tiny/cirrus-qemu.c
-+++ b/drivers/gpu/drm/tiny/cirrus-qemu.c
-@@ -570,6 +570,9 @@ static int cirrus_pci_probe(struct pci_dev *pdev,
- 	struct cirrus_device *cirrus;
- 	int ret;
+diff --git a/include/trace/events/icmp.h b/include/trace/events/icmp.h
+index 31559796949a7..acfcf2b132d60 100644
+--- a/include/trace/events/icmp.h
++++ b/include/trace/events/icmp.h
+@@ -27,17 +27,20 @@ TRACE_EVENT(icmp_send,
  
-+	if (pci_resource_len(pdev, 0) < CIRRUS_VRAM_SIZE)
-+		return -ENODEV;
+ 		TP_fast_assign(
+ 			struct iphdr *iph = ip_hdr(skb);
+-			struct udphdr *uh = udp_hdr(skb);
+-			int proto_4 = iph->protocol;
++			struct udphdr _uh, *uh = NULL;
+ 			__be32 *p32;
+ 
+ 			__entry->skbaddr = skb;
+ 			__entry->type = type;
+ 			__entry->code = code;
+ 
+-			if (proto_4 != IPPROTO_UDP || (u8 *)uh < skb->head ||
+-				(u8 *)uh + sizeof(struct udphdr)
+-				> skb_tail_pointer(skb)) {
++			if (iph->protocol == IPPROTO_UDP)
++				uh = skb_header_pointer(skb,
++							skb_network_offset(skb) +
++							(iph->ihl << 2),
++							sizeof(_uh), &_uh);
 +
- 	ret = aperture_remove_conflicting_pci_devices(pdev, cirrus_driver.name);
- 	if (ret)
- 		return ret;
++			if (!uh) {
+ 				__entry->sport = 0;
+ 				__entry->dport = 0;
+ 				__entry->ulen = 0;
 -- 
 2.53.0
 
