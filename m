@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB23B4EF14A;
-	Thu, 17 Sep 2026 17:53:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E9EB4EF12D;
+	Thu, 17 Sep 2026 17:53:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789667588; cv=none; b=UEShl24Q9O84sLuZwWZi+XzueT9hTNEcE5G/4XF+0R4lUE3qxf9KCsy7tS7AVCNW0EYcW6BDSIQlxRfUdbm6FjnOsjUEYxogHfSkWEu093DbG+1dlJosP9cRKRCfakJ3/D8Ks+Uq4x9aZ3u7ZNIjbw6v1jZiuS2+CQK6GvGHmRM=
+	t=1789667591; cv=none; b=uIAZx/N+sBa2CA6cvxRiTXOJEzRJ5Qy1MioHRzXRSjaQbPOOJxuDcDhZkBYkNtOSfGNIJEHGWYH+7Za3JpK6dyWZ/5PCMRa68DFJWETkuE3ILEXhg1EKOwGlpMagQLIr9QHmeMoQ/57BqzUJIj9B1R14RjXshlAJeUAVHAxT1MA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789667588; c=relaxed/simple;
-	bh=+eFdiTf4iREULv0fFfrvmnP5cuiIcb68EmJrEOLtKDo=;
+	s=arc-20240116; t=1789667591; c=relaxed/simple;
+	bh=K/dT+YtMPBhW3c5nPSgNfZHj0SDaIQueL8+rYIQk03M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gcPfhQI7v4DWwvfLZDc64j8EmeWbNaT8aM8byoXE6dnNLRsVGrJigUwhoLHv/fC28bst59Mi0b9xgCdhW9TjyrFPAs6eYq6gT+59dxte3mH1F2dwNCG96mkFj6ynYi9armgKZhxJ+EmzccmJys41yFl+oz0iSUK7LsXDxxpr7jg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f8bwkmrJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=bt5H9PFDp5btGqGvHqRYzaFfBYVsgPKMNAdw7VRxgSm95m0VIsWauxfH3PxEayWktvdz0Qf+chs6Ob3ltNf9tzsMULooysw6+RrOHXBNhpJBTcxJc3PEH578rPXKaLgZ4l/U0P+Ln4jLYXB8RUwJvEgzLzfQdbgm4zePhKE3RPE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hLh9W6dN; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f8bwkmrJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CABB71F000FF;
-	Thu, 17 Sep 2026 17:53:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hLh9W6dN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF4AB1F000FF;
+	Thu, 17 Sep 2026 17:53:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789667586;
-	bh=a+yAmGgdwCieODC+ohBsIq9FhDB94xDCGJfFQvZ/AQ0=;
+	s=korg; t=1789667589;
+	bh=i4+8JCePdkBeRW2eA/rvIK6ZKxIqklHU7L2hDw0oIa8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=f8bwkmrJqpZ6HNwa1KDGxXNFVOtan8hQeKtB040bGoJ6W0izuln3EVDvoyoQ4ug23
-	 e8PzUoViEx28mdjNCjjlZNAU9fYdbyPca3yc2dkdWuQdRyndukRKqorbTvBnfwGVJ+
-	 EkzOBs2CujFgKAGjv1sMHmFBw4FGRu3dTo/7oFbE=
+	b=hLh9W6dNZfGkuoVaASDX9gJhmmOnFyUZNKIkcKEjRe56jXrpam2OPF8D4F9B8Y3oc
+	 blxsAuSXlgMgjVAcaWApHiT/9QAWl6EDLr+lpeL9vekphltndzze1EwLfL7sObjZLu
+	 R6hKzbBMAxb3rimNAs0HBnC4qv29ixofFfeg4FkY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Allison Henderson <achender@kernel.org>,
+	Simon Horman <horms@kernel.org>,
+	Praveen Kakkolangara <praveen.kakkolangara@aumovio.com>,
+	Maoyi Xie <maoyixie.tju@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0143/1102] ALSA: seq: Remove arbitrary prioq insertion limit
-Date: Thu, 17 Sep 2026 16:01:26 +0100
-Message-ID: <20260917151543.113367042@linuxfoundation.org>
+Subject: [PATCH 6.12 0144/1102] rds: filter RDS_INFO_* getsockopt by callers netns
+Date: Thu, 17 Sep 2026 16:01:27 +0100
+Message-ID: <20260917151543.138959334@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -45,80 +48,449 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+From: Maoyi Xie <maoyixie.tju@gmail.com>
 
-[ Upstream commit 3fcc84f1f8d28cc1966b859cef33c858ff531766 ]
+[ Upstream commit c96a5209dda666004b8ee1ed7f0d493d09a4f200 ]
 
-The sequencer priority queue insertion path uses a hardcoded traversal
-limit of 10000 entries.  The value is intended to catch a corrupted list,
-but it also becomes a real limit for valid queues.
+The RDS_INFO_* family of getsockopt(2) options reads several
+file-scope global lists that are not per-netns:
 
-The event pool limit is per client, while a sequencer queue can be shared
-by multiple clients.  A queue can therefore legitimately contain more than
-10000 events.  In that case, inserting an event that has to be placed past
-the arbitrary limit fails with -EINVAL.
+  rds_sock_info / rds6_sock_info,
+  rds_sock_inc_info / rds6_sock_inc_info        -> rds_sock_list
+  rds_tcp_tc_info / rds6_tcp_tc_info            -> rds_tcp_tc_list
+  rds_conn_info / rds6_conn_info,
+  rds_conn_message_info_cmn (for the *_SEND_MESSAGES and
+  *_RETRANS_MESSAGES variants),
+  rds_for_each_conn_info (for RDS_INFO_IB_CONNECTIONS)
+                                                -> rds_conn_hash[]
 
-Use the queue's own cell count as the traversal bound instead.  This keeps
-the protection against inconsistent list accounting or cyclic lists without
-rejecting valid large queues.
+The handlers do not filter by the caller's network namespace.
+rds_info_getsockopt() has no netns or capable() check, and
+rds_create() has no capable() check, so AF_RDS is reachable from
+an unprivileged user namespace. As a result, an unprivileged
+caller in a fresh user_ns plus netns can read the bound address
+and sock inode of every RDS socket on the host, the peer address
+of incoming messages on every RDS socket on the host, the peer
+address and TCP sequence numbers of every rds-tcp connection on
+the host, and the peer address and RDS sequence numbers of every
+RDS connection on the host.
 
-Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
-Link: https://patch.msgid.link/20260525-alsa-seq-prioq-limit-v1-1-16c348df5ff7@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+The rds-tcp transport is reachable from a non-initial netns (see
+rds_set_transport()), so a one-shot init_net gate at
+rds_info_getsockopt() would deny legitimate per-netns visibility
+to rds-tcp callers. Instead, filter at each handler by comparing
+the netns of the caller's socket to the netns of the list entry,
+or to rds_conn_net(conn) for connection paths. Only copy entries
+whose netns matches the caller. Counters (RDS_INFO_COUNTERS) are
+aggregate statistics and remain global.
+
+Reproducer (KASAN VM, rds and rds_tcp loaded): an AF_RDS socket
+binds 127.0.0.1:4242 in init_net as root. A child process enters
+a fresh user_ns plus netns and opens AF_RDS there, then calls
+getsockopt(SOL_RDS, RDS_INFO_SOCKETS). Before this change, the
+child sees the init_net socket. After this change, the child
+sees zero entries.
+
+Drop the rds_sock_count, rds_tcp_tc_count, and rds6_tcp_tc_count
+globals. v2 used them for the size precheck and lens->nr; v3
+replaced the precheck with a per-ns count from a first pass over
+the list, so the globals have no remaining readers. The matching
+increments and decrements in rds_create()/rds_destroy_sock() and
+rds_tcp_set_callbacks()/rds_tcp_restore_callbacks() go away with
+them. Reported by the kernel test robot under clang W=1.
+
+Suggested-by: Allison Henderson <achender@kernel.org>
+Suggested-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Allison Henderson <achender@kernel.org>
+Co-developed-by: Praveen Kakkolangara <praveen.kakkolangara@aumovio.com>
+Signed-off-by: Praveen Kakkolangara <praveen.kakkolangara@aumovio.com>
+Signed-off-by: Maoyi Xie <maoyixie.tju@gmail.com>
+Link: https://patch.msgid.link/20260520084236.2724349-1-maoyixie.tju@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/seq/seq_prioq.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ net/rds/af_rds.c     | 59 ++++++++++++++++++++++++++++++++++-------
+ net/rds/connection.c | 13 +++++++++
+ net/rds/tcp.c        | 63 ++++++++++++++++++++++++++++----------------
+ 3 files changed, 104 insertions(+), 31 deletions(-)
 
-diff --git a/sound/core/seq/seq_prioq.c b/sound/core/seq/seq_prioq.c
-index e649485a87722..8c9a293cb5b51 100644
---- a/sound/core/seq/seq_prioq.c
-+++ b/sound/core/seq/seq_prioq.c
-@@ -132,7 +132,7 @@ int snd_seq_prioq_cell_in(struct snd_seq_prioq * f,
- 			  struct snd_seq_event_cell * cell)
+diff --git a/net/rds/af_rds.c b/net/rds/af_rds.c
+index f0840169d5e31..528336ac1cb11 100644
+--- a/net/rds/af_rds.c
++++ b/net/rds/af_rds.c
+@@ -43,7 +43,6 @@
+ 
+ /* this is just used for stats gathering :/ */
+ static DEFINE_SPINLOCK(rds_sock_lock);
+-static unsigned long rds_sock_count;
+ static LIST_HEAD(rds_sock_list);
+ DECLARE_WAIT_QUEUE_HEAD(rds_poll_waitq);
+ 
+@@ -82,7 +81,6 @@ static int rds_release(struct socket *sock)
+ 
+ 	spin_lock_bh(&rds_sock_lock);
+ 	list_del_init(&rs->rs_item);
+-	rds_sock_count--;
+ 	spin_unlock_bh(&rds_sock_lock);
+ 
+ 	rds_trans_put(rs->rs_transport);
+@@ -694,7 +692,6 @@ static int __rds_create(struct socket *sock, struct sock *sk, int protocol)
+ 
+ 	spin_lock_bh(&rds_sock_lock);
+ 	list_add_tail(&rs->rs_item, &rds_sock_list);
+-	rds_sock_count++;
+ 	spin_unlock_bh(&rds_sock_lock);
+ 
+ 	return 0;
+@@ -735,6 +732,7 @@ static void rds_sock_inc_info(struct socket *sock, unsigned int len,
+ 			      struct rds_info_iterator *iter,
+ 			      struct rds_info_lengths *lens)
  {
- 	struct snd_seq_event_cell *cur, *prev;
--	int count;
-+	int remaining;
- 	int prior;
++	struct net *net = sock_net(sock->sk);
+ 	struct rds_sock *rs;
+ 	struct rds_incoming *inc;
+ 	unsigned int total = 0;
+@@ -744,6 +742,9 @@ static void rds_sock_inc_info(struct socket *sock, unsigned int len,
+ 	spin_lock_bh(&rds_sock_lock);
  
- 	if (snd_BUG_ON(!f || !cell))
-@@ -162,10 +162,16 @@ int snd_seq_prioq_cell_in(struct snd_seq_prioq * f,
- 	prev = NULL;		/* previous cell */
- 	cur = f->head;		/* cursor */
+ 	list_for_each_entry(rs, &rds_sock_list, rs_item) {
++		/* Only show sockets in the caller's netns. */
++		if (!net_eq(sock_net(rds_rs_to_sk(rs)), net))
++			continue;
+ 		/* This option only supports IPv4 sockets. */
+ 		if (!ipv6_addr_v4mapped(&rs->rs_bound_addr))
+ 			continue;
+@@ -774,6 +775,7 @@ static void rds6_sock_inc_info(struct socket *sock, unsigned int len,
+ 			       struct rds_info_iterator *iter,
+ 			       struct rds_info_lengths *lens)
+ {
++	struct net *net = sock_net(sock->sk);
+ 	struct rds_incoming *inc;
+ 	unsigned int total = 0;
+ 	struct rds_sock *rs;
+@@ -783,6 +785,9 @@ static void rds6_sock_inc_info(struct socket *sock, unsigned int len,
+ 	spin_lock_bh(&rds_sock_lock);
  
--	count = 10000; /* FIXME: enough big, isn't it? */
-+	remaining = f->cells;
- 	while (cur != NULL) {
- 		/* compare timestamps */
- 		int rel = compare_timestamp_rel(&cell->event, &cur->event);
-+
-+		if (remaining-- <= 0) {
-+			pr_err("ALSA: seq: inconsistent prioq cell count\n");
-+			return -EINVAL;
-+		}
-+
- 		if (rel < 0)
- 			/* new cell has earlier schedule time, */
- 			break;
-@@ -176,10 +182,6 @@ int snd_seq_prioq_cell_in(struct snd_seq_prioq * f,
- 		/* move cursor to next cell */
- 		prev = cur;
- 		cur = cur->next;
--		if (! --count) {
--			pr_err("ALSA: seq: cannot find a pointer.. infinite loop?\n");
--			return -EINVAL;
--		}
+ 	list_for_each_entry(rs, &rds_sock_list, rs_item) {
++		/* Only show sockets in the caller's netns. */
++		if (!net_eq(sock_net(rds_rs_to_sk(rs)), net))
++			continue;
+ 		read_lock(&rs->rs_recv_lock);
+ 
+ 		list_for_each_entry(inc, &rs->rs_recv_queue, i_item) {
+@@ -806,7 +811,9 @@ static void rds_sock_info(struct socket *sock, unsigned int len,
+ 			  struct rds_info_iterator *iter,
+ 			  struct rds_info_lengths *lens)
+ {
++	struct net *net = sock_net(sock->sk);
+ 	struct rds_info_socket sinfo;
++	unsigned int copied = 0;
+ 	unsigned int cnt = 0;
+ 	struct rds_sock *rs;
+ 
+@@ -814,12 +821,24 @@ static void rds_sock_info(struct socket *sock, unsigned int len,
+ 
+ 	spin_lock_bh(&rds_sock_lock);
+ 
+-	if (len < rds_sock_count) {
+-		cnt = rds_sock_count;
+-		goto out;
++	/* First pass: count entries visible in the caller's netns. */
++	list_for_each_entry(rs, &rds_sock_list, rs_item) {
++		if (!net_eq(sock_net(rds_rs_to_sk(rs)), net))
++			continue;
++		if (!ipv6_addr_v4mapped(&rs->rs_bound_addr))
++			continue;
++		cnt++;
  	}
  
- 	/* insert it before cursor */
++	if (len < cnt)
++		goto out;
++
+ 	list_for_each_entry(rs, &rds_sock_list, rs_item) {
++		if (copied >= cnt)
++			break;
++		/* Only show sockets in the caller's netns. */
++		if (!net_eq(sock_net(rds_rs_to_sk(rs)), net))
++			continue;
+ 		/* This option only supports IPv4 sockets. */
+ 		if (!ipv6_addr_v4mapped(&rs->rs_bound_addr))
+ 			continue;
+@@ -832,8 +851,13 @@ static void rds_sock_info(struct socket *sock, unsigned int len,
+ 		sinfo.inum = sock_i_ino(rds_rs_to_sk(rs));
+ 
+ 		rds_info_copy(iter, &sinfo, sizeof(sinfo));
+-		cnt++;
++		copied++;
+ 	}
++	/* A concurrent rds_bind() can change rs_bound_addr between the
++	 * two passes without holding rds_sock_lock, so copied may be
++	 * less than cnt. Report what was actually copied.
++	 */
++	cnt = copied;
+ 
+ out:
+ 	lens->nr = cnt;
+@@ -847,17 +871,32 @@ static void rds6_sock_info(struct socket *sock, unsigned int len,
+ 			   struct rds_info_iterator *iter,
+ 			   struct rds_info_lengths *lens)
+ {
++	struct net *net = sock_net(sock->sk);
+ 	struct rds6_info_socket sinfo6;
++	unsigned int copied = 0;
++	unsigned int cnt = 0;
+ 	struct rds_sock *rs;
+ 
+ 	len /= sizeof(struct rds6_info_socket);
+ 
+ 	spin_lock_bh(&rds_sock_lock);
+ 
+-	if (len < rds_sock_count)
++	/* First pass: count entries visible in the caller's netns. */
++	list_for_each_entry(rs, &rds_sock_list, rs_item) {
++		if (!net_eq(sock_net(rds_rs_to_sk(rs)), net))
++			continue;
++		cnt++;
++	}
++
++	if (len < cnt)
+ 		goto out;
+ 
+ 	list_for_each_entry(rs, &rds_sock_list, rs_item) {
++		if (copied >= cnt)
++			break;
++		/* Only show sockets in the caller's netns. */
++		if (!net_eq(sock_net(rds_rs_to_sk(rs)), net))
++			continue;
+ 		sinfo6.sndbuf = rds_sk_sndbuf(rs);
+ 		sinfo6.rcvbuf = rds_sk_rcvbuf(rs);
+ 		sinfo6.bound_addr = rs->rs_bound_addr;
+@@ -867,10 +906,12 @@ static void rds6_sock_info(struct socket *sock, unsigned int len,
+ 		sinfo6.inum = sock_i_ino(rds_rs_to_sk(rs));
+ 
+ 		rds_info_copy(iter, &sinfo6, sizeof(sinfo6));
++		copied++;
+ 	}
++	cnt = copied;
+ 
+  out:
+-	lens->nr = rds_sock_count;
++	lens->nr = cnt;
+ 	lens->each = sizeof(struct rds6_info_socket);
+ 
+ 	spin_unlock_bh(&rds_sock_lock);
+diff --git a/net/rds/connection.c b/net/rds/connection.c
+index d6ee386fd820e..9fa76fe9f2356 100644
+--- a/net/rds/connection.c
++++ b/net/rds/connection.c
+@@ -540,6 +540,7 @@ static void rds_conn_message_info_cmn(struct socket *sock, unsigned int len,
+ 				      struct rds_info_lengths *lens,
+ 				      int want_send, bool isv6)
+ {
++	struct net *net = sock_net(sock->sk);
+ 	struct hlist_head *head;
+ 	struct list_head *list;
+ 	struct rds_connection *conn;
+@@ -562,6 +563,9 @@ static void rds_conn_message_info_cmn(struct socket *sock, unsigned int len,
+ 			struct rds_conn_path *cp;
+ 			int npaths;
+ 
++			/* Only show connections in the caller's netns. */
++			if (!net_eq(rds_conn_net(conn), net))
++				continue;
+ 			if (!isv6 && conn->c_isv6)
+ 				continue;
+ 
+@@ -660,6 +664,7 @@ void rds_for_each_conn_info(struct socket *sock, unsigned int len,
+ 			  u64 *buffer,
+ 			  size_t item_len)
+ {
++	struct net *net = sock_net(sock->sk);
+ 	struct hlist_head *head;
+ 	struct rds_connection *conn;
+ 	size_t i;
+@@ -672,6 +677,9 @@ void rds_for_each_conn_info(struct socket *sock, unsigned int len,
+ 	for (i = 0, head = rds_conn_hash; i < ARRAY_SIZE(rds_conn_hash);
+ 	     i++, head++) {
+ 		hlist_for_each_entry_rcu(conn, head, c_hash_node) {
++			/* Only show connections in the caller's netns. */
++			if (!net_eq(rds_conn_net(conn), net))
++				continue;
+ 
+ 			/* Zero the per-item buffer before handing it to the
+ 			 * visitor so any field the visitor does not write -
+@@ -705,6 +713,7 @@ static void rds_walk_conn_path_info(struct socket *sock, unsigned int len,
+ 				    u64 *buffer,
+ 				    size_t item_len)
+ {
++	struct net *net = sock_net(sock->sk);
+ 	struct hlist_head *head;
+ 	struct rds_connection *conn;
+ 	size_t i;
+@@ -719,6 +728,10 @@ static void rds_walk_conn_path_info(struct socket *sock, unsigned int len,
+ 		hlist_for_each_entry_rcu(conn, head, c_hash_node) {
+ 			struct rds_conn_path *cp;
+ 
++			/* Only show connections in the caller's netns. */
++			if (!net_eq(rds_conn_net(conn), net))
++				continue;
++
+ 			/* XXX We only copy the information from the first
+ 			 * path for now.  The problem is that if there are
+ 			 * more than one underlying paths, we cannot report
+diff --git a/net/rds/tcp.c b/net/rds/tcp.c
+index 1980a197034ba..ab509498cf752 100644
+--- a/net/rds/tcp.c
++++ b/net/rds/tcp.c
+@@ -46,14 +46,6 @@
+ static DEFINE_SPINLOCK(rds_tcp_tc_list_lock);
+ static LIST_HEAD(rds_tcp_tc_list);
+ 
+-/* rds_tcp_tc_count counts only IPv4 connections.
+- * rds6_tcp_tc_count counts both IPv4 and IPv6 connections.
+- */
+-static unsigned int rds_tcp_tc_count;
+-#if IS_ENABLED(CONFIG_IPV6)
+-static unsigned int rds6_tcp_tc_count;
+-#endif
+-
+ /* Track rds_tcp_connection structs so they can be cleaned up */
+ static DEFINE_SPINLOCK(rds_tcp_conn_lock);
+ static LIST_HEAD(rds_tcp_conn_list);
+@@ -110,11 +102,6 @@ void rds_tcp_restore_callbacks(struct socket *sock,
+ 	/* done under the callback_lock to serialize with write_space */
+ 	spin_lock(&rds_tcp_tc_list_lock);
+ 	list_del_init(&tc->t_list_item);
+-#if IS_ENABLED(CONFIG_IPV6)
+-	rds6_tcp_tc_count--;
+-#endif
+-	if (!tc->t_cpath->cp_conn->c_isv6)
+-		rds_tcp_tc_count--;
+ 	spin_unlock(&rds_tcp_tc_list_lock);
+ 
+ 	tc->t_sock = NULL;
+@@ -201,11 +188,6 @@ void rds_tcp_set_callbacks(struct socket *sock, struct rds_conn_path *cp)
+ 	/* done under the callback_lock to serialize with write_space */
+ 	spin_lock(&rds_tcp_tc_list_lock);
+ 	list_add_tail(&tc->t_list_item, &rds_tcp_tc_list);
+-#if IS_ENABLED(CONFIG_IPV6)
+-	rds6_tcp_tc_count++;
+-#endif
+-	if (!tc->t_cpath->cp_conn->c_isv6)
+-		rds_tcp_tc_count++;
+ 	spin_unlock(&rds_tcp_tc_list_lock);
+ 
+ 	/* accepted sockets need our listen data ready undone */
+@@ -233,20 +215,37 @@ static void rds_tcp_tc_info(struct socket *rds_sock, unsigned int len,
+ 			    struct rds_info_iterator *iter,
+ 			    struct rds_info_lengths *lens)
+ {
++	struct net *net = sock_net(rds_sock->sk);
+ 	struct rds_info_tcp_socket tsinfo;
+ 	struct rds_tcp_connection *tc;
++	unsigned int copied = 0;
++	unsigned int cnt = 0;
+ 	unsigned long flags;
+ 
+ 	spin_lock_irqsave(&rds_tcp_tc_list_lock, flags);
+ 
+-	if (len / sizeof(tsinfo) < rds_tcp_tc_count)
++	/* First pass: count entries visible in the caller's netns. */
++	list_for_each_entry(tc, &rds_tcp_tc_list, t_list_item) {
++		if (tc->t_cpath->cp_conn->c_isv6)
++			continue;
++		if (!net_eq(rds_conn_net(tc->t_cpath->cp_conn), net))
++			continue;
++		cnt++;
++	}
++
++	if (len / sizeof(tsinfo) < cnt)
+ 		goto out;
+ 
+ 	list_for_each_entry(tc, &rds_tcp_tc_list, t_list_item) {
+ 		struct inet_sock *inet = inet_sk(tc->t_sock->sk);
+ 
++		if (copied >= cnt)
++			break;
+ 		if (tc->t_cpath->cp_conn->c_isv6)
+ 			continue;
++		/* Only show connections in the caller's netns. */
++		if (!net_eq(rds_conn_net(tc->t_cpath->cp_conn), net))
++			continue;
+ 
+ 		tsinfo.local_addr = inet->inet_saddr;
+ 		tsinfo.local_port = inet->inet_sport;
+@@ -261,10 +260,12 @@ static void rds_tcp_tc_info(struct socket *rds_sock, unsigned int len,
+ 		tsinfo.tos = tc->t_cpath->cp_conn->c_tos;
+ 
+ 		rds_info_copy(iter, &tsinfo, sizeof(tsinfo));
++		copied++;
+ 	}
++	cnt = copied;
+ 
+ out:
+-	lens->nr = rds_tcp_tc_count;
++	lens->nr = cnt;
+ 	lens->each = sizeof(tsinfo);
+ 
+ 	spin_unlock_irqrestore(&rds_tcp_tc_list_lock, flags);
+@@ -279,19 +280,35 @@ static void rds6_tcp_tc_info(struct socket *sock, unsigned int len,
+ 			     struct rds_info_iterator *iter,
+ 			     struct rds_info_lengths *lens)
+ {
++	struct net *net = sock_net(sock->sk);
+ 	struct rds6_info_tcp_socket tsinfo6;
+ 	struct rds_tcp_connection *tc;
++	unsigned int copied = 0;
++	unsigned int cnt = 0;
+ 	unsigned long flags;
+ 
+ 	spin_lock_irqsave(&rds_tcp_tc_list_lock, flags);
+ 
+-	if (len / sizeof(tsinfo6) < rds6_tcp_tc_count)
++	/* First pass: count entries visible in the caller's netns. */
++	list_for_each_entry(tc, &rds_tcp_tc_list, t_list_item) {
++		if (!net_eq(rds_conn_net(tc->t_cpath->cp_conn), net))
++			continue;
++		cnt++;
++	}
++
++	if (len / sizeof(tsinfo6) < cnt)
+ 		goto out;
+ 
+ 	list_for_each_entry(tc, &rds_tcp_tc_list, t_list_item) {
+ 		struct sock *sk = tc->t_sock->sk;
+ 		struct inet_sock *inet = inet_sk(sk);
+ 
++		if (copied >= cnt)
++			break;
++		/* Only show connections in the caller's netns. */
++		if (!net_eq(rds_conn_net(tc->t_cpath->cp_conn), net))
++			continue;
++
+ 		tsinfo6.local_addr = sk->sk_v6_rcv_saddr;
+ 		tsinfo6.local_port = inet->inet_sport;
+ 		tsinfo6.peer_addr = sk->sk_v6_daddr;
+@@ -304,10 +321,12 @@ static void rds6_tcp_tc_info(struct socket *sock, unsigned int len,
+ 		tsinfo6.last_seen_una = tc->t_last_seen_una;
+ 
+ 		rds_info_copy(iter, &tsinfo6, sizeof(tsinfo6));
++		copied++;
+ 	}
++	cnt = copied;
+ 
+ out:
+-	lens->nr = rds6_tcp_tc_count;
++	lens->nr = cnt;
+ 	lens->each = sizeof(tsinfo6);
+ 
+ 	spin_unlock_irqrestore(&rds_tcp_tc_list_lock, flags);
 -- 
 2.53.0
 
