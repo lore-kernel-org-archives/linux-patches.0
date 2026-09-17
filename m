@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C62FE51AFC4;
-	Thu, 17 Sep 2026 17:49:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8E894398F5;
+	Thu, 17 Sep 2026 17:49:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789667362; cv=none; b=rgAxhh6ayMEmSzxhJS9iViaMPeKNDAHQYAg/K5ptijwLEMzuQjy/3JUH4XwsirOEhUfBWPJpbmyiS8OKaVEAul3GqW9tnFIhdewSBg4mcoD01nrkQOp2oHMuYD77cbIrxZPGMr2Roh/5c2KG9OnF/rMRyFmqpqnt2RzCLb96u3s=
+	t=1789667365; cv=none; b=WElfnVofGVRmLIfXolUD4dXRKV4EaJ2hnjBzF1tlbgx5QryhWLVJbP9lR+47wjDJFkoAWOyLPv5tbnGXvrX/JcLwjRlYs/jDeujRkBcXr1ciHPwm5gYr4nVejcVwnNDgTm0dUiGmLTSALzz/ZOr0h34Fu7mUyUSZUIXAI85GooU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789667362; c=relaxed/simple;
-	bh=v83ARvFVb0qiVEErMnmTNKDjly4Zc/BoY/eyGsg15EQ=;
+	s=arc-20240116; t=1789667365; c=relaxed/simple;
+	bh=c168D2FlHZAX5FNpSwrrXJ/XqiU8Jp/ax68aA/XaLXg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NoQkVHrU0Cm9S24luxmqI7cXQgc2Pjy2Elp2mArhyVZC04wveafgKAPP0sF5feI2gPu+TR7vqweb3t0DxHDq4r+99K2G5hxKVVgCWMKuG0Q7IzwvKOCZP4Tpj95Qs8WKmaJYfAgiPnaMffcoT/JR5Lc0oyLznjlYw61SqnW6NnA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NPr/t265; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=mZ3t7/q3yADPxILHhUc/KxeD5Hivi/EYqMSKh0Rudv1YKbWrn39mQvolU4RIrfySRO/FONBt7ljaWxVJ04T5cpvUUbE5RQnoIC/0R7HbAE+B3Ng1sPDdByS+TPYeDJdB20XBFvu8wokxB2wIgzi6gD8mMNWivYEXAE5heLb+xYo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rGrXEnj9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NPr/t265"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29DE91F000FF;
-	Thu, 17 Sep 2026 17:49:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rGrXEnj9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2935A1F000FF;
+	Thu, 17 Sep 2026 17:49:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789667360;
-	bh=661zzrKFtjBbqpdKhVCl5GXo6DWbfdZjEfeyNjTviIs=;
+	s=korg; t=1789667363;
+	bh=SzAHWiJM4zTytOf7U9tQFVROwCO8w0cBmQiXDJvXENw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NPr/t265UQoP1dpCPpPMQ1FoE6QVjz0ce23bU0aXqzfiub5mZbQuMiJYRPSv+iUL6
-	 auAWYqyhDbhwRoZdV965nurLca6uSzCPxxTGvTVJNTe0ngpjl4MN1CRPkbRSdX/AJV
-	 j1IzBsTCZq+vH3w7lAvwDHelhLHfbeTJceBLTu3E=
+	b=rGrXEnj9kY4+sou7PAVBEh2i12ppTepv0EKnZRUA6wmqmXJhI0SyyKKH8GsBDhAzS
+	 D+YGWtgqIUT2d/VvsiU3vK3be7faFnmdTiF0rkQNhO7blII2nzqplZRjQorK//cDvv
+	 LlC8WPMA8pYdvT4U+IJ22vnrgPQnj7vcyfmMrRTc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stepan Ionichev <sozdayvek@gmail.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Robert Joslyn <robert.joslyn@redrectangle.org>,
+	Brodie Abrew <brodie_abrew@selinc.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0067/1102] mmc: davinci: avoid NULL deref of host->data in IRQ handler
-Date: Thu, 17 Sep 2026 16:00:10 +0100
-Message-ID: <20260917151541.143964519@linuxfoundation.org>
+Subject: [PATCH 6.12 0068/1102] platform/x86: sel3350-platform: Retain LED state on load and unload
+Date: Thu, 17 Sep 2026 16:00:11 +0100
+Message-ID: <20260917151541.170044792@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -46,85 +46,240 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Stepan Ionichev <sozdayvek@gmail.com>
+From: Brodie Abrew <brodie_abrew@selinc.com>
 
-[ Upstream commit 4f28846aaf8db9668e338b8987973f8935edff34 ]
+[ Upstream commit 18bc6ce6bb618e1dff4473d7dd528d22519abbd7 ]
 
-mmc_davinci_irq() returns early only when both host->cmd and
-host->data are NULL:
+When the platform driver is loaded or unloaded, it overwrites the
+existing LED states. This can cause a loss of early boot state when the
+driver loads, and it can cause the ALARM contact to change state or
+flicker.
 
-  if (host->cmd == NULL && host->data == NULL) {
-          ...
-          return IRQ_NONE;
-  }
+Explicitly retain the existing LED state to prevent overwriting on
+driver load and unload.
 
-So we may legitimately reach the rest of the handler with
-host->data == NULL (and therefore data == NULL). The DATDNE branch
-already guards against this with an explicit "if (data != NULL)"
-check, but the subsequent TOUTRD ("read data timeout") and
-CRCWR/CRCRD ("data CRC error") branches dereference data
-unconditionally:
-
-  if (qstatus & MMCST0_TOUTRD) {
-          data->error = -ETIMEDOUT;        <-- NULL deref
-          ...
-          davinci_abort_data(host, data);
-  }
-
-  if (qstatus & (MMCST0_CRCWR | MMCST0_CRCRD)) {
-          data->error = -EILSEQ;           <-- NULL deref
-          ...
-  }
-
-If either bit is set in qstatus while host->data is NULL, the kernel
-will crash inside the IRQ handler. smatch flags this:
-
-  drivers/mmc/host/davinci_mmc.c:933 mmc_davinci_irq() error: we
-    previously assumed 'data' could be null (see line 914)
-
-Gate both branches on a non-NULL data, matching the existing pattern
-used by the DATDNE branch.
-
-No functional change for callers where data is non-NULL, which is
-the only case in which these branches did meaningful work before
-this change.
-
-Signed-off-by: Stepan Ionichev <sozdayvek@gmail.com>
-Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Tested-By: Robert Joslyn <robert.joslyn@redrectangle.org>
+Reviewed-by: Robert Joslyn <robert.joslyn@redrectangle.org>
+Signed-off-by: Brodie Abrew <brodie_abrew@selinc.com>
+Link: https://patch.msgid.link/20260507004916.6710-1-brodie_abrew@selinc.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/davinci_mmc.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/platform/x86/sel3350-platform.c | 136 ++++++++++++++++++------
+ 1 file changed, 103 insertions(+), 33 deletions(-)
 
-diff --git a/drivers/mmc/host/davinci_mmc.c b/drivers/mmc/host/davinci_mmc.c
-index 9cbde800685d0..48f85c0aca207 100644
---- a/drivers/mmc/host/davinci_mmc.c
-+++ b/drivers/mmc/host/davinci_mmc.c
-@@ -929,7 +929,7 @@ static irqreturn_t mmc_davinci_irq(int irq, void *dev_id)
- 		}
- 	}
+diff --git a/drivers/platform/x86/sel3350-platform.c b/drivers/platform/x86/sel3350-platform.c
+index d09e976e71483..ea1c675c27157 100644
+--- a/drivers/platform/x86/sel3350-platform.c
++++ b/drivers/platform/x86/sel3350-platform.c
+@@ -9,6 +9,8 @@
+  */
  
--	if (qstatus & MMCST0_TOUTRD) {
-+	if (data && (qstatus & MMCST0_TOUTRD)) {
- 		/* Read data timeout */
- 		data->error = -ETIMEDOUT;
- 		end_transfer = 1;
-@@ -941,7 +941,7 @@ static irqreturn_t mmc_davinci_irq(int irq, void *dev_id)
- 		davinci_abort_data(host, data);
- 	}
+ #include <linux/acpi.h>
++#include <linux/array_size.h>
++#include <linux/err.h>
+ #include <linux/gpio/consumer.h>
+ #include <linux/gpio/machine.h>
+ #include <linux/leds.h>
+@@ -30,19 +32,82 @@
+ #define SEL_PS_B_DETECT "sel_ps_b_detect"
+ #define SEL_PS_B_GOOD   "sel_ps_b_good"
  
--	if (qstatus & (MMCST0_CRCWR | MMCST0_CRCRD)) {
-+	if (data && (qstatus & (MMCST0_CRCWR | MMCST0_CRCRD))) {
- 		/* Data CRC error */
- 		data->error = -EILSEQ;
- 		end_transfer = 1;
++#define AUX_LED_GRN1        "sel_aux_led_grn1"
++#define AUX_LED_GRN2        "sel_aux_led_grn2"
++#define AUX_LED_GRN3        "sel_aux_led_grn3"
++#define AUX_LED_GRN4        "sel_aux_led_grn4"
++#define ALARM_STATE_USER    "sel_alarm_state_user"
++#define ENABLE_STATE_USER   "sel_enable_state_user"
++#define AUX_LED_RED1        "sel_aux_led_red1"
++#define AUX_LED_RED2        "sel_aux_led_red2"
++#define AUX_LED_RED3        "sel_aux_led_red3"
++#define AUX_LED_RED4        "sel_aux_led_red4"
++
++static const char *const sel3350_leds_gpio_names[] = {
++	AUX_LED_GRN1,
++	AUX_LED_GRN2,
++	AUX_LED_GRN3,
++	AUX_LED_GRN4,
++	ALARM_STATE_USER,
++	ENABLE_STATE_USER,
++	AUX_LED_RED1,
++	AUX_LED_RED2,
++	AUX_LED_RED3,
++	AUX_LED_RED4,
++};
++
+ /* LEDs */
+-static const struct gpio_led sel3350_leds[] = {
+-	{ .name = "sel:green:aux1" },
+-	{ .name = "sel:green:aux2" },
+-	{ .name = "sel:green:aux3" },
+-	{ .name = "sel:green:aux4" },
+-	{ .name = "sel:red:alarm" },
++static struct gpio_led sel3350_leds[] = {
++	{ .name = "sel:green:aux1",
++	  .default_state = LEDS_GPIO_DEFSTATE_KEEP,
++	  .retain_state_suspended = 1,
++	  .retain_state_shutdown = 1,
++	},
++	{ .name = "sel:green:aux2",
++	  .default_state = LEDS_GPIO_DEFSTATE_KEEP,
++	  .retain_state_suspended = 1,
++	  .retain_state_shutdown = 1,
++	},
++	{ .name = "sel:green:aux3",
++	  .default_state = LEDS_GPIO_DEFSTATE_KEEP,
++	  .retain_state_suspended = 1,
++	  .retain_state_shutdown = 1,
++	},
++	{ .name = "sel:green:aux4",
++	  .default_state = LEDS_GPIO_DEFSTATE_KEEP,
++	  .retain_state_suspended = 1,
++	  .retain_state_shutdown = 1,
++	},
++	{ .name = "sel:red:alarm",
++	  .default_state = LEDS_GPIO_DEFSTATE_KEEP,
++	  .retain_state_suspended = 1,
++	  .retain_state_shutdown = 1,
++	},
+ 	{ .name = "sel:green:enabled",
+-	  .default_state = LEDS_GPIO_DEFSTATE_ON },
+-	{ .name = "sel:red:aux1" },
+-	{ .name = "sel:red:aux2" },
+-	{ .name = "sel:red:aux3" },
+-	{ .name = "sel:red:aux4" },
++	  .default_state = LEDS_GPIO_DEFSTATE_KEEP,
++	  .retain_state_suspended = 1,
++	  .retain_state_shutdown = 1,
++	},
++	{ .name = "sel:red:aux1",
++	  .default_state = LEDS_GPIO_DEFSTATE_KEEP,
++	  .retain_state_suspended = 1,
++	  .retain_state_shutdown = 1,
++	},
++	{ .name = "sel:red:aux2",
++	  .default_state = LEDS_GPIO_DEFSTATE_KEEP,
++	  .retain_state_suspended = 1,
++	  .retain_state_shutdown = 1,
++	},
++	{ .name = "sel:red:aux3",
++	  .default_state = LEDS_GPIO_DEFSTATE_KEEP,
++	  .retain_state_suspended = 1,
++	  .retain_state_shutdown = 1,
++	},
++	{ .name = "sel:red:aux4",
++	  .default_state = LEDS_GPIO_DEFSTATE_KEEP,
++	  .retain_state_suspended = 1,
++	  .retain_state_shutdown = 1,
++	},
+ };
+ 
+ static const struct gpio_led_platform_data sel3350_leds_pdata = {
+@@ -50,25 +115,6 @@ static const struct gpio_led_platform_data sel3350_leds_pdata = {
+ 	.leds = sel3350_leds,
+ };
+ 
+-/* Map GPIOs to LEDs */
+-static struct gpiod_lookup_table sel3350_leds_table = {
+-	.dev_id = "leds-gpio",
+-	.table = {
+-		GPIO_LOOKUP_IDX(BXT_NW, 49, NULL, 0, GPIO_ACTIVE_HIGH),
+-		GPIO_LOOKUP_IDX(BXT_NW, 50, NULL, 1, GPIO_ACTIVE_HIGH),
+-		GPIO_LOOKUP_IDX(BXT_NW, 51, NULL, 2, GPIO_ACTIVE_HIGH),
+-		GPIO_LOOKUP_IDX(BXT_NW, 52, NULL, 3, GPIO_ACTIVE_HIGH),
+-		GPIO_LOOKUP_IDX(BXT_W,  20, NULL, 4, GPIO_ACTIVE_HIGH),
+-		GPIO_LOOKUP_IDX(BXT_W,  21, NULL, 5, GPIO_ACTIVE_HIGH),
+-		GPIO_LOOKUP_IDX(BXT_SW, 37, NULL, 6, GPIO_ACTIVE_HIGH),
+-		GPIO_LOOKUP_IDX(BXT_SW, 38, NULL, 7, GPIO_ACTIVE_HIGH),
+-		GPIO_LOOKUP_IDX(BXT_SW, 39, NULL, 8, GPIO_ACTIVE_HIGH),
+-		GPIO_LOOKUP_IDX(BXT_SW, 40, NULL, 9, GPIO_ACTIVE_HIGH),
+-		{},
+-	}
+-};
+-
+-/* Map GPIOs to power supplies */
+ static struct gpiod_lookup_table sel3350_gpios_table = {
+ 	.dev_id = B2093_GPIO_ACPI_ID ":00",
+ 	.table = {
+@@ -76,6 +122,16 @@ static struct gpiod_lookup_table sel3350_gpios_table = {
+ 		GPIO_LOOKUP(BXT_NW, 45, SEL_PS_A_GOOD,   GPIO_ACTIVE_LOW),
+ 		GPIO_LOOKUP(BXT_NW, 46, SEL_PS_B_DETECT, GPIO_ACTIVE_LOW),
+ 		GPIO_LOOKUP(BXT_NW, 47, SEL_PS_B_GOOD,   GPIO_ACTIVE_LOW),
++		GPIO_LOOKUP(BXT_NW, 49, AUX_LED_GRN1, GPIO_ACTIVE_HIGH),
++		GPIO_LOOKUP(BXT_NW, 50, AUX_LED_GRN2, GPIO_ACTIVE_HIGH),
++		GPIO_LOOKUP(BXT_NW, 51, AUX_LED_GRN3, GPIO_ACTIVE_HIGH),
++		GPIO_LOOKUP(BXT_NW, 52, AUX_LED_GRN4, GPIO_ACTIVE_HIGH),
++		GPIO_LOOKUP(BXT_W,  20, ALARM_STATE_USER, GPIO_ACTIVE_HIGH),
++		GPIO_LOOKUP(BXT_W,  21, ENABLE_STATE_USER, GPIO_ACTIVE_HIGH),
++		GPIO_LOOKUP(BXT_SW, 37, AUX_LED_RED1, GPIO_ACTIVE_HIGH),
++		GPIO_LOOKUP(BXT_SW, 38, AUX_LED_RED2, GPIO_ACTIVE_HIGH),
++		GPIO_LOOKUP(BXT_SW, 39, AUX_LED_RED3, GPIO_ACTIVE_HIGH),
++		GPIO_LOOKUP(BXT_SW, 40, AUX_LED_RED4, GPIO_ACTIVE_HIGH),
+ 		{},
+ 	}
+ };
+@@ -149,6 +205,7 @@ struct sel3350_data {
+ static int sel3350_probe(struct platform_device *pdev)
+ {
+ 	int rs;
++	int i;
+ 	struct sel3350_data *sel3350;
+ 	struct power_supply_config ps_cfg = {};
+ 
+@@ -158,9 +215,19 @@ static int sel3350_probe(struct platform_device *pdev)
+ 
+ 	platform_set_drvdata(pdev, sel3350);
+ 
+-	gpiod_add_lookup_table(&sel3350_leds_table);
+ 	gpiod_add_lookup_table(&sel3350_gpios_table);
+ 
++	for (i = 0; i < ARRAY_SIZE(sel3350_leds); ++i) {
++		sel3350_leds[i].gpiod = devm_gpiod_get(&pdev->dev,
++						       sel3350_leds_gpio_names[i],
++						       GPIOD_ASIS);
++		if (IS_ERR_OR_NULL(sel3350_leds[i].gpiod)) {
++			rs = -EPROBE_DEFER;
++			goto err_gpio_loop;
++		}
++		gpiod_set_consumer_name(sel3350_leds[i].gpiod, sel3350_leds[i].name);
++	}
++
+ 	sel3350->leds_pdev = platform_device_register_data(
+ 			NULL,
+ 			"leds-gpio",
+@@ -209,11 +276,15 @@ static int sel3350_probe(struct platform_device *pdev)
+ 
+ 	return 0;
+ 
++err_gpio_loop:
++	while (i--)
++		devm_gpiod_put(&pdev->dev, sel3350_leds[i].gpiod);
++	goto err_platform;
++
+ err_ps:
+ 	platform_device_unregister(sel3350->leds_pdev);
+ err_platform:
+ 	gpiod_remove_lookup_table(&sel3350_gpios_table);
+-	gpiod_remove_lookup_table(&sel3350_leds_table);
+ 
+ 	return rs;
+ }
+@@ -224,7 +295,6 @@ static void sel3350_remove(struct platform_device *pdev)
+ 
+ 	platform_device_unregister(sel3350->leds_pdev);
+ 	gpiod_remove_lookup_table(&sel3350_gpios_table);
+-	gpiod_remove_lookup_table(&sel3350_leds_table);
+ }
+ 
+ static const struct acpi_device_id sel3350_device_ids[] = {
 -- 
 2.53.0
 
