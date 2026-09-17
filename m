@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 123CB390230;
-	Thu, 17 Sep 2026 15:37:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54E754EB857;
+	Thu, 17 Sep 2026 15:37:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659466; cv=none; b=EDb55ydDqeaA45eD+yJKWJ9Kh0nsx3+4Xg6PtZgVVmbSEqyukb+geRJOC2w82eHzFhc9JWdr4RoomrvQwdbmA31n8m/PnVJ02x3xVBxjI1t6tRNnQMhiES+LsgJKPwhUVm+rFp7TmqveF2fmrIfIygbfuMYo3cXbrw/rCOYv4ko=
+	t=1789659468; cv=none; b=EaYjuYbdCfpNLPRlJX5OSxBPfofnYsDeMD+7R4Mnr2DWx1mJAeq8UWPYjE/Metfuv0Ql/dgUD4b/0GDpYk2mPYhEKLmjLS3Iw0eE9vWw/CSMa0tNQfEE56tSIZ3ObmEI14MZLwX0QGFobEQKxm1CJDdCJFCc0Kd+gjFBKrV/xdE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659466; c=relaxed/simple;
-	bh=oJwchZx/OJ6ZK4F1lU9K/2oiNB32DLF3yVWthkz4xuQ=;
+	s=arc-20240116; t=1789659468; c=relaxed/simple;
+	bh=ZSrki1t+CEg3BT/i6XaSwcaQZ8aMRqeu9fnezne7WF0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dXYvq+YkzOXRqEPAc9RLX7vtdswKIOduTeJNUKhrqeSWbpjcDbJHIUlZScAAzPI0n85SkGKbJcI5dp9rFvzA7RGx3tIMw/I4NNbEj1qZEoUKTx3cu25Q2bzM9q9WGhJPXCOHlsDaEtUUmSGgtiqWGqlPpA4LzZpPO0sVWFuFomA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DzVPcexz; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=t9zOou9RkiWVVP3x3IyE6+JkKHSFpzlFR9ArjF9MwJm30Ex+61ZEW0IPwc2ixZffiDC0xU9fs8fO3AZ1WADk/3k+N4e82EIo1Z0mnAeSkrHo4it2j+wCC9vM5YxBHocoCM0vweaxwzOZl1olIRkBRmr76Ac8DlLf7y+tuB9v+5o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yetioX+c; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DzVPcexz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D8361F00899;
-	Thu, 17 Sep 2026 15:37:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yetioX+c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3ABC01F00893;
+	Thu, 17 Sep 2026 15:37:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659457;
-	bh=Sf+VoHe93Ws/KxM823+7PyeK91VEabAO9jqqZA1gepA=;
+	s=korg; t=1789659460;
+	bh=0j7huc/FvaAoPvvsL4ajXlA87qPY0ete+S2uGgcAiek=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DzVPcexzQ+3NCmC0LVFGQ3hy8n6LJ8AVcs7GNFbqj4kZ36HASj1EEQ3KWgj3TTg5P
-	 aLofUjkchHvmIa6FhBvrkHe+rSgARWHkEr+4TXVa4ekLDHdcqXWcGAd3Sm5xEQYENj
-	 SX5S1M/P/Q2qrBgpCRl4+60LCLzi0Rq78vCmmw3M=
+	b=yetioX+cDQHi/OG5+pH7hB+Rkx6AHj/czCB3y+d9LZB0pqwdlar8knZNhWsXL7grh
+	 hQP8xtwdpzhUNFkQxbzX3Hyf0cGcoRlSyi8DMs91DBcrS0pjauV+R/MLWVqcuTySpl
+	 ktfehnouX5tO3g/dTGEazto2owAERD2mk2TWaSyI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Taylor Bates <tmbates12@gmail.com>,
-	Petr Machata <petrm@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Nicholas Carlini <npc@anthropic.com>,
+	Yuan Chen <chenyuan@kylinos.cn>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 246/733] mlxsw: spectrum_ptp: Fix napi_gro_receive() call from GC workqueue context
-Date: Thu, 17 Sep 2026 16:09:14 +0100
-Message-ID: <20260917151357.412407550@linuxfoundation.org>
+Subject: [PATCH 7.2 264/733] bpf: Preserve special fields in recycled rhtab elements
+Date: Thu, 17 Sep 2026 16:09:32 +0100
+Message-ID: <20260917151357.907583663@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -52,151 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Taylor Bates <tmbates12@gmail.com>
+From: Yuan Chen <chenyuan@kylinos.cn>
 
-[ Upstream commit 2ac174dfcdde399fa95ba889541fb5e688d8bb35 ]
+[ Upstream commit 5df46ddcb7b36878c1b691e9057a0509042a2567 ]
 
-Currently mlxsw_sp1_ptp_ht_gc_collect() is run from the PTP
-garbage-collection workqueue, rather than the NAPI poll context. For any
-unmatched PTP entries carrying an SKB, it calls
-mlxsw_sp1_ptp_unmatched_finish() -> mlxsw_sp1_ptp_packet_finish(). For
-ingress packets, this calls mlxsw_sp_rx_listener_no_mark_func(). The end
-of that function is the following:
+rhtab_map_update_elem() initializes special fields after obtaining an
+element from bpf_mem_cache_alloc(). The allocator can return a fresh,
+zeroed unit, or recycle one from its RCU-pending lists before the
+registered destructor has run.
 
-    skb->protocol = eth_type_trans(skb, skb->dev);
-    napi_gro_receive(mlxsw_skb_cb(skb)->rx_md_info.napi, skb);
+A BPF program can retain a map-value pointer after deleting its element
+and initialize and arm a timer through that pointer. If the deleted unit
+is recycled, check_and_init_map_value() clears the only pointer to the
+timer. Neither a later deletion nor rhtab_mem_dtor() can then cancel it,
+and the callback can run with its key and value pointing into freed memory.
 
-The napi pointer is one that was placed in the SKB control block when the
-trapped packet was received in the NAPI context. Later, when the GC reaps
-the unmatched entry (up to MLXSW_SP1_PTP_HT_GC_TIMEOUT later), the call to
-napi_gro_receive() mutates the NAPI instance's GRO list, which is unsafe
-if the poll is running concurrently on another CPU.
+Do not reinitialize special fields on insertion. Fresh allocator units are
+already zeroed. For recycled units, the special fields are ownership state
+that must remain visible to the eventual destructor. copy_map_value()
+already skips those fields, matching the non-preallocated hash-map path and
+the lifecycle established by commit 275c30bcee66 ("bpf: Don't reinit map
+value in prealloc_lru_pop").
 
-In mlxsw_sp1_ptp_ht_gc_collect(), local_bh_disable() is called to prevent
-softirq processing, but this only applies to the local CPU. Additionally,
-its comment is stale. It states that mlxsw_sp1_ptp_unmatched_finish()
-invokes netif_receive_skb(). This has not been accurate since the
-referenced commit; this patch makes that comment accurate again.
-mlxsw_pci_napi_devs_init() calls netif_threaded_enable() on the NAPI RX
-net_device without any conditions. The NAPI instance's poll, which may be
-running concurrent to the GC, is running as an independently-scheduled
-kthread which may be on a different CPU. The call to local_bh_disable()
-does not guard against this.
-
-If a tx-timestamp timeout produces an unmatched entry (which can be easily
-reproduced by running ptp4l and waiting for a port to reach the
-UNCALIBRATED/SLAVE state) while the owning NAPI thread is in the middle of
-a poll on another CPU, both sides mutate the GRO list concurrently, as
-shown below:
-
-  [39.846] port 1 (swp1): MASTER to UNCALIBRATED on RS_SLAVE
-  list_add corruption. next->prev should be prev (ffff8d620faf4138), but was ffff8d624150f700. (next=ffff8d620faf4138).
-  kernel BUG at lib/list_debug.c:29!
-  Oops: invalid opcode: 0000 [#1] SMP PTI
-  CPU: 1 UID: 0 PID: 539 Comm: napi/mlxsw_rx-0 Not tainted 6.18.48 #1-NixOS PREEMPT(lazy)
-  Hardware name: Mellanox Technologies Ltd. MSN2410/VMOD0001, BIOS 4.6.5 09/13/2018
-  RIP: 0010:__list_add_valid_or_report+0x79/0xb0
-  RSP: 0018:ffffcdf8c0f27c08 EFLAGS: 00010246
-  RAX: 0000000000000075 RBX: ffff8d624150fd00 RCX: 0000000000000000
-  RDX: 0000000000000000 RSI: 0000000000000001 RDI: ffff8d6315d1e540
-  RBP: ffff8d620faf4070 R08: 0000000000000000 R09: 00000000ffffdfff
-  R10: ffffffffa5c60fe0 R11: ffffcdf8c0f27ab8 R12: 0000000000000003
-  R13: 000000000000003d R14: 00000000000001bc R15: 0000000000000001
-  FS:  0000000000000000(0000) GS:ffff8d636f63f000(0000) knlGS:0000000000000000
-  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-  CR2: 0000562689a60c24 CR3: 000000015f224004 CR4: 00000000001726f0
-  Call Trace:
-  <TASK>
-  gro_receive_skb+0xee/0x230
-  mlxsw_sp1_ptp_got_packet+0x61/0x140 [mlxsw_spectrum]
-  mlxsw_core_skb_receive+0xdf/0x1b0 [mlxsw_core]
-  mlxsw_pci_napi_poll_cq_rx+0x780/0x9d0 [mlxsw_pci]
-  __napi_poll+0x31/0x1e0
-  napi_threaded_poll_loop+0x16b/0x1c0
-  napi_threaded_poll+0x71/0xa0
-  kthread+0xfb/0x260
-  ret_from_fork+0x22d/0x260
-  ret_from_fork_asm+0x1a/0x30
-  </TASK>
-  Kernel panic - not syncing: Fatal exception in interrupt
-
-The machinery that leads to this kernel panic has not been changed between
-6.18.48 and mainline.
-
-This patch adds an ingress-delivery helper for the PTP packet_finish()
-path that calls netif_receive_skb() instead of napi_gro_receive().
-netif_receive_skb(), unlike napi_gro_receive(), can be called from outside
-of the NAPI instance's poll context, which can occur at the call site for
-this path. RX stats accounting and the skb->dev assignment are still
-preserved; the only change is the delivery call itself.
-
-This removes GRO batching for any PTP event traffic received by the mlxsw
-trap, but given the relatively low volume of traffic characteristic of the
-protocol, and impact limited to only Spectrum-1 ASICs, this is an
-acceptable solution.
-
-Fixes: 1ba06ca96ca2 ("mlxsw: Switch to napi_gro_receive()")
-Signed-off-by: Taylor Bates <tmbates12@gmail.com>
-Reviewed-by: Petr Machata <petrm@nvidia.com>
-Link: https://patch.msgid.link/20260902024949.2273997-1-tmbates12@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 6905f8601298 ("bpf: Allow special fields in resizable hashtab")
+Reported-by: Nicholas Carlini <npc@anthropic.com>
+Suggested-by: Nicholas Carlini <npc@anthropic.com>
+Signed-off-by: Yuan Chen <chenyuan@kylinos.cn>
+[ kkd: Split out the fix and rewrote the commit log ]
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Link: https://lore.kernel.org/r/20260904104203.345917-2-memxor@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/mellanox/mlxsw/spectrum_ptp.c    | 34 ++++++++++++++++++-
- 1 file changed, 33 insertions(+), 1 deletion(-)
+ kernel/bpf/hashtab.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum_ptp.c b/drivers/net/ethernet/mellanox/mlxsw/spectrum_ptp.c
-index 9939749c47bcc..9c5862f4e16a3 100644
---- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_ptp.c
-+++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_ptp.c
-@@ -572,6 +572,38 @@ mlxsw_sp1_ptp_unmatched_remove(struct mlxsw_sp *mlxsw_sp,
- 			       mlxsw_sp1_ptp_unmatched_ht_params);
- }
+diff --git a/kernel/bpf/hashtab.c b/kernel/bpf/hashtab.c
+index 7f70db4d5dcf0..df22236d1ccf9 100644
+--- a/kernel/bpf/hashtab.c
++++ b/kernel/bpf/hashtab.c
+@@ -3072,7 +3072,6 @@ static long rhtab_map_update_elem(struct bpf_map *map, void *key, void *value, u
  
-+/* mlxsw_sp1_ptp_packet_finish() is reached both from the NAPI poll context
-+ * (mlxsw_sp1_ptp_got_packet(), mlxsw_sp1_ptp_got_piece() and
-+ * mlxsw_sp1_packet_timestamp()) and from process context, by way of the GC
-+ * workqueue (mlxsw_sp1_ptp_ht_gc_collect() ->
-+ * mlxsw_sp1_ptp_unmatched_finish()).
-+ *
-+ * mlxsw_sp_rx_listener_no_mark_func() ends in napi_gro_receive(), using the
-+ * NAPI pointer that was placed in the SKB control block when the trapped
-+ * packet was received in the NAPI context. That pointer may only be used
-+ * from its own poll context, which this call site cannot guarantee.
-+ *
-+ * netif_receive_skb(), unlike napi_gro_receive(), can be called from outside
-+ * of the NAPI instance's poll context. RX stats accounting and the skb->dev
-+ * assignment are still preserved; the only change is the delivery call.
-+ */
-+static void mlxsw_sp1_ptp_rx_finish(struct mlxsw_sp_port *mlxsw_sp_port,
-+				    struct sk_buff *skb)
-+{
-+	struct mlxsw_sp_port_pcpu_stats *pcpu_stats;
-+
-+	skb->dev = mlxsw_sp_port->dev;
-+
-+	pcpu_stats = this_cpu_ptr(mlxsw_sp_port->pcpu_stats);
-+	u64_stats_update_begin(&pcpu_stats->syncp);
-+	pcpu_stats->rx_packets++;
-+	pcpu_stats->rx_bytes += skb->len;
-+	u64_stats_update_end(&pcpu_stats->syncp);
-+
-+	skb->protocol = eth_type_trans(skb, skb->dev);
-+	netif_receive_skb(skb);
-+}
-+
- /* This function is called in the following scenarios:
-  *
-  * 1) When a packet is matched with its timestamp.
-@@ -600,7 +632,7 @@ static void mlxsw_sp1_ptp_packet_finish(struct mlxsw_sp *mlxsw_sp,
- 	if (ingress) {
- 		if (hwtstamps)
- 			*skb_hwtstamps(skb) = *hwtstamps;
--		mlxsw_sp_rx_listener_no_mark_func(skb, local_port, mlxsw_sp);
-+		mlxsw_sp1_ptp_rx_finish(mlxsw_sp_port, skb);
- 	} else {
- 		/* skb_tstamp_tx() allows hwtstamps to be NULL. */
- 		skb_tstamp_tx(skb, hwtstamps);
+ 	memcpy(elem->data, key, map->key_size);
+ 	copy_map_value(map, rhtab_elem_value(elem, map->key_size), value);
+-	check_and_init_map_value(map, rhtab_elem_value(elem, map->key_size));
+ 
+ 	/* Prevent deadlock for NMI programs attempting to take bucket lock */
+ 	bpf_disable_instrumentation();
 -- 
 2.53.0
 
