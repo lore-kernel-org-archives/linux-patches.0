@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 297C0399377;
-	Thu, 17 Sep 2026 16:03:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D30A24C10EE;
+	Thu, 17 Sep 2026 16:03:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789661008; cv=none; b=L2BAAR2QaAxTSujGztXoMXxEkvgLUt6dBNXrrkvPnH3MOWtIeIDVsmIl6IcNa2o+d4SUUYUbPHzGp2CmBd9eIdFxXkjGAJR1jqppHtSzj7CckxNn5IbsKdRD7kpE8HIOWoAs2h1rPfc5k7NDFbtqmougw4BJ5YvHZ91mQqwpf+Y=
+	t=1789661011; cv=none; b=iAjj6YY2yE+4FO0Ucs/xeyK/zK0NLMC9hm4REbViiIAQzj5+PbdbNylUWxj2JVortp842+RjU7eZHshkhxjJ5W5yCHtcvLcxETAAzhx9cCjfZ2qp1APuXM2dQ7RbnqCfAf/HeVsvmUikqA9F9JiOD9LET1ZxXpymBsKJADoBjd4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789661008; c=relaxed/simple;
-	bh=UNdk66oz8fLRomiZ0SglyslTDL84Uxutd4w0Sl1nFko=;
+	s=arc-20240116; t=1789661011; c=relaxed/simple;
+	bh=2FL9D62MA6WdVZenrAtAJLMuMhI8dn07YNAyKI5MfRg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZZnHa3CL8ncvbwGnZ/7YM6fAWOwEuGasrMa3QQ0p9EtJEQaxzzYd0BPVXxnJMMpNec3szME5veOmBh+4t+Wy5ATeMTNKbYYW321j+fEsJyRUCvyvssNYf4/thttlqOQIJq3Q6mgk3jTwRjujphC7T2mZvwXeFoT0b2L/mR9EHrQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VsvtCSPM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=s6b4xxq5TxfEYoxuKfR+ij7etlQmj01JD+siodTUJ4ZEq68DCetk7YRDmNzaNd4/tS+ScuEVH3AucG0RVIAXDMod2bFG8Jh2jYWG3Pt4UwuPFAP65i2cUdyAMiWk6EhN0i3GL6NPI1cQYd88/xOJbWcC9T75fL2LlMtef8in9oI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ktuhN750; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VsvtCSPM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B2D51F000FF;
-	Thu, 17 Sep 2026 16:03:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ktuhN750"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C9511F000FF;
+	Thu, 17 Sep 2026 16:03:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789661006;
-	bh=SsE3Co6wcU+ZaMRVMUuZSwXCz1WpUfJWE9sszd/2XZo=;
+	s=korg; t=1789661009;
+	bh=0TlvoF2nqMH5/IRefZrSI1nj5TnlhQNPmBE6iHJ8s7o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VsvtCSPM+kfpcszzhuaOvA7Jy8KhiS858YRtK4V4lGbL3EstZhFvhaXhYcOimrGeY
-	 YGdgJTDpWqJL/1n2+3WB7TKAimsypgs3D5ncDdutoTF8Mk0xdiV/rRQwVjnrvfexAV
-	 M6JSOmGpVWjra87uTyhrxwN9mOOI94b+REPEE8bw=
+	b=ktuhN750Z543fazi/o/MLHrzXDsgLfl1p/50u2qbP98MPveqXpNLgDqNAhS/UqaLk
+	 Cvhm8OLsYRIuvxSZrijTnEQTKrJhoA5ADlFo3UR2fYgsVHxUL2MhI/uESll1Y5EPfw
+	 jaklErfVB3cTCqywANYuIwdBYBWkx99ziWKFPkps=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Erni Sri Satya Vennela <ernis@linux.microsoft.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Vineeth Vijayan <vneethv@linux.ibm.com>,
+	Peter Oberparleiter <oberpar@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0051/1250] net: mana: hardening: Reject zero max_num_queues from MANA_QUERY_VPORT_CONFIG
-Date: Thu, 17 Sep 2026 15:57:26 +0100
-Message-ID: <20260917151553.321306361@linuxfoundation.org>
+Subject: [PATCH 6.18 0052/1250] s390/cio: Purge based on the cdevs online status
+Date: Thu, 17 Sep 2026 15:57:27 +0100
+Message-ID: <20260917151553.347442437@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,43 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Erni Sri Satya Vennela <ernis@linux.microsoft.com>
+From: Vineeth Vijayan <vneethv@linux.ibm.com>
 
-[ Upstream commit 93ca1575dd1f43e24ad85663305e13114f9acdf1 ]
+[ Upstream commit 58d50cad63e85daae032924ecc3d457fb1ec02fb ]
 
-As a part of MANA hardening for CVM, validate that max_num_sq and
-max_num_rq returned by MANA_QUERY_VPORT_CONFIG are not zero. These
-values flow into apc->num_queues, which is used as an allocation count
-and loop bound. A zero value would result in zero-size allocations and
-incorrect driver behavior.
+Ensure that all devices currently offline are purged correctly.
 
-Return -EPROTO if either value is zero.
+Previously, purging logic relied on the internal FSM state to
+determine whether a device was offline. However, devices with a
+target state of offline could be skipped if CIO internal
+processing was still ongoing during the purge operation.
 
-Signed-off-by: Erni Sri Satya Vennela <ernis@linux.microsoft.com>
-Link: https://patch.msgid.link/20260430085638.1875400-1-ernis@linux.microsoft.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Update the purge decision logic to rely on the online variable
+in the cdev structure instead of the internal FSM state,
+providing a more reliable indication of actual device
+availability.
+
+Signed-off-by: Vineeth Vijayan <vneethv@linux.ibm.com>
+Reviewed-by: Peter Oberparleiter <oberpar@linux.ibm.com>
+Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/microsoft/mana/mana_en.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/s390/cio/device.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/microsoft/mana/mana_en.c b/drivers/net/ethernet/microsoft/mana/mana_en.c
-index adf25acb0d46f..b61da240ac1bb 100644
---- a/drivers/net/ethernet/microsoft/mana/mana_en.c
-+++ b/drivers/net/ethernet/microsoft/mana/mana_en.c
-@@ -1262,6 +1262,12 @@ static int mana_query_vport_cfg(struct mana_port_context *apc, u32 vport_index,
+diff --git a/drivers/s390/cio/device.c b/drivers/s390/cio/device.c
+index 4b2dae6eb3760..7f8f78b1f8aea 100644
+--- a/drivers/s390/cio/device.c
++++ b/drivers/s390/cio/device.c
+@@ -1329,7 +1329,7 @@ static int purge_fn(struct subchannel *sch, void *data)
  
- 	*max_sq = resp.max_num_sq;
- 	*max_rq = resp.max_num_rq;
-+
-+	if (*max_sq == 0 || *max_rq == 0) {
-+		netdev_err(apc->ndev, "Invalid max queues from vPort config\n");
-+		return -EPROTO;
-+	}
-+
- 	if (resp.num_indirection_ent > 0 &&
- 	    resp.num_indirection_ent <= MANA_INDIRECT_TABLE_MAX_SIZE &&
- 	    is_power_of_2(resp.num_indirection_ent)) {
+ 	cdev = sch_get_cdev(sch);
+ 	if (cdev) {
+-		if (cdev->private->state != DEV_STATE_OFFLINE)
++		if (cdev->online)
+ 			goto unlock;
+ 
+ 		if (atomic_cmpxchg(&cdev->private->onoff, 0, 1) != 0)
 -- 
 2.53.0
 
