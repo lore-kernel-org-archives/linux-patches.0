@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEE754C10C7;
-	Thu, 17 Sep 2026 15:33:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BF614E3246;
+	Thu, 17 Sep 2026 15:33:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659187; cv=none; b=SJpV5+JC0MN7WNumUAnPTJryypunHT0NVYBdq6mK2DykFM4wmP2FNLfVCL/cTDlDDoIPb/ZsI/9x6xj/fI6FVjr38d/+GWN9zklTyIwoqh9nlWtSPO16wAYbtxoWsw9CkSFYvoJAhoR/5d1l2bhuEG2Ah4h2d0dBulLhfIM+cxE=
+	t=1789659191; cv=none; b=iG2Pt1V7aCs9ao2/8ahIih6L+qHeQi4ep4k8dMd3clm6+VuMMQ17PBZO44F4Q2f+HmeVTp5SzQZ7mt3Unr8IuABVql/Hjfn7YzP1RW8EQtbClEvkkJG+Z1XKPJd1I3Mjavqg1U3GKM64M3R59c8v9fsmb7HB0PqSqTpLUs+VFyM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659187; c=relaxed/simple;
-	bh=AiBEtLXxAGT13KNpJ0y2G6wJ51PRd9gjtzwbplJGU/E=;
+	s=arc-20240116; t=1789659191; c=relaxed/simple;
+	bh=eK1lEcFgkaNthxd7fNwc7CoqYQrSTW2okBNnTIRYYPQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cXqYmB1REIiGWsMHGN36Mi9q3M3xn/D7qfMwG69F6WuRhcYnH2v94DmO4EhnXszcMz/R7rOhZ1wN2nDyIvv0dwxD/bXhCTyu1X7P8wubcP8TAy0yLzQUyP7TwcEsqtU3fDkk6pFthOXB21pHA3w8LTQNa2qQw6oV175o2qIxFhE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Aq2Txybj; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Av74p2kObl97xweKac6+s9FIOCE5wVif8zpTc7f0ucHXJZ5L2ZvBJ5o279vH6Nd8a7rL9CdOjZmwqLeegBj0QFHyg5TCxHfU52Y3lUd4NeJDZFhVZCUy857gjnoAy/xHV59ABiLx1arWAbvLpDOVQVpMeeO6VzTVZ50WN6ahVfc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SL4qYGmh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Aq2Txybj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C71FB1F00898;
-	Thu, 17 Sep 2026 15:32:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SL4qYGmh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFC141F00893;
+	Thu, 17 Sep 2026 15:33:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659179;
-	bh=EFRbJOjAbOuM/ceRQxl+Ad5wX8lGwDMPLboJxRla12k=;
+	s=korg; t=1789659182;
+	bh=WA8UnWMF5yDQBHxHYeWeK2NOB+L4phxgwKp0FpR1RWU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Aq2Txybjozb7uruJVVl+kkMR+D0GGEQ607kxlTTzL0rr8nQp9jNAoVpEfUBwo+S4v
-	 bUigkTevdofsBmq9CGBDG9Wxh9FkH7tZJltVhui1/MsyMCKo8zF+yXdcLDJlSK9hR3
-	 nif5P+owR5ym5L19V5S9U7cfJsMGAdLinAlKgUPc=
+	b=SL4qYGmhEIsOmZyhLADYvQ4NVFRQhA6F0gKvo+5MZs8U8wAOBrG6pLOFj3S7oSNc7
+	 MGSmR8VW35ANBlAtuq7HaMHEdp/XZnGOjlLA/MREc2lZK1iKZ1rt1t+1ROkW5mWMdi
+	 apaL75gCGq/PZhy83Vpm7sU6H6UPlnlaqkaaebu4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Klaus Kusche <klaus.kusche@computerix.info>,
-	Mario Limonciello <mario.limonciello@amd.com>,
+	Tamas Petz <tamas.petz@arm.com>,
+	Leo Yan <leo.yan@arm.com>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Tim Chen <tim.c.chen@linux.intel.com>,
-	K Prateek Nayak <kprateek.nayak@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 171/733] x86/itmt: Dont make ITMT enablement depend on debugfs
-Date: Thu, 17 Sep 2026 16:07:59 +0100
-Message-ID: <20260917151355.363496171@linuxfoundation.org>
+Subject: [PATCH 7.2 172/733] perf/core: Skip empty AUX records with only format flags
+Date: Thu, 17 Sep 2026 16:08:00 +0100
+Message-ID: <20260917151355.389329485@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -54,54 +52,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Leo Yan <leo.yan@arm.com>
 
-[ Upstream commit eaece4849991d62fcd6f46637c55dcce00e25d70 ]
+[ Upstream commit 8a7f5b5e860b5c113ca99acd5b1e9074f5c5af3c ]
 
-sched_set_itmt_support() treats debugfs file creation failures as fatal.
-When CONFIG_DEBUG_FS is disabled, debugfs stubs return ERR_PTR(-ENODEV),
-causing ITMT to be silently disabled.
+perf_aux_output_end() emits a PERF_RECORD_AUX when the recorded size is
+nonzero or when any flag other than PERF_AUX_FLAG_OVERWRITE is set.
 
-debugfs is a debug-only facility; its return values should be ignored.
-Drop the fatal error handling and enable ITMT unconditionally.
+PMU format flags describe how an AUX payload is encoded. TRBE driver
+sets PERF_AUX_FLAG_CORESIGHT_FORMAT_RAW for raw trace buffers, causing
+an AUX record to be emitted even when no trace data.
 
-Fixes: d04013a4b21b ("x86/itmt: Move the "sched_itmt_enabled" sysctl to debugfs")
-Reported-by: Klaus Kusche <klaus.kusche@computerix.info>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+This is noticeable when tracing a task with strace. Ptrace stops
+repeatedly end empty AUX transactions, producing many zero-sized
+PERF_RECORD_AUX records. For example:
+
+  perf record -e cs_etm//u -m,128M -- strace ls
+
+  perf script -D 2>&1 |
+     awk '/PERF_RECORD_AUX offset/ {
+        for (i = 1; i <= NF; i++)
+                if ($i == "size:" && $(i + 1) == "0")
+                        count++
+     }
+     END { print count }'
+  165
+
+This recording contains 165 zero-sized AUX records which provide no
+useful information to userspace.
+
+Ignore PERF_AUX_FLAG_PMU_FORMAT_TYPE_MASK, together with
+PERF_AUX_FLAG_OVERWRITE, when deciding whether an empty AUX record is
+useful. Zero-sized records carrying TRUNCATED, PARTIAL or COLLISION
+are still emitted.
+
+Fixes: 547b60988e63 ("perf: aux: Add flags for the buffer format")
+Reported-by: Tamas Petz <tamas.petz@arm.com>
+Signed-off-by: Leo Yan <leo.yan@arm.com>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Tim Chen <tim.c.chen@linux.intel.com>
-Reviewed-by: K Prateek Nayak <kprateek.nayak@amd.com>
-Tested-by: K Prateek Nayak <kprateek.nayak@amd.com>
-Link: https://patch.msgid.link/20260831053836.1881864-1-mario.limonciello@amd.com
+Link: https://patch.msgid.link/20260825-perf_core_fix_zero_aux_records-v1-1-23b95e8d5df3@arm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/itmt.c | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+ kernel/events/ring_buffer.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/arch/x86/kernel/itmt.c b/arch/x86/kernel/itmt.c
-index 243a769fdd97b..85ebde361d6ae 100644
---- a/arch/x86/kernel/itmt.c
-+++ b/arch/x86/kernel/itmt.c
-@@ -110,18 +110,14 @@ int sched_set_itmt_support(void)
- 						    arch_debugfs_dir,
- 						    &sysctl_sched_itmt_enabled,
- 						    &dfs_sched_itmt_fops);
--	if (IS_ERR_OR_NULL(dfs_sched_itmt)) {
-+	if (IS_ERR(dfs_sched_itmt))
- 		dfs_sched_itmt = NULL;
--		return -ENOMEM;
--	}
- 
- 	dfs_sched_core_prio = debugfs_create_file("sched_core_priority", 0644,
- 						  arch_debugfs_dir, NULL,
- 						  &sched_core_priority_fops);
--	if (IS_ERR_OR_NULL(dfs_sched_core_prio)) {
-+	if (IS_ERR(dfs_sched_core_prio))
- 		dfs_sched_core_prio = NULL;
--		return -ENOMEM;
--	}
- 
- 	sched_itmt_capable = true;
+diff --git a/kernel/events/ring_buffer.c b/kernel/events/ring_buffer.c
+index 9fe92161715e0..1b1ffe0533e58 100644
+--- a/kernel/events/ring_buffer.c
++++ b/kernel/events/ring_buffer.c
+@@ -509,7 +509,10 @@ void perf_aux_output_end(struct perf_output_handle *handle, unsigned long size)
+ 	/*
+ 	 * Only send RECORD_AUX if we have something useful to communicate
+ 	 *
+-	 * Note: the OVERWRITE records by themselves are not considered
++	 * PMU_FORMAT bits identify the PMU type rather than an AUX event
++	 * has occurred, so ignore them for zero-sized records.
++	 *
++	 * The OVERWRITE records by themselves are not considered
+ 	 * useful, as they don't communicate any *new* information,
+ 	 * aside from the short-lived offset, that becomes history at
+ 	 * the next event sched-in and therefore isn't useful.
+@@ -518,7 +521,9 @@ void perf_aux_output_end(struct perf_output_handle *handle, unsigned long size)
+ 	 * offset. So, from now on we don't output AUX records that
+ 	 * have *only* OVERWRITE flag set.
+ 	 */
+-	if (size || (handle->aux_flags & ~(u64)PERF_AUX_FLAG_OVERWRITE))
++	if (size ||
++	    (handle->aux_flags & ~(u64)(PERF_AUX_FLAG_PMU_FORMAT_TYPE_MASK |
++					PERF_AUX_FLAG_OVERWRITE)))
+ 		perf_event_aux_event(handle->event, aux_head, size,
+ 				     handle->aux_flags);
  
 -- 
 2.53.0
