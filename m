@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 828B83B27DF;
-	Thu, 17 Sep 2026 16:51:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35FCD3B2FC2;
+	Thu, 17 Sep 2026 16:51:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789663881; cv=none; b=lRMH9U9wg+YREOXsDOAXb+64/sfO9q39DOGkH2weM4ZQOlMfP/ePdgHbcMFPQszVjAcOqzXZg+t7cXZ5QrXLy3nusxaEwlKKUasfCSl4xI4h4FFY1clsE2gFDLNxlz87xQteHfTUtwVh4Ij8yifqDILuuVucWpgsnXWxi6oTncA=
+	t=1789663884; cv=none; b=okxWscLOMdfKIgDm1qGC/rHP5nT1HAubYzaq8NXq3BVWs1mvHBoaveOD16k3SmyrSjxRpRU9luuWE/glbGeR6FodrB43Y9hMSB8/rJzYEWrX9CPMWPH6LAj/MVyfeFopmI6kYN4TrGyvitBT1Pxe05DwBC3o1KNh7dhdY14GCu8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789663881; c=relaxed/simple;
-	bh=PZcJV5YYXJDzAGoDiXy+J32j/WDG/V4dowXLvH4MIVk=;
+	s=arc-20240116; t=1789663884; c=relaxed/simple;
+	bh=Yb1O/vs3dWz7a9gwkfPds7XG2hgB8WAxedznto4CAZQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tEVLrAfmmWuBALVvWqK2cvcTX7rRru0Fnr9iNtCO0R7jKKuORKYheOLp3oCJQdfnMMLF0NJj5bFB8dpbjnOOOZYc0mp0sBrgOKPrguljdzEGJnPVTtyfWOBp/Q/oJivDiJHVahIvHkPl3GyDxXZGkbu6PROgmgWiMwBLYK1Sn1c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qNoeSvZG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=inwiJLPzLCiaTGuxbvQq8klPe33FHy/pWOq315xFn1Mhoydy7N1OsfC4vrFNCdh89Wy2XgeIbBD7iG6Yvg6axX6Ay1qYE5ljIgpTD6Mlz0W7DEODoOFEulmCtpk5jSAyRpEjFJw4opBEgNLbIdntye7c3SymcMLkdJTsyVsNhhQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lOSYoXTo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qNoeSvZG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D9DC1F000FF;
-	Thu, 17 Sep 2026 16:51:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lOSYoXTo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E7291F00893;
+	Thu, 17 Sep 2026 16:51:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789663880;
-	bh=vGHSkjtlWF2RzabbJf2R2V78aWNZChlPkkn1ldx5AGc=;
+	s=korg; t=1789663883;
+	bh=UvY+LOq8xYs2kuFWWqJUDhrKjyq9kGn8da1rr5TG13g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qNoeSvZGd0NjFy3+tJvTHvcVS2A6Vcd6n1UDTFt/ASoi6g+JuUBHglXhK9QtPt9Nt
-	 Zgr9Adj0UG4Oazm9Ph4N/eSZ7q7zlg2impxbQGjO+94jqJ1XgODz9WN7iYoLLjn3Sx
-	 UoqqJquy23hf6IGp7TLNpv7hByZ/5AW/ZkjbwbfU=
+	b=lOSYoXToH/tVgjgkEnOpMcu6h/HoS2UKNwsDoX4uToDIVrTiv0Z8XkUM4eEYPXYrx
+	 64E3Rq/MMSr04a6HZIHRNimkFgcVm9L9LKDOMXufhhGySV9Tqhi8rzZDna9ywAOvHl
+	 HJgKZ2+uWgG4x7uA12no0nK9YGecuh88einTlH5E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Wowk <dev@adrianwowk.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	Oliver Neukum <oneukum@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0186/1250] usbip: vhci_hcd: fix NULL deref in status_show_vhci
-Date: Thu, 17 Sep 2026 15:59:41 +0100
-Message-ID: <20260917151557.154503281@linuxfoundation.org>
+Subject: [PATCH 6.18 0187/1250] usb: core: hcd: fix possible deadlock in rh control transfers
+Date: Thu, 17 Sep 2026 15:59:42 +0100
+Message-ID: <20260917151557.181701992@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,107 +50,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adrian Wowk <dev@adrianwowk.com>
+From: Oliver Neukum <oneukum@suse.com>
 
-[ Upstream commit bc150783542ba2e7c1257d1299c6f3269bdba270 ]
+[ Upstream commit d5559f43d76b398392b26a15cbc16d731969cd1c ]
 
-platform_get_drvdata() can return NULL if a VHCI host controller's
-probe failed (e.g. due to USB bus number exhaustion). status_show_vhci()
-checked for a NULL pdev but not for a NULL hcd returned by
-platform_get_drvdata(). Passing NULL to hcd_to_vhci_hcd() does not
-return NULL - it returns a pointer offset of 0x260, causing a NULL
-pointer dereference when that value is subsequently dereferenced.
+>From within the SCSI error handler memory allocations must not
+trigger IO. Handling errors in UAS and the storage driver may
+involve resetting a device. The thread doing the reset itself
+relies on VM magic. However, that is insufficient, as resetting
+a device involves resuming it. Resumption as well as resetting
+involves conrol transfers to the parent of the device to be reset.
+That may be a root hub. Hence usbcore must heed the flags passed
+to usb_submit_urb() processing control transfers to root hubs.
 
-Add a NULL check on hcd before calling hcd_to_vhci_hcd(). Move
-status_show_not_ready() above status_show_vhci() to make it callable
-from the new error path without a forward declaration.
+The problem exist since the storage driver has been merged.
 
-Signed-off-by: Adrian Wowk <dev@adrianwowk.com>
-Reviewed-by: Shuah Khan <skhan@linuxfoundation.org>
-Link: https://patch.msgid.link/20260414010050.158064-2-dev@adrianwowk.com
+Signed-off-by: Oliver Neukum <oneukum@suse.com>
+Link: https://patch.msgid.link/20260429094413.181038-1-oneukum@suse.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/usbip/vhci_sysfs.c | 52 +++++++++++++++++++---------------
- 1 file changed, 29 insertions(+), 23 deletions(-)
+ drivers/usb/core/hcd.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/usb/usbip/vhci_sysfs.c b/drivers/usb/usbip/vhci_sysfs.c
-index d5865460e82d5..336fb4d92c6f5 100644
---- a/drivers/usb/usbip/vhci_sysfs.c
-+++ b/drivers/usb/usbip/vhci_sysfs.c
-@@ -59,6 +59,29 @@ static void port_show_vhci(char **out, int hub, int port, struct vhci_device *vd
- 	*out += sprintf(*out, "\n");
+diff --git a/drivers/usb/core/hcd.c b/drivers/usb/core/hcd.c
+index e11a8818af74a..4f198351ca9bb 100644
+--- a/drivers/usb/core/hcd.c
++++ b/drivers/usb/core/hcd.c
+@@ -450,7 +450,8 @@ rh_string(int id, struct usb_hcd const *hcd, u8 *data, unsigned len)
+ 
+ 
+ /* Root hub control transfers execute synchronously */
+-static int rh_call_control (struct usb_hcd *hcd, struct urb *urb)
++static int rh_call_control(struct usb_hcd *hcd,
++		struct urb *urb, gfp_t mem_flags)
+ {
+ 	struct usb_ctrlrequest *cmd;
+ 	u16		typeReq, wValue, wIndex, wLength;
+@@ -485,8 +486,8 @@ static int rh_call_control (struct usb_hcd *hcd, struct urb *urb)
+ 	 * tbuf should be at least as big as the
+ 	 * USB hub descriptor.
+ 	 */
+-	tbuf_size =  max_t(u16, sizeof(struct usb_hub_descriptor), wLength);
+-	tbuf = kzalloc(tbuf_size, GFP_KERNEL);
++	tbuf_size = max_t(u16, sizeof(struct usb_hub_descriptor), wLength);
++	tbuf = kzalloc(tbuf_size, mem_flags);
+ 	if (!tbuf) {
+ 		status = -ENOMEM;
+ 		goto err_alloc;
+@@ -811,12 +812,13 @@ static int rh_queue_status (struct usb_hcd *hcd, struct urb *urb)
+ 	return retval;
  }
  
-+static ssize_t status_show_not_ready(int pdev_nr, char *out)
-+{
-+	char *s = out;
-+	int i = 0;
-+
-+	for (i = 0; i < VHCI_HC_PORTS; i++) {
-+		out += sprintf(out, "hs  %04u %03u ",
-+				    (pdev_nr * VHCI_PORTS) + i,
-+				    VDEV_ST_NOTASSIGNED);
-+		out += sprintf(out, "000 00000000 0000000000000000 0-0");
-+		out += sprintf(out, "\n");
-+	}
-+
-+	for (i = 0; i < VHCI_HC_PORTS; i++) {
-+		out += sprintf(out, "ss  %04u %03u ",
-+				    (pdev_nr * VHCI_PORTS) + VHCI_HC_PORTS + i,
-+				    VDEV_ST_NOTASSIGNED);
-+		out += sprintf(out, "000 00000000 0000000000000000 0-0");
-+		out += sprintf(out, "\n");
-+	}
-+	return out - s;
-+}
-+
- /* Sysfs entry to show port status */
- static ssize_t status_show_vhci(int pdev_nr, char *out)
+-static int rh_urb_enqueue (struct usb_hcd *hcd, struct urb *urb)
++static int rh_urb_enqueue(struct usb_hcd *hcd,
++		struct urb *urb, gfp_t mem_flags)
  {
-@@ -76,6 +99,12 @@ static ssize_t status_show_vhci(int pdev_nr, char *out)
- 	}
- 
- 	hcd = platform_get_drvdata(pdev);
-+
-+	if (!hcd) {
-+		usbip_dbg_vhci_sysfs("show status error (hcd is NULL)\n");
-+		return status_show_not_ready(pdev_nr, out);
-+	}
-+
- 	vhci_hcd = hcd_to_vhci_hcd(hcd);
- 	vhci = vhci_hcd->vhci;
- 
-@@ -104,29 +133,6 @@ static ssize_t status_show_vhci(int pdev_nr, char *out)
- 	return out - s;
+ 	if (usb_endpoint_xfer_int(&urb->ep->desc))
+ 		return rh_queue_status (hcd, urb);
+ 	if (usb_endpoint_xfer_control(&urb->ep->desc))
+-		return rh_call_control (hcd, urb);
++		return rh_call_control(hcd, urb, mem_flags);
+ 	return -EINVAL;
  }
  
--static ssize_t status_show_not_ready(int pdev_nr, char *out)
--{
--	char *s = out;
--	int i = 0;
--
--	for (i = 0; i < VHCI_HC_PORTS; i++) {
--		out += sprintf(out, "hs  %04u %03u ",
--				    (pdev_nr * VHCI_PORTS) + i,
--				    VDEV_ST_NOTASSIGNED);
--		out += sprintf(out, "000 00000000 0000000000000000 0-0");
--		out += sprintf(out, "\n");
--	}
--
--	for (i = 0; i < VHCI_HC_PORTS; i++) {
--		out += sprintf(out, "ss  %04u %03u ",
--				    (pdev_nr * VHCI_PORTS) + VHCI_HC_PORTS + i,
--				    VDEV_ST_NOTASSIGNED);
--		out += sprintf(out, "000 00000000 0000000000000000 0-0");
--		out += sprintf(out, "\n");
--	}
--	return out - s;
--}
--
- static int status_name_to_id(const char *name)
- {
- 	char *c;
+@@ -1537,7 +1539,7 @@ int usb_hcd_submit_urb (struct urb *urb, gfp_t mem_flags)
+ 	 */
+ 
+ 	if (is_root_hub(urb->dev)) {
+-		status = rh_urb_enqueue(hcd, urb);
++		status = rh_urb_enqueue(hcd, urb, mem_flags);
+ 	} else {
+ 		status = map_urb_for_dma(hcd, urb, mem_flags);
+ 		if (likely(status == 0)) {
 -- 
 2.53.0
 
