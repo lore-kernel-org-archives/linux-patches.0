@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54EA44F68A6;
-	Thu, 17 Sep 2026 17:37:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B44A84F68AB;
+	Thu, 17 Sep 2026 17:37:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666637; cv=none; b=BaYj9bY8ofs2vl+Y3fT+A6mNbNm1EOQ/D6GGJ8zlgLyoHjnGWP39IIHfaRX53RuGBjpZHaASgBZUsqlx3QDvyvse5x1QVvi/B7ZKK4BPb5HpkKjh4QY3EompnKM+ut/WL3JdZXblKvme5xDxXDWBqlOPVeZc8fapYxogmNMzJ58=
+	t=1789666641; cv=none; b=PgUK6dsCdH+gq1N0FejZhHUmEnRqp9YU9CrHQz8t+N+ZY9EuIbkCJisej0yyzvMVLRKqdMXrlR4jQMOjeVqpleKmebKwmZyMjnYuEG2KXI48yUImYhwgqGsxlBOIMkMMdszc7BL1Y3rQYmZn+H59UrJTQyBN92h52gKDm9BTXms=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666637; c=relaxed/simple;
-	bh=/ePPS9f0DH7EmT4ZosZLhX757MnI2MGJVVm2/e63Vhc=;
+	s=arc-20240116; t=1789666641; c=relaxed/simple;
+	bh=DRzommKJ7biwn1LtCR++lYkM7EWXvKZl/+GBTXGC9Gg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LLKvViE/soU7WPPGkCwEbzqSOiUzQTBf8fWR9ezdX/FUvBRMEZyi3CdkhWu6qpDgr8dEmKab6/56cdwFMwU4MemILEQWmCg9ZiaDJ9ZwzOyAy5/Eo0xMRkTCFy8kFXcyWqGU/EaGXgIS0Sfk0Ws3W1r/MwCV854lCDpzuc9KLhM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G9xjz9cp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=VKfcgQMy4NuaCTNXDktrmSS75rWurfzO7nvQgTKXsS2gyDUW7ng844Uv/Pp9i4rEVYd5SmbdKG5U1EK1eCdoJ35btwhiN1Reg+AkIgLrpoiUW20MITtJxkkkyADnQtNQwtmVT1I81cAznguhUn65OCQeG1lriDYrdpbL4u4kzUQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wsPjYMgU; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G9xjz9cp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC26D1F000FF;
-	Thu, 17 Sep 2026 17:37:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wsPjYMgU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B30DA1F00893;
+	Thu, 17 Sep 2026 17:37:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666636;
-	bh=mroYuxdRmH9RJX4Co7RKqoxwn/pKf1ypXey0khp8+C0=;
+	s=korg; t=1789666639;
+	bh=u8gIzYMXLVYGplaq0Kubg9jSS7DwMHyIlWJBiYu58AU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=G9xjz9cpRRea+ygqIfcxmXlS4Ik1Y7uLA0rLthTfJVthUlEmSLSVvXXDr5vBs0/Eb
-	 KGIhsZ7j82URYnugaYSLxbZ1H3/PtaYm2Je2iroqXrSw6QoEZKe8etQtTY5Cdix6ZE
-	 3MCHJV+F2ogT4AoeZRKni6K1RPFtrAl/4jVIl6B8=
+	b=wsPjYMgU8AS3pkgMvPg5Nkz0QAH3SRBC8bXW49JjLbIrDboeLsJ3V4VD+KIaUTp3Y
+	 rwkqPb5g7o42TZNw4l6v5/qqPGORnn3BvQoVvRKk2qU7CrFBtxo0reQ776WlfobTO9
+	 XBScusQY8o694xsg7dL9BTzFwjAk3R9IT3N0MyFw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Bommarito <michael.bommarito@gmail.com>,
-	Benjamin Gaignard <benjamin.gaignard@collabora.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.18 1066/1250] media: v4l2-ctrls: validate HEVC tile counts
-Date: Thu, 17 Sep 2026 16:14:21 +0100
-Message-ID: <20260917151621.022009706@linuxfoundation.org>
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Carlos Maiolino <cem@kernel.org>
+Subject: [PATCH 6.18 1102/1250] xfs: fix xfs_rtrmapbt_mem_cursor for non-rmap filesystems
+Date: Thu, 17 Sep 2026 16:14:57 +0100
+Message-ID: <20260917151622.050086072@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,48 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Bommarito <michael.bommarito@gmail.com>
+From: Darrick J. Wong <djwong@kernel.org>
 
-commit dc694a9929f7cb9c88ef91e45eb982b7bbe5a477 upstream.
+commit 022d5f5fce7f0b6125d404eb74044e6238aef369 upstream.
 
-The stateless HEVC decoders read num_tile_columns_minus1 + 1 entries from
-column_width_minus1[] and num_tile_rows_minus1 + 1 from row_height_minus1[]
-and use them as tile-loop bounds, but std_validate_compound() does not
-bound these u8 counts. Reject a V4L2_CTRL_TYPE_HEVC_PPS with tiling
-enabled whose tile counts exceed the uAPI array capacity, mirroring the
-existing compound-control range checks.
+It's possible to construct an in-memory rtrmap btree for filesystems
+that don't have the rmap feature enabled.  The kernel doesn't do this,
+but xfs_repair will, if asked to reindex a filesystem that has rtreflink
+enabled but not rtrmap.  Therefore, we must create the cursor with
+enough levels to handle a maximally sized btree possible.
 
-Fixes: 256fa3920874 ("media: v4l: Add definitions for HEVC stateless decoding")
-Assisted-by: Claude:claude-opus-4-8
-Cc: stable@vger.kernel.org
-Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
-Reviewed-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Note that the rtrmapbt btree cursor slab creates objects large enough to
+handle xfs_rtrmap_maxlevels_ondisk() levels, so setting bc_nlevels to
+the same value isn't costing us any extra memory.
+
+Cc: stable@vger.kernel.org # v6.14
+Fixes: 4a61f12eb11958 ("xfs: create a shadow rmap btree during realtime rmap repair")
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/v4l2-core/v4l2-ctrls-core.c |   12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ fs/xfs/libxfs/xfs_rtrmap_btree.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/media/v4l2-core/v4l2-ctrls-core.c
-+++ b/drivers/media/v4l2-core/v4l2-ctrls-core.c
-@@ -1154,6 +1154,18 @@ static int std_validate_compound(const s
+diff --git a/fs/xfs/libxfs/xfs_rtrmap_btree.c b/fs/xfs/libxfs/xfs_rtrmap_btree.c
+index 0cb2113d5b40..a15e460a1ec7 100644
+--- a/fs/xfs/libxfs/xfs_rtrmap_btree.c
++++ b/fs/xfs/libxfs/xfs_rtrmap_btree.c
+@@ -618,7 +618,7 @@ xfs_rtrmapbt_mem_cursor(
+ 	struct xfs_btree_cur	*cur;
  
- 			p_hevc_pps->flags &=
- 				~V4L2_HEVC_PPS_FLAG_LOOP_FILTER_ACROSS_TILES_ENABLED;
-+		} else {
-+			/*
-+			 * These count the entries the stateless HEVC drivers
-+			 * read from column_width_minus1[] / row_height_minus1[]
-+			 * and use as tile-loop bounds.
-+			 */
-+			if (p_hevc_pps->num_tile_columns_minus1 >=
-+			    ARRAY_SIZE(p_hevc_pps->column_width_minus1))
-+				return -EINVAL;
-+			if (p_hevc_pps->num_tile_rows_minus1 >=
-+			    ARRAY_SIZE(p_hevc_pps->row_height_minus1))
-+				return -EINVAL;
- 		}
- 
- 		if (p_hevc_pps->flags &
+ 	cur = xfs_btree_alloc_cursor(mp, tp, &xfs_rtrmapbt_mem_ops,
+-			mp->m_rtrmap_maxlevels, xfs_rtrmapbt_cur_cache);
++			xfs_rtrmapbt_maxlevels_ondisk(), xfs_rtrmapbt_cur_cache);
+ 	cur->bc_mem.xfbtree = xfbt;
+ 	cur->bc_nlevels = xfbt->nlevels;
+ 	cur->bc_group = xfs_group_hold(rtg_group(rtg));
+-- 
+2.55.0
+
 
 
