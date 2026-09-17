@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECCE34D4892;
-	Thu, 17 Sep 2026 18:42:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 351984D4881;
+	Thu, 17 Sep 2026 18:42:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789670522; cv=none; b=tSzztfLerev7PNivnIzlTAMukUqijoeEK9sSUCYIfUGzYg5Myx5TBYSbuteXwmWiA5leB+jOYFF5RAxb13VLBcekl4NnNKGiUcWOW0PoIOcQ2WZ0olL4IC7YzNcr+SshcMnqTi2yJIvfoEL+gYGajlIBC9JxRgWDhaAmKqVgyNs=
+	t=1789670525; cv=none; b=pAS2TD9NSiXHVO5ZnEZoujBiTvgTvCCE/YePzO/ZbyX3YCqE4pM4sMxPmxxqT4i+LPEWH1GvDyXjWI2P23F1mRZ6WdJgw9wRtwBXa8G/xfW3TUUDarukjjvCr6b0wnVc7mTyEKuao9KDb8eT2dPDPXaMp7/MWil95yNPr2nR/RA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789670522; c=relaxed/simple;
-	bh=vNozFJE4/1XvPIxg6xbiH9oUIzVqid2fA+QdPgyfgYc=;
+	s=arc-20240116; t=1789670525; c=relaxed/simple;
+	bh=yDFlqFVHETTSJ01WDNH83Kx74WJ82wMNLktm15ojTdI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W4nXjkXys33IYYR0K6ZkYiacF7vwdCGIIheJwZLKTaO+P+kQxvXyhf1ZlLnvUMjyt6ew+S+LwI2UYSN5RXf51fDXk3UgXnEDmwWdXKs6uNOe38bBI9oA4AD23MeXrOoCw1UIaOBW1phDtPmCg/ukh6iF+zKpsbzAAZV1/vZFn4M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XSurb4Ca; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ST9plyqsf4il6t4ZkVekS2zBgy3lm/K7hVtrXr5vvPOCrar/fYFWyKUFti6SsHoCFiUNz9HEYyPkFPGw3HgwX/sG3TVXCD+6o7Ol1IziMsiHjAxWmP4CQC8ud5wjNREUc93YUP/kdC6zv/4sCRgyWTvyc1VsthDxfCsRmabOJZ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rqdpM32j; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XSurb4Ca"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C99E1F000FF;
-	Thu, 17 Sep 2026 18:42:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rqdpM32j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 478B41F000FF;
+	Thu, 17 Sep 2026 18:42:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789670520;
-	bh=DH9SZXeIIgktPSrMg+4ear3PZZz+FRnqg+6Le3Jm+e4=;
+	s=korg; t=1789670523;
+	bh=zjjMwWQ/s/dGObn5fyyCiELJNNpFcida2p090UK5bt4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XSurb4CaMQqarceivWbJZlY8GCg5utlJEhU6AwB6OubuHLwzbSq7bFq/CNOedy7rM
-	 su4r7ft5gxRbT5gTyuFp1kSFXh0F68XPAG9sBZImP/OLn4OUIiCqRHYOBgXTrbYS7y
-	 FIJ4C8i6YSdYKnwEeisI6hr+CECyCZOGTaQ7wyh4=
+	b=rqdpM32jp6m3jPSgmwZz54hLEan8+3X1MEnJbkk0ION1aaijTlQsUb72jgBxIcyWe
+	 nvoiNrQHyUv0EfyzgEKJcYJNBoKUlbvQUHMYqn7VFbfZkl36XvGVXM5nlSk9ujOqzm
+	 zaxSi6Swg34dGX1if+hzQwfeg+ZL8wRu00nJoZLU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Carolina Jubran <cjubran@nvidia.com>,
-	Shahar Shitrit <shshitrit@nvidia.com>,
+	Yael Chemla <ychemla@nvidia.com>,
+	Dragos Tatulea <dtatulea@nvidia.com>,
 	Tariq Toukan <tariqt@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0689/1102] net/mlx5e: Fix use-after-free race in sample_restore_put()
-Date: Thu, 17 Sep 2026 16:10:32 +0100
-Message-ID: <20260917151557.568470321@linuxfoundation.org>
+Subject: [PATCH 6.12 0690/1102] net/mlx5: E-Switch: fix use-after-free in mlx5_eswitch_termtbl_put
+Date: Thu, 17 Sep 2026 16:10:33 +0100
+Message-ID: <20260917151557.595248728@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -53,51 +53,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Carolina Jubran <cjubran@nvidia.com>
+From: Yael Chemla <ychemla@nvidia.com>
 
-[ Upstream commit af3aef0245abbab5e9f6302e7a7d6407187afb71 ]
+[ Upstream commit 7ee07f601f8f507c9faf25c68a49396ab8950596 ]
 
-Concurrent teardown of TC sample rules sharing the same restore
-context may re-read restore->count after dropping restore_lock.
-At that point another thread may already have completed cleanup and
-freed the restore object.
+In mlx5_eswitch_termtbl_put(), the zero-ref cleanup check reads
+tt->ref_count after termtbl_mutex has been released.  Two concurrent
+callers on the same mlx5_termtbl_handle race: one decrements ref_count
+to zero, removes the hash entry, and calls kfree(tt) while the other
+has already dropped the mutex and is about to evaluate
+if (!tt->ref_count), producing a use-after-free.
 
-Use the result of the refcount decrement while holding restore_lock to
-determine whether cleanup is needed.
+Fix this by capturing the result of the decrement into a stack-local
+last variable before dropping the mutex.  The cleanup decision is now
+made entirely under termtbl_mutex, and tt is not touched after
+kfree.
 
-Fixes: 36a3196256bf ("net/mlx5e: TC, Add sampler restore handle API")
-Signed-off-by: Carolina Jubran <cjubran@nvidia.com>
-Reviewed-by: Shahar Shitrit <shshitrit@nvidia.com>
+Fixes: 10caabdaad5a ("net/mlx5e: Use termination table for VLAN push actions")
+Signed-off-by: Yael Chemla <ychemla@nvidia.com>
+Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
 Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20260902193341.3668809-1-tariqt@nvidia.com
+Link: https://patch.msgid.link/20260902193514.3668880-1-tariqt@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en/tc/sample.c | 7 +++++--
+ .../ethernet/mellanox/mlx5/core/eswitch_offloads_termtbl.c | 7 +++++--
  1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/tc/sample.c b/drivers/net/ethernet/mellanox/mlx5/core/en/tc/sample.c
-index 5db239cae8145..5ae13af900308 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en/tc/sample.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en/tc/sample.c
-@@ -311,12 +311,15 @@ sample_restore_get(struct mlx5e_tc_psample *tc_psample, u32 obj_id,
- static void
- sample_restore_put(struct mlx5e_tc_psample *tc_psample, struct mlx5e_sample_restore *restore)
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads_termtbl.c b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads_termtbl.c
+index 40bdc677f051d..e282f65b8756a 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads_termtbl.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads_termtbl.c
+@@ -163,12 +163,15 @@ void
+ mlx5_eswitch_termtbl_put(struct mlx5_eswitch *esw,
+ 			 struct mlx5_termtbl_handle *tt)
  {
 +	bool last;
 +
- 	mutex_lock(&tc_psample->restore_lock);
--	if (--restore->count == 0)
-+	last = --restore->count == 0;
+ 	mutex_lock(&esw->offloads.termtbl_mutex);
+-	if (--tt->ref_count == 0)
++	last = (--tt->ref_count == 0);
 +	if (last)
- 		hash_del(&restore->hlist);
- 	mutex_unlock(&tc_psample->restore_lock);
+ 		hash_del(&tt->termtbl_hlist);
+ 	mutex_unlock(&esw->offloads.termtbl_mutex);
  
--	if (!restore->count) {
+-	if (!tt->ref_count) {
 +	if (last) {
- 		mlx5_del_flow_rules(restore->rule);
- 		mlx5_modify_header_dealloc(tc_psample->esw->dev, restore->modify_hdr);
- 		kfree(restore);
+ 		mlx5_del_flow_rules(tt->rule);
+ 		mlx5_destroy_flow_table(tt->termtbl);
+ 		kfree(tt);
 -- 
 2.53.0
 
