@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF7963B3BE7;
-	Thu, 17 Sep 2026 17:17:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 209FE4EF15B;
+	Thu, 17 Sep 2026 17:17:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789665447; cv=none; b=o0cNdklW99DczmAUTbQFFLyRrV2MCORIUoJtcb34l8WUALxQx7Ep7Y8+Kxy8C9nsPwd05+oprHdVwkmLf8DIx3pEOFIlqXKO/7SLrs0rWvJYyMdqWs9Ph3gpesQfplOWPUI0en3PdmNouv0Os/MT565z5xrC+dkoWjS90aSfA+w=
+	t=1789665450; cv=none; b=j3h1bXaDK3K8b1zPVInzwkPdvm5sbuOhqBYgQCA2p1z5eVnBB0CrlNw3chym9E7Oh49jC6GXqfQY+XyTuvUOMQkSgeg9pwU/mNnSrxD1v18lENcyBHnNsGkGAU58RlzFBKfPHkURVUNOqLu3awb5SeV9sKaraGRhBIc875QSDNQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789665447; c=relaxed/simple;
-	bh=VpBlTVutulHVumXLvRBuvzTxPj7vQ0lwxKXH73u40hA=;
+	s=arc-20240116; t=1789665450; c=relaxed/simple;
+	bh=ftZvoQLpqjAm4soCz46QTIXSP2QztcVix8Wn0r9vuwI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l4JB8V7flhnoIKJIwf2ZWrOXTim2koyGri1MVvZTDQVPZITZCZWcwFCelh1wFEsnX/tyATkVs5rncKsM4zH++810zHzae6pjjkZCeFPczfZsLB52haAYwMEty7iYuv6K4z+gTMLdzNjEqhGYf45r38z2VaPRwt3I138NkiSkux4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b6uEpNzq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=eCz36ETiLKZzdO5o27+DFpJi3vqp83Esf556ZScNDtQZRqRgXrvOK+QNICCeGLHu70KA9KrGrOStx0JEJO+fpq9mgJihvfvuZuYMYH6sOC09wM8jExI3Gi1ZsCbxKXVf2GJUY7Xm7aKc2GVvXNuNWewMPx+nejVdHv/nefHMMog=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UCdm5j8d; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b6uEpNzq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4ECF01F00893;
-	Thu, 17 Sep 2026 17:17:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UCdm5j8d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 724081F000FF;
+	Thu, 17 Sep 2026 17:17:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789665445;
-	bh=SLhaJaO6DIYdl/gW2JxgJjLtMj/0ih83rk/Mgbctig8=;
+	s=korg; t=1789665449;
+	bh=YrmsIOFU+T0MwY0l408ZdjJqduH5XDvwsprtqPJzR00=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=b6uEpNzqR5pmlvypcTZGTxOXiXOsVpKvv/EHODEAC3duEriAACJM6cQ11ZGapozbL
-	 AfpH8bsOtS3J1Exc6zzA5mKy8dJIA0kPghD9nTTmcCrmgOjskaRmw2OZimaLZfLMOJ
-	 1sQbkpZUqqXsMor4Dz/DQI37yijteigUVe87XziA=
+	b=UCdm5j8d1KyHEuUz4tqkL/8OrnRHRz/abL+THYaAcaWB71tqH1X16c05ic4qxUCtn
+	 d96zl4QFl0bShohRekdcRe5Kwsdy2yJvA0lSkfm1UakC8WVkX4EBMo1CglpjSFkko3
+	 rtoJonKKqOByHoDUjZqWYwZsbxwk/E5afDxqIHPU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tamas Petz <tamas.petz@arm.com>,
-	Leo Yan <leo.yan@arm.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Hui Su <sh_def@163.com>,
+	Nam Cao <namcao@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0708/1250] perf/core: Skip empty AUX records with only format flags
-Date: Thu, 17 Sep 2026 16:08:23 +0100
-Message-ID: <20260917151611.089177725@linuxfoundation.org>
+Subject: [PATCH 6.18 0691/1250] staging: fbtft: make dirty_lock IRQ-safe
+Date: Thu, 17 Sep 2026 16:08:06 +0100
+Message-ID: <20260917151610.619929911@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -52,77 +51,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leo Yan <leo.yan@arm.com>
+From: Hui Su <sh_def@163.com>
 
-[ Upstream commit 8a7f5b5e860b5c113ca99acd5b1e9074f5c5af3c ]
+[ Upstream commit f576944a59f31bcffff121117ebf452c5dd162b7 ]
 
-perf_aux_output_end() emits a PERF_RECORD_AUX when the recorded size is
-nonzero or when any flag other than PERF_AUX_FLAG_OVERWRITE is set.
+fbtft_mkdirty() can be reached from the fbcon rendering path while
+processing printk() in hardirq context. Meanwhile, dirty_lock is also
+taken by fbtft_deferred_io() in workqueue context with local interrupts
+enabled.
 
-PMU format flags describe how an AUX payload is encoded. TRBE driver
-sets PERF_AUX_FLAG_CORESIGHT_FORMAT_RAW for raw trace buffers, causing
-an AUX record to be emitted even when no trace data.
+Lockdep reports a possible IRQ lock inversion involving dirty_lock and
+console_owner. A hardirq can interrupt a CPU holding dirty_lock and
+enter the console rendering path, which can attempt to acquire
+dirty_lock again.
 
-This is noticeable when tracing a task with strace. Ptrace stops
-repeatedly end empty AUX transactions, producing many zero-sized
-PERF_RECORD_AUX records. For example:
+The following lockdep report was observed on an RK3566 system with
+CONFIG_PROVE_LOCKING enabled:
 
-  perf record -e cs_etm//u -m,128M -- strace ls
+  WARNING: possible irq lock inversion dependency detected
+  swapper/2/0 just changed the state of lock:
+  (console_owner){-...}-{0:0}
+  but this lock took another, HARDIRQ-unsafe lock in the past:
+  (&par->dirty_lock){+.+.}-{2:2}
 
-  perf script -D 2>&1 |
-     awk '/PERF_RECORD_AUX offset/ {
-        for (i = 1; i <= NF; i++)
-                if ($i == "size:" && $(i + 1) == "0")
-                        count++
-     }
-     END { print count }'
-  165
+  CPU0                    CPU1
+  ----                    ----
+  lock(&par->dirty_lock);
+                         local_irq_disable();
+                         lock(console_owner);
+                         lock(&par->dirty_lock);
+  <Interrupt>
+    lock(console_owner);
 
-This recording contains 165 zero-sized AUX records which provide no
-useful information to userspace.
+  *** DEADLOCK ***
 
-Ignore PERF_AUX_FLAG_PMU_FORMAT_TYPE_MASK, together with
-PERF_AUX_FLAG_OVERWRITE, when deciding whether an empty AUX record is
-useful. Zero-sized records carrying TRUNCATED, PARTIAL or COLLISION
-are still emitted.
+Use spin_lock_irqsave() for fbtft_mkdirty() and spin_lock_irq() for
+fbtft_deferred_io(). They only access the dirty line range, so the
+IRQ-off regions remain short.
 
-Fixes: 547b60988e63 ("perf: aux: Add flags for the buffer format")
-Reported-by: Tamas Petz <tamas.petz@arm.com>
-Signed-off-by: Leo Yan <leo.yan@arm.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://patch.msgid.link/20260825-perf_core_fix_zero_aux_records-v1-1-23b95e8d5df3@arm.com
+Fixes: c296d5f9957c ("staging: fbtft: core support")
+Signed-off-by: Hui Su <sh_def@163.com>
+Link: https://lore.kernel.org/lkml/20260804173712.176017-1-sh_def@163.com/
+Reviewed-by: Nam Cao <namcao@linutronix.de>
+Link: https://patch.msgid.link/20260807150953.2811933-3-sh_def@163.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/events/ring_buffer.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/staging/fbtft/fbtft-core.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/kernel/events/ring_buffer.c b/kernel/events/ring_buffer.c
-index dc2aa2a7109ef..6d805a7168be6 100644
---- a/kernel/events/ring_buffer.c
-+++ b/kernel/events/ring_buffer.c
-@@ -509,7 +509,10 @@ void perf_aux_output_end(struct perf_output_handle *handle, unsigned long size)
- 	/*
- 	 * Only send RECORD_AUX if we have something useful to communicate
- 	 *
--	 * Note: the OVERWRITE records by themselves are not considered
-+	 * PMU_FORMAT bits identify the PMU type rather than an AUX event
-+	 * has occurred, so ignore them for zero-sized records.
-+	 *
-+	 * The OVERWRITE records by themselves are not considered
- 	 * useful, as they don't communicate any *new* information,
- 	 * aside from the short-lived offset, that becomes history at
- 	 * the next event sched-in and therefore isn't useful.
-@@ -518,7 +521,9 @@ void perf_aux_output_end(struct perf_output_handle *handle, unsigned long size)
- 	 * offset. So, from now on we don't output AUX records that
- 	 * have *only* OVERWRITE flag set.
- 	 */
--	if (size || (handle->aux_flags & ~(u64)PERF_AUX_FLAG_OVERWRITE))
-+	if (size ||
-+	    (handle->aux_flags & ~(u64)(PERF_AUX_FLAG_PMU_FORMAT_TYPE_MASK |
-+					PERF_AUX_FLAG_OVERWRITE)))
- 		perf_event_aux_event(handle->event, aux_head, size,
- 				     handle->aux_flags);
+diff --git a/drivers/staging/fbtft/fbtft-core.c b/drivers/staging/fbtft/fbtft-core.c
+index 8a5ccc8ae0a18..ff751d24de225 100644
+--- a/drivers/staging/fbtft/fbtft-core.c
++++ b/drivers/staging/fbtft/fbtft-core.c
+@@ -299,6 +299,7 @@ static void fbtft_mkdirty(struct fb_info *info, int y, int height)
+ {
+ 	struct fbtft_par *par = info->par;
+ 	struct fb_deferred_io *fbdefio = info->fbdefio;
++	unsigned long flags;
  
+ 	/* special case, needed ? */
+ 	if (y == -1) {
+@@ -307,12 +308,12 @@ static void fbtft_mkdirty(struct fb_info *info, int y, int height)
+ 	}
+ 
+ 	/* Mark display lines/area as dirty */
+-	spin_lock(&par->dirty_lock);
++	spin_lock_irqsave(&par->dirty_lock, flags);
+ 	if (y < par->dirty_lines_start)
+ 		par->dirty_lines_start = y;
+ 	if (y + height - 1 > par->dirty_lines_end)
+ 		par->dirty_lines_end = y + height - 1;
+-	spin_unlock(&par->dirty_lock);
++	spin_unlock_irqrestore(&par->dirty_lock, flags);
+ 
+ 	/* Schedule deferred_io to update display (no-op if already on queue)*/
+ 	schedule_delayed_work(&info->deferred_work, fbdefio->delay);
+@@ -325,13 +326,13 @@ static void fbtft_deferred_io(struct fb_info *info, struct list_head *pagereflis
+ 	struct fb_deferred_io_pageref *pageref;
+ 	unsigned int y_low = 0, y_high = 0;
+ 
+-	spin_lock(&par->dirty_lock);
++	spin_lock_irq(&par->dirty_lock);
+ 	dirty_lines_start = par->dirty_lines_start;
+ 	dirty_lines_end = par->dirty_lines_end;
+ 	/* set display line markers as clean */
+ 	par->dirty_lines_start = par->info->var.yres - 1;
+ 	par->dirty_lines_end = 0;
+-	spin_unlock(&par->dirty_lock);
++	spin_unlock_irq(&par->dirty_lock);
+ 
+ 	/* Mark display lines as dirty */
+ 	list_for_each_entry(pageref, pagereflist, list) {
 -- 
 2.53.0
 
