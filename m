@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 067303CD8BF;
-	Thu, 17 Sep 2026 18:45:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 296B24078D3;
+	Thu, 17 Sep 2026 18:45:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789670745; cv=none; b=HhwktFg7D5LT6VTITVxYQ8zAOwX57iSNIjxkYfEWeS2UCYltvz28skATtZf4M9u9wRLdOEMYZHGoVx8v2UIVqlM2fPnIECJtUUoe4ETzcxGb/+TqLPcwFv0oY3SS5/JWEuR61a/dc77u/oDku7+0kSzBq0GqZsGH8v8Uadt9h4s=
+	t=1789670748; cv=none; b=pRi3SM1XOs7lVEPE85L7U86ao9MsLitst9w54LN/gGXk3KiNJemSTB/jpX+k8U1Z0aWitXbXZizENKhs8ItEbZ68hRhnqWGbMMZnCZ3imkly7jYW5DdZ2vUnF/2kFL8IrYvHHJL/6YeWt8uzquX/vlfdDVUoL1twejcMxvjCoRU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789670745; c=relaxed/simple;
-	bh=RtJzv5r9y5tadXdBDeUUneuuAPa+DBRDM53+IcCI6EU=;
+	s=arc-20240116; t=1789670748; c=relaxed/simple;
+	bh=kFfdRCYV4khLP7w8CMh/z87WZnA8yH30LzZJYwLKE8E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hb6dV4xckgF4OfjIhpIjAM78G8pi/XI6vUVRQvs1ksIJbxnAglcyCj42VBXxFIRRhuVogi0Pr2QBkTu0RFoRPfz5YUq48WXW4UxHrruCJ70B6rc6Ojp8oEgDHjIv841Kxe9VKMcmi2yLrjAIcK0UXRMUeW69eVgrrft49ACgXcY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZqX/e8Ss; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=Bl407gq+0T9IqD7EHq5cTlit5qgkJjkYDNbyHw/z7zZ7g0YHLyswl4MurFKNlRnkPJ0DlTXFHMc1QmcZrAo2+Y7eIZNXYY2YuvEO/2Y7MY1e4ik0D7niehUvRz7xDH1szx0Bu5AqpXRTKOkdVdupaGB4r5CPSWDmDyXClVhHGgk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J7K67XqT; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZqX/e8Ss"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 174991F00893;
-	Thu, 17 Sep 2026 18:45:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J7K67XqT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81F131F000FF;
+	Thu, 17 Sep 2026 18:45:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789670743;
-	bh=fvkipSENLHWWJuvgwe91LfFND7lh/knBIJz0rdNbgag=;
+	s=korg; t=1789670747;
+	bh=tiBQjeofGT6QpvmFVeIxHnTf0NlGra2y9OOjAkSE/uk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZqX/e8Ssvc109taFbyC4/D6XK4nlAFK8YVFQjKuNYRwxzm/1Yce3+LHC9VLr03O3J
-	 MIF8LIKkCt7cgr5+3i9JtIJmslz5b2ZUV4QBVM8XWDOxjeV6jN8qmQfeE8v8yWdFol
-	 NdDBqgnBQB/elpiKpeG6JCMhlN8aYeAr9kb+5rTI=
+	b=J7K67XqTfMsZrSILP9vQzitO96b3fZCCd1h4EqYKWfu+maX8COeq03MnV4NDNmxrD
+	 0vCTem4umheMq19zVdZHsDk4B0HdJBaQbJghZ5cdBddA00trdpyTwL7owDO+hqHanS
+	 QWo4bFLUhreUuHPWk3TKhOcaugiqb0q2D0TXETSg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Golle <daniel@makrotopia.org>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Vladimir Oltean <olteanv@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0755/1102] net: dsa: lantiq_gswip: prepare for more CPU port options
-Date: Thu, 17 Sep 2026 16:11:38 +0100
-Message-ID: <20260917151559.381162060@linuxfoundation.org>
+Subject: [PATCH 6.12 0720/1102] virtio_input: stop callbacks before unregistering input device
+Date: Thu, 17 Sep 2026 16:11:03 +0100
+Message-ID: <20260917151558.423350217@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -53,222 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Golle <daniel@makrotopia.org>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit 2bec1c3836990d1159d2fe113f3ffddb48b9e040 ]
+[ Upstream commit d7808b37da0a619cf1fa541c2384e783fecc2480 ]
 
-The MaxLinear GSW1xx series of switches support using either the
-(R)(G)MII interface on port 5 or the SGMII interface on port 4 to be
-used as CPU port. Prepare for supporting them by defining a mask of
-allowed CPU ports instead of a single port.
+virtinput_remove() unregisters the input device before resetting the
+virtio device. virtinput_recv_events() drops vi->lock around input_event(),
+so clearing vi->ready does not stop a callback that passed the entry check.
+It can still use vi->idev, requeue buffers and kick the queue.
 
-Signed-off-by: Daniel Golle <daniel@makrotopia.org>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Reviewed-by: Vladimir Oltean <olteanv@gmail.com>
-Link: https://patch.msgid.link/879c66672d26fe49c1f5d9aa40d8ebc0f31885ab.1755878232.git.daniel@makrotopia.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 59fb389ad6bf ("net: dsa: lantiq_gswip: fix GSWIP_MDIO_PHY_FCONTX_EN value")
+Reset first, as virtinput_freeze() already does. With the preceding core
+change, reset waits for callbacks before input_unregister_device() can
+free vi->idev. Recheck vi->ready after taking the lock again: keep draining
+completed events so an input packet is not truncated, but stop requeueing
+buffers and kicking the queue.
+
+With evdev attached, input_unregister_handle() currently waits for an RCU
+grace period, which also waits out IRQ callbacks. This masks the lifetime
+bug on PCI and MMIO, but does not protect sleepable callbacks on other
+transports.
+
+Fixes: 271c865161c5 ("Add virtio-input driver.")
+Assisted-by: LLM
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20260905152059.89560-3-kmehltretter@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/lantiq_gswip.c | 79 +++++++++++++++++++++-------------
- 1 file changed, 50 insertions(+), 29 deletions(-)
+ drivers/virtio/virtio_input.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/dsa/lantiq_gswip.c b/drivers/net/dsa/lantiq_gswip.c
-index 2c2b943ad13e1..dbfadc9831f54 100644
---- a/drivers/net/dsa/lantiq_gswip.c
-+++ b/drivers/net/dsa/lantiq_gswip.c
-@@ -253,7 +253,7 @@
- 
- struct gswip_hw_info {
- 	int max_ports;
--	int cpu_port;
-+	unsigned int allowed_cpu_ports;
- 	void (*phylink_get_caps)(struct dsa_switch *ds, int port,
- 				 struct phylink_config *config);
- };
-@@ -655,7 +655,6 @@ static int gswip_add_single_port_br(struct gswip_priv *priv, int port, bool add)
- {
- 	struct gswip_pce_table_entry vlan_active = {0,};
- 	struct gswip_pce_table_entry vlan_mapping = {0,};
--	unsigned int cpu_port = priv->hw_info->cpu_port;
- 	int err;
- 
- 	vlan_active.index = port + 1;
-@@ -675,7 +674,7 @@ static int gswip_add_single_port_br(struct gswip_priv *priv, int port, bool add)
- 	vlan_mapping.index = port + 1;
- 	vlan_mapping.table = GSWIP_TABLE_VLAN_MAPPING;
- 	vlan_mapping.val[0] = 0 /* vid */;
--	vlan_mapping.val[1] = BIT(port) | BIT(cpu_port);
-+	vlan_mapping.val[1] = BIT(port) | dsa_cpu_ports(priv->ds);
- 	vlan_mapping.val[2] = 0;
- 	err = gswip_pce_table_entry_write(priv, &vlan_mapping);
- 	if (err) {
-@@ -814,10 +813,10 @@ static int gswip_port_vlan_filtering(struct dsa_switch *ds, int port,
- 
- static int gswip_setup(struct dsa_switch *ds)
- {
-+	unsigned int cpu_ports = dsa_cpu_ports(ds);
- 	struct gswip_priv *priv = ds->priv;
--	unsigned int cpu_port = priv->hw_info->cpu_port;
--	int i;
--	int err;
-+	struct dsa_port *cpu_dp;
-+	int err, i;
- 
- 	gswip_switch_w(priv, GSWIP_SWRES_R0, GSWIP_SWRES);
- 	usleep_range(5000, 10000);
-@@ -839,9 +838,9 @@ static int gswip_setup(struct dsa_switch *ds)
+diff --git a/drivers/virtio/virtio_input.c b/drivers/virtio/virtio_input.c
+index c5a1959035d50..177894121f3a7 100644
+--- a/drivers/virtio/virtio_input.c
++++ b/drivers/virtio/virtio_input.c
+@@ -46,9 +46,12 @@ static void virtinput_recv_events(struct virtqueue *vq)
+ 				    le16_to_cpu(event->code),
+ 				    le32_to_cpu(event->value));
+ 			spin_lock_irqsave(&vi->lock, flags);
++			if (!vi->ready)
++				continue;
+ 			virtinput_queue_evtbuf(vi, event);
+ 		}
+-		virtqueue_kick(vq);
++		if (vi->ready)
++			virtqueue_kick(vq);
  	}
- 
- 	/* Default unknown Broadcast/Multicast/Unicast port maps */
--	gswip_switch_w(priv, BIT(cpu_port), GSWIP_PCE_PMAP1);
--	gswip_switch_w(priv, BIT(cpu_port), GSWIP_PCE_PMAP2);
--	gswip_switch_w(priv, BIT(cpu_port), GSWIP_PCE_PMAP3);
-+	gswip_switch_w(priv, cpu_ports, GSWIP_PCE_PMAP1);
-+	gswip_switch_w(priv, cpu_ports, GSWIP_PCE_PMAP2);
-+	gswip_switch_w(priv, cpu_ports, GSWIP_PCE_PMAP3);
- 
- 	/* Deactivate MDIO PHY auto polling. Some PHYs as the AR8030 have an
- 	 * interoperability problem with this auto polling mechanism because
-@@ -870,13 +869,15 @@ static int gswip_setup(struct dsa_switch *ds)
- 				   GSWIP_MII_CFG_EN | GSWIP_MII_CFG_ISOLATE,
- 				   0, i);
- 
--	/* enable special tag insertion on cpu port */
--	gswip_switch_mask(priv, 0, GSWIP_FDMA_PCTRL_STEN,
--			  GSWIP_FDMA_PCTRLp(cpu_port));
-+	dsa_switch_for_each_cpu_port(cpu_dp, ds) {
-+		/* enable special tag insertion on cpu port */
-+		gswip_switch_mask(priv, 0, GSWIP_FDMA_PCTRL_STEN,
-+				  GSWIP_FDMA_PCTRLp(cpu_dp->index));
- 
--	/* accept special tag in ingress direction */
--	gswip_switch_mask(priv, 0, GSWIP_PCE_PCTRL_0_INGRESS,
--			  GSWIP_PCE_PCTRL_0p(cpu_port));
-+		/* accept special tag in ingress direction */
-+		gswip_switch_mask(priv, 0, GSWIP_PCE_PCTRL_0_INGRESS,
-+				  GSWIP_PCE_PCTRL_0p(cpu_dp->index));
-+	}
- 
- 	gswip_switch_mask(priv, 0, GSWIP_BM_QUEUE_GCTRL_GL_MOD,
- 			  GSWIP_BM_QUEUE_GCTRL);
-@@ -972,7 +973,6 @@ static int gswip_vlan_add_unaware(struct gswip_priv *priv,
- {
- 	struct gswip_pce_table_entry vlan_mapping = {0,};
- 	unsigned int max_ports = priv->hw_info->max_ports;
--	unsigned int cpu_port = priv->hw_info->cpu_port;
- 	bool active_vlan_created = false;
- 	int idx = -1;
- 	int i;
-@@ -1012,7 +1012,7 @@ static int gswip_vlan_add_unaware(struct gswip_priv *priv,
- 	}
- 
- 	/* Update the VLAN mapping entry and write it to the switch */
--	vlan_mapping.val[1] |= BIT(cpu_port);
-+	vlan_mapping.val[1] |= dsa_cpu_ports(priv->ds);
- 	vlan_mapping.val[1] |= BIT(port);
- 	err = gswip_pce_table_entry_write(priv, &vlan_mapping);
- 	if (err) {
-@@ -1034,7 +1034,7 @@ static int gswip_vlan_add_aware(struct gswip_priv *priv,
- {
- 	struct gswip_pce_table_entry vlan_mapping = {0,};
- 	unsigned int max_ports = priv->hw_info->max_ports;
--	unsigned int cpu_port = priv->hw_info->cpu_port;
-+	unsigned int cpu_ports = dsa_cpu_ports(priv->ds);
- 	bool active_vlan_created = false;
- 	int idx = -1;
- 	int fid = -1;
-@@ -1081,8 +1081,8 @@ static int gswip_vlan_add_aware(struct gswip_priv *priv,
- 
- 	vlan_mapping.val[0] = vid;
- 	/* Update the VLAN mapping entry and write it to the switch */
--	vlan_mapping.val[1] |= BIT(cpu_port);
--	vlan_mapping.val[2] |= BIT(cpu_port);
-+	vlan_mapping.val[1] |= cpu_ports;
-+	vlan_mapping.val[2] |= cpu_ports;
- 	vlan_mapping.val[1] |= BIT(port);
- 	if (untagged)
- 		vlan_mapping.val[2] &= ~BIT(port);
-@@ -1109,7 +1109,6 @@ static int gswip_vlan_remove(struct gswip_priv *priv,
- {
- 	struct gswip_pce_table_entry vlan_mapping = {0,};
- 	unsigned int max_ports = priv->hw_info->max_ports;
--	unsigned int cpu_port = priv->hw_info->cpu_port;
- 	int idx = -1;
- 	int i;
- 	int err;
-@@ -1145,7 +1144,7 @@ static int gswip_vlan_remove(struct gswip_priv *priv,
- 	}
- 
- 	/* In case all ports are removed from the bridge, remove the VLAN */
--	if ((vlan_mapping.val[1] & ~BIT(cpu_port)) == 0) {
-+	if (!(vlan_mapping.val[1] & ~dsa_cpu_ports(priv->ds))) {
- 		err = gswip_vlan_active_remove(priv, idx);
- 		if (err) {
- 			dev_err(priv->dev, "failed to write active VLAN: %d\n",
-@@ -2090,6 +2089,30 @@ static int gswip_gphy_fw_list(struct gswip_priv *priv,
- 	return err;
+ 	spin_unlock_irqrestore(&vi->lock, flags);
  }
+@@ -348,8 +351,9 @@ static void virtinput_remove(struct virtio_device *vdev)
+ 	vi->ready = false;
+ 	spin_unlock_irqrestore(&vi->lock, flags);
  
-+static int gswip_validate_cpu_port(struct dsa_switch *ds)
-+{
-+	struct gswip_priv *priv = ds->priv;
-+	struct dsa_port *cpu_dp;
-+	int cpu_port = -1;
-+
-+	dsa_switch_for_each_cpu_port(cpu_dp, ds) {
-+		if (cpu_port != -1)
-+			return dev_err_probe(ds->dev, -EINVAL,
-+					     "only a single CPU port is supported\n");
-+
-+		cpu_port = cpu_dp->index;
-+	}
-+
-+	if (cpu_port == -1)
-+		return dev_err_probe(ds->dev, -EINVAL, "no CPU port defined\n");
-+
-+	if (BIT(cpu_port) & ~priv->hw_info->allowed_cpu_ports)
-+		return dev_err_probe(ds->dev, -EINVAL,
-+				     "unsupported CPU port defined\n");
-+
-+	return 0;
-+}
-+
- static int gswip_probe(struct platform_device *pdev)
- {
- 	struct device_node *np, *gphy_fw_np;
-@@ -2172,12 +2195,10 @@ static int gswip_probe(struct platform_device *pdev)
- 		dev_err_probe(dev, err, "dsa switch registration failed\n");
- 		goto gphy_fw_remove;
- 	}
--	if (!dsa_is_cpu_port(priv->ds, priv->hw_info->cpu_port)) {
--		err = dev_err_probe(dev, -EINVAL,
--				    "wrong CPU port defined, HW only supports port: %i\n",
--				    priv->hw_info->cpu_port);
-+
-+	err = gswip_validate_cpu_port(priv->ds);
-+	if (err)
- 		goto disable_switch;
--	}
- 
- 	platform_set_drvdata(pdev, priv);
- 
-@@ -2226,13 +2247,13 @@ static void gswip_shutdown(struct platform_device *pdev)
- 
- static const struct gswip_hw_info gswip_xrx200 = {
- 	.max_ports = 7,
--	.cpu_port = 6,
-+	.allowed_cpu_ports = BIT(6),
- 	.phylink_get_caps = gswip_xrx200_phylink_get_caps,
- };
- 
- static const struct gswip_hw_info gswip_xrx300 = {
- 	.max_ports = 7,
--	.cpu_port = 6,
-+	.allowed_cpu_ports = BIT(6),
- 	.phylink_get_caps = gswip_xrx300_phylink_get_caps,
- };
- 
+-	input_unregister_device(vi->idev);
++	/* Callbacks use vi->idev. */
+ 	virtio_reset_device(vdev);
++	input_unregister_device(vi->idev);
+ 	while ((buf = virtqueue_detach_unused_buf(vi->sts)) != NULL)
+ 		kfree(buf);
+ 	vdev->config->del_vqs(vdev);
 -- 
 2.53.0
 
