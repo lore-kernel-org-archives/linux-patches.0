@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4527535FA8;
-	Thu, 17 Sep 2026 17:02:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D24C9535FC2;
+	Thu, 17 Sep 2026 17:02:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789664529; cv=none; b=Dx7bL+bUtg2bJp8Cwzr7+2UFpuHRhCJcJP//0cWF9KREMFdpdSEpjLAVejVlLO7e1euyGY8z6VaWIveXqe4sk5GYm2D9iWMyz6a4zzbDOKR8wxPHrqZiuxwJCgRLxEyLP+FHJu/WrFLg6kbK1joolCpUEWIzs44BKWPq+lpSlZQ=
+	t=1789664533; cv=none; b=dYVRDbe7KcvyvdrjL/jm0/46x1vehKbvii8ecLl7BkgP9V4oFTiSTaBxBdVKnz7WLm0eC0k0FAa504w++pjUhpNGsyWjbEv3l4TGBbgjdM8ovLz60uPA4b7Xje7kXRZhDScEJgchQL3NSgVFKjgk5WAfZFM7ujTy0KnykjfzWLs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789664529; c=relaxed/simple;
-	bh=PYk71ssYIpOrdVN3/kn43OuHCVJ8/wJkEgEvZP+64FA=;
+	s=arc-20240116; t=1789664533; c=relaxed/simple;
+	bh=zUf7C6PEDl/9SghJsHETKQa9DVTptZ5ooIvUnYErZB8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dnbg1lo44wYxJgji24PbobJ/wSG3MtF85nTv8uX3hCUvFJ5e0J2WusibjSbHDKH6SNeb5apf800SA1hISR3Z0dPn7YMroSzYRCj1MUzaw/ywpAQvKIaO9QRBDm7k3E0y9lK3bqyTB7mLhexARRV+Y+qljd3zquN2MFCRFnilVQE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dctnMi+W; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dE57xt4LEmjA+e78MqGLQTGfRnOz0j4/ESGeiAme53tHSUijTcYFNKlRQCMUpfmsqCwbu42CJhfSvWexifENFeW7n2FsM63sKIEU8Q7D8wEy75UPvBfDOoLwxAAv7rgqhdTnbogIL8d5ksb2IkgELEk6pUxN2iNK1ip1N6fLWNM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qBPhVGu4; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dctnMi+W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E704C1F000FF;
-	Thu, 17 Sep 2026 17:02:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qBPhVGu4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5B021F000FF;
+	Thu, 17 Sep 2026 17:02:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789664528;
-	bh=N0EgeF0ATohklC1ejVcl5ZyE91B9AjTETbFueqQRCXo=;
+	s=korg; t=1789664531;
+	bh=VVcB3O0SKSLxkYnHpIQkKN7d4C8D4INc9WAzs7MfCQY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dctnMi+WIPnNg4J84v9IpZNQHWHUZ22PndXOfyeFiOIglZNhPqVx/IftOSyQWAvjt
-	 2L0PVepiv9m+hyZCwqE+9qyUDjjZpvDVG/enswRezCXX+gtFW85bzm+Dkmy37NxEZU
-	 v3zjOUeVAPeW0R+/w0zjJ771BmaC57i98VezJUKc=
+	b=qBPhVGu466xRYQYJkujoR8uAHrUkbHuwCnErQLaxlQ2Er0rYxH1O8ipkQPyEqXZIo
+	 /6YfOHZKHb3TwbJ23MQV2zJrSm5+cDcxogbeWVg3QrD/nR8L5oA/jqblHogp10tz7A
+	 pvSDYjMoSJVFde+eO0iNxZGo9BW71r7o5PG8g4Zs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko AI Review <sashiko-bot@kernel.org>,
-	bui duc phuc <phucduc.bui@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Chen Zhang <zhangchen01@kylinos.cn>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0403/1250] ASoC: rockchip: spdif: Restore regcache cache-only mode on sync failure
-Date: Thu, 17 Sep 2026 16:03:18 +0100
-Message-ID: <20260917151602.950348165@linuxfoundation.org>
+Subject: [PATCH 6.18 0404/1250] Bluetooth: btusb: Add Realtek RTL8922AE VID/PID 0bda/d923
+Date: Thu, 17 Sep 2026 16:03:19 +0100
+Message-ID: <20260917151602.976905733@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -52,38 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: bui duc phuc <phucduc.bui@gmail.com>
+From: Chen Zhang <zhangchen01@kylinos.cn>
 
-[ Upstream commit 3546e9aa691ac981e4734fedd1646d0180784893 ]
+[ Upstream commit 5612ee230a33c450976c3bcaea174f1d816a2697 ]
 
-If regcache_sync() fails during runtime resume, the driver disables the
-clocks and returns an error. However, the regmap cache-only mode is left
-disabled.
-Restore cache-only mode in the error path so subsequent register accesses
-continue to use the cache while the device is inactive.
+Add the vendor/product ID (0x0bda, 0xd923) to usb_device_id table for
+Realtek RTL8922AE.
 
-Reported-by: Sashiko AI Review <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/all/20260522103713.6C09D1F000E9@smtp.kernel.org/
-Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
-Link: https://patch.msgid.link/20260602101608.45137-5-phucduc.bui@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+The device info from /sys/kernel/debug/usb/devices as below.
+
+T:  Bus=10 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  2 Spd=12   MxCh= 0
+D:  Ver= 1.00 Cls=e0(wlcon) Sub=01 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=0bda ProdID=d923 Rev= 0.00
+S:  Manufacturer=Realtek
+S:  Product=Bluetooth Radio
+S:  SerialNumber=00E04C885A01
+C:* #Ifs= 2 Cfg#= 1 Atr=e0 MxPwr=500mA
+I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=1ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS=  64 Ivl=0ms
+E:  Ad=82(I) Atr=02(Bulk) MxPS=  64 Ivl=0ms
+I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+I:  If#= 1 Alt= 6 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  63 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  63 Ivl=1ms
+
+Signed-off-by: Chen Zhang <zhangchen01@kylinos.cn>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/rockchip/rockchip_spdif.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/bluetooth/btusb.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/sound/soc/rockchip/rockchip_spdif.c b/sound/soc/rockchip/rockchip_spdif.c
-index d365168934dc6..7a15f680de2fe 100644
---- a/sound/soc/rockchip/rockchip_spdif.c
-+++ b/sound/soc/rockchip/rockchip_spdif.c
-@@ -97,6 +97,7 @@ static int rk_spdif_runtime_resume(struct device *dev)
- 
- 	ret = regcache_sync(spdif->regmap);
- 	if (ret) {
-+		regcache_cache_only(spdif->regmap, true);
- 		clk_disable_unprepare(spdif->mclk);
- 		clk_disable_unprepare(spdif->hclk);
- 	}
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index a75fd4a372636..befda7caca40a 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -605,6 +605,8 @@ static const struct usb_device_id quirks_table[] = {
+ 						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x0bda, 0xd922), .driver_info = BTUSB_REALTEK |
+ 						     BTUSB_WIDEBAND_SPEECH },
++	{ USB_DEVICE(0x0bda, 0xd923), .driver_info = BTUSB_REALTEK |
++						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x13d3, 0x3617), .driver_info = BTUSB_REALTEK |
+ 						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x13d3, 0x3616), .driver_info = BTUSB_REALTEK |
 -- 
 2.53.0
 
