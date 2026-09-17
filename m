@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F404B524AE7;
-	Thu, 17 Sep 2026 15:29:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 382FC39021A;
+	Thu, 17 Sep 2026 15:29:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789658983; cv=none; b=bmCvAl1zZBmXOnqSiTrXURQGczSCH4qYfJoVmptvY+Y/AMqfrYw6Y6vlf736PG4/00wfNWV0bhORKjWZU9k+LfOyeS9OgtDpVu7wt+mjhWmYv2r+tGsSSk8YZQ7qnYS7zHaePEq45iCFSXeRHiye3/bDYEa8Ff10WkIuXEikXDE=
+	t=1789658989; cv=none; b=fUP0jnXADHbmeGmezoNvMm0tkvlMY7Ub51CcNRzc4D8MY5ZzR7YdLPowcfq4OIcoAljX26vghOQKRSgYGbPM40gLHtMNtLRVjkxMXSRyh80aueEnHek8zgv0aGtu2dum2ucTpstPkMyTZJxygUss1rkA0c9VEypmbYpi8elYdcU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789658983; c=relaxed/simple;
-	bh=RfUuNIwD1SW74754mDwCVsz1z8xCme73xH0XJb6QMTs=;
+	s=arc-20240116; t=1789658989; c=relaxed/simple;
+	bh=Nv3S14ndQP+qmrvNg+BB4NWxOJu4UhX4I1eZCGxqGtQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qzFA5awfo6hpXYa8/u3oWr82/+ul6JESawbJGeTUl2EbPSXU28OwtxLgSVGAfR1O4h5qb5XRI/LKumjopPzsRMyXUTiQr21BbHvH+7eTV9L4lREU96ZGeIcfQjwVXVb7VLOUnjLWJjRqtz7hrWMzzJs2oxqbhUBWQgbxiG3rZx0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UZRZ38cH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=t3PsP1NZynfz8LlQez3RS6BidKheaJWHyphFRNus6zM2BrnRROHC8spN8EH0gDHS6cmlCWPYzrvtTooOiRukLKeUmUImk9MS/nY5BazgEGbuaqeQclP4nUYK+Uf5kFe9ojbZUJLgChLpAjHXHFBCyTM3Gnz2Z0VcdV5RUbSYJYg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FsDl1PEm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UZRZ38cH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42F401F00899;
-	Thu, 17 Sep 2026 15:29:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FsDl1PEm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D5171F0089A;
+	Thu, 17 Sep 2026 15:29:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789658971;
-	bh=5ezqZROagRiBibwaJhEX4/EaxjlPhLZiXfFz7IarLVg=;
+	s=korg; t=1789658983;
+	bh=FISipWQoKmN+68P+yXFx2hsf9YizvMRV+pSUlDO3xZE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UZRZ38cHHyiqhhrmEbRCQN4w4e5d30wH67/lxvf7C8iGlMv0e7szsY+VXF5mM5zVK
-	 LS0avm2IwZUYWvj2gcBWYz1ANlGv8qlWXct36AAYo1Z8tPZ6StJNCLVji5mn+Qw7nS
-	 buvUDOLa4X6Rcs6KMgmeMicJCCYHP5Pby+Hr6e0w=
+	b=FsDl1PEmCgW14g26nWbGnk51FSJN9Tf0o78ianMkYWQZqVAJVv8C1jMoCVRhwvgHw
+	 nqN61tKfApdfkJd7SVN9QfTonUL74rNcRdZETNcAw34M3I8ydy0X96Cro5ZcAh5KEH
+	 WybKZxgtYjrK2SEbcAjwJD9e+p24sbOpa33jh870=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Schlameuss <schlameuss@linux.ibm.com>,
-	Alexander Egorenkov <egorenar@linux.ibm.com>,
+	Thomas Richter <tmricht@linux.ibm.com>,
 	Vasily Gorbik <gor@linux.ibm.com>,
 	Heiko Carstens <hca@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 100/733] s390/time: Use jiffies instead of jiffies_64
-Date: Thu, 17 Sep 2026 16:06:48 +0100
-Message-ID: <20260917151353.444618092@linuxfoundation.org>
+Subject: [PATCH 7.2 104/733] s390/pai: Reduce excessive debug feature size
+Date: Thu, 17 Sep 2026 16:06:52 +0100
+Message-ID: <20260917151353.556479736@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -55,90 +54,46 @@ Content-Transfer-Encoding: 8bit
 
 From: Heiko Carstens <hca@linux.ibm.com>
 
-[ Upstream commit ca1f4a5ecab084af7f405baa902edbed171b57e6 ]
+[ Upstream commit 8cff0ac21658fedd4598e9904dd0c518bdaf5856 ]
 
-Christoph Schlameuss and Alexander Egorenkov reported a data-race
-reported by KCSAN when jiffies_64 is read:
+The pai debug feature is registered with 256 areas, where each area
+contains 32 pages. This sums up to a total of 32MiB. The code does not use
+any debug exceptions, which means that 255 of those areas are never
+used. In addition all existing debug feature calls have a lower level (5)
+than the default level (3).
 
-==================================================================
-BUG: KCSAN: data-race in do_account_vtime / tick_do_update_jiffies64
+This in turn means that without user interaction the debug feature is
+unused.
 
-write to 0x0000016599ea8600 of 8 bytes by interrupt on cpu 6:
- tick_do_update_jiffies64+0x140/0x250
-=============================================================>
-BUG: KCSAN: data-race in do_account_vtime / tick_do_update_ji>
+Reduce the number of areas to 1, and also reduce the number of pages for
+the remaining area to 1. Since user interaction is required, the user can
+also increase the size of the remaining area, instead of wasting memory by
+default.
 
-write to 0x0000016599ea8600 of 8 bytes by interrupt on cpu 6:
- tick_do_update_jiffies64+0x140/0x250
- tick_nohz_handler+0x2e6/0x300
- __run_hrtimer+0x156/0x4d0
- __hrtimer_run_queues+0xd2/0x150
-...
- system_call+0x72/0x90
+This reduces the total size of the debug feature to 4KiB.
 
-read to 0x0000016599ea8600 of 8 bytes by interrupt on cpu 12:
- do_account_vtime+0x7d6/0x860
- vtime_flush+0x26/0xe0
- update_process_times+0x32/0x160
- tick_nohz_handler+0x12a/0x300
-...
- system_call+0x72/0x90
-
-value changed: 0x00000000ffffaa6c -> 0x00000000ffffaa6d
-...
-=============================================================>
-
-Problem is that jiffies_64 instead of jiffies is used. Both are at the
-same address, but only jiffies is of volatile type, which prevents this
-warning.
-
-Change the vtime code so jiffies instead of jiffies_64 is used
-everywhere. This addresses also the inconsistency that both jiffies and
-jiffies_64 were used in the original patch which introduced this.
-
-Fixes: f341b8dff982 ("s390/vtime: limit MT scaling value updates")
-Reported-by: Christoph Schlameuss <schlameuss@linux.ibm.com>
-Reported-by: Alexander Egorenkov <egorenar@linux.ibm.com>
-Reviewed-by: Alexander Egorenkov <egorenar@linux.ibm.com>
-Tested-by: Alexander Egorenkov <egorenar@linux.ibm.com>
+Fixes: a3f8423622ef ("s390/pai_crypto: Add PAI crypto characteristics table for parameters")
+Reviewed-by: Thomas Richter <tmricht@linux.ibm.com>
 Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
 Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/kernel/vtime.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ arch/s390/kernel/perf_pai.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/s390/kernel/vtime.c b/arch/s390/kernel/vtime.c
-index d804e1140c2e9..efcbf406f03e7 100644
---- a/arch/s390/kernel/vtime.c
-+++ b/arch/s390/kernel/vtime.c
-@@ -32,7 +32,7 @@ static atomic64_t virt_timer_elapsed;
- DEFINE_PER_CPU(u64, mt_cycles[8]);
- static DEFINE_PER_CPU(u64, mt_scaling_mult) = { 1 };
- static DEFINE_PER_CPU(u64, mt_scaling_div) = { 1 };
--static DEFINE_PER_CPU(u64, mt_scaling_jiffies);
-+static DEFINE_PER_CPU(unsigned long, mt_scaling_jiffies);
- 
- static inline void set_vtimer(u64 expires)
+diff --git a/arch/s390/kernel/perf_pai.c b/arch/s390/kernel/perf_pai.c
+index cdb8006220ca0..ab76ed7ad791e 100644
+--- a/arch/s390/kernel/perf_pai.c
++++ b/arch/s390/kernel/perf_pai.c
+@@ -1221,7 +1221,7 @@ static int __init paipmu_setup(void)
+ static int __init pai_init(void)
  {
-@@ -81,7 +81,7 @@ static void update_mt_scaling(void)
- 		memcpy(cycles_old, cycles_new,
- 		       sizeof(u64) * (smp_cpu_mtid + 1));
- 	}
--	__this_cpu_write(mt_scaling_jiffies, jiffies_64);
-+	__this_cpu_write(mt_scaling_jiffies, jiffies);
- }
- 
- static inline u64 update_tsk_timer(unsigned long *tsk_vtime, u64 new)
-@@ -144,7 +144,7 @@ static int do_account_vtime(struct task_struct *tsk)
- 		lc->system_timer += timer;
- 
- 	/* Update MT utilization calculation */
--	if (smp_cpu_mtid && time_after64(jiffies_64, __this_cpu_read(mt_scaling_jiffies)))
-+	if (smp_cpu_mtid && time_after(jiffies, __this_cpu_read(mt_scaling_jiffies)))
- 		update_mt_scaling();
- 
- 	/* Calculate cputime delta */
+ 	/* Setup s390dbf facility */
+-	paidbg = debug_register("pai", 32, 256, 128);
++	paidbg = debug_register("pai", 1, 1, 128);
+ 	if (!paidbg) {
+ 		pr_err("Registration of s390dbf pai failed\n");
+ 		return -ENOMEM;
 -- 
 2.53.0
 
