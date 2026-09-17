@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B2D451B193;
-	Thu, 17 Sep 2026 17:31:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA2CF4848A3;
+	Thu, 17 Sep 2026 17:31:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666264; cv=none; b=JTo+MSu2PggRdG6nhUHKEkJqjhkWpOSXmJntrskRO2stiPgA8QxGQA8CX9bGrVbE5eN4QkRNJyMh0MCoyz0sLi/hmBpQl4TSTDpcRAUsV4WueOZNNNilwF+DzCZSGd8XYgEhqRIt5a+v10spTw49o27yyEXXk6v+aYff7B5bX6U=
+	t=1789666268; cv=none; b=pKPfS8AC6JJexPxFC199ZN6TjTP9ySZJ0NqZzjzMSeAP1+M3Dy9UC6SOLHU5VnNYddCcAeQrzSgFi5kElC7CWUqPi41GN6aEKjGyPT1o7hIgGJQuqgZxrAthRd8Wqw3En7TgHhVKBHOJOOlZDqUCCuk4GnR5axSdr/Ah8gpNorc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666264; c=relaxed/simple;
-	bh=NXEEHqBhICtL4jLBSZHQ0/0cbdAO3ZkAiFbQyOTQCk8=;
+	s=arc-20240116; t=1789666268; c=relaxed/simple;
+	bh=/KWoMrTbMOlwnEuPz1qxF9vz4pzh1HBHLVzBqAjagrc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Du5k+z+AMaW8VeFxQHkBA6S4hPSF9DEobULLUmiHnEdsD3SzHmtJ9k3CG7PgteLIrJ10406J6OtFNeQsODLT6ok9gRImV3g2zhlwGj53W4a1+9JYBqBYRinFvx3ny2dGXAt51+qkpjLWr+OT1WyrwH297DX/4anYzNBievvFnvo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l2MU4/jH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qNn4o1B4VrKeBhd3NuwUKhFSbnuasskOHPYqeVeKjV9xBcDgcX+7GHcG8k1zAvdUWDX5N4Y/FnTNFkWwwYF5ve4240FxFR6dcbaAfOy3ITeSDc9SDX63fil3RfE6ozNLnxkYMZuwOxe96p5+mGsw/Kzniz9iBizsaHm6E90+BRA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jcffhyqe; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l2MU4/jH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD3501F000FF;
-	Thu, 17 Sep 2026 17:31:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jcffhyqe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3D1B1F000FF;
+	Thu, 17 Sep 2026 17:31:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666263;
-	bh=9ds6aLtMCM+SNOlAf9miXudBfrOU5+TAwxWW+6gjyYc=;
+	s=korg; t=1789666266;
+	bh=Nc+Nwp9teNN1/kyLi+IxwJ5aRldseJCbWOsXW2sd3u0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=l2MU4/jHlIpKE+sjQjgvvc2Ga6o2BTF9GnamUb146vLyXQqJuenfkO5UxL64vFwvB
-	 4gwrNSObpwzTqxgTe+YAZgnAw7eAi/57ol9LRwdkQVqC5yKCeIqi8AOFy1CWXWeRL6
-	 n96x1KJM/4hf++gl9ni/gMWMQw9HwGKdTUcQtq5o=
+	b=JcffhyqekmJ82aH++fIKMdklnUAJBbysTpukS2zu3U6qZmyWt3UmGESKXr3Kecb96
+	 dOpiILrzlRMZIietoDLMvcyuouZz/HUFndR4KVI/zMfIbsRbvQFCDjLBK7GZHG4VJt
+	 HVQcvj5/onrqniYCzeemix4tJA+u5L8VgJmVIRAA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0942/1250] net: stmmac: add TSO check for header length
-Date: Thu, 17 Sep 2026 16:12:17 +0100
-Message-ID: <20260917151617.555014672@linuxfoundation.org>
+	Harry Wentland <harry.wentland@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.18 0978/1250] dm/amdgpu: fix malformed link_settings debugfs output
+Date: Thu, 17 Sep 2026 16:12:53 +0100
+Message-ID: <20260917151618.523190472@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,63 +51,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+From: Harry Wentland <harry.wentland@amd.com>
 
-[ Upstream commit 6732e474f880468435a79d05811c8c814c5d71f8 ]
+commit 622b4e8505aa7453a53d17fa3a288871f270fc8b upstream.
 
-According to the STM32MP151 documentation which covers dwmac v4.2, the
-hardware TSO feature can handle header lengths up to a maximum of 1023
-bytes.
+[Why]
+dp_link_settings_read() passed strlen() of each format string as the size
+argument to snprintf() and then advanced rd_buf_ptr by that same fixed amount.
+The format-string length has no relation to the formatted output length, so
+snprintf() truncated each field at a NUL it wrote inside the buffer while the
+pointer was advanced past it. The result is a buffer peppered with embedded NUL
+bytes and fields that are silently cut short, so the data read back from the
+debugfs node does not reflect the actual link settings.
 
-Add a .ndo_features_check() method implementation to check the header
-length meets these requirements, otherwise fall back to software GSO.
+[How]
+Use scnprintf() with the real remaining buffer size
+(rd_buf_size - (rd_buf_ptr - rd_buf)) and advance rd_buf_ptr by its return
+value, which is the number of characters actually written. This both bounds
+each write to the space left in rd_buf and keeps the output a single,
+properly terminated string. The now-unused str_len local is removed.
 
-Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Link: https://patch.msgid.link/E1w7ptO-0000000EatC-39il@rmk-PC.armlinux.org.uk
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 5e38d732ec67 ("net: stmmac: fix TX descriptor availability check for TSO traffic")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 41db5f1931ec ("drm/amd/display: set-read link rate and lane count through debugfs")
+Assisted-by: Copilot:claude-opus-4.8
+Signed-off-by: Harry Wentland <harry.wentland@amd.com>
+Reviewed-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 43b9f0f18693c7f7b75613f3aeae25fa2b4e2f76)
+Cc: stable@vger.kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- .../net/ethernet/stmicro/stmmac/stmmac_main.c   | 17 ++++++++++++++++-
- 1 file changed, 16 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_debugfs.c |   20 +++++---------
+ 1 file changed, 8 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index 609f056d4a70f..49651dc792278 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -4176,6 +4176,20 @@ static size_t stmmac_tso_header_size(struct sk_buff *skb)
- 	return size;
- }
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_debugfs.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_debugfs.c
+@@ -194,7 +194,6 @@ static ssize_t dp_link_settings_read(str
+ 	char *rd_buf_ptr = NULL;
+ 	const uint32_t rd_buf_size = 100;
+ 	uint32_t result = 0;
+-	uint8_t str_len = 0;
+ 	int r;
  
-+/* STM32MP151 (dwmac v4.2) and STM32MP25xx (dwmac v5.3) states for TDES2 normal
-+ * (read format) descriptor that the maximum header length supported for the
-+ * TSO feature is 1023 bytes.
-+ *
-+ * While IPv4 is limited to MAC+VLAN+IPv4+ext+TCP+ext = 138 bytes, the IPv6
-+ * extension headers aren't similarly limited.
-+ */
-+static bool stmmac_tso_valid_packet(struct sk_buff *skb)
-+{
-+	size_t header_len = stmmac_tso_header_size(skb);
-+
-+	return header_len <= 1023;
-+}
-+
- /**
-  *  stmmac_tso_xmit - Tx entry point of the driver for oversized frames (TSO)
-  *  @skb : the socket buffer
-@@ -4754,7 +4768,8 @@ static netdev_features_t stmmac_features_check(struct sk_buff *skb,
+ 	if (*pos & 3 || size & 3)
+@@ -206,29 +205,26 @@ static ssize_t dp_link_settings_read(str
  
- 	if (skb_is_gso(skb)) {
- 		queue = skb_get_queue_mapping(skb);
--		if (!stmmac_tso_channel_permitted(netdev_priv(dev), queue))
-+		if (!stmmac_tso_channel_permitted(netdev_priv(dev), queue) ||
-+		    !stmmac_tso_valid_packet(skb))
- 			features &= ~NETIF_F_GSO_MASK;
- 	}
+ 	rd_buf_ptr = rd_buf;
  
--- 
-2.53.0
-
+-	str_len = strlen("Current:  %d  0x%x  %d  ");
+-	snprintf(rd_buf_ptr, str_len, "Current:  %d  0x%x  %d  ",
++	rd_buf_ptr += scnprintf(rd_buf_ptr, rd_buf_size - (rd_buf_ptr - rd_buf),
++			"Current:  %d  0x%x  %d  ",
+ 			link->cur_link_settings.lane_count,
+ 			link->cur_link_settings.link_rate,
+ 			link->cur_link_settings.link_spread);
+-	rd_buf_ptr += str_len;
+ 
+-	str_len = strlen("Verified:  %d  0x%x  %d  ");
+-	snprintf(rd_buf_ptr, str_len, "Verified:  %d  0x%x  %d  ",
++	rd_buf_ptr += scnprintf(rd_buf_ptr, rd_buf_size - (rd_buf_ptr - rd_buf),
++			"Verified:  %d  0x%x  %d  ",
+ 			link->verified_link_cap.lane_count,
+ 			link->verified_link_cap.link_rate,
+ 			link->verified_link_cap.link_spread);
+-	rd_buf_ptr += str_len;
+ 
+-	str_len = strlen("Reported:  %d  0x%x  %d  ");
+-	snprintf(rd_buf_ptr, str_len, "Reported:  %d  0x%x  %d  ",
++	rd_buf_ptr += scnprintf(rd_buf_ptr, rd_buf_size - (rd_buf_ptr - rd_buf),
++			"Reported:  %d  0x%x  %d  ",
+ 			link->reported_link_cap.lane_count,
+ 			link->reported_link_cap.link_rate,
+ 			link->reported_link_cap.link_spread);
+-	rd_buf_ptr += str_len;
+ 
+-	str_len = strlen("Preferred:  %d  0x%x  %d  ");
+-	snprintf(rd_buf_ptr, str_len, "Preferred:  %d  0x%x  %d\n",
++	rd_buf_ptr += scnprintf(rd_buf_ptr, rd_buf_size - (rd_buf_ptr - rd_buf),
++			"Preferred:  %d  0x%x  %d\n",
+ 			link->preferred_link_setting.lane_count,
+ 			link->preferred_link_setting.link_rate,
+ 			link->preferred_link_setting.link_spread);
 
 
