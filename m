@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4801A4EF153;
-	Thu, 17 Sep 2026 17:37:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52DB151DB04;
+	Thu, 17 Sep 2026 17:37:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666649; cv=none; b=sRWq5+w6o6S5+AYxL+kJelyblwQ+eAW1Tuvx5mlkeQgLynlARWFnYGGFVIkoDL9Cn2Vjcl22r0tz2fl4OrH6cEWxU7sszHRN8Mp2A3qwvAGBJoel0brETN0qPdswiiIsxHSAdgqFfdhgOl2W2OXMBO1FDS0ksYtfvZbT3rWnzLo=
+	t=1789666652; cv=none; b=DJ00401ps8WbpDhnGvEravwJ1zoWOwXKsIkIwn9MAh3fVUB0/NbaXKtmAFxZo7FVGy+P0f6+AKSlucxwlAj2ruSu58785+3bO9djLmY4jk+IinyMmY9bogiFEzhCy2r/0+k3HkVk+9zzs8P9z1fXhAI4C6Fk5EZEB4V9T6N76C8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666649; c=relaxed/simple;
-	bh=pCAqGFCSQdtX+brE35AhYQRJbd86VKGlnD+OnZjUHHY=;
+	s=arc-20240116; t=1789666652; c=relaxed/simple;
+	bh=PoCMuhpMIAma3AyOvcOOqyhYFm9AOTMtfnUaIBrIjl4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e4Zx2x9a3RNSCeyyL0MpDY209mdSuuxIW7FS6NxxIYBxU9Vco4q+SWf2ig1z7tttAjtndqSfrZikRDscx6LAFj1rlVdC46QHDLsjJWMRDA9Ehu0tNvCQnCoT5SNsnu3K/TFJ7QheX4spqhrNR1dkTf+UvwNY39MRB+sOWdZrslA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1JjvJ89S; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HhX2qYA/giJmj6oWu8W7OE0E9I1q20ouU5+NptkekpBcgIr4eUw6KYpmXvbCpUZWAbX81AmSqxnN8+bMCg9xzXq2KhnjE/kQsyaG/crLFHAMKNR/zttJnoz+NruuMxv7C5KQjdsXi9TK+282qUvKPBPqStQheqCzkVANd/ZSGtM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RW72AIFZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1JjvJ89S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F3ED1F00893;
-	Thu, 17 Sep 2026 17:37:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RW72AIFZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 976F11F00898;
+	Thu, 17 Sep 2026 17:37:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666648;
-	bh=XpLTHpH0+DfpojWBtx5wCdGMo0VbJU5Sz5haiqGLqCM=;
+	s=korg; t=1789666651;
+	bh=7Jr+KSw+oEZWxjsk6Tbeo8pMNtTn/auh0N/t3G7DpvI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1JjvJ89SS+XIW9oVfv23xH+7GoEC1GnTOcsRNJ9LgqW2SyszIPUgaq/7aeLjwXH4X
-	 juyNrzCpO8zOU8YmVkTquykq5nuFzGpP//+fufya1hNUfvZBBJyaZ+bEUCLN+plTve
-	 kiX+qMgDYO0IzCm8zZohPWdvQUq01f/Npep4n3Zk=
+	b=RW72AIFZujMwTxVKzcOGpONyrVnWtRypY0low8Hrcj16ruyU+EszO8Wuem5Ywthn2
+	 kd/VtkJwxxhWSMmuogyDYJV528B80tRctwKQcbZJmTEP5phY9zw0/PCeOQZkEk3aAr
+	 ql9uu2qu98FKMczyWS7lg7+cZorIP76Puw6VE9bI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sashiko <sashiko-bot+sashiko@kernel.org>,
 	Joe Damato <joe@dama.to>,
 	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.18 1069/1250] bnxt_en: Dont free the live rings TPA state on queue restart failure
-Date: Thu, 17 Sep 2026 16:14:24 +0100
-Message-ID: <20260917151621.106556284@linuxfoundation.org>
+Subject: [PATCH 6.18 1070/1250] bnxt_en: Propagate RX ring init failures in bnxt_init_nic()
+Date: Thu, 17 Sep 2026 16:14:25 +0100
+Message-ID: <20260917151621.133816734@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -53,44 +53,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Joe Damato <joe@dama.to>
 
-commit 5ce7f36c334d723954855ac769ede2fe0e8f89c8 upstream.
+commit 8e6a850c0746bb4be167aedf1ee57469fcda09a9 upstream.
 
-bnxt_queue_mem_alloc() shallow copies the live RX ring into the clone:
+bnxt_init_rx_rings() returns an error when bnxt_alloc_one_rx_ring()
+fails, but bnxt_init_nic() discards that return value and calls
+bnxt_init_chip(), which enables TPA.
 
-  memcpy(clone, rxr, sizeof(*rxr));
+If an allocation fails, this could leave rxr->rx_tpa[] partially zeroed
+and TPA would be enabled over an array with zeroed entries. This would
+lead to a zeroed DMA address being handed out if the agg_idx is
+translated to a SW index at a zeroed entry.
 
-the code currently clears pointers that the clone owns (such as
-rx_agg_bmap), but rx_tpa and rx_tpa_idx_map are left pointing at memory
-of the live ring that was cloned.
+Fix this by propagating the error out of bnxt_init_nic(). Both callers
+already check its return value and unwind with bnxt_free_skbs() and
+bnxt_free_mem(), which tolerate a partially initialized RX ring.
 
-If an allocation failure happens later and the err_free_tpa_info label
-is taken, the live ring's memory can be freed while still in use.
-
-Fix this by initializing the clone's pointers to NULL to prevent live
-ring state from being freed inadvertently.
-
-Fixes: bd649c5cc958 ("bnxt_en: handle tpa_info in queue API implementation")
+Fixes: c0c050c58d84 ("bnxt_en: New Broadcom ethernet driver.")
 Reported-by: Sashiko <sashiko-bot+sashiko@kernel.org>
 Link: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260828190900.1767611-1-joe%40dama.to
 Cc: stable@vger.kernel.org
 Signed-off-by: Joe Damato <joe@dama.to>
-Link: https://patch.msgid.link/20260902015652.2421609-3-joe@dama.to
+Link: https://patch.msgid.link/20260902015652.2421609-6-joe@dama.to
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
 --- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
 +++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -16054,6 +16054,8 @@ static int bnxt_queue_mem_alloc(struct n
- 	clone->need_head_pool = false;
- 	clone->rx_page_size = qcfg->rx_page_size;
- 	clone->rx_agg_bmap = NULL;
-+	clone->rx_tpa = NULL;
-+	clone->rx_tpa_idx_map = NULL;
+@@ -11192,8 +11192,13 @@ static int bnxt_shutdown_nic(struct bnxt
  
- 	rc = bnxt_alloc_rx_page_pool(bp, clone, rxr->page_pool->p.nid);
- 	if (rc)
+ static int bnxt_init_nic(struct bnxt *bp, bool irq_re_init)
+ {
++	int rc;
++
+ 	bnxt_init_cp_rings(bp);
+-	bnxt_init_rx_rings(bp);
++	rc = bnxt_init_rx_rings(bp);
++	if (rc)
++		return rc;
++
+ 	bnxt_init_tx_rings(bp);
+ 	bnxt_init_ring_grps(bp, irq_re_init);
+ 	bnxt_init_vnics(bp);
 
 
