@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 326355218BB;
-	Thu, 17 Sep 2026 17:24:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C26D5218B6;
+	Thu, 17 Sep 2026 17:25:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789665900; cv=none; b=tnrQzkHP/vyJFoG/90KU7QQwQJ6nuBryxgYfNVte/XDGSDgkDYXtrHEhfVwZWVsBajpZV3mg4ogqJU5z+sHX6fHnwlfGlycu3Y3yyxSc7BjdgX4a+zIYFvZLtB5FQUv/vyGIlbcJGTjYm0dZ0G6mjaIjAGLdKAyl+reqb5sc+8k=
+	t=1789665903; cv=none; b=HEUZEetstXx0BNsiJZHd8sThw+pTIa7eA5QKhQKiBy8WX2KY9scfmJJ5ryuU7Skgc4q8/jER3nKweColKsQS0rxQPX+hIj7lbejyDpOtx0UtMsplYQkDbacaOtYIgYcvD8Ycck+9sLrWTiagtmE86V2jhcT/WVjGsyT4pv4N4so=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789665900; c=relaxed/simple;
-	bh=e5w042YGHsWamlWoiA6zIUmCUV93sBxV3xj6KjWBCJY=;
+	s=arc-20240116; t=1789665903; c=relaxed/simple;
+	bh=hLgTCnrX4iM7907gkiQtOE4yFQzk724tXmRRM4QTITQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=G5FBNMqdF0LaaZIVXHVIxD0jOCj1N2hXyfE5fPzy391PHkWU93ajp0G4de55nvIyhyfcTvMFRwVaY2vgFkbAbOme+jcmsZJTQKScoIGM3N0lpxPrbM2IyYW2rm5K98r0BrMcpxnpUGPRkxXOlsJngtV3ZEKiiIkBvnj/Jg/u/2U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zC6PXBtM; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=cdH2oWFpG7FHiGCurtcfI27okiWmy17iFupe11fX7jyHmkXq/hhOJJYquwe1Ek8km5+ERSfh3CtisBKG2+2c6uhhCFiuzxZjeQa3pqNNEOg229nhjlxCF0f04TjumIp8C6qY+HeRA0W0t/l6QlvF44L8ytU+IlhwaPgWQctMc74=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BCQIjuM/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zC6PXBtM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A9C71F000FF;
-	Thu, 17 Sep 2026 17:24:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BCQIjuM/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 908041F000FF;
+	Thu, 17 Sep 2026 17:25:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789665899;
-	bh=Ed4Nso5Lmd9N87KsR4JPSD9JhxvKVpcWoyqyi1nV4qI=;
+	s=korg; t=1789665902;
+	bh=2hmSXHJPJTrVKp7CoocMgN2l1357yVP+wukzGprNzVE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zC6PXBtMteNh2AGFf3DJIM+poVaT/GRr3uyRGq72fbNm9Ias5wx/AplN0M4iE5OHG
-	 t95SelWmRBW7Rh7alVc83hpsRJUNjRN5LuaVQH5VBQDX+rLQsGKcocsh67vYZq3+5R
-	 cMtsNWz6oYq11KVVK7LFotT7x/8TK/SNCNezrCo0=
+	b=BCQIjuM/364Z4FpNkP1+5vfuSe8rPKNLziY2HGEvYlzp0Ta7G5hxe0FqmByVLxvZ5
+	 +sYAht7EH5NsPQE2XLMPvzJMLjKeewiG/bAzzot87Rsph0Q1NVmETbPcV4uknBjohS
+	 aUL/8rzWUXVIlTZM7zissSYvYALaHcRy9Giz0Z4s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -33,9 +33,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jamal Hadi Salim <jhs@mojatatu.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0819/1250] net/sched: fq_pie: clamp quantum in change path
-Date: Thu, 17 Sep 2026 16:10:14 +0100
-Message-ID: <20260917151614.131311038@linuxfoundation.org>
+Subject: [PATCH 6.18 0820/1250] net/sched: sfq: clamp quantum in change path
+Date: Thu, 17 Sep 2026 16:10:15 +0100
+Message-ID: <20260917151614.158970422@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -57,48 +57,60 @@ Content-Transfer-Encoding: 8bit
 
 From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-[ Upstream commit 4864f58c53eb47257d55e01f47d4a9f355f7f970 ]
+[ Upstream commit fb9f88a33c516ea5c0bcd9a22ca288b246b34567 ]
 
-fq_pie_change() accepts any quantum value from userspace, including 1.
-With a crafted size table qdisc_pkt_len reaches ~2 GiB, so quantum=1
-makes the deficit-refill loop spin ~2^31 times under the qdisc lock
-(a soft lockup / denial of service).
+sfq_change() accepts any non-negative quantum (only rejects
+(int)ctl->quantum < 0). With a crafted size table qdisc_pkt_len reaches
+~2 GiB, so quantum=1 makes the deficit-refill loop spin ~2^31 times
+under the qdisc lock (a soft lockup / denial of service).
 
-Add max(256U, ...) matching fq_codel_change().
+Add max(256U, ...) matching fq_codel_change(). Reject quantum > 1<<20
+with -EINVAL, matching fq_codel_change() and the init clamp.
 
 Conditions to recreate the bug:
-  CONFIG_NET_SCH_FQ_PIE=y. Requires CAP_NET_ADMIN (namespace-local via
+  CONFIG_NET_SCH_SFQ=y. Requires CAP_NET_ADMIN (namespace-local via
   unshare -Urn suffices).
 
-  tc qdisc add dev dummy0 root fq_pie
-  tc qdisc change dev dummy0 root fq_pie quantum 1 stab data 32768 size_log 15 cell_log 0
+  tc qdisc add dev dummy0 root sfq
+  tc qdisc change dev dummy0 root sfq quantum 1 stab data 32768 size_log 15 cell_log 0
 
-Fixes: ec97ecf1ebe4 ("net: sched: add Flow Queue PIE packet scheduler")
+Fixes: e4650d7ae425 ("net_sched: sch_sfq: handle bigger packets")
 Reported-by: Vega <vega@nebusec.ai>
 Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
 Tested-by: Victor Nogueira <victor@mojatatu.com>
 Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/QDISC-0CFC.v3.20260901204856@mojatatu.com.3
+Link: https://patch.msgid.link/QDISC-0CFC.v3.20260901204856@mojatatu.com.4
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_fq_pie.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/sched/sch_sfq.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/net/sched/sch_fq_pie.c b/net/sched/sch_fq_pie.c
-index 4b829d894af1c..ff26999afe4c6 100644
---- a/net/sched/sch_fq_pie.c
-+++ b/net/sched/sch_fq_pie.c
-@@ -341,7 +341,8 @@ static int fq_pie_change(struct Qdisc *sch, struct nlattr *opt,
- 			   nla_get_u32(tb[TCA_FQ_PIE_BETA]));
+diff --git a/net/sched/sch_sfq.c b/net/sched/sch_sfq.c
+index 645e40f2f402d..d11b0b192e2c2 100644
+--- a/net/sched/sch_sfq.c
++++ b/net/sched/sch_sfq.c
+@@ -657,6 +657,11 @@ static int sfq_change(struct Qdisc *sch, struct nlattr *opt,
+ 		return -EINVAL;
+ 	}
  
- 	if (tb[TCA_FQ_PIE_QUANTUM])
--		WRITE_ONCE(q->quantum, nla_get_u32(tb[TCA_FQ_PIE_QUANTUM]));
-+		WRITE_ONCE(q->quantum,
-+			   max(256U, nla_get_u32(tb[TCA_FQ_PIE_QUANTUM])));
++	if (ctl->quantum > 1 << 20) {
++		NL_SET_ERR_MSG_MOD(extack, "quantum too large");
++		return -EINVAL;
++	}
++
+ 	if (ctl->perturb_period < 0 ||
+ 	    ctl->perturb_period > INT_MAX / HZ) {
+ 		NL_SET_ERR_MSG_MOD(extack, "invalid perturb period");
+@@ -685,7 +690,7 @@ static int sfq_change(struct Qdisc *sch, struct nlattr *opt,
  
- 	if (tb[TCA_FQ_PIE_MEMORY_LIMIT])
- 		WRITE_ONCE(q->memory_limit,
+ 	/* update and validate configuration */
+ 	if (ctl->quantum)
+-		quantum = ctl->quantum;
++		quantum = max(256U, ctl->quantum);
+ 	if (ctl->flows)
+ 		maxflows = min_t(u32, ctl->flows, SFQ_MAX_FLOWS);
+ 	if (ctl->divisor) {
 -- 
 2.53.0
 
