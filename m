@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98A5E535FAA;
-	Thu, 17 Sep 2026 17:02:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4527535FA8;
+	Thu, 17 Sep 2026 17:02:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789664526; cv=none; b=E/oJvSgc/mNJbMppOkLkDnbhFoOR7MWBUkQBa22VJcGP11mSP3ZIaN9KCqoUlKRRLtLSNJyLn07ca0oWUgsdbLaEmuqQtUdCdmLV/XAtz66kzcGvoGPOeWfd07/RNzhVDnnEYPiZwm6r6sQpUftRyV/RenWmA+HvmWzWqEJzm5E=
+	t=1789664529; cv=none; b=Dx7bL+bUtg2bJp8Cwzr7+2UFpuHRhCJcJP//0cWF9KREMFdpdSEpjLAVejVlLO7e1euyGY8z6VaWIveXqe4sk5GYm2D9iWMyz6a4zzbDOKR8wxPHrqZiuxwJCgRLxEyLP+FHJu/WrFLg6kbK1joolCpUEWIzs44BKWPq+lpSlZQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789664526; c=relaxed/simple;
-	bh=z3YkIlR+TDHiLHgRcWrVzditycePY7OkggnwumIycYs=;
+	s=arc-20240116; t=1789664529; c=relaxed/simple;
+	bh=PYk71ssYIpOrdVN3/kn43OuHCVJ8/wJkEgEvZP+64FA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ov6lipEvF3cL4wz7BLZC1bLno13RXwd6q4K7d6wuPsd0Obl6ZRPru8s4cGEDLeQQXm3Z4JWl6my7w0Gfyke6aOH0ldZiBmiFJqF5BmSPcY0GxhCCydPK69HIw6vV4wHtuOE10Lzy+bR+lo9F3bhu2+dPmSIbWBczpO15WpQXcUs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CoyLvtP3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=dnbg1lo44wYxJgji24PbobJ/wSG3MtF85nTv8uX3hCUvFJ5e0J2WusibjSbHDKH6SNeb5apf800SA1hISR3Z0dPn7YMroSzYRCj1MUzaw/ywpAQvKIaO9QRBDm7k3E0y9lK3bqyTB7mLhexARRV+Y+qljd3zquN2MFCRFnilVQE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dctnMi+W; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CoyLvtP3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8B721F000FF;
-	Thu, 17 Sep 2026 17:02:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dctnMi+W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E704C1F000FF;
+	Thu, 17 Sep 2026 17:02:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789664525;
-	bh=yDOjpJs7fIZV499xay8BHdPxdULj5wGr9fGlMYSebcI=;
+	s=korg; t=1789664528;
+	bh=N0EgeF0ATohklC1ejVcl5ZyE91B9AjTETbFueqQRCXo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CoyLvtP3An4HT9pyuMxNo8FTvazDzbO8XdvHdJpLMh9Fkv3c/2GCEjURQ2/JarC/V
-	 X/DxUZLkiYjE3DTowGCpbBBYYVJtVlw2JWkucxpffHgPqnhMuXr+AJ5vBIdHOzJQLZ
-	 HeJyL6yYV70ld9B0guaXybX9dycz69jqLD6GvGMw=
+	b=dctnMi+WIPnNg4J84v9IpZNQHWHUZ22PndXOfyeFiOIglZNhPqVx/IftOSyQWAvjt
+	 2L0PVepiv9m+hyZCwqE+9qyUDjjZpvDVG/enswRezCXX+gtFW85bzm+Dkmy37NxEZU
+	 v3zjOUeVAPeW0R+/w0zjJ771BmaC57i98VezJUKc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Sashiko AI Review <sashiko-bot@kernel.org>,
 	bui duc phuc <phucduc.bui@gmail.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0402/1250] ASoC: rockchip: rockchip_pdm: Reorder clock enable sequence
-Date: Thu, 17 Sep 2026 16:03:17 +0100
-Message-ID: <20260917151602.924042305@linuxfoundation.org>
+Subject: [PATCH 6.18 0403/1250] ASoC: rockchip: spdif: Restore regcache cache-only mode on sync failure
+Date: Thu, 17 Sep 2026 16:03:18 +0100
+Message-ID: <20260917151602.950348165@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -53,48 +54,36 @@ Content-Transfer-Encoding: 8bit
 
 From: bui duc phuc <phucduc.bui@gmail.com>
 
-[ Upstream commit 3168721d6ec3b610edf6a3c22ad190722a27d276 ]
+[ Upstream commit 3546e9aa691ac981e4734fedd1646d0180784893 ]
 
-Enable the 'hclk' bus clock before the 'clk' controller clock during
-runtime resume.
-The bus clock provides the register access interface, so enable it before
-the controller clock. This also makes the resume sequence the reverse of
-the suspend sequence, which keeps the clock ordering consistent.
+If regcache_sync() fails during runtime resume, the driver disables the
+clocks and returns an error. However, the regmap cache-only mode is left
+disabled.
+Restore cache-only mode in the error path so subsequent register accesses
+continue to use the cache while the device is inactive.
 
+Reported-by: Sashiko AI Review <sashiko-bot@kernel.org>
+Closes: https://lore.kernel.org/all/20260522103713.6C09D1F000E9@smtp.kernel.org/
 Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
-Link: https://patch.msgid.link/20260602101608.45137-4-phucduc.bui@gmail.com
+Link: https://patch.msgid.link/20260602101608.45137-5-phucduc.bui@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/rockchip/rockchip_pdm.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ sound/soc/rockchip/rockchip_spdif.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/soc/rockchip/rockchip_pdm.c b/sound/soc/rockchip/rockchip_pdm.c
-index 01292b63bf9d6..115e90d3bbfe0 100644
---- a/sound/soc/rockchip/rockchip_pdm.c
-+++ b/sound/soc/rockchip/rockchip_pdm.c
-@@ -426,16 +426,16 @@ static int rockchip_pdm_runtime_resume(struct device *dev)
- 	struct rk_pdm_dev *pdm = dev_get_drvdata(dev);
- 	int ret;
+diff --git a/sound/soc/rockchip/rockchip_spdif.c b/sound/soc/rockchip/rockchip_spdif.c
+index d365168934dc6..7a15f680de2fe 100644
+--- a/sound/soc/rockchip/rockchip_spdif.c
++++ b/sound/soc/rockchip/rockchip_spdif.c
+@@ -97,6 +97,7 @@ static int rk_spdif_runtime_resume(struct device *dev)
  
--	ret = clk_prepare_enable(pdm->clk);
-+	ret = clk_prepare_enable(pdm->hclk);
+ 	ret = regcache_sync(spdif->regmap);
  	if (ret) {
--		dev_err(pdm->dev, "clock enable failed %d\n", ret);
-+		dev_err(pdm->dev, "hclock enable failed %d\n", ret);
- 		return ret;
++		regcache_cache_only(spdif->regmap, true);
+ 		clk_disable_unprepare(spdif->mclk);
+ 		clk_disable_unprepare(spdif->hclk);
  	}
- 
--	ret = clk_prepare_enable(pdm->hclk);
-+	ret = clk_prepare_enable(pdm->clk);
- 	if (ret) {
--		clk_disable_unprepare(pdm->clk);
--		dev_err(pdm->dev, "hclock enable failed %d\n", ret);
-+		clk_disable_unprepare(pdm->hclk);
-+		dev_err(pdm->dev, "clock enable failed %d\n", ret);
- 		return ret;
- 	}
- 
 -- 
 2.53.0
 
