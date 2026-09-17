@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DB904E77E6;
-	Thu, 17 Sep 2026 16:56:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88DAC4E7808;
+	Thu, 17 Sep 2026 16:56:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789664212; cv=none; b=uYrMjbiLvW5tCSXjHEsjbSPeaPxdPK7jbuTiP+lzwvDQ+WERU7AKUJnJ2zxYXwOrdPX1EpB0j0evp7HY1qYmme4Fqd1F9MfrzFeL7aa9/rmdYyKYCv1Bvyv7/TlhlM1kG/IUd8nw5rsz7KNlzwY4028qbTRxduTKqzXkSWUS7zA=
+	t=1789664215; cv=none; b=uoWxWawRBJb4TFrZcsUi3b9HxSpqMVOmMg414tKhzAr5EFyVbONaSQ1SG5H1cYCAjNillkAfDH8uwvyzZqq/XFgGo4ApY+bJkPvLj+4HMcHhcsZrmT1avXKmorCeGSpye0cl0YfWqHihIeJOKiSk1vcLeDBUiH0wuUo6ZmplZ/A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789664212; c=relaxed/simple;
-	bh=SWMmBatbjW0yUPiEE+TizuRHFwoTf0H0UYwefKAqQhM=;
+	s=arc-20240116; t=1789664215; c=relaxed/simple;
+	bh=Qa+sxh3uQ727l+CmOFEofUVFmrIBY2EhH2lx3ZHagbk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OmuNG/wU1ToelaoqYRvuzjT7VVJgQ7RBjqopLC9s0i88C7idxsoXt01WIl/3QmsguCtInzvZBB9qqT4o62/aiw/53o7Los55zyE0L0ZG2CkVxEdd5I4ExLlz0WZgYujfEp7J1hhCkCF0AKuETQt7XoEuo/JPOgaIUc8DYHAOd9k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kvHX7qyq; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=cTAC93xLSEzQjn+e+QEtarclhFN2GA2703K6NYIVrnKf4bhVR5aYAvXdpE+I9HTZEb3mIyXDElG++jP+ylbRM0ZPUn+QiAXQJJj28j4hicwkqsuTYg1RriNNCbCOr0GtwcChJrLaHZXqBBYj6UP28vM++xS1sNkqGYOM+Ou9ABM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pu1AuJ+C; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kvHX7qyq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C0FC1F000FF;
-	Thu, 17 Sep 2026 16:56:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pu1AuJ+C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 996B31F00899;
+	Thu, 17 Sep 2026 16:56:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789664211;
-	bh=crovUlVCH0E/atYkox8zJ1H1siL1q40qsUVkHuew76I=;
+	s=korg; t=1789664214;
+	bh=39lq2Hj0xoYroqvSt9SIbX850PzLEnJa44GmQaFFF9M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kvHX7qyqtUgGrzv4ZONHZnQNY0mPyYZEhTHLnHIlOGawnkV/J3zp4LG2HTMVnSfe+
-	 H2A2y9svYA7t88xcUE4WIPM6zXudIGoWaaIlDYRFtWgNzZ8C2/5EXlWaFcMlF6KtdY
-	 pe+m7NUtEhic6pUktrPduwOii64xwmhhVqBMOFPg=
+	b=pu1AuJ+CT9LGDq+2QZ7IKsvEluW3HhOOeB6r3MVC01JaC7tVOAHIdZTPoU0bMgn7z
+	 hloJtuDtfuFNjphyCjoT7dMUPOFk/Yy3A+wDBG3cAH/Wf3pfw2yVMm8AMWfoWtOtGd
+	 rQWu5g1F/rPLFnvpQAY23DubjFhAyrLXQt2UGqwI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tiezhu Yang <yangtiezhu@loongson.cn>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Kartik Rajput <kkartik@nvidia.com>,
+	Thierry Reding <treding@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0258/1250] libbpf: Add __NR_bpf definition for LoongArch
-Date: Thu, 17 Sep 2026 16:00:53 +0100
-Message-ID: <20260917151559.148100642@linuxfoundation.org>
+Subject: [PATCH 6.18 0259/1250] soc/tegra: fuse: Register nvmem lookups at probe
+Date: Thu, 17 Sep 2026 16:00:54 +0100
+Message-ID: <20260917151559.174671270@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,59 +51,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tiezhu Yang <yangtiezhu@loongson.cn>
+From: Kartik Rajput <kkartik@nvidia.com>
 
-[ Upstream commit a4a5d4ee061240a1d39053db0a87f841d43277c0 ]
+[ Upstream commit 8a3571618c2e3f339b5b6fee5841143face58a2b ]
 
-LoongArch uses the generic syscall table, where __NR_bpf is defined
-as 280 in include/uapi/asm-generic/unistd.h.
+Register nvmem lookups in tegra_fuse_probe(), after the nvmem device has
+been registered, since they can only be used after the nvmem device is
+registered.
 
-To align with other architectures, add the __NR_bpf definition for
-LoongArch to avoid a potential compilation failure: "error __NR_bpf
-not defined. libbpf does not support your arch."
-
-This is a follow up patch of:
-
-  commit b0c47807d31d ("bpf: Add sparc support to tools and samples.")
-  commit bad1926dd2f6 ("bpf, s390: fix build for libbpf and selftest suite")
-  commit ca31ca8247e2 ("tools/bpf: fix perf build error with uClibc (seen on ARC)")
-  commit e32cb12ff52a ("bpf, mips: Fix build errors about __NR_bpf undeclared")
-
-Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20260526063936.16769-1-yangtiezhu@loongson.cn
+Signed-off-by: Kartik Rajput <kkartik@nvidia.com>
+Signed-off-by: Thierry Reding <treding@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/build/feature/test-bpf.c | 2 ++
- tools/lib/bpf/bpf.c            | 2 ++
- 2 files changed, 4 insertions(+)
+ drivers/soc/tegra/fuse/fuse-tegra.c | 14 +++++---------
+ 1 file changed, 5 insertions(+), 9 deletions(-)
 
-diff --git a/tools/build/feature/test-bpf.c b/tools/build/feature/test-bpf.c
-index e7a405f83af6e..89d59674f39b9 100644
---- a/tools/build/feature/test-bpf.c
-+++ b/tools/build/feature/test-bpf.c
-@@ -20,6 +20,8 @@
- #  define __NR_bpf 6319
- # elif defined(__mips__) && defined(_ABI64)
- #  define __NR_bpf 5315
-+# elif defined(__loongarch__)
-+#  define __NR_bpf 280
- # else
- #  error __NR_bpf not defined. libbpf does not support your arch.
- # endif
-diff --git a/tools/lib/bpf/bpf.c b/tools/lib/bpf/bpf.c
-index 339b197972374..1e8f01bfc1bfd 100644
---- a/tools/lib/bpf/bpf.c
-+++ b/tools/lib/bpf/bpf.c
-@@ -59,6 +59,8 @@
- #  define __NR_bpf 6319
- # elif defined(__mips__) && defined(_ABI64)
- #  define __NR_bpf 5315
-+# elif defined(__loongarch__)
-+#  define __NR_bpf 280
- # else
- #  error __NR_bpf not defined. libbpf does not support your arch.
- # endif
+diff --git a/drivers/soc/tegra/fuse/fuse-tegra.c b/drivers/soc/tegra/fuse/fuse-tegra.c
+index 74d2fedea71ca..972a63993e1db 100644
+--- a/drivers/soc/tegra/fuse/fuse-tegra.c
++++ b/drivers/soc/tegra/fuse/fuse-tegra.c
+@@ -182,10 +182,6 @@ static int tegra_fuse_probe(struct platform_device *pdev)
+ 		}
+ 
+ 		fuse->soc->init(fuse);
+-
+-		err = tegra_fuse_add_lookups(fuse);
+-		if (err)
+-			return dev_err_probe(&pdev->dev, err, "failed to add FUSE lookups\n");
+ 	}
+ 
+ 	fuse->clk = devm_clk_get_optional(&pdev->dev, "fuse");
+@@ -231,6 +227,10 @@ static int tegra_fuse_probe(struct platform_device *pdev)
+ 		return err;
+ 	}
+ 
++	err = tegra_fuse_add_lookups(fuse);
++	if (err)
++		return dev_err_probe(&pdev->dev, err, "failed to add FUSE lookups\n");
++
+ 	fuse->rst = devm_reset_control_get_optional(&pdev->dev, "fuse");
+ 	if (IS_ERR(fuse->rst))
+ 		return dev_err_probe(&pdev->dev, PTR_ERR(fuse->rst), "failed to get FUSE reset\n");
+@@ -473,7 +473,7 @@ static int __init tegra_init_fuse(void)
+ 	const struct of_device_id *match;
+ 	struct device_node *np;
+ 	struct resource regs;
+-	int err;
++	int err = 0;
+ 
+ 	tegra_init_apbmisc();
+ 
+@@ -566,10 +566,6 @@ static int __init tegra_init_fuse(void)
+ 
+ 	tegra_fuse_print_sku_info(&tegra_sku_info);
+ 
+-	err = tegra_fuse_add_lookups(fuse);
+-	if (err)
+-		pr_err("failed to add FUSE lookups\n");
+-
+ 	return err;
+ }
+ early_initcall(tegra_init_fuse);
 -- 
 2.53.0
 
