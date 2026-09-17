@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4C1A4CDDEC;
-	Thu, 17 Sep 2026 15:25:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C50364CDDE8;
+	Thu, 17 Sep 2026 15:25:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789658756; cv=none; b=vExmx3fUhnDXIEVmDvZB3shVjDWd6fT59UB9QkXB0+P+kGgpkOfLU46AtZiGVdgpDGyGYL+idgyNQAZeXtWuSy90MdFXc3FWtpvh5jrJAeUkAtVUlh1/378s2dLRKtGNcfw6ZJaQdmA+r/fSJzko/ZTQAslH+gnxfQXoP9ZjgVs=
+	t=1789658759; cv=none; b=UuHE+7UR8GvUvwD1xevCp4FllnQmbHt3QFXvv/kSIhqCkLTy9JNXt+YchiQhuzLgN0Ch9TYTrom8nv1EMLJoZKkZ6RaCBclfiQdjWFCKRceTKPySEplIpSFec+4wZbJ/vx+vpbGH6dyzmROPN2g0Lxl765ESDx+iMS5r01VHU3I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789658756; c=relaxed/simple;
-	bh=eP30ImTaT/S30Xq45FPn38f+I7YeKRtuSHPEss3iFrc=;
+	s=arc-20240116; t=1789658759; c=relaxed/simple;
+	bh=3wlAdOM72h4DPEMLj85jYI0MdQQk1oIs8zCx8qpv2fE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aPZqqv1dhPwEph3ktG1FJaaTN/CLlMSOIu+XcFcuD/KPMLyo23lI4SQlohyyV1+k4eWG1aiSA5aiUgZu/ZAkrvZ8wOATJf7A6V7/TGbjPdTLqemyqsANwIfwS8NN8QqZDAp22SMUOgnH7mUaLNOPftJmbYfeFz5D5OvBg8GKjxM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sJWbrEa1; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=B8bwXF2uVm9LjyURQIXqvDaQpirc6ZLgdv2lHDAfLhcd1kjQ3q2y2ed/XR0/in+/li1d346LWiW0I8Ggcr0NTDY9GSQSHAV8WbIvLnw42Y7KE9lCwW4T3lYBnoz/EOVKwVWEcLepFvqZr9EcTKU+YYpW6kesIWCcnE7R94gx37E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gNhIwzr3; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sJWbrEa1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB3A81F00899;
-	Thu, 17 Sep 2026 15:25:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gNhIwzr3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A95C31F000FF;
+	Thu, 17 Sep 2026 15:25:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789658749;
-	bh=NBpho3uncKrkiaz2BbrDQ+ZSZa1mBR9cZBkK++Q0NyI=;
+	s=korg; t=1789658746;
+	bh=X2H26vjSFYvq7oxl6e1350W+SkC/f9t1cteOEJ4f02U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sJWbrEa1o/wKF3MibSwP3zhkuuAH/H8JXEBtJLMwtcbY3ygGhUwHES6Lx8bMWXBX1
-	 bWrpipGysbcRrweoLgjScxD2yl21dnDC0xPWZS6yiXY8IC/kTY0JkOe/Zga2P29pVh
-	 myi3S9j1RQrtKXQuN+SQF5c/OePp8P4zEN3jLMjM=
+	b=gNhIwzr3SUpIV0MVoan/BAaHR5YdbUaXjbPlpLn1xaxCmi3cvfuyPbnOmbD4/ztMn
+	 Yfi09U1ikFTy18ezC4/rYEtKy0xPHHxL1Br1caF+e0NGCBE9esElgtCH44kFTCw2he
+	 CUTNxW3phHyRwJ/IQb8YsKF1kZ9UBhzo2+d5P2g4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tejun Heo <tj@kernel.org>,
+	Hui Su <sh_def@163.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Leon Hwang <leon.hwang@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 026/733] sched_ext: Fix spurious aborts in scx_bpf_dsq_move() on ownership change races
-Date: Thu, 17 Sep 2026 16:05:34 +0100
-Message-ID: <20260917151351.361753441@linuxfoundation.org>
+Subject: [PATCH 7.2 025/733] bpf: Fix percpu map update indexing with sparse CPU IDs
+Date: Thu, 17 Sep 2026 16:05:33 +0100
+Message-ID: <20260917151351.332328539@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -50,85 +52,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tejun Heo <tj@kernel.org>
+From: Hui Su <sh_def@163.com>
 
-[ Upstream commit cca061dccf563907061766191b2ce3f66b7c285a ]
+[ Upstream commit 75b0a6db4300e4c2c9e97a0848deaa7acfb42fb7 ]
 
-scx_dsq_move() verifies that the task belongs to the calling scheduler
-before taking any locks and aborts the scheduler on mismatch. The task can
-lose the sched association at any point: It can run and fully exit, which
-clears the association, or get rehomed to a different sub-sched. Both are
-benign races, but the early ownership check escalates them into scheduler
-aborts.
+Per-CPU array, hash, and cgroup storage map updates without BPF_F_CPU
+or BPF_F_ALL_CPUS use a value buffer whose per-CPU slots are packed in
+possible-CPU order. The buffer is sized as:
 
-Move the ownership check below the cursor-lost check. Every ownership change
-dequeues the task first, so a task that is still on the iterated DSQ under
-the lock while owned elsewhere indicates a genuine violation and should
-abort.
+  round_up(value_size, 8) * num_possible_cpus()
 
-Also fix two stale comments still referencing sched_ext_free(), which has
-been renamed to sched_ext_dead().
+The update paths iterate over possible CPUs, but use the logical CPU ID
+to calculate the source offset:
 
-Fixes: bb4d9fd55158 ("sched_ext: scx_dsq_move() should validate the task belongs to the right scheduler")
-Signed-off-by: Tejun Heo <tj@kernel.org>
+  value + size * cpu
+
+This only works when possible CPU IDs are contiguous starting at zero.
+
+For example, with a possible CPU mask of 0,2-3, the buffer contains
+three slots corresponding to CPUs 0, 2, and 3. CPU2 is therefore
+expected to use slot 1 and CPU3 slot 2. Instead, the current code uses
+slots 2 and 3 respectively, causing incorrect per-CPU values and an
+out-of-bounds read from the update buffer for CPU3.
+
+The corresponding lookup paths already use a dense offset while
+iterating over possible CPUs. Do the same for the array, hash, and
+cgroup storage update paths, advancing the source offset once for each
+possible CPU. BPF_F_ALL_CPUS continues to use the same value for every
+CPU.
+
+Fixes: 8eb76cb03f0f ("bpf: Add BPF_F_CPU and BPF_F_ALL_CPUS flags support for percpu_array maps")
+Fixes: c6936161fd55 ("bpf: Add BPF_F_CPU and BPF_F_ALL_CPUS flags support for percpu_hash and lru_percpu_hash maps")
+Fixes: 47c79f05aa0d ("bpf: Add BPF_F_CPU and BPF_F_ALL_CPUS flags support for percpu_cgroup_storage maps")
+Signed-off-by: Hui Su <sh_def@163.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Acked-by: Leon Hwang <leon.hwang@linux.dev>
+Link: https://lore.kernel.org/bpf/20260813155131.1022745-3-sh_def@163.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/ext/ext.c | 21 +++++++++++++--------
- 1 file changed, 13 insertions(+), 8 deletions(-)
+ kernel/bpf/arraymap.c      | 5 +++--
+ kernel/bpf/hashtab.c       | 5 +++--
+ kernel/bpf/local_storage.c | 5 +++--
+ 3 files changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/kernel/sched/ext/ext.c b/kernel/sched/ext/ext.c
-index 558be0cdebef8..548f46a427883 100644
---- a/kernel/sched/ext/ext.c
-+++ b/kernel/sched/ext/ext.c
-@@ -7435,7 +7435,7 @@ static void scx_root_enable_workfn(struct kthread_work *work)
- 	/*
- 	 * Enable ops for every task. Fork is excluded by scx_fork_rwsem
- 	 * preventing new tasks from being added. No need to exclude tasks
--	 * leaving as sched_ext_free() can handle both prepped and enabled
-+	 * leaving as sched_ext_dead() can handle both prepped and enabled
- 	 * tasks. Prep all tasks first and then enable them with preemption
- 	 * disabled.
- 	 *
-@@ -7524,7 +7524,7 @@ static void scx_root_enable_workfn(struct kthread_work *work)
+diff --git a/kernel/bpf/arraymap.c b/kernel/bpf/arraymap.c
+index 248b4818178cd..cc3f8c25a28b5 100644
+--- a/kernel/bpf/arraymap.c
++++ b/kernel/bpf/arraymap.c
+@@ -405,7 +405,7 @@ int bpf_percpu_array_update(struct bpf_map *map, void *key, void *value,
+ 	void __percpu *pptr;
+ 	void *ptr, *val;
+ 	u32 size;
+-	int cpu;
++	int cpu, off = 0;
  
- 	/*
- 	 * We're fully committed and can't fail. The task READY -> ENABLED
--	 * transitions here are synchronized against sched_ext_free() through
-+	 * transitions here are synchronized against sched_ext_dead() through
- 	 * scx_tasks_lock.
- 	 */
- 	percpu_down_write(&scx_fork_rwsem);
-@@ -9019,12 +9019,6 @@ static bool scx_dsq_move(struct bpf_iter_scx_dsq_kern *kit,
- 	if (unlikely(READ_ONCE(sch->aborting)))
- 		return false;
- 
--	if (unlikely(!scx_task_on_sched(sch, p))) {
--		scx_error(sch, "scx_bpf_dsq_move[_vtime]() on %s[%d] but the task belongs to a different scheduler",
--			  p->comm, p->pid);
--		return false;
--	}
--
- 	/*
- 	 * Can be called from either ops.dispatch() holding the dispatched rq's
- 	 * lock or any context where no rq lock is held. If latter, lock @p's
-@@ -9056,6 +9050,17 @@ static bool scx_dsq_move(struct bpf_iter_scx_dsq_kern *kit,
- 		goto out;
+ 	if (unlikely((map_flags & BPF_F_LOCK) || (u32)map_flags > BPF_F_ALL_CPUS))
+ 		/* unknown flags */
+@@ -437,9 +437,10 @@ int bpf_percpu_array_update(struct bpf_map *map, void *key, void *value,
  	}
+ 	for_each_possible_cpu(cpu) {
+ 		ptr = per_cpu_ptr(pptr, cpu);
+-		val = (map_flags & BPF_F_ALL_CPUS) ? value : value + size * cpu;
++		val = (map_flags & BPF_F_ALL_CPUS) ? value : value + off;
+ 		copy_map_value(map, ptr, val);
+ 		bpf_obj_cancel_fields(map, ptr);
++		off += size;
+ 	}
+ unlock:
+ 	rcu_read_unlock();
+diff --git a/kernel/bpf/hashtab.c b/kernel/bpf/hashtab.c
+index 9f394e1aa2e85..dd4da18312ac1 100644
+--- a/kernel/bpf/hashtab.c
++++ b/kernel/bpf/hashtab.c
+@@ -1026,7 +1026,7 @@ static void pcpu_copy_value(struct bpf_htab *htab, void __percpu *pptr,
+ 	} else {
+ 		u32 size = round_up(htab->map.value_size, 8);
+ 		void *val;
+-		int cpu;
++		int cpu, off = 0;
  
-+	/*
-+	 * @p has been on $src_dsq and can't move anymore. If @p is not on @sch,
-+	 * the caller didn't have authority over @p at the time of the call.
-+	 */
-+	if (unlikely(!scx_task_on_sched(sch, p))) {
-+		scx_error(sch, "scx_bpf_dsq_move[_vtime]() on %s[%d] but the task belongs to a different scheduler",
-+			  p->comm, p->pid);
-+		raw_spin_unlock(&src_dsq->lock);
-+		goto out;
-+	}
-+
- 	/* @p is still on $src_dsq and stable, determine the destination */
- 	dst_dsq = find_dsq_for_dispatch(sch, locked_rq ?: this_rq(), dsq_id, task_cpu(p));
+ 		if (map_flags & BPF_F_CPU) {
+ 			cpu = map_flags >> 32;
+@@ -1038,9 +1038,10 @@ static void pcpu_copy_value(struct bpf_htab *htab, void __percpu *pptr,
  
+ 		for_each_possible_cpu(cpu) {
+ 			ptr = per_cpu_ptr(pptr, cpu);
+-			val = (map_flags & BPF_F_ALL_CPUS) ? value : value + size * cpu;
++			val = (map_flags & BPF_F_ALL_CPUS) ? value : value + off;
+ 			copy_map_value(&htab->map, ptr, val);
+ 			bpf_obj_cancel_fields(&htab->map, ptr);
++			off += size;
+ 		}
+ 	}
+ }
+diff --git a/kernel/bpf/local_storage.c b/kernel/bpf/local_storage.c
+index 23267213a17fb..83cd527a2542b 100644
+--- a/kernel/bpf/local_storage.c
++++ b/kernel/bpf/local_storage.c
+@@ -220,7 +220,7 @@ int bpf_percpu_cgroup_storage_update(struct bpf_map *_map, void *key,
+ 	struct bpf_cgroup_storage *storage;
+ 	void *val;
+ 	u32 size;
+-	int cpu;
++	int cpu, off = 0;
+ 
+ 	if ((u32)map_flags & ~(BPF_ANY | BPF_EXIST | BPF_F_CPU | BPF_F_ALL_CPUS))
+ 		return -EINVAL;
+@@ -245,8 +245,9 @@ int bpf_percpu_cgroup_storage_update(struct bpf_map *_map, void *key,
+ 	}
+ 	size = round_up(_map->value_size, 8);
+ 	for_each_possible_cpu(cpu) {
+-		val = (map_flags & BPF_F_ALL_CPUS) ? value : value + size * cpu;
++		val = (map_flags & BPF_F_ALL_CPUS) ? value : value + off;
+ 		copy_map_value(_map, per_cpu_ptr(storage->percpu_buf, cpu), val);
++		off += size;
+ 	}
+ unlock:
+ 	rcu_read_unlock();
 -- 
 2.53.0
 
