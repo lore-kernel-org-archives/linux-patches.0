@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B23745172C9;
-	Thu, 17 Sep 2026 16:57:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC8714F93D0;
+	Thu, 17 Sep 2026 16:57:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789664268; cv=none; b=e992CvJPAwNwlPYz8q53iFsAKxCEDYjDaXH+W6Pp7i4V4NO4wAYLF+RV/alp4BEM6EeVO/IU4VlwQBEHCWyKiFIrrjVCZqYyGgM78xaPfhVwJfBioyFWmc7LJprKyq+vVWrtoCarASEbvpwn0oR0R2E5BA2H6krj7XmOLEY/Jbs=
+	t=1789664272; cv=none; b=s64CMtbc1eoQRLC+A5Ay5dAvn/787ATwHk+V9IiLEOA/LPxkgKSjSHct+8WNMgiBSIYQxnzSPAe+C8nT+7FCjVdas0BXlfQbiJpgwsVwsL/8H0ydKV3sf9Bm6/M6j45bAviQtvPn+HM+WUDQz4Ypb8eIo+SF/DyEvleo58Nltg0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789664268; c=relaxed/simple;
-	bh=I1++zwOe1VTMAvyQkOlTXGVhfDMIUVvGufQMFcstq6A=;
+	s=arc-20240116; t=1789664272; c=relaxed/simple;
+	bh=jzEGBCmSI1xTlG5yahtSaV+lAJ0Yu/wcGH5LKJ18cWQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WwxMSAceZl55j5Xx69OxIebvCDqXYqJvfBYzHEOtbH8sN+aihww5DJdF6i5GEG3mUEvehSscaRkMr+Zy/UZRM9dFooBbZEUaSFELbyRMbbYG4SQVOcG84lAu2KUyaVjaR0gIS/j+XsQg2D3f4RZKDW/mmN2PoL+EW+PcN9ic9b4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FTfjz8Db; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=p+PotYHKe1ULTjpYCI2qrIiGMjr8pwUanhZ+NqDyCmnHXchwghPSormUrBvy9SrxbD0AdSYHFzM0NkyJvFoWAQ05grRrAvY/hWfUQrWb/kzLuC3H8z00OWYpS+UA3hSHNJy5JESUNQnswSk1T7Pbiqf2sYJDBhGtRFM1WuTkWq4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pia9Qq9n; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FTfjz8Db"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 152FB1F00893;
-	Thu, 17 Sep 2026 16:57:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pia9Qq9n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12D5F1F000FF;
+	Thu, 17 Sep 2026 16:57:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789664267;
-	bh=/myfrsduq7tAljz7Cvczdz4r52wKZ8021SttmQnDrUA=;
+	s=korg; t=1789664270;
+	bh=znKTbH5Nsxn3DstKW2WbgbpG/S4fDTRpuH2zSlTLmhI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FTfjz8DbQ1M/akqv4s77FYL0BJW/WxRqVGHwH/upobzPsayi0QjCBSnmyEluy0+mg
-	 fTVJMnz1M12+KAlPeGahapXxmN3BSCFw0MHyps3ELeZ+dF2e5iLhZZOLhHhcXNMtP5
-	 v3dfB+i0LdumwGqOHh+P9CMqFpUedSvKXFU8DFQA=
+	b=Pia9Qq9nnRzoDVGp6urXNdnA8WIxJVUVWEJS2tqESyFjuNc+ZxqLqS5UQOHe8nAPX
+	 wey4imKR+axXeiThlNuOCX4EAglG7IV8gMxLaWM4cyCN9ZOGtPgjSuJlcExbbmSLLD
+	 bSjHFweSQ2yEXd1XA9O35F9xcnLfMVSG/zDqdQdE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amir Shetaia <Amir.Shetaia@amd.com>,
-	Alysa Liu <Alysa.Liu@amd.com>,
+	"Stanley.Yang" <Stanley.Yang@amd.com>,
+	Tao Zhou <tao.zhou1@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0315/1250] drm/amdkfd: fix UAF race in destroy_queue_cpsch
-Date: Thu, 17 Sep 2026 16:01:50 +0100
-Message-ID: <20260917151600.640438155@linuxfoundation.org>
+Subject: [PATCH 6.18 0316/1250] drm/amdgpu: harden FRU PIA parsing with bounded helpers
+Date: Thu, 17 Sep 2026 16:01:51 +0100
+Message-ID: <20260917151600.667511012@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -52,55 +52,150 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alysa Liu <Alysa.Liu@amd.com>
+From: Stanley.Yang <Stanley.Yang@amd.com>
 
-[ Upstream commit ac081deaf16a639ea7dff2f285fe421a33c1ade0 ]
+[ Upstream commit c990c05eb6c74c98d1ff3acf67a19015312820b7 ]
 
-wait_on_destroy_queue() drops locks to wait for queue resume, allowing
-a concurrent destroy to free the queue. Use is_being_destroyed flag to
-serialize destruction.
+Replace the open-coded TLV walk with fru_pia_advance()
+and fru_pia_copy_field() helpers that bound every read
+by the actual EEPROM data length, preventing out-of-bounds
+reads on truncated or malformed FRU data.
 
-Reviewed-by: Amir Shetaia <Amir.Shetaia@amd.com>
-Signed-off-by: Alysa Liu <Alysa.Liu@amd.com>
+Signed-off-by: Stanley.Yang <Stanley.Yang@amd.com>
+Reviewed-by: Tao Zhou <tao.zhou1@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ .../gpu/drm/amd/amdgpu/amdgpu_fru_eeprom.c    | 95 ++++++++++++-------
+ 1 file changed, 63 insertions(+), 32 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c b/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
-index 4de6bc59569a4..af8e6f53249da 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
-@@ -2517,6 +2517,9 @@ static int wait_on_destroy_queue(struct device_queue_manager *dqm,
- 	if (pdd->qpd.is_debug)
- 		return ret;
- 
-+	if (q->properties.is_being_destroyed)
-+		return -EBUSY;
-+
- 	q->properties.is_being_destroyed = true;
- 
- 	if (pdd->process->debug_trap_enabled && q->properties.is_suspended) {
-@@ -2529,6 +2532,9 @@ static int wait_on_destroy_queue(struct device_queue_manager *dqm,
- 		dqm_lock(dqm);
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_fru_eeprom.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_fru_eeprom.c
+index b0082aa7f3c61..2875627dce8e9 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_fru_eeprom.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_fru_eeprom.c
+@@ -114,6 +114,43 @@ static bool is_fru_eeprom_supported(struct amdgpu_device *adev, u32 *fru_addr)
  	}
+ }
  
-+	if (ret)
-+		q->properties.is_being_destroyed = false;
++/*
++ * IPMI FRU Product Info Area fields are TLV: one type/length byte
++ * (low 6 bits = data length) followed by that many data bytes. These
++ * helpers walk the cursor and copy a single field while bounding all
++ * accesses to the actual buffer length read from the EEPROM.
++ */
++#define FRU_FIELD_LEN(p, a)	((p)[a] & 0x3F)
 +
- 	return ret;
- }
++/* Advance cursor past the current TLV. Returns false if no more data. */
++static bool fru_pia_advance(u32 *addr, const unsigned char *pia, int len)
++{
++	if (*addr >= (u32)len)
++		return false;
++	*addr += 1 + FRU_FIELD_LEN(pia, *addr);
++	return true;
++}
++
++/*
++ * Copy the current TLV's data into dst (NUL-terminated). Returns false if
++ * the TLV header or data would read past the end of pia.
++ */
++static bool fru_pia_copy_field(char *dst, size_t dst_size,
++			       const unsigned char *pia, u32 addr, int len)
++{
++	size_t fl;
++
++	if (addr + 1 >= (u32)len)
++		return false;
++
++	fl = min3((size_t)FRU_FIELD_LEN(pia, addr),
++			  dst_size - 1,
++			  (size_t)(len - addr - 1));
++	memcpy(dst, pia + addr + 1, fl);
++	dst[fl] = '\0';
++	return true;
++}
++
+ int amdgpu_fru_get_product_info(struct amdgpu_device *adev)
+ {
+ 	struct amdgpu_fru_info *fru_info;
+@@ -222,52 +259,46 @@ int amdgpu_fru_get_product_info(struct amdgpu_device *adev)
+ 	 * Read Manufacturer Name field whose length is [3].
+ 	 */
+ 	addr = 3;
+-	if (addr + 1 >= len)
++	if (!fru_pia_copy_field(fru_info->manufacturer_name,
++				sizeof(fru_info->manufacturer_name),
++				pia, addr, len))
+ 		goto Out;
+-	memcpy(fru_info->manufacturer_name, pia + addr + 1,
+-	       min_t(size_t, sizeof(fru_info->manufacturer_name),
+-		     pia[addr] & 0x3F));
+-	fru_info->manufacturer_name[sizeof(fru_info->manufacturer_name) - 1] =
+-		'\0';
  
-@@ -2622,7 +2628,7 @@ static int destroy_queue_cpsch(struct device_queue_manager *dqm,
- 	return retval;
+ 	/* Read Product Name field. */
+-	addr += 1 + (pia[addr] & 0x3F);
+-	if (addr + 1 >= len)
++	if (!fru_pia_advance(&addr, pia, len) ||
++	    !fru_pia_copy_field(fru_info->product_name,
++				sizeof(fru_info->product_name),
++				pia, addr, len))
+ 		goto Out;
+-	memcpy(fru_info->product_name, pia + addr + 1,
+-	       min_t(size_t, sizeof(fru_info->product_name), pia[addr] & 0x3F));
+-	fru_info->product_name[sizeof(fru_info->product_name) - 1] = '\0';
  
- failed_try_destroy_debugged_queue:
--
-+	q->properties.is_being_destroyed = false;
- 	dqm_unlock(dqm);
- 	return retval;
- }
+ 	/* Go to the Product Part/Model Number field. */
+-	addr += 1 + (pia[addr] & 0x3F);
+-	if (addr + 1 >= len)
++	if (!fru_pia_advance(&addr, pia, len) ||
++	    !fru_pia_copy_field(fru_info->product_number,
++				sizeof(fru_info->product_number),
++				pia, addr, len))
+ 		goto Out;
+-	memcpy(fru_info->product_number, pia + addr + 1,
+-	       min_t(size_t, sizeof(fru_info->product_number),
+-		     pia[addr] & 0x3F));
+-	fru_info->product_number[sizeof(fru_info->product_number) - 1] = '\0';
+ 
+-	/* Go to the Product Version field. */
+-	addr += 1 + (pia[addr] & 0x3F);
++	/* Skip the Product Version field. */
++	if (!fru_pia_advance(&addr, pia, len))
++		goto Out;
+ 
+-	/* Go to the Product Serial Number field. */
+-	addr += 1 + (pia[addr] & 0x3F);
+-	if (addr + 1 >= len)
++	/* Read the Product Serial Number field. */
++	if (!fru_pia_advance(&addr, pia, len) ||
++	    !fru_pia_copy_field(fru_info->serial,
++				sizeof(fru_info->serial),
++				pia, addr, len))
+ 		goto Out;
+-	memcpy(fru_info->serial, pia + addr + 1,
+-	       min_t(size_t, sizeof(fru_info->serial), pia[addr] & 0x3F));
+-	fru_info->serial[sizeof(fru_info->serial) - 1] = '\0';
+ 
+-	/* Asset Tag field */
+-	addr += 1 + (pia[addr] & 0x3F);
++	/* Skip the Asset Tag field. */
++	if (!fru_pia_advance(&addr, pia, len))
++		goto Out;
+ 
+ 	/* FRU File Id field. This could be 'null'. */
+-	addr += 1 + (pia[addr] & 0x3F);
+-	if ((addr + 1 >= len) || !(pia[addr] & 0x3F))
++	if (!fru_pia_advance(&addr, pia, len) ||
++	    !fru_pia_copy_field(fru_info->fru_id,
++				sizeof(fru_info->fru_id),
++				pia, addr, len))
+ 		goto Out;
+-	memcpy(fru_info->fru_id, pia + addr + 1,
+-	       min_t(size_t, sizeof(fru_info->fru_id), pia[addr] & 0x3F));
+-	fru_info->fru_id[sizeof(fru_info->fru_id) - 1] = '\0';
+ 
+ Out:
+ 	kfree(pia);
 -- 
 2.53.0
 
