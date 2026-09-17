@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 740464C10DF;
-	Thu, 17 Sep 2026 15:45:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 414404E4C3E;
+	Thu, 17 Sep 2026 15:45:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659932; cv=none; b=eUGFGxC6y0sDqQ5O8h04k1virug2Nyt4O1rrcxYHz9CqLw8BDImx0RBBo8kTZ3POenWwwHJgD+Zu+lypNfT5LdlxKTK5pQlDEJgxO74m28vDY0it9RIAW+YPw7EewTX7+cCLGlE8BU4eGRQ/iHfgKydUdt6ZZewcZ5E8OnAzLjw=
+	t=1789659936; cv=none; b=BONbdkHfRaDkQlgfixsgOt3/ZuryWICUGqfO67lexGfZlfxzofrYWI1wbUVhJMOT6E+a+GpZ9QQPZAODT/IpSq7Ljfbxj2b33b72pBaoDPIq75XIJ2rBNCYHTeLLAcO9KVgSFZUtfZa9Z4eVfS/CetqoayQLa0kwf5GP/VyaFm0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659932; c=relaxed/simple;
-	bh=Y4rdUjI/RZHNjPyvMsJetF+NDG3ToNtmDG7vRMrRnRM=;
+	s=arc-20240116; t=1789659936; c=relaxed/simple;
+	bh=7/4YbXh0OtbWeb6bmHEBGk2H9iC0fqdDja0BkIUtX2A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FLR/vmc7EzNF8F3oM8hV45oz7kbQLbzEgzvANIViFiSMUE8nS8h5EpvMlniZzkGj6/VaN4/EI39+Xx23Gj0cC7p5LtNJ7iHB6wZuGz31085wf4CJk3PMQKr0FjW5rzlKIoCgnheJrjoZ1AheA7L07+08C8iyP0MDs1ZllG4I3I0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Iu46JsGt; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EWcut/5cglm+KaWTjeYczqClxwyYV18v+Dg0KBkGFyHzKkoeZRzmVkTs8yjKgn7EY3FX9OrtJQ/wU7ZrzsOcCyOZKzsYbFh1EmY8AQwoLDa6owxjejY8cLon7o8NgJFaoVL8ZHbyxvfFVtu6lBhg8MV/FPamurBauuMzXBKVV+s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oa/Eo8lF; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Iu46JsGt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7965C1F00899;
-	Thu, 17 Sep 2026 15:45:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oa/Eo8lF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58F4F1F00893;
+	Thu, 17 Sep 2026 15:45:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659926;
-	bh=vCT8cg4t64MoeGcej56zM92ORyy4N/n7HLUPZsy5Axs=;
+	s=korg; t=1789659931;
+	bh=SPPmrT6lBllwuTpI5hBCBbe93rynugtW6hIr3R2d5LY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Iu46JsGtxhgmAfZ44gdK8DXhZ0D71GhfMXL3IYv3zKU4ZYbnqH1sjIruyGha43+z8
-	 iUa1MD/VRTtNxRDOB8OKs3Jfk4JEwHnukOzYiJrcYcSHyEjtsIeYY6JH1H9FDNAVxR
-	 17RQXkVQ4alJdZXKv5xwytVKffRMr0RN1ZsuIy+g=
+	b=oa/Eo8lFrOx+TYx8sJc6/34agFT6gtXwfwzJ88ToxzOk99Y4akZWfMTKIpXpnF3F3
+	 JgXh1E2F0qx/8g2MDlZjq+f58ggKyHIW4LsX5pXbAdXZLwBsltHeFvRg60JtDGHq5Z
+	 hMKSXIbjjq3Xq/Fww8JShLAYaNCBin0/wJLfa95s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
+	Taras Madan <tarasmadan@google.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
 	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Victor Nogueira <victor@mojatatu.com>,
+	hybris@mojatatu.ai,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 421/733] net/sched: cls_route: Reject handle aliasing
-Date: Thu, 17 Sep 2026 16:12:09 +0100
-Message-ID: <20260917151402.299339618@linuxfoundation.org>
+Subject: [PATCH 7.2 423/733] net/sched: cls_api: Dont replay RTM_GETCHAIN in tc_ctl_chain().
+Date: Thu, 17 Sep 2026 16:12:11 +0100
+Message-ID: <20260917151402.355203358@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -53,67 +54,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Victor Nogueira <victor@mojatatu.com>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit b74a8455a2f271f54695b6a8ec1f113824a46c0e ]
+[ Upstream commit dff39930ad5e53d202bfdfb14687d1d2fd753b4d ]
 
-route4_set_parms() rejects a duplicate by scanning the destination chain
-for f->handle, but f->handle is the handle the filter has before the
-update, not the one it is about to be linked under. The comparison and
-the insertion therefore use different handles, which causes breakage.
+If a netlink socket sends RTM_GETCHAIN requests repeatedly
+without recv()ing the responses, tc_ctl_chain() hogs CPU and
+triggers Hung Task splat. [0]
 
-When a change moves the filter to a chain that already holds nhandle,
-the scan looks for the old handle instead, misses the collision and
-links a second filter with the same handle:
+As caught in the stack trace, netlink_attachskb() could confuse
+tc_ctl_chain() by returning -EAGAIN when the userspace netlink
+socket's receive buffer is full.
 
-  tc filter add dev lo ingress protocol ip pref 100 \
-    route from 1 to 1 classid 1:1 action ok
-  tc filter add dev lo ingress protocol ip pref 100 \
-    route from 2 to 2 classid 1:2 action drop
-  tc filter change dev lo ingress protocol ip pref 100 handle 0x10001 \
-    route from 2 to 2 classid 1:1 action ok
-  tc filter show dev lo ingress
-  ... fh 0x00020002 flowid 1:2 to 2 from 2
-  ... fh 0x00020002 flowid 1:1 to 2 from 2
+The replay: label exists since commit 32a4f5ecd738 ("net: sched:
+introduce chain object to uapi") but was not used initially.
 
-The newcomer is appended after the incumbent, and both end up with the
-same f->id. route4_get() returns the first match, so the second filter
-can no longer be addressed by handle, and route4_classify() stops at the
-first filter whose f->id matches. The second filter is dumped but is
-effectively dead.
+Since commit 9f407f1768d3 ("net: sched: introduce chain templates"),
+the label is needed for RTM_NEWCHAIN because tcf_proto_lookup_ops()
+may release RTNL to call request_module().
 
-Fix this by comparing against nhandle.
+However, the replay logic is unnecessary for RTM_GETCHAIN.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260829205422.854785-1-victor%40mojatatu.com
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Signed-off-by: Victor Nogueira <victor@mojatatu.com>
-Link: https://patch.msgid.link/20260907192133.2639067-3-victor@mojatatu.com
+Let's apply the replay logic only for RTM_NEWCHAIN.
+
+[0]:
+INFO: task repro:1018 is blocked on a mutex likely owned by task repro:1022.
+task:repro           state:R  running task     stack:14096 pid:1022  tgid:1014  ppid:961    task_flags:0x400040 flags:0x00080000
+Call Trace:
+ <TASK>
+ ? clockevents_program_event (kernel/time/clockevents.c:372)
+ ? pskb_expand_head (net/core/skbuff.c:615)
+ ? skb_release_data (net/core/skbuff.c:1122)
+ ? netlink_attachskb (./include/linux/skbuff.h:1323 ./include/linux/skbuff.h:1332 net/netlink/af_netlink.c:1232)
+ ? __netlink_lookup (./include/linux/rcupdate.h:882 ./include/linux/rhashtable.h:711 net/netlink/af_netlink.c:499)
+ ? tc_chain_notify (net/sched/cls_api.c:3045)
+ ? tc_chain_notify (./include/linux/skbuff.h:1384 net/sched/cls_api.c:3041)
+ ? netlink_unicast (net/netlink/af_netlink.c:1335)
+ ? rtnl_unicast (./include/net/netlink.h:1198 net/core/rtnetlink.c:985)
+ ? tc_ctl_chain (net/sched/cls_api.c:3242)
+ ? rtnetlink_rcv_msg (net/core/rtnetlink.c:7146)
+ ? netlink_unicast (net/netlink/af_netlink.c:1354)
+ ? __pfx_rtnetlink_rcv_msg (net/core/rtnetlink.c:7177)
+ ? netlink_rcv_skb (net/netlink/af_netlink.c:2556)
+ ? netlink_unicast (net/netlink/af_netlink.c:1319)
+ ? netlink_sendmsg (net/netlink/af_netlink.c:1900)
+ ? __sock_sendmsg (net/socket.c:800)
+ ? __sys_sendto (net/socket.c:2281)
+ ? __x64_sys_sendto (net/socket.c:2288 net/socket.c:2284 net/socket.c:2284)
+ ? do_syscall_64 (arch/x86/entry/syscall_64.c:61 arch/x86/entry/syscall_64.c:84)
+ ? entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
+ </TASK>
+
+Fixes: 2ed9db3074fc ("net: sched: cls_api: fix dead code in switch")
+Reported-by: Taras Madan <tarasmadan@google.com>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Tested-by: hybris@mojatatu.ai
+Link: https://patch.msgid.link/20260908205537.863484-1-kuniyu@google.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/cls_route.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ net/sched/cls_api.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/sched/cls_route.c b/net/sched/cls_route.c
-index 17b0ebb766626..9710b77d379c4 100644
---- a/net/sched/cls_route.c
-+++ b/net/sched/cls_route.c
-@@ -460,8 +460,12 @@ static int route4_set_parms(struct net *net, struct tcf_proto *tp,
- 		for (fp = rtnl_dereference(b->ht[h2]);
- 		     fp;
- 		     fp = rtnl_dereference(fp->next))
--			if (fp->handle == f->handle)
-+			if (fp->handle == nhandle) {
-+				NL_SET_ERR_MSG_FMT(extack,
-+						   "Handle %x is already in use",
-+						   nhandle);
- 				return -EEXIST;
-+			}
- 
- 		refcount_inc(&b->filters_ref);
- 	}
+diff --git a/net/sched/cls_api.c b/net/sched/cls_api.c
+index 9966766661d50..c47d2ee13641d 100644
+--- a/net/sched/cls_api.c
++++ b/net/sched/cls_api.c
+@@ -3254,7 +3254,7 @@ static int tc_ctl_chain(struct sk_buff *skb, struct nlmsghdr *n,
+ 	tcf_chain_put(chain);
+ errout_block:
+ 	tcf_block_release(q, block, true);
+-	if (err == -EAGAIN)
++	if (err == -EAGAIN && n->nlmsg_type == RTM_NEWCHAIN)
+ 		/* Replay the request. */
+ 		goto replay;
+ 	return err;
 -- 
 2.53.0
 
