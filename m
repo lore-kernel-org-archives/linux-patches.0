@@ -1,139 +1,102 @@
-Received: from smtp-42ab.mail.infomaniak.ch (smtp-42ab.mail.infomaniak.ch [84.16.66.171])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0914553D0D2
-	for <patches@lists.linux.dev>; Thu, 17 Sep 2026 15:29:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=84.16.66.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5CAD58FD2D;
+	Thu, 17 Sep 2026 15:29:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789658979; cv=none; b=isGWWh56ZB0M5Iyp9VLE3vHX5pAA7tlwjc0giMUSSylohLvnCWVS/1+UCpzSJh4FPV0OVQ2XBtKvi3LCnyRgilhqFCCDsqtRJ4bBpfQPOT1rkTpf1udpFu8NBRfj/lE0VxuGO+9PoLYQ+wgSZf4TCQCQwBjiLszo0rnzMQx2Ufc=
+	t=1789658983; cv=none; b=lYq9GPfVB4MCh7p3HOR4jUkt/f3tpnyer/voFL4L/724dqQIjYODCRQ0toqDPIMeHXp32QDX+xHZI9Ot/drveoRZvC4XNYOm/O/YX4cg4qfSCWJNR9CB6O6/1jlmvqsTUuUwKBncWpCQdyW/CAww30cdSR2iZhZEPWyTn/DMj+g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789658979; c=relaxed/simple;
-	bh=6IQg6/Nx7OtLJ+WqvVWxQjl+XojXPeWTzuIq0nAsTwg=;
+	s=arc-20240116; t=1789658983; c=relaxed/simple;
+	bh=bAbM83pVMmxg/fRHrWioIFxJSUWC0mImcItewETTTVs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=cwfD76qvHpAxwPjpiW1n6LWoz2l9elNzTHMJ/wsaV2I3w67BxkAUjZcm9qiFE+8hZNNcUuaRNiFx04VoOYUUoJbfZKK0C82JP81eejyzf4fhkGu+dcQT1++y1kBWEjOzf0KozNKKgr7NexnUQtAjzc7vW2BOr9HvOrFLeQIgsC0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=digikod.net; spf=pass smtp.mailfrom=digikod.net; dkim=pass (1024-bit key) header.d=digikod.net header.i=@digikod.net header.b=1y30jYqJ; arc=none smtp.client-ip=84.16.66.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=digikod.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=digikod.net
+	 MIME-Version; b=tVFHeQzx7Yz6CjOQi72NV9A7VWjTCtW6xVURllpp0A1Xq+JWQyzbnBHI01UnI57wy5TQEHIY/U4xZt4s+xW7oVYqa4Eofaipv8vnKeLFTdZzP7Ixpu60Les2mt+EEd2/sRbhbMGy6XrlcPYFfTCWQumsXmIt8zCBb7DIpgY2EGs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GGD5uG7/; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=digikod.net header.i=@digikod.net header.b="1y30jYqJ"
-Received: from smtp-3-0001.mail.infomaniak.ch (smtp-3-0001.mail.infomaniak.ch [10.4.36.108])
-	by smtp-4-3000.mail.infomaniak.ch (Postfix) with ESMTPS id 4hm06W2f4rz1mb;
-	Thu, 17 Sep 2026 17:29:23 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=digikod.net;
-	s=20191114; t=1789658963;
-	bh=r5LsqCjBqYhN4j4DIw0D6ts6vEO+lM9IC9N4ztHs2Fw=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1y30jYqJvJsKJvGv0EFDJ39cNwDCpLU0LlHo3S3bcvxlPH7sgHeHEkyXZ6gs514KS
-	 c64e2bD1x1I144MGQgGUMv5pWC++SoEM9hL/rChun/ViU3jx64Q0FvMGZB2/cS4lO4
-	 a1ZnNY55TO9/7FCaZZ2u9ooEp13/STq+eXsq+2Sg=
-Received: from unknown by smtp-3-0001.mail.infomaniak.ch (Postfix) with ESMTPA id 4hm06V4nVRzCHP;
-	Thu, 17 Sep 2026 17:29:22 +0200 (CEST)
-From: =?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GGD5uG7/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FDAC1F00898;
+	Thu, 17 Sep 2026 15:29:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1789658974;
+	bh=aNGYabKnTzLAC6mokFqP8gGZkTUaK1kuilJU3+Hydfc=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=GGD5uG7/m9Bbpv12mrupSPeT6S3xKfr1UXrYk5LHiNswIgfjlzWP4O8z3TJy5smv3
+	 CvIWFyyjXiFljHkVT0w9C2AmMGnwdPH+byL1mtg5V7WxIiDa18FhcEvBsCpc3zIXET
+	 IDRdUDIm2FaFn4jr84aBwesx+pBJDjoB6MmWyI3I=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
-Cc: =?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?utf-8?q?G=C3=BCnther_Noack?= <gnoack@google.com>,
-	Paul Moore <paul@paul-moore.com>,
-	syzbot+bf4903dc7e12b18ebc87@syzkaller.appspotmail.com
-Subject: [PATCH 6.6.y] selftests/landlock: Add layout1.refer_mount_root
-Date: Thu, 17 Sep 2026 17:29:19 +0200
-Message-ID: <761a7c88d1ed83c222b845fb767d4a271dcaed70.1789655724.git.mic@digikod.net>
-In-Reply-To: <20240619125609.689806867@linuxfoundation.org>
-References: <20240619125609.689806867@linuxfoundation.org>
+	Heiko Carstens <hca@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.2 101/733] s390/ipl: Fix NULL deref in kdump without re-IPL parm block
+Date: Thu, 17 Sep 2026 16:06:49 +0100
+Message-ID: <20260917151353.473492085@linuxfoundation.org>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
+References: <20260917151350.597953846@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Infomaniak-Routing: alpha
 
-[ Upstream commit 0055f53aac80fd938bf7cdfad7ad414ca6c0e198 ]
+7.2-stable review patch.  If anyone has any objections, please let me know.
 
-Add tests to check error codes when linking or renaming a mount root
-directory.  This previously triggered a kernel warning, but it is fixed
-with the previous commit.
+------------------
 
-Cc: Günther Noack <gnoack@google.com>
-Cc: Paul Moore <paul@paul-moore.com>
-Link: https://lore.kernel.org/r/20240516181935.1645983-3-mic@digikod.net
-Signed-off-by: Mickaël Salaün <mic@digikod.net>
-[mic: Backport: adapt to the older selftest header layout]
-Signed-off-by: Mickaël Salaün <mic@digikod.net>
+From: Vasily Gorbik <gor@linux.ibm.com>
+
+[ Upstream commit 7f918871112e8e7c581e99eb8e545af4e59c8367 ]
+
+Some IPL types, like HMC FTP boot or QEMU direct kernel boot, might
+not provide an IPL parameter block. In this case, reipl_type_init()
+selects IPL_TYPE_UNKNOWN, and reipl_block_actual remains NULL.
+
+kdump passes the re-IPL parameter block to the dump kernel through
+os_info. Before commit 3b9678472bab ("s390/ipl: correct kdump reipl
+block checksum calculation"), the os_info entry was added only for
+IPL types which initialized reipl_block_actual. That commit moved the
+os_info update to machine_crash_shutdown(), making it unconditional. As
+a result, set_os_info_reipl_block() dereferences reipl_block_actual for
+IPL_TYPE_UNKNOWN. This may happen to work by chance when address zero
+contains readable lowcore data and the resulting empty os_info entry is
+ignored by the dump kernel.
+
+Skip the os_info update when no re-IPL parameter block is available.
+Kdump then collect the dump and reboot without setting re-IPL parameter
+block.
+
+Fixes: 3b9678472bab ("s390/ipl: correct kdump reipl block checksum calculation")
+Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/landlock/fs_test.c | 45 ++++++++++++++++++++++
- 1 file changed, 45 insertions(+)
+ arch/s390/kernel/ipl.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/tools/testing/selftests/landlock/fs_test.c b/tools/testing/selftests/landlock/fs_test.c
-index c239838c796a..96a5bf9eb6e9 100644
---- a/tools/testing/selftests/landlock/fs_test.c
-+++ b/tools/testing/selftests/landlock/fs_test.c
-@@ -11,6 +11,7 @@
- #include <fcntl.h>
- #include <linux/landlock.h>
- #include <linux/magic.h>
-+#include <linux/mount.h>
- #include <sched.h>
- #include <stdio.h>
- #include <string.h>
-@@ -34,6 +35,13 @@ int renameat2(int olddirfd, const char *oldpath, int newdirfd,
- }
- #endif
+diff --git a/arch/s390/kernel/ipl.c b/arch/s390/kernel/ipl.c
+index 3c346b02ceb95..7024fc4137152 100644
+--- a/arch/s390/kernel/ipl.c
++++ b/arch/s390/kernel/ipl.c
+@@ -1157,6 +1157,8 @@ static struct attribute_group reipl_nss_attr_group = {
  
-+#ifndef open_tree
-+int open_tree(int dfd, const char *filename, unsigned int flags)
-+{
-+	return syscall(__NR_open_tree, dfd, filename, flags);
-+}
-+#endif
-+
- #ifndef RENAME_EXCHANGE
- #define RENAME_EXCHANGE (1 << 1)
- #endif
-@@ -2264,6 +2272,43 @@ TEST_F_FORK(layout1, refer_denied_by_default4)
- 				layer_dir_s1d1_refer);
- }
- 
-+/*
-+ * Tests walking through a denied root mount.
-+ */
-+TEST_F_FORK(layout1, refer_mount_root_deny)
-+{
-+	const struct landlock_ruleset_attr ruleset_attr = {
-+		.handled_access_fs = LANDLOCK_ACCESS_FS_MAKE_DIR,
-+	};
-+	int root_fd, ruleset_fd;
-+
-+	/* Creates a mount object from a non-mount point. */
-+	set_cap(_metadata, CAP_SYS_ADMIN);
-+	root_fd =
-+		open_tree(AT_FDCWD, dir_s1d1,
-+			  AT_EMPTY_PATH | OPEN_TREE_CLONE | OPEN_TREE_CLOEXEC);
-+	clear_cap(_metadata, CAP_SYS_ADMIN);
-+	ASSERT_LE(0, root_fd);
-+
-+	ruleset_fd =
-+		landlock_create_ruleset(&ruleset_attr, sizeof(ruleset_attr), 0);
-+	ASSERT_LE(0, ruleset_fd);
-+
-+	ASSERT_EQ(0, prctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0));
-+	ASSERT_EQ(0, landlock_restrict_self(ruleset_fd, 0));
-+	EXPECT_EQ(0, close(ruleset_fd));
-+
-+	/* Link denied by Landlock: EACCES. */
-+	EXPECT_EQ(-1, linkat(root_fd, ".", root_fd, "does_not_exist", 0));
-+	EXPECT_EQ(EACCES, errno);
-+
-+	/* renameat2() always returns EBUSY. */
-+	EXPECT_EQ(-1, renameat2(root_fd, ".", root_fd, "does_not_exist", 0));
-+	EXPECT_EQ(EBUSY, errno);
-+
-+	EXPECT_EQ(0, close(root_fd));
-+}
-+
- TEST_F_FORK(layout1, reparent_link)
+ void set_os_info_reipl_block(void)
  {
- 	const struct rule layer1[] = {
++	if (!reipl_block_actual)
++		return;
+ 	os_info_entry_add_data(OS_INFO_REIPL_BLOCK, reipl_block_actual,
+ 			       reipl_block_actual->hdr.len);
+ }
+-- 
+2.53.0
+
+
+
