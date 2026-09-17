@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0CA24E73B7;
-	Thu, 17 Sep 2026 15:42:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BA0B4DDB30;
+	Thu, 17 Sep 2026 15:42:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659756; cv=none; b=qwIkfO2Ba+D5podOgLDM2e4wOen0v1I8DZi6nL7gqrIB457UGfMPTzC5gwiRZH2RAhe6RWxOZbLeXlqIiwLac/CqIgwtC9pWEWn/CeEUloVU8p0xkwwDt9wjPxNaVNnbkuDsKFsj2GYcx8ayFUiG4GvBewP/wx2kHYzkyZmRjVI=
+	t=1789659757; cv=none; b=cBJ6tMSp2PThEmTcn8bh1Ensw47pdnQxxFFfLsWCQf22zGVnjFlurirBmjAL9WyoQCjnVFR+pr4ZJnZ06ib8vGm3tke++CVk5X0bZWtlNlg4p5201YpJdxkzhzDg8xENYXmtFOHzAthwQ8Xln4lsPAwPsityuMKvbC3TXxBBOgU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659756; c=relaxed/simple;
-	bh=V2wCPPsYmDDVKx9LHmlivc6vKXdQGsYEfrdSL0lpmgE=;
+	s=arc-20240116; t=1789659757; c=relaxed/simple;
+	bh=yvRB2qHvtmdGzBUtH0BvhFW4n7aZ3mP09dhGdkfrFsM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rV/q7IO31oLTmbCwZ4kmUHNN8ONELV072AfOXbtzyEzS5YdHdtTecxWHMZHFodz/A9iz+oK4W/1wL/GmTx+ptrcuUeLSoRWzQPhDKbSEm0VJF5uulH5vcTzI9OJBTp2GdgBusVBJHqfrPEPXCJ60CC8gutdpxT3Kur7mxeF6whA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p8C2SvZI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RYd/mFY0Gs2skvidrkPF8RzZA/wdIcR0pIChsPfQBNl/wa8pFrV1jvAtktZx1B0b+jiaylH4j7Uk1HnNAQgB9NK2uam7xR+DMQvEXpDFjuk9GSxhRWwaps+xfxXzsK0Qnm+HiK+zuTTtFwW6fuHV1TbHjUeQk87CFaYAtjvvYdQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OqhsoP69; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p8C2SvZI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C0EB1F00899;
-	Thu, 17 Sep 2026 15:42:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OqhsoP69"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 345261F0089B;
+	Thu, 17 Sep 2026 15:42:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659746;
-	bh=uR9kvMWKicGXJ6RjUL+lSzDKAdguiqSKokDMKPDl+B8=;
+	s=korg; t=1789659749;
+	bh=n4IxYd9uZGRk0l+t/YEekZ4HHgy8ubohhuV1llegpFg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=p8C2SvZIhpwB/tAmpM03/cabnzvSIvImYbL/zeRa1m3OOW4BkVLn3FViJdOrUsFVX
-	 WRoh1sbiCnxtEHE8lRnpHyJjgtNzm3zd2Kw4/YlGbb3UKWF1PliXb87QQLdogS4RUF
-	 fQGx9dAdrXZjuEqiKRw55Vfp5mVq0704LyRYxgrM=
+	b=OqhsoP69EK1q2Plo76OF0wBrP1zt7Qx8Tn7fDV4sP7Npm+zy4DfyPJW6mj4zYBuA9
+	 lSsO1THqT7++LdAX3UDbvuDJJmkMcM60bl/NG0IyRdpJS731yJI/9Rw0ydsoVSkCPD
+	 Ck8xoakUJnKGR59vp5w20vE9ciZqZ9yp9Fk48QyY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linfeng Sun <linfeng.sun.dev@gmail.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	Aleksei Sviridkin <f@lex.la>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 359/733] vduse: return compat ioctl results directly
-Date: Thu, 17 Sep 2026 16:11:07 +0100
-Message-ID: <20260917151400.545056007@linuxfoundation.org>
+Subject: [PATCH 7.2 360/733] net: macb: zero the link settings taprio reads back
+Date: Thu, 17 Sep 2026 16:11:08 +0100
+Message-ID: <20260917151400.572406693@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -51,46 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linfeng Sun <linfeng.sun.dev@gmail.com>
+From: Aleksei Sviridkin <f@lex.la>
 
-[ Upstream commit 48a4ee65e677559776349128e6a81a6041986c99 ]
+[ Upstream commit 0523d5c52a450590bf5992bd6925394f3cc403e8 ]
 
-The compat handler handles VDUSE_IOTLB_GET_FD and VDUSE_VQ_GET_INFO, but
-then calls the native handler. Their different command sizes make native
-dispatch return -ENOIOCTLCMD.
+macb_taprio_setup_replace() calls phylink_ethtool_ksettings_get() with
+an uninitialised kset, and kset is not only an out-parameter. On a
+fixed link, or an in-band link with no PHY, phylink writes speed and
+duplex only if kset->base.rate_matching already reads RATE_MATCH_NONE,
+a field it never writes itself; in PHY mode before the PHY is attached
+it writes port and supported and nothing more. Either way the speed
+read back afterwards can be stack garbage. The ethtool core zeroes the
+structure on every path into the op, which is why its callers never
+see this; taprio is the only in-kernel caller passing its own variable.
 
-For GET_FD, this overwrites receive_fd()'s return value after the
-descriptor is installed, leaking one fd per call. Return handled compat
-results directly and use native dispatch only for other commands.
-
-Fixes: 455a2a1af926 ("vduse: fix compat handling for VDUSE_IOTLB_GET_FD/VDUSE_VQ_GET_INFO")
-Signed-off-by: Linfeng Sun <linfeng.sun.dev@gmail.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260908-fix-vduse_dev_compat_ioctl-v1-1-62264d9bfb8d@gmail.com>
+Fixes: 89934dbf169e ("net: macb: Add TAPRIO traffic scheduling support")
+Assisted-by: LLM
+Signed-off-by: Aleksei Sviridkin <f@lex.la>
+Link: https://patch.msgid.link/20260903123652.23900-2-f@lex.la
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vdpa/vdpa_user/vduse_dev.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/cadence/macb_main.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/vdpa/vdpa_user/vduse_dev.c b/drivers/vdpa/vdpa_user/vduse_dev.c
-index 2ea30f85350d3..ed71e5835e60c 100644
---- a/drivers/vdpa/vdpa_user/vduse_dev.c
-+++ b/drivers/vdpa/vdpa_user/vduse_dev.c
-@@ -1751,11 +1751,11 @@ static long vduse_dev_compat_ioctl(struct file *file, unsigned int cmd,
- 		break;
- 	}
- 	default:
--		ret = -ENOIOCTLCMD;
--		break;
-+		return vduse_dev_ioctl(file, cmd,
-+				       (unsigned long)compat_ptr(arg));
- 	}
- 
--	return vduse_dev_ioctl(file, cmd, (unsigned long)compat_ptr(arg));
-+	return ret;
- }
- #else
- #define vduse_dev_compat_ioctl compat_ptr_ioctl
+diff --git a/drivers/net/ethernet/cadence/macb_main.c b/drivers/net/ethernet/cadence/macb_main.c
+index cd140f98cbc83..09fd83782ae3f 100644
+--- a/drivers/net/ethernet/cadence/macb_main.c
++++ b/drivers/net/ethernet/cadence/macb_main.c
+@@ -4331,9 +4331,9 @@ static int macb_taprio_setup_replace(struct net_device *netdev,
+ 	u64 total_on_time = 0, start_time_sec = 0, start_time = conf->base_time;
+ 	u32 configured_queues = 0, speed = 0, start_time_nsec;
+ 	struct macb_queue_enst_config *enst_queue;
+-	struct tc_taprio_sched_entry *entry;
++	struct ethtool_link_ksettings kset = {};
+ 	struct macb *bp = netdev_priv(netdev);
+-	struct ethtool_link_ksettings kset;
++	struct tc_taprio_sched_entry *entry;
+ 	struct macb_queue *queue;
+ 	u32 queue_mask;
+ 	u8 queue_id;
 -- 
 2.53.0
 
