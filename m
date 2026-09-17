@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AABCE4FDE57;
-	Thu, 17 Sep 2026 16:52:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78AA050B403;
+	Thu, 17 Sep 2026 16:52:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789663977; cv=none; b=dDCCpOmyQHXPSyw3mEzX/XMmuWxtFWMQcR5msA0JkYpycJfO3igE5a8NVGvteiHrgNz5t0hxCCJe9rIT8luQsZrPd9PzJgYJ4HzM7B0z2pKzNARSz2WoozsVdz7g743vxg3Xj1UPdJmYd15/t/H9U/57KotH0D2GqXNymS+Jf1w=
+	t=1789663980; cv=none; b=KfZJLgcY8k1jd1kB8QDLiWFnNrcuFgn9Y/qQu2F5OSuBKHwoFQngfPxlVZnCFtB6cnn2dTbOZ0pbJwbAW8ldSA6vOgb7d6Jz0IAUhaTOPmInOriOcbn6en8z082kQSfnMeVCwDR1ujzqFpj3rfjcMVgbLB3uRliSNjnaK0MrPyc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789663977; c=relaxed/simple;
-	bh=hfjPCF5ZW5pBH8PYfv2eaWHlJh1728pAaeKqWtrVRRM=;
+	s=arc-20240116; t=1789663980; c=relaxed/simple;
+	bh=8d4dImvTNW/vG0jhZ+7j2nIOCfG03dBCYr8D5wfCZC0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s4jpBDLlcXMpqlTOmJGkSs7sSpbJcsKCMNOgeYeuTa/+qllVyXfVYVgTXusC4yr8e4JKoAOCYJrQ8OV3KtH0xD0B1vGaTQo6EJA4LLewU9W1NCbrJp2HUKyfiGLAUmaAGuKyUTf9qiHzPnmzxYKhjlozxVVQCLxWNByNSXfqSGg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w7b9Kwi7; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=SYpLYxAjvk/4BNQgvGtsuDMGQnlgOTOQwvMV1BqAmwUJb0dmfpDI9GD+xUnZHOCGVZFSzm8U0YctY6jtjecXoPC/HJ/8PyGFAh+0zmKdcRcWgE5fd/FTjiOJs4ERVwZS4kp0OkiwRQh17FnWewjnFs40Jl56Zi5WfXJwhzQpHFY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V8G0/8GQ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w7b9Kwi7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F0CB1F000FF;
-	Thu, 17 Sep 2026 16:52:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V8G0/8GQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A99571F000FF;
+	Thu, 17 Sep 2026 16:52:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789663975;
-	bh=X2mIpNUiF5D8j1RboRAAbiqKLiTwJ4lCRCFPC4k6lZI=;
+	s=korg; t=1789663978;
+	bh=GtkPNTtfO1TBo1ydMETnNPVAycyjxsloKITp+/NJm4M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=w7b9Kwi7wn4nhX+ZIEr5txVyo3oAhIbgAw0jp4T3iaqKUKeT2sBhjZimSvmPnRJI5
-	 VbrzgKD8Zeoqc5I2v+tqB9Ob7YbAsPqGV9v2G3olSQjgREETXqZCSlXdqolnAmlLFK
-	 WXxGAAxvHOBqh+FBzue+VQm755g46q57CY+5fsos=
+	b=V8G0/8GQoVc5jlsC7ggCIbE+oWzunTkhtx1lbpLWT27qCn3nEo86W/zGontEVfOY1
+	 LTDJ33IR3bAeMGQHwVWD/jPsBwKeZ5lxbeY1jMSIVu7kPcmTt0qycvcuLAvHdPjqP6
+	 H6tKctYpM5XqzCH3qzIeiS4KkQTx5DUZojUYqPyE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Sitnicki <jakub@cloudflare.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
+	Daniel Gabay <daniel.gabay@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0169/1250] net: bridge: remove stale rcu_barrier() in br_multicast_dev_del()
-Date: Thu, 17 Sep 2026 15:59:24 +0100
-Message-ID: <20260917151556.672513344@linuxfoundation.org>
+Subject: [PATCH 6.18 0211/1250] wifi: iwlwifi: fix the access to CNVR TOP registers
+Date: Thu, 17 Sep 2026 16:00:06 +0100
+Message-ID: <20260917151557.846893794@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -54,61 +52,148 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
 
-[ Upstream commit 25ae123db10ba9ab890b56bcdb0a4363aee8529a ]
+[ Upstream commit c73869c1df2a27dc3c928e94b42660124318f727 ]
 
-This rcu_barrier() came from a time call_rcu() calls were used in
-net/bridge/br_multicast.c.
+For Dr and Sc, we need to wait until the TOP is ready to gets its
+registers read by the host.
 
-Now kfree_rcu() is there, we can remove this problematic rcu_barrier()
-which causes extreme RTNL pressure in many syzbot reports.
-
-INFO: task syz-executor:77945 is blocked on a mutex likely owned by task kworker/u1024:5:36537.
-task:kworker/u1024:5 state:D stack:24616 pid:36537 tgid:36537 ppid:2      task_flags:0x4208060 flags:0x00080000 last_sleep:612797637337
-Workqueue: netns cleanup_net
-Call Trace:
- <TASK>
-  [<ffffffff81914eaa>] context_switch+0xf2a/0x1730 kernel/sched/core.c:6483
-  [<ffffffff81201143>] __schedule+0x1133/0x43a0 kernel/sched/core.c:8411
-  [<ffffffff8120446b>] __schedule_loop kernel/sched/core.c:8514 [inline]
-  [<ffffffff8120446b>] schedule+0xab/0x260 kernel/sched/core.c:8529
-  [<ffffffff8121a093>] schedule_timeout+0xc3/0x2b0 kernel/time/sleep_timeout.c:75
-  [<ffffffff81205347>] do_wait_for_common kernel/sched/completion.c:100 [inline]
-  [<ffffffff81205347>] __wait_for_common kernel/sched/completion.c:121 [inline]
-  [<ffffffff81205347>] wait_for_common kernel/sched/completion.c:132 [inline]
-  [<ffffffff81205347>] wait_for_completion+0x2c7/0x5d0 kernel/sched/completion.c:153
-  [<ffffffff81b8f27f>] rcu_barrier+0x49f/0x620 kernel/rcu/tree.c:3888
-  [<ffffffff860091b3>] br_multicast_dev_del+0x303/0x350 net/bridge/br_multicast.c:4459
-  [<ffffffff85fb5dbc>] br_dev_uninit+0x1c/0x40 net/bridge/br_device.c:157
-  [<ffffffff8568058c>] unregister_netdevice_many_notify+0x1c1c/0x2300 net/core/dev.c:12599
-  [<ffffffff8562be43>] ops_exit_rtnl_list net/core/net_namespace.c:187 [inline]
-  [<ffffffff8562be43>] ops_undo_list+0x3d3/0x940 net/core/net_namespace.c:248
-
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Jakub Sitnicki <jakub@cloudflare.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://patch.msgid.link/20260519095540.2643318-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+Reviewed-by: Daniel Gabay <daniel.gabay@intel.com>
+Link: https://patch.msgid.link/20260511203428.09778340db51.I28d678ad404bbf8068f139666d38e29be5aa063b@changeid
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/br_multicast.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/iwl-io.c   | 18 ++++++++++++-
+ drivers/net/wireless/intel/iwlwifi/iwl-io.h   |  4 ++-
+ drivers/net/wireless/intel/iwlwifi/iwl-prph.h |  7 ++++-
+ .../intel/iwlwifi/pcie/gen1_2/trans.c         | 26 ++++++++++++++++++-
+ 4 files changed, 51 insertions(+), 4 deletions(-)
 
-diff --git a/net/bridge/br_multicast.c b/net/bridge/br_multicast.c
-index c2a5af45df204..9de9db5fa731c 100644
---- a/net/bridge/br_multicast.c
-+++ b/net/bridge/br_multicast.c
-@@ -4456,8 +4456,6 @@ void br_multicast_dev_del(struct net_bridge *br)
- 	br_multicast_ctx_deinit(&br->multicast_ctx);
- 	br_multicast_gc(&deleted_head);
- 	cancel_work_sync(&br->mcast_gc_work);
--
--	rcu_barrier();
+diff --git a/drivers/net/wireless/intel/iwlwifi/iwl-io.c b/drivers/net/wireless/intel/iwlwifi/iwl-io.c
+index b1944584c6931..c4ccfffdf6af9 100644
+--- a/drivers/net/wireless/intel/iwlwifi/iwl-io.c
++++ b/drivers/net/wireless/intel/iwlwifi/iwl-io.c
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause
+ /*
+- * Copyright (C) 2003-2014, 2018-2022, 2024-2025 Intel Corporation
++ * Copyright (C) 2003-2014, 2018-2022, 2024-2026 Intel Corporation
+  * Copyright (C) 2015-2016 Intel Deutschland GmbH
+  */
+ #include <linux/device.h>
+@@ -168,6 +168,22 @@ int iwl_poll_prph_bit(struct iwl_trans *trans, u32 addr,
+ 	return -ETIMEDOUT;
  }
  
- int br_multicast_set_router(struct net_bridge_mcast *brmctx, unsigned long val)
++int iwl_poll_umac_prph_bits_no_grab(struct iwl_trans *trans, u32 addr,
++				    u32 bits, u32 mask, int timeout)
++{
++	int t = 0;
++
++	do {
++		if ((iwl_read_umac_prph_no_grab(trans, addr) & mask) ==
++		    (bits & mask))
++			return 0;
++		udelay(IWL_POLL_INTERVAL);
++		t += IWL_POLL_INTERVAL;
++	} while (t < timeout);
++
++	return -ETIMEDOUT;
++}
++
+ void iwl_set_bits_prph(struct iwl_trans *trans, u32 ofs, u32 mask)
+ {
+ 	if (iwl_trans_grab_nic_access(trans)) {
+diff --git a/drivers/net/wireless/intel/iwlwifi/iwl-io.h b/drivers/net/wireless/intel/iwlwifi/iwl-io.h
+index 5bcec239ffc4a..d920a32fc173c 100644
+--- a/drivers/net/wireless/intel/iwlwifi/iwl-io.h
++++ b/drivers/net/wireless/intel/iwlwifi/iwl-io.h
+@@ -1,6 +1,6 @@
+ /* SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause */
+ /*
+- * Copyright (C) 2018-2021, 2025 Intel Corporation
++ * Copyright (C) 2018-2021, 2025-2026 Intel Corporation
+  */
+ #ifndef __iwl_io_h__
+ #define __iwl_io_h__
+@@ -51,6 +51,8 @@ static inline void iwl_write_prph(struct iwl_trans *trans, u32 ofs, u32 val)
+ 
+ int iwl_poll_prph_bit(struct iwl_trans *trans, u32 addr,
+ 		      u32 bits, u32 mask, int timeout);
++int iwl_poll_umac_prph_bits_no_grab(struct iwl_trans *trans, u32 addr,
++				    u32 bits, u32 mask, int timeout);
+ void iwl_set_bits_prph(struct iwl_trans *trans, u32 ofs, u32 mask);
+ void iwl_set_bits_mask_prph(struct iwl_trans *trans, u32 ofs,
+ 			    u32 bits, u32 mask);
+diff --git a/drivers/net/wireless/intel/iwlwifi/iwl-prph.h b/drivers/net/wireless/intel/iwlwifi/iwl-prph.h
+index a7214ddcfaf56..6ca1f51b69a1c 100644
+--- a/drivers/net/wireless/intel/iwlwifi/iwl-prph.h
++++ b/drivers/net/wireless/intel/iwlwifi/iwl-prph.h
+@@ -1,6 +1,6 @@
+ /* SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause */
+ /*
+- * Copyright (C) 2005-2014, 2018-2025 Intel Corporation
++ * Copyright (C) 2005-2014, 2018-2026 Intel Corporation
+  * Copyright (C) 2013-2015 Intel Mobile Communications GmbH
+  * Copyright (C) 2016 Intel Deutschland GmbH
+  */
+@@ -411,6 +411,11 @@ enum {
+ #define HPM_SECONDARY_DEVICE_STATE      0xa03404
+ #define WFPM_MAC_OTP_CFG7_ADDR		0xa03338
+ #define WFPM_MAC_OTP_CFG7_DATA		0xa0333c
++#define WFPM_RSRCS_4PHS_REQ_STTS	0xa033f8
++#define WFPM_RSRCS_4PHS_ACK_STTS	0xa033fc
++
++#define RSRC_REQ_CNVR_TOP BIT(6)
++#define RSRC_ACK_CNVR_TOP BIT(6)
+ 
+ 
+ /* For UMAG_GEN_HW_STATUS reg check */
+diff --git a/drivers/net/wireless/intel/iwlwifi/pcie/gen1_2/trans.c b/drivers/net/wireless/intel/iwlwifi/pcie/gen1_2/trans.c
+index 59307b5df4417..b003abf1fe2ce 100644
+--- a/drivers/net/wireless/intel/iwlwifi/pcie/gen1_2/trans.c
++++ b/drivers/net/wireless/intel/iwlwifi/pcie/gen1_2/trans.c
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause
+ /*
+- * Copyright (C) 2007-2015, 2018-2024 Intel Corporation
++ * Copyright (C) 2007-2015, 2018-2024, 2026 Intel Corporation
+  * Copyright (C) 2013-2015 Intel Mobile Communications GmbH
+  * Copyright (C) 2016-2017 Intel Deutschland GmbH
+  */
+@@ -4000,6 +4000,30 @@ static void get_crf_id(struct iwl_trans *iwl_trans,
+ 	else
+ 		sd_reg_ver_addr = SD_REG_VER;
+ 
++	/* wait until the device is ready to access the prph registers */
++	if (iwl_trans->mac_cfg->device_family == IWL_DEVICE_FAMILY_DR ||
++	    iwl_trans->mac_cfg->device_family == IWL_DEVICE_FAMILY_SC) {
++		u32 req = iwl_read_umac_prph_no_grab(iwl_trans,
++						     WFPM_RSRCS_4PHS_REQ_STTS);
++		int ret;
++
++		if (!(req & RSRC_REQ_CNVR_TOP)) {
++			IWL_ERR(iwl_trans,
++				"WFPM_RSRCS_4PHS_REQ_STTS bit 6 is clear 0x%x\n",
++				req);
++			return;
++		}
++
++		ret = iwl_poll_umac_prph_bits_no_grab(iwl_trans,
++						      WFPM_RSRCS_4PHS_ACK_STTS,
++						      RSRC_ACK_CNVR_TOP,
++						      RSRC_ACK_CNVR_TOP,
++						      50 * 1000);
++		if (ret < 0)
++			IWL_ERR(iwl_trans,
++				"WFPM_RSRCS_4PHS_ACK_STTS bit 6 is clear\n");
++	}
++
+ 	/* Enable access to peripheral registers */
+ 	val = iwl_read_umac_prph_no_grab(iwl_trans, WFPM_CTRL_REG);
+ 	val |= WFPM_AUX_CTL_AUX_IF_MAC_OWNER_MSK;
 -- 
 2.53.0
 
