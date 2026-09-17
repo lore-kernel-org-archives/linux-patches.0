@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 446874E5350;
-	Thu, 17 Sep 2026 17:38:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECA094E5337;
+	Thu, 17 Sep 2026 17:38:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666712; cv=none; b=F6PlePrwRGopGy2QBROkCZjoMh19By4/2+taPbMYLWwr9UQVV2/MIkP11Qa2vImZ6yCN9DPG/Kv0JKhhlzuULO5RqDlHv+FrJ60XjDrOOWKaQEQ6kOqWPKufK1VRZthOwlFK6xl5qwHFZ5u+Hz3l1sDbAw7QKgjBR6mETXctX+8=
+	t=1789666715; cv=none; b=fNmd71ONrI2vbck1DVcUv3MNlNtqr9M5U0T+Gj+y1eHm0SZn7kuLub7yvZgYj/1q+ZhM0t2W9qXWGGcadujAnBhQV/pgoAvxWYcN3eNkkpLgqXzNUu6Mqx8Y0KuVj3JD9Zz1ydhJ6Fj44l0RVl/G4ev3IQlajqrc+FbAeYUm5Yo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666712; c=relaxed/simple;
-	bh=A7ath27qBEy/nq0w2bmkCqIUnlclit6p6N6ZpytixE8=;
+	s=arc-20240116; t=1789666715; c=relaxed/simple;
+	bh=9CJzjikQRvxgEj4XIg9RxVF2suXULReL2uU/kd5JD1k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NF6Q/lrCbM7DC6b0B2OWgnn1/RVjNZcnHojpZlEiEtJUiA3i2tF/K7S5QXziHI/6gf9C6uycwBSXjdCIyZhieGSr+c10dAyHM8WAI/CjPb6SQ6sqDsz3Y4tBJYJsM2OyYQ8bCYPYP+eWo3OjrniOdsMYiFZmsQvQREjPFh1h8AU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZA1KTrJk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=O3Ri8WZgh9C92a+PstNajTsZ+0a8kqOgAu/S/G4VL1yLk+Ex0JAVEIj0hM2K+byi2JCur+6/JjPO0ib/k0DahSkDnpCPym/1B9ilYLfuLsU/aV0Ja9LnLvO+5uwjrbLVQjwvCbl/i20E7/1txAlGyI+rhl3yzqfFICngmn0p9yI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YATxguxj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZA1KTrJk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CD6A1F000FF;
-	Thu, 17 Sep 2026 17:38:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YATxguxj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 467E41F000FF;
+	Thu, 17 Sep 2026 17:38:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666710;
-	bh=ilFx5QMblg7NykqhIci3DR8M9Dd+Bdauvch4/0/zzrs=;
+	s=korg; t=1789666713;
+	bh=IMZAqBlTiU6QCph91D57z60gt/JgsJNGdawhR5ySYgc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZA1KTrJkm1GRmR17PRYW38RntsF6E7kL8Vm06Qh2+xje2GH9LBmRfUjIvjrIsweXI
-	 Yv9GnBlMJQkj1Bita1dE5ClHZgZ4jQhomZckYn9tB4u3K0mkSXSh3WZXuk/2vlisWE
-	 R+h3Gu0Hl5oAUPfws1QHlfsPxdhY0hEVaMaesPzM=
+	b=YATxguxjM+ILKZu56i4ZQyWRjcxKPAzSopJP8Vq6CghFw1nYlm77GLj/dAsw7PS25
+	 z/mFVNkQqqQcyEEfKwXSWt5mTnrMXPivdRPO5ifOYdNacBIhXojne9qSPzKcbbIdN4
+	 a7OoKGwLh9N0Tn9AOukcqGMzlSFN4B8Ebq5VaQkM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Youling Tang <tangyouling@kylinos.cn>,
-	ChenXiaoSong <chenxiaosong@kylinos.cn>,
-	Henrique Carvalho <henrique.carvalho@suse.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.18 1128/1250] smb: client: fix UBSAN array-index-out-of-bounds in smb2_copychunk_range
-Date: Thu, 17 Sep 2026 16:15:23 +0100
-Message-ID: <20260917151622.823907683@linuxfoundation.org>
+	Alessandro Zini <alessandro.zini@siemens.com>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 6.18 1129/1250] hwmon: (sht4x) Add missing locks
+Date: Thu, 17 Sep 2026 16:15:24 +0100
+Message-ID: <20260917151622.852976394@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -52,45 +50,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Henrique Carvalho <henrique.carvalho@suse.com>
+From: Guenter Roeck <linux@roeck-us.net>
 
-commit fa2fd0b10f66b08bc44745feed1761d7c1539d6e upstream.
+commit 06b7cf395b1fb652a50db39674a759658fbfba0d upstream.
 
-struct copychunk_ioctl_req::ChunkCount is annotated with
-__counted_by_le() as the number of elements in Chunks[].
+Sashiko reports:
 
-smb2_copychunk_range reuses ChunkCount to store the number of chunks
-sent in the current iteration. If a later iteration populates more
-chunks than a previous one, the stale smaller value trips UBSAN.
+Heater sysfs callbacks (heater_enable_store, heater_power_store, and
+heater_time_store) are exposed to data races without the hwmon lock.
 
-Set ChunkCount to chunk_count (allocated capacity) before populating
-Chunks[].
+If a user-space process reads hwmon data while another process enables
+the heater, heater_enable_store() executes without holding
+hwmon_lock(dev). This can interleave I2C commands and mutate shared
+state (data->heating_complete and data->data_pending) concurrently
+with sht4x_read_values(), leading to corrupted I2C sequences.
 
-Fixes: cc26f593dc19 ("smb: move copychunk definitions to common/smb2pdu.h")
-Link: https://lore.kernel.org/linux-cifs/CAH2r5ms9AWLy8WZ04Cpq5XOeVK64tcrUQ6__iMW+yk1VPzo1BA@mail.gmail.com
-Tested-by: Youling Tang <tangyouling@kylinos.cn>
-Acked-by:  ChenXiaoSong <chenxiaosong@kylinos.cn>
-Signed-off-by: Henrique Carvalho <henrique.carvalho@suse.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: 53dfa12299c1 ("hwmon: (sht4x) Rely on subsystem locking")
+Cc: Alessandro Zini <alessandro.zini@siemens.com>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://patch.msgid.link/20260821144916.2889031-1-linux@roeck-us.net
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/smb2ops.c |    6 ++++++
+ drivers/hwmon/sht4x.c |    6 ++++++
  1 file changed, 6 insertions(+)
 
---- a/fs/smb/client/smb2ops.c
-+++ b/fs/smb/client/smb2ops.c
-@@ -1970,6 +1970,12 @@ retry:
- 		src_off_prev = src_off;
- 		dst_off_prev = dst_off;
+--- a/drivers/hwmon/sht4x.c
++++ b/drivers/hwmon/sht4x.c
+@@ -277,6 +277,8 @@ static ssize_t heater_enable_store(struc
+ 		heating_time_bound = 1100;
+ 	}
  
-+		/*
-+		 * __counted_by_le(ChunkCount): set to allocated chunks before
-+		 * populating Chunks[]
-+		 */
-+		cc_req->ChunkCount = cpu_to_le32(chunk_count);
++	guard(hwmon_lock)(dev);
 +
- 		chunks = 0;
- 		copy_bytes = 0;
- 		copy_bytes_left = umin(total_bytes_left, tcon->max_bytes_copy);
+ 	if (time_before(jiffies, data->heating_complete))
+ 		return -EBUSY;
+ 
+@@ -314,6 +316,8 @@ static ssize_t heater_power_store(struct
+ 	if (power != 20 && power != 110 && power != 200)
+ 		return -EINVAL;
+ 
++	guard(hwmon_lock)(dev);
++
+ 	data->heater_power = power;
+ 
+ 	return count;
+@@ -344,6 +348,8 @@ static ssize_t heater_time_store(struct
+ 	if (time != 100 && time != 1000)
+ 		return -EINVAL;
+ 
++	guard(hwmon_lock)(dev);
++
+ 	data->heater_time = time;
+ 
+ 	return count;
 
 
