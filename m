@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E27950254F;
-	Thu, 17 Sep 2026 17:10:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9676E502D47;
+	Thu, 17 Sep 2026 17:10:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789665022; cv=none; b=ne5Qwy8JcguWNsW/GWMJETq7g0CPeVzVBJekkYXgZ7lI9jRww9s4CF4SijBVwIOrKt0h+VLM46fcCF/8KZOSjIbEqYZwNcSpqT2nWfXu687uAdq8nuJT6PeswsEX/6+m2yG1Wj9vZgZm7mchV4p4DKEcapq9FO2HhLBYMIi1jbc=
+	t=1789665025; cv=none; b=kKcQSYaQ2XYWdPvA5a1InK+yt2QId7dKObe6Iz9Div51iw5Asx35sWr7pYpvwgV2WgKuBCdrBPS0AEx0yGx8n0q+qcgy3frtORebUws9578xp9V6u+wc4seSeDCm/707KBt0Vv/gylmzHgpbWMuTUq9J1ClW8OyUWbNUIfQz6rw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789665022; c=relaxed/simple;
-	bh=6wpu8ONKX1G/UVdF/UYtWS9uVsyMWmuOdjxMDnTUE2o=;
+	s=arc-20240116; t=1789665025; c=relaxed/simple;
+	bh=y/bSs18fTjpqfUe7Mm0xkx/s4SvCLsR6fRow2nHuvtQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ooz+HczuaBgl3Yz35PY/l+CvOP2rUpJPhPl/+htK7Fe1BOQCsjD4K0D4O6/VRbl/e2n4QUDRdRWcHUL9WRsNXgB4K/l16TXAqVsyvYfhJb1Fhmenxm5jDHyg/p1wMNrGeVasXUUjmQpfn35jAWwcSeawB6EvLQjuoyMqTr6LYwc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=STbAn4+O; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mBiIXVk+rK33Q+SSSxazaAAT8fBxP/p8C3t0+OxKBZIxhGX1rmtSPCR3+7PMSq99YdwRbo4RNhvRCzY7LtpCw70gJ2PfHwbnt9yoMmbNMTL/aD7vhqOQz7QRMcelp2BTkj8PdVKOyIy2quEXyvqxIgU6rh0Kb5tIFZhGm69Qr0g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IQDGypcn; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="STbAn4+O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EBE51F000FF;
-	Thu, 17 Sep 2026 17:10:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IQDGypcn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9588B1F00893;
+	Thu, 17 Sep 2026 17:10:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789665020;
-	bh=kHcJC7r/upxzM3jgRXOKw1u9Uv9htrlDjs/qCZJUaFg=;
+	s=korg; t=1789665023;
+	bh=DxmvC9WxN9hRpU2Ap48akdnYD/AxLo4L8aomRSWttOQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=STbAn4+OX11NYdnvTfnOgYQdHM+vn8OqYU7JzqoJB/Oxg+Vugcd4T9/4S+cJ/mYbD
-	 8aG4GwzVczOra8zAtvArGv5gewN0/XDkZwvaL6awYyRvcAGmml3Os57Xe03kkMWvM4
-	 rAfQ69vCMIGA7uJ38a7rxhWbtp2sx4166ulV9KkQ=
+	b=IQDGypcnVkq5QCJQqiIgEt2X4Yn9Fe+c4pdWnKe2HCEo2VJ+7WHX3POdHELv+Gnd8
+	 WaM2QL/I63MRXFEVsEmDxfrYyAeCWG3x2m4kmoNdQBNxNgvek6EUK7tky7ykXyO3Su
+	 zD38I6eG0KdC8YRfUwbf3mlNO5IbTvSVmtS4BASw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Quentin Monnet <qmo@kernel.org>,
+	Gil Portnoy <dddhkts1@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0567/1250] bpftool: Strip all -Wformat* flags from bootstrap libbpf build
-Date: Thu, 17 Sep 2026 16:06:02 +0100
-Message-ID: <20260917151607.286963447@linuxfoundation.org>
+Subject: [PATCH 6.18 0568/1250] ksmbd: remove stale channels from all sessions on teardown
+Date: Thu, 17 Sep 2026 16:06:03 +0100
+Message-ID: <20260917151607.311533472@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,57 +52,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrii Nakryiko <andrii@kernel.org>
+From: Gil Portnoy <dddhkts1@gmail.com>
 
-[ Upstream commit a954c9e3168cdf0c3cad07b43dfc8ca2945d773a ]
+[ Upstream commit b10665730fbf6b5e45fe422badcbbc3f0df96ef5 ]
 
-Commit 9080b97689db ("bpftool: Pass host flags to bootstrap libbpf")
-started building the bootstrap libbpf with HOST_CFLAGS, stripping the
-warning options that are unsuitable for that build by filtering out
--W -Wall -Wextra -Wformat -Wformat-signedness.
+ksmbd_sessions_deregister() removes a connection's channels from other
+sessions' channel lists only while conn->binding is still set:
 
-HOST_CFLAGS inherits EXTRA_WARNINGS, which includes -Wformat-security
-and -Wformat-y2k. The filter drops -Wall and -Wformat (the latter being
-what actually enables -Wformat), but leaves those two -Wformat-* children
-in LIBBPF_BOOTSTRAP_CFLAGS. Building the bootstrap libbpf with it then
-warns:
+	if (conn->binding) {
+		hash_for_each_safe(sessions_table, ...)
+			ksmbd_chann_del(conn, sess);
+	}
 
-  cc1: warning: '-Wformat-y2k' ignored without '-Wformat'
-  cc1: warning: '-Wformat-security' ignored without '-Wformat'
+conn->binding is a transient flag: it is cleared once a binding
+SESSION_SETUP completes, and also by a subsequent non-binding
+SESSION_SETUP on the same connection (a reauthentication on a bound
+channel, or a new SessionId==0 setup). A connection that has bound a
+channel into another session's ksmbd_chann_list and then clears
+conn->binding leaves that channel behind when it disconnects: the
+channel, whose chann->conn points at the now freed struct ksmbd_conn,
+stays on the owner session's list.
 
-The warning is easy to miss in an in-tree build: tools/lib/bpf/Makefile
-re-adds -Wall via "override CFLAGS += -Wall", which re-enables -Wformat
-for the libbpf objects, so only libbpf's feature-detection probe (which
-uses the passed CFLAGS verbatim) leaks the two warnings. The standalone
-libbpf Makefile (github.com/libbpf/libbpf, used by the bpftool mirror)
-instead uses "CFLAGS ?= ... -Wall", which the passed-in CFLAGS overrides,
-so -Wall is never re-added and every bootstrap object warns.
+When the owning connection later tears down, the second loop
+dereferences the stale channel:
 
-Use a -Wformat% wildcard in the filter-out so the orphaned children are
-removed together with the parent.
+	xa_for_each(&sess->ksmbd_chann_list, chann_id, chann)
+		if (chann->conn != conn)
+			ksmbd_conn_set_exiting(chann->conn);   /* freed */
 
-Fixes: 9080b97689db ("bpftool: Pass host flags to bootstrap libbpf")
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Acked-by: Quentin Monnet <qmo@kernel.org>
-Link: https://lore.kernel.org/bpf/20260630205418.3483969-1-andrii@kernel.org
+which is a use-after-free write into the freed ksmbd_conn (the same
+stale channel is also walked by show_proc_session() through /proc). The
+session is leaked as well, because its channel list never empties.
+
+Remove the conn->binding gate so a connection always removes its
+channels from every session on teardown.
+
+Fixes: faf8578c77f3 ("ksmbd: find bound sessions during reauthentication")
+Signed-off-by: Gil Portnoy <dddhkts1@gmail.com>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/bpf/bpftool/Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/smb/server/mgmt/user_session.c | 25 +++++++++++--------------
+ 1 file changed, 11 insertions(+), 14 deletions(-)
 
-diff --git a/tools/bpf/bpftool/Makefile b/tools/bpf/bpftool/Makefile
-index 4b6670bad86e7..0081f5bf73b72 100644
---- a/tools/bpf/bpftool/Makefile
-+++ b/tools/bpf/bpftool/Makefile
-@@ -94,7 +94,7 @@ HOST_CFLAGS := $(subst -I$(LIBBPF_INCLUDE),-I$(LIBBPF_BOOTSTRAP_INCLUDE),\
- HOST_LDFLAGS := $(LDFLAGS)
+diff --git a/fs/smb/server/mgmt/user_session.c b/fs/smb/server/mgmt/user_session.c
+index e815915665211..920eb3963ae9f 100644
+--- a/fs/smb/server/mgmt/user_session.c
++++ b/fs/smb/server/mgmt/user_session.c
+@@ -247,22 +247,19 @@ void ksmbd_sessions_deregister(struct ksmbd_conn *conn)
+ {
+ 	struct ksmbd_session *sess;
+ 	unsigned long id;
++	struct hlist_node *tmp;
++	int bkt;
  
- # Remove warnings for libbpf bootstrap build
--LIBBPF_BOOTSTRAP_CFLAGS := $(filter-out -W -Wall -Wextra -Wformat -Wformat-signedness,$(HOST_CFLAGS))
-+LIBBPF_BOOTSTRAP_CFLAGS := $(filter-out -W -Wall -Wextra -Wformat%,$(HOST_CFLAGS))
+ 	down_write(&sessions_table_lock);
+-	if (conn->binding) {
+-		int bkt;
+-		struct hlist_node *tmp;
+-
+-		hash_for_each_safe(sessions_table, bkt, tmp, sess, hlist) {
+-			if (!ksmbd_chann_del(conn, sess) &&
+-			    xa_empty(&sess->ksmbd_chann_list)) {
+-				hash_del(&sess->hlist);
+-				down_write(&conn->session_lock);
+-				xa_erase(&conn->sessions, sess->id);
+-				up_write(&conn->session_lock);
+-				if (atomic_dec_and_test(&sess->refcnt))
+-					ksmbd_session_destroy(sess);
+-			}
++	hash_for_each_safe(sessions_table, bkt, tmp, sess, hlist) {
++		if (!ksmbd_chann_del(conn, sess) &&
++		    xa_empty(&sess->ksmbd_chann_list)) {
++			hash_del(&sess->hlist);
++			down_write(&conn->session_lock);
++			xa_erase(&conn->sessions, sess->id);
++			up_write(&conn->session_lock);
++			if (atomic_dec_and_test(&sess->refcnt))
++				ksmbd_session_destroy(sess);
+ 		}
+ 	}
  
- INSTALL ?= install
- RM ?= rm -f
 -- 
 2.53.0
 
