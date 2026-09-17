@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 810B94D4883;
-	Thu, 17 Sep 2026 15:39:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66E5E4E3230;
+	Thu, 17 Sep 2026 15:39:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659585; cv=none; b=c+TYRiiQZXqfMNhrYf/VYQ/0sNaB8XDEOBWYYG3MvwZoY599tlDwm0UOP30+4RI+B7qbRRK3XpLuFmAvzfo7sWLbS3SJP5QiN3W1GjPCExgpGh2PzGl47MeQerxaSIzWlAZAvEBsWsEpzs/+8tWmibfmj4Lh1hoxIQDJPtgg6Tk=
+	t=1789659587; cv=none; b=iCiI2rCK9So7u0e9SIBZDkD8K7+J9qm4GdcCi6zNYy6Zw38tbdBJRQuHhzv3NvjjTUIggAbFxnH4EQ/rOEX+gRI+guL7JxCwcsQN8ZgYGWlQd29lJZwfsJVZX7KHopsiH3EBDjfhd6Z8eQCiONNQditLmZil2qCSY/UFhRQGFR0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659585; c=relaxed/simple;
-	bh=/vNK+k115YGSKowTkB/Nwg5LblM2yy66QH+4ylINJ/A=;
+	s=arc-20240116; t=1789659587; c=relaxed/simple;
+	bh=w1jRA6fXTUcW8vssFrLdOf812VsTTMrjygBpNhk5GOY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D0kfgM/MvAq+bW6ISH5WRQSXkBKY7r/OQHTwGZEkqOO3Epu/LlVh8COlH0NyKFaSDuxujOvXVewaSmeJoV5LEQ7viCd+XKcfHf82H4gPW/Ri4dKbrWiySmU0DoVWlFNOEtBwnDXJW3ukRTHuwhSpXxsJAIOSwuYDG0CBUJbHdmY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S8lS5UdS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=k4QxxaN21u6A2N4z/DqrACV+kcH8b3yLyoJU0dLsi1bMi6tubnRdx9HRMj5YOU7G/NPxv23pAAuP+utsnE0zrcWCkgBafZ3XjCQnubpZzmLbavh3BGPi/duCvKNx5njMci2zZM4p8yxKWKTGA58S+quEwS69LPCFhyuRTAJ9fZI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lsORu6dI; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S8lS5UdS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BFD21F000FF;
-	Thu, 17 Sep 2026 15:39:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lsORu6dI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FAC71F00899;
+	Thu, 17 Sep 2026 15:39:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659574;
-	bh=fwIwl3Z6IhEeLZTFhI0X5R/6u4FhJ8ttQjIbMfmoBUY=;
+	s=korg; t=1789659577;
+	bh=5bg2+ogBRd3RrihzCShmNsxACkNYTsxVOvtJ9hRKpCQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S8lS5UdSlR+1bfZ2osF2mcvzah0cILN0Y2sW9gb5s130a0sjMC8aKx8wprAJhG2wA
-	 8abmhNVuSM3yqAw6PyLTDd5dmcy5V5ksb2npa/npm8L+SE1SAAWjEOXVyQoVMCJK5O
-	 /FxfCzJ2oahx8VtdQ1WCBEtF9PxBeKDO5QktnPTQ=
+	b=lsORu6dI0yv2HG1iPJNNgfCPQrr1fZvH31cdkj6LGa+dceVzn+7EXpxeCQxCGhjTw
+	 WS+YWgtO83VJBCtpwIu4S12lx1GtPr1pMccYktUAUVtsqL89RW3D1Cm9XfegmX0NSk
+	 Xr0U6T+GnM/E83kfIVvLa3ZoeKYPFdjU91DJ2nj4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lama Kayal <lkayal@nvidia.com>,
-	Cosmin Ratiu <cratiu@nvidia.com>,
+	Carolina Jubran <cjubran@nvidia.com>,
+	Shahar Shitrit <shshitrit@nvidia.com>,
 	Tariq Toukan <tariqt@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 303/733] net/mlx5: E-Switch, prevent mc_list repopulation during vport disable
-Date: Thu, 17 Sep 2026 16:10:11 +0100
-Message-ID: <20260917151358.992440366@linuxfoundation.org>
+Subject: [PATCH 7.2 304/733] net/mlx5e: Keep HW timestamp stats monotonic across reconfiguration
+Date: Thu, 17 Sep 2026 16:10:12 +0100
+Message-ID: <20260917151359.022818671@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -53,83 +53,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lama Kayal <lkayal@nvidia.com>
+From: Carolina Jubran <cjubran@nvidia.com>
 
-[ Upstream commit c0c6f4ba8a37688f7b4d4044898d88f0450d44c2 ]
+[ Upstream commit df99553f840e4c529c1ba4c29bd39396466ca11a ]
 
-In mlx5_esw_vport_disable(), move esw_apply_vport_rx_mode() ahead
-of esw_vport_change_handle_locked() so vport->allmulti_rule is
-NULL before the change handler observes it.
+`mlx5e_stats_ts_get()` currently selects either DMA or port timestamp
+counters based on `tx_ptp_opened`. This flag is intentionally kept set
+once the PTP TX queues have been opened so their statistics remain
+available after queue teardown. As a result, DMA timestamps are no
+longer reported after switching from port timestamping back to DMA
+timestamping.
 
-During FW-fatal recovery the disable runs while dev->state ==
-INTERNAL_ERROR. The promisc query inside esw_update_vport_rx_mode()
-fails and returns early, leaving vport->allmulti_rule intact, so
-esw_update_vport_mc_promisc() runs and adds MLX5_ACTION_ADD entries
-to vport->mc_list whose flow rules are then installed in the FDB
-by esw_add_mc_addr(). esw_destroy_legacy_table() tears down the
-FDB with those refs still held, corrupting the sub-tree and
-leaving dangling flow_rule pointers in vport->mc_list.
+The function also reads statistics only from the currently active
+channels and TCs. Reducing the number of channels or TCs can therefore
+drop previously accumulated timestamp counters from the reported value.
 
-Two-stage failure on `echo 1 > /sys/bus/pci/devices/<bdf>/reset`:
+Read the persistent channel statistics instead and always include DMA
+timestamp counters. Once the PTP TX queues have been opened, also
+include the port timestamp counters.
 
-  refcount_t: underflow; use-after-free.
-   tree_put_node+0xef/0x110 [mlx5_core]
-   clean_tree+0x44/0xd0 [mlx5_core] (x5)
-   mlx5_fs_core_cleanup+0x57/0x1c0 [mlx5_core]
-   mlx5_unload+0x65/0xd0 [mlx5_core]
-   ... mlx5_health_try_recover
+This also drops state_lock. It previously protected live channel/PTP
+pointers, the new code only reads persistent channel_stats and
+ptp_stats via mlx5e_stats_nch_read(), which is already safe for
+lockless stats access.
 
-  BUG: unable to handle page fault for address: 0000000003000055
-   down_write+0x1c/0x60
-   mlx5_del_flow_rules+0x33/0x1f0 [mlx5_core]
-   esw_del_mc_addr+0x7b/0x170 [mlx5_core]
-   esw_apply_vport_addr_list+0x56/0xf0 [mlx5_core]
-   esw_vport_change_handle_locked+0x28b/0x310 [mlx5_core]
-   mlx5_esw_vport_enable+0x270/0x4a0 [mlx5_core]
-   ... mlx5_load ... mlx5_health_try_recover
-
-esw_apply_vport_rx_mode(false, false) clears vport->allmulti_rule
-via its local state machine even when the FW del fails. With the
-rule NULL the !IS_ERR_OR_NULL(allmulti_rule) gate in the change
-handler closes, no rules are installed during disable, and the
-reload starts with a clean mc_list.
-
-Fixes: 922f56e9a795 ("net/mlx5: Fix steering rules cleanup")
-Signed-off-by: Lama Kayal <lkayal@nvidia.com>
-Reviewed-by: Cosmin Ratiu <cratiu@nvidia.com>
+Fixes: 3579032c08c1 ("net/mlx5e: Implement ethtool hardware timestamping statistics")
+Signed-off-by: Carolina Jubran <cjubran@nvidia.com>
+Reviewed-by: Shahar Shitrit <shshitrit@nvidia.com>
 Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20260902193854.3669035-1-tariqt@nvidia.com
+Link: https://patch.msgid.link/20260902193731.3668958-1-tariqt@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/eswitch.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ .../ethernet/mellanox/mlx5/core/en_stats.c    | 51 ++++++++-----------
+ 1 file changed, 20 insertions(+), 31 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.c b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.c
-index a0e2ca87b8d8f..eadc44119b1f4 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.c
-@@ -1040,13 +1040,19 @@ void mlx5_esw_vport_disable(struct mlx5_eswitch *esw, struct mlx5_vport *vport)
- 	    (vport->info.ipsec_crypto_enabled || vport->info.ipsec_packet_enabled))
- 		esw->enabled_ipsec_vf_count--;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_stats.c b/drivers/net/ethernet/mellanox/mlx5/core/en_stats.c
+index e7e6db7f6bf17..cd94bb44f6ab0 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_stats.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_stats.c
+@@ -1199,50 +1199,39 @@ void mlx5e_stats_rmon_get(struct mlx5e_priv *priv,
+ void mlx5e_stats_ts_get(struct mlx5e_priv *priv,
+ 			struct ethtool_ts_stats *ts_stats)
+ {
+-	int i, j;
++	u16 nch = mlx5e_stats_nch_read(priv);
++	int i, tc;
  
-+	/* Clear rx-mode before esw_vport_change_handle_locked(): on
-+	 * MLX5_VPORT_PROMISC_CHANGE it calls esw_update_vport_mc_promisc()
-+	 * when vport->allmulti_rule is set, repopulating mc_list with FDB
-+	 * rules that dangle once the FDB is destroyed. NULL allmulti_rule
-+	 * here skips that path.
+-	mutex_lock(&priv->state_lock);
++	ts_stats->pkts = 0;
+ 
+-	if (priv->tx_ptp_opened) {
+-		struct mlx5e_ptp *ptp = priv->channels.ptp;
++	for (i = 0; i < nch; i++) {
++		struct mlx5e_channel_stats *channel_stats =
++			priv->channel_stats[i];
+ 
+-		ts_stats->pkts = 0;
++		for (tc = 0; tc < priv->max_opened_tc; tc++)
++			ts_stats->pkts += channel_stats->sq[tc].timestamps;
++	}
++
++	/* Accumulate DMA and port timestamp counters so values stay monotonic
++	 * across channel teardown and mode switches.
 +	 */
-+	esw_apply_vport_rx_mode(esw, vport, false, false);
- 	/* We don't assume VFs will cleanup after themselves.
- 	 * Calling vport change handler while vport is disabled will cleanup
- 	 * the vport resources.
- 	 */
- 	esw_vport_change_handle_locked(vport);
- 	vport->enabled_events = 0;
--	esw_apply_vport_rx_mode(esw, vport, false, false);
- 	esw_vport_cleanup(esw, vport);
- 	esw->enabled_vports--;
++	if (priv->tx_ptp_opened) {
++		/* Err and Lost stats are only relevant for port timestamping,
++		 * as the DMA layer will always successfully timestamp packets.
++		 */
+ 		ts_stats->err = 0;
+ 		ts_stats->lost = 0;
  
+-		if (!ptp)
+-			goto out;
+-
+-		/* Aggregate stats across all TCs */
+-		for (i = 0; i < ptp->num_tc; i++) {
++		for (tc = 0; tc < priv->max_opened_tc; tc++) {
+ 			struct mlx5e_ptp_cq_stats *stats =
+-				ptp->ptpsq[i].cq_stats;
++				&priv->ptp_stats.cq[tc];
+ 
+ 			ts_stats->pkts += stats->cqe;
+ 			ts_stats->err += stats->abort + stats->err_cqe +
+-				stats->late_cqe;
++					stats->late_cqe;
+ 			ts_stats->lost += stats->lost_cqe;
+ 		}
+-	} else {
+-		/* DMA layer will always successfully timestamp packets. Other
+-		 * counters do not make sense for this layer.
+-		 */
+-		ts_stats->pkts = 0;
+-
+-		/* Aggregate stats across all SQs */
+-		for (j = 0; j < priv->channels.num; j++) {
+-			struct mlx5e_channel *c = priv->channels.c[j];
+-
+-			for (i = 0; i < c->num_tc; i++) {
+-				struct mlx5e_sq_stats *stats = c->sq[i].stats;
+-
+-				ts_stats->pkts += stats->timestamps;
+-			}
+-		}
+ 	}
+-
+-out:
+-	mutex_unlock(&priv->state_lock);
+ }
+ 
+ #define PPORT_PHY_LAYER_OFF(c) \
 -- 
 2.53.0
 
