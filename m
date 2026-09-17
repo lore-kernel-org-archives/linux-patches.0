@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61A884DE720;
-	Thu, 17 Sep 2026 17:18:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 382714D4876;
+	Thu, 17 Sep 2026 17:18:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789665495; cv=none; b=YmW2cGN/qvdjHD0t/zDJZ+433njtzqJSUW40f8+J45jqfnw7EdWEztas4oydICbQ5AWPOEg9T6oy23BpzB9Hqfbw2g1x5yeHF2Ct0K9vqgk7k2tei7S2Evl00hCnUlu0n/P3/zGGwr9efXeqAKIdZkHAW+yBPz8Iij/NsDAK18M=
+	t=1789665499; cv=none; b=tPHQN1deNZnTEggIUmH1UyS+5xcseNOXGTGeS9Yb66ov9CVyggzBnYTPsErj3sBluxmDoVlUUI4AYWW2MfrpJBwXxowOoPpgzCB9hyKT26/AQ8agC0oGIsLPBaxjQLiPABtob2pvbNpNHFRUJHHoxTiRXAKKsNi//SaEy5tlFCQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789665495; c=relaxed/simple;
-	bh=BXxDHDQkXInU2WfzxqAxuUnaCDb8F7ybK6vR4kqDMVM=;
+	s=arc-20240116; t=1789665499; c=relaxed/simple;
+	bh=jj4lAuM7xbok/HFuM8kyIQLLIHomS3ZlxqdlfNH2988=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oOE5GoxpB/rDarnuVbp1gOlvd9X7jSGP7yUhYttM8Q+NQe7n3reF+Fppb19cUK8CLECocxGJGNwM3goJluMEhmHym0DPHngfuGUGH9B2qdmeForxY3wnmzL/AZfgIrz5v04IxUjDWwY0dVHXpqbjwnFCdrzSi4XuwANoAswdkls=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sL1glrWy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=BtFfl/12b/daZ2oLnLYHcIAF/aASB2BB48Af/yKaGe889ebrPBMHnJHBBupxc47SEdsmoFdbnaNJvwtCswxgxIuzAS53590bdJDqDoBPqLkkfOqxlsfg2zvWRCTv7dYHznjw61ZHySXCtwuWM1nBIQVXYLLELjoJb/7+09al8uI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kd5YR3Tv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sL1glrWy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87B4B1F00893;
-	Thu, 17 Sep 2026 17:18:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kd5YR3Tv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BC2F1F00893;
+	Thu, 17 Sep 2026 17:18:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789665494;
-	bh=xqIQQpcvh3ysWsFXxGNN9sIKNFBInZQv1p39QWXWYzI=;
+	s=korg; t=1789665497;
+	bh=5nl7Ed2hoEn0rHWn6H+Mk72sPaZ5zobpzAWeDqQfyWE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sL1glrWyM78af8NIZT+MW+DLEzN83A6DbIxXgbfWfgw9T41+5ag9sHSsEvHw6M/3j
-	 2uvBnPBnp+b8VrGsHItBwYOMEB6iwJtOQgPtz+cToI40nuMrlmfcfHOg2NwAbr3X1F
-	 6e3ZNHwGWrs/2PdRZudWBAfOvWjVU1imFJ0pylIU=
+	b=Kd5YR3TvO2HpZpxfP/vbBR3inFoRzgv6FhavWLRIwqfghJt3Gaxt8Kl2ywW2w5tsI
+	 sdyrLGVVUKHMAEicKT0x8ft7iZ4QzyEmSnMWbKTTptHImt4K8PVtRGBW73nWDHRz/Z
+	 YXDvsnm3qfYgTIo5Gf15nQeYiiuEbVLIm3Iq+Oxk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linusw@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
+	Qu Wenruo <wqu@suse.com>,
+	"James C. Owens" <jamesowens@optonline.net>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0722/1250] ASoC: ux500: Program the MSP FIFO watermarks
-Date: Thu, 17 Sep 2026 16:08:37 +0100
-Message-ID: <20260917151611.458721866@linuxfoundation.org>
+Subject: [PATCH 6.18 0723/1250] btrfs: scrub: report the failing sectors address, not the stripe base
+Date: Thu, 17 Sep 2026 16:08:38 +0100
+Message-ID: <20260917151611.484754647@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,65 +52,118 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linusw@kernel.org>
+From: James C. Owens <jamesowens@optonline.net>
 
-[ Upstream commit 2519439b4b5f6ee95879b1a44fc373127291b1e4 ]
+[ Upstream commit 33ce0aa4c57611c3a3485ec7c01ad67b3751447d ]
 
-The DMA engine is configured for four-element bursts, but the MSP
-driver never programs the FIFO watermark register and instead depends
-on its previous or reset value. The DB8500 DMA request protocol requires
-the peripheral watermark to match the DMA packet size.
+scrub_stripe_report_errors() iterates over the sectors of a stripe, but
+every message it emits passes stripe->logical, the address of the first
+sector of the 64KiB stripe, rather than the address of the sector being
+reported. The physical address is likewise computed once, before the
+loop, from stripe->logical.
 
-Program four-element receive and transmit watermarks when configuring
-the first direction, before enabling MSP DMA requests.
+This matters because scrub_print_common_warning() uses that logical
+address for the backref walk which produces the "root %llu inode %llu
+offset %llu ... (path: ...)" part of the message. As the address is
+always the stripe base, the reported root/inode/offset/path can identify
+a different file from the one whose sector actually failed.
 
-Fixes: 3592b7f69a54 ("ASoC: Ux500: Add MSP I2S-driver")
-Assisted-by: LLM
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260902-ux500-msp-fixes-v2-9-4b60b002d55a@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+A 64KiB stripe routinely spans several extents belonging to unrelated
+files. On the machine where this was found, the stripe at logical
+0x17D9380000 holds four sectors of /usr/share/plasma/emoji/bg.dict, then
+a file inside a docker volume, then sectors referenced only by
+snapshots. Every error anywhere in that stripe is attributed to bg.dict.
+
+The effect is visible statistically: across ten months and four kernel
+series that machine logged 81 distinct flagged logical addresses, and
+every one of them is exactly 64KiB aligned. Since BTRFS_STRIPE_LEN is
+64KiB and stripe->logical is stripe aligned by construction, real
+failures distributed across sectors could not produce that.
+
+Report the address of the sector actually being examined. Adding the
+sector offset to the physical address is valid because BTRFS_STRIPE_LEN
+is the unit contiguous on a single device for every profile, so a stripe
+never crosses a device boundary.
+
+Fixes: 0096580713ff ("btrfs: scrub: introduce error reporting functionality for scrub_stripe")
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: James C. Owens <jamesowens@optonline.net>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/ux500/ux500_msp_i2s.c | 2 ++
- sound/soc/ux500/ux500_msp_i2s.h | 5 +++++
- 2 files changed, 7 insertions(+)
+ fs/btrfs/scrub.c | 24 ++++++++++++++----------
+ 1 file changed, 14 insertions(+), 10 deletions(-)
 
-diff --git a/sound/soc/ux500/ux500_msp_i2s.c b/sound/soc/ux500/ux500_msp_i2s.c
-index 43dc9b3aa4ef5..683b485fb5708 100644
---- a/sound/soc/ux500/ux500_msp_i2s.c
-+++ b/sound/soc/ux500/ux500_msp_i2s.c
-@@ -507,6 +507,8 @@ int ux500_msp_i2s_open(struct ux500_msp *msp,
- 		old_reg &= ~mask;
- 		new_reg |= old_reg;
- 		writel(new_reg, msp->registers + MSP_GCR);
-+		writel(MSP_WMRK_TX_4_ELEMENTS | MSP_WMRK_RX_4_ELEMENTS,
-+		       msp->registers + MSP_WMRK);
+diff --git a/fs/btrfs/scrub.c b/fs/btrfs/scrub.c
+index 368f1d4444935..f02188acd0480 100644
+--- a/fs/btrfs/scrub.c
++++ b/fs/btrfs/scrub.c
+@@ -1049,6 +1049,10 @@ static void scrub_stripe_report_errors(struct scrub_ctx *sctx,
+ 
+ skip:
+ 	for_each_set_bit(sector_nr, &extent_bitmap, stripe->nr_sectors) {
++		const u64 sector_logical = stripe->logical +
++					   ((u64)sector_nr << fs_info->sectorsize_bits);
++		const u64 sector_physical = physical +
++					   ((u64)sector_nr << fs_info->sectorsize_bits);
+ 		bool repaired = false;
+ 
+ 		if (scrub_bitmap_test_bit_is_metadata(stripe, sector_nr)) {
+@@ -1077,12 +1081,12 @@ static void scrub_stripe_report_errors(struct scrub_ctx *sctx,
+ 			if (dev) {
+ 				btrfs_err_rl(fs_info,
+ 		"scrub: fixed up error at logical %llu on dev %s physical %llu",
+-					    stripe->logical, btrfs_dev_name(dev),
+-					    physical);
++					    sector_logical, btrfs_dev_name(dev),
++					    sector_physical);
+ 			} else {
+ 				btrfs_err_rl(fs_info,
+ 			   "scrub: fixed up error at logical %llu on mirror %u",
+-					    stripe->logical, stripe->mirror_num);
++					    sector_logical, stripe->mirror_num);
+ 			}
+ 			continue;
+ 		}
+@@ -1091,30 +1095,30 @@ static void scrub_stripe_report_errors(struct scrub_ctx *sctx,
+ 		if (dev) {
+ 			btrfs_err_rl(fs_info,
+ "scrub: unable to fixup (regular) error at logical %llu on dev %s physical %llu",
+-					    stripe->logical, btrfs_dev_name(dev),
+-					    physical);
++					    sector_logical, btrfs_dev_name(dev),
++					    sector_physical);
+ 		} else {
+ 			btrfs_err_rl(fs_info,
+ 	  "scrub: unable to fixup (regular) error at logical %llu on mirror %u",
+-					    stripe->logical, stripe->mirror_num);
++					    sector_logical, stripe->mirror_num);
+ 		}
+ 
+ 		if (scrub_bitmap_test_bit_io_error(stripe, sector_nr))
+ 			if (__ratelimit(&rs) && dev)
+ 				scrub_print_common_warning("i/o error", dev, false,
+-						     stripe->logical, physical);
++						     sector_logical, sector_physical);
+ 		if (scrub_bitmap_test_bit_csum_error(stripe, sector_nr))
+ 			if (__ratelimit(&rs) && dev)
+ 				scrub_print_common_warning("checksum error", dev, false,
+-						     stripe->logical, physical);
++						     sector_logical, sector_physical);
+ 		if (scrub_bitmap_test_bit_meta_error(stripe, sector_nr))
+ 			if (__ratelimit(&rs) && dev)
+ 				scrub_print_common_warning("header error", dev, false,
+-						     stripe->logical, physical);
++						     sector_logical, sector_physical);
+ 		if (scrub_bitmap_test_bit_meta_gen_error(stripe, sector_nr))
+ 			if (__ratelimit(&rs) && dev)
+ 				scrub_print_common_warning("generation error", dev, false,
+-						     stripe->logical, physical);
++						     sector_logical, sector_physical);
  	}
  
- 	res = enable_msp(msp, config, first);
-diff --git a/sound/soc/ux500/ux500_msp_i2s.h b/sound/soc/ux500/ux500_msp_i2s.h
-index 17b5c37a7e5d5..2bf2699bdc49f 100644
---- a/sound/soc/ux500/ux500_msp_i2s.h
-+++ b/sound/soc/ux500/ux500_msp_i2s.h
-@@ -62,6 +62,7 @@ enum msp_direction {
- #define MSP_SRG		0x10
- #define MSP_FLR		0x14
- #define MSP_DMACR	0x18
-+#define MSP_WMRK	0x1c
- 
- #define MSP_IMSC	0x20
- #define MSP_RIS		0x24
-@@ -228,6 +229,10 @@ enum msp_direction {
- #define RDMAE_SHIFT		0
- #define TDMAE_SHIFT		1
- 
-+/* FIFO watermark register */
-+#define MSP_WMRK_RX_4_ELEMENTS	BIT(0)
-+#define MSP_WMRK_TX_4_ELEMENTS	BIT(3)
-+
- /* Interrupt Register */
- #define RX_SERVICE_INT		BIT(0)
- #define RX_OVERRUN_ERROR_INT	BIT(1)
+ 	/* Update the device stats. */
 -- 
 2.53.0
 
