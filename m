@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D63FC4DDB26;
-	Thu, 17 Sep 2026 18:03:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E99894FDA61;
+	Thu, 17 Sep 2026 18:03:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789668185; cv=none; b=IoOy6QLXHOtZGEm9Op83NV8WuvQyKNCsEDgubeYJ+2FIn53AsCeQcz2SgAL03D/ofhwmhp4Yik5jlHWOAcUrzE0GVefl4c1CFD8A1geUEi81m2SkBb+lE0x0h3QVA2GCDvt13fgerW8JdkziPrsfb3BaaTdXV0H5W6WA3zVHNUk=
+	t=1789668188; cv=none; b=ViovGWJwEo3CuGyEF4M88TgFA4Jg1+aGsU6LvaIg5GJVp8uEjWGMmY+6E8vfUwIQXe+L180MGVWdUSGuxSv6RoZWZyvQhLuxgZPGenZhgR5sse60Cjk8P3QdkfNejtep37A0x7dihM9jWW9cfDljK9fTtT1jKwqg6L2CrQvc1Tk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789668185; c=relaxed/simple;
-	bh=YuilmWMCqNeOkouool231bjW2ZArvS3iXSKGLQ2G51c=;
+	s=arc-20240116; t=1789668188; c=relaxed/simple;
+	bh=/cBu1P/ujOr3ngcSmOoJ9vgatV62qD/e4oLd7+Buric=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nFWo4BmX17msoNzJr7bEUN75svVG2/loYbzWmN3UinDpPNXSyl6gJVlO8W+UjZNOZ5CqIok2JvU12cMVDqYaz543NyXzBilZ0Qc3+QCpcu4BCdI6P8I7poxnh8lfmGEyJEJl2y412KvklwSDhR/Z71jSSBMy+USNuDS2AndmJeg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QYh+IhTp; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=O6/HoW7K/CyQeR89YB3U8Ofk7oKmgKgqzWevLYlju5j4J7J11i1QU+zjJFjZ9v9Z1N/qlxJ0kw9lbpZDPhLrd6k9RWXdr+i/e/fPN+ZIoI7TOrnK05hpjdHw+BUf4qOdlKwsgZ124VYZEVL/jRA8Hj/iEVnj+l/9imKr2eKdh1Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gCJuxI+5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QYh+IhTp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A1301F000FF;
-	Thu, 17 Sep 2026 18:03:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gCJuxI+5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A74F1F000FF;
+	Thu, 17 Sep 2026 18:03:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789668183;
-	bh=8p2J+5DY9HEXLOchsnclb0pzwi8cAI+JJX36QnpZpW4=;
+	s=korg; t=1789668186;
+	bh=aGJKHo5cxE5GJQwPFsII1ENjeJ0HKcCazAOAWeBXHNs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QYh+IhTpvIzEMIbume8jIVVNuqefbLIngRLQssi3J1spkQpdfAvoWyeOiLuwyFDEA
-	 cpICpVSiXMa7pcy1Zhqgp+9O/Eh6gIur84YWKWsJhxBoLdtEs4eX9axqC9Jg+3GcJT
-	 y3j5b9/axzh5ZQFV9MJxpEPmcwQmrxnHEK0lYbaI=
+	b=gCJuxI+5LQSqX1zx3WX/VqBH9owyon6kYdZQkJDGudPM59NulLmZlzBqhQEI+SZkv
+	 1JuCe4ZQy+jI+o154EYSZLQdtEyViEkkcbCexxTji8pgmIgfpUUe/GrN2qZoGVDwI9
+	 beacxJcbFSHR9OkcblUZzYHmppPRia8wE86DLalw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peng Fan <peng.fan@nxp.com>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Jassi Brar <jassisinghbrar@gmail.com>,
+	Tobias Deiminger <tobias.deiminger@linutronix.de>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0342/1102] mailbox: imx: Add a channel shutdown field
-Date: Thu, 17 Sep 2026 16:04:45 +0100
-Message-ID: <20260917151548.224617237@linuxfoundation.org>
+Subject: [PATCH 6.12 0325/1102] leds: pca9532: Dont stop blinking for non-zero brightness
+Date: Thu, 17 Sep 2026 16:04:28 +0100
+Message-ID: <20260917151547.791769722@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -53,126 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+From: Tobias Deiminger <tobias.deiminger@linutronix.de>
 
-[ Upstream commit 5ccea7eacb7786c358833634f45700365f6c1d99 ]
+[ Upstream commit 0261683a4d31783d680e74b3ae5f22f6a62128cc ]
 
-sashiko complained about possible teardown problem. The scenario
+pca9532 unexpectedly stopped blinking when changing brightness to a
+non-zero value. To reproduce:
 
- CPU 0                              CPU 1
-  imx_mu_isr()                   imx_mu_shutdown()
-                                   imx_mu_xcr_rmw(priv, IMX_MU_RCR, 0, IMX_MU_xCR_RIEn(priv->dcfg->type, cp->idx));
-    imx_mu_specific_rx()
-      imx_mu_xcr_rmw(priv, IMX_MU_RCR, IMX_MU_xCR_RIEn(priv->dcfg->type, 0), 0);
-                                   free_irq()
+ echo timer > /sys/class/leds/led-1/trigger   # blinks
+ echo 255 > /sys/class/leds/led-1/brightness  # blinking stops, light on
+ cat /sys/class/leds/led-1/trigger            # still claims [timer]
 
-The RX event remains enabled because in this short window the RX event
-was disabled in ->shutdown() while the interrupt was active and then
-enabled again by the ISR while ->shutdown waited in free_irq().
+According to Documentation/leds/leds-class.rst, only brightness = 0
+shall be a stop condition:
 
-This race requires timing and if happens can be problematic on shared
-handlers if the "removed" channel triggers an interrupt. In this case
-the irq-core will shutdown the interrupt with the "nobody cared"
-message.
+> You can change the brightness value of a LED independently of the
+> timer trigger. However, if you set the brightness value to LED_OFF it
+> will also disable the timer trigger.
 
-Introduce imx_mu_con_priv::shutdown to signal that the channel is
-shutting down. This flag is set with the lock held (by
-imx_mu_xcr_clr_shut()). The unmask side uses imx_mu_xcr_set_act() which
-only enables the event if the channel has not been shutdown and
-serialises on the same lock.
+Therefore add a guard to continue blinking when brightness != LED_OFF,
+similar to how pca955x does it since 575f10dc64a2 ("leds: pca955x: Add
+HW blink support").
 
-Reviewed-by: Peng Fan <peng.fan@nxp.com>
-Reviewed-by: Mathieu Poirier <mathieu.poirier@linaro.org>
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
+Signed-off-by: Tobias Deiminger <tobias.deiminger@linutronix.de>
+Link: https://patch.msgid.link/20260331202848.658676-1-tobias.deiminger@linutronix.de
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mailbox/imx-mailbox.c | 40 +++++++++++++++++++++++++++++++----
- 1 file changed, 36 insertions(+), 4 deletions(-)
+ drivers/leds/leds-pca9532.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/mailbox/imx-mailbox.c b/drivers/mailbox/imx-mailbox.c
-index 3319b40835f3c..fa1b0c814c575 100644
---- a/drivers/mailbox/imx-mailbox.c
-+++ b/drivers/mailbox/imx-mailbox.c
-@@ -82,6 +82,7 @@ struct imx_mu_con_priv {
- 	enum imx_mu_chan_type	type;
- 	struct mbox_chan	*chan;
- 	struct work_struct 	txdb_work;
-+	bool			shutdown;
- };
+diff --git a/drivers/leds/leds-pca9532.c b/drivers/leds/leds-pca9532.c
+index 4ecdfee14809f..e2c4aad89a7ca 100644
+--- a/drivers/leds/leds-pca9532.c
++++ b/drivers/leds/leds-pca9532.c
+@@ -182,11 +182,13 @@ static int pca9532_set_brightness(struct led_classdev *led_cdev,
+ 	int err = 0;
+ 	struct pca9532_led *led = ldev_to_led(led_cdev);
  
- struct imx_mu_priv {
-@@ -221,6 +222,36 @@ static u32 imx_mu_xcr_rmw(struct imx_mu_priv *priv, enum imx_mu_xcr type, u32 se
- 	return val;
- }
- 
-+static void imx_mu_xcr_clr_shut(struct imx_mu_priv *priv, struct imx_mu_con_priv *cp,
-+				enum imx_mu_xcr type, u32 clr)
-+{
-+	unsigned long flags;
-+	u32 val;
-+
-+	spin_lock_irqsave(&priv->xcr_lock, flags);
-+	cp->shutdown = true;
-+
-+	val = imx_mu_read(priv, priv->dcfg->xCR[type]);
-+	val &= ~clr;
-+	imx_mu_write(priv, val, priv->dcfg->xCR[type]);
-+	spin_unlock_irqrestore(&priv->xcr_lock, flags);
-+}
-+
-+static void imx_mu_xcr_set_act(struct imx_mu_priv *priv, struct imx_mu_con_priv *cp,
-+			       enum imx_mu_xcr type, u32 set)
-+{
-+	unsigned long flags;
-+	u32 val;
-+
-+	spin_lock_irqsave(&priv->xcr_lock, flags);
-+	if (!cp->shutdown) {
-+		val = imx_mu_read(priv, priv->dcfg->xCR[type]);
-+		val |= set;
-+		imx_mu_write(priv, val, priv->dcfg->xCR[type]);
-+	}
-+	spin_unlock_irqrestore(&priv->xcr_lock, flags);
-+}
-+
- static int imx_mu_generic_tx(struct imx_mu_priv *priv,
- 			     struct imx_mu_con_priv *cp,
- 			     void *data)
-@@ -379,7 +410,7 @@ static int imx_mu_specific_rx(struct imx_mu_priv *priv, struct imx_mu_con_priv *
- 		*data++ = imx_mu_read(priv, priv->dcfg->xRR + (i % num_rr) * 4);
- 	}
- 
--	imx_mu_xcr_rmw(priv, IMX_MU_RCR, IMX_MU_xCR_RIEn(priv->dcfg->type, 0), 0);
-+	imx_mu_xcr_set_act(priv, cp, IMX_MU_RCR, IMX_MU_xCR_RIEn(priv->dcfg->type, 0));
- 	mbox_chan_received_data(cp->chan, (void *)priv->msg);
- 
- 	return 0;
-@@ -607,6 +638,7 @@ static int imx_mu_startup(struct mbox_chan *chan)
- 		return ret;
- 	}
- 
-+	cp->shutdown = false;
- 	switch (cp->type) {
- 	case IMX_MU_TYPE_RX:
- 		imx_mu_xcr_rmw(priv, IMX_MU_RCR, IMX_MU_xCR_RIEn(priv->dcfg->type, cp->idx), 0);
-@@ -641,13 +673,13 @@ static void imx_mu_shutdown(struct mbox_chan *chan)
- 
- 	switch (cp->type) {
- 	case IMX_MU_TYPE_TX:
--		imx_mu_xcr_rmw(priv, IMX_MU_TCR, 0, IMX_MU_xCR_TIEn(priv->dcfg->type, cp->idx));
-+		imx_mu_xcr_clr_shut(priv, cp, IMX_MU_TCR, IMX_MU_xCR_TIEn(priv->dcfg->type, cp->idx));
- 		break;
- 	case IMX_MU_TYPE_RX:
--		imx_mu_xcr_rmw(priv, IMX_MU_RCR, 0, IMX_MU_xCR_RIEn(priv->dcfg->type, cp->idx));
-+		imx_mu_xcr_clr_shut(priv, cp, IMX_MU_RCR, IMX_MU_xCR_RIEn(priv->dcfg->type, cp->idx));
- 		break;
- 	case IMX_MU_TYPE_RXDB:
--		imx_mu_xcr_rmw(priv, IMX_MU_GIER, 0, IMX_MU_xCR_GIEn(priv->dcfg->type, cp->idx));
-+		imx_mu_xcr_clr_shut(priv, cp, IMX_MU_GIER, IMX_MU_xCR_GIEn(priv->dcfg->type, cp->idx));
- 		break;
- 	case IMX_MU_TYPE_RST:
- 		imx_mu_xcr_rmw(priv, IMX_MU_CR, IMX_MU_xCR_RST(priv->dcfg->type), 0);
+-	if (value == LED_OFF)
++	if (value == LED_OFF) {
+ 		led->state = PCA9532_OFF;
+-	else if (value == LED_FULL)
++	} else if (led->state == PCA9532_PWM1) {
++		return 0; /* Non-zero brightness shall not stop HW blinking */
++	} else if (value == LED_FULL) {
+ 		led->state = PCA9532_ON;
+-	else {
++	} else {
+ 		led->state = PCA9532_PWM0; /* Thecus: hardcode one pwm */
+ 		err = pca9532_calcpwm(led->client, PCA9532_PWM_ID_0, 0, value);
+ 		if (err)
 -- 
 2.53.0
 
