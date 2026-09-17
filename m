@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B366A59E34E;
-	Thu, 17 Sep 2026 15:27:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B94854C10C7;
+	Thu, 17 Sep 2026 15:27:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789658865; cv=none; b=necOE4c5d8LmaC0YJ2sE9PGY0Xu5MJr9L/WtSPOfY2OQzqSvsmZGtNaDSSdIhRuf5qt8X+a4kYlrIJhoBPjUoVF25oTW2mjqcLhX9y1RDtYTzcUxzhJvmBBtrluUyUUWULWkfcOq/teqnkfOf+zwvM5LdTDRcQ6oYw25CTisKhA=
+	t=1789658870; cv=none; b=blEfLUQ1V7AtAuT2ABL7dLltD5wU5+v3NSMCYpZANjerbG8L3zpebJfynQrSDGc41A3bY13OKMczDJyftAE5suJHauL6laWFbnth+fvUbbVV2y7O2EMlhe5A3SEbRuBSGty7MXOyZiivlI/EHXvUpx6qHpIc+v0cUnSB4X7N9kQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789658865; c=relaxed/simple;
-	bh=tvaL9YigsCvYNBJpxyqU8v3Pf2HYai6OYGfViduYEtU=;
+	s=arc-20240116; t=1789658870; c=relaxed/simple;
+	bh=plLLevNdJF6cfNHuzT7DST1nU9AB1YmnHykfQ/wkjPM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OjIGJ5Z9WlBM6ovacCfvrnXQHxNgyr9whfBU5Hnoac51/I1SHg3u88kHYZ+7vhiTVSMBsSPYZIDeiwX3Vx1gGXa85dXJlQ0tr6562bCRYb1lj6LA0pU7TlLtawYylYPfza7dGz5xutNWLv2OPu/RHLLV32424frjQaq9Q6JrZxU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ibDcMYF0; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nwOnElqIIqx4ukVkDHJqXmFHRraaAVXv6E9ya2n/EMtfjZkexXRoFvepMPmJo6AIgS906K4nTs+qkctln0XTnq9onI8cV2RZb8uhAyulY7BZvkJyzbxiFVxMf4vvHh4M8Ryb65M0d+vLz9ttwgdOCgV+bmOR7BQu+94OTtTqGHw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kBGVe2dG; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ibDcMYF0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A1A61F000FF;
-	Thu, 17 Sep 2026 15:27:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kBGVe2dG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F5E61F0089D;
+	Thu, 17 Sep 2026 15:27:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789658856;
-	bh=WwguYoSTZK2RTSZhqK+9EM0Iim0zkXivzYwTaR0XAmk=;
+	s=korg; t=1789658862;
+	bh=3TSxTBBEZIZldvx5wkgx10jHWEB6eZln06VGGawQ3Ew=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ibDcMYF0+ed3rUr9XN5SGx2/6nFpmIhobnCK61nz/nt77JCGs0qIdGN1Wtz4I+tyg
-	 /au8f2Msj0tJDgvq3XwvSQC6dU6gKhoeL79q4Aq2kg4IQuz5Ut1sP4gOzM8qmaLS4C
-	 gDDZ3hG+ppEN3+cpzPW6wCsKGVonUaWjoMNwrhDo=
+	b=kBGVe2dGxI3dF6viS4hRUTZF895V1fjX4MQjrb+UxWTxTXOm4m8ZH91Ooiz+Wom4W
+	 yKY0qA+vtFOylRMOC2NgvR9LrRFdbMb3qtp3w3hEbD3Afe/IZraOIeDW7WVu0c8RDf
+	 Pn2gYAIcz4n40bye8o4w1fKJVjyiUG12hCJqfSvQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sangram kumar yerra <sangram.k.y@intel.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
+	Huiwen He <hehuiwen@kylinos.cn>,
+	ChenXiaoSong <chenxiaosong@kylinos.cn>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Paulo Alcantara <pc@manguebit.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 062/733] scsi: ufs: ufs-pci: Add support for Intel UFS 4.0 HS-Gear5
-Date: Thu, 17 Sep 2026 16:06:10 +0100
-Message-ID: <20260917151352.374125366@linuxfoundation.org>
+Subject: [PATCH 7.2 064/733] smb/client: validate new EOF for insert range
+Date: Thu, 17 Sep 2026 16:06:12 +0100
+Message-ID: <20260917151352.430068655@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -53,76 +53,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: sangram kumar yerra <sangram.k.y@intel.com>
+From: Huiwen He <hehuiwen@kylinos.cn>
 
-[ Upstream commit ef675ea168453a9b3e635b8ac543f92938bdd03b ]
+[ Upstream commit 1519dc88c87f5346dae0464d7d6da1b6bf1f6e8e ]
 
-Reliable HS-Gear5 operation on Intel UFS 4.0 controllers requires
-configuring PA_INITIAL_ADAPT before changing the power mode. Without
-this setting, the link fails to train reliably at Gear5.
+smb3_insert_range() does not check if the new file size
+(i_size + len) is valid. This allows FALLOC_FL_INSERT_RANGE to bypass
+RLIMIT_FSIZE, exceed s_maxbytes, or produce a size outside the loff_t
+range.
 
-Add a pwr_change_notify() hook to configure the adaptation mode before
-the power mode transition. Enable this only for UFS 4.0 and later
-controllers by checking hba->ufs_version.
+Use check_add_overflow() to calculate the new EOF. Validate it with
+inode_newsize_ok() before modifying the file.
 
-Wire the hook into the existing Meteor Lake family variant operations
-table (ufs_intel_mtl_hba_vops) instead of introducing a separate table,
-since the Intel UFS 4.0 PCI variant (PCI ID 8086:D335) already uses this
-vops table and the hook is internally gated on UFS version >= 4.0.
+Reproducer, using a file on a CIFS mount:
 
-Use PA_INITIAL_ADAPT when the negotiated TX power mode is FAST_MODE or
-FASTAUTO_MODE. Otherwise, reset the adaptation mode to PA_NO_ADAPT,
-which is the default setting.
+	bash -c '
+		FILE=/mnt/cifs/repro
 
-Fixes: 096cd6b7adf2 ("scsi: ufs: ufs-pci: Add support for Intel Nova Lake")
-Signed-off-by: sangram kumar yerra <sangram.k.y@intel.com>
-Reviewed-by: Adrian Hunter <adrian.hunter@intel.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://patch.msgid.link/20260818112830.453402-2-sangram.k.y@intel.com
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+		trap "" SIGXFSZ
+		ulimit -f 3072		# RLIMIT_FSIZE = 3 MiB
+
+		# A regular write is stopped at 3 MiB.
+		dd if=/dev/zero of="$FILE" bs=1M count=4 status=none
+		stat -c "size after write: %s" "$FILE"
+
+		# Insert 2 MiB into a 2 MiB file.
+		truncate -s 2M "$FILE"
+		fallocate -i -o 0 -l 2M "$FILE"
+		stat -c "size after insert: %s" "$FILE"
+	'
+
+Before this change, the regular write stops at the 3 MiB limit, but
+insert range grows the file to 4 MiB:
+
+	dd: error writing '/mnt/cifs/repro': File too large
+	size after write: 3145728
+	size after insert: 4194304
+
+After this change, insert range also fails at the limit and leaves the
+2 MiB file unchanged:
+
+	dd: error writing '/mnt/cifs/repro': File too large
+	size after write: 3145728
+	fallocate: fallocate failed: File too large
+	size after insert: 2097152
+
+Fixes: 7fe6fe95b936 ("cifs: add FALLOC_FL_INSERT_RANGE support")
+Signed-off-by: Huiwen He <hehuiwen@kylinos.cn>
+Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/host/ufshcd-pci.c | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+ fs/smb/client/smb2ops.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/ufs/host/ufshcd-pci.c b/drivers/ufs/host/ufshcd-pci.c
-index f2433879b0eba..93bfafc25018b 100644
---- a/drivers/ufs/host/ufshcd-pci.c
-+++ b/drivers/ufs/host/ufshcd-pci.c
-@@ -181,6 +181,25 @@ static int ufs_intel_lkf_pwr_change_notify(struct ufs_hba *hba,
- 	return err;
- }
+diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
+index 0e872d58fae7c..476afb4e49fd8 100644
+--- a/fs/smb/client/smb2ops.c
++++ b/fs/smb/client/smb2ops.c
+@@ -3982,7 +3982,8 @@ static long smb3_insert_range(struct file *file, struct cifs_tcon *tcon,
+ 	struct cifsFileInfo *cfile = file->private_data;
+ 	struct inode *inode = file_inode(file);
+ 	struct cifsInodeInfo *cifsi = CIFS_I(inode);
+-	__u64 count, old_eof, new_eof;
++	u64 count;
++	loff_t old_eof, new_eof;
  
-+static int ufs_intel_nvl_pwr_change_notify(struct ufs_hba *hba,
-+					   enum ufs_notify_change_status stage,
-+					   struct ufs_pa_layer_attr *dev_req_params)
-+{
-+	int adapt_val;
+ 	xid = get_xid();
+ 
+@@ -3992,8 +3993,15 @@ static long smb3_insert_range(struct file *file, struct cifs_tcon *tcon,
+ 		goto out;
+ 	}
+ 
++	if (check_add_overflow(old_eof, len, &new_eof)) {
++		rc = -EFBIG;
++		goto out;
++	}
++	rc = inode_newsize_ok(inode, new_eof);
++	if (rc)
++		goto out;
 +
-+	if (stage != PRE_CHANGE || hba->ufs_version < ufshci_version(4, 0))
-+		return 0;
-+
-+	if (dev_req_params->pwr_tx == FAST_MODE || dev_req_params->pwr_tx == FASTAUTO_MODE)
-+		adapt_val = PA_INITIAL_ADAPT;
-+	else
-+		adapt_val = PA_NO_ADAPT;
-+
-+	ufshcd_dme_configure_adapt(hba, dev_req_params->gear_tx, adapt_val);
-+
-+	return 0;
-+}
-+
- static int ufs_intel_lkf_apply_dev_quirks(struct ufs_hba *hba)
- {
- 	u32 granularity, peer_granularity;
-@@ -527,6 +546,7 @@ static struct ufs_hba_variant_ops ufs_intel_mtl_hba_vops = {
- 	.exit			= ufs_intel_common_exit,
- 	.hce_enable_notify	= ufs_intel_hce_enable_notify,
- 	.link_startup_notify	= ufs_intel_link_startup_notify,
-+	.pwr_change_notify	= ufs_intel_nvl_pwr_change_notify,
- 	.resume			= ufs_intel_resume,
- 	.device_reset		= ufs_intel_device_reset,
- };
+ 	count = old_eof - off;
+-	new_eof = old_eof + len;
+ 
+ 	filemap_invalidate_lock(inode->i_mapping);
+ 	rc = filemap_write_and_wait_range(inode->i_mapping, off, new_eof - 1);
 -- 
 2.53.0
 
