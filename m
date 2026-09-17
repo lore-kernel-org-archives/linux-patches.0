@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EFDE4D1781;
-	Thu, 17 Sep 2026 18:53:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 538AB4B44C4;
+	Thu, 17 Sep 2026 18:53:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789671233; cv=none; b=ohS2IuSW5sxEegHJXKcYsXu8LtyrFmPcizqiGCczwyY72qphEHhxNCqoc2lfX6fC2UHhZog3oVm9NG0BxslFuWeL1OUNOvljc/6KNH0BoSbvu/a91BSmwBPfuuEWmdw/iucnTo1Xf4/1Djkt4UGZPVcQOhJNlUQu5fiqKuFvn68=
+	t=1789671236; cv=none; b=UgPW+Qt/4wpLL8725904sSYKUeEwReH0RuvA940oa5jowOYLogevENoPsnCYO99oXtaZwPmpyykqyLqCdljWuOa8TlFAE59QFYyk1Se6gxdUiVK4U6EQC4p7oqmbqzSVq8ukGPXdQOb0iySkx/B1sXSc5NnPAfieo0K6QkhxwKM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789671233; c=relaxed/simple;
-	bh=Jm6TZQfPq0xCIXqMaIzP33yiz3r/+sUfusdXMAQ53wI=;
+	s=arc-20240116; t=1789671236; c=relaxed/simple;
+	bh=uOuHYLQRwus7J2Eke1MDjGeIveca346GVY24ljZ5uk0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k2q9mWUpj8HgZrf1DdS6Gjc+KiNQlrvPiQpiGu82zW66mcH2hEQRAUv0LRJSUWQkRuNUyvzY6sAdnml7nbotAq0zRecnONN5/2yLyfv9plVuuOdvmGn7ppdR4Xd+c4mlhnEJH2mctZWy2dyvevIwImNSI1qw9sUQAEd/XqHbz+w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1rjDUxtw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ufM7CswOWkczMBGEaDnNPnTknIRzdRyxUsg27VOI1i3nRLsUjyJhxIn253Wf0vECTmQl7mFrGi72sbkFX3izdY23W/gVVSA4ieSk/oYZFv53UBKP9eYdrKrEsNUdah04dbv4BodSGChAFbSwAFzaOYELbO81TMXM7Qh4WzafWm4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UCD4pSC1; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1rjDUxtw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99E7D1F000FF;
-	Thu, 17 Sep 2026 18:53:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UCD4pSC1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A91BA1F000FF;
+	Thu, 17 Sep 2026 18:53:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789671232;
-	bh=bh6G+k1dWyATfLXcnHCOLsgxit3duNX+q1+4KFZbqGM=;
+	s=korg; t=1789671235;
+	bh=xeWWPYWEO+Hjzd5DC5N0uLyHR1GJC2NLCBTIEao4xaY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1rjDUxtwDElvw8/XbnzqzFxvRddUvzeK2xKdvVdwtbFYFhXEFXRzcwR7LuN+ju51O
-	 Sx27VxXshmcL1fvQUn800cljj29spq2jpyPiNwX6UykFZ0HDZD4k7jerHWrj+JUGu2
-	 n5igJLMjJDT9aAQfjCkOok6Po02oWa4OyboFKz9c=
+	b=UCD4pSC1mn9NeaZTnjJoYYR7buHUOdu0zlTNHYQfQ364g9gEhksKYVNGY6wemnoMd
+	 0B1Y/GodpZhDrfnv5zygj6RVi7UZMau1A/a17kSsLu/qv+6WC5FL1DnhNednMXuFZP
+	 iP8RTGpFgpm7tI2mLnzIJHVJn8C/a+lgKn7j8mbU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot+sashiko@kernel.org>,
-	Joe Damato <joe@dama.to>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.12 0882/1102] bnxt_en: Only restore LRO if the device supports TPA
-Date: Thu, 17 Sep 2026 16:13:45 +0100
-Message-ID: <20260917151602.711571076@linuxfoundation.org>
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Carlos Maiolino <cem@kernel.org>
+Subject: [PATCH 6.12 0909/1102] xfs: fix bnobt repair space reservation disposal failure
+Date: Thu, 17 Sep 2026 16:14:12 +0100
+Message-ID: <20260917151603.431351455@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -51,39 +51,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joe Damato <joe@dama.to>
+From: Darrick J. Wong <djwong@kernel.org>
 
-commit 4e17b5007b6664559cdad2b2fe270526cf786b5b upstream.
+commit c83d1ef97ee3b0b92797d4b4932a3a813ba05b86 upstream.
 
-With a P5+ device with firmware that reports max_aggs_supported == 0, it is
-possible to make LRO settable by attaching and detaching an XDP program
-even though the device does not support TPA.
+LOLLM complains that we don't bubble failures from xrep_abt_dispose_one
+upwards in the callstack.  A failure to clean up the space used (or
+reserved but not used) by the new bnobt/cntbt should be reported.
 
-Fix this by testing BNXT_SUPPORTS_TPA before restoring the feature bit.
-
-Fixes: f0aa6a37a3db ("eth: bnxt: always recalculate features after XDP clearing, fix null-deref")
-Reported-by: Sashiko <sashiko-bot+sashiko@kernel.org>
-Link: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260828190900.1767611-1-joe%40dama.to
-Cc: stable@vger.kernel.org
-Signed-off-by: Joe Damato <joe@dama.to>
-Link: https://patch.msgid.link/20260902015652.2421609-2-joe@dama.to
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Cc: stable@vger.kernel.org # v6.8
+Fixes: 4bdfd7d15747b1 ("xfs: repair free space btrees")
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Assisted-by: LOLLM # finding obvious bugs
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/xfs/scrub/alloc_repair.c |   18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -4670,7 +4670,8 @@ void bnxt_set_rx_skb_mode(struct bnxt *b
- 		bnxt_get_max_rings(bp, &rx, &tx, true);
- 		if (rx > 1) {
- 			bp->flags &= ~BNXT_FLAG_NO_AGG_RINGS;
--			bp->dev->hw_features |= NETIF_F_LRO;
-+			if (BNXT_SUPPORTS_TPA(bp))
-+				bp->dev->hw_features |= NETIF_F_LRO;
- 		}
+--- a/fs/xfs/scrub/alloc_repair.c
++++ b/fs/xfs/scrub/alloc_repair.c
+@@ -571,7 +571,7 @@ xrep_abt_dispose_one(
+  * allocation, and blocks that didn't get used can be freed via the usual
+  * (deferred) means.
+  */
+-STATIC void
++STATIC int
+ xrep_abt_dispose_reservations(
+ 	struct xrep_abt		*ra,
+ 	int			error)
+@@ -582,9 +582,13 @@ xrep_abt_dispose_reservations(
+ 		goto junkit;
+ 
+ 	list_for_each_entry_safe(resv, n, &ra->new_bnobt.resv_list, list) {
+-		error = xrep_abt_dispose_one(ra, resv);
+-		if (error)
++		int		error2 = xrep_abt_dispose_one(ra, resv);
++
++		if (error2) {
++			if (!error)
++				error = error2;
+ 			goto junkit;
++		}
  	}
  
+ junkit:
+@@ -596,6 +600,7 @@ junkit:
+ 
+ 	xrep_newbt_cancel(&ra->new_bnobt);
+ 	xrep_newbt_cancel(&ra->new_cntbt);
++	return error;
+ }
+ 
+ /* Retrieve free space data for bulk load. */
+@@ -801,7 +806,9 @@ xrep_abt_build_new_trees(
+ 		goto err_newbt;
+ 
+ 	/* Dispose of any unused blocks and the accounting information. */
+-	xrep_abt_dispose_reservations(ra, error);
++	error = xrep_abt_dispose_reservations(ra, error);
++	if (error)
++		return error;
+ 
+ 	return xrep_roll_ag_trans(sc);
+ 
+@@ -812,8 +819,7 @@ err_cur:
+ 	xfs_btree_del_cursor(cnt_cur, error);
+ 	xfs_btree_del_cursor(bno_cur, error);
+ err_newbt:
+-	xrep_abt_dispose_reservations(ra, error);
+-	return error;
++	return xrep_abt_dispose_reservations(ra, error);
+ }
+ 
+ /*
 
 
