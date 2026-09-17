@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 760613CB57B;
-	Thu, 17 Sep 2026 18:44:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81F333DD85E;
+	Thu, 17 Sep 2026 18:44:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789670670; cv=none; b=q5oRhomfmL/K9kkrD4yTC9OUZjJvTGrEk7oBqo1bSNU0Gi3n8yVYGrwRzr/+QvrqQTVcfFrmStDfd0sF9Ywnfjuek/1BV/1kWEj1AGLLF/lJ053rmfZ4s8VQn4TrMCx2YezzDcjJdnO/8mOw5HZ4YI3eT+71dOQT5jKSGZTLQ8E=
+	t=1789670673; cv=none; b=JO/8KL4RbfuYSiMgWR8W4Ui/pGnnMUNT5XZR2efGoFaiAdxRmvySpGDBK3yHAl2oVLDQIu4Dmwxdt7vZtJ2DahkQoSvBFj90i95hCE34bIPRxg5NzTOhRqWInF7VfP7vL0oVynDavqwHfiafcfGg58rr4gdWajBr+wK2gOb5L6w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789670670; c=relaxed/simple;
-	bh=Fj03FnADOEy++wQwgGVpbpCJPoU1alEEOjamrhkGe+s=;
+	s=arc-20240116; t=1789670673; c=relaxed/simple;
+	bh=k47MDmxIYieGo2oeL5LPp2U6sbeA+m3tq75xTb37h3Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=keM0cCNYmdBJtYkTImKC7O4pvSPCtITjLO/Xc9jaKVLMKQi/ybyEZ0A+GHNrvfpP7cVurxqr4M/vTHiPMTuOGT4No5PJTJPY9dT+0U+paJUKEohJyv3/wH1LAmCa179yaJbcOH9jAJoRGlkLiFL5+8nT9Fq//utMUplSsM+REfo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mFU3Py6z; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IC/7p9EBY+/vt9Nxl8AFOVtY4QhhLnEgBtsXAJf+BLoMJnhIOjCdzR3k2EYGMK9qGSfwIbxuN/F/4N1Vs9FhkmRB8WAiH85LPpGo3lCJYvPUiwwMLhtprR/APOLpXIrNFv6+wp97DwcigIVxc51kMe2LeKLWoA+CvY8Meo1/81Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Jiidksf; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mFU3Py6z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1B291F000FF;
-	Thu, 17 Sep 2026 18:44:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Jiidksf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2D881F000FF;
+	Thu, 17 Sep 2026 18:44:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789670669;
-	bh=rgwhGCDBB6f4feIwTnb8O7eNrZ+lPB9v2O/dcSmLA+8=;
+	s=korg; t=1789670672;
+	bh=Ft1klI+dWEv/tKoHLw98vLQ7RKItPGCoGVD8laHyklA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mFU3Py6zR9t8pOBaRB7J0oaQqHPxwbLTsqpmDYM+tqYOUh3njCt4MM5xnWI+KUEEK
-	 uEq1SdbJzF3HPJYVPZrJAMlHv69oT18sGaH7MsXOKqrrNhLL4P6IsRx3OHyPoIOmbk
-	 uikwmVfy55oodcunyIEGu46s0QfEZJUTRxUgrFGA=
+	b=0Jiidksfpc3Qb7gKG2iSrLM/zNUefxinBp1rkcZycI+8LZu7P+GZsOsQpJPYckBj9
+	 uJyAu6GOMHNotb9c6603mO6g2vMR9Z6bTffVA2NCFbxp+7Nsl48QJ/VUTMKANJzk0I
+	 Qpf0i35o76CymBRL4UyFG3D6Mo95ltj2SPWsZip8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	HyeongJun An <sammiee5311@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Andrew Stellman <astellman@stellman-greene.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0735/1102] ALSA: hda: Report a change when only the channel status bytes move
-Date: Thu, 17 Sep 2026 16:11:18 +0100
-Message-ID: <20260917151558.839032908@linuxfoundation.org>
+Subject: [PATCH 6.12 0718/1102] virtio-pci: return IRQ_HANDLED after non-zero ISR
+Date: Thu, 17 Sep 2026 16:11:01 +0100
+Message-ID: <20260917151558.370137722@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -51,65 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: HyeongJun An <sammiee5311@gmail.com>
+From: Andrew Stellman <astellman@stellman-greene.com>
 
-[ Upstream commit 7284788743121ec8bed556b00f830dc52ad9955d ]
+[ Upstream commit 93fa09455fb1a9624b73d42ac1f83771f4818e80 ]
 
-The put() callback of "IEC958 Playback Default" returns whether the
-converted register value moved. The convert_from_spdif_status() helper
-reads part of the first two channel status bytes and none of the last
-two, while the get() callback returns all four. So a write that lands
-only in the bits it does not read changes what userspace reads back and
-reports no change. Of the 31 bits above the mode bit, 20 are such bits
-in consumer mode and 29 in professional mode. The core notifies only on
-a positive return.
+vp_interrupt() reads the ISR before dispatching config-change and
+vring handling. Reading the ISR also clears it, so once the read
+returns non-zero the interrupt was from this device and has already
+been consumed.
 
-Toggling status[2] bit 0 on an HDA HDMI codec moves the read-back from
-04 00 00 00 to 04 00 01 00 with no event. Toggling the non-audio bit
-in status[0] gives one.
+Currently vp_interrupt() returns the result of vp_vring_interrupt().
+For a config-change interrupt with no vring work, that can return
+IRQ_NONE even though the ISR was non-zero and the interrupt was
+handled.
 
-Compare the stored status as well, the way the ac97 code does. The
-write to the codec stays gated on the converted value.
+Call vp_vring_interrupt() for any queue work, but once the ISR is
+non-zero return IRQ_HANDLED.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
-Assisted-by: Claude:claude-opus-5
-Link: https://patch.msgid.link/20260908134153.1614273-1-sammiee5311@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Tested with QEMU virtio-blk-pci forced to INTx using vectors=0 and
+pci=nomsi. On an idle device, 200 config-change interrupts were
+generated using QMP block_resize.
+
+Before this change, irq_handler_exit reported ret=unhandled and
+/proc/irq/11/spurious increased from 0 to 200 unhandled interrupts.
+After this change, irq_handler_exit reported ret=handled and the
+unhandled count remained at 0.
+
+The issue was found during an LLM-assisted Quality Playbook review.
+
+Fixes: 77cf524654a8 ("virtio_pci: split up vp_interrupt")
+Suggested-by: Michael S. Tsirkin <mst@redhat.com>
+Assisted-by: LLM
+Signed-off-by: Andrew Stellman <astellman@stellman-greene.com>
+Message-ID: <20260904141318.30278-1-astellman@stellman-greene.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/hda_codec.c | 4 +++-
+ drivers/virtio/virtio_pci_common.c | 4 +++-
  1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/sound/pci/hda/hda_codec.c b/sound/pci/hda/hda_codec.c
-index c99abab12c841..b4006b31251f9 100644
---- a/sound/pci/hda/hda_codec.c
-+++ b/sound/pci/hda/hda_codec.c
-@@ -2320,6 +2320,7 @@ static int snd_hda_spdif_default_put(struct snd_kcontrol *kcontrol,
- 	int idx = kcontrol->private_value;
- 	struct hda_spdif_out *spdif;
- 	hda_nid_t nid;
-+	unsigned int old_status;
- 	unsigned short val;
- 	int change;
+diff --git a/drivers/virtio/virtio_pci_common.c b/drivers/virtio/virtio_pci_common.c
+index af31711f3861a..d88f62d0fb7a2 100644
+--- a/drivers/virtio/virtio_pci_common.c
++++ b/drivers/virtio/virtio_pci_common.c
+@@ -120,7 +120,9 @@ static irqreturn_t vp_interrupt(int irq, void *opaque)
+ 	if (isr & VIRTIO_PCI_ISR_CONFIG)
+ 		vp_config_changed(irq, opaque);
  
-@@ -2328,6 +2329,7 @@ static int snd_hda_spdif_default_put(struct snd_kcontrol *kcontrol,
- 	guard(mutex)(&codec->spdif_mutex);
- 	spdif = snd_array_elem(&codec->spdif_out, idx);
- 	nid = spdif->nid;
-+	old_status = spdif->status;
- 	spdif->status = ucontrol->value.iec958.status[0] |
- 		((unsigned int)ucontrol->value.iec958.status[1] << 8) |
- 		((unsigned int)ucontrol->value.iec958.status[2] << 16) |
-@@ -2338,7 +2340,7 @@ static int snd_hda_spdif_default_put(struct snd_kcontrol *kcontrol,
- 	spdif->ctls = val;
- 	if (change && nid != (u16)-1)
- 		set_dig_out_convert(codec, nid, val & 0xff, (val >> 8) & 0xff);
--	return change;
-+	return change || spdif->status != old_status;
+-	return vp_vring_interrupt(irq, opaque);
++	vp_vring_interrupt(irq, opaque);
++
++	return IRQ_HANDLED;
  }
  
- #define snd_hda_spdif_out_switch_info	snd_ctl_boolean_mono_info
+ static int vp_request_msix_vectors(struct virtio_device *vdev, int nvectors,
 -- 
 2.53.0
 
