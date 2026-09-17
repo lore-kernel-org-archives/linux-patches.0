@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10C4B318B9C;
-	Thu, 17 Sep 2026 16:00:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 080784E73A9;
+	Thu, 17 Sep 2026 16:00:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789660842; cv=none; b=mS+U/B1yvmREtDEpqBknzsDN3lY5pTItTf6IJyzAV5rmw2sEyE7YsKcZpsJ6qnHNulrJfZ7QAqYkB+dAVMVZ7LIlRgjC6m+1Tq6VzzgVhWxWaln3FaNryHbyMor18CDZdAfhC/6N8Yyy5TfdhlaXSLFwlnGIgAcHGPLi3o7pzZc=
+	t=1789660845; cv=none; b=pkNrVIqQS4h3yMb8BHbBFUG6qLxf9Wh+0vc8SpFDn/WzaLrlwoR8BYXfuu80wo8w5pUrIuoAErNCZKTwjen8DDls4WYsx+ympBr5nFN2lb5g62tEPcCSTJAWgil3lnWyROvi3D43DtF7LtkCO5L6+R46CJJokNDDql4DmouLv1I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789660842; c=relaxed/simple;
-	bh=iQzCPfWTomikvGtMSgEgP3mH9lLy07QfJ9uA0qdVh3g=;
+	s=arc-20240116; t=1789660845; c=relaxed/simple;
+	bh=6mQPBoDds7F4HLZQrDe4/ndTy4w3AI11xQ9G6B4giQQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ezA9TSPc5FBBQOMy9RVvM03UHdFqYgBFDEKaoatMBO+ks4SvCbmPezYGyvnTo8ImeRzGCedzA+964LM3j+aIuI4Rb9B45yevSqJrmdC4fKUcezoqAQvH/LfNOUpUCmFUW6LE8njYo4Qxv+84vp4ZniJrfNgM+2ehfRzlrjIhxug=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M4ttSXQK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=hNkpZo3wat05nQnkBT/cy/ofCswxgocnQ61VGBC8aSewNDkBrmEkHhohzoJKDiV5VOue+hl/AtwlNp+dWJtzEAv07BtNZ0hNV4+Us56A8eKtBguAbIiqSEvsPmPHINJB812BBxgPk5WqQ2qmgN80ZKMAfnsaZponIhHU8PGlVrM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ceVy/lL8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M4ttSXQK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6519F1F000FF;
-	Thu, 17 Sep 2026 16:00:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ceVy/lL8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F3A51F000FF;
+	Thu, 17 Sep 2026 16:00:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789660841;
-	bh=xIkIZSIibSregESMebnA1lqSwI2yJWjRAbRjDpuJdx0=;
+	s=korg; t=1789660843;
+	bh=uAu2lV30iBo2jU0YsqI44Vn54D39P6AGn0WLkvefEKA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M4ttSXQKTHlyM615WzCHGghWyGcQz4b/4y1k1Vp3/JyQkMKCbAEqalZ5RP6hVChRZ
-	 OHt8z4qX1wwsctrRPqsowlqq+B1yLIS02GhrFm5v1TXvSoWE7zEFzYQMDA9d/RmxUb
-	 PQmamxSTkDqqTNI1oneX/lGd5IKmGDUB2ufkrj4U=
+	b=ceVy/lL8fgCSii+NMKw6zhkHYC/Zyi0xc59Mf2kW/Udd9cjcybtNghjCPJmoOM1uG
+	 a5Lw+nJY5g81WDjq9r7B6KBk6APrxqIaOu5CpFdulTZ4zRZitNmmvkuY/utKwPBi//
+	 TRjofQR0t9p7QyjAoXd2VaZ4e4sPVk6KDd0VYy8c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 726/733] drm/amd/display: Propagate HDMI RGB quantization selectability
-Date: Thu, 17 Sep 2026 16:17:14 +0100
-Message-ID: <20260917151411.063960368@linuxfoundation.org>
+Subject: [PATCH 7.2 727/733] drm/amd/display: Honor Broadcast RGB for BT.2020 RGB output
+Date: Thu, 17 Sep 2026 16:17:15 +0100
+Message-ID: <20260917151411.093474318@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -55,40 +55,53 @@ Content-Transfer-Encoding: 8bit
 
 From: Satyajit Roy <sroy14@alum.utk.edu>
 
-[ Upstream commit bdcd0411d7d186225a52458fd42bb70d54ca917a ]
+[ Upstream commit 7fca7acd60a228b62b4e9efa5f184738041e9564 ]
 
-DC uses dc_edid_caps.qs_bit when constructing the HDMI AVI InfoFrame
-quantization-range field. Although DRM parses the sink capability into
-drm_display_info, DM never copies it into the DC EDID capabilities. The
-field therefore remains zero and the AVI quantization range stays at its
-default value.
+amdgpu_dm_get_output_color_space() applies the Broadcast RGB connector
+property to default RGB output, but always selects full-range output for
+BT.2020 RGB. Consequently, explicitly selecting Limited has no effect on
+the output CSC or AVI InfoFrame when HDR uses BT.2020 RGB.
 
-Copy rgb_quant_range_selectable for HDMI sinks and extend the existing
-EDID-capability KUnit test to cover it.
+Select COLOR_SPACE_2020_RGB_LIMITEDRANGE when the output encoding is RGB
+and Broadcast RGB is Limited. Keep Automatic and Full at full range, and
+leave YCbCr output unchanged.
+
+Add KUnit coverage for limited-range RGB output through both BT.2020
+connector colorspace values.
 
 Fixes: 6eb4c13a3845 ("drm/amd/display: Support "Broadcast RGB" drm property")
 Signed-off-by: Satyajit Roy <sroy14@alum.utk.edu>
 Reviewed-by: Alex Hung <alex.hung@amd.com>
 Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 892659399f64642e33072562a11ec1b2e7bd2263)
+(cherry picked from commit 022236eaa63bbf65761aa8aec43f661451a94654)
 Cc: stable@vger.kernel.org
-[ Omitted KUnit test additions because amdgpu_dm_helpers_test.c and its supporting infrastructure are absent. ]
+[ adapted the hunk to the older get_output_color_space() function in amdgpu_dm.c. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |   10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c
-@@ -197,6 +197,7 @@ enum dc_edid_status dm_helpers_parse_edi
- 	edid_caps->edid_hdmi = connector->display_info.is_hdmi;
- 
- 	if (edid_caps->edid_hdmi) {
-+		edid_caps->qs_bit = connector->display_info.rgb_quant_range_selectable;
- 		populate_hdmi_info_from_connector(link->dc->config.enable_frl, &connector->display_info.hdmi, edid_caps);
- 		drm_dbg_driver(connector->dev, "%s: HDMI_FRL [%s] max_frl_rate %d\n", __func__, connector->name, edid_caps->max_frl_rate);
- 		if (edid_caps->frl_dsc_support)
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -6895,10 +6895,14 @@ get_output_color_space(const struct dc_c
+ 		break;
+ 	case DRM_MODE_COLORIMETRY_BT2020_RGB:
+ 	case DRM_MODE_COLORIMETRY_BT2020_YCC:
+-		if (dc_crtc_timing->pixel_encoding == PIXEL_ENCODING_RGB)
+-			color_space = COLOR_SPACE_2020_RGB_FULLRANGE;
+-		else
++		if (dc_crtc_timing->pixel_encoding == PIXEL_ENCODING_RGB) {
++			if (connector_state->hdmi.broadcast_rgb == DRM_HDMI_BROADCAST_RGB_LIMITED)
++				color_space = COLOR_SPACE_2020_RGB_LIMITEDRANGE;
++			else
++				color_space = COLOR_SPACE_2020_RGB_FULLRANGE;
++		} else {
+ 			color_space = COLOR_SPACE_2020_YCBCR_LIMITED;
++		}
+ 		break;
+ 	case DRM_MODE_COLORIMETRY_DEFAULT: // ITU601
+ 	default:
 
 
