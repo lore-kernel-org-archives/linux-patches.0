@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 838E04E3255;
-	Thu, 17 Sep 2026 15:50:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 167D1207E00;
+	Thu, 17 Sep 2026 15:50:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789660249; cv=none; b=EBiJ8wDJU1gP8L7a/tX3kwHJ1em93jEmAt/7nZpj0auAxMmexRMEp58vSnhZsA0w6N+mG9vE70nWXK8DstdJZs1/uSfmwjasHzka4sjdM78X0VSCvzzU9/XPa+rPlVo+Wx4m275Q8LQfw7TUE3EXA8bdLVr9q240P/eyFjj56qs=
+	t=1789660254; cv=none; b=cpFvPsS0nC6Qeptk1dTH59Nt6ZsiMoQVVQ5T6S4D6T3g1neiHdV7QPyhRGrSB+cyeRc/OwTC8DHKunq9c+ZCMh7U5NVSEi3EDvfvp5rhou0P3IMilnHAFxtdePywwxXPH3NGHtoCx0XSkmL8Ioc8q7LyRSdrVoSTMf+7EVU1lbQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789660249; c=relaxed/simple;
-	bh=2yPq2zuSCan+xQkGCw4Kh2iDQKXOr54awKtN4nOoYOY=;
+	s=arc-20240116; t=1789660254; c=relaxed/simple;
+	bh=f2E2T3buGi/UtDYuAZ7909MV0tMZWvePtNatgG7O5t4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pUB5IxYpkrS9o5AuE+p9t4ikOaMI6VYARo3kfzbfSR9EaWyD1lMTO8BWLlocosHetuG82QwFHpDYRc60pMS3YCw6wErOsKwI93E8kA0sbUjgFPiyFQdvQgHgiUyccjJAZUqdGB28tkzFG1I0BB1ch4ZY0ahGXXFis/9tDY+Ujl4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zWWNdUaL; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=pIl44Yn9XwOjeEc56420cn+u+/4PL4qBkasb0BL5rd5hHRFUJpwqVGj/cRj20UjwJxKnUPTmlMjjzkFGKBRHjjPbGuH8aM5mP7IB1NBPLN4koZwPI59/auFsALectMuKyo2ccq1FkyU9rdvCKl8pzHzY8DX8o5VRC491oSts5EE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CbYThz6U; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zWWNdUaL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FB441F00893;
-	Thu, 17 Sep 2026 15:50:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CbYThz6U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2818E1F000FF;
+	Thu, 17 Sep 2026 15:50:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789660244;
-	bh=3aTEvlz+fh4sRoKDp0U7ZgsGoqrgsBKy1ODITJm899M=;
+	s=korg; t=1789660247;
+	bh=6AnzWlsvMJPtNLKGug5bF/Pxa7K76YLbJPn/tmUsa/4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zWWNdUaLy9lpiczeA8ArdYHw4KCKnmzdH2McA889lYw4W3+Ibc7OJibq0Ta5k4Kiy
-	 xIk8Ml/RcrjmSXQXT+2b+6QSalb00FiKkf5xvF9FB3YiMOr9ektiJt9WnZmttYjA8V
-	 B5E/LOsu07aKuBSvb5fVaa39zjkZqg4uFH/6q2hk=
+	b=CbYThz6UAAFRxYPAlBosNgGuKOWNU9XW1rCqH77Avx0ABNPm4FtUvYxyzGHg3TYmr
+	 IKiWdvbPycdTOMm79JREmHErepF9R5Ks0YhU19nv9Jt5+IF29+15JpqW+2RNPujgR7
+	 fpavu4i4Lnwqbzy64PBUO6FD1cNze0n6LrdOiVt0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrea Parri <parri.andrea@gmail.com>,
-	Thomas Gleixner <tglx@kernel.org>
-Subject: [PATCH 7.2 526/733] hrtimer: Use hard expiry when updating timers on the same base
-Date: Thu, 17 Sep 2026 16:13:54 +0100
-Message-ID: <20260917151405.289317134@linuxfoundation.org>
+	Kevin Wang <kevin.wang@amd.com>,
+	Kenneth Feng <kenneth.feng@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 7.2 527/733] drm/amd/pm: fix gpu metrics energy accumulator for smu 13.0.0/13.0.7
+Date: Thu, 17 Sep 2026 16:13:55 +0100
+Message-ID: <20260917151405.316517033@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -44,85 +45,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andrea Parri <parri.andrea@gmail.com>
+From: Kevin Wang <kevin.wang@amd.com>
 
-commit c5dcb3aadc18d7b82ba64790721b005d18193d35 upstream.
+commit 13ddcc7acb9adbed7627e952a61d1d62cd9546fc upstream.
 
-Rearming a queued timer with nonzero slack can leave the timerqueue out
-of order. remove_and_enqueue_same_base() checks the new soft expiry
-against its neighbours' hard expiries, then stores the new hard expiry
-in the node without requeueing it.
+GPU metrics v1.3 defines energy_accumulator as a 64‑bit field.
+The unsupported‑firmware code path assigns UINT_MAX, which is neither the
+full‑width invalid value for this field nor its default value.
 
-For example, with A at 10 and B at 20, rearming A at 11 with slack 30
-passes the neighbour check but leaves A's hard expiry of 41 before B's
-20. The same function also caches the soft expiry in base->expires_next
-when updating or inserting the first timer, giving next-event selection
-an earlier deadline than the queue head's hard expiry.
-
-Set the timer expiry before handling the queue. Use its stored hard
-expiry for the in-place ordering check and both updates to
-base->expires_next.
-
-The early update is safe because remove_and_enqueue_same_base() runs
-with base->cpu_base->lock held. The lock keeps the queue stable while
-hrtimer_can_update_in_place() checks the new expiry against both
-neighbours. If the check fails, timerqueue_linked_del() removes the node
-without comparing expiry values before it is reinserted.
-
-Fixes: eddffab8282e3 ("hrtimer: Keep track of first expiring timer per clock base")
-Fixes: 343f2f4dc5425 ("hrtimer: Try to modify timers in place")
-Signed-off-by: Andrea Parri <parri.andrea@gmail.com>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Assisted-by: LLM
+Fixes: 8de9edb35976 ("drm/amd/pm: remove invalid gpu_metrics.energy_accumulator on smu v13.0.x")
+Signed-off-by: Kevin Wang <kevin.wang@amd.com>
+Reviewed-by: Kenneth Feng <kenneth.feng@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit c2b948c4fe16eb13d98ff5d1371956cb2f55cdc6)
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260910143442.2018-1-parri.andrea@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/time/hrtimer.c |   15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c |    2 --
+ drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c |    4 ++--
+ 2 files changed, 2 insertions(+), 4 deletions(-)
 
---- a/kernel/time/hrtimer.c
-+++ b/kernel/time/hrtimer.c
-@@ -1236,13 +1236,23 @@ remove_and_enqueue_same_base(struct hrti
- {
- 	bool was_first = false;
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
+@@ -2094,8 +2094,6 @@ static ssize_t smu_v13_0_0_get_gpu_metri
+ 	if ((mp1_ver == IP_VERSION(13, 0, 0) && smu->smc_fw_version <= 0x004e1e00) ||
+ 	    (mp1_ver == IP_VERSION(13, 0, 10) && smu->smc_fw_version <= 0x00500800))
+ 		gpu_metrics->energy_accumulator = metrics->EnergyAccumulator;
+-	else
+-		gpu_metrics->energy_accumulator = UINT_MAX;
  
-+	/*
-+	 * Updating the sort key while @timer is queued can temporarily
-+	 * make the tree inconsistent. This is safe under cpu_base->lock:
-+	 * no other queue operation can observe that state.
-+	 * hrtimer_can_update_in_place() either confirms that the new expiry
-+	 * fits between the neighbours or timerqueue_linked_del() removes the
-+	 * timer without consulting the expiry.
-+	 */
-+	hrtimer_set_expires_range_ns(timer, expires, delta_ns);
-+	expires = hrtimer_get_expires(timer);
-+
- 	/* Remove it from the timer queue if active */
- 	if (timer->is_queued) {
- 		was_first = !timerqueue_linked_prev(&timer->node);
+ 	if (metrics->AverageGfxActivity <= SMU_13_0_0_BUSY_THRESHOLD)
+ 		gpu_metrics->average_gfxclk_frequency = metrics->AverageGfxclkFrequencyPostDs;
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c
+@@ -2096,8 +2096,8 @@ static ssize_t smu_v13_0_7_get_gpu_metri
+ 					       metrics->Vcn1ActivityPercentage);
  
- 		/* Try to update in place to avoid the de/enqueue dance */
- 		if (hrtimer_can_update_in_place(timer, base, expires)) {
--			hrtimer_set_expires_range_ns(timer, expires, delta_ns);
- 			trace_hrtimer_start(timer, mode, true);
- 			if (was_first)
- 				base->expires_next = expires;
-@@ -1253,9 +1263,6 @@ remove_and_enqueue_same_base(struct hrti
- 		timerqueue_linked_del(&base->active, &timer->node);
- 	}
+ 	gpu_metrics->average_socket_power = metrics->AverageSocketPower;
+-	gpu_metrics->energy_accumulator = smu->smc_fw_version <= 0x00521400 ?
+-		metrics->EnergyAccumulator : UINT_MAX;
++	if (smu->smc_fw_version <= 0x00521400)
++		gpu_metrics->energy_accumulator = metrics->EnergyAccumulator;
  
--	/* Set the new expiry time */
--	hrtimer_set_expires_range_ns(timer, expires, delta_ns);
--
- 	debug_activate(timer, mode, timer->is_queued);
- 	base->cpu_base->active_bases |= 1 << base->index;
- 
+ 	if (metrics->AverageGfxActivity <= SMU_13_0_7_BUSY_THRESHOLD)
+ 		gpu_metrics->average_gfxclk_frequency = metrics->AverageGfxclkFrequencyPostDs;
 
 
