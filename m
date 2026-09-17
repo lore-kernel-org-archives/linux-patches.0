@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29D67386568;
-	Thu, 17 Sep 2026 18:41:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 086B74D17B6;
+	Thu, 17 Sep 2026 18:41:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789670516; cv=none; b=N5CyyQuoXkzP+qJOKg24XvSekueKyKvp2Kne58ItlMPYntD9I199t9Ttky+HRAIid/9uw2kaTdsoqvN7FlBpl6K0fwakxNmraVITNUHtwDpO6L8RgJYgzLwBmGT776mt/CLddxluslyfPSudzlUOtA7Zt4qGoFZr0r0fF2ROsE4=
+	t=1789670519; cv=none; b=DOWvYOXhKCO/y18DZQbxj3QTIZZG44SaPi0oGNlX6T8tLcu90sokdVSWH+j6x8rU4UypocPVBXb11YtdQJNro8hxtgtMs7j1PgaRgEGewvSUmcG9WugedPUksuaUSHxypPs81JH5cXntr0/wwK3bjpXaot10QQfoEcO/1yQlSRk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789670516; c=relaxed/simple;
-	bh=NLwYEyb9UEqhZADJzhql6DLPfYcZTcNhs7GrNBAQ+MQ=;
+	s=arc-20240116; t=1789670519; c=relaxed/simple;
+	bh=kYquDGbZufFTdtvomYcWCahY6haIGTgQtJ+b4QEqZCw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YoqBpBam/SpoDSIjNz5D3pGiuqdqvwZSJuIElWBNTm6hyBeaCWkJ9Yn0/UF0e+FWvCc7e2UbWX1dK8jggLCaomgq9MDwJpYQISk1Urj7yS7WkM4U1qxF1aF9kf2NCXKVsrWdwKnmmzWvx9Cz3UOBCuCyxp2I19py58MrXjc31ek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qPZKNioS; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=d98Yn5O0W2jagrL4P0JGXfpKVD1xkb0Y5aDscpbvrw706s6mHpKODtKkrdjkjiIg6ZfDXQZSigzvoSmH6YvDz3XZwAxSPWp7ambO3X+yzDgGpXm7xiMdx2iHATkAyakaSnSi4OmCutNbBG6/O2oqlpFZJfjrnRst91H7mvdlSho=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A7PnV32m; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qPZKNioS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C4C61F000FF;
-	Thu, 17 Sep 2026 18:41:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A7PnV32m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 618D81F000FF;
+	Thu, 17 Sep 2026 18:41:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789670515;
-	bh=3B3MLfv2zPgAJ9QnmoO6wlEHkeQRIeQZu7v+8KXNNIY=;
+	s=korg; t=1789670517;
+	bh=CqkfN+wVN34ajex9/wRhT2cMUJ/uUyfiPRwHp4FHwhM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qPZKNioSX8AvJFZMPGhsRy+4jewpI1aj+zQt72RbZtRGawpNBUXfrxHqrBU78gFeg
-	 qDBJLLp5xmKcfbm3FqkFwwwuN0lSX7HvSKvNiQ2zFL5dir1yRabZTRha/gzLoc40mD
-	 AN2CutweTvU4aQmgCBeMdLFH3UawgeS1gLEQsoBE=
+	b=A7PnV32mW7zpdsunBu5AT27TqKo3JKBsPQF3ycu21PcDoQgMmNTzJ8QdMXmBGMITo
+	 6+RF+VkpzmoZvV6j2mU5UeOIeeIbRLdUahgXhmX/M5D8TNgoL7pEveaeQNCWYZrLON
+	 WysDZDc4X6J3e3NkFNvWVquYvAr6bByraKK3Zwzg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shahar Shitrit <shshitrit@nvidia.com>,
-	Dragos Tatulea <dtatulea@nvidia.com>,
-	Yael Chemla <ychemla@nvidia.com>,
+	Carolina Jubran <cjubran@nvidia.com>,
+	Alex Lazar <alazar@nvidia.com>,
 	Tariq Toukan <tariqt@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0687/1102] net/mlx5e: Fix setting RS FEC after remapping
-Date: Thu, 17 Sep 2026 16:10:30 +0100
-Message-ID: <20260917151557.511922696@linuxfoundation.org>
+Subject: [PATCH 6.12 0688/1102] net/mlx5e: Fix ETS zero BW reporting when one TC holds 100%
+Date: Thu, 17 Sep 2026 16:10:31 +0100
+Message-ID: <20260917151557.541187312@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -54,86 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shahar Shitrit <shshitrit@nvidia.com>
+From: Carolina Jubran <cjubran@nvidia.com>
 
-[ Upstream commit b9d755c5a37519fb1354034db1dfeb30e1ba6856 ]
+[ Upstream commit e7ee89740800a1cf253713e9249c3ee9203ebe91 ]
 
-When a user sets a FEC mode via ethtool, the driver maps the ethtool
-FEC type to the lowest mlx5 bit of that type. For RS FEC, this is
-MLX5E_FEC_RS_528_514 (bit 2). The driver then checks whether this
-bit is supported by at least one link mode by inspecting the
-fec_override_cap fields via mlx5e_fec_in_caps(), and returns
--EOPNOTSUPP if not.
+When ETS TCs with zero bandwidth are configured, the driver programs the
+firmware using an alternate representation. On get, it needs
+to recognize that representation so those TCs can be translated back and
+reported as 0% bandwidth.
 
-This check is incorrect. RS FEC has three supported hardware variants:
-RS_528_514 (bit 2), RS_544_514_INTERLEAVED_QUAD (bit 4), and
-RS_544_514 (bit 7). mlx5e_remap_fec_conf_mode() already remaps bit 2
-to the appropriate RS variant per link mode when writing the admin
-fields, but the early capability check is done against the raw
-unmapped bit. As a result, a device that supports RS_544_514 or
-RS_544_514_INTERLEAVED_QUAD but not RS_528_514 will incorrectly reject
-the user's RS FEC request.
+The existing detection relied on the programmed bandwidth because it was
+enough to identify this representation. However, when a single ETS TC
+owns 100% of the bandwidth, its firmware representation becomes the
+same as a strict-priority TC, causing zero-bandwidth ETS TCs to be
+reported with non-zero bandwidth values.
 
-Remove the early support check from mlx5e_set_fec_mode() and fold
-it into the existing write loop, checking caps against the remapped
-policy per link mode. Return -EOPNOTSUPP before the final register
-write if no link mode accepted the policy.
+Use the cached TSA instead to distinguish the ETS and strict-priority
+cases.
 
-Fixes: 2608a2f831c4 ("net/mlx5e: Fix return status when setting unsupported FEC mode")
-Signed-off-by: Shahar Shitrit <shshitrit@nvidia.com>
-Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
-Reviewed-by: Yael Chemla <ychemla@nvidia.com>
+Fixes: be0f161ef141 ("net/mlx5e: DCBNL, Implement tc with ets type and zero bandwidth")
+Signed-off-by: Carolina Jubran <cjubran@nvidia.com>
+Reviewed-by: Alex Lazar <alazar@nvidia.com>
 Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20260902164634.3657606-3-tariqt@nvidia.com
+Link: https://patch.msgid.link/20260902193224.3668743-1-tariqt@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en/port.c | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/port.c b/drivers/net/ethernet/mellanox/mlx5/core/en/port.c
-index 5f6a0605e4ae8..b8ada7993d0bc 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en/port.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en/port.c
-@@ -501,6 +501,7 @@ int mlx5e_set_fec_mode(struct mlx5_core_dev *dev, u16 fec_policy)
- 	u32 in[MLX5_ST_SZ_DW(pplm_reg)] = {};
- 	int sz = MLX5_ST_SZ_BYTES(pplm_reg);
- 	u16 fec_policy_auto = 0;
-+	bool fec_set = false;
- 	int err;
- 	int i;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c b/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c
+index 98ca8f486d52c..9fe8ea3e71cf8 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c
+@@ -133,7 +133,7 @@ static int mlx5e_dcbnl_ieee_getets(struct net_device *netdev,
+ 		if (err)
+ 			return err;
  
-@@ -513,9 +514,6 @@ int mlx5e_set_fec_mode(struct mlx5_core_dev *dev, u16 fec_policy)
- 	if (fec_policy >= (1 << MLX5E_FEC_LLRS_272_257_1) && !fec_50g_per_lane)
- 		return -EOPNOTSUPP;
+-		if (ets->tc_tx_bw[i] < MLX5E_MAX_BW_ALLOC &&
++		if (priv->dcbx.tc_tsa[i] == IEEE_8021QAZ_TSA_ETS &&
+ 		    tc_group[i] == (MLX5E_LOWEST_PRIO_GROUP + 1))
+ 			is_zero_bw_ets_tc = true;
  
--	if (fec_policy && !mlx5e_fec_in_caps(dev, fec_policy))
--		return -EOPNOTSUPP;
--
- 	MLX5_SET(pplm_reg, in, local_port, 1);
- 	err = mlx5_core_access_reg(dev, in, sz, out, sz, MLX5_REG_PPLM, 0, 0);
- 	if (err)
-@@ -542,12 +540,17 @@ int mlx5e_set_fec_mode(struct mlx5_core_dev *dev, u16 fec_policy)
- 		mlx5e_get_fec_cap_field(out, &fec_caps, i);
- 
- 		/* policy supported for link speed */
--		if (fec_caps & conf_fec)
-+		if (fec_caps & conf_fec) {
- 			mlx5e_fec_admin_field(out, &conf_fec, 1, i);
--		else
--			/* set FEC to auto*/
-+			fec_set = true;
-+		} else {
-+			/* set FEC to auto */
- 			mlx5e_fec_admin_field(out, &fec_policy_auto, 1, i);
-+		}
- 	}
- 
-+	if (fec_policy && !fec_set)
-+		return -EOPNOTSUPP;
-+
- 	return mlx5_core_access_reg(dev, out, sz, out, sz, MLX5_REG_PPLM, 0, 1);
- }
 -- 
 2.53.0
 
