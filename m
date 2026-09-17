@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C32C4547045;
-	Thu, 17 Sep 2026 18:09:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED5863AEF54;
+	Thu, 17 Sep 2026 18:09:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789668542; cv=none; b=byfCx/A+NaI0BmnQK7NV5VQAf8bV3OupSGMI4I6didlJhl9nXtqZdXINd6gZ5Jpi5D+yeNqPrCXi+JtgWoVxdEVNVCeVs164j/2WL6lzBV1nCOVGXoKMuZQ5/eaRwqhe51YfpNB7vbbpp4dpjkLhn2YUE70iJEvHKcHY/j7cnHA=
+	t=1789668545; cv=none; b=P1RdRGZ60o9DeE01L7Gh9l6RUVOyH9hGrhM46JSrD6xld5cMeQpKr9QKMYdSt9j7Rb1OTOoOWUwUobku1SQMKx0IglNv0E+WT5DerHkvFdRhzoWIFnydLfjMjlB3KlS9TLO2gVNOqJRR94g9Xc86yaJyIukNiwViq0/Kz4NFyqc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789668542; c=relaxed/simple;
-	bh=6vv34Zul512kD4UboyGGMeI8+4HjL7U8r9OGaMD417E=;
+	s=arc-20240116; t=1789668545; c=relaxed/simple;
+	bh=T9oienrJdoEF5RymkoP8E62oOqa3NMWenuvRnP8ZmWs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t5Y7/xPXskLgiIBUeg6NgSfx1pvmFqY6H1tPL33t/kpF+OiAplblz0/Lf1OcCNnatJUib9pYDkMUfVYzOB4RtQpS3bv4Btd+7jq+6qAGUjU9RcNxg/9QVHOrwVy0kyqCZzjGCAkN6l7c5kUunaUMYnzFYpCYKyr81fVnAv7MhS0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nxzeUSfR; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mX8f7NXkwfLl14Q7dkkewXr6ZWqf8RCZA82Gs7d+kcqVD/4VKvoRuD+I3abhIIxE7gx3COO5Ak4swqhZD3YQEgGJhY3BmEmhB5WYFW+77MyIajjitqBlDF3wAUlbnRYvUjwXxRuRfqLWkfvZfZ8uwQksWNfK3TkKPwdjhRYNRsM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NQKvUtiP; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nxzeUSfR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0C5A1F000FF;
-	Thu, 17 Sep 2026 18:08:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NQKvUtiP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A6951F000FF;
+	Thu, 17 Sep 2026 18:09:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789668540;
-	bh=ykN+zAjRPkCuo2OEXT+QoaHw5kvNjhaa/PndSipIQ9w=;
+	s=korg; t=1789668543;
+	bh=TJyCKlBHLBF1B59uTNI3zMIV6AtYYW/V0e2KFZ7AXOg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nxzeUSfRf3QLEztFXnn73cEV73CpsETQtUd7W3iqyhKPDlZf1p9syRoiHASGYRkHb
-	 nY8RQXbcyIpZcXsu2RNNXYGMWuBimEVrdX8AqR0SLGhRIHfFe1W71dgZ9CZ5IsRbzz
-	 Q2u+2gszgAAMVqAYt10+8xLzlPF8qOjid+jYRGuM=
+	b=NQKvUtiPwYp3LT1Ym6S0baaCL2osXycb6Un7AGtfFvhF+QGlwIKDgo1dlDq7sxfeC
+	 vi6dvwn17Vq9PotudpYQWhWwxhIEJZHHJCAo62GyFJtma1J6kn6CsOUtYJ91kmS5zs
+	 Spu8d/krQFeQClSwZTSQF51qJnfeDcSDxEpfqDHU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang YuWei <1973615295@qq.com>,
-	Mark Brown <broonie@kernel.org>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Wilken Gottwalt <wilken.gottwalt@posteo.net>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0412/1102] spi: dw-dma: Wait for controller idle before completing Tx
-Date: Thu, 17 Sep 2026 16:05:55 +0100
-Message-ID: <20260917151550.008236701@linuxfoundation.org>
+Subject: [PATCH 6.12 0457/1102] hwmon: (corsair-psu) Fix linear11 calculation
+Date: Thu, 17 Sep 2026 16:06:40 +0100
+Message-ID: <20260917151551.159697477@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -51,46 +52,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wang YuWei <1973615295@qq.com>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit 0bcd59706aeda8a5d48ba656bab74cb26f2b423e ]
+[ Upstream commit c6c4234928d2eb4f61fecb61067e612d9bdbd2ff ]
 
-dw_spi_dma_wait_tx_done() polls dw_spi_dma_tx_busy(), which only checks
-DW_SPI_SR_TF_EMPT. An empty TX FIFO merely means the last data word has
-been moved into the shift register; the transfer is not complete on the
-bus until DW_SPI_SR_BUSY is also cleared. As a result the wait can
-return while the controller is still shifting out the final word.
+In corsairpsu_linear11_to_int(), the mantissa is extracted using bitwise
+operations and cast to s16 before being shifted left:
 
-Any caller that tears down or reconfigures the controller right after
-the transfer can then lose the tail of the transfer.
+static int corsairpsu_linear11_to_int(const u16 val, const int scale)
+{
+    ...
+    const int mant = (((s16)(val & 0x7ff)) << 5) >> 5;
+    ...
+}
 
-The memory-operation path in spi-dw-core.c already waits for both
-DW_SPI_SR_BUSY == 0 and DW_SPI_SR_TF_EMPT == 1. Use the same completion
-condition in the DMA path so the transfer is guaranteed to be finished
-on the bus before the wait returns.
+Due to C integer promotion rules, the masked value (which is always
+positive) is promoted to a 32-bit integer before the left shift. As a
+result, the sign bit is never extended to bit 31 of the promoted integer.
 
-Signed-off-by: Wang YuWei <1973615295@qq.com>
-Link: https://patch.msgid.link/tencent_4EA7B5C94669ED4C38A5F6C1C9126E5D9106@qq.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+When the device hardware reports a negative temperature in Linear11 format
+(such as an ambient temperature probe reporting sub-zero), the negative
+mantissa is parsed incorrectly as a massive positive value. For example,
+-1 becomes 2047, which scales to 2047 degrees Celsius.
+
+Fix the problem by type casting the result of the left shift operation
+to s16.
+
+Another problem is left-shifting of negative values. In C, the result of
+left-shifting negative values is undefined. Use a multiplication instead
+to avoid the problem.
+
+Also use a local s64 variable to store temporary results, change
+the return value type from int to long, and clamp the final value
+to LONG_MIN and LONG_MAX to avoid under- and overflow issues while
+retaining as much information as possible.
+
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Cc: Wilken Gottwalt <wilken.gottwalt@posteo.net>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Tested-by: Wilken Gottwalt <wilken.gottwalt@posteo.net>
+Link: https://lore.kernel.org/r/20260804034811.2385506-1-linux@roeck-us.net
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-dw-dma.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/hwmon/corsair-psu.c | 23 ++++++++++++++---------
+ 1 file changed, 14 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/spi/spi-dw-dma.c b/drivers/spi/spi-dw-dma.c
-index 4104e1bc2d5bd..a469626c50d53 100644
---- a/drivers/spi/spi-dw-dma.c
-+++ b/drivers/spi/spi-dw-dma.c
-@@ -281,7 +281,8 @@ static int dw_spi_dma_wait(struct dw_spi *dws, unsigned int len, u32 speed)
+diff --git a/drivers/hwmon/corsair-psu.c b/drivers/hwmon/corsair-psu.c
+index 61d1b22bc63ec..7b64e04116e39 100644
+--- a/drivers/hwmon/corsair-psu.c
++++ b/drivers/hwmon/corsair-psu.c
+@@ -140,13 +140,18 @@ struct corsairpsu_data {
+ };
  
- static inline bool dw_spi_dma_tx_busy(struct dw_spi *dws)
+ /* some values are SMBus LINEAR11 data which need a conversion */
+-static int corsairpsu_linear11_to_int(const u16 val, const int scale)
++static long corsairpsu_linear11_to_long(const u16 val, const int scale)
  {
--	return !(dw_readl(dws, DW_SPI_SR) & DW_SPI_SR_TF_EMPT);
-+	return (dw_readl(dws, DW_SPI_SR) &
-+		(DW_SPI_SR_BUSY | DW_SPI_SR_TF_EMPT)) != DW_SPI_SR_TF_EMPT;
+ 	const int exp = ((s16)val) >> 11;
+-	const int mant = (((s16)(val & 0x7ff)) << 5) >> 5;
+-	const int result = mant * scale;
++	const int mant = ((s16)((val & 0x7ff) << 5)) >> 5;
++	s64 result = mant * scale;
+ 
+-	return (exp >= 0) ? (result << exp) : (result >> -exp);
++	if (exp >= 0)
++		result *= (int)(1UL << exp);
++	else
++		result >>= -exp;
++
++	return clamp(result, LONG_MIN, LONG_MAX);
  }
  
- static int dw_spi_dma_wait_tx_done(struct dw_spi *dws,
+ /* the micro-controller uses percentage values to control pwm */
+@@ -271,13 +276,13 @@ static int corsairpsu_get_value(struct corsairpsu_data *priv, u8 cmd, u8 rail, l
+ 	case PSU_CMD_RAIL_AMPS:
+ 	case PSU_CMD_TEMP0:
+ 	case PSU_CMD_TEMP1:
+-		*val = corsairpsu_linear11_to_int(tmp & 0xFFFF, 1000);
++		*val = corsairpsu_linear11_to_long(tmp & 0xFFFF, 1000);
+ 		break;
+ 	case PSU_CMD_FAN:
+-		*val = corsairpsu_linear11_to_int(tmp & 0xFFFF, 1);
++		*val = corsairpsu_linear11_to_long(tmp & 0xFFFF, 1);
+ 		break;
+ 	case PSU_CMD_FAN_PWM_ENABLE:
+-		*val = corsairpsu_linear11_to_int(tmp & 0xFFFF, 1);
++		*val = corsairpsu_linear11_to_long(tmp & 0xFFFF, 1);
+ 		/*
+ 		 * 0 = automatic mode, means the micro-controller controls the fan using a plan
+ 		 *     which can be modified, but changing this plan is not supported by this
+@@ -291,12 +296,12 @@ static int corsairpsu_get_value(struct corsairpsu_data *priv, u8 cmd, u8 rail, l
+ 			*val = 2;
+ 		break;
+ 	case PSU_CMD_FAN_PWM:
+-		*val = corsairpsu_linear11_to_int(tmp & 0xFFFF, 1);
++		*val = corsairpsu_linear11_to_long(tmp & 0xFFFF, 1);
+ 		*val = corsairpsu_dutycycle_to_pwm(*val);
+ 		break;
+ 	case PSU_CMD_RAIL_WATTS:
+ 	case PSU_CMD_TOTAL_WATTS:
+-		*val = corsairpsu_linear11_to_int(tmp & 0xFFFF, 1000000);
++		*val = corsairpsu_linear11_to_long(tmp & 0xFFFF, 1000000);
+ 		break;
+ 	case PSU_CMD_TOTAL_UPTIME:
+ 	case PSU_CMD_UPTIME:
 -- 
 2.53.0
 
