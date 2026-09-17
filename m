@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C432E4F93BC;
-	Thu, 17 Sep 2026 17:58:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAB394F93D6;
+	Thu, 17 Sep 2026 17:58:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789667918; cv=none; b=NWSFoeACbC/L44o7tozbe9E+1+cv4mp3rYP1iiUqEgbz2ipL0MsaESWuQurnvaSlzT2iStxh16w3HDsHSK3tpzO7ExiWcOrZk4lOiDohiJVQDb3qUNks4Uob4yxjgcr8WJYPcNpURGQ/4B7PoJOxB35sePSji3SFFgj992Qczgk=
+	t=1789667921; cv=none; b=lIrbd+XLewhIDQgYJoMhh0IxwLGsEI7bQ/9u100+qvTbev5PTjq8Eqpr3T9UVBj9BTFFMqfamvclOwFdV3OZBI7B+hndstePzRvXiNmzj7LE1zkx7+u9taDhGvtq6XBOU5ewdpKhc47/G+cT9olIfXwrTaLxcSbmfBfMYIgeCdw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789667918; c=relaxed/simple;
-	bh=RckveI/up09krXFduwlF9HR2OXPxqfh8nBzFvkPe98U=;
+	s=arc-20240116; t=1789667921; c=relaxed/simple;
+	bh=mbFM9dAti546cptwofQS+2FJDgvSrsOaaJpZCB0N0Ms=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HjJLFmvT0z1vuv5b78tDNYay/2i+JaXk9e+2BQcUSiuafd/U3Ao3hy4TgmsXI/h0OQT8fKfLKGMoonjgwcgjRHwDc/XTO1DRHOXmB3jTKpQcthk6ehs7ehK7A9i9pdq9OEpG1dlcAtS1+fJx9SR/KuA5XrXZowBNjLMkebAtZqo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GabDkNOw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=e4q7RuMVhKtsFuXpJAwsbX3gaj0+t6zPbAw/PYoi3Sa8gs2H6PfZHDOCuaKdraOmWQn9gxOZBE+BAu1vYJhPXQhYtB5ptKM+40YIeJyGdT+2m8YNx5GDBbV8oezCn1E7DioMXvsfKPthBLBySRynwYoJdjyuHI4bJqHhoFrwd9w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OiEFCjFE; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GabDkNOw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25BE71F000FF;
-	Thu, 17 Sep 2026 17:58:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OiEFCjFE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DB171F000FF;
+	Thu, 17 Sep 2026 17:58:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789667916;
-	bh=eTBsIx6Wdo7Z6Xg8q0i/BbZlLwhVZbSYcypKDUGbjsQ=;
+	s=korg; t=1789667919;
+	bh=+OmMVgF9sVi3GgNkv7qSdzyFjajjh2FgngSs4uDJ6ms=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GabDkNOwEO8P13OYCVf9AATti1o1OSijweICxO0mpvthPDq7zdfstzva4kUZwijmT
-	 98KRbJLkJ77MD6F4/D4sXvCgFN0FvHYD4ttBePD0VvDjnEzmBW8Rx6GduhNNgzQv20
-	 HJAOVx93yZ1snDB8AAaJjcI5O4M0JEQPfc4ZeCNs=
+	b=OiEFCjFEU6osnyhvdcb39BcZhNlf0XOCnxwbNsl0GwHBdhekfscObxBwu3RLdcnhL
+	 uN9ImE2MH4HKxi52RfmI+WFVatiNPSvOdVHteTwuti3zUOeKFQhL8V1WAFTO+KqI1H
+	 PyeMB6asERB4emztVIi1i3yoWdbKyHW35hADXf88=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ioana Ciornei <ioana.ciornei@nxp.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Priyansh Jain <priyansh.jain@oss.qualcomm.com>,
+	Daniel Lezcano <daniel.lezcano@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0216/1102] dpaa2-switch: fix handling of NAPI on the remove path
-Date: Thu, 17 Sep 2026 16:02:39 +0100
-Message-ID: <20260917151545.001294537@linuxfoundation.org>
+Subject: [PATCH 6.12 0217/1102] thermal/drivers/qcom/tsens: Atomic temperature read with hardware-guided retries
+Date: Thu, 17 Sep 2026 16:02:40 +0100
+Message-ID: <20260917151545.026682613@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -51,65 +52,221 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ioana Ciornei <ioana.ciornei@nxp.com>
+From: Priyansh Jain <priyansh.jain@oss.qualcomm.com>
 
-[ Upstream commit e23d7c8c1d4ba435c457d7ffb2669175ec819b07 ]
+[ Upstream commit e28ef2f3ccea276436bd0f30c93f99e764ba492b ]
 
-All the NAPI instances for a DPSW device are attached to the first
-switch port's net_device but shared by all ports. The NAPI instances get
-disabled only once the last port goes down.
+The existing TSENS temperature read logic polls the valid bit and then
+reads the temperature register. When temperature reads are triggered
+at very short intervals, this can race with hardware updates and allow
+the temperature field to be read while it is still being updated.
 
-This causes an issue on the .remove() path where each port is
-unregistered and freed one at a time, causing the NAPI instances to be
-deleted even though they are not disabled.
+In this case, the valid bit may already be asserted even though the
+temperature value is transitioning, resulting in an incorrect reading.
 
-In order to avoid this, split up the unregister_netdev() calls from the
-free_netdev() so that we make sure all ports go down before we attempt
-a deletion of NAPI instances. Also, make the netif_napi_del() explicit
-as it is on the .probe() path.
+Hardware programming guidelines require the temperature value and the
+valid bit to be sampled atomically in the same read transaction. A
+reading is considered valid only if the valid bit is observed set in
+that same sample.
 
-Signed-off-by: Ioana Ciornei <ioana.ciornei@nxp.com>
-Link: https://patch.msgid.link/20260528173452.1953102-6-ioana.ciornei@nxp.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+The guidelines further specify that software should attempt the
+temperature read up to three times to account for transient update
+windows. If none of the attempts yields a valid sample, a stable fallback
+value must be returned: if the first and second samples match, the second
+value is returned;otherwise, if the second and third samples match, the
+third value is returned;if neither pair matches, -EAGAIN is returned.
+
+Update the TSENS sensor read logic to implement atomic sampling along
+with the recommended retry-and-compare fallback behavior. This removes
+the race window and ensures deterministic temperature values in
+accordance with hardware requirements.
+
+Signed-off-by: Priyansh Jain <priyansh.jain@oss.qualcomm.com>
+Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260514113643.1954111-1-priyansh.jain@oss.qualcomm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/freescale/dpaa2/dpaa2-switch.c   | 15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ drivers/thermal/qcom/tsens.c | 111 ++++++++++++++++++++++++-----------
+ drivers/thermal/qcom/tsens.h |   1 +
+ 2 files changed, 78 insertions(+), 34 deletions(-)
 
-diff --git a/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c b/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c
-index ff3a71c4419f2..b6a92742294a1 100644
---- a/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c
-+++ b/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c
-@@ -3306,7 +3306,6 @@ static void dpaa2_switch_teardown(struct fsl_mc_device *sw_dev)
+diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
+index d2db804692f01..5f62e17be8498 100644
+--- a/drivers/thermal/qcom/tsens.c
++++ b/drivers/thermal/qcom/tsens.c
+@@ -316,9 +316,66 @@ static inline int code_to_degc(u32 adc_code, const struct tsens_sensor *s)
+ }
  
- static void dpaa2_switch_remove(struct fsl_mc_device *sw_dev)
- {
--	struct ethsw_port_priv *port_priv;
- 	struct ethsw_core *ethsw;
- 	struct device *dev;
- 	int i;
-@@ -3318,11 +3317,17 @@ static void dpaa2_switch_remove(struct fsl_mc_device *sw_dev)
- 
- 	dpsw_disable(ethsw->mc_io, 0, ethsw->dpsw_handle);
- 
--	for (i = 0; i < ethsw->sw_attr.num_ifs; i++) {
--		port_priv = ethsw->ports[i];
--		unregister_netdev(port_priv->netdev);
-+	/* Unregister all the netdevs so that they are brought down and the
-+	 * shared NAPI instances gets disabled.
+ /**
+- * tsens_hw_to_mC - Return sign-extended temperature in mCelsius.
++ * tsens_read_temp - Retrieve temperature readings from the hardware.
+  * @s:     Pointer to sensor struct
+  * @field: Index into regmap_field array pointing to temperature data
++ * @temp: temperature in deciCelsius to be read from hardware
++ *
++ * This function handles temperature returned in ADC code or deciCelsius
++ * depending on IP version.
++ *
++ * Return: 0 on success, a negative errno will be returned in error cases
++ */
++static int tsens_read_temp(const struct tsens_sensor *s, int field, int *temp)
++{
++	struct tsens_priv *priv = s->priv;
++	int temp_val[MAX_READ_RETRY] = {0};
++	u32 status;
++	int ret;
++	u32 last_temp_mask = GENMASK(priv->fields[LAST_TEMP_0].msb,
++					priv->fields[LAST_TEMP_0].lsb);
++	u32 valid_bit = priv->rf[VALID_0] ? BIT(priv->fields[VALID_0].lsb) : 0;
++
++	for (int i = 0; i < MAX_READ_RETRY; i++) {
++		ret = regmap_read(priv->tm_map, priv->fields[field].reg, &status);
++		if (ret)
++			return ret;
++
++		/* VER_0 doesn't have a VALID bit */
++		if (!valid_bit) {
++			*temp = status & last_temp_mask;
++			return 0;
++		}
++
++		temp_val[i] = status & last_temp_mask;
++
++		if (status & valid_bit) {
++			*temp = temp_val[i];
++			return 0;
++		}
++	}
++
++	/*
++	 * As per the HW guidelines, if none of the attempts observe a
++	 * valid sample, a stable fallback value must be returned. If the
++	 * first and second samples match, the second value is returned;
++	 * otherwise, if the second and third samples match, the third
++	 * value is returned.
 +	 */
-+	for (i = 0; i < ethsw->sw_attr.num_ifs; i++)
-+		unregister_netdev(ethsw->ports[i]->netdev);
++	if (temp_val[0] == temp_val[1])
++		*temp = temp_val[1];
++	else if (temp_val[1] == temp_val[2])
++		*temp = temp_val[2];
++	else
++		return -EAGAIN;
 +
-+	for (i = 0; i < DPAA2_SWITCH_RX_NUM_FQS; i++)
-+		netif_napi_del(&ethsw->fq[i].napi);
++	return 0;
++}
 +
-+	for (i = 0; i < ethsw->sw_attr.num_ifs; i++)
- 		dpaa2_switch_remove_port(ethsw, i);
--	}
++/**
++ * tsens_hw_to_mC - Return sign-extended temperature in mCelsius.
++ * @s:     Pointer to sensor struct
++ * @temp: temperature in milliCelsius to be read from hardware
+  *
+  * This function handles temperature returned in ADC code or deciCelsius
+  * depending on IP version.
+@@ -326,20 +383,14 @@ static inline int code_to_degc(u32 adc_code, const struct tsens_sensor *s)
+  * Return: Temperature in milliCelsius on success, a negative errno will
+  * be returned in error cases
+  */
+-static int tsens_hw_to_mC(const struct tsens_sensor *s, int field)
++static int tsens_hw_to_mC(const struct tsens_sensor *s, int temp)
+ {
+ 	struct tsens_priv *priv = s->priv;
+ 	u32 resolution;
+-	u32 temp = 0;
+-	int ret;
  
- 	kfree(ethsw->fdbs);
- 	kfree(ethsw->filter_blocks);
+ 	resolution = priv->fields[LAST_TEMP_0].msb -
+ 		priv->fields[LAST_TEMP_0].lsb;
+ 
+-	ret = regmap_field_read(priv->rf[field], &temp);
+-	if (ret)
+-		return ret;
+-
+ 	/* Convert temperature from ADC code to milliCelsius */
+ 	if (priv->feat->adc)
+ 		return code_to_degc(temp, s) * 1000;
+@@ -514,8 +565,10 @@ static int tsens_read_irq_state(struct tsens_priv *priv, u32 hw_id,
+ 					&d->crit_irq_mask);
+ 		if (ret)
+ 			return ret;
+-
+-		d->crit_thresh = tsens_hw_to_mC(s, CRIT_THRESH_0 + hw_id);
++		ret = regmap_field_read(priv->rf[CRIT_THRESH_0 + hw_id], &d->crit_thresh);
++		if (ret)
++			return ret;
++		d->crit_thresh = tsens_hw_to_mC(s, d->crit_thresh);
+ 	} else {
+ 		/* No mask register on older TSENS */
+ 		d->up_irq_mask = 0;
+@@ -525,8 +578,16 @@ static int tsens_read_irq_state(struct tsens_priv *priv, u32 hw_id,
+ 		d->crit_thresh = 0;
+ 	}
+ 
+-	d->up_thresh  = tsens_hw_to_mC(s, UP_THRESH_0 + hw_id);
+-	d->low_thresh = tsens_hw_to_mC(s, LOW_THRESH_0 + hw_id);
++	ret = regmap_field_read(priv->rf[UP_THRESH_0 + hw_id], &d->up_thresh);
++	if (ret)
++		return ret;
++
++	d->up_thresh = tsens_hw_to_mC(s, d->up_thresh);
++	ret = regmap_field_read(priv->rf[LOW_THRESH_0 + hw_id], &d->low_thresh);
++	if (ret)
++		return ret;
++
++	d->low_thresh = tsens_hw_to_mC(s, d->low_thresh);
+ 
+ 	dev_dbg(priv->dev, "[%u] %s%s: status(%u|%u|%u) | clr(%u|%u|%u) | mask(%u|%u|%u)\n",
+ 		hw_id, __func__,
+@@ -750,33 +811,15 @@ static void tsens_disable_irq(struct tsens_priv *priv)
+ 
+ int get_temp_tsens_valid(const struct tsens_sensor *s, int *temp)
+ {
+-	struct tsens_priv *priv = s->priv;
+ 	int hw_id = s->hw_id;
+ 	u32 temp_idx = LAST_TEMP_0 + hw_id;
+-	u32 valid_idx = VALID_0 + hw_id;
+-	u32 valid;
+ 	int ret;
+ 
+-	/* VER_0 doesn't have VALID bit */
+-	if (tsens_version(priv) == VER_0)
+-		goto get_temp;
+-
+-	/* Valid bit is 0 for 6 AHB clock cycles.
+-	 * At 19.2MHz, 1 AHB clock is ~60ns.
+-	 * We should enter this loop very, very rarely.
+-	 * Wait 1 us since it's the min of poll_timeout macro.
+-	 * Old value was 400 ns.
+-	 */
+-	ret = regmap_field_read_poll_timeout(priv->rf[valid_idx], valid,
+-					     valid, 1, 20 * USEC_PER_MSEC);
+-	if (ret)
+-		return ret;
+-
+-get_temp:
+-	/* Valid bit is set, OK to read the temperature */
+-	*temp = tsens_hw_to_mC(s, temp_idx);
++	ret = tsens_read_temp(s, temp_idx, temp);
++	if (!ret)
++		*temp = tsens_hw_to_mC(s, *temp);
+ 
+-	return 0;
++	return ret;
+ }
+ 
+ int get_temp_common(const struct tsens_sensor *s, int *temp)
+diff --git a/drivers/thermal/qcom/tsens.h b/drivers/thermal/qcom/tsens.h
+index 7b36a0318fa6a..4d02be5a0a481 100644
+--- a/drivers/thermal/qcom/tsens.h
++++ b/drivers/thermal/qcom/tsens.h
+@@ -21,6 +21,7 @@
+ #define THRESHOLD_MIN_ADC_CODE	0x0
+ 
+ #define MAX_SENSORS 16
++#define MAX_READ_RETRY 3
+ 
+ #include <linux/interrupt.h>
+ #include <linux/thermal.h>
 -- 
 2.53.0
 
