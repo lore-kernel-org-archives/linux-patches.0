@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACD6B4B44CB;
-	Thu, 17 Sep 2026 15:54:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 308D34B44CB;
+	Thu, 17 Sep 2026 15:54:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789660462; cv=none; b=VVMPq1V7CbWh/9TbhhsWx/YYpzv9ugjv7TcnPH880A5chILMCjrROpiWtrdj/bM7Vwuj+6sFV4BvVlm6rw3vIKHufMDw82XNfC2bYOfFJmEatZabBMZuboiKyeRh+rp3zrEOpVv0BRllMh+xcOTSYWounZK3E3ZLf5qxPBZjysk=
+	t=1789660465; cv=none; b=mNzxWpTIZcBTAqZ8PR4MjyxbA37Eyfm6Vvj9m0nv/S4IHsAunKXEz5hjpstOPaISO6oT6p+HU9XKj6y/o1MOusNeh8Dn6DxsyrMOgaPSIXoI5pGLAcKxUhwZkkYXB1Rq5LafpFMnIvAZzH4pfm5bpNOokIKanx98HefRGoAEHUo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789660462; c=relaxed/simple;
-	bh=bV7CjtbuZrd0KRyAQtPFQleRbEnIHQaoHrQ5+Ba6Ihc=;
+	s=arc-20240116; t=1789660465; c=relaxed/simple;
+	bh=JZyQRSpft533/qlfNW22eVkgFYijS4eifpz0HFyy8qE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sq4BHGqpQzzrv7veDcOu8NNJjwlEC4BuVb9hPPHZ7jlDJ+RSm7VPb/Kpcv3UFtuYWvSTeFBI0COIOqqfaumx8lqZpSWckQoBHJlN93050rkBz6lz0QiRqM9rj0lsrHGgpebqPHmqCjB2OYD1UAUobtEFO/XN2m5wuudJZEjaTMQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i/TY3MVU; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=iU+9cWh33k+RXGRh7H+6i2Pkt3av1x7LQJyCCv7nQrobYiaoiE5AJM5xBu8D2GWkuX9dx9NKIbPcqRu3vQrSapeoFZMemXLDq6jJY7ANh1ttIK7IfopOMzdfovPcQegKduWYGaX7rM70Q6kxnSo4NBj2gW2+y7Sg+1q3FzPheSc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JUYHI3xZ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i/TY3MVU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9394B1F000FF;
-	Thu, 17 Sep 2026 15:54:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JUYHI3xZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 802DF1F000FF;
+	Thu, 17 Sep 2026 15:54:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789660461;
-	bh=N9Ic6EqAbLGsNuuTFoJIAh++UAWOPxflnOQlKt9YeAo=;
+	s=korg; t=1789660464;
+	bh=3CAWKjMsLV6Dyt4ly+xBVYmsQJutYnySmrkC/QlFqrU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=i/TY3MVUe22qgs7De13JdrAv9E7FOBrpP7dx8ssFQ9kTR4soZS5WDP/OP7VW3u1T5
-	 GRtav7qRZI9swRdTINDy6Vu3DiD14C42me5OHWVqQuy1qRq0gvCRzGCC+T3RtxM2iI
-	 n2i6QpWnk9LUcs33SyGU7BGTVV6+CQU848/PGoWM=
+	b=JUYHI3xZ+C3YlqwlbstIEhaSSKIzQVAax5ozcoPth87V5VcvfNN5E5J0ORo/zCp79
+	 Ce9YMyZBXOmZe0txRhsx3hU3sOHZ8sLSJCDTLqe3Z/evlFtSGEhNOX0MLonCp8ionI
+	 WKM3tVr9Bp1L0dU1mUVyH9YGMU9GG29vK73j6pAQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolas Dufresne <nicolas@ndufresne.ca>,
-	Haotian Zhang <vulab@iscas.ac.cn>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Michael Bommarito <michael.bommarito@gmail.com>,
+	Benjamin Gaignard <benjamin.gaignard@collabora.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 7.2 600/733] media: v4l2-h264: Fix memcmp() size in B1 reference list comparison
-Date: Thu, 17 Sep 2026 16:15:08 +0100
-Message-ID: <20260917151407.413312296@linuxfoundation.org>
+Subject: [PATCH 7.2 601/733] media: verisilicon: rockchip: guard VPU981 AV1 divisor and tile buffer
+Date: Thu, 17 Sep 2026 16:15:09 +0100
+Message-ID: <20260917151407.444189268@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -52,43 +51,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haotian Zhang <vulab@iscas.ac.cn>
+From: Michael Bommarito <michael.bommarito@gmail.com>
 
-commit 10e59fbdef13597836bd6459095caa02c80af3d7 upstream.
+commit b84f6533a8ed2fd7b282fc7ab4b8efadc745a89c upstream.
 
-In v4l2_h264_build_b_ref_lists(), the B0/B1 list equality
-check passes the entry count builder->num_valid to memcmp()
-instead of a byte size. Since struct v4l2_h264_reference is
-two bytes (fields and index), only half of each list is
-compared, so distinct lists can be wrongly treated as equal
-and trigger an incorrect swap(b1_reflist[0], b1_reflist[1]).
+rockchip_vpu981_av1_dec_set_tile_info() divides context_update_tile_id by
+tile_info->tile_cols and writes one descriptor per tile into the tile_info
+DMA buffer, which holds AV1_MAX_TILES entries; tile_cols and tile_rows
+come from the bitstream. Guard the division against a zero tile_cols by
+initialising the context-update values to zero and computing them only
+when tile_cols is non-zero, and stop the descriptor writes once the
+tile_info buffer is full. The tile geometry written to the hardware
+registers is left unmodified; the per-dimension and total tile bounds are
+enforced by the control validation.
 
-Change the memcmp() size argument to sizeof(b1_reflist[0]) *
-builder->num_valid so that the full byte length of both
-reference lists is compared.
-
-Fixes: 624922a2739b ("media: v4l2-core: Add helpers to build the H264 P/B0/B1 reflists")
-Suggested-by: Nicolas Dufresne <nicolas@ndufresne.ca>
+Fixes: 727a400686a2 ("media: verisilicon: Add Rockchip AV1 decoder")
+Assisted-by: Claude:claude-opus-4-8
 Cc: stable@vger.kernel.org
-Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
-Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Michael Bommarito <michael.bommarito@gmail.com>
+Reviewed-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/v4l2-core/v4l2-h264.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/media/platform/verisilicon/rockchip_vpu981_hw_av1_dec.c |   32 ++++++++--
+ 1 file changed, 26 insertions(+), 6 deletions(-)
 
---- a/drivers/media/v4l2-core/v4l2-h264.c
-+++ b/drivers/media/v4l2-core/v4l2-h264.c
-@@ -440,7 +440,8 @@ v4l2_h264_build_b_ref_lists(const struct
+--- a/drivers/media/platform/verisilicon/rockchip_vpu981_hw_av1_dec.c
++++ b/drivers/media/platform/verisilicon/rockchip_vpu981_hw_av1_dec.c
+@@ -578,16 +578,30 @@ static void rockchip_vpu981_av1_dec_set_
+ 	const struct v4l2_av1_tile_info *tile_info = &ctrls->frame->tile_info;
+ 	const struct v4l2_ctrl_av1_tile_group_entry *group_entry =
+ 	    ctrls->tile_group_entry;
+-	int context_update_y =
+-	    tile_info->context_update_tile_id / tile_info->tile_cols;
+-	int context_update_x =
+-	    tile_info->context_update_tile_id % tile_info->tile_cols;
+-	int context_update_tile_id =
+-	    context_update_x * tile_info->tile_rows + context_update_y;
++	int context_update_y = 0;
++	int context_update_x = 0;
++	int context_update_tile_id = 0;
+ 	u8 *dst = av1_dec->tile_info.cpu;
++	u8 *dst_end = dst + av1_dec->tile_info.size;
+ 	struct hantro_dev *vpu = ctx->dev;
+ 	int tile0, tile1;
+ 
++	/*
++	 * tile_cols and tile_rows are bounded by the V4L2 control validation
++	 * (V4L2_AV1_MAX_TILE_{COLS,ROWS} and V4L2_AV1_MAX_TILE_COUNT). Guard
++	 * the divisor here, and keep the descriptor writes within the
++	 * AV1_MAX_TILES tile_info buffer below; the register values use the
++	 * unmodified tile geometry.
++	 */
++	if (tile_info->tile_cols) {
++		context_update_y =
++		    tile_info->context_update_tile_id / tile_info->tile_cols;
++		context_update_x =
++		    tile_info->context_update_tile_id % tile_info->tile_cols;
++		context_update_tile_id =
++		    context_update_x * tile_info->tile_rows + context_update_y;
++	}
++
+ 	memset(dst, 0, av1_dec->tile_info.size);
+ 
+ 	for (tile0 = 0; tile0 < tile_info->tile_cols; tile0++) {
+@@ -598,6 +612,10 @@ static void rockchip_vpu981_av1_dec_set_
+ 			    tile_info->height_in_sbs_minus_1[tile1] + 1;
+ 			u32 x0 = tile_info->width_in_sbs_minus_1[tile0] + 1;
+ 
++			/* Stop once the tile_info descriptor buffer is full. */
++			if (dst + 16 > dst_end)
++				break;
++
+ 			/* tile size in SB units (width,height) */
+ 			*dst++ = x0;
+ 			*dst++ = 0;
+@@ -622,6 +640,8 @@ static void rockchip_vpu981_av1_dec_set_
+ 			*dst++ = (end >> 16) & 255;
+ 			*dst++ = (end >> 24) & 255;
+ 		}
++		if (dst + 16 > dst_end)
++			break;
  	}
  
- 	if (builder->num_valid > 1 &&
--	    !memcmp(b1_reflist, b0_reflist, builder->num_valid))
-+	    !memcmp(b1_reflist, b0_reflist,
-+			sizeof(b1_reflist[0]) * builder->num_valid))
- 		swap(b1_reflist[0], b1_reflist[1]);
- 
- 	print_ref_list_b(builder, b0_reflist, 0);
+ 	hantro_reg_write(vpu, &av1_multicore_expect_context_update, !!(context_update_x == 0));
 
 
