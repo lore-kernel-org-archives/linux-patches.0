@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7BC84F4D0B;
-	Thu, 17 Sep 2026 16:07:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B0514B44C5;
+	Thu, 17 Sep 2026 16:08:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789661280; cv=none; b=WjZoruYbFjydaQ2EZuczMbNabJ5N2rrZ1UNthW+Hdwz7i/0c/IdeG2yMznlJAsKATliYq8eW2Ta9scCBEuvU1+FhjsvduxYfZfnG0sVcpFfoSouDjK1CokMcN7k1yokJj2rVvR0cBATHc7wlfUMmwd+RqxcdXowwNmr8FYBT/WA=
+	t=1789661284; cv=none; b=CNYZG/ePkSGb9oP5Jr7TW+ZlPTdWiB4xGHXaNoO1f6moQqDehuMNkyp/DSvXYScJ66BAKiSnuovevQ1tZ0ILMxqxZTcvqUHqpdlsAaiD2su2v6OcODOe6hUQFGFjOmELYZqHXBN+UbmcY0NaEHEM18DCu6dGWh9LtgRSinClXsY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789661280; c=relaxed/simple;
-	bh=Ndc7ZhFDTgTAj+1ukUlI/GR6Fm0W4q02eDSq5oEEWt8=;
+	s=arc-20240116; t=1789661284; c=relaxed/simple;
+	bh=9Ha8MtyYW8At0r3iII5Awj9xSduQdSM281xYLhkr7RQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZK1x3NT6o4/IlVg5N661VzJ84mN//+CMQ88wCGBPY393iZ/xKRrNgWjb1Az4bHrkC4CrVKfUXdcKlUSELdL2s5pc1C4tuocEqXV7uzf++5IKE5FSkOaNgvl5iAkyCdooJv20kVxFS0uJZ7k6fuQArj57DXbdra0+hXU41zfQQFI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KfjEtNzW; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=qvaQSzhSJwk2hfBmvlsFIpHSHXzrQueMFzDGSIo8cxszXCYccYzPg0bULe/zylAhFUTJW1NWBuVmTtoM0MyycWNF8F0Pgt+KsD+6xeaa+k9TIOvrlMqWvjsWRcQO+VKm65luQO3LLxAWUwr31UQqXDbtDNbDh7avcV85rFhwEo0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=loC9JUsm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KfjEtNzW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFDBC1F00898;
-	Thu, 17 Sep 2026 16:07:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="loC9JUsm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C67C01F00893;
+	Thu, 17 Sep 2026 16:08:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789661279;
-	bh=xDq/TpG/D7Dq9LxQusQ+mueedo8m+XB6xgN8R/aZXKE=;
+	s=korg; t=1789661282;
+	bh=wCC7TMxcv0cIvAMLgLDY3Iw9aH5WACpCvatIYTI5KCQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KfjEtNzWixxIBzKFYD9mye79hSrWNe0ZviSmUKDlR3Z0HwQShJGYHfrh8yI2Wp36j
-	 NwqwyKNx/fM6fcOZ9zU70xLcwk9SVy+Ax4I07j0T7XbpXX4b92YgtmpvxmrIex33bP
-	 WDS7V0Qi6CL1galJ1+SdcRRGJ6po3+9IbKzauutg=
+	b=loC9JUsmrPuSriGXTbbmkzNsPhP6XCEpS/1ICSFQS4X8vlx5HuHiuWoxvEcs0uqfE
+	 VOWrqy+b7Jmk1/ybXhZkE/NOZnUG+8V3GjQi8kVztFptMREVNQygxrB/RLcVR9sbYV
+	 yZdDAhCjFVp2MvhswDGc9oeaWBWBY+Va+6E8jV4Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brajesh Gupta <brajesh.gupta@imgtec.com>,
-	Matt Coster <matt.coster@imgtec.com>,
+	Pierre Barre <pierre@barre.sh>,
+	Dominique Martinet <asmadeus@codewreck.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0143/1250] drm/imagination: Dont timeout job if its fence has been signaled
-Date: Thu, 17 Sep 2026 15:58:58 +0100
-Message-ID: <20260917151555.931813893@linuxfoundation.org>
+Subject: [PATCH 6.18 0144/1250] 9p: invalidate readdir buffer on seek
+Date: Thu, 17 Sep 2026 15:58:59 +0100
+Message-ID: <20260917151555.961040515@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -45,54 +45,112 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Brajesh Gupta <brajesh.gupta@imgtec.com>
+From: Pierre Barre <pierre@barre.sh>
 
-[ Upstream commit ee7cb742531432ec1bb29b996e3363aacd860054 ]
+[ Upstream commit e661e17ddbed524b5fbda789a091b48b6b677067 ]
 
-Verify the job’s fence in the timeout handler; if the firmware has since
-signaled completion, then report NO HANG.
+The per-fid readdir buffer (fid->rdir) is populated lazily and only
+refilled when fully drained (rdir->head == rdir->tail). userspace
+lseek() on a directory fd updates file->f_pos via generic_file_llseek()
+but does not touch the cached buffer, so the next getdents() iterates
+the stale cache and emits entries from the previous position instead
+of the one the caller asked for.
 
-Signed-off-by: Brajesh Gupta <brajesh.gupta@imgtec.com>
-Reviewed-by: Matt Coster <matt.coster@imgtec.com>
-Link: https://patch.msgid.link/20260519-b4-context_reset-v2-2-931018a7131d@imgtec.com
-Signed-off-by: Matt Coster <matt.coster@imgtec.com>
+Track the file position the cached data corresponds to in
+struct p9_rdir, and drop the cache on entry to iterate_shared when it
+no longer matches ctx->pos. The 9p protocol's Tread/Treaddir already
+take an arbitrary offset on every request, so a refill at the new
+position is always legal; no .llseek override or seek restriction is
+needed.
+
+Reported-by: Pierre Barre <pierre@barre.sh>
+Link: https://lore.kernel.org/v9fs/496d10b9-40fe-4f81-8014-37497c37ff63@app.fastmail.com/
+Signed-off-by: Pierre Barre <pierre@barre.sh>
+Message-ID: <20260512132032.369281-2-pierre@barre.sh>
+Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/imagination/pvr_queue.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ fs/9p/vfs_dir.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/drivers/gpu/drm/imagination/pvr_queue.c b/drivers/gpu/drm/imagination/pvr_queue.c
-index bb5835ede6660..7497bca2e7e83 100644
---- a/drivers/gpu/drm/imagination/pvr_queue.c
-+++ b/drivers/gpu/drm/imagination/pvr_queue.c
-@@ -818,7 +818,9 @@ static void pvr_queue_start(struct pvr_queue *queue)
-  * the scheduler, and re-assign parent fences in the middle.
+diff --git a/fs/9p/vfs_dir.c b/fs/9p/vfs_dir.c
+index e0d34e4e9076e..edef553bbd59e 100644
+--- a/fs/9p/vfs_dir.c
++++ b/fs/9p/vfs_dir.c
+@@ -27,6 +27,7 @@
+  * struct p9_rdir - readdir accounting
+  * @head: start offset of current dirread buffer
+  * @tail: end offset of current dirread buffer
++ * @offset: file position the data at @head corresponds to
+  * @buf: dirread buffer
   *
-  * Return:
-- *  * DRM_GPU_SCHED_STAT_RESET.
-+ *  *%DRM_GPU_SCHED_STAT_NO_HANG if the job fence has already been
-+ *   signaled, or
-+ *  *%DRM_GPU_SCHED_STAT_RESET otherwise.
-  */
- static enum drm_gpu_sched_stat
- pvr_queue_timedout_job(struct drm_sched_job *s_job)
-@@ -829,6 +831,9 @@ pvr_queue_timedout_job(struct drm_sched_job *s_job)
- 	struct pvr_job *job;
- 	u32 job_count = 0;
+  * private structure for keeping track of readdir
+@@ -36,6 +37,7 @@
+ struct p9_rdir {
+ 	int head;
+ 	int tail;
++	loff_t offset;
+ 	uint8_t buf[];
+ };
  
-+	if (dma_fence_is_signaled(s_job->s_fence->parent))
-+		return DRM_GPU_SCHED_STAT_NO_HANG;
+@@ -102,6 +104,9 @@ static int v9fs_dir_readdir(struct file *file, struct dir_context *ctx)
+ 	kvec.iov_base = rdir->buf;
+ 	kvec.iov_len = buflen;
+ 
++	if (rdir->head < rdir->tail && rdir->offset != ctx->pos)
++		rdir->head = rdir->tail = 0;
 +
- 	dev_err(sched->dev, "Job timeout\n");
+ 	while (1) {
+ 		if (rdir->tail == rdir->head) {
+ 			struct iov_iter to;
+@@ -117,6 +122,7 @@ static int v9fs_dir_readdir(struct file *file, struct dir_context *ctx)
  
- 	/* Before we stop the scheduler, make sure the queue is out of any list, so
+ 			rdir->head = 0;
+ 			rdir->tail = n;
++			rdir->offset = ctx->pos;
+ 		}
+ 		while (rdir->head < rdir->tail) {
+ 			err = p9stat_read(fid->clnt, rdir->buf + rdir->head,
+@@ -134,6 +140,7 @@ static int v9fs_dir_readdir(struct file *file, struct dir_context *ctx)
+ 
+ 			rdir->head += err;
+ 			ctx->pos += err;
++			rdir->offset = ctx->pos;
+ 		}
+ 	}
+ }
+@@ -161,6 +168,9 @@ static int v9fs_dir_readdir_dotl(struct file *file, struct dir_context *ctx)
+ 	if (!rdir)
+ 		return -ENOMEM;
+ 
++	if (rdir->head < rdir->tail && rdir->offset != ctx->pos)
++		rdir->head = rdir->tail = 0;
++
+ 	while (1) {
+ 		if (rdir->tail == rdir->head) {
+ 			err = p9_client_readdir(fid, rdir->buf, buflen,
+@@ -170,6 +180,7 @@ static int v9fs_dir_readdir_dotl(struct file *file, struct dir_context *ctx)
+ 
+ 			rdir->head = 0;
+ 			rdir->tail = err;
++			rdir->offset = ctx->pos;
+ 		}
+ 
+ 		while (rdir->head < rdir->tail) {
+@@ -190,6 +201,7 @@ static int v9fs_dir_readdir_dotl(struct file *file, struct dir_context *ctx)
+ 
+ 			ctx->pos = curdirent.d_off;
+ 			rdir->head += err;
++			rdir->offset = ctx->pos;
+ 		}
+ 	}
+ }
 -- 
 2.53.0
 
