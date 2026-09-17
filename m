@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 402C154705A;
-	Thu, 17 Sep 2026 18:03:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B38454705A;
+	Thu, 17 Sep 2026 18:03:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789668221; cv=none; b=kVsMX5RPfeQF8HevWmdxx00YNEn0qJ4LFnpAkBiMWr7AX6CM3TteE9wal3SuFSGSS+2ewlvTxyaOer8K0U/VoAzOiqGU1ZoFO5cDsd981OLKVHI8ZBbcKSDIL3vEL8rsBm2VJHYaBHCS8JshwHBObKWTZZ1RzSOhE6JVwC3hLRg=
+	t=1789668224; cv=none; b=iPbQXiBsyL19iBLCsz23FzAUCayS/psaiZXCxu8xsezL3oNN+IaSlbksu0BcX4wHozidjm2icE/GGtwlrf765F2lt7Zo9Etn/ZVNDzqUK8KXczCyp+8lRzHX/sDoei9j/zc7SuizHOZ00kfQo4kmjTdmrququgyvzV5OnKJIA1c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789668221; c=relaxed/simple;
-	bh=F5h+YJzFiR24mLlyJhFDVorKvsc7KxCC+7LFfDTCreA=;
+	s=arc-20240116; t=1789668224; c=relaxed/simple;
+	bh=3O+KeZb4AjyT9i3G8JRVzEp7b3rQf1fMqMCjp8sljLk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qAOCMDuw5gIIQEfpa4R6s1GDyOt9A5o33KW29x94+EcEx081Of7BtYYZS+uqN6a20Mf68CrEA86K4epiHL2z3mKupFj1jdUrpzaADOYRk7aAORaSBJgFOiMT5/31WKQwV3MQtb4w2adIJx0GQKs51l1NP3gX0UIERDj0FWiA840=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tgLmCDSk; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XH5cEElTEMuhXY8xgYbtrgzB04QWk4iyuhMNJ/gVBlTqIUqeGwUu6UBs8duFV7GxMIWMoygzUwUp3e+zJXDuROURT4faDOXa6yADO4kYuewm2P5cbYDg3mJD7oF627f/dzaURIaVej5HLQ4uaBORshoqyYN/tuk38sRPYuYhSz4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o3KoZ7Dl; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tgLmCDSk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52F071F000FF;
-	Thu, 17 Sep 2026 18:03:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o3KoZ7Dl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BEED1F000FF;
+	Thu, 17 Sep 2026 18:03:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789668219;
-	bh=DVmw645xhQ3BozA7xIrjzD/VdRygEZ5Y+HSQLuEnQmw=;
+	s=korg; t=1789668222;
+	bh=EpUuobXTPUIsy6aiJBiXcAqgL5dkdD1al8Y9F5DV6PA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tgLmCDSk+E32NPeu20WUZOILTFQV6Lybv0AIXWn2E1c6vf8fCWixCKgR4QPLiHT75
-	 C+w5jtcVoK3Zxm8ITlP7HqHA9sUaQgskhCodNLp4Z4ovAOUGXE6Jhr67BQ76F5WIGT
-	 +kfJNYhQvwkJodI9gR33J7+FPI70Y9sy/s65gb5c=
+	b=o3KoZ7Dl8AlVhk0lqRKxp0CsqVK/+WH82Xn9VTwEqZqCynRmw6mnyGoWWwZ4Ysjoz
+	 V4uJ1lpjO7Q0iF7YPT0ojTycXObr1T7vIEERMXobboVEohJMFFarW7tvCc6bs6sIVR
+	 vhwU09OMA08lYzCZjROkOKvA/KZZbqwt64Te5/9Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Akashdeep Kaur <a-kaur@ti.com>,
-	Lee Jones <lee@kernel.org>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0326/1102] mfd: tps65219: Make poweroff handler conditional on system-power-controller
-Date: Thu, 17 Sep 2026 16:04:29 +0100
-Message-ID: <20260917151547.815794776@linuxfoundation.org>
+Subject: [PATCH 6.12 0353/1102] ksmbd: use connection ClientGUID for lease lookup
+Date: Thu, 17 Sep 2026 16:04:56 +0100
+Message-ID: <20260917151548.509176685@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -51,56 +51,125 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Akashdeep Kaur <a-kaur@ti.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 104cd764a031bfe2ffe253adce9581384a78c16e ]
+[ Upstream commit fa111daae1a02dbff5693dfc12f368bccd9eb5f4 ]
 
-Currently, the TPS65219 driver unconditionally registers a poweroff
-handler. This causes issues on systems where a different component
-(such as TF-A firmware) should handle system poweroff instead.
+MS-SMB2 defines the lease table lookup key as Connection.ClientGuid.
+Use the connection ClientGUID consistently when checking for same-client
+leases and duplicate lease keys.
 
-Make the poweroff handler registration conditional based on the
-"system-power-controller" device tree property. This follows the
-standard kernel pattern where only the designated power controller
-registers for system poweroff operations.
+Also preserve directory and parent lease metadata when copying an existing
+lease state to a new open.
 
-On systems where the property is absent, the PMIC will not register
-a poweroff handler, allowing other poweroff mechanisms to function.
-
-Signed-off-by: Akashdeep Kaur <a-kaur@ti.com>
-Link: https://patch.msgid.link/20260401112257.1248437-3-a-kaur@ti.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/tps65219.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ fs/smb/server/oplock.c  | 16 +++++++++-------
+ fs/smb/server/oplock.h  |  2 +-
+ fs/smb/server/smb2pdu.c |  2 +-
+ 3 files changed, 11 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/mfd/tps65219.c b/drivers/mfd/tps65219.c
-index d3b77abec786e..5bd95e75f6e78 100644
---- a/drivers/mfd/tps65219.c
-+++ b/drivers/mfd/tps65219.c
-@@ -280,13 +280,15 @@ static int tps65219_probe(struct i2c_client *client)
- 		return ret;
- 	}
- 
--	ret = devm_register_power_off_handler(tps->dev,
--					      tps65219_power_off_handler,
--					      tps);
--	if (ret) {
--		dev_err(tps->dev, "failed to register power-off handler: %d\n", ret);
--		return ret;
-+	if (of_device_is_system_power_controller(tps->dev->of_node)) {
-+		ret = devm_register_power_off_handler(tps->dev,
-+						      tps65219_power_off_handler,
-+						      tps);
-+		if (ret)
-+			return dev_err_probe(tps->dev, ret,
-+					     "Failed to register power-off handler\n");
- 	}
-+
- 	return 0;
+diff --git a/fs/smb/server/oplock.c b/fs/smb/server/oplock.c
+index 82bc255cbceab..a413d81db11b9 100644
+--- a/fs/smb/server/oplock.c
++++ b/fs/smb/server/oplock.c
+@@ -520,7 +520,7 @@ static inline int compare_guid_key(struct oplock_info *opinfo,
+  * Return:      oplock(lease) object on success, otherwise NULL
+  */
+ static struct oplock_info *same_client_has_lease(struct ksmbd_inode *ci,
+-						 char *client_guid,
++						 const char *client_guid,
+ 						 struct lease_ctx_info *lctx)
+ {
+ 	int ret;
+@@ -1088,7 +1088,7 @@ void destroy_lease_table(struct ksmbd_conn *conn)
+ 	write_unlock(&lease_list_lock);
  }
  
+-int find_same_lease_key(struct ksmbd_session *sess, struct ksmbd_inode *ci,
++int find_same_lease_key(struct ksmbd_conn *conn, struct ksmbd_inode *ci,
+ 			struct lease_ctx_info *lctx)
+ {
+ 	struct oplock_info *opinfo;
+@@ -1105,7 +1105,7 @@ int find_same_lease_key(struct ksmbd_session *sess, struct ksmbd_inode *ci,
+ 	}
+ 
+ 	list_for_each_entry(lb, &lease_table_list, l_entry) {
+-		if (!memcmp(lb->client_guid, sess->ClientGUID,
++		if (!memcmp(lb->client_guid, conn->ClientGUID,
+ 			    SMB2_CLIENT_GUID_SIZE))
+ 			goto found;
+ 	}
+@@ -1121,7 +1121,7 @@ int find_same_lease_key(struct ksmbd_session *sess, struct ksmbd_inode *ci,
+ 		rcu_read_unlock();
+ 		if (opinfo->o_fp->f_ci == ci)
+ 			goto op_next;
+-		err = compare_guid_key(opinfo, sess->ClientGUID,
++		err = compare_guid_key(opinfo, conn->ClientGUID,
+ 				       lctx->lease_key);
+ 		if (err) {
+ 			err = -EINVAL;
+@@ -1154,6 +1154,9 @@ static void copy_lease(struct oplock_info *op1, struct oplock_info *op2)
+ 	lease2->flags = lease1->flags;
+ 	lease2->epoch = lease1->epoch;
+ 	lease2->version = lease1->version;
++	lease2->is_dir = lease1->is_dir;
++	memcpy(lease2->parent_lease_key, lease1->parent_lease_key,
++	       SMB2_LEASE_KEY_SIZE);
+ }
+ 
+ static void add_lease_global_list(struct oplock_info *opinfo,
+@@ -1298,7 +1301,6 @@ int smb_grant_oplock(struct ksmbd_work *work, int req_op_level, u64 pid,
+ 		     struct ksmbd_file *fp, __u16 tid,
+ 		     struct lease_ctx_info *lctx, int share_ret)
+ {
+-	struct ksmbd_session *sess = work->sess;
+ 	int err = 0;
+ 	struct oplock_info *opinfo = NULL, *prev_opinfo = NULL;
+ 	struct ksmbd_inode *ci = fp->f_ci;
+@@ -1341,12 +1343,12 @@ int smb_grant_oplock(struct ksmbd_work *work, int req_op_level, u64 pid,
+ 		struct oplock_info *m_opinfo;
+ 
+ 		/* is lease already granted ? */
+-		m_opinfo = same_client_has_lease(ci, sess->ClientGUID,
++		m_opinfo = same_client_has_lease(ci, work->conn->ClientGUID,
+ 						 lctx);
+ 		if (m_opinfo) {
+ 			copy_lease(m_opinfo, opinfo);
+ 			if (atomic_read(&m_opinfo->breaking_cnt))
+-				opinfo->o_lease->flags =
++				opinfo->o_lease->flags |=
+ 					SMB2_LEASE_FLAG_BREAK_IN_PROGRESS_LE;
+ 			opinfo_put(m_opinfo);
+ 			goto out;
+diff --git a/fs/smb/server/oplock.h b/fs/smb/server/oplock.h
+index d91a8266e065e..795a9119dad9a 100644
+--- a/fs/smb/server/oplock.h
++++ b/fs/smb/server/oplock.h
+@@ -116,7 +116,7 @@ void create_posix_rsp_buf(char *cc, struct ksmbd_file *fp);
+ struct create_context *smb2_find_context_vals(void *open_req, const char *tag, int tag_len);
+ struct oplock_info *lookup_lease_in_table(struct ksmbd_conn *conn,
+ 					  char *lease_key);
+-int find_same_lease_key(struct ksmbd_session *sess, struct ksmbd_inode *ci,
++int find_same_lease_key(struct ksmbd_conn *conn, struct ksmbd_inode *ci,
+ 			struct lease_ctx_info *lctx);
+ void destroy_lease_table(struct ksmbd_conn *conn);
+ void smb_send_parent_lease_break_noti(struct ksmbd_file *fp,
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index e71ff33a0b1be..5345298759f7c 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -3535,7 +3535,7 @@ int smb2_open(struct ksmbd_work *work)
+ 			ksmbd_debug(SMB,
+ 				    "lease req for(%s) req oplock state 0x%x, lease state 0x%x\n",
+ 				    name, req_op_level, lc->req_state);
+-			rc = find_same_lease_key(sess, fp->f_ci, lc);
++			rc = find_same_lease_key(conn, fp->f_ci, lc);
+ 			if (rc)
+ 				goto err_out1;
+ 		} else if (open_flags == O_RDONLY &&
 -- 
 2.53.0
 
