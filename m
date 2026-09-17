@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CD474E77FE;
-	Thu, 17 Sep 2026 18:16:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 264294E77F9;
+	Thu, 17 Sep 2026 18:16:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789668971; cv=none; b=KydDczEcyWuK4FwmmZwQqLX9S7gMr1wSitHcE5I9e5WOPToCI4NHbixX5u6MUpKbstML5FEYXBbCJwadKRe1ExppCIEaei393JOaBLPC+H7s87sqgs9y6zxmPSEzo2EksXEJsfYsrzzeTsvfuWMfz/CITmXxKJukMLHZkwveeJc=
+	t=1789668974; cv=none; b=HkMAQYkvtXEwXx17lq8+KkRP3xIte7lSe9ucr6Wmxzoce+/vNTuJt+2SeZmeV9wWV/bcMqk/ziWbelun26Jeo48+VuxAasF3H90693YsoRUbFO2KURFqOz/EZY5P331LeAucyM6Dq/+RsTPGWLQF0GdWA6ZH44qmmto9kFeYKWc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789668971; c=relaxed/simple;
-	bh=2S6IQorDO0epiSD54bTkcaATV//u/R41VnxxDWNB95k=;
+	s=arc-20240116; t=1789668974; c=relaxed/simple;
+	bh=/iY8lnshwqVQZx/Evg+WPe4kz1Yfma3hZ3NDtAyURK8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wk845xmtBvpyyEAf0ElbX2/01dLaNZuJX6Q54De/kopYZPeEbLG3f9gYYJsmTBuTs1dE26t8MzUDlflbcNnleiZw2ljJS/XMIzywkfnb7piIc2EeWrIxP8Bh1ald/VPIutVMS/1T+lbrsxQ/Myeg5BVAp7x4gH/Svn9jNKVoQIg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dffwEuk8; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=RDKx00aIs2kxjP2UBTwG81qnP57wVZPu25VRtUZt8/TKf6GISOCYz7VPH6uF8bLrjQ5j9rs3YRluUFi6zziy7VN/2wboO+ykY8RMvM1eKbL0Zpbk4dQevh1ouD/fzf3Mq89rlwLibOpm1LWBhegh17JniBO7G/lqBMujcuvtEZ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0/jdv4h8; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dffwEuk8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8150D1F000FF;
-	Thu, 17 Sep 2026 18:16:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0/jdv4h8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D5A61F000FF;
+	Thu, 17 Sep 2026 18:16:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789668970;
-	bh=L61pqgXlldMW8daZGqhK5c0udX0Fh5ReBMkJBw35loQ=;
+	s=korg; t=1789668973;
+	bh=oUUHcSKRdZDCPU7flEU65IhF8SXyw/xyxdTaI9J/DdM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dffwEuk8lI+2EppNFzeM8w8//1/cvzCzy62GsGIO+x8eE/YdoAzopZ7g+xzJKrXcN
-	 cYyEGw3GKxAAHNcj7vRcf7jeWuOiodhslKKtijQePFyqB7euXAB0oKpd/1u5DlyPZZ
-	 t1z39R7z3605mtbS11eDG/rWenzRg5NopLC5lIJU=
+	b=0/jdv4h8urEuDrNKPUERakpj225TKHs4QoSD5sXH5BPnKETj6PxDVz2cdN4E4lXRz
+	 lnelimUa5iBVohPefn1GbXG51bEHj4UsPy0IvwkNkpgRdRe+BPDElGj1suJVgaMzFP
+	 Ou6FUcuZ63whujcoZ21hg8ARpCsdkpPuYz5kWDJo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pauli Virtanen <pav@iki.fi>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Ivy Lopez <skunkolee@gmail.com>,
+	John Garry <john.g.garry@oracle.com>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0553/1102] Bluetooth: L2CAP: fix chan mode for LE_CONN_REQ + EXT_FLOWCTL pchan
-Date: Thu, 17 Sep 2026 16:08:16 +0100
-Message-ID: <20260917151553.728149590@linuxfoundation.org>
+Subject: [PATCH 6.12 0595/1102] scsi: mpt3sas: Avoid out-of-bounds cpumask_of_node() call in _base_assign_reply_queues()
+Date: Thu, 17 Sep 2026 16:08:58 +0100
+Message-ID: <20260917151554.921351149@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -51,66 +53,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pauli Virtanen <pav@iki.fi>
+From: Ivy Lopez <skunkolee@gmail.com>
 
-[ Upstream commit 4ef05db5b08b176a551b4a6287372045998806b0 ]
+[ Upstream commit e0d26fe176a8db6ccad4ab38c5bab29391c1946b ]
 
-l2cap_new_connection() sets default value of channel mode to match the
-parent channel.  l2cap_le_connect_req() left this at the default, and
-created L2CAP_MODE_EXT_FLOWCTL channels if listening pchan has that
-mode.  This causes FLAG_DEFER_SETUP channels to reply to
-L2CAP_LE_CONN_REQ with L2CAP_ECRED_CONN_RSP, which is incorrect.
+dev_to_node() can return NUMA_NO_NODE (-1) on systems without NUMA
+topology information for the PCI device, such as single-socket boards
+that don't expose device-to-node affinity. Passing -1 directly into
+cpumask_of_node() indexes node_to_cpumask_map[-1], an out-of-bounds
+array read caught by UBSAN:
 
-It can also result to stack OOB write (of l2cap_alloc_cid determined
-values) in l2cap_ecred_rsp_defer(), as l2cap_le_connect_req() does not
-limit maximum number of deferred channels or check for duplicate ident.
+  UBSAN: array-index-out-of-bounds in arch/x86/include/asm/topology.h:72:28
+  index -1 is out of range for type 'cpumask *[1024]'
 
-Fix by setting chan->mode correctly in l2cap_le_connect_req().
+Fall back to cpu_online_mask when no NUMA node is available, rather than
+assuming dev_to_node() always returns a valid node index.
 
-Also check channel mode in l2cap_ecred_rsp_defer(), and do WARN_ON_ONCE
-instead of OOB write to make it less brittle.
-
-Fixes: 15f02b910562 ("Bluetooth: L2CAP: Add initial code for Enhanced Credit Based Mode")
-Signed-off-by: Pauli Virtanen <pav@iki.fi>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=221294
+Suggested-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Fixes: 728bbc6cbff7 ("scsi: mpt3sas: Affinity high iops queues IRQs to local node")
+Signed-off-by: Ivy Lopez <skunkolee@gmail.com>
+Reviewed-by: John Garry <john.g.garry@oracle.com>
+Link: https://patch.msgid.link/20260825190313.24013-1-skunkolee@gmail.com
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_core.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/scsi/mpt3sas/mpt3sas_base.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index c88caeefb6786..b98bb57ef6781 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -3858,6 +3858,9 @@ static void l2cap_ecred_rsp_defer(struct l2cap_chan *chan, void *data)
- 	struct l2cap_ecred_conn_rsp *rsp_flex =
- 		container_of(&rsp->pdu.rsp, struct l2cap_ecred_conn_rsp, hdr);
- 
-+	if (chan->mode != L2CAP_MODE_EXT_FLOWCTL)
-+		return;
+diff --git a/drivers/scsi/mpt3sas/mpt3sas_base.c b/drivers/scsi/mpt3sas/mpt3sas_base.c
+index 0d78e9dbf641c..b533898a38601 100644
+--- a/drivers/scsi/mpt3sas/mpt3sas_base.c
++++ b/drivers/scsi/mpt3sas/mpt3sas_base.c
+@@ -3227,7 +3227,10 @@ _base_assign_reply_queues(struct MPT3SAS_ADAPTER *ioc)
+ 		 * corresponding to high iops queues.
+ 		 */
+ 		if (ioc->high_iops_queues) {
+-			mask = cpumask_of_node(dev_to_node(&ioc->pdev->dev));
++			int node = dev_to_node(&ioc->pdev->dev);
 +
- 	/* Check if channel for outgoing connection or if it wasn't deferred
- 	 * since in those cases it must be skipped.
- 	 */
-@@ -3868,6 +3871,10 @@ static void l2cap_ecred_rsp_defer(struct l2cap_chan *chan, void *data)
- 	/* Reset ident so only one response is sent */
- 	chan->ident = 0;
- 
-+	/* Unreachable, check in l2cap_ecred_conn_req. If reached, drop rest */
-+	if (WARN_ON_ONCE(rsp->count >= ARRAY_SIZE(rsp->pdu.scid)))
-+		rsp->pdu.rsp.result = cpu_to_le16(L2CAP_CR_LE_NO_MEM);
-+
- 	/* Include all channels pending with the same ident */
- 	if (!rsp->pdu.rsp.result)
- 		rsp_flex->dcid[rsp->count++] = cpu_to_le16(chan->scid);
-@@ -5042,6 +5049,7 @@ static int l2cap_le_connect_req(struct l2cap_conn *conn,
- 	__set_chan_timer(chan, chan->ops->get_sndtimeo(chan));
- 
- 	chan->ident = cmd->ident;
-+	chan->mode = L2CAP_MODE_LE_FLOWCTL;
- 
- 	if (test_bit(FLAG_DEFER_SETUP, &chan->flags)) {
- 		l2cap_state_change(chan, BT_CONNECT2);
++			mask = (node == NUMA_NO_NODE) ?
++				cpu_online_mask : cpumask_of_node(node);
+ 			for (index = 0; index < ioc->high_iops_queues;
+ 			    index++) {
+ 				irq = pci_irq_vector(ioc->pdev, index);
 -- 
 2.53.0
 
