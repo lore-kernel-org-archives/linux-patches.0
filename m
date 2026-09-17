@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3CFC4ABBB0;
-	Thu, 17 Sep 2026 19:02:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF1B83C9886;
+	Thu, 17 Sep 2026 19:02:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789671746; cv=none; b=KIzdVyfzakpWpxwkAup346bjCtWLy8vvbBltH+txpXsndBz4YEX0KUej3eAYPykeOhl2CRURd6a1hWIm1GhoccicmWMNBwbipZ8wTFaRqGo/FZ2OSe7tJ5RLYXJJ4OEe603MBoRTFQXgjR4O+ypbz7JWcWooZzQT4tcx1h72GdE=
+	t=1789671749; cv=none; b=JtlP8SchEopj0NnA9Im9mNtSnQYtCizT9buqx3NPwBhLenDvwO5N7nLsiaPp1EVqQxuGiKqZsH4RvL+iHvJoYQmA3XsRbphOSSYbG0ZNbr46sunoBwvQcgTjAYZJPN/0s62Q/yW4lvawfjziRhHbw2+5/tNoF5XxuDjDcHyQmw0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789671746; c=relaxed/simple;
-	bh=dQwLC9E3Sa2AB4CJVJnjso8SAoxUcIxoQNuPMe3QcCM=;
+	s=arc-20240116; t=1789671749; c=relaxed/simple;
+	bh=spY6eGfeIzAueaZaPzwtXvS5F+yHATe5b8hLOOLAjGs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ebQGxK2Lvb03GpPrQJOpgL5DBmYieR7GM9xa1Ckk11mmRGtgPDsHiMK5JH43D2lujGWklfrtWmKgMhf92lV43WG2ECoBq4QUKuPHj5yQZicJ83f8eysrnttTI27H6y9z0g4gBH/d9aPRWMrnckSEIKlqOSrEajNpEiV1u3tzuck=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O8EEr2fw; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fufxjl6KMMXIPz0NU42IXT+GMkQ5MU2O8lRpvQErARKMPBlrSWQOq0snTpbAYoVvItTJN2qMFUm5uIEo/Gav0j/B2FrE/oexGnW1EfaD9C6R2pjz7W9YLBC3T6cF25TvRnHf93kih1OTJRijkowZft/wbf+pTuhaQz1A4DVLcOk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cd2BzWUa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O8EEr2fw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D16761F00893;
-	Thu, 17 Sep 2026 19:02:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cd2BzWUa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E87FB1F000FF;
+	Thu, 17 Sep 2026 19:02:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789671745;
-	bh=1z6sT3XgjWcm9ODHKyksHwme1t733YJM4EFIkxZcJ+I=;
+	s=korg; t=1789671748;
+	bh=go5owtcR50KfsOJO3lBqVFKHO3guPcKCK4T92tQJsYA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O8EEr2fwy5QhX2LerD/Yg8O21JEG58ryOgyzVl5kNUX5g3AV2yDcj9pGlvUREXRer
-	 FVHJ793mkwhiqBVV+gHQu9MzdgvNmyG1Q+UThv1rYZlykzyEKJ7j329kxmTMfdr4sk
-	 XcMR8RUuGgNUeSA35YatYQdmRNJXdUaxK6645Am4=
+	b=Cd2BzWUaoqb5KFBzJ7q0c8GbCmrWdeu6UcZKPnU0RKXriDitHFOo42/ThbWWiyUsG
+	 W6MdkUUaConnj6UL3X9n7oido89DqClnXTPlukGsToVY9WAhqMWgm4g1+H7rGONx9n
+	 rpdqytryn2YLrLBYtluEmdIO3OQ8cFRqndCLS9rY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Terry Bowman <terry.bowman@amd.com>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Richard Cheng <icheng@nvidia.com>,
-	Alison Schofield <alison.schofield@intel.com>,
+	Yue Haibing <yuehaibing@huawei.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1075/1102] cxl/ras: Fix cxl_rch_get_aer_severity() wrong severity register
-Date: Thu, 17 Sep 2026 16:16:58 +0100
-Message-ID: <20260917151607.826064979@linuxfoundation.org>
+Subject: [PATCH 6.12 1076/1102] ipv6: annotate data-races around devconf->rpl_seg_enabled
+Date: Thu, 17 Sep 2026 16:16:59 +0100
+Message-ID: <20260917151607.851212032@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -54,55 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Terry Bowman <terry.bowman@amd.com>
+From: Yue Haibing <yuehaibing@huawei.com>
 
-[ Upstream commit 9d399526128bae184b153deab42b49f5f3eea2ed ]
+[ Upstream commit 3a5f55500f3e93cf4d62351c753452279b088b4b ]
 
-cxl_rch_get_aer_severity() classifies RCH Downstream Port uncorrectable
-errors as fatal or non-fatal by ANDing uncorrectable status with
-PCI_ERR_ROOT_FATAL_RCV. This is wrong because PCI_ERR_ROOT_FATAL_RCV is a
-Root Error Status register bit (bit 6), not a severity bit. ANDing it
-against uncorrectable status tests a reserved bit and produces incorrect
-severity classification.
+devconf->rpl_seg_enabled can be changed concurrently from
+/proc/sys/net/ipv6/conf, annotate lockless reads on it.
 
-Fix by ANDing the unmasked uncor_status against uncor_severity. Per
-PCIe Base Spec r6.0 Section 7.8.4.4, each bit in the Uncorrectable
-Error Severity register indicates whether the corresponding error is
-fatal (1) or non-fatal (0).
-
-Fixes: 6ac07883dbb5 ("cxl/pci: Add RCH downstream port error logging")
-Cc: stable@vger.kernel.org
-Signed-off-by: Terry Bowman <terry.bowman@amd.com>
-Reviewed-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Reviewed-by: Richard Cheng <icheng@nvidia.com>
-Reviewed-by: Alison Schofield <alison.schofield@intel.com>
-Link: https://patch.msgid.link/20260803221810.3685703-3-terry.bowman@amd.com
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+Signed-off-by: Yue Haibing <yuehaibing@huawei.com>
+Link: https://patch.msgid.link/20250901123726.1972881-2-yuehaibing@huawei.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: f826df95332c ("ipv6: rpl: fix NULL dereference of idev in ipv6_rpl_srh_rcv()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cxl/core/ras_rch.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ net/ipv6/exthdrs.c |    6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
---- a/drivers/cxl/core/ras_rch.c
-+++ b/drivers/cxl/core/ras_rch.c
-@@ -94,11 +94,11 @@ static bool cxl_rch_get_aer_info(void __
- static bool cxl_rch_get_aer_severity(struct aer_capability_regs *aer_regs,
- 				     int *severity)
- {
--	if (aer_regs->uncor_status & ~aer_regs->uncor_mask) {
--		if (aer_regs->uncor_status & PCI_ERR_ROOT_FATAL_RCV)
--			*severity = AER_FATAL;
--		else
--			*severity = AER_NONFATAL;
-+	u32 uncor_status = aer_regs->uncor_status & ~aer_regs->uncor_mask;
-+
-+	if (uncor_status) {
-+		*severity = (uncor_status & aer_regs->uncor_severity) ?
-+			     AER_FATAL : AER_NONFATAL;
- 		return true;
- 	}
+--- a/net/ipv6/exthdrs.c
++++ b/net/ipv6/exthdrs.c
+@@ -504,10 +504,8 @@ static int ipv6_rpl_srh_rcv(struct sk_bu
  
+ 	idev = __in6_dev_get(skb->dev);
+ 
+-	accept_rpl_seg = net->ipv6.devconf_all->rpl_seg_enabled;
+-	if (accept_rpl_seg > idev->cnf.rpl_seg_enabled)
+-		accept_rpl_seg = idev->cnf.rpl_seg_enabled;
+-
++	accept_rpl_seg = min(READ_ONCE(net->ipv6.devconf_all->rpl_seg_enabled),
++			     READ_ONCE(idev->cnf.rpl_seg_enabled));
+ 	if (!accept_rpl_seg) {
+ 		kfree_skb(skb);
+ 		return -1;
 
 
