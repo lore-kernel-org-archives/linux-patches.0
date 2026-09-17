@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7CF54FDA76;
-	Thu, 17 Sep 2026 17:09:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B501502577;
+	Thu, 17 Sep 2026 17:09:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789664944; cv=none; b=Rj1Epzl7RxBINwlUVv0YLZ2FI7LiFyvuuTs+PjKpRUXcb1hZQ49MhKjDPgK64bjTyfDV85NvghiFovDEMN5c07vb2LRQbpo2rXZkUOYlYc+0ZXifHsadfQmomc3qKLiyxF3nLz5QOu7Hp56XqGvtI3YEgw+/GseEYtssR3MJsag=
+	t=1789664947; cv=none; b=Q8n0Rj/l9AVHFNVCxD2HuleW/E46dX3+w6gLzoJnnOACq+QBA49imR+rcqVuG8y4lzMfYBkZiH7k91nOPghuSjrvMFLeq/kH/nO0oU4hqhjphZzPeMtEFH2srbz7M0DlvFcJBSU7MY59wfmZ6U+aYCd5T+Tj/Kh2xRo2IRSbH6s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789664944; c=relaxed/simple;
-	bh=Whb8l41xDl/sRimkLyZPJzsnOEfWlCPZ0jevcPa6CZY=;
+	s=arc-20240116; t=1789664947; c=relaxed/simple;
+	bh=38hL9L6Jf0vb86bvRapTbHEx1GLv3XfrDg1XNQRfoXQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ecyW/Axvkb4sHolOsK5O7wQH9mNRTT3G6ONbGv0SSJ4/QsPdVb8+ARO7KH8QaemWQcBIaQIeOGE2saFyOs+9SCgxsgYuqbwUPI+rZhMr1SUPnuoIDcX4/JpSwWDRv9nTQO2lfsabfrAA0RSUc9XRPF8gCWoYRdmlpJhviJVkMQk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QCQXktjy; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TLCAvF/stYj03wVeibbeyZnDWGqLAu0ICR07ikTUkX10ro2wVXnS+CdBVA+jCM7TORLaZeEOKj+uXoDOkygBCfgfXxAlnsYwfKjyCZPaNqmwk77M1zpH4AVP//fVrD4KCrjFdP6q0NjQRa83RiJUB/8k/ayeFOGy0Y1w4HHJQW4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a/exT4Js; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QCQXktjy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDE5E1F000FF;
-	Thu, 17 Sep 2026 17:09:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a/exT4Js"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C61C21F000FF;
+	Thu, 17 Sep 2026 17:09:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789664942;
-	bh=wdhNWWOFVrH1sszqg1bVoNpvqkc/4ZPM4cZ7T9QknLc=;
+	s=korg; t=1789664945;
+	bh=NCxLsHmaCuEHv4kV1YYeurHvwpx5WqiPF2EevbwybwE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QCQXktjyiWqBwEYdxshIxjfUN7vJxWJf598sA6PPS1svy1jTDRSHlSttd9HhGcwcK
-	 4Jn3GOFvpYvELIxAxw7vqccovGW9FGZGer0ulSB03Y5PTtxSK4mWM8DjUSuLTbV3MR
-	 rocYQmlZfqIGc9RZZIb61lp5yVG6FCRdWjC48Fzo=
+	b=a/exT4Js0hKE454uaBH+/X7C3H1BvKTC0XwJ0NgmIDpiFJRXyZTasaN9S9VLWcNqi
+	 Mn61dROmPn7ui/GU/ibVgX5ZYVt8OLGvbIrRe3w1AHy6lG1lSjCtOF/6l28cNomNRb
+	 MkjMSsTdlv4/VpBVyZm6X/FAI2rJQaH1pqaDQ2ss=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jay Vadayath <jay@artiphishell.com>,
-	Steve French <stfrench@microsoft.com>,
+	Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0540/1250] smb: client: bound dirent name against end of SMB response in cifs_filldir
-Date: Thu, 17 Sep 2026 16:05:35 +0100
-Message-ID: <20260917151606.580358556@linuxfoundation.org>
+Subject: [PATCH 6.18 0541/1250] regulator: core: clamp voltage constraints before applying apply_uV
+Date: Thu, 17 Sep 2026 16:05:36 +0100
+Message-ID: <20260917151606.605364321@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,88 +51,223 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jay Vadayath <jay@artiphishell.com>
+From: Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>
 
-[ Upstream commit f8cf09a53a0dc1da298e9dd0ba5f21710cf119d6 ]
+[ Upstream commit a45cc646a3aa83eb4ab4c7ed2685785ea51dc5e6 ]
 
-cifs_filldir() copies the entry name out of an SMB1 TRANS2_FIND_FIRST /
-FIND_NEXT response using a length (de.namelen) supplied by the server.
-The kmalloc'd SMB response buffer is bounded, but nothing checks that
-de.name + de.namelen still lies inside that buffer before the eventual
-filldir64() -> verify_dirent_name() -> memchr() reads namelen bytes.
+machine_constraints_voltage() currently applies apply_uV against the
+machine-supplied [min_uV, max_uV] range, and only afterwards clamps
+that range down to what the regulator can actually supply (via
+ops->list_voltage()).
 
-A hostile SMB1 server that returns an oversized FileNameLength in a
-directory entry therefore causes memchr() to read past the end of the
-response slab buffer. Reachable from any user who can list a directory
-on a CIFS mount served by an attacker-controlled server (getdents64()
-on the mounted directory):
+If the machine-supplied range is wider than the regulator's actual
+range, apply_uV's rounding can pick a selector outside the (correct)
+clamped range, so the regulator ends up programmed outside its clamped
+min/max. At bring-up this shows up as a voltage read-back outside the
+clamped range.
 
-  BUG: KASAN: slab-out-of-bounds in memchr+0x71/0x80
-  Read of size 1 at addr ffff88800e0640cc by task poc/115
-  Call Trace:
-   dump_stack_lvl+0x64/0x80
-   print_report+0xce/0x620
-   kasan_report+0xec/0x120
-   memchr+0x71/0x80
-   filldir64+0x4c/0x6a0
-   cifs_filldir.constprop.0+0x9bb/0x1e00
-   cifs_readdir+0x2101/0x3380
-   iterate_dir+0x19c/0x520
-   __x64_sys_getdents64+0x126/0x210
-   do_syscall_64+0x107/0x5a0
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+Fix this by moving the clamping block ahead of the apply_uV block, so
+apply_uV always targets an already-clamped range. Whether apply_uV
+should run is decided from the unclamped constraints beforehand and
+stored in a local bool, since clamping must not itself change whether
+apply_uV fires.
 
-Pass the end-of-response pointer down to cifs_filldir() and reject
-entries whose name would extend past that boundary.
+No functional change to the clamping logic itself, only its position
+relative to apply_uV. Its early return 0 exits become fallthroughs
+since the apply_uV logic now follows it.
 
-This bug was discovered by Artiphishell's vTriage pipeline, which
-generated a userspace reproducer (an emulated hostile SMB1 server plus
-a getdents64() client) that reliably triggers the KASAN report on an
-unpatched kernel. The fix below was drafted with the Claude coding
-assistant; a userspace reproducer is available on request.
-
-Assisted-by: Claude:claude-opus-4-7
-Signed-off-by: Jay Vadayath <jay@artiphishell.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Assisted-by: Claude:claude-sonnet-5
+Signed-off-by: Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260720-b4-regulator-core-clamp-voltage-v1-1-8e5eec076a8e@oss.qualcomm.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/readdir.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/regulator/core.c | 163 +++++++++++++++++++++------------------
+ 1 file changed, 90 insertions(+), 73 deletions(-)
 
-diff --git a/fs/smb/client/readdir.c b/fs/smb/client/readdir.c
-index f0ce26622a140..d61ce7c6be645 100644
---- a/fs/smb/client/readdir.c
-+++ b/fs/smb/client/readdir.c
-@@ -949,7 +949,7 @@ static bool cifs_dir_emit(struct dir_context *ctx,
- static int cifs_filldir(char *find_entry, struct file *file,
- 			struct dir_context *ctx,
- 			char *scratch_buf, unsigned int max_len,
--			struct cached_fid *cfid)
-+			char *end_of_smb, struct cached_fid *cfid)
+diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
+index 97b4ee5d29902..eae756c82c262 100644
+--- a/drivers/regulator/core.c
++++ b/drivers/regulator/core.c
+@@ -1205,10 +1205,98 @@ static int machine_constraints_voltage(struct regulator_dev *rdev,
  {
- 	struct cifsFileInfo *file_info = file->private_data;
- 	struct super_block *sb = file_inode(file)->i_sb;
-@@ -970,6 +970,11 @@ static int cifs_filldir(char *find_entry, struct file *file,
- 		return -EINVAL;
+ 	const struct regulator_ops *ops = rdev->desc->ops;
+ 	int ret;
++	bool apply_uV;
++
++	/*
++	 * Decide up front, from the constraints as handed to us, whether
++	 * apply_uV needs to run below. The clamping pass right after this
++	 * may rewrite constraints->min_uV/max_uV (e.g. the fixed-voltage
++	 * autoconfigure case), and we don't want that to change whether
++	 * apply_uV fires.
++	 */
++	apply_uV = rdev->constraints->apply_uV &&
++		   rdev->constraints->min_uV && rdev->constraints->max_uV;
++
++	/*
++	 * Constrain machine-level voltage specs to fit the actual range
++	 * supported by this regulator before apply_uV (below) tries to
++	 * force hardware to a value from that range: otherwise apply_uV
++	 * can target a constraint value that doesn't correspond to any
++	 * real voltage selector and fail registration outright, even
++	 * though the clamping pass would have narrowed it to a value
++	 * the regulator can actually hit.
++	 */
++	if (ops->list_voltage && rdev->desc->n_voltages) {
++		int	count = rdev->desc->n_voltages;
++		int	i;
++		int	min_uV = INT_MAX;
++		int	max_uV = INT_MIN;
++		int	cmin = constraints->min_uV;
++		int	cmax = constraints->max_uV;
++
++		/* it's safe to autoconfigure fixed-voltage supplies
++		 * and the constraints are used by list_voltage.
++		 */
++		if (count == 1 && !cmin) {
++			cmin = 1;
++			cmax = INT_MAX;
++			constraints->min_uV = cmin;
++			constraints->max_uV = cmax;
++		}
++
++		/* voltage constraints are optional */
++		if ((cmin == 0) && (cmax == 0)) {
++			/* nothing more to do */
++
++		/* else require explicit machine-level constraints */
++		} else if (cmin <= 0 || cmax <= 0 || cmax < cmin) {
++			rdev_err(rdev, "invalid voltage constraints\n");
++			return -EINVAL;
++
++		/* no need to loop voltages if range is continuous */
++		} else if (rdev->desc->continuous_voltage_range) {
++			/* nothing more to do */
++
++		} else {
++			/* initial: [cmin..cmax] valid, [min_uV..max_uV] not */
++			for (i = 0; i < count; i++) {
++				int	value;
++
++				value = ops->list_voltage(rdev, i);
++				if (value <= 0)
++					continue;
++
++				/* maybe adjust [min_uV..max_uV] */
++				if (value >= cmin && value < min_uV)
++					min_uV = value;
++				if (value <= cmax && value > max_uV)
++					max_uV = value;
++			}
++
++			/* final: [min_uV..max_uV] valid iff constraints valid */
++			if (max_uV < min_uV) {
++				rdev_err(rdev,
++					 "unsupportable voltage constraints %u-%uuV\n",
++					 min_uV, max_uV);
++				return -EINVAL;
++			}
++
++			/* use regulator's subset of machine constraints */
++			if (constraints->min_uV < min_uV) {
++				rdev_dbg(rdev, "override min_uV, %d -> %d\n",
++					 constraints->min_uV, min_uV);
++				constraints->min_uV = min_uV;
++			}
++			if (constraints->max_uV > max_uV) {
++				rdev_dbg(rdev, "override max_uV, %d -> %d\n",
++					 constraints->max_uV, max_uV);
++				constraints->max_uV = max_uV;
++			}
++		}
++	}
+ 
+ 	/* do we need to apply the constraint voltage */
+-	if (rdev->constraints->apply_uV &&
+-	    rdev->constraints->min_uV && rdev->constraints->max_uV) {
++	if (apply_uV) {
+ 		int target_min, target_max;
+ 		int current_uV = regulator_get_voltage_rdev(rdev);
+ 
+@@ -1263,77 +1351,6 @@ static int machine_constraints_voltage(struct regulator_dev *rdev,
+ 		}
  	}
  
-+	if (de.name + de.namelen > end_of_smb) {
-+		cifs_dbg(VFS, "search entry name extends past end of SMB\n");
-+		return -EINVAL;
-+	}
-+
- 	/* skip . and .. since we added them first */
- 	if (cifs_entry_is_dot(&de, file_info->srch_inf.unicode))
- 		return 0;
-@@ -1190,7 +1195,7 @@ int cifs_readdir(struct file *file, struct dir_context *ctx)
- 		 */
- 		*tmp_buf = 0;
- 		rc = cifs_filldir(current_entry, file, ctx,
--				  tmp_buf, max_len, cfid);
-+				  tmp_buf, max_len, end_of_smb, cfid);
- 		if (rc) {
- 			if (rc > 0)
- 				rc = 0;
+-	/* constrain machine-level voltage specs to fit
+-	 * the actual range supported by this regulator.
+-	 */
+-	if (ops->list_voltage && rdev->desc->n_voltages) {
+-		int	count = rdev->desc->n_voltages;
+-		int	i;
+-		int	min_uV = INT_MAX;
+-		int	max_uV = INT_MIN;
+-		int	cmin = constraints->min_uV;
+-		int	cmax = constraints->max_uV;
+-
+-		/* it's safe to autoconfigure fixed-voltage supplies
+-		 * and the constraints are used by list_voltage.
+-		 */
+-		if (count == 1 && !cmin) {
+-			cmin = 1;
+-			cmax = INT_MAX;
+-			constraints->min_uV = cmin;
+-			constraints->max_uV = cmax;
+-		}
+-
+-		/* voltage constraints are optional */
+-		if ((cmin == 0) && (cmax == 0))
+-			return 0;
+-
+-		/* else require explicit machine-level constraints */
+-		if (cmin <= 0 || cmax <= 0 || cmax < cmin) {
+-			rdev_err(rdev, "invalid voltage constraints\n");
+-			return -EINVAL;
+-		}
+-
+-		/* no need to loop voltages if range is continuous */
+-		if (rdev->desc->continuous_voltage_range)
+-			return 0;
+-
+-		/* initial: [cmin..cmax] valid, [min_uV..max_uV] not */
+-		for (i = 0; i < count; i++) {
+-			int	value;
+-
+-			value = ops->list_voltage(rdev, i);
+-			if (value <= 0)
+-				continue;
+-
+-			/* maybe adjust [min_uV..max_uV] */
+-			if (value >= cmin && value < min_uV)
+-				min_uV = value;
+-			if (value <= cmax && value > max_uV)
+-				max_uV = value;
+-		}
+-
+-		/* final: [min_uV..max_uV] valid iff constraints valid */
+-		if (max_uV < min_uV) {
+-			rdev_err(rdev,
+-				 "unsupportable voltage constraints %u-%uuV\n",
+-				 min_uV, max_uV);
+-			return -EINVAL;
+-		}
+-
+-		/* use regulator's subset of machine constraints */
+-		if (constraints->min_uV < min_uV) {
+-			rdev_dbg(rdev, "override min_uV, %d -> %d\n",
+-				 constraints->min_uV, min_uV);
+-			constraints->min_uV = min_uV;
+-		}
+-		if (constraints->max_uV > max_uV) {
+-			rdev_dbg(rdev, "override max_uV, %d -> %d\n",
+-				 constraints->max_uV, max_uV);
+-			constraints->max_uV = max_uV;
+-		}
+-	}
+-
+ 	return 0;
+ }
+ 
 -- 
 2.53.0
 
