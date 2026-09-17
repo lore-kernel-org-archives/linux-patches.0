@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4F4E3A5E84;
-	Thu, 17 Sep 2026 18:43:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C0974398F5;
+	Thu, 17 Sep 2026 18:43:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789670635; cv=none; b=FwNVRGKMdR2PToTlyDBhzSjhJGFUk9shhur0NVyen+HzzrcAvq/70OG8nT24/s8U3jcz1OTMmF337XxdPJrTGirJyVtS1yfrOV++gnVZIlTOJN6l1AAMiMi8Yu8DJc0TIwQqclwLUfymhRN0aaLws8D/MoOxTLuFedpc5GJOywU=
+	t=1789670638; cv=none; b=qk/f3SPYTstEido4g9HuOKBggVhuJgQvocHFs5HB5myvFRDvCKzvUfw93UZNf6KzTOKVYGup05ICcK/3BUIWkRk+4oiqWc8y/kTr8CZ3HBYjYmueZxuL6qbZnwLj+8Dy1f4N945Ei+mPrpzeJqWSCanDnZHlJz39aCVhU98v2vA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789670635; c=relaxed/simple;
-	bh=JfG8SZwSCXnhXIz0ZfsuDadlyYsoljl9bEXqkK4HpN8=;
+	s=arc-20240116; t=1789670638; c=relaxed/simple;
+	bh=XZPKGoHOQ3N3n5OIdh04GycViA/8Y4xyupmB5MAJAxE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pcEEpgO0UdscAa4AyEINKiCVVS3g54GLnVVgiLlj6k5Cg+j0Wx/qlBjbefK+jrtTww5oUWDT2A/+CWhUZk4vD1StX9AfQIHVJN9h4DdKEn6X2QNXo5n3b0nAf7jHqD3uBjz9elIObyeGtOMRDUOq8DKDkrWGGR9NMut4B7vVJBc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ArbGjgvG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=XF5uq1/XthkrojPmZddk8qe2AeONOdX6FPPcoXcpM72OiV0l+s2gqmEp78zXdAufDsFwbczbHuyA1i6Zn25uJpkztUR/0iE/u34lOw8ANZK0YMs0hpNN7YRyK4lI4fAYcLji3aKnYyVBe1lHb2rae2He6HbRqUzSP5onXJXrd1o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GE2Zkc15; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ArbGjgvG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6BA51F000FF;
-	Thu, 17 Sep 2026 18:43:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GE2Zkc15"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F13D51F000FF;
+	Thu, 17 Sep 2026 18:43:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789670634;
-	bh=iQbd7cxtY/QuzGL76VUlieyuyHAXTcslQ2sWBYeGSI8=;
+	s=korg; t=1789670637;
+	bh=H37QuzCA3mImExHQsPlLRHYlsqgMPBdxevkHt6nN1d0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ArbGjgvGg8U5ClLAG9jovrv5CmLw5xJrT6v6pyF4TvZ08QYI4RwqiHMT8pcCrBZVY
-	 cneORO69SpzHhoDirAscA7dk62YX3O2TxtoEwh6SU2u84r+SDwfLEeNH1/RSzo5IZv
-	 PDnuB1JQWvpEZqidT1IlaZ7U4u3tlGvMlREo0PkE=
+	b=GE2Zkc156qiuFSR5epxmr3BBoyn/7guZaY4UIlORZgv1nRF10d1dboDvqtLM1J8Tp
+	 d6cyrPSx/Vu5vqbklwnc6UUR22J0rpYlUQzXO7Q5eJlbi4HnOheg2GBrrk2NBd4+62
+	 RQHkAwZANb88u9mO6hi8+NQJ99UxAIg73cdKxkO4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linfeng Sun <linfeng.sun.dev@gmail.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	Joe Damato <joe@dama.to>,
+	Linus Walleij <linusw@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0717/1102] vdpa_sim_net: check TX pull result before RX copy
-Date: Thu, 17 Sep 2026 16:11:00 +0100
-Message-ID: <20260917151558.343058929@linuxfoundation.org>
+Subject: [PATCH 6.12 0726/1102] net: ethernet: cortina: Finish RX updates before NAPI completion
+Date: Thu, 17 Sep 2026 16:11:09 +0100
+Message-ID: <20260917151558.593808770@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -51,51 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linfeng Sun <linfeng.sun.dev@gmail.com>
+From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit 0d195797a80b77f2ec56718cd26d3ee65d0093e8 ]
+[ Upstream commit baa26841cb9a2cdc7e0e99d6854a4e3359bf7393 ]
 
-vringh_iov_pull_iotlb() returns a signed byte count.  A failed TX pull is
-currently added to the unsigned byte counter and then passed as a size_t
-length to receive_filter() and vringh_iov_push_iotlb().  A negative error
-can therefore become a large length in the RX path.
+napi_complete_done() releases ownership of the NAPI instance, but the
+Gemini poll keeps the RX statistics writer section open and updates the
+free queue after calling it. A new poll can therefore start while the old
+writer is still active.
 
-Handle non-positive pull results before every length use.  Count the TX
-error and complete the consumed TX descriptor with zero bytes.
+Finish the statistics and free queue updates before releasing ownership.
+Only re-enable RX interrupts when napi_complete_done() reports successful
+completion.
 
-I found this bug myself, though the patch was written with AI assistance.
-
-Fixes: cfe226892913 ("vdpa_sim: filter destination mac address")
-Assisted-by: OpenAI-Codex:GPT-5
-Signed-off-by: Linfeng Sun <linfeng.sun.dev@gmail.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260901094842.25875-1-linfeng.sun.dev@gmail.com>
+Fixes: 4d5ae32f5e1e ("net: ethernet: Add a driver for Gemini gigabit ethernet")
+Suggested-by: Joe Damato <joe@dama.to>
+Assisted-by: LLM
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20260903-gemini-ethernet-fixes-v2-2-2bbbd598ca6e@kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vdpa/vdpa_sim/vdpa_sim_net.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/cortina/gemini.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/vdpa/vdpa_sim/vdpa_sim_net.c b/drivers/vdpa/vdpa_sim/vdpa_sim_net.c
-index 6caf09a1907b5..b596d4a532d01 100644
---- a/drivers/vdpa/vdpa_sim/vdpa_sim_net.c
-+++ b/drivers/vdpa/vdpa_sim/vdpa_sim_net.c
-@@ -225,10 +225,15 @@ static void vdpasim_net_work(struct vdpasim *vdpasim)
- 			break;
- 		}
+diff --git a/drivers/net/ethernet/cortina/gemini.c b/drivers/net/ethernet/cortina/gemini.c
+index 627e4221ba396..353530b4091ae 100644
+--- a/drivers/net/ethernet/cortina/gemini.c
++++ b/drivers/net/ethernet/cortina/gemini.c
+@@ -1581,12 +1581,10 @@ static int gmac_napi_poll(struct napi_struct *napi, int budget)
+ 	u64_stats_update_begin(&port->rx_stats_syncp);
  
--		++tx_pkts;
- 		read = vringh_iov_pull_iotlb(&txq->vring, &txq->out_iov,
- 					     net->buffer, PAGE_SIZE);
-+		if (read <= 0) {
-+			++tx_errors;
-+			vdpasim_net_complete(txq, 0);
-+			continue;
-+		}
+ 	received = gmac_rx(napi->dev, budget);
+-	if (received < budget) {
+-		napi_gro_flush(napi, false);
+-		napi_complete_done(napi, received);
+-		gmac_enable_rx_irq(napi->dev, 1);
++	if (received < budget)
+ 		++port->rx_napi_exits;
+-	}
++
++	u64_stats_update_end(&port->rx_stats_syncp);
  
-+		++tx_pkts;
- 		tx_bytes += read;
+ 	port->freeq_refill += received;
+ 	if (port->freeq_refill > freeq_threshold) {
+@@ -1594,7 +1592,9 @@ static int gmac_napi_poll(struct napi_struct *napi, int budget)
+ 		geth_fill_freeq(geth, true);
+ 	}
  
- 		if (!receive_filter(vdpasim, read)) {
+-	u64_stats_update_end(&port->rx_stats_syncp);
++	if (received < budget && napi_complete_done(napi, received))
++		gmac_enable_rx_irq(napi->dev, 1);
++
+ 	return received;
+ }
+ 
 -- 
 2.53.0
 
