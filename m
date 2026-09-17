@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97D715172F0;
-	Thu, 17 Sep 2026 16:58:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F22D518120;
+	Thu, 17 Sep 2026 16:58:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789664292; cv=none; b=fHBzfzGDWfY3onYsYiYryVRzlGu1oObRWzn5J0MMS2jY7IbV9IgfQqxQPrbihZesyUPY5qk5Y2qHVsiUsrzHEyHbLuBSKLeBppYy303igQ+1d8YnUMggWiq+DwycWipIHBljfOFunFCUvLpNnHXyUslCslIr0Kxw8ld/wgfUXYc=
+	t=1789664296; cv=none; b=Y3Cdbs/u9KIkMfA7siV1Q+sp4WzLHGhozLBrklzfqqP7z6DQWcMxDjyA5g35auAaK7P7+fnxhiwTMllPZ8TvzpYVV1T29XCl1trOhpzw4znEcZj17OSYwU4g6MWSppLpNrxHEhMCOXSYfyyFTslM/FPgurbWuQzXppf4xCKOPYk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789664292; c=relaxed/simple;
-	bh=GgI95lDMrDx83wZXPFgJgzymxtfOzCggQffVehPq/fE=;
+	s=arc-20240116; t=1789664296; c=relaxed/simple;
+	bh=qH1qb88ylt5HjRJ+47Pr5etgmh1eIMv4FUYCy2DHKvA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TwfHgwGpbBsIyktefqaYiDS7sYPAzPiF7BGmItWoOz40kpcG6YLhXtj1aqv35j8G6FfwaGKcvh8iMz54ZKNnr5dRSGkrG91QOQ+Rgt+DAZxfOsacT66XnjTu9Q7BbgojxN3SlTEvrk/xiYyUMBWB0W4U7rA9pDWgiExn+9fDdhg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DrQecVaH; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YDDRHucqxdNoo1tuobHzoJFW2WvJ69yWrwfECCtsmwGLrCNb79TAz9p3257xgblHYhpadKvnCrcpQ4toKYBiGbLXlU0Un5STe55Pm5G62ZXht1vNsFPJQcndWxl1se7ksaN6R4ACzpEIk9abIn04NYqLUrJ+YKMQBVqc8MdSN0k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J18CAvcK; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DrQecVaH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF0DF1F00893;
-	Thu, 17 Sep 2026 16:58:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J18CAvcK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E54701F000FF;
+	Thu, 17 Sep 2026 16:58:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789664291;
-	bh=+npYUNbZiaYwiG3AZ6nxnuBRyEwYStHKHDPjVlf2WG4=;
+	s=korg; t=1789664294;
+	bh=z2zv3gqi2XwM7UDz042d52hmKaRZjDy5qbx78P1EGoE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DrQecVaH/QNlWnH0wL41cj2zP5wULjJ0P23rmGuM/gXNo6C/jSCcYcd96GgkR4jz5
-	 cqU9kaZhQ4S7JzSGrhCkwJ1xdx5HFqv8kmtg8n9y9vl6HtCnV1xmXPeAGgmu7YM7nz
-	 dteJfYw2DtgtNqTvzDu5lxk2CxgTx8KUFL9DFv8w=
+	b=J18CAvcKFSFfmVo4ap8gcPpLmvu44bYuZpzcQy8dYRapnuTWGVvdLm2WD2GdBUBoB
+	 PG5VEF7F5PHlHdA/mzy7TgyqVxhg5JP3gKStTz0yKPCmMh9TizH3AxuYkgaoMgvzQw
+	 oo51moeONYOlGmyLaT2MxtNCAoGTvGysZwCMsNV4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cyrill Gorcunov <gorcunov@gmail.com>,
-	Jacob Moroni <jmoroni@google.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Yunxiang Li <Yunxiang.Li@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0322/1250] RDMA/irdma: Fix typo in SQ completions generation
-Date: Thu, 17 Sep 2026 16:01:57 +0100
-Message-ID: <20260917151600.824729962@linuxfoundation.org>
+Subject: [PATCH 6.18 0323/1250] drm/amdgpu/ras: add ras_suspend callback and use it for cp_ecc_error_irq
+Date: Thu, 17 Sep 2026 16:01:58 +0100
+Message-ID: <20260917151600.851338584@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -52,36 +51,203 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cyrill Gorcunov <gorcunov@gmail.com>
+From: Yunxiang Li <Yunxiang.Li@amd.com>
 
-[ Upstream commit b548a6c4eee5c428663f3944e173e6c92e2e8d6f ]
+[ Upstream commit e3829992dd9fa0a82511af4f01733fc854cd15a5 ]
 
-When we generate completion for SQ the opcode while being properly read
-from ring buffer is ignored when written back to completion. Seems
-to be a simple typo.
+cp_ecc_error_irq is acquired in amdgpu_gfx_ras_late_init() but
+released in gfx_v9_0_hw_fini(), so the put site has to query
+amdgpu_irq_enabled() because the get is skipped on SR-IOV VF.
 
-Link: https://patch.msgid.link/r/ahjB87k54bYdFbft@grain
-Signed-off-by: Cyrill Gorcunov <gorcunov@gmail.com>
-Reviewed-by: Jacob Moroni <jmoroni@google.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+ras_late_init / ras_fini have no suspend counterpart, so move the
+put to amdgpu_gfx_ras_suspend() / amdgpu_gfx_ras_fini() and add a
+matching ras_suspend callback that is invoked from
+amdgpu_ras_suspend() before disable_all_features().  The get and
+put now sit in the same place and check the same condition (not
+VF, funcs registered), no refcount querying needed.
+
+An active flag gates ras_fini so the
+suspend-then-unload-without-resume path falls into
+amdgpu_ras_block_late_fini_default() instead of double-releasing
+what ras_suspend already cleaned up.
+
+Drop the cp_ecc_error_irq put from gfx_v9_0_hw_fini().  gfx_v8_0
+manages cp_ecc_error_irq locally and is unaffected; no other GFX
+generation has this IRQ.
+
+Signed-off-by: Yunxiang Li <Yunxiang.Li@amd.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/irdma/utils.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c | 26 ++++++++++++++++----
+ drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.h |  3 ++-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c | 32 +++++++++++++++++++++----
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ras.h |  1 +
+ drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c   |  2 --
+ 5 files changed, 53 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/infiniband/hw/irdma/utils.c b/drivers/infiniband/hw/irdma/utils.c
-index 835c11d6cc85c..f78d5dd4b24a9 100644
---- a/drivers/infiniband/hw/irdma/utils.c
-+++ b/drivers/infiniband/hw/irdma/utils.c
-@@ -2467,7 +2467,7 @@ void irdma_generate_flush_completions(struct irdma_qp *iwqp)
- 			cmpl->cpi.wr_id = qp->sq_wrtrk_array[wqe_idx].wrid;
- 			sw_wqe = qp->sq_base[wqe_idx].elem;
- 			get_64bit_val(sw_wqe, 24, &wqe_qword);
--			cmpl->cpi.op_type = (u8)FIELD_GET(IRDMAQPSQ_OPCODE, IRDMAQPSQ_OPCODE);
-+			cmpl->cpi.op_type = (u8)FIELD_GET(IRDMAQPSQ_OPCODE, wqe_qword);
- 			cmpl->cpi.q_type = IRDMA_CQE_QTYPE_SQ;
- 			/* remove the SQ WR by moving SQ tail*/
- 			IRDMA_RING_SET_TAIL(*sq_ring,
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c
+index 40e7482980692..46c0b986db51d 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c
+@@ -934,10 +934,7 @@ int amdgpu_gfx_ras_late_init(struct amdgpu_device *adev, struct ras_common_if *r
+ 		if (r)
+ 			return r;
+ 
+-		if (amdgpu_sriov_vf(adev))
+-			return r;
+-
+-		if (adev->gfx.cp_ecc_error_irq.funcs) {
++		if (!amdgpu_sriov_vf(adev) && adev->gfx.cp_ecc_error_irq.funcs) {
+ 			r = amdgpu_irq_get(adev, &adev->gfx.cp_ecc_error_irq, 0);
+ 			if (r)
+ 				goto late_fini;
+@@ -952,6 +949,21 @@ int amdgpu_gfx_ras_late_init(struct amdgpu_device *adev, struct ras_common_if *r
+ 	return r;
+ }
+ 
++void amdgpu_gfx_ras_suspend(struct amdgpu_device *adev,
++			    struct ras_common_if *ras_block)
++{
++	if (!amdgpu_sriov_vf(adev) && adev->gfx.cp_ecc_error_irq.funcs)
++		amdgpu_irq_put(adev, &adev->gfx.cp_ecc_error_irq, 0);
++}
++
++void amdgpu_gfx_ras_fini(struct amdgpu_device *adev,
++			 struct ras_common_if *ras_block)
++{
++	if (!amdgpu_sriov_vf(adev) && adev->gfx.cp_ecc_error_irq.funcs)
++		amdgpu_irq_put(adev, &adev->gfx.cp_ecc_error_irq, 0);
++	amdgpu_ras_block_late_fini(adev, ras_block);
++}
++
+ int amdgpu_gfx_ras_sw_init(struct amdgpu_device *adev)
+ {
+ 	int err = 0;
+@@ -980,6 +992,12 @@ int amdgpu_gfx_ras_sw_init(struct amdgpu_device *adev)
+ 	if (!ras->ras_block.ras_late_init)
+ 		ras->ras_block.ras_late_init = amdgpu_gfx_ras_late_init;
+ 
++	if (!ras->ras_block.ras_suspend)
++		ras->ras_block.ras_suspend = amdgpu_gfx_ras_suspend;
++
++	if (!ras->ras_block.ras_fini)
++		ras->ras_block.ras_fini = amdgpu_gfx_ras_fini;
++
+ 	/* If not defined special ras_cb function, use default ras_cb */
+ 	if (!ras->ras_block.ras_cb)
+ 		ras->ras_block.ras_cb = amdgpu_gfx_process_ras_data_cb;
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.h b/drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.h
+index fb5f7a0ee029f..8949037b62a43 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.h
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.h
+@@ -603,7 +603,8 @@ void amdgpu_gfx_off_ctrl(struct amdgpu_device *adev, bool enable);
+ void amdgpu_gfx_off_ctrl_immediate(struct amdgpu_device *adev, bool enable);
+ int amdgpu_get_gfx_off_status(struct amdgpu_device *adev, uint32_t *value);
+ int amdgpu_gfx_ras_late_init(struct amdgpu_device *adev, struct ras_common_if *ras_block);
+-void amdgpu_gfx_ras_fini(struct amdgpu_device *adev);
++void amdgpu_gfx_ras_suspend(struct amdgpu_device *adev, struct ras_common_if *ras_block);
++void amdgpu_gfx_ras_fini(struct amdgpu_device *adev, struct ras_common_if *ras_block);
+ int amdgpu_get_gfx_off_entrycount(struct amdgpu_device *adev, u64 *value);
+ int amdgpu_get_gfx_off_residency(struct amdgpu_device *adev, u32 *residency);
+ int amdgpu_set_gfx_off_residency(struct amdgpu_device *adev, bool value);
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c
+index 4c1a65fffede7..16ae44e131ad4 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c
+@@ -92,6 +92,9 @@ struct amdgpu_ras_block_list {
+ 	struct list_head node;
+ 
+ 	struct amdgpu_ras_block_object *ras_obj;
++
++	/* set by ras_late_init, cleared by ras_suspend/ras_fini */
++	bool active;
+ };
+ 
+ const char *get_ras_block_str(struct ras_common_if *ras_block)
+@@ -4392,10 +4395,23 @@ void amdgpu_ras_resume(struct amdgpu_device *adev)
+ void amdgpu_ras_suspend(struct amdgpu_device *adev)
+ {
+ 	struct amdgpu_ras *con = amdgpu_ras_get_context(adev);
++	struct amdgpu_ras_block_list *node;
++	struct amdgpu_ras_block_object *obj;
+ 
+ 	if (!adev->ras_enabled || !con)
+ 		return;
+ 
++	/* run per-block ras_suspend before tearing down the RAS context */
++	list_for_each_entry(node, &adev->ras_list, node) {
++		if (!node->active)
++			continue;
++
++		obj = node->ras_obj;
++		if (obj && obj->ras_suspend)
++			obj->ras_suspend(adev, &obj->ras_comm);
++		node->active = false;
++	}
++
+ 	amdgpu_ras_disable_all_features(adev, 0);
+ 	/* Make sure all ras objects are disabled. */
+ 	if (AMDGPU_RAS_GET_FEATURES(con->features))
+@@ -4449,8 +4465,15 @@ int amdgpu_ras_late_init(struct amdgpu_device *adev)
+ 					obj->ras_comm.name, r);
+ 				return r;
+ 			}
+-		} else
+-			amdgpu_ras_block_late_init_default(adev, &obj->ras_comm);
++		} else {
++			r = amdgpu_ras_block_late_init_default(adev, &obj->ras_comm);
++			if (r) {
++				dev_err(adev->dev, "%s failed to execute ras_block_late_init_default! ret:%d\n",
++					obj->ras_comm.name, r);
++				return r;
++			}
++		}
++		node->active = true;
+ 	}
+ 
+ 	return 0;
+@@ -4487,11 +4510,12 @@ int amdgpu_ras_fini(struct amdgpu_device *adev)
+ 	list_for_each_entry_safe(ras_node, tmp, &adev->ras_list, node) {
+ 		if (ras_node->ras_obj) {
+ 			obj = ras_node->ras_obj;
+-			if (amdgpu_ras_is_supported(adev, obj->ras_comm.block) &&
+-			    obj->ras_fini)
++			/* fall back to default cleanup if ras_suspend already ran */
++			if (ras_node->active && obj->ras_fini)
+ 				obj->ras_fini(adev, &obj->ras_comm);
+ 			else
+ 				amdgpu_ras_block_late_fini_default(adev, &obj->ras_comm);
++			ras_node->active = false;
+ 		}
+ 
+ 		/* Clear ras blocks from ras_list and free ras block list node */
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_ras.h b/drivers/gpu/drm/amd/amdgpu/amdgpu_ras.h
+index 6cf0dfd38be8b..8160c4d598543 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ras.h
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ras.h
+@@ -731,6 +731,7 @@ struct amdgpu_ras_block_object {
+ 	int (*ras_block_match)(struct amdgpu_ras_block_object *block_obj,
+ 				enum amdgpu_ras_block block, uint32_t sub_block_index);
+ 	int (*ras_late_init)(struct amdgpu_device *adev, struct ras_common_if *ras_block);
++	void (*ras_suspend)(struct amdgpu_device *adev, struct ras_common_if *ras_block);
+ 	void (*ras_fini)(struct amdgpu_device *adev, struct ras_common_if *ras_block);
+ 	ras_ih_cb ras_cb;
+ 	const struct amdgpu_ras_block_hw_ops *hw_ops;
+diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
+index c5549a5abcd43..9d7214bcaadb9 100644
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
+@@ -4084,8 +4084,6 @@ static int gfx_v9_0_hw_fini(struct amdgpu_ip_block *ip_block)
+ {
+ 	struct amdgpu_device *adev = ip_block->adev;
+ 
+-	if (amdgpu_ras_is_supported(adev, AMDGPU_RAS_BLOCK__GFX))
+-		amdgpu_irq_put(adev, &adev->gfx.cp_ecc_error_irq, 0);
+ 	amdgpu_irq_put(adev, &adev->gfx.priv_reg_irq, 0);
+ 	amdgpu_irq_put(adev, &adev->gfx.priv_inst_irq, 0);
+ 	amdgpu_irq_put(adev, &adev->gfx.bad_op_irq, 0);
 -- 
 2.53.0
 
