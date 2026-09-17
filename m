@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 767805012AE;
-	Thu, 17 Sep 2026 17:09:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F98E50257D;
+	Thu, 17 Sep 2026 17:09:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789664958; cv=none; b=eR+61qvs5262BKA0mVqCEXBmvtxnn6tQ6R74X62NCFH5KqBd+zDQNTFCN7io6gsaebGTEL/MgFVfl/HFioJRCmuBJVI7PfQEWIMZRoudERq7c8OL0XELSvKtm6kpAgHBMhjkkcjyb82vl4OXHRy/ZKgR2ufh2IT144q8ploaWd0=
+	t=1789664961; cv=none; b=Du2C6h01SqHp2oYKZFL3VOa660kWc1ooYMZtfT26eT8pE0TsM7KlDLgOXBUxo8p1kA1JeEVUxRFIF8Bei05T+uTevzesqUVc6e2QUNxeyFaqcqnb3/k5f86NNkAHHmdZYUImy5/NFJe+aOxp1GgbAxXcTCVARCcfF34EXz+TasY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789664958; c=relaxed/simple;
-	bh=zAmsM/KsUdYDFSZzaxFsPuArOMGwK++AFo8NmvT2mqo=;
+	s=arc-20240116; t=1789664961; c=relaxed/simple;
+	bh=AQl7ZxD7q8us8BLw8dRejRdmFAD3Dp46qFWvNNs5q+g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bbGuwptz4txAtjdRR+QFfnNrvX5WasUtFjIJhMAnhnarLQ6hXzChWdQVD/rrrTZuev164yEv9/5/xDrcnJFMeo5WpLNUF2AqqZmosCISSUrItZiMd+eF9pVyEpvv8eBcK775w3LUTmwWRz8lUZYxHrQAqqYx6XSTjwgi1xQ0lqI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tp5K6B8h; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=mCP3Nu0TLtnl6EhvZmP0qln5w7+MPYn65eczAtLEaS2JKpDM/NpYa6ylzUYp5QGCkG/cbGhtaigqQVFOCHPv5lPzALav+phWpWSqFL2sxWB52J1ayWbYkYWyUvOVJPD0+p8EHwesI4KmHoW68JHZarwHkGY5AUOgpQM2s5xh2UA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NnkIcTjt; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tp5K6B8h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C221C1F000FF;
-	Thu, 17 Sep 2026 17:09:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NnkIcTjt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDF0E1F000FF;
+	Thu, 17 Sep 2026 17:09:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789664957;
-	bh=aaMxWur/VuXDnzcHY7AZgTINRg8Nuu6NTwxs4iUGUC8=;
+	s=korg; t=1789664960;
+	bh=WofmMJ4Wh2FSu3qXiKALH8fiIG3ZHNgMW5bpVve0B1k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Tp5K6B8hJbeNSa2lq+x0Q9xJWDIXZuK7xd1Wrb+56E4dPLsP7fyLhJtv6B5rLc+pg
-	 sTyq6c8HIqDu5i4cN2VHGecCoNwBRk8zzOPY96RBlMvDk5bPUhO9ZtZiJvRY/wLgMM
-	 eEBRunFxjPZ0RyFOYHX/LwM+Q74UdjwyS/TfEne8=
+	b=NnkIcTjtDNnTWg8oHtbtzEwQIlTwdG1baEVD8C6M4dpUrSg9b45iLd+egHK8iEYfA
+	 sbGpGOKl+o8WiGEIZwwqS4dODCfz6zvS6BrzLi8RLmUvJJmxliWGREhlaVeocWgE7K
+	 VbZhivwq4XKi0qsIN9SYxguD1MESfb2J0xcw8/yk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Patrik Jakobsson <patrik.r.jakobsson@gmail.com>,
+	Minhong He <heminhong@kylinos.cn>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0544/1250] drm/gma500: return errors from Oaktrail HDMI I2C reads
-Date: Thu, 17 Sep 2026 16:05:39 +0100
-Message-ID: <20260917151606.683082726@linuxfoundation.org>
+Subject: [PATCH 6.18 0545/1250] phonet: check register_netdevice_notifier() error in phonet_device_init()
+Date: Thu, 17 Sep 2026 16:05:40 +0100
+Message-ID: <20260917151606.708957595@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,89 +51,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Minhong He <heminhong@kylinos.cn>
 
-[ Upstream commit 9b5ce5c496efd20c1c662cedba88465d39ec1f93 ]
+[ Upstream commit d1ff66b66151c14b084e88040512a064b1c1e493 ]
 
-xfer_read() waits for the HDMI I2C transaction to reach
-I2C_TRANSACTION_DONE, but it ignores both timeout and signal returns from
-wait_for_completion_interruptible_timeout().  If the interrupt never
-advances the transaction state, the loop can wait forever.
+phonet_device_init() registers a netdevice notifier before calling
+phonet_netlink_register(), but does not check whether notifier
+registration succeeded. On failure, netlink setup still proceeds and
+init may return success without the notifier in place.
 
-Return -ETIMEDOUT when the completion wait expires, propagate interrupted
-waits, and make the I2C master_xfer callback return the first transfer
-error instead of reporting a successful message count.
+Also, the existing phonet_netlink_register() failure path called
+phonet_device_exit(), which runs rtnl_unregister_all() even though
+rtnl_register_many() already unwound any partial registration. Calling
+the full exit helper on a partial init is not correct.
 
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Signed-off-by: Patrik Jakobsson <patrik.r.jakobsson@gmail.com>
-Link: https://patch.msgid.link/20260625003240.6923-1-pengpeng@iscas.ac.cn
+Check each registration error, including proc_create_net(), and unwind
+only the steps that have succeeded so far, in reverse order.
+
+Signed-off-by: Minhong He <heminhong@kylinos.cn>
+Link: https://patch.msgid.link/20260721093956.162617-1-heminhong@kylinos.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/gma500/oaktrail_hdmi_i2c.c | 21 ++++++++++++++++-----
- 1 file changed, 16 insertions(+), 5 deletions(-)
+ net/phonet/pn_dev.c | 30 ++++++++++++++++++++++++------
+ 1 file changed, 24 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/gma500/oaktrail_hdmi_i2c.c b/drivers/gpu/drm/gma500/oaktrail_hdmi_i2c.c
-index 6daa6669ed237..4f1d095fc5a81 100644
---- a/drivers/gpu/drm/gma500/oaktrail_hdmi_i2c.c
-+++ b/drivers/gpu/drm/gma500/oaktrail_hdmi_i2c.c
-@@ -95,6 +95,7 @@ static int xfer_read(struct i2c_adapter *adap, struct i2c_msg *pmsg)
- 	struct oaktrail_hdmi_dev *hdmi_dev = i2c_get_adapdata(adap);
- 	struct hdmi_i2c_dev *i2c_dev = hdmi_dev->i2c_dev;
- 	u32 temp;
-+	int ret;
- 
- 	i2c_dev->status = I2C_STAT_INIT;
- 	i2c_dev->msg = pmsg;
-@@ -106,9 +107,14 @@ static int xfer_read(struct i2c_adapter *adap, struct i2c_msg *pmsg)
- 	HDMI_WRITE(HDMI_HI2CHCR, temp);
- 	HDMI_READ(HDMI_HI2CHCR);
- 
--	while (i2c_dev->status != I2C_TRANSACTION_DONE)
--		wait_for_completion_interruptible_timeout(&i2c_dev->complete,
-+	while (i2c_dev->status != I2C_TRANSACTION_DONE) {
-+		ret = wait_for_completion_interruptible_timeout(&i2c_dev->complete,
- 								10 * HZ);
-+		if (ret < 0)
-+			return ret;
-+		if (!ret)
-+			return -ETIMEDOUT;
-+	}
- 
- 	return 0;
- }
-@@ -127,7 +133,7 @@ static int oaktrail_hdmi_i2c_access(struct i2c_adapter *adap,
+diff --git a/net/phonet/pn_dev.c b/net/phonet/pn_dev.c
+index ec9363c337a9f..4bf8f63d45a9a 100644
+--- a/net/phonet/pn_dev.c
++++ b/net/phonet/pn_dev.c
+@@ -350,16 +350,34 @@ static struct pernet_operations phonet_net_ops = {
+ /* Initialize Phonet devices list */
+ int __init phonet_device_init(void)
  {
- 	struct oaktrail_hdmi_dev *hdmi_dev = i2c_get_adapdata(adap);
- 	struct hdmi_i2c_dev *i2c_dev = hdmi_dev->i2c_dev;
--	int i;
-+	int i, ret = 0;
- 
- 	mutex_lock(&i2c_dev->i2c_lock);
- 
-@@ -139,9 +145,11 @@ static int oaktrail_hdmi_i2c_access(struct i2c_adapter *adap,
- 	for (i = 0; i < num; i++) {
- 		if (pmsg->len && pmsg->buf) {
- 			if (pmsg->flags & I2C_M_RD)
--				xfer_read(adap, pmsg);
-+				ret = xfer_read(adap, pmsg);
- 			else
--				xfer_write(adap, pmsg);
-+				ret = xfer_write(adap, pmsg);
-+			if (ret)
-+				break;
- 		}
- 		pmsg++;         /* next message */
- 	}
-@@ -151,6 +159,9 @@ static int oaktrail_hdmi_i2c_access(struct i2c_adapter *adap,
- 
- 	mutex_unlock(&i2c_dev->i2c_lock);
- 
-+	if (ret)
-+		return ret;
+-	int err = register_pernet_subsys(&phonet_net_ops);
++	int err;
 +
- 	return i;
++	err = register_pernet_subsys(&phonet_net_ops);
+ 	if (err)
+ 		return err;
+ 
+-	proc_create_net("pnresource", 0, init_net.proc_net, &pn_res_seq_ops,
+-			sizeof(struct seq_net_private));
+-	register_netdevice_notifier(&phonet_device_notifier);
++	if (!proc_create_net("pnresource", 0, init_net.proc_net,
++			     &pn_res_seq_ops, sizeof(struct seq_net_private))) {
++		err = -ENOMEM;
++		goto err_pernet;
++	}
++
++	err = register_netdevice_notifier(&phonet_device_notifier);
++	if (err)
++		goto err_proc;
++
+ 	err = phonet_netlink_register();
+ 	if (err)
+-		phonet_device_exit();
++		goto err_notifier;
++
++	return 0;
++
++err_notifier:
++	unregister_netdevice_notifier(&phonet_device_notifier);
++err_proc:
++	remove_proc_entry("pnresource", init_net.proc_net);
++err_pernet:
++	unregister_pernet_subsys(&phonet_net_ops);
+ 	return err;
  }
  
+@@ -367,8 +385,8 @@ void phonet_device_exit(void)
+ {
+ 	rtnl_unregister_all(PF_PHONET);
+ 	unregister_netdevice_notifier(&phonet_device_notifier);
+-	unregister_pernet_subsys(&phonet_net_ops);
+ 	remove_proc_entry("pnresource", init_net.proc_net);
++	unregister_pernet_subsys(&phonet_net_ops);
+ }
+ 
+ int phonet_route_add(struct net_device *dev, u8 daddr)
 -- 
 2.53.0
 
