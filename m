@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C1ED518142;
-	Thu, 17 Sep 2026 17:42:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B15951814B;
+	Thu, 17 Sep 2026 17:42:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666978; cv=none; b=LryNwBkdj2n/AXBcKeOQ4qo3ZIsaA+ipkY8riGbA3c0jvteZ7OcPYxksknGm81lfX/kg44IqgIrnXMgJOd1El32t/J8/ydQl2n3dwxwYkoN7LBtxoot7iEA3Ft5Ev3m2dgktm81Betds0/BKB96r/Y89prQA2LScx4wqgWKHSQo=
+	t=1789666981; cv=none; b=okXSNwM8AuhJeb7OQNVSrUCON9kSYebB6aaNttnAu0NpIiT/Ip/w6CTCQlKsQNacZ9Aoc+UAaG93yUUwXFUmnkAqtDpebeQkflg/7DoEdiTnredGhnoylW2NqHJ0O+zbjbe7EPgu+J+UJty8h5iGx3KNTDmdBxigHQJ+U9GR/Sw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666978; c=relaxed/simple;
-	bh=Wna0/cOo7Er2H+/+pF+IPFbN6px5UBap2gOkzwmsV5Q=;
+	s=arc-20240116; t=1789666981; c=relaxed/simple;
+	bh=ouE2dSRxu6E3FGFjJOLe2v7csglPpVONo+s+V4DCyv4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rgDHJkNegWsIoHY5adERFCmgxmJxnXOlJ4RyW9m3owsxZgv+/mjj0xqjJY+wUMoDEJmAKZ6fkXYS1pv0KE/OZoKZXGe4J3S7jcVDPjBBJG5/VjiXFZRxUZoHfA/zWH1MNZqxvMEsPBY2SZXQPNorWRU4xY73Gk7mLygVa9KdsGY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kYnfNigY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LVNl4+719u/a+LZXMg7qAjWicHz9N5GjpLwIYo3pddsHraSojEv0CwRNiHS0i7zXAfrUeRDbISiMB60RFno6+4qycAqDqTxOXvr+wlOtXUD7bOSd8sKz31fmIUFihFfBXFUpiILCJ+fsrt1Jo+pM6VkHag9W2S+dB8Kvt3M5Was=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ArvF2S40; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kYnfNigY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EA271F000FF;
-	Thu, 17 Sep 2026 17:42:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ArvF2S40"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4A991F000FF;
+	Thu, 17 Sep 2026 17:42:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666976;
-	bh=/oSNkaSNsPmkvW/CeZ80Bw7YhO3qfNRE5a3KQu45jX4=;
+	s=korg; t=1789666979;
+	bh=5Ye+8XPiGwDv93Iq9E9Th67AmI3coTwZRxifuU4HbXU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kYnfNigY9cWPEYzku+lIPv842Hr1TWQxfagL+84driDXAsHLMIURDlYjvdUGt7hgJ
-	 1v+73vFvjYnPhoXgimr0nyFNFcmIeNPjMsJHBBKWYtykaQ7XUb+WS++rZF5gOVEcQ+
-	 zb2iPsBw1GARO6hzElARieGG3wK1e7rQ/3jUo1Ks=
+	b=ArvF2S40M6mfIYM1tPVMPviYH/2jYIznmfllBzNq5QMR5hR9AdpGY4p/a4VMXZ+X3
+	 ukXlsofgdcezyhP+7Cqi/46fVxhv1Ou2Em4nqijFD8hYieeht21Fn+qRHKEqd/5qI1
+	 PJOXYUt3Ren6P586hUajNNvgq8mvV3gt2XV9P2Y4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Danilo Krummrich <dakr@kernel.org>,
 	Gary Guo <gary@garyguo.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1149/1250] usb: usbtmc: dont store usb_device_id
-Date: Thu, 17 Sep 2026 16:15:44 +0100
-Message-ID: <20260917151623.408081568@linuxfoundation.org>
+Subject: [PATCH 6.18 1150/1250] usb: serial: spcp8x5: dont store usb_device_id
+Date: Thu, 17 Sep 2026 16:15:45 +0100
+Message-ID: <20260917151623.434025301@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -54,41 +54,53 @@ Content-Transfer-Encoding: 8bit
 
 From: Gary Guo <gary@garyguo.net>
 
-[ Upstream commit fc045acec1a501c97f84ae184aadce9dae4ba9b2 ]
+[ Upstream commit 934e1322f18c1b58bca431c0d5d01e002060c990 ]
 
-usb_device_id is not guaranteed to live longer than probe due to presence
-of dynamic ID. This stored ID is unused so remove it.
+USB probe functions should not keep usb_device_id for longer than probe due
+to presence of dynamic ID removal. USB serial does not support ID removal,
+however in this case only driver_data is ever needed, there is no reason
+keeping the usb_device_id in the first place, so convert it as well.
 
 Reviewed-by: Manuel Ebner <manuelebner@mailbox.org>
 Reviewed-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Gary Guo <gary@garyguo.net>
-Link: https://patch.msgid.link/20260707-usb_dyn_id_uaf-v2-2-632dcf3adfba@garyguo.net
+Link: https://patch.msgid.link/20260707-usb_dyn_id_uaf-v2-3-632dcf3adfba@garyguo.net
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/class/usbtmc.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/usb/serial/spcp8x5.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/usb/class/usbtmc.c b/drivers/usb/class/usbtmc.c
-index fe88d555142ad..5bfbf801f9c4f 100644
---- a/drivers/usb/class/usbtmc.c
-+++ b/drivers/usb/class/usbtmc.c
-@@ -71,7 +71,6 @@ struct usbtmc_dev_capabilities {
-  * allocated for each USBTMC device in the driver's probe function.
-  */
- struct usbtmc_device_data {
--	const struct usb_device_id *id;
- 	struct usb_device *usb_dev;
- 	struct usb_interface *intf;
- 	struct list_head file_list;
-@@ -2398,7 +2397,6 @@ static int usbtmc_probe(struct usb_interface *intf,
+diff --git a/drivers/usb/serial/spcp8x5.c b/drivers/usb/serial/spcp8x5.c
+index aa8fe0dcb680e..8418d812eb3cd 100644
+--- a/drivers/usb/serial/spcp8x5.c
++++ b/drivers/usb/serial/spcp8x5.c
+@@ -135,14 +135,14 @@ struct spcp8x5_private {
+ static int spcp8x5_probe(struct usb_serial *serial,
+ 						const struct usb_device_id *id)
+ {
+-	usb_set_serial_data(serial, (void *)id);
++	usb_set_serial_data(serial, (void *)id->driver_info);
+ 
+ 	return 0;
+ }
+ 
+ static int spcp8x5_port_probe(struct usb_serial_port *port)
+ {
+-	const struct usb_device_id *id = usb_get_serial_data(port->serial);
++	unsigned int quirks = (unsigned int)(unsigned long)usb_get_serial_data(port->serial);
+ 	struct spcp8x5_private *priv;
+ 
+ 	priv = kzalloc(sizeof(*priv), GFP_KERNEL);
+@@ -150,7 +150,7 @@ static int spcp8x5_port_probe(struct usb_serial_port *port)
  		return -ENOMEM;
  
- 	data->intf = intf;
--	data->id = id;
- 	data->usb_dev = usb_get_dev(interface_to_usbdev(intf));
- 	usb_set_intfdata(intf, data);
- 	kref_init(&data->kref);
+ 	spin_lock_init(&priv->lock);
+-	priv->quirks = id->driver_info;
++	priv->quirks = quirks;
+ 
+ 	usb_set_serial_port_data(port, priv);
+ 
 -- 
 2.53.0
 
