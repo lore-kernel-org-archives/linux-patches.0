@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 750AE4F93AB;
-	Thu, 17 Sep 2026 17:20:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 548244F93B1;
+	Thu, 17 Sep 2026 17:20:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789665648; cv=none; b=m/G6WyIzIPIJc1+779XFl7XSjvc4QQ9MVYaTXlq5CKbWWuhm4onLpluh7OkP/yRpqzYNeUnpvOa++1gjjqlgZr6ENseGFDILhintuPHyvmp3yJJ40BUN7Mfxg5g6uNG3FtDU7ZXF4Pz/5SEH6I6I+X01UciI3fccTAU3BVkme3w=
+	t=1789665651; cv=none; b=EalWAbXFgv8v51ff/wWtMibEW103zMEmO5u0McCzW4oQ89mbiXlyZMvy1HHWj2MhspM271cFzl5fLJywksxBJ1l5DuWUiVVqKBug6Hpt4KO3B2i6qqDrYlxhQYxqahDymnbrUi3VXMmtiNWkuxE7pVCvMyQyu2XGosd+wPfiGsA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789665648; c=relaxed/simple;
-	bh=mCloSppnJXU04UdvBIMsBiiDJzZJKdq5mBREx7q9PzM=;
+	s=arc-20240116; t=1789665651; c=relaxed/simple;
+	bh=OujQQ1OjW3i+kRlHjWU/YJx3ZgGRUOwu0OFX1iZlJ4w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WFxfgQOflxAdXvf4SOSsfGB+VB9XdRbRwR1VWee8/dhsmtt8n1S6p0D4lQsByCbolzwneyIIvgb06+BYXGCDzVmlDR2EHTkWAli18NBMT5TswLn2GSMpjA4lM+pclbCx8YEuXc5xd+iJmlM3gqn1REIL0FK9P/eG1W2KfowJjbw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A+vB9rTY; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=l+byiJF/dK3FI0EhwTqP2lDjRNErEC+dfdi0RvpTtDawmLIkCPJwvEiQnB7DYfiFtA+4iZilxnssbu/ByhzdaSgGnca9/qXL/plR6nPtl++knbKC0PZFbriDKCYbFQzBGRneSuH2bjkU3Fa/S2fuHI5uGCdvoya0B90Nre4XpZA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0GbaK1dJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A+vB9rTY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABF2D1F000FF;
-	Thu, 17 Sep 2026 17:20:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0GbaK1dJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9FC11F00893;
+	Thu, 17 Sep 2026 17:20:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789665647;
-	bh=vr3yev8YvHn/Gsb2fvI13buTNehLLs1lEjIjmLxHWbc=;
+	s=korg; t=1789665650;
+	bh=unfpCsU3TTL3vOUiphJ3HJl7QhOdAv/Cz+VxmP9c8sY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=A+vB9rTYX0i+Xb7bkyhlJq4XUaY/X3cVAXBgxC1G+CiwQbFkzGTmmftE2eGMeSq91
-	 sBcsinbD2JPN4zAkLYOYkgTRP3dQjd8TjRoEz8mTAuufLu65I6cAWP7RCa9uV+ITw+
-	 WTVwl9jgiOO2b3bOJV96l10vJJodo6UxSgZQhUtM=
+	b=0GbaK1dJNzFmx5WbRTb39lVtNAcqPAmCUQDDBoRWAAhIpZUv8vkKyAzvPSvnkaY97
+	 t34jFr5+28zp5ST76UzLP4GY8Ls9RFFpDhSkcmLQ+WuI2+Vb9beoP57k3ornvSnnt+
+	 uaBW9W7biJgLGFdpJSD2OrwS11JT/0Q6CwzuslOo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Jay Vosburgh <jv@jvosburgh.net>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
+	syzbot+74f338e09f1ef3ee6457@syzkaller.appspotmail.com,
+	Kuniyuki Iwashima <kuniyu@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0736/1250] bonding: do not clear curr_active_slave prematurely when releasing all slaves
-Date: Thu, 17 Sep 2026 16:08:51 +0100
-Message-ID: <20260917151611.839580994@linuxfoundation.org>
+Subject: [PATCH 6.18 0737/1250] net: Remove conflicting altnames for dying netns in __dev_change_net_namespace().
+Date: Thu, 17 Sep 2026 16:08:52 +0100
+Message-ID: <20260917151611.865983025@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -53,57 +52,131 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit af602c7aa5fedc9be3043244017aef4f26c96b70 ]
+[ Upstream commit debac3a20dec524a59625cf10fa2f18571127824 ]
 
-When releasing all slaves during bond destruction (all == true),
-__bond_release_one() unconditionally clears bond->curr_active_slave to
-NULL in every iteration.
+syzbot reported the warning in cfg80211_pernet_exit(). [0]
 
-If a backup slave is released before the active slave,
-bond_alb_deinit_slave() triggers rlb_teach_disabled_mac_on_primary(),
-which increments the active slave dev promiscuity counter and sets
-bond_info->primary_is_promisc = 1.
+The repro does the following:
 
-Because bond->curr_active_slave was prematurely cleared to NULL when
-releasing the backup slave, the subsequent iteration releasing the active
-slave evaluates oldcurrent as NULL, so bond_change_active_slave(bond, NULL)
-is skipped. Consequently, bond_alb_handle_active_change() is never called
-to decrement the promiscuity counter, permanently leaking promiscuous
-mode on the physical device after bond teardown.
+  1. create two device in root netns and non-root netns
+  2. assign the same altname for the two devices
+  3. remove the non-root netns
 
-When oldcurrent == slave, bond_change_active_slave(bond, NULL) already sets
-bond->curr_active_slave to NULL. We only need to avoid selecting a new
-active slave when all == true. Replace the if (all) branch with
-if (!all && oldcurrent == slave).
+Since commit 7663d522099e ("net: check for altname conflicts
+when changing netdev's netns"), cfg80211_switch_netns() and
+cfg802154_switch_netns() fail if init_net has a device with the
+conflicting altname.
 
-Fixes: 0896341a44bf ("bonding: fix bond_release_all inconsistencies")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Acked-by: Jay Vosburgh <jv@jvosburgh.net>
-Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://patch.msgid.link/20260831203042.164466-1-edumazet@google.com
+default_device_exit_net() had the same issue and commit d09486a04f5d
+("net: fix removing a namespace with conflicting altnames") fixed it.
+
+cfg80211_pernet_exit() and cfg802154_pernet_exit() need the same fix.
+
+Let's generalise the fix by removing conflicting altnames for dying
+netns in __dev_change_net_namespace().
+
+[0]:
+cfg80211_switch_netns(rdev, &init_net)
+WARNING: net/wireless/core.c:1871 at cfg80211_pernet_exit+0xd5/0x120 net/wireless/core.c:1871, CPU#1: kworker/u8:9/1160
+Modules linked in:
+CPU: 1 UID: 0 PID: 1160 Comm: kworker/u8:9 Not tainted syzkaller #0 PREEMPT(full)
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 07/24/2026
+Workqueue: netns cleanup_net
+RIP: 0010:cfg80211_pernet_exit+0xd5/0x120 net/wireless/core.c:1871
+Code: e8 03 42 80 3c 20 00 74 08 4c 89 f7 e8 b4 ef 0e f7 4d 8b 36 49 81 fe 20 10 4a 90 74 12 e8 03 3d 9f f6 eb 85 e8 fc 3c 9f f6 90 <0f> 0b 90 eb cc e8 f1 3c 9f f6 eb 05 e8 ea 3c 9f f6 5b 41 5c 41 5e
+RSP: 0018:ffffc900057a78f0 EFLAGS: 00010293
+RAX: ffffffff8b287154 RBX: ffff88807ba72780 RCX: ffff8880213e8000
+RDX: 0000000000000000 RSI: 00000000ffffffef RDI: 0000000000000000
+RBP: 00000000ffffffef R08: ffffffff9024cc67 R09: 0000000000000000
+R10: fffff52000af4eb0 R11: fffffbfff204998d R12: dffffc0000000000
+R13: ffffffff904a1080 R14: ffff888144ed0008 R15: ffff888144ed0e20
+FS:  0000000000000000(0000) GS:ffff888124de6000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00005642de0a8a70 CR3: 000000007a40c000 CR4: 00000000003526f0
+Call Trace:
+ <TASK>
+ ops_exit_list net/core/net_namespace.c:200 [inline]
+ ops_undo_list+0x43d/0x8d0 net/core/net_namespace.c:253
+ cleanup_net+0x572/0x810 net/core/net_namespace.c:706
+ process_one_work kernel/workqueue.c:3387 [inline]
+ process_scheduled_works+0xc3d/0x1630 kernel/workqueue.c:3470
+ worker_thread+0xa47/0xfb0 kernel/workqueue.c:3551
+ kthread+0x38b/0x480 kernel/kthread.c:436
+ ret_from_fork+0x514/0xb70 arch/x86/kernel/process.c:158
+ ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:245
+ </TASK>
+
+Fixes: 36fbf1e52bd3 ("net: rtnetlink: add linkprop commands to add and delete alternative ifnames")
+Reported-by: syzbot+74f338e09f1ef3ee6457@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/6a96219e.04428c52.29b18.0001.GAE@google.com/T/
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20260901005550.2042357-1-kuniyu@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/bonding/bond_main.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ net/core/dev.c | 25 +++++++++++++------------
+ 1 file changed, 13 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
-index 52af663e12e0c..6b9509e939289 100644
---- a/drivers/net/bonding/bond_main.c
-+++ b/drivers/net/bonding/bond_main.c
-@@ -2481,9 +2481,7 @@ static int __bond_release_one(struct net_device *bond_dev,
- 		bond_alb_deinit_slave(bond, slave);
+diff --git a/net/core/dev.c b/net/core/dev.c
+index c7e35768238cc..ca8d0773040b9 100644
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -12443,7 +12443,7 @@ int __dev_change_net_namespace(struct net_device *dev, struct net *net,
+ 			       const char *pat, int new_ifindex,
+ 			       struct netlink_ext_ack *extack)
+ {
+-	struct netdev_name_node *name_node;
++	struct netdev_name_node *name_node, *tmp;
+ 	struct net *net_old = dev_net(dev);
+ 	char new_name[IFNAMSIZ] = {};
+ 	int err, new_nsid;
+@@ -12489,13 +12489,19 @@ int __dev_change_net_namespace(struct net_device *dev, struct net *net,
+ 	}
+ 	/* Check that none of the altnames conflicts. */
+ 	err = -EEXIST;
+-	netdev_for_each_altname(dev, name_node) {
+-		if (netdev_name_in_use(net, name_node->name)) {
+-			NL_SET_ERR_MSG_FMT(extack,
+-					   "An interface with the altname %s exists in the target netns",
+-					   name_node->name);
+-			goto out;
++	netdev_for_each_altname_safe(dev, name_node, tmp) {
++		if (!netdev_name_in_use(net, name_node->name))
++			continue;
++
++		if (!check_net(net_old)) {
++			__netdev_name_node_alt_destroy(name_node);
++			continue;
+ 		}
++
++		NL_SET_ERR_MSG_FMT(extack,
++				   "An interface with the altname %s exists in the target netns",
++				   name_node->name);
++		goto out;
  	}
  
--	if (all) {
--		RCU_INIT_POINTER(bond->curr_active_slave, NULL);
--	} else if (oldcurrent == slave) {
-+	if (!all && oldcurrent == slave) {
- 		/* Note that we hold RTNL over this sequence, so there
- 		 * is no concern that another slave add/remove event
- 		 * will interfere.
+ 	/* Check that new_ifindex isn't used yet. */
+@@ -12946,7 +12952,6 @@ static struct pernet_operations __net_initdata netdev_net_ops = {
+ 
+ static void __net_exit default_device_exit_net(struct net *net)
+ {
+-	struct netdev_name_node *name_node, *tmp;
+ 	struct net_device *dev, *aux;
+ 	/*
+ 	 * Push all migratable network devices back to the
+@@ -12970,10 +12975,6 @@ static void __net_exit default_device_exit_net(struct net *net)
+ 		if (netdev_name_in_use(&init_net, fb_name))
+ 			snprintf(fb_name, IFNAMSIZ, "dev%%d");
+ 
+-		netdev_for_each_altname_safe(dev, name_node, tmp)
+-			if (netdev_name_in_use(&init_net, name_node->name))
+-				__netdev_name_node_alt_destroy(name_node);
+-
+ 		err = dev_change_net_namespace(dev, &init_net, fb_name);
+ 		if (err) {
+ 			pr_emerg("%s: failed to move %s to init_net: %d\n",
 -- 
 2.53.0
 
