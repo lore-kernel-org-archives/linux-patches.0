@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 792974E5358;
-	Thu, 17 Sep 2026 16:56:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5835351599C;
+	Thu, 17 Sep 2026 16:56:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789664163; cv=none; b=Jp+TSKpb2apH593ENKV13E1oB7ryor91XJDuqhaTjkRKs8UP0gZvXsPVOP+wf/+8+c+KbdJixfwCWTcwe9LfdgbWYa3jb67AV4B3fMRkxnRptP913HtV/i9dakZEpyTlfnhuoS4w2MCFbm0vttasGZW5D0uKey0PT5Ic4T9f30k=
+	t=1789664166; cv=none; b=P9KDdTaLWMATf2X+XF2qKBoJ+ZKWepSM6Srxt5YRwUzsx2cCdB/igZ5BPK/7kO9hpd/stth8ZxqNuEYMOg/EL+3dCo4cV0IG1GdsoznVez2ksFgbaH1PBtTjZqjaQwDvgMQrrhZ8YjbRMtPhLLR6yB4OJXT90DnMQgpTHEZVHlA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789664163; c=relaxed/simple;
-	bh=5MXV3OarFuOeMP4Vt2qQAENwLqkizH4gmO0Xt2+dEww=;
+	s=arc-20240116; t=1789664166; c=relaxed/simple;
+	bh=lFPEUIUMKFp9Kxu5aGc58cjx6Y0WNyTYn6Ug5XIrdrk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ESZMUDKs+XF1QxoweQnu+/qZcTK5lF57FloLvwCBSEBD4rDlTPrvITYW5dIq5gBKg3vlfKlvIUaa7RfomnG+GEM1dG8vD33tZO1rCEZG1ZC3CJkSLgxu6SY0N0qVVchYb5hMJc1b4HTKlIw9b6VKZxt54/aNC+fi/At8Dpe5qA4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bMI3OZcV; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=pOBZGnw+uqZVFzRWMlgH5v+XpDwoqnA5fe3be6E88cZYYFUwyG6mk3BvscuXg3s1WkU4BGn5SD092kcpEQK2vQWzNBe1zlEgpOm0NM4pvhg8s4iwMcGsuIj8dKBoSR5SzwKix6LPHndhOGOlIoFLhHiz1ADkJvKhLGiNwlpmvbc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=shK/HKul; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bMI3OZcV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E3511F000FF;
-	Thu, 17 Sep 2026 16:56:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="shK/HKul"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8326A1F000FF;
+	Thu, 17 Sep 2026 16:56:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789664162;
-	bh=uDCFK1nvQt75WUYmuvzGjbFvSs6UpW84yW+JOxVOfwc=;
+	s=korg; t=1789664165;
+	bh=5o4AS0Qjd6qZ55rWVJiQy9DRgP0TBJ1pQCXqMOCKzOY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bMI3OZcVQfYS55VWr1ikSfddPQtf8aSyx0vhjSwyLNZ6Y/Gu9DZMPZ6grtydN+4cN
-	 d9gfGKP1TeoWszpsHKLJeJ7jd6ZMfhJEf98SM7KteHEpREqxiyYEXkGX/kVOmISS87
-	 7sw9Yp2/vYZgu+5Mr/Y4vgT7XvjMc4wdfQMrDpF8=
+	b=shK/HKulD6/rEynksGQb5TCtb/t6fqabVKgNIZzDAZ6vsUlvwDJrqmM/SLWfr74Nk
+	 CV2jif5T+uK+OL3M3iqDVA1VQYA2NysQOezQXVRQehSMth8rSRJyiLmQ7tG90nWQFP
+	 wMT8tVqAp3s0ftXrDWVq85KYqxlhj42ZK8m5gS9k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cezary Rojewski <cezary.rojewski@intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Timur Tabi <ttabi@nvidia.com>,
+	Danilo Krummrich <dakr@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0280/1250] ASoC: codecs: pcm3168a: Drop CONFIG_PM-conditional preproc directive
-Date: Thu, 17 Sep 2026 16:01:15 +0100
-Message-ID: <20260917151559.725986576@linuxfoundation.org>
+Subject: [PATCH 6.18 0254/1250] drm/nouveau/gsp: add SEC2 to GA100 chip table
+Date: Thu, 17 Sep 2026 16:00:49 +0100
+Message-ID: <20260917151559.039828211@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,71 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cezary Rojewski <cezary.rojewski@intel.com>
+From: Timur Tabi <ttabi@nvidia.com>
 
-[ Upstream commit eb7107264da8545ba7381a76818bae553e1fd1e4 ]
+[ Upstream commit 604d0efb17cc0dd197e089134736ac2698d5fca7 ]
 
-Revert changes done in commit 489db5d94150 ("ASoC: pcm3168a:
-Don't disable pcm3168a when CONFIG_PM defined") and add
-pm_runtime_status_suspended() check.
+The booter-load and booter-unload firmware run on the SEC2 falcon.
+During tu102_gsp_oneinit(), the booter constructor needs device->sec2
+to access the SEC2 falcon.
 
-The suspended-check addresses regulator's "unbalanced disables"
-warning during driver removal even when CONFIG_PM is enabled.
+Without the .sec2 entry, device->sec2 is NULL and this dereference
+crashes during GSP-RM boot.
 
-Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Link: https://patch.msgid.link/20260525201801.1336936-4-cezary.rojewski@intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Timur Tabi <ttabi@nvidia.com>
+Link: https://patch.msgid.link/20260430223838.2530778-3-ttabi@nvidia.com
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/pcm3168a.c | 20 +++++++-------------
- 1 file changed, 7 insertions(+), 13 deletions(-)
+ drivers/gpu/drm/nouveau/nvkm/engine/device/base.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/soc/codecs/pcm3168a.c b/sound/soc/codecs/pcm3168a.c
-index 7f8d64fb0e57f..2066cf6c1e976 100644
---- a/sound/soc/codecs/pcm3168a.c
-+++ b/sound/soc/codecs/pcm3168a.c
-@@ -822,15 +822,6 @@ int pcm3168a_probe(struct device *dev, struct regmap *regmap)
- }
- EXPORT_SYMBOL_GPL(pcm3168a_probe);
+diff --git a/drivers/gpu/drm/nouveau/nvkm/engine/device/base.c b/drivers/gpu/drm/nouveau/nvkm/engine/device/base.c
+index 33db3a010efd4..3738c4664fb6a 100644
+--- a/drivers/gpu/drm/nouveau/nvkm/engine/device/base.c
++++ b/drivers/gpu/drm/nouveau/nvkm/engine/device/base.c
+@@ -2529,6 +2529,7 @@ nv170_chipset = {
+ 	.vfn      = { 0x00000001, ga100_vfn_new },
+ 	.ce       = { 0x000003ff, ga100_ce_new },
+ 	.fifo     = { 0x00000001, ga100_fifo_new },
++	.sec2     = { 0x00000001, tu102_sec2_new },
+ };
  
--static void pcm3168a_disable(struct device *dev)
--{
--	struct pcm3168a_priv *pcm3168a = dev_get_drvdata(dev);
--
--	regulator_bulk_disable(ARRAY_SIZE(pcm3168a->supplies),
--			       pcm3168a->supplies);
--	clk_disable_unprepare(pcm3168a->scki);
--}
--
- void pcm3168a_remove(struct device *dev)
- {
- 	struct pcm3168a_priv *pcm3168a = dev_get_drvdata(dev);
-@@ -842,10 +833,12 @@ void pcm3168a_remove(struct device *dev)
- 	 * The asserted level of GPIO_ACTIVE_LOW is LOW.
- 	 */
- 	gpiod_set_value_cansleep(pcm3168a->gpio_rst, 1);
-+
- 	pm_runtime_disable(dev);
--#ifndef CONFIG_PM
--	pcm3168a_disable(dev);
--#endif
-+	if (!pm_runtime_status_suspended(dev)) {
-+		regulator_bulk_disable(ARRAY_SIZE(pcm3168a->supplies), pcm3168a->supplies);
-+		clk_disable_unprepare(pcm3168a->scki);
-+	}
- }
- EXPORT_SYMBOL_GPL(pcm3168a_remove);
- 
-@@ -900,7 +893,8 @@ static int pcm3168a_rt_suspend(struct device *dev)
- 
- 	regcache_cache_only(pcm3168a->regmap, true);
- 
--	pcm3168a_disable(dev);
-+	regulator_bulk_disable(ARRAY_SIZE(pcm3168a->supplies), pcm3168a->supplies);
-+	clk_disable_unprepare(pcm3168a->scki);
- 
- 	return 0;
- }
+ static const struct nvkm_device_chip
 -- 
 2.53.0
 
