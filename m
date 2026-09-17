@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5F494FDA58;
-	Thu, 17 Sep 2026 17:47:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C08CB4F391E;
+	Thu, 17 Sep 2026 17:47:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789667261; cv=none; b=fH7aXGOxL5Nr+jzL75fFY1SgLnj6CokM2LrMtWho24s/H/CB6P/9SLXPxpCy78hw+Xhemh4N7yCkKGJS7JOoZ2NUejdWR2YFyfmx2IXb632aMIM1nIiagHfOSZF4KoBkNPx59D1aU5YnHo0PLiJURIg2vjogABQAMMi4HxEpsEo=
+	t=1789667264; cv=none; b=hZrVPbX3l+fTOfDY8tHOEqFjScCwGpZHmWLhwRlhG3eFZnPxUVa2z2TJnu4he1QWXpKszkG0BtBsGSL9iAfLKjJgL/L22SkEN7vY6wArR1JocBTiqHmygza/KeZl+fpcZLLKBZH1zz23mID1TdmsUnIRmlkUO8p3Alsd6a4YDBs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789667261; c=relaxed/simple;
-	bh=F9MFpvTJdxCI+JofnvFxLCmkp+8aa1n8O+m8aXkr4zw=;
+	s=arc-20240116; t=1789667264; c=relaxed/simple;
+	bh=VmybTJpKbVoGBVoEOLxLYEXosac1Dd05VmrltQnSmfg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u/LYga3S2Nk5Z2h+VVXIaSj7tjWUyOcJG5BslCjOQKPxpUOQTbDviBfGat9JzKkL7W0+WFKgWE9Jpk+NH4RAvYACKduMp3fA9cm6Zdn7ljUdmjsz1q8ddj2+eBV7u60IiwB/UI27BHT2vRz35/6W9YaVgjKH7hYJm/ambIHJq3E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a78FcOeT; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=LxlqXBuClkhiIyo/6mTT1Ly5PJPCPoAM50EKNzkMKaq/tsIsE4IPkbIjhGo7qc5lWuUD+WUF9CkDdKpYX9UJrnIqOt5/05T+SxKZp0dtZNTTgaiQKEb1A/sPSx2dbqXeP1A9vh9XpTmeQYjXuq1Ym5j4lUe9X6mVQ3iy5RksS/s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b5omUu6S; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a78FcOeT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12E741F000FF;
-	Thu, 17 Sep 2026 17:47:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b5omUu6S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2143C1F00893;
+	Thu, 17 Sep 2026 17:47:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789667259;
-	bh=MrwCZutj2QC7kP+MwvHQ2ZdQnGIqoFIRdXwa6MNkNwk=;
+	s=korg; t=1789667262;
+	bh=E8ZsOjUwtzC3R/JQkPbFL614Oi0bscjDm7OLEFhrYF0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=a78FcOeTYTmmpK7gvNTYEG2i5inNZnl+CHdQrDZUEEQopRXcOzJfnD0Ty71rF9bub
-	 rVy5AolzCljyKvDn28Wqa+mZPkq18Itb15UCNFOFPWeEhqESJwjBJEdxx2HsxH4gOk
-	 06Ajx/whnNCXJWo/ubDAiv7EMZoDqvIWrM5OWmAo=
+	b=b5omUu6SBGP/uM2S4CGN/PGfzF5LyID6MB6NRMYxYdmbmxga8WgDjBCe2bTGggugY
+	 HYZpDuFFvINtxdRrBCKbybb0bp1GwAFOODF5ECnFpgpom3fPIx2c9Ydya138D7tnht
+	 D3Mwqjupgz/IIY6mtlmI0xn2Dq4GYX3Z/xBV/a88=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linusw@kernel.org>,
-	Riccardo Mereu <r.mereu@arduino.cc>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Erni Sri Satya Vennela <ernis@linux.microsoft.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0006/1102] drm/panel: jadard-jd9365da-h3: set prepare_prev_first
-Date: Thu, 17 Sep 2026 15:59:09 +0100
-Message-ID: <20260917151539.580006583@linuxfoundation.org>
+Subject: [PATCH 6.12 0033/1102] net: mana: hardening: Reject zero max_num_queues from MANA_QUERY_VPORT_CONFIG
+Date: Thu, 17 Sep 2026 15:59:36 +0100
+Message-ID: <20260917151540.271796321@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -52,37 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+From: Erni Sri Satya Vennela <ernis@linux.microsoft.com>
 
-[ Upstream commit b55a4b5d4769a650f52ea3f1ae680610169d125e ]
+[ Upstream commit 93ca1575dd1f43e24ad85663305e13114f9acdf1 ]
 
-Sending DSI commands from the prepare() callback requires DSI link to be
-up at that point. For DSI hosts is guaranteed only if the panel driver
-sets the .prepare_prev_first flag. Set it to let these panels work with
-the DSI hosts which don't power on the link in their .mode_set callback.
+As a part of MANA hardening for CVM, validate that max_num_sq and
+max_num_rq returned by MANA_QUERY_VPORT_CONFIG are not zero. These
+values flow into apc->num_queues, which is used as an allocation count
+and loop bound. A zero value would result in zero-size allocations and
+incorrect driver behavior.
 
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Tested-by: Riccardo Mereu <r.mereu@arduino.cc>
-Link: https://patch.msgid.link/20260413-waveshare-dsi-touch-v3-13-3aeb53022c32@oss.qualcomm.com
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Return -EPROTO if either value is zero.
+
+Signed-off-by: Erni Sri Satya Vennela <ernis@linux.microsoft.com>
+Link: https://patch.msgid.link/20260430085638.1875400-1-ernis@linux.microsoft.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panel/panel-jadard-jd9365da-h3.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/microsoft/mana/mana_en.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/gpu/drm/panel/panel-jadard-jd9365da-h3.c b/drivers/gpu/drm/panel/panel-jadard-jd9365da-h3.c
-index eb0f8373258c3..94597defaa2c9 100644
---- a/drivers/gpu/drm/panel/panel-jadard-jd9365da-h3.c
-+++ b/drivers/gpu/drm/panel/panel-jadard-jd9365da-h3.c
-@@ -1159,6 +1159,8 @@ static int jadard_dsi_probe(struct mipi_dsi_device *dsi)
- 	if (ret)
- 		return ret;
+diff --git a/drivers/net/ethernet/microsoft/mana/mana_en.c b/drivers/net/ethernet/microsoft/mana/mana_en.c
+index 70fe4d837a0b6..d64ea270dca26 100644
+--- a/drivers/net/ethernet/microsoft/mana/mana_en.c
++++ b/drivers/net/ethernet/microsoft/mana/mana_en.c
+@@ -959,6 +959,12 @@ static int mana_query_vport_cfg(struct mana_port_context *apc, u32 vport_index,
  
-+	jadard->panel.prepare_prev_first = true;
+ 	*max_sq = resp.max_num_sq;
+ 	*max_rq = resp.max_num_rq;
 +
- 	drm_panel_add(&jadard->panel);
- 
- 	mipi_dsi_set_drvdata(dsi, jadard);
++	if (*max_sq == 0 || *max_rq == 0) {
++		netdev_err(apc->ndev, "Invalid max queues from vPort config\n");
++		return -EPROTO;
++	}
++
+ 	if (resp.num_indirection_ent > 0 &&
+ 	    resp.num_indirection_ent <= MANA_INDIRECT_TABLE_MAX_SIZE &&
+ 	    is_power_of_2(resp.num_indirection_ent)) {
 -- 
 2.53.0
 
