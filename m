@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A16A4C10E1;
-	Thu, 17 Sep 2026 15:47:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6AB24E77FB;
+	Thu, 17 Sep 2026 15:47:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789660077; cv=none; b=RdQjoZlJY0Yrnr1A4qLJZYG1rQ1d+BQWROUKsKLVrYg6be2V/fre6yMOuIEAZDUL0gFhSci1NfIUeJDVgegbXz4o9lmIFl6W+tQaYce2jKD32fiq9Es/OsYE9FRN34a507w2aLS4PyzTKLIX0Thq0f8zqGrWWiOMxcJMwlLSogw=
+	t=1789660079; cv=none; b=edHquMg+YGeLeGhfVyqp3pZxBhgEC2jH9c6CZLZOeosV+JXfJWj0nFLNSxEVlcoL+PBW/zEY/pGastG52tNc4Ok4bxhuEtAu91OpwxuSH8wNmpS1PIKXl6Gk7e2yNQlcbdVWr429fAKhOMA7ZgBTNqdW7N/b2JG1Xar7r2S6GDw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789660077; c=relaxed/simple;
-	bh=P9efC/1Wa8Nj9JutGfUeVcHoTa+Vt5Tw3qD4gtUeYJ4=;
+	s=arc-20240116; t=1789660079; c=relaxed/simple;
+	bh=yr5ZcUaRp2i9cfs4eh43o4ntooB5dF+VgRXbu9VRWew=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=kqrFhTWY+82sR9Xz8b+vA1+Ie+h0mVV9JWK+slSv1kQG4+LVyb08Vikn6iFXz81GfqzquHbfwL6w1YPOIwCPeoYHdDKDKxAWHjsrZXJ7AzTyVjYGu/YTKf/xkMn5bbjJd4x797GhpB8gUs1CSbHAgEHvwHvmAwPqaIb5tzlVq6c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NNiLVN6b; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=d+1DPwVmxFKqw2O4167saAsIy1vyL7L2xzA07NTgl9cTD/YL8tx367nlC52VtEMyk23JIkHwvIJI2zVO0xnuj5xr2NkMvMiTiBrdwHqEMo1WZn8PSZpQT76hy0Be8wgSN+GgZiJgujcjpQ70KOq0GHxpe4T6gdV21Y4W2/N3kOU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bM4qc+sA; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NNiLVN6b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 470BB1F00893;
-	Thu, 17 Sep 2026 15:47:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bM4qc+sA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 299701F00899;
+	Thu, 17 Sep 2026 15:47:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789660070;
-	bh=eYPk3LZiDM9WaLRcuQabEU592fgPxCAIToHmgZnrzFM=;
+	s=korg; t=1789660073;
+	bh=RATRjiaVZHXcvTGP3/Bx4nZrDDsPCWJqihs4qK3lkwg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NNiLVN6b6Ai/PLC7QYtdpxuB2XkSikj7esJoqoJv390Q2tV8gPXfwRbkWPToajQ9n
-	 zeyu7j8h1IKYcw29UbVwkiMBc/A4OJxcYxq1Xl7Je8Wfag/0a6D9ExfEj777x+AWpV
-	 s8pivbO5HmveTUuL+vJ0DLEmyFGESAxEnFOFI6z8=
+	b=bM4qc+sA4Cmg4GCuw8e5x5H41HoCmKcyR2IimYRgcAa7HLkZqP++MdrbyzqwwA6FZ
+	 kixIIcimr6gw2AzUTEuBKSq7b8XmFvkHxYJcW4d8OxKfyiwz7EwHtWZ6wdaxVtxS4A
+	 KVMdXixTBoQVIXpnzchj89bYXuK9xbUnJVqoLiBw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
-	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 7.2 470/733] tracing: Restore :mod: trailer after parsing in ftrace_set_clr_event()
-Date: Thu, 17 Sep 2026 16:12:58 +0100
-Message-ID: <20260917151403.697317503@linuxfoundation.org>
+	Borislav Petkov <bp@alien8.de>,
+	Jason Andryuk <jason.andryuk@amd.com>,
+	Yazen Ghannam <yazen.ghannam@amd.com>
+Subject: [PATCH 7.2 453/733] x86/amd_node: Avoid divide by zero on virtualized systems
+Date: Thu, 17 Sep 2026 16:12:41 +0100
+Message-ID: <20260917151403.202072527@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -44,47 +45,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+From: Jason Andryuk <jason.andryuk@amd.com>
 
-commit 911002e99e15f640f1fdc6d276206beaef59e790 upstream.
+commit 72bd92bd8190d7869ecb462649ca40f297822a33 upstream.
 
-While ftrace_set_clr_event() modifies its input buffer during parsing,
-before returning to the caller the buffer is supposed to be restored
-to its original state.
+On a virtualized system, the number of nodes does not have a relationship to
+the number of roots.  A Xen PVH dom0 can calculate roots_per_node as 0, which
+crashes with a divide by zero in:
 
-This works correctly for the colon between the subsystem and event
-but not the colon at the beginning of :mod:.
+  if (count++ % roots_per_node)
 
-Restore the colon, so the :mod: trailer is not stripped after
-ftrace_set_clr_event().
+because the underlying topology code on Xen ends up making num_nodes
+2 and num_roots 1 and the integer division result is 0.
 
+The issue is seen with Xen, but it could affect other systems.
+
+Set roots_per_node to 1 in this case. Print a firmware bug when this is
+performed for non-virtualized systems.
+
+  [ bp: Massage commit message. ]
+
+Fixes: 0a4b61d9c2e4 ("x86/amd_node: Fix AMD root device caching")
+Suggested-by: Borislav Petkov <bp@alien8.de>
+Signed-off-by: Jason Andryuk <jason.andryuk@amd.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Yazen Ghannam <yazen.ghannam@amd.com>
 Cc: stable@vger.kernel.org
-Fixes: 4c86bc531e60 ("tracing: Add :mod: command to enabled module events")
-Link: https://patch.msgid.link/20260908-tracing-cli-event-filter-v2-1-05396a3fb663@linutronix.de
-Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Link: https://patch.msgid.link/20260825214805.39148-2-jason.andryuk@amd.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_events.c |    2 ++
- 1 file changed, 2 insertions(+)
+ arch/x86/kernel/amd_node.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/kernel/trace/trace_events.c
-+++ b/kernel/trace/trace_events.c
-@@ -1462,6 +1462,8 @@ int ftrace_set_clr_event(struct trace_ar
- 	/* Put back the colon to allow this to be called again */
- 	if (buf)
- 		*(buf - 1) = ':';
-+	if (mod)
-+		*(mod - 5) = ':';
+--- a/arch/x86/kernel/amd_node.c
++++ b/arch/x86/kernel/amd_node.c
+@@ -287,6 +287,11 @@ static int __init amd_smn_init(void)
+ 		return -ENOMEM;
  
- 	return ret;
- }
+ 	roots_per_node = num_roots / num_nodes;
++	if (!roots_per_node) {
++		if (!cpu_feature_enabled(X86_FEATURE_HYPERVISOR))
++			pr_warn(FW_BUG "Error detecting roots per node.\n");
++		roots_per_node = 1;
++	}
+ 
+ 	count = 0;
+ 	node = 0;
 
 
