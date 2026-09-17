@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39A883B6364;
-	Thu, 17 Sep 2026 17:13:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30EAF4F4CFE;
+	Thu, 17 Sep 2026 17:13:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789665197; cv=none; b=pPTbBwAAJ600nWyXtkypK3KeIx/5SIgOeGRIe1kNHqTVZnAtsZ2zFFDoMZw9kr7YtNVdA/lxndRRNwzaNOF07sJHFkVQCSGWVsfQwLzPBgfyX3uAC23ZfRnJ2Z4gjXjwy+HpUALiqUbNqTW61DS/aickVTia7N5hzAbqeI62mt0=
+	t=1789665199; cv=none; b=kpE9j1kGUfZ6LikaAVsXN6NK82wTi3RjhDCjVHYw6EGmQ/hibJyRlikNXZyhQSb4UWkruXV7ODy3JSKvHJocZFROGh3uJInZe6cHsI0ow4juVchzx2967y3Ddv/ZvneyIlajpOFo3NOkz8qKaGIsXl60L/J4082Mx1nW/o1dvtI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789665197; c=relaxed/simple;
-	bh=mcdM4fPOvdPdWzmwnUPSvToQXUK6WYnhEK1XplmnY4M=;
+	s=arc-20240116; t=1789665199; c=relaxed/simple;
+	bh=IodtzkzOK0nHtKoRO1dYp7zBPNxQofKiW3pF/JwY7yM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NzxjpYl92wMM6OOAflyXWEzclsQwWNn5D57/lINsfxChMV/aF6z+S2rDjAQL0jzfvcwdW0VP73P5v8o/HnMaQhxOWRghgBw7jpjKjIReVQdLyo6X9SSqapnBWeL8LVwG4/XR9DLzA77dpMvHJHOVlW7fQE+2A6StWurk9LXIlPU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lVmOxuIG; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=udczvVuvnd0lTNoRurIHWanXYAyG+xauu1LKNbqsCCsZwvApDzcCzJuwWcGiEpZ7ljXQmCHH2i+WoxmEQk/CyOxxmftGXvlyo3Ft9TCTVYN1gtPjK/QaleJmOgyMebJb/QJGHV51RxspMJ4Mi7xgvYyq/tSLXAArYC0Cc1EEzkc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pww6xD/g; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lVmOxuIG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D1271F000FF;
-	Thu, 17 Sep 2026 17:13:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pww6xD/g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 876DD1F000FF;
+	Thu, 17 Sep 2026 17:13:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789665195;
-	bh=OfqihVRFKH1ChSnl1WSUjUeWgtOr8OXcEaoGjJuu/rY=;
+	s=korg; t=1789665198;
+	bh=BoZqXpMAqlu1QRxB9xuJam7s0YrpIZnk/qRi0DMxJZs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lVmOxuIGg4fDlh+Ten8VXe0RVnu3hY+00iJsxrMb/kOcmYBjm5j4UDlU/KV1IaLMO
-	 vX9xrnLmYD0U7OyBCPBifS4h6X6fbHVFIc9nz3w+E+UuTxA6PA7svh83V0782Nlvfm
-	 6FN0ti3W57c3ooxw8udl8U2Z0vFLR14PDkJM/oiI=
+	b=Pww6xD/g9handjDItQR+darnDCsEaOUotNf/mZpaH+3GWz7F/NNwkEczxkTZ3RFwn
+	 W3Lyj/TvndGfRDBdGhEVYkEjSwNMX9MDUF8bgW0kwQd9jq01Ug/DkJIqzZDGjAtxqk
+	 wiP3aGnzZpyQNPleVm0sw1Z2WZZhYZ01fzCUjvCY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zero Day Initiative <zdi-disclosures@trendmicro.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	"Milan P. Gandhi" <mgandhi@redhat.com>,
+	Laurence Oberman <loberman@redhat.com>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0624/1250] sctp: fix a TOCTOU race in SCTP_CMD_TIMER_START
-Date: Thu, 17 Sep 2026 16:06:59 +0100
-Message-ID: <20260917151608.792576182@linuxfoundation.org>
+Subject: [PATCH 6.18 0625/1250] scsi: mpi3mr: Fix NULL pointer dereference in mpi3mr_sas_port_add()
+Date: Thu, 17 Sep 2026 16:07:00 +0100
+Message-ID: <20260917151608.818610150@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -52,60 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xin Long <lucien.xin@gmail.com>
+From: Milan P. Gandhi <mgandhi@redhat.com>
 
-[ Upstream commit 2188569e7e1b0bc3f3b557dc97ab7a02befc11c8 ]
+[ Upstream commit dba9e2181ca5e875f98b8b9b4535cdaab87dcb0d ]
 
-The SCTP_CMD_TIMER_START handler checks timer_pending() before calling
-timer_reduce(). The timer can expire and detach between these operations,
-causing timer_reduce() to rearm the timer without taking the association
-reference required for the newly armed timer.
+sas_port_alloc_num() can return NULL on memory allocation failure. The
+return value is passed directly to sas_port_add() without a NULL check,
+which causes a NULL pointer dereference.
 
-The timer callback later unconditionally drops its association reference,
-which can leave the association reference count unbalanced and result in
-use-after-free during association teardown.
+Additionally, if sas_port_add() fails, the allocated port is not freed
+before jumping to out_fail, leaking the sas_port structure. Call
+sas_port_free() to properly release it.
 
-Use the return value of timer_reduce() to determine whether the timer was
-actually armed. Take the association reference only when timer_reduce()
-successfully starts a new timer, closing the race between checking the
-timer state and rearming it.
-
-This issue was reported by Nico Yip (@_cyeaa_) working with TrendAI Zero
-Day Initiative.
-
-Fixes: 20a785aa52c8 ("sctp: Don't add the shutdown timer if its already been added")
-Reported-by: Zero Day Initiative <zdi-disclosures@trendmicro.com>
-Signed-off-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/9d8f1b5c50329d5ea7c642128d35681abaa9ed20.1787773744.git.lucien.xin@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: e22bae30667a ("scsi: mpi3mr: Add expander devices to STL")
+Signed-off-by: Milan P. Gandhi <mgandhi@redhat.com>
+Reviewed-by: Laurence Oberman <loberman@redhat.com>
+Link: https://patch.msgid.link/20260812103344.174247-2-mgandhi@redhat.com
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/sm_sideeffect.c | 11 +----------
- 1 file changed, 1 insertion(+), 10 deletions(-)
+ drivers/scsi/mpi3mr/mpi3mr_transport.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/net/sctp/sm_sideeffect.c b/net/sctp/sm_sideeffect.c
-index 94716406d602c..0d99b7e8c082f 100644
---- a/net/sctp/sm_sideeffect.c
-+++ b/net/sctp/sm_sideeffect.c
-@@ -1545,17 +1545,8 @@ static int sctp_cmd_interpreter(enum sctp_event_type event_type,
- 			timeout = asoc->timeouts[cmd->obj.to];
- 			BUG_ON(!timeout);
+diff --git a/drivers/scsi/mpi3mr/mpi3mr_transport.c b/drivers/scsi/mpi3mr/mpi3mr_transport.c
+index d70f002d6487d..4b917659a16c7 100644
+--- a/drivers/scsi/mpi3mr/mpi3mr_transport.c
++++ b/drivers/scsi/mpi3mr/mpi3mr_transport.c
+@@ -1430,9 +1430,15 @@ static struct mpi3mr_sas_port *mpi3mr_sas_port_add(struct mpi3mr_ioc *mrioc,
+ 	}
  
--			/*
--			 * SCTP has a hard time with timer starts.  Because we process
--			 * timer starts as side effects, it can be hard to tell if we
--			 * have already started a timer or not, which leads to BUG
--			 * halts when we call add_timer. So here, instead of just starting
--			 * a timer, if the timer is already started, and just mod
--			 * the timer with the shorter of the two expiration times
--			 */
--			if (!timer_pending(timer))
-+			if (!timer_reduce(timer, jiffies + timeout))
- 				sctp_association_hold(asoc);
--			timer_reduce(timer, jiffies + timeout);
- 			break;
+ 	port = sas_port_alloc_num(mr_sas_node->parent_dev);
++	if (!port) {
++		ioc_err(mrioc, "failure at %s:%d/%s()!\n",
++		    __FILE__, __LINE__, __func__);
++		goto out_fail;
++	}
+ 	if ((sas_port_add(port))) {
+ 		ioc_err(mrioc, "failure at %s:%d/%s()!\n",
+ 		    __FILE__, __LINE__, __func__);
++		sas_port_free(port);
+ 		goto out_fail;
+ 	}
  
- 		case SCTP_CMD_TIMER_RESTART:
 -- 
 2.53.0
 
