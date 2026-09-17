@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3017547041;
-	Thu, 17 Sep 2026 17:33:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47E5254706A;
+	Thu, 17 Sep 2026 17:33:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666409; cv=none; b=HGHdAoaNlSP8dmHCvos7ny4a3kjeU47VbpiUWKFGrycxQV6gCWj9y8Xys89mwTUFkW6etTod+UjC1Pt2omYq+Z/KM8Kw/mfq/y32cDb76lzalH0GZ4zozFekz5XuOwwo0B2+dyJqI/GbL8t6AFsdNdjqKuMddiGbS8sLCUNiQYI=
+	t=1789666412; cv=none; b=uLnWtHAiLE4FFSB9bDlfITHM8LixPK1Jv1/ctNY+zC3YZ+g5PnAQhboNAW48OvKh6OyxpFBB08svqrvz7nsxMdGA2q3tB98oQVSUsR9gTWwBoz6fx1wAkzCdQZWEjcH4MX5tHRFLVHm1vca+NZF2IzUpNKJFpakWnUoYBChamXw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666409; c=relaxed/simple;
-	bh=KnEHye+q3CEnpEJSKejDlYTbeojLgsgDRp9IdKmqLmI=;
+	s=arc-20240116; t=1789666412; c=relaxed/simple;
+	bh=5EmOsecXoI2OruM3Gc3T9pqMrJK6JmwAgfkvmjKemk4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OR9vtCTllkJdolt/wY76LP77mGwcydj94SgnNMVVX0dw9WYW4xA12ZDPJVSk5vVzkOdBiFuqVrbUauosFteUZvxBREBugMlJ8Ao8C64UZRxo6TRLAS6lQc33hDNO0EhM+ShGxBccX8czBazMkHPi2bPbyOMAu7BG7byk3qAkfJ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VA51O4FI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=NxlliocP2AMoPE6Ky3INOIOjiLedhtyMfXp6KoMDNyKMiY2xvYQgjk0GE0GVZ9VF01kMuRcANvb826nf7HDyEVSXkP7W76RjeS3xPTFzRUW4KTu49eR2wGGaLXvhKG7buMMHhib2860kc1CPXTul8AMwnPiGLqDYqSyOSV2M9Uo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r8LXB+sY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VA51O4FI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46FFD1F000FF;
-	Thu, 17 Sep 2026 17:33:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r8LXB+sY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A4691F000FF;
+	Thu, 17 Sep 2026 17:33:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666407;
-	bh=9A1OzlDLF+puIzmZEjfR+k2wl3+LVpA8Q+oV1SmLXPk=;
+	s=korg; t=1789666410;
+	bh=fXEX4YlbAr9jO8bTNCLW4wNV9GB/cGWI16QhszX2KO8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VA51O4FIgxZIjkRtuzDogiqVcUqDkVac/XhE7JF0Wo6M6ScIFeksNeY+dGpH2H4Ez
-	 iYz8saqeeahSSZpyf07aYkEADUZ6FspA8RLjclYCWdl49lscd1dpkZmyOqGwUZUS7f
-	 JVCoYZ7NciJ1I5IUYC/D0CPoO/coIldvd0zrcJ0c=
+	b=r8LXB+sYdoKX0BlsNjNS0Dq7PIboQxnEiPhsJ+D2NKdm+nhEUbrj8mbAFJVB3Qq0v
+	 p8rhuQp3dNApRukwqszH8Zmjc9XZgduikxmUxL7H3lKgo0mlfeh8X3dJ9ALfVfMSoM
+	 jqPSzDUGCjRkDdToO7UTxiBhHdFlbFpzGlsG0L0w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Prike Liang <Prike.Liang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.18 0979/1250] drm/amdgpu: skip gfx switch_power_profile during GPU reset
-Date: Thu, 17 Sep 2026 16:12:54 +0100
-Message-ID: <20260917151618.549864396@linuxfoundation.org>
+	Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 1021/1250] net: phy: dp83td510: handle the active-high LED polarity mode
+Date: Thu, 17 Sep 2026 16:13:36 +0100
+Message-ID: <20260917151619.728542879@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -50,66 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Prike Liang <Prike.Liang@amd.com>
+From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
 
-commit 1f1d43418d61c8511779e0f63a954a78b9433b43 upstream.
+commit 6ca81bbc31cdc964e4b74d17b86215d4a810a56f upstream.
 
-During resume from GPU reset, the gfx idle work may invoke switch_power_profile
-before the reset completes. This causes the following assert error because the
-register access occurs without first releasing the GPU reset semaphore:
+dp83td510_led_polarity_set() only recognizes PHY_LED_ACTIVE_LOW, so
+PHY_LED_ACTIVE_HIGH falls through to the default case and returns -EINVAL.
+of_phy_led() propagates the error, of_phy_leds() drops the LEDs registered
+so far and passes it on, and phy_probe() returns it. A device tree marking
+a DP83TD510 LED as 'active-high', which leds/common.yaml allows and
+ethernet-phy.yaml references for led@N nodes, thus leaves the mdio device
+unbound, so phy_attach_direct() falls back to the genphy driver, which
+cannot drive this 10BASE-T1L single-mode PHY, so the interface has no
+usable link.
 
-[ 1576.768935] CR2: 0000559ea133ead0 CR3: 00000002e6c42000 CR4: 0000000000350ef0
-[ 1576.768940] Call Trace:
-[ 1576.768944]  <TASK>
-[ 1576.768953]  amdgpu_device_rreg+0x21/0x50 [amdgpu]
-[ 1576.769158]  smu_msg_v1_send_msg+0x1a4/0x6e0 [amdgpu]
-[ 1576.769437]  smu_cmn_send_smc_msg_with_params_ext+0xba/0x120 [amdgpu]
-[ 1576.769721]  smu_cmn_send_smc_msg_with_param+0x33/0x40 [amdgpu]
-[ 1576.769993]  smu_v13_0_0_set_power_profile_mode+0x192/0x2b0 [amdgpu]
-[ 1576.770267]  smu_bump_power_profile_mode+0x5d/0x80 [amdgpu]
-[ 1576.770538]  smu_switch_power_profile+0xa4/0xf0 [amdgpu]
-[ 1576.770839]  amdgpu_dpm_switch_power_profile+0x6f/0x90 [amdgpu]
-[ 1576.771210]  amdgpu_gfx_profile_idle_work_handler+0xe9/0x130 [amdgpu]
-[ 1576.771460]  process_one_work+0x23e/0x6f0
-[ 1576.771491]  worker_thread+0x1c4/0x380
-[ 1576.771506]  kthread+0x10c/0x150
-[ 1576.771512]  ? __pfx_worker_thread+0x10/0x10
-[ 1576.771518]  ? __pfx_kthread+0x10/0x10
-[ 1576.771530]  ret_from_fork+0x314/0x390
-[ 1576.771537]  ? __pfx_kthread+0x10/0x10
-[ 1576.771546]  ret_from_fork_asm+0x1a/0x30
+The callback initializes polarity to DP83TD510E_LED_POLARITY(index), which
+is the active-high setting, so the request is already satisfied and only
+the case label is missing.
 
-Signed-off-by: Prike Liang <Prike.Liang@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit d93b1ff538ce9750c01e0dd0aa62575579c0fc08)
 Cc: stable@vger.kernel.org
+Fixes: 5b281fe7e396 ("net: phy: dp83td510: introduce LED framework support")
+Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20260908105959.70453-3-donggeunyoo.kernel@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/pm/amdgpu_dpm.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/phy/dp83td510.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/gpu/drm/amd/pm/amdgpu_dpm.c
-+++ b/drivers/gpu/drm/amd/pm/amdgpu_dpm.c
-@@ -348,7 +348,8 @@ int amdgpu_dpm_switch_power_profile(stru
- 	const struct amd_pm_funcs *pp_funcs = adev->powerplay.pp_funcs;
- 	int ret = 0;
- 
--	if (amdgpu_sriov_vf(adev))
-+	if (amdgpu_sriov_vf(adev) ||
-+		amdgpu_in_reset(adev))
- 		return 0;
- 
- 	if (pp_funcs && pp_funcs->switch_power_profile) {
-@@ -367,7 +368,8 @@ int amdgpu_dpm_pause_power_profile(struc
- 	const struct amd_pm_funcs *pp_funcs = adev->powerplay.pp_funcs;
- 	int ret = 0;
- 
--	if (amdgpu_sriov_vf(adev))
-+	if (amdgpu_sriov_vf(adev) ||
-+		amdgpu_in_reset(adev))
- 		return 0;
- 
- 	if (pp_funcs && pp_funcs->pause_power_profile) {
+--- a/drivers/net/phy/dp83td510.c
++++ b/drivers/net/phy/dp83td510.c
+@@ -380,6 +380,9 @@ static int dp83td510_led_polarity_set(st
+ 		case PHY_LED_ACTIVE_LOW:
+ 			polarity = 0;
+ 			break;
++		case PHY_LED_ACTIVE_HIGH:
++			polarity = DP83TD510E_LED_POLARITY(index);
++			break;
+ 		default:
+ 			return -EINVAL;
+ 		}
 
 
