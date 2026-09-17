@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF0184B7A46;
-	Thu, 17 Sep 2026 15:53:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD15A4CDDEC;
+	Thu, 17 Sep 2026 15:53:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789660406; cv=none; b=HJiTYMuWM+QOBllHtoiHXplKhxVNeM2OdrY2BnMNgMaEMN9RITK85j+z9UAIeOf+GHbKWIGUDTM8vFjBH/IddCTboG6J9RUxawXosDgLp9717tGi7D/14gV7PRVjgCEaSfztaxexFe0j1VQM690NW8MvJoB2OGNYAyYTCrAyu4E=
+	t=1789660409; cv=none; b=UIixGWzQiNmE8N813yI9jUFyPj/hrRZO8W7Dh7tJGmsPyitVI3AGXp0JlOqUFhhmn6xr60OQ6KVxfbBFV3l9EIDIrROs6b5k580KoLWBvBYPXLuV+0PmjphMTt2aXZSt6B2Noejlpe+UPnEa4TmV57iQyPIxGejwvC68xXt78+s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789660406; c=relaxed/simple;
-	bh=+xesEqLCBJnuXExPrjHXHkIMJTB7ms5o+7nUlKhfK9Y=;
+	s=arc-20240116; t=1789660409; c=relaxed/simple;
+	bh=F3oTZCiHmEQMOleNcnNaVqwx42qPz9/EHgwlu8p0b30=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=teX13n22d8BADimZmcOakVgwAW1Axi2hkncIW6xHROf0uwYsj+Zd2zOX700uFQwjGEmqA1aIrzuiJhsuCLN/zgbO+VWSj6RRTX50CSeaCkf5/KH+TMMjrFhfqD7YSjEfFSNvX+HvuEIdTN0zfDRVEbYZGYeqY5YJAC/V375JWCA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FV54iPvO; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=tLaIttowomYwEkzyGfouh7uF5ec8SgQOS6mf5aYXQ5euCHw+mbbcCsb2vnOPB0VY3ZbtG7WygdFPTZ13OrJ5udC2D7rTZhtynFe/1WL6hzNFZCg70g2ntvSfOCLLxeKLCxmI/t/7mtoIJvgEx9vdiN1J26P6Dnbd6Ksosi/JocA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AvfiJOwL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FV54iPvO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F06B1F000FF;
-	Thu, 17 Sep 2026 15:53:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AvfiJOwL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A0EF1F000FF;
+	Thu, 17 Sep 2026 15:53:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789660404;
-	bh=YlrwkB5lPstg+o0xu/e7ISD+wB/d+PzEgCME/y3Q/xc=;
+	s=korg; t=1789660407;
+	bh=wzk0B2nvxNQohYHq85q0GjOjXI16TZ60WhISLUsdM7w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FV54iPvOUJEvR43i3zfWbP1B7ZfokwSnCKM7ceIWXn4fFN7byijH0A/5paHh4swsA
-	 QqC5WyeZUAYyKsEIBAUJSLfsKSjTfRcG38/I+/z6tvMFT/AlmLh8/4RGxDWhhE6keS
-	 6p+ykCOoLIz9saoYIFFSadv1vWsOwzPsGNJ4sLtI=
+	b=AvfiJOwLHF0b9BuIPw4p9jo7n7Df6LZojHytyNJcv0GFZ+1tkgpYSq2uHJXFz2A2/
+	 84QgxpELX4bi5Qv/ti+ymWKgndLba8jueqjFgWMoYh5mykx/voi7aSVxMd3OBtaQv/
+	 zjpl7Q7uKmzwwh8EXhcGdsccDSC0pp9hNtTaXJsw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Yilin Zhu <zylzyl2333@gmail.com>,
-	Zhiling Zou <zhilinz@nebusec.ai>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 7.2 543/733] net: bridge: use option bits for CFM/MRP frame handlers
-Date: Thu, 17 Sep 2026 16:14:11 +0100
-Message-ID: <20260917151405.763461382@linuxfoundation.org>
+	Lionel Landwerlin <lionel.g.landwerlin@intel.com>,
+	=?UTF-8?q?Jos=C3=A9=20Roberto=20de=20Souza?= <jose.souza@intel.com>,
+	intel-xe@lists.freedesktop.org,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	Matthew Auld <matthew.auld@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>
+Subject: [PATCH 7.2 534/733] drm/xe: Flush LSC untyped L1 dataport cache after rcs/ccs batches
+Date: Thu, 17 Sep 2026 16:14:02 +0100
+Message-ID: <20260917151405.512070398@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -47,284 +48,112 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.2-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhiling Zou <zhilinz@nebusec.ai>
+From: Thomas Hellström <thomas.hellstrom@linux.intel.com>
 
-commit 7a49e6b16f36b8e085521699adbca3e321b6dd0c upstream.
+commit f5fcf7e638b904397ec0f66d3ea6766ef0cfe25b upstream.
 
-CFM and MRP register a global br_frame_type whose hlist_node is linked
-into the per-bridge frame_type_list when the first MEP/MRP instance is
-created. Enabling the protocol on multiple bridges therefore inserts the
-same node into multiple lists. Unregistering it on one bridge then
-corrupts list state belonging to another.
+emit_render_cache_flush() sets PIPE_CONTROL0_HDC_PIPELINE_FLUSH to
+flush the L2/HDC data cache before fence signalling, but it never
+requests a flush of the LSC untyped L1 data cache via the 'Untyped
+Data-Port Cache Flush Enable' bit in PIPE_CONTROL DWord0[11].
 
-These handlers can only be installed once per bridge, and they are
-uncommon. Track their per-bridge enable state with net_bridge option
-bits, which already live on the Rx hot cache line, and dispatch the
-matching handler directly from the receive path. Check both bits
-together first as an unlikely case.
+Per the Bspec, in 3D pipeline mode HDC Pipeline Flush is documented to
+also flush/invalidate the untyped L1 cache, but only depending on how
+HDC_CHICKEN0[13:11] is programmed. Starting with MTL, this coupling
+between HDC Pipeline Flush and the untyped L1 cache flush no longer
+holds in practice, regardless of how HDC_CHICKEN0 is programmed, so
+relying on it is not safe on newer platforms such as BMG. Mesa's Vulkan
+driver (anv) has been assuming the kernel flushes both caches between
+submissions, and hit user-visible corruption in apps such as Llama.cpp
+because of this gap; it now works around it by flushing both caches
+again from userspace at the end of every command buffer.
 
-Remove the generic frame_type_list and br_frame_type helpers, which
-have had no other users since CFM and MRP were added. That shrinks
-struct net_bridge by 8 bytes and drops the list walk from the fast
-path. When neither protocol is compiled in, BR_CFM_MRP_OPTS is 0 and
-the compiler prunes the branch.
+Correctness between submissions on the same queue is userspace's
+responsibility and belongs in Mesa, not the kernel. However, for
+security we must ensure stale data can't leak through the untyped L1
+dataport cache once memory is reclaimed or evicted, which requires the
+KMD to flush it before releasing memory for reuse.
 
-Fixes: 90c628dd47ff ("net: bridge: extend the process of special frames")
-Fixes: dc32cbb3dbd7 ("bridge: cfm: Kernel space implementation of CFM. CCM frame RX added.")
-Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Suggested-by: Nikolay Aleksandrov <razor@blackwall.org>
-Co-developed-by: Yilin Zhu <zylzyl2333@gmail.com>
-Signed-off-by: Yilin Zhu <zylzyl2333@gmail.com>
-Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
-Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://patch.msgid.link/0345b9d5aa60ba416f6738ff1b87140f0a749cb8.1788417901.git.zhilinz@nebusec.ai
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Prior to MTL, HDC_CHICKEN0 could be programmed (as already done for
+DG2 via Wa_22010960976/Wa_14013347512) to reliably keep HDC Pipeline
+Flush coupled to the untyped L1 cache flush, so those platforms are
+unaffected. Mesa's own anv driver found that on MTL the HW
+disconnected the two independently of how HDC_CHICKEN0 is programmed,
+and could not bring the old behavior back even by writing the register
+by hand; see Mesa commit 7c2ff46a4fc3 ("anv: don't prevent L1 untyped
+cache flush in 3D mode"). The kernel can't reliably request the flush
+from the CS on MTL either, so restrict the new PIPE_CONTROL bit to
+GRAPHICS_VERx100 >= 2000 (Xe2 and later), where it can be relied on.
+
+Explicitly set PIPE_CONTROL0_UNTYPED_DATAPORT_CACHE_FLUSH together
+with PIPE_CONTROL0_HDC_PIPELINE_FLUSH in emit_render_cache_flush() on
+Xe2 and later, so the L1 data cache is known clean before memory is
+released for reuse, without depending on undocumented
+platform-specific HDC_CHICKEN0 behavior.
+
+Bspec: 56551
+Link: https://gitlab.freedesktop.org/mesa/mesa/-/commit/7c2ff46a4fc3e537573ac9503057e0cd29b6fff3
+Fixes: 9f8f93bee3ef ("drm/xe: Emit a render cache flush after each rcs/ccs batch")
+Reported-by: Lionel Landwerlin <lionel.g.landwerlin@intel.com>
+Closes: https://gitlab.freedesktop.org/drm/xe/kernel/-/issues/8909
+Cc: José Roberto de Souza <jose.souza@intel.com>
+Cc: intel-xe@lists.freedesktop.org
+Cc: <stable@vger.kernel.org> # v6.8+
+Assisted-by: GitHub_Copilot:claude-sonnet-5
+Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Reviewed-by: Matthew Auld <matthew.auld@intel.com>
+Link: https://patch.msgid.link/20260903114552.48634-1-thomas.hellstrom@linux.intel.com
+(cherry picked from commit 434514b6fe731e873808297c268fc52cdf4a1ce6)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bridge/br_cfm.c     |   11 +++--------
- net/bridge/br_device.c  |    1 -
- net/bridge/br_input.c   |   35 ++++++++++++++---------------------
- net/bridge/br_mrp.c     |   13 +++----------
- net/bridge/br_private.h |   26 +++++++++++++++-----------
- 5 files changed, 35 insertions(+), 51 deletions(-)
+ drivers/gpu/drm/xe/instructions/xe_gpu_commands.h |    1 +
+ drivers/gpu/drm/xe/xe_ring_ops.c                  |   11 +++++++++++
+ 2 files changed, 12 insertions(+)
 
---- a/net/bridge/br_cfm.c
-+++ b/net/bridge/br_cfm.c
-@@ -367,7 +367,7 @@ static u32 ccm_tlv_extract(struct sk_buf
- }
+--- a/drivers/gpu/drm/xe/instructions/xe_gpu_commands.h
++++ b/drivers/gpu/drm/xe/instructions/xe_gpu_commands.h
+@@ -46,6 +46,7 @@
+ #define GFX_OP_PIPE_CONTROL(len)	((0x3<<29)|(0x3<<27)|(0x2<<24)|((len)-2))
  
- /* note: already called with rcu_read_lock */
--static int br_cfm_frame_rx(struct net_bridge_port *port, struct sk_buff *skb)
-+int br_cfm_frame_rx(struct net_bridge_port *port, struct sk_buff *skb)
+ #define   PIPE_CONTROL0_QUEUE_DRAIN_MODE		BIT(12)
++#define	  PIPE_CONTROL0_UNTYPED_DATAPORT_CACHE_FLUSH	BIT(11)	/* gen12 */
+ #define	  PIPE_CONTROL0_L3_READ_ONLY_CACHE_INVALIDATE	BIT(10)	/* gen12 */
+ #define	  PIPE_CONTROL0_HDC_PIPELINE_FLUSH		BIT(9)	/* gen12 */
+ 
+--- a/drivers/gpu/drm/xe/xe_ring_ops.c
++++ b/drivers/gpu/drm/xe/xe_ring_ops.c
+@@ -212,6 +212,7 @@ static int emit_render_cache_flush(struc
  {
- 	u32 mdlevel, interval, size, index, max;
- 	const struct br_cfm_common_hdr *hdr;
-@@ -489,11 +489,6 @@ static int br_cfm_frame_rx(struct net_br
- 	return 1;
- }
+ 	struct xe_exec_queue *q = job->q;
+ 	struct xe_gt *gt = q->gt;
++	struct xe_device *xe = gt_to_xe(gt);
+ 	bool lacks_render = !(gt->info.engine_mask & XE_HW_ENGINE_RCS_MASK);
+ 	u32 flags0, flags1;
  
--static struct br_frame_type cfm_frame_type __read_mostly = {
--	.type = cpu_to_be16(ETH_P_CFM),
--	.frame_handler = br_cfm_frame_rx,
--};
--
- int br_cfm_mep_create(struct net_bridge *br,
- 		      const u32 instance,
- 		      struct br_cfm_mep_create *const create,
-@@ -559,7 +554,7 @@ int br_cfm_mep_create(struct net_bridge
- 	INIT_DELAYED_WORK(&mep->ccm_tx_dwork, ccm_tx_work_expired);
+@@ -220,6 +221,16 @@ static int emit_render_cache_flush(struc
+ 				      LRC_PPHWSP_FLUSH_INVAL_SCRATCH_ADDR, 0);
  
- 	if (hlist_empty(&br->mep_list))
--		br_add_frame(br, &cfm_frame_type);
-+		br_opt_toggle(br, BROPT_CFM_ENABLED, true);
- 
- 	hlist_add_tail_rcu(&mep->head, &br->mep_list);
- 
-@@ -588,7 +583,7 @@ static void mep_delete_implementation(st
- 	kfree_rcu(mep, rcu);
- 
- 	if (hlist_empty(&br->mep_list))
--		br_del_frame(br, &cfm_frame_type);
-+		br_opt_toggle(br, BROPT_CFM_ENABLED, false);
- }
- 
- int br_cfm_mep_delete(struct net_bridge *br,
---- a/net/bridge/br_device.c
-+++ b/net/bridge/br_device.c
-@@ -503,7 +503,6 @@ void br_dev_setup(struct net_device *dev
- 	spin_lock_init(&br->lock);
- 	INIT_LIST_HEAD(&br->port_list);
- 	INIT_HLIST_HEAD(&br->fdb_list);
--	INIT_HLIST_HEAD(&br->frame_type_list);
- #if IS_ENABLED(CONFIG_BRIDGE_MRP)
- 	INIT_HLIST_HEAD(&br->mrp_list);
- #endif
---- a/net/bridge/br_input.c
-+++ b/net/bridge/br_input.c
-@@ -317,17 +317,25 @@ frame_finish:
- 	return RX_HANDLER_CONSUMED;
- }
- 
-+#define BR_CFM_MRP_OPTS \
-+	((IS_ENABLED(CONFIG_BRIDGE_CFM) ? BIT(BROPT_CFM_ENABLED) : 0UL) | \
-+	 (IS_ENABLED(CONFIG_BRIDGE_MRP) ? BIT(BROPT_MRP_ENABLED) : 0UL))
-+
- /* Return 0 if the frame was not processed otherwise 1
-  * note: already called with rcu_read_lock
-  */
- static int br_process_frame_type(struct net_bridge_port *p,
- 				 struct sk_buff *skb)
- {
--	struct br_frame_type *tmp;
-+	struct net_bridge *br = p->br;
- 
--	hlist_for_each_entry_rcu(tmp, &p->br->frame_type_list, list)
--		if (unlikely(tmp->type == skb->protocol))
--			return tmp->frame_handler(p, skb);
-+	if (skb->protocol == htons(ETH_P_CFM) &&
-+	    br_opt_get(br, BROPT_CFM_ENABLED))
-+		return br_cfm_frame_rx(p, skb);
-+
-+	if (skb->protocol == htons(ETH_P_MRP) &&
-+	    br_opt_get(br, BROPT_MRP_ENABLED))
-+		return br_mrp_process(p, skb);
- 
- 	return 0;
- }
-@@ -425,7 +433,8 @@ static rx_handler_result_t br_handle_fra
- 		}
- 	}
- 
--	if (unlikely(br_process_frame_type(p, skb)))
-+	if (unlikely((READ_ONCE(p->br->options) & BR_CFM_MRP_OPTS) &&
-+		     br_process_frame_type(p, skb)))
- 		return RX_HANDLER_PASS;
- 
- forward:
-@@ -467,19 +476,3 @@ rx_handler_func_t *br_get_rx_handler(con
- 
- 	return br_handle_frame;
- }
--
--void br_add_frame(struct net_bridge *br, struct br_frame_type *ft)
--{
--	hlist_add_head_rcu(&ft->list, &br->frame_type_list);
--}
--
--void br_del_frame(struct net_bridge *br, struct br_frame_type *ft)
--{
--	struct br_frame_type *tmp;
--
--	hlist_for_each_entry(tmp, &br->frame_type_list, list)
--		if (ft == tmp) {
--			hlist_del_rcu(&ft->list);
--			return;
--		}
--}
---- a/net/bridge/br_mrp.c
-+++ b/net/bridge/br_mrp.c
-@@ -6,13 +6,6 @@
- static const u8 mrp_test_dmac[ETH_ALEN] = { 0x1, 0x15, 0x4e, 0x0, 0x0, 0x1 };
- static const u8 mrp_in_test_dmac[ETH_ALEN] = { 0x1, 0x15, 0x4e, 0x0, 0x0, 0x3 };
- 
--static int br_mrp_process(struct net_bridge_port *p, struct sk_buff *skb);
--
--static struct br_frame_type mrp_frame_type __read_mostly = {
--	.type = cpu_to_be16(ETH_P_MRP),
--	.frame_handler = br_mrp_process,
--};
--
- static bool br_mrp_is_ring_port(struct net_bridge_port *p_port,
- 				struct net_bridge_port *s_port,
- 				struct net_bridge_port *port)
-@@ -486,7 +479,7 @@ static void br_mrp_del_impl(struct net_b
- 	kfree_rcu(mrp, rcu);
- 
- 	if (hlist_empty(&br->mrp_list))
--		br_del_frame(br, &mrp_frame_type);
-+		br_opt_toggle(br, BROPT_MRP_ENABLED, false);
- }
- 
- /* Adds a new MRP instance.
-@@ -536,7 +529,7 @@ int br_mrp_add(struct net_bridge *br, st
- 	rcu_assign_pointer(mrp->s_port, p);
- 
- 	if (hlist_empty(&br->mrp_list))
--		br_add_frame(br, &mrp_frame_type);
-+		br_opt_toggle(br, BROPT_MRP_ENABLED, true);
- 
- 	INIT_DELAYED_WORK(&mrp->test_work, br_mrp_test_work_expired);
- 	INIT_DELAYED_WORK(&mrp->in_test_work, br_mrp_in_test_work_expired);
-@@ -1241,7 +1234,7 @@ no_forward:
-  * normal forwarding.
-  * note: already called with rcu_read_lock
-  */
--static int br_mrp_process(struct net_bridge_port *p, struct sk_buff *skb)
-+int br_mrp_process(struct net_bridge_port *p, struct sk_buff *skb)
- {
- 	/* If there is no MRP instance do normal forwarding */
- 	if (likely(!test_bit(BR_MRP_AWARE_BIT, &p->flags)))
---- a/net/bridge/br_private.h
-+++ b/net/bridge/br_private.h
-@@ -491,12 +491,13 @@ enum net_bridge_opts {
- 	BROPT_MST_ENABLED,
- 	BROPT_MDB_OFFLOAD_FAIL_NOTIFICATION,
- 	BROPT_FDB_LOCAL_VLAN_0,
-+	BROPT_CFM_ENABLED,
-+	BROPT_MRP_ENABLED,
- };
- 
- struct net_bridge {
- 	spinlock_t			lock;
- 	spinlock_t			hash_lock;
--	struct hlist_head		frame_type_list;
- 	struct net_device		*dev;
- 	unsigned long			options;
- 	/* These fields are accessed on each packet */
-@@ -928,16 +929,6 @@ int nbp_backup_change(struct net_bridge_
- int br_handle_frame_finish(struct net *net, struct sock *sk, struct sk_buff *skb);
- rx_handler_func_t *br_get_rx_handler(const struct net_device *dev);
- 
--struct br_frame_type {
--	__be16			type;
--	int			(*frame_handler)(struct net_bridge_port *port,
--						 struct sk_buff *skb);
--	struct hlist_node	list;
--};
--
--void br_add_frame(struct net_bridge *br, struct br_frame_type *ft);
--void br_del_frame(struct net_bridge *br, struct br_frame_type *ft);
--
- static inline bool br_rx_handler_check_rcu(const struct net_device *dev)
- {
- 	return rcu_dereference(dev->rx_handler) == br_get_rx_handler(dev);
-@@ -2076,6 +2067,7 @@ int br_mrp_parse(struct net_bridge *br,
- bool br_mrp_enabled(struct net_bridge *br);
- void br_mrp_port_del(struct net_bridge *br, struct net_bridge_port *p);
- int br_mrp_fill_info(struct sk_buff *skb, struct net_bridge *br);
-+int br_mrp_process(struct net_bridge_port *p, struct sk_buff *skb);
- #else
- static inline int br_mrp_parse(struct net_bridge *br, struct net_bridge_port *p,
- 			       struct nlattr *attr, int cmd,
-@@ -2099,6 +2091,11 @@ static inline int br_mrp_fill_info(struc
- 	return 0;
- }
- 
-+static inline int br_mrp_process(struct net_bridge_port *p, struct sk_buff *skb)
-+{
-+	return 0;
-+}
-+
- #endif
- 
- /* br_cfm.c */
-@@ -2107,6 +2104,7 @@ int br_cfm_parse(struct net_bridge *br,
- 		 struct nlattr *attr, int cmd, struct netlink_ext_ack *extack);
- bool br_cfm_created(struct net_bridge *br);
- void br_cfm_port_del(struct net_bridge *br, struct net_bridge_port *p);
-+int br_cfm_frame_rx(struct net_bridge_port *port, struct sk_buff *skb);
- int br_cfm_config_fill_info(struct sk_buff *skb, struct net_bridge *br);
- int br_cfm_status_fill_info(struct sk_buff *skb,
- 			    struct net_bridge *br,
-@@ -2131,6 +2129,12 @@ static inline void br_cfm_port_del(struc
- {
- }
- 
-+static inline int br_cfm_frame_rx(struct net_bridge_port *port,
-+				  struct sk_buff *skb)
-+{
-+	return 0;
-+}
-+
- static inline int br_cfm_config_fill_info(struct sk_buff *skb, struct net_bridge *br)
- {
- 	return -EOPNOTSUPP;
+ 	flags0 = PIPE_CONTROL0_HDC_PIPELINE_FLUSH;
++	/*
++	 * Prior to MTL, HDC Pipeline Flush reliably also flushes the LSC
++	 * untyped L1 dataport cache, provided HDC_CHICKEN0 is programmed
++	 * correctly. Starting with MTL that coupling no longer holds
++	 * regardless of how HDC_CHICKEN0 is programmed, but explicitly
++	 * requesting the flush via PIPE_CONTROL is itself only reliable
++	 * from Xe2 onward, so only gate it in on Xe2+.
++	 */
++	if (GRAPHICS_VERx100(xe) >= 2000)
++		flags0 |= PIPE_CONTROL0_UNTYPED_DATAPORT_CACHE_FLUSH;
+ 	flags1 = (PIPE_CONTROL_TILE_CACHE_FLUSH |
+ 		 PIPE_CONTROL_RENDER_TARGET_CACHE_FLUSH |
+ 		 PIPE_CONTROL_DEPTH_CACHE_FLUSH |
 
 
