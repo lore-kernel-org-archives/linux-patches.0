@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0645A4F392F;
-	Thu, 17 Sep 2026 17:28:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EC8D531633;
+	Thu, 17 Sep 2026 17:28:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666103; cv=none; b=PprDx0ERNBdsMw4QVIQnjNHGhJOzNMnTBO9OaTpK210vGJrfvGVD49t2imyhgt8NrYE4on3oy0MimlckUUI78/M4VAKnQ/6RhxjXevywkHbSbROGT9SyfEXvgIUAFIzEN+NQPBQVFE2JIBIh0w0C6euBsABq3UusykceCc5juHs=
+	t=1789666106; cv=none; b=Da8ik5zSsy+7Be308m21u+Atxb2zsdwyja72eVLGQt/ZTdBkETBunJNKLfAmQy0zgoQCRdw/ucAv9JnYZiS7ZzjMV6h79mvEy8YdxmdiFnjBUF5RIPd0MT84phuwwnGOZxBhtdt+R00WStRj77j2G3AS42YfweZl/ukSJgxXGw8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666103; c=relaxed/simple;
-	bh=9iH+kAjRRPOJ+Z4Yqwys+CO5/cXmNxEphH/ryJbyZm8=;
+	s=arc-20240116; t=1789666106; c=relaxed/simple;
+	bh=jyBT4EcTaXtkFRwqSBXHBpzhf6wvUzWEapqDErTbGL0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BbV5pWGXjt/YGrQgfEf/kJx5IYgOw0wMb9Zh3YwT4X2Jh8MZbRdlhETVUoAV2AY5H2GiM+VFSCa+Ajo6Kt4BhvcVjB2rZCMgB2Q/mkMlJAZQ97RnVD/23kZrA9a9QylDLTQjME0FRwTnvr0xL1yJYSkGO+wYrIuHsJZd7pDPun0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LziSIa/4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=p8SGUtLFHEmEsU+EOq441Oa1hEEW49OXQN2cPZnZDZsKmP3U2L8HJ5pQHC32txdHjbzsQzvnPbvPYtiQm0Xh3HCUBXEaS9da7aaXwqMyhXE8Nx229oZr6ZGz+hZUVeiTo7L2vvNeSKvVEFaQUh/NIhzW4H8+KFjlAC0lGi8tT4w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SnbAACFx; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LziSIa/4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E4631F000FF;
-	Thu, 17 Sep 2026 17:28:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SnbAACFx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E8761F000FF;
+	Thu, 17 Sep 2026 17:28:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666101;
-	bh=0pQWTbqwqHutexSrG8Otdr20sn/XVnBbe2rN53pGHqY=;
+	s=korg; t=1789666104;
+	bh=/L1e6ZtraohZS8FAkwbDFDG3Dd5w8ObeAninO9idXwo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LziSIa/4FoN8Su6rdpOMeHU2aLK70tCbW463iUDrYn95q8lMKNiw2z7KmgHsjw5OX
-	 SomhbOY8cBjtZwD9jTw5IZFwvMynT+BU9j11oN4XaBDxGZAtNlRcmWgfAte/Bw+c5d
-	 vbvsuNPyjuVZtO/XIJP6gJWKay1doPEEhJyDGblg=
+	b=SnbAACFxF4lHzymLmFXRQl9QAGVEFn4TXcMJ5HueknrCVSa9XzXKdNDVhPCiiIf0S
+	 Kp+Wpl1tc81DNokxtMwsGU1VASktvPNnDS7SbTpTeza3D84WlomJaPpKrmTL8kJRoE
+	 X7XPkR7QepWN9GeOK8I+cZPxoXwZBy+zPfzhEwl8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Victor Nogueira <victor@mojatatu.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Yicong Hui <yiconghui@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0925/1250] net/sched: cls_route: Fix in-place replace
-Date: Thu, 17 Sep 2026 16:12:00 +0100
-Message-ID: <20260917151617.080084431@linuxfoundation.org>
+Subject: [PATCH 6.18 0899/1250] net/micrel: Fix typos in micrel driver code comments
+Date: Thu, 17 Sep 2026 16:11:34 +0100
+Message-ID: <20260917151616.356264851@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -53,128 +51,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Victor Nogueira <victor@mojatatu.com>
+From: Yicong Hui <yiconghui@gmail.com>
 
-[ Upstream commit 41e85e54e5649a1617698438b0ce64c6f9d83d69 ]
+[ Upstream commit c2b733da93bf607d6c6f925b4d40598e6bb516be ]
 
-Building on the previous patch, route4_set_parms rejects a duplicate by
-scanning the destination chain for nhandle, but the scan doesn't exclude
-the older version it is replacing, so an in-place replace will match
-the older version's handle and fail.
+Fix various typos and misspellings in code comments in the
+drivers/net/ethernet/micrel directory
 
-Fix this by passing the older filter as a parameter to route4_set_parms
-(replacing "new") and skipping it in the scan.
-
-Excluding the older version is not enough on its own. nhandle is built
-out of TCA_ROUTE4_TO, TCA_ROUTE4_FROM and TCA_ROUTE4_IIF alone, while the
-0x7F00 bits, which only tell apart filters sharing one key, are folded in
-on the create path. Letting the replace through would therefore rename
-the filter it replaces: replacing handle 0x10101 stored it back as
-0x10001, and a sibling at 0x10201 could then no longer be replaced at
-all, since its own nhandle collided with the renamed filter.
-
-	tc filter add ... handle 0x10101 route from 1 to 1 classid 1:1
-	tc filter add ... handle 0x10201 route from 1 to 1 classid 1:2
-	tc filter replace ... handle 0x10101 route from 1 to 1 classid 1:9
-	... fh 0x00010001 flowid 1:9 to 1 from 1
-	... fh 0x00010201 flowid 1:2 to 1 from 1
-	tc filter replace ... handle 0x10201 route from 1 to 1 classid 1:8
-	Error: Handle 10001 is already in use.
-
-So carry those bits over when the key the request builds is the key the
-older filter already has. An in-place replace then keeps the handle
-userspace named the filter by, while a request that does change the key
-still renames it, as it did before.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260829205422.854785-1-victor%40mojatatu.com
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Signed-off-by: Victor Nogueira <victor@mojatatu.com>
-Link: https://patch.msgid.link/20260907192133.2639067-4-victor@mojatatu.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Yicong Hui <yiconghui@gmail.com>
+Link: https://patch.msgid.link/20260118121001.136806-3-yiconghui@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 66ef5adb7544 ("net: ks8851: Fix receiver error in 100BASE-TX mode following software power-down")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/cls_route.c | 27 +++++++++++++--------------
- 1 file changed, 13 insertions(+), 14 deletions(-)
+ drivers/net/ethernet/micrel/ks8842.c        | 4 ++--
+ drivers/net/ethernet/micrel/ks8851_common.c | 2 +-
+ drivers/net/ethernet/micrel/ks8851_spi.c    | 4 ++--
+ drivers/net/ethernet/micrel/ksz884x.c       | 4 ++--
+ 4 files changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/net/sched/cls_route.c b/net/sched/cls_route.c
-index 1699ae262a615..5a0ddcf3e2b40 100644
---- a/net/sched/cls_route.c
-+++ b/net/sched/cls_route.c
-@@ -393,8 +393,9 @@ static const struct nla_policy route4_policy[TCA_ROUTE4_MAX + 1] = {
- static int route4_set_parms(struct net *net, struct tcf_proto *tp,
- 			    unsigned long base, struct route4_filter *f,
- 			    u32 handle, struct route4_head *head,
--			    struct nlattr **tb, struct nlattr *est, int new,
--			    u32 flags, struct netlink_ext_ack *extack)
-+			    struct nlattr **tb, struct nlattr *est,
-+			    struct route4_filter *fold, u32 flags,
-+			    struct netlink_ext_ack *extack)
- {
- 	u32 id = 0, to = 0, nhandle = 0x8000;
- 	struct route4_filter *fp;
-@@ -407,7 +408,7 @@ static int route4_set_parms(struct net *net, struct tcf_proto *tp,
- 		return err;
+diff --git a/drivers/net/ethernet/micrel/ks8842.c b/drivers/net/ethernet/micrel/ks8842.c
+index 541c41a9077a4..b7cf2ee9115fd 100644
+--- a/drivers/net/ethernet/micrel/ks8842.c
++++ b/drivers/net/ethernet/micrel/ks8842.c
+@@ -242,7 +242,7 @@ static void ks8842_reset(struct ks8842_adapter *adapter)
+ 		msleep(10);
+ 		iowrite16(0, adapter->hw_addr + REG_GRR);
+ 	} else {
+-		/* The KS8842 goes haywire when doing softare reset
++		/* The KS8842 goes haywire when doing software reset
+ 		* a work around in the timberdale IP is implemented to
+ 		* do a hardware reset instead
+ 		ks8842_write16(adapter, 3, 1, REG_GRR);
+@@ -312,7 +312,7 @@ static void ks8842_reset_hw(struct ks8842_adapter *adapter)
+ 	/* aggressive back off in half duplex */
+ 	ks8842_enable_bits(adapter, 32, 1 << 8, REG_SGCR1);
  
- 	if (tb[TCA_ROUTE4_TO]) {
--		if (new && handle & 0x8000) {
-+		if (!fold && handle & 0x8000) {
- 			NL_SET_ERR_MSG(extack, "Invalid handle");
- 			return -EINVAL;
- 		}
-@@ -430,14 +431,14 @@ static int route4_set_parms(struct net *net, struct tcf_proto *tp,
- 	} else
- 		nhandle |= 0xFFFF << 16;
+-	/* enable no excessive collison drop */
++	/* enable no excessive collision drop */
+ 	ks8842_enable_bits(adapter, 32, 1 << 3, REG_SGCR2);
  
--	if (handle && new) {
-+	if (handle && (!fold || nhandle == (handle & ~0x7F00)))
- 		nhandle |= handle & 0x7F00;
--		if (nhandle != handle) {
--			NL_SET_ERR_MSG_FMT(extack,
--					   "Handle mismatch constructed: %x (expected: %x)",
--					   handle, nhandle);
--			return -EINVAL;
--		}
-+
-+	if (handle && !fold && nhandle != handle) {
-+		NL_SET_ERR_MSG_FMT(extack,
-+				   "Handle mismatch constructed: %x (expected: %x)",
-+				   handle, nhandle);
-+		return -EINVAL;
- 	}
+ 	/* Enable port 1 force flow control / back pressure / transmit / recv */
+diff --git a/drivers/net/ethernet/micrel/ks8851_common.c b/drivers/net/ethernet/micrel/ks8851_common.c
+index 0369e80b01bec..4afbb40bc0e4a 100644
+--- a/drivers/net/ethernet/micrel/ks8851_common.c
++++ b/drivers/net/ethernet/micrel/ks8851_common.c
+@@ -477,7 +477,7 @@ static int ks8851_net_open(struct net_device *dev)
+  * ks8851_net_stop - close network device
+  * @dev: The device being closed.
+  *
+- * Called to close down a network device which has been active. Cancell any
++ * Called to close down a network device which has been active. Cancel any
+  * work, shutdown the RX and TX process and then place the chip into a low
+  * power state whilst it is not being used.
+  */
+diff --git a/drivers/net/ethernet/micrel/ks8851_spi.c b/drivers/net/ethernet/micrel/ks8851_spi.c
+index 28a7ff7644bb5..b9e68520278d0 100644
+--- a/drivers/net/ethernet/micrel/ks8851_spi.c
++++ b/drivers/net/ethernet/micrel/ks8851_spi.c
+@@ -39,7 +39,7 @@ static int msg_enable;
+  *
+  * The @lock ensures that the chip is protected when certain operations are
+  * in progress. When the read or write packet transfer is in progress, most
+- * of the chip registers are not ccessible until the transfer is finished and
++ * of the chip registers are not accessible until the transfer is finished and
+  * the DMA has been de-asserted.
+  */
+ struct ks8851_net_spi {
+@@ -296,7 +296,7 @@ static unsigned int calc_txlen(unsigned int len)
  
- 	if (!nhandle) {
-@@ -460,7 +461,7 @@ static int route4_set_parms(struct net *net, struct tcf_proto *tp,
- 		for (fp = rtnl_dereference(b->ht[h2]);
- 		     fp;
- 		     fp = rtnl_dereference(fp->next))
--			if (fp->handle == nhandle) {
-+			if (fp != fold && fp->handle == nhandle) {
- 				NL_SET_ERR_MSG_FMT(extack,
- 						   "Handle %x is already in use",
- 						   nhandle);
-@@ -502,7 +503,6 @@ static int route4_change(struct net *net, struct sk_buff *in_skb,
- 	struct nlattr *tb[TCA_ROUTE4_MAX + 1];
- 	unsigned int h;
- 	int err;
--	bool new = true;
+ /**
+  * ks8851_tx_work - process tx packet(s)
+- * @work: The work strucutre what was scheduled.
++ * @work: The work structure what was scheduled.
+  *
+  * This is called when a number of packets have been scheduled for
+  * transmission and need to be sent to the device.
+diff --git a/drivers/net/ethernet/micrel/ksz884x.c b/drivers/net/ethernet/micrel/ksz884x.c
+index cdde19b8edc46..60223f03482da 100644
+--- a/drivers/net/ethernet/micrel/ksz884x.c
++++ b/drivers/net/ethernet/micrel/ksz884x.c
+@@ -1166,7 +1166,7 @@ struct ksz_port_info {
+  * @tx_cfg:		Cached transmit control settings.
+  * @rx_cfg:		Cached receive control settings.
+  * @intr_mask:		Current interrupt mask.
+- * @intr_set:		Current interrup set.
++ * @intr_set:		Current interrupt set.
+  * @intr_blocked:	Interrupt blocked.
+  * @rx_desc_info:	Receive descriptor information.
+  * @tx_desc_info:	Transmit descriptor information.
+@@ -2096,7 +2096,7 @@ static void sw_dis_prio_rate(struct ksz_hw *hw, int port)
+ }
  
- 	if (!handle) {
- 		NL_SET_ERR_MSG(extack, "Creating with handle of 0 is invalid");
-@@ -539,11 +539,10 @@ static int route4_change(struct net *net, struct sk_buff *in_skb,
- 
- 		f->tp = fold->tp;
- 		f->bkt = fold->bkt;
--		new = false;
- 	}
- 
- 	err = route4_set_parms(net, tp, base, f, handle, head, tb,
--			       tca[TCA_RATE], new, flags, extack);
-+			       tca[TCA_RATE], fold, flags, extack);
- 	if (err < 0)
- 		goto errout;
- 
+ /**
+- * sw_init_prio_rate - initialize switch prioirty rate
++ * sw_init_prio_rate - initialize switch priority rate
+  * @hw: 	The hardware instance.
+  *
+  * This routine initializes the priority rate function of the switch.
 -- 
 2.53.0
 
