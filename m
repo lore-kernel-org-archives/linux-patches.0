@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E14F53B2FC2;
-	Thu, 17 Sep 2026 17:16:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BEAA3B71AE;
+	Thu, 17 Sep 2026 17:16:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789665391; cv=none; b=Rvw20Fem8rhc7mrdTiOzHGLJVNEEzoE7Y7In/Qoc2eNmg9Mr1pwRF+uP4z1kMNuyV98ZLElZ/u78gyMF1e9P0E5MZ2uSi0VcH2Bf8ljad43VyP11AuV2ryHpVjBOiZi5rXGHP3Uia3Xrtq9zqotkeCXbJb21QZxizIveFzQ/yP8=
+	t=1789665394; cv=none; b=jaYL3x0JWYfmSeb3ew45FlA68skHsc46TjQcTtnykJF0eJa0QKuuAmREB/ghQq5L3Xz/7z2zp+LW3I0/QwgvBtQfmiJQz3r/Mpk0YqVcT5JXHI5JRvKnu+sjc+Rq24k7RUOmqvEXUKzBrWgmQGEa48Hgh0F9O2651t5sS1+sF9Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789665391; c=relaxed/simple;
-	bh=khPcQU0DhiGKq0VEj53xlCSPS1OSQwzmVUDqi+F6hcw=;
+	s=arc-20240116; t=1789665394; c=relaxed/simple;
+	bh=suV1BNQr5EVxAjVwQcpH3j6eibqsECHbU27unozIHkA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k8o6OsAiZcQARVQ4GuTg76n+CljR2Yo+LIyp8miHN+jPVZvo8zALoPC/UUlMT1mx6QarzisYOJsTXxmCuAfdQ1uOdcb/MlN5xK1+VTVH2Esjfo0OoqyhODqKAhcskvjyoAs+OPKl99wkoikgrguDBDCctAZMleiUdloXSmHOsQc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s2Pmvoab; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=HEX4/XKWSbFIkbidYw/im/F0gIIUyJvGMUQA4UI/f/ZTo/N2TR0teqyJINu/Dli3CGAK+0sD/wXTLRuzRaE6sWEAXFszSdpBczcRliNPbAsBkyF3OSLO5ZRWC6mGgq6NQMtllwFjJLb2vbl239zUEIWSb+iPULyEIdkNybCW7tQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CNslLQnr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s2Pmvoab"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41C631F000FF;
-	Thu, 17 Sep 2026 17:16:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CNslLQnr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 407861F00893;
+	Thu, 17 Sep 2026 17:16:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789665389;
-	bh=QXWU/h3aeUVmcG4OBSXX6BE8XXakRAm7wq8zk6ufyT4=;
+	s=korg; t=1789665392;
+	bh=BfiqywzWSMGtuY9iiVr+cA+XTPyO8GmntMPeNMu5kVk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=s2PmvoabZ6EkWnybj7ZxFT8pHCHCCm5ELtVKCLoyaHJKZkaDTY5METGIFrl7B3q8Z
-	 WNl38yy+W0a5/iEZgRSzqdElO39TD7ZNtZOA7u8jWpGUB+NKHYvSz+3mmOCaVkWOxy
-	 1zQLIOCbGwsHUkh/kzx0WYXvDdlMdZ2jjqTGv8kU=
+	b=CNslLQnrO1cnajX+yLZquC5H0dBrRmNg4GPLFZG7Hj/bAAL637L7CO+p5QuQ/MAVi
+	 4mglKHpLeAYH/OguGSWDKn3i56141ZcGKZpAMkiUOyp2mPoWsZyK1R6CZfVXAOns3Z
+	 ahb8KHjM4aSKcBkdsCd78C6G+8jfxiQul+FnyoIc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Shi <bestswngs@gmail.com>,
+	David Laight <david.laight.linux@gmail.com>,
 	Tung Nguyen <tung.quang.nguyen@est.tech>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0687/1250] tipc: fix NULL deref in tipc_named_node_up() on empty publication list
-Date: Thu, 17 Sep 2026 16:08:02 +0100
-Message-ID: <20260917151610.510694578@linuxfoundation.org>
+Subject: [PATCH 6.18 0688/1250] tipc: Dont send random pad bytes in RESET/ACTIVATE messages
+Date: Thu, 17 Sep 2026 16:08:03 +0100
+Message-ID: <20260917151610.537310324@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -53,129 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tung Nguyen <tung.quang.nguyen@est.tech>
+From: David Laight <david.laight.linux@gmail.com>
 
-[ Upstream commit b3b76e9f4f2476f1135b2ba7743a821db4a0df4b ]
+[ Upstream commit 81c600c26302a27852ed8b19c5f2f647ea3555c9 ]
 
-User-space applications can bind a large number of service addresses to
-one or more sockets. Each binding of a local-scope service address inserts
-one entry (publication) into the TIPC name table. If the number of these
-publications exceeds TIPC_MAX_PUBL (65535), protocol service types
-(such as node state and link state) are no longer inserted into the name
-table. This causes two issues:
+The interface name is passed in a fixed length (TIPC_MAX_IF_NAME) buffer.
+Replace the strcpy(data, l->if_name) with memcpy() so that the
+pad bytes are actually written (l->if_name[] is zero padded)
+rather than sending random bytes from the skb to the remote system.
 
-1. User-space applications subscribing to node or link up/down events
-   stop receiving notifications.
+Replace two other strcpy() with strscpy().
 
-2. A NULL pointer dereference can occur:
-
-   BUG: kernel NULL pointer dereference, address: 00000000000000d0
-   ...
-   CPU: 0 UID: 0 PID: 0 Comm: swapper/0 Not tainted 7.2.0-rc4-default+ #5 PREEMPT(full)
-   ...
-   RIP: 0010:tipc_named_node_up (./include/linux/skbuff.h:2251 net/tipc/name_distr.c:195 net/tipc/name_distr.c:221)
-   ...
-   Call Trace:
-   <IRQ>
-   tipc_node_write_unlock (net/tipc/node.c:428)
-   tipc_rcv (net/tipc/node.c:934 net/tipc/node.c:2189)
-   tipc_udp_recv (net/tipc/udp_media.c:389)
-
-   Thread 1 (tipc_net_finalize) | Thread 2 (named_distribute)
-   -----------------------------|-----------------------------
-                                | ...
-                                | list_for_each_entry(publ, pls, binding_node) {
-                                | ...
-                                | __skb_queue_tail(list, skb);
-                                | ...
-                                | }
-                                | ...
-                                | hdr = buf_msg(skb_peek_tail(list));
-   ...                          |
-   tipc_nametbl_publish();      |
-
-   If 'tipc_nametbl_publish()' (Thread 1) fails because the number of
-   local publications reaches TIPC_MAX_PUBL, list (Thread 2) will be empty. As a
-   result, NULL is passed to 'buf_msg()', leading to a NULL pointer dereference.
-
-Fix these issues by allowing protocol service types (node state, link state,
-and topology server) to be inserted into the name table unconditionally.
-This ensures that users subscribing to these types always receive
-notifications. In addition, the maximum number of local user publications is
-reduced to (TIPC_MAX_PUBL - 1). This ensures that the maximum bulk size
-calculated in tipc_link_set_queue_limits() remains valid.
-
-Fixes: a5e7ac5ce134 ("tipc: fix regression bug where node events are not being generated")
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Tested-by: Weiming Shi <bestswngs@gmail.com>
-Signed-off-by: Tung Nguyen <tung.quang.nguyen@est.tech>
-Link: https://patch.msgid.link/20260827111418.164957-1-tung.quang.nguyen@est.tech
+Fixes: e74a386d70c7 ("tipc: remove pre-allocated message header in link struct")
+Signed-off-by: David Laight <david.laight.linux@gmail.com>
+Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
+Link: https://patch.msgid.link/20260829115813.188600-1-david.laight.linux@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tipc/name_table.c | 30 ++++++++++++++++++++++++++----
- 1 file changed, 26 insertions(+), 4 deletions(-)
+ net/tipc/link.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/net/tipc/name_table.c b/net/tipc/name_table.c
-index 7f42fb6a8481f..cc99a9324837a 100644
---- a/net/tipc/name_table.c
-+++ b/net/tipc/name_table.c
-@@ -763,21 +763,40 @@ struct publication *tipc_nametbl_publish(struct net *net, struct tipc_uaddr *ua,
- 					 struct tipc_socket_addr *sk, u32 key)
- {
- 	struct name_table *nt = tipc_name_table(net);
-+	u32 max_user_pub = TIPC_MAX_PUBL - 1;
- 	struct tipc_net *tn = tipc_net(net);
- 	struct publication *p = NULL;
- 	struct sk_buff *skb = NULL;
-+	bool protocol_type = false;
- 	u32 rc_dests;
+diff --git a/net/tipc/link.c b/net/tipc/link.c
+index 931f55f781a13..da9e3b1b0ce21 100644
+--- a/net/tipc/link.c
++++ b/net/tipc/link.c
+@@ -504,7 +504,7 @@ bool tipc_link_create(struct net *net, char *if_name, int bearer_id,
+ 	snprintf(l->name, sizeof(l->name), "%s:%s-%s:unknown",
+ 		 self_str, if_name, peer_str);
  
-+	if (ua->sr.type == TIPC_NODE_STATE || ua->sr.type == TIPC_LINK_STATE ||
-+	    ua->sr.type == TIPC_TOP_SRV)
-+		protocol_type = true;
-+
- 	spin_lock_bh(&tn->nametbl_lock);
-+	if (protocol_type)
-+		goto insert;
- 
--	if (nt->local_publ_count >= TIPC_MAX_PUBL) {
--		pr_warn("Bind failed, max limit %u reached\n", TIPC_MAX_PUBL);
-+	/* Reserve one entry for node state service type because it has cluster
-+	 * scope and it is distributed in bulk. So, the maximum number of user's
-+	 * publications is (TIPC_MAX_PUBL - 1).
-+	 */
-+	if (nt->local_publ_count >= max_user_pub) {
-+		pr_warn("Bind failed, max limit %u reached\n", max_user_pub);
- 		goto exit;
+-	strcpy(l->if_name, if_name);
++	strscpy(l->if_name, if_name);
+ 	l->addr = peer;
+ 	l->peer_caps = peer_caps;
+ 	l->net = net;
+@@ -574,7 +574,7 @@ bool tipc_link_bc_create(struct net *net, u32 ownnode, u32 peer, u8 *peer_id,
+ 		snprintf(l->name, sizeof(l->name), "%s:%s", tipc_bclink_name,
+ 			 peer_str);
+ 	} else {
+-		strcpy(l->name, tipc_bclink_name);
++		strscpy(l->name, tipc_bclink_name);
  	}
- 
-+insert:
- 	p = tipc_nametbl_insert_publ(net, ua, sk, key);
- 	if (p) {
--		nt->local_publ_count++;
-+		/* Not count node state, link state and topology server types
-+		 * so that maximum nt->local_publ_count does not prevent
-+		 * protocol service types from being inserted into the name
-+		 * table.
-+		 */
-+		if (!protocol_type)
-+			nt->local_publ_count++;
- 		skb = tipc_named_publish(net, p);
+ 	trace_tipc_link_reset(l, TIPC_DUMP_ALL, "bclink created!");
+ 	tipc_link_reset(l);
+@@ -1898,7 +1898,7 @@ static void tipc_link_build_proto_msg(struct tipc_link *l, int mtyp, bool probe,
+ 			msg_set_dest_session(hdr, l->peer_session);
+ 		}
+ 		msg_set_max_pkt(hdr, l->advertised_mtu);
+-		strcpy(data, l->if_name);
++		memcpy(data, l->if_name, TIPC_MAX_IF_NAME);
+ 		msg_set_size(hdr, INT_H_SIZE + TIPC_MAX_IF_NAME);
+ 		skb_trim(skb, INT_H_SIZE + TIPC_MAX_IF_NAME);
  	}
- 	rc_dests = nt->rc_dests;
-@@ -810,7 +829,10 @@ void tipc_nametbl_withdraw(struct net *net, struct tipc_uaddr *ua,
- 
- 	p = tipc_nametbl_remove_publ(net, ua, sk, key);
- 	if (p) {
--		nt->local_publ_count--;
-+		if (p->sr.type != TIPC_NODE_STATE &&
-+		    p->sr.type != TIPC_LINK_STATE &&
-+		    p->sr.type != TIPC_TOP_SRV)
-+			nt->local_publ_count--;
- 		skb = tipc_named_withdraw(net, p);
- 		list_del_init(&p->binding_sock);
- 		kfree_rcu(p, rcu);
 -- 
 2.53.0
 
