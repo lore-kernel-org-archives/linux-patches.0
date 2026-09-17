@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0202C4F93DA;
-	Thu, 17 Sep 2026 16:57:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B375C5172DD;
+	Thu, 17 Sep 2026 16:57:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789664275; cv=none; b=Q6Vqhfgi+VPNuDzHJ/78WdlHguEvfz6raKY9vhzSQHDmJzQqkicqw0rWWewrewHmnUXi0K4nmWwMAa6+NTtLeeHHKFTPdj51qza8VvZ7U/WyA63C+hVGDzuzaJCWqRMeFa4ogm8+3c/j6rcS/zkMHS/mTR2ESFORmXEp5ptFD+w=
+	t=1789664277; cv=none; b=Cao2FtleZhCb8ezO+xsPexdja96NCdFr0axeUEytTP311B7DT3Xt+9PvWSVigPElH3A2Ire50KVtVAApqsiVw9TPrldUXcYcA0ksrEZ028FDqUR8KUiRL6QmpBqbZOhnmIFUbIgHfMwEZV3Y2893fm/V/Lam1GUEk6OD5qa+xEg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789664275; c=relaxed/simple;
-	bh=PvgkBEvPrtMitndb7zG5A/q9vgf5GmsLaiGfQEwNKl0=;
+	s=arc-20240116; t=1789664277; c=relaxed/simple;
+	bh=OwRi8/OXTWkAY5Q0OXMsCNluoYLAnmMINlET6cJt/nM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cIxNGhwwcHNLlIdLqn6H4KNKyCgJAwXKeuA3o4HpPU+35i5z+CIVXMhFt4llLV4/THFCiXWhR1uXb4k5JZTurd0T0/DuZEzJm/Xwg2RZJ1+ZDFNI/tnvNW4VB2oB+I4lu8ERf2Y+TCwxEgPKU0ONlIcVjz5Tb+8dmK5fbbX2yro=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vot2i1aI; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=aYLb38ZW+17WYFM4pLB7l2j0Y6LTzrdDbW3135qpf3ZLpuAfUjzftAa3ovA1G50+TDxtHdCUVwNJJs832gXCk21ndyHyv6qywAdVWOKJJJif41KYb0g8IVMDvTmoTJyb++rCNOug6ABZbx2FzZdCm22CGjSvg21iEuCltbdVaCY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DTo3Rgz5; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vot2i1aI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B13C1F00893;
-	Thu, 17 Sep 2026 16:57:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DTo3Rgz5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 038A01F000FF;
+	Thu, 17 Sep 2026 16:57:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789664273;
-	bh=FLL8rLXAC0Jh6NeJq6d/HxduvsnuiXArYRmTrOe9UEg=;
+	s=korg; t=1789664276;
+	bh=8JxjTAd6GZndKhKBQetrEFhmqq3/kte0s21QftgFFDk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vot2i1aIvypYSXr5+rfkpln5ennN/oju+LrFeAL6XT50MfeYeSPzHFw+MrUYIF3jG
-	 v5WlyqR6AVOuhb8VEhXfZ2J2oSTD2810mij9HC9Q95njypuMZTuXbtaOeC520rRdDV
-	 365okwMVb+ysPhHn7sUsYjFyZm9BHJtjJkgcy4Yw=
+	b=DTo3Rgz5powWdhXCTwdfbByS8ASWvkltZt9h/zIc/Qcacrxx9rUNp7vCJAOBmnE7W
+	 tNqZ/2L0TJmsLL3dvcKhiaMk/aDmM6SLrGS37q5Ch75FI25PeZg9ARlu6vnvC7FtLV
+	 rzTMmm7NZ6NcSqX/ojw8L4z0MYZtmywkb5BuGP20=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Asad Kamal <asad.kamal@amd.com>,
-	Yang Wang <kevinyang.wang@amd.com>,
+	Candice Li <candice.li@amd.com>,
+	Hawking Zhang <Hawking.Zhang@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0317/1250] drm/amd/pm: bound pp_dpm_set_pp_table() memcpy
-Date: Thu, 17 Sep 2026 16:01:52 +0100
-Message-ID: <20260917151600.696675895@linuxfoundation.org>
+Subject: [PATCH 6.18 0318/1250] drm/amdgpu/pm: fix SmartShift bias sysfs store PM refcount on parse error
+Date: Thu, 17 Sep 2026 16:01:53 +0100
+Message-ID: <20260917151600.721275602@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -52,37 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Asad Kamal <asad.kamal@amd.com>
+From: Candice Li <candice.li@amd.com>
 
-[ Upstream commit f193e71fa9fab2e68ef85201b106e8f580d3a25b ]
+[ Upstream commit a4b0c3f5d2287997876d8f711a40d3c0418458d8 ]
 
-The powerplay path allocates hardcode_pp_table once with kmemdup(...,
-soft_pp_table_size). memcpy(..., size) used the sysfs store count (up to
-PAGE_SIZE) with no upper bound, causing heap overflow. Reject
-writes where size exceeds soft_pp_table_size.
+Return the parse error before acquiring PM access.
 
-Signed-off-by: Asad Kamal <asad.kamal@amd.com>
-Reviewed-by: Yang Wang <kevinyang.wang@amd.com>
+Signed-off-by: Candice Li <candice.li@amd.com>
+Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/amd/pm/amdgpu_pm.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c b/drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c
-index a16fcca3576c4..5e197c463ed96 100644
---- a/drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c
-@@ -668,6 +668,9 @@ static int pp_dpm_set_pp_table(void *handle, const char *buf, size_t size)
- 	if (!hwmgr || !hwmgr->pm_en)
- 		return -EINVAL;
+diff --git a/drivers/gpu/drm/amd/pm/amdgpu_pm.c b/drivers/gpu/drm/amd/pm/amdgpu_pm.c
+index db7296567c85f..6cdb8dda97e0f 100644
+--- a/drivers/gpu/drm/amd/pm/amdgpu_pm.c
++++ b/drivers/gpu/drm/amd/pm/amdgpu_pm.c
+@@ -1853,12 +1853,12 @@ static ssize_t amdgpu_set_smartshift_bias(struct device *dev,
+ {
+ 	struct drm_device *ddev = dev_get_drvdata(dev);
+ 	struct amdgpu_device *adev = drm_to_adev(ddev);
+-	int r = 0;
++	int r;
+ 	int bias = 0;
  
-+	if (size > hwmgr->soft_pp_table_size)
-+		return -EINVAL;
-+
- 	if (!hwmgr->hardcode_pp_table) {
- 		hwmgr->hardcode_pp_table = kmemdup(hwmgr->soft_pp_table,
- 						   hwmgr->soft_pp_table_size,
+ 	r = kstrtoint(buf, 10, &bias);
+ 	if (r)
+-		goto out;
++		return r;
+ 
+ 	r = amdgpu_pm_get_access(adev);
+ 	if (r < 0)
+@@ -1870,14 +1870,12 @@ static ssize_t amdgpu_set_smartshift_bias(struct device *dev,
+ 		bias = AMDGPU_SMARTSHIFT_MIN_BIAS;
+ 
+ 	amdgpu_smartshift_bias = bias;
+-	r = count;
+ 
+ 	/* TODO: update bias level with SMU message */
+ 
+-out:
+ 	amdgpu_pm_put_access(adev);
+ 
+-	return r;
++	return count;
+ }
+ 
+ static int ss_power_attr_update(struct amdgpu_device *adev, struct amdgpu_device_attr *attr,
 -- 
 2.53.0
 
