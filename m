@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BCA3515980;
-	Thu, 17 Sep 2026 16:55:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70FE64DA9B0;
+	Thu, 17 Sep 2026 16:55:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789664109; cv=none; b=aKiTbChSH+cgRTrrCKwOEdrihV2n9R5g/vl76KIWYB7nYidVxZB4WBCoAf7ku5H7rVDVlUmVnnkXVknU6Xg1Fs5OS+8+sBTAF6aRFWJyE+sI1yhLTRjwhVBIRbBcie/uavjABF10ygGFI3JQacvQW2crfLmFuK4pEQ5HpRmsjxM=
+	t=1789664112; cv=none; b=n3CCjkBpuFTvj7FPYwtW+Y4f0ybSBzSdfA39woYQvshN/YHmZ9d+x8DshS3OBDgiLZrP0ZXjTQSVRJ3Xg5vBbBOZRP8wMC6sl/Lrs7AJtk+lKzGox1BtcJRxOnQQzTUXKxbM4bEUKS4zN01UbR8dpJ727OLz56+th32GTPYy7nQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789664109; c=relaxed/simple;
-	bh=HvQJDJ3jSKXEOZpMEHYMpHlEa7ZFg/YXXHVEAd/pzJw=;
+	s=arc-20240116; t=1789664112; c=relaxed/simple;
+	bh=Dmw0CQ89Mt8y5KWn5A0mATAr5yA0bL14vw7AjBeozrs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fxHiiCID3sT0pLzCG+RHTc88ULJZgnam1gOHxdRED7vp57M8Bqk2mGJWyjqW9WC3btTPinMoqpXNtEkRr6B7Jqmp2baaCWSdeTjKwwbRxokKYiJOU7q4nU5gf2ahDki7xiM0etMck1/X08cqr46lvqj3NfbT86g+qhplxGj2m0g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SNjSkNPc; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=KeXmKx/WbcM2cTdnMWcF39mHOLrHS+gsCf4d1joTyxkdUxtJDjgRO9WFbZszFnxs3eBAluhFvWc3hDPd6auBSr+TX7wXO9wT2qQWIOivq6FNHyTbLF+Pu1hGKuCPGcNqn8WzOlhzn07K19IO2ECc3JmW34YDf/7ndtXJqh9slxA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mTceT0+r; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SNjSkNPc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D702D1F00893;
-	Thu, 17 Sep 2026 16:55:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mTceT0+r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6AD61F000FF;
+	Thu, 17 Sep 2026 16:55:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789664108;
-	bh=X4m0YVSH+FHofrIgtokuC7dlxLqWkwXTYfX24c6ETfo=;
+	s=korg; t=1789664111;
+	bh=Cu0Rwk6rLyHHSesuFRF0OMpLZ/Uh2viC3MsZoLLBD9A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SNjSkNPcq/ipF6kn7kYAQ0CO81LhQHs+0yzMm2czQo4MnX2INI6sEs9wjkPLeuqUe
-	 zvt8lMFeRmNsesEwdi0pQo8k70yaInMSzq8Hyqgf3vArMvGwhDR6r3ZGQIfvHkUtDU
-	 7Kpa77UemV6tjcQRVq6QbaBu0mHzPXhUrPQMulWI=
+	b=mTceT0+rN/0+1P9fRCC/U02tjMyRq7m+azSFtUZhwFycctH3wviQc0iskbLPvxHby
+	 a6KELDY1ko2UT9AHQft5VwY69FXH3+673AlXOqUf+nHTmbYlE/+bp5z5HbdxGtpMjj
+	 e0iqW/zKcuci+XM5WzEqJHwvtDsWJ8LwhSK5VIgM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Osama Abdelkader <osama.abdelkader@gmail.com>,
-	Ulf Hansson <ulfh@kernel.org>,
+	Andreas Westman Dorcsak <hedmoo@yahoo.com>,
+	Svyatoslav Ryhel <clamor95@gmail.com>,
+	Thierry Reding <treding@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0263/1250] mmc: davinci: fix mmc_add_host order in probe
-Date: Thu, 17 Sep 2026 16:00:58 +0100
-Message-ID: <20260917151559.277767065@linuxfoundation.org>
+Subject: [PATCH 6.18 0264/1250] ARM: tegra: tf600t: Invert accelerometer calibration matrix
+Date: Thu, 17 Sep 2026 16:00:59 +0100
+Message-ID: <20260917151559.303263185@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,61 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Osama Abdelkader <osama.abdelkader@gmail.com>
+From: Svyatoslav Ryhel <clamor95@gmail.com>
 
-[ Upstream commit d04e0151d316edbdb4f0397a9b92a1936e4a1421 ]
+[ Upstream commit 774bc2764647cfd6b65727cfa978d809f11df392 ]
 
-mmc_add_host() makes the host visible to the MMC core. Register the
-interrupt handlers and advertise MMC_CAP_SDIO_IRQ before that, so the
-core cannot start using the host before IRQ handling is set up.
+IMU calibration matrix used in the device tree is inverted when testing on
+the device which results in wrong screen orientation. Invert it to match
+the matrix dumped from the device.
 
-Signed-off-by: Osama Abdelkader <osama.abdelkader@gmail.com>
-Signed-off-by: Ulf Hansson <ulfh@kernel.org>
+Tested-by: Andreas Westman Dorcsak <hedmoo@yahoo.com>
+Signed-off-by: Svyatoslav Ryhel <clamor95@gmail.com>
+Signed-off-by: Thierry Reding <treding@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/davinci_mmc.c | 12 +++++-------
- 1 file changed, 5 insertions(+), 7 deletions(-)
+ arch/arm/boot/dts/nvidia/tegra30-asus-tf600t.dts | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/mmc/host/davinci_mmc.c b/drivers/mmc/host/davinci_mmc.c
-index 00adc15956fd2..3d0d05ab1fe48 100644
---- a/drivers/mmc/host/davinci_mmc.c
-+++ b/drivers/mmc/host/davinci_mmc.c
-@@ -1294,14 +1294,10 @@ static int davinci_mmcsd_probe(struct platform_device *pdev)
- 		goto cpu_freq_fail;
- 	}
+diff --git a/arch/arm/boot/dts/nvidia/tegra30-asus-tf600t.dts b/arch/arm/boot/dts/nvidia/tegra30-asus-tf600t.dts
+index 5d9e23a438204..856b1bb8b6f37 100644
+--- a/arch/arm/boot/dts/nvidia/tegra30-asus-tf600t.dts
++++ b/arch/arm/boot/dts/nvidia/tegra30-asus-tf600t.dts
+@@ -1040,9 +1040,9 @@ imu@69 {
+ 			vdd-supply   = <&vdd_3v3_sys>;
+ 			vddio-supply = <&vdd_1v8_vio>;
  
--	ret = mmc_add_host(mmc);
--	if (ret < 0)
--		goto mmc_add_host_fail;
--
- 	ret = devm_request_irq(&pdev->dev, irq, mmc_davinci_irq, 0,
- 			       mmc_hostname(mmc), host);
- 	if (ret)
--		goto request_irq_fail;
-+		goto mmc_add_host_fail;
+-			mount-matrix =	 "0", "-1",  "0",
+-					"-1",  "0",  "0",
+-					 "0",  "0", "-1";
++			mount-matrix =	 "0",  "1",  "0",
++					 "1",  "0",  "0",
++					 "0",  "0",  "1";
  
- 	if (host->sdio_irq >= 0) {
- 		ret = devm_request_irq(&pdev->dev, host->sdio_irq,
-@@ -1311,6 +1307,10 @@ static int davinci_mmcsd_probe(struct platform_device *pdev)
- 			mmc->caps |= MMC_CAP_SDIO_IRQ;
- 	}
- 
-+	ret = mmc_add_host(mmc);
-+	if (ret < 0)
-+		goto mmc_add_host_fail;
-+
- 	rename_region(mem, mmc_hostname(mmc));
- 
- 	if (mmc->caps & MMC_CAP_8_BIT_DATA)
-@@ -1324,8 +1324,6 @@ static int davinci_mmcsd_probe(struct platform_device *pdev)
- 
- 	return 0;
- 
--request_irq_fail:
--	mmc_remove_host(mmc);
- mmc_add_host_fail:
- 	mmc_davinci_cpufreq_deregister(host);
- cpu_freq_fail:
+ 			/* External I2C interface */
+ 			i2c-gate {
 -- 
 2.53.0
 
