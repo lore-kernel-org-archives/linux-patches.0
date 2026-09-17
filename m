@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9C19381EBB;
-	Thu, 17 Sep 2026 17:15:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9C863AFB01;
+	Thu, 17 Sep 2026 17:15:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789665343; cv=none; b=Uv4B5wMnNRI6fDIqPltEee10c1BSP7/ZklH5Fh4O7ZGtNJ2aHquLeifHBxm5wJGjMeialyA1au858rPyVHkY/19ES0Ng8JK6Q+vMXpDF8V7xlC5fc9wTrFKOytbfEmwzAkE8tML1k1hdDEORqodl6k/o8xpVDBTTo0FMhYrUE3g=
+	t=1789665346; cv=none; b=q+7v7cBjg6DrV8lezU0G2qTOwMgeEnMQTOblvmb6ujbAtQNb4ELbtLiTxaUu3zqaEne+hp4HRyVpVrGAod2iyZejXQS0QNvZWFOalz965utNoaLNsbfHL08DQQdgeEaCaPQQC6UMVTSZ+TigKpvdSConC+hc8x7nbqsGT3poqj8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789665343; c=relaxed/simple;
-	bh=9OOjTxkIq/zaA5FS+c8CKouoLmp1s4NQ60nFE7rxJwI=;
+	s=arc-20240116; t=1789665346; c=relaxed/simple;
+	bh=hQb0qOZgIAoyK8oIyOGLg5j2oWS3ElbEdxqdom9LtEM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qvj7Ivb2fOEW386Ez6aZyLbeFU99oIHZtzPwtBpDeHOk0CAUT9C1e4N6YDhr4LY5Kt9O3EkG2SyDIkgiJLvPPH8tvw73IE8wEfOhZC+yJ/ml+eS5jjjxYmoHPGwXvgMVQXr38i0N/bMGsRlkcLcFk67Bg/6fMpUX+gzPdUga6nE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AaeB8Ipf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=sF+kCWID3y5G2JG2k1jSX+3jU7pU2JmJDiVAPy9INA0gA4nROKW/+W99AL23RYzD77iMI9lBhcVO0tlaxfiOimFO06IEAGkddr2Gosd2aK+3jYWFEIS0g9Rf1E8AK8NW0Py6BbxDYyMzDXluGvD6vkZFrCanAR9bAsi/GlUSQac=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gy8JIeIk; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AaeB8Ipf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B8E21F000FF;
-	Thu, 17 Sep 2026 17:15:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gy8JIeIk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1942F1F000FF;
+	Thu, 17 Sep 2026 17:15:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789665341;
-	bh=junDpSAORRv3rmak+1fBkej/I1c8HEe9wONPA+snpqE=;
+	s=korg; t=1789665344;
+	bh=iTLM2Nqcv8/Kgf0/mZ1k49U9Porh+92ileVGgrmJIsc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AaeB8IpfBIm6xyyVqpnZR8nPXqtbFDMGRNu9QPTZDTNEJYtk4llVYzw8egYfzjYcF
-	 /x1Naa66W5QfDOmwwsszp/zpo+qvRAxmUNtwy43RY6Yp/35DFFBDLZTV08OebeBr4Q
-	 R4qUeFIQB8RuTPF/F4nNjC1x6q0urZ0QzA/vE8yQ=
+	b=Gy8JIeIkGwjI2fT+BBdxhxzUO3a1r5JBKzv5Q5uY3sZ4WJ6TosVdx124mssz2yXe6
+	 P5UtRta8WwjnmQDQtFTyD7Im5Km+XGlRC2y/z+2woWWIbzE7XmM9VhZXCRnsUcQRkN
+	 UCV+UaSQT+Gf/HkYxT7BiinZoQ/WC9GW1xuiaVVw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Andrew Lunn <andrew@lunn.ch>,
 	Ciprian Regus <ciprian.regus@analog.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0673/1250] net: ethernet: oa_tc6: Handle the OA TC6 SPI protected mode
-Date: Thu, 17 Sep 2026 16:07:48 +0100
-Message-ID: <20260917151610.128531793@linuxfoundation.org>
+Subject: [PATCH 6.18 0674/1250] net: ethernet: oa_tc6: Export standard defined registers
+Date: Thu, 17 Sep 2026 16:07:49 +0100
+Message-ID: <20260917151610.156058199@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -45,6 +46,7 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
@@ -53,255 +55,152 @@ Content-Transfer-Encoding: 8bit
 
 From: Ciprian Regus <ciprian.regus@analog.com>
 
-[ Upstream commit 7d0e4c4b8c85d8ea2c77a90e1f7a7f74ce531e52 ]
+[ Upstream commit 9210d402bdf54240b8aec9815b2f9aad360fcb42 ]
 
-Implement the OA TC6 standard defined protected mode for control (register
-access) transactions. In addition to the current register access formats
-the oa_tc6 driver handles, 1's complement values of the data field
-are included (by both the host and the MACPHY) in the SPI transfer frames.
-This feature acts as an integrity check.
+Move defines for standard Open Alliance TC6 register addresses and
+subfields in the oa_tc6's header. As such, other ethernet drivers
+that rely on oa_tc6 can use them directly.
 
-Control write transactions look like this:
-
-          |<- 32 bits ->|<--- data_size --->|<- 32 bits ->|
-    MOSI: | ctrl header | reg write data    | ignored     |
-    MISO: | (discard)   | echoed ctrl hdr   | echoed data |
-
-    data_size (LEN = number of registers to read in a sequence):
-      Unprotected: 32 x (LEN + 1) bits
-      Protected:   2 x 32 x (LEN + 1) bits
-
-Control read transaction:
-
-          |<- 32 bits ->|<--- 32 bits --> |<- data_size ->|
-    MOSI: | ctrl header | ignored ...                     |
-    MISO: | (discard)   | echoed ctrl hdr | reg read data |
-
-    data_size (LEN = number of registers to read in a sequence):
-      Unprotected: 32 x (LEN + 1) bits
-      Protected:   2 x 32 x (LEN + 1) bits
-
-Register data format ("reg write data" and "reg read data"):
-
-    Unprotected:
-      | W1 (normal) | W2 (normal) | ... | Wx (normal) |
-
-    Protected:
-    | W1 (normal) | W1 (complement) | ... | Wx (normal) | Wx (complement)|
-
-The protected mode state can be read from the bit 5 of CONFIG0 (0x4)
-register, and this setting is usually only configured during the
-MACPHY's reset (depending on the device it can be done by setting the
-state of a pin). We can read the protected mode configuration before any
-other register access and since the SPI transfer is initially sized for an
-unprotected read, the MACPHY's complement words are never clocked out
-and no checking is required. The data transactions (Ethernet frames)
-remain unchanged.
-
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
 Signed-off-by: Ciprian Regus <ciprian.regus@analog.com>
-Link: https://patch.msgid.link/20260708-adin1140-driver-v5-2-4aca7b51a58b@analog.com
+Link: https://patch.msgid.link/20260708-adin1140-driver-v5-5-4aca7b51a58b@analog.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Stable-dep-of: 172c974113bf ("net: ethernet: oa_tc6: Improve the error recovery")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/oa_tc6.c | 93 ++++++++++++++++++++++++++++-------
- 1 file changed, 76 insertions(+), 17 deletions(-)
+ drivers/net/ethernet/oa_tc6.c | 50 -----------------------------------
+ include/linux/oa_tc6.h        | 50 +++++++++++++++++++++++++++++++++++
+ 2 files changed, 50 insertions(+), 50 deletions(-)
 
 diff --git a/drivers/net/ethernet/oa_tc6.c b/drivers/net/ethernet/oa_tc6.c
-index cf5249f81651f..3321ed4201963 100644
+index 3321ed4201963..6a01c5e3f14c6 100644
 --- a/drivers/net/ethernet/oa_tc6.c
 +++ b/drivers/net/ethernet/oa_tc6.c
-@@ -25,6 +25,7 @@
- #define OA_TC6_REG_CONFIG0			0x0004
- #define CONFIG0_SYNC				BIT(15)
- #define CONFIG0_ZARFE_ENABLE			BIT(12)
-+#define CONFIG0_PROTE				BIT(5)
+@@ -12,47 +12,6 @@
+ #include <linux/phy.h>
+ #include <linux/oa_tc6.h>
  
- /* Status Register #0 */
- #define OA_TC6_REG_STATUS0			0x0008
-@@ -90,14 +91,17 @@
- #define OA_TC6_PHY_C45_AUTO_NEG_MMS5		5	/* MMD 7 */
- #define OA_TC6_PHY_C45_POWER_UNIT_MMS6		6	/* MMD 13 */
+-/* OPEN Alliance TC6 registers */
+-/* Standard Capabilities Register */
+-#define OA_TC6_REG_STDCAP			0x0002
+-#define STDCAP_DIRECT_PHY_REG_ACCESS		BIT(8)
+-
+-/* Reset Control and Status Register */
+-#define OA_TC6_REG_RESET			0x0003
+-#define RESET_SWRESET				BIT(0)	/* Software Reset */
+-
+-/* Configuration Register #0 */
+-#define OA_TC6_REG_CONFIG0			0x0004
+-#define CONFIG0_SYNC				BIT(15)
+-#define CONFIG0_ZARFE_ENABLE			BIT(12)
+-#define CONFIG0_PROTE				BIT(5)
+-
+-/* Status Register #0 */
+-#define OA_TC6_REG_STATUS0			0x0008
+-#define STATUS0_RESETC				BIT(6)	/* Reset Complete */
+-#define STATUS0_HEADER_ERROR			BIT(5)
+-#define STATUS0_LOSS_OF_FRAME_ERROR		BIT(4)
+-#define STATUS0_RX_BUFFER_OVERFLOW_ERROR	BIT(3)
+-#define STATUS0_TX_PROTOCOL_ERROR		BIT(0)
+-
+-/* Buffer Status Register */
+-#define OA_TC6_REG_BUFFER_STATUS		0x000B
+-#define BUFFER_STATUS_TX_CREDITS_AVAILABLE	GENMASK(15, 8)
+-#define BUFFER_STATUS_RX_CHUNKS_AVAILABLE	GENMASK(7, 0)
+-
+-/* Interrupt Mask Register #0 */
+-#define OA_TC6_REG_INT_MASK0			0x000C
+-#define INT_MASK0_HEADER_ERR_MASK		BIT(5)
+-#define INT_MASK0_LOSS_OF_FRAME_ERR_MASK	BIT(4)
+-#define INT_MASK0_RX_BUFFER_OVERFLOW_ERR_MASK	BIT(3)
+-#define INT_MASK0_TX_PROTOCOL_ERR_MASK		BIT(0)
+-#define INT_MASK0_ALL_INTERRUPTS                (GENMASK(5, 0) | \
+-						 GENMASK(12, 7))
+-
+-/* PHY Clause 22 registers base address and mask */
+-#define OA_TC6_PHY_STD_REG_ADDR_BASE		0xFF00
+-#define OA_TC6_PHY_STD_REG_ADDR_MASK		0x1F
+-
+ /* Control command header */
+ #define OA_TC6_CTRL_HEADER_DATA_NOT_CTRL	BIT(31)
+ #define OA_TC6_CTRL_HEADER_WRITE_NOT_READ	BIT(29)
+@@ -82,15 +41,6 @@
+ #define OA_TC6_DATA_FOOTER_END_BYTE_OFFSET	GENMASK(13, 8)
+ #define OA_TC6_DATA_FOOTER_TX_CREDITS		GENMASK(5, 1)
  
-+#define OA_TC6_CTRL_PROT_REPLY_SIZE		4
+-/* PHY – Clause 45 registers memory map selector (MMS) as per table 6 in the
+- * OPEN Alliance specification.
+- */
+-#define OA_TC6_PHY_C45_PCS_MMS2			2	/* MMD 3 */
+-#define OA_TC6_PHY_C45_PMA_PMD_MMS3		3	/* MMD 1 */
+-#define OA_TC6_PHY_C45_VS_PLCA_MMS4		4	/* MMD 31 */
+-#define OA_TC6_PHY_C45_AUTO_NEG_MMS5		5	/* MMD 7 */
+-#define OA_TC6_PHY_C45_POWER_UNIT_MMS6		6	/* MMD 13 */
+-
+ #define OA_TC6_CTRL_PROT_REPLY_SIZE		4
  #define OA_TC6_CTRL_HEADER_SIZE			4
  #define OA_TC6_CTRL_REG_VALUE_SIZE		4
- #define OA_TC6_CTRL_IGNORED_SIZE		4
- #define OA_TC6_CTRL_MAX_REGISTERS		128
--#define OA_TC6_CTRL_SPI_BUF_SIZE		(OA_TC6_CTRL_HEADER_SIZE +\
--						(OA_TC6_CTRL_MAX_REGISTERS *\
--						OA_TC6_CTRL_REG_VALUE_SIZE) +\
--						OA_TC6_CTRL_IGNORED_SIZE)
-+#define OA_TC6_CTRL_SPI_BUF_SIZE	(OA_TC6_CTRL_HEADER_SIZE +\
-+					(OA_TC6_CTRL_MAX_REGISTERS *\
-+					(OA_TC6_CTRL_REG_VALUE_SIZE +\
-+					OA_TC6_CTRL_PROT_REPLY_SIZE)) +\
-+					OA_TC6_CTRL_IGNORED_SIZE)
+diff --git a/include/linux/oa_tc6.h b/include/linux/oa_tc6.h
+index 15f58e3c56c74..97c6ed0bf34df 100644
+--- a/include/linux/oa_tc6.h
++++ b/include/linux/oa_tc6.h
+@@ -10,6 +10,56 @@
+ #include <linux/etherdevice.h>
+ #include <linux/spi/spi.h>
+ 
++/* OPEN Alliance TC6 registers */
++/* Standard Capabilities Register */
++#define OA_TC6_REG_STDCAP			0x0002
++#define STDCAP_DIRECT_PHY_REG_ACCESS		BIT(8)
 +
- #define OA_TC6_CHUNK_PAYLOAD_SIZE		64
- #define OA_TC6_DATA_HEADER_SIZE			4
- #define OA_TC6_CHUNK_SIZE			(OA_TC6_DATA_HEADER_SIZE +\
-@@ -131,6 +135,7 @@ struct oa_tc6 {
- 	bool rx_buf_overflow;
- 	bool int_flag;
- 	bool disable_traffic;
-+	bool prot_ctrl;
- };
- 
- enum oa_tc6_header_type {
-@@ -214,25 +219,36 @@ static void oa_tc6_update_ctrl_write_data(struct oa_tc6 *tc6, u32 value[],
- {
- 	__be32 *tx_buf = tc6->spi_ctrl_tx_buf + OA_TC6_CTRL_HEADER_SIZE;
- 
--	for (int i = 0; i < length; i++)
-+	for (int i = 0; i < length; i++) {
- 		*tx_buf++ = cpu_to_be32(value[i]);
-+		if (tc6->prot_ctrl)
-+			*tx_buf++ = cpu_to_be32(~value[i]);
-+	}
- }
- 
--static u16 oa_tc6_calculate_ctrl_buf_size(u8 length)
-+static u16 oa_tc6_calculate_ctrl_buf_size(u8 length, bool ctrl_prot)
- {
-+	u32 reply_size = OA_TC6_CTRL_REG_VALUE_SIZE;
++/* Reset Control and Status Register */
++#define OA_TC6_REG_RESET			0x0003
++#define RESET_SWRESET				BIT(0)	/* Software Reset */
 +
-+	if (ctrl_prot)
-+		reply_size += OA_TC6_CTRL_PROT_REPLY_SIZE;
++/* Configuration Register #0 */
++#define OA_TC6_REG_CONFIG0			0x0004
++#define CONFIG0_SYNC				BIT(15)
++#define CONFIG0_ZARFE_ENABLE			BIT(12)
++#define CONFIG0_PROTE				BIT(5)
 +
- 	/* Control command consists 4 bytes header + 4 bytes register value for
--	 * each register + 4 bytes ignored value.
-+	 * each register (+ 4 bytes for the register value complement in case
-+	 * protected mode is used) + 4 bytes ignored value.
- 	 */
--	return OA_TC6_CTRL_HEADER_SIZE + OA_TC6_CTRL_REG_VALUE_SIZE * length +
-+	return OA_TC6_CTRL_HEADER_SIZE + reply_size * length +
- 	       OA_TC6_CTRL_IGNORED_SIZE;
- }
- 
- static void oa_tc6_prepare_ctrl_spi_buf(struct oa_tc6 *tc6, u32 address,
- 					u32 value[], u8 length,
--					enum oa_tc6_register_op reg_op)
-+					enum oa_tc6_register_op reg_op,
-+					u16 buf_size)
- {
- 	__be32 *tx_buf = tc6->spi_ctrl_tx_buf;
- 
-+	memset(tx_buf, 0, buf_size);
- 	*tx_buf = oa_tc6_prepare_ctrl_header(address, length, reg_op);
- 
- 	if (reg_op == OA_TC6_CTRL_REG_WRITE)
-@@ -255,10 +271,12 @@ static int oa_tc6_check_ctrl_write_reply(struct oa_tc6 *tc6, u8 size)
- 	return 0;
- }
- 
--static int oa_tc6_check_ctrl_read_reply(struct oa_tc6 *tc6, u8 size)
-+static int oa_tc6_check_ctrl_read_reply(struct oa_tc6 *tc6, u8 length)
- {
--	u32 *rx_buf = tc6->spi_ctrl_rx_buf + OA_TC6_CTRL_IGNORED_SIZE;
--	u32 *tx_buf = tc6->spi_ctrl_tx_buf;
-+	__be32 *rx_buf = tc6->spi_ctrl_rx_buf + OA_TC6_CTRL_IGNORED_SIZE;
-+	__be32 *tx_buf = tc6->spi_ctrl_tx_buf;
-+	u32 complement;
-+	u32 reply;
- 
- 	/* The echoed control read header must match with the one that was
- 	 * transmitted.
-@@ -266,6 +284,20 @@ static int oa_tc6_check_ctrl_read_reply(struct oa_tc6 *tc6, u8 size)
- 	if (*tx_buf != *rx_buf)
- 		return -EPROTO;
- 
-+	if (tc6->prot_ctrl) {
-+		/* Skip past the echoed header to the value/complement pairs */
-+		rx_buf += 1;
-+		for (int i = 0; i < length; i++) {
-+			reply = be32_to_cpu(rx_buf[0]);
-+			complement = be32_to_cpu(rx_buf[1]);
++/* Status Register #0 */
++#define OA_TC6_REG_STATUS0			0x0008
++#define STATUS0_RESETC				BIT(6)	/* Reset Complete */
++#define STATUS0_HEADER_ERROR			BIT(5)
++#define STATUS0_LOSS_OF_FRAME_ERROR		BIT(4)
++#define STATUS0_RX_BUFFER_OVERFLOW_ERROR	BIT(3)
++#define STATUS0_TX_PROTOCOL_ERROR		BIT(0)
 +
-+			if (complement != ~reply)
-+				return -EPROTO;
++/* Buffer Status Register */
++#define OA_TC6_REG_BUFFER_STATUS		0x000B
++#define BUFFER_STATUS_TX_CREDITS_AVAILABLE	GENMASK(15, 8)
++#define BUFFER_STATUS_RX_CHUNKS_AVAILABLE	GENMASK(7, 0)
 +
-+			rx_buf += 2;
-+		}
-+	}
++/* Interrupt Mask Register #0 */
++#define OA_TC6_REG_INT_MASK0			0x000C
++#define INT_MASK0_HEADER_ERR_MASK		BIT(5)
++#define INT_MASK0_LOSS_OF_FRAME_ERR_MASK	BIT(4)
++#define INT_MASK0_RX_BUFFER_OVERFLOW_ERR_MASK	BIT(3)
++#define INT_MASK0_TX_PROTOCOL_ERR_MASK		BIT(0)
++#define INT_MASK0_ALL_INTERRUPTS                (GENMASK(5, 0) | \
++						 GENMASK(12, 7))
 +
- 	return 0;
- }
- 
-@@ -275,8 +307,13 @@ static void oa_tc6_copy_ctrl_read_data(struct oa_tc6 *tc6, u32 value[],
- 	__be32 *rx_buf = tc6->spi_ctrl_rx_buf + OA_TC6_CTRL_IGNORED_SIZE +
- 			 OA_TC6_CTRL_HEADER_SIZE;
- 
--	for (int i = 0; i < length; i++)
-+	for (int i = 0; i < length; i++) {
- 		value[i] = be32_to_cpu(*rx_buf++);
++/* PHY Clause 22 registers base address and mask */
++#define OA_TC6_PHY_STD_REG_ADDR_BASE		0xFF00
++#define OA_TC6_PHY_STD_REG_ADDR_MASK		0x1F
 +
-+		/* skip complement word */
-+		if (tc6->prot_ctrl)
-+			rx_buf++;
-+	}
- }
- 
- static int oa_tc6_perform_ctrl(struct oa_tc6 *tc6, u32 address, u32 value[],
-@@ -285,10 +322,10 @@ static int oa_tc6_perform_ctrl(struct oa_tc6 *tc6, u32 address, u32 value[],
- 	u16 size;
- 	int ret;
- 
--	/* Prepare control command and copy to SPI control buffer */
--	oa_tc6_prepare_ctrl_spi_buf(tc6, address, value, length, reg_op);
-+	size = oa_tc6_calculate_ctrl_buf_size(length, tc6->prot_ctrl);
- 
--	size = oa_tc6_calculate_ctrl_buf_size(length);
-+	/* Prepare control command and copy to SPI control buffer */
-+	oa_tc6_prepare_ctrl_spi_buf(tc6, address, value, length, reg_op, size);
- 
- 	/* Perform SPI transfer */
- 	ret = oa_tc6_spi_transfer(tc6, OA_TC6_CTRL_HEADER, size);
-@@ -303,7 +340,7 @@ static int oa_tc6_perform_ctrl(struct oa_tc6 *tc6, u32 address, u32 value[],
- 		return oa_tc6_check_ctrl_write_reply(tc6, size);
- 
- 	/* Check echoed/received control read command reply for errors */
--	ret = oa_tc6_check_ctrl_read_reply(tc6, size);
-+	ret = oa_tc6_check_ctrl_read_reply(tc6, length);
- 	if (ret)
- 		return ret;
- 
-@@ -1273,6 +1310,20 @@ netdev_tx_t oa_tc6_start_xmit(struct oa_tc6 *tc6, struct sk_buff *skb)
- }
- EXPORT_SYMBOL_GPL(oa_tc6_start_xmit);
- 
-+static int oa_tc6_check_ctrl_protection(struct oa_tc6 *tc6)
-+{
-+	u32 regval;
-+	int ret;
++/* PHY – Clause 45 registers memory map selector (MMS) as per table 6 in the
++ * OPEN Alliance specification.
++ */
++#define OA_TC6_PHY_C45_PCS_MMS2			2	/* MMD 3 */
++#define OA_TC6_PHY_C45_PMA_PMD_MMS3		3	/* MMD 1 */
++#define OA_TC6_PHY_C45_VS_PLCA_MMS4		4	/* MMD 31 */
++#define OA_TC6_PHY_C45_AUTO_NEG_MMS5		5	/* MMD 7 */
++#define OA_TC6_PHY_C45_POWER_UNIT_MMS6		6	/* MMD 13 */
 +
-+	ret = oa_tc6_read_register(tc6, OA_TC6_REG_CONFIG0, &regval);
-+	if (ret)
-+		return ret;
-+
-+	tc6->prot_ctrl = FIELD_GET(CONFIG0_PROTE, regval);
-+
-+	return 0;
-+}
-+
- /**
-  * oa_tc6_init - allocates and initializes oa_tc6 structure.
-  * @spi: device with which data will be exchanged.
-@@ -1325,6 +1376,14 @@ struct oa_tc6 *oa_tc6_init(struct spi_device *spi, struct net_device *netdev)
- 	if (!tc6->spi_data_rx_buf)
- 		return NULL;
+ struct oa_tc6;
  
-+	/* Check the PROTE bit status so that we can reset the device */
-+	ret = oa_tc6_check_ctrl_protection(tc6);
-+	if (ret) {
-+		dev_err(&tc6->spi->dev,
-+			"Failed to check the protection mode: %d\n", ret);
-+		return NULL;
-+	}
-+
- 	ret = oa_tc6_sw_reset_macphy(tc6);
- 	if (ret) {
- 		dev_err(&tc6->spi->dev,
+ struct oa_tc6 *oa_tc6_init(struct spi_device *spi, struct net_device *netdev);
 -- 
 2.53.0
 
