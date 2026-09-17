@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FD9A4B44B1;
-	Thu, 17 Sep 2026 15:37:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 170C94C10E8;
+	Thu, 17 Sep 2026 15:37:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659470; cv=none; b=EUtqeLBMbVWJ7w+KUnkArMCA+wm3bV0YLe0YYWSUXMpriM+oIlgq+n4VUXWH7bsva2HwrkEcwk5IL6h50mNmLglPKVikcWiHLgpHq8Q0HHYgMQjZ7R/bFKcBUZXSATzl2VikjHQOElwIcD+tq2IUxcDfmiIeM9LfkCLcTdDs+3o=
+	t=1789659473; cv=none; b=kdQjv5ojf0KnAu+rsGmg3w7vIltqoun34e/zVCUjcYwMVgYKjwwDvczqLDODlG7ShrPbYU2IK9m76R5AH4OoM7UhbmLfS5FYOyphttturH6VE7pXpPPseGvyb2t6BmvN76rlAD2TZgiTZyGVLU91dytHVJD9Of0mVAYE4ppNrDQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659470; c=relaxed/simple;
-	bh=t6btjatQ7ak57yw7N41EdrfOBclTR4dd9wbcEXaaVPg=;
+	s=arc-20240116; t=1789659473; c=relaxed/simple;
+	bh=Ol0EeEBjoky0sgOFnc6H8wY1DuOglo19D17VZIGrdUA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HVXaMXOtYwllZ/dbZMYQFdwZ3EjPuS7Vag/mGsRHTxj3YU9MuCtR5VZGUh3hHcG3h7zj1CTtJYCSw7IeagIAOEnmqZDUPah+phUOIUf/cQX1OxmlCv8PojWqKDsk4wZCVKnBPhkcPwuVezxjzyti/irqOREUE/sTkgo8ys3d644=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EFffqVLa; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=oMUOTD0Toew1TZItpi4axAe0b4+wDltBhOy6+E0+KAydYVweleWJ8toNzAw0gDy4a8XnwW3h5qEQuFEedt56taMrXDiMcRW0KWYId8Bqv6hktFzdUq9xGw3wfIA65r5YfIYQPyZg4ndy25Obh4ykU2+B/JXgktQLMn7DvxJNiEk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a1zfbVOW; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EFffqVLa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 394381F0089B;
-	Thu, 17 Sep 2026 15:37:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a1zfbVOW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12F3D1F00893;
+	Thu, 17 Sep 2026 15:37:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659463;
-	bh=70k5nfNSWQLuXLm7Hf7xN8LOAB1nfLsldkltv7f4zo0=;
+	s=korg; t=1789659469;
+	bh=ZBFnvprEvl08k80HabP06TprFvtBDAis0GkoV14c/h8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EFffqVLa3S/4AyUBRTEZ0g/XZtQ8MNJrf7YoMXgluUI7ezUpgoA7G4b7Jq5qG6ve+
-	 zx2QbZZ16kT4WVdH23eKZqQT+ZhwKf9vGjUT0YN3rVCAbpmQgqg9EXT5fLgNVyZrgH
-	 4bn7skj414+0ZU29E0luhp0QeUqpVLi87rUehEV8=
+	b=a1zfbVOWsAsdBOVD3e/jccSeJ0AeOsMd+c6tI8579lUq1Pcly+yoZam98eofhioFU
+	 ugw51+M9bX8cYOoSe9z36Xe5TfNyKF/yqasVk/DydEMIrJikWUgkXwqK1gWk/XdoJy
+	 /HDw74GjvTinUT85Waexi+xxx7kIOVaiLBVnQcvQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nuoqi Gui <gnq25@mails.tsinghua.edu.cn>,
-	Mykyta Yatsenko <yatsenko@meta.com>,
+	Nicholas Carlini <npc@anthropic.com>,
 	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 265/733] bpf: Cancel special fields when recycling rhtab elements
-Date: Thu, 17 Sep 2026 16:09:33 +0100
-Message-ID: <20260917151357.935347529@linuxfoundation.org>
+Subject: [PATCH 7.2 267/733] bpf: Preserve inner map identity in callback frames
+Date: Thu, 17 Sep 2026 16:09:35 +0100
+Message-ID: <20260917151357.990762469@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -53,85 +52,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nuoqi Gui <gnq25@mails.tsinghua.edu.cn>
+From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 
-[ Upstream commit 65cc95eba9e8b46312cac38c227473605a4b996a ]
+[ Upstream commit b90c5d770dad910fb89e6c1b15052a8a1e8db752 ]
 
-rhtab_map_update_existing() and rhtab_delete_elem() call
-bpf_obj_free_fields() when replacing or deleting a value. These map
-operations can run from BPF programs in NMI context, where releasing a
-referenced kptr or another complex field is not generally safe.
+Callback frame constructors initialize map-typed argument registers with
+__mark_reg_known_zero() and then restore map_ptr. This clears map_uid,
+which is the only field distinguishing inner maps that share an
+inner_map_meta template.
 
-Array and hash maps avoid that problem by cancelling only the asynchronous
-fields which can be stopped safely in the caller context. Other ownership
-state remains attached to the allocation until its memory allocator
-destructor performs the final cleanup.
+When a timer callback invokes bpf_for_each_map_elem() on a second inner
+map, both the saved first map and the second map value can reach the nested
+callback as the same template with map_uid zero. bpf_timer_init() then
+accepts pairing the timer from the second map with the first map.
 
-Use bpf_obj_cancel_fields() for the corresponding rhtab paths as well. This
-cancels timers, workqueues, and task work while allowing rhtab_mem_dtor() to
-release referenced kptrs when the allocation is eventually destroyed.
+The runtime records the first map in the timer without taking a reference.
+Freeing that map does not find the timer stored in the second map, so a
+later timer callback dereferences the freed map.
 
-Fixes: 6905f8601298 ("bpf: Allow special fields in resizable hashtab")
-Signed-off-by: Nuoqi Gui <gnq25@mails.tsinghua.edu.cn>
-Acked-by: Mykyta Yatsenko <yatsenko@meta.com>
-[ kkd: Rebased, used direct helper calls, and rewrote the commit log ]
+Copy map_uid from the same caller register as map_ptr when constructing
+for-each, timer/workqueue, and task-work callback arguments. The existing
+identity check can then reject mismatched inner maps while allowing a
+callback value to be paired with its actual map.
+
+Fixes: 3e8ce29850f1 ("bpf: Prevent pointer mismatch in bpf_timer_init.")
+Fixes: 69c087ba6225 ("bpf: Add bpf_for_each_map_elem() helper")
+Fixes: 5c8fd7e2b5b0 ("bpf: bpf task work plumbing")
+Reported-by: Nicholas Carlini <npc@anthropic.com>
+Suggested-by: Nicholas Carlini <npc@anthropic.com>
 Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Link: https://lore.kernel.org/r/20260904104203.345917-4-memxor@gmail.com
+Link: https://lore.kernel.org/r/20260904104203.345917-8-memxor@gmail.com
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/hashtab.c | 17 +++--------------
- 1 file changed, 3 insertions(+), 14 deletions(-)
+ kernel/bpf/verifier.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/kernel/bpf/hashtab.c b/kernel/bpf/hashtab.c
-index df22236d1ccf9..59406da06424d 100644
---- a/kernel/bpf/hashtab.c
-+++ b/kernel/bpf/hashtab.c
-@@ -2869,16 +2869,6 @@ static int rhtab_map_alloc_check(union bpf_attr *attr)
- 	return htab_map_alloc_check(attr);
- }
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 14bd6889f6de9..be282185d5653 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -9529,10 +9529,12 @@ int map_set_for_each_callback_args(struct bpf_verifier_env *env,
+ 	callee->regs[BPF_REG_2].type = PTR_TO_MAP_KEY;
+ 	__mark_reg_known_zero(&callee->regs[BPF_REG_2]);
+ 	callee->regs[BPF_REG_2].map_ptr = caller->regs[BPF_REG_1].map_ptr;
++	callee->regs[BPF_REG_2].map_uid = caller->regs[BPF_REG_1].map_uid;
  
--static void rhtab_check_and_free_fields(struct bpf_rhtab *rhtab,
--					struct rhtab_elem *elem)
--{
--	if (IS_ERR_OR_NULL(rhtab->map.record))
--		return;
--
--	bpf_obj_free_fields(rhtab->map.record,
--			    rhtab_elem_value(elem, rhtab->map.key_size));
--}
--
- static void rhtab_mem_dtor(void *obj, void *ctx)
+ 	callee->regs[BPF_REG_3].type = PTR_TO_MAP_VALUE;
+ 	__mark_reg_known_zero(&callee->regs[BPF_REG_3]);
+ 	callee->regs[BPF_REG_3].map_ptr = caller->regs[BPF_REG_1].map_ptr;
++	callee->regs[BPF_REG_3].map_uid = caller->regs[BPF_REG_1].map_uid;
+ 
+ 	/* pointer to stack or null */
+ 	callee->regs[BPF_REG_4] = caller->regs[BPF_REG_3];
+@@ -9610,6 +9612,7 @@ static int set_timer_callback_state(struct bpf_verifier_env *env,
+ 				    int insn_idx)
  {
- 	struct htab_btf_record *hrec = ctx;
-@@ -2968,8 +2958,8 @@ static int rhtab_delete_elem(struct bpf_rhtab *rhtab, struct rhtab_elem *elem, v
- 		rhtab_read_elem_value(&rhtab->map, copy, elem, flags);
- 		check_and_init_map_value(&rhtab->map, copy);
- 	}
--	/* Release internal structs: kptr, bpf_timer, task_work, wq */
--	rhtab_check_and_free_fields(rhtab, elem);
-+	bpf_obj_cancel_fields(&rhtab->map,
-+			      rhtab_elem_value(elem, rhtab->map.key_size));
- 	bpf_mem_cache_free_rcu(&rhtab->ma, elem);
- 	return 0;
- }
-@@ -3011,7 +3001,6 @@ static int rhtab_map_lookup_and_delete_elem(struct bpf_map *map, void *key, void
- static long rhtab_map_update_existing(struct bpf_map *map, struct rhtab_elem *elem, void *value,
- 				      u64 map_flags)
+ 	struct bpf_map *map_ptr = caller->regs[BPF_REG_1].map_ptr;
++	u32 map_uid = caller->regs[BPF_REG_1].map_uid;
+ 
+ 	/* bpf_timer_set_callback(struct bpf_timer *timer, void *callback_fn);
+ 	 * callback_fn(struct bpf_map *map, void *key, void *value);
+@@ -9617,14 +9620,17 @@ static int set_timer_callback_state(struct bpf_verifier_env *env,
+ 	callee->regs[BPF_REG_1].type = CONST_PTR_TO_MAP;
+ 	__mark_reg_known_zero(&callee->regs[BPF_REG_1]);
+ 	callee->regs[BPF_REG_1].map_ptr = map_ptr;
++	callee->regs[BPF_REG_1].map_uid = map_uid;
+ 
+ 	callee->regs[BPF_REG_2].type = PTR_TO_MAP_KEY;
+ 	__mark_reg_known_zero(&callee->regs[BPF_REG_2]);
+ 	callee->regs[BPF_REG_2].map_ptr = map_ptr;
++	callee->regs[BPF_REG_2].map_uid = map_uid;
+ 
+ 	callee->regs[BPF_REG_3].type = PTR_TO_MAP_VALUE;
+ 	__mark_reg_known_zero(&callee->regs[BPF_REG_3]);
+ 	callee->regs[BPF_REG_3].map_ptr = map_ptr;
++	callee->regs[BPF_REG_3].map_uid = map_uid;
+ 
+ 	/* unused */
+ 	bpf_mark_reg_not_init(env, &callee->regs[BPF_REG_4]);
+@@ -9724,6 +9730,7 @@ static int set_task_work_schedule_callback_state(struct bpf_verifier_env *env,
+ 						 int insn_idx)
  {
--	struct bpf_rhtab *rhtab = container_of(map, struct bpf_rhtab, map);
- 	void *old_val = rhtab_elem_value(elem, map->key_size);
+ 	struct bpf_map *map_ptr = caller->regs[BPF_REG_3].map_ptr;
++	u32 map_uid = caller->regs[BPF_REG_3].map_uid;
  
- 	if (map_flags & BPF_NOEXIST)
-@@ -3031,7 +3020,7 @@ static long rhtab_map_update_existing(struct bpf_map *map, struct rhtab_elem *el
- 	 * kptrs/etc. still sit in the slot. Cancel them after the copy
- 	 * to match arraymap's update semantics.
- 	 */
--	rhtab_check_and_free_fields(rhtab, elem);
-+	bpf_obj_cancel_fields(map, old_val);
- 	return 0;
- }
+ 	/*
+ 	 * callback_fn(struct bpf_map *map, void *key, void *value);
+@@ -9731,14 +9738,17 @@ static int set_task_work_schedule_callback_state(struct bpf_verifier_env *env,
+ 	callee->regs[BPF_REG_1].type = CONST_PTR_TO_MAP;
+ 	__mark_reg_known_zero(&callee->regs[BPF_REG_1]);
+ 	callee->regs[BPF_REG_1].map_ptr = map_ptr;
++	callee->regs[BPF_REG_1].map_uid = map_uid;
  
+ 	callee->regs[BPF_REG_2].type = PTR_TO_MAP_KEY;
+ 	__mark_reg_known_zero(&callee->regs[BPF_REG_2]);
+ 	callee->regs[BPF_REG_2].map_ptr = map_ptr;
++	callee->regs[BPF_REG_2].map_uid = map_uid;
+ 
+ 	callee->regs[BPF_REG_3].type = PTR_TO_MAP_VALUE;
+ 	__mark_reg_known_zero(&callee->regs[BPF_REG_3]);
+ 	callee->regs[BPF_REG_3].map_ptr = map_ptr;
++	callee->regs[BPF_REG_3].map_uid = map_uid;
+ 
+ 	/* unused */
+ 	bpf_mark_reg_not_init(env, &callee->regs[BPF_REG_4]);
 -- 
 2.53.0
 
