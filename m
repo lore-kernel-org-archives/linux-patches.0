@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D848D547077;
-	Thu, 17 Sep 2026 17:11:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B24C4547067;
+	Thu, 17 Sep 2026 17:11:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789665104; cv=none; b=Eg7i4Sg9VqUYQOBFbTV4tC7anXGJFmhZu6G6WLbGdzAlk86pgbU1usNlBSw+PTjdksvtSZd43qknf5TpHeNjCcOKpye7quQR0B8vLtUUOw0+XzNkmRClBfWtU1tnb1hxx7V3/fce3Cl4nTznGJcMAFni1EHTL/dP761pir60f1M=
+	t=1789665107; cv=none; b=aW1nU3FdndzDFloQqzeO/qaP98Z2EiC+VLR5BEmfMNuDtTtxcsAts1e6YWVaohQQCd+1ZVtrtI7ZllEIPHd+vtwp0b86pQz56CjICQqxad5YTsNeEcstJ/yel73UGIDOP1mnLGm+xcF/dergaKLim5XeQmnalv3LEJxwCPsE7aw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789665104; c=relaxed/simple;
-	bh=jBQBT5WszA3vpouQBJs2eWDuWYjnc7ayyoKSBX0ghIw=;
+	s=arc-20240116; t=1789665107; c=relaxed/simple;
+	bh=IX9/r9JXd2OUprYQuv5zG3gUiv+7FiF1GrqCG3pUlgo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GOh5mgR7OSsLkNhOVl1yDL7SXRPN1qa8qXStwSgdjCoVUcb3YkeSXUA/nqF241yMkQVjqbpd5KPg2R4+96PoUq9lmJWMp5wNeCQKtob738XKL9sCVCnl4sLmvY14sJtXu2/vnzJuUTib37t4p/16eEYnC0/CUtIP+OxFVdvIVCw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JvYKna6r; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=nVE6PHlvwOEDKi7h+fl9n8vS5PYk17CqLsMNfgpPYroUa8aptW3kOvlyoWkoKQSD3ykgz1U+ZjxjWTDgzg9ZYw+ZLo644tfMLmJZfwIR3U0azPwvkXf/QS7hQUrs0I28IIFds8R7W2x9jDs6GnIq2ULEEPQJW0GGbKqZ+G3agc8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jnNKcKgz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JvYKna6r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 214441F000FF;
-	Thu, 17 Sep 2026 17:11:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jnNKcKgz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1485A1F000FF;
+	Thu, 17 Sep 2026 17:11:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789665102;
-	bh=f8nY82PeDW5gqMY5LHkEFtW+UZTVkxdffXO0SXtzm3A=;
+	s=korg; t=1789665105;
+	bh=hotNuRUNpygNp+tox3hLe8TZ2zk0LljxcckF5VwlTCw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JvYKna6rbmZszwZVfdQsLCZIULTfoDmT0Wn24HAT9hoIKrJ6McdFsvJSIdkcrQ4Dn
-	 f0ZadEIM7gaEkqWUIx4AEYHnaCaPGIVkzgxbuT/MsbgYoAOeA48v5G+90m/IYkGFu2
-	 dzEX+6l7SkhXPQJA5SHFgsFBAPwZdfBgfrbbQV4Y=
+	b=jnNKcKgzid0Y7lmU7XBmBuwZxTg2AXR+YydYQ55kaFS6bmcGPbPP1hjTSEdko3RDj
+	 rDBhPS6aRRRcna94qk0PD/R4nlYOTwuFWsw33t31kzdFmTPrKBNcy6n+tg1pHaIjhy
+	 rKwx9xW2VaQpOuzRX5AutJ00q80HTf7yL2bo0tJ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?C=C3=A1ssio=20Gabriel?= <cassiogabrielcontato@gmail.com>,
+	HyeongJun An <sammiee5311@gmail.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0592/1250] ASoC: topology: Check PCM and DAI name strings before use
-Date: Thu, 17 Sep 2026 16:06:27 +0100
-Message-ID: <20260917151607.927898672@linuxfoundation.org>
+Subject: [PATCH 6.18 0593/1250] ASoC: meson: aiu: Validate written enum values
+Date: Thu, 17 Sep 2026 16:06:28 +0100
+Message-ID: <20260917151607.955016646@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -45,120 +45,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cássio Gabriel <cassiogabrielcontato@gmail.com>
+From: HyeongJun An <sammiee5311@gmail.com>
 
-[ Upstream commit b7e44d1986d6671342c19b82192189ca5db5dab7 ]
+[ Upstream commit d65adf85477247be04ac86886f8edfaa047b5d4a ]
 
-Topology objects store several PCM and DAI names in fixed-size UAPI
-arrays. Other topology parser paths validate these fields with bounded
-strnlen() checks before using them as C strings, but the PCM and DAI
-paths still pass some fixed-size arrays directly to strlen(),
-devm_kstrdup(), DAI lookup, and diagnostic prints.
+The AIU HDMI and internal codec mux put callbacks use the written enum
+value with snd_soc_enum_item_to_val() before checking whether the value is
+valid for the enumeration.
 
-A malformed topology blob with a non-NUL-terminated PCM, DAI, or stream
-capability name can therefore make the parser read past the end of the
-fixed-size field.
+Reject out-of-range values before converting the enum item, matching the
+validation already done by the G12A HDMI and internal codec mux controls.
 
-Reject unterminated PCM and DAI name fields before consuming them as C
-strings.
-
-Fixes: 64527e8a3529 ("ASoC: topology: Add FE DAIs dynamically")
-Fixes: acfc7d46cddc ("ASoC: topology: Add FE DAI links dynamically")
-Fixes: 0038be9a84dc ("ASoC: topology: Add support for configuring existing BE DAIs")
-Signed-off-by: Cássio Gabriel <cassiogabrielcontato@gmail.com>
-Link: https://patch.msgid.link/20260604-asoc-topology-check-pcm-dai-names-v1-1-e1b0f6f7c2ce@gmail.com
+Fixes: b82b734c0e9a ("ASoC: meson: aiu: add hdmi codec control support")
+Fixes: 65816025d461 ("ASoC: meson: aiu: add internal dac codec control support")
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
+Link: https://patch.msgid.link/20260609124317.38046-3-sammiee5311@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/soc-topology.c | 37 ++++++++++++++++++++++++++++++++++---
- 1 file changed, 34 insertions(+), 3 deletions(-)
+ sound/soc/meson/aiu-acodec-ctrl.c | 3 +++
+ sound/soc/meson/aiu-codec-ctrl.c  | 3 +++
+ 2 files changed, 6 insertions(+)
 
-diff --git a/sound/soc/soc-topology.c b/sound/soc/soc-topology.c
-index 44b60324eaa2e..3e4f96e79021a 100644
---- a/sound/soc/soc-topology.c
-+++ b/sound/soc/soc-topology.c
-@@ -1320,9 +1320,24 @@ static int soc_tplg_dapm_complete(struct soc_tplg *tplg)
- 	return ret;
- }
+diff --git a/sound/soc/meson/aiu-acodec-ctrl.c b/sound/soc/meson/aiu-acodec-ctrl.c
+index 7b04b97f7b41c..c4cf97d2c82f5 100644
+--- a/sound/soc/meson/aiu-acodec-ctrl.c
++++ b/sound/soc/meson/aiu-acodec-ctrl.c
+@@ -38,6 +38,9 @@ static int aiu_acodec_ctrl_mux_put_enum(struct snd_kcontrol *kcontrol,
+ 	struct soc_enum *e = (struct soc_enum *)kcontrol->private_value;
+ 	unsigned int mux, changed;
  
-+static int soc_tplg_check_name(const char *name)
-+{
-+	if (strnlen(name, SNDRV_CTL_ELEM_ID_NAME_MAXLEN) ==
-+	    SNDRV_CTL_ELEM_ID_NAME_MAXLEN)
++	if (ucontrol->value.enumerated.item[0] >= e->items)
 +		return -EINVAL;
 +
-+	return 0;
-+}
-+
- static int set_stream_info(struct soc_tplg *tplg, struct snd_soc_pcm_stream *stream,
- 			   struct snd_soc_tplg_stream_caps *caps)
- {
-+	int ret;
-+
-+	ret = soc_tplg_check_name(caps->name);
-+	if (ret)
-+		return ret;
-+
- 	stream->stream_name = devm_kstrdup(tplg->dev, caps->name, GFP_KERNEL);
- 	if (!stream->stream_name)
- 		return -ENOMEM;
-@@ -1375,7 +1390,11 @@ static int soc_tplg_dai_create(struct soc_tplg *tplg,
- 	if (dai_drv == NULL)
- 		return -ENOMEM;
+ 	mux = snd_soc_enum_item_to_val(e, ucontrol->value.enumerated.item[0]);
+ 	changed = snd_soc_component_test_bits(component, e->reg,
+ 					      CTRL_DIN_LRCLK_SRC,
+diff --git a/sound/soc/meson/aiu-codec-ctrl.c b/sound/soc/meson/aiu-codec-ctrl.c
+index ee0ef6301010c..fe776de739881 100644
+--- a/sound/soc/meson/aiu-codec-ctrl.c
++++ b/sound/soc/meson/aiu-codec-ctrl.c
+@@ -30,6 +30,9 @@ static int aiu_codec_ctrl_mux_put_enum(struct snd_kcontrol *kcontrol,
+ 	struct soc_enum *e = (struct soc_enum *)kcontrol->private_value;
+ 	unsigned int mux, changed;
  
--	if (strlen(pcm->dai_name)) {
-+	ret = soc_tplg_check_name(pcm->dai_name);
-+	if (ret)
-+		goto err;
++	if (ucontrol->value.enumerated.item[0] >= e->items)
++		return -EINVAL;
 +
-+	if (pcm->dai_name[0]) {
- 		dai_drv->name = devm_kstrdup(tplg->dev, pcm->dai_name, GFP_KERNEL);
- 		if (!dai_drv->name) {
- 			ret = -ENOMEM;
-@@ -1481,7 +1500,11 @@ static int soc_tplg_fe_link_create(struct soc_tplg *tplg,
- 	if (tplg->ops)
- 		link->dobj.unload = tplg->ops->link_unload;
- 
--	if (strlen(pcm->pcm_name)) {
-+	ret = soc_tplg_check_name(pcm->pcm_name);
-+	if (ret)
-+		goto err;
-+
-+	if (pcm->pcm_name[0]) {
- 		link->name = devm_kstrdup(tplg->dev, pcm->pcm_name, GFP_KERNEL);
- 		link->stream_name = devm_kstrdup(tplg->dev, pcm->pcm_name, GFP_KERNEL);
- 		if (!link->name || !link->stream_name) {
-@@ -1491,7 +1514,11 @@ static int soc_tplg_fe_link_create(struct soc_tplg *tplg,
- 	}
- 	link->id = le32_to_cpu(pcm->pcm_id);
- 
--	if (strlen(pcm->dai_name)) {
-+	ret = soc_tplg_check_name(pcm->dai_name);
-+	if (ret)
-+		goto err;
-+
-+	if (pcm->dai_name[0]) {
- 		link->cpus->dai_name = devm_kstrdup(tplg->dev, pcm->dai_name, GFP_KERNEL);
- 		if (!link->cpus->dai_name) {
- 			ret = -ENOMEM;
-@@ -1843,6 +1870,10 @@ static int soc_tplg_dai_config(struct soc_tplg *tplg,
- 
- 	memset(&dai_component, 0, sizeof(dai_component));
- 
-+	ret = soc_tplg_check_name(d->dai_name);
-+	if (ret)
-+		return ret;
-+
- 	dai_component.dai_name = d->dai_name;
- 	dai = snd_soc_find_dai(&dai_component);
- 	if (!dai) {
+ 	mux = snd_soc_enum_item_to_val(e, ucontrol->value.enumerated.item[0]);
+ 	changed = snd_soc_component_test_bits(component, e->reg,
+ 					      CTRL_DATA_SEL,
 -- 
 2.53.0
 
