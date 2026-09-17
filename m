@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60115374A0E;
-	Thu, 17 Sep 2026 18:45:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A67EB37C91B;
+	Thu, 17 Sep 2026 18:45:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789670710; cv=none; b=qBsuGSyncubggv1ztHF9ZVC80kPNfoLpENFg4Ag8UzI6Pgi2rVlQb/lVB0KPGYkH+NqBy0V9ZdRr7s4bAqSQhjSTD+4I6GnutS2ST4DFEkO/ENmt8Sg67XIqebLl/B7PaMmuv2wkbVaWmNMRLkpQUKytimnAjhC9TQysBBSAUpA=
+	t=1789670713; cv=none; b=YiE0JAo9rA8PP8QonZF2sHHtLNqkTx77MoxEDjR7N2QYD+cAi8oL5z7ktmXBnqgcex6IGBnHmFb0Sznc1C42TEN/dhSRKaCREDEUMs5E22DK7JITel6N9Oei+5wDX7ziRgFesoGqip7CM5zKgMp9yLGelXkPoPH+T74zdK84sE8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789670710; c=relaxed/simple;
-	bh=kXpuGDQk2/X8FEbfY6CHTyNCWnnyPkFDO6MQPfq3oWs=;
+	s=arc-20240116; t=1789670713; c=relaxed/simple;
+	bh=Vym8x8jOjRBJf0hoghrqYnOwOP3AcE8ygl2ZgQDH4vU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cJd8OL/0zVQ9Lq3FqbeoIXRMPNRNFKeK+g3mZRyJEywsw8oenuH3AtJzU08nMkzsps4LTKzu7mnnw5eowlUERwigYQsku/muuEXL5bapG8hfiDkViO45eTb0MvqwOXdp7BY8ViaZRsy2HUADNDIUYn6tw0YlE5K4srPBe475Ltg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S8Gz9lH/; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=tCFdny8nPmstmm213K1b3JKMI5VbaNI/NUMRhREv5n1tGZiazMqzw5QcuCSHxfsmCwdDhfi0p0bIKKx4onHiKY9WJiVuAa+ZYiJ2KTQbz3XaLe4nevWl4gmnjMKBQ8WKvZadOB1T7xjkbPbt4mqUND3LxzgZujKGXFpxYwT8oCU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LrQsGDhY; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S8Gz9lH/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4ED471F000FF;
-	Thu, 17 Sep 2026 18:45:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LrQsGDhY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C50201F000FF;
+	Thu, 17 Sep 2026 18:45:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789670708;
-	bh=HmJy+OkcDkftZRfSTQbNrjtsuxajolp3DRbKGC88gdo=;
+	s=korg; t=1789670712;
+	bh=hgdYqwoWNCdbwO5ABznuMQ/VfMAOCEqTG57iT+lUnRM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S8Gz9lH/W622muQZgZsUJUp6OnsUv5M0GOcZ9+e2qhDDe1uOXuVwlL8JxOuHc3Xw+
-	 U3UrGIyCqh/qnQinzaK/VsTiflb6O56mb6VcmkJi2i1Zg83J1MtKUKd7a8tzv9L3ul
-	 z4pG6lbMsy+zOcRJSXlHQHeQ+ZiiVMebVzPiIxGA=
+	b=LrQsGDhYQlXmC9X9xHO9W0QffGXG3MLf20SDVYtnfr8rSb3t2tLwGC4NBThmyJwMT
+	 2LLukVnqfiuTB2lsXyDXAPz52TNBhdk/eLPW/0ZOCWJegypt5kkxtkWqdwuqgG51P2
+	 XS/uHjZAS+CqE58oPALPynU8Rob4cXyEXF1tl32g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolai Buchwitz <nb@tipi-net.de>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Xiong Weimin <xiongweimin@kylinos.cn>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0745/1102] net: macb: destroy the phylink instance on the probe error path
-Date: Thu, 17 Sep 2026 16:11:28 +0100
-Message-ID: <20260917151559.117024203@linuxfoundation.org>
+Subject: [PATCH 6.12 0719/1102] virtio_input: reset device if input_register_device() fails
+Date: Thu, 17 Sep 2026 16:11:02 +0100
+Message-ID: <20260917151558.395931855@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -51,38 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolai Buchwitz <nb@tipi-net.de>
+From: Xiong Weimin <xiongweimin@kylinos.cn>
 
-[ Upstream commit 7d059f390750152b9bd69df934198651b94fc26d ]
+[ Upstream commit 81489b32a21c9360f8750d1fb600155d27452e19 ]
 
-macb_mii_init() creates a phylink instance on both of its success paths,
-but the probe unwind frees the netdev without destroying it, so a failing
-macb_alloc_tieoff() or register_netdev() leaks the instance.
+Probe marks the device DRIVER_OK with virtio_device_ready() before
+calling input_register_device(). If registration fails, the error path
+cleared vi->ready and called del_vqs() while the device was still live,
+so the device could keep DMA to queues that were already torn down.
 
-Destroy it at err_out_unregister_mdio, which is only reachable once
-macb_mii_init() has succeeded, so bp->phylink is valid there.
+Match remove/freeze: call virtio_reset_device() on that path before
+tearing down the virtqueues.
 
-Fixes: 7897b071ac3b ("net: macb: convert to phylink")
-Signed-off-by: Nicolai Buchwitz <nb@tipi-net.de>
-Link: https://patch.msgid.link/20260907210856.1673589-2-nb@tipi-net.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 271c865161c5 ("Add virtio-input driver.")
+Signed-off-by: Xiong Weimin <xiongweimin@kylinos.cn>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20260805032931.1606652-1-xiongweimin@kylinos.cn>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/cadence/macb_main.c | 1 +
+ drivers/virtio/virtio_input.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/cadence/macb_main.c b/drivers/net/ethernet/cadence/macb_main.c
-index e2e3f8d12fdbc..c8d098e8ca32a 100644
---- a/drivers/net/ethernet/cadence/macb_main.c
-+++ b/drivers/net/ethernet/cadence/macb_main.c
-@@ -5324,6 +5324,7 @@ static int macb_probe(struct platform_device *pdev)
- 		mdiobus_unregister(bp->mii_bus);
- 		mdiobus_free(bp->mii_bus);
- 	}
-+	phylink_destroy(bp->phylink);
- 
- err_out_phy_exit:
- 	phy_exit(bp->phy);
+diff --git a/drivers/virtio/virtio_input.c b/drivers/virtio/virtio_input.c
+index a5d63269f20b9..c5a1959035d50 100644
+--- a/drivers/virtio/virtio_input.c
++++ b/drivers/virtio/virtio_input.c
+@@ -328,6 +328,7 @@ static int virtinput_probe(struct virtio_device *vdev)
+ 	spin_lock_irqsave(&vi->lock, flags);
+ 	vi->ready = false;
+ 	spin_unlock_irqrestore(&vi->lock, flags);
++	virtio_reset_device(vdev);
+ err_mt_init_slots:
+ 	input_free_device(vi->idev);
+ err_input_alloc:
 -- 
 2.53.0
 
