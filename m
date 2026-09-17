@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD74C50B435;
-	Thu, 17 Sep 2026 16:53:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77C234E020C;
+	Thu, 17 Sep 2026 16:53:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789664020; cv=none; b=WYgfPjBVgjeRDLQRDKxVTxaT3ydUPyJ4p0x0StgKlUbZuQjfk1P95njGV6p+11vGmQuzBwYg60cQ1Ds7Q+h1NRbqIMzZJdNMagag08DQiPHkSTtfqYHbXLewX2Z5R9TBL9/WWVz9IXxS06D/BBr6Mwb4GMFa+8EDleqxg5kRgD8=
+	t=1789664023; cv=none; b=m1yYsaOxUd3D1HeZxjYTadkXxrBhv0HF9+/KIQMippjj8wsCfcAF9xi3BpR5+mYSczEhcyjzIbsmH4lkvZJGovYuPJYQTUMh3Xa5WJi/KPd10+9YbAeB+JFHWgQUQxFnvYHJbZ+Pa5QqnzWQJsnRS8kSuUzfro8en3s2USoSVwE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789664020; c=relaxed/simple;
-	bh=K8ZmWIk0Dx5a4mXaH2gwkRYukqkzzkT1zcXPmmK1wHw=;
+	s=arc-20240116; t=1789664023; c=relaxed/simple;
+	bh=pQNXy84D4fiDfD1IZZWo0KWQ7EUF2qtKqHnpi28WbY8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FrwUgGm1nWhz9pBVPJldxK9em1sHwiif9YnpEbIhdu4l1Zt7nCQb5bd9hqPMhpaGG9Kib5seNcnSbBuiCY7JjM7FrX3cu5ipMw6OV1b63wZuOGQt2qO3hfaD/v2nS38WreLE0mtCYWHF6C9syGClG2XHfauCQfab4snBdzTSkwQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DPAZU+s9; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=ND6m14Hj2Vat14akJlYozAWGQwSfgBs5ls8jV4J97rauPECAuRvTWKx356s+RPkPpX0i0Ik5eySVAuw1OQ2Qexys5rNL+SMOixdF2kxAN9EMnyzesMPWgJbvi+o1RJe6A88TNm27BLMyyywGuogpk6MavAu2+7VeURI/Tf+SCnk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=13uDINWL; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DPAZU+s9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6E3B1F00893;
-	Thu, 17 Sep 2026 16:53:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="13uDINWL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE5781F000FF;
+	Thu, 17 Sep 2026 16:53:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789664019;
-	bh=3sK8fVQAi4WLkJ6VmEOcdtDhnsFpSYcHLtw4DnI0sh8=;
+	s=korg; t=1789664022;
+	bh=Yow1AcxRriC7ApyOyYci1MOgE54QHCUifkeW5LFeajs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DPAZU+s9FobmQrREd6+hXCHU83tZFvdaNSyG8AYQGIfMCv76gF8dHBO97/I9k8WQL
-	 R88StgkrKAS/5rBiBaQAnhiXB4yodUHke7UXbkd7rPGpv2J0ph89iFZrO9ACVItf5M
-	 Qse2fyWRNb5lKu1ISWAG9WQNCw1cjTtcL8B/jZcw=
+	b=13uDINWLKSuBj0J+2fzs90QXhbWsNMHPec5pB/G9ND5JKDknXBJNVgDrIFSKQB3FR
+	 NpfFjerHDpiKKasM+NSfqFiDsz5Gnz7NNJVF8ZUiViS13qGu29Iuki7Upq1jIFIld8
+	 mv4Clon5cWkblArahRN05yQXIHRgbNWQcnquPWJk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lyude Paul <lyude@redhat.com>,
-	Mika Kahola <mika.kahola@intel.com>,
-	Imre Deak <imre.deak@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Shawn C Lee <shawn.c.lee@intel.com>
-Subject: [PATCH 6.18 0232/1250] drm/dp: Add DSC virtual DPCD quirk for Realtek MST branch device
-Date: Thu, 17 Sep 2026 16:00:27 +0100
-Message-ID: <20260917151558.429764022@linuxfoundation.org>
+	Alex Deucher <alexander.deucher@amd.com>,
+	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
+	Jeremy Klarenbeek <jeremy.klarenbeek99@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 0233/1250] drm/amd/pm/si: Fix updating clock limits from power states
+Date: Thu, 17 Sep 2026 16:00:28 +0100
+Message-ID: <20260917151558.456055634@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -47,50 +46,94 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Imre Deak <imre.deak@intel.com>
+From: Jeremy Klarenbeek <jeremy.klarenbeek99@gmail.com>
 
-[ Upstream commit bff2da7aa0020eb72e42d63868dc5adaa0fb85d3 ]
+[ Upstream commit e6c5d36756e7d4d260e2365fc4d01226f1973152 ]
 
-The ASUS DC301 USB-C dock containing a Realtek MST branch device
-supports the DSC decompression functionality on each of the dock's
-downstream connectors, even though there is no discoverable peer-to-peer
-virtual device in the MST topology (which the DP Standard
-requires/suggests to control the DSC functionality on a per-DFP basis).
-Add the DP_DPCD_QUIRK_DSC_WITHOUT_VIRTUAL_DPCD quirk for this branch
-device as well to enable the DSC decompression functionality on all DFP
-connectors of the dock, similarly to how this is done for dock's
-containing older Synaptics branch devices.
+VBIOS can contain conflicting values between:
+- the maximum allowed clocks and voltages on AC or DC
+- the clocks and voltages in power states on AC or DC
 
-Cc: Lyude Paul <lyude@redhat.com>
-Reported-and-tested-by: Shawn C Lee <shawn.c.lee@intel.com>
-Reviewed-by: Mika Kahola <mika.kahola@intel.com>
-Reviewed-by: Lyude Paul <lyude@redhat.com>
-Signed-off-by: Imre Deak <imre.deak@intel.com>
-Link: https://patch.msgid.link/20260525125516.2794636-1-imre.deak@intel.com
+Update maximum clock (and voltage) limits for both AC/DC
+and take the highest value from the VBIOS limits and
+the performance/battery power states. Previously this
+was only done for AC, but is also needed for DC.
+
+This commit fixes the behaviour on some laptop GPUs,
+where the VBIOS limit was set to the lowest possible
+clock frequency, so the GPU was stuck on the lowest
+possible power level on battery.
+
+Some affected GPUs are:
+FirePro W4170M (Dell Precision M2800)
+Radeon HD 8790M (Dell Latitude E6540)
+and possibly other laptop GPUs.
+
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Co-developed-by: Timur Kristóf <timur.kristof@gmail.com>
+Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
+Signed-off-by: Jeremy Klarenbeek <jeremy.klarenbeek99@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/display/drm_dp_helper.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c | 29 ++++++++++++++++++----
+ 1 file changed, 24 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/display/drm_dp_helper.c b/drivers/gpu/drm/display/drm_dp_helper.c
-index 8c858ba40c6c6..77336bc3e62c2 100644
---- a/drivers/gpu/drm/display/drm_dp_helper.c
-+++ b/drivers/gpu/drm/display/drm_dp_helper.c
-@@ -2537,6 +2537,8 @@ static const struct dpcd_quirk dpcd_quirk_list[] = {
- 	{ OUI(0x00, 0x00, 0x00), DEVICE_ID('C', 'H', '7', '5', '1', '1'), false, BIT(DP_DPCD_QUIRK_NO_SINK_COUNT) },
- 	/* Synaptics DP1.4 MST hubs can support DSC without virtual DPCD */
- 	{ OUI(0x90, 0xCC, 0x24), DEVICE_ID_ANY, true, BIT(DP_DPCD_QUIRK_DSC_WITHOUT_VIRTUAL_DPCD) },
-+	/* Realtek DP1.4 MST hubs can support DSC without virtual DPCD */
-+	{ OUI(0x00, 0xe0, 0x4c), DEVICE_ID('D', 'p', '1', '.', '4', 0), true, BIT(DP_DPCD_QUIRK_DSC_WITHOUT_VIRTUAL_DPCD) },
- 	/* Synaptics DP1.4 MST hubs require DSC for some modes on which it applies HBLANK expansion. */
- 	{ OUI(0x90, 0xCC, 0x24), DEVICE_ID_ANY, true, BIT(DP_DPCD_QUIRK_HBLANK_EXPANSION_REQUIRES_DSC) },
- 	/* MediaTek panels (at least in U3224KBA) require DSC for modes with a short HBLANK on UHBR links. */
+diff --git a/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c b/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c
+index 0385b24e7e4a2..ea97276358c0a 100644
+--- a/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c
++++ b/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c
+@@ -7238,6 +7238,7 @@ static void si_parse_pplib_clock_info(struct amdgpu_device *adev,
+ 	struct evergreen_power_info *eg_pi = evergreen_get_pi(adev);
+ 	struct si_power_info *si_pi = si_get_pi(adev);
+ 	struct  si_ps *ps = si_get_ps(rps);
++	struct amdgpu_clock_and_voltage_limits *limits;
+ 	u16 leakage_voltage;
+ 	struct rv7xx_pl *pl = &ps->performance_levels[index];
+ 	int ret;
+@@ -7297,12 +7298,30 @@ static void si_parse_pplib_clock_info(struct amdgpu_device *adev,
+ 		si_pi->mvdd_bootup_value = mvdd;
+ 	}
+ 
++	/*
++	 * Update maximum allowed clock limits.
++	 * VBIOS can contain conflicting values between:
++	 * - the maximum allowed clocks and voltages on AC or DC
++	 * - the clocks and voltages in power states on AC or DC
++	 */
+ 	if ((rps->class & ATOM_PPLIB_CLASSIFICATION_UI_MASK) ==
+-	    ATOM_PPLIB_CLASSIFICATION_UI_PERFORMANCE) {
+-		adev->pm.dpm.dyn_state.max_clock_voltage_on_ac.sclk = pl->sclk;
+-		adev->pm.dpm.dyn_state.max_clock_voltage_on_ac.mclk = pl->mclk;
+-		adev->pm.dpm.dyn_state.max_clock_voltage_on_ac.vddc = pl->vddc;
+-		adev->pm.dpm.dyn_state.max_clock_voltage_on_ac.vddci = pl->vddci;
++	    ATOM_PPLIB_CLASSIFICATION_UI_PERFORMANCE)
++		limits = &adev->pm.dpm.dyn_state.max_clock_voltage_on_ac;
++	else if ((rps->class & ATOM_PPLIB_CLASSIFICATION_UI_MASK) ==
++		 ATOM_PPLIB_CLASSIFICATION_UI_BATTERY)
++		limits = &adev->pm.dpm.dyn_state.max_clock_voltage_on_dc;
++	else
++		limits = NULL;
++
++	if (limits) {
++		if (pl->sclk > limits->sclk)
++			limits->sclk = pl->sclk;
++		if (pl->mclk > limits->mclk)
++			limits->mclk = pl->mclk;
++		if (pl->vddc > limits->vddc)
++			limits->vddc = pl->vddc;
++		if (pl->vddci > limits->vddci)
++			limits->vddci = pl->vddci;
+ 	}
+ }
+ 
 -- 
 2.53.0
 
