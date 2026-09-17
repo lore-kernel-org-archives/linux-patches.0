@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D65984F85CA;
-	Thu, 17 Sep 2026 17:41:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CD8C4EB865;
+	Thu, 17 Sep 2026 17:41:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666878; cv=none; b=Q6P+vqHcXmj/3BkAsIF4ZLm4SG9UFBDkjjkEtNGsDl6UTa69FEn/OjV2cACEwUf49vC2VrhAo+qAyY2TbMcYMDQzpNX3bhnYWESBGkqKwzSgnvof5yyvVZqkFgsPf2zUrOwqUGsQJ2u3OnqVW8M+GLYfC2pI6hWnlWZ7yAWE6vU=
+	t=1789666880; cv=none; b=ev4aahaADRA6vVLHnNTElrQGq71MS/9vEM0DtFIgLTlQ2Q3T3rgTXx9TCwliLF2tOMVuZrFPuXlTvhAIUJLgIuUPjW9GwPLrhz/bihGrnZXXeKGaHUYelrp6977Z5bp1pn7Iud/yfRqgV4gWKl1ZtOwPmfUaKUrWS0Hq4gSnppQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666878; c=relaxed/simple;
-	bh=WhzDPwbunecHHsvIcnOIRQo9kT9QiPNShckkS4am/ns=;
+	s=arc-20240116; t=1789666880; c=relaxed/simple;
+	bh=SckJsMtP//kBHffgU3tTdT2Czykb2dSl7mGDIjxJK1c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=IlhSW1403mGhZ3nXYfprAlg/AKJ5On78T0SEOliAe1XEzC2DAws7wPffCP8mrd4ZZTJib0/h5Obxi5v7kJ1lFr3W/OIIuze43JC0y2p2Av3XTnt07eG6ra9auMpMRdke9t8nBOHU73owwlZrmQbPvg7kd8LPbiVcIxt2TH4h6Nk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KWiXk/NN; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=Plya+WOaS/j8W7D16fsAG44kwaOkDLPyA/E3qPdBvvgutW6mG6Zk00WQkEUkP+c+Wqon+regDbOtMtIIA9tBvHl1IFKAnE4gEJHlzXYxKjCp5h+iX9d3H78pzOZZZ13QziCGGLvj52JXBrDQHliDPp3zzMuWGR+nR2o5/sycbQs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0VyqOy0b; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KWiXk/NN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 927551F000FF;
-	Thu, 17 Sep 2026 17:41:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0VyqOy0b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A695E1F00893;
+	Thu, 17 Sep 2026 17:41:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666876;
-	bh=0P2CQZ8fj0xwSdpiXeV+veIbiRpRzt+KavyvoDbw6GM=;
+	s=korg; t=1789666879;
+	bh=mGxoqwkiwme00F3ECrr0bz5jkbmEoZ/DyZIrz48iyrU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KWiXk/NNaP8MmUPsLNA7R4VCFKWzBHf2/s4YSbTY6n8WU2GhWojWjcdubHbOpIyUS
-	 VeZDyUd0pB8tILxhBXNBBgjCgoDDWyvEXUthh+ycjGnyDNbeGrUMe5HTO3vVWlTISX
-	 ll+JlFdbbA5sGw7d/dHq3jzsbjhcCNHoRcSHKjVM=
+	b=0VyqOy0biSdgTpTCxHF+Oz1S/t/m3OoKh92vhlGz/nKeYnlkhMx1ph1NTY3jKapSX
+	 2heq7d05n36dOa6zaTm5ijjSHo5zo/cMhB+vD7LhpoxTocLEfTIWwgtr+iDkWX2Avm
+	 PwDXmiC0I8pThGb00NVerm1+/1SUy7SiKz/Z3lJQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jackson Lee <jackson.lee@chipsnmedia.com>,
-	Nas Chung <nas.chung@chipsnmedia.com>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Nilesh Javali <njavali@marvell.com>,
+	Hannes Reinecke <hare@kernel.org>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1155/1250] media: chips-media: wave5: Add timeout while stop_streaming
-Date: Thu, 17 Sep 2026 16:15:50 +0100
-Message-ID: <20260917151623.570703929@linuxfoundation.org>
+Subject: [PATCH 6.18 1156/1250] scsi: qla2xxx: Zero dport diagnostics buffer to avoid info leak
+Date: Thu, 17 Sep 2026 16:15:51 +0100
+Message-ID: <20260917151623.598903535@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -54,80 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jackson Lee <jackson.lee@chipsnmedia.com>
+From: Nilesh Javali <njavali@marvell.com>
 
-[ Upstream commit 2ae7faed2e60d6d07d9efdd962d20dcb15330ced ]
+[ Upstream commit a152edab3854f01dd2daf3eaf8f32cbabdb3834e ]
 
-When stop_streaming is called, an infinite loop may occur in some cases.
-Add a bounded poll of the queue status: loop until the queues drain,
-sleeping briefly between polls, and bail out once VPU_DEC_STOP_TIMEOUT
-elapses.
+qla2x00_do_dport_diagnostics() allocates the qla_dport_diag response
+buffer with kmalloc_obj() (non-zeroing) and, on success, copies the full
+sizeof(*dd) back to user space via sg_copy_from_buffer(). The inbound
+sg_copy_to_buffer() only fills as many bytes as the user request payload
+provides, and qla26xx_dport_diagnostics() zeroes only dd->buf. The
+options and unused[] fields are therefore copied out uninitialized,
+leaking kernel heap contents to user space.
 
-Fixes: 9707a6254a8a ("media: chips-media: wave5: Add the v4l2 layer")
+Allocate with kzalloc_obj(), matching qla2x00_do_dport_diagnostics_v2().
+
+Fixes: ec89146215d1 ("qla2xxx: Add bsg interface to support D_Port Diagnostics.")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jackson Lee <jackson.lee@chipsnmedia.com>
-Signed-off-by: Nas Chung <nas.chung@chipsnmedia.com>
-Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
-[ adapted timeout polling to the older decoder’s report_queue_count condition. ]
+Signed-off-by: Nilesh Javali <njavali@marvell.com>
+Reviewed-by: Hannes Reinecke <hare@kernel.org>
+Link: https://patch.msgid.link/20260723050413.3897522-54-njavali@marvell.com
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+[ Adapted kzalloc_obj(*dd) to kzalloc(sizeof(*dd), GFP_KERNEL) to match the branch’s allocation syntax. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/chips-media/wave5/wave5-vpu-dec.c   |   12 ++++++------
- drivers/media/platform/chips-media/wave5/wave5-vpuconfig.h |    1 +
- 2 files changed, 7 insertions(+), 6 deletions(-)
+ drivers/scsi/qla2xxx/qla_bsg.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/media/platform/chips-media/wave5/wave5-vpu-dec.c
-+++ b/drivers/media/platform/chips-media/wave5/wave5-vpu-dec.c
-@@ -5,6 +5,7 @@
-  * Copyright (C) 2021-2023 CHIPS&MEDIA INC
-  */
+--- a/drivers/scsi/qla2xxx/qla_bsg.c
++++ b/drivers/scsi/qla2xxx/qla_bsg.c
+@@ -2412,7 +2412,7 @@ qla2x00_do_dport_diagnostics(struct bsg_
+ 	    !IS_QLA28XX(vha->hw))
+ 		return -EPERM;
  
-+#include <linux/delay.h>
- #include <linux/pm_runtime.h>
- #include "wave5-helper.h"
- 
-@@ -1490,25 +1491,24 @@ static void wave5_vpu_dec_stop_streaming
- {
- 	struct vpu_instance *inst = vb2_get_drv_priv(q);
- 	struct v4l2_m2m_ctx *m2m_ctx = inst->v4l2_fh.m2m_ctx;
--	bool check_cmd = TRUE;
-+	unsigned long timeout;
- 
- 	dev_dbg(inst->dev->dev, "%s: type: %u\n", __func__, q->type);
- 	pm_runtime_resume_and_get(inst->dev->dev);
- 
--	while (check_cmd) {
-+	timeout = jiffies + msecs_to_jiffies(VPU_DEC_STOP_TIMEOUT);
-+	while (true) {
- 		struct queue_status_info q_status;
--		struct dec_output_info dec_output_info;
- 
- 		wave5_vpu_dec_give_command(inst, DEC_GET_QUEUE_STATUS, &q_status);
- 
- 		if (q_status.report_queue_count == 0)
- 			break;
- 
--		if (wave5_vpu_wait_interrupt(inst, VPU_DEC_TIMEOUT) < 0)
-+		if (time_after(jiffies, timeout))
- 			break;
- 
--		if (wave5_vpu_dec_get_output_info(inst, &dec_output_info))
--			dev_dbg(inst->dev->dev, "there is no output info\n");
-+		usleep_range(1000, 2000);
- 	}
- 
- 	v4l2_m2m_update_stop_streaming_state(m2m_ctx, q);
---- a/drivers/media/platform/chips-media/wave5/wave5-vpuconfig.h
-+++ b/drivers/media/platform/chips-media/wave5/wave5-vpuconfig.h
-@@ -59,6 +59,7 @@
- //  application specific configuration
- #define VPU_ENC_TIMEOUT                 60000
- #define VPU_DEC_TIMEOUT                 60000
-+#define VPU_DEC_STOP_TIMEOUT            300
- 
- // for WAVE encoder
- #define USE_SRC_PRP_AXI         0
+-	dd = kmalloc(sizeof(*dd), GFP_KERNEL);
++	dd = kzalloc(sizeof(*dd), GFP_KERNEL);
+ 	if (!dd) {
+ 		ql_log(ql_log_warn, vha, 0x70db,
+ 		    "Failed to allocate memory for dport.\n");
 
 
