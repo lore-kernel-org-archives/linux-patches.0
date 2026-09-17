@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED5863AEF54;
-	Thu, 17 Sep 2026 18:09:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9E83356757;
+	Thu, 17 Sep 2026 18:09:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789668545; cv=none; b=P1RdRGZ60o9DeE01L7Gh9l6RUVOyH9hGrhM46JSrD6xld5cMeQpKr9QKMYdSt9j7Rb1OTOoOWUwUobku1SQMKx0IglNv0E+WT5DerHkvFdRhzoWIFnydLfjMjlB3KlS9TLO2gVNOqJRR94g9Xc86yaJyIukNiwViq0/Kz4NFyqc=
+	t=1789668548; cv=none; b=dlQfbMMrYvjrvw7I5qy2wugQgFrkIwbz8Bc677F/RcUY8HD0D+27C+L9ied6d+Z77SkfVvFloXDfFR7e6tEBcXuvP/fRV4lJdEHfhWLjxWxLV7R8P8IYFnlbkEUgoWMc4FNu3mNManh9S89Xx5K2Vmmbjh+KEy+14TmYHaVHrGw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789668545; c=relaxed/simple;
-	bh=T9oienrJdoEF5RymkoP8E62oOqa3NMWenuvRnP8ZmWs=;
+	s=arc-20240116; t=1789668548; c=relaxed/simple;
+	bh=rZLtGSxTzVVqBCUeUyNFY/0hv0WgQcJm95x8vwdo1mE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mX8f7NXkwfLl14Q7dkkewXr6ZWqf8RCZA82Gs7d+kcqVD/4VKvoRuD+I3abhIIxE7gx3COO5Ak4swqhZD3YQEgGJhY3BmEmhB5WYFW+77MyIajjitqBlDF3wAUlbnRYvUjwXxRuRfqLWkfvZfZ8uwQksWNfK3TkKPwdjhRYNRsM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NQKvUtiP; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=jO1NkQedgNPY4QG8HH7yvS1Sobi8upB46ouh97aRYcXwG/YGzqtPcvpKifANp6oS12HUn65ogkNXlJYgcHpzCyxjD1Z4LzCueuJhcDQwpmS9ftDsdrdn/eUx2xdx82E95XszkoCLl7si5cTbDECIP4C5/n37tYsFpv43Ve4p4DQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HrP+cGPc; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NQKvUtiP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A6951F000FF;
-	Thu, 17 Sep 2026 18:09:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HrP+cGPc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DFDC1F000FF;
+	Thu, 17 Sep 2026 18:09:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789668543;
-	bh=TJyCKlBHLBF1B59uTNI3zMIV6AtYYW/V0e2KFZ7AXOg=;
+	s=korg; t=1789668546;
+	bh=+P/Q8+USsGK0cgI7TSytWu2ecfm5HEQg/e04mKfqG38=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NQKvUtiPwYp3LT1Ym6S0baaCL2osXycb6Un7AGtfFvhF+QGlwIKDgo1dlDq7sxfeC
-	 vi6dvwn17Vq9PotudpYQWhWwxhIEJZHHJCAo62GyFJtma1J6kn6CsOUtYJ91kmS5zs
-	 Spu8d/krQFeQClSwZTSQF51qJnfeDcSDxEpfqDHU=
+	b=HrP+cGPcIXMZMguQwdFAzlBwokomsIO86Ey2XbCLHGizSnxH5F9Q3L7vBHZkdfcWh
+	 VNJutUBcwgBrvh6XeWJQPaz3Xy5xE1vdjrHsnN8xDxtRByUypGGDwZBsezOYg0oEbQ
+	 Z1hJ39lqFcnOXDyUYRGAUPq2k3PKtKzAVgSeLnQA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Wilken Gottwalt <wilken.gottwalt@posteo.net>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Niklas Cassel <cassel@kernel.org>,
+	Damien Le Moal <dlemoal@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0457/1102] hwmon: (corsair-psu) Fix linear11 calculation
-Date: Thu, 17 Sep 2026 16:06:40 +0100
-Message-ID: <20260917151551.159697477@linuxfoundation.org>
+Subject: [PATCH 6.12 0458/1102] ata: libata-core: Disable LPM on WDC WD141KFGX-68FH9N0
+Date: Thu, 17 Sep 2026 16:06:41 +0100
+Message-ID: <20260917151551.185115235@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -52,111 +51,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Niklas Cassel <cassel@kernel.org>
 
-[ Upstream commit c6c4234928d2eb4f61fecb61067e612d9bdbd2ff ]
+[ Upstream commit 3971921a055330669b281962ff723d1abb76a58c ]
 
-In corsairpsu_linear11_to_int(), the mantissa is extracted using bitwise
-operations and cast to s16 before being shifted left:
+According to a user report, WDC WD141KFGX-68FH9N0 has problems with LPM.
 
-static int corsairpsu_linear11_to_int(const u16 val, const int scale)
-{
-    ...
-    const int mant = (((s16)(val & 0x7ff)) << 5) >> 5;
-    ...
-}
-
-Due to C integer promotion rules, the masked value (which is always
-positive) is promoted to a 32-bit integer before the left shift. As a
-result, the sign bit is never extended to bit 31 of the promoted integer.
-
-When the device hardware reports a negative temperature in Linear11 format
-(such as an ambient temperature probe reporting sub-zero), the negative
-mantissa is parsed incorrectly as a massive positive value. For example,
--1 becomes 2047, which scales to 2047 degrees Celsius.
-
-Fix the problem by type casting the result of the left shift operation
-to s16.
-
-Another problem is left-shifting of negative values. In C, the result of
-left-shifting negative values is undefined. Use a multiplication instead
-to avoid the problem.
-
-Also use a local s64 variable to store temporary results, change
-the return value type from int to long, and clamp the final value
-to LONG_MIN and LONG_MAX to avoid under- and overflow issues while
-retaining as much information as possible.
-
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Cc: Wilken Gottwalt <wilken.gottwalt@posteo.net>
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Tested-by: Wilken Gottwalt <wilken.gottwalt@posteo.net>
-Link: https://lore.kernel.org/r/20260804034811.2385506-1-linux@roeck-us.net
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=220693
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/corsair-psu.c | 23 ++++++++++++++---------
- 1 file changed, 14 insertions(+), 9 deletions(-)
+ drivers/ata/libata-core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/hwmon/corsair-psu.c b/drivers/hwmon/corsair-psu.c
-index 61d1b22bc63ec..7b64e04116e39 100644
---- a/drivers/hwmon/corsair-psu.c
-+++ b/drivers/hwmon/corsair-psu.c
-@@ -140,13 +140,18 @@ struct corsairpsu_data {
- };
+diff --git a/drivers/ata/libata-core.c b/drivers/ata/libata-core.c
+index dc3e7d8eae161..caf77faf7a33f 100644
+--- a/drivers/ata/libata-core.c
++++ b/drivers/ata/libata-core.c
+@@ -4324,6 +4324,7 @@ static const struct ata_dev_quirks_entry __ata_dev_quirks[] = {
+ 	 */
+ 	{ "WDC WD100EFGX-68CPLN0",	NULL,	ATA_QUIRK_NOLPM },
+ 	{ "WDC WD102KFBX-68M95N0",	NULL,	ATA_QUIRK_NOLPM },
++	{ "WDC WD141KFGX-68FH9N0",	NULL,	ATA_QUIRK_NOLPM },
+ 	{ "WD Green 2.5 480GB",		NULL,	ATA_QUIRK_NOLPM },
  
- /* some values are SMBus LINEAR11 data which need a conversion */
--static int corsairpsu_linear11_to_int(const u16 val, const int scale)
-+static long corsairpsu_linear11_to_long(const u16 val, const int scale)
- {
- 	const int exp = ((s16)val) >> 11;
--	const int mant = (((s16)(val & 0x7ff)) << 5) >> 5;
--	const int result = mant * scale;
-+	const int mant = ((s16)((val & 0x7ff) << 5)) >> 5;
-+	s64 result = mant * scale;
- 
--	return (exp >= 0) ? (result << exp) : (result >> -exp);
-+	if (exp >= 0)
-+		result *= (int)(1UL << exp);
-+	else
-+		result >>= -exp;
-+
-+	return clamp(result, LONG_MIN, LONG_MAX);
- }
- 
- /* the micro-controller uses percentage values to control pwm */
-@@ -271,13 +276,13 @@ static int corsairpsu_get_value(struct corsairpsu_data *priv, u8 cmd, u8 rail, l
- 	case PSU_CMD_RAIL_AMPS:
- 	case PSU_CMD_TEMP0:
- 	case PSU_CMD_TEMP1:
--		*val = corsairpsu_linear11_to_int(tmp & 0xFFFF, 1000);
-+		*val = corsairpsu_linear11_to_long(tmp & 0xFFFF, 1000);
- 		break;
- 	case PSU_CMD_FAN:
--		*val = corsairpsu_linear11_to_int(tmp & 0xFFFF, 1);
-+		*val = corsairpsu_linear11_to_long(tmp & 0xFFFF, 1);
- 		break;
- 	case PSU_CMD_FAN_PWM_ENABLE:
--		*val = corsairpsu_linear11_to_int(tmp & 0xFFFF, 1);
-+		*val = corsairpsu_linear11_to_long(tmp & 0xFFFF, 1);
- 		/*
- 		 * 0 = automatic mode, means the micro-controller controls the fan using a plan
- 		 *     which can be modified, but changing this plan is not supported by this
-@@ -291,12 +296,12 @@ static int corsairpsu_get_value(struct corsairpsu_data *priv, u8 cmd, u8 rail, l
- 			*val = 2;
- 		break;
- 	case PSU_CMD_FAN_PWM:
--		*val = corsairpsu_linear11_to_int(tmp & 0xFFFF, 1);
-+		*val = corsairpsu_linear11_to_long(tmp & 0xFFFF, 1);
- 		*val = corsairpsu_dutycycle_to_pwm(*val);
- 		break;
- 	case PSU_CMD_RAIL_WATTS:
- 	case PSU_CMD_TOTAL_WATTS:
--		*val = corsairpsu_linear11_to_int(tmp & 0xFFFF, 1000000);
-+		*val = corsairpsu_linear11_to_long(tmp & 0xFFFF, 1000000);
- 		break;
- 	case PSU_CMD_TOTAL_UPTIME:
- 	case PSU_CMD_UPTIME:
+ 	/*
 -- 
 2.53.0
 
