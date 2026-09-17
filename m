@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0861C4F3936;
-	Thu, 17 Sep 2026 15:55:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ED9F4ABBAA;
+	Thu, 17 Sep 2026 15:55:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789660521; cv=none; b=JYxb+jHrUDFHAtdMxyx6M6WQvMgZWVJ6Zqd6Q9o+ZD7O+1PUA+z8MR7Z1h6hZMYgPKq09VqDBv1fcXL6hUh7C4mRI1w55CT855egAlpZqDWXPYjQJYfUTmAhthnmLxffS1e3FkFsCNT4Yfs/7bNanCRM3jVToG6264Ucgl9Ebgw=
+	t=1789660524; cv=none; b=Mo5xQNVWzKoYBwewlnNM0makgBMiHbCezOa62QUtaXFtdnxldJMdegvkjYGkcKto41BhgvYsR5RceqqfT9A3kLMN/hJBxPDn/BWVF9KfuRrKj4HwFTbzUZtK4899n74iVKbYHAS3KeqBxRUT6W+yqXSJK4o6V4JlhImaz9d4sSA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789660521; c=relaxed/simple;
-	bh=PtfGs2dj1GXP024S+7O20OcIdEJYUarCWwuckA/7fR8=;
+	s=arc-20240116; t=1789660524; c=relaxed/simple;
+	bh=4D5H1SFxafWXNqD7srnrqW4jG94ludvG/3qERsWRxgE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SKEnbhXmd++27xQ+6pshd4wrzMIsmjXBxjTdDRTkj8wSq36AAdKJFErJ/OxuENzzhCzWBuTek4I2o3IyL4eXrqMuycwfnHl4eu46jSP6+7Ijv/PL4Uoorbo/7uHAd9fPOpx7fpkkCYxJIZScTREv8hgpHFGjmDsLzxSuVI3cNg4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Ms83dj5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=k0HJhCZWMrk+D2gp2aeLZceCqsjiQcJoN2ijoumRZvYwO3AIwybDfFtuWfwd+jMdtcMu/UlZM2V8c/yHdWFd9pRo8NJRuiGrXWGbrjRNUgg1SRyw8WDR0km1//wHdKeLREQxvGJEEJqHZSxqr2TLFfF86CJq3qOCAg/9vSzkLxM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kIjn2+un; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Ms83dj5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 569051F000FF;
-	Thu, 17 Sep 2026 15:55:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kIjn2+un"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4238C1F00893;
+	Thu, 17 Sep 2026 15:55:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789660519;
-	bh=aXDl6Yam9/823KUvJ4/jjQSiF7iI97Gcgvwz37CxX6Q=;
+	s=korg; t=1789660522;
+	bh=RRF/gmNmH48dHG+/nTd7p0YIJY7sG1q2ewYoBf3sua4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1Ms83dj5ba/dYLaMoRYjb8nxCmfs9pdZ53N7/gb6bCUQJY3ofZCB6qhOJeS/srlxL
-	 H5xOYYu1Vvnw9C9/Ph+Pwu311pNZ4bqtjZ2rgxON0KbKXVnwevQGfNRwejPxVH6+Q8
-	 po/9N1vuRT6uuEglBEDiVtQ5wPQjLj6uSXKrB45s=
+	b=kIjn2+unJWKOvIuwiAaJyAxfUbY286brt96uiv8nEYFLid6w567hveD82eMxJ6lT7
+	 GlumInHfAtnfsF4iK/4ccYFu1aRQxXxdoM6CDYWNrZVUuLGU4c3VA5nQPWjXk+AH6u
+	 8eF8/ZmcshdqLOnME8qJmI69YK/T2jDSujN4IwIo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Holger Dengler <dengler@linux.ibm.com>,
 	Heiko Carstens <hca@linux.ibm.com>,
 	Vasily Gorbik <gor@linux.ibm.com>
-Subject: [PATCH 7.2 580/733] s390/crypto: Fix missing scrub of temp buffers with PAES algorithm
-Date: Thu, 17 Sep 2026 16:14:48 +0100
-Message-ID: <20260917151406.842275906@linuxfoundation.org>
+Subject: [PATCH 7.2 581/733] s390/crypto: Fix wrong return code to engine in asynch callbacks
+Date: Thu, 17 Sep 2026 16:14:49 +0100
+Message-ID: <20260917151406.876450015@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -54,16 +54,20 @@ Content-Transfer-Encoding: 8bit
 
 From: Harald Freudenberger <freude@linux.ibm.com>
 
-commit 19a218b46b2471d370c11fb52040f36ac8d05d23 upstream.
+commit ac1481320110b803ab9b79ab4d2ca11a74fc05f2 upstream.
 
-In function ctr_paes_do_crypt() there is a buffer used to process
-remaining bytes < AES_BLOCK_SIZE. This buffer was not scrubbed and
-thus could lead to expose of unwanted data. Rework the code to
-explicitly scrub the buffer at the end of the function to avoid
-exposure of maybe sensitive data.
+When crypto_finalize_hash_request() or
+crypto_finalize_skcipher_request() explicitly completes a request, the
+do_one_request callback must return 0 to indicate successful
+handling. Returning a negative error code causes the crypto engine to
+assume the driver failed to take ownership and triggers a second
+completion via crypto_request_complete(), resulting in a double
+completion. This pattern occurs in paes_s390.c 4 times and once in
+phmac_s390.c.
 
-In function __xts_2keys_prep_param() change the existing scrub to
-clean the whole param block instead of just the key field.
+Fixed in phmac_do_one_request() and all four paes do_one_request
+callbacks (ecb, cbc, ctr, xts) by returning 0 after explicit
+finalization instead of propagating the error code.
 
 Fixes: 6cd87cb5ef6c ("s390/crypto: Rework protected key AES for true asynch support")
 Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
@@ -73,27 +77,58 @@ Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/crypto/paes_s390.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/s390/crypto/paes_s390.c  |    8 ++++----
+ arch/s390/crypto/phmac_s390.c |    2 +-
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
 --- a/arch/s390/crypto/paes_s390.c
 +++ b/arch/s390/crypto/paes_s390.c
-@@ -1036,6 +1036,7 @@ static int ctr_paes_do_crypt(struct s390
- 	}
- 
- out:
-+	memzero_explicit(buf, sizeof(buf));
- 	pr_debug("rc=%d\n", rc);
- 	return rc;
- }
-@@ -1367,7 +1368,7 @@ static inline int __xts_2keys_prep_param
- 		memcpy(param->init, pcc_param.xts, 16);
- 	}
- 
--	memzero_explicit(pcc_param.key, sizeof(pcc_param.key));
-+	memzero_explicit(&pcc_param, sizeof(pcc_param));
- 	return rc;
+@@ -568,7 +568,7 @@ static int ecb_paes_do_one_request(struc
+ 	atomic_dec(&ctx->via_engine_ctr);
+ 	crypto_finalize_skcipher_request(engine, req, rc);
+ 	local_bh_enable();
+-	return rc;
++	return 0;
  }
  
+ static struct skcipher_engine_alg ecb_paes_alg = {
+@@ -835,7 +835,7 @@ static int cbc_paes_do_one_request(struc
+ 	atomic_dec(&ctx->via_engine_ctr);
+ 	crypto_finalize_skcipher_request(engine, req, rc);
+ 	local_bh_enable();
+-	return rc;
++	return 0;
+ }
+ 
+ static struct skcipher_engine_alg cbc_paes_alg = {
+@@ -1145,7 +1145,7 @@ static int ctr_paes_do_one_request(struc
+ 	atomic_dec(&ctx->via_engine_ctr);
+ 	crypto_finalize_skcipher_request(engine, req, rc);
+ 	local_bh_enable();
+-	return rc;
++	return 0;
+ }
+ 
+ static struct skcipher_engine_alg ctr_paes_alg = {
+@@ -1589,7 +1589,7 @@ static int xts_paes_do_one_request(struc
+ 	atomic_dec(&ctx->via_engine_ctr);
+ 	crypto_finalize_skcipher_request(engine, req, rc);
+ 	local_bh_enable();
+-	return rc;
++	return 0;
+ }
+ 
+ static struct skcipher_engine_alg xts_paes_alg = {
+--- a/arch/s390/crypto/phmac_s390.c
++++ b/arch/s390/crypto/phmac_s390.c
+@@ -945,7 +945,7 @@ out:
+ 	atomic_dec(&tfm_ctx->via_engine_ctr);
+ 	crypto_finalize_hash_request(engine, req, rc);
+ 	local_bh_enable();
+-	return rc;
++	return 0;
+ }
+ 
+ #define S390_ASYNC_PHMAC_ALG(x)						\
 
 
