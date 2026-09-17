@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3C8A4F85A9;
-	Thu, 17 Sep 2026 17:40:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E60949D5BB;
+	Thu, 17 Sep 2026 17:40:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666844; cv=none; b=hXzc9pMwlbiAUn+JL8lwU9RiykQQ/FffZzauUfKF4rcTvkm993grQ2z8bLroKO7iTzllHQ8Hlqi9FVEkOnUj+XPM+2TAQZokboogC8WNPSjYiXzh/QYKEodrI1ngD5UKfQ+uN45rMCa0C0ozIxxlT4BVRaeE9XjH8jAvZev9558=
+	t=1789666847; cv=none; b=XWMm1LwzG0+FkRlqFUarTPIDXfUsMO5Z4V1p0TeRj0t+6slv+icgeWz+U+sTGWUE28MVCegqlwBu4aMCc7FMs3pnYlforBImVJ0nyxdz+XYHjWTmFnjDMCDgVianDOAB7HsdOGGw34Y3JyyORyHiI/1lem8yKZSmGnROONpHI+Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666844; c=relaxed/simple;
-	bh=YBbdSsIVBLcSwHSSv8sMaRQr50kgFRrIrmtnXlAC6vQ=;
+	s=arc-20240116; t=1789666847; c=relaxed/simple;
+	bh=YKPc32okcBRQVB/w44riARqXoBlsXkD+wGWzKA8PjWw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L85oA0+078h4M/P+iECjKNDJRqpey20ctp9jAnZt0a+jKnsZYSGRhC69m8Md2kSi4e37EZVz+p1EGtJJusb1mNb0gTFx1JgrAOviv6aKfkrH2yg2EV5jf2N1KSWEU5mvPSTs32cuT3WOdY7sWjLzJQ+wWhDLdAzwtPfjb+bhao8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CzByapQb; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=EpXJvGT6rUraQCaMjQ039ra7BiKTB5n05O5ppmSeHbv1AFLHZi3Hu/MRfyWnOEZOM4Y2Y6HA53B00WpI/w6gcHmvXb8h0z120wOLSJp/4qMN4/GePlv0623UAvTrFbVJPhWLecJENzeOhZPHw3foD8BP30PLxhe2CYP4SWX7jII=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ubn2zyqd; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CzByapQb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51F861F000FF;
-	Thu, 17 Sep 2026 17:40:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ubn2zyqd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E5571F00893;
+	Thu, 17 Sep 2026 17:40:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666842;
-	bh=QUKz8ZZdqdNUzhaVa38bPHOZwqvqLsSu4TdpY8bPyrg=;
+	s=korg; t=1789666845;
+	bh=2YxkOSZRazkkKzb3zuT3F1KeLyi+BwQziSzOi+I5vN0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CzByapQbO99nBRkPoJhP8yLvnP4v0Ie4YesVV26qvFHdOTgVo60cnFYzOn/ccmaO3
-	 guxXKLZ8HUPhln9sUhU6aKiWzSclzQoGtvubwTDCCE/dMNnRr2aWo5Yaw4EG+Df9Ni
-	 CUGJjbGorO/4QlPheli3UW10+Yojfaiz3lMiIhyY=
+	b=Ubn2zyqdf3J/gWIG905vmT21D7Ytf8Y+PKoYC9fY/OqYOUcZnKW5ws70Ek44/89pe
+	 c+OKQHDHCPjWtZwjnQllisRTzqg1k61HPTuKkQr1RisIDWXmuo0AT52h9pfR3onCAW
+	 xDzGI2WGEMx6UYVT6B3BW2U/vI7DqQ5dZ/WjsL9Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1142/1250] Revert "arm64: dts: qcom: sdm845: Fix the PCIe iommu-map entries"
-Date: Thu, 17 Sep 2026 16:15:37 +0100
-Message-ID: <20260917151623.209362856@linuxfoundation.org>
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Carlos Maiolino <cem@kernel.org>
+Subject: [PATCH 6.18 1107/1250] xfs: fix rtrefcount btree block counting in scrub
+Date: Thu, 17 Sep 2026 16:15:02 +0100
+Message-ID: <20260917151622.193488391@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -49,97 +51,134 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-This reverts commit a98b8bb0ca25f05b15267da97dc665dd9e13309b.
+From: Darrick J. Wong <djwong@kernel.org>
 
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+commit 3f9fd694fa429e89fe6de51b22b0ed5fb8b2daf4 upstream.
+
+LOLLM started on a long tangent about how xchk_refcount_xref_rmap
+shouldn't nope out if sc->sa.rmap_cur isn't set, because nothing ever
+sets that field.  It's right about the condition, but misses the bigger
+problem, which is that to count the rtrefcount btree blocks, we have to
+walk all rmap records in each AG in the data section.  That was papered
+over by the incorrect !sc->sa.rmap_cur test.
+
+In other words, we need a perag iteration loop here.  Restructure the
+code to do that, and now it'll all work properly.  Fix the confusing
+function name prefix.
+
+Cc: stable@vger.kernel.org # v6.14
+Fixes: c27929670de144 ("xfs: scrub the realtime refcount btree")
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Assisted-by: LOLLM # finding obvious bugs
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/qcom/sdm845.dtsi | 64 ++++++++++++++--------------
- 1 file changed, 32 insertions(+), 32 deletions(-)
+ fs/xfs/scrub/rtrefcount.c |   64 +++++++++++++++++++++++++++++++++++++++-------
+ 1 file changed, 55 insertions(+), 9 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-index c49ef738d0947..13c9515260ef1 100644
---- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-@@ -2367,22 +2367,22 @@ pcie0: pcie@1c00000 {
- 				      "slave_q2a",
- 				      "tbu";
+--- a/fs/xfs/scrub/rtrefcount.c
++++ b/fs/xfs/scrub/rtrefcount.c
+@@ -20,6 +20,7 @@
+ #include "xfs_metafile.h"
+ #include "xfs_rtrefcount_btree.h"
+ #include "xfs_rtalloc.h"
++#include "xfs_ag.h"
+ #include "scrub/scrub.h"
+ #include "scrub/common.h"
+ #include "scrub/btree.h"
+@@ -505,30 +506,75 @@ xchk_rtrefcountbt_rec(
+ 	return 0;
+ }
  
--			iommu-map = <0x0   &apps_smmu 0x1c10 0x0 0x1>,
--				    <0x100 &apps_smmu 0x1c11 0x0 0x1>,
--				    <0x200 &apps_smmu 0x1c12 0x0 0x1>,
--				    <0x300 &apps_smmu 0x1c13 0x0 0x1>,
--				    <0x400 &apps_smmu 0x1c14 0x0 0x1>,
--				    <0x500 &apps_smmu 0x1c15 0x0 0x1>,
--				    <0x600 &apps_smmu 0x1c16 0x0 0x1>,
--				    <0x700 &apps_smmu 0x1c17 0x0 0x1>,
--				    <0x800 &apps_smmu 0x1c18 0x0 0x1>,
--				    <0x900 &apps_smmu 0x1c19 0x0 0x1>,
--				    <0xa00 &apps_smmu 0x1c1a 0x0 0x1>,
--				    <0xb00 &apps_smmu 0x1c1b 0x0 0x1>,
--				    <0xc00 &apps_smmu 0x1c1c 0x0 0x1>,
--				    <0xd00 &apps_smmu 0x1c1d 0x0 0x1>,
--				    <0xe00 &apps_smmu 0x1c1e 0x0 0x1>,
--				    <0xf00 &apps_smmu 0x1c1f 0x0 0x1>;
-+			iommu-map = <0x0   &apps_smmu 0x1c10 0x1>,
-+				    <0x100 &apps_smmu 0x1c11 0x1>,
-+				    <0x200 &apps_smmu 0x1c12 0x1>,
-+				    <0x300 &apps_smmu 0x1c13 0x1>,
-+				    <0x400 &apps_smmu 0x1c14 0x1>,
-+				    <0x500 &apps_smmu 0x1c15 0x1>,
-+				    <0x600 &apps_smmu 0x1c16 0x1>,
-+				    <0x700 &apps_smmu 0x1c17 0x1>,
-+				    <0x800 &apps_smmu 0x1c18 0x1>,
-+				    <0x900 &apps_smmu 0x1c19 0x1>,
-+				    <0xa00 &apps_smmu 0x1c1a 0x1>,
-+				    <0xb00 &apps_smmu 0x1c1b 0x1>,
-+				    <0xc00 &apps_smmu 0x1c1c 0x1>,
-+				    <0xd00 &apps_smmu 0x1c1d 0x1>,
-+				    <0xe00 &apps_smmu 0x1c1e 0x1>,
-+				    <0xf00 &apps_smmu 0x1c1f 0x1>;
++/* Count the number of blocks used by the rtrefcount btree file in this AG. */
++static int
++xchk_rtrefcount_count_agblocks(
++	struct xfs_scrub	*sc,
++	xfs_agnumber_t		agno,
++	const struct xfs_owner_info *btree_oinfo,
++	xfs_filblks_t		*blocks)
++{
++	xfs_filblks_t		agblocks = 0;
++	int			error;
++
++	error = xchk_ag_init_existing(sc, agno, &sc->sa);
++	if (error)
++		goto out_free;
++
++	/*
++	 * If we don't have an rmap cursor, we can't complete the cross
++	 * referencing, so return EFSCORRUPTED to end the loop and trigger the
++	 * XFAIL flag.
++	 */
++	if (!sc->sa.rmap_cur) {
++		error = -EFSCORRUPTED;
++		goto out_free;
++	}
++
++	error = xchk_count_rmap_ownedby_ag(sc, sc->sa.rmap_cur, btree_oinfo,
++			&agblocks);
++	if (error)
++		goto out_free;
++
++	*blocks += agblocks;
++out_free:
++	xchk_ag_free(sc, &sc->sa);
++	return error;
++}
++
+ /* Make sure we have as many refc blocks as the rmap says. */
+ STATIC void
+-xchk_refcount_xref_rmap(
++xchk_rtrefcount_xref_rmap(
+ 	struct xfs_scrub	*sc,
+ 	const struct xfs_owner_info *btree_oinfo,
+ 	xfs_extlen_t		cow_blocks)
+ {
+ 	xfs_filblks_t		refcbt_blocks = 0;
+-	xfs_filblks_t		blocks;
+-	int			error;
++	xfs_filblks_t		blocks = 1; /* one for the iroot */
++	xfs_agnumber_t		agno;
++	int			error = 0;
  
- 			resets = <&gcc GCC_PCIE_0_BCR>;
- 			reset-names = "pci";
-@@ -2497,22 +2497,22 @@ pcie1: pcie@1c08000 {
- 			assigned-clocks = <&gcc GCC_PCIE_1_AUX_CLK>;
- 			assigned-clock-rates = <19200000>;
+-	if (!sc->sr.rmap_cur || !sc->sa.rmap_cur || xchk_skip_xref(sc->sm))
++	if (!xfs_has_rmapbt(sc->mp) || xchk_skip_xref(sc->sm))
+ 		return;
  
--			iommu-map = <0x0   &apps_smmu 0x1c00 0x0 0x1>,
--				    <0x100 &apps_smmu 0x1c01 0x0 0x1>,
--				    <0x200 &apps_smmu 0x1c02 0x0 0x1>,
--				    <0x300 &apps_smmu 0x1c03 0x0 0x1>,
--				    <0x400 &apps_smmu 0x1c04 0x0 0x1>,
--				    <0x500 &apps_smmu 0x1c05 0x0 0x1>,
--				    <0x600 &apps_smmu 0x1c06 0x0 0x1>,
--				    <0x700 &apps_smmu 0x1c07 0x0 0x1>,
--				    <0x800 &apps_smmu 0x1c08 0x0 0x1>,
--				    <0x900 &apps_smmu 0x1c09 0x0 0x1>,
--				    <0xa00 &apps_smmu 0x1c0a 0x0 0x1>,
--				    <0xb00 &apps_smmu 0x1c0b 0x0 0x1>,
--				    <0xc00 &apps_smmu 0x1c0c 0x0 0x1>,
--				    <0xd00 &apps_smmu 0x1c0d 0x0 0x1>,
--				    <0xe00 &apps_smmu 0x1c0e 0x0 0x1>,
--				    <0xf00 &apps_smmu 0x1c0f 0x0 0x1>;
-+			iommu-map = <0x0   &apps_smmu 0x1c00 0x1>,
-+				    <0x100 &apps_smmu 0x1c01 0x1>,
-+				    <0x200 &apps_smmu 0x1c02 0x1>,
-+				    <0x300 &apps_smmu 0x1c03 0x1>,
-+				    <0x400 &apps_smmu 0x1c04 0x1>,
-+				    <0x500 &apps_smmu 0x1c05 0x1>,
-+				    <0x600 &apps_smmu 0x1c06 0x1>,
-+				    <0x700 &apps_smmu 0x1c07 0x1>,
-+				    <0x800 &apps_smmu 0x1c08 0x1>,
-+				    <0x900 &apps_smmu 0x1c09 0x1>,
-+				    <0xa00 &apps_smmu 0x1c0a 0x1>,
-+				    <0xb00 &apps_smmu 0x1c0b 0x1>,
-+				    <0xc00 &apps_smmu 0x1c0c 0x1>,
-+				    <0xd00 &apps_smmu 0x1c0d 0x1>,
-+				    <0xe00 &apps_smmu 0x1c0e 0x1>,
-+				    <0xf00 &apps_smmu 0x1c0f 0x1>;
+ 	/* Check that we saw as many refcbt blocks as the rmap knows about. */
+ 	error = xfs_btree_count_blocks(sc->sr.refc_cur, &refcbt_blocks);
+ 	if (!xchk_btree_process_error(sc, sc->sr.refc_cur, 0, &error))
+ 		return;
+-	error = xchk_count_rmap_ownedby_ag(sc, sc->sa.rmap_cur, btree_oinfo,
+-			&blocks);
+-	if (!xchk_should_check_xref(sc, &error, &sc->sa.rmap_cur))
++
++	for (agno = 0; agno < sc->mp->m_sb.sb_agcount; agno++) {
++		error = xchk_rtrefcount_count_agblocks(sc, agno, btree_oinfo,
++				&blocks);
++		if (error)
++			break;
++	}
++	if (!xchk_fblock_xref_process_error(sc, XFS_DATA_FORK, 0, &error))
+ 		return;
+ 	if (blocks != refcbt_blocks)
+-		xchk_btree_xref_set_corrupt(sc, sc->sa.rmap_cur, 0);
++		xchk_fblock_xref_set_corrupt(sc, XFS_DATA_FORK, 0);
++
++	if (!sc->sr.rmap_cur || xchk_skip_xref(sc->sm))
++		return;
  
- 			resets = <&gcc GCC_PCIE_1_BCR>;
- 			reset-names = "pci";
--- 
-2.53.0
-
+ 	/* Check that we saw as many cow blocks as the rmap knows about. */
+ 	error = xchk_count_rmap_ownedby_ag(sc, sc->sr.rmap_cur,
+@@ -569,7 +615,7 @@ xchk_rtrefcountbt(
+ 	 */
+ 	xchk_rtrefcountbt_xref_gaps(sc, &rrc,
+ 			xfs_rtx_to_rgbno(sc->sr.rtg, sc->mp->m_sb.sb_rgextents));
+-	xchk_refcount_xref_rmap(sc, &btree_oinfo, rrc.cow_blocks);
++	xchk_rtrefcount_xref_rmap(sc, &btree_oinfo, rrc.cow_blocks);
+ 
+ 	return 0;
+ }
 
 
