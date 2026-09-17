@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 708473DD874;
-	Thu, 17 Sep 2026 17:12:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EA6D3D9DA2;
+	Thu, 17 Sep 2026 17:12:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789665151; cv=none; b=FQS9EVWLcT1KNjh7BAV8FuKOHcUFG/Lwq/PEuFOE8MImjfTSi7OqDurnLomAW8Uilv2vDQ03+g1SNhzr/re18N/n0MM90XzF9Zeoaz01qxDdaZAzX7zKAL4awsoh4evloQRtsqgEUFINZJU8egsp0AY7Y8v89Odn01RmyaCDEMk=
+	t=1789665154; cv=none; b=ai5+bxfBf+jVnxGoDF3nyaQG0DkSFz7W2dOWBMuvBv7FbXBO7UVo6hyxlhB92vbFbPvyoJBB6GrFpFWtQhU9jQ0lP7eu2WjuuZXzs2SZr38Fz7/+oH2SqhufY3Bqc2CoxfmslXuzwXp+2x19Lz47UyiAp8x/ded5lWlyFbX7Y8k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789665151; c=relaxed/simple;
-	bh=V3Q/73gp6ujmLpCrYmrnG1v2F7nslIpPK3rysPV3a6k=;
+	s=arc-20240116; t=1789665154; c=relaxed/simple;
+	bh=cuQAneHkCL8q8JfiI+j7JYAtK88FEAgayYvmoVwEm1U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jupoK67ZLMJsJulZcO//F0WV2LyzOoxzYO9zV4+0H1NRTLk+gTdkAMRX54YwFUxHcTlhAbv2VhZtEyQYTE7yfyLN5h3bMsT1LQq6bhbSJd9O59C9zBzq2g3KFlS6eHHO03Ibh31ZjoG2avYu5cmR2ACcXn+CVTiFsr1bajGaIsU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c9V/FsG5; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OyEr0PI4hLL8Y3Sx2FWNO1AsreZBPDrvm6TU0lXlgfulshMxPHOBuMRw2ozUg5vPX6C7yFgHFNDS5XDHCXQ+LHQNkSjsebIDTRM9F5jQk5KABP3j/s51bL1prDzx5X4fJQ4KywWxk0jl0a/Y6uOabiQ428fD8db4dODoZuSm17Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PRZoaAsa; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c9V/FsG5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C93C51F000FF;
-	Thu, 17 Sep 2026 17:12:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PRZoaAsa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEA541F000FF;
+	Thu, 17 Sep 2026 17:12:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789665150;
-	bh=reyzMqJL4uL3EDRyJBY7T9y9M0CAgk44PetY02wW4SU=;
+	s=korg; t=1789665153;
+	bh=1t/l9h2KWyL+PjjUc30TZEjjKc6fwQVuPFWA/c8yhIM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=c9V/FsG547hPRhsFefiUz9k2LAy11wBgacFlZhAu19J/1bBCO5RHFHSNvU7f5e+h9
-	 Q/I4x7q6TQtDwpA1rbrm36I+mWsuLh/SXyyQrO2db9JZWtpsNLZEtLpB5y+rgEGdYP
-	 yshNMoWo9jOk5NL7wnU4yZEEyYtQG+ph4lXDzfD0=
+	b=PRZoaAsa2k35jZ8Tw+ee6MKkCuLtTUysZPj6DLYB9ZrjAptQ0raNMoABmAmutnCW0
+	 pK+JxDQSgfYXq7J4MSpFQrGH0Fa2htRBTNuiahuDFkgoNUo97qGCOeANl5CC4i66Cr
+	 I8R6wT9RcA23GPJz61BisXxMT1YLicG4r8aV4lc4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qiuxu Zhuo <qiuxu.zhuo@intel.com>,
-	Tony Luck <tony.luck@intel.com>,
+	Liang Luo <luoliang@kylinos.cn>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0602/1250] EDAC/igen6: Fix interleave boundary condition
-Date: Thu, 17 Sep 2026 16:06:37 +0100
-Message-ID: <20260917151608.198185565@linuxfoundation.org>
+Subject: [PATCH 6.18 0611/1250] sched_ext: Fix nonexistent field in sched-ext.rst example
+Date: Thu, 17 Sep 2026 16:06:46 +0100
+Message-ID: <20260917151608.437272540@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,42 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
+From: Liang Luo <luoliang@kylinos.cn>
 
-[ Upstream commit f4008169bd320eedb9ddf2b39eeb21370ddac278 ]
+[ Upstream commit 4fb8d6379d2c7ceecb2b3e111954d29089d59492 ]
 
-The address translation logic splits the memory space into interleaved
-and non-interleaved regions using a boundary at 2 * s_size.
+The ops.exit() example in sched-ext.rst reads ei->type, but
+struct scx_exit_info has never had a type field - the exit reason is
+exposed as ei->kind since the struct was introduced. A scheduler
+written following the example fails to compile with
 
-The current check uses '>' and incorrectly classifies the boundary
-address (2 * s_size) as part of the interleaved region. This leads to
-incorrect channel/sub-channel selection at the region boundary.
+    error: no member named 'type' in 'struct scx_exit_info'
 
-Fix the classification by using '>=' so that the boundary address is
-handled in the non-interleaved region, matching the hardware layout.
+Use ei->kind.
 
-Fixes: 10590a9d4f23 ("EDAC/igen6: Add EDAC driver for Intel client SoCs using IBECC")
-Signed-off-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
-Signed-off-by: Tony Luck <tony.luck@intel.com>
-Link: https://patch.msgid.link/20260730024238.4096623-3-qiuxu.zhuo@intel.com
+Fixes: fa48e8d2c7b5 ("sched_ext: Documentation: scheduler: Document extensible scheduler class")
+Signed-off-by: Liang Luo <luoliang@kylinos.cn>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/edac/igen6_edac.c | 2 +-
+ Documentation/scheduler/sched-ext.rst | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/edac/igen6_edac.c b/drivers/edac/igen6_edac.c
-index 42eadece2d71b..d1ab46895d7a5 100644
---- a/drivers/edac/igen6_edac.c
-+++ b/drivers/edac/igen6_edac.c
-@@ -730,7 +730,7 @@ static void decode_addr(u64 addr, u32 hash, u64 s_size, int l_map,
- {
- 	int intlv_bit = CHANNEL_HASH_LSB_MASK_BIT(hash) + 6;
+diff --git a/Documentation/scheduler/sched-ext.rst b/Documentation/scheduler/sched-ext.rst
+index a72461b1c9305..09f28db3bc8d2 100644
+--- a/Documentation/scheduler/sched-ext.rst
++++ b/Documentation/scheduler/sched-ext.rst
+@@ -181,7 +181,7 @@ optional. The following modified excerpt is from
  
--	if (addr > 2 * s_size) {
-+	if (addr >= 2 * s_size) {
- 		*sub_addr = addr - s_size;
- 		*idx = l_map;
- 		return;
+     void BPF_STRUCT_OPS(simple_exit, struct scx_exit_info *ei)
+     {
+-            exit_type = ei->type;
++            exit_type = ei->kind;
+     }
+ 
+     SEC(".struct_ops")
 -- 
 2.53.0
 
