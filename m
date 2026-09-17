@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AA874EB85B;
-	Thu, 17 Sep 2026 15:37:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D7D64ABBB4;
+	Thu, 17 Sep 2026 15:37:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659455; cv=none; b=F99FA/bzK75mhEnXeciXCTOoKMluKpj4H5Lvulv9mXeqPAZIYvGdHQm4XV9+p6XQUpZeuNHfHbwzUwdj9ZzPZuaf5I6jIKst9mNIjUP9jvrm9egF0PTeejydmNJY/KCapqirLc/6zH5UyvSNNLDwYVNJguCK/OrICc2OZtljsPA=
+	t=1789659460; cv=none; b=AyYVxFF2uSFgAbcoFqcYjW2sHqd4qFEhrPcW5NJmqDdXq28CJ2fCJnIE1lHV8MnCADvxHuEFPhFS4viI5UnHD+s944/1ukp/jguLRq/YQ4ItAFSIAUyciqAfjdlxuQUZSjgr+C5iI7pbPWKvvpTYhPtWSy9B4061z7HSTwJZ7kE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659455; c=relaxed/simple;
-	bh=QhA3a2FShBvq2cxxPQjFGYxhOizQiKDs6fERTk1wgzU=;
+	s=arc-20240116; t=1789659460; c=relaxed/simple;
+	bh=rkgD3Fi/72chE2SS3zPiRFDvwwrnRZIJNqvAgWTAN4g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qsxa2SwXcKCT9ESQgKtwX8hkRsMDwTPF/4+LPxQyt0+CCSjDlgeufLBmRr5EBzyveewYMdM2wbzzJAzMJ7PEU5KTZWyZ8M7ojo54EngYU3V3W2cBd+QCdWLH4M2IqbFjHjtcm8BWdjyrrKvp8gyDkdWGuN+WQXxC1Dwsbpx6DRw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JM+rzH/h; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=AL1x7FHZS9/bw8q7ISPNJ7RlT8ndnVL3P/J9lPkyHoqA7BepF8/AfjLfKCmtZs5PXkYj0PhQSwFdFCdeHn6w4uJ5hS7whuad8Ys/1VGlKsiy3plr99miVflc6G4nt1iRB0/Tfuqm2eJ4sBKZ1aBCRfjdvO3jiDPNlSxNlWSoUvM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zJGUw2zC; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JM+rzH/h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32EED1F00893;
-	Thu, 17 Sep 2026 15:37:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zJGUw2zC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CBFA1F00898;
+	Thu, 17 Sep 2026 15:37:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659448;
-	bh=TwVHXwKc57NGU+Oa9n6V0F0CzF3JMqRR2woC7Fq5WbA=;
+	s=korg; t=1789659451;
+	bh=pNSIGy3k5SshpIcyt7hXgwbVo2S6z1ro1AxDeV0emVM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JM+rzH/hIlCgiVQIPnWQUOZQldeQ9+lqLrxCkIGu1dDtglmvtzEzMzZDPfIXKq3UU
-	 1bYwfg1jGa2R3VGKyssihjJwQLPVwU9FTtI2FiVyoQCVDv8Q81KII85nVfBkZKGN/S
-	 99A8zwoy3H5DggX5rFmc7SxX+5BTg7NTU4R0cq0U=
+	b=zJGUw2zCQZX4H4w+5vLgi2fPpbkS1ijeLt1+n1nFHjPfseZZVClmadxsK12lGVLCn
+	 A7PgqWDBfj3riPlNlKIt6Z/BJukjk9SvXD3o1ob6CbIrBiQwrmWL3/FUgJvGMHqWkn
+	 W2btGDF8HOr29kDkWo0L6eUammIdZZtNK39u4dwg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicholas Carlini <npc@anthropic.com>,
-	Ning Ding <dingning04@gmail.com>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Steven Rostedt <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 261/733] bpf: Reject untrusted allocated-object pointers
-Date: Thu, 17 Sep 2026 16:09:29 +0100
-Message-ID: <20260917151357.823474012@linuxfoundation.org>
+Subject: [PATCH 7.2 262/733] tracing: Fix to avoid creating trace instances with duplicate names
+Date: Thu, 17 Sep 2026 16:09:30 +0100
+Message-ID: <20260917151357.852174660@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -53,54 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ning Ding <dingning04@gmail.com>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-[ Upstream commit 7441ee8276641bddaf1cba7bb75ef9c1458ceb3b ]
+[ Upstream commit d7dbdd2ee01e12211046d4a535623ac732b749fb ]
 
-When the final RCU read-side critical section ends, a local kptr is demoted
-to PTR_UNTRUSTED but retains MEM_ALLOC. The pointer may be NULL or may refer
-to an object whose lifetime is no longer protected.
+Since commit e645535a954a ("tracing: Add option to use memmapped
+memory for trace boot instance") changed trace_array_get_by_name() to
+trace_array_create_systems(), enable_instances() does not reuse the
+same name instance. Therefore, if an administrator mistakenly specifies
+multiple `trace_instance=` options with duplicate names, all are
+created but only the first is accessible via tracefs.
 
-type_is_ptr_alloc_obj() nevertheless recognizes any PTR_TO_BTF_ID with
-MEM_ALLOC as a live allocated object. In particular, a refcount-only local
-kptr never carries NON_OWN_REF, so it still passes the
-bpf_refcount_acquire() argument check after RCU protection ends. The kfunc
-can then dereference NULL or stale memory.
+Check whether an instance with the same name already exists before
+creating a new one, and reject duplicates with a warning.
 
-Make type_is_ptr_alloc_obj() reject PTR_UNTRUSTED pointers. Since
-type_is_non_owning_ref() is based on the same predicate, graph kfunc
-arguments obey the same live-object requirement. Fault-protected reads of
-the demoted pointer remain valid: writes are already rejected, and read
-fixups use bpf_may_fault_on_deref() rather than this predicate.
-
-Fixes: 1b12171533a9 ("bpf: Mark direct ld of stashed bpf_{rb,list}_node as non-owning ref")
-Reported-by: Nicholas Carlini <npc@anthropic.com>
-Suggested-by: Nicholas Carlini <npc@anthropic.com>
-Signed-off-by: Ning Ding <dingning04@gmail.com>
-[ kkd: Rewrote commit log ]
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Link: https://lore.kernel.org/r/20260904084325.52250-8-memxor@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Link: https://patch.msgid.link/178847790399.283263.5313150997200138426.stgit@devnote2
+Fixes: e645535a954a ("tracing: Add option to use memmapped memory for trace boot instance")
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/bpf_verifier.h | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ kernel/trace/trace.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/include/linux/bpf_verifier.h b/include/linux/bpf_verifier.h
-index 70a6133c5e7b0..7ad03ffb9300f 100644
---- a/include/linux/bpf_verifier.h
-+++ b/include/linux/bpf_verifier.h
-@@ -1322,7 +1322,9 @@ static inline bool bpf_type_has_unsafe_modifiers(u32 type)
+diff --git a/kernel/trace/trace.c b/kernel/trace/trace.c
+index fc964001783f3..e6915fc7de832 100644
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -9708,6 +9708,11 @@ __init static void enable_instances(void)
+ 		if (flag_delim)
+ 			*flag_delim++ = '\0';
  
- static inline bool type_is_ptr_alloc_obj(u32 type)
- {
--	return base_type(type) == PTR_TO_BTF_ID && type_flag(type) & MEM_ALLOC;
-+	return base_type(type) == PTR_TO_BTF_ID &&
-+	       type_flag(type) & MEM_ALLOC &&
-+	       !(type_flag(type) & PTR_UNTRUSTED);
- }
- 
- static inline bool type_is_non_owning_ref(u32 type)
++		if (trace_array_find(name)) {
++			pr_warn("Tracing: Instance %s already exists\n", name);
++			continue;
++		}
++
+ 		if (backup) {
+ 			if (backup_instance_area(backup, &addr, &size) < 0)
+ 				continue;
 -- 
 2.53.0
 
