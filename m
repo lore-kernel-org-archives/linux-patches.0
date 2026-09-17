@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94ABA5326C2;
-	Thu, 17 Sep 2026 17:30:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B8094FE2D7;
+	Thu, 17 Sep 2026 17:30:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666231; cv=none; b=VTD3vNFfNFAXxfz2oHkdYzUo4lW6CX0ZDhaMYZaFui+akGUKFJYfbe2YR843XUjOnkOqi1FdqqqsTSeDnIVs7TwdYDRykvpQJG8Hvpa8XVtBF5kaeeVVdkQvElHnh426MahGVk/xyzitgJMh4kjIk9RsHqjxJWrtraQ2u5wy/tg=
+	t=1789666234; cv=none; b=Hu/jUVGfKvn73O+odGjTck7GNJ7MRjXmLzOd94cDJwVqr0bIj306m2gx5XfMN3rlSct5nKwVSciSSox6pWHtIWmr88Mv+7UHfnmD2A3GfY5zxMDqS5zM+H9cb7LLKg2XJLk1OFaV2oEmGK8K9RfL539fE77mKjykiSHhOFzJM2E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666231; c=relaxed/simple;
-	bh=35Etwq4IciRtMbNIokHQ+1N3tCvcEfIpRWOlkPROhyQ=;
+	s=arc-20240116; t=1789666234; c=relaxed/simple;
+	bh=MeYLkA5Llk4SMO8UkOfzWswQbOIpooh7SqIlgekCasY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YGp++RpSmUdv8cKS3ibb5ZGhnDzrZgaC46kOK5MB6qKVONgLjDrNY97r5KnJKfHmf4bpIYcuspbkc6i+JK0gQRaI/IGERXyxwER0PEI0nkbXvQtOvRVe3aTlFvXAs4ZRS2pGVDQMTBh9AtTGJNK6D+Zb8MNbbMkcD+X3eC92R+4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mb5ZZmN+; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version:Content-Type; b=IqA2BY+YKFKkiS+sLDrjxVm2LqgIOg8crtzLnTC2LDKQg/qk7/1au9/yyKNaS5JpwinJq/pYiiklqkNzAtLQnQfiNWBomLjz1U5yiaBuhDNewo8tfHYRxp1F2spU9gFat7zEaip/+f08xghuwImzjLZHhaykL6lqmkaTXvSldgM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=av0OR44X; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mb5ZZmN+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC9AD1F00893;
-	Thu, 17 Sep 2026 17:30:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="av0OR44X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2F1E1F000FF;
+	Thu, 17 Sep 2026 17:30:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666230;
-	bh=tJ3kvjvbTgQiYsfioSFkOghasWkRmHCSoZNnv0KuHw8=;
+	s=korg; t=1789666233;
+	bh=HcquNPtrvASf69gyj6V/O4EC1EO3GAGpsNICXKP+muE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Mb5ZZmN+a4xuezkf43IGrg1NUZk6rupSGSuHfA5ICPytMWsjzptdigk5SqumuM5Am
-	 f7WryRXRu7C+OLgvJbF2JfqBAp53eSIQaSTv4nLKN6MjDMHmzZyrtbDcdmFceFwjy/
-	 mPu0UoByBTi7MBR4r23VHkjYuRlfc1HTXl9zJRZ0=
+	b=av0OR44X4COdFwWRycENjeaGp/MxfaX3O7jFgzVk50whDdPTg5v4ejrOcEOvCEaXB
+	 00me94aX8HE8dkEazCh3f34iLEoAJHBvlr6aVYuSL0O1//N5xDN9eCGB1wSIqf8Epq
+	 aqN0E5O5F9uLy0GWmMRKdJCYROrwuzm0+d0jUXK8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0941/1250] net: stmmac: add stmmac_tso_header_size()
-Date: Thu, 17 Sep 2026 16:12:16 +0100
-Message-ID: <20260917151617.525362995@linuxfoundation.org>
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
+	Steven Rostedt <rostedt@goodmis.org>
+Subject: [PATCH 6.18 0968/1250] tracing: Restore :mod: trailer after parsing in ftrace_set_clr_event()
+Date: Thu, 17 Sep 2026 16:12:43 +0100
+Message-ID: <20260917151618.255237815@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -45,70 +44,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
 
-[ Upstream commit f799b5dab9c98a4b52a93d1c357916e0f0b7e663 ]
+commit 911002e99e15f640f1fdc6d276206beaef59e790 upstream.
 
-We will need to compute the size of the protocol headers in two places,
-so move this into a separate function.
+While ftrace_set_clr_event() modifies its input buffer during parsing,
+before returning to the caller the buffer is supposed to be restored
+to its original state.
 
-Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Link: https://patch.msgid.link/E1w7ptJ-0000000Eat5-2ZlA@rmk-PC.armlinux.org.uk
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 5e38d732ec67 ("net: stmmac: fix TX descriptor availability check for TSO traffic")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This works correctly for the colon between the subsystem and event
+but not the colon at the beginning of :mod:.
+
+Restore the colon, so the :mod: trailer is not stripped after
+ftrace_set_clr_event().
+
+Cc: stable@vger.kernel.org
+Fixes: 4c86bc531e60 ("tracing: Add :mod: command to enabled module events")
+Link: https://patch.msgid.link/20260908-tracing-cli-event-filter-v2-1-05396a3fb663@linutronix.de
+Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- .../net/ethernet/stmicro/stmmac/stmmac_main.c | 20 ++++++++++++++-----
- 1 file changed, 15 insertions(+), 5 deletions(-)
+ kernel/trace/trace_events.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index 007eee6798a5f..609f056d4a70f 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -4164,6 +4164,18 @@ static void stmmac_flush_tx_descriptors(struct stmmac_priv *priv, int queue)
- 	stmmac_set_tx_tail_ptr(priv, priv->ioaddr, tx_q->tx_tail_addr, queue);
+--- a/kernel/trace/trace_events.c
++++ b/kernel/trace/trace_events.c
+@@ -1442,6 +1442,8 @@ int ftrace_set_clr_event(struct trace_ar
+ 	/* Put back the colon to allow this to be called again */
+ 	if (buf)
+ 		*(buf - 1) = ':';
++	if (mod)
++		*(mod - 5) = ':';
+ 
+ 	return ret;
  }
- 
-+static size_t stmmac_tso_header_size(struct sk_buff *skb)
-+{
-+	size_t size;
-+
-+	if (skb_shinfo(skb)->gso_type & SKB_GSO_UDP_L4)
-+		size = skb_transport_offset(skb) + sizeof(struct udphdr);
-+	else
-+		size = skb_tcp_all_headers(skb);
-+
-+	return size;
-+}
-+
- /**
-  *  stmmac_tso_xmit - Tx entry point of the driver for oversized frames (TSO)
-  *  @skb : the socket buffer
-@@ -4235,13 +4247,11 @@ static netdev_tx_t stmmac_tso_xmit(struct sk_buff *skb, struct net_device *dev)
- 	first_tx = tx_q->cur_tx;
- 
- 	/* Compute header lengths */
--	if (skb_shinfo(skb)->gso_type & SKB_GSO_UDP_L4) {
--		proto_hdr_len = skb_transport_offset(skb) + sizeof(struct udphdr);
-+	proto_hdr_len = stmmac_tso_header_size(skb);
-+	if (skb_shinfo(skb)->gso_type & SKB_GSO_UDP_L4)
- 		hdr = sizeof(struct udphdr);
--	} else {
--		proto_hdr_len = skb_tcp_all_headers(skb);
-+	else
- 		hdr = tcp_hdrlen(skb);
--	}
- 
- 	/* Desc availability based on threshold should be enough safe */
- 	if (unlikely(stmmac_tx_avail(priv, queue) <
--- 
-2.53.0
-
 
 
