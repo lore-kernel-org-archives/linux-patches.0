@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9191151C043;
-	Thu, 17 Sep 2026 17:09:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83E1F2E282B;
+	Thu, 17 Sep 2026 17:09:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789664982; cv=none; b=QkqlgBFxywlwCXMPi/fejiLaZCBLydvllY2Ciyytd1oustHxM9sWAZf7tH+MAit2QU62HcPt6O4NhZfvdL8GfNCCCy4FLFNEKPB8gD1cwVftqoPWVuNHfaRedu5RadJrMrc5u9eDCJ69uVMMXKu9jkUsGIV/xh1c57q2uF2POQ4=
+	t=1789664985; cv=none; b=pB0ng9j87YTkBIXddtR5Q49zthhmIpDSOCthQLeXXxOt8IiAqg1gUh5EkRfF/SLkpsJ65+z3OETuLjtizFvXGkQNr71bCFXoF98OhQ63kK1ESpuiSK2T+a7rS7hd5TZ7fl3WI4OcRx2L0fe5AGBMPZBL9AXjqLGx0+LrNI1CopI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789664982; c=relaxed/simple;
-	bh=o3t3EcIpjBrC2TT16qZsJJ0hWuP/DRSLmjQUvazcxuQ=;
+	s=arc-20240116; t=1789664985; c=relaxed/simple;
+	bh=ewKG9WwYz8JR3jSi3X6Gzj+zKV0vOHmnDqAZehNCpQo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RJQKw4AOmmWLnZA6ZMcdL+TfiOZ1WauOS0v1MjLv4im37hmXYSRaNjtAgnP7BvafakFKTuUyb9YQi6yKauSTIz6tPe1oTDOwoTgMTcn7wPnv/OEiiAqqf8NpyDzETHl9qdxM6jH+k7xcVOobTrUPj9gQ6n363Zb4VPS1L2D5P0k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o7XjsqfK; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=ihGXXF4PFkw+l15FGC618WFwSNto/ZvAEaeG2kVQmeqcKfM3eW6svWkgNhf6AUW1VXuXiu0E679UvoFXy70Li86dk6A0/eYCFJOpCZKXwR/W2XsYltUJY/7B+RBhaJsOXkbetNCpAy5/Gzh1496dAxKIeaeCA0NUgk3y1gvbQyM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ucy7aWs9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o7XjsqfK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEB9E1F000FF;
-	Thu, 17 Sep 2026 17:09:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ucy7aWs9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB9C41F0089A;
+	Thu, 17 Sep 2026 17:09:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789664981;
-	bh=dqVYZszc2sQDGR0eUvSyzI/vdcDe0AvVyy/1jaZ6VkI=;
+	s=korg; t=1789664984;
+	bh=Vx9BPypgLYHLYvELhEQqIC5+HxHjG+2nKf73sa/vqHc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=o7XjsqfKAFhdzcIRHKcm3m0Wsbt4BWIdaXxEIo1d+WnLJcNWN8xvm+CKpFMl7t6Ae
-	 LWbyX4+3x+pO85DnAF/Um3XQPm6PVsY31PBJt4jVHv+BVo0x9jiEyRN3pZEP4o9wAj
-	 z0iF/PkeQHfWumU9LGpp1cHqPhxWnKmABK60cgFs=
+	b=ucy7aWs9pIFWhY6hDlR9U5GRBYZbAh3UOTCtPcaplnKYw/8dgvgqoRU5BUhQb304w
+	 31YIrlzumF5CULl5mH3xn2EeZilkUGvvyBno/6YG0+Uph33x5bTTmHSHbjtrFwhCO9
+	 I2HPxSBW+oSv1iqn254Pu5OmTEx7BT+C3q1Mmz7E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Jiale Yao <yaojiale02@163.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0516/1250] wifi: iwlwifi: mvm: validate sta_id in BA window status notif
-Date: Thu, 17 Sep 2026 16:05:11 +0100
-Message-ID: <20260917151605.938833243@linuxfoundation.org>
+Subject: [PATCH 6.18 0552/1250] Bluetooth: RFCOMM: validate skb length in rfcomm_recv_frame
+Date: Thu, 17 Sep 2026 16:05:47 +0100
+Message-ID: <20260917151606.895520710@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,40 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+From: Jiale Yao <yaojiale02@163.com>
 
-[ Upstream commit 6aa77efaea9efea92e3090c35ad348fd759a3cf3 ]
+[ Upstream commit b230e5bf501c5edaf2eb0991cb862ac142031d4b ]
 
-BA_WINDOW_STATUS_NOTIFICATION_ID extracts a 5-bit sta_id from the
-firmware notification and uses it to index fw_id_to_mac_id[] without
-bounds checking. Validate sta_id before array access to prevent
-out-of-bounds indexing.
+rfcomm_recv_frame() casts skb->data to struct rfcomm_hdr and dereferences
+hdr->addr and hdr->ctrl without validating skb->len first. A truncated
+frame with skb->len less than the minimum header size causes an
+out-of-bounds read of uninitialized memory. Additionally, a zero-length
+frame causes skb->len-- to underflow to UINT_MAX, making
+skb_tail_pointer() read far past the buffer.
 
-Assisted-by: GitHubCopilot:gpt-5.3-codex
-Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
-Link: https://patch.msgid.link/20260714141909.2e97f337f3cb.Ic3f0f404082ccdea13809a3c0b70e0f5417e1037@changeid
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Commit 23882b828c3c ("Bluetooth: RFCOMM: validate skb length in MCC
+handlers") fixed the same class of missing-length-check bugs in the MCC
+sub-handlers, but the top-level rfcomm_recv_frame() was left unfixed.
+KMSAN reports:
+
+  BUG: KMSAN: uninit-value in rfcomm_run
+  ...
+  Uninit was created at:
+    __alloc_skb+0x474/0xb60
+    vhci_write+0xe9/0x870
+
+Fix this by rejecting frames smaller than sizeof(struct rfcomm_hdr) + 1
+(the minimum frame must have a 3-byte header and a 1-byte FCS).
+
+Signed-off-by: Jiale Yao <yaojiale02@163.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/rx.c | 5 +++++
+ net/bluetooth/rfcomm/core.c | 5 +++++
  1 file changed, 5 insertions(+)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/rx.c b/drivers/net/wireless/intel/iwlwifi/mvm/rx.c
-index 8c1bb3a7ffcaa..1e6d06bb674c1 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/rx.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/rx.c
-@@ -1224,6 +1224,11 @@ void iwl_mvm_window_status_notif(struct iwl_mvm *mvm,
- 		/* get the station */
- 		sta_id = (ratid & BA_WINDOW_STATUS_STA_ID_MSK)
- 			 >> BA_WINDOW_STATUS_STA_ID_POS;
-+		if (IWL_FW_CHECK(mvm,
-+				 sta_id >= mvm->fw->ucode_capa.num_stations,
-+				 "Invalid sta id (%d) in BA window status notification\n",
-+				 sta_id))
-+			continue;
- 		sta = rcu_dereference(mvm->fw_id_to_mac_id[sta_id]);
- 		if (IS_ERR_OR_NULL(sta))
- 			continue;
+diff --git a/net/bluetooth/rfcomm/core.c b/net/bluetooth/rfcomm/core.c
+index 6571b33d553ea..45f8cfebcc6a6 100644
+--- a/net/bluetooth/rfcomm/core.c
++++ b/net/bluetooth/rfcomm/core.c
+@@ -1817,6 +1817,11 @@ static struct rfcomm_session *rfcomm_recv_frame(struct rfcomm_session *s,
+ 		return s;
+ 	}
+ 
++	if (skb->len < sizeof(*hdr) + 1) {
++		kfree_skb(skb);
++		return s;
++	}
++
+ 	dlci = __get_dlci(hdr->addr);
+ 	type = __get_type(hdr->ctrl);
+ 
 -- 
 2.53.0
 
