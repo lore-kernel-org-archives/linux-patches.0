@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9738D3E40EF;
-	Thu, 17 Sep 2026 18:46:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 928653CF688;
+	Thu, 17 Sep 2026 18:46:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789670805; cv=none; b=mkDKvCVc2IwnNcy2ThB38FqitGMkuD3CVnxMhUIlC3kgUKpqSDZpDo9Uncl7J0cbE1GwOv/pzc/ZsmUr8OJ2pbrSAjKHIDSGfhtG+JyT321gImuXN6q/t/h+KKjCUFXYeFvD1LjhGnhEWsO/fKCMtSZ4ri3Me7hsQIhmx/aXSPg=
+	t=1789670807; cv=none; b=gvaQAR3yiqewUjzU8TbXbge8HOIdqwwzFcf2aODzZtZQzq2644ppBGTyV3aLl2D0zHa+ooalQwE+10xhx7UhZ8w0c71+gG7wF7ONP5o4UE9SytydjUE10udziFBV+R207EnsyG+hlEAN443SyAYy5byr4Rpz0ogRIxVf3vkNPBU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789670805; c=relaxed/simple;
-	bh=+6Zp6yVDXM0wo8TdPrSo/ekwvxUtD+6MWNynJ3DxJJo=;
+	s=arc-20240116; t=1789670807; c=relaxed/simple;
+	bh=x4PJ1a1LOzqP3SAgICauCBnjextkJ+BFvAaesEepNcM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hLYw49bdG38w0zhRBV6mpIIrLj+9C3wovAseABAmB/Hpn3S7sI8CPtMNbL6nPM/wsqkgriTbKJapDuzHRVkFChr86MUrkazBthfMSPm3yNMo9t7QYHMVc/fxzlwCuJIAI2b5MJYp2PEZizJMrLniLc3/jX8eNMDAU0NRPezA1lk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LPb5KMh3; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=IrcNdQ+tgrH3QlEQoj/Wn/gPFwWaiqQbUER8h1FnzJJ2HkMxcx6PTw+SaEz+ntFlNGKxsVHoMH3I5psaiC9yKEc2s6X7QK07NspMvZ+RYmT1aeFPSYBYnZHptxESYRdqWcDsdVVOaxCL5aT+kkNHkv0AvsJXr57TuPPpyEZmdhk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cn9gcyEX; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LPb5KMh3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFDDD1F000FF;
-	Thu, 17 Sep 2026 18:46:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cn9gcyEX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9E1B1F000FF;
+	Thu, 17 Sep 2026 18:46:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789670803;
-	bh=4uGRKn+WyoJLi6lEyOXzt15HVcLcEk9wQduf8rJNN9Q=;
+	s=korg; t=1789670806;
+	bh=k/3aKBgwP56rT4ei/R7qgGkaIiJ9AnKI0cEEPeW0nyY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LPb5KMh3M+1uTnRcQ4bzO9Ax4Xbj+6wODFVncbON8AynwgOLZZtfOeza4rqR7tlsa
-	 DkOFg/Pssh68jsy8CvSFTAtlnChHtM9Gsck2F09i5Cm8pNM9T1NqGTPdi+8/qHZzOm
-	 CzYWLinPco/tR59bPGK+bqUZSpds1uqepi5qaUCY=
+	b=Cn9gcyEX/XrN8gFM3qjPH9D0t9Peny1z6h7mQm+W8ybT3EnLvx9J0y/e48dFSQllv
+	 nqMIVWClLHn3FTJx+5EioTSr50dwmksSrjgBPWVDT+0b4DbWt2NK/9iOHf6Kpnoxtb
+	 bMw3Gz1lP+vewdotFuA2fnnw0igXrjxDXJ3xrnO8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Doug Smythies <dsmythies@telus.net>,
-	Ingo Molnar <mingo@kernel.org>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Vincent Guittot <vincent.guittot@linaro.org>,
+	K Prateek Nayak <kprateek.nayak@amd.com>,
+	Shubhang Kaushik <shubhang@os.amperecomputing.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0776/1102] sched/fair: Fix EEVDF entity placement bug causing scheduling lag
-Date: Thu, 17 Sep 2026 16:11:59 +0100
-Message-ID: <20260917151559.933535252@linuxfoundation.org>
+Subject: [PATCH 6.12 0777/1102] sched/fair: Fix lag clamp
+Date: Thu, 17 Sep 2026 16:12:00 +0100
+Message-ID: <20260917151559.959521727@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -54,256 +55,132 @@ Content-Transfer-Encoding: 8bit
 
 From: Peter Zijlstra <peterz@infradead.org>
 
-[ Upstream commit 6d71a9c6160479899ee744d2c6d6602a191deb1f ]
+[ Upstream commit 6e3c0a4e1ad1e0455b7880fad02b3ee179f56c09 ]
 
-I noticed this in my traces today:
+Vincent reported that he was seeing undue lag clamping in a mixed
+slice workload. Implement the max_slice tracking as per the todo
+comment.
 
-       turbostat-1222    [006] d..2.   311.935649: reweight_entity: (ffff888108f13e00-ffff88885ef38440-6)
-                               { weight: 1048576 avg_vruntime: 3184159639071 vruntime: 3184159640194 (-1123) deadline: 3184162621107 } ->
-                               { weight: 2 avg_vruntime: 3184177463330 vruntime: 3184748414495 (-570951165) deadline: 4747605329439 }
-       turbostat-1222    [006] d..2.   311.935651: reweight_entity: (ffff888108f13e00-ffff88885ef38440-6)
-                               { weight: 2 avg_vruntime: 3184177463330 vruntime: 3184748414495 (-570951165) deadline: 4747605329439 } ->
-                               { weight: 1048576 avg_vruntime: 3184176414812 vruntime: 3184177464419 (-1049607) deadline: 3184180445332 }
-
-Which is a weight transition: 1048576 -> 2 -> 1048576.
-
-One would expect the lag to shoot out *AND* come back, notably:
-
-  -1123*1048576/2 = -588775424
-  -588775424*2/1048576 = -1123
-
-Except the trace shows it is all off. Worse, subsequent cycles shoot it
-out further and further.
-
-This made me have a very hard look at reweight_entity(), and
-specifically the ->on_rq case, which is more prominent with
-DELAY_DEQUEUE.
-
-And indeed, it is all sorts of broken. While the computation of the new
-lag is correct, the computation for the new vruntime, using the new lag
-is broken for it does not consider the logic set out in place_entity().
-
-With the below patch, I now see things like:
-
-    migration/12-55      [012] d..3.   309.006650: reweight_entity: (ffff8881e0e6f600-ffff88885f235f40-12)
-                               { weight: 977582 avg_vruntime: 4860513347366 vruntime: 4860513347908 (-542) deadline: 4860516552475 } ->
-                               { weight: 2 avg_vruntime: 4860528915984 vruntime: 4860793840706 (-264924722) deadline: 6427157349203 }
-    migration/14-62      [014] d..3.   309.006698: reweight_entity: (ffff8881e0e6cc00-ffff88885f3b5f40-15)
-                               { weight: 2 avg_vruntime: 4874472992283 vruntime: 4939833828823 (-65360836540) deadline: 6316614641111 } ->
-                               { weight: 967149 avg_vruntime: 4874217684324 vruntime: 4874217688559 (-4235) deadline: 4874220535650 }
-
-Which isn't perfect yet, but much closer.
-
-Reported-by: Doug Smythies <dsmythies@telus.net>
-Reported-by: Ingo Molnar <mingo@kernel.org>
-Tested-by: Ingo Molnar <mingo@kernel.org>
+Fixes: 147f3efaa241 ("sched/fair: Implement an EEVDF-like scheduling policy")
+Reported-off-by: Vincent Guittot <vincent.guittot@linaro.org>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Fixes: eab03c23c2a1 ("sched/eevdf: Fix vruntime adjustment on reweight")
-Link: https://lore.kernel.org/r/20250109105959.GA2981@noisy.programming.kicks-ass.net
+Tested-by: Vincent Guittot <vincent.guittot@linaro.org>
+Tested-by: K Prateek Nayak <kprateek.nayak@amd.com>
+Tested-by: Shubhang Kaushik <shubhang@os.amperecomputing.com>
+Link: https://patch.msgid.link/20250422101628.GA33555@noisy.programming.kicks-ass.net
 Stable-dep-of: 51b0e68cfa0a ("sched/eevdf: Fix rb augmented with multi fields")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/fair.c | 145 ++++++--------------------------------------
- 1 file changed, 18 insertions(+), 127 deletions(-)
+ include/linux/sched.h |  1 +
+ kernel/sched/fair.c   | 39 +++++++++++++++++++++++++++++++++++----
+ 2 files changed, 36 insertions(+), 4 deletions(-)
 
+diff --git a/include/linux/sched.h b/include/linux/sched.h
+index 7b97f1ec1bc0a..8630b6ea34c06 100644
+--- a/include/linux/sched.h
++++ b/include/linux/sched.h
+@@ -545,6 +545,7 @@ struct sched_entity {
+ 	u64				deadline;
+ 	u64				min_vruntime;
+ 	u64				min_slice;
++	u64				max_slice;
+ 
+ 	struct list_head		group_node;
+ 	unsigned char			on_rq;
 diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index 011786704297c..c20cd8ccc5787 100644
+index c20cd8ccc5787..3219a9fe3201a 100644
 --- a/kernel/sched/fair.c
 +++ b/kernel/sched/fair.c
-@@ -726,21 +726,16 @@ u64 avg_vruntime(struct cfs_rq *cfs_rq)
-  *
-  * XXX could add max_slice to the augmented data to track this.
-  */
--static s64 entity_lag(u64 avruntime, struct sched_entity *se)
-+static void update_entity_lag(struct cfs_rq *cfs_rq, struct sched_entity *se)
- {
- 	s64 vlag, limit;
- 
--	vlag = avruntime - se->vruntime;
--	limit = calc_delta_fair(max_t(u64, 2*se->slice, TICK_NSEC), se);
--
--	return clamp(vlag, -limit, limit);
--}
--
--static void update_entity_lag(struct cfs_rq *cfs_rq, struct sched_entity *se)
--{
- 	SCHED_WARN_ON(!se->on_rq);
- 
--	se->vlag = entity_lag(avg_vruntime(cfs_rq), se);
-+	vlag = avg_vruntime(cfs_rq) - se->vruntime;
-+	limit = calc_delta_fair(max_t(u64, 2*se->slice, TICK_NSEC), se);
-+
-+	se->vlag = clamp(vlag, -limit, limit);
+@@ -710,6 +710,8 @@ u64 avg_vruntime(struct cfs_rq *cfs_rq)
+        return cfs_rq->zero_vruntime;
  }
  
++static inline u64 cfs_rq_max_slice(struct cfs_rq *cfs_rq);
++
  /*
-@@ -3789,137 +3784,32 @@ static inline void
- dequeue_load_avg(struct cfs_rq *cfs_rq, struct sched_entity *se) { }
- #endif
- 
--static void reweight_eevdf(struct sched_entity *se, u64 avruntime,
--			   unsigned long weight)
--{
--	unsigned long old_weight = se->load.weight;
--	s64 vlag, vslice;
--
--	/*
--	 * VRUNTIME
--	 * --------
--	 *
--	 * COROLLARY #1: The virtual runtime of the entity needs to be
--	 * adjusted if re-weight at !0-lag point.
--	 *
--	 * Proof: For contradiction assume this is not true, so we can
--	 * re-weight without changing vruntime at !0-lag point.
--	 *
--	 *             Weight	VRuntime   Avg-VRuntime
--	 *     before    w          v            V
--	 *      after    w'         v'           V'
--	 *
--	 * Since lag needs to be preserved through re-weight:
--	 *
--	 *	lag = (V - v)*w = (V'- v')*w', where v = v'
--	 *	==>	V' = (V - v)*w/w' + v		(1)
--	 *
--	 * Let W be the total weight of the entities before reweight,
--	 * since V' is the new weighted average of entities:
--	 *
--	 *	V' = (WV + w'v - wv) / (W + w' - w)	(2)
--	 *
--	 * by using (1) & (2) we obtain:
--	 *
--	 *	(WV + w'v - wv) / (W + w' - w) = (V - v)*w/w' + v
--	 *	==> (WV-Wv+Wv+w'v-wv)/(W+w'-w) = (V - v)*w/w' + v
--	 *	==> (WV - Wv)/(W + w' - w) + v = (V - v)*w/w' + v
--	 *	==>	(V - v)*W/(W + w' - w) = (V - v)*w/w' (3)
--	 *
--	 * Since we are doing at !0-lag point which means V != v, we
--	 * can simplify (3):
--	 *
--	 *	==>	W / (W + w' - w) = w / w'
--	 *	==>	Ww' = Ww + ww' - ww
--	 *	==>	W * (w' - w) = w * (w' - w)
--	 *	==>	W = w	(re-weight indicates w' != w)
--	 *
--	 * So the cfs_rq contains only one entity, hence vruntime of
--	 * the entity @v should always equal to the cfs_rq's weighted
--	 * average vruntime @V, which means we will always re-weight
--	 * at 0-lag point, thus breach assumption. Proof completed.
--	 *
--	 *
--	 * COROLLARY #2: Re-weight does NOT affect weighted average
--	 * vruntime of all the entities.
--	 *
--	 * Proof: According to corollary #1, Eq. (1) should be:
--	 *
--	 *	(V - v)*w = (V' - v')*w'
--	 *	==>    v' = V' - (V - v)*w/w'		(4)
--	 *
--	 * According to the weighted average formula, we have:
--	 *
--	 *	V' = (WV - wv + w'v') / (W - w + w')
--	 *	   = (WV - wv + w'(V' - (V - v)w/w')) / (W - w + w')
--	 *	   = (WV - wv + w'V' - Vw + wv) / (W - w + w')
--	 *	   = (WV + w'V' - Vw) / (W - w + w')
--	 *
--	 *	==>  V'*(W - w + w') = WV + w'V' - Vw
--	 *	==>	V' * (W - w) = (W - w) * V	(5)
--	 *
--	 * If the entity is the only one in the cfs_rq, then reweight
--	 * always occurs at 0-lag point, so V won't change. Or else
--	 * there are other entities, hence W != w, then Eq. (5) turns
--	 * into V' = V. So V won't change in either case, proof done.
--	 *
--	 *
--	 * So according to corollary #1 & #2, the effect of re-weight
--	 * on vruntime should be:
--	 *
--	 *	v' = V' - (V - v) * w / w'		(4)
--	 *	   = V  - (V - v) * w / w'
--	 *	   = V  - vl * w / w'
--	 *	   = V  - vl'
--	 */
--	if (avruntime != se->vruntime) {
--		vlag = entity_lag(avruntime, se);
--		vlag = div_s64(vlag * old_weight, weight);
--		se->vruntime = avruntime - vlag;
--	}
--
--	/*
--	 * DEADLINE
--	 * --------
--	 *
--	 * When the weight changes, the virtual time slope changes and
--	 * we should adjust the relative virtual deadline accordingly.
--	 *
--	 *	d' = v' + (d - v)*w/w'
--	 *	   = V' - (V - v)*w/w' + (d - v)*w/w'
--	 *	   = V  - (V - v)*w/w' + (d - v)*w/w'
--	 *	   = V  + (d - V)*w/w'
--	 */
--	vslice = (s64)(se->deadline - avruntime);
--	vslice = div_s64(vslice * old_weight, weight);
--	se->deadline = avruntime + vslice;
--}
-+static void place_entity(struct cfs_rq *cfs_rq, struct sched_entity *se, int flags);
- 
- static void reweight_entity(struct cfs_rq *cfs_rq, struct sched_entity *se,
- 			    unsigned long weight)
+  * lag_i = S - s_i = w_i * (V - v_i)
+  *
+@@ -723,17 +725,16 @@ u64 avg_vruntime(struct cfs_rq *cfs_rq)
+  * EEVDF gives the following limit for a steady state system:
+  *
+  *   -r_max < lag < max(r_max, q)
+- *
+- * XXX could add max_slice to the augmented data to track this.
+  */
+ static void update_entity_lag(struct cfs_rq *cfs_rq, struct sched_entity *se)
  {
- 	bool curr = cfs_rq->curr == se;
--	u64 avruntime;
++	u64 max_slice = cfs_rq_max_slice(cfs_rq) + TICK_NSEC;
+ 	s64 vlag, limit;
  
- 	if (se->on_rq) {
- 		/* commit outstanding execution time */
- 		update_curr(cfs_rq);
--		avruntime = avg_vruntime(cfs_rq);
-+		update_entity_lag(cfs_rq, se);
-+		se->deadline -= se->vruntime;
-+		se->rel_deadline = 1;
- 		if (!curr)
- 			__dequeue_entity(cfs_rq, se);
- 		update_load_sub(&cfs_rq->load, se->load.weight);
+ 	SCHED_WARN_ON(!se->on_rq);
+ 
+ 	vlag = avg_vruntime(cfs_rq) - se->vruntime;
+-	limit = calc_delta_fair(max_t(u64, 2*se->slice, TICK_NSEC), se);
++	limit = calc_delta_fair(max_slice, se);
+ 
+ 	se->vlag = clamp(vlag, -limit, limit);
+ }
+@@ -791,6 +792,21 @@ static inline u64 cfs_rq_min_slice(struct cfs_rq *cfs_rq)
+ 	return min_slice;
+ }
+ 
++static inline u64 cfs_rq_max_slice(struct cfs_rq *cfs_rq)
++{
++	struct sched_entity *root = __pick_root_entity(cfs_rq);
++	struct sched_entity *curr = cfs_rq->curr;
++	u64 max_slice = 0ULL;
++
++	if (curr && curr->on_rq)
++		max_slice = curr->slice;
++
++	if (root)
++		max_slice = max(max_slice, root->max_slice);
++
++	return max_slice;
++}
++
+ static inline bool __entity_less(struct rb_node *a, const struct rb_node *b)
+ {
+ 	return entity_before(__node_2_se(a), __node_2_se(b));
+@@ -816,6 +832,15 @@ static inline void __min_slice_update(struct sched_entity *se, struct rb_node *n
  	}
- 	dequeue_load_avg(cfs_rq, se);
+ }
  
--	if (se->on_rq) {
--		reweight_eevdf(se, avruntime, weight);
--	} else {
--		/*
--		 * Because we keep se->vlag = V - v_i, while: lag_i = w_i*(V - v_i),
--		 * we need to scale se->vlag when w_i changes.
--		 */
--		se->vlag = div_s64(se->vlag * se->load.weight, weight);
--	}
-+	/*
-+	 * Because we keep se->vlag = V - v_i, while: lag_i = w_i*(V - v_i),
-+	 * we need to scale se->vlag when w_i changes.
-+	 */
-+	se->vlag = div_s64(se->vlag * se->load.weight, weight);
-+	if (se->rel_deadline)
-+		se->deadline = div_s64(se->deadline * se->load.weight, weight);
++static inline void __max_slice_update(struct sched_entity *se, struct rb_node *node)
++{
++	if (node) {
++		struct sched_entity *rse = __node_2_se(node);
++		if (rse->max_slice > se->max_slice)
++			se->max_slice = rse->max_slice;
++	}
++}
++
+ /*
+  * se->min_vruntime = min(se->vruntime, {left,right}->min_vruntime)
+  */
+@@ -823,6 +848,7 @@ static inline bool min_vruntime_update(struct sched_entity *se, bool exit)
+ {
+ 	u64 old_min_vruntime = se->min_vruntime;
+ 	u64 old_min_slice = se->min_slice;
++	u64 old_max_slice = se->max_slice;
+ 	struct rb_node *node = &se->run_node;
  
- 	update_load_set(&se->load, weight);
+ 	se->min_vruntime = se->vruntime;
+@@ -833,8 +859,13 @@ static inline bool min_vruntime_update(struct sched_entity *se, bool exit)
+ 	__min_slice_update(se, node->rb_right);
+ 	__min_slice_update(se, node->rb_left);
  
-@@ -3934,6 +3824,7 @@ static void reweight_entity(struct cfs_rq *cfs_rq, struct sched_entity *se,
- 	enqueue_load_avg(cfs_rq, se);
- 	if (se->on_rq) {
- 		update_load_add(&cfs_rq->load, se->load.weight);
-+		place_entity(cfs_rq, se, 0);
- 		if (!curr)
- 			__enqueue_entity(cfs_rq, se);
- 	}
-@@ -5375,7 +5266,7 @@ place_entity(struct cfs_rq *cfs_rq, struct sched_entity *se, int flags)
++	se->max_slice = se->slice;
++	__max_slice_update(se, node->rb_right);
++	__max_slice_update(se, node->rb_left);
++
+ 	return se->min_vruntime == old_min_vruntime &&
+-	       se->min_slice == old_min_slice;
++	       se->min_slice == old_min_slice &&
++	       se->max_slice == old_max_slice;
+ }
  
- 	se->vruntime = vruntime - lag;
- 
--	if (sched_feat(PLACE_REL_DEADLINE) && se->rel_deadline) {
-+	if (se->rel_deadline) {
- 		se->deadline += se->vruntime;
- 		se->rel_deadline = 0;
- 		return;
+ RB_DECLARE_CALLBACKS(static, min_vruntime_cb, struct sched_entity,
 -- 
 2.53.0
 
