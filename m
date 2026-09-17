@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C6AC4848A3;
-	Thu, 17 Sep 2026 18:17:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28D554E77FF;
+	Thu, 17 Sep 2026 18:17:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789669058; cv=none; b=O81VCgXc/adZzSulUnoZTXmvRYCaKaDfipgoxLslqW3c2pwQQG7+4Ybh7trSHi7Y6qYHfH6DCvy0YQLn1M28axYlqF3M0p1K+fn726WeEa2uB85MOL9dAp3ptegYNuzxoBWQTxC09/tZwLNBk0xq9tG4Uvdz2ni6s8fMD6N7VKQ=
+	t=1789669061; cv=none; b=stq8RWwfb2lraAiO6VrZlYeMRB/dYmJWsHBoljoMsSXmLUQ4loj9cRYqC//P17KxHhJQQTyTLCYGswpZzbC88qnWx5dBNmS7Wfj+bEd4VzJpq7S38hgGwAUCxXk0KIjL82nmeGdegc+VpLWUddTS7QlKID1Ffpkaxj2TO1GaCHY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789669058; c=relaxed/simple;
-	bh=IXJN65ISXB4dNF8m+zZja14D55mRe4EvpDhS/AQljeQ=;
+	s=arc-20240116; t=1789669061; c=relaxed/simple;
+	bh=EiETaM8AUMqe9EJiE+V8/5IXAp48YCaU7FQgjjmrbq0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hGNTYGUdIHNejhOM8cJqxA/iMdPC+DL/4Oq5+GPSNvo2IJ96qvBc/ah7/lTu7mcH0Ah+4Al/sUpgF5CNTGtxqrgO+3Zr5DVex0vadlNuSw4hP6skqTHmnP3dm6k82pkGIsfjO0VtuIh7tVYT+4Cz4xSwZ2Y6u8KdodF9Hqs26hQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pum+3mXJ; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=F48bWfJn0JdYKAuGCgCWJH28Ua6bzAXiOl/XG3YhdsQ3EtiqajDomCpXbS8tvKF8vzZ1uDU4jf8uZRYWOyf3uqQHP0LIOsZFeAylQEzN8L27mdTYiJ2nT0iGbzoiabfCn7SQrjlwvA78Xze/4FhZ7flohiMZz5/27Xe7h3GYdIE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KJIs67Gv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pum+3mXJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 818D81F000FF;
-	Thu, 17 Sep 2026 18:17:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KJIs67Gv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ED2B1F000FF;
+	Thu, 17 Sep 2026 18:17:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789669057;
-	bh=qrs7CVU3bIuwFNNkDJePjFxPvRK74T9iqSVP1dRmG1o=;
+	s=korg; t=1789669060;
+	bh=ehzzu+8RMVNkj8wQ1X7N4enuoWYZvPcW78G++/Nsgxs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pum+3mXJfhk/9oB5i0Ede9IsegxBGZpc2iMjB/Ey6IGsRWkfilPxLjveZvrqfTZZn
-	 pbrtyz4z4sfp4Pk9mtzhpS7esIWORomVOZUO5k0NnLuzOWbz/3mXS2+ksXiFb4PMwr
-	 /YL8AHXMftE3XUi1uKnBzq5boONuMMnAlj2VSADM=
+	b=KJIs67Gv/F2JjIzTrcA0YTbKAz1B47yDjgI/NVPGA5ovNXGX0kaWaRnfIgjIp4x2r
+	 6UMEf/UAcc+nDKcR7pxcWTNpEI6FksTWcJ39Uh6GqeHvPyoYpOL55g8Hc5hb1kXtMF
+	 lmtEErLdgmbSEr8/Cjf0TAG+R/y974Me3Fw+SXkQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Allison Henderson <achender@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0629/1102] net/rds: use wq_has_sleeper() in release_in_xmit()
-Date: Thu, 17 Sep 2026 16:09:32 +0100
-Message-ID: <20260917151555.893306132@linuxfoundation.org>
+Subject: [PATCH 6.12 0630/1102] net/rds: use clear_bit_unlock() in release_refill()
+Date: Thu, 17 Sep 2026 16:09:33 +0100
+Message-ID: <20260917151555.920869344@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -53,63 +53,69 @@ Content-Transfer-Encoding: 8bit
 
 From: Allison Henderson <achender@kernel.org>
 
-[ Upstream commit 6d0c8b7073913011459cf968cbbadd341e166bc3 ]
+[ Upstream commit 17c4476dbb9c3bfd34193a6c22f2c3da8747134a ]
 
-release_in_xmit() clears RDS_IN_XMIT with clear_bit_unlock() and then
-checks waitqueue_active() to decide whether anyone needs waking.
-clear_bit_unlock() is only a release operation: it orders the
-critical section before the bit clear, but does not order the
-subsequent plain load of the wait queue head after it.  The waiter
-side does the mirror image - it adds itself to the wait queue and
-then tests the bit.  That is the classic store-buffering pattern: the
-releasing CPU can read the wait queue as empty while the waiting CPU
-still reads the bit as set, so the sleeper is never woken.
+release_refill() drops the RDS_RECV_REFILL bit with a plain
+clear_bit().  clear_bit() has no ordering semantics, and the
+smp_mb__after_atomic() that follows it sits on the wrong side for a
+lock release: it orders the clear against the waitqueue_active() load
+below it, but does nothing to order the refill critical section's ring
+and descriptor stores before the clear itself.
 
-The waiters are rds_conn_shutdown() and rds_tcp_reset_callbacks(),
-both in uninterruptible wait_event() with no timeout.  A lost wake-up
-strands the shutdown worker on its single-threaded workqueue until
-some other sender releases the bit again - and on a connection that
-is being torn down precisely because it failed, there may never be
-another sender.
+That matters once connection teardown owns RDS_RECV_REFILL as a lock
+across the transport shutdown and path reset, rather than sampling it
+clear, which "net/rds: acquire the fastpath locks in
+rds_conn_shutdown()" later in this series arranges: on a weakly
+ordered architecture the teardown can win the bit and start the
+shutdown and reset while some of the refill's stores are not yet
+visible to it.  The same gap existed under the sample-based scheme - a
+waiter that saw the bit clear had no guarantee it also observed the
+refill's stores - but taking the bit as a lock makes the missing
+release pairing load-bearing.
 
-The barrier used to be there: release_in_xmit() did clear_bit()
-followed by smp_mb__after_atomic() until commit 1422f28826d2 ("rds:
-introduce acquire/release ordering in acquire/release_in_xmit()")
-folded both into clear_bit_unlock(), which strengthened the lock
-hand-off but silently dropped the full barrier the wake-up check
-depends on.  The refill counterpart, release_refill() in
-net/rds/ib_recv.c, still carries its smp_mb__after_atomic() for
-exactly this reason.
+Switch to clear_bit_unlock(), which orders the critical section before
+the release, and replace the open-coded barrier-plus-waitqueue_active()
+with wq_has_sleeper(), whose internal full barrier keeps the
+store-buffering guarantee between clearing the bit and checking for
+sleepers.  This mirrors what "net/rds: use wq_has_sleeper() in
+release_in_xmit()" does for RDS_IN_XMIT.
 
-Use wq_has_sleeper(), which is waitqueue_active() preceded by the
-required full barrier.
+The fast-path acquire side, acquire_refill(), uses test_and_set_bit(),
+a full-barrier RMW that pairs with this release.  The teardown at this
+point in the series still samples the bit, so on its own this change
+is release-side hardening; the shutdown-conversion patch named above
+makes the teardown acquire the bit with the same RMW, completing the
+pairing at the end of the series.
 
-Fixes: 1422f28826d2 ("rds: introduce acquire/release ordering in acquire/release_in_xmit()")
+Fixes: 73ce4317bf98 ("RDS: make sure we post recv buffers")
 Signed-off-by: Allison Henderson <achender@kernel.org>
-Link: https://patch.msgid.link/20260828223921.202913-2-achender@kernel.org
+Link: https://patch.msgid.link/20260828223921.202913-3-achender@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rds/send.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ net/rds/ib_recv.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/net/rds/send.c b/net/rds/send.c
-index 1fc84bd899534..da3a6ad39b920 100644
---- a/net/rds/send.c
-+++ b/net/rds/send.c
-@@ -114,8 +114,13 @@ static void release_in_xmit(struct rds_conn_path *cp)
+diff --git a/net/rds/ib_recv.c b/net/rds/ib_recv.c
+index e53b7f266bd76..20210822c9235 100644
+--- a/net/rds/ib_recv.c
++++ b/net/rds/ib_recv.c
+@@ -363,15 +363,14 @@ static int acquire_refill(struct rds_connection *conn)
+ 
+ static void release_refill(struct rds_connection *conn)
+ {
+-	clear_bit(RDS_RECV_REFILL, &conn->c_flags);
+-	smp_mb__after_atomic();
++	clear_bit_unlock(RDS_RECV_REFILL, &conn->c_flags);
+ 
+ 	/* We don't use wait_on_bit()/wake_up_bit() because our waking is in a
  	 * hot path and finding waiters is very rare.  We don't want to walk
  	 * the system-wide hashed waitqueue buckets in the fast path only to
  	 * almost never find waiters.
-+	 *
-+	 * wq_has_sleeper() supplies the full barrier that orders the wait
-+	 * queue read after the bit clear; clear_bit_unlock() alone is only
-+	 * a release and would let this check read a stale empty queue,
-+	 * losing the wake-up.
  	 */
--	if (waitqueue_active(&cp->cp_waitq))
-+	if (wq_has_sleeper(&cp->cp_waitq))
- 		wake_up_all(&cp->cp_waitq);
+-	if (waitqueue_active(&conn->c_waitq))
++	if (wq_has_sleeper(&conn->c_waitq))
+ 		wake_up_all(&conn->c_waitq);
  }
  
 -- 
