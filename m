@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 899014C10D4;
-	Thu, 17 Sep 2026 17:32:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CD9F50E5A6;
+	Thu, 17 Sep 2026 17:32:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789666359; cv=none; b=rxgww7teJHDyxeN2OoSGwE5AU4IW6GnkEum/ljpEt8pXhOTVgBZwRyb2zAWgpE4r55nMfVclIH+Mt3zA1Vl7k9CE/4fFL0ODUXwG1SveCfnXGh6NJkyeLZwsjAtrHQaeyDdg570TH+ovNRA4mdFSiAIZyhiSkQIgkSGLb3dr5No=
+	t=1789666361; cv=none; b=TN2IgRK74rDxdQY5E1jRIyaGB6KbejmVQwKr/mPnBETmvNHSaXRfbEUOYnAf6Qv1FI4FmkX1nkmrpSpqh6NWihHCaTH5HOPpZ7I4BlEVAZWdDfrRgnOaGNlo684pJWiPGRKX4tg7nDrCJ1F74HP7OetsWlQO9AEvcD04eNlMtG4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789666359; c=relaxed/simple;
-	bh=swEVDNRwZ+KzIREQLog0EtsJzindt0wluhDMFKdGXlQ=;
+	s=arc-20240116; t=1789666361; c=relaxed/simple;
+	bh=gIIyW/gk5Qq/AUgdvWg7Lnrl6AU9uh57eLDu64+GxlY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FaUbZ53MKW4TQZvxSZxde8SG1Ge7G7SfGizPnKd+AOy8EidVi8VMPFoPxCWmjw5MjmT0Ii5yR31c362AVIxEXyg3m4wxDj9hUUsC4Ztm3uQKwrOujn+S9YNeWpCG2mDteP3sghnfkzvh+EGsoGO2Z8lJp8AHQhu5AQ/pQUprLGg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pPzFjePx; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TstqOMqm2rNcJQm9L+QzIjvQWMPfvMtUeUOO7yAk773mTBlYIbL9s8E6sKzw2BPndLwRIFfH7GWCo/p9vIBsFT2sIevbytyI/DFba+iCLxKxo+VEIm9hM6sHSd+8AoceM1KdXOot/TPwcUr30dU9zRG9qrt6rZ0vSzUzYodr304=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rlScuTzo; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pPzFjePx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 999071F000FF;
-	Thu, 17 Sep 2026 17:32:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rlScuTzo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C15B1F000FF;
+	Thu, 17 Sep 2026 17:32:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789666357;
-	bh=NZDrz+Q3H5R1Ub9Spi3E5evoF+4xxDPF5wjrjTEe/CM=;
+	s=korg; t=1789666360;
+	bh=5txZgQaqQ22zMeouCh5vxBUknShzZwW9Xnz61FAY6I0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pPzFjePx9BNeVq8u8daScH3yWuIoHIQtDT74IDJAlpbvKoUJJKaUwAKdD4+srquiU
-	 D3+36o62l2p3dEjtHj1ls+xAXXh8+XReZOYaq1I4cRxxeOSlrPBYYnjFjl+rRmgeKf
-	 rUkTKpis0nS92nqlPPvNNYPnOIIxDHqkp/lukejw=
+	b=rlScuTzo3NfORpXP5gBQJeYHRP9MzxrNb0hP2BdAJhh9yOn8pMdrA3TdSAN2hOymz
+	 HoDqxdx9WWEMHvbSh6FTyGG8r9hjTwZOdu8CNfZYHep/j9Z7Ydd0ioyRT0DaUUnIwR
+	 yG8gaQhfIG4zJQtrDGuB+V71vKh1OPfjWfWR+dDI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shixiong Ou <oushixiong@kylinos.cn>,
-	Maxime Ripard <mripard@kernel.org>,
-	Philipp Stanner <phasta@kernel.org>
-Subject: [PATCH 6.18 1009/1250] drm/sched: Create a fake device for KUnit tests
-Date: Thu, 17 Sep 2026 16:13:24 +0100
-Message-ID: <20260917151619.395382416@linuxfoundation.org>
+	Gabriel Krisman Bertazi <krisman@suse.de>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.18 1010/1250] io_uring/net: let io_recv_buf_select return the length of the buffer region
+Date: Thu, 17 Sep 2026 16:13:25 +0100
+Message-ID: <20260917151619.423687692@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -51,68 +50,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shixiong Ou <oushixiong@kylinos.cn>
+From: Gabriel Krisman Bertazi <krisman@suse.de>
 
-commit 28cc4d5a75bb07d0eb2fa178db355b04483f5aca upstream.
+commit dcbd1c054848848a1937ca0768ce2bdbc31ae621 upstream.
 
-The DRM scheduler KUnit tests pass NULL for the dev field in
-drm_sched_init_args, which NULL-pointer dereferences in the drm_sched_job
-trace event via dev_name() on sched->dev.
+In preparation to using this field as an upper limit to truncation,
+return the size of the allocated region.
 
-Give the mock scheduler a device with kunit_device_register(), which is
-also cleaned up at test exit. A per-function counter keeps the device
-names unique, since some tests create several mock schedulers.
-
-Fixes: 5a99350794fe ("drm/sched: Add scheduler unit testing infrastructure and some basic tests")
+Fixes: ae98dbf43d75 ("io_uring/kbuf: add support for incremental buffer consumption")
 Cc: stable@vger.kernel.org
-Signed-off-by: Shixiong Ou <oushixiong@kylinos.cn>
-Acked-by: Maxime Ripard <mripard@kernel.org>
-[phasta: removed static variable init to 0 again]
-Signed-off-by: Philipp Stanner <phasta@kernel.org>
-Link: https://patch.msgid.link/20260908055941.351486-1-oushixiong1025@163.com
+Signed-off-by: Gabriel Krisman Bertazi <krisman@suse.de>
+Link: https://patch.msgid.link/20260902230041.1320658-2-krisman@suse.de
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/scheduler/tests/mock_scheduler.c |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ io_uring/net.c |   10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
---- a/drivers/gpu/drm/scheduler/tests/mock_scheduler.c
-+++ b/drivers/gpu/drm/scheduler/tests/mock_scheduler.c
-@@ -1,6 +1,8 @@
- // SPDX-License-Identifier: GPL-2.0
- /* Copyright (c) 2025 Valve Corporation */
- 
-+#include <kunit/device.h>
-+
- #include "sched_tests.h"
- 
- /*
-@@ -288,6 +290,7 @@ static const struct drm_sched_backend_op
-  */
- struct drm_mock_scheduler *drm_mock_sched_new(struct kunit *test, long timeout)
+--- a/io_uring/net.c
++++ b/io_uring/net.c
+@@ -1107,6 +1107,7 @@ static int io_recv_buf_select(struct io_
+ 			      struct io_br_sel *sel, unsigned int issue_flags)
  {
-+	static unsigned int instance;
- 	struct drm_sched_init_args args = {
- 		.ops		= &drm_mock_scheduler_ops,
- 		.num_rqs	= DRM_SCHED_PRIORITY_COUNT,
-@@ -297,11 +300,19 @@ struct drm_mock_scheduler *drm_mock_sche
- 		.name		= "drm-mock-scheduler",
- 	};
- 	struct drm_mock_scheduler *sched;
-+	struct device *dev;
-+	char name[64];
+ 	struct io_sr_msg *sr = io_kiocb_to_cmd(req, struct io_sr_msg);
++	size_t len;
  	int ret;
  
- 	sched = kunit_kzalloc(test, sizeof(*sched), GFP_KERNEL);
- 	KUNIT_ASSERT_NOT_NULL(test, sched);
+ 	/*
+@@ -1152,13 +1153,14 @@ static int io_recv_buf_select(struct io_
+ 		/* special case 1 vec, can be a fast path */
+ 		if (ret == 1) {
+ 			sr->buf = arg.iovs[0].iov_base;
+-			sr->len = arg.iovs[0].iov_len;
++			len = sr->len = arg.iovs[0].iov_len;
+ 			goto map_ubuf;
+ 		}
+ 		iov_iter_init(&kmsg->msg.msg_iter, ITER_DEST, arg.iovs, ret,
+-				arg.out_len);
++			      arg.out_len);
++		len = arg.out_len;
+ 	} else {
+-		size_t len = sel->val;
++		len = sel->val;
  
-+	snprintf(name, sizeof(name), "%s-%u", args.name, instance++);
-+	dev = kunit_device_register(test, name);
-+	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, dev);
-+
-+	args.dev = dev;
-+
- 	ret = drm_sched_init(&sched->base, &args);
- 	KUNIT_ASSERT_EQ(test, ret, 0);
+ 		*sel = io_buffer_select(req, &len, sr->buf_group, issue_flags);
+ 		if (!sel->addr)
+@@ -1172,7 +1174,7 @@ map_ubuf:
+ 			return ret;
+ 	}
  
+-	return 0;
++	return len;
+ }
+ 
+ int io_recv(struct io_kiocb *req, unsigned int issue_flags)
 
 
