@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 156785AEC6D;
-	Thu, 17 Sep 2026 15:29:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9B61497387;
+	Thu, 17 Sep 2026 15:29:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659001; cv=none; b=AIUmy2dUOeJlqUx92H46bMWl7o86M5rr7lXY4DV8AHX1gnJgf5j04KLejI3+Yv76kgzeQfvZJWTHx+rWWdzg1Y0MfPpr22Na4swlz0X+8H1/Gm0TLEZXZR2k399HG3ZK/AgrQoHb5JmqLzUPqCeCEZLy7J4jpSRUgJeV3oau1Ls=
+	t=1789659002; cv=none; b=R955RNusrEaM9aAhgjCwECA/hhmBlVAqLu2mcBIyZSBW0xZ9OMAlOs0w/O34PcyGyMduZO5P4RgPjQMIZ1VJoPCvSJ7qY8g9lNFCqbme/IRP/BSljyc2SgK7yplyrhDUQ8QPzyPniVFcwusrTpZpG7/F0eC0fhrJ1/Rn5+EZzgY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659001; c=relaxed/simple;
-	bh=QV/XDEerXu1rxttDl/Jb5ADmoX+G0apdN7scsDbORF0=;
+	s=arc-20240116; t=1789659002; c=relaxed/simple;
+	bh=4arC5SGsf7kOgfkrSSIxlC6e/6olbs3swRkos3LE/k0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f5UEqmjMU3OtVar88II2rcEm0Oa4aiiEEtXjMAxG3Rm5O1aYf3jsCe/Z8IiuNTGtj9r1bwHgn6LtuIkmKJ4Akke0uCmBEjF8bOHc7/GUgqDj4W0pa7OWjK8Go1d70plO8B+S/dco3FvdUapPZDA9kqPMSwANDoz5CFbHOyCU1gA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SAPQr5ST; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=YJx4avcBoQsNqzmP3wYANi767QHWWEuabEZ9ZPjHbxX3nmKjjM04AgucfFOrazY7AZoVz1EyOPlZphpyutiFzpU3pvt7IRU40XtUDVY0AalfO7gA+TYOqBIDbTujjaZ0NJcPGaoTV+T93eXiArxrEnaqcnUIBZV9ZEeEX+kAH2M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JnukVTPJ; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SAPQr5ST"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 412D21F00898;
-	Thu, 17 Sep 2026 15:29:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JnukVTPJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E1551F0089B;
+	Thu, 17 Sep 2026 15:29:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789658986;
-	bh=Oi1iZvblqCYn1tD9f0vZ82+dwPkpAjtk4K+UUEILNzo=;
+	s=korg; t=1789658992;
+	bh=UlpEjdtyIdX24bIsR/7tQJWsWG32pc3//uWH2/hjp2s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SAPQr5ST525RPFsomGTytvKSv65Dhkhb37UrkzD8JepJTpJL5WuxzlmUzC9fj5aCu
-	 aZOxR2aPQeTJdJMCqxcGvG+xbKknheTpHqF/zDabpJPYC96MwRENcUxDS3wo3K2DN2
-	 oQklf9EekC1TutytbNsXKcypGhQtIQyrooAUShmA=
+	b=JnukVTPJ9W7D7OKB/jj3NOgWg9jEk6HnHpLk5ZyActp7Izz0Syvi0TwtLzs3WsC//
+	 MhRecqWwfzIFRY1jmKQifnFugX+WNpgXL1DTPO185ERyOubpEydENirNKiKKeTTfhY
+	 Ws668pCH3IFfWobaoE7fHe5QJkTtum1uDYZeZudc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wanwu Li <liwanwu@kylinos.cn>,
-	Tejun Heo <tj@kernel.org>,
+	David Howells <dhowells@redhat.com>,
+	Paulo Alcantara <pc@manguebit.org>,
+	netfs@lists.linux.dev,
+	linux-fsdevel@vger.kernel.org,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 105/733] sched_ext: Fix timer pinning and return value in scx_central
-Date: Thu, 17 Sep 2026 16:06:53 +0100
-Message-ID: <20260917151353.583256955@linuxfoundation.org>
+Subject: [PATCH 7.2 080/733] netfs: Fix unbuffered/DIO write partial transfer error return
+Date: Thu, 17 Sep 2026 16:06:28 +0100
+Message-ID: <20260917151352.889338385@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -51,49 +54,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wanwu Li <liwanwu@kylinos.cn>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit 23761359861ca4bb087540937dfea8b0716914c2 ]
+[ Upstream commit c753a33664e4e86246f7491a93d9a77c1a673b5d ]
 
-central_timerfn() re-arms the timer with a hardcoded
-BPF_F_TIMER_CPU_PIN flag and ignores the return value, defeating
-start_central_timer()'s -EINVAL fallback for kernels without the flag
-(<6.7): on such kernels the first tick kills the timer permanently
-with no diagnostic.  Honor timer_pinned and check the return like
-the initial arm does.
+Fix unbuffered/DIO write to return the amount of data transferred in
+preference to an error if a partial transfer has been achieved, and to
+prefer an error stashed in the request over the one returned by
+netfs_unbuffered_write() (likely -EINTR or -ERESTARTSYS).
 
-Fixes: 22a920209ab6 ("sched_ext: Implement tickless support")
-Signed-off-by: Wanwu Li <liwanwu@kylinos.cn>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Fixes: a0b4c7a49137e ("netfs: Fix unbuffered/DIO writes to dispatch subrequests in strict sequence")
+Link: https://sashiko.dev/#/patchset/20260824120224.504575-1-dhowells%40redhat.com
+Signed-off-by: David Howells <dhowells@redhat.com>
+Link: https://patch.msgid.link/20260827134304.2075713-3-dhowells@redhat.com
+Acked-by: Paulo Alcantara <pc@manguebit.org>
+cc: Paulo Alcantara <pc@manguebit.org>
+cc: netfs@lists.linux.dev
+cc: linux-fsdevel@vger.kernel.org
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/sched_ext/scx_central.bpf.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ fs/netfs/direct_write.c | 12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
-diff --git a/tools/sched_ext/scx_central.bpf.c b/tools/sched_ext/scx_central.bpf.c
-index 64dd60b3e9223..65dae9e454009 100644
---- a/tools/sched_ext/scx_central.bpf.c
-+++ b/tools/sched_ext/scx_central.bpf.c
-@@ -299,6 +299,7 @@ static int central_timerfn(void *map, int *key, struct bpf_timer *timer)
- 	u64 now = scx_bpf_now();
- 	u64 nr_to_kick = nr_queued;
- 	s32 i, curr_cpu;
-+	int ret;
+diff --git a/fs/netfs/direct_write.c b/fs/netfs/direct_write.c
+index c16fbad286a17..d53b42ceadd23 100644
+--- a/fs/netfs/direct_write.c
++++ b/fs/netfs/direct_write.c
+@@ -139,13 +139,11 @@ static int netfs_unbuffered_write(struct netfs_io_request *wreq)
+ 		if (test_bit(NETFS_SREQ_NEED_RETRY, &subreq->flags)) {
+ 			retry = true;
+ 		} else if (test_bit(NETFS_SREQ_FAILED, &subreq->flags)) {
+-			ret = subreq->error;
+-			wreq->error = ret;
++			wreq->error = subreq->error;
+ 			netfs_see_subrequest(subreq, netfs_sreq_trace_see_failed);
+ 			subreq = NULL;
+ 			break;
+ 		}
+-		ret = 0;
  
- 	curr_cpu = bpf_get_smp_processor_id();
- 	if (timer_pinned && (curr_cpu != central_cpu)) {
-@@ -332,7 +333,10 @@ static int central_timerfn(void *map, int *key, struct bpf_timer *timer)
- 		scx_bpf_kick_cpu(cpu, SCX_KICK_PREEMPT);
- 	}
+ 		if (!retry) {
+ 			netfs_unbuffered_write_collect(wreq, stream, subreq);
+@@ -288,11 +286,11 @@ ssize_t netfs_unbuffered_write_iter_locked(struct kiocb *iocb, struct iov_iter *
+ 		ret = -EIOCBQUEUED;
+ 	} else {
+ 		ret = netfs_unbuffered_write(wreq);
+-		if (ret < 0) {
+-			_debug("begin = %zd", ret);
+-		} else {
++		if (wreq->transferred) {
+ 			iocb->ki_pos += wreq->transferred;
+-			ret = wreq->transferred ?: wreq->error;
++			ret = wreq->transferred;
++		} else if (wreq->error) {
++			ret = wreq->error;
+ 		}
  
--	bpf_timer_start(timer, TIMER_INTERVAL_NS, BPF_F_TIMER_CPU_PIN);
-+	ret = bpf_timer_start(timer, TIMER_INTERVAL_NS,
-+			      timer_pinned ? BPF_F_TIMER_CPU_PIN : 0);
-+	if (ret)
-+		scx_bpf_error("bpf_timer_start failed (%d)", ret);
- 	__sync_fetch_and_add(&nr_timers, 1);
- 	return 0;
- }
+ 		netfs_put_request(wreq, netfs_rreq_trace_put_complete);
 -- 
 2.53.0
 
