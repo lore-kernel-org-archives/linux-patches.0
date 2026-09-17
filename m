@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 141483DB339;
-	Thu, 17 Sep 2026 19:00:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 592DD54707E;
+	Thu, 17 Sep 2026 19:00:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789671616; cv=none; b=CCJz7J1s76wl30MBT3plMO3LmbOcpu1E3xxHkI3eZ9g0xj2vspUv54G5ZSXdHsxt8wLgepMcV1r+xRVHwysMrp1zdDWsnRY62UbZ2DSXd63aPkDD+6gcGkvW5ioZ0Ke12+OSKtQkGYPUaIsDa0HezxoYgBZ1LQKmrSozEC8DOVU=
+	t=1789671619; cv=none; b=E2e3kl6WzQXCfevKjTBjV8AvCpwWPXTMfMOEWS5fnqpYeePvzaF0dgeOWgNL8Oo4XjFOrIvPLbO3GQKxA4eJiCHMF76TmDqpV3nfasyROEa/cLx8Tpxq4/Co69TPBNFahTgwSVUGlRqAjvf0Ttiy9gPGMgat9CiyhUy+xBJnFBU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789671616; c=relaxed/simple;
-	bh=KweztZvEFogNfc5WS9zsYiaXKvWu7XfjBoRHgRNp+pY=;
+	s=arc-20240116; t=1789671619; c=relaxed/simple;
+	bh=nFY785JYS4j8s4omKDF31b0KyqApwRf9MyKYfKVaJRI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nQ6xD/yN2PMtziXM2wAi8w45AtbO+/KMziGOiMjnhuf8yF6zL8s9m1Mb//Xs0qdIDkPzBXuKs2LJyyrv66OVBbAfq9JdaLxDhOYTK7mpQu1ju4x5G9K5xvvjvK1qih1ZNWl+3Qj3eqs1ndnIp5tYEwj4+YKkW0ZPoljOUdJu9zk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PS6kgaE2; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=OiL9lqQPOPelTtoFyH3lsu249QXKzCMBmJjBSR6we6iSv2quMDoTSUNleivBPpLnh03BRGKW9oPkXmc5TeuzqTwg4dUut8msJ6erJiO4T3+cY3K7vZ18xwvo+JSVYDcZ7CHKQqZFpAbB3/K/aVVquJQ8v+qBSyvGBOkksyzOwv8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uh/D7/xj; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PS6kgaE2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59C901F000FF;
-	Thu, 17 Sep 2026 19:00:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uh/D7/xj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54BA11F000FF;
+	Thu, 17 Sep 2026 19:00:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789671614;
-	bh=Aes0F6Kwe1uEsVuBKo+4i1a7+90r1J4qI3I15TwXHQw=;
+	s=korg; t=1789671617;
+	bh=Aup/Rqal+1mJM2jmhgnKvuCyl6qOit8SMeIVkpLLxsU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PS6kgaE2CVKRnyErAgAKDvDMV6zouBz+BCRdcN/V2eG/6+ySfUbSXGFlPUtZTtcMV
-	 uhAEHCTOmxmJlRUFEYz1k7kA3RB+EfsVWLiengK1RPbj5pIyBEdCd9wCKWcq5iFz6z
-	 bWjNA8DR1cDQy1n2+Q7zwv9L9UIsz8KoO2m1hxl4=
+	b=uh/D7/xjFfigHz8KdNs6ed7jv/50Q/+2mSwqLs3jwB71z6s/d43OJ3Z3qlVeZcGbn
+	 stPUxkJeX2DEt4XNRVtIveAmx/3SEkLfZ5a09/HY+R8gnhSoMiJf94EcOC3bF8gpEv
+	 5aObWcTanJMI9gdKpyQkOSnHL9dScP6JP+mCNo1s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Snitzer <snitzer@kernel.org>,
+	NeilBrown <neil@brown.name>,
 	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Chuck Lever <cel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1033/1102] nfsd: disallow file locking and delegations for NFSv4 reexport
-Date: Thu, 17 Sep 2026 16:16:16 +0100
-Message-ID: <20260917151606.708955221@linuxfoundation.org>
+Subject: [PATCH 6.12 1034/1102] NFSD: Prevent client use-after-free during delegation revoke
+Date: Thu, 17 Sep 2026 16:16:17 +0100
+Message-ID: <20260917151606.737344795@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -52,331 +52,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mike Snitzer <snitzer@kernel.org>
+From: Chuck Lever <cel@kernel.org>
 
-[ Upstream commit 9254c8ae9b8172d9ad26e620a4bbc604a1efa7fa ]
+[ Upstream commit 4683ca76b3b7e5808338491c6eb3c20e6b4894d5 ]
 
-We do not and cannot support file locking with NFS reexport over
-NFSv4.x for the same reason we don't do it for NFSv3: NFS reexport
-server reboot cannot allow clients to recover locks because the source
-NFS server has not rebooted, and so it is not in grace.  Since the
-source NFS server is not in grace, it cannot offer any guarantees that
-the file won't have been changed between the locks getting lost and
-any attempt to recover/reclaim them.  The same applies to delegations
-and any associated locks, so disallow them too.
+A delegation stateid holds only a bare pointer to its owning
+nfs4_client and does not keep it alive.  The client survives its
+stateids only because __destroy_client() drains cl_delegations and
+cl_revoked before free_client() runs.
 
-Clients are no longer allowed to get file locks or delegations from a
-reexport server, any attempts will fail with operation not supported.
+nfs4_laundromat() breaks that invariant: it unhashes an
+expired delegation from cl_delegations, drops deleg_lock, then
+revoke_delegation() relinks it onto cl_revoked under cl_lock.  In that
+window the delegation is on neither list, so client_has_state() can
+report no remaining state.
 
-Update the "Reboot recovery" section accordingly in
-Documentation/filesystems/nfs/reexport.rst
+Every teardown path first requires cl_rpc_users to be zero, but
+the laundromat holds no such reference.  A client whose recalled
+delegation has just timed out can therefore reach free_client()
+while revoke_delegation() is still about to dereference cl_lock,
+a use-after-free.
 
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+Pin the client with cl_rpc_users across the revoke so teardown blocks
+until it completes, then reap the delegation from cl_revoked.  A client
+already expiring reaps its own, so skip it and leave the delegation on
+del_recall_lru.
+
+Fixes: 3bd64a5ba171 ("nfsd4: implement SEQ4_STATUS_RECALLABLE_STATE_REVOKED")
+Cc: stable@vger.kernel.org
+Reviewed-by: NeilBrown <neil@brown.name>
 Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Stable-dep-of: 4683ca76b3b7 ("NFSD: Prevent client use-after-free during delegation revoke")
+Link: https://patch.msgid.link/20260709-cel-v4-2-1d519d9be0cb@kernel.org
+Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/filesystems/nfs/reexport.rst |   10 ++-
- fs/nfs/export.c                            |    3 -
- fs/nfsd/netns.h                            |    3 +
- fs/nfsd/nfs4state.c                        |   75 ++++++++++++++++++-----------
- fs/nfsd/state.h                            |    2 
- include/linux/exportfs.h                   |    1 
- 6 files changed, 61 insertions(+), 33 deletions(-)
+ fs/nfsd/netns.h     |    6 ++++--
+ fs/nfsd/nfs4state.c |   23 +++++++++++++++++++++++
+ 2 files changed, 27 insertions(+), 2 deletions(-)
 
---- a/Documentation/filesystems/nfs/reexport.rst
-+++ b/Documentation/filesystems/nfs/reexport.rst
-@@ -26,9 +26,13 @@ Reboot recovery
- ---------------
- 
- The NFS protocol's normal reboot recovery mechanisms don't work for the
--case when the reexport server reboots.  Clients will lose any locks
--they held before the reboot, and further IO will result in errors.
--Closing and reopening files should clear the errors.
-+case when the reexport server reboots because the source server has not
-+rebooted, and so it is not in grace.  Since the source server is not in
-+grace, it cannot offer any guarantees that the file won't have been
-+changed between the locks getting lost and any attempt to recover them.
-+The same applies to delegations and any associated locks.  Clients are
-+not allowed to get file locks or delegations from a reexport server, any
-+attempts will fail with operation not supported.
- 
- Filehandle limits
- -----------------
---- a/fs/nfs/export.c
-+++ b/fs/nfs/export.c
-@@ -161,5 +161,6 @@ const struct export_operations nfs_expor
- 		 EXPORT_OP_CLOSE_BEFORE_UNLINK	|
- 		 EXPORT_OP_REMOTE_FS		|
- 		 EXPORT_OP_NOATOMIC_ATTR	|
--		 EXPORT_OP_FLUSH_ON_CLOSE,
-+		 EXPORT_OP_FLUSH_ON_CLOSE	|
-+		 EXPORT_OP_NOLOCKS,
- };
 --- a/fs/nfsd/netns.h
 +++ b/fs/nfsd/netns.h
-@@ -105,6 +105,9 @@ struct nfsd_net {
- 	 */
+@@ -106,7 +106,8 @@ struct nfsd_net {
  	struct list_head client_lru;
  	struct list_head close_lru;
-+
-+	/* protects del_recall_lru and delegation hash/unhash */
-+	spinlock_t deleg_lock ____cacheline_aligned;
+ 
+-	/* protects del_recall_lru and delegation hash/unhash */
++	/* protects del_recall_lru and delegation hash/unhash;
++	 * nests outside client_lock */
+ 	spinlock_t deleg_lock ____cacheline_aligned;
  	struct list_head del_recall_lru;
  
- 	/* protected by blocked_locks_lock */
+@@ -115,7 +116,8 @@ struct nfsd_net {
+ 
+ 	struct delayed_work laundromat_work;
+ 
+-	/* client_lock protects the client lru list and session hash table */
++	/* client_lock protects the client lru list and session hash
++	 * table; nests inside deleg_lock */
+ 	spinlock_t client_lock;
+ 
+ 	/* protects blocked_locks_lru */
 --- a/fs/nfsd/nfs4state.c
 +++ b/fs/nfsd/nfs4state.c
-@@ -89,15 +89,6 @@ static void _free_cpntf_state_locked(str
- static void nfsd4_file_hash_remove(struct nfs4_file *fi);
- static void deleg_reaper(struct nfsd_net *nn);
+@@ -6783,6 +6783,7 @@ nfs4_laundromat(struct nfsd_net *nn)
+ 		.new_timeo = nn->nfsd4_lease
+ 	};
+ 	struct nfs4_cpntf_state *cps;
++	struct nfs4_client *clp;
+ 	copy_stateid_t *cps_t;
+ 	int i;
  
--/* Locking: */
--
--/*
-- * Currently used for the del_recall_lru and file hash table.  In an
-- * effort to decrease the scope of the client_mutex, this spinlock may
-- * eventually cover more:
-- */
--static DEFINE_SPINLOCK(state_lock);
--
- enum nfsd4_st_mutex_lock_subclass {
- 	OPEN_STATEID_MUTEX = 0,
- 	LOCK_STATEID_MUTEX = 1,
-@@ -1349,8 +1340,9 @@ nfs4_delegation_exists(struct nfs4_clien
- {
- 	struct nfs4_delegation *searchdp = NULL;
- 	struct nfs4_client *searchclp = NULL;
-+	struct nfsd_net *nn = net_generic(clp->net, nfsd_net_id);
- 
--	lockdep_assert_held(&state_lock);
-+	lockdep_assert_held(&nn->deleg_lock);
- 	lockdep_assert_held(&fp->fi_lock);
- 
- 	list_for_each_entry(searchdp, &fp->fi_delegations, dl_perfile) {
-@@ -1379,8 +1371,9 @@ static int
- hash_delegation_locked(struct nfs4_delegation *dp, struct nfs4_file *fp)
- {
- 	struct nfs4_client *clp = dp->dl_stid.sc_client;
-+	struct nfsd_net *nn = net_generic(clp->net, nfsd_net_id);
- 
--	lockdep_assert_held(&state_lock);
-+	lockdep_assert_held(&nn->deleg_lock);
- 	lockdep_assert_held(&fp->fi_lock);
- 	lockdep_assert_held(&clp->cl_lock);
- 
-@@ -1402,8 +1395,10 @@ static bool
- unhash_delegation_locked(struct nfs4_delegation *dp, unsigned short statusmask)
- {
- 	struct nfs4_file *fp = dp->dl_stid.sc_file;
-+	struct nfsd_net *nn = net_generic(dp->dl_stid.sc_client->net,
-+					  nfsd_net_id);
- 
--	lockdep_assert_held(&state_lock);
-+	lockdep_assert_held(&nn->deleg_lock);
- 
- 	if (!delegation_hashed(dp))
- 		return false;
-@@ -1428,10 +1423,12 @@ unhash_delegation_locked(struct nfs4_del
- static void destroy_delegation(struct nfs4_delegation *dp)
- {
- 	bool unhashed;
-+	struct nfsd_net *nn = net_generic(dp->dl_stid.sc_client->net,
-+					  nfsd_net_id);
- 
--	spin_lock(&state_lock);
-+	spin_lock(&nn->deleg_lock);
- 	unhashed = unhash_delegation_locked(dp, SC_STATUS_CLOSED);
--	spin_unlock(&state_lock);
-+	spin_unlock(&nn->deleg_lock);
- 	if (unhashed)
- 		destroy_unhashed_deleg(dp);
- }
-@@ -1908,11 +1905,11 @@ void nfsd4_revoke_states(struct nfsd_net
- 					 */
- 					refcount_inc(&stid->sc_count);
- 					dp = delegstateid(stid);
--					spin_lock(&state_lock);
-+					spin_lock(&nn->deleg_lock);
- 					if (!unhash_delegation_locked(
- 						    dp, SC_STATUS_ADMIN_REVOKED))
- 						dp = NULL;
--					spin_unlock(&state_lock);
-+					spin_unlock(&nn->deleg_lock);
- 					if (dp)
- 						revoke_delegation(dp);
- 					else
-@@ -2512,13 +2509,13 @@ __destroy_client(struct nfs4_client *clp
- 	struct nfs4_delegation *dp;
- 	LIST_HEAD(reaplist);
- 
--	spin_lock(&state_lock);
-+	spin_lock(&nn->deleg_lock);
- 	while (!list_empty(&clp->cl_delegations)) {
- 		dp = list_entry(clp->cl_delegations.next, struct nfs4_delegation, dl_perclnt);
- 		unhash_delegation_locked(dp, SC_STATUS_CLOSED);
- 		list_add(&dp->dl_recall_lru, &reaplist);
- 	}
--	spin_unlock(&state_lock);
-+	spin_unlock(&nn->deleg_lock);
- 	while (!list_empty(&reaplist)) {
- 		dp = list_entry(reaplist.next, struct nfs4_delegation, dl_recall_lru);
- 		list_del_init(&dp->dl_recall_lru);
-@@ -5361,12 +5358,12 @@ static void nfsd4_cb_recall_prepare(stru
- 	 * If the dl_time != 0, then we know that it has already been
- 	 * queued for a lease break. Don't queue it again.
- 	 */
--	spin_lock(&state_lock);
-+	spin_lock(&nn->deleg_lock);
- 	if (delegation_hashed(dp) && dp->dl_time == 0) {
- 		dp->dl_time = ktime_get_boottime_seconds();
- 		list_add_tail(&dp->dl_recall_lru, &nn->del_recall_lru);
- 	}
--	spin_unlock(&state_lock);
-+	spin_unlock(&nn->deleg_lock);
- }
- 
- static int nfsd4_cb_recall_done(struct nfsd4_callback *cb,
-@@ -5963,6 +5960,7 @@ nfs4_set_delegation(struct nfsd4_open *o
- {
- 	int status = 0;
- 	struct nfs4_client *clp = stp->st_stid.sc_client;
-+	struct nfsd_net *nn = net_generic(clp->net, nfsd_net_id);
- 	struct nfs4_file *fp = stp->st_stid.sc_file;
- 	struct nfs4_clnt_odstate *odstate = stp->st_clnt_odstate;
- 	struct nfs4_delegation *dp;
-@@ -6007,7 +6005,17 @@ nfs4_set_delegation(struct nfsd4_open *o
- 	if (!nf)
- 		return ERR_PTR(-EAGAIN);
- 
--	spin_lock(&state_lock);
-+	/*
-+	 * File delegations and associated locks cannot be recovered if the
-+	 * export is from an NFS proxy server.
-+	 */
-+	if (nf->nf_file->f_path.mnt->mnt_sb->s_export_op->flags &
-+	    EXPORT_OP_NOLOCKS) {
-+		nfsd_file_put(nf);
-+		return ERR_PTR(-EOPNOTSUPP);
-+	}
-+
-+	spin_lock(&nn->deleg_lock);
- 	spin_lock(&fp->fi_lock);
- 	if (nfs4_delegation_exists(clp, fp))
- 		status = -EAGAIN;
-@@ -6022,7 +6030,7 @@ nfs4_set_delegation(struct nfsd4_open *o
- 	} else
- 		fp->fi_delegees++;
- 	spin_unlock(&fp->fi_lock);
--	spin_unlock(&state_lock);
-+	spin_unlock(&nn->deleg_lock);
- 	if (nf)
- 		nfsd_file_put(nf);
- 	if (status)
-@@ -6066,13 +6074,13 @@ nfs4_set_delegation(struct nfsd4_open *o
- 	if (fp->fi_had_conflict)
- 		goto out_unlock;
- 
--	spin_lock(&state_lock);
-+	spin_lock(&nn->deleg_lock);
- 	spin_lock(&clp->cl_lock);
- 	spin_lock(&fp->fi_lock);
- 	status = hash_delegation_locked(dp, fp);
- 	spin_unlock(&fp->fi_lock);
- 	spin_unlock(&clp->cl_lock);
--	spin_unlock(&state_lock);
-+	spin_unlock(&nn->deleg_lock);
- 
- 	if (status)
- 		goto out_unlock;
-@@ -6797,7 +6805,7 @@ nfs4_laundromat(struct nfsd_net *nn)
- 
- 	nfs40_clean_admin_revoked(nn, &lt);
- 
--	spin_lock(&state_lock);
-+	spin_lock(&nn->deleg_lock);
- 	list_for_each_safe(pos, next, &nn->del_recall_lru) {
+@@ -6810,6 +6811,18 @@ nfs4_laundromat(struct nfsd_net *nn)
  		dp = list_entry (pos, struct nfs4_delegation, dl_recall_lru);
  		if (!state_expired(&lt, dp->dl_time))
-@@ -6806,7 +6814,7 @@ nfs4_laundromat(struct nfsd_net *nn)
+ 			break;
++		clp = dp->dl_stid.sc_client;
++		spin_lock(&nn->client_lock);
++		if (is_client_expired(clp)) {
++			spin_unlock(&nn->client_lock);
++			continue;
++		}
++		/*
++		 * Pin without reviving: get_client_locked() would
++		 * flip a courtesy client back to NFSD4_ACTIVE.
++		 */
++		atomic_inc(&clp->cl_rpc_users);
++		spin_unlock(&nn->client_lock);
+ 		refcount_inc(&dp->dl_stid.sc_count);
  		unhash_delegation_locked(dp, SC_STATUS_REVOKED);
  		list_add(&dp->dl_recall_lru, &reaplist);
- 	}
--	spin_unlock(&state_lock);
-+	spin_unlock(&nn->deleg_lock);
+@@ -6818,8 +6831,18 @@ nfs4_laundromat(struct nfsd_net *nn)
  	while (!list_empty(&reaplist)) {
  		dp = list_first_entry(&reaplist, struct nfs4_delegation,
  					dl_recall_lru);
-@@ -8192,6 +8200,10 @@ nfsd4_lock(struct svc_rqst *rqstp, struc
- 	if (status != nfs_ok)
- 		return status;
- 	sb = cstate->current_fh.fh_dentry->d_sb;
-+	if (sb->s_export_op->flags & EXPORT_OP_NOLOCKS) {
-+		status = nfserr_notsupp;
-+		goto out;
-+	}
- 
- 	if (lock->lk_is_new) {
- 		if (nfsd4_has_session(cstate))
-@@ -8545,6 +8557,12 @@ nfsd4_locku(struct svc_rqst *rqstp, stru
- 		status = nfserr_lock_range;
- 		goto put_stateid;
- 	}
-+	if (nf->nf_file->f_path.mnt->mnt_sb->s_export_op->flags &
-+	    EXPORT_OP_NOLOCKS) {
-+		status = nfserr_notsupp;
-+		goto put_file;
-+	}
-+
- 	file_lock = locks_alloc_lock();
- 	if (!file_lock) {
- 		dprintk("NFSD: %s: unable to allocate lock!\n", __func__);
-@@ -8904,6 +8922,7 @@ static int nfs4_state_create_net(struct
- 	INIT_LIST_HEAD(&nn->client_lru);
- 	INIT_LIST_HEAD(&nn->close_lru);
- 	INIT_LIST_HEAD(&nn->del_recall_lru);
-+	spin_lock_init(&nn->deleg_lock);
- 	spin_lock_init(&nn->client_lock);
- 	spin_lock_init(&nn->s2s_cp_lock);
- 	idr_init(&nn->s2s_cp_stateids);
-@@ -9030,13 +9049,13 @@ nfs4_state_shutdown_net(struct net *net)
- 	locks_end_grace(&nn->nfsd4_manager);
- 
- 	INIT_LIST_HEAD(&reaplist);
--	spin_lock(&state_lock);
-+	spin_lock(&nn->deleg_lock);
- 	list_for_each_safe(pos, next, &nn->del_recall_lru) {
- 		dp = list_entry (pos, struct nfs4_delegation, dl_recall_lru);
- 		unhash_delegation_locked(dp, SC_STATUS_CLOSED);
- 		list_add(&dp->dl_recall_lru, &reaplist);
- 	}
--	spin_unlock(&state_lock);
-+	spin_unlock(&nn->deleg_lock);
- 	list_for_each_safe(pos, next, &reaplist) {
- 		dp = list_entry (pos, struct nfs4_delegation, dl_recall_lru);
++		clp = dp->dl_stid.sc_client;
  		list_del_init(&dp->dl_recall_lru);
---- a/fs/nfsd/state.h
-+++ b/fs/nfsd/state.h
-@@ -101,7 +101,7 @@ struct nfs4_stid {
- #define SC_TYPE_LAYOUT		BIT(3)
- 	unsigned short		sc_type;
+ 		revoke_delegation(dp);
++		/*
++		 * Unpin without renewing: put_client_renew() would
++		 * renew the reaped client's lease.
++		 */
++		if (atomic_dec_and_lock(&clp->cl_rpc_users, &nn->client_lock)) {
++			if (is_client_expired(clp))
++				wake_up_all(&expiry_wq);
++			spin_unlock(&nn->client_lock);
++		}
+ 	}
  
--/* state_lock protects sc_status for delegation stateids.
-+/* nn->deleg_lock protects sc_status for delegation stateids.
-  * ->cl_lock protects sc_status for open and lock stateids.
-  * ->st_mutex also protect sc_status for open stateids.
-  * ->ls_lock protects sc_status for layout stateids.
---- a/include/linux/exportfs.h
-+++ b/include/linux/exportfs.h
-@@ -247,6 +247,7 @@ struct export_operations {
- 						*/
- #define EXPORT_OP_FLUSH_ON_CLOSE	(0x20) /* fs flushes file data on close */
- #define EXPORT_OP_ASYNC_LOCK		(0x40) /* fs can do async lock request */
-+#define EXPORT_OP_NOLOCKS		(0x80) /* no file locking support */
- 	unsigned long	flags;
- };
- 
+ 	spin_lock(&nn->client_lock);
 
 
