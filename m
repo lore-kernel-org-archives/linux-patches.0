@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB5EB54CF65;
-	Thu, 17 Sep 2026 16:01:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B507C57266F;
+	Thu, 17 Sep 2026 16:01:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789660893; cv=none; b=EPiv81g1fpn/v1tBw0tDJHjci53r7uoGlSPjak7Y3v7BfHRygDb8TqIXcvkNOTbtoDRnBFzFEol2TWjYXKe0NffdQBRBHF8XjsLSVMwpPaNtbDrfJVgt4GC3qwQFyzXHzDb/8T3WsfVw8coPTxroUFJBWsWPt0QEWp51TeyTku0=
+	t=1789660895; cv=none; b=nULQPsqYhxPAugb62hXuf/40Mgz8lLVKQuf7LvhEzfz493DSVXpvTNwHsnajil6TzM8BJDBeWcd2e5Of2mYpcojXhWLFtP1z4X1XIQ1wauFVw3AF8U4y3UJdhaUF4bf7xHRFzsvoPZgw5BCq3dtMptQ3983Gu2DHAyXEQJAZ4jc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789660893; c=relaxed/simple;
-	bh=rjJ5EoIcqb5A0TRu1KRVNz9NzgILSdFB8GN+lVeP9uI=;
+	s=arc-20240116; t=1789660895; c=relaxed/simple;
+	bh=56xKN3kQQm+skV2c1O1sGlJxUjp54MJWCuCItQ3ZwKI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e0lo0uDC7izNnXBd8tG3DCd8unrsafKXgsjcY/l6XKlWp5i/xku/fM5RCdKe4vKn43OCLjdJCrm2XIGeF5bCdwMFj42TncfUxP6He9lUgihIQVw8lS4D/M21xsa7nlRYCzXarwg5gE1rbI/E+JaXOkvmg/68psJsfp/QVG3xHaY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ykx6S3zf; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=f+LntXQQO8TYYYbHPC8CDrpIUujZwT73POw0kjA5qagD2Zv/7S6meqYLIfdOjwJGS0f52DdftCusnjCzTRcUsULlKq2tf/9LdzYwe1yDFBDNO9iign0n4KLjt7sHx7yhJxSpIDaXVNhnLmxVBCbdZHLHGVmDksXvD5JeSNcZMng=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q1/bs+2g; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ykx6S3zf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30E391F0089A;
-	Thu, 17 Sep 2026 16:01:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q1/bs+2g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B3FD1F000FF;
+	Thu, 17 Sep 2026 16:01:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789660891;
-	bh=F58AyJjY18TPOKEcl40XyEZo5f2pI/r3LbOMG4qaCuw=;
+	s=korg; t=1789660894;
+	bh=p0N5UUmMSGj9i8p88QAJNtHBj66AZMkw1/9jKtZhXFg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ykx6S3zf7oyqv9B1qC+MB+XCKJjCh0HB9OmMwVsalWqANNLodOb49pPpfZdHzU+9b
-	 E6B7qwS4R/TRa2Mu+UohnXHtNIWv5BhCcM5fD+EPOa8ZtHImam2WzmA6g05/TQ2Vfg
-	 7h1FfI/7E+9EyZQU0GHatSU4KGXjSjTD+apJ3pxM=
+	b=q1/bs+2gsbbc7H/GGj02etRAkyXcSq6iXrzAb2D7mwq/U4R5Ov6otM00pzxz844av
+	 06tByhAAtiU/GUF6MxUMklSK+mKOLjkwOAywXj7qrQLMzW9QvkA8QzpcmA/nEvp10o
+	 anRQV2LK0YxMlGZH5NSK0QK31Q7UDA+ijr2AHApA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+642d0561f78362d67d3f@syzkaller.appspotmail.com,
-	Jie Wang <jie.wang@intel.com>,
-	Andreas Gruenbacher <agruenba@redhat.com>,
+	Arun T <arun.t@intel.com>,
+	Vadillo Miguel <miguel.vadillo@intel.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0013/1250] gfs2: fix quota init duplicate scan
-Date: Thu, 17 Sep 2026 15:56:48 +0100
-Message-ID: <20260917151552.284645802@linuxfoundation.org>
+Subject: [PATCH 6.18 0014/1250] gpio: usbio: Add ACPI device-id for NVL platforms
+Date: Thu, 17 Sep 2026 15:56:49 +0100
+Message-ID: <20260917151552.311030024@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -52,102 +53,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jie Wang <jie.wang@intel.com>
+From: Arun T <arun.t@intel.com>
 
-[ Upstream commit b99a1f0f18ee50445907f55069e88bcfd8947383 ]
+[ Upstream commit 5ccb19ae1cb3620a76254db5c60121d092d9a0f6 ]
 
-gfs2_quota_init() checks for duplicate quota_change IDs while holding
-qd_lock and the quota hash bucket bitlock. That path used
-gfs2_qd_search_bucket(), which takes a lockref reference via
-lockref_get_not_dead().
+Add device IDs of Nova Lake into gpio-usbio support list.
 
-On PREEMPT_RT this may sleep, which is not allowed under the bucket
-bitlock, triggering "sleeping function called from invalid context".
-
-Use a no-ref bucket lookup in this path, then continue duplicate
-handling without taking a lockref there.
-
-Refactor gfs2_qd_search_bucket() to build on top of the no-ref helper
-so lookup traversal stays in one place.
-
-This patch fixes a bug reported by syzbot.
-
-Reported-by: syzbot+642d0561f78362d67d3f@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=642d0561f78362d67d3f
-Tested-by: syzbot+642d0561f78362d67d3f@syzkaller.appspotmail.com
-Signed-off-by: Jie Wang <jie.wang@intel.com>
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+Signed-off-by: Arun T <arun.t@intel.com>
+Reviewed-by: Vadillo Miguel <miguel.vadillo@intel.com>
+Reviewed-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Link: https://patch.msgid.link/20260410140858.585609-2-arun.t@intel.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/gfs2/quota.c | 33 +++++++++++++++++++++++----------
- 1 file changed, 23 insertions(+), 10 deletions(-)
+ drivers/gpio/gpio-usbio.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/gfs2/quota.c b/fs/gfs2/quota.c
-index 898fc3937b449..7a36a3fe5e6e6 100644
---- a/fs/gfs2/quota.c
-+++ b/fs/gfs2/quota.c
-@@ -254,9 +254,13 @@ static struct gfs2_quota_data *qd_alloc(unsigned hash, struct gfs2_sbd *sdp, str
- 	return NULL;
- }
+diff --git a/drivers/gpio/gpio-usbio.c b/drivers/gpio/gpio-usbio.c
+index 34d42c743d5bc..489c8ac6299e1 100644
+--- a/drivers/gpio/gpio-usbio.c
++++ b/drivers/gpio/gpio-usbio.c
+@@ -31,6 +31,7 @@ static const struct acpi_device_id usbio_gpio_acpi_hids[] = {
+ 	{ "INTC10B5" }, /* LNL */
+ 	{ "INTC10D1" }, /* MTL-CVF */
+ 	{ "INTC10E2" }, /* PTL */
++	{ "INTC1116" }, /* NVL */
+ 	{ }
+ };
  
--static struct gfs2_quota_data *gfs2_qd_search_bucket(unsigned int hash,
--						     const struct gfs2_sbd *sdp,
--						     struct kqid qid)
-+/*
-+ * Lookup variant for callers which already hold qd_lock + bucket lock.
-+ */
-+static struct gfs2_quota_data *
-+gfs2_qd_search_bucket_noref(unsigned int hash,
-+			    const struct gfs2_sbd *sdp,
-+			    struct kqid qid)
- {
- 	struct gfs2_quota_data *qd;
- 	struct hlist_bl_node *h;
-@@ -264,12 +268,22 @@ static struct gfs2_quota_data *gfs2_qd_search_bucket(unsigned int hash,
- 	hlist_bl_for_each_entry_rcu(qd, h, &qd_hash_table[hash], qd_hlist) {
- 		if (!qid_eq(qd->qd_id, qid))
- 			continue;
--		if (qd->qd_sbd != sdp)
--			continue;
--		if (lockref_get_not_dead(&qd->qd_lockref)) {
--			list_lru_del_obj(&gfs2_qd_lru, &qd->qd_lru);
-+		if (qd->qd_sbd == sdp)
- 			return qd;
--		}
-+	}
-+
-+	return NULL;
-+}
-+
-+static struct gfs2_quota_data *
-+gfs2_qd_search_bucket(unsigned int hash, const struct gfs2_sbd *sdp, struct kqid qid)
-+{
-+	struct gfs2_quota_data *qd;
-+
-+	qd = gfs2_qd_search_bucket_noref(hash, sdp, qid);
-+	if (qd && lockref_get_not_dead(&qd->qd_lockref)) {
-+		list_lru_del_obj(&gfs2_qd_lru, &qd->qd_lru);
-+		return qd;
- 	}
- 
- 	return NULL;
-@@ -1458,7 +1472,7 @@ int gfs2_quota_init(struct gfs2_sbd *sdp)
- 
- 			spin_lock(&qd_lock);
- 			spin_lock_bucket(hash);
--			old_qd = gfs2_qd_search_bucket(hash, sdp, qc_id);
-+			old_qd = gfs2_qd_search_bucket_noref(hash, sdp, qc_id);
- 			if (old_qd) {
- 				fs_err(sdp, "Corruption found in quota_change%u"
- 					    "file: duplicate identifier in "
-@@ -1467,7 +1481,6 @@ int gfs2_quota_init(struct gfs2_sbd *sdp)
- 
- 				spin_unlock_bucket(hash);
- 				spin_unlock(&qd_lock);
--				qd_put(old_qd);
- 
- 				gfs2_glock_put(qd->qd_gl);
- 				kmem_cache_free(gfs2_quotad_cachep, qd);
 -- 
 2.53.0
 
