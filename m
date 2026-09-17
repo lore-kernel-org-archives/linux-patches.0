@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 981EB568FA0;
-	Thu, 17 Sep 2026 15:27:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 365CA556B8B;
+	Thu, 17 Sep 2026 15:27:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789658844; cv=none; b=d+hgaLQAf4pvLVtTVBI+G98uQ63irHRNrexXeQTzyuIcnbCBu0DlgT22sVaZa6WaE85uDwGnEcVKqr/NN1szBJJjtGG3ro6qLu1FMQitw+YM+tL2H5y9I/S76ozKfBIo02TxRtsMCV2oXKTG2KxLR35hw1TkG+dKfgwfc3UcouI=
+	t=1789658843; cv=none; b=FExn0R0FcOrcFeSPTmVgev3C4Wb5YxwHm+/ojJGfxDrRi3d0Jq5hiNZ8hZvdQtYy3Q42Rvn3dcf60cy11pHb4Enc2Y52XlY6O5nd6UWCKsY4/EVpvanHnnC+5/b9L63cWfXtDtVcaUGQdTgMCqpGCEcnrMzdp6PdSxQ8qoSucgs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789658844; c=relaxed/simple;
-	bh=fghPRFoWIlD2vKU/X8jYcvHP58au2xsLanPrJjYvDxQ=;
+	s=arc-20240116; t=1789658843; c=relaxed/simple;
+	bh=1mCngvLazbweyPgmh6u6xJZNA8po5Q7n9dq3lq9Hed0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iCxHEdNvgZJoZFpVbkxSaw9tZ4kYRe5ryvTkBsTLKpm8FO2vXZFHfjzynKnPKch7urlG42s5o3oXeQerLsqvhgXjODQaaceofjRlvj55x0Gl0hdd3aWINeHq/PmAFdGlmrWXTlS1AXjtA3unxuP9sYCFcNgsEyt+5jCsJ4z+wXQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fIyGd9zi; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=TLx8Z/+JUzi1ywMDV3NnFg21CT/Qbqk7l7plz7QbTfMNz69OxJP3IQO2GH6mEnyOzv65CJ+bt1KY5/aOhQXAIeSewkF3yuTXH7XAjVqPoMyQDINsQy7gHpBUr4URpti9W5+cU3kPk0TozzI2lb86+ZAZ7YxSyU3IzLnR1bV7UF8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vSjUesyr; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fIyGd9zi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44EDB1F00893;
-	Thu, 17 Sep 2026 15:27:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vSjUesyr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47CDA1F00898;
+	Thu, 17 Sep 2026 15:27:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789658826;
-	bh=jNG07rnTnPNcYdk2vG73Wj20GZVsttT9Yxayyn8cmvg=;
+	s=korg; t=1789658829;
+	bh=SzFaqTxE97QjQmvyhby46puCyLsdbbf+6cb5Hoxq7lw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fIyGd9zi3UuxZNpjQMXYahVx1ajapAp8/AIW1P+lMsK5MPLw1jIwa9mVV/Ns5HcSX
-	 VMZkbsb0XEf2UaNeYjUgj7Z5XxTLYY/Zx5A2I4CMdwC1Y3E3Y8QqJU555pFQ9+a+D8
-	 osn1ZivvGpNe3rhqRaBBDQKDbqsJZ1lGdjojTC/g=
+	b=vSjUesyrGaKNdODEoGX4krc1tbqk8+S7Ptn7/uvXG6nKdNQHkaOqVSRqeQ8T92YoI
+	 KsH4xQ3aID77RXoK8E0bmyva6FiAvRKh60xGssOcp5SGNwi2fy8cCpwGuE42g7XiW2
+	 tLXYTu+Fc4qEK7wzsP0n/sxJa0by9jdeWglEUjxE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 053/733] tcp: use GFP_ATOMIC in tcp_send_active_reset()
-Date: Thu, 17 Sep 2026 16:06:01 +0100
-Message-ID: <20260917151352.111437205@linuxfoundation.org>
+Subject: [PATCH 7.2 054/733] net: stmmac: fix dma mapping leak in stmmac_tso_xmit()
+Date: Thu, 17 Sep 2026 16:06:02 +0100
+Message-ID: <20260917151352.142033974@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -52,195 +51,160 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
 
-[ Upstream commit 18666c73afe95eeca8707c699b63f96ce3acda42 ]
+[ Upstream commit a5d946466a95621fa2769720d59ea336003aa1a5 ]
 
-tcp_send_active_reset() can be called from contexts where gfp_any()
-(in tcp_disconnect()) or sk->sk_allocation (in __tcp_close() and
-mptcp_do_fastclose()) evaluates to GFP_KERNEL, which includes
-__GFP_FS and __GFP_DIRECT_RECLAIM.
+In stmmac_tso_xmit(), if the DMA mapping of an skb fragment fails, the
+frame is dropped but the DMA mappings already created for the linear
+part and for the fragments mapped before the failure are never
+unmapped, leaking DMA mappings.
 
-Allocating with GFP_KERNEL while holding the socket lock (sk_lock) creates
-a lockdep dependency:
-  sk_lock -> fs_reclaim
+Fix the leak by walking back over the descriptors used by the frame and
+releasing each of them with stmmac_free_tx_buffer(). Moreover, release
+the descriptors with stmmac_release_tx_desc() unmapping the DMA buffers.
 
-This causes false-positive lockdep circular locking warnings with storage
-subsystems (such as nvme-tcp) that acquire socket locks in block I/O paths
-and invoke tcp_disconnect() or close sockets upon teardown:
-  set->srcu -> sk_lock -> fs_reclaim -> elevator_lock -> set->srcu
-
-Active resets are small RST packet headers that should never
-enter direct reclaim or block while holding socket locks.
-
-Use sk_gfp_mask(sk, GFP_ATOMIC | __GFP_NOWARN) inside tcp_send_active_reset()
-and remove its priority argument. This preserves __GFP_MEMALLOC access
-for SOCK_MEMALLOC sockets, suppresses allocation failure warnings,
-and aligns with other control packet allocations (e.g. tcp_send_fin(),
-__tcp_send_ack(), tcp_xmit_probe_skb()).
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Acked-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260827095936.551524-1-edumazet@google.com
+Fixes: f748be531d70 ("stmmac: support new GMAC4")
+Signed-off-by: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260826-stmmac_dma_unmap_tso-v1-1-a2753d1576ba@oss.qualcomm.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/tcp.h     |  3 +--
- net/ipv4/tcp.c        | 14 ++++++--------
- net/ipv4/tcp_output.c |  4 ++--
- net/ipv4/tcp_timer.c  |  6 +++---
- net/mptcp/protocol.c  |  3 +--
- net/mptcp/protocol.h  |  2 +-
- 6 files changed, 14 insertions(+), 18 deletions(-)
+ .../net/ethernet/stmicro/stmmac/stmmac_main.c | 53 ++++++++++++-------
+ 1 file changed, 34 insertions(+), 19 deletions(-)
 
-diff --git a/include/net/tcp.h b/include/net/tcp.h
-index 670c20876f265..436495ff2271d 100644
---- a/include/net/tcp.h
-+++ b/include/net/tcp.h
-@@ -765,8 +765,7 @@ int tcp_fragment(struct sock *sk, enum tcp_queue tcp_queue,
- void tcp_send_probe0(struct sock *);
- int tcp_write_wakeup(struct sock *, int mib);
- void tcp_send_fin(struct sock *sk);
--void tcp_send_active_reset(struct sock *sk, gfp_t priority,
--			   enum sk_rst_reason reason);
-+void tcp_send_active_reset(struct sock *sk, enum sk_rst_reason reason);
- int tcp_send_synack(struct sock *);
- void tcp_push_one(struct sock *, unsigned int mss_now);
- void __tcp_send_ack(struct sock *sk, u32 rcv_nxt, u16 flags);
-diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
-index 10f58281be17b..47a34a993972a 100644
---- a/net/ipv4/tcp.c
-+++ b/net/ipv4/tcp.c
-@@ -3181,8 +3181,7 @@ void __tcp_close(struct sock *sk, long timeout)
- 		/* Unread data was tossed, zap the connection. */
- 		NET_INC_STATS(sock_net(sk), LINUX_MIB_TCPABORTONCLOSE);
- 		tcp_set_state(sk, TCP_CLOSE);
--		tcp_send_active_reset(sk, sk->sk_allocation,
--				      SK_RST_REASON_TCP_ABORT_ON_CLOSE);
-+		tcp_send_active_reset(sk, SK_RST_REASON_TCP_ABORT_ON_CLOSE);
- 	} else if (sock_flag(sk, SOCK_LINGER) && !sk->sk_lingertime) {
- 		/* Check zero linger _after_ checking for unread data. */
- 		sk->sk_prot->disconnect(sk, 0);
-@@ -3256,7 +3255,7 @@ void __tcp_close(struct sock *sk, long timeout)
- 		struct tcp_sock *tp = tcp_sk(sk);
- 		if (READ_ONCE(tp->linger2) < 0) {
- 			tcp_set_state(sk, TCP_CLOSE);
--			tcp_send_active_reset(sk, GFP_ATOMIC,
-+			tcp_send_active_reset(sk,
- 					      SK_RST_REASON_TCP_ABORT_ON_LINGER);
- 			__NET_INC_STATS(sock_net(sk),
- 					LINUX_MIB_TCPABORTONLINGER);
-@@ -3275,7 +3274,7 @@ void __tcp_close(struct sock *sk, long timeout)
- 	if (sk->sk_state != TCP_CLOSE) {
- 		if (tcp_check_oom(sk, 0)) {
- 			tcp_set_state(sk, TCP_CLOSE);
--			tcp_send_active_reset(sk, GFP_ATOMIC,
-+			tcp_send_active_reset(sk,
- 					      SK_RST_REASON_TCP_ABORT_ON_MEMORY);
- 			__NET_INC_STATS(sock_net(sk),
- 					LINUX_MIB_TCPABORTONMEMORY);
-@@ -3376,14 +3375,14 @@ int tcp_disconnect(struct sock *sk, int flags)
- 	} else if (unlikely(tp->repair)) {
- 		WRITE_ONCE(sk->sk_err, ECONNABORTED);
- 	} else if (tcp_need_reset(old_state)) {
--		tcp_send_active_reset(sk, gfp_any(), SK_RST_REASON_TCP_STATE);
-+		tcp_send_active_reset(sk, SK_RST_REASON_TCP_STATE);
- 		WRITE_ONCE(sk->sk_err, ECONNRESET);
- 	} else if (tp->snd_nxt != tp->write_seq &&
- 		   (1 << old_state) & (TCPF_CLOSING | TCPF_LAST_ACK)) {
- 		/* The last check adjusts for discrepancy of Linux wrt. RFC
- 		 * states
- 		 */
--		tcp_send_active_reset(sk, gfp_any(),
-+		tcp_send_active_reset(sk,
- 				      SK_RST_REASON_TCP_DISCONNECT_WITH_DATA);
- 		WRITE_ONCE(sk->sk_err, ECONNRESET);
- 	} else if (old_state == TCP_SYN_SENT)
-@@ -5146,8 +5145,7 @@ int tcp_abort(struct sock *sk, int err)
- 	bh_lock_sock(sk);
- 
- 	if (tcp_need_reset(sk->sk_state))
--		tcp_send_active_reset(sk, GFP_ATOMIC,
--				      SK_RST_REASON_TCP_STATE);
-+		tcp_send_active_reset(sk, SK_RST_REASON_TCP_STATE);
- 	tcp_done_with_error(sk, err);
- 
- 	bh_unlock_sock(sk);
-diff --git a/net/ipv4/tcp_output.c b/net/ipv4/tcp_output.c
-index 8d243e91761a9..f72a6b1fe749b 100644
---- a/net/ipv4/tcp_output.c
-+++ b/net/ipv4/tcp_output.c
-@@ -3849,9 +3849,9 @@ void tcp_send_fin(struct sock *sk)
-  * was unread data in the receive queue.  This behavior is recommended
-  * by RFC 2525, section 2.17.  -DaveM
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+index 3a437409f78ae..1946361081fc2 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -4319,6 +4319,7 @@ static bool stmmac_vlan_insert(struct stmmac_priv *priv, struct sk_buff *skb,
+ /**
+  *  stmmac_tso_allocator - close entry point of the driver
+  *  @priv: driver private structure
++ *  @entry: TX queue buffer index
+  *  @des: buffer start address
+  *  @total_len: total length to fill in descriptors
+  *  @last_segment: condition for the last descriptor
+@@ -4327,8 +4328,9 @@ static bool stmmac_vlan_insert(struct stmmac_priv *priv, struct sk_buff *skb,
+  *  This function fills descriptor and request new descriptors according to
+  *  buffer length to fill
   */
--void tcp_send_active_reset(struct sock *sk, gfp_t priority,
--			   enum sk_rst_reason reason)
-+void tcp_send_active_reset(struct sock *sk, enum sk_rst_reason reason)
+-static void stmmac_tso_allocator(struct stmmac_priv *priv, dma_addr_t des,
+-				 int total_len, bool last_segment, u32 queue)
++static void stmmac_tso_allocator(struct stmmac_priv *priv, u32 *entry,
++				 dma_addr_t des, int total_len,
++				 bool last_segment, u32 queue)
  {
-+	gfp_t priority = sk_gfp_mask(sk, GFP_ATOMIC | __GFP_NOWARN);
- 	struct sk_buff *skb;
+ 	struct stmmac_tx_queue *tx_q = &priv->dma_conf.tx_queue[queue];
+ 	struct dma_desc *desc;
+@@ -4340,14 +4342,13 @@ static void stmmac_tso_allocator(struct stmmac_priv *priv, dma_addr_t des,
+ 	while (tmp_len > 0) {
+ 		dma_addr_t curr_addr;
  
- 	TCP_INC_STATS(sock_net(sk), TCP_MIB_OUTRSTS);
-diff --git a/net/ipv4/tcp_timer.c b/net/ipv4/tcp_timer.c
-index 4df1c9745c5d5..95296b1cf0ca2 100644
---- a/net/ipv4/tcp_timer.c
-+++ b/net/ipv4/tcp_timer.c
-@@ -126,7 +126,7 @@ static int tcp_out_of_resources(struct sock *sk, bool do_reset)
- 		    (!tp->snd_wnd && !tp->packets_out))
- 			do_reset = true;
- 		if (do_reset)
--			tcp_send_active_reset(sk, GFP_ATOMIC,
-+			tcp_send_active_reset(sk,
- 					      SK_RST_REASON_TCP_ABORT_ON_MEMORY);
- 		tcp_done(sk);
- 		__NET_INC_STATS(sock_net(sk), LINUX_MIB_TCPABORTONMEMORY);
-@@ -809,7 +809,7 @@ static void tcp_keepalive_timer(struct timer_list *t)
- 				goto out;
- 			}
- 		}
--		tcp_send_active_reset(sk, GFP_ATOMIC, SK_RST_REASON_TCP_STATE);
-+		tcp_send_active_reset(sk, SK_RST_REASON_TCP_STATE);
- 		goto death;
+-		tx_q->cur_tx = STMMAC_NEXT_ENTRY(tx_q->cur_tx,
+-						priv->dma_conf.dma_tx_size);
+-		WARN_ON(tx_q->tx_skbuff[tx_q->cur_tx]);
++		*entry = STMMAC_NEXT_ENTRY(*entry, priv->dma_conf.dma_tx_size);
++		WARN_ON(tx_q->tx_skbuff[*entry]);
+ 
+ 		if (tx_q->tbs & STMMAC_TBS_AVAIL)
+-			desc = &tx_q->dma_entx[tx_q->cur_tx].basic;
++			desc = &tx_q->dma_entx[*entry].basic;
+ 		else
+-			desc = &tx_q->dma_tx[tx_q->cur_tx];
++			desc = &tx_q->dma_tx[*entry];
+ 
+ 		curr_addr = des + (total_len - tmp_len);
+ 		stmmac_set_desc_addr(priv, desc, curr_addr);
+@@ -4486,7 +4487,7 @@ static netdev_tx_t stmmac_tso_xmit(struct sk_buff *skb, struct net_device *dev)
+ {
+ 	struct dma_desc *desc, *first, *mss_desc = NULL;
+ 	struct stmmac_priv *priv = netdev_priv(dev);
+-	unsigned int first_entry, tx_packets;
++	unsigned int first_entry, entry, tx_packets;
+ 	struct stmmac_txq_stats *txq_stats;
+ 	struct stmmac_tx_queue *tx_q;
+ 	bool set_ic, is_last_segment;
+@@ -4549,22 +4550,24 @@ static netdev_tx_t stmmac_tso_xmit(struct sk_buff *skb, struct net_device *dev)
  	}
  
-@@ -836,7 +836,7 @@ static void tcp_keepalive_timer(struct timer_list *t)
- 		    icsk->icsk_probes_out > 0) ||
- 		    (user_timeout == 0 &&
- 		    icsk->icsk_probes_out >= keepalive_probes(tp))) {
--			tcp_send_active_reset(sk, GFP_ATOMIC,
-+			tcp_send_active_reset(sk,
- 					      SK_RST_REASON_TCP_KEEPALIVE_TIMEOUT);
- 			tcp_write_err(sk);
- 			goto out;
-diff --git a/net/mptcp/protocol.c b/net/mptcp/protocol.c
-index 7c8180d8d5eff..8adf699894e32 100644
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -2985,8 +2985,7 @@ static void mptcp_do_fastclose(struct sock *sk)
- 		 */
- 		inet_csk(ssk)->icsk_ack.rcv_mss = TCP_MIN_MSS;
+ 	first_entry = tx_q->cur_tx;
+-	WARN_ON(tx_q->tx_skbuff[first_entry]);
++	entry = first_entry;
++
++	WARN_ON(tx_q->tx_skbuff[entry]);
  
--		tcp_send_active_reset(ssk, ssk->sk_allocation,
--				      SK_RST_REASON_TCP_ABORT_ON_CLOSE);
-+		tcp_send_active_reset(ssk, SK_RST_REASON_TCP_ABORT_ON_CLOSE);
- unlock:
- 		release_sock(ssk);
+ 	if (tx_q->tbs & STMMAC_TBS_AVAIL)
+-		desc = &tx_q->dma_entx[first_entry].basic;
++		desc = &tx_q->dma_entx[entry].basic;
+ 	else
+-		desc = &tx_q->dma_tx[first_entry];
++		desc = &tx_q->dma_tx[entry];
+ 	first = desc;
+ 
+ 	/* first descriptor: fill Headers on Buf1 */
+ 	des = dma_map_single(priv->device, skb->data, skb_headlen(skb),
+ 			     DMA_TO_DEVICE);
+ 	if (dma_mapping_error(priv->device, des))
+-		goto dma_map_err;
++		goto error;
+ 
+ 	stmmac_set_desc_addr(priv, first, des);
+-	stmmac_tso_allocator(priv, des + proto_hdr_len, pay_len,
++	stmmac_tso_allocator(priv, &entry, des + proto_hdr_len, pay_len,
+ 			     (nfrags == 0), queue);
+ 
+ 	/* In case two or more DMA transmit descriptors are allocated for this
+@@ -4579,8 +4582,7 @@ static netdev_tx_t stmmac_tso_xmit(struct sk_buff *skb, struct net_device *dev)
+ 	 * this DMA buffer right after the DMA engine completely finishes the
+ 	 * full buffer transmission.
+ 	 */
+-	stmmac_set_tx_skb_dma_entry(tx_q, tx_q->cur_tx, des, skb_headlen(skb),
+-				    false);
++	stmmac_set_tx_skb_dma_entry(tx_q, entry, des, skb_headlen(skb), false);
+ 
+ 	/* Prepare fragments */
+ 	for (i = 0; i < nfrags; i++) {
+@@ -4590,14 +4592,15 @@ static netdev_tx_t stmmac_tso_xmit(struct sk_buff *skb, struct net_device *dev)
+ 				       skb_frag_size(frag),
+ 				       DMA_TO_DEVICE);
+ 		if (dma_mapping_error(priv->device, des))
+-			goto dma_map_err;
++			goto error_dma_unmap;
+ 
+-		stmmac_tso_allocator(priv, des, skb_frag_size(frag),
++		stmmac_tso_allocator(priv, &entry, des, skb_frag_size(frag),
+ 				     (i == nfrags - 1), queue);
+ 
+-		stmmac_set_tx_skb_dma_entry(tx_q, tx_q->cur_tx, des,
++		stmmac_set_tx_skb_dma_entry(tx_q, entry, des,
+ 					    skb_frag_size(frag), true);
  	}
-diff --git a/net/mptcp/protocol.h b/net/mptcp/protocol.h
-index 1b80f2d6ec5a2..32b771e658500 100644
---- a/net/mptcp/protocol.h
-+++ b/net/mptcp/protocol.h
-@@ -687,7 +687,7 @@ mptcp_send_active_reset_reason(struct sock *sk)
- 	enum sk_rst_reason reason;
++	tx_q->cur_tx = entry;
  
- 	reason = sk_rst_convert_mptcp_reason(subflow->reset_reason);
--	tcp_send_active_reset(sk, GFP_ATOMIC, reason);
-+	tcp_send_active_reset(sk, reason);
- }
+ 	stmmac_set_tx_dma_last_segment(tx_q, tx_q->cur_tx);
  
- /* Made the fwd mem carried by the given skb available to the msk,
+@@ -4700,7 +4703,19 @@ static netdev_tx_t stmmac_tso_xmit(struct sk_buff *skb, struct net_device *dev)
+ 
+ 	return NETDEV_TX_OK;
+ 
+-dma_map_err:
++error_dma_unmap:
++	for (;;) {
++		desc = stmmac_get_tx_desc(priv, tx_q, first_entry);
++		stmmac_release_tx_desc(priv, desc, priv->descriptor_mode);
++		stmmac_free_tx_buffer(priv, &priv->dma_conf, queue,
++				      first_entry);
++		if (first_entry == entry)
++			break;
++
++		first_entry = STMMAC_NEXT_ENTRY(first_entry,
++						priv->dma_conf.dma_tx_size);
++	}
++error:
+ 	dev_err(priv->device, "Tx dma map failed\n");
+ 	dev_kfree_skb(skb);
+ 	priv->xstats.tx_dropped++;
 -- 
 2.53.0
 
