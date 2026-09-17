@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B6AF4F7CCB;
-	Thu, 17 Sep 2026 16:52:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FA304F7CCF;
+	Thu, 17 Sep 2026 16:52:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789663964; cv=none; b=X4TgxyDqXpiBFApfoKmyENrWXWHocmIhQ3uoG/3o1hdCPxZW9MFZjOkcAqFhOGP7zJU3XkSn5kjN6ZSNvrjQn7+kQr86IlmzCnHi9N9Ky8s1r2v5qOy9xs+2wrVAbir3dTkbSejiPYr203N5+scBoxDbm5LCZVwnzaVnv7QUtA8=
+	t=1789663967; cv=none; b=Q9KWDaW+d3GoHP+1a8xMxrSfMFe3ZHLhSshbVqtBXG/MYip/EmM/0F7SZ9TZaxNj7RXRhpfeDTRMs/DIUAQOSwmfkrIxekElDCgf0QZIDpmeZPijdA6LXa06Z3O2NUhC1yx8pME3zgX0W66vr7HF5IMg5RRYcGK66vj7FwNACCk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789663964; c=relaxed/simple;
-	bh=8x/cAqme8g9mbn9f6s+21xeK4VbdaM2Il2T7ohsIpPs=;
+	s=arc-20240116; t=1789663967; c=relaxed/simple;
+	bh=4+ChK37IHcetQABQj1v9nH/ZxbexAkb2CNyTZtsV4V0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YD+4WB3LCTIfe9uL9wTTSN7IG8/qXY86voakTq31YwG5PT4AHQ7cHgMuCj6pKnYGk4FDgK6RS3vzZxj2M3/x5XkhVpxLoU3PiBZuznahsTH5fltRML3BCjrdU3CBHrPFYjFOdKcMYaUnFVksVaEdSjSV+UGdOrxPe6IkLRXRVlk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FCVJn1Gr; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=fihUDCK7cPNwnmDTSDOiFgFY3OWveRXS2uCD5sr8BZGoUz/hTUZKpdwuV1cUGQekw1jmoBbNSducNoiZkyhqbfd4n+R6jGTl3c+JY4OEQZlSYhEm0SVK3AKszcOsJKdymJHSsPLE7w/V4GycG7L0clkLqKlMtp5klEKT8JYGuPo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TbjknGqv; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FCVJn1Gr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A78E81F000FF;
-	Thu, 17 Sep 2026 16:52:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TbjknGqv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2C9F1F000FF;
+	Thu, 17 Sep 2026 16:52:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789663963;
-	bh=inswrxZkNQuMFmSPMibJeebiOsejS8cNfRikuBEwMTQ=;
+	s=korg; t=1789663966;
+	bh=mqmp36VB/DiLE1FSWi87z4ix12W53yrcFqAUQ7kOnz8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FCVJn1GrTZ4tOFGVVsY/Gm0blukNQ2YyucG+lgGQv/toHLr532OfCcQCPblNVVavH
-	 Pf1VK9/jiLpTWwpbNr5dfGCng0HmsO8wT4DGkxtWm86W9gclCwHdF0n2MK4TFM3yWn
-	 KvcbjrRyJa7p4gWouk9F50YHuUAuLBzmviUXEW0o=
+	b=TbjknGqvI+136Ks+UUkaR1k/Omhl014ifRnrKQzA6817lIj0nc2lLbusEMqXKs01G
+	 ziFW64Ky2XqEXqzcRr3pVTA7jxMD1xtvMODt3sxOvBVeNOQGK6+u6VAZncbWY02n2U
+	 jZpHfXL5CUjVE9V3MCF/V1fzv78zixzmVQnMHgPs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Christoph Hellwig <hch@lst.de>,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0175/1250] ntfs3: handle set_blocksize failures
-Date: Thu, 17 Sep 2026 15:59:30 +0100
-Message-ID: <20260917151556.842011369@linuxfoundation.org>
+Subject: [PATCH 6.18 0176/1250] affs: handle set_blocksize failures
+Date: Thu, 17 Sep 2026 15:59:31 +0100
+Message-ID: <20260917151556.870334455@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151551.901433442@linuxfoundation.org>
 References: <20260917151551.901433442@linuxfoundation.org>
@@ -53,9 +53,9 @@ Content-Transfer-Encoding: 8bit
 
 From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit 24f7d1824b7581ae3daf9d443c5dfeabd89df6d8 ]
+[ Upstream commit 0861182af5983a39bd2a891966436c5679b74a45 ]
 
-ntfs3 uses buffer_heads, which don't handle block size > PAGE_SIZE well.
+affs uses buffer_heads, which don't handle block size > PAGE_SIZE well.
 Without this, mounting we will hit the
 
         BUG_ON(offset >= folio_size(folio));
@@ -63,39 +63,54 @@ Without this, mounting we will hit the
 in folio_set_bh on the first __bread_gfp call.
 
 Signed-off-by: Christoph Hellwig <hch@lst.de>
-Link: https://patch.msgid.link/20260511071701.2456211-10-hch@lst.de
+Link: https://patch.msgid.link/20260511071701.2456211-7-hch@lst.de
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/super.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ fs/affs/affs.h  | 5 -----
+ fs/affs/super.c | 6 ++++--
+ 2 files changed, 4 insertions(+), 7 deletions(-)
 
-diff --git a/fs/ntfs3/super.c b/fs/ntfs3/super.c
-index 98cfa33571629..66ad6d82bf5c5 100644
---- a/fs/ntfs3/super.c
-+++ b/fs/ntfs3/super.c
-@@ -1143,7 +1143,10 @@ static int ntfs_init_from_boot(struct super_block *sb, u32 sector_size,
- 	rec->total = cpu_to_le32(sbi->record_size);
- 	((struct ATTRIB *)Add2Ptr(rec, ao))->type = ATTR_END;
+diff --git a/fs/affs/affs.h b/fs/affs/affs.h
+index ac4e9a02910b7..99e54e3453ac1 100644
+--- a/fs/affs/affs.h
++++ b/fs/affs/affs.h
+@@ -225,11 +225,6 @@ static inline bool affs_validblock(struct super_block *sb, int block)
+ 	       block < AFFS_SB(sb)->s_partition_size);
+ }
  
--	sb_set_blocksize(sb, min_t(u32, sbi->cluster_size, PAGE_SIZE));
-+	if (!sb_set_blocksize(sb, min_t(u32, sbi->cluster_size, PAGE_SIZE))) {
-+		err = -EINVAL;
-+		goto out;
-+	}
+-static inline void
+-affs_set_blocksize(struct super_block *sb, int size)
+-{
+-	sb_set_blocksize(sb, size);
+-}
+ static inline struct buffer_head *
+ affs_bread(struct super_block *sb, int block)
+ {
+diff --git a/fs/affs/super.c b/fs/affs/super.c
+index 44f8aa883100e..994f1199beaf1 100644
+--- a/fs/affs/super.c
++++ b/fs/affs/super.c
+@@ -357,7 +357,8 @@ static int affs_fill_super(struct super_block *sb, struct fs_context *fc)
+ 	size = bdev_nr_sectors(sb->s_bdev);
+ 	pr_debug("initial blocksize=%d, #blocks=%d\n", 512, size);
  
- 	sbi->block_mask = sb->s_blocksize - 1;
- 	sbi->blocks_per_cluster = sbi->cluster_size >> sb->s_blocksize_bits;
-@@ -1194,7 +1197,8 @@ static int ntfs_init_from_boot(struct super_block *sb, u32 sector_size,
- 			/*
- 			 * Try alternative boot (last sector)
- 			 */
--			sb_set_blocksize(sb, block_size);
-+			if (!sb_set_blocksize(sb, block_size))
-+				return -EINVAL;
- 			hint = "Alternative boot";
- 			dev_size = dev_size0; /* restore original size. */
- 			goto read_boot;
+-	affs_set_blocksize(sb, PAGE_SIZE);
++	if (!sb_set_blocksize(sb, PAGE_SIZE))
++		return -EINVAL;
+ 	/* Try to find root block. Its location depends on the block size. */
+ 
+ 	i = bdev_logical_block_size(sb->s_bdev);
+@@ -373,7 +374,8 @@ static int affs_fill_super(struct super_block *sb, struct fs_context *fc)
+ 		if (ctx->root_block < 0)
+ 			sbi->s_root_block = (ctx->reserved + size - 1) / 2;
+ 		pr_debug("setting blocksize to %d\n", blocksize);
+-		affs_set_blocksize(sb, blocksize);
++		if (!sb_set_blocksize(sb, blocksize))
++			return -EINVAL;
+ 		sbi->s_partition_size = size;
+ 
+ 		/* The root block location that was calculated above is not
 -- 
 2.53.0
 
