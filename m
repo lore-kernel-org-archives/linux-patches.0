@@ -1,40 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3C484B44C4;
-	Thu, 17 Sep 2026 18:55:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8D1F4B44C4;
+	Thu, 17 Sep 2026 18:55:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789671327; cv=none; b=nkj4Rt4pL+gt4wA1fkigwXWvqkixHudzsoaYeW28PrLLvbBows7EDEME5EInSVftZDplOggYt19uSATh5x3qr7pC8EQLe8Getndje5RkeEqPEZRqvlZUmdM0onzvCMPcx67AbzllvFThOjbJPgD7h8+1lVn+Zeqif6L4o1p4lcg=
+	t=1789671330; cv=none; b=bQ8hYp5GFcQglCq/PVm7Q6eifNpZh4lIRYmtY6A3eX80ZPbKxguy1sLrbIgLdX3imLgG/dbiswj9S3LQaTWCq0sS7H3GNl8KToznFjDHT7ahn39alg06SJMf9pWYJgdnE4CVhWOJOhx5OGvr/JtAgQayMiHaJ5r906v+5IMhMkQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789671327; c=relaxed/simple;
-	bh=MPeoMBXp+U4GRU0N8IKbA4PAcknh8hjYGSmwx7UGtgs=;
+	s=arc-20240116; t=1789671330; c=relaxed/simple;
+	bh=AolWxVvYr52Qb364OU7lJFOzZWRCCIDjbnKglb2M+6Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m2vs6SLXVMFpS+gXfHv0hHjDQvIBj/wGHmIxqI/71zOeY4NaHlSki3Yun7p7JPXmNyHHMM6jHngg0+ctutbMvjF4luFYXKzDsRo7w6aA3g6a/BxbZlYJsw2GvMkBmUN7Sa9XRfAG0JbdyMIECk3QxD+//LMLAB1Plbpi5qRBl4k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jrbnFK8a; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=QdlCfXZ3hzBN7rQ8gaxZBwJYVglsPHa99oiFh1G0h6BqRqW/6lZBBMRQ7XrF8qX25IyuXlILlXzAcqh+AG63DkmYjDdUTqxuWLvakWjUjuE9Lq3aeEBAmbN1OWtye9g6wQfjZSgniem2ikl+LyeAMXMH4WAENDnEIFxQnbzB1a8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uBGZNjMz; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jrbnFK8a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A9031F000FF;
-	Thu, 17 Sep 2026 18:55:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uBGZNjMz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 135911F000FF;
+	Thu, 17 Sep 2026 18:55:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789671325;
-	bh=lhg1nmikg/zkDE+OjbmnMCCkzTHqr3EvRhdtjU8E25c=;
+	s=korg; t=1789671328;
+	bh=gLEZqNYYarg9yKb4Or87h62gt/Dapxh5VWVXj+QJin0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jrbnFK8a0g0QwgcSfrk9zyI7vnC6aG3JLzYNAGhCahG8vni+s5etjWFrLOXTSjNz4
-	 FXnn3jp/+zTWuyAVbqZ0wrGNMaJJrh5B174DTlY5hc96rSsc1n8MKMeoRpi0AQ9AjK
-	 muGamYUtbm5Gkl9TAi4t32M0882vCmYqr5+VKXjs=
+	b=uBGZNjMzrjUXQkNQ982Zp5k4jFbWZkT16A/aV+6Rx7yHXmSta425RCR+5YzAlpjEC
+	 aWFlw1/NSzxoTGS9hHPMPrFm3gziKzXguamtwWhlTM9/D++Q9nGEqC+7XzfStpT6uE
+	 EAW7uLhPr2k1S3wnGpq4Xa2yGfEbR9snoB5FPjOw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <clm@meta.com>,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	Atish Patra <atishp@meta.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0922/1102] crypto: ccp - Fix possible deadlock in SEV init failure path
-Date: Thu, 17 Sep 2026 16:14:25 +0100
-Message-ID: <20260917151603.779644080@linuxfoundation.org>
+Subject: [PATCH 6.12 0940/1102] Revert "perf tests: Fix flakiness in BPF counters test on hybrid systems"
+Date: Thu, 17 Sep 2026 16:14:43 +0100
+Message-ID: <20260917151604.243606026@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -53,46 +49,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Atish Patra <atishp@meta.com>
+This reverts commit a5e14624e1e0e06363a11880f2872f67eaf6d921.
 
-[ Upstream commit b0e7ec0dab242c5e480121ba12400d0513e37ca2 ]
-
-__sev_platform_init_handle_init_ex_path() calls
-rmp_mark_pages_firmware() with locked=false while the parent
-function of init_ex_path already acquired the sev_cmd_mutex.
-In the case of an RMPUPDATE failure for any page after the first, the cleanup
-path would invoke reclaim pages which would result in a deadlock in
-sev_do_cmd.
-
-Pass locked=true to honor the lock status of the parent function.
-
-Fixes: 7364a6fbca45 ("crypto: ccp: Handle non-volatile INIT_EX data when SNP is enabled")
-
-Reported-by: Chris Mason <clm@meta.com>
-Assisted-by: Claude:claude-opus-4-6
-Fixes: 7364a6fbca45 ("crypto: ccp: Handle non-volatile INIT_EX data when SNP is enabled")
-Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
-Signed-off-by: Atish Patra <atishp@meta.com>
-Acked-by: Herbert Xu <herbert@gondor.apana.org.au>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/ccp/sev-dev.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/perf/tests/shell/stat_bpf_counters.sh | 28 ++++++++-------------
+ 1 file changed, 10 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/crypto/ccp/sev-dev.c b/drivers/crypto/ccp/sev-dev.c
-index 6dc380537ece9..66b3e71871979 100644
---- a/drivers/crypto/ccp/sev-dev.c
-+++ b/drivers/crypto/ccp/sev-dev.c
-@@ -1261,7 +1261,7 @@ static int __sev_platform_init_handle_init_ex_path(struct sev_device *sev)
- 		unsigned long npages;
+diff --git a/tools/perf/tests/shell/stat_bpf_counters.sh b/tools/perf/tests/shell/stat_bpf_counters.sh
+index 76d4a7f15a43d..b776ee2e445a6 100755
+--- a/tools/perf/tests/shell/stat_bpf_counters.sh
++++ b/tools/perf/tests/shell/stat_bpf_counters.sh
+@@ -4,26 +4,21 @@
  
- 		npages = 1UL << get_order(NV_LENGTH);
--		if (rmp_mark_pages_firmware(__pa(sev_init_ex_buffer), npages, false)) {
-+		if (rmp_mark_pages_firmware(__pa(sev_init_ex_buffer), npages, true)) {
- 			dev_err(sev->dev, "SEV: INIT_EX NV memory page state change failed.\n");
- 			rc = -ENOMEM;
- 			/*
+ set -e
+ 
+-# Get the first allowed CPU
+-CPU=$(taskset -c -p $$ | awk -F': ' '{print $2}' | awk -F'[,-]' '{print $1}')
+-if [ -z "$CPU" ]; then
+-	CPU=0
+-fi
+-workload=(taskset -c "$CPU" awk 'BEGIN { for (i=0; i<10000000; i++) sum+=i }')
++workload="perf test -w sqrtloop"
+ 
+-# check whether $2 is within +/- 15% of $1
++# check whether $2 is within +/- 20% of $1
+ compare_number()
+ {
+ 	first_num=$1
+ 	second_num=$2
+ 
+-	# upper bound is first_num * 115%
+-	upper=$(expr $first_num + $first_num / 20 \* 3 )
+-	# lower bound is first_num * 85%
+-	lower=$(expr $first_num - $first_num / 20 \* 3 )
++	# upper bound is first_num * 120%
++	upper=$(expr $first_num + $first_num / 5 )
++	# lower bound is first_num * 80%
++	lower=$(expr $first_num - $first_num / 5 )
+ 
+ 	if [ $second_num -gt $upper ] || [ $second_num -lt $lower ]; then
+-		echo "The difference between $first_num and $second_num are greater than 15%."
++		echo "The difference between $first_num and $second_num are greater than 20%."
+ 		exit 1
+ 	fi
+ }
+@@ -46,12 +41,11 @@ check_counts()
+ test_bpf_counters()
+ {
+ 	printf "Testing --bpf-counters "
+-	base_instructions=$(perf stat --no-big-num -e instructions:u -- "${workload[@]}" 2>&1 | \
++	base_instructions=$(perf stat --no-big-num -e instructions -- $workload 2>&1 | \
+ 				awk -v i=0 -v c=0 '/instructions/ { \
+ 					if ($1 != "<not") { i++; c += $1 } \
+ 				} END { if (i > 0) printf "%.0f", c; else print "<not" }')
+-	bpf_instructions=$(perf stat --no-big-num --bpf-counters -e instructions:u \
+-				-- "${workload[@]}"  2>&1 | \
++	bpf_instructions=$(perf stat --no-big-num --bpf-counters -e instructions -- $workload  2>&1 | \
+ 				awk -v i=0 -v c=0 '/instructions/ { \
+ 					if ($1 != "<not") { i++; c += $1 } \
+ 				} END { if (i > 0) printf "%.0f", c; else print "<not" }')
+@@ -63,9 +57,7 @@ test_bpf_counters()
+ test_bpf_modifier()
+ {
+ 	printf "Testing bpf event modifier "
+-	stat_output=$(perf stat --no-big-num \
+-		-e instructions/name=base_instructions/u,instructions/name=bpf_instructions/bu \
+-		-- "${workload[@]}" 2>&1)
++	stat_output=$(perf stat --no-big-num -e instructions/name=base_instructions/,instructions/name=bpf_instructions/b -- $workload 2>&1)
+ 	base_instructions=$(echo "$stat_output"| \
+ 				awk -v i=0 -v c=0 '/base_instructions/ { \
+ 					if ($1 != "<not") { i++; c += $1 } \
 -- 
 2.53.0
 
