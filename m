@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92FD1547075;
-	Thu, 17 Sep 2026 17:50:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A8CF54704B;
+	Thu, 17 Sep 2026 17:50:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789667415; cv=none; b=NPJCsZvxnGEFl/00sWzk9b6v9yqIcAFqLeRXsszaXPtFHQs2Gu+bxFMSzK8uVrp8jYdwZOn3ynWewUO8aALESdWfNjQOC3B3c0yObfVw/vPtUW3esmIjGPG4ydrLSvnZXndwiu+mCgfmkhDd9pHQzbUBMrZj26nqsI9T34DcpK4=
+	t=1789667418; cv=none; b=phjOJ2aDN+brCiii1o218Nn+Tkf6rLxL2j9F8JMJwwpFzZs2WVmwPM2UC4FffJZxqAlWLXkCZM4OAkCTEyf65UpUFd6zKxQJMYchFwiegw7vu+Q3aV/ufJRfbsjZZMYKprWquqv71572W4Zdwvz3nID4cdP6N8AHwlXBdBtDjVc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789667415; c=relaxed/simple;
-	bh=cZvWRgZecvAcv9lj0eB88onA8PN5YoodiHACMVX50Cw=;
+	s=arc-20240116; t=1789667418; c=relaxed/simple;
+	bh=kmLXdtqRUolDVPRIlZ8GV+FS9E8AfvhVMeWeQh6qz6s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gCLfhZg7y+CdYMxMLi4IsjrMxbIRQ1rJFgtEARkbLqmEp55xoDC5Lx4MTl7NnClvh5pnX4YBzsf3ZJ/KuzBj1u1QBK4c+3E8deuATkSQrFPHomNXT3mzZ+6OcHBchXL/67HB0ezmcVskAbu8Hux7I0vM4ZRvH1R8cYT9/08WEH4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1nAJ2IKn; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=gJnhgXJk1p0zoz9qcnNkeSguUiPYvPiXjU94l9hxQkmMnKgjopQAjSclVQgzCBCu8x3jWLjBfJKTpjm2IEt2LZ7KSlp/QyfrDtZymuRICJtZguKrl1bk+DJJpGcfd6vV0RTQmhnPbh3ETYF+5u1NSCjbJ5YDHkvmPNPW9wxT/ho=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xmaDj5TH; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1nAJ2IKn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAD191F000FF;
-	Thu, 17 Sep 2026 17:50:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xmaDj5TH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D96861F000FF;
+	Thu, 17 Sep 2026 17:50:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789667414;
-	bh=hyLH/aQgi3nlhvm74yk0UzsmC3byl+gFQupbAIuY2WQ=;
+	s=korg; t=1789667417;
+	bh=ghCJI3ST1D1F4OlfO9a6do9d707jSoKVXqNbGqf9Jb4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1nAJ2IKnU1NN5+IR+akwSaMzuV6Ute8L0UF5jrWQI8hQQ3YBcjPk2x4kvOJtUZHo+
-	 3BBy0RslSiZh4ypEJOmnEsgHV00LzeRm/Azdgnu+fFLyIXPu9iafP3+QkBzgCC9Xlm
-	 DD+YvO4mbIKd9Fw57e7V4FiCycwaOjBbWhJ465sQ=
+	b=xmaDj5THL4Xt0sSsISt4Qn/sc6CgRDkLUgPcTT0vlWTMMtB8zb3DIVXp1L4mqtHTW
+	 XaFSuIitj7s3q+VY+Te/XQ5pqGrg+sX9DktNMsKT3lz/W40q37vpJLhHeqb452u7k6
+	 Y/znIuucxxTWJwKyG+VefKdvmSiiMs5PqrReqKMo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Marek=20Beh=C3=BAn?= <kabel@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Kumar Meiyappan <kumar.meiyappan@microchip.com>,
+	Sagar Biradar <sagar.biradar@microchip.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0048/1102] net: dsa: mv88e6xxx: define .pot_clear() for 6321
-Date: Thu, 17 Sep 2026 15:59:51 +0100
-Message-ID: <20260917151540.654578878@linuxfoundation.org>
+Subject: [PATCH 6.12 0084/1102] scsi: pm8001: Reject non-fatal dump when controller is crashed
+Date: Thu, 17 Sep 2026 16:00:27 +0100
+Message-ID: <20260917151541.586589464@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151539.408551884@linuxfoundation.org>
 References: <20260917151539.408551884@linuxfoundation.org>
@@ -45,41 +46,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marek Behún <kabel@kernel.org>
+From: Kumar Meiyappan <kumar.meiyappan@microchip.com>
 
-[ Upstream commit 17826d9708a57d27011d0a6efdebb628d6f8299a ]
+[ Upstream commit aa3b8f56ef27ed72394a752820abdec4608b731c ]
 
-Commit 9e907d739cc3 ("net: dsa: mv88e6xxx: add POT operation") did not
-add the .pot_clear() method to the 6321 switch operations structure.
-Add them now.
+pm80xx_get_non_fatal_dump() can be called even after the controller has
+entered a fatal error state. In that case the forensic memory contents
+are not safe to access for a non-fatal dump request, and attempting to
+do so can trigger a call trace.
 
-Signed-off-by: Marek Behún <kabel@kernel.org>
-Link: https://patch.msgid.link/20260504153227.1390546-4-kabel@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Check controller_fatal_error before reading the non-fatal dump buffer
+and return -EINVAL when the controller is already in a crashed state.
+
+This prevents non-fatal dump collection from running in an invalid
+controller state.
+
+Signed-off-by: Kumar Meiyappan <kumar.meiyappan@microchip.com>
+Signed-off-by: Sagar Biradar <sagar.biradar@microchip.com>
+Link: https://patch.msgid.link/20260416154650.415624-1-sagar.biradar@microchip.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/mv88e6xxx/chip.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/scsi/pm8001/pm80xx_hwi.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/net/dsa/mv88e6xxx/chip.c b/drivers/net/dsa/mv88e6xxx/chip.c
-index 9794e44977275..93e6e3ed69789 100644
---- a/drivers/net/dsa/mv88e6xxx/chip.c
-+++ b/drivers/net/dsa/mv88e6xxx/chip.c
-@@ -5260,6 +5260,7 @@ static const struct mv88e6xxx_ops mv88e6321_ops = {
- 	.set_egress_port = mv88e6095_g1_set_egress_port,
- 	.watchdog_ops = &mv88e6390_watchdog_ops,
- 	.mgmt_rsvd2cpu = mv88e6352_g2_mgmt_rsvd2cpu,
-+	.pot_clear = mv88e6xxx_g2_pot_clear,
- 	.hardware_reset_pre = mv88e6xxx_g2_eeprom_wait,
- 	.hardware_reset_post = mv88e6xxx_g2_eeprom_wait,
- 	.reset = mv88e6352_g1_reset,
+diff --git a/drivers/scsi/pm8001/pm80xx_hwi.c b/drivers/scsi/pm8001/pm80xx_hwi.c
+index a9869cd8c4c07..e0e6bacef8c38 100644
+--- a/drivers/scsi/pm8001/pm80xx_hwi.c
++++ b/drivers/scsi/pm8001/pm80xx_hwi.c
+@@ -401,6 +401,13 @@ ssize_t pm80xx_get_non_fatal_dump(struct device *cdev,
+ 	char *buf_copy = buf;
+ 
+ 	temp = (u32 *)pm8001_ha->memoryMap.region[FORENSIC_MEM].virt_ptr;
++
++	if (pm8001_ha->controller_fatal_error) {
++		pm8001_dbg(pm8001_ha, FAIL,
++			   "non-fatal dump not available in fatal error state\n");
++		return -EINVAL;
++	}
++
+ 	if (++pm8001_ha->non_fatal_count == 1) {
+ 		if (pm8001_ha->chip_id == chip_8001) {
+ 			snprintf(pm8001_ha->forensic_info.data_buf.direct_data,
 -- 
 2.53.0
 
