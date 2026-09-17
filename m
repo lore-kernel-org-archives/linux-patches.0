@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F33D4E781E;
-	Thu, 17 Sep 2026 15:42:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F12F24E77FF;
+	Thu, 17 Sep 2026 15:41:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789659725; cv=none; b=tPGfdi3o62XvkNPMVGDHcxZ9AgYmxs7w0SxGPHwF5+T+YqNT7AtnMzYeq/2nngA11d11WqgJnEXfr3Of5lxHagLrfyFj1fP/EW8V8hn3Ulwi7wbN9mmQdqil2LjjWjR+YUAMTXzrKV1Bu8fQBUGoR1lAQuoOYC3zcGrRrVdOtOc=
+	t=1789659724; cv=none; b=CV6o+IJSQ384UTPOqVQrgtTfwvuOUZTMpb7mN5u/aVj7mZ40Im/sHmMB5GE+Ba3+V+4oFInj9Ax+rNkj/ietBdRJNdfmIR/ZotEMgb5LMc84pDrPJBbiX5Gp4Kv7HupcucVHlt6/5AQBBBhZSVz265uky50S3GuX0gbF5jy/41c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789659725; c=relaxed/simple;
-	bh=7Vu548EtAmQl4StqNoEmPtfysqN0Q2w+yTnBTLbEuQ8=;
+	s=arc-20240116; t=1789659724; c=relaxed/simple;
+	bh=z6vOf1YeyFgvkYj1yXXUS/3IwPf1k5+XK4OIOyQl4ec=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cMfJZ1yffOTwefXK+0hPA0lDyGO4unR86z2PBOf49h9hfr1+P3P9xK7RB+XbPf1zWOPdkCuV0QNEOkDeXoCnmvANCSD4/xLSnV+YVNCn/BPGzVuKLCKjgO3SPckT6z/H2UB70j7kO4II33psnnbq6/HbE8D1G9pkgEEbziBly2o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gWFFjhv4; arc=none smtp.client-ip=100.103.45.18
+	 MIME-Version; b=FmefRtSQLt+2D9TwBDgRAni7EUQt0oe8HrkljPzeTy6ogwyp46p348Q0g/BMA5f5j3CM8JygXsbv3WVlTkgksFqyyt9k/qmXwJkKAw1gJb2VAzTYxij/2oRZw3kV1nxOtL0M09+LDO40qm7Qyu+C2Z+JNoElV8GXQUCS7e7HzJg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XdtJGMcp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gWFFjhv4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0132D1F00898;
-	Thu, 17 Sep 2026 15:41:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XdtJGMcp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05DB31F00893;
+	Thu, 17 Sep 2026 15:41:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1789659717;
-	bh=AVjCtQQcE7Gq/KEddEihoLj5vM3nCqZn1EfE/XvX+vc=;
+	s=korg; t=1789659714;
+	bh=aJpklFrE6M79BnX5F25M3E+INT5Or2RjJKH8FA3WtxU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gWFFjhv4o3hIcBX1D+bzPuaFo0r5YdnpWzqj0kV6RaMXa/wwkeEzWuYstcrrpb4HC
-	 Rbn70sk4PF6dQypBkSjd44EaVCKb0jAoTquYjG3UyGUjj641bRgsXGwNMshsES9O6+
-	 Xpuqt5JDtuyeK7ST/Vz4Wq6oSEwtp81rZhQE38Rw=
+	b=XdtJGMcpg0AzRZWBbrqDfAqQzrxBDvnW04scwrtJa2dLve8/3AHqHQBz+Hcl3y2r8
+	 z16D6mnzYHI9guZnpp9RG2jRGenAA/kx524CeJiWCs+O43vJd75iahVw4r7azdpuoG
+	 ih4g/Bqj1kRABcLVXUizvnVYWf/0orFA2DNSfjCQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jia Jia <physicalmtea@gmail.com>,
 	"Michael S. Tsirkin" <mst@redhat.com>,
+	Andrew Stellman <astellman@stellman-greene.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.2 350/733] vduse: validate virtqueue alignment
-Date: Thu, 17 Sep 2026 16:10:58 +0100
-Message-ID: <20260917151400.295899525@linuxfoundation.org>
+Subject: [PATCH 7.2 349/733] virtio-pci: return IRQ_HANDLED after non-zero ISR
+Date: Thu, 17 Sep 2026 16:10:57 +0100
+Message-ID: <20260917151400.266881868@linuxfoundation.org>
 X-Mailer: git-send-email 2.55.0
 In-Reply-To: <20260917151350.597953846@linuxfoundation.org>
 References: <20260917151350.597953846@linuxfoundation.org>
@@ -51,65 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jia Jia <physicalmtea@gmail.com>
+From: Andrew Stellman <astellman@stellman-greene.com>
 
-[ Upstream commit fa2c25b4add57888acfa89e398389e267bff3dcf ]
+[ Upstream commit 93fa09455fb1a9624b73d42ac1f83771f4818e80 ]
 
-vduse_validate_config() only checks the upper bound of vq_align. Invalid
-values can therefore reach vring_create_virtqueue_map(). The split-ring
-helpers use align - 1 as a bit mask, so the alignment must be a non-zero
-power of two. A zero value makes vring_size() drop the descriptor and
-available-ring part and vring_init() leave the used ring pointer NULL.
+vp_interrupt() reads the ISR before dispatching config-change and
+vring handling. Reading the ISR also clears it, so once the read
+returns non-zero the interrupt was from this device and has already
+been consumed.
 
-The VIRTIO spec requires the used ring to start at an address
-aligned to at least 4 bytes. Reject values below VRING_USED_ALIGN_SIZE as
-well as non-power-of-two values before they reach the virtio ring helpers.
+Currently vp_interrupt() returns the result of vp_vring_interrupt().
+For a config-change interrupt with no vring work, that can return
+IRQ_NONE even though the ISR was non-zero and the interrupt was
+handled.
 
-Opening a virtio-net device created with vq_align=0 triggered:
+Call vp_vring_interrupt() for any queue work, but once the ISR is
+non-zero return IRQ_HANDLED.
 
-BUG: KASAN: null-ptr-deref in virtqueue_kick_prepare_split+0xe3/0x100
-Read of size 2 at addr 0000000000000000 by task systemd-network/1062
+Tested with QEMU virtio-blk-pci forced to INTx using vectors=0 and
+pci=nomsi. On an idle device, 200 config-change interrupts were
+generated using QMP block_resize.
 
-Call Trace (relevant frames):
- dump_stack_lvl
- print_report
- kasan_report
- __asan_load2
- virtqueue_kick_prepare_split+0xe3/0x100
- virtqueue_kick_prepare+0x40/0x60
- try_fill_recv+0x857/0x1250
- virtnet_open+0x189/0x460
- __dev_open+0x225/0x390
- __dev_change_flags+0x368/0x3b0
- netif_change_flags+0x56/0xc0
- do_setlink.isra.0+0x68c/0x1e30
+Before this change, irq_handler_exit reported ret=unhandled and
+/proc/irq/11/spurious increased from 0 to 200 unhandled interrupts.
+After this change, irq_handler_exit reported ret=handled and the
+unhandled count remained at 0.
 
-Validate the value before it reaches the virtio ring helpers.
+The issue was found during an LLM-assisted Quality Playbook review.
 
-Fixes: c8a6153b6c59 ("vduse: Introduce VDUSE - vDPA Device in Userspace")
-Signed-off-by: Jia Jia <physicalmtea@gmail.com>
+Fixes: 77cf524654a8 ("virtio_pci: split up vp_interrupt")
+Suggested-by: Michael S. Tsirkin <mst@redhat.com>
+Assisted-by: LLM
+Signed-off-by: Andrew Stellman <astellman@stellman-greene.com>
+Message-ID: <20260904141318.30278-1-astellman@stellman-greene.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260830023354.115333-1-physicalmtea@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vdpa/vdpa_user/vduse_dev.c | 4 +++-
+ drivers/virtio/virtio_pci_common.c | 4 +++-
  1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/vdpa/vdpa_user/vduse_dev.c b/drivers/vdpa/vdpa_user/vduse_dev.c
-index 10dcf016bfb06..2ea30f85350d3 100644
---- a/drivers/vdpa/vdpa_user/vduse_dev.c
-+++ b/drivers/vdpa/vdpa_user/vduse_dev.c
-@@ -2094,7 +2094,9 @@ static bool vduse_validate_config(struct vduse_dev_config *config,
- 			return false;
- 	}
+diff --git a/drivers/virtio/virtio_pci_common.c b/drivers/virtio/virtio_pci_common.c
+index 10371ecbc054c..b90c174450b20 100644
+--- a/drivers/virtio/virtio_pci_common.c
++++ b/drivers/virtio/virtio_pci_common.c
+@@ -120,7 +120,9 @@ static irqreturn_t vp_interrupt(int irq, void *opaque)
+ 	if (isr & VIRTIO_PCI_ISR_CONFIG)
+ 		vp_config_changed(irq, opaque);
  
--	if (config->vq_align > PAGE_SIZE)
-+	if (config->vq_align < VRING_USED_ALIGN_SIZE ||
-+	    !is_power_of_2(config->vq_align) ||
-+	    config->vq_align > PAGE_SIZE)
- 		return false;
+-	return vp_vring_interrupt(irq, opaque);
++	vp_vring_interrupt(irq, opaque);
++
++	return IRQ_HANDLED;
+ }
  
- 	if (config->config_size > PAGE_SIZE)
+ static int vp_request_msix_vectors(struct virtio_device *vdev, int nvectors,
 -- 
 2.53.0
 
